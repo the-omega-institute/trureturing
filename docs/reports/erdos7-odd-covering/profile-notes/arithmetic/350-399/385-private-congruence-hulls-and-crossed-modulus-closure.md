@@ -313,6 +313,16 @@ can block their reserve at every escaped source. The resulting condition
 concerns the complete private region; the cited conditional LLL provides
 an explicit sufficient test, whose arithmetic hypotheses remain open.
 
+[Section165](#165-actual-prime-guards-exclude-the-singleton-r-opposite-flat57-branch)
+excludes the entire branch with singleton R, opposite concentrated5/7
+and H_5=H_7=1, for arbitrary H_3 and H_q. Conditioning on actual p/3p
+guards sharpens each color's reciprocal budget; the shared pure-three
+guard mass excludes the final q=11,13 cases. This also excludes the
+specified q=53 subcase of Sections158 and161 without enumerating its
+finite carrier. HPM7 then forces H_5>=2 and an original25 whenever R
+is a singleton and5/7 have opposite colors. The other branches of
+unrestricted Erdős#7 remain open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19435,7 +19445,7 @@ so |S_(7-color)|<=6. Hence q<=29+18=47, contradicting q>=49. Consequently these 
 
 This uses the favorable root of an ACTUAL mixed top owner, even if the pure q^G has private points at only the other root. It does not require simultaneous realization of the two packets.
 
-The numerical regime is below both the HPA cutoff P<125 supplied by H_5=1 and the forbidden-pair cutoff P<4200 for5,7. Thus this consumer is not removed merely by either large-prime cutoff. It remains a necessary conditional restriction; no actual cover with these parameters is claimed, and the surviving q=53, H_q<=3 branch is not excluded.
+The numerical regime is below both the HPA cutoff P<125 supplied by H_5=1 and the forbidden-pair cutoff P<4200 for5,7. Thus this consumer is not removed merely by either large-prime cutoff. It remains a necessary conditional restriction; no actual cover with these parameters is claimed. Section165 excludes this entire opposite5/7, H_5=H_7=1, singleton-R branch by the actual prime-guard budgets, with no bound on H_q required.
 
 For unrestricted R, MTR3–MTR4 retain the actual A=tau(Q_0). They do not replace it by1 or bound all shared cofactors. The new root availability can be consumed by further same-family inventory bounds, but it does not itself yield unrestricted odd noncoverage.
 
@@ -19715,7 +19725,7 @@ The ordinary HPM7 bound gives r<25 in S_7 and r<49 in S_5. Since R={53}, the max
 
     Q divides 3^28 product_(5<=p<=53, p prime)p.   (TCP10)
 
-There are14 nonternary prime factors in that product. Every original label, phase and source remains unchanged. The squarefree noncoverage theorem in [BBMST, arXiv:1901.11465v1](https://arxiv.org/abs/1901.11465v1), including the closing relaxation after Lemma5.4, still requires the3-height to be at most one; TCP10 does not supply that hypothesis. No enumeration or exclusion of this finite carrier is asserted. The q=53 branch and unrestricted odd noncoverage remain unresolved.
+There are14 nonternary prime factors in that product. Every original label, phase and source remains unchanged. The squarefree noncoverage theorem in [BBMST, arXiv:1901.11465v1](https://arxiv.org/abs/1901.11465v1), including the closing relaxation after Lemma5.4, still requires the3-height to be at most one; TCP10 does not supply that hypothesis. No enumeration or universal exclusion of this finite carrier is asserted. Section165 excludes this specified EB1 branch using its opposite-color and height-one-anchor hypotheses. Unrestricted odd noncoverage remains unresolved.
 
 ## 162. A unique nonconcentrated prime is at most211
 
@@ -20079,3 +20089,160 @@ If a source has positive reserve, the uniform law on the WHOLE E_J intersect F_w
 Thus either an aligned q-height-two low-row original exists, or at least q distinct deeper low-row originals are required. This statement concerns the same actual cofactor, all later q-digits and the entire cell; it supplies no additional copy of a shared original elsewhere.
 
 The new reduction is from arbitrary retained top inventory to at most two fixed original partners, and then to a two-congruence condition on one COMPLETE private region. Deep partners cannot block positive reserve. The unresolved source step is to defeat TPO3, for example by proving a certificate such as TPO5–TPO6 for the actual blocker inventory. Even after source selection, TPO7 can be paid by existing low-row originals; a legal repair of the full E_J and strict whole-family descent remain separate obligations. No argument here forces every hypothetical cover to contain this particular triangle or proves unrestricted noncoverage. These are ordinary mathematical deductions; no new Lean verification is asserted.
+
+## 165. Actual prime guards exclude the singleton-R opposite flat5/7 branch
+
+Keep ONE EB1-selected original whole distinct odd cover. Let5 and7 be concentrated in opposite nonzero ternary colors, called S_5 and S_7, and suppose
+
+    H_5=H_7=1, R={q}.
+
+These conditions are impossible. Equivalently, when R is a singleton and5 and7 have opposite concentrated colors, at least one of H_5,H_7 is at least two. The original ternary height H=H_3 and shared-prime height G=H_q are arbitrary finite positive integers. No initial-segment support conclusion, bound on H, or upper bound on q is used.
+
+### The finite concentrated palettes and the actual fixed carrier
+
+Since q is distinct from5 and7, q>=11. Reuse HPM7 with the opposite anchors5 and7. If a prime r in S_7 had H_r>=2, the stronger part of HPM7 would give r<5. If r in S_5 had H_r>=2, it would give r<7, leaving only5, whose height is already one. Thus EVERY concentrated nonternary prime has height one. The ordinary part of HPM7 gives
+
+    S_7 subset C={7,11,13,17,19,23},
+    S_5 subset {5,11,13,17,19,23,29,31,37,41,43,47}.
+
+The actual color sets S_5,S_7 are disjoint, and neither contains q. Put
+
+    F={5,29,31,37,41,43,47}.
+
+All root restrictions below concern this same original cover and keep its complete ternary words, all original q-digits, phases and numerical labels.
+
+For p in either concentrated color, DP9/SI1 supplies original A_(3p), whose p-root r_p differs from the normalized original prime root0. It is the ONLY original p-bearing class at r_p. This is the original-class statement in section73, restated explicitly in section138; it is not merely a statement about private projections.
+
+At ternary root i, fix every opposite-color prime at its own r_p. Section73's literal singleton-root elimination then removes every opposite-color original, including the three-free ones. The retained originals, supported away from3 on S_i union {q}, cover the WHOLE root i, with the full remaining coordinates unchanged.
+
+Inside this retained complete carrier, give the following fixed product the uniform product law:
+
+* At each p in S_i, take all p-2 residues other than0 and r_p.
+* At q, take all residues modulo q^G whose first q-root is nonzero.
+* At3, take all complete words in the chosen nonzero first-three root.
+
+The cofactor product is fixed independently of the ternary word and of the original being measured. Original p and3p have zero mass for every p in S_i. Original q also has zero mass. Higher pure q-powers are retained and counted; they have not been discarded as guards.
+
+A surviving class with q-exponent e>=1 has normalized q-mass
+
+    a_e=q^(1-e)/(q-1).
+
+At a concentrated prime p it has normalized mass1/(p-2). A phase outside the fixed product instead gives mass zero. These are masses of the actual original events under this one fixed law, bounded by the indicated products.
+
+### The complete low complement gives a guarded divisor budget
+
+For one color S, write
+
+    w_p=1/(p-2), P(S)=product_(p in S)(1+w_p),
+    W(S)=P(S)-1, X(S)=sum_(p in S)w_p,
+    a=1/(q-1), A=sum_(e=1..G)a_e < a+a^2,
+    T=(1+A)W(S), theta=sum_(b=2..H)3^(1-b)<1/2.
+
+The cofactor inventory meeting S has total mass at most T. Low originals with labels m and3m contribute at most2(T-X), since the actual p and3p labels have both been excluded for every singleton cofactor p in S. The shared pure-q cofactors contribute at most2A-a: there are at most two low labels per q^e, and the actual original q alone has been removed. Consequently the sum of all actual low cofactor masses is at most
+
+    L_*=2T-2X+2A-a.
+
+For each high original3^b m, b>=2,m>1, the ternary mass relative to its root is3^(1-b). Numerical distinctness therefore bounds their total product mass by theta M_*, where
+
+    M_*=T+A.
+
+Let beta_i be the actual mass of the pure-three guards in root i, and tau_i=1-beta_i. CM1 gives
+
+    beta_5+beta_7=theta, tau_i>=1-theta>theta.
+
+Use exactly CM9's complete low complement on the fixed cofactor product above. If U is the complement of the union of its actual low events, then every point of (root i minus its pure-three guards) times U must be covered by an actual high original. Hence
+
+    tau_i <= tau_i L_* + theta M_*.                 (GCB1)
+
+When L_*>=1 this inequality is automatic; otherwise it follows by measuring the same U at every complete ternary word. No independently selected fiber law or positive-complement assumption is used.
+
+Since M_*>0 and tau_i>theta, GCB1 implies the strict necessary inequality
+
+    J(S,q,G)=L_*+M_*=3T-2X+3A-a>1.                 (GCB2)
+
+Indeed, if L_*>=1 this is immediate; otherwise GCB1 gives1-L_*<M_*. Replacing the finite A by its geometric limit yields
+
+    J_infinity(S,q)
+      =3(P(S)-1)-2X(S)+(3P(S)-1)a+3P(S)a^2 >1.     (GCB3)
+
+The finite J is strictly smaller than J_infinity. Write L_infinity,M_infinity for the corresponding replacements in L_*,M_*.
+
+All three envelopes J_infinity,L_infinity,M_infinity increase when primes are added to S or replaced by smaller primes, and decrease as q increases. For example, adding a weight w changes J_infinity by
+
+    w[3(1+a+a^2)P(S)-2]>0.
+
+For L_infinity and M_infinity the respective changes are2w[(1+a+a^2)P(S)-1]>0 and w(1+a+a^2)P(S)>0. Their dependence on a also has positive coefficients. These monotonicities permit numerical upper palettes. Such a palette need not itself be a permissible original support: it bounds a sum of nonnegative weights, and asserts no jointly realizable maximizing family.
+
+### Every shared prime q>=17 violates an individual color budget
+
+First suppose q>=37. If S_7 is a proper subset of C, its largest five-prime upper palette is C minus {23}. Monotonicity and exact arithmetic give
+
+    J_infinity({7,11,13,17,19},37)=33197/33660<1.
+
+Thus GCB3 forces S_7=C. The opposite palette then satisfies S_5 subset F, and
+
+    J_infinity(F,37)=1319828929/1577541420<1,
+
+again contradicting GCB3. This handles every q>=37 without any upper cutoff on q.
+
+Next suppose q is29 or31. If S_7 omits any member of {11,13,17,19}, its largest possible envelope omits19 and uses q=29:
+
+    J_infinity({7,11,13,17,23},29)=671149/679140<1.
+
+Hence S_7 contains {7,11,13,17,19}, and S_5 is contained in F union {23}, with q itself omitted. The larger ordered-weight upper palette omits31 rather than29; using the smaller value29 in the shared-prime factor enlarges the bound further. Therefore
+
+    J_infinity(S_5,q)
+      <=J_infinity({5,23,29,37,41,43,47},29)
+       =12761423/14103180<1.
+
+When the actual shared prime is29, the displayed upper palette is an ordered-weight bound, not a literal subset of the actual concentrated support. The occurrence of29 in both numerical inputs does not introduce an original concentrated29 or assert simultaneous realization.
+
+Now suppose q is17,19 or23. Then S_7 subset C minus {q}. If this is a proper subset, it has at most four primes. Its four largest possible weights and the smallest q in this case give
+
+    J_infinity(S_7,q)
+      <=J_infinity({7,11,13,17},17)=7633/7920<1.
+
+Here too the palette is a numerical upper bound, including when its17 is the actual shared prime. Thus S_7=C minus {q}. Since q cannot belong to S_5 either, S_5 subset F, and
+
+    J_infinity(F,17)=229356383/233709840<1.
+
+This excludes the remaining shared primes at least17.
+
+### The shared pure-three guards exclude q=11 and q=13
+
+For q=11, a proper subset of C minus {11} has envelope at most
+
+    J_infinity({7,13,17,19},11)=694669/701250<1.
+
+For q=13, a proper subset of C minus {13} has envelope at most
+
+    J_infinity({7,11,17,19},13)=593/612<1.
+
+Thus S_7=C minus {q} in either case, and again S_5 subset F. The following exact bounds suffice for the two actual colors:
+
+| Upper palette and shared prime | L_infinity | M_infinity |
+| --- | ---: | ---: |
+| F, q=11 | 57925727/146068650 <5/12 | 2622143/3477825 <5/6 |
+| C minus {11}, q=11 | 671743/1636250 <5/12 | 53497/74375 <5/6 |
+| C minus {13}, q=13 | 24949/64260 <5/12 | 11567/16065 <5/6 |
+
+The F,q=13 envelope is smaller than the first row in each coordinate. Consequently both actual colors have L_*<5/12 and M_*<5/6. GCB1 now requires
+
+    tau_i <= theta M_* /(1-L_*) < (1/2)(10/7)=5/7,
+    beta_i>2/7.
+
+The SAME original pure-three guards would therefore satisfy
+
+    beta_5+beta_7>4/7>1/2>theta,
+
+contrary to their exact shared identity beta_5+beta_7=theta. This finishes all possible q>=11.
+
+The argument reuses HPM7's actual height and palette bounds, DP9/SI1's literal opposite-root elimination, CM1's shared pure-three mass, and CM9's complete-low-complement inequality. The additional consumer measures the fixed complement of each actual p,3p pair, retains all higher q-powers, and uses the resulting singleton-subtracted squarefree concentrated inventory. It does not reprove a generic product-measure lemma or combine separate optimal sources.
+
+There is a direct stronger anchor conclusion. If H_5=1, the height-at-least-two clause of HPM7 already excludes H_7>=2, since it would give7<5. Hence H_5=1 would force the just-excluded pair H_5=H_7=1. Under singleton R and opposite concentrated5/7, the SAME original family must therefore satisfy
+
+    H_5>=2, so25 is ORIGINAL.                       (GCB4)
+
+The original25 follows from divisor closure, with its actual phase unrestricted here. Together with TCP5's existing height bounds, the remaining anchor pairs lie in {2,3,4} times {1,2}. These are necessary original-family conditions, not jointly realized examples.
+
+This ordinary arithmetic exclusion has no Lean verification or priority claim. It excludes the singleton-R, opposite5/7 branch with H_5=1, for every finite H_3 and H_q. It does not exclude larger R, same-color5/7, or the remaining anchor heights, and does not settle unrestricted Erdős #7.
