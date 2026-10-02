@@ -347,6 +347,7 @@ jobs:
             tools/tests/StrataLint.WorktreeContract.Tests/*
             tools/tests/Trureturing.Truth.Tests/*
             [tests-cache]
+            tools/scripts/workflow/elan-cache-inventory.sh
             Meta/ci-cache-paths.json
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
@@ -1045,6 +1046,10 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
+      - name: List toolchains in the elan cache
+        if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' }}
+        continue-on-error: true
+        run: bash tools/scripts/workflow/elan-cache-inventory.sh "$HOME/.elan"
       - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' && steps.elan.outputs.cache-hit != 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5

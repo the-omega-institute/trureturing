@@ -6,6 +6,7 @@ import json
 import os
 import pathlib
 import sys
+import subprocess
 import unittest
 from unittest import mock
 
@@ -266,6 +267,27 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 ready, _ = self.snapshot_result()
                 self.assertEqual(project, ready["project_ready"])
                 self.assertEqual(dependency, ready["dependency_ready"])
+
+    def test_elan_inventory_lists_installed_toolchains_without_modifying_them(self):
+        home = self.root / "elan cache with spaces"
+        binary = home / "bin/elan"
+        binary.parent.mkdir(parents=True)
+        binary.write_text("#!/bin/bash\n[[ \"$*\" == 'toolchain list' ]] || exit 23\n"
+                          "[[ \"${ELAN_HOME:-}\" == \"$EXPECTED_INVENTORY_HOME\" ]] || exit 24\n"
+                          "printf '%s\\n' 'leanprover/lean4:v4.33.0 (default)' 'leanprover/lean4:v4.31.0'\n")
+        binary.chmod(0o755)
+        toolchains = home / "toolchains/stale"
+        toolchains.mkdir(parents=True)
+        material = toolchains / "keep"
+        material.write_bytes(b"installed toolchain")
+        result = subprocess.run(["bash", "--noprofile", "--norc",
+            str(CACHE.parents[1] / "workflow/elan-cache-inventory.sh"), str(home)],
+            cwd=self.root, env=dict(self.env, EXPECTED_INVENTORY_HOME=str(home)), capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIn("ELAN_CACHE_TOOLCHAINS", result.stdout)
+        self.assertIn("leanprover/lean4:v4.33.0 (default)", result.stdout)
+        self.assertIn("leanprover/lean4:v4.31.0", result.stdout)
+        self.assertEqual(b"installed toolchain", material.read_bytes())
 
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
