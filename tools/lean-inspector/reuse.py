@@ -298,7 +298,7 @@ def recover_and_reuse(repository, report, output, owner_snapshot=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'seed-version',
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal',
                                            'claim-receipt', 'cleanup-receipt'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
@@ -312,7 +312,7 @@ def main():
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build', help='policy for the reuse consumer')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'seal', 'seed-version', 'claim-receipt', 'cleanup-receipt') and args.report is None:
+    if args.command in ('probe', 'reuse', 'seal', 'claim-receipt', 'cleanup-receipt') and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
@@ -330,10 +330,6 @@ def main():
         with cache_guard(args.repository):
             seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
                  args.owner_snapshot)
-    elif args.command == 'seed-version':
-        result = seed_version(args.repository, args.report)
-        # Three whitespace-free fields for the local shell entry; no writes.
-        print(result['local_version'], result['current_version'], result['reason'])
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
         print(json.dumps(result, separators=(',', ':')))
