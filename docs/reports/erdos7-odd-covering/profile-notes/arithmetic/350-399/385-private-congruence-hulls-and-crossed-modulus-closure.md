@@ -22525,3 +22525,124 @@ maintained at
 [`verify_lcm_10000_bridge.py`](../../../verify_lcm_10000_bridge.py) and
 [`lcm_10000_bridge_certificate.json`](../../../certificates/lcm_10000_bridge_certificate.json).
 The phase-sensitive complete-liability bridge remains open.
+
+## 187. Divisor closure raises the necessary modulus-sum floor to 34547
+
+The preceding bounds can be combined with the four-factor branch without
+introducing a new covering theorem. Assume the same EB1 extremal
+representative as in Sections 181--186. Thus HF1 supplies a modulus with at
+least four distinct prime factors, HF2 supplies at least nine support primes,
+EB2 supplies every nonunit divisor of every original modulus, and HF9 gives
+
+\[
+ |D|\ge121.
+\]
+
+The support normalization makes the first nine support primes
+
+\[
+3,5,7,11,13,17,19,23,29.
+\]
+
+Put \(H_{29}=v_{29}(Q)\). Simpson's Theorem 2, applied to
+\(D_0=Q/29\), supplies at least
+
+\[
+1+(29-1)=29
+\]
+
+labels not dividing \(D_0\). They are distinct odd multiples of
+\(29^{H_{29}}\) (and hence have full 29-adic height). Choose any 29 of these
+labels as \(F_0\), and put \(R=D\setminus F_0\). Then \(|R|\ge92\); any
+additional full-height labels lie in \(R\) and are handled below.
+
+If \(H_{29}\ge2\), the 29 labels in \(F_0\) alone contribute at least
+
+\[
+29^{H_{29}}(1+3+\cdots+57)=29^{H_{29}+2}\ge29^4>34547.
+\]
+
+It remains to treat \(H_{29}=1\). The 29 smallest odd multiples of 29 then
+contribute
+
+\[
+29(1+3+\cdots+57)=29^3=24389.
+\]
+
+The 92 smallest odd nonunits not divisible by 29 are the odd integers from 3
+through 191 with \(29,87,145\) removed. Their sum is
+
+\[
+95\cdot97-(29+87+145)=8954.
+\]
+
+If \(R\) contains further full-height multiples of 29, each is at least
+\(29\cdot59=1711\), whereas every listed non-29 term is at most 191.
+Replacing a listed non-29 term by such an extra multiple only increases the
+sum, so this is a valid lower bound for \(R\).
+
+Thus the baseline is \(24389+8954=33343\). We now use the four-factor
+modulus from HF1 and EB2 to force replacements in this baseline.
+
+If its four prime factors \(S\) do not contain 29 and
+\(S=\{3,5,7,11\}\), EB2 forces the three non-29 labels
+
+\[
+3\cdot7\cdot11=231,
+\qquad 5\cdot7\cdot11=385,
+\qquad 3\cdot5\cdot7\cdot11=1155.
+\]
+
+Replacing the baseline entries \(187,189,191\) gives
+
+\[
+\sum_{d\in R}d\ge8954-(187+189+191)+(231+385+1155)=10158,
+\]
+
+and therefore
+
+\[
+\boxed{\sum_{d\in D}d\ge24389+10158=34547.}
+\]
+
+If \(S\) does not contain 29 but is not this smallest set, its largest prime
+is at least 13. EB2 then forces the three distinct non-29 labels
+
+\[
+s_1s_3s_4\ge273,
+\qquad s_2s_3s_4\ge455,
+\qquad s_1s_2s_3s_4\ge1365.
+\]
+
+Replacing the same three baseline entries yields
+
+\[
+\sum_{d\in R}d\ge8954-567+(273+455+1365)=10480,
+\]
+
+so the total is at least \(34869\).
+
+Finally, suppose \(29\in S\), so \(S=\{r_1,r_2,r_3,29\}\). Its full product
+is an original divisor and is a full-height 29 label. Choose \(F_0\) to
+include this label. It is at least
+
+\[
+29\cdot3\cdot5\cdot7=3045.
+\]
+
+Replacing the largest baseline full-height label \(29\cdot57=1653\) gives
+
+\[
+\sum_{d\in F_0}d\ge24389-1653+3045=25781,
+\]
+
+and hence \(\sum_{d\in D}d\ge25781+8954=34735\). The smallest of the three
+cases is therefore
+
+\[
+\boxed{\sum_{d\in D}d\ge34547.}
+\]
+
+This is a necessary modulus-sum floor under HF1, HF2, EB1, EB2, HF9 and the
+retained Simpson cut. It does not provide the phase-sensitive whole-cover
+repair and does not settle unrestricted Erdős #7.
