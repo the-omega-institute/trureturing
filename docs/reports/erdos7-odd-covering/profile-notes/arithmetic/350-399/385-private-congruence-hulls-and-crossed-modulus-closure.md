@@ -22884,10 +22884,10 @@ lemma's \(p\) classes are precisely these top-layer labels, and \(p\nmid m_i\).
 If \(R\notin D\), the replacement has a numerical label distinct from every
 retained class and from every deleted class (its \(p\)-valuation is \(e-1\)),
 so it is a distinct odd cover with \(K-p+1<K\), contradicting the first EB1
-objective.  The degenerate case \(R=1\) would instead mean that the \(p\)
-classes of modulus \(p\) cover all integers, making every other class
-redundant.  Thus, in the nondegenerate EB1 case, the output label is forced to
-be occupied:
+objective.  The case \(R=1\) is already impossible for a distinct-label
+system: it forces \(e=1\) and every \(m_i=1\), so the \(p\) deleted labels
+would all have the same modulus \(p\).  Thus the output label is forced to be
+occupied:
 
 \[
 \boxed{
