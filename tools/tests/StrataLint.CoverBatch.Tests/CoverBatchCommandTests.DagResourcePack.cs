@@ -13,8 +13,9 @@ public sealed partial class CoverBatchCommandTests
     public void DagResourcePackRejectsInvalidInputWithoutWritingArtifacts(string input, string diagnostic)
     {
         using var world = new BatchWorld();
+        using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
-        var packPath = Path.Combine(world.Root, "resources.zip");
+        var packPath = Path.Combine(resources.Path, "resources.zip");
         var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
         if (input == "digest") digest = new string('0', 64);
         if (input == "missing") File.Delete(packPath);
@@ -60,7 +61,8 @@ public sealed partial class CoverBatchCommandTests
     [Fact]
     public void DagResourcePackMatchesAssemblyArtifactsByteForByteAndSupportsCheck()
     {
-        using var world = new BatchWorld();
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
         var truth = DagLedgerCommandPreparation.BuildTruth(world.Repository, new PrecomputedLeanReportSource(world.Root));
@@ -69,7 +71,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(reference.Success, reference.Error);
         var paths = new[] { "Generated/DAG.md", "Generated/truth-graph.v1.json" };
         var expected = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(world.Root, path)));
-        var packPath = Path.Combine(world.Root, "resources.zip");
+        var packPath = Path.Combine(resources.Path, "resources.zip");
         var digest = ScribeResourcePack.Write(packPath, DocumentDefinitions.Discover(assembly, world.Root)).TotalSha256;
         foreach (var path in paths) File.Delete(Path.Combine(world.Root, path));
         string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest.ToUpperInvariant()];
@@ -86,10 +88,11 @@ public sealed partial class CoverBatchCommandTests
     [Fact]
     public void DagResourcePackUsesPackDefinitionsWithoutDiscoveringAssemblyDefinitions()
     {
-        using var world = new BatchWorld();
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
-        var packPath = Path.Combine(world.Root, "resources.zip");
+        var packPath = Path.Combine(resources.Path, "resources.zip");
         var document = ScribeDocument.Create(DefinitionDsl.Header("D5/S0/Carrier/Probe", "Resource fixture"),
             Heading.Create("Resource fixture"), DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body"))));
         var digest = ScribeResourcePack.Write(packPath,
