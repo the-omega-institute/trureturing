@@ -63,15 +63,26 @@ public static class ScribeScriptHost
 
     private static ScribeScriptResult ExecuteCore(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers)
-        => ExecutePrepared(repositoryRoot, relativePath, references, analyzers, ScriptParseOptions);
+        => ExecutePrepared(repositoryRoot, relativePath, references, analyzers, ScriptParseOptions,
+            allowlistPath: null, entryTypeOverride: null);
 
     internal static ScribeScriptResult ExecuteWithDefineConstants(string repositoryRoot, string relativePath,
         string? constants) => ExecutePrepared(repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(),
-            ReadScriptParseOptions(constants));
+            ReadScriptParseOptions(constants), allowlistPath: null, entryTypeOverride: null);
+
+    internal static ScribeScriptResult ExecuteWithAllowlistPath(
+        string repositoryRoot, string relativePath, string allowlistPath) => ExecutePrepared(
+            repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(), ScriptParseOptions,
+            allowlistPath, entryTypeOverride: null);
+
+    internal static ScribeScriptResult ExecuteWithEntryType(
+        string repositoryRoot, string relativePath, string entryType) => ExecutePrepared(
+            repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(), ScriptParseOptions,
+            allowlistPath: null, entryType);
 
     private static ScribeScriptResult ExecutePrepared(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
-        CSharpParseOptions? parseOptions)
+        CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
     {
         var normalized = NormalizePath(relativePath);
         if (normalized is null)
@@ -92,7 +103,8 @@ public static class ScribeScriptHost
                 return new(normalized, null, sourceGraph.Failure);
             }
     
-            var compilation = Compile(root, normalized, sourceGraph.Sources!.Value, references, analyzers, parseOptions);
+            var compilation = Compile(root, normalized, sourceGraph.Sources!.Value, references, analyzers,
+                parseOptions, allowlistPath);
             if (compilation.Failure is not null)
             {
                 return new(normalized, null, compilation.Failure);
@@ -106,12 +118,13 @@ public static class ScribeScriptHost
                 try
                 {
                     var assembly = loadContext.LoadFromStream(image);
-                    type = assembly.GetType(compilation.EntryType!, throwOnError: true)!;
+                    type = assembly.GetType(entryTypeOverride ?? compilation.EntryType!, throwOnError: true)!;
                 }
                 catch (Exception exception) when (exception is TypeLoadException or FileLoadException
                     or FileNotFoundException or BadImageFormatException)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
+                    return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad,
+                        $"{normalized}: {FirstMessage(exception)}");
                 }
                 DocumentDefinition definition;
                 try
@@ -270,7 +283,8 @@ public static class ScribeScriptHost
         ImmutableArray<string> sources,
         ImmutableArray<MetadataReference> references,
         ImmutableArray<DiagnosticAnalyzer> analyzers,
-        CSharpParseOptions parseOptions)
+        CSharpParseOptions parseOptions,
+        string? allowlistPath)
     {
         var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
             File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
@@ -328,7 +342,7 @@ public static class ScribeScriptHost
             return (null, null, MakeFailure(entry, entryTypes.Length == 0
                 ? ScribeScriptFailureCode.DefinitionMissing : ScribeScriptFailureCode.MultipleDefinitions,
                 $"entry source contains {entryTypes.Length} concrete document definitions"));
-        var allowlist = ReadAllowlist(compilation, entry);
+        var allowlist = ReadAllowlist(compilation, entry, allowlistPath);
         if (allowlist.Failure is not null)
             return (null, null, allowlist.Failure);
         var symbolFailure = ValidateAllowedSymbols(compilation, sources, allowlist.Table!);
@@ -350,9 +364,9 @@ public static class ScribeScriptHost
     }
 
     private static (ScriptAllowlist? Table, ScribeScriptFailure? Failure) ReadAllowlist(
-        CSharpCompilation compilation, string entry)
+        CSharpCompilation compilation, string entry, string? allowlistPath)
     {
-        var path = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
+        var path = allowlistPath ?? Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
         string[] lines;
         try
         {

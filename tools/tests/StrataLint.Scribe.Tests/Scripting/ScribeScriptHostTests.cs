@@ -159,26 +159,20 @@ public sealed class ScribeScriptHostTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("X:NotAnEntry")]
+    [InlineData("T:System.String\nT:System.String")]
+    [InlineData("T:Missing.Type")]
+    [InlineData("M:System.Linq.Enumerable::MissingMember")]
     public void AllowlistConfigurationFailsClosed(string? contents)
     {
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
         WriteDefinition(root.Path, path, "Probe");
-        var allowlistPath = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
-        var original = File.ReadAllText(allowlistPath);
-        try
-        {
-            if (contents is null) File.Delete(allowlistPath);
-            else File.WriteAllText(allowlistPath, contents);
+        var allowlistPath = root.Resolve("Scripting/ScribeScriptAllowlist.txt");
+        if (contents is not null) TemporaryFileSystem.File.WriteAllText(allowlistPath, contents);
 
-            var result = ScribeScriptHost.Execute(root.Path, path);
+        var result = ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, path, allowlistPath);
 
-            Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
-        }
-        finally
-        {
-            File.WriteAllText(allowlistPath, original);
-        }
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
     }
 
     [Fact]
@@ -208,6 +202,20 @@ public sealed class ScribeScriptHostTests
         Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
         Assert.Equal(path, result.Failure!.RelativePath);
         Assert.Equal("banned API analyzer is unavailable", result.Failure.Message);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void TypeLoadFailureCarriesSourcePath()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+
+        var result = ScribeScriptHost.ExecuteWithEntryType(root.Path, path, "Missing.Entry");
+
+        Assert.Equal(ScribeScriptFailureCode.TypeLoad, result.Failure?.Code);
+        Assert.Contains(path, result.Failure!.Message, StringComparison.Ordinal);
         Assert.Null(result.Definition);
     }
 

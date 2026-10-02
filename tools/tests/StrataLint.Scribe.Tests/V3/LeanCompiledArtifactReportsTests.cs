@@ -2,7 +2,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
-[Collection("Lean report environment")]
 public sealed class LeanCompiledArtifactReportsTests
 {
     [Fact]
@@ -34,22 +33,9 @@ public sealed class LeanCompiledArtifactReportsTests
         var configured = Path.Combine(
             Path.GetTempPath(),
             "stratalint-configured-report-" + Guid.NewGuid().ToString("N") + ".json");
-        var previous = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
-        Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", configured);
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => LeanCompiledArtifactReports.ReadRepository(repositoryRoot, configured));
 
-        try
-        {
-            var exception = Assert.Throws<InvalidOperationException>(
-                () => LeanCompiledArtifactReports.InspectRepository(repositoryRoot));
-
-            Assert.Contains(configured, exception.Message, StringComparison.Ordinal);
-        }
-        finally
-        {
-            Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", previous);
-        }
+        Assert.Contains(configured, exception.Message, StringComparison.Ordinal);
     }
 }
-
-[CollectionDefinition("Lean report environment", DisableParallelization = true)]
-public sealed class LeanReportEnvironmentCollection;
