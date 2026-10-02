@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16 and retains a positive Fourier-tail correction. A weighted-Schur application gives a 4/5 lower bound for the actual prime comparison block at c=9; the complete retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor and an actual positive Fourier-tail correction at c=9; the complete retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -226,18 +226,158 @@ for i, (left, right) in enumerate(zip(ends, ends[1:])):
     print(i + 1, minimum)
 ```
 
+## The actual band complement at $a=\log3$
+
+Appendix B fixes $L=17/16$, $\Omega=256$ and $\Omega L=272$ at its outset. Its band-complement and tail statements therefore cannot simply be instantiated at another width. The following application checks the width dependencies in B.1–B.3 and constructs the new operators; it does not use the old finite sign certificate.
+
+Keep $a=\log3$ and the full complex space $\mathcal H=L^2((-a,a);\mathbb C)$. Write $c_{\rm band}=256a$, distinct from the arithmetic cutoff $c=9$. The cited logarithm enclosure gives
+
+$$
+272<c_{\rm band}<282,\qquad a<11/10.
+$$
+
+Define the actual band operator and its exterior Fourier energy by
+
+$$
+(B_9f)(u)=\int_{-a}^a
+\frac{\sin(256(u-v))}{\pi(u-v)}f(v)\,dv,
+\qquad
+\mathcal E_9(f)=\frac1{2\pi}\int_{|t|>256}|F_f(t)|^2\,dt,
+$$
+
+with kernel value $256/\pi$ on the diagonal. Plancherel gives $0\preceq B_9\preceq I$ and $\mathcal E_9(f)=\langle f,(I-B_9)f\rangle$ for every $f\in\mathcal H$.
+
+In B.1, the Fourier-derivative bound for a unit vector becomes $|F_f^{(j)}(t)|\le a^j\sqrt{2a}<2a^j$. It differentiates $F_f$ in frequency; it requires no derivatives of $f$. The fixed frequency band, the $N=4096$ exterior nodes with spacing $h=1/32$, their distance bound $768$, and the Lagrange basis sum $<2^{24570}$ do not depend on the support width. The changed interpolation remainder is controlled by
+
+$$
+\frac{3\cdot768a}{4096}<\frac{99}{160}<\frac58,
+\qquad
+\frac{2(768a)^{4096}}{4096!}
+<2(5/8)^{4096}<2^{-2047}<1/32.
+$$
+
+The middle power bound uses $(5/8)^2<1/2$. Thus the source's real-phase interpolation argument still gives, when $\mathcal E_9(f)<1/2$,
+
+$$
+\frac1{16}<16\sqrt{\mathcal E_9(f)}\,2^{24570}+\frac1{32},
+\qquad
+\sqrt{\mathcal E_9(f)}>2^{-24579}.
+$$
+
+The other energy case is immediate. Consequently this source-proof application supplies the actual new-window bounded-operator input
+
+$$
+I-B_9\succeq\delta I,\qquad
+\delta=2^{-49158},\qquad
+S_9=I-B_9-\delta I,\qquad 0\preceq S_9\preceq I.
+\tag{A5}
+$$
+
+This conclusion covers the entire complex Hilbert space. The exterior Gamma-weighted form used below is finite on the original smooth legal domain; its bounded comparison (A5) does not assert finiteness of that weighted integral for arbitrary $L^2$ vectors. This is an application of the inspected proof with a new remainder comparison, not a new uncertainty principle or a kernel-verified declaration.
+
+## Positive tail compensation at the new width
+
+At this same $a=\log3$, define the newly normalized modes and filtered vectors
+
+$$
+v_{0,9}(u)=(2a)^{-1/2},\qquad
+v_{1,9}(u)=\sqrt{3/(2a)}\,u/a,\qquad
+h_{j,9}=S_9v_{j,9},\qquad
+e_j=\langle v_{j,9},(I-B_9)v_{j,9}\rangle.
+$$
+
+The exterior-weight estimate in B.2 uses only $|t|\ge256$ and the background $7/2$, so it supplies $T_{{\rm tail},9}(f)\ge C\mathcal E_9(f)$ with $C=123/1280>1/16$. This is the source's actual exterior integral, with all poles, contributing prime powers and the central Gamma band retained elsewhere in $Q$.
+
+B.3's normalized Fourier integrals, evaluated with $c_{\rm band}=256a$, supply independent lower and upper bounds:
+
+$$
+\frac{c_{\rm band}-1}{\pi c_{\rm band}^2}\le e_0
+\le\frac{c_{\rm band}+1}{\pi c_{\rm band}^2},\qquad
+\frac{3(c_{\rm band}-2)}{\pi c_{\rm band}^2}\le e_1
+\le\frac{3/c_{\rm band}+6/c_{\rm band}^2+2/c_{\rm band}^3}{\pi}.
+$$
+
+All four envelopes decrease on $[272,282]$. Using the source's $157/50<\pi<22/7$, the lower envelopes at $282$ and upper envelopes at $272$ give
+
+| Direction | Lower bound for $e_j$ | Upper bound for $e_j$ | Required upper comparison |
+|---|---:|---:|---|
+| $j=0$ | $1967/1749528$ | $6825/5807744$ | $81e_0<C$ |
+| $j=1$ | $245/72897$ | $2794825/789853184$ | $27e_1<C$ |
+
+Both lower bounds exceed $2^{-11}>\delta$. Thus $e_j-\delta>0$ is established independently of the upper estimates. Reflection commutes with $S_9$, making $h_{0,9}$ even, $h_{1,9}$ odd and $\langle v_{0,9},S_9v_{1,9}\rangle=0$. The source's complex square completion in the positive form of $S_9$ therefore applies:
+
+$$
+\langle f,S_9f\rangle\ge
+\sum_{j=0}^1\frac{|\langle h_{j,9},f\rangle|^2}{e_j-\delta}.
+$$
+
+Since $C/(e_0-\delta)>81$, $C/(e_1-\delta)>27$ and $C\delta>\delta/16$, this gives the actual new-window tail input
+
+$$
+\boxed{
+T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
+\quad
+\tau_9=2^{-49162},\quad
+U_9=81|h_{0,9}\rangle\langle h_{0,9}|
++27|h_{1,9}\rangle\langle h_{1,9}|,
+}
+\tag{A6}
+$$
+
+for every $f\in C_c^\infty((-a,a);\mathbb C)$. On even tests the odd contribution vanishes. The displayed constants match the old calibration because the new parameter bounds justify them, while $B_9$, the modes and both filtered vectors are new-width objects. This is a paper application of the inspected analytic proof, independently reviewed; it is not a reproduced numerical certificate, a new kernel theorem or positivity of the complete form.
+
+The same upper envelopes give $\|h_{0,9}\|<1/29$ and $\|h_{1,9}\|<3/50$, since $S_9^2\preceq S_9$ implies $\|h_{j,9}\|^2\le e_j-\delta$. These norm bounds do not provide finite-column approximation errors for the new vectors.
+
+This exact scalar replay checks only the new parameter comparisons. Its logarithm and $\pi$ enclosures are the cited analytic inputs; it does not reexecute the original finite matrices or prove the analytic interpolation and square-completion suppliers.
+
+```python
+from fractions import Fraction as F
+
+log3_lo, log3_hi = F(1098612, 10**6), F(1098613, 10**6)
+assert F(17, 16) < log3_lo < log3_hi < F(11, 10)
+assert F(272) < 256 * log3_lo < 256 * log3_hi < F(282)
+ratio = F(3 * 768, 4096) * F(11, 10)
+assert ratio == F(99, 160) < F(5, 8)
+assert F(5, 8)**2 < F(1, 2)
+
+band_lo, band_hi = F(272), F(282)
+pi_lo, pi_hi, C = F(157, 50), F(22, 7), F(123, 1280)
+lower = [(band_hi - 1) / (pi_hi * band_hi**2),
+         3 * (band_hi - 2) / (pi_hi * band_hi**2)]
+upper = [(band_lo + 1) / (pi_lo * band_lo**2),
+         (3 / band_lo + 6 / band_lo**2 + 2 / band_lo**3) / pi_lo]
+assert lower == [F(1967, 1749528), F(245, 72897)]
+assert upper == [F(6825, 5807744), F(2794825, 789853184)]
+assert all(value > F(1, 2**11) for value in lower)
+assert 49158 > 11
+assert C > F(1, 16)
+assert 81 * upper[0] < C and 27 * upper[1] < C
+assert upper[0] < F(1, 29**2) and upper[1] < F(9, 50**2)
+for j in range(2):
+    print(j, lower[j], upper[j])
+```
+
 ## The remaining retained-matrix consumer at $c=9$
 
-The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. This removes the need to assume a positive floor for this block; it leaves the complete form's sign undecided.
+The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
 
-Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits choosing the even Hilbert space and an even retained dictionary for the existing RH route. If a new-window tail estimate supplies
+On the actual interval $(-\log3,\log3)$, the compact self-adjoint operator $K_9$ has the source's kernel
 
 $$
-T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
-\qquad\tau_9\ge0,
+k(u-v)=2\cosh((u-v)/2)
++\frac1{2\pi}\int_{-256}^{256}(A(t)-7/2)e^{it(u-v)}\,dt.
 $$
 
-with $U_9$ bounded self-adjoint, put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
+Together with the prime-block decomposition and the now supplied tail input (A6), this gives
+
+$$
+Q(f)\ge2^{-49162}\|f\|^2+
+\langle f,(M_9+K_9+U_9)f\rangle
+\quad\bigl(f\in C_c^\infty((-\log3,\log3);\mathbb C)\bigr).
+\tag{A7}
+$$
+
+The sign of the bounded term in (A7) is not established. Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits restricting **all** operators, norms and complements to the even Hilbert space for the existing even-test RH route. In that space $U_9=81|h_{0,9}\rangle\langle h_{0,9}|$; the even pole contribution is also nonnegative, but the central Gamma band remains payable. Put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
 
 $$
 G_9=E^*M_9^{-1}E,\qquad
@@ -254,4 +394,4 @@ G_9^{-1}+J_9\succeq
 \tag{A4}
 $$
 
-This condition would imply $M_9+V_9\succeq0$ and hence the needed nonnegativity of $Q$ on its legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The new $K_9$, tail-filtered vectors, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. None of the $17/16$ certificate's retained matrices, tail constants or errors has been transported to $\log3$ by (A3). Using another retained basis also requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. The tail input itself is supplied by (A5)–(A6). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
