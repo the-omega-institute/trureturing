@@ -8,9 +8,9 @@ public sealed class ScribeReleaseScriptTests
     [Theory]
     [InlineData("hidden", "UntrackedFiles")]
     [InlineData("untracked", "UntrackedFiles")]
-    [InlineData("ignored-blueprint", "UntrackedReleaseInput")]
-    [InlineData("ignored-projection", "UntrackedReleaseInput")]
-    [InlineData("staged", "SourceContentMismatch")]
+    [InlineData("ignored-blueprint", "SourceContentMismatch")]
+    [InlineData("ignored-projection", "SourceContentMismatch")]
+    [InlineData("staged", "IndexNotAtHead")]
     [InlineData("unstaged", "SourceContentMismatch")]
     [InlineData("assume-unchanged", "SourceContentMismatch")]
     [InlineData("skip-worktree", "SourceContentMismatch")]
@@ -27,26 +27,41 @@ public sealed class ScribeReleaseScriptTests
     }
 
     [Fact]
-    public void CleanRepositoryReleasesAndVerifiesHeadDefinitionPathsThenRemovesList()
+    public void CleanRepositoryReleasesAndVerifiesHeadDefinitionPathsFromTree()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ReleaseFixture();
         var result = fixture.Run();
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(new[] { "verify-source", "release", "verify-release" }, fixture.Calls);
-        Assert.Equal(ReleaseFixture.Definition + "\n", fixture.ExpectedPaths);
-        Assert.False(File.Exists(fixture.PathsFile));
+        Assert.Contains("\t" + ReleaseFixture.Definition + "\0", fixture.TreeText, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void StagedOnlyChangeWithHeadBytesOnDiskReachesRelease()
+    public void StagedOnlyChangeWithHeadBytesOnDiskIsRejected()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ReleaseFixture();
         fixture.Change("staged-only");
         var result = fixture.Run();
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal(new[] { "verify-source", "release", "verify-release" }, fixture.Calls);
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("IndexNotAtHead:", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.Empty(fixture.Calls);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void StagedNewDefinitionIsRejectedBeforeReleaseWhetherAssetsExist(bool existingAssets)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ReleaseFixture();
+        fixture.Change("staged-new");
+        if (existingAssets) fixture.CreateExistingReleaseDirectory();
+        var result = fixture.Run();
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("IndexNotAtHead:", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.Empty(fixture.Calls);
     }
 
     [Fact]
@@ -63,12 +78,10 @@ public sealed class ScribeReleaseScriptTests
     }
 
     [Theory]
-    [InlineData("temporary-1", "DefinitionPathsTemporaryFileFailed")]
-    [InlineData("temporary-2", "SourceCommitTemporaryFileFailed")]
-    [InlineData("temporary-3", "SourceTreeTemporaryFileFailed")]
+    [InlineData("temporary-1", "SourceCommitTemporaryFileFailed")]
+    [InlineData("temporary-2", "SourceTreeTemporaryFileFailed")]
     [InlineData("commit-read", "GitSourceCommitFailed")]
     [InlineData("tree-read", "GitSourceTreeFailed")]
-    [InlineData("definition-paths", "GitDefinitionPathsFailed")]
     [InlineData("verify-source", "SourceContentMismatch")]
     [InlineData("release", "ReleaseFailed")]
     [InlineData("verify-release", "VerificationFailed")]
@@ -91,7 +104,6 @@ public sealed class ScribeReleaseScriptTests
         private readonly string bin;
         private readonly string calls;
         private readonly string pathsCopy;
-        private readonly string pathsFile;
         private readonly string temporary;
         private readonly string gitExecutable;
         private string failure = "";
@@ -107,7 +119,6 @@ public sealed class ScribeReleaseScriptTests
             bin = Path.Combine(scratch.Path, "bin");
             calls = Path.Combine(scratch.Path, "calls");
             pathsCopy = Path.Combine(scratch.Path, "paths-copy");
-            pathsFile = Path.Combine(scratch.Path, "paths-file");
             temporary = Path.Combine(scratch.Path, "temporary");
             ScriptHarnessScratch.EnsureDirectory(root);
             ScriptHarnessScratch.EnsureDirectory(bin);
@@ -144,7 +155,7 @@ public sealed class ScribeReleaseScriptTests
                 while [[ $# -gt 0 ]]; do
                   case "$1" in
                     --out) directory="$2" ;;
-                    --paths-from) paths="$2" ;;
+                    --tree-from) tree="$2" ;;
                   esac
                   shift 2
                 done
@@ -152,9 +163,8 @@ public sealed class ScribeReleaseScriptTests
                   mkdir -p "$directory"
                   printf '{}\n' > "$directory/identity.json"
                 else
-                  [[ -n "${paths:-}" ]] || exit 91
-                  cat "$paths" > "$RELEASE_PATHS_COPY"
-                  printf '%s' "$paths" > "$RELEASE_PATHS_FILE"
+                  [[ -n "${tree:-}" ]] || exit 91
+                  cat "$tree" > "$RELEASE_TREE_COPY"
                 fi
                 """);
         }
@@ -175,15 +185,19 @@ public sealed class ScribeReleaseScriptTests
                 case "$RELEASE_FAIL_COMMAND:$1:${2:-}" in
                   commit-read:cat-file:*|tree-read:ls-tree:-r)
                     [[ "$RELEASE_FAIL_COMMAND" != tree-read || "$3" == -z ]] && exit 94 ;;
-                  definition-paths:ls-tree:-r) [[ "$3" != --name-only ]] || exit 95 ;;
                 esac
                 exec "$RELEASE_GIT" "$@"
                 """);
         }
 
         internal string[] Calls => ScriptHarnessScratch.ReadRecordedCalls(calls);
-        internal string ExpectedPaths => ScriptHarnessScratch.ReadScratchText(pathsCopy);
-        internal string PathsFile => ScriptHarnessScratch.ReadScratchText(pathsFile);
+        internal string TreeText => ScriptHarnessScratch.ReadScratchText(pathsCopy);
+
+        internal void CreateExistingReleaseDirectory()
+        {
+            var commit = GitOutput("rev-parse", "HEAD").Trim();
+            ScriptHarnessScratch.EnsureDirectory(Path.Combine(root, "Generated", "scribe-release", commit));
+        }
 
         internal void Change(string change)
         {
@@ -204,6 +218,10 @@ public sealed class ScribeReleaseScriptTests
                     Write(Definition, "staged definition\n");
                     Git("add", Definition);
                     Write(Definition, "neutral definition\n");
+                    break;
+                case "staged-new":
+                    Write("Blueprint/D5/S0/Test/Additional.scribe.cs", "additional definition\n");
+                    Git("add", "Blueprint/D5/S0/Test/Additional.scribe.cs");
                     break;
                 case "assume-unchanged":
                 case "skip-worktree":
@@ -230,7 +248,7 @@ public sealed class ScribeReleaseScriptTests
             [$"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}", $"TMPDIR={temporary}", $"RELEASE_CALLS={calls}",
                 $"RELEASE_DOTNET={Path.Combine(Environment.GetEnvironmentVariable("DOTNET_ROOT")!, "dotnet")}",
                 $"RELEASE_HOST={Path.Combine(TestRepositoryLayout.FindRoot(), "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll")}",
-                $"RELEASE_PATHS_COPY={pathsCopy}", $"RELEASE_PATHS_FILE={pathsFile}",
+                $"RELEASE_TREE_COPY={pathsCopy}",
                 $"RELEASE_FAIL_COMMAND={failure}", $"RELEASE_MKTEMP_COUNT={Path.Combine(scratch.Path, "temporary-count")}",
                 $"RELEASE_GIT={gitExecutable}",
                 "/bin/bash", Path.Combine(root, Script)],
@@ -243,6 +261,13 @@ public sealed class ScribeReleaseScriptTests
         {
             var result = TestProcessRunner.Run(gitExecutable, arguments, root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        }
+
+        private string GitOutput(params string[] arguments)
+        {
+            var result = TestProcessRunner.Run(gitExecutable, arguments, root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+            return Encoding.UTF8.GetString(result.StandardOutput);
         }
 
         private void Write(string relative, string text)

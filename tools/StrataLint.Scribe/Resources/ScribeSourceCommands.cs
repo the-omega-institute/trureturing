@@ -7,7 +7,6 @@ namespace StrataLint.Scribe;
 internal static class ScribeSourceCommands
 {
     internal const string Usage = "usage: resources verify-source --source-commit <commit> --commit-from <file> --tree-from <file>";
-    private const int MaximumReportedMismatches = 20;
     private const int HashBufferSize = 64 * 1024;
 
     internal static int Run(IReadOnlyList<string> arguments, string workingDirectory,
@@ -59,7 +58,7 @@ internal static class ScribeSourceCommands
                 error.WriteLine($"SourceRootTreeMismatch: expected={rootTreeId} actual={actualTree}");
                 return 1;
             }
-            var mismatches = 0;
+            var contentMismatches = 0;
             foreach (var entry in entries)
             {
                 var path = Path.Combine(root, entry.Path.Replace('/', Path.DirectorySeparatorChar));
@@ -71,14 +70,27 @@ internal static class ScribeSourceCommands
                 };
                 if (mismatch is not null)
                 {
-                    mismatches++;
-                    if (mismatches <= MaximumReportedMismatches) error.WriteLine(mismatch);
+                    contentMismatches++;
+                    error.WriteLine(mismatch);
                 }
             }
 
+            var expectedInputs = entries.Where(static entry => IsReleaseInput(entry.Path))
+                .Select(static entry => entry.Path)
+                .ToHashSet(StringComparer.Ordinal);
+            var actualInputs = EnumerateReleaseInputFiles(root)
+                .ToHashSet(StringComparer.Ordinal);
+            var extraInputs = actualInputs.Except(expectedInputs).Order(StringComparer.Ordinal).ToArray();
+            foreach (var path in extraInputs)
+            {
+                error.WriteLine($"UnexpectedSourceInput: {path}");
+            }
+
+            var mismatches = contentMismatches + extraInputs.Length;
             if (mismatches != 0)
             {
-                error.WriteLine($"SourceContentSummary: entries={entries.Count} mismatches={mismatches}");
+                error.WriteLine($"SourceContentSummary: entries={entries.Count} mismatches={contentMismatches}");
+                error.WriteLine($"SourceInputSummary: expected={expectedInputs.Count} actual={actualInputs.Count} extras={extraInputs.Length}");
                 return 1;
             }
 
@@ -156,6 +168,44 @@ internal static class ScribeSourceCommands
             : ObjectId(Encoding.UTF8.GetBytes(target), expected.Length) == expected
                 ? null
                 : $"SourceContentMismatch: {displayPath}";
+    }
+
+    private static bool IsReleaseInput(string path) =>
+        path.StartsWith(ScribeResourceInputPaths.BlueprintDirectoryName + "/", StringComparison.Ordinal)
+        || path.StartsWith(ScribeResourceInputPaths.ProjectionDirectoryName + "/", StringComparison.Ordinal);
+
+    private static IEnumerable<string> EnumerateReleaseInputFiles(string repositoryRoot)
+    {
+        foreach (var (directory, relative) in new[]
+        {
+            (ScribeResourceInputPaths.BlueprintDirectory(repositoryRoot), ScribeResourceInputPaths.BlueprintDirectoryName),
+            (ScribeResourceInputPaths.ProjectionDirectory(repositoryRoot), ScribeResourceInputPaths.ProjectionDirectoryName),
+        })
+        {
+            if (!Directory.Exists(directory)) continue;
+            var pending = new Stack<(string Directory, string Relative)>();
+            pending.Push((directory, relative));
+            while (pending.Count != 0)
+            {
+                var current = pending.Pop();
+                foreach (var entry in new DirectoryInfo(current.Directory).EnumerateFileSystemInfos())
+                {
+                    var path = current.Relative + "/" + entry.Name;
+                    if (entry.LinkTarget is not null || entry.Attributes.HasFlag(FileAttributes.ReparsePoint))
+                    {
+                        yield return path;
+                    }
+                    else if (entry is DirectoryInfo)
+                    {
+                        pending.Push((entry.FullName, path));
+                    }
+                    else
+                    {
+                        yield return path;
+                    }
+                }
+            }
+        }
     }
 
     private static string ObjectId(ReadOnlySpan<byte> content, int objectIdLength)

@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace StrataLint.Scribe;
 
 internal static class ScribeReleaseCommands
@@ -15,8 +17,8 @@ internal static class ScribeReleaseCommands
             var directory = Path.GetFullPath(options[release ? "--out" : "--dir"], workingDirectory);
             return release
                 ? Release(repositoryRoot(), directory, options["--source-commit"], output, error)
-                : Verify(directory, options, options.TryGetValue("--paths-from", out var pathsFile)
-                    ? ReadDefinitionPaths(Path.GetFullPath(pathsFile, workingDirectory)) : null, output, error);
+                : Verify(directory, options, options.TryGetValue("--tree-from", out var treeFile)
+                    ? ReadDefinitionPathsFromTree(Path.GetFullPath(treeFile, workingDirectory)) : null, output, error);
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
             or ArgumentException or FormatException or InvalidOperationException)
@@ -30,7 +32,7 @@ internal static class ScribeReleaseCommands
     private static Dictionary<string, string> Parse(IReadOnlyList<string> arguments, bool release)
     {
         var options = new Dictionary<string, string>(StringComparer.Ordinal);
-        var allowed = release ? new[] { "--source-commit", "--out" } : ["--dir", "--source-commit", "--total-sha256", "--paths-from"];
+        var allowed = release ? new[] { "--source-commit", "--out" } : ["--dir", "--source-commit", "--total-sha256", "--tree-from"];
         if (arguments.Count < 4 || arguments.Count % 2 != 0)
             throw new ArgumentException("InvalidReleaseArguments: options require a name and value.");
         for (var index = 2; index < arguments.Count; index += 2)
@@ -111,24 +113,53 @@ internal static class ScribeReleaseCommands
         }
     }
 
-    private static HashSet<string> ReadDefinitionPaths(string path)
+    private static HashSet<string> ReadDefinitionPathsFromTree(string path)
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
-        var lineNumber = 0;
-        foreach (var line in File.ReadAllLines(path, new System.Text.UTF8Encoding(false, true)))
+        var bytes = File.ReadAllBytes(path);
+        if (bytes.Length != 0 && bytes[^1] != 0)
+            throw new ArgumentException("InvalidDefinitionTree: entries must be NUL separated.");
+        var start = 0;
+        while (start < bytes.Length)
         {
-            lineNumber++;
-            if (!line.StartsWith("Blueprint/", StringComparison.Ordinal)
-                || !line.EndsWith(".scribe.cs", StringComparison.Ordinal)
-                || line != line.Trim() || line.Contains('\\') || line.Any(char.IsControl)
-                || line.Split('/').Any(segment => segment is "" or "." or "..") || !paths.Add(line))
-                throw new ArgumentException($"InvalidDefinitionPathList: invalid or duplicate path on line {lineNumber}.");
+            var end = bytes.AsSpan(start).IndexOf((byte)0);
+            if (end < 0) throw new ArgumentException("InvalidDefinitionTree: entries must be NUL separated.");
+            var record = bytes.AsSpan(start, end);
+            start += end + 1;
+            var tab = record.IndexOf((byte)'\t');
+            if (tab <= 0 || tab == record.Length - 1)
+                throw new ArgumentException("InvalidDefinitionTree: each entry requires metadata and path.");
+            string text;
+            try { text = new System.Text.UTF8Encoding(false, true).GetString(record); }
+            catch (DecoderFallbackException exception)
+            {
+                throw new ArgumentException("InvalidDefinitionTree: invalid UTF-8.", exception);
+            }
+            var metadata = text[..text.IndexOf('\t')].Split(' ', StringSplitOptions.None);
+            var pathValue = text[(text.IndexOf('\t') + 1)..];
+            if (metadata.Length != 3 || metadata.Any(string.IsNullOrEmpty)
+                || metadata[1] is not ("blob" or "commit" or "tree")
+                || !IsObjectId(metadata[2]) || !IsTreePath(pathValue))
+                throw new ArgumentException($"InvalidDefinitionTree: {text}.");
+            if (pathValue.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && pathValue.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                && !paths.Add(pathValue))
+                throw new ArgumentException($"InvalidDefinitionTree: duplicate path {pathValue}.");
         }
         return paths;
     }
 
+    private static bool IsObjectId(string value) =>
+        value.Length is 40 or 64 && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
+
+    private static bool IsTreePath(string value) =>
+        value.Length != 0 && !value.Contains('\\') && !Path.IsPathRooted(value)
+        && !value.StartsWith("//", StringComparison.Ordinal)
+        && !value.Split('/').Any(static segment => segment is "" or "." or "..")
+        && !(value.Length >= 2 && value[1] == ':');
+
     private static int Verify(string directory, IReadOnlyDictionary<string, string> options,
-        HashSet<string>? expectedPaths, TextWriter output, TextWriter error)
+        HashSet<string>? expectedDefinitionPaths, TextWriter output, TextWriter error)
     {
         var missing = Assets.Where(asset => !File.Exists(Path.Combine(directory, asset))).ToArray();
         if (missing.Length != 0)
@@ -154,13 +185,13 @@ internal static class ScribeReleaseCommands
             mismatches.Add("SourceCommitMismatch: identity differs from expected source commit.");
         if (options.TryGetValue("--total-sha256", out var digest) && digest != identity.TotalSha256)
             mismatches.Add("ExpectedTotalSha256Mismatch: identity differs from expected digest.");
-        if (expectedPaths is not null)
+        if (expectedDefinitionPaths is not null)
         {
             var actualPaths = pack.Manifest.Entries.Select(entry => "Blueprint/" + entry.Gid + ".scribe.cs")
                 .ToHashSet(StringComparer.Ordinal);
-            foreach (var path in actualPaths.Except(expectedPaths).Order(StringComparer.Ordinal))
+            foreach (var path in actualPaths.Except(expectedDefinitionPaths).Order(StringComparer.Ordinal))
                 mismatches.Add($"UnexpectedDefinitionPath: {path}.");
-            foreach (var path in expectedPaths.Except(actualPaths).Order(StringComparer.Ordinal))
+            foreach (var path in expectedDefinitionPaths.Except(actualPaths).Order(StringComparer.Ordinal))
                 mismatches.Add($"MissingDefinitionPath: {path}.");
         }
         foreach (var path in Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal))

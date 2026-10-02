@@ -74,6 +74,59 @@ public sealed class ScribeSourceCommandTests
         Assert.Contains("mismatches=2", error, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ReleaseInputClosureReportsEveryAdditionalFileAndIgnoresOutsideFiles()
+    {
+        using var root = Prepare();
+        Write(root, "Blueprint/ordinary", [1]);
+        Write(root, "Blueprint/.hidden", [2]);
+        Write(root, "Blueprint/ignored.ignored", [3]);
+        Write(root, ".gitignore", Encoding.UTF8.GetBytes("*.ignored\n"));
+        TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("Blueprint/nested"));
+        Write(root, "Blueprint/nested/deep", [4]);
+        TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("Golden/Projection"));
+        Write(root, "Golden/Projection/projection.json", [5]);
+        Write(root, "outside", [6]);
+        Manifest(root, "");
+        var (code, _, error) = Run(root);
+        Assert.True(code == 1, error.ToString());
+        foreach (var path in new[]
+        {
+            "Blueprint/ordinary", "Blueprint/.hidden", "Blueprint/ignored.ignored",
+            "Blueprint/nested/deep", "Golden/Projection/projection.json",
+        })
+        {
+            Assert.Contains("UnexpectedSourceInput: " + path, error, StringComparison.Ordinal);
+        }
+        Assert.DoesNotContain("outside", error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EveryContentMismatchBeyondTwentyIsNamed()
+    {
+        using var root = Prepare();
+        var paths = Enumerable.Range(0, 25).Select(index => $"entry-{index:00}").ToArray();
+        Manifest(root, string.Concat(paths.Select(path => Entry(path, []))));
+        var (code, _, error) = Run(root);
+        Assert.Equal(1, code);
+        foreach (var path in paths)
+            Assert.Contains("MissingSourceEntry: " + path, error, StringComparison.Ordinal);
+        Assert.Equal(25, error.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+            .Count(line => line.StartsWith("MissingSourceEntry:", StringComparison.Ordinal)));
+    }
+
+    [Fact]
+    public void ReleaseInputClosureTreatsASymbolicLinkAsOneFile()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var root = Prepare();
+        File.CreateSymbolicLink(root.Resolve("Blueprint/link"), "missing-target");
+        Manifest(root, "");
+        var (code, _, error) = Run(root);
+        Assert.Equal(1, code);
+        Assert.Contains("UnexpectedSourceInput: Blueprint/link", error, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

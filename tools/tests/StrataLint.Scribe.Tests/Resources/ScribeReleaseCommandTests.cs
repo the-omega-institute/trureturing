@@ -31,19 +31,19 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Theory]
-    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\n", "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.")]
-    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\nBlueprint/D5/S0/Synthetic/Second.scribe.cs\nBlueprint/D5/S0/Synthetic/Third.scribe.cs\n",
+    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\0", "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.")]
+    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\0Blueprint/D5/S0/Synthetic/Second.scribe.cs\0Blueprint/D5/S0/Synthetic/Third.scribe.cs\0",
         "MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.")]
-    [InlineData("Blueprint/D5/S0/Synthetic/Third.scribe.cs\n",
+    [InlineData("Blueprint/D5/S0/Synthetic/Third.scribe.cs\0",
         "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/First.scribe.cs.")]
-    public void VerifyPathsFromReportsEveryExtraAndMissingPath(string paths, string reason)
+    public void VerifyTreeFromReportsEveryExtraAndMissingPath(string paths, string reason)
     {
         using var root = Assets();
-        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"), paths);
+        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("tree.txt"), Tree(paths));
         var error = new StringWriter();
-        Assert.Equal(1, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Equal(1, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
         Assert.Contains(reason, error.ToString(), StringComparison.Ordinal);
-        if (paths == "Blueprint/D5/S0/Synthetic/Third.scribe.cs\n")
+        if (paths == "Blueprint/D5/S0/Synthetic/Third.scribe.cs\0")
         {
             Assert.Contains("UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.", error.ToString(), StringComparison.Ordinal);
             Assert.Contains("MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.", error.ToString(), StringComparison.Ordinal);
@@ -51,47 +51,49 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Fact]
-    public void VerifyPathsFromAcceptsExactlyTheDefinitionSetInAnyOrder()
+    public void VerifyTreeFromAcceptsExactlyTheDefinitionSetInAnyOrder()
     {
         using var root = Assets();
-        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"),
-            "Blueprint/D5/S0/Synthetic/Second.scribe.cs\nBlueprint/D5/S0/Synthetic/First.scribe.cs\n");
+        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("tree.txt"), Tree(
+            "Blueprint/D5/S0/Synthetic/Second.scribe.cs\0Blueprint/D5/S0/Synthetic/First.scribe.cs\0"));
         var error = new StringWriter();
-        Assert.Equal(0, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Equal(0, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
         Assert.Empty(error.ToString());
     }
 
     [Theory]
-    [InlineData("\n")]
-    [InlineData("../Neutral.scribe.cs\n")]
-    [InlineData("/Blueprint/Neutral.scribe.cs\n")]
-    [InlineData("Blueprint/../Neutral.scribe.cs\n")]
-    [InlineData("Blueprint//Neutral.scribe.cs\n")]
-    [InlineData("Blueprint/./Neutral.scribe.cs\n")]
-    [InlineData("Blueprint\\Neutral.scribe.cs\n")]
-    [InlineData("Blueprint/Neutral.txt\n")]
-    [InlineData(" Blueprint/Neutral.scribe.cs\n")]
-    [InlineData("Blueprint/Neutral\0.scribe.cs\n")]
-    [InlineData("Blueprint/Neutral.scribe.cs\nBlueprint/Neutral.scribe.cs\n")]
-    public void VerifyPathsFromRejectsInvalidLinesWithExitTwo(string paths)
+    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint//Neutral.scribe.cs\0")]
+    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint/../Neutral.scribe.cs\0")]
+    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint\\Neutral.scribe.cs\0")]
+    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint/Neutral.scribe.cs")]
+    public void VerifyTreeFromRejectsInvalidEntriesWithExitTwo(string tree)
     {
         using var root = Assets();
-        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"), paths);
+        TemporaryFileSystem.File.WriteAllText(root.Resolve("tree.txt"), tree);
         var error = new StringWriter();
-        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
-        Assert.Contains("InvalidDefinitionPathList", error.ToString(), StringComparison.Ordinal);
+        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
+        Assert.Contains("InvalidDefinitionTree", error.ToString(), StringComparison.Ordinal);
     }
 
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void VerifyPathsFromRejectsUnreadableFileWithExitTwo(bool directory)
+    public void VerifyTreeFromRejectsUnreadableFileWithExitTwo(bool directory)
     {
         using var root = Assets();
-        if (directory) TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("paths.txt"));
+        if (directory) TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("tree.txt"));
         var error = new StringWriter();
-        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
         Assert.NotEmpty(error.ToString());
+    }
+
+    [Fact]
+    public void VerifyReleaseRejectsPathsFromOptionWithExitTwo()
+    {
+        using var root = Assets();
+        var error = new StringWriter();
+        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "tree.txt"], error));
+        Assert.Contains("InvalidReleaseArguments", error.ToString(), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -340,4 +342,11 @@ public sealed class ScribeReleaseCommandTests
 
     private static int Run(TemporaryRoot root, string[] args, TextWriter error) =>
         ScribeCli.Run(typeof(ScribeResourcePack).Assembly, args, root.Path, TextWriter.Null, error);
+
+    private static byte[] Tree(string paths)
+    {
+        var entries = paths.Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Select(path => $"100644 blob {new string('0', 40)}\t{path}\0");
+        return Encoding.UTF8.GetBytes(string.Concat(entries));
+    }
 }

@@ -549,8 +549,8 @@ internal static class StatementProjectionFixtureLoader
     internal static string OffendingSubject(string reason) =>
         reason.Contains(':', StringComparison.Ordinal) ? reason[(reason.IndexOf(':') + 1)..] : reason;
 
-    internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
-        repositoryRoot, "Golden", "Projection");
+    internal static string FixtureDirectory(string repositoryRoot) =>
+        ScribeResourceInputPaths.ProjectionDirectory(repositoryRoot);
 
     internal static T WithRepositoryRoot<T>(string repositoryRoot, Func<T> action)
     {
@@ -650,7 +650,7 @@ internal static class StatementProjectionFixtureLoader
              directory = directory.Parent)
         {
             if (File.Exists(Path.Combine(directory.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(directory.FullName, "Golden", "Projection")))
+                && Directory.Exists(ScribeResourceInputPaths.ProjectionDirectory(directory.FullName)))
                 return directory.FullName;
         }
         throw new DirectoryNotFoundException(

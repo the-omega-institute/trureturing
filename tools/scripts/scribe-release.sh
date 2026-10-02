@@ -21,28 +21,21 @@ dotnet --version >/dev/null || fail 2 'SdkUnavailable: install the SDK selected 
 [[ "$(git rev-parse --show-toplevel)" == "$ROOT" ]] || fail 2 'InvalidRepositoryRoot'
 untracked="$(git ls-files --others --exclude-standard)" || fail 2 'GitUntrackedFilesFailed'
 [[ -z "$untracked" ]] || fail 1 'UntrackedFiles: commit or remove untracked files before release'
-inputs="$(git ls-files --others -- Blueprint Golden/Projection)" || fail 2 'GitReleaseInputsFailed'
-[[ -z "$inputs" ]] || fail 1 'UntrackedReleaseInput: remove untracked or ignored files from Blueprint and Golden/Projection'
+export GIT_NO_REPLACE_OBJECTS=1
+git diff --cached --quiet HEAD -- || fail 1 'IndexNotAtHead: the index must match HEAD before release'
 SOURCE_COMMIT="$(git rev-parse --verify HEAD)" || fail 2 'SourceCommitUnavailable'
 [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || fail 2 'InvalidSourceCommit'
 DIRECTORY="$ROOT/Generated/scribe-release/$SOURCE_COMMIT"
-PATHS_FILE=''
 COMMIT_FILE=''
 TREE_FILE=''
-trap 'rm -f "$PATHS_FILE" "$COMMIT_FILE" "$TREE_FILE"' EXIT
-PATHS_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-paths.XXXXXX")" || fail 2 'DefinitionPathsTemporaryFileFailed'
+trap 'rm -f "$COMMIT_FILE" "$TREE_FILE"' EXIT
 COMMIT_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-commit.XXXXXX")" || fail 2 'SourceCommitTemporaryFileFailed'
 TREE_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-tree.XXXXXX")" || fail 2 'SourceTreeTemporaryFileFailed'
-export GIT_NO_REPLACE_OBJECTS=1
 git cat-file commit "$SOURCE_COMMIT" > "$COMMIT_FILE" || fail 2 'GitSourceCommitFailed'
 git ls-tree -r -z "$SOURCE_COMMIT" > "$TREE_FILE" || fail 2 'GitSourceTreeFailed'
 dotnet run --project "$PROJECT" --configuration Release -- \
     resources verify-source --source-commit "$SOURCE_COMMIT" --commit-from "$COMMIT_FILE" --tree-from "$TREE_FILE" \
   || fail "$?" 'SourceContentMismatch: disk bytes do not match source commit'
-tree_paths="$(git ls-tree -r --name-only "$SOURCE_COMMIT" -- Blueprint)" || fail 2 'GitDefinitionPathsFailed'
-while IFS= read -r path; do
-  case "$path" in *.scribe.cs) printf '%s\n' "$path" ;; esac
-done <<< "$tree_paths" > "$PATHS_FILE"
 
 if [[ ! -e "$DIRECTORY" && ! -L "$DIRECTORY" ]]; then
   if dotnet run --project "$PROJECT" --configuration Release -- \
@@ -53,7 +46,7 @@ if [[ ! -e "$DIRECTORY" && ! -L "$DIRECTORY" ]]; then
   fi
 fi
 if dotnet run --project "$PROJECT" --configuration Release -- \
-    resources verify-release --dir "$DIRECTORY" --source-commit "$SOURCE_COMMIT" --paths-from "$PATHS_FILE"; then
+    resources verify-release --dir "$DIRECTORY" --source-commit "$SOURCE_COMMIT" --tree-from "$TREE_FILE"; then
   :
 else
   fail "$?" 'VerificationFailed'
