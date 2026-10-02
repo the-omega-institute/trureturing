@@ -4,7 +4,7 @@ authors: trureturing contributors
 year: 2026
 title: Nonnormal index-72 PSL2(F71) cover for pure degree-(8,9) cycle packets
 doi: null
-url: https://github.com/the-omega-institute/trureturing/pull/12065
+url: https://github.com/the-omega-institute/trureturing/pull/12145
 claim: An explicit torsion-free nonnormal index-72 subgroup of the [4,9,3] orientation Coxeter group yields N=24 in the six-sector degree-(8,9) construction.
 license: citation-only
 triage: anchor
