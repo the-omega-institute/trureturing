@@ -38,9 +38,9 @@ inductive PrefixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k + 
 inductive SuffixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k + 1)) → Prop
   | one : SuffixSpine k k (leaf (Fin.last k))
   | peel {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k)
-      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork (leaf ⟨j,by omega⟩) t)
+      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork (leaf (⟨j,by omega⟩ : Fin (k + 1))) t)
   | peel_swap {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k)
-      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork t (leaf ⟨j,by omega⟩))
+      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork t (leaf (⟨j,by omega⟩ : Fin (k + 1))))
 
 /-- Exact child - swap freedom at all forks is built into the two spine predicates. -/
 def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k + 1))) : Prop :=
@@ -618,8 +618,18 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
     (∀ A : Finset (Fin (k + 1)), A.Nonempty → A ≠ Finset.univ →
       (capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4 ↔ SmallBlock A)) ∧
     (∀ i : Fin (k + 1), 0 < i.val → i.val < k →
-      capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4) := by
+      capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4) ∧
+    (∀ (t : TreeMessageRealization.Tree (Fin (k + 1))), Full t → leaves t = Finset.univ →
+      ∀ (m : Implementation (fun _ : Fin (k + 1) => Window)) (read : m.Message t → Bool),
+      Correct boolean t m read → 4 ≤ peak m t ∧
+        (peak m t ≤ 4 → ∃ j, 0 < j ∧ j < k + 1 ∧ ∃ l r,
+          PrefixSpine k j l ∧ SuffixSpine k j r ∧ (t = fork l r ∨ t = fork r l) ∧
+          height t = max j (k + 1 - j) ∧ (k + 2) / 2 ≤ height t)) ∧
+    (∀ t : TreeMessageRealization.Tree (Fin (k + 1)), DoubleComb t →
+      ∃ (m : Implementation (fun _ : Fin (k + 1) => Window)) (read : m.Message t → Bool),
+        Correct boolean t m read ∧ peak m t = 4 ∧ optimum boolean t = 4) := by
   classical
+  letI : DecidableEq (Fin (k + 1)) := Classical.decEq _
   have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
       capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4 := by
     have he : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val + 1) := by
@@ -646,6 +656,189 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
       unfold epsilon
       split_ifs <;> omega
     · exact le_of_eq (singleton_capacity i hi hik)
-  exact ⟨fun A hA hp => ⟨classify k hk A hA hp, sufficient A⟩, singleton_capacity⟩
+  have leaf_present (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (i : Fin (k + 1)) (hi : i ∈ leaves u) : leaf i ∈ subtrees u := by
+    induction u with
+    | nil => simp [Full] at hu
+    | node a l r hl hr =>
+      cases a with
+      | some j =>
+        obtain ⟨rfl,rfl⟩ := hu
+        have he : i = j := by simpa [leaves] using hi
+        subst i
+        simp [leaf,subtrees]
+      | none =>
+        have h : i ∈ leaves l ∨ i ∈ leaves r := by simpa [leaves] using hi
+        rcases h with h | h
+        · have hs := hl hu.1 h
+          simp [subtrees,hs]
+        · have hs := hr hu.2.1 h
+          simp [subtrees,hs]
+  have : Nonempty Window := ⟨.middle⟩
+  have lower (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (hall : leaves u = Finset.univ)
+      (m : Implementation (fun _ : Fin (k + 1) => Window)) (read : m.Message u → Bool)
+      (hm : Correct boolean u m read) : 4 ≤ peak m u := by
+    let i : Fin (k + 1) := ⟨1,by omega⟩
+    have hs : leaf i ∈ subtrees u := leaf_present u hu i (by simp [hall])
+    have hc := implementation_lower_bound boolean u hu m read hm (leaf i) hs
+    have he : leaves (leaf i) = {i} := by simp [leaves,leaf]
+    rw [he,singleton_capacity i (by simp [i]) (by dsimp [i]; omega)] at hc
+    exact hc.trans (Finset.le_sup hs)
+  have full_capacity : capacity (fun _ : Fin (k + 1) => Window) boolean (fun i => i ∈ (Finset.univ : Finset _)) ≤ 4 := by
+    have he : (Finset.univ : Finset (Fin (k + 1))) = interval k 0 (k + 1) := by
+      ext i
+      simp [interval, Nat.le_of_lt_succ i.isLt]
+    rw [he,(FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
+    have hd := (FirstRejectionCutCapacity.interval_data k 0 (k + 1) (by omega) le_rfl).1
+    norm_num [hd]
+    unfold epsilon
+    split_ifs <;> omega
+  have prefix_data (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
+      (h : PrefixSpine k j u) : 0 < j ∧ j ≤ k + 1 ∧ Full u ∧ leaves u = interval k 0 j ∧
+      (j < k + 1 → ∀ s ∈ subtrees u, capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4) := by
+    induction h with
+    | one =>
+      refine ⟨by omega,by omega,by simp [Full,leaf],?_,?_⟩
+      · ext i
+        simp only [leaves,leaf,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+        omega
+      · intro hj s hs
+        have he : s = leaf ⟨0,Nat.zero_lt_succ k⟩ := by simpa [subtrees,leaf] using hs
+        subst s
+        apply sufficient
+        left
+        refine ⟨1,by omega,hj,?_⟩
+        ext i
+        simp only [leaves,leaf,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+        omega
+    | @peel j u hj h ih | @peel_swap j u hj h ih =>
+      have hu := ih.2.2.1
+      have he := ih.2.2.2.1
+      have hd : Disjoint (leaves u) (leaves (leaf ⟨j,hj⟩)) := by
+        apply Finset.disjoint_left.mpr
+        intro i hi hleaf
+        have ei : i.val = j := by simpa [leaf,leaves,Fin.ext_iff] using hleaf
+        rw [he] at hi
+        simp only [interval,Finset.mem_filter,Finset.mem_univ,true_and] at hi
+        omega
+      have hh : leaves u ∪ leaves (leaf ⟨j,hj⟩) = interval k 0 (j + 1) := by
+        ext i
+        simp only [he,leaves,leaf,Finset.mem_union,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+        omega
+      all_goals refine ⟨by omega,by omega,?_,?_,?_⟩
+      all_goals try { simpa only [fork,Full] using And.intro hu (And.intro (by simp [Full,leaf]) hd) }
+      all_goals try { simpa only [fork,Full] using And.intro (by simp [Full,leaf]) (And.intro hu hd.symm) }
+      all_goals try { simpa only [fork,leaves,Finset.union_comm] using hh }
+      all_goals
+        intro hjn s hs
+        simp only [fork,subtrees,Finset.mem_insert,Finset.mem_union,leaf] at hs
+        have hc := ih.2.2.2.2 (by omega)
+        have hl : ∀ s ∈ subtrees (leaf ⟨j,hj⟩), capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4 := by
+          intro s hs
+          have es : s = leaf ⟨j,hj⟩ := by simpa [leaf,subtrees] using hs
+          subst s
+          simpa [leaves,leaf] using le_of_eq (singleton_capacity ⟨j,hj⟩ ih.1 (by change j < k; omega))
+        rcases hs with rfl | hs | hs
+        · apply sufficient
+          left
+          refine ⟨j+1,by omega,hjn,?_⟩
+          simpa only [fork,leaves,Finset.union_comm] using hh
+        · first | exact hc s hs | exact hl s hs
+        · first | exact hc s hs | exact hl s hs
+  have suffix_data (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
+      (h : SuffixSpine k j u) : j ≤ k ∧ Full u ∧ leaves u = interval k j (k + 1) ∧
+      (0 < j → ∀ s ∈ subtrees u, capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4) := by
+    induction h with
+    | one =>
+      refine ⟨le_rfl,by simp [Full,leaf],?_,?_⟩
+      · ext i
+        simp only [leaves,leaf,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_last]
+        omega
+      · intro hj s hs
+        have he : s = leaf (Fin.last k) := by simpa [subtrees,leaf] using hs
+        subst s
+        apply sufficient
+        right; left
+        refine ⟨k,hj,by omega,?_⟩
+        ext i
+        simp only [leaves,leaf,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_last]
+        omega
+    | @peel j u hj h ih | @peel_swap j u hj h ih =>
+      have hu := ih.2.1
+      have he := ih.2.2.1
+      have hd : Disjoint (leaves (leaf (⟨j,by omega⟩ : Fin (k + 1)))) (leaves u) := by
+        apply Finset.disjoint_left.mpr
+        intro i hleaf hi
+        have ei : i.val = j := by simpa [leaf,leaves,Fin.ext_iff] using hleaf
+        rw [he] at hi
+        simp only [interval,Finset.mem_filter,Finset.mem_univ,true_and] at hi
+        omega
+      have hh : leaves (leaf (⟨j,by omega⟩ : Fin (k + 1))) ∪ leaves u = interval k j (k + 1) := by
+        ext i
+        simp only [he,leaves,leaf,Finset.mem_union,Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+        omega
+      all_goals refine ⟨by omega,?_,?_,?_⟩
+      all_goals try { simpa only [fork,Full] using And.intro (by simp [Full,leaf]) (And.intro hu hd) }
+      all_goals try { simpa only [fork,Full] using And.intro hu (And.intro (by simp [Full,leaf]) hd.symm) }
+      all_goals try { simpa only [fork,leaves,Finset.union_comm] using hh }
+      all_goals
+        intro hjp s hs
+        simp only [fork,subtrees,Finset.mem_insert,Finset.mem_union,leaf] at hs
+        have hc := ih.2.2.2 (by omega : 0 < j + 1)
+        have hl : ∀ s ∈ subtrees (leaf (⟨j,by omega⟩ : Fin (k + 1))), capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4 := by
+          intro s hs
+          have es : s = leaf (⟨j,by omega⟩ : Fin (k + 1)) := by simpa [leaf,subtrees] using hs
+          subst s
+          simpa [leaves,leaf] using le_of_eq (singleton_capacity ⟨j,by omega⟩ hjp hj)
+        rcases hs with rfl | hs | hs
+        · apply sufficient
+          right; left
+          refine ⟨j,hjp,by omega,?_⟩
+          simpa only [fork,leaves,Finset.union_comm] using hh
+        · first | exact hc s hs | exact hl s hs
+        · first | exact hc s hs | exact hl s hs
+  have comb_data (u : TreeMessageRealization.Tree (Fin (k + 1))) (h : DoubleComb u) :
+      Full u ∧ leaves u = Finset.univ ∧
+      (∀ s ∈ subtrees u, capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4) := by
+    obtain ⟨j,hj,hjn,l,r,hl,hr,he⟩ := h
+    obtain ⟨hjp,hjb,hlf,hle,hlc⟩ := prefix_data j l hl
+    obtain ⟨hjb',hrf,hre,hrc⟩ := suffix_data j r hr
+    have hd : Disjoint (leaves l) (leaves r) := by
+      apply Finset.disjoint_left.mpr
+      intro i hi hi'
+      rw [hle] at hi
+      rw [hre] at hi'
+      simp only [interval,Finset.mem_filter,Finset.mem_univ,true_and] at hi hi'
+      omega
+    have hh : leaves l ∪ leaves r = Finset.univ := by
+      ext i
+      simp [hle,hre,interval, Nat.le_of_lt_succ i.isLt]
+      omega
+    rcases he with rfl | rfl
+    all_goals refine ⟨?_,?_,?_⟩
+    all_goals try { simpa only [fork,Full] using And.intro hlf (And.intro hrf hd) }
+    all_goals try { simpa only [fork,Full] using And.intro hrf (And.intro hlf hd.symm) }
+    all_goals try { simpa only [fork,leaves,Finset.union_comm] using hh }
+    all_goals
+      intro s hs
+      simp only [fork,subtrees,Finset.mem_insert,Finset.mem_union] at hs
+      rcases hs with rfl | hs | hs
+      · simpa only [fork,leaves,Finset.union_comm,hh] using full_capacity
+      · first | exact hlc hjn s hs | exact hrc hj s hs
+      · first | exact hlc hjn s hs | exact hrc hj s hs
+  have realization (u : TreeMessageRealization.Tree (Fin (k + 1))) (h : DoubleComb u) :
+      ∃ (m : Implementation (fun _ : Fin (k + 1) => Window)) (read : m.Message u → Bool),
+        Correct boolean u m read ∧ peak m u = 4 ∧ optimum boolean u = 4 := by
+    obtain ⟨hu,hall,hcaps⟩ := comb_data u h
+    obtain ⟨m,read,hm,hsharp,hpeak,hopt⟩ := simultaneous_realization boolean u hu hall
+    have hp : peak m u ≤ 4 := by
+      rw [hpeak,hopt]
+      exact Finset.sup_le hcaps
+    have he : peak m u = 4 := le_antisymm hp (lower u hu hall m read hm)
+    exact ⟨m,read,hm,he,hpeak.symm.trans he⟩
+  exact ⟨fun A hA hp => ⟨classify k hk A hA hp, sufficient A⟩, singleton_capacity,
+    fun t ht hall m read hm => ⟨lower t ht hall m read hm,
+      rigidity_from_implementation k hk t ht hall m read hm⟩, realization⟩
 
 end D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity
