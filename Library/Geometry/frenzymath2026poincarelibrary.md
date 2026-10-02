@@ -2625,3 +2625,73 @@ Cusps, orientation components and covers, and the nonorientable
 endpoint remain in scope. Full finite-volume Mostow-Prasad remains
 active and incomplete; the linked escape audit is unfinished and
 registration remains paused.
+
+
+### Actual infinity-ray stabilizer: Euclidean horizontal normal form
+
+For an actual isometry k of the ORIGINAL H3 and a real scalar a,
+assume its actual Lorentz action sends the SAME original infinity
+frame (1,0,0,1) to a times that frame. The previously checked result
+derives a > 0 and height(k p)=a height(p) at every point. Under this
+same frame-fixing hypothesis, the remaining horizontal action is now
+classified: there are a single complex b and a single unit complex u
+such that ONE of the following alternatives holds at EVERY point
+p=(z,t):
+
+horizontal(k p) = b + a u z,
+
+or
+
+horizontal(k p) = b + a u conjugate(z).
+
+Together with the height law, these are the actual coordinate normal
+forms (b+a u z,a t) and (b+a u conjugate(z),a t). The branch is global;
+it is not selected separately at each point. No horizontal similarity,
+linearity, surjectivity, positivity or height law is supplied as an
+additional premise.
+
+The argument uses the original Lorentz-kernel/cosh-distance formula
+for arbitrary actual points. Compare the points (z,t) and (z,1):
+the known image heights force the squared horizontal displacement
+between their images to vanish. Thus the horizontal map q(z), defined
+at height 1, is independent of input height. Comparing (z,1) and
+(w,1) gives dist(q(z),q(w))=a dist(z,w). Actual surjectivity of k,
+applied to (w,a), and the height law yield surjectivity of q.
+Consequently a inverse times q is an actual surjective Euclidean
+isometry of the complex plane. Existing Mathlib Mazur-Ulam constructs
+its real linear isometry after subtracting its value at zero;
+Mathlib's linear_isometry_complex and rotation_apply give the global
+rotation or rotation-after-conjugation alternative. This is classical
+reuse and construction, without a novelty claim.
+
+The exact application to an arbitrary actual H3 isometry e is also
+checked: the preceding actual two-family word constructor supplies
+g in the SAME algebraically generated subgroup H and a > 0 with
+L(g e)(1,0,0,1)=a(1,0,0,1). The SAME g e then has both the every-point
+height law and one of the two global horizontal formulas above, with
+one b and one u. This gives a coordinate normal form after an actual
+generated word; it does not identify H with the whole isometry group
+or its orientation-preserving component.
+
+Two serial scoped cache-guarded transient Lean checks exited zero:
+the horizontal-classification module has five printed axiom closures
+and its exact universal word application has one. All six use only
+propext, Classical.choice and Quot.sound. Five unusedSimpArgs style
+warnings remain unsuppressed in the classification check; the exact
+application has none. Failed checks are excluded in full. The
+original carrier, metric, topology, Lorentz frame and default compiler
+resources are retained. All new Lean remains under ignored .lake;
+only this research note is intended tracked delivery.
+
+This appendix advances the earlier unfinished horizontal-action
+classification. A converse stabilizer/group identification,
+orientation-component identification and generation, invariant-function
+constancy and flow ergodicity remain unproved. No lattice boundary map
+or ambient conjugator for the SAME arbitrary-h induced deck isomorphism
+has been constructed. Its geometric preservation and the prescribed
+homotopy equivalence's isometric representative still need proof.
+Cusps, orientation components and covers, and the nonorientable
+finite-volume endpoint remain in scope. Full Mostow-Prasad remains
+active and incomplete. The escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+Registration remains paused under CLAUDE section 3.9.
