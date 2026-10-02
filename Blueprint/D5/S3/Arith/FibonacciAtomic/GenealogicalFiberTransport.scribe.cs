@@ -36,7 +36,7 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("All a,b,n are natural numbers, including zero. F(v) is the actual tree fiber, "
                         + "N(v) its Catalan and binomial expression, P_n(v,y) the existing preimage-sum pushforward applied to the actual fiber map and source uniform mass, and U(v,y) "
-                        + "the uniform mass. M(n,v) denotes M^n v and rho(n,t) denotes rho^n t. TV(v,n) compares the pushed and uniform target masses. I_n(v) is the image of the actual fiber map rho_v^n. Every sum below "
+                        + "the uniform mass. M(n,v) denotes M^n v and rho(n,t) denotes rho^n t. TV(v,n) compares the pushed and uniform target masses. I_n(v) is the image of the actual fiber map rho_v^n. Every displayed sum "
                         + "ranges over the whole target fiber F(M^n v).")),
                     Paragraph(Text("The substitution is injective because no image is the leaf alpha. The image of a beta leaf "
                         + "is the pair (beta,alpha), which cannot be the image of an internal node: its right child alpha "

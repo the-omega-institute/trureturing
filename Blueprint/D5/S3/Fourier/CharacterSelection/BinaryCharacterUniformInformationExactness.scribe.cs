@@ -74,8 +74,7 @@ internal sealed class BinaryCharacterUniformInformationExactnessDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The deterministic profile decomposition subtracts the realized profile "
-                        + "entropy from the uniform source entropy. This is the second boxed "
-                        + "conclusion of FPOD Corollary 90.1."))),
+                        + "entropy from the uniform source entropy."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zero-character-family-information-bits"),
@@ -119,9 +118,9 @@ internal sealed class BinaryCharacterUniformInformationExactnessDocument
         Formula mass = new Formula.Power(Call("card", F.Id("X")), Seq(Minus, D(1)));
         return Disp(Seq(Forall, Sp, F.Id("X"), Comma, Sp,
             Call("Finite", F.Id("X")), Sp, Land, Sp, Call("Nonempty", F.Id("X")),
-            Sp, Implies, Sp, Open, Forall, Sp, F.Id("x"), InMacro, F.Id("X"), Comma, Sp,
+            Sp, Implies, Sp, Open, Forall, Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("X"), Comma, Sp,
             D(0), Leq, mass, Close, Sp, Land, Sp,
-            Sum, Underscore, Grp(Seq(F.Id("x"), InMacro, F.Id("X"))), mass, Eq, D(1)));
+            Sum, Underscore, Grp(Seq(F.Id("x"), Sp, InMacro, Sp, F.Id("X"))), mass, Eq, D(1)));
     }
 
     private static Formula Equal(Formula left, Formula right) =>
