@@ -29,6 +29,31 @@ noncomputable def zeroRank (p : ℕ) : ℕ := sInf {d : ℕ | 0 < d ∧ p ∣ Na
 noncomputable def recoveryLimit (n : ℕ) : ℕ :=
   sInf (zeroRank '' {p : ℕ | p.Prime ∧ p ∣ n})
 
+theorem prime_zero_rank_facts : ∀ p : ℕ, p.Prime →
+    0 < zeroRank p ∧ p ∣ Nat.fib (zeroRank p) ∧
+      ∀ d, 0 < d → p ∣ Nat.fib d → zeroRank p ≤ d := by
+  intro p hp
+  let : NeZero p := ⟨hp.ne_zero⟩
+  let U : ZMod p × ZMod p → ZMod p × ZMod p := fun x => (x.2, x.1 + x.2)
+  have hi : Function.Injective U := by
+    intro x y h
+    have h₁ := congrArg Prod.fst h
+    have h₂ := congrArg Prod.snd h
+    dsimp [U] at h₁ h₂
+    exact Prod.ext (add_right_cancel (h₁ ▸ h₂)) h₁
+  let C : ℕ × ℕ → ZMod p × ZMod p := fun x => (x.1, x.2)
+  have hc : Function.Semiconj C (fun x : ℕ × ℕ => (x.2, x.1 + x.2)) U := by
+    intro x
+    simp [C, U]
+  obtain ⟨d, hd, hreturn⟩ := hi.mem_periodicPts (0, 1)
+  have hz : (Nat.fib d : ZMod p) = 0 := by
+    have h := congrArg Prod.fst (hc.iterate_right d (0, 1))
+    simpa [Nat.fib, C, hreturn.eq] using h
+  have hex : Set.Nonempty {d : ℕ | 0 < d ∧ p ∣ Nat.fib d} :=
+    ⟨d, hd, (ZMod.natCast_eq_zero_iff _ _).mp hz⟩
+  have hm := Nat.sInf_mem hex
+  exact ⟨hm.1, hm.2, fun d hd hz => Nat.sInf_le ⟨hd, hz⟩⟩
+
 /-- The exact maximum is attained by consecutive time labels, for every nontrivial modulus. -/
 theorem pairwise_recovery_maximum (n : ℕ) (hn : 2 ≤ n) :
     PairwiseRecovery n (Finset.range (recoveryLimit n)) ∧
@@ -36,30 +61,7 @@ theorem pairwise_recovery_maximum (n : ℕ) (hn : 2 ≤ n) :
   classical
   have hn0 : n ≠ 0 := by omega
   let : NeZero n := ⟨hn0⟩
-  have ranks : ∀ p : ℕ, p.Prime →
-      0 < zeroRank p ∧ p ∣ Nat.fib (zeroRank p) ∧
-        ∀ d, 0 < d → p ∣ Nat.fib d → zeroRank p ≤ d := by
-    intro p hp
-    let : NeZero p := ⟨hp.ne_zero⟩
-    let U : ZMod p × ZMod p → ZMod p × ZMod p := fun x => (x.2, x.1 + x.2)
-    have hi : Function.Injective U := by
-      intro x y h
-      have h₁ := congrArg Prod.fst h
-      have h₂ := congrArg Prod.snd h
-      dsimp [U] at h₁ h₂
-      exact Prod.ext (add_right_cancel (h₁ ▸ h₂)) h₁
-    let C : ℕ × ℕ → ZMod p × ZMod p := fun x => (x.1, x.2)
-    have hc : Function.Semiconj C (fun x : ℕ × ℕ => (x.2, x.1 + x.2)) U := by
-      intro x
-      simp [C, U]
-    obtain ⟨d, hd, hreturn⟩ := hi.mem_periodicPts (0, 1)
-    have hz : (Nat.fib d : ZMod p) = 0 := by
-      have h := congrArg Prod.fst (hc.iterate_right d (0, 1))
-      simpa [Nat.fib, C, hreturn.eq] using h
-    have hex : Set.Nonempty {d : ℕ | 0 < d ∧ p ∣ Nat.fib d} :=
-      ⟨d, hd, (ZMod.natCast_eq_zero_iff _ _).mp hz⟩
-    have hm := Nat.sInf_mem hex
-    exact ⟨hm.1, hm.2, fun d hd hz => Nat.sInf_le ⟨hd, hz⟩⟩
+  have ranks := prime_zero_rank_facts
   have hprime : Set.Nonempty {p : ℕ | p.Prime ∧ p ∣ n} :=
     ⟨n.minFac, Nat.minFac_prime (by omega), Nat.minFac_dvd n⟩
   obtain ⟨p, ⟨hp, hpn⟩, hpr⟩ := Nat.sInf_mem (hprime.image zeroRank)
