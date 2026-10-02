@@ -13,6 +13,36 @@ public sealed class ScribeScriptCorpusTests
     public ScribeScriptCorpusTests(ITestOutputHelper output) => this.output = output;
 
     [Fact]
+    public void IndependentFullScriptPacksMatchAssemblyAndDigest()
+    {
+        var root = FindRepositoryRoot();
+        var directory = Directory.CreateTempSubdirectory("scribe-script-pack-");
+        try
+        {
+            var firstPath = Path.Combine(directory.FullName, "first.zip");
+            var secondPath = Path.Combine(directory.FullName, "second.zip");
+            var firstResult = ScribeResourceScriptPacker.Write(root, firstPath);
+            Assert.Empty(firstResult.Failures);
+            var secondResult = ScribeResourceScriptPacker.Write(root, secondPath);
+            Assert.Empty(secondResult.Failures);
+            var first = ScribeResourcePack.Open(firstPath);
+            var second = ScribeResourcePack.Open(secondPath);
+            var definitions = DocumentAssembly.Definitions;
+            Assert.Equal(definitions.Length, first.Manifest.EntryCount);
+            Assert.Equal(definitions.Length, second.Manifest.EntryCount);
+            Assert.Equal(first.Manifest.TotalSha256, second.Manifest.TotalSha256);
+            foreach (var definition in definitions)
+            {
+                var gid = definition.Document.Header.Gid.Value;
+                Assert.Equal(ScribeResourceCodec.Encode(definition), first.EncodedBytes(gid).ToArray());
+                Assert.Equal(ScribeResourceCodec.Encode(definition), second.EncodedBytes(gid).ToArray());
+            }
+            output.WriteLine($"script pack definitions={definitions.Length}; hostFailures={firstResult.Failures.Length + secondResult.Failures.Length}; mismatches=0; firstSha256={first.Manifest.TotalSha256}; secondSha256={second.Manifest.TotalSha256}; firstFileBytes={new FileInfo(firstPath).Length}; secondFileBytes={new FileInfo(secondPath).Length}");
+        }
+        finally { directory.Delete(recursive: true); }
+    }
+
+    [Fact]
     public void EveryDocumentDefinitionMatchesItsScript()
     {
         var root = FindRepositoryRoot();
