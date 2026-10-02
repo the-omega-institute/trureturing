@@ -5,9 +5,10 @@ year: 2024
 title: Stack-sorting with Stacks Avoiding Vincular Patterns
 doi: 10.1016/j.disc.2025.114834
 url: https://arxiv.org/abs/2410.17057v1
-claim: "Conjectures 4.14 and 5.2 on the maximum and second-largest preimage counts of vincular-pattern-avoiding stack-sorting maps."
+claim: "Conjectures 4.14 and 5.2 on preimage counts of vincular-pattern-avoiding stack-sorting maps, and Conjecture 3.30 on the Schröder enumeration of a sorting class."
 strata_touched:
   - D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations
+  - D5/S3/Combinatorics/VincularStack/VincularStackSort
 license: citation-only
 triage: anchor
 ---
@@ -23,6 +24,15 @@ Conjecture 4.14, Section 4.1.4, printed page 17:
 
 > For $n\ge 2$, it holds that
 > $$\max_{\pi\in\mathfrak{S}_n}|SC_{1\underline{23}}^{-1}(\pi)|=\max_{\pi\in\mathfrak{S}_n}|SC_{3\underline{21}}^{-1}(\pi)|=2^{n-2}.$$
+
+Conjecture 3.30, Section 3.2, printed page 11:
+
+> The sorting class of $SC_{\underline{23}1}$ is enumerated by $|\mathrm{Sort}_n(SC_{\underline{23}1})| = S_{n-1}$.
+
+Here $S_m$ is the large Schröder number (OEIS A006318) and $\mathrm{Sort}_n(SC_\sigma)$ is the set of
+permutations of length $n$ that $s\circ SC_\sigma$ maps to the identity, i.e. whose image under $SC_\sigma$
+avoids 231. Proposition 3.29 on the same page gives $SC_{\underline{23}1}(25314)=54132$ and
+$SC_{\underline{23}1}(2413)=3142$; the right-greedy rule below reproduces both values.
 
 Conjecture 5.2, Section 5, printed page 20:
 
@@ -56,6 +66,7 @@ is ASSUMED-UNVERIFIED. The named statements here are fixed to arXiv v1.
 - URL: https://arxiv.org/abs/2410.17057v1
 - PDF: https://arxiv.org/pdf/2410.17057v1
 - DOI of the published version: https://doi.org/10.1016/j.disc.2025.114834
+- Conjecture 3.30: Section 3.2, printed page 11.
 - Conjecture 4.14: Section 4.1.4, printed page 17.
 - Conjecture 5.2: Section 5, printed page 20.
 - Vincular containment: Introduction, printed page 1.
