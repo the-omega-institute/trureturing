@@ -357,6 +357,44 @@ for j in range(2):
     print(j, lower[j], upper[j])
 ```
 
+## The actual even projection at $c=9$
+
+The existing Appendix C projection and block-error formulas can be applied at the new width after checking their parameter dependencies. This supplies explicit projection, cross and complementary-block inputs for (A4); the retained sign still requires proof.
+
+Let $P_N$ be the full complex Legendre projection onto degrees below $N=448$. On the even Hilbert space take its restriction $P$ and the orthonormal embedding $E$ with columns
+
+$$
+E_j(u)=\sqrt{\frac{4j+1}{2a}}P_{2j}(u/a),\qquad 0\le j<224,
+\qquad a=\log3,
+$$
+
+where $P_{2j}$ is the standard Legendre polynomial. Thus $P=EE^*$ is the actual even projection. The same ellipse of radius $3/2$ has imaginary semiaxis $5/12$. Appendix C's Chebyshev and best-approximation estimate, with the new width, gives
+
+$$
+\sup_{|t|\le256}\|(I-P_N)e^{itu}\|^2
+\le72a\exp((640/3)a)(2/3)^{896}
+<\frac{396}{5}(68/25)^{235}(2/3)^{896}<2^{-178}.
+\tag{A8}
+$$
+
+Here $a<11/10$, $(640/3)(11/10)=704/3<235$ and the source's $e<68/25$ justify the outward comparison; the last step is exact rational arithmetic. Use $r=2^{-89}$, rather than the old-width $2^{-95}$. On the even space the band vectors are $w_t=\Pi_{\rm even}e^{itu}=\cos(tu)$, so
+
+$$
+\|(I-P)w_t\|\le\|(I-P_N)e^{itu}\|<r,
+\qquad \|w_t\|\le\sqrt{2a}<3/2.
+$$
+
+This does not assert a small residual for $e^{itu}$ under the even projection on the full Hilbert space.
+
+The source pole estimate also has explicit width conditions. They remain valid: $a/2<1$, $e^{a/2}<2$ and $\sqrt{2a}<3/2$. Degree-$447$ Taylor approximation of $a_\pm(u)=e^{\pm u/2}$ gives $\|(I-P_N)a_\pm\|<3/448!$ and $\|a_\pm\|<3$. The same rank-one difference estimate therefore yields
+
+$$
+\|K_{\rm pole}-P_NK_{\rm pole}P_N\|
+<36/448!\le36/2^{447}<2^{-440}=:p.
+$$
+
+Restriction gives this upper allowance on the even space. Its pole operator is $2|\cosh(u/2)\rangle\langle\cosh(u/2)|$, hence positive there. The pole allowance $p$ is an upper-error input, not a negative-complement charge.
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
