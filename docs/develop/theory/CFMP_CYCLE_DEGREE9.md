@@ -14,9 +14,10 @@ edge has degree 8 and each high quotient edge has degree 9. Then the prescribed
 triangulation has a nondegenerate hyper-ideal length vector with zero cone
 curvature at every quotient edge.
 
-No explicit face-pairing is asserted here; the theorem is conditional on the
-stated manifold and incidence hypotheses. It is not the unrestricted CFMP
-minimum-eight theorem.
+The prescribed-triangulation theorem assumes the stated manifold and incidence
+hypotheses. The finite Coxeter-sector construction below proves their
+non-vacuity without claiming an explicit minimal face-pairing or the
+unrestricted CFMP minimum-eight theorem.
 
 ## Role separation and necessary topology counts
 
@@ -34,8 +35,8 @@ center endpoint and contributes one link vertex. Hence
 `chi(S)=-N_S/6=2-2*g_S`, so `N_S=12*(g_S-1)`.
 Globally the low-edge count is `3*N/8`, which is integral and forces `8|N`.
 Summing the center counts gives `12|N`; thus `24|N`.
-These are necessary conditions only. No sufficient pairing construction or
-non-vacuity is claimed.
+These counts are necessary conditions only; the construction below supplies
+existence at some finite count, without asserting that N=24 is attained.
 
 ## Cosine and monotonicity
 
@@ -144,7 +145,9 @@ Choose one such sector Q. Label its four original facets A,B,C,D, where A is a p
 m_AB=4, m_BC=9, m_CD=3, m_AC=m_AD=m_BD=2.
 The low angle is unchanged π/4, the high angle is bisected to π/9, and adjacent symmetry planes meet at π/3. Q is a compact doubly truncated Coxeter orthoscheme. It has hyperideal endpoints ABC and BCD, and finite vertices ABD and ACD. The latter are respectively a low-edge midpoint and the base-face center; they are subdivision points only.
 
-Write a,b,c,d for the four facet reflections, U for the ABC truncation face, V for the BCD truncation face, and K=<c,d>≅S3 (order 6). The six chambers kQ tile T by construction. One can also verify the coarsening by face stabilizers:
+Write a,b,c,d for the four facet reflections, U for the ABC truncation face, V for the BCD truncation face, and K=<c,d>≅S3 (order 6). The six chambers kQ tile T by construction. One can also verify the coarsening by stabilizers of the supporting planes
+(or, equivalently, the corresponding complete faces of T), not of the
+individual Q-face polygons:
 - A: Stab_K(A)=K, since a commutes with c,d. Six sectors give one base hexagon
 - B: Stab_K(B)=<d>. The three K-translates of its supporting face each comprise B∪dB, giving three side hexagons
 - U: Stab_K(U)=<c>. Three peripheral truncation triangles each comprise U∪cU
@@ -158,8 +161,7 @@ U is a triangle with angles (π/4,π/9,π/2); U and cU join along C to a
 triangle with angles (π/4,π/4,2π/9), and K gives three peripheral copies.
 V is a triangle with angles (π/9,π/3,π/2); its six K sectors give one
 equilateral triangle of angle 2π/9. Thus KQ=T has four outer hexagons and
-four truncation triangles. Marshall's distinct P(q) prism construction is not
-this chamber: his 24-prism count cannot be applied to Q.
+four truncation triangles.
 
 ## Finite quotient and whole-face pairings
 
@@ -177,9 +179,10 @@ the omitted facets form smooth totally geodesic boundary patches.
 The development is a manifold with totally geodesic boundary. At interior points, the rank-two dihedral cycles and the spherical rank-three groups <a,b,d> (order 16), <a,c,d> (order 12) give balls. At a truncation face, its incident reflections preserve its supporting plane and tile it by hyperbolic triangles, giving half-balls. In particular no pleated boundary or singular finite vertex remains.
 
 Let \(W^+\) be the orientation-preserving index-two subgroup.  It has a
-finite-index torsion-free subgroup \(\Gamma\) by Selberg's lemma (or take the
-explicit mod-17 kernel audited in `verify_cycle9_coxeter_local.py` and
-intersect it with \(W^+\)).  The quotient \(M=\Omega/\Gamma\) is compact,
+finite-index torsion-free subgroup \(\Gamma\) by Selberg's lemma: W is a
+finitely generated characteristic-zero linear reflection group, and the
+intersection of any torsion-free finite-index subgroup with \(W^+\) has the
+required properties.  The quotient \(M=\Omega/\Gamma\) is compact,
 connected and orientable.  Its T-blocks are indexed by
 \(\Gamma\backslash W/K\).  Every K-orbit has six chambers: Γ has trivial
 intersection with every conjugate of finite K.
@@ -198,14 +201,18 @@ No further sectors are identified in the Γ quotient: an edge stabilizer in the 
 
 The two ideal-vertex types stay separate under the full face maps. The center truncation triangle has angles (2π/9,2π/9,2π/9); every peripheral triangle has (π/4,π/4,2π/9). All truncation sides are paired because they lie on paired original hexagons. Their vertices have total angle 2π by the edge-link check. Thus each boundary component is a closed hyperbolic surface. Orientation is inherited from Γ<W⁺. Compactness and Gauss–Bonnet give genus at least two for every component.
 
-Collapsing each boundary component gives an ideal vertex of the usual ideal triangulation of M. This proves every incidence/manifold hypothesis of the degree-(8,9) packet theorem.
+Collapsing each boundary component gives the end-compactification of the
+usual topological ideal triangulation of the interior of M. Removing the
+ideal vertices recovers the interior, while truncating them recovers M.
+The geometric tetrahedra are strictly hyperideal, not metric ideal.
+This proves every incidence/manifold hypothesis of the degree-(8,9) packet theorem.
 
 ## Sources and scope
 
 - Luo–Yang, "Volume and rigidity of hyperbolic polyhedral 3-manifolds," Proposition 4.1 (existence and uniqueness of a strictly hyperideal tetrahedron from positive angles with vertex sums <π): https://arxiv.org/html/1404.5365v2#S4.SS1
 - T. H. Marshall, "Truncated tetrahedra and their reflection groups," J. Austral. Math. Soc. 64 (1998), 54–72, pp. 58–60 (Poincare reflection presentation), pp. 64–65 (open/truncated reflection groups and torsionfree subgroups), pp. 69–70 (chamber coarsening/manifold construction): https://doi.org/10.1017/S1446788700001294
 - Felikson--Tumarkin, *On hyperbolic Coxeter polytopes with mutually intersecting facets*, arXiv:math/0604248v3 (intro: integer-submultiple dihedral angles give a discrete reflection tiling): https://arxiv.org/abs/math/0604248
-- Selberg's lemma: finitely generated characteristic-zero linear groups have finite-index torsionfree subgroups. No effective index bound is claimed. The optional mod-17 reflection-matrix kernel is independently checked by `verify_cycle9_coxeter_local.py`.
+- Selberg's lemma: finitely generated characteristic-zero linear groups have finite-index torsionfree subgroups. No effective index bound is claimed.
 - The six-sector grouping, full-face adjacency, and explicit (8,9) edge count are the argument here, not a claim that Marshall stated this mixed packet.
 
 The direct Coxeter-chamber quotient without coarsening has degree 2m, not m. It fails for odd degree 9. The present construction avoids that failure by two Q-sectors per high edge, one per low edge, and does not identify sectors via torsion.
