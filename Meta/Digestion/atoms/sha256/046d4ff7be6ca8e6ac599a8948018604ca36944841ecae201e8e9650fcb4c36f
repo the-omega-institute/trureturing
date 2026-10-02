@@ -1,0 +1,20 @@
+**定理 302.3（同纤维反差族的两个正 Robin 余量）。** 假设302.1成立，并固定定理302.2中的 $C>0$。则
+\[
+\log A_L\sim\tfrac34m_L\sim\tfrac94L,
+\qquad U_{A_L}=E\bigl(\log m_L-\tfrac12\log2\bigr)+o(1),
+\tag{302.16}
+\]
+\[
+\Delta(A_L)\longrightarrow E\log\frac3{2\sqrt2}>0.
+\tag{302.17}
+\]
+同一纤维的另一个整数族满足
+\[
+\log H_L\sim x_L,
+\qquad U_{H_L}=E\bigl(\log x_L-\tfrac12\log2\bigr)+o(1),
+\qquad
+\Delta(H_L)\longrightarrow\tfrac E2\log2>0.
+\tag{302.18}
+\]
+所以这两族充分大时都满足严格 Robin 不等式。它们的权重相差无界与此结论同时成立。
+
