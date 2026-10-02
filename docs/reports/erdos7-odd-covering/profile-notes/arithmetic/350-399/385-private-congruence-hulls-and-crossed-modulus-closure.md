@@ -15296,3 +15296,103 @@ To check this whole rectangle, consider any such source point. Every q-free owne
 Each point in this rectangle had BOTH its collision owner and at least one q-free owner from B_h, by AS1. Consequently it belongs to the original private region of NONE of the deleted originals. Thus AS9 exhibits actual joint deletion liabilities that are absent from the union of the deleted classes' individual original private regions. This is a nonempty rectangle since0 belongs to C and R_o is nonempty. Any proposed joint replacement must cover this rectangle and the rest of E; covering the separate old private regions is insufficient.
 
 The numerical height alternative and full-private-root exclusion above are forced consequences of losing both complete altered children. They do not bound the supplier family's total size or cofactor values, do not identify its cofactor APs with a complete original deletion obligation, and do not make a fresh-label repair cheaper than the original family. No strict EB1 descent is established. If at least one altered child survives in Y_*, AS1 does not hold and these lost-demand conclusions are not available.
+
+## 123. Whole private donor obligations can be reassigned to spare original labels
+
+This is a concrete consumer of PH1, PH3--PH4, PI10, AD9 and the existing finite Hall interface. The complete obligations and actual label inventory determine the matching; no general matching or set-cover theorem is added.
+
+Keep the one all-concentrated EB1 source of §118. For each surviving q-bearing original d, let F_d be its COMPLETE stripped cylinder on Y, and let Ptilde_d be its COMPLETE original private trace there. All actual phases and all original exponent heights are retained. Use AD9 label by label: disjoint original-label menus, each covering the same entire Y, produce the fixed enclosing APs at different output p-roots. Do not replace this by separately optimized sources or individual witnesses.
+
+### An extra cover can be assembled by transferring indispensable labels
+
+Let J_free be the f=q-|T| collision-free first-q roots. The complete original batch B_j at each j in J_free covers all of Y. Choose donor subsets D_j subset B_j so that, within each root j, their COMPLETE stripped cylinders are pairwise disjoint. Taking at most one donor per root always meets this requirement; a chain of comparable original labels at one root also does, by original comparable-class disjointness. Empty donor subsets are allowed.
+
+Write D_don for their union. Require that their full cylinders cover Y:
+
+    union_(d in D_don) F_d = Y.                       (LA1)
+
+Let E_spare consist of surviving noncollision original labels at roots outside J_free. Form the actual donor-to-spare graph by
+
+    d is adjacent to e iff Ptilde_d subset F_e.        (LA2)
+
+If this graph has a matching saturating D_don, then the surviving labels contain f+1 pairwise label-disjoint covers of Y. In particular, when f=k-1 this gives the strict whole-cover descent forbidden by EB1.
+
+Here is the source check, rather than a new Hall proof. For a free-root batch, removing D_j leaves exactly
+
+    union_(d in D_j) Ptilde_d                         (LA3)
+
+uncovered on Y. Whole batch coverage and pairwise disjoint donor cylinders ensure that a newly missed point belongs to exactly one removed original; hence it was private inside that root batch. On the actual §118 demand all q-free originals are absent, and original labels at other q-roots cannot own that same source. Thus this is precisely its complete ORIGINAL private trace. LA3 is PI10's existing argument on the fixed original root source.
+
+Replace each donor d in its old batch by its matched e. LA2 repairs the entire LA3 obligation. Each resulting batch still covers all of Y. The donors themselves form the additional cover by LA1. The menus are label-disjoint: donor labels were removed, each spare is used only once, and no spare belonged to an old free-root batch. The actual transport is AD9 applied label by label. RS1 fixes one old root per leaf; the following application permits a menu to mix old roots without duplicating a numerical label.
+
+Assign k disjoint menus to the actual first-p roots r in K. For each original d=q^a u assigned to r, write its original q-phase as j_d+q*beta_d modulo q^a and insert the one enclosing AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                  (LA5)
+
+At any point (y,x) of the exact demand Y times R_o, the first-p root of x chooses a menu. Its full-cylinder coverage supplies an original d containing the SAME y after stripping its first-q root. The literal source is L_(j_d)(y,x), and LA5 covers the output point. This does not require the chosen original root to be constant across the menu.
+
+The map d -> p*d/q is injective. If a>=2, its image still has a q factor and cannot collide with a retained q-free label. If a=1, CP1 confines any collision to C_col, whose labels were excluded. The retained q-free originals cover the exact complement of Y times R_o. Each surviving selected original is used at most once, so at least k menus give a whole cover with at most N-(t+1) classes. For f=k-1 the augmented f+1 menus therefore contradict EB1.
+
+One spare ROOT may supply several different spare LABELS to different output roots. This is the strict extra freedom absent from the root-disjoint safe-group criterion.
+
+### The matching edges are exact arithmetic hull tests
+
+Identify Y with its actual CRT subset of the reduced own-color carrier of period
+
+    M = 3^H * q^(B-1) * product_(ell in S_i minus {q}) ell^H_ell.
+
+For d, choose y_d in its nonempty complete trace Ptilde_d, and define its complete projected congruence hull Gamma_d^* by the PH3 construction on this carrier. For e=q^a u, its stripped numerical modulus is m_e=e/q and its actual stripped phase beta_e is fixed by the literal q-tail and original u-phase. PH4 gives the exact edge test
+
+    Ptilde_d subset F_e
+      iff m_e divides Gamma_d^*
+          and y_d = beta_e modulo m_e.               (LA4)
+
+This uses the whole private trace, not a chosen-point incidence. All m_e divide the same actual M. The existing finite Hall theorem therefore converts existence of the required matching into its usual inequalities on THESE original labels.
+
+Consequently an EB1 source with f=k-1 forbids a saturating LA2 matching for every donor selection satisfying LA1 and the stated same-root disjointness. Such a selection must have a nonempty Hall-deficient donor subset. This is a conditional original-inventory obstruction, not a proof that suitable donors always exist or that the Hall inequalities hold.
+
+### A literal finite AP control separates this from root grouping
+
+The following controlled local source shows that the extra label freedom is real. It is NOT an EB1 whole cover of the integers: it asserts neither global coverage nor divisor closure nor the actual prime-private color hypotheses.
+
+Take q=7 and let Y consist of three actual CRT points a,b,c. Their coordinates are
+
+| point | modulo 27 | modulo 11 | modulo 13 | modulo 17,19,23,29,31 |
+| --- | ---: | ---: | ---: | --- |
+| a | 1 | 1 | 2 | all 1 |
+| b | 10 | 1 | 1 | all 1 |
+| c | 19 | 2 | 1 | all 1 |
+
+All classes below are single actual APs, specified by their first-7 root and their other CRT conditions. Factorized numerical labels remain distinct odd nonunits.
+
+| root | numerical label | other conditions | complete trace on Y |
+| ---: | --- | --- | --- |
+| 0 | 7 | none | Y |
+| 4 | 3*7 | 1 modulo 3 | Y |
+| 5 | 9*7 | 1 modulo 9 | Y |
+| 3 | 27*7 | 10 modulo 27 | {b} |
+| 1 | 7*11 | 1 modulo 11 | {a,b} |
+| 1 | 7*13 | 1 modulo 13 | {b,c} |
+| 2 | 7*13*17 | 1 modulo 13 and 17 | {b,c} |
+| 2 | 7*11*19 | 1 modulo 11 and 19 | {a,b} |
+| 3 | 7*11*13*23 | (1,2,1) modulo (11,13,23) | {a} |
+| 3 | 7*11*13*29 | (2,1,1) modulo (11,13,29) | {c} |
+| 6 | 7*31 | 1 modulo 31 | Y |
+
+These classes cover the entire declared local source Y times Z/7. Every displayed class has a private point on that source, and distinct comparable numerical labels have disjoint actual APs. For the collision chain {7,21,63,189}, the complete private traces are Y,Y,Y,{b} at roots 0,4,5,3 respectively. Thus the free roots are 1,2,6. All nonfree safe sets miss b, so root-disjoint safe decomposition has exactly three covers.
+
+Choose donors 7*11 at root 1 and 7*13*17 at root 2. Their full traces cover Y, and their complete private traces are {a} and {c}. Match them to the two spare labels at root 3. The resulting four disjoint label menus cover Y:
+
+    {7*13,       7*11*13*23},
+    {7*11*19,    7*11*13*29},
+    {7*31},
+    {7*11,       7*13*17}.
+
+No selected point substitutes for a full trace: all traces on the declared finite source are displayed. This control only separates the two allocation interfaces. The theorem consumer above still needs an actual EB1 source to satisfy LA1–LA4; that bridge has not been forced.
+
+### The remaining original-inventory condition
+
+The useful additional interface is one extra complete cover obtained by matching whole private donor liabilities to existing spare original labels, with PH4 giving an exact arithmetic adjacency test. It can share a spare root across output columns without copying any original label.
+
+No unconditional label allocation or strict descent for every EB1 source was obtained. In particular, private-trace coverage is sufficient for the declared single or pairwise-disjoint donor deletions; arbitrary simultaneous donor deletions require their joint original obligation and cannot use LA3. Replacing LA2 by one private witness per donor, or by pointwise covering multiplicity alone, is not justified.
