@@ -152,7 +152,7 @@ private theorem split_inverse (p : Cuts) (hp : Clean p) : split (join p) = p := 
 
 /-- Neutral positions determine a unique decomposition, and each legal gap
 has unique low/end/high exponents. -/
-theorem result :
+private theorem decomposition :
     (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
     (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
     (∀ w : List Window, legal false (flatten w) ↔
@@ -195,6 +195,120 @@ theorem result :
       have hg : dg.2 ∈ gaps (split w) :=
         List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
       exact (characterize dg.2 (hc _ hg)).mpr (h _ hg)
+
+
+
+
+/-- Canonical legal gaps together with the ordered neutral letters. -/
+abbrev Code := Gap × List (Bool × Gap)
+
+def codeCuts (p : Code) : Cuts := (gap p.1, p.2.map fun dg => (dg.1, gap dg.2))
+def codeWord (p : Code) : List Window := join (codeCuts p)
+def readGap (g : List Window) : Gap :=
+  ⟨g.count .low, decide (g.count .ends = 1), g.count .high⟩
+def readCode (p : Cuts) : Code :=
+  (readGap p.1, p.2.map fun dg => (dg.1, readGap dg.2))
+def terminalGap (p : Code) : Gap := p.2.foldl (fun _ dg => dg.2) p.1
+
+private theorem code_language (w : List Window) :
+    legal false (flatten w) ↔ ∃! p : Code, codeWord p = w := by
+  have reading (q : Gap) : readGap (gap q) = q := by
+    rcases q with ⟨a, z, b⟩
+    cases z <;> simp [readGap, gap, List.count_replicate]
+  have clean (p : Code) : Clean (codeCuts p) := by
+    rcases p with ⟨g, ds⟩
+    simp only [Clean, gaps, codeCuts, List.map_map]
+    intro h hh
+    rcases List.mem_cons.mp hh with rfl | hh
+    · intro b hb
+      cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
+    · obtain ⟨dg, _, rfl⟩ := List.mem_map.mp hh
+      intro b hb
+      cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
+  have inverse (p : Code) : readCode (split (codeWord p)) = p := by
+    rw [codeWord, split_inverse _ (clean p)]
+    rcases p with ⟨g, ds⟩
+    simp [readCode, codeCuts, List.map_map, Function.comp_def, reading]
+  have legal_code (p : Code) : legal false (flatten (codeWord p)) := by
+    rw [(decomposition).2.2, codeWord, split_inverse _ (clean p)]
+    intro g hg
+    simp only [gaps, codeCuts, List.map_map, List.mem_cons, List.mem_map] at hg
+    rcases hg with rfl | ⟨dg, _, rfl⟩
+    · exact ⟨p.1, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
+    · exact ⟨dg.2, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
+  constructor
+  · intro hw
+    have hs := split_properties w
+    have restore (g : List Window) (hg : Free g) (hl : legal false (flatten g)) :
+        gap (readGap g) = g := by
+      obtain ⟨q, hq⟩ := (gap_language g hg).1.mp hl
+      rw [← hq, reading]
+    have hl := hs.2.2.2 false |>.mp hw
+    have rebuilt : codeCuts (readCode (split w)) = split w := by
+      apply Prod.ext
+      · exact restore _ (hs.2.1 _ (by simp [Clean, gaps])) hl.1
+      · simp only [codeCuts, readCode, List.map_map, Function.comp_def]
+        conv_rhs => rw [← List.map_id (split w).2]
+        apply List.map_congr_left
+        intro dg hdg
+        have hg : dg.2 ∈ gaps (split w) :=
+          List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
+        simp only [restore _ (hs.2.1 _ hg) (hl.2 _ hdg), Prod.eta, id_eq]
+    refine ⟨readCode (split w), ?_, ?_⟩
+    · change join (codeCuts (readCode (split w))) = w
+      rw [rebuilt, hs.1]
+    · intro p hp
+      rw [← inverse p, hp]
+  · rintro ⟨p, hp, _⟩
+    simpa [← hp] using legal_code p
+
+private theorem terminal_shapes (p : Code) :
+    ((codeWord p).getLast? = some .low ↔
+      0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
+    ((codeWord p).getLast? = some .ends ↔
+      (terminalGap p).z = true ∧ (terminalGap p).y = 0) := by
+  have final (g : Gap) (ds : List (Bool × Gap)) (f : Window)
+      (hf : f = .low ∨ f = .ends) :
+      (codeWord (g, ds)).getLast? = some f ↔
+        (gap (terminalGap (g, ds))).getLast? = some f := by
+    induction ds generalizing g with
+    | nil => simp [codeWord, codeCuts, join, terminalGap]
+    | cons dg ds ih =>
+      rcases dg with ⟨d, h⟩
+      have he : codeWord (g, (d, h) :: ds) = gap g ++ neutral d :: codeWord (h, ds) := by
+        simp [codeWord, codeCuts, join, List.flatMap_cons, List.append_assoc]
+      rw [he, List.getLast?_append_of_ne_nil _ (by simp)]
+      have hn : neutral d ≠ f := by
+        rcases hf with rfl | rfl <;> cases d <;> simp [neutral]
+      have ht : (neutral d :: codeWord (h, ds)).getLast? = some f ↔
+          (codeWord (h, ds)).getLast? = some f := by
+        cases codeWord (h, ds) <;> simp [hn]
+      rw [ht, ih h]
+      rfl
+  rw [final p.1 p.2 .low (Or.inl rfl), final p.1 p.2 .ends (Or.inr rfl)]
+  generalize terminalGap p = q
+  rcases q with ⟨a, z, b⟩
+  cases z <;>
+    simp only [gap, Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte,
+      List.getLast?_append, List.getLast?_replicate, List.getLast?_singleton,
+      List.getLast?_nil]
+  all_goals by_cases ha : a = 0 <;> by_cases hb : b = 0 <;>
+    simp [ha, hb, Nat.pos_iff_ne_zero]
+
+/-- Unique neutral-position decomposition and a reversible canonical code
+that retains the restrictions on an exact low or ends terminal window. -/
+theorem result :
+    (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
+    (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
+    (∀ w : List Window, legal false (flatten w) ↔
+      ∀ g ∈ gaps (split w), ∃! q : Gap, gap q = g) ∧
+    (∀ w : List Window, legal false (flatten w) ↔ ∃! p : Code, codeWord p = w) ∧
+    (∀ p : Code, (codeWord p).getLast? = some .low ↔
+      0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
+    (∀ p : Code, (codeWord p).getLast? = some .ends ↔
+      (terminalGap p).z = true ∧ (terminalGap p).y = 0) :=
+  ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language,
+    fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2⟩
 
 #print axioms result
 

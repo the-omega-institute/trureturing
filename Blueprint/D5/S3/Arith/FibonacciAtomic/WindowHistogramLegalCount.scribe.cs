@@ -47,12 +47,33 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 "Split(w) retains the first gap and every neutral letter together with "
                 + "the following gap. Leading, trailing and consecutive neutral letters "
                 + "retain their corresponding empty gaps.", DescribeRole.Definition),
+            Node("Code", "Canonical legal-word codes",
+                "A Code consists of a Gap and an ordered list of Boolean/Gap pairs. "
+                + "Every Boolean specifies one actual U or V input position.", DescribeRole.Definition),
+            Node("codeCuts", "Expanding gap exponents",
+                "CodeCuts replaces each Gap in a Code by its canonical gap word.",
+                DescribeRole.Definition),
+            Node("codeWord", "Reconstructing the literal word",
+                "CodeWord(p)=Join(CodeCuts(p)).", DescribeRole.Definition),
+            Node("readGap", "Reading gap exponents",
+                "ReadGap reads the X count, whether the Z count is one, and the Y count.",
+                DescribeRole.Definition),
+            Node("readCode", "Reading a canonical code",
+                "ReadCode reads every gap and retains all ordered neutral letters.",
+                DescribeRole.Definition),
+            Node("terminalGap", "The final gap",
+                "TerminalGap(p) selects the final gap, including an empty final gap.",
+                DescribeRole.Definition),
             Node("result", "Unique decomposition and exact legal gap shape",
-                "Three assertions hold jointly. For every finite window word w there "
+                "Six assertions hold jointly. For every finite window word w there "
                 + "exists exactly one p in Cuts with Clean(p) and Join(p)=w. For every "
                 + "w, the number of separator-gap pairs in Split(w) is count(U,w)+count(V,w). "
                 + "For every w, Legal(w) holds if and only if, for every gap g in "
                 + "Gaps(Split(w)), there exists exactly one Gap q with GapWord(q)=g. "
+                + "For every w, Legal(w) holds if and only if there is exactly one Code p "
+                + "with CodeWord(p)=w. For every Code p, its word ends in X precisely "
+                + "when its final gap has x>0, z=false and y=0; it ends in Z precisely "
+                + "when its final gap has z=true and y=0. "
                 + "All natural exponents, empty words, empty gaps and words with no "
                 + "neutral letters are included.", DescribeRole.Theorem,
                 "Each neutral letter removes both possible seam obstructions. Inside "
@@ -60,7 +81,10 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "Y or Z, every remaining letter must be Y; before them, every "
                 + "letter is X. Hence a legal gap has the displayed shape. Counts of "
                 + "X, Z and Y recover its three exponents. Recursive splitting and "
-                + "joining are inverse when the gap alphabet condition holds."))));
+                + "joining are inverse when the gap alphabet condition holds. Reading the "
+                + "exponents and rebuilding are inverse on all legal words. Since neutral "
+                + "letters differ from X and Z, these endpoints require a nonempty final "
+                + "gap of the stated form."))));
 
     private static DocumentBlock Node(string name, string title, string statement,
         DescribeRole role, params string[] proof) => Describe.Lean(
