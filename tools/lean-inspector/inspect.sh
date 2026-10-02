@@ -196,8 +196,6 @@ cat "$LOG_DIR/reuse.stdout.log"
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
   --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
-# A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
 if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
   require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
@@ -205,6 +203,10 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
+# Keep any receipt produced by a concurrent refresh until the writer guard is
+# acquired.  A failed report is cleared by finish(), while a successful report
+# is replaced by seal(); unlinking here could delete another caller's receipt
+# in the miss-to-Lake handoff window.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"

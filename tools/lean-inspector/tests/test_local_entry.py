@@ -5,6 +5,7 @@ from pathlib import Path
 import select
 import shutil
 import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -44,8 +45,12 @@ root = pathlib.Path(__file__).resolve().parents[3]
 args = sys.argv[1:]
 with (root / "fetch-called").open("a") as log:
     log.write(" ".join(args) + "\\n")
-assert args in (["fetch", "--mode", "production", "--refresh-stale"],
-                ["fetch", "--mode", "production", "--refresh-stale", "--writer-owned"]), args
+assert args[:2] == ["fetch", "--mode"] and "production" in args and "--refresh-stale" in args, args
+with (root / "fetch-seeded-marker").open("w") as marker:
+    marker.write(os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", ""))
+if os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", "").lower() in ("1", "true"):
+    (root / "fetch-skipped-by-seeded-marker").write_text("1")
+    raise SystemExit(0)
 if os.environ.get("FETCH_RESULT") == "unavailable":
     raise SystemExit(9)
 with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root):
@@ -143,6 +148,14 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
         self.dev_seed(2)
         self.assert_continued(self.entry())
 
+    def test_recovery_clears_inherited_actions_seed_marker(self):
+        self.current_version(2)
+        self.dev_seed(2)
+        self.environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '1'
+        self.assert_continued(self.entry())
+        self.assertEqual((self.root / 'fetch-seeded-marker').read_text(), '0')
+        self.assertFalse((self.root / 'fetch-skipped-by-seeded-marker').exists())
+
     def test_dev_seed_still_incompatible_never_builds(self):
         self.current_version(2)
         self.assert_blocked(self.entry(), 1, 2, 1, 'version-mismatch')
@@ -175,6 +188,17 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
 
     def test_matching_seed_has_no_fetch_or_report_build(self):
         self.assert_continued(self.entry(), fetched=False)
+
+    def test_ci_reuse_or_build_matching_seed_skips_report_facet(self):
+        self.assert_continued(self.entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'), fetched=False)
+
+    def test_ci_reuse_or_build_input_miss_enters_report_facet(self):
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.assert_build(self.entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'))
+
+    def test_ci_reuse_or_build_version_miss_enters_report_facet(self):
+        self.current_version(2)
+        self.assert_build(self.entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'))
 
     def test_default_matches_but_actual_reuse_seed_is_incompatible(self):
         self.current_version(2)
@@ -282,6 +306,58 @@ if os.environ.get('BARRIER_READY'):
         self.assert_continued(subprocess.CompletedProcess(first.args, first.returncode, out, err), fetched=False)
         self.assert_blocked(second, 'unavailable', 2, 'unavailable', 'cache-busy', fetched=False)
         self.assert_blocked(same_output, 'unavailable', 2, 'unavailable', 'cache-busy', fetched=False)
+
+    def test_same_version_miss_handoff_keeps_refreshed_receipt_for_lake_writer(self):
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        ready = self.root / 'handoff-ready'
+        release = self.root / 'handoff-release'
+        self.fixture.write('bin/python3', f'''#!/bin/bash
+set -euo pipefail
+real="${{PYTHON_REAL:?}}"
+if [[ "$*" == *"reuse.py reuse"* ]]; then
+  set +e
+  "$real" "$@"
+  rc=$?
+  set -e
+  if [[ "$rc" == 3 && -n "${{HANDOFF_READY:-}}" ]]; then
+    : > "$HANDOFF_READY"
+    while [[ ! -f "${{HANDOFF_RELEASE:?}}" ]]; do sleep 0.01; done
+  fi
+  exit "$rc"
+fi
+exec "$real" "$@"
+''')
+        (self.root / 'bin/python3').chmod(0o755)
+        self.executable('tools/scripts/worktree/lean-cache-run.sh', '''if [[ "$*" == *":report"* ]]; then
+  if [[ -f .lake/build/stratalint/raw-lean-report.json.reuse.json ]]; then
+    printf '%s\n' present > lake-entry-receipt
+  else
+    printf '%s\n' missing > lake-entry-receipt
+  fi
+fi
+printf "%s\n" "$*" >> report-builds
+exit 73
+''')
+        first_env = dict(self.environment, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'],
+                         PYTHON_REAL=os.environ.get('PYTHON', 'python3'),
+                         HANDOFF_READY=str(ready), HANDOFF_RELEASE=str(release))
+        first_env['PYTHON_REAL'] = sys.executable
+        with subprocess.Popen(['make', '--no-print-directory', 'lean-report'], cwd=self.root,
+                              env=first_env, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as first:
+            for _ in range(2000):
+                if ready.exists():
+                    break
+                import time
+                time.sleep(0.01)
+            self.assertTrue(ready.exists(), 'reuse miss handoff barrier was not reached')
+            refresh = subprocess.run(['make', '--no-print-directory', 'lean-cache-from-github-without-mathlib',
+                                      'REFRESH_STALE=1'], cwd=self.root, env=self.environment,
+                                     text=True, capture_output=True, timeout=30)
+            self.assertEqual(refresh.returncode, 0, refresh.stdout + refresh.stderr)
+            release.write_text('release\n')
+            stdout, stderr = first.communicate(timeout=30)
+        self.assertEqual(first.returncode, 2, stdout + stderr)
+        self.assertEqual((self.root / 'lake-entry-receipt').read_text(), 'present\n')
 
 
 if __name__ == '__main__':
