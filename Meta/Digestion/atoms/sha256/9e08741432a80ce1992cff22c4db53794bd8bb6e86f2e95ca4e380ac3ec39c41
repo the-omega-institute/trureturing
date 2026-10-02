@@ -1,0 +1,6 @@
+**Conjecture 13.1 (Bertuzzo–Ravagnani–Yaakobi, Conjecture 3.2).** Let $K$ be any finite field of cardinality $q$, let $k\ge2$, and put $n=(q^k-1)/(q-1)$. For every rank-$k$ matrix $G\in K^{k\times n}$, and every matrix $S\in K^{k\times n}$ whose columns are exactly one nonzero representative of each projective line in $K^k$, let $X_0,X_1,\ldots$ be iid uniform physical positions in $\operatorname{Fin}(n)$. Write $T_C=\min\{t:\operatorname{span}_K(C_{X_0},\ldots,C_{X_{t-1}})=K^k\}$. Then
+
+$$
+\mathbb E[T_S]\le\mathbb E[T_G].
+$$
+
