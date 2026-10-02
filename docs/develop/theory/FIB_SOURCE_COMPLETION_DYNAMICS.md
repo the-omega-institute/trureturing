@@ -25670,3 +25670,725 @@ $$
 本节未证明所有奇周期 rival 的分类，未排除更大不相干 SCC，未构造剩余共同链的完整返回，也不从折叠边界及返回体的数学联系推断物理起源或全部目标完成。
 
 ## 60.99 追加锚（本行以下为增补区）
+
+## 62. 固定预算的精确标量准入与双侧速率极限
+
+在一个固定过渡预算内，规定的同列表、同字面尾来源对，其全部实际出发槽的供应条件可以化为一维仿射系统的守卫。该模板的完整语言率等于一个二字母加权子移位的率，并由上下有限记忆图的加权谱根分别单调逼近。下侧收敛依靠固定有限等权码本的共同重置实现；上侧收敛依靠紧致嵌套语言的加权压力。本章同时给最终偶数支撑上的完整长度渐近式，以及每个完整恢复解码器的必要存储系数下界。
+
+实际来源与全槽证书引用本卷[固定已发表版本的第49章](https://github.com/the-omega-institute/trureturing/blob/fd4b8ca5424438d72b86659262bea2a3235b6058/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L19528)，其中49.1规定仪器、端点与观察接缝，49.2给实际词和固定尾，49.3给同一来源的全槽证书，49.10给共同第一未来的配置计数接口。同列表模板、原字面尾、付费 anchor、departure 接缝及计数合同采用[定义58.3](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23620-L23677)与[定义59.1](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24408-L24494)的同一对象。参数对应为本章 $c_0,h,A,d,q_K$ 分别对应前篇 $c,h_H,A_H,d_b,Q_K$；粗体 $\mathbf d,\mathbf e,\mathbf h$ 对应前篇颜色词 $d,e,h$，不与标量混同。前篇完整观察长度对应本章 $N_{\rm obs}=N+\Delta$，$\Delta=26$ 或52；列表反序执行而不反转块内标签。下文保留所用实际数据；共有全槽、重置和配置接口在相应条目引用，完整语言率桥与两侧收敛保留本章论证。所有率等式限于明确规定的返回模板；解码器结论是由这些实际见证给出的必要下界。
+
+### 62.1 实际数据、预算与读取方向
+
+**约定 62.1（来源、仪器与观察长度）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1,\quad \phi=1+t,\quad
+T_2=t^2=1-t,\quad \lambda=\frac{T_2}{10},\quad c_0=\frac{2t}{5},
+\quad \rho=g^6,\quad \chi=g^{20}.
+\tag{62.1}
+$$
+
+这里 $c_0$ 是第49章的中心坐标 $c$。来源的 guard 为0、1，支撑分别为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$。合法来源边及其平移量为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,T_2,1,2-t),\qquad F_\ell(x)=\Delta_\ell-gx,\\
+F_w=F_{w_0}\circ\cdots\circ F_{w_{|w|-1}}.
+\end{gathered}
+$$
+
+窗口标签0表示空窗，25是一个标签。$D_s$ 表示从 guard $s$ 出发、最终为空窗的实际地址；这些地址包含在完整恢复合同的实际来源类 $\Omega$ 中。来源标签、颜色标签和 guard 是三种不同对象。
+
+固定合法端点归属向量 $o=(o_1,\ldots,o_5)$，$o_a\in\{a-1,a\}$ 表示切点 $q_a$ 属于哪个颜色。色格闭包为
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+\tag{62.2}
+$$
+
+实际色格 $C_i^o$ 依归属分配这些切点，支撑外端点 $-1,\phi$ 分别归颜色0、5。实际读数为 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。若 $\operatorname{dist}(x,J_i)<b$，可以选择色格内部目标取得颜色 $i$，误差严格小于 $b$；若距离恰为 $b>0$，闭预算的实际取得等价于唯一最近点归颜色 $i$ 所有。裁剪不扩张距离，不能绕过这个端点条件。
+
+历史只读来源边的出发位置。长 $M$ 的历史读位置 $0,\ldots,M-1$，走过 $M$ 条来源边后的位置 $M$ 尚未观察。终尾为 $\xi$ 时，零误差完整未来 $S_\xi$ 从这个未观察终端开始。
+
+**定义 62.2（固定字面词与两种模板）。** 保留第49章的来源词和颜色词；用粗体区分颜色词与稍后的标量：
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),\\
+\mathbf d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+\mathbf e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2).
+\end{aligned}
+\tag{62.3}
+$$
+
+即 $\mathbf d,\mathbf e$ 是第49章的 $d,e$。$U,V,\mathbf d$ 长6，$C,\mathbf e$ 长20。stems 为 $P=UC,Q=VC$，共同颜色 stem 为 $\mathbf h=\mathbf d\mathbf e$，长度26，guard 零到一。两条字面尾始终是
+
+$$
+\xi_H=UC^3\,5\,0^\infty,\qquad
+\xi_L=VC^3\,0^\infty.
+\tag{62.4}
+$$
+
+对外到内的同一个有限列表 $\mathbf a=((m_1,r_1),\ldots,(m_k,r_k))$，$m_i,r_i\ge1$，原模板是
+
+$$
+\begin{aligned}
+\alpha_{\mathbf a}&=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\xi_H,\\
+\gamma_{\mathbf a}&=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\xi_L,\\
+H_{\mathbf a}&=\mathbf h\,\mathbf d^{m_1}\mathbf e^{r_1}\cdots
+\mathbf d^{m_k}\mathbf e^{r_k}.
+\end{aligned}
+\tag{62.5}
+$$
+
+固定 anchor 模板在列表与字面尾之间再放一个 $UC/VC$，共同历史相应增加 $\mathbf d\mathbf e$。原尾仍为(62.4)。两种模板的观察长度分别是
+
+$$
+N_{\rm obs}=\Delta+N,\qquad
+N=\sum_{i=1}^k(6m_i+20r_i),\qquad
+\Delta=26\ \text{或}\ 52.
+\tag{62.6}
+$$
+
+$N$ 只计可变列表，$N_{\rm obs}$ 计全部 departure 观察。每个返回是 guard 一到一，两侧来源均是实际 $D_0$ 地址。
+
+高侧位移为 $D_H=x-c_0$，低侧位移为 $D_L=c_0-y$。令
+
+$$
+\begin{gathered}
+h_H=\frac{39-6g}{380},\quad h_L=\frac{46+31g}{380},\quad
+E_H=T_2-c_0,\quad E_L=c_0,\quad A_j=(1-\rho)h_j,\\
+X_j=A_j+\rho\chi^3E_j,\qquad
+Y_j=A_j+\rho\chi X_j\qquad(j=H,L).
+\end{gathered}
+\tag{62.7}
+$$
+
+第49.2节给 $h_H<h_L$、$E_H<E_L$、$X_H<X_L$，以及
+
+$$
+0<\chi E_j<A_j<X_j<h_j<E_j<1,\qquad A_j>\chi h_j.
+\tag{62.8}
+$$
+
+$X_j$ 是原尾位移，$Y_j$ 是固定 anchor 接原尾后的位移；它们均在 $(A_j,h_j)$。六字块和二十字块分别作用为 $D\mapsto A_j+\rho D$、$D\mapsto\chi D$。
+
+**约定 62.3（固定过渡预算与执行符号）。** 固定整数 $K\ge2$，简记 $h=h_H$、$A=A_H$，并置
+
+$$
+Z_K=\frac{A}{1-\rho\chi^K},\qquad
+q_K=\lambda-g^2\chi^Kh,\qquad
+\Psi_K=\lambda-g^2\chi^KZ_K.
+$$
+
+本章固定实预算及守卫为
+
+$$
+q_K<b<\Psi_K,\qquad
+s=\frac{\lambda-b}{g^2},\qquad d=\frac{s}{\chi^K},
+\qquad Z_K<d<h.
+\tag{62.9}
+$$
+
+$q_K$ 是预算阈值，区别于仪器切点 $q_1,\ldots,q_5$；$d$ 是标量守卫，区别于颜色词 $\mathbf d$。由 $0<g<1/4$ 得 $0<\chi<\rho<1$、$1-\rho>\chi$，所以
+
+$$
+Z_K>A>\chi h,\qquad q_K<\Psi_K<q_{K+1}<\lambda.
+\tag{62.10}
+$$
+
+由[定义59.3](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24572-L24594)在 $Q_K=q_K$、$d_b=d$、$h_H=h$、$A_H=A$ 下的同一过渡区，以及[定理58.10.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24063-L24107)的实际帽判据，本章 $K$ 就是 $K(b)$。称 $r=K$ 的返回为高返回，$1\le r<K$ 的返回为低返回；这区别于同一返回的高侧、低侧来源。[推论58.10.2](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24109-L24119)适用于这里的 $b>\Theta_1$、$b<\lambda$：预算帽只限制 $r$，不限制 $m$、完整返回长度、列表深度或总长度；允许某个 $r=K$ 实际出现不表示所有 cap $K$ 列表可供应。
+
+从字面尾向外执行一个返回，使用二字母词 $\mathsf c^r\mathsf u^m$，映射和实际长度权重为
+
+$$
+f_{\mathsf c}(D)=\chi D,\quad f_{\mathsf u}(D)=A+\rho D,
+\qquad \ell(\mathsf c)=20,\quad\ell(\mathsf u)=6,
+$$
+
+$$
+G_{m,r}(D)=f_{\mathsf u}^m\circ f_{\mathsf c}^r(D)
+=h-\rho^m(h-\chi^rD).
+\tag{62.11}
+$$
+
+执行次序与外到内列表相反：若执行列表为 $(m_i,r_i)_{i=1}^k$，则(62.5)使用反序 $(m_k,r_k),\ldots,(m_1,r_1)$。每个执行块 $\mathsf c^r\mathsf u^m$ 对应字面返回 $U^mC^r/V^mC^r$；块内原标签次序不反转。所有恢复到来源与颜色的构造均使用这一约定。
+
+### 62.2 全槽标量准入与余量量词
+
+**引理 62.4（同一后缀的不变区间与控制槽）。** 原模板和 anchor 模板中，每个完整返回后缀的两侧位移同时满足
+
+$$
+A_j<D_j<h_j,\qquad D_H<D_L.
+\tag{62.12}
+$$
+
+一个返回 $(m,r)$ 面对高侧完整后缀位移 $D$ 时，其全部槽的控制成本是最内高侧 $U$ 的位置4：
+
+$$
+C_r(D)=\lambda-g^2\chi^rD.
+\tag{62.13}
+$$
+
+同返回更外侧六字块的活跃成本下降；对应低侧活跃成本严格更小。其余六字槽及全部 $C$ 槽的闭距离不超过 $\lambda-g^6$。
+
+**证明。** 应用[引理59.2](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24498-L24558)于相同的两条原字面尾和同列表完整返回，取其 $c=c_0$、$T_j(z)=A_j+\rho z$，原初态为 $X_j$，付费 anchor 初态为 $Y_j$；外到内返回下标按本章执行反序对应。所引实际返回映射为 $G_{j,m,r}(D)=h_j-\rho^m(h_j-\chi^rD)$，在 $0<D<h_j$ 上给
+
+$$
+A_j<G_{j,m,r}(D)<h_j.
+$$
+
+其同列表次序接口在本章记号下是
+
+$$
+G_{L,m,r}(D_L)-G_{H,m,r}(D_H)
+=(1-\rho^m)(h_L-h_H)+\rho^m\chi^r(D_L-D_H)>0,
+$$
+
+故 (62.12) 直接沿用完整返回边界结论，不能扩张到任意内部切口。所引逐实际块接口仍对同一组成块 $B$ 的每个出发位置 $p$ 使用唯一实际坐标
+
+$$
+x_{B,p}=F_{B[p:]}(c_0)+(-g)^{|B|-p}\sigma_jD_j,
+\qquad \sigma_H=1,\quad\sigma_L=-1.
+$$
+
+[推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)以同一实际 $\chi^{r}D_j$ 为最内六字输入，直接给位置4控制成本 (62.13)、高低比较和更外 $T_j$ 迭代的成本下降；其非活跃槽界是 $\lambda-g^6$。比较域由引理59.2对真实 $\chi$ 幂、$T_j$ 迭代与整条后缀检验，覆盖所有六字和 $C$ 块。每个槽的 $D_j$ 仍来自同一整条实际后缀，没有逐槽另选状态。证毕。
+
+**定理 62.5（规定来源对的精确准入）。** 固定端点归属 $o$ 和高侧实际初态 $D_0=X_H$ 或 $Y_H$，低侧同步使用 $X_L$ 或 $Y_L$。对内到外执行列表 $(m_i,r_i)_{i=1}^k$，令
+
+$$
+D_i=G_{m_i,r_i}(D_{i-1}).
+\tag{62.14}
+$$
+
+规定的两条实际来源共同供应规定颜色历史，当且仅当每个 $r_i\le K$，并在 $r_i=K$ 的位置满足以下条件：闭预算且 $o_1=1$ 要求 $D_{i-1}\ge d$；闭预算且 $o_1=0$ 要求 $D_{i-1}>d$；逐槽严格合同和逐记录正余量合同均要求 $D_{i-1}>d$。$r_i<K$ 不增加守卫。空列表通过。结论包含 stem、固定 anchor（如有）、所有重复块的全部 departure 槽和两条原尾的零误差未来。
+
+**证明。** [推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)的实际初态与本章相同；其外到内第 $k+1-i$ 项的右侧完整后缀对应执行第 $i$ 项的 $D_{i-1}$。取其 $s=(\lambda-b)/g^2$、$d=s/\chi^K$。低返回直接应用[式(59.24)](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24687-L24690)，其中 $D_H=D$、$A_H=A$、$h_H=h$，得
+
+$$
+\chi^rD>\chi^{K-1}A>\chi^Kh>s.
+\tag{62.15}
+$$
+
+超出实际帽的返回由[定理58.10.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24063-L24107)排除；本章同一完整后缀的比较仍为：对 $r>K$，
+
+$$
+\chi^rD<\chi^{K+1}h<\chi^KA<\chi^KZ_K<s,
+$$
+
+所以控制槽严格超预算。stem 的活跃输入是 $\chi D>\chi A\ge\chi^{K-1}A$；固定 anchor 的最大成本是第49.8节的 $\Theta_1=\lambda-g^2\chi X_H$。可固定自动槽上界
+
+$$
+C_{\rm auto}=\max\{\Theta_1,\ \lambda-g^2\chi^{K-1}A,\ \lambda-g^6\}<q_K<b.
+\tag{62.16}
+$$
+
+[式(59.22)](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24669-L24676)在 $Q_K=q_K$、$A_H=A$ 下恰给 (62.16) 的三项严格界；stem 输入仍是 $\chi D$，固定 anchor 自身输入是 $\chi X_H$，不能以输出 $Y_H$ 替代。低返回、stem、anchor 和全部非活跃槽因此都由本地 $C_{\rm auto}<b$ 自动严格通过。
+
+$r=K$ 时，(62.13)不超过 $b$ 恰为 $D\ge d$。在 $D=d$ 时，高侧位置4的实际坐标是
+
+$$
+q_1-\lambda+g^2\chi^Kd=q_1-b.
+$$
+
+[推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)的等号接口指定唯一最近颜色1目标 $q_1$，所以实际闭取得恰须 $o_1=1$；严格及逐记录余量合同必须 $D>d$。低侧、同幂更外槽和自动槽严格通过，其他归属旗标不改变结论。所引充分性在 $D>d$ 时选择格内部目标，必要性使用裁剪非扩张；未拥有的最近点或严格超预算的闭距离均不能被裁剪补救。
+
+[定义58.3](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23620-L23677)在 $b>0$、有限历史接各自原字面尾零误差未来的合同下，直接给逐槽严格与逐记录正余量的等价；这里仍只断言每条记录有自己的余量。所引全槽充分性作用于已经固定的同列表实际来源对，不另选后缀。证毕。
+
+**命题 62.6（全族共同余量的精确条件）。** 对任一由 $r_i\le K$ 列表组成的族，定义
+
+$$
+\Delta_{\mathcal F}=\inf\{D_{i-1}-d:\text{族内全部 }r_i=K\text{ 的实际位置}\},
+\qquad\inf\varnothing=+\infty.
+\tag{62.17}
+$$
+
+该族及其各自原尾零误差未来能够共用一个正误差余量，当且仅当 $\Delta_{\mathcal F}>0$。
+
+**证明。** 若全部误差至多 $b-\varepsilon$，裁剪非扩张及控制槽距离给
+
+$$
+D_{i-1}-d\ge\frac{\varepsilon}{g^2\chi^K}
+\tag{62.18}
+$$
+
+于每个高返回。反向，若有高返回且下确界为正，可取 $\frac12\min\{b-C_{\rm auto},g^2\chi^K\Delta_{\mathcal F}\}$ 为共同误差余量；先有更强的闭距离界，再把最近目标略移入实际色格内部。无高返回时只取 $\frac12(b-C_{\rm auto})$。未来误差为零，完成整族实现。有限记录各自有余量，不能代替(62.17)的全族量词。证毕。
+
+### 62.3 固定重置与首个返回的输出支配
+
+**引理 62.7（两个不同的保护作用）。** 固定有限整数 $M\ge1$，使
+
+$$
+B_M=h-\rho^M(h-\chi A)>\max\{X_H,Y_H,d\}.
+\tag{62.19}
+$$
+
+令重置返回及其执行词、付费长度为
+
+$$
+R=(M,1),\qquad \mathcal R=\mathsf c\mathsf u^M,
+\qquad C_R=20+6M.
+\tag{62.20}
+$$
+
+实际完整输入 $D>A$ 时，重置输出 $>B_M$；辅助输入 $D\ge A$ 时，输出 $\ge B_M$。重置自身是低返回，全部槽由 $C_{\rm auto}$ 统一严格通过。此外，对 $m\ge1$、$1\le r\le K$、$z\ge A$，
+
+$$
+G_{m+1,r}(z)-G_{m,r}(h)
+=\rho^m\{A-\chi^rh+\rho\chi^rz\}>0.
+\tag{62.21}
+$$
+
+**证明。** [引理59.3.1](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24596-L24631)取 $h_H=h$、$A_H=A$、$d_b=d$，给同一个 $R=(M,1)$、$B_M\uparrow h$ 及实际完整输入 $D>A$ 的严格输出界。本章 (62.19) 的较强右侧仍小于 $h$，故存在满足该较强选择的有限 $M$；该选择不由前篇仅有的 $B_M>d$ 代替。重置映射的正斜率保留辅助输入 $D\ge A$ 的非严格输出界；$1<K$ 使其自身由低返回接口严格合法。展开两项得(62.21)，其括号严格为正，因为 $A>\chi h\ge\chi^rh$，其余项非负。证毕。
+
+重置直接抬高嵌入因子的首个 $\mathsf c$ 串起点；该串所对应的首个返回若是高返回，其控制槽由 $B_M-d$ 保护。随后，无论这个首个返回是高还是低，都在它后面的 $\mathsf u$ 串中增加一个 $\mathsf u$，由(62.21)使其完成输出支配任意辅助起点不超过 $h$ 的对应输出。增加 $m$ 本身不改善这个返回最内六字控制槽。后续高返回使用这种输出支配所继承的守卫；不能将未衰减的 $B_M-d$ 归给有先行低返回的较后首个高返回。重置与额外 $\mathsf u$ 都保持在首个 $\mathsf c$ 串所确定的位置。
+
+### 62.4 各实际合同与初态的共同率
+
+**定义 62.8（实际完整列表率）。** 对 $D_0\in\{X_H,Y_H\}$，$a_{D_0}^{\ge}(N)$、$a_{D_0}^{>}(N)$ 分别计返回权重恰为 $N$、满足定理62.5非严格或严格高守卫的不同完整列表；不计固定偏移 $\Delta$。非严格计数作为数学语言，对应拥有 $q_1$ 的闭合同；其余实际合同使用严格计数。空列表权重为0。定义
+
+$$
+\eta_b=\limsup_{N\to\infty}\frac1N
+\log_2\max\{1,a_{D_0}^{\ge}(N)\}.
+\tag{62.22}
+$$
+
+**命题 62.9（固定开销的合同与初态率桥）。** (62.22)不依赖选取 $X_H$ 或 $Y_H$。任意合法端点归属下，闭、逐槽严格、逐记录正余量合同都有同一率 $\eta_b$。
+
+**证明。** 给从一个指定初态弱可行的执行词 $v$，从另一个指定初态先执行 $\mathcal R$ 再执行 $v$。由(62.19)，$v$ 的新起点严格大于原初态。沿相同列表的所有仿射映射斜率为正，故每个旧高守卫都被严格改善；重置及自动槽也严格通过。映射 $v\mapsto\mathcal Rv$ 单射，权重增加固定 $C_R$，仍恢复为(62.5)中同列表、原字面尾的实际来源对。删除执行词的固定前缀可恢复 $v$，即使相邻 $\mathsf u$ 被写成同一个极大串也一样。
+
+严格词包含于弱词；上述单射在两个初态之间均成立。取上极限并消去固定开销，就得到所有列出计数的共同率。定理62.5将它们对应到各实际合同。率相等不要求有限语言逐词相同，也不赋予全部重置前置词一个共同正余量。证毕。
+
+完整返回列表到颜色历史和同长第一来源的单射直接引用[定理58.8的列表解析接口](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23950-L24008)及[引理59.4.1的返回解析段](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24644-L24648)：使用相同 $U,C$ 与颜色码，本章 $\mathbf d,\mathbf e$ 对应前篇 $d,e$，极大连续块恢复相同的 $(m,r)$。其中来源码 $\{U,C\}$ 的第二个标签仍为0、5；$\{V,C\}$ 的第一个标签仍为0、5；颜色码 $\{\mathbf d,\mathbf e\}$ 的第二个标签仍为1、3。反序只改变完整返回的列表次序，同长比较去掉相同 stem 和付费 anchor，再接同一原尾，故两种固定偏移不引入计数碰撞。不同执行列表给不同第一来源和不同颜色历史；反序及两种固定偏移不引入计数碰撞。这里使用返回解析，不把引理59.4.1的高宏分界或宏语言供应扩张到任意列表。
+
+### 62.5 紧致辅助系统与守卫时点
+
+**定义 62.10（双无限辅助语言）。** 对 $\omega\in\{\mathsf u,\mathsf c\}^{\mathbb Z}$，定义转移前状态
+
+$$
+x_i(\omega)=\lim_{n\to\infty}
+f_{\omega_{i-1}}\circ\cdots\circ f_{\omega_{i-n}}(0).
+\tag{62.23}
+$$
+
+两映射保持 $[0,h]$，有限过去作用于0、$h$ 的像差为
+
+$$
+h\,g^{\ell(\omega_{i-n}\cdots\omega_{i-1})}
+\le h\rho^n\longrightarrow0.
+\tag{62.24}
+$$
+
+更长过去的0像不减，$h$ 像不增；二者收敛到同一个状态。由此 $x_i$ 唯一、连续，满足 $0\le x_i\le h$ 及 $x_{i+1}=f_{\omega_i}(x_i)$。
+
+置 $\tau=\chi^{K-1}d$。令 $X_d$ 为不含 $\mathsf c^{K+1}$，且在一个 $\mathsf c$ 串的第 $K$ 个字母 $\omega_i=\mathsf c$ 处满足
+
+$$
+x_i\ge\tau
+\tag{62.25}
+$$
+
+的全部双无限序列。这里检查当前 $\mathsf c$ 转移之前的状态；转移后等价于 $x_{i+1}\ge\chi^Kd=s$。完整 $\mathsf c^K\mathsf u^m$ 从状态 $D$ 开始时，检查值是 $\chi^{K-1}D$，所以(62.25)恰为 $D\ge d$。
+
+局部禁词及连续非严格守卫使 $X_d$ 成为非空紧致子移位，全 $\mathsf u$ 序列属于其中。任意长 $m$ 由任意长 $\mathsf u$ 串保留。$[0,h]$、双无限过去和无限 $\mathsf u$ 尾是辅助计数对象，不替代(62.4)的实际尾，也不被断言为最终空窗的实际来源。
+
+### 62.6 不完整因子的有界开销实际实现
+
+**定理 62.11（完整实际语言与辅助因子的率相等）。** 令 $A_X(N)$ 计子移位 $X$ 中实际权重恰为 $N$ 的不同有限因子，空词权重为0；令
+
+$$
+\eta(X)=\limsup_{N\to\infty}\frac1N\log_2\max\{1,A_X(N)\}.
+$$
+
+则
+
+$$
+\eta(X_d)=\eta_b.
+\tag{62.26}
+$$
+
+对每个 $N>0$ 和任一指定实际初态，还有
+
+$$
+A_{X_d}(N)\le a_{D_0}^{>}(N+C_R+6)
++a_{D_0}^{>}(N+C_R+12)+1.
+\tag{62.27}
+$$
+
+**证明。** 先取实际弱可行完整执行词 $v$。在辅助系统中放入 $\mathsf u^\infty v\mathsf u^\infty$，其第一个 $\mathsf c$ 前状态为 $h>D_0$。单调性保证所有高守卫，词末为 $\mathsf u$，两端填充不合并 $\mathsf c$ 串也不产生新守卫。因此 $v$ 是 $X_d$ 因子，给 $\eta_b\le\eta(X_d)$。此无限填充只在辅助系统内使用。
+
+反向取含 $\mathsf c$ 的因子 $v$。先前置 $\mathcal R$，把 $v$ 的前导 $\mathsf u$ 并入重置的六字重复段；若 $v$ 末字为 $\mathsf c$，先在末尾补一个 $\mathsf u$，完成末返回。然后在 $v$ 的首个 $\mathsf c$ 串后的首个 $\mathsf u$ 串再加一个 $\mathsf u$。这个额外字母总跟随首个返回，即使首个返回是低返回。
+
+首个 $\mathsf c$ 串长至多 $K$；它的实际起点 $z\ge B_M>d$。若该返回高，控制槽直接由重置余量通过；若低，则自动通过。即使 $v$ 从原辅助 $\mathsf c$ 串中间开始，新首串也只会更短，此判断不变。设完成后首个 $\mathsf u$ 串在加入额外字母前长 $m\ge1$。原辅助实现相应首串起点至多 $h$，故完成状态至多 $G_{m,r}(h)$；新状态为 $G_{m+1,r}(z)$，由(62.21)严格支配前者。若首个 $\mathsf u$ 串在因子末端截断，同一比较仍在这个截断点成立；若末尾补出的 $\mathsf u$ 同时完成首返回，取 $m=1$ 即可。
+
+其后所有共同仿射转移保持严格支配。后续高串是原辅助序列的完整高串，所以原守卫加严格支配使新高守卫严格通过。末尾若截断在 $\mathsf c$ 串内部，补出的 $\mathsf u$ 只完成它，不增加 $\mathsf c$ 数；它若达到 $K$，原守卫已存在，仍由支配保护。于是产物是从实际原尾或 anchor 初态出发的严格完整列表；stem、anchor、其余槽均由定理62.5一并通过。
+
+$v$ 原末字为 $\mathsf u$ 的类别增加权重 $C_R+6$，末字为 $\mathsf c$ 的类别增加 $C_R+12$。每类映射均单射：先删固定前缀 $\mathsf c\mathsf u^M$，再删余词首个 $\mathsf c$ 串后额外加入的一个 $\mathsf u$，最后按类别删末尾补出的 $\mathsf u$。前导 $\mathsf u$ 即使合并，也按前 $M$ 个删除；首返回恰为末返回时，两个末尾添加字母依这个次序删除，仍唯一恢复 $v$。全 $\mathsf u$ 因子在每个权重最多一个，可由前置重置形成低返回，故将其计为(62.27)的最后一项。
+
+(62.27)的固定开销不改变上极限率，结合命题62.9给反向不等式。原前缀码及反序约定保证这些实际来源、历史和列表计数相符。证毕。
+
+### 62.7 有限记忆图、嵌套性与固定图余量
+
+**定义 62.12（上下记忆图）。** 对 $n\ge K$ 和过去词 $w=w_1\cdots w_n$，令
+
+$$
+L_n(w)=f_{w_n}\circ\cdots\circ f_{w_1}(0),\qquad
+U_n(w)=f_{w_n}\circ\cdots\circ f_{w_1}(h).
+$$
+
+若该词是 $\omega$ 在位置 $i$ 前的过去，则
+
+$$
+L_n(w)\le x_i(\omega)\le U_n(w),\qquad
+U_n(w)-L_n(w)=h\,g^{\ell(w)}\le h\rho^n.
+\tag{62.28}
+$$
+
+图顶点为长度 $n$ 的二字母过去词，边删去首字并追加一个字母，禁止形成 $\mathsf c^{K+1}$。追加 $\mathsf u$、$\mathsf c$ 的权分别为 $z^6,z^{20}$。若追加字母是串的第 $K$ 个 $\mathsf c$，上图允许边当且仅当 $U_n(w)\ge\tau$，下图允许边当且仅当 $L_n(w)>\tau$。其余未被禁词排除的边均允许。
+
+$X_n^+,X_n^-$ 分别是两图双无限路径的标签语言。只计可双向延伸的语言；可删去不出现在任何双无限路径上的边和顶点。保留的瞬态桥可以连接循环分量，其自身不增加谱增长。
+
+**命题 62.13（嵌套及上交集）。** 有
+
+$$
+X_n^-\subseteq X_{n+1}^-\subseteq X_d
+\subseteq X_{n+1}^+\subseteq X_n^+,\qquad
+\bigcap_{n\ge K}X_n^+=X_d.
+\tag{62.29}
+$$
+
+**证明。** 更早添加一个过去字母后，它作用于0的像不小于0，作用于 $h$ 的像不大于 $h$；余下映射递增。因此记忆增长使下包络不减、上包络不增，给上下嵌套。由(62.28)，下图严格守卫足以保证真实守卫，真实守卫足以通过上图。若真实 $x_i<\tau$，取足够大 $n$ 使 $h\rho^n<\tau-x_i$，则 $U_n<\tau$，该序列被上图排除。真实等号在每个上图保留，交集遂恰为 $X_d$。证毕。
+
+**命题 62.14（固定下图的共同实际误差余量）。** 若固定下图存在允许高边，置
+
+$$
+\varepsilon_{\rm graph}=\min_{\text{允许高边 }(w,\mathsf c)}
+\{L_n(w)-\tau\}>0.
+\tag{62.30}
+$$
+
+将该固定下图的每个有限因子按定理62.11嵌入实际完整列表，所有得到的同列表来源对及其零误差未来可以共用
+
+$$
+\varepsilon_{\rm actual}
+=\frac12\min\{b-C_{\rm auto},\ g^2\chi^K(B_M-d),\ g^2\chi\varepsilon_{\rm graph}\}>0
+\tag{62.31}
+$$
+
+作为实际误差余量。无高边时省略最后一项。
+
+**证明。** 允许高边有限且各有严格正差，故(62.30)为正。一个原辅助高返回的第 $K$ 个 $\mathsf c$ 前状态至少为 $\tau+\varepsilon_{\rm graph}$；其控制槽的闭距离因而至多
+
+$$
+\lambda-g^2\chi(\tau+\varepsilon_{\rm graph})
+=b-g^2\chi\varepsilon_{\rm graph}.
+$$
+
+嵌入中，重置直接保护的对象仅是因子首个 $\mathsf c$ 串所对应的返回：若它高，其起点至少 $B_M$，控制槽闭距离至多 $b-g^2\chi^K(B_M-d)$；若它低，则使用自动槽界。额外 $\mathsf u$ 紧跟这个首返回，无论它是否高。该返回完成后的严格输出支配保证所有后续高返回保留原固定图的守卫余量，故使用图项。一个首返回为低的因子，其较后首个高返回也使用图项，不能使用未衰减的重置项。
+
+重置自身、stem、anchor及其余自动槽由 $C_{\rm auto}$ 控制。三项最小值给闭距离与预算的共同间隙；保留其一半，将目标移入实际色格内部，就能逐槽取 $|e_p|<b-\varepsilon_{\rm actual}$。无高边时，因子没有高返回，省略图项仍是有效的保守正界。未来误差零。全程保持原重置及额外字母的位置。证毕。
+
+### 62.8 有限图的实际加权谱率
+
+**定理 62.15（加权谱根）。** 令 $M_n^\pm(z)$ 为上述图在可双向延伸部分的加权邻接矩阵，平行边的权相加。存在唯一 $z_n^\pm\in(0,1)$ 使
+
+$$
+\operatorname{spr}(M_n^\pm(z_n^\pm))=1.
+\tag{62.32}
+$$
+
+置 $\gamma_n^\pm=-\log_2z_n^\pm$，则 $\gamma_n^\pm=\eta(X_n^\pm)$，并且
+
+$$
+\gamma_n^-\le\eta_b\le\gamma_n^+,\qquad
+\gamma_n^-\text{ 不减},\quad\gamma_n^+\text{ 不增}.
+\tag{62.33}
+$$
+
+**证明。** 两图都包含没有高串的低 cap $K-1$ 语言。特别地，$\mathsf c\mathsf u\mathsf c\mathsf u^2$ 与 $\mathsf c\mathsf u^2\mathsf c\mathsf u$ 是不同的5字母块，任意双无限拼接不触发高守卫。故按字母数的语言熵至少 $1/5$，在 $z=1$ 谱半径大于1。全 $\mathsf u$ 循环使每个 $z>0$ 的谱半径为正。
+
+当 $z\downarrow0$ 时，矩阵及谱半径趋于零。若 $z_2>z_1>0$，每条边的实际长度至少6，故逐项有
+
+$$
+M_n^\pm(z_2)\ge(z_2/z_1)^6M_n^\pm(z_1).
+$$
+
+非负矩阵谱半径的单调性与正性使谱半径严格增加；连续性给(62.32)唯一根。无需图整体不可约；谱半径由有向强连通分量的最大值决定。
+
+一个标签词从每个过去顶点至多产生一条路径，故最多有 $2^n$ 条初态不同的路径。反向，每个保留图的有限路径有双向延伸，产生一个因子。所以路径和不同词的加权总和只相差固定倍数。全部路径权重总和为
+
+$$
+\sum_{k\ge0}\mathbf1^{\mathsf T}M_n^\pm(z)^k\mathbf1.
+$$
+
+谱半径小于1时收敛，大于1时发散；因此其正实收敛边界是 $z_n^\pm$。按总实际权重重组这个非负级数，根检验给不同因子权重计数的率为 $-\log_2z_n^\pm$。瞬态分量及循环间桥只产生不改变收敛边界的有限矩阵因子。再用(62.26)、(62.29)得到(62.33)。权重始终是6与20，没有把字母熵或可达顶点数当作实际来源步率。证毕。
+
+### 62.9 加权压力与上侧收敛
+
+**引理 62.16（压力零点）。** 对任一非空二字母子移位 $X$，令 $\mathcal L_k(X)$ 为 $k$ 字因子集。对实数 $\theta$ 定义
+
+$$
+Z_X(k,\theta)=\sum_{w\in\mathcal L_k(X)}2^{-\theta\ell(w)},\qquad
+P_X(\theta)=\lim_{k\to\infty}\frac1k\log_2Z_X(k,\theta).
+\tag{62.34}
+$$
+
+极限存在，等于各 $k\ge1$ 商的下确界。对 $a>0$，
+
+$$
+P_X(\theta)-20a\le P_X(\theta+a)\le P_X(\theta)-6a.
+\tag{62.35}
+$$
+
+其唯一零点为 $\eta(X)$。
+
+**证明。** 因子的前 $k$ 字及后 $j$ 字唯一决定原词，权重相加，故
+
+$$
+Z_X(k+j,\theta)\le Z_X(k,\theta)Z_X(j,\theta).
+$$
+
+对数次可加，Fekete引理给下确界公式。每个 $k$ 字词的权重介于 $6k$ 与 $20k$，逐项比较配分函数即得(62.35)。压力有限、连续且严格下降，并在 $\theta\to-\infty$ 时趋于正无穷、$\theta\to+\infty$ 时趋于负无穷，因此有唯一零点。
+
+非负项级数按权重或字母数重组是同一总和：
+
+$$
+\sum_{N\ge0}A_X(N)2^{-\theta N}
+=\sum_{k\ge0}Z_X(k,\theta).
+\tag{62.36}
+$$
+
+若压力负，配分函数最终指数衰减，级数收敛；若压力正，配分函数指数增长，级数发散。按 $N$ 的根检验使收敛边界为 $\eta(X)$；零点处级数的收敛与否不影响边界。非空子移位有任意长因子，故 $\eta(X)\ge0$，使用 $\max\{1,A_X(N)\}$ 不改变此结论。证毕。
+
+**定理 62.17（上图率单调趋近）。** 有
+
+$$
+\gamma_n^+\downarrow\eta_b.
+\tag{62.37}
+$$
+
+**证明。** 先设紧致非空子移位 $Y_n$ 递减，交集为 $Y$。每个固定 $k$ 的有限语言 $\mathcal L_k(Y_n)$ 最终稳定为 $\mathcal L_k(Y)$：若某词持续出现，把它平移到位置0，则相应嵌套非空紧致柱集有交点，词必在 $Y$ 中。有限个 $k$ 字词使稳定时间也有限。
+
+令 $p_{n,k}(\theta)=k^{-1}\log_2 Z_{Y_n}(k,\theta)$。于是
+
+$$
+\begin{aligned}
+\inf_nP_{Y_n}(\theta)
+&=\inf_n\inf_k p_{n,k}(\theta)\\
+&=\inf_k\inf_n p_{n,k}(\theta)=P_Y(\theta).
+\end{aligned}
+\tag{62.38}
+$$
+
+压力随 $n$ 单调下降，故收敛到 $P_Y$。零点也收敛：设 $\eta(Y)$ 为极限压力零点，任取 $a>0$，由(62.35)，$P_Y(\eta(Y)+a)\le-6a<0$，充分大 $n$ 时同点的 $P_{Y_n}$ 为负，所以其零点小于 $\eta(Y)+a$；由语言包含，其零点不小于 $\eta(Y)$。将此结论用于 $Y_n=X_n^+$、$Y=X_d$，再用(62.26)，得到(62.37)。证明使用完整可延伸语言和实际权重。证毕。
+
+### 62.10 先固定码本、再选记忆的下侧收敛
+
+**定理 62.18（等权码本的共同实现）。** 固定 $D_0\in\{X_H,Y_H\}$。先取一个 $N>0$，使 $a_N=a_{D_0}^{\ge}(N)\ge1$，以全部这些弱可行词组成有限码本 $\mathcal V_N$。每词前置同一重置，形成
+
+$$
+\mathcal W_N=\{\mathcal Rv:v\in\mathcal V_N\},\qquad
+L=N+C_R,\qquad \delta=B_M-D_0>0.
+\tag{62.39}
+$$
+
+该码本的全部有限实际拼接，以及全部双无限辅助拼接，具有共同严格高守卫余量。具体地，原码字中每个高返回的起点至少为
+
+$$
+d+\delta g^N,
+\tag{62.40}
+$$
+
+第 $K$ 个 $\mathsf c$ 前的共同余量至少为
+
+$$
+\varepsilon_N^{\rm state}=\chi^{K-1}\delta g^N>0.
+\tag{62.41}
+$$
+
+因而选取有限 $n\ge K$ 满足
+
+$$
+h\rho^n<\varepsilon_N^{\rm state}
+\tag{62.42}
+$$
+
+后，全部双无限拼接属于 $X_n^-$，并有
+
+$$
+\gamma_n^-\ge\frac{\log_2a_N}{N+C_R}.
+\tag{62.43}
+$$
+
+**证明。** 固定权重的符号词只有有限个，故码本有限。每个词从 $\mathsf c$ 开始、以 $\mathsf u$ 结束，所有拼接接缝均为 $\mathsf u\mid\mathsf c$，不合并 $\mathsf c$ 串；重置自身是低返回。双无限拼接中每个重置前的状态刚经过 $\mathsf u$，所以至少为 $A$；第一段有限实际拼接则从 $D_0>A$ 开始。于是每个重置后状态均至少为 $B_M=D_0+\delta$。
+
+比较同一码字从原初态 $D_0$ 的弱实现与拼接中的实现。已执行原词权重为 $J$ 时，两个状态的初态差精确乘以 $g^J$；若实际增益大于 $\delta$，差也相应更大。高返回前 $J\le N$，且 $0<g<1$，故增益至少 $\delta g^J\ge\delta g^N$，得到(62.40)。这是一条共同实现上的逐位置界，不把不同实现的边际最优值组合在一起。乘以 $\chi^{K-1}$ 得(62.41)。自动槽不受码字选择影响；全部有限实际拼接可使用
+
+$$
+\frac12\min\{b-C_{\rm auto},\ g^2\chi^K\delta g^N\}>0
+\tag{62.44}
+$$
+
+作为共同实际误差余量，原尾未来仍零误差。这里比较对象是原实际初态 $D_0$，所以无需定理62.11用于自由辅助起点的首返回额外 $\mathsf u$。
+
+现在才选择 $n$。由(62.28)、(62.41)、(62.42)，每个高边的下包络满足
+
+$$
+L_n\ge x_i-h\rho^n>\tau,
+$$
+
+故整个双无限拼接属于 $X_n^-$。这与有限实际拼接是两个相应但不同的对象；辅助拼接没有被当作实际最终空窗来源。
+
+任取 $k$ 个码字，所得符号串权重为 $kL$。每字母权重正，累计权重严格递增，所以每个累计权重 $jL$ 的切口若存在就是唯一的。每段删去固定 $\mathcal R$ 即恢复一个原码字。即使各码字的字母数不同，仍有 $a_N^k$ 个不同权重 $kL$ 的因子；每个选择可向两边补任意码字而双向延伸。这给(62.43)。证毕。
+
+**定理 62.19（下图率单调趋近与双侧极限）。** 有
+
+$$
+\gamma_n^-\uparrow\eta_b,\qquad
+\gamma_n^+\downarrow\eta_b.
+\tag{62.45}
+$$
+
+**证明。** 实际语言有正率：低返回 $\mathsf c\mathsf u$ 与 $\mathsf c\mathsf u^2$ 的两种交换顺序都严格合法，形成两个不同等权58的完整词，任意拼接仍合法。因此 $\eta_b\ge1/58>0$。沿(62.22)实现上极限的 $N\to\infty$ 取码本，便有
+
+$$
+\frac{\log_2a_N}{N+C_R}\longrightarrow\eta_b.
+\tag{62.46}
+$$
+
+每个固定 $N$ 先由定理62.18得到其共同正余量，再选有限记忆 $n$，使下图率至少是(62.46)相应值。下图率已单调不减且不超过 $\eta_b$，故其极限为 $\eta_b$；上侧由定理62.17得到。证毕。
+
+(62.41)可随 $N$ 增大趋于零。量词次序是固定预算，先固定有限码本 $N$，取得这个码本及其全部联合拼接的共同余量，再选有限 $n$；最后才让码本率趋近目标率。既不交换 $N,n$，也不声称整个严格语言由一个下图捕获。这是本模板的重置和等权码本论证，不是一般子移位熵的内近似稠密性结论。
+
+### 62.11 最终偶数支撑上的完整长度率
+
+**定理 62.20（完整长度渐近式）。** 对两个指定实际初态，严格与弱完整计数都满足
+
+$$
+\log_2a_{D_0}^{>}(T)=\eta_bT+o(T),\qquad
+\log_2a_{D_0}^{\ge}(T)=\eta_bT+o(T)
+\quad(T\to\infty,\ T\text{ 为偶数}).
+\tag{62.47}
+$$
+
+每个充分大的偶数 $T$ 都有严格可行列表；奇数返回权重没有列表。固定偏移26、52不改变率。
+
+**证明。** 任意偶数 $F=2v\ge78$ 都能由低返回填充。取唯一 $j\in\{1,2,3\}$ 使 $v\equiv j\pmod3$，用 $j$ 个基准返回 $(1,1)$，再向其中一个增加
+
+$$
+q=\frac{v-13j}{3}
+$$
+
+个 $\mathsf u$。$q$ 为整数；$v\ge39$ 且 $13j\le39$，故非负。总权重为 $26j+6q=F$，所有返回均为低返回，无论面对哪个实际完整后缀都严格通过。
+
+固定定理62.18的一个码本及其偶数权重 $L$。对充分大的偶数 $T$，取
+
+$$
+k=\left\lfloor\frac{T-78}{L}\right\rfloor,\qquad
+F=T-kL\in[78,78+L).
+\tag{62.48}
+$$
+
+在 $k$ 个码字后，即实际列表的外侧，加一个按 $F$ 预定的低填充词。原码字守卫不变，填充及更外 stem 均自动合法。所得严格列表至少 $a_N^k$ 个：相同 $T$ 的填充固定，删除它后按累计权重 $L$ 唯一切分恢复全部选择。因此
+
+$$
+\liminf_{\substack{T\to\infty\\T\ {\rm even}}}
+\frac{\log_2a_{D_0}^{>}(T)}T
+\ge\frac{\log_2a_N}{L}.
+$$
+
+让固定码本率沿(62.46)趋于 $\eta_b$，下极限至少 $\eta_b$。严格语言的上极限不超过共同率 $\eta_b$，故得第一式；弱计数夹在严格计数与同一上极限之间，得第二式。所有权重为偶数，固定偏移也为偶数；把 $T$ 换成 $N_{\rm obs}-\Delta$ 保留同一系数及 $o(N_{\rm obs})$。证毕。
+
+### 62.12 完整恢复解码器的必要系数
+
+**约定 62.21（完整配置计价）。** 沿用定义36.9及第49.1、49.10节的完整恢复合同。解码器确定、因果、固定初态，每次取得只作有限计算和有限输出批次；输出有序追加且不可回读。全部实际 $\Omega$ 记录上安全，全部实际 $D$ 记录上逐位置最终生效，包括空窗补齐。可读控制、持久及临时数据、计数、输入和输出位置、时序、可读时钟及输出侧存储，只要影响未来，均属完整配置。没有 End、支持上界、免费输入重放或免费外部记录。
+
+$B^{\rm worst}_{b,\mathcal A}(N_{\rm obs})$ 计截至第 $N_{\rm obs}$ 次取得的最坏完整存储峰值；它随观察视界不减。检查点当前占用本身不必单调。
+
+**定理 62.22（必要的下极限存储系数）。** 固定归属及本章所列任一实际误差合同。每个满足完整恢复合同的解码器 $\mathcal A$ 都满足
+
+$$
+\liminf_{N_{\rm obs}\to\infty}
+\frac{B^{\rm worst}_{b,\mathcal A}(N_{\rm obs})}{N_{\rm obs}}
+\ge\eta_b.
+\tag{62.49}
+$$
+
+**证明。** 固定定理62.18的一个码本。$k$ 次选择给 $a_N^k$ 个不同完整列表，在相同观察长度 $\Delta+kL$ 上，每个历史由同一列表的高低实际来源对共同供应，并共用该码本的正误差余量。前缀码保证第一来源不同；颜色历史也不同。
+
+对这些已经由定理62.18共同供应的列表，应用[定理58.13](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24281-L24317)的配置分离接口。其模板 $\mathsf T=\mathsf O$ 或 $\mathsf A$、归属 $o$ 及合同 $\kappa$ 分别对应本章所固定者，源定理观察长度取 $\Delta+kL$；本章码本拼接是该长度可供应历史的一个子族，计数为 $a_N^k$。其完整可读状态合同正是约定62.21。
+
+所引接口使用首标签5、0的同列表实际 $D/D$ 对，迫使共同过去累计输出为空；高侧在未观察终端接同一个 $S_{\xi_H}$，低侧保留各自的 $S_{\xi_L}$，不要求两侧未来相同。相异同长第一来源因此给至少 $a_N^k$ 个完整配置；无需规范包络内部尾假设。所引编码计价对固定宽度给 $2^B$，对长度至多 $B$ 的完整变长二进制编码给 $2^{B+1}-1$，故其 $B\ge\log_2(\mathrm{count})-1$ 在本章检查点成为
+
+$$
+B^{\rm worst}_{b,\mathcal A}(\Delta+kL)\ge k\log_2a_N-1.
+\tag{62.50}
+$$
+
+若视界内峰值无穷，下界自动成立；否则此计数同样约束检查点的最大完整编码长度，从而约束峰值。任意充分大的视界取 $k=\lfloor(N_{\rm obs}-\Delta)/L\rfloor$，由峰值单调性，
+
+$$
+\liminf_{N_{\rm obs}\to\infty}
+\frac{B^{\rm worst}_{b,\mathcal A}(N_{\rm obs})}{N_{\rm obs}}
+\ge\frac{\log_2a_N}{N+C_R}.
+\tag{62.51}
+$$
+
+见证可随有限视界变化，不要求一条记录经过全部历史。所有码本的有限实际拼接都在原预算下严格且有共同余量，故该论证适用于闭、逐槽严格和逐记录正余量合同。最后沿(62.46)逼近 $\eta_b$，得到(62.49)。证毕。
+
+每个固定码本给一个固定斜率及其常数损失；码本趋近 $\eta_b$ 时常数和余量均可变化。因此(62.49)没有断言存在单个常数 $C$ 使所有视界满足 $B^{\rm worst}_{b,\mathcal A}(N_{\rm obs})\ge\eta_bN_{\rm obs}-C$。必要下界也没有构造达到系数 $\eta_b$ 的解码器。
+
+### 62.13 逐记录严格性与全族余量的实际分离
+
+**命题 62.23（严格但无全族共同余量的实际族）。** 对任一固定 $K\ge2$，令
+
+$$
+p=\frac{(1-\rho^2)h}{1-\rho^2\chi^K},\qquad
+b_* =\lambda-g^2\chi^Kp.
+\tag{62.52}
+$$
+
+则 $Z_K<p<h$，所以 $q_K<b_*<\Psi_K$。在预算 $b_*$，存在同列表、原字面尾的实际有限历史族，每条记录严格且有自身正余量，但全族没有共同正余量。
+
+**证明。** $p$ 是返回 $(2,K)$ 的固定点。直接相减得
+
+$$
+p-Z_K=\frac{A\rho(1-\chi^K)}
+{(1-\rho^2\chi^K)(1-\rho\chi^K)}>0,
+\qquad
+h-p=\frac{h\rho^2(1-\chi^K)}{1-\rho^2\chi^K}>0.
+$$
+
+选择一个固定低返回重置，使实际输出 $D_R>p$；存在性由重置输出趋于 $h$ 得到。令 $a_2=\rho^2\chi^K$。在重置之外连续执行 $(2,K)$ 时，第 $j+1$ 个高返回面对的真实完整后缀为
+
+$$
+p+a_2^j(D_R-p)>p,\qquad j\ge0.
+\tag{62.53}
+$$
+
+此预算的标量守卫为 $d=p$，故每个有限列表严格通过，自动槽和原尾未来仍合法。控制成本却随 $j$ 趋近 $b_*$，对应 $\Delta_{\mathcal F}=0$，由命题62.6全族无共同正余量。两侧始终共享这一列表，使用原尾(62.4)。证毕。
+
+该命题在过渡区内分离了逐记录合同和统一族合同。它也说明，不能仅凭每个有限词严格，就断言整个族进入同一个有限下图；定理62.18所需的固定码本共同余量是实质条件。
+
+### 62.14 有限图存在的效力与模板边界
+
+**注记 62.24（实数比较与率逼近的计算前提）。** 对每个固定 $n$，定义62.12给一个精确有限数学对象；边集一旦确定，加权矩阵的条目是整系数多项式。有限矩阵在 $z_n^\pm$ 的谱半径为1，因而 $\det(I-M_n^\pm(z_n^\pm))=0$；这个多项式在 $z=0$ 为1，所以谱根是代数数。此结论依赖已经确定的边集，不能据此为任意非有效实预算决定边集。
+
+若预算和固定常数有有效的精确代数表示，例如已认证的 $b\in\mathbb Q(t)$，有限个比较可通过代数数序比较决定；如使用可靠区间证书，上侧须保守保留未决边，下侧只能接纳已有严格正余量证书的边。没有有效表示、序比较能力或相应证书的任意抽象实数 $b$，并不因图有限而自动给出一个算法。双侧极限本身也不提供实用图规模界、指定精度的预先记忆长度、有效收敛模或复杂度保证。
+
+**注记 62.25（全局恢复与量词边界）。** (62.26)、(62.45)和(62.47)刻画的是(62.5)规定的两种实际模板。它们没有把其他实际来源规范化到本模板，也没有覆盖完整候选残余中的 $\Omega$-only 竞争者、所有 guards 和所有端点关系。模板计数的上界不成为全体实际残余数的上界。
+
+(62.49)对每个满足完整恢复合同的解码器给必要系数。要证明匹配的全局在线上界，还须覆盖全部实际残余，并构造合法更新与安全输出，计入临时峰值、控制、位置、时序及全部可读信息。第49.10节引用的已发表 $O(N_{\rm obs}+1)$ 存在性上界给较粗阶数，没有识别 $\eta_b$ 为全局最优系数。
+
+下图的共同余量属于每个固定图；码本的共同余量属于先选定的有限码本及其全部联合拼接。二者都可在逼近中缩小。相同指数率不等于相同有限语言，不保证一个统一余量族达到整个率，也不产生一般熵内稠密结论。所有实际见证均为有限列表接原字面尾，双无限序列仅服务于辅助压力和计数。固定预算、固定模板、同列表两侧以及26、52的观察偏移，在所有准入、计数和配置下界中保持各自量词。
+
+## 62.99 追加锚（本行以下为增补区）
