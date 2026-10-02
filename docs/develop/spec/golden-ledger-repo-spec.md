@@ -434,7 +434,7 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `make lean-report` | 经受保护的 Lean 缓存入口和原生 Lake 增量生产规范报告。 |
 | `check-current --candidate-lean-report FILE` | 当前树有效性；context 无 base 或 changes，可在根提交、无 remote 的仓库中独立运行。 |
 | `check-delta --protected-base <40-hex-sha> --candidate-lean-report FILE` | 读取固定 base 数据，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
-| `tools/scripts/workflow/scribe-content-checks.sh FILE` | 消费显式报告，编译并验证当前 Scribe 内容。 |
+| `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
 `make test` 运行 lean-report 与 check-current。`make gate BASE=<sha>` 在本地依次运行 lean-report、check-current、Scribe、filemap-conform、带显式 base 的 check-delta；`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。
@@ -447,13 +447,15 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 `Meta/ci-checks.json` 仅保留 SL-003/SL-015 的 materials 与 material_excludes，供现役规则材料谓词读取。`Meta/ReportProducers/scribe-content.json` 声明 statement projection 的项目根与 `lean-report-inputs.json` 中的 scope；非空 changes 使用显式登记及项目引用闭包决定谓词影响范围，null changes 仍完整验证。它不承担跨 workflow 计划或执行证据。
 
-**Workflow 与报告消费。** 测试项目、selftest、两类反证、FILEMAP 与 current 分属独立作业，`ci-unit.yml` 只提供 workflow_call 的公共执行步骤。current 作业串行生产一次 Lean report，再运行 check-current 与 Scribe；PR 命中 delta 白名单时运行 check-delta，普通 push 不运行 delta。唯一 required check 为 `required`，确切名称与 Actions app 绑定取自实际 ruleset 和真实运行。watcher 与 contribution queue 按配置的 required set 汇总固定 head 的红绿，不认证旧嵌套运行拓扑。保持 strict=false。
+**Workflow 与报告消费。** 测试项目、selftest、两类反证、FILEMAP 与 current 分属独立作业，`ci-unit.yml` 只提供 workflow_call 的公共执行步骤。current 作业在报告生产前恢复 judge，miss 时先构建 judge 并按原 key 保存成功的输出；可运行的 judge 输出 bundle 提供 Lean producer，否则报告入口保留独立 producer 构建。judge 构建失败不截断原本可达的报告生产，current 判卷仍跳过，非取消时的 Scribe/delta 保持可达且作业保持失败。随后串行生产一次 Lean report，再运行 check-current 与 Scribe；PR 命中 delta 白名单时运行 check-delta，普通 push 不运行 delta。唯一 required check 为 `required`，确切名称与 Actions app 绑定取自实际 ruleset 和真实运行。watcher 与 contribution queue 按配置的 required set 汇总固定 head 的红绿，不认证旧嵌套运行拓扑。保持 strict=false。
 
 `StrataLint topology` 读取 remote default branch 固定提交的 `ci-current.yml`，检查其 dev pull_request 触发与 current 作业中的 check-delta 步骤。它只报告安装拓扑，不能证明实际执行版本或分支保护，且不门控 current/delta；新 workflow 尚未安装不会阻止候选检查。Tower 的 ci-jobs 消费 `ci-*.yml` 中作业的 dev PR/push 声明：engineering-ci 的成员是 `required`，current 另须满足 delta gate 契约。
 
 离线 truth release bundle 接口验证完整性及调用者声明的成功 check 名称；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
 
-**缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。PR 缓存只供同一 PR 使用，不能供其它 PR 或 dev 恢复；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。
+**缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。project Actions key 使用唯一的 `lean-project-push-` 前缀，不恢复其它 project 前缀；所有读者使用同一生成规则。首次 miss 令 `STRATALINT_ACTIONS_CACHE_SEEDED=0`，由既有 Release 快照恢复与 Lake 权威增量补编补齐。project 种子只由 dev/integration push 发布，在报告生产成功后、判卷开始前只尝试一次，且本次报告与程序目标的构建工作须已知并为正；pull request 恢复 push 种子，不发布 project 种子并具名报告跳过。生产者在恢复树之外记录本次 run/attempt 与报告、程序两类工作；缺失、畸形、陈旧或无法判定的记录禁写 project，并具名报告 unknown，不视为零工作；零工作另报跳过原因。project 的成功前置称为 `STRATALINT_REPORT_SUCCEEDED`，不预报检查成功。dependency 与 elan 仍在全部检查成功后按各自条件保存，PR 的这些缓存只供同一 PR 使用。缓存步骤不承载业务判词；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。elan Actions key 使用唯一的 `elan-pinned-` 生成，不恢复其它 elan 前缀；miss 只由 `install-lean-toolchain.sh` 安装钉版工具链。保存点列出已安装工具链作为轻量收据，不删除恢复目录中的工具链。
+
+project 恢复在 current 与 Lean build 单元中优先请求读者基线分支的 push 种子：pull_request 取 `refs/heads/$GITHUB_BASE_REF`，push 取 `$GITHUB_REF`。`lean_actions.py keys` 使用可选的 `GH_TOKEN`、`GITHUB_REPOSITORY` 与 `GITHUB_API_URL`（默认 `https://api.github.com`），通过标准库 HTTP 请求完整分页的 Actions cache 列表，显式按 `created_at` 降序分页；每行的 cache `id` 须为互异正整数，重复、缺失或无效 id，或不同 id 的总数与 `total_count` 不符，均走具名不完整列表 fallback。只接纳 ref 精确相同、key 为当前 project restore prefix 加正十进制 run id 与 attempt 的条目，按数值 `(run id, attempt)` 取最大值，不使用列表顺序或时间字段。`project_restore_key` 是独立的恢复输出，`project_key` 仍是本次发布 key。查找未配置、请求失败、HTTP 错误、列表畸形或不完整、无合格条目时具名报告原因并请求本次 key，保留现有 prefix restore；偏好 key 被淘汰或不兼容时也经同一 prefix fallback 与既有恢复入口补齐。每次请求保留固定网络 timeout；整个可选查找由单个固定 10 秒 transport hang guard 限定，涵盖名称解析、连接、headers、body 及全部分页。查找在 daemon thread 中执行；guard 到期即放弃等待，以 `lookup-transport-hang-guard` 原因输出既有 fallback 收据并继续本次 key，不重试或轮询。daemon thread 不输出收据或 key。restore 收据同时给出 requested key 与实际 matched key。此偏好仅是性能启发式；run id 大小不证明 push 顺序、构建材料包含关系或有效性，查找与缓存命中均不承载检查成功或判词。
 
 `lean-report-inputs.json` 的 report_cache_release_semantic_version 决定报告兼容性，Lake traces 决定实际模块重建；复用行保留原 producer 来源。正常报告入口仍执行原生构建与严格 publication 校验，不借恢复绕过 Lean kernel、utility/audit 或报告验证。定时 Release 缓存发布与 integration 的 cache publication 验证独立保留；验证事件、来源、run/attempt、归档材料与空目标恢复按其既有程序核对，不外推为 truth 发布成功。
 
