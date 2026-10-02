@@ -152,21 +152,31 @@ public sealed class ScribeResourceAstCoverageTests
             typeof(DescribeStatement),
             typeof(AssessedProvenance),
             typeof(StatementSource),
+            typeof(StatementAssessment),
             typeof(NarrativeTarget),
             typeof(DocumentEdge),
         };
 
         foreach (var family in abstractFamilies)
         {
-            var concreteTypes = family
-                .GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic)
-                .Where(type => !type.IsAbstract && family.IsAssignableFrom(type));
+            var concreteTypes = ConcreteBranches(family);
             foreach (var concreteType in concreteTypes)
             {
                 Assert.Contains(concreteType, roundTrippedTypes);
             }
         }
     }
+
+    [Fact]
+    public void CoverageIncludesNonNestedConcreteBranches()
+    {
+        Assert.Null(typeof(ResourceCoverageBranch).DeclaringType);
+        Assert.Contains(typeof(ResourceCoverageBranch), ConcreteBranches(typeof(ResourceCoverageFamily)));
+    }
+
+    private static IEnumerable<Type> ConcreteBranches(Type family) => family.Assembly
+        .GetTypes()
+        .Where(type => !type.IsAbstract && family.IsAssignableFrom(type));
 
     [Fact]
     public void CoverageDoesNotCrossSatisfySameNamedConcreteTypes()
@@ -353,3 +363,7 @@ public sealed class ScribeResourceAstCoverageTests
             "Blueprint/D5/S1/Scale/WaiverBranch.scribe.cs");
     }
 }
+
+internal abstract class ResourceCoverageFamily;
+
+internal sealed class ResourceCoverageBranch : ResourceCoverageFamily;
