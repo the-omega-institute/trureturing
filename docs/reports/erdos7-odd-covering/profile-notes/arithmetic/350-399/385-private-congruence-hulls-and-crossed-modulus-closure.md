@@ -283,6 +283,14 @@ cutoff, so sufficiently large support forces both powers in ONE original
 label. This works without a color assignment; it does not multiply
 separately forced labels or infer their phase compatibility.
 
+[Section161](#161-the-private-ternary-root-lowers-colored-repair-depths)
+uses a colored parent's complete private ternary root in the fresh
+repair labels. The exact odd-quotient price lowers q-parent depth to
+(p-3)/2 and pure colored-parent depth to(p-1)/2, retaining capacity p-2.
+Opposite5 forces the other anchor's height at most2; all concentrated
+heights in the small-anchor branch are at most8. The specified MTR
+q=53 branch now has H_q=1, with no assertion that H_3 is one.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19571,3 +19579,112 @@ For example, the following are exact substitutions into PPL6 for the original su
 These are consumers in the unrestricted original source. The existing small-opposite-pair bound P^+(Q)<14570 removes both displayed large-P regimes inside that particular small-anchor branch, so PPL7 is not presented as a further exclusion there. PPL6 remains a joint-label constraint when the small-anchor hypotheses are unavailable or for other parameter choices.
 
 The remaining step is to consume such genuinely forced joint labels with an actual original-parent capacity, supplier relation or complete-hole repair. This result supplies no automatic closure under multiplying several separately forced products, no small opposite-color pair when R meets {5,7,11,13}, and no unrestricted contradiction.
+
+## 161. The private ternary root lowers colored repair depths
+
+Keep one original EB1 whole cover. Let ell be a concentrated prime of color i and let p be a concentrated prime of the opposite color. Both are at least5. Every original multiple d of ell has its COMPLETE private region at first ternary root i, by the same private-reset containment used in CP1:
+
+    V_d subset V_ell={i}.
+
+This supplies one additional ternary factor in the fresh CP1 palette. Reusing DR1–DR2 and AQ3 with that factor lowers the q-parent depth in §140 and improves the global heights of concentrated primes. No new exchange theorem or Lean verification is asserted.
+
+### A q-parent needs only (p-3)/2 shared q-digits
+
+Let q>3 be an original prime distinct from p and ell, and suppose the ORIGINAL parent
+
+    d=q^a ell
+
+exists. Put
+
+    N=p-1, k=(p-1)/2, b=k-1=(p-3)/2,
+
+and assume a>=b. Assign the N nonzero first-p roots injectively to the N pairs
+
+    (epsilon,j), epsilon in {0,1}, 0<=j<=k-1.
+
+For each pair use the fresh numerical label
+
+    p ell 3^epsilon q^j.                            (TCP1)
+
+Its phase is the assigned nonzero p-root, the old parent's ell- and q^j-phases, and, when epsilon=1, the fixed first-three root i. All these CRT coordinates are compatible. The labels are pairwise distinct and absent from the ENTIRE original family because each contains the forbidden opposite-color product p ell.
+
+Every point of the whole old P_d avoids retained A_p, has the parent's original ell- and q^j-congruences, and has first-three root i. Its nonzero p-root therefore selects one TCP1 AP containing it. This repairs the ENTIRE private obligation, including every cofactor and integer lift. The ternary root comes from the old parent's private region, not from a selected descendant-phase witness.
+
+Now apply the existing DR1 move at any non-own d-phase and delete its complete original proper-descendant group J. Its exact remaining hole is P_d. If |J|>N, the TCP1 repair decreases class count. If |J|=N, the EXISTING distinct-odd quotient estimate AQ3 gives
+
+    sum_(M in J) M>=N(N+2)d=(p^2-1)d.
+
+The repair price satisfies
+
+    W=4p ell sum_(j=0..k-1)q^j,
+    W/d<=4p sum_(j=0..k-1)q^(-j)
+       <4p q/(q-1)<p^2-1.                         (TCP2)
+
+The first inequality uses a>=k-1. For p>=7 and q>=5, the last expression is at most5p<p^2-1. For p=5, distinctness q!=p gives q>=7, and4p q/(q-1)<=70/3<24=p^2-1. Thus the modulus sum also decreases at tied count. EB1 forces
+
+    a>=(p-3)/2 ==>
+    every non-own phase of original q^a ell
+       has at most p-2 proper original descendants. (TCP3)
+
+The capacity remains p-2; its depth threshold is now(p-3)/2. The stronger deletion sum N(N+2)d is essential to the last saved depth. Using only3Nd would give the weaker cutoff(p-1)/2.
+
+### A pure colored parent uses the same two-axis palette
+
+For a concentrated prime r of color i and opposite p, consider the ORIGINAL parent d=r^a with a>=k=(p-1)/2. Its entire P_d has first-three root i. Use the N fresh labels
+
+    3^epsilon p r^j,
+    epsilon in {0,1}, 1<=j<=k.                     (TCP4)
+
+The index starts at1, so the original labels p and3p are not reused. Assign the N nonzero p-roots to these pairs and inherit the parent's r^j-phases and its private first-three root as above. Every P_d point meets its assigned AP. CP1 supplies freshness, and the two exponents distinguish all labels.
+
+The price satisfies
+
+    W/d<=4p sum_(j=0..k-1)r^(-j)
+       <4p r/(r-1)<p^2-1.
+
+The same two cases as TCP2 apply: p=5 implies r>=7, while p>=7 permits r>=5. DR1–DR2/AQ3 therefore give the same phase capacity p-2 for this parent at the smaller cutoff a>=k.
+
+Use the existing QC2/HC1 pure-top packet at one original private point of r^(H_r). If H_r>k, it contains at least1+(H_r-k)(r-1) original labels in one non-own r^k phase, including the top owner. Consequently
+
+    1+(H_r-k)(r-1)<=p-2,
+    H_r<=(p-1)/2+floor((p-3)/(r-1)).               (TCP5)
+
+The displayed height bound is automatic when H_r<=k. It is an ordinary consumer of the existing pure-top demand and the just-checked complete-private repair; no new private-point lemma is needed.
+
+In the branch R intersect {5,7,11,13}=empty, use opposite5 and ell in {7,11,13}. The SAME original family now satisfies
+
+    H_ell<=2,
+    H_5<=4,7,8 for ell=7,11,13 respectively,
+    H_r<=8 for every concentrated prime r.          (TCP6)
+
+For the last assertion, choose an opposite concentrated prime at most13 for either color, as already supplied in OCP9. These bounds concern concentrated primes; they do not replace the separate OCP bound on primes in R or on3.
+
+### Existing fan budgets retain their capacities and lower their cutoffs
+
+For a root-i actual q-top fan, let c=p-2, C_i=c|S_i| and b=(p-3)/2. Each color-i bucket whose labels contain ell in S_i shares the original parent phase modulo q^b ell. When G>b its members are proper descendants, so TCP3 bounds the entire colored part by C_i. The TQ3 inequality is therefore available under G>b, rather than G>c:
+
+    G>b ==> q<=A(H_3+1)+C_i.                       (TCP7)
+
+No change is made to c or C_i. The existing TQ6 all-depth argument likewise works for every b<=a<G, giving
+
+    1+(G-a)(q-1)<=(G-a)A(H_3+1)+C_i.
+
+If q-1>A(H_3+1), taking a=b gives
+
+    G<=b+floor((C_i-1)/(q-1-A(H_3+1))).            (TCP8)
+
+The old ternary-parent threshold in TQ1 is not lowered by this construction: its extra ternary digit would lie on the same axis as the parent. TCP3 changes only the q-parent use, where q differs from3.
+
+### The actual mixed-owner q=53 consumer now has height one
+
+Retain MTR5's additional hypotheses:5 and7 have opposite colors, H_5=H_7=1, R={q}, and q>=49. The existing mixed-owner argument gives q=53 and an ACTUAL private source of7q^G at the7-color root. It does not require the pure q^G to have private points at that root.
+
+Choose opposite p=5, so b=1 and C_i=3|S_(7-color)|. If G>1, TCP7 at this same source gives
+
+    q<=A(H_3+1)+3|S_(7-color)|<=29+18=47,
+
+using A=1, the unchanged OCP6 bound H_3<=28, and HPM7's7-color list {7,11,13,17,19,23}. This contradicts q>=49. Thus these hypotheses now force
+
+    q=53 and H_q=1.                                (TCP9)
+
+The source and every original label remain those of the same EB1 family. This is a height-one conclusion for q; H_3 and the other original prime heights are not thereby squarefree. The remaining q=53 branch is not excluded by this consumer, and no unrestricted odd noncoverage follows.
