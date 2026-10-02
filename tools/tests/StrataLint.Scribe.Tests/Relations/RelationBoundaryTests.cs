@@ -211,7 +211,7 @@ public sealed class RelationBoundaryTests
         var describe = Assert.Single(projection.Describes);
         Assert.Equal("report-derived", describe.KindSource);
         Assert.Equal("Theorem", describe.Role);
-        Assert.Null(describe.Kind);
+        Assert.Equal("Theorem", describe.Kind);
         Assert.NotNull(describe.Claim);
         Assert.Equal("sample-problem", describe.Claim.Problem);
         Assert.Equal("Refuted", describe.Claim.Resolution);

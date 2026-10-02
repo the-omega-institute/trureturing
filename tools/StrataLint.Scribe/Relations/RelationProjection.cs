@@ -42,7 +42,7 @@ public sealed record RelationProjection(
                         var authored = describe.KindSource as DescribeKindSource.Authored;
                         var claim = describe.OpenProblemResolutionClaim;
                         describes.Add(new(describe.Id.Value, derived is null ? "authored" : "report-derived",
-                            authored?.Value.ToString(), derived?.Role?.ToString(), declaration,
+                            authored?.Value.ToString() ?? derived?.Role?.ToString(), derived?.Role?.ToString(), declaration,
                             claim is null ? null : new(claim.ProblemSlug.Value, claim.ResolutionKind.ToString(),
                                 claim.Members(declaration ?? string.Empty).Order(StringComparer.Ordinal).ToImmutableArray())));
                         Visit(describe.Content);

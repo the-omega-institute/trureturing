@@ -352,7 +352,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                     : Arg("role") is { } authoredRole ? EnumName(compilation.GetTypeByMetadataName("StrataLint.Scribe.DescribeRole")!, authoredRole, node) : null;
                 var claim = Arg("openProblemResolutionClaim") as Claim;
                 var describe = new RelationDescribe(Str("id"), reportDerived ? "report-derived" : "authored",
-                    reportDerived ? null : name, role, declaration,
+                    reportDerived ? role : name, role, declaration,
                     claim is null ? null : new(claim.Problem, claim.Resolution,
                         new[] { declaration ?? string.Empty }.Concat(claim.Additional).Order(StringComparer.Ordinal).ToImmutableArray()));
                 return new object?[] { describe, Arg("narrative") };
