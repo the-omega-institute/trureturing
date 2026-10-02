@@ -18,8 +18,6 @@ open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 open D5.S3.Arith.FibonacciAtomic.FirstRejectionCutCapacity
 open scoped BigOperators
 
-abbrev Word (k : ℕ) := Fin (k + 1) → Window
-abbrev Side (k : ℕ) (A : Finset (Fin (k + 1))) := {r // r ∈ A} → Window
 abbrev Complement (k : ℕ) (A : Finset (Fin (k + 1))) :=
   {r // r ∉ A} → Window
 
