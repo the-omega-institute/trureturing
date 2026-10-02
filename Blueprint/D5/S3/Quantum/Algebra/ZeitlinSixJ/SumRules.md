@@ -24,6 +24,10 @@ $$\forall N \in \mathit{Nat},\; (2 \le N) \Rightarrow ((\forall j \in \mathit{Na
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/ZeitlinSixJ/SumRules.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lichtenfelz-modin-preston-2026-zeitlin-sixj-identities` (proved) by `D5/S3/Quantum/Algebra/ZeitlinSixJ/SumRules.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lichtenfelz-modin-preston-2026-zeitlin-sixj-identities","declaration_gid":"D5/S3/Quantum/Algebra/ZeitlinSixJ/SumRules.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

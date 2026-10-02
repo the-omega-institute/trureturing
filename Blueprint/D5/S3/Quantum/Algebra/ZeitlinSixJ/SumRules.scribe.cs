@@ -16,13 +16,17 @@ internal sealed class SumRulesDocument : IScribeDocumentDefinition
             Node("claim", "claim", F0(),
                 "Conjecture 1, page 6, section 2.2, equations (2.10)–(2.13): for every 1 ≤ j,l ≤ N−1, the four displayed identities hold; the inverse-Casimir identity alone requires j ≠ l. The complete source quotation, including the Casimir and harmonic-number conventions, is in the cited literature note. The encoding quantifies over natural N ≥ 2; W(N,i,j,l) is the top row i,j,l with bottom row (N−1)/2,(N−1)/2,(N−1)/2, and Wij(N,i,j) has top row i,(N−1)/2,(N−1)/2 and bottom row j,(N−1)/2,(N−1)/2. Each sixJ argument is twice the corresponding spin. The sum variable i+1 in range(N−1) traverses exactly 1,...,N−1. The first identity alone assumes j≠l. Harmonic numbers are rational and are cast to Real.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", F1(),
-                "The four identities hold over their complete stated ranges. The Green inverse, parity addition, Jacobi diagonal and harmonic antidifference give the four conjuncts.", DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                "The four identities hold over their complete stated ranges. The Green inverse, parity addition, Jacobi diagonal and harmonic antidifference give the four conjuncts.", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lichtenfelz-modin-preston-2026-zeitlin-sixj-identities"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("zeitlin-sumrules-" + name.Replace("_", "-").Replace(".", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Call(string name, params Formula[] arguments) =>
