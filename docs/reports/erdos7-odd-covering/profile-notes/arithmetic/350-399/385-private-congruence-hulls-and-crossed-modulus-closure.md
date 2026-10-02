@@ -165,6 +165,14 @@ Opposite concentrated primes5 and7 force H_3<=28. If R avoids
 nonternary exponent is at most48; concentrated exponents are at most14.
 The number of nonconcentrated primes remains unbounded.
 
+[Section145](#145-separate-shallow-row-laminarity-permits-unrestricted-cross-row-intersections)
+requires laminarity only within each shallow depth row; arbitrary
+cross-row intersections still admit a fixed original-label repair.
+A balanced first row gives one actual full-source sparse point; if it
+fails W, that same point carries simultaneous gcd-one depth-two root
+triples. Two numerical divisor chains supply a concrete balanced case.
+The unrestricted within-row crossings and primitive triples remain open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17801,3 +17809,129 @@ OCP2 can now be applied directly to an R-only composite parent d once tau(d)>=N 
 In particular, Report385 §136's R-only packet is at one COMPLETE nonternary cofactor. Its q-bearing phases lie along one q-adic branch, so packet cardinality does not furnish a branching q-tree. The pure3^H private source is not in the q-free-live residual. This argument uses only HC1's existing actual descendant-phase packet and does not infer either missing source property.
 
 The all-concentrated SG1 support-gap bound cannot simply be applied here: its old collision proof restricts common cofactors to3^c, whereas with R present a common cofactor can be3^c s_R. Accordingly OCP7 is not used to claim a global support bound or a finite exhaustive proof of the original problem. A contradiction from these bounded heights and unbounded shared support remains unproved.
+
+## 145. Separate shallow-row laminarity permits unrestricted cross-row intersections
+
+Laminarity separately within the two shallow q-depth rows suffices to force an actual W point. The rows may cross each other arbitrarily. A second consumer permits a balanced first row and imposes no structural assumption on the second row: it produces one actual joint-source point with at most two depth-one incidences, where failure of W forces several simultaneous depth-two root triples with cofactor gcd one.
+
+These are ordinary arithmetic applications of the existing shallow predicate, complete joint-hole replacement and unweighted coloring results. No new Lean verification or unrestricted noncoverage is asserted.
+
+### The complete shallow deletion source
+
+Keep one original EB1 family, Q=3^H q^G M with q>3 and gcd(M,3q)=1, and fix a full ternary word u. Let B=B_1 disjoint-union B_2 consist of ALL its original shallow top labels at u:
+
+    B_e={d=3^H q^e s_d original:a_d=u modulo3^H},
+    e=1,2,
+
+with B_2 empty when G=1. Assume B is nonempty and retain every original outside B, including all deeper top labels. Use the complete simultaneous-deletion source
+
+    E_B=(Z/Q) minus union_(d notin B) A_d,
+    P_B=projection_M(E_B),
+    F_d=P_B intersect {v:v=a_d modulo s_d},
+    n_e(v)=|{d in B_e:v in F_d}|.
+
+Original private-point indispensability makes P_B and every F_d nonempty. Whole original coverage confines E_B to the word u; every q-free original is retained, so P_B is contained in the actual q-free residual R_u. No union of individual private regions replaces E_B.
+
+### Allocate the two rows from opposite ends
+
+Suppose the trace families {F_d:d in B_1} and {F_d:d in B_2} are EACH laminar. Equal traces retain all their separate original labels. Then
+
+    exists v in P_B, 3n_1(v)+n_2(v)<=8               (RLC1)
+
+when G>=2. At G=1 the conclusion is n_1(v)<=2. In either case the point belongs to the actual W by SH3. There is no hypothesis on cross-row intersections.
+
+To check the fixed code assignment, order labels with equal traces once, separately in each row, and define
+
+    rho_e(d)=1+|{f in B_e:F_d is a strict subset of F_f}|
+               +|{f preceding d in its equal-trace group}|.
+
+At each actual v, the incident traces in one row form a chain. Every ancestor of an incident trace also contains v, so the ranks of the incident ORIGINAL labels are exactly 1,...,n_e(v).
+
+Order the nine depth-two cells as
+
+    (0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2),
+
+where (i,j) denotes residue i+3j modulo9. A consecutive block of three cells is one first-digit cylinder. Give a depth-one original of rank r the first digit min(r-1,2). Its row's incident labels cover the first min(3n_1(v),9) cells in this order.
+
+For a depth-two original of rank r, let t=max(9-r,0) and assign the fixed code
+
+    c_d=floor(t/3)+3(t mod3) modulo9.
+
+These incident originals cover the last min(n_2(v),9) cells. Therefore
+
+    3n_1(v)+n_2(v)>=9
+
+implies coverage of all nine cells by the fixed incident prefixes. Each original's code depends on its trace rank, never on the currently tested v. Cross-row intersections have no role in this initial-segment/terminal-segment coverage.
+
+If this inequality held throughout P_B, JCE1 would hold for the entire deleted batch. Use its existing complete AP replacement
+
+    z=u+3^H c_d modulo3^(H+e_d),
+    z=a_d modulo s_d.
+
+It covers every integer lift of the COMPLETE E_B, keeps one AP per original, has fresh and mutually distinct numerical moduli, and lowers every changed modulus by the factor (3/q)^e_d. The common carrier remains 3^(H+min(G,2))q^G M. This is the exact EB1 contradiction already checked in §139; it proves RLC1. At G=1 only the first-digit allocation is used.
+
+This strengthens §141's combined-family laminarity. It removes the boundary-stability requirement of §142 when BOTH rows are themselves laminar. Section142 also allows balanced nonlaminar rows under its separate boundary condition, so no implication between those two broader sufficient classes is asserted.
+
+A concrete arithmetic hypothesis is that the numerical cofactors within each fixed depth row form a divisibility chain; the two chains may be unrelated. Each row's compatible cofactor cylinders are nested and incompatible ones are disjoint. The first row may, for instance, use powers of one cofactor prime and the second powers of another, at arbitrary available heights and actual phases.
+
+Consequently, if every (u,v) with v in P_B lies outside W, some SINGLE depth row contains crossing actual traces: there exist d,f in the same B_e and
+
+    v_0 in F_d intersect F_f,
+    v_1 in F_d minus F_f,
+    v_2 in F_f minus F_d.                            (RLC2)
+
+Their numerical cofactors are incomparable by divisibility. Crossings only between the two rows cannot obstruct this fixed-code repair.
+
+### A balanced first row yields a sparse point on the FULL shallow source
+
+Now impose no condition on B_2. Suppose the first-row incidence matrix, with rows v in P_B and columns ORIGINAL labels d in B_1, is balanced in §142's sense. Then
+
+    exists v in P_B, n_1(v)<=2.                       (RLC3)
+
+If B_1 is empty this is immediate. Otherwise suppose every row had at least three entries. The same classical polychromatic result used in §142 gives one fixed first-digit color to each original in B_1, with every actual v seeing all three colors.
+
+Delete ALL of B_1 union B_2, and insert the fresh APs only for B_1, of moduli 3^(H+1)s_d and their fixed colors, old word u and literal full cofactor phases. They cover every lift of the same E_B. This does not replace P_B by the smaller deletion source for B_1 alone. The exact budgets are
+
+    N_new=N_old-|B_2|,
+    S_old-S_new
+      =3^H[(q-3)sum_(d in B_1)s_d+q^2 sum_(d in B_2)s_d]>0.
+
+If B_2 is nonempty the class count decreases; otherwise the nonempty B_1 gives strict modulus-sum descent at equal count. Both contradict EB1, proving RLC3.
+
+### The SAME sparse point carries gcd-one root triples unless it survives
+
+Fix the actual v from RLC3. If (u,v) does not belong to W, SH2 supplies three shallow-good first-q roots. At most n_1(v) first roots can be supplied by incident depth-one originals. Hence at least
+
+    3-n_1(v)
+
+distinct first roots each contain a triple of incident depth-two originals with distinct second-q prefixes. By §130's existing second simultaneous ancestor restriction, EACH such triple obeys
+
+    gcd(s_(d_1),s_(d_2),s_(d_3))=1.                 (RLC4)
+
+No parent-cap theorem is added here: §130 already excludes three incident e>=2 originals in one first-q root sharing any nonunit cofactor divisor. The new relation is that these 3-n_1(v) root triples occur at the SAME actual v forced by the full-source first-row replacement. Triples from different roots have disjoint original labels.
+
+Thus the balanced first-row hypothesis gives this source alternative:
+
+    either P_B contains an actual W point,
+    or one actual v in P_B has n_1(v)<=2 and supports
+    at least 3-n_1(v) distinct first-root triples as in RLC4. (RLC5)
+
+One sufficient arithmetic condition excluding the second alternative is that every triple of depth-two originals at u with a common first-q root and distinct second-q prefixes has cofactor gcd greater than one. This condition is on their original numbers and literal q-prefixes, before choosing v. It can hold even when second-row traces cross arbitrarily.
+
+A simpler sufficient certificate is that, at each first-q root capable of containing three second-prefix branches, all depth-two cofactor labels have a common prime divisor. That prime may differ between roots, and other cofactor factors and heights remain unrestricted. Under either condition, RLC3–RLC5 force an actual W point. They do not assert its total shallow charge is less than one; that sharper conclusion belongs to RLC1.
+
+### Two divisor chains give a concrete first-row or packet criterion
+
+The first-row balanced hypothesis holds whenever its ORIGINAL labels can be partitioned into two laminar trace subfamilies. A concrete arithmetic sufficient condition is that its numerical cofactors can be partitioned into TWO divisibility chains, each giving one laminar actual trace family on P_B. The classical incidence theorem for the union of two laminar families gives total unimodularity, hence balance; no generic lemma is reproved. Equal traces preserve their separate original columns.
+
+The inspected source is Gurjar–Thierauf–Vishnoi, *Isolating a Vertex via Lattices: Polytopes with Totally Unimodular Faces*, [arXiv:1708.02222v3](https://arxiv.org/pdf/1708.02222v3), printed page4, citing Schrijver, *Combinatorial Optimization*, VolumeB, Theorem41.11. The unweighted polychromatic input remains the one cited and inspected in §142.
+
+By the finite Dilworth theorem, this numerical condition is divisibility width at most two. A concrete arbitrary-height palette is
+
+    {p^a r^b:0<=a<=A, b in {0,1}},
+
+partitioned into chains by b, for distinct cofactor primes p,r. Every subpalette qualifies, with arbitrary literal phases. The same two-chain criterion also applies directly to §143's fixed first-q-prefix depth-two packet and its OWN complete Omega_B: OHL8 then forces an actual packet row with at most two incidences. This extends its {1,p,r,pr} case, but that packet point alone is not a full-family W witness.
+
+CP1 vacancy and §144's individual exponent bounds do not supply these chain partitions or exclude the gcd-one root triples. In particular bounded prime exponents do not bound divisibility width when the prime support remains unbounded. The unresolved arithmetic step is to exclude or legally repair the actual within-row crossings and simultaneous gcd-one triples, retaining their complete original deletion obligations.
+
+Whenever one of the W conclusions above holds, its actual point mass is a valid input to §133's existing complete-tail law. The tail must still be taken in the genuine deep-retained complement. The shallow deletion hole E_B is not identified with that law's low-row deletion hole, and no uniform cofactor density or total price below one follows here.
