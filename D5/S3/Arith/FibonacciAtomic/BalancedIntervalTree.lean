@@ -18,9 +18,11 @@ namespace D5.S3.Arith.FibonacciAtomic.BalancedIntervalTree
 open FirstRejectionCutCapacity (interval)
 open TreeMessageRealization (Tree leaf fork leaves Full subtrees height)
 
-/-- Bisection puts the larger half first. Every node is an interval; a node
-whose left endpoint differs from its ancestor's occupies at most half that
-ancestor's interval. The tree has the least possible logarithmic height. -/
+/-- Every node is an interval. Relative to this call's original interval
+`[l, l+w)`, a node whose left endpoint differs from `l` has length at most
+`w / 2`. The proof constructs bisections with the larger half on the left;
+the public statement does not assert a balanced shape at every internal node.
+The tree has the least possible logarithmic height. -/
 theorem result (k l w : ℕ) (hw : 0 < w) (hbound : l + w ≤ k + 1) :
     ∃ t : TreeMessageRealization.Tree (Fin (k + 1)), Full t ∧ leaves t = interval k l (l + w) ∧
       height t = Nat.clog 2 w ∧

@@ -22,7 +22,11 @@ The equality for P holds for every full all-coordinate tree. Each minimum consis
 
 For n at least three, split the root into a leading interval of length ceil((n+1)/2) and its trailing complement. Recursively bisect both intervals with the larger half first. Every nonprefix node has length at most floor((n-1)/2), so the interval capacity formulas bound every node by n+1. The resulting height is clog(2,n+1). Ordinary balanced bisection attains height H with peak at most n+2.
 
-Any full binary tree of edge height h has at most 2^h labelled leaves. At n=2^H and height H, both root children must have n/2 leaves. Disjointness forces one child block to exclude zero; the arbitrary-subset bound then forces peak at least n+2. This also excludes height H among peak-minimal trees. Outside the exceptional case, the biased construction attains both minima. A single terminal and a two-terminal fork handle the two smallest sizes.
+Any full binary tree of edge height h has at most 2^h labelled leaves. When n=2^H is at least four and the tree has height H, both root children must have n/2 leaves. Disjointness forces one child block to exclude zero; the arbitrary-subset bound then forces peak at least n+2. This also excludes height H among peak-minimal trees. Outside the exceptional case, the biased construction attains both minima. A single terminal and a two-terminal fork handle the two smallest sizes.
+
+The lower bound in Proposition 41.1 follows from the existing capacity formula by seam-indicator counting and normalization, and is not an independent contribution. The two consecutive-block identities in its original proof, equations 41.2 and 41.3, have not been separately formalized.
+
+In Kowshik and Kumar, Optimal Function Computation in Directed and Undirected Graphs, Theorem 2 gives optimal encoding for two nodes. The simultaneous tree realization is Theorem 4 in Section III.B.
 
 Peak is a single node's message alphabet size, not simultaneous storage. Height counts dependencies, not an unconditional running time. Input access, control, precision, storage, total work and available parallel resources are separate quantities.
 

@@ -20,6 +20,8 @@ Every subtree has a nonempty adjacent coordinate block inside the original inter
 
 For length greater than one, divide into a leading block of length ceil(w/2) and a trailing block of length floor(w/2), then apply the same construction recursively. The child blocks partition the parent interval. The larger half determines the height through the ceiling-logarithm recurrence. A descendant of the trailing half stays inside that half; a nonleading descendant of the leading half is bounded by half the leading length.
 
+In Kowshik and Kumar, Optimal Function Computation in Directed and Undirected Graphs, Theorem 2 gives optimal encoding for two nodes. The simultaneous tree realization is Theorem 4 in Section III.B. The ordered interval bisection here is the repository's construction.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/BalancedIntervalTree.result`

@@ -45,5 +45,9 @@ internal sealed class BalancedIntervalTreeDocument : IScribeDocumentDefinition
                         + "recursively. The child blocks partition the parent interval. The larger half "
                         + "determines the height through the ceiling-logarithm recurrence. A descendant "
                         + "of the trailing half stays inside that half; a nonleading descendant of the "
-                        + "leading half is bounded by half the leading length."))), DescribeRole.Theorem))));
+                        + "leading half is bounded by half the leading length.")),
+                    Paragraph(Text("In Kowshik and Kumar, Optimal Function Computation in Directed "
+                        + "and Undirected Graphs, Theorem 2 gives optimal encoding for two nodes. "
+                        + "The simultaneous tree realization is Theorem 4 in Section III.B. "
+                        + "The ordered interval bisection here is the repository's construction."))), DescribeRole.Theorem))));
 }
