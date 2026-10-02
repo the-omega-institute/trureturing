@@ -177,17 +177,21 @@ def write_receipt(report, captured):
         Path(temporary).unlink(missing_ok=True)
 
 
-def seal(repository, report, captured):
+def seal(repository, report, captured, owner_snapshot=None):
     current = capture(repository)
     if current != captured:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        if owner_snapshot is not None:
+            cleanup_receipt(repository, report, owner_snapshot, writer_owned=True)
         raise ValueError('registered inputs changed during report entry')
     if not captured['eligible']:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        if owner_snapshot is not None:
+            cleanup_receipt(repository, report, owner_snapshot, writer_owned=True)
         return
     # The caller reaches this only after Lake's default+report facet and normal
     # private publication have succeeded. Bind the exact published five pieces.
     write_receipt(report, captured)
+    if owner_snapshot is not None:
+        claim_receipt(report, owner_snapshot)
 
 
 def reuse(repository, report, output):
@@ -324,9 +328,8 @@ def main():
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':
         with cache_guard(args.repository):
-            seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
-            if args.owner_snapshot is not None:
-                claim_receipt(args.report, args.owner_snapshot)
+            seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
+                 args.owner_snapshot)
     elif args.command == 'seed-version':
         result = seed_version(args.repository, args.report)
         # Three whitespace-free fields for the local shell entry; no writes.

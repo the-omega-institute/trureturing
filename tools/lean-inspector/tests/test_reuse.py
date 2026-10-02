@@ -391,11 +391,14 @@ class ReuseTests(unittest.TestCase):
 
     def test_missing_execution_contract_disables_only_reuse(self):
         api = self.receipt()
+        owner = self.root / 'receipt-owner.json'
+        api.claim_receipt(self.report, owner)
         del self.policy['report_execution']
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
-        api.seal(self.root, self.report, captured)
+        with api.cache_guard(self.root):
+            api.seal(self.root, self.report, captured, owner)
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()

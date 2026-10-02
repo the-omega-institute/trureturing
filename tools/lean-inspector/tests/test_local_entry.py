@@ -529,6 +529,71 @@ except BlockingIOError:
         self.assert_build(self.entry('REBUILD_REPORT_CACHE=1'))
         self.assertFalse(Path(str(self.seed) + '.reuse.json').exists())
 
+    def seal_interleaving(self, branch, replacement):
+        runner = self.root / 'tools/scripts/worktree/native_fixture.py'
+        runner.write_text(runner.read_text().replace(
+            "73 if report else int(os.environ.get('PROGRAM_EXIT', '0'))", '0'))
+        self.environment['SEAL_BRANCH'] = branch
+        self.environment['SEAL_REPLACEMENT'] = str(int(replacement))
+        self.environment['FIXTURE_TEST_DIRECTORY'] = str(fixtures.HERE / 'tests')
+        if branch == 'ineligible':
+            self.environment['LEAN_OPTS'] = '-Dfixture=true'
+        self.fixture.write('tools/lean-inspector/native.py', '''import json, os, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, os.environ['FIXTURE_TEST_DIRECTORY'])
+import test_reuse
+import reuse
+root = Path(sys.argv[2])
+report = root / '.lake/build/stratalint/raw-lean-report.json'
+receipt = Path(str(report) + '.reuse.json')
+with reuse.cache_guard(root):
+    claimed = Path(os.environ['STRATALINT_RECEIPT_OWNER_SNAPSHOT']).read_text()
+    (root / 'claimed-identity.json').write_text(claimed)
+    if os.environ['SEAL_BRANCH'] == 'input-change':
+        (root / 'D5/A.lean').write_text('def a := 2\\n')
+    if os.environ['SEAL_REPLACEMENT'] == '1':
+        # A subsequent eligible writer publishes a complete, current bundle.
+        with patch.dict(os.environ, LEAN_OPTS=''):
+            fixture = test_reuse.ReuseTests()
+            fixture.root, fixture.report = root, report
+            fixture.receipt()
+            assert not reuse.probe(root, report)['needs_lake']
+        (root / 'replacement-receipt').write_bytes(receipt.read_bytes())
+        (root / 'replacement-identity.json').write_text(json.dumps(reuse.receipt_identity(report)))
+''')
+        result = self.entry('REBUILD_REPORT_CACHE=1')
+        self.assertEqual(result.returncode, 2 if branch == 'input-change' else 0,
+                         result.stdout + result.stderr)
+        if branch == 'input-change':
+            self.assertIn('LEAN_INSPECTOR_FAILED phase=seal exit=1', result.stderr)
+            self.assertIn('registered inputs changed during report entry', result.stderr)
+        else:
+            self.assertIn('phase=seal status=completed', result.stderr)
+        receipt = Path(str(self.seed) + '.reuse.json')
+        if replacement:
+            import reuse
+            identity = json.loads((self.root / 'replacement-identity.json').read_text())
+            self.assertNotEqual(json.loads((self.root / 'claimed-identity.json').read_text()), identity)
+            self.assertTrue(receipt.is_file(), '[FAIL] seal removed successor receipt')
+            self.assertEqual(receipt.read_bytes(), (self.root / 'replacement-receipt').read_bytes())
+            self.assertEqual(reuse.receipt_identity(self.seed), identity)
+        else:
+            self.assertIsNotNone(json.loads((self.root / 'claimed-identity.json').read_text()))
+            self.assertFalse(receipt.exists(), '[FAIL] seal retained owned invalid receipt')
+
+    def test_seal_input_change_preserves_successor_receipt(self):
+        self.seal_interleaving('input-change', replacement=True)
+
+    def test_seal_ineligible_preserves_successor_receipt(self):
+        self.seal_interleaving('ineligible', replacement=True)
+
+    def test_seal_invalidates_owned_receipt(self):
+        for branch in ('input-change', 'ineligible'):
+            with self.subTest(branch=branch):
+                self.seal_interleaving(branch, replacement=False)
+                self.fixture.receipt()
+
     def test_owned_selected_program_failure_clears_published_receipt(self):
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
         self.executable('bin/lake', '[[ "$1" == --version ]] || exit 71\n')
