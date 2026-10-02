@@ -66,8 +66,8 @@ of $B$ and $E$), and requires the realizing box to lie in $\mathcal P$.
   620–634).
 - URL: https://arxiv.org/abs/1408.1223v2 (v2, 2015-12-13, the latest
   version; source `monsyg_arxiv_rev.tex`, md5
-  `c101ce685080e746b6aadf13b130b759`): the correlators (l. 228–233), the
-  class $\mathcal P$ (l. 424–446), $R$ for $M=2$ (l. 320), the printed
-  $M=2$ list (l. 469–472), the chained Bell expression and its monogamy
-  relation (l. 594–604), the set $\mathcal P^M_\Delta$ (l. 647–652), the
-  coordinates (l. 664–671) and (ElPrat) with the conjecture (l. 713–723).
+  `5de9e3dfdbf983d1702258847136f444`): the correlators (l. 225–230), the
+  class $\mathcal P$ (l. 425–443), $R$ for $M=2$ (l. 319), the printed
+  $M=2$ list (l. 468–471), the chained Bell expression and its monogamy
+  relation (l. 594–602), the set $\mathcal P^M_\Delta$ (l. 646–651), the
+  coordinates (l. 665–669) and (ElPrat) with the conjecture (l. 712–723).

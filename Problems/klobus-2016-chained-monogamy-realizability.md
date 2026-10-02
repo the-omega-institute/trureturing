@@ -40,8 +40,8 @@ for all $a_i,b_i,c\in\{0,1\}$.
 
 The paper derives the monogamy relation $|I^M_{AB}|+2|\langle
 B_0E\rangle|\le2M$ of nonsignaling boxes from three-variable inequalities
-and reads a violation by $\Delta$ as forced signaling: the correlators in
-each pair $S^i_{A\to BE}$, $S^i_{B\to AE}$ must differ, and each pair
+and reads a violation by $\Delta>0$ as forced signaling: the correlators in at
+least one pair $S^i_{A\to BE}$, $S^i_{B\to AE}$ must differ, and each pair
 defines a binary classical channel. The communication strength of the
 violation is the least over violating boxes of the largest capacity of
 these channels. The conjecture identifies the set over which this
@@ -155,13 +155,13 @@ every admissible coordinate vector).
   exactly the condition that this maximum reaches $2M+\Delta$; since
   $x_B^0+x_B^1\le2$, also $t\ge\tfrac12$.
 - **Follows from it (not stated in Lean):** with the paper's derivation of
-  (ElPrat) as a necessary condition (l. 700–719), the set of coordinate
+  (ElPrat) as a necessary condition (l. 704–716), the set of coordinate
   vectors of $\mathcal P^M_\Delta$ is exactly the (ElPrat) polytope inside
   $[-1,1]^{4M-2}$, so the communication strength $C^M_\Delta$ is a
   minimization over this explicit polytope. At $\Delta=0$ the realizing
   box need not signal; for $\Delta>0$ every realizing box signals.
 - **Checked by reading (orchestrator, issue #12401):** the paper's printed
-  $M=2$ list (l. 469–472, labels niert1–niert4) has the signs of
+  $M=2$ list (l. 468–471, labels niert1–niert4) has the signs of
   $x_A^1,y_A^1$ reversed in niert2 and niert3; the point
   $(x_A^1,y_A^1,x_B^0,y_B^0,x_B^1,y_B^1)=(1,1,1,1,1,-1)$ satisfies all four
   printed inequalities at $\Delta=2$ but has $x_B^0+x_B^1-T=-2$, so it is
