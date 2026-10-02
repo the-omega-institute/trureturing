@@ -137,7 +137,9 @@ Tier 1 published conjecture; resolution `Proved` by
   $d=2$ to $d=3$. The paths from $(0,i+1)$ stop at $d\le2$, the equations
   with $d\ge3$ see only the paths from $(i,1)$ with $i\ge3$, and the
   coefficient system is triangular. All remaining sums are iterated forward
-  differences of binomial coefficients of degree below their order.
+  differences $\sum_i(-1)^{M-i}\binom Mi\binom{i+a}b$, equal to
+  $\binom a{b-M}$ for $M\le b$ and to $0$ for $M>b$ (Route, step 4); the
+  printed denominator uses the case $M=b$, where the value is $1$.
 - **Follows from the proved closed form:** the diagonal of OEIS A272688 is
   $x_n^n=(-1)^n n!\,c_n^n=\dfrac{n!\,(2n-2)!}{(n-2)!\,(n+1)!}$ for $n\ge3$
   (and $1$ at $n=2$).
