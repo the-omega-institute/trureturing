@@ -82,6 +82,15 @@ lifted to the original source: its canonical law charges a positive
 box whose entire ternary fibres are already covered by q-free primes.
 A compatible law or a paid positive-overlap construction remains needed.
 
+[Section132](#132-a-single-larger-prime-retained-palette-gives-an-actual-positive-reserve)
+obtains a reserve greater than two thirds from an existing law already
+on the actual residual, under its explicit retained-palette condition.
+[Sections133--134](#133-complete-surviving-q-tails-improve-the-same-marginal-liability-law)
+keep complete surviving q-tails after a shallow skeleton. This lowers
+the deep-q prefix prices both at a fixed W-marginal and on the larger
+projected U; the latter retains prefix-cofactor correlation. Adequate
+simultaneous source bounds and a strict total liability price remain open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -16614,3 +16623,101 @@ Finally, the full-payment unconditioned shortcut excluded by RE11 remains exclud
 for every nonnegative lambda on R. The gain resides in the supported conditional law and its actual incidences. It does not supply nonempty W, compatibility of SD1's canonical cofactor law, or a universal strict charge below one.
 
 These are ordinary mathematical consequences of the existing phase cap, SH2 and finite probability construction. No new Lean verification or unrestricted Erdős #7 conclusion is asserted.
+
+## 134. The larger projected source admits shallow cofactor choices and complete tails
+
+The larger projected set U has an exact shallow obstruction test and supports a full-tail probability with the coefficients kappa_e of DT2, even without a point of W. The construction reuses the original full-height phase cap, the existing finite-tree alternative and finite-fibre normalization. It retains the actual correlation between the selected q-prefix and its cofactor witness. These are ordinary mathematical deductions, not new Lean verification.
+
+### Fix the source and the meaning of U
+
+Keep one original family, Q=3^H q^G M, q>3, gcd(M,3q)=1, and t=q-2. Let J consist of q-bearing originals below full ternary height H; K=D\J. Let E_J be the complement of ALL retained originals. Let R be the full q-free residual on (Z/3^H) times (Z/M), and let R_u={v:(u,v) in R}. The projected joint-liability fibre is exactly
+
+    E_u={xi:exists v,(u,xi,v) in E_J}.
+
+U is Report375 LM4's existing set of words u for which the complement of E_u contains NO complete ternary depth-G q-tree. EB1 gives U nonempty by JL2--JL3. Also U is a subset of L=projection_3(R): if R_u is empty then E_u is empty and its complement contains every such tree.
+
+For u in L define D_(u,v) as the full retained q-bearing union on the q-line at that actual pair, and put
+
+    Z_u=(Z/q^G)\E_u=intersection_(v in R_u)D_(u,v).  (PS1)
+
+This is an intersection, because one live witness v suffices for membership in E_u. All phases and full q-heights remain those of the original family.
+
+### Complete cofactor sets at depth two
+
+For G>=2 and beta modulo q^2, let C_(u,beta) contain exactly the v in R_u for which no retained original of q-height one or two has all of:
+
+* original full ternary phase u;
+* original cofactor phase v modulo s_d;
+* original q-prefix containing the full beta cylinder.
+
+This definition includes the s_d=1 originals. A matching unit-cofactor shallow ancestor makes C empty; omitting it would invalidate the construction.
+
+At every fixed (u,beta), DR8 at the actual parent 3^H q^2 bounds the ENTIRE set of deeper retained originals with that projected phase by two, even before a v is selected. If such an original exists, divisor closure supplies the parent. Thus, for v in C_(u,beta), the complete actual tail
+
+    Y_(u,v,beta)=E_(u,v) intersect [beta]_(q^2)
+
+is obtained by deleting at most two genuine deeper prefixes from that cylinder. For G>2,
+
+    |Y_(u,v,beta)|/q^(G-2)>=1-2/q=t/q>0.           (PS2)
+
+The estimate uses a union bound on the two actual forbidden cylinders, each of relative mass at most 1/q. It does not erase their phases or replace Y by the whole cylinder. At G=2 there are no deeper prefixes and Y is the singleton beta, with relative density one.
+
+The projected subtree criterion is exact:
+
+    Z_u intersect [beta] contains a complete ternary
+    subtree of depth G-2 rooted at beta
+        iff C_(u,beta) is empty.                    (PS3)
+
+If C is empty, every actual v has a shallow ancestor covering the whole beta cylinder, so the whole cylinder lies in Z_u. If C is nonempty, fix one of its v. The corresponding D_(u,v) below beta has at most two deeper prefixes, each contained in a single immediate child; it cannot contain the required three-child tree. Z_u is a subset of that D_(u,v). At G=2 the depth-zero tree means the single leaf beta; the same equivalence holds because the chosen shallow-safe v has no retained owner there.
+
+Consequently U has an exact depth-two test: mark beta bad iff C_(u,beta) is empty, and test whether the bad leaves contain a complete ternary depth-two tree. A word is in U exactly when they do not. This follows by applying PS3 separately at each depth-two node, and is NOT an equality between Z_u and the union of the empty-C cylinders.
+
+The existing finite-tree alternative therefore supplies, for every u in U, a t-by-t skeleton S_u with t^2 depth-two leaves, all having nonempty C_(u,beta). The skeleton has exactly t first roots and t selected second children at each root.
+
+### One actual probability and its exact prices
+
+Fix ONE probability sigma on the same U and choose all skeletons once. Sample u from sigma, beta uniformly from S_u, v uniformly from the COMPLETE C_(u,beta), and xi uniformly from the COMPLETE Y_(u,v,beta). PS2 makes every denominator positive. Every sampled point lies in the original E_J, including all deep retained deletions. Every retained original has probability zero.
+
+For d=3^a q^e s in J with actual phase r_d, the exact original-event probability is
+
+    nu(A_d)=sum_(u in U,u=r_d mod3^a) sigma(u)t^(-2)
+      *sum_(beta in S_u) [1/|C_(u,beta)|]
+        *sum_(v in C_(u,beta),v=r_d mod s)
+          |Y_(u,v,beta) intersect [r_d]_(q^e)|
+            /|Y_(u,v,beta)|.                         (PS4)
+
+For this same law define
+
+    g_(u,beta)(d)=|C_(u,beta) intersect [r_d]_s|/|C_(u,beta)|,
+    kappa_e=t^(-min(e,3))*q^(-max(e-3,0)).
+
+For an active ternary phase u, its conditional probability obeys
+
+    e=1: nu_u(A_d)<=t^(-2)
+            sum_(beta in S_u,beta=r_d modq)g_(u,beta)(d);
+    e>=2: nu_u(A_d)<=kappa_e*1_(beta_d in S_u)
+                                  *g_(u,beta_d)(d), (PS5)
+
+where beta_d=r_d modq^2. For e=1 the corresponding tail probability is exactly one on a matching first root and zero elsewhere. For e=2 the same statement holds at the single matching beta. For e>=3, the numerator in PS4 is at most q^(G-e), while PS2 bounds its denominator below by (t/q)q^(G-2); after the skeleton weight t^-2 the bound is t^-3 q^(3-e). These observations prove each case of PS5. An incompatible ternary phase has probability zero.
+
+If the SAME selected C sets have |C_(u,beta)|/M>=delta>0 for all u of positive sigma-mass and all beta in S_u, then
+
+    g_(u,beta)(d)<=min(1,1/(s delta)).
+
+If the SAME sigma has ternary prefix caps beta_a, whole original coverage of E_J gives:
+
+    1<=sum_(d in J)nu(A_d)
+      <=sum_(d=3^a q^e s in J)
+           beta_a*kappa_e*min(1,1/(s delta)).         (PS6)
+
+For e=1 there are exactly t compatible skeleton leaves whenever the root is selected, giving the necessary factor t^-1. For e>=2 there is at most one matching leaf. No separately selected marginal or per-label optimizing source is used.
+
+Even without a useful cofactor reserve, PS5 with g<=1 gives the kappa_e q-prefix bound under this actual larger-U law. For e>=4 it is strictly below the old t^-e universal prefix price. This is an improvement of the actual JL3 interface without assuming any point of W. It alone does not make the total original J-price less than one or provide the desired ternary prefix caps.
+
+### Height-one case and correlation boundary
+
+For G=1 define C_(u,j) using the actual height-one retained ancestors of root j. Then j belongs to E_u exactly when C_(u,j) is nonempty. The ORIGINAL U consists of words with at least t=q-2 such roots. Select t of them, give each weight t^-1, and sample v uniformly from its complete C_(u,j); xi=j. Every J original has e=1. PS4--PS6 hold with this one-level formula and kappa_1=t^-1. No q^2 node or artificial tail is introduced. G=2 uses the main construction with singleton tails and only e=1,2 prices.
+
+The (u,v)-marginal of PS4 need not be supported on W, and its conditional q-law at a fixed (u,v) need not have the old RE7 caps. The v choice depends on beta. Therefore one must NOT assert nu(A_d)<=kappa_e theta(B_d) merely by naming this marginal theta. PS4--PS5 are the legitimate correlated prices. In particular this construction does not identify U with projection(W), condition away the cofactor choice, or grant the same lambda to a different experiment.
+
+CF3--CF5 choose a full q-tree leaf first and then condition its complete actual cofactor fibre. Here the source chooses a shallow prefix, then a full shallow-safe cofactor, then a dense complete actual tail. The two laws need not coincide, and a per-label minimum of their prices is unjustified. Useful delta, ternary distribution, and a strict whole-family upper price remain the substantive unresolved conditions.
