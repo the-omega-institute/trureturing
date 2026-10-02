@@ -1,0 +1,16 @@
+**定义 303.0。** 沿用 §§301–302 的 $Q_L,A_L,m_L=3L+2,U_H$ 与 $E=e^\gamma$。对 $L\ge3$，定义饱和 Euler 权重、Robin 阈值及正实常数
+\[
+\mathscr F_L=\prod_{p\mid A_L}(1-p^{-1})^{-1},\qquad
+R(H)=E\log\log H\quad(H>1),\qquad
+d=\log\frac3{2\sqrt2}=\tfrac12\log\frac98>0.
+\tag{303.1}
+\]
+对同一饱和签名的正整数 $H$，置
+\[
+\mathcal N_L(H)=\{p:p\mid H,\ p\nmid A_L\},\qquad
+K_L(H)=\#\mathcal N_L(H),\qquad
+J_L(H)=\sum_{p\in\mathcal N_L(H)}\log(1-p^{-1})^{-1}.
+\tag{303.2}
+\]
+所有集合中的 $p$ 都为素数，计数只计不同素数，不计其幂次。由定理302.1，同签名恰好意味着 $H=A_Lt$、$t\ge1$ 且 $(t,3)=1$；乘子与 $Q_L$ 不要求互素。
+

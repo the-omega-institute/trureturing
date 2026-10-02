@@ -1,0 +1,38 @@
+**定理 309.2（一个质量极限强制宽度与矩极限）。** 取最终位于 $[m/2,m]$ 的实际截止序列 $z_L$。若对有限实数 $a$ 有
+\[
+h_L/\rho^3\longrightarrow a,
+\tag{309.10}
+\]
+则 $a\ge0$，并且
+\[
+D_L/\rho^3\longrightarrow2a,\qquad
+D_L/m\longrightarrow0,\qquad
+M_L/\rho^6\longrightarrow a^2.
+\tag{309.11}
+\]
+因此该实际完整末端族在 §308 的有限极限域中满足 $j=a^2$。若 $a>0$，其实际加权平均删除距离还满足
+\[
+\frac{M_L/h_L}{m^{3/4}}\longrightarrow a.
+\tag{309.12}
+\]
+
+**证明。** 记 $q_L=h_L/\rho^3$、$t_L=D_L/\rho^3$。由（309.4）的端点式，
+\[
+|q_L-t_L/2|\le\epsilon_Lt_L+\delta_L.
+\tag{309.13}
+\]
+在 $\epsilon_L<1/4$ 时，左右两侧重排给
+\[
+\frac{2(q_L-\delta_L)}{1+2\epsilon_L}
+\le t_L\le
+\frac{2(q_L+\delta_L)}{1-2\epsilon_L}.
+\tag{309.14}
+\]
+两端均趋于 $2a$，由夹逼得第一个极限。所有 $q_L,t_L$ 非负，故 $a\ge0$；又 $D_L/m=t_L/\rho$，得第二个极限，不预先假设相对宽度趋零。将（309.6）除以 $\rho^6$，
+\[
+\left|\frac{M_L}{\rho^6}-\frac{t_L^2}{4}\right|
+\le2t_L(\epsilon_Lt_L+\delta_L)\longrightarrow0,
+\tag{309.15}
+\]
+得到最后一个极限，包括 $a=0$。若 $a>0$，两个实际质量与矩极限取商给（309.12）。这一步强制的是完整截止尾集合的矩；没有将任意删去子集视为同一个末端族。$\square$
+

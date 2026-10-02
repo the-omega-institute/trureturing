@@ -1,0 +1,48 @@
+### theorem 262.2 实际源在临界宽度上的有界弦误差
+
+在 §260.3 的同一分析输入下，对每个固定 $\delta\ge0$，全部充分大的 $a$、
+$a<b\le a+H_\delta^-(a)$ 及 $y\in[a,b]$ 一致有
+
+$$
+\begin{aligned}
+w(y)|\mathcal R_{a,b}(y)|\ll{}&
+L_a^{-2\delta}
++a^{-1/12}e^{u_a/2}L_a^{-1/2-\delta}\\
+&+a^{-1/4}e^{3u_a/2}L_a^{-5/2-3\delta}
++a^{-1/4}e^{u_a/2}L_a^{3/2-\delta}.
+\end{aligned}
+\tag{262.2}
+$$
+
+因此 $\delta>0$ 时归一弦误差一致趋零；$\delta=0$ 时它一致有界。
+对每个固定 $\delta$，仍有 $H_\delta^-(a)/a\to0$，并且
+$H_\delta^-(a)/a^{3/4}\to\infty$。
+
+**证明。** 式（260.10） 给出，对 $a^{2/3}\le T\le a^{0.99}$，
+
+$$
+M_{a,a+T}\ll a^{2/3}+TL_ae^{-u_a}
++\frac{T^2}{aL_a}+\sqrt a\,L_a^2.
+$$
+
+固定 $\delta$ 后，$T=H_\delta^-(a)$ 最终在上述范围内，且 $a+T\le2a$。
+对任何较短区间使用同一截止 $T$；式（260.4） 于是给
+
+$$
+w(y)|\mathcal R_{a,b}(y)|
+\ll\frac{T}{a^{3/2}}
+\left(a^{2/3}+TL_ae^{-u_a}+\frac{T^2}{aL_a}+\sqrt a\,L_a^2\right).
+$$
+
+主成本恰为
+
+$$
+\frac{T^2L_ae^{-u_a}}{a^{3/2}}=L_a^{-2\delta}.
+\tag{262.3}
+$$
+
+其余三项逐项代入给式（262.2）。
+由于 $u_a=o(L_a)$，任何固定正幂的 $a^{-1}$ 都压过这里的指数与对数因子，
+故后三项趋零；$\delta>0$ 时第一项也趋零。
+两个宽度比值的结论同样由 $\log L_a=o(u_a)$ 与 $u_a=o(L_a)$ 得到。$\square$
+

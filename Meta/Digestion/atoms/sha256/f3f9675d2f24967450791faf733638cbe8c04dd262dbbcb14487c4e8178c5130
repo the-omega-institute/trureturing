@@ -1,0 +1,10 @@
+## 253. 完整截止模型的阶乘归一与统一修正预算
+
+沿用 §252 的同一归一化连续模型
+$\mathcal F(s)=\mathcal J(s)+\mathcal H(s)$。
+取 $\varepsilon,C,q>0$，使 $\mathcal H$ 在 $|s|<\varepsilon$ 解析，
+其 Taylor 系数满足 $|h_n|\le Cq^n$，且式（252.1）在 $0<s<\varepsilon$ 成立。
+经典 Borel–Laplace 方法作为中间工具，背景见
+[DLMF §2.11(v)](https://dlmf.nist.gov/2.11#v) 及其中的 Borel 文献指引；
+本节将其用于既定移动截止模型，并把只截断解析修正的统一预算接回式（251.4）。
+

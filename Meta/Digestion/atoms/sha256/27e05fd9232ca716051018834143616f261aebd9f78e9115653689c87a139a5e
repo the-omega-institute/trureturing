@@ -1,0 +1,25 @@
+### definition 255.1 同一价格点的归一化证书族
+
+令 $t\ge100$、$K=2461/1000$、$c_R=2(\sqrt2-1)$，对整数 $N\ge0$ 定义
+
+$$
+\mathcal Z_t=t e^{t/2}\Phi(e^t),\qquad
+\Theta(t)=t e^{t/2}\mathcal M(t),\qquad
+e_N(t)=4\frac{(10/t)^{N+1}}{1-10/t},
+$$
+
+$$
+\begin{aligned}
+\mathscr C(t)&=\mathcal Z_t+\Theta(t)-\frac{2K}{t^2},\\
+\mathscr C_N(t)&=\mathcal Z_t+\mathcal J(1/t)
++\sum_{n=0}^N\frac{h_n}{t^n}-\frac{2K}{t^2}-e_N(t).
+\end{aligned}
+\tag{255.1}
+$$
+
+于是 $\mathscr C_N=t e^{t/2}(\Phi+\mathcal M_N-B-E_N^*)$，
+$\mathscr C=t e^{t/2}(\Phi+\mathcal M-B)$，函数 $\Phi$ 的输入均为 $e^t$。
+因此 $\mathscr C_N\ge0$ 恰是式（254.7）的正性充分条件。
+在相同实际价格源与其 Dusart 输入下，还有
+$t e^{t/2}\mathfrak D(e^t)>\mathscr C_N(t)$。
+

@@ -1,0 +1,39 @@
+**定义 343.1（固定三角预算与晚期截止集）。** 固定 §§337–339 的同一实际累计证书、起点与块斜率，在本节假设 RH。沿用实际正频率集 $\Gamma$、正权重 $a_\gamma=m_\gamma/[\gamma(1/4+\gamma^2)]$、中心 $c_0$ 与谱函数 $S,F$，其中 $\sum_\gamma a_\gamma<\infty$。定义
+
+$$
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma,\qquad
+D_\triangle=B_\triangle-c_0,\qquad
+\Delta_\triangle(T)=B_\triangle+S(T)
+=2\sum_{\gamma\in\Gamma}a_\gamma[1-\sin(\gamma T)].
+\tag{343.1}
+$$
+
+以下要求 $D_\triangle\ge0$，并使用这一预先固定的预算。它与 §339 的实际临界预算 $D_{\rm crit}=A_*-c_0$ 区别；本节不假设 $A_*=B_\triangle$。记
+
+$$
+M_\triangle(T)=D_\triangle+\mathcal C^{\rm fin}(e^T).
+\tag{343.2}
+$$
+
+这里的“非正截止点”指 $M_\triangle(T)\le0$，包括零余量。它表示该固定累计预算的证书未给出严格正余量，不把这些截止点定义为 Robin 不等式的反例。
+
+由定理339.1，存在固定 $C\ge0$ 和起点 $T_b\ge1$，使全部 $T\ge T_b$ 满足
+
+$$
+M_\triangle(T)=\Delta_\triangle(T)+\frac{F(T)}T+R_1(T),
+\qquad |R_1(T)|\le\frac C{T^2}.
+\tag{343.3}
+$$
+
+取任意实际频率 $\gamma_0\in\Gamma$，记 $a_0=a_{\gamma_0}>0$，并置
+
+$$
+L=\frac{2\pi}{\gamma_0},\quad
+T_0=\max(T_b,L,1),\quad
+E=\{T\ge T_0:M_\triangle(T)\le0\},\quad
+\mathcal B=\{r\in\mathbb N:r\ge2,\ \log r\in E\}.
+\tag{343.4}
+$$
+
+由于 $T_0\ge1$，$\mathcal B$ 中的整数均大于 $1$。累计证书连续，故 $E$ 为可测集。若纳入证书定义域中 $T_0$ 以前的非正截止，以下渐近结论只增加一个有界连续区间或有限整数集。
+

@@ -1,0 +1,21 @@
+**定义 307.0。** 沿用 §305 的实际整数 $T_L=\widetilde C_L$、$m=3L+2$、$E=e^\gamma$、$\ell=\log m$、$S(m)$ 及余量 $\Delta$。对 $L\ge16$ 与实数 $m/2\le z\le m$，置
+\[
+\mathcal T_L(z)=\{z<p\le m:p\equiv1\pmod3\},\quad
+B_L^{\rm tail}(z)=\prod_{p\in\mathcal T_L(z)}p,
+\quad H_L(z)=T_L/B_L^{\rm tail}(z).
+\tag{307.1}
+\]
+乘积只取素数。另置
+\[
+D=m-z,\quad X_L=\log T_L,\quad U_L=U_{T_L},\quad
+h_L=\sum_{p\in\mathcal T_L(z)}\log p,\quad
+s_L=\sum_{p\in\mathcal T_L(z)}\log(1+p^{-1}),
+\tag{307.2}
+\]
+\[
+M_L=\sum_{p\in\mathcal T_L(z)}(m-p)\log p,\qquad
+b_L=\frac{U_L}{E\ell}-\frac m{X_L}.
+\tag{307.3}
+\]
+$b_L$ 是同一实际整数上的有符号失衡，不预先指定其符号，也不将它定义成余量差。
+

@@ -1,0 +1,14 @@
+**推论 336.4（同一无限累计条件的递归表示）。** 在 §335 的同一输入下，以下条件等价：
+
+$$
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists D\in\mathbb R\ \exists k_1\ge k_0,
+\ \forall\text{实际块 }k\ge k_1,\ \forall\text{本块相邻格 }[a,b],
+\ \forall t\in\mathscr T_{a,b}(K):\quad G_{K,D}(t)\ge0.
+\end{aligned}
+\tag{336.12}
+$$
+
+这里 $D$ 为固定偏移，所有格使用从同一起点携带的同一 $G_{K,D}$；不允许按格自由重置 $D$。在有限区间上的检查集合与平方密度网格一样具有 $O(\sqrt X)$ 个节点量级，但不据此声称计算所有有限节点素数前缀的工作量也是 $O(\sqrt X)$。
+

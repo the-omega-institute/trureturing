@@ -1,0 +1,59 @@
+### theorem 260.2 同一实际源的中心化恒等式与局部预算
+
+对定义 260.1 的全部参数，有
+
+$$
+\boxed{\mathcal R_{a,b}(y)
+=-\lambda_y\int_a^y k(v)E_a(v)\,dv
++(1-\lambda_y)\int_y^b k(v)E_a(v)\,dv.}
+\tag{260.2}
+$$
+
+特别地，使用 §256 的核，有
+
+$$
+|\mathcal R_{a,b}(y)|
+\le 2M_{a,b}G_{A,B}(z,z)
+\le\frac{M_{a,b}}2(A-B).
+\tag{260.3}
+$$
+
+若 $a\ge4$、$b\le2a$、$h=b-a$，则
+
+$$
+\boxed{w(y)|\mathcal R_{a,b}(y)|
+\le\frac{4hM_{a,b}}{a^{3/2}}.}
+\tag{260.4}
+$$
+
+**证明。** 实际 $\Phi$ 连续，在每个无事件区间有
+$\Phi'(v)=k(v)(v-\Psi(v))$。逐个有限事件区间积分可得
+
+$$
+\mathcal R_{a,b}(y)
+=\lambda_y\int_a^y k(v)(v-\Psi(v))\,dv
+-(1-\lambda_y)\int_y^b k(v)(v-\Psi(v))\,dv.
+$$
+
+代入 $v-\Psi(v)=a-\Psi(a)-E_a(v)$，并用
+
+$$
+\int_a^y k(v)\,dv=A-z,\quad
+\int_y^b k(v)\,dv=z-B,\qquad
+\lambda_y(A-z)=(1-\lambda_y)(z-B),
+$$
+
+常数 $a-\Psi(a)$ 的贡献为零，即得式（260.2）。事件端点的单点值不改变积分。
+由 $k\ge0$ 与 $|E_a|\le M_{a,b}$，两个积分的绝对值分别不超过
+$M_{a,b}(A-z)$ 与 $M_{a,b}(z-B)$。加权相加给出式（260.3）的第一界。
+因为 $(z-B)(A-z)\le(A-B)^2/4$，第二界成立。
+最后，$k$ 在 $(1,\infty)$ 递减，且在上述范围有
+
+$$
+A-B\le k(a)h,\qquad
+k(a)\le\frac2{a^2\log a},\qquad
+w(y)\le4w(a).
+$$
+
+将这些界代入式（260.3）即得式（260.4）。$\square$
+
