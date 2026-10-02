@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor, an actual positive Fourier-tail correction and even-space complement/coupling bounds at c=9; the retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply prime, tail and complement inputs at c=9. A positive constant prime reference and pointwise exterior positivity are incompatible at band256 for c>=27; the same cofinal strategy requires growing bands. Retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -711,3 +711,46 @@ print('the band256 pointwise tail mechanism requires beta < 4')
 ```
 
 Thus, for every $c\ge27$, no real $\beta$ can satisfy both $M_{c,\beta}\succeq mI$ for some $m>0$ and the pointwise exterior-weight condition at band $256$. Merely raising the constant background cannot continue this fixed-band comparison through the next FIB layer. This is a paper-level obstruction to the stated splitting and sufficient criterion; it refutes neither full Weil positivity nor RH.
+
+## Necessary band growth for the same cofinal strategy
+
+The classical unconditional prime number theorem, in the form $\Psi(t)=\sum_{n\le t}\Lambda(n)\sim t$, and partial summation give
+
+$$
+S(t):=\sum_{n\le t}\frac{\Lambda(n)}{\sqrt n}
+=\frac{\Psi(t)}{\sqrt t}+\frac12\int_1^t\frac{\Psi(u)}{u^{3/2}}\,du
+\sim2\sqrt t.
+$$
+
+This is the existing half-weighted Mangoldt sum discussed in [Chirre–Helfgott's source application](chirrehelfgott2025nonnegative.md); no new prime-number theorem or stronger error term is used. Writing $\log(c/n)=\int_n^c dt/t$ in (A14) and exchanging the finite positive sum with the integral gives
+
+$$
+\rho(c)=\frac2{\log c}\int_1^c\frac{S(t)}t\,dt
+\sim\frac{8\sqrt c}{\log c}.
+\tag{A17}
+$$
+
+The positive-integral representation matters: a coarse error in two separately estimated weighted sums need not survive their leading cancellation, whereas $S(t)\sim2\sqrt t$ directly yields (A17).
+
+Suppose the same strategy uses $M_{c,\beta_c}\succeq m_cI$ with $m_c>0$ and $A(t)-\beta_c\ge0$ for all $|t|>\Omega_c$. These are conditions on the actual common splitting. They require
+
+$$
+A(\Omega_c)\ge\beta_c\ge\rho(c)+m_c.
+$$
+
+In particular $\Omega_c\to\infty$. The digamma asymptotic [DLMF 5.11.2](https://dlmf.nist.gov/5.11.E2), applied in a fixed sector containing $1/4+it/2$, gives $A(t)=\log(t/(2\pi))+o(1)$ as $t\to+\infty$. Therefore the strategy necessarily satisfies
+
+$$
+\liminf_{c\to\infty}\frac{\log\Omega_c\,\log c}{\sqrt c}\ge8.
+\tag{A18}
+$$
+
+For the specified FIB sequence, write $c_r=3^{k_r}$ with $k_0=k_1=1$ and $k_{r+2}=k_{r+1}+k_r$. Then (A18) requires
+
+$$
+\log\Omega_r\ge(8-o(1))\frac{3^{k_r/2}}{k_r\log3}.
+$$
+
+Thus even a band growing polynomially in $c$ is insufficient for **these two simultaneous conditions**. This is a necessary growth bound for a constant-background reference with a pointwise nonnegative exterior multiplier. It is not a lower bound for the cost of proving RH, and a band satisfying it still supplies no retained sign or cofinal positivity.
+
+The existing [joint pole–prime localization identity](frankliebseiringer2006hardy.md) provides another representation: it combines the continuous prime main term with the pole and Gamma terms before estimating the signed Chebyshev remainder. Its common-test remainder still lacks the required favorable bound. Alternatives to the present obstruction must supply such a joint estimate, control a signed exterior band, or justify another reference operator without a globally positive $\beta I-C_{{\rm p},c}$. None is supplied by raising $\beta$ alone, reusing the scalar moment packet at a different band, or changing the FIB coordinates. These conclusions are source applications and interface analysis, not originality claims or a proof of RH.
