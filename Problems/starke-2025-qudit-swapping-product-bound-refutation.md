@@ -145,7 +145,5 @@ The journal version's retention of Eq. (59) is search-seat reported and not
 verified by this delivery. The target is the explicitly cited arXiv v2.
 The bounded literature check does not establish exhaustive novelty or priority.
 The Lean kernel does not authenticate external publication metadata.
-逃逸审计未完成 (CLAUDE.md §3.9 exception): the obstruction and the missing
-evidence are recorded in
-https://github.com/the-omega-institute/trureturing/issues/11499#issuecomment-5923339788.
-No Reg registration is claimed.
+Information-escape registration is paused under CLAUDE.md §3.9
+（信息逃逸登记暂缓）. No Reg registration is claimed.
