@@ -79,6 +79,27 @@ noncomputable def intervalSum (family : IntervalFamily Occurrence) :
       simp [intervalArrow, survives, middle_survives]
     · simp [intervalArrow, survives]
 
+theorem image_range_mono {Source Target : Type v}
+    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
+    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
+    {source target : ℝ} (ordered : source ≤ target) :
+    Submodule.map (intervalArrow targetFamily source target ordered)
+        (LinearMap.range (morphism.app source).hom) ≤
+      LinearMap.range (morphism.app target).hom := by
+  rintro vector ⟨preimage, ⟨original, rfl⟩, rfl⟩
+  have square := congrArg (fun arrow => arrow.hom original)
+    (morphism.naturality (homOfLE ordered))
+  change (morphism.app target).hom
+      (intervalArrow sourceFamily source target ordered original) =
+    intervalArrow targetFamily source target ordered
+      ((morphism.app source).hom original) at square
+  have in_range : (morphism.app target).hom
+      (intervalArrow sourceFamily source target ordered original) ∈
+    LinearMap.range (morphism.app target).hom :=
+      ⟨intervalArrow sourceFamily source target ordered original, rfl⟩
+  rw [square] at in_range
+  exact in_range
+
 set_option backward.isDefEq.respectTransparency false in
 theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Fintype Target]
     (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)

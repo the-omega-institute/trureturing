@@ -27,6 +27,22 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
                     + "zero spaces and infinite tails. The substantive classification and "
                     + "arbitrary competing-decomposition uniqueness proof is in RealDecomposition."),
             Describe.Lean(
+                DescribeId.Create("image-range-mono"),
+                DeclarationHandle.Create(Prefix + "image_range_mono"),
+                H("Actual morphism images persist under interval arrows"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary source and target occurrence families and an actual natural map "
+                        + "between their interval sums, the image of a source component is carried "
+                        + "inside the image of the target component by every interval arrow. The "
+                        + "inclusion is proved from the actual naturality square: an element in the "
+                        + "source image is transported along the source interval arrow, then mapped "
+                        + "by the target component, and hence is the target interval arrow applied "
+                        + "to the original source image element. This is the same-map image "
+                        + "persistence needed before classifying a common image; it does not assert "
+                        + "a barcode decomposition or a quantitative endpoint bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mono-death-window-count"),
                 DeclarationHandle.Create(Prefix + "mono_death_window_count"),
                 H("Actual monomorphisms bound birth/death window counts"),

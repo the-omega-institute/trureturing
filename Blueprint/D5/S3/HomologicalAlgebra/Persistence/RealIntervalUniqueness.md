@@ -60,9 +60,22 @@ Lean statement: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.int
 
 The supported spaces and actual arrows form a functor from the real preorder to ModuleCat. Identity and composition hold at exact birth/death points, zero spaces and infinite tails. The substantive classification and arbitrary competing-decomposition uniqueness proof is in RealDecomposition.
 
+**Theorem 1.5 (Actual morphism images persist under interval arrows).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.image_range_mono`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.image_range_mono`.
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary source and target occurrence families and an actual natural map between their interval sums, the image of a source component is carried inside the image of the target component by every interval arrow. The proof uses the actual naturality square, so it concerns the same morphism at all times. This establishes the persistence inclusion needed before classifying a common image; it does not assert a barcode decomposition or a quantitative endpoint bound.
+
 ## References
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.IntervalFamily`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.intervalArrow`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.intervalSpace`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.intervalSum`
+- Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness.image_range_mono`
