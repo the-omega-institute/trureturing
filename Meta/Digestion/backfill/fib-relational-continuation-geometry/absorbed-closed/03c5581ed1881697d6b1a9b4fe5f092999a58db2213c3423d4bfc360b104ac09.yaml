@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:03c5581ed1881697d6b1a9b4fe5f092999a58db2213c3423d4bfc360b104ac09
   normalized_sha256: sha256:03c5581ed1881697d6b1a9b4fe5f092999a58db2213c3423d4bfc360b104ac09
 cas_ref: sha256:03c5581ed1881697d6b1a9b4fe5f092999a58db2213c3423d4bfc360b104ac09
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualDeficitFourFees.full30_5
+    target_statement_id: sha256:77c8bd713aea06a18641ad70aec11762456e35cd09860c3cee3aa129d73121fa
 receipts:
   unresolved_subitems: []
