@@ -147,6 +147,8 @@ def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
       (renameExpr mapping oldRecord.occurrence.arena).equal newRecord.occurrence.arena &&
       oldRecord.occurrence.levelParams == newRecord.occurrence.levelParams do
     throwError "contract.unresolved_equivalence:expression_mapping"
+  verifyActualDependencies "unresolved" oldEnv newEnv mapping
+    oldRecord.occurrence newRecord.occurrence false #[descriptor] #[newDescriptor]
   let oldStatement ← result (rawStatementIdentity oldRecord.occurrence.levelParams oldRecord.occurrence.statement)
   let newStatement ← result (rawStatementIdentity newRecord.occurrence.levelParams newRecord.occurrence.statement)
   check "statement.old" oldStatement.1 oldRecord.occurrence.statementIdentity

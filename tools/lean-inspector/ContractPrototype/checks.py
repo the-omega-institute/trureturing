@@ -25,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
-    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current"], required=True)
+    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved"], required=True)
     parser.add_argument("--reference", type=pathlib.Path)
     args = parser.parse_args()
     if sys.platform != "darwin":
@@ -81,7 +81,7 @@ def main():
             raise RuntimeError(f"unmatched negative or control: {label}; see {path}")
 
     try:
-        if args.unit in ("repair", "current"):
+        if args.unit in ("repair", "current", "unresolved"):
             package = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype"
             mapping = package / "NameMapping.lean"
             equivalence = package / "Equivalence.lean"
@@ -152,6 +152,15 @@ def main():
                 build("current-record-control", current_probe, 0)
                 mutation("current-record-binding", equivalence, without_current_record,
                          current_probe, expected)
+            elif args.unit == "unresolved":
+                dependency_probe = "LeanInformationAuditRegTests.ContractUnresolvedDependencyProbe"
+                build("unresolved-dependency-control", dependency_probe, 0)
+                mutation("unresolved-actual-dependencies", unresolved,
+                         lambda s: s.replace(
+                             '  verifyActualDependencies "unresolved" oldEnv newEnv mapping\n'
+                             '    oldRecord.occurrence newRecord.occurrence false #[descriptor] #[newDescriptor]\n',
+                             ''),
+                         dependency_probe, ["comparator_rejects_unresolved_actual_dependencies"])
             else:
                 build("repair-control", mapping_probe, 0)
                 mutation("stale-descriptor", equivalence,

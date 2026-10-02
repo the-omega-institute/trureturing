@@ -245,20 +245,22 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
   check s!"evidence.{side}" (← result (bindingIdentity record.occurrence.statementIdentity certificate 524288)).1
     certificate.evidenceRef
 
-/-- Undeclared actuals keep their raw expression shape after proof erasure.
+/-- Actuals and supplied roots keep their raw expression shape after proof erasure.
 Repository data/type dependencies are followed; proof bodies are omitted and
 upstream implementations remain pinned. The fixed walk has no candidate rules. -/
 def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
-    (value : Expr) : MetaM (Array DependencyIdentity) := inEnvironment env do
-  let mut pending := ((← eraseProofs value).1.getUsedConstants ++
-    (← inspectionRoots event)).toList
+    (value : Expr) (extraRoots : Array Expr := #[]) :
+    MetaM (Array DependencyIdentity) := inEnvironment env do
+  let mut roots := (← eraseProofs value).1.getUsedConstants ++ (← inspectionRoots event)
+  for value in extraRoots do roots := roots ++ (← eraseProofs value).1.getUsedConstants
+  let mut pending := roots.toList
   let mut seen : NameSet := {}
   let mut remaining := 524288
   while let name :: rest := pending do
     pending := rest
     if name == ``lcProof || seen.contains name then continue
-    Core.checkMaxHeartbeats "contract undeclared dependency closure"
-    if remaining == 0 then throwError "contract.equivalence:undeclared_dependency_budget"
+    Core.checkMaxHeartbeats "contract actual dependency closure"
+    if remaining == 0 then throwError "contract.equivalence:actual_dependency_budget"
     remaining := remaining - 1
     seen := seen.insert name
     let info ← getConstInfo name
@@ -278,6 +280,35 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     let bodyIdentity ← if (← isProp info.type) || !Repository.isModule owner then pure ""
       else pure ((← info.value?.mapM (identity false info.levelParams)).getD "")
     return { name, owner, typeIdentity, bodyIdentity }
+
+/-- Independently extract both actuals and their fixed data/type closures.
+Repository data bodies are compared, proof bodies and pinned upstream bodies
+are omitted, and supplied descriptor roots follow the same traversal. -/
+def verifyActualDependencies (label : String) (oldEnv newEnv : Environment)
+    (mapping : NameMapping) (oldEvent newEvent : TemplateOccurrenceEvent) (source : Bool)
+    (oldRoots newRoots : Array Expr := #[]) : MetaM Unit := do
+  let oldActual ← actual oldEnv oldEvent source
+  let newActual ← actual newEnv newEvent source
+  let expected ← inEnvironment newEnv <| identity source oldEvent.levelParams
+    (renameExpr mapping oldActual)
+  let observed ← inEnvironment newEnv <| identity source newEvent.levelParams newActual
+  check s!"{label}.actual" observed expected
+  let oldDependencies ← actualDependencies oldEnv oldEvent oldActual oldRoots
+  let newDependencies ← actualDependencies newEnv newEvent newActual newRoots
+  let mappedDependencies ← oldDependencies.mapM fun input => do
+    -- The closure fingerprints upstream types but omits pinned upstream bodies.
+    let info ← inEnvironment oldEnv <| getConstInfo input.name
+    let typeIdentity ← inEnvironment newEnv <| identity false info.levelParams (renameExpr mapping info.type)
+    let bodyIdentity ← inEnvironment newEnv do
+      if input.bodyIdentity.isEmpty then return ""
+      let some body := info.value? | throwError "contract.equivalence:actual_dependency_body"
+      identity false info.levelParams (renameExpr mapping body)
+    return { input with
+      name := renameName mapping input.name
+      owner := renameName mapping input.owner
+      typeIdentity, bodyIdentity }
+  let mappedDependencies := mappedDependencies.qsort (fun a b => Name.quickLt a.name b.name)
+  discard <| alignDependencies mappedDependencies newDependencies
 
 /-- Verify every certificate identity by the production encoder. Dependency
 membership and producer enumeration are checked after declaration renaming.
@@ -394,28 +425,8 @@ def verifyMissingRecord (oldEnv newEnv : Environment) (authorization : Authoriza
   let source := oldRecord.escape.bridgeKind == "source-equivalence"
   unless source == (newRecord.escape.bridgeKind == "source-equivalence") do
     throwError "contract.equivalence:undeclared_source_kind"
-  let oldActual ← actual oldEnv oldRecord.occurrence source
-  let newActual ← actual newEnv newRecord.occurrence source
-  let expected ← inEnvironment newEnv <| identity source oldRecord.occurrence.levelParams
-    (renameExpr mapping oldActual)
-  let observed ← inEnvironment newEnv <| identity source newRecord.occurrence.levelParams newActual
-  check "undeclared.actual" observed expected
-  let oldDependencies ← actualDependencies oldEnv oldRecord.occurrence oldActual
-  let newDependencies ← actualDependencies newEnv newRecord.occurrence newActual
-  let mappedDependencies ← oldDependencies.mapM fun input => do
-    -- The closure fingerprints upstream types but omits pinned upstream bodies.
-    let info ← inEnvironment oldEnv <| getConstInfo input.name
-    let typeIdentity ← inEnvironment newEnv <| identity false info.levelParams (renameExpr mapping info.type)
-    let bodyIdentity ← inEnvironment newEnv do
-      if input.bodyIdentity.isEmpty then return ""
-      let some body := info.value? | throwError "contract.equivalence:undeclared_dependency_body"
-      identity false info.levelParams (renameExpr mapping body)
-    return { input with
-      name := renameName mapping input.name
-      owner := renameName mapping input.owner
-      typeIdentity, bodyIdentity }
-  let mappedDependencies := mappedDependencies.qsort (fun a b => Name.quickLt a.name b.name)
-  discard <| alignDependencies mappedDependencies newDependencies
+  verifyActualDependencies "undeclared" oldEnv newEnv mapping
+    oldRecord.occurrence newRecord.occurrence source
   let occurrence := oldRecord.occurrence
   let key := occurrence.key
   let key : TemplateOccurrenceKey := {
