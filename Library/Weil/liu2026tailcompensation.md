@@ -226,6 +226,55 @@ for i, (left, right) in enumerate(zip(ends, ends[1:])):
     print(i + 1, minimum)
 ```
 
+## The actual band complement at $a=\log3$
+
+Appendix B fixes $L=17/16$, $\Omega=256$ and $\Omega L=272$ at its outset. Its band-complement and tail statements therefore cannot simply be instantiated at another width. The following application checks the width dependencies in B.1–B.3 and constructs the new operators; it does not use the old finite sign certificate.
+
+Keep $a=\log3$ and the full complex space $\mathcal H=L^2((-a,a);\mathbb C)$. Write $c_{\rm band}=256a$, distinct from the arithmetic cutoff $c=9$. The cited logarithm enclosure gives
+
+$$
+272<c_{\rm band}<282,\qquad a<11/10.
+$$
+
+Define the actual band operator and its exterior Fourier energy by
+
+$$
+(B_9f)(u)=\int_{-a}^a
+\frac{\sin(256(u-v))}{\pi(u-v)}f(v)\,dv,
+\qquad
+\mathcal E_9(f)=\frac1{2\pi}\int_{|t|>256}|F_f(t)|^2\,dt,
+$$
+
+with kernel value $256/\pi$ on the diagonal. Plancherel gives $0\preceq B_9\preceq I$ and $\mathcal E_9(f)=\langle f,(I-B_9)f\rangle$ for every $f\in\mathcal H$.
+
+In B.1, the Fourier-derivative bound for a unit vector becomes $|F_f^{(j)}(t)|\le a^j\sqrt{2a}<2a^j$. It differentiates $F_f$ in frequency; it requires no derivatives of $f$. The fixed frequency band, the $N=4096$ exterior nodes with spacing $h=1/32$, their distance bound $768$, and the Lagrange basis sum $<2^{24570}$ do not depend on the support width. The changed interpolation remainder is controlled by
+
+$$
+\frac{3\cdot768a}{4096}<\frac{99}{160}<\frac58,
+\qquad
+\frac{2(768a)^{4096}}{4096!}
+<2(5/8)^{4096}<2^{-2047}<1/32.
+$$
+
+The middle power bound uses $(5/8)^2<1/2$. Thus the source's real-phase interpolation argument still gives, when $\mathcal E_9(f)<1/2$,
+
+$$
+\frac1{16}<16\sqrt{\mathcal E_9(f)}\,2^{24570}+\frac1{32},
+\qquad
+\sqrt{\mathcal E_9(f)}>2^{-24579}.
+$$
+
+The other energy case is immediate. Consequently this source-proof application supplies the actual new-window bounded-operator input
+
+$$
+I-B_9\succeq\delta I,\qquad
+\delta=2^{-49158},\qquad
+S_9=I-B_9-\delta I,\qquad 0\preceq S_9\preceq I.
+\tag{A5}
+$$
+
+This conclusion covers the entire complex Hilbert space. The exterior Gamma-weighted form used below is finite on the original smooth legal domain; its bounded comparison (A5) does not assert finiteness of that weighted integral for arbitrary $L^2$ vectors. This is an application of the inspected proof with a new remainder comparison, not a new uncertainty principle or a kernel-verified declaration.
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. This removes the need to assume a positive floor for this block; it leaves the complete form's sign undecided.
