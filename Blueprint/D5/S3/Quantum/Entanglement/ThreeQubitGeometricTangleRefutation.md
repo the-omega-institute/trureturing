@@ -238,6 +238,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ThreeQubitGeometricTangleRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/benedito-sierra-2025-geometric-tangle-ansatz-refutation` (refuted) by `D5/S3/Quantum/Entanglement/ThreeQubitGeometricTangleRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"benedito-sierra-2025-geometric-tangle-ansatz-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/ThreeQubitGeometricTangleRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Benedito; G. Sierra (2025). *Visualizing Three-Qubit Entanglement*. URL: <https://arxiv.org/abs/2505.23638v2>.

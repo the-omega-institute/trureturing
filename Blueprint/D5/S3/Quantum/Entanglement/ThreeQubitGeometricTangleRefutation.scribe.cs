@@ -84,7 +84,10 @@ internal sealed class ThreeQubitGeometricTangleRefutationDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A type-4c diagonal counterexample", ResultFormula(),
                 "For ψ = (|000⟩ + |101⟩ + |110⟩ + |111⟩)/2, the canonical parameters are (1/2,0,1/2,1/2,1/2;0). Its reduced states have Bloch lengths (1/2,1/2,1/2), so the distance to V_line is zero. The ansatz therefore gives 3/4, while τ = 4(1/2)²(1/2)² = 1/4. Hence no nonnegative F can satisfy the universal claim." ,
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("benedito-sierra-2025-geometric-tangle-ansatz-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
