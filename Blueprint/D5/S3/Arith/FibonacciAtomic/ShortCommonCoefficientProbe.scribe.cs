@@ -76,8 +76,10 @@ internal sealed class ShortCommonCoefficientProbeDocument : IScribeDocumentDefin
                         + "Its positive natural value excludes the empty word, and "
                         + "the two leading zeros preserve legality at either seam. "
                         + "The existing literal End theorem supplies positivity after "
-                        + "a legal prefix. Finally 2^r<=F(2r+2) and H<2^(floor(log_2 H)+1) "
-                        + "bound m by 4 floor(log_2 H)+12."))),
+                        + "a legal prefix. Finally, let k=Nat.log 2 H>=1. The chain "
+                        + "H(q+1)<=4H^2+H<2^(2k+5)<=4^(k+3)<F(3k+13)<=F(4k+12) "
+                        + "bounds m by 4k+12, using the existing powerDigits_bound "
+                        + "estimate 4^n<F(3n+4)."))),
                 DescribeRole.Theorem),
             Describe.Remark(
                 DescribeId.Create("short-common-modular-hofstadter-antecedent"),
