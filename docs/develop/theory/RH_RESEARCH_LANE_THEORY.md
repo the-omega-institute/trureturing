@@ -10873,3 +10873,180 @@ $$
 这里使用 $1-\prod_p(1-u_p)\le\sum_pu_p$ 和 $1-a^2\le2(1-a)$，其中 $0\le a,u_p\le1$。例如 $\mathcal P=\{2,3\}$、$N_2=N_3=N$ 时，误差为 $O_r(2^{-(N+1)/4}+3^{-(N+1)/4})$，常数由上式确定。证明没有把两个近共振替换成彼此分离的共振。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 混合共振核与同一测试的完整差额
+
+**假设 18.1（实际投影与完整迹合同）。** 对第 17.1 节的共同物理表示，设
+
+$$
+G=T^*T,\qquad K=(PGP)|_V,\qquad
+P_S=TPK^{-1}PT^*,\qquad
+C=Q\mathcal F_SQ,\qquad R=(I-C^2)^{-1}.
+$$
+
+其中 $K^{-1}$ 仅在 $V$ 上取逆，在 $V^\perp$ 上延为零。采用 [Burnol 的物理 Sonin 投影](../../../Library/Weil/burnol2002sonine.md)及 [CC 的 archimedean 迹合同](../../../Library/Weil/connesconsani2021weilpositivity.md)：后者钉为 arXiv:2006.13771v1，使用 Proposition 1.5、Proposition 2.2、式 (81)、式 (90) 和 Theorem 4.7 的紧支撑光滑测试迹接口，不把后续小支撑正性定理外推到一般支撑。
+
+具体合同是 $V_S=TV=\ker Q\cap\ker Q\mathcal F_S$、$P_S$ 为其普通正交投影，以及
+
+$$
+P_S=I-R(Q-C\mathcal F_S)
+-\mathcal F_SR(Q\mathcal F_S-C).
+$$
+
+对所取 $f\in C_c^\infty(\mathbb R)$，沿用 $g(u)=f(\log u)$、$H_f(t)=(g*g^*)(e^t)$、$A_f=\rho(g*g^*)$。假定 $H_f$ 实且偶、$\operatorname{supp}H_f\subset[-r,r]$，并采用源中 $A_fP_S$、$A_fP$ 的迹类接口及第 14.4 节各局部差的迹类合同。定义
+
+$$
+\begin{aligned}
+B_f&=QA_fW,\qquad M_f=\|f\|_2^2,\\
+\sigma_S(f)&=\operatorname{Tr}(A_fP_S),\\
+\mathcal A_{\mathcal P}(f)&=\sum_{p\in\mathcal P}\log p
+\sum_{k\ne0}p^{-|k|/2}H_f(k\log p),\\
+\mathcal A_{\mathcal P^c}(f)&=\sum_{p\notin\mathcal P}\log p
+\sum_{k\ne0}p^{-|k|/2}H_f(k\log p).
+\end{aligned}
+$$
+
+自相关支撑使后两式都只有有限个非零 prime-power 配对；这不意味着截断物理频率时也截掉这些算术项。完整双极点约定采用第 16.1 节：
+
+$$
+\begin{aligned}
+A_\pm(f)&=\int_{\mathbb R}e^{\pm x/2}f(x)dx,\\
+P_{\rm full}(f)&=2\operatorname{Re}\bigl(A_+(f)\overline{A_-(f)}\bigr),\\
+Q_{\rm full}(f)&=P_{\rm full}(f)+W_\infty(H_f)
+-\mathcal A_{\mathcal P}(f)-\mathcal A_{\mathcal P^c}(f).
+\end{aligned}
+$$
+
+**候签定理 18.1（实际有符号修正的有限核误差）。** 在假设 18.1 下，令
+
+$$
+\begin{aligned}
+\gamma_0&=\|Q\mathcal FQ\|<1,\\
+\alpha_S&=\prod_{p\in\mathcal P}(1-q_p),\qquad
+\beta_S=\prod_{p\in\mathcal P}(1+q_p),\\
+\delta_S&=(1-\gamma_0)(\alpha_S/\beta_S)^2,\\
+J_S&=2^{2/3}\prod_{p\in\mathcal P}
+\left[p^{-5/6}+\frac{1-p^{-1}}{1-p^{-1/6}}\right],\\
+D_{\rm corr}(f)&=2\operatorname{Re}\operatorname{Tr}(CRB_f\mathcal F_SQ).
+\end{aligned}
+$$
+
+则对每个矩形 $\mathbf N$，有同一测试上的界
+
+$$
+\begin{aligned}
+D_{\rm corr}(f)\le{}&
+\int_0^rH_f(t)\mathcal K_{S,\mathbf N}(t)dt
++M_fE_S(r,\mathbf N)\\
+&+\frac{2J_S^3}{\delta_S(2-\delta_S)}\|f\|_1^2.
+\end{aligned}
+$$
+
+完整差额保留极点与遗漏素数：
+
+$$
+\sigma_S(f)-Q_{\rm full}(f)
+=D_{\rm corr}(f)+\mathcal A_{\mathcal P^c}(f)-P_{\rm full}(f).
+$$
+
+特别地，若 $\widehat f(0)=\widehat f(i/2)=\widehat f(-i/2)=0$ 且 $\mathcal P$ 包含所有支撑活跃素数，则 $\sigma_S-Q_{\rm full}=D_{\rm corr}$。本结论给出固定有限 $S$ 和固定支撑的绝对误差，未给出随 $S,r$ 增长的相对估计 $D_{\rm corr}\le\sigma_S$。
+
+**证明。** 在 logarithmic unitary 坐标中，$A_f=X_fX_f^*$，其中 $X_f$ 为卷积 $f$ 的算子。$B_f$ 的核只在 $[-r,0]\times[0,r]$ 上非零。两个 cutoff 的 Hilbert–Schmidt 因子分别具有范数 $\sqrt{rM_f}$；复用 Schatten Hölder 与 Young 不等式，得到
+
+$$
+\|B_f\|_1\le rM_f,\qquad
+\|B_f\|\le\|f\|_1^2,\qquad
+\|H_f\|_\infty\le M_f.
+$$
+
+先只计算有限线性迹。记 $C_{\mathbf N}=Q\mathcal F_{\mathbf N}Q$。在 $u,x\in(0,1)$、$y>1$ 的核积分中置 $y=e^tx$，则
+
+$$
+A_f(x,y)dy=e^{t/2}H_f(-t)dt,\qquad e^{-t}<x<1.
+$$
+
+两个 Fourier 核各有系数 $2$，而
+
+$$
+\int_0^1\cos(Au)\cos(Bu)du
+=\tfrac12\bigl[\operatorname{sinc}(A-B)+\operatorname{sinc}(A+B)\bigr].
+$$
+
+乘上迹外的 $2\operatorname{Re}$，得到定义 17.2 中的系数 $4$，以及精确有限配对
+
+$$
+2\operatorname{Re}\operatorname{Tr}(C_{\mathbf N}B_f\mathcal F_{\mathbf N}Q)
+=\int_0^rH_f(t)\mathcal K_{S,\mathbf N}(t)dt.
+$$
+
+Neumann 尾项给出
+
+$$
+\epsilon_{p,N}=(1+q_p)q_p^{N+1},\qquad
+\eta_{\mathbf N}=\prod_p(1+\epsilon_{p,N_p})-1,
+$$
+
+及 $\|\mathcal F_{\mathbf N}-\mathcal F_S\|\le\eta_{\mathbf N}$、$\|\mathcal F_{\mathbf N}\|\le1+\eta_{\mathbf N}$。因此有限线性迹与完整线性迹的距离至多为
+
+$$
+2rM_f\eta_{\mathbf N}(2+\eta_{\mathbf N})\longrightarrow0.
+$$
+
+候签定理 17.1 独立给出 $L^1$ 极限，故
+
+$$
+\begin{aligned}
+D_{\rm lin}(f)&=2\operatorname{Re}\operatorname{Tr}(CB_f\mathcal F_SQ)
+=\int_0^rH_f(t)\mathcal K_S(t)dt,\\
+\left|D_{\rm lin}(f)-\int_0^rH_f(t)\mathcal K_{S,\mathbf N}(t)dt\right|
+&\le M_fE_S(r,\mathbf N).
+\end{aligned}
+$$
+
+operator-norm 极限承担迹识别，绝对 $L^1$ 极限承担积分尾界；二者使用相同矩形截断。
+
+对压缩核 $D_a=Q[2\cos(2\pi axy)]Q$，完整伸缩 Fourier 的范数给出 $\|D_a\|\le a^{-1/2}$，单位方形核的平方积分给出 $\|D_a\|_2\le2$。标准 Schatten 插值于是给出 $\|D_a\|_3\le2^{2/3}a^{-1/6}$。将定义 17.1 的级数在 $\mathfrak S_3$ 中求和，得 $\|C\|_3\le J_S$。这只是插值与绝对求和的应用；不把文献的 quasi-inner 阶数直接提升成更强 Schatten 阶数。
+
+严格 cutoff 间隔复用 Burnol 的 $\gamma_0<1$。令 $A=T^{-*}$，则 $A(QH)=QH$、$A(\mathcal FQH)=\mathcal F_SQH$，并且 $\beta_S^{-1}\|x\|\le\|Ax\|\le\alpha_S^{-1}\|x\|$。原 cutoff pair 满足
+
+$$
+\|e+v\|^2\ge(1-\gamma_0)(\|e\|^2+\|v\|^2),
+\qquad e\in QH,\quad v\in\mathcal FQH.
+$$
+
+运输此式得到
+
+$$
+\|Ae+Av\|^2\ge\delta_S(\|Ae\|^2+\|Av\|^2),
+$$
+
+从而 $1-\|C\|\ge\delta_S$、$\|R\|\le[\delta_S(2-\delta_S)]^{-1}$。由 $CR=C+C^3R$，
+
+$$
+|D_{\rm corr}(f)-D_{\rm lin}(f)|
+\le2\|C\|_3^3\|R\|\|B_f\|
+\le\frac{2J_S^3}{\delta_S(2-\delta_S)}\|f\|_1^2.
+$$
+
+最后，在每个 prime 的局部 trace-class 差上复用第 14.4 节的纯 prime-power 身份。令 $T_p=I-q_pU_p$、$L_p=T_p^{-1}T_p^*$、$L=\prod_pL_p$、$\widetilde Q=LQL^*$。对任意素数顺序，有限 telescoping 写成
+
+$$
+\widetilde Q-Q=\sum_jL_{<j}(L_{p_j}QL_{p_j}^*-Q)L_{<j}^*.
+$$
+
+$A_f$ 与全部 $L_p$ 交换，故迹的不变性给出 $\operatorname{Tr}(A_f(\widetilde Q-Q))=\mathcal A_{\mathcal P}(f)$；不相减两个发散的迹，也不出现混合算术原子。源 archimedean 迹合同给出
+
+$$
+\operatorname{Tr}\bigl(A_f(W-\mathcal F_SQ\mathcal F_S)\bigr)
+=W_\infty(H_f)-\mathcal A_{\mathcal P}(f).
+$$
+
+普通正交投影公式与第 14.1 节相同的 cross-cutoff 展开给出
+
+$$
+\sigma_S(f)=W_\infty(H_f)-\mathcal A_{\mathcal P}(f)+D_{\rm corr}(f).
+$$
+
+减去定义中的完整 $Q_{\rm full}$ 即得所列差额。$\widehat f(\pm i/2)=0$ 分别消去 $A_\pm(f)$；$\widehat f(0)=0$ 保留原 constrained criterion 的测试类。若 $\mathcal P=\{2,3\}$，则 $r<\log5$ 足以消去遗漏素数，仍须保留所有活跃的 $2^k$ 和 $3^k$，包括 $r\ge\log4$ 时的 $2^2$。$\square$
+
+## 追加锚（本行以下为增补区）
