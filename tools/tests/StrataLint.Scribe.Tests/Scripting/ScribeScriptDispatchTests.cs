@@ -68,6 +68,20 @@ public sealed class ScribeScriptDispatchTests
     }
 
     [Theory]
+    [InlineData("_ = value.ToString();")]
+    [InlineData("_ = $\"{value}\";")]
+    public void AbstractDerivedTypesRemainInTheClosedTypeEnumeration(string statement)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("Base value = new Derived(); " + statement) + """
+            internal abstract record Base { public override string ToString() => "base"; }
+            internal abstract record Middle : Base { }
+            internal sealed record Derived : Middle { public override string ToString() => "derived"; }
+            """);
+        Reject(root, "M:Middle.ToString");
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void InterfaceSlotChecksEveryImplementation(bool generated)
@@ -81,6 +95,39 @@ public sealed class ScribeScriptDispatchTests
                 : "internal sealed class Second : IValue { public override string ToString() => \"second\"; }"));
         if (generated) Reject(root, "M:Second.ToString");
         else Accept(root);
+    }
+
+    [Fact]
+    public void StaticInterfaceSlotRejectsGeneratedOperator()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("Value value = new Value(); _ = Operations.Equal(value, value);") + """
+            internal interface IOps<T> where T : IOps<T>
+            {
+                static abstract bool operator ==(T left, T right);
+                static abstract bool operator !=(T left, T right);
+            }
+            internal sealed record Value : IOps<Value>;
+            internal static class Operations
+            {
+                public static bool Equal<T>(T left, T right) where T : IOps<T> => left == right;
+            }
+            """);
+        Reject(root, "M:Value.op_Equality");
+    }
+
+    [Fact]
+    public void EveryConstructedInterfaceImplementationIsChecked()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("IValue<string> value = new Value(); _ = value.ToString();") + """
+            internal interface IValue<T> { string ToString(); }
+            internal sealed record Value : IValue<int>, IValue<string>
+            {
+                string IValue<int>.ToString() => "value";
+            }
+            """);
+        Reject(root, "M:Value.ToString");
     }
 
     [Fact]

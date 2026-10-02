@@ -261,6 +261,11 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         if (value.Type is not INamedTypeSymbol type) return Disallowed(value.Syntax, $"implicit formatting {TypeId(value.Type)}");
         if (!IsScript(type)) return allowlist.AllowsFormatting(type)
             ? null : Disallowed(value.Syntax, $"implicit formatting {TypeId(type)}");
+        if (type.IsAbstract && type.TypeKind != TypeKind.Interface)
+        {
+            var failure = FormattingType(type, value.Syntax, interpolation);
+            if (failure is not null) return failure;
+        }
         foreach (var possible in scriptTypes.Append(type).Where(candidate => !candidate.IsAbstract
             && candidate.TypeKind != TypeKind.Interface && Related(candidate, type)).Distinct(SymbolEqualityComparer.Default))
         {
@@ -310,7 +315,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
 
     private ScribeScriptFailure? Dispatch(ISymbol symbol, SyntaxNode node, ITypeSymbol? receiverType)
     {
-        if (symbol.IsStatic || symbol is not (IMethodSymbol or IPropertySymbol)
+        if (symbol.IsStatic && !symbol.IsAbstract && !symbol.IsVirtual
+            || symbol is not (IMethodSymbol or IPropertySymbol)
             || !(symbol.IsVirtual || symbol.IsAbstract || symbol.IsOverride
                 || symbol.ContainingType.TypeKind == TypeKind.Interface)) return null;
         var receiver = receiverType ?? symbol.ContainingType;
@@ -318,29 +324,36 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             return Disallowed(node, $"unresolved dispatch {ScribeScriptAllowlist.Id(symbol)}");
         var contract = symbol.ContainingType.TypeKind == TypeKind.Interface;
         if (!IsScript(named) && !IsScript(symbol) && !contract) return null;
-        foreach (var type in scriptTypes.Where(type => !type.IsAbstract && type.TypeKind != TypeKind.Interface))
+        foreach (var type in scriptTypes.Where(type => type.TypeKind != TypeKind.Interface))
         {
             if (!Related(type, named)) continue;
-            ISymbol? implementation;
+            ISymbol?[] implementations;
             if (contract)
             {
-                var implemented = type.AllInterfaces.Prepend(type).FirstOrDefault(item =>
-                    Same(item, symbol.ContainingType));
-                var member = implemented?.GetMembers(symbol.Name).FirstOrDefault(item => Same(item, symbol));
-                implementation = member is null ? null : type.FindImplementationForInterfaceMember(member);
-                if (implementation is not null) implementation = VirtualImplementation(type, implementation);
+                implementations = type.AllInterfaces.Prepend(type).Where(item => Same(item, symbol.ContainingType))
+                    .Select(implemented =>
+                    {
+                        var member = implemented.GetMembers(symbol.Name).FirstOrDefault(item => Same(item, symbol));
+                        var resolved = member is null ? null : type.FindImplementationForInterfaceMember(member);
+                        return resolved is null ? null : VirtualImplementation(type, resolved);
+                    }).ToArray();
             }
-            else implementation = VirtualImplementation(type, symbol);
-            if (implementation is null || implementation.IsAbstract)
+            else implementations = [VirtualImplementation(type, symbol)];
+            if (implementations.Length == 0)
                 return Disallowed(node, $"unresolved dispatch {TypeId(type)} {ScribeScriptAllowlist.Id(symbol)}");
-            var failure = InspectMember(implementation, node);
-            if (failure is null && implementation is IPropertySymbol property)
-                foreach (var accessor in new[] { property.GetMethod, property.SetMethod })
-                {
-                    if (accessor is null) continue;
-                    failure ??= InspectMember(accessor, node);
-                }
-            if (failure is not null) return failure;
+            foreach (var implementation in implementations)
+            {
+                if (implementation is null || implementation.IsAbstract && !type.IsAbstract)
+                    return Disallowed(node, $"unresolved dispatch {TypeId(type)} {ScribeScriptAllowlist.Id(symbol)}");
+                var failure = InspectMember(implementation, node);
+                if (failure is null && implementation is IPropertySymbol property)
+                    foreach (var accessor in new[] { property.GetMethod, property.SetMethod })
+                    {
+                        if (accessor is null) continue;
+                        failure ??= InspectMember(accessor, node);
+                    }
+                if (failure is not null) return failure;
+            }
         }
         return null;
     }
