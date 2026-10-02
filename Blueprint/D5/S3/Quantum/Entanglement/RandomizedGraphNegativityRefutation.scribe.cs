@@ -15,7 +15,7 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
         H("The negativity of randomized graph states is not monotone"),
         Blocks(
             Node("cz", "Controlled-Z phases", CzFormula(),
-                "The n qubits are indexed by Fin(n) and the computational basis by the maps x from Fin(n) to {0, 1}. The controlled-Z gate on the edge {a, b} is diagonal in this basis, with entry (-1)^(x(a) x(b)) at the basis state x.",
+                "The n qubits are indexed by Fin(n) and the computational basis by the maps x from Fin(n) to Bool, with true read as 1 and false as 0. The controlled-Z gate on the edge {a, b} is diagonal in this basis, with entry (-1)^(x(a) x(b)) at the basis state x.",
                 "czPhase", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("plus", "The product state", PlusFormula(),
                 "The state |+>^n has every computational-basis amplitude equal to 2^(-n/2).",
@@ -26,11 +26,8 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
             Node("rg", "Randomized graph states", RgFormula(),
                 "Each edge of G is present independently with probability p. The randomized graph state is the mixture, over the subsets F of the edge set of G, of the projections onto the graph states of F, with weights p^|F| (1 - p)^(|E(G)| - |F|).",
                 "rgState", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("pt", "Partial transposition", PtFormula(),
-                "The partial transposition on the qubits in A exchanges the A parts of the row and column labels: the entry of M^Gamma_A at (x, y) is the entry of M at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y. Here piecewise(A, u, v) is the label that agrees with u on A and with v elsewhere (Mathlib Finset.piecewise).",
-                "partialTranspose", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("neg", "Negativity", NegFormula(),
-                "The negativity across the bipartition A versus its complement is (||rho^Gamma_A|| - 1)/2, with the trace norm ||X|| = Re Tr sqrt(X^* X) of the existing finite trace-distance module.",
+                "The negativity across the bipartition A versus its complement is (||rho^Gamma_A|| - 1)/2. The partial transposition rho^Gamma_A is the existing transposePart: its entry at (x, y) is the entry of rho at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y. The trace norm ||X|| = Re Tr sqrt(X^* X) is that of the existing finite trace-distance module.",
                 "negativity", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The question", ClaimFormula(),
                 "The paper reports monotone negativity for the complete graphs and the star graphs with at most 4 vertices and states that it is an open question whether the monotonic behaviour of the negativity in p is a common feature of all randomized graph states, the negativity being evaluated with respect to all bipartitions. The displayed statement reads the question as a universal statement over finite simple graphs on Fin(n), subsets A of the vertices and 0 <= p <= q <= 1.",
@@ -135,20 +132,10 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
             EqTo(Call(F.Id("rgState"), g, p), value)))));
     }
 
-    private static Formula PtFormula()
-    {
-        Formula n = F.Id("n"), a = F.Id("A"), m = F.Id("M"), x = F.Id("x"), y = F.Id("y");
-        Formula left = Call(F.Id("entry"), Call(F.Id("partialTranspose"), a, m), x, y);
-        Formula right = Call(F.Id("entry"), m, Call(F.Id("piecewise"), a, y, x),
-            Call(F.Id("piecewise"), a, x, y));
-        return Disp(All(n, Nat(), All(a, VertexSets(n), All(m, Matrices(n),
-            All(x, Qubits(n), All(y, Qubits(n), EqTo(left, right)))))));
-    }
-
     private static Formula NegFormula()
     {
         Formula n = F.Id("n"), a = F.Id("A"), rho = Rho;
-        Formula value = Frac(Sub(Call(F.Id("traceNorm"), Call(F.Id("partialTranspose"), a, rho)),
+        Formula value = Frac(Sub(Call(F.Id("traceNorm"), Call(F.Id("transposePart"), a, rho)),
             D(1)), D(2));
         return Disp(All(n, Nat(), All(a, VertexSets(n), All(rho, Matrices(n),
             EqTo(Call(F.Id("negativity"), a, rho), value)))));

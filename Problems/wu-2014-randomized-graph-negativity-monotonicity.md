@@ -96,11 +96,12 @@ $B=\{1,3,5\}$, $p=97/100$ and $q=1$.
 
 The kernel-checked `result` is the negation of the universal statement
 over finite simple graphs on `Fin n`, subsets $A$ of the vertices and all
-real $0\le p\le q\le1$. The basis states are the maps `Fin n → Fin 2`, the
+real $0\le p\le q\le1$. The basis states are the maps `Fin n → Bool`, the
 graph state of an edge set is its product of controlled-Z phases times the
 amplitude $2^{-n/2}$ of $|+\rangle^{\otimes n}$, the mixture runs over the
-subsets of `G.edgeFinset`, the partial transposition exchanges the $A$
-parts of the row and column labels, and the trace norm is the frozen
+subsets of `G.edgeFinset`, the partial transposition is the frozen
+`CycleFiveStrongOneResistance.transposePart` (it exchanges the $A$ parts of
+the row and column labels), and the trace norm is the frozen
 `FiniteTraceDistance.traceNorm`, $\operatorname{Re}\operatorname{Tr}
 \sqrt{X^\dagger X}$. A measure that is an increasing function of $N$, such
 as the logarithmic negativity $\log_2(2N+1)$, is refuted as well;
@@ -121,17 +122,20 @@ two in each mixed sector, four in the standard–standard sector).
 The canonical source is
 `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.lean`. Its
 public declarations are `Qubits`, `czPhase`, `plusState`, `graphState`,
-`rgState`, `partialTranspose`, `negativity`, `claim`, `k33`,
-`partA` and `result`; the trace norm and its lemmas are frozen in
+`rgState`, `negativity`, `claim`, `k33`, `partA` and `result`; the
+partial transposition is the frozen
+`D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.transposePart`, and
+the trace norm and its lemmas are frozen in
 `D5/S3/Quantum/Foundation/FiniteTraceDistance`; `k33` carries a decidable
 adjacency instance. The frozen module state has statement identity
-`sha256:e6b7c60cb6c1860ae73bb8c939e895f78caaea0453eb3bca8ad5d4e2c47fed0a`. The
+`sha256:a40b0f5478e2394807b3cd5c3fe6678251f25ad3e25d09ddd424e32bc01e1f60`. The
 result declaration has statement identity
 `sha256:8699682eb0805d4dcf1355be31c5dac754e3a40e309a3d295ac441cf8ab56906`. The
 Freeze event is
-`sha256:7b4331af2c3bbbd8cf354609e89d5137abeb2a7daaf7722b9d52a233f58ca751`; its
-project-level frozen prerequisite is the Freeze event of
-`D5/S3/Quantum/Foundation/FiniteTraceDistance`. The proof uses only the standard axioms `propext`, `Classical.choice` and
+`sha256:cb386a648738573ec8ccc5fa15cead0984628eb4c316f21e726fda95f4cae172`; its
+project-level frozen prerequisites are the Freeze events of
+`D5/S3/Quantum/Foundation/FiniteTraceDistance` and
+`D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance`. The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
 ## Triage

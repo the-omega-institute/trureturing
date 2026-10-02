@@ -14,7 +14,7 @@ $$\forall n : \mathbb{N}, \forall a : \operatorname{Fin}\left(n\right), \forall 
 
 *Commentary.*
 
-The n qubits are indexed by Fin(n) and the computational basis by the maps x from Fin(n) to {0, 1}. The controlled-Z gate on the edge {a, b} is diagonal in this basis, with entry (-1)^(x(a) x(b)) at the basis state x.
+The n qubits are indexed by Fin(n) and the computational basis by the maps x from Fin(n) to Bool, with true read as 1 and false as 0. The controlled-Z gate on the edge {a, b} is diagonal in this basis, with entry (-1)^(x(a) x(b)) at the basis state x.
 
 **Definition 1.2 (The product state).**
 
@@ -52,21 +52,9 @@ $$\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorn
 
 Each edge of G is present independently with probability p. The randomized graph state is the mixture, over the subsets F of the edge set of G, of the projections onto the graph states of F, with weights p^|F| (1 - p)^(|E(G)| - |F|).
 
-**Definition 1.5 (Partial transposition).**
+**Definition 1.5 (Negativity).**
 
-$$\forall n : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), \forall M : \mathbb{C}^{\operatorname{Qubits}\left(n\right) \times \operatorname{Qubits}\left(n\right)}, \forall x : \operatorname{Qubits}\left(n\right), \forall y : \operatorname{Qubits}\left(n\right), \operatorname{entry}\left(\operatorname{partialTranspose}\left(A, M\right), x, y\right) = \operatorname{entry}\left(M, \operatorname{piecewise}\left(A, y, x\right), \operatorname{piecewise}\left(A, x, y\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.partialTranspose` (`✓ std3`).
-
-*Citation.* Jun-Yi Wu; Matteo Rossi; Hermann Kampermann; Simone Severini; Leong Chuan Kwek; Chiara Macchiavello; Dagmar Bruß (2014). *Randomized Graph States and their Entanglement Properties*. DOI: [10.1103/PhysRevA.89.052335](https://doi.org/10.1103/PhysRevA.89.052335). URL: <https://arxiv.org/abs/1403.3828v3>.
-
-*Commentary.*
-
-The partial transposition on the qubits in A exchanges the A parts of the row and column labels: the entry of M^Gamma_A at (x, y) is the entry of M at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y. Here piecewise(A, u, v) is the label that agrees with u on A and with v elsewhere (Mathlib Finset.piecewise).
-
-**Definition 1.6 (Negativity).**
-
-$$\forall n : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), \forall \rho : \mathbb{C}^{\operatorname{Qubits}\left(n\right) \times \operatorname{Qubits}\left(n\right)}, \operatorname{negativity}\left(A, \rho\right) = \frac{\operatorname{traceNorm}\left(\operatorname{partialTranspose}\left(A, \rho\right)\right) - 1}{2}$$
+$$\forall n : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), \forall \rho : \mathbb{C}^{\operatorname{Qubits}\left(n\right) \times \operatorname{Qubits}\left(n\right)}, \operatorname{negativity}\left(A, \rho\right) = \frac{\operatorname{traceNorm}\left(\operatorname{transposePart}\left(A, \rho\right)\right) - 1}{2}$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.negativity` (`✓ std3`).
 
@@ -74,9 +62,9 @@ $$\forall n : \mathbb{N}, \forall A : \operatorname{Finset}\left(\operatorname{F
 
 *Commentary.*
 
-The negativity across the bipartition A versus its complement is (||rho^Gamma_A|| - 1)/2, with the trace norm ||X|| = Re Tr sqrt(X^* X) of the existing finite trace-distance module.
+The negativity across the bipartition A versus its complement is (||rho^Gamma_A|| - 1)/2. The partial transposition rho^Gamma_A is the existing transposePart: its entry at (x, y) is the entry of rho at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y. The trace norm ||X|| = Re Tr sqrt(X^* X) is that of the existing finite trace-distance module.
 
-**Definition 1.7 (The question).**
+**Definition 1.6 (The question).**
 
 $$(claim) \Leftrightarrow (\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right), \forall A : \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right), \forall p : \mathbb{R}, \forall q : \mathbb{R}, (0 \le p) \Rightarrow ((p \le q) \Rightarrow ((q \le 1) \Rightarrow (\operatorname{negativity}\left(A, \operatorname{rgState}\left(G, p\right)\right) \le \operatorname{negativity}\left(A, \operatorname{rgState}\left(G, q\right)\right)))))$$
 
@@ -88,7 +76,7 @@ $$(claim) \Leftrightarrow (\forall n : \mathbb{N}, \forall G : \operatorname{Sim
 
 The paper reports monotone negativity for the complete graphs and the star graphs with at most 4 vertices and states that it is an open question whether the monotonic behaviour of the negativity in p is a common feature of all randomized graph states, the negativity being evaluated with respect to all bipartitions. The displayed statement reads the question as a universal statement over finite simple graphs on Fin(n), subsets A of the vertices and 0 <= p <= q <= 1.
 
-**Definition 1.8 (The graph K_(3,3)).**
+**Definition 1.7 (The graph K_(3,3)).**
 
 $$\forall a : \operatorname{Fin}\left(6\right), \forall b : \operatorname{Fin}\left(6\right), (\operatorname{Adj}\left(k33, a, b\right)) \Leftrightarrow (\neg (a\equiv b\pmod{2}))$$
 
@@ -102,7 +90,7 @@ $$\forall a : \operatorname{Fin}\left(6\right), \forall b : \operatorname{Fin}\l
 
 The complete bipartite graph on Fin(6) whose parts are the even and the odd vertices.
 
-**Definition 1.9 (One part of K_(3,3)).**
+**Definition 1.8 (One part of K_(3,3)).**
 
 $$partA = \ \{0, 2, 4\ \}$$
 
@@ -116,7 +104,7 @@ $$partA = \ \{0, 2, 4\ \}$$
 
 The part A is the set of even vertices.
 
-**Theorem 1.10 (The answer is negative).**
+**Theorem 1.9 (The answer is negative).**
 
 $$\neg claim$$
 
@@ -142,8 +130,8 @@ Expanding the product over the edges, the entry of the randomized state of a gra
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.k33`
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.negativity`
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.partA`
-- Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.partialTranspose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.plusState`
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.rgState`
+- Dependency: [D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance](CycleFiveStrongOneResistance.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

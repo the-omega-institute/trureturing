@@ -7,10 +7,9 @@
    digest: The randomized K_(3,3) graph state has larger negativity at p = 97/100 than at p = 1. -/
 
 /-
-proof_shape: Qubits, czPhase, plusState, graphState, rgState, partialTranspose, negativity:
-  definition (computational basis, CZ phases, the product state |+>^n, graph states, the
-  randomized graph state, partial transposition by Finset.piecewise, and the negativity with
-  the frozen trace norm)
+proof_shape: Qubits, czPhase, plusState, graphState, rgState, negativity: definition
+  (computational basis, CZ phases, the product state |+>^n, graph states, the randomized graph
+  state, and the negativity with the frozen partial transposition and trace norm)
 proof_shape: claim: definition (published open question, read as a universal statement over
   graphs, bipartitions and 0 <= p <= q <= 1)
 proof_shape: k33, partA: definition (the complete bipartite graph K_(3,3) on Fin 6 and one of
@@ -29,6 +28,7 @@ escape_witness: result (form (2) of §3.2: both trace-norm bounds are produced b
   existing statement gives them)
 admission_basis: open-problem-resolution (issue #12382; Refuted)
 Direct frozen dependencies:
+  D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.transposePart
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le
@@ -36,6 +36,7 @@ Direct frozen dependencies:
   D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef
 -/
 
+import D5.S3.Quantum.Entanglement.CycleFiveStrongOneResistance
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Combinatorics.SimpleGraph.Finite
 
@@ -46,14 +47,15 @@ namespace D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
 
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
+open D5.S3.Quantum.Entanglement.CycleFiveStrongOneResistance (transposePart)
 open scoped ComplexOrder
 
 /-- Computational-basis labels of `n` qubits. -/
-abbrev Qubits (n : ℕ) := Fin n → Fin 2
+abbrev Qubits (n : ℕ) := Fin n → Bool
 
 /-- The diagonal entry `(-1)^{x_a x_b}` of `CZ` on the edge `e = {a, b}` at the basis state `x`. -/
 def czPhase {n : ℕ} (e : Sym2 (Fin n)) (x : Qubits n) : ℂ :=
-  Sym2.lift ⟨fun a b => (-1) ^ ((x a).val * (x b).val), fun a b => by
+  Sym2.lift ⟨fun a b => (-1) ^ ((x a).toNat * (x b).toNat), fun a b => by
     dsimp only; rw [Nat.mul_comm]⟩ e
 
 /-- The product state `|+⟩^{⊗n}` in the computational basis. -/
@@ -72,17 +74,10 @@ noncomputable def rgState {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Ad
     (((p ^ F.card * (1 - p) ^ (G.edgeFinset \ F).card : ℝ)) : ℂ) •
       vecMulVec (graphState F) (star (graphState F))
 
-/-- The partial transposition on the qubits in `A`:
-`⟨x_A x_B| M^{Γ_A} |y_A y_B⟩ = ⟨y_A x_B| M |x_A y_B⟩`, where `A.piecewise y x` takes the
-coordinates in `A` from `y` and the others from `x`. -/
-def partialTranspose {n : ℕ} (A : Finset (Fin n)) (M : Matrix (Qubits n) (Qubits n) ℂ) :
-    Matrix (Qubits n) (Qubits n) ℂ :=
-  fun x y => M (A.piecewise y x) (A.piecewise x y)
-
 /-- The negativity `N(ρ) = (‖ρ^{Γ_A}‖ - 1) / 2` with the trace norm `Tr √(X† X)`. -/
 noncomputable def negativity {n : ℕ} (A : Finset (Fin n)) (ρ : Matrix (Qubits n) (Qubits n) ℂ) :
     ℝ :=
-  (traceNorm (partialTranspose A ρ) - 1) / 2
+  (traceNorm (transposePart A ρ) - 1) / 2
 
 /-- The open question of Wu et al. (arXiv:1403.3828, Section V), read as a universal statement:
 the negativity across every bipartition increases monotonically in the randomness `p`. -/
@@ -106,15 +101,15 @@ private def edges9 : Finset (Sym2 (Fin 6)) :=
 
 
 private def mism (e : Sym2 (Fin 6)) (u v : Qubits 6) : Bool :=
-  Sym2.lift ⟨fun a b => decide ((u a).val * (u b).val ≠ (v a).val * (v b).val), fun a b => by
-    dsimp only; rw [Nat.mul_comm (u a).val, Nat.mul_comm (v a).val]⟩ e
+  Sym2.lift ⟨fun a b => decide ((u a).toNat * (u b).toNat ≠ (v a).toNat * (v b).toNat),
+    fun a b => by dsimp only; rw [Nat.mul_comm (u a).toNat, Nat.mul_comm (v a).toNat]⟩ e
 
 private def xi (a b : ℤ) (x y : Qubits 6) : ℤ :=
   ∏ e ∈ edges9, if mism e (partA.piecewise y x) (partA.piecewise x y) then a else b
 
 
 /-- The binary index of a basis label. -/
-private def enc (x : Qubits 6) : ℕ := ∑ k : Fin 6, (x k).val * 2 ^ (k : ℕ)
+private def enc (x : Qubits 6) : ℕ := ∑ k : Fin 6, (x k).toNat * 2 ^ (k : ℕ)
 
 /-- The fourteen pairwise orthogonal integer vectors of the lower-bound certificate, as tables
 indexed by `enc`. -/
@@ -211,9 +206,9 @@ private def nvals : Fin 14 → ℤ := ![
 private def uv (j : Fin 14) (x : Qubits 6) : ℤ := (tab j).getD (enc x) 0
 
 /-- Parity of the `A` part and the sign `(-1)^{|x_B|}` of the `B` part. -/
-private def parA (x : Qubits 6) : ℕ := ((x 0).val + (x 2).val + (x 4).val) % 2
+private def parA (x : Qubits 6) : ℕ := ((x 0).toNat + (x 2).toNat + (x 4).toNat) % 2
 
-private def sgnB (x : Qubits 6) : ℤ := (-1) ^ ((x 1).val + (x 3).val + (x 5).val)
+private def sgnB (x : Qubits 6) : ℤ := (-1) ^ ((x 1).toNat + (x 3).toNat + (x 5).toNat)
 
 /-- The products of the parity states of `A` with `|+++⟩` and `|---⟩` on `B`, unnormalized. -/
 private def u00 (x : Qubits 6) : ℤ := if parA x = 0 then 1 else 0
@@ -276,16 +271,17 @@ theorem result : ¬ claim := by
     intro e u v
     induction e using Sym2.ind with
     | h a b =>
-      have h2 : ∀ i : Fin 2, i.val = 0 ∨ i.val = 1 := fun i => by omega
       simp only [czPhase, mism, Sym2.lift_mk]
-      rcases h2 (u a) with h1 | h1 <;> rcases h2 (u b) with h3 | h3 <;>
-        rcases h2 (v a) with h4 | h4 <;> rcases h2 (v b) with h5 | h5 <;> simp [h1, h3, h4, h5]
+      rcases Bool.eq_false_or_eq_true (u a) with h1 | h1 <;>
+        rcases Bool.eq_false_or_eq_true (u b) with h3 | h3 <;>
+        rcases Bool.eq_false_or_eq_true (v a) with h4 | h4 <;>
+        rcases Bool.eq_false_or_eq_true (v b) with h5 | h5 <;> simp [h1, h3, h4, h5]
   have hcard : edges9.card = 9 := by decide
   have hX : ∀ (p : ℝ) (a b : ℤ), (b : ℂ) ≠ 0 → ((1 - 2 * p : ℝ) : ℂ) = (a : ℂ) / b →
-      ∀ x y : Qubits 6, partialTranspose partA (rgState k33 p) x y =
+      ∀ x y : Qubits 6, transposePart partA (rgState k33 p) x y =
         ((xi a b x y : ℤ) : ℂ) / (64 * (b : ℂ) ^ 9) := by
     intro p a b hb hab x y
-    simp only [partialTranspose]
+    simp only [transposePart]
     rw [closed, edgeFinset_k33]
     have hfac : ∀ e ∈ edges9,
         (p : ℂ) * (czPhase e (partA.piecewise y x) * czPhase e (partA.piecewise x y)) +
@@ -306,7 +302,7 @@ theorem result : ¬ claim := by
     field_simp
     ring
   -- the state at `p = 97/100`
-  obtain ⟨X, hXdef⟩ : ∃ X, X = partialTranspose partA (rgState k33 (97 / 100)) := ⟨_, rfl⟩
+  obtain ⟨X, hXdef⟩ : ∃ X, X = transposePart partA (rgState k33 (97 / 100)) := ⟨_, rfl⟩
   have hXe : ∀ x y, X x y = ((xi (-47) 50 x y : ℤ) : ℂ) / (64 * ((50 : ℤ) : ℂ) ^ 9) := by
     intro x y
     rw [hXdef]
@@ -406,7 +402,7 @@ theorem result : ¬ claim := by
       norm_num
     exact lt_of_lt_of_le hnum (hre ▸ hle)
   -- the state at `p = 1`
-  obtain ⟨X1, hX1def⟩ : ∃ X1, X1 = partialTranspose partA (rgState k33 1) := ⟨_, rfl⟩
+  obtain ⟨X1, hX1def⟩ : ∃ X1, X1 = transposePart partA (rgState k33 1) := ⟨_, rfl⟩
   have hX1e : ∀ x y, X1 x y = ((xi (-1) 1 x y : ℤ) : ℂ) / 64 := by
     intro x y
     rw [hX1def, hX 1 (-1) 1 (by norm_num) (by push_cast; norm_num) x y]
