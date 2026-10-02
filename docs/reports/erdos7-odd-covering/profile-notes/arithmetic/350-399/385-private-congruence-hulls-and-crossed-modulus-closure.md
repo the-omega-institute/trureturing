@@ -141,6 +141,14 @@ Divisibility-chain cofactors qualify, including powers of any one
 cofactor prime; deeper retained originals remain unrestricted. General
 crossing traces and a period-independent density are not settled.
 
+[Section142](#142-balanced-depth-layers-with-stable-heavy-incidence-give-fixed-original-label-codes)
+reuses classical balanced-hypergraph cover decomposition on actual
+original-label incidence. With stable depth-one incidence along each
+depth-two trace component, crossing traces still force a W point.
+Otherwise a source with no W point must expose an actual odd
+same-depth incidence cycle or a depth-two trace crossing a depth-one
+boundary. No original is split into duplicate repair labels.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17426,3 +17434,96 @@ This supplies an actual W point over every live word, strengthening LW1's projec
 Section132's one-larger-prime argument gives a quantitative reserve under its specific actual law. LCW1 does not replace that stronger measure estimate: it supplies a point, allows cofactor primes below q, and only constrains the shallow traces at the chosen word. Arbitrary multi-prime cofactor incidences need not be laminar, and no such hypothesis is established for every EB1 family.
 
 Section114's laminar-prefix application supplies a two-Helly matching criterion for different safe-root sets. It does not allocate these mixed depth-one/depth-two codes. The present finite allocation is used only inside the existing whole-hole replacement, with actual cofactor traces and original label ownership. These are ordinary mathematical deductions, not new Lean verification or unrestricted noncoverage.
+
+## 142. Balanced depth layers with stable heavy incidence give fixed original-label codes
+
+This is an ordinary arithmetic consumer of classical polychromatic coloring and Report385 §139's complete joint-hole replacement. It supplies a sufficient condition allowing crossings within either depth layer. It does not assert that arbitrary actual cofactor traces satisfy the condition or add a Lean result.
+
+### Exact original source and hypotheses
+
+Fix one original EB1 cover, Q=3^H q^G M with q>3 and gcd(M,3q)=1, and a full ternary word u. Let B be all actual shallow top labels at u,
+
+    d=3^H q^e s_d, e in {1,...,min(G,2)}, a_d=u mod3^H.
+
+Assume B is nonempty. Keep EVERY original outside B unchanged, and retain the complete joint source
+
+    E_B=(Z/Q) minus union_(d notin B) A_d,
+    P=projection_M(E_B),
+    F_d=P intersect {v:v=a_d mod s_d}.
+
+Every F_d and P are nonempty by original private-point indispensability; P is a subset of the actual q-free residual at u. No private-region union replaces E_B.
+
+Let B_e denote the original labels of depth e. Define the incidence matrix A_e with rows the actual v in P and columns ORIGINAL labels d in B_e, with entry 1 exactly when v belongs to F_d. Repeated rows and equal traces are retained or compressed without identifying original labels. A 0–1 matrix is balanced if it contains no odd-order square submatrix having exactly two 1s in every row and column. The condition is invariant under transpose.
+
+Assume:
+
+1. Each nonempty depth-layer matrix A_1,A_2 is balanced.
+2. For every d in B_2 and h in B_1, either F_d is contained in F_h, or F_d and F_h are disjoint.
+
+Condition 2 permits heavy traces to cross each other and light traces to cross each other. It says that a light trace does not cross any heavy trace's boundary. It is stronger than an arbitrary mixed laminar family in one direction, so this consumer supplements the laminar result rather than claiming to contain every laminar case.
+
+Then there exists an ACTUAL v in P with
+
+    c(v)=|{h in B_1:v in F_h}|/3
+          +|{d in B_2:v in F_d}|/9 < 1.              (BLC1)
+
+By SH3, this (u,v) belongs to W with all deeper retained deletions still present. The numerical slack is c(v)<=8/9 for G>=2, and <=2/3 for G=1.
+
+### Classical input, with the orientation fixed
+
+For a finite balanced hypergraph whose vertices are ORIGINAL LABELS and whose hyperedges are the incident-label sets at source points, a minimum hyperedge size r implies a polychromatic r-coloring. Thus labels can be partitioned into r subfamilies, each covering the same complete source.
+
+The inspected source is Bollobás, Pritchard, Rothvoß and Scott, *Cover-Decomposition and Polychromatic Numbers*, arXiv:1009.6144v3, §1.3, printed page 5, paragraph beginning “For a hypergraph H let M_H be its 0–1 incidence matrix.” It states the deletion/duplication, integer-decomposition, and Mengerian equivalence, and explicitly includes balanced hypergraphs. Definitions of polychromatic coloring, duality and permitted repeated edges are in §1.1, printed page 2. The journal article is SIAM Journal on Discrete Mathematics 27 (2013), DOI 10.1137/110856332. Its reference [38] is Schrijver, *Combinatorial Optimization* (2003).
+
+Primary manuscript inspected: https://arxiv.org/pdf/1009.6144v3
+
+The standard balanced theorem is reused. The following application does not reprove it. No matching declaration was located by searches for balanced hypergraph/matrix, polychromatic coloring, or cover decomposition in the repository D5 and pinned Mathlib; this result is ordinary mathematics, not a claim of Lean verification.
+
+### One root code for every heavy original
+
+Suppose contrary that c(v)>=1 for every v in P. Apply the balanced theorem to the heavy incidence hypergraph after padding each edge of size less than three with its own private auxiliary vertices to size three. These auxiliary columns have only one 1, so they cannot participate in a forbidden cycle submatrix and do not destroy balance. They are proof variables, not copied original labels or output APs.
+
+A polychromatic three-coloring of the padded hypergraph gives a single first-digit color r_h in {0,1,2} to each original h in B_1. At every actual source v, the original heavy labels use exactly min(3,n_1(v)) different root colors: if n_1(v)<3 the padded edge has exactly three vertices and hence distinct colors; if n_1(v)>=3 it sees all three colors. Every heavy original retains that same code at all its actual cofactors.
+
+### Light components have one fixed remaining demand
+
+Make a graph on B_2 joining two light labels exactly when their ACTUAL traces meet in P. For a connected component K let X_K be the union of its traces.
+
+Condition 2 forces the complete heavy incidence set to be constant throughout X_K. Indeed if a heavy trace contains one light trace, it also contains any intersecting light trace; otherwise condition 2 would make them disjoint. Propagate along the component. Every heavy trace therefore contains all of X_K or misses all of X_K.
+
+Write I_K for this fixed heavy-label set and k=min(3,|I_K|). Its heavy root-color mask is constant on X_K and has exactly k elements. If k=3, the heavy originals already cover all ternary tails there and light codes may be arbitrary.
+
+If k<=2, the contrary inequality c(v)>=1 gives, at every v in X_K,
+
+    n_2(v)>=3(3-k).
+
+All incident light labels belong to this same component. Restrict A_2 to rows X_K and columns K; this is a submatrix and remains balanced. The classical theorem gives a polychromatic 3(3-k)-coloring of its ORIGINAL light labels. Identify those colors bijectively with precisely the three second-digit slots beneath each of the 3-k missing first-digit roots. This fixes one depth-two code for every light original in K. At every v in X_K, its incident light labels cover every missing leaf slot.
+
+Different light components have disjoint unions X_K. Each original light label belongs to exactly one component, so no code is assigned twice. At points outside all light traces, c(v)>=1 forces n_1(v)>=3 and the heavy codes already cover every tail. This proves JCE1 on the entire P, with one fixed code per original label.
+
+### Exact arithmetic consequence
+
+Invoke §139's already checked replacement
+
+    z=u+3^H c_d mod3^(H+e_d), z=a_d mod s_d.
+
+Its actual cofactor phase and height e_d are unchanged. The new labels 3^(H+e_d)s_d are pairwise distinct and fresh against every retained original, and their ratio to the old labels is (3/q)^e_d<1. The fixed codes cover all integer lifts of the COMPLETE E_B. PH1 yields a whole cover with unchanged count and strictly smaller modulus sum, contradicting EB1. This proves BLC1.
+
+If B is empty, SH2 directly places every actual q-free-live pair at u in W; no empty-batch descent is used. If G=1, only the heavy coloring step is needed.
+
+### Arithmetic tests and the forced obstruction
+
+Condition 2 is checked on actual traces, so it can hold even when full CRT cylinders cross. A simple full-cylinder sufficient test is: whenever an e=1 and an e=2 trace meet, require s_h to divide s_d. Their actual common point supplies the phase agreement; then the light full cylinder is contained in the heavy full cylinder. This uses the original numerical cofactors and does not change any phase. Balancedness can be required directly, or strengthened to total balancedness, which forbids every cycle submatrix of order at least three rather than only odd ones.
+
+Consequently, if no v in the nonempty actual P gives (u,v) in W, at least one of these two REAL source configurations must occur:
+
+* One depth layer has an odd incidence cycle: for an odd ell>=3 there are distinct original labels d_1,...,d_ell at that same depth and distinct actual v_1,...,v_ell in P such that among the selected labels, v_i belongs exactly to d_i and d_(i+1), with cyclic indices. Other original labels may also be present. This is the concrete forbidden balanced submatrix.
+* Some actual depth-two trace meets a depth-one trace and also leaves it: there are v,w in P with v in F_d intersect F_h and w in F_d minus F_h.
+
+These are necessary alternatives for the same original EB1 family. They are not asserted to contradict the existing arithmetic phase caps. The remaining bridge is to eliminate or consume these configurations using original CRT, unique-label and complete-hole constraints; balancedness or condition 2 has not been proved for unrestricted palettes.
+
+### Why an unrestricted balanced claim is not supplied
+
+Triplicating each depth-one column and nine-coloring a balanced clone matrix supplies three arbitrary leaf colors to that original. They need not form the three children of ONE first-digit root. Converting those colors to three separate APs violates one original-label capacity, while enclosing arbitrary slots by one depth-one prefix may fail. Ordinary unweighted cover decomposition therefore does not by itself establish the general mixed-depth result at the threshold 3n_1+n_2>=9.
+
+The paper's sensor-cover extension (§5) also assigns intervals of prescribed durations; it does not impose this ternary prefix shape and does not provide an exact threshold-one guarantee. No theorem from that extension is transferred here. The boundary-stability hypothesis above is precisely what lets genuine balanced cover decomposition fill a fixed set of missing leaf slots without splitting a heavy original.
