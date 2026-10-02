@@ -1,0 +1,58 @@
+**定理 50.2（全族的概率、响应与基线）。** 式（50.1）是归一的非负联合律，满足 $X\to Y\to Y_\alpha$；$0\le\alpha<1$ 时每个三元事件 $(x,i,j)$ 的概率严格为正，$\alpha=1$ 时只有 $i=j$ 有正概率。所有后验坐标在整个闭区间上至少为 $D>0$。对于 $\alpha>0$，$\rho_\alpha$ 严格以 $C$ 为唯一最大类，三行互异，全部补全响应商与 $C$ 相同；$\alpha=0$ 时后验恒定，后验响应商为单点。
+
+各律的 Bayes 分类错误率及 proper 基线为
+
+$$
+\begin{aligned}
+R_{01,\mathrm{Bayes}}^\alpha&=\frac23-\frac\alpha6,\\
+h(\alpha)&=\frac{21}{25}\mathcal E(R,U,V)
++\frac4{25}\mathcal E(E,R,E),\\
+b(\alpha)&=\frac23(1-\alpha^2)
++\alpha^2\frac{105\sqrt2-134}{25},
+\qquad \mathcal E(v)=-\sum_i v_i\log v_i.
+\end{aligned}
+\tag{50.5}
+$$
+
+特别地 $h(0)=\log3,b(0)=2/3$。对每个准入预测器，
+
+$$
+\Delta_{\log}^\alpha(p)=\mathbb E_{P_n}\operatorname{KL}(\rho_\alpha\Vert p),
+\qquad
+\Delta_2^\alpha(p)=\mathbb E_{P_n}\|\rho_\alpha-p\|_2^2.
+\tag{50.6}
+$$
+
+证明。$T_\alpha$ 行随机，且
+$Q_\alpha=\alpha Q+(1-\alpha)J_3/3$，所以式（50.1）的求和给式（50.2）及所述 Markov 性。$Q$ 的最小坐标为 $D$，与 $1/3$ 的凸组合仍至少为 $D$；联合律在 $\alpha=1$ 的支撑由 $T_1=I_3$ 决定。准确差值为
+
+$$
+R-U=\alpha D,\qquad R-V=\alpha A,\qquad R-E=\frac\alpha4.
+\tag{50.7}
+$$
+
+它们对 $\alpha>0$ 全部为正。因此三行的不同唯一赢家使行映射单射，逆在其三点像上就是 $\arg\max$。对任意切面和任意共同补全，后验相等当且仅当 $C$ 相等；再取全部补全的全称量词就得到同一响应商。这是边界卷定理19的任务细化关系在可逆有限像上的应用，不是随机标签的反演。
+
+式（49.9）的整类质量仍为 $(89,20,16)/125$，也对每个固定尾条件成立：整窗独立给 $P(ab=1)=P(cd=1)=4/25$，实际中窗给 $\mathbb E[bc]=1/5$，从而 $P(abcd=1)=4/125$，而 $G_2=cd-abcd$。没有把 $b,c$ 拆成独立位。正确类概率恒为 $R$，于是分类基线为 $1-R$；在 $\alpha=0$ 三类并列，Bayes 正确率仍为 $1/3$。类0和类2的熵相同，两端总质量为 $21/25$，给 $h(\alpha)$。对任意概率向量 $v$，
+
+$$
+\left\|\alpha v+\frac{1-\alpha}{3}\mathbf1\right\|_2^2
+=\alpha^2\|v\|_2^2+\frac{1-\alpha^2}{3}.
+$$
+
+结合式（49.11）的旧 Brier 基线即得 $b(\alpha)$。分别条件于 $X$，对数损失减熵给 KL，Brier 展开给
+$1-\|\rho_\alpha\|_2^2+\|p-\rho_\alpha\|_2^2$，得到式（50.6）。评分约定是 Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，JASA 102(477):359–378，2007，§3 Examples 1、3 的负评分，平方距离不除以类数。
+
+概率矩阵还满足
+
+$$
+\det Q_\alpha=\alpha^2AD,\qquad
+\rho=\frac{\rho_\alpha-(1-\alpha)\mathbf1/3}{\alpha}\quad(\alpha>0).
+\tag{50.8}
+$$
+
+第一式由 $\det Q=AD$ 和 $T_\alpha$ 在常数方向、零和方向上的特征值 $1,\alpha,\alpha$ 得到。若 $0<\alpha<1$ 且有反向行随机矩阵 $S$ 使 $Q_\alpha S=Q$，可逆性迫使
+$S=T_\alpha^{-1}=\alpha^{-1}I_3-(1-\alpha)J_3/(3\alpha)$，其非对角元为负；$\alpha=0$ 的秩也排除反向矩阵，$\alpha=1$ 则是恒等。故式（50.8）的后验代数反演不等于随机标签逆通道，响应商保留不等于原头的概率可实现性。
+
+这种类条件随机通道与概率级前向修正是既有工具：Lukasik、Bhojanapalli、Menon、Kumar，[*Does Label Smoothing Mitigate Label Noise?*](https://proceedings.mlr.press/v119/lukasik20a.html)，ICML 2020，PMLR 119:6448–6458，§2.2 式（2）–（5）；其中对称混合参数对应本节 $1-\alpha$，本文独立定义完全混合端点。Patrini、Rozza、Menon、Nock、Qu，[*Making Deep Neural Networks Robust to Label Noise: A Loss Correction Approach*](https://openaccess.thecvf.com/content_cvpr_2017/html/Patrini_Making_Deep_Neural_CVPR_2017_paper.html)，CVPR 2017:1944–1952，§4.2、Theorem 2 的非奇异矩阵和 proper-composite 条件属于其总体前向修正结论；本节不借此增加原头族，也不推论训练保证。$\square$
+
