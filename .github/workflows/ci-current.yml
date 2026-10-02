@@ -1001,6 +1001,48 @@ jobs:
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
+      # Pages consumes the existing checked report; this does not build Lean again.
+      - name: Package the checked report for Pages
+        if: ${{ success() && github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
+        env:
+          PAGES_REPORT_COMMIT: ${{ github.sha }}
+          PAGES_REPORT_RUN: ${{ github.run_id }}
+          PAGES_REPORT_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          test -s "$REPORT"
+          delivery="$RUNNER_TEMP/pages-report"
+          mkdir -p "$delivery"
+          cp "$REPORT" "$delivery/raw-lean-report.json"
+          python3 - <<'PYREPORT'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+
+          delivery = Path(os.environ["RUNNER_TEMP"]) / "pages-report"
+          report = delivery / "raw-lean-report.json"
+          receipt = {
+              "schema": "pages-ci-report.v1",
+              "source_repository": os.environ["GITHUB_REPOSITORY"],
+              "source_commit": os.environ["PAGES_REPORT_COMMIT"],
+              "source_tree": subprocess.check_output(["git", "rev-parse", "HEAD^{tree}"], text=True).strip(),
+              "ci_run_id": int(os.environ["PAGES_REPORT_RUN"]),
+              "ci_run_attempt": int(os.environ["PAGES_REPORT_ATTEMPT"]),
+              "report_digest": "sha256:" + hashlib.sha256(report.read_bytes()).hexdigest(),
+          }
+          (delivery / "publication.json").write_text(json.dumps(receipt) + "\n")
+          PYREPORT
+          tar -czf "$RUNNER_TEMP/pages-lean-report.tar.gz" -C "$delivery" raw-lean-report.json publication.json
+      - name: Upload the checked report for Pages
+        if: ${{ success() && github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-lean-report-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pages-lean-report.tar.gz
+          if-no-files-found: error
+          retention-days: 14
       # Caches are written only after every check above succeeded; the snapshot
       # program decides per layer whether the archive is ready to publish.
       - id: snapshot
