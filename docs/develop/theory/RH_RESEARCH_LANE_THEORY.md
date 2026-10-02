@@ -11874,3 +11874,103 @@ $$
 上述负号仅属于充分预算证书；它没有给出 $N_S(f_\tau)>\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)$，也没有反驳 $N_S\le U_{\mathrm{phase},S}$。更早的 $\|CX_f\|_{\mathrm{HS}}^2$ 和负半轴 Hankel 矩没有被此论证反驳。负的 Gamma 相位经范数取绝对方向，再乘外层系数 $2$，是本证书的主项损失。标准调制、digamma 渐近及固定 $S$ 评价前提都作为复用输入；本章只作这份特定预算的条件性适用范围判定，不认证其组合的原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 保留负半轴方向的同一测试预算
+
+沿用第 21 节的实际 $m_S,h_{S,f},Q,C$ 与有符号谱配对，第 23 节仅对相位范数预算的障碍不涉及负半轴矩本身。本章比较这两个估计环节，中心参数只用于标量矩控制，不移动物理 cutoff，不改变实际散射或测试。
+
+**定义 24.1（有方向的中心剩余预算）。** 在第 21 节合同下，对 $a>0$ 定义
+
+$$
+\begin{aligned}
+R_{a,S}(f)&=\left\|(omega_S(t)+a)\widehat f(-t)
++i\widehat f'(-t)\right\|_{L^2(d\mu)}^2,\\
+U_{\mathrm{or},a,S}(f)&=
+\left(\sqrt{D(f)}+\frac{\sqrt{R_{a,S}(f)}}{2\sqrt a}\right)^2.
+\end{aligned}
+$$
+
+$\widehat f'(-t)$ 表示先对 $\widehat f$ 求导，再在 $-t$ 处取值。完整 $\omega_S$ 包含实际 Gamma 相位和全部有限素数幂，不把局部内函数或平移分开收费。
+
+**候签定理 24.1（相位方向在固定高频族上的预算比较）。** 在第 21 节合同下，对每个 $a>0$ 有 $N_S(f)\le U_{\mathrm{or},a,S}(f)$。特别地，取定义 23.1 的固定有限 $S$ 与实偶测试族，令
+
+$$
+a_\tau=\log\tau-\log(2\pi)>0\quad(\tau>2\pi),\qquad
+D_0=\frac12\int_{\mathbb R}|x|\,|\phi(x)|^2dx.
+$$
+
+则在不使用正迹密度前提时已有
+
+$$
+R_{a_\tau,S}(f_\tau)=O_{S,r,\phi}(1),\qquad
+\mathcal H_S(f_\tau)=O_{S,r,\phi}(1/\log\tau),\qquad
+U_{\mathrm{or},a_\tau,S}(f_\tau)\longrightarrow D_0.
+$$
+
+若同时满足假设 23.1，则同一个实际 $f_\tau,S$ 上的精确证书满足
+
+$$
+\boxed{
+\frac{\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)
+-U_{\mathrm{or},a_\tau,S}(f_\tau)}{\log\tau}
+\longrightarrow m_0>0.
+}
+$$
+
+它与候签定理 23.1 的负主项形成两份充分预算的比较，未给出实际 $N_S$ 的极限或绝对值界。
+
+证明。只作为标准单侧二次矩工具使用标量不等式
+
+$$
+(-u)\mathbf1_{u<0}\le\frac{(u-a)^2}{4a}.
+$$
+
+在 $u<0$ 时，两边之差是 $(u+a)^2/(4a)$；其余位置直接非负。由 $\widehat h=m_S\widehat f(-t)$、$m_S'=i\omega_Sm_S$ 及 Plancherel，
+
+$$
+\mathscr F[(u-a)h_{S,f}](t)
+=i\widehat h'(t)-a\widehat h(t)
+=-m_S(t)\bigl[(\omega_S(t)+a)\widehat f(-t)
++i\widehat f'(-t)\bigr].
+$$
+
+因此 $\mathcal H_S(f)\le R_{a,S}(f)/(4a)$。复用第 21.1—21.2 节已给的谱配对与截断恒等式，
+
+$$
+N_S(f)\le\|CX_f\|_{\mathrm{HS}}^2
+\le\left(\sqrt{\mathcal H_S(f)}+\sqrt{D(f)}\right)^2
+\le U_{\mathrm{or},a,S}(f).
+$$
+
+上述标量不等式和既有算子链不另作为新工具定理列出。
+
+对实偶 $f$，$\widehat f,\widehat f'$ 在实轴上取实值，$\omega_S$ 实且偶，故二次式的交叉项逐点为零，准确得到
+
+$$
+R_{a,S}(f)=\|(\omega_S+a)\widehat f\|_{L^2(d\mu)}^2
++\|xf\|_2^2.
+$$
+
+仅有实偶自相关时不能作这个简化。现在使用第 23 节的精确双包式。对每个 $\eta=\pm1$ 的中心区域 $|t-\eta\tau|\le\tau/2$，$|t|/\tau\in[1/2,3/2]$；DLMF 5.11.2 的渐近保证 $\omega_\infty(t)+a_\tau$ 在该区域一致有界。归一化多项式 $t(t^2+1/4)/\tau^3$ 同样有界，固定 $S$ 的完整素数相位不超过 $2\mathfrak d_S$。
+
+在第 $\eta$ 包的补区域令 $s=t-\eta\tau$，则 $|s|>\tau/2$。全局对数增长及 $\tau\le2|s|$ 给出一个可积的支配量
+
+$$
+C_{S,\phi}(1+|s|)^6\bigl(1+\log(2+|s|)\bigr)^2
+|\widehat\phi(s)|^2.
+$$
+
+Schwartz 衰减同时控制多项式导数归一化和 $\log\tau$；对两包用三角不等式即可，不需要假定一个加权交叉消去。因此
+
+$$
+\|(\omega_S+a_\tau)\widehat f_\tau\|_{L^2(d\mu)}=O_{S,\phi}(1),\qquad
+R_{a_\tau,S}(f_\tau)=O_{S,r,\phi}(1).
+$$
+
+代入负半轴矩界得到 $\mathcal H_S(f_\tau)=O(1/\log\tau)$。固定支撑下，$f_\tau=-\phi\cos(\tau x)+O_{L^2}(\tau^{-1})$ 允许带权质量替换；Riemann–Lebesgue 给出 $D(f_\tau)\to D_0$。定义 24.1 中另一个平方根项趋于零，所以 $U_{\mathrm{or},a_\tau,S}\to D_0$。最后，在假设 23.1 下直接复用候签定理 23.1 的正迹和线性主项，即得证书的正系数。$\square$
+
+这份比较解释了第 23 节的一个估计损失：负的 Gamma 相位把高频包的实际 $h_{S,f}$ 质量送向正半轴，完整相位的大小范数丢掉了该方向。中心 $a_\tau$ 只恢复矩估计需要的方向信息，没有把 $Q$ 换成另一个投影，也没有删除普通度量中的 $K_S^{-1}$。
+
+标准包调制、标量矩控制和受限高频正性均作为既有方法或现象复用；本章的承重比较是两份特定预算在同一实际载体上的不同增长量，不把受限高频正性重新列为开放问题。所有隐含常数和成功阈值允许依赖固定 $S$；若 $S$ 随 $\tau$ 增长，$\omega_{\mathcal P}$ 不能再吸收进固定 $O(1)$，假设 23.1 也没有给出联合统一阈值。对一般测试，合适正中心和小剩余矩均未保证；完整的 $\sigma_S-D_{\mathrm{lin},S}\ge N_S$ 因而仍是更广的未解比较。
+
+## 追加锚（本行以下为增补区）
