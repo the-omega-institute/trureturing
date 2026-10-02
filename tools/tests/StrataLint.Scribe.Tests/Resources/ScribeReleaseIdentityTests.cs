@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ScribeReleaseIdentityTests
 {
     private const string Valid = """
-        {"schema":"trureturing.scribe.release-identity","sourceCommit":"0123456789abcdef0123456789abcdef01234567","packFormatVersion":1,"entryCount":2,"totalSha256":"abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcd"}
+        {"schema":"trureturing.scribe.release-identity","sourceCommit":"0123456789abcdef0123456789abcdef01234567","packFormatVersion":1,"entryCount":2,"totalSha256":"abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"}
         """;
 
     [Theory]
@@ -40,7 +40,7 @@ public sealed class ScribeReleaseIdentityTests
     [InlineData("schema", "\"other\"", "SchemaMismatch")]
     [InlineData("sourceCommit", "null", "InvalidType")]
     [InlineData("sourceCommit", "7", "InvalidType")]
-    [InlineData("sourceCommit", "\"ABCDEF0123456789abcdef0123456789abcdef0123\"", "InvalidSourceCommit")]
+    [InlineData("sourceCommit", "\"0123456789ABCDEF0123456789abcdef01234567\"", "InvalidSourceCommit")]
     [InlineData("sourceCommit", "\"0123\"", "InvalidSourceCommit")]
     [InlineData("sourceCommit", "\"g123456789abcdef0123456789abcdef01234567\"", "InvalidSourceCommit")]
     [InlineData("packFormatVersion", "\"1\"", "InvalidType")]
@@ -56,9 +56,9 @@ public sealed class ScribeReleaseIdentityTests
     [InlineData("entryCount", "-1", "InvalidEntryCount")]
     [InlineData("totalSha256", "null", "InvalidType")]
     [InlineData("totalSha256", "5", "InvalidType")]
-    [InlineData("totalSha256", "\"ABCDEF0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcd\"", "InvalidTotalSha256")]
+    [InlineData("totalSha256", "\"0123456789ABCDEF0123456789abcdef01234567456789abcdef0123456789\"", "InvalidTotalSha256")]
     [InlineData("totalSha256", "\"abcd\"", "InvalidTotalSha256")]
-    [InlineData("totalSha256", "\"gbcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcd\"", "InvalidTotalSha256")]
+    [InlineData("totalSha256", "\"gbcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789\"", "InvalidTotalSha256")]
     public void DecodeRejectsInvalidField(string field, string value, string reason)
     {
         var json = JsonNode.Parse(Valid)!.AsObject();

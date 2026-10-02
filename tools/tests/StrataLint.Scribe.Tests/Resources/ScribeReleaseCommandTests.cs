@@ -44,7 +44,7 @@ public sealed class ScribeReleaseCommandTests
 
     [Theory]
     [InlineData("0123")]
-    [InlineData("ABCDEF0123456789abcdef0123456789abcdef0123")]
+    [InlineData("0123456789ABCDEF0123456789abcdef01234567")]
     [InlineData("g123456789abcdef0123456789abcdef01234567")]
     public void ReleaseRejectsInvalidSourceCommit(string commit)
     {
