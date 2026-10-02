@@ -14,7 +14,7 @@ triage: anchor
 # Absolute square gaps with their support dependence retained
 
 Yann Bugeaud, *On the difference between squares and integral S-units*,
-Portugaliae Mathematica **83**(3) (2026), 223–234,
+Portugaliae Mathematica **83**(3/4) (2026), 223–234,
 [DOI:10.4171/PM/2145](https://doi.org/10.4171/PM/2145).
 The [publisher page](https://ems.press/journals/pm/articles/14298883)
 records online publication on 13 June 2025; 2026 is the printed volume year.
