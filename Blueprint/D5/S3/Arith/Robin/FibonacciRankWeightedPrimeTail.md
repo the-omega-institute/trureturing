@@ -14,6 +14,8 @@ $$\begin{aligned}\forall y \in \mathbb{R}, y \ge 2 \Rightarrow\\\operatorname{Su
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Juan Jose Alba Gonzalez, Florian Luca, Carl Pomerance, and Igor E. Shparlinski (2012). *On numbers n dividing the nth term of a linear recurrence*. DOI: [10.1017/S0013091510001355](https://doi.org/10.1017/S0013091510001355). URL: <https://doi.org/10.1017/S0013091510001355>.
+
 *Commentary.*
 
 The sum over all natural p converges, and the displayed bound holds for every real y at least two. The first-zero buckets at ranks one through five are empty, empty, the singleton two, the singleton three, and the singleton five, respectively.

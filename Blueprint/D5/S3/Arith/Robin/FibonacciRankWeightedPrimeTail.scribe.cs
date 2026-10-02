@@ -18,7 +18,8 @@ internal sealed class FibonacciRankWeightedPrimeTailDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/Arith/Robin/FibonacciRankWeightedPrimeTail.result"),
                 H("A uniform real-cutoff tail bound"),
                 StatementSource.FromAuthor(Statement()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Scale/albagonzalez2012recurrencedivisibility")),
                 Blocks(
                     Paragraph(Text("The sum over all natural p converges, and the "
                         + "displayed bound holds for every real y at least two. "

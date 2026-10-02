@@ -36,3 +36,8 @@ bucket bounds the number of primes above the cutoff. Combining this count
 with the complete bucket's Euler-logarithm estimate yields the common
 square-root bound, then summing over the divisors of a Fibonacci index yields
 the truncated Euler tail. This last estimate is not attributed to the article.
+
+## Verified locator
+
+- DOI and original text: https://doi.org/10.1017/S0013091510001355
+- Scope: proof of Theorem 1.2, §4, printed pages 281–282.
