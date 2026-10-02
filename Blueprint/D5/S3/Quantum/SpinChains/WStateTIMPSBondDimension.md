@@ -6,7 +6,7 @@ Two 3 x 3 matrices give a translation-invariant matrix product state representat
 
 **Definition 1.1 (Translation-invariant representations of the W-state).**
 
-$$\operatorname{IsWStateTIMPS}\left(n, d, A\right) \Leftrightarrow (\forall w \in \{0, 1\}^{n}, \operatorname{tr}\left(\prod_{i=0}^{n-1} A_{w_{i}}\right) = \operatorname{ite}\left(\sum_{i} w_{i} = 1, \frac{1}{\sqrt{n}}, 0\right))$$
+$$\forall n : \mathbb{N}, \forall d : \mathbb{N}, \forall A : \operatorname{Fin}\left(2\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \operatorname{IsWStateTIMPS}\left(n, d, A\right) \Leftrightarrow (\forall w : \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right), \operatorname{tr}\left(\prod_{i=0}^{n-1} A_{w_{i}}\right) = \operatorname{ite}\left(\sum_{i} w_{i} = 1, \frac{1}{\sqrt{n}}, 0\right))$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/WStateTIMPSBondDimension.IsWStateTIMPS` (`✓ std3`).
 
@@ -18,7 +18,7 @@ A pair A(0), A(1) of complex d x d matrices represents the normalized W-state of
 
 **Definition 1.2 (The conjecture).**
 
-$$claim \Leftrightarrow (\forall n, d, A, \left((2 \le n) \land \operatorname{IsWStateTIMPS}\left(n, d, A\right)\right) \Rightarrow \left\lfloor\frac{n}{2}\right\rfloor + 1 \le d)$$
+$$claim \Leftrightarrow (\forall n : \mathbb{N}, \forall d : \mathbb{N}, \forall A : \operatorname{Fin}\left(2\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \left((2 \le n) \land \operatorname{IsWStateTIMPS}\left(n, d, A\right)\right) \Rightarrow \left\lfloor\frac{n}{2}\right\rfloor + 1 \le d)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/WStateTIMPSBondDimension.claim` (`✓ std3`).
 

@@ -59,18 +59,27 @@ internal sealed class WStateTIMPSBondDimensionDocument : IScribeDocumentDefiniti
         Call(F.Id("ite"), condition, then, otherwise);
     private static Formula Sub(Formula value, Formula index) => new Formula.Subscript(value, index);
 
+    private static Formula All(Formula variable, Formula type, Formula body) =>
+        Seq(Forall, Sp, variable, Sp, Colon, Sp, type, Comma, Sp, body);
+    private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Fin(Formula n) => Call(F.Id("Fin"), n);
+    private static Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
+    private static Formula MatrixPair(Formula d) =>
+        Arrow(Fin(D(2)), Call(F.Id("Matrix"), Fin(d), Fin(d), Complex()));
+
     private static Formula RepFormula()
     {
         Formula n = F.Id("n"), d = F.Id("d"), a = F.Id("A"), w = F.Id("w"), i = F.Id("i");
-        Formula words = new Formula.Power(Seq(OpenBrace, D(0), Comma, Sp, D(1), CloseBrace), n);
         Formula product = Seq(F.Prod, Underscore, Grp(i, Eq, D(0)), Caret, Grp(n, F.Minus, D(1)), Sp,
             Sub(a, Sub(w, i)));
         Formula weight = Seq(F.Sum, Underscore, Grp(i), Sp, Sub(w, i));
         Formula amplitude = Ite(Equal(weight, D(1)),
             new Formula.Fraction(D(1), Seq(Sqrt, Grp(n))), D(0));
-        Formula body = Seq(Forall, Sp, w, Sp, InMacro, Sp, words, Comma, Sp,
+        Formula body = All(w, Arrow(Fin(n), Fin(D(2))),
             Equal(Call(F.Id("tr"), product), amplitude));
-        return Disp(Iff(Call(F.Id("IsWStateTIMPS"), n, d, a), body));
+        return Disp(All(n, Nat(), All(d, Nat(), All(a, MatrixPair(d),
+            Iff(Call(F.Id("IsWStateTIMPS"), n, d, a), body)))));
     }
 
     private static Formula ClaimFormula()
@@ -78,8 +87,7 @@ internal sealed class WStateTIMPSBondDimensionDocument : IScribeDocumentDefiniti
         Formula n = F.Id("n"), d = F.Id("d"), a = F.Id("A");
         Formula hypotheses = And(Le(D(2), n), Call(F.Id("IsWStateTIMPS"), n, d, a));
         Formula bound = Le(Plus(new Formula.Floor(new Formula.Fraction(n, D(2))), D(1)), d);
-        Formula body = Seq(Forall, Sp, n, Comma, Sp, d, Comma, Sp, a, Comma, Sp,
-            Implies(hypotheses, bound));
+        Formula body = All(n, Nat(), All(d, Nat(), All(a, MatrixPair(d), Implies(hypotheses, bound))));
         return Disp(Iff(F.Id("claim"), body));
     }
 }
