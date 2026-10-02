@@ -365,7 +365,9 @@ For R={7} and H_5=1, the color opposite5 is exactly{11,13,17,19,23},
 and H_7=2 forces21 into that color.
 If21 has5's color, then H_7>=3 and147,63,441 have the other color;
 63's first7-prefix differs from those of49 and147. The remaining
-phase branches and higher powers are not excluded.
+phase branches and higher powers are not excluded. Original27 has
+the opposite5 color in both branches. When21 has5's color,63 and441
+share the third mod9 branch outside9 and27, and have different7 roots.
 
 [Section171](#171-fixed-probe-holes-force-a-finite-q-height-window-or-lower-ternary-suppliers)
 shrinks the fixed probe deletion family to height-two payers, lower
@@ -21062,6 +21064,51 @@ The positive derivatives of J on these ranges therefore imply
          =2687/2805=1-118/2805<1.
 
 This excludes every proper subpalette of C', proving S7B9 at all finite H and G in both21 branches. It supplies the five actual concentrated primes and their common color, without assigning further residues or excluding the remaining family.
+
+### Actual27 ownership forces the second ternary phases of63 and441
+
+In both21 branches, original27 has ternary root i. Moreover,
+
+    a_21=j modulo3 ==>
+      a_63=a_441 modulo9,
+      a_63 differs from a_9 and a_27 modulo9,
+      a_441 differs from a_63 modulo7.               (S7B10)
+
+Use the same root-independent carrier as in S7B9, with alpha<1/4. Its common low-union and high-capacity quantities satisfy
+
+    u>=1-ell-2alpha W>=11189/16830>0,
+    tau u<=theta K,
+    K=(1+alpha)W+alpha(1-ell).
+
+Original27 exists since H>=3. If it had root j, its mass1/9 would be missing from root i's pure-three guards, giving beta_i<=theta-1/9 and tau>11/18. Whole coverage would require (11/9)u<K. But the JOINT expression
+
+    D(alpha,W,ell)=(11/9)(1-ell-2alpha W)-K
+      =11/9-alpha-(1+31alpha/9)W-(11/9-alpha)ell
+
+decreases in alpha,W,ell on the stated ranges. Its alpha derivative is -1-(31/9)W+ell<0, and the other two coefficients are negative. Hence
+
+    D(alpha,W,ell)>=D(1/4,W_*,C_*)
+      =10469/212058>0,
+
+a contradiction. This comparison retains the SAME actual ell in both terms; the endpoint value of K is not used as an independently maximized bound. Root zero is excluded by original3, so27 has root i.
+
+Now assume21 has root j. Originals63 and441 have root i by S7B2. For n=9*7^e, e in{1,2}, suppose a_n=a_27 modulo9. The actual27 ternary cylinder, of relative mass1/9 in Omega_i, lies inside n's ternary cylinder of relative mass1/3. Let m_e be n's actual conditional7-prefix mass on Y, so0<=m_e<=7^(-e)/y. The high demand avoids both27 and the complete low union L_0. Since n has no Z-coordinate, its contribution is at most
+
+    (1/3-1/9)m_e(1-ell)
+      <=(2/9)7^(-e)(1-ell)/y.
+
+Its nominal allowance in S7B5 is (1/3)7^(-e)(1-ell)/y. The SAME specified slot therefore loses
+
+    Delta_e>=7^(-e)(1-ell)/(9y)>=(1-C_*)/441.
+
+Any part of the prefix removed by B only lowers m_e. There is no conditioning-independence assumption or sum of overlapping losses. S7B6–S7B7 now give the impossible necessary inequality
+
+    1<J-2Delta_e
+      <=334462/333795-2(1-C_*)/441
+      =88145392/88322157
+      =1-176765/88322157<1.
+
+Thus63 and441 both avoid a_27 modulo9. They also avoid a_9 modulo9 by comparable-original disjointness. The two excluded residues differ because9|27. All four originals have root i, which has exactly three lifts modulo9, so63 and441 use the same remaining lift. Finally63|441 forces their first7 roots to differ; otherwise the441 class would lie inside63. This proves S7B10. No mutual first7 separation of49,147 and441 is asserted.
 
 ## 171. Fixed probe holes force a finite q-height window or lower ternary suppliers
 
