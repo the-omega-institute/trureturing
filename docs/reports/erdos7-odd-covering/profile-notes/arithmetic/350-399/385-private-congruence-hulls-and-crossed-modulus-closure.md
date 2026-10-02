@@ -325,6 +325,7 @@ R={q} and q>=11, without requiring5/7 to have opposite colors. For
 R={7}, H_5=1, the opposite color contains11,13 and at least four primes;
 all nonternary heights except7 are one. Its original9 owns that root
 and H_3>=3; when H_7=1, original27 also owns it and H_3>=4.
+Section168 excludes that entire H_7=1 case, forcing original49.
 The remaining singleton cases and unrestricted Erdős#7 remain open.
 
 [Section166](#166-the-primitive-triangle-has-singleton-top-cells-and-two-complete-low-row-probe-obligations)
@@ -342,6 +343,12 @@ actual cofactor point, full-height originals in a single first-q root
 have cofactor intersection graph of matching number at most one.
 This constrains each actual source; it does not make the global
 incidence matrix balanced or close the joint-deletion obligation.
+
+[Section168](#168-an-actual63-overlap-excludes-shared7-at-height-one)
+excludes H_7=1 for every finite H_3 when R={7} and H_5=1.
+On one retained product carrier, the actual7-free low union removes
+part of the single63 slot's high capacity. The resulting strict
+budget forces H_7>=2 and original49. Higher7 powers remain unresolved.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -20627,3 +20634,112 @@ and have the same literal phase modulo h. Divisor closure makes h an original la
 This argument permits e_i=1. An exponent-one label can equal h only in the parent case just handled; no assumption that every selected original is a deeper q-descendant is needed.
 
 Every hypothetical matching of size two in the stated graph is excluded by one of these two cases. The additional arithmetic consumer is the four-row repair with two different cofactor gcds. The common-parent capacity, complete-deletion rule, fresh-row construction and elementary graph classification are reused. No Lean verification, global incidence-matrix conclusion or unrestricted noncoverage is asserted.
+
+## 168. An actual63 overlap excludes shared7 at height one
+
+Keep ONE EB1 original whole cover with R={7},5 concentrated and H_5=1. Then
+
+    H_7>=2, and numerical49 is ORIGINAL.                 (S7O1)
+
+The previously established H_3>=3 and the actual9 ownership remain valid. This conclusion excludes H_7=1 for every finite ternary height; it does not exclude H_7>=2.
+
+Suppose, for contradiction, that G=H_7=1. Put H=H_3>=3, and let S be the concentrated color opposite5, with ternary root i. Reuse the established height-one palette
+
+    S subset C'={11,13,17,19,23}, H_p=1 for p in S.
+
+The literal singleton-root assignment of section73 eliminates every opposite-color original from the COMPLETE root i. Retained originals cover the whole remaining carrier, with all original labels, phases and ternary tails unchanged. At each p in S restrict its coordinate to all p-2 roots other than0 and r_p, and denote their uniform product space by Z. These restrictions remove actual p and3p.
+
+Write
+
+    N=product_(p in S)p,
+    w(d)=product_(p|d)1/(p-2), d|N,
+    W=sum_(d|N,d>1)w(d), X=sum_(p in S)1/(p-2),
+    C_0=2(W-X)=2 sum_(d|N,omega(d)>=2)w(d).
+
+Both W and C_0 increase when primes are added to S. Their upper-palette values are
+
+    W_*=155/357, X_*=22097/58905,
+    C_(0,*)=6956/58905.                                (S7O2)
+
+Let Omega_i be the complete ternary root i, let G_i be its actual pure-three guard union, and put beta=mu(G_i), tau=1-beta and theta=sum_(b=2..H)3^(1-b). CM1 supplies beta<=theta<1/2, so tau>1/2 and tau>theta.
+
+### Original21 is forced into the retained root
+
+First give the7 coordinate its six nonzero roots. Suppose21 is absent or has the other ternary root. Both pure-seven low labels7,21 then have zero mass. The7-free low originals d,3d have total cofactor mass at most C_0. The7-bearing low labels7d,21d with d>1 contribute at most W/3. The high non-pure-three inventory has envelope theta M^-, where
+
+    L^-=C_0+W/3, M^-=(7/6)W+1/6.
+
+Apply the existing complete-low-complement inequality CM9/GCB1 on this fixed product:
+
+    tau<=tau L^-+theta M^-.
+
+Since tau>theta and M^->0, this requires L^-+M^->1. Yet
+
+    L^-+M^-=1/6+(3/2)W+C_0
+      <=55136/58905<1.
+
+Consequently original21 exists and has first-three root i. Its actual first-seven root s is nonzero by comparable-class disjointness with original7. No root is assigned to any higher multiple of21.
+
+### The actual low union and high demand use one product law
+
+Now give the7 coordinate the five roots
+
+    Y=F_7 minus {0,s},
+
+and use the uniform product law on Omega_i times Y times Z. Original7,21 and every concentrated p,3p have zero mass. All remaining labels are still distinguished by their ORIGINAL tuples3^b7^epsilon d, with epsilon in {0,1}; no reduced moduli are identified.
+
+Let L_0 subset Z be the union of the actual7-free low events active in root i, where low means ternary height0 or1. Its nonzero events have labels d or3d with omega(d)>=2. Its ACTUAL union mass ell satisfies
+
+    0<=ell=mu_Z(L_0)<=C_0.
+
+Let L_7 subset Y times Z be the actual7-bearing low union. Its nonzero events have labels7d or21d with d>1, hence
+
+    mu(L_7)<=B, B=2W/5.
+
+The SAME complete low complement at every ternary word is
+
+    U=(Y times Z) minus [(Y times L_0) union L_7],
+    u=mu(U)>=1-ell-B.
+
+Whole original coverage requires every point of
+
+    D_high=(Omega_i minus G_i) times U
+
+to be covered by an actual high original. For each b>=2, non-pure-three high cofactors have total mass at most W+(1+W)/5. Thus their full product-mass envelope is
+
+    theta M, M=(6/5)W+1/5.
+
+This sum includes each possible original numerical label at most once, with absent or inactive labels contributing zero.
+
+### The single63 slot necessarily wastes capacity on the same low union
+
+The high envelope includes the numerical slot63=3^2*7 with nominal mass1/15. If the actual63 class has nonzero mass on the product, its mass is EXACTLY1/15: its ternary prefix has relative mass1/3 and its7-root has mass1/5. It has no coordinate in Z, so
+
+    mu(A_63 intersect [Omega_i times Y times L_0])=ell/15.
+
+This entire intersection lies outside D_high, since it is already low-covered. Therefore actual63 can contribute at most(1-ell)/15 toward the high demand.
+
+If63 is absent, has the wrong ternary root, or has zero mass on the restricted carrier, its contribution is zero. Removing its full nominal1/15 allowance saves at least ell/15 because ell<=1. Thus every case gives the SAME actual-source inequality
+
+    tau u<=theta M-ell/15.                            (S7O3)
+
+Only one original numerical63 slot is involved. Other high originals retain their prior upper allowances. This subtraction needs neither existence nor root ownership of63, and uses the product law before any conditioning on the high-demand set.
+
+### The shared union measure closes the contradiction
+
+Using tau>1/2, theta<1/2 and u>=1-ell-B in S7O3 gives
+
+    (1/2)(1-ell-B)<=tau u<=(1/2)M-ell/15.
+
+Consequently
+
+    1<=B+M+(13/15)ell
+      <=1/5+(8/5)W+(13/15)C_0
+      <=125849/126225
+       =1-376/126225<1.                              (S7O4)
+
+The last step substitutes S7O2; all coefficients are positive. This contradiction excludes G=1, and divisor closure supplies original49 once G>=2.
+
+For comparison, retaining only the corresponding inventory sums would give the larger upper value B_*+M_*+C_(0,*)=59657/58905>1. The useful extra relation is S7O3: the actual7-free low union both reduces the remaining demand and removes part of the single63 capacity available to meet that demand. The two appearances of ell concern exactly the same union in the same original source.
+
+Higher7 powers cannot be discarded when G>=2. Original7^e and3*7^e for e>=2 can remain on the five-root carrier, as can higher7 levels in every mixed cofactor column. The forcing of21 into root i above was established under G=1. No phase assignment or exclusion of those higher originals follows here. The argument is ordinary mathematics with exact rational arithmetic, without Lean verification or an unrestricted Erdős#7 conclusion.
