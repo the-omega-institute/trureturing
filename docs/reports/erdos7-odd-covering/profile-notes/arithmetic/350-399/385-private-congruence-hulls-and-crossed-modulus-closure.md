@@ -23727,3 +23727,158 @@ prefix-separated \(p=3\) case into a finite divisor-and-phase problem inside
 the original period, rather than an unrestricted search over new odd
 moduli.  The present results do not yet rule out a split of the two
 responsibility pieces among several such divisor classes.
+
+## 200. A vacant lower-prime layer gives a whole-cover descent
+
+The finite palette in Section 199 can be combined with the source phase from
+Section 192 to obtain a global inventory restriction.  Keep an EB1
+representative with
+
+\[
+ Q=\operatorname{lcm}(D),\qquad p^e\parallel Q,
+\]
+
+whose top \(p\)-layer has exactly the \(p\) classes
+\(p^e m_1,\ldots,p^e m_p\).  Write
+
+\[
+ L=\operatorname{lcm}(m_1,\ldots,m_p),\qquad
+ R=p^{e-1}L.
+\]
+
+Let \(A=a_R\pmod R\) be the occupied original class and
+\(B=b\pmod R\) the source-determined phase of the Dalton--Trifonov
+replacement.  Let \(W\) be the union of all original classes other than the
+top \(p\) classes and \(A\).  The source replacement gives the same-source
+whole-cover identity
+
+\[
+\boxed{\mathbb Z=W\cup A\cup B.}
+\tag{LP0}
+\]
+
+Fix an odd prime \(q<p\), put
+
+\[
+ b_q=v_q(L),\qquad J=L/q^{b_q},
+\]
+
+and consider the candidate labels
+
+\[
+ \mathcal V_q=
+ \left\{
+ q^{b_q+1}d:
+ d\mid p^{e-1}J,\quad q^{b_q+1}d\notin D
+ \right\}.
+\tag{LP1}
+\]
+
+### Vacancy theorem
+
+\[
+\boxed{
+ |\mathcal V_q|\ge q
+ \quad\Longrightarrow\quad
+ \text{there is a distinct odd whole cover with }|D|-p+q\text{ classes}.
+}
+\tag{LP2}
+\]
+
+Choose \(q\) distinct vacant labels
+\(q^{b_q+1}d_0,\ldots,q^{b_q+1}d_{q-1}\).  For each \(j\), define a
+class \(C_j\) by the compatible CRT conditions
+
+\[
+ x\equiv a_R+jq^{b_q}\pmod {q^{b_q+1}},
+ \qquad
+ x\equiv a_R\pmod {d_j}.
+\tag{LP3}
+\]
+
+Here \(q\nmid d_j\), and \(d_j\mid p^{e-1}J\mid R\), so every point of
+\(A\) satisfies the second condition and has one of the \(q\) first
+\(q\)-digit values in the first condition.  Thus
+
+\[
+ A\subseteq\bigcup_{j=0}^{q-1}C_j.
+\tag{LP4}
+\]
+
+Replace the original \(A\) and the \(p\) top classes by the source class
+\(B\) at the occupied label \(R\) and the \(q\) classes \(C_j\).  Equation
+(LP0) and (LP4) prove whole coverage.  The new labels are pairwise distinct,
+absent from \(D\), odd and greater than one; none is \(R\), since its
+\(q\)-valuation is \(b_q+1\) whereas \(v_q(R)=b_q\).  The new family has
+
+\[
+ |D|-(p+1)+(q+1)=|D|-p+q<|D|
+\]
+
+classes, contradicting EB1.  Consequently every EB1 representative in this
+occupied-\(R\) branch satisfies
+
+\[
+\boxed{|\mathcal V_q|\le q-1\qquad(q<p,\ q\text{ odd prime}).}
+\tag{LP5}
+\]
+
+If \(b_q=v_q(Q)\), every label in the complete candidate layer has
+\(q\)-valuation above the original period and is absent from \(D\).  Since
+\(p\nmid J\), that layer has \(e\,\tau(J)\) labels, and (LP5) gives
+
+\[
+\boxed{
+ e\,\tau\!\left(L/q^{v_q(L)}\right)\le q-1.
+}
+\tag{LP6}
+\]
+
+For instance, when \(q=3<p\), full \(3\)-height forces
+\(e\,\tau(J)\le2\); hence \(e\ge3\) is impossible, and \(e=2\) forces
+\(J=1\).  More generally, if \(e\ge q\), divisor closure and (LP5) force
+
+\[
+\boxed{p^{e-q}qL\in D.}
+\tag{LP7}
+\]
+
+Otherwise divisor closure would make the \(q\) labels
+\(p^{e-q}qL,\ldots,p^{e-1}qL\) all absent, contradicting (LP5).
+
+This is a whole-cover descent, so it pays the actual phase of \(A\) and
+does not replace a joint responsibility by selected witnesses.  Its boundary
+is explicit: when \(v_q(L)<v_q(Q)\), some candidate labels can already be
+occupied, and deleting those occupants creates a new liability; when \(p=3\)
+there is no smaller odd prime \(q\).  Thus (LP5)--(LP7) are necessary
+inventory restrictions, not an unrestricted Erdős #7 conclusion.
+
+## 201. Higher \(p\)-powers cannot repair a bounded all-high layer
+
+There is also a way to remove a common false escape regardless of how high
+the inserted \(p\)-exponents are.  Let
+\(W\) be a finite union of classes whose moduli all have \(p\)-valuation at
+most \(e-1\), and let \(E=\mathbb Z\setminus W\).  Suppose \(N\) inserted
+classes cover \(E\), with every inserted modulus having \(p\)-valuation at
+least \(e\).
+
+Fix the \(p\)-free CRT coordinates and a prefix modulo \(p^{e-1}\).  Membership
+in \(W\) is constant on the remaining \(p\)-digit tail.  On a tail belonging
+to \(E\), every one of the \(p\) next \(p\)-digits must be covered.  A class
+of exact \(p\)-valuation \(e\) covers at most one such digit; a deeper class
+covers at most a \(1/p\) fraction of that digit and cannot serve another
+digit.  If \(r\) digits have no exact-height class, the tail needs at least
+
+\[
+ p+(p-1)r
+\tag{HP1}
+\]
+
+inserted classes.  Therefore, if \(N<2p-1\), the exact-height-\(e\)
+subfamily already covers \(E\).  In particular, for \(N\le p+1\) (and
+\(p\ge3\)) allowing higher \(p\)-powers cannot enlarge the bounded
+all-high repair interface.  Any successful bounded descent must instead use
+lower \(p\)-height classes, new cofactor types at exact height \(e\), or a
+larger joint replacement.  This observation complements (MI2)--(MI3) and
+does not assert that the exact-height subfamily has distinct labels or
+preserves the original phases.
