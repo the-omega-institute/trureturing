@@ -2,18 +2,21 @@
    generality: G
    mirror-B: D5/B/S3/HomologicalAlgebra/Persistence/RealDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/HomologicalAlgebra/Persistence/RealExtension,
-     D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
+   anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
      D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
    utility: none
    digest: Actual natural real interval classification against arbitrary finite competitors. -/
 
-import D5.S3.HomologicalAlgebra.Persistence.RealExtension
+import D5.S3.HomologicalAlgebra.Persistence.FiniteIntervalDecomposition
+import D5.S3.HomologicalAlgebra.Persistence.RealIntervalUniqueness
+import Mathlib.CategoryTheory.NatIso
+import Mathlib.CategoryTheory.Whiskering
+import Mathlib.Data.Finset.Lattice.Fold
 import Mathlib.Algebra.Category.ModuleCat.Ulift
 
 namespace D5.S3.HomologicalAlgebra.Persistence.RealDecomposition
 
-open CategoryTheory Module FiniteIntervalSplit FiniteIntervalDecomposition RealExtension
+open CategoryTheory Module FiniteIntervalSplit FiniteIntervalDecomposition
   RealIntervalUniqueness
 
 universe u v
@@ -21,21 +24,74 @@ universe u v
 variable {K : Type u} [Field K] {n : ℕ} {V : Fin n → Type v}
   [∀ index, AddCommGroup (V index)] [∀ index, Module K (V index)]
 
-structure Decomposition (diagram : Diagram K V) (grid : Breakpoints n) where
+structure Decomposition (representation : ℝ ⥤ ModuleCat.{v} K) where
   Occurrence : Type v
   finite : Fintype Occurrence
   family : IntervalFamily Occurrence
-  isomorphism : realModule diagram grid ⋙ ModuleCat.uliftFunctor.{u} K ≅
+  isomorphism : representation ⋙ ModuleCat.uliftFunctor.{u} K ≅
     intervalSum (K := K) family
 
 attribute [instance] Decomposition.finite
 
+set_option maxHeartbeats 400000 in
 set_option backward.isDefEq.respectTransparency false in
 theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
-    (diagram : Diagram K V) (grid : Breakpoints n) :
-    ∃ decomposition : Decomposition diagram grid,
+    (diagram : Diagram K V) (grid : Fin n ↪o ℝ) :
+    let prefixedDiagram : WithBot (Fin n) ⥤ ModuleCat.{v} K := {
+      obj slot := match slot with
+        | ⊥ => ModuleCat.of K (ULift.{v} PUnit.{1})
+        | (index : Fin n) => ModuleCat.of K (V index)
+      map {source target} arrow := by
+        cases source with
+        | bot => exact ModuleCat.ofHom 0
+        | coe source =>
+          cases target with
+          | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom arrow))
+          | coe target =>
+            exact ModuleCat.ofHom
+              (diagram.map source target (WithBot.coe_le_coe.mp (leOfHom arrow)))
+      map_id index := by
+        cases index with
+        | bot =>
+          ext vector
+        | coe index =>
+          change ModuleCat.ofHom (diagram.map index index le_rfl) = _
+          rw [diagram.identity]
+          rfl
+      map_comp {source middle target} first second := by
+        cases source with
+        | bot =>
+          have : Subsingleton (ULift.{v} PUnit.{1}) := by
+            infer_instance
+          ext vector
+          have zero : vector = 0 := Subsingleton.elim _ _
+          subst vector
+          simp
+        | coe source =>
+          cases middle with
+          | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom first))
+          | coe middle =>
+            cases target with
+            | bot => exact False.elim (WithBot.not_coe_le_bot middle (leOfHom second))
+            | coe target =>
+              change ModuleCat.ofHom _ = ModuleCat.ofHom _ ≫ ModuleCat.ofHom _
+              rw [← ModuleCat.ofHom_comp, diagram.composition]
+    }
+    let selectedCell : ℝ → WithBot (Fin n) := fun time => by
+      classical
+      exact Finset.univ.sup fun index => if grid index ≤ time then
+        (index : WithBot (Fin n)) else ⊥
+    let selector := (show Monotone (selectedCell) from by
+      classical
+      intro source target ordered
+      apply Finset.sup_mono_fun
+      intro index _
+      by_cases born : grid index ≤ source
+      · simp [born, born.trans ordered]
+      · simp [born]).functor
+    ∃ decomposition : Decomposition (selector ⋙ prefixedDiagram),
       ∀ {Second : Type v} [Fintype Second] (second : IntervalFamily Second),
-        (realModule diagram grid ⋙ ModuleCat.uliftFunctor.{u} K ≅
+        ((selector ⋙ prefixedDiagram) ⋙ ModuleCat.uliftFunctor.{u} K ≅
           intervalSum (K := K) second) →
         ∀ birth death,
           Fintype.card {occurrence // decomposition.family.birth occurrence = birth ∧
@@ -43,28 +99,88 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
           Fintype.card {occurrence // second.birth occurrence = birth ∧
             second.death occurrence = death} := by
   classical
-  let construction : Decomposition diagram grid := by
+  let prefixedDiagram : WithBot (Fin n) ⥤ ModuleCat.{v} K := {
+    obj slot := match slot with
+      | ⊥ => ModuleCat.of K (ULift.{v} PUnit.{1})
+      | (index : Fin n) => ModuleCat.of K (V index)
+    map {source target} arrow := by
+      cases source with
+      | bot => exact ModuleCat.ofHom 0
+      | coe source =>
+        cases target with
+        | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom arrow))
+        | coe target =>
+          exact ModuleCat.ofHom
+            (diagram.map source target (WithBot.coe_le_coe.mp (leOfHom arrow)))
+    map_id index := by
+      cases index with
+      | bot =>
+        ext vector
+      | coe index =>
+        change ModuleCat.ofHom (diagram.map index index le_rfl) = _
+        rw [diagram.identity]
+        rfl
+    map_comp {source middle target} first second := by
+      cases source with
+      | bot =>
+        have : Subsingleton (ULift.{v} PUnit.{1}) := by
+          infer_instance
+        ext vector
+        have zero : vector = 0 := Subsingleton.elim _ _
+        subst vector
+        simp
+      | coe source =>
+        cases middle with
+        | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom first))
+        | coe middle =>
+          cases target with
+          | bot => exact False.elim (WithBot.not_coe_le_bot middle (leOfHom second))
+          | coe target =>
+            change ModuleCat.ofHom _ = ModuleCat.ofHom _ ≫ ModuleCat.ofHom _
+            rw [← ModuleCat.ofHom_comp, diagram.composition]
+  }
+  let selectedCell : ℝ → WithBot (Fin n) := fun time =>
+    Finset.univ.sup fun index => if grid index ≤ time then (index : WithBot (Fin n)) else ⊥
+  let selector := (show Monotone (selectedCell) from by
+    intro source target ordered
+    apply Finset.sup_mono_fun
+    intro index _
+    by_cases born : grid index ≤ source
+    · simp [born, born.trans ordered]
+    · simp [born]).functor
+  let construction : Decomposition (selector ⋙ prefixedDiagram) := by
     let basis := Classical.choice (exists_interval_basis diagram)
-    let family := realFamily diagram basis grid
+    let family : IntervalFamily (ULift.{v} basis.Occurrence) := {
+      birth occurrence := grid (basis.birth occurrence.down)
+      death occurrence := if next : (basis.last occurrence.down).val + 1 < n then
+        (grid ⟨(basis.last occurrence.down).val + 1, next⟩ : WithTop ℝ) else ⊤
+      positive occurrence := by
+        split_ifs with next
+        · apply WithTop.coe_lt_coe.mpr
+          apply grid.strictMono
+          have ordered := basis.ordered occurrence.down
+          change (basis.birth occurrence.down).val < (basis.last occurrence.down).val + 1
+          omega
+        · exact WithTop.coe_lt_top _ }
     have born_test : ∀ (index : Fin n) (time : ℝ),
-        (index : WithBot (Fin n)) ≤ cell grid time ↔ grid.time index ≤ time := by
+        (index : WithBot (Fin n)) ≤ selectedCell time ↔ grid index ≤ time := by
       intro index time
       change (index : WithBot (Fin n)) ≤ Finset.univ.sup _ ↔ _
       rw [Finset.le_sup_iff (WithBot.bot_lt_coe index)]
       constructor
       · rintro ⟨other, _, below⟩
-        by_cases born : grid.time other ≤ time
+        by_cases born : grid other ≤ time
         · have ordered : index ≤ other := by simpa [born] using below
-          exact (grid.increasing.monotone ordered).trans born
+          exact (grid.strictMono.monotone ordered).trans born
         · simp [born] at below
       · intro born
         exact ⟨index, Finset.mem_univ _, by simp [born]⟩
     have death_test : ∀ occurrence time,
-        cell grid time ≤ (basis.last occurrence.down : WithBot (Fin n)) ↔
+        selectedCell time ≤ (basis.last occurrence.down : WithBot (Fin n)) ↔
           (time : WithTop ℝ) < family.death occurrence := by
       intro occurrence time
       by_cases next : (basis.last occurrence.down).val + 1 < n
-      · simp only [family, realFamily, dif_pos next]
+      · simp only [family, dif_pos next]
         rw [WithTop.coe_lt_coe]
         constructor
         · intro below
@@ -77,33 +193,33 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
         · intro before
           apply Finset.sup_le
           intro index _
-          by_cases born : grid.time index ≤ time
-          · have ordered := grid.increasing.lt_iff_lt.mp (born.trans_lt before)
+          by_cases born : grid index ≤ time
+          · have ordered := grid.strictMono.lt_iff_lt.mp (born.trans_lt before)
             have below : index ≤ basis.last occurrence.down := by
               change index.val ≤ (basis.last occurrence.down).val
               change index.val < (basis.last occurrence.down).val + 1 at ordered
               omega
             simpa [born] using (WithBot.coe_le_coe.mpr below)
           · simp [born]
-      · have bounded : cell grid time ≤ (basis.last occurrence.down : WithBot (Fin n)) := by
+      · have bounded : selectedCell time ≤ (basis.last occurrence.down : WithBot (Fin n)) := by
           apply Finset.sup_le
           intro index _
-          by_cases born : grid.time index ≤ time
+          by_cases born : grid index ≤ time
           · have below : index ≤ basis.last occurrence.down := by
               have range := index.isLt
               change index.val ≤ (basis.last occurrence.down).val
               omega
             simpa [born] using (WithBot.coe_le_coe.mpr below)
           · simp [born]
-        simp [family, realFamily, next, bounded]
+        simp [family, next, bounded]
     have support_test : ∀ occurrence time,
         family.birth occurrence ≤ time ∧ (time : WithTop ℝ) < family.death occurrence ↔
-          (basis.birth occurrence.down : WithBot (Fin n)) ≤ cell grid time ∧
-            cell grid time ≤ (basis.last occurrence.down : WithBot (Fin n)) := by
+          (basis.birth occurrence.down : WithBot (Fin n)) ≤ selectedCell time ∧
+            selectedCell time ≤ (basis.last occurrence.down : WithBot (Fin n)) := by
       intro occurrence time
-      change grid.time (basis.birth occurrence.down) ≤ time ∧ _ ↔ _
+      change grid (basis.birth occurrence.down) ≤ time ∧ _ ↔ _
       rw [← born_test, ← death_test]
-    have zero_coordinates : ∀ time, cell grid time = ⊥ →
+    have zero_coordinates : ∀ time, selectedCell time = ⊥ →
         Subsingleton (intervalSpace (K := K) family time) := by
       intro time selected
       refine ⟨fun first second => ?_⟩
@@ -116,7 +232,7 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
         exact WithBot.not_coe_le_bot _ impossible.1
       rw [first.property occurrence unsupported, second.property occurrence unsupported]
     let vector_map : ∀ slot time, intervalSpace (K := K) family time →ₗ[K]
-        ULift.{u} (zeroPrefixObject diagram slot) := fun slot time => by
+        ULift.{u} (prefixedDiagram.obj slot) := fun slot time => by
       cases slot with
       | bot => exact 0
       | coe index =>
@@ -126,13 +242,13 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
             LinearMap.smulRight
               ((LinearMap.proj (ULift.up occurrence)).comp (intervalSpace family time).subtype)
               (basis.vectors occurrence index))
-    have vector_map_bijective : ∀ slot time, cell grid time = slot →
+    have vector_map_bijective : ∀ slot time, selectedCell time = slot →
         Function.Bijective (vector_map slot time) := by
       intro slot time selected
       cases slot with
       | bot =>
         have := zero_coordinates time selected
-        have : Subsingleton (ULift.{u} (zeroPrefixObject diagram ⊥)) := by
+        have : Subsingleton (ULift.{u} (prefixedDiagram.obj ⊥)) := by
           change Subsingleton (ULift.{u} (ULift.{v} PUnit))
           infer_instance
         exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun target =>
@@ -191,7 +307,7 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
           let lifting : V index ≃ₗ[K] ULift.{u} (V index) :=
             (ULift.moduleEquiv (R := K)).symm
           have lifted := congrArg lifting (reconstruction coordinates)
-          simpa only [vector_map, zeroPrefixObject, WithBot.recBotCoe_coe, id_eq,
+          simpa only [vector_map, prefixedDiagram, WithBot.recBotCoe_coe, id_eq,
             LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smulRight_apply,
             LinearMap.proj_apply, Submodule.subtype_apply, LinearEquiv.coe_coe,
             LinearEquiv.trans_apply, lifting, map_sum, map_smul] using lifted
@@ -199,16 +315,16 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
         exact (restriction.trans ((basis.basis index).equivFun.symm.trans
           ULift.moduleEquiv.symm)).bijective
     let components : ∀ time, (intervalSum (K := K) family).obj time ≅
-        (realModule diagram grid ⋙ ModuleCat.uliftFunctor.{u} K).obj time := fun time =>
-      (LinearEquiv.ofBijective (vector_map (cell grid time) time)
-        (vector_map_bijective (cell grid time) time rfl)).toModuleIso
+        ((selector ⋙ prefixedDiagram) ⋙ ModuleCat.uliftFunctor.{u} K).obj time := fun time =>
+      (LinearEquiv.ofBijective (vector_map (selectedCell time) time)
+        (vector_map_bijective (selectedCell time) time rfl)).toModuleIso
     have square : ∀ source target (ordered : source ≤ target)
         (source_slot target_slot : WithBot (Fin n)),
-        cell grid source = source_slot → cell grid target = target_slot →
+        selectedCell source = source_slot → selectedCell target = target_slot →
         ∀ slot_ordered : source_slot ≤ target_slot,
         (vector_map target_slot target).comp (intervalArrow family source target ordered) =
           (ULift.moduleEquiv.symm.toLinearMap.comp
-            (((zeroPrefix diagram).map (homOfLE slot_ordered)).hom.comp
+            ((prefixedDiagram.map (homOfLE slot_ordered)).hom.comp
               ULift.moduleEquiv.toLinearMap)).comp (vector_map source_slot source) := by
         intro source target ordered source_slot target_slot source_cell target_cell slot_ordered
         cases source_slot with
@@ -219,6 +335,7 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
           have zero : coordinates = 0 := Subsingleton.elim _ _
           subst coordinates
           simp
+          rfl
         | coe source_index =>
           cases target_slot with
           | bot =>
@@ -227,7 +344,7 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
             apply LinearMap.ext
             intro coordinates
             apply ULift.ext
-            simp [zeroPrefix, vector_map, zeroPrefixObject,
+            simp [prefixedDiagram, vector_map,
               map_sum, map_smul, basis.naturality]
             apply Finset.sum_congr rfl
             intro occurrence _
@@ -245,12 +362,12 @@ theorem exists_unique_decomposition [∀ index, FiniteDimensional K (V index)]
               simp [intervalArrow, born, coordinates.property (ULift.up occurrence) absent]
               rfl
     let isomorphism : intervalSum (K := K) family ≅
-        realModule diagram grid ⋙ ModuleCat.uliftFunctor.{u} K :=
+        (selector ⋙ prefixedDiagram) ⋙ ModuleCat.uliftFunctor.{u} K :=
       NatIso.ofComponents components (by
         intro source target arrow
         apply ModuleCat.hom_ext
-        exact square source target (leOfHom arrow) (cell grid source) (cell grid target)
-          rfl rfl (leOfHom ((cellFunctor grid).map arrow)))
+        exact square source target (leOfHom arrow) (selectedCell source) (selectedCell target)
+          rfl rfl (leOfHom (selector.map arrow)))
     exact {
       Occurrence := ULift.{v} basis.Occurrence
       finite := inferInstance

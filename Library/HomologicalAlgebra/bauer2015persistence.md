@@ -9,7 +9,6 @@ claim: "Finite-chain interval classification and the exact algebraic stability/i
 strata_touched:
   - D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit
   - D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition
-  - D5/S3/HomologicalAlgebra/Persistence/RealExtension
   - D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness
   - D5/S3/HomologicalAlgebra/Persistence/RealDecomposition
 license: citation-only
@@ -59,6 +58,18 @@ Same-death counts for monos follow from actual birth-image/death-kernel intersec
 $$\operatorname{im}(N(t-\eta)\to N_t)\subseteq\operatorname{im}f_t\subseteq N_t.$$
 
 The left diagram trims births by $\eta$ and removes lengths at most $\eta$. Kernel triviality gives $\ker f_t\subseteq\ker(M_t\to M(t+\eta))$, hence commuting epimorphisms from $M$ through $\operatorname{im}f$ to the shift-kernel quotient, which trims finite deaths by $\eta$. Ordered occurrence sandwiches give both estimates. The displayed structure map in the source's definition of $N^\eta$ must be the map of $N$, not $M$. No reflection into a left-continuous class is needed.
+
+**Lemma 4.2 (actual monomorphism window counts).** For finite positive interval families $A,B$, an actual natural monomorphism $f:I_A\to I_B$, real $s\le t$ and an upper cut $u\in\mathbb R\cup\{\infty\}$ with $t\le u$,
+
+$$\#\{a:b_a\le s,\ t<d_a\le u\}\le\#\{b:b_b\le s,\ t<d_b\le u\}.$$
+
+**Proof.** Extend source-window coordinates into $I_A(s)$ and $I_A(t)$ by zero. Their vector at $t$ lies in the actual birth image from $s$ and, when $u$ is finite, in the actual kernel of the arrow to $u$. The naturality squares at $s\to t$ and $t\to u$ carry these two properties to the target. Thus the image has no coordinates outside the target window. Restriction to that window remains injective: recover the full target vector by zero extension, use injectivity of $f_t$, then recover the source-window coordinates. Compare the dimensions of these finite coordinate spaces. For $u=\infty$ the death restriction is vacuous; no infinite-time object or terminal zero is used. Sampling beyond every finite death specializes this version to essential occurrences.
+
+**Lemma 4.3 (actual epimorphism birth-window counts).** For an actual natural epimorphism $f:I_A\to I_B$ and real $r\le s\le t$,
+
+$$\#\{b:r<b_b\le s,\ t<d_b\}\le\#\{a:r<b_a\le s,\ t<d_a\}.$$
+
+**Proof.** Extend arbitrary target-window coordinates to a vector at $s$ and lift it through the actual surjection $f_s$. Its source image at $t$ splits into the coordinates born in $(r,s]$ surviving $t$ and a vector in the actual image from $r$. Naturality carries the latter to the target image from $r$, whose coordinates vanish on the target window. Consequently the restricted map from source-window to target-window coordinates is surjective. The existing surjective dimension comparison gives the count inequality. These coordinate spaces realize the respective birth-image quotients; this argument constructs the surjection rather than assuming a quotient rank inequality. Infinite deaths are included. The two window lemmas do not themselves construct the classwise ordinal injections or prove their composition or the quantitative estimates.
 
 ## 5. Exact stability and extended distances
 

@@ -1,0 +1,4 @@
+**Lemma 4.3 (actual epimorphism birth-window counts).** For an actual natural epimorphism $f:I_A\to I_B$ and real $r\le s\le t$,
+
+$$\#\{b:r<b_b\le s,\ t<d_b\}\le\#\{a:r<b_a\le s,\ t<d_a\}.$$
+

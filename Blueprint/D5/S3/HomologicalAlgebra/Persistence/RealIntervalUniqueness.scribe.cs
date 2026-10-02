@@ -25,7 +25,41 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
                 "The supported spaces and actual arrows form a functor from the real preorder to "
                     + "ModuleCat. Identity and composition hold at exact birth/death points, "
                     + "zero spaces and infinite tails. The substantive classification and "
-                    + "arbitrary competing-decomposition uniqueness proof is in RealDecomposition."))));
+                    + "arbitrary competing-decomposition uniqueness proof is in RealDecomposition."),
+            Describe.Lean(
+                DescribeId.Create("mono-death-window-count"),
+                DeclarationHandle.Create(Prefix + "mono_death_window_count"),
+                H("Actual monomorphisms bound birth/death window counts"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For finite occurrence families and an actual natural map injective at every "
+                        + "real time, the number of source intervals born by s and dying in (t,u] "
+                        + "is at most the corresponding target number, for s <= t <= u. "
+                        + "The upper cut u may be infinity; this version uses the birth image "
+                        + "without an artificial arrow to an infinite-time object. "
+                        + "Extend window coordinates into the source at s and t. Naturality at "
+                        + "s -> t and t -> u puts their actual images in the target birth-image "
+                        + "and death-kernel intersection. Restriction to the target window is "
+                        + "injective, so the existing finrank comparison gives the count bound. "
+                        + "No occurrence injection or quantitative endpoint bound is assumed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("epi-birth-window-count"),
+                DeclarationHandle.Create(Prefix + "epi_birth_window_count"),
+                H("Actual epimorphisms bound surviving birth-window counts"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For an actual natural map surjective at every real time and r <= s <= t, "
+                        + "the target number of intervals born in (r,s] and surviving t is at "
+                        + "most the source number. Lift target window coordinates at s. Split "
+                        + "the lifted source vector at t into the recent-birth coordinates and "
+                        + "the actual image from r. Naturality makes the latter invisible in "
+                        + "the target recent-birth quotient. The resulting coordinate map is "
+                        + "surjective; the existing surjective finrank comparison gives the "
+                        + "count bound. Infinite deaths are included. Ordered occurrence "
+                        + "injections, their composition, sandwiches and stability are not "
+                        + "conclusions of this theorem."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(string id, string declaration, string heading, string body) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
