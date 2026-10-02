@@ -36,7 +36,10 @@ internal sealed class ObliqueDiscordMutualInformationRefutationDocument : IScrib
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Two qubits refute monotonicity", Disp(new Formula.Not(F.Id("claim"))),
                 "Take v_+ = (2,1)/sqrt(5), v_- = (2,-1)/sqrt(5) and w_+ = (sqrt(5)/4,sqrt(5)/2), w_- = (sqrt(5)/4,-sqrt(5)/2). The input rho is the rank-one projector onto (8|00> + |11>)/sqrt(65). The source normalizer and unnormalized trace are 17/26 and the output tau is (1/85)[[64,0,0,8],[0,4,8,0],[0,8,16,0],[8,0,0,1]]. Rational similarity certificates identify the spectra: rho has eigenvalues 1,0,0,0 and tau has 13/17,4/17,0,0. The marginals of rho are diag(64/65,1/65); those of tau are diag(4/5,1/5) and diag(16/17,1/17). For h(p) = -p log(p) -(1-p) log(1-p), the information gain is h(1/5)+h(1/17)-h(4/17)-2h(1/65) = (7648/1105) log(2) -log(5) -(21/17) log(13) > 0. The elementary comparisons 5^3 < 2^7 and 13^17 < 2^63 certify strict positivity by logarithmic monotonicity.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("xu-2015-oblique-discord-mutual-information-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

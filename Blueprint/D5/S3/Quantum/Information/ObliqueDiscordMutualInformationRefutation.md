@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ObliqueDiscordMutualInformationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/xu-2015-oblique-discord-mutual-information-refutation` (refuted) by `D5/S3/Quantum/Information/ObliqueDiscordMutualInformationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"xu-2015-oblique-discord-mutual-information-refutation","declaration_gid":"D5/S3/Quantum/Information/ObliqueDiscordMutualInformationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jianwei Xu (2015). *Oblique discord*. DOI: [10.1142/S0217979216502568](https://doi.org/10.1142/S0217979216502568). URL: <https://arxiv.org/abs/1506.00404v1>.
