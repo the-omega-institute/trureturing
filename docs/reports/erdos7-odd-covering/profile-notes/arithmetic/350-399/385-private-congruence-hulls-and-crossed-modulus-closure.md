@@ -16374,3 +16374,119 @@ Adding the actual q-free prime class A_ell to the shallow projected family remov
 Report572 FS5–FS8 instead require selected cofactor projections to contain every actual original projection through the specified ternary height, together with a bound on the number of residual active numerical cofactors at each same cofactor point. Neither requirement follows from selecting the two retained q-depths at full ternary height. Those existing results are available consumers once their actual-source hypotheses are established; they do not provide the missing hypotheses here.
 
 When M=1 there is no cofactor prime and the box argument does not apply. The cofactor carrier is a singleton, and the q-free originals are pure-3 originals. Taking sigma to be their complete survivor law gives c=1.
+
+## 132. A single larger-prime retained palette gives an actual positive reserve
+
+Keep one EB1 original whole cover, with Q=3^H q^G M and the exact
+q-free residual R, retained inventory T and actual set W of section127.
+Fix an ORIGINAL prime ell>q. Suppose every retained original satisfies
+
+    d=3^H q^e s in T ==> s=ell^k for some k>=0.      (OP1)
+
+This condition is equivalently imposed only on the first two q-rows:
+divisor closure gives the e=1 parent of any deeper original, with
+the same cofactor s. Thus OP1 constrains the entire retained inventory.
+Other primes of M, at arbitrary original heights, are still permitted
+in ALL lower ternary rows and in the q-free inventory. It is not a
+restriction of the entire cover to three prime directions.
+
+Put K=v_ell(Q)>=1, b=ell-q+1>=3, and m=min(G,2). Direct application
+of Report375 DP7 supplies ONE probability lambda on the complete
+actual R, with
+
+    lambda({x:x_ell=c mod ell^k})<=b^(-k), 0<=k<=K. (OP2)
+
+Its witness at each ell-leaf includes all ternary and other cofactor
+coordinates. Every q-free original already has lambda-mass zero.
+No independent product law or additional compatible-fibre premise
+is used to enter the actual source.
+
+### A bad actual pair needs a cofactor of ell-height at least two
+
+The exact shallow certificate SH3 has charge
+
+    c_sh(x)=sum_(d in T,e_d<=2)3^(-e_d)1_(B_d)(x),
+    1_(R minus W)(x)<=c_sh(x).
+
+For k=0 and k=1 together, numerical distinctness allows at most one
+original for each(e,k). These labels have total charge at most
+
+    2*sum_(e=1..m)3^(-e)<=8/9<1.
+
+Therefore every x in R minus W meets a shallow original with k>=2.
+Apply this pointwise implication under the SAME lambda from OP2:
+
+    lambda(R minus W)
+      <=sum_(d in T,e_d<=2,k_d>=2)lambda(B_d)
+      <=m*sum_(k=2..K)b^(-k).
+
+Writing mu=lambda(W), define the positive reserve
+
+    alpha=1-m*sum_(k=2..K)b^(-k),
+    mu>=alpha.                                     (OP3)
+
+The empty sum at K=1 is zero; in that case W=R. For arbitrary K>=1,
+the worst gap b=3 gives
+
+    G>=2 ==> mu>=2/3+3^(-K)>2/3,
+    G=1  ==> mu>=5/6+(1/2)*3^(-K)>5/6.              (OP4)
+
+Missing numerical labels and incompatible actual phases only improve
+the bound. In particular W is nonempty in the OP1 class, at arbitrary
+H,G,K and without bounding the remaining support. All deep retained
+classes still define the actual W and its true q-complements.
+
+### The same conditioned source bounds the remaining original labels
+
+Use theta=lambda restricted to W, divided by mu. For every original
+non-q event B_d and k=v_ell(s_d), OP2 gives
+
+    theta(B_d)<=min(1,b^(-k)/mu)
+              <=min(1,b^(-k)/alpha).                (OP5)
+
+This is containment in one literal ell-cylinder, not independence
+from the ternary condition or other cofactor coordinates. The
+existing RE7 construction now supplies one full law on the exact
+joint-deletion region E_J, using each actual deep-retained complement,
+with
+
+    nu(A_d)<=(q-2)^(-e_d)theta(B_d), d in J.         (OP6)
+
+All retained originals have zero mass. The true theta(B_d) can be
+smaller than OP5; no ternary prefix cap is inferred from OP2.
+
+Write M=ell^K M_0 with gcd(M_0,ell)=1 and t=q-2. The unchanged
+original family covers the support of nu, so only the deleted
+originals J must have total nu-mass at least one. Count every possible
+numerical label3^a q^e ell^k s_0, with a=0,...,H-1, e=1,...,G,
+k=0,...,K and s_0|M_0. At k=0 use theta(B_d)<=1; at k>=1 use OP5.
+Since alpha>2/3 and b>=3, b^(-k)/alpha<1 for positive k. This yields
+
+    1<=H*tau(M_0)*sum_(e=1..G)t^(-e)
+                   *(1+sum_(k=1..K)b^(-k)/alpha).   (OP7)
+
+Every event is evaluated under the same nu and theta; numerical
+inventory enlargement does not assert independent cofactor phases.
+Finite G and K imply
+
+    q-3 < H*tau(M_0)*(b^2-2)/((b-2)(b+1))
+         <=(7/4)*H*tau(M_0).                        (OP8)
+
+Indeed sum_(e=1..G)t^(-e)<1/(q-3),
+sum_(k=1..K)b^(-k)<1/(b-1), and
+alpha>1-2/[b(b-1)]. The last coefficient is
+1+b/((b-2)(b+1))<=7/4 for b>=3.
+
+Under OP1 this removes the factor K+1 from Report375 LA5's inventory
+bound q-3<H*tau(M)=(K+1)H*tau(M_0). It does not bound H or M_0, or
+exclude every OP1 family. A violation of OP7 or OP8 is a contradiction
+for that specified original family; a uniform violation has not
+been established.
+
+Report371 AC5 needs saturated cofactor-universal first roots, which
+OP1 does not supply. The terminal two-color exclusions in sections
+98--117 require the all-concentrated branch; OP1 does not impose it.
+The source estimate here therefore keeps a distinct conditional
+scope with arbitrary lower-row support. These are ordinary deductions
+from DP7, SH3 and RE7, not new Lean verification or a claim that an
+EB1 cover realizing OP1 exists.
