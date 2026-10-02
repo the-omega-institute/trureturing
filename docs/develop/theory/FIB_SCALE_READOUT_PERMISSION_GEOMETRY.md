@@ -1466,3 +1466,981 @@ $$
 第二组直接取初始树 $\rho^3(\alpha)$ 与 $\alpha$，在各自阶段的读数都为八；式 (4.8)、(4.17) 给 $J=G=3$，所以唯一已知低阶段的非恒值预算 $H=3$ 在隐藏阶段下消失。第三组中 $a_2-r_1b_2=5-4=1$，而 $B_2+r_1A_2=72$，故 $\tau=0$。取低阶段初始树 $\rho^6(\alpha)$ 与高阶段初始树 $\alpha$；$S^{-1}(5,8)^{\mathsf T}=(1,2)^{\mathsf T}$ 非负，而 $S^{-1}e_1=(-3,2)^{\mathsf T}$ 含负坐标，故标签确为一和零。读数 $34\cdot5+55\cdot8=610=A_4$，$K_{1,2}=55+\lceil34/2\rceil=72$。定理 4.3、4.4 与推论 4.5 给出所列阈值及窗口。这些实例的极小性来自上述全参数证明，具体数值不替代全整数纤维与实际来源的下界。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 5. 共同原始噪声下的阶段参照与尖锐许可间距
+
+**定义 5.1（隐藏与显露阶段的共同原始间距）。** 完全沿用定义 4.1 的联合初始树域 $\mathcal T_H\times\{\ell,\ell+d\}$、同一个组成域 $D_H$、初始组成许可 $\chi_k$ 和原始数量报告 $r$，其中 $\ell\in\mathbb N_0$、$k,d,H\in\mathbb N_{\ge1}$。记
+
+$$
+\begin{aligned}
+\delta_{\mathrm{hid}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s,s'\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}|n_s(x)-n_{s'}(y)|,\\
+\delta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}|n_s(x)-n_s(y)|.
+\end{aligned}
+\tag{5.1}
+$$
+
+空的反标签点对集合取最小值 $+\infty$。每个组成由定义 1.1 的实际初始树实现，所以两个最小值也就是相应树来源上的反标签间距。下标 $\mathrm{cal}$ 表示额外显露实际阶段 $s$，此时观察为 $(s,r)$；对每个已知 $E\in\mathbb Q_{\ge0}$，允许响应仍满足同一个 $|r-n_s(c(T))|\le E$。显露阶段只容许按 $s$ 选择恢复器，不改变原始读数或 $E$ 的单位。隐藏阶段仍只观察 $r$，没有依赖实际 $s$ 的归一化、历史、地址、标签或第二通道。$H$ 只约束两个分支各自的初始树，后续替换树可超过 $H$。
+
+**定理 5.2（共同原始间距的准确阶段比较与碰撞截断）。** 对定义 5.1 的所有参数，复用式 (2.2) 的 $\delta_k$ 和式 (4.17) 的 $G_{k,\ell,d}$，有
+
+$$
+\boxed{
+\begin{aligned}
+\delta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min\{\delta_k(H,\ell),\delta_k(H,\ell+d)\}
+=\delta_k(H,\ell),\\
+\delta_{\mathrm{hid}}(H;k,\ell,d)
+&=\begin{cases}
+\delta_k(H,\ell),&H<G_{k,\ell,d},\\
+0,&H\ge G_{k,\ell,d}.
+\end{cases}
+\end{aligned}}
+\tag{5.2}
+$$
+
+第一行对每个 $H\ge1$ 成立。所有有限最小值均由同一联合合同中的实际初始树对达到；在 $H<G_{k,\ell,d}$ 的有限正间距分支，可将达到点对的两个报告阶段都取为 $\ell$。
+
+证明。置
+
+$$
+m=3\ell+3,\qquad A=A_\ell=F_m,\qquad
+B=B_\ell=F_{m+1},\qquad v=B-A=F_{m-1},\qquad
+\Delta=\delta_k(H,\ell),\qquad K=K_{k,\ell}.
+$$
+
+先比较两个同阶段间距。式 (5.1) 直接给第一行的第一个等号。若 $H<N_k$，式 (2.9) 给两个阶段的目标都恒为零，两个间距同为 $+\infty$。若 $H\ge K$，定理 2.3 给 $\Delta=0$，故两间距的最小值为零。只余 $N_k\le H<K$；由式 (2.10)，这强制 $k\le\ell+1$，且式 (4.18) 给 $H<K_{k,\ell+d}$。
+
+若 $k=\ell+1$，式 (2.12) 给 $\Delta=1$；高阶段的反标签集合非空，且尚无反标签相等的整数读数，所以 $\delta_k(H,\ell+d)\ge1$。若 $k\le\ell$，则 $k=1$ 使用定理 2.2，$2\le k\le\ell$ 使用定理 3.3。单步的 $H=3$ 分支在两个阶段分别为 $F_{m-1}$ 和 $F_{m+3d-1}$；其后各档由式 (2.5) 中与阶段无关的预算选出同一个最大指标 $j$。中间深度的两个早期间距分支的预算分界 $N_k$、$2F_{3k}$、$N_k+F_{3k-1}$ 同样与阶段无关，后续预算 $C_{k,j}$ 由式 (3.2) 给出，也选出同一个 $j$。这些分支从低阶段改到高阶段，只将相应 Fibonacci 残差的下标增加 $3d$，故高阶段间距不小于 $\Delta$。这证明对所有 $H$ 的校准间距等式；所复用的有限阶梯和零分支均已有实际来源达到点。
+
+再求隐藏阶段间距。$H<N_k$ 时没有反标签来源，故为 $+\infty$。$H\ge G_{k,\ell,d}$ 时，定理 4.4 的实际反标签精确碰撞给出零值。由同阶段点对包含在隐藏阶段点对中，$H<G_{k,\ell,d}$ 时已有 $\delta_{\mathrm{hid}}\le\Delta$。只须在剩余非恒值域证明反向不等式。式 (4.21) 给
+
+$$
+N_k\le H<G_{k,\ell,d}
+\quad\Longrightarrow\quad
+k\le\ell+1,\qquad d>k,\qquad H<K,\qquad
+0<\Delta\le v<A<B.
+\tag{5.3}
+$$
+
+最后一串不等式来自定理 2.2、2.3、3.3 的正间距阶梯。同阶段反标签间距已经由校准等式界定为至少 $\Delta$。对跨阶段对，把低阶段初始组成记为 $x\in D_H$，高阶段初始组成记为 $y\in D_H$；交换来源的书写次序不改变读数差绝对值。
+
+若 $d\ge\ell+2$，式 (4.19) 对每个非零高阶段来源给 $n_{\ell+d}(y)\ge A_{\ell+d}>BK$，而 $n_\ell(x)\le BH$。因此
+
+$$
+n_{\ell+d}(y)-n_\ell(x)>B(K-H)\ge B>\Delta.
+$$
+
+这里 $K-H$ 是正整数，故这个分支的全部跨阶段对都满足所需下界，无须预设标签方向。
+
+以下设 $k<d\le\ell+1$。式 (4.17) 给 $G_{k,\ell,d}=N_d$，所以 $H<N_d$。记
+
+$$
+a=F_{3d-1},\qquad b=F_{3d},\qquad
+z=S^de_1=(a,b)^{\mathsf T},\qquad a<b,\qquad a+b=N_d.
+$$
+
+先处理所有高阶段 $y\ne e_1$。若 $y$ 有 $\beta$ 叶，其报告至少为 $B_{\ell+d}$；否则它至少有两片 $\alpha$ 叶，其报告至少为 $2A_{\ell+d}>B_{\ell+d}$。这是定理 4.3 证明中式 (4.12) 的全来源排除，其行乘法还给 $B_{\ell+d}=Ab+BN_d$。故
+
+$$
+n_{\ell+d}(y)-n_\ell(x)
+\ge Ab+B(N_d-H)>B>\Delta.
+$$
+
+唯一余下的实际高阶段来源组成为 $y=e_1$，其初始标签是零，报告为 $n_{\ell+d}(e_1)=n_\ell(z)$。$z$ 的叶数为 $N_d>H$，所以 $z\notin D_H$；这里仅用它表达这个报告，绝不将其作为允许的低阶段初始来源。对每个实际低阶段 $x\in D_H$，令 $h=x-z$，则
+
+$$
+h\in\mathbb Z^2\setminus\{0\},\qquad
+h_1+h_2=|x|_1-N_d<0,\qquad
+|n_\ell(x)-n_{\ell+d}(e_1)|=|n_\ell(h)|.
+$$
+
+令 $t=3k$、$Q=N_k+F_{t-1}$。若 $H<Q$，则 $d>k$ 给 $a\ge F_{t+2}>Q$，而 $b>a$。每个 $x$ 的两个坐标都不超过 $H$，所以 $h$ 的两个坐标均为负，$|n_\ell(h)|\ge A>\Delta$。若 $k=\ell+1$，式 (2.12) 给 $Q=B+v=K$，所以该临界深度已被这个早期情形全部覆盖。
+
+只余 $H\ge Q$，此时 $k\le\ell$。对 $i\ge t$ 写
+
+$$
+\begin{gathered}
+C_{k,i}=F_{i+1}+\lceil r_kF_i\rceil,\qquad
+j=\max\{i\ge t:C_{k,i}\le H\},\\
+t\le j\le m-1,\qquad
+C_{k,j}\le H<C_{k,j+1},\qquad \Delta=F_{m-j}.
+\end{gathered}
+\tag{5.4}
+$$
+
+当 $k=1$ 时这些是 $r_1=1/2$ 下的式 (2.5) 和定理 2.2；当 $k\ge2$ 时是式 (3.2)、(3.18)、(3.25)。若 $h$ 的两个坐标弱同号，非零性给 $|n_\ell(h)|\ge A$。若 $h=(u,-w)$，$u,w>0$，则 $h_1+h_2<0$ 给 $u<w$，从而
+
+$$
+|n_\ell(h)|=Bw-Au\ge(B-A)w\ge v\ge\Delta.
+$$
+
+最后一个差符号情形是 $h=(-u,w)$，其中 $u>w>0$。由 $x_1=a-u\ge0$ 和 $x_2=b+w$，有 $u\le a$、$b+w\le|x|_1\le H$。定义线性泛函 $\Lambda(u,w)=u+r_kw$；因为 $0<r_k<1$，
+
+$$
+\begin{aligned}
+\Lambda(u,w)&\le a+r_kw<a+w<b+w\le H,\\
+\Lambda(w_j)&>0,\qquad \Lambda(w_{j+1})>0,\\
+H&<C_{k,j+1}=\lceil\Lambda(w_{j+1})\rceil
+\quad\Longrightarrow\quad H<\Lambda(w_{j+1}),\\
+w_j&=(F_{j+1},F_j),\qquad
+w_{j+1}=(F_{j+2},F_{j+1}).
+\end{aligned}
+\tag{5.5}
+$$
+
+其中取整后的蕴含使用 $H$ 是整数：$H\le\lceil\Lambda(w_{j+1})\rceil-1<\Lambda(w_{j+1})$。这样已经核对了式 (3.21) 的全部实际假设：$(u,w)$ 是正整数方向，$t\le j\le m-1$，所选相邻整数基上的泛函值为正，且 $\Lambda(u,w)<\Lambda(w_{j+1})$。当 $k\ge2$ 时直接应用该式；当 $k=1$ 时直接应用定理 2.2 证明中式 (2.8) 的同一全整数系数估计，其泛函正是 $u+w/2$。两者都给
+
+$$
+|n_\ell(h)|=|Au-Bw|\ge F_{m-j}=\Delta.
+$$
+
+这些估计覆盖整数基展开的全部系数符号，包括末档 $j=m-1$ 的第二基残差 $g=F_0=0$；不把方向限于 Fibonacci 向量，也不要求 $z$ 是初始来源。至此，全部同阶段和跨阶段反标签对均具有至少 $\Delta$ 的间距。
+
+为达到这个下界，临界深度 $k=\ell+1$ 使用式 (2.13)、(2.17) 的 $(v,A)$ 与 $(0,A+F_{m-2})$，共同预算不超过 $B\le H$，间距为一。单步且 $k\le\ell$ 时，$H=3$ 使用 $(1,2)$ 与 $(2,1)$，其后正间距档使用式 (2.7) 的实际点对。中间深度 $2\le k\le\ell$ 的三个正间距分支依次使用式 (3.11)、(3.12)、(3.15) 的点对，其共同初始叶预算分别为 $N_k$、$2F_{3k}$、$C_{k,j}$，均不超过各分支的 $H$。这些点的反标签、读数残差及实际完整树实现已经由定理 2.2、2.3、3.2 证明。取相应两棵实际初始树，并把两者的报告阶段都设为 $\ell$，便在定义 4.1 的同一个联合来源域达到 $\Delta$。原树仍只受初始预算约束，后续替换照原合同执行。结合下界、空集合分支和定理 4.4 的实际零碰撞分支，得到式 (5.2)。证毕。
+
+**定理 5.3（共同原始有理噪声的尖锐恢复条件）。** 对定义 5.1 的全部参数及每个已知 $E\in\mathbb Q_{\ge0}$，定义 4.1 的隐藏阶段初始组成许可统一恢复存在，当且仅当
+
+$$
+\boxed{\quad H<G_{k,\ell,d}\quad\text{且}\quad
+2E<\delta_k(H,\ell).\quad}
+\tag{5.6}
+$$
+
+若显露实际阶段 $s$，保持同一个原始报告与误差关系，则存在统一的 $P_{\mathrm{cal}}:\{\ell,\ell+d\}\times\mathbb Q\to\{0,1\}$ 对所有允许响应输出正确初始标签，当且仅当
+
+$$
+\boxed{\quad2E<\delta_k(H,\ell).\quad}
+\tag{5.7}
+$$
+
+$H<N_k$ 的空反标签集合给间距 $+\infty$，允许任意有限 $E$。每个有限间距的等号均在失败侧，零间距在 $E=0$ 也失败。阶段仍只计替换次数；恢复目标仍是组成祖先存在，不是完整树、规范地址、指定树的语法祖先或实际逆执行。
+
+证明。直接将定理 2.2 证明及定理 3.4 使用的闭候选目标纤维判据应用于定义 4.1 的联合来源。若 $2E<\delta_{\mathrm{hid}}$，同一个允许报告不能同时对应两个相反初始标签，否则两真值的距离至多为 $2E$，与间距矛盾。因而每条非空候选纤维有共同标签，原判据给所需统一恢复器。$H<N_k$ 时所有初始标签为零，常值零恢复器对任意有限 $E$ 有效。
+
+若隐藏间距有限且 $2E\ge\delta_{\mathrm{hid}}$，定理 5.2 给达到它的实际初始树对 $T,T'$ 及其报告阶段 $s,s'$。记 $x=c(T)$、$y=c(T')$，其共同有理中点
+
+$$
+r_*=\frac{n_s(x)+n_{s'}(y)}2\in\mathbb Q
+\tag{5.8}
+$$
+
+到两个真值的距离都是 $\delta_{\mathrm{hid}}/2\le E$，所以同一个报告同时允许两个不同正确标签，任何统一恢复器均失败。这包括有限正间距的等号；零间距时共同报告已经精确。故隐藏阶段的条件恰为 $2E<\delta_{\mathrm{hid}}$。代入式 (5.2)，得到式 (5.6)，因为 $H\ge G_{k,\ell,d}$ 时 $2E<0$ 不成立。
+
+显露阶段后，在两个已知阶段分别应用同一个既有目标纤维判据；存在按实际 $s$ 选择的恢复器，当且仅当 $2E$ 同时严格小于两个同阶段间距，即 $2E<\delta_{\mathrm{cal}}$。式 (5.2) 给式 (5.7)。有限间距的失败可取同在低阶段的实际达到点对，式 (5.8) 的中点也具有相同的阶段标记，因此显露阶段仍不能消除等号失败。两个结论都使用原始数量单位中的同一个 $E$，没有作依赖实际阶段的尺度归一化。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 6. 共同相对响应下的阶段隐藏与许可分离
+
+**定义 6.1（原始相对响应与反标签比值）。** 沿用定义 1.1、4.1 的非空有限有序完全二叉树、全局替换 $\rho$、联合初始来源 $\mathcal T_H\times\{\ell,\ell+d\}$、初始组成域 $D_H$ 与初始组成许可 $\chi_k$，其中 $\ell\in\mathbb N_0$、$k,d,H\in\mathbb N_{\ge1}$。各阶段的原始真值仍是式 (4.2) 的正整数 $n_s(x)=A_sx_1+B_sx_2$。对共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，定义单个原始有理报告的允许响应关系
+
+$$
+\mathcal R^{\mathrm{hid}}_{H,k,\ell,d,\epsilon}
+=\left\{((T,s),r):
+T\in\mathcal T_H,\ s\in\{\ell,\ell+d\},\ r\in\mathbb Q,
+\ |r-n_s(c(T))|\le\epsilon n_s(c(T))\right\}.
+\tag{6.1}
+$$
+
+参数 $H,k,\ell,d,\epsilon$ 已知，实际阶段 $s$ 隐藏，观察恰为 $r$，不作依赖实际 $s$ 的归一化。预算仍只限制两个分支各自的初始树，后续替换树可超过 $H$。显露阶段的合同额外给出 $s$，允许响应仍是式 (6.1)，观察为 $(s,r)$。隐藏阶段统一恢复指存在总函数 $P:\mathbb Q\to\{0,1\}$，对每个允许响应输出 $\chi_k(c(T))$；显露阶段的恢复器是 $P_{\mathrm{cal}}:\{\ell,\ell+d\}\times\mathbb Q\to\{0,1\}$。目标仅取初始组成祖先的存在，不恢复完整树、规范地址、指定树的语法祖先或实际逆执行。相对响应是数学关系假设，不给设备或物理对应。
+
+对正数 $u,v$ 记 $\mathfrak r(u,v)=|u-v|/(u+v)$，并定义
+
+$$
+\begin{aligned}
+\theta_k(H,s)
+&=\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_s(y)),\qquad s\in\mathbb N_0,\\
+\theta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\},\\
+\theta_{\mathrm{hid}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s,s'\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_{s'}(y)).
+\end{aligned}
+\tag{6.2}
+$$
+
+每个空的反标签集合取最小值 $+\infty$。两个同阶段比值都保留在 $\theta_{\mathrm{cal}}$ 中，使用同一个 $D_H$ 与同一个 $\epsilon$。
+
+有限未知线性映射的背景可参见 [Tsakiris–Peng，Homomorphic Sensing](https://proceedings.mlr.press/v97/tsakiris19a.html)。[Peng–Tsakiris，Homomorphic Sensing of Subspace Arrangements，§2.1，Theorem 1](https://arxiv.org/html/2006.05158v3#Thmtheorem1) 的结论针对泛型 $p$ 维子空间，要求每个映射的秩至少为 $2p$，并满足所列余维条件；这里 $\operatorname{span}_{\mathbb R}D_H=\mathbb R^2$，但每个 $n_s$ 的秩只有一，不满足该秩条件。该文 [§2.3，Theorem 3](https://arxiv.org/html/2006.05158v3#Thmtheorem3) 在完整向量的 homomorphic sensing 性质下，按其式 (4) 的条件控制加性 Euclidean 噪声，并用伪逆表示向量误差；该前提在此完整二维张成空间上已经失败，因为 $0$ 与非零向量 $(B_s,-A_s)$ 具有相同的 $n_s$ 读数。本节的有限整数来源、二值初始目标与相对响应须在式 (6.1) 的合同内处理，下面的比值结论由本卷的整数与许可锥关系证明。
+
+**定理 6.2（隐藏阶段的准确相对间距与跨阶段严格排除）。** 对定义 6.1 的所有参数，复用式 (4.17) 的联合精确碰撞预算 $G_{k,\ell,d}$，有
+
+$$
+\boxed{
+\theta_{\mathrm{hid}}(H;k,\ell,d)
+=\begin{cases}
+\theta_{\mathrm{cal}}(H;k,\ell,d),&H<G_{k,\ell,d},\\
+0,&H\ge G_{k,\ell,d}.
+\end{cases}}
+\tag{6.3}
+$$
+
+当 $N_k\le H<G_{k,\ell,d}$ 时，对所有 $x,y\in D_H$ 满足 $\chi_k(x)\ne\chi_k(y)$，更有
+
+$$
+\mathfrak r(n_\ell(x),n_{\ell+d}(y))
+>\theta_k(H,\ell).
+\tag{6.4}
+$$
+
+当 $H<N_k$ 时三个间距均为 $+\infty$。式 (6.2) 的每个有限最小值均由相应合同中的实际初始树及其阶段达到；在 $H<G_{k,\ell,d}$ 的有限分支，隐藏间距可由同阶段的实际来源对达到。
+
+证明。式 (2.9) 给最小许可初始叶数 $N_k$。故 $H<N_k$ 时全部初始标签为零，反标签集合为空。若 $H\ge G_{k,\ell,d}$，定理 4.4 给同一联合初始来源域中的实际反标签精确碰撞，式 (6.2) 的非负比值因而最小为零。只须证明非恒值的碰撞前域。由式 (4.21)，该域必满足
+
+$$
+\begin{gathered}
+N_k\le H<G_{k,\ell,d},\qquad
+k\le\ell+1,\qquad d>k,\qquad H<K_{k,\ell},\\
+\begin{cases}
+G_{k,\ell,d}=N_d,\quad H<N_d,&k<d\le\ell+1,\\
+G_{k,\ell,d}=K_{k,\ell},&d\ge\ell+2.
+\end{cases}
+\end{gathered}
+\tag{6.5}
+$$
+
+以下在此域内简记
+
+$$
+m=3\ell+3,\qquad A=A_\ell=F_m,\qquad
+B=B_\ell=F_{m+1},\qquad v=B-A=F_{m-1},\qquad K=K_{k,\ell}.
+$$
+
+这里 $B$ 是正整数读数系数；Fibonacci 递推给 $B>A>B/2>0$。式 (2.10)、(2.13) 给 $K=B+\lceil Ar_k\rceil\le B+v=2B-A$。
+
+先在原始预算内建立一个严格小于 $1/9$ 的同阶段比值。取许可锥壁上的组成
+
+$$
+p=S^ke_1=(F_{3k-1},F_{3k}),\qquad
+p'=\begin{cases}
+p+(-1,1),&k\text{ 为奇数},\\
+p+(1,-1),&k\text{ 为偶数}.
+\end{cases}
+$$
+
+两点非负非零，叶数都恰为 $N_k\le H$。式 (2.9) 表明，奇数 $k$ 时 $p$ 位于闭下壁，$p'$ 的第一坐标与第二坐标之比严格下降到该壁外；偶数 $k$ 时 $p$ 位于闭上壁，$p'$ 的比值严格上升到该壁外。因此 $\chi_k(p)=1$、$\chi_k(p')=0$。两种奇偶的读数差绝对值均为 $v$。由 $p\ge(1,2)$ 逐坐标成立，
+
+$$
+\begin{aligned}
+n_\ell(p)+n_\ell(p')
+&\ge2n_\ell(p)-v
+\ge2(A+2B)-v=3(A+B),\\
+\theta_k(H,\ell)
+&\le\mathfrak r(n_\ell(p),n_\ell(p'))
+\le\frac{v}{3(A+B)}<\frac19.
+\end{aligned}
+\tag{6.6}
+$$
+
+最后的严格不等式等价于 $B<2A$。两点由定义 1.1 实现为实际初始树，许可端点可直接取 $\rho^{3k}(\alpha)$；偶数 $k\ge2$ 时第二坐标减一仍为正，奇数 $k\ge1$ 时第一坐标减一仍非负。
+
+若 $d\ge\ell+2$，则 $m+3d\ge2m+3$。Fibonacci 加法式在这些索引下给
+
+$$
+\begin{aligned}
+A_{\ell+d}
+&\ge F_{2m+3}=A^2+2AB+2B^2
+>2B(2B-A)\ge2BK>2BH.
+\end{aligned}
+\tag{6.7}
+$$
+
+严格比较的差为 $A^2+4AB-2B^2>0$，因为 $2A>B$。每个实际高阶段来源的读数至少为 $A_{\ell+d}$，每个低阶段来源的读数至多为 $BH$。故任意跨阶段比值都严格大于 $1/3$，再由式 (6.6) 得式 (6.4)，包括两个可能的标签方向。
+
+以下设 $k<d\le\ell+1$，所以 $d\ge2$。记
+
+$$
+a=F_{3d-1},\quad b=F_{3d},\quad c=F_{3d-2},\quad
+N=N_d=a+b,\quad z=S^de_1=(a,b),\quad Z=Aa+Bb.
+\tag{6.8}
+$$
+
+此时 $a+c=b$、$H<N$，且 $A_{\ell+d}=Z$、$B_{\ell+d}=Ab+BN$。比较组成 $z$ 的叶数为 $N>H$，所以 $z\notin D_H$，不能充当允许的低阶段初始来源；读数 $Z$ 所对应的实际高阶段初始来源是单叶 $\alpha$，组成为 $e_1\in D_H$。
+
+对任意高阶段初始组成 $y\ne e_1$，若它含至少一个 $\beta$ 叶，则读数至少为 $B_{\ell+d}$；否则它至少含两个 $\alpha$ 叶，而 $2A_{\ell+d}>B_{\ell+d}$。故令 $V=n_{\ell+d}(y)$、$X=n_\ell(x)$，每个这样的跨阶段来源对满足
+
+$$
+V\ge Ab+BN,\qquad X\le BH<BN,\qquad
+\mathfrak r(X,V)
+>\frac{Ab}{Ab+2BN}>\frac19.
+\tag{6.9}
+$$
+
+最后一步等价于 $4(A/B)(b/N)>1$，由 $A/B>1/2$ 与 $b/N>1/2$ 得到。这一界对所有低阶段 $x$ 成立，故式 (6.6) 已排除所有高阶段 $y\ne e_1$。
+
+只余高阶段 $y=e_1$。其初始标签为零，所以反标签的低阶段组成 $x$ 必须满足 $\chi_k(x)=1$。置
+
+$$
+j=3d-2,\qquad t=\lceil r_kc\rceil,\qquad C=a+t.
+\tag{6.10}
+$$
+
+由 $0<r_k<1$ 与正整数 $c$，有 $1\le t\le c$、$C\le a+c=b$。若 $H<C$，则 $X\le BH<BC\le Bb$，于是
+
+$$
+\mathfrak r(X,Z)
+>\frac{Aa}{Aa+2Bb}>\frac19.
+$$
+
+这里最后一步等价于 $4(A/B)(a/b)>1$；$d\ge2$ 给 $a/b>1/2$，故严格成立。这也由式 (6.6) 排除。
+
+设 $C\le H<N$。先对每个实际许可 $x\in D_H$ 证明整数分子下界
+
+$$
+|n_\ell(x)-Z|\ge g,
+\qquad g=F_{m-3d+6}.
+\tag{6.11}
+$$
+
+因为 $2\le d\le\ell+1$，指数 $m-3d+6$ 在 $6$ 与 $m$ 之间，故 $0<g\le A$。令 $h=x-z$，则 $h_1+h_2=|x|_1-N\le H-N<0$。若两个坐标均非正，则 $h\ne0$，其非零整数性给 $|n_\ell(h)|\ge A\ge g$。若 $h=(u,-w)$、$u,w>0$，则 $u<w$，从而
+
+$$
+|Au-Bw|=B(w-u)+vu>B>A\ge g.
+$$
+
+坐标为零时，负坐标和零坐标归入第一种情形；正坐标和零坐标与严格负的坐标和矛盾。
+
+剩下 $h=(-u,w)$、整数 $u>w>0$。许可锥嵌套给 $\chi_k(x)=1\Rightarrow\chi_1(x)=1$，所以 $a-u\ge(b+w)/2$，即
+
+$$
+2u+w\le2a-b=F_{3d-3}.
+\tag{6.12}
+$$
+
+$d=2$ 时右边为 $F_3=2$，但左边至少为五，这种情形不存在。若 $d\ge3$，则 $F_{3d-3}<2F_{3d-4}$，式 (6.12) 给 $u<F_{3d-4}$。把定理 1.2 应用于两个辅助整数组成 $(u,0),(0,w)\in D_u$：它们不同、非零，且 $w<u$。这里用于整数间距估计的辅助预算是 $u$，没有把这两个辅助组成或 $z$ 加入原始来源域。令
+
+$$
+i=\max\{q\ge1:F_{q+1}\le u\}.
+$$
+
+因 $u\ge2$，该指标存在；$u<F_{3d-4}$ 给 $i\le3d-6$，而 $3d-4\le m-4$ 给 $u<F_{m+1}=B$。定理 1.2 的正间距分支因而给
+
+$$
+|Au-Bw|\ge F_{m-i}\ge F_{m-3d+6}=g.
+\tag{6.13}
+$$
+
+这些情况覆盖全部整数差 $h$，证明式 (6.11)。
+
+现构造保持原预算、并控制分母的同阶段反标签对。由 $d>k$ 与 $d\le\ell+1$，有 $3k\le j\le m-2$。式 (3.13) 的矩阵恒等式对这些整数指数直接给
+
+$$
+M^je_1=(F_{j-1},c)=S^kM^{j-3k}e_1.
+$$
+
+右端祖先为非零非负整数向量；因此式 (2.9) 的闭锥判据给
+
+$$
+r_kc\le t\le F_{j-1}\le R_kc.
+\tag{6.14}
+$$
+
+这里中间的取整界使用 $r_kc\le F_{j-1}$ 且 $F_{j-1}$ 为整数。这是式 (3.14) 的整数锥构造；当 $k=1$ 时也直接成立，与式 (2.7) 相合，不要求定义 3.1 的中间深度范围。于是
+
+$$
+P=(t,c),\qquad Q=(t+a,0),\qquad
+\chi_k(P)=1,\quad\chi_k(Q)=0,\quad
+\max\{|P|_1,|Q|_1\}=a+t=C\le H.
+$$
+
+由式 (3.15) 的相同差方向及式 (1.8)，它们满足
+
+$$
+\begin{aligned}
+f&=F_{m-j}=F_{m-3d+2}>0,\\
+|n_\ell(Q)-n_\ell(P)|&=|Aa-Bc|=f,\\
+D:=n_\ell(P)+n_\ell(Q)&=A(2t+a)+Bc,\qquad
+\theta_k(H,\ell)\le\frac fD.
+\end{aligned}
+\tag{6.15}
+$$
+
+两点均为实际原始预算内的组成：定义 1.1 可直接赋予完整有序二叉括号；$S^{-k}P$ 为非零非负整数，也可先实现该祖先再施加 $\rho^{3k}$，而 $Q$ 可由全 $\alpha$ 叶实现。
+
+许可锥嵌套给 $r_k\ge r_1=1/2$，所以 $2t\ge c$。再由 $A>B/2$、$a+c=b$ 与 $b=2c+F_{3d-3}<3c$，可逐项控制同阶段分母：
+
+$$
+\begin{aligned}
+D&\ge A(a+c)+Bc=Ab+Bc
+>\frac B2b+Bc
+>\frac B2(b+a)=\frac{BN}{2},\\
+\theta_k(H,\ell)&\le\frac fD<\frac{2f}{BN}.
+\end{aligned}
+\tag{6.16}
+$$
+
+第二个严格不等式使用 $2c>a$，它等价于 $3c>b$。另一方面，当前实际低阶段读数 $X$ 与高阶段 $e_1$ 的读数 $Z$ 满足
+
+$$
+\begin{aligned}
+X+Z&\le BH+Aa+Bb<BN+Aa+Bb<2BN,\\
+g&=F_{m-3d+6}=2F_{m-3d+2}+3F_{m-3d+3}\ge5f.
+\end{aligned}
+\tag{6.17}
+$$
+
+分母的最后一步使用 $Aa+Bb<B(a+b)=BN$。分子的递推中 $m-3d+2\ge2$，所以 $F_{m-3d+3}\ge F_{m-3d+2}=f$。将式 (6.11)、(6.16)、(6.17) 应用于这一实际反标签对，得到
+
+$$
+\mathfrak r(X,Z)
+\ge\frac{g}{X+Z}
+>\frac{g}{2BN}
+\ge\frac{5f}{2BN}
+>\frac{2f}{BN}
+>\theta_k(H,\ell).
+\tag{6.18}
+$$
+
+这里分别控制同阶段实际见证的分母 $D$ 与当前跨阶段实际来源的分母 $X+Z$，而不是用绝对最小间距除以任意读数和。结合式 (6.9) 和 $H<C$ 的分支，所有反标签跨阶段来源均满足式 (6.4)。式 (6.7) 则已处理较大的 $d$，故两种碰撞前参数域都完整。
+
+同阶段反标签点对本来就在隐藏阶段的联合域中，所以 $\theta_{\mathrm{hid}}\le\theta_{\mathrm{cal}}$。非恒值碰撞前域中，式 (6.4) 给每个跨阶段比值严格大于 $\theta_k(H,\ell)\ge\theta_{\mathrm{cal}}$；其余比值恰是两个同阶段集合，故隐藏最小值就是两者的最小值。这不需要比较两个同阶段相对间距的先后次序，得到式 (6.3)。
+
+最后，$D_H$ 与阶段集合有限，故每个非空反标签集合的最小值均存在且为非负有理数。定义 1.1 把每个达到组成实现为非空完整有序树，选择其达到阶段就给实际联合来源；显露阶段的最小值使用同一阶段。非恒值时许可来源 $\rho^{3k}(\alpha)$ 与非许可单叶 $\alpha$ 已保证反标签集合非空。结合常值分支及定理 4.4 的实际精确碰撞，取得性覆盖全部参数。证毕。
+
+**定理 6.3（闭相对响应的尖锐恢复阈值与调和报告）。** 对定义 6.1 的全部参数及每个共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，隐藏阶段初始组成许可的统一恢复存在，当且仅当
+
+$$
+\boxed{\quad
+\epsilon<\theta_{\mathrm{hid}}(H;k,\ell,d)
+\quad\Longleftrightarrow\quad
+H<G_{k,\ell,d}\ \text{且}\
+\epsilon<\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\}.
+\quad}
+\tag{6.19}
+$$
+
+显露实际阶段而保持式 (6.1) 的同一个响应关系时，统一恢复存在，当且仅当 $\epsilon<\theta_{\mathrm{cal}}(H;k,\ell,d)$。$H<N_k$ 的空反标签集合允许每个有限 $\epsilon$。每个有限相对间距的等号均在失败侧，零间距在 $\epsilon=0$ 时也失败；失败由相应合同中的实际初始树对及共同有理报告达到。
+
+证明。对每个 $r\in\mathbb Q$，定义原联合组成域内的有限候选集与总函数
+
+$$
+\begin{aligned}
+\mathcal C_\epsilon(r)
+&=\{(x,s)\in D_H\times\{\ell,\ell+d\}:
+|r-n_s(x)|\le\epsilon n_s(x)\},\\
+P_\epsilon(r)
+&=\begin{cases}
+1,&\mathcal C_\epsilon(r)\ne\varnothing\ \text{且}\
+\chi_k(x)=1\ \text{对每个 }(x,s)\in\mathcal C_\epsilon(r),\\
+0,&\text{其余情形}.
+\end{cases}
+\end{aligned}
+\tag{6.20}
+$$
+
+若一个候选集包含相反标签，其两个正整数真值 $u,v$ 必须满足
+
+$$
+|u-v|\le|u-r|+|r-v|\le\epsilon(u+v),
+$$
+
+因而 $\mathfrak r(u,v)\le\epsilon$。当 $\epsilon<\theta_{\mathrm{hid}}$ 时这不可能，故每个非空候选集都有共同标签。每个实际允许响应的来源都在该候选集中，式 (6.20) 因而总是输出正确标签；空候选集的零值使恢复器在全部有理报告上定义。若 $H<N_k$，所有候选初始标签都是零，同一函数就是常值零恢复器。
+
+反之，若 $\theta_{\mathrm{hid}}$ 有限，定理 6.2 给达到它的实际初始树 $T,T'$ 及阶段 $s,s'$。令 $u=n_s(c(T))>0$、$v=n_{s'}(c(T'))>0$、$\theta=\mathfrak r(u,v)=\theta_{\mathrm{hid}}$。两初始标签相反，且共同有理报告
+
+$$
+\begin{aligned}
+r_*&=\frac{2uv}{u+v}\in\mathbb Q_{>0},\\
+|r_*-u|&=\frac{u|v-u|}{u+v}=\theta u,\qquad
+|r_*-v|=\frac{v|v-u|}{u+v}=\theta v
+\end{aligned}
+\tag{6.21}
+$$
+
+在 $\epsilon=\theta$ 时已经同时合法，在每个更大 $\epsilon$ 时继续合法。因此任何单报告恢复器都须对同一个 $r_*$ 输出两个不同标签，统一恢复失败。$u=v$ 时调和报告就是共同精确读数，包含零间距端点。空反标签集合没有这一阻碍，并已由常值恢复器处理。于是隐藏阶段恢复恰在 $\epsilon<\theta_{\mathrm{hid}}$；代入定理 6.2 得式 (6.19)。
+
+显露阶段时，把式 (6.20) 的候选集限制为报告所给的那个 $s$，同一个三角不等式证明两个阶段分别在 $\epsilon<\theta_k(H,s)$ 时可恢复；共同合同要求两者同时成立，恰为 $\epsilon<\theta_{\mathrm{cal}}$。若这个最小值有限，选取达到它的同阶段实际树对，式 (6.21) 的调和报告与相同阶段标记同时合法，故等号及以上仍失败。该闭区间交叠论证是本卷定理 2.2、3.4 所用候选标签纤维判据在式 (6.1) 下的应用；其尖锐端点使用相对半径对应的调和报告。所有阈值仍判定初始组成许可，阶段只计替换次数。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 7. 固定许可深度的最终精确极小对与尖锐预算包络
+
+**定义 7.1（原始来源上的相对极限量）。** 固定整数 $k\ge1$。来源仍为[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的非空有限有序完全二叉树，叶标记为 $\alpha,\beta$，替换仍为 $\rho$；对整数 $H\ge1$，初始组成域仍为 $D_H=\{(a,b)\in\mathbb N_0^2:1\le a+b\le H\}$，目标仍为[定义 2.1](#2-许可预算阶梯与深层碰撞前沿)的初始组成许可 $\chi_k(c)=\mathbf1_{\{S^{-k}c\in\mathbb N_0^2\}}$。在已知有限阶段 $L\ge0$，恰好施加 $3L$ 次替换，真值仍为 $n_L(c)=F_{3L+3}c_1+F_{3L+4}c_2$；观察仅为一个 $r\in\mathbb Q$，满足 $|r-n_L(c)|\le\epsilon n_L(c)$，其中共同的 $\epsilon\in\mathbb Q_{\ge0}$ 已知。这是[定义 6.1](#6-共同相对响应下的阶段隐藏与许可分离)的固定阶段分支，预算只计初始树的叶数。
+
+令 $t=3k$、$\phi=(1+\sqrt5)/2$、$\psi=-1/\phi$，复用式 (2.9) 的 $r_k,R_k,N_k$，并记
+
+$$
+\begin{gathered}
+r_-=r_k,\qquad r_+=R_k,\qquad
+s=1+r_-,\qquad g=\phi+r_-,\qquad \kappa=\frac gs,\\
+N=N_k=F_{t+1},\qquad Q=N+F_{t-1},\\
+\ell(a,b)=a+\phi b,\qquad \ell'(a,b)=a+\psi b=a-b/\phi.
+\end{gathered}
+\tag{7.1}
+$$
+
+对 $j\ge t$ 和整数 $H\ge1$ 定义
+
+$$
+\begin{aligned}
+C_j=C_{k,j}&=F_{j+1}+\lceil r_-F_j\rceil,\\
+\Theta_k(H)&=
+\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}
+\frac{|\ell(x)-\ell(y)|}{\ell(x)+\ell(y)}.
+\end{aligned}
+\tag{7.2}
+$$
+
+空集合的最小值取 $+\infty$。$\ell,\ell'$ 和 $\Theta_k(H)$ 是证明中的数学量，不是额外观察、无穷阶段报告或隐藏阶段归一化。这里的 $\ell$ 不等于[延拓卷定义 14.1、定理 14.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#14-规范五窗的黄金双读出与进位方向)中作用于规范五窗组成的整数行 $r_G=(1,2)$。本来源域不附加[母卷命题 182.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#182-收缩窗口对规范来源的识别与范数预算)的单位位、规范接缝和严格共轭条带条件。目标在实际来源纤维上取值、恢复目标与完整隐藏状态有别的范围约定参见[有效分辨率卷 §§10.1–10.4](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#10-分辨率恢复动态自然性与实际误差)；其中的近似恢复与归一化原则不提供式 (7.2) 的整数极小值。
+
+**定理 7.2（最终精确极小对、方向切换与尖锐固定深度包络）。** 在定义 7.1 的合同下，取充分起点
+
+$$
+J=6k+1=2t+1,\qquad H_0=C_{k,J}.
+\tag{7.3}
+$$
+
+对每个整数 $H\ge H_0$，存在唯一 $j\ge J$ 使 $C_j\le H<C_{j+1}$。令
+
+$$
+\begin{gathered}
+u=F_{j+1},\qquad w=F_j,\qquad
+ e=u-\phi w=(-1)^j\phi^{-j},\\
+\tau=H-u+w,\qquad B_H=\left\lfloor\frac\tau s\right\rfloor,\\
+x_H=(\tau-B_H,B_H),\qquad
+y_H=(\tau-B_H+u,B_H-w),\\
+D_{j,H}=\ell(x_H)+\ell(y_H)
+=2\tau+2(\phi-1)B_H+e.
+\end{gathered}
+\tag{7.4}
+$$
+
+这两个组成由同一个初始预算内的实际树实现，且
+
+$$
+\boxed{
+\chi_k(x_H)=1,\quad \chi_k(y_H)=0,\quad
+|x_H|_1=\tau\le H,\quad |y_H|_1=H,\quad
+\Theta_k(H)=\frac{\phi^{-j}}{D_{j,H}}.}
+\tag{7.5}
+$$
+
+除差方向 $\pm(F_{j+1},-F_j)$ 外的全部反标签对，其相对比值严格更大；在该方向上，式 (7.4) 的平移使分母最大。因此 $C_j$ 不仅是这一差方向的共同来源预算，还在 $C_j\ge H_0$ 后成为式 (7.2) 极小差方向的准确切换预算。$H_0$ 是充分起点，不断言它是最小起点。
+
+对每个固定 $k$，尖锐渐近包络为
+
+$$
+\boxed{
+\begin{aligned}
+\liminf_{H\to\infty}H^2\Theta_k(H)
+&=\frac{\phi+r_-}{2\sqrt5},\\
+\limsup_{H\to\infty}H^2\Theta_k(H)
+&=\frac{(\phi+r_-)(1+r_-)\phi^2}
+ {2\sqrt5(2+\phi r_-)}.
+\end{aligned}}
+\tag{7.6}
+$$
+
+这里 $H$ 只沿正整数趋于无穷。两条预算墙子列分别达到这两个极限：
+
+$$
+\begin{aligned}
+\lim_{j\to\infty}C_j^2\Theta_k(C_j)
+&=\frac g{2\sqrt5},\\
+\lim_{j\to\infty}(C_{j+1}-1)^2\Theta_k(C_{j+1}-1)
+&=\frac{gs\phi^2}{2\sqrt5(2+\phi r_-)}.
+\end{aligned}
+\tag{7.7}
+$$
+
+证明。闭锥、整数祖先与最小许可预算直接复用[定理 2.3](#2-许可预算阶梯与深层碰撞前沿)。Fibonacci 递推及双根式给
+
+$$
+\frac12\le r_-<\frac1\phi<r_+\le\frac23,
+\qquad r_+-r_- =\frac1{F_tF_{t+1}},
+\qquad
+\chi_k(a,b)=1\ \Longleftrightarrow\ b>0,\ r_-b\le a\le r_+b.
+\tag{7.8}
+$$
+
+具体地，相邻倒比值 $F_{n-1}/F_n$ 位于 $1/2$ 与 $2/3$ 之间，并由 $F_{n-1}+\phi F_n=\phi^n$ 的共轭式交替处于 $1/\phi$ 两侧；Cassini 确定两端差为式 (7.8)。这些双根表达复用[母卷定义 18.1、命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)。
+
+$k\ge2$ 时，选一个辅助整数 $L^\dagger\ge k$，在[定理 3.2](#3-任意中间深度的许可噪声阶梯与共同实现预算)的条件下只取其方向预算结论；该结论允许任意 $j\ge t$，与 $L^\dagger$ 无关。$k=1$ 时直接用定理 2.2 的式 (2.5)。两者都给 $C_t=Q$、$C_j$ 严格递增且无界，故预算窗口指标唯一。这一步不把式 (3.5) 的有限输出残差延伸到 $j>3L+3$。
+
+先证式 (7.4) 的真实可行性。使用[母卷命题 105.2 证明中的矩阵幂与加法式](FIBONACCI_ATOMIC_RELATION_GENERATION.md#105-实际联合可达性标量返回与精确自主记忆)，有
+
+$$
+F_J=F_{2t+1}=F_t^2+F_{t+1}^2
+\ge2F_tF_{t+1}>sF_tF_{t+1}
+=\frac{s}{r_+-r_-}.
+\tag{7.9}
+$$
+
+因为 $s\le5/3<2$，最后比较严格。$j\ge J$ 因而给 $w\ge s/(r_+-r_-)$。由 $H\ge C_j\ge u+r_-w$，得 $\tau\ge sw$ 和 $B_H\ge w$。另一方面
+
+$$
+0\le\tau-sB_H<s\le(r_+-r_-)B_H,
+\qquad
+r_-B_H\le\tau-B_H\le r_+B_H.
+\tag{7.10}
+$$
+
+所以 $x_H$ 为许可非零整数组成。利用 $H,C_{j+1}$ 都是整数，$H<C_{j+1}=u+w+\lceil r_-u\rceil$ 蕴含 $H<su+w$，因为 $\lceil r_-u\rceil-1<r_-u$。于是
+
+$$
+0\le B_H-w
+\le\frac{H-u-r_-w}{s}
+<\frac{r_-u+(1-r_-)w}{s}<u.
+\tag{7.11}
+$$
+
+$y_H$ 的第一坐标至少为 $u$，第二坐标小于 $u$；而 $r_+<1$，故它非许可。两点的叶数恰为 $\tau,H$，且 $u>w$ 保证 $\tau<H$。其差为 $(u,-w)$，双根式给分子 $|e|=\phi^{-j}$。
+
+现在排除全部竞争方向。对任意反标签对，若差在交换符号后为 $(p,-z)$，其中整数 $p>z>0$，将许可端点记为 $a=(a_1,a_2)$。当另一端为 $a+(p,-z)$ 时，$a_2\ge z$ 且 $a_1\ge r_-a_2$，较大的叶数至少是 $p+r_-z$。当另一端为 $a-(p,-z)$ 时，$a_1\ge p$ 且 $a_2\ge a_1/r_+$，许可端点的叶数至少为 $(1+1/r_+)p>p+r_-z$。故两种方向都有必要条件
+
+$$
+\Lambda(p,z):=p+r_-z\le H.
+\tag{7.12}
+$$
+
+这重用式 (3.9)、(3.10) 的必要成本机制，不把它当作任意方向的可行性充分条件。
+
+Cassini 给 $\det((u,w),(u+w,u))=(-1)^j$，故两向量是整个整数格的一组基。唯一写成
+
+$$
+(p,z)=h(u,w)+i(u+w,u),\qquad h,i\in\mathbb Z,
+\qquad p-\phi z=e(h-i/\phi).
+\tag{7.13}
+$$
+
+后一式由 $u-\phi w=e$ 及 $(u+w)-\phi u=-e/\phi$ 得到。整数条件和 $H<C_{j+1}$ 又给
+$\Lambda(p,z)\le H<\Lambda(u+w,u)$。若 $h,i\ge0$，则 $i\ge1$ 已违反此严格预算界，所以 $i=0$，$h\ge1$；除 $(h,i)=(1,0)$ 外，残差至少为 $2|e|$。若两系数均非正，不能产生 $p,z>0$。若两系数异号且都非零，则 $|h-i/\phi|\ge1+1/\phi=\phi$。一个系数为零的其余情形或者已包含在第一种，或者不能产生正坐标。因此除 $(p,z)=(u,w)$ 外，这类方向的残差至少为 $\phi|e|$。
+
+若原差两个坐标同号，或一个坐标为零，其非零整数性给残差至少为一。异号差若写成 $(p,-z)$ 且 $p\le z$，则 $|p-\phi z|\ge(\phi-1)z\ge1/\phi$。$j\ge3$ 时，这两类也严格大于 $\phi|e|$。所以全部非 Fibonacci 竞争方向都已有严格分子间隙；尚须比较它们的相对分母。
+
+许可点 $a\in D_H$ 满足 $a_2\le H/s$，因而 $\ell(a)=|a|_1+(\phi-1)a_2\le\kappa H$；任意点 $b\in D_H$ 满足 $\ell(b)\le\phi H$。每个反标签分母因此至多为 $(\kappa+\phi)H$。式 (7.4) 的 $y_H$ 有叶数 $H$，故
+
+$$
+D_{j,H}=2\ell(y_H)-e\ge2H-|e|,
+\qquad
+\phi-\kappa=\frac{r_-}{\phi(1+r_-)}\ge\frac1{3\phi}.
+\tag{7.14}
+$$
+
+由 $H\ge3$、$j\ge3$，
+
+$$
+\phi D_{j,H}-(\kappa+\phi)H
+\ge(\phi-\kappa)H-\phi|e|
+\ge\frac1\phi-\phi^{-2}>0.
+\tag{7.15}
+$$
+
+因此任何非 Fibonacci 方向的比值至少为 $\phi|e|/((\kappa+\phi)H)>|e|/D_{j,H}$，分母不能逆转严格分子间隙。
+
+只剩 Fibonacci 方向。许可端点 $a$ 与另一端 $a-(u,-w)$ 的方向不可能：它要求 $|a|_1\ge(1+1/r_+)u\ge5u/2$，而 $H<su+w\le7u/3$；后一个弱界使用 $s\le5/3$ 及 $w/u\le2/3$。在另一方向，写许可端点为 $(a,b)$，非许可端点为 $(a+u,b-w)$。后者预算给 $a+b\le\tau$，许可锥给 $a\ge r_-b$，所以 $b\le B_H$，进而
+
+$$
+\ell(a,b)=a+b+(\phi-1)b
+\le\tau+(\phi-1)B_H.
+\tag{7.16}
+$$
+
+已构造的 $x_H$ 达到两个上界，故使 $2\ell(a,b)+e$ 最大。分子在此方向固定为 $|e|$，这证明式 (7.5) 及严格方向排除。
+
+这些可行点不是实锥替身。$S^{-k}$ 是整数矩阵，$S^{-k}x_H$ 为非零非负整数组成。按定义 1.1 先选一个具有此组成的完整有序树 $U$，再取初始树 $T_H=\rho^{3k}(U)$，就得到 $c(T_H)=x_H$、叶数 $\tau$。按 $y_H$ 的非负叶组成选择叶序与完整二叉括号，得到另一初始树 $T'_H$，叶数 $H$。随后才在这两棵初始树上施加合同规定的 $3L$ 次替换。此构造证明代表树存在，不断言任何指定树有这一语法祖先，不恢复括号或地址，也不授权逆执行。
+
+最后证明尖锐包络。经典 Binet 式与上述双嵌入表达在同一索引下给
+
+$$
+C_j=\frac{g\phi^j}{\sqrt5}+O_k(1),\qquad
+\frac{C_{j+1}}{C_j}\longrightarrow\phi,\qquad
+D_{j,H}=2\kappa(H-F_{j-1})+O_k(1).
+\tag{7.17}
+$$
+
+分母式由 $u-w=F_{j-1}$、$B_H=\tau/s+O(1)$ 及 $e=O(\phi^{-j})$ 得到，误差在整个窗口内有界。令 $h=H/C_j$，则 $1\le h<C_{j+1}/C_j$，Binet 还给 $F_{j-1}/C_j\to1/(\phi g)$。式 (7.5) 因而在窗口内一致给
+
+$$
+H^2\Theta_k(H)=f_k(h)+o(1),\qquad
+f_k(h)=\frac{gsh^2}{2\sqrt5(gh-1/\phi)}.
+\tag{7.18}
+$$
+
+一致性来自窗口内有界的 $h$ 与严格正的分母下界 $g-1/\phi=s$；$k$ 在此保持固定。导数为
+
+$$
+f'_k(h)=\frac{gs}{2\sqrt5}
+\frac{h(gh-2/\phi)}{(gh-1/\phi)^2}>0
+\quad(1\le h\le\phi),
+\tag{7.19}
+$$
+
+因为 $g\ge\phi+1/2>2/\phi$。在窗口上端稍超过 $\phi$ 的区间导数也仍正，且上端趋于 $\phi$，所以全部整数预算的极限下、上包络分别为 $f_k(1)$、$f_k(\phi)$。用 $g-1/\phi=s$ 与 $g\phi-1/\phi=2+\phi r_-$ 化简，得到式 (7.6)。取 $H=C_j$ 时 $h=1$；取 $H=C_{j+1}-1$ 时 $h\to\phi$，得到式 (7.7)。两个常数严格不同，因此不能将结论写成一个普遍常数乘 $H^{-2}$ 的渐近等式。证毕。
+
+**定理 7.3（全部非恒值预算的来源敏感范数下界与实际上界）。** 在定义 7.1 的条件下，令
+
+$$
+\begin{gathered}
+c_k=\frac{1+r_-}{\phi(\phi+\kappa)},\\
+E_k=\frac{\phi^{-(t-2)}}
+ {F_{t-1}+\phi F_t+\phi(F_t+F_{t-2})},\qquad
+U_k=\max\{3,(Q-1)^2E_k\}.
+\end{gathered}
+\tag{7.20}
+$$
+
+$H<N$ 时 $\Theta_k(H)=+\infty$，且所有有限阶段的 $\theta_k(H,L)=+\infty$。对每个整数 $H\ge N$，反标签集合非空，式 (7.2) 的最小值正且由实际初始树对达到，并有
+
+$$
+\boxed{
+\frac{c_k}{H^2}\le\Theta_k(H)\le\frac{U_k}{H^2},
+\qquad
+\begin{cases}
+\Theta_k(H)\le E_k,&N\le H<Q,\\
+\Theta_k(H)<3/H^2,&H\ge Q.
+\end{cases}}
+\tag{7.21}
+$$
+
+在 $H\ge H_0$ 的范围，式 (7.5) 还给 $\Theta_k(H)<g/H^2$。这些有限预算界与式 (7.6) 的尖锐渐近常数具有不同的适用断言。
+
+证明。由[定理 2.3](#2-许可预算阶梯与深层碰撞前沿)，每个许可初始组成的叶数至少为 $N$，$S^k(1,0)$ 则达到 $N$；非零坐标轴点非许可。因此反标签集合恰在 $H\ge N$ 时非空，且有限。对非零整数差 $d=(d_1,d_2)$，重用[母卷定义 15.5](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-155-共轭与范数)与[定义 18.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-181-算术的两个实嵌入)的范数及两个实嵌入，有
+
+$$
+\mathcal N(d)=d_1^2+d_1d_2-d_2^2
+=\ell(d)\ell'(d)\in\mathbb Z\setminus\{0\}.
+\tag{7.22}
+$$
+
+非零性可直接核对：若 $d_2=0$，范数就是非零平方；若 $d_2\ne0$ 且范数为零，$d_1/d_2$ 会是 $z^2+z-1=0$ 的无理根，矛盾。因此 $|\mathcal N(d)|\ge1$，也给 $\ell$ 在整数组成上的单射性。每个非空有限反标签集合的比值遂正且取得。
+
+取许可端点 $x$ 和任意另一端 $y\in D_H$。对 $x$ 用闭锥，对 $y$ 用原始整数三角域，得到
+
+$$
+\begin{gathered}
+H\frac{r_- -1/\phi}{1+r_-}
+\le\ell'(x)\le
+H\frac{r_+ -1/\phi}{1+r_+},\qquad
+-\frac H\phi\le\ell'(y)\le H,\\
+|\ell'(x-y)|\le\frac{\phi H}{1+r_-},\qquad
+\ell(x)+\ell(y)\le(\kappa+\phi)H.
+\end{gathered}
+\tag{7.23}
+$$
+
+第一行中关于 $x$ 的两端来自函数 $(v-1/\phi)/(1+v)$ 在 $v\in[r_-,r_+]$ 上递增，以及 $|x|_1\le H$；下端为负，上端为正，故缩小叶数仍保持这两个界。两端相减的两个可能绝对上界分别为 $\phi H/(1+r_-)$ 与 $\phi r_+H/(1+r_+)$。因为 $r_-r_+<1$，后者不大于前者。结合式 (7.22)，每个反标签比值满足
+
+$$
+\frac{|\ell(x-y)|}{\ell(x)+\ell(y)}
+=\frac{|\mathcal N(x-y)|}
+ {|\ell'(x-y)|\,[\ell(x)+\ell(y)]}
+\ge\frac{c_k}{H^2}.
+\tag{7.24}
+$$
+
+这是保留许可来源条件的下界，而非用一个任意实锥极值替换实际端点。
+
+给出全部预算的实际上界。在 $N\le H<Q$，取
+
+$$
+x_0=(F_{t-1},F_t)=c(\rho^t(\alpha)),\qquad
+y_0=(0,F_t+F_{t-2}).
+\tag{7.25}
+$$
+
+$x_0$ 许可，$y_0$ 非许可；其叶数分别为 $N$、$F_t+F_{t-2}\le N$，包含 $k=1$ 的等号情形。$x_0-y_0=(F_{t-1},-F_{t-2})$，正确的 Fibonacci 双根残差给分子 $\phi^{-(t-2)}$；分母恰是式 (7.20) 保留的三项和，所以比值为 $E_k$。这里 $F_{t-1}+\phi F_t=\phi^t$ 可由初值 $(F_0,F_1)$ 和乘以 $\phi$ 的递推验证，但无须将其他 Fibonacci 加权和替换为幂。$y_0$ 由全 $\beta$ 叶的完整有序树实现。
+
+对 $H\ge Q=C_t$，取唯一 $j\ge t$ 满足 $C_j\le H<C_{j+1}$，并令 $a_j=\lceil r_-F_j\rceil$。实际点对
+
+$$
+\widetilde x_j=(a_j,F_j),\qquad
+\widetilde y_j=(a_j+F_{j+1},0),\qquad
+\frac{|\ell(\widetilde x_j)-\ell(\widetilde y_j)|}
+ {\ell(\widetilde x_j)+\ell(\widetilde y_j)}
+=\frac{\phi^{-j}}{2a_j+F_{j+1}+\phi F_j}
+\tag{7.26}
+$$
+
+是[定理 3.2 的式 (3.14)、(3.15)](#3-任意中间深度的许可噪声阶梯与共同实现预算)所给来源构造；$k\ge2$ 仍只在辅助 $L^\dagger\ge k$ 下调用方向预算，$k=1$ 取定理 2.2 的式 (2.7)。也可直接核对 $M^je_1=S^kM^{j-t}e_1$，其中祖先非零非负且整数，故 $r_-F_j\le a_j\le F_{j-1}\le r_+F_j$。两点分别许可与非许可，共同叶数为 $C_j\le H$；每点按定义 1.1 实现，许可端点还可先实现其整数祖先再替换。
+
+同一整数锥构造用于 $j+1$，给 $a_{j+1}\le F_j=w$。记 $u=F_{j+1}$，则 $H<C_{j+1}\le u+2w\le4w$；又因 $j\ge3$，$u\ge3w/2$，故式 (7.26) 的分母严格大于 $3w$。Binet 给 $w\phi^{-j}\le(1+\phi^{-6})/\sqrt5$。于是
+
+$$
+H^2\frac{\phi^{-j}}{2a_j+u+\phi w}
+<\frac{16(1+\phi^{-6})}{3\sqrt5}
+<\frac{6344}{2187}<3.
+\tag{7.27}
+$$
+
+第二个严格界只用 $\phi>3/2$、$\sqrt5>2$。早期预算则有 $H^2E_k\le(Q-1)^2E_k$，合并即得式 (7.21)。这些上界全部由初始非零整数点及实际树代表给出。
+
+在 $H\ge H_0$，式 (7.14) 给 $D_{j,H}>H$。递推归纳给 $F_{j+1}\le\phi^j$、$F_j\le\phi^{j-1}$，再用 $H<su+w$，得到 $H\phi^{-j}<s+1/\phi=g$，故式 (7.5) 给更强的最终上界。
+
+该实际极小差 $d=(u,-w)$ 还满足
+
+$$
+\ell(d)=(-1)^j\phi^{-j},\qquad
+\ell'(d)=u+w/\phi=F_{j-1}+\phi F_j=\phi^j,
+\qquad \mathcal N(d)=(-1)^j.
+\tag{7.28}
+$$
+
+中间等式使用 $u=w+F_{j-1}$、$1+1/\phi=\phi$，再用已经验证的幂表达。因而范数一的整数差确由极小实际来源对实现。$\ell$ 作为实线性泛函有核 $\mathbb R(\phi,-1)$，但该核不含非零整数点；预算增长中的相对裕度消失不是整数核非零。不同实际树仍可共享同一组成，整数组成单射不分离那些树。证毕。
+
+**定理 7.4（有限阶段行列式误差、实际调和报告与未定比较带）。** 对定义 7.1 的任意整数 $L\ge0$，令
+
+$$
+\begin{gathered}
+m=3L+3,\qquad \xi_L=\frac{F_{m+1}}{F_m},\qquad
+\delta_L=|\xi_L-\phi|
+=\frac{\phi^{-m}}{F_m}
+=\frac{\sqrt5}{\phi^{2m}-(-1)^m},\\
+R_z(x,y)=\frac{|x_1-y_1+z(x_2-y_2)|}
+ {x_1+y_1+z(x_2+y_2)}\quad(z>0).
+\end{gathered}
+\tag{7.29}
+$$
+
+对同一个 $D_H$ 内的任意实际组成对 $x,y$，置 $A=x_1+y_1$、$B=x_2+y_2$，则
+
+$$
+\begin{aligned}
+|R_{\xi_L}(x,y)-R_\phi(x,y)|
+&\le E_L(x,y),\\
+E_L(x,y)&=
+\frac{2\delta_L|\det(x,y)|}
+ {(A+\xi_LB)(A+\phi B)}
+\le E_L:=\frac{2\delta_L}{(\sqrt{\xi_L}+\sqrt\phi)^2}
+\le\frac{\delta_L}{3}
+\le\frac{\sqrt5}{3(\phi^{6L+6}-1)}.
+\end{aligned}
+\tag{7.30}
+$$
+
+该行列式误差保留同一实际点对，不要求差方向指标 $j\le m$。对每个 $H\ge N$，
+
+$$
+\boxed{
+|\theta_k(H,L)-\Theta_k(H)|\le E_L,
+\qquad
+\lim_{L\to\infty}\theta_k(H,L)=\Theta_k(H).}
+\tag{7.31}
+$$
+
+对 $H<N$，两个量始终为 $+\infty$，不作无穷值相减。
+
+在固定已知阶段分支，共同有理误差 $\epsilon<\Theta_k(H)-E_L$ 足以保证初始许可恢复。对 $H\ge H_0$，使用式 (7.4) 的实际树对，$\epsilon\ge\Theta_k(H)+E_L(x_H,y_H)$ 足以保证失败。因此，仅由这两个比较作出的判断留下如下带：
+
+$$
+\epsilon\in\mathbb Q_{\ge0},\qquad
+\Theta_k(H)-E_L\le\epsilon
+<\Theta_k(H)+E_L(x_H,y_H).
+\tag{7.32}
+$$
+
+此带内的恢复与失败不能由上述误差夹逼决定，须使用准确的有限阶段 $\theta_k(H,L)$；在它的等号处失败。任意准确有限阈值都由达到它的实际反标签初始树对及一个共同有理调和报告实现。对任意 $0<\eta<1$，还有有限阶段的联合充分范围
+
+$$
+\phi^{6L+6}\ge1+\frac{\sqrt5H^2}{3\eta c_k},\quad H\ge N
+\quad\Longrightarrow\quad
+\theta_k(H,L)\ge(1-\eta)\frac{c_k}{H^2}.
+\tag{7.33}
+$$
+
+本定理只比较同一已知阶段的组成对，不凭这一界分类隐藏阶段联合域的跨阶段间距。
+
+证明。由[母卷命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)的双嵌入式，在本合同中 Binet 正确给
+$n_L(c)=(\phi^m\ell(c)-\psi^m\ell'(c))/\sqrt5$。同时 $F_{m+1}-\phi F_m=(-1)^m\phi^{-m}$，并且 $F_m=(\phi^m-(-1)^m\phi^{-m})/\sqrt5$，所以式 (7.29) 的 $\delta_L$ 等式成立。对非空初始组成，两种 $R_z$ 的分母都正；有限阶段比值恰为 $R_{\xi_L}(x,y)$，此等式只是约去共同正系数 $F_m$，未给观察增加或变更任何报告。
+
+暂时去掉绝对值，写 $S_z=(x_1-y_1+z(x_2-y_2))/(A+zB)$。直接交叉相减给
+
+$$
+S_{\xi_L}-S_\phi
+=\frac{-2\det(x,y)(\xi_L-\phi)}
+ {(A+\xi_LB)(A+\phi B)}.
+\tag{7.34}
+$$
+
+用 $\bigl||a|-|b|\bigr|\le|a-b|$ 得来源敏感误差。非负坐标保证 $|\det(x,y)|\le AB$；而
+
+$$
+\begin{aligned}
+(A+\xi_LB)(A+\phi B)
+&=A^2+(\xi_L+\phi)AB+\xi_L\phi B^2\\
+&\ge(\sqrt{\xi_L}+\sqrt\phi)^2AB.
+\end{aligned}
+\tag{7.35}
+$$
+
+当 $AB>0$ 时相除即得 $E_L(x,y)\le E_L$；当 $AB=0$ 时行列式为零，两个比值相等。Fibonacci 比值满足 $\xi_L\ge3/2$，且 $\phi>3/2$，故 $(\sqrt{\xi_L}+\sqrt\phi)^2>6$，给 $E_L\le\delta_L/3$；式 (7.29) 的分母至少为 $\phi^{6L+6}-1$，完成式 (7.30)。
+
+$H\ge N$ 时，两种比值在同一个非空有限反标签集合上取最小值。对达到任一最小值的点对应用式 (7.30)，分别得到两方向的不等式，从而证明式 (7.31)。这也是有限族的最小值连续性在本整数任务上的应用，直接识别固定 $H$ 的数学极限，没有引入无限观察。
+
+固定阶段的准确恢复判据 $\epsilon<\theta_k(H,L)$ 直接复用[定理 6.3](#6-共同相对响应下的阶段隐藏与许可分离)的显露阶段证明，将候选限制为此阶段即可。其充分性来自同一允许报告不能包含反标签候选。若相应最小值有限，取实际达到点对 $T,T'$，置 $U=n_L(c(T))>0$、$V=n_L(c(T'))>0$，则
+
+$$
+\begin{gathered}
+r_* =\frac{2UV}{U+V}\in\mathbb Q_{>0},\qquad
+\vartheta=\frac{|U-V|}{U+V}=\theta_k(H,L),\\
+|r_*-U|=\vartheta U,\qquad
+|r_*-V|=\vartheta V.
+\end{gathered}
+\tag{7.36}
+$$
+
+$\vartheta$ 本身也是有理数。故 $\epsilon=\vartheta$ 时报告已经同时合法，且两标签相反；更大的共同误差继续允许它。若 $U=V$，这一式仍给 $\vartheta=0$ 及共同精确报告，包含有限阶段的精确碰撞。来源实现由定义 1.1 保证，所以等号失败有实际初始树见证。
+
+由式 (7.31)，$\epsilon<\Theta_k(H)-E_L$ 保证 $\epsilon<\theta_k(H,L)$。对最终实际极小对，式 (7.30) 给 $R_{\xi_L}(x_H,y_H)\le\Theta_k(H)+E_L(x_H,y_H)$；故达到或超过右端的 $\epsilon$ 允许这对树的共同调和报告，得到失败侧及式 (7.32)。比较带并非对准确有限阈值的不可判断言，而是这些充分条件没有决定的范围。式 (7.33) 则使 $E_L\le\eta c_k/H^2$，再结合定理 7.3 的下界即可。$\ell,\xi_L$ 及以上代数比较始终只在证明中使用；观察仍是原合同的单个有理 $r$，没有历史、伴随通道、无理报告或依赖隐藏阶段的缩放。证毕。
+
+**命题 7.5（起点与渐近常数的两个精确早期反例）。** 定理 7.2 的起点条件不能直接删去，式 (7.6) 的下包络常数也不能直接充作全部非恒值预算的下界。具体地，$k=1,H=5$ 时预算窗口为 $C_{1,3}=4\le5<C_{1,4}=7$，将式 (7.4) 的取整构造直接代入会给
+
+$$
+u=3,\quad w=2,\quad \tau=4,\quad B_H=2,\quad
+x_H=(2,2),\quad y_H=(5,0),\qquad
+S^{-1}x_H=(-2,2).
+\tag{7.37}
+$$
+
+因而两端均非许可，该构造不是反标签见证。另在 $k=1,H=4$，实际树
+$T=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 和
+$T'=\langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle$
+满足
+
+$$
+\begin{gathered}
+c(T)=(1,2),\quad c(T')=(4,0),\quad
+\chi_1(c(T))=1,\quad \chi_1(c(T'))=0,\\
+\Theta_1(4)\le\frac{2\phi-3}{5+2\phi},\qquad
+16\frac{2\phi-3}{5+2\phi}
+<\frac{\phi+1/2}{2\sqrt5}.
+\end{gathered}
+\tag{7.38}
+$$
+
+证明。第一项直接使用[定义 1.3](#1-有限预算的尺度读出与逆许可分离)的整数矩阵 $S^{-1}=\begin{pmatrix}-3&2\\2&-1\end{pmatrix}$；负的祖先坐标否定许可。它只否定将取整构造外推到每个 $H\ge C_{1,3}$，不否定定理 7.2 的最终范围。
+
+第二项两棵树的初始叶数为三、四，均在 $\mathcal T_4$ 内。许可点的祖先组成为 $(1,0)$，横轴点非许可。两个 $\ell$ 值为 $1+2\phi$、$4$，且 $2\phi>3$，故分子为 $2\phi-3$、分母为 $5+2\phi$。最后的严格比较用 $\sqrt5=2\phi-1$ 和 $\phi^2=\phi+1$ 交叉相乘，等价于
+
+$$
+439<272\phi
+\quad\Longleftrightarrow\quad
+303<136\sqrt5;
+\qquad
+303^2=91809<92480=5\cdot136^2.
+\tag{7.39}
+$$
+
+所以 $\Theta_k(H)\ge(\phi+r_k)/(2\sqrt5H^2)$ 的全预算断言已被这对实际来源否定。式 (7.21) 的来源敏感有限下界与式 (7.6) 的渐近下包络必须各守其范围。证毕。
+
+**定义 7.6（早期预算与变动深度的未定范围）。** 以 $C_j$ 的严格递增窗口定义每个 $H\ge Q$ 的指标 $j(H)$，并用式 (7.4) 定义形式上的取整点对及分母。令
+
+$$
+H_k^*=\min\left\{h\in\mathbb Z_{\ge Q}:
+\begin{array}{l}
+\text{对每个整数 }H\ge h,\ \text{式 (7.4) 的点对属于 }D_H,\\
+\chi_k(x_H)=1,\ \chi_k(y_H)=0,\\
+\Theta_k(H)=\phi^{-j(H)}/D_{j(H),H}
+\end{array}\right\}.
+\tag{7.40}
+$$
+
+定理 7.2 保证此定义的集合非空，并给 $Q\le H_k^*\le C_{k,6k+1}$。这里未确定最小起点 $H_k^*$，也未分类全部 $N_k\le H<C_{k,6k+1}$ 的精确极小对。定理 7.2 的两个包络只取固定 $k$ 的极限；允许 $k=k(H)$ 增长时的统一窗口误差、最小起点和渐近常数范围仍是待定数学问题。式 (7.33) 是逐参数的有限阶段充分条件，不交换 $H\to\infty$ 与 $L\to\infty$，也不填补这些变动深度问题。以上范围始终针对原始初始树域与组成许可，不扩大为指定树祖先、完整树或规范地址恢复以及实际逆执行。
+
+## 追加锚（本行以下为增补区）

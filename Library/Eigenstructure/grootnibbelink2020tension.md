@@ -25,14 +25,16 @@ trivial singlets in the branching of the spinor representation `4` of the
 point group to its cyclic subgroups, and global ones by trivial singlets of the
 whole group. In the subsection "A Finite Group Conjecture" the paper states:
 
-> There does not exist any finite group $\mathbf{H}$ that has a
-> four-dimensional representation $D_\rep{4}$ with the following three
-> properties: (i) $D_\rep{4}$ has a trivial determinant, i.e.
-> $\det\left(D_\rep{4}(\gth)\right) = 1$ for all $\gth \in \mathbf{H}$, (ii)
-> $D_\rep{4}$ does not contain the trivial singlet representation of
-> $\mathbf{H}$, (iii) but the branchings of $D_\rep{4}$ to all $\Z{N} \subset
-> \mathbf{H}$ subgroups always contain the trivial $\Z{N}$-singlet
-> representation.
+```latex
+There does not exist any finite group $\mathbf{H}$ that has a
+four-dimensional representation $D_\rep{4}$ with the following three
+properties: (i) $D_\rep{4}$ has a trivial determinant, i.e.
+$\det\left(D_\rep{4}(\gth)\right) = 1$ for all $\gth \in \mathbf{H}$, (ii)
+$D_\rep{4}$ does not contain the trivial singlet representation of
+$\mathbf{H}$, (iii) but the branchings of $D_\rep{4}$ to all $\Z{N} \subset
+\mathbf{H}$ subgroups always contain the trivial $\Z{N}$-singlet
+representation.
+```
 
 It is checked by computer for the 1,594 finite groups from the CARAT
 ℚ-classes and all finite groups of order at most 500, and it fails for

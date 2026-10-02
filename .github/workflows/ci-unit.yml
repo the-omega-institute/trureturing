@@ -1,0 +1,114 @@
+name: CI unit
+
+# One CI unit. The calling job runs it only when the change hits the unit; this
+# workflow verifies the candidate, prepares the requested tools and runs either
+# the unit's test project or its command.
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        description: Test project run through make -C tools test; empty for a command unit
+        type: string
+        default: ''
+      command:
+        description: Command of a non-test unit, executed from the repository root
+        type: string
+        default: ''
+      dotnet:
+        description: Set up the .NET SDK
+        type: boolean
+        default: true
+      lean:
+        description: 'Lean preparation: none, toolchain, or build (toolchain plus build seeds)'
+        type: string
+        default: none
+      timeout-minutes:
+        type: number
+        default: 30
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  unit:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - name: Validate the unit definition
+        env:
+          PROJECT: ${{ inputs.project }}
+          COMMAND: ${{ inputs.command }}
+          LEAN: ${{ inputs.lean }}
+        run: |
+          has_project=false has_command=false
+          [[ -z "$PROJECT" ]] || has_project=true
+          [[ -z "${COMMAND//[[:space:]]/}" ]] || has_command=true
+          [[ "$has_project" != "$has_command" ]] || { echo "CI_UNIT_ERROR set exactly one of project and command" >&2; exit 2; }
+          case "$LEAN" in none|toolchain|build) ;; *) echo "CI_UNIT_ERROR lean is '$LEAN'" >&2; exit 2 ;; esac
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Verify the candidate
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: inputs.dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+      - id: keys
+        if: inputs.lean != 'none'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: inputs.lean != 'none'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional Lean build seeds
+        if: inputs.lean == 'build'
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Run
+        env:
+          CI: 'true'
+          DOTNET_CLI_UI_LANGUAGE: en-US
+          PROJECT: ${{ inputs.project }}
+          COMMAND: ${{ inputs.command }}
+        run: |
+          if [[ -n "$PROJECT" ]]; then
+            make -C tools test TEST_PROJECT="$PROJECT"
+          else
+            bash -e -o pipefail -c "$COMMAND"
+          fi
