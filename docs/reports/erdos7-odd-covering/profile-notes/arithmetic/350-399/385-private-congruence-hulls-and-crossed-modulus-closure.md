@@ -57,7 +57,11 @@ At ternary height one, the existing multiplicity-two exclusion forces
 5 and7 into opposite colors. [Section72](#72-small-prime-overlap-excludes-the-height-one-all-concentrated-branch)
 uses the stronger two-cover support-intersection consequence of published
 distortion bounds to exclude this entire height-one concentrated branch.
-The arbitrary-height branch and unrestricted Erdős#7 remain unresolved.
+[Sections128--129](#129-the-complete-all-concentrated-branch-contradicts-the-original-budgets)
+extend the exclusion to arbitrary original heights: one complete private
+source forces a colorwise height bound, which SG1 and CM3 contradict.
+Any hypothetical EB1 cover must therefore have a nonconcentrated prime.
+The nonconcentrated branch and unrestricted Erdős#7 remain unresolved.
 
 [Sections77--83](#77-independent-color-permutations-force-every-nonzero-private-p-root-of3)
 give actual source permutations and count-saving replacements when
@@ -68,6 +72,15 @@ p=5, equality requires two prime-power columns in EACH concentrated
 color. Other primes and heights in the p-free inventory remain
 unrestricted. This final layout, larger inventories and higher shared
 heights have not been excluded.
+
+[Section130](#130-the-retained-tree-predicate-is-determined-by-its-first-two-q-rows)
+reduces the full-height retained three-ary tree test to its first two
+q-depths, without removing deeper original classes from the actual
+residual. [Section131](#131-the-canonical-shallow-cofactor-law-gives-positive-mass-to-empty-actual-fibres)
+shows why the resulting two-copy cofactor supplier cannot directly be
+lifted to the original source: its canonical law charges a positive
+box whose entire ternary fibres are already covered by q-free primes.
+A compatible law or a paid positive-overlap construction remains needed.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -16269,3 +16282,95 @@ supported on R intersect ((Z/3^H) times V), hence on W by SH7, with M-marginal e
 RE7 then supplies one full-height original joint law on E_J. All its q-trees are selected in the genuine deep-retained complement E_x, and every price uses this SAME theta.
 
 The required reserve c0 is an additional hypothesis. Section131 identifies an actual obstruction to this hypothesis for the full-support law on V. The q-free originals include varying ternary heights and may eliminate entire ternary fibres over some v in V. Appending all their projected cofactor phases to F_sh can exceed two phases per numerical s, so it is not a legitimate unqualified SD1 reuse. Conditioning nu on only compatible v generally changes its query bound; positivity of the conditioned mass and its cost must be established. A query norm bound or nonempty V by itself is not support on R. The new work isolates this remaining compatibility requirement rather than bypassing it.
+
+## 131. The canonical shallow cofactor law gives positive mass to empty actual fibres
+
+The canonical full-support law in Report569 SD1 cannot satisfy the positive-fibre premise of SH8 for the retained-row shallow family whenever M>1. SH8 remains a valid conditional statement. This obstruction concerns that specific supplier law; it does not rule out a different law on the compatible cofactor region.
+
+This is ordinary conditional mathematics under the same original EB1 cover assumptions as SH1–SH8. It is not a new Lean result. All phases, heights, numerical labels and residual deletions below belong to one original cover.
+
+### Standing objects
+
+Write the original period as Q=3^H q^G M, with q>3 and gcd(M,3q)=1. The original numerical moduli are distinct and divisor closed, and comparable original congruence classes are disjoint. Let R be section127's complete residual of all original q-free classes, represented in (Z/3^H Z) times (Z/M Z). Thus R_v consists of exactly those ternary points at cofactor coordinate v that survive every original q-free class.
+
+For each retained original d=3^H q^e s_d with e in {1,2} and s_d>1, retain its actual projected cofactor class a_d modulo s_d. Their family F_sh has at most two classes per nonunit numerical cofactor. Define V to be its complete actual survivor in Z/M Z, exactly as in SH7. Modulus-one cofactors are omitted.
+
+For M supported on a subset of {5,7,11,13,17,19}, let nu be the probability supplied by the concrete PA construction in Report569. Its complete cofactor query bound is
+
+    R_M(nu) <= B_*
+    B_* = 432040125182653876501 / 86355045355449035400.
+
+The statement uses the concrete law, including its full-support property, and not just SD1's existential query conclusion.
+
+### A nonempty cofactor box has no original residual fibre
+
+Assume M>1. Divisor closure supplies an original prime class A_ell=a_ell modulo ell for every prime ell dividing M. Put
+
+    Z = {v modulo M : v = a_ell modulo ell for every prime ell dividing M}.
+
+The Chinese remainder theorem gives
+
+    |Z| = M/rad(M),       H_M(Z) = 1/rad(M) > 0.
+
+No common phase normalization is needed. If original prime phases have already been normalized to zero, this is the box v=0 modulo every prime dividing M.
+
+For any shallow retained original d=3^H q^e s_d with s_d>1, choose a prime ell dividing s_d. The original ell properly divides d. Comparable-class disjointness therefore gives
+
+    a_d != a_ell modulo ell.
+
+Every v in Z has residue a_ell modulo ell and so cannot meet the projected class a_d modulo s_d. This applies to every member of F_sh, proving
+
+    Z subset V.
+
+On the other hand, each v in Z meets the original q-free prime class A_ell, independently of the ternary coordinate. Hence
+
+    R_v is empty for every v in Z.
+
+In particular, for every ternary reference probability sigma, with no independence or regularity assumption,
+
+    c(v) := integral 1_R(u,v) d sigma(u) = 0   for every v in Z.
+
+This uses the complete joint deletion mask defining R. No union of separately chosen private regions or modified cofactor phases is substituted.
+
+### The canonical supplier assigns that box positive mass
+
+Report569, in “One actual law and its existing mass bounds”, explicitly states
+
+    H_M restricted to V <= lambda_final <= 9 H_M,
+
+and that normalization preserves exactly the actual survivor support. If the supplier is run on a larger six-prime carrier, the same inequality for M follows by taking its marginal: the forbidden family depends only on the M-coordinate, and the pullback of Z has the same Haar mass 1/rad(M).
+
+Write s=lambda_final(1). Report569 SD3 gives s>0. The construction also gives s<=1: its initial mass is xy-m<=1, and each later row has total mass min(1,C_q g_q)<=1. Thus nu=lambda_final/s satisfies
+
+    nu(Z) >= H_M(Z)/s >= 1/rad(M) > 0.
+
+Consequently c=0 on a set of positive nu-mass, for every sigma. The SH8/Report572 FS2 premise
+
+    c(v) >= c0 > 0 for nu-almost every v
+
+is impossible for this canonical law when M>1. It is not merely an unproved consequence of SD1. The conditional lift itself is still valid wherever its premise is supplied.
+
+Full support is essential to this conclusion about the supplier. A probability with support contained in V need not charge Z. Nothing here proves that every law with the same query bound is incompatible with R.
+
+### Conditioning identifies the exact remaining obligations
+
+Let P=proj_M R, S=V intersect P, and beta=nu(S)=nu(P). The box above gives
+
+    beta <= 1-nu(Z) <= 1-1/rad(M) < 1.
+
+Conditioning this supplier to a compatible marginal requires beta>0. SD1 supplies no overlap theorem asserting V intersect P is nonempty. Nonemptiness of R alone does not supply that intersection. No original EB1 cover with beta=0 is constructed here; positive overlap remains an unproved obligation, rather than a disproved statement.
+
+If beta>0, the existing conditioning inequality gives, for nu_S=nu restricted to S and normalized,
+
+    nu_S(E) <= nu(E)/beta,
+    R_M(nu_S) <= B_*/beta.
+
+This is an inherited upper bound, not the exact query cost or a lower bound on the unavoidable loss. A useful same-source fibre reserve for sigma is still needed to apply FS2, or one must control the unequal-fibre query profile in FS3a–FS3b using this same conditioned law.
+
+If sigma is normalized Haar on the complete actual pure-3 survivor, then c(v)>0 exactly when v belongs to P: every point of R already survives all pure-3 originals. On finite nonempty S this gives some positive minimum c_min. The immediate counting bound is only c_min>=1/|S_3|, where S_3 is the pure-3 survivor in Z/3^H Z; this bound can shrink with H and supplies no uniform reserve independent of H.
+
+Adding the actual q-free prime class A_ell to the shallow projected family removes the corresponding part of Z, but its phase differs from each retained original phase at numerical cofactor ell. If the two retained rows already have different ell-phases, that addition gives three projected phases at the same numerical cofactor. Therefore SD1's two-copy hypothesis cannot be retained automatically by that repair.
+
+Report572 FS5–FS8 instead require selected cofactor projections to contain every actual original projection through the specified ternary height, together with a bound on the number of residual active numerical cofactors at each same cofactor point. Neither requirement follows from selecting the two retained q-depths at full ternary height. Those existing results are available consumers once their actual-source hypotheses are established; they do not provide the missing hypotheses here.
+
+When M=1 there is no cofactor prime and the box argument does not apply. The cofactor carrier is a singleton, and the q-free originals are pure-3 originals. Taking sigma to be their complete survivor law gives c=1.
