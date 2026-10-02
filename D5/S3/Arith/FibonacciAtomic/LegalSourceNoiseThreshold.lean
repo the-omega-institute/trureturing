@@ -10,7 +10,8 @@ import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Analysis.SpecificLimits.ArithmeticGeometric
+import Mathlib.Data.Nat.SuccPred
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Positivity
@@ -270,24 +271,25 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
         noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
           (List.replicate (k + 1) (a, (-c) • target a)) =
           (lam ^ (k + 1) - c * geometric lam (k + 1)) • target a := by
-      induction k with
-      | zero =>
-          ext r
-          simp [noisyRun, action, initialRead, geometric, Pi.smul_apply, smul_eq_mul]
-          ring
-      | succ k ih =>
-          rw [List.replicate_succ']
-          simp only [noisyRun, List.foldl_append, List.foldl_cons, List.foldl_nil]
-          change lam • (noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
-            (List.replicate (k + 1) (a, (-c) • target a)) ᵥ* matrix a) +
-            (-c) • target a = _
-          rw [ih, action]
-          ext r
-          simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ha,
-            mul_one, pow_succ]
-          rw [show geometric lam (k + 1 + 1) = lam * geometric lam (k + 1) + 1 from
-            geom_sum_succ]
-          ring
+      let update : Row → Row := fun x => lam • (x ᵥ* matrix a) + (-c) • target a
+      let f : ℕ → Row := fun j => arithGeom lam (-c) 1 j • target a
+      have semiconj : Function.Semiconj f Nat.succ update := by
+        intro j
+        ext r
+        simp [f, update, arithGeom_succ, action, Pi.smul_apply, smul_eq_mul, ha]
+        ring
+      have firstStep : update zA = f 1 := by
+        ext r
+        simp [update, f, action, initialRead, arithGeom, Pi.smul_apply, smul_eq_mul]
+        ring
+      rw [show List.replicate (k + 1) (a, (-c) • target a) =
+        (List.replicate (k + 1) ()).map (fun _ => (a, (-c) • target a)) by simp]
+      unfold noisyRun
+      rw [List.foldl_map]
+      change (List.replicate (k + 1) ()).foldl (fun x _ => update x) zA = _
+      rw [List.foldl_const, List.length_replicate, Function.iterate_succ_apply, firstStep]
+      rw [← (semiconj.iterate_right k) 1, Nat.succ_iterate]
+      simp [f, arithGeom_eq_add_sum, geometric, Nat.add_comm, sub_eq_add_neg]
     have lowFormula : actual lam p = c • zB := by
       change noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
         (List.replicate (n + 1) (.low, (-c) • target .low)) = _
