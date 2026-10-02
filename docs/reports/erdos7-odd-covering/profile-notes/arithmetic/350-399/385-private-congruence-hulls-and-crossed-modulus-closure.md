@@ -201,6 +201,13 @@ For one nonconcentrated prime, the resulting height bound no longer
 contains H_3 and needs no original mixed corner. With further shared
 primes, their cofactor divisor count remains in the denominator.
 
+[Section150](#150-shared-cofactors-give-an-exact-opposite-color-support-gap-budget)
+repairs the support-gap count by retaining every original shared
+cofactor in the first-digit compression. With k nonconcentrated primes
+outside the four-prime head, all concentrated primes are at most
+11+65*49^k; initial-segment support then bounds all primes for fixed k.
+The transported witnesses keep every shared coordinate at full height.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18352,3 +18359,63 @@ The colored capacity and high-parent capacity are unchanged. The low R-only inve
 and a height upper bound follows when q>1+aD_0. Neither Q_0 nor Q is assumed original; they are used only to overcount possible cofactors. This does not bound D_0 or the amount of nonconcentrated support. For R={q}, D_0=1 recovers QHP3–QHP7.
 
 The new arithmetic input is the division of one full all-depth private packet into a finite low-ternary strip and one qualified mixed-parent phase. CPA's same-parent accounting and OCP2 provide the capacity; §140 provides the color removal. The absence of an original parent can only make the high group empty, so it is not an extra existence assumption. A whole-cover contradiction and an extension of the all-concentrated SG1 support-gap repair to R-only cofactors are not supplied here.
+
+## 150. Shared cofactors give an exact opposite-color support-gap budget
+
+Keep one original EB1 whole cover with its original partition R,S_1,S_2. Put H=v_3(Q) and Q_R=product_(r in R)r^(H_r). Fix opposite concentrated primes p<ell. The first-digit compression of §56 still applies with R present. What changes is the numerical inventory of its collision roots, not its common-source coverage argument.
+
+Define the original common-cofactor set and its actual root image by
+
+    U_(p,ell)={u:gcd(u,p ell)=1, p u and ell u are ORIGINAL},
+    T_(p,ell)={a_(ell u) mod ell:u in U_(p,ell)}.
+
+CP1 excludes every original p ell-bearing modulus. If a nonternary colored prime divided u, one of p u and ell u would contain both colors. Thus
+
+    U_(p,ell) subset {u:u divides 3^H Q_R},
+    |T_(p,ell)|<=|U_(p,ell)|<=(H+1)tau(Q_R).       (RSG1)
+
+The original prime labels p and ell give u=1. With the common prime-phase normalization, 0 belongs to T_(p,ell). Distinct cofactors may contribute the same root; RSG1 makes no distinct-root assumption.
+
+### Reuse the original first-digit transport with every shared coordinate retained
+
+In §56's transport, every mixed-root blacklist is empty because CP1 forbids original p ell-bearing labels. If ell-|T_(p,ell)|>=p-1, assign the p-1 nonzero first-p roots injectively to roots outside T_(p,ell). This is the already established successful-matching case of that interface, with all R coordinates retained.
+
+For precision, write Q=p^A ell^B M, gcd(M,p ell)=1, and let sigma be that one injection. On the output carrier p^A ell^(B-1)M, a point z with nonzero first-p root uses the single old source
+
+    y mod p^A = z mod p^A,
+    y mod ell^B = sigma(z mod p)+ell*(z mod ell^(B-1)),
+    y mod M = z mod M.
+
+Thus all ternary and shared-prime coordinates, at their full old heights, are unchanged. The retained original A_p covers the zero output root. Every ell-free original is retained unchanged.
+
+An ell-bearing original is ell^e u with gcd(u,p ell)=1. Its inverse is empty or is the existing one-AP pullback of modulus p ell^(e-1)u. The numerical map is injective. If e>=2, the new label still contains ell and cannot collide with a retained ell-free label. If e=1, collision requires exactly the old pair ell u,p u; its old first-ell phase lies in T_(p,ell), so that pullback is empty. This is the collision check from §104 with the permissible u enlarged to include its actual R factors, not a claim that those factors vanish.
+
+The one-source whole-coverage conclusion of §56 therefore holds. All new moduli are distinct odd nonunits, and A_ell disappears because its root zero is avoided. That strict class-count saving contradicts EB1. Consequently
+
+    ell-p+2 <= |T_(p,ell)|
+             <= |U_(p,ell)| <= (H+1)tau(Q_R),
+    ell <= p-2+(H+1)tau(Q_R).                     (RSG2)
+
+The entire common cofactor, its original numerical label and its actual root remain in this inequality. In particular, substituting tau(Q_R)=1 when R is nonempty would be invalid. When R is empty, §104's sharper paired-height count recovers SG1; no new proof of that result is supplied here.
+
+### A fixed number of shared primes gives a finite support head
+
+Suppose R avoids K={5,7,11,13}. GM1 supplies both concentrated colors within K. Let k=|R|>=1 and D_R=tau(Q_R). The already proved OCP9 gives
+
+    H+1<=65, D_R<=49^k.
+
+Name the color of5 S_o, and choose an opposite ell_0 in {7,11,13}. Apply RSG2 first to5 and each prime of the other color, then to ell_0 and every larger prime of S_o. The smaller S_o primes are already below ell_0. Every concentrated prime therefore satisfies
+
+    r <= 11+65D_R <= 11+65*49^k =: B_k.           (RSG3)
+
+This is a bound on the SAME original family. It does not require distinct root images or an optimized phase chosen separately for each output point.
+
+Let t_k be the kth prime strictly greater than the explicit integer B_k. By the original initial-segment support EB3, if P^+(Q)>t_k then the first k+1 primes above B_k would all be original. None could be concentrated by RSG3. They would give more than k members of R. Hence
+
+    P^+(Q)<=t_k.                                  (RSG4)
+
+For k=1, RSG3 is the concrete concentrated-prime head B_1=3196; the possible full support is bounded by the next prime above that head. This counts original prime support, not just one retained quotient. Combined with OCP9, each fixed k therefore admits only finitely many numerical palettes and original phase assignments. No enumeration of them is asserted, and a finite bound is not their exclusion.
+
+RSG3 can keep the actual product D_R instead of49^k. When R={q}, the stronger q-height bounds QHP4 and OCP5 give further valid substitutions D_R=H_q+1. Bounds on the same family's parameters may be combined; independently optimized private sources are not identified.
+
+The arithmetic addition is the actual shared-cofactor collision count RSG1–RSG2. The source map, matching implication and whole-cover descent are reused. This consumer alone does not bound k, and it does not resolve unrestricted noncoverage or constitute Lean verification.
