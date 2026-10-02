@@ -16,7 +16,7 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
     private static Formula Both(params Formula[] clauses) => Seq(clauses.SelectMany((clause, i) =>
         i == 0 ? new[] { Par(clause) } : new[] { Sp, Land, Sp, Par(clause) }).ToArray());
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("source-density-" + name.ToLowerInvariant()),
+        DescribeId.Create("source-density-" + (name == "a" ? "coordinate-a" : name.ToLowerInvariant())),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
@@ -53,6 +53,9 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
             Def("lowerEnvelope", "Three-block lower envelope", "The lower envelope is "
                 + "1/(t-j)-(j+1/2)/(LADt^2)-AE/(2a(a+E))-DA/(2b(b+A)) "
                 + "-LD/((n-1/2)(n+D-1/2)). Its coordinates share the same k,j,t."),
+            Paragraph(Text("In the displayed statement, logQ(k,j) denotes the function "
+                + "t maps to log(q(k,j,t)), and qOverT(k,j) denotes t maps to q(k,j,t)/t. "
+                + "R and N denote the real numbers and natural numbers.")),
             Describe.Lean(DescribeId.Create("source-density-estimate"),
                 DeclarationHandle.Create(Prefix + "result"), H("Strict increase and unique crossing"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
@@ -70,7 +73,7 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
     private static Formula ResultFormula()
     {
         var k = V("k"); var j = V("j"); var t = V("t");
-        var tau = V("tau"); var z = V("z");
+        var tau = F.Tau; var z = V("z");
         var qt = Call("q", k, j, t); var gt = Call("g", k, j, t);
         var qtau = Call("q", k, j, tau);
         var legalRoot = Both(LeOf(Add(j, D(1)), tau), Seq(qtau, Sp, Eq, Sp, D(1)));
@@ -88,13 +91,13 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
                 LtOf(tau, Add(j, new Formula.Fraction(Add(j, D(1)), Call("c", k)))), comparisons));
         var analytic = Seq(Forall, Sp, t, Sp, InMacro, Sp, V("R"), Comma, Sp,
             Par(LeOf(Add(j, D(1)), t)), Sp, Implies, Sp,
-            Both(LtOf(D(0), qt), Call("HasDerivAt", Call("log_q", k, j), gt, t),
+            Both(LtOf(D(0), qt), Call("HasDerivAt", Call("logQ", k, j), gt, t),
                 LeOf(Call("lowerEnvelope", k, j, t), gt)));
         return Disp(Seq(Forall, Sp, k, Comma, j, Sp, InMacro, Sp, V("N"), Comma, Sp,
             Par(LeOf(D(1), k)), Sp, Implies, Sp,
             Both(LtOf(D(0), Call("c", k)), analytic,
                 Call("StrictMonoOn", Call("q", k, j), Call("Ici", Add(j, D(1)))),
-                Call("Tendsto", Call("q_over_t", k, j), Call("atTop"),
+                Call("Tendsto", Call("qOverT", k, j), Call("atTop"),
                     Call("nhds", new Formula.Fraction(Call("c", k), Add(j, D(1))))),
                 uniqueRoot, boundedRoot)));
     }
