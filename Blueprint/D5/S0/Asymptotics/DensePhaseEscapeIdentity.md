@@ -25,3 +25,5 @@ Indeed, the structural fixed-point bound supplies a finite cutoff A0. Every expo
 - Truth anchor: `D5/S0/Asymptotics/DensePhaseEscapeIdentity.dense_phase_escape_identity_on_realizable_exponents`
 - Dependency: [D5/S0/Asymptotics/DensePhaseUnrealizable](DensePhaseUnrealizable.md)
 - Dependency: [D5/S0/Asymptotics/FixedPointFreeEscapeProbability](FixedPointFreeEscapeProbability.md)
+
+ci-perf negative probe: this hand-written line is not produced by the Scribe definition.
