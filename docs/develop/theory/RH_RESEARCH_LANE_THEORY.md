@@ -10361,3 +10361,194 @@ $$
 推导纲要：在 $C_2$ 的本征向量 $\xi$ 上写 $\mathcal F_2\xi=\lambda\xi+\sqrt{1-\lambda^2}\,\zeta$，其中 $\zeta\in WH$。利用 $[A_f,\mathcal F_2]=0$，对应二维对的迹贡献化为 $2\lambda\operatorname{Re}\langle\xi,A_f\zeta\rangle/\sqrt{1-\lambda^2}$。还需验证完整谱分解、收敛与源算术识别，才可把这个逐对计算提升为实际迹恒等式。
 
 ## 追加锚（本行以下为增补区）
+## 15. 同一四脉冲测试的 dyadic 共振候选
+
+本章提出第 14 章实际修正公式的一个符号检验。整个新增解析桥仍为 `ASSUMED-UNVERIFIED`，没有 Lean 核验、实际加权迹数值证书或已认证的具体 $\epsilon_0$。候选的作用是检验较强条件 $D_2\le0$；完整 RH 目标仍要求同一实际完整 Weil 形式在全部目标支撑上非负。
+
+### 15.1 固定的合法测试
+
+取非零、非负、实偶函数 $\beta\in C_c^\infty([-1,1])$，令
+
+$$
+\beta_0=\int_{\mathbb R}\beta(x)\,dx>0,\quad
+m=\|\beta\|_2^2,\quad
+a=\frac{3\ell}{5},\quad b=\frac{2\ell}{5},\quad
+c=\frac{\sinh(a/2)}{\sinh(b/2)}.
+$$
+
+对 $0<\epsilon<\ell/40$，定义
+
+$$
+\begin{aligned}
+\beta_\epsilon(x)&=\epsilon^{-1/2}\beta(x/\epsilon),\\
+f_\epsilon(x)&=\beta_\epsilon(x-a)-\beta_\epsilon(x+a)
+-c\bigl(\beta_\epsilon(x-b)-\beta_\epsilon(x+b)\bigr).
+\end{aligned}
+$$
+
+它是奇的 additive 积分测试，物理载体仍然是偶函数空间 $H$。其 Fourier 表达式为
+
+$$
+\widehat f_\epsilon(t)
+=-2i\sqrt\epsilon\,\widehat\beta(\epsilon t)
+\bigl(\sin(at)-c\sin(bt)\bigr).
+$$
+
+因此三个固定零约束相容。以 $L=a+\epsilon$ 为支撑界，有 $2<e^{2L}<3$，所需 place set 为 $\{\infty,2\}$。同一自相关支撑使 $2^m$ 的 $m\ge2$ 项与所有其他素数项为零。
+
+四个脉冲互不相交，给出
+
+$$
+M=\|f_\epsilon\|_2^2=2(1+c^2)m,
+\qquad
+H_\epsilon(\ell)=2cm,
+\qquad
+\mathcal A_2(f_\epsilon)=2\sqrt2\,c\ell m>0.
+$$
+
+这些是同一 $f_\epsilon$ 的读数，没有独立选取可分别达到的极值。
+
+### 15.2 线性共振与连续余项
+
+在第 14 章候选迹公式中分开 $C_2R_2=C_2+C_2^3R_2$。若 $C_2\in\mathfrak S_3$ 的识别与余项合同成立，则非线性部分有候选连续 kernel
+
+$$
+\kappa_{\rm nl}(t)=2\operatorname{Re}\operatorname{Tr}_{QH}
+\bigl[C_2^3R_2Q\rho(e^{-t})W\mathcal F_2Q\bigr],\qquad t\ge0.
+$$
+
+所需连续性来自固定 trace-class 算子与强连续伸缩的配对，而不是未经证明的 operator-norm 连续性。
+
+令 $\sigma_{-1}=-1$、$\sigma_j=1$（$j\ge0$），以及 $\operatorname{sinc}z=\sin z/z$，在零点作连续延拓。线性 cross-cutoff 部分的候选 kernel 为
+
+$$
+\begin{aligned}
+\mathcal K_{\rm lin}(t)
+={}&e^{t/2}\int_{e^{-t}}^1\sum_{j,k\ge-1}\sigma_j\sigma_k\,
+\Bigl[\operatorname{sinc}\bigl(2\pi x(2^j-2^ke^t)\bigr)\\
+&\hspace{35mm}+\operatorname{sinc}\bigl(2\pi x(2^j+2^ke^t)\bigr)\Bigr]dx.
+\end{aligned}
+$$
+
+这是先在有限矩形截断上积分两个余弦，再取迹配对极限的表达式。$2\operatorname{Re}$ 与 $\cos v\cos w$ 的二分系数在这里相消。
+
+固定 $r_*=5\ell/4$。在 $0<t<r_*$ 内，无限同频族是 $j=k+1$、$k\ge0$，共振中心为 $t=\ell$。其候选单独项为
+
+$$
+\mathcal L(t)=e^{t/2}\sum_{k\ge0}
+\int_{e^{-t}}^1
+\operatorname{sinc}\bigl(2\pi2^kx(2-e^t)\bigr)\,dx.
+$$
+
+需要证明 $\mathcal K_{\rm lin}-\mathcal L$ 在 $[0,r_*]$ 连续。候选控制如下：非同频族的绝对值用 $O(2^{-\max(j,k)})$ 求和；$j=k$ 在 $t=0$ 的端点项用 $O(t(1+|\log t|))$ 控制；$j=0,k=-1$ 在 $\ell$ 只是一项连续贡献。
+
+有限截断在 $\ell$ 附近还需有与截断无关的、局部可积的 logarithmic 主控界。仅有 operator-norm 截断误差不完成这项证明；必须排除取极限时额外出现未计入的集中项。
+
+**候签定理 15.1（共同测试上的共振分解）。** 若上述迹识别、矩形截断与连续余项合同成立，则存在固定 $\kappa\in C([0,r_*])$，使
+
+$$
+D_2(f_\epsilon)=\int_0^{r_*}H_\epsilon(t)
+\bigl[\mathcal L(t)+\kappa(t)\bigr]dt.
+$$
+
+算术尺度上的集中项已在第 14 章单独配平；这里剩下的是 locally integrable 的对数共振。不能预先把整个投影修正当成随支撑宽度消失的连续核。
+
+### 15.3 正 dyadic 配对与待核验的余项
+
+定义
+
+$$
+r(v)=\int_{\mathbb R}\beta(u)\beta(u-v)\,du,
+\qquad
+\Psi_\beta(v)=\int_{\mathbb R}r(u)\operatorname{sinc}(vu)\,du.
+$$
+
+对 $v>0$，复用 Fourier 自相关与区间平均关系，候选读数为
+
+$$
+\Psi_\beta(v)=\frac1{2v}\int_{-v}^{v}|\widehat\beta(\omega)|^2\,d\omega\ge0.
+$$
+
+定义实际尺度上的同一 dyadic 和
+
+$$
+S_\beta(\epsilon)=\sum_{k\ge0}\int_{1/2}^1
+\Psi_\beta(4\pi2^k\epsilon x)\,dx.
+$$
+
+自相关在 $\ell$ 附近恰为 $H_\epsilon(\ell+\epsilon v)=2c\,r(v)$；其其他正 lag 中心为 $0,a-b,2b,2a$，均与 $\ell$ 分离。候选配对估计是
+
+$$
+D_2(f_\epsilon)=2\sqrt2\,c\epsilon S_\beta(\epsilon)+O_\beta(\epsilon).
+$$
+
+这里的 $O_\beta(\epsilon)$ 必须是对同一固定 $\beta$、全部充分小 $\epsilon$ 的统一界。连续核部分通过自相关脉冲的 $L^1$ 大小控制。共振项中的 $e^{\epsilon v}$、半密度与变动端点，则需要先按 $2^k\epsilon\asymp1$ 分段；低尺度的误差按层数求和，高尺度作 $w=(e^{\epsilon v}-1)/\epsilon$ 的换元并控制 sinc 积分尾。
+
+所需的更细候选误差为 $O_\beta(\epsilon^2(1+|\log\epsilon|))$。未证明这个 uniform-in-$k$ 估计时，逐个固定 $k$ 的 Taylor 展开不足以推出上式。
+
+### 15.4 较强迹支配条件的候选障碍
+
+由于 $\beta_0>0$，候选尺度读数满足
+
+$$
+\Psi_\beta(v)=\beta_0^2+O_\beta(v^2)\quad(v\to0),
+\qquad
+\Psi_\beta(v)=O_\beta(v^{-1})\quad(v\to\infty).
+$$
+
+把 $2^k\epsilon\le1$ 与其补段分开，待核验的 dyadic 计数结论为
+
+$$
+S_\beta(\epsilon)=\frac{\beta_0^2}{2\ell}\log(1/\epsilon)+O_\beta(1).
+$$
+
+**候签定理 15.2（实际投影差额的对数主项）。** 在第 14 章源合同与本章共振、余项义务全部成立时，对上述固定非负 $\beta$，有
+
+$$
+D_2(f_\epsilon)
+=\frac{\sqrt2\,c}{\ell}\beta_0^2\epsilon\log(1/\epsilon)
++O_\beta(\epsilon).
+$$
+
+其严格正主系数将给出充分小 $\epsilon$ 下的 $D_2(f_\epsilon)>0$。源 archimedean 连续修正的配对为 $O_\beta(\epsilon)$ 时，还将得到
+
+$$
+\delta_2(g_\epsilon)
+=-\mathcal A_2(f_\epsilon)
++\frac{\sqrt2\,c}{\ell}\beta_0^2\epsilon\log(1/\epsilon)
++O_\beta(\epsilon).
+$$
+
+因此候选机制不是投影修正趋零，而是其常数项先抵消真实算术贡献，再由 dyadic 共振决定剩余差额的符号。这些均是未闭合的解析候选，不能据此报告强条件已被形式反驳。
+
+## 16. 完整 Weil 门槛与当前证明义务
+
+### 16.1 同一测试的正性范围
+
+在共同 Gamma-energy 约定确实成立时，记 $c_\Gamma=\operatorname{digamma}(1/4)-\log\pi$，固定四脉冲测试具有候选下界
+
+$$
+Q_{\rm full}(f_\epsilon)\ge
+M\left[c_\Gamma+2^{-1/20}\log\frac{\ell}{20\epsilon}
+-\frac{\sqrt2\,c\ell}{1+c^2}\right].
+$$
+
+其来源是平移区间 $2\epsilon\le t\le\ell/10$ 上的脉冲不相交，使 translation-square 等于 $2M$，并保留正 Gamma-energy 的这一段。一般复杂测试的能量桥需要独立核对；不能无条件调用只覆盖偶 additive 测试的实现。这个正性下界与本章 actual projection 仍都缺 Lean 接回。
+
+若下界与候签定理 15.2 均经核验，则同一测试上将有
+
+$$
+0<D_2(f_\epsilon)<\sigma_2(g_\epsilon).
+$$
+
+这只排除较强条件 $D_2\le0$；实际完整 Weil 门槛 $D_2\le\sigma_2$ 仍成立于该测试。单个测试或单个 place set 的结论不完成全部支撑上的 RH 判据。
+
+### 16.2 可复用来源与未闭合接口
+
+物理投影与 entire generator、dual semilocal transport、archimedean trace 和 quasi-inner 紧性分别复用第 14 章的源条目。局部相位级数、有限 rank-one 线性代数与已有 source statement 的改写不计作新成果；候选新增内容是实际算术项配平之后的共振 kernel 与 uniform 余项。
+
+当前完整证明义务是：识别共同 unitary 表示下的 $T,\mathcal F_2,P_2$；以 trace-class 的差完成算术项配平；证明 double-sinc 截断的局部可积主控与连续余项；证明 dyadic 指标上的统一误差；把得到的实际比较接回完整 Weil 形式。没有这些条件的数值正矩阵不提供该结论。
+
+本文没有形式化、deposit 或覆盖记录，没有实际加权迹数值和已认证的具体 $\epsilon_0$。RH、全部支撑上的有符号比较以及黄金/FIB 组成与这些物理算子的额外识别均保持未解决。素数二的乘法伸缩 $U=\rho(2)$ 在本章有固定物理定义；它与 FIB 原子递归的黄金尺度作用需要另给对应。
+
+## 追加锚（本行以下为增补区）
