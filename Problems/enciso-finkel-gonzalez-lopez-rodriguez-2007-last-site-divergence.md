@@ -132,6 +132,15 @@ fit retain their separate status. The frozen unique-minimum result is
 unaffected, and no spectral, partition-function or freezing-limit theorem
 is established by this module.
 
+**Growth rate implied by the proved estimate (interpretation, not an
+additional exported theorem):** since $H_{N-1}\geq\log N$, the inequality
+$H_{N-1}<2R^2$ gives $R>\sqrt{(\log N)/2}$ for the last site $R$ (the
+source's $\xi_N$). The paper's heuristic (19),
+$\xi_N\simeq\sqrt2\,\operatorname{erf}^{-1}(1-1/N)$, has leading size
+$\sqrt{2\log N}$. The proved lower bound therefore has the predicted
+$\sqrt{\log N}$ order with half the predicted coefficient; no matching
+upper bound and no asymptotic constant follow from this delivery.
+
 **Open:** weighted equations, different interaction graphs, non-increasing
 chambers and the cases $N<3$. The proof supplies no statement for these
 altered hypotheses.
