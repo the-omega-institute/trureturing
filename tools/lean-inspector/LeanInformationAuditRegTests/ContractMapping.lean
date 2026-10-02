@@ -75,7 +75,8 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
       throwError "template_mutation_type_changed"
   let .ok (alternateIdentity, _) ← inEnvironment newEnv <| TemplateAudit.rawIdentity
       newRecord.occurrence.levelParams alternate | throwError "alternate_fingerprint_failed"
-  let template ← rejected "same_type_template_selection" "new.current_descriptor|descriptor.new|unregistered_template" <|
+  let template ← rejected "same_type_template_selection"
+      "new.current_descriptor|new.current_result|descriptor.new|unregistered_template" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       descriptor := some alternate
       result := .declaredValidated { certificate with descriptorIdentity := alternateIdentity } }
