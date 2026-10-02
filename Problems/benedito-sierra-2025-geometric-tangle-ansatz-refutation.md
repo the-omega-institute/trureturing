@@ -122,8 +122,9 @@ Tier 1; `theorem`; resolution `Refuted`; preregistration #11500.
 `proof_shape: bind-only`; `escape_witness: none`;
 `admission_basis: open-problem-resolution`.
 The utility is `certified-instance` with `basis=refutes`, the closed `claim`,
-and its designated `result`. 逃逸审计未完成 (CLAUDE.md §3.9 exception): the obstruction and missing evidence
-are recorded in https://github.com/the-omega-institute/trureturing/issues/11500#issuecomment-5943413667. The current raw report has 6049 modules, including 383 `Reg.` modules; no faithful registration for this existential-function statement is delivered.
+and its designated `result`. Information-escape registration is paused under
+CLAUDE.md §3.9 「信息逃逸登记暂缓」; no `Reg` source or `declared_validated`
+record is part of this delivery.
 
 ### What the settlement shows
 
