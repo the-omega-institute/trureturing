@@ -100,17 +100,14 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
     unfold coord at this
     have hd : (d.factorial : ℚ) ≠ 0 := by positivity
     exact mul_left_cancel₀ hd this
-
   have coord_smul : ∀ (a : ℚ) (Ψ : ℚ[X] →ₗ[ℚ] ℚ[X]) (d s : ℕ),
         coord (a • Ψ) d s = a * coord Ψ d s := by
     intro a Ψ d s
     simp [coord]; ring
-
   have coord_sum : ∀ (t : Finset ℕ) (f : ℕ → ℚ[X] →ₗ[ℚ] ℚ[X]) (d s : ℕ),
         coord (∑ i ∈ t, f i) d s = ∑ i ∈ t, coord (f i) d s := by
     intro t f d s
     simp [coord, LinearMap.sum_apply, finsetSum_coeff, mul_sum]
-
   have coord_phi : ∀ m i d s : ℕ, coord (phi m i) d s = if s = i ∧ d = m - i then 1 else 0 := by
     intro m i d s
     simp only [coord, phi, LinearMap.smulRight_apply, lcoeff_apply, coeff_X_pow]
@@ -121,7 +118,6 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
       · subst hd; simp [Nat.factorial_ne_zero]
       · simp [hd]
     · simp [hs, Ne.symm hs]
-
   have rho_apply_X_pow : ∀ (k : ℕ) (Ψ : ℚ[X] →ₗ[ℚ] ℚ[X]) (s : ℕ),
         rho k Ψ (X ^ s) = (1 / (k.factorial : ℚ)) • (X ^ k * Ψ (X ^ s)) -
           (1 / ((k + 1).factorial : ℚ)) • (X ^ (k + 1) * derivative (Ψ (X ^ s))) -
@@ -138,11 +134,10 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
     simp only [rho, LinearMap.sub_apply, LinearMap.comp_apply, LinearMap.smul_apply,
       LinearMap.mulLeft_apply, hpow, map_smul]
     rw [hX, smul_smul]
-
   have coord_rho : ∀ (k : ℕ) (Ψ : ℚ[X] →ₗ[ℚ] ℚ[X]), coord (rho k Ψ) = R k (coord Ψ) := by
     intro k Ψ
     funext d s
-    show coord (rho k Ψ) d s =
+    change coord (rho k Ψ) d s =
       (if k ≤ d then ((d.choose k : ℚ) - d.choose (k + 1)) * coord Ψ (d - k) s else 0) -
         (s.choose (k + 1) : ℚ) * coord Ψ d (s - k)
     rw [coord, rho_apply_X_pow]
@@ -177,7 +172,6 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
         linear_combination a * e1' - b * e3
     · simp only [hkd, if_false, show ¬ (k + 1 ≤ d) by omega]
       linear_combination (-b) * e3
-
   have coord_iterate : ∀ (t : ℕ) (Ψ : ℚ[X] →ₗ[ℚ] ℚ[X]),
       coord ((rho 1)^[t] Ψ) = (R 1)^[t] (coord Ψ) := by
     intro t Ψ
@@ -274,7 +268,6 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
             · omega
           · rw [if_neg (by omega), if_neg (by omega)]; ring
         · rw [if_neg (by omega), if_neg (by omega)]; ring
-
   have coord_koszul : ∀ m d s : ℕ, coord (koszul m) d s =
         if 1 ≤ s ∧ s ≤ m ∧ d + s = m then (-1 : ℚ) ^ (m - s) else 0 := by
     intro m d s
@@ -287,13 +280,11 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
     · rw [if_neg h]
       apply Finset.sum_eq_zero
       intro i hi; rw [Finset.mem_Icc] at hi; rw [if_neg]; omega
-
   have coord_koszul_one : coord (koszul 1) = δ 0 1 := by
     funext d s; rw [coord_koszul, δ]
     by_cases h : d = 0 ∧ s = 1
     · obtain ⟨rfl, rfl⟩ := h; simp
     · rw [if_neg h, if_neg]; omega
-
   have R_δ01 : ∀ i : ℕ, 1 ≤ i → R i (δ 0 1) = δ i 1 - δ 0 (i + 1) := by
     intro i hi
     funext d s
@@ -318,7 +309,6 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
           · rw [if_pos a, if_neg (show ¬ (d - i = 0 ∧ s = 1) by omega)]; simp
           · rw [if_neg a]
         rw [e1]; simp
-
   have G_eq : ∀ i d s : ℕ, 1 ≤ i → i ≤ n →
         ((R 1)^[n - i] (δ i 1) - (R 1)^[n - i] (δ 0 (i + 1))) d s =
           if 1 ≤ s ∧ d + s = n + 1 then g n i d else 0 := by
@@ -334,7 +324,6 @@ private theorem identity_iff_rows (n : ℕ) (c : ℕ → ℚ) :
         · rw [if_pos ⟨Nat.zero_le _, by omega, by omega⟩, Nat.sub_zero]
         · rw [if_neg (by omega), Nat.choose_eq_zero_of_lt (by omega)]; simp
     · rw [if_neg h, if_neg (by omega), if_neg (by omega)]; simp
-
   have hcoord : ∀ d s, coord (∑ i ∈ Icc 1 n, c i • (rho 1)^[n - i] (rho i (koszul 1))) d s =
       if 1 ≤ s ∧ d + s = n + 1 then ∑ i ∈ Icc 1 n, c i * g n i d else 0 := by
     intro d s
@@ -491,7 +480,6 @@ private theorem sums :
       Int.cast_natCast, zero_add, smul_eq_mul, mul_one] at h3
     rw [show (if M ≤ b then (a.choose (b - M) : ℚ) else 0) =
       ((if M ≤ b then (a.choose (b - M) : ℤ) else 0 : ℤ) : ℚ) by split_ifs <;> simp, ← h3]
-
   have sum_Icc_one : ∀ (n M : ℕ), M ≤ n → ∀ g : ℕ → ℚ, (∀ i, M < i → g i = 0) →
         ∑ i ∈ Icc 1 n, g i = ∑ i ∈ range (M + 1), g i - g 0 := by
     intro n M hM g hg
@@ -504,7 +492,6 @@ private theorem sums :
     rw [← h1, Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot (by omega),
       Finset.Ico_add_one_right_eq_Icc]
     ring
-
   refine ⟨fun N => ?_, fun N r hr => ?_, fun N D hD => ?_⟩
   · rw [← Finset.Ico_add_one_right_eq_Icc, Finset.sum_Ico_eq_sum_range,
       show N + 3 + 1 - 2 = N + 1 + 1 by omega]
@@ -546,7 +533,6 @@ private theorem sums :
     rw [e1, e2, Γ, show N + 3 - 2 = N + 1 by omega, show N + 3 - 1 = N + 2 by omega]
     push_cast
     ring
-
   · set M := N + 3 - r with hMdef
     set κ : ℚ := ((N + 4 - r).factorial : ℚ) * N.factorial / (2 ^ (M - 1) * r.factorial)
     have key : ∀ i ∈ Icc 1 (N + 3),
@@ -580,7 +566,6 @@ private theorem sums :
     push_cast
     field_simp
     ring
-
   · rw [← Finset.Ico_add_one_right_eq_Icc, Finset.sum_Ico_eq_sum_range,
       show D + 3 + 1 - 3 = D + 1 by omega]
     set κ : ℚ := ((D + 3).factorial : ℚ) * (N + 1).factorial / (2 ^ (D + 2) * (N - D).factorial)
@@ -643,7 +628,6 @@ private theorem main_large (N : ℕ) :
     intro h
     have : ((u : ℚ) + 1) * u = 0 := by linarith
     rcases mul_eq_zero.mp this with h' | h' <;> linarith
-
   have Bp_one : ∀ m : ℕ, 1 ≤ m →
         Bp 1 m = (-1) ^ (m - 1) * ((m - 1).factorial : ℚ) * m.factorial / 2 ^ (m - 1) := by
     intro m hm
@@ -651,21 +635,18 @@ private theorem main_large (N : ℕ) :
     simp only [Nat.sub_self, Nat.factorial_zero, Nat.factorial_one, mul_one, Nat.cast_mul,
       Nat.cast_one]
     ring
-
   have P_pos : ∀ n i : ℕ, 0 < P n i := by
     intro n i
     unfold P
     have h1 : (0 : ℚ) < (n + i - 2).factorial := by exact_mod_cast Nat.factorial_pos _
     have h2 : (0 : ℚ) < (n - i).factorial := by exact_mod_cast Nat.factorial_pos _
     exact div_pos h1 (mul_pos h2 (by positivity))
-
   have Γ_pos : ∀ n : ℕ, 0 < Γ n := by
     intro n
     unfold Γ
     have h1 : (0 : ℚ) < (n - 2).factorial := by exact_mod_cast Nat.factorial_pos _
     have h2 : (0 : ℚ) < (n + 1).factorial := by exact_mod_cast Nat.factorial_pos _
     exact div_pos (mul_pos h1 h2) (by positivity)
-
   have formula_eq : ∀ N i : ℕ, 1 ≤ i → i ≤ N + 3 →
       formula (N + 3) i = (-1) ^ (N + 3) * P (N + 3) i / Γ (N + 3) := by
     intro N i hi hin
@@ -683,7 +664,6 @@ private theorem main_large (N : ℕ) :
     · intro i hi
       rw [Finset.mem_Icc] at hi
       rw [if_pos hi.2]
-
   have row_split : ∀ (n d : ℕ), d ≤ n → ∀ x : ℕ → ℚ,
         ∑ i ∈ Icc 1 n, x i * g n i d =
           ∑ i ∈ Icc 1 d, x i * (((n - i).choose (d - i) : ℚ) * Ap i d * Bp 1 (n + 1 - d)) -
@@ -694,7 +674,6 @@ private theorem main_large (N : ℕ) :
     intro i _
     simp only [g]
     split_ifs <;> ring
-
   have row_high : ∀ (n d : ℕ), 3 ≤ d → d ≤ n → ∀ x : ℕ → ℚ,
         ∑ i ∈ Icc 1 n, x i * g n i d =
           ∑ i ∈ Icc 3 d, x i * (((n - i).choose (d - i) : ℚ) * Ap i d * Bp 1 (n + 1 - d)) := by
@@ -711,7 +690,6 @@ private theorem main_large (N : ℕ) :
       simp only [Finset.mem_Icc] at hi
       simp only [g, if_pos hi.2, Ap_zero (show 0 ≤ 2 by omega) hd]
       ring
-
   have hold : ∀ d ≤ N + 3, ∑ i ∈ Icc 1 (N + 3), formula (N + 3) i * g (N + 3) i d = (-1) ^ d := by
     intro d hd
     have hP1 : P (N + 3) 1 = 1 := by
@@ -772,7 +750,6 @@ private theorem main_large (N : ℕ) :
       _ = (-1) ^ d := by
           rw [hS]; field_simp
           rw [← pow_mul, mul_comm, pow_mul, neg_one_sq, one_pow]
-
   have uniq : ∀ e : ℕ → ℚ, (∀ d ≤ N + 3, ∑ i ∈ Icc 1 (N + 3), e i * g (N + 3) i d = 0) →
         ∀ i ∈ Icc 1 (N + 3), e i = 0 := by
     intro e h
@@ -838,7 +815,6 @@ private theorem main_large (N : ℕ) :
     · exact he1
     · exact he2
     · exact hhigh i hi3 hi.2
-
   refine ⟨fun c => ⟨fun hrows => ?_, fun hc d hd => ?_⟩, fun i hi => ?_⟩
   · have := uniq (fun i => c i - formula (N + 3) i) (fun d hd => by
       simp only [sub_mul, Finset.sum_sub_distrib, hrows d hd, hold d hd, sub_self])
@@ -897,7 +873,6 @@ theorem result : claim := by
         · rw [g10, g20]; norm_num
         · rw [g11, g21]; norm_num
         · rw [g12, g22]; norm_num
-
     refine ⟨fun c => (identity_iff_rows 2 c).trans (case_two c), fun i hi => ?_⟩
     rw [Finset.mem_Icc] at hi
     rcases (show i = 1 ∨ i = 2 by omega) with rfl | rfl <;> norm_num [formula]
