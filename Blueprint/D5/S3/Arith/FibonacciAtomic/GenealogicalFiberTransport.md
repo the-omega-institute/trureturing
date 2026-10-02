@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.fiberCou
 
 *Commentary.*
 
-N(a,b)=catalan(a+b-1) choose(a+b,a). Natural subtraction is truncated at zero.
+N(a,b)=catalan(a+b-1) choose(a+b,a). Natural subtraction is truncated at zero. This expression is interpreted as the fiber cardinality N(a,b) only when a+b>=1. At (0,0), Lean's truncated natural subtraction gives 1 although the actual fiber is empty; this is a total-definition convention. Every conclusion of the theorem concerning a general fiber assumes 1<=a+b.
 
 **Definition 1.6 (Labels on a shape).**
 

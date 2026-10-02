@@ -19,7 +19,10 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
             Def("substitution", "Native substitution", "The magma homomorphism sends alpha to beta and beta to the ordered pair (beta,alpha)."),
             Def("composition", "Actual leaf composition", "Alpha has composition (1,0), beta has composition (0,1), and pairing adds compositions."),
             Def("Fiber", "Composition fiber", "Fiber(v) consists of actual source trees whose composition equals v."),
-            Def("fiberCount", "Catalan and binomial expression", "N(a,b)=catalan(a+b-1) choose(a+b,a). Natural subtraction is truncated at zero."),
+            Def("fiberCount", "Catalan and binomial expression", "N(a,b)=catalan(a+b-1) choose(a+b,a). Natural subtraction is truncated at zero. "
+                + "This expression is interpreted as the fiber cardinality N(a,b) only when a+b>=1. At (0,0), "
+                + "Lean's truncated natural subtraction gives 1 although the actual fiber is empty; this is a total-definition convention. "
+                + "Every conclusion of the theorem concerning a general fiber assumes 1<=a+b."),
             Def("TreeLabels", "Labels on a shape", "A leaf carries one Boolean label, and an internal node carries the labels of its left and right subshapes."),
             Def("assemble", "Assembling a source", "Assembling a shape with its leaf labels produces the actual ordered source tree."),
             Def("decompose", "Decomposing a source", "Decomposition retains the ordered shape and every leaf label."),
