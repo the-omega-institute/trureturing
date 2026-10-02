@@ -47,6 +47,145 @@ def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k + 1))) : Prop 
   ∃ j, 0 < j ∧ j < k + 1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
     (t = fork l r ∨ t = fork r l)
 
+private theorem classify (k : ℕ) (hk : 2 ≤ k) (A : Finset (Fin (k + 1))) (hA : A.Nonempty) (hproper : A ≠ Finset.univ)
+    (hwidth : capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4) :
+    SmallBlock A := by
+  classical
+  let z : Fin (k + 1) := ⟨0, by omega⟩
+  have mem_interval (a b : ℕ) (i : Fin (k + 1)) :
+      i ∈ interval k a b ↔ a ≤ i.val ∧ i.val < b := by simp [interval]
+  rw [(FirstRejectionCutCapacity.result k A).2.2.2.2.2.2.2.2.1] at hwidth
+  have hd : d A ≤ 2 := by
+    apply (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp
+    norm_num
+    omega
+  by_cases heps : Fin.last k ∈ A ∨ (internals A).Nonempty
+  · have hd1 : d A ≤ 1 := by
+      have hp : (2:ℕ)^d A ≤ 2 := by
+        have h := hwidth
+        simp only [epsilon, if_pos heps] at h
+        interval_cases hda : d A <;> norm_num [hda] at *
+      simpa using (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp hp
+    have unique : ∀ a ∈ crossings A, ∀ b ∈ crossings A, a = b :=
+      Finset.card_le_one.mp hd1
+    have crosses : (crossings A).Nonempty := by
+      by_contra hn
+      have no : ∀ i : Fin k, ¬ Cross A i := by
+        intro i hi
+        exact hn ⟨i,by simp [crossings,hi]⟩
+      have constant (j : ℕ) (hj : j ≤ k) :
+          (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ z ∈ A := by
+        induction j with
+        | zero => rfl
+        | succ j ih =>
+          have h := no ⟨j,by omega⟩
+          have prev := ih (by omega)
+          simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at h
+          tauto
+      obtain ⟨i,hi⟩ := hA
+      have hz : z ∈ A := (constant i.val (by omega)).mp hi
+      apply hproper
+      apply Finset.eq_univ_of_forall
+      intro j
+      exact (constant j.val (by omega)).mpr hz
+    obtain ⟨edge, hedge⟩ := crosses
+    have boundary : Cross A edge := by simpa [crossings] using hedge
+    have pattern (j : ℕ) (hj : j ≤ k) :
+        (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ (j ≤ edge.val ↔ z ∈ A) := by
+      induction j with
+      | zero => simp [z]
+      | succ j ih =>
+        have prev := ih (by omega)
+        by_cases je : j = edge.val
+        · have ee : (⟨j,by omega⟩ : Fin k) = edge := Fin.ext je
+          have hc := boundary
+          rw [← ee] at hc
+          simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at hc
+          have hjle : j ≤ edge.val := by omega
+          have hjnle : ¬ j + 1 ≤ edge.val := by omega
+          simp only [hjle,true_iff] at prev
+          simp only [hjnle,false_iff]
+          tauto
+        · have nc : ¬ Cross A ⟨j,by omega⟩ := by
+            intro hc
+            have eq := unique (⟨j,by omega⟩ : Fin k) (by simp [crossings,hc]) edge hedge
+            exact je (congrArg Fin.val eq)
+          simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at nc
+          have step : (j + 1 ≤ edge.val) = (j ≤ edge.val) := by
+            apply propext; omega
+          rw [step]
+          tauto
+    by_cases hz : z ∈ A
+    · left
+      refine ⟨edge.val + 1,by omega,by omega,?_⟩
+      ext i
+      rw [mem_interval]
+      have h : i ∈ A ↔ i.val ≤ edge.val := by
+        simpa only [hz,iff_true] using pattern i.val (by omega)
+      rw [h]
+      omega
+    · right; left
+      refine ⟨edge.val + 1,by omega,by omega,?_⟩
+      ext i
+      rw [mem_interval]
+      have h : i ∈ A ↔ ¬ i.val ≤ edge.val := by
+        simpa only [hz,iff_false] using pattern i.val (by omega)
+      rw [h]
+      omega
+  · have hlast : Fin.last k ∉ A := fun h => heps (Or.inl h)
+    have nointernal : ∀ i : Fin k, ¬ Internal A i := by
+      intro i hi
+      exact heps (Or.inr ⟨i,by simp [internals,hi]⟩)
+    have below (i : Fin (k + 1)) (hi : i ∈ A) : i.val < k := by
+      by_contra hn
+      have ie : i = Fin.last k := Fin.ext (by simp; omega)
+      exact hlast (ie ▸ hi)
+    have single : ∀ a ∈ A, ∀ b ∈ A, a = b := by
+      intro a ha b hb
+      by_contra hab
+      wlog hlt : a.val < b.val generalizing a b
+      · exact this b hb a ha (Ne.symm hab) (by
+          have hn : a.val ≠ b.val := fun h => hab (Fin.ext h)
+          omega)
+      have hak := below a ha
+      have hbk := below b hb
+      let x : Fin k := ⟨a.val,hak⟩
+      let y : Fin k := ⟨b.val - 1,by omega⟩
+      let q : Fin k := ⟨b.val,hbk⟩
+      have ax : left x = a := Fin.ext rfl
+      have bq : left q = b := Fin.ext rfl
+      have by' : right y = b := Fin.ext (by dsimp [y,right]; omega)
+      have nx : right x ∉ A := fun h => nointernal x ⟨ax ▸ ha,h⟩
+      have nq : right q ∉ A := fun h => nointernal q ⟨bq ▸ hb,h⟩
+      have ny : left y ∉ A := fun h => nointernal y ⟨h,by' ▸ hb⟩
+      have xcross : x ∈ crossings A := by simp [crossings,Cross,ax,ha,nx]
+      have ycross : y ∈ crossings A := by simp [crossings,Cross,by',hb,ny]
+      have qcross : q ∈ crossings A := by simp [crossings,Cross,bq,hb,nq]
+      have gap : a.val + 1 < b.val := by
+        by_contra hn
+        have xe : right x = b := Fin.ext (by dsimp [x,right]; omega)
+        exact nx (xe ▸ hb)
+      have xne : x ≠ y := by intro h; have := congrArg Fin.val h; dsimp [x,y] at this; omega
+      have xq : x ≠ q := by intro h; have := congrArg Fin.val h; dsimp [x,q] at this; omega
+      have yq : y ≠ q := by intro h; have := congrArg Fin.val h; dsimp [y,q] at this; omega
+      have ht := Finset.two_lt_card_iff.mpr
+        ⟨x,y,q,xcross,ycross,qcross,xne,xq,yq⟩
+      change 2 < d A at ht
+      omega
+    obtain ⟨i,hi⟩ := hA
+    have eq : A = {i} := Finset.eq_singleton_iff_unique_mem.mpr ⟨hi,fun j hj => single j hj i hi⟩
+    by_cases hz : i.val = 0
+    · left
+      refine ⟨1,by omega,by omega,?_⟩
+      rw [eq]
+      ext j
+      rw [mem_interval,Finset.mem_singleton]
+      constructor
+      · intro h; subst j; omega
+      · intro h; apply Fin.ext; omega
+    · right; right
+      exact ⟨i,by omega,below i hi,eq⟩
+
 set_option maxHeartbeats 2000000 in
 -- Capacity classification and the two spine inductions are elaborated in one proof.
 /-- Arbitrary leaf - labelled full binary trees whose proper blocks are small
@@ -79,140 +218,6 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       | none =>
         obtain ⟨i,hi⟩ := hl hu.1
         exact ⟨i, by simp [leaves, hi]⟩
-  have classify (A : Finset (Fin (k + 1))) (hA : A.Nonempty) (hproper : A ≠ Finset.univ)
-      (hwidth : capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4) :
-      SmallBlock A := by
-    rw [(FirstRejectionCutCapacity.result k A).2.2.2.2.2.2.2.2.1] at hwidth
-    have hd : d A ≤ 2 := by
-      apply (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp
-      norm_num
-      omega
-    by_cases heps : Fin.last k ∈ A ∨ (internals A).Nonempty
-    · have hd1 : d A ≤ 1 := by
-        have hp : (2:ℕ)^d A ≤ 2 := by
-          have h := hwidth
-          simp only [epsilon, if_pos heps] at h
-          interval_cases hda : d A <;> norm_num [hda] at *
-        simpa using (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp hp
-      have unique : ∀ a ∈ crossings A, ∀ b ∈ crossings A, a = b :=
-        Finset.card_le_one.mp hd1
-      have crosses : (crossings A).Nonempty := by
-        by_contra hn
-        have no : ∀ i : Fin k, ¬ Cross A i := by
-          intro i hi
-          exact hn ⟨i,by simp [crossings,hi]⟩
-        have constant (j : ℕ) (hj : j ≤ k) :
-            (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ z ∈ A := by
-          induction j with
-          | zero => rfl
-          | succ j ih =>
-            have h := no ⟨j,by omega⟩
-            have prev := ih (by omega)
-            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at h
-            tauto
-        obtain ⟨i,hi⟩ := hA
-        have hz : z ∈ A := (constant i.val (by omega)).mp hi
-        apply hproper
-        apply Finset.eq_univ_of_forall
-        intro j
-        exact (constant j.val (by omega)).mpr hz
-      obtain ⟨edge, hedge⟩ := crosses
-      have boundary : Cross A edge := by simpa [crossings] using hedge
-      have pattern (j : ℕ) (hj : j ≤ k) :
-          (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ (j ≤ edge.val ↔ z ∈ A) := by
-        induction j with
-        | zero => simp [z]
-        | succ j ih =>
-          have prev := ih (by omega)
-          by_cases je : j = edge.val
-          · have ee : (⟨j,by omega⟩ : Fin k) = edge := Fin.ext je
-            have hc := boundary
-            rw [← ee] at hc
-            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at hc
-            have hjle : j ≤ edge.val := by omega
-            have hjnle : ¬ j + 1 ≤ edge.val := by omega
-            simp only [hjle,true_iff] at prev
-            simp only [hjnle,false_iff]
-            tauto
-          · have nc : ¬ Cross A ⟨j,by omega⟩ := by
-              intro hc
-              have eq := unique (⟨j,by omega⟩ : Fin k) (by simp [crossings,hc]) edge hedge
-              exact je (congrArg Fin.val eq)
-            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at nc
-            have step : (j + 1 ≤ edge.val) = (j ≤ edge.val) := by
-              apply propext; omega
-            rw [step]
-            tauto
-      by_cases hz : z ∈ A
-      · left
-        refine ⟨edge.val + 1,by omega,by omega,?_⟩
-        ext i
-        rw [mem_interval]
-        have h : i ∈ A ↔ i.val ≤ edge.val := by
-          simpa only [hz,iff_true] using pattern i.val (by omega)
-        rw [h]
-        omega
-      · right; left
-        refine ⟨edge.val + 1,by omega,by omega,?_⟩
-        ext i
-        rw [mem_interval]
-        have h : i ∈ A ↔ ¬ i.val ≤ edge.val := by
-          simpa only [hz,iff_false] using pattern i.val (by omega)
-        rw [h]
-        omega
-    · have hlast : Fin.last k ∉ A := fun h => heps (Or.inl h)
-      have nointernal : ∀ i : Fin k, ¬ Internal A i := by
-        intro i hi
-        exact heps (Or.inr ⟨i,by simp [internals,hi]⟩)
-      have below (i : Fin (k + 1)) (hi : i ∈ A) : i.val < k := by
-        by_contra hn
-        have ie : i = Fin.last k := Fin.ext (by simp; omega)
-        exact hlast (ie ▸ hi)
-      have single : ∀ a ∈ A, ∀ b ∈ A, a = b := by
-        intro a ha b hb
-        by_contra hab
-        wlog hlt : a.val < b.val generalizing a b
-        · exact this b hb a ha (Ne.symm hab) (by
-            have hn : a.val ≠ b.val := fun h => hab (Fin.ext h)
-            omega)
-        have hak := below a ha
-        have hbk := below b hb
-        let x : Fin k := ⟨a.val,hak⟩
-        let y : Fin k := ⟨b.val - 1,by omega⟩
-        let q : Fin k := ⟨b.val,hbk⟩
-        have ax : left x = a := Fin.ext rfl
-        have bq : left q = b := Fin.ext rfl
-        have by' : right y = b := Fin.ext (by dsimp [y,right]; omega)
-        have nx : right x ∉ A := fun h => nointernal x ⟨ax ▸ ha,h⟩
-        have nq : right q ∉ A := fun h => nointernal q ⟨bq ▸ hb,h⟩
-        have ny : left y ∉ A := fun h => nointernal y ⟨h,by' ▸ hb⟩
-        have xcross : x ∈ crossings A := by simp [crossings,Cross,ax,ha,nx]
-        have ycross : y ∈ crossings A := by simp [crossings,Cross,by',hb,ny]
-        have qcross : q ∈ crossings A := by simp [crossings,Cross,bq,hb,nq]
-        have gap : a.val + 1 < b.val := by
-          by_contra hn
-          have xe : right x = b := Fin.ext (by dsimp [x,right]; omega)
-          exact nx (xe ▸ hb)
-        have xne : x ≠ y := by intro h; have := congrArg Fin.val h; dsimp [x,y] at this; omega
-        have xq : x ≠ q := by intro h; have := congrArg Fin.val h; dsimp [x,q] at this; omega
-        have yq : y ≠ q := by intro h; have := congrArg Fin.val h; dsimp [y,q] at this; omega
-        have ht := Finset.two_lt_card_iff.mpr
-          ⟨x,y,q,xcross,ycross,qcross,xne,xq,yq⟩
-        change 2 < d A at ht
-        omega
-      obtain ⟨i,hi⟩ := hA
-      have eq : A = {i} := Finset.eq_singleton_iff_unique_mem.mpr ⟨hi,fun j hj => single j hj i hi⟩
-      by_cases hz : i.val = 0
-      · left
-        refine ⟨1,by omega,by omega,?_⟩
-        rw [eq]
-        ext j
-        rw [mem_interval,Finset.mem_singleton]
-        constructor
-        · intro h; subst j; omega
-        · intro h; apply Fin.ext; omega
-      · right; right
-        exact ⟨i,by omega,below i hi,eq⟩
   have proper_subtree (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
       (s : TreeMessageRealization.Tree (Fin (k + 1))) (hs : s ∈ subtrees u)
       (hne : s ≠ u) : leaves s ≠ leaves u := by
@@ -236,7 +241,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
           exact Finset.disjoint_left.mp hu.2.2 hi ((subtree_structure r hu.2.1 s hs).2 hm)
   have hsmall : ∀ s ∈ subtrees t, s ≠ t → SmallBlock (leaves s) := by
     intro s hs hne
-    apply classify _ (nonempty s (subtree_structure t ht s hs).1)
+    apply classify k hk _ (nonempty s (subtree_structure t ht s hs).1)
     · rw [← hall]
       exact proper_subtree t ht s hs hne
     · exact hcap s hs hne
@@ -606,5 +611,41 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
   omega
 
 
+
+set_option maxHeartbeats 2000000 in
+/-- Small proper coordinate blocks are exactly the endpoint intervals and internal singletons. -/
+theorem result (k : ℕ) (hk : 2 ≤ k) :
+    (∀ A : Finset (Fin (k + 1)), A.Nonempty → A ≠ Finset.univ →
+      (capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4 ↔ SmallBlock A)) ∧
+    (∀ i : Fin (k + 1), 0 < i.val → i.val < k →
+      capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4) := by
+  classical
+  have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
+      capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4 := by
+    have he : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val + 1) := by
+      ext j
+      simp only [Finset.mem_singleton, interval, Finset.mem_filter, Finset.mem_univ, true_and, Fin.ext_iff]
+      omega
+    rw [he, (FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
+    obtain ⟨hd,hj,hc,ht,hdel⟩ := FirstRejectionCutCapacity.interval_data k i.val (i.val + 1) (by omega) (by omega)
+    have hint : internals (interval k i.val (i.val + 1)) = ∅ := Finset.card_eq_zero.mp (by omega)
+    have hn : i.val + 1 ≠ k + 1 := by omega
+    norm_num [hd, epsilon, ht, hint, hn, show i.val ≠ 0 by omega, show i.val ≠ k by omega]
+  have sufficient (A : Finset (Fin (k + 1))) (hA : SmallBlock A) :
+      capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4 := by
+    rcases hA with ⟨j,hj,hjn,rfl⟩ | ⟨j,hj,hjn,rfl⟩ | ⟨i,hi,hik,rfl⟩
+    · rw [(FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
+      have hd := (FirstRejectionCutCapacity.interval_data k 0 j hj (by omega)).1
+      have hn : j ≠ k + 1 := by omega
+      norm_num [hd, hn]
+      unfold epsilon
+      split_ifs <;> omega
+    · rw [(FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
+      have hd := (FirstRejectionCutCapacity.interval_data k j (k + 1) hjn le_rfl).1
+      norm_num [hd, show j ≠ 0 by omega]
+      unfold epsilon
+      split_ifs <;> omega
+    · exact le_of_eq (singleton_capacity i hi hik)
+  exact ⟨fun A hA hp => ⟨classify k hk A hA hp, sufficient A⟩, singleton_capacity⟩
 
 end D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity
