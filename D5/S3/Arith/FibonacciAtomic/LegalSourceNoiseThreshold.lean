@@ -12,7 +12,10 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Field.GeomSum
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.Normed.Group.Constructions
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Tauto
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -85,16 +88,16 @@ private theorem coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
   induction p with
   | nil =>
       intro s E y k _ _ hz ho r
-      exact ⟨hz r, by simpa [noisyRun] using ho r⟩
+      exact ⟨hz r, by simpa [run, noisyRun] using ho r⟩
   | cons e p ih =>
       rcases e with ⟨a, ξ⟩
       intro s E y k hlegal hnoise hz ho
       have guard : (s && first a) = false := by
-        cases s <;> cases a <;> simp_all [flatten, bits, first, legal]
+        cases s <;> cases a <;> simp [flatten, bits, first, legal] at hlegal ⊢
       have tailLegal : legal (last a) (flatten (p.map Prod.fst)) := by
-        cases s <;> cases a <;> simp_all [flatten, bits, last, legal]
+        cases s <;> cases a <;> simp [flatten, bits, last, legal] at hlegal ⊢ <;> tauto
       have readOne : canonical (some (s, E)) (readIndex a) = 1 := by
-        cases s <;> cases a <;> simp_all [canonical, readIndex, first]
+        cases s <;> cases a <;> simp [canonical, readIndex, first] at guard ⊢
       have sourceLower := ho (readIndex a) readOne
       have errorBound : ∀ r, |ξ r| ≤ ν := by
         intro r
