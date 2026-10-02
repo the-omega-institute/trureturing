@@ -34,6 +34,20 @@ internal sealed class FirstRejectionCutCapacityDocument : IScribeDocumentDefinit
                 + "zero at r=n and one otherwise. singletonSuffix(l,r) is one exactly when "
                 + "0<l, r=n, and r-l=1, and is zero otherwise. Subtractions below are natural "
                 + "subtractions.")),
+            Describe.Lean(DescribeId.Create("diagnostic-prefix-order"),
+                DeclarationHandle.Create(Prefix + "task_le_iff"), H("Diagnostic Prefix Order"),
+                StatementSource.FromAuthor(Seq(Forall, Sp, V("k"), Colon, Sp, Call("Nat"), Comma, Sp,
+                    Forall, Sp, V("w"), Colon, Sp, Call("Word", V("k")), Comma, Sp,
+                    Forall, Sp, V("j"), Colon, Sp, Call("Fin", Add(V("k"), D(1))), Comma, Sp,
+                    Call("task", V("w")), Sp, Le, Sp, Call("finiteLabel", V("j")), Sp, Iff, Sp,
+                    Exists, Sp, V("i"), Colon, Sp, Call("Fin", Add(V("k"), D(1))), Comma, Sp,
+                    Call("bad", V("w"), V("i")), Sp, Land, Sp, V("i"), Sp, Le, Sp, V("j"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural k, raw word w and position j, the first "
+                    + "diagnostic is at most the finite label j exactly when a bad seam or terminal "
+                    + "failure occurs at a position i no later than j. Acceptance exceeds every "
+                    + "finite label. This characterizes chronological diagnostic prefixes."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("interval-cut-data"),
                 DeclarationHandle.Create(Prefix + "interval_data"), H("Interval Seams and Terminal Ownership"),
                 StatementSource.FromAuthor(IntervalDataFormula()), AssessedProvenance.FromRepo(),

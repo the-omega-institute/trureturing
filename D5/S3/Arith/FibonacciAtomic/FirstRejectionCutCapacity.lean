@@ -59,7 +59,6 @@ noncomputable def representative {k : ℕ} {A : Finset (Fin (k + 1))} (P : Profi
       (if h : r.val.val < k then desired P ⟨r.val.val, h⟩ else false)
 noncomputable def merge {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) : Word k :=
   (Equiv.piEquivPiSubtypeProd (fun r => r ∈ A) (fun _ => Window)).symm (a,b)
-
 noncomputable def crossings {k : ℕ} (A : Finset (Fin (k + 1))) : Finset (Fin k) := by
   classical
   exact Finset.univ.filter (Cross A)
@@ -79,7 +78,14 @@ noncomputable def interval (k l r : ℕ) : Finset (Fin (k + 1)) := by
   exact Finset.univ.filter (fun i => l ≤ i.val ∧ i.val < r)
 def x (k : ℕ) : Word k := fun r => if r.val = 0 then .high else if r.val = 1 then .low else .middle
 def y (k : ℕ) : Word k := fun r => if r = Fin.last k then .zero else .middle
-
+/-- A diagnostic is at most j exactly when some rejection occurs at or before j. -/
+theorem task_le_iff {k : ℕ} (w : Word k) (j : Fin (k + 1)) :
+    task w ≤ (j : Label k) ↔ ∃ i, bad w i ∧ i ≤ j := by
+  classical
+  simp only [task, Finset.inf_le_iff (WithTop.coe_lt_top j), Finset.mem_univ, true_and]
+  apply exists_congr
+  intro i
+  by_cases h : bad w i <;> simp [h]
 /-- A singleton coordinate is its unit interval. -/
 theorem singleton_interval (k : ℕ) (i : Fin (k + 1)) :
     ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
@@ -232,11 +238,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
       task (x k) = ((0 : Fin (k + 1)) : Label k) ∧ task (y k) = (Fin.last k : Label k) ∧
       ¬ ∃ post : Bool → Label k, ∀ w : Word k, post (boolean w) = task w) := by
   classical
-  have spec (w : Word k) (j : Fin (k + 1)) : task w ≤ (j : Label k) ↔ ∃ i, bad w i ∧ i ≤ j := by
-    simp only [task, Finset.inf_le_iff (WithTop.coe_lt_top j), Finset.mem_univ, true_and]
-    apply exists_congr
-    intro i
-    by_cases h : bad w i <;> simp [h]
+  have spec := task_le_iff (k := k)
   have hit (w : Word k) (j : Fin (k + 1)) (h : task w = (j : Label k)) : bad w j := by
     obtain ⟨i, hi, hij⟩ := (spec w j).mp (le_of_eq h)
     have hji : j ≤ i := by
@@ -450,7 +452,6 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
       · exact Or.inr (Or.inl ((spec _ _).mpr ⟨r,h,hr⟩))
       · split_ifs at h with hlt
         · exact Or.inr (Or.inr ⟨⟨r.val,hlt⟩,h.1,hr,h.2⟩)
-
     · rintro (h | h | ⟨i,hc,hij,hp,hq⟩)
       · obtain ⟨r,hb,hr⟩ := (spec _ _).mp h
         exact ⟨r,(event a b r).mpr (Or.inl hb),hr⟩
@@ -626,7 +627,6 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
         task (fun r => r ∈ A) a' ↔ code A a = code A a' := by
     rw [funext_iff]
     simpa only [response_apply] using fibers a a'
-
   have capacity_exact : D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
         task (fun r => r ∈ A) = Nat.card (Profile k A) := by
     let resp := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A)
