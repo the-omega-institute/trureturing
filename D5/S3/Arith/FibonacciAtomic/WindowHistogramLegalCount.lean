@@ -496,6 +496,10 @@ private theorem histogram_count (a b c r s : ℕ) :
     simp only [Factors, Nat.card_prod, cg]
     simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
+example (q : Option (Bool × Bool)) (w : List Window) :
+    run q w = w.foldl LiteralWindowEnd.step q := by
+  rfl
+
 /-- Unique neutral-position decomposition and a reversible canonical code
 that counts every histogram and retains exact terminal constraints and labels. -/
 theorem result :
