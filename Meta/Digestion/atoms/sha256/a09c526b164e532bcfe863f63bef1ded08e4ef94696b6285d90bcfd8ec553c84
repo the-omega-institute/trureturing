@@ -1,0 +1,16 @@
+**Proof.** The source formula $q(c(T_j))=F_{j+3}$ gives
+$$
+R_i(n,z)=F_{n+3}+F_{n+2}z_i,
+$$
+so the denominator is positive and $D_n$ is an exact inverse on the image. Each complementary pair has composition
+$$
+ c(T_n)+c(T_{n+1})=M^n(1,1)=(F_{n+1},F_{n+2}),
+$$
+independently of its orientation. Summing over slots gives the two aggregate formulas. Homomorphic substitution preserves slot order, so it advances $E_n$ to $E_{n+1}$ and commutes with all lawful swaps.
+
+For a transition $z\to z'$, use the single swap vector $a=z\oplus z'$. The probability of that swap is $K(z,z')$. Induction on history length gives
+$$
+\Pr(z_0,\ldots,z_N)=\nu(z_0)\prod_{j<N}K(z_j,z_{j+1}),
+$$
+so pushforward by any supplied readout preserves every finite joint law. The same induction with a legal-domain indicator and an adaptive kernel proves the action statement. The aggregate formula is independent of the history and inherits the Fibonacci recurrence. Finally, realizing the all-zero probe vector requires at least $k$ leaves of one atom and realizing the all-one vector at least $k$ leaves of the other atom; a fixed-composition carrier therefore has at least $2k$ leaves, attained by the displayed pairs. $\square$
+

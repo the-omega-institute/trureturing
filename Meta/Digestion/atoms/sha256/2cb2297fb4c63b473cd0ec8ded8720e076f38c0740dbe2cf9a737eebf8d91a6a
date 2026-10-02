@@ -1,0 +1,18 @@
+**Theorem 4.2 (Exact scale compatibility and finite-window blindness).** There is a unique stationary law $\nu$ on $X_\tau$, with letter vector
+$$
+\nu[\alpha]=\varphi^{-2},\qquad \nu[\beta]=\varphi^{-1}.
+$$
+Uniform spatial roots in $w(\rho^n t)$ converge in every fixed finite window to $\nu$, for every fixed nonempty $t$. The operator $R$ preserves stationarity, satisfies $R\nu=\nu$, and $R^n\mu\Rightarrow\nu$ for every stationary $\mu$ on $X_M$. For each $r$,
+$$
+\ker\Phi_r=\ker O_r.
+$$
+For every integer $r\ge2$ there exists an ergodic stationary law $\mu_r$ on $X_M$ such that
+$$
+O_r(R^n\mu_r)=O_r(\nu)\quad\text{for every }n\ge0,
+$$
+while
+$$
+ h(R^n\mu_r)=\varphi^{-n}h(\mu_r)>0=h(\nu).
+$$
+The quantifiers are $\forall r\,\exists\mu_r\,\forall n$, and do not assert one law works for every window length.
+
