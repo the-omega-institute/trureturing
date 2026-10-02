@@ -175,7 +175,7 @@ public static class ScribeScriptHost
 
             var text = File.ReadAllText(full);
             var tree = CSharpSyntaxTree.ParseText(text, ScriptParseOptions, path: path);
-            foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>())
+            foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
             {
                 foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))
                 {
@@ -286,12 +286,11 @@ public static class ScribeScriptHost
         }
 
         var contract = compilation.GetTypeByMetadataName(typeof(IScribeDocumentDefinition).FullName!)!;
-        var entryTree = trees.Single(tree => tree.FilePath == entry);
-        var model = compilation.GetSemanticModel(entryTree);
-        var entryTypes = entryTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>()
-            .Select(declaration => model.GetDeclaredSymbol(declaration))
+        var entryTypes = compilation.GetSymbolsWithName(static _ => true, SymbolFilter.Type)
             .OfType<INamedTypeSymbol>()
-            .Where(symbol => !symbol.IsAbstract && symbol.AllInterfaces.Contains(contract, SymbolEqualityComparer.Default))
+            .Where(symbol => !symbol.IsAbstract
+                && symbol.AllInterfaces.Contains(contract, SymbolEqualityComparer.Default)
+                && symbol.Locations.Any(location => string.Equals(location.SourceTree?.FilePath, entry, StringComparison.Ordinal)))
             .Select(MetadataName).Distinct(StringComparer.Ordinal).ToArray();
         if (entryTypes.Length != 1)
             return (null, null, MakeFailure(entry, entryTypes.Length == 0

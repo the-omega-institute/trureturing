@@ -24,6 +24,26 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void ExecutesOneRecordClassDefinition()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, """
+            internal sealed record class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal("D5/S0/Test/Probe", result.Definition!.Document.Header.Gid.Value);
+        Assert.Equal(path, result.Definition.SourcePath);
+    }
+
+    [Fact]
     public void InvalidPathHasANamedFailure()
     {
         using var root = new TemporaryRoot();
@@ -117,6 +137,28 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void ClassAndRecordClassDefinitionsAreRejectedBeforeCreate()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, """
+            internal sealed class First : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => throw new InvalidOperationException();
+            }
+            internal sealed record class Second : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => throw new InvalidOperationException();
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.Equal(ScribeScriptFailureCode.MultipleDefinitions, result.Failure?.Code);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
     public void FrameworkConditionalBannedSymbolIsRejected()
     {
         using var root = new TemporaryRoot();
@@ -202,6 +244,38 @@ public sealed class ScribeScriptHostTests
         var result = ScribeScriptHost.Execute(root.Path, path);
         if (declared) Assert.True(result.IsSuccess, result.Failure?.ToString());
         else Assert.Equal(ScribeScriptFailureCode.Compilation, result.Failure?.Code);
+    }
+
+    [Fact]
+    public void RecordClassSharedSourceDeclarationIsUsed()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
+        Write(root, shared, """
+            internal sealed class Shared : IScribeDocumentDefinition
+            {
+                internal const string Value = "shared content";
+                public DocumentDefinition Create() => throw new InvalidOperationException();
+            }
+            """);
+        Write(root, path, $$"""
+            [ScribeSharedSource("{{shared}}")]
+            internal sealed record class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text(Shared.Value)))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal(path, result.Definition!.SourcePath);
+        Assert.Equal(ScribeResourceCodec.Encode(DocumentDefinition.Create(
+            ScribeNode.Create("digest", DefinitionDsl.H("title"),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("shared content"))),
+                sourcePath: path), sourcePath: path)), ScribeResourceCodec.Encode(result.Definition));
     }
 
     [Fact]
