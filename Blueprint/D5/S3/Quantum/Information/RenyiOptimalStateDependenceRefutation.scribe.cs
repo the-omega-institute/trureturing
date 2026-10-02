@@ -34,7 +34,10 @@ internal sealed class RenyiOptimalStateDependenceRefutationDocument : IScribeDoc
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A qutrit refutes order independence", Disp(new Formula.Not(F.Id("claim"))),
                 "Use the real orthogonal overlap matrix with rows (sqrt(2)/2,sqrt(2)/2,0), (sqrt(2)/4,-sqrt(2)/4,sqrt(3)/2), and (sqrt(2)sqrt(3)/4,-sqrt(2)sqrt(3)/4,-1/2). The X basis projectors are OrthogonalRecordEntropy.pointerState specialized to Fin(3). The Y laws of these projectors are p0 = (1/2,1/2,0), p1 = (1/8,1/8,3/4), and p2 = (3/8,3/8,1/4). At orders (1,1), zero X entropy forces any dominating density state to be an X basis projector: the Shannon zero-entropy characterization forces a point mass, and positivity eliminates the off-diagonal entries. The Y entropies are log(2), (9/4)log(2)-(3/4)log(3), and (11/4)log(2)-(3/4)log(3); 27 < 32 makes the last two strictly larger than the first. Hence the first projector is optimal. At orders (3/5,3), the second projector has the same zero X entropy and Y entropy -(1/2)log(109/256) < log(2), since 1/4 < 109/256. It strictly dominates the first projector, so the latter is not optimal. Both pairs satisfy duality and have orders strictly above 1/2.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abdelkhalek-et-al-2015-optimal-state-independence-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

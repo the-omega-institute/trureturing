@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/RenyiOptimalStateDependenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/abdelkhalek-et-al-2015-optimal-state-independence-refutation` (refuted) by `D5/S3/Quantum/Information/RenyiOptimalStateDependenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abdelkhalek-et-al-2015-optimal-state-independence-refutation","declaration_gid":"D5/S3/Quantum/Information/RenyiOptimalStateDependenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kais Abdelkhalek; René Schwonnek; Hans Maassen; Fabian Furrer; Jörg Duhme; Philippe Raynal; Berthold-Georg Englert; Reinhard F. Werner (2015). *Optimality of entropic uncertainty relations*. DOI: [10.1142/S0219749915500458](https://doi.org/10.1142/S0219749915500458). URL: <https://arxiv.org/abs/1509.00398v1>.
