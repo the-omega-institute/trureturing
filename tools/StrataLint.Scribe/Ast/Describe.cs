@@ -250,36 +250,65 @@ public abstract record StatementSource
     public static StatementSource FromAuthor(Formula presentation) => new Authored(presentation, null);
     public static StatementSource WithoutFormula() => new NoFormula(null);
 
+    internal static StatementAssessment Evaluate(LeanDeclarationRef declaration)
+    {
+        var assessment = StatementProjectionFixtureLoader.Assess(declaration);
+        return assessment.Outcome switch
+        {
+            ProjectionOutcome.Projected projected => new StatementAssessment.Projected(projected.Formula),
+            ProjectionOutcome.Unprojectable failed => new StatementAssessment.Unprojectable(
+                StatementProjectionFixtureLoader.ReasonCode(failed.Reason),
+                StatementProjectionFixtureLoader.OffendingSubject(failed.Reason),
+                StatementProjectionFixtureLoader.ProjectorEpoch,
+                assessment.DeclarationContentDigest),
+            _ => throw new InvalidOperationException("Unknown statement projection outcome."),
+        };
+    }
+
     internal static (StatementSource Source, Formula? Formula) Materialize(
         StatementSource source,
-        LeanDeclarationRef declaration)
+        LeanDeclarationRef declaration) => Materialize(source, declaration, Evaluate(declaration));
+
+    internal static (StatementSource Source, Formula? Formula) Materialize(
+        StatementSource source,
+        LeanDeclarationRef declaration,
+        StatementAssessment assessment)
     {
         ArgumentNullException.ThrowIfNull(source);
-        var assessment = StatementProjectionFixtureLoader.Assess(declaration);
-        return (source, assessment.Outcome) switch
+        ArgumentNullException.ThrowIfNull(declaration);
+        ArgumentNullException.ThrowIfNull(assessment);
+        return (source, assessment) switch
         {
-            (LeanDerived, ProjectionOutcome.Projected projected) => (source, projected.Formula),
-            (LeanDerived, ProjectionOutcome.Unprojectable failed) => throw new InvalidOperationException(
-                $"Lean-derived statement is unavailable for {declaration.Value}: {failed.Reason}"),
-            (Authored, ProjectionOutcome.Projected) => throw new InvalidOperationException(
+            (LeanDerived, StatementAssessment.Projected projected) => (source, projected.Formula),
+            (LeanDerived, StatementAssessment.Unprojectable failed) => throw new InvalidOperationException(
+                $"Lean-derived statement is unavailable for {declaration.Value}: {failed.ReasonCode}:{failed.OffendingSubject}"),
+            (Authored, StatementAssessment.Projected) => throw new InvalidOperationException(
                 $"Authored statement is illegal because Lean projection is available for {declaration.Value}."),
-            (Authored authored, ProjectionOutcome.Unprojectable failed) =>
-                (new Authored(authored.Presentation, Gap(failed, assessment)), authored.Presentation),
-            (NoFormula, ProjectionOutcome.Projected) => throw new InvalidOperationException(
+            (Authored authored, StatementAssessment.Unprojectable failed) =>
+                (new Authored(authored.Presentation, Gap(failed)), authored.Presentation),
+            (NoFormula, StatementAssessment.Projected) => throw new InvalidOperationException(
                 $"Omitting the statement is illegal because Lean projection is available for {declaration.Value}."),
-            (NoFormula, ProjectionOutcome.Unprojectable failed) =>
-                (new NoFormula(Gap(failed, assessment)), null),
+            (NoFormula, StatementAssessment.Unprojectable failed) =>
+                (new NoFormula(Gap(failed)), null),
             _ => throw new InvalidOperationException("Unknown statement source or projection outcome."),
         };
     }
 
-    private static ProjectionGap Gap(
-        ProjectionOutcome.Unprojectable failed,
-        StatementProjectionFixtureLoader.Assessment assessment) =>
-        new(StatementProjectionFixtureLoader.ReasonCode(failed.Reason),
-            StatementProjectionFixtureLoader.OffendingSubject(failed.Reason),
-            StatementProjectionFixtureLoader.ProjectorEpoch,
-            assessment.DeclarationContentDigest);
+    private static ProjectionGap Gap(StatementAssessment.Unprojectable failed) =>
+        new(failed.ReasonCode, failed.OffendingSubject, failed.ProjectorEpoch, failed.DeclarationContentDigest);
+
+}
+
+internal abstract record StatementAssessment
+{
+    private StatementAssessment() { }
+
+    internal sealed record Projected(Formula Formula) : StatementAssessment;
+    internal sealed record Unprojectable(
+        string ReasonCode,
+        string OffendingSubject,
+        string ProjectorEpoch,
+        string DeclarationContentDigest) : StatementAssessment;
 }
 
 public static class Describe

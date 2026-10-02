@@ -43802,3 +43802,121 @@ $\bar b(t)=o(t^{-1/4})$ 也给（312.1）的绝对收敛。
 共同基线与实际漂移通过（312.3）相接，但逐点小的漂移并不自动使其有符号积分为正。若另有固定 $\eta>0$ 使 $\sqrt{m_L}\mathcal H(m_L)\ge\eta$ 最终成立，则（312.12）给整个指定截止族最终严格满足 Robin 不等式；本节未证明这个单边输入。即使 $\mathcal H(m_L)$ 趋于零，或上述两个缩放误差趋于零，也不能省去余量的符号义务。表示（312.1）没有被识别为价格剥离的原有有符号尾项，也不覆盖全部同签名整数或全部 $n>5040$。
 
 若另有任一固定 $\lambda\in(1/4,1/2)$ 的 $|m_L^\lambda b_L|\le C$ 最终成立，则 $m_L^{1/4}b_L\to0$，也是（312.2）的充分条件。仅在四分之一尺度给有界性则无法在本证明中把二次项的 $O(x^{-1/2})$ 删为小 $o$；本节使用的是该尺度的零极限。经典 RH 素数误差判据及定理311.3给 RH 下的（312.2），故本节表示亦可在该条件下使用；这不证明 RH。全部候选仍保留（307.4）的同一核心、签名与5040整除性。$\square$
+
+## 313. 指定5040整除族的单边余量检验与全实数尾项运输
+
+**定义 313.0。** 沿用 §§302、305 的 $A_L,C_L,T_L=\widetilde C_L$、$m_L=3L+2$、$E=e^\gamma$、$P,\vartheta,\psi,S$ 与 $\Delta(H)=E\log\log H-\sigma(H)/H$。只在 $L\ge16$ 使用实际整数族，记
+\[
+\mathfrak m_L=\frac{\sqrt{m_L}}E\Delta(T_L),\qquad
+D(x)=\frac{S(x)}E,\qquad \mathcal A(x)=\frac{P(x)}E,
+\qquad f(x)=\frac{E\log\vartheta(x)}{P(x)}=1+\frac{D(x)}{\mathcal A(x)}.
+\tag{313.1}
+\]
+这里 $f$ 在充分大实数 $x$ 上为正。置
+\[
+k(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+I_\vartheta(x)=\int_x^\infty[\vartheta(t)-t]k(t)\,dt,\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]k(t)\,dt,
+\qquad \mathcal Z_\psi(x)=\sqrt x\log x\,I_\psi(x).
+\tag{313.2}
+\]
+两积分均取全部实数尾域，与 §92.3 及 `Library/ArithSums/nicolas2025comparison.md` 的经典核一致。本节采用假设302.1；Nicolas 不等式、RH 素数误差估计及 §92.3 中的显式公式与 Landau 非负变换均作为已有解析中间步骤。
+
+**定理 313.1（实际全序列的单边检验集合）。** 在上述解析输入下，以下四个命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists L_0\ge16\ \forall L\ge L_0:\quad \mathfrak m_L\ge-K;\\
+&\exists L_0\ge16\ \forall L\ge L_0:\quad\Delta(T_L)\ge0;\\
+&\exists L_0\ge16\ \forall L\ge L_0:\quad\Delta(T_L)>0.
+\end{aligned}
+\tag{313.3}
+\]
+第二项不预设 $m_L^{1/4}b_L$ 有有限极限，不要求 $\mathfrak m_L$ 收敛，也不要求其双边有界。所用整数是（305.1）的确切实际构造，保留（305.3）的同一签名、核心及5040整除性。
+
+**证明。** 先从第二项推 RH。由（305.8），
+\[
+\mathfrak m_L-\sqrt{m_L}D(m_L)\longrightarrow2\sqrt2.
+\tag{313.4}
+\]
+因而存在常数 $C\ge0$，使 $\sqrt{m_L}D(m_L)\ge-C$ 最终成立。由 $\mathcal A(x)\sim\log x$，令 $\ell=\log m$，充分大格点处有 $\mathcal A(m)\ge\ell/2>0$，从（313.1）得
+\[
+f(m)\ge1-\frac{2C}{\sqrt m\,\ell}.
+\]
+取 $z=2C/(\sqrt m\,\ell)$，最终 $0\le z\le1/2$；对数的单调性及 $\log(1-z)\ge-2z$ 给
+\[
+\log f(m)\ge-\frac{4C}{\sqrt m\log m}.
+\tag{313.5}
+\]
+只对 $f$ 使用单边下界；即使 $D$ 有很大的正值，本论证仍成立。
+
+Nicolas，*Small values of the Euler function and the Riemann hypothesis*，arXiv:1202.0729v2，印刷页4，Lemma 2.1、式（2.1），对全部实数 $x\ge121$ 无条件给
+\[
+\log f(x)\le I_\vartheta(x)+\frac1{2(x-1)}.
+\tag{313.6}
+\]
+该文式（1.15）–（1.16）的 $K,J$ 分别对应此处 $I_\vartheta,I_\psi$；该引理追溯至其1983年参考文献[6]的 Proposition 1。此处只将已有不等式用于实际族的桥接，不将其单边机制另立为新原理。因 $\psi\ge\vartheta$ 且 $k>0$，有 $I_\psi\ge I_\vartheta$。（313.5）–（313.6）遂给某个有限 $C_1\ge0$ 使
+\[
+I_\psi(m_L)\ge-\frac{C_1}{\sqrt{m_L}\log m_L}
+\quad\text{最终成立}.
+\tag{313.7}
+\]
+误差 $1/[2(m-1)]$ 乘以 $\sqrt m\log m$ 趋零，已吸收进固定常数。
+
+要使用 §92.3，必须把（313.7）延伸至全部充分大的实数。每个 $x\ge50$ 都唯一位于 $m_L\le x<m_L+3$；完整全序列供应这些格点。经典 $\psi(t)=O(t)$ 与 $k(t)=O(1/(t^2\log t))$ 给
+\[
+|I_\psi(x)-I_\psi(m_L)|
+=\left|\int_{m_L}^x[\psi(t)-t]k(t)\,dt\right|
+=O\!\left(\frac1{m_L\log m_L}\right).
+\tag{313.8}
+\]
+这是一致于该长度三间隔的界。又
+$\sqrt x\log x/(\sqrt{m_L}\log m_L)\to1$ 一致成立，因此（313.7）与（313.8）给某个有限 $C_2\ge0$ 使
+\[
+I_\psi(x)\ge-\frac{C_2}{\sqrt x\log x}
+\quad\text{在全部充分大的实数上成立}.
+\tag{313.9}
+\]
+§92.3 的经典正逆变换及 Landau 论证由（313.9）推出 RH。此反向既未采用假设312.1，也未删去未经控制的二次端点项。
+
+再假设 RH，证明最终严格正余量。沿用 §311 的 $a=(\vartheta-x)/x$、$e=\log[P/(E\log x)]$、$\tau=\sum_{p>x}\sum_{j\ge2}1/(jp^j)$、$q_a=a-\log(1+a)$、$q_e=\exp e-1-e$。同截断的经典 Abel 恒等式为
+\[
+D(x)=\log x\,I_\vartheta(x)+\log x\,\tau(x)-q_a(x)-\log x\,q_e(x).
+\tag{313.10}
+\]
+它由 $e=a/\log x-I_\vartheta-\tau$ 和 $D=\log(1+a)-\log x(\exp e-1)$ 直接得到，参见上述 Nicolas Library note 的端点核算。
+
+RH 的经典误差界给 $a=O(x^{-1/2}\log^2x)$、$I_\vartheta=O(\log x/\sqrt x)$；结合 $\tau=O(1/x)$，得 $e=O(x^{-1/2}\log x)$。对数与指数二次余项遂给 $q_a=O(x^{-1}\log^4x)$、$\log x\,q_e=O(x^{-1}\log^3x)$，而 $\log x\,\tau=O(\log x/x)$。所以
+\[
+\sqrt x[D(x)-\log x\,I_\vartheta(x)]\longrightarrow0.
+\tag{313.11}
+\]
+普通素数定理的经典素幂分解给 $\psi(t)-\vartheta(t)\sim\sqrt t$，更高素幂是小阶；与正核积分相接得到
+\[
+\sqrt x\log x[I_\psi(x)-I_\vartheta(x)]\longrightarrow2.
+\tag{313.12}
+\]
+这里使用 $\int_x^\infty t^{-3/2}/\log t\,dt\sim2/(\sqrt x\log x)$；该素平方移位与常数见 `Library/ArithSums/nicolas2025comparison.md` 的 “What remains after the prime-square contribution” 段；此处只是将其代入指定实际族。
+
+将（313.4）、（313.11）、（313.12）合并，得到
+\[
+\mathfrak m_L=\mathcal Z_\psi(m_L)+(2\sqrt2-2)+o(1).
+\tag{313.13}
+\]
+§92.3 在 RH 下给 $\limsup_{x\to\infty}|\mathcal Z_\psi(x)|\le C_\gamma$，其中经典零点和常数
+$C_\gamma=2+\gamma-\log(4\pi)=0.0461914179\ldots<1/2$。又 $2\sqrt2-2>1/2$，故（313.13）给 $\mathfrak m_L>0$ 最终成立。由于 $\sqrt{m_L}/E>0$，这正是第四项。第四项蕴含第三项，第三项以 $K=0$ 蕴含第二项，完成等价链。等价式不证明其中任何一项无条件成立。$\square$
+
+**定理 313.2（正储备与任意深负余量的二择）。** 在定理313.1的输入下，RH 蕴含
+\[
+\liminf_{L\to\infty}\mathfrak m_L\ge2\sqrt2-2-C_\gamma>0.
+\tag{313.14}
+\]
+若 RH 不成立，则
+\[
+\forall K\ge0\ \forall L_0\ge16\ \exists L\ge L_0:\quad \mathfrak m_L<-K.
+\tag{313.15}
+\]
+
+**证明。** 第一式直接由（313.13）及 §92.3 的 RH 界得到。第二式是（313.3）第二项的精确否定：若存在任何最终有限下界，就会推出 RH。因此负余量出现在任意晚的尺度，且其缩放值跌破任意给定负阈值。这不指定出现频率、具体负幅增长率或某个可计算的违例；$\Delta(T_L)=E\mathfrak m_L/\sqrt{m_L}$ 的未缩放负幅也不必无界。
+
+这里的检验集合由同一实际仿射核心、补齐支撑与平方层提升构造，不把 $T_L$ 识别为超丰数或极大丰数。与经典 CA 检验集合的关系仅在共同素数基线和已注明的平方层先例；本节承重是该确切5040整除族的单边下界能够运输至全部实数的经典尾项。任意稀疏子列缺少（313.8）的全实数覆盖，不能据此替代完整 $L$ 序列。$\square$
