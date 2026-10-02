@@ -6,6 +6,7 @@ import select
 import shutil
 import subprocess
 import sys
+import time
 import unittest
 from unittest.mock import patch
 
@@ -204,6 +205,37 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
         program_builds = (self.root / 'program-builds').read_text().splitlines()
         self.assertEqual(len(program_builds), 1)
         self.assertTrue(program_builds[0].endswith('tools/lean-inspector-reg build D5/A'))
+
+    def test_ci_aged_complete_actions_seed_survives_writer_owned_refresh(self):
+        original = (self.root / 'D5/A.lean').read_text()
+        self.fixture.write('D5/A.lean', original + 'def dev_addition := 2\n')
+        self.dev_seed(1)
+        self.fixture.write('D5/A.lean', original)
+        aged = time.time() - 7 * 60 * 60
+        for member in self.seed.parent.iterdir():
+            os.utime(member, (aged, aged))
+        self.environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '1'
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
+        self.executable('tools/scripts/worktree/lean-cache-ensure.sh',
+                        'exec python3 -B "$(dirname "$0")/aged_ensure_fixture.py"\n')
+        self.fixture.write('tools/scripts/worktree/aged_ensure_fixture.py', '''import shutil
+from pathlib import Path
+import lean_cache_release as api
+root = Path(__file__).resolve().parents[3]
+def transport(root, partition, deadline, refresh_stale=False):
+    assert refresh_stale
+    (root / 'refresh-transport-called').write_text('1')
+    for source in (root / 'dev-seed').iterdir():
+        shutil.copyfile(source, root / '.lake/build/stratalint' / source.name)
+    return 0
+api.fetch_locked = transport
+# EnsureLocked's expired-cache branch holds the writer guard and requests refresh.
+with api.cache_guard(root):
+    raise SystemExit(api.fetch(root, 'fixture-partition', writer_owned=True, refresh_stale=True))
+''')
+        self.assert_continued(self.entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'), fetched=False)
+        self.assertFalse((self.root / 'refresh-transport-called').exists())
+        self.assertIn('build D5/A', (self.root / 'program-builds').read_text())
 
     def test_ci_reuse_or_build_input_miss_enters_report_facet(self):
         self.fixture.write('D5/A.lean', 'def a := 2\n')
