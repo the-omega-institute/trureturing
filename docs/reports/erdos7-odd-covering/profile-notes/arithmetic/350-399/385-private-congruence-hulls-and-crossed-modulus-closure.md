@@ -21628,3 +21628,86 @@ a globally fixed GLC exception set automatically pays a complete parent
 move. Any next exchange must retain the full whole-cover shell or add a
 separate source-capacity theorem; the displayed probe and collision data
 alone are insufficient.
+
+## 176. Reciprocal private-hull swaps leave one exact joint liability
+
+Keep one EB1-selected whole cover with distinct odd numerical labels
+\(D\), classes \(A_d=a_d\bmod d\), complete private regions \(P_d\),
+and private congruence hulls \(\Gamma_d\) as in (PH3)--(PH4). Take two
+distinct labels \(d,g\in D\) satisfying
+
+\[
+g\mid\Gamma_d,\qquad d\mid\Gamma_g.                 \tag{RH1}
+\]
+
+Choose \(w_d\in P_d\) and \(w_g\in P_g\), and define the two actual
+replacement classes
+
+\[
+B_d=w_g\bmod d,
+\qquad
+B_g=w_d\bmod g.                                     \tag{RH2}
+\]
+
+The hull equivalence says that \(B_g\) covers all of \(P_d\), while
+\(B_d\) covers all of \(P_g\). The only possible uncovered points after
+replacing \(A_d,A_g\) by \(B_d,B_g\) are the points whose complete set of
+old owners is exactly \(\{d,g\}\):
+
+\[
+K_{d,g}:=(A_d\cap A_g)\setminus
+          \bigcup_{m\in D\setminus\{d,g\}}A_m.        \tag{RH3}
+\]
+
+More precisely, the replacement preserves whole coverage if and only if
+
+\[
+\boxed{K_{d,g}=\varnothing.}                         \tag{RH4}
+\]
+
+For sufficiency, a point with only owner \(d\) lies in \(P_d\) and is
+covered by \(B_g\); the analogous statement holds for \(g\). A point
+with an unchanged owner remains covered. For necessity, \(w_g\in P_g\)
+implies \(w_g\notin A_d\), so \(B_d\) is disjoint from \(A_d\); likewise
+\(B_g\) is disjoint from \(A_g\). Hence every point of \(K_{d,g}\) is
+missed by both replacements and by every unchanged class.
+
+The swap can then absorb actual descendants. Define
+
+\[
+\begin{aligned}
+J_d&=\{m\in D\setminus\{d,g\}:d\mid m,\ a_m\equiv w_g\pmod d\},\\
+J_g&=\{m\in D\setminus\{d,g\}:g\mid m,\ a_m\equiv w_d\pmod g\},\\
+J&=J_d\cup J_g.                                      \tag{RH5}
+\end{aligned}
+\]
+
+Every class in \(J_d\) is contained in \(B_d\), and every class in
+\(J_g\) is contained in \(B_g\). Thus (RH4) together with
+\(J\ne\varnothing\) gives a whole cover with \(|D|-|J|\) classes after
+the swap and deletion. It contradicts the EB1 cardinality minimum. The
+resulting necessary condition is therefore
+
+\[
+\boxed{
+g\mid\Gamma_d,\ d\mid\Gamma_g,\ J\ne\varnothing
+\ \Longrightarrow\ K_{d,g}\ne\varnothing.
+}                                                        \tag{RH6}
+\]
+
+This is a source-preserving count descent. It does not spend an occupied
+label as deleted inventory, does not rephase a class without repairing its
+complete private region, and does not assume that the descendants of the
+two parents have a common multiple. When the old parent classes are
+disjoint, (RH4) is automatic, so any reciprocal hull pair with a proper
+descendant in either receiving phase is impossible in an EB1 family.
+
+The result narrows the remaining whole-cover gap but does not close it.
+Section 174 supplies one-direction hull divisibility for a certified
+subset of \(q^2\) sources; it does not force the reciprocal condition,
+the absence of \(K_{d,g}\), or a descendant in the receiving phase.
+Section 175 is deliberately not a whole cover and therefore does not
+refute (RH4)--(RH6). A complete solution still needs a whole-cover
+argument forcing one usable reciprocal pair, or a different construction
+that pays the complete joint liability \(K_{d,g}\) while satisfying both
+EB1 comparisons.
