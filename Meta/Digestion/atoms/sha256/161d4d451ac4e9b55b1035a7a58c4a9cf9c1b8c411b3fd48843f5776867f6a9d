@@ -1,0 +1,141 @@
+**定理 347.1（同源极小路径的普适双重对数项）。** 在定理346.3的全部假设下，对每个极小点选取，同时有
+
+$$
+\ell_\varepsilon=L_\varepsilon+2\log L_\varepsilon-\log C_*
++O\!\left(\frac{\log L_\varepsilon}{L_\varepsilon}\right),
+\tag{347.1}
+$$
+
+$$
+t_\varepsilon=\frac{C_*\varepsilon}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right],
+\tag{347.2}
+$$
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{D_*\varepsilon^2}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right].
+\tag{347.3}
+$$
+
+各隐含常数可对全部极小点共同选择，不要求极小点唯一。
+这些渐近使用同一谱给出的驱动导数模连续性；仅假设驱动为 $C^1$ 时不能据此保留双重对数项。
+
+证明。定理346.1给总相位和斜率的量化余项
+
+$$
+\delta(t)=\frac c2 t^2\log^2(1/|t|)+O(t^2\log(1/|t|)),\qquad
+\delta'(t)=ct\log^2(1/|t|)+O(|t|\log(1/|t|)).
+\tag{347.4}
+$$
+
+先补足驱动的余项，而不将连续性自动视为所需速率。
+同源系数 $b_\gamma=D_\gamma^{-1}-2$、$c_\gamma=2\gamma/D_\gamma$
+给出精确分解。记 $M_0=\sum_\gamma a_\gamma$，置
+
+$$
+R(t)=\sum_\gamma\frac{a_\gamma}{D_\gamma}\cos\gamma t
+-\sum_\gamma\frac{2a_\gamma\gamma}{D_\gamma}\sin\gamma t,
+\qquad F_\iota(t)=\delta(t)-2M_0+R(t).
+\tag{347.5}
+$$
+
+$R(0)=f_*+2M_0$、$R'(0)=-2K$，其中
+$K=\sum_\gamma a_\gamma\gamma^2/D_\gamma
+=\sum_\gamma m_\gamma\gamma/D_\gamma^2\le M_0$。
+一阶导数的级数主控为可和权重 $a_\gamma\gamma/D_\gamma$
+及 $2a_\gamma\gamma^2/D_\gamma$。
+经典 $|\sin x|\le|x|$、$|1-\cos x|\le|x|$ 与
+$\gamma^2/D_\gamma\le1$ 给全部实数 $t$ 上
+
+$$
+|R'(t)-R'(0)|
+\le |t|\left(K+2\sum_\gamma a_\gamma\gamma\right).
+$$
+
+因而 $R(t)=R(0)-2Kt+O(t^2)$，并且
+
+$$
+F_\iota(t)=f_*+\delta(t)-2Kt+O(t^2),\qquad
+F_\iota'(t)=\delta'(t)-2K+O(|t|),\qquad
+G_\iota(t)=8A+O(|t|),\qquad G_\iota'(t)=O(1).
+\tag{347.6}
+$$
+
+这些结论复用可和权重和已知相位的一阶导数；无需重新取得累计计数或矩尾的速率。
+
+复用定理346.3的极小点存在、内点性、正性及初阶尺度结论。
+这些结论可以对任意极小点选取使用。驻点方程与（347.6）给
+
+$$
+(1+\varepsilon)\delta'(t_\varepsilon)
+=2K\varepsilon+O(\varepsilon|t_\varepsilon|)
++O(\varepsilon^2).
+$$
+
+已有初阶尺度给 $t_\varepsilon=O(\varepsilon)$，
+所以除以 $1+\varepsilon$ 后右侧仍为 $2K\varepsilon+O(\varepsilon^2)$。
+再由（347.4）并利用 $\varepsilon=O(1/\ell_\varepsilon)$，得到
+
+$$
+t_\varepsilon\ell_\varepsilon^2
+=C_*\varepsilon[1+O(1/\ell_\varepsilon)].
+\tag{347.7}
+$$
+
+经典对数反演可由 Lambert $W$ 的负分支实现；精确模型
+$t\log^2(1/t)=C_*\varepsilon$ 的大对数解为
+$\ell=-2W_{-1}(-\sqrt{C_*\varepsilon}/2)$。
+这里使用 [DLMF §4.13](https://dlmf.nist.gov/4.13) 及 [Corless 等（1996），§4](https://cs.uwaterloo.ca/research/tr/1993/03/W.pdf) 的经典反演机制，
+不将该已知反演另列为新结论。对本式也可直接取对数：
+
+$$
+\ell_\varepsilon
+=L_\varepsilon+2\log\ell_\varepsilon-\log C_*
++O(1/\ell_\varepsilon).
+\tag{347.8}
+$$
+
+定理346.3已给 $\ell_\varepsilon/L_\varepsilon\to1$，
+故先得 $\ell_\varepsilon-L_\varepsilon=O(\log L_\varepsilon)$，
+再用 $\log\ell_\varepsilon-\log L_\varepsilon
+=O(\log L_\varepsilon/L_\varepsilon)$ 得（347.1）。
+将（347.1）代入（347.7）的
+$t_\varepsilon=C_*\varepsilon\ell_\varepsilon^{-2}
+[1+O(1/\ell_\varepsilon)]$，得到（347.2）。
+未知的斜率余项只影响相对 $O(1/L_\varepsilon)$，
+小于已显示的 $\log L_\varepsilon/L_\varepsilon$ 项。
+
+最后将（347.6）代入 $J_\varepsilon$，并用驻点尺度替换二次相位成本：
+
+$$
+\frac c2 t_\varepsilon^2\ell_\varepsilon^2
+-2K\varepsilon t_\varepsilon
+=-K\varepsilon t_\varepsilon
++O(t_\varepsilon^2\ell_\varepsilon)
++O(\varepsilon^2t_\varepsilon).
+$$
+
+来自（347.4）的成本余项也是 $O(t_\varepsilon^2\ell_\varepsilon)
+=O(\varepsilon^2/L_\varepsilon^3)$；
+驱动中的 $\varepsilon\delta(t_\varepsilon)$ 为
+$O(\varepsilon t_\varepsilon^2\ell_\varepsilon^2)$，
+$R$ 的余项为 $O(\varepsilon t_\varepsilon^2)$，
+以及 $\varepsilon^2[G_\iota(t_\varepsilon)-G_\iota(0)]$
+均为 $O(\varepsilon^3/L_\varepsilon^2)$，
+被同一余项吸收。于是目标偏移为
+$-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
+代入（347.2）且 $KC_*=D_*$，得到（347.3）。
+
+所有谱界、函数余项、初阶极小点排除和驻点比较均在固定区间上共同控制；
+若某个共同结论失败，可选择违反它的极小点列，与以上逐选择推导矛盾，
+故可采用对全部极小点共同的常数。$\square$
+
+本命题保留 $\iota\in H$ 的相位相容假设。
+独立平移参数 $t_\varepsilon$ 与实际截止 $T=1/\varepsilon$ 仍未被识别；
+该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
+

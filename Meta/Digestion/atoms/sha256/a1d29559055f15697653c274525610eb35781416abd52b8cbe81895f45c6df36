@@ -1,0 +1,26 @@
+**定义 301.0。** 沿用 §300 的实际自然来源与约数权重
+\[
+N_1(a,1)=3a+5,\qquad U_H=\frac{\sigma(H)}H.
+\]
+对整数 $L\ge1$、$H\ge1$，定义
+\[
+Q_L=\operatorname{lcm}_{0\le a<L}(3a+5),\qquad
+B_L(H)=3^{v_3(H)}\gcd(H,Q_L),
+\tag{301.1}
+\]
+以及观测签名
+\[
+\mathcal O_L(H)=\left(v_3(H),\bigl(\gcd(H,3a+5)\bigr)_{0\le a<L}\right).
+\tag{301.2}
+\]
+签名保留逐项 gcd，未将它们替换为约数个数或前缀均值。记
+\[
+A_L(p)=\lfloor\log L/\log p\rfloor,\qquad
+\delta_L=\prod_{p\le L}(1-p^{-A_L(p)-1}),\qquad
+P(x)=\prod_{p\le x}(1-1/p)^{-1},
+\tag{301.3}
+\]
+其中乘积指标均为素数。
+
+### 301.1 短探针重构同一目标的除数核心
+

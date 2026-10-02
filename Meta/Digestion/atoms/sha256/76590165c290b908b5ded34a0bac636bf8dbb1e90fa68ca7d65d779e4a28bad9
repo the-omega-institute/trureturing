@@ -1,0 +1,2 @@
+**假设 334.1（已有同截断解析身份）。** 使用 §§313、315 的同截断 Abel 恒等式、实际核心修正 $R_L\to2\sqrt2$ 和普通素数幂分解。置 $R(t)=\psi(t)-\vartheta(t)\ge0$、$k(t)=(1+\log t)/(t^2\log^2t)$、$J_m=\int_m^\infty R(t)k(t)dt$，则 $I_\psi-I_\vartheta=J_m$。$\tau(m)=\sum_{p>m}\sum_{r\ge2}1/(rp^r)$ 采用原来的同截断定义。经典几何级数比较给 $0\le\tau(m)\le1/[2(m-1)]$；经典 Chebyshev 素幂估计给 $0\le R(t)\le2\sqrt t\log t$（$t\ge1$），可直接复用 Mathlib `Chebyshev.psi_sub_theta_le`。这些是已知中间输入，不是新的素数分布结论。
+

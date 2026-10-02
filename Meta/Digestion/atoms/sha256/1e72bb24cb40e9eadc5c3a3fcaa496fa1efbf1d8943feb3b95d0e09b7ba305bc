@@ -1,0 +1,49 @@
+**证明。** 在式（247.10）中以 $q=e^{t/2}U$ 分段。
+低段的第二候选为 $1/(xt)-1/(2v^2\log v)$，
+高段的第一候选为 $1/(2v^2\log v)$。
+令 $z=\log v$，有
+
+$$
+\int_{\sqrt x}^q\frac{dv}{v^2\log v}
+=\operatorname E_1(t/2)-\operatorname E_1(y),\qquad
+\int_q^\infty\frac{dv}{v^2\log v}=\operatorname E_1(y).
+$$
+
+低段常数项的积分是 $e^{-t/2}(U-1)/t$，合并即得式（251.1）。
+这也说明 $\mathcal M(t)=e^{-t/2}G(t,U(t))/t$，其中 $G$ 沿用式（247.12）。
+
+截止方程对 $U$ 的偏导严格为正，隐函数定理给出 $U$ 光滑。
+在微分中仅使用
+
+$$
+y'=\frac12+\frac{U'}U,\qquad
+y=\frac t{U^2},\qquad e^{-y}=\frac{e^{-t/2}}U.
+$$
+
+由此
+
+$$
+\begin{aligned}
+\mathcal M'
+&=\frac{e^{-t/2}}t
+\left[U'-(U-1)\left(\frac12+\frac1t\right)\right]
+-\frac{e^{-t/2}}{Uy}\left(\frac12+\frac{U'}U\right)
++\frac{e^{-t/2}}{2t}\\
+&=-\frac{e^{-t/2}(t+1)}{t^2}(U-1).
+\end{aligned}
+$$
+
+全部 $U'$ 项精确抵消；这是两个候选在移动分界相等的微分表现，
+未对带未知余项的渐近式求导。
+$1<U<\rho$、$y\ge t/2$ 及指数积分上界先给出 $\mathcal M(t)\to0$。
+再将精确导数积分至无穷远，得到式（251.2）的第二式。
+被积函数为正，而
+
+$$
+\frac{e^{-v/2}(v+1)}{v^2}(U(v)-1)
+<\frac{c e^{-v/2}(v+2)}{v^2}
+=-2c\frac{d}{dv}\left(\frac{e^{-v/2}}v\right),
+$$
+
+积分给出式（251.3）。$\square$
+

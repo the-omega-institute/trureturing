@@ -1,0 +1,15 @@
+**证明。** （311.18）正向直接应用定理311.2于 $c=0$。反向中，经典正向分部求和与同一 Mertens 常数给
+\[
+s(x)=\frac{a(x)}{\log x}
+-\int_x^\infty a(t)\frac{\log t+1}{t\log^2t}\,dt.
+\tag{311.20}
+\]
+若 $a=o(x^{-\lambda})$，则对任意 $\eta>0$，全部充分大的 $t$ 上有 $|a(t)|\le\eta t^{-\lambda}$。因 $\log t\ge\log x$，核积分给 $s=o(x^{-\lambda}/\log x)$，进而 $e=s-\tau=o(x^{-\lambda})$。对（311.2）在原点使用经典 Taylor 式，得到 $B=a+e+O(a^2+e^2)=o(x^{-\lambda})$，再用（311.4）得反向。
+
+这里使用的经典 RH 素数误差背景见 Brian Conrey，*Riemann’s Hypothesis*，2019年4月28日作者稿，[第3节、印刷页6](https://aimath.org/~kaur/publications/90.pdf)，该页直接陈述 $\pi$ 与素幂对数和 $\psi$ 的通常平方根对数误差刻画，$\vartheta$ 式经经典素幂余项转换。采用其经典幂误差表述：RH 等价于对每个 $\varepsilon>0$ 有 $\vartheta(x)-x=O_\varepsilon(x^{1/2+\varepsilon})$；RH 更给通常的 $O(\sqrt x\log^2x)$ 界。它是已知的素数误差刻画，本节没有将其另立为新解析定理。幂误差版本的经典反向可由同一 Mellin 接口看出：对 $\Re s>1$，
+\[
+-\frac{\zeta'(s)}{\zeta(s)}-\frac{s}{s-1}
+=s\int_1^\infty[\psi(x)-x]x^{-s-1}\,dx.
+\]
+全部正 $\varepsilon$ 的幂界使右侧在 $\Re s>1/2$ 上全纯；通过解析延拓匹配，它排除该域中的非平凡零点极点，再由零点反射对称性得 RH。此处先给出积分等式的原始收敛域，没有把延拓域当作初始逐项积分域。RH 因而给（311.18）右侧对每个 $\lambda<1/2$ 的小 $o$。反向中，取 $\lambda=1/2-\varepsilon$，$0<\varepsilon<1/2$，便有相应小 $o$，从而有经典判据要求的大 $O$；更大的 $\varepsilon$ 由任一较小正 $\varepsilon$ 的界覆盖。因此（311.19）是把已知 RH 刻画运输到（311.1）的实际权重与高度混合漂移。本节未从单个 $\lambda=1/4$ 的界推出 RH；这里的反向证明使用逼近 $1/2$ 的全部尺度。$\square$
+

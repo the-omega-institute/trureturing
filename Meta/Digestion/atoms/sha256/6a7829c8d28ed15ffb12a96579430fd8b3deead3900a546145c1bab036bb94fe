@@ -1,0 +1,4 @@
+**推论 51.4（非一致的点态相位识别）。** 对 $m\ge1$，令 $t_m=\min\{1/4,m^{-1/4}\}$，按以下互不重叠的分支输出：$\beta\le t_m$ 时为0，$\beta\ge1-t_m$ 时为1，其余为2。对每个固定 $\alpha$，错误概率趋零；沿同一个无限独立样本序列的嵌套前缀，规则最终几乎必然一直输出 $\phi(\alpha)$。
+
+证明。在两个端点，错误概率至多 $2e^{-mt_m^2/18}$。在固定内部参数，令 $d=\min\{\alpha,1-\alpha\}>0$；当 $t_m<d/2$，出错蕴含 $|\beta-\alpha|\ge d/2$，概率至多 $2e^{-md^2/72}$。前一种尾界最终按 $e^{-\sqrt m/18}$ 衰减，后一种按 $e^{-md^2/72}$ 衰减，两者各自可求和。第一 Borel–Cantelli 引理给每个固定律下的最终正确性；无需置信失败事件独立。这个点态结论不把式（51.8）的极限改成零，也不认证精确后验。收缩阈值和非一致性的成熟背景可见 Leeb、Pötscher，[*Sparse Estimators and the Oracle Property, or the Return of Hodges' Estimator*](https://arxiv.org/abs/0704.1466)，其引言的 $m^{-1/4}$ 阈值与点态边界；这里没有将其回归定理移用为本实验的证明。$\square$
+

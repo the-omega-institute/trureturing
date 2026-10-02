@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b457852672ba16d9ab18af10d7a9e152c9c7b7059c445c3a944af99a16a31ab2
+  normalized_sha256: sha256:b457852672ba16d9ab18af10d7a9e152c9c7b7059c445c3a944af99a16a31ab2
+cas_ref: sha256:b457852672ba16d9ab18af10d7a9e152c9c7b7059c445c3a944af99a16a31ab2
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/URSRelativeCyclePartition.actual_invariant_moved_support_bound
+    target_statement_id: sha256:9e8d04143b2be34ff378de340ea10cc31f7c861e4d5c125c382f5fa6c0270f1a
+receipts:
+  unresolved_subitems: []

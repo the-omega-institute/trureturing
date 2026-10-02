@@ -1,0 +1,16 @@
+### theorem 256.2 同一实际尾项的精确双端分解
+
+对全部 $y\in[a,b]$，有有限恒等式
+
+$$
+\boxed{\begin{aligned}
+\Phi(y)={}&\lambda_y\Phi(a)+(1-\lambda_y)\Phi(b)\\
+&+F_0(y)-\lambda_yF_0(a)-(1-\lambda_y)F_0(b)\\
+&+\sum_{\substack{r=p^h\\a<r<b}}\log p\,G_{A,B}(q(y),q(r)).
+\end{aligned}}
+\tag{256.2}
+$$
+
+若 $a<y<b$ 且区间内至少有一个素数幂事件，最后一行严格为正。
+若没有内部事件，它等于零，前两行给精确值。
+

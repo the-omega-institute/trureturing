@@ -1,0 +1,19 @@
+**定义 302.0。** 沿用 §301 的 $Q_L,B_L,\mathcal O_L,U_H$。对整数 $L\ge2$，置
+\[
+m_L=3L+2,\qquad e_L=\lfloor\log_3L\rfloor,\qquad
+A_L=3^{e_L}Q_L,\qquad D_j=\operatorname{lcm}(1,\ldots,j).
+\tag{302.1}
+\]
+对实数 $y\ge2$ 与 $r\in\{1,2\}$，置
+\[
+\vartheta_r(y)=\sum_{\substack{p\le y\\p\equiv r\pmod3}}\log p,
+\qquad P(y)=\prod_{p\le y}(1-p^{-1})^{-1},\qquad E=e^\gamma.
+\tag{302.2}
+\]
+这里所有 $p$ 都为素数，$\log$ 为自然对数；对整数 $H>1$，定义 Robin 余量
+\[
+\Delta(H)=E\log\log H-U_H.
+\tag{302.3}
+\]
+式（302.1）中的 $A_L$ 是一个整数族，与 §301 证明中逐素数的截断层数 $A_L(p)$ 不同。
+

@@ -1,0 +1,26 @@
+### theorem 256.3 实际尾项的二次修正凹性
+
+取 §243.3 的无条件 Chebyshev 常数 $C\ge1$，满足 $0\le\Psi(x)\le Cx$。
+令
+
+$$
+k(x)=\frac{\log x+1}{x^2\log^2x},\qquad
+M_a=\frac{7C}{a^2\log a},\qquad a\ge4.
+$$
+
+对任意 $b>a$，函数
+
+$$
+g_a(x)=\Phi(x)-\frac{M_a}{2}x^2
+\tag{256.3}
+$$
+
+在 $[a,b]$ 上凹。特别地，对 $a\le y\le b$，
+
+$$
+\boxed{\Phi(y)\ge
+\frac{b-y}{b-a}\Phi(a)+\frac{y-a}{b-a}\Phi(b)
+-\frac{7C}{2a^2\log a}(y-a)(b-y).}
+\tag{256.4}
+$$
+

@@ -1,0 +1,28 @@
+**定理 341.1（任意无理比两频率的临界储备任意晚失败）。** 取任意无理实数 $\beta>1$，令两频率为 $(14,14\beta)$。存在正整数对 $(q_n,p_n)$，满足
+
+$$
+q_n\equiv p_n\equiv1\pmod4,\qquad
+q_n\longrightarrow\infty,\qquad
+|q_n\beta-p_n|\le\frac{36}{q_n}.
+\tag{341.2}
+$$
+
+置 $T_n=\pi q_n/28$。则对全部充分大的 $n$，
+
+$$
+0\le\Delta(T_n)\le\frac{324a_1\pi^2}{q_n^2},\qquad
+0\le T_n\Delta(T_n)\le\frac{81a_1\pi^3}{7q_n},
+\tag{341.3}
+$$
+
+且
+
+$$
+F(T_n)\longrightarrow
+f_*=\sum_{j=0}^1a_j\left(\frac1{D_j}-2\right)<0,\qquad
+\mathfrak M(T_n)<0.
+\tag{341.4}
+$$
+
+因此 §340 的 Fibonacci 六步回归是这一两频率结论的显式特例；任意晚失败不要求 $\beta$ 为二次无理数或具有有界连分数部分商。
+

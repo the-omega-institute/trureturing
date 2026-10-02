@@ -1,0 +1,30 @@
+### theorem 253.1 移动截止修正保留一个确定的 Borel 极点
+
+在原点附近定义阶乘归一的形式级数
+
+$$
+\widehat{\mathcal F}(\xi)=\sum_{n\ge0}\frac{m_n}{n!}\xi^n,
+\qquad
+\widehat{\mathcal H}(\xi)=\sum_{n\ge0}\frac{h_n}{n!}\xi^n.
+$$
+
+则 $\widehat{\mathcal H}$ 延拓为整函数，且
+
+$$
+|\widehat{\mathcal H}(\xi)|\le Ce^{q|\xi|},\qquad
+\boxed{\widehat{\mathcal F}(\xi)
+=\frac1{1+2\xi}+\widehat{\mathcal H}(\xi).}
+\tag{253.1}
+$$
+
+右式给出整个复平面的亚纯延拓，其唯一有限奇点为 $\xi=-1/2$，
+是留数 $1/2$ 的简单极点。
+原点处的 Borel Taylor 级数收敛半径恰为 $1/2$。
+对同时满足 $0<s<\varepsilon$ 与 $qs<1$ 的实数 $s$，有绝对收敛的恢复公式
+
+$$
+\boxed{\mathcal F(s)=\int_0^\infty
+e^{-z}\widehat{\mathcal F}(sz)\,dz.}
+\tag{253.2}
+$$
+

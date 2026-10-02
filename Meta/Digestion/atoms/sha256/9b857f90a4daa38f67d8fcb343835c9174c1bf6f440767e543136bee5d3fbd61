@@ -1,0 +1,41 @@
+**定理 52.3（未知教师的统一训练—测试保证）。** 对每个 $n\ge3$、$\theta\in\Theta_n$、$\alpha\in[0,1]$、固定准入树、$\varepsilon>0$ 和 $0<\delta<1$，若（52.26）成立，则上述单次训练选择器满足
+
+$$
+P_{\theta,\alpha}^{m}\left\{
+\Delta_{\log}(\theta,\alpha;p_{D_m})\le\varepsilon,
+\quad
+\Delta_B(\theta,\alpha;p_{D_m})\le\varepsilon
+\right\}\ge1-\delta.
+\tag{52.30}
+$$
+
+这里的测试期望对独立同律 $X$ 取，$p_{D_m}$ 在训练后固定；没有把训练样本重新当测试样本。
+
+**证明。** 在 $\mathcal E$ 上，若 $U_0>\varepsilon_0$，则
+$\beta+r>\sqrt{\varepsilon_0/K}$。结合（52.27），
+
+$$
+\alpha\ge\beta-r>\frac12\sqrt{\frac{\varepsilon_0}{K}},qquad
+\alpha\tau>2e.
+$$
+
+定理52.2的同一最大偏差事件遂给出 $\widehat\theta=\theta$；因此所有非零根分支只在已证明的正确教师上调用（52.29）。若 $U_0$ 合格，§51.6 的参数曲率界直接控制均匀后验。根二的 $U_2$ 总是合格，故选择总有定义。端点 $\alpha=0$ 时 $u_I\le2r$，根零合格；$\alpha=1$ 时 $g_\beta\le6Ar$，并以
+
+$$
+C_1=K+\frac{9\chi}{50}+\frac{2A}{25},qquad
+4K-C_1=\frac{49\sqrt2}{50}-\frac{13}{30}>0
+$$
+
+得到根一合格。于是（52.29）、（51.17）和（52.28）在同一事件上给两种超额不超过 $\varepsilon_0\le\varepsilon$，而事件失败概率至多 $\delta$。证毕。$\square$
+
+这个证明把结构恢复、端点相位和总体预测分别量化：弱信号时可以合法选择根零，但没有把有限数据下的准确结构相位认证成定理。若事件 $\mathcal E$ 失败，或部署到未恢复的 $\widehat\theta\ne\theta$，则不赋予已知教师保证；（52.23）给出实际错误教师的结构项，且所有输出概率坐标至少为
+$D=(3-2\sqrt2)/2$，从而失败分支逐次满足
+
+$$
+\Delta_{\log}\le\log(1/D),qquad \Delta_B\le2.
+\tag{52.31}
+$$
+
+因此把失败分支计入训练随机性后，期望超额还可写成
+$\varepsilon+\delta\log(1/D)$ 和 $\varepsilon+2\delta$ 的显式上界；这不是把失败样本删掉，而是单独收费。对任意错误三元组，根二的精确 Brier 式（52.23）仍保留 $\alpha\beta J_{\theta\eta}$，根一只在定理52.3已经证明的恢复事件上使用（52.29）。
+

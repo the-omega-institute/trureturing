@@ -1,0 +1,13 @@
+**定理 311.2（有限漂移系数的素数端点运输与零系数约束）。** 对固定 $0<\lambda<1/2$，若实际全序列有有限极限
+\[
+m_L^\lambda b_L\longrightarrow c\in\mathbb R,
+\tag{311.7}
+\]
+则
+\[
+x^\lambda a(x)\longrightarrow c,
+\qquad x^\lambda e(x)\longrightarrow0,
+\qquad c=0.
+\tag{311.8}
+\]
+

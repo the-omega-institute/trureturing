@@ -1,0 +1,26 @@
+**定理 303.1（实际同签名整数的有限费用界）。** 对 $L\ge3$ 及每个正整数 $H$ 满足 $\mathcal O_L(H)=\mathcal O_L(A_L)$，有
+\[
+p\in\mathcal N_L(H)\quad\Longrightarrow\quad p>m_L/2,
+\tag{303.3}
+\]
+\[
+0\le J_L(H)\le\frac{2K_L(H)}{m_L-2},\qquad
+U_H\le\mathscr F_L\exp(J_L(H)).
+\tag{303.4}
+\]
+因此，对任何实预算 $K$，
+\[
+K_L(H)\le K,\qquad
+\mathscr F_L\exp\!\left(\frac{2K}{m_L-2}\right)<R(A_L)
+\quad\Longrightarrow\quad U_H<R(H).
+\tag{303.5}
+\]
+反向中，若 $H>5040$ 且 $U_H\ge R(H)$，则
+\[
+J_L(H)\ge\log\frac{R(H)}{\mathscr F_L},\qquad
+K_L(H)\ge\frac{m_L-2}{2}\log\frac{R(H)}{\mathscr F_L}
+\ge\frac{m_L-2}{2}\log\frac{R(A_L)}{\mathscr F_L}.
+\tag{303.6}
+\]
+这些有限不等式不使用假设302.1。
+

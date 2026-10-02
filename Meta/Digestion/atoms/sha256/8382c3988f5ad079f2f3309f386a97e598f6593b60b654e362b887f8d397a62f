@@ -1,0 +1,17 @@
+### 定理 293.1 实际排除阈值可以控制全部选中子势
+
+设 $s\ge5$ 为素数，$P>1$，选中子节点为 $m_s$ 的任意不同素因子集合 $S$，且每个 $p\in S$ 满足 $p\ge P$。不限制 $|S|$。则
+\[
+\sum_{p\in S}w(p)
+\le\frac{s}{P}\left(1+\frac{c}{\log P}\right)
+=Q(s,P)w(s),
+\qquad
+Q(s,P)=\frac{s^2}{P}\frac{1+c/\log P}{1+\log(3s)}.
+\tag{293.2}
+\]
+对 $s\ge10000$，若选中子节点满足平方间隙 $p\ge s^2/8$，则
+\[
+\sum_{p\in S}w(p)\le\frac78w(s).
+\tag{293.3}
+\]
+

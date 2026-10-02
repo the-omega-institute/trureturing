@@ -1,0 +1,49 @@
+**定理 303.2（少量新素轴的整个纤维一致安全）。** 假设302.1成立。对每个固定实数 $\eta$ 满足
+\[
+0\le\eta<d/2,
+\tag{303.11}
+\]
+存在 $L_0$，使全部整数 $L\ge L_0$、$H\ge1$ 满足
+\[
+\mathcal O_L(H)=\mathcal O_L(A_L),\qquad
+K_L(H)\le\eta\frac{m_L}{\log m_L}
+\tag{303.12}
+\]
+时，都有 $H>5040$ 且 $U_H<R(H)$。结论对 $H$ 没有高度上限，不另设非三素数的指数上限；三赋值仍固定为 $e_L$。更精确地，对每个 $\varepsilon>0$，同一个族最终一致满足
+\[
+\Delta(H)\ge E(d-2\eta)-\varepsilon.
+\tag{303.13}
+\]
+该余量估计的最终阈值还可依赖 $\varepsilon$。
+
+**证明。** 由（302.23）–（302.25），
+\[
+\mathscr F_L=E\bigl(\log m_L-\tfrac12\log2\bigr)+o(1),\qquad
+R(A_L)-\mathscr F_L=Ed+o(1).
+\tag{303.14}
+\]
+两式都是 §302 在固定解析输入下已得计算的中间后果，不新增 Mertens 误差假设。令
+\[
+q_L=\frac{2\eta m_L}{(m_L-2)\log m_L}.
+\tag{303.15}
+\]
+则 $q_L\to0$，且
+\[
+\mathscr F_Lq_L\longrightarrow2E\eta,
+\qquad
+\mathscr F_L(e^{q_L}-1)\longrightarrow2E\eta.
+\tag{303.16}
+\]
+第二式来自指数在零处的导数；它对 $\eta=0$ 也成立。因而
+\[
+R(A_L)-\mathscr F_Le^{q_L}
+\longrightarrow E(d-2\eta)>0.
+\tag{303.17}
+\]
+对所有（303.12）的实际整数，（303.4）给 $J_L(H)\le q_L$，并且 $R(H)\ge R(A_L)$，所以
+\[
+\Delta(H)\ge R(A_L)-\mathscr F_Le^{q_L}.
+\tag{303.18}
+\]
+右端仅依赖 $L$ 和固定 $\eta$，给一致余量（303.13）及最终严格性。由 $\log A_L\sim3m_L/4$、$H\ge A_L$，最终 $H>5040$。这里 $L_0$ 可依赖 $\eta$ 和解析输入；没有给跨所有 $\eta\uparrow d/2$ 的共同阈值。$\square$
+

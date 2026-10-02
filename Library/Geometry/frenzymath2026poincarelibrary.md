@@ -3849,3 +3849,129 @@ Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
 跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
 按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从粗稠密性构造逆映射与一般边界同胚
+
+设实际原 H³ 映射 F 在所有原点对上满足原距离上界
+`L*dist+K` 和下界 `a*dist-B`，其中 L、K 非负，a 严格为正，
+B 任意实数。再设 R 非负，且每个实际原目标点 q 都有原点 p
+使 `dist(F(p),q)≤R`。`h3_coarse_density_constructs_controlled_inverse`
+从这个实际粗稠密性逐点选择 G(q)，不再输入另一个受控 G。
+同一个实际选择的 G 满足 `dist(F(G(q)),q)≤R`，并由原 F 的
+距离下界导出 `dist(G(F(p)),p)≤max(0,(B+R)/a)`。
+原三角不等式与同一个 F 的距离双边控制还供应 G 自己的全局
+原距离上界 `(1/a)*dist+max(0,(B+2R)/a)`，以及下界
+`(1/(L+1))*dist-(K+2R)/(L+1)`；前者的系数和常数非负，
+后者的系数严格为正。两侧一致有界逆复合和 G 的控制均为
+构造结论，没有成为新的外部输入。
+
+这个选择的 G 不保证逐点等变。对每一对实际原等距映射
+e、e′，若同一个 F 在每个原点上满足 `F(e(p))=e′(F(p))`，
+`h3_coarse_inverse_approximate_intertwining` 则给出所有原点 q
+上的一致原距离界
+`dist(G(e′(q)),e(G(q)))≤max(0,(B+2R)/a)`。
+证明比较两个 F 像：它们与同一个 `e′(q)` 的原距离各至多 R，
+再应用同一个原 F 的距离下界。
+`h3_coarse_density_constructs_approximately_equivariant_inverse`
+保留实际构造的同一个 G、它自己的全局控制、双向逆复合界
+以及对所有上述原等距映射对的这一近似等变界。
+
+在上述同一个实际原 F 的全部条件和 R 粗稠密性下，
+`h3_coarse_density_constructs_general_equivariant_boundary_homeomorphism`
+实际构造同一个 G 与原归一化零光锥边界上的同胚 E。
+它使用已导出的 G 控制及双向逆复合界，而非输入 G 或 E。
+F 和 G 的整条实参数原射线像分别趋于 `E(b)` 与 `E.symm(b)`。
+从这些实际构造的整条实射线极限导出整数射线极限，再复用
+一般点族扩展，得到任意滤子 l、实际原点族 P 的双向结论：
+若 P 的原归一化坐标趋于原边界 b，则 F(P) 的原归一化坐标
+趋于 `E(b)`，G(P) 的原归一化坐标趋于 `E.symm(b)`。
+同一个 G、E 同时实现这些射线及一般点族极限；没有额外的
+F 连续性、G 连续性、Morse/射线追踪或滤子非底前提。
+任意滤子上的这段推导仍是收敛传递，不是极限唯一性断言。
+
+对每一对由同一个 F 在所有原点处联系的原实际等距映射
+e、e′，同一个 E 满足
+`E(action(e,b))=action(e′,E(b))`。
+`h3_boundary_homeomorphism_inverse_intertwining` 从这个同一个
+E 的逆关系代数地推出
+`E.symm(action(e′,c))=action(e,E.symm(c))`。
+逆边界映射的精确等变性由同一个 F 的原逐点关系和边界逆
+关系供应，没有假称实际选择的 G 具有原逐点精确等变性。
+对原给定群同构 d 的应用仍须由所构造的 F 在所有原点处
+联系同一个 d 对应的两侧原表示；本轮没有供应该原 h/d 的 F。
+
+三个完整模块串行本地 Lean 成功，共六项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+一次完整失败尝试保留并整次排除，包括其中的部分标准闭包
+和后续 `sorryAx` 诊断；没有接受失败尝试的任何闭包。
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，范围
+保留非紧尖点、非可定向情形、两侧原度量和原给定同伦等价
+诱导的同一个群同构 d。尚未从该原 h/d 构造具有上述距离
+控制和粗稠密性的 F，也没有迫使同一个边界映射保持原交比。
+条件下的实际 G 和边界同胚不等于原目标实例已构造。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
+按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从水平数据构造原 H³ 高度保持映射
+
+`h3HorizontalHeightExtension T` 将实际水平映射 `T : ℂ → ℂ`
+延伸到实际原 H³：水平坐标变为 T 的像，严格正的原高度保持。
+若 C、D 都至少为 1，且所有水平点对 z、w 满足欧氏距离上界
+`dist(T(z),T(w))≤C*dist(z,w)` 与反向界
+`dist(z,w)≤D*dist(T(z),T(w))`，
+`h3_horizontal_height_extension_native_distance_controls` 就在所有
+原 H³ 点对 p、q 上推导原双曲距离双边界：
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`。
+F 是上述同一个实际高度保持延伸；双曲距离控制是推导结论，
+没有作为水平输入条件。证明用原坐标的精确 cosh 距离式、
+复数欧氏距离平方、严格正的高度分母及 cosh 加法公式。
+`h3_horizontal_height_extension_surjective` 还从 T 的实际满射性
+构造同一个 F 的实际原 H³ 满射性；目标高度保持为原正高度。
+这个满射结论本身不需要 C、D 或水平距离控制。
+
+对每一对实际原等距映射 e、e′，若它们在原 Lorentz 表示中
+都将原无穷远零光锥标架射线按同一个 a 缩放，且所有水平点 z
+满足 `T(h3InfinityHorizontalMap(e,z))=h3InfinityHorizontalMap(e′,T(z))`，
+`h3_horizontal_height_extension_intertwines_original_isometries`
+就在每个实际原 H³ 点 p 上推导
+`F(e(p))=e′(F(p))`。它用实际原等距作用的水平坐标与高度律，
+推导原逐点关系，没有再输入 F 的逐点等变性；没有加入定向
+保持条件。同一个缩放 a 的正性由实际原射线固定关系供应。
+这段等变推导自身不需要 T 的双边距离控制或满射性。
+
+`h3PeriodBasisHorizontalEquiv b b′` 从两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ` 构造同一个实际连续实线性
+等价 T；`h3PeriodBasisHeightExtension b b′` 是它的原 H³ 高度
+保持延伸 F。`h3_period_bases_construct_controlled_surjective_translation_map`
+不再输入 T、F 或水平距离控制，而是从这两组有同一索引配对
+的基实际构造它们。T 与 T.symm 的算子范数给出各自的常数
+`C=max(1,‖T‖)`、`D=max(1,‖T.symm‖)`，推导同一个 F 的上述
+所有原 H³ 距离双边界和实际满射性。对每个整数系数族
+`m : Fin 2 → ℤ` 及每个原 H³ 点 p，同一个 F 精确联系实际
+水平平移：源平移向量是 `∑j (m(j):ℝ)•b(j)`，目标平移向量
+是使用同一个 m 的 `∑j (m(j):ℝ)•b′(j)`。这些平移的逐点关系
+来自所构造的同一个基等价的线性性，没有输入该原 F 的
+平移等变性。两组实基及同一索引的配对仍是明示的周期输入，
+本轮没有从原 h/d 构造尖点上的这两组周期基。
+
+三个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+四次完整失败尝试全部排除；其中的部分标准闭包、`sorryAx`
+诊断及警告均未接收。仅修正距离平方规范化、实基类型的
+命名空间、反向算子范数界的常数推断及原正高度证明的显式参数，不改变数学条件和
+目标陈述，不压制诊断。
+
+前两个模块以实际水平 T 及明示的水平控制、满射或等变条件
+为相应输入；第三个模块从明示的两组实基构造 T、F 及全部
+距离控制、满射性和上述全部整数周期关系。尚未为原给定同伦等价诱导的同一个全甲板群
+同构 d 构造尖点水平映射 T，也没有完成尖点与紧核心的原
+全局等变拼接或迫使原交比保持。完整有限体积 Mostow–Prasad
+仍为 **ACTIVE/INCOMPLETE**，保留非紧尖点、非可定向情形、
+两侧原度量及原 h 所诱导的同一个 d。Lean 源仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

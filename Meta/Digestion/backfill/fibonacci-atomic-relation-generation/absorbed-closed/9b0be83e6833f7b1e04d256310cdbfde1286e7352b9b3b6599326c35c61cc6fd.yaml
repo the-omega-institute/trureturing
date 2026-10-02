@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9b0be83e6833f7b1e04d256310cdbfde1286e7352b9b3b6599326c35c61cc6fd
+  normalized_sha256: sha256:9b0be83e6833f7b1e04d256310cdbfde1286e7352b9b3b6599326c35c61cc6fd
+cas_ref: sha256:9b0be83e6833f7b1e04d256310cdbfde1286e7352b9b3b6599326c35c61cc6fd
+coverage_gids:
+  - gid: D5/S3/Analytic/Asymptotics/LogarithmicPhaseStiffness.logarithmic_phase_stiffness
+    target_statement_id: sha256:6386b51acfc901c1c179a7683b87d0972885af8945f0dc33fb8f3af9c46b3c90
+receipts:
+  unresolved_subitems: []

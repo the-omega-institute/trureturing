@@ -1,0 +1,15 @@
+**定理 310.1（有限代表与完整半区间上的余量下界）。** $I_L$ 存在且由 $\mathcal C_L$ 中的一个截止取得。取非负参数 $\epsilon_L,\delta_L$，并假定该实际 $L$ 上（309.4）对全部半区间截止及其 $v$ 域成立。若另有
+\[
+\ell\ge10000,\quad 0\le\epsilon_L\le10^{-3},\quad
+0\le\delta_L\le\rho/1000,\quad
+\frac{99}{100}\le\alpha_L,\chi_L\le\frac{101}{100},
+\tag{310.4}
+\]
+则对全部 $m/2\le z\le m$，一致有
+\[
+G_L(z)\ge q_L(z)\beta_L+\frac{t_L(z)^2}{32}
+-3\delta_Lt_L(z)-\delta_L^2-\frac6{\rho^2}.
+\tag{310.5}
+\]
+这里的下界覆盖完整半区间，不预先限制 $t_L(z)$。
+
