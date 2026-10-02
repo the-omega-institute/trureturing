@@ -41,12 +41,6 @@ internal sealed class RealExtensionDocument : IScribeDocumentDefinition
             Definition("real-module", "realModule", "The actual right-continuous extension",
                 "Compose the cell selector with the zero-prefix diagram. Cells include their left "
                     + "breakpoint. The last actual object continues for all later real times."),
-            Definition("finite-module", "finiteModule", "The actual finite functor",
-                "Embed the original finite indices into WithBot and use the same zero-prefix diagram."),
-            Definition("sampling-iso", "samplingIso", "Recover the original diagram by sampling",
-                "At every input breakpoint the selector equals the corresponding original index. "
-                    + "Whiskering that order-category isomorphism gives the actual natural sampling "
-                    + "isomorphism. The empty case requires no chosen breakpoint."),
             Definition("real-family", "realFamily", "Positive intervals from the constructed finite basis",
                 "Birth is the basis birth breakpoint. Death is the next breakpoint after the last "
                     + "supported vertex when one exists, and infinity otherwise. Ordered basis supports "

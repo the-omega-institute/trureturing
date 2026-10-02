@@ -141,32 +141,6 @@ noncomputable def cellFunctor (grid : Breakpoints n) : ℝ ⥤ WithBot (Fin n) :
 noncomputable def realModule (diagram : Diagram K V) (grid : Breakpoints n) :
     ℝ ⥤ ModuleCat.{v} K := cellFunctor grid ⋙ zeroPrefix diagram
 
-noncomputable def finiteModule (diagram : Diagram K V) : Fin n ⥤ ModuleCat.{v} K :=
-  (show Monotone (fun index : Fin n => (index : WithBot (Fin n))) from
-    fun _ _ ordered => WithBot.coe_le_coe.mpr ordered).functor ⋙ zeroPrefix diagram
-
-noncomputable def samplingIso (diagram : Diagram K V) (grid : Breakpoints n) :
-    grid.increasing.monotone.functor ⋙ realModule diagram grid ≅ finiteModule diagram := by
-  classical
-  have sample : ∀ index, cell grid (grid.time index) = (index : WithBot (Fin n)) := by
-    intro index
-    apply le_antisymm
-    · apply Finset.sup_le
-      intro other _
-      by_cases born : grid.time other ≤ grid.time index
-      · simp [born, grid.increasing.le_iff_le.mp born]
-      · simp [born]
-    · have included := Finset.le_sup (f := fun other =>
-        if grid.time other ≤ grid.time index then (other : WithBot (Fin n)) else ⊥)
-        (Finset.mem_univ index)
-      change (index : WithBot (Fin n)) ≤ Finset.univ.sup _
-      simpa only [if_pos le_rfl] using included
-  let embedding := (show Monotone (fun index : Fin n => (index : WithBot (Fin n))) from
-    fun _ _ ordered => WithBot.coe_le_coe.mpr ordered).functor
-  let cells : grid.increasing.monotone.functor ⋙ cellFunctor grid ≅ embedding :=
-    NatIso.ofComponents (fun index => eqToIso (sample index)) (fun _ => Subsingleton.elim _ _)
-  exact CategoryTheory.Functor.isoWhiskerRight cells (zeroPrefix diagram)
-
 noncomputable def realFamily (diagram : Diagram K V)
     (basis : FiniteIntervalDecomposition.IntervalBasis diagram) (grid : Breakpoints n) :
     RealIntervalUniqueness.IntervalFamily (ULift.{v} basis.Occurrence) where

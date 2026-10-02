@@ -9,8 +9,8 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/HomologicalAlgebra/bauer2015persistence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Construct the actual natural finite interval-sum decomposition of a real finite-chain extension.",
-        H("Actual Natural Real Decomposition"),
+        "Construct and uniquely classify the actual natural real interval-sum decomposition.",
+        H("Actual Natural Real Classification"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("decomposition"), DeclarationHandle.Create(Prefix + "Decomposition"),
@@ -24,8 +24,9 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                         + "independent universes; it changes neither the maps nor the field."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("decompose"), DeclarationHandle.Create(Prefix + "decompose"),
-                H("Apply the supplied constructive basis and coordinate suppliers"),
+                DescribeId.Create("exists-unique-decomposition"),
+                DeclarationHandle.Create(Prefix + "exists_unique_decomposition"),
+                H("Existence and uniqueness against arbitrary finite competitors"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -38,11 +39,17 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                             + "sum give component isomorphisms. The existing occurrence naturality "
                             + "equations give all real arrow squares, including the zero prefix "
                             + "and unrestricted final tail. An empty or zero chain has an empty "
-                            + "occurrence set. This necessary object constructor is supplier "
-                            + "transport, not an additional content theorem or escape witness.")),
+                            + "occurrence set. These coordinate suppliers are applied inside "
+                            + "the substantive classification proof, not retained as a separate wrapper.")),
                     Paragraph(Text(
-                        "Uniqueness is a distinct actual-image and common-endpoint-cut result. "
+                        "Every competing finite positive-length interval family, with arbitrary "
+                            + "real births and finite or infinite deaths, that is naturally isomorphic "
+                            + "to the same actual module has the same endpoint occurrence counts. "
+                            + "Component isomorphisms and naturality transport actual image ranks "
+                            + "using the pinned range and finrank suppliers. The proof constructs "
+                            + "the surviving-coordinate image equivalence, then uses common finite "
+                            + "endpoint cuts and integer differences to isolate each multiplicity. "
                             + "Induced matching, quantitative estimates, exact interleaving iff "
                             + "matching and extended isometry remain separate obligations."))),
-                DescribeRole.Definition))));
+                DescribeRole.Theorem))));
 }
