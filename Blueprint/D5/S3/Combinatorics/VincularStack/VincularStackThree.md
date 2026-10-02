@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/VincularStack/VincularStackThree.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/VincularStack/VincularStackThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhao-vincular-stack-three-sorting-classes` (proved) by `D5/S3/Combinatorics/VincularStack/VincularStackThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhao-vincular-stack-three-sorting-classes","declaration_gid":"D5/S3/Combinatorics/VincularStack/VincularStackThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* William Zhao (2024). *Stack-sorting with Stacks Avoiding Vincular Patterns*. DOI: [10.1016/j.disc.2025.114834](https://doi.org/10.1016/j.disc.2025.114834). URL: <https://arxiv.org/abs/2410.17057v1>.
