@@ -6177,3 +6177,492 @@ $U_1\ge\log(125/98)^2/200>10^{-4}$，且 $U_0\ge K/4>10^{-4}$，选根二。式�
 始终输出根二的 plug-in 后验已经由引理51.6给有用风险上界；本节在其相同的参数生成信息上，用式（51.22）添加低根资格而不另建拟合问题。实际新连接是这个具体 FIB 正实验的严格有限相位底、完整记录样本尺度、带符号跨律恒等式与共同选择路径，属于仓内普通综合推导。它不主张一般统计工具或边界选模现象的新原创性，不具有新增 Lean kernel 证明身份，不认证未知教师学习、一般神经网络训练、梯度优化、因果发现、隐藏标签多视图恢复、有限精度或总资源最优性。准确相位、参数识别和有限容差预测三个要求始终分开。
 
 ## 追加锚（本行以下为增补区）
+
+## 52. 未知选定窗口教师的联合辨识、结构恢复与弱信号预测门
+
+本节把 §50–§51 的“教师已知、只估计标量”改成一个具体的未知教师问题。对象仍是完整五窗记录，不把被跳过的窗口改写成首次失败诊断。固定
+
+$$
+\Sigma=\{000,100,010,101,001\},\qquad
+h(x)=x_2,\quad \ell(x)=x_0,
+$$
+
+位按原卷 §104 的低到高顺序读取；不同窗口独立，窗口内的 $h,\ell$ 保持实际相关性。对 $n\ge3$，未知参数是有序三元组
+$\theta=(p,q,r)$，$1\le p<q<r\le n$，以及独立于输入、开始采样前固定的 $\alpha\in[0,1]$。写
+
+$$
+G_{1,\theta}=h_p\ell_q,qquad
+G_{2,\theta}=(1-G_{1,\theta})h_q\ell_r,qquad
+C_\theta=G_{1,\theta}+2G_{2,\theta},
+$$
+
+并令 $Q$ 为式（50.2）的三行无噪声后验矩阵，$u=(1/3,1/3,1/3)$，$w_c=Q_{c,\cdot}-u$。实际观测律为
+
+$$
+P_{\theta,\alpha}(x,y)=5^{-n}\bigl(u+\alpha w_{C_\theta(x)}\bigr)_y.
+\tag{52.1}
+$$
+
+这仍只观察 $Y$；不存在退化前标签、未知输入分布、可自由置换的类名或概率后适配器。由实际五符号律和窗口独立性，所有 $\theta$ 都有相同的类质量
+
+$$
+\pi=(\pi_0,\pi_1,\pi_2)=\left(\frac{89}{125},\frac4{25},\frac{16}{125}\right).
+\tag{52.2}
+$$
+
+其中 $\mathbb E[h]=\mathbb E[\ell]=2/5$、$\mathbb E[h\ell]=1/5$；后一等式是窗口内相关性的必要部分。§104 给出这五种窗口及正值规范窗口的原子语义，§44 给出相同全树合同下的共同供应器。本节的三种量词分开：辨识是总体联合律相等时的断言，结构恢复是在给定正信号下的有限样本概率断言，预测是训练后固定参数对独立同律测试的总体风险断言。
+
+### 52.1. 总体联合辨识与信号为零的碰撞
+
+先使用与 $\theta$ 无关的标签边际。令
+$Z=\mathbf1_{\{Y=0\}}-\mathbf1_{\{Y=2\}}$。由 $Q$ 的三行和式（52.2），
+
+$$
+\mathbb E_{\theta,\alpha}[Z]
+=\kappa\alpha,qquad
+\kappa=\frac{73(\sqrt2-1)}{125}>0.
+\tag{52.3}
+$$
+
+同样，
+
+$$
+P_{\theta,\alpha}(Y=2)=\frac13-\rho\alpha,qquad
+\rho=\frac{534\sqrt2-629}{750}>0,
+\tag{52.4}
+$$
+
+因为 $P_{\theta,1}(Y=2)=(293-178\sqrt2)/250$。故总体边际先唯一确定 $\alpha$；这个结论使用固定输入边缘和固定类模板，不能推广成任意未知教师、任意未知输入律下的未知噪声辨识。
+
+对 $\alpha>0$，$u+\alpha w_0,u+\alpha w_1,u+\alpha w_2$ 三行两两不同，并且其最大坐标分别仍为 $0,1,2$。因此若
+$P_{\theta,\alpha}=P_{\eta,\beta}$，式（52.4）先给 $\alpha=\beta$，再由全支撑的 $X$ 边缘得到
+$C_\theta(x)=C_\eta(x)$ 对所有 $x\in\Sigma^n$ 成立。下面的协方差指纹使三个位点及其有序角色唯一确定，所以 $\theta=\eta$。反之，$\alpha=0$ 时所有三元组都给同一个均匀标签联合律；当 $n=3$ 时参数空间本来只有一个三元组。于是对 $n\ge4$ 有精确的总体碰撞结论
+
+$$
+P_{\theta,\alpha}=P_{\eta,\beta}\iff
+\alpha=\beta\ \text{且}\ (\alpha=0\ \text{或}\ \theta=\eta).
+\tag{52.5}
+$$
+
+由后验向量做
+$[q_\alpha-(1-\alpha)u]/\alpha$ 只是正概率向量的代数逆变换；它不恢复某一次随机的退化前标签。形式上的反向矩阵在 $0<\alpha<1$ 时有负的非对角元，故不能作为隐藏标签的随机反演器；$\alpha=0$ 完全抹去教师信号。
+
+### 52.2. 协方差指纹与精确重叠间隙
+
+**引理 52.1（角色指纹）。** 对任意 $\theta=(p,q,r)$，令协方差在完整输入律下计算，则
+
+$$
+\begin{array}{c|ccc}
+ i & p & q & r\\ \hline
+\operatorname{Cov}(h_i,C_\theta)&36/625&106/625&16/625\\
+\operatorname{Cov}(\ell_i,C_\theta)&6/625&56/625&96/625
+\end{array}
+\tag{52.6}
+$$
+
+而对所有 $i\notin\{p,q,r\}$ 两项均为零。特别地，$\{p,q,r\}$ 是非零坐标的支撑，三种非零向量又区分低位角色、中间角色和高位角色。
+
+**证明。** 记 $a=h_p,b=\ell_q,c=h_q,d=\ell_r$。直接展开
+$C=ab+2cd-2abcd$，并使用跨窗独立和
+$\mathbb E[h]=\mathbb E[\ell]=2/5$、$\mathbb E[h\ell]=1/5$。有
+
+$$
+\mathbb E[C\mid a]=\frac8{25}+\frac6{25}a,qquad
+\mathbb E[C\mid d]=\frac4{25}+\frac{16}{25}d,
+$$
+
+以及
+
+$$
+\mathbb E[C\mid b,c]=\frac25b+\frac45c-\frac8{25}bc.
+$$
+
+代入 $\operatorname{Var}(h)=\operatorname{Var}(\ell)=6/25$ 和实际的 $bc$ 矩即可得（52.6）；未出现的窗口与 $C$ 独立。证毕。$\square$
+
+为量化不同三元组的可分性，令
+
+$$
+\begin{aligned}
+D(\theta,\eta)&=P_X\{C_\theta\ne C_\eta\},\\
+\Gamma(\theta,\eta)&=\mathbb E_X\left[\frac12-Q_{C_\theta(X),C_\eta(X)}\right],\\
+T(\theta,\eta)&=\mathbb E_X\left\|Q_{C_\theta(X),\cdot}-Q_{C_\eta(X),\cdot}\right\|_2^2.
+\end{aligned}
+\tag{52.7}
+$$
+
+这里 $Q_{c,d}$ 是无噪声行 $c$ 在标签 $d$ 的坐标。先看 $G_1$ 的前两位。两个不同有序对的交集质量分别在“同角色共用一个位置、交叉共用一个位置、完全不共用位置”三种情形为 $8/125,4/125,16/625$；因为每个 $G_1$ 的质量都是 $4/25$，对应的异或质量为
+
+$$
+\frac{24}{125},\qquad \frac{32}{125},\qquad \frac{168}{625}.
+\tag{52.8}
+$$
+
+若前两位相同而 $r\ne r'$，差异只发生在
+$(1-h_p\ell_q)h_q$ 通过两个不同的 $\ell$ 位时。该门的质量为 $8/25$，两个独立低位不同的概率为 $12/25$，故
+
+$$
+D(\theta,\eta)=\frac{96}{625}
+\quad(p,q\text{ 相同},\ r\ne r'),
+$$
+
+而第一种情形至少为 $24/125$。所以对 $n\ge4$ 的不同三元组
+
+$$
+\inf_{\theta\ne\eta}D(\theta,\eta)=\frac{96}{625}.
+\tag{52.9}
+$$
+
+这已经给出结构不同与噪声标量的分离，但还要保留实际标签行的权重。令 $A=\sqrt2-1$、$\chi=A^2=3-2\sqrt2$、$D_*=\chi/2$。若前两位不同，类1差异的两个方向质量相同；从真实类1流向非1的匹配亏量为 $1/4$，从真实非1流入类1的亏量为
+$1/2-(\sqrt2-1)=D_*$。因此由（52.8）
+
+$$
+\Gamma(\theta,\eta)
+\ge \frac12\left(D_*+\frac14\right)\frac{24}{125}
+=\frac{3(7-4\sqrt2)}{125}=:\Gamma_*.
+\tag{52.10}
+$$
+
+若只有 $r$ 改变，额外差异是类0与类2的交换，每点亏量为 $A$，故其匹配间隙为 $96A/625>\Gamma_*$. 这是所有不同三元组的精确下界，等号由 $(1,3,4)$ 与 $(2,3,4)$ 取得。
+
+同样，类1与端点类的行平方距离均为
+
+$$
+d_{\rm row}=\frac{63}{8}-\frac{11\sqrt2}{2},
+$$
+
+端点类0与类2的平方距离为 $2\chi$。由（52.8）及后者的 $r$ 情形，得到
+
+$$
+\inf_{\theta\ne\eta}T(\theta,\eta)
+=\frac{24d_{\rm row}}{125}
+=\frac{189-132\sqrt2}{125}=:T_*.
+\tag{52.11}
+$$
+
+等号仍由 $(1,3,4),(2,3,4)$ 取得；同前两位而只改 $r$ 时平方距离为 $192\chi/625>T_*$. 后文只需一个便于书写的正下界，置
+
+$$
+ d_0:=\frac1{100}<T_*.
+\tag{52.12}
+$$
+
+式（52.8）–（52.11）是对第一对不同和同第一对不同两类的解析证明。任意一对候选只依赖至多六个并集窗口，故把这六窗枚举作为外部反例和常数核验的充分约化；有限枚举本身不替代这里的全称证明。
+
+### 52.3. 一个不需要已知 $\alpha$ 的一向量恢复器
+
+对每个位置定义
+
+$$
+\psi_i=\frac{9h_i+2\ell_i}{11}-\frac25,qquad
+J_i=-\psi_i Z.
+\tag{52.13}
+$$
+
+由（52.3）和（52.6），在三种活动角色上的均值依次为
+
+$$
+\mathbb E[J_i]=
+\begin{cases}
+\alpha\tau,&i=p\text{ 或 }i=r,\\
+\alpha\,1066(\sqrt2-1)/6875,&i=q,\\
+0,&i\notin\{p,q,r\},
+\end{cases}
+\qquad
+\tau=\frac{336(\sqrt2-1)}{6875}=0.0202437464665\ldots .
+\tag{52.14}
+$$
+
+每个 $J_i$ 落在 $[-3/5,3/5]$。恢复器只保存一个长度为 $n$ 的经验向量 $\overline J_i$，选取其中最大的三个位置，按固定索引顺序破平，再排序为
+$\widehat\theta=(\widehat p,\widehat q,\widehat r)$。它不使用 $\alpha$、下界 $a$ 或候选三元组表。
+
+**定理 52.2（正信号下的结构恢复）。** 对 $n\ge4$、$0<a\le1$、$0<\delta<1$，若
+
+$$
+ m\ge
+\left\lceil
+\frac{72}{25\tau^2a^2}\log\frac{2n}{\delta}
+\right\rceil,
+\tag{52.15}
+$$
+
+则
+
+$$
+\inf_{\theta\in\Theta_n,\,\alpha\in[a,1]}
+P_{\theta,\alpha}^{m}\{\widehat\theta=\theta\}\ge1-\delta.
+\tag{52.16}
+$$
+
+恢复器本身不需要知道 $a$；$a$ 只出现在统一预算中。对每个固定的 $\alpha>0$，同一规则逐点强一致；式（52.16）不声称在 $\alpha\downarrow0$ 时仍有统一结构准确性。
+
+**证明。** Hoeffding 对区间长度 $6/5$ 的 $J_i$ 给出
+$P(|\overline J_i-\mathbb E J_i|\ge e)\le2\exp(-25me^2/18)$。取
+$e=a\tau/2$ 并对 $n$ 个坐标作并集界；在该事件上每个活动均值至少为 $a\tau$，每个非活动均值为零，故三个活动坐标严格排在所有非活动坐标之前。证毕。$\square$
+
+标量仍可由同一记录流式估计。令
+
+$$
+\overline Z=m^{-1}\sum_{j=1}^m Z_j,qquad
+\widehat\alpha=\operatorname{clip}_{[0,1]}(\overline Z/\kappa).
+\tag{52.17}
+$$
+
+因为 $Z\in[-1,1]$，对任意 $r>0$
+
+$$
+P_{\theta,\alpha}^{m}\{|\widehat\alpha-\alpha|>r\}
+\le2\exp\left(-\frac{m\kappa^2r^2}{2}\right).
+\tag{52.18}
+$$
+
+这个边际标量估计在学习 $\theta$ 以前仍有效；§51 的已知教师匹配计数没有被移植成未知教师的充分统计量。
+
+### 52.4. 完整记录的信息下界
+
+令 $N=\binom n3$，对允许参数无关随机化的完整记录规则 $\mathcal A$ 定义
+
+$$
+R_m(n,a)=\inf_{\mathcal A}\sup_{\theta\in\Theta_n,\,\alpha\in[a,1]}
+P_{\theta,\alpha}^{m}\{\mathcal A\ne\theta\}.
+$$
+
+记
+
+$$
+S=\sum_{c=0}^2\pi_c\|w_c\|_2^2
+=\frac{452-315\sqrt2}{75}=0.0869697046997\ldots .
+\tag{52.19}
+$$
+
+令 $P_0$ 为输入仍按 $5^{-n}$、标签独立均匀的参考律。它不必属于 $[a,1]$，只是信息论参考。逐坐标的 $\mathrm{KL}\le\chi^2$ 和张量化给
+
+$$
+\mathrm{KL}(P_{\theta,a}^{m}\Vert P_0^{m})
+\le3mSa^2.
+$$
+
+所以完整记录的 Fano 下界为
+
+$$
+R_m(n,a)\ge
+\left[1-\frac{3mSa^2+\log2}{\log N}\right]_+.
+\tag{52.20}
+$$
+
+这一步没有假设（52.13）是充分统计量。另一方面取近邻
+$\theta=(1,2,3)$、$\eta=(1,2,4)$，它们只有类0、2在质量 $96/625$ 的集合上交换。对同一 $a$，完整记录的单样本 KL 正好是
+
+$$
+\frac{96}{625}aA\lambda(a),qquad
+\lambda(a)=\log\frac{2+a}{2+(7-6\sqrt2)a},
+$$
+
+且 $0\le\lambda(a)\le2a\log(1+\sqrt2)$。因此
+
+$$
+\mathrm{KL}(P_{\theta,a}^{m}\Vert P_{\eta,a}^{m})
+\le c_{\rm pair}ma^2,qquad
+c_{\rm pair}=\frac{192(\sqrt2-1)\log(1+\sqrt2)}{625}
+=0.1121516216098\ldots .
+\tag{52.21}
+$$
+
+任意规则若在这两个参数上的错误都不超过 $\delta<1/2$，则
+
+$$
+ m\ge\frac{\operatorname{kl}(1-\delta,\delta)}{c_{\rm pair}a^2}.
+\tag{52.22}
+$$
+
+所以在 $n\ge4$、$0<\delta\le1/4$ 时，必要项包含 $a^{-2}\log N$ 和 $a^{-2}\log(1/\delta)$，与（52.15）的 $a^{-2}[\log n+\log(1/\delta)]$ 阶相合，常数不作最优声称。对 $\alpha\in[0,1]$ 的有限样本 minimax 错误至少为 $1-1/N$；即使把参数域改成 $(0,1]$，令 $\alpha\downarrow0$ 的连续性仍给同一下确界，均匀随机猜测达到它。所有有限记录律的点概率均为正，故 $n\ge4$ 时不存在无分离条件下的有限样本概率一的结构恢复。
+
+### 52.5. 错误教师的真实 proper-risk 费用
+
+对任意真实 $\theta$、候选 $\eta$ 和 $\alpha,\beta\in[0,1]$，置
+
+$$
+J_{\theta\eta}=\mathbb E_X\|w_{C_\theta(X)}-w_{C_\eta(X)}\|_2^2
+=T(\theta,\eta).
+$$
+
+若部署后验为 $q_\beta(C_\eta(X))$，则在同一三类质量（52.2）下有精确的跨律恒等式
+
+$$
+\begin{aligned}
+\Delta_B(\theta,\alpha;q_\beta\circ C_\eta)
+ &=S(\alpha-\beta)^2+\alpha\beta J_{\theta\eta},\\
+\Delta_{\log}(\theta,\alpha;q_\beta\circ C_\eta)
+ &=D_F(\alpha,\beta)
+ +\frac{\alpha}{\beta}
+ \mathrm{KL}(P_{\theta,\beta}\Vert P_{\eta,\beta}),\qquad \beta>0.
+\end{aligned}
+\tag{52.23}
+$$
+
+其中 $D_F$ 是式（51.17）的参数 Bregman 项；当 $\beta=0$ 时第二式的结构项按连续意义为零，实际后验是均匀向量。式（52.23）把噪声估计误差和教师位置误差分开，且第二项在 $\alpha\beta>0$、$\theta\ne\eta$ 时严格为正。由（52.11），它至少包含 $\alpha\beta d_0$ 的 Brier 结构费用。
+
+例如 $\theta=(1,2,3)$、$\eta=(1,2,4)$、$\beta=\alpha>0$ 时，
+
+$$
+\Delta_B=\frac{192\chi}{625}\alpha^2,qquad
+\Delta_{\log}=\frac{96}{625}\alpha A\lambda(\alpha)>0.
+\tag{52.24}
+$$
+
+在 $\alpha=1$，两数分别为 $0.0527071872780\ldots$ 与
+$0.1121516216098\ldots$。所以即使噪声标量完全已知，错误的学习三元组也会在真实测试律上付出结构费用；它不能被已知教师的条件保证静默吸收。
+
+### 52.6. 同一事件上的弱信号预测门
+
+恢复和预测共用一份记录，不作样本分割。令
+
+$$
+ e=\sqrt{\frac{18}{25m}\log\frac{4n}{\delta}},qquad
+ r=\sqrt{\frac{2}{m\kappa^2}\log\frac4\delta},
+$$
+
+并定义事件
+
+$$
+\mathcal E=\left\{\max_i|\overline J_i-\mathbb E J_i|\le e,\quad
+|\widehat\alpha-\alpha|\le r\right\}.
+\tag{52.25}
+$$
+
+由两个并集界，$P_{\theta,\alpha}^m(\mathcal E)\ge1-\delta$。令
+$\varepsilon_0=\min\{\varepsilon,K/4\}$，其中
+$K=(4+105\sqrt2)/450$ 是 §51 的统一曲率常数。若
+
+$$
+ m\ge\left\lceil\max\left{
+\frac{32K}{\kappa^2\varepsilon_0}\log\frac4\delta,
+\frac{288K}{25\tau^2\varepsilon_0}\log\frac{4n}{\delta}
+\right\}\right\rceil,
+\tag{52.26}
+$$
+
+则在 $\mathcal E$ 上
+
+$$
+ r\le\frac14\sqrt{\frac{\varepsilon_0}{K}},qquad
+ e\le\frac{\tau}{4}\sqrt{\frac{\varepsilon_0}{K}}.
+\tag{52.27}
+$$
+
+由 $\beta=\widehat\alpha$ 写 $u_I=\min(1,\beta+r)$，并计算三个证书
+
+$$
+U_0=Ku_I^2,qquad
+U_1=Kr^2+\frac{g_\beta^2}{200}+\frac{rg_\beta}{75},qquad
+U_2=Kr^2,
+\tag{52.28}
+$$
+
+其中 $g_\beta$ 是 §51.7 的 secant 几何位移。固定选择规则为：若 $U_0\le\varepsilon_0$ 选均匀根 $p^{(0)}=u$；否则若 $U_1\le\varepsilon_0$ 选 §51.7 的标量 secant 头 $p^{(1)}_\beta$；否则选根二的
+$p^{(2)}_\beta=q_\beta(C_{\widehat\theta})$。等号归前一支。
+
+在 $\widehat\theta=\theta$ 的事件上，必须保留 §51.7 的带符号跨律项，而不能只相加绝对值：
+
+$$
+\begin{aligned}
+\Delta_{\log}(\theta,\alpha;p^{(1)}_\beta)
+ &=D_F(\alpha,\beta)+L_\beta
+   +\frac{(\alpha-\beta)g_\beta}{75},\\
+\Delta_B(\theta,\alpha;p^{(1)}_\beta)
+ &=S(\alpha-\beta)^2+\frac6{25}e_\beta^2
+   +\frac2{25}(\alpha-\beta)e_\beta,
+\end{aligned}
+\tag{52.29}
+$$
+
+式中 $0\le L_\beta\le g_\beta^2/200$、$0\le e_\beta\le g_\beta/8$，并且 $0\le g_\beta\le6A\beta(1-\beta)$。故（52.28）同时控制两种总体超额；它是 §51 的已知教师恒等式在已证明恢复事件上的应用。
+
+**定理 52.3（未知教师的统一训练—测试保证）。** 对每个 $n\ge3$、$\theta\in\Theta_n$、$\alpha\in[0,1]$、固定准入树、$\varepsilon>0$ 和 $0<\delta<1$，若（52.26）成立，则上述单次训练选择器满足
+
+$$
+P_{\theta,\alpha}^{m}\left\{
+\Delta_{\log}(\theta,\alpha;p_{D_m})\le\varepsilon,
+\quad
+\Delta_B(\theta,\alpha;p_{D_m})\le\varepsilon
+\right\}\ge1-\delta.
+\tag{52.30}
+$$
+
+这里的测试期望对独立同律 $X$ 取，$p_{D_m}$ 在训练后固定；没有把训练样本重新当测试样本。
+
+**证明。** 在 $\mathcal E$ 上，若 $U_0>\varepsilon_0$，则
+$\beta+r>\sqrt{\varepsilon_0/K}$。结合（52.27），
+
+$$
+\alpha\ge\beta-r>\frac12\sqrt{\frac{\varepsilon_0}{K}},qquad
+\alpha\tau>2e.
+$$
+
+定理52.2的同一最大偏差事件遂给出 $\widehat\theta=\theta$；因此所有非零根分支只在已证明的正确教师上调用（52.29）。若 $U_0$ 合格，§51.6 的参数曲率界直接控制均匀后验。根二的 $U_2$ 总是合格，故选择总有定义。端点 $\alpha=0$ 时 $u_I\le2r$，根零合格；$\alpha=1$ 时 $g_\beta\le6Ar$，并以
+
+$$
+C_1=K+\frac{9\chi}{50}+\frac{2A}{25},qquad
+4K-C_1=\frac{49\sqrt2}{50}-\frac{13}{30}>0
+$$
+
+得到根一合格。于是（52.29）、（51.17）和（52.28）在同一事件上给两种超额不超过 $\varepsilon_0\le\varepsilon$，而事件失败概率至多 $\delta$。证毕。$\square$
+
+这个证明把结构恢复、端点相位和总体预测分别量化：弱信号时可以合法选择根零，但没有把有限数据下的准确结构相位认证成定理。若事件 $\mathcal E$ 失败，或部署到未恢复的 $\widehat\theta\ne\theta$，则不赋予已知教师保证；（52.23）给出实际错误教师的结构项，且所有输出概率坐标至少为
+$D=(3-2\sqrt2)/2$，从而失败分支逐次满足
+
+$$
+\Delta_{\log}\le\log(1/D),qquad \Delta_B\le2.
+\tag{52.31}
+$$
+
+因此把失败分支计入训练随机性后，期望超额还可写成
+$\varepsilon+\delta\log(1/D)$ 和 $\varepsilon+2\delta$ 的显式上界；这不是把失败样本删掉，而是单独收费。对任意错误三元组，根二的精确 Brier 式（52.23）仍保留 $\alpha\beta J_{\theta\eta}$，根一只在定理52.3已经证明的恢复事件上使用（52.29）。
+
+### 52.7. 预测样本下界与全树实现收费
+
+取 $0<\varepsilon\le d_0/9$，令
+$\alpha_*=3\sqrt{\varepsilon/d_0}$。由（52.11）任意两个目标后验在
+$L^2(P_n)$ 中的距离至少为 $3\sqrt\varepsilon$。因此半径 $\sqrt\varepsilon$ 的 Brier 好球互不相交；对任意学习器把输出归到最近目标，再对完整记录使用（52.20）的同一参考律，得到
+
+$$
+ m\ge
+\frac{d_0\bigl((1-\delta)\log N-\log2\bigr)}{27S\varepsilon}
+\quad\text{当分子为正时}.
+\tag{52.32}
+$$
+
+这一下界允许任意预测器，不假设候选表、扫描统计量或树模型。另取固定 $\theta$ 的两个标量
+$0$ 与 $3\sqrt{\varepsilon/S}$，便有
+
+$$
+ m\ge\frac{\operatorname{kl}(1-\delta,\delta)}{27\varepsilon},
+\tag{52.33}
+$$
+
+在 $0<\varepsilon\le S/9$ 下同样成立。故小容差范围内，选定预测器的
+$\varepsilon^{-1}[\log n+\log(1/\delta)]$ 阶有完整记录下界；没有声称优化器、根容差、统计量或物理资源达到最优。
+
+学习到的三元组接入 §44.5 的成熟 all-tree 供应器，只把活动叶的名字重标为 $p,q,r$。它是选定窗口教师的传输，不是跳过窗口上的首失败诊断。对最终活动分拆，直接根映射仍在整个子消息环境空间上齐次双线性。例如以 $u=(u_0,u_1)$、$v=(v_1,v_2,v_3)$、$w=(w_0,w_1)$ 表示活动集 $1,2,3$ 的消息时，三种最后分拆的根标量直接为
+
+$$
+\begin{array}{rcl}
+12+3&:&x_0y_0+2x_1y_1,\\
+13+2&:&x_0y_0+2x_1y_1-2x_2y_2,\\
+23+1&:&x_0y_1+2x_1y_0-2x_2y_1.
+\end{array}
+\tag{52.34}
+$$
+
+根二则直接输出 $(G_1,G_2)$，不先物化更大根再免费投影；根零沿用已收费标量常数和乘法合并。§44.5 的六个活动子集表和树归纳因此继续适用任意叶序、忽略叶及非连续三元组。
+
+统计和表示费用分开记录。流式训练保存 $n$ 个累加器和一个标签和：$55J_i=-(45h_i+10\ell_i-22)Z$，每次总和可保持在 $[-33m,33m]$，标签和在 $[-m,m]$；另计样本计数、前三名扫描寄存器和三分支控制器。学习到的有序三元组元数据至多为 $3\lceil\log_2 n\rceil$ 比特，或在固定枚举下为 $\lceil\log_2\binom n3\rceil$ 比特。输入取得是 $m$ 个完整 $n$ 窗口记录及 $m$ 个标签；没有物化 $N$ 个候选表，也没有输入相关的测试控制。
+
+§51.9 的消息、叶表、非根张量、直接根张量和仿射头槽数继续分别收费；训练计数、位置元数据、置信半径的对数与平方根、至多三个头对数、树模板和参数发射另计。所有位置和参数在独立测试前固定。这些是有限实数合同下的上界与实现关系，不是总资源、峰值、物理比特、物理神经元、唯一编码、梯度优化收敛或一般稀疏教师可学习性的断言。
+
+### 52.8. 关系边界与证据范围
+
+本节新增的是同一实际五窗律中的未知有序位置、共同噪声标量、协方差指纹、精确重叠间隙、错误教师 proper-risk 项和同一弱信号置信事件之间的关系。§50–§51 的已知教师 secant 头、曲率、树供应器和带符号跨律项作为接口复用；成熟的 Fano、二点 KL、Hoeffding 和 proper-score 恒等式只作证明工具。它不是一个泛化的有限类 PAC 包装，也没有把标签边际标量估计冒充教师学习。
+
+（52.2）、（52.6）、（52.9）–（52.11）、（52.19）–（52.21）、（52.23）、（52.26）–（52.29）和（52.34）的常数、概率、矩、间隙、KL、Brier、对数及直接根恒等式都可在至多六个并集窗口的有限代数中逐项核对；这些有限事实只支撑常数与反例边界，解析的第一对／同第一对证明承担全称结论。输入窗口与原子语义仍受原卷 §104 的正值规范合同约束；本节没有新增 Lean kernel 身份，也没有把有限抽样当作普遍证明。
+
+## 追加锚（未知选定窗口教师批次之后）
