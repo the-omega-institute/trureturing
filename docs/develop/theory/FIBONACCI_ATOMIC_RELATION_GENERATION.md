@@ -47157,3 +47157,207 @@ $$
 **证明。** 包络加密单调给旧亏损尾不小于新亏损尾，两者之差恰为（339.14）的中间项；上界和超多项式尾界来自（339.6）。因此新中心上移 $\delta$，一阶谱仍相同。临界储备同时下降 $\delta$，相减后剩下的恰为未兑现的尾部节省的负数。对固定原始 $D$ 加密提高余量；在把 $D$ 同时减至新临界值时，则不能把这份固定预算的改善再次算入临界一阶余量。这解释了五分递归与相位群的分工：前者控制插值亏损和中心，后者及其逼近速度决定临界谱障碍。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 340. 临界相位的两种速度：Fibonacci 四分之一回归与四次范数障碍
+
+**定义 340.1（用于 §339 临界消费者的有限谱模型）。** 固定有限个实频率 $\gamma_j\ge14$，令
+
+$$
+D_j=\frac14+\gamma_j^2,\qquad
+a_j=\frac1{\gamma_jD_j}>0,\qquad
+S(T)=-2\sum_j a_j\sin(\gamma_jT),\qquad B=2\sum_j a_j.
+\tag{340.1}
+$$
+
+沿用 §339 的算子 $Qf(T)=\int_0^\infty e^{-v/2}f(T+v)\,dv$，令 $F=S-QS$。令 $\Delta$ 定义于全部实数。取任意实函数 $r(T)=O(T^{-2})$，将 $C$ 定义于 $T\ge1$，固定 $D_{\rm crit}=B$，即
+
+$$
+C(T)=S(T)+\frac{F(T)}T+r(T),\qquad
+\Delta(T)=B+S(T),\qquad D_{\rm crit}=B.
+\tag{340.2}
+$$
+
+这里固定中心 $c_0=0$，所以临界储备非负。$C$ 是为检验 §339 的临界消费者而构造的模型函数，未识别为任何实际素数证书的 $\mathcal C^{\rm fin}(e^T)$。这些频率的权重与 §339 的重数为 $1$ 时同形，不把频率识别为实际 $\zeta$ 零点。
+
+对正频率的有限族，指数核的经典三角积分给出
+
+$$
+F(T)=\sum_j a_j\left[
+\left(\frac1{D_j}-2\right)\sin(\gamma_jT)
++\frac{2\gamma_j}{D_j}\cos(\gamma_jT)\right],
+\qquad
+T[D_{\rm crit}+C(T)]=T\Delta(T)+F(T)+O(T^{-1}).
+\tag{340.3}
+$$
+
+当各相位均为 $\pi/2$ 时，$S=-B$，而 $F=\sum_j a_j(1/D_j-2)<0$。这个负号和 §339 的最低值修正相容，但本身不决定临界储备的最终符号。
+
+**定理 340.1（同一临界消费者中的快速回归与范数阻滞）。** 对定义340.1，有以下两个支持模型。
+
+第一，取 $\varphi=(1+\sqrt5)/2$ 和两频率 $(14,14\varphi)$。其连续相位轨道的闭包为整个二维圆环，且 $\inf S=-B$。令
+
+$$
+n_k=6k+1,\qquad q_k=F_{n_k},\qquad p_k=F_{n_k+1},\qquad
+T_k=\frac{\pi q_k}{28}\quad(k\ge0),
+\tag{340.4}
+$$
+
+其中 $F_n$ 是 Fibonacci 数。则 $T_k\to\infty$，存在常数 $C_1>0$ 使
+
+$$
+0\le\Delta(T_k)\le\frac{C_1}{T_k^2},\qquad
+T_k\Delta(T_k)\to0.
+\tag{340.5}
+$$
+
+对任意预先固定的 $r(T)=O(T^{-2})$，所有充分大的这些 $T_k$ 均有 $D_{\rm crit}+C(T_k)<0$，所以临界储备任意晚仍失败。
+
+第二，取正实数 $\alpha=2^{1/4}$ 和四频率 $(14,14\alpha,14\alpha^2,14\alpha^3)$。其连续相位轨道的闭包为整个四维圆环，且 $\inf S=-B$。对所有实数 $T\ge1$，定义
+
+$$
+t=\frac{7T}{\pi},\qquad
+d(T)=\max_{0\le j\le3}\operatorname{dist}\left(t\alpha^j,\mathbb Z+\frac14\right),\qquad
+K=27\,216\,000,\qquad c=\frac{16}{21959}.
+\tag{340.6}
+$$
+
+则
+
+$$
+1\le KT\,d(T)^3,\qquad
+\Delta(T)\ge c\,d(T)^2,\qquad
+c^3T\le K^2[T\Delta(T)]^3.
+\tag{340.7}
+$$
+
+因此 $T\Delta(T)\to\infty$。对任意预先固定的 $r(T)=O(T^{-2})$，存在 $T_0$，使所有实数 $T\ge T_0$ 均有 $D_{\rm crit}+C(T)>0$，即临界储备最终严格可行。两模型均满足 $\sum_jD_j^{-1}<1/40$。
+
+**证明。** 两模型的精确最低值使用经典连续 Kronecker 轨道闭包定理：$1,\varphi$ 在 $\mathbb Q$ 上线性无关；$1,\alpha,\alpha^2,\alpha^3$ 的线性无关性来自 $X^4-2$ 的 Eisenstein 不可约性。连续时间的闭包条件是不存在 $\sum_j m_j\gamma_j=0$ 的非零整数关系，不是离散整数时刻的模 $2\pi$ 条件。故两族相位均可逼近各坐标 $\pi/2$，给出 $\inf S=-B$。这里不要求实际时刻取得最低值，也不从闭包定理取得逼近速度；后面的速度各自另证。Kronecker 的经典前置可见本库所引 Onishchik 的 *Kronecker theorem*，Eisenstein 是经典不可约性判据。
+
+对第一模型，§120.5 已有的六步矩阵恒等式 $M^6=5I+8M$ 给出
+
+$$
+(F_{n+6},F_{n+7})=(5F_n+8F_{n+1},\ 8F_n+13F_{n+1})
+\equiv(F_n,F_{n+1})\pmod4.
+$$
+
+由初对 $(F_1,F_2)=(1,1)$，得所有 $k\ge0$ 的 $q_k\equiv p_k\equiv1\pmod4$。此处是实际矩阵模 $4$ 恒等，不能只以射影周期代替。经典 Fibonacci 残差恒等式（Binet 公式的直接推论）给出
+
+$$
+q_k\varphi-p_k=\varphi^{-n_k}>0.
+\tag{340.8}
+$$
+
+这一经典恒等式的共轭形式为 $F_{n+1}-\varphi F_n=\psi^n$，其中 $\psi=-\varphi^{-1}$；$n_k$ 为奇数，故得到（340.8）。不以比值 $F_{n+1}/F_n\to\varphi$ 替代这里的误差速率。
+
+令 $\eta_k=(\pi/2)\varphi^{-n_k}\in(0,\pi/2)$。在（340.4）的时刻，第一相位精确为 $\pi/2\pmod{2\pi}$，第二相位为 $\pi/2+\eta_k\pmod{2\pi}$。因此
+
+$$
+\Delta(T_k)=2a_1(1-\cos\eta_k)\le a_1\eta_k^2.
+$$
+
+经典递推界 $F_n\le\varphi^n$ 来自 $\varphi^2=\varphi+1$ 与二步归纳，故 $q_k\varphi^{-n_k}\le1$，得到
+
+$$
+\Delta(T_k)\le\frac{a_1\pi^2}{4q_k^2},\qquad
+T_k\Delta(T_k)\le\frac{a_1\pi^3}{112q_k}.
+\tag{340.9}
+$$
+
+又经典界 $n\le F_n+1$ 给出 $q_k\to\infty$。沿这些时刻，（340.3）成为
+
+$$
+F(T_k)=a_0\left(\frac1{D_0}-2\right)
++a_1\left(\frac1{D_1}-2\right)\cos\eta_k
+-\frac{2a_1\gamma_1}{D_1}\sin\eta_k
+<a_0\left(\frac1{D_0}-2\right)<0.
+\tag{340.10}
+$$
+
+于是趋零的 $T_k\Delta(T_k)$ 与 $T_kr(T_k)$ 最终小于这个固定负号储备的绝对值，证明任意晚失败；同时 $F(T_k)\to\sum_{j=0}^1a_j(1/D_j-2)<0$。
+
+对第二模型，给每个 $t\alpha^j$ 选择最近的四分之一整数 $k_j+1/4$。写
+
+$$
+q=4k_0+1,\qquad p_j=4k_j+1\ (j=1,2,3),\qquad
+e_j=p_j-q\alpha^j,\qquad \varepsilon=\max_{1\le j\le3}|e_j|.
+$$
+
+$0\le d(T)\le1/2$，且 $|q-4t|\le4d(T)\le2$。由 $T\ge1$、$3<\pi<4$ 和 $1<\alpha^j<2$（$j=1,2,3$）得到
+
+$$
+|p_j-q\alpha^j|\le |p_j-4t\alpha^j|+\alpha^j|4t-q|
+\le4(1+\alpha^j)d(T),
+$$
+
+从而
+
+$$
+0<q\le12T,\qquad \varepsilon\le12d(T)\le6.
+\tag{340.11}
+$$
+
+使用经典代数整数范数方法。设
+
+$$
+\begin{aligned}
+L_0&=p_3+\alpha p_2+\alpha^2p_1+\alpha^3q,\\
+L_1&=p_3-\alpha p_2+\alpha^2p_1-\alpha^3q,\\
+L_2&=p_3+i\alpha p_2-\alpha^2p_1-i\alpha^3q,\qquad L_3=\overline{L_2},\\
+U&=p_3^2+2p_1^2-4p_2q,\qquad V=2p_3p_1-p_2^2-2q^2.
+\end{aligned}
+$$
+
+由 $\alpha^4=2$ 的直接展开，
+
+$$
+N=L_0L_1|L_2|^2=U^2-2V^2\in\mathbb Z.
+\tag{340.12}
+$$
+
+因为 $q,p_1,p_2,p_3$ 皆为奇数，$U,V$ 皆奇；奇数平方模 $8$ 为 $1$，所以 $N\equiv7\pmod8$。于是 $N\ne0$ 且 $|N|\ge1$。这里范数的非零性由同余直接供应，不须再以不可约性证明 $L_0\ne0$。
+
+代入 $p_j=q\alpha^j+e_j$，其余共轭的共同 $q$ 项消去，而
+
+$$
+\begin{aligned}
+|L_0|&\le4q\alpha^3+(1+\alpha+\alpha^2)\varepsilon
+\le8q+5\varepsilon\le126T,\\
+|L_1|&\le5\varepsilon\le60d(T),\qquad
+|L_2|=|L_3|\le5\varepsilon\le60d(T).
+\end{aligned}
+$$
+
+因此（340.12）给出
+
+$$
+1\le|N|\le126T[60d(T)]^3=KTd(T)^3.
+\tag{340.13}
+$$
+
+经典 Jordan 正弦不等式 $\sin(\pi d)\ge2d$（$0\le d\le1/2$）给出
+
+$$
+1-\sin(2\pi x)=2\sin^2\left(\pi\operatorname{dist}\left(x,\mathbb Z+\frac14\right)\right)
+\ge8\operatorname{dist}\left(x,\mathbb Z+\frac14\right)^2.
+$$
+
+取达到最大距离的坐标，得到 $\Delta(T)\ge16a_{\min}d(T)^2$。每个 $\gamma_j<28$，故
+
+$$
+a_{\min}>\frac1{28(28^2+1/4)}=\frac1{21959}.
+$$
+
+这证明（340.7）的前两项。将（340.13）平方，再乘以 $c^3T$，并使用 $\Delta^3\ge c^3d^6$，得到第三项。它蕴含 $[T\Delta(T)]^3\ge(c^3/K^2)T$，从而 $T\Delta(T)\to\infty$；等价地，$\Delta(T)\ge cK^{-2/3}T^{-2/3}$。
+
+有限三角和 $F$ 有界，$Tr(T)\to0$。故（340.3）的右侧最终严格正，且是对全部充分大的实数 $T$ 成立，不只对子序列成立。
+
+最后，每个 $D_j\ge14^2+1/4=785/4$。四频模型满足 $\sum_jD_j^{-1}\le16/785<1/40$；两频模型满足 $\sum_jD_j^{-1}\le8/785<1/40$。两种结局因而不是破坏 §339 的低谱预算所致。$\square$
+
+**推论 340.2（递归信息与临界判定所需的速度信息）。** 在定义340.1的模型类中，“相位闭包为整个圆环”与“所有最低值相位上的一阶修正严格为负”合在一起，仍不能判定临界储备最终可行或任意晚失败：定理340.1的两模型具有这些共同性质而有相反结局。
+
+**证明。** 第一模型给出任意晚的负余量，第二模型给出全部充分晚时刻的正余量，所以这些共同性质对临界结局不是充分统计量。Fibonacci 模型的六步同余保证每次回归仍命中正确的四分之一陪集，精确残差供应 $O(T_k^{-1})$ 相位误差；四次模型的模 $8$ 范数则供应 $\Omega(T^{-1/3})$ 相位障碍。两者的不同均在定量速度，不在仅有的闭包或最低相位负号。
+
+这与 §339 的实际速度缺口形成可计算的对照；没有建立实际 $\zeta$ 零点的任何一种速度。§240 的五种合法窗口也不是五个独立谱方向；本条没有把其递推增长特征值识别为 $\zeta$ 的振荡频率。与五分递归的精确关系仍是命题339.2及定理338.4的固定证书重定心：插值加密控制中心与亏损尾，不能替代实际相位速度的证明。$\square$
+
+## 追加锚（本行以下为增补区）
