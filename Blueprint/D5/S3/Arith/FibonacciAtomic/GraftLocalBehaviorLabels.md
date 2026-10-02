@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Primitive zero phases and maximal-hit directions describe local Fibonacci divisibility profiles.
+Canonical local records classify every future Fibonacci reading at prime-power precision.
 
 **Definition 1.1 (Reduction of a pair).**
 
@@ -116,7 +116,27 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.localLabel
 
 *Commentary.*
 
-For all natural p,h,e and x in (Z/(p^h)Z)^2, put s=content(p,h,x). If e<=s, the record is High(x), including the zero pair. Otherwise set u=scaledPair(p,h,s,x) and m=e-s. If the reduction of u to precision m has a zero first coordinate at some natural time, choose its least such time t and return Hit(s,t,(S^t(x)).1,U), where U is the second coordinate of scaledPair(p,h,s,S^t(x)) reduced to the prescribed exponent ell. If there is no hit, put j=topHit(p,h-s,m,u) and return NoHit(s,j,None) for j=0, or NoHit(s,j,Some(direction(p,h-s,j,u))) otherwise. Equality of these three records and equality of every future psi reading are not asserted by the two primitive-state theorems.
+For all natural p,h,e and x in (Z/(p^h)Z)^2, put s=content(p,h,x). If e<=s, the record is High(x), including the zero pair. Otherwise set u=scaledPair(p,h,s,x) and m=e-s. If the reduction of u to precision m has a zero first coordinate at some natural time, choose its least such time t and return Hit(s,t,(S^t(x)).1,U), where U is the second coordinate of scaledPair(p,h,s,S^t(x)) reduced to the prescribed exponent ell. If there is no hit, put j=topHit(p,h-s,m,u) and return NoHit(s,j,None) for j=0, or NoHit(s,j,Some(direction(p,h-s,j,u))) otherwise. The local classification below identifies equality of these records with equality of all future psi readings.
+
+**Theorem 1.10 (Complete local behavior classification).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural prime p, every natural h>=1, every natural e<=h, and all x,y in (Z/(p^h)Z)^2, the following are equivalent: for every natural k>=0, psi(p,h,e,val(fst(S^k(x)))) equals psi(p,h,e,val(fst(S^k(y)))); localLabel(p,h,e,x) equals localLabel(p,h,e,y). Here S(a,b)=(b,a+b), and psi retains the saturated depth when it is below e and the full residue modulo p^h otherwise. The statement includes e=0, p=2, the zero pair, and the unique scalar residue at precision zero.
+
+The readings at times zero and one recover the common saturated depth of the pair. In the High case both coordinates are retained, so equality of all readings is exactly equality of the pair. For a low pair, division by its common power of p gives primitive coordinates; reduction of those coordinates to layer i vanishes exactly when the original coordinate depth is at least s+i.
+
+For NoHit records, the maximal hit layer and its unit orbit determine every lower-layer zero test. No higher-layer test occurs. These tests determine each depth below e, and hence every psi reading. Conversely the complete depth profile recovers that maximal layer and its direction, with the single empty-direction record at layer zero.
+
+For Hit records, simultaneous layer-e-s hits recover the least nonnegative phase t. The primitive zero-phase theorem also determines all lower-layer depth tests. At times t and t+r, where r=zeroRank(p^(e-s)), the readings retain complete residues. The first recovers A, and cancellation of F(r) from the second recovers B/p^s modulo p^(h-s-v_p(F(r))). The full valuation is used even when zero-rank lifting is stationary. Equality of these first two samples gives equality at every coarse-clock time by the sampling quotient theorem; t<r identifies precisely all nonnegative hit times. The remaining times are determined by the lower-layer depth tests.
+
+Prime-power Fibonacci zero ranks are treated in Wall (1960), Robinson (1963), and Bragman and Rowland, arXiv:2202.00704v2. The classification uses those zero-rank properties together with finite orbit and sampling identities, without an assumption that the rank multiplies by p at each lift.
 
 ## References
 
@@ -127,6 +147,7 @@ For all natural p,h,e and x in (Z/(p^h)Z)^2, put s=content(p,h,x). If e<=s, the 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.primitive_hit_phase`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.primitive_no_hit_profile`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.reducePair`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.scaledPair`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels.topHit`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GraftAffineClosure](GraftAffineClosure.md)

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Primitive Fibonacci states have one zero phase at each prime-power precision. -/
+   digest: Canonical local labels classify all future Fibonacci prime-power readings. -/
 
 import D5.S3.Arith.FibonacciAtomic.GraftAffineClosure
 import D5.S3.Arith.FibonacciAtomic.SamplingQuotient
@@ -281,7 +281,9 @@ noncomputable def localLabel (p h e : ℕ) (x : ZMod (p ^ h) × ZMod (p ^ h)) :
 #print axioms primitive_hit_phase
 #print axioms primitive_no_hit_profile
 
+-- The three dependent record branches and scalar precision casts use a larger elaboration budget.
 set_option maxHeartbeats 800000 in
+/-- The complete classification combines dependent records, normalization, and coarse sampling. -/
 theorem result (p h e : ℕ) (hp : p.Prime) (hh : 1 ≤ h) (he : e ≤ h)
     (x y : ZMod (p ^ h) × ZMod (p ^ h)) :
     (∀ k : ℕ, GraftAffineClosure.psi p h e ((step^[k] x).1.val : ℤ) =
@@ -551,7 +553,7 @@ theorem result (p h e : ℕ) (hp : p.Prime) (hh : 1 ≤ h) (he : e ≤ h)
         D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h
           ((step^[k] w).1.val : ℤ) :=
       Nat.le_antisymm ((thresholds _ low.le).mp le_rfl) ((thresholds _ loww.le).mpr le_rfl)
-    simp only [GraftAffineClosure.psi, if_pos low, if_pos loww, same]
+    simp only [GraftAffineClosure.psi, if_pos loww, same]
   let label_content : LocalLabel p h e → ℕ := fun L => match L with
     | .high z => content p h z
     | .noHit s _ _ => s
@@ -604,10 +606,9 @@ theorem result (p h e : ℕ) (hp : p.Prime) (hh : 1 ≤ h) (he : e ≤ h)
       rw [Prod.ext first second]
     · intro labels
       have pair : x = y := by
-        simp only [localLabel, if_pos high] at labels
-        split_ifs at labels with hy hit jzero
+        simp only [localLabel] at labels
+        split_ifs at labels with hy hit
         · exact LocalLabel.high.inj labels
-        all_goals cases labels
       subst y
       intro k
       rfl
@@ -658,7 +659,7 @@ theorem result (p h e : ℕ) (hp : p.Prime) (hh : 1 ≤ h) (he : e ≤ h)
           ((PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon p 2 hp le_rfl).1 m).1
         have htr : (step^[t + r] (reducePair p (h - s) m u)).1 = 0 := by
           apply (phase _).mpr
-          simp [r, Nat.add_mod]
+          simp [r]
         have high_at (k : ℕ)
             (hk : (step^[k] (reducePair p (h - s) m u)).1 = 0) :
             e ≤ D5.S3.Arith.Congruence.PrimePowerAffineBehavior.depth p h
