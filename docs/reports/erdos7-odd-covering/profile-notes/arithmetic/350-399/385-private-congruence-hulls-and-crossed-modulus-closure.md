@@ -319,7 +319,9 @@ and H_5=H_7=1, for arbitrary H_3 and H_q. Conditioning on actual p/3p
 guards sharpens each color's reciprocal budget; the shared pure-three
 guard mass excludes the final q=11,13 cases. This also excludes the
 specified q=53 subcase of Sections158 and161 without enumerating its
-finite carrier. The other branches of unrestricted Erdős#7 remain open.
+finite carrier. HPM7 then forces H_5>=2 and an original25 whenever R
+is a singleton and5/7 have opposite colors. The other branches of
+unrestricted Erdős#7 remain open.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -20237,4 +20239,10 @@ contrary to their exact shared identity beta_5+beta_7=theta. This finishes all p
 
 The argument reuses HPM7's actual height and palette bounds, DP9/SI1's literal opposite-root elimination, CM1's shared pure-three mass, and CM9's complete-low-complement inequality. The additional consumer measures the fixed complement of each actual p,3p pair, retains all higher q-powers, and uses the resulting singleton-subtracted squarefree concentrated inventory. It does not reprove a generic product-measure lemma or combine separate optimal sources.
 
-This ordinary arithmetic exclusion has no Lean verification or priority claim. It concerns precisely the singleton-R, opposite5/7, H_5=H_7=1 branch. It does not exclude larger R, same-color5/7, or either anchor at height at least two, and does not settle unrestricted Erdős #7.
+There is a direct stronger anchor conclusion. If H_5=1, the height-at-least-two clause of HPM7 already excludes H_7>=2, since it would give7<5. Hence H_5=1 would force the just-excluded pair H_5=H_7=1. Under singleton R and opposite concentrated5/7, the SAME original family must therefore satisfy
+
+    H_5>=2, so25 is ORIGINAL.                       (GCB4)
+
+The original25 follows from divisor closure, with its actual phase unrestricted here. Together with TCP5's existing height bounds, the remaining anchor pairs lie in {2,3,4} times {1,2}. These are necessary original-family conditions, not jointly realized examples.
+
+This ordinary arithmetic exclusion has no Lean verification or priority claim. It excludes the singleton-R, opposite5/7 branch with H_5=1, for every finite H_3 and H_q. It does not exclude larger R, same-color5/7, or the remaining anchor heights, and does not settle unrestricted Erdős #7.
