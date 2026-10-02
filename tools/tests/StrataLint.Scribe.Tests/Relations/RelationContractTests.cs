@@ -1,4 +1,4 @@
-using System.Reflection;
+using System.Collections.Immutable;
 using System.Text;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -16,19 +16,19 @@ public sealed class RelationContractTests
     {
         using var root = Fixture("Paragraph(Ref(" + expression + "))");
         var result = Read(root);
-        Assert.Null(Property(result, "Projection"));
-        var failure = Property(result, "Failure");
+        Assert.Null(result.Projection);
+        var failure = result.Failure;
         Assert.NotNull(failure);
-        Assert.Equal(shape, Property(failure, "Shape"));
-        Assert.Equal(Entry, Property(failure, "SourcePath"));
-        Assert.True((int)Property(failure, "Line")! > 0);
+        Assert.Equal(shape, failure.Shape);
+        Assert.Equal(Entry, failure.SourcePath);
+        Assert.True(failure.Line > 0);
     }
 
     [Fact]
     public void RecursiveHelpersFailClosed()
     {
         using var root = Fixture("Cycle()", "private static DocumentBlock Cycle() => Cycle();");
-        Assert.Equal("RecursiveHelper", Property(Property(Read(root), "Failure")!, "Shape"));
+        Assert.Equal("RecursiveHelper", Read(root).Failure?.Shape);
     }
 
     [Theory]
@@ -38,7 +38,7 @@ public sealed class RelationContractTests
     [InlineData("$\"D5/S0/Test/{\"First\"}\"", "")]
     [InlineData("\"D5/S0/Test/FIRST\".Replace(\"FIRST\", \"First\")", "")]
     [InlineData("\"D5/S0/Test/First\".Replace('x', 'y')", "")]
-    [InlineData("\"D5/S0/Test/\" + \"FIRST\".ToLowerInvariant()", "")]
+    [InlineData("\"D5/S0/Test/First.\" + \"CLAIM\".ToLowerInvariant()", "")]
     [InlineData("\"D5/S0/Test/\" + \"first\".ToUpperInvariant()", "")]
     [InlineData("\" D5/S0/Test/First \".Trim()", "")]
     [InlineData("Target(\"First\")", "private static string Target(string name) => \"D5/S0/Test/\" + name;")]
@@ -156,13 +156,16 @@ public sealed class RelationContractTests
         typeof(RelationContractTests).Assembly, ["relations", "verify", "--paths-from", "-"],
         root.Path, output, error, new StringReader(Entry));
 
-    private static string EqualExecution(TemporaryRoot root)
+    internal static string EqualExecution(TemporaryRoot root)
     {
         var read = Read(root);
-        Assert.Null(Property(read, "Failure"));
-        var host = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.Null(read.Failure);
+        var allowlist = root.Resolve("allowlist.txt");
+        File.WriteAllText(allowlist, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt"))
+            + "\nM:StrataLint.Scribe.BlockSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentBlock})\nM:StrataLint.Scribe.InlineSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.Inline})\nM:StrataLint.Scribe.DocumentBlock.Paragraph.#ctor(StrataLint.Scribe.InlineSequence)\nM:StrataLint.Scribe.Inline.GidReference.#ctor(StrataLint.Scribe.GidRef)\nM:System.String.Trim\nM:System.String.ToUpperInvariant\nM:StrataLint.Scribe.DocumentEdge.TruthAnchor.Create(StrataLint.Scribe.LeanDeclarationRef)\nM:StrataLint.Scribe.LeanDeclarationRef.Create(System.String,StrataLint.Scribe.IGidExistenceValidator)\nM:StrataLint.Scribe.DocumentEdge.NarrativeReference.ToDescribe(StrataLint.Scribe.GidRef,StrataLint.Scribe.DescribeId)\n");
+        var host = ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, allowlist);
         Assert.True(host.IsSuccess, host.Failure?.ToString());
-        var bytes = Encode(Property(read, "Projection")!);
+        var bytes = Encode(read.Projection!);
         Assert.Equal(Encode(Project(host.Definition!)), bytes);
         return Encoding.UTF8.GetString(bytes);
     }
@@ -170,14 +173,7 @@ public sealed class RelationContractTests
     private static DocumentDefinition Definition(BlockSequence blocks) => DocumentDefinition.Create(
         ScribeNode.Create("digest", H("title"), blocks, sourcePath: Entry), sourcePath: Entry);
 
-    private static object Read(TemporaryRoot root) => Invoke("StaticRelationIndexer", "Read", root.Path, Entry);
-    private static object Project(DocumentDefinition definition) => Invoke("RelationProjection", "FromDefinition", definition);
-    private static byte[] Encode(object projection) => (byte[])projection.GetType().GetMethod("Encode")!.Invoke(projection, null)!;
-    private static object? Property(object value, string name) => value.GetType().GetProperty(name)!.GetValue(value);
-    private static object Invoke(string type, string method, params object[] args)
-    {
-        var target = typeof(ScribeCli).Assembly.GetType("StrataLint.Scribe." + type);
-        Assert.NotNull(target);
-        return target.GetMethod(method)!.Invoke(null, args)!;
-    }
+    private static RelationReadResult Read(TemporaryRoot root) => StaticRelationIndexer.Read(root.Path, Entry);
+    private static RelationProjection Project(DocumentDefinition definition) => RelationProjection.FromDefinition(definition);
+    private static byte[] Encode(RelationProjection projection) => projection.Encode();
 }
