@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ac8b67cd23d740dc4086bb51c3c12126034afba87f766ab0e1a0fb83f4829dc
+  normalized_sha256: sha256:2ac8b67cd23d740dc4086bb51c3c12126034afba87f766ab0e1a0fb83f4829dc
+cas_ref: sha256:2ac8b67cd23d740dc4086bb51c3c12126034afba87f766ab0e1a0fb83f4829dc
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualExteriorEntrance.full31_3
+    target_statement_id: sha256:f50f92f1dc4df9fb8ff78fe4f770ae5871a70a15bb084dd223d7c60beae7ca20
+receipts:
+  unresolved_subitems: []
