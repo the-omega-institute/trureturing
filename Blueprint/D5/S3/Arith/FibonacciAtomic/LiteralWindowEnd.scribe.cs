@@ -43,8 +43,8 @@ internal sealed class LiteralWindowEndDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "This interface exposes the adjacent-window chain form of the legal "
-                        + "flattened language. It is reused by the gap histogram module and "
-                        + "does not introduce a new counting claim."))),
+                        + "flattened language. FirstRejectionCutCapacity and the gap histogram "
+                        + "module reuse it."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("literal-window-success-bijection"),

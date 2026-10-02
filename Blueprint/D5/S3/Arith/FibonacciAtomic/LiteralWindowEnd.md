@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.legal_chain`
 
 *Commentary.*
 
-This interface exposes the adjacent-window chain form of the legal flattened language. It is reused by the gap histogram module and does not introduce a new counting claim.
+This interface exposes the adjacent-window chain form of the legal flattened language. FirstRejectionCutCapacity and the gap histogram module reuse it.
 
 **Theorem 1.3 (All successful bounded queries have an exact independent-set parametrization).**
 

@@ -12,3 +12,15 @@ strata_touched: []
 ---
 
 Kupin and Yuster, arXiv:0810.5113, §4 equation (7) and §7.2, develop generalized Goulden–Jackson cluster enumerations. The present result applies that general counting perspective to the five-window language; it makes no originality claim for the general enumeration method.
+
+## Verified locator
+
+URL: https://arxiv.org/abs/0810.5113
+
+- Locator: Section 4 (Single Letter Weights), equation (7), the weighted marked-word
+  generating function with separate letter weights.
+- Locator: Section 7.2 (DoubleGJIF), the subword-avoidance generating function with
+  digraph weights and separately specified initial and final letter weights.
+- Scope: These identities supply the general weighted enumeration and endpoint
+  framework. The five-window closed forms specialize it; the project's exact
+  word, marked-cut and factor maps are not supplied as Lean declarations.

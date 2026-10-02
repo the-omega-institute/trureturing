@@ -5,6 +5,10 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/WindowHistogramLegalCount.";
+    private static readonly LibraryNoteRef Zhuang =
+        LibraryNoteRef.Create("D5/L/Combinatorics/zhuang2015generalizedgouldenjackson");
+    private static readonly LibraryNoteRef KupinYuster =
+        LibraryNoteRef.Create("D5/L/Combinatorics/kupin2008generalizationsgouldenjackson");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Neutral input positions give a unique legal gap code and exact five-window histogram counts.",
@@ -170,14 +174,15 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "Theorem 1, and Kupin-Yuster, arXiv:0810.5113, §4 (7) and §7.2. "
                 + "Those sources provide the general constrained-word enumeration framework; "
                 + "the new content here is only the kernel-verified correspondence between "
-                + "actual legal words, marked neutral cuts, and factor data. The splitOnP "
-                + "specification in the pinned Lean core was audited, but the Bool-marked "
-                + "Cuts inverse and cleanliness obligations remain specific to this module."))));
+                + "actual legal words, marked neutral cuts, and factor data. The Bool-marked "
+                + "Cuts inverse and cleanliness obligations use the pinned fold interfaces "
+                + "and the finite window equations."))));
 
     private static DocumentBlock Node(string name, string title, string statement,
         DescribeRole role, params string[] proof) => Describe.Lean(
             DescribeId.Create("window-histogram-" + (name == "Gap" ? "gap-data" : name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            name == "result" ? AssessedProvenance.FromRepo(Zhuang, KupinYuster)
+                : AssessedProvenance.FromRepo(),
             Blocks([Paragraph(Text(statement)), .. proof.Select(text => Paragraph(Text(text)))]), role);
 }
