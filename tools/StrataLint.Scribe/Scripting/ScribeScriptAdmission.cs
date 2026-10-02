@@ -9,6 +9,20 @@ namespace StrataLint.Scribe;
 /// <summary>Unrecognized operations and unregistered external declarations are rejected.</summary>
 internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, ScribeScriptAllowlist allowlist)
 {
+    private readonly ImmutableArray<INamedTypeSymbol> scriptTypes = ScriptTypes(compilation.Assembly.GlobalNamespace).ToImmutableArray();
+
+    private static IEnumerable<INamedTypeSymbol> ScriptTypes(INamespaceOrTypeSymbol container)
+    {
+        foreach (var type in container.GetTypeMembers())
+        {
+            yield return type;
+            foreach (var nested in ScriptTypes(type)) yield return nested;
+        }
+        if (container is INamespaceSymbol space)
+            foreach (var child in space.GetNamespaceMembers())
+                foreach (var type in ScriptTypes(child)) yield return type;
+    }
+
     internal static ScribeScriptFailure? Validate(CSharpCompilation compilation,
         ImmutableArray<string> sources, ScribeScriptAllowlist allowlist)
     {
@@ -66,13 +80,16 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         switch (operation.Kind)
         {
             case OperationKind.Invocation:
-                failure = Member(((IInvocationOperation)operation).TargetMethod, node, argumentsChecked: true); break;
+                var invocation = (IInvocationOperation)operation;
+                failure = Member(invocation.TargetMethod, node, argumentsChecked: true, receiverType: invocation.Instance?.Type); break;
             case OperationKind.ObjectCreation:
                 failure = Member(((IObjectCreationOperation)operation).Constructor, node, argumentsChecked: true); break;
             case OperationKind.MethodReference:
-                failure = Member(((IMethodReferenceOperation)operation).Method, node); break;
+                var reference = (IMethodReferenceOperation)operation;
+                failure = Member(reference.Method, node, receiverType: reference.Instance?.Type); break;
             case OperationKind.PropertyReference:
-                failure = Member(((IPropertyReferenceOperation)operation).Property, node); break;
+                var property = (IPropertyReferenceOperation)operation;
+                failure = Member(property.Property, node, receiverType: property.Instance?.Type); break;
             case OperationKind.FieldReference:
                 failure = Member(((IFieldReferenceOperation)operation).Field, node); break;
             case OperationKind.Binary:
@@ -244,6 +261,17 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         if (value.Type is not INamedTypeSymbol type) return Disallowed(value.Syntax, $"implicit formatting {TypeId(value.Type)}");
         if (!IsScript(type)) return allowlist.AllowsFormatting(type)
             ? null : Disallowed(value.Syntax, $"implicit formatting {TypeId(type)}");
+        foreach (var possible in scriptTypes.Append(type).Where(candidate => !candidate.IsAbstract
+            && candidate.TypeKind != TypeKind.Interface && Related(candidate, type)).Distinct(SymbolEqualityComparer.Default))
+        {
+            var failure = FormattingType((INamedTypeSymbol)possible!, value.Syntax, interpolation);
+            if (failure is not null) return failure;
+        }
+        return null;
+    }
+
+    private ScribeScriptFailure? FormattingType(INamedTypeSymbol type, SyntaxNode node, bool interpolation)
+    {
         if (interpolation)
         {
             foreach (var metadataName in new[] { "System.ISpanFormattable", "System.IFormattable" })
@@ -252,8 +280,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
                 if (contract is null || !type.AllInterfaces.Contains(contract, SymbolEqualityComparer.Default)) continue;
                 var method = contract.GetMembers().OfType<IMethodSymbol>().Single();
                 var implementation = type.FindImplementationForInterfaceMember(method);
-                if (implementation is null) return Disallowed(value.Syntax, $"unresolved formatting {ScribeScriptAllowlist.Id(method)}");
-                return Member(implementation, value.Syntax);
+                if (implementation is null) return Disallowed(node, $"unresolved formatting {ScribeScriptAllowlist.Id(method)}");
+                return Member(implementation, node, receiverType: type, dispatchSlot: method);
             }
         }
         // String concatenation and the fallback interpolation path dispatch Object.ToString virtually.
@@ -261,9 +289,9 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         {
             var method = current.GetMembers("ToString").OfType<IMethodSymbol>().FirstOrDefault(candidate =>
                 IsObjectToString(candidate));
-            if (method is not null) return Member(method, value.Syntax);
+            if (method is not null) return Member(method, node, receiverType: type);
         }
-        return Disallowed(value.Syntax, $"unresolved implicit formatting {TypeId(type)}");
+        return Disallowed(node, $"unresolved implicit formatting {TypeId(type)}");
     }
 
     private static bool IsObjectToString(IMethodSymbol method)
@@ -273,9 +301,90 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         return method.ContainingType.SpecialType == SpecialType.System_Object;
     }
 
-    private ScribeScriptFailure? Member(ISymbol? symbol, SyntaxNode node, bool argumentsChecked = false)
+    private ScribeScriptFailure? Member(ISymbol? symbol, SyntaxNode node, bool argumentsChecked = false,
+        ITypeSymbol? receiverType = null, ISymbol? dispatchSlot = null)
     {
         if (symbol is null) return null;
+        return Dispatch(dispatchSlot ?? symbol, node, receiverType) ?? InspectMember(symbol, node, argumentsChecked);
+    }
+
+    private ScribeScriptFailure? Dispatch(ISymbol symbol, SyntaxNode node, ITypeSymbol? receiverType)
+    {
+        if (symbol.IsStatic || symbol is not (IMethodSymbol or IPropertySymbol)
+            || !(symbol.IsVirtual || symbol.IsAbstract || symbol.IsOverride
+                || symbol.ContainingType.TypeKind == TypeKind.Interface)) return null;
+        var receiver = receiverType ?? symbol.ContainingType;
+        if (receiver is not INamedTypeSymbol named)
+            return Disallowed(node, $"unresolved dispatch {ScribeScriptAllowlist.Id(symbol)}");
+        var contract = symbol.ContainingType.TypeKind == TypeKind.Interface;
+        if (!IsScript(named) && !IsScript(symbol) && !contract) return null;
+        foreach (var type in scriptTypes.Where(type => !type.IsAbstract && type.TypeKind != TypeKind.Interface))
+        {
+            if (!Related(type, named)) continue;
+            ISymbol? implementation;
+            if (contract)
+            {
+                var implemented = type.AllInterfaces.Prepend(type).FirstOrDefault(item =>
+                    Same(item, symbol.ContainingType));
+                var member = implemented?.GetMembers(symbol.Name).FirstOrDefault(item => Same(item, symbol));
+                implementation = member is null ? null : type.FindImplementationForInterfaceMember(member);
+                if (implementation is not null) implementation = VirtualImplementation(type, implementation);
+            }
+            else implementation = VirtualImplementation(type, symbol);
+            if (implementation is null || implementation.IsAbstract)
+                return Disallowed(node, $"unresolved dispatch {TypeId(type)} {ScribeScriptAllowlist.Id(symbol)}");
+            var failure = InspectMember(implementation, node);
+            if (failure is null && implementation is IPropertySymbol property)
+                foreach (var accessor in new[] { property.GetMethod, property.SetMethod })
+                {
+                    if (accessor is null) continue;
+                    failure ??= InspectMember(accessor, node);
+                }
+            if (failure is not null) return failure;
+        }
+        return null;
+    }
+
+    private static bool Related(INamedTypeSymbol type, INamedTypeSymbol receiver) =>
+        receiver.TypeKind == TypeKind.Interface
+            ? type.AllInterfaces.Any(item => Same(item, receiver))
+            : Bases(type).Any(item => Same(item, receiver));
+
+    private static IEnumerable<INamedTypeSymbol> Bases(INamedTypeSymbol type)
+    {
+        for (INamedTypeSymbol? current = type; current is not null; current = current.BaseType)
+            yield return current;
+    }
+
+    private static bool Same(ISymbol left, ISymbol right) =>
+        SymbolEqualityComparer.Default.Equals(left.OriginalDefinition, right.OriginalDefinition);
+
+    private static ISymbol VirtualImplementation(INamedTypeSymbol type, ISymbol slot)
+    {
+        foreach (var current in Bases(type))
+            foreach (var candidate in current.GetMembers(slot.Name))
+                for (ISymbol? overridden = candidate; overridden is not null; overridden = overridden switch
+                {
+                    IMethodSymbol method => method.OverriddenMethod,
+                    IPropertySymbol property => property.OverriddenProperty,
+                    _ => null,
+                })
+                    if (Same(overridden, slot)) return candidate;
+        return slot;
+    }
+
+    private ScribeScriptFailure? InspectMember(ISymbol? symbol, SyntaxNode node, bool argumentsChecked = false)
+    {
+        if (symbol is null) return null;
+        // Default equality in Array.IndexOf can call arbitrary implementations on T.
+        // Restrict this registered overload to sealed primitive/string equality domains.
+        if (symbol is IMethodSymbol callback && ScribeScriptAllowlist.Id(callback) == "M:System.Array.IndexOf``1(``0[],``0)"
+            && callback.TypeArguments.Single().SpecialType is not (SpecialType.System_String
+                or SpecialType.System_Boolean or SpecialType.System_Byte or SpecialType.System_SByte
+                or SpecialType.System_Char or SpecialType.System_Int16 or SpecialType.System_UInt16
+                or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64
+                or SpecialType.System_UInt64 or SpecialType.System_IntPtr or SpecialType.System_UIntPtr))
+            return Disallowed(node, $"uncheckable equality callback {ScribeScriptAllowlist.Id(callback)}");
         if (!argumentsChecked && allowlist.HasParameterConstraints(symbol))
             return Disallowed(node, $"uncheckable parameter constraints {ScribeScriptAllowlist.Id(symbol)}");
         if (IsScript(symbol) && symbol is IMethodSymbol { IsImplicitlyDeclared: true } generated)
@@ -294,7 +403,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
                 if (baseFailure is not null) return baseFailure;
             }
         }
-        if (!IsScript(symbol) && !allowlist.AllowsMember(symbol))
+        if (!IsScript(symbol) && !allowlist.AllowsMember(symbol)
+            && !(symbol is IMethodSymbol { AssociatedSymbol: IPropertySymbol registered } && allowlist.AllowsMember(registered)))
             return Disallowed(node, ScribeScriptAllowlist.Id(symbol) ?? symbol.ToDisplayString());
         var failure = Type(symbol.ContainingType, node);
         if (failure is not null) return failure;
