@@ -157,5 +157,7 @@ Kaliski, Appendix B, Lemma 5, Theorem 2 and Corollary 2 give simultaneous modula
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ShortCommonCoefficientProbe.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ShortCommonCoefficientProbe.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ShortCommonCoefficientProbe.windowCoefficients`
+- Dependency: [D5/S1/Digit/GoldenZeckendorfLanguage](../../../S1/Digit/GoldenZeckendorfLanguage.md)
 - Dependency: [D5/S3/Analytic/GoldenEulerBetaZeckendorf](../../Analytic/GoldenEulerBetaZeckendorf.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd](LiteralWindowEnd.md)
+- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../../Quantum/FockSpace/ForbiddenNeighbourDeterminant.md)
