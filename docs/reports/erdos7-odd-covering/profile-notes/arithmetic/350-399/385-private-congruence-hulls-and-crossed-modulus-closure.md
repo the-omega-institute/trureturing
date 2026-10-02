@@ -15055,3 +15055,81 @@ pure-prefix boundary by a same-source private-fiber requirement.
 No contradiction to such a fiber has been established. In particular
 the k=p-1 tight branch and larger-height sources remain unresolved.
 No new Lean verification or unrestricted conclusion is asserted.
+
+## 120. The simultaneous auxiliary slice has exact private-prefix traces
+
+Assume section119's distinct collision roots and simultaneous private
+source y_*=(s_*,w_*,v_*). This includes the minimum t=q-p+1 and the
+localized minimum t=q-k. Fix the entire same-color auxiliary
+coordinate w_* and divided q-tail v_*, and put
+
+    Y_*={s:(s,w_*,v_*) in Y}, alpha_c=s_* mod3^c.
+
+Then the COMPLETE collision-private trace on this one slice is
+
+    {s in Y_*:(s,w_*,v_*) in H_(j_c)}
+       =Y_* intersect[alpha_c mod3^c], 0<=c<=t.   (SF1)
+
+These are simultaneous identities on the same auxiliary slice,
+with privacy for every x in the entire actual R_o. They do not
+assert an identity between complete H_j on different slices.
+
+For c=0 both sides equal Y_*, by H_0=Y. For c>=1, take s on the
+right. The unchanged first-q root and the matching ternary prefix
+put the point in its original A_(3^c q). All q-free originals are
+absent because the point lies in the exact demand Y times R_o.
+Consider any other q-bearing original and its ternary exponent h.
+
+If h<c, every coordinate tested by that original agrees with the
+simultaneous private point at s_*: the first h ternary digits,
+the full q-coordinate, and the same-color auxiliary coordinates
+are unchanged. CP1 excludes opposite-color prime factors. The
+original therefore remains absent. If h>=c, its numerical label
+is divisible by3^c q, so comparable-class disjointness prevents
+it from meeting A_(3^c q). Thus the point is private.
+
+Conversely a point in H_(j_c) is private to a collision original
+at that root. Distinctness of j_0,...,j_t identifies the owner as
+3^c q, forcing its ternary prefix. This proves SF1 without replacing
+an actual cofactor trace by a universal one.
+
+In particular, on this fixed slice the traces are nested:
+
+    Y_*=H_(j_0)|_*=H_(j_1)|_*
+       contains H_(j_2)|_* contains ... contains H_(j_t)|_*.
+
+The c=1 equality uses the first ternary root built into Y. If a
+word s remains in Y_* but first differs from s_* at position h,
+numbering the lowest ternary digit as1, SF1 gives exactly
+
+    s in H_(j_c)|_* for c<h,
+    s not in H_(j_c)|_* for c>=h.                 (SF2)
+
+The extra premise s in Y_* is essential. AD13 supplies the common
+word s_* but does not supply a point in either altered child.
+The original pure guards and q-free same-color classes of ternary
+height at least h must be checked at the altered word. A q-free
+owner there removes that word from Y_* and can cover every q-root
+at once. Hence changing a digit does not by itself force distinct
+new q-bearing suppliers or an additional safe covering group.
+
+For comparison, a direct existing-results constraint goes in the
+opposite direction from deep concentration. Write H_q=v_q(Q) and
+h_q=v_3(Gamma_q) for the COMPLETE original prime-private region.
+For opposite primes p<q,
+
+    H_q>=2 implies h_q<=p-3.                      (SF3)
+
+This reuses [Report371, section2](371-private-top-fans-and-ancestor-cuts.md#2-the-private-top-fan-has-an-escaping-first-ancestor)
+and RG6, without a new fan proof. The original highest pure-q
+private point supplies q-1 distinct mixed top originals by varying
+only its highest q-digit. For H_q>=2, those originals and the pure
+top itself share one nonzero first-q root, so its complete group
+has at least q>=p members. RG6 gives SF3. Thus a route requiring
+h_q>=p-2 would first need H_q=1; the simultaneous private slice
+does not provide that full-region concentration.
+
+The remaining obligation is survival of altered-child demand or
+another legal coupling that yields strict whole-cover descent.
+SF1--SF2 identify the slice exactly but do not supply that obligation.
+No new Lean verification or unrestricted noncoverage is asserted.
