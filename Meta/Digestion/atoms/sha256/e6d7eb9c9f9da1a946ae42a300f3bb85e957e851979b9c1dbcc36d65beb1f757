@@ -1,0 +1,15 @@
+**Definition 6.1 (Complementary-pair encoding).** Fix $k\ge1$ and a binary ordered skeleton $C_k$ with $k$ numbered slots. For $z\in\Omega_k=\{0,1\}^k$ and $n\ge0$, set
+$$
+P_i(n,z_i)=\left\langle T_{n+z_i},T_{n+1-z_i}\right\rangle,
+$$
+and let $E_n(z)$ be the tree obtained by placing these $k$ pairs into the slots of $C_k$. Define the left-child readout
+$$
+R_i(n,z)=q\bigl(c(\text{left child in slot }i)\bigr).
+$$
+On the actual image $E_n[\Omega_k]$, define
+$$
+D_n(t)_i=\frac{R_i(n,z)-F_{n+3}}{F_{n+2}}
+\quad\text{when }t=E_n(z).
+$$
+For $a\in\Omega_k$, let $J_a$ exchange the two children in slot $i$ exactly when $a_i=1$. These operations are defined only on trees possessing the displayed slots.
+
