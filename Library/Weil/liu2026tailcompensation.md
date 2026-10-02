@@ -359,16 +359,25 @@ for j in range(2):
 
 ## The remaining retained-matrix consumer at $c=9$
 
-The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. This removes the need to assume a positive floor for this block; it leaves the complete form's sign undecided.
+The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
 
-Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits choosing the even Hilbert space and an even retained dictionary for the existing RH route. If a new-window tail estimate supplies
+On the actual interval $(-\log3,\log3)$, the compact self-adjoint operator $K_9$ has the source's kernel
 
 $$
-T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
-\qquad\tau_9\ge0,
+k(u-v)=2\cosh((u-v)/2)
++\frac1{2\pi}\int_{-256}^{256}(A(t)-7/2)e^{it(u-v)}\,dt.
 $$
 
-with $U_9$ bounded self-adjoint, put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
+Together with the prime-block decomposition and the now supplied tail input (A6), this gives
+
+$$
+Q(f)\ge2^{-49162}\|f\|^2+
+\langle f,(M_9+K_9+U_9)f\rangle
+\quad\bigl(f\in C_c^\infty((-\log3,\log3);\mathbb C)\bigr).
+\tag{A7}
+$$
+
+The sign of the bounded term in (A7) is not established. Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits restricting **all** operators, norms and complements to the even Hilbert space for the existing even-test RH route. In that space $U_9=81|h_{0,9}\rangle\langle h_{0,9}|$; the even pole contribution is also nonnegative, but the central Gamma band remains payable. Put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
 
 $$
 G_9=E^*M_9^{-1}E,\qquad
@@ -385,4 +394,4 @@ G_9^{-1}+J_9\succeq
 \tag{A4}
 $$
 
-This condition would imply $M_9+V_9\succeq0$ and hence the needed nonnegativity of $Q$ on its legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The new $K_9$, tail-filtered vectors, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. None of the $17/16$ certificate's retained matrices, tail constants or errors has been transported to $\log3$ by (A3). Using another retained basis also requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. The tail input itself is supplied by (A5)–(A6). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
