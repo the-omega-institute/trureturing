@@ -22211,5 +22211,12 @@ Consequently every extremal representative in the remaining branch obeys
  \sum_{d\in D}d\ge1155+385+13923=15463.}           \tag{HF8}
 \]
 
+This scalar floor is sharp under these numerical constraints alone. Take
+the 15 nonempty products of \(3,5,7,11\), and adjoin the 104 smallest odd
+integers greater than one that are not among those products. The resulting
+119-element divisor-closed set has at least nine support primes and total sum
+15463.
+It is only a numerical witness, not a covering system.
+
 This is a necessary numerical floor only; it does not exclude the
 unrestricted high-factor branch or settle Erdős #7.
