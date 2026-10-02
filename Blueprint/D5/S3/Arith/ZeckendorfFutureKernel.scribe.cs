@@ -38,6 +38,15 @@ internal sealed class ZeckendorfFutureKernelDocument : IScribeDocumentDefinition
                     + "two triples (r,u,v) and (r',u',v') are equivalent when every finite "
                     + "continuation has the same legal-and-zero-residue acceptance answer. "
                     + "This is an entire future-language condition, not equality of a current output."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("zk-future-flag"), DeclarationHandle.Create(Owner+"flag"),
+                H("The outgoing bit boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("flag(previous,w) is the "
+                    + "last bit of w, or previous when w is empty."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("zk-future-legal-append"), DeclarationHandle.Create(Owner+"legal_append"),
+                H("Legality through the actual concatenation boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("legal(b,w++w') holds exactly "
+                    + "when legal(b,w) and legal(flag(b,w),w') both hold. The same boundary "
+                    + "computed by the first word is passed into the second."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("zk-future-unit-scaling-result"), DeclarationHandle.Create(Owner+"result"),
                 H("Constructive saturation and exact fixed-boundary quotient"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(), Blocks(
