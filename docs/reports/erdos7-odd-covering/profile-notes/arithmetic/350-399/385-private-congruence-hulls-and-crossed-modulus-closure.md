@@ -21695,6 +21695,25 @@ g\mid\Gamma_d,\ d\mid\Gamma_g,\ J\ne\varnothing
 }                                                        \tag{RH6}
 \]
 
+There is an immediate comparable-label corollary. If \(d\mid g\),
+\(g>d\), and \(g\in D\) also divides \(\Gamma_d\), then
+\(d\mid\Gamma_g\) because \(d\mid g\mid\Gamma_g\). Comparable
+original classes are disjoint in an EB1 family, so \(K_{d,g}=\varnothing\).
+Moreover \(w_g\in A_g\) and \(d\mid g\) give
+\(a_g\equiv w_g\pmod d\), hence \(g\in J_d\). Therefore (RH6) yields
+
+\[
+\boxed{
+d\mid g,\quad g>d,\quad g\in D
+\quad\Longrightarrow\quad g\nmid\Gamma_d.
+}                                                        \tag{RH7}
+\]
+
+Thus an EB1-minimal cover cannot contain a proper original multiple inside
+the complete private hull of its smaller parent. This strengthens the
+one-way hull closure precisely in the comparable direction; it says
+nothing about crossed, incomparable hull divisors.
+
 This is a source-preserving count descent. It does not spend an occupied
 label as deleted inventory, does not rephase a class without repairing its
 complete private region, and does not assume that the descendants of the
