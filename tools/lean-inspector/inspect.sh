@@ -142,12 +142,23 @@ owned_lake() {
   cat > "$OWNED_LAKE" <<'SH_OWNED_LAKE'
 #!/bin/bash
 set -euo pipefail
+finish_owned_lake() {
+  local rc=$?
+  trap - EXIT
+  if [[ "$rc" != 0 ]]; then
+    python3 -B "$STRATALINT_RECEIPT_INSPECTOR/reuse.py" cleanup-receipt --writer-owned \
+      --repository "$STRATALINT_RECEIPT_REPOSITORY" --report "$STRATALINT_RECEIPT_OUTPUT" \
+      --owner-snapshot "$STRATALINT_RECEIPT_OWNER_SNAPSHOT" || true
+  fi
+  exit "$rc"
+}
 if [[ "${1:-}" != --version ]]; then
   python3 -B "$STRATALINT_RECEIPT_INSPECTOR/reuse.py" claim-receipt \
     --repository "$STRATALINT_RECEIPT_REPOSITORY" --report "$STRATALINT_RECEIPT_OUTPUT" \
     --owner-snapshot "$STRATALINT_RECEIPT_OWNER_SNAPSHOT"
+  trap finish_owned_lake EXIT
 fi
-exec "$STRATALINT_RECEIPT_LAKE" "$@"
+"$STRATALINT_RECEIPT_LAKE" "$@"
 SH_OWNED_LAKE
   chmod 700 "$OWNED_LAKE"
 }

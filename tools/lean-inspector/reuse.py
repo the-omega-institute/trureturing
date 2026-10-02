@@ -8,6 +8,7 @@ part of the seal; the semantic version is their compatibility contract. A receip
 to the normal Lake entry; malformed authored registration remains an error.
 """
 import argparse
+import contextlib
 import json
 import os
 from pathlib import Path
@@ -241,7 +242,7 @@ def claim_receipt(report, snapshot):
     snapshot.write_text(json.dumps(receipt_identity(report)))
 
 
-def cleanup_receipt(repository, report, snapshot):
+def cleanup_receipt(repository, report, snapshot, writer_owned=False):
     """Invalidate only the claimed receipt, without racing a subsequent writer."""
     if not snapshot.is_file():
         return
@@ -249,7 +250,7 @@ def cleanup_receipt(repository, report, snapshot):
     if identity is None:
         return
     try:
-        with cache_guard(repository):
+        with contextlib.nullcontext() if writer_owned else cache_guard(repository):
             if receipt_identity(report) == identity:
                 publication.member(report, SUFFIX).unlink(missing_ok=True)
     except BlockingIOError:
@@ -300,6 +301,8 @@ def main():
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
     parser.add_argument('--owner-snapshot', type=Path)
+    parser.add_argument('--writer-owned', action='store_true',
+                        help='cleanup runs inside the native writer guard')
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
@@ -316,7 +319,7 @@ def main():
     if args.command == 'claim-receipt':
         claim_receipt(args.report, args.owner_snapshot)
     elif args.command == 'cleanup-receipt':
-        cleanup_receipt(args.repository, args.report, args.owner_snapshot)
+        cleanup_receipt(args.repository, args.report, args.owner_snapshot, args.writer_owned)
     elif args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':

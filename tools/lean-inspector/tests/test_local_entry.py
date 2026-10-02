@@ -530,11 +530,21 @@ except BlockingIOError:
 
     def test_owned_selected_program_failure_clears_published_receipt(self):
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
-        self.environment['PROGRAM_EXIT'] = '71'
+        self.executable('bin/lake', '[[ "$1" == --version ]] || exit 71\n')
         result = self.entry()
         self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
         self.assertIn('phase=programs exit=71', result.stderr)
         self.assertFalse(Path(str(self.seed) + '.reuse.json').exists())
+
+    def test_native_failure_cleans_receipt_before_releasing_writer_guard(self):
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
+        self.executable('bin/lake', '[[ "$1" == --version ]] || exit 71\n')
+        runner = self.root / 'tools/scripts/worktree/native_fixture.py'
+        runner.write_text(runner.read_text().replace('if result.returncode:',
+            "if result.returncode:\n        assert not (root / '.lake/build/stratalint/raw-lean-report.json.reuse.json').exists(), 'receipt survived native failure inside writer guard'"))
+        result = self.entry()
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn('phase=programs exit=71', result.stderr)
 
     def test_cleanup_preserves_receipt_replaced_after_owned_program_failure(self):
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
