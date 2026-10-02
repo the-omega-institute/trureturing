@@ -71,10 +71,14 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
         items.Add(Close);
         return Seq([.. items]);
     }
-    private static Formula Sub(string name, string index) => Seq(V(name), Underscore, Grp(V(index)));
+    private static Formula Sub(string name, Formula index) => Seq(V(name), Underscore, Grp(index));
+    private static Formula Fraction(Formula numerator, Formula denominator) =>
+        Seq(Frac, Grp(numerator), Grp(denominator));
+    private static Formula N(int value) => D(value.ToString(System.Globalization.CultureInfo.InvariantCulture)
+        .Select(character => (byte)(character - '0')).ToArray());
     private static Formula Sq(Formula value) => Seq(Par(value), Caret, Grp(D(2)));
-    private static Formula LogRatio() => Call("log", Frac(D(125), D(98)));
-    private static Formula Kappa() => V("kappa");
+    private static Formula LogRatio() => Call("log", Fraction(N(125), N(98)));
+    private static Formula Kappa() => F.Kappa;
     private static Formula ResultFormula() => Disp(new Formula.Aligned([
         Seq(Forall, Sp, V("m"), Sp, InMacro, Sp, Seq(Mathbb, Grp(V("N"))), Comma,
             Sp, Forall, Sp, V("z"), Colon, Call("Input", V("m")), To,
@@ -82,11 +86,11 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
         Seq(Forall, Sp, V("u"), Comma, V("v"), Colon, Call("Fin", D(3)), To,
             Seq(Mathbb, Grp(V("R"))), Comma, Sp,
             V("p"), Sp, Eq, Sp, Call("softmax", V("z"), V("u"), V("v")), Colon),
-        Seq(Kappa(), Sp, Le, Sp, Call("R_2", V("p")), Minus, V("b"), Sp, Land,
-            Sp, Kappa(), Sp, Le, Sp, Call("R_log", V("p")), Minus, V("h"), Sp, Land),
-        Seq(Kappa(), Sp, Eq, Sp, Frac(Seq(Sq(V("mu")), Sq(LogRatio())), D(1875)),
+        Seq(Kappa(), Sp, Le, Sp, Seq(Sub("R", D(2)), Par(V("p"))), Minus, V("b"), Sp, Land,
+            Sp, Kappa(), Sp, Le, Sp, Seq(Sub("R", V("log")), Par(V("p"))), Minus, V("h"), Sp, Land),
+        Seq(Kappa(), Sp, Eq, Sp, Fraction(Seq(Sq(Mu), Sq(LogRatio())), N(1875)),
             Sp, Eq, Sp,
-            Frac(Seq(D(193), Minus, D(132), Seq(Sqrt, Grp(D(2)))), D(270000)), Sq(LogRatio()),
+            Fraction(Seq(N(193), Minus, N(132), Seq(Sqrt, Grp(D(2)))), N(270000)), Sq(LogRatio()),
             Sp, Land, Sp, D(0), Sp, Lt, Sp, Kappa(), Dot),
     ]));
 }

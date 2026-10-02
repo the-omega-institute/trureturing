@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A scalar root with an unrestricted affine softmax head has a uniform positive proper-risk gap for the garbled three-class window teacher. -/
+   digest: A garbled window teacher has a uniform risk gap for scalar softmax roots. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.TotalVariation.Pinsker
@@ -196,6 +196,8 @@ private theorem probability_separation (p q : Fin 3 → ℝ) (μ δ : ℝ)
     change μ ^ 2 * δ ^ 2 / 240 ≤ e
     nlinarith [sq_nonneg μ]
 
+-- The exact three-window class count expands 125 branches within the main proof.
+set_option maxHeartbeats 1600000 in
 /-- The risk is scored under the joint law, with its own Bayes value.
 The lower bound includes arbitrary scalar roots and free affine heads. -/
 theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
@@ -249,12 +251,213 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
     dsimp [kappa, mu, δ]
     linear_combination (Real.log (125 / 98 : ℝ)) ^ 2 / 7500 * hs
   have hk : 0 < kappa := by dsimp [kappa]; positivity
+  let p := softmax z u v
+  have hden (x : Input m) : 0 < ∑ j, Real.exp (u j * z x + v j) :=
+    Finset.sum_pos (fun i _ => Real.exp_pos _) Finset.univ_nonempty
+  have hp (x : Input m) (i : Fin 3) : 0 < p x i :=
+    div_pos (Real.exp_pos _) (hden x)
+  have hpsum (x : Input m) : ∑ i, p x i = 1 := by
+    dsimp [p, softmax]
+    rw [← Finset.sum_div, div_self (hden x).ne']
+  have hlogit (x : Input m) (i : Fin 3) :
+      Real.log (p x i / p x 0) = (u i - u 0) * z x + (v i - v 0) := by
+    have hratio : p x i / p x 0 =
+        Real.exp (u i * z x + v i) / Real.exp (u 0 * z x + v 0) := by
+      dsimp [p, softmax]
+      field_simp [(hden x).ne', (Real.exp_pos (u 0 * z x + v 0)).ne']
+    rw [hratio, Real.log_div (Real.exp_pos _).ne' (Real.exp_pos _).ne',
+      Real.log_exp, Real.log_exp]
+    ring
+  have htarget (c : Fin 3) :
+      Real.log (channel c 1 / channel c 0) = ![η, ξ, η + lam] c ∧
+      Real.log (channel c 2 / channel c 0) = ![-lam, 0, lam] c := by
+    fin_cases c
+    · change Real.log ((Real.sqrt 2 / 2 - 1 / 3) / (5 / 12 : ℝ)) = η ∧
+        Real.log (mu / (5 / 12 : ℝ)) = -lam
+      constructor
+      · rfl
+      · dsimp [lam]
+        rw [Real.log_div hμ.ne' (by norm_num), Real.log_div (by norm_num) hμ.ne']
+        ring
+    · change Real.log ((5 / 12 : ℝ) / (7 / 24 : ℝ)) = ξ ∧
+        Real.log ((7 / 24 : ℝ) / (7 / 24 : ℝ)) = 0
+      exact ⟨rfl, by norm_num⟩
+    · change Real.log ((Real.sqrt 2 / 2 - 1 / 3) / mu) = η + lam ∧
+        Real.log ((5 / 12 : ℝ) / mu) = lam
+      constructor
+      · dsimp [η, lam]
+        rw [Real.log_div hA.ne' hμ.ne', Real.log_div hA.ne' (by norm_num),
+          Real.log_div (by norm_num) hμ.ne']
+        ring
+      · rfl
+  have hnormal : ∃ a b : ℝ, a ^ 2 + b ^ 2 = 1 ∧
+      a * (u 1 - u 0) + b * (u 2 - u 0) = 0 := by
+    by_cases hzero : (u 1 - u 0) ^ 2 + (u 2 - u 0) ^ 2 = 0
+    · refine ⟨1, 0, by norm_num, ?_⟩
+      nlinarith [sq_nonneg (u 1 - u 0), sq_nonneg (u 2 - u 0)]
+    · let r := Real.sqrt ((u 1 - u 0) ^ 2 + (u 2 - u 0) ^ 2)
+      have hrpos : 0 < r := Real.sqrt_pos.mpr (lt_of_le_of_ne
+        (add_nonneg (sq_nonneg _) (sq_nonneg _)) (Ne.symm hzero))
+      have hrsq : r ^ 2 = (u 1 - u 0) ^ 2 + (u 2 - u 0) ^ 2 :=
+        Real.sq_sqrt (add_nonneg (sq_nonneg _) (sq_nonneg _))
+      refine ⟨-(u 2 - u 0) / r, (u 1 - u 0) / r, ?_, ?_⟩
+      · field_simp [hrpos.ne']
+        nlinarith only [hrsq]
+      · ring
+  obtain ⟨a, b, hunit, horth⟩ := hnormal
+  let offset := a * (v 1 - v 0) + b * (v 2 - v 0)
+  have hline (x : Input m) :
+      a * Real.log (p x 1 / p x 0) + b * Real.log (p x 2 / p x 0) = offset := by
+    rw [hlogit, hlogit]
+    dsimp [offset]
+    linear_combination z x * horth
+  obtain ⟨c, hc⟩ := strip_distance η ξ lam δ a b offset hδ hlam.le hmid hunit
+  have herror (x : Input m) (hx : teacher x = c) :
+      mu ^ 2 * δ ^ 2 / 240 ≤ ∑ i, (p x i - posterior x i) ^ 2 := by
+    have hq1 := (htarget c).1
+    have hq2 := (htarget c).2
+    have hpoint :
+        ![a * η - b * lam - offset, a * ξ - offset,
+          a * (η + lam) + b * lam - offset] c =
+        a * Real.log (channel c 1 / channel c 0) +
+          b * Real.log (channel c 2 / channel c 0) - offset := by
+      rw [hq1, hq2]
+      fin_cases c <;> simp <;> ring
+    rw [hpoint] at hc
+    let e1 := Real.log (p x 1 / p x 0) - Real.log (channel c 1 / channel c 0)
+    let e2 := Real.log (p x 2 / p x 0) - Real.log (channel c 2 / channel c 0)
+    have hid : a * Real.log (channel c 1 / channel c 0) +
+        b * Real.log (channel c 2 / channel c 0) - offset = -(a * e1 + b * e2) := by
+      dsimp [e1, e2]
+      linear_combination hline x
+    rw [hid, neg_sq] at hc
+    have hcs : (a * e1 + b * e2) ^ 2 ≤ e1 ^ 2 + e2 ^ 2 := by
+      have h := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+        (![a, b] : Fin 2 → ℝ) (![e1, e2] : Fin 2 → ℝ)
+      simpa [Fin.sum_univ_two, hunit] using h
+    have hdist : δ ^ 2 / 20 ≤ e1 ^ 2 + e2 ^ 2 := hc.trans hcs
+    simpa only [posterior, hx] using
+      probability_separation (p x) (channel c) mu δ hμ hδ.le hδlt.le
+        (hp x) (hmin c) hdist
+  let error := fun x : Input m => ∑ i, (p x i - posterior x i) ^ 2
+  have hcard : Fintype.card Window = 5 := by decide
+  have peel (n : ℕ) (f : (Fin (n + 1) → Window) → ℝ) :
+      (∑ x, f x) = ∑ w : Window, ∑ tail : Fin n → Window, f (Fin.cons w tail) := by
+    rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Window)).sum_comp f,
+      Fintype.sum_prod_type]
+    rfl
+  have window_sum (f : Window → ℝ) :
+      (∑ w, f w) = f .zero + f .low + f .middle + f .ends + f .high := by
+    change (∑ w ∈ ({.zero, .low, .middle, .ends, .high} : Finset Window), f w) = _
+    simp
+    <;> ring
+  have cons_two (n : ℕ) (a b : Window) (f : Fin (n + 1) → Window) :
+      (Fin.cons a (Fin.cons b f) : Fin (n + 3) → Window) 2 = f 0 := by
+    change Matrix.vecCons a (Matrix.vecCons b f) 2 = f 0
+    simpa only [Matrix.head_cons, Matrix.tail_cons, Matrix.vecHead] using
+      Matrix.cons_val_two a (Matrix.vecCons b f)
+  have hcount : (∑ x : Input m, if teacher x = c then (1 : ℝ) else 0) =
+      (5 : ℝ) ^ m * (![89, 20, 16] c) := by
+    rw [peel (m + 2)]
+    simp_rw [peel (m + 1), peel m]
+    simp only [window_sum]
+    fin_cases c <;>
+      norm_num [teacher, first, last, Fin.cons_zero, Fin.cons_one, cons_two, Fin.cons_succ,
+        Finset.sum_const, Fintype.card_fun, hcard, Fin.ext_iff]
+    <;> ring
+  have hclass : (16 / 125 : ℝ) ≤ mean (fun x : Input m => if teacher x = c then 1 else 0) := by
+    rw [mean, hcount, uniformMass, pow_add]
+    fin_cases c <;> norm_num
+    all_goals field_simp <;> nlinarith [pow_pos (show (0 : ℝ) < 5 by norm_num) m]
+  have hmean : kappa ≤ mean error := by
+    have hpwise (x : Input m) :
+        (mu ^ 2 * δ ^ 2 / 240) * (if teacher x = c then 1 else 0) ≤ error x := by
+      by_cases hx : teacher x = c
+      · simpa only [hx, ite_true, mul_one, error] using herror x hx
+      · simp only [hx, ite_false, mul_zero]
+        exact Finset.sum_nonneg (fun i _ => sq_nonneg _)
+    have hsum := Finset.sum_le_sum (s := Finset.univ) (fun x _ => hpwise x)
+    have hsumw := mul_le_mul_of_nonneg_left hsum
+      (show 0 ≤ uniformMass m by dsimp [uniformMass]; positivity)
+    have hk0 : 0 ≤ mu ^ 2 * δ ^ 2 / 240 := by positivity
+    calc
+      kappa = (mu ^ 2 * δ ^ 2 / 240) * (16 / 125) := by dsimp [kappa, δ]; ring
+      _ ≤ (mu ^ 2 * δ ^ 2 / 240) *
+          mean (fun x : Input m => if teacher x = c then 1 else 0) :=
+        mul_le_mul_of_nonneg_left hclass hk0
+      _ = uniformMass m * ∑ x : Input m,
+          (mu ^ 2 * δ ^ 2 / 240) * (if teacher x = c then 1 else 0) := by
+        rw [← Finset.mul_sum]
+        dsimp [mean]
+        ring
+      _ ≤ mean error := hsumw
+  have hbrier : brierRisk p - brierBayes m = mean error := by
+    have point (x : Input m) :
+        (∑ j, posterior x j * ∑ i, (p x i - if j = i then 1 else 0) ^ 2) =
+        1 - ∑ i, posterior x i ^ 2 + error x := by
+      have hmass := (hrows (teacher x)).2
+      change (∑ i, posterior x i) = 1 at hmass
+      simp only [Fin.sum_univ_three] at hmass
+      dsimp [error]
+      simp only [Fin.sum_univ_three]
+      norm_num [Fin.ext_iff]
+      linear_combination (p x 0 ^ 2 + p x 1 ^ 2 + p x 2 ^ 2 + 1) * hmass
+    have hrisk : brierRisk p =
+        mean (fun x : Input m => 1 - ∑ i, posterior x i ^ 2 + error x) := by
+      unfold brierRisk mean
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro x _
+      simp only [jointMass, mul_assoc, ← Finset.mul_sum]
+      rw [point]
+    rw [hrisk]
+    simp only [mean, brierBayes, Finset.sum_add_distrib, mul_add]
+    ring
+  have hlog : logRisk p - logBayes m = mean (fun x => klDivergence (posterior x) (p x)) := by
+    unfold logRisk logBayes mean klDivergence
+    simp only [jointMass, mul_assoc, ← Finset.mul_sum]
+    rw [← mul_sub, ← Finset.sum_sub_distrib]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro x _
+    simp only [← Finset.sum_neg_distrib, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [Real.log_div (ne_of_gt (show 0 < posterior x i from (hrows (teacher x)).1 i))
+      (hp x i).ne']
+    ring
+  have hkl (x : Input m) : error x ≤ klDivergence (posterior x) (p x) := by
+    have hpost := hrows (teacher x)
+    have hpk := pinsker_inequality (posterior x) (p x)
+      ⟨fun i => (hpost.1 i).le, hpost.2⟩ ⟨fun i => (hp x i).le, hpsum x⟩
+      (fun i h => False.elim ((hp x i).ne' h))
+    have hmass : ∑ i, (p x i - posterior x i) = 0 := by
+      rw [Finset.sum_sub_distrib, hpsum x]
+      change 1 - ∑ i, channel (teacher x) i = 0
+      rw [hpost.2, sub_self]
+    simp only [Fin.sum_univ_three] at hmass
+    have hL2 : error x ≤ 2 * totalVariation (posterior x) (p x) ^ 2 := by
+      dsimp [error, totalVariation]
+      simp only [Fin.sum_univ_three, abs_sub_comm (posterior x 0),
+        abs_sub_comm (posterior x 1), abs_sub_comm (posterior x 2)]
+      have h01 := mul_nonneg (abs_nonneg (p x 0 - posterior x 0))
+        (abs_nonneg (p x 1 - posterior x 1))
+      have h02 := mul_nonneg (abs_nonneg (p x 0 - posterior x 0))
+        (abs_nonneg (p x 2 - posterior x 2))
+      have h12 := mul_nonneg (abs_nonneg (p x 1 - posterior x 1))
+        (abs_nonneg (p x 2 - posterior x 2))
+      rcases le_total 0 (p x 0 - posterior x 0) with h0 | h0 <;>
+        rcases le_total 0 (p x 1 - posterior x 1) with h1 | h1 <;>
+        rcases le_total 0 (p x 2 - posterior x 2) with h2 | h2
+      all_goals simp only [abs_of_nonneg, abs_of_nonpos, h0, h1, h2] at h01 h02 h12 ⊢
+      all_goals nlinarith only [h01, h02, h12,
+        congrArg (fun t : ℝ => t ^ 2) hmass]
+    exact hL2.trans hpk
   refine ⟨?_, ?_, hconstant, hk⟩
-  · sorry
-  · sorry
-
-#print axioms probability_separation
-#print axioms strip_distance
-#print axioms result
+  · rw [hbrier]
+    exact hmean
+  · rw [hlog]
+    exact hmean.trans (mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun x _ => hkl x))
+      (show 0 ≤ uniformMass m by dsimp [uniformMass]; positivity))
 
 end D5.S3.Arith.FibonacciAtomic.GarbledPosteriorRootGap
