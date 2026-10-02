@@ -135,7 +135,7 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                         + "attain these respective lower bounds."))),
                 DescribeRole.Theorem))));
 
-    private static Formula LowerBound(int n) => All("V", All("R",
+    private static Formula LowerBound(byte n) => All("V", All("R",
         Imp(And(Call("FiniteKSpace", V("V")), Call("LinearWordRep", V("R"), V("V"))),
             Imp(Call("Realizes", V("R"), V("fK")), LeOf(D(n), Call("dimK", V("V")))))));
 
