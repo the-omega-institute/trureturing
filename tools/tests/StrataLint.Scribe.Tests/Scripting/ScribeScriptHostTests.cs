@@ -228,6 +228,20 @@ public sealed class ScribeScriptHostTests
             root.Path, TextWriter.Null, new StringWriter(), TextReader.Null));
     }
 
+    [Fact]
+    public void ScriptsVerifyRejectsAnEmptySelection()
+    {
+        using var root = PrepareCommandRoot();
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
+            root.Path, output, error, new StringReader(string.Empty));
+
+        Assert.Equal(1, exit);
+        Assert.Contains("EmptyScriptSelection", error.ToString(), StringComparison.Ordinal);
+    }
+
     private static TemporaryRoot PrepareCommandRoot()
     {
         var root = new TemporaryRoot();

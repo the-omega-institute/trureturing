@@ -20,7 +20,9 @@ public sealed class ScribeScriptCorpusTests
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
+        Assert.NotEmpty(paths);
         var results = ScribeScriptHost.ExecuteBatch(root, paths);
+        Assert.Equal(paths, results.Select(static result => result.RelativePath).Order(StringComparer.Ordinal));
         var current = DocumentAssembly.Definitions.ToDictionary(
             static definition => definition.Document.Header.Gid.Value, StringComparer.Ordinal);
         var failures = results.Where(static result => !result.IsSuccess).ToArray();
