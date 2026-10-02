@@ -306,6 +306,13 @@ an explicit support cutoff without color or height restrictions. The
 unrestricted gap is to force a bounded missing label or a bounded
 actual parent with the required capacity.
 
+[Section164](#164-two-fixed-original-partners-reduce-a-private-source-obstruction-to-two-congruences)
+uses the triangle's actual parent capacity to leave at most one fixed
+partner in each of two probe cells. Only two compatible shallow partners
+can block their reserve at every escaped source. The resulting condition
+concerns the complete private region; the cited conditional LLL provides
+an explicit sufficient test, whose arithmetic hypotheses remain open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19935,3 +19942,140 @@ This consumer requires a real original parent and its proved whole-parent capaci
 Once a support cutoff B_* is available, choose the least prime ell>B_*. It is absent, and the EXISTING HC6 gives H_p<=ell-1+floor((ell-2)/(p-1)) for each original p. Hence Q divides the finite product of those prime powers over odd primes p<B_*. This is a finite carrier restriction, with no phase enumeration or exclusion claim.
 
 The remaining unrestricted obligation is to produce a uniformly bounded missing mixed label, or a uniformly bounded actual parent with the required capacity, or to contradict the forced joint inventory while retaining its literal phases and complete obligations. The checksum construction by itself does not supply that obligation.
+
+## 164. Two fixed original partners reduce a private-source obstruction to two congruences
+
+Keep the original EB1 family and the actual primitive triangle of §152:
+
+    Q=3^H q^G M, G>=2, gcd(M,3q)=1,
+    d_0=3^H q^2 pr, d_1=3^H q^2 pt, d_2=3^H q^2 rt.
+
+Their full ternary phase is u, their common first-q root is omega, their distinct second-q prefixes are beta_0,beta_1,beta_2, and their literal cofactor phases agree at the actual v modulo M. Relabel once as in PTE so that d_0 has a complete private point escaping v modulo t. All original phases and the complete low-row deletion family J from §155 remain fixed.
+
+The following consumer strengthens the source-selection question in §155. Two fixed original labels control the two other triangle cells. Their deeper q-heights automatically leave positive complete-hole mass; the remaining obstruction is a two-congruence containment of the ENTIRE private region of d_0. An explicit conditional-LLL certificate can defeat that containment. Neither the certificate nor a subsequent whole-hole repair is asserted for every EB1 family.
+
+### Each probe phase has at most one fixed partner
+
+Let h=3^H q^2. This is an ORIGINAL label by divisor closure. The smallest support prime is3, its global height in h is full, and tau(q^2)=3. Thus the actual DR8 hypotheses hold: every h-phase has at most two proper original descendants, independently of their other cofactor coordinates or heights.
+
+For i=1,2, the phase c_i=(u,beta_i) modulo h already contains the proper descendant d_i. It can therefore contain at most one further original; call it m_i when present. The parent h itself cannot own c_i, since that would contain A_(d_i), contrary to comparable-original disjointness. Write
+
+    m_i=3^H q^e_i s_i, e_i>=2, s_i|M,
+    b_i=a_(m_i) mod s_i.
+
+These partners are fixed original labels, determined before any private source is chosen. They are not separately selected suppliers at different cofactor points.
+
+Choose ANY escaped complete private point x of d_0 and write w=x mod M. It satisfies
+
+    w=v mod p, w=v mod r, w!=v mod t.
+
+Let F_w be the whole fibre with fixed full ternary coordinate u, first-q root omega and complete cofactor w. Let F_i(w) be its complete second-prefix cell beta_i, for i=1,2. Under the uniform law mu_w on F_w, each cell has mass1/q.
+
+Every original of q-height at most one is false throughout F_w, since its truth value is constant there and it misses the private point x. In F_i(w), d_i fails at t and the other triangle labels have wrong q-prefixes. Every remaining retained original has full ternary height H, q-height at least two and h-phase c_i. The preceding global phase cap leaves only m_i. Consequently the COMPLETE low-row deletion hole obeys the exact identity
+
+    mu_w(E_J intersect (F_1(w) union F_2(w)))
+      =2/q-sum_(i=1,2; m_i exists)
+                  q^(1-e_i) 1_(w=b_i mod s_i).             (TPO1)
+
+A matching partner contributes exactly q^(1-e_i); its higher q-digits are retained in this count. The two probe cells are disjoint, so no union-bound loss enters TPO1. This is a subset of the correctly defined joint deletion hole, not a claim that these cells exhaust E_J or equal a union of private regions.
+
+### Only two compatible shallow partners can eliminate both cells
+
+If either partner is absent or its cofactor misses w, an entire cell belongs to E_J. If either partner has e_i>=3, the reserve in the two cells is at least
+
+    1/q-1/q^2=(q-1)/q^2>0,
+
+even if the other cell is fully retained-top-covered. Thus zero reserve in both cells is equivalent to
+
+    e_1=e_2=2 and w=b_1 mod s_1 and w=b_2 mod s_2.           (TPO2)
+
+The already saturated original3^H qp phase contains d_0,d_1, while the corresponding3^H qr phase contains d_0,d_2. A further partner containing p or r cannot match an escaped w with the displayed p,r phases. Such a partner therefore leaves a whole cell at every escaped source. In the remaining case both partner cofactors satisfy gcd(s_i,pr)=1.
+
+For shallow partners, s_i>1 because m_i is a proper descendant of h. The two partners have different numerical labels and therefore s_1!=s_2. If their cofactor congruences are incompatible, TPO2 never occurs. Otherwise their intersection is one congruence
+
+    w=b mod s, s=lcm(s_1,s_2).
+
+The index s is analytical; it need not be an original label. It is composite, since two distinct nonunit divisors of a prime cannot exist. As s|M and M has no prime factor2 or3, s>=25. Also gcd(s,pr)=1 and gcd(ts,d_0)=1. The indices t and s themselves need NOT be coprime.
+
+Let V be the projection modulo M of all private points of d_0 escaping v modulo t. PTE makes V nonempty. In this sole remaining two-compatible-shallow-partner case, zero reserve at EVERY escaped source is equivalent to
+
+    V subset {w:w=b mod s},
+
+and hence to the complete private-region containment
+
+    P_(d_0) subset {x:x=v mod t} union {x:x=b mod s}.        (TPO3)
+
+This is the exact obstruction for the two probes. It does not assert that the full fibre has no other holes. If t|s and b=v modulo t, the second congruence is contained in the first and TPO3 is already impossible by PTE's escaped private point. If t|s and the residues differ modulo t, the two congruences are disjoint; otherwise t and s are coprime. None of the arguments below assumes independent query events under the private-source law.
+
+### Restrict every original blocker to the complete owner class
+
+To test TPO3, parameterize the ENTIRE original owner class, including every remaining q-digit and every cofactor coordinate:
+
+    Sigma={a_0+d_0 z:z mod L}, L=Q/d_0,
+
+where a_0 is the literal phase of d_0. This is a bijection from Z/LZ to the owner class modulo Q. Initially z is uniform; no privacy is yet asserted.
+
+For EVERY other original d define its blocker B_d by a_0+d_0 z belonging to A_d. Put
+
+    g_d=gcd(d,d_0), n_d=d/g_d.
+
+The blocker is empty unless a_d=a_0 modulo g_d. When compatible it is exactly
+
+    z=((a_d-a_0)/g_d)*(d_0/g_d)^(-1) mod n_d,              (TPO4)
+
+since gcd(d_0/g_d,n_d)=1. Here n_d|L and its probability is1/n_d. Every nonempty blocker has n_d>1: n_d=1 would make d a divisor of d_0 and the original classes disjoint. Comparable larger originals are empty blockers as well.
+
+It is NOT legitimate to discard all primes already present in d_0. The reduced n_d can share an owner prime when d tests additional digits at that prime; those residual coordinates and all their correlations remain in TPO4. Repeated reduced moduli remain separate event indices with their actual phases; identical congruence events alone may be exactly deduplicated. No distinct-modulus theorem is applied to this restricted family.
+
+Avoiding all these blockers is exactly the complete private region P_(d_0). The two analytical query events are
+
+    T={z:a_0+d_0 z=v mod t},
+    C_s={z:a_0+d_0 z=b mod s}.
+
+Their original probabilities are1/t and1/s because gcd(ts,d_0)=1. A general query not coprime to d_0 would instead require the same gcd reduction and compatibility test as TPO4; its probability could not simply be written1/k. The augmented avoidance set is exactly
+
+    P_(d_0) intersect complement(T) intersect complement(C_s).
+
+Thus every point found by an avoidance argument is a genuine escaped private source, rather than merely an avoiding lower shadow.
+
+### A conditional-LLL certificate preserves the whole private-source law
+
+Use the independent CRT prime-power coordinates of the ONE uniform variable z modulo L. A blocker with modulus n_d depends on the corresponding full prime-power coordinates. Joining blockers whenever gcd(n_d,n_c)>1 therefore gives a valid variable-sharing dependency graph, including residual owner-prime digits and repeated reduced indices.
+
+Suppose there are activities theta_d in (0,1), one for every nonempty source blocker, satisfying
+
+    1/n_d <= theta_d
+       product_(c!=d, gcd(n_c,n_d)>1)(1-theta_c).           (TPO5)
+
+This is the explicit asymmetric LLL hypothesis for that complete blocker family. Let nu be uniform on the whole P_(d_0), equivalently the uniform owner-class law conditioned on avoiding EVERY source blocker. For k=t or s put
+
+    Lambda(k)=product_(d:gcd(n_d,k)>1)(1-theta_d)^(-1).
+
+Haeupler–Saha–Srinivasan, *New Constructive Aspects of the Lovasz Local Lemma*, [arXiv:1001.1231v5](https://arxiv.org/abs/1001.1231v5), Theorems1.1 and2.1, applies to finite independent variables with these variable-sharing neighborhoods. Theorem2.1 bounds arbitrary query probabilities in the actual conditional avoidance distribution. It gives
+
+    nu(T)<=Lambda(t)/t, nu(C_s)<=Lambda(s)/s.
+
+Using all prime-sharing blockers is an admissible, possibly enlarged neighborhood. This use is of the conditional law, not a Moser–Tardos terminal distribution or a claim that resampling preserves privacy.
+
+Therefore the sufficient source-selection test is
+
+    Lambda(t)/t+Lambda(s)/s<1.                            (TPO6)
+
+It leaves positive nu-mass outside both queries. Such a point misses the intersection of the two shallow partner cofactors, so at least one whole F_i(w) lies in E_J. The two query events may share t-coordinates; the step is a union bound under ONE conditional law and does not require their independence.
+
+For example, the sufficient bounds Lambda(t)<=4 and Lambda(s)<=4 give
+
+    nu(complement(T) intersect complement(C_s))
+      >=1-4/5-4/25=1/25,
+
+using t>=5 and s>=25. These inflation bounds are a target, not a proved consequence of the existing original-parent capacities. Conversely, whenever TPO5 is available, containment TPO3 necessarily requires Lambda(t)/t+Lambda(s)/s>=1. Failure of TPO6 alone proves neither that containment nor absence of a good source.
+
+### The resulting low-row obligation and the remaining bridge
+
+If a source has positive reserve, the uniform law on the WHOLE E_J intersect F_w is an actual complete-hole law. When a whole cell F_i(w) is obtained by a missed partner, whole original coverage requires the low-row originals to cover that complete cell. Let L_i(w) contain ALL actual originals in J with matching ternary prefix, second-q prefix beta_i and literal cofactor incidence at w. The q-height-zero and height-one originals are already false on F_w. Uniform counting within the cell therefore yields
+
+    sum_(d in L_i(w)) q^(2-v_q(d))>=1.                    (TPO7)
+
+Thus either an aligned q-height-two low-row original exists, or at least q distinct deeper low-row originals are required. This statement concerns the same actual cofactor, all later q-digits and the entire cell; it supplies no additional copy of a shared original elsewhere.
+
+The new reduction is from arbitrary retained top inventory to at most two fixed original partners, and then to a two-congruence condition on one COMPLETE private region. Deep partners cannot block positive reserve. The unresolved source step is to defeat TPO3, for example by proving a certificate such as TPO5–TPO6 for the actual blocker inventory. Even after source selection, TPO7 can be paid by existing low-row originals; a legal repair of the full E_J and strict whole-family descent remain separate obligations. No argument here forces every hypothetical cover to contain this particular triangle or proves unrestricted noncoverage. These are ordinary mathematical deductions; no new Lean verification is asserted.
