@@ -3849,3 +3849,68 @@ Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
 跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
 按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从粗稠密性构造逆映射与一般边界同胚
+
+设实际原 H³ 映射 F 在所有原点对上满足原距离上界
+`L*dist+K` 和下界 `a*dist-B`，其中 L、K 非负，a 严格为正，
+B 任意实数。再设 R 非负，且每个实际原目标点 q 都有原点 p
+使 `dist(F(p),q)≤R`。`h3_coarse_density_constructs_controlled_inverse`
+从这个实际粗稠密性逐点选择 G(q)，不再输入另一个受控 G。
+同一个实际选择的 G 满足 `dist(F(G(q)),q)≤R`，并由原 F 的
+距离下界导出 `dist(G(F(p)),p)≤max(0,(B+R)/a)`。
+原三角不等式与同一个 F 的距离双边控制还供应 G 自己的全局
+原距离上界 `(1/a)*dist+max(0,(B+2R)/a)`，以及下界
+`(1/(L+1))*dist-(K+2R)/(L+1)`；前者的系数和常数非负，
+后者的系数严格为正。两侧一致有界逆复合和 G 的控制均为
+构造结论，没有成为新的外部输入。
+
+这个选择的 G 不保证逐点等变。对每一对实际原等距映射
+e、e′，若同一个 F 在每个原点上满足 `F(e(p))=e′(F(p))`，
+`h3_coarse_inverse_approximate_intertwining` 则给出所有原点 q
+上的一致原距离界
+`dist(G(e′(q)),e(G(q)))≤max(0,(B+2R)/a)`。
+证明比较两个 F 像：它们与同一个 `e′(q)` 的原距离各至多 R，
+再应用同一个原 F 的距离下界。
+`h3_coarse_density_constructs_approximately_equivariant_inverse`
+保留实际构造的同一个 G、它自己的全局控制、双向逆复合界
+以及对所有上述原等距映射对的这一近似等变界。
+
+在上述同一个实际原 F 的全部条件和 R 粗稠密性下，
+`h3_coarse_density_constructs_general_equivariant_boundary_homeomorphism`
+实际构造同一个 G 与原归一化零光锥边界上的同胚 E。
+它使用已导出的 G 控制及双向逆复合界，而非输入 G 或 E。
+F 和 G 的整条实参数原射线像分别趋于 `E(b)` 与 `E.symm(b)`。
+从这些实际构造的整条实射线极限导出整数射线极限，再复用
+一般点族扩展，得到任意滤子 l、实际原点族 P 的双向结论：
+若 P 的原归一化坐标趋于原边界 b，则 F(P) 的原归一化坐标
+趋于 `E(b)`，G(P) 的原归一化坐标趋于 `E.symm(b)`。
+同一个 G、E 同时实现这些射线及一般点族极限；没有额外的
+F 连续性、G 连续性、Morse/射线追踪或滤子非底前提。
+任意滤子上的这段推导仍是收敛传递，不是极限唯一性断言。
+
+对每一对由同一个 F 在所有原点处联系的原实际等距映射
+e、e′，同一个 E 满足
+`E(action(e,b))=action(e′,E(b))`。
+`h3_boundary_homeomorphism_inverse_intertwining` 从这个同一个
+E 的逆关系代数地推出
+`E.symm(action(e′,c))=action(e,E.symm(c))`。
+逆边界映射的精确等变性由同一个 F 的原逐点关系和边界逆
+关系供应，没有假称实际选择的 G 具有原逐点精确等变性。
+对原给定群同构 d 的应用仍须由所构造的 F 在所有原点处
+联系同一个 d 对应的两侧原表示；本轮没有供应该原 h/d 的 F。
+
+三个完整模块串行本地 Lean 成功，共六项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+一次完整失败尝试保留并整次排除，包括其中的部分标准闭包
+和后续 `sorryAx` 诊断；没有接受失败尝试的任何闭包。
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，范围
+保留非紧尖点、非可定向情形、两侧原度量和原给定同伦等价
+诱导的同一个群同构 d。尚未从该原 h/d 构造具有上述距离
+控制和粗稠密性的 F，也没有迫使同一个边界映射保持原交比。
+条件下的实际 G 和边界同胚不等于原目标实例已构造。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
+按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

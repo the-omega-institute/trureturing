@@ -1,0 +1,78 @@
+**命题 47.4（不限制学习参数的中窗定量分离）。** 对每个固定尾赋值 $\tau=(w_4,\ldots,w_n)$，考虑首窗 $w_1\in\{000,001\}$、第三窗 $w_3\in\{000,100\}$，以及中窗依次为 $000,100,001,101$。外部列按 $(a,d)=00,10,01,11$ 排列。令 $t=-\gamma-\beta_1$，第一目标 log-odds 减偏置的实际四乘四矩阵为
+
+$$
+M(t)=
+\begin{pmatrix}
+t&t&t&t\\
+t&t+2\gamma&t&t+2\gamma\\
+t&t&t+\gamma&t+\gamma\\
+t&t+2\gamma&t+\gamma&t+2\gamma
+\end{pmatrix},\qquad
+\det M(t)=-2t\gamma^3.
+\tag{47.10}
+$$
+
+当 $t\ne0$，所选逆及其 Frobenius 范数恒等式是
+
+$$
+\begin{aligned}
+M(t)^{-1}&=
+\begin{pmatrix}
+\frac1t+\frac1{2\gamma}&\frac1{2\gamma}&0&-\frac1\gamma\\
+\frac1{2\gamma}&-\frac1{2\gamma}&-\frac1\gamma&\frac1\gamma\\
+0&-\frac1\gamma&0&\frac1\gamma\\
+-\frac1\gamma&\frac1\gamma&\frac1\gamma&-\frac1\gamma
+\end{pmatrix},\\
+\|M(t)^{-1}\|_F^2&=\frac1{t^2}+\frac1{\gamma t}+\frac{10}{\gamma^2}.
+\end{aligned}
+\tag{47.11}
+$$
+
+若中窗叶 $m\le3$ 且 $B<\gamma$，每个尾下都有一个上述实际词满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_B:=\frac{\gamma-B}{4\sqrt{11}}.
+\tag{47.12}
+$$
+
+若 $m\le2$，不论偏置大小，每个尾下都有一个上述实际词满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_2:=\frac{\gamma}{4\sqrt{10}}.
+\tag{47.13}
+$$
+
+证明。首、第三窗选取确实实现所列四个位对，中窗行实现全部四种 $b,c$；因此十六个矩阵元都是不同的原始三窗词，给定尾时各有质量 $1/125$。逐式代入式（47.6）得到 $M(t)$；直接乘法给式（47.11）的左右逆，平方求和给其范数。第二目标坐标对应矩阵是
+
+$$
+M_2(t_2)=
+\begin{pmatrix}
+t_2&t_2&t_2&t_2\\
+t_2&t_2+\gamma&t_2&t_2+\gamma\\
+t_2&t_2&t_2+2\gamma&t_2+2\gamma\\
+t_2&t_2+\gamma&t_2+2\gamma&t_2+\gamma
+\end{pmatrix},\qquad \det M_2(t_2)=-4t_2\gamma^3,
+\tag{47.14}
+$$
+
+也给出式（47.8）的例外判据。
+
+由引理47.3，第一预测坐标减偏置的矩阵 $N$ 可分解为四行叶编码乘四列路径系数，故 $\operatorname{rank}N\le m$。任意秩至多三的 $N$ 都有单位向量 $x\in\ker N$，而
+
+$$
+\|M-N\|_F\ge\|(M-N)x\|_2=\|Mx\|_2
+\ge\frac1{\|M^{-1}\|_{\rm op}}\ge\frac1{\|M^{-1}\|_F}.
+\tag{47.15}
+$$
+
+十六个元中至少一个误差不小于此值的四分之一。若 $B<\gamma$，有 $t<0$、$|t|\ge\gamma-B$，式（47.11）的交叉项非正，因而
+
+$$
+\|M(t)^{-1}\|_F^2
+\le\frac1{(\gamma-B)^2}+\frac{10}{\gamma^2}
+\le\frac{11}{(\gamma-B)^2}.
+\tag{47.16}
+$$
+
+这给式（47.12），不需控制 $N$。当 $m\le2$，第一预测 log-odds 本身的矩阵为 $N+\beta_1\mathbf1\mathbf1^{\mathsf T}$，秩至多三；与未移去偏置的目标 $M(-\gamma)$ 比较。式（47.11）给 $\|M(-\gamma)^{-1}\|_F^2=10/\gamma^2$，故式（47.15）给式（47.13），也不需限制 $\beta$。$\square$
+

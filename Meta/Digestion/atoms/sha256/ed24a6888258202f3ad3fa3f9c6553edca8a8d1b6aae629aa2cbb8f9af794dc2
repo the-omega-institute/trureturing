@@ -1,0 +1,39 @@
+**Theorem 5.2 (Currents, passage recurrence and the Cassini order correction).** Let $m_n(k)=\Pr(X_n=k)$, set $J_n(-1)=J_n(L)=0$, and define
+$$
+J_n(i)=\frac{\theta}{r_{s_i}}\bigl(m_n(i)-m_n(i+1)\bigr)\quad(0\le i<L-1),
+\qquad
+J_n(L-1)=\frac{\theta}{r_{s_{L-1}}}m_n(L-1).
+$$
+Then
+$$
+ m_{n+1}(k)-m_n(k)=J_n(k-1)-J_n(k),
+\qquad\sum_{k=0}^Lm_n(k)=1,
+$$
+and
+$$
+\mathbb E[x_{X_{n+1}}-x_{X_n}]
+=\sum_{i=0}^{L-1}q(e_{s_i})J_n(i).
+$$
+For a word $u=u_0\cdots u_{L-1}$ put
+$$
+R(u)=\sum_{i=0}^{L-1}r_{u_i},\qquad
+A(u)=\sum_{i=0}^{L-1}(i+1)r_{u_i}.
+$$
+Writing $A_j=A(w(T_j))$, $R_j=R(w(T_j))$ and $L_j=|w(T_j)|$, one has
+$$
+\theta\,\mathbb E\tau(T_j)=A_j,
+$$
+$$
+A_{j+2}=A_{j+1}+A_j+L_{j+1}R_j,
+\qquad A_0=r_\alpha,\quad A_1=r_\beta,
+$$
+and, for $j\ge2$,
+$$
+2\theta\,\mathbb E\tau(T_j)
+=(L_j+1)R_j-(r_\beta-r_\alpha)\bigl(F_{j-2}+(-1)^j\bigr),
+$$
+where $L_j=F_{j+1}$ and
+$$
+R_j=r_\alpha F_{j-1}+r_\beta F_j.
+$$
+

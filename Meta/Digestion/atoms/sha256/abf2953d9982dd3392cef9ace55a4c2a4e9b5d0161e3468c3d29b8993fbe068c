@@ -1,0 +1,7 @@
+**证明。** 写 $f_\theta=q_{\alpha_*}\circ C_\theta$。由式（52.11）–（52.12），不同教师满足
+$\|f_\theta-f_\eta\|_{L^2(P_n)}^2=\alpha_*^2T(\theta,\eta)\ge9\varepsilon$。把学习器输出归到 $L^2(P_n)$ 距离最近的 $f_\eta$，并固定破平规则。在式（52.44）的好事件上，到真实目标的距离至多 $\sqrt\varepsilon$，到任意其他目标至少为 $2\sqrt\varepsilon$，所以这个同一解码器在每个教师下的错误概率至多 $\delta$。
+
+式（52.35）的完整记录参考律论证在共同信号 $\alpha_*$ 上适用：
+$\operatorname{KL}(P_{\theta,\alpha_*}^{m}\Vert P_0^m)\le3mS\alpha_*^2=27mS\varepsilon/d_0$。加入同一独立种子不改变该 KL。对均匀教师索引，互信息不超过这些参考 KL 的平均值；Fano 给平均解码错误至少为
+$1-(27mS\varepsilon/d_0+\log2)/\log N$。结合错误至多 $\delta$ 即得式（52.45）。最近目标计算只用于信息下界归约，不给部署模型增加免费组件。$\square$
+

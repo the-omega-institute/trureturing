@@ -1,0 +1,15 @@
+**Hypothesis 3.1 (Common phase and anchored reconstruction).** Let $a=\varphi^{-2}$ and let $U$ be uniform on $[0,1)$. Define the Fibonacci phase path
+$$
+C_j(U)=\lfloor U+(j+1)a\rfloor-\lfloor U+ja\rfloor .
+$$
+For comparison, let $C$ have the stationary Markov law
+$$
+P_p=\begin{pmatrix}1-p&p\\1&0\end{pmatrix},\qquad
+\pi_p=\left(\frac1{1+p},\frac p{1+p}\right),\qquad0\le p\le1.
+$$
+Both paths forbid $11$, but only the phase path is supported on the Fibonacci substitution language. Independently choose a fair bit $B$, let $x_0=B$ and
+$$
+ x_{j+1}=x_j\mathbin{\oplus}(1-C_j),\qquad S_j=(-1)^{x_j}.
+$$
+The common phase, path law and fair anchor are hypotheses; they are not consequences of $\rho$.
+

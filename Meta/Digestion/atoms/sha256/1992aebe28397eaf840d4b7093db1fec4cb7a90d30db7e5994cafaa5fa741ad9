@@ -1,0 +1,28 @@
+**引理 47.3（任意叶编码下的共同路径空间）。** 令中窗叶的 $m$ 个坐标函数张成 $V\subseteq\mathbb R^\Sigma$。固定该叶之外的所有输入后，预测的每个 log-odds 坐标减去相应 $\beta_i$ 都属于同一个 $V$。若预测准确，则它必须包含目标所有外部截面；其联合张成恰为
+
+$$
+U_2(H^\star-\beta)=
+\begin{cases}
+\operatorname{span}\{1,b,c,bc\},&\beta\ne(-\gamma,-\gamma),\\
+\operatorname{span}\{b,c,bc\},&\beta=(-\gamma,-\gamma).
+\end{cases}
+\tag{47.8}
+$$
+
+两行维数分别为四、三。唯一使常数方向消失的相对偏置，其跨度正好是 $\gamma$。
+
+证明。沿中窗叶到根的路径，固定另一子树的消息后，每次分别双线性合并成为对当前消息的齐次线性映射；与头斜率复合仍齐次线性。头只在最后加入实际 $\beta$，所以所有外部环境共用叶坐标空间 $V$。这一步约束的是 log-odds，未把 softmax 概率当作线性张量。
+
+写 $t_i=-\gamma-\beta_i$。第一坐标的四个外部 $(a,d)=00,10,01,11$ 截面为
+
+$$
+t_1\mathbf1,\quad t_1\mathbf1+2\gamma b,\quad
+ t_1\mathbf1+\gamma c,\quad
+ t_1\mathbf1+2\gamma b+\gamma c-\gamma bc.
+\tag{47.9}
+$$
+
+作差得到 $b,c,bc$；若 $t_1\ne0$，还得到1。第二坐标把 $2\gamma b,\gamma c,-\gamma bc$ 分别换为 $\gamma b,2\gamma c,-2\gamma bc$，所以 $t_2\ne0$ 时同样得到四维空间。四个函数在实际中窗 $000,100,001,101$ 上独立；原始符号 $010$ 与 $000$ 的目标截面相同，但任意编码仍可区分这两个符号。当两个 $t_i$ 均为零，联合输出为 $\gamma(2G_1+G_2,G_1+2G_2)$，其二乘二系数矩阵行列式为3，故其截面空间等于 $(G_1,G_2)$ 的截面空间，即 $\operatorname{span}\{b,c,bc\}$。相对偏置 $(-\gamma,-\gamma)$ 对应截距 $(0,-\gamma,-\gamma)$，跨度为 $\gamma$。$\square$
+
+这个必要空间不是关于信息状态数的下界：二维非线性编码可以给有限中窗状态安排不同实数值。这里恢复的 $bc$ 是完成所有外部环境下准确后验所需的关系响应方向；它连同是否需传输1，由齐次运算和实际头截距共同决定。维数下界也不要求隐藏坐标恰叫 $b,c,bc$。
+

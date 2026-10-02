@@ -1,0 +1,21 @@
+**Theorem 3.3 (Bounded discrepancy and nonmixing native fluctuations).** For every phase and every window,
+$$
+|A_{s,n}-na|<1.
+$$
+For fixed $k$ and $T<\infty$,
+$$
+\sup_{0\le t\le T}
+\frac{\left|Q_{s,\lfloor Nt\rfloor}^{(k)}-(F_{k+4}-aF_{k+2})\lfloor Nt\rfloor\right|}{F_{k+2}\sqrt N}
+\le N^{-1/2}.
+$$
+Thus the centered count step processes and every finite collection of centered quantity step processes, divided by $\sqrt N$, converge uniformly on $[0,T]$ to zero for every phase. In particular this is functional convergence in the Skorohod $J_1$ topology, as well as zero fluctuation at every finite collection of observation times. The unscaled variance has all subsequential limits in $[0,F_{k+2}^2/4]$, and for $j\ge2$,
+$$
+\operatorname{Var}(A_{s,F_j})=\varphi^{-j}(1-\varphi^{-j}).
+$$
+If $d_r=\{ra\}$, then
+$$
+\operatorname{Cov}(C_0,C_r)
+=(a-d_r)_++(a+d_r-1)_+-a^2.
+$$
+Along $r=F_j$ this tends to $a(1-a)>0$, while $|\mathbb E(S_0S_{F_j})|\to1$; neither observed process is mixing.
+
