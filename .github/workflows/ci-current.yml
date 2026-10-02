@@ -934,6 +934,21 @@ jobs:
           key: ${{ steps.judge_key.outputs.key }}
       - id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - name: 'PROBE: start a forced judge build in the background'
+        run: |
+          mkdir -p "$RUNNER_TEMP/probe-judge"
+          cat > "$RUNNER_TEMP/probe-judge/run.sh" <<'SH'
+          #!/usr/bin/env bash
+          d="$RUNNER_TEMP/probe-judge"
+          date +%s > "$d/start"
+          rc=0
+          dotnet build $JUDGE_BUILD_ARGS > "$d/build.log" 2>&1 || rc=$?
+          date +%s > "$d/end"
+          echo "$rc" > "$d/rc"
+          SH
+          sed -i 's/^          //' "$RUNNER_TEMP/probe-judge/run.sh"
+          nohup bash "$RUNNER_TEMP/probe-judge/run.sh" > /dev/null 2>&1 < /dev/null &
+          echo "CI_PROBE background judge build started pid=$!"
       - id: elan
         if: steps.keys.outputs.elan_key != ''
         continue-on-error: true
@@ -967,6 +982,16 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: 'PROBE: join the background judge build'
+        if: ${{ !cancelled() }}
+        run: |
+          d="$RUNNER_TEMP/probe-judge"
+          waited=0
+          while [[ ! -f "$d/rc" && $waited -lt 900 ]]; do sleep 1; waited=$((waited + 1)); done
+          [[ -f "$d/rc" ]] || { echo "CI_PROBE judge build did not finish"; tail -5 "$d/build.log" || true; exit 1; }
+          echo "CI_PROBE {\"judge_build_s\": $(( $(cat "$d/end") - $(cat "$d/start") )), \"rc\": $(cat "$d/rc"), \"waited_after_restores_s\": $waited}"
+          grep -E "Time Elapsed|Build succeeded|error" "$d/build.log" | tail -4 || true
+          exit "$(cat "$d/rc")"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
         run: dotnet build $JUDGE_BUILD_ARGS
