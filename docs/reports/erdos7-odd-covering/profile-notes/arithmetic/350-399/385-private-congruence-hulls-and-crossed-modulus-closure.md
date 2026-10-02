@@ -105,6 +105,13 @@ ternary depth forces R-only mixed suppliers at one unchanged complete
 private source and one late ternary prefix. Their remaining capacity
 or whole-hole repair is not provided by the concentrated-color bound.
 
+[Section137](#137-every-shallow-retained-certificate-has-an-original-private-escape)
+localizes a shallow antichain replacement by its complete deletion
+obligation. Every actual shallow retained certificate must have an
+original private point outside its common cofactor cylinder; otherwise
+one legal replacement strictly lowers the modulus sum. The escape
+does not yet give a surviving W-point or an iteration that must terminate.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -16874,3 +16881,93 @@ If both colors are nonempty, set p_i=min(S_(3-i)), c_i=p_i-2, and let B_i be the
 For H=1 this bound is automatic; for H>=2 the highest pure-three class lies in one of the two nonzero roots. When R is empty these expressions recover the existing HH height bounds; that closed branch is reused.
 
 If R misses {5,7,11,13}, GM1 supplies both p_i<=13, so every excess over the resulting concentrated allowances must be carried by actual R-only originals, including the source and late-prefix information in CSH2--CSH3. This does not exclude those suppliers or bound their heights: p*r with r in R need not be fresh. CP20 and CP21 cannot be counted as disjoint inventory in addition to this packet. A usable bound or legal whole-hole repair for the actual R-only packet remains missing. No unrestricted noncoverage or new Lean verification is asserted.
+
+## 137. Every shallow retained certificate has an original private escape
+
+Keep one original EB1 family and Report385 §130's notation
+
+    Q=3^H q^G M, q>3, gcd(M,3q)=1,
+    T={3^H q^e s original:e>=1},
+    R=the complete q-free residual,
+    W={x in R:the retained D_x contains no complete ternary q-tree}.
+
+Fix an actual x=(u,v) in R minus W. The existing SH2 supplies a shallow certificate S from the SAME original family: select three distinct first-q roots; at k of them select one incident height-one retained original, and at each of the other 3-k select three incident height-two originals in distinct second-q children. Thus
+
+    |S|=k+3(3-k)=9-2k, 0<=k<=3.
+
+When G=1, use the three incident height-one originals. All members of S have their original full ternary phase u and their actual cofactor phases at v. Their q-prefixes form an antichain, so the COMPLETE original classes A_d, d in S, are pairwise disjoint.
+
+Write each original d=3^H q^(e_d) s_d and define
+
+    h=lcm_(d in S)s_d,
+    C={z:z=v mod h}.
+
+There is an original d in S and a point y in its COMPLETE original private region P_d such that
+
+    y != v mod h.                                  (SCE1)
+
+The assertion concerns original private regions in the unchanged whole family. It is stronger than merely finding another live cofactor outside C. It does not assert that the escaping point belongs to W.
+
+### The cofactor-local replacement that proves SCE1
+
+Suppose instead P_d is contained in C for every d in S. Because the original S classes are pairwise disjoint, the exact deletion obligation satisfies
+
+    E_S=Z minus union_(d notin S)A_d
+       =disjoint union_(d in S)P_d
+       subset {z:z=u mod3^H, z=v mod h}.            (SCE2)
+
+Here equality uses both the whole original cover and disjointness of the complete removed classes. It is not available for an arbitrary deletion batch.
+
+Reuse the literal inverse APs in Report375 LA3. Realize S's selected q-prefixes as a complete ternary depth-two skeleton: the k height-one owners cover their entire selected first branch, and each other first branch has its three selected second children. Choose an arbitrary three-child continuation under a height-one owner. Let theta_e denote its prefix-compatible injections for e=1,2, and let c_d be the inverse of d's actual q-prefix. At G=1 use only theta_1.
+
+Replace each d in S by the single AP
+
+    B_d={z:z=u+3^H c_d mod3^(H+e_d),
+             z=a_d mod s_d},
+    modulus(B_d)=3^(H+e_d)s_d.                      (SCE3)
+
+Keep every other original unchanged. In particular no cofactor cylinder is cut out of an unchanged crossing original.
+
+On the complete cylinder on the right side of SCE2, every B_d cofactor condition holds: s_d divides h, and v is the actual common incident phase. Its next one or two ternary digits select a leaf of the chosen ternary skeleton. The corresponding original S owner supplies a B_d containing those digits. Therefore the B_d cover that ENTIRE cylinder, including every old q-coordinate and all integer lifts. They cover E_S, so PH1 gives a whole output cover.
+
+Every new numerical label has ternary height H+e_d>H and is absent from the entire original palette. The map
+
+    (e_d,s_d) -> 3^(H+e_d)s_d
+
+is injective; distinct original numerical labels have distinct pairs. Hence the B_d are pairwise numerically distinct and collide with no retained original. Their cofactor is s_d itself, not h or lcm(h,s_d). Imposing the common cylinder only on the deletion obligation lets the repair classes extend beyond it harmlessly and avoids an unnecessary cofactor-label collapse.
+
+The class count is unchanged, while each replacement has
+
+    modulus(B_d)/d=(3/q)^(e_d)<1.
+
+The modulus sum decreases strictly, contradicting EB1. This proves SCE1 at arbitrary original H and all remaining original prime heights.
+
+### Exact arithmetic meaning of the missing hypothesis
+
+For the complete private hull Gamma_d from PH3 and any actual private witness w_d, the contrary hypothesis for a member d is exactly
+
+    h divides Gamma_d AND w_d=v mod h.
+
+Thus every certificate S has a member for which this pair of tests fails. Its own cofactor s_d always divides Gamma_d and its private points have residue v modulo s_d; the forced escape changes some further cofactor information supplied by other certificate members. The statement includes all powers in h, not just its prime support.
+
+By contrast, LW1 (U=L) alone ensures that the selected q-tree cannot be retained-covered at every live v'. That yields some q-free-live cofactor outside the certificate's common incidence cylinder. SCE1 identifies an escaping point private to ONE of its actual owners. This retains an ownership relation absent from the projection-only consequence.
+
+There is still no monotone descent on cofactor points: at such an escaping private point, some old certificate incidences disappear, but other original cofactor incidences may become active. SCE1 does not justify discarding those newly active originals or asserting that successive escapes reach W. Neither a lower bound for |C_(u,beta)| nor a complete-price upper bound below one is supplied here.
+
+### Why unrestricted cofactor localization still has a cost
+
+The successful SCE3 repair needs the complete joint obligation confined to the chosen cylinder. Merely finding a point, a private witness per class, or one v on which a retained tree exists does not provide SCE2. If an original d has a private point outside the cylinder, deleting it there creates a genuine obligation; retaining its old class while adding a localized replacement increases the class count unless another paid saving is supplied.
+
+One tempting but unnecessary modification is to require every new inverse AP itself to be contained in z=v mod h. Its numerical modulus becomes
+
+    3^(H+e_d)lcm(s_d,h),
+
+with price ratio (3/q)^(e_d) h/gcd(s_d,h). Distinct s_d can then produce the same lcm at the same e_d, giving different phases of one numerical modulus. A concrete pattern is h=ell*s and cofactors s,ell*s with ell not dividing s: both map to cofactor h. Fresh ternary height protects against old labels, but not this new/new collision. Neither the ratio nor the collision is automatically paid by EB1.
+
+SCE3 avoids this artificial restriction; it does not avoid the essential outside-cylinder liability. When that liability is absent, its source and numeric-label map remain exactly the same as the original single-word absorption.
+
+Finally, cofactor-dependent choices of a different avoiding tree at each v do not automatically preserve a single AP per original. Report375 LA3 permits dependence on the complete fixed ternary word because every transported original fixes that word. Original cofactor cylinders need not fix v. Report385 §§99/101 already supplies literal controls separating fibrewise tree availability from a common single-AP realization. Those controls do not refute an EB1 cofactor bridge, but the generic inference is unavailable.
+
+The three-height-one-owner case uses exactly the existing fresh ternary-digit repair of DR7/NF4–NF5 with the three original cofactors. The general shallow case uses LA3's already available prefix inverse on its mixed depth-one/depth-two antichain. The additional conclusion is the original private escape SCE1 for every actual shallow certificate, not a new generic repair or tree theorem.
+
+This is an ordinary conditional consequence of PH1–PH4, SH2 and those existing repair interfaces. It adds no Lean verification and gives no unrestricted Erdős #7 conclusion.
