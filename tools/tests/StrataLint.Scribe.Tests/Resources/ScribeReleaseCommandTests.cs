@@ -6,6 +6,94 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeReleaseCommandTests
 {
+    [Fact]
+    public void ReleaseRejectsFileTargetWithoutTouchingIt()
+    {
+        using var root = Prepare();
+        TemporaryFileSystem.File.WriteAllText(root.Resolve("release"), "content");
+        var error = new StringWriter();
+        Assert.Equal(2, Release(root, error: error));
+        Assert.Contains("InvalidReleaseDirectory", error.ToString(), StringComparison.Ordinal);
+        Assert.Equal("content", File.ReadAllText(root.Resolve("release")));
+    }
+
+    [Fact]
+    public void ReleaseCreatesMissingParentDirectory()
+    {
+        using var root = Prepare();
+        Script(root, "Neutral");
+        var error = new StringWriter();
+        Assert.False(Directory.Exists(Path.Combine(root.Path, "parent")));
+        Assert.Equal(0, Run(root, ["resources", "release", "--source-commit", ScribeReleaseSurface.Commit,
+            "--out", "parent/release"], error));
+        Assert.Empty(error.ToString());
+        Assert.Equal(3, Directory.GetFiles(Path.Combine(root.Path, "parent/release")).Length);
+    }
+
+    [Theory]
+    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\n", "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.")]
+    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\nBlueprint/D5/S0/Synthetic/Second.scribe.cs\nBlueprint/D5/S0/Synthetic/Third.scribe.cs\n",
+        "MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.")]
+    [InlineData("Blueprint/D5/S0/Synthetic/Third.scribe.cs\n",
+        "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/First.scribe.cs.")]
+    public void VerifyPathsFromReportsEveryExtraAndMissingPath(string paths, string reason)
+    {
+        using var root = Assets();
+        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"), paths);
+        var error = new StringWriter();
+        Assert.Equal(1, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Contains(reason, error.ToString(), StringComparison.Ordinal);
+        if (paths == "Blueprint/D5/S0/Synthetic/Third.scribe.cs\n")
+        {
+            Assert.Contains("UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.", error.ToString(), StringComparison.Ordinal);
+            Assert.Contains("MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.", error.ToString(), StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void VerifyPathsFromAcceptsExactlyTheDefinitionSetInAnyOrder()
+    {
+        using var root = Assets();
+        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"),
+            "Blueprint/D5/S0/Synthetic/Second.scribe.cs\nBlueprint/D5/S0/Synthetic/First.scribe.cs\n");
+        var error = new StringWriter();
+        Assert.Equal(0, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Empty(error.ToString());
+    }
+
+    [Theory]
+    [InlineData("\n")]
+    [InlineData("../Neutral.scribe.cs\n")]
+    [InlineData("/Blueprint/Neutral.scribe.cs\n")]
+    [InlineData("Blueprint/../Neutral.scribe.cs\n")]
+    [InlineData("Blueprint//Neutral.scribe.cs\n")]
+    [InlineData("Blueprint/./Neutral.scribe.cs\n")]
+    [InlineData("Blueprint\\Neutral.scribe.cs\n")]
+    [InlineData("Blueprint/Neutral.txt\n")]
+    [InlineData(" Blueprint/Neutral.scribe.cs\n")]
+    [InlineData("Blueprint/Neutral\0.scribe.cs\n")]
+    [InlineData("Blueprint/Neutral.scribe.cs\nBlueprint/Neutral.scribe.cs\n")]
+    public void VerifyPathsFromRejectsInvalidLinesWithExitTwo(string paths)
+    {
+        using var root = Assets();
+        TemporaryFileSystem.File.WriteAllText(root.Resolve("paths.txt"), paths);
+        var error = new StringWriter();
+        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.Contains("InvalidDefinitionPathList", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void VerifyPathsFromRejectsUnreadableFileWithExitTwo(bool directory)
+    {
+        using var root = Assets();
+        if (directory) TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("paths.txt"));
+        var error = new StringWriter();
+        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--paths-from", "paths.txt"], error));
+        Assert.NotEmpty(error.ToString());
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

@@ -7,6 +7,7 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed partial class MakeWorkflowTests
 {
     private const string ScribeScriptPath = "tools/scripts/scribe.sh";
+    private const string ScribeReleaseScriptPath = "tools/scripts/scribe-release.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
@@ -48,6 +49,7 @@ public sealed partial class MakeWorkflowTests
         "lean-report",
         "build",
         "emit",
+        "scribe-release",
         "ingest",
         "align-digestion-status",
         "refresh-source-registry",

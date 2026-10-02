@@ -8,6 +8,25 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ScribeResourceBundleTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReaderRejectsTruncatedResourceOrOutOfRangeLength(bool oversizedLength)
+    {
+        var bytes = Carrier(ScribeReleaseSurface.ResourceName);
+        using var pe = new PEReader(new MemoryStream(bytes));
+        var directory = pe.PEHeaders.CorHeader!.ResourcesDirectory;
+        var section = pe.PEHeaders.SectionHeaders.Single(item => directory.RelativeVirtualAddress >= item.VirtualAddress
+            && directory.RelativeVirtualAddress < item.VirtualAddress + item.VirtualSize);
+        var offset = section.PointerToRawData + directory.RelativeVirtualAddress - section.VirtualAddress;
+        if (oversizedLength)
+            System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(bytes.AsSpan(offset, sizeof(int)), int.MaxValue);
+        else
+            bytes = bytes[..(offset + sizeof(int) + 1)];
+        var exception = Assert.ThrowsAny<FormatException>(() => ScribeReleaseSurface.Unbundle(bytes));
+        Assert.StartsWith(oversizedLength ? "InvalidResource:" : "InvalidAssembly:", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("InvalidAssembly")]
     [InlineData("MissingResource")]
     [InlineData("MultipleResources")]

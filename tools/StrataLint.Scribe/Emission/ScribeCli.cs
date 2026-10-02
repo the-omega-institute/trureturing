@@ -249,7 +249,7 @@ public static class ScribeCli
         + "| markdown-check --report <file> [--paths-from <file|->] "
         + "| resources pack --out <file> | resources verify --pack <file> "
         + "| resources release --source-commit <commit> --out <directory> "
-        + "| resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] "
+        + "| resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--paths-from <file>] "
         + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>

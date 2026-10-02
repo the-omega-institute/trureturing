@@ -6,7 +6,7 @@ internal static class ScribeResourceCommands
 {
     internal const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>"
         + " | resources release --source-commit <commit> --out <directory>"
-        + " | resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>]";
+        + " | resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--paths-from <file>]";
 
     internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)

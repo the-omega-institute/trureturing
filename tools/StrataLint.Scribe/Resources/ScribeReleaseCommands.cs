@@ -15,7 +15,8 @@ internal static class ScribeReleaseCommands
             var directory = Path.GetFullPath(options[release ? "--out" : "--dir"], workingDirectory);
             return release
                 ? Release(repositoryRoot(), directory, options["--source-commit"], output, error)
-                : Verify(directory, options, output, error);
+                : Verify(directory, options, options.TryGetValue("--paths-from", out var pathsFile)
+                    ? ReadDefinitionPaths(Path.GetFullPath(pathsFile, workingDirectory)) : null, output, error);
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
             or ArgumentException or FormatException or InvalidOperationException)
@@ -29,7 +30,7 @@ internal static class ScribeReleaseCommands
     private static Dictionary<string, string> Parse(IReadOnlyList<string> arguments, bool release)
     {
         var options = new Dictionary<string, string>(StringComparer.Ordinal);
-        var allowed = release ? new[] { "--source-commit", "--out" } : ["--dir", "--source-commit", "--total-sha256"];
+        var allowed = release ? new[] { "--source-commit", "--out" } : ["--dir", "--source-commit", "--total-sha256", "--paths-from"];
         if (arguments.Count < 4 || arguments.Count % 2 != 0)
             throw new ArgumentException("InvalidReleaseArguments: options require a name and value.");
         for (var index = 2; index < arguments.Count; index += 2)
@@ -110,7 +111,24 @@ internal static class ScribeReleaseCommands
         }
     }
 
-    private static int Verify(string directory, IReadOnlyDictionary<string, string> options, TextWriter output, TextWriter error)
+    private static HashSet<string> ReadDefinitionPaths(string path)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal);
+        var lineNumber = 0;
+        foreach (var line in File.ReadAllLines(path, new System.Text.UTF8Encoding(false, true)))
+        {
+            lineNumber++;
+            if (!line.StartsWith("Blueprint/", StringComparison.Ordinal)
+                || !line.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                || line != line.Trim() || line.Contains('\\') || line.Any(char.IsControl)
+                || line.Split('/').Any(segment => segment is "" or "." or "..") || !paths.Add(line))
+                throw new ArgumentException($"InvalidDefinitionPathList: invalid or duplicate path on line {lineNumber}.");
+        }
+        return paths;
+    }
+
+    private static int Verify(string directory, IReadOnlyDictionary<string, string> options,
+        HashSet<string>? expectedPaths, TextWriter output, TextWriter error)
     {
         var missing = Assets.Where(asset => !File.Exists(Path.Combine(directory, asset))).ToArray();
         if (missing.Length != 0)
@@ -136,6 +154,15 @@ internal static class ScribeReleaseCommands
             mismatches.Add("SourceCommitMismatch: identity differs from expected source commit.");
         if (options.TryGetValue("--total-sha256", out var digest) && digest != identity.TotalSha256)
             mismatches.Add("ExpectedTotalSha256Mismatch: identity differs from expected digest.");
+        if (expectedPaths is not null)
+        {
+            var actualPaths = pack.Manifest.Entries.Select(entry => "Blueprint/" + entry.Gid + ".scribe.cs")
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var path in actualPaths.Except(expectedPaths).Order(StringComparer.Ordinal))
+                mismatches.Add($"UnexpectedDefinitionPath: {path}.");
+            foreach (var path in expectedPaths.Except(actualPaths).Order(StringComparer.Ordinal))
+                mismatches.Add($"MissingDefinitionPath: {path}.");
+        }
         foreach (var path in Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal))
         {
             var relative = Path.GetRelativePath(directory, path);

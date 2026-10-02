@@ -5,6 +5,14 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeReleaseIdentityTests
 {
+    [Fact]
+    public void DecodeRejectsUtf8Bom() => Reject("\uFEFF" + Valid, "InvalidJson");
+
+    [Fact]
+    public void DecodeAcceptsSurroundingJsonWhitespace() => Assert.Equal(
+        ScribeReleaseSurface.Decode(Encoding.UTF8.GetBytes(Valid)),
+        ScribeReleaseSurface.Decode(Encoding.UTF8.GetBytes(" \t\r\n" + Valid + "\r\n\t ")));
+
     private const string Valid = """
         {"schema":"trureturing.scribe.release-identity","sourceCommit":"0123456789abcdef0123456789abcdef01234567","packFormatVersion":1,"entryCount":2,"totalSha256":"abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"}
         """;
