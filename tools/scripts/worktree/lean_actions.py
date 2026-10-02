@@ -298,7 +298,7 @@ def main():
             archive_paths = native_archive_paths(root, args.layers)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
             system, arch = binary_platform()
-            values["elan_key"] = f"elan-v1-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+            values["elan_key"] = f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             output(values)
