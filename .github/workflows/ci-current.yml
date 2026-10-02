@@ -979,14 +979,11 @@ jobs:
                       raw[key] += os.path.getsize(path); count[key] += 1; files[key].append(path)
               return raw, count, files
           def compressed(paths):
-              listing = "\n".join(paths).encode()
-              tar = subprocess.Popen(["tar", "-cf", "-", "--files-from=-"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-              zstd = subprocess.Popen(["zstd", "-T0", "-q", "-c"], stdin=tar.stdout, stdout=subprocess.PIPE)
-              tar.stdin.write(listing); tar.stdin.close()
-              size = 0
-              while chunk := zstd.stdout.read(1 << 20):
-                  size += len(chunk)
-              return size
+              listing = os.path.join(os.environ["RUNNER_TEMP"], "probe-files")
+              with open(listing, "w") as stream:
+                  stream.write("\n".join(paths) + "\n")
+              pipeline = f'tar -cf - --files-from="{listing}" 2>/dev/null | zstd -T0 -q -c | wc -c'
+              return int(subprocess.run(["bash", "-c", pipeline], capture_output=True, text=True).stdout.strip() or 0)
           for label, root in (("project", ".lake/build"), ("dependency", ".lake/packages"), ("elan", os.path.expanduser("~/.elan"))):
               if not os.path.isdir(root):
                   print("CI_PROBE " + json.dumps({"inventory": label, "status": "absent"}), flush=True); continue
