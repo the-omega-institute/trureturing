@@ -254,6 +254,14 @@ P^+(Q)<rs(r-1)(s-1)min(r,s), independent of their heights. Thus the branch
 where R avoids5,7,11,13 has P^+(Q)<15600. The remaining finite carrier
 and the case where R meets that small head remain unresolved.
 
+[Section157](#157-one-complete-source-does-not-bound-small-core-top-multiplicity)
+gives an explicit noncover family with a covered actual top fibre,
+exact shell service at one private source and global qualified-parent
+phase caps, yet unbounded small-core multiplicity there. Another actual
+private source fails shell coverage. Thus a bound needs further EB1 or
+whole-source input; this example does not refute controlled-source
+selection or provide an odd whole cover.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19166,3 +19174,138 @@ The general statement also has a direct original-label consequence: for ANY two 
 Indeed the negation, together with divisor closure, would prohibit every original rs-multiple and contradict FPA2. Pairwise forced labels do not assert the presence of a product of three or more primes, nor prescribe their phases or one common private point.
 
 When R meets {5,7,11,13}, FPA7 is still valid for any actual opposite pair. The existing small-root intersection condition can instead be supplied by members of R; it does not place an opposite concentrated pair in a uniformly small range or ensure both colors exist. No bound on that unresolved case, no complete-liability descent inside FPA8 and no unrestricted noncoverage is asserted.
+
+## 157. One complete source does not bound small-core top multiplicity
+
+The following explicit NONCOVER family rules out a particular pointwise shortcut. Distinct odd moduli, divisor closure, private points for every original class, global qualified-parent phase caps, and all shell demands at ONE complete private source can coexist with arbitrarily large small-core top multiplicity at that source. Its whole top fibre is covered. The missing whole-source condition is exhibited by another private point with an uncovered adjacent point.
+
+This is a structural counterexample, not an EB1 family or an odd-cover counterexample. Here qualification means the numerical condition tau(f)>=47. No concentrated-color hypothesis is inferred from that chosen threshold. The argument reuses the definitions of top support, lower index and directional shell service; it proves no new generic shell or exchange theorem. No Lean verification is asserted.
+
+### One fixed numerical inventory and its literal phases
+
+Fix
+
+    u=17, g=19*23*29*31*37, h=ug,
+    r>47 prime, M=hr.
+
+Thus g has five prime factors, h and rg have six, and M has seven. In particular tau(g)=32, whereas tau(h)=tau(rg)=64. Write C_d for the original class with numerical modulus d, and omega(d) for the number of distinct prime factors of d.
+
+Include every divisor d>1 of M. Give the prime classes phase zero, every proper composite divisor d<M phase omega(d), and M phase one:
+
+    C_d=0 mod d                         if omega(d)=1,
+    C_d=omega(d) mod d                  if 1<d<M and omega(d)>=2,
+    C_M=1 mod M.
+
+The proper composite phases are in {2,...,6}. Also include the five isolated classes 0 modulo 3,5,7,11,13. No other numerical label contains these five primes.
+
+Choose mutually distinct auxiliary primes, all larger than r:
+
+    v_(q,b) for q|h and 2<=b<=q-1,
+    c_a for 2<=a<=r-1.
+
+For EVERY auxiliary prime t include C_t=0 mod t and C_(t^2)=8 mod t^2. For each v_(q,b), also include the ordinary supplier
+
+    C_(q v_(q,b)):
+        x=b mod q, x=1 mod v_(q,b).
+
+For each c_a include all numerical labels c_a d with d|rg. The case d=1 is the already included C_(c_a). For 1<d<rg prescribe
+
+    C_(c_a d):
+        x=1 mod d, x=omega(d)+1 mod c_a.
+
+For d=rg use instead the full-column class
+
+    E_a=C_(rg c_a):
+        x=1 mod g, x=a mod r, x=1 mod c_a.
+
+Every displayed CRT prescription is compatible. These are fixed original classes, including all column divisors; no phase is chosen later as a function of a sampled source.
+
+### Closure, comparable disjointness and complete private points
+
+All numerical labels are distinct odd nonunits. Auxiliary primes distinguish columns from each other and from ordinary suppliers. The inventory is divisor-closed above one: the base divisors are all present, each column contains its entire c_a-divisor interval, and the remaining divisors of column labels are base divisors. The primes of ordinary suppliers and auxiliary squares are included. Base and isolated primes have global height one; auxiliary primes have height two.
+
+Every pair of comparable distinct original classes is disjoint. For proper base divisors, strict divisibility increases omega, and their residues in {0,2,...,6} are different modulo every common prime. The phase one of M differs from every proper base phase. Within a column, strict proper divisibility increases its c_a-phase omega(d)+1, while the full column has c_a-phase one. A base divisor of a proper-column label has phase zero or 2,...,6 at some base coordinate where the column has phase one. For E_a, any base divisor containing a g-prime is separated there; its only remaining prime divisor r has phase zero, different from a. Auxiliary prime phase zero and square phase eight avoid all mixed auxiliary phases in {1,...,6}. These cases exhaust comparable numerical pairs.
+
+Every original class has a COMPLETE private point. The following CRT recipes prove this directly. Unless an auxiliary coordinate is explicitly targeted, set it to 9 modulo its square; this disables every original using that auxiliary prime. Unless an isolated small prime is targeted, set its coordinate to one.
+
+* For a proper base target C_d, set its own residue on the primes dividing d and set all other base coordinates to one. Any other matching base class would need the same support size within the same support, so it would equal d. The target's non-one coordinate excludes M.
+* The class C_M is private at the complete point x=1. Ordinary suppliers require a base value at least two, full columns require r-value a>=2, and proper columns require auxiliary value in {2,...,6}; all miss x.
+* For an ordinary supplier q v_(q,b), set q to b, all other base coordinates to one, and its auxiliary coordinate to one. For E_a, set r to a, every other base coordinate to one, and c_a to one. Only the respective target is active.
+* For a proper-column target c_a d, set base coordinates in d to one, all other base coordinates to ten, and c_a to omega(d)+1. Another class in this column could match only with the same-size base support contained in d, hence only if identical. Base classes are excluded by the values one and ten; the full column has the wrong c_a-phase.
+* For an auxiliary prime or square target, set all base coordinates to ten and its auxiliary coordinate to its own residue zero or eight. Other classes with that auxiliary prime have different residues. For an isolated small-prime target, use all base coordinates ten, all auxiliary coordinates nine, the target coordinate zero, and the other small-prime coordinates one.
+
+All these literal values are below the relevant base or auxiliary primes, so the indicated distinctions persist in the actual CRT coordinates. Irredundancy here concerns this fixed family and does not assert whole coverage.
+
+### Qualified-parent caps hold globally, including nonempty descendant groups
+
+Every original f with tau(f)>=47 has at most ONE proper original multiple in each phase modulo f. This can be checked exhaustively by numerical type, without enumerating the period.
+
+Such a parent must be squarefree with six or seven prime factors: smaller squarefree supports have divisor count at most32, and auxiliary squares have divisor count three. A six-prime base divisor f of M other than rg has only M as a proper original multiple. The parent rg has M and every E_a; their phases modulo rg are
+
+    (1 mod g, 1 mod r),
+    (1 mod g, a mod r), 2<=a<=r-1,
+
+which are pairwise distinct. A qualified proper-column parent c_a d has omega(d)=5 and only its full-column successor E_a. Seven-prime original labels are maximal. These are all qualified parents and all their descendants.
+
+Thus the global per-phase cap is one, stronger than the comparison cap46. It is nonvacuous at h and rg. The many E_a share the g-phase one, but tau(g)=32 is below qualification. Adding r qualifies the parent and separates their phases; adding u qualifies the parent and excludes all E_a from its descendant inventory.
+
+### A covered top fibre with unbounded primitive multiplicity
+
+Let P_aux be the auxiliary-prime set. The full period and lower carrier are
+
+    Q=(3*5*7*11*13) M product_(t in P_aux)t^2,
+    L=Q/rad(Q)=product_(t in P_aux)t.
+
+Use the actual lower source z=1 modulo L, coming from the private point x=1 of C_M. For an original numerical label m, retain the usual top support
+
+    T_m={p prime dividing Q:v_p(m)=v_p(Q)},
+    lower_m=m/product_(p in T_m)p.
+
+At z=1 every base class, ordinary supplier and E_a is active. Auxiliary prime classes, auxiliary squares and proper-column classes are inactive: their lower residues are respectively zero, eight and 2,...,6. The only empty-top-support classes are the inactive auxiliary prime classes.
+
+The ENTIRE top fibre over z is covered. For any assignment in that fibre, if some q|h differs from one, value zero meets C_q and value b in {2,...,q-1} meets the ordinary supplier q v_(q,b). If every h-coordinate is one, inspect r: zero meets C_r, a in {2,...,r-1} meets E_a, and one meets C_M. Each used class has nonempty top support, and the argument allows every auxiliary top digit and every isolated small-prime coordinate.
+
+Now set A=supp(rg). For every E_a,
+
+    T_(E_a)=A, lower_(E_a)=c_a.
+
+There are r-2 such labels, all active at z, with distinct top r-phases and pairwise-coprime lower indices. The base class C_(rg) has the same top support and is also active, with top phase six. No other active original has this top support. Consequently
+
+    n_A(1)=r-1,                                    (SCO1)
+
+which is unbounded as r ranges over primes. Removing identical top hyperplanes does not reduce this multiplicity. Every prime of A has global height one, so its common lower core is one. Indeed every lower label in the construction is either one or one auxiliary prime, and every common lower gcd has divisor count at most two.
+
+The full-modulus gcd of the E_a is rg, with divisor count64. It cannot replace the lower gcd in LSM: these originals have different actual r top phases.
+
+### Exact shell service and a repeatedly omitted coordinate at the same source
+
+At the COMPLETE private point x=1, the full directional supplier sets of the owner M are exactly
+
+    S_q={q} union {q v_(q,b):2<=b<=q-1}, q|h,
+    S_r={r} union {rg c_a:2<=a<=r-1}.
+
+Each listed original has a nontrivial congruence defect only in its indicated prime direction. Proper composite base classes have defects at several base coordinates; proper-column classes have an auxiliary defect; no other original qualifies for these owner-prime directions. Thus these are complete supplier sets, not selected subsets.
+
+Every displayed supplier has directional modulus height one and defect depth zero, hence shell weight one. Therefore
+
+    sum_(d in S_q) w_(q,d)=q-1 for every q|M.       (SCO2)
+
+All directional demands of M are met exactly at this same source, and different directions use disjoint original labels.
+
+For the qualified parent h=ug and owner M=hr, only r is an increased direction. None of S_r is divisible by h, so the entire r-1 service is escape service. In particular every one of the r-2 E_a omits exactly the SAME h-coordinate u and retains every coordinate of g. The CPA comparison with N=47 requires only r-46; this selected source satisfies it. Its direct divisor-tail count is tau(M/h)=2 and supplies no bound on r. Pigeonholing omitted coordinates therefore cannot by itself produce a qualified common lower core or a uniform pointwise multiplicity bound.
+
+### Another actual private source exposes the missing obligation
+
+Choose x' by CRT with all base coordinates one, every auxiliary coordinate nine modulo its square, and every isolated small-prime coordinate one. It is again a complete private point of C_M. Every auxiliary-bearing original is now disabled.
+
+Change ONLY its r-coordinate to two. The resulting point y satisfies
+
+    y=1 mod h, y=2 mod r,
+    y=9 mod t^2 for every auxiliary t,
+    y=1 mod 3*5*7*11*13.
+
+It is uncovered. C_M fails at r; auxiliary-bearing classes fail at their auxiliary coordinates; every proper composite base class fails at a base coordinate other than r; and every prime class has the wrong zero residue. Accordingly the r-shell at x' has only the prime supplier C_r and service one, which is less than r-1.
+
+The family therefore meets the stated pointwise premises and the global qualified-parent caps while failing the universally quantified private-source shell obligation. It also lacks initial-segment prime support, the actual opposite concentrated-color structure, EB1 minimality, and the HPA/HPM consequences of whole coverage. Its isolated small primes have private points in both nonzero ternary roots. It does not contradict the bounded-support branch proved from those additional hypotheses.
+
+The exact obstruction is to deriving uniform small-core multiplicity from one completed top fibre and its one-source shell service. A valid replacement must use further whole-source information or another actual EB1 condition. This example neither refutes a controlled-source selection theorem nor supplies an odd whole cover.
