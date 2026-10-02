@@ -91,6 +91,33 @@ the deep-q prefix prices both at a fixed W-marginal and on the larger
 projected U; the latter retains prefix-cofactor correlation. Adequate
 simultaneous source bounds and a strict total liability price remain open.
 
+[Section135](#135-every-q-free-live-full-ternary-word-is-blocked-by-a-local-modulus-sum-descent)
+localizes the full-height replacement to one actual word while retaining
+all other originals and the q-axis. EB1's modulus-sum minimum then gives
+U=L: every q-free-live word supports the projected construction. A
+nonconcentrated prime supplies one two-root law, reducing the crude
+ternary factor from H to (H+1)/2. Deeper distribution and useful joint
+cofactor prices remain unproved.
+
+[Section136](#136-shared-support-shell-demand-stays-at-one-complete-private-source)
+reuses the opposite-color repair with shared support present. Excess
+ternary depth forces R-only mixed suppliers at one unchanged complete
+private source and one late ternary prefix. Their remaining capacity
+or whole-hole repair is not provided by the concentrated-color bound.
+
+[Section137](#137-every-shallow-retained-certificate-has-an-original-private-escape)
+localizes a shallow antichain replacement by its complete deletion
+obligation. Every actual shallow retained certificate must have an
+original private point outside its common cofactor cylinder; otherwise
+one legal replacement strictly lowers the modulus sum. The escape
+does not yet give a surviving W-point or an iteration that must terminate.
+
+[Section138](#138-singleton-root-pruning-improves-the-two-root-original-source-budget)
+combines U=L with the existing opposite-color singleton roots. Two
+actual source laws eliminate opposite-color originals even at ternary
+height zero; one global mixture yields a smaller full-height liability
+budget without assuming independent cofactors or adequate fibre density.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -16149,9 +16176,12 @@ joint addition of independently selected repairs or substitution
 of separate private regions for a joint hole.
 
 Thus the all-concentrated branch is excluded at arbitrary heights.
-The nonconcentrated branch R!=empty remains: CP1's two-color support
-separation and the fresh opposite-color repair are not supplied
-there. No original-quantifier covering counterexample or universal
+The nonconcentrated branch R!=empty remains. CP1 still excludes
+multiples joining two opposite concentrated colors, so their pairwise
+repair remains fresh. It does not separate the ENTIRE support into
+two disjoint carriers: R-only originals and originals sharing R with
+a concentrated color remain. Section136 locates their actual shell
+obligation. No original-quantifier covering counterexample or universal
 descent in that remaining branch follows from CT1--CT6.
 
 ## 130. The retained-tree predicate is determined by its first two q-rows
@@ -16721,3 +16751,328 @@ For G=1 define C_(u,j) using the actual height-one retained ancestors of root j.
 The (u,v)-marginal of PS4 need not be supported on W, and its conditional q-law at a fixed (u,v) need not have the old RE7 caps. The v choice depends on beta. Therefore one must NOT assert nu(A_d)<=kappa_e theta(B_d) merely by naming this marginal theta. PS4--PS5 are the legitimate correlated prices. In particular this construction does not identify U with projection(W), condition away the cofactor choice, or grant the same lambda to a different experiment.
 
 CF3--CF5 choose a full q-tree leaf first and then condition its complete actual cofactor fibre. Here the source chooses a shallow prefix, then a full shallow-safe cofactor, then a dense complete actual tail. The two laws need not coincide, and a per-label minimum of their prices is unjustified. Useful delta, ternary distribution, and a strict whole-family upper price remain the substantive unresolved conditions.
+
+## 135. Every q-free-live full ternary word is blocked by a local modulus-sum descent
+
+For the original EB1 family and the definitions in Report375 JL1 and Report385 §§127/134,
+
+    U=L.                                           (LW1)
+
+The extra input is EB1's modulus-sum minimum. One avoiding tree at one actual live full ternary word already permits a strict local replacement, while every low-height original is retained. This reuses the literal single-AP pullback in Report375 LA2–LA3/JL2; it does not require an avoiding tree at any other word.
+
+### Local replacement at one complete old word
+
+More generally let r<q be original support primes, with
+
+    Q=r^H q^G M, H,G>=1, gcd(M,rq)=1.
+
+For each original d=r^a q^e s write A_d for its unchanged actual class. Let J={d:e>=1,a<H}, K=D minus J, and E_J be the complement of the complete K union. For u modulo r^H put
+
+    R_u={v mod M:no q-free original contains (u,v)},
+    E_u={xi mod q^G:exists v,(u,xi,v) in E_J}.
+
+Suppose R_u is nonempty and a complete r-ary depth-G q-prefix tree avoids E_u. Choose its compatible injections
+
+    theta_e:Z/r^e -> Z/q^e, 0<=e<=G.
+
+They depend on this fixed u, not on v. Let T_u consist of exactly the original labels r^H q^e s, e>=1, whose actual full r-phase is u.
+
+Keep EVERY original outside T_u unchanged, including all J originals. For each d in T_u, with original residue a_d, use the existing LA3 inverse:
+
+* If a_d modulo q^e is outside image(theta_e), omit d.
+* Otherwise let c_d be its unique inverse and insert the single AP
+
+      z=u+r^H c_d mod r^(H+e),
+      z=a_d mod s,
+      numerical modulus d'=r^(H+e)s.               (LW2)
+
+Prefix compatibility makes this one AP, with all subsequent digits free. No lower-r original is restricted to a root or copied.
+
+To check the whole output, use the common finite carrier
+
+    N=r^(H+G) q^G M.
+
+For z whose old r-coordinate differs from u, every old T_u event was already false, and every original outside T_u is unchanged. The original whole cover therefore still covers z.
+
+For z=u modulo r^H, put b=(z-u)/r^H modulo r^G and v=z modulo M. Evaluate the ONE old source point
+
+    y=(u,theta_G(b),v).
+
+Since theta_G(b) avoids E_u, some original in K covers this y. A q-free owner covers z unchanged. Otherwise its r-height is H and its r-phase is u, so it lies in T_u; its nonempty LW2 inverse covers z. This holds for every v and every old q-coordinate of z. Thus the output covers all of N and hence all integers.
+
+This proof permits the piecewise source map to ignore the output q-coordinate inside the chosen word. It need not be injective. It also does not claim that an unchanged J event equals its old event at y: such events are extra retained coverage and are not used for the inside-u argument. All events actually used there have the exact LA3 correspondence at this same y.
+
+Every new label has r-height H+e>H, so it is absent from the complete original inventory. Two new labels recover the same pair (e,s) only when their original numerical labels coincide. Thus new labels are pairwise distinct and collide with no unchanged original. Oddness and nonunit labels are preserved when r,q are odd.
+
+The set T_u is nonempty. Indeed fix v in R_u and any selected tree leaf: that source point has no q-free owner and, by avoidance of E_u, has an owner in K, necessarily in T_u. Each member of T_u produces at most one output. If any is omitted, the class count decreases. Otherwise every member is replaced and
+
+    d'/d=(r/q)^e<1,
+
+so the class count is unchanged and the modulus sum decreases strictly. This contradicts EB1. The output need not be irredundant, divisor closed, or have an LCM bounded by Q: EB1 is the minimum over ALL distinct odd whole covers, and the construction meets that admissible class.
+
+### Consequence for the original live source
+
+It follows that EVERY u with R_u nonempty has no complete r-ary depth-G q-tree avoiding E_u. Conversely R_u empty implies E_u empty, so an avoiding tree exists. With r=3 and Report385's notation this is exactly LW1.
+
+Consequently Report375's existing dual tree and Report385 §134's complete shallow-cofactor/tail construction are available at every u in L. Any ONE probability sigma on the actual live projection L may now be used in PS4–PS6, with its actual C_(u,beta) sets and full tails. The old need to establish sigma's support in the possibly smaller U is discharged.
+
+This does not prove W=R or projection_3(W)=L. Localizing additionally to a chosen cofactor would require a different arithmetic replacement; no such replacement is used here. It also does not establish a positive uniform size for C_(u,beta) or a complete binary subtree in L.
+
+### A nonconcentrated prime gives simultaneous two-root caps
+
+In the EB1 source, the original prime-q private region is precisely the complete q-free residual R times its original q-root, including all higher q-digits. Every other q-bearing original is disjoint from that prime class. Thus nonconcentration of q gives two full words u_1,u_2 in L at different nonzero first-three roots.
+
+Choose this ONE sigma with mass1/2 at each word. By LW1 both words are in U, so use the SAME §134 law with its complete actual C sets and tails. Its ternary prefix bounds are
+
+    beta_0=1,
+    beta_a=1/2 for 1<=a<H.                         (LW3)
+
+Every positive-height ternary cylinder meets at most one of the two words. This is a simultaneous bound for all original heights; it is not the stronger complete binary-depth profile 2^(-a).
+
+Apply PS5 with its actual cofactor ratios bounded by one and retain DT2's kappa_e. Numerical distinctness gives
+
+    1<=sum_(d in J)nu(A_d)
+      <=tau(M) [(H+1)/2] K_(q,G),                 (LW4)
+
+where K_(q,G)=sum_(e=1..G)kappa_e is DT5's finite sum. Since K_(q,G)<K_(q,infinity),
+
+    tau(M)(H+1)>2/K_(q,infinity),
+
+    K_(q,infinity)
+      =1/(q-3)-2/[(q-3)(q-2)^3(q-1)].              (LW5)
+
+With the older t^(-e) coefficients this same actual two-root source gives q-3<tau(M)(H+1)/2. At q=5, LW5 reads tau(M)(H+1)>216/53. These bounds retain arbitrary original H,G and do not assume an unpaid binary-cell margin.
+
+The exact PS4 price, or PS5 retaining g_(u,beta)(d), remains available for this same sigma. A further inequality forcing that complete price below one is not proved here. LW1 removes the support gap; useful cofactor reserve and stronger distribution across deeper ternary prefixes remain separate obligations.
+
+The literal AP pullback is reused from Report375 LA2--LA3; the common-cofactor avoidance criterion is JL2. The local replacement retains all lower-height originals and the q-axis. The result uses EB1's original modulus-sum minimum and gives an ordinary mathematical proof, not new Lean verification or a resolution of unrestricted Erdős #7.
+
+## 136. Shared-support shell demand stays at one complete private source
+
+Keep one original EB1 cover and the prime-private partition R,S_1,S_2. Here R is the set of nonconcentrated primes, not a q-free residual. Fix S_i nonempty and an opposite concentrated prime p in S_(3-i). Put c=p-2 and C_i=c|S_i|.
+
+CP1 still excludes every original multiple of p*ell for ell in S_i, even when R is nonempty. Therefore the original CD1 repair remains fresh and gives the SAME bound c on every non-own phase group of an original parent3^a ell, a>=c. Its whole-parent-private-hole repair and modulus-sum comparison are unchanged.
+
+Fix one complete nonternary coordinate v and one depth-a ternary prefix alpha in root i, a>=c. Among all actual mixed originals3^b n with b>a, cofactor phase containing v and ternary prefix extending alpha, assign each label whose support meets S_i once to a dividing ell in S_i. Every bucket lies in one non-own phase group of the original parent3^a ell. Consequently
+
+    number of such S_i-bearing originals <= C_i.       (CSH1)
+
+The counted cofactors may also contain arbitrary R factors. An original containing any opposite concentrated prime cannot be active in root i. Hence every remaining mixed original at this source has nonternary support entirely in R.
+
+Let d=3^A n be an original mixed label meeting S_i, and choose ONE complete original private point x=(s,v). For c<=a<A, the altered-child counting step of HH3, now counting ALL mixed originals at this unchanged v, supplies A-a distinct shell suppliers and the owner d. Their heights exceed a and their actual ternary prefixes all extend s modulo3^a. The pure-guard capacity and disjoint-shell argument are unchanged; all three-free originals stay absent at v. Subtracting CSH1 gives
+
+    #{original3^b m: b>a, m>1, supp(m) subset R,
+      v=a_(3^b m) modm,
+      a_(3^b m)=s mod3^a}
+      >= max(0,A-a+1-C_i).                           (CSH2)
+
+This is one actual phase-cone inventory, not a sum of separately optimized sources. If A>c+C_i-1, take a=A-C_i. There is an actual R-only supplier of height at least A-C_i+1 and with the same prefix as x through depth A-C_i. Its own AP avoids x because x is private to d; no equality with an ancestor's old phase is inferred.
+
+For the original pure3^H at GLOBAL ternary height H with first root i, choose its complete original private point. QC2/HC1 supplies at least2(H-a) nonowner labels for c<=a<H, all of height>a and with the same complete cofactor incidence and depth-a ternary prefix. At most H-a-1 are pure-three labels. Thus the same actual R-only count obeys
+
+    R-only count in that phase cone
+       >=max(0,H-a+1-C_i).                          (CSH3)
+
+Let B_i(v) be the largest height of an R-only mixed original in root i incident to the fixed complete cofactor v, with zero for an empty set. CSH2 and CSH3 imply, for their respective private source,
+
+    A <= max(c,B_i(v))+C_i-1,
+    H <= max(c,B_i(v))+C_i-1.                       (CSH4)
+
+For either inequality use a=max(c,B_i(v)) when the left side exceeds a; otherwise it is immediate. The H inequality retains its stated top-pure-root premise.
+
+If both colors are nonempty, set p_i=min(S_(3-i)), c_i=p_i-2, and let B_i be the global maximum R-only mixed height in root i. Applying CSH4 at the highest pure-three private source gives
+
+    H <= max_(i=1,2) [max(c_i,B_i)+c_i|S_i|-1].      (CSH5)
+
+For H=1 this bound is automatic; for H>=2 the highest pure-three class lies in one of the two nonzero roots. When R is empty these expressions recover the existing HH height bounds; that closed branch is reused.
+
+If R misses {5,7,11,13}, GM1 supplies both p_i<=13, so every excess over the resulting concentrated allowances must be carried by actual R-only originals, including the source and late-prefix information in CSH2--CSH3. This does not exclude those suppliers or bound their heights: p*r with r in R need not be fresh. CP20 and CP21 cannot be counted as disjoint inventory in addition to this packet. A usable bound or legal whole-hole repair for the actual R-only packet remains missing. No unrestricted noncoverage or new Lean verification is asserted.
+
+## 137. Every shallow retained certificate has an original private escape
+
+Keep one original EB1 family and Report385 §130's notation
+
+    Q=3^H q^G M, q>3, gcd(M,3q)=1,
+    T={3^H q^e s original:e>=1},
+    R=the complete q-free residual,
+    W={x in R:the retained D_x contains no complete ternary q-tree}.
+
+Fix an actual x=(u,v) in R minus W. The existing SH2 supplies a shallow certificate S from the SAME original family: select three distinct first-q roots; at k of them select one incident height-one retained original, and at each of the other 3-k select three incident height-two originals in distinct second-q children. Thus
+
+    |S|=k+3(3-k)=9-2k, 0<=k<=3.
+
+When G=1, use the three incident height-one originals. All members of S have their original full ternary phase u and their actual cofactor phases at v. Their q-prefixes form an antichain, so the COMPLETE original classes A_d, d in S, are pairwise disjoint.
+
+Write each original d=3^H q^(e_d) s_d and define
+
+    h=lcm_(d in S)s_d,
+    C={z:z=v mod h}.
+
+There is an original d in S and a point y in its COMPLETE original private region P_d such that
+
+    y != v mod h.                                  (SCE1)
+
+The assertion concerns original private regions in the unchanged whole family. It is stronger than merely finding another live cofactor outside C. It does not assert that the escaping point belongs to W.
+
+### The cofactor-local replacement that proves SCE1
+
+Suppose instead P_d is contained in C for every d in S. Because the original S classes are pairwise disjoint, the exact deletion obligation satisfies
+
+    E_S=Z minus union_(d notin S)A_d
+       =disjoint union_(d in S)P_d
+       subset {z:z=u mod3^H, z=v mod h}.            (SCE2)
+
+Here equality uses both the whole original cover and disjointness of the complete removed classes. It is not available for an arbitrary deletion batch.
+
+Reuse the literal inverse APs in Report375 LA3. Realize S's selected q-prefixes as a complete ternary depth-two skeleton: the k height-one owners cover their entire selected first branch, and each other first branch has its three selected second children. Choose an arbitrary three-child continuation under a height-one owner. Let theta_e denote its prefix-compatible injections for e=1,2, and let c_d be the inverse of d's actual q-prefix. At G=1 use only theta_1.
+
+Replace each d in S by the single AP
+
+    B_d={z:z=u+3^H c_d mod3^(H+e_d),
+             z=a_d mod s_d},
+    modulus(B_d)=3^(H+e_d)s_d.                      (SCE3)
+
+Keep every other original unchanged. In particular no cofactor cylinder is cut out of an unchanged crossing original.
+
+On the complete cylinder on the right side of SCE2, every B_d cofactor condition holds: s_d divides h, and v is the actual common incident phase. Its next one or two ternary digits select a leaf of the chosen ternary skeleton. The corresponding original S owner supplies a B_d containing those digits. Therefore the B_d cover that ENTIRE cylinder, including every old q-coordinate and all integer lifts. They cover E_S, so PH1 gives a whole output cover.
+
+Every new numerical label has ternary height H+e_d>H and is absent from the entire original palette. The map
+
+    (e_d,s_d) -> 3^(H+e_d)s_d
+
+is injective; distinct original numerical labels have distinct pairs. Hence the B_d are pairwise numerically distinct and collide with no retained original. Their cofactor is s_d itself, not h or lcm(h,s_d). Imposing the common cylinder only on the deletion obligation lets the repair classes extend beyond it harmlessly and avoids an unnecessary cofactor-label collapse.
+
+The class count is unchanged, while each replacement has
+
+    modulus(B_d)/d=(3/q)^(e_d)<1.
+
+The modulus sum decreases strictly, contradicting EB1. This proves SCE1 at arbitrary original H and all remaining original prime heights.
+
+### Exact arithmetic meaning of the missing hypothesis
+
+For the complete private hull Gamma_d from PH3 and any actual private witness w_d, the contrary hypothesis for a member d is exactly
+
+    h divides Gamma_d AND w_d=v mod h.
+
+Thus every certificate S has a member for which this pair of tests fails. Its own cofactor s_d always divides Gamma_d and its private points have residue v modulo s_d; the forced escape changes some further cofactor information supplied by other certificate members. The statement includes all powers in h, not just its prime support.
+
+By contrast, LW1 (U=L) alone ensures that the selected q-tree cannot be retained-covered at every live v'. That yields some q-free-live cofactor outside the certificate's common incidence cylinder. SCE1 identifies an escaping point private to ONE of its actual owners. This retains an ownership relation absent from the projection-only consequence.
+
+There is still no monotone descent on cofactor points: at such an escaping private point, some old certificate incidences disappear, but other original cofactor incidences may become active. SCE1 does not justify discarding those newly active originals or asserting that successive escapes reach W. Neither a lower bound for |C_(u,beta)| nor a complete-price upper bound below one is supplied here.
+
+### Why unrestricted cofactor localization still has a cost
+
+The successful SCE3 repair needs the complete joint obligation confined to the chosen cylinder. Merely finding a point, a private witness per class, or one v on which a retained tree exists does not provide SCE2. If an original d has a private point outside the cylinder, deleting it there creates a genuine obligation; retaining its old class while adding a localized replacement increases the class count unless another paid saving is supplied.
+
+One tempting but unnecessary modification is to require every new inverse AP itself to be contained in z=v mod h. Its numerical modulus becomes
+
+    3^(H+e_d)lcm(s_d,h),
+
+with price ratio (3/q)^(e_d) h/gcd(s_d,h). Distinct s_d can then produce the same lcm at the same e_d, giving different phases of one numerical modulus. A concrete pattern is h=ell*s and cofactors s,ell*s with ell not dividing s: both map to cofactor h. Fresh ternary height protects against old labels, but not this new/new collision. Neither the ratio nor the collision is automatically paid by EB1.
+
+SCE3 avoids this artificial restriction; it does not avoid the essential outside-cylinder liability. When that liability is absent, its source and numeric-label map remain exactly the same as the original single-word absorption.
+
+Finally, cofactor-dependent choices of a different avoiding tree at each v do not automatically preserve a single AP per original. Report375 LA3 permits dependence on the complete fixed ternary word because every transported original fixes that word. Original cofactor cylinders need not fix v. Report385 §§99/101 already supplies literal controls separating fibrewise tree availability from a common single-AP realization. Those controls do not refute an EB1 cofactor bridge, but the generic inference is unavailable.
+
+The three-height-one-owner case uses exactly the existing fresh ternary-digit repair of DR7/NF4–NF5 with the three original cofactors. The general shallow case uses LA3's already available prefix inverse on its mixed depth-one/depth-two antichain. The additional conclusion is the original private escape SCE1 for every actual shallow certificate, not a new generic repair or tree theorem.
+
+This is an ordinary conditional consequence of PH1–PH4, SH2 and those existing repair interfaces. It adds no Lean verification and gives no unrestricted Erdős #7 conclusion.
+
+## 138. Singleton-root pruning improves the two-root original source budget
+
+Keep ONE EB1 original whole distinct odd cover and its complete prime-private partition R,S_1,S_2. In this note R is the set of nonconcentrated nonternary primes. Fix an original q in R. Write
+
+    Q=3^H q^G Q_0 Q_1 Q_2,
+    Q_0=product_(r in R minus {q})r^H_r,
+    Q_i=product_(p in S_i)p^H_p,
+    A=tau(Q_0), D_i=tau(Q_i), t=q-2.
+
+The factors1 are allowed, so an empty S_i gives D_i=1. Every original exponent, numerical label and phase remains fixed. Use J={d:v_q(d)>=1,v_3(d)<H}, K=D minus J, and the full original joint-deletion region E_J. Let K_(q,G) be the finite DT5 sum of kappa_e=t^(-min(e,3))*q^(-max(e-3,0)).
+
+The new consumer of LW1 and the existing singleton-root pruning is
+
+    1 <= A*K_(q,G)*min{
+            H*D_1,
+            H*D_2,
+            [H*(D_1+D_2-1)+1]/2 }.                 (TC1)
+
+This is a necessary constraint on the same arbitrary-height original family. It does not force a contradiction for every family or a nonconcentrated small prime.
+
+### The fixed opposite coordinates are the 3p singleton roots
+
+Choose original private points of A_q whose full ternary words u_1,u_2 lie in its two different nonzero first-three roots. They give u_i in the complete q-free-live projection L. LW1 puts BOTH selected words in U, without a deep binary-subtree assumption.
+
+For each p in S_j, reuse DP9/SI1 exactly as stated in Report385 section73. Original A_(3p) exists; put
+
+    r_p=a_(3p) modulo p.
+
+A_(3p) is the ONLY original p-bearing class at this first-p root. Every other original divisible by p, including every THREE-FREE original and every higher-p original, has a different first-p phase. This is not merely a private-set statement. The root r_p is not the prime-own root0.
+
+At ternary root i, set each p in S_(3-i) to this r_p and fix its higher digits arbitrarily once. Denote the resulting CRT embedding of the complete retained cofactor carrier Z/(Q_0 Q_i) into the complete non-q carrier by phi_i. For every q-coordinate and every retained cofactor w:
+
+* An original containing an opposite-color p is absent at (u_i,xi,phi_i(w)). Its only possible p-root representative is A_(3p), and that class has the wrong ternary root.
+* Every other original has exactly its original event in (u_i,xi,w); it does not depend on the fixed coordinates.
+
+Thus all opposite-color classes disappear, including their a=0 labels. All remaining original phases and heights are unchanged.
+
+### Exact projection and lift of the complete source
+
+In the retained carrier Z/(Q_0 Q_i), define R^i_(u_i) by avoiding ALL actual q-free originals whose nonternary support is contained in R union S_i. It is nonempty: project the chosen original A_q private point. Define the retained full-height q-bearing union on a q-line there using the actual original top labels, and its joint-deletion q-projection E^i_(u_i).
+
+Every top original whose full ternary phase is u_i already has nonternary support in R union S_i. A top original containing an opposite concentrated prime would have that opposite first-three root by the original private reset. Thus no such top label was silently discarded.
+
+The projection and lift give the exact identity
+
+    E^i_(u_i)=E_(u_i).                              (TC2)
+
+For one inclusion, an original E_J witness avoids every member of the pruned retained family, so its retained cofactor projection is a witness on the left. Conversely, a pruned witness w lifts by phi_i: its retained q-free and top events remain absent, and every discarded opposite-color original vanishes. Hence its lifted point is in the ORIGINAL E_J.
+
+The same proof applies to every complete shallow-safe cofactor set. For G>=2 let C^i_(u_i,beta) be the COMPLETE set of w in R^i_(u_i) avoiding the actual shallow top ancestors of beta, including unit cofactors. Then C^i is exactly the retained-coordinate projection of the original C_(u_i,beta), and each w in it has the single fixed phi_i lift back into original C. Nonemptiness is equivalent, with no assumed fibre reserve. At G=1 use the corresponding full root sets.
+
+Since u_i is in U, PS3 supplies its shallow skeleton with these nonempty C^i sets. Reuse PS4: sample beta from that fixed skeleton, w uniformly from its COMPLETE C^i set, and the q-tail uniformly from the COMPLETE actual surviving tail after phi_i(w). This defines ONE law nu_i on ORIGINAL E_J. The actual tail has all original deep deletions; its density and q-prefix price are the existing PS2/DT2 bounds. These two laws need not share one constant cofactor, and none is asserted.
+
+Each nu_i has ternary word u_i, q-prefix masses at most kappa_e, zero mass on every retained original, and zero mass on every original containing a prime of S_(3-i). All cofactor correlation is kept in the actual construction. Uniformity is on the complete PRUNED C sets, not an assertion that their phi_i images exhaust the original full C sets.
+
+### One mixture counts each original numerical label once
+
+Choose w_1,w_2>=0 with w_1+w_2=1 ONCE and put nu=w_1 nu_1+w_2 nu_2. This is one law on the same original E_J. For d=3^a q^e s in J, CP1 says its cofactor s cannot meet both concentrated colors.
+
+* If supp(s) meets S_i, then nu(A_d)<=w_i*kappa_e. This holds also for a=0, by the literal singleton-root elimination above.
+* If s is supported only on R minus {q} and a=0, then nu(A_d)<=kappa_e.
+* If s is supported only on R minus {q} and a>=1, its actual first-three root is a single i, so nu(A_d)<=w_i*kappa_e. Root0 cannot occur because original A_3 is retained and comparable originals are disjoint.
+
+These are bounds for the same fixed nu; no per-label optimum or independent repairs are combined. Counting the distinct numerical triples (a,e,s) gives
+
+    1<=sum_(d in J)nu(A_d)
+      <=A*K_(q,G)*{
+          1+(H-1)*max(w_1,w_2)
+          +H*[w_1*(D_1-1)+w_2*(D_2-1)] }.         (TC3)
+
+The shared three-free labels have one original pool. For each positive a there is also only one shared numerical label per (e,s), with one actual ternary-root owner. The factor max(w_1,w_2) enlarges that single pool and does not count it twice.
+
+The right side is piecewise linear in w_1, with its only internal breakpoint at1/2. Its minimum occurs among0,1/2,1, giving TC1. The component laws and all original phases are fixed before choosing that global mixture weight. Because D_1,D_2 are integers, if they differ the smaller-inventory endpoint is the strict minimum. If D_1=D_2 and H>1, the equal mixture is strictly better than either endpoint; at H=1 all weights have the same price in this equal-inventory case.
+
+Put C_* equal to A times the displayed minimum. Since the finite K_(q,G) is strictly below K_(q,infinity), TC1 also gives
+
+    C_*>1/K_(q,infinity)>q-3.                       (TC4)
+
+No bound on H, G, Q_0 or the concentrated supports is silently inserted.
+
+### Comparison with the existing consumers
+
+Merely applying CP1 to LW4 replaces tau(M) by the allowed cofactor count A*(D_1+D_2-1), giving the coefficient
+
+    C_CP1=A*(D_1+D_2-1)*(H+1)/2.
+
+The new equal-weight coefficient is
+
+    C_mid=A*[H*(D_1+D_2-1)+1]/2,
+    C_CP1-C_mid=A*(D_1+D_2-2)/2.                    (TC5)
+
+The gain is strictly positive whenever any concentrated support remains. It comes specifically from making a color-bearing THREE-FREE original inactive at the opposite source; a singleton private projection alone would not justify that step. The endpoint coefficients H*A*D_i additionally retain the potentially unequal color inventories. When S_1 and S_2 are both empty, the midpoint reduces exactly to LW4, as it should.
+
+Section73 already supplies the arithmetic singleton-root elimination and the whole root quotients. CM6–CM10 already enforce shared original ownership in reciprocal cover budgets. They are reused, not reproved. Their displayed bounds do not supply kappa_e laws on E_J at BOTH prescribed private words: that support step is furnished by the new LW1 equality. Conversely TC1 does not dominate every reciprocal CM bound; it counts divisor inventories and may be weaker when those inventories are large. It is not presented as an exclusion of an already settled low-support family or as independence from all repository consequences.
+
+The same construction permits retaining the exact pruned C-fractions in PS4 instead of bounding them by1. A useful uniform density or a strict total price below1 has not been forced. Choosing a single private cofactor from each original A_q-private root is insufficient by itself: the lawful law above may change the cofactor with beta while preserving the one original source and both complete deletion masks.
+
+These are ordinary mathematical consequences of the cited source and probability constructions, not new Lean verification or a resolution of unrestricted Erdős #7.
