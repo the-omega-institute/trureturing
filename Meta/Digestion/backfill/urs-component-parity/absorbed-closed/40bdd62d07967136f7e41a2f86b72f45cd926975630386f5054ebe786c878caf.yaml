@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:40bdd62d07967136f7e41a2f86b72f45cd926975630386f5054ebe786c878caf
+  normalized_sha256: sha256:40bdd62d07967136f7e41a2f86b72f45cd926975630386f5054ebe786c878caf
+cas_ref: sha256:40bdd62d07967136f7e41a2f86b72f45cd926975630386f5054ebe786c878caf
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/URSActualNonsingularity.actual_crossGram_kernel_trivial
+    target_statement_id: sha256:68c5a8e174e798b17896c6cbac3bae187ba8d4eaffc48f139974f855ddcd505a
+receipts:
+  unresolved_subitems: []
