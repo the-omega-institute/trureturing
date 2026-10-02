@@ -291,6 +291,13 @@ Opposite5 forces the other anchor's height at most2; all concentrated
 heights in the small-anchor branch are at most8. The specified MTR
 q=53 branch now has H_q=1, with no assertion that H_3 is one.
 
+[Section162](#162-a-unique-nonconcentrated-prime-is-at-most211)
+forces an actual near-top colored owner and retains the discounted
+global top layer in its shell budget. If R contains exactly one prime q,
+then q is at most211; opposite pairs5/7,5/11,5/13 give103,173,211.
+This bounds that shared prime, not the entire support, and leaves the
+remaining singleton cases and the general nonconcentrated branch open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19688,3 +19695,101 @@ using A=1, the unchanged OCP6 bound H_3<=28, and HPM7's7-color list {7,11,13,17,
     q=53 and H_q=1.                                (TCP9)
 
 The source and every original label remain those of the same EB1 family. This is a height-one conclusion for q; H_3 and the other original prime heights are not thereby squarefree. The remaining q=53 branch is not excluded by this consumer, and no unrestricted odd noncoverage follows.
+
+## 162. A unique nonconcentrated prime is at most211
+
+Keep ONE original EB1 whole cover with R={q}. If q belongs to {5,7,11,13}, the bound q<=211 is immediate. It remains to consider q>=17, so R intersect {5,7,11,13}=empty. Write G=H_q and name the color containing5 S_5. There is an opposite concentrated prime ell in {7,11,13}, whose color is S_o. The existing TCP height bound, HPM retained-prefix absorption, QC3 shell identity and qualified-parent budgets give
+
+    ell=7  ==> q<=103,
+    ell=11 ==> q<=173,
+    ell=13 ==> q<=211.                             (NTH1)
+
+In particular q<=211. These bounds concern the unique shared prime, not P^+(Q). They are necessary restrictions on the same original family; they do not construct a surviving cover, assert Lean verification, or exclude unrestricted odd distinct whole coverage.
+
+### Original near-top ownership follows from the actual mixed profile
+
+For any distinct original primes p,q with G>=2, HPM5 gives
+
+    q>=p^H_p ==> p q^(G-1) is ORIGINAL.            (NTH2)
+
+Indeed, if that label were absent, divisor closure would forbid all originals having positive p-height and q-height at least G-1. The actual mixed profile would satisfy h_(G-1)=h_G=0. HPM5 at k=G-1 would then give q<p^max(H_p,1)=p^H_p, a contradiction.
+
+For p=ell, TCP6 gives H_ell<=2. Thus q>=ell^2 and G>=2 force the original owner
+
+    M=ell q^J, J=G-1.                              (NTH3)
+
+Its complete private region has the ell-color ternary root. Choose one actual private point and perform the existing opposite-coordinate pruning there. It preserves M privately, while removing every opposite-color original on its entire q-line. All original residues and heights remain literal. This supplies a favorable root without asserting that pure q^G has private points at both roots.
+
+### Keep the shallow shells and discount the deeper numerical layer
+
+For the opposite pair5,ell put
+
+    N=max(3(ell-1),4(ell-2)),
+    t=N/2-1, C=3|S_o|.
+
+Here N is even and t=9,17,21 for ell=7,11,13. Assume G>=3, so J=G-1>=2. At the source NTH3, use only q-defect shells b=1,...,J-1. QC3 gives the exact identity
+
+    F_b=(q-1)(Avg_(B_b)c-1_(b>=J)).
+
+Whole coverage makes each selected F_b at least q-1. Hence the selected original suppliers have total service at least(J-1)(q-1). This uses individual shell positivity, not subtraction of lower bounds on two suffix sums.
+
+A selected supplier of original q-height e has its exact weight q^(1-e+b). This is at most one when e<=J, and at most q^(J-e) when e>J, because b<=J-1. In particular, the global top layer e=G=J+1 remains present with weight at most1/q. Every supplier agrees with the source at its COMPLETE q-free cofactor and modulo q. Add M once with weight one; it is not a directional supplier.
+
+Partition these actual labels into three disjoint inventories.
+
+* Assign each colored label, including M, once to one of its S_o prime factors r. All have q-height at least two and are proper descendants of the ORIGINAL parent qr, in one common qr-phase. TCP3 with opposite5 has cutoff one and capacity three. The full colored contribution is at most C=3|S_o|.
+* Low-ternary R-only suppliers have labels3^a q^e with0<=a<t and2<=e<=G. Numerical distinctness and the exact weight bound give total service at most t[(J-1)+1/q]. This retains the global q-height G rather than replacing it by the owner's height J.
+* Every remaining R-only supplier is a proper multiple of h=3^t q, in the same source phase. If this group is nonempty, its original members supply h as an original divisor. Since tau(h)=2(t+1)=N, the existing uniform OCP parent budget bounds this group by N-1. The parent's old private root need not equal the selected source root. An empty group needs no original-parent assertion.
+
+Consequently
+
+    1+(J-1)(q-1)<=t[(J-1)+1/q]+(N-1)+C,
+    (G-2)(q-1-t)<=N-2+3|S_o|+t/q.                (NTH4)
+
+The owner is already included in C and is added only once. For G=2 the displayed final inequality is automatically true, but the preceding proper-descendant argument is used only for G>=3.
+
+The same source estimate keeps all shared cofactors when R is arbitrary. Put Q_0=product_(r in R minus {q})r^H_r and A=tau(Q_0). For each pair(a,e), the low group can have at most A labels3^a q^e u, u|Q_0. Its weighted contribution is therefore at most tA[(J-1)+1/q]. The colored and qualified high-parent capacities do not change. Under the same original-owner and opposite5 hypotheses this gives
+
+    (G-2)(q-1-tA)<=N-2+C+tA/q.                    (NTH6)
+
+Here Q_0 is only a numerical cofactor inventory, not an original label. This estimate does not bound A or justify replacing it by one for general R. The numerical head proof below specializes to R={q}, so A=1.
+
+### Initial-segment support and the exact color inventory
+
+For the chosen pair put
+
+    Hbar=(3N-4)/2,
+    B(G)=ell-2+(Hbar+1)(G+1).
+
+OCP6 and RSG2 put every concentrated prime at most B(G). Because R={q} and support is an initial odd-prime segment, q is at most the first prime strictly greater than B(G). This does not assume q is the largest support prime.
+
+CM6 forces |S_5|>=2 for q>=17: otherwise its infinite Euler product would be at most5q/[4(q-1)]<4/3, contrary to that root's reciprocal requirement. Therefore
+
+    |S_o|<=pi(B)-4,
+    q<=B ==> |S_o|<=pi(B)-5.                     (NTH5)
+
+The first bound removes2,3 and at least two S_5 primes; the second also removes the shared q. If7 and11 both belong to S_5, replace these two bounds by pi(B)-5 and pi(B)-6 respectively. No shared prime is subtracted when q>B.
+
+The necessary small exact arithmetic is:
+
+| ell | t | B(2) | nextprime(B(2)) | B(3) | pi(B(3)) | B(4) | pi(B(4)) | (Hbar+2)/2 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 7 | 9 | 92 | 97 | 121 | 30 | 150 | 35 | 15 |
+| 11 | 17 | 168 | 173 | 221 | 47 | 274 | 58 | 27 |
+| 13 | 21 | 206 | 211 | 271 | 58 | 336 | 67 | 33 |
+
+Here pi counts all primes including2 and nextprime is strict. These values are obtained by trial division through336. The three target successors are nextprime(103)=107, nextprime(173)=179 and nextprime(211)=223. No covering palettes or phases are enumerated.
+
+### The three upper bounds
+
+First let ell=7 and suppose q>103, hence q>=107>ell^2. G<=2 contradicts the next-prime bound q<=97. Thus the original near-top source exists and NTH4 applies.
+
+For G=3 and q>B(3)=121, NTH5 gives |S_o|<=26. The right side of NTH4 is at most96+9/q<97, while the left side q-10 exceeds111. If instead q<=121, the shared-prime subtraction gives |S_o|<=25. The right side is at most93+9/q<94, while q-10>=97. Both cases are impossible.
+
+For G=4+s, s>=0, an increment of G adds29 to B and at most15 new odd integers, so pi(B)<=35+15s. Without subtracting q, NTH5 bounds the right side by111+45s+9/q<112+45s. The left side is at least97(2+s)=194+97s. This excludes all remaining heights and proves the first line of NTH1.
+
+Next let ell=11 and suppose q>173, hence q>=179>ell^2. G<=2 gives q<=173. For G=3 and q>B(3)=221, the right side of NTH4 is at most163+17/q<164, while q-18>203. For q<=221, it is at most160+17/q<161, while q-18>=161. For G=4+s, pi(B)<=58+27s and the right side is at most196+81s+17/q<197+81s; the left side is at least161(2+s)=322+161s. These contradictions prove q<=173.
+
+Finally let ell=13 and suppose q>211, hence q>=223>ell^2. The two already proved pair bounds force7 and11 to share the color of5. Thus |S_5|>=3, and the strengthened form of NTH5 applies. G<=2 gives q<=211. For G=3 and q>B(3)=271, the right side of NTH4 is at most201+21/q<202, while q-22>249. For q<=271, it is at most198+21/q<199, while q-22>=201. For G=4+s, pi(B)<=67+33s and the right side is at most228+99s+21/q<229+99s; the left side is at least201(2+s)=402+201s. This proves q<=211.
+
+Each affine tail is valid for every integer s>=0 by counting all possible new odd integers. The improvement uses the actual near-top colored owner and the1/q weight of deeper suppliers in one fixed family. The global height G, the owner's height G-1, and the highest original support prime remain distinct quantities.
