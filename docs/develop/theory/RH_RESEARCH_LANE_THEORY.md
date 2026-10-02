@@ -11233,3 +11233,150 @@ $$
 总能量下界为 $v^2/4$，故这是实质的低频集中族；在频率零点恰为零不妨碍能量集中到其越来越小的邻域。
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 支撑完整素数集上的分离证书障碍
+
+### 20.1 素数增长来自同一测试的实际活跃响应
+
+继续使用第 19 节的 $f_{\mathcal R}$ 及固定常数。取
+
+$$
+\eta=\min\{1/2,v/(2D_*)\}>0.
+$$
+
+对任意实 $F\in H^1(\mathbb R)$，复用平移的 Sobolev 界得到
+
+$$
+H_F(s)=\|F\|_2^2-\tfrac12\|F(\cdot+s)-F\|_2^2
+\ge\|F\|_2^2-\tfrac{s^2}{2}\|F'\|_2^2.
+$$
+
+代入 $F_{\mathcal R}$ 及第 19.3 节的界，得
+
+$$
+\boxed{
+H_{f_{\mathcal R}}(t)=H_{F_{\mathcal R}}(t/\mathcal R)
+\ge v^2/8>0\quad\text{当 }|t|\le\eta\mathcal R.
+}
+$$
+
+定义最小活跃素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}
+=\{p\text{ prime}:\exists k\ge1,\ H_{f_{\mathcal R}}(k\log p)\ne0\}.
+$$
+
+它是有限集，且
+
+$$
+\{p:p\le e^{\eta\mathcal R}\}
+\subseteq\mathcal P_{\mathcal R}^{\rm act}
+\subseteq\{p:p\le e^{\mathcal R}\}.
+$$
+
+每个 $p\le e^{\eta\mathcal R}$ 已在第一素幂活跃；所有 $k\log p\le\eta\mathcal R$ 的素幂也活跃。故本节没有把小支撑函数任意配上大量冗余素数，也没有删除高素幂。自相关实际支撑随 $\mathcal R$ 增长，而非仅把一个固定支撑的上界放大。
+
+### 20.2 非线性预算的初等统一下界
+
+第 18 节的局部因子为
+
+$$
+j_p=p^{-5/6}+\frac{1-p^{-1}}{1-p^{-1/6}}.
+$$
+
+置 $q=p^{-1/6}$，精确写成
+
+$$
+j_p=1+q+q^2+q^3+q^4+2q^5
+\ge1+2/p\ge(1-p^{-1})^{-1}.
+$$
+
+对 $X\ge2$，有限 Euler 乘积的正项展开包含每个 $n\le\lfloor X\rfloor$，因而
+
+$$
+\prod_{p\le X}(1-p^{-1})^{-1}
+\ge\sum_{n\le\lfloor X\rfloor}\frac1n\ge\log X.
+$$
+
+这只复用唯一素因子分解与调和和估计，不需要素数定理或素数间距输入。对每个有限支撑完整集 $\mathcal P\supseteq\mathcal P_{\mathcal R}^{\rm act}$，只要 $e^{\eta\mathcal R}\ge2$，得到
+
+$$
+\boxed{J_S^3=4\Bigl(\prod_{p\in\mathcal P}j_p\Bigr)^3
+\ge4\eta^3\mathcal R^3.}
+$$
+
+加入冗余素数仍保持这一方向，因为每个 $j_p>1$。
+
+### 20.3 对所有截断与支撑完整集的条件性失效
+
+**候签定理 20.1（保留绝对非线性预算的充分证书不覆盖全部测试）。** 假设第 18 节实际投影、线性迹及矩形积分尾合同，以及第 19.1 节实际正迹密度和固定对角界成立。使用第 19.3 节的显式实测试族，令
+
+$$
+\mathcal R_*
+=\max\left\{
+\mathcal R_0,\frac{\log2}{\eta},
+\left[\frac{c_0(B_*+2M_*)}{u^2\eta^3}\right]^{1/3}
+\right\}.
+$$
+
+对每个 $\mathcal R>\mathcal R_*$、每个有限 $\mathcal P\supseteq\mathcal P_{\mathcal R}^{\rm act}$ 和每个矩形截断 $\mathbf N$，以 $r=\mathcal R$ 计算第 19.2 节证书，均有
+
+$$
+\boxed{
+\mathfrak c_{S,\mathbf N}(f_{\mathcal R})
+\le\widetilde{\mathfrak c}_{S,\mathbf N}(f_{\mathcal R})
+\le\chi_S\left[B_*+2M_*\mathcal R
+-\frac{u^2\eta^3}{c_0}\mathcal R^4\right]<0.
+}
+$$
+
+同样的负上界适用于没有截断误差的更强表达式
+
+$$
+\sigma_S(f_{\mathcal R})-D_{\rm lin}(f_{\mathcal R})-b_S\|f_{\mathcal R}\|_1^2.
+$$
+
+上述两个表达式使用精确正迹，已经允许线性迹具有最有利的负符号。任意更小的正迹下界、增加截断深度或扩大有限素数集，都无法使这一保留预算的证书在该族上成功。
+
+**证明。** 第 19.2 节给出
+
+$$
+\frac{\widetilde{\mathfrak c}_{S,\mathbf N}(f_{\mathcal R})}{\chi_S}
+\le\mathcal T_0(f_{\mathcal R})+
+\frac{2\mathcal R\|f_{\mathcal R}\|_2^2}{\chi_S}
+-\frac{J_S^3}{c_0}\|f_{\mathcal R}\|_1^2.
+$$
+
+分别代入 $\mathcal T_0\le B_*$、$\chi_S\ge1$、$\|f_{\mathcal R}\|_2^2\le M_*$、$\|f_{\mathcal R}\|_1^2\ge u^2\mathcal R/4$ 及第 20.2 节的 $J_S^3$ 下界，得到陈述中的同一测试上界。由于 $\mathcal R\ge1$，有 $B_*+2M_*\mathcal R\le(B_*+2M_*)\mathcal R$；阈值保证四次项严格支配。用 $D_{\rm lin}$ 直接替代 $D_{\rm fin}+\|f\|_2^2E_S$ 时，仍有 $D_{\rm lin}\ge-2\mathcal R\|f\|_2^2$，故同一上界成立。$\square$
+
+若选用更大的形式支撑界 $r\ge\mathcal R$，仍可用实际支撑证明 $\|B_{f_{\mathcal R}}\|_1\le\mathcal R\|f_{\mathcal R}\|_2^2$，而该 $r$ 的尾项仍按正确方向控制其线性近似误差。因此扩大支撑上界也不修复证书。
+
+本命题中的 $\chi_S$ 可随素数集任意增长；它被完整保留在正上界与预算下界中，没有作为固定常数处理。结论已适用于最小活跃素数集，不能把障碍归因于冗余素数。结论也允许别的、特选的测试子族具有任意大支撑并通过证书；被排除的是用此证书覆盖全部合法测试。
+
+### 20.4 尚须控制的量与来源边界
+
+障碍落在 $b_S\|f\|_1^2$ 这一绝对预算，并未给出 $D_{\rm corr}(f_{\mathcal R})>\sigma_S(f_{\mathcal R})$，也未决定不扣预算时 $L_S(f)-D_{\rm lin}(f)$ 的符号。条件性推导只说明：在同一族上，除去共同因子 $\chi_S$ 后，最有利的正迹与线性补偿上界为 $O(1)+O(\mathcal R)$，而保留预算至少为固定正系数乘 $\mathcal R^4$。
+
+需要研究的实际有符号余项是
+
+$$
+N_S(f)=D_{\rm corr}(f)-D_{\rm lin}(f)
+=2\operatorname{Re}\operatorname{Tr}(C^3RB_f\mathcal F_SQ).
+$$
+
+在消极点及支撑完整合同下，足够的联合条件为
+
+$$
+N_S(f)\le\sigma_S(f)-D_{\rm lin}(f)
+$$
+
+对全部 constrained 测试成立，并保留低频区、增长的支撑、同一测试的 Euler 相位及所有活跃素幂。这是待证估计，不能把它改名为非负几何量就宣告成立，也不能用 $A_f$ 与 $\mathcal F_S$ 交换代替尚未成立的 $A_f$ 与 $C$ 交换。
+
+文献接口复用 [Burnol math/0208121v1](https://arxiv.org/abs/math/0208121v1) 的固定 cutoff 与实际评价生成元、[Connes–Consani 2006.13771v1](https://arxiv.org/abs/2006.13771v1) 的 archimedean 迹合同及 [Connes–Consani–Moscovici 2310.18423v2](https://arxiv.org/abs/2310.18423v2) 的有限 $S$ 运输。三者不被引用为上述全支撑联合估计。CC 的小支撑 Theorem 6.11 不用于本节扩张测试。支撑增长、完整约束与预算失效的组合是本卷的候选综合推导；限定来源检索未取得足够的统一供应定理，不认证原创性。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式分辨和四相运输仍提供独立的来源—观察几何。它们尚未给出通向这里物理 prime-dilation、实际 Sonin 投影或 $N_S(f)$ 的交织定理。五模式长度守恒不能替代 Robin 的约数倒数预算，也不能替代本节所缺的有符号联合估计。
+
+本文新增桥接未摄入 atom、未 deposit 或 cover，未执行 Lean 构建，未给出实际加权迹数值证书。上述失效结论始终受第 19.1 节明列的纸面合同约束；RH 及其完整 Robin/Weil 判据目标保持未解决。
+
+## 追加锚（本行以下为增补区）
