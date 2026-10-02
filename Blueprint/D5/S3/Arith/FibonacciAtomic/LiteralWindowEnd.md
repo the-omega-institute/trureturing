@@ -4,7 +4,19 @@
 
 Low-to-high three-bit windows have a terminal flag as well as a seam. Successful literal End queries correspond to independent selected positions.
 
-**Theorem 1.1 (The seam guard recognizes the flattened legal word).**
+**Theorem 1.1 (The complete window alphabet has five letters).**
+
+$$\operatorname{card}(Window) = 5$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.window_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Window consists of 000, 100, 010, 101 and 001, written in low-to-high bit order.
+
+**Theorem 1.2 (The seam guard recognizes the flattened legal word).**
 
 $$\begin{aligned}\forall s, E \in B, \forall w \in W^{*},\\(\operatorname{run}(\operatorname{some}((s, E)), w) = \operatorname{some}((\operatorname{lastFold}(s, w), \operatorname{endFold}(E, w))) \iff \operatorname{legal}(s, \operatorname{flatten}(w))) \land\\(\operatorname{run}(\operatorname{some}((s, E)), w) = none \iff \neg\operatorname{legal}(s, \operatorname{flatten}(w))).\end{aligned}$$
 
@@ -22,7 +34,7 @@ $$
 
 A live transition rejects an incoming seam 1 followed by a low bit 1. Otherwise it takes the high bit as the new seam and records whether the current window is nonzero as End. Legal(s,flatten(w)) includes the incoming seam and excludes adjacent ones in the complete flattened word.
 
-**Theorem 1.2 (All successful bounded queries have an exact independent-set parametrization).**
+**Theorem 1.3 (All successful bounded queries have an exact independent-set parametrization).**
 
 $$\begin{aligned}\forall t \in \mathbb{N}, (\exists e: \operatorname{Equiv}(S_{t}, I_{t}),\\(\forall x \in I_{t}, e^{-1}(x) = \operatorname{encode}(t, x)) \land\\(\forall w \in S_{t}, \operatorname{independentBits}(t, e(w)) = \operatorname{flatten}(\operatorname{pad}(t, w))) \land\\(\forall w \in S_{t}, \forall r \in \mathbb{N}, \forall u \in \mathbb{N}, \forall v \in \mathbb{N}, \operatorname{query}(r, u, v, w) = \operatorname{some}((r+\operatorname{O}(t, u, v, e(w))))) \land\\(\forall H \in \mathbb{N}, \forall u \in \mathbb{N}, \forall v \in \mathbb{N}, \forall w \in S_{t}, \operatorname{value}([u]_{H}, [v]_{H}, \operatorname{flatten}(w)) = [\operatorname{O}(t, u, v, e(w))]_{H})) \land\\\lvert S_{t} \rvert = F_{3t+1} \land\\(\forall w \in W^{*}, \forall r \in \mathbb{N}, \forall u \in \mathbb{N}, \forall v \in \mathbb{N}, \operatorname{query}(r, u, v, w) = none \iff \neg\operatorname{Success}(w)) \land\\(\forall w \in W^{*}, \forall r \in \mathbb{N}, \forall u \in \mathbb{N}, \forall v \in \mathbb{N}, (\operatorname{Success}(w) \land 0 < r) \implies (\exists N \in \mathbb{N}, 0 < N \land \operatorname{query}(r, u, v, w) = \operatorname{some}(N))) \land\\\lvert L_{t} \rvert = \sum_{n=0}^{t}5^{n} \land\\\lvert R_{t} \rvert = \sum_{n=0}^{t}5^{n} - F_{3t+1} \land\\(\forall H \in \mathbb{N}, \forall u \in \operatorname{ZMod}(H), \forall v \in \operatorname{ZMod}(H), \lvert \operatorname{centerImage}(t, H, u, v) \rvert \le F_{3t+1}) \land\\(\forall epsilon \in B, \forall w \in W^{*}, \forall N \in \mathbb{N}, \operatorname{initialized}(epsilon, w) = \operatorname{some}(N) \implies 0 < N).\end{aligned}$$
 
@@ -62,5 +74,6 @@ $$
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.execution`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.result`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.window_card`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../S1/Words/AdmissibleWords/AdmissibleCount.md)
 - Dependency: [D5/S3/Arith/ZeckendorfFutureKernel](../ZeckendorfFutureKernel.md)

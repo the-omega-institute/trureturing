@@ -88,11 +88,11 @@ internal sealed class ScalarSoftmaxTreeObstructionDocument : IScribeDocumentDefi
         var z = Call("evaluate", Call("scalarImplementation", f, b), t);
         var error = All(c, Seq(Call("Finset", labels), Sp, To, Sp, labels),
             Seq(Call("LegalChoice", c), Sp, Implies, Sp,
-                new Formula.Fraction(D(1), D(125)), Sp, Le, Sp,
+                new Formula.Fraction(D(1), D(1, 2, 5)), Sp, Le, Sp,
                 Call("errorRisk", z, u, v, c)));
-        var square = Seq(new Formula.Fraction(D(1), D(250)), Sp, Le, Sp,
+        var square = Seq(new Formula.Fraction(D(1), D(2, 5, 0)), Sp, Le, Sp,
             Call("squareRisk", z, u, v));
-        var log = Seq(new Formula.Fraction(Call("log", D(2)), D(125)), Sp, Le, Sp,
+        var log = Seq(new Formula.Fraction(Call("log", D(2)), D(1, 2, 5)), Sp, Le, Sp,
             Call("logRisk", z, u, v));
         var condition = And(Call("Full", t),
             Seq(Call("leaves", t), Sp, Eq, Sp, Call("univ")));

@@ -408,7 +408,7 @@ theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : F
           (Finset.mem_univ (wa a))
     have prefix_mean (τ : Fin m → Window) : η / 125 ≤
         𝔼 a : Window, 𝔼 b : Window, 𝔼 c : Window, loss (join a b c τ) := by
-      have hw : Fintype.card Window = 5 := by decide
+      have hw := LiteralWindowEnd.window_card
       simp only [Fintype.expect_eq_sum_div_card, hw, Nat.cast_ofNat]
       simp only [← Finset.sum_div, div_div]
       have h := fibre τ

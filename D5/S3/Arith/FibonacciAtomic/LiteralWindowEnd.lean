@@ -27,6 +27,9 @@ instance : Fintype Window where
   elems := {.zero, .low, .middle, .ends, .high}
   complete b := by cases b <;> simp
 
+/-- The complete literal-window alphabet has five letters. -/
+theorem window_card : Fintype.card Window = 5 := by decide
+
 def bits : Window -> List Bool
   | .zero => [false, false, false]
   | .low => [true, false, false]
@@ -469,7 +472,7 @@ theorem result (t : Nat) :
     }
     rw [Fintype.card_congr e, Fintype.card_sigma]
     simp only [card_vector]
-    have hwindow : Fintype.card Window = 5 := by decide
+    have hwindow := window_card
     rw [hwindow]
   have equiv_exists (t : Nat) :
       ∃ e : SuccessfulWord t ≃ IndependentWord t,
