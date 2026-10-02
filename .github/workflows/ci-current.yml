@@ -565,6 +565,7 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.LeanCacheScript.Tests/*
             [tests-lean-report-script]
+            tools/scripts/workflow/judge-lean-producer.sh
             tools/lean-inspector/build_work.py
             tools/TestSupport/StrataLint.LeanTestSupport/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
@@ -957,19 +958,41 @@ jobs:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - name: Restore optional Lean build seeds
+      - id: lean_seeds
+        name: Restore optional Lean build seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Build the judge
+        if: steps.judge.outputs.cache-hit != 'true'
+        run: dotnet build $JUDGE_BUILD_ARGS
+      # The judge outputs are a function of the keyed sources, so they are saved
+      # as soon as the build succeeds.
+      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
       - id: lean_report
         name: Build the Lean report
+        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: make lean-report
+        run: |
+          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+          if [[ -n "$producer" ]]; then
+            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+          else
+            unset STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          make lean-report
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -985,19 +1008,6 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - name: Build the judge
-        if: steps.judge.outputs.cache-hit != 'true'
-        run: dotnet build $JUDGE_BUILD_ARGS
-      # The judge outputs are a function of the keyed sources, so they are saved
-      # as soon as the build succeeds.
-      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            tools/StrataLint.Cli/bin/Release/net10.0
-            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
-          key: ${{ steps.judge_key.outputs.key }}
       - name: Current-tree rules
         run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT"
       - name: Scribe content
