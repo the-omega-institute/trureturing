@@ -586,7 +586,9 @@ W^{-1}+J_0-\varepsilon_JI-2^{-187}I
 \tag{A13}
 $$
 
-This condition is not established. All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note reuses the author's support-independent Gamma input, constructs only the new-width kernel and identifies the common 256-mode remaining finite obligation. It supplies no verified finite sign, full bounded or cofinal positivity, originality claim, kernel theorem or RH proof.
+All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note supplies its criterion and error interfaces, with no kernel theorem or originality claim.
+
+The [actual c9 reproduction package](../../docs/reports/weil-c9/README.md) publishes project-authored programs, hash-bound new-width matrix inputs and a local conditional run of (A13). At the pinned arithmetic environment and precision, all 256 directed LDL pivots are strictly positive and no directed negative witness is found. The recorded minimum pivot lower bound is not an eigenvalue bound. Moment containment remains an author premise; the retained-target source contract was reviewed separately, but independent execution and matrix regeneration have not been obtained. The package reuses the existing inputs rather than replaying the author's old certificate. This is conditional numerical evidence for the specified sufficient comparison; the cofinal support positivity required for RH remains unproved.
 
 ```python
 from fractions import Fraction as F
