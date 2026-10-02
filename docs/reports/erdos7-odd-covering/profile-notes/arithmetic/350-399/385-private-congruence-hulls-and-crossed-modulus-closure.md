@@ -22122,3 +22122,57 @@ This does not bound the exponents or the total support, and it does not
 exclude a 119-class (or larger) extremal cover. It only makes the remaining
 branch explicit: any such representative simultaneously has (HF1), (HF2),
 and (HF3), while the phase-sensitive joint-liability bridge is still open.
+
+## 182. A four-factor modulus forces a 2404 modulus-sum floor
+
+The same extremal representative has a useful secondary-cost floor. It is
+obtained by combining the four-distinct-prime-factor conclusion in Section
+180 with divisor closure from Section 350. This is another range reduction;
+it does not exclude the remaining high-factor branch.
+
+Let \(S\subseteq\Lambda\) be four distinct support primes dividing the
+modulus supplied by (HF1). Divisor closure (EB2) puts every nonempty product
+of members of \(S\) into \(D\). These \(15\) distinct moduli contribute
+
+\[
+ R(S)=\prod_{p\in S}(1+p)-1.
+ \tag{HF4}
+\]
+
+There are at least five support primes outside \(S\), by (HF2), and their
+prime moduli also belong to \(D\). If \(U\subseteq\Lambda\setminus S\) is any
+five of them, then
+
+\[
+ \sum_{d\in D}d
+ \ge R(S)+\sum_{q\in U}q.
+ \tag{HF5}
+\]
+
+This lower bound is minimized by taking the nine involved primes to be the
+first nine odd primes and taking the four smallest of those nine for \(S\).
+Indeed, with the nine primes sorted as \(t_1<\cdots<t_9\), increasing any
+selected prime increases the product term, and increasing any unselected
+prime increases the linear term. At fixed nine values, swapping a selected
+\(q\) with a smaller unselected \(p\) changes the right side by
+
+\[
+ (q-p)\left(1-\prod_{r\in S\setminus\{q\}}(1+r)\right)<0,
+\]
+
+so the selected four must be the smallest four at the minimum. Consequently
+
+\[
+ \begin{aligned}
+ \sum_{d\in D}d
+ &\ge (1+3)(1+5)(1+7)(1+11)-1
+       +(13+17+19+23+29)\\
+ &=2303+101=\boxed{2404}.
+ \end{aligned}
+ \tag{HF6}
+\]
+
+Thus a hypothetical cover chosen by (EB1) lies simultaneously in the
+high-factor, nine-support, at-least-119-class, and modulus-sum-at-least-2404
+branch. The bound uses the original numerical labels and does not replace
+the unresolved phase-sensitive whole-cover condition.
