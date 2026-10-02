@@ -3518,3 +3518,420 @@ $$
 这里 $n_L(a,b)=34a+55b$，三条纤维逐项由上述整数核裁剪取得；$y_1$ 虽然合法，响应较低而不达到相对极小值。无序极小组成对恰为 $\{x_0,y_0\}$、$\{x_0,y_2\}$，而等号报告的组成候选恰为 $\{x_0,y_0,y_2\}$，树候选和两个次序的全部树极小对仍分别由 (11.6)、(11.5) 给出。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 完整树替换像的计数密度、祖先混合与共轭来源偏差
+
+**定义 12.1（完整来源纤维与两个叶数尺度）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的非空有限有序完全二叉树集合 $\mathcal T$、叶标签 $\alpha,\beta$、组成 $c$ 及保持左右括号的替换 $\rho$。树的相等取原始自由语法相等，保留每个括号和每片叶的次序；其完整代码与全部路径读数的等价刻画分别由[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。对 $a,b\in\mathbb N_0$、$a+b\ge1$，记
+
+$$
+\mathcal T_{a,b}=\{T\in\mathcal T:c(T)=(a,b)^{\mathsf T}\}.
+$$
+
+取任意整数 $k\ge1$、$p,q\ge0$、$t=p+q\ge1$，置
+
+$$
+\begin{gathered}
+d=3k,\qquad
+\binom ab=M^d\binom pq=S^k\binom pq,
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad S=M^3,\\
+a=F_{d-1}p+F_dq,\qquad
+b=F_dp+F_{d+1}q,\qquad n=a+b,\\
+\mathcal I_{k,p,q}=\mathcal T_{a,b}\cap\rho^d(\mathcal T),
+\qquad R_{k,p,q}=\frac{|\mathcal I_{k,p,q}|}{|\mathcal T_{a,b}|},
+\qquad N_{t,p}=C_{t-1}\binom tp,\quad
+C_m=\frac1{m+1}\binom{2m}{m}.
+\end{gathered}
+\tag{12.1}
+$$
+
+Fibonacci 编号仍为 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。若使用既有有限预算 $H$，要求 $H\ge n$；待判定的初始树纤维 $\mathcal T_{a,b}$ 因而包含在 $\mathcal T_H$ 内。这里 $d$ 是检验该初始树的组成祖先及语法祖先的替换深度，不是数量观察的末端阶段 $L$。组成许可沿用[定义 2.1、定理 2.3](#2-许可预算阶梯与深层碰撞前沿)；$R_{k,p,q}$ 是该许可组成纤维内部指定树属于替换像的计数比例。
+
+对连续参数 $x\in[0,1]$ 定义
+
+$$
+\begin{gathered}
+u_k(x)=F_{d-1}x+F_d(1-x),\qquad
+v_k(x)=F_dx+F_{d+1}(1-x),\\
+\ell_k(x)=u_k(x)+v_k(x)
+=F_{d+1}x+F_{d+2}(1-x),\qquad
+ y_k(x)=\frac{u_k(x)}{\ell_k(x)},\\
+h(z)=-z\log z-(1-z)\log(1-z),\quad h(0)=h(1)=0,
+\qquad g(z)=\log4+h(z),\\
+J_k(x)=\ell_k(x)g(y_k(x))-g(x),\qquad
+\Gamma_k(x)=\frac{J_k(x)}{\ell_k(x)},\\
+\phi=\frac{1+\sqrt5}{2},\qquad
+\eta=\phi^{-2},\qquad B=g(\eta).
+\end{gathered}
+\tag{12.2}
+$$
+
+全部对数为自然对数。对整数来源参数，以下简写 $x=p/t$、$\ell=\ell_k(x)=n/t$、$y=y_k(x)=a/n$。连续延拓 $J_k$ 比较相同祖先叶数尺度上的指数损失；只有网格 $x=p/t$ 对应实际整数组成。$R_{k,p,q}$ 的定义不赋予实际来源概率律。若另给 $\mathcal T_{a,b}$ 上的均匀律，它才等于该律下的替换像概率；组成、代码、路径读数及计数比例均不自行授权实际逆执行，也不指定物理解释。
+
+**定理 12.1（许可纤维内实际像的统一密度、混合曲率与黄金归一化边界）。** 在定义 12.1 的全部参数范围内，实际像与祖先纤维满足
+
+$$
+\mathcal I_{k,p,q}=\rho^d(\mathcal T_{p,q}),\qquad
+|\mathcal I_{k,p,q}|=N_{t,p}.
+\tag{12.3}
+$$
+
+对每个允许的三元组存在实数 $e_{k,p,q}$，使
+
+$$
+\boxed{\quad
+R_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{y(1-y)}
+ \exp\bigl(-ng(y)+e_{k,p,q}\bigr),
+\qquad |e_{k,p,q}|\le\frac2n.
+\quad}
+\tag{12.4}
+$$
+
+祖先因子 $N_{t,p}$ 在本式中保持精确，包括 $p=0$、$q=0$、$t=1$ 及有界的 $\min(p,q)$。删除指数余项后，所得近似与真实 $R_{k,p,q}$ 的相对误差至多 $\exp(2/n)-1$，所以沿任意允许的 $n\to\infty$ 序列均为相对等价；这包括 $t$ 固定、$k\to\infty$，不要求两个祖先坐标同时增长。
+
+其统一指数损失满足
+
+$$
+\begin{gathered}
+\left|\log R_{k,p,q}+tJ_k(x)\right|
+\le3\log(n+1)+3,\\
+\Gamma_k(x)\ge\gamma_*:=\log2+h(1/3)>0.
+\end{gathered}
+\tag{12.5}
+$$
+
+故沿任意 $n\to\infty$ 的允许序列，$R_{k,p,q}\to0$，且 $-\log R_{k,p,q}/n$ 与 $\Gamma_k(x)$ 的差一致趋零。递归深度与祖先规模同时变化时，进一步有
+
+$$
+\boxed{\quad
+\left|-\frac{\log R_{k,p,q}}n-B\right|
+\le\frac{\log8}{F_{d+1}}
+ + (\log2)\phi^{-2d}
+ +\frac{3\log(n+1)+3}{n}.
+\quad}
+\tag{12.6}
+$$
+
+因此 $k\to\infty$ 时，每片目标叶的实际像指数损失一致趋于 $B$，一致性覆盖所有非零祖先规模及两类祖先叶的全部混合比例。
+
+在 $0<x<1$ 上，连续祖先速率的曲率为
+
+$$
+J_k''(x)
+=\frac1{x(1-x)}
+ -\frac1{\ell_k(x)u_k(x)v_k(x)}
+\ge\frac{23}{6}.
+\tag{12.7}
+$$
+
+每个 $k\ge1$ 恰有一个连续最小点 $x_k\in(1/2,1)$。令 $y_k^*=y_k(x_k)$，它由
+
+$$
+\frac{x_k}{1-x_k}
+=4^{F_d}(y_k^*)^{-F_{d-2}}(1-y_k^*)^{-F_{d-1}}
+\tag{12.8}
+$$
+
+确定，并对所有 $x\in[0,1]$ 满足
+
+$$
+J_k(x)\ge J_k(x_k)+\frac{23}{12}(x-x_k)^2.
+\tag{12.9}
+$$
+
+因此两个纯祖先端点均有严格更大的连续指数损失。对每个固定 $k$，整数网格的最大密度仅在指数尺度上满足
+
+$$
+\lim_{t\to\infty}
+-\frac1t\log\left(\max_{p\in\{0,\ldots,t\}}
+R_{k,p,t-p}\right)=J_k(x_k).
+\tag{12.10}
+$$
+
+若比较时保留共同预算 $H_t$，须取 $H_t\ge F_{d+2}t$，以包含整张祖先网格对应的初始树纤维。本式不指定有限 $t$ 的精确最大点，也不将固定 $k$ 的网格结论扩展成增长 $k$ 的最优前因子。连续最小点的少数祖先叶比例由同一个 $B$ 控制，且对所有 $k\ge1$ 有
+
+$$
+\boxed{\quad
+\left|-\log(1-x_k)-F_d B\right|\le\frac5{F_d}.
+\quad}
+\tag{12.11}
+$$
+
+定义带符号的共轭来源偏差及黄金组成归一化因子
+
+$$
+\begin{gathered}
+D_{k,p,q}=a-\eta n
+=(-1)^k\phi^{-(d+1)}(p-q/\phi),\\
+\mathcal G_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{\eta(1-\eta)}\exp(-nB).
+\end{gathered}
+\tag{12.12}
+$$
+
+它们对所有参数同时满足
+
+$$
+\boxed{\quad
+\left|\log\frac{R_{k,p,q}}{\mathcal G_{k,p,q}}
+ + (\log\phi)D_{k,p,q}\right|
+\le\frac94\frac{D_{k,p,q}^2}{n}
+ +\frac34\frac{|D_{k,p,q}|}{n}+\frac2n.
+\quad}
+\tag{12.13}
+$$
+
+对任意允许的整数参数序列 $(k_i,p_i,q_i)$，只要求 $k_i\to\infty$，不限制 $t_i=p_i+q_i$ 的增长，则
+
+$$
+\boxed{\quad
+\frac{R_{k_i,p_i,q_i}}{\mathcal G_{k_i,p_i,q_i}}\longrightarrow1
+\quad\Longleftrightarrow\quad D_{k_i,p_i,q_i}\longrightarrow0.
+\quad}
+\tag{12.14}
+$$
+
+更一般地，对任意 $z\in\mathbb R$，$D_{k_i,p_i,q_i}\to z$ 时该比值趋于 $\phi^{-z}$；偏差趋于 $+\infty$ 时比值趋于零，偏差趋于 $-\infty$ 时比值趋于 $+\infty$。每个有限 $z$ 都可由合法整数组成达到。允许抵消的混合祖先可以在规模无上界的同时令 $D_{k_i,p_i,q_i}\to0$，故黄金组成归一化的相对有效性由此联合来源偏差决定，不能仅由深度或祖先总规模代替。
+
+证明。由[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#theorem-34-组成观察下的闭合动力学)的组成动力学及其迭代，有 $c\rho^d=M^dc$。直接复用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的完整树替换单射性，$\rho^d$ 仍为单射。若 $U\in\mathcal T_{a,b}$ 且 $U=\rho^d(T)$，则 $M^dc(T)=M^d(p,q)^{\mathsf T}$。因 $\det M=-1$，$M^d$ 在整数上可逆，强制 $c(T)=(p,q)^{\mathsf T}$。反向每棵 $\mathcal T_{p,q}$ 的树都映到 $\mathcal T_{a,b}$。于是 $\rho^d$ 在这两个集合之间给出到 $\mathcal I_{k,p,q}$ 的双射；这一步使用原有单射，不以矩阵可逆性替代树语法单射。
+
+具有 $s\ge1$ 片有序叶的完全二叉树形状有 $C_{s-1}$ 个，复用 [Flajolet–Sedgewick，《Analytic Combinatorics》，第 6–7 页](https://algo.inria.fr/flajolet/Publications/book.pdf) 的 Catalan 计数及 [Stanley，《Enumerative Combinatorics》第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf) 的二叉括号与平面完全二叉树对应。每个形状有固定的从左到右叶序，任选 $a$ 个位置放置 $\alpha$ 给 $\binom{s}{a}$ 种着色。这既不将括号取商，也不将叶位置取商。因此这些既有计数在当前纤维上给
+
+$$
+|\mathcal T_{a,b}|=C_{n-1}\binom na,
+\qquad |\mathcal I_{k,p,q}|=|\mathcal T_{p,q}|=C_{t-1}\binom tp,
+\qquad
+R_{k,p,q}=\frac{N_{t,p}}{C_{n-1}\binom na}.
+\tag{12.15}
+$$
+
+这证明（12.3），同时给出后续联合估计的精确分子。所有纤维非空且有限，故其对数有定义。
+
+由既有深度许可锥，$S^k(p,q)^{\mathsf T}$ 是一步许可组成；一步矩阵的两列比例给
+
+$$
+\frac13\le y\le\frac25,\qquad
+n\ge F_{d+1}t\ge3t.
+\tag{12.16}
+$$
+
+同样的界在整个连续区间上成立。特别地 $u_k(x)\ge F_{d-1}\ge1$、$v_k(x)\ge F_d\ge2$、$\ell_k(x)\ge F_{d+1}\ge3$，没有零目标坐标。经典双根表达直接复用[母卷定义 18.1、命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)的两个嵌入：
+
+$$
+F_s=\frac{\phi^s-(-\phi^{-1})^s}{\sqrt5}.
+$$
+
+代入 $a-\eta n$，两个来源列的系数分别为 $(-1)^d\phi^{-(d+1)}$ 和 $-(-1)^d\phi^{-(d+2)}$，给出（12.12）；$(-1)^d=(-1)^k$。递推与 $\phi^2=\phi+1$ 给 $F_s\ge\phi^{s-2}$（$s\ge2$）及 $F_s\le\phi^s$（$s\ge0$）。从两列各自的偏差除以叶数，并按其叶数作非负加权平均，遂有
+
+$$
+|y-\eta|=\frac{|D_{k,p,q}|}{n}\le\phi^{-2d}.
+\tag{12.17}
+$$
+
+具体地，第一列界为 $\phi^{-(d+1)}/F_{d+1}\le\phi^{-2d}$，第二列界为 $\phi^{-(d+2)}/F_{d+2}\le\phi^{-2d-2}$。该论证也覆盖连续混合。
+
+下面只在正整数上调用 [Robbins，*A Remark on Stirling's Formula*，第 26 页式（1）–（2）](https://dornsife.usc.edu/sergey-lototsky/wp-content/uploads/sites/211/2024/02/Stirling-Robbins.pdf)：
+
+$$
+m!=\sqrt{2\pi}\,m^{m+1/2}e^{-m}\exp(r_m),
+\qquad \frac1{12m+1}<r_m<\frac1{12m},\qquad m\ge1.
+\tag{12.18}
+$$
+
+本证明没有把此供应扩展到零或任意正实数。由标准恒等式 $C_{m-1}=\binom{2m}{m}/(4m-2)$，其对数形式给
+
+$$
+\begin{gathered}
+C_{m-1}=\frac{4^m}{4\sqrt\pi\,m^{3/2}}\exp(E_m),\\
+E_m=-\log\left(1-\frac1{2m}\right)+r_{2m}-2r_m,
+\qquad 0<E_m<\frac1m.
+\end{gathered}
+\tag{12.19}
+$$
+
+最后的界可直接从供应余项取得：下界用 $-\log(1-1/(2m))\ge1/(2m)$ 和 $2r_m<1/(6m)$；上界用
+
+$$
+-\log\left(1-\frac1{2m}\right)
+=\sum_{j\ge1}\frac1{j2^jm^j}\le\frac{\log2}{m},
+\qquad r_{2m}<\frac1{24m},
+\qquad \log2+1/24<1.
+$$
+
+因此 $m=1$ 同样在范围内。在目标二项式上 $a,b,n\ge1$，由（12.18）得
+
+$$
+\binom na
+=\frac{\exp(nh(y))}{\sqrt{2\pi n y(1-y)}}
+ \exp(r_n-r_a-r_b).
+$$
+
+乘上（12.19）在 $m=n$ 的值，再取倒数，得到（12.4），其中
+
+$$
+e_{k,p,q}=-E_n-r_n+r_a+r_b.
+$$
+
+因为 $y\in[1/3,2/5]$，有 $1/a+1/b\le9/(2n)$。故
+
+$$
+-\frac{13}{12n}<e_{k,p,q}<\frac3{8n},
+$$
+
+足以给出所用的 $2/n$。祖先二项式没有作渐近替换，所以纯祖先、固定少数叶、固定 $t$ 及所有端点仍由同一式覆盖。对正近似因子乘上 $\exp(e_{k,p,q})$，即得所述相对误差界。
+
+为取得整个祖先区间上的指数估计，置
+
+$$
+\omega_{t,p}=\binom tp\exp(-th(p/t)).
+$$
+
+有
+
+$$
+\frac1{t+1}\le\omega_{t,p}\le1.
+\tag{12.20}
+$$
+
+$p=0,t$ 时直接等于一；若 $0<p<t$，二项式恒等式 $\sum_{j=0}^t\binom tj x^j(1-x)^{t-j}=1$ 在 $x=p/t$ 的最大项位于 $j=p$。相邻项的比值为 $(t-j)x/((j+1)(1-x))$，随 $j$ 递减，在 $j=p-1$ 时大于一，在 $j=p$ 时小于一。这最大项就是 $\omega_{t,p}$，所以至少为 $1/(t+1)$，至多为一。这只是一条有限多项式不等式，没有给实际树来源赋律。
+
+把（12.19）用于 $m=t$，并保持 $\omega_{t,p}$ 精确，（12.4）成为对数恒等式
+
+$$
+\begin{aligned}
+\log R_{k,p,q}+tJ_k(x)
+={}&2\log n-\frac32\log t
+ +\frac12\log\bigl(2\pi y(1-y)\bigr)\\
+&+\log\omega_{t,p}+E_t+e_{k,p,q}.
+\end{aligned}
+\tag{12.21}
+$$
+
+在（12.16）的区间内，$0<\tfrac12\log(2\pi y(1-y))<1/2$。上界由 $\log\omega\le0$、$E_t\le1$、$|e|\le2/3$ 得到 $2\log n+3$；下界由 $\log\omega\ge-\log(t+1)$、$E_t\ge0$ 得到 $-\tfrac52\log(n+1)-2/3$。两者给（12.5）的绝对误差。又因 $h(x)\le\log2$、$h(y)\ge h(1/3)$ 及 $\ell\ge3$，
+
+$$
+\Gamma_k(x)=g(y)-\frac{g(x)}\ell
+\ge\log4+h(1/3)-\frac{\log8}{3}=\gamma_*.
+$$
+
+正的统一下界和（12.5）证明任意 $n\to\infty$ 序列的衰减。$\eta\in[1/3,2/5]$，且在此区间 $|h'|\le\log2$。由（12.17）、$\ell\ge F_{d+1}$ 及 $g(x)\le\log8$，
+
+$$
+|\Gamma_k(x)-B|
+\le (\log2)\phi^{-2d}+\frac{\log8}{F_{d+1}}.
+$$
+
+再用（12.5）除以 $n$，得到（12.6）。函数 $(3\log(n+1)+3)/n$ 对 $n\ge1$ 递减，而 $n\ge F_{d+1}\to\infty$，所以这确实是对全部祖先规模和混合比例的一致深度极限，不只是逐点极限。
+
+以下曲率将两个来源列的联合约束保留在同一个实现中。为简写置 $j=F_{d-2}$、$f=F_{d-1}$、$w=F_d=j+f$。则 $u=w-jx$、$v=f+w-fx$、$\ell'= -w$。Cassini 等式给
+
+$$
+u'v-uv'=f(f+w)-w^2=(-1)^d.
+$$
+
+熵的齐次表达为
+
+$$
+\ell h(u/\ell)=\ell\log\ell-u\log u-v\log v.
+$$
+
+对仿射函数 $u,v$ 连续求导两次，得到
+
+$$
+\begin{aligned}
+\bigl(\ell h(u/\ell)\bigr)''
+&=\frac{(u'+v')^2}{\ell}-\frac{(u')^2}{u}-\frac{(v')^2}{v}\\
+&=-\frac{(u'v-uv')^2}{\ell uv}=-\frac1{\ell uv}.
+\end{aligned}
+$$
+
+$\ell\log4$ 为仿射项，$h''(x)=-1/(x(1-x))$，所以得（12.7）；$\ell uv\ge6$ 且 $x(1-x)\le1/4$ 给下界 $4-1/6=23/6$。一次导数为
+
+$$
+J_k'(x)
+=\log\frac{x}{1-x}
+ -j\log\frac{4\ell}{u}-f\log\frac{4\ell}{v}.
+\tag{12.22}
+$$
+
+后两个对数在闭区间有限且为正。故 $J_k'(0+)=-\infty$、$J_k'(1-)=+\infty$、$J_k'(1/2)<0$。严格递增的导数恰有一个零点，位于 $(1/2,1)$，就是连续最小点；在零点代入（12.22）得（12.8）。从 $x_k$ 到任意内部 $x$ 积分曲率下界两次，得（12.9）；由连续性延到两个端点。
+
+对固定 $k$，整张网格的 $n$ 处于 $F_{d+1}t$ 与 $F_{d+2}t$ 之间。因此（12.5）除以 $t$ 的误差对 $p=0,\ldots,t$ 一致趋零。连续函数 $J_k$ 的网格最小值趋于 $J_k(x_k)$：下界来自连续最小值，上界取距 $x_k$ 至多 $1/(2t)$ 的网格点并用连续性。$-\log$ 把最大密度变成最小指数损失，遂得（12.10）。这一论证不决定精确有限网格最优点；当 $k$ 增长时，连续最小点到端点的距离还可以小于网格间距。
+
+为取得深层最小点的定量少数比例，令
+
+$$
+A_k=\log\frac{x_k}{1-x_k}
+=w\log4-j\log y_k^*-f\log(1-y_k^*).
+$$
+
+双根式给 $|j-\eta w|=\phi^{-d}$；又有 $w\le\phi^d$。在 $[1/3,2/5]$ 上，$|\log z-\log\eta|\le3|z-\eta|$，$|\log(1-z)-\log(1-\eta)|\le(5/3)|z-\eta|$。用（12.17）的连续版本及 $j+f=w$，得到
+
+$$
+\begin{aligned}
+|A_k-wB|
+&\le(3j+5f/3)|y_k^*-\eta|
+ +|j-\eta w|\left|\log\frac{1-\eta}{\eta}\right|\\
+&\le3w\phi^{-2d}+\phi^{-d}\log\phi
+<\frac4w.
+\end{aligned}
+$$
+
+另一方面 $A_k\ge w\log4$，所以
+
+$$
+0\le-\log(1-x_k)-A_k
+=\log(1+e^{-A_k})\le4^{-w}\le\frac1w.
+$$
+
+相加即为（12.11）。这将每片目标叶的深度熵常数 $B$ 与连续最优祖先的少数叶边界联系起来；其中的少数比例不是有限网格的已取得祖先组成。
+
+最后考察黄金组成归一化的相对有效性。以下简写 $D=D_{k,p,q}$、$R=R_{k,p,q}$、$\mathcal G=\mathcal G_{k,p,q}$。从（12.4）精确相减得到
+
+$$
+\log\frac R{\mathcal G}
+=-n\bigl(h(y)-h(\eta)\bigr)
+ +\frac12\log\frac{y(1-y)}{\eta(1-\eta)}+e_{k,p,q}.
+\tag{12.23}
+$$
+
+$h'(\eta)=\log\phi$，且连接 $\eta,y$ 的整个区间位于 $[1/3,2/5]$，其上 $|h''|\le9/2$。Taylor 定理与 $y-\eta=D/n$ 给
+
+$$
+\left|n\bigl(h(y)-h(\eta)\bigr)-(\log\phi)D\right|
+\le\frac94\frac{D^2}{n}.
+$$
+
+函数 $z\mapsto\tfrac12\log(z(1-z))$ 的导数在同一区间的绝对值至多 $3/4$。将这两个界及 $|e|\le2/n$ 代入（12.23），得到（12.13）。该 Taylor 界同时保留偏差的符号、二次余项和前因子误差，没有先取深度极限。
+
+对任何 $k_i\to\infty$ 的允许序列，（12.17）给 $|D_i|/n_i\le\phi^{-2d_i}\to0$，而 $n_i\ge F_{d_i+1}\to\infty$。因而（12.13）可写为
+
+$$
+\log\frac{R_i}{\mathcal G_i}=-(\log\phi)D_i+\varepsilon_i,
+\qquad
+|\varepsilon_i|\le c_i|D_i|+b_i,
+\quad
+c_i=\frac94\phi^{-2d_i}\to0,
+\quad
+b_i=\frac34\phi^{-2d_i}+\frac2{n_i}\to0.
+$$
+
+偏差有有限极限时，余项趋零，给出 $\phi^{-z}$；偏差趋正无穷或负无穷时，主项的符号和绝对值支配余项，给出零或正无穷的比值极限。特别地 $D_i\to0$ 蕴含比值趋一。反向，比值趋一使其对数趋零；当 $c_i\le(\log\phi)/2$ 时，上式强制
+
+$$
+\frac{\log\phi}{2}|D_i|
+\le\left|\log\frac{R_i}{\mathcal G_i}\right|+b_i\longrightarrow0.
+$$
+
+这证明（12.14）的必要性，未对变化的祖先规模添加条件，也没有把振荡偏差赋予不存在的极限。
+
+各有限相位由实际整数来源实现。沿偶数 $k\to\infty$，若 $z>0$，取 $q=0$、$p=\lfloor z\phi^{d+1}\rfloor$；若 $z<0$，取 $p=0$、$q=\lfloor(-z)\phi^{d+2}\rfloor$。在充分大的深度这些来源非空，取整误差乘以相应收缩因子趋零，故 $D\to z$。$z=0$ 时取 $p=1,q=0$ 即可。另一方面，对每个深度任选正整数 $q$，取距 $q/\phi$ 最近的整数 $p$，则
+
+$$
+|p-q/\phi|\le\frac12,\qquad
+|D|\le\frac12\phi^{-(d+1)}\longrightarrow0.
+$$
+
+$q$ 可以随深度任意快速增长，例如取 $q\ge\lceil\phi^{4d}\rceil$，仍有同一偏差界与相对等价；此时总规模的增长不能替代来源抵消关系。上述序列的每个组成都有完整有序祖先树代表，使用预算时取 $H\ge n$ 即仍在原域内。全部结论只是这些完整树纤维之间的计数及近似关系；它们不增加数量读出、代码或路径观察的取得权限，不将组成祖先许可提升为指定树的逆执行许可。证毕。
+
+## 追加锚（本行以下为增补区）
