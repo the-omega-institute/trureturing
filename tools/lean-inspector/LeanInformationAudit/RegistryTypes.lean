@@ -1,7 +1,9 @@
 import LeanInformationAuditInterface.Store
+import LeanInformationAudit.BindingRecords
+import LeanInformationAudit.CatalogRecords
+import LeanInformationAudit.StructuralProvenance
 
-/- Implementation-owned plans and record computations.
-Stable declaration records are defined in the Interface package. -/
+/- Implementation-owned plans, assessment records and record computations. -/
 namespace LeanInformationAudit
 
 open Lean
