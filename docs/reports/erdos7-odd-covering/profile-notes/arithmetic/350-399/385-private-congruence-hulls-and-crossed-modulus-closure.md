@@ -262,6 +262,13 @@ private source fails shell coverage. Thus a bound needs further EB1 or
 whole-source input; this example does not refute controlled-source
 selection or provide an odd whole cover.
 
+[Section158](#158-forced-mixed-top-owners-supply-both-actual-root-fan-budgets)
+uses forced original mixed top owners to supply actual private points
+at both ternary roots, without assuming two-root privacy of pure q^G.
+The existing two-packet inventory bound then applies. With opposite5,7,
+H_5=H_7=1 and R={q}, the branch q>=49 has q=53 and H_q<=3.
+The packets retain distinct actual sources and one original inventory.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19309,3 +19316,81 @@ It is uncovered. C_M fails at r; auxiliary-bearing classes fail at their auxilia
 The family therefore meets the stated pointwise premises and the global qualified-parent caps while failing the universally quantified private-source shell obligation. It also lacks initial-segment prime support, the actual opposite concentrated-color structure, EB1 minimality, and the HPA/HPM consequences of whole coverage. Its isolated small primes have private points in both nonzero ternary roots. It does not contradict the bounded-support branch proved from those additional hypotheses.
 
 The exact obstruction is to deriving uniform small-core multiplicity from one completed top fibre and its one-source shell service. A valid replacement must use further whole-source information or another actual EB1 condition. This example neither refutes a controlled-source selection theorem nor supplies an odd whole cover.
+
+## 158. Forced mixed top owners supply both actual-root fan budgets
+
+Keep one original EB1 whole cover with the original partition R,S_1,S_2. Let p_1 in S_1 and p_2 in S_2 be opposite concentrated primes, and let q be an original support prime such that
+
+    q>=max(p_1^(H_(p_1)+1), p_2^(H_(p_2)+1)).      (MTR1)
+
+HPM6 supplies the ORIGINAL labels
+
+    M_1=p_1 q^G, M_2=p_2 q^G, G=H_q.              (MTR2)
+
+The opposite-color bound HPM7 also ensures q is nonconcentrated: either concentrated color would violate the bound from the opposite anchor. The two labels M_1,M_2 are separate original owners; CP1 forbids their combined product p_1 p_2 q^G and no such original is inferred.
+
+These owners provide actual private sources at BOTH ternary roots for q-top fan counting. This removes §140's pure-owner two-root premise in the range MTR1. It does not show that the pure original q^G itself is privately nonconcentrated.
+
+### The existing fan argument applies to these actual owners
+
+Choose a complete private point x_i of M_i. The original private-reset containment V_(M_i) subset V_(p_i) places x_i at the concentrated ternary root i. This is the same containment used in CP1; it does not select a free root of a quotient or identify the two private points.
+
+Apply §140's existing opposite-color elimination separately at each x_i: set each prime in S_(3-i) to its §73–74 singleton root, retaining the other coordinates. Every opposite-color-bearing original then vanishes. M_i remains true because its only nonternary prime factors are p_i and q, neither in the opposite color; other originals without opposite-color factors retain their original truth values. Thus M_i still owns the resulting point privately.
+
+Use TS6 at this ONE modified private point, keeping its complete q-free cofactor and prefix modulo q^(G-1). Changing the final q-digit gives q-1 distinct actual suppliers, all at q-height G. Include the original owner M_i itself to obtain q distinct labels at that root.
+
+The owner need not be pure for this step: only its original privacy and q-height G are used. The two packets have different complete sources. They are not claimed to occur at one common integer point or common cofactor.
+
+### Exactly which parts of TQ1–TQ5 are reused
+
+Put H=H_3 and retain §140's numerical inventories
+
+    Q_0=product_(r in R minus {q})r^(H_r), A=tau(Q_0),
+    Q_i=product_(r in S_i)r^(H_r), D_i=tau(Q_i).
+
+For each root i choose an opposite prime ell_i in S_(3-i), and put
+
+    c_i=ell_i-2, C_i=c_i |S_i|.
+
+The R-only labels in its packet still have numerical form 3^a q^G s_0, s_0|Q_0, so their count is at most A(H+1). The actual owner M_i is colored and is counted in that color's inventory; no pure-owner contribution is added to the R-only count.
+
+The TQ1 colored buckets use only actual complete cofactor agreement and the common ternary prefix. Their parent capacities do not require a pure owner. Thus the colored part is at most
+
+    B_i=A(min(H,c_i)+1)(D_i-1)+1_(H>c_i) C_i.
+
+When G>c_i, the common q-prefix permits exactly TQ3's q^c_i ell parent buckets, so B_i may be replaced by min(B_i,C_i). All counted labels, including M_i when assigned to a bucket, remain proper original descendants. No extra owner slot is subtracted.
+
+Now reuse TQ5's inventory counting across the TWO packets. Positive-ternary-height R-only originals can appear in at most one root packet, and have at most H A numerical possibilities. Ternary-free R-only originals have at most A possibilities and may each appear once in each packet, hence contribute at most2A incidences. Color-i originals occur only in packet i after elimination. Therefore
+
+    2q<=A(H+2)+B_1+B_2.                            (MTR3)
+
+What is shared here is the ONE original family's numerical inventory. The sources remain distinct. The positive-height disjointness comes from the originals' literal first-three phases, not from coupling independently optimized laws.
+
+In particular, if G>max(c_1,c_2), then
+
+    2q<=A(H+2)+C_1+C_2,
+    A>=max(1,ceil((2q-C_1-C_2)/(H+2))).             (MTR4)
+
+The substantive new input is the actual availability of both private owner roots from MTR2. No fan, parent-capacity or two-root counting theorem is reproved.
+
+### A low-anchor-height consumer inside the remaining prime range
+
+Suppose5 and7 are opposite concentrated primes, H_5=H_7=1, and R={q}. Suppose also q>=49. HPM7 bounds the color of5 below7^2=49 and the color of7 below5^2=25. Thus all primes at least49 in the original support belong to R. Initial-segment support and R={q} force q=53, the first prime above49.
+
+MTR1 holds because q>=49=max(5^2,7^2), so in particular the original7q^G has a complete private point at the7-color root. Use that forced root, choose opposite prime5, and set c=3. If G>3, the reused TQ3 bound there gives
+
+    q<=A(H_3+1)+3|S_(7-color)|.
+
+Here A=1 because R={q}; OCP6 gives H_3<=28; and the7-color primes belong to
+
+    {7,11,13,17,19,23},
+
+so |S_(7-color)|<=6. Hence q<=29+18=47, contradicting q>=49. Consequently these hypotheses imply
+
+    q=53 and H_q<=3.                               (MTR5)
+
+This uses the favorable root of an ACTUAL mixed top owner, even if the pure q^G has private points at only the other root. It does not require simultaneous realization of the two packets.
+
+The numerical regime is below both the HPA cutoff P<125 supplied by H_5=1 and the forbidden-pair cutoff P<4200 for5,7. Thus this consumer is not removed merely by either large-prime cutoff. It remains a necessary conditional restriction; no actual cover with these parameters is claimed, and the surviving q=53, H_q<=3 branch is not excluded.
+
+For unrestricted R, MTR3–MTR4 retain the actual A=tau(Q_0). They do not replace it by1 or bound all shared cofactors. The new root availability can be consumed by further same-family inventory bounds, but it does not itself yield unrestricted odd noncoverage.
