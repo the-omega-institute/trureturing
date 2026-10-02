@@ -22035,3 +22035,54 @@ The full-ternary bridge strengthens the liability transfer in Section 177,
 but it still does not force a reciprocal pair in every hypothetical odd
 whole cover, nor does it turn the phase-specific vacancy (FT3) into the
 global statement \(J\cap\{e:e\mid\Gamma_L\}=\varnothing\) from (OL3).
+
+
+## 180. Reused published bounds isolate the high-factor branch
+
+Several published results already apply to the exact finite, distinct, odd
+whole-cover quantifiers. They should be used as reductions rather than
+reproved here.
+
+First, Schroeder's checked declaration
+`Erdos7.noncoverage_at_most_three_prime_factors` assumes the actual modulus
+map is injective, every modulus is odd and greater than one, and
+
+\[
+\forall d\in D,
+\qquad \#\operatorname{primeFactors}(d)\le3.
+\]
+
+It concludes that an integer avoids every displayed class. Therefore a
+hypothetical whole cover must contain at least one original modulus \(m\) with
+
+\[
+\boxed{\#\operatorname{primeFactors}(m)\ge4.}
+\tag{HF1}
+\]
+
+This is the exact theorem condition; it does not replace the unrestricted
+problem by a square-free or bounded-height variant.
+
+Second, Schroeder's distinct-odd total-support result gives at least nine
+distinct primes in the union of the original supports. Third, the
+kernel-checked Mian--Siddique result gives
+
+\[
+\boxed{\#\operatorname{supp}(Q)\ge9,qquad Q=\operatorname{lcm}(D)>10000.}
+\tag{HF2}
+\]
+
+The repository records the source, pins, and verification boundaries in
+[schroeder2026noncoverage](../../../../../../Library/Arith/schroeder2026noncoverage.md),
+[schroeder2026nine](../../../../../../Library/Arith/schroeder2026nine.md), and
+[mian2026lcm10000](../../../../../../Library/Arith/mian2026lcm10000.md).
+No new Lean wrapper or duplicate enumeration is introduced here.
+
+Thus any remaining counterexample search, and any attempted universal descent,
+may be restricted to the simultaneous branch (HF1)--(HF2): at least one
+four-prime-factor original, at least nine support primes overall, and a period
+above 10000. This does not exclude that branch. In particular, it does not
+force a composite reciprocal pair, control arbitrary prime-power heights, or
+supply the complete phase-sensitive liability repair missing after Section
+179. It is a scope reduction for the same whole-cover problem, not its
+resolution.
