@@ -385,7 +385,8 @@ private theorem alt_sum_choose (M a b : ℕ) :
         clear ih
         induction M with
         | zero => rfl
-        | succ M ihM => rw [Function.iterate_succ_apply]; convert ihM using 2; funext i; simp [fwdDiff]
+        | succ M ihM =>
+          rw [Function.iterate_succ_apply]; convert ihM using 2; funext i; simp [fwdDiff]
       · have h1 : Δ_[1] (fun i : ℕ => ((i + a).choose b : ℚ)) =
             fun i : ℕ => ((i + a).choose (b - 1) : ℚ) := by
           funext i
@@ -734,7 +735,8 @@ private theorem rows_hold (N d : ℕ) (hd : d ≤ N + 3) :
         Bp_one (N + 3 + 1 - 2) (by omega), hΓ]
       simp only [P, show N + 3 + 1 - 2 = N + 2 by omega, show N + 2 - 1 = N + 1 by omega,
         show N + 3 - 2 = N + 1 by omega,
-        show N + 3 - 1 = N + 2 by omega, show N + 3 + (1 + 1) - 2 = N + 3 by omega, show N + 2 - 2 = N by omega,
+        show N + 3 - 1 = N + 2 by omega, show N + 3 + (1 + 1) - 2 = N + 3 by omega,
+        show N + 2 - 2 = N by omega,
         show (2 : ℕ) - 1 = 1 by rfl, show (2 : ℕ) - (1 + 1) = 0 by rfl,
         Nat.choose_zero_right, Nat.choose_one_right,
         Nat.factorial_succ, Nat.factorial_zero, pow_one]
@@ -743,7 +745,8 @@ private theorem rows_hold (N d : ℕ) (hd : d ≤ N + 3) :
       obtain ⟨e, rfl⟩ : ∃ e, N = D + e := ⟨N - D, by omega⟩
       rw [row_high (D + e + 3) (D + 3) (by omega) hd (P (D + e + 3))]
       have hre : ∀ i ∈ Icc 3 (D + 3), P (D + e + 3) i *
-          (((D + e + 3 - i).choose (D + 3 - i) : ℚ) * Ap i (D + 3) * Bp 1 (D + e + 3 + 1 - (D + 3))) =
+          (((D + e + 3 - i).choose (D + 3 - i) : ℚ) * Ap i (D + 3) *
+            Bp 1 (D + e + 3 + 1 - (D + 3))) =
           (P (D + e + 3) i * ((D + e + 3 - i).choose (D + 3 - i) : ℚ) * Ap i (D + 3)) *
             Bp 1 (D + e + 3 + 1 - (D + 3)) := fun i _ => by ring
       rw [Finset.sum_congr rfl hre, ← Finset.sum_mul, row_sum_high (D + e) D (by omega),
