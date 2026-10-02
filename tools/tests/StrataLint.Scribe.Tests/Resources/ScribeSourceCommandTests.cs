@@ -5,6 +5,24 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeSourceCommandTests
 {
+    [Fact]
+    public void VerifySourceDoesNotEvaluateDefinitionsAssembly()
+    {
+        using var root = Prepare();
+        Write(root, "file", []);
+        Manifest(root, Entry("file", []));
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        var code = ScribeCli.Run(
+            () => throw new InvalidOperationException("Definitions assembly must not be evaluated."),
+            ["resources", "verify-source", "--tree-from", "tree"], root.Path, output, error);
+
+        Assert.Equal(0, code);
+        Assert.Equal("resources verify-source: entries=1" + Environment.NewLine, output.ToString());
+        Assert.Empty(error.ToString());
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

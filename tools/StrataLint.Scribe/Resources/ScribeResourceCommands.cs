@@ -9,7 +9,7 @@ internal static class ScribeResourceCommands
         + " | resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--paths-from <file>]"
         + " | resources verify-source --tree-from <file>";
 
-    internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
+    internal static int Run(Func<Assembly> assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)
     {
         if (arguments.Count > 1 && arguments[1] == "verify-source")
@@ -47,7 +47,7 @@ internal static class ScribeResourceCommands
             }
 
             var pack = ScribeResourcePack.Open(path);
-            var definitions = DocumentDefinitions.Discover(assembly, root)
+            var definitions = DocumentDefinitions.Discover(assembly(), root)
                 .ToDictionary(item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
             var mismatches = 0;
             foreach (var entry in pack.Manifest.Entries)
