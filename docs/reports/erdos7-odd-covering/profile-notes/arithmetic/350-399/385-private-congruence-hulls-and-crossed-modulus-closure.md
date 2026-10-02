@@ -149,6 +149,14 @@ Otherwise a source with no W point must expose an actual odd
 same-depth incidence cycle or a depth-two trace crossing a depth-one
 boundary. No original is split into duplicate repair labels.
 
+[Section143](#143-actual-joint-hole-sources-sharpen-the-low-row-inventory-and-first-q-prefix-repair)
+restricts the existing PS law to the complete top-packet hole projection;
+its low-row incidence inventory must still contain at least q-2 pairs.
+Retaining one literal first-q digit gives a three-slot depth-two repair.
+Balanced packet incidence, including a concrete crossing CRT palette,
+then forces an actual point of incidence at most two. This packet point
+is not asserted to survive the full top-row W test.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17527,3 +17535,112 @@ These are necessary alternatives for the same original EB1 family. They are not 
 Triplicating each depth-one column and nine-coloring a balanced clone matrix supplies three arbitrary leaf colors to that original. They need not form the three children of ONE first-digit root. Converting those colors to three separate APs violates one original-label capacity, while enclosing arbitrary slots by one depth-one prefix may fail. Ordinary unweighted cover decomposition therefore does not by itself establish the general mixed-depth result at the threshold 3n_1+n_2>=9.
 
 The paper's sensor-cover extension (§5) also assigns intervals of prescribed durations; it does not impose this ternary prefix shape and does not provide an exact threshold-one guarantee. No theorem from that extension is transferred here. The boundary-stability hypothesis above is precisely what lets genuine balanced cover decomposition fill a fixed set of missing leaf slots without splitting a heavy original.
+
+## 143. Actual joint-hole sources sharpen the low-row inventory and first-q-prefix repair
+
+The complete joint source in §139 supports a more localized version of §134's probability law. Retaining one literal first-q digit also gives a three-slot repair for depth-two originals. Both are ordinary consumers of the existing whole-hole and fresh-height interfaces; no new general exchange theorem or Lean result is asserted.
+
+### The complete top-packet hole supplies the cofactor source
+
+Keep one original EB1 family, Q=3^H q^G M with q>3, H,G>=1 and gcd(M,3q)=1. Fix a full ternary word u. Let T_u be ALL original top-q-bearing labels at u, and assume T_u is nonempty. Use §139's existing source P_u:
+
+    E_(T_u)=(Z/Q) minus union_(d outside T_u) A_d,
+    Omega_u=P_u=projection_M(E_(T_u)).                (OHL1)
+
+Original irredundancy makes Omega_u nonempty. Every q-free original is retained in this deletion, so Omega_u is a subset of the complete q-free-live cofactor set R_u. This source retains every simultaneous-hole point, including those owned by several deleted labels.
+
+The common top-q union satisfies
+
+    intersection_(v in Omega_u) D_(u,v)
+      contains no complete ternary depth-G q-tree.  (OHL2)
+
+This follows from SH1 and JCE1, without another exchange theorem. If one fixed tree lay in that intersection, SH1's proof applied to that SAME tree would give an incident shallow owner at every selected depth-two node and every v in Omega_u: three deeper owners in one phase of 3^H q^2 are forbidden. Take the shallow top labels whose literal prefixes occur in the tree and give each its fixed inverse ternary prefix. Their complete deletion-hole projection is contained in Omega_u by JCE6. The inverse codes therefore satisfy JCE1 on that entire projection, contradicting §139. At G=1 use the tree's first-level owners; at G=2 no deeper truncation is needed.
+
+### One probability on complete restricted cofactor sets and original tails
+
+Put t=q-2. For G>=2 restrict the COMPLETE shallow-safe cofactor sets of PS3:
+
+    C^Omega_(u,beta)=Omega_u intersect C_(u,beta),
+       beta modulo q^2.                             (OHL3)
+
+PS3's proof applies with Omega_u in place of R_u. If this set is empty, every source has a shallow owner covering the whole beta cylinder. If it is nonempty, one actual shallow-safe v has at most two genuine deeper top prefixes below beta, preventing a ternary subtree. Thus OHL2 and the existing finite-tree alternative supply a t-by-t skeleton S_u whose restricted cofactor sets are all nonempty.
+
+Sample beta uniformly from this ONE skeleton, then v uniformly from the ENTIRE C^Omega_(u,beta), and then xi uniformly from the ENTIRE original surviving tail Y_(u,v,beta). PS2 gives the positive tail denominator. Every sampled point avoids all q-free originals because v is in Omega_u, and avoids every top-q original by the definition of Y. It therefore belongs to the original E_J for
+
+    J={d=3^a q^e s:a<H,e>=1}.
+
+Whole original coverage supplies an original J-owner. The sampled xi need not be the q-coordinate witnessing v in the definition of Omega_u; no such identification is used.
+
+The exact PS4 formula and PS5 bounds hold with C^Omega in place of C. In particular the SAME probability satisfies
+
+    nu_u(A_d)<=kappa_e,
+    kappa_e=t^(-min(e,3))*q^(-max(e-3,0)),             (OHL4)
+
+for each original d=3^a q^e s in J. A ternary phase incompatible with u, or a literal cofactor cylinder disjoint from Omega_u, has probability zero. Retaining the actual restricted cofactor fractions gives the sharper PS5 prices; no positive density bound is assumed for those sets.
+
+Define the ACTUAL incident inventory
+
+    I_u={(a,s): some original d=3^a q^e s has
+          a<H, e>=1, a_d=u modulo3^a,
+          and Omega_u intersects [a_d]_s}.
+
+Numerical distinctness permits at most one original at each (a,e,s). Summing this one law over its possible original owners gives
+
+    1<=sum_(d in J)nu_u(A_d)<=|I_u|K_(q,G),
+    K_(q,G)=sum_(e=1..G)kappa_e<K_(q,infinity),
+    K_(q,infinity)=1/t+1/t^2+q/((q-1)t^3)<1/(q-3).
+
+Consequently
+
+    |I_u|>=q-2.                                      (OHL5)
+
+At G=1 use PS's genuine one-level construction on the nonempty restricted root sets: kappa_1=1/t and the same conclusion follows directly. At G=2 the actual tails are singleton depth-two leaves. If T_u is empty, Omega_u is empty and there is no nonempty deletion budget; OHL5 is not asserted.
+
+The improvement over the R_u inventory is its actual simultaneous-hole support: these low-row (a,s) incidences must meet Omega_u. The construction does not give a cofactor distribution independent of beta, a W-supported marginal, a positive cofactor reserve, deep ternary caps, or a total price below one. For a proper arbitrary subpacket of T_u, retained top labels can pay a similarly constructed law; its support must be checked before claiming a J-only budget.
+
+### Retaining the first q-digit reduces depth-two repair to three slots
+
+Assume G>=2. Fix a literal first-q digit omega. Let B be ANY nonempty packet of original labels
+
+    d=3^H q^2 s_d,
+    a_d=u modulo3^H, a_d=omega modulo q.
+
+Keep every original outside B unchanged, including all deeper top-q labels. Define the complete hole E_B and Omega_B=projection_M(E_B) exactly as in OHL1. Whole original coverage puts E_B inside the cylinder with old ternary word u and first-q digit omega. For each d in B write C_d=[a_d]_(s_d).
+
+Choose ONE code c_d modulo3 for each original label. The exact repair condition is
+
+    for every v in Omega_B and b modulo3,
+    some d in B has v in C_d and c_d=b.               (OHL6)
+
+Under OHL6 use the single AP
+
+    z=u+3^H c_d modulo3^(H+1),
+    z=omega modulo q,
+    z=a_d modulo s_d,
+    numerical modulus 3^(H+1)q s_d.                  (OHL7)
+
+The common carrier is 3^(H+1)q^G M, retaining the original q-axis. OHL6 covers every point of the COMPLETE old hole and every new ternary lift. Conversely, if it fails at (v,b), a q-witness from the definition of Omega_B and CRT produce an old-hole lift missed by every replacement. Hence it is necessary and sufficient for these fixed APs to repair the whole hole.
+
+All output labels have ternary height above H and are fresh against every retained original. Distinct original labels have distinct s_d, so the outputs are pairwise distinct. Each original produces exactly one AP, with modulus ratio 3/q<1. PH1 then contradicts EB1 at unchanged count. Thus no such fixed three-color cover of Omega_B exists.
+
+This is the existing LA3 fresh-height mechanism with the literal first-q digit retained. Its numerical advantage is specific: §139 maps a depth-two original to 3^(H+2)s_d and requires nine new leaf slots, whereas OHL7 maps it to 3^(H+1)q s_d and requires only three. It does not supply a common code merely from the number of packet labels.
+
+### Balanced incidence and a concrete crossing CRT palette
+
+Let A_B be the 0–1 matrix with rows the actual v in Omega_B, columns the ORIGINAL labels d in B, and entry 1 when v is in C_d. If A_B is balanced in §142's sense, the classical polychromatic theorem used there would supply OHL6 whenever every row had at least three entries. Therefore
+
+    A_B balanced implies some actual v in Omega_B
+      is incident to at most TWO packet labels.     (OHL8)
+
+This is a single-depth application; it copies no label and needs no mixed-depth boundary-stability hypothesis. If all actual rows have size at least three, an actual odd incidence cycle is consequently necessary.
+
+A direct CRT case permits crossing cylinders without assuming balance separately. Suppose the packet's numerical cofactors belong to {1,p,r,pr}, where p and r are distinct primes dividing M. There is at most one label of each cofactor. If at most three labels occur, give them distinct colors. If all four occur, give the 1,p,r labels colors 0,1,2. Assign the pr label as follows:
+
+* If its cylinder intersects the p cylinder but misses the r cylinder, give it color 2.
+* If it intersects the r cylinder but misses the p cylinder, give it color 1.
+* If it intersects both, divisibility and actual phase compatibility put its WHOLE cylinder inside their intersection; give it any color.
+* If it intersects neither, give it any color.
+
+Every cofactor point incident to at least three labels then sees all three colors. Thus this palette also forces a point of Omega_B with at most two packet incidences, by OHL6–OHL7. The p/r cylinders may cross. The full M, other original labels, and all their heights remain unrestricted; neither p nor r needs to exceed q.
+
+The sparse point in OHL8 or this CRT case is NOT automatically in W. It counts only the chosen depth-two packet in one first-q root. Other top labels, including other q-roots or depth-two labels outside B, can still supply the full-family shallow certificate of SH2. The complete-hole projection only witnesses a missing retained owner at SOME q-coordinate. It does not erase those other labels on the full q-line. No unrestricted noncoverage, automatic W witness, or exclusion of the nonconcentrated branch follows.
