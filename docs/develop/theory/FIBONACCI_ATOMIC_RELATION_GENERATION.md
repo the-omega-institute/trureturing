@@ -46903,3 +46903,257 @@ $$
 此结论比较预先固定的两个证书。若整数格点最终重复，则重复节点不增加包络；它不推出无限加密使损失趋零。特别在 $m=3L+2$ 的实际原子格上，最细可用格距仍受该整数结构限制。五分迭代控制证书中心的插值亏损，零点频率群控制剩余谱振幅；二者通过同一累计储备相连。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 339. 临界储备的一阶相位陪集、低零点负修正与逼近速度
+
+**定义 339.1（同一实际证书的一阶坐标）。** 固定 §§337–338 的实际证书、起点和块斜率，并在本节假设 RH。沿用其正频率集 $\Gamma$、重数 $m_\gamma$、权重 $a_\gamma$、紧群 $H$、轨道 $\phi(T)$、中心 $c_0$ 和振幅 $A_*$。置
+
+$$
+D_\gamma=\frac14+\gamma^2,\qquad
+S(T)=-2\sum_{\gamma\in\Gamma}a_\gamma\sin(\gamma T),\qquad
+Y_0(T)=S'(T)=-2\sum_{\gamma\in\Gamma}\frac{m_\gamma}{D_\gamma}\cos(\gamma T),
+$$
+
+$$
+(Qf)(T)=\int_0^\infty e^{-v/2}f(T+v)\,dv,\qquad
+F(T)=S(T)-(QS)(T),\qquad
+\Delta(T)=A_*+S(T)\ge0.
+\tag{339.1}
+$$
+
+$Q$ 是向未来平移的指数积分，核的总质量为 $2$。§337 的标准零点计数给 $\sum_\gamma a_\gamma\gamma=\sum_\gamma m_\gamma/D_\gamma<\infty$，保证 $S$ 为 $C^1$；零频空洞另给 $\sum_\gamma a_\gamma/\gamma<\infty$，所以
+
+$$
+U(T)=2\sum_{\gamma\in\Gamma}\frac{a_\gamma}{\gamma}\cos(\gamma T)
+\quad\text{满足}\quad U'=S,\qquad \sup_{T\in\mathbb R}|U(T)|<\infty.
+\tag{339.2}
+$$
+
+不要求 $Y_0$ 可微；形式上的下一次频率导数不具有这里所需的绝对可和保证。
+
+**定理 339.1（实际固定证书的一阶展开）。** 对定义339.1的同一 $c_0$，全部实数截止满足
+
+$$
+\mathcal C^{\rm fin}(e^T)
+=c_0+S(T)+\frac{F(T)}T+O(T^{-2}),
+\qquad T\longrightarrow\infty.
+\tag{339.3}
+$$
+
+因此 §338 的趋零误差具有明确的第一项，它不是可以任意选择符号的模型误差。
+
+**证明。** 复用 §337 的精确累计恒等式及 $Y=Y_0+r$，其中 $r(T)=O(e^{-T/2})$。记 $I_p(T)=\int_{t_0}^Tp(u)Y(u)\,du$。对 $pS'$ 分部积分并把 $pr$ 的尾积分计入指数小项，得
+
+$$
+I_p(T)-I_p(\infty)
+=p(T)S(T)+\int_T^\infty p'(u)S(u)\,du+O(e^{-T/2}/T),
+$$
+
+$$
+p(T)=-T^{-1}+8T^{-3},\quad
+p'(T)=T^{-2}-24T^{-4},\quad
+p''(T)=-2T^{-3}+96T^{-5}.
+\tag{339.4}
+$$
+
+仅由 $S$ 有界，第二项至多得到 $O(T^{-1})$，不足以识别一阶系数。这里使用（339.2）的有界原函数，再次分部积分：
+
+$$
+\int_T^\infty p'(u)S(u)\,du
+=-p'(T)U(T)-\int_T^\infty p''(u)U(u)\,du=O(T^{-2}).
+$$
+
+故 $I_p(T)-I_p(\infty)=-S(T)/T+O(T^{-2})$。本推导是经典 Dirichlet 分部积分机制在实际同源谱上的应用。
+
+对 $T\ge1$、$v\ge0$，§337 的 $d$ 满足
+
+$$
+\left|d(T+v)-T^{-2}\right|\le\frac{2v+2}{T^3}.
+$$
+
+指数核的零阶、一阶矩分别为 $2$、$4$，因而
+
+$$
+R(T)=T^{-2}(QY_0)(T)+O(T^{-3}),\qquad
+QY_0=-S+\frac12QS.
+\tag{339.5}
+$$
+
+最后的等式只对有界的 $C^1$ 函数 $S$ 分部积分：无穷端的 $e^{-v/2}S(T+v)$ 为零，起点项为 $-S(T)$。没有微分 $Y_0$。
+
+另一方面，$\mathscr B(T)=b_0+S(T)+O(e^{-T/2})$。实际 Fibonacci 块端点 $A_k=3F_k+2$ 给 $\log A_k\asymp k$；当 $e^T$ 落在第 $k$ 块时，$k\asymp T$。定理335.1遂给
+
+$$
+\mathcal L_\infty-\mathcal L(e^T)
+=O((1+T)e^{-c'\sqrt T})=o(T^{-N})
+\quad\text{对每个固定}\ N>0.
+\tag{339.6}
+$$
+
+这是对全部实数截止的尾界，包括部分末块。将这些估计代回（337.6），累计修正的一阶项为
+
+$$
+-S(T)-2(QY_0)(T)
+=-S(T)-2\left[-S(T)+\frac12(QS)(T)\right]
+=S(T)-(QS)(T).
+$$
+
+常数项保持 §337–338 的同一 $c_0$，即得（339.3）。$\square$
+
+**定理 339.2（逐频率等幅变换与相位陪集）。** 定义
+
+$$
+u_\gamma=1-\frac1{1/2-i\gamma}
+=\frac{-1/2-i\gamma}{1/2-i\gamma}
+=\frac{2\gamma-i}{2\gamma+i},\qquad |u_\gamma|=1.
+\tag{339.7}
+$$
+
+对 $z\in\mathbb T^\Gamma$，置
+
+$$
+F_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}(u_\gamma z_\gamma),\qquad
+(QS)_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}\frac{z_\gamma}{1/2-i\gamma}.
+\tag{339.8}
+$$
+
+把 §338 的同一可和公式 $s_H$ 延拓到整个 $\mathbb T^\Gamma$，记为 $s$，使 $s|_H=s_H$。两级数一致绝对收敛，并满足 $F(T)=F_H(\phi(T))$、$F_H|_H=s_H-(QS)_H|_H$。$F$ 的尾部聚点值集合为 $s(uH)$；其逐频率振幅与 $S$ 相同，但整体极值及反演对称性不必相同。特别地，不能在未证明 $u\in H$ 时把 $uH$ 换回 $H$。
+
+**证明。** 指数频率的经典 Laplace 积分给
+
+$$
+\int_0^\infty e^{-v/2}e^{i\gamma v}\,dv=\frac1{1/2-i\gamma}.
+$$
+
+可和权重与可积指数核允许逐项交换求和和积分；（339.7）随即给（339.8）。分子和分母为共轭复数的适当倍数，故模长为 $1$。§338 的每个尾轨道稠密于 $H$，逐坐标乘以 $u$ 将其闭包送到陪集 $uH$；连续性保证尾部聚点值集合正是该陪集上的值域；这不保证极值在某个实际轨道时刻取得。逐频率模长不变不决定整个谱的可达相位集合。$\square$
+
+**命题 339.1（谐波陪集可以改变极值和对称性）。** 只在本命题取模型频率 $\lambda,2\lambda$、权重均为 $1$，与实际 $\zeta$ 频率区别。存在 $\lambda>0$，使原谱的最大值不超过 $18/5$，而对应的一阶修正谱的精确范围为
+
+$$
+[-9/4,4].
+\tag{339.9}
+$$
+
+**证明。** 令 $x=2\lambda$ 为 $2x^3=3x^2+1$ 在 $(1,2)$ 中的唯一根；端点值异号，导数 $6x(x-1)>0$ 给存在与唯一性，且 $0<x\le1$ 不可能满足等式。模型群为 $H=\{(z,z^2):|z|=1\}$。§338 的谐波界及反演对称性给原谱最大值不超过 $18/5<4$。写
+
+$$
+u_1=\frac{x-i}{x+i},\qquad u_2=\frac{2x-i}{2x+i},\qquad
+\frac{u_1^2}{u_2}
+=\frac{2x^3-i(3x^2+1)}{2x^3+i(3x^2+1)}=-i.
+$$
+
+因而对 $w\in uH$，$w_2=iw_1^2$。令 $y=\operatorname{Im}w_1\in[-1,1]$，得到
+
+$$
+-2\operatorname{Im}(w_1+w_2)
+=4(y-1/4)^2-9/4.
+$$
+
+$y=1/4$ 达到最小值 $-9/4$；取 $z=-i/u_1$，则 $w_1=w_2=-i$，达到最大值 $4$。关系特征 $w_1^2/w_2$ 从 $H$ 上的 $1$ 变为陪集上的 $-i$，故两个相位集合不同。这是支持性模型，不断言真实零点具有该谐波关系或实际修正谱振幅必然增加。$\square$
+
+**定理 339.3（实际低零点预算强迫最低相位的一阶负修正）。** 消费经典零点总和与已验证的首零点输入：
+
+$$
+2\sum_{\gamma>0}\frac{m_\gamma}{D_\gamma}
+=2+\gamma_E-\log(4\pi)<\frac1{20},\qquad
+\gamma\ge14\ (\gamma\in\Gamma),\qquad
+\exists\gamma_1\in\Gamma:\ \gamma_1\le15.
+\tag{339.10}
+$$
+
+其中 $\gamma_E$ 是 Euler 常数，不是零点纵坐标。置
+
+$$
+\kappa=\frac1{3390}-\frac1{3920}=\frac{53}{1328880}>0.
+$$
+
+则对每个 $z\in H$，均有
+
+$$
+|(QS)_H(z)|<\frac1{3920},\qquad
+A_*\ge\frac1{3390},\qquad
+F_H(z)<A_*+s_H(z)-\kappa.
+\tag{339.11}
+$$
+
+特别地，在每个最低值相位 $s_H(z_*)=-A_*$ 上都有 $F_H(z_*)<-\kappa$。这一实际符号结论不需要频率线性独立。
+
+**证明。** 经典零点总和见 Nicolas，*Small values of the Euler function and the Riemann hypothesis*，[arXiv:1202.0729v2](https://arxiv.org/abs/1202.0729v2)，式（1.3），其值为 $0.0461914179\ldots<1/20$；本卷 §92 已使用同一总和。首零点范围消费 [LMFDB 首零点数据](https://www.lmfdb.org/zeros/zeta/list?limit=1&N=0) 及其 [来源与可靠性说明](https://www.lmfdb.org/zeros/zeta/Source)：索引 $1$ 的纵坐标为 $14.1347251417346937904572519835625$，说明页给出 Platt 算法、绝对精度 $\pm2^{-102}$，以及严格 Turing 方法对列表完整性的验证；算法来源为 [Platt，Math. Comp.，DOI 10.1090/S0025-5718-2014-02884-6](https://doi.org/10.1090/S0025-5718-2014-02884-6)。这里使用已验证外部输入，没有重新执行该零点计算或把普通舍入表当作本地新证书。
+
+因 $\gamma\sqrt{D_\gamma}\ge196$，（339.8）及（339.10）给
+
+$$
+|(QS)_H(z)|
+\le2\sum_\gamma\frac{m_\gamma}{\gamma D_\gamma\sqrt{D_\gamma}}
+\le\frac2{196}\sum_\gamma\frac{m_\gamma}{D_\gamma}
+<\frac1{3920}.
+$$
+
+§337 的 Fourier–Bohr 系数在频率 $\gamma_1$ 上的模为 $a_{\gamma_1}$，而 $|S(T)|\le A_*$；平均积分的模不超过 $A_*$，取极限得到
+
+$$
+A_*\ge a_{\gamma_1}
+=\frac{m_{\gamma_1}}{\gamma_1D_{\gamma_1}}
+\ge\frac1{15\cdot226}=\frac1{3390}.
+$$
+
+这里仅用重数至少为 $1$，不需要首零点单纯性。于是对 $\Delta_H(z)=A_*+s_H(z)$，
+
+$$
+F_H(z)=\Delta_H(z)-A_*-(QS)_H(z)
+<\Delta_H(z)-\kappa,
+$$
+
+给出全相位界和最低值处的严格负号。$\square$
+
+**定理 339.4（实际临界储备的速度门槛）。** 若 $D_{\rm crit}=A_*-c_0\ge0$，则
+
+$$
+T\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^T)\bigr]
+=T\Delta(T)+F(T)+O(T^{-1}).
+\tag{339.12}
+$$
+
+由此有三项判据：若 $\liminf_{T\to\infty}[T\Delta(T)+F(T)]>0$，临界储备最终可行；若该下极限小于零，任意晚仍失败；等于零不由这一阶展开决定。在（339.10）的实际输入下，还得到
+
+$$
+\liminf_{T\to\infty}T\Delta(T)<\kappa
+\quad\Longrightarrow\quad
+\text{临界储备在任意晚截止仍失败}.
+\tag{339.13}
+$$
+
+另一方面，$|F(T)|\le B_\triangle$，故 $\liminf T\Delta(T)>B_\triangle$ 足以给最终可行；尤其 $T\Delta(T)\to\infty$ 时最终可行。
+
+**证明。** 在（339.3）代入同一临界常数得到（339.12），其误差为 $O(T^{-1})$。严格正、负下极限分别保留最终正号和任意晚负号。对（339.13），定理339.3给
+
+$$
+T\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^T)\bigr]
+<(T+1)\Delta(T)-\kappa+O(T^{-1}).
+$$
+
+若下极限小于 $\kappa$，可取趋向无穷的序列，使 $T\Delta(T)$ 与 $\kappa$ 保持固定正间距；该序列上 $\Delta(T)\to0$，趋零误差最终小于该间距，所以原始余量为负。最后的充分可行界由（339.7）的逐频率模长 $1$ 和三角界推出。
+
+§338 的尾轨道稠密性只保证 $\Delta(T)$ 在任意晚可以任意小，未给出 $T\Delta(T)$ 的速度。这里没有建立真实轨道满足（339.13），也没有据此判定实际临界储备；所缺输入已从未知误差符号缩为具体的相位逼近速度。$\square$
+
+**命题 339.2（递归加密在临界重定心后只留下亏损尾）。** 对定理338.4的两个预先固定证书，记 $\delta=c_{0,\rm new}-c_{0,\rm old}\ge0$。则它们具有同一 $S$、$F$ 和 $\Delta$，且
+
+$$
+0\le\delta-\bigl[\mathcal C^{\rm fin}_{\rm new}(e^T)-\mathcal C^{\rm fin}_{\rm old}(e^T)\bigr]
+\le\mathcal L_{{\rm old},\infty}-\mathcal L_{\rm old}(e^T)
+=o(T^{-N})
+\tag{339.14}
+$$
+
+对每个固定 $N>0$ 成立。若两个谱临界储备均非负，则
+
+$$
+D_{{\rm crit},\rm new}+\mathcal C^{\rm fin}_{\rm new}(e^T)
+\le D_{{\rm crit},\rm old}+\mathcal C^{\rm fin}_{\rm old}(e^T),
+$$
+
+两者之差比任意固定负幂都小。
+
+**证明。** 包络加密单调给旧亏损尾不小于新亏损尾，两者之差恰为（339.14）的中间项；上界和超多项式尾界来自（339.6）。因此新中心上移 $\delta$，一阶谱仍相同。临界储备同时下降 $\delta$，相减后剩下的恰为未兑现的尾部节省的负数。对固定原始 $D$ 加密提高余量；在把 $D$ 同时减至新临界值时，则不能把这份固定预算的改善再次算入临界一阶余量。这解释了五分递归与相位群的分工：前者控制插值亏损和中心，后者及其逼近速度决定临界谱障碍。$\square$
+
+## 追加锚（本行以下为增补区）
