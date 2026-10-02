@@ -359,6 +359,13 @@ near-top probe inventory across all escaped private sources. A fixed
 smaller deletion family has at least q-4 fixed third-prefix whole-tail
 holes at every such source. Its other deletion liabilities remain.
 
+[Section170](#170-the-complete-low-pure-block-guard-constrains-shared7-at-every-height)
+uses every actual low pure7 and mixed3*7 prefix in one guarded product.
+For R={7} and H_5=1, H_7=2 forces21 into the color opposite5.
+If21 has5's color, then H_7>=3 and147,63,441 have the other color;
+63's first7-prefix differs from those of49 and147. The remaining
+phase branches and higher powers are not excluded.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -20914,3 +20921,109 @@ This use of the same eight cofactor columns cannot simply move another row down.
 That specified palette therefore has no finite whole-cylinder repair. This does not exclude using a smaller complete private region, additional columns, freed original labels or retained guards.
 
 The remaining alternatives are actual height-two probe payers, lower ternary rows, or cofactors omitting p or r. A further exchange must repair the WHOLE E_(Xi_(i_*)), or a fully specified larger deletion liability, with its numerical labels and both EB1 objectives checked. No argument here forces a triangle, excludes these remaining alternatives, or proves unrestricted Erdős #7. This is an ordinary mathematical consumer of ML, TSC and VH, with no new Lean verification or literature-priority claim.
+
+## 170. The complete low pure-block guard constrains shared7 at every height
+
+Keep ONE original EB1 family with R={7},5 concentrated and H_5=1. Let i be the concentrated color S opposite5, and j the color of5. Reuse H=H_3>=3, G=H_7>=2, original3*7^e for every1<=e<=G, and the height-one palette S subset{11,13,17,19,23}. Then
+
+    G=2 ==> a_21=i modulo3.                           (S7B1)
+
+At every finite G, the other phase branch satisfies
+
+    a_21=j modulo3 ==>
+      G>=3;
+      147,63,441 are original with ternary root i;
+      a_63!=a_49 modulo7 and a_63!=a_147 modulo7.       (S7B2)
+
+Only §90's numerical3*7^e supplier is reused here; its height-one quotient-privacy assertions are not extended. These are ordinary mathematical consequences, without Lean verification or an unrestricted noncoverage claim.
+
+### One actual product retains the entire pure-block guard
+
+Assume a_21=j modulo3. Apply the literal opposite-color elimination and the S-coordinate restrictions of §168. Keep the whole ternary root Omega_i, all7^G residues and
+
+    Z=product_(p in S)(F_p minus{0,r_p}),
+    W=sum_(d|product S,d>1) product_(p|d)1/(p-2),
+    C_0=2 sum_(d|product S,omega(d)>=2) product_(p|d)1/(p-2).
+
+Every surviving original still has its distinct numerical tuple3^b7^e d. Section168 gives
+
+    W<=W_*=155/357, C_0<=C_*=6956/58905.              (S7B3)
+
+On X_7=Z/7^G let B be the union of ALL actual prefixes of original7^e and of original3*7^e active in root i, for every1<=e<=G. Put
+
+    Y=X_7 minus B, y=|Y|/7^G,
+    A_G=sum_(e=1..G)7^(-e), alpha=A_G/y.
+
+Since21 is inactive in root i,
+
+    y>=1-2A_G+1/7>17/21, alpha<7/34.                 (S7B4)
+
+Use the uniform product on Omega_i times Y times Z. Every low pure-block original, with b=0 or1 and d=1, has zero mass. Each actual depth-e7-prefix has conditional mass at most7^(-e)/y. No pairwise disjointness of arbitrary-height low guards is required.
+
+Let L_0 subset Z be the ACTUAL7-free low union, with ell=mu(L_0)<=C_0, and L_7 the actual remaining7-bearing low union. Then mu(L_7)<=2alpha W. Its complete low complement U obeys
+
+    U=(Y times Z) minus[(Y times L_0) union L_7],
+    u=mu(U)>=1-ell-2alpha W.
+
+Let G_i be the actual pure-three guard union and write
+
+    beta=mu(G_i), tau=1-beta,
+    theta=sum_(b=2..H)3^(1-b), beta<=theta<1/2<tau.
+
+Whole coverage requires the complete high demand (Omega_i minus G_i) times U to be covered. High slots with d>1 have total capacity at most theta(1+alpha)W. Every high pure-block slot3^b7^e is independent of Z, so its capacity on that demand is at most
+
+    3^(1-b)7^(-e)(1-ell)/y.
+
+This also holds when the slot is absent, inactive, or cut by B. Summing over ALL b>=2,e>=1 within the original heights gives
+
+    tau u<=theta K,
+    K=(1+alpha)W+alpha(1-ell).
+
+The same actual ell therefore yields the necessary inequality
+
+    1<J(alpha,W,ell),
+    J(alpha,W,ell)=alpha+(1+3alpha)W+(1-alpha)ell.       (S7B5)
+
+A known loss Delta from that high allowance instead gives
+
+    1<J(alpha,W,ell)-2Delta.                          (S7B6)
+
+Indeed tau u<=theta K-Delta<K/2-Delta and u>=1-ell-2alpha W. The three arguments of J are increasing on the ranges used below.
+
+### Height two excludes the opposite21 phase
+
+For G=2, original7 guards seven of the49 residues and original49 guards one further residue. If147 is active in root i, its depth-two prefix guards one further distinct residue by comparable-original disjointness. Thus |Y| is40 or41, and alpha=8/|Y|<=1/5. Equations S7B3 and S7B5 would give
+
+    1<J<=1/5+(8/5)W_*+(4/5)C_*
+         =17137/17325=1-188/17325<1.
+
+This proves S7B1. The first7-root of21 was not removed, and no relative first-root assignment for49 was assumed.
+
+### The all-height excess forces actual labels and separated prefixes
+
+If147 also has ternary root j, its low guard is absent. Then
+
+    y>=1-2A_G+1/7+1/49>122/147,
+    alpha<49/244,
+    J<=158251/159698=1-1447/159698<1.
+
+Hence147 has root i. For arbitrary G, the remaining universal ceiling is
+
+    J<=J(7/34,W_*,C_*)
+      =334462/333795=1+667/333795.                    (S7B7)
+
+If63 is absent or has root j, its entire nominal high capacity (1-ell)/(21y) is lost. If441 is absent or has root j, the lost capacity is (1-ell)/(147y). Either gives
+
+    Delta>=(1-ell)/(147y)>=(1-C_*)/147.
+
+But S7B6–S7B7 would imply
+
+    1<J-2Delta
+      <=334462/333795-2(1-C_*)/147
+      =13248316/13382145<1.                          (S7B8)
+
+Thus63 and441 are original and have root i.
+
+If a_63=a_49 modulo7, the actual49 depth-two cylinder lies inside63's first-root cylinder and is removed by B. This loses at least(1-ell)/(147y) from63's nominal high allowance, again contradicting S7B8. The identical argument applies to147, which has now been proved active in root i. The two possible losses are tested separately; no disjointness or simultaneous subtraction is assumed. This proves S7B2.
+
+All original heights, literal phases and low-union overlaps remain in this one product law. No original is moved or deleted. The21-in-S branch and theG>=3 opposite21 branch with the forced relations remain unresolved by this argument.
