@@ -47944,3 +47944,215 @@ $$
 本节的相位关系只用一个实际频率的正权重，未使用零点频率的线性独立、振幅饱和或返回速度，也不需要 §342 的二阶正修正。各项非负亏损将同一个累计预算的失败转成二次相位距离，随后由连续单元覆盖运输至整数截止。这与五分递归控制中心和插值亏损相接：递归可改善固定预算的证书，而三角边界附近的符号还受同源相位约束。本节没有把密度零提升为全部截止点严格正，也没有增加已认证的 Robin 安全整数区间。
 
 ## 追加锚（本行以下为增补区）
+
+## 344. 移动极小相位的二阶储备与实际频率关系的投影约束
+
+**定义 344.1（同一实际谱的相位包络）。** 固定 §§337–342 的同一实际累计证书，在本节假设 RH，并沿用其实际正频率集 $\Gamma$、重数 $m_\gamma$、正权重 $a_\gamma=m_\gamma/(\gamma D_\gamma)$、$D_\gamma=1/4+\gamma^2$、中心 $c_0$ 与轨道闭包 $H\subseteq\mathbb T^\Gamma$。使用 §339 的实际输入 $\gamma\ge14$。定义
+
+$$
+\begin{aligned}
+b_\gamma&=D_\gamma^{-1}-2,& c_\gamma&=2\gamma/D_\gamma,\\
+g_\gamma&=8\gamma^2/D_\gamma^2,&
+h_\gamma&=-2/\gamma+8\gamma/D_\gamma-4\gamma/D_\gamma^2.
+\end{aligned}
+\tag{344.1}
+$$
+
+将同源谱延拓到整个自由圆环，置
+
+$$
+\begin{aligned}
+s(z)&=-2\sum_\gamma a_\gamma\operatorname{Im}z_\gamma,\\
+f(z)&=\sum_\gamma a_\gamma[b_\gamma\operatorname{Im}z_\gamma+c_\gamma\operatorname{Re}z_\gamma],\\
+g(z)&=\sum_\gamma a_\gamma[g_\gamma\operatorname{Im}z_\gamma+h_\gamma\operatorname{Re}z_\gamma].
+\end{aligned}
+\tag{344.2}
+$$
+
+四族系数绝对值均不超过 $2$，$\sum a_\gamma<\infty$，故这些函数连续。§339 的逐频率公式及 §342 的 $G=-U-4QS+2Q_1S$ 给 $s(\phi(T))=S(T)$、$f(\phi(T))=F(T)$、$g(\phi(T))=G(T)$。记
+
+$$
+B=2\sum_\gamma a_\gamma,\qquad
+f_*:=\sum_\gamma a_\gamma b_\gamma<0,\qquad
+A:=\sum_\gamma a_\gamma\frac{\gamma^2}{D_\gamma^2}>0,
+$$
+
+$$
+J_\varepsilon(z)=B+s(z)+\varepsilon f(z)+\varepsilon^2g(z),\qquad
+\iota=(i)_\gamma,\qquad \varepsilon\longrightarrow0^+.
+\tag{344.3}
+$$
+
+这些常数可和，严格符号使用实际频率非空及全部权重正。特别 $J_\varepsilon(\iota)=f_*\varepsilon+8A\varepsilon^2$。这里 $\varepsilon$ 是独立参数，相位最小化并未要求其极小点恰为时间 $T=1/\varepsilon$ 的实际轨道相位。
+
+**定理 344.1（自由相位移动后的七份二阶储备）。** 对定义344.1，整个自由圆环上的精确下包络为
+
+$$
+\begin{aligned}
+\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+&=B-\sum_\gamma a_\gamma\sqrt{p_\gamma(\varepsilon)^2+q_\gamma(\varepsilon)^2},\\
+p_\gamma(\varepsilon)&=-2+b_\gamma\varepsilon+g_\gamma\varepsilon^2,\\
+q_\gamma(\varepsilon)&=c_\gamma\varepsilon+h_\gamma\varepsilon^2.
+\end{aligned}
+\tag{344.4}
+$$
+
+当 $0\le\varepsilon\le1/8$ 时，
+
+$$
+\left|\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+-f_*\varepsilon-7A\varepsilon^2\right|
+\le21\left(\sum_\gamma a_\gamma\right)\varepsilon^3.
+\tag{344.5}
+$$
+
+因此，在 §343 的同一非负三角预算 $D_\triangle=B-c_0$ 下，存在固定 $C_1\ge0$，使全部充分晚的实际截止满足
+
+$$
+D_\triangle+\mathcal C^{\rm fin}(e^T)
+\ge\frac{f_*}{T}+\frac{7A}{T^2}-\frac{C_1}{T^3}.
+\tag{344.6}
+$$
+
+这个实际下界不要求 $H=\mathbb T^\Gamma$ 或 $\iota\in H$。
+
+证明。实线性函数 $p\sin\theta+q\cos\theta$ 在单位圆上的最小值为 $-\sqrt{p^2+q^2}$。分别选取各坐标的极小相位，一致可和级数给（344.4）；这是经典圆周线性最小化的同源谱应用。
+
+统一余项不能只依靠每个固定频率的 Taylor 展开。对任意 $|b|,|c|,|g|,|h|\le2$，置 $y=2-b\varepsilon+(c^2/4-g)\varepsilon^2$。当 $0\le\varepsilon\le1/8$ 时 $y\ge1$，且
+
+$$
+\begin{aligned}
+&(-2+b\varepsilon+g\varepsilon^2)^2+(c\varepsilon+h\varepsilon^2)^2-y^2\\
+&\qquad=\varepsilon^3\left[\frac{bc^2}{2}+2ch
++\varepsilon\left(h^2+\frac{c^2g}{2}-\frac{c^4}{16}\right)\right].
+\end{aligned}
+\tag{344.7}
+$$
+
+两个方括号系数的绝对值分别至多 $12$、$9$。因 $\sqrt X+y\ge1$，有 $|\sqrt X-y|\le|X-y^2|$，故逐频误差至多 $21\varepsilon^3$。实际系数满足
+
+$$
+g_\gamma-\frac{c_\gamma^2}{4}
+=\frac{7\gamma^2}{D_\gamma^2}.
+\tag{344.8}
+$$
+
+乘以正权重并求和即得（344.5）。将定理342.1的同一实际展开写为 $D_\triangle+\mathcal C^{\rm fin}(e^T)=J_{1/T}(\phi(T))+O(T^{-3})$，再用自由相位下包络，得到（344.6）。静止四分之一相位的 $8A$ 因允许相位移动扣去 $A$；二阶系数仍正。$\square$
+
+**定义 344.2（实际频率关系的有限能量方向）。** 令 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$ 为实 Hilbert 空间，
+
+$$
+\|v\|_a^2=\sum_\gamma a_\gamma v_\gamma^2,\qquad
+\langle v,w\rangle_a=\sum_\gamma a_\gamma v_\gamma w_\gamma.
+$$
+
+定义 $r_\gamma=\gamma/D_\gamma$，则 $r\in\mathcal E$ 且 $\|r\|_a^2=A$。令
+
+$$
+V=\left\{v\in\mathcal E:
+\sum_\gamma n_\gamma v_\gamma=0\ \text{对每个有限支撑整数族 }n
+\text{ 满足 }\sum_\gamma n_\gamma\gamma=0\right\}.
+\tag{344.9}
+$$
+
+每条有限支撑关系给一个连续实线性泛函，因此 $V$ 为闭子空间，具有经典正交投影 $P_V$。本定义没有断言 $H$ 是局部流形，也没有把实际轨道速度 $(\gamma)_\gamma$ 假定为有限能量向量。
+
+**定理 344.2（实际关系群约束下的投影储备）。** 额外假设实际振幅饱和，即 $\iota\in H$。则
+
+$$
+\min_{z\in H}J_\varepsilon(z)
+=f_*\varepsilon+
+\left(8A-\|P_Vr\|_a^2\right)\varepsilon^2+o(\varepsilon^2),
+\tag{344.10}
+$$
+
+并且
+
+$$
+7A\le8A-\|P_Vr\|_a^2\le8A.
+\tag{344.11}
+$$
+
+特别，没有非零有限整数频率关系时，$V=\mathcal E$，二阶系数为 $7A$；一般关系限制相位的有限能量移动，保留的储备为 $8A-\|P_Vr\|_a^2$。
+
+证明。先建立下界。$H$ 紧且 $J_\varepsilon$ 连续，故存在极小点 $z_\varepsilon$。取主值角 $\theta_{\varepsilon,\gamma}\in[-\pi,\pi]$，使 $z_{\varepsilon,\gamma}=i e^{i\theta_{\varepsilon,\gamma}}$。记
+
+$$
+\delta_\varepsilon=B+s(z_\varepsilon)
+=2\sum_\gamma a_\gamma(1-\cos\theta_{\varepsilon,\gamma}).
+$$
+
+由 $|b_\gamma|\le2$、$c_\gamma=2r_\gamma$、$\sin^2\theta\le2(1-\cos\theta)$ 及经典加权 Cauchy–Schwarz，
+
+$$
+|f(z_\varepsilon)-f_*|
+\le\delta_\varepsilon+2\sqrt{A\delta_\varepsilon}.
+\tag{344.12}
+$$
+
+取 $C_G\ge\sup|g|$。与 $\iota$ 比较给
+
+$$
+(1-\varepsilon)\delta_\varepsilon
+\le2\varepsilon\sqrt{A\delta_\varepsilon}+2C_G\varepsilon^2.
+$$
+
+当 $\varepsilon\le1/2$ 时，Young 不等式 $2\varepsilon\sqrt{A\delta}\le\delta/4+4A\varepsilon^2$ 给
+
+$$
+\delta_\varepsilon\le(16A+8C_G)\varepsilon^2,
+\qquad
+\|\theta_\varepsilon/\varepsilon\|_a=O(1).
+\tag{344.13}
+$$
+
+第二式使用经典 Jordan 界 $2(1-\cos\theta)\ge4\theta^2/\pi^2$。每个固定坐标的主值角因此趋零，故 $z_\varepsilon\to\iota$ 于乘积拓扑，$g(z_\varepsilon)\to8A$。
+
+为控制下极限，先选取归一化极小值实现其下极限的趋零正参数子列；定理344.1与相位 $\iota$ 的比较保证这些值有界。从该子列的有界缩放角中再抽取弱收敛子列，记其弱极限为 $v\in\mathcal E$；这是实 Hilbert 空间的经典弱紧性。对每条固定有限整数关系 $n$，§338 的字符判据及 $z_\varepsilon,\iota\in H$ 给
+
+$$
+\sum_\gamma n_\gamma\theta_{\varepsilon,\gamma}\in2\pi\mathbb Z.
+$$
+
+左边趋零，所以充分晚时恰为零。连续有限坐标泛函的弱收敛给 $v\in V$。对每个固定有限频率集，$2(1-\cos\theta)/\theta^2\to1$；非负项及有限部分和下界遂给
+
+$$
+\liminf\frac{\delta_\varepsilon}{\varepsilon^2}\ge\|v\|_a^2.
+\tag{344.14}
+$$
+
+这里不对整个无限缩放角族使用统一 Taylor 余项。
+
+再写 $f(z_\varepsilon)-f_*=
+\sum a_\gamma b_\gamma(\cos\theta_\gamma-1)
+-2\sum a_\gamma r_\gamma\sin\theta_\gamma$。第一项为 $O(\varepsilon^2)$。第二项用有限坐标的 $\sin\theta-\theta=o(\theta)$、$r\in\mathcal E$ 的可小加权尾及（344.13）的范数界，得到
+
+$$
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}
+\longrightarrow-2\langle r,v\rangle_a.
+$$
+
+结合（344.14），缩放极小值的下极限至少为
+
+$$
+8A+\|v\|_a^2-2\langle r,v\rangle_a
+=8A-\|P_Vr\|_a^2+\|v-P_Vr\|_a^2.
+\tag{344.15}
+$$
+
+子列已实现归一化极小值的下极限，故给出所需的全下极限界。
+
+反向建立上界。对任意 $v\in V$，所有有限关系字符在 $e^{itv}$ 上都为 $1$，故 §338 的完整字符判据给 $e^{itv}\in H$。因此 $z_\varepsilon=\iota e^{i\varepsilon v}\in H$ 是真实允许的群内相位路径。经典支配收敛、$2(1-\cos x)\le x^2$ 与加权 Cauchy–Schwarz 给
+
+$$
+\frac{B+s(z_\varepsilon)}{\varepsilon^2}\to\|v\|_a^2,
+\quad
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}\to-2\langle r,v\rangle_a,
+\quad g(z_\varepsilon)\to8A.
+$$
+
+取 $v=P_Vr$，与（344.15）匹配，即得（344.10）。投影范数不增加，$0\le\|P_Vr\|_a^2\le\|r\|_a^2=A$，所以（344.11）成立。这些 Hilbert 投影与弱紧性是经典前置，本节新增的是它们对同一实际二阶谱及完整有限关系群的组合。$\square$
+
+**注记 344.1（相位约束与实际时间的区别）。** 定理344.2把频率关系对移动相位的影响写成具体投影能量，无需局部流形假设。虽然二阶储备至少为 $7A>0$，但 $f_*<0$，相位下包络仍在充分小的正 $\varepsilon$ 处为负。群内路径 $\iota e^{i\varepsilon P_Vr}$ 未被识别为时间 $T=1/\varepsilon$ 的实际轨道相位；尾轨道稠密性也没有提供随 $T$ 移动的极小点所需的逼近速度。因此本节没有从包络负号推出实际证书余量任意晚为负，也没有从二阶正储备推出全部实际截止点最终为正。五分递归控制中心和插值亏损的关系仍如 §339；本节的新增约束作用于同一谱的一阶移动方向，不把递归分类数识别为零点频率关系数。
+
+## 追加锚（本行以下为增补区）

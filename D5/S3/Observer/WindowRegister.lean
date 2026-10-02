@@ -46,10 +46,10 @@ private theorem windowRoot_pow_val_eq_character (i : ZMod M) :
   congr 1
   simp [i.natCast_zmod_val]
 
-private def shiftPerm (M : ℕ) : Equiv.Perm (ZMod M) :=
+def shiftPerm (M : ℕ) : Equiv.Perm (ZMod M) :=
   Equiv.subRight 1
 
-private theorem shiftMatrix_eq_permMatrix :
+theorem shiftMatrix_eq_permMatrix :
     shiftMatrix M = (shiftPerm M).permMatrix ℂ := by
   ext i j
   simp only [shiftMatrix, Matrix.circulant_apply, Equiv.Perm.permMatrix,
@@ -67,7 +67,7 @@ private theorem shiftMatrix_eq_permMatrix :
     linear_combination h
 
 omit [NeZero M] in
-private theorem shiftPerm_pow_apply (n : ℕ) (i : ZMod M) :
+theorem shiftPerm_pow_apply (n : ℕ) (i : ZMod M) :
     (shiftPerm M ^ n) i = i - (n : ZMod M) := by
   induction n generalizing i with
   | zero => simp
