@@ -557,8 +557,8 @@ $q>P^{1/14}$ eventually. The effective existential version (T5) is
 retained independently; no comparison of its unnamed exponent with
 $5/67$ is asserted.
 
-This numerical rate still leaves the useful faithful-mask cutoff
-compatible. For example $b=1/5$ allows $m_1\le Y^5$, while the lower
+This numerical conductor bound alone does not cross the faithful-mask
+cutoff. Its inequalities permit $m_1\le Y^5$ at $b=1/5$, while the lower
 bound is only $m_1>P^{1/14}$ and $P\sim Y$. A conductor lower bound
 $q>P^\eta$ would contradict $m_1^b\le Y$ by powers alone if
 $\eta b>1$; equality requires further constant or lower-order
@@ -629,8 +629,8 @@ $$
 P^{1/8}<q\le m_1\le Y^{1/b},\qquad Y=\log n\sim P.
 $$
 
-This is still compatible with the existing $\beta_0<b<1/4$ cutoff;
-for example $b=1/5$ permits an upper scale $Y^5$. The count comparison
+The conductor-only comparison does not rule out that cutoff by powers
+alone; the additional actual-mask constraint is supplied in (T22). The count comparison
 excludes a larger conductor range than (T7), but supplies neither a
 reciprocal-prime deficit nor the required signed Robin margin. Unit-bit
 zero, square $D$ and the larger remaining conductors stay unresolved.
@@ -768,8 +768,9 @@ band $(1/2,1]$ would instead give the lower coefficient
 $r-3/4-r^2/2=-(r-1)^2/2-1/4<0$, so this weight supplies no contradiction
 from that band alone. No square-depth distribution estimate is supplied here.
 
-Even (T16) leaves the sufficient faithful-mask cutoff compatible:
-$c_*b<1$ for $\beta_0<b<1/4$. This proves neither $q^b\le P$ nor
+Bound (T16) alone does not cross the sufficient faithful-mask cutoff:
+$c_*b<1$ for $\beta_0<b<1/4$. The full mask has the additional
+restriction (T22). The conductor-only bound proves neither $q^b\le P$ nor
 the faithful-mask condition. No weighted missing-prime deficit,
 signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
 follows. Every character and layer in the comparison belongs to the
@@ -830,8 +831,10 @@ are incompatible at every sufficiently large actual CA source in the
 $h=1$, nonsquare-$D$ branch. Indeed, (T19)'s lower coefficient exceeds
 $25/6$, whereas the cutoff gives
 $\log q/L\le25/6+o(1)$. The strict fixed gap absorbs both errors.
-This is a conditional application of the same published signed estimate;
-neither condition in (T20) is established for all remaining candidates.
+This is a conditional application of the same published signed estimate.
+Formula (T21) supplies its moment hypothesis whenever the actual cutoff
+holds; formula (T22) rules out that cutoff at sufficiently large sources
+in this branch.
 
 The unrestricted even-layer envelope is only
 
@@ -841,8 +844,140 @@ M_r(n)\le
 $$
 
 whose coefficient at $r=\sqrt2$ is $0.345188935617\ldots$. It does
-not imply the required $0.045928\ldots$ bound. The missing work is an
-actual-source upper estimate for square-depth membership in
-$c=4A+7B$, sufficiently strong at this weighted scale, together with
-coverage of sources outside the cutoff. No distribution law, h=0 or
+not imply the required $0.045928\ldots$ bound without further conditions.
+The unrestricted actual-source upper estimate for square-depth membership
+in $c=4A+7B$ remains missing. The full large-mask signed budget and
+remaining branches require their own estimates. No distribution law, h=0 or
 square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
+
+## The actual mask pays the moment and leaves the reachable cutoff
+
+The modulus in (P4) is $m_1=\operatorname{lcm}(q,R_1)$, so both
+$q\le m_1$ and $R_1\le m_1$ hold for the same actual canonical source.
+A polynomial mask cap therefore controls the moment in (T17), in addition
+to the primitive conductor. This is an application of existing results,
+without a new analytic theorem, originality claim or Lean verification.
+
+Continue on the actual CA source, whose initial support contains every
+prime through $P$. For fixed $C>0$, suppose $m_1\le P^C$. Then every
+prime in (T17) divides $R_1$; splitting at $L=\log P$ gives
+
+$$
+0\le M_r(n)\le r\sum_{p\mid R_1}\frac{\log p}{p}
+\le r\sum_{p\le L}\frac{\log p}{p}
++\frac rL\log R_1
+\le r\log L+O_{r,C}(1)=o(L).
+\tag{T21}
+$$
+
+This reuses the same two-range Mertens estimate as (T13), here split
+at $L=\log P$. It requires no
+independence, residue distribution or additional upper hypothesis about
+the same source's square-depth membership. In particular the cutoff
+$m_1^{6/25}\le\log n\sim P$ would imply the moment condition in (T20)
+for any fixed $0<\mu<71\sqrt2/96-1$, at sufficiently large sources.
+The combined (T19) lower coefficient $16-8\sqrt2=4.686291\ldots$
+then exceeds $25/6$. This already rules out that joint cutoff.
+
+A stronger existing supplier directly applies to the faithful mask.
+The induced character $\widetilde\chi_1\bmod m_1$ is nonprincipal and
+quadratic: reduction from units modulo $m_1$ to units modulo $q$ is
+surjective, so a negative unit of the primitive character has a unit
+lift. Formula (P4) says every prime with
+$\widetilde\chi_1(\ell)=-1$ is missing from the actual integer.
+For every actual CA maximizer with largest prime $P$, including ties,
+all primes through $P$ are supported. Thus every such negative prime
+satisfies $\ell>P$.
+
+Along any unbounded sequence in this actual branch, the mask tends to
+infinity with $P$. Indeed a negative unit represented
+by $1\le a<m_1$ has a negative prime factor $\ell\le a<m_1$;
+faithfulness gives $P<\ell<m_1$. Reuse the original published
+Theorem 1.1 above, whose character need not be primitive. For every fixed
+$\varepsilon>0$ and sufficiently large masks, it supplies a negative prime
+
+$$
+P<\ell\le m_1^{\beta_0+\varepsilon},
+\qquad \beta_0=\frac1{4\sqrt e}.
+$$
+
+Consequently, for every fixed $0<\eta<4\sqrt e$, choosing
+$\varepsilon$ with $\eta(\beta_0+\varepsilon)<1$ gives
+
+$$
+\boxed{m_1>P^\eta\quad\text{eventually}.}
+\tag{T22}
+$$
+
+The statement covers every actual $h=1$, nonsquare-$D$ CA source with
+its own faithful mask, including intermediate ties; it asserts no
+infinitude of this branch, endpoint $\eta=4\sqrt e$ or numerical onset.
+It is a lower bound for the full mask, not for the primitive conductor
+$q$ alone. This direct use of Pollack's theorem is stronger than the
+mask bound obtainable from (T21) and the triangular signed estimate;
+neither analytic proof is repeated.
+
+For any fixed $b>\beta_0$, choose $1/b<\eta<4\sqrt e$ in (T22).
+Since $P\sim\log n$ on these actual CA sources,
+
+$$
+\frac{m_1^b}{\log n}\longrightarrow\infty
+\tag{T23}
+$$
+
+along every unbounded sequence in this branch. Thus the sufficient
+cutoff $m_1^b\le\log n$ has no sufficiently large realization there,
+including the weighted supplier's entire $\beta_0<b<1/4$ regime.
+The conductor-only lower bounds in (T10) and (T16) remain valid; their
+numerical power comparison alone omitted this further mask constraint.
+
+This excludes applicability of that small-mask route at large CA sources;
+it proves no Robin violation or safety there. Outside a polynomial mask
+cap, (T21) supplies no $o(L)$ bound for the actual moment. The full
+large-mask signed Robin estimate, unit bit zero and square discriminants
+remain unresolved. An average on free Beatty indices or independently
+selected residues cannot discharge this same-source obligation.
+
+### Small conductor forces a large actual exception radical
+
+The same moment budget remains useful when the primitive conductor is
+polynomial but the full mask is not. The split at
+$z=\max\{2,\log R_1\}$, again using the existing Mertens estimate,
+gives the uniform elementary bound
+
+$$
+M_r(n)\le r\log\log(R_1+3)+O_r(1).
+\tag{T24}
+$$
+
+For the large primes the contribution is at most
+$r(\log R_1)/z\le r$; the smaller primes contribute
+$r\log z+O_r(1)$. This uses the actual $R_1$, including any overlap
+with the conductor, without treating the two factors as coprime.
+
+Fix $0<C<K:=16-8\sqrt2$ and suppose the same actual source has
+$q\le P^C$. Formula (T19) is applicable through its fixed-power range
+and the existing bootstrap (T10), whether or not $m_1$ is polynomial.
+Taking $r=\sqrt2$ and inserting (T24) yields
+
+$$
+\frac{\log q}{\log P}
++16\frac{\log\log(R_1+3)}{\log P}\ge K-o(1).
+\tag{T25}
+$$
+
+Therefore for every fixed $0<\tau<(K-C)/16$ one has, eventually
+at every actual $h=1$, nonsquare-$D$ CA source satisfying $q\le P^C$,
+
+$$
+\boxed{\log R_1>P^\tau,\qquad m_1\ge R_1>\exp(P^\tau).}
+\tag{T26}
+$$
+
+For example $C=25/6$ permits every fixed
+$0<\tau<0.0324765521467\ldots$. This is a conditional tradeoff between
+the same integer's conductor and actual exception radical; it does not
+assert existence of infinitely many sources in that conductor range.
+No endpoint exponent, effective onset or universal distribution of the
+canonical lift is claimed. It quantifies why retaining the primitive
+conductor alone can lose the dominant mask scale, without proving Robin.
