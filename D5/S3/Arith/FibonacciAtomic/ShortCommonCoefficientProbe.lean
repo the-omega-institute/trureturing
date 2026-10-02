@@ -8,6 +8,8 @@
 
 import D5.S3.Analytic.GoldenEulerBetaZeckendorf
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
+import D5.S1.Digit.GoldenZeckendorfLanguage
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Data.Nat.Log
 import Mathlib.Algebra.Order.Round
@@ -23,8 +25,8 @@ open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 open D5.S3.Arith.ZeckendorfFutureKernel (legal value)
 open scoped BigOperators
 
-local instance : IsTrans Nat (fun a b => b + 2 ≤ a) where
-  trans _ _ _ hab hbc := by omega
+attribute [local instance]
+  D5.S3.Analytic.GoldenEulerBetaZeckendorf.instIsTransNatLeHAddOfNat_d5
 
 noncomputable section
 
@@ -123,7 +125,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     have hφ : 0 < φ := Real.goldenRatio_pos
     have hφ1 : 1 < φ := Real.one_lt_goldenRatio
     have hφsq : φ ^ 2 = φ + 1 := Real.goldenRatio_sq
-    have hφhalf : (3 / 2 : Real) < φ := by nlinarith
     have hupper : ∀ k : Nat, (Nat.fib (k + 2) : Real) < φ ^ (k + 2) / 2 := by
       intro k
       induction k using Nat.twoStepInduction with
@@ -293,50 +294,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       have hi : (shiftedFibSum n : Int) = (a : Int) + (H : Int) * z := hs.symm.trans hfloor
       have hc := congrArg (fun v : Int => (v : ZMod H)) hi
       simpa [a, Int.cast_add, Int.cast_mul] using hc
-  have adm_of_no_adj (N : Nat) (f : Fin N → Bool)
-      (hsep : ∀ (i : Nat) (hi : i + 1 < N),
-        ¬ (f ⟨i, Nat.lt_of_succ_lt hi⟩ = true ∧ f ⟨i + 1, hi⟩ = true)) :
-      D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm N f := by
-    induction N using Nat.twoStepInduction with
-    | zero => trivial
-    | one => trivial
-    | more N _ ih =>
-      rw [D5.S1.Words.AdmissibleWords.AdmissibleCount.adm_two_iff]
-      refine ⟨by simpa using hsep 0 (by omega), ih (Fin.tail f) ?_⟩
-      intro i hi
-      simpa [Fin.tail, Nat.add_assoc] using hsep (i + 1) (by omega)
-  have no_consecutive_of_pairwise {l : List Nat}
-      (hp : l.Pairwise (fun a b => b + 2 ≤ a)) :
-      ∀ i, i ∈ l → i + 1 ∉ l := by
-    induction l with
-    | nil => simp
-    | cons a l ih =>
-        rw [List.pairwise_cons] at hp
-        intro i hi hj
-        simp only [List.mem_cons] at hi hj
-        rcases hi with hia | hi
-        · rcases hj with rfl | hj
-          · omega
-          · have h := hp.1 _ hj
-            rw [← hia] at h
-            omega
-        · rcases hj with rfl | hj
-          · have h := hp.1 _ hi
-            omega
-          · exact ih hp.2 i hi hj
-  have zeckendorf_no_adj (n : Nat) (_hn : 0 < n) :
-      ∀ i : Nat,
-        (decide (i ∈ Nat.zeckendorf n) : Bool) = true →
-        (decide (i + 1 ∈ Nat.zeckendorf n) : Bool) = false := by
-    intro i hi
-    have hi' : i ∈ Nat.zeckendorf n := by simpa using hi
-    have hpair := (Nat.isZeckendorfRep_zeckendorf n)
-    rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at hpair
-    have hno := no_consecutive_of_pairwise
-      (List.pairwise_append.mp hpair).1 i hi'
-    by_cases hnext : i + 1 ∈ Nat.zeckendorf n
-    · exact False.elim (hno hnext)
-    · simp [hnext]
   have support_offset (n r : Nat)
       (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * (r + 1))
       (x : IndependentWord (r + 1))
@@ -379,16 +336,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       List.sum_toFinset (fun k => Nat.fib (k - 1)) hnd,
       List.sum_toFinset Nat.fib hnd, Nat.sum_zeckendorf_fib]
     rfl
-  have value_linear (bs : List Bool) (a b c d u v : ZMod H) :
-      value (a * u + b * v) (c * u + d * v) bs =
-        value a c bs * u + value b d bs * v := by
-    induction bs generalizing a b c d with
-    | nil => simp [value]
-    | cons bit bs ih =>
-      cases bit <;> simp only [value, Bool.false_eq_true, ↓reduceIte, zero_add]
-      all_goals rw [show a * u + b * v + (c * u + d * v) =
-        (a + c) * u + (b + d) * v by ring, ih]
-      all_goals ring
   obtain ⟨hj, hq, hq4, hpair⟩ := bounded_coefficient_pair H hH
   have hwords : ∀ A B : ZMod H, ∃ w : List Window,
       w.length ≤ lengthBound H ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
@@ -423,12 +370,18 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     rw [hr] at hbnd
     let x : IndependentWord (r + 1) := ⟨
       fun i => decide (i.val + 1 ∈ Nat.zeckendorf n), by
-        apply adm_of_no_adj
-        intro i hi hbad
-        have hadj := zeckendorf_no_adj n hn (i + 1) hbad.1
-        have htrue := hbad.2
-        simp only [decide_eq_true_eq] at htrue
-        simp [htrue, Nat.add_assoc] at hadj⟩
+        apply (D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true
+          _ _).mpr
+        intro i j hij
+        by_cases hmem : i.val + 1 ∈ Nat.zeckendorf n
+        · right
+          simp only [decide_eq_false_iff_not]
+          intro hnext
+          exact D5.S1.Digit.GoldenZeckendorfLanguage.canonical_indices_not_adjacent
+            _ (Nat.isZeckendorfRep_zeckendorf n) (i.val + 1)
+            ⟨hmem, by simpa only [← hij, Nat.add_assoc] using hnext⟩
+        · left
+          simp [hmem]⟩
     obtain ⟨e, hencode, hbits, hquery, hreadout⟩ := (LiteralWindowEnd.result (r + 1)).1
     let sw := e.symm x
     let w := sw.val
@@ -484,12 +437,10 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         rw [hoff] at h
         simpa [windowCoefficients, hnB] using h
     have hval (u v : ZMod H) : value u v (flatten w) = A * u + B * v := by
-      have hl := value_linear (flatten w) 1 0 0 1 u v
-      have hA := congrArg Prod.fst hcoeff
-      have hB := congrArg Prod.snd hcoeff
-      change value 1 0 (flatten w) = A at hA
-      change value 0 1 (flatten w) = B at hB
-      simpa only [one_mul, zero_mul, add_zero, zero_add, hA, hB] using hl
+      let : NeZero H := ⟨by omega⟩
+      have h := hreadout H u.val v.val sw
+      rw [hoff] at h
+      simpa only [Nat.cast_add, Nat.cast_mul, ZMod.natCast_zmod_val, hnA, hnB] using h
     have halllegal (s : Bool) : legal s (flatten w) := by
       cases s
       · cases he : flatten w with
@@ -505,20 +456,17 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       cases he : w with
       | nil => exact False.elim (hnonempty he)
       | cons b bs => simpa only [he, List.foldl_cons] using hh
-    have hend (s E : Bool) : endable (run (some (s, E)) w) = true := by
-      rw [(execution s E w).1.2 (halllegal s)]
-      simpa only [endable, Option.any_some] using hterminal E
     refine ⟨w, by simpa only [← hr] using sw.property.1, hnonempty, hfirsttrim, hsuccess, hcoeff, hval, ?_⟩
     intro epsilon p hp
-    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
-        run q (a ++ b) = run (run q a) b := by
-      induction a generalizing q with
-      | nil => rfl
-      | cons a as ih => exact ih (step q a)
     have hout : initialized epsilon (p ++ w) =
         some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
       unfold initialized observe
-      rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
+      have hpw : legal epsilon (flatten (p ++ w)) := by
+        rw [flatten, List.flatMap_append]
+        exact (D5.S3.Arith.ZeckendorfFutureKernel.legal_append _ _ _).mpr
+          ⟨hp, halllegal _⟩
+      rw [(execution epsilon epsilon (p ++ w)).1.2 hpw]
+      simp only [List.foldl_append, hterminal, endable, Option.any_some]
       rfl
     refine ⟨_, ?_, hout⟩
     exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
@@ -528,10 +476,7 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     exact ⟨w, hl, hn, h00, hs, hc⟩
   have hLpos : 1 ≤ lengthBound H := by
     obtain ⟨w, hl, hn, _⟩ := hcover00 0 0
-    have hw : 0 < w.length := by
-      cases w with
-      | nil => exact False.elim (hn rfl)
-      | cons _ _ => simp
+    have hw : 0 < w.length := List.length_pos_iff.mpr hn
     omega
   have hcover (K : Nat) (hk : Covers00 H K) : Covers H K := by
     intro A B
