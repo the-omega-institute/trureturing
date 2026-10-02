@@ -44497,8 +44497,8 @@ $$
 \begin{aligned}
 \sum_{p>P}\log\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right)
 &\le s e^{s/P}\sum_{n>P}\frac1{n(n-1)}\\
-&=\frac{s}{P}e^{s/(P-1)}
-=O(\log P\,P^{\chi+o(1)})=o(\sqrt P).
+&=\frac{s}{P}e^{s/P}
+=\chi\log P\,P^\chi=o(\sqrt P).
 \end{aligned}
 \tag{320.9}
 $$
@@ -44630,5 +44630,130 @@ $$
 在回到 CA宿主时，§319 的成本仍必须支付。为独立的 $W(N_C)$ 下界减去 $e^\gamma\kappa+o(1)$ 才得到宿主下界；仅有（322.2）或所选整数最终正余量，都不提供这笔超出成本的储备。新的乘子选择不能把由自身放大预算制造的差额当成宿主原有余量。实际数量、完整素支撑、本原性或CA性也未由这项选择保持。
 
 所选 $\Delta(N_C)\to0$ 仍成立，因此增加归一化差额没有自动进入 §201.6 的固定正加性储备族；既有慢本原范数适用条件仍须另外核对。后续需要的是对这些实际来源的绝对有符号储备，而不是再分类地址、重做有限Robin检查，或把本节差额重新命名为RH证明。本节没有新增Lean、冻结或准入判官改动。
+
+## 追加锚（本行以下为增补区）
+
+## 323. 把成本与响应合成同一个量的加权选择
+
+本节复用 §321 的区间Bohr计数及既有非负有限除数求和接口，将大小与响应共同估计。参数随宿主变化的矩界在本节单独写明；不把 §320 的固定 $\chi$ 渐近直接代入变化参数。所用加权组合属于纸面推导，没有Lean核验或原创性声明。
+
+保留实际 CA宿主 $C$、$P=P^+(C)$、$F_C$ 与其最优价格 $\epsilon$，定义
+
+$$
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{323.1}
+$$
+
+由全局价格及 $\mathcal A_P\epsilon\le P\log(1+1/P)<1$，有 $0\le\mathcal D_C(t)\le\log t$。既有价格损失 $\operatorname{Ben}_{C,\epsilon}(tC)=\epsilon\log t-\log F_C(t)$ 给精确账本
+
+$$
+\mathcal D_C(t)
+=\mathcal A_P\operatorname{Ben}_{C,\epsilon}(tC)
+ +(1-\mathcal A_P\epsilon)\log t.
+\tag{323.2}
+$$
+
+这两个非负项来自同一个实际 $C,t,\epsilon$，不预设Robin符号。
+
+**命题 323.1（变化矩参数的统一有限预算）。** 对所有 $1/4\le\beta\le1/2$，令 $s=\beta\mathcal A_P$，则存在不依赖 $\beta,C$ 或最优价格选择的常数 $A_0$，使充分大的宿主同时满足
+
+$$
+\log M_C(s)\le A_0 P^\beta\log P,
+\qquad
+\sum_{t\le Q}e^{-\beta\mathcal D_C(t)}
+\le\frac{Q^{1-\beta}}{1-\beta}M_C(s)
+\quad(Q\in\mathbb N_{>0}).
+\tag{323.3}
+$$
+
+证明。对旧素数 $p\le P$，全局价格给 $F_C(p^v)^s\le p^{\beta v}$。非负增量的Euler因子等于 $(1-1/p)\sum_{v\ge0}F_C(p^v)^s/p^v$，所以旧素数部分的对数不超过
+
+$$
+\sum_{p\le P}-\log(1-p^{\beta-1})
+\ll\sum_{n\le P}n^{\beta-1}\ll P^\beta,
+\tag{323.4}
+$$
+
+常数对区间 $1/4\le\beta\le1/2$ 统一：$p^{\beta-1}\le2^{-1/2}<1$，且积分求和中的 $1/\beta\le4$。新素数尾使用（320.8）及整数截止 $p>P$，给 $sP^{-1}e^{s/P}=\beta\log P\,P^\beta$，由此得第一式。对每个固定宿主和参数，尾界也证明乘积收敛。
+
+令 $g_{C,s}=\mu*(F_C^s)\ge0$，使用同一个有限除数求和接口及 $\sum_{m\le x}m^{-\beta}\le x^{1-\beta}/(1-\beta)$（$x\ge1$），得到
+
+$$
+\begin{aligned}
+\sum_{t\le Q}e^{-\beta\mathcal D_C(t)}
+&=\sum_{t\le Q}t^{-\beta}F_C(t)^s\\
+&=\sum_{d\le Q}g_{C,s}(d)d^{-\beta}
+  \sum_{m\le Q/d}m^{-\beta}\\
+&\le\frac{Q^{1-\beta}}{1-\beta}
+  \sum_{d\le Q}\frac{g_{C,s}(d)}d
+\le\frac{Q^{1-\beta}}{1-\beta}M_C(s).
+\end{aligned}
+\tag{323.5}
+$$
+
+全部求和在同一宿主上进行，因非负而可向完整Euler均值上界扩展；没有固定函数或固定矩阶的隐藏阈值。$\square$
+
+**命题 323.2（半预算以下的实际平方根空窗与正差额）。** 固定 $\kappa>0$ 和 $0<\eta<\kappa/2$，令 $Q_C=\lfloor e^{\kappa\sqrt P}\rfloor$、$K_C=\lceil e^{\eta\sqrt P}\rceil$。每个充分大的实际 CA宿主都有一个乘子 $1\le t_C\le Q_C$，使同一整数 $N_C=t_CC$ 满足
+
+$$
+\begin{gathered}
+\|N_C\varphi\|<1/K_C,\qquad
+\log t_C\ge(\kappa-2\eta-o(1))\sqrt P,\\
+e^\gamma(\kappa-2\eta)-o(1)
+\le W(N_C)-W(C)
+\le e^\gamma\kappa+o(1),\\
+h(N_C)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2.
+\end{gathered}
+\tag{323.6}
+$$
+
+证明。取
+
+$$
+\beta_P=\frac12-\frac{2\log\log P}{\log P}.
+\tag{323.7}
+$$
+
+它最终位于命题323.1的统一参数区间，且 $P^{\beta_P}=\sqrt P/(\log P)^2$，因此 $\log M_C(\beta_P\mathcal A_P)=O(\sqrt P/\log P)=o(\sqrt P)$。原相位命中集合 $\mathcal H_C=\{1\le t\le Q_C:\|tC\varphi\|<1/K_C\}$ 由 §321 至少有 $Q_C/(4K_C)$ 个元素。在这同一集合上使用（323.3）的非负总和上界，至少有一个实际乘子满足
+
+$$
+\mathcal D_C(t_C)\ge\log Q_C-
+\frac{\log(4K_C)+\log M_C(\beta_P\mathcal A_P)-\log(1-\beta_P)}{\beta_P}
+=(\kappa-2\eta-o(1))\sqrt P.
+\tag{323.8}
+$$
+
+$\mathcal D_C(t_C)\le\log t_C$ 自动给出所需大小下界，无须先从相位命中中删去小乘子再对响应作独立筛选。
+
+对全部 $t\le Q_C$，令 $\ell=\log t$、$v=\log F_C(t)$。同源价格给 $0\le v\le\epsilon\ell=O_\kappa((\sqrt P\log P)^{-1})$。在精确余量账本（317.4）中统一展开 $\log(1+\ell/\log C)$ 与 $e^v-1$，再使用 $\log C\sim P$、$Z(C)\sim e^\gamma\log P$ 以及既有归一化运输，得到
+
+$$
+W(tC)-W(C)=\frac{e^\gamma}{\sqrt P}\mathcal D_C(t)+o(1).
+\tag{323.9}
+$$
+
+二次项的归一化误差分别为 $O_\kappa(P^{-1/2})$ 与 $O_\kappa((\sqrt P\log P)^{-1})$；一阶系数替换只使用已有渐近。根尺度改变项仍由 $\Delta(C)\to0$ 控制，不假设 $W(C)$ 有界。将（323.8）及 $0\le\mathcal D_C(t_C)\le\kappa\sqrt P$ 代入即得差额界。真实单位位、null深度、接缝和正值End直接复用 §322 的严格相位来源接口。$\square$
+
+**推论 323.3（次平方根深度与完整增量）。** 固定 $\kappa>0$，令 $r(P)\to\infty$ 且 $r(P)=o(\sqrt P)$，改取 $K_C=\lceil e^{r(P)}\rceil$。同一统一加权方法给实际相位命中，并有
+
+$$
+\begin{gathered}
+\log t_C=\kappa\sqrt P-o(\sqrt P),\qquad
+Z(t_CC)-Z(C)=o(P^{-1/2}),\\
+W(t_CC)-W(C)=e^\gamma\kappa+o(1),\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2.
+\end{gathered}
+\tag{323.10}
+$$
+
+证明。（323.8）的分子除 $\log Q_C$ 外均为 $o(\sqrt P)$，故 $\mathcal D_C(t_C)=\kappa\sqrt P-o(\sqrt P)$。由 $\mathcal D_C(t_C)\le\log t_C\le\kappa\sqrt P$，得 $\mathcal A_P\log F_C(t_C)=o(\sqrt P)$，于是 $Z(C)(F_C(t_C)-1)=o(P^{-1/2})$。再用（323.9）和原有限来源接口。这里变化的相位参数由命题323.1的明确统一界支撑，不改变 §321 的固定参数范围。$\square$
+
+本节扩大了有符号差额可构造的深度系数范围，仍未进入原Dirichlet最深窗，也不声称半预算端点最优或可达。对固定正 $\eta$，（323.6）只给响应增量 $O(P^{-1/2})$；不能把推论323.3的 $o(P^{-1/2})$ 结论搬到固定平方根深度。
+
+加权选择没有降低回传上侧成本：较小响应使预算增长留在差额中。绝对的 $W(C)$ 下界、或超过同一乘子已认证回传成本的独立 $W(N_C)$ 下界，仍是 §319 的未解义务。原子的有限地址、非负价格损失与统一增长矩可以共同落实到同一整数，但这不把两个整数的差额正号升级为Robin判据或RH证明。
 
 ## 追加锚（本行以下为增补区）
