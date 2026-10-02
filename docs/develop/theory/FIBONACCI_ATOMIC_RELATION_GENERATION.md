@@ -43517,3 +43517,184 @@ $w_L=\max\{m/2,m-d_*\rho^3\}$。它始终在半区间内，充分大时等于 $m
 因为实际最小值逐点不超过同一实际竞争截止的响应，而两边沿该子列均有极限。经典配方给 $\phi_\beta$ 在 $u\ge0$ 上的唯一最小点 $d_*$，故 $d=d_*$。有界序列的任一收敛子列都只能有这一极限，紧性遂给整个最小宽度序列收敛，得到（310.15）。最后将该全序列重新代入（310.16），即得（310.14）。
 
 全部候选整数均保留（307.4）的饱和签名、核心和5040整除性；最小化也只遍历（307.1）的完整截止尾集合。它没有遍历任意删除子集、全部同签名整数或全部整数。非零 $\beta$ 的实际实现、漂移速度及共同有符号基线 $S(m)$ 仍按各自独立问题处理。即使 $\beta<0$ 使成对最小差额在此尺度为负，也没有决定任一实际整数的绝对 Robin 余量或 RH。$\square$
+
+## 311. 实际混合漂移的双向素数误差运输与临界尺度
+
+**定义 311.0。** 沿用 §§305、307、310 的实际整数 $T_L=\widetilde C_L$、$m=m_L=3L+2$、$E=e^\gamma$、$X_L=\log T_L$、$U_L=\sigma(T_L)/T_L$ 与
+\[
+b_L=\frac{U_L}{E\log m}-\frac m{X_L}.
+\tag{311.1}
+\]
+对实数 $x\ge2$，沿用同一素数序列的 $\vartheta(x),P(x)$，并置
+\[
+a(x)=\frac{\vartheta(x)-x}{x},\qquad
+e(x)=\log\frac{P(x)}{E\log x},\qquad
+B(x)=\frac{P(x)}{E\log x}-\frac x{\vartheta(x)}
+=\exp e(x)-\frac1{1+a(x)}.
+\tag{311.2}
+\]
+本节采用假设302.1；所用 Mertens 分部求和、Littlewood 振荡及经典 RH 素数误差判据分别作为已知解析中间步骤。$b_L$ 保留同一个实际整数的权重与高度，$B(x)$ 保留同一素数截断的两项误差；二者均不是独立选择的两个极值。
+
+**定理 311.1（实际整数修正与全实数截断）。** 有
+\[
+\sqrt m\,[b_L-B(m)]\longrightarrow\sqrt2.
+\tag{311.3}
+\]
+因此对每个固定 $0<\lambda<1/2$，
+\[
+m^\lambda[b_L-B(m)]\longrightarrow0.
+\tag{311.4}
+\]
+在同一指数域内，对任意有限 $c$，
+\[
+m_L^\lambda b_L\longrightarrow c
+\quad\Longleftrightarrow\quad
+x^\lambda B(x)\longrightarrow c\quad(x\to\infty\text{ 为实数}).
+\tag{311.5}
+\]
+
+**证明。** （305.11）、（305.16）在 $c=2$ 的平方层给
+\[
+\frac{X_L-\vartheta(m)}{\sqrt m}\longrightarrow\sqrt2,
+\qquad \sqrt m\,[U_L-P(m)]\longrightarrow-\sqrt2 E.
+\]
+由 $X_L/m,\vartheta(m)/m\to1$，精确相减得
+\[
+\sqrt m\,[b_L-B(m)]
+=\frac{\sqrt m\,[U_L-P(m)]}{E\log m}
++\frac{m^2}{X_L\vartheta(m)}\frac{X_L-\vartheta(m)}{\sqrt m}
+\longrightarrow\sqrt2.
+\tag{311.6}
+\]
+再乘 $m^{\lambda-1/2}\to0$ 得（311.4）。
+
+每个充分大的实数 $x$ 都在一个 $m_L\le x<m_L+3$ 内。这段长度小于三的区间至多含三个整数素数，故 $\vartheta(x)-\vartheta(m_L)=O(\log x)$，$P(x)-P(m_L)=O(\log x/x)$。利用 $\vartheta(x)\sim x$、$P(x)\sim E\log x$，得到
+\[
+|B(x)-B(m_L)|=O(\log x/x).
+\]
+又 $x/m_L\to1$。因此格点上的有限缩放极限可延伸到全部实数截断；反向只需取格点子列。与（311.4）合并得到（311.5）。这一步必须使用全部 $L$；任意选取的稀疏子列不供应相邻格点之间的控制。$\square$
+
+**定理 311.2（有限漂移系数的素数端点运输与零系数约束）。** 对固定 $0<\lambda<1/2$，若实际全序列有有限极限
+\[
+m_L^\lambda b_L\longrightarrow c\in\mathbb R,
+\tag{311.7}
+\]
+则
+\[
+x^\lambda a(x)\longrightarrow c,
+\qquad x^\lambda e(x)\longrightarrow0,
+\qquad c=0.
+\tag{311.8}
+\]
+
+**证明。** 由定理311.1，$x^\lambda B(x)\to c$。以下反演使用同一批素数的经典 Abel 分部求和；相应正向恒等式也见 `Library/ArithSums/nicolas2025comparison.md` 的同截断端点核算。记 $B_1$ 为 Meissel–Mertens 常数，置
+\[
+s(x)=\sum_{p\le x}\frac1p-\log\log x-B_1,
+\qquad
+\tau(x)=\sum_{p>x}\sum_{j\ge2}\frac1{jp^j}.
+\tag{311.9}
+\]
+经典 Mertens 常数恒等式给 $s=e+\tau$，而整数幂尾和给 $0\le\tau(x)=O(1/x)$。对有限素数和直接分部求和，若
+\[
+c_0=2\log2(\log\log2+B_1)-2,\qquad
+J(x)=\frac1x\left[\int_2^x(\log t+1)s(t)\,dt-c_0\right],
+\tag{311.10}
+\]
+则精确有
+\[
+a(x)=\log x\,[e(x)+\tau(x)]-J(x),\qquad
+J'(x)=\frac{a(x)+e(x)+\tau(x)}x
+\quad\text{几乎处处}.
+\tag{311.11}
+\]
+$J$ 局部绝对连续；导数式只在几乎处处使用，不要求在素数跳点上有通常导数。假设302.1的加性乘积误差给 $\log x\,e(x)\to0$，且 $a(x)\to0$、$\log x\,\tau(x)\to0$，故 $J(x)\to0$。这个终端条件来自实际素数输入，未由待证缩放极限指定。
+
+在 $a,e$ 足够小的域，经典指数 Taylor 余项及有界分母给
+\[
+a=B-e+O(e^2+B^2),\qquad
+|a|\le2|B|+4|e|.
+\tag{311.12}
+\]
+具体地，对 $|a|\le1/2,|e|\le1$，有
+$|B-a-e|\le e^2+2a^2$；用（311.2）解出 $a$，便可把二次项改为 $O(e^2+B^2)$。将（311.12）代入（311.11），对 $\log x\ge8$ 得正确的逆界
+\[
+|e(x)|\le C\frac{|J(x)|+|B(x)|}{\log x}+\frac Cx.
+\tag{311.13}
+\]
+这里保留 $O(1/x)$，不把它未经证明地加强为 $O(1/(x\log x))$。
+
+由 $B=O(x^{-\lambda})$，几乎处处有
+\[
+|J'(x)|\le Cx^{-\lambda-1}
++C\frac{J(x)^2}{x\log^2x}+\frac C{x^2}.
+\tag{311.14}
+\]
+因 $J\to0$，右端可积，故可从 $J(\infty)=0$ 积分回来。定义真实尾部上确界 $M(x)=\sup_{t\ge x}|J(t)|$，则 $M(x)\to0$。对每个 $u\ge x$，经典幂积分与 $\int_u^\infty dt/(t\log^2t)=1/\log u$ 给
+\[
+|J(u)|\le\frac C\lambda u^{-\lambda}
++\frac{CM(x)^2}{\log u}+\frac Cu.
+\]
+各项随 $u$ 递减，取上确界并吸收固定 $\lambda$ 后的常数得到
+\[
+M(x)\le Cx^{-\lambda}+\frac{CM(x)^2}{\log x}+\frac Cx.
+\tag{311.15}
+\]
+最终 $M\le1$ 且 $\log x\ge2C$，中间项不超过 $M/2$，所以 $M=O(x^{-\lambda})$。于是（311.13）给
+\[
+e=O(x^{-\lambda}/\log x)+O(1/x)=o(x^{-\lambda}).
+\tag{311.16}
+\]
+再回到（311.12），二次余项乘 $x^\lambda$ 趋零，得到 $x^\lambda(a-B)\to0$，证明前两个极限。常数与阈值允许依赖固定的 $\lambda$，没有断言 $\lambda\uparrow1/2$ 时的一致性。
+
+经典素幂分解给 $\psi(x)-\vartheta(x)=O(\sqrt x\log^2x)=o(x^{1-\lambda})$，故
+\[
+\psi(x)-x=cx^{1-\lambda}+o(x^{1-\lambda}).
+\tag{311.17}
+\]
+若 $c\ne0$，右侧最终严格与 $c$ 同号。这与命题111.2已引用的无条件 Littlewood 双侧振荡矛盾，故 $c=0$。该结论限制的是全序列的有限极限；没有排除任意子列上的非零极限、持续振荡或发散。$\square$
+
+**定理 311.3（实际漂移的速率判据与 RH 运输）。** 对每个固定 $0<\lambda<1/2$，有
+\[
+m_L^\lambda b_L\longrightarrow0
+\quad\Longleftrightarrow\quad
+\vartheta(x)-x=o(x^{1-\lambda}).
+\tag{311.18}
+\]
+因此结合经典 RH 素数误差判据，有
+\[
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\forall\lambda\in(0,1/2),\quad m_L^\lambda b_L\longrightarrow0.
+\tag{311.19}
+\]
+
+**证明。** （311.18）正向直接应用定理311.2于 $c=0$。反向中，经典正向分部求和与同一 Mertens 常数给
+\[
+s(x)=\frac{a(x)}{\log x}
+-\int_x^\infty a(t)\frac{\log t+1}{t\log^2t}\,dt.
+\tag{311.20}
+\]
+若 $a=o(x^{-\lambda})$，则对任意 $\eta>0$，全部充分大的 $t$ 上有 $|a(t)|\le\eta t^{-\lambda}$。因 $\log t\ge\log x$，核积分给 $s=o(x^{-\lambda}/\log x)$，进而 $e=s-\tau=o(x^{-\lambda})$。对（311.2）在原点使用经典 Taylor 式，得到 $B=a+e+O(a^2+e^2)=o(x^{-\lambda})$，再用（311.4）得反向。
+
+这里使用的经典 RH 素数误差背景见 Brian Conrey，*Riemann’s Hypothesis*，2019年4月28日作者稿，[第3节、印刷页6](https://aimath.org/~kaur/publications/90.pdf)，该页直接陈述 $\pi$ 与素幂对数和 $\psi$ 的通常平方根对数误差刻画，$\vartheta$ 式经经典素幂余项转换。采用其经典幂误差表述：RH 等价于对每个 $\varepsilon>0$ 有 $\vartheta(x)-x=O_\varepsilon(x^{1/2+\varepsilon})$；RH 更给通常的 $O(\sqrt x\log^2x)$ 界。它是已知的素数误差刻画，本节没有将其另立为新解析定理。幂误差版本的经典反向可由同一 Mellin 接口看出：对 $\Re s>1$，
+\[
+-\frac{\zeta'(s)}{\zeta(s)}-\frac{s}{s-1}
+=s\int_1^\infty[\psi(x)-x]x^{-s-1}\,dx.
+\]
+全部正 $\varepsilon$ 的幂界使右侧在 $\Re s>1/2$ 上全纯；通过解析延拓匹配，它排除该域中的非平凡零点极点，再由零点反射对称性得 RH。此处先给出积分等式的原始收敛域，没有把延拓域当作初始逐项积分域。RH 因而给（311.18）右侧对每个 $\lambda<1/2$ 的小 $o$。反向中，取 $\lambda=1/2-\varepsilon$，$0<\varepsilon<1/2$，便有相应小 $o$，从而有经典判据要求的大 $O$；更大的 $\varepsilon$ 由任一较小正 $\varepsilon$ 的界覆盖。因此（311.19）是把已知 RH 刻画运输到（311.1）的实际权重与高度混合漂移。本节未从单个 $\lambda=1/4$ 的界推出 RH；这里的反向证明使用逼近 $1/2$ 的全部尺度。$\square$
+
+**推论 311.4（四分之一尺度的实际最优尾与半尺度偏移）。** 在假设310.1之外采用本节解析输入，则该假设中的有限漂移极限必为 $\beta=0$，从而
+\[
+I_L\longrightarrow0,\qquad
+\frac{m-z_L^*}{m^{3/4}}\longrightarrow0
+\quad\text{对每个实际最小截止序列}.
+\tag{311.21}
+\]
+与此同时，不能把（311.4）扩至 $\lambda=1/2$：若 $\sqrt m\,B(m)$ 有有限极限 $d$，则
+\[
+\sqrt m\,b_L\longrightarrow d+\sqrt2.
+\tag{311.22}
+\]
+
+**证明。** 对 $\lambda=1/4$ 应用定理311.2得到 $\beta=0$，代入定理310.3即得（311.21）。式（311.22）直接来自（311.3）；其中固定偏移来自实际平方层的高度修正，在亚临界幂尺度消失而在半尺度保留。
+
+（311.19）未证明右侧的全尺度界成立；（311.21）也未证明实际漂移极限存在。全部整数仍为原来的同签名、同核心、5040整除族，实际最小化仍只遍历完整截止尾。$I_L\to0$ 是相对余量的缩放极限，不给有限 $L$ 上的严格符号，也不控制共同基线 $S(m)$ 或价格剥离有符号尾项。$\square$
