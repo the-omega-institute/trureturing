@@ -47,7 +47,7 @@ def shiftedFibSum (n : Nat) : Nat :=
 private def conjugateError (n : Nat) : Real :=
   ((Nat.zeckendorf n).map fun k => Real.goldenConj ^ k).sum
 
-private theorem canonical_pairwise (n : Nat) :
+theorem canonical_pairwise (n : Nat) :
     (Nat.zeckendorf n).Pairwise (fun x y => y + 2 <= x) := by
   have h := Nat.isZeckendorfRep_zeckendorf n
   rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at h

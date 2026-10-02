@@ -298,11 +298,9 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       (hx : x.val = fun i => decide (i.val + 1 ∈ Nat.zeckendorf n))
       (u v : Nat) :
       independentOffset (r + 1) u v x = shiftedFibSum n * u + n * v := by
-    have hp := Nat.isZeckendorfRep_zeckendorf n
-    rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at hp
     have hlo := canonical_two_le n
     have hnd : (Nat.zeckendorf n).Nodup :=
-      (List.pairwise_append.mp hp).1.imp (fun {a b} hab => (show a ≠ b by omega))
+      (canonical_pairwise n).imp (fun {a b} hab => (show a ≠ b by omega))
     have hs (f : Nat → Nat) :
         (∑ i : Fin (3 * (r + 1) - 1), if i.val + 1 ∈ Nat.zeckendorf n
           then f (i.val + 1) else 0) =
