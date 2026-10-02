@@ -45224,3 +45224,89 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 327. 有理相位弧对更低回传成本的阻碍
+
+固定 $0<2\eta<\kappa$，沿用 $S,Q_C$，置 $\delta_C=e^{-\eta S}$。既有 §318 的有限Dirichlet输入只需把预算改为 $R_C=\lceil\delta_C^{-1}\rceil$，就供应
+
+$$
+1\le t\le R_C<Q_C,\qquad
+\|tC\varphi\|<\delta_C,\qquad
+\mathcal D_C(t)\le\eta S+o(1).
+\tag{327.1}
+$$
+
+它的上侧归一化回传成本为 $e^\gamma\eta+o(1)$。这是旧输入的参数取值，不是新增选择定理。更低成本需要另外控制实际相位，下面给出斜率统一方法的明确边界。
+
+**命题 327.1（有理弧内的最小命中成本）。** 充分大 $P$ 时，选一素数
+
+$$
+\frac1{8\delta_C}\le q\le\frac1{4\delta_C}.
+\tag{327.2}
+$$
+
+对任意与 $q$ 互素的整数 $a$，若实相位 $\theta$ 满足
+
+$$
+\left\|\theta-\frac aq\right\|_{\mathbb T}
+\le\frac{\delta_C}{2Q_C},
+\tag{327.3}
+$$
+
+则每个 $1\le t\le Q_C$、$\|t\theta\|<\delta_C$ 的命中都被 $q$ 整除，并有
+
+$$
+\mathcal D_C(t)\ge\eta S+O(1).
+\tag{327.4}
+$$
+
+同时 $t=q$ 是一个命中，且
+$\mathcal D_C(q)=\eta S+O(1)$。式中成本仍按同一个实际 CA宿主 $C$ 计算；相位允许改变。
+
+证明。经典 Bertrand输入保证（327.2）的素数最终存在。此时 $q>P$、$q\le Q_C$、$\log q=\eta S+O(1)$。若 $q\nmid t$，圆上三角不等式给
+
+$$
+\|t\theta\|\ge
+\left\|\frac{at}{q}\right\|
+-t\left\|\theta-\frac aq\right\|_{\mathbb T}
+\ge\frac1q-\frac{\delta_C}2>\delta_C.
+\tag{327.5}
+$$
+
+所以命中必有 $t=q^v u$、$v\ge1$、$(q,u)=1$。
+由 $q>P$ 和
+$1+q^{-1}+\cdots+q^{-v}\le(1+q^{-1})^v$，得到
+
+$$
+\begin{aligned}
+\mathcal D_C(t)
+&=\mathcal D_C(q^v)+\mathcal D_C(u)\\
+&\ge v\mathcal D_C(q)\ge\mathcal D_C(q)\\
+&=\log q-\mathcal A_P\log(1+1/q)
+=\eta S+O(1).
+\end{aligned}
+\tag{327.6}
+$$
+
+这里 $\mathcal D_C(u)\ge0$ 来自同源价格，$\mathcal A_P/q\to0$。另一方面，
+$\|q\theta\|\le q\delta_C/(2Q_C)\le1/(8Q_C)<\delta_C$，
+故 $q$ 本身命中，给出相同上界。$\square$
+
+这证明（327.1）的首项成本系数对任意斜率的统一断言不能降低。它没有证明任何实际 CA相位 $C\varphi$ 落入（327.3），因此不是实际CA低成本命中的反例，更不是Robin反例。
+
+黄金数的经典坏逼近下界，在乘以 $C$ 后只给
+
+$$
+\|qC\varphi\|\ge\frac{c_\varphi}{Cq},\qquad
+\left\|C\varphi-\frac aq\right\|_{\mathbb T}
+\ge\frac{c_\varphi}{Cq^2}.
+\tag{327.7}
+$$
+
+它的下界尺度为 $\exp(-(1+o(1))P-2\eta S+O(1))$，
+小于（327.3）的弧宽 $\exp(-(\kappa+\eta)S+O(1))$，
+因而这份下界不能排除该弧。逐个 $C\varphi$ 都是二次无理数，也不供应宿主族统一的有界部分商常数。
+
+§326 的廉价候选使用的素数全小于 $q$，故在（327.3）的相位弧中全部不命中。这把候选数量与真实相位交叠明确分开；下一步需要实际 $C\varphi$ 的联合算术输入。
+
+## 追加锚（本行以下为增补区）
+
