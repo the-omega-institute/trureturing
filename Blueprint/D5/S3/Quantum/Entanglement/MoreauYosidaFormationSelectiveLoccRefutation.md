@@ -142,6 +142,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/MoreauYosidaFormationSelectiveLoccRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shirokov-2026-moreau-yosida-eof-selective-locc-refutation` (refuted) by `D5/S3/Quantum/Entanglement/MoreauYosidaFormationSelectiveLoccRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shirokov-2026-moreau-yosida-eof-selective-locc-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/MoreauYosidaFormationSelectiveLoccRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. E. Shirokov (2026). *The Moreau-Yosida approximation of the EoF: basic properties and accuracy estimates*. URL: <https://arxiv.org/abs/2609.30246v1>.

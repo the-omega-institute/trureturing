@@ -78,7 +78,10 @@ internal sealed class MoreauYosidaFormationSelectiveLoccRefutationDocument : ISc
         AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(
             "Let v_2 = e_00 + e_11 and v_3 = e_20 + e_31 + e_42 on C^5 tensor C^3, let Phi_2 = v_2 v_2^*/2 and Phi_3 = v_3 v_3^*/3, and omega = (Phi_2 + Phi_3)/2. At t = 7/2 Alice measures the projections diag(1,1,0,0,0) and its complement. The two branches have probabilities 1/2 and outputs Phi_2 and Phi_3. For every normalized ambient 5 by 3 pure coefficient matrix, entropy is at least 1 - Tr((M M^*)^2), equal to twice the sum of the squared absolute 2 by 2 minors. Pair and triple norm estimates give affine entropy bounds with slope 3/10 and fidelity offsets 11/20 and 2/5. Nonnegativity lowers the slope to 2/7; linearity extends the bounds to every finite ensemble. The unitary reflection 2P-I gives traceNorm(P-sigma) >= 2(1-Tr(P sigma)) for a trace-one projector P. Thus E_F_my(7/2,Phi_2) >= 9/70 and E_F_my(7/2,Phi_3) >= 6/35, and their average is at least 3/20. The state sigma = (|00><00| + |11><11|)/2 has an explicit product-state ensemble of entropy zero, and traceNorm(omega-sigma) <= 1, so E_F_my(7/2,omega) <= 1/7. Since 3/20 - 1/7 = 1/140 > 0, the selective inequality fails."))),
-        DescribeRole.Theorem);
+        DescribeRole.Theorem,
+        new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("shirokov-2026-moreau-yosida-eof-selective-locc-refutation"),
+            ResolutionKind.Refuted));
 
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Call(string name, params Formula[] args) =>
