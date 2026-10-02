@@ -1,5 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
+using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.TruthRelease.Tests;
 
@@ -120,6 +122,47 @@ public sealed partial class TruthReleaseCommandTests
     }
 
     private const string PackUsage = "[--scribe-pack FILE --scribe-pack-digest HEX64]";
+
+    [Fact]
+    public void ResourcePackProductionVerifierAcceptsSnapshotDefinitionsWithoutAssemblyDiscovery()
+    {
+        using var fixture = CreateFixture(productionVerifier: true);
+        using var resources = new TemporaryDirectory();
+        using var output = new TemporaryDirectory();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
+
+        Assert.True(exitCode == 0, console.Error);
+        var verified = TruthReleaseVerification.Verify(output.Path, Assert.Single(
+            console.Output.Split(' ', StringSplitOptions.RemoveEmptyEntries),
+            part => part.StartsWith("release_digest=", StringComparison.Ordinal))["release_digest=".Length..]);
+        Assert.Empty(verified.ReadTruthGraph().Documents.DescribeNodes);
+    }
+
+    [Fact]
+    public void ResourcePackProductionVerifierRejectsPackLiteratureReferenceWithoutWritingBundle()
+    {
+        using var fixture = CreateFixture(productionVerifier: true);
+        using var resources = new TemporaryDirectory();
+        using var output = new TemporaryDirectory();
+        var definition = DocumentDefinition.Create(ScribeDocument.Create(
+            DefinitionDsl.Header(BlueprintGid, "Resource fixture", Anchor.ParseCanonical("lit/fixture2000reference")),
+            Heading.Create("Resource fixture"),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body")))),
+            "Blueprint/" + BlueprintGid + ".scribe.cs");
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [definition]).TotalSha256;
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("Scribe emission verification failed:", console.Error, StringComparison.Ordinal);
+        Assert.Contains("dangling-literature-reference", console.Error, StringComparison.Ordinal);
+        Assert.Contains("lit/fixture2000reference", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+    }
 
     private static string[] PackArguments(string path, string digest) =>
         ["--scribe-pack", path, "--scribe-pack-digest", digest];

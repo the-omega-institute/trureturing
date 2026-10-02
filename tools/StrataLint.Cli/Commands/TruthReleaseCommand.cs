@@ -27,7 +27,7 @@ internal static class TruthReleaseCommand
         try
         {
             var suppliedDefinitions = options.ScribePackPath is null
-                ? (IEnumerable<DocumentDefinition>?)null
+                ? (IReadOnlyList<DocumentDefinition>?)null
                 : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!);
             var verifier = scribeEmissionVerifier
                 ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
@@ -73,7 +73,8 @@ internal static class TruthReleaseCommand
                 truth.Lean,
                 truth.Report,
                 verifier,
-                preparation.States);
+                preparation.States,
+                suppliedDefinitions);
             var sourceSnapshot = SourceSnapshotAssembler.Assemble(
                 snapshot,
                 identity,

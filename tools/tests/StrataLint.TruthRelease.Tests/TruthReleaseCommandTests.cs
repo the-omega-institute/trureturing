@@ -138,7 +138,7 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -192,6 +192,24 @@ public sealed partial class TruthReleaseCommandTests
         }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);
+        if (productionVerifier)
+        {
+            files[blueprintSourcePath] = """
+                using StrataLint.Scribe;
+
+                return DocumentDefinition.Create(
+                    ScribeDocument.Create(DefinitionDsl.Header("D5/S3/Midline/GoldenSpectralMarker", "Resource fixture"),
+                        Heading.Create("Resource fixture"),
+                        DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body")))),
+                    "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs");
+                """;
+            files[blueprintProjectionPath] = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+                SimpleDefinition(BlueprintGid).Document, DeclarationCatalog.Create(report)).AsSpan());
+            files["Golden/Projection/statement-projection-pilot-v1.json"] =
+                "{\"schema\":\"statement-projection-pilot-fixture-v1\",\"declarations\":[]}";
+            files["Golden/Projection/statement-projection-expansion-v1.json"] =
+                "{\"schema\":\"statement-projection-expansion-fixture-v1\",\"declarations\":[]}";
+        }
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshotWithoutLedger, report)).Capability;
         var dag = TruthDagProjectionAssembler.Build(snapshotWithoutLedger, lean);
@@ -243,7 +261,8 @@ public sealed partial class TruthReleaseCommandTests
             gitRoot,
             gateway,
             mutableSource,
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            productionVerifier ? new ProductionScribeEmissionVerifier()
+                : new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
         return new Fixture(
             temporary,
             cli,
