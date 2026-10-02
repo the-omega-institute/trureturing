@@ -361,7 +361,8 @@ holes at every such source. Its other deletion liabilities remain.
 
 [Section170](#170-the-complete-low-pure-block-guard-constrains-shared7-at-every-height)
 uses every actual low pure7 and mixed3*7 prefix in one guarded product.
-For R={7} and H_5=1, H_7=2 forces21 into the color opposite5.
+For R={7} and H_5=1, the color opposite5 is exactly{11,13,17,19,23},
+and H_7=2 forces21 into that color.
 If21 has5's color, then H_7>=3 and147,63,441 have the other color;
 63's first7-prefix differs from those of49 and147. The remaining
 phase branches and higher powers are not excluded.
@@ -21027,3 +21028,31 @@ Thus63 and441 are original and have root i.
 If a_63=a_49 modulo7, the actual49 depth-two cylinder lies inside63's first-root cylinder and is removed by B. This loses at least(1-ell)/(147y) from63's nominal high allowance, again contradicting S7B8. The identical argument applies to147, which has now been proved active in root i. The two possible losses are tested separately; no disjointness or simultaneous subtraction is assumed. This proves S7B2.
 
 All original heights, literal phases and low-union overlaps remain in this one product law. No original is moved or deleted. The21-in-S branch and theG>=3 opposite21 branch with the forced relations remain unresolved by this argument.
+
+### Both21 phases require the entire five-prime opposite color
+
+For either actual ternary root of21, the opposite concentrated color satisfies
+
+    S={11,13,17,19,23}.                              (S7B9)
+
+Reuse GCB7's inclusion S subset C'={11,13,17,19,23}. Keep the same complete low pure-block guard B, now without assigning21 to either root. The general union bound gives
+
+    y>=1-2A_G>2/3, alpha<1/4.
+
+On Omega_i times Y times Z, every low pure-block original again vanishes: an active21 is removed by B, and an inactive21 vanishes by its ternary root. All remaining low-union and high-capacity accounting through S7B5 is unchanged. Thus the SAME actual product satisfies
+
+    1<J(alpha,W,ell), 0<=ell<=C_0,
+    W=sum_(d|product S,d>1)w(d),
+    C_0=2 sum_(d|product S,omega(d)>=2)w(d),
+    w(d)=product_(p|d)1/(p-2).
+
+If |S|<=4, the four largest available prime weights come from{11,13,17,19}. The polynomials W and C_0 have nonnegative coefficients in those weights, so
+
+    W<=69/187, C_0<=698/8415.
+
+The positive derivatives of J on these ranges therefore imply
+
+    1<J<=1/4+(7/4)(69/187)+(3/4)(698/8415)
+         =2687/2805=1-118/2805<1.
+
+This excludes every proper subpalette of C', proving S7B9 at all finite H and G in both21 branches. It supplies the five actual concentrated primes and their common color, without assigning further residues or excluding the remaining family.
