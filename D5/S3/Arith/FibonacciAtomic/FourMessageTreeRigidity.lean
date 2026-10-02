@@ -207,6 +207,13 @@ private theorem suffix_height (k j : ℕ) (u : TreeMessageRealization.Tree (Fin 
     simp only [BinaryTree.height,leaf] at *
     omega
 
+
+/-- A full task tree occurs among its own message nodes. -/
+theorem full_subtree_self (k : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
+  cases u with
+  | nil => simp [Full] at hu
+  | node a l r => cases a <;> simp [subtrees]
+
 set_option maxHeartbeats 2000000 in
 -- Capacity classification and the two spine inductions are elaborated in one proof.
 /-- Arbitrary leaf - labelled full binary trees whose proper blocks are small
@@ -266,10 +273,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     · rw [← hall]
       exact proper_subtree t ht s hs hne
     · exact hcap s hs hne
-  have self (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
-    cases u with
-    | nil => simp [Full] at hu
-    | node a l r => cases a <;> simp [subtrees]
+  have self := full_subtree_self k
   have single (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
       (i : Fin (k + 1)) (hi : leaves u = {i}) : u = leaf i := by
     cases u with
