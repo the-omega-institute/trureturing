@@ -14376,6 +14376,8 @@ For c=0,...,t, write the actual collision original A_(3^c q) as
     s=alpha_c mod3^c, first-q root j_c.
 
 Here j_0=0, and j_c!=0 for c>=1 by comparable-class disjointness.
+Write T={j_c:0<=c<=t} for the collision-root set in sections113--114;
+it is not the top-class batch denoted by T in sections108--112.
 For each nonzero q-root j define its COMPLETE forbidden and safe sets
 
     B_j=Omega intersect union_(1<=c<=t, j_c=j)
