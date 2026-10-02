@@ -1,0 +1,397 @@
+---
+bibkey: liu2026tailcompensation
+authors: Vincent Liu
+year: 2026
+title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
+doi: null
+url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor and an actual positive Fourier-tail correction at c=9; the complete retained sign and cofinal positivity remain unproved.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
+# Fixed-window positivity and retained tail compensation
+
+The primary source is the author's release [v1.0-mcom-submission](https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission), submitted to *Mathematics of Computation* on 14 September 2026. The inspected source is pinned to commit `b6cd2183c1e79c6c27a34267812a7b2d73ed1b59`: [manuscript TeX](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/frozen-source/publication/manuscript.tex) and [submitted PDF](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/manuscript.pdf). The downloaded PDF has SHA-256 `91126eee6ceb5315a4a40a4d4b2f34d058a71432ae18a8aaf47146f71abf418e`, matching the pinned README's submitted-original hash. This is an author-posted submission; journal acceptance, a DOI and external human reproduction are not asserted by the release.
+
+The theorem statements and analytic interfaces below were inspected in the pinned source. The numerical package was not executed, and the source's historical verification labels are not independent evidence supplied by this note. The complete package is the separately attached `w200-frozen-artifact.zip`, rather than GitHub's automatic source archive. The [rights statement](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/RIGHTS.md) grants no blanket open-source license; this note provides citations and mathematical applications, without copying its implementation or certificates.
+
+## Source normalization and support
+
+In section 2, equations (1)–(2), the legal domain is $\mathcal D_a=C_c^\infty((-a,a);\mathbb C)$, with
+
+$$
+F_f(z)=\int_{\mathbb R}f(u)e^{-izu}\,du,
+\qquad H_f(x)=\Re\int_{\mathbb R}f(v+x)\overline{f(v)}\,dv.
+$$
+
+Writing $A(t)=\Re\psi(1/4+it/2)-\log\pi$, the complete form is
+
+$$
+Q(f)=2\Re\bigl(F_f(i/2)\overline{F_f(-i/2)}\bigr)
++\frac1{2\pi}\int_{\mathbb R}A(t)|F_f(t)|^2\,dt
+-\sum_{n\ge2}\frac{2\Lambda(n)}{\sqrt n}H_f(\log n).
+$$
+
+Both poles, Gamma and every contributing prime power are retained. There is no imposed Mellin-vanishing condition, parity restriction or RH hypothesis. For a smooth test with this support, only $\log n<2a$ contributes. The minus sign in $F_f$ reverses the project's plus-sign Fourier variable; the even Gamma bracket and the paired poles retain the same quadratic normalization. For even tests, $F_f(i/2)=F_f(-i/2)$ and the pole term is $2|F_f(i/2)|^2$.
+
+Theorem A, section 3, equation (3), states
+
+$$
+Q(f)\ge2^{-151}\|f\|_2^2\quad(f\in\mathcal D_1).
+$$
+
+Theorem B, section 4, equation (6), states
+
+$$
+Q(f)\ge2^{-49162}\|f\|_2^2\quad(f\in\mathcal D_{17/16}).
+$$
+
+The bounded-operator proof covers both parity sectors and the entire orthogonal complement, then applies its conclusion to the original smooth domain. These are the manuscript's full-form claims, rather than claims about a positive finite compression alone. Their computer-assisted certificates have not been independently reproduced here. The comparison with [Zhu's versioned half-width $0.8$ result](suzuki2026screw.md) concerns support range, not a stronger coercivity constant.
+
+## The positive tail remains in the retained matrix
+
+At the source's fixed half-width $a=17/16$ and Fourier-band cutoff $\Omega=256$, equations (7)–(9) write
+
+$$
+Q(f)=\langle f,(M+K)f\rangle+T_{\rm tail}(f),
+\qquad
+T_{\rm tail}(f)=\frac1{2\pi}\int_{|t|>256}
+\bigl(A(t)-7/2\bigr)|F_f(t)|^2\,dt.
+$$
+
+Here $M$ retains all paired prime shifts for $n\in\{2,3,4,5,7,8\}$, and $K$ retains the pole kernel and the central Gamma band. The source proves the quantitative tail input
+
+$$
+T_{\rm tail}(f)\ge2^{-49162}\|f\|_2^2+\langle f,Uf\rangle,
+\qquad
+U=81|h_0\rangle\langle h_0|+27|h_1\rangle\langle h_1|.
+$$
+
+If $B_{256}$ is the sinc-kernel band operator and $v_0,v_1$ are the first two normalized Legendre modes, these retained vectors are
+
+$$
+h_j=(I-B_{256}-2^{-49158}I)v_j.
+$$
+
+They are **tail-filtered** vectors. Replacing them by $v_j$ would change the estimate. The compression of $U$ enters the source-error finite sign test in section 6, equation (22). Its two integer matrices cover the two 224-dimensional parity sectors, with the complement and coupling charged separately. This is a reusable positive-tail mechanism, not a new general Schur principle. The numerical constants and certified matrices belong to the specified support and band parameters.
+
+Reflection commutes with $B_{256}$, so $h_0$ is even and $h_1$ is odd. On even tests the second rank-one contribution vanishes and the retained contribution is $81|\langle h_0,f\rangle|^2$. This is a restriction of the source's estimate at $17/16$, not a positivity statement at a larger support.
+
+## Matching the first new FIB window
+
+In the project's Fourier convention the interval has length $\ell=\log c$ and physical half-width $a=\ell/2$. For $c_0=c_1=3$ and $c_{r+2}=c_{r+1}c_r$, the first new cutoff is $c_2=9$. Consequently
+
+$$
+a_9=\log3>17/16,
+\qquad e^{17/8}\approx8.3729<9,
+\qquad a_9-17/16\approx0.0361123.
+$$
+
+Theorem B does not cover this window. At the exact $c=9$ endpoint, the shift $\log9=2a_9$ has zero overlap, so the same prime-power list $\{2,3,4,5,7,8\}$ applies. The missing step is an estimate for the enlarged interval's actual operator, retained matrix and infinite complement. An unchanged prime list does not transport the old certificate or its tiny margin. The next FIB cutoff $c_3=27$, with $a_{27}=3\log3/2$, also lies outside the stated range.
+
+The [existing same-symbol coupling allowance](../Fourier/montgomery1978largesieve.md) keeps a common signed cross interval, every middle mode and the second-jet remainder. A sufficient consumer still needs the actual retained form to dominate their complete Schur cost. The source's positive-tail correction suggests retaining an available arithmetic-compatible positive contribution in that form; it does not establish that domination at $c=9$, an induction step or cofinal support positivity. Failure of a particular upper allowance to fit would not refute positivity or RH.
+
+## A source-formula application to the actual prime block at $c=9$
+
+The source's weighted Schur formula in Appendix B.4, “Weighted Schur bound including prime power eight,” can be reused without its old support-dependent constants. At the new physical half-width $a=\log3$, let $I=(-a,a)$, $\mathcal H=L^2(I;\mathbb C)$ and
+
+$$
+(S_df)(u)=\mathbf1_I(u+d)f(u+d),\qquad
+C_{\rm p}=\sum_{n\in\{2,3,4,5,7,8\}}w_n(S_{\log n}+S_{-\log n}),
+\qquad w_n=\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+These are the actual compressed translations on the whole Hilbert space, with $S_d^*=S_{-d}$. The $n=9$ endpoint translation is zero almost everywhere. Put $M_9=(7/2)I-C_{\rm p}$. The following application gives a lower bound for this **prime comparison block**, not for $Q$.
+
+Choose $q(u)=1+(5/8)(u/a)^2$. The source formula bounds the absolute quadratic form by the weighted row sum:
+
+$$
+|\langle f,C_{\rm p}f\rangle|
+\le\int_I r_q(u)|f(u)|^2\,du,
+\qquad
+r_q(u)=\sum_nw_n
+\frac{\mathbf1_I(u+\log n)q(u+\log n)
++\mathbf1_I(u-\log n)q(u-\log n)}{q(u)}.
+\tag{A1}
+$$
+
+This formula uses complex weighted Young and translation of the adjoint term; its validity does not require the source's $17/16$ width, finite-dimensional tests or RH. The function $r_q$ is even. New outward support cells and rational bounds are required at $a=\log3$.
+
+Use the source's logarithm grid endpoints $l_p^-<\log p<l_p^+$ and root lower endpoints $k_n/10^6\le\sqrt n$:
+
+| $p$ | $10^6l_p^-$ | $10^6l_p^+$ |
+|---|---:|---:|
+| $2$ | $693147$ | $693148$ |
+| $3$ | $1098612$ | $1098613$ |
+| $5$ | $1609437$ | $1609438$ |
+| $7$ | $1945910$ | $1945911$ |
+
+For $n=2,3,4,5,7,8$, the respective $k_n$ are $1414213,1732050,2000000,2236067,2645751,2828427$. For $n=p^j$, define
+
+$$
+w_n^+=\frac{l_p^+}{k_n/10^6},\qquad
+t_n^-=\frac{j l_p^-}{l_3^+},\qquad
+t_n^+=\frac{j l_p^+}{l_3^-}.
+$$
+
+Set $t_3^-=t_3^+=1$ instead: this shift equals the actual half-width exactly. The weight remains $\log3/\sqrt3$. Define
+
+$$
+x_1=t_4^--1,\quad x_2=1-t_2^-,\quad
+x_3=t_5^--1,\quad x_4=t_7^--1,\quad x_5=t_8^--1.
+$$
+
+They are, respectively, $287681/1098613$, $405466/1098613$, $510824/1098613$, $847297/1098613$, $980828/1098613$, in increasing order inside $(0,1)$. On $x=u/a\in[0,1]$, the following outward lists activate negative shifts early and retain positive shifts late:
+
+| Cell | Negative shifts | Positive shifts | Lower bound for the quadratic minimum |
+|---|---|---|---:|
+| $[0,x_1]$ | $2,3$ | $2$ | $2/5$ |
+| $[x_1,x_2]$ | $2,3,4$ | $2$ | $13/100$ |
+| $[x_2,x_3]$ | $2,3,4$ | none | $11/10$ |
+| $[x_3,x_4]$ | $2,3,4,5$ | none | $4/25$ |
+| $[x_4,x_5]$ | $2,3,4,5,7$ | none | $1/50$ |
+| $[x_5,1]$ | $2,3,4,5,7,8$ | none | $4/25$ |
+
+The positive $n=3$ shift is present only at the single endpoint $x=0$ under a closed-interval convention, hence contributes nothing to the $L^2$ integral. The rows cover every other support switch; no prime-power weight is deleted.
+
+For each row, with $b=5/8$ and $R=27/10$, sum its listed terms with multiplicity to form
+
+$$
+W=\sum w_n^+,\quad
+B=\sum_{\rm negative}w_n^+t_n^--\sum_{\rm positive}w_n^+t_n^+,
+\quad D=\sum w_n^+(t_n^+)^2.
+$$
+
+Then, on that whole cell,
+
+$$
+(1+bx^2)(R-r_q(ax))\ge
+P(x):=b(R-W)x^2+2bBx+(R-W-bD).
+\tag{A2}
+$$
+
+The listed quadratic-minimum bounds were evaluated using exact fractions, at both endpoints and any interior vertex of a convex quadratic. Each minimum strictly exceeds $1/50$. Since $1+bx^2\le13/8$, (A1)–(A2) give
+
+$$
+|\langle f,C_{\rm p}f\rangle|
+\le\left(\frac{27}{10}-\frac4{325}\right)\|f\|^2,
+\qquad
+\boxed{\frac45 I\preceq M_9\preceq\frac{31}{5}I.}
+\tag{A3}
+$$
+
+The bound applies to the complete complex Hilbert space, and therefore its even subspace. This is a paper application of an existing weighted Schur formula with a new exact scalar parameter calculation; it is not a new kernel theorem, reproduction of a fixed-window certificate or claim of priority. The pole and Gamma band are still in $K$, and the positive exterior-frequency contribution remains in $T_{\rm tail}$. Neither $M_9\succ0$ nor its invertibility establishes positivity of $M_9+K+U$ or $Q$.
+
+The following independent scalar replay produces the six quadratic minima using only exact fractions. The logarithm and root enclosures are the cited analytic inputs; this program verifies their downstream rational comparison, not the source's full analytic proof or a complete Weil certificate.
+
+```python
+from fractions import Fraction as F
+
+beta, target = F(5, 8), F(27, 10)
+log_lo = {2: 693147, 3: 1098612, 5: 1609437, 7: 1945910}
+log_hi = {2: 693148, 3: 1098613, 5: 1609438, 7: 1945911}
+root_lo = {2: 1414213, 3: 1732050, 4: 2000000,
+           5: 2236067, 7: 2645751, 8: 2828427}
+powers = {2: (2, 1), 3: (3, 1), 4: (2, 2),
+          5: (5, 1), 7: (7, 1), 8: (2, 3)}
+weight = {n: F(log_hi[p], root_lo[n])
+          for n, (p, j) in powers.items()}
+shift_lo = {n: F(1) if n == 3 else F(j * log_lo[p], log_hi[3])
+            for n, (p, j) in powers.items()}
+shift_hi = {n: F(1) if n == 3 else F(j * log_hi[p], log_lo[3])
+            for n, (p, j) in powers.items()}
+ends = [F(0), shift_lo[4] - 1, 1 - shift_lo[2],
+        shift_lo[5] - 1, shift_lo[7] - 1, shift_lo[8] - 1, F(1)]
+assert all(left < right for left, right in zip(ends, ends[1:]))
+negative = [[2, 3], [2, 3, 4], [2, 3, 4], [2, 3, 4, 5],
+            [2, 3, 4, 5, 7], [2, 3, 4, 5, 7, 8]]
+positive = [[2], [2], [], [], [], []]
+floors = [F(2, 5), F(13, 100), F(11, 10),
+          F(4, 25), F(1, 50), F(4, 25)]
+
+for i, (left, right) in enumerate(zip(ends, ends[1:])):
+    neg, pos = negative[i], positive[i]
+    W = sum((weight[n] for n in neg + pos), F(0))
+    B = (sum((weight[n] * shift_lo[n] for n in neg), F(0))
+         - sum((weight[n] * shift_hi[n] for n in pos), F(0)))
+    D = sum((weight[n] * shift_hi[n] ** 2 for n in neg + pos), F(0))
+    A, E, C = beta * (target - W), 2 * beta * B, target - W - beta * D
+    points = [left, right]
+    if A > 0 and left < -E / (2 * A) < right:
+        points.append(-E / (2 * A))
+    minimum = min(A * x * x + E * x + C for x in points)
+    assert minimum > floors[i] >= F(1, 50)
+    print(i + 1, minimum)
+```
+
+## The actual band complement at $a=\log3$
+
+Appendix B fixes $L=17/16$, $\Omega=256$ and $\Omega L=272$ at its outset. Its band-complement and tail statements therefore cannot simply be instantiated at another width. The following application checks the width dependencies in B.1–B.3 and constructs the new operators; it does not use the old finite sign certificate.
+
+Keep $a=\log3$ and the full complex space $\mathcal H=L^2((-a,a);\mathbb C)$. Write $c_{\rm band}=256a$, distinct from the arithmetic cutoff $c=9$. The cited logarithm enclosure gives
+
+$$
+272<c_{\rm band}<282,\qquad a<11/10.
+$$
+
+Define the actual band operator and its exterior Fourier energy by
+
+$$
+(B_9f)(u)=\int_{-a}^a
+\frac{\sin(256(u-v))}{\pi(u-v)}f(v)\,dv,
+\qquad
+\mathcal E_9(f)=\frac1{2\pi}\int_{|t|>256}|F_f(t)|^2\,dt,
+$$
+
+with kernel value $256/\pi$ on the diagonal. Plancherel gives $0\preceq B_9\preceq I$ and $\mathcal E_9(f)=\langle f,(I-B_9)f\rangle$ for every $f\in\mathcal H$.
+
+In B.1, the Fourier-derivative bound for a unit vector becomes $|F_f^{(j)}(t)|\le a^j\sqrt{2a}<2a^j$. It differentiates $F_f$ in frequency; it requires no derivatives of $f$. The fixed frequency band, the $N=4096$ exterior nodes with spacing $h=1/32$, their distance bound $768$, and the Lagrange basis sum $<2^{24570}$ do not depend on the support width. The changed interpolation remainder is controlled by
+
+$$
+\frac{3\cdot768a}{4096}<\frac{99}{160}<\frac58,
+\qquad
+\frac{2(768a)^{4096}}{4096!}
+<2(5/8)^{4096}<2^{-2047}<1/32.
+$$
+
+The middle power bound uses $(5/8)^2<1/2$. Thus the source's real-phase interpolation argument still gives, when $\mathcal E_9(f)<1/2$,
+
+$$
+\frac1{16}<16\sqrt{\mathcal E_9(f)}\,2^{24570}+\frac1{32},
+\qquad
+\sqrt{\mathcal E_9(f)}>2^{-24579}.
+$$
+
+The other energy case is immediate. Consequently this source-proof application supplies the actual new-window bounded-operator input
+
+$$
+I-B_9\succeq\delta I,\qquad
+\delta=2^{-49158},\qquad
+S_9=I-B_9-\delta I,\qquad 0\preceq S_9\preceq I.
+\tag{A5}
+$$
+
+This conclusion covers the entire complex Hilbert space. The exterior Gamma-weighted form used below is finite on the original smooth legal domain; its bounded comparison (A5) does not assert finiteness of that weighted integral for arbitrary $L^2$ vectors. This is an application of the inspected proof with a new remainder comparison, not a new uncertainty principle or a kernel-verified declaration.
+
+## Positive tail compensation at the new width
+
+At this same $a=\log3$, define the newly normalized modes and filtered vectors
+
+$$
+v_{0,9}(u)=(2a)^{-1/2},\qquad
+v_{1,9}(u)=\sqrt{3/(2a)}\,u/a,\qquad
+h_{j,9}=S_9v_{j,9},\qquad
+e_j=\langle v_{j,9},(I-B_9)v_{j,9}\rangle.
+$$
+
+The exterior-weight estimate in B.2 uses only $|t|\ge256$ and the background $7/2$, so it supplies $T_{{\rm tail},9}(f)\ge C\mathcal E_9(f)$ with $C=123/1280>1/16$. This is the source's actual exterior integral, with all poles, contributing prime powers and the central Gamma band retained elsewhere in $Q$.
+
+B.3's normalized Fourier integrals, evaluated with $c_{\rm band}=256a$, supply independent lower and upper bounds:
+
+$$
+\frac{c_{\rm band}-1}{\pi c_{\rm band}^2}\le e_0
+\le\frac{c_{\rm band}+1}{\pi c_{\rm band}^2},\qquad
+\frac{3(c_{\rm band}-2)}{\pi c_{\rm band}^2}\le e_1
+\le\frac{3/c_{\rm band}+6/c_{\rm band}^2+2/c_{\rm band}^3}{\pi}.
+$$
+
+All four envelopes decrease on $[272,282]$. Using the source's $157/50<\pi<22/7$, the lower envelopes at $282$ and upper envelopes at $272$ give
+
+| Direction | Lower bound for $e_j$ | Upper bound for $e_j$ | Required upper comparison |
+|---|---:|---:|---|
+| $j=0$ | $1967/1749528$ | $6825/5807744$ | $81e_0<C$ |
+| $j=1$ | $245/72897$ | $2794825/789853184$ | $27e_1<C$ |
+
+Both lower bounds exceed $2^{-11}>\delta$. Thus $e_j-\delta>0$ is established independently of the upper estimates. Reflection commutes with $S_9$, making $h_{0,9}$ even, $h_{1,9}$ odd and $\langle v_{0,9},S_9v_{1,9}\rangle=0$. The source's complex square completion in the positive form of $S_9$ therefore applies:
+
+$$
+\langle f,S_9f\rangle\ge
+\sum_{j=0}^1\frac{|\langle h_{j,9},f\rangle|^2}{e_j-\delta}.
+$$
+
+Since $C/(e_0-\delta)>81$, $C/(e_1-\delta)>27$ and $C\delta>\delta/16$, this gives the actual new-window tail input
+
+$$
+\boxed{
+T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
+\quad
+\tau_9=2^{-49162},\quad
+U_9=81|h_{0,9}\rangle\langle h_{0,9}|
++27|h_{1,9}\rangle\langle h_{1,9}|,
+}
+\tag{A6}
+$$
+
+for every $f\in C_c^\infty((-a,a);\mathbb C)$. On even tests the odd contribution vanishes. The displayed constants match the old calibration because the new parameter bounds justify them, while $B_9$, the modes and both filtered vectors are new-width objects. This is a paper application of the inspected analytic proof, independently reviewed; it is not a reproduced numerical certificate, a new kernel theorem or positivity of the complete form.
+
+The same upper envelopes give $\|h_{0,9}\|<1/29$ and $\|h_{1,9}\|<3/50$, since $S_9^2\preceq S_9$ implies $\|h_{j,9}\|^2\le e_j-\delta$. These norm bounds do not provide finite-column approximation errors for the new vectors.
+
+This exact scalar replay checks only the new parameter comparisons. Its logarithm and $\pi$ enclosures are the cited analytic inputs; it does not reexecute the original finite matrices or prove the analytic interpolation and square-completion suppliers.
+
+```python
+from fractions import Fraction as F
+
+log3_lo, log3_hi = F(1098612, 10**6), F(1098613, 10**6)
+assert F(17, 16) < log3_lo < log3_hi < F(11, 10)
+assert F(272) < 256 * log3_lo < 256 * log3_hi < F(282)
+ratio = F(3 * 768, 4096) * F(11, 10)
+assert ratio == F(99, 160) < F(5, 8)
+assert F(5, 8)**2 < F(1, 2)
+
+band_lo, band_hi = F(272), F(282)
+pi_lo, pi_hi, C = F(157, 50), F(22, 7), F(123, 1280)
+lower = [(band_hi - 1) / (pi_hi * band_hi**2),
+         3 * (band_hi - 2) / (pi_hi * band_hi**2)]
+upper = [(band_lo + 1) / (pi_lo * band_lo**2),
+         (3 / band_lo + 6 / band_lo**2 + 2 / band_lo**3) / pi_lo]
+assert lower == [F(1967, 1749528), F(245, 72897)]
+assert upper == [F(6825, 5807744), F(2794825, 789853184)]
+assert all(value > F(1, 2**11) for value in lower)
+assert 49158 > 11
+assert C > F(1, 16)
+assert 81 * upper[0] < C and 27 * upper[1] < C
+assert upper[0] < F(1, 29**2) and upper[1] < F(9, 50**2)
+for j in range(2):
+    print(j, lower[j], upper[j])
+```
+
+## The remaining retained-matrix consumer at $c=9$
+
+The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
+
+On the actual interval $(-\log3,\log3)$, the compact self-adjoint operator $K_9$ has the source's kernel
+
+$$
+k(u-v)=2\cosh((u-v)/2)
++\frac1{2\pi}\int_{-256}^{256}(A(t)-7/2)e^{it(u-v)}\,dt.
+$$
+
+Together with the prime-block decomposition and the now supplied tail input (A6), this gives
+
+$$
+Q(f)\ge2^{-49162}\|f\|^2+
+\langle f,(M_9+K_9+U_9)f\rangle
+\quad\bigl(f\in C_c^\infty((-\log3,\log3);\mathbb C)\bigr).
+\tag{A7}
+$$
+
+The sign of the bounded term in (A7) is not established. Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits restricting **all** operators, norms and complements to the even Hilbert space for the existing even-test RH route. In that space $U_9=81|h_{0,9}\rangle\langle h_{0,9}|$; the even pole contribution is also nonnegative, but the central Gamma band remains payable. Put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
+
+$$
+G_9=E^*M_9^{-1}E,\qquad
+D_9=E^*M_9^2E-(E^*M_9E)^2.
+$$
+
+Suppose the actual new-window blocks satisfy $\|(R_9)_{10}\|\le e$, $(R_9)_{11}\succeq-nI$, $\|(R_9)_{11}\|\le h$, with $0\le n<4/5$. For $\theta,\chi>0$, direct parameter substitution in the existing source theorem makes the following a sufficient target:
+
+$$
+G_9^{-1}+J_9\succeq
+\left(e\theta+\frac{(1+\chi)e^2}{4/5-n}\right)I
++\frac{25}{16}\left(e/\theta+n+
+\frac{(1+\chi^{-1})h^2}{4/5-n}\right)D_9.
+\tag{A4}
+$$
+
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. The tail input itself is supplied by (A5)–(A6). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
