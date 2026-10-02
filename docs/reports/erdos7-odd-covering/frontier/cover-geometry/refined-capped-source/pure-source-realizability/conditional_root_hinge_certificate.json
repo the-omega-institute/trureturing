@@ -1,0 +1,48 @@
+{
+  "schema": "e7-conditional-root-hinge-certificate-v1",
+  "source_certificate": {
+    "file": "retained_factorial_hinge_certificate.json",
+    "sha256": "17557f86d60a40310275025219d893e28ba103b5f099cf53886a8eb8ef970aca"
+  },
+  "source_result": {
+    "file": "retained_factorial_hinge.json",
+    "sha256": "1e76928fa5e63ca221913ad6cdd7ba0db4a54ab093a3a2c26086e1e08b1710e5"
+  },
+  "source_math_fields": [
+    "actual_family",
+    "expected_hinge",
+    "leaves",
+    "nonzero_u",
+    "normalization",
+    "partitions",
+    "pattern_encoding",
+    "phase45",
+    "primes",
+    "selected_labels",
+    "tail",
+    "threshold",
+    "weights"
+  ],
+  "source_math_sha256": "7c2aea132c63baaecadc6d398c8cc7f848fc2bd82887fdb1918766c69bcc3574",
+  "threshold_domain": {
+    "lower": 0,
+    "upper_exclusive": 28,
+    "closed_diagnostic_upper": 28,
+    "leaf_control": 16,
+    "nominal": 16
+  },
+  "ternary_roots": [
+    [
+      4,
+      7
+    ],
+    [
+      2,
+      5,
+      8
+    ]
+  ],
+  "normalization": "nu_u restricted to U / nu_u(U)",
+  "source_point": "C only",
+  "retained_positive_entries": 106
+}

@@ -77,6 +77,23 @@ public sealed class DocumentHeader
 
     public Digest Digest { get; }
 
+    internal static DocumentHeader Create(
+        GidRef gid,
+        Generality generality,
+        EvidenceMirror mirrorEvidence,
+        IEnumerable<Anchor> anchors,
+        Digest digest) => Create(gid, generality, BlueprintMirror(gid), mirrorEvidence, anchors, digest);
+
+    private static GidRef BlueprintMirror(GidRef gid)
+    {
+        ArgumentNullException.ThrowIfNull(gid);
+        if (!gid.IsFormalModule)
+        {
+            throw new ArgumentException("Document GID must identify a formal module.", nameof(gid));
+        }
+        return GidRef.Create("D5/B/" + gid.Value["D5/".Length..]);
+    }
+
     public static DocumentHeader Create(
         GidRef gid,
         Generality generality,
@@ -96,7 +113,7 @@ public sealed class DocumentHeader
             throw new ArgumentException("Document GID must identify a formal module.", nameof(gid));
         }
 
-        var expectedMirror = "D5/B/" + gid.Value["D5/".Length..];
+        var expectedMirror = BlueprintMirror(gid).Value;
         if (!mirrorBlueprint.IsBlueprint
             || !string.Equals(mirrorBlueprint.Value, expectedMirror, StringComparison.Ordinal))
         {

@@ -1,0 +1,2 @@
+**Theorem 7.2 (connected derivative-positive Hessian support).** Under the hypotheses of Theorem 7.1, let $d\ge2$ and define the actual active set by $A=\{i:(\partial_iF_{U,d})(x)>0\}$. For every nonempty proper subset $B\subset A$, there are $i\in B$ and $j\in A\setminus B$ with $(\partial_i\partial_jF_{U,d})(x)>0$. Empty active sets are included vacuously; no represented index or physical sampling mass is removed from the family.
+

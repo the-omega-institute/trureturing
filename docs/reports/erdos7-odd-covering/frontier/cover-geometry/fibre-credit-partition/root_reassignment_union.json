@@ -1,0 +1,135 @@
+{
+  "additional_disjoint_group7": {
+    "P": "2285037625117400157085886580014163000/5439913544973123878591559720580874461",
+    "S": "14006/2401",
+    "T": {
+      "11": "2795/13177",
+      "13": "4577/26181",
+      "17": "10133/78301",
+      "19": "14099/123081",
+      "23": "12720/267121",
+      "29": "871/23518",
+      "31": "993/28798",
+      "37": "1407/49246",
+      "41": "1723/67198"
+    },
+    "branch": "k-full-rows: P>=rho^k",
+    "gain_lower": "8976829335964927793946183097059818181315736638030673927/9905141890060234726159565497570157057327145600000000000000",
+    "gain_upper": "561051833498161813438373597549661867222593648100709783/619071368128764670384972843598134816082946600000000000000",
+    "k": 5,
+    "old_charge": "4552993326118748323087069003596486725393915/49525709450301173630797827487850785286635728",
+    "prefactor": "3752763/32830064",
+    "prime": 7,
+    "private_primes": [
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41
+    ],
+    "rho": "2001/2401",
+    "root_lower": "840737214623727/1000000000000000",
+    "root_upper": "52546075913983/62500000000000",
+    "union_formula_lower": "37354718014813414971/410375800000000000000",
+    "union_formula_upper": "597675488237018392299/6566012800000000000000"
+  },
+  "attempt_count": 4,
+  "both_group_root1_interval_decimal": [
+    -0.0012083667571608089,
+    -0.001208366757159704
+  ],
+  "both_group_root1_lower": "-20143901363203143744800586446475240701080793556842324476859/16670353800971375044126548732410574327481586044800000000000000",
+  "both_group_root1_upper": "-5035975340796181500659932007938714905360458686519451749469/4167588450242843761031637183102643581870396511200000000000000",
+  "both_groups_all_weight_strict_upper": "-1/1000",
+  "canonical_checks": {
+    "mixed_divisor_closure_edges": 6178,
+    "mixed_labels": 2138,
+    "pair_constraints": 55,
+    "per_label_cr9_checks": 7328,
+    "root_pair_constraints": 110,
+    "root_square_constraints": 22,
+    "square_constraints": 11,
+    "star_labels": 42
+  },
+  "canonical_constraint_verdict": "passed: original check(candidate), unchanged actual-star-roots constraint contract",
+  "checker": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_inventory_witness.py",
+  "checker_sha256": "7c1b50dfc923dc731fb4be6d34f8b0654389add366ca7764b5aeef16c5c1ffd3",
+  "checks": 4307,
+  "comparison_threshold_note": "Only the old witness output threshold is changed to -1/1000000; all structural capacity/source/closure/CR9 constraints are unchanged.",
+  "contract": "Fixed2138-cofactor numerical/root relaxation with unchanged complete star roots, heights and scalar source. Root recoloring changes no numerical inventory. Negative comparisons do not construct AP phases, a cover, or negative actual survivor mass.",
+  "corrected_root1_interval_decimal": [
+    -0.0021146464890012115,
+    -0.002114646489000678
+  ],
+  "corrected_root1_lower": "-4406488141954014652751501574853364337529397289830993587/2083794225121421880515818591551321790935198255600000000000",
+  "corrected_root1_upper": "-70503810271246454629816504533144308764023673004267440069/33340707601942750088253097464821148654963172089600000000000",
+  "flipped_cofactors": [
+    77,
+    91,
+    119,
+    133
+  ],
+  "flipped_original_moduli": [
+    231,
+    273,
+    357,
+    399
+  ],
+  "group5": {
+    "P": "3181062826519439838446223390324180812800000/11314427222967695596967677738798675563563751",
+    "S": "1563/625",
+    "T": {
+      "11": "2927/13177",
+      "13": "4759/26181",
+      "17": "5526/78301",
+      "19": "14479/123081",
+      "23": "25439/267121",
+      "29": "871/11759",
+      "31": "993/14399",
+      "37": "1407/24623",
+      "41": "1723/33599",
+      "7": "3193/14006"
+    },
+    "branch": "k-full-rows: P>=rho^k",
+    "gain_lower": "1575510282962927967414346258410543309055339364821627531/26000997461408116156168859431121662275483757200000000000",
+    "gain_upper": "25208164527407069330143715971737260938566582752353169197/416015959382529858498701750897946596407740115200000000000",
+    "k": 2,
+    "old_charge": "323564624098395992344410375014652593091514375/1040039898456324646246754377244866491019350288",
+    "prefactor": "625/2344",
+    "prime": 5,
+    "private_primes": [
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41
+    ],
+    "rho": "313/625",
+    "root_lower": "33139797777831/62500000000000",
+    "root_upper": "530236764445297/1000000000000000",
+    "union_formula_lower": "469763235554703/1875200000000000",
+    "union_formula_upper": "29360202222169/117200000000000"
+  },
+  "group5_all_weight_strict_upper": "-1/500",
+  "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "interpretation": "The original5-group cut alone does not close all root assignments in the existing numerical relaxation. The optional7-group result is an independent additional replacement, never counted twice with the5-group.",
+  "old_endpoints_by_root": {
+    "1": "-146353069717740910766193401918766135478840186351/2333849532135992506177716822537480405847422046272",
+    "2": "-192899355550520959014862331059495339459686383741/65347786899807790172976071031049451363727817295616"
+  },
+  "proposal_count": 45,
+  "root1_labels_after": 191,
+  "root1_labels_before": 187,
+  "root2_decimal": -0.002951888115909375,
+  "search": "Bounded deterministic greedy among original-root2 squarefree two-prime non5 labels, descending root1 debit; accept only root-pair-legal flips retaining a negative root2 endpoint."
+}
