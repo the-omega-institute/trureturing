@@ -12,6 +12,37 @@ import pathlib
 import re
 import subprocess
 import os
+import select
+import time
+from contextlib import closing
+
+
+def wait_for_lean_builds():
+    """Wait on macOS process exit events before starting a Lean build."""
+    deadline = time.monotonic() + 7200
+    while True:
+        processes = subprocess.check_output(["ps", "-axo", "pid=,comm="], text=True)
+        pids = [int(pid) for line in processes.splitlines()
+                for pid, command in [line.strip().split(None, 1)]
+                if pathlib.Path(command).name == "lake"]
+        if not pids:
+            return
+        print("waiting for existing Lean builds: " + ",".join(map(str, pids)), flush=True)
+        with closing(select.kqueue()) as queue:
+            pending = set()
+            for pid in pids:
+                try:
+                    queue.control([select.kevent(pid, filter=select.KQ_FILTER_PROC,
+                        flags=select.KQ_EV_ADD | select.KQ_EV_ONESHOT,
+                        fflags=select.KQ_NOTE_EXIT)], 0, 0)
+                    pending.add(pid)
+                except ProcessLookupError:
+                    pass
+            while pending:
+                if time.monotonic() >= deadline:
+                    raise RuntimeError("existing Lean builds did not exit within the infrastructure wait budget")
+                for event in queue.control(None, len(pending), 30):
+                    pending.discard(event.ident)
 
 
 def free_bytes():
@@ -25,11 +56,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
-    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved"], required=True)
+    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved", "opaque", "arena", "imports"], required=True)
+    parser.add_argument("--baseline", action="store_true", help="expect opaque body regressions to fail when the comparator omits opaque bodies")
     parser.add_argument("--reference", type=pathlib.Path)
     args = parser.parse_args()
     if sys.platform != "darwin":
         parser.error("these probes require macOS vm_stat")
+    if args.baseline and args.unit != "opaque":
+        parser.error("--baseline is only supported by --unit opaque")
     for tool in ("make", "vm_stat"):
         if shutil.which(tool) is None:
             parser.error("missing required tool: " + tool)
@@ -40,6 +74,7 @@ def main():
     results = []
 
     def build(label, module, expected_exit, diagnostic=None, env=None):
+        wait_for_lean_builds()
         memory = free_bytes()
         if memory < 8 * 1024**3:
             raise RuntimeError(f"free memory below 8 GiB: {memory}")
@@ -81,7 +116,7 @@ def main():
             raise RuntimeError(f"unmatched negative or control: {label}; see {path}")
 
     try:
-        if args.unit in ("repair", "current", "unresolved"):
+        if args.unit in ("repair", "current", "unresolved", "opaque", "arena", "imports"):
             package = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype"
             mapping = package / "NameMapping.lean"
             equivalence = package / "Equivalence.lean"
@@ -101,7 +136,12 @@ def main():
                     "expected_red_tests": expected, "expected_compile_errors": 0,
                 }
                 (out / (label + "-prediction.json")).write_text(json.dumps(prediction, indent=2) + "\n")
-                environment = os.environ | ({"STRATALINT_CONTRACT_SEMANTIC_MUTATION": mode} if mode else {})
+                environment = os.environ | (
+                    {"STRATALINT_CONTRACT_OPAQUE_MUTATION": mode.removeprefix("opaque:")}
+                    if mode and mode.startswith("opaque:") else
+                    {"STRATALINT_CONTRACT_IMPORT_MUTATION": "forbidden"}
+                    if mode == "imports" else
+                    {"STRATALINT_CONTRACT_SEMANTIC_MUTATION": mode} if mode else {})
                 try:
                     path.write_text(changed)
                     build(label, module, 2, r"\[FAIL\] " + re.escape(expected[0]), environment)
@@ -142,7 +182,91 @@ def main():
                     "(_record : BindingRecord) : MetaM Unit := pure ()\n\n"
                 ) + s[end:]
 
-            if args.unit == "current":
+            if args.unit == "arena":
+                arena_probe = "LeanInformationAuditRegTests.ContractArenaProbe"
+                build("validated-arena-control", arena_probe, 0)
+                mutation("validated-arena", equivalence,
+                         lambda s: s.replace(
+                             '  unless (renameExpr mapping oldRecord.occurrence.arena).equal newRecord.occurrence.arena do\n'
+                             '    throwError "contract.equivalence:arena_mapping"\n', ''),
+                         arena_probe, ["comparator_rejects_validated_arena_old",
+                                       "comparator_rejects_validated_arena_new"])
+            elif args.unit == "imports":
+                dependency_probe = "LeanInformationAuditRegTests.ContractUnresolvedDependencyProbe"
+                probe = root / "tools/lean-inspector/LeanInformationAuditRegTests/ContractUnresolvedDependencyProbe.lean"
+                fixture = root / "Reg/ContractPrototype/UnresolvedChanged.lean"
+                build("candidate-import-control", dependency_probe, 0)
+                original = fixture.read_bytes()
+                environment = os.environ | {"STRATALINT_CONTRACT_IMPORT_MUTATION": "forbidden"}
+                try:
+                    fixture.write_bytes(b"import LeanInformationAuditInterface.Syntax\n" + original)
+                    build("candidate-forbidden-import", dependency_probe, 0,
+                          r"\[PASS\] comparator_rejects_unresolved_changed_candidate_import_closure", environment)
+                    mutation("candidate-import-guard", probe,
+                             lambda s: s.replace(
+                                 '  unless forbidden.isEmpty do throwError "candidate_forbidden_import:{forbidden}"',
+                                 '  unless true do throwError "candidate_forbidden_import:{forbidden}"'),
+                             dependency_probe, ["comparator_rejects_unresolved_changed_candidate_import_closure"], "imports")
+                finally:
+                    fixture.write_bytes(original)
+                if fixture.read_bytes() != original:
+                    raise RuntimeError("import input restoration failed")
+                build("candidate-import-source-restored", dependency_probe, 0)
+            elif args.unit == "opaque":
+                opaque_probe = "LeanInformationAuditRegTests.ContractOpaqueProbe"
+                build("opaque-equal-control", opaque_probe, 0)
+                for side, fixture in (
+                    ("old", root / "Reg/ContractPrototype/Controls/Opaque.lean"),
+                    ("new", root / "Reg/ContractPrototype/Opaque.lean"),
+                ):
+                    original = fixture.read_bytes()
+                    expected = ["comparator_rejects_opaque_" + state + "_" + side
+                                for state in ("unresolved", "undeclared")]
+                    prediction = {"mutation_location": str(fixture.relative_to(root)),
+                                  "expected_red_tests": expected, "expected_compile_errors": 0}
+                    (out / ("opaque-" + side + "-prediction.json")).write_text(
+                        json.dumps(prediction, indent=2) + "\n")
+                    environment = os.environ | {"STRATALINT_CONTRACT_OPAQUE_MUTATION": side}
+                    try:
+                        changed = original.decode().replace(
+                            "private opaque hiddenBit : Bool := false",
+                            "private opaque hiddenBit : Bool := true")
+                        if changed == original.decode():
+                            raise RuntimeError("opaque input mutation did not change source")
+                        fixture.write_text(changed)
+                        build("opaque-" + side, opaque_probe, 2 if args.baseline else 0,
+                              r"\[FAIL\] " + re.escape(expected[0]) if args.baseline
+                              else r"\[PASS\] " + re.escape(expected[0]), environment)
+                        if args.baseline:
+                            if results[-1]["compile_errors"] != 0 or sorted(results[-1]["named_failures"]) != sorted(expected):
+                                raise RuntimeError("invalid opaque baseline red")
+                        else:
+                            mutation("opaque-body-" + side, equivalence,
+                                     lambda s: s.replace("info.value? (allowOpaque := true)", "info.value?"),
+                                     opaque_probe, expected, "opaque:" + side)
+                    finally:
+                        fixture.write_bytes(original)
+                    if fixture.read_bytes() != original:
+                        raise RuntimeError("opaque input restoration failed")
+                    build("opaque-" + side + "-source-restored", opaque_probe, 0)
+                if not args.baseline:
+                    environment = os.environ | {"STRATALINT_CONTRACT_OPAQUE_MUTATION": "walk"}
+                    # The mode is an elaboration-time input, so invalidate only
+                    # the probe's source trace before the equal-body walk check.
+                    probe = root / "tools/lean-inspector/LeanInformationAuditRegTests/ContractOpaqueProbe.lean"
+                    original = probe.read_bytes()
+                    try:
+                        probe.write_bytes(original + b"\n")
+                        build("opaque-traversal-control", opaque_probe, 0,
+                              r"\[PASS\] opaque_repository_body_traversal_old", environment)
+                        mutation("opaque-traversal", equivalence,
+                                 lambda s: s.replace("info.value? (allowOpaque := true)", "info.value?"),
+                                 opaque_probe, ["opaque_repository_body_traversal_old",
+                                                "opaque_repository_body_traversal_new"], "opaque:walk")
+                    finally:
+                        probe.write_bytes(original)
+                    build("opaque-traversal-source-restored", opaque_probe, 0)
+            elif args.unit == "current":
                 current_probe = "LeanInformationAuditRegTests.ContractCurrentRecordProbe"
                 expected = ["comparator_rejects_" + label for label in (
                     "unresolved_current_descriptor", "unresolved_source_identity",

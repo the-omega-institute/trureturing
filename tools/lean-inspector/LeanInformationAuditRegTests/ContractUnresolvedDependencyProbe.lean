@@ -6,12 +6,26 @@ import Reg.ContractPrototype.UnresolvedChanged
 open Lean Meta Elab Command LeanInformationAudit
 open ContractPrototype.Equivalence LeanInformationAuditRegTests.ContractMapping
 
+private def candidateClosure (env : Environment) (target : Name) : MetaM Json := do
+  let modules := (reachableModules env target).toArray
+  let forbidden := modules.filter fun name =>
+    (`LeanInformationAudit).isPrefixOf name ||
+    ((`LeanInformationAuditInterface).isPrefixOf name &&
+      !(`LeanInformationAuditInterface.Contract).isPrefixOf name)
+  unless forbidden.isEmpty do throwError "candidate_forbidden_import:{forbidden}"
+  return Json.mkObj [("target", toJson target.toString), ("module_count", toJson modules.size)]
+
 run_cmd do
   let saved := (← getEnv).setExporting false
   setEnv saved
   liftTermElabM do
     let oldRoot := `Reg.ContractPrototype.Controls.Unresolved
     let newRoot := `Reg.ContractPrototype.UnresolvedChanged
+    if (← IO.getEnv "STRATALINT_CONTRACT_IMPORT_MUTATION") == some "forbidden" then
+      discard <| rejected "unresolved_changed_candidate_import_closure" "candidate_forbidden_import" <|
+        candidateClosure saved newRoot
+    else
+      logInfo m!"[PASS] unresolved_changed_candidate_import_closure: {← candidateClosure saved newRoot}"
     let reports ← ContractPrototype.reports #[oldRoot, newRoot]
     let some (_, _, oldEnv) := reports[0]? | throwError "old_report_missing"
     let some (_, _, newEnv) := reports[1]? | throwError "new_report_missing"
