@@ -11,25 +11,25 @@ def heads : Array Name := #[
   `LeanInformationAudit.Contract.Seal]
 
 /-- Inspect dependency syntax to detect aliases and wrappers; never normalize it. -/
-def containsContract (env : Environment) (e : Expr) : Bool := Id.run do
+def scanContract (env : Environment) (e : Expr) (unrelated : NameSet := {})
+    : Bool × NameSet := Id.run do
   let mut pending := e.getUsedConstants
   let mut seen : NameSet := {}
   while !pending.isEmpty do
     let name := pending.back!
     pending := pending.pop
-    if heads.contains name then return true
-    if seen.contains name then continue
+    if heads.contains name then return (true, unrelated)
+    if seen.contains name || unrelated.contains name then continue
     seen := seen.insert name
-    match env.find? name with
-    | some (.defnInfo d) =>
-      if d.type.getForallBody.isSort then pending := pending ++ d.value.getUsedConstants
-    | some (.opaqueInfo d) =>
-      if d.type.getForallBody.isSort then pending := pending ++ d.value.getUsedConstants
-    | some (.inductInfo d) =>
-      for ctor in d.ctors do
-        if let some c := env.find? ctor then pending := pending ++ c.type.getUsedConstants
-    | _ => pure ()
-  return false
+    if let some info := env.find? name then
+      pending := pending ++ info.type.getUsedConstants
+      if let some value := info.value? (allowOpaque := true) then
+        pending := pending ++ value.getUsedConstants
+      if let .inductInfo d := info then pending := pending ++ d.ctors.toArray
+  return (false, seen.toArray.foldl (fun cache name => cache.insert name) unrelated)
+
+def containsContract (env : Environment) (e : Expr) : Bool :=
+  (scanContract env e).1
 
 partial def termHead (stx : Syntax) : Syntax :=
   if stx.isOfKind ``Parser.Term.app then termHead stx[0]
@@ -73,6 +73,26 @@ structure Entry where
   start : String.Pos.Raw
   stop : String.Pos.Raw
 
+/-- Examples emit no named constant; every other author declaration belongs
+to the source inventory, independently of its result-type spelling. -/
+def hasInventory (command : Syntax) : Bool :=
+  command.isOfKind ``Parser.Command.declaration &&
+    !command[1].isOfKind ``Parser.Command.example
+
+private def declarationName (ns : Name) (command : Syntax) : Option Name := do
+  guard (command.isOfKind ``Parser.Command.declaration)
+  let id ← command[1].find? (·.isOfKind ``Parser.Command.declId)
+  guard id[0].isIdent
+  let name := id[0].getId
+  return if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else ns ++ name
+
+private partial def declarations (command : Syntax) : Array Syntax :=
+  if command.isOfKind ``Parser.Command.declaration then #[command]
+  else if command.isOfKind ``Parser.Command.mutual then
+    command.getArgs.flatMap declarations
+  else if command.getKind == `null then command.getArgs.flatMap declarations
+  else #[]
+
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do
   let input := Parser.mkInputContext source file
@@ -90,10 +110,13 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
     if next.pos == state.pos then throw <| IO.userError "contract.discovery:source_progress"
     let some start := command.getPos? | throw <| IO.userError "contract.discovery:source_range"
     let some stop := command.getTailPos? | throw <| IO.userError "contract.discovery:source_range"
-    let sourceName := if command.isOfKind ``Parser.Command.declaration &&
-        command[1][1][0].isIdent then
-      some (ns ++ command[1][1][0].getId) else none
-    entries := entries.push ⟨command, sourceName, start, stop⟩
+    let authorDeclarations := declarations command
+    if authorDeclarations.isEmpty then
+      entries := entries.push ⟨command, none, start, stop⟩
+    else
+      for declaration in authorDeclarations do
+        entries := entries.push ⟨declaration, declarationName ns declaration,
+          declaration.getPos?.getD start, declaration.getTailPos?.getD stop⟩
     if command.isOfKind ``Parser.Command.namespace then
       scopes := ns :: scopes
       ns := ns ++ command[1].getId

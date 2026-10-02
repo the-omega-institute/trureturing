@@ -32,10 +32,14 @@ def checkDefinition (info : ConstantInfo) : MetaM DefinitionVal := do
     throwError "contract.discovery:forwarding_or_computed:{info.name}"
   return value
 
-private def candidate (env : Environment) (info : ConstantInfo) : Bool :=
-  SourceAudit.containsContract env info.type ||
-    (info.type.isSort && (info.value? (allowOpaque := true)).any
-      (SourceAudit.containsContract env ·))
+private def candidate (env : Environment) (info : ConstantInfo)
+    (unrelated : NameSet) : Bool × NameSet := Id.run do
+  let (inType, unrelated) := SourceAudit.scanContract env info.type unrelated
+  if inType then return (true, unrelated)
+  if info.type.isSort then
+    if let some value := info.value? (allowOpaque := true) then
+      return SourceAudit.scanContract env value unrelated
+  return (false, unrelated)
 
 def requireRange (name : Name) : MetaM DeclarationRanges := do
   let some range ← findDeclarationRanges? name
@@ -57,8 +61,11 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
   let constants ← names.mapM fun name => do
     let some info := env.find? name | throwError "contract.discovery:constant_missing:{name}"
     return (name, info)
+  let mut unrelated : NameSet := {}
   for (name, info) in constants do
-    unless candidate env info do continue
+    let (relevant, cache) := candidate env info unrelated
+    unrelated := cache
+    unless relevant do continue
     let range ← requireRange name
     let start := map.ofPosition range.range.pos
     let stop := map.ofPosition range.range.endPos
@@ -77,10 +84,18 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     found := found.push ⟨owner, value, range⟩
   for entry in entries do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
-    if entry.command[1].isOfKind ``Parser.Command.definition then
-      unless entry.sourceName.any (fun sourceName =>
-          names.any (fun name => privateToUserName name == sourceName)) do
-        throwError "contract.discovery:compiled_inventory_missing:{owner}"
+    if SourceAudit.hasInventory entry.command then
+      let mut present := entry.sourceName.any (fun sourceName =>
+        names.any (fun name => privateToUserName name == sourceName))
+      if entry.sourceName.isNone then
+        for name in names do
+          if let some range ← findDeclarationRanges? name then
+            if entry.start ≤ map.ofPosition range.range.pos &&
+                map.ofPosition range.range.endPos ≤ entry.stop then
+              present := true
+              break
+      unless present do
+        throwError "contract.discovery:compiled_inventory_missing:{owner}:{entry.sourceName}"
     let relevant := (entry.command.find? fun node =>
       node.isIdent && SourceAudit.heads.any (SourceAudit.isHeadSpelling node)).isSome
     unless relevant do continue
