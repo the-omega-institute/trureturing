@@ -375,6 +375,12 @@ ternary rows, and a finite q-height window of near-top payers. Complete
 private sources of deeper near-top originals force lower-row service.
 The smaller deletion family's whole repair is still missing.
 
+[Section172](#172-literal-prime-root-collisions-have-one-fixed-exceptional-pair-across-all-sources)
+controls literal prime-root collisions across all cofactor sources.
+At most two fixed original labels meet every collision edge. For each
+complete ternary word, all original3^Hpq multiples together number
+at most pq-max(p,q), retaining every higher digit and cofactor.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -21219,3 +21225,77 @@ The finite-window constraint does not authorize removal of every higher-q origin
 The existing cofactor-free near-top ML threshold needs more than six divisor columns. The parent3^(H-1)q^5 has only six, whereas h_6 has seven; this argument therefore does not reduce the window to q-height two. Lowering the ternary parent changes that threshold and cannot reuse NQW3 unchanged.
 
 Actual height-two payers, the finite near-top missing-p/r window, and lower ternary rows remain. No step excludes the actual triangle as a whole or forces a triangle in every hypothetical cover. These are ordinary mathematical consumers of ML, NPL, TLE and QC2; no new Lean verification or unrestricted Erdős #7 conclusion is asserted.
+
+## 172. Literal prime-root collisions have one fixed exceptional pair across all sources
+
+Keep ONE original EB1 whole cover with Q=3^H q^G M, H,G>=1, q>=5 prime and gcd(M,3q)=1. Fix a complete ternary word u and a first-q root omega. Let T(u,omega) contain ALL original labels
+
+    d=3^H q^e s, e>=1, s|M,
+    a_d=u modulo3^H, a_d=omega modulo q.
+
+No complete cofactor point is fixed. Join two distinct labels when some prime p divides both cofactors and their literal phases agree modulo p. This graph has matching number at most one, over ALL original heights and cofactor sources. Consequently there is ONE fixed set X(u,omega) of at most two original labels meeting every edge. Outside X,
+
+    gcd(s_d,s_f)>1 ==> [a_d]_(s_d) intersect[a_f]_(s_f)=empty.  (GLC1)
+
+Thus at every cofactor point, the incident originals outside this SAME X have pairwise coprime cofactors. X is an analytical partition; its originals remain in the cover.
+
+For any two distinct support primes p,q>=5 and every complete u, a further consequence is
+
+    #{d in D:3^H p q|d, a_d=u modulo3^H}
+       <=pq-max(p,q).                                (GLC2)
+
+This counts every higher p- and q-digit, other cofactor and cofactor source. It does not bound H or the lower ternary rows.
+
+### Two disjoint collisions give a fully paid four-for-four repair
+
+Suppose four distinct originals d_1,d_2,d_3,d_4 in T(u,omega) form disjoint edges, witnessed by cofactor primes p,r and literal residues
+
+    p|s_1,s_2, a_(d_1)=a_(d_2)=b modulo p,
+    r|s_3,s_4, a_(d_3)=a_(d_4)=c modulo r.
+
+Choose the three extensions rho_j=u+j*3^H modulo3^(H+1). If p!=r, reuse §167's four-row construction with tags1,q,p,r. Its last two rows use the separate conditions b modulo p and c modulo r. That proof needs no common cofactor point: each removed original individually implies the condition of its own pair's row. It covers the FULL removed union and has the same strict comparison
+
+    (W_old-W_new)/3^H
+       >=(2q-3)(p+r)-3(q+1)>=17q-33>0.
+
+The additional case is p=r, with b and c possibly different. Use these four APs:
+
+| Ternary residue modulo3^(H+1) | Additional literal conditions | Numerical modulus |
+| --- | --- | --- |
+| rho_0 | none | 3^(H+1) |
+| rho_1 | omega modulo q | 3^(H+1)q |
+| rho_2 | b modulo p | 3^(H+1)p |
+| rho_2 | omega modulo q and c modulo p | 3^(H+1)qp |
+
+At the first two ternary extensions every removed point meets the corresponding row. At rho_2, the first pair meets the p-row and the second pair meets the qp-row. This remains true when b!=c; the two pairs need not occur at any common cofactor source.
+
+The tags1,q,p,qp are distinct. All output moduli have ternary height H+1 and are therefore globally fresh. They are odd nonunits dividing3Q. Put L=3^Hqp. The four old numerical labels are distinct positive multiples of L, so
+
+    W_old>=10L,
+    W_new=3L(1+1/q)(1+1/p)<=108L/25<10L.              (GLC3)
+
+Delete exactly the four originals and retain every other original. On the common carrier Z/(3Q), with its canonical projection pi to Z/Q, whole old coverage gives
+
+    pi^(-1)(E_K) subset union_(d in K) pi^(-1)(A_d).
+
+The displayed rows cover this entire removed union, hence every simultaneous-deletion liability and every integer lift. Four distinct fresh APs replace four originals with strictly smaller modulus sum, contradicting EB1. Both prime cases are therefore excluded.
+
+The matching-number-one classification gives a star or triangle plus isolates. Its center, or two triangle vertices, supplies the fixed X in GLC1. Agreement at even one common first-prime root would be an edge, so any two nonexceptional labels with noncoprime cofactors have disjoint full cofactor cylinders. No source-dependent exceptional selection is used.
+
+### The same fixed graph bounds a complete prime-root table
+
+Fix a cofactor prime p. At any one literal p-root b, the labels in T(u,omega) bearing p share a phase modulo h=3^Hqp. A nonempty group supplies this ORIGINAL parent by divisor closure. Since tau(qp)=4, the existing DR8 cap permits at most two proper descendants in that phase. If h itself belongs to the group, comparable-original disjointness excludes every proper descendant there. Hence every p-root contains at most two originals.
+
+Two doubled p-roots would give disjoint graph edges, so at most one root is doubled. Root zero is unavailable because the original prime-p class is normalized to zero and comparable originals are disjoint. Thus
+
+    #{d in T(u,omega):p|s_d}<=p.                     (GLC4)
+
+For GLC2, form the(p-1)-by-(q-1) table whose entry m_(b,c) counts every original divisible by3^Hpq with ternary word u and literal nonzero roots b modulo p,c modulo q. Each entry is at most two. GLC4's graph argument gives at most one doubled entry in each column; interchanging p and q gives at most one in each row. This interchange uses no concentration assumption. The doubled entries form a partial matching, so
+
+    sum_(b,c)m_(b,c)
+      <=(p-1)(q-1)+min(p-1,q-1)
+       =pq-max(p,q).
+
+In the general R intersect{5,7,11,13} branch, companion7 for shared5 and companion5 for shared7,11,13 give respective bounds28,28,44,52 per complete u. Original5 and7 are available by initial-segment support and the existing two-prime reciprocal obstruction in Report375 §9. No assumption makes the selected shared prime the largest or excludes it from being the largest.
+
+The new relation controls noncoprime interactions across different sources and supplies fixed small-pair capacities while retaining every tail. Coprime cofactor overlaps can still form odd incidence cycles; GLC1 does not imply balancedness or nesting of traces. Originals omitting the chosen pair, lower ternary rows and the number of complete u remain uncontrolled here. Even the actual parent3^Hpq need not have bounded numerical size. No bounded mixed vacancy, absolute support bound or unrestricted noncoverage follows from this ordinary mathematical result alone; no Lean verification is asserted.
