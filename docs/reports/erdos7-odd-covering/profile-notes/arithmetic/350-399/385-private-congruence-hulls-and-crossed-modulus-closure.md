@@ -23882,3 +23882,76 @@ lower \(p\)-height classes, new cofactor types at exact height \(e\), or a
 larger joint replacement.  This observation complements (MI2)--(MI3) and
 does not assert that the exact-height subfamily has distinct labels or
 preserves the original phases.
+
+## 202. The old cofactor palette cannot cheaply repair two full fibres
+
+The preceding bounds concern arbitrary labels.  A sharper obstruction applies
+when a proposed replacement keeps only the \(p\) original cofactor types.  Let
+
+\[
+ M=\{m_0,\ldots,m_{p-1}\},\qquad
+ L=\operatorname{lcm}(M),
+\]
+
+with the \(m_i\) distinct and coprime to the odd prime \(p\).  Let
+\(F_\rho=\rho\pmod L\) and \(F_\sigma=\sigma\pmod L\), and write
+
+\[
+ t=\#\{m\in M:m\mid \rho-\sigma\}.
+\]
+
+Consider any finite family of distinct numerical labels of the form
+\(p^e m\), \(e\ge1\), \(m\in M\), with arbitrary phases, that covers
+\(F_\rho\cup F_\sigma\).
+
+If \(t\le p-2\), no such family exists.  On a fixed cofactor fibre, one
+class of type \(m\) and exponent \(e\) has relative mass \(p^{-e}\).  A
+compatible type can meet both fibres, while an incompatible type can meet at
+most one.  Since distinct labels permit at most one class for each pair
+\((e,m)\), the total mass available on the two fibres is strictly below
+
+\[
+ \bigl(2t+(p-t)\bigr)\sum_{e\ge1}p^{-e}
+ =\frac{p+t}{p-1}\le2.
+\]
+
+The strict inequality is because the family is finite, whereas covering both
+fibres requires total mass at least two.
+
+If \(t=p-1\), every cofactor type must occur on each fibre.  Otherwise the
+remaining \(p-1\) types have finite total mass strictly below one on the
+missing fibre.  The unique incompatible type must therefore occur twice.
+If a compatible type occurred only once, its one class fixes one first
+\(p\)-digit on both fibres.  Every other first-digit/fibre pair would then
+need an exponent-one class; deeper classes of the other \(p-1\) types have
+total conditional mass strictly below one.  The remaining exponent-one
+types can serve at most
+
+\[
+ 2(p-2)+1=2p-3
+\]
+
+of the \(2p-2\) required pairs, a contradiction.  Hence every cofactor type
+occurs at least twice, with distinct exponents, and
+
+\[
+\boxed{
+ |\mathcal R|\ge2p,\qquad
+ \sum_{C\in\mathcal R}\operatorname{mod}(C)
+ \ge p(p+1)\sum_{m\in M}m.
+}
+\tag{OP1}
+\]
+
+Both bounds are sharp: use one \(pm\) class for every \(m\in M\), with the
+\(\rho\)-phase, and one \(p^2m\) class for every \(m\in M\), with the
+\(\sigma\)-phase, assigning their \(p\)-digits so that the common types cover
+the shared roots and the unique incompatible type supplies the remaining
+root on each fibre.
+
+This proposition is a finite full-fibre statement.  The actual
+\(E_A,E_B\) in Section 192 can be proper subsets of \(F_\rho,F_\sigma\), so
+(OP1) cannot be applied without proving that the complete fibres survive the
+retained family.  It nevertheless rules out a proposed repair strategy that
+keeps only the old cofactor palette and tries to escape the occupied label by
+raising \(p\)-adic exponents.
