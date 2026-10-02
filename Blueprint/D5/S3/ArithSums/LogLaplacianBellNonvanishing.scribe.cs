@@ -39,7 +39,10 @@ internal sealed class LogLaplacianBellNonvanishingDocument : IScribeDocumentDefi
                     + "The only remaining profile has j_2=m and all other counts zero; "
                     + "its contribution b_1^m has valuation zero. The ultrametric inequality therefore "
                     + "makes the scaled sum nonzero with valuation zero, proving the assertion. The identity scaled_pBell links the defining Bell sum to the finite-profile sum; scaledEntry_pos_val supplies the strict positive valuation of each nonprincipal even profile.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rosenzweig-stanfill-2026-open-problem-1-3-bell-nonvanishing"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance, string? declaration = null,

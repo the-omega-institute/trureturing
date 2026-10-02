@@ -80,6 +80,10 @@ $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (pBell\left(2 \cdot m, S_{1}
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/LogLaplacianBellNonvanishing.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rosenzweig-stanfill-2026-open-problem-1-3-bell-nonvanishing` (proved) by `D5/S3/ArithSums/LogLaplacianBellNonvanishing.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rosenzweig-stanfill-2026-open-problem-1-3-bell-nonvanishing","declaration_gid":"D5/S3/ArithSums/LogLaplacianBellNonvanishing.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Rosenzweig; J. Stanfill (2026). *On the fundamental solutions of two nonlocal parabolic equations related to logarithmic Laplacians*. DOI: [10.48550/arXiv.2606.04225](https://doi.org/10.48550/arXiv.2606.04225). URL: <https://arxiv.org/abs/2606.04225>.
