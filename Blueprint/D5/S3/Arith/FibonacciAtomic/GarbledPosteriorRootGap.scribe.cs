@@ -21,6 +21,10 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
+                        "The head contract in this theorem contains no probability adapter "
+                            + "after softmax. The theorem does not apply to models that add "
+                            + "such an adapter.")),
+                    Paragraph(Text(
                         "The alphabet W is the existing set of five whole windows 000, 100, "
                             + "010, 101 and 001, written from low to high. Input(m) consists of "
                             + "m+3 independent windows, with each word having mass 5^(-(m+3)). "
@@ -35,7 +39,10 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
                             + "word mass times the j-th coordinate of the row selected by its "
                             + "class. The predictor p is the softmax of u_i z(x)+v_i.")),
                     Paragraph(Text(
-                        "R_2 is the joint-law expectation of the complete three-label Brier "
+                        "In the displayed formula, R_2(p), R_log(p), b, h and p denote "
+                            + "brierRisk (softmax z u v), logRisk (softmax z u v), "
+                            + "brierBayes m, logBayes m and softmax z u v, respectively. "
+                            + "R_2 is the joint-law expectation of the complete three-label Brier "
                             + "loss sum_i (p_i(x)-1[j=i])^2. Its Bayes value b is the word "
                             + "expectation of 1-sum_i rho_i(x)^2. R_log is the joint-law "
                             + "expectation of -log p_j(x), using natural logarithms. Its Bayes "
@@ -53,6 +60,9 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
                             + "turn this separation into a squared probability error. That "
                             + "class has uniform mass at least 16/125. The finite Pinsker "
                             + "inequality transfers the same bound to logarithmic excess risk. "
+                            + "For the Pinsker convention, see Reid–Williamson, Information, "
+                            + "Divergence and Risk for Binary Experiments, JMLR 12 (2011), "
+                            + "§3.2 and Appendix E. "
                             + "The general softmax rank obstruction is discussed by Yang et al. "
                             + "in arXiv:1711.03953 and by Ganea et al. in ICML 2019; the "
                             + "displayed constant belongs to this specified posterior."))),

@@ -58,6 +58,9 @@ def brierRisk {m : ℕ} (p : Input m → Fin 3 → ℝ) : ℝ :=
 
 def brierBayes (m : ℕ) : ℝ := mean (m := m) (fun x => 1 - ∑ i, posterior x i ^ 2)
 
+/-- Used only for probability predictions with positive coordinates, as supplied by softmax here.
+The source's extended-real convention of +∞ for zero true-class probability
+is outside this definition. -/
 def logRisk {m : ℕ} (p : Input m → Fin 3 → ℝ) : ℝ :=
   ∑ x, ∑ j, jointMass x j * (-Real.log (p x j))
 
@@ -197,8 +200,9 @@ private theorem probability_separation (p q : Fin 3 → ℝ) (μ δ : ℝ)
     change μ ^ 2 * δ ^ 2 / 240 ≤ e
     nlinarith [sq_nonneg μ]
 
--- The exact three-window class count expands 125 branches within the main proof.
+-- Exact three-window class counts require a larger local elaboration budget.
 set_option maxHeartbeats 1600000 in
+-- The class-count subproof expands 125 three-window configurations.
 /-- The risk is scored under the joint law, with its own Bayes value.
 The lower bound includes arbitrary scalar roots and free affine heads. -/
 theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
