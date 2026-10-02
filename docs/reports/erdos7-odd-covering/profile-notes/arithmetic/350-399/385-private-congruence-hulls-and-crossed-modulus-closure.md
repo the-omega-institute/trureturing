@@ -16490,3 +16490,127 @@ The source estimate here therefore keeps a distinct conditional
 scope with arbitrary lower-row support. These are ordinary deductions
 from DP7, SH3 and RE7, not new Lean verification or a claim that an
 EB1 cover realizing OP1 exists.
+
+## 133. Complete surviving q-tails improve the same-marginal liability law
+
+Keep the original source and notation of Report385 §127: Q=3^H q^G M, q>3, t=q-2, J={d:v_q(d)>=1, v_3(d)<H}, retained labels K=D minus J, retained q-bearing top row T, complete q-free residual R, actual complements E_x, and W. All original heights, residues, labels and cofactor incidences remain fixed. Supply ONE probability theta on W. The following construction strengthens RE7–RE8 while preserving exactly that theta.
+
+### A shallow skeleton with complete actual tails
+
+For G>=2, reuse SH2 to choose at each x in W exactly t first-q roots and exactly t second-level children under each, with no incident retained ancestor of q-height one or two. Write S_x for these t^2 selected depth-two prefixes. Choose the skeletons once for this original source.
+
+For every beta in S_x set
+
+    Y_(x,beta)=E_x intersect [beta]_(q^2).
+
+The original-parent phase cap already used in SH1 counts at most TWO retained originals of height e>2 below beta, across all deeper heights and cofactors together. The parent is the actual original 3^H q^2 whenever such a descendant exists; all counted original phases agree with x's full ternary coordinate and beta. Imposing x's actual cofactor incidence can only decrease this count.
+
+Each of the two deeper cylinders removes at most q^(G-3) leaves. Hence for G>=3,
+
+    |Y_(x,beta)| / q^(G-2) >= 1-2/q = t/q.         (DT1)
+
+For G=2 the selected prefix is itself an unremoved leaf and this density is one. This is a bound for the COMPLETE surviving tail: every deeper retained original remains deleted at its original phase and height.
+
+Give each selected beta mass t^(-2), distributed uniformly over Y_(x,beta). This defines one conditional probability eta_x supported in E_x. For G=1, use instead uniform mass on any t first roots missed by the retained row, whose existence is the G=1 case of SH2.
+
+For 1<=e<=G define
+
+    kappa_e=t^(-min(e,3)) q^(-max(e-3,0)).          (DT2)
+
+Every q-prefix of depth e has eta_x-mass at most kappa_e. The first two bounds are t^(-1), t^(-2). For e>=3 a prefix meets at most one selected beta, and DT1 gives
+
+    eta_x([b]_(q^e))
+       <=t^(-2) q^(G-e)/[(t/q)q^(G-2)]
+        =t^(-3)q^(3-e).
+
+Thus no arbitrary-height tail estimate or renewed descendant budget is needed. At G=1,2 only the corresponding first one or two coefficients occur.
+
+### One supported law and every original event
+
+Sample x according to theta and then its q-coordinate according to eta_x. The resulting law nu satisfies
+
+    support(nu) subset E_J,
+    projection_(u,v)(nu)=theta,
+    nu(A_d)=0                                      for d in K,
+    nu(A_d)<=kappa_(e_d) theta(B_d)                 for d in J. (DT3)
+
+The last estimate is conditional on the SAME x: an original d can be present only when x belongs to its literal non-q event B_d. Whole original coverage consequently requires
+
+    1<=sum_(d in J)nu(A_d)
+      <=sum_(d in J)kappa_(e_d) theta(B_d).          (DT4)
+
+For G>=2 its exact conditional original-event price is
+
+    1_(B_d)(x) t^(-2)
+       sum_(beta in S_x)
+          |Y_(x,beta) intersect [r_d]_(q^e_d)| / |Y_(x,beta)|.
+
+It may be integrated against theta before making any uniform bound. All original cofactor powers and actual deep-tail intersections remain in this expression.
+
+The DT4 upper charge is no larger than the RE8 upper charge with this same theta. For e>=4,
+
+    kappa_e/t^(-e)=(t/q)^(e-3)<1.
+
+The improvement of these upper charges is strict if some original d in J has e_d>=4 and theta(B_d)>0. For G<=3 the coefficient bounds coincide. For example q=5,e=6 gives coefficient 1/3375 instead of 1/729; the ratio is 27/125. These compare valid bounds for the law just constructed, not event probabilities under different optimizing laws.
+
+### The exact convergent sum and its existing consumers
+
+Put K_(q,G)=sum_(e=1..G)kappa_e. Direct summation gives
+
+    K_(q,1)=1/t,
+    K_(q,2)=1/t+1/t^2,
+    K_(q,G)=1/t+1/t^2
+              +q[1-q^(-(G-2))]/[t^3(q-1)]         for G>=3.
+
+Its infinite limit and exact improvement over the old geometric envelope are
+
+    K_(q,infinity)
+       =1/(q-3)-2/[(q-3)(q-2)^3(q-1)],
+
+    1/(q-3)-K_(q,infinity)
+       =2/[(q-3)(q-2)^3(q-1)].                     (DT5)
+
+The finite sum is strictly below its infinite limit. The finite improvement over sum_(e=1..G)t^(-e) is zero for G<=3 and strictly positive for G>=4. Representative complete-height envelopes are
+
+| q | old envelope | K_(q,infinity) | difference |
+| --- | --- | --- | --- |
+| 5 | 1/2 | 53/108 | 1/108 |
+| 7 | 1/4 | 187/750 | 1/1500 |
+| 11 | 1/8 | 911/7290 | 1/29160 |
+
+The immediate unresolved target is RE8's strict original-source upper charge below one. If this SAME theta has simultaneous bounds
+
+    theta(B_d)<=beta_(a_d) gamma_(s_d),
+
+then numerical distinctness gives
+
+    1<=C K_(q,G),
+    C=[sum_(a=0..H-1)beta_a] [sum_(s|M)gamma_s].     (DT6)
+
+Thus C K_(q,G)<1 is a sufficient contradiction, and every such source must satisfy C>1/K_(q,infinity). At q=5 the infinite-envelope boundary improves from C>2 to C>108/53. This can improve a continuous weighted or density threshold lying in that interval. It does not by itself improve the old coarse integer bound C>=q-2, since
+
+    q-3 < 1/K_(q,infinity) < q-2.
+
+Report375 LM4–LM5 is an existing convergent-sum consumer: taking gamma_s=1 gives C=tau(M) sum beta_a. DT6 strengthens that estimate when the supplied ternary law comes from a suitable theta on W, for example the actual binary-cell representatives certified by RE9/SH4. A law supported only on the larger U does not suffice for this construction.
+
+Report385 RE10 supplies another direct same-source consumer. If W has normalized counting density delta_*>0 and theta is uniform on W, its simultaneous bound is theta(B_d)<=3^(-a_d)/(s_d delta_*). Consequently DT6 gives
+
+    1 <= [3(1-3^(-H))/(2 delta_*)]
+          [sum_(s|M)1/s] K_(q,G).                  (DT7)
+
+The sufficient contradiction threshold is therefore
+
+    delta_* > (3/2)(1-3^(-H)) [sum_(s|M)1/s] K_(q,G),
+
+with the precise decrease obtained by replacing the old q-height sum by DT5's finite sum. Neither adequate delta_* nor the needed binary-cell margins are established here.
+
+Report385 CF7–CF9 has a similar geometric sum, but its law first selects q-leaves and then conditions complete cofactor fibres; it need not have a marginal supported on W. DT2 cannot simply be inserted into that different construction. If a single theta on W separately satisfies beta_a min(1,1/(s delta)) bounds, DT6 does yield the corresponding A_delta(M) sum beta_a threshold with K_(q,G). That is an explicit extra same-source premise.
+
+Finally, the full-payment unconditioned shortcut excluded by RE11 remains excluded: kappa_e>=q^(-e), so complete-q-line counting still gives
+
+    sum_(d in T)3^(-e_d)lambda(B_d)
+      +sum_(d in J)kappa_(e_d)lambda(B_d) >= lambda(R)
+
+for every nonnegative lambda on R. The gain resides in the supported conditional law and its actual incidences. It does not supply nonempty W, compatibility of SD1's canonical cofactor law, or a universal strict charge below one.
+
+These are ordinary mathematical consequences of the existing phase cap, SH2 and finite probability construction. No new Lean verification or unrestricted Erdős #7 conclusion is asserted.
