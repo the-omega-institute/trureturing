@@ -11110,7 +11110,20 @@ D_{\rm fin}(f)&=\int_0^r H_f(t)\mathcal K_{S,\mathbf N}(t)dt,\\
 \end{aligned}
 $$
 
-正项使用实际 Burnol 物理评价向量 $k_t\in V$，而非假定的 Euler-product entire generator。令 $d\mu(t)=dt/(2\pi)$、$d(t)=\|k_t\|^2$，并复用实际加权密度合同
+正项使用实际 Burnol 物理评价向量 $k_t\in V$。具体地，$k_t$ 是源的 Sonin 评价意义下未完成 Mellin 泛函
+
+$$
+\mathcal M\xi(t)=\int_0^\infty\xi(x)x^{-1/2-it}dx
+$$
+
+在 $V$ 上的 Riesz 代表。若 $D_{\rm comp}(t)$ 是对应完成 Mellin 评价的范数平方，令
+
+$$
+s_t=\tfrac12+it,\qquad \gamma(s)=\pi^{-s/2}\Gamma(s/2),\qquad
+d(t)=\|k_t\|^2=\frac{D_{\rm comp}(t)}{|\gamma(s_t)|^2}.
+$$
+
+这一归一化直接运输评价泛函；不能把完成对角 $D_{\rm comp}$ 直接作为物理迹密度。这里不构造一个假定的 Euler-product entire generator。令 $d\mu(t)=dt/(2\pi)$，并复用实际加权密度合同
 
 $$
 \sigma_S(f)=\int_{\mathbb R}|\widehat f(t)|^2
@@ -11146,7 +11159,7 @@ $$
 \end{aligned}
 $$
 
-在第 18 节源合同、消极点条件及支撑完整条件下，$\mathfrak c\ge0$ 足以推出 $Q_{\rm full}(f)\ge0$；$\mathfrak c<0$ 不给出 $Q_{\rm full}$ 的符号。更强版本保留精确正迹，故 $\mathfrak c\le\widetilde{\mathfrak c}$。
+在第 18 节源合同、极点消去条件及支撑完整条件下，$\mathfrak c\ge0$ 足以推出 $Q_{\rm full}(f)\ge0$；$\mathfrak c<0$ 不给出 $Q_{\rm full}$ 的符号。更强版本保留精确正迹，故 $\mathfrak c\le\widetilde{\mathfrak c}$。
 
 $\mathcal F_S$ 是酉对合，$C$ 是其压缩，因此
 
@@ -11173,7 +11186,7 @@ $$
 
 这里使用真实截断误差的方向消去尾部；未把各项分别可达的极值当成同一配置。
 
-### 19.3 显式实测试与恰好三个约束
+### 19.3 显式实测试与三个精确约束
 
 固定实偶 bump
 
@@ -11356,6 +11369,22 @@ $$
 
 ### 20.4 尚须控制的量与来源边界
 
+在第 18 节合同下，令
+
+$$
+\mathfrak c_{{\rm exact},S}(f)=\sigma_S(f)-D_{\rm lin}(f)-b_S\|f\|_1^2.
+$$
+
+则有
+
+$$
+Q_{\rm full}(f)=\mathfrak c_{{\rm exact},S}(f)
++\bigl[b_S\|f\|_1^2-N_S(f)\bigr],\qquad
+b_S\|f\|_1^2-N_S(f)\ge0,
+$$
+
+其中 $N_S=D_{\rm corr}-D_{\rm lin}$。因此证书变负仍与实际 $Q_{\rm full}$ 非负相容；被扣预算与实际余项之间的差额正是未被粗界解释的部分。
+
 障碍落在 $b_S\|f\|_1^2$ 这一绝对预算，并未给出 $D_{\rm corr}(f_{\mathcal R})>\sigma_S(f_{\mathcal R})$，也未决定不扣预算时 $L_S(f)-D_{\rm lin}(f)$ 的符号。条件性推导只说明：在同一族上，除去共同因子 $\chi_S$ 后，最有利的正迹与线性补偿上界为 $O(1)+O(\mathcal R)$，而保留预算至少为固定正系数乘 $\mathcal R^4$。
 
 需要研究的实际有符号余项是
@@ -11365,7 +11394,7 @@ N_S(f)=D_{\rm corr}(f)-D_{\rm lin}(f)
 =2\operatorname{Re}\operatorname{Tr}(C^3RB_f\mathcal F_SQ).
 $$
 
-在消极点及支撑完整合同下，足够的联合条件为
+在极点消去及支撑完整合同下，足够的联合条件为
 
 $$
 N_S(f)\le\sigma_S(f)-D_{\rm lin}(f)
