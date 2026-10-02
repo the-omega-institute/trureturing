@@ -4121,3 +4121,254 @@ It does not identify a Frobenius event, compute a prime density,
 or produce a prime in the finite support of the current block.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 69. Local and Galois structure of the actual common cubic fields
+
+For each integer $j\geq1$, retain the actual Lucas block
+$B_j=L_{3^j}^2+3$ and its designated positive real cube root
+$\theta_j=B_j^{1/3}$. Put $\omega=\exp(2\pi i/3)$ and
+$E=\mathbb Q(\omega)$. For every integer $J\geq0$, define the
+actual subfields of $\mathbb C$
+
+$$
+F_J=\mathbb Q(\theta_1,\ldots,\theta_J),\qquad
+N_J=E(\theta_1,\ldots,\theta_J),
+$$
+
+with $F_0=\mathbb Q$ and $N_0=E$. Write
+
+$$
+c_j=\prod_{p\mid B_j}p^{\lfloor v_p(B_j)/3\rfloor},\qquad
+ d_j=B_j/c_j^3,\qquad
+ R_J=\prod_{j=1}^J\operatorname{rad}(d_j),\qquad R_0=1.
+$$
+
+Thus $c_j$ is the largest positive integer whose cube divides
+$B_j$; it is not the ordinary real cube root rounded down.
+Here $\operatorname{rad}(a)$ is the product of the distinct
+rational prime divisors of the positive integer $a$.
+For a number field $K$, write $\mathcal O_K$ for its integer ring.
+For primes $\mathfrak P\mid\mathfrak p$, write
+$e(\mathfrak P/\mathfrak p)$ and $f(\mathfrak P/\mathfrak p)$
+for the ramification index and residue degree. All primes below
+are nonzero prime ideals. The inertia group at $\mathfrak P$
+is the subgroup acting trivially on its residue field.
+These assertions give separate local and group statements used
+by the discriminant calculation of Theorem 56.1.
+
+**Theorem 69.1 (compatible completion collapse at three).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+prime $\mathfrak p$ of $\mathcal O_E$ above $(3)$ and every
+prime $\mathfrak P$ of $\mathcal O_{N_J}$ above $\mathfrak p$,
+there is a continuous surjective unital ring homomorphism
+
+$$
+\iota_{\mathfrak p,\mathfrak P}:E_{\mathfrak p}\longrightarrow
+(N_J)_{\mathfrak P}
+$$
+
+between their adic completions, such that for every $x\in E$
+its value on the image of $x$ equals the image of $x$ through
+$E\hookrightarrow N_J\hookrightarrow(N_J)_{\mathfrak P}$.
+
+Proof. Each actual block is congruent to one modulo nine.
+The three-adic Hensel construction gives a cube root of each
+block in the completion of the base. Embed the generated tower
+into that completion using those roots, extend the compatible
+base embedding to the specified tower completion, and identify
+the closure of the base with the entire completion.
+
+**Theorem 69.2 (relative ramification at three with its completion map).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+$\mathfrak p\mid(3)$ in $\mathcal O_E$ and every
+$\mathfrak P\mid\mathfrak p$ in $\mathcal O_{N_J}$,
+there is a continuous surjective ring homomorphism
+$\iota_{\mathfrak p,\mathfrak P}:E_{\mathfrak p}\to(N_J)_{\mathfrak P}$
+agreeing with both embeddings of every $x\in E$, and
+
+$$
+e(\mathfrak P/\mathfrak p)=1.
+$$
+
+Proof. The compatible completion map transports the base
+valuation to the tower valuation. Surjectivity identifies their
+value groups, so the relative ramification index is one.
+
+**Theorem 69.3 (relative residue degree at three).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+$\mathfrak p\mid(3)$ in $\mathcal O_E$ and every
+$\mathfrak P\mid\mathfrak p$ in $\mathcal O_{N_J}$,
+
+$$
+f(\mathfrak P/\mathfrak p)=1.
+$$
+
+Proof. Approximate an integral element of the tower completion
+by an element of the dense image of the base, close enough to
+preserve its residue. The compatible surjective completion map
+therefore makes the base residue-field map surjective.
+
+**Theorem 69.4 (rational Galois action and actual conjugation).**
+For every $J\geq0$, $N_J/\mathbb Q$ is Galois. There is an
+automorphism $c\in\operatorname{Gal}(N_J/\mathbb Q)$ satisfying
+$c(x)=\overline x$ in the designated complex embedding for all
+$x\in N_J$, with $c^2=1$ and $c\ne1$. For every
+$\sigma\in\operatorname{Gal}(N_J/E)$, regard $\sigma$ also as a
+rational automorphism. Then
+
+$$
+c\sigma c=\sigma^{-1}.
+$$
+
+Proof. The field contains every conjugate of each radical and
+of $\omega$, so it is a splitting field. Conjugation fixes the
+positive roots and inverts $\omega$. The same-root cubic
+coordinate action consequently changes every exponent to its
+negative under conjugation; the generators determine the whole
+automorphism.
+
+**Theorem 69.5 (the conjugation subgroup is self-normalizing).**
+For every $J\geq0$, there is an actual conjugation automorphism
+$c\in\operatorname{Gal}(N_J/\mathbb Q)$ with
+$c(x)=\overline x$ for all $x\in N_J$, $c^2=1$ and $c\ne1$,
+such that
+
+$$
+N_{\operatorname{Gal}(N_J/\mathbb Q)}(\langle c\rangle)
+=\langle c\rangle.
+$$
+
+Proof. An automorphism normalizing the nontrivial order-two
+subgroup commutes with conjugation. Its radical-coordinate
+part equals its inverse. A group of exponent three has no
+nonidentity element satisfying that equality, leaving precisely
+the two elements of the conjugation subgroup.
+
+**Theorem 69.6 (primes above three and the unique fixed prime).**
+For every $J\geq0$, $N_J$ is a number field and there is an
+automorphism $c$ acting as complex conjugation on every element.
+There are exactly $3^J$ primes of $\mathcal O_{N_J}$ above
+$(3)$. Every such prime $\mathfrak P$ satisfies
+
+$$
+e(\mathfrak P/(3))=2,\qquad f(\mathfrak P/(3))=1.
+$$
+
+Exactly one of these primes is fixed by $c$.
+
+Proof. Combine relative completion collapse with the quadratic
+cyclotomic ramification at three. Galois transitivity and the
+fundamental identity give the number of primes. The decomposition
+subgroup has order two; self-normalization of conjugation makes
+its action have exactly one fixed prime.
+
+**Theorem 69.7 (inertia fixes all unit radical coordinates).**
+For every $J\geq0$, every rational prime $p\ne3$, every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$ and every
+$\sigma$ in its inertia group, $\sigma$ fixes $\omega$.
+For every integer $j$ with $1\leq j\leq J$, if $p\nmid d_j$,
+then $\sigma$ fixes the designated element $\theta_j$ of $N_J$.
+
+Proof. Distinct cubic roots of unity have distinct reductions
+away from three. Divide each radical by its integral cube factor;
+when $p\nmid d_j$ the result is a unit. An inertia automorphism
+cannot multiply that unit by a nontrivial cubic root of unity,
+because its residue must remain fixed.
+
+**Theorem 69.8 (inertia has at most three elements at a block prime).**
+For every $J\geq0$, every $1\leq j\leq J$, every rational
+prime $p\ne3$ dividing $B_j$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+\#I_{\mathfrak P}(N_J/\mathbb Q)\leq3.
+$$
+
+Proof. The actual block supports are disjoint. Inertia fixes the
+base and every other radical coordinate. The image of the one
+remaining radical can have only its three cubic conjugates, and
+those generator images determine the automorphism.
+
+**Theorem 69.9 (rational degrees and signature of the positive-root field).**
+For every $J\geq0$,
+
+$$
+[N_J:\mathbb Q]=2\cdot3^J,\qquad [F_J:\mathbb Q]=3^J.
+$$
+
+The field $F_J$ is a number field with exactly one real place
+and $(3^J-1)/2$ complex places. The assertion includes
+$F_0=\mathbb Q$ with signature $(1,0)$.
+
+Proof. The cubic tower degree over $E$ gives the first degree.
+The positive-root field lies in the real numbers and has trivial
+intersection with $E$ over $\mathbb Q$, giving the second.
+A real embedding must select the unique real conjugate of each
+radical. Thus precisely one embedding is real; the others pair
+under conjugation.
+
+**Theorem 69.10 (semidirect product with coordinate inversion).**
+For every $J\geq0$, there exists an action
+$\phi:C_2\to\operatorname{Aut}(C_3^J)$ whose nonidentity element
+sends each vector $x$ to $x^{-1}$, and a group isomorphism
+
+$$
+C_3^J\rtimes_\phi C_2
+\simeq\operatorname{Gal}(N_J/\mathbb Q).
+$$
+
+Here $C_3^J$ is the product of $J$ cyclic groups, with the empty
+product equal to the trivial group.
+
+Proof. Restrict rational automorphisms to the actual cyclotomic
+base. The kernel is the cubic-coordinate group and conjugation
+splits the order-two quotient. Its action on that kernel is
+inversion. Transport the split extension along the actual
+coordinate and cyclic-quotient equivalences.
+
+**Theorem 69.11 (a nonzero cubic valuation forces ramification).**
+For every $J\geq0$, every $1\leq j\leq J$, every rational
+prime $p$ for which $3\nmid v_p(B_j)$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+3\mid e(\mathfrak P/(p)).
+$$
+
+Proof. The valuation of the actual root equation
+$\theta_j^3=B_j$ equals the ramification index times the base
+valuation of $B_j$. Its left side is divisible by three, while
+the given base valuation is not.
+
+**Theorem 69.12 (no ramification outside the cubefree support).**
+For every $J\geq0$, every rational prime $p\ne3$ satisfying
+$3\mid v_p(B_j)$ for every $1\leq j\leq J$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+e(\mathfrak P/(p))=1.
+$$
+
+Proof. Every normalized radical is a unit at this prime.
+Inertia fixes the base and all radical coordinates, hence is
+trivial. The Galois ramification-inertia identity gives the
+ramification index.
+
+**Theorem 69.13 (sixth power of the absolute different).**
+For every $J\geq0$, let $\mathfrak D_J$ be the different ideal
+of $\mathcal O_{N_J}$ over $\mathbb Z$. As ideals of
+$\mathcal O_{N_J}$,
+
+$$
+\mathfrak D_J^6=(3)^3(R_J)^4.
+$$
+
+Proof. At primes over three, the absolute ramification index is
+two and the tame different multiplicity is one. At primes
+in the cubefree support, the index is three and the different
+multiplicity is two. Every other prime is unramified and its
+different multiplicity is zero. Unique factorization of ideals
+then gives the displayed equality at every prime.
+
+## 追加锚（本行以下为增补区）
