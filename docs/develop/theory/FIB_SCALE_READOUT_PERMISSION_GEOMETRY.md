@@ -1633,3 +1633,328 @@ $$
 显露阶段后，在两个已知阶段分别应用同一个既有目标纤维判据；存在按实际 $s$ 选择的恢复器，当且仅当 $2E$ 同时严格小于两个同阶段间距，即 $2E<\delta_{\mathrm{cal}}$。式 (5.2) 给式 (5.7)。有限间距的失败可取同在低阶段的实际达到点对，式 (5.8) 的中点也具有相同的阶段标记，因此显露阶段仍不能消除等号失败。两个结论都使用原始数量单位中的同一个 $E$，没有作依赖实际阶段的尺度归一化。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 6. 共同相对响应下的阶段隐藏与许可分离
+
+**定义 6.1（原始相对响应与反标签比值）。** 沿用定义 1.1、4.1 的非空有限有序完全二叉树、全局替换 $\rho$、联合初始来源 $\mathcal T_H\times\{\ell,\ell+d\}$、初始组成域 $D_H$ 与初始组成许可 $\chi_k$，其中 $\ell\in\mathbb N_0$、$k,d,H\in\mathbb N_{\ge1}$。各阶段的原始真值仍是式 (4.2) 的正整数 $n_s(x)=A_sx_1+B_sx_2$。对共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，定义单个原始有理报告的允许响应关系
+
+$$
+\mathcal R^{\mathrm{hid}}_{H,k,\ell,d,\epsilon}
+=\left\{((T,s),r):
+T\in\mathcal T_H,\ s\in\{\ell,\ell+d\},\ r\in\mathbb Q,
+\ |r-n_s(c(T))|\le\epsilon n_s(c(T))\right\}.
+\tag{6.1}
+$$
+
+参数 $H,k,\ell,d,\epsilon$ 已知，实际阶段 $s$ 隐藏，观察恰为 $r$，不作依赖实际 $s$ 的归一化。预算仍只限制两个分支各自的初始树，后续替换树可超过 $H$。显露阶段的合同额外给出 $s$，允许响应仍是式 (6.1)，观察为 $(s,r)$。隐藏阶段统一恢复指存在总函数 $P:\mathbb Q\to\{0,1\}$，对每个允许响应输出 $\chi_k(c(T))$；显露阶段的恢复器是 $P_{\mathrm{cal}}:\{\ell,\ell+d\}\times\mathbb Q\to\{0,1\}$。目标仅取初始组成祖先的存在，不恢复完整树、规范地址、指定树的语法祖先或实际逆执行。相对响应是数学关系假设，不给设备或物理对应。
+
+对正数 $u,v$ 记 $\mathfrak r(u,v)=|u-v|/(u+v)$，并定义
+
+$$
+\begin{aligned}
+\theta_k(H,s)
+&=\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_s(y)),\qquad s\in\mathbb N_0,\\
+\theta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\},\\
+\theta_{\mathrm{hid}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s,s'\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_{s'}(y)).
+\end{aligned}
+\tag{6.2}
+$$
+
+每个空的反标签集合取最小值 $+\infty$。两个同阶段比值都保留在 $\theta_{\mathrm{cal}}$ 中，使用同一个 $D_H$ 与同一个 $\epsilon$。
+
+有限未知线性映射的背景可参见 [Tsakiris–Peng，Homomorphic Sensing](https://proceedings.mlr.press/v97/tsakiris19a.html)。[Peng–Tsakiris，Homomorphic Sensing of Subspace Arrangements，§2.1，Theorem 1](https://arxiv.org/html/2006.05158v3#Thmtheorem1) 的结论针对泛型 $p$ 维子空间，要求每个映射的秩至少为 $2p$，并满足所列余维条件；这里 $\operatorname{span}_{\mathbb R}D_H=\mathbb R^2$，但每个 $n_s$ 的秩只有一，不满足该秩条件。该文 [§2.3，Theorem 3](https://arxiv.org/html/2006.05158v3#Thmtheorem3) 在完整向量的 homomorphic sensing 性质下，按其式 (4) 的条件控制加性 Euclidean 噪声，并用伪逆表示向量误差；该前提在此完整二维张成空间上已经失败，因为 $0$ 与非零向量 $(B_s,-A_s)$ 具有相同的 $n_s$ 读数。本节的有限整数来源、二值初始目标与相对响应须在式 (6.1) 的合同内处理，下面的比值结论由本卷的整数与许可锥关系证明。
+
+**定理 6.2（隐藏阶段的准确相对间距与跨阶段严格排除）。** 对定义 6.1 的所有参数，复用式 (4.17) 的联合精确碰撞预算 $G_{k,\ell,d}$，有
+
+$$
+\boxed{
+\theta_{\mathrm{hid}}(H;k,\ell,d)
+=\begin{cases}
+\theta_{\mathrm{cal}}(H;k,\ell,d),&H<G_{k,\ell,d},\\
+0,&H\ge G_{k,\ell,d}.
+\end{cases}}
+\tag{6.3}
+$$
+
+当 $N_k\le H<G_{k,\ell,d}$ 时，对所有 $x,y\in D_H$ 满足 $\chi_k(x)\ne\chi_k(y)$，更有
+
+$$
+\mathfrak r(n_\ell(x),n_{\ell+d}(y))
+>\theta_k(H,\ell).
+\tag{6.4}
+$$
+
+当 $H<N_k$ 时三个间距均为 $+\infty$。式 (6.2) 的每个有限最小值均由相应合同中的实际初始树及其阶段达到；在 $H<G_{k,\ell,d}$ 的有限分支，隐藏间距可由同阶段的实际来源对达到。
+
+证明。式 (2.9) 给最小许可初始叶数 $N_k$。故 $H<N_k$ 时全部初始标签为零，反标签集合为空。若 $H\ge G_{k,\ell,d}$，定理 4.4 给同一联合初始来源域中的实际反标签精确碰撞，式 (6.2) 的非负比值因而最小为零。只须证明非恒值的碰撞前域。由式 (4.21)，该域必满足
+
+$$
+\begin{gathered}
+N_k\le H<G_{k,\ell,d},\qquad
+k\le\ell+1,\qquad d>k,\qquad H<K_{k,\ell},\\
+\begin{cases}
+G_{k,\ell,d}=N_d,\quad H<N_d,&k<d\le\ell+1,\\
+G_{k,\ell,d}=K_{k,\ell},&d\ge\ell+2.
+\end{cases}
+\end{gathered}
+\tag{6.5}
+$$
+
+以下在此域内简记
+
+$$
+m=3\ell+3,\qquad A=A_\ell=F_m,\qquad
+B=B_\ell=F_{m+1},\qquad v=B-A=F_{m-1},\qquad K=K_{k,\ell}.
+$$
+
+这里 $B$ 是正整数读数系数；Fibonacci 递推给 $B>A>B/2>0$。式 (2.10)、(2.13) 给 $K=B+\lceil Ar_k\rceil\le B+v=2B-A$。
+
+先在原始预算内建立一个严格小于 $1/9$ 的同阶段比值。取许可锥壁上的组成
+
+$$
+p=S^ke_1=(F_{3k-1},F_{3k}),\qquad
+p'=\begin{cases}
+p+(-1,1),&k\text{ 为奇数},\\
+p+(1,-1),&k\text{ 为偶数}.
+\end{cases}
+$$
+
+两点非负非零，叶数都恰为 $N_k\le H$。式 (2.9) 表明，奇数 $k$ 时 $p$ 位于闭下壁，$p'$ 的第一坐标与第二坐标之比严格下降到该壁外；偶数 $k$ 时 $p$ 位于闭上壁，$p'$ 的比值严格上升到该壁外。因此 $\chi_k(p)=1$、$\chi_k(p')=0$。两种奇偶的读数差绝对值均为 $v$。由 $p\ge(1,2)$ 逐坐标成立，
+
+$$
+\begin{aligned}
+n_\ell(p)+n_\ell(p')
+&\ge2n_\ell(p)-v
+\ge2(A+2B)-v=3(A+B),\\
+\theta_k(H,\ell)
+&\le\mathfrak r(n_\ell(p),n_\ell(p'))
+\le\frac{v}{3(A+B)}<\frac19.
+\end{aligned}
+\tag{6.6}
+$$
+
+最后的严格不等式等价于 $B<2A$。两点由定义 1.1 实现为实际初始树，许可端点可直接取 $\rho^{3k}(\alpha)$；偶数 $k\ge2$ 时第二坐标减一仍为正，奇数 $k\ge1$ 时第一坐标减一仍非负。
+
+若 $d\ge\ell+2$，则 $m+3d\ge2m+3$。Fibonacci 加法式在这些索引下给
+
+$$
+\begin{aligned}
+A_{\ell+d}
+&\ge F_{2m+3}=A^2+2AB+2B^2
+>2B(2B-A)\ge2BK>2BH.
+\end{aligned}
+\tag{6.7}
+$$
+
+严格比较的差为 $A^2+4AB-2B^2>0$，因为 $2A>B$。每个实际高阶段来源的读数至少为 $A_{\ell+d}$，每个低阶段来源的读数至多为 $BH$。故任意跨阶段比值都严格大于 $1/3$，再由式 (6.6) 得式 (6.4)，包括两个可能的标签方向。
+
+以下设 $k<d\le\ell+1$，所以 $d\ge2$。记
+
+$$
+a=F_{3d-1},\quad b=F_{3d},\quad c=F_{3d-2},\quad
+N=N_d=a+b,\quad z=S^de_1=(a,b),\quad Z=Aa+Bb.
+\tag{6.8}
+$$
+
+此时 $a+c=b$、$H<N$，且 $A_{\ell+d}=Z$、$B_{\ell+d}=Ab+BN$。比较组成 $z$ 的叶数为 $N>H$，所以 $z\notin D_H$，不能充当允许的低阶段初始来源；读数 $Z$ 所对应的实际高阶段初始来源是单叶 $\alpha$，组成为 $e_1\in D_H$。
+
+对任意高阶段初始组成 $y\ne e_1$，若它含至少一个 $\beta$ 叶，则读数至少为 $B_{\ell+d}$；否则它至少含两个 $\alpha$ 叶，而 $2A_{\ell+d}>B_{\ell+d}$。故令 $V=n_{\ell+d}(y)$、$X=n_\ell(x)$，每个这样的跨阶段来源对满足
+
+$$
+V\ge Ab+BN,\qquad X\le BH<BN,\qquad
+\mathfrak r(X,V)
+>\frac{Ab}{Ab+2BN}>\frac19.
+\tag{6.9}
+$$
+
+最后一步等价于 $4(A/B)(b/N)>1$，由 $A/B>1/2$ 与 $b/N>1/2$ 得到。这一界对所有低阶段 $x$ 成立，故式 (6.6) 已排除所有高阶段 $y\ne e_1$。
+
+只余高阶段 $y=e_1$。其初始标签为零，所以反标签的低阶段组成 $x$ 必须满足 $\chi_k(x)=1$。置
+
+$$
+j=3d-2,\qquad t=\lceil r_kc\rceil,\qquad C=a+t.
+\tag{6.10}
+$$
+
+由 $0<r_k<1$ 与正整数 $c$，有 $1\le t\le c$、$C\le a+c=b$。若 $H<C$，则 $X\le BH<BC\le Bb$，于是
+
+$$
+\mathfrak r(X,Z)
+>\frac{Aa}{Aa+2Bb}>\frac19.
+$$
+
+这里最后一步等价于 $4(A/B)(a/b)>1$；$d\ge2$ 给 $a/b>1/2$，故严格成立。这也由式 (6.6) 排除。
+
+设 $C\le H<N$。先对每个实际许可 $x\in D_H$ 证明整数分子下界
+
+$$
+|n_\ell(x)-Z|\ge g,
+\qquad g=F_{m-3d+6}.
+\tag{6.11}
+$$
+
+因为 $2\le d\le\ell+1$，指数 $m-3d+6$ 在 $6$ 与 $m$ 之间，故 $0<g\le A$。令 $h=x-z$，则 $h_1+h_2=|x|_1-N\le H-N<0$。若两个坐标均非正，则 $h\ne0$，其非零整数性给 $|n_\ell(h)|\ge A\ge g$。若 $h=(u,-w)$、$u,w>0$，则 $u<w$，从而
+
+$$
+|Au-Bw|=B(w-u)+vu>B>A\ge g.
+$$
+
+坐标为零时，负坐标和零坐标归入第一种情形；正坐标和零坐标与严格负的坐标和矛盾。
+
+剩下 $h=(-u,w)$、整数 $u>w>0$。许可锥嵌套给 $\chi_k(x)=1\Rightarrow\chi_1(x)=1$，所以 $a-u\ge(b+w)/2$，即
+
+$$
+2u+w\le2a-b=F_{3d-3}.
+\tag{6.12}
+$$
+
+$d=2$ 时右边为 $F_3=2$，但左边至少为五，这种情形不存在。若 $d\ge3$，则 $F_{3d-3}<2F_{3d-4}$，式 (6.12) 给 $u<F_{3d-4}$。把定理 1.2 应用于两个辅助整数组成 $(u,0),(0,w)\in D_u$：它们不同、非零，且 $w<u$。这里用于整数间距估计的辅助预算是 $u$，没有把这两个辅助组成或 $z$ 加入原始来源域。令
+
+$$
+i=\max\{q\ge1:F_{q+1}\le u\}.
+$$
+
+因 $u\ge2$，该指标存在；$u<F_{3d-4}$ 给 $i\le3d-6$，而 $3d-4\le m-4$ 给 $u<F_{m+1}=B$。定理 1.2 的正间距分支因而给
+
+$$
+|Au-Bw|\ge F_{m-i}\ge F_{m-3d+6}=g.
+\tag{6.13}
+$$
+
+这些情况覆盖全部整数差 $h$，证明式 (6.11)。
+
+现构造保持原预算、并控制分母的同阶段反标签对。由 $d>k$ 与 $d\le\ell+1$，有 $3k\le j\le m-2$。式 (3.13) 的矩阵恒等式对这些整数指数直接给
+
+$$
+M^je_1=(F_{j-1},c)=S^kM^{j-3k}e_1.
+$$
+
+右端祖先为非零非负整数向量；因此式 (2.9) 的闭锥判据给
+
+$$
+r_kc\le t\le F_{j-1}\le R_kc.
+\tag{6.14}
+$$
+
+这里中间的取整界使用 $r_kc\le F_{j-1}$ 且 $F_{j-1}$ 为整数。这是式 (3.14) 的整数锥构造；当 $k=1$ 时也直接成立，与式 (2.7) 相合，不要求定义 3.1 的中间深度范围。于是
+
+$$
+P=(t,c),\qquad Q=(t+a,0),\qquad
+\chi_k(P)=1,\quad\chi_k(Q)=0,\quad
+\max\{|P|_1,|Q|_1\}=a+t=C\le H.
+$$
+
+由式 (3.15) 的相同差方向及式 (1.8)，它们满足
+
+$$
+\begin{aligned}
+f&=F_{m-j}=F_{m-3d+2}>0,\\
+|n_\ell(Q)-n_\ell(P)|&=|Aa-Bc|=f,\\
+D:=n_\ell(P)+n_\ell(Q)&=A(2t+a)+Bc,\qquad
+\theta_k(H,\ell)\le\frac fD.
+\end{aligned}
+\tag{6.15}
+$$
+
+两点均为实际原始预算内的组成：定义 1.1 可直接赋予完整有序二叉括号；$S^{-k}P$ 为非零非负整数，也可先实现该祖先再施加 $\rho^{3k}$，而 $Q$ 可由全 $\alpha$ 叶实现。
+
+许可锥嵌套给 $r_k\ge r_1=1/2$，所以 $2t\ge c$。再由 $A>B/2$、$a+c=b$ 与 $b=2c+F_{3d-3}<3c$，可逐项控制同阶段分母：
+
+$$
+\begin{aligned}
+D&\ge A(a+c)+Bc=Ab+Bc
+>\frac B2b+Bc
+>\frac B2(b+a)=\frac{BN}{2},\\
+\theta_k(H,\ell)&\le\frac fD<\frac{2f}{BN}.
+\end{aligned}
+\tag{6.16}
+$$
+
+第二个严格不等式使用 $2c>a$，它等价于 $3c>b$。另一方面，当前实际低阶段读数 $X$ 与高阶段 $e_1$ 的读数 $Z$ 满足
+
+$$
+\begin{aligned}
+X+Z&\le BH+Aa+Bb<BN+Aa+Bb<2BN,\\
+g&=F_{m-3d+6}=2F_{m-3d+2}+3F_{m-3d+3}\ge5f.
+\end{aligned}
+\tag{6.17}
+$$
+
+分母的最后一步使用 $Aa+Bb<B(a+b)=BN$。分子的递推中 $m-3d+2\ge2$，所以 $F_{m-3d+3}\ge F_{m-3d+2}=f$。将式 (6.11)、(6.16)、(6.17) 应用于这一实际反标签对，得到
+
+$$
+\mathfrak r(X,Z)
+\ge\frac{g}{X+Z}
+>\frac{g}{2BN}
+\ge\frac{5f}{2BN}
+>\frac{2f}{BN}
+>\theta_k(H,\ell).
+\tag{6.18}
+$$
+
+这里分别控制同阶段实际见证的分母 $D$ 与当前跨阶段实际来源的分母 $X+Z$，而不是用绝对最小间距除以任意读数和。结合式 (6.9) 和 $H<C$ 的分支，所有反标签跨阶段来源均满足式 (6.4)。式 (6.7) 则已处理较大的 $d$，故两种碰撞前参数域都完整。
+
+同阶段反标签点对本来就在隐藏阶段的联合域中，所以 $\theta_{\mathrm{hid}}\le\theta_{\mathrm{cal}}$。非恒值碰撞前域中，式 (6.4) 给每个跨阶段比值严格大于 $\theta_k(H,\ell)\ge\theta_{\mathrm{cal}}$；其余比值恰是两个同阶段集合，故隐藏最小值就是两者的最小值。这不需要比较两个同阶段相对间距的先后次序，得到式 (6.3)。
+
+最后，$D_H$ 与阶段集合有限，故每个非空反标签集合的最小值均存在且为非负有理数。定义 1.1 把每个达到组成实现为非空完整有序树，选择其达到阶段就给实际联合来源；显露阶段的最小值使用同一阶段。非恒值时许可来源 $\rho^{3k}(\alpha)$ 与非许可单叶 $\alpha$ 已保证反标签集合非空。结合常值分支及定理 4.4 的实际精确碰撞，取得性覆盖全部参数。证毕。
+
+**定理 6.3（闭相对响应的尖锐恢复阈值与调和报告）。** 对定义 6.1 的全部参数及每个共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，隐藏阶段初始组成许可的统一恢复存在，当且仅当
+
+$$
+\boxed{\quad
+\epsilon<\theta_{\mathrm{hid}}(H;k,\ell,d)
+\quad\Longleftrightarrow\quad
+H<G_{k,\ell,d}\ \text{且}\
+\epsilon<\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\}.
+\quad}
+\tag{6.19}
+$$
+
+显露实际阶段而保持式 (6.1) 的同一个响应关系时，统一恢复存在，当且仅当 $\epsilon<\theta_{\mathrm{cal}}(H;k,\ell,d)$。$H<N_k$ 的空反标签集合允许每个有限 $\epsilon$。每个有限相对间距的等号均在失败侧，零间距在 $\epsilon=0$ 时也失败；失败由相应合同中的实际初始树对及共同有理报告达到。
+
+证明。对每个 $r\in\mathbb Q$，定义原联合组成域内的有限候选集与总函数
+
+$$
+\begin{aligned}
+\mathcal C_\epsilon(r)
+&=\{(x,s)\in D_H\times\{\ell,\ell+d\}:
+|r-n_s(x)|\le\epsilon n_s(x)\},\\
+P_\epsilon(r)
+&=\begin{cases}
+1,&\mathcal C_\epsilon(r)\ne\varnothing\ \text{且}\
+\chi_k(x)=1\ \text{对每个 }(x,s)\in\mathcal C_\epsilon(r),\\
+0,&\text{其余情形}.
+\end{cases}
+\end{aligned}
+\tag{6.20}
+$$
+
+若一个候选集包含相反标签，其两个正整数真值 $u,v$ 必须满足
+
+$$
+|u-v|\le|u-r|+|r-v|\le\epsilon(u+v),
+$$
+
+因而 $\mathfrak r(u,v)\le\epsilon$。当 $\epsilon<\theta_{\mathrm{hid}}$ 时这不可能，故每个非空候选集都有共同标签。每个实际允许响应的来源都在该候选集中，式 (6.20) 因而总是输出正确标签；空候选集的零值使恢复器在全部有理报告上定义。若 $H<N_k$，所有候选初始标签都是零，同一函数就是常值零恢复器。
+
+反之，若 $\theta_{\mathrm{hid}}$ 有限，定理 6.2 给达到它的实际初始树 $T,T'$ 及阶段 $s,s'$。令 $u=n_s(c(T))>0$、$v=n_{s'}(c(T'))>0$、$\theta=\mathfrak r(u,v)=\theta_{\mathrm{hid}}$。两初始标签相反，且共同有理报告
+
+$$
+\begin{aligned}
+r_*&=\frac{2uv}{u+v}\in\mathbb Q_{>0},\\
+|r_*-u|&=\frac{u|v-u|}{u+v}=\theta u,\qquad
+|r_*-v|=\frac{v|v-u|}{u+v}=\theta v
+\end{aligned}
+\tag{6.21}
+$$
+
+在 $\epsilon=\theta$ 时已经同时合法，在每个更大 $\epsilon$ 时继续合法。因此任何单报告恢复器都须对同一个 $r_*$ 输出两个不同标签，统一恢复失败。$u=v$ 时调和报告就是共同精确读数，包含零间距端点。空反标签集合没有这一阻碍，并已由常值恢复器处理。于是隐藏阶段恢复恰在 $\epsilon<\theta_{\mathrm{hid}}$；代入定理 6.2 得式 (6.19)。
+
+显露阶段时，把式 (6.20) 的候选集限制为报告所给的那个 $s$，同一个三角不等式证明两个阶段分别在 $\epsilon<\theta_k(H,s)$ 时可恢复；共同合同要求两者同时成立，恰为 $\epsilon<\theta_{\mathrm{cal}}$。若这个最小值有限，选取达到它的同阶段实际树对，式 (6.21) 的调和报告与相同阶段标记同时合法，故等号及以上仍失败。该闭区间交叠论证是本卷定理 2.2、3.4 所用候选标签纤维判据在式 (6.1) 下的应用；其尖锐端点使用相对半径对应的调和报告。所有阈值仍判定初始组成许可，阶段只计替换次数。证毕。
+
+## 追加锚（本行以下为增补区）
