@@ -15209,3 +15209,90 @@ selected common word, with distinct actual heights for distinct
 owners. It supplies no additional numerical modulus or whole-cover
 repair by itself. No new Lean verification or unrestricted
 noncoverage is asserted.
+
+## 122. Lost altered-child demand forces actual suppliers and joint liabilities
+
+### One original private bundle and two complete altered children
+
+Let y_*=(s_*,w_*,v_*) belong to the actual Y of §118. Let C be any set of collision heights containing0 for which, simultaneously for every x in the same complete R_o,
+
+    L_(j_c)(y_*,x) is private to original A_(3^c q), c in C.
+
+Their roots j_c are distinct. This includes §119's C={0,...,t} at t=q-p+1, and it also permits a smaller actual simultaneous bundle. Put
+
+    Y_*={s:(s,w_*,v_*) in Y}.
+
+Fix2<=h<=H. Let D_h be the union of the two COMPLETE ternary children that agree with s_* through digit h-1 and differ at digit h. Higher ternary digits are unrestricted, so |D_h|=2*3^(H-h). Assume exactly the missing-demand condition
+
+    D_h intersect Y_*=empty.                         (AS1)
+
+Every lower-height q-free original remains absent on D_h at w_* because it was absent at s_*. Opposite-color mixed originals are inactive at this unchanged first ternary root, and all opposite-color three-free originals are absent for x in R_o. Therefore the q-free originals covering this lost demand consist of pure-three guards and actual same-color mixed classes
+
+    A_d, d=3^a n, a>=h, n>1, gcd(n,3q)=1,
+    supp(n) subset S_i,
+
+whose cofactor AP contains w_* and whose ternary cylinder lies in D_h. Denote these mixed originals by S_h. They are actual original labels with actual phases, not fresh completions.
+
+### Finite capacity forces a mixed supplier and a numerical row alternative
+
+For a=h,...,H let m_a count members of S_h of ternary height a, and let epsilon_a in {0,1} indicate whether the original pure-three guard of height a lies in D_h. Counting complete ternary cylinders on the fixed cofactor gives the necessary inequality
+
+    sum_(a=h..H) (epsilon_a+m_a)*3^(h-a)>=2.       (AS2)
+
+Possible overlaps only increase the sum relative to the size of the union. There is at most one pure guard at each numerical height, whence
+
+    sum_(a=h..H) m_a*3^(h-a)
+        >=(1+3^(h-H))/2 >1/2.                    (AS3)
+
+In particular S_h is nonempty. Every chosen member3^a n therefore supplies, by original divisor closure, a numerical label
+
+    3^h ell in D for some ell in S_i minus {q}.    (AS4)
+
+No residue is copied from that mixed supplier to the divisor label3^h ell. AS4 concerns numerical height and support only.
+
+There is a sharper finite row alternative. If m_h=0 and every higher m_a<=1, their geometric sum is strictly less than1/2, contradicting AS3. Hence
+
+    m_h>=1, or m_a>=2 at some actual height a>h.   (AS5)
+
+More precisely, if every m_a<=1, then epsilon_h=m_h=1, and these two height-h classes occupy different altered children. Indeed, if their height-h count were at most one, the maximal total capacity would be
+
+    1+2*sum_(r=1..H-h)3^(-r)=2-3^(h-H)<2.
+
+If both occupied the same child, the other child's higher-level capacity would be at most1-3^(h-H)<1. Thus in this sparse-row case one altered child is a pure guard, while the other is an actual mixed height-h supplier whose cofactor contains w_*; each covers its entire fixed-cofactor child. This is a restriction on actual row incidence, not an assertion that all lost demand always has one supplier.
+
+### Every supplier has a global private-root exclusion
+
+Let
+
+    C_<h={c in C:c<h}, J_<h={j_c:c in C_<h},
+    g_h=|C_<h|=|J_<h|.
+
+For EVERY supplier S in S_h and every c in C_<h, the following inclusion holds on the FULL original carrier, without fixing w_*, v_* or the opposite coordinates:
+
+    S intersect {z:z=j_c modq} subset A_(3^c q).  (AS6)
+
+The supplier fixes the first h-1 ternary digits to those of s_*, hence fixes the first c digits to the actual collision prefix. Its q-root restriction is then precisely the other condition of A_(3^c q). Since S is q-free it is a different original. Its COMPLETE original private region therefore obeys
+
+    projection_q(P_S) intersect J_<h=empty,
+    |projection_q(P_S)|<=q-g_h.                  (AS7)
+
+This is stronger than a statement about the selected supplier point. It is an entire-private-region exclusion obtained from the supplier's actual prefix, while retaining all prime-power heights.
+
+In the tight bundle C={0,...,t}, choose h=t (so t>=2). Then g_h=t, and AS1 forces an actual q-free mixed supplier of height at least t for which
+
+    |projection_q(P_S)|<=q-t=p-1.                (AS8)
+
+AS4 simultaneously forces a same-color prime ell different from q with original3^t ell. AS8 is not an application of the prime-private projection theorem to S: that theorem concerns a different complete residual, and cannot be transferred to P_S.
+
+### Deleting the suppliers creates a genuine joint liability
+
+Let B_h contain ALL members of S_h and all pure-three guards counted by epsilon_a. Let K_h be the actual collision originals at heights C_<h. Delete B_h union K_h from the original cover, retaining every other original. Its exact uncovered set E satisfies
+
+    {L_(j_c)((s,w_*,v_*),x):
+       s in D_h, c in C_<h, x in R_o} subset E.   (AS9)
+
+To check this whole rectangle, consider any such source point. Every q-free owner lies in B_h by the definition of D_h and the fixed actual cofactor. Among q-bearing originals, A_(3^c q) is the sole owner: a different one of ternary height at least c is comparable to that collision original and disjoint; one of lower height has unchanged membership from the common original private source and remains absent. All its owners have therefore been deleted.
+
+Each point in this rectangle had BOTH its collision owner and at least one q-free owner from B_h, by AS1. Consequently it belongs to the original private region of NONE of the deleted originals. Thus AS9 exhibits actual joint deletion liabilities that are absent from the union of the deleted classes' individual original private regions. This is a nonempty rectangle since0 belongs to C and R_o is nonempty. Any proposed joint replacement must cover this rectangle and the rest of E; covering the separate old private regions is insufficient.
+
+The numerical height alternative and full-private-root exclusion above are forced consequences of losing both complete altered children. They do not bound the supplier family's total size or cofactor values, do not identify its cofactor APs with a complete original deletion obligation, and do not make a fresh-label repair cheaper than the original family. No strict EB1 descent is established. If at least one altered child survives in Y_*, AS1 does not hold and these lost-demand conclusions are not available.
