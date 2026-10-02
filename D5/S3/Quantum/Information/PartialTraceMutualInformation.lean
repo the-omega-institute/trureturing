@@ -181,7 +181,9 @@ private theorem isHermitian_kronecker {m : Type*} {ρ : Matrix n n ℂ}
   unfold Matrix.IsHermitian
   rw [Matrix.conjTranspose_kronecker, hρ.eq, hσ.eq]
 
-private theorem spectral_sum_eq_of_charpoly_prod
+/-- A spectral sum over the eigenvalues of a Hermitian matrix equals the same sum over the roots
+`d c` of a split characteristic polynomial `∏ (X - d c)`. -/
+theorem spectral_sum_eq_of_charpoly_prod
     {k : Type*} [Fintype k] [DecidableEq k] {A : Matrix k k ℂ} (hA : A.IsHermitian)
     (d : k → ℝ) (g : ℝ → ℝ)
     (h : A.charpoly = ∏ c, (X - C ((RCLike.ofReal (d c)) : ℂ))) :

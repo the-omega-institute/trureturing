@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:28d9a6fd0b26040cce88c8637dd7784d1f2b0d482729699c6aa2a0ee1cc14db1
+  normalized_sha256: sha256:28d9a6fd0b26040cce88c8637dd7784d1f2b0d482729699c6aa2a0ee1cc14db1
+cas_ref: sha256:28d9a6fd0b26040cce88c8637dd7784d1f2b0d482729699c6aa2a0ee1cc14db1
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/ClauseHamiltonian.clause_partition_recovery
+    target_statement_id: sha256:ba6c76613e2dd3f79356f6c52e94de3980e66ec63e662ac4d144ff0b801f4645
+receipts:
+  unresolved_subitems: []

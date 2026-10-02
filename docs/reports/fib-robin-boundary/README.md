@@ -978,5 +978,6 @@ For general primitive seeds and the finite zero-class checks behind FIB
 §§191–192, see [seed zero classes](seed_zero_cosets.md).
 
 For the mixed and odd squarefree prime sections, the window-105 character
-twist and the changing norm family in FIB §§196–200, see
+twist, changing norm families and actual unit-one affine sources in FIB
+§§196–205, see
 [prime sections](prime_sections.md).

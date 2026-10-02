@@ -80,6 +80,33 @@ public sealed class LeanUtilityInputTests
     }
 
     [Fact]
+    public void CurrentUtilityInputEnumeratesOnlyManagedLeanAndPolicyPaths()
+    {
+        using var repository = new TemporaryDirectory();
+        TestGit.Run(repository.Path, "init");
+        foreach (var (path, text) in UtilityAdmissionTestSupport.RefutationFixture().Files)
+        {
+            var fullPath = Path.Combine(repository.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+            File.WriteAllText(fullPath, text);
+        }
+        TestGit.Run(repository.Path, "add", ".");
+        var expected = LeanUtilityInputCommand.Run(repository.Path, []);
+        Assert.Equal(0, expected.ExitCode);
+
+        // An unsupported entry outside D5 is not an input; the producer must not enumerate it.
+        TestGit.Run(repository.Path, "update-index", "--add", "--cacheinfo",
+            "160000,1111111111111111111111111111111111111111,vendor/submodule");
+        Assert.Equal(expected, LeanUtilityInputCommand.Run(repository.Path, []));
+
+        // Inside the scope, an undeclared symlink still fails closed.
+        File.CreateSymbolicLink(Path.Combine(repository.Path, "D5/Alias.lean"), "S0/Carrier/Ring.lean");
+        var linked = LeanUtilityInputCommand.Run(repository.Path, []);
+        Assert.Equal(2, linked.ExitCode);
+        Assert.Contains("FILEMAP", linked.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CurrentUtilityInputStillRejectsMalformedManagedSource()
     {
         using var repository = new TemporaryDirectory();

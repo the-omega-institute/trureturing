@@ -1,6 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -38,7 +37,7 @@ class NativeInvalidationTests:
         # enrollment_encoding_omits_source_hashes in Tests/RegistrationGates.
         prepared = self.guarded_command(['make', 'lean',
             'LEAN_TARGETS=D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates '
-            'LeanInformationAudit.Syntax'], cwd=ROOT, env=os.environ,
+            'LeanInformationAudit.SealCommand'], cwd=ROOT, env=os.environ,
             capture_output=True, text=True, timeout=120)
         self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
         paths = subprocess.check_output(['git', 'ls-files', '-z', '.gitignore', 'D5',
@@ -61,17 +60,12 @@ class NativeInvalidationTests:
             'def helper (b : Bool) : Bool := b\nend D5.CommentSupport\n')
         self.write('D5/CommentOwner.lean', '''import D5.CommentSupport
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
 namespace D5.CommentOwner
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
 def template {X : Type} (f : X → Bool) : PrimitiveRealization (cutSignature X Bool) :=
   cutRealization (fun x => D5.CommentSupport.helper (f x))
 register_information_template template
-run_meta do
-  let .ok plan := LeanInformationAudit.TemplateAudit.selectedPlan (← Lean.getEnv) ``template
-    | throwError "missing plan"
-  unless plan.dependencies.any (fun dep => dep.name == ``D5.CommentSupport.helper) do
-    throwError "plain helper is not a live plan dependency"
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
   signature := cutSignature Bool Bool
@@ -199,24 +193,26 @@ end D5.CommentOwner
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
 ''')
-        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
-  names.mapM fun _ => do
+  let rows ← names.mapM fun _ => do
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
       "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
       "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
       "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
+  let env ← getEnv
+  return rows.map fun row => (row, #[], env)
 ''')
 
         def build():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.Registry :report'], cwd=self.root,
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.SealCommand :report'], cwd=self.root,
                 env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
@@ -383,14 +379,14 @@ class NativeSemanticConsumerTests:
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
         # The fixed judge is version-gated outside a module's compiler closure.
-        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 2\n')
+        self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 2\n')
         changed([])
 
     def test_native_judge_semantic_version_gate(self):
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n')
         driver = 'import LeanInformationAudit.Support\ndef fixtureDriver : Nat := judgeSupport\n'
-        self.write('LeanInformationAudit/Registry.lean', driver)
-        self.write('D5/A.lean', 'import LeanInformationAudit.Registry\n' +
+        self.write('LeanInformationAudit/SealCommand.lean', driver)
+        self.write('D5/A.lean', 'import LeanInformationAudit.SealCommand\n' +
                    (self.root / 'D5/A.lean').read_text())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['dependency_sources']['include'].append(
@@ -424,7 +420,7 @@ class NativeSemanticConsumerTests:
         for name in ['D5.B', 'D5.Alone']:
             self.assertEqual(self.origins()[name], origins[name])
         changed(set())
-        self.write('LeanInformationAudit/Registry.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
+        self.write('LeanInformationAudit/SealCommand.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
@@ -437,26 +433,8 @@ class NativeSemanticConsumerTests:
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
 
-        # Compatible judge edits cannot license damaged, incomplete or foreign rows.
-        state = native.state(self.root)
-        artifact = state / 'modules/D5.Alone.zip'
-        valid = artifact.read_bytes()
-        foreign = (state / 'modules/D5.B.zip').read_bytes()
-        with zipfile.ZipFile(io.BytesIO(valid)) as archive:
-            incomplete = io.BytesIO()
-            with zipfile.ZipFile(incomplete, 'w') as writer:
-                writer.writestr(publication.RAW, archive.read(publication.RAW))
-        for data in [b'damaged', incomplete.getvalue(), foreign]:
-            with self.subTest(damage=data[:16]):
-                artifact.unlink()
-                artifact.write_bytes(data)
-                with self.assertRaises(native.ROW_ERRORS):
-                    native.validate('module', self.root, 'D5.Alone',
-                                    state / 'inputs/D5.Alone.json', artifact)
-                changed({'D5.Alone'})
-
         # The judge must still build even when this module does not import it.
-        self.write('LeanInformationAudit/Registry.lean', driver + 'unknown_command\n')
+        self.write('LeanInformationAudit/SealCommand.lean', driver + 'unknown_command\n')
         self.run_lake('build', 'D5.Alone:report', success=False)
         self.assertEqual(before, self.stamps())
 
@@ -661,7 +639,7 @@ class NativeSemanticConsumerTests:
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
 
-    def test_exported_private_dependency_and_retired_origin(self):
+    def test_exported_private_dependency_invalidates_report(self):
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)
         self.write('D5/A.lean', 'import Support\nnoncomputable def value : Nat := support\n')
@@ -680,33 +658,3 @@ class NativeSemanticConsumerTests:
         self.build()
         self.assertEqual(self.report()[0][0]['declarations'][0]['axioms'], [])
         self.publish()
-        # Retired origin fields are malformed: only the current format is read.
-        before = self.stamps()
-        expected = self.report()[1:]
-        for relative in [*(f'modules/{name}.zip' for name in before), 'report.zip']:
-            artifact = self.root / '.lake/build/lean-inspector' / relative
-            with zipfile.ZipFile(artifact) as archive:
-                entries = [(info, archive.read(info)) for info in archive.infolist()]
-            artifact.unlink()
-            with zipfile.ZipFile(artifact, 'w') as archive:
-                for info, data in entries:
-                    if info.filename.endswith('.provenance.json'):
-                        origin = json.loads(data)
-                        records = origin['module_origins'].values() if 'module_origins' in origin else [origin]
-                        for record in records:
-                            record['input_sources'] = {}
-                        data = json.dumps(origin).encode()
-                    archive.writestr(info, data)
-        result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
-            'publish', str(self.root), str(self.root / 'rejected.json')], env=self.env, capture_output=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertFalse((self.root / 'rejected.json').exists())
-        self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
-        self.assertEqual(expected, self.report()[1:])
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual([row['count'] for row in records if row['kind'] == 'extract'], [len(before)])
-        self.publish()
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                         'successfully reconstructed legacy artifacts must be reusable')

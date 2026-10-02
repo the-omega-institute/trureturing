@@ -1,0 +1,28 @@
+**定理 5.2（固定乘积环境的一轮相干因子）。** 设单轮输入限定为 $\rho_A\otimes\tau_H$，其中 $\tau_H$ 固定，置
+
+$$
+z=\operatorname{Tr}(R\tau_H).
+$$
+
+则该轮低层通道为
+
+$$
+\Lambda_\tau(\rho_A)=U_d\left(
+P_0\rho_AP_0+P_1\rho_AP_1
++\overline z P_0\rho_AP_1+zP_1\rho_AP_0
+\right)U_d^\dagger.
+$$
+
+$z$ 的全体可达值为 $\operatorname{conv}\{1,\omega,\ldots,\omega^{e-1}\}$；当 $e=2$ 时是线段 $[-1,1]$。此通道为酉通道，当且仅当 $|z|=1$，等价于 $\tau_H$ 的支撑包含在 $R$ 的一个本征空间内。
+
+证明。$E_{aa'}$ 的系数乘上
+
+$$
+\operatorname{Tr}(V_a\tau_HV_{a'}^\dagger)
+=\operatorname{Tr}(R^{k(a)-k(a')}\tau_H),
+$$
+
+得到所述交叉块的符号。设 $R=\sum_j\omega^j\Pi_j$，则 $z=\sum_j\omega^j\operatorname{Tr}(\Pi_j\tau_H)$，其中权重非负且和为 $1$。任意这样的权重均可用各本征空间中纯态的混合实现，所以值域正是所述凸包。单位圆上不同点的非平凡凸组合模长严格小于 $1$；故 $|z|=1$ 当且仅当全部权重落在一个本征值上。密度算子的正性进一步保证其支撑落在该本征空间。
+
+若 $z=\omega^j$，括号内映射是 $D_j\rho_AD_j^\dagger$，其中 $D_j=P_0+\omega^jP_1$，所以通道酉。若 $|z|<1$，对任意跨两扇区的等权纯态，输出在两维支撑上的本征值为 $(1\pm|z|)/2$，是混态，因而通道不可能酉。这只刻画一轮乘积输入；若每轮重新制备同一 $\tau_H$，才可按该重置合同反复使用同一低层通道。未重置的 $U$ 会保留并更新环境及关联，不能套用此结论。$\square$
+

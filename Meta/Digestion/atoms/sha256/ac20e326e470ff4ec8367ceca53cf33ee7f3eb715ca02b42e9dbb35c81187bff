@@ -1,0 +1,2 @@
+**Theorem 5.3 (homogeneity and Euler).** The actual polynomial $F_{U,m}$ is homogeneous of degree $m$, including when it is zero, and satisfies $\sum_{i\in I}X_i\partial_iF_{U,m}=mF_{U,m}$.
+

@@ -1,0 +1,24 @@
+**推论 28.3（实际根族的密度等价与规范缺陷衰减）。** 在假设 24.1 下，对任意实际根族 $(j_i,N_i)$，其中 $j_i\to\infty$、$F_{j_i}\le N_i\le F_{j_i+1}$，按式 (28.1) 取 $b_i,e_i$，有
+
+$$
+\frac{e_i}{N_i}\longrightarrow0
+\quad\Longleftrightarrow\quad
+\frac{b_i}{N_i}\longrightarrow0.
+\tag{28.7}
+$$
+
+任一条件还推出 $D(N_i)/N_i\to0$。
+
+证明。正亏量子列上，式 (28.3) 的右侧满足 $u[R(u)^2+1]\to0$，$u\downarrow0$，因为它至多是常数倍的 $u[1+\log(1/u)]^2$。零亏量子列上，直接复用 $b_i\le\zeta_{j_i}$，并有 $N_i\ge F_{j_i}$、$\zeta_{j_i}=O(j_i)$，故 $b_i/N_i\to0$。这两个子列一起覆盖可能交错的全部根族。
+
+反向只需已知黄金下界和 Fibonacci 取整关系。把已有误差恒等式代入，$\gamma_j=\alpha(F_{j+1}+1)-F_j=\alpha-(-1)^{j+1}\alpha^{j+1}\in(0,1)$，$j\ge4$；因而 $F_j-G(F_{j+1}-b)=\lceil\alpha b-\gamma_j\rceil<\alpha b+1$。在同一闭块中遂有
+
+$$
+0\le e_i\le F_{j_i}-G(F_{j_i+1}-b_i)<\alpha b_i+1.
+\tag{28.8}
+$$
+
+除以 $N_i\to\infty$ 即得反向蕴含。最后直接复用式 (26.5) 的 $0\le D(N_i)\le b_i$，得到规范缺陷结论。证毕。
+
+式 (28.7) 将旧界 $b\le j^2e$ 所需的 $e=o(N/j^2)$ 扇区扩到全部 $e=o(N)$，包括正且无界的次线性亏量。它不证明所有实际根都属于这个扇区，也不从子列结论推出全域 $C(n)/n\to\alpha$。
+

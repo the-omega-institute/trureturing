@@ -1,0 +1,15 @@
+## 21. 实际时间 Gramian 的可逆缩放与定量极限
+
+沿用 §19–20。令 $Q_j:U\to U$ 为 $\Pi_j$ 在 $U$ 上的限制，定义
+
+$$
+d_T=\sum_{j<n}\sqrt{T}\,T^jQ_j,\qquad
+e_T=\sum_{j<n}(\sqrt{T}\,T^j)^{-1}Q_j,
+$$
+
+$$
+A(t)=ce^{tb}i,\qquad
+G_T=\int_0^T A(t)^*A(t)\,dt,\qquad
+Z(T,s)=\sqrt{T}\,A(Ts)e_T.
+$$
+

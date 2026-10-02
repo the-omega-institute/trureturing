@@ -1,5 +1,8 @@
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.Tests.Census.Evidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta Elab Command LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape

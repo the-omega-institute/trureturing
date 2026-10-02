@@ -3,6 +3,9 @@ import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selective9
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selective33
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.All9
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Extra24
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 measure_imported_template_query 33 0
 check_imported_template_queries

@@ -10,20 +10,14 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
 [assembly: InternalsVisibleTo("StrataLint.Cache.Tests")]
 [assembly: InternalsVisibleTo("StrataLint")]
+[assembly: InternalsVisibleTo("StrataLint.TestEvidence")]
 [assembly: InternalsVisibleTo("StrataLint.Configuration")]
 [assembly: InternalsVisibleTo("StrataLint.Configuration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RepositoryConfiguration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Scribe")]
 [assembly: InternalsVisibleTo("StrataLint.Scribe.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.EngineeringScope")]
 [assembly: InternalsVisibleTo("StrataLint.Lean")]
 [assembly: InternalsVisibleTo("StrataLint.Lean.Tests")]
-
-[assembly: InternalsVisibleTo("StrataLint.InspectionScope")]
-
-[assembly: InternalsVisibleTo("StrataLint.ExecutionEvidence")]
-
-[assembly: InternalsVisibleTo("StrataLint.BuildRuntime")]
 
 [assembly: InternalsVisibleTo("StrataLint.CliTestSupport")]
 

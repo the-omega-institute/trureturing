@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -32,18 +35,18 @@ def testRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem target
+test_assess in information_theorem target
   in arena
   primitives testRealization
   : arena.Law testRealization := by trivial
 
-expect_information_occurrence target
+test_assess in expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.Seal.IllTypedEnumeration"
 
 /-- error: IE-C009 ProofConstructionFailed: LeanInformationAudit.Tests.Seal.IllTypedEnumeration.arena.__state_enumeration
 expected type Arena.StateEnumeration LeanInformationAudit.Tests.Seal.IllTypedEnumeration.arena.toArena -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.Seal.IllTypedEnumeration

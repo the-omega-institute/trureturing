@@ -23,7 +23,7 @@ private theorem inv_golden_sq_add_inv_golden :
   rw [Real.inv_goldenRatio]
   nlinarith [Real.goldenConj_sq]
 
-private theorem pow_add_pow_succ {r : ℝ} (hr : r ^ 2 + r = 1) {a : ℕ} (ha : 1 ≤ a) :
+theorem pow_add_pow_succ {r : ℝ} (hr : r ^ 2 + r = 1) {a : ℕ} (ha : 1 ≤ a) :
     r ^ a + r ^ (a + 1) = r ^ (a - 1) := by
   conv_lhs =>
     lhs
@@ -69,7 +69,7 @@ private theorem sum_powers_le_sub_head {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
             omega
           linarith
 
-private theorem sum_powers_lt {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
+theorem sum_powers_lt {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     (hr : r ^ 2 + r = 1) {d : ℕ} {l : List ℕ}
     (hgap : l.Pairwise fun x y => y + 2 ≤ x)
     (hmin : ∀ k ∈ l, d + 1 ≤ k) :
@@ -112,7 +112,7 @@ private theorem neg_sum_odd_powers_le_sum_neg_powers {r : ℝ} (hr0 : 0 < r) :
         have hpow : 0 ≤ r ^ k := (pow_pos hr0 k).le
         linarith
 
-private theorem sum_neg_powers_eq_even_sub_odd (r : ℝ) : ∀ l : List ℕ,
+theorem sum_neg_powers_eq_even_sub_odd (r : ℝ) : ∀ l : List ℕ,
     (l.map fun k => (-r) ^ k).sum =
       ((l.filter fun k => decide (Even k)).map fun k => r ^ k).sum -
         ((l.filter fun k => decide (Odd k)).map fun k => r ^ k).sum := by
@@ -145,7 +145,7 @@ private theorem canonical_two_le {l : List ℕ} (hl : l.IsZeckendorfRep) :
   intro k hk
   exact (List.pairwise_append.mp hl).2.2 k hk 0 (by simp)
 
-private theorem conjugate_error_bounds {l : List ℕ} (hl : l.IsZeckendorfRep) :
+theorem conjugate_error_bounds {l : List ℕ} (hl : l.IsZeckendorfRep) :
     -(Real.goldenRatio⁻¹ ^ 2) < (l.map fun k => Real.goldenConj ^ k).sum ∧
       (l.map fun k => Real.goldenConj ^ k).sum < Real.goldenRatio⁻¹ := by
   let r : ℝ := Real.goldenRatio⁻¹
@@ -284,7 +284,7 @@ private theorem fib_mul_inv_golden {k : ℕ} (hk : 2 ≤ k) :
   rw [Real.inv_goldenRatio]
   linarith
 
-private theorem sum_fib_mul_inv_golden {l : List ℕ} (hmin : ∀ k ∈ l, 2 ≤ k) :
+theorem sum_fib_mul_inv_golden {l : List ℕ} (hmin : ∀ k ∈ l, 2 ≤ k) :
     (l.map fun k => (Nat.fib k : ℝ) * Real.goldenRatio⁻¹).sum =
       (l.map fun k => (Nat.fib (k - 1) : ℝ)).sum -
         (l.map fun k => Real.goldenConj ^ k).sum := by

@@ -1,0 +1,36 @@
+**定理 2.5（Successor birth band for abstract event laws）。** For every event sequence $E$, every instance of $\mathcal L(E)$, every $f\in\mathbb N$ with $f\ne\beta(k_f)$, and $e=p_f$, $h=H_e$, the conclusion is
+
+$$
+n_{\beta(h)}\le H_f<n_{\beta(h+1)}.
+$$
+
+证明。Endpoints are nondecreasing by their positive increments, every height is positive, and the strict birth cut gives $\beta(H_t)\le t$ for every $t$. Immediate predecessors of renewals are injective: if two distinct renewals had the same predecessor, their labels would agree, and the earlier renewal would lie strictly between that predecessor and the later renewal, contrary to immediacy.
+
+Prove the lower bound by strong induction on the chronological renewal index $t$. Suppose it fails at a renewal $t$, and put $e=p_t$, $i=k_t$, $h=H_e$, $K=H_t$. Thus $K<n_{\beta(h)}$, $e<t$, and $0<i\le h\le K$. For every higher-bin renewal $g<t$, induction gives
+
+$$
+n_{\beta(H_{p_g})}\le H_g\le K<n_{\beta(h)}.
+$$
+
+The birth cut implies that positive birth indices are nondecreasing in their height parameter. Endpoint monotonicity then forces $H_{p_g}<h$, and hence $p_g<\beta(h)$. Its label is $k_g>i$. The injective predecessor map therefore sends $\mathcal R_E(i,t)$ into
+
+$$
+S=\{g:g<\beta(h),\ i<k_g\}.
+$$
+
+Births in $S$ inject by their labels into $\{i+1,\ldots,h-1\}$, giving at most $h-i$ of them. Renewals in $S$ are counted among $\mathcal R_E(i,e)$ because $\beta(h)\le e$. Thus
+
+$$
+\rho_i(t)\le |S|\le h-i+\rho_i(e).
+$$
+
+Reset balance now gives $n_e+h\le K+h-i$, hence $n_e+i\le K$. But endpoint monotonicity gives $n_{\beta(h)}\le n_e$, while $K<n_{\beta(h)}$ and $i>0$. This is impossible, proving the lower bound.
+
+For the upper bound return to $f$ and $e=p_f$, $h=H_e$, $i=k_f$. Since $e<f$, higher-renewal counts are nondecreasing from $e$ to $f$. Reset balance gives $H_f\le n_e+h$. Put $q=\beta(h+1)$. The strict birth cut gives $e<q$, so $q>0$ and $e\le q-1$. The endpoint step and birth-label law yield
+
+$$
+n_q=n_{q-1}+h+1\ge n_e+h+1>H_f.
+$$
+
+This establishes the strict upper bound. The proof uses only $\mathcal L(E)$, and does not assume existence of later same-bin events or any reciprocity identity. Applied inside the trace setting, Theorems 2.3 and 2.4 supply these hypotheses for the renewal $\sigma_T(e)$ without adding a separate theorem. $\square$
+

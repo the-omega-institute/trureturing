@@ -1,0 +1,36 @@
+**定义 6.1（域值词响应与线性实现）。** 固定域 $K$、有限输出维数 $r$ 和响应 $f:\Sigma^*\to K^r$。线性实现由 $K$ 向量空间 $V$、初态 $v_\varepsilon$、每个字母的线性更新 $L_\sigma$ 和线性读出 $C:V\to K^r$ 构成，满足
+
+$$
+f(w)=CL_wv_\varepsilon,\qquad
+L_{\sigma_1\cdots\sigma_k}=L_{\sigma_k}\cdots L_{\sigma_1}.
+$$
+
+联合延拓矩阵与残余行定义为
+
+$$
+H_f(u,(v,j))=f(uv)_j,\qquad
+R_u(v,j)=f(uv)_j,\qquad
+\mathcal V_f=\operatorname{span}_K\{R_u:u\in\Sigma^*\}.
+$$
+
+无限矩阵的秩在这里就是实际残余行张成空间的维数。多个输出共享同一状态空间与更新；联合秩不是任意单一输出坐标的秩。
+
+Hankel 有限秩—最小线性表示是经典加权自动机理论。可用出处为 Berstel–Reutenauer，[*Noncommutative Rational Series with Applications*](https://doi.org/10.1017/CBO9780511760860)，Chapter 2；公开的实数单输出陈述见 Balle–Panangaden–Precup，[*Singular Value Automata and Approximate Minimization*, arXiv:1711.05994v2](https://arxiv.org/abs/1711.05994v2)，Theorem 2.1。多字母有限矩阵表示的经典背景另见 Fliess，[*Fonctionnelles causales non linéaires et indéterminées non commutatives*](https://doi.org/10.24033/bsmf.1931)，1981，Théorème I.1 及其推论。下面给出本卷所需任意域、联合向量输出的代数适配，而不把它当作这些实数陈述的逐字引文。
+
+支撑推导。对任一 $d$ 维实现，观察映射
+
+$$
+E:V\to K^{\Sigma^*\times\{1,\ldots,r\}},\qquad
+E(z)(v,j)=(CL_vz)_j
+$$
+
+是线性的，且 $R_u=E(L_uv_\varepsilon)$。所以 $\operatorname{rank}H_f\leq d$。反向，在 $\mathcal V_f$ 上定义 $L_\sigma R_u=R_{u\sigma}$。若 $\sum_uc_uR_u=0$，在所有后缀 $(\sigma v,j)$ 处评价，得到
+
+$$
+\sum_uc_uR_{u\sigma}(v,j)=\sum_uc_uf(u\sigma v)_j=0.
+$$
+
+故更新与线性关系相容、良定义。取初态 $R_\varepsilon$、读出 $C(R)=(R(\varepsilon,j))_{j=1}^r$，则经任意词 $w$ 到达 $R_w$ 并读出 $f(w)$。因此存在有限维精确线性实现当且仅当联合秩有限；有限秩时最小维数恰等于该秩。零响应可用零维空间。无限秩排除有限维精确实现。
+
+这个结论不施加非负性、概率归一化或完全正性；附加这些条件后最小物理实现是另一个问题。有限状态个数、域上线性维数、编码位数、量子位数也不是同一种资源。
+

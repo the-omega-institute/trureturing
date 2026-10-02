@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7db9513bc8267fa2c10c6c732bd323ea1070642f798c37e860188f4928cce926
+  normalized_sha256: sha256:7db9513bc8267fa2c10c6c732bd323ea1070642f798c37e860188f4928cce926
+cas_ref: sha256:7db9513bc8267fa2c10c6c732bd323ea1070642f798c37e860188f4928cce926
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.result
+    target_statement_id: sha256:17336e96a830fab4ebe2ebf56b2d2b1777e77374b80d1f902926c50f5bcf9494
+receipts:
+  unresolved_subitems: []

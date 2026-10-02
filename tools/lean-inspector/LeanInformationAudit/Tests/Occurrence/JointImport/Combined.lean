@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.JointImport.First
 import LeanInformationAudit.Tests.Occurrence.JointImport.Second
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.JointImport

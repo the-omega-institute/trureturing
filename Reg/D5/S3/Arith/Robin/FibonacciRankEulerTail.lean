@@ -73,14 +73,6 @@ register_information_theorem result in arena
       functionOperand := true }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName == `D5.S3.Arith.Robin.FibonacciRankEulerTail.result
-  unless row.any (fun record => match record.result with
-      | .declaredValidated _ => true | _ => false) do
-    throwError "Fibonacci rank Euler tail registration is not declaredValidated"
-
 #print axioms registration
 
 end

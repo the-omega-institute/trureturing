@@ -1,0 +1,57 @@
+**Theorem 2.1 (Measurable visible-protocol thermodynamic sufficiency).** For every finite visible protocol and actual physical history family of Definitions 1.1–1.2, all terminal physical history laws $\mu_N^\sigma$ coincide, and their exact returned-record laws coincide for every hidden density $\sigma$. For every executed stage and measurable returned-record event $C$, stopped-record mass is preserved exactly:
+
+$$
+\mu_{n+1}^\sigma\bigl(p_n^{-1}S_n\cap r_{n+1}^{-1}C\bigr)
+ =\mu_n^\sigma\bigl(S_n\cap r_n^{-1}C\bigr).
+$$
+
+The hidden target satisfies
+
+$$
+D(\sigma\Vert I_B/e)=\log e-S(\sigma),\qquad
+0\le\theta(\sigma)\le L:=\frac{\log e}{\beta}.
+$$
+
+For every such protocol $\mathcal E$, optimizing over every real randomized estimator gives
+
+$$
+\inf_\kappa\sup_\sigma
+ \int |z-\theta(\sigma)|\,dQ_{\mathcal E,\kappa}^\sigma(z)
+ =\frac{\log e}{2\beta}.
+$$
+
+The class of legal experiments with the fixed visible preparation and Hamiltonian is nonempty: it contains the zero-step product-preparation experiment. Consequently the additional optimization over all legal experiments has the same value,
+
+$$
+\inf_{\mathcal E}\inf_\kappa\sup_\sigma
+ \int |z-\theta(\sigma)|\,dQ_{\mathcal E,\kappa}^\sigma(z)
+ =\frac{\log e}{2\beta},
+$$
+
+and the midpoint estimator attains it. This conclusion applies to arbitrary finite adaptive depth, dependent measurable and uncountable classical outcomes, history-measurable real waits, measurable stopping, singular hidden states and infinite-risk estimators.
+
+Proof. Since the hidden Hamiltonian is zero, the matrix exponential gives $V_n(h)=U_n(h)\otimes I_B$. Tensor amplification acts on a product input by
+
+$$
+\mathcal T_{n,h}(E)(X\otimes\sigma)
+ =\Phi_{n,h}(\iota_{n,h}^{-1}E)(U_n(h)XU_n(h)^*)\otimes\sigma.
+$$
+
+To verify the physical interpretation, apply the representing Kraus identity first to elementary tensors and then expand an arbitrary joint matrix in tensor products of matrix units. Linearity proves equality with the local Kraus sum on all joint inputs; no product-input restriction is needed for this correspondence.
+
+Construct the visible history recursively. Given a finite visible history measure $\mu$ and measurable positive trace-one visible density $\rho(h)$, write $A_h(E)=\Phi_h(\iota_h^{-1}E)(U_h\rho(h)U_h^*)$. For each fixed vector $v$, the quadratic form $q_v(h,E)=\operatorname{Re}(v^*A_h(E)v)$ is a positive finite scalar event measure. Complete positivity and event trace nonincrease imply the uniform bound $q_v(h,E)\le\sum_i|v_i|^2$. Coordinate measurability implies measurable evaluation on every fixed retained event. Thus these actual scalar measures form finite kernels $K_v$ on the total next-history space. The sum $P=\sum_iK_{e_i}$ is a Markov kernel; individual $K_v$ need not be Markov.
+
+Bind $\mu$ with each $K_v$ to obtain finite event measures $\nu_v$. Polarization reconstructs the complex matrix event measure $M$: its $(i,j)$ real coordinate is $(\nu_{e_i+e_j}-\nu_{e_i-e_j})/4$, and its imaginary coordinate is $(\nu_{e_i-ie_j}-\nu_{e_i+ie_j})/4$. These are signed-measure differences. Section integration on each measurable event identifies every arbitrary-vector quadratic form with $\nu_v(E)$, so $M(E)$ is positive. Its trace is the scalar next-history probability law $\mu P$. Finite-dimensional positive matrix-measure density gives an integrable measurable positive trace-one posterior under that law, chosen to be a state on null histories as well. This uses ordinary measure Radon–Nikodym density and competing-density uniqueness, without a parameterized jointly measurable derivative or standard-Borel hypothesis.
+
+The measurable predecessor relation ensures preservation of the scalar preceding marginal. On $p^{-1}B$, every fibre pullback is either the full outcome event or the empty event according as $h\in B$. Total trace preservation therefore gives $P(h,p^{-1}B)=\mathbf1_B(h)$ and $(\mu P)(p^{-1}B)=\mu(B)$. The matrix marginal is the channel's output and is not asserted to equal the preceding matrix marginal. Cemetery continuation is included as an identity event action. If normalization only holds almost everywhere on executed histories, complete the visible instrument by the identity cemetery action outside its measurable normalization domain. For each hidden state this changes no physical event integral, using that state's own normalization null set.
+
+Now induct on the executed depth, starting with the Dirac/product initial history. Suppose the actual physical law equals the constructed visible law and its posterior is the visible density tensored with $\sigma$ almost everywhere. The product action identity equates the next actual joint event integral with the constructed visible event integral tensored with $\sigma$. Taking its trace, using $\operatorname{tr}\sigma=1$ and trace-one physical densities, proves equality of the next physical scalar measure with the constructed visible law on every measurable event. Only after identifying this actual measure does competing-density uniqueness imply equality of the next physical posterior with the visible density tensored with $\sigma$, almost everywhere under that measure. The induction works separately for each hidden state and needs no common null set across states or events. It yields common full history laws at every executed depth, hence common terminal record pushforwards.
+
+On a stopped preceding history the event action is $\mathbf1_E(c_n(h))X$. The predecessor, stop-persistence and unchanged-record identities therefore give the displayed exact stopped-record mass equality. Active history transport retains its length increment. Neither waiting nor stopping introduces a hidden measurement or removes probability mass.
+
+The zero-Hamiltonian Gibbs reference is $I_B/e$. Its logarithm is $-(\log e)I_B$, so relative entropy equals $\log e-S(\sigma)$, including singular $\sigma$ because the reference is full rank. The entropy bounds give the target interval $[0,L]$. The uniform hidden state has target zero; a pure hidden state has target $L$.
+
+For any real randomized estimator, both endpoint states induce the same output law $Q$. The pointwise triangle inequality gives $|z|+|z-L|\ge L$. Its nonnegative integral gives $R_0+R_L\ge L$, also when either risk is infinite. Thus the worst risk is at least $L/2$. The constant estimator $z=L/2$ has loss at most $L/2$ for every target in $[0,L]$, and the endpoints attain that bound. This proves the per-protocol equality without imposing integrability on arbitrary estimators.
+
+Finally the zero-step experiment uses a singleton initial history, product density $\rho_A\otimes\sigma$, Dirac law and constant length-zero record; all executed-stage requirements are vacuous. It belongs to the same legal class for the given preparation and Hamiltonian. Every class member has the proved inner minimax value $L/2$, so the outer infimum over this nonempty class also equals $L/2$. The zero-step experiment and midpoint estimator attain it.
+

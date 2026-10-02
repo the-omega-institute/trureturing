@@ -1,0 +1,1 @@
+| [ConditionalExpectationResidualDecomposition.lean](../../../D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.lean)，`conditional_expectation_residual_orthogonal_decomposition` | $L^2$ 残差对概念可测子空间正交；第14节以有限纤维求和写出本卷所需的交叉项消去 

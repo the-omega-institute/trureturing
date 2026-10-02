@@ -6,9 +6,7 @@
    utility: none
    digest: Informationally complete common-label tests force positive local Gram rigidity along finite composed paths. -/
 
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Tactic
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 
 
 noncomputable section
@@ -20,20 +18,6 @@ variable {A I : Type*} [Fintype A] [DecidableEq A] [Nonempty I]
 variable (H : A → Type*) (R : ℕ → A → Type*)
 variable [∀ a, Fintype (H a)] [∀ a, DecidableEq (H a)]
 variable [∀ t a, Fintype (R t a)] [∀ t a, DecidableEq (R t a)]
-
-def accumulated (B : ∀ a, Matrix (R 0 a) (H a) ℂ)
-    (E : ∀ t a, Matrix (R (t+1) a) (R t a) ℂ) :
-    ∀ t a, Matrix (R t a) (H a) ℂ
-  | 0, a => B a
-  | t+1, a => E t a * accumulated B E t a
-
-def gram {X Y : Type*} [Fintype Y] (L : Matrix Y X ℂ) : Matrix X X ℂ := Lᴴ * L
-
-def readout {X : Type*} [Fintype X] (Q : Matrix X X ℂ) (v : X → ℂ) : ℝ :=
-  (star v ⬝ᵥ (Q *ᵥ v)).re
-
-def productMap {T : A → Type*} (L : ∀ a, Matrix (T a) (H a) ℂ) :
-    Matrix (∀ a, T a) (∀ a, H a) ℂ := fun y x => ∏ a, L a (y a) (x a)
 
 /-- A finite path of genuinely composed local maps: positive prefixes have full-source
 Gram rigidity; a first zero factor annihilates all subsequent product maps. -/

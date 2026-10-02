@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaContractSource
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit ImportedContractProbe
 
@@ -15,6 +18,12 @@ def row (arena : Name) : CommandElabM SnapshotOccurrence := do
     theoremName := ``target
     statementIdentity := theoremStatementIdentity (← getEnv) ``target
     registrationModuleName := contributor }
+
+/-- The report acquires a contract's independent arena evidence before it can take
+effect; a rejected input therefore publishes no contract. -/
+private def declareAcquired (contract : RootCatalogContract) : CommandElabM Unit := do
+  liftTermElabM <| RootCatalogs.acquireProvenance contract
+  RootCatalogs.declare contract
 
 private def checkEvidence (name owner : Name) : CommandElabM Unit := do
   unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) == owner do
@@ -39,7 +48,7 @@ run_cmd do
         unless message == s!"IE-C003 ArenaSourceUnavailable declaration={name} reason=provenance" do
           throwError "contract input was acquired incidentally: {name}: {message}"
       let rows := #[← row aliasName, ← row copy]
-      RootCatalogs.declare {
+      declareAcquired {
         rootId := original.header.mainModule
         expected := if role == "expected" then rows else #[]
         source := if role == "source" then rows else #[]
@@ -70,7 +79,7 @@ run_cmd do
       try
         let rows := #[← row name]
         let diagnostic ← try
-          RootCatalogs.declare {
+          declareAcquired {
             rootId := original.header.mainModule
             expected := if role == "expected" then rows else #[]
             source := if role == "source" then rows else #[]
@@ -116,7 +125,7 @@ run_cmd do
           throwError "[FAIL] named contract input incidentally acquired: {name}: {before}"
         let rows := #[← row name]
         let diagnostic ← try
-          RootCatalogs.declare {
+          declareAcquired {
             rootId := original.header.mainModule
             expected := if role == "expected" then rows else #[]
             source := if role == "source" then rows else #[]
@@ -160,7 +169,7 @@ run_cmd do
 -- neither source-only nor baseline rows is incidentally acquired by registration.
 run_cmd do
   let baseline := #[← row ``baselineAlias, ← row ``baselineCopy]
-  RootCatalogs.declare {
+  declareAcquired {
     rootId := (← getEnv).header.mainModule
     expected := #[← row ``expectedAlias, ← row ``expectedCopy]
     source := #[← row ``sourceAlias, ← row ``sourceCopy] ++ baseline
@@ -170,11 +179,11 @@ run_cmd do
     checkEvidence aliasName ``arena
     checkEvidence copy copy
 
-register_information_theorem target in lawArena object_arena arena catalog forwarding
+test_assess in register_information_theorem target in lawArena object_arena arena catalog forwarding
   primitives readout.toPrimitiveBundle realization bridge
-register_information_theorem target in lawArena object_arena expectedCopy catalog copy
+test_assess in register_information_theorem target in lawArena object_arena expectedCopy catalog copy
   primitives readout.toPrimitiveBundle realization bridge
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end ImportedContractFixture

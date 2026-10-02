@@ -1,0 +1,37 @@
+**定理 16.3（包括非单位与零标签的精确轨道判据）。** 对任意 $f\in R_e$，定义
+
+$$
+S(f)=\{a\in H_e:(a-1)f=0\},\qquad
+E(f)=\{a\in H_e:\bar f=af\}.
+$$
+
+在 $\Phi$ 坐标中有
+
+$$
+|\Gamma_e f|=
+\begin{cases}
+h_e/|S(f)|,&E(f)\ne\varnothing,\\
+2h_e/|S(f)|,&E(f)=\varnothing.
+\end{cases}
+\tag{16.2}
+$$
+
+此外 $|\Gamma_e|=2h_e$，且
+
+$$
+b_e\in\{h_e,2h_e\},\qquad
+b_e=2h_e\quad\Longleftrightarrow\quad
+\exists f\in R_e:\ S(f)=\{1\}, E(f)=\varnothing.
+\tag{16.3}
+$$
+
+证明。$N_e$ 忠实对应 $H_e$ 的乘法作用。$S(f)$ 是稳定子，$E(f)$ 非空时是它的一个陪集。共轭保持 $H_e$，因为 $\bar z=-z^{-1}$，故 $f$ 与 $\bar f$ 的稳定子阶相同。矩阵关系 $j^2=I$、$jgj=-g^{-1}$ 给 $N_e\triangleleft\Gamma_e$，且 $\Gamma_e=N_e\cup N_ej$。$N_e$ 的每个元素与 $g$ 交换，但
+
+$$
+jg-gj=\begin{pmatrix}-1&2\\-3&1\end{pmatrix}
+$$
+
+在任何模 $e\ge2$ 下非零，所以 $j\notin N_e$，群阶为 $2h_e$。两条 $N_e$ 轨道 $H_ef,H_e\bar f$ 大小相同，或者相等或者不交；$j$ 的负号由 $-1\in H_e$ 吸收，故轨道稳定子公式给 (16.2)。零标签有 $S(0)=E(0)=H_e$，也被该式包含。
+
+若 $|S(f)|\ge2$，其 $\Gamma_e$ 轨道至多有 $h_e$ 点；若 $S(f)=\{1\}$，轨道只能有 $h_e$ 或 $2h_e$ 点。定理 15.2 的 $\alpha$ 至少达到 $h_e$，所以最大值与达到条件恰为 (16.3)。对单位可将反射条件写成 $\bar f/f\in H_e$，但非单位必须保留 $S,E$ 原式。此为全部标签的精确判据，不是仅由合数的素因子清单给出的 $b_e$ 闭式。$\square$
+

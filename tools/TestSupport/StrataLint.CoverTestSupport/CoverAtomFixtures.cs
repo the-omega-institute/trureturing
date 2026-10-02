@@ -199,13 +199,12 @@ internal static partial class CoverWorld
             var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "cover fixture");
             var sibling = new FileMapEntry(OtherSourcePath, FileMapKind.Program,
                 FileMapAdmissionPlane.Judge, "none", ["reader"], ["repository-policy"], false,
-                "none", null, "committed-source", null, [], null, digestionSource: true);
+                "none", null, "committed-source", null, null, digestionSource: true);
             files[FileMapLoader.RelativePath] = Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
                 new FileMapManifest(
                     manifest.ResidencePolicy,
                     manifest.Entries.Add(sibling),
-                    manifest.ArtifactKinds,
-                    manifest.Resources)).AsSpan());
+                    manifest.ArtifactKinds)).AsSpan());
             files[OtherSourcePath] = Encoding.UTF8.GetString(otherSourceBytes);
             var (otherCasPath, otherCasBytes) = DigestionTestSupport.CasFile(otherAtom);
             files[otherCasPath] = Encoding.UTF8.GetString(otherCasBytes);

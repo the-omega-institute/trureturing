@@ -2,7 +2,6 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using Tomlyn.Model;
 
 namespace StrataLint.CoverBatch.Tests;
 
@@ -313,17 +312,6 @@ public sealed partial class CoverBatchCommandTests
             path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
         foreach (var document in documents)
             WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
-        var resources = FileMapTomlTables.Parse(documents[0].Table["resources"],
-            AdmissionPlanePolicy.FileMapPath, allowEmpty: false);
-        foreach (var path in resources
-                     .SelectMany(resource => ((TomlArray)resource["materials"])
-                         .Cast<string>()
-                         .Prepend((string)resource["owner"]))
-                     .Distinct(StringComparer.Ordinal))
-        {
-            if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
-                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(repositoryRoot, path)));
-        }
     }
 
     private sealed class ReportLoadCounter : IDisposable

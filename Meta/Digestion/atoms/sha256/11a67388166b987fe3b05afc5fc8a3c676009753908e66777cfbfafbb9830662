@@ -1,0 +1,64 @@
+## 196. 平方范数原例的高次素切面与共享分裂域障碍
+
+本节固定 §195.3 的本原种子
+
+$$
+v=(16,29)=\phi(3+2\phi)^2,\qquad Q=-121,
+\qquad V_j=q(M^jv),
+$$
+
+只研究它的偶指标，也就是尚未由定理 195.1 覆盖的主字符奇偶类。所讨论的上包络始终是“指定高次多项式模素数有根”的允许集合，不把它等同于实际递推的全部素因子。以下为精确域论与有限群计数上的纸面推导，未作新增 Lean 核验。
+
+令
+
+$$
+K=\mathbb Q(\sqrt5),\qquad w=3+2\phi,
+\qquad \operatorname N(w)=11,\qquad
+\tau=\phi/\psi=-\phi^2.
+$$
+
+用 $\mathcal D_d$ 表示 Dickson 迹多项式，由
+
+$$
+\mathcal D_0(X)=2,\quad \mathcal D_1(X)=X,\quad
+\mathcal D_{d+1}(X)=X\mathcal D_d(X)-\mathcal D_{d-1}(X)
+$$
+
+定义。递推直接给
+
+$$
+\mathcal D_d(y+y^{-1})=y^d+y^{-d},
+\qquad
+\mathcal D_{2d}(X)=\mathcal D_d(X)^2-2.
+$$
+
+固定 $k=2^m$、$m\ge2$，置 $n=k/2$。取任意偶数 $r\in\{0,2,\ldots,k-2\}$，定义
+
+$$
+\begin{aligned}
+A_r&=\operatorname{Tr}(v^2\tau^{r+3}),\\
+P_{r,k}(X)&=Q\mathcal D_k(X)-A_r,\\
+a_r&=\tau^{-(r+4)/2}\frac{w'}w,\qquad
+ t_r=a_r+a_r^{-1}\in\mathbb Q.
+\end{aligned}
+\tag{196.1}
+$$
+
+由于 $r$ 为偶数，$a_r$ 的单位指数是整数。它包含 $\tau$ 的原有负号，未以绝对值替换。$\operatorname N(a_r)=1$，并且
+
+$$
+\rho_r:=\tau^{-r-3}\frac{v'}v
+=\tau^{-r-4}\left(\frac{w'}w\right)^2=a_r^2,
+\qquad
+\frac{A_r}Q=a_r^2+a_r^{-2}.
+$$
+
+因此有准确因式分解
+
+$$
+\frac{P_{r,k}(X)}Q
+=\bigl(\mathcal D_n(X)-t_r\bigr)
+ \bigl(\mathcal D_n(X)+t_r\bigr).
+\tag{196.2}
+$$
+

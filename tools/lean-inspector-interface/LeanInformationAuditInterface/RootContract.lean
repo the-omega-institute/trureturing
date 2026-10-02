@@ -3,11 +3,13 @@ import Lean
 namespace LeanInformationAudit
 open Lean
 
-/-- Producer-captured identities; no field is derived in the consuming root. -/
+/-- Independent expected rows retain either a supplied identity or the original
+compiler expression. The report interprets the expression; the recorder does not hash it. -/
 structure SnapshotOccurrence where
   objectArenaName : Name
   theoremName : Name
-  statementIdentity : String
+  statementIdentity : String := ""
+  capturedStatement : Option Expr := none
   registrationModuleName : Name
   deriving Inhabited, Repr
 
@@ -31,5 +33,9 @@ structure RootCatalogContract where
   baseline : Array SnapshotOccurrence := #[]
   companionPrefix : Option Name := none
   deriving Inhabited
+
+/-- Capture the original compiler type before registration and assessment. -/
+def captureStatement (env : Environment) (name : Name) : Option Expr :=
+  (env.find? name).map (·.type)
 
 end LeanInformationAudit

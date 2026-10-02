@@ -1,0 +1,10 @@
+**Theorem 11.3 (actual uniform physical recovery probability).** Assume additionally that $I$ is nonempty, has a measurable space with measurable singletons, and sampling has exactly the measure `MinimumRetrievalTime.uniformSamples I`. Write $N=|I|$ and $x_i=1/N\in\mathbb R$. For every $t\ge0$, the actual event `MinimumRetrievalTime.recovered a top t` satisfies
+
+$$
+\Pr(\operatorname{recovered}(a,V,t))
+=\operatorname{ofReal}\bigl(W_{0,t}(x)\bigr)
+=\operatorname{ofReal}\bigl(t!F_{0,t}(x)\bigr).
+$$
+
+This uses the original physical alphabet, not a projective pushforward, and imposes no full-spanning or finite-dimensional hypothesis. It includes zero ambient space, degree zero, and unspanned families. Nonemptiness is necessary for the specified uniform distribution and is not required by Theorem 11.2.
+

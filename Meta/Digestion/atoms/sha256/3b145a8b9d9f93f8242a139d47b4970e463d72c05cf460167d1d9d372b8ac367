@@ -1,0 +1,13 @@
+**定义 1.3（仪器分支与条件充分性）。** 在指定输入、输出空间上，一次仪器由有限族完全正映射
+
+$$
+\mathcal I_y(\rho)=\sum_\mu K_{y\mu}\rho K_{y\mu}^\dagger,
+\qquad \sum_{y,\mu}K_{y\mu}^\dagger K_{y\mu}=I
+$$
+
+组成。记录 $y$ 的概率为 $p_y=\operatorname{Tr}\mathcal I_y(\rho)$；仅在 $p_y>0$ 时定义条件态 $\mathcal I_y(\rho)/p_y$。效果 $E_y=\sum_\mu K_{y\mu}^\dagger K_{y\mu}$ 只规定概率，不替代整个分支。采用此标准仪器约定以及半迹距离 $D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1$，参见 Watrous, [*The Theory of Quantum Information*，第 2、3 章](https://cs.uwaterloo.ca/~watrous/TQI/)。
+
+一个操作合同 $\mathscr A$ 指定空间类型、允许通道与仪器、可读记录和动作选择规则。有限自适应协议是在每条已有记录路径上选择下一项允许操作的有限树；选择器只使用已经保留的记录及声明的控制数据。边界映射 $q$ 对 $\mathscr A$ 条件充分，指相同 $q(\rho)$ 的输入给出相同的整条记录分布，且每条正概率路径的后继边界相同；动作合法域及选择器也必须能由同一边界和记录决定。零概率路径没有条件态义务。
+
+这采用 [FIB 第 55 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L3261)及[动态边界卷第 1、2 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#L15)的合法性、读数和后继同时下降要求。以下每个充分性结论均另给操作合同；不把当前约化态相等定义成未来等价。
+

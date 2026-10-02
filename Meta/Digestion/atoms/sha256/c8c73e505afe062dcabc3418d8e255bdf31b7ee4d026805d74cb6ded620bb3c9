@@ -1,0 +1,31 @@
+### 207.3 每个核心至多有一个合法乘子
+
+令
+
+$$
+N_-=\lceil V/10\rceil V+1,\qquad
+N_+=\lfloor V/5\rfloor V+1,
+$$
+
+并取
+
+$$
+H_*=\left\lceil\exp\left(
+\kappa\frac{\log N_+}{(\log\log N_+)^2}
+\right)\right\rceil,
+\qquad C_*=N_-/H_*.
+\tag{207.7}
+$$
+
+函数 $x/(\log x)^2$ 在 $x>e^2$ 上递增。故对定理 207.3 范围内的每个潜在反例，有 $H\le H_*$、$C\ge C_*$。又
+
+$$
+\log H_*=O(r/(\log r)^2)=o(\log V),
+\qquad C_*/V\longrightarrow\infty.
+\tag{207.8}
+$$
+
+特别地，最终 $C_*>\max I_r$，也大于乘子区间的长度。
+
+以下各命题均取充分大的素数 $r$，并把定理 207.3 的阈值一次扩大，使 $\log\log N_->2$、$C_*>\max I_r$ 及 $H_*<V/2$ 同时成立。
+

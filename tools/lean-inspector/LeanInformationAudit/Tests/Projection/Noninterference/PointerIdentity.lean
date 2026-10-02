@@ -14,26 +14,26 @@ private def computedIdentity (a b : α) : Bool := unsafe !(ptrEq a b)
 
 private def swappedIdentity (a b : α) : Bool := unsafe ptrEq b a
 
-private def publishIdentity : CommandElabM Unit := do
+private def publishIdentity (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let env ← getEnv
   if identity env env then pure () else throwError "identity failure"
 
-private def publishFile : CommandElabM Unit := do
+private def publishFile (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let env ← getEnv
   if fileIdentity env env then pure () else throwError "identity failure"
 
-private def publishComputed : CommandElabM Unit := do
+private def publishComputed (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let env ← getEnv
   if computedIdentity env env then pure () else throwError "identity failure"
 
-private def publishSwapped : CommandElabM Unit := do
+private def publishSwapped (_snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let env ← getEnv
   if swappedIdentity env env then pure () else throwError "identity failure"
 
-private def identityCommand : CommandElab := terminalSealCommand publishIdentity
-private def fileCommand : CommandElab := terminalSealCommand publishFile
-private def computedCommand : CommandElab := terminalSealCommand publishComputed
-private def swappedCommand : CommandElab := terminalSealCommand publishSwapped
+private def identityCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishIdentity
+private def fileCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishFile
+private def computedCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishComputed
+private def swappedCommand : ValidatedSourceSnapshot → CommandElab := terminalSealCommand publishSwapped
 
 -- Audit only: none of the candidate publication closures is executed.
 run_cmd do

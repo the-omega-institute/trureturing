@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural
 import InformationSourceFixture
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredIndependentSources
 open Lean Meta Elab Command

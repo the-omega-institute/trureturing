@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta

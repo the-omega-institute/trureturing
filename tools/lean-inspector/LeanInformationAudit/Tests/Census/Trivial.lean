@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.SealOvercomplete
 import LeanInformationAudit.Census.Query
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
 open LeanInformationAudit.Tests.SealOvercomplete

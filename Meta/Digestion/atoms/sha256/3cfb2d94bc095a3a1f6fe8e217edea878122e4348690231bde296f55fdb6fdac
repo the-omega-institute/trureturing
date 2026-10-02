@@ -1,0 +1,4 @@
+# Predictive Thermodynamic Graded Spectrum
+
+> 本卷按 `generic-v1` 理论输入组织。它记录归一化正定矩阵族的抽象谱结论，作为后续物理 Gramian 桥接的参考输入；Lean 声明及其证明项仍是数学真源。本卷只增不减，后续修订写在追加锚之后。
+

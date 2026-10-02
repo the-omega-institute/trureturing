@@ -1,5 +1,8 @@
 import LeanInformationAudit.RegistrationGates
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
 namespace P2Padding
@@ -33,7 +36,7 @@ theorem lawVariation : arena.Law readouts ∧ ¬arena.Law bad := by
   · intro h
     have h0 := h (false,false)
     exact Bool.noConfusion h0
-register_information_theorem source in arena
+test_assess in register_information_theorem source in arena
   primitives readouts.toPrimitiveBundle realization bridge variation lawVariation
 def cat : Catalog arena.toArena := Catalog.ofVector ![source.__information_unit]
 example : arena.toArena.Nondegenerate := by decide

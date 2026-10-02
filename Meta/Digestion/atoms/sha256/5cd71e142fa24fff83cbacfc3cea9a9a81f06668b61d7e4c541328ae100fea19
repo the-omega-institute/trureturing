@@ -1,0 +1,37 @@
+**定理 7.1（包含全部低层算子的最小联合不变代数）。** 令
+
+$$
+\mathcal T_H=\operatorname{span}_{\mathbb C}\{T_v:v\in H\}.
+$$
+
+在包含 $\mathcal B(\mathcal H_A)\otimes I_H$ 且满足 $U^\dagger\mathcal A U\subseteq\mathcal A$ 的含幺 $C^*$ 子代数中，唯一按包含关系最小者为
+
+$$
+\boxed{\mathcal A_{\min}=\mathcal B(\mathcal H_A)\otimes\mathcal T_H.}
+$$
+
+不要求 $d,e$ 互素。这里的最小性是在联合算子代数中包含全部低层算子的最小性；与定理 4.4 在纯低层范围内求最大自主代数属于不同问题。
+
+证明。任取符合条件的 $\mathcal A$。取 $a\in A_0,a'\in A_1$，定理 3.2 给出
+
+$$
+U^\dagger(E_{f(a),f(a')}\otimes I_H)U=E_{aa'}\otimes R\in\mathcal A.
+$$
+
+对任意 $b\in A$，左右乘已有的 $E_{ba}\otimes I_H$ 与 $E_{a'b}\otimes I_H$ 得 $E_{bb}\otimes R$；求和得 $I_A\otimes R\in\mathcal A$。因高层平移交换，再次拉回有
+
+$$
+U^\dagger(I_A\otimes T_v)U=I_A\otimes T_{M^{-1}v}.
+$$
+
+特别地 $I_A\otimes T_{(-1,1)}\in\mathcal A$，因为 $M^{-1}(1,0)=(-1,1)$。向量 $(1,0)$ 与 $(-1,1)$ 在每个模 $e$ 上生成 $H$：两者之和为 $(0,1)$。用乘积和伴随遂得到所有 $I_A\otimes T_v$，再与低层矩阵单位相乘，证明 $\mathcal A_{\min}\subseteq\mathcal A$。
+
+反过来，$\mathcal T_H$ 因 $T_vT_w=T_{v+w}$、$T_v^\dagger=T_{-v}$ 构成含幺 $C^*$ 代数。直接计算
+
+$$
+U^\dagger(E_{f(a),f(a')}\otimes T_v)U
+=E_{aa'}\otimes T_{M^{-1}(v+c(a')-c(a))},
+$$
+
+所以 $\mathcal A_{\min}$ 在拉回下稳定，满足所有条件。有限维性还使该包含成为相等。$\square$
+

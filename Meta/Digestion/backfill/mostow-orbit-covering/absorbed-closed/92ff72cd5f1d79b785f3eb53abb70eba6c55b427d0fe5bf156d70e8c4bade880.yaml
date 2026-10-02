@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:92ff72cd5f1d79b785f3eb53abb70eba6c55b427d0fe5bf156d70e8c4bade880
+  normalized_sha256: sha256:92ff72cd5f1d79b785f3eb53abb70eba6c55b427d0fe5bf156d70e8c4bade880
+cas_ref: sha256:92ff72cd5f1d79b785f3eb53abb70eba6c55b427d0fe5bf156d70e8c4bade880
+coverage_gids:
+  - gid: D5/S3/Geometry/IsometricOrbitMetric.orbitDistance
+    target_statement_id: sha256:e42eb0ec053838333c228b469e4cc05766bb01a29ad7c34b7e8cda384b875e06
+  - gid: D5/S3/Geometry/IsometricOrbitMetric.orbitMetricSpace
+    target_statement_id: sha256:248a04e8bcb66716b73096eb682bd526003f3b0a38ea5083d4ba853bf6c0c00d
+  - gid: D5/S3/Geometry/IsometricOrbitMetric.orbitProperSpace
+    target_statement_id: sha256:47585395f6162b536c777d2e437c7293e51f2240d79dd0b746d482808aa11e30
+receipts:
+  unresolved_subitems: []

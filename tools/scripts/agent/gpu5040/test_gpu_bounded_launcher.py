@@ -323,16 +323,16 @@ sys.exit(launcher.main(['--state-dir', sys.argv[1]]))
         self.assertEqual(128 + signal.SIGTERM, self.finish(process, release=True))
         self.assertEqual(b"fixture checkpoint 124", (self.state / "latest.pt").read_bytes())
 
-    def test_signal_after_preflight_prevents_child_creation(self):
+    def test_signal_during_status_validation_prevents_child_creation(self):
         code = """
 import os, signal, sys
 import gpu_bounded_launcher as launcher
 original = launcher.read_status
-def interrupted_preflight(*args):
+def interrupted_status_validation(*args):
     result = original(*args)
     os.kill(os.getpid(), signal.SIGTERM)
     return result
-launcher.read_status = interrupted_preflight
+launcher.read_status = interrupted_status_validation
 sys.exit(launcher.main(['--state-dir', sys.argv[1]]))
 """
         process = self.spawn(command=[sys.executable, "-c", code, str(self.state)])

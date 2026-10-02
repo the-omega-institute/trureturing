@@ -1,0 +1,31 @@
+**定义 20.1（共同长度合同及比较映射）。** 沿用定义 14.1 的 $G$、$M$、$S$、$q$、$r_G$、$d_\sigma$ 与定义 17.2 的高到低词 $W(n)$。记 $L(n)$ 为规范词的窗口数，故 $L(0)=L(1)=0$。对 $H\geq L(n)$，定义
+
+$$
+W_H(n)=\mathrm{null}^{H-L(n)}W(n).
+$$
+
+对任意 $f:\mathbb N_{>0}\to\mathbb N$，其全补零同步词图是
+
+$$
+\mathcal G_f=
+\left\{\bigl(W_H(n),W_H(f(n))\bigr)_{\mathrm{sync}}:
+ n\geq1,\ H\geq\max\{L(n),L(f(n))\}\right\}.
+\tag{20.1}
+$$
+
+其中每个词恰含 $H$ 个窗口配对字母，最后恰有一个单位位配对字母；窗口字母和单位末字母的字母表不交。三轨及投影也使用同一个 $H$，只删除相应轨道，不改变字母数。每一轨都须满足定义 2.1 的不相邻占位条件。这里保留所有共同长度，不只取最短共同长度；$n=1$、零值输出、零窗口词及任意额外高端 $\mathrm{null}$ 都在合同内。
+
+取 $A=[2]$、$B=\mathrm{null}$，并定义
+
+$$
+\begin{aligned}
+\mathcal S&=\{n_m:m\geq1\},&
+n_m&=F_{6m+9}+F_{3m+6}+2,\\
+p_0(n)&=G(n),&
+p_\star(n)&=G(n)+\mathbf1_{\mathcal S}(n).
+\end{aligned}
+\tag{20.2}
+$$
+
+对 $G(n)\leq p(n)\leq n$ 的映射记 $E_p(n)=p(n)-G(n)$。对 $N\geq2$，记 $D_N=\{1,\ldots,N-1\}$、$T_{N,p}(x)=N-p(x)$；周期长度指此映射在 $D_N$ 中一条周期的不同索引数，与同步词图的窗口数无关。
+

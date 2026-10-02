@@ -1,0 +1,22 @@
+**命题 4.2（块函数与共现记录的精确配对）。** 给任意 $f:\mathcal A\to\mathbb R$，置
+
+$$
+c_T=\sum_{U\subseteq T}(-1)^{|T|-|U|}f(U).
+$$
+
+则
+
+$$
+f(S)=\sum_{T\subseteq S}c_T,
+\qquad
+\boxed{\sum_{S\in\mathcal A}m_Sf(S)
+=\sum_{T\in\mathcal A}c_Ty_T.}
+\tag{4.2}
+$$
+
+证明。第一式中 $f(U)$ 的合并系数为 $\sum_{U\subseteq T\subseteq S}(-1)^{|T|-|U|}$，$U=S$ 时为一，否则由二项式展开为零。向下闭保证所用 $f(U)$ 均有定义。第二式把有限和交换次序，再用式（4.1）。$\square$
+
+这是有限集合 Möbius 反演的应用。FIB 卷 §62 从共现记录恢复块重数；这里从块函数恢复解释系数。二者通过式（4.2）相接：**关系记录说明共同发生了什么，任务系数说明这种共同发生对输出有什么贡献。** 有限配对并未假设块统计独立。
+
+若 $c_\varnothing=f(\varnothing)\ne0$，必须保留 $y_\varnothing$ 的总块数贡献。这套无序统计不保存窗口次序、位置权重或接缝；第6、7节的递归任务还需要相应状态，不能仅由这些计数恢复。
+

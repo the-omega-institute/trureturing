@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.SealSuccess
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.Census.Query
 

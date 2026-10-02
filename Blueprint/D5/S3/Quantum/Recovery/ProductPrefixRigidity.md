@@ -19,3 +19,4 @@ For locally informationally complete normalized common-label source families, la
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/ProductPrefixRigidity.prefix_rigidity`
+- Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](PurifiedLocalPath.md)

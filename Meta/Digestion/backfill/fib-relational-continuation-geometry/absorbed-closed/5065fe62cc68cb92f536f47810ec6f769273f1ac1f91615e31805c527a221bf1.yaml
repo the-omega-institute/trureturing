@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5065fe62cc68cb92f536f47810ec6f769273f1ac1f91615e31805c527a221bf1
+  normalized_sha256: sha256:5065fe62cc68cb92f536f47810ec6f769273f1ac1f91615e31805c527a221bf1
+cas_ref: sha256:5065fe62cc68cb92f536f47810ec6f769273f1ac1f91615e31805c527a221bf1
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualRightProfile.full21_3
+    target_statement_id: sha256:dc616db7e24d55a8872be49969ea84d66570358e32a316d1360c3cd7a5080125
+receipts:
+  unresolved_subitems: []

@@ -1,5 +1,14 @@
-import LeanInformationAuditRegTests.CausalSourceContract
+import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.SourceFamily
+import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion
+import Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
+import D5.S3.ConceptDynamics.DagSemantics.KnowledgeAlongDependency
+import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
 import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta Elab Command LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -117,7 +126,7 @@ run_meta do
   unless (TemplateAudit.compactRawIdentity [] (balanced unique)).toOption.isNone do
     throwError "[FAIL] oversized unique compact source accepted"
   logInfo "[PASS] compact_source_deep_and_unique_budget_negatives"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let modules := #[event.key.registrationModule].map fun module =>
     (module, snapshot.originals.filter (·.occurrence.key.registrationModule == module) |>.map (·.occurrence.key))
   let wires ← TemplateBinding.reportJson modules

@@ -1,0 +1,15 @@
+**命题 3.3（单步最大性不等于同一边界闭合）。** 当 $d=2$ 时，置
+
+$$
+B=|00\rangle\langle01|+|01\rangle\langle00|.
+$$
+
+则 $B\in\mathcal D_{\mathrm{out}}$，但
+
+$$
+\alpha(B)=|00\rangle\langle10|+|10\rangle\langle00|
+\notin\mathcal D_{\mathrm{out}}.
+$$
+
+证明。模 $2$ 的低层置换有 $00\mapsto00$ 和 $10\mapsto01\mapsto11\mapsto10$。输入的唯一进位 $1$ 标签是 $11$，故输出单独成块的标签是 $10$。$B$ 的两个标签均在另一个输出块中，而 $\alpha(B)$ 跨过该分块，定理 3.2 给出结论。$\square$
+

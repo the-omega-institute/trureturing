@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredObligations
 open Lean Meta Elab Command
@@ -9,13 +12,13 @@ theorem boundProof (n : Nat) : Nat.lt n (Nat.succ n) := Nat.lt_succ_self n
 def boundTemplate (n : Nat) : PrimitiveRealization (cutSignature Bool (Fin (Nat.succ n))) :=
   cutRealization (fun _ : Bool => ⟨n, boundProof n⟩)
 
-register_information_template boundTemplate
+test_assess in register_information_template boundTemplate
 
 def indexedDecision (P : Bool → Prop) (d : ∀ b, Decidable (P b)) :
     PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization (fun b => @decide (P b) (d b))
 
-register_information_template indexedDecision
+test_assess in register_information_template indexedDecision
 
 private def decisionTypeRetained : TemplateAudit.PlanNode → Bool
   | .app (.app (.atom (.const ``decide _)) proposition) _ =>
@@ -40,10 +43,10 @@ def independentArena : PrimitiveLawArena where
 instance : DecidableEq targetArena.State := instDecidableEqBool
 instance : DecidableEq independentArena.State := instDecidableEqBool
 
-information_theorem target in targetArena primitives (boundTemplate 0)
+test_assess in information_theorem target in targetArena primitives (boundTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
 
-information_theorem independent in independentArena primitives (boundTemplate 0)
+test_assess in information_theorem independent in independentArena primitives (boundTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
 
 run_meta do

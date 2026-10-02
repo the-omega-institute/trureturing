@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:44d5e83963d9522f8fd3d0eb7741c44f436d9cbc4d1253690a894a7a085a8762
+  normalized_sha256: sha256:44d5e83963d9522f8fd3d0eb7741c44f436d9cbc4d1253690a894a7a085a8762
+cas_ref: sha256:44d5e83963d9522f8fd3d0eb7741c44f436d9cbc4d1253690a894a7a085a8762
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/TimeSampling.prime_zero_rank_facts
+    target_statement_id: sha256:9abb2390abb56faf4c6d65cee8b83e7d10788bca72e9b91f7538a0b4c80c2d37
+  - gid: D5/S3/Arith/FibonacciRank.fibonacci_entry_point
+    target_statement_id: sha256:cb723385a81b5685d65e8dea810894ef7ad83d2ee8a1855a9b34e573a090e19d
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.euler_log_bounds
+    target_statement_id: sha256:25cfdb63fc9d10b436edcdaf761da6235ced39eacf55c166bada8aea5df8dacf
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.fibonacci_lt_two_pow
+    target_statement_id: sha256:2835718d067d9b38ca9dfa060154e3b36ce20703edae81a26cf193d5999f926a
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.result
+    target_statement_id: sha256:17af9071c6ced32ad8a2d19cf02f5f2449fdf91993c69fd77021ba9f52b353a9
+  - gid: D5/S3/Factorization/TauCubeRootBound.result
+    target_statement_id: sha256:40a369068c95a928cff7bf67f73b0b823b4893502d35a1aa779e99df74abbe4c
+  - gid: D5/S3/Weil/GronwallUpperEnvelope.large_prime_count_le
+    target_statement_id: sha256:aa7c5137fc4da240f0970d978baf8929ee5ad102bdf7a8e27f9411fab6939682
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,41 @@
+**Theorem 7.1 (coordinate topology and properness).** Let (E) be a real
+inner product space and equip (U_E) with the metric of Definition 3.1. The
+coordinate bijection from this hyperbolic metric space to the positive-height
+subspace of (E\times\mathbb R), with its Euclidean subspace topology, is a
+homeomorphism. If (E) is a proper metric space, then the hyperbolic metric
+space is proper: every closed hyperbolic ball is compact.
+
+**Proof.** The logarithmic height bound of Theorem 6.1 makes log-height
+continuous in the hyperbolic topology, hence height is continuous by
+exponentiation. The exact identity
+
+\[
+ d_2(p,q)=2\sqrt{h(p)h(q)}\sinh\frac{d_H(p,q)}2
+\]
+
+then proves continuity of the Euclidean coordinates at each point. Conversely,
+the distance formula of Definition 3.1 is continuous in the Euclidean
+coordinates, with a positive denominator. These two continuities give the
+coordinate homeomorphism.
+
+For a closed hyperbolic ball of radius (r\geq0) about (p), write
+(U=h(p)\exp r), (L=h(p)\exp(-r)>0), and
+(R=2U\sinh(r/2)). Every point (q) of the ball satisfies
+
+\[
+ L\leq h(q)\leq U,\qquad d_E(q_{\mathrm{horizontal}},p_{\mathrm{horizontal}})
+ \leq d_2(q,p)\leq R.
+\]
+
+The height estimates follow by exponentiating the logarithmic bound. The
+distance estimate follows from the displayed identity and monotonicity of
+square root and hyperbolic sine. Thus the ball lies in the continuous image
+of the compact Euclidean product
+(\overline B_E(p_{\mathrm{horizontal}},R)\times[L,U]). Its height lower bound
+ensures that this compact product maps into the positive-height space.
+The hyperbolic ball is closed, so it is a closed subset of that compact
+image and is compact. Negative-radius balls are empty. Properness supplies
+local compactness and second countability by the standard metric-space
+theorems. This establishes topological and compactness properties of the
+model; curvature, quotient metric completeness, finite covolume, and
+Mostow--Prasad rigidity remain separate obligations.

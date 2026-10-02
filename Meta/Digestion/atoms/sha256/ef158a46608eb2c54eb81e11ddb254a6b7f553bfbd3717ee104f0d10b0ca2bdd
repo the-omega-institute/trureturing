@@ -1,0 +1,13 @@
+**命题 39.2（规范首次闭合剖面与联合可实现性）。** 对 $a\in\Sigma^A$ 定义
+
+$$
+\Pi_A(a)=
+\begin{cases}
+(\tau_A(a),(p_i(a))_{i\in C_A,\ i<\tau_A(a)}),&\tau_A(a)<\infty,\\
+(\infty,(p_i(a))_{i\in C_A}),&\tau_A(a)=\infty.
+\end{cases}
+\tag{39.5}
+$$
+
+则 $\Pi_A(a)$ 完全决定补全响应 $b\mapsto T_n(a\sqcup b)$；每个列出的剖面都由实际五窗赋值实现，而且 $A$、$B$ 的代表可任意合并为同一个原始词；不同的 $\tau_A$ 标签由全 $010$ 的中性补全分开，相同 $\tau_A$ 下的不同端口剖面由单端口测试补全分开。当 $B=\varnothing$ 时，中性补全就是唯一的空赋值，仍分开不同闭合标签。
+

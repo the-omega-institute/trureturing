@@ -1,0 +1,25 @@
+**定义 28.1（Stop、End 与有限递归类型）。** 正数 End 的独立资格位初始化为 $\chi=\varepsilon$，读窗后替换为 $\chi'=\mathbf1_{\{\sigma\ne\mathrm{null}\}}$，不取累计 OR。可达活动对为 $(s,\chi)\in\{(0,0),(0,1),(1,1)\}$；非法 seam 进入吸收错误态。正数 End 还须完整来源合同或证书保证未读高位全零；零另用全零的结构表示。单位一的空窗字可表示一并正数 End，单位零的空字不能作正数 End。语法 Stop 仅结束一个有限路径，不提供未知来源的高位证书。
+
+若
+
+$$
+\mathrm{Geom}::=\mathrm{Self}\mid\mathrm{Mirror}(2)
+\mid\mathrm{Translate}(3)\mid\mathrm{Rotate}(4)
+\mid\mathrm{Scale}(\mathrm{Geom})
+$$
+
+中 $2,3,4$ 是有限叶参数集的基数，令 $C$ 为十个叶参数的互斥和，则其有限初始代数为 $\mu X.(C\sqcup X)$。按 §27 的真实窗图，允许 Stop 的有限路径类型和无 Stop 的无限流类型分别为
+
+$$
+X_0=1+3X_0+2X_1,\qquad X_1=1+2X_0+X_1,
+\tag{28.1}
+$$
+
+$$
+\Omega_0=3\Omega_0+2\Omega_1,\qquad
+\Omega_1=2\Omega_0+\Omega_1.
+\tag{28.2}
+$$
+
+前者取有限良基初始解，后者取所有合法无限展开的最大余代数解。
+

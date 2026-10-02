@@ -20,9 +20,11 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - env:
-          CANDIDATE_SHA: ${{ github.sha }}
-        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json

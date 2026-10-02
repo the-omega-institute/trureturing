@@ -1,0 +1,80 @@
+**定理 21.5（实际五窗正则性与黄金收敛的互斥条件）。** 在假设 21.1 下，严格使用定义 17.2、20.1 的高到低规范五窗、独立单位末字母及全部共同高端补零合同，有
+
+$$
+\begin{aligned}
+\operatorname{Reg}(\mathcal G_C)
+&\quad\Longrightarrow\quad
+\limsup_{n\to\infty}\frac{C(n)}n>\alpha,\\
+\frac{C(n)}n\longrightarrow\alpha
+&\quad\Longrightarrow\quad
+\neg\operatorname{Reg}(\mathcal G_C).
+\end{aligned}
+\tag{21.7}
+$$
+
+证明。来源界履行定理 20.2 的实际前提，故
+
+$$
+\operatorname{Reg}(\mathcal G_C)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_C}),\qquad
+0\le E_C(n)\le n.
+$$
+
+定理 21.4 又给出实际 $E_C$ 无界。接下来只在这条实际缺陷词图的推导中使用有限自动机泵送。整数进制同步函数的相关方法先例见 Goč、Schaeffer、Shallit，[*Subword Complexity and k-Synchronization*, arXiv:1206.5352v4，§5，Theorem 16 的证明](https://arxiv.org/abs/1206.5352v4)。该整数进制论证不直接承担这里的 Fibonacci 权重；下面给出当前五窗合同中的具体估计。
+
+记 $f=E_C$，假设其词图正则。与“输入没有额外高端零窗口”的正则语言相交，得到正则语言 $\mathcal L$。它对每个 $n\ge1$ 恰有一个词，窗口数为 $H=L(n)$；当 $H>0$ 时首个输入窗口非 $\mathrm{null}$。定理 20.2 中的共同长度资源等式
+
+$$
+L(x)\le H\quad\Longleftrightarrow\quad 0\le x<F_{3H+3}
+$$
+
+及 $0\le f(n)\le n$ 保证输出在同样的 $H$ 个窗口内，故这个限制保留每个实际输入，未另加输出窗口。
+
+取识别 $\mathcal L$ 的确定有限自动机，其状态数为 $Q\ge1$。$f$ 无界，所以存在实际输入 $n$ 使 $L(f(n))\ge Q+1$。选取它在 $\mathcal L$ 中的唯一词，设从高端起第一个非零输出窗口为第 $b$ 个窗口，则
+
+$$
+b=H-L(f(n))+1,\qquad H-b\ge Q.
+$$
+
+输入的第一个窗口已非零。读完第 $b$ 个窗口之后，两轨前缀都已经非零。在读完窗口 $b,b+1,\ldots,H$ 后的 $H-b+1\ge Q+1$ 个状态中，有两个相同。取其位置 $b\le i<j\le H$，令 $\ell=j-i\ge1$，将配对词写成 $uvw$，其中 $u$ 含前 $i$ 个窗口，$v$ 含随后 $\ell$ 个配对窗口，$w$ 含剩余窗口和唯一的单位末字母。
+
+泵块 $v$ 非空且不含单位末字母；它在两轨均已有非零前缀之后。对每个整数 $m\ge0$，词 $uv^mw$ 被同一自动机接受，因而仍属于准确的实际语言 $\mathcal L$。特别地，两轨都满足原接缝合法性、单位末字母条件及实际函数关系，而不只是满足某个放松的数值约束。记解码值为 $(n_m,f(n_m))$，窗口数为
+
+$$
+H_m=H+(m-1)\ell.
+$$
+
+首个输入非零窗口仍在第一位，首个输出非零窗口仍在第 $b$ 位。该泵送没有重复任何先于首次输出非零的填充块，故不可能只产生同一个整数的更长高端补零表示。
+
+为确定增长及比值，按本卷窗口索引直接计算：从低端数第 $a$ 个窗口、$a\ge0$，占用 Fibonacci 索引 $3a+3,3a+4,3a+5$。非零窗口的最小权重为 $F_{3a+3}$。因此，对所有 $m\ge0$，
+
+$$
+\begin{aligned}
+n_m&\ge F_{3H_m},&n_m&<F_{3H_m+3},\\
+f(n_m)&\ge F_{3(H_m-b+1)}.
+\end{aligned}
+\tag{21.8}
+$$
+
+因为 $H_m\to\infty$，输入 $n_m\to\infty$。Binet 公式 $F_r=(\varphi^r-(-\varphi^{-1})^r)/\sqrt5$ 在固定 $b$ 下给
+
+$$
+\liminf_{m\to\infty}\frac{f(n_m)}{n_m}
+\ge\lim_{m\to\infty}
+\frac{F_{3(H_m-b+1)}}{F_{3H_m+3}}
+=\varphi^{-3b}>0.
+$$
+
+这个估计只用合法窗口的准确 Fibonacci 权重及自动机在首次输出非零之后的循环；其常数可以依赖所选实际词和自动机。由 $G(n)/n\to\alpha$，同一列实际输入遂满足
+
+$$
+\limsup_{n\to\infty}\frac{C(n)}n
+\ge\liminf_{m\to\infty}\frac{C(n_m)}{n_m}
+\ge\alpha+\varphi^{-3b}>\alpha.
+$$
+
+这证明第一条蕴含，第二条是其逆否命题。
+
+式 (21.7) 将定理 21.4 的无界实际进位缺陷接到定理 20.2 的准确词图闭合条件，并未分别决定 $\mathcal G_C$ 的正则性或 $C(n)/n$ 的全局收敛。任意固定右宽度的反射也没有覆盖 Fibonacci 块中心、负宽度轮廓或全部外部索引。实际周期是否存在无界长度族，以及从输出词图正则性到按可变深度选取 $T_N^{C(N-1)}(N-1)$ 的全局同步图所需的额外条件，仍未由这些结论解决。Campbell 的实际三尺度结果仍保持定理 17.3 的适用范围。
+

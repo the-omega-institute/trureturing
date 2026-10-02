@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
@@ -139,17 +142,5 @@ register_information_theorem
   realization isometricBridge
   variation isometricVariation sensitivity isometricSensitivity
   escape from (ℝ) escape continues (open)
-
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights,
-      `D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "mechanical order registration is not declaredValidated: {theoremName}"
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder

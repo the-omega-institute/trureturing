@@ -1,0 +1,8 @@
+### 205.3 最小公倍数核心的加性精度
+
+令
+
+$$
+D_y=\operatorname{lcm}(1,2,\ldots,\lfloor y\rfloor).
+$$
+

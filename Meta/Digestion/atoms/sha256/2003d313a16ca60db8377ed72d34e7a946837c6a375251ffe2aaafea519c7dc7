@@ -1,0 +1,12 @@
+**定义 5.3（关联输入的完整算子块）。** 对任意联合态写
+
+$$
+\rho_{AH}=\sum_{a,a'}E_{aa'}\otimes\rho_{aa'},
+\qquad
+\operatorname{Tr}_H(U\rho_{AH}U^\dagger)
+=\sum_{a,a'}|f(a)\rangle\langle f(a')|
+\operatorname{Tr}\left(R^{k(a)-k(a')}\rho_{aa'}\right).
+$$
+
+这里 $\rho_{aa'}$ 为高层算子，不假设相同，也不假设非对角块单独为正。该恒等式由 $V_a=U_eR^{k(a)}$ 和迹的循环性得到；低层边缘只给出 $\operatorname{Tr}\rho_{aa'}$，高层边缘只给出 $\sum_a\rho_{aa}$，一般都不决定右侧。第 7 节给出既保持两边缘相同又改变下一低层输出的具体联合态。
+

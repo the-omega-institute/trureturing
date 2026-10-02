@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c8751821ba2fb0adb7210499e71d997966c1be46c8960f8a791eaa68363e5b13
+  normalized_sha256: sha256:c8751821ba2fb0adb7210499e71d997966c1be46c8960f8a791eaa68363e5b13
+cas_ref: sha256:c8751821ba2fb0adb7210499e71d997966c1be46c8960f8a791eaa68363e5b13
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/CycleNineThreeObstruction.result
+    target_statement_id: sha256:e5b42fc3ab72fafcade3eb1d033f1857ffcd7b7bbbc379d09b11ce8a65265f39
+receipts:
+  unresolved_subitems: []

@@ -3,6 +3,9 @@ import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Tower.DBonacci.Substitution
 import D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.ReifierShadow
 open Lean Meta Elab Command
@@ -23,9 +26,9 @@ private def viaForms : CommandElabM (Array Syntax) := do
     (fun d : Fin 3 => recenter d (direction d)) (fun _ => (0, 0))) in recenterArena)
   return #[substitution, recenter]
 
-expect_information_occurrence gapLabelSubstitution_three_compatible in substitutionArena
+test_assess in expect_information_occurrence gapLabelSubstitution_three_compatible in substitutionArena
   from "LeanInformationAudit.Tests.RegistrationGates.ReifierShadow"
-expect_information_occurrence recenter_direction in recenterArena
+test_assess in expect_information_occurrence recenter_direction in recenterArena
   from "LeanInformationAudit.Tests.RegistrationGates.ReifierShadow"
 
 /-- Actual consumer observations: identities/ownership, raw expressions, universes,
@@ -78,8 +81,8 @@ Companion names match the derived convention to compare the same occurrences. -/
 private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[1]
   let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[5]
-  let unit := localCompanionName (← getEnv) theoremName theoremUnitSuffix
-  let bridge := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+  let unit := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName theoremUnitSuffix
+  let bridge := localCompanionName (← getEnv) (← getEnv).header.mainModule theoremName primitiveRealizationSuffix
   let nd := unit.str "__nondegenerate"
   let sens := unit.str "__sensitivity"
   let vari := unit.str "__variation"
@@ -118,7 +121,7 @@ private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let bridgeSyntax ← `(informationRealization| $bridgeId:ident)
   let variId := mkIdent vari
   let sensId := mkIdent sens
-  elabCommand (← `(command| register_information_theorem $theoremId in $arenaId
+  elabCommand (← `(command| test_assess in register_information_theorem $theoremId in $arenaId
     primitives $primitive:ident realization $bridgeSyntax variation $variId sensitivity $sensId))
   unless InformationRegistry.hasTheorem (← getEnv) theoremName do
     throwError "manual lowering failed; generated_unit={(← getEnv).contains unit}"
@@ -131,7 +134,7 @@ elab "check_pointwise_shadow" : command => do
   unless manualEntries.size == 2 do throwError "manual count"
   let manualObs ← liftTermElabM <| (manualEntries.mapM registrationObservations : MetaM _)
   let manifest := reprStr <| ExpectedOccurrenceManifest.declaredEntries (← getEnv) (← getEnv).header.mainModule
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   if (← get).messages.hasErrors then throwError "manual seal command rejected"
   let manualSeal ← liftTermElabM <| sealObservations
   set initial
@@ -143,7 +146,8 @@ elab "check_pointwise_shadow" : command => do
     unless ← liftTermElabM <| sameObservations m w do
       throwError "harmless bridge proof changed consumer observations"
   set initial
-  forms.forM elabCommand
+  forms.forM fun form => do
+    elabCommand (← `(command| test_assess in $(⟨form⟩):command))
   let derivedEntries ← liftCoreM ownEntries
   unless derivedEntries.size == 2 do throwError "derived count"
   let derivedObs ← liftTermElabM <| (derivedEntries.mapM registrationObservations : MetaM _)
@@ -155,7 +159,7 @@ elab "check_pointwise_shadow" : command => do
   for entry in derivedEntries do
     liftTermElabM <| RegistrationReifier.validateDerivedCertificate entry
     unless entry.derivedCertificate.isSome do throwError "missing derived certificate"
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   if (← get).messages.hasErrors then throwError "derived seal command rejected"
   let derivedSeal ← liftTermElabM <| sealObservations
   unless ← liftTermElabM <| sameObservations manualSeal derivedSeal do throwError "seal/catalog ordering or enumeration differs"

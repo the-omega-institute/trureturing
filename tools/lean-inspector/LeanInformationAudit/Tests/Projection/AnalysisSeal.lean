@@ -1,12 +1,15 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit Lean.Elab.Command
 open LeanInformationAudit.Tests.ImportClosureProducer
 open LeanInformationAudit.Tests.Projection
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
@@ -20,7 +23,7 @@ run_cmd do
   let sealArtifact := Syntax.mkStrLit (← fixturePath "seal-catalog.json")
   let analysis := Syntax.mkStrLit (← fixturePath "seal-analysis.json")
   let ascii := Syntax.mkStrLit (← fixturePath "seal-analysis.txt")
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   let rootId := mkIdent (`_root_ ++ (← getEnv).header.mainModule)
   elabCommand (← `(command| #stage_information_analysis root $rootId:ident))
   elabCommand (← `(command| #export_information_analysis root $rootId:ident output $sealArtifact:str

@@ -18,7 +18,7 @@ internal static partial class RepositoryRules
     // 故判据不是「执行了什么」(文本上不可判),而是「有没有把另一修订的文件物化进 shell」:
     // 能物化修订文件的 git 动词(show <rev>:<path>、cat-file、archive、worktree add、checkout <rev>、
     // restore --source、read-tree、checkout-index)在判官面上只许指向 HEAD;修订为变量时 fail-closed。
-    // Scope includes .github/**, tools/scripts/workflow/** and the shared ci-stage.sh entrypoint.
+    // Scope includes .github/** and tools/scripts/workflow/**.
     // 这是四次案例全部发生的面。`tools/scripts/ingest.sh` 一类本地 producer 与 `tools/scripts/agent/**`
     // 不在面内:它们在 lane 里把 base 当数据读,不判决候选。
     private static bool JudgeSurfaceScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>

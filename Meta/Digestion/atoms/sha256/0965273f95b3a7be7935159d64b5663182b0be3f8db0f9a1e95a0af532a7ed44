@@ -1,0 +1,18 @@
+**theorem 2.1 (Valid source execution and exact output length).** For every
+$n\in\mathbb N$ and every raw formula $F$ over $n$ declared variables, if each
+clause has length at most three, the fixed pre-machine started on $s(F)$ reaches
+the exact clean terminal configuration with output $q(F)$ in at most
+
+$$
+3(|s(F)|+3)^2+7
+$$
+
+actual transitions. The output length is exactly
+
+$$
+|q(F)|=|s(F)|+6+|F|(n+2).
+$$
+
+The declared universe includes unused variables. Empty formulas, empty clauses,
+repeated literals and clauses, tautologies and $n=0$ remain allowed.
+

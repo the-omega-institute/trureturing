@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit
@@ -50,14 +53,14 @@ theorem legacyA : LegacyPrimitiveRealization lawA True realizationA where
 theorem legacyB : LegacyPrimitiveRealization lawB True realizationB where
   equivalence := Iff.rfl
 
-register_information_theorem sharedTheorem
+test_assess in register_information_theorem sharedTheorem
   in lawA
   object_arena objectA
   catalog boolA
   primitives realizationA.toPrimitiveBundle
   realization legacyA
 
-register_information_theorem sharedTheorem
+test_assess in register_information_theorem sharedTheorem
   in lawB
   object_arena objectB
   catalog boolB
@@ -66,22 +69,22 @@ register_information_theorem sharedTheorem
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.OccurrenceIdentity.objectA theorem_name=LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"] count=2 -/
 #guard_msgs (error) in
-register_information_theorem sharedTheorem
+test_assess in register_information_theorem sharedTheorem
   in lawA
   object_arena objectA
   catalog duplicateSpellingDoesNotMatter
   primitives realizationA.toPrimitiveBundle
   realization legacyA
 
-expect_information_occurrence sharedTheorem
+test_assess in expect_information_occurrence sharedTheorem
   in objectA
   from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
-expect_information_occurrence sharedTheorem
+test_assess in expect_information_occurrence sharedTheorem
   in objectB
   from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- info: occurrence-qualified staged identities and seal schema passed -/
 #guard_msgs (info) in

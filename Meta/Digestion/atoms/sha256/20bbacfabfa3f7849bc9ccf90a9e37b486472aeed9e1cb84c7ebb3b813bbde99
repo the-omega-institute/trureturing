@@ -1,0 +1,15 @@
+**定理 3.1（单调等级下的 canonical graded spectrum）。** 对任意 $n\in\mathbb N$、$H:\mathbb R\to\operatorname{Matrix}(\operatorname{Fin}(n),\operatorname{Fin}(n),\mathbb R)$、$H_0$ 和 $w:\operatorname{Fin}(n)\to\mathbb N$，假设 $w$ 单调不减，$H_T\to H_0$ 当 $T\to0^+$，$H_0$ 正定，并且每个 $T>0$ 的实际矩阵
+
+$$
+G_T=\operatorname{diag}(T^{w_i}\sqrt T)\,H_T\,\operatorname{diag}(T^{w_i}\sqrt T)
+$$
+
+正定。则存在与 $T$ 和指标无关的 $c,C,\delta>0$，使得对每个 $0<T<\delta$ 及每个 $i\in\operatorname{Fin}n$，canonical decreasing eigenvalue 满足
+
+$$
+cT^{2w_i+1}\le
+\lambda_i(G_T)\le CT^{2w_i+1}.
+$$
+
+这里 $\lambda_i(G_T)$ 是实际 $G_T$ 的 `Matrix.IsHermitian.eigenvalues₀`，通过 $\operatorname{card}(\operatorname{Fin}(n))=n$ 的标准有序同构取坐标。结论允许 $n=0$、重复等级和空等级层，并包括 $k=0$ 的空主子式和空前缀。
+

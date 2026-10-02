@@ -132,10 +132,6 @@ public abstract record DocumentBlock
             StatementSource = statementSource;
             OpenProblemResolutionClaim = openProblemResolutionClaim;
             FormulaProvenance = statementSource is StatementSource.LeanDerived
-                || statementSource is null
-                    && statementFormula is not null
-                    && statement is DescribeStatement.LeanDeclaration lean
-                    && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
                 ? StatementFormulaProvenance.LeanDerived : StatementFormulaProvenance.HandAuthored;
             this.kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
@@ -178,6 +174,7 @@ public abstract record DocumentBlock
                 AssessedProvenance,
                 resolvedContent,
                 StatementFormula,
+                kindSource: KindSource,
                 statementSource: StatementSource,
                 openProblemResolutionClaim: OpenProblemResolutionClaim);
         }
@@ -206,6 +203,19 @@ public abstract record DocumentBlock
         public Formula? StatementFormula { get; }
 
         public StatementSource? StatementSource { get; }
+
+        internal StatementAssessment? StatementAssessment => StatementSource switch
+        {
+            StatementSource.LeanDerived when StatementFormula is { } formula =>
+                new StatementAssessment.Projected(formula),
+            StatementSource.Authored { ProjectionGap: { } gap } => AssessmentFromGap(gap),
+            StatementSource.NoFormula { ProjectionGap: { } gap } => AssessmentFromGap(gap),
+            _ => null,
+        };
+
+        private static StatementAssessment AssessmentFromGap(ProjectionGap gap) =>
+            new StatementAssessment.Unprojectable(
+                gap.ReasonCode, gap.OffendingSubject, gap.ProjectorEpoch, gap.DeclarationContentDigest);
 
         public OpenProblemResolutionClaim? OpenProblemResolutionClaim { get; }
 
@@ -274,10 +284,12 @@ public abstract record DocumentBlock
             AssessedProvenance provenance,
             BlockSequence content,
             DescribeRole? role,
-            OpenProblemResolutionClaim? openProblemResolutionClaim)
+            OpenProblemResolutionClaim? openProblemResolutionClaim,
+            StatementAssessment? recordedAssessment = null)
         {
             var declaration = LeanDeclarationRef.Create(handle.Value);
-            var materialized = StatementSource.Materialize(statementSource, declaration);
+            var assessment = recordedAssessment ?? StatementSource.Evaluate(declaration);
+            var materialized = StatementSource.Materialize(statementSource, declaration, assessment);
             return new(
                 id,
                 role switch
@@ -298,7 +310,6 @@ public abstract record DocumentBlock
                 materialized.Source,
                 openProblemResolutionClaim);
         }
-
     }
 
     internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>

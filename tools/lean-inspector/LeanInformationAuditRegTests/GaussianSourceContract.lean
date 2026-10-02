@@ -1,4 +1,7 @@
 import Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 

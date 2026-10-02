@@ -1,0 +1,15 @@
+**命题 32.2（Hermitian 连续响应的生成元）。** 有限维 Hermitian 实空间中，对自伴 $H$，全部非负等待产生的线性响应等于
+
+$$
+\operatorname{span}_{\mathbb R}
+\{e^{itH}Ae^{-itH}:t\ge0,A\in\mathcal O_0\}
+=
+\operatorname{span}_{\mathbb R}
+\{(i\operatorname{ad}_H)^nA:n\ge0,A\in\mathcal O_0\}.
+\tag{32.2}
+$$
+
+证明。导数为 $i[H,A]$，它 Hermitian，而 $[H,A]$ anti-Hermitian。左空间有限维闭，对时间的右导数及其迭代仍在其中；右空间对实线性算子 $i\operatorname{ad}_H$ 不变，其矩阵指数使所有时间轨道在其中，给反向包含。$\square$
+
+固定离散时钟还需处理谱差混叠，不能用该导数代替；(32.2) 是响应张成规则，也没有授权直接测量每个交换子。
+

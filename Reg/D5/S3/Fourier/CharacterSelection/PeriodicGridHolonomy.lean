@@ -80,19 +80,6 @@ register_information_theorem
       stateBinder := 1 }] })
   escape continues (open)
 
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one periodic-grid cardinality registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "periodic-grid source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "periodic-grid source registration did not validate"
-  logInfo "periodic-grid flat-label cardinality registration declared_validated"
-
 def dimensionActual : Realization signature :=
   realize signature (fun (_ : Unit) (M N : ℕ) => M * N + 1) (fun e => nomatch e)
 
@@ -165,19 +152,6 @@ register_information_theorem
       path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg"]
       stateBinder := 1 }] })
   escape continues (open)
-
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one periodic-grid linear-statistics registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "periodic-grid linear-statistics source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "periodic-grid linear-statistics registration did not validate"
-  logInfo "periodic-grid linear-statistics registration declared_validated"
 
 namespace HolonomyConstant
 
@@ -254,19 +228,6 @@ register_information_theorem
       stateBinder := 6 }] })
   escape continues (open)
 
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one flat-holonomy registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "flat-holonomy source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "flat-holonomy source registration did not validate: {(← TemplateBinding.recordJson record).compress}"
-  logInfo "flat-holonomy registration declared_validated"
-
 end HolonomyConstant
 
 namespace EdgeCardinality
@@ -328,19 +289,6 @@ register_information_theorem
       path := #["body", "body", "arg"]
       stateBinder := 1 }] })
   escape continues (open)
-
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one edge-cardinality registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "edge-cardinality source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "edge-cardinality source registration did not validate"
-  logInfo "edge-cardinality registration declared_validated"
 
 end EdgeCardinality
 
@@ -406,19 +354,6 @@ register_information_theorem
       stateBinder := 1 }] })
   escape continues (open)
 
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one anchored-card registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "anchored-card source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "anchored-card source registration did not validate"
-  logInfo "anchored-card registration declared_validated"
-
 end AnchoredVertexCard
 
 namespace HolonomySectorCard
@@ -483,19 +418,6 @@ register_information_theorem
       stateBinder := 1 }] })
   escape continues (open)
 
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one holonomy-sector registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "holonomy-sector source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "holonomy-sector source registration did not validate"
-  logInfo "holonomy-sector registration declared_validated"
-
 end HolonomySectorCard
 
 namespace ExactLabelCard
@@ -559,19 +481,6 @@ register_information_theorem
       path := #["body", "body", "body", "body", "arg"]
       stateBinder := 1 }] })
   escape continues (open)
-
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one exact-label registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "exact-label source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "exact-label source registration did not validate"
-  logInfo "exact-label registration declared_validated"
 
 end ExactLabelCard
 
@@ -644,19 +553,6 @@ register_information_theorem
         "body", "arg"]
       stateBinder := 5 }] })
   escape continues (open)
-
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one seam-holonomy registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "seam-holonomy source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "seam-holonomy source registration did not validate"
-  logInfo "seam-holonomy registration declared_validated"
 
 end SeamHolonomy
 

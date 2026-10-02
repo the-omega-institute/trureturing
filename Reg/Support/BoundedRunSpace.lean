@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunSpace
 import D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
 

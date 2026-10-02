@@ -1,0 +1,389 @@
+{
+  "scope": "Exactly seven prescribed prefix types at q=11, retained depth2. Literal prefix unions use an antichain calculation; no full-period enumeration. The all-N and uniform-continuation conclusions are proofs in the companion note. Formula counts use only the nine declared private primes.",
+  "source_reference": "Report528 FC147-FC152; fixed prefixes reproduced explicitly",
+  "checks": 152,
+  "local_q": 11,
+  "local_depth": 2,
+  "pure_prefixes": [
+    [
+      0
+    ],
+    [
+      6,
+      0
+    ]
+  ],
+  "star_prefixes": [
+    [
+      1
+    ],
+    [
+      6,
+      1
+    ]
+  ],
+  "pure_normalizer": "121/109",
+  "complete_role_mass": "12/109",
+  "types": [
+    {
+      "name": "empty",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "edges": [],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "0",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "61/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "49/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "F5-F7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        2,
+        4
+      ],
+      "edges": [
+        [
+          "F5",
+          "F7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "11/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "72/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "60/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "F5-S7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        4,
+        2
+      ],
+      "edges": [
+        [
+          "F5",
+          "S7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "11/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "72/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "60/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "S5-F7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "edges": [
+        [
+          "S5",
+          "F7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "11/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "72/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "60/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "S5-S7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        4,
+        3
+      ],
+      "edges": [
+        [
+          "S5",
+          "S7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "11/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "72/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "60/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "F5-F7,S5-S7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        2,
+        3
+      ],
+      "edges": [
+        [
+          "F5",
+          "F7"
+        ],
+        [
+          "S5",
+          "S7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "22/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "83/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "71/109",
+          "K": "73/109"
+        }
+      ]
+    },
+    {
+      "name": "F5-S7,S5-F7",
+      "role_order": [
+        "F5",
+        "S5",
+        "F7",
+        "S7"
+      ],
+      "digits": [
+        2,
+        3,
+        3,
+        2
+      ],
+      "edges": [
+        [
+          "F5",
+          "S7"
+        ],
+        [
+          "S5",
+          "F7"
+        ]
+      ],
+      "raw_X": "24/109",
+      "raw_Y": "24/109",
+      "raw_overlap": "22/109",
+      "local_all-role_envelopes": [
+        {
+          "star_active": false,
+          "g": "1",
+          "P": "61/109",
+          "H": "83/109",
+          "K": "85/109"
+        },
+        {
+          "star_active": true,
+          "g": "97/109",
+          "P": "49/109",
+          "H": "71/109",
+          "K": "73/109"
+        }
+      ]
+    }
+  ],
+  "per_prime_assignment_counts": [
+    {
+      "q": 11,
+      "available_digits": 8,
+      "empty": 1680,
+      "each_single": 336,
+      "each_perfect": 56,
+      "total": 3136
+    },
+    {
+      "q": 13,
+      "available_digits": 10,
+      "empty": 5040,
+      "each_single": 720,
+      "each_perfect": 90,
+      "total": 8100
+    },
+    {
+      "q": 17,
+      "available_digits": 14,
+      "empty": 24024,
+      "each_single": 2184,
+      "each_perfect": 182,
+      "total": 33124
+    },
+    {
+      "q": 19,
+      "available_digits": 16,
+      "empty": 43680,
+      "each_single": 3360,
+      "each_perfect": 240,
+      "total": 57600
+    },
+    {
+      "q": 23,
+      "available_digits": 20,
+      "empty": 116280,
+      "each_single": 6840,
+      "each_perfect": 380,
+      "total": 144400
+    },
+    {
+      "q": 29,
+      "available_digits": 26,
+      "empty": 358800,
+      "each_single": 15600,
+      "each_perfect": 650,
+      "total": 422500
+    },
+    {
+      "q": 31,
+      "available_digits": 28,
+      "empty": 491400,
+      "each_single": 19656,
+      "each_perfect": 756,
+      "total": 571536
+    },
+    {
+      "q": 37,
+      "available_digits": 34,
+      "empty": 1113024,
+      "each_single": 35904,
+      "each_perfect": 1122,
+      "total": 1258884
+    },
+    {
+      "q": 41,
+      "available_digits": 38,
+      "empty": 1771560,
+      "each_single": 50616,
+      "each_perfect": 1406,
+      "total": 1976836
+    }
+  ],
+  "global_named_incidence_types": 40353607,
+  "global_literal_assignments": 4205524670804538271292764088791203840000000000,
+  "continuation_producer_rerun": false
+}

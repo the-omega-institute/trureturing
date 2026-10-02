@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f275d4279aa068c8e787f8573d99b3bed9aa4f69d2f8fc07f3f84d87541ba228
+  normalized_sha256: sha256:f275d4279aa068c8e787f8573d99b3bed9aa4f69d2f8fc07f3f84d87541ba228
+cas_ref: sha256:f275d4279aa068c8e787f8573d99b3bed9aa4f69d2f8fc07f3f84d87541ba228
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.adaptive_marker_stopping_tails
+    target_statement_id: sha256:ce50fc4dfbc69d016f6a9fcc39c347ec1c3297c2c747fc4d391113fe363c4d10
+receipts:
+  unresolved_subitems: []

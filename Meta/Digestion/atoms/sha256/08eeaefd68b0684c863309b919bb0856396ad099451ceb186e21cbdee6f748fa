@@ -1,0 +1,18 @@
+**定理 2.4（Successor and predecessor inverse laws）。** For every initialized unbounded rest trace $T$, with $E=E_T$ and $\sigma=\sigma_T$, the following conjunction holds:
+
+$$
+\begin{aligned}
+&\forall e\in\mathbb N,\quad
+e<\sigma(e)\ \land\ k_{\sigma(e)}=k_e
+\ \land\ \sigma(e)\ne\beta(k_{\sigma(e)})
+\ \land\ p_{\sigma(e)}=e\\
+&\hspace{30mm}\land\
+\bigl(\forall g\in\mathbb N,\ e<g\Rightarrow g<\sigma(e)\Rightarrow k_g\ne k_e\bigr),\\
+&\forall f\in\mathbb N,\quad f\ne\beta(k_f)\Rightarrow\sigma(p_f)=f.
+\end{aligned}
+$$
+
+证明。Theorem 2.2 makes every $\sigma(e)$ defined. Its leastness gives $e<\sigma(e)$, equality of labels, and absence of an intervening event with that label. By Theorem 2.3 the birth of $k_e$ is no later than $e$, so $\sigma(e)$ is a renewal. The greatest earlier same-bin index at $\sigma(e)$ is at least $e$; if it were greater than $e$, it would be an intervening event, contradicting leastness. Thus $p_{\sigma(e)}=e$.
+
+Conversely, for a renewal $f$, the event $f$ is a later same-bin candidate after $p_f$, so $\sigma(p_f)\le f$. A strict inequality would produce an event of label $k_f$ strictly between $p_f$ and $f$, contradicting the predecessor law from Theorem 2.3. Hence equality holds. No event is excluded from the first universal statement. $\square$
+

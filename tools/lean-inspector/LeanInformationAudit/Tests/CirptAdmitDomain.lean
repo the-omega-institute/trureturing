@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.CIRPT.SemanticIntegrity
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-CIRPT-003: a mixed Bool CUT fiber has an exact nonempty ADMIT defect.
 
@@ -35,7 +38,7 @@ def registeredRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
-information_theorem registeredTheorem
+test_assess in information_theorem registeredTheorem
   in arena
   primitives registeredRealization
   : arena.Law registeredRealization := by trivial

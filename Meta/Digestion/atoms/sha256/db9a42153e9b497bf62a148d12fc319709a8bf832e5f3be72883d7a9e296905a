@@ -1,0 +1,19 @@
+### 200.5 有效文献输入与统一素数窗口
+
+采用 Jesse Thorner 与 Asif Zaman，*A unified and improved Chebotarev density theorem*，[作者稿 arXiv:1803.02823v3](https://arxiv.org/pdf/1803.02823v3) 的以下输入：
+
+- 第2页 Theorem1.1：对 Galois 扩张 $E/\mathbb Q$、次数 $n_E$、绝对判别式 $D_E$，存在绝对有效常数 $c_2,c_3>0$，当 $x\ge(D_En_E^{n_E})^{c_2}$ 时，每个共轭类 $\mathcal C$ 满足
+
+$$
+\pi_{\mathcal C}(x)
+=\frac{|\mathcal C|}{|G|}
+\bigl(\operatorname{Li}(x)-\theta_{\mathcal C}\operatorname{Li}(x^{\beta_1})\bigr)
+\left(1+O\!\left(
+ e^{-c_3\log x/\log(D_En_E^{n_E})}
+ +e^{-\sqrt{c_3\log x/n_E}}
+\right)\right),
+\tag{200.6}
+$$
+
+其中 $\theta_{\mathcal C}\in\{-1,0,1\}$，没有异常零点时相应项为零。
+

@@ -1,0 +1,9 @@
+**定理 145.1（有限全幺模整数矩阵的内逆）。** 令 $m,n$ 为任意有限类型，
+$A\in\mathbb Z^{m\times n}$。假设对每个 $k\in\mathbb N$ 及单射
+$r:\operatorname{Fin}(k)\to m$、$c:\operatorname{Fin}(k)\to n$，
+$\det A[r,c]\in\{-1,0,1\}$。则存在 $B\in\mathbb Z^{n\times m}$ 使
+$$
+ABA=A.
+$$
+类型可以为空，矩阵可以为零、非方阵或秩亏；不假设存在非零项。
+

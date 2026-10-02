@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:06f0d47a887a3108b94ea769c0109bbdf8e86519015f6d0f5a2a707c762bc37d
+  normalized_sha256: sha256:06f0d47a887a3108b94ea769c0109bbdf8e86519015f6d0f5a2a707c762bc37d
+cas_ref: sha256:06f0d47a887a3108b94ea769c0109bbdf8e86519015f6d0f5a2a707c762bc37d
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GreedyBrick/LiteralRestTrace.literal_trace_realization
+    target_statement_id: sha256:7241bf417e1128b0ea0e165b9b3ee542e43d3e88abba3c5c759360794a671b78
+receipts:
+  unresolved_subitems: []

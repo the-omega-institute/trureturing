@@ -1,4 +1,7 @@
 import Reg.Support.DependentFamily
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.ExplicitSourceOperands

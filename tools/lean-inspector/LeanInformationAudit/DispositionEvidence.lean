@@ -58,6 +58,15 @@ private initialize structuralRegistry :
     addEntryFn := Array.push
     addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
 
+/-- The resolved readout declaration of each structural registration, retained as
+its raw input so an importing report reassesses the same claim. -/
+private initialize structuralDeclarationInputs :
+    SimplePersistentEnvExtension (Name × Option TemplateBinding.ResolvedDeclaration)
+      (Array (Name × Option TemplateBinding.ResolvedDeclaration)) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
 /-- Read-only access for exhaustive registration queries. -/
 def structuralProvenanceEntries (env : Environment) : Array StructuralProvenanceEntry :=
   structuralRegistry.getState env
@@ -131,7 +140,7 @@ def finiteSealInScope? (env : Environment) (modules : Array Name)
       return some (record, occurrence)
   return none
 
-private def validateFinite (modules : Array Name) (key : StatementKey)
+private def validateFinite (root : Name) (modules : Array Name) (key : StatementKey)
     (payload : FiniteOccurrenceDisposition key)
     (trivial : Option (TrivialInCatalogDisposition key) := none) : MetaM Unit := do
   let className := if trivial.isSome then "trivial_in_catalog" else "finite_occurrence"
@@ -142,7 +151,7 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   let some registration := candidates[0]?
     | throwError (identityError key.theoremName "canonical_arena" "registered-arena"
         payload.canonicalArena.toString)
-  match ← validatePersistedEntry env registration with
+  match ← validatePersistedEntry root env registration with
   | .error message => throwError message
   | .ok () => pure ()
   unless payload.registration == registration.unitName do
@@ -163,9 +172,10 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   let index ← ProjectionProof.fin occurrence.index record.theorems.size
   for row in record.theorems do
     let some peer := (InformationRegistry.entries env).find? fun peer =>
-        peer.theoremName == row.theoremName && peer.canonicalObjectArenaName == payload.canonicalArena
+        modules.contains peer.registrationModuleName && peer.theoremName == row.theoremName &&
+          peer.canonicalObjectArenaName == payload.canonicalArena
       | failClass key className "catalog.membership"
-    match ← validatePersistedEntry env peer with
+    match ← validatePersistedEntry root env peer with
     | .error message => throwError message
     | .ok () => pure ()
     let unit ← constant modules key className "catalog.unit" row.unitName
@@ -191,7 +201,7 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
       catalogValue index do failClass key className "seal_certificate.proposition"
   checkWithKernel certificate
   let lawArena ← mkConstWithFreshMVarLevels registration.arenaName
-  let arena := (← RegistrationGates.normalizeArena lawArena).finite
+  let arena := (← RegistrationElaboration.normalizeArena lawArena).finite
   let _ ← typed modules key className "nondegeneracy_certificate"
     payload.nondegeneracyCertificate (← mkAppM ``Arena.Nondegenerate #[arena])
   let _ ← typed modules key className "state_enumeration_certificate"
@@ -309,9 +319,11 @@ private def elabStructuralTheorem : CommandElab := fun stx => registrationTransa
         lawArenaSyntax := lawArenaId.raw.reprint.getD ""
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
     liftTermElabM do
-      RegistrationGates.publishDiagnostic entry.unitConst (← RegistrationGates.validateStructural entry)
+      RegistrationGates.publishDiagnostic entry.registrationModule entry.unitConst (← RegistrationGates.validateStructural entry)
+    let declaration := TemplateBinding.currentDeclaration (← getEnv)
     modifyEnv fun env => structuralRegistry.addEntry env entry
-    TemplateBinding.publishRegistration {
+    modifyEnv fun env => structuralDeclarationInputs.addEntry env (entry.theoremName, declaration)
+    TemplateBinding.publishRegistration entry.registrationModule {
       theoremName := entry.theoremName, unitName := entry.unitConst,
       arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
       registrationModuleName := entry.registrationModule,
@@ -319,6 +331,29 @@ private def elabStructuralTheorem : CommandElab := fun stx => registrationTransa
   catch error =>
     setEnv before
     throw error
+
+/-- Reassess imported structural registrations from their retained inputs, after the
+recorded-input replay has reset the transient assessment state. Entries of the
+current module were assessed by their introducing command. -/
+def replayStructuralRegistrations (rootId : Name) : CommandElabM Unit := do
+  let env ← getEnv
+  let declarations := structuralDeclarationInputs.getState env
+  for entry in structuralRegistry.getState env do
+    unless entry.registrationModule != env.header.mainModule &&
+        moduleReachable env rootId entry.registrationModule do continue
+    let declaration := (declarations.find? (·.1 == entry.theoremName)).bind (·.2)
+    GeneratedDeclarations.withOwner entry.registrationModule do
+      liftTermElabM do
+        RegistrationGates.publishDiagnostic entry.registrationModule entry.unitConst
+          (← RegistrationGates.validateStructural entry)
+      let publish := TemplateBinding.publishRegistration entry.registrationModule {
+        theoremName := entry.theoremName, unitName := entry.unitConst,
+        arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
+        registrationModuleName := entry.registrationModule,
+        resolvedArenaName := entry.canonicalArena }
+      match declaration with
+      | some declaration => TemplateBinding.withDeclaration declaration publish
+      | none => publish
 
 syntax (name := structuralTheoremReadoutCmd)
   "structural_theorem " ident " in " ident &"readout " "via " "(" term ")"
@@ -730,7 +765,7 @@ private def validateUnreachable (modules : Array Name) (registrations : Array (N
     let arena ← constant modules key className "candidate_arena" name
     let type ← inferType arena
     unless type.isConstOf ``StructuralArena do
-      try discard <| RegistrationGates.normalizeArena arena
+      try discard <| RegistrationElaboration.normalizeArena arena
       catch _ => failClass key className "candidate_arena"
 
 private def validateObserved (head : String) (root : Name) (modules : Array Name)
@@ -789,14 +824,14 @@ def validateEvidenceSources (root : Name) (inventory : DispositionInventory)
       | .trivialInCatalog payload =>
         match payload.context with
         | .finite nondegenerate enumeration =>
-          validateFinite modules key ⟨payload.canonicalArena, payload.registration,
+          validateFinite root modules key ⟨payload.canonicalArena, payload.registration,
             payload.realization, nondegenerate, enumeration⟩ (some payload)
         | .structural =>
           let source ← validateStructural root inventory.headSha modules registrations
             key theoremExpr statement ⟨payload.canonicalArena, payload.registration,
               payload.realization, .anonymous, .anonymous⟩ (some payload)
           unless sources.contains source do sources := sources.push source
-      | .finiteOccurrence payload => validateFinite modules key payload
+      | .finiteOccurrence payload => validateFinite root modules key payload
       | .structuralOccurrence payload =>
         let source ← validateStructural root inventory.headSha modules registrations
           key theoremExpr statement payload
@@ -823,23 +858,21 @@ end LeanInformationAudit
 namespace LeanInformationAudit
 open Lean Meta
 
-/-- One authoritative imported join shared by all requested report modules. -/
+/-- Each requested report module is assessed from its own root, finite and
+structural registrations alike; loaded peers it does not import are inert. -/
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
-    let env ← getEnv
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    let modules := moduleNames.map fun moduleName => Id.run do
-      let finite := (InformationRegistry.entries env).filter
-        (·.registrationModuleName == moduleName) |>.map fun entry => {
-          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
-          objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
-            TemplateOccurrenceKey }
-      let structural := (DispositionCensus.structuralProvenanceEntries env).filter
-        (·.registrationModule == moduleName) |>.map fun entry => {
-          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+    let owners := recordedInputOwners (← getEnv) ++
+      (DispositionCensus.structuralProvenanceEntries (← getEnv)).map (·.registrationModule)
+    let reports ← assessReportTargets moduleNames owners fun target => do
+      assessRecordedRegistrations target
+      (liftCommandElabM <| DispositionCensus.replayStructuralRegistrations target : CoreM Unit)
+      let structural := (DispositionCensus.structuralProvenanceEntries (← getEnv)).filter
+        (·.registrationModule == target) |>.map fun entry => {
+          root := target, registrationModule := target, theoremName := entry.theoremName,
           objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-      return (moduleName, finite ++ structural)
-    let rows ← TemplateBinding.reportJson modules
+      return registeredKeys (← getEnv) target ++ structural
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    return rows
+    return reports
 
 end LeanInformationAudit

@@ -1,0 +1,10 @@
+**定理 3.3（Reachable capacity and area invariants）。** For every $N\in\mathbb N$,
+
+$$
+\forall a\in C_N,\ a\le2N-1,\qquad
+A(C_N)=\sum_{i=0}^{N}i,\qquad
+|C_N|\le|C_{N+1}|\le|C_N|+1.
+$$
+
+证明。At zero the list is empty and the sum vanishes. The cap $2N-1$ implies the cap $2(N+1)-1$ required to apply Theorem 3.2 at width $N+1$. Its area increment, together with the induction hypothesis and the last term of the sum, gives the next exact area. Applying that same step to $C_N$ gives both height inequalities. $\square$
+

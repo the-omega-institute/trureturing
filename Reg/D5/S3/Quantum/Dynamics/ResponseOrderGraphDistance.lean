@@ -1,6 +1,9 @@
 import D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
@@ -117,6 +120,5 @@ register_information_theorem first_nonzero_power_eq_graph_distance in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance

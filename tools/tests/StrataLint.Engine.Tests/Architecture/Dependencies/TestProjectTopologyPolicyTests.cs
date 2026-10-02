@@ -613,7 +613,7 @@ public sealed partial class TestProjectTopologyPolicyTests
         var ownerPath = references.Select(reference => new Uri(new Uri("https://fixture.invalid/" + path), reference).AbsolutePath.TrimStart('/'))
             .FirstOrDefault(reference => reference.EndsWith("/" + ownerAssembly + ".csproj", StringComparison.OrdinalIgnoreCase))
             ?? (ownerAssembly == "StrataLint" ? "tools/StrataLint.Cli/StrataLint.Cli.csproj" : $"tools/{ownerAssembly}/{ownerAssembly}.csproj");
-        var registration = new EngineeringProjectRegistration(path, assembly, role, xunit, [], [],
+        var registration = new EngineeringProjectRegistration(path, assembly, role, [], [],
             references.Select(reference => new Uri(new Uri("https://fixture.invalid/" + path), reference).AbsolutePath.TrimStart('/')).ToArray(),
             role == "owned-test" ? new EngineeringProjectOwner(ownerPath, ownerAssembly) : null,
             role == "production" ? assembly + ".Tests" : null, xunit ? path : null, "Fixture", [], []);

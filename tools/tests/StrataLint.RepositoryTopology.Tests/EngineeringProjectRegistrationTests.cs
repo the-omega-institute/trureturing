@@ -7,7 +7,7 @@ namespace StrataLint.RepositoryTopology.Tests;
 public sealed class EngineeringProjectRegistrationTests
 {
     [Xunit.Fact]
-    public void CurrentRepositoryExecutionAndBuildInputsExpandOnlyExplicitExistingMaterials()
+    public void CurrentRepositoryCompileInputsExpandOnlyExplicitExistingMaterials()
     {
         var root = TestRepositoryLayout.FindRoot();
         var tracked = StrataLint.Engine.GitIndexRepositoryFiles.EnumerateTracked(root)
@@ -39,10 +39,6 @@ public sealed class EngineeringProjectRegistrationTests
                 ? utf8.GetString(File.ReadAllBytes(Path.Combine(root, path))) : string.Empty)).ToArray();
         var registry = EngineeringProjectRegistry.Read(sources);
         foreach (var project in registry.Projects)
-        {
-            Assert.NotEmpty(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
-            if (project.IsTest)
-                _ = EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path);
-        }
+            Assert.NotEmpty(registry.ProjectInputs([project.Path], paths, []));
     }
 }

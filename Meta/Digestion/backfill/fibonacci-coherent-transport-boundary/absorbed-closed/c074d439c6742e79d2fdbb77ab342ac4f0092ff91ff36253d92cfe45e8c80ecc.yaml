@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c074d439c6742e79d2fdbb77ab342ac4f0092ff91ff36253d92cfe45e8c80ecc
+  normalized_sha256: sha256:c074d439c6742e79d2fdbb77ab342ac4f0092ff91ff36253d92cfe45e8c80ecc
+cas_ref: sha256:c074d439c6742e79d2fdbb77ab342ac4f0092ff91ff36253d92cfe45e8c80ecc
+coverage_gids:
+  - gid: D5/S3/Quantum/Transport/FibonacciPrefix.fibonacci_prefix_transport
+    target_statement_id: sha256:b28afd11d3b6127336d6bee0a485941fb63cecdb1aae9f5422d35658eac7379d
+receipts:
+  unresolved_subitems: []

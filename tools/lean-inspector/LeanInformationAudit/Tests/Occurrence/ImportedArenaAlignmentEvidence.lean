@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaAlignmentRegistration
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 

@@ -1,0 +1,295 @@
+{
+  "arithmetic": "Exact CRT integers and rational probabilities",
+  "fixtures": [
+    {
+      "H": 1,
+      "J": 1,
+      "K": 0,
+      "M": 4,
+      "amplification_ratio": "1",
+      "coarse_modulus": 2401,
+      "conditioned_cross_union": "4/7",
+      "conditioned_rectangle": "4/7",
+      "cross_union_mass": "8/15",
+      "original_count": 7,
+      "originals": [
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 21,
+          "residue": 7
+        },
+        {
+          "modulus": 147,
+          "residue": 98
+        },
+        {
+          "modulus": 35,
+          "residue": 21
+        },
+        {
+          "modulus": 245,
+          "residue": 147
+        },
+        {
+          "modulus": 1715,
+          "residue": 343
+        },
+        {
+          "modulus": 12005,
+          "residue": 9604
+        }
+      ],
+      "period": 36015,
+      "private_mass": "1/15",
+      "private_witnesses": [
+        33615,
+        24010,
+        12005,
+        14406,
+        28812,
+        7203,
+        21609
+      ],
+      "rectangle_mass": "8/15",
+      "residual_cells": 15
+    },
+    {
+      "H": 1,
+      "J": 2,
+      "K": 4,
+      "M": 8,
+      "amplification_ratio": "5",
+      "coarse_modulus": 5764801,
+      "conditioned_cross_union": "24/35",
+      "conditioned_rectangle": "4/7",
+      "cross_union_mass": "16/25",
+      "original_count": 11,
+      "originals": [
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 50421,
+          "residue": 16807
+        },
+        {
+          "modulus": 352947,
+          "residue": 235298
+        },
+        {
+          "modulus": 84035,
+          "residue": 50421
+        },
+        {
+          "modulus": 588245,
+          "residue": 352947
+        },
+        {
+          "modulus": 4117715,
+          "residue": 823543
+        },
+        {
+          "modulus": 28824005,
+          "residue": 23059204
+        },
+        {
+          "modulus": 175,
+          "residue": 105
+        },
+        {
+          "modulus": 1225,
+          "residue": 735
+        },
+        {
+          "modulus": 8575,
+          "residue": 1715
+        },
+        {
+          "modulus": 60025,
+          "residue": 48020
+        }
+      ],
+      "period": 432360075,
+      "private_mass": "1/75",
+      "private_witnesses": [
+        426595275,
+        144120025,
+        288240050,
+        294004851,
+        155649627,
+        17294403,
+        311299254,
+        276710455,
+        207532885,
+        415066015,
+        397773670
+      ],
+      "rectangle_mass": "8/15",
+      "residual_cells": 75
+    },
+    {
+      "H": 2,
+      "J": 1,
+      "K": 2,
+      "M": 6,
+      "amplification_ratio": "3",
+      "coarse_modulus": 117649,
+      "conditioned_cross_union": "16/21",
+      "conditioned_rectangle": "4/7",
+      "cross_union_mass": "32/45",
+      "original_count": 9,
+      "originals": [
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 1029,
+          "residue": 343
+        },
+        {
+          "modulus": 7203,
+          "residue": 4802
+        },
+        {
+          "modulus": 63,
+          "residue": 21
+        },
+        {
+          "modulus": 441,
+          "residue": 294
+        },
+        {
+          "modulus": 1715,
+          "residue": 686
+        },
+        {
+          "modulus": 12005,
+          "residue": 4802
+        },
+        {
+          "modulus": 84035,
+          "residue": 67228
+        },
+        {
+          "modulus": 588245,
+          "residue": 117649
+        }
+      ],
+      "period": 5294205,
+      "private_mass": "1/45",
+      "private_witnesses": [
+        3058875,
+        1176490,
+        2352980,
+        4823616,
+        4470711,
+        1058841,
+        2117682,
+        3176523,
+        4235364
+      ],
+      "rectangle_mass": "8/15",
+      "residual_cells": 45
+    },
+    {
+      "H": 2,
+      "J": 2,
+      "K": 4,
+      "M": 8,
+      "amplification_ratio": "15",
+      "coarse_modulus": 5764801,
+      "conditioned_cross_union": "92/105",
+      "conditioned_rectangle": "4/7",
+      "cross_union_mass": "64/75",
+      "original_count": 13,
+      "originals": [
+        {
+          "modulus": 15,
+          "residue": 0
+        },
+        {
+          "modulus": 50421,
+          "residue": 16807
+        },
+        {
+          "modulus": 352947,
+          "residue": 235298
+        },
+        {
+          "modulus": 63,
+          "residue": 21
+        },
+        {
+          "modulus": 441,
+          "residue": 294
+        },
+        {
+          "modulus": 84035,
+          "residue": 50421
+        },
+        {
+          "modulus": 588245,
+          "residue": 352947
+        },
+        {
+          "modulus": 4117715,
+          "residue": 823543
+        },
+        {
+          "modulus": 28824005,
+          "residue": 23059204
+        },
+        {
+          "modulus": 175,
+          "residue": 105
+        },
+        {
+          "modulus": 1225,
+          "residue": 735
+        },
+        {
+          "modulus": 8575,
+          "residue": 1715
+        },
+        {
+          "modulus": 60025,
+          "residue": 48020
+        }
+      ],
+      "period": 1297080225,
+      "private_mass": "1/225",
+      "private_witnesses": [
+        426595275,
+        144120025,
+        288240050,
+        253651251,
+        443889726,
+        726364926,
+        155649627,
+        882014553,
+        311299254,
+        276710455,
+        1072253035,
+        415066015,
+        1262493820
+      ],
+      "rectangle_mass": "8/15",
+      "residual_cells": 225
+    }
+  ],
+  "global_private_witnesses": 40,
+  "negative_controls": {
+    "covered_unit_fibre_has_private_target": false,
+    "further_deletion_cross_union_mass": "0",
+    "further_deletion_survivor_count": 4,
+    "omitted_p_strip_holes": 1,
+    "omitted_p_strip_rectangle_failures": 4
+  },
+  "scope": "Four fixed conditional grids; no full-period enumeration or all-family computational claim",
+  "total_main_grid_cells": 360
+}

@@ -1,0 +1,47 @@
+**定义 12.1（无附加相位的混合几何合同）。** 在同一 digits 分解 $x=a+dh$ 上，固定整数矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+C=MJ=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+对这些矩阵及其乘积 $G$，标准提升始终是不另加相位的置换 $|x\rangle\mapsto|[Gx]_{de}\rangle$。在低高分解中记为 $U_G$，并定义
+
+$$
+f_G(a)=[Ga]_d,\qquad
+c_G(a)=\frac{Ga-f_G(a)}d\pmod e,\qquad
+\gamma_G=G^{-\mathsf T}.
+$$
+
+分子用整数代表计算，允许负进位。于是
+
+$$
+U_G|a,h\rangle=|f_G(a),Gh+c_G(a)\rangle,
+\qquad U_GU_{G'}=U_{GG'}.
+$$
+
+沿用定义 7.2 的 Fourier 约定，写为
+
+$$
+\begin{aligned}
+U_G&=\sum_{p\in\widehat H}F_{G,p}\otimes|\gamma_Gp\rangle\langle p|,\\
+F_{G,p}|a\rangle&=\omega^{(\gamma_Gp)\cdot c_G(a)}|f_G(a)\rangle.
+\end{aligned}
+$$
+
+每个 $F_{G,p}$ 都是低层酉，且 $F_{G,p}|0\rangle=|0\rangle$。记 $g=M^{-\mathsf T}$、$j=J^{-\mathsf T}$，在 $\widehat H$ 上置
+
+$$
+\Gamma=\langle g,j\rangle,\qquad N=\langle g,-I\rangle,
+\qquad L_G=2I-U_G-U_G^\dagger,\quad W_G(t)=e^{-itL_G}.
+$$
+
+混合字母表 $\Sigma_{\mathrm{mix}}$ 允许离散 $U_M,U_J,U_C$、所有 $t\ge0$ 的 $W_M(t)$，以及定义 11.1 的任意低层有限仪器和有限自适应选择；全部读出在低层。它不含 $W_J$ 或 $W_C$。这里 $U_M=U$、$W_M(t)=W(t)$，且 $U_C=U_MU_J$。对 $K=N$ 或 $\Gamma$，记其 Fourier 轨道分割为 $\mathcal P_K=\widehat H/K$，并置
+
+$$
+\mathcal A_K=\mathcal B(\mathcal H_A)\otimes
+\bigoplus_{O\in\mathcal P_K}\mathcal B(\mathbb C^O),\qquad
+\mathcal E_K(\rho)=\sum_{O\in\mathcal P_K}(I_A\otimes Q_O)\rho(I_A\otimes Q_O).
+$$
+

@@ -1,0 +1,23 @@
+**命题 37.4（旧终态的部分同步与整个 cylinder 的不等价）。** 取同深 $L\ge1$ 的 $u,v$，旧终态分别零、一，记 $P_u=j_L(E_{uu})$、$P_v=j_L(E_{vv})$。共用下一窗标签 null、$[3]$、$[5]$，各用自己的实际 typed edges，则 $A_{L+1}$ 内有
+
+$$
+V=E_{u\mathrm{null},v\mathrm{null}}+E_{u3,v3}+E_{u5,v5},
+$$
+
+$$
+V^*V=P_v,\qquad VV^*=P_{u\mathrm{null}}+P_{u3}+P_{u5}=:Q<P_u.
+\tag{37.6}
+$$
+
+但 $P_u,P_v$ 在 AF algebra 内不 Murray–von Neumann 等价。
+
+证明。三个后继中每对具有相同新终态，所以矩阵单位合法；不同末窗正交。状态一只有这三种后继，故 $V^*V$ 覆盖全部 $P_v$；状态零还缺 $u2,u25$ 两个非零子投影，故 $VV^*=Q<P_u$。trace 给 $\tau(P_u)=\lambda^{-L}$、$\tau(P_v)=\lambda^{-L}/\phi$，不相等。若整个 cylinders 等价，部分等距的 trace 恒等会强迫这两个值相等，矛盾。实际 $\tau(Q)=\tau(P_v)$，剩余 trace 为 $\lambda^{-L}(1-\phi^{-1})>0$。$\square$
+
+所以不同旧终态不是 AF 极限中永久的 coherence 禁区。令 $Y=V+V^*$，旧 cylinders 正交使 $V^2=0$、$Y^2=Q+P_v$、$\|Y\|=1$。全部后续 diagonal entries 仍零，故 $\psi_\pm(a)=\tau((I\pm\eta Y)a)$ 是共享全部 cylinder probabilities 的态，且
+
+$$
+\psi_\pm(Y)=\pm2\eta\lambda^{-L}/\phi.
+$$
+
+这项相干已在 $L+1$ 层合法存在，反向 $E_L$ 舍去它。两种 fine densities 都粗化到相同 $\tau_L$；由命题 36.4，它们不能从该 coarse input 经任何全域线性正右逆创造，可作为 $L+1$ 层种子再向后延拓。单态 coherent lift 与统一 recovery channel 因此没有矛盾；$X,V,Y$ 的 abstract membership 也不授予实际测量权限。
+

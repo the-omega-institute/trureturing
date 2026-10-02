@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.Census.StructuralTrivial
 import LeanInformationAudit.Census.Command
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 open LeanInformationAudit.Tests.Projection
 run_cmd do

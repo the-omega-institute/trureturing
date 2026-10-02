@@ -1,0 +1,6 @@
+**Theorem 7.1 (positive evaluation and quotient rank).** Let the represented index set be finite and nonempty, let $V$ be finite dimensional, and suppose $U+\operatorname{span}\{a_i:i\in I\}=V$. At every strictly positive real coordinate vector $x$ and every degree $m$, the actual represented polynomial satisfies $F_{U,m}(x)\ge0$, and
+
+$$
+F_{U,m}(x)>0\quad\Longleftrightarrow\quad \dim_K(V/U)\le m.
+$$
+

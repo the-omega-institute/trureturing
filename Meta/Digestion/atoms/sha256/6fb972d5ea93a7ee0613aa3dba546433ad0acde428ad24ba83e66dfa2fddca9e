@@ -1,0 +1,28 @@
+**命题 14.2（四项非负分解）。** 在定义14.1的合同下，实际风险满足
+
+$$
+R(\widehat h):=\mathbb E[(Y-\widehat h(Z))^2]=N+I+A+B,
+\qquad N,I,A,B\ge0.
+\tag{14.2}
+$$
+
+证明。逐个正概率的 $X=x$ 纤维有 $\mathbb E[Y-m(X)\mid X=x]=0$；因此 $Y-m(X)$ 与任意 $X$ 的函数的乘积期望为零。又因 $Z=e(X)$，逐个 $Z=z$ 纤维求和得 $\mathbb E[m(X)\mid Z]=m_e(Z)$，故 $m(X)-m_e(Z)$ 与任意 $Z$ 的函数正交。展开
+
+$$
+Y-\widehat h(Z)=(Y-m(X))+(m(X)-m_e(Z))+(m_e(Z)-\widehat h(Z))
+$$
+
+的平方，三个交叉项分别由上述两种纤维求和消去，得到 $N+I+\mathbb E[(m_e-\widehat h)^2]$。加减 $A$ 得式（14.2）。前三项是平方期望或其非空类下确界；由 $\widehat h\in\mathcal H$，最后一项也非负。$\square$
+
+$B$ 不一概是“优化残差”：未知目标的样本识别不足也能让经验最优读出具有正的 $B$。对给定非空训练集，令 $\widehat R$ 为经验平方风险。若 $\delta=\sup_{h\in\mathcal H}|R(h)-\widehat R(h)|<\infty$，则有
+
+$$
+\begin{aligned}
+B&=R(\widehat h)-\inf_{h\in\mathcal H}R(h)\\
+&\le \widehat R(\widehat h)-\inf_{h\in\mathcal H}\widehat R(h)+2\delta.
+\end{aligned}
+\tag{14.3}
+$$
+
+证明。由 $|R-\widehat R|\le\delta$，有 $R(\widehat h)\le\widehat R(\widehat h)+\delta$；又对任意 $h\in\mathcal H$ 有 $\widehat R(h)\le R(h)+\delta$，取下确界得 $\inf\widehat R\le\inf R+\delta$。两式相减即得，无需下确界可达。$\square$ 这只给总体超额的上界；经验优化差降低，不单独保证总体风险严格降低，也未给出 $\delta$ 的概率估计。
+

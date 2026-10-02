@@ -1,0 +1,14 @@
+**Theorem 8.2 (metric and compact-ball bridge).** For the representation
+quotient in Definition 1.1, the function in Definition 8.1 is independent
+of representatives. If the representation is properly discontinuous as in
+Definition 2.1, this function is a metric inducing the existing quotient
+topology. If in addition \(X\) is proper, then for every \(x\in X\) and
+\(r\in\mathbb R\), with \(\pi:X\to X/\rho\) the quotient projection,
+
+\[
+ \overline B_{d_\rho}([x],r)=\pi(\overline B_{d_X}(x,r)).
+\]
+
+Hence \((X/\rho,d_\rho)\) is proper. Freeness and compactness of the quotient
+are not hypotheses.
+

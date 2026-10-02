@@ -1,0 +1,17 @@
+**命题 16.2（负共轭与三种向量条件）。** 对每个 $e\ge2$，
+
+$$
+\Phi(gv)=z\Phi(v),\qquad
+\Phi(jv)=-\overline{\Phi(v)},
+$$
+
+$$
+D(x,y):=\det[v,gv]=x^2+xy-y^2
+=-\operatorname{Nm}(\Phi(v)).
+\tag{16.1}
+$$
+
+$\Phi(v)$ 是环单位，当且仅当 $v$ 循环。循环向量必本原且 $N_e$ 自由；本原、循环与 $N_e$ 自由并非同一个条件。
+
+证明。由 $z^2=1-z$，$z(y+xz)=x+(y-x)z=\Phi(gv)$；而 $\overline{y+xz}=y-x-xz=-\Phi(jv)$。范数展开为 $y^2-xy-x^2$，给 (16.1)。乘以 $y+xz$ 在基 $(1,z)$ 中的矩阵是 $\left(\begin{smallmatrix}y&x\\x&y-x\end{smallmatrix}\right)$；它可逆恰当范数为基环单位，亦可由 $f^{-1}=\bar f/\operatorname{Nm}(f)$ 得充分性。因此环单位恰对应 $D(x,y)$ 为单位，亦即 $v,gv$ 成基。成基蕴含坐标生成单位理想；若 $af=f$ 且 $f$ 为单位，则 $a=1$，给 $N_e$ 自由。第 17 节的分裂素数幂向量 $(1,p)$（在特征基中）及第 18 节的实际标签给出本原且 $N_e$ 自由、但不循环的实例；模 $11$ 特征线上的非零向量本原但有非平凡 $N_{11}$ 稳定子。$\square$
+

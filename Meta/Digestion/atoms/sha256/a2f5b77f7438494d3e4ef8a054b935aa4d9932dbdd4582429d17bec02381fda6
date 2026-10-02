@@ -1,0 +1,21 @@
+**命题 30.4（指定二模式相干的读取设置）。** 对可执行的二模式投影 $|r_\theta\rangle\langle r_\theta|$，其中 $r_\theta=(u+e^{i\theta}v)/\sqrt2$、$u,v$ 为正交单位向量，写 $s=\rho_{uu}+\rho_{vv}$、$z=\rho_{uv}$，则
+
+$$
+p_\theta=\frac s2+\operatorname{Re}(e^{i\theta}z).
+$$
+
+未知 $s$ 时三个设置 $0,\pi,\pi/2$ 已给
+
+$$
+s=p_0+p_\pi,\qquad
+\operatorname{Re}z=(p_0-p_\pi)/2,\qquad
+\operatorname{Im}z=(p_0+p_\pi)/2-p_{\pi/2}.
+\tag{30.3}
+$$
+
+已知 $s$ 时两个设置 $0,\pi/2$ 足够。
+
+证明。展开 $\langle r_\theta|\rho|r_\theta\rangle$ 得显示概率，代入三个角即得逆式。$\square$
+
+四相成对差可方便消去背景，但不是此指定参数读取任务的必要最小设置数；本命题也不是高维全态层析或一次未知态恢复。五个窗标签乘四个 character 名称没有独立性的证明，更不能叫“二十个状态”：有限前缀、程序参数和量子态载体各有自己的类型。
+

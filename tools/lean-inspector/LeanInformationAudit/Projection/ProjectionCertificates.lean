@@ -9,6 +9,26 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 abbrev ProjectionM := StateT (Array Declaration) Lean.Elab.Term.TermElabM
 
+/-- Imported test producers and repeated report roots can already contain the
+same proof. Reuse requires the full declaration and an independent kernel check. -/
+def verifyExistingDeclaration (owner : Name) (declaration : Declaration) : MetaM Bool := do
+  let (name, levels, type, value, isTheorem) ← match declaration with
+    | .thmDecl data => pure (data.name, data.levelParams, data.type, data.value, true)
+    | .defnDecl data => pure (data.name, data.levelParams, data.type, data.value, false)
+    | _ => return false
+  let some info := (← getEnv).find? name | return false
+  -- Each check runs only after the preceding one holds; nested actions in a
+  -- single Boolean condition would all execute before `&&` could short-circuit.
+  let some existing := info.value? (allowOpaque := true) | return false
+  unless GeneratedDeclarations.ownerOf (← getEnv) name == owner &&
+      info.isTheorem == isTheorem && !info.isUnsafe && info.levelParams == levels do
+    return false
+  unless ← isDefEq info.type type do return false
+  unless ← isDefEq existing value do return false
+  unless ← isDefEq (← inferType value) type do return false
+  checkWithKernel value
+  return true
+
 /-- Check the complete batch synchronously before its environment can be published.
 Preparing declarations does not certify them. A failed batch leaves the caller's
 environment unchanged, including declarations that preceded the failure. -/
@@ -17,10 +37,18 @@ def stageDeclarations (env : Environment) (declarations : Array Declaration)
   let options ← getOptions
   let mut stagedEnv := env
   for declaration in declarations do
+    -- Only a declaration that preceded this batch can be reused; a name repeated
+    -- inside the batch reaches the kernel and is rejected there.
+    if declaration.getNames.any env.contains then
+      unless ← withEnv stagedEnv <| MetaM.run' <| verifyExistingDeclaration
+          (GeneratedDeclarations.currentOwner stagedEnv) declaration do
+        throwError "IE-C009 ProofConstructionFailed: {declaration.getNames[0]!}\nexisting declaration mismatch"
+      continue
     match stagedEnv.addDeclCore
         (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
         (maxRecDepth.get options).toUSize declaration none true with
-    | .ok nextEnv => stagedEnv := nextEnv
+    | .ok nextEnv =>
+      stagedEnv := declaration.getNames.foldl GeneratedDeclarations.record nextEnv
     | .error error =>
         let name := declaration.getNames[0]!
         throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"

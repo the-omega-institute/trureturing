@@ -4,6 +4,8 @@ import LeanInformationAuditInterface.SourceSelection
 namespace LeanInformationAudit
 open Lean
 
+initialize registerTraceClass `InformationRegistration.check
+
 abbrev CatalogId := Name
 
 structure TemplateOccurrenceKey where

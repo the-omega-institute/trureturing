@@ -1,0 +1,658 @@
+{
+  "schema": "common-core-arbitrary-ternary-height-v1",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "weights": [
+    "1/3",
+    "1/3",
+    "1/9",
+    "1/9",
+    "1/9"
+  ],
+  "enumeration_cutoff": 5000,
+  "numeric_prefix_cutoff": 437,
+  "outside_prime_cutoff": 3000,
+  "tail_ell": 7,
+  "selected_shallow_labels": [
+    {
+      "modulus": 15,
+      "ternary_height": 1,
+      "nonternary_cofactor": 5,
+      "cap": "8/45"
+    },
+    {
+      "modulus": 21,
+      "ternary_height": 1,
+      "nonternary_cofactor": 7,
+      "cap": "4/35"
+    },
+    {
+      "modulus": 45,
+      "ternary_height": 2,
+      "nonternary_cofactor": 5,
+      "cap": "4/45"
+    },
+    {
+      "modulus": 33,
+      "ternary_height": 1,
+      "nonternary_cofactor": 11,
+      "cap": "20/297"
+    },
+    {
+      "modulus": 63,
+      "ternary_height": 2,
+      "nonternary_cofactor": 7,
+      "cap": "2/35"
+    },
+    {
+      "modulus": 39,
+      "ternary_height": 1,
+      "nonternary_cofactor": 13,
+      "cap": "8/143"
+    },
+    {
+      "modulus": 35,
+      "ternary_height": 0,
+      "nonternary_cofactor": 35,
+      "cap": "8/175"
+    },
+    {
+      "modulus": 51,
+      "ternary_height": 1,
+      "nonternary_cofactor": 17,
+      "cap": "32/765"
+    },
+    {
+      "modulus": 57,
+      "ternary_height": 1,
+      "nonternary_cofactor": 19,
+      "cap": "12/323"
+    },
+    {
+      "modulus": 75,
+      "ternary_height": 1,
+      "nonternary_cofactor": 25,
+      "cap": "8/225"
+    },
+    {
+      "modulus": 99,
+      "ternary_height": 2,
+      "nonternary_cofactor": 11,
+      "cap": "10/297"
+    },
+    {
+      "modulus": 105,
+      "ternary_height": 1,
+      "nonternary_cofactor": 35,
+      "cap": "16/525"
+    },
+    {
+      "modulus": 69,
+      "ternary_height": 1,
+      "nonternary_cofactor": 23,
+      "cap": "44/1449"
+    },
+    {
+      "modulus": 117,
+      "ternary_height": 2,
+      "nonternary_cofactor": 13,
+      "cap": "4/143"
+    },
+    {
+      "modulus": 55,
+      "ternary_height": 0,
+      "nonternary_cofactor": 55,
+      "cap": "8/297"
+    },
+    {
+      "modulus": 65,
+      "ternary_height": 0,
+      "nonternary_cofactor": 65,
+      "cap": "16/715"
+    },
+    {
+      "modulus": 153,
+      "ternary_height": 2,
+      "nonternary_cofactor": 17,
+      "cap": "16/765"
+    },
+    {
+      "modulus": 171,
+      "ternary_height": 2,
+      "nonternary_cofactor": 19,
+      "cap": "6/323"
+    },
+    {
+      "modulus": 165,
+      "ternary_height": 1,
+      "nonternary_cofactor": 55,
+      "cap": "16/891"
+    },
+    {
+      "modulus": 225,
+      "ternary_height": 2,
+      "nonternary_cofactor": 25,
+      "cap": "4/225"
+    },
+    {
+      "modulus": 77,
+      "ternary_height": 0,
+      "nonternary_cofactor": 77,
+      "cap": "4/231"
+    },
+    {
+      "modulus": 85,
+      "ternary_height": 0,
+      "nonternary_cofactor": 85,
+      "cap": "64/3825"
+    },
+    {
+      "modulus": 147,
+      "ternary_height": 1,
+      "nonternary_cofactor": 49,
+      "cap": "4/245"
+    },
+    {
+      "modulus": 315,
+      "ternary_height": 2,
+      "nonternary_cofactor": 35,
+      "cap": "8/525"
+    },
+    {
+      "modulus": 207,
+      "ternary_height": 2,
+      "nonternary_cofactor": 23,
+      "cap": "22/1449"
+    },
+    {
+      "modulus": 195,
+      "ternary_height": 1,
+      "nonternary_cofactor": 65,
+      "cap": "32/2145"
+    },
+    {
+      "modulus": 95,
+      "ternary_height": 0,
+      "nonternary_cofactor": 95,
+      "cap": "24/1615"
+    },
+    {
+      "modulus": 91,
+      "ternary_height": 0,
+      "nonternary_cofactor": 91,
+      "cap": "72/5005"
+    },
+    {
+      "modulus": 115,
+      "ternary_height": 0,
+      "nonternary_cofactor": 115,
+      "cap": "88/7245"
+    },
+    {
+      "modulus": 231,
+      "ternary_height": 1,
+      "nonternary_cofactor": 77,
+      "cap": "8/693"
+    },
+    {
+      "modulus": 255,
+      "ternary_height": 1,
+      "nonternary_cofactor": 85,
+      "cap": "128/11475"
+    },
+    {
+      "modulus": 119,
+      "ternary_height": 0,
+      "nonternary_cofactor": 119,
+      "cap": "32/2975"
+    },
+    {
+      "modulus": 285,
+      "ternary_height": 1,
+      "nonternary_cofactor": 95,
+      "cap": "16/1615"
+    },
+    {
+      "modulus": 273,
+      "ternary_height": 1,
+      "nonternary_cofactor": 91,
+      "cap": "48/5005"
+    },
+    {
+      "modulus": 133,
+      "ternary_height": 0,
+      "nonternary_cofactor": 133,
+      "cap": "108/11305"
+    },
+    {
+      "modulus": 175,
+      "ternary_height": 0,
+      "nonternary_cofactor": 175,
+      "cap": "8/875"
+    },
+    {
+      "modulus": 495,
+      "ternary_height": 2,
+      "nonternary_cofactor": 55,
+      "cap": "8/891"
+    },
+    {
+      "modulus": 143,
+      "ternary_height": 0,
+      "nonternary_cofactor": 143,
+      "cap": "40/4719"
+    },
+    {
+      "modulus": 441,
+      "ternary_height": 2,
+      "nonternary_cofactor": 49,
+      "cap": "2/245"
+    },
+    {
+      "modulus": 345,
+      "ternary_height": 1,
+      "nonternary_cofactor": 115,
+      "cap": "176/21735"
+    },
+    {
+      "modulus": 161,
+      "ternary_height": 0,
+      "nonternary_cofactor": 161,
+      "cap": "44/5635"
+    },
+    {
+      "modulus": 585,
+      "ternary_height": 2,
+      "nonternary_cofactor": 65,
+      "cap": "16/2145"
+    },
+    {
+      "modulus": 357,
+      "ternary_height": 1,
+      "nonternary_cofactor": 119,
+      "cap": "64/8925"
+    },
+    {
+      "modulus": 375,
+      "ternary_height": 1,
+      "nonternary_cofactor": 125,
+      "cap": "8/1125"
+    },
+    {
+      "modulus": 245,
+      "ternary_height": 0,
+      "nonternary_cofactor": 245,
+      "cap": "8/1225"
+    },
+    {
+      "modulus": 399,
+      "ternary_height": 1,
+      "nonternary_cofactor": 133,
+      "cap": "72/11305"
+    },
+    {
+      "modulus": 187,
+      "ternary_height": 0,
+      "nonternary_cofactor": 187,
+      "cap": "32/5049"
+    },
+    {
+      "modulus": 363,
+      "ternary_height": 1,
+      "nonternary_cofactor": 121,
+      "cap": "20/3267"
+    },
+    {
+      "modulus": 525,
+      "ternary_height": 1,
+      "nonternary_cofactor": 175,
+      "cap": "16/2625"
+    },
+    {
+      "modulus": 693,
+      "ternary_height": 2,
+      "nonternary_cofactor": 77,
+      "cap": "4/693"
+    },
+    {
+      "modulus": 429,
+      "ternary_height": 1,
+      "nonternary_cofactor": 143,
+      "cap": "80/14157"
+    },
+    {
+      "modulus": 209,
+      "ternary_height": 0,
+      "nonternary_cofactor": 209,
+      "cap": "20/3553"
+    },
+    {
+      "modulus": 765,
+      "ternary_height": 2,
+      "nonternary_cofactor": 85,
+      "cap": "64/11475"
+    },
+    {
+      "modulus": 275,
+      "ternary_height": 0,
+      "nonternary_cofactor": 275,
+      "cap": "8/1485"
+    },
+    {
+      "modulus": 221,
+      "ternary_height": 0,
+      "nonternary_cofactor": 221,
+      "cap": "64/12155"
+    },
+    {
+      "modulus": 483,
+      "ternary_height": 1,
+      "nonternary_cofactor": 161,
+      "cap": "88/16905"
+    },
+    {
+      "modulus": 855,
+      "ternary_height": 2,
+      "nonternary_cofactor": 95,
+      "cap": "8/1615"
+    },
+    {
+      "modulus": 819,
+      "ternary_height": 2,
+      "nonternary_cofactor": 91,
+      "cap": "24/5005"
+    },
+    {
+      "modulus": 247,
+      "ternary_height": 0,
+      "nonternary_cofactor": 247,
+      "cap": "216/46189"
+    },
+    {
+      "modulus": 385,
+      "ternary_height": 0,
+      "nonternary_cofactor": 385,
+      "cap": "16/3465"
+    },
+    {
+      "modulus": 253,
+      "ternary_height": 0,
+      "nonternary_cofactor": 253,
+      "cap": "20/4347"
+    },
+    {
+      "modulus": 325,
+      "ternary_height": 0,
+      "nonternary_cofactor": 325,
+      "cap": "16/3575"
+    },
+    {
+      "modulus": 735,
+      "ternary_height": 1,
+      "nonternary_cofactor": 245,
+      "cap": "16/3675"
+    },
+    {
+      "modulus": 507,
+      "ternary_height": 1,
+      "nonternary_cofactor": 169,
+      "cap": "8/1859"
+    },
+    {
+      "modulus": 561,
+      "ternary_height": 1,
+      "nonternary_cofactor": 187,
+      "cap": "64/15147"
+    },
+    {
+      "modulus": 1035,
+      "ternary_height": 2,
+      "nonternary_cofactor": 115,
+      "cap": "88/21735"
+    },
+    {
+      "modulus": 455,
+      "ternary_height": 0,
+      "nonternary_cofactor": 455,
+      "cap": "96/25025"
+    },
+    {
+      "modulus": 299,
+      "ternary_height": 0,
+      "nonternary_cofactor": 299,
+      "cap": "8/2093"
+    },
+    {
+      "modulus": 627,
+      "ternary_height": 1,
+      "nonternary_cofactor": 209,
+      "cap": "40/10659"
+    },
+    {
+      "modulus": 825,
+      "ternary_height": 1,
+      "nonternary_cofactor": 275,
+      "cap": "16/4455"
+    },
+    {
+      "modulus": 1071,
+      "ternary_height": 2,
+      "nonternary_cofactor": 119,
+      "cap": "32/8925"
+    },
+    {
+      "modulus": 1125,
+      "ternary_height": 2,
+      "nonternary_cofactor": 125,
+      "cap": "4/1125"
+    },
+    {
+      "modulus": 663,
+      "ternary_height": 1,
+      "nonternary_cofactor": 221,
+      "cap": "128/36465"
+    },
+    {
+      "modulus": 323,
+      "ternary_height": 0,
+      "nonternary_cofactor": 323,
+      "cap": "96/27455"
+    },
+    {
+      "modulus": 425,
+      "ternary_height": 0,
+      "nonternary_cofactor": 425,
+      "cap": "64/19125"
+    },
+    {
+      "modulus": 1197,
+      "ternary_height": 2,
+      "nonternary_cofactor": 133,
+      "cap": "36/11305"
+    },
+    {
+      "modulus": 741,
+      "ternary_height": 1,
+      "nonternary_cofactor": 247,
+      "cap": "144/46189"
+    },
+    {
+      "modulus": 1155,
+      "ternary_height": 1,
+      "nonternary_cofactor": 385,
+      "cap": "32/10395"
+    },
+    {
+      "modulus": 759,
+      "ternary_height": 1,
+      "nonternary_cofactor": 253,
+      "cap": "40/13041"
+    },
+    {
+      "modulus": 1089,
+      "ternary_height": 2,
+      "nonternary_cofactor": 121,
+      "cap": "10/3267"
+    },
+    {
+      "modulus": 1575,
+      "ternary_height": 2,
+      "nonternary_cofactor": 175,
+      "cap": "8/2625"
+    },
+    {
+      "modulus": 975,
+      "ternary_height": 1,
+      "nonternary_cofactor": 325,
+      "cap": "32/10725"
+    },
+    {
+      "modulus": 475,
+      "ternary_height": 0,
+      "nonternary_cofactor": 475,
+      "cap": "24/8075"
+    },
+    {
+      "modulus": 595,
+      "ternary_height": 0,
+      "nonternary_cofactor": 595,
+      "cap": "128/44625"
+    },
+    {
+      "modulus": 391,
+      "ternary_height": 0,
+      "nonternary_cofactor": 391,
+      "cap": "352/123165"
+    },
+    {
+      "modulus": 1287,
+      "ternary_height": 2,
+      "nonternary_cofactor": 143,
+      "cap": "40/14157"
+    },
+    {
+      "modulus": 1449,
+      "ternary_height": 2,
+      "nonternary_cofactor": 161,
+      "cap": "44/16905"
+    },
+    {
+      "modulus": 1365,
+      "ternary_height": 1,
+      "nonternary_cofactor": 455,
+      "cap": "64/25025"
+    },
+    {
+      "modulus": 897,
+      "ternary_height": 1,
+      "nonternary_cofactor": 299,
+      "cap": "16/6279"
+    },
+    {
+      "modulus": 665,
+      "ternary_height": 0,
+      "nonternary_cofactor": 665,
+      "cap": "144/56525"
+    },
+    {
+      "modulus": 437,
+      "ternary_height": 0,
+      "nonternary_cofactor": 437,
+      "cap": "132/52003"
+    },
+    {
+      "modulus": 539,
+      "ternary_height": 0,
+      "nonternary_cofactor": 539,
+      "cap": "4/1617"
+    },
+    {
+      "modulus": 867,
+      "ternary_height": 1,
+      "nonternary_cofactor": 289,
+      "cap": "32/13005"
+    },
+    {
+      "modulus": 605,
+      "ternary_height": 0,
+      "nonternary_cofactor": 605,
+      "cap": "8/3267"
+    },
+    {
+      "modulus": 575,
+      "ternary_height": 0,
+      "nonternary_cofactor": 575,
+      "cap": "88/36225"
+    },
+    {
+      "modulus": 1029,
+      "ternary_height": 1,
+      "nonternary_cofactor": 343,
+      "cap": "4/1715"
+    },
+    {
+      "modulus": 969,
+      "ternary_height": 1,
+      "nonternary_cofactor": 323,
+      "cap": "64/27455"
+    },
+    {
+      "modulus": 715,
+      "ternary_height": 0,
+      "nonternary_cofactor": 715,
+      "cap": "32/14157"
+    },
+    {
+      "modulus": 1275,
+      "ternary_height": 1,
+      "nonternary_cofactor": 425,
+      "cap": "128/57375"
+    },
+    {
+      "modulus": 2205,
+      "ternary_height": 2,
+      "nonternary_cofactor": 245,
+      "cap": "8/3675"
+    },
+    {
+      "modulus": 1521,
+      "ternary_height": 2,
+      "nonternary_cofactor": 169,
+      "cap": "4/1859"
+    },
+    {
+      "modulus": 1683,
+      "ternary_height": 2,
+      "nonternary_cofactor": 187,
+      "cap": "32/15147"
+    },
+    {
+      "modulus": 805,
+      "ternary_height": 0,
+      "nonternary_cofactor": 805,
+      "cap": "176/84525"
+    }
+  ],
+  "expected": {
+    "core_mass": "33324292966457/52178633632125",
+    "high_ternary_debit": "2048/5355",
+    "post_high_mass": "13368766976057/52178633632125",
+    "total_low_mixed_cap": "99013/58905",
+    "selected_low_remainder": "26234722426961/119585698116885",
+    "selected_alpha": "2973044873761504/80720346228897375",
+    "previous_alpha": "2804967015893584/80720346228897375",
+    "pure29_mass_gate": "101137423013159293277525595557841494896567698208395952242683757650564733156982580304884714278764583173166741337357750339809597/2978644366056858600599735026631204970689051992405269096904665358081263917012276240090731463323359590319810382961017456054687500",
+    "tail3000_mass_gate": "1050869314212294672870517172980465884312497310073598122469968165404976939709255798812299556321928085907016431895803991615384007138146364864969917323358331668156674211437590501467512351270841/29852373600770623053495057468196598256650011499529206506264209984969847572387560838218285175440677830803154218247269481249697454799851106622929618202590225420778183435946987520000000000000000",
+    "selected_final_lower": "48635958618305940203007287240139789286164886023254330018773255668355736635036392500542357162127990714301776530082658807331165818883238573468255852774657171790200106781824886692487648729159/2473886863868851379415430035496362765596989941217918018099668197414998521774657430453894305339126172397965968958244963451109139153316607736485889646299224889880467215993684623360000000000000",
+    "cutoff437_alpha": "55499567246375488/1533686578349050125",
+    "cutoff437_final_lower": "29399522660075469951106678770922856911270624044189170950918149155018378054406574436331321065175480821601547577239007649417055565710165412235602387435226021737888114818518984612487648729159/2430604882962832821348653666440624667753477851765021410196994207759989464968240339809419474120983025139390453814346748345802391083677193123712419349285504802262765234076246343680000000000000",
+    "cutoff436_alpha": "47713607653964488/1533686578349050125"
+  }
+}

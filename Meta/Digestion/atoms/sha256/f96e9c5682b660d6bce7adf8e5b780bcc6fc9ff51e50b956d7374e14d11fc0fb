@@ -1,0 +1,8 @@
+**定义 1.3（Finite higher-event budget）。** For a rest history and $i,e,d\in\mathbb N$, put
+
+$$
+Q_T(i,e,d)=\{q\in\mathbb N:q<d,\ i<k_{e+q+1}\}.
+$$
+
+This set counts higher-label transitions among the next $d$ transitions after event $e$.
+

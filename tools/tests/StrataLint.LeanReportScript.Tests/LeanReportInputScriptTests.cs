@@ -29,8 +29,6 @@ public sealed partial class LeanReportInputScriptTests
     private const string ResourceObservationLibraryPath =
         "tools/scripts/lib/resource-observation-lib.sh";
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
-    private const string JudgeContentAddressPath =
-        "tools/scripts/workflow/judge-content-address.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
@@ -206,7 +204,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(CachePublishScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
-        Assert.Contains(JudgeContentAddressPath, paths);
+        Assert.DoesNotContain("tools/scripts/workflow/judge-content-address.sh", paths);
         Assert.DoesNotContain(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -228,7 +226,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
-        Assert.Contains(JudgeContentAddressPath, paths);
+        Assert.DoesNotContain("tools/scripts/workflow/judge-content-address.sh", paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
     }
@@ -255,7 +253,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(DocumentsProjectPath, paths);
         Assert.Contains(DocumentsLockPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
-        Assert.Contains(JudgeContentAddressPath, paths);
+        Assert.DoesNotContain("tools/scripts/workflow/judge-content-address.sh", paths);
         Assert.Contains(CachePublishScriptPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -456,13 +454,6 @@ public sealed partial class LeanReportInputScriptTests
                         "tools", "scripts", "lib", "resource-observation-lib.sh"),
                     Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
-            Write(
-                JudgeContentAddressPath,
-                File.ReadAllText(
-                    Path.Combine(
-                        TestRepositoryLayout.FindRoot(),
-                        "tools", "scripts", "workflow", "judge-content-address.sh"),
-                    Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(WorkflowPath, "# unrelated fixture workflow\n");
             Write("Directory.Build.props", "<Project />\n");

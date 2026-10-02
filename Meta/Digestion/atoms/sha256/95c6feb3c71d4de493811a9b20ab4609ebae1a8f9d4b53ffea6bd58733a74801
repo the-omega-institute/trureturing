@@ -1,0 +1,1 @@
+| [ConditionalExpectationOptimality.lean](../../../D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.lean)，`conditional_expectation_minimizes_mean_square_error` | 对概念生成的 $\sigma$-代数，平方可积条件期望的误差不大于任意可测平方可积读出；对应不限类最优性，不保证受限类下确界可达 

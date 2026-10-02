@@ -1,0 +1,31 @@
+**定理 10.2（固定对角边界的逐分支闭合）。** 令
+
+$$
+q_\Delta(\rho)=\bigl(\langle a|\operatorname{Tr}_H\rho|a\rangle\bigr)_{a\in A}.
+$$
+
+允许字母表由未修正 $U$ 与满足
+
+$$
+\mathcal I_y^\dagger(\Delta_A)\subseteq\Delta_A
+\quad\text{对每个结果 }y
+$$
+
+的低层仪器组成；读出和选择器也遵守同一合同。则 $q_\Delta$ 对任意初始联合态及任意有限自适应序列条件充分。任意低层酉门不自动属于此字母表。
+
+证明。定理 3.2 对每个对角算子 $B$ 给出 $U^\dagger(B\otimes I_H)U=\alpha(B)\otimes I_H$，且 $\alpha(B)$ 仍对角，所以运输只将分布按 $f$ 重排。对于额外仪器，分支后第 $b$ 个对角元为
+
+$$
+\operatorname{Tr}\bigl[\rho\bigl(\mathcal I_y^\dagger(E_{bb})\otimes I_H\bigr)\bigr].
+$$
+
+显示假设使该表达只依赖 $q_\Delta(\rho)$。因 $I_A\in\Delta_A$，分支概率也由同一边界决定。等价地，存在非负的次随机核
+
+$$
+S_y(b\mid a)=\sum_\mu|\langle b|K_{y\mu}|a\rangle|^2,
+\qquad
+\widetilde q_y(b)=\sum_aS_y(b\mid a)q_\Delta(\rho)(a).
+$$
+
+取 $p_y=\sum_b\widetilde q_y(b)$，正概率时以后者归一化。逐层归纳证明所有有限自适应分支的概率和条件对角边界一致。一般低层相干门的共轭会把某个 $E_{bb}$ 变成非对角算子，如命题 2.3 证明中的两标签酉，所以它不满足假设；要允许任意低层仪器，可用定理 7.4 的更丰富边界，或定理 6.3 的完整修正轮。$\square$
+

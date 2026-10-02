@@ -143,7 +143,6 @@ public static class LeanClosureValidator
 
             if (!report.Files.TryGetValue(path, out var fileReport))
             {
-                if (!IsRequiredReportLean(path.Value)) continue;
                 return new LeanValidationOutcome.InfrastructureFailure(
                     $"Lean environment report is missing for {path.Value}.");
             }
@@ -178,10 +177,6 @@ public static class LeanClosureValidator
     // IsManagedLean: Reg has no GID, Scribe, header, deposit or utility obligations.
     public static bool IsReportLean(string path) => IsManagedLean(path)
         || path.StartsWith("Reg/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal);
-
-    // Reg rows are admitted when present but not required while the escape-registration
-    // audit is paused (#11269); restoring the audit reverts this to IsReportLean.
-    public static bool IsRequiredReportLean(string path) => IsManagedLean(path);
 
     public static bool IsManagedLean(string path) =>
         string.Equals(path, "Trureturing.lean", StringComparison.Ordinal)

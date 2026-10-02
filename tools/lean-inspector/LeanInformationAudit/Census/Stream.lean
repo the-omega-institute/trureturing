@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Records
+import LeanInformationAuditInterface.Store
 import LeanInformationAudit.NameWire
 import LeanInformationAudit.Census.Ownership
 
@@ -98,32 +98,26 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Json := I
   let mut bindings := #[]
   for (name, entries) in data.entries do
     let name := privateToUserName name
-    if name == `LeanInformationAudit.informationRegistryExt then
+    if name == `LeanInformationAudit.registrationInputs then
       for raw in entries do
-        let entry : InformationRegistryEntry := unsafeCast raw
+        let input : RegistrationInput := unsafeCast raw
+        let entry := input.entry
         finite := finite.push <| Json.mkObj [
-          ("key", nameJson entry.theoremName), ("module", toJson entry.registrationModuleName.toString),
+          ("key", nameJson entry.theoremName), ("module", toJson moduleName),
           ("names", Json.arr #[nameJson entry.unitName, nameJson entry.realizationName])]
+        let row := Json.mkObj [("key", nameJson entry.theoremName), ("module", toJson moduleName)]
+        bindings := bindings.push row
+        if input.declaration.isSome then bindings := bindings.push row
     else if name == `LeanInformationAudit.DispositionCensus.structuralRegistry then
       for raw in entries do
         let entry : StructuralProvenanceEntry := unsafeCast raw
         structural := structural.push <| Json.mkObj [
           ("key", nameJson entry.theoremName), ("module", toJson entry.registrationModule.toString),
           ("names", Json.arr #[nameJson entry.unitConst, nameJson entry.realizationConst])]
-    else if name == `LeanInformationAudit.sealRecordExt then
+    else if name == `LeanInformationAudit.sealInputs then
       for raw in entries do
-        let entry : SealArenaRecord := unsafeCast raw
-        seals := seals.push (toJson entry.catalog.rootId.toString)
-    else if name == `LeanInformationAudit.TemplateBinding.occurrenceInventory then
-      for raw in entries do
-        let entry : TemplateOccurrenceEvent := unsafeCast raw
-        bindings := bindings.push <| Json.mkObj [
-          ("key", nameJson entry.key.theoremName), ("module", toJson moduleName)]
-    else if name == `LeanInformationAudit.TemplateBinding.bindingClaims then
-      for raw in entries do
-        let entry : TemplateBindingClaim := unsafeCast raw
-        bindings := bindings.push <| Json.mkObj [
-          ("key", nameJson entry.key.theoremName), ("module", toJson moduleName)]
+        let entry : SealInput := unsafeCast raw
+        seals := seals.push (toJson entry.rootId.toString)
   return Json.mkObj [("finite", Json.arr finite), ("structural", Json.arr structural),
     ("seals", Json.arr seals), ("bindings", Json.arr bindings)]
 

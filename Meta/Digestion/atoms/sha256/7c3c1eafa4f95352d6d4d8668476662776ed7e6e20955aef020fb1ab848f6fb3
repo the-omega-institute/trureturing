@@ -1,0 +1,51 @@
+**定义 39.1（首次拒绝诊断）。** 固定 $n\ge1$，沿用式（35.1）的
+$\Sigma^n$、零初始化和 End 位置。令 $\mathsf{acc}$ 表示接受，令
+
+$$
+T_n(w)=
+\begin{cases}
+\min\{\,i<n:b_3(w_i)b_1(w_{i+1})=1\,\},&
+\text{若坏接缝非空},\\
+n,&
+\text{若所有接缝合法且 }w_n=000,\\
+\mathsf{acc},&
+\text{若所有接缝合法且 }w_n\ne000.
+\end{cases}
+\tag{39.1}
+$$
+
+这里的整数标签是规定的有序诊断位置；它不声称唯一的物理因果、干预归因或实际学习机制。于是
+$F_n(w)=1\Longleftrightarrow T_n(w)=\mathsf{acc}$。
+
+对 $A\subseteq[n]$ 写 $B=[n]\setminus A$，所有补全均在完整 $\Sigma^B$ 上量化（包括坏接缝和末窗 $000$），并令
+
+$$
+C_A=\{\,i<n:|\{i,i+1\}\cap A|=1\,\},\quad
+J_A=\{\,j<n:j,j+1\in A\,\},\quad d_A=|C_A|.
+\tag{39.2}
+$$
+
+对 $j\in J_A$ 置
+$c_A(j)=|\{\,i\in C_A:i<j\,\}|$，并置
+$\delta_A=\mathbf1_{\{\,n\ge2,\ n\in A,\ n-1\notin A\,\}}$。
+跨切面接缝 $i\in C_A$ 的 $A$-端口记作 $p_i(a)$：若 $i\in A$，它是 $b_3(a_i)$；若 $i+1\in A$，它是 $b_1(a_{i+1})$。补全 $b$ 的另一端口记作 $q_i(b)$。定义 $A$-闭合首次拒绝
+
+$$
+\tau_A(a)=\min\Bigl(
+\{\,j\in J_A:b_3(a_j)b_1(a_{j+1})=1\,\}
+\cup
+\{\,n:n\in A,\ a_n=000\,\}
+\cup\{\infty\}\Bigr).
+\tag{39.3}
+$$
+
+其中 $\infty$ 大于所有整数。于是全局诊断正是闭合失败和跨切面失败的最小者：
+
+$$
+T_n(a\sqcup b)=\min\Bigl(\tau_A(a),\tau_B(b),
+\{\,i\in C_A:p_i(a)q_i(b)=1\,\}\Bigr),
+\tag{39.4}
+$$
+
+若最小值为 $\infty$ 则按约定读作 $\mathsf{acc}$。式（39.4）只是把接缝因子和末窗因子按 $A$、$B$、跨切面三类重排，没有改变算术源或式（35.1）的 $F_n$。
+

@@ -1,0 +1,51 @@
+**定理 194.4（密度小于一半时的全乘子严格余量）。** 设式（194.1）—（194.2）成立且 $0<\delta<1/2$。对每个固定 $C>0$，有
+
+$$
+\liminf_{\substack{U\to\infty\\p\mid U\Rightarrow p\in S}}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le CU}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma\bigl(\log2-H(\delta)\bigr)>0.
+\tag{194.10}
+$$
+
+这里 $U$ 取正整数，误差对给定范围内的全部乘子 $g$ 一致。
+
+证明。先设 $0\le h\le L$。在固定 $\varepsilon\le t=h/L\le1$ 上，引理 194.3 与实际预算
+
+$$
+\log\log(gU)=\log L+\log(1+t)
+$$
+
+给归一化余量下界 $f_\delta(t)+o(1)$，其中
+
+$$
+f_\delta(t)=\log(1+t)-H(\delta)-(1-\delta)\log t,
+\qquad
+f_\delta'(t)=\frac{\delta t-(1-\delta)}{t(1+t)}<0.
+$$
+
+故该分支的最小值在 $t=1$，等于 $\log2-H(\delta)>0$。
+
+还须单独处理 $0\le h\le\varepsilon L$，不能直接把紧区间渐近用于 $t\to0$。将实际预算放宽为
+
+$$
+A+B\le(1+\varepsilon)L,\qquad B\le\varepsilon L,
+$$
+
+并在引理 194.3 的证明中以 $\varepsilon L$ 替换 $h$，得到
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log\varepsilon+o(1).
+$$
+
+实际预算至少为 $\log L$。预先选择固定 $\varepsilon\in(0,1)$ 满足 $-(1-\delta)\log\varepsilon\ge\log2$，便使此分支也有不小于 $\log2-H(\delta)+o(1)$ 的归一化余量。
+
+一般的 $g\le CU$ 给 $h\le L+\log C$。令 $L'=L+\max(\log C,0)$，则 $A+B\le L'+h$、$B\le h$、$0\le h\le L'$。上述证明只使用这两个支撑预算与参数 $L'\to\infty$，不要求 $L'$ 本身为某个辅助整数的对数。因
+
+$$
+0\le\log(L'+h)-\log(L+h)=O(1/L)
+$$
+
+一致于 $h\ge0$，把该放宽预算换回实际预算只损失 $o(1)$。合并各分支即得式（194.10）。$\square$
+

@@ -1,0 +1,37 @@
+**theorem 4.1 (All-input paid execution with one ask).** For every raw Boolean
+source word $w$, there is a physical response $r$ to $q_w$ such that
+
+$$
+|r|\le 2(L+1)^2+L+5.
+$$
+
+The ordinary binary value of the total postprocessor output on $r$ is the
+independently defined satisfying count of $F_w$. From the exact clean
+preprocessor initialization on $w$, the protocol reaches the exact clean
+postprocessor halt on that output in at most
+
+$$
+16L^2+50L+71
+$$
+
+edges, with exactly one ask. Every complete protocol run from that
+initialization to a terminal configuration also has exactly one ask.
+
+To obtain the response bound, source-codec soundness gives $n\le L$ and
+$|F_w|\le L+1$ on accepted words. These inequalities also hold for the rejected
+fallback. The physical representation bound of Theorem 3.1 then applies.
+For a response of length $R$, actual read, push and reversal execution plus
+its two handoffs costs $3R+3$ edges. Adding the preprocessing bound
+$(4L+20)L+13$, the query handoff, one ask, the postprocessing bound $3R+10$
+and the terminal handoff gives the displayed quadratic bound. The exact-one
+property follows from a phase invariant: before the ask the phase indicator
+is zero, after the ask it is one, and its difference over any run equals
+the number of ask edges.
+
+This statement uses the explicit variable universe decoded from the unary
+source. The conventional appearing-binary-name dictionary converters and their
+count-preserving word execution correspondence remain separate obligations.
+The protocol is an operational composition of fixed native machines and an
+explicit physical response port; it does not assert a compiled single FinTM2
+oracle-program implementation of the entire phase relation.
+

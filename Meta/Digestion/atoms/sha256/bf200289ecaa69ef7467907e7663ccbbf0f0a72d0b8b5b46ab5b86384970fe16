@@ -1,0 +1,17 @@
+**定理 3.5（Actual least births with an explicit bound）。** For every $m\in\mathbb N$ with $1\le m$, there exists $B\in\mathbb N$ such that
+
+$$
+B>0,\qquad |C_B|=m,\qquad
+\forall K<B,\ |C_K|<m,\qquad
+B\le\begin{cases}1,&m=1,\\2m(m-1)-1,&m\ne1.\end{cases}
+$$
+
+证明。For a list of height $h$ with all capacities at most $q$, list induction gives $A(c)\le qh(h+1)/2$. At a positive endpoint $N$, Theorem 3.3 and this inequality give
+
+$$
+N(N+1)=2A(C_N)\le (2N-1)h(h+1)<2Nh(h+1),
+\qquad h=|C_N|.
+$$
+
+The strict inequality holds because the area is positive and thus $h(h+1)>0$. Cancel $N>0$ to obtain $N+1<2h(h+1)$. For $m\ge2$, put $D=2m(m-1)-1>0$. If $|C_D|\le m-1$, the obstruction gives $D+1<2m(m-1)=D+1$, a contradiction. For $m=1$, $C_1=[1]$ supplies the crossing. Choose the least endpoint $B$ with height at least $m$. It is positive because $C_0=[]$; the height at $B-1$ is less than $m$, and the one-step upper bound makes the height at $B$ exactly $m$. Leastness supplies both minimality and the explicit bound. $\square$
+

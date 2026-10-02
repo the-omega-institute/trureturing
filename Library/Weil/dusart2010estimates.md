@@ -5,7 +5,7 @@ year: 2010
 title: "Estimates of Some Functions Over Primes without R.H."
 doi: null
 url: https://arxiv.org/abs/1002.0442
-claim: Explicit prime-counting and prime-in-short-interval estimates used as external inputs in the Erdős 699 continuation.
+claim: Explicit prime-counting and short-interval estimates for the Erdős 699 continuation, and eventual theta and Mertens estimates for the Robin support-loss comparison.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -53,3 +53,20 @@ Theorem 6.9，式 (6.5)，印刷页 9：当 `x > 1`，
 对 `i>=3000`，Dusart 素数计数上界与新判别式界给出 `n<2048*i`。当 `x=n-i>=396738`，短区间定理给出 `n-i<p<n`。较小 x 的情形以及全部 `325<=i<=2999`，由明确的整数幂比较归约到 `n<2^31`，再使用 §26 的完整有限素数间隙证书。两套实际执行的确定性分段筛均得到 `pi(2^31)=105097565`、下一个素数 `2147483659`、最大间隙 `292`，最大间隙端点 `1453168141,1453168433`。
 
 这个区域定理同时包含书面推导与明确使用的有限计算引理。它不是对原题三元组的有限采样，也没有证明 `3<=i<=324` 的剩余情形。有限比较2675项、两套全区间筛和程序哈希均在 §28 记录；它们未被称为独立数学评审或 Lean 核验。数值292是本轮完整筛的结果，不是从外部网页抄录的定理前提。没有新增 Scribe 数学真值或解决计数。
+
+## Robin 支撑损失所需的渐近输入
+
+同一 [arXiv:1002.0442v1 原文](https://arxiv.org/pdf/1002.0442v1) 的 Theorem 5.2（印刷页 4）给出 $|\vartheta(x)-x|$ 的显式 $x/\log^k x$ 界，其中 $k=2$ 的行蕴含
+
+$$
+\vartheta(x)=x+O(x/\log^2x).
+$$
+
+Theorem 6.12（印刷页 11）给出 $\prod_{p\le x}(1-1/p)$ 的双侧估计，蕴含
+
+$$
+\log\prod_{p\le x}(1-1/p)^{-1}
+=\gamma+\log\log x+O(1/\log^2x).
+$$
+
+[FIB 理论卷](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) §233.2 仅使用这两个最终渐近结论，组合经典支撑损失，给出不带权逐剩余类单候选结论的短推导。它不依赖该文的数值阈值来认证一个有限窗口，也不将 $n/\varphi(n)$ 的损失直接当成真实增量源 $b_s(d)/d$ 的损失。原文所列定理已读取；本条不声称独立重验其全部计算或提供 Lean 证明。

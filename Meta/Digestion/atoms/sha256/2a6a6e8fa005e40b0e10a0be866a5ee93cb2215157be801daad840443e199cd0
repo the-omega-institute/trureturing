@@ -1,0 +1,32 @@
+## 24. 一次调用的相干信号与已知失谐的固定信号
+
+固定第 23 节的标准模四模型，令 $U=U_{M,4}$、$V=U_{M,2}$。本节 $V$ 只指高层置换。使用 canonical Fourier 基
+
+$$
+|p\rangle=\frac12\sum_{h\in\mathbb F_2^2}(-1)^{p\cdot h}|h\rangle,
+\qquad V|p\rangle=|gp\rangle .
+\tag{24.1}
+$$
+
+三个非零 Fourier 标签记作 $\alpha=10,\beta=11,\gamma=01$，$g$ 按 $\alpha\to\beta\to\gamma\to\alpha$ 循环。低层基用二进制串表示，不混用这些字母。输入为
+
+$$
+\rho_\pm=|10\rangle\langle10|_A\otimes
+|\psi_\pm\rangle\langle\psi_\pm|,\qquad
+|\psi_\pm\rangle=\frac{|p\rangle\pm|q\rangle}{\sqrt2}
+$$
+
+（任选不同非零 $p,q$）。定义标量函数，与子系统名称分开理解，
+
+$$
+x=e^{-it},\qquad A(t)=\frac{1+2x^3}{3},\quad
+B(t)=\frac{x(2+x^3)}3,\quad C(t)=\frac{1-x^3}{3}.
+\tag{24.2}
+$$
+
+下面公式省略这些标量的自变量。准备低层 $|10\rangle$，作一次 $W_t$，再测两结果低层投影，其中指定成功向量为
+
+$$
+|r_\phi\rangle=\frac{|10\rangle+e^{i\phi}|11\rangle}{\sqrt2}.
+$$
+

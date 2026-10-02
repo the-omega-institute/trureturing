@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:983e2fccebdf78b8b8be53f517dd633233cec8d40409f4e16023cf7b8429ec60
+  normalized_sha256: sha256:983e2fccebdf78b8b8be53f517dd633233cec8d40409f4e16023cf7b8429ec60
+cas_ref: sha256:983e2fccebdf78b8b8be53f517dd633233cec8d40409f4e16023cf7b8429ec60
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GreedyBrick/RestBlock.literal_rest_block
+    target_statement_id: sha256:c6745e069f6ec24c1a1e7d1c14d2de708d7c2ff1c85c22a1b93e141dea409bcc
+receipts:
+  unresolved_subitems: []

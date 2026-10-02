@@ -1,0 +1,32 @@
+**引理 204.3（单位根分支的大素数尾）。** 若式（204.5）中的某根为单位，则存在固定 $\epsilon\in\{1,-1\}$、$t\in\mathbb Z$，使 $\alpha=\epsilon\phi^{2t}$。对分配到该根的实际素因子，除固定有限异常集合外，
+
+$$
+p\mid F_{2|m-t|}.
+\tag{204.13}
+$$
+
+对每个固定 $0<a_0<1$，令 $y=\lceil j^{a_0}\rceil$，则这些素因子中 $p>y$ 的对数 Euler 因子总和趋于零。
+
+证明。黄金单位分类及范数一给出所述形式。式（204.7）于是给 $\phi^{2(m-t)}=\epsilon$ 模某个 $p$ 上方素理想；其逆也等于 $\epsilon$。因此
+
+$$
+\sqrt5F_{2(m-t)}=\phi^{2(m-t)}-\psi^{2(m-t)}=0
+$$
+
+模该素理想。排除五后，左边的整数系数被 $p$ 整除，得到式（204.13）。负指标只改变符号；$m=t$ 至多发生一次，不影响尾段。其余指标 $n=2|m-t|$ 趋于无穷且为 $O_{g,v}(j)$。
+
+任意固定 $\varepsilon>0$ 都有初等界 $\tau(n)\le C_\varepsilon n^\varepsilon$：在足够大的素数处，$h+1\le2^h\le p^{\varepsilon h}$；在剩下有限个素数处，$\sup_{h\ge0}(h+1)p^{-\varepsilon h}$ 有限。对素因子指数相乘即得全体 $n$ 上的界。
+
+现在使用 §184.1 的第一条、仍保留 $\tau(n)$ 的估计，并取其指数为 $a_0/4$，得到
+
+$$
+\begin{aligned}
+\sum_{\substack{p\mid F_n\\p>y}}\log\frac p{p-1}
+&\le\tau(n)\sqrt{\frac{6(1+\log n)}{y\log y}}\\
+&=O_{a_0,g,v}(j^{-a_0/4})\longrightarrow0.
+\end{aligned}
+\tag{204.14}
+$$
+
+这里没有使用较粗的 $\tau(n)<4n^{1/3}$；后者会强迫 $a_0>2/3$，不足以支持下面令 $a_0$ 任意减小的论证。$\square$
+

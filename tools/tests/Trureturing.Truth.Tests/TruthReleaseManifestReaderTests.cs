@@ -190,19 +190,21 @@ public sealed class TruthReleaseManifestReaderTests
     [InlineData("push / current")]
     [InlineData("delta")]
     [InlineData("Canonical Lean report production")]
-    public void RejectsChecksOutsideTheDevPushContract(string otherCheck)
+    public void AcceptsDistinctCallerDeclaredCheckNames(string otherCheck)
     {
         var bad = ValidManifest.Replace("\"current\"", "\"" + otherCheck + "\"", StringComparison.Ordinal);
 
-        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+        Assert.Equal(otherCheck, TruthReleaseManifestReader.Read(bad).Trust.RequiredChecks[1].Name);
     }
 
     [Fact]
-    public void RejectsMissingOrDuplicatedPushEvidence()
+    public void RejectsEmptyOrDuplicatedCheckNames()
     {
-        var bad = ValidManifest.Replace("\"current\"", "\"engineering\"", StringComparison.Ordinal);
-
-        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+        foreach (var name in new[] { "engineering", "", "   " })
+        {
+            var bad = ValidManifest.Replace("\"current\"", "\"" + name + "\"", StringComparison.Ordinal);
+            Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+        }
     }
 
     [Fact]

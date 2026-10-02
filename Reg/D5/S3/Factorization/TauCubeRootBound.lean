@@ -83,14 +83,6 @@ register_information_theorem result in arena
       stateBinder := 0 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName == `D5.S3.Factorization.TauCubeRootBound.result
-  unless row.any (fun record => match record.result with
-      | .declaredValidated _ => true | _ => false) do
-    throwError "Tau cubic-root registration is not declaredValidated"
-
 #print axioms registration
 
 end Reg.D5.S3.Factorization.TauCubeRootBound

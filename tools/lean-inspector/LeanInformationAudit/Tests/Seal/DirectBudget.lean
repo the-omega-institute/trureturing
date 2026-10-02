@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -30,21 +33,21 @@ def fixtureRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem target
+test_assess in information_theorem target
   in lawArena
   object_arena objectArena
   catalog oversized
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 
-expect_information_occurrence target
+test_assess in expect_information_occurrence target
   in objectArena
   from "LeanInformationAudit.Tests.Seal.DirectBudget"
 
 set_option maxRecDepth 100000 in
 /-- error: IE-C032 SizeBudgetRequiresReflectedSeal root=LeanInformationAudit.Tests.Seal.DirectBudget catalog=oversized pair_budget=65792 limit=65536 seal=LeanInformationAudit.Tests.Seal.DirectBudget -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 #print axioms
   target.«LeanInformationAudit.Tests.Seal.DirectBudget/LeanInformationAudit.Tests.Seal.DirectBudget.objectArena/oversized».__primitive_realization

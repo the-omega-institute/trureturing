@@ -1,0 +1,26 @@
+{
+  "checks": 14209,
+  "contract": "Exact finite actual-family controls for JR1-JR9; ordinary proof, no Lean or uniform positivity claim.",
+  "limits": [
+    "The row probabilities in every fee are actual common-source projection masses, not independent upper budgets.",
+    "Positive values for selected arrays do not prove a uniform bound over arbitrary actual families.",
+    "No old checker, optimizer or Lean build was run."
+  ],
+  "statistics": {
+    "full_product_points": 138240,
+    "individual_remaining_original_bounds": 504,
+    "squarefree_actual_families": 24,
+    "strict_fee_improvements": 1,
+    "supported_deep_head_controls": 192,
+    "weighted_comparisons": 96
+  },
+  "supported_head_double_payment_counterexample": {
+    "actual_residual_mass": "1/200",
+    "correct_original_depth_cap": "1/200",
+    "first_head_row_mass": "1/4",
+    "head_depth": 2,
+    "incorrect_cap_times_row_weight": "1/800",
+    "original_modulus": 275,
+    "source": "Delete 0 mod5 and 0 mod11; no stars or groups. Other source coordinates integrate to one."
+  }
+}

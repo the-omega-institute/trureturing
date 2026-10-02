@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1e82f0802465bbdbea7c12590cf3c49915cf6ce6eb91980c43e2e487df5c0629
+  normalized_sha256: sha256:1e82f0802465bbdbea7c12590cf3c49915cf6ce6eb91980c43e2e487df5c0629
+cas_ref: sha256:1e82f0802465bbdbea7c12590cf3c49915cf6ce6eb91980c43e2e487df5c0629
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/PrimePhaseGcdSampling.prime_phase_gcd_sampling
+    target_statement_id: sha256:7127801f1d120d00c0d9b4c0c93aa6001c49cdbdb10c47967a9b0aa8af8f7626
+receipts:
+  unresolved_subitems: []

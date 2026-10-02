@@ -41,19 +41,19 @@ noncomputable section
 local instance : IsTrans Nat (fun a b => b + 2 <= a) where
   trans _ _ _ hab hbc := by omega
 
-private def shiftedFibSum (n : Nat) : Nat :=
+def shiftedFibSum (n : Nat) : Nat :=
   ((Nat.zeckendorf n).map fun k => Nat.fib (k - 1)).sum
 
 private def conjugateError (n : Nat) : Real :=
   ((Nat.zeckendorf n).map fun k => Real.goldenConj ^ k).sum
 
-private theorem canonical_pairwise (n : Nat) :
+theorem canonical_pairwise (n : Nat) :
     (Nat.zeckendorf n).Pairwise (fun x y => y + 2 <= x) := by
   have h := Nat.isZeckendorfRep_zeckendorf n
   rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at h
   exact (List.pairwise_append.mp h).1
 
-private theorem canonical_two_le (n : Nat) :
+theorem canonical_two_le (n : Nat) :
     forall k, k ∈ Nat.zeckendorf n -> 2 <= k := by
   have h := Nat.isZeckendorfRep_zeckendorf n
   rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at h
@@ -305,7 +305,7 @@ private theorem conjugate_error_sign {n : Nat} (hn : 0 < n) :
       have hupper := (abs_lt.mp htailAbs).2
       linarith [pow_pos hr0 k]
 
-private theorem fib_mul_inv_golden {k : Nat} (hk : 2 <= k) :
+theorem fib_mul_inv_golden {k : Nat} (hk : 2 <= k) :
     (Nat.fib k : Real) * Real.goldenRatio⁻¹ =
       (Nat.fib (k - 1) : Real) - Real.goldenConj ^ k := by
   have h := Real.goldenConj_mul_fib_succ_add_fib (k - 1)
@@ -403,7 +403,7 @@ private theorem floor_div_golden_zeckendorf {n : Nat} (hn : 0 < n) :
       have hrSq_lt_one : Real.goldenRatio⁻¹ ^ 2 < 1 := by nlinarith
       linarith
 
-private theorem floor_succ_div_golden_eq_shifted {n : Nat} (_hn : 0 < n) :
+theorem floor_succ_div_golden_eq_shifted {n : Nat} (_hn : 0 < n) :
     ⌊((n + 1 : Nat) : Real) / Real.goldenRatio⌋ =
       (shiftedFibSum n : Int) := by
   let r : Real := Real.goldenRatio⁻¹

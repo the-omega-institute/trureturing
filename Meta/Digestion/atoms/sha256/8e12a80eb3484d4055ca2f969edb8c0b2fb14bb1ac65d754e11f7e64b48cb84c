@@ -1,0 +1,10 @@
+**Theorem 4.1 (sign identities, Lemma 5).** The signs in Definition 2.2 satisfy the following properties. First, $\epsilon(V,V,\varnothing)=1$. Second, take $w_0\in W$, $i\notin W$, $j\notin U$ and a forest $F$ from $U\cup\{j\}$ to $W\cup\{i\}$. If there is a directed path from $j$ to $i$, set $F_{ij;w_0}=F\cup\{(w_0,j)\}$; otherwise set $F_{ij;w_0}=F\cup\{(i,j)\}$. This is a forest from $U$ to $W$, and
+
+$$
+(-1)^{i+|\{w\in W:w<i\}|+j+|\{u\in U:u<j\}|}
+\epsilon(U\cup\{j\},W\cup\{i\},F)
+=\epsilon''_{ij}(F)\epsilon(U,W,F_{ij;w_0}),
+$$
+
+where $\epsilon''_{ij}(F)=-1$ if $i$ is a descendant of $j$, including $i=j$, and $+1$ otherwise. Third, if $F$ and $F'=F\setminus\{(i,j)\}\cup\{(w_0,j)\}$ are both forests from $U$ to $W$, then $\epsilon(U,W,F)=\epsilon(U,W,F')$.
+

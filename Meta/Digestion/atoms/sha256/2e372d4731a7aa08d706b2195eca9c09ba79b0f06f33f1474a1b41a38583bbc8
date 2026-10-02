@@ -1,0 +1,30 @@
+**定理 23.1（同一输入与共振不可分输入的界）。** 对任意参考扩张，单调用酉通道满足
+
+$$
+\frac12\|\mathsf W_\Delta-\mathsf W_{\Delta_*}\|_\diamond
+\le\eta(\delta)\le\min\{1,2|\delta|\}.
+\tag{23.1}
+$$
+
+固定任一有限自适应协议的全部控制规则，且每条分支的调用次数至多 $N$，则同一输入的实际与共振可访问输出之差至多 $\min\{1,N\eta(\delta)\}$。若两输入在共振版本下的可访问输出相同，则任一实际事件满足
+
+$$
+|p_+(E)-p_-(E)|\le\min\{1,2N\eta(\delta)\}
+\le\min\{1,4N|\delta|\}.
+\tag{23.2}
+$$
+
+证明。中心化 $K=L-2I$ 后 $\operatorname{spec}K\subseteq[-2,2]$。对任意纯态输入及参考，两个纯态输出重叠的模等于 $|\langle\xi|e^{-i\delta K}\otimes I|\xi\rangle|$；若 $|\delta|\le\pi/4$，其实部至少为 $\cos(2|\delta|)\ge0$，故纯态迹距离至多 $\sin(2|\delta|)$。纯化和偏迹收缩给任意混合态及参考的界，即 (23.1)；大角度用通用界 $1$，线性界用 $\sin u\le u$（或 $\|e^{-i\delta K}-I\|\le2|\delta|$）。
+
+把经典记录全部保留，使仪器与控制规则成为 CPTP 中间映射。按调用槽逐个替换 $W_\Delta$ 为 $W_{\Delta_*}$，每个混合项的半 diamond 距离至多 $\eta$，合计至多 $N\eta$。早停用实际经典 continue/stopped 标志填满 $N$ 槽：继续的直和块调用时钟，停止的块作相同演化。对经典块对角输入，每槽仍至多 $\eta$；亦可先对标志退相干后定义整个 CPTP 槽。这不允许相干控制查询。最后丢弃 $H$、保留允许输出不会增距。两输入的共振输出相同，三角不等式的两条混合边给 (23.2)。控制规则可依赖已知 $\delta$，但在每次混合比较中固定。$\square$
+
+例如采用标准 Fourier 基，取任意不同非零标签 $p,q$，令
+
+$$
+|\psi_\pm\rangle=\frac{|p\rangle\pm|q\rangle}{\sqrt2},\qquad
+\rho_\pm=\tau_{ABR}\otimes|\psi_\pm\rangle\langle\psi_\pm|_H,
+\tag{23.3}
+$$
+
+其中 $\tau_{ABR}$ 是任意共同态。$B$ 是有限可访问辅助，低层仪器可作用于 $AB$；$R$ 是从不触碰的外部参考。零共振只能读取共同的 $ABR$ 边缘，非零共振时所有分支按 Fourier 单点块对角，(23.3) 的对角条件矩阵相同，故所有共振输出相同。这里未允许给两输入另配能直接显示正负标签的不同参考扩张。
+

@@ -1,0 +1,224 @@
+{
+  "schema": "e7-common-null-envelope-v1",
+  "actual_reference_family": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      15,
+      10
+    ],
+    [
+      21,
+      7
+    ],
+    [
+      33,
+      22
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      39,
+      13
+    ],
+    [
+      45,
+      11
+    ],
+    [
+      51,
+      34
+    ],
+    [
+      55,
+      0
+    ],
+    [
+      57,
+      19
+    ],
+    [
+      63,
+      49
+    ],
+    [
+      65,
+      0
+    ],
+    [
+      69,
+      46
+    ],
+    [
+      75,
+      25
+    ],
+    [
+      77,
+      0
+    ],
+    [
+      85,
+      0
+    ],
+    [
+      91,
+      0
+    ],
+    [
+      95,
+      0
+    ],
+    [
+      99,
+      22
+    ],
+    [
+      105,
+      70
+    ],
+    [
+      117,
+      13
+    ],
+    [
+      147,
+      49
+    ],
+    [
+      165,
+      55
+    ],
+    [
+      225,
+      175
+    ]
+  ],
+  "free_labels": [
+    15,
+    45,
+    75,
+    225
+  ],
+  "common_period": 225,
+  "references": [
+    2,
+    8,
+    11,
+    14,
+    17,
+    23,
+    26,
+    29,
+    32,
+    38,
+    41,
+    44
+  ],
+  "base_phase_counts": [
+    6,
+    22,
+    30,
+    110
+  ],
+  "fixed_reference_phase_counts": [
+    6,
+    23,
+    30,
+    115
+  ],
+  "joint_45_225_count": 5120,
+  "joint_quadruple_count": 921600,
+  "separate_product_count": 1040400,
+  "fixtures": [
+    {
+      "name": "base",
+      "phases": [
+        10,
+        0,
+        25,
+        175
+      ],
+      "expected_references": [
+        2,
+        8,
+        11,
+        14,
+        17,
+        23,
+        26,
+        29,
+        32,
+        38,
+        41,
+        44
+      ]
+    },
+    {
+      "name": "change45 only",
+      "phases": [
+        10,
+        11,
+        25,
+        175
+      ],
+      "expected_references": [
+        11
+      ]
+    },
+    {
+      "name": "change225 only",
+      "phases": [
+        10,
+        0,
+        25,
+        41
+      ],
+      "expected_references": [
+        41
+      ]
+    },
+    {
+      "name": "nonjoint combination",
+      "phases": [
+        10,
+        11,
+        25,
+        41
+      ],
+      "expected_references": [],
+      "nonjoint": true
+    },
+    {
+      "name": "all four phases changed",
+      "phases": [
+        3,
+        0,
+        70,
+        41
+      ],
+      "expected_references": [
+        41
+      ]
+    },
+    {
+      "name": "another second5 child nonjoint",
+      "phases": [
+        10,
+        11,
+        25,
+        176
+      ],
+      "expected_references": [],
+      "nonjoint": true
+    }
+  ]
+}

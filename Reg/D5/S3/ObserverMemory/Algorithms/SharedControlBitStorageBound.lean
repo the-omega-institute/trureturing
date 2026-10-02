@@ -1,6 +1,9 @@
 import D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
@@ -154,6 +157,5 @@ register_information_theorem shared_control_bit_storage_bound in arena
 #print axioms sensitivity_proof
 #print axioms dependence_proof
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← getEnv)
 
 end Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound

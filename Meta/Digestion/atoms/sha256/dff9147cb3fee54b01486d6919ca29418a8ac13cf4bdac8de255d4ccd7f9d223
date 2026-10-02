@@ -1,0 +1,35 @@
+## 20. 复合模数的最大相干块
+
+沿用第 16 节的记号
+
+$$
+R_e=(\mathbb Z/e\mathbb Z)[z]/(z^2+z-1),\qquad
+\bar z=-1-z,\qquad H_e=\langle z,-1\rangle\le R_e^\times,
+$$
+
+并令 $h(e)=|H_e|$、$b(e)=\max_{f\in R_e}|\Gamma_e f|$。定义单位比值群
+
+$$
+\mathcal B_e=\{\bar u/u:u\in R_e^\times\},\qquad C_e=|\mathcal B_e|,
+$$
+
+以及
+
+$$
+\iota_e=\begin{cases}1,&e=2,\\4,&5\mid e,\\2,&\text{otherwise}.\end{cases}
+$$
+
+对互素素数幂作乘法定义 $C_e$；局部因子为
+
+$$
+C_{2^a}=3\cdot2^{a-1},\qquad C_{5^a}=5^a,
+$$
+
+$$
+C_{p^a}=p^{a-1}(p-1)\quad\text{若 }p\ne2,5\text{ 且 }(5/p)=1,
+$$
+
+$$
+C_{p^a}=p^{a-1}(p+1)\quad\text{若 }p\ne2,5\text{ 且 }(5/p)=-1.
+$$
+

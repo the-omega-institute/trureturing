@@ -1,0 +1,25 @@
+**定义 26.1（衰减族的共同合同）。** 沿用第6、19节的低位到高位字母表 $\Sigma=\{000,100,010,101,001\}$、初态 $A$ 及吸收失败态 $D$。End 只在词末查询，不属于 $\Sigma$，也不增加词长。响应 $F:\Sigma^*\to\{0,1\}\subset\mathbb Q$ 按式（19.1）总化，故 $F(\varepsilon)=0$。记号 $(100)^r,(010)^r,(000)^r$ 均表示重复整个窗字母 $r$ 次，零次重复为空词。
+
+固定每个模型内不随词或时间改变的有理数 $0<\lambda<1$。取第20节的 $\alpha,\beta,T_a$，定义
+
+$$
+T_a^\lambda=\lambda T_a,\qquad
+F_\lambda(w)=\alpha T_{a_1}^\lambda\cdots T_{a_n}^\lambda\beta
+\quad(w=a_1\cdots a_n),
+\qquad
+J_\lambda(w)=\mathbf1_{\{F_\lambda(w)\ge1/2\}}.
+\tag{26.1}
+$$
+
+定义整数截止与截断响应
+
+$$
+h(\lambda)=\max\{k\in\mathbb N_0:\lambda^k\ge1/2\},\qquad
+J_h(w)=F(w)\mathbf1_{\{|w|\le h\}}\quad(h\in\mathbb N_0).
+\tag{26.2}
+$$
+
+$h(\lambda)$ 存在，因为 $\lambda^0=1$ 而 $\lambda^k\to0$。比较目标始终为 $F$。$F_\lambda$ 是三维齐次线性模型的域值读出，$J_\lambda$ 是其非线性终端阈值读出；另求 $J_h$ 的最小齐次线性维数时，要求直接以线性终端列输出 $J_h$ 的 $0,1$ 域值，采用第19节的另一输出合同。
+
+对任意响应 $f$，记 $f_u(v)=f(uv)$、$H_f(u,v)=f(uv)$。令 $\kappa(f)$ 为这些残余函数的不同取值数，即精确确定性终端响应所需的最小可达状态数；令 $\operatorname{rank}_{\mathbb Q}H_f$ 为残余的有理线性张成维数。确定性状态数、齐次线性维数与有理系数的表示精度分别计量；参数 $\lambda$ 的分子分母不计作额外线性坐标。
+

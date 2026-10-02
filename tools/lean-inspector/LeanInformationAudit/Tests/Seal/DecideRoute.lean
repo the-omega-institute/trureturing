@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -25,17 +28,17 @@ def testRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem target
+test_assess in information_theorem target
   in arena
   primitives testRealization
   : arena.Law testRealization := by trivial
 
-expect_information_occurrence target
+test_assess in expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.Seal.DecideRoute"
 
 /-- info: information seal: arena=LeanInformationAudit.Tests.Seal.DecideRoute.arena theorem=LeanInformationAudit.Tests.Seal.DecideRoute.target unique=2 method=decide -/
 #guard_msgs (info) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.Seal.DecideRoute

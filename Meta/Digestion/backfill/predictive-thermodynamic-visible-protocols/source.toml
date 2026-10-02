@@ -1,0 +1,5 @@
+source_id = "predictive-thermodynamic-visible-protocols"
+path = "docs/develop/theory/PREDICTIVE_THERMODYNAMIC_VISIBLE_PROTOCOLS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

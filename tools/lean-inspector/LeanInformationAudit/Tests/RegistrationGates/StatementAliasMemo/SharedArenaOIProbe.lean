@@ -1,7 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedArenaFiniteTemplates
 import D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -12,9 +14,9 @@ open D5.S3.ConceptDynamics.InformationEscapeArenas
 open LeanInformationAudit.Tests.RegistrationGates.StatementAliasMemo.SharedArenaFiniteTemplates LeanInformationAudit
 open Lean Meta Elab Command
 
-register_information_template interventionFiniteRealization constructors 1
+test_assess in register_information_template interventionFiniteRealization constructors 1
   [D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM]
-register_information_template observationFiniteRealization constructors 1
+test_assess in register_information_template observationFiniteRealization constructors 1
   [D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.CausalDirection,
    D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM]
 
@@ -112,7 +114,7 @@ private theorem intervention_slot_sensitive : FiniteSlotSensitivity intervention
 private theorem intervention_bridge : LegacyPrimitiveRealization interventionArena
     (∃ M N : DeterministicBoolSCM, Int M = Int N ∧ CF M ≠ CF N) interventionRealization :=
   ⟨SharedArenaPeers.intervention_bridge.equivalence.trans intervention_equiv⟩
-register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
+test_assess in register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
   object_arena interventionObject catalog finiteProbe
   readout via (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M))
@@ -124,7 +126,7 @@ private theorem finer_bridge : LegacyPrimitiveRealization interventionArena
     ((∀ M N : DeterministicBoolSCM, CF M = CF N → Int M = Int N) ∧
       ∃ M N : DeterministicBoolSCM, Int M = Int N ∧ CF M ≠ CF N) interventionRealization :=
   ⟨SharedArenaPeers.finer_bridge.equivalence.trans intervention_equiv⟩
-register_information_theorem counterfactual_kernel_strictly_finer in interventionArena
+test_assess in register_information_theorem counterfactual_kernel_strictly_finer in interventionArena
   object_arena interventionObject catalog finiteProbe
   readout via (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M))
@@ -136,7 +138,7 @@ private theorem fiber_bridge : LegacyPrimitiveRealization interventionArena
     (∃ μ M N, M ∈ couplingFiber allSingleWorldMarginals μ ∧
       N ∈ couplingFiber allSingleWorldMarginals μ ∧ CF M ≠ CF N) interventionRealization :=
   ⟨SharedArenaPeers.fiber_bridge.equivalence.trans intervention_equiv⟩
-register_information_theorem boolean_counterfactual_varies_on_coupling_fiber in interventionArena
+test_assess in register_information_theorem boolean_counterfactual_varies_on_coupling_fiber in interventionArena
   object_arena interventionObject catalog finiteProbe
   readout via (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M))
@@ -148,7 +150,7 @@ private theorem not_identifiable_bridge : LegacyPrimitiveRealization interventio
     (¬ ∃ f : (Bool → BooleanMarginal) → (Bool → Bool → Bool → Bool),
       CF = f ∘ allSingleWorldMarginals) interventionRealization :=
   ⟨SharedArenaPeers.not_identifiable_bridge.equivalence.trans intervention_equiv⟩
-register_information_theorem boolean_counterfactual_not_identifiable in interventionArena
+test_assess in register_information_theorem boolean_counterfactual_not_identifiable in interventionArena
   object_arena interventionObject catalog finiteProbe
   readout via (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M))
@@ -161,7 +163,7 @@ private theorem target_bridge : LegacyPrimitiveRealization interventionArena
       ¬ Refines (canonicalTargetReadout counterfactualJoint) interventionMarginal)
     interventionRealization :=
   ⟨SharedArenaPeers.target_bridge.equivalence.trans intervention_equiv⟩
-register_information_theorem interventional_marginal_sufficient_but_counterfactual_joint_not in interventionArena
+test_assess in register_information_theorem interventional_marginal_sufficient_but_counterfactual_joint_not in interventionArena
   object_arena interventionObject catalog finiteProbe
   readout via (@interventionFiniteRealization DeterministicBoolSCM
     (fun M => icIntCode M) (fun M => icCFCode M))
@@ -211,7 +213,7 @@ private theorem observation_slot_sensitive : FiniteSlotSensitivity observationIn
 private theorem observation_bridge : LegacyPrimitiveRealization observationInterventionArena
     (∃ M N : DeterministicBoolSCM, Obs M = Obs N ∧ Int M ≠ Int N) observationRealization :=
   ⟨SharedArenaPeers.observation_bridge.equivalence.trans observation_equiv⟩
-register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
+test_assess in register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
   object_arena observationObject catalog finiteProbe
   readout via (@observationFiniteRealization DeterministicBoolSCM
     (fun M => oiObsCode M) (fun M => oiIntCode M))
@@ -226,7 +228,7 @@ private theorem profile_bridge : LegacyPrimitiveRealization observationIntervent
       {p : DeterministicBoolSCM × DeterministicBoolSCM | Setoid.ker Obs p.1 p.2})
     observationRealization :=
   ⟨SharedArenaPeers.profile_bridge.equivalence.trans observation_equiv⟩
-register_information_theorem intervention_kernel_strictly_finer_than_observation in observationInterventionArena
+test_assess in register_information_theorem intervention_kernel_strictly_finer_than_observation in observationInterventionArena
   object_arena observationObject catalog finiteProbe
   readout via (@observationFiniteRealization DeterministicBoolSCM
     (fun M => oiObsCode M) (fun M => oiIntCode M))

@@ -1,0 +1,31 @@
+**定理 29.1（扩大群的唯一正规形与产品）。** 在 signed lattice $\mathbb Z^2$ 上允许 $M,J,T_\alpha,T_\beta$ 及其逆，其中
+
+$$
+\alpha=(1,0),\quad\beta=(0,1),\quad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\quad C=MJ.
+$$
+
+群 $G=\langle M,J,T_\alpha,T_\beta\rangle$ 的每个元素唯一为
+
+$$
+g_{\epsilon,k,\delta,t}(x)=(-1)^\epsilon M^kJ^\delta x+t,
+\quad \epsilon,\delta\in\{0,1\},\ k\in\mathbb Z,\ t\in\mathbb Z^2.
+\tag{29.1}
+$$
+
+以右项先做的函数复合为产品，$g=(\epsilon,k,\delta,t)$、$h=(\epsilon',k',\delta',u)$ 有
+
+$$
+\begin{aligned}
+\epsilon''&=\epsilon+\epsilon'+\delta k'\pmod2,\\
+k''&=k+(-1)^\delta k',\\
+\delta''&=\delta+\delta'\pmod2,\\
+t''&=t+(-1)^\epsilon M^kJ^\delta u.
+\end{aligned}
+\tag{29.2}
+$$
+
+证明。$M^{-1}=M-I$、$J^2=I$、$JMJ=-M^{-1}$、$(MJ)^2=-I$；故 $-I$ 已生成，且对所有正负整数 $r$，$JM^rJ=(-1)^rM^{-r}$。移全部 $J$ 到右端得到线性正规形及符号 $\delta k'$；由 $AT_uA^{-1}=T_{Au}$ 移全部平移到左端。反向所列因子都在生成群中，给存在性。$M^r=\pm I$ 由扩张特征值 $\phi^r$ 强迫 $r=0$、正号。$J\ne\pm M^r$，否则 $J$ 与 $M$ 交换，与 $JMJ=-M^{-1}$ 合起来强迫 $M^2=-I$，矛盾。两线性正规形相等，先排除不同 $\delta$，再消去同一 $J^\delta$ 得相同 $k,\epsilon$。零点读出给唯一 $t$。$\square$
+
+$J$ 是黄金共轭的整数线性作用；它的二阶不使它成为标准欧氏度量中的正交镜面反射。$C$ 则是该组成坐标的欧氏 quarter-turn。它们的 signed domains 与原 canonical 来源类型分别声明。
+

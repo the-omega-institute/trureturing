@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredObligations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredProofTypeObligations
 open Lean Meta Elab Command
@@ -13,7 +16,7 @@ theorem hiddenProof (n m : Nat) : hiddenBound n m := Nat.lt_succ_self m
 def template (n m : Nat) : PrimitiveRealization (cutSignature Bool (Fin (Nat.succ m))) :=
   cutRealization (fun _ : Bool => ⟨m, hiddenProof n m⟩)
 
-register_information_template template
+test_assess in register_information_template template
 
 def targetArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -28,9 +31,9 @@ def independentArena : PrimitiveLawArena where
 instance : DecidableEq targetArena.State := instDecidableEqBool
 instance : DecidableEq independentArena.State := instDecidableEqBool
 
-information_theorem target in targetArena primitives (template 0 1)
+test_assess in information_theorem target in targetArena primitives (template 0 1)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem independent in independentArena primitives (template 0 1)
+test_assess in information_theorem independent in independentArena primitives (template 0 1)
   : Nat.lt 2 (Nat.succ 2) := Nat.lt_succ_self 2
 
 run_meta do

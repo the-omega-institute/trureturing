@@ -1,0 +1,942 @@
+{
+  "scope": "Fixed-partition numerical/root relaxation; not an actual AP family, negative survivor mass, or counterexample to Erdos 7.",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "heights": [
+    5,
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    3
+  ],
+  "partition_A": [
+    5
+  ],
+  "mixed_labels": 2206,
+  "star_labels": 42,
+  "root_assignment_counts": {
+    "1": 197,
+    "2": 2009
+  },
+  "mixed_divisor_closure_edges": 6375,
+  "per_label_cr9_checks": 7550,
+  "pair_constraints": 55,
+  "root_pair_constraints": 110,
+  "square_constraints": 11,
+  "root_square_constraints": 22,
+  "pair_table": [
+    {
+      "pair": [
+        5,
+        7
+      ],
+      "count": 37,
+      "total_cap": 44,
+      "root_counts": [
+        24,
+        13
+      ],
+      "root_cap": 27
+    },
+    {
+      "pair": [
+        5,
+        11
+      ],
+      "count": 44,
+      "total_cap": 72,
+      "root_counts": [
+        34,
+        10
+      ],
+      "root_cap": 43
+    },
+    {
+      "pair": [
+        5,
+        13
+      ],
+      "count": 41,
+      "total_cap": 86,
+      "root_counts": [
+        37,
+        4
+      ],
+      "root_cap": 51
+    },
+    {
+      "pair": [
+        5,
+        17
+      ],
+      "count": 45,
+      "total_cap": 114,
+      "root_counts": [
+        41,
+        4
+      ],
+      "root_cap": 67
+    },
+    {
+      "pair": [
+        5,
+        19
+      ],
+      "count": 48,
+      "total_cap": 128,
+      "root_counts": [
+        46,
+        2
+      ],
+      "root_cap": 75
+    },
+    {
+      "pair": [
+        5,
+        23
+      ],
+      "count": 49,
+      "total_cap": 156,
+      "root_counts": [
+        47,
+        2
+      ],
+      "root_cap": 91
+    },
+    {
+      "pair": [
+        5,
+        29
+      ],
+      "count": 40,
+      "total_cap": 198,
+      "root_counts": [
+        39,
+        1
+      ],
+      "root_cap": 115
+    },
+    {
+      "pair": [
+        5,
+        31
+      ],
+      "count": 39,
+      "total_cap": 212,
+      "root_counts": [
+        39,
+        0
+      ],
+      "root_cap": 123
+    },
+    {
+      "pair": [
+        5,
+        37
+      ],
+      "count": 33,
+      "total_cap": 254,
+      "root_counts": [
+        32,
+        1
+      ],
+      "root_cap": 147
+    },
+    {
+      "pair": [
+        5,
+        41
+      ],
+      "count": 32,
+      "total_cap": 282,
+      "root_counts": [
+        32,
+        0
+      ],
+      "root_cap": 163
+    },
+    {
+      "pair": [
+        7,
+        11
+      ],
+      "count": 65,
+      "total_cap": 114,
+      "root_counts": [
+        0,
+        65
+      ],
+      "root_cap": 65
+    },
+    {
+      "pair": [
+        7,
+        13
+      ],
+      "count": 76,
+      "total_cap": 136,
+      "root_counts": [
+        4,
+        72
+      ],
+      "root_cap": 77
+    },
+    {
+      "pair": [
+        7,
+        17
+      ],
+      "count": 73,
+      "total_cap": 180,
+      "root_counts": [
+        2,
+        71
+      ],
+      "root_cap": 101
+    },
+    {
+      "pair": [
+        7,
+        19
+      ],
+      "count": 72,
+      "total_cap": 202,
+      "root_counts": [
+        3,
+        69
+      ],
+      "root_cap": 113
+    },
+    {
+      "pair": [
+        7,
+        23
+      ],
+      "count": 70,
+      "total_cap": 246,
+      "root_counts": [
+        3,
+        67
+      ],
+      "root_cap": 137
+    },
+    {
+      "pair": [
+        7,
+        29
+      ],
+      "count": 65,
+      "total_cap": 312,
+      "root_counts": [
+        2,
+        63
+      ],
+      "root_cap": 173
+    },
+    {
+      "pair": [
+        7,
+        31
+      ],
+      "count": 65,
+      "total_cap": 334,
+      "root_counts": [
+        2,
+        63
+      ],
+      "root_cap": 185
+    },
+    {
+      "pair": [
+        7,
+        37
+      ],
+      "count": 62,
+      "total_cap": 400,
+      "root_counts": [
+        1,
+        61
+      ],
+      "root_cap": 221
+    },
+    {
+      "pair": [
+        7,
+        41
+      ],
+      "count": 60,
+      "total_cap": 444,
+      "root_counts": [
+        1,
+        59
+      ],
+      "root_cap": 245
+    },
+    {
+      "pair": [
+        11,
+        13
+      ],
+      "count": 120,
+      "total_cap": 236,
+      "root_counts": [
+        8,
+        112
+      ],
+      "root_cap": 129
+    },
+    {
+      "pair": [
+        11,
+        17
+      ],
+      "count": 140,
+      "total_cap": 312,
+      "root_counts": [
+        7,
+        133
+      ],
+      "root_cap": 169
+    },
+    {
+      "pair": [
+        11,
+        19
+      ],
+      "count": 146,
+      "total_cap": 350,
+      "root_counts": [
+        7,
+        139
+      ],
+      "root_cap": 189
+    },
+    {
+      "pair": [
+        11,
+        23
+      ],
+      "count": 151,
+      "total_cap": 426,
+      "root_counts": [
+        4,
+        147
+      ],
+      "root_cap": 229
+    },
+    {
+      "pair": [
+        11,
+        29
+      ],
+      "count": 148,
+      "total_cap": 540,
+      "root_counts": [
+        3,
+        145
+      ],
+      "root_cap": 289
+    },
+    {
+      "pair": [
+        11,
+        31
+      ],
+      "count": 146,
+      "total_cap": 578,
+      "root_counts": [
+        3,
+        143
+      ],
+      "root_cap": 309
+    },
+    {
+      "pair": [
+        11,
+        37
+      ],
+      "count": 130,
+      "total_cap": 692,
+      "root_counts": [
+        2,
+        128
+      ],
+      "root_cap": 369
+    },
+    {
+      "pair": [
+        11,
+        41
+      ],
+      "count": 119,
+      "total_cap": 768,
+      "root_counts": [
+        1,
+        118
+      ],
+      "root_cap": 409
+    },
+    {
+      "pair": [
+        13,
+        17
+      ],
+      "count": 151,
+      "total_cap": 378,
+      "root_counts": [
+        8,
+        143
+      ],
+      "root_cap": 203
+    },
+    {
+      "pair": [
+        13,
+        19
+      ],
+      "count": 162,
+      "total_cap": 424,
+      "root_counts": [
+        6,
+        156
+      ],
+      "root_cap": 227
+    },
+    {
+      "pair": [
+        13,
+        23
+      ],
+      "count": 181,
+      "total_cap": 516,
+      "root_counts": [
+        4,
+        177
+      ],
+      "root_cap": 275
+    },
+    {
+      "pair": [
+        13,
+        29
+      ],
+      "count": 168,
+      "total_cap": 654,
+      "root_counts": [
+        4,
+        164
+      ],
+      "root_cap": 347
+    },
+    {
+      "pair": [
+        13,
+        31
+      ],
+      "count": 166,
+      "total_cap": 700,
+      "root_counts": [
+        3,
+        163
+      ],
+      "root_cap": 371
+    },
+    {
+      "pair": [
+        13,
+        37
+      ],
+      "count": 155,
+      "total_cap": 838,
+      "root_counts": [
+        1,
+        154
+      ],
+      "root_cap": 443
+    },
+    {
+      "pair": [
+        13,
+        41
+      ],
+      "count": 146,
+      "total_cap": 930,
+      "root_counts": [
+        1,
+        145
+      ],
+      "root_cap": 491
+    },
+    {
+      "pair": [
+        17,
+        19
+      ],
+      "count": 206,
+      "total_cap": 572,
+      "root_counts": [
+        10,
+        196
+      ],
+      "root_cap": 303
+    },
+    {
+      "pair": [
+        17,
+        23
+      ],
+      "count": 198,
+      "total_cap": 696,
+      "root_counts": [
+        8,
+        190
+      ],
+      "root_cap": 367
+    },
+    {
+      "pair": [
+        17,
+        29
+      ],
+      "count": 189,
+      "total_cap": 882,
+      "root_counts": [
+        5,
+        184
+      ],
+      "root_cap": 463
+    },
+    {
+      "pair": [
+        17,
+        31
+      ],
+      "count": 188,
+      "total_cap": 944,
+      "root_counts": [
+        4,
+        184
+      ],
+      "root_cap": 495
+    },
+    {
+      "pair": [
+        17,
+        37
+      ],
+      "count": 182,
+      "total_cap": 1130,
+      "root_counts": [
+        3,
+        179
+      ],
+      "root_cap": 591
+    },
+    {
+      "pair": [
+        17,
+        41
+      ],
+      "count": 175,
+      "total_cap": 1254,
+      "root_counts": [
+        3,
+        172
+      ],
+      "root_cap": 655
+    },
+    {
+      "pair": [
+        19,
+        23
+      ],
+      "count": 211,
+      "total_cap": 786,
+      "root_counts": [
+        10,
+        201
+      ],
+      "root_cap": 413
+    },
+    {
+      "pair": [
+        19,
+        29
+      ],
+      "count": 192,
+      "total_cap": 996,
+      "root_counts": [
+        6,
+        186
+      ],
+      "root_cap": 521
+    },
+    {
+      "pair": [
+        19,
+        31
+      ],
+      "count": 190,
+      "total_cap": 1066,
+      "root_counts": [
+        6,
+        184
+      ],
+      "root_cap": 557
+    },
+    {
+      "pair": [
+        19,
+        37
+      ],
+      "count": 181,
+      "total_cap": 1276,
+      "root_counts": [
+        4,
+        177
+      ],
+      "root_cap": 665
+    },
+    {
+      "pair": [
+        19,
+        41
+      ],
+      "count": 173,
+      "total_cap": 1416,
+      "root_counts": [
+        4,
+        169
+      ],
+      "root_cap": 737
+    },
+    {
+      "pair": [
+        23,
+        29
+      ],
+      "count": 211,
+      "total_cap": 1224,
+      "root_counts": [
+        8,
+        203
+      ],
+      "root_cap": 637
+    },
+    {
+      "pair": [
+        23,
+        31
+      ],
+      "count": 211,
+      "total_cap": 1310,
+      "root_counts": [
+        8,
+        203
+      ],
+      "root_cap": 681
+    },
+    {
+      "pair": [
+        23,
+        37
+      ],
+      "count": 207,
+      "total_cap": 1568,
+      "root_counts": [
+        8,
+        199
+      ],
+      "root_cap": 813
+    },
+    {
+      "pair": [
+        23,
+        41
+      ],
+      "count": 201,
+      "total_cap": 1740,
+      "root_counts": [
+        7,
+        194
+      ],
+      "root_cap": 901
+    },
+    {
+      "pair": [
+        29,
+        31
+      ],
+      "count": 239,
+      "total_cap": 1676,
+      "root_counts": [
+        8,
+        231
+      ],
+      "root_cap": 867
+    },
+    {
+      "pair": [
+        29,
+        37
+      ],
+      "count": 230,
+      "total_cap": 2006,
+      "root_counts": [
+        6,
+        224
+      ],
+      "root_cap": 1035
+    },
+    {
+      "pair": [
+        29,
+        41
+      ],
+      "count": 222,
+      "total_cap": 2226,
+      "root_counts": [
+        6,
+        216
+      ],
+      "root_cap": 1147
+    },
+    {
+      "pair": [
+        31,
+        37
+      ],
+      "count": 233,
+      "total_cap": 2152,
+      "root_counts": [
+        7,
+        226
+      ],
+      "root_cap": 1109
+    },
+    {
+      "pair": [
+        31,
+        41
+      ],
+      "count": 228,
+      "total_cap": 2388,
+      "root_counts": [
+        6,
+        222
+      ],
+      "root_cap": 1229
+    },
+    {
+      "pair": [
+        37,
+        41
+      ],
+      "count": 238,
+      "total_cap": 2874,
+      "root_counts": [
+        6,
+        232
+      ],
+      "root_cap": 1475
+    }
+  ],
+  "square_table": [
+    {
+      "prime": 5,
+      "mixed": 36,
+      "stars": 4,
+      "total": 40,
+      "total_cap": 67,
+      "root_counts": [
+        38,
+        2
+      ],
+      "root_cap": 38
+    },
+    {
+      "prime": 7,
+      "mixed": 85,
+      "stars": 4,
+      "total": 89,
+      "total_cap": 151,
+      "root_counts": [
+        7,
+        82
+      ],
+      "root_cap": 82
+    },
+    {
+      "prime": 11,
+      "mixed": 225,
+      "stars": 3,
+      "total": 228,
+      "total_cap": 415,
+      "root_counts": [
+        10,
+        218
+      ],
+      "root_cap": 218
+    },
+    {
+      "prime": 13,
+      "mixed": 233,
+      "stars": 3,
+      "total": 236,
+      "total_cap": 595,
+      "root_counts": [
+        10,
+        226
+      ],
+      "root_cap": 310
+    },
+    {
+      "prime": 17,
+      "mixed": 236,
+      "stars": 3,
+      "total": 239,
+      "total_cap": 1051,
+      "root_counts": [
+        10,
+        229
+      ],
+      "root_cap": 542
+    },
+    {
+      "prime": 19,
+      "mixed": 225,
+      "stars": 3,
+      "total": 228,
+      "total_cap": 1327,
+      "root_counts": [
+        10,
+        218
+      ],
+      "root_cap": 682
+    },
+    {
+      "prime": 23,
+      "mixed": 231,
+      "stars": 3,
+      "total": 234,
+      "total_cap": 1975,
+      "root_counts": [
+        9,
+        225
+      ],
+      "root_cap": 1010
+    },
+    {
+      "prime": 29,
+      "mixed": 226,
+      "stars": 2,
+      "total": 228,
+      "total_cap": 3187,
+      "root_counts": [
+        8,
+        220
+      ],
+      "root_cap": 1622
+    },
+    {
+      "prime": 31,
+      "mixed": 227,
+      "stars": 2,
+      "total": 229,
+      "total_cap": 3655,
+      "root_counts": [
+        7,
+        222
+      ],
+      "root_cap": 1858
+    },
+    {
+      "prime": 37,
+      "mixed": 225,
+      "stars": 2,
+      "total": 227,
+      "total_cap": 5251,
+      "root_counts": [
+        6,
+        221
+      ],
+      "root_cap": 2662
+    },
+    {
+      "prime": 41,
+      "mixed": 219,
+      "stars": 2,
+      "total": 221,
+      "total_cap": 6475,
+      "root_counts": [
+        6,
+        215
+      ],
+      "root_cap": 3278
+    }
+  ],
+  "source_caps": {
+    "5": "3125/2344",
+    "7": "16807/14006",
+    "11": "14641/13177",
+    "13": "28561/26181",
+    "17": "83521/78301",
+    "19": "130321/123081",
+    "23": "279841/267121",
+    "29": "24389/23518",
+    "31": "29791/28798",
+    "37": "50653/49246",
+    "41": "68921/67198"
+  },
+  "coordinate_budgets": {
+    "5": "781/2344",
+    "7": "2801/14006",
+    "11": "1464/13177",
+    "13": "2380/26181",
+    "17": "5220/78301",
+    "19": "7240/123081",
+    "23": "12720/267121",
+    "29": "871/23518",
+    "31": "993/28798",
+    "37": "1407/49246",
+    "41": "1723/67198"
+  },
+  "carrier_by_root": {
+    "1": "1563/2344",
+    "2": "34131540122345475220885010904351679329375/71709580339664539335109068655487743718368"
+  },
+  "free_charge_by_root": {
+    "1": "2997582507490764544372269304715762233498576991/6240239390737947877480526263469198946116101728",
+    "2": "71111210362071071313511385990037269597592178025/220026218517871347383757814919358422100093660928"
+  },
+  "selected_charge_by_root": {
+    "1": "169099488885814387070713066737299708582616301531/777949844045330835392572274179160135282474015424",
+    "2": "163526494796779848139882790095591020531607989391/859839301313260397012843039882229623206944964416"
+  },
+  "endpoints": [
+    "-2444519676814433363956816847225730467844697552141/65347786899807790172976071031049451363727817295616",
+    "-72162746503120377618045653270269169361504131683/2333849532135992506177716822537480405847422046272"
+  ],
+  "endpoint_decimals": [
+    -0.037407841838047365,
+    -0.030920050975640826
+  ],
+  "strict_upper_threshold": "-1/100"
+}

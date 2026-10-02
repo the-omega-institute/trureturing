@@ -1,0 +1,10 @@
+固定任意概率测度 $\nu$ 于 $R(G)$ 后，满足
+$$
+\delta_*\mu=\nu
+$$
+的顶点概率测度 $\mu$ 与族
+$$
+(q_y)_{y\in S_\nu},\qquad
+q_y\in\operatorname{Prob}(\mathbb F_2^{c(G)}),
+$$
+一一对应。

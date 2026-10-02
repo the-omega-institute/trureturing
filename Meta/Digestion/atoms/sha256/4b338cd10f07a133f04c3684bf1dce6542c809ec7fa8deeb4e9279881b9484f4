@@ -1,0 +1,16 @@
+**定理 4.4（Continuous row geometry）。** For every positive natural $n$ and every pairwise nondecreasing natural width list $w$, there exist natural $x,y$ forming a placement frontier that are a physical row optimum when regarded as real coordinates, and for all real $t,z$,
+
+$$
+\mathcal W_{P_n(w)}(t,z)\ \Longleftrightarrow\
+\mathcal W_w(t,z)\ \lor\ (t,z)\in\mathcal B_n(x,y).
+$$
+
+证明。The cell and real slices satisfy
+
+$$
+\mathcal W_w(t,z)\ \Longleftrightarrow\
+0\le t\ \land\ 0\le z\ \land\ O_w(\lfloor t\rfloor,\lfloor z\rfloor).
+$$
+
+At natural endpoints, the same floor identities characterize rectangle membership. A legal real competitor has integer height $q$, by its floor-or-upper-face support condition. Nonoverlap forces $r_w(q)\le x'$, since otherwise the point $(x',q)$ belongs to both the competitor and the old wall. Support implies $x'+n\le r_w(q-1)$ when $q>0$: a contrary inequality supplies a point in the proposed bottom interval beyond the supporting row. Thus $(r_w(q),q)$ is a legal cell frontier with endpoint no greater than $x'$. Theorem 4.2 gives the required ordering against it and hence against every real competitor. Its natural chosen position is physically legal by the floor-slice identities and integer support. Those identities also transport the exact cell update to the displayed real union. $\square$
+

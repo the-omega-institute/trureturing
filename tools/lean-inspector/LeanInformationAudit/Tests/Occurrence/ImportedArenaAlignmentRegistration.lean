@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaAlignmentSource
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -15,10 +18,10 @@ theorem bridge : LegacyPrimitiveRealization lawArena True fixtureRealization whe
 
 /-- error: IE-C003 ArenaSourceUnsupported arena=QualityPure.defaultUse owner=QualityPure.defaultUse -/
 #guard_msgs (error) in
-register_information_theorem defaultFact
+test_assess in register_information_theorem defaultFact
   in lawArena object_arena QualityPure.defaultUse catalog defaultCopy
   primitives fixtureRealization.toPrimitiveBundle realization bridge
-register_information_theorem contextFact
+test_assess in register_information_theorem contextFact
   in lawArena object_arena QualityContext.drift catalog contextCopy
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 
@@ -137,12 +140,12 @@ theorem copyFact : True := trivial
 theorem bridge : LegacyPrimitiveRealization lawArena True fixtureRealization := ⟨Iff.rfl⟩
 /-- error: IE-C003 ArenaSourceUnsupported arena=QualityGrouped.shifted owner=QualityGrouped.shifted -/
 #guard_msgs (error) in
-register_information_theorem aliasFact
+test_assess in register_information_theorem aliasFact
   in lawArena object_arena QualityGrouped.shifted catalog groupedAlias
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 /-- error: IE-C003 ArenaSourceUnsupported arena=QualityGrouped.shiftedCopy owner=QualityGrouped.shiftedCopy -/
 #guard_msgs (error) in
-register_information_theorem copyFact
+test_assess in register_information_theorem copyFact
   in lawArena object_arena QualityGrouped.shiftedCopy catalog groupedCopy
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 end QualityGroupedRegistration
@@ -206,13 +209,13 @@ theorem bridge : LegacyPrimitiveRealization lawArena True fixtureRealization := 
 
 /-- error: IE-C003 ArenaSourceUnsupported arena=ArchitectureNamed.liveUse owner=ArchitectureNamed.liveUse -/
 #guard_msgs (error) in
-register_information_theorem liveFact
+test_assess in register_information_theorem liveFact
   in lawArena object_arena ArchitectureNamed.liveUse catalog namedLive
   primitives fixtureRealization.toPrimitiveBundle realization bridge
-register_information_theorem deadFact
+test_assess in register_information_theorem deadFact
   in lawArena object_arena ArchitectureNamed.deadUse catalog namedDead
   primitives fixtureRealization.toPrimitiveBundle realization bridge
-register_information_theorem explicitFact
+test_assess in register_information_theorem explicitFact
   in lawArena object_arena ArchitectureNamed.explicitUse catalog namedExplicit
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 

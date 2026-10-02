@@ -1,0 +1,52 @@
+**定理 200.5（固定窗口、缓慢增长范数的 Robin 族）。** 固定满足 $\delta_k<1/2$ 的上述 $k$、$0<\eta<1$ 与 $C>0$。对全部满足式（200.1）、（200.7）的实际 $U=V_j$，一致于整数 $1\le g\le CU$，有
+
+$$
+e^\gamma\log\log(gU)-Z(gU)
+\ge e^\gamma\bigl(\log2-H(\delta_k)\bigr)
+-O_{k,\eta,C}\!\left(\frac1{\log\log U}\right).
+\tag{200.9}
+$$
+
+其中 $U$ 超过一个只依赖 $k,\eta,C$ 的有效阈值；特别是所有这些整数最终严格满足 Robin 不等式。该阈值不是对无限多个固定种子阈值取最大值。
+
+证明。引理200.2给实际素支撑包含关系；引理200.4在 §194 的全部固定倍数窗口内同时给
+
+$$
+\vartheta_S(x)=\delta_kx+O(x\mathcal E(L)),\qquad
+\vartheta_T(x)=(1-\delta_k)x+O(x\mathcal E(L)),
+$$
+
+其中 $\mathcal E(L)\ll\exp[-c(\log L)^\nu]+(\log L)^\eta/L$。通常有效素数定理的误差也可并入此式。
+
+因而引理194.2的分部求和现在一致给
+
+$$
+\log\frac{P_S(aL)}{P_S(L)}
+=\frac{\delta_k\log a}{\log L}
++O\!\left(\frac1{(\log L)^2}+
+\frac{\mathcal E(L)}{\log L}\right)
+$$
+
+对所有所需固定倍数 $a$ 成立。Axler 包络与有效素数定理同时给 $P(L)/e^\gamma\le\log L+O(1/(\log L)^2)$。
+
+将这些带速率的界代入引理194.3的两个共同预算，指数展开后的加性误差为
+
+$$
+O\!\left(\frac1{\log L}+\mathcal E(L)\right)
+=O\!\left(\frac1{\log L}\right).
+$$
+
+对于 $\varepsilon\le\log g/L\le1$，同一函数 $f_{\delta_k}$ 在一处取最小值 $\log2-H(\delta_k)$。对于 $0\le\log g\le\varepsilon L$，预先固定 $\varepsilon$，采用定理194.4的独立放宽预算分支，取得相同下界。$g\le CU$ 的额外常数仍只使预算相差 $O(1/L)$。所有误差均由固定参数及式（200.7）控制，故一致得到式（200.9）。$\square$
+
+例如可明确固定
+
+$$
+k=105=3\cdot5\cdot7,
+\qquad \delta_k=\frac{48}{105}=\frac{16}{35}<\frac12.
+\tag{200.10}
+$$
+
+此时 $m=48$、$[\mathcal L:\mathbb Q]=5040$。这个域次数来自 $105\varphi(105)$，不与 Robin 的整数阈值建立额外关系。三与七在 $K$ 中惰性，五是唯一分歧素数；本原性使这三处不可能承载非零 $e$，故式（200.1）中的 $p_0\nmid105$ 自动成立，只需另核 $\gcd(e,105)=1$。例如原种子 $(16,29)$ 的十一上方赋值 $e=\pm2$ 满足此条件。
+
+本节给出增长规则和有效误差率，但没有计算其数值阈值，不把渐近结论当成当前数值范围的快速测试。
+

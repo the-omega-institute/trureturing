@@ -1,0 +1,4 @@
+## 36. 有限 legal-prefix AF 层的正边界与实际分支合同
+
+§33 的嵌入保留 observables，§35 的定理保留 states 和 conditional continuations。两者在这里通过普通迹对偶连接，而不是凭相同维数识别两个来源。这里的“细层”是合法窗口长度 $L+1$；它不等于定义 1.1 digits 分解中的高层 $H$。
+

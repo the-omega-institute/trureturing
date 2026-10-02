@@ -1,0 +1,21 @@
+**命题 16.4（CRT 中的真实向量周期与共同指数）。** 写 $e=\prod_i e_i$ 为两两互素素数幂，固定一个实际全局标签 $v$，其分量为 $v_i$。令
+
+$$
+s_i=|\langle g_i\rangle v_i|,
+\qquad K_i(\varepsilon)=
+\{k\bmod s_i:j_iv_i=\varepsilon g_i^kv_i\},
+\quad\varepsilon\in\{1,-1\}.
+$$
+
+每个 $K_i(\varepsilon)$ 或为空，或为单个剩余类 $k_i(\varepsilon)$。于是 $jv\in N_ev$ 当且仅当存在同一个 $\varepsilon$，使全部 $K_i(\varepsilon)$ 非空且
+
+$$
+k_i(\varepsilon)\equiv k_j(\varepsilon)
+\pmod{\gcd(s_i,s_j)}\quad\text{对所有 }i,j.
+\tag{16.4}
+$$
+
+证明。两个指数作用在同一 $v_i$ 上结果相同，恰当其差为该向量返回周期 $s_i$ 的倍数，故局部解至多一个剩余类。先固定共同符号 $\varepsilon$，广义 CRT 说明这些指数同余有一个共同整数解 $k$ 恰当 (16.4)；其解给实际全局元素 $\varepsilon g^k$，反向亦然。零分量有 $s_i=1$，不添约束。
+
+系数 CRT 将 $R_e$ 识别为 $\prod_iR_{e_i}$，任意一组局部向量均给唯一全局向量；群元素却只能取同一 $\varepsilon,k$ 的 $(\varepsilon z_i^k)_i$。因此 $S(f)$ 也要求同一个全局元素同时满足全部局部固定式，不能分别优化局部轨道后拼接最大值。不同符号—指数参数可能表示同一个群元素；稳定子计数按群元素进行，尤其在 $-I\in\langle g\rangle$ 或 $e=2$ 时不能重复计数。矩阵周期仅在向量确有满周期时可代替这里的 $s_i$。$\square$
+

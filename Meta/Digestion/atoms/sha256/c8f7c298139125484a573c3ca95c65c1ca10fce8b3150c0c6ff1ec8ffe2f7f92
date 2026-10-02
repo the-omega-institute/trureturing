@@ -1,0 +1,24 @@
+**定义 7.2（统一 Fourier 符号与条件矩阵）。** 令 $\widehat H=(\mathbb Z/e\mathbb Z)^2$ 为有限群 $H$ 的对偶标签集，$\omega=\exp(2\pi i/e)$。始终采用
+
+$$
+|p\rangle=\frac1e\sum_{h\in H}\omega^{-p\cdot h}|h\rangle,
+\qquad p\in\widehat H.
+$$
+
+这里的 $p$ 是代数特征标标签，不附加物理动量解释。此约定给出
+
+$$
+T_v|p\rangle=\omega^{p\cdot v}|p\rangle,\qquad
+U_e|p\rangle=|g(p)\rangle,\qquad
+g(p)=M^{-\mathsf T}p=(-p_0+p_1,p_0).
+$$
+
+对任意联合密度算子 $\rho$，定义未归一化的正低层矩阵
+
+$$
+\sigma_p=(I_A\otimes\langle p|)\rho(I_A\otimes|p\rangle),
+\qquad \sum_p\operatorname{Tr}\sigma_p=1.
+$$
+
+若 $w_p=\operatorname{Tr}\sigma_p>0$，才定义该标签下条件态 $\sigma_p/w_p$。保留全部 $\sigma_p$ 同时保留权重与关联，而非只保留 $\sum_p\sigma_p$ 和 $\{w_p\}$。
+

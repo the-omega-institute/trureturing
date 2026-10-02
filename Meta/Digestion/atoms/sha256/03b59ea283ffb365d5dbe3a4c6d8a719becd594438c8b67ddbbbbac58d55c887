@@ -1,0 +1,8 @@
+# Finite transducers for the zero-leakage partition reduction
+
+This volume supplies word and machine obligations for Theorem 4.3 of
+[PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md](https://github.com/the-omega-institute/trureturing/blob/488e3fce13cd3f77e9051ae316dadc0da7f7a4fc/docs/develop/theory/PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md).
+The standing finite-dimensional, support and natural-logarithm conventions are
+its Sections 1.2 and 3.1-3.4. The current main-volume presentation is Section 6.4
+of SYMPLECTIC_PREDICTIVE_COMPLETION.md.
+

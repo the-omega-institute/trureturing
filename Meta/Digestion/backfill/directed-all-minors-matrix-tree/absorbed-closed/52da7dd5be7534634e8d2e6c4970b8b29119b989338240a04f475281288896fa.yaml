@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:52da7dd5be7534634e8d2e6c4970b8b29119b989338240a04f475281288896fa
+  normalized_sha256: sha256:52da7dd5be7534634e8d2e6c4970b8b29119b989338240a04f475281288896fa
+cas_ref: sha256:52da7dd5be7534634e8d2e6c4970b8b29119b989338240a04f475281288896fa
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree
+    target_statement_id: sha256:ea14bfff12d5f3659e9e07332e26a7578f7181d9ba42baa0a943795a47081119
+receipts:
+  unresolved_subitems: []

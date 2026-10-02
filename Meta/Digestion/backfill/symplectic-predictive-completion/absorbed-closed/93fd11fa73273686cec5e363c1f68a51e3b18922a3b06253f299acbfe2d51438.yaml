@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:93fd11fa73273686cec5e363c1f68a51e3b18922a3b06253f299acbfe2d51438
+  normalized_sha256: sha256:93fd11fa73273686cec5e363c1f68a51e3b18922a3b06253f299acbfe2d51438
+cas_ref: sha256:93fd11fa73273686cec5e363c1f68a51e3b18922a3b06253f299acbfe2d51438
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/SpectralNoiseAsymptotics.spectral_noise_asymptotics
+    target_statement_id: sha256:23a5579b866aa7763f1f42f6013743ddfa661a82e7e1d194497049d686ff9b61
+receipts:
+  unresolved_subitems: []

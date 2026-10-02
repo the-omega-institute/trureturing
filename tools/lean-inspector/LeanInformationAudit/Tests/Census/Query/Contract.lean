@@ -1,6 +1,9 @@
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.Tests.Census.Evidence
 import LeanInformationAudit.Tests.Census.Query.Registration
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 

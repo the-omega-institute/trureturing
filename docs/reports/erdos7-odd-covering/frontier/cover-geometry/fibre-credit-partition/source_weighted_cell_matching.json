@@ -1,0 +1,120 @@
+{
+  "base_independent_charge": "1032057001017028748534605437014375/72000930662194716486065016875595096",
+  "checks": 285,
+  "coefficients": [
+    {
+      "cofactor": 455,
+      "original_modulus": 1365,
+      "u": "3296873125/859523905584"
+    },
+    {
+      "cofactor": 665,
+      "original_modulus": 1995,
+      "u": "1470398125/577251015312"
+    },
+    {
+      "cofactor": 805,
+      "original_modulus": 2415,
+      "u": "18258104375/8769599525744"
+    },
+    {
+      "cofactor": 1015,
+      "original_modulus": 3045,
+      "u": "1262025625/772097445152"
+    },
+    {
+      "cofactor": 1085,
+      "original_modulus": 3255,
+      "u": "206014375/135062883296"
+    },
+    {
+      "cofactor": 1295,
+      "original_modulus": 3885,
+      "u": "2054355625/1616749331744"
+    },
+    {
+      "cofactor": 1435,
+      "original_modulus": 4305,
+      "u": "2522550625/2206114640672"
+    },
+    {
+      "cofactor": 5915,
+      "original_modulus": 17745,
+      "u": "253605625/859523905584"
+    }
+  ],
+  "contract": "Conditional fixed FC36 85-original source plus global-extremal JP phase capacity; no whole-cover or uniform-all-sources assertion",
+  "exact_valuations": {
+    "5": 1,
+    "7": 1
+  },
+  "fixed_shared_old35_phase": [
+    1,
+    1
+  ],
+  "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "matching_count": 229,
+  "maximum_matching_relaxation_charge": "1013038772182797823358790822227309/72000930662194716486065016875595096",
+  "necessary_deficit": "635674842953/2406595308643068",
+  "relaxed_equality_matching": [
+    [
+      4,
+      2
+    ]
+  ],
+  "root": 1,
+  "root_weight_factor": "Multiply all charge values by the same original lambda3(root1)=w",
+  "slot_majorant": [
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "2001/2401",
+    "469/625"
+  ],
+  "source_rows": {
+    "5": {
+      "period": 3125,
+      "pure_survivor_count": 2344,
+      "ratios": [
+        "0",
+        "469/625",
+        "0",
+        "469/625",
+        "1"
+      ],
+      "residual_first_root_counts": [
+        0,
+        469,
+        0,
+        469,
+        625
+      ]
+    },
+    "7": {
+      "period": 16807,
+      "pure_survivor_count": 14006,
+      "ratios": [
+        "0",
+        "2001/2401",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "residual_first_root_counts": [
+        0,
+        2001,
+        2401,
+        2401,
+        2401,
+        2401,
+        2401
+      ]
+    }
+  }
+}

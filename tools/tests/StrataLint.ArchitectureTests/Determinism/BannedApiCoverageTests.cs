@@ -1,4 +1,4 @@
-using StrataLint.EngineeringScope;
+using StrataLint.TestEvidence;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -41,7 +41,7 @@ public sealed class BannedApiCoverageTests
     }
 
     [Fact]
-    public void PreflightComparesEveryMarkedLineWithAnRs0030Diagnostic()
+    public void CompileProofComparesEveryMarkedLineWithAnRs0030Diagnostic()
     {
         var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
             "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"));

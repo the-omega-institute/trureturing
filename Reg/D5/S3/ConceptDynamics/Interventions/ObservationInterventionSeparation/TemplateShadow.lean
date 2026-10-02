@@ -1,5 +1,8 @@
 import Reg.Support.LegacyCausalMapping
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
 run_cmd LeanInformationAudit.RootCatalogs.declare {

@@ -45,3 +45,16 @@ Ying-Hsuan Lin, *Topological modularity of Monstrous Moonshine*, https://arxiv.o
 The manuscript derives the precise cubic reconstruction/stabilizer interface, ancestry-marker centralizer and group-average mixing, an eight-setting finite-pulse estimator with real-form cancellation of first-order bias, and local stability of a finite cubic stabilizer. The resulting scalar bound is 29645*sqrt(4620)*t^2 + (43752/25)*epsilon/t^3, giving an epsilon^(2/5) upper-bound rate. It assumes explicitly declared controls and normalized complex-trace measurements. It is neither a reported hardware experiment nor a dimension-free full-tensor protocol.
 
 Only finite exact coefficient/arithmetic checks and explicitly labelled toy permutation/cocycle models were executed. They do not instantiate actual Monster matrices, the full Griess tensor, a VOA, a conformal net or a Monster cohomology class. The general proofs remain ordinary mathematics; no new Lean/Scribe binding, independent review or global priority claim is supplied.
+
+## Verified locator
+
+- Published article and DOI declared above: https://doi.org/10.1073/pnas.78.2.689
+- Full 1982 construction DOI cited in the scope note: https://doi.org/10.1007/BF01389186
+- Griess--Lam paper: https://arxiv.org/pdf/1103.1414v2
+- Kawahigashi--Longo paper: https://arxiv.org/pdf/math/0407263v2
+- Abe--Lam--Yamada paper: https://arxiv.org/html/1705.09022v4
+- Matsuo paper and read copy: https://doi.org/10.1007/s00220-001-0565-3 and https://arxiv.org/pdf/math/0007169v1
+- Dong--Griess--Lam paper: https://arxiv.org/pdf/math/0506321v1
+- Zhu paper: https://doi.org/10.1090/S0894-0347-96-00182-8
+- Johnson--Freyd paper and correction: https://arxiv.org/html/1707.08388v3 and https://link.springer.com/content/pdf/10.1007/s00220-019-03636-9.pdf
+- Lin paper: https://arxiv.org/html/2207.14076v3

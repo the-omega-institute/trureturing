@@ -1,0 +1,9 @@
+**定义 1.4（Abstract event sequence）。** An event sequence $E$ consists of five functions $n,k,H,\beta,p:\mathbb N\to\mathbb N$, called endpoint, bin label, height, birth index and predecessor. Define a renewal at $t$ by $t\ne\beta(k_t)$, and put
+
+$$
+\mathcal R_E(i,t)=\{g\in\mathbb N:g<t,\ i<k_g,\ g\ne\beta(k_g)\},
+\qquad \rho_i(t)=|\mathcal R_E(i,t)|.
+$$
+
+The endpoint $n_t$ is distinct from the chronological event index $t$. A birth endpoint is $b_h=n_{\beta(h)}$.
+

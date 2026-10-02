@@ -1,0 +1,6 @@
+## 1. Source and conventions
+
+The reference is Amitai Zernik, *Taylor expansion proof of the matrix tree theorem — part II*, arXiv:1308.2160v1, Definitions 1 and 4, Theorem 2 and Lemma 5, pages 1–5. The forest identity and signs are literature-attested. The source uses real matrices in its Taylor-expansion proof. The integral-coefficient argument below explains the commutative-ring extension; it does not transfer the vanishing of real derivatives to positive characteristic. This exposition is reference input, not a kernel-verified assertion.
+
+Vertices are $V=\{0,\ldots,n-1\}$. All subsets and their complements are enumerated in increasing order. Changing the source's one-based vertex labels to these labels subtracts $2k$ from the root-sum exponent, so the sign is unchanged. An arrow $i\to j$ has weight $M_{ij}$. Rows indexed by $W$ and columns indexed by $U$ are deleted, not the other way around.
+

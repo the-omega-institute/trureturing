@@ -1,0 +1,8 @@
+**假设 10.4（指定的持续单激发子空间）。** 若要把某个有限模式空间解释为“一个持续存在的激发”，额外指定
+
+$$
+\mathcal H_{\mathrm{ext}}=\mathbb C|\mathrm{vac}\rangle\oplus\mathcal H_{\mathrm{exc}}
+$$
+
+和初始态支撑 $\operatorname{supp}\rho\subseteq\mathcal H_{\mathrm{exc}}$。所选运输酉、行走和修正轮在 $\mathcal H_{\mathrm{exc}}$ 上实现相应已声明的模型，并满足 $V\mathcal H_{\mathrm{exc}}=\mathcal H_{\mathrm{exc}}$；允许仪器的每个 Kraus 算子均满足 $K_{y\mu}\mathcal H_{\mathrm{exc}}\subseteq\mathcal H_{\mathrm{exc}}$。若接口同时保留高低层结构，$\mathcal H_{\mathrm{exc}}$ 还须附带定义 1.1 的张量识别，仪器须遵守所选的第 6、7、8 或 10.2 节合同。这些是额外的子空间和仪器假设，有限组成递推本身未指定它们；$\mathcal H_{\mathrm{exc}}$ 不与进位扇区 $\mathcal H_1$ 混同。
+

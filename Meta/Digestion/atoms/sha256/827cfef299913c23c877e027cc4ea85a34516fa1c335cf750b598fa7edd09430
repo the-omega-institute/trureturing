@@ -1,0 +1,23 @@
+### theorem 243.1 单个区间的归一预算传递
+
+设 $f:[4,\infty)\to\mathbb R$，$B,K,L\ge0$，且
+
+$$
+4\le a\le y\le4a,\qquad y-a\le L\sqrt a,
+\qquad w(a)f(a)\ge-K,
+$$
+
+以及
+
+$$
+|f(y)-f(a)|\le B\frac{y-a}{a\log a}.
+\tag{243.1}
+$$
+
+则
+
+$$
+w(y)f(y)\ge-4(K+BL).
+\tag{243.2}
+$$
+

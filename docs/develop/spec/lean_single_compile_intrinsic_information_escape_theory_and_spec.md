@@ -5554,7 +5554,8 @@ wrapper、cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 m
 
 两个不同的合法 occurrences 导出相同 catalog-qualified unit、realization、certificate 或
 其他 generated companion `Name`。同一 `(canonical arena declaration,theoremName)` 的重复
-登记不使用本码，而统一使用 IE-C002。
+登记不使用本码，而统一使用 IE-C002。IE-C025 由报告期评定发出；原生形式在记录时自行声明的
+unit 若其地址已被声明，由 Lean 自身的声明检查在记录时拒绝（`… has already been declared`）。
 
 ### IE-C026　MissingMaximalCatalog
 
@@ -8241,6 +8242,9 @@ closure 中出现至少两次时统一发 IE-C002，与 registration module、ro
 是不同 occurrence；其 generated qualified names 若碰撞则发 IE-C025。
 IE-C002 diagnostic 必须列出 `object_arena`、`theorem_name`、完整 canonical-sorted
 `registration_modules` 与 `count`，不得只报告最先遇到的一项。
+IE-C002 由报告期评定对既有 theorem 的重复登记发出。原生 `information_theorem` 形式在记录时
+自行声明其 theorem 与 unit；以该形式重新声明已存在的 theorem 名，由 Lean 自身的声明检查在
+记录时拒绝（`… has already been declared`），不产生 IE-C002。
 
 ### IE-C003　ArenaResolutionFailed
 

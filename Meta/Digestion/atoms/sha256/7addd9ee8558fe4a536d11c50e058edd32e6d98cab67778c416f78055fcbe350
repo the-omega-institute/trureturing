@@ -1,0 +1,65 @@
+### 定理 45：边界输运的菱形相容性与顺序曲率
+
+设 \(A\subseteq I\)，\(i,j\notin A\) 且 \(i\neq j\)。对任意 \(a\in X_i\)、\(b\in X_j\)，有
+
+$$
+\boxed{
+\tau_{A\cup\{i\},A\cup\{i,j\};b}^F
+\circ
+\tau_{A,A\cup\{i\};a}^F
+=
+\tau_{A\cup\{j\},A\cup\{i,j\};a}^F
+\circ
+\tau_{A,A\cup\{j\};b}^F.
+}
+$$
+
+两边都等于
+
+$$
+[s]_A\longmapsto[s\sqcup a\sqcup b]_{A\cup\{i,j\}}.
+$$
+
+但是中间容量 \(\kappa_{A\cup\{i\}}(F)\) 与 \(\kappa_{A\cup\{j\}}(F)\) 可以不同，因而不同读取顺序可以有不同峰值，即使终点边界空间完全相同。
+
+#### 证明
+
+对任意 \([s]_A\)，左侧给出
+
+$$
+\tau_{A\cup\{i\},A\cup\{i,j\};b}^F
+\bigl([s\sqcup a]_{A\cup\{i\}}\bigr)
+=[s\sqcup a\sqcup b]_{A\cup\{i,j\}}.
+$$
+
+右侧同样给出该类。两条复合映射相等。
+
+终点的输运复合相同只说明固定的 \((a,b)\) 产生相同终点类；容量是对所有中间赋值的输运像作并集后的基数。两条路径的中间像并可以不同，故中间容量和峰值不由菱形相容性决定。证毕。
+
+由此可以把一个读取顺序的局部数据写成输运剖面
+
+$$
+\mathsf P_F(\pi)
+=
+\left(
+\left\{
+\operatorname{im}\tau_{A_{k-1},A_k;a}^F:
+a\in X_{i_k}
+\right\}
+\right)_{k=1}^{n},
+$$
+
+其中 \(A_k\) 是顺序 \(\pi\) 的前缀。顺序宽度不是终点商的另一个名字，而是这些输运像并集在中间层的最大基数：
+
+$$
+W_F(\pi)
+=
+\max_k
+\left|
+\bigcup_{a\in X_{i_k}}
+\operatorname{im}\tau_{A_{k-1},A_k;a}^F
+\right|.
+$$
+
+这是定理 43.1 对固定顺序的逐层展开。所谓**顺序曲率**，就是同一终点切面在不同菱形路径中出现的中间输运像并大小差异；它不是新的状态类型，而是已有类型沿不同路径被暂时合并和重新展开的方式。
+

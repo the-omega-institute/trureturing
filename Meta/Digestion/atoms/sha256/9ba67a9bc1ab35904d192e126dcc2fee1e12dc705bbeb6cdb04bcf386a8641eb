@@ -1,0 +1,8 @@
+**定义 30.1（标签置换的酉表示）。** 独立声明 $C(a,b)=(-b,a)$ 在 $X_n=(\mathbb Z/n\mathbb Z)^2$ 上可用，$n\ge1$，并在 $\mathcal H_n=\mathbb C^{X_n}$ 上取
+
+$$
+U_C|x\rangle=|Cx\rangle.
+$$
+
+这是基标签置换的线性提升，$U_C^4=I$；不是给原数字标签逐个任意指定 $i^j$ 相位。
+

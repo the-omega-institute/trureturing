@@ -3,7 +3,7 @@
 # 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]...
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
 #       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
-#       → preflight(locale 熔断)→ builder commit → push → pr-open → 等 MERGED。
+#       → make gate → builder commit → push → pr-open → 等 MERGED。
 #       零 cover 对 = 纯 deposit 分支照落。
 set -x
 L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"; mkdir -p "$L/flights"
@@ -42,7 +42,7 @@ fi
 export LC_ALL=C LANG=C
 BASE=$(git rev-parse origin/dev)
 # 合 dev 若带进新 D5 模块,上一轮的 raw Lean 报告就缺它们;而门内 engineering-test
-# 先于 lean-reports,故 preflight/admission 会读陈旧报告并判
+# 先于 lean-reports,故 gate/admission 会读陈旧报告并判
 #   INFRASTRUCTURE_FAILURE Raw Lean report is missing modules: <新模块>
 # 实测(2026-08-30)该缺口让一条 lane 白烧一轮 CI(engineering 17m2s + admission 3m32s)。
 # 缓存命中时这步是秒级;未命中才重编,那正是它该做的事。
@@ -55,14 +55,8 @@ for pair in "${COVERS[@]}"; do
   echo "COVER_EXIT=$C atom=${A:17:8}"
   [ "$C" -eq 0 ] || { echo HALT_COVER_RED; exit 93; }
 done
-make preflight MODE=push BASE="$BASE" > "$L/flights/$TAG-preflight.log" 2>&1; P=$?; echo "PREFLIGHT_EXIT=$P"
-if [ "$P" -ne 0 ]; then
-  # 本机负载伪影豁免(#3670):该具名测试的 120s 子进程超时属机器性能型判词,CI 云端为权威
-  N=$(grep -E "\[FAIL\]" "$L/flights/$TAG-preflight.log" | grep -v LeanCachePublish | grep -cv "PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits" || true)
-  echo "NONLOCALE=$N"; [ "$N" -eq 0 ] || { echo HALT_REAL_RED; exit 94; }
-  R=$(grep -cE "^RULE_REJECTED" "$L/flights/$TAG-preflight.log" || true)
-  echo "RULE_REJECTED_LINES=$R"; [ "$R" -eq 0 ] || { echo HALT_ADMISSION_RED; exit 94; }
-fi
+make gate BASE="$BASE" > "$L/flights/$TAG-gate.log" 2>&1; P=$?; echo "GATE_EXIT=$P"
+[ "$P" -eq 0 ] || { echo HALT_GATE; exit 94; }
 git add -A || { echo HALT_LAND_STAGE; exit 98; }
 if git diff --cached --quiet; then
   echo LAND_COMMIT_SKIPPED reason=tree-unchanged

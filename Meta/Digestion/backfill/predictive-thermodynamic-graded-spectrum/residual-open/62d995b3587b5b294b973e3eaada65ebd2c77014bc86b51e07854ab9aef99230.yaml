@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:62d995b3587b5b294b973e3eaada65ebd2c77014bc86b51e07854ab9aef99230
+  normalized_sha256: sha256:62d995b3587b5b294b973e3eaada65ebd2c77014bc86b51e07854ab9aef99230
+cas_ref: sha256:62d995b3587b5b294b973e3eaada65ebd2c77014bc86b51e07854ab9aef99230
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Observer/Linear/GradedCongruenceSpectrum.graded_congruence_spectrum
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 67aac9695e2a581366e9163f7d5491e7b90a773bd3dbd09b0e49fa7add51575c
+      - code: chain-migration-incomplete
+        detail: b6083ad81849978965d716d1092b0114de181c81f02273b8b6686126647e0318
+  chain_atoms:
+    - b6083ad81849978965d716d1092b0114de181c81f02273b8b6686126647e0318
+    - 67aac9695e2a581366e9163f7d5491e7b90a773bd3dbd09b0e49fa7add51575c

@@ -540,7 +540,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
         StrataLint.TestSupport.RegPackageFixture.Write(root);
-        Git(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg");
+        Git(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg", "tools/lean-inspector-reg");
         Git(root, "commit", "-m", "fixture baseline");
     }
 

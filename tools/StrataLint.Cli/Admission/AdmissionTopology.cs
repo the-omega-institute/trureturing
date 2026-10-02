@@ -16,7 +16,7 @@ internal abstract record AdmissionTopologyOutcome
 
 internal static class AdmissionWorkflowTopology
 {
-    internal const string WorkflowPath = RepositoryPathPolicy.PrWorkflowPath;
+    internal const string WorkflowPath = ".github/workflows/ci-current.yml";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 

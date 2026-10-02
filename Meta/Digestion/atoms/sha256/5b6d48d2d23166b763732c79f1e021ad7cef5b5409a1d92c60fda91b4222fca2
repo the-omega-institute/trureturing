@@ -1,0 +1,14 @@
+**定理 2.1（No-reset coordinate budget）。** For every rest history $T$ and every $i,e,d,c\in\mathbb N$, if $0<i$, $c_i(s_e)=c$, and every $g$ with $e<g\le e+d$ has $k_g\ne i$, then there exists $r\in\mathbb N$ such that
+
+$$
+\begin{aligned}
+c_i(s_{e+d})&=r,\\
+r+|Q_T(i,e,d)|&=c,\\
+\ell(s_{e+d})&\le\ell(s_e)+|Q_T(i,e,d)|.
+\end{aligned}
+$$
+
+证明。Induct on $d$. At $d=0$, take $r=c$. For the next transition write $k=k_{e+d+1}$ and assume the induction hypothesis with remaining capacity $r$. The coordinate still exists by that hypothesis. The no-reset premise excludes $k=i$.
+
+If $i<k$, prefix positivity gives $r>0$, and prefix decrement leaves $r-1$. The new higher-event set has one additional member, so $(r-1)+(|Q_T(i,e,d)|+1)=c$. The new height is at most the old height plus one, because $k\le\ell(s_{e+d})+1$. This proves the height bound in this case. If $k<i$, the suffix is unchanged. Since $i\le\ell(s_{e+d})$, the selected label is within the old height, so the height is unchanged as well. The higher-event count is unchanged. These two cases give all three conclusions and maintain existence of the coordinate. $\square$
+

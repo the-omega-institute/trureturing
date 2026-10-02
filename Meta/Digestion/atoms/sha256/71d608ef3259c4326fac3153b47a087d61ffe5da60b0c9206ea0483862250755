@@ -1,0 +1,29 @@
+## 208. 有限正项高阶矩与单位位一来源的稀疏异常上界
+
+本节继续研究同一份实际来源族
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+gV.
+$$
+
+令实际区间端点为
+
+$$
+N_-=1+V\lceil V/10\rceil,\qquad
+N_+=1+V\lfloor V/5\rfloor.
+$$
+
+本节计数的集合是
+
+$$
+\mathcal E_r=
+\{g\in I_r:Z(N_g)\ge e^\gamma\log\log N_g\},
+\qquad Z(n)=\sigma(n)/n.
+$$
+
+这里的 $\ge$ 包括临界等号；没有假设该集合非空。只在 $N_g>5040$ 时，集合成员才是 Robin 严格不等式的反例。本节的渐近结论均取 $r\to\infty$，故最终自动处于该范围。
+
+解析输入为 [Weingartner 2010 作者稿](../../../Library/ArithSums/weingartner2010distribution.md) 的式（5）与 Lemma 5。以下先证明对每个有限 $X$、每个实数矩阶 $s>0$ 都成立的上界，再选择随 $X$ 增长的矩阶。这不使用把固定阈值的极限密度代入移动阈值的交换论证。新增连接为纸面推导，未新增 Lean 声明或编译。
+

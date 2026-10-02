@@ -1,0 +1,9 @@
+**定义 4.5（Actual labelled unions and support）。** For a position function $p:\mathbb N\to\mathbb N^2$, let
+
+$$
+\mathcal U_{p,N}(t,z)\ \Longleftrightarrow\
+\exists i\in\mathbb N,\ 0<i\le N\ \land\ (t,z)\in\mathcal B_i(p_i^x,p_i^y).
+$$
+
+A legal history placement of width $n$ at real $(x,y)$ after endpoint $N$ has $x,y\ge0$, its rectangle disjoint from $\mathcal U_{p,N}$, and either $y=0$ or every $t\in[x,x+n)$ lies on an earlier brick's half-open upper face: some $0<i\le N$ satisfies $p_i^y+1=y$ and $p_i^x\le t<p_i^x+i$. A history optimum is a legal history placement with $x\le x'$ and $y'\le y$ against every such real competitor. Closed bottom support requires either $y=0$ or, for every $t\in[x,x+n]$, an earlier $0<i\le N$ with $p_i^y+1=y$ and $p_i^x\le t\le p_i^x+i$. These conditions refer only to the labelled rectangles already present.
+

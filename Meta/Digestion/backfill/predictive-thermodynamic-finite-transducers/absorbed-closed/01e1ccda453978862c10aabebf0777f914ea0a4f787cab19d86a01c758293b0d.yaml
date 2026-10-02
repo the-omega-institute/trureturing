@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+  normalized_sha256: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+cas_ref: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/PhysicalProtocol/ClauseOracleProtocol.one_query_run
+    target_statement_id: sha256:93c08956a8ef7bcc73ab2942789cb3dc5d4eea7d29272a75d47a0bb1f1469fb7
+receipts:
+  unresolved_subitems: []

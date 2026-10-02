@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b6083ad81849978965d716d1092b0114de181c81f02273b8b6686126647e0318
+  normalized_sha256: sha256:b6083ad81849978965d716d1092b0114de181c81f02273b8b6686126647e0318
+cas_ref: sha256:b6083ad81849978965d716d1092b0114de181c81f02273b8b6686126647e0318
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GradedCongruenceSpectrum.graded_congruence_spectrum
+    target_statement_id: sha256:d673f1cb815534626e34a5cc293ce6b57eb2938422c74080c0a4cbf613884444
+receipts:
+  unresolved_subitems: []

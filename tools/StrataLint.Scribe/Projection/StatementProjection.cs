@@ -481,8 +481,15 @@ internal static class StatementProjectionFixtureLoader
                 $"Pinned statement-v1 fixture is unprojectable for {declaration.Value}: {failed.Reason}"),
             _ => throw new InvalidOperationException("Unknown statement projection outcome.")
         };
-        Derived.Add(formula, declaration);
+        RestoreDerived(formula, declaration);
         return formula;
+    }
+
+    internal static void RestoreDerived(Formula formula, LeanDeclarationRef declaration)
+    {
+        ArgumentNullException.ThrowIfNull(formula);
+        ArgumentNullException.ThrowIfNull(declaration);
+        Derived.Add(formula, declaration);
     }
 
     internal static bool IsDerivedFrom(Formula formula, LeanDeclarationRef declaration) =>

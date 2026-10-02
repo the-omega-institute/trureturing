@@ -77,16 +77,6 @@ register_information_theorem forced_core_normalization in arena
     readouts := #[{ path := #["body", "body", "body", "value"], stateBinder := 0 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Arith.ExponentExchange.ForcedCoreNormalization.forced_core_normalization
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "forced core normalization registration is not declaredValidated"
-
 #print axioms registration
 
 end Reg.D5.S3.Arith.ExponentExchange.ForcedCoreNormalization

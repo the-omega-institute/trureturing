@@ -1,0 +1,35 @@
+**引理 196.1（两个高次因子与实际整数因子的桥）。** 设 $j=r+k\ell$、$\ell\ge0$，并令
+
+$$
+W_j=\phi^{j/2+2}w,
+\qquad U_{1,j}=[\phi]W_j,
+\qquad U_{2,j}=\operatorname{Tr}(W_j),
+\qquad z_\ell=\operatorname{Tr}(\tau^\ell).
+$$
+
+则 $V_j=U_{1,j}U_{2,j}$。对每个素数 $p\nmid110$，有
+
+$$
+\begin{aligned}
+p\mid U_{1,j}&\Longrightarrow
+\mathcal D_n(z_\ell)-t_r=0\pmod p,\\
+p\mid U_{2,j}&\Longrightarrow
+\mathcal D_n(z_\ell)+t_r=0\pmod p.
+\end{aligned}
+\tag{196.3}
+$$
+
+特别地，$p\mid V_j$ 蕴含 $P_{r,k}(z_\ell)=0\pmod p$。两个有理系数因子的模 $p$ 读法使用其局部整系数形式；所需分母只含素数十一。
+
+证明。由 $v=\phi w^2$ 得 $\phi^{j+3}v=W_j^2$。$\phi^{j+3}v$ 的 $\phi$ 系数为 $V_j$，而对任意 $A+B\phi$，平方的 $\phi$ 系数是 $B(2A+B)$，故得到实际分解。又
+
+$$
+\operatorname N(W_j)=(-1)^{j/2}11,
+\qquad
+\frac{W_j'}{W_j}
+=\tau^{-(j+4)/2}\frac{w'}w
+=a_r\tau^{-n\ell}.
+$$
+
+当 $p\nmid110$ 时 $W_j$ 在 $R/pR$ 中可逆。若 $p\mid U_{1,j}$，则 $W_j'=W_j$，所以 $\tau^{n\ell}=a_r$；若 $p\mid U_{2,j}$，则 $W_j'=-W_j$，所以 $\tau^{n\ell}=-a_r$。分别取迹并用 $\mathcal D_n$ 的定义，得到式（196.3）。分母断言来自 $w'/w=(w')^2/11$，而 $\tau$ 是黄金整数单位。$\square$
+

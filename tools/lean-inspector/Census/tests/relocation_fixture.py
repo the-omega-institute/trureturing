@@ -17,15 +17,15 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
                         ignore=shutil.ignore_patterns(".lake", "__pycache__"))
         shutil.copytree(INSPECTOR / "Census", self.root / "tools/lean-inspector/Census",
                         ignore=shutil.ignore_patterns("__pycache__"))
-        for name in ("NameWire", "Census/Ownership", "Census/Stream", "Census/Membership"):
+        for name in ("NameWire", "RegistryTypes", "Census/Ownership", "Census/Stream", "Census/Membership"):
             self.copy("tools/lean-inspector/LeanInformationAudit/" + name + ".lean")
         # Keep the support fixture's synthetic driver in this library's source root.
-        (self.root / "LeanInformationAudit/Registry.lean").rename(
-            self.root / "tools/lean-inspector/LeanInformationAudit/Registry.lean")
+        (self.root / "LeanInformationAudit/SealCommand.lean").rename(
+            self.root / "tools/lean-inspector/LeanInformationAudit/SealCommand.lean")
         (self.root / "LeanInformationAudit").rmdir()
         policy = self.root / "lean-report-inputs.json"
-        policy.write_text(policy.read_text().replace('"LeanInformationAudit/Registry.lean"',
-            '"tools/lean-inspector/LeanInformationAudit/Registry.lean"'))
+        policy.write_text(policy.read_text().replace('"LeanInformationAudit/SealCommand.lean"',
+            '"tools/lean-inspector/LeanInformationAudit/SealCommand.lean"'))
         # This fixture puts the same dependency under a different source root.
         # Only Lake knows that location; Census cannot name it as a special case.
         config = self.root / "declaration package/lakefile.toml"

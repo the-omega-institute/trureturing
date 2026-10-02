@@ -1,0 +1,10 @@
+### 195.5 文献输入与结论范围
+
+本批使用的外部输入及其范围如下。
+
+1. 固定有限 Galois 扩张的无条件 Chebotarev 密度定理，用于推论 193.4 的模素数有根上包络。定性计数形式见 Arango-Piñeros、Keliher、Keyes，*Mertens' theorem for Chebotarev sets*，[arXiv:2103.14747v2](https://arxiv.org/pdf/2103.14747v2)，引言第 2 页汇总表“Galois extension / Chebotarev’s theorem”一行。取基域为 $\mathbb Q$，对固定有限个共轭类求和，再分部求和得到式（193.5）。该文 Theorem A 的 Chebotarev–Mertens 相对误差本身不能替代本批需要的加性 $o(1)$；本批由引理 194.2 的固定倍数窗口取得相应精度，不增强该文的误差结论。
+2. Axler，*On Robin's inequality*，[作者稿 arXiv:2110.13478v3](https://arxiv.org/pdf/2110.13478v3)，式（3.4）—（3.5）及本卷 §160.1，提供式（194.2）的最终 Euler 包络。这里只在整数最终超过固定门槛后使用，不重新执行原文的大规模验证。其余完整素数乘积主项使用通常素数定理。
+3. Moree、Stevenhagen，*Prime divisors of the Lagarias sequence*，Journal de Théorie des Nombres de Bordeaux 13 (2001), 241–251，[原文](https://jtnb.centre-mersenne.org/item/JTNB_2001__13_1_241_0.pdf)，研究递推实际素因子集合的精确密度，主定理使用 GRH。本批不使用该条件性精确密度作为无条件输入，而只取固定四次分裂域的素数上包络。
+
+定理 195.1 的阈值依赖固定种子；固定域的渐近误差不提供变化种子的一致控制。因此这些结论既没有覆盖所有变化种子的共同尾段，也没有覆盖非单位平方范数的全部主指标，不能推出所有整数的 Robin 不等式或黎曼猜想。五窗口的收缩几何在这里提供合法公因子范围，素数切面与同一整数的联合预算负责约数响应上界；区间长度守恒没有被替代成约数权重守恒。
+

@@ -26,8 +26,7 @@ internal static class TestFileMap
 
 
     private const string Input = """
-        schema_version = 5
-        resources = []
+        schema_version = 6
 
         [residence_policy]
         case_id = "TEST"
@@ -73,7 +72,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = ".github/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -84,7 +82,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = ".gitignore"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -96,7 +93,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "AGENTS.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -108,7 +104,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Blueprint/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -120,7 +115,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "CLAUDE.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -132,7 +126,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Chronicle/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -144,7 +137,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "D5/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -156,7 +148,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Directory.Build.props"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -167,7 +158,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Directory.Packages.props"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -179,7 +169,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Evidence/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -191,7 +180,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Generated/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -203,7 +191,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Golden/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -215,7 +202,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Library/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -227,7 +213,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Makefile"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -239,7 +224,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/BACKFILL.yaml"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -251,7 +235,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/Digestion/**"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -263,7 +246,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/FILEMAP.*.toml"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -275,7 +257,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/FILEMAP.toml"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -287,7 +268,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ReportConsumers/lean-report.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -299,7 +279,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ReportConsumers/scribe-content.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -311,7 +290,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ReportProducers/lean-report.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -323,7 +301,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ReportProducers/scribe-content.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -335,7 +312,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ci-checks.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -347,7 +323,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/ci-resources.json"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -359,7 +334,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/domains.yaml"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -371,7 +345,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/engineering-projects.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -383,7 +356,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/judge-seed.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -395,7 +367,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Meta/package-materials.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -407,7 +378,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Papers/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -419,7 +389,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Problems/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -431,7 +400,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "README.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -443,7 +411,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Reg/Catalogs/**/*.lean"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"
@@ -455,7 +422,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Reg/D5/**/*.lean"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"
@@ -467,7 +433,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Reg/Support/**/*.lean"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"
@@ -479,7 +444,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Reg/lake-manifest.json"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -491,7 +455,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Reg/lakefile.toml"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -503,7 +466,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "Trureturing.lean"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -515,7 +477,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "agents/CONTEXT.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -527,7 +488,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "agents/adversary.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -539,7 +499,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "docs/CONTRIBUTING.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -552,7 +511,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "docs/GOVERNANCE.md"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -565,7 +523,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "docs/develop/spec/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -577,7 +534,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "docs/develop/theory/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -590,7 +546,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "docs/reports/**/*.json"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"
@@ -602,7 +557,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "global.json"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -614,7 +568,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "lake-manifest.json"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -626,7 +579,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "lakefile.toml"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -638,7 +590,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "lean-report-inputs.json"
-        require = []
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"
@@ -650,7 +601,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "lean-toolchain"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"
@@ -662,7 +612,6 @@ internal static class TestFileMap
 
         [[files]]
         pattern = "tools/**"
-        require = []
         kind = "program"
         admission_plane = "judge"
         produced_by = "none"

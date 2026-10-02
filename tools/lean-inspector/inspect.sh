@@ -82,24 +82,27 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
 fi
-workspace=(-d "$REPOSITORY/Reg")
-# A scoped caller passes the selected resource's registered targets. Direct
-# report calls consume all explicitly registered program targets.
+workspace=(-d "$REPOSITORY/tools/lean-inspector-reg")
+# Direct report calls own these program obligations; scoped callers may override them.
 if [[ "${STRATALINT_LEAN_BUILD_TARGETS-}" != '[]' ]]; then
-  python3 -B - "$REPOSITORY" > "$STARTUP_LOG_DIR/build-targets" <<'PY' || exit 2
-import json, os, pathlib, sys
-root = pathlib.Path(sys.argv[1])
-sys.path.insert(0, str(root / 'tools/scripts/workflow'))
-from ci_plan import lean_build_targets, strict_json_bytes
-if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ:
-    targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS'])
-else:
-    registration = strict_json_bytes((root / 'Meta/ci-resources.json').read_bytes())
-    targets = sorted({target for row in registration['resources']
-                      for target in lean_build_targets(row.get('lean_targets', []))})
-for target in lean_build_targets(targets):
+  python3 -B - > "$STARTUP_LOG_DIR/build-targets" <<'PY_TARGETS' || exit 2
+import json, os, re
+default_targets = [
+    "leanInspector/LeanInformationAudit",
+    "leanInspector/reportInspector",
+    "leanInspectorInterface/LeanInformationAuditInterface",
+    "reg/Reg",
+    "regInspector/LeanInformationAuditRegTests",
+]
+targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS']) if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ else default_targets
+if (not isinstance(targets, list)
+        or any(not isinstance(target, str) or not re.fullmatch(
+            r"[A-Za-z][A-Za-z0-9_.]*(?:/[A-Za-z][A-Za-z0-9_.]*)?", target) for target in targets)
+        or targets != sorted(set(targets))):
+    raise ValueError("lean_targets requires sorted unique Lean module or package/target names")
+for target in targets:
     print(target)
-PY
+PY_TARGETS
   while IFS= read -r target; do BUILD_TARGETS+=("$target"); done < "$STARTUP_LOG_DIR/build-targets"
 fi
 # Provision before reuse publication creates .lake, preserving cold donor seeding.
@@ -118,8 +121,21 @@ require_lake() {
     || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; return 2; }
   export LAKE_BIN="$LAKE"
 }
+# A standalone call builds the producer once; every later step runs that DLL
+# instead of refreshing the project through `dotnet run`.
+require_producer() {
+  [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
+  run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
+    --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
+  local producer
+  producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
+  [[ "$producer" == /* && -f "$producer" ]] \
+    || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
+  export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+}
 if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
   require_lake
+  require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs() {
@@ -158,11 +174,8 @@ run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOS
   --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 rm -f -- "${OUTPUT}.reuse.json"
-if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
-  run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    --configuration Release --nologo --verbosity quiet
-fi
 if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
+  require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs

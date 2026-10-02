@@ -1,0 +1,4 @@
+## Appendix A. Scope of the visible observation restriction
+
+The preceding law and minimax deduction concern the original finite visible-experiment model with Hamiltonian $H_A\otimes I_B$ and target relative entropy against $I_B/e$. The assertion is a synthesis of the operational measure construction and entropy endpoint argument. The matrix tensor action, scalar measure density and entropy identities are the standard intermediate identities used in its proof. No algorithmic runtime or hidden partition-function counting assertion is part of Theorem 2.1.
+

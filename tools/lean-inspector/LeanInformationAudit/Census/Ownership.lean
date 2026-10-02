@@ -1,4 +1,5 @@
 import Lean
+import LeanInformationAudit.RegistryTypes
 
 namespace LeanInformationAudit.CensusOwnership
 
@@ -22,6 +23,8 @@ def recordedModuleContainsTheorem (env : Environment) (scope : Array Name)
 
 /-- Presence determines the scope diagnostic; declaration binding checks type and levels separately. -/
 def nameInScope (env : Environment) (scope : Array Name) (declaration : Name) : IO Bool := do
+  if (GeneratedDeclarations.entries env).any fun (name, owner) =>
+      name == declaration && scope.contains owner then return true
   if let some index := env.getModuleIdxFor? declaration then
     if scope.contains env.header.moduleNames[index.toNat]! &&
         env.header.moduleData[index.toNat]!.constNames.contains declaration then return true

@@ -1,0 +1,88 @@
+{
+  "base_clique_complement_cap_sum": "184697/233415",
+  "canonical_vertices": 929408,
+  "direct_ordered_role_response": "1131518/596413125",
+  "direct_response_terms": 192,
+  "final_mass_decimal": 0.00022033933017146849,
+  "final_mass_lower": "129882283939292751957439908807313056861249628949069481635021953820749507582050793616659/589464821546920867842527541574611934669712219698379024782123287644108454509917451059200000",
+  "leaf_orbits": 7261,
+  "leaf_weights": [
+    "11/50",
+    "11/50",
+    "14/75",
+    "14/75",
+    "14/75"
+  ],
+  "minimum_layout": [
+    [
+      1,
+      2
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "missing_three": {
+    "final": "2881534632462513161737889804659283583424471847360023061100191541524393917515127717250909251/5092976058165396298159437959204647115546313578193994774117545205245097046965686777151488000",
+    "final_decimal": 0.5657860157898535,
+    "fourth": "7101326389957751920822379861/821055227980138905600000",
+    "mass": "299974/530145",
+    "primes": [
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ]
+  },
+  "nonternary_benchmark": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "proof_boundary": "Source completion, one-clique Shearer validity, separate concavity, and prefix transport are ordinary mathematical arguments. The analytic tail imports Report734's stated prime-product input.",
+  "raw_fourth_upper": "83957323825075240180209923/277054053281280000000",
+  "raw_star_vertices": 10000000,
+  "scope": "At most8 actual support primes at most2000; only originals wholly on those small primes require v3<=2. All later original phases, finite heights, mixed supports and finite tail lengths are unrestricted.",
+  "simple_lower": "1/5000",
+  "source_mass_lower": "1131518/596413125",
+  "status": "exact_arithmetic_passed_not_Lean",
+  "tail": {
+    "cutoff": 2000,
+    "delta": "2/7",
+    "ell": 6,
+    "factor": "42047440402759323077177141661311839889921399180696313691971025/7598630955192611710593911633179861897860149235442182922507617109029888",
+    "growth": 21
+  },
+  "ternary_fourth_factor": "1423/25",
+  "ternary_leaf_cap": "11/50",
+  "ternary_root_cap": "14/25"
+}

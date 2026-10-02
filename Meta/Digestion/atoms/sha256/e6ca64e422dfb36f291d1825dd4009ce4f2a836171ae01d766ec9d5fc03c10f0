@@ -1,0 +1,14 @@
+**定理 3.6（Exact conjugacy of the row and capacity scans）。** For every positive $n\in\mathbb N$ and every finite natural capacity list $c$,
+
+$$
+W(S_n(c))=P_n(W(c)).
+$$
+
+证明。Induct on the tail capacities with an arbitrary common offset $a$. If $F_n(d)=(v,\mathrm{true})$, then
+
+$$
+E_n(a::(a+W(d)))=(a+n)::(a+n+W(v));
+$$
+
+if its carry is false, the result is $a::(a+W(v))$. At a tail donor $b\ge n$, eligibility is $a+n\le a+b$, and $a+n+(b-n)=a+b$ restores all lower widths. For $b<n$, the row scan descends and the induction hypothesis applies with offset $a+b$. These cases prove the offset identity. For the full list, a top donor produces a new row of width $n$ and leaves the previous top width unchanged after reconstruction; an ineligible top invokes the offset identity. The empty list gives $[n]$ on both sides. No reachability or capacity bound is needed. $\square$
+

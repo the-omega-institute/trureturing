@@ -1,0 +1,12 @@
+**定义 8.4（对偶轨道内完整块）。** 令 $\mathfrak O$ 为 $g=M^{-\mathsf T}$ 在 $\widehat H$ 上的轨道分割，置
+
+$$
+Q_O=\sum_{p\in O}|p\rangle\langle p|,
+\qquad
+\tau_O=(I_A\otimes Q_O)\rho(I_A\otimes Q_O),
+\qquad
+\mathcal E_{\mathrm{orb}}(\rho)=\sum_{O\in\mathfrak O}\tau_O.
+$$
+
+边界 $q_{\mathrm{orb}}(\rho)=(\tau_O)_O$ 在每个轨道中保留全部 Fourier 非对角块，只去掉不同轨道之间的相干。各块未归一化，$\sum_O\operatorname{Tr}\tau_O=1$。
+

@@ -342,7 +342,7 @@ public sealed class StatementProjectionPilotTests
             RawRepositoryEntry.FromText("producer/retained.py", "# retained registered member"),
             RawRepositoryEntry.FromText(StrataLint.TestSupport.EngineeringRegistrationFixture.Path,
                 StrataLint.TestSupport.EngineeringRegistrationFixture.Manifest(new StrataLint.TestSupport.EngineeringProjectFixture(
-                    "producer/Owner.csproj", "Owner", "test-support", false, ["tools/StrataLint.Scribe/**/*.cs"]))),
+                    "producer/Owner.csproj", "Owner", "test-support", ["tools/StrataLint.Scribe/**/*.cs"]))),
         ]))).Snapshot;
     }
 

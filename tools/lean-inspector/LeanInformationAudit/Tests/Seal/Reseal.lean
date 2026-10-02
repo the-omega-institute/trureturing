@@ -1,17 +1,20 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Tests.SealSuccess
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean LeanInformationAudit Lean.Elab.Command
 open LeanInformationAudit.Tests.SealSuccess
 namespace LeanInformationAudit.Tests.Seal.Reseal
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
-information_theorem peer in arena primitives fstRealization : arena.Law fstRealization := by trivial
-expect_information_occurrence fstTheorem in arena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence sndTheorem in arena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence notTheorem in notArena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence idTheorem in t001Arena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence peer in arena from "LeanInformationAudit.Tests.Seal.Reseal"
+test_assess in information_theorem peer in arena primitives fstRealization : arena.Law fstRealization := by trivial
+test_assess in expect_information_occurrence fstTheorem in arena from "LeanInformationAudit.Tests.SealSuccess"
+test_assess in expect_information_occurrence sndTheorem in arena from "LeanInformationAudit.Tests.SealSuccess"
+test_assess in expect_information_occurrence notTheorem in notArena from "LeanInformationAudit.Tests.SealSuccess"
+test_assess in expect_information_occurrence idTheorem in t001Arena from "LeanInformationAudit.Tests.SealSuccess"
+test_assess in expect_information_occurrence peer in arena from "LeanInformationAudit.Tests.Seal.Reseal"
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 run_cmd do
   let env ← getEnv
   let old := SealRecords.forRoot env `LeanInformationAudit.Tests.SealSuccess

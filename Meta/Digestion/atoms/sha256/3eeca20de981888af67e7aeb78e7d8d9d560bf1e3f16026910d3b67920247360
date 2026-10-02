@@ -1,0 +1,2 @@
+**Theorem 8.1 (rank obstruction and unspanned families).** For any finite represented index set in a finite-dimensional column space, the actual polynomial $F_{U,m}$ is identically zero if either $\dim_K(V/U)>m$ or $U+\operatorname{span}\{a_i:i\in I\}\ne V$. No nonempty-carrier or full-spanning assumption is imposed in this statement.
+

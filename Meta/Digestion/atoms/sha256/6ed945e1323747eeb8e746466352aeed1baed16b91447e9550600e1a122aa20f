@@ -1,0 +1,57 @@
+**定理205.5（单位位一、固定单位种子的近界安全族）。** 存在沿素数指标 $r\to\infty$ 的实际规范来源
+
+$$
+N_r=1+g_rF_r,\qquad
+V/10\le g_r\le V/5,\qquad
+x_r=g_rM^{r-3}\alpha,
+$$
+
+其外部单位位为一、本原种子固定为 $\alpha$、本原黄金范数恒为一，并且
+
+$$
+\boxed{\Delta(N_r)\longrightarrow e^\gamma\log2>0.}
+\tag{205.6}
+$$
+
+因此这些整数最终严格满足 Robin 不等式，同时
+
+$$
+\frac{Z(N_r)}{e^\gamma\log\log N_r}\longrightarrow1.
+$$
+
+证明。取上一部分得到的同一个 $N_r=DH$。因为 $D$ 的全部素因子不超过 $y_r<z_r$，而 $H$ 没有不超过 $z_r$ 的素因子，所以 $\gcd(D,H)=1$，并有精确乘法式 $Z(N_r)=Z(D)Z(H)$。
+
+乘子区间给
+
+$$
+\log N_r=2\log V+O(1),\qquad
+\log\log N_r=\log\log V+\log2+o(1),
+\qquad \log H=O(r).
+$$
+
+若 $H>1$，其不同素因子个数不超过 $\log H/\log z_r$；每个都大于 $z_r$，故
+
+$$
+0\le\log Z(H)
+\le\log\frac H{\varphi(H)}
+\le\frac{\log H}{(z_r-1)\log z_r}
+=O((\log r)^{-5/4}).
+$$
+
+$H=1$ 时该界也成立。引理205.4 与 $y_r\sim\log V$ 给
+
+$$
+Z(D)=e^\gamma\log y_r+o(1)
+=e^\gamma\log\log V+o(1).
+$$
+
+$Z(D)=O(\log r)$，所以余因子带来的加性误差为 $O((\log r)^{-1/4})=o(1)$。从而
+
+$$
+Z(N_r)=e^\gamma\log\log V+o(1).
+$$
+
+与同一个 $N_r$ 的预算相减即得差额极限。合法性、单位初始化、End 及本原范数均已由引理205.1 和偶数 $r-3$ 核对。$\square$
+
+这个极限是已构造子族上的等号极限，不是对所有合法 $g$ 的下界。它说明：单位位一不能整体被判成 Robin 比值趋零的安全侧；§190.3 的趋零例子与本节的趋一例子都使用固定单位种子，却有不同的共同模数与乘子选择。它也与 §204 的固定乘子比值趋零相容：本节 $g_r\asymp F_r\to\infty$，没有固定该参数。若未来证明该固定种子全部单位位一来源拥有统一加性下界，其极限常数至多为 $e^\gamma\log2$。
+

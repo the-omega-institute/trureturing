@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:82c5baf6399fbf1742cc634b28365d55ba3959400ab75a47e474d0d3becc746c
+  normalized_sha256: sha256:82c5baf6399fbf1742cc634b28365d55ba3959400ab75a47e474d0d3becc746c
+cas_ref: sha256:82c5baf6399fbf1742cc634b28365d55ba3959400ab75a47e474d0d3becc746c
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/VisibleAdaptiveRecordLaw.visible_adaptive_record_law_and_absolute_minimax
+    target_statement_id: sha256:a36a17f924809571cb9d88d7acefca62ab084fbc7df8caee02ef35c1929e0359
+receipts:
+  unresolved_subitems: []

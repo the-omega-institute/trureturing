@@ -1,0 +1,52 @@
+### 定理 51：固定树的共同延拓定理
+
+对每个正确协议 \(\Pi\)，存在 \(H_\Pi\in\operatorname{Ext}(D,f)\)，使得对所有节点 \(v\)，
+
+$$
+\boxed{
+\kappa_{A_v}(H_\Pi)\leq r_v(\Pi).
+}
+$$
+
+反过来，对每个 \(H\in\operatorname{Ext}(D,f)\)，存在一个在 \(D\) 上正确的规范协议 \(\Pi_H\)，使得
+
+$$
+\boxed{
+r_v(\Pi_H)\leq\kappa_{A_v}(H)
+\qquad\forall v.
+}
+$$
+
+因而两组向量的向上闭包相同：
+
+$$
+\boxed{
+\operatorname{Up}
+\{\mathbf r_T(\Pi):\Pi\text{ 正确}\}
+=
+\operatorname{Up}
+\{\mathbf k_T(H):H\in\operatorname{Ext}(D,f)\}.
+}
+$$
+
+特别地，对任意逐坐标单调的有限成本函数 \(C\)，有
+
+$$
+\boxed{
+\min_{\Pi\text{ 正确}}C(\mathbf r_T(\Pi))
+=
+\min_{H\in\operatorname{Ext}(D,f)}C(\mathbf k_T(H)).
+}
+$$
+
+峰值目标给出
+
+$$
+\boxed{
+P_T(D,f)
+=
+\min_{H\in\operatorname{Ext}(D,f)}
+\max_{v\in T}\kappa_{A_v}(H).
+}
+$$
+

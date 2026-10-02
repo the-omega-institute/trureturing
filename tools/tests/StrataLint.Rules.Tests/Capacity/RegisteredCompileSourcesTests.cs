@@ -10,9 +10,9 @@ public sealed class RegisteredCompileSourcesTests
     {
         var projects = new[]
         {
-            new EngineeringProjectFixture("a/a.csproj", "First", "cross-cutting-test", true,
+            new EngineeringProjectFixture("a/a.csproj", "First", "cross-cutting-test",
                 ["a/**/*.cs", "shared/**/*.cs"], ["shared/Excluded.cs"]),
-            new EngineeringProjectFixture("b/b.csproj", "Second", "cross-cutting-test", true,
+            new EngineeringProjectFixture("b/b.csproj", "Second", "cross-cutting-test",
                 ["b/**/*.cs", "shared/**/*.cs"], ["shared/Excluded.cs"]),
         };
         var snapshot = Snapshot(
@@ -30,7 +30,7 @@ public sealed class RegisteredCompileSourcesTests
     {
         var snapshot = Snapshot(
             (EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
-                new EngineeringProjectFixture("p/p.csproj", "P", "test-support", false, ["shared/Missing.cs"]))),
+                new EngineeringProjectFixture("p/p.csproj", "P", "test-support", ["shared/Missing.cs"]))),
             ("p/p.csproj", "<Project />"));
         Assert.Throws<InvalidDataException>(() => Sources(snapshot));
     }
@@ -40,7 +40,7 @@ public sealed class RegisteredCompileSourcesTests
     {
         var snapshot = Snapshot(
             (EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
-                new EngineeringProjectFixture("p/p.csproj", "P", "test-support", false, ["p/*.cs"]))),
+                new EngineeringProjectFixture("p/p.csproj", "P", "test-support", ["p/*.cs"]))),
             ("p/p.csproj", "<Project />"), ("elsewhere/Unowned.cs", "class Unowned {}"));
         Assert.Throws<InvalidDataException>(() => Sources(snapshot));
     }

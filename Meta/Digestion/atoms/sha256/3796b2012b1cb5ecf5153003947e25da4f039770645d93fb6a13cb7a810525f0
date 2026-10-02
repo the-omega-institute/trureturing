@@ -1,0 +1,66 @@
+**定理 25.3（标签对也未知）。** 独立均匀选 (25.1) 的一行，并均匀抽取 $m\in\{1,\ldots,Q\}$，其中
+
+$$
+Q=\left\lceil\frac{29\pi}{9\delta_{\min}}\right\rceil .
+$$
+
+连续调用 $n=3m$ 次，最后按该行读出，指定事件仍是各抽样分支的成功读出之并。则对全部不同非零标签对和全部允许失谐，
+
+$$
+p_-(E)-p_+(E)\ge1/54,\qquad
+N_{\max}=3Q\le\frac{29\pi}{3\delta_{\min}}+3.
+\tag{25.6}
+$$
+
+证明。令 $f_0(t)=(2\cos2t-\cos t-\cos4t)/9$，避免与低层置换 $f$ 混用。由 (25.3) 计算全部有符号差得
+
+$$
+\begin{array}{c|ccc}
+\text{设置 }(a,s)&\{01,11\}&\{10,01\}&\{10,11\}\\ \hline
+(10,+1)&d(t)&f_0(t)&f_0(t)\\
+(01,-1)&f_0(t)&d(t)&-f_0(t)\\
+(11,-1)&-f_0(t)&f_0(t)&d(t)
+\end{array}
+\tag{25.7}
+$$
+
+确实，对有向边 $u\to v=g^2u$，一般事件差为
+$-s\chi_v(c_2(a))\operatorname{Re}(C\overline{d_v}f_u)$，其中 $d_v$ 是 $D_a$ 的值，$f_u$ 是 $\Pi_{a,+}-x\Pi_{a,-}$ 的值。若两字符均为负就得匹配项 (25.2)；若字符不同，则
+$-\operatorname{Re}(C\overline B)=\operatorname{Re}(xC\overline A)=f_0(t)$，再乘该行的 $s\chi_v$ 即得全部六个不匹配项。这样每个负项的来源由实际 carry 与测量符号确定。
+
+均匀混合设置后，第一和第三列为 $d(t)/3$；中间列为
+
+$$
+\frac{d(t)+2f_0(t)}3
+=\frac{1-\cos3t+4\cos2t-2\cos t-2\cos4t}{27}.
+\tag{25.8}
+$$
+
+$n=3m$ 使 $t=n\Delta\equiv3m\delta\pmod{2\pi}$，消去全部共振相位。对 $k=1,2,3,4$，$3k|\delta|/2\le1/9<\pi/2$；(25.5) 和正弦弦界给
+
+$$
+\left|\frac1Q\sum_{m=1}^Q\cos(3km\delta)\right|
+\le\frac{\pi}{3Qk\delta_{\min}}.
+$$
+
+所以 (25.8) 的平均至少为
+
+$$
+\frac1{27}\left[
+1-\frac{\pi}{3Q\delta_{\min}}
+\left(\frac13+\frac42+\frac21+\frac24\right)\right]
+=\frac1{27}\left(1-\frac{29\pi}{18Q\delta_{\min}}\right)
+\ge\frac1{54}.
+$$
+
+另外两列的平均为 $[1-\operatorname{avg}\cos(9m\delta)]/27$，其余弦绝对值至多 $\pi/(9Q\delta_{\min})\le1/29<1/2$，也满足同一下界。这控制了不匹配分支的总抵消，而不是从某一好分支的存在推出混合结论。$\square$
+
+两协议均不估计实际失谐，不调用逆时钟或测量高层；没有对抽样或成功分支作归一化后选择。对整个区间的统一固定差任务，(23.2) 在允许端点 $|\delta|=\delta_{\min}$ 分别给
+
+$$
+N\ge\frac1{72\delta_{\min}}\quad\text{及}\quad
+N\ge\frac1{216\delta_{\min}}.
+$$
+
+结合 (25.4)、(25.6)，两个任务的最坏调用复杂度均为 $\Theta(1/\delta_{\min})$。达到的固定差分别为 $1/18$、$1/54$，不宣称未知失谐时的差 $1/9$、最佳常数、shot 或精度成本。若允许 $|\delta|$ 任意趋于零而没有正的 $\delta_{\min}$，(23.2) 使每个固定最坏调用预算的所有事件差趋于零，故不能保证统一正信号。
+

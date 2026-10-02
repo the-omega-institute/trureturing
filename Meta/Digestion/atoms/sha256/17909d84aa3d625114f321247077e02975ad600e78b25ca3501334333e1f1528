@@ -1,0 +1,75 @@
+**证明。** 定理 93.2 给出 $R-B_2=O(x^{-2/3})$，并在 $p>\sqrt x$ 上有
+
+$$
+d_1(p)=\frac1{2p^2}+O(p^{-3}),\qquad
+d_2(p,x)=-\frac1{2p^2}+\frac{\log p}{xt}+O(p^{-3}).
+\tag{247.9}
+$$
+
+最小值对两候选的误差至多取较大误差，整数尾和给总误差 $O(x^{-1})$。
+将近似最小值的素数和延伸到全部 $p>\sqrt x$，在 $p>x-1$ 上的附加尾为
+$O(1/(x\log x))$。这些误差均小于式（247.8）的余项尺度。
+
+有效 PNT 的部分求和将同一近似素数和替换为
+
+$$
+\int_{\sqrt x}^\infty
+\min\left\{\frac1{2v^2},\frac{\log v}{xt}-\frac1{2v^2}\right\}
+\frac{dv}{\log v}.
+\tag{247.10}
+$$
+
+其误差为 $O(x^{-1/2}e^{-c_0\sqrt t})$，允许缩小某个 $c_0>0$。
+为见这一估计，两个近似分支在分界处连续；低段长度为 $O(\sqrt x)$、峰值为 $O(x^{-1})$，
+高段是 $1/(2v^2)$。对 $\pi(v)-\operatorname{li}(v)=O(ve^{-c_0\sqrt{\log v}})$
+分段部分求和，低段的端项及导数积分、高段的 $v^{-3}$ 导数积分均满足所示界。
+不需要把 PNT 误差用于远高于 $x$ 的第二分支。
+
+令 $v=u\sqrt x$，两分支的唯一分界 $U=U(t)$ 满足
+
+$$
+U^2\left(1+\frac{2\log U}{t}\right)=2,
+\qquad 1<U<\sqrt2.
+\tag{247.11}
+$$
+
+式（247.10）恰为 $G(t,U)/(\sqrt x\,t)$，其中
+
+$$
+G(t,U)=U-1
+-\int_1^U\frac{du}{u^2(1+2\log u/t)}
++\int_U^\infty\frac{du}{u^2(1+2\log u/t)}.
+\tag{247.12}
+$$
+
+式（247.11）给 $U-\sqrt2=O(t^{-1})$。
+而 $\partial_U G=1-2/[U^2(1+2\log U/t)]$ 在实际分界为零，在 $U=\sqrt2$ 为 $O(t^{-1})$，
+其 $U$ 导数在 $[1,\sqrt2]$ 上一致有界。因此
+$G(t,U)=G(t,\sqrt2)+O(t^{-2})$。
+候选接触使移动分界不改变下一项系数。
+
+对全部 $u\ge1$，使用精确恒等式
+
+$$
+\frac1{1+z}=1-z+\frac{z^2}{1+z},\qquad z=\frac{2\log u}{t}\ge0.
+\tag{247.13}
+$$
+
+积分余项的绝对值至多
+$4t^{-2}\int_1^\infty(\log u)^2u^{-2}du=8t^{-2}$。
+于是固定分界下的常数项为 $2(\sqrt2-1)$，下一项为
+
+$$
+\begin{aligned}
+c_2&=2\left(\int_1^{\sqrt2}\frac{\log u}{u^2}du
+-\int_{\sqrt2}^\infty\frac{\log u}{u^2}du\right)\\
+&=2-2\sqrt2-\sqrt2\log2=-c_R-\sqrt2\log2.
+\end{aligned}
+\tag{247.14}
+$$
+
+所用原函数为 $-(\log u+1)/u$；二阶余项可用
+$-((\log u)^2+2\log u+2)/u$ 积分。
+合并连续积分余项、离散候选误差及储备截断误差即得式（247.8）。
+这个展开没有给出已指定有限起点后的有理证书。
+

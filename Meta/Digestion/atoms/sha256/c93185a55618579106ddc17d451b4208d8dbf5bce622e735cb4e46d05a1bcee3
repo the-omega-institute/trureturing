@@ -1,0 +1,58 @@
+**定理 39.1（任意固定正向酉的自适应低层事件张成）。** 令 $A,H$ 为任意有限非空集合，$\mathcal H_A=\mathbb C^A$、$\mathcal H_H=\mathbb C^H$、$\mathcal H=\mathcal H_A\otimes\mathcal H_H$，置 $\ell(K)=K\otimes I_H$。任取一个固定酉 $W\in\mathcal B(\mathcal H)$，即 $`W^*W=WW^*=I`$。唯一联合演化原语为正向 $W$；不另加 $`W^*`$、其它等待时间或高层仪器。
+
+一项低层有限仪器 $\mathcal I$ 由任意自然数 $n,m$ 及矩阵 $K_{yr}\in\mathcal B(\mathcal H_A)$ 给出，$y\in\{0,\ldots,n-1\}$ 是保留结果，$r\in\{0,\ldots,m-1\}$ 是隐藏 Kraus 指标，满足
+
+$$
+\sum_y\sum_r K_{yr}^*K_{yr}=I_A.
+$$
+
+不同结果的有限 Kraus 数可补零到共同的 $m$。一条分支作用于联合输入 $\rho$ 的未归一化完全正映射为 $`\rho\mapsto\sum_r\ell(K_{yr})\rho\ell(K_{yr})^*`$，隐藏指标不作为控制记录。所有终端低层读出也作为这种仪器保留其结果。
+
+实际事件是递归生成的任意有限自适应树：接受或拒绝的 Boolean 叶 $\operatorname{stop}(b)$、一次正向门及其续接 $\operatorname{tick}(e)$，或仪器及逐保留结果选择的续接 $\operatorname{observe}(\mathcal I,(e_y)_y)$。每个节点的仪器与续接可依赖此前保留的结果和已声明的经典控制；同一结果的所有隐藏 Kraus 分支使用相同续接。接受叶指定同一协议内互斥完整历史的并，中途事件由接受该节点的全部后继叶表示。
+
+对每棵树定义其实际效果 $E_e$ 及接受输出 $J_e(\rho)$：
+
+$$
+\begin{aligned}
+E_{\operatorname{stop}(b)}&=\begin{cases}I,&b=\mathrm{true},\\0,&b=\mathrm{false},\end{cases}
+&J_{\operatorname{stop}(b)}(\rho)&=\begin{cases}\rho,&b=\mathrm{true},\\0,&b=\mathrm{false},\end{cases}\\
+E_{\operatorname{tick}(e)}&=W^*E_eW,
+&J_{\operatorname{tick}(e)}(\rho)&=J_e(W\rho W^*),\\
+E_{\operatorname{observe}(\mathcal I,(e_y)_y)}
+&=\sum_y\sum_r\ell(K_{yr})^*E_{e_y}\ell(K_{yr}),
+&J_{\operatorname{observe}(\mathcal I,(e_y)_y)}(\rho)
+&=\sum_y\sum_rJ_{e_y}(\ell(K_{yr})\rho\ell(K_{yr})^*).
+\end{aligned}
+$$
+
+置 $S_W=\operatorname{span}_{\mathbb C}\{E_e:e\text{ 是上述实际有限事件}\}$，不以预选代数定义 $S_W$。对每个事件及每个联合矩阵 $\rho\in\mathcal B(\mathcal H)$，有
+
+$$
+\operatorname{Tr}J_e(\rho)=\operatorname{Tr}(E_e\rho),
+\qquad 0\le E_e\le I.
+$$
+
+因此该迹公式适用于全部联合密度算子，包括任意低高层关联。存在含幺复星子代数 $D\subseteq\mathcal B(\mathcal H)$，其底层复线性空间恰为 $S_W$，且
+
+$$
+\ell(\mathcal B(\mathcal H_A))\subseteq D,
+\qquad\forall X\in\mathcal B(\mathcal H),\quad
+X\in D\ \Longleftrightarrow\ W^*XW\in D.
+$$
+
+对每个含幺复星子代数 $R\subseteq\mathcal B(\mathcal H)$，若 $\ell(\mathcal B(\mathcal H_A))\subseteq R$ 且对每个 $X\in R$ 有 $`W^*XW\in R`$，则 $D\subseteq R$。故 $S_W$ 是包含全部低层算子的最小正向共轭不变含幺星代数。上述不变性的逆向只是一项代数结论，不扩充实际事件的操作合同。
+
+证明。对有限树归纳，迹的循环性给接受输出与效果的迹对偶。单位叶与零叶满足效果界；酉拉回保序，各 Kraus 拉回保正，仪器总归一化使各项上界之和为 $I$，故每个实际效果在 $0,I$ 之间。效果自伴及复线性张成给 $`S_W^*=S_W`$，接受叶给 $I\in S_W$。
+
+任取低层矩阵 $K$，选 $\epsilon=(\lVert K\rVert+1)^{-1}>0$ 并置 $Z=\epsilon K$，则 $\lVert Z\rVert\le1$ 且 $`I_A-Z^*Z\ge0`$。以 $Z$ 与 $`F=(I_A-Z^*Z)^{1/2}`$ 作为二结果、各单 Kraus 的仪器，$`Z^*Z+F^*F=I_A`$。第一结果续接事件 $e$，第二结果拒绝，取得效果 $`\epsilon^2\ell(K)^*E_e\ell(K)`$。除去非零标量并线性延拓，给每个 $X\in S_W$ 的低层夹乘闭合。把 $K$ 依次取成 $A+B,A-B,A+iB,A-iB$ 作极化，得 $`\ell(A)^*X\ell(B)\in S_W`$；取一侧为单位，得到全部低层左右乘闭合。
+
+令 $\alpha(X)=W^*XW$。正向前置事件使 $\alpha(S_W)\subseteq S_W$；酉性使 $\alpha$ 单射，有限维性使限制 $\alpha|_{S_W}$ 满射。构造实际效果空间的双侧乘子代数
+
+$$
+D=\{X\in\mathcal B(\mathcal H):XS_W\subseteq S_W,\ S_WX\subseteq S_W\}.
+$$
+
+线性、乘积与 $`S_W^*=S_W`$ 使它为含幺复星子代数，低层左右乘闭合给 $\ell(\mathcal B(\mathcal H_A))\subseteq D$，而 $I\in S_W$ 给 $D\subseteq S_W$。对 $X\in D$、$Y\in S_W$，选 $Y=\alpha(Z)$、$Z\in S_W$，则 $\alpha(X)Y=\alpha(XZ)\in S_W$，右乘同理；故 $\alpha(D)\subseteq D$。
+
+对任何包含低层代数并正向共轭不变的含幺星子代数 $R$，沿实际树从叶向根归纳，仪器节点只用 $R$ 中的有限和、乘积与伴随，得到每个 $E_e\in R$，即 $S_W\subseteq R$。将此论证用于刚构造的 $D$，得 $S_W\subseteq D$，与前一包含合成 $D=S_W$；对一般 $R$ 同时给最小性。最后，$\alpha|_{S_W}$ 的满射与 $\alpha$ 的单射给 $X\in D\Longleftrightarrow\alpha(X)\in D$。这里的逆映射只用于有限维线性论证，未出现在事件树的原语中。$\square$
+

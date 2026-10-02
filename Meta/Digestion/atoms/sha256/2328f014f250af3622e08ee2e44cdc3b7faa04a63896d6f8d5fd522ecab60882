@@ -1,0 +1,26 @@
+**命题 32.4（相同计数与相同末窗的最短区别）。** 定义受限符号观察
+
+$$
+O(u)=\bigl(|u|,(N_a(u))_{a\in\Sigma},\ell(u)\bigr),
+\tag{32.8}
+$$
+
+其中 $N_a(u)$ 是窗字母 $a$ 的出现次数，空词沿用独立末窗标记。存在 $O$ 相同而 $F$ 与 $L$ 各自不同的同长词，其最小长度恰为三；每个 $n\ge3$ 都有这样的词对：
+
+$$
+\begin{aligned}
+p_n&=(000)^{n-3}\,001\cdot000\cdot100,\\
+r_n&=(000)^{n-3}\,000\cdot001\cdot100,\\
+O(p_n)&=O(r_n),&
+(L(p_n),F(p_n))&=(1,1),&
+(L(r_n),F(r_n))&=(0,0).
+\end{aligned}
+\tag{32.9}
+$$
+
+故只经 $O$ 读出的预测器不能在总域精确恢复 $F$，也不能精确验证 $L$；此限制仅针对所声明的长度、计数、末窗观察。
+
+证明。前置零窗保持初态 $A$。随后 $p_n$ 的三步为 $A\to C\to A\to B$，每条接缝合法；$r_n$ 的三步为 $A\to A\to C\to D$，末接缝失败。两词均有 $n-2$ 个 $000$、一个 $001$、一个 $100$，其余窗计数为零，末窗同为 $100$，得到式（32.9）。$n=0$ 时只有空词；$n=1$ 时末窗决定整词；$n=2$ 时从计数中减去一个已知末窗，剩下的唯一窗就是首窗。因此 $O$ 在长度至多二的词上单射，不能发生不同标签的合并，长度三的展示词对达到最小值。任何只经 $O$ 的函数在展示词对上输出相同，不能同时等于两种相反的 $F$ 值或 $L$ 值。$\square$
+
+[^fib-wb-seam-evaluation]: Robert Geirhos 等，[*Shortcut Learning in Deep Neural Networks*](https://www.nature.com/articles/s42256-020-00257-z)，Nature Machine Intelligence 2，665–673；其摘要给出标准基准表现与更困难测试条件之间的快捷规则区分。Alexander D’Amour 等，[*Underspecification Presents Challenges for Credibility in Modern Machine Learning*](https://jmlr.org/papers/v23/20-1335.html)，JMLR 23(226)，1–61；其摘要区分训练域测试表现等价与部署域行为不同。这里仅借用这两项评估区分，FIB 的接缝表与风险式由上述递推证明，不从文献推出训练或实际网络结论。
+

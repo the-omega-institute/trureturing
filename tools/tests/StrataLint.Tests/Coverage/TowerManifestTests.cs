@@ -11,7 +11,7 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"),
             LedgerAnchorFile());
@@ -33,7 +33,7 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, "jobs:\n  delta:\n    name: Baseline\n"),
             LedgerAnchorFile());
@@ -55,11 +55,11 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-001"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, """
-                on: {pull_request: {branches: [dev]}}
-                jobs: {delta: {runs-on: fixture}}
+                on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}
+                jobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}
                 """),
             LedgerAnchorFile());
 
@@ -75,54 +75,16 @@ public sealed class TowerManifestTests
     }
 
     [Fact]
-    public void NestedChecksComeFromTheReferencedReusableWorkflow()
+    public void IndependentChecksComeFromEachRegisteredWorkflow()
     {
-        var syntax = Syntax(Component("checks", "ci-jobs",
-            ["push / engineering", "push / current", "delta"], "bootstrap-pr-1"));
+        var syntax = Syntax(Component("checks", "ci-jobs", ["tests-fixture", "current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (".github/workflows/ci-pr.yml", """
-                on: {pull_request: {branches: [dev]}}
-                jobs:
-                  common: {name: push, uses: './.github/workflows/ci-push.yml'}
-                  delta: {runs-on: fixture}
-                """),
-            (".github/workflows/ci-push.yml", """
-                on: {push: {branches: [dev]}, workflow_call: {}}
-                jobs: {engineering: {runs-on: fixture}, current: {runs-on: fixture}}
-                """),
+            (".github/workflows/ci-tests-fixture.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {tests-fixture: {uses: ./unit.yml}}"),
+            (".github/workflows/ci-current.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}"),
             LedgerAnchorFile());
-
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
-
-        Assert.Equal(3, accepted.Manifest.Checks.Count(check => check.Subject == "checks"));
-    }
-
-    [Theory]
-    [InlineData("pull_request_target", "push", "ci-push.yml", "push", "current")]
-    [InlineData("pull_request", "workflow_dispatch", "ci-push.yml", "push", "current")]
-    [InlineData("pull_request", "push", "other.yml", "push", "current")]
-    [InlineData("pull_request", "push", "ci-push.yml", "renamed", "current")]
-    [InlineData("pull_request", "push", "ci-push.yml", "push", "renamed")]
-    public void NestedChecksRejectWrongEventsReferencesAndDisplayNames(
-        string prEvent, string pushEvent, string calledFile, string callerName, string currentName)
-    {
-        var syntax = Syntax(Component("checks", "ci-jobs", ["push / current"], "bootstrap-pr-1"));
-        var snapshot = Snapshot(
-            (".github/workflows/ci-pr.yml", $$"""
-                on: { {{prEvent}}: {branches: [dev]} }
-                jobs: {common: {name: '{{callerName}}', uses: './.github/workflows/{{calledFile}}'} }
-                """),
-            (".github/workflows/ci-push.yml", $$"""
-                on: { {{pushEvent}}: {branches: [dev]}, workflow_call: {} }
-                jobs: {current: {name: '{{currentName}}', runs-on: fixture} }
-                """),
-            LedgerAnchorFile());
-
-        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
-            TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
-
-        Assert.Contains(rejected.Findings, finding => finding.Code == "TOWER-CI-JOB");
+        Assert.Equal(2, accepted.Manifest.Checks.Count(check => check.Subject == "checks"));
     }
 
     [Fact]

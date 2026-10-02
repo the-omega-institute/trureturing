@@ -271,20 +271,6 @@ register_information_theorem actual_future_residue_equivalence in futureArena
 
 #print axioms futureRegistration
 
-run_meta do
-  let rows ← TemplateBinding.assessJoined
-  for target in #[
-      `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_common_depth_fullness,
-      `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_nonconverse,
-      `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_future_residue_equivalence] do
-    let some row := rows.find? (fun r => r.occurrence.key.theoremName == target &&
-      r.occurrence.key.registrationModule ==
-        `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion)
-      | throwError "missing source registration for {target}"
-    unless row.result matches .declaredValidated _ do
-      throwError "source registration not declared_validated: {target}"
-    logInfo m!"REGISTRATION {target}: declared_validated"
-
 end
 
 end Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion

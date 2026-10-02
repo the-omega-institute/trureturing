@@ -1,0 +1,90 @@
+{
+  "premise": "Same actual eight-prime source has mass>=1/11250 by the20-leaf refinement; 779 full conditional-cap comparison and transport,780 normalized clipping,734 analytic tail.",
+  "eight_head": {
+    "mass": "1/11250",
+    "upper_quantile": {
+      "cutoff": 144,
+      "tail_strictly_above": {
+        "lower_inclusive": "15052874327/250000000000000",
+        "upper_exclusive": "60211497309/1000000000000000"
+      },
+      "tail_at_least": {
+        "lower_inclusive": "13546820413/125000000000000",
+        "upper_exclusive": "21674912661/200000000000000"
+      }
+    },
+    "mean": {
+      "lower_inclusive": "12322111676982537/62500000000000",
+      "upper_exclusive": "197153786831720593/1000000000000000"
+    },
+    "complete_moments": {
+      "1": {
+        "lower_inclusive": "4381195262927/250000000000000",
+        "upper_exclusive": "17524781051709/1000000000000000"
+      },
+      "2": {
+        "lower_inclusive": "2002712310438769/500000000000000",
+        "upper_exclusive": "4005424620877539/1000000000000000"
+      },
+      "4": {
+        "lower_inclusive": "634296681069772290537/1000000000000000",
+        "upper_exclusive": "317148340534886145269/500000000000000"
+      }
+    },
+    "safe_fourth": "634300",
+    "tail_cutoff": 5500,
+    "ell": 7,
+    "tail_allowance": "901108614553452916860796096547617627394287894308803747398101822835078125/6514109329259627495621223310756598076669985192865117931371677549280755063711875328",
+    "distorted_mass_lower": "10488861797875832814648745663108392473471383133035373800905963032186493559687541/9160466244271351165717345280751466045317166677466572090991421553676061808344824680000",
+    "strict_simple_lower": "1/1000000",
+    "scope": "At most8 original support primes<=5500; arbitrary finite larger support and all heights."
+  },
+  "ninth_bridge": {
+    "prime": 199,
+    "threshold": "144",
+    "delta": "8/11",
+    "cap": "11/3",
+    "actual_mass_lower": {
+      "lower_inclusive": "696471743/500000000000000",
+      "upper_exclusive": "1392943487/1000000000000000"
+    },
+    "prescribed_mass": "1/750000",
+    "upper_quantile": {
+      "cutoff": 480,
+      "tail_strictly_above": {
+        "lower_inclusive": "1166316611/1000000000000000",
+        "upper_exclusive": "291579153/250000000000000"
+      },
+      "tail_at_least": {
+        "lower_inclusive": "1552824569/1000000000000000",
+        "upper_exclusive": "155282457/100000000000000"
+      }
+    },
+    "complete_moments": {
+      "1": {
+        "lower_inclusive": "425560315631/500000000000000",
+        "upper_exclusive": "851120631263/1000000000000000"
+      },
+      "2": {
+        "lower_inclusive": "298803796265737/500000000000000",
+        "upper_exclusive": "23904303701259/40000000000000"
+      },
+      "4": {
+        "lower_inclusive": "288608673026031739409/500000000000000",
+        "upper_exclusive": "577217346052063478819/1000000000000000"
+      }
+    },
+    "safe_fourth": "577300",
+    "tail_cutoff": 18000,
+    "ell": 8,
+    "tail_allowance": "218669193720525455506220613856072124462645560667466039273609678795074296875/116172253772125550813010394278876469257362925976601165848166024258245339908431572631552",
+    "distorted_mass_lower": "335843119077828776800070687414744393252327567915704023338669899717938222171538244243/1361393598892096298589965557955583624109721788788294912283195596776312577051932491776000000",
+    "strict_simple_lower": "1/5000000",
+    "scope": "At most8 original support primes<199 and at most9<=18000; arbitrary finite larger support and all heights."
+  },
+  "comparison_coefficients_are_not_physical_independence": true,
+  "all_queries_use_one_source_before_query_selection": true,
+  "original_phase_and_complete_label_accounting": "As in779/780; completion preserves original covered-set containment.",
+  "infinite_comparison_tails_included": true,
+  "lean_verification": false
+}

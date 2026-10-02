@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Census.UnreachableProofs
 import LeanInformationAudit.Tests.Census.RegisteredClosedTruth
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open Lean.Elab.Command

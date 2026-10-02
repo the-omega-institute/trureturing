@@ -1,4 +1,7 @@
 import LeanInformationAudit.Census.Receipt
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 

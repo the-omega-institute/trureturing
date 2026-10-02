@@ -1,0 +1,21 @@
+**命题（固定修正系数下的状态比较）。** 若 $K<c_R$，则在充分大的共同无事件点
+$V_K'>\mathfrak D'$；若 $K>c_R$，则方向相反。
+在任一趋于无穷的严格稳定自匹配点列 $z$，有
+
+$$
+A^-(z)=A^+(z)=z,
+\qquad \frac{\Psi(z)-z}{\sqrt z}\longrightarrow-c.
+\tag{247.5}
+$$
+
+若 $r\to\infty$ 是 $V_K$ 的内点局部极小点列，则
+
+$$
+\Psi(r)=T_K(r),\qquad
+\frac{\Psi(r)-r}{\sqrt r}\longrightarrow-\frac K2.
+\tag{247.6}
+$$
+
+对 $K<c_R$，在充分大的 $\mathfrak D$ 谷底处，$V_K$ 两侧导数均为正；
+在充分大的 $V_K$ 内点谷底处，$\mathfrak D$ 两侧导数均为负。
+

@@ -1,0 +1,29 @@
+**假设 23.1（同一实际递归与锚前值）。** 全节使用定义 15.1 的实际 $C$，并条件于假设 21.1 的全局下界、上限函数 $U$、锚值、有限捕获及规定深度入周期前提。仍取 $F_0=0$、$F_1=1$、$\alpha=\varphi^{-1}$、$G(n)=\lfloor\alpha(n+1)\rfloor$、$E(n)=C(n)-G(n)\ge0$，不假设 $C$ 单调。另显式使用假设 21.1 未列出的锚前恒等式
+
+$$
+C(F_j-1)=F_{j-1}\qquad(j\ge5),
+$$
+
+其出处为 [Cloitre 黄金结构，主陈述 4 及 §6](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/golden-proof.md)。这些来源前提承继假设 21.1 所列的计算辅助基础；本节不提供对那些有限基础的独立核验，也不宣称 Lean 核验证明。
+
+对整数 $k\ge6$，固定同一个外部参数及其实际轨道
+
+$$
+\begin{aligned}
+N&=F_k,&A&=F_{k-1},&B&=F_{k-2},\\
+x_0&=N-1,&x_{i+1}&=N-C(x_i),&
+\mu_k&=\min\{i\ge0:x_i=A\}.
+\end{aligned}
+$$
+
+来源捕获在偏移零时把全部周期限定为固定点 $A$，所以 $\mu_k$ 存在且等于这条实际轨道的最短前周期。规定深度仍是 $d_N=C(N-1)$，所选点仍是 $g_N=x_{d_N}$。时间下标的奇偶表示迭代次数，不表示自变量 $x_i$ 的奇偶。
+
+这里直接复用 [Fibonacci collars，§1 的定量捕获](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/fibonacci-collars.md)：到捕获区间的整数距离每两步至多缩为原距离的 $2/3$ 向下取整。其整数预算为 $Q(0)=0$、$Q(d)=1+Q(\lfloor2d/3\rfloor)$，$d\ge1$。在当前锚点和实际起点上，该已证结果给
+
+$$
+\mu_k\le2Q(B-1),\qquad
+Q(d)\le1+\lfloor\log_{3/2}d\rfloor\quad(d\ge1),
+$$
+
+从而 $\mu_k=O(k)$。这是来源的上界应用；以下承重结论研究同一实际瞬态所迫使的规范缺陷下界。
+

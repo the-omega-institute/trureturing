@@ -1,0 +1,10 @@
+**定义 1.6（Event sequence of a supplied trace）。** For an initialized unbounded trace $T$, let $E_T$ have $n_t$ equal to the endpoint of $s_t$, $k_t$ equal to its supplied label, and $H_t=\ell(s_t)$. Define
+
+$$
+\beta(h)=\min\{t:h\le H_t\},
+\qquad
+p_f=\max\{e:e\le f-1,\ k_e=k_f\},
+$$
+
+where the maximum is zero if the displayed finite set is empty. The minimum exists by unboundedness, including at $h=0$. When a later same-bin event exists, define $\sigma_T(e)=\min\{f:e<f,\ k_f=k_e\}$. Theorem 2.2 supplies its existence for every event of every initialized unbounded trace. These minima and maxima are the actual chronological selections from the supplied history.
+

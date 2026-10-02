@@ -1,0 +1,1232 @@
+{
+  "scope": "Fixed actual-star metadata and numerical/root relaxation; not an actual AP family, negative survivor mass, or Erdos 7 counterexample.",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "heights": [
+    5,
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    3
+  ],
+  "mixed_labels": 2138,
+  "star_labels": 42,
+  "root_assignment_counts": {
+    "1": 187,
+    "2": 1951
+  },
+  "mixed_divisor_closure_edges": 6178,
+  "per_label_cr9_checks": 7328,
+  "pair_constraints": 55,
+  "root_pair_constraints": 110,
+  "square_constraints": 11,
+  "root_square_constraints": 22,
+  "pair_table": [
+    {
+      "pair": [
+        5,
+        7
+      ],
+      "count": 34,
+      "total_cap": 43,
+      "root_counts": [
+        21,
+        13
+      ],
+      "root_cap": 27,
+      "root_caps": [
+        21,
+        24
+      ]
+    },
+    {
+      "pair": [
+        5,
+        11
+      ],
+      "count": 41,
+      "total_cap": 71,
+      "root_counts": [
+        31,
+        10
+      ],
+      "root_cap": 43,
+      "root_caps": [
+        33,
+        40
+      ]
+    },
+    {
+      "pair": [
+        5,
+        13
+      ],
+      "count": 39,
+      "total_cap": 85,
+      "root_counts": [
+        35,
+        4
+      ],
+      "root_cap": 51,
+      "root_caps": [
+        39,
+        48
+      ]
+    },
+    {
+      "pair": [
+        5,
+        17
+      ],
+      "count": 43,
+      "total_cap": 113,
+      "root_counts": [
+        39,
+        4
+      ],
+      "root_cap": 67,
+      "root_caps": [
+        51,
+        64
+      ]
+    },
+    {
+      "pair": [
+        5,
+        19
+      ],
+      "count": 47,
+      "total_cap": 127,
+      "root_counts": [
+        45,
+        2
+      ],
+      "root_cap": 75,
+      "root_caps": [
+        57,
+        72
+      ]
+    },
+    {
+      "pair": [
+        5,
+        23
+      ],
+      "count": 49,
+      "total_cap": 155,
+      "root_counts": [
+        47,
+        2
+      ],
+      "root_cap": 91,
+      "root_caps": [
+        69,
+        88
+      ]
+    },
+    {
+      "pair": [
+        5,
+        29
+      ],
+      "count": 39,
+      "total_cap": 197,
+      "root_counts": [
+        38,
+        1
+      ],
+      "root_cap": 115,
+      "root_caps": [
+        87,
+        112
+      ]
+    },
+    {
+      "pair": [
+        5,
+        31
+      ],
+      "count": 38,
+      "total_cap": 211,
+      "root_counts": [
+        38,
+        0
+      ],
+      "root_cap": 123,
+      "root_caps": [
+        93,
+        120
+      ]
+    },
+    {
+      "pair": [
+        5,
+        37
+      ],
+      "count": 31,
+      "total_cap": 253,
+      "root_counts": [
+        30,
+        1
+      ],
+      "root_cap": 147,
+      "root_caps": [
+        111,
+        144
+      ]
+    },
+    {
+      "pair": [
+        5,
+        41
+      ],
+      "count": 31,
+      "total_cap": 281,
+      "root_counts": [
+        31,
+        0
+      ],
+      "root_cap": 163,
+      "root_caps": [
+        123,
+        160
+      ]
+    },
+    {
+      "pair": [
+        7,
+        11
+      ],
+      "count": 50,
+      "total_cap": 114,
+      "root_counts": [
+        0,
+        50
+      ],
+      "root_cap": 65,
+      "root_caps": [
+        65,
+        50
+      ]
+    },
+    {
+      "pair": [
+        7,
+        13
+      ],
+      "count": 63,
+      "total_cap": 136,
+      "root_counts": [
+        4,
+        59
+      ],
+      "root_cap": 77,
+      "root_caps": [
+        77,
+        60
+      ]
+    },
+    {
+      "pair": [
+        7,
+        17
+      ],
+      "count": 68,
+      "total_cap": 180,
+      "root_counts": [
+        2,
+        66
+      ],
+      "root_cap": 101,
+      "root_caps": [
+        101,
+        80
+      ]
+    },
+    {
+      "pair": [
+        7,
+        19
+      ],
+      "count": 68,
+      "total_cap": 202,
+      "root_counts": [
+        3,
+        65
+      ],
+      "root_cap": 113,
+      "root_caps": [
+        113,
+        90
+      ]
+    },
+    {
+      "pair": [
+        7,
+        23
+      ],
+      "count": 65,
+      "total_cap": 246,
+      "root_counts": [
+        3,
+        62
+      ],
+      "root_cap": 137,
+      "root_caps": [
+        137,
+        110
+      ]
+    },
+    {
+      "pair": [
+        7,
+        29
+      ],
+      "count": 57,
+      "total_cap": 312,
+      "root_counts": [
+        1,
+        56
+      ],
+      "root_cap": 173,
+      "root_caps": [
+        173,
+        140
+      ]
+    },
+    {
+      "pair": [
+        7,
+        31
+      ],
+      "count": 56,
+      "total_cap": 334,
+      "root_counts": [
+        1,
+        55
+      ],
+      "root_cap": 185,
+      "root_caps": [
+        185,
+        150
+      ]
+    },
+    {
+      "pair": [
+        7,
+        37
+      ],
+      "count": 54,
+      "total_cap": 400,
+      "root_counts": [
+        1,
+        53
+      ],
+      "root_cap": 221,
+      "root_caps": [
+        221,
+        180
+      ]
+    },
+    {
+      "pair": [
+        7,
+        41
+      ],
+      "count": 51,
+      "total_cap": 444,
+      "root_counts": [
+        1,
+        50
+      ],
+      "root_cap": 245,
+      "root_caps": [
+        245,
+        200
+      ]
+    },
+    {
+      "pair": [
+        11,
+        13
+      ],
+      "count": 114,
+      "total_cap": 236,
+      "root_counts": [
+        8,
+        106
+      ],
+      "root_cap": 129,
+      "root_caps": [
+        129,
+        108
+      ]
+    },
+    {
+      "pair": [
+        11,
+        17
+      ],
+      "count": 133,
+      "total_cap": 312,
+      "root_counts": [
+        6,
+        127
+      ],
+      "root_cap": 169,
+      "root_caps": [
+        169,
+        144
+      ]
+    },
+    {
+      "pair": [
+        11,
+        19
+      ],
+      "count": 140,
+      "total_cap": 350,
+      "root_counts": [
+        6,
+        134
+      ],
+      "root_cap": 189,
+      "root_caps": [
+        189,
+        162
+      ]
+    },
+    {
+      "pair": [
+        11,
+        23
+      ],
+      "count": 145,
+      "total_cap": 426,
+      "root_counts": [
+        4,
+        141
+      ],
+      "root_cap": 229,
+      "root_caps": [
+        229,
+        198
+      ]
+    },
+    {
+      "pair": [
+        11,
+        29
+      ],
+      "count": 138,
+      "total_cap": 540,
+      "root_counts": [
+        3,
+        135
+      ],
+      "root_cap": 289,
+      "root_caps": [
+        289,
+        252
+      ]
+    },
+    {
+      "pair": [
+        11,
+        31
+      ],
+      "count": 134,
+      "total_cap": 578,
+      "root_counts": [
+        3,
+        131
+      ],
+      "root_cap": 309,
+      "root_caps": [
+        309,
+        270
+      ]
+    },
+    {
+      "pair": [
+        11,
+        37
+      ],
+      "count": 117,
+      "total_cap": 692,
+      "root_counts": [
+        1,
+        116
+      ],
+      "root_cap": 369,
+      "root_caps": [
+        369,
+        324
+      ]
+    },
+    {
+      "pair": [
+        11,
+        41
+      ],
+      "count": 107,
+      "total_cap": 768,
+      "root_counts": [
+        1,
+        106
+      ],
+      "root_cap": 409,
+      "root_caps": [
+        409,
+        360
+      ]
+    },
+    {
+      "pair": [
+        13,
+        17
+      ],
+      "count": 147,
+      "total_cap": 378,
+      "root_counts": [
+        7,
+        140
+      ],
+      "root_cap": 203,
+      "root_caps": [
+        203,
+        176
+      ]
+    },
+    {
+      "pair": [
+        13,
+        19
+      ],
+      "count": 159,
+      "total_cap": 424,
+      "root_counts": [
+        6,
+        153
+      ],
+      "root_cap": 227,
+      "root_caps": [
+        227,
+        198
+      ]
+    },
+    {
+      "pair": [
+        13,
+        23
+      ],
+      "count": 176,
+      "total_cap": 516,
+      "root_counts": [
+        4,
+        172
+      ],
+      "root_cap": 275,
+      "root_caps": [
+        275,
+        242
+      ]
+    },
+    {
+      "pair": [
+        13,
+        29
+      ],
+      "count": 165,
+      "total_cap": 654,
+      "root_counts": [
+        4,
+        161
+      ],
+      "root_cap": 347,
+      "root_caps": [
+        347,
+        308
+      ]
+    },
+    {
+      "pair": [
+        13,
+        31
+      ],
+      "count": 162,
+      "total_cap": 700,
+      "root_counts": [
+        3,
+        159
+      ],
+      "root_cap": 371,
+      "root_caps": [
+        371,
+        330
+      ]
+    },
+    {
+      "pair": [
+        13,
+        37
+      ],
+      "count": 153,
+      "total_cap": 838,
+      "root_counts": [
+        1,
+        152
+      ],
+      "root_cap": 443,
+      "root_caps": [
+        443,
+        396
+      ]
+    },
+    {
+      "pair": [
+        13,
+        41
+      ],
+      "count": 142,
+      "total_cap": 930,
+      "root_counts": [
+        1,
+        141
+      ],
+      "root_cap": 491,
+      "root_caps": [
+        491,
+        440
+      ]
+    },
+    {
+      "pair": [
+        17,
+        19
+      ],
+      "count": 205,
+      "total_cap": 572,
+      "root_counts": [
+        10,
+        195
+      ],
+      "root_cap": 303,
+      "root_caps": [
+        303,
+        270
+      ]
+    },
+    {
+      "pair": [
+        17,
+        23
+      ],
+      "count": 196,
+      "total_cap": 696,
+      "root_counts": [
+        8,
+        188
+      ],
+      "root_cap": 367,
+      "root_caps": [
+        367,
+        330
+      ]
+    },
+    {
+      "pair": [
+        17,
+        29
+      ],
+      "count": 188,
+      "total_cap": 882,
+      "root_counts": [
+        5,
+        183
+      ],
+      "root_cap": 463,
+      "root_caps": [
+        463,
+        420
+      ]
+    },
+    {
+      "pair": [
+        17,
+        31
+      ],
+      "count": 187,
+      "total_cap": 944,
+      "root_counts": [
+        4,
+        183
+      ],
+      "root_cap": 495,
+      "root_caps": [
+        495,
+        450
+      ]
+    },
+    {
+      "pair": [
+        17,
+        37
+      ],
+      "count": 181,
+      "total_cap": 1130,
+      "root_counts": [
+        3,
+        178
+      ],
+      "root_cap": 591,
+      "root_caps": [
+        591,
+        540
+      ]
+    },
+    {
+      "pair": [
+        17,
+        41
+      ],
+      "count": 174,
+      "total_cap": 1254,
+      "root_counts": [
+        3,
+        171
+      ],
+      "root_cap": 655,
+      "root_caps": [
+        655,
+        600
+      ]
+    },
+    {
+      "pair": [
+        19,
+        23
+      ],
+      "count": 210,
+      "total_cap": 786,
+      "root_counts": [
+        10,
+        200
+      ],
+      "root_cap": 413,
+      "root_caps": [
+        413,
+        374
+      ]
+    },
+    {
+      "pair": [
+        19,
+        29
+      ],
+      "count": 191,
+      "total_cap": 996,
+      "root_counts": [
+        6,
+        185
+      ],
+      "root_cap": 521,
+      "root_caps": [
+        521,
+        476
+      ]
+    },
+    {
+      "pair": [
+        19,
+        31
+      ],
+      "count": 188,
+      "total_cap": 1066,
+      "root_counts": [
+        6,
+        182
+      ],
+      "root_cap": 557,
+      "root_caps": [
+        557,
+        510
+      ]
+    },
+    {
+      "pair": [
+        19,
+        37
+      ],
+      "count": 180,
+      "total_cap": 1276,
+      "root_counts": [
+        4,
+        176
+      ],
+      "root_cap": 665,
+      "root_caps": [
+        665,
+        612
+      ]
+    },
+    {
+      "pair": [
+        19,
+        41
+      ],
+      "count": 173,
+      "total_cap": 1416,
+      "root_counts": [
+        4,
+        169
+      ],
+      "root_cap": 737,
+      "root_caps": [
+        737,
+        680
+      ]
+    },
+    {
+      "pair": [
+        23,
+        29
+      ],
+      "count": 210,
+      "total_cap": 1224,
+      "root_counts": [
+        8,
+        202
+      ],
+      "root_cap": 637,
+      "root_caps": [
+        637,
+        588
+      ]
+    },
+    {
+      "pair": [
+        23,
+        31
+      ],
+      "count": 210,
+      "total_cap": 1310,
+      "root_counts": [
+        8,
+        202
+      ],
+      "root_cap": 681,
+      "root_caps": [
+        681,
+        630
+      ]
+    },
+    {
+      "pair": [
+        23,
+        37
+      ],
+      "count": 207,
+      "total_cap": 1568,
+      "root_counts": [
+        8,
+        199
+      ],
+      "root_cap": 813,
+      "root_caps": [
+        813,
+        756
+      ]
+    },
+    {
+      "pair": [
+        23,
+        41
+      ],
+      "count": 200,
+      "total_cap": 1740,
+      "root_counts": [
+        7,
+        193
+      ],
+      "root_cap": 901,
+      "root_caps": [
+        901,
+        840
+      ]
+    },
+    {
+      "pair": [
+        29,
+        31
+      ],
+      "count": 237,
+      "total_cap": 1676,
+      "root_counts": [
+        8,
+        229
+      ],
+      "root_cap": 867,
+      "root_caps": [
+        867,
+        810
+      ]
+    },
+    {
+      "pair": [
+        29,
+        37
+      ],
+      "count": 228,
+      "total_cap": 2006,
+      "root_counts": [
+        6,
+        222
+      ],
+      "root_cap": 1035,
+      "root_caps": [
+        1035,
+        972
+      ]
+    },
+    {
+      "pair": [
+        29,
+        41
+      ],
+      "count": 219,
+      "total_cap": 2226,
+      "root_counts": [
+        6,
+        213
+      ],
+      "root_cap": 1147,
+      "root_caps": [
+        1147,
+        1080
+      ]
+    },
+    {
+      "pair": [
+        31,
+        37
+      ],
+      "count": 230,
+      "total_cap": 2152,
+      "root_counts": [
+        7,
+        223
+      ],
+      "root_cap": 1109,
+      "root_caps": [
+        1109,
+        1044
+      ]
+    },
+    {
+      "pair": [
+        31,
+        41
+      ],
+      "count": 224,
+      "total_cap": 2388,
+      "root_counts": [
+        6,
+        218
+      ],
+      "root_cap": 1229,
+      "root_caps": [
+        1229,
+        1160
+      ]
+    },
+    {
+      "pair": [
+        37,
+        41
+      ],
+      "count": 234,
+      "total_cap": 2874,
+      "root_counts": [
+        6,
+        228
+      ],
+      "root_cap": 1475,
+      "root_caps": [
+        1475,
+        1400
+      ]
+    }
+  ],
+  "square_table": [
+    {
+      "prime": 5,
+      "mixed": 27,
+      "stars": 4,
+      "total": 31,
+      "total_cap": 65,
+      "root_counts": [
+        29,
+        2
+      ],
+      "root_cap": 38,
+      "root_caps": [
+        29,
+        38
+      ]
+    },
+    {
+      "prime": 7,
+      "mixed": 72,
+      "stars": 4,
+      "total": 76,
+      "total_cap": 149,
+      "root_counts": [
+        7,
+        69
+      ],
+      "root_cap": 82,
+      "root_caps": [
+        82,
+        69
+      ]
+    },
+    {
+      "prime": 11,
+      "mixed": 198,
+      "stars": 3,
+      "total": 201,
+      "total_cap": 413,
+      "root_counts": [
+        9,
+        192
+      ],
+      "root_cap": 218,
+      "root_caps": [
+        218,
+        197
+      ]
+    },
+    {
+      "prime": 13,
+      "mixed": 231,
+      "stars": 3,
+      "total": 234,
+      "total_cap": 593,
+      "root_counts": [
+        9,
+        225
+      ],
+      "root_cap": 310,
+      "root_caps": [
+        310,
+        285
+      ]
+    },
+    {
+      "prime": 17,
+      "mixed": 235,
+      "stars": 3,
+      "total": 238,
+      "total_cap": 1049,
+      "root_counts": [
+        10,
+        228
+      ],
+      "root_cap": 542,
+      "root_caps": [
+        542,
+        509
+      ]
+    },
+    {
+      "prime": 19,
+      "mixed": 225,
+      "stars": 3,
+      "total": 228,
+      "total_cap": 1325,
+      "root_counts": [
+        10,
+        218
+      ],
+      "root_cap": 682,
+      "root_caps": [
+        682,
+        645
+      ]
+    },
+    {
+      "prime": 23,
+      "mixed": 229,
+      "stars": 3,
+      "total": 232,
+      "total_cap": 1973,
+      "root_counts": [
+        9,
+        223
+      ],
+      "root_cap": 1010,
+      "root_caps": [
+        1010,
+        965
+      ]
+    },
+    {
+      "prime": 29,
+      "mixed": 222,
+      "stars": 2,
+      "total": 224,
+      "total_cap": 3185,
+      "root_counts": [
+        8,
+        216
+      ],
+      "root_cap": 1622,
+      "root_caps": [
+        1622,
+        1565
+      ]
+    },
+    {
+      "prime": 31,
+      "mixed": 223,
+      "stars": 2,
+      "total": 225,
+      "total_cap": 3653,
+      "root_counts": [
+        7,
+        218
+      ],
+      "root_cap": 1858,
+      "root_caps": [
+        1858,
+        1797
+      ]
+    },
+    {
+      "prime": 37,
+      "mixed": 220,
+      "stars": 2,
+      "total": 222,
+      "total_cap": 5249,
+      "root_counts": [
+        6,
+        216
+      ],
+      "root_cap": 2662,
+      "root_caps": [
+        2662,
+        2589
+      ]
+    },
+    {
+      "prime": 41,
+      "mixed": 213,
+      "stars": 2,
+      "total": 215,
+      "total_cap": 6473,
+      "root_counts": [
+        6,
+        209
+      ],
+      "root_cap": 3278,
+      "root_caps": [
+        3278,
+        3197
+      ]
+    }
+  ],
+  "source_caps": {
+    "5": "3125/2344",
+    "7": "16807/14006",
+    "11": "14641/13177",
+    "13": "28561/26181",
+    "17": "83521/78301",
+    "19": "130321/123081",
+    "23": "279841/267121",
+    "29": "24389/23518",
+    "31": "29791/28798",
+    "37": "50653/49246",
+    "41": "68921/67198"
+  },
+  "coordinate_budgets": {
+    "5": "781/2344",
+    "7": "2801/14006",
+    "11": "1464/13177",
+    "13": "2380/26181",
+    "17": "5220/78301",
+    "19": "7240/123081",
+    "23": "12720/267121",
+    "29": "871/23518",
+    "31": "993/28798",
+    "37": "1407/49246",
+    "41": "1723/67198"
+  },
+  "carrier_by_root": {
+    "1": "1563/2344",
+    "2": "34131540122345475220885010904351679329375/71709580339664539335109068655487743718368"
+  },
+  "free_charge_by_root": {
+    "1": "2997582507490764544372269304715762233498576991/6240239390737947877480526263469198946116101728",
+    "2": "71111210362071071313511385990037269597592178025/220026218517871347383757814919358422100093660928"
+  },
+  "selected_charge_by_root": {
+    "1": "23835644359680314408085864305518549639033296793/111135692006475833627510324882737162183210573632",
+    "2": "442558751803596919785673981290422413620144399047/2333849532135992506177716822537480405847422046272"
+  },
+  "endpoints": [
+    "-2408151122759878659324596276092640488806533531741/65347786899807790172976071031049451363727817295616",
+    "-65412811398963818975709603474259586033354459743/2333849532135992506177716822537480405847422046272"
+  ],
+  "endpoint_decimals": [
+    -0.03685130341830998,
+    -0.028027861478754596
+  ],
+  "strict_upper_threshold": "-1/100",
+  "capacity_contract": "actual-star-roots",
+  "source_budget_by_root": {
+    "1": {
+      "5": "781/2344",
+      "7": "0",
+      "11": "0",
+      "13": "0",
+      "17": "0",
+      "19": "0",
+      "23": "0",
+      "29": "0",
+      "31": "0",
+      "37": "0",
+      "41": "0"
+    },
+    "2": {
+      "5": "0",
+      "7": "2801/14006",
+      "11": "1464/13177",
+      "13": "2380/26181",
+      "17": "5220/78301",
+      "19": "7240/123081",
+      "23": "12720/267121",
+      "29": "871/23518",
+      "31": "993/28798",
+      "37": "1407/49246",
+      "41": "1723/67198"
+    }
+  }
+}

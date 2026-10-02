@@ -1,0 +1,45 @@
+**良定义与满射像并：**
+
+$$
+\tau_{A,C;e}^F
+\text{ 良定义},
+\qquad
+\mathsf S_C(F)
+=
+\bigcup_{e\in X_E}
+\operatorname{im}(\tau_{A,C;e}^F).
+$$
+
+因此，令
+
+$$
+r_{A,C}^F(e)
+=
+\left|\operatorname{im}(\tau_{A,C;e}^F)\right|,
+$$
+
+则有精确容量公式
+
+$$
+\boxed{
+\kappa_C(F)
+=
+\left|
+\bigcup_{e\in X_E}
+\operatorname{im}(\tau_{A,C;e}^F)
+\right|.
+}
+$$
+
+特别地，
+
+$$
+\max_{e\in X_E}r_{A,C}^F(e)
+\leq
+\kappa_C(F)
+\leq
+\sum_{e\in X_E}r_{A,C}^F(e)
+\leq
+|X_E|\,\kappa_A(F).
+$$
+

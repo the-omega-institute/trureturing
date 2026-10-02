@@ -33,8 +33,13 @@ for argument in "$@"; do
   fi
 done
 
+# The standalone evidence tool references Engine and validates TRX without
+# compiling Scribe documents. Build it here when the test project does not.
+dotnet build "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" --configuration Release \
+  -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet
+
 owner_assemblies="$(dotnet run \
-  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --project "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
   list-test-owner-assemblies --repository "$ROOT" --target "$test_target" --filtered "$filtered")"
 while IFS= read -r owner_assembly; do
@@ -43,7 +48,7 @@ while IFS= read -r owner_assembly; do
 done <<< "$owner_assemblies"
 
 dotnet run \
-  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --project "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
   verify-trx --results-directory "$RESULTS_DIRECTORY" \
   ${OWNER_ASSEMBLY_ARGS[@]+"${OWNER_ASSEMBLY_ARGS[@]}"}

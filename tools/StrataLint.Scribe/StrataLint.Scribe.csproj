@@ -7,7 +7,12 @@
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../Trureturing.Truth/Trureturing.Truth.csproj" />
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" GeneratePathProperty="true" />
+    <None Include="$(PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers)/analyzers/dotnet/cs/Microsoft.CodeAnalysis.BannedApiAnalyzers.dll"
+          Link="Scripting/Microsoft.CodeAnalysis.BannedApiAnalyzers.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers)/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll"
+          Link="Scripting/Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../Architecture/BannedSymbols*.txt" Link="Scripting/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="Vendor/Katex/katex.min.js" LogicalName="katex.min.js" />
     <PackageReference Include="Jint" />
     <PackageReference Include="QuestPDF" />
@@ -16,4 +21,12 @@
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
   </ItemGroup>
+  <Target Name="ExportScribeScriptDefineConstants" BeforeTargets="GetAssemblyAttributes"
+          DependsOnTargets="AddImplicitDefineConstants">
+    <Error Condition="'$(DefineConstants)' == ''"
+           Text="Scribe DefineConstants are unavailable." />
+    <ItemGroup>
+      <AssemblyMetadata Include="ScribeScriptDefineConstants" Value="$(DefineConstants)" />
+    </ItemGroup>
+  </Target>
 </Project>

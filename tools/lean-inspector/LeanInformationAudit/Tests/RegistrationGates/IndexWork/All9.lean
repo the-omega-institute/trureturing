@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.All1
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Extra8
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 measure_imported_template_query 9 0

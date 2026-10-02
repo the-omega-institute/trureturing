@@ -1,4 +1,7 @@
 import Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions

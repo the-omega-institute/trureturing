@@ -1,0 +1,8 @@
+**支持性：** 若两个延拓在 $\Sigma_v$ 上相同，则
+
+$$
+H|_{\Sigma_v}=H'|_{\Sigma_v}
+\quad\Longrightarrow\quad
+c_v(H)=c_v(H').
+$$
+

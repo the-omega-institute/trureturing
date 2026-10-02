@@ -1,0 +1,37 @@
+### 247.1 同一来源下的导数差
+
+记 $t=\log x$、$w(x)=(t+1)/(x^2t^2)>0$，$x>1$，并令
+
+$$
+b(x)=\frac1{\sqrt x\log x},\qquad
+V_K(x)=\Phi(x)+Kb(x),\qquad K\ge0,
+\tag{247.1}
+$$
+
+其中 $K$ 固定。完整裕度仍记作 $\mathfrak D=\Phi+R$。
+$A^-$、$A^+$ 使用定义 111.1 的严格与含同价层端点，$\Psi$ 右连续。
+在共同无事件的点，有
+
+$$
+\begin{aligned}
+\mathfrak D'(x)&=(x-A(x))w(x),\\
+V_K'(x)&=(T_K(x)-\Psi(x))w(x),\\
+T_K(x)&=x-\frac{K\sqrt x(t+2)}{2(t+1)}.
+\end{aligned}
+\tag{247.2}
+$$
+
+**证明。** 复用命题 98.2 的两项导数，并直接微分 $b$：
+$b'=-\sqrt x(t+2)w/(2(t+1))$。因此
+
+$$
+\boxed{\frac{V_K'-\mathfrak D'}{\sqrt x\,w}
+=\frac{A-\Psi}{\sqrt x}-\frac K2-\frac K{2(t+1)}.}
+\tag{247.3}
+$$
+
+在素数幂事件处，分别用 $\Psi_-$、$\Psi_+$；在价格激活处，分别用 $A^-$、$A^+$。
+式（247.2）与式（247.3）按相同侧的状态给出左右导数，不混用两个端点约定。
+素数幂 $p^k=x$ 的跳幅为 $\log p\le\log x$，
+$V_K'$ 的右减左差为 $-\log p\,w<0$；故该事件不能是 $V_K$ 的局部极小点。
+

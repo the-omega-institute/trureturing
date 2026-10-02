@@ -7,9 +7,8 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FileMapIncludeTests
 {
     private const string FragmentPath = "Meta/FILEMAP.docs.reports.toml";
-    private const string Schema = "schema_version = 5\n";
+    private const string Schema = "schema_version = 6\n";
     private const string Resources = """
-        resources = []
         evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
         """ + "\n";
     private const string Include = "include = [\"FILEMAP.docs.reports.toml\"]\n";
@@ -138,7 +137,7 @@ public sealed class FileMapIncludeTests
     public void DuplicateFragmentKeysAreRejectedByTheStrictDecoder()
     {
         var root = Bytes(Schema + Include + Resources + Residence);
-        var fragment = Bytes(Schema + "schema_version = 5\n" + Entry("docs/**"));
+        var fragment = Bytes(Schema + "schema_version = 6\n" + Entry("docs/**"));
 
         Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(root, "root", _ => fragment));
     }
@@ -227,7 +226,7 @@ public sealed class FileMapIncludeTests
     public void ProtectedBaseSchemaTwoRootRetainsIncludedSymlinkDeclarations()
     {
         var root = Bytes((Schema + Include + Resources + Residence)
-            .Replace("schema_version = 5", "schema_version = 2", StringComparison.Ordinal));
+            .Replace("schema_version = 6", "schema_version = 2", StringComparison.Ordinal));
         var fragment = Bytes("schema_version = 2\n" + Entry("AGENTS.md")
             + "symlink = { target = \"CLAUDE.md\", kind = \"file\" }\n" + Entry("CLAUDE.md"));
 
@@ -333,7 +332,6 @@ public sealed class FileMapIncludeTests
     private static string Entry(string pattern, string plane = "content") => $$"""
         [[files]]
         pattern = "{{pattern}}"
-        require = []
         kind = "data"
         admission_plane = "{{plane}}"
         produced_by = "none"

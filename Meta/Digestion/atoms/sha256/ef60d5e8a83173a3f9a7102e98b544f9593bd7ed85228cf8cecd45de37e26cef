@@ -1,0 +1,18 @@
+**定理 37.1（相容态的双射与拓扑）。** 对每层 positive block densities $\rho_L=(\rho_{L,s})_s$，采用总 trace 一而不要求各块分别 trace 一。则 restriction 给仿射双射
+
+$$
+S(A)\cong
+\left\{(\rho_L)_{L\ge0}:\rho_{L,s}\ge0,
+\ \sum_s\operatorname{Tr}\rho_{L,s}=1,
+\ E_L\rho_{L+1}=\rho_L\right\}.
+\tag{37.1}
+$$
+
+$S(A)$ 的 weak-star topology 与右侧 finite-state-space product topology 同胚。
+
+证明。AF 态限制到每个 $j_L(A_L)$ 给唯一普通 block density。$j_{L+1}i_L=j_L$ 及 $E_L^\dagger=i_L$ 给相容式。反向在 dense algebraic union 定义 $\varphi(j_L(a))=\operatorname{Tr}_L(\rho_La)$；将任意两个表示送到共同更高层，重复迹对偶证明值一致。各层 positive normalized，所以 $|\varphi(a)|\le\|a\|$；唯一连续延拓到 $A$，仍 positive normalized。若两态有限层限制一致，稠密性使其全域一致。构造保持凸组合。
+
+weak-star 收敛使每个有限层 density 收敛。反向，所有态范数一，将任意 $a\in A$ 范数逼近到固定 finite level，误差对态统一受控，再用该层收敛即得 weak-star 收敛。因此映射及逆均连续。此处固定层的条目、trace-norm、弱收敛等价；不声称全 AF 态的范数收敛。$\square$
+
+给定一层 density 与全部未来 section 选择，递推 $\rho_{L+1}=R_L\rho_L$，旧层由连续 $E$ 粗化，便得一个相容无限延拓。固定种子和 section 族时该递推唯一；只给相容条件时不唯一。
+

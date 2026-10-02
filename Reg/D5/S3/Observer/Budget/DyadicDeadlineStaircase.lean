@@ -79,18 +79,6 @@ register_information_theorem exceptional_prefix_timing in timingArena
       stateBinder := 0 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Observer.Budget.DyadicDeadlineStaircase.exceptional_prefix_timing
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do
-    throwError "exceptional_prefix_timing lacks declared_validated binding"
-  logInfo "[PASS] exceptional_prefix_timing declared_validated"
-
 #print axioms timingRegistration
 
 end Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase

@@ -1,0 +1,13 @@
+**命题（来源深度预算）。** 对 $k\ge1$、$\delta\ge0$，在扩展非负实数中有
+
+$$
+\boxed{R_k(s)\le F_{3k}^{-\delta}L(s-\delta).}
+\tag{246.5}
+$$
+
+特别地，若 $\delta>0$ 且 $C=L(s-\delta)<\infty$，则
+$R_k(s)\le C F_{3k}^{-\delta}\to0$。
+由 $F_{3k}\sim\varphi^{3k}/\sqrt5$，其中 $\varphi=(1+\sqrt5)/2$，
+当 $C>0$ 时，该上界渐近为 $C5^{\delta/2}\varphi^{-3\delta k}$；$C=0$ 时所有 $R_k(s)=0$。
+这是上界的渐近式，不断言实际余量达到该值。
+

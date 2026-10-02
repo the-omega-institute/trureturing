@@ -47,8 +47,8 @@ public sealed class RepositoryPolicyLoaderTests
     {
         var fileMap = mutateFileMap
             ? CanonicalFileMap.Replace(
-                "schema_version = 5",
-                "schema_version = 0x5",
+                "schema_version = 6",
+                "schema_version = 0x6",
                 StringComparison.Ordinal)
             : CanonicalFileMap;
         var domains = mutateFileMap
@@ -73,7 +73,7 @@ public sealed class RepositoryPolicyLoaderTests
 
     public static TheoryData<string, string, string> InvalidDocuments => new()
     {
-        { CanonicalFileMap.Replace("schema_version = 5", "schema_version = 4", StringComparison.Ordinal), TestFileMap.Domains, "schema_version" },
+        { CanonicalFileMap.Replace("schema_version = 6", "schema_version = 4", StringComparison.Ordinal), TestFileMap.Domains, "schema_version" },
         { "unknown_key = true\n" + CanonicalFileMap, TestFileMap.Domains, "unknown" },
         { CanonicalFileMap, TestFileMap.Domains + "domains: {}\n", "duplicate" },
         { CanonicalFileMap, TestFileMap.Domains.Replace("domains:", "domains: &root", StringComparison.Ordinal), "anchor" },

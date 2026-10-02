@@ -146,7 +146,7 @@ finds
 
 in each of the six shapes. Hence the actual uniform H6 is exactly10/N
 for every b. This scalar numerator cannot be reused unchanged for a
-nonuniform source; weighted H6 is separately enumerated below.
+nonuniform source; (W) gives a separate upper bound for weighted H6.
 
 The final group key is(N,M,K,J). All four entries belong to the SAME b.
 Grouping neither identifies their extrema across sources nor changes the

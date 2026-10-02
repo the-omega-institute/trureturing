@@ -7,6 +7,12 @@ Declaration namespaces do not identify the package that supplied a definition. -
 def isInspectorModule (name : Lean.Name) : Bool :=
   (`LeanInformationAudit).isPrefixOf name || (`LeanInformationAuditInterface).isPrefixOf name
 
+/-- The implementation package and its downstream test/analysis host share
+this source directory. These are library namespaces, not individual module pins. -/
+def isImplementationSourceModule (name : Lean.Name) : Bool :=
+  #[`LeanInformationAudit, `LeanInformationAuditAnalysis,
+    `LeanInformationAuditRegTests, `LeanInformationAuditRegAnalysis].contains name.getRoot
+
 /-- Local data/type bodies include registration support; external libraries remain
 opaque. This classifies a supplied owner, without enumerating loaded modules. -/
 def isModule (name : Lean.Name) : Bool :=
@@ -29,3 +35,12 @@ def source (path : String) : IO System.FilePath := do
   return (← root) / path
 
 end LeanInformationAudit.Repository
+
+namespace LeanInformationAudit.TemplateAudit
+
+def sourcePath (name : Lean.Name) : String :=
+  (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"
+    else if Repository.isImplementationSourceModule name then "tools/lean-inspector/" else "") ++
+    name.toString.replace "." "/" ++ ".lean"
+
+end LeanInformationAudit.TemplateAudit

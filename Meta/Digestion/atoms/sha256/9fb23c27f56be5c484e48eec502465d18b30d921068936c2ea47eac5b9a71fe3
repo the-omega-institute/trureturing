@@ -1,0 +1,11 @@
+## Scope
+
+This is an obstruction for the normal (regular-cover) Coxeter-sector construction of CFMP_CYCLE_DEGREE9.md. It does not rule out an arbitrary pseudo-simplicial face pairing of 24 tetrahedra. The six-sector block is the regular Coxeter block KQ, with
+
+    W = <a,b,c,d | a²=b²=c²=d²=1,
+        (ab)^4=(bc)^9=(cd)^3=1,
+        [a,c]=[a,d]=[b,d]=1>,
+    W+ = ker(det:W -> {+1,-1}),
+
+and K=<c,d> ~= S3, |K|=6. A torsionfree subgroup Gamma <= W+ gives N=[W+:Gamma]/3 tetrahedral blocks; the regular finite-cover route asks for Gamma normal in W+.
+

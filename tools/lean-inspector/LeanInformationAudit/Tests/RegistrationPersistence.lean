@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationErrors
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 
@@ -47,13 +50,13 @@ run_cmd do
   let some entry := InformationRegistry.find? env
       `LeanInformationAudit.Tests.RegistrationErrors.nativeExample
     | throwError "missing persisted native registration"
-  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env entry with
+  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env.header.mainModule env entry with
   | .ok () => pure ()
   | .error message => throwError message
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors","LeanInformationAudit.Tests.RegistrationPersistence"] count=2 -/
 #guard_msgs (error) in
-register_information_theorem
+test_assess in register_information_theorem
   LeanInformationAudit.Tests.RegistrationErrors.legacyExample
   in LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
   primitives LeanInformationAudit.Tests.RegistrationErrors.fixtureBundle
@@ -100,7 +103,7 @@ run_cmd do
   let caught ← indexException <|
     LeanInformationAudit.registrationTransaction do
       Lean.Elab.Command.elabCommand (← `(command|
-        information_theorem $target
+        test_assess in information_theorem $target
           in LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
           primitives LeanInformationAudit.Tests.RegistrationErrors.fixtureRealization
           : LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena.Law
@@ -116,7 +119,7 @@ run_cmd do
         throwError "insertion changed imported entry order or identities"
       let beforeDuplicate ← getEnv
       let duplicate ← indexException do
-        discard <| registerSemanticEntry inserted
+        discard <| registerSemanticEntry (← getEnv).header.mainModule inserted
       let some error := duplicate | throwError "duplicate occurrence was accepted"
       unless (← error.toMessageData.toString).startsWith "IE-C002 DuplicateRegistration" do
         throwError "duplicate occurrence changed its first rejection"

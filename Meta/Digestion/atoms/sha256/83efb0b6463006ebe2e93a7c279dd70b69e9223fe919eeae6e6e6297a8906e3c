@@ -1,0 +1,40 @@
+**引理 194.1（共同实现的两个预算与截断不等式）。** 设整数 $U\ge2$ 的所有素因子属于 $S$，$g\ge1$ 为整数，并令
+
+$$
+N=gU,\qquad L=\log U,\qquad h=\log g,
+$$
+
+$$
+A=\sum_{\substack{p\mid N\\p\in S}}\log p,
+\qquad B=\sum_{\substack{p\mid N\\p\in T}}\log p.
+$$
+
+则同一个实际整数同时满足
+
+$$
+A+B\le L+h,\qquad B\le h.
+\tag{194.3}
+$$
+
+对 $x>1$ 定义
+
+$$
+\ell(x)=\log\frac{x}{x-1},\qquad
+\kappa(x)=\frac{\ell(x)}{\log x},\qquad
+E_S(N)=\prod_{\substack{p\mid N\\p\in S}}(1-1/p)^{-1}.
+$$
+
+函数 $\kappa$ 正且严格递减，并且
+
+$$
+\log E_S(N)
+\le\log P_S(x)+\kappa(x)(A-\vartheta_S(x)).
+\tag{194.4}
+$$
+
+同样的结论适用于 $T$ 与 $B$。
+
+证明。$A+B=\log\operatorname{rad}(N)\le\log N=L+h$。每个属于 $T$ 的实际素因子只能来自 $g$，故其无重复乘积整除 $g$，得到 $B\le h$。这两个约束同时使用同一个 $N$，没有分别优化两个不能共同实现的支撑。
+
+$\ell(x)$ 为正且严格递减，$\log x$ 为正且严格递增，故 $\kappa$ 严格递减。比较实际支撑和截断支撑：每个遗漏的 $p\le x$ 至少扣除 $\kappa(x)\log p$ 的 Euler 对数权重，每个新增的 $p>x$ 至多增加同样的权重。有限求和即得式（194.4）。$\square$
+

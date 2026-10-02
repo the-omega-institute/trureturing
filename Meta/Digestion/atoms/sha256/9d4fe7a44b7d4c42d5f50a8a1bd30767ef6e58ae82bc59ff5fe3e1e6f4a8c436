@@ -1,0 +1,20 @@
+**命题 37.2（指定 Perron trace）。** 令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\lambda=2+\sqrt5=\phi^3,\qquad
+r=(\phi,1)^{\mathsf T},\qquad Br=\lambda r,
+$$
+
+$$
+c_{L,s}=\lambda^{-L}r_s/\phi,
+\qquad\tau_L(a)=\sum_sc_{L,s}\operatorname{Tr}(a_s).
+\tag{37.2}
+$$
+
+这些泛函相容，定义 $A$ 上的 trace state $\tau$。
+
+证明。$\sum_sp_{L,s}c_{L,s}=\lambda^{-L}(1,0)B^Lr/\phi=1$，所以归一化。$\sum_tB_{s,t}c_{L+1,t}=c_{L,s}$ 给嵌入相容，finite positive traces 延拓仍 trace。每条 $e:s\to t$ 若选 $w_e=r_t/(\lambda r_s)$，其出边权重和由 $Br=\lambda r$ 为一，且 $w_ec_{L,s}=c_{L+1,t}$；非相干 section (36.3) 从根态一就生成这个 trace density。$\square$
+
+这是一个明确选择的数学态及边权，不推断来源的物理概率律，也不需要主张 trace 唯一。
+

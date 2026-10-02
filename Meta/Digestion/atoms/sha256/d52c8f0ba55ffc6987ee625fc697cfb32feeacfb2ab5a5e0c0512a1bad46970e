@@ -1,0 +1,51 @@
+**定理 36.1（AF 嵌入的 CPTP 边界及所选 section）。** 令 $\mathcal H_{L,s}=\mathbb C^{W_{L,s}}$。每条实际边 $e:s\to t$ 给等距
+
+$$
+V_e:\mathcal H_{L,s}\to\mathcal H_{L+1,t},\qquad V_e|u\rangle=|ue\rangle.
+$$
+
+固定细终态 $t$ 后，incoming-copy 分解为
+
+$$
+\mathcal H_{L+1,t}=\bigoplus_{s,e:s\to t}V_e\mathcal H_{L,s},
+\qquad\sum_{s,e:s\to t}V_eV_e^*=I_t.
+\tag{36.1}
+$$
+
+各层用普通 block trace $\operatorname{Tr}_L=\sum_s\operatorname{Tr}_{\mathcal H_{L,s}}$。则 $i_L$ 的唯一迹对偶为
+
+$$
+(E_L\sigma)_s=\sum_{t,e:s\to t}V_e^*\sigma_tV_e,
+\qquad E_L^\dagger=i_L,
+\tag{36.2}
+$$
+
+它 CPTP。另选每个非零源块的出边权重
+
+$$
+w_{s,e}\ge0,\qquad\sum_{e:\operatorname{src}(e)=s}w_{s,e}=1,
+$$
+
+便有 CPTP section
+
+$$
+(R_L\rho)_t=\sum_{s,e:s\to t}w_{s,e}V_e\rho_sV_e^*,
+\qquad E_LR_L=\mathrm{id}_{A_L}.
+\tag{36.3}
+$$
+
+证明。每个新路径唯一给旧前缀和末边，故 (36.1) 是正交铺满分解。由 §33 的嵌入 $i_L(a)_t=\sum_{s,e}V_ea_sV_e^*$，迹循环性给 $\operatorname{Tr}_L[aE_L\sigma]=\operatorname{Tr}_{L+1}[i_L(a)\sigma]$，非退化迹配对给唯一性。式 (36.2) 是 CP compression 之和，(36.1) 使其总迹为 $\sum_t\operatorname{Tr}\sigma_t$，所以 CPTP。式 (36.3) 的 Kraus 为 $\sqrt{w_{s,e}}V_e$，源权重归一化给 TP；压缩到一条 incoming copy 时其它正交副本消失，故 $(E_LR_L\rho)_s=\sum_ew_{s,e}\rho_s=\rho_s$。所有证明张量有限参考恒等仍成立；零维旧块直接略去，$L=0$ 时 $E_0$ 是 $M_3\oplus M_2$ 两迹之和。$\square$
+
+$E_L$ 求同 extension 的 diagonal copies 之和，完整保留同一旧终态前缀之间的矩阵元，删掉不同末边或不同旧终态的 incoming-copy 角。没有除以出度：$E_L(I_{L+1})_s=d_sI_s$，$d_0=5,d_1=3$。若额外平均，会破坏本迹约定的 TP；相对地 $i_L$ 含幺而一般不保持普通迹。
+
+出边权重是新选择数据，而不是计数自动生成的 Born law。例如在 $A_1=M_3\oplus M_2\to A_2=M_{13}\oplus M_8$，每源均匀的 $1/5,1/3$ 给
+
+$$
+R_1(\rho)_0=(\rho_0/5)^{\oplus3}\oplus(\rho_1/3)^{\oplus2},
+\qquad
+R_1(\rho)_1=(\rho_0/5)^{\oplus2}\oplus(\rho_1/3).
+\tag{36.4}
+$$
+
+维数分别为 $3\cdot3+2\cdot2=13$、$2\cdot3+1\cdot2=8$；粗化分别求五份旧三维块与三份旧二维块的和，恢复原块。section 选择一份细提升，不能反向恢复所有原细态。
+

@@ -1,0 +1,29 @@
+**约定 28.1（同一实际递归、继承闭块与来源条件）。** 全节条件于假设 24.1 的完整前提，包括它经假设 23.1、21.1 继承的合法域、全局上下包络、黄金锚值、有限捕获和规定深度入周期结论。仍取 $F_0=0$、$F_1=1$、$\alpha=(\sqrt5-1)/2$、$G(n)=\lfloor\alpha(n+1)\rfloor$，始终使用式 (24.1) 的同一个实际序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&T_n(x)&=n-C(x),\\
+x_0&=n-1,&d_n&=C(n-1),\\
+g_n&=T_n^{d_n}(n-1),&C(n)&=C(g_n)+C(n-g_n)\quad(n\ge3).
+\end{aligned}
+$$
+
+上述内步、深度和选择器的定义取整数 $n\ge3$。各实际内步的索引都在 $\{1,\ldots,n-1\}$ 中，所选点仍是从这个起点走恰好 $d_n$ 步取得的相位。不假设 $C$ 单调，不改选盆、入口、深度或返回相位。来源的计算辅助基础仍作为本节未独立核验的条件输入。
+
+对整数 $j\ge4$、实际闭块根 $F_j\le N\le F_{j+1}$，严格沿用式 (24.20)：
+
+$$
+\begin{aligned}
+b&=F_{j+1}-N,&0\le b&\le F_{j-1},\\
+e&=\ell_j(b)=F_j-C(N)\ge0,&D(N)&=C(N)-G(N)\ge0,\\
+\ell_h(t)&=F_h-C(F_{h+1}-t),&
+\zeta_h&=\max\left(1,\left\lfloor\frac{2h-7}{3}\right\rfloor\right)
+\quad(h\ge4,\ 0\le t\le F_{h-1}).
+\end{aligned}
+\tag{28.1}
+$$
+
+$e$ 是上锚高度亏量，$D$ 是规范黄金缺陷，两者不能互换。每个树节点是一个出现节点 $(h,M)$，保留继承阶数 $h$ 及自身缺口 $b_v=F_{h+1}-M$、亏量 $e_v=\ell_h(b_v)$。在 $h\ge6$ 时用实际 $g_M$ 拆分，两个子阶数为 $h-1,h-2$，在四、五阶停止；上端点不重新归阶。同一物理索引的全部出现共享一个实际 $C$、$g$ 和规定深度，各出现节点的质量、阶标和路径仍分别保留。式 (24.21) 的质量、缺口、亏量三项加性，以及式 (24.22) 的零集和正亏量逆二次界，直接作为已证输入使用。
+
+这些接口的不可变来源分别是 [ff6e foundations，§§1、4](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/proof.md)、[ff6e 黄金结构，§§1–2、5–6](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/golden-proof.md)、[ff6e 闭块捕获及锚交集](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/fibonacci-collars.md#intersecting-the-anchor-bounds) 和 [ff6e 递归下降及共享物理行](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/recursive-descent.md)。本节直接复用其实际树与来源基础，不另证参数窗口、共享网络或逆标签接口。
+

@@ -1,0 +1,4 @@
+**定理 144.3（整数端点边界全幺模）。** 对任意上述 $V,E,\operatorname{tail},\operatorname{head}$，
+矩阵 $\partial_{\operatorname{tail},\operatorname{head}}$ 是全幺模的；等价地，对所有 $k,f,g$，
+式（144.3）成立。
+

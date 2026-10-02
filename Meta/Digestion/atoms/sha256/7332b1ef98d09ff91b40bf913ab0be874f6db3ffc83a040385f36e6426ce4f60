@@ -1,0 +1,2 @@
+**定义 2.4（采样合同的时钟与切口）。** 采样记录同时包含 $n,\mathcal T,y$ 和所用仪器。[FIB 第 45 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L2854)给出的粗步长 $g$ 上闭合与细步长 $1$ 上不闭合，适用于其声明的经典来源读数；它不把 $P_y$ 自动变为任意相干操作的充分态。类似地，[FIB 第 46 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L2880)的四端口 Schmidt 谱属于联合单射的模组成采样态。第 9 节使用另一种区域字空间，其切口不由四个时刻端口替代。
+

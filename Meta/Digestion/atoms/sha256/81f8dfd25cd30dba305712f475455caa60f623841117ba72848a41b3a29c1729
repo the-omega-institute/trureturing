@@ -1,0 +1,9 @@
+，而 $e\ge2$ 时
+
+$$
+L_p(e)=
+\begin{cases}
+r_e,&r_e=r_{e-1},\\
+r_e-r_{e-1},&r_e=pr_{e-1}.
+\end{cases}
+$$

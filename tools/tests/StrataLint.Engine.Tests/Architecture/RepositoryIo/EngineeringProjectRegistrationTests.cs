@@ -7,25 +7,11 @@ public sealed class EngineeringProjectRegistrationTests
     private const string Project = "odd/LooksLikeProduction.csproj";
     private const string Misleading = "<Project><PropertyGroup><AssemblyName>Wrong</AssemblyName><IsTestProject>false</IsTestProject></PropertyGroup></Project>";
 
-    [Theory]
-    [InlineData("execution_inputs")]
-    [InlineData("execution_excludes")]
-    [InlineData("execution_environment")]
-    [InlineData("execution_filemap_paths")]
-    public void CurrentNonTestRequiresExplicitNullableExecutionDeclarations(string field)
-    {
-        const string project = "tools/Utility.csproj";
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
-            new EngineeringProjectFixture(project, "Utility", "test-support", false, [])))!;
-        manifest["projects"]![0]!.AsObject().Remove(field);
-        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(Snapshot(manifest.ToJsonString(), (project, "<Project />"))));
-    }
-
     [Fact]
     public void ExplicitClassificationWinsOverNameLocationAndMetadata()
     {
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Equal([Project], TestProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
     }
 
     [Fact]
@@ -50,6 +36,24 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(
             Snapshot(EngineeringRegistrationFixture.Manifest(Test()))));
 
+    [Fact]
+    public void CandidateRegistrationDoesNotRequireCiExecutionFlag()
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!.AsObject().Remove("ci");
+        var topology = RepositoryRules.ReadSnapshotProjects(Snapshot(manifest.ToJsonString(), (Project, Misleading)));
+        Assert.True(Assert.Single(topology.Projects).Registration.IsTest);
+    }
+
+    [Fact]
+    public void CandidateRegistrationRejectsRetiredCiExecutionFlag()
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!["ci"] = true;
+        Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+    }
+
     [Theory]
     [InlineData("{\"version\":1,\"version\":1,\"projects\":[],\"historical_projects\":[]}")]
     [InlineData("{\"version\":1,\"projects\":[],\"historical_projects\":[],\"discovery\":true}")]
@@ -60,25 +64,15 @@ public sealed class EngineeringProjectRegistrationTests
     [Fact]
     public void SupportAndProofRolesDoNotBecomeTestsFromXunitMetadata()
     {
-        var entries = new[] { Test() with { Role = "test-support", Ci = false },
-            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof", Ci = false } };
+        var entries = new[] { Test() with { Role = "test-support" },
+            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof" } };
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(entries),
             entries.Select(entry => (entry.Path, "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>")).ToArray());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Empty(TestProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
     }
 
-    [Fact]
-    public void BasePredatingRegistryUsesCandidateDeclarationsAndStillHasAnExecutionFloor()
-    {
-        var baseline = Snapshot(null, (Project, Misleading));
-        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
-    }
-
-    // Original version-1 row from 653216143592d41af04f03074f33d07668d8d257.
-    // Deliberately independent of the candidate fixture writer and its namespace policy.
+    // Legacy declaration fixture independent of the candidate writer and namespace policy.
     private const string PriorRegistration = """
         {"version":1,"projects":[{
           "path":"tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -94,63 +88,10 @@ public sealed class EngineeringProjectRegistrationTests
         """;
 
     [Fact]
-    public void OriginalTenFieldBaseRegistrationRetainsRemovedProjectInExecutionFloor()
-    {
-        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
-        var baseline = Snapshot(PriorRegistration, (path, Misleading));
-        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest());
-        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
-    }
-
-    [Fact]
-    public void BaseDeclarationReadIgnoresPolicyItDoesNotConsume()
-    {
-        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
-        manifest["projects"]![0]!["execution_inputs"] = new System.Text.Json.Nodes.JsonArray("not-consumed");
-        var baseline = Snapshot(manifest.ToJsonString(), (path, Misleading));
-        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline,
-            Snapshot(EngineeringRegistrationFixture.Manifest()))).ToArray());
-    }
-
-    [Theory]
-    [InlineData("path")]
-    [InlineData("assembly")]
-    [InlineData("role")]
-    [InlineData("ci")]
-    [InlineData("references")]
-    [InlineData("owner")]
-    [InlineData("owned_test_assembly")]
-    [InlineData("test_partition")]
-    public void BaseDeclarationReadRequiresEveryConsumedField(string field)
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
-        manifest["projects"]![0]!.AsObject().Remove(field);
-        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(
-            Snapshot(manifest.ToJsonString()), Snapshot(EngineeringRegistrationFixture.Manifest())));
-        Assert.Contains(field, error.Message);
-    }
-
-    [Fact]
     public void HistoricalProjectionDoesNotRelaxCandidateRegistration()
     {
         var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(Snapshot(PriorRegistration)));
-        Assert.Contains("root_namespace", error.Message);
-    }
-
-    [Fact]
-    public void HistoricalProjectCannotDisappearFromBaseExecutionFloor()
-    {
-        var baseline = Snapshot(null, (Project, Misleading));
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        manifest["historical_projects"] = manifest["projects"]!.DeepClone();
-        manifest["projects"] = new System.Text.Json.Nodes.JsonArray();
-        var candidate = Snapshot(manifest.ToJsonString());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(baseline,
-            Snapshot(EngineeringRegistrationFixture.Manifest())));
+        Assert.Contains("ci", error.Message);
     }
 
     [Fact]
@@ -158,7 +99,7 @@ public sealed class EngineeringProjectRegistrationTests
     {
         const string production = "somewhere/Unexpected.Tests.csproj";
         var manifest = EngineeringRegistrationFixture.Manifest(
-            new EngineeringProjectFixture(production, "Unrelated.Library", "production", false, [], OwnedTestAssembly: "Explicit.Checks"),
+            new EngineeringProjectFixture(production, "Unrelated.Library", "production", [], OwnedTestAssembly: "Explicit.Checks"),
             Test() with { Role = "owned-test", Owner = new(production, "Unrelated.Library"), References = [production] });
         var snapshot = Snapshot(manifest, (production, Misleading), (Project, Misleading));
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
@@ -178,7 +119,7 @@ public sealed class EngineeringProjectRegistrationTests
         var topology = RepositoryRules.ReadTrackedProjects(repository.Path);
         Assert.Equal(Project, Assert.Single(topology.Projects).Path);
         Assert.Equal(Misleading, topology.Projects[0].Content);
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(topology).ToArray());
+        Assert.Equal([Project], TestProjects(topology).ToArray());
 
         // An existing but untracked source cannot discharge a declared Compile input.
         Git("rm", "--cached", source);
@@ -195,94 +136,6 @@ public sealed class EngineeringProjectRegistrationTests
 
         void Git(params string[] arguments) => Assert.Equal(0, TestProcessRunner.Run("git", arguments,
             repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024).ExitCode);
-    }
-
-    [Fact]
-    public void CurrentExecutionDeclarationsAreRequiredButHistoricalBaseMembershipProjectsOldRows()
-    {
-        var old = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        foreach (var field in new[] { "build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths" })
-            old["projects"]![0]!.AsObject().Remove(field);
-        var baseline = Snapshot(old.ToJsonString(), (Project, Misleading));
-        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(baseline));
-        Assert.Equal(Project, Assert.Single(EngineeringProjectRegistry.ReadBase(baseline, candidate)).Path);
-        var current = Assert.Single(EngineeringProjectRegistry.Read(candidate).Projects);
-        Assert.Empty(current.BuildInputs!);
-        Assert.Empty(current.ExecutionInputs!);
-        Assert.Empty(current.ExecutionExcludes!);
-        Assert.Empty(current.ExecutionEnvironment!);
-        Assert.Empty(current.ExecutionFileMapPaths!);
-    }
-
-    [Theory]
-    [InlineData("null")]
-    [InlineData("[null]")]
-    [InlineData("[\"\"]")]
-    [InlineData("[\"../README.md\"]")]
-    [InlineData("[\"/README.md\"]")]
-    [InlineData("[\"docs/../README.md\"]")]
-    [InlineData("[\"docs\\\\input.md\"]")]
-    [InlineData("[\"docs/*.md\"]")]
-    [InlineData("[\"docs/input?.md\"]")]
-    [InlineData("[\"C:/README.md\"]")]
-    [InlineData("[\" README.md\"]")]
-    [InlineData("[\"README.md\",\"README.md\"]")]
-    public void InvalidExecutionFileMapPathsFail(string value)
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
-            Test() with { ExecutionInputs = ["Meta/FILEMAP.toml"] }))!;
-        manifest["projects"]![0]!["execution_filemap_paths"] = System.Text.Json.Nodes.JsonNode.Parse(value);
-        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
-            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
-        Assert.Contains("execution_filemap_paths", error.Message);
-    }
-
-    [Fact]
-    public void CurrentTestRequiresExplicitFileMapPaths()
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        manifest["projects"]![0]!.AsObject().Remove("execution_filemap_paths");
-        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
-            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
-        Assert.Contains("execution_filemap_paths", error.Message);
-    }
-
-    [Theory]
-    [InlineData("production")]
-    [InlineData("test-support")]
-    [InlineData("compile-fail-proof")]
-    public void ExecutionFileMapPathsRequireTestRole(string role)
-    {
-        var project = new EngineeringProjectFixture(Project, "Utility", role, false, [],
-            OwnedTestAssembly: role == "production" ? "Utility.Tests" : null);
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(project))!;
-        manifest["projects"]![0]!["execution_filemap_paths"] = new System.Text.Json.Nodes.JsonArray();
-        Assert.Contains("test role", Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
-            Snapshot(manifest.ToJsonString(), (Project, Misleading)))).Message);
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ExecutionFileMapPathsRequireIncludedRuntimeFileMap(bool excluded)
-    {
-        var declaration = Test() with { ExecutionFileMapPaths = ["docs/virtual.md"],
-            ExecutionInputs = excluded ? ["Meta/**"] : [],
-            ExecutionExcludes = excluded ? ["Meta/FILEMAP.toml"] : [] };
-        Assert.Contains("execution_filemap_paths", Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
-            Snapshot(EngineeringRegistrationFixture.Manifest(declaration), (Project, Misleading)))).Message);
-    }
-
-    [Theory]
-    [InlineData("Meta/FILEMAP.toml")]
-    [InlineData("Meta/**")]
-    public void ExecutionFileMapPathsDoNotRequirePhysicalExampleFiles(string runtimeInput)
-    {
-        var declaration = Test() with { ExecutionInputs = [runtimeInput], ExecutionFileMapPaths = ["docs/virtual.md"] };
-        var registry = EngineeringProjectRegistry.Read(Snapshot(EngineeringRegistrationFixture.Manifest(declaration),
-            (Project, Misleading), ("Meta/FILEMAP.toml", "schema_version = 5")));
-        Assert.Equal(["docs/virtual.md"], Assert.Single(registry.Projects).ExecutionFileMapPaths!);
     }
 
     [Theory]
@@ -385,10 +238,13 @@ public sealed class EngineeringProjectRegistrationTests
             .Order(StringComparer.Ordinal));
     }
 
-    private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);
+    private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", []);
 
     internal static RepositorySnapshot Snapshot(string? manifest, params (string Path, string Text)[] files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
             files.Select(file => RawRepositoryEntry.FromText(file.Path, file.Text)).Concat(manifest is null ? [] :
                 new[] { RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, manifest) })))).Snapshot;
+    private static IEnumerable<string> TestProjects(TestProjectTopologySnapshot topology) =>
+        topology.Projects.Where(project => project.Registration.IsTest).Select(project => project.Path).Order(StringComparer.Ordinal);
+
 }

@@ -1,6 +1,8 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

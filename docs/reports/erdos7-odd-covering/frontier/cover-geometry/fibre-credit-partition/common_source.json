@@ -1,0 +1,33 @@
+{
+  "actual_phase_fixture_statistics": {
+    "actual_phase_families": 48,
+    "coordinates_with_cross_root_star_overlap": 19,
+    "grouped_union_bounds": 96,
+    "head_first_row_tail_checks": 96,
+    "rows_with_free_selected_overlap": 93,
+    "unblocked_root1_private_comparisons": 92
+  },
+  "actual_star_padding_boundary": {
+    "deep_star_allowance": "1/15",
+    "maximum_compatible_actual_star_mass": "4/15",
+    "padded_mass": "1/3",
+    "warning": "An arbitrary measurable enlargement remains allowed by the older padding contract; this does not justify silently imposing actual-star constraints at fixed padded masses."
+  },
+  "checks": 22213,
+  "contract": "Common-source necessary scalar boundary; ordinary proof and finite exact controls, no Lean or unrestricted positivity claim.",
+  "independent_whole_product_models": 24,
+  "limits": [
+    "The actual-family map is proved for the declared original inventory and arbitrary globally fixed phases.",
+    "Scalar feasibility has an abstract common-probability-source realization, not necessarily an arithmetic cylinder realization.",
+    "Excluding the old witness does not prove positivity; stronger interfaces and joint remaining-charge constraints remain open.",
+    "No old checker, fixed-scalar optimizer or Lean build was run."
+  ],
+  "literal_overlap_controls": {
+    "shared_head_row_mass": "1/4",
+    "shared_private_blocker_mass": "1/10",
+    "sum_cross_root_star_deletions": "3/10",
+    "sum_overlapping_free_losses": "6/55"
+  },
+  "rejected_common_head_permutations": 120,
+  "witness_sha256": "bb97d58da88320e8bcefa293f424fca7b5621dfd385e6a64801aa4a6b4667086"
+}

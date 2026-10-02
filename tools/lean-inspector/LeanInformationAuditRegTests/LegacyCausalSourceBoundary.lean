@@ -1,5 +1,8 @@
 import Reg.Support.CausalSourceFamily
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAuditRegTests.LegacyCausalSourceBoundary
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -13,7 +16,7 @@ noncomputable def registration : Registration separationArena (Separation actual
   sensitivity := separation_sensitivity
   dependence := dependence
 
-register_information_theorem intervention_strictly_weaker_than_counterfactual in separationArena
+test_assess in register_information_theorem intervention_strictly_weaker_than_counterfactual in separationArena
   readout via (realize signature actual.readout actual.anchor)
   realizes registration
   escape from source ({
@@ -63,7 +66,7 @@ of sort `Type (max ?u.1 (?u.2 + 1))` in the application
     intervention_strictly_weaker_than_counterfactual.«LeanInformationAuditRegTests.LegacyCausalSourceBoundary/Reg.Support.CausalSourceFamily.separationArena/[anonymous]».__information_unit
 -/
 #guard_msgs in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 #print axioms registration
 end LeanInformationAuditRegTests.LegacyCausalSourceBoundary

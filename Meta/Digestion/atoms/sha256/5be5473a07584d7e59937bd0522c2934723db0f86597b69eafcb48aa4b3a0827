@@ -1,0 +1,2 @@
+**Proof.** Two contractions reduce each Hessian entry to the constant polynomial $F_{U_i+\operatorname{span}\{a_j\},0}$, hence give the indicator with coefficient one. Adjoining a column outside a subspace increases its dimension by exactly one. The quotient dimension identity then gives all four cases. In quotient dimension two, distinct one-column extensions have dimension $\dim U+1$; containment would force equality, whereas a column outside such an extension raises its dimension to $\dim V$. No pair spans a quotient of dimension greater than two.
+

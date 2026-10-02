@@ -1,0 +1,17 @@
+**定义 15.1（完整向量轨道的算术量）。** 对每个整数 $e\ge2$，所有作用均在完整 Fourier 标签集 $(\mathbb Z/e\mathbb Z)^2$ 上，置
+
+$$
+g=\begin{pmatrix}-1&1\\1&0\end{pmatrix},\qquad
+j=\begin{pmatrix}1&0\\1&-1\end{pmatrix},\qquad
+N_e=\langle g,-I\rangle,\qquad\Gamma_e=\langle g,j\rangle,
+$$
+
+$$
+T_e=\operatorname{ord}_e(g),\qquad
+h_e=|N_e|,\qquad b_e=\max_v|\Gamma_ev|,
+\qquad
+\pi(e)=\min\{k\ge1:(F_k,F_{k+1})\equiv(0,1)\pmod e\}.
+$$
+
+$\pi(e)$ 是矩阵／Pisano 周期；最小正零指标另在第 19 节记为 $r(e)$，两者不混同。
+

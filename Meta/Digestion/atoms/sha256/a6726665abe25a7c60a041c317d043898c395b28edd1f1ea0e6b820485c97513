@@ -1,0 +1,36 @@
+## 194. 同一整数的联合素支撑预算与严格余量
+
+本节与 Fibonacci 的具体表达无关。设 $S$ 是固定素数集合，$T$ 为其补集，且
+
+$$
+\vartheta_S(x)=\delta x+o(x),\qquad
+\vartheta_T(x)=(1-\delta)x+o(x),\qquad
+0<\delta\le\frac12.
+\tag{194.1}
+$$
+
+对 $n\ge1$ 沿用 $Z(n)=\sigma(n)/n$。记
+
+$$
+P_S(x)=\prod_{\substack{p\le x\\p\in S}}(1-1/p)^{-1},
+\qquad P(x)=\prod_{p\le x}(1-1/p)^{-1},
+$$
+
+并令
+
+$$
+H(\delta)=-\delta\log\delta-(1-\delta)\log(1-\delta).
+$$
+
+解析输入除式（194.1）外，只用通常素数定理及 §160.1 已引用的 Axler 包络：对所有充分大的整数 $n$，
+
+$$
+\frac{n}{\varphi(n)}
+<e^\gamma\left(\log\log n+
+\frac{a_0}{(\log\log n)^2}\right),
+\qquad a_0=0.0094243.
+\tag{194.2}
+$$
+
+所有对数均为自然对数。涉及 $\log\log$ 的渐近陈述只用于参数充分大时。
+

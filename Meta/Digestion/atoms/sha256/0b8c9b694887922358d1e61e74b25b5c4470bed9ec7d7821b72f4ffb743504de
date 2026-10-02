@@ -1,0 +1,20 @@
+**定理 4.5（只看终点的代数与整周期回归）。** 固定单个整数 $m\ge1$，定义
+
+$$
+\mathcal D_m=\{B:(U^m)^\dagger(B\otimes I_H)U^m
+\in\mathcal B(\mathcal H_A)\otimes I_H\}.
+$$
+
+则
+
+$$
+\mathcal D_m=U_d^m\left(
+\bigoplus_{\gamma\in\operatorname{im}c_m}
+\mathcal B\bigl(\operatorname{span}\{|a\rangle:c_m(a)=\gamma\}\bigr)
+\right)U_d^{-m}.
+$$
+
+这族单终点代数不随 $m$ 单调递减。具体地，若 $M^m=I\pmod{de}$，则 $U^m=I$、$\mathcal D_m=\mathcal B(\mathcal H_A)$；这样的正整数 $m$ 总存在。
+
+证明。将定理 4.2 的展开中的 $B_{aa'}$ 换成 $B_{f^m(a),f^m(a')}$，仅检查这个时刻，平移为标量的判据恰为 $c_m(a)=c_m(a')$，得到公式。模 $de$ 上的 $M$ 属于有限群 $\mathrm{GL}_2(\mathbb Z/de\mathbb Z)$，所以有有限阶。其整周期上的组成置换和提升 $U$ 都是恒等，因而全部低层算子可拉回。由于 $d,e\ge2$ 时定理 3.2 的 $\mathcal D_1$ 严格小于全代数，这族代数不可能递减。终点累计进位模 $e$ 的相消可恢复相干；它不满足定理 4.2 的每个中间时刻条件，也不扩大定理 4.4 的固定自主代数。$\square$
+

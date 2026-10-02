@@ -1,0 +1,30 @@
+**定理 196.3（共同根域的忠实仿射作用）。** $P_{r,k}$ 的 $k$ 个根可写为
+
+$$
+x_h=u\zeta_k^h+u^{-1}\zeta_k^{-h},
+\qquad h\in\mathbb Z/k\mathbb Z.
+\tag{196.6}
+$$
+
+这些根彼此不同。若 $E$ 是该多项式的分裂域，则
+
+$$
+\operatorname{Gal}(E/\mathbb Q)
+\cong G_k:=\{h\mapsto ch+d\pmod k:c\text{ 为奇数},\ d\text{ 为偶数}\},
+\qquad [E:\mathbb Q]=n^2.
+\tag{196.7}
+$$
+
+证明。$u^n=a_r$ 给 $u^k=a_r^2$，所以式（196.6）的每个元素均为 $P_{r,k}$ 的根。若 $x_h=x_{h'}$，令 $y=u\zeta_k^h$、$y'=u\zeta_k^{h'}$；等式 $y+y^{-1}=y'+(y')^{-1}$ 蕴含 $y=y'$ 或 $yy'=1$。前者给 $h=h'$，后者使 $u^2$ 成为单位根，继而 $a_r$ 成为单位根，与引理 196.2 的十一处非零赋值矛盾。因此根彼此不同。
+
+自同构（196.5）给准确根置换
+
+$$
+x_h\longmapsto x_{\varepsilon Ah+2\varepsilon b}.
+\tag{196.8}
+$$
+
+当 $\varepsilon=-1$ 时，这使用了 $y+y^{-1}$ 在反演 $y\mapsto y^{-1}$ 下不变；不能省去这个根坐标的商。随着参数变化，$c=\varepsilon A$ 取遍所有奇数，$d=2\varepsilon b$ 取遍所有偶数，恰得到 $G_k$。
+
+该仿射参数化是忠实的，因为映射在零与一上的值已确定 $c,d$，而根互不相同。$L$ 对所有根的作用核准确包含两个元素：$(\varepsilon,A,b)=(1,1,0)$ 与 $(-1,-1,0)$。后一元素同时共轭 $K$、反演 $\zeta_k$ 及反演 $u$，因而固定所有根。故实际根域 $E$ 是该二阶核的固定域，次数为 $2n^2/2=n^2$。$\square$
+

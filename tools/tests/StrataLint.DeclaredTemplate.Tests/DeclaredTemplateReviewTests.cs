@@ -193,7 +193,7 @@ public sealed class DeclaredTemplateReviewTests
     public void indirect_judge_import_closure_keeps_ownership_without_hash_lists()
     {
         var files = Files();
-        const string syntax = "tools/lean-inspector/LeanInformationAudit/Syntax.lean";
+        const string syntax = "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean";
         files[syntax] = "-- indirect judge fixture\n";
         var loaded = Report(files, indirectJudgePath: true);
         // The raw artifact is the strict reader boundary. The synthetic judge
@@ -204,7 +204,7 @@ public sealed class DeclaredTemplateReviewTests
         reportFiles[syntax] = new([TargetModule], []);
         var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
-        Assert.Equal("LeanInformationAudit.Syntax",
+        Assert.Equal("LeanInformationAuditInterface.Syntax",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
         var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
         Assert.Contains(RepoPath.CreateKnown(DeclaredTemplateFixture.Target), closure);

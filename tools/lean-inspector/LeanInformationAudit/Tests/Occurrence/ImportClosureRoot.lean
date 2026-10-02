@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit
@@ -11,18 +14,20 @@ set_option linter.style.longLine false
 
 def importedAlias := objectArena
 
-/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.ImportClosureProducer.objectArena theorem_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.ImportClosureProducer","LeanInformationAudit.Tests.Occurrence.ImportClosureRoot"] count=2 -/
+-- A native registration declares its theorem, so re-declaring an imported
+-- theorem is rejected when the recorder elaborates the declaration.
+/-- error: `LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem` has already been declared -/
 #guard_msgs (error) in
-information_theorem _root_.LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem
+test_assess in information_theorem _root_.LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem
   in lawArena object_arena importedAlias catalog duplicate
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- info: import-closure qualified identity passed -/
 #guard_msgs (info) in

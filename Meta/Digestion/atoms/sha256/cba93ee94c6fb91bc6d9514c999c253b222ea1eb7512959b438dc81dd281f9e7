@@ -1,0 +1,12 @@
+**Theorem 4.1 (sign identities, Lemma 5).** The signs in Definition 2.2 satisfy the following properties. First, $\epsilon(V,V,\varnothing)=1$. Second, take $w_0\in W$, $i\notin W$, $j\notin U$ and a forest $F$ from $U\cup\{j\}$ to $W\cup\{i\}$. If there is a directed path from $j$ to $i$, set $F_{ij;w_0}=F\cup\{(w_0,j)\}$; otherwise set $F_{ij;w_0}=F\cup\{(i,j)\}$. This is a forest from $U$ to $W$, and
+
+$$
+(-1)^{i+|\{w\in W:w<i\}|+j+|\{u\in U:u<j\}|}
+\epsilon(U\cup\{j\},W\cup\{i\},F)
+=\epsilon''_{ij}(F)\epsilon(U,W,F_{ij;w_0}),
+$$
+
+where $\epsilon''_{ij}(F)=-1$ if $i$ is a descendant of $j$, including $i=j$, and $+1$ otherwise. Third, if $F$ and $F'=F\setminus\{(i,j)\}\cup\{(w_0,j)\}$ are both forests from $U$ to $W$, then $\epsilon(U,W,F)=\epsilon(U,W,F')$.
+
+**Proof.** The first property follows from the identity matching and the even exponent $2n+2\sum V$. For the second, if $j$ and $i$ lie in different components, gluing replaces the two matching arrows $u\mapsto i$, $j\mapsto w$ by $u\mapsto w$. Removing their ascending coordinates changes the matching sign by $(-1)^{|\{u\in U:u<j\}|+|\{w\in W:w<i\}|-1}$. If $j$ and $i$ lie in the same component, gluing removes the single matching arrow $j\mapsto i$, with sign change $(-1)^{|\{u\in U:u<j\}|+|\{w\in W:w<i\}|}$. Combining either sign change with the root-sum exponent yields the displayed identity. For the third property, the detached subtree has no $W$ vertex, because the reattachment is also a forest with exactly one $W$ vertex per component. Consequently the component matching is unchanged. These are the combinatorial sign properties used by the real Taylor-expansion proof; the integral proof of Theorem 3.1 instead computes every coefficient directly.
+

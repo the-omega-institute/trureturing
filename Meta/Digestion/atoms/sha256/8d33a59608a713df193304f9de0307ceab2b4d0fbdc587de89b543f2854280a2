@@ -1,0 +1,70 @@
+**命题 11.8（FIB 操作改变所需相干端口）。** 在定义 11.7 的单份精确共同解码合同下，离散 $\Sigma_{\mathrm{dis}}$ 的最小免费 flag 量子端口为 $d^2$；原连续 $\Sigma_{\mathrm{orb}}$、仅非负等待的 $\Sigma_W$，以及满足 (11.1) 的固定采样 $\Sigma_\Delta$，其最小端口均为 $d^2\max_{O\in\widehat H/\langle g\rangle}|O|$。这些合同的最小全计费 Hilbert 记忆维数均为 $d^2e^2$。特别地，当 $e=2$ 时，FIB 字母表所决定的响应块及两种精确成本为
+
+$$
+\begin{aligned}
+\Sigma_{\mathrm{dis}}:&\quad
+(d^2,d^2,d^2,d^2),\qquad
+q_{\min}=d^2,\qquad (\dim\mathcal K)_{\min}=4d^2,\\
+\Sigma_{\mathrm{orb}},\ \Sigma_W,\ \Sigma_\Delta\text{ 满足 (11.1)}:&\quad
+(d^2,3d^2),\qquad
+q_{\min}=3d^2,\qquad (\dim\mathcal K)_{\min}=4d^2.
+\end{aligned}
+$$
+
+其中每个 $0<\Delta<\pi/4$ 都适用。这些最优值对共同解码保持全部实际历史统计和精确恢复 $\mathcal E_{\mathcal P}$ 两项任务相同；两项任务要求的通道等式并不相同。
+
+证明。先把具体 FIB 效果识别接到共同解码要求。定理 11.2–11.4 给出
+
+$$
+\operatorname{span}_{\mathbb C}\mathscr F_\Sigma
+=\mathcal A_{\mathcal P}
+=\bigoplus_{O\in\mathcal P}\mathcal B(\mathcal H_O).
+$$
+
+所以统计保持等价于 $T^\dagger$ 在 $\mathcal A_{\mathcal P}$ 上逐点恒等。Pinching 关于迹配对自伴，像空间恰为 $\mathcal A_{\mathcal P}$，故对所有 $X$ 与 $\rho$，
+
+$$
+\operatorname{Tr}\bigl[X\mathcal E_{\mathcal P}(T(\rho)-\rho)\bigr]
+=\operatorname{Tr}\bigl[\mathcal E_{\mathcal P}(X)(T(\rho)-\rho)\bigr]=0.
+$$
+
+由迹配对非退化性得到准确的通道条件
+
+$$
+\mathcal E_{\mathcal P}\circ T=\mathcal E_{\mathcal P}.
+$$
+
+后置 $\mathcal E_{\mathcal P}$，将解码换为 $\mathrm{Dec}'=\mathcal E_{\mathcal P}\circ\mathrm{Dec}$，不改变中间资源，即取得 $\mathrm{Dec}'\circ\mathrm{Enc}=\mathcal E_{\mathcal P}$。反之，精确 pinching 固定每个实际效果的期望，自然保持全部历史统计。故两任务的可行记忆维数相同。这里没有从统计保持推出原来的 $T$ 就等于 pinching，例如恒等通道也保持统计。
+
+下面在这些已识别的 FIB 块上使用已知的精确块压缩工具。Bluhm–Rauber–Wolf 上引文定理 7.1 给出最大矩阵块维数的上界构造，定理 9.2 给出精确态族恢复的相应最优值；应用的态族是 $\{\mathcal E_{\mathcal P}(\rho):\rho\text{ 为密度算子}\}$，其生成代数正是 $\bigoplus_O\mathcal B(\mathcal H_O)$。固定这一态族与恢复全部输入的 pinching 有相同成本：后者固定该态族，前者只需在编码前再施加 pinching。为明确一般输入相关 flag 和全域 CPTP 解码的条件，将这些标准工具在本处的秩论证写出。
+
+令 $n_O=\dim\mathcal H_O=d^2|O|$，$J_O:\mathcal H_O\to\mathcal H$ 为自然包含。全记忆计费时，取全部块内正交基，合计 $\sum_On_O=d^2e^2$ 个向量 $u_j$。每个基态都被 pinching 固定。若 $\sigma_j=\mathrm{Enc}(|u_j\rangle\langle u_j|)$，则解码拉回的 POVM $Q_j=\mathrm{Dec}^\dagger(|u_j\rangle\langle u_j|)$ 满足 $\operatorname{Tr}(Q_j\sigma_k)=\delta_{jk}$。$\sigma_j$ 的支撑位于 $Q_j$ 的特征值 $1$ 子空间，而其余 $\sigma_k$ 的支撑位于其核。因此这些非零支撑两两正交，$\dim\mathcal K\ge\sum_On_O$。取 $\mathcal K=\mathcal H$、编码为 pinching、解码为恒等，达到此界。
+
+免费 flag 时，固定一个最大块 $O$，令编码分支 Kraus 算子为 $B_{f\alpha}:\mathcal H\to\mathbb C^q$，解码分支 Kraus 算子为 $A_{f\beta}:\mathbb C^q\to\mathcal H$。限制输入到该块后，复合 Kraus 算子为 $C_{f\alpha\beta}=A_{f\beta}B_{f\alpha}J_O$，每个秩至多为 $q$；这种经过公共量子端口的 Kraus 秩界也见 Bluhm–Rauber–Wolf 上引文引理 5.2 的证明。块恢复要求它们给出的通道恰为 $X\mapsto J_OXJ_O^\dagger$。其 Choi 算子是秩一的；用归一化最大纠缠向量 $|\Omega_O\rangle$ 表示，就是
+
+$$
+\sum_{f,\alpha,\beta}
+|(I\otimes C_{f\alpha\beta})\Omega_O\rangle
+\langle(I\otimes C_{f\alpha\beta})\Omega_O|
+=|(I\otimes J_O)\Omega_O\rangle
+\langle(I\otimes J_O)\Omega_O|.
+$$
+
+正算子之和为秩一时，每个非零求和向量都与目标向量共线：对目标的任意正交向量取二次型，各非负项只能全为零。向量化单射遂给出每个非零 $C_{f\alpha\beta}=\alpha_{f\alpha\beta}J_O$，其秩为 $n_O$。至少一个非零项存在，因而 $q\ge n_O$。这是 Nayak–Sen, [*Invertible Quantum Operations and Perfect Encryption of Quantum States*，定理 2.1 证明中的 $B_jA_i=\alpha_{ji}I$](https://arxiv.org/pdf/quant-ph/0605041v4)所用可逆 Kraus 秩论证在该 FIB 块上的应用；参考系统只用于通道等式的数学检验，不是额外传递或读出资源。下界没有限制 flag 怎样依赖输入。
+
+为达到上界，取 $q=\max_On_O$，为每块选等距映射 $V_O:\mathcal H_O\to\mathbb C^q$，将块标签作为一种可行的有限 flag，置
+
+$$
+\begin{aligned}
+\mathrm{Enc}_O(\rho)&=V_OJ_O^\dagger\rho J_OV_O^\dagger,\\
+\mathrm{Dec}_O(\sigma)&=J_OV_O^\dagger\sigma V_OJ_O^\dagger
++\operatorname{Tr}\bigl[(I_q-V_OV_O^\dagger)\sigma\bigr]\tau_*,
+\end{aligned}
+$$
+
+其中 $\tau_*$ 为固定的 $\mathcal H$ 上密度算子。各编码分支完全正且总迹守恒；解码的两项均完全正，迹之和为 $\operatorname{Tr}\sigma$，所以在端口全部状态上均为 CPTP。编码输出落在 $V_O$ 的像中，第二项为零，复合恰为 $\sum_OP_O\rho P_O$。由此在本 FIB 分割上得到 $q_{\min}=\max_On_O=d^2\max_O|O|$ 及全记忆值 $\sum_On_O=d^2e^2$。
+
+离散分割的 $e^2$ 个块均为单点。$e=2$ 时，$g$ 的轨道是 $\{00\}$ 与 $\{10,11,01\}$，故连续或满足判据的采样操作需要 $d^2$ 与 $3d^2$ 两个块，得到所述操作依赖的端口变化。
+
+这里必须使用实际效果的线性张成以及同一个 CPTP 状态解码器。仅有 $C^*(\mathscr F_\Sigma)=\mathcal A_{\mathcal P}$ 不足以推出上述下界，参见 Bluhm–Rauber–Wolf 上引文推论 8.5。逐测量另选读出、受限效果集、近似或渐近资源不由本命题判定。第 9 节合法字的区域 Schmidt 切口也不是本节的低高模数分解，其容量不能直接代入此编解码合同。$\square$
+

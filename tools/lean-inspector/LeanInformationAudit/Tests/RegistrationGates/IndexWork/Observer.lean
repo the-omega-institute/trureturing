@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.IndexWork
 open Lean Elab Command TemplateAudit
@@ -36,7 +39,7 @@ elab "measure_imported_template_query " population:num selective:num : command =
   liftTermElabM do
     withCumulativeBudget <| NativeCoherence.validate #[plan.definitionOwner, plan.enrollmentOwner]
   let nativeInputs := NativeCoherence.lastInputs (← getEnv)
-  let retainedBytes := importedSummaryBytes env
+  let retainedBytes := assessedPlanBytes env
   unless retainedBytes > 0 && retainedBytes ≤ 8388608 do
     throwError "setup: workload is not an admitted imported index"
   modifyEnv fun current => measurements.addEntry current {

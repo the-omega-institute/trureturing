@@ -124,7 +124,7 @@ public sealed class RegisteredImpactTests
         const string library = "remote/library/Explicit.csproj";
         fixture.Files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
             fixture.Files[EngineeringRegistrationFixture.Path], new EngineeringProjectFixture(
-                library, "Registered.Library", "test-support", false, ["remote/library/**/*.cs"]));
+                library, "Registered.Library", "test-support", ["remote/library/**/*.cs"]));
         fixture.Files[library] = "<Project />";
         fixture.Files["remote/library/Code.cs"] = "namespace Fixture; class Library { }";
         var manifest = JsonNode.Parse(fixture.Files[EngineeringRegistrationFixture.Path])!;

@@ -2,6 +2,9 @@ import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Tests.RegistrationGates.ReifierShadow
 import LeanInformationAudit.Tests.RegistrationGates.ReifierChecks
 import LeanInformationAudit.Tests.RegistrationPersistence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit in
 run_meta do
@@ -10,7 +13,7 @@ run_meta do
   unless entries.size == 7 do throwError "expected seven imported derived certificates"
   for entry in entries do
     unless env.isImportedConst entry.unitName do throwError "unit was not imported"
-    match ← validatePersistedEntry env entry with
+    match ← validatePersistedEntry env.header.mainModule env entry with
     | .error reason => throwError reason
     | .ok () => pure ()
     let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)
@@ -31,6 +34,6 @@ run_meta do
       RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName] do
     unless env.isImportedConst name do
       throwError "provider_export: missing imported generated declaration {name}"
-  match ← validatePersistedEntry env entry with
+  match ← validatePersistedEntry env.header.mainModule env entry with
   | .error reason => throwError reason
   | .ok () => logInfo "P1_A7 provider_export imported_row_and_generated_declarations accepted"

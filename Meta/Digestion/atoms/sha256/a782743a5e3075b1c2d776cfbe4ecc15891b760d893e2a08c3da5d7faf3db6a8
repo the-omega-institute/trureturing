@@ -1,0 +1,5 @@
+W_{U,t}=t!F_{U,t}.
+$$
+
+The last equation is an identity in $\mathbb Q[X_i:i\in I]$ for the existing exact reciprocal-factorial polynomial of Definition 5.1. It therefore holds under every rational-algebra evaluation, without a nonnegativity or probability assumption.
+

@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Build the nondefault analysis libraries through make lean; clear only each
 # exporting fixture's trace so a warm build repeats its output operations.
-# Generic analyses remain in Impl; production analyses belong to Reg.
+# Generic analyses remain in Impl; production analyses belong to the downstream Reg inspector host.
 # Exit 64 means bad arguments, 66 missing inputs, 69 missing tools, 73 output
 # unavailable; otherwise preserve the failing command's exit code. Only exit 0
 # and ANALYSIS_FIXTURES_EXIT=0 indicate that all fixtures finished.
@@ -46,10 +46,11 @@ if [[ $scope == all || $scope == generic ]]; then
 fi
 if [[ $scope == all || $scope == production ]]; then
   fixtures+=(FrozenRootAnalysis)
-  targets+=(@reg/LeanInformationAuditRegAnalysis)
+  targets+=(@regInspector/LeanInformationAuditRegAnalysis)
   sources+=("$script_directory/../LeanInformationAuditRegAnalysis/FrozenRootAnalysis.lean"
-    Reg/lakefile.toml Reg/lake-manifest.json)
-  traces+=(.lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace)
+    Reg/lakefile.toml Reg/lake-manifest.json
+    tools/lean-inspector-reg/lakefile.toml tools/lean-inspector-reg/lake-manifest.json)
+  traces+=(.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace)
 fi
 for input in lakefile.toml lake-manifest.json lean-toolchain; do
   [[ -r $input ]] || fail 66 "missing input: $input"

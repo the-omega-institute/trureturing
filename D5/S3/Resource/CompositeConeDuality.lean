@@ -39,7 +39,8 @@ private lemma pairing_rank_one (W : CompositeMatrix m n) (x : Fin m × Fin n →
   rw [Matrix.trace_mul_comm, Matrix.mul_vecMulVec, Matrix.trace_vecMulVec]
   simp [dotProduct_comm]
 
-private lemma kronecker_rank_one (a : Fin m → ℂ) (b : Fin n → ℂ) :
+/-- The Kronecker product of the projectors `aa†` and `bb†` is the projector of `a ⊗ b`. -/
+lemma kronecker_rank_one (a : Fin m → ℂ) (b : Fin n → ℂ) :
     (Matrix.vecMulVec a (star a) ⊗ₖ Matrix.vecMulVec b (star b) : CompositeMatrix m n) =
       Matrix.vecMulVec (fun ij : Fin m × Fin n => a ij.1 * b ij.2)
         (star (fun ij : Fin m × Fin n => a ij.1 * b ij.2)) := by

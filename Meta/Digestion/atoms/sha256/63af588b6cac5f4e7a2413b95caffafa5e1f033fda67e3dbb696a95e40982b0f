@@ -1,0 +1,10 @@
+**theorem 1.4 (Machine error entry cleanup).** For every finite control state
+and arbitrary Boolean contents of input, header, scratch and partial-query
+stacks, the fixed pre-machine starting at badInput with empty output reaches
+the exact haltList configuration for the valid zero-variable one-empty-clause
+dummy query. It resets the finite control and empties all four starting stacks.
+The actual step count is bounded by the sum of their lengths plus five. This
+error-entry theorem does not assume that the stacks contain unary marks. The
+complete parser-to-error-entry bound for every malformed source word is a
+separate obligation.
+

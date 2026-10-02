@@ -1,0 +1,57 @@
+{
+  "centers": [
+    {
+      "center_score": "17062109570167/198315713846250",
+      "center_score_decimal": 0.08603508637442062,
+      "neighborhood_lower_bound": "12288140637404551/155479519655460000",
+      "neighborhood_lower_bound_decimal": 0.07903382171899466,
+      "schema": "first_layer_witness",
+      "witness_path": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "witness_sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70"
+    },
+    {
+      "center_score": "25372782312134/297473570769375",
+      "center_score_decimal": 0.08529424058248518,
+      "neighborhood_lower_bound": "36518862868606981/466438558966380000",
+      "neighborhood_lower_bound_decimal": 0.07829297592705922,
+      "schema": "bounded_joint_result",
+      "witness_path": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "witness_sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6"
+    }
+  ],
+  "checks": 18,
+  "contract": "Conditional uniform lower bounds on two specified raw-state neighborhoods of radius exactly 1/10000 around the FC132 sources, using ternary height at most one, fixed physical addresses, gamma=1/2, fixed finite support and caps, actual-source guards and head totals at most one. Not a bound on the whole source domain.",
+  "coordinate_norms": {
+    "heads": "Each root/head/physical row differs by at most radius.",
+    "private": "At each root/private q, |Delta g|, sup_i|Delta X_i| and sup_j|Delta Y_j| are each at most radius; X=g*x, Y=g*y."
+  },
+  "gamma": "1/2",
+  "input_sha256": "4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4",
+  "limits": [
+    "The neighborhood is intersected with the admissible common actual/raw-source domain and all row masses are nonnegative with each head total at most one.",
+    "The continuous raw min-cap function retains supported-private cap charges at zero carriers; it is not the boundary rule that discards such roots.",
+    "Fixed pure caps and inventory, physical addresses and gamma are essential; no radius optimization or source search was performed.",
+    "No global arbitrary-source positivity, arbitrary-prime extension, full AP realization of the centers, or Lean verification is claimed."
+  ],
+  "modulus": {
+    "T_sup_error": "3/1000",
+    "fixed_T_head_fee_error": "91555439/58835256480",
+    "group_error": "39/10000",
+    "inventory_S": "480382582/1399052655",
+    "kernel_fee_error": "240191291/155450295000",
+    "total_error": "1493214356113/213277804740000",
+    "total_error_decimal": 0.007001264655425954
+  },
+  "private_primes": [
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "radius": "1/10000"
+}

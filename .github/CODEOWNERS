@@ -11,7 +11,6 @@
 /lakefile.toml @loning
 /lake-manifest.json @loning
 /.github/CODEOWNERS @loning
-/.github/workflows/ci-pr.yml @loning
-/.github/workflows/ci-push.yml @loning
+/.github/workflows/ci-*.yml @loning
 /CLAUDE.md @loning
 /AGENTS.md @loning

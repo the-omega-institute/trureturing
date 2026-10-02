@@ -345,7 +345,6 @@ public sealed class TruthReleaseCommandTests
         ..TestFileMap.Canonical.IndexOf("[[files]]", StringComparison.Ordinal)] + """
         [[files]]
         pattern = "Blueprint/**/*.md"
-        require = []
         kind = "generated"
         admission_plane = "content"
         produced_by = "ScribeEmitter"
@@ -356,7 +355,6 @@ public sealed class TruthReleaseCommandTests
 
         [[files]]
         pattern = "Blueprint/**/*.scribe.cs"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"

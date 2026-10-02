@@ -1,0 +1,13 @@
+**Definition 8.1.** With the orbit relation of Definition 1.1, put
+\(O_y=\{\rho(g)y:g\in G\}\) and define
+
+\[
+ d_\rho([x],[y])=\operatorname{infDist}(x,O_y)
+ =\inf_{g\in G}d_X(x,\rho(g)y).
+\]
+
+The orbit contains \(y\), so this infimum is finite and nonnegative.
+Distance to a nonempty set, its invariance under an isometry, and attainment
+on a nonempty closed subset of a proper metric space are the standard
+point-to-set distance results.
+

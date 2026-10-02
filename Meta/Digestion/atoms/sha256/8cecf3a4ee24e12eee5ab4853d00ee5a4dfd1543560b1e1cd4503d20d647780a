@@ -1,0 +1,42 @@
+**Theorem 8.2 (metric and compact-ball bridge).** For the representation
+quotient in Definition 1.1, the function in Definition 8.1 is independent
+of representatives. If the representation is properly discontinuous as in
+Definition 2.1, this function is a metric inducing the existing quotient
+topology. If in addition \(X\) is proper, then \((X/\rho,d_\rho)\) is
+proper. Freeness and compactness of the quotient are not hypotheses.
+
+**Proof.** Replacing \(x\) by \(\rho(a)x\) and \(y\) by \(\rho(b)y\)
+reindexes the orbit: \(\rho(a)O_y=O_{\rho(b)y}\). Isometry invariance of
+point-to-set distance proves independence. Inversion in \(G\) and distance
+symmetry give symmetry of \(d_\rho\). For all \(g,h\in G\),
+
+\[
+ d_\rho([x],[z])\leq d_X(x,\rho(gh)z)
+ \leq d_X(x,\rho(g)y)+d_X(y,\rho(h)z).
+\]
+
+Taking the two infima proves the triangle inequality. The distance from
+an orbit to itself is zero. Proper discontinuity on a metric space gives
+a proper action when the group is given the discrete topology, and a
+proper action has a Hausdorff orbit quotient. These standard proper-action
+results apply through the comparison in Theorem 1.2. Thus each fiber
+\(O_y=\pi^{-1}\{[y]\}\) is closed. The standard zero-distance criterion
+for a nonempty closed set gives \(d_\rho([x],[y])=0\) exactly when
+\(x\in O_y\), proving separation.
+
+If \(U\) is quotient-open and \([x]\in U\), some ambient ball about \(x\)
+lies in \(\pi^{-1}U\). Any class sufficiently close to \([x]\) has a
+translate of a representative in that ball, so belongs to \(U\).
+Conversely, the inequality \(d_\rho([x],[y])\leq d_X(x,y)\) shows that
+the preimage of an orbit-distance neighborhood contains an ambient ball.
+These two implications identify the metric topology with the quotient
+topology already used in Theorem 2.2.
+
+Suppose now that \(X\) is proper. Distance from \(x\) to the closed
+nonempty orbit \(O_y\) is attained at a point \(z\in O_y\). If
+\(d_\rho([x],[y])\leq r\), then \(d_X(x,z)\leq r\) and \([z]=[y]\),
+which gives one inclusion in the ball identity. The opposite inclusion
+follows from \(d_\rho([x],[z])\leq d_X(x,z)\). The ambient closed ball
+is compact and \(\pi\) is continuous in the agreed topology, so the
+quotient closed ball is compact. This bridge concerns the representation
+quotient; it imposes no finite-volume or smooth-curvature conclusion.

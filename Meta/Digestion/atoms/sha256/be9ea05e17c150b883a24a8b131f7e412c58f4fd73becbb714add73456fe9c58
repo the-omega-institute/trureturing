@@ -1,0 +1,104 @@
+**定理 13.1（所有低高模数的端点采样）。** 对每个整数 $d,e\ge2$，采用定义 1.1、1.2、8.1 的标准提升，令 $L=2I-U-U^\dagger$。唯一联合演化原语为 $W=W_M(\pi/4)$；其余许可恰为定义 11.1 的任意低层有限仪器、低层终端读出及有限自适应历史，初始输入遍历全部联合密度算子。则
+
+$$
+S_{\pi/4}=\mathcal A_{\mathrm{orb}}.
+$$
+
+两个输入的全部实际历史统计相同，当且仅当每个 $g=M^{-\mathsf T}$ 轨道完整块相同；相应 pinching 也保留每条正概率路径的条件边界。
+
+证明。对实际效果复线性空间 $S=S_{\pi/4}$，直接采用[定理 11.2 的低层 Kraus 缩放、极化与乘子构造](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L935)：
+
+$$
+\mathfrak D=\{X:XS\subseteq S, SX\subseteq S\},\qquad
+\mathcal B(\mathcal H_A)\otimes I_H\subseteq\mathfrak D\subseteq S.
+$$
+
+$\mathfrak D$ 是有限维含幺 $*$ 代数。前置一次获准的 $W$ 给 $W^\dagger SW\subseteq S$，有限维单射性使之为等号，从而 $W^\dagger\mathfrak DW=\mathfrak D$。逆共轭在此只是线性空间等式，不是新增的物理逆门。
+
+由 $\operatorname{spec}L\subseteq[0,4]$，算子
+
+$$
+B=\frac{W^\dagger-W}{2i}=\sin(\pi L/4)
+$$
+
+半正定。谱定理给出全空间中的精确核等式
+
+$$
+\ker B=\ker(W^2-I)=\ker(U^2-I)
+=\ker L\oplus\ker(L-4I).
+\tag{13.1}
+$$
+
+前两个核在 $L$ 谱上都只取端点 $0,4$；这两个能量分别对应 $U$ 的特征值 $1,-1$。若 $P$ 是 $\mathfrak D$ 的任意非零中心投影，它与全部低层矩阵交换，故 $P=I_A\otimes Q$，其中 $Q\ne0$。取 $0\ne\eta\in\operatorname{ran}Q$。从低层 $(1,0)$ 出发的前两步均无进位，因而
+
+$$
+U^2(|1,0\rangle\otimes\eta)
+=|1,1\rangle\otimes V^2\eta,
+\qquad V=U_e.
+$$
+
+$d\ge2$ 保证两个低层标签不同，故此向量不等于原向量。因此任何非零中心块都不能包含于 (13.1) 的核。
+
+$W$ 正规化 $\mathfrak D$，所以置换其最小非零中心投影。若 $P'=WPW^\dagger\ne P$，则 $PP'=0$，从而 $PWP=PP'W=0$，亦有 $PW^\dagger P=0$。于是 $PBP=0$。正性给出
+
+$$
+0=PBP=(B^{1/2}P)^\dagger(B^{1/2}P),
+$$
+
+故 $BP=0$，与上一段矛盾。于是 $W$ 固定每个最小中心块。函数 $\lambda\mapsto e^{-i\pi\lambda/4}$ 在 $[0,4]$ 上单射，所以 $L$ 是 $W$ 的有限谱函数，也逐块保持。
+
+固定一个最小中心块。有限维矩阵代数的结构给出坐标
+
+$$
+P\mathcal H\simeq\mathcal K\otimes\mathcal R,
+\qquad P\mathfrak DP\simeq\mathcal B(\mathcal K)\otimes I_{\mathcal R}.
+$$
+
+矩阵代数的 $*$ 自同构为内自同构；从 $W|_P$ 消去实现该自同构的第一因子酉后，余下酉属于交换子代数。因此 $W|_P=A_0\otimes R_0$。这只是代数坐标分解。取两因子的酉特征值 $a_i,r_j$，其乘积都在闭下半圆，有唯一 $\theta_{ij}\in[0,\pi]$ 满足 $a_ir_j=e^{-i\theta_{ij}}$。每个相位矩形满足
+
+$$
+\theta_{ij}+\theta_{k\ell}-\theta_{i\ell}-\theta_{kj}
+\in2\pi\mathbb Z\cap[-2\pi,2\pi].
+$$
+
+若此差非零，交换指标后可令其为 $2\pi$；四角只能交错取 $\pi,0,0,\pi$。故 $a_k=-a_i$、$r_\ell=-r_j$。任意两个互为相反数且同在闭下半圆的单位复数只能为 $1,-1$。对任意行 $s$，$a_sr_j$ 与 $a_sr_\ell$ 因而都为 $\pm1$；对任意列 $t$，$a_ir_t$ 与 $a_kr_t$ 也都为 $\pm1$。于是整个乘积谱满足
+
+$$
+a_sr_t=\frac{(a_sr_j)(a_ir_t)}{a_ir_j}\in\{1,-1\}
+\quad\text{对所有 }s,t.
+$$
+
+这使 $W^2P=P$，并由 (13.1) 使整个非零中心块落入 $\ker(U^2-I)$，矛盾。故所有相位矩形都为零。固定 $i_0,j_0$ 后，
+
+$$
+\theta_{ij}=\theta_{ij_0}+\theta_{i_0j}-\theta_{i_0j_0}.
+$$
+
+在相应特征基中分别取 Hermitian 算子 $A',R'$，特征值为 $4\theta_{ij_0}/\pi$ 与 $4(\theta_{i_0j}-\theta_{i_0j_0})/\pi$，便有
+
+$$
+L|_P=A'\otimes I+I\otimes R',
+\qquad [L,P\mathfrak DP]\subseteq P\mathfrak DP.
+$$
+
+合并全部中心块得 $[L,\mathfrak D]\subseteq\mathfrak D$。
+
+现在接入[定理 11.3 的两个非零进位角](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L981)。恒等式 $M-I=M^{-1}$、$M^2-I=M$ 排除模 $d$ 的非零不动点和二周期。对 $a\ne0$、$b=f(a)$、$P_a=E_{aa}\otimes I_H$，有
+
+$$
+P_b[L,P_a]P_a=-E_{ba}\otimes T_{c(a)}V\in\mathfrak D.
+$$
+
+$U^\dagger$ 不贡献此角，否则 $f^2(a)=a$。低层矩阵夹乘并求和给 $I_A\otimes T_{c(a)}V\in\mathfrak D$。分别取 $a=(1,0)$ 与 $(d-1,1)$，得到 $I_A\otimes V$ 与 $I_A\otimes T_{(0,1)}V$。乘积、伴随以及 $V^\dagger T_{(0,1)}V=T_{(1,0)}$ 给出全部高层平移。按定义 7.2 的 Fourier 约定，
+
+$$
+\Pi_p=I_A\otimes|p\rangle\langle p|
+=\frac1{e^2}\sum_{v\in H}\omega^{-p\cdot v}(I_A\otimes T_v)
+\in\mathfrak D,
+\qquad
+\Pi_{gp}(I_A\otimes V)\Pi_p
+=I_A\otimes|gp\rangle\langle p|\in\mathfrak D.
+$$
+
+沿每条有限 $g$ 轨道相乘并取伴随，得到全部轨道矩阵单位，故 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D\subseteq S$。反向，每个轨道投影与 $U,L,W$ 及低层 Kraus 算子交换；从终端低层效果逐历史拉回，仍在 $\mathcal A_{\mathrm{orb}}$ 中。有限自适应分支与事件求和保持此性质，故 $S\subseteq\mathcal A_{\mathrm{orb}}$。迹配对给统计等价，pinching 与每个实际分支交换给正概率条件边界。$\square$
+

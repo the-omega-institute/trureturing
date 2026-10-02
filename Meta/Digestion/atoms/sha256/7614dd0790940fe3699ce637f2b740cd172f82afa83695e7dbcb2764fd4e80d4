@@ -1,0 +1,105 @@
+**定理 20.1（全部模数的最大轨道）。** 令 $E(e)$ 表示下列条件：$e$ 没有奇分裂素因子，或 $e=p$、$e=2p$，其中 $p$ 是一个奇分裂素数。则对每个 $e\ge2$ 有
+
+$$
+\boxed{
+ b(e)=h(e)\iff h(e)=\iota_eC_e\text{ 且 }E(e),
+}\qquad
+\boxed{
+ b(e)=2h(e)\text{ 在其余情形}.}
+\tag{20.1}
+$$
+
+**证明。** 用 $\Psi(x,y)=y+xz$ 识别 $(\mathbb Z/e\mathbb Z)^2$ 与 $R_e$。直接计算得
+
+$$
+\Psi(g(x,y))=z\Psi(x,y),\qquad \Psi(j(x,y))=-\overline{\Psi(x,y)}.
+\tag{20.2}
+$$
+
+因此 $N_e$ 是 $H_e$ 的乘法作用。共轭正规化 $H_e$，而共轭不是乘法作用：它固定 $1$ 却不固定 $z$；即使 $e$ 为偶数，$2z+1$ 的常数项仍为 $1$，所以这一步不需要除以 $2$。于是 $\Gamma_e$ 在 $f$ 上的轨道是 $H_ef$ 与 $H_e\bar f$ 的并。令
+
+$$
+S(f)=\{a\in H_e:(a-1)f=0\}.
+$$
+
+若 $S(f)$ 的阶为 $s$，则 $|H_ef|=h(e)/s$；两个 $H_e$ 轨道或者相等或者不交。故每条轨道大小为 $h(e)/s$ 或 $2h(e)/s$，并且
+
+$$
+ b(e)=2h(e)\quad\Longleftrightarrow\quad
+\exists f\;[S(f)=\{1\},\ \bar f\notin H_ef].
+\tag{20.3}
+$$
+
+单位环元的稳定子总是平凡；非单位不作此假设。单位 $1$ 的轨道恰有 $h(e)$ 个元素，而 $s\ge2$ 的标签轨道至多有 $h(e)$ 个元素，所以最大值只可能是 $h(e)$ 或 $2h(e)$。
+
+考虑同态 $u\mapsto\bar u/u$。若 $u=a+bz$ 且 $\bar u=u$，比较常数系数即得 $b=0$，故其核恰为标量单位群 $(\mathbb Z/e\mathbb Z)^\times$，包括 $2$ 的幂。CRT 同时分解单位群与共轭，因此 $\mathcal B_e$ 是局部比值群的直积。局部单位数为
+
+$$
+|R_{2^a}^\times|=3\cdot2^{2a-2},\quad
+|R_{5^a}^\times|=4\cdot5^{2a-1},
+$$
+
+$$
+|R_{p^a}^\times|=
+\begin{cases}
+p^{2a-2}(p-1)^2,&(5/p)=1,\\
+p^{2a-2}(p^2-1),&(5/p)=-1,
+\end{cases}
+$$
+
+这些计数来自模 $p$ 的环分别为 $\mathbb F_p\times\mathbb F_p$、$\mathbb F_{p^2}$、$\mathbb F_4$ 和 $\mathbb F_5[w]/(w^2)$。模 $p$ 的每个单位有 $p^{2a-2}$ 个提升且全部可逆，因为 $pR_{p^a}$ 是幂零理想；模 $p$ 非单位的提升仍非单位。分别除以标量单位数 $\varphi(p^a)$ 即得所列 $C_e$。
+
+在商群 $R_e^\times/\mathcal B_e$ 中，
+
+$$
+\bar z/z=-z^{-2}\in\mathcal B_e,
+$$
+
+所以 $[z]^2=[-1]$，商中 $[z]$ 的阶至多为 $4$。若 $5\mid e$，令 $w=2z+1$，则 $w^2=5$，模 $5$ 共轭在 $R_5/(w)=\mathbb F_5$ 上为恒等，而任意单位比值约化为 $1$；$-1$ 约化为 $4$，故 $[-1]\ne1$，从而 $[z]$ 的阶恰为 $4$。若 $5\nmid e$，则 $w=2z+1$ 的范数为 $-5$，故 $w$ 可逆，且 $\bar w/w=-1$，所以 $[-1]=1$。若另有 $e>2$，$\operatorname N(z)=-1\ne1$，而 $\operatorname N(\mathcal B_e)=1$，故 $[z]\ne1$，其阶恰为 $2$。当 $e=2$ 时 $R_2=\mathbb F_4$，标量单位群 $\mathbb F_2^\times$ 是平凡群，故比值同态像有三个元素，$\mathcal B_2=R_2^\times$，商中 $[z]$ 的阶为 $1$。于是
+
+$$
+|H_e\cap\mathcal B_e|=h(e)/\iota_e,\qquad h(e)\le\iota_eC_e,\qquad
+\mathcal B_e\subseteq H_e\iff h(e)=\iota_eC_e.
+\tag{20.4}
+$$
+
+若 $h(e)<\iota_eC_e$，取 $c=\bar u/u\in\mathcal B_e\setminus H_e$。单位 $u$ 的 $H_e$ 稳定子平凡，且 $\bar u\notin H_eu$，所以 $|\Gamma_eu|=2h(e)$。以下设饱和条件 $\mathcal B_e\subseteq H_e$ 成立。
+
+设 $p^a\parallel e$ 是奇分裂素因子。在局部坐标 $R_{p^a}\simeq(\mathbb Z/p^a)^2$ 中，$z=(\lambda,\mu)$、$\lambda\mu=-1$，共轭交换两坐标。这是实际环同构：模 $p$ 的两根简单，若 $\lambda$ 已是模 $p^k$ 的根，$\lambda+p^kt$ 是模 $p^{k+1}$ 的根等价于一个系数 $2\lambda+1\ne0\pmod p$ 的线性方程，故两根逐层唯一提升且根差为单位。每个所选局部有序对遂对应唯一的原二坐标标签。
+
+若 $a\ge2$，取该分量为 $(1,p)$，其余 CRT 分量为单位 $1$。若同一个 $\varepsilon z^k$ 固定该标签，第一坐标给出乘子为 $1$；两坐标乘积为 $\operatorname N(\varepsilon z^k)=(-1)^k$，第二坐标条件为 $p((-1)^k-1)=0\pmod {p^a}$，故 $k$ 为偶数，随后两坐标乘子均为 $1$。其余分量为 $1$ 又迫使全局元素为恒等。共轭把 $(1,p)$ 变成 $(p,1)$，单位乘法不能交换一个单位坐标与一个非单位坐标，因此 $\bar f\notin H_ef$。
+
+若 $a=1$ 且 $m=e/p>2$，取 $p$ 分量 $(1,0)$，其余 $m$ 分量为单位 $1$。固定条件先在 $R_m$ 中给出 $\operatorname N(\varepsilon z^k)=1$；由于 $m>2$，$k$ 为偶数，且 $p$ 分量两坐标乘子均为 $1$。同样得到平凡稳定子和共轭后的另一坐标轴。这里的符号 $\varepsilon$ 与指数 $k$ 是全局共同的。
+
+这些构造穷尽“有奇分裂因子而非 $p,2p$”的情形。剩下没有奇分裂因子的情形。惰性局部（包括 $2$）约化为域，所以非单位恰为 $pR_{p^a}$。对惰性 $p^a$，若 $a\ge2$，令 $u=1+p^{a-1}z$，则
+
+$$
+\frac{\bar u}{u}=1-p^{a-1}(2z+1)\ne1,
+\tag{20.5}
+$$
+
+因为 $p^{2a-2}=0\pmod {p^a}$，而右端与 $1$ 的差的常数系数非零。它固定全部被 $p$ 除的非单位。若 $a=1$，唯一非单位为零，取任意非平凡的局部比值元即可。对 $5^a$，令 $w=2z+1$，则 $R_{5^a}=(\mathbb Z/5^a)[w]/(w^2-5)$。元素 $a+bw$ 可逆恰当 $5\nmid a$；若 $5\mid a$，写成 $w(b+(a/5)w)$，故非单位均被 $w$ 除。取 $n=w^{2a-1}=5^{a-1}w$；则 $n\ne0$、$n^2=0$、$\bar n=-n$，并且
+
+$$
+\frac{\overline{1-n/2}}{1-n/2}=1+n\ne1,
+\tag{20.6}
+$$
+
+它固定全部被 $w$ 除的非单位，因为 $nw=w^{2a}=5^a=0$。先在对应局部分量构造 (20.5) 或 (20.6) 的比值元，再在其他分量放置 $1$，得到 $\mathcal B_e$ 中的全局支撑元；只有在此之后才用 $\mathcal B_e\subseteq H_e$ 把它视为同一个全局 $H_e$ 元素。因此任何非单位标签都有非平凡稳定子，而单位标签的共轭比值属于 $H_e$，故其轨道不翻倍。
+
+最后处理 $e=p$ 与 $e=2p$。分裂局部的 $\mathcal B_p$ 是整个范数一群 $(t,t^{-1})$：取单位 $(1,t)$ 即得比值 $(t,t^{-1})$。饱和条件经投影给 $\mathcal B_p\subseteq H_p$，而 $z\mathcal B_p$ 是所有范数 $-1$ 的乘子对；因此轴稳定子 $(1,-1)$、$(-1,1)$ 都来自 $H_p$。当 $e=p$ 时，这两个乘子分别固定两条坐标轴，零标签也有非平凡稳定子。当 $e=2p$ 时，若 $2$ 分量为零，用非平凡的 $\mathcal B_2=\mathbb F_4^\times$ 元支撑即可；若 $2$ 分量非零而 $p$ 分量在坐标轴上（包括零），先取 $p$ 分量的非恒等轴稳定子。约化 $H_e\to H_p$ 满射，因为两群均由 $z,-1$ 生成；取其全局提升 $t$，再利用 $\mathcal B_e\subseteq H_e$ 中支持于 $2$ 分量的元素校正其 $\mathbb F_4^\times$ 分量为 $1$。若两分量均为非单位，任一支撑元同样适用。故这两个例外中所有非单位都有非平凡稳定子，单位仍不翻倍。
+
+于是，饱和且满足 $E(e)$ 时 $b(e)=h(e)$；饱和而不满足 $E(e)$ 时分裂构造给 $b(e)=2h(e)$；不饱和时单位比值构造给 $b(e)=2h(e)$。这完成 (20.1)。在推论 15.5 的实际效果张成与共同 CPTP 精确解码合同下，最大相干块及最小免费 flag 量子端口因而为
+
+$$
+q_\Gamma(d,e)=
+\begin{cases}
+d^2h(e),&h(e)=\iota_eC_e\ \text{且 }E(e),\\
+2d^2h(e),&\text{其余情形}.
+\end{cases}
+$$
+
+这一步只把全部标签的最大轨道代入已有资源定理，不扩大许可仪器。$\square$
+
+在因子分解和各局部精确周期已给定时，由第 15 节的负单位同步条件计算 $h(e)$，再以 (20.1) 决定最大轨道；不需要枚举向量或求离散对数。这不把因子分解或周期取得称为免费，也不给出按位复杂度的效率保证；奇素数的周期提升允许任意初始平台。周期的 CRT 与平台提升背景见 Baake--Neumärker--Roberts, [arXiv:1205.1003v1, Eq. (7), p. 4; Proposition 1, p. 5; Appendix A.2, pp. 26–27](https://arxiv.org/abs/1205.1003v1)。文中的 Fibonacci 矩阵与本卷 $M$ 置换共轭，其普通 reversing 结果不证明这里的带符号关系 $jgj=-g^{-1}$ 所产生的 $\Gamma_e$ 结论。局部单位计数亦见 Lombardo--Perucca, [arXiv:1612.02845v2, Lemma 13, p. 6](https://arxiv.org/abs/1612.02845v2)；计数不把特定有限子群 $H_e$ 识别为全部 Cartan 单位群。
+

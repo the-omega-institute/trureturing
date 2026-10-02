@@ -1,0 +1,2 @@
+**Proof.** Structural polynomial induction treats constants, addition, and multiplication by one variable. The last case is the ordinary product rule; the formal product rule and the Kronecker delta for the derivative of a variable identify the same finite sum. Apply this result to each $\partial_j f$ and use the finite-sum derivative rule. Interchange finite sums and commute real scalar factors to identify the quadratic form. No nonempty-index assumption is used.
+

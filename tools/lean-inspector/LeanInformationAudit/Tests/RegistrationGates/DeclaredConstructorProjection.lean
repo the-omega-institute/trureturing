@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredConstructorProjection
 open Lean Meta Elab Command TemplateAudit
@@ -85,13 +88,13 @@ run_meta do
 #guard_msgs in
 run_cmd do
   let saved ← get
-  let result ← enroll ``recursorTemplate #[``State]
+  let result ← enroll (← getEnv).header.mainModule (← getOptions) ``recursorTemplate #[``State]
   set saved
   liftTermElabM <| check "enrolled_structural_descent_rejected"
     (match result with | .ok () => none | .error reason => some reason)
     (some "unclassified_form:E4c.structural_descent")
 
-register_information_template fieldTemplate constructors 1 [State]
+test_assess in register_information_template fieldTemplate constructors 1 [State]
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype State
@@ -100,7 +103,7 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := inferInstanceAs (DecidableEq State)
 
-information_theorem validated in arena
+test_assess in information_theorem validated in arena
   readout via (fieldTemplate)
   primitives fieldTemplate
   : ∀ s : State, s.outcome s.flag = (s.outcome s.flag).not.not := by

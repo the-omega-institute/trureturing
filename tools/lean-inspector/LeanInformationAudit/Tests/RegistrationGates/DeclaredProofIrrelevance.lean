@@ -1,5 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredProofIrrelevance
 open Lean Meta Elab Command TemplateAudit
@@ -47,7 +49,7 @@ elab "observe_proof_irrelevance_enrollment" : command => do
     ("proof_absurd_data_rejected", ``absurdData, some "unclassified_form:E4.recursion:False.rec")]
   for (label, name, expected) in cases do
     let saved ← get
-    let result ← enroll name
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name
     let actual := match result with | .ok () => none | .error text => some text
     let present := (selectedPlan (← getEnv) name).isOk
     set saved

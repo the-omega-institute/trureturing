@@ -1,0 +1,42 @@
+**假设 21.1（实际递归的全局来源前提）。** 沿用 $F_0=0$、$F_1=1$、$F_{j+1}=F_j+F_{j-1}$、$\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$ 与 $G(n)=\lfloor\alpha(n+1)\rfloor$。本节的 $C$ 始终是定义 15.1 的实际 Cloitre 序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},\qquad T_N(x)=N-C(x),\\
+x_0&=N-1,\qquad x_{i+1}=T_N(x_i),\qquad d_N=C(N-1),\\
+g_N&=x_{d_N},\qquad C(N)=C(g_N)+C(N-g_N)\quad(N\ge3).
+\end{aligned}
+$$
+
+取 [Cloitre 黄金结构，§§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md) 的下列全局关系作为显式前提。对每个正整数 $n$，
+
+$$
+G(n)\le C(n)\le U(n)\le n,
+$$
+
+其中 $U(1)=1$，对 $F_j\le n<F_{j+1}$、$j\ge3$，
+
+$$
+U(n)=\min\{n-F_{j-2},F_j\}.
+$$
+
+此外，$U$ 非减且满足 $0\le U(n+1)-U(n)\le1$，并有
+
+$$
+\begin{aligned}
+U(F_j)&=C(F_j)=G(F_j)=F_{j-1}&&(j\ge2),\\
+G(F_j+1)&=C(F_j+1)=F_{j-1}+1&&(j\ge3).
+\end{aligned}
+$$
+
+这里不假设 $C$ 单调。使用 [Fibonacci collars，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的全轨道捕获结论：对 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，每条 $T_N$ 轨道最终进入不变区间
+
+$$
+I_{q,t}=[F_{q-1},F_{q-1}+t]\cap\mathbb Z\subseteq D_N,
+$$
+
+且全部周期都在其中。还使用 [Cloitre foundations，§4](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md) 的规定深度入周期结论：对每个 $N\ge3$，起点 $N-1$ 的最短前周期 $\mu_N$ 满足 $d_N\ge\mu_N$，所以 $g_N$ 是同一实际轨道的周期点。
+
+这些全局前提承继来源的计算辅助基础：黄金结构使用区间 $[16384,131071]$ 上的有限比值前提及 $[1,65535]$ 上的有限归纳基，规定深度入周期使用 $3\le N\le52$ 的有限初值前提。以下结论条件于这些来源前提，不给它们另一个独立证明。[Fibonacci collars，§6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的额外双种子只给出固定带 $-12\le t\le32$；本节不把该固定带当作任意宽度的种子。
+

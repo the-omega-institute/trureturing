@@ -1,0 +1,20 @@
+**定义 30.1（原始实际更新与逐坐标重置）。** 沿用定义29.1的固定 $\lambda$、五窗与当前行观察合同，取实数 $\nu\ge0$。对词 $u=a_1\cdots a_n$，原始实际轨迹及其无噪声轨迹为
+
+$$
+\begin{aligned}
+y_0&=z_A,&y_k&=\lambda y_{k-1}T_{a_k}+\xi_k,&\|\xi_k\|_\infty&\le\nu,\\
+x_0&=z_A,&x_k&=\lambda x_{k-1}T_{a_k},&&1\le k\le n.
+\end{aligned}
+\tag{30.1}
+$$
+
+令 $s_0=0$，并对 $k\ge1$ 令 $s_k=1+\lambda+\cdots+\lambda^{k-1}=(1-\lambda^k)/(1-\lambda)$。另定义重置轨迹
+
+$$
+q_0=z_A,\qquad q_k=P_\lambda(\lambda q_{k-1}T_{a_k}+\xi_k),\qquad
+(P_\lambda(t))_j=\mathbf1_{\{t_j\ge\lambda/2\}}\quad(1\le j\le3).
+\tag{30.2}
+$$
+
+噪声发生在重置之前；$P_\lambda$ 的输出用于下一步反馈，故该合同改变了更新接口，并非仅在原始轨迹末端改变读出。
+

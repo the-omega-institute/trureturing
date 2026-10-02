@@ -1,0 +1,1 @@
+| 仓内 pinned Mathlib | `repo-derived`：主子式系数恒等式、Hermitian characteristic polynomial、canonical `eigenvalues₀` 的排序和正定性 API；只用于定理 3.1 的已编译证明。 

@@ -1,4 +1,6 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open D5.S3.ConceptDynamics.CIRPT
@@ -41,7 +43,7 @@ def fixtureRealization : PrimitiveRealization fixtureLawArena.signature where
 def fixtureBundle :=
   fixtureRealization.toPrimitiveBundle
 
-information_theorem nativeExample
+test_assess in information_theorem nativeExample
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by
@@ -53,7 +55,7 @@ example : nativeExample.__information_unit.primitives =
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.unrelatedNative -/
 #guard_msgs (error) in
-information_theorem unrelatedNative
+test_assess in information_theorem unrelatedNative
   in fixtureLawArena
   primitives fixtureRealization
   : 2 + 2 = 4 := by
@@ -76,7 +78,7 @@ LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName := `LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget
       unitName :=
         `LeanInformationAudit.Tests.RegistrationErrors.mismatchedNativeBundleUnit
@@ -100,7 +102,7 @@ LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchUnit
@@ -118,7 +120,7 @@ theorem legacyRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-register_information_theorem legacyExample
+test_assess in register_information_theorem legacyExample
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization
@@ -136,7 +138,7 @@ end ImportedFixture
 
 open ImportedFixture
 
-register_information_theorem importedExample
+test_assess in register_information_theorem importedExample
   in fixtureLawArena
   primitives fixtureBundle
   realization importedRealization
@@ -152,14 +154,24 @@ def definitionBackedRealization :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
 #guard_msgs (error) in
-register_information_theorem definitionBackedTarget
-  in fixtureLawArena
-  primitives fixtureBundle
-  realization definitionBackedRealization
+run_cmd registrationTransaction do
+  -- Assert the recording phase before asking the report to reject the input.
+  -- Rollback also keeps this local negative probe out of imported fixtures.
+  Lean.Elab.Command.elabCommand (← `(command| register_information_theorem definitionBackedTarget
+    in fixtureLawArena primitives fixtureBundle realization definitionBackedRealization))
+  if (← get).messages.hasErrors then
+    throwError "[FAIL] definition_bridge_rejected_during_recording"
+  let owner := (← getEnv).header.mainModule
+  let some (_, input) := (RegistrationInputs.owned (← getEnv)).find? fun (_, input) =>
+      input.entry.theoremName == ``definitionBackedTarget
+    | throwError "[FAIL] definition_bridge_not_recorded"
+  unless (← getEnv).contains input.entry.unitName do
+    throwError "[FAIL] definition_bridge_companion_missing"
+  GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner input
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors"] count=2 -/
 #guard_msgs (error) in
-register_information_theorem legacyExample
+test_assess in register_information_theorem legacyExample
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization
@@ -175,7 +187,7 @@ theorem generatedRealization :
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
 #guard_msgs (error) in
-register_information_theorem generated.__lowers_escape
+test_assess in register_information_theorem generated.__lowers_escape
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -191,7 +203,7 @@ theorem generated.__catalog_irredundant : True :=
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
 #guard_msgs (error) in
-register_information_theorem generated.__information_catalog
+test_assess in register_information_theorem generated.__information_catalog
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -199,7 +211,7 @@ register_information_theorem generated.__information_catalog
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
 #guard_msgs (error) in
-register_information_theorem generated.__catalog_irredundant
+test_assess in register_information_theorem generated.__catalog_irredundant
   in fixtureLawArena
   primitives fixtureBundle
   realization generatedRealization
@@ -207,7 +219,7 @@ register_information_theorem generated.__catalog_irredundant
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.authored.__information_catalog -/
 #guard_msgs (error) in
-information_theorem authored.__information_catalog
+test_assess in information_theorem authored.__information_catalog
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by trivial
@@ -215,7 +227,7 @@ information_theorem authored.__information_catalog
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.RegistrationErrors.authored.__catalog_irredundant -/
 #guard_msgs (error) in
-information_theorem authored.__catalog_irredundant
+test_assess in information_theorem authored.__catalog_irredundant
   in fixtureLawArena
   primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by trivial
@@ -225,7 +237,7 @@ LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
 #guard_msgs in
 run_cmd do
   try
-    registerValidatedEntry {
+    registerValidatedEntry (← getEnv).header.mainModule {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
@@ -240,7 +252,7 @@ LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
 #guard_msgs in
 run_cmd do
   try
-    registerValidatedEntry {
+    registerValidatedEntry (← getEnv).header.mainModule {
       theoremName :=
         `LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
@@ -263,7 +275,7 @@ theorem mismatchedRealization :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs (error) in
-register_information_theorem mismatchTarget
+test_assess in register_information_theorem mismatchTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization mismatchedRealization
@@ -278,7 +290,7 @@ LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
       theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
       arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
@@ -296,7 +308,7 @@ LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.notATheorem
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
@@ -311,7 +323,7 @@ LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.missingArena
@@ -329,7 +341,7 @@ LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) {
+    validateNewEntry (← getEnv).header.mainModule (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.wrongUnitHead
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
@@ -342,7 +354,7 @@ run_cmd do
 /-- error: IE-C001 UnregisteredTheoremUnit:
 LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
 #guard_msgs (error) in
-register_information_theorem unknownTheorem
+test_assess in register_information_theorem unknownTheorem
   in fixtureLawArena
   primitives fixtureBundle
   realization legacyRealization

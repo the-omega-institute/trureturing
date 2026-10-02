@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredAnchors
 open Lean Meta Elab Command
@@ -19,7 +22,7 @@ def signature : PrimitiveSignature Bool where
 def template (f anchor : Bool → Bool) : PrimitiveRealization signature :=
   ⟨fun _ => f, anchor⟩
 
-register_information_template template
+test_assess in register_information_template template
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -28,7 +31,7 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
-information_theorem faithful in arena primitives (template (fun x => x) (fun b => b))
+test_assess in information_theorem faithful in arena primitives (template (fun x => x) (fun b => b))
   : ∀ x : Bool, x = x := by intro x; rfl
 
 def projectedAnchorDomain : PrimitiveRealization signature := ⟨fun _ x => x, fun b => b⟩

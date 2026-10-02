@@ -1,0 +1,8 @@
+**约定 2.2（等级与缩放）。** 给定有限指标集 $\operatorname{Fin}(n)$ 和单调不减的整数等级 $w_i$，令
+
+$$
+d_T(i)=T^{w_i}\sqrt T,\qquad G_T=\operatorname{diag}(d_T)H_T\operatorname{diag}(d_T).
+$$
+
+矩阵的谱坐标使用 Hermitian `eigenvalues₀` 的 Mathlib canonical decreasing 顺序；它不是另给的排列或独立的特征值函数。
+

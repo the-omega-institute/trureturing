@@ -1,0 +1,5 @@
+## 已形式化的声明
+
+源码为 [`D5/S3/VertexAlgebra/MonsterShortSupportSpin.lean`](../../../D5/S3/VertexAlgebra/MonsterShortSupportSpin.lean)。
+
+* `labelQuadratic` 独立定义在 `Label` 上；它不展开 `fullMap`，因此不是把支持谓词改名。

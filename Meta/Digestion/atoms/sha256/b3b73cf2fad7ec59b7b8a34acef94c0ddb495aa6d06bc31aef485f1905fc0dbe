@@ -1,0 +1,9 @@
+**定义 8.1（在给定运输上另选的行走）。** 在同一联合空间上选择
+
+$$
+L=2I-U-U^\dagger=(I-U)^\dagger(I-U),\qquad
+W(t)=\exp(-itL),\qquad t\in\mathbb R.
+$$
+
+$L$ 自伴且半正定，$W(t)$ 为酉。用有限图上的自伴生成元定义连续时间相干行走是标准构造，参见 Farhi–Gutmann, [*Quantum Computation and Decision Trees*](https://arxiv.org/abs/quant-ph/9706062)。这里具体选定的是由进位置换 $U$ 形成的 $L$；实参数 $t$ 与第 4 节的整数轮数分别属于不同操作。这个选择是模型的附加结构，不由组成递推单独指定。
+

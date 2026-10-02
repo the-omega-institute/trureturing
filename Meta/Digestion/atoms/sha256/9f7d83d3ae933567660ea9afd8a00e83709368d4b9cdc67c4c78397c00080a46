@@ -1,0 +1,33 @@
+**命题 31.1（纯经典的新增 FIB 响应）。** 在 $\mathcal K_2=\mathbb C^{(\mathbb Z/2)^2}$ 上只允许等待整数次 $U|a,b\rangle=|b,a+b\rangle$ 后读第二坐标。令 $Z_a,Z_b$ 分别在该基取 $(-1)^a,(-1)^b$。则
+
+$$
+U^\dagger Z_bU=Z_aZ_b,\qquad
+(U^2)^\dagger Z_bU^2=Z_a,\qquad U^3=I,
+$$
+
+$$
+\mathcal O_0=\operatorname{span}_{\mathbb R}\{I,Z_b\},\qquad
+\mathcal O_\infty=\operatorname{span}_{\mathbb R}\{I,Z_a,Z_b,Z_aZ_b\}.
+\tag{31.1}
+$$
+
+新增两维全部计算基对角。
+
+证明。迭代第二坐标依次为 $b,a+b,a$，二结果投影是相应 $Z$ 的 $(I\pm Z)/2$，所以效果恰张成 (31.1)。$|00\rangle,|10\rangle$ 初读相同，等待一步后分别读零、一，全程无需相干。$\square$
+
+更强例属于本卷已有的标准 digits、完整低仪器合同。取 $d=e=2$、$\Delta=2\pi/3$、$x=e^{-2\pi i/3}$。定理 14.1 的已证公式为
+
+$$
+W=\frac{I+U^3}{2}+x\frac{I-U^3}{2},\qquad
+U^3=\sum_aE_{aa}\otimes T_{Ma}.
+$$
+
+两输入都用低态 $s=(|00\rangle+|10\rangle)/\sqrt2$，高态分别为 Fourier 基 $p_{10},p_{01}$，都没有高 Fourier 非对角项。低 $00$ 控制 identity，低 $10$ 控制 $T_{01}$；它在两高标签上分别为 $+1,-1$。输出低向量分别为 $s$ 与 $(|00\rangle+x|10\rangle)/\sqrt2$，所以同一合法低事件 $|s\rangle\langle s|$ 的概率为
+
+$$
+1\quad\text{和}\quad |1+x|^2/4=1/4.
+\tag{31.2}
+$$
+
+这个新预测信息来自高标签差异，不是新增高标签相干。定理 14.1 给该共振效果空间 Hermitian 维数 $64$，初始低读出维数 $16$；新增 $48$ 维全在高 Fourier 对角块中。
+

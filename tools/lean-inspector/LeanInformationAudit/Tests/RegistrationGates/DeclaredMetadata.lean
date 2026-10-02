@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredMetadata
 open Lean Meta Elab Command
@@ -51,7 +54,7 @@ elab "observe_metadata_enrollment" : command => do
       ("body_binding_projection_rejected", ``capturedProjection),
       ("body_binding_query_rejected", ``capturedQuery)] do
     let saved ← get
-    let result ← TemplateAudit.enroll name
+    let result ← TemplateAudit.enroll (← getEnv).header.mainModule (← getOptions) name
     let noEvidence := !(TemplateAudit.selectedPlan (← getEnv) name).isOk
     let ok := result matches .error "forbidden_dependency:E6.registered_identity"
     set saved
@@ -68,7 +71,7 @@ elab "observe_metadata_enrollment" : command => do
   liftTermElabM <| addDecl <| .defnDecl {
     name, levelParams := info.levelParams, type := info.type, value,
     hints := .abbrev, safety := .safe }
-  let result ← TemplateAudit.enroll name
+  let result ← TemplateAudit.enroll (← getEnv).header.mainModule (← getOptions) name
   let ok := result matches .error "forbidden_dependency:E6.registered_identity"
   let noEvidence := !(TemplateAudit.selectedPlan (← getEnv) name).isOk
   set saved

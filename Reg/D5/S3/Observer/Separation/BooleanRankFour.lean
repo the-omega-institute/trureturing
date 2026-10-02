@@ -76,23 +76,6 @@ register_information_theorem result in arena
       stateBinder := 0 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let some row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Observer.Separation.BooleanRankFour.result
-    | throwError "BooleanRankFour registration is absent"
-  match row.result with
-  | .declaredValidated certificate =>
-    unless certificate.sourceBinding.isSome && !certificate.evidenceRef.isEmpty &&
-        certificate.escape.bridgeKind == "source-equivalence" do
-      throwError "BooleanRankFour current source binding evidence is incomplete"
-    logInfo m!"BOOLEAN_RANK_FOUR_DECLARED_VALIDATED {certificate.evidenceRef}"
-    logInfo m!"{certificate.sourceBinding.get!}"
-  | .declaredUnresolved diagnostic =>
-    throwError "BooleanRankFour registration unresolved: {diagnostic}"
-  | .undeclared => throwError "BooleanRankFour registration undeclared"
-
 #print axioms registration
 
 end

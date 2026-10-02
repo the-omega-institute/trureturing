@@ -1,0 +1,7 @@
+**Theorem 6.2 (degree-two reverse quadratic bound).** For the actual represented polynomial $F=F_{U,2}$ in a finite-dimensional column space, every nonnegative real coordinate vector $x$ and every real vector $y$ satisfy
+
+$$
+2F(x)\,y^THy\ \le\ (g^Ty)^2,
+\qquad g_i=(\partial_i F)(x),\qquad H_{ij}=(\partial_i\partial_j F)(x).
+$$
+

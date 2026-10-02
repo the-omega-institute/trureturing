@@ -1,0 +1,9 @@
+**定义 4.3（Real wall and physical competitors）。** The row endpoint $r_w(y)$ is zero for an empty list and otherwise is $a$ when $w=a::v$ and $y=|v|$, and $r_v(y)$ in all other cases. For real $t,z$, define
+
+$$
+\mathcal W_w(t,z)\ \Longleftrightarrow\
+\exists y\in\mathbb N,\ y\le z<y+1\ \land\ 0\le t<r_w(y).
+$$
+
+The width-$n$ rectangle at a real position $(x,y)$ is $\mathcal B_n(x,y)=[x,x+n)\times[y,y+1)$. A physical row placement is legal when $x,y\ge0$, its rectangle is disjoint from $\mathcal W_w$, and either $y=0$ or there is $k\in\mathbb N$ with $y=k+1$ and every $t\in[x,x+n)$ satisfies $t<r_w(k)$. No left-contact constraint is imposed. A physical row optimum is a legal position $(x,y)$ with $x\le x'$ and $y'\le y$ for every legal real competitor $(x',y')$.
+

@@ -1,0 +1,1173 @@
+{
+  "boundaries": [
+    "finite declared29-label query family only; not its full-divisor or all-height completion",
+    "not fixedC/phase31 and not an Erdos7 result",
+    "fourth moment tuple order is not the number of prime coordinates in one numerical label"
+  ],
+  "checks": {
+    "CRT component range": 320,
+    "actual globally phased attaining loads": 6,
+    "actual parity deletion and background survival": 2,
+    "actual whole original classes CRT-disjoint": 2,
+    "all declared material failure controls rejected": 1,
+    "all nonempty query incidence classes": 28,
+    "all proper cube scopes with full auxiliary coordinates agree": 6,
+    "background choice and exact coefficient identity": 2,
+    "background on same source carrier": 1,
+    "both independently attained global-max formulas": 4,
+    "bounded exact control count": 1,
+    "common probability normalization preserves sign": 4,
+    "coprime CRT coordinates": 320,
+    "correct surviving maximum cluster": 4,
+    "declared parameter domain": 2,
+    "distinct actual query labels in carrier": 1,
+    "distinct numerical original labels": 3,
+    "distinct source positions": 2,
+    "each labelled original has mass one": 8,
+    "equal parity cardinalities": 2,
+    "exact distinct odd control primes": 1,
+    "exact primes for algebraic support control": 1,
+    "four equal query labels retain entire numerical prime support": 1,
+    "fourth convex chord for every possible integer hit count": 29,
+    "fourth order does not bound prime-coordinate scope": 1,
+    "full cube marginals differ": 1,
+    "full cube scope separates survivors": 2,
+    "hinge convex chord for every possible integer hit count": 29,
+    "literal CRT component": 320,
+    "literal equal original numerical inventories": 1,
+    "maximizer changes under actual deletion": 1,
+    "nonzero q-phase misses source": 28,
+    "normalized CRT residue": 153,
+    "normalized globally fixed query phase": 113,
+    "odd nonunit original labels": 2,
+    "old cluster is not a final-law maximizer": 1,
+    "old maximizing phase underestimates both survivor maxima": 1,
+    "one common source carrier": 4,
+    "one cube private point and no background hit": 4,
+    "one phase realizes the whole claimed incidence": 113,
+    "opposite exact joint numerator": 4,
+    "query and original tag axes distinct": 1,
+    "query literal numerical modulus": 112,
+    "query phase hits exactly one cube cluster": 112,
+    "same exact survivor and deletion masses": 4,
+    "same indexed original inventory": 4,
+    "switch control old maximizer is zero": 1,
+    "unit omission changes attaining hinge": 1,
+    "unit-inclusive hinge endpoints": 1
+  },
+  "checks_total": 1765,
+  "consumer_sha256": "7ae6d2274b77e0ff70c70cdca72150f5d92994db758f7976a0fcafc6d79356a6",
+  "evidence": "ordinary proof plus exact sparse controls; no Lean claim",
+  "failure_controls": {
+    "algebraic_support": {
+      "distinct_prime_axes": [
+        3,
+        5,
+        7,
+        11,
+        17
+      ],
+      "four_tuple": [
+        19635,
+        19635,
+        19635,
+        19635
+      ],
+      "lcm": 19635
+    },
+    "optimizer_switch": {
+      "background_weight": "1/2",
+      "maximum_fourth": "1414565/2",
+      "maximum_hinge": "13",
+      "old_phase_fourth": "707285/2",
+      "old_phase_hinge": "13/2",
+      "surviving_maximum_mass": "1",
+      "surviving_zero_mass": "1/2"
+    },
+    "rejections": [
+      {
+        "control": "background_original_tag_lost",
+        "rejected_by": "distinct source positions"
+      },
+      {
+        "control": "duplicate_numerical_original",
+        "rejected_by": "distinct numerical original labels"
+      },
+      {
+        "control": "cellwise_query_phase",
+        "rejected_by": "one phase realizes the whole claimed incidence"
+      },
+      {
+        "control": "unit_omitted",
+        "rejected_by": "unit omission changes attaining hinge"
+      },
+      {
+        "control": "frozen_old_maximizer",
+        "rejected_by": "old cluster is not a final-law maximizer"
+      },
+      {
+        "control": "proper_scope_promoted_to_full",
+        "rejected_by": "full cube marginals differ"
+      },
+      {
+        "control": "tuple_order_promoted_to_prime_scope",
+        "rejected_by": "fourth order does not bound prime-coordinate scope"
+      }
+    ]
+  },
+  "geometry": {
+    "actual_originals": {
+      "D_even": [
+        {
+          "modulus": 105,
+          "phase": 0,
+          "source_hits": [
+            0
+          ],
+          "vector": [
+            0,
+            0
+          ]
+        },
+        {
+          "modulus": 735,
+          "phase": 196,
+          "source_hits": [
+            3
+          ],
+          "vector": [
+            1,
+            1
+          ]
+        }
+      ],
+      "D_odd": [
+        {
+          "modulus": 105,
+          "phase": 21,
+          "source_hits": [
+            1
+          ],
+          "vector": [
+            0,
+            1
+          ]
+        },
+        {
+          "modulus": 735,
+          "phase": 490,
+          "source_hits": [
+            2
+          ],
+          "vector": [
+            1,
+            0
+          ]
+        }
+      ]
+    },
+    "cube_primes": [
+      3,
+      5
+    ],
+    "k": 2,
+    "n": 2,
+    "original_tag_prime_r": 7,
+    "period": 105994303038276937017691907099535,
+    "query_inventory": [
+      1,
+      165,
+      1815,
+      19965,
+      219615,
+      2415765,
+      26573415,
+      292307565,
+      3215383215,
+      35369215365,
+      389061369015,
+      4279675059165,
+      47076425650815,
+      517840682158965,
+      5696247503748615,
+      62658722541234765,
+      689245947953582415,
+      7581705427489406565,
+      83398759702383472215,
+      917386356726218194365,
+      10091249923988400138015,
+      111003749163872401518165,
+      1221041240802596416699815,
+      13431453648828560583697965,
+      147745990137114166420677615,
+      1625205891508255830627453765,
+      17877264806590814136901991415,
+      196649912872498955505921905565,
+      2163149041597488510565140961215
+    ],
+    "query_tag_prime_q": 11,
+    "source_positions": [
+      {
+        "name": "00",
+        "q": 0,
+        "r": 0,
+        "residue": 0,
+        "vector": [
+          0,
+          0
+        ]
+      },
+      {
+        "name": "01",
+        "q": 0,
+        "r": 0,
+        "residue": 63596581822966162210615144259721,
+        "vector": [
+          0,
+          1
+        ]
+      },
+      {
+        "name": "10",
+        "q": 0,
+        "r": 0,
+        "residue": 70662868692184624678461271399690,
+        "vector": [
+          1,
+          0
+        ]
+      },
+      {
+        "name": "11",
+        "q": 0,
+        "r": 0,
+        "residue": 28265147476873849871384508559876,
+        "vector": [
+          1,
+          1
+        ]
+      },
+      {
+        "name": "background",
+        "q": 0,
+        "r": 1,
+        "residue": 4326298083194977021130281922430,
+        "vector": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "global_maximum_proof_interface": "Convex chord on[1,29], sum of per-cluster hits<=28, and one actual globally fixed attaining layout; no phase-product enumeration.",
+  "main_examples": [
+    {
+      "A": "12",
+      "B": "13",
+      "C": "1",
+      "background_weight": "35/2",
+      "prior_mass": "43/2",
+      "prior_weights": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "35/2"
+      ],
+      "proper_scope_marginals": [
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [],
+          "histogram": [
+            [
+              [
+                0,
+                0
+              ],
+              "2"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "35/2"
+            ]
+          ]
+        },
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [
+            1
+          ],
+          "histogram": [
+            [
+              [
+                0,
+                0,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                0,
+                1,
+                0
+              ],
+              "35/2"
+            ],
+            [
+              [
+                1,
+                0,
+                0
+              ],
+              "1"
+            ]
+          ]
+        },
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [
+            0
+          ],
+          "histogram": [
+            [
+              [
+                0,
+                0,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                0,
+                1,
+                0
+              ],
+              "35/2"
+            ],
+            [
+              [
+                1,
+                0,
+                0
+              ],
+              "1"
+            ]
+          ]
+        }
+      ],
+      "scenarios": {
+        "D_even": {
+          "attaining_cube_vector": [
+            0,
+            0
+          ],
+          "attaining_layout": [
+            [
+              165,
+              0
+            ],
+            [
+              1815,
+              0
+            ],
+            [
+              19965,
+              0
+            ],
+            [
+              219615,
+              0
+            ],
+            [
+              2415765,
+              0
+            ],
+            [
+              26573415,
+              0
+            ],
+            [
+              292307565,
+              0
+            ],
+            [
+              3215383215,
+              0
+            ],
+            [
+              35369215365,
+              0
+            ],
+            [
+              389061369015,
+              0
+            ],
+            [
+              4279675059165,
+              0
+            ],
+            [
+              47076425650815,
+              0
+            ],
+            [
+              517840682158965,
+              0
+            ],
+            [
+              5696247503748615,
+              0
+            ],
+            [
+              62658722541234765,
+              0
+            ],
+            [
+              689245947953582415,
+              0
+            ],
+            [
+              7581705427489406565,
+              0
+            ],
+            [
+              83398759702383472215,
+              0
+            ],
+            [
+              917386356726218194365,
+              0
+            ],
+            [
+              10091249923988400138015,
+              0
+            ],
+            [
+              111003749163872401518165,
+              0
+            ],
+            [
+              1221041240802596416699815,
+              0
+            ],
+            [
+              13431453648828560583697965,
+              0
+            ],
+            [
+              147745990137114166420677615,
+              0
+            ],
+            [
+              1625205891508255830627453765,
+              0
+            ],
+            [
+              17877264806590814136901991415,
+              0
+            ],
+            [
+              196649912872498955505921905565,
+              0
+            ],
+            [
+              2163149041597488510565140961215,
+              0
+            ]
+          ],
+          "cluster_masses": [
+            [
+              [
+                0,
+                0
+              ],
+              "35/2"
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              "1"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                1,
+                1
+              ],
+              "0"
+            ]
+          ],
+          "joint_gate": "13/2",
+          "maximum_fourth": "24754839/2",
+          "maximum_hinge16": "455/2",
+          "normalized_joint_gate": "13/43",
+          "source_loads": [
+            29,
+            1,
+            1,
+            1,
+            29
+          ],
+          "survivor_weights": [
+            "0",
+            "1",
+            "1",
+            "0",
+            "35/2"
+          ]
+        },
+        "D_odd": {
+          "attaining_cube_vector": [
+            0,
+            0
+          ],
+          "attaining_layout": [
+            [
+              165,
+              0
+            ],
+            [
+              1815,
+              0
+            ],
+            [
+              19965,
+              0
+            ],
+            [
+              219615,
+              0
+            ],
+            [
+              2415765,
+              0
+            ],
+            [
+              26573415,
+              0
+            ],
+            [
+              292307565,
+              0
+            ],
+            [
+              3215383215,
+              0
+            ],
+            [
+              35369215365,
+              0
+            ],
+            [
+              389061369015,
+              0
+            ],
+            [
+              4279675059165,
+              0
+            ],
+            [
+              47076425650815,
+              0
+            ],
+            [
+              517840682158965,
+              0
+            ],
+            [
+              5696247503748615,
+              0
+            ],
+            [
+              62658722541234765,
+              0
+            ],
+            [
+              689245947953582415,
+              0
+            ],
+            [
+              7581705427489406565,
+              0
+            ],
+            [
+              83398759702383472215,
+              0
+            ],
+            [
+              917386356726218194365,
+              0
+            ],
+            [
+              10091249923988400138015,
+              0
+            ],
+            [
+              111003749163872401518165,
+              0
+            ],
+            [
+              1221041240802596416699815,
+              0
+            ],
+            [
+              13431453648828560583697965,
+              0
+            ],
+            [
+              147745990137114166420677615,
+              0
+            ],
+            [
+              1625205891508255830627453765,
+              0
+            ],
+            [
+              17877264806590814136901991415,
+              0
+            ],
+            [
+              196649912872498955505921905565,
+              0
+            ],
+            [
+              2163149041597488510565140961215,
+              0
+            ]
+          ],
+          "cluster_masses": [
+            [
+              [
+                0,
+                0
+              ],
+              "37/2"
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              "0"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "0"
+            ],
+            [
+              [
+                1,
+                1
+              ],
+              "1"
+            ]
+          ],
+          "joint_gate": "-13/2",
+          "maximum_fourth": "26169399/2",
+          "maximum_hinge16": "481/2",
+          "normalized_joint_gate": "-13/43",
+          "source_loads": [
+            29,
+            1,
+            1,
+            1,
+            29
+          ],
+          "survivor_weights": [
+            "1",
+            "0",
+            "0",
+            "1",
+            "35/2"
+          ]
+        }
+      },
+      "survivor_mass": "39/2",
+      "tau": "0"
+    },
+    {
+      "A": "8487371/707281",
+      "B": "9901933/707281",
+      "C": "2",
+      "background_weight": "24047551/2829124",
+      "prior_mass": "35364047/2829124",
+      "prior_weights": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "24047551/2829124"
+      ],
+      "proper_scope_marginals": [
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [],
+          "histogram": [
+            [
+              [
+                0,
+                0
+              ],
+              "2"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "24047551/2829124"
+            ]
+          ]
+        },
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [
+            1
+          ],
+          "histogram": [
+            [
+              [
+                0,
+                0,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                0,
+                1,
+                0
+              ],
+              "24047551/2829124"
+            ],
+            [
+              [
+                1,
+                0,
+                0
+              ],
+              "1"
+            ]
+          ]
+        },
+        {
+          "auxiliary_axes": [
+            "r^n",
+            "q^28"
+          ],
+          "cube_axes": [
+            0
+          ],
+          "histogram": [
+            [
+              [
+                0,
+                0,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                0,
+                1,
+                0
+              ],
+              "24047551/2829124"
+            ],
+            [
+              [
+                1,
+                0,
+                0
+              ],
+              "1"
+            ]
+          ]
+        }
+      ],
+      "scenarios": {
+        "D_even": {
+          "attaining_cube_vector": [
+            0,
+            0
+          ],
+          "attaining_layout": [
+            [
+              165,
+              0
+            ],
+            [
+              1815,
+              0
+            ],
+            [
+              19965,
+              0
+            ],
+            [
+              219615,
+              0
+            ],
+            [
+              2415765,
+              0
+            ],
+            [
+              26573415,
+              0
+            ],
+            [
+              292307565,
+              0
+            ],
+            [
+              3215383215,
+              0
+            ],
+            [
+              35369215365,
+              0
+            ],
+            [
+              389061369015,
+              0
+            ],
+            [
+              4279675059165,
+              0
+            ],
+            [
+              47076425650815,
+              0
+            ],
+            [
+              517840682158965,
+              0
+            ],
+            [
+              5696247503748615,
+              0
+            ],
+            [
+              62658722541234765,
+              0
+            ],
+            [
+              689245947953582415,
+              0
+            ],
+            [
+              7581705427489406565,
+              0
+            ],
+            [
+              83398759702383472215,
+              0
+            ],
+            [
+              917386356726218194365,
+              0
+            ],
+            [
+              10091249923988400138015,
+              0
+            ],
+            [
+              111003749163872401518165,
+              0
+            ],
+            [
+              1221041240802596416699815,
+              0
+            ],
+            [
+              13431453648828560583697965,
+              0
+            ],
+            [
+              147745990137114166420677615,
+              0
+            ],
+            [
+              1625205891508255830627453765,
+              0
+            ],
+            [
+              17877264806590814136901991415,
+              0
+            ],
+            [
+              196649912872498955505921905565,
+              0
+            ],
+            [
+              2163149041597488510565140961215,
+              0
+            ]
+          ],
+          "cluster_masses": [
+            [
+              [
+                0,
+                0
+              ],
+              "24047551/2829124"
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              "1"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "1"
+            ],
+            [
+              [
+                1,
+                1
+              ],
+              "0"
+            ]
+          ],
+          "joint_gate": "9901933/1414562",
+          "maximum_fourth": "24047559/4",
+          "maximum_hinge16": "312618163/2829124",
+          "normalized_joint_gate": "19803866/35364047",
+          "source_loads": [
+            29,
+            1,
+            1,
+            1,
+            29
+          ],
+          "survivor_weights": [
+            "0",
+            "1",
+            "1",
+            "0",
+            "24047551/2829124"
+          ]
+        },
+        "D_odd": {
+          "attaining_cube_vector": [
+            0,
+            0
+          ],
+          "attaining_layout": [
+            [
+              165,
+              0
+            ],
+            [
+              1815,
+              0
+            ],
+            [
+              19965,
+              0
+            ],
+            [
+              219615,
+              0
+            ],
+            [
+              2415765,
+              0
+            ],
+            [
+              26573415,
+              0
+            ],
+            [
+              292307565,
+              0
+            ],
+            [
+              3215383215,
+              0
+            ],
+            [
+              35369215365,
+              0
+            ],
+            [
+              389061369015,
+              0
+            ],
+            [
+              4279675059165,
+              0
+            ],
+            [
+              47076425650815,
+              0
+            ],
+            [
+              517840682158965,
+              0
+            ],
+            [
+              5696247503748615,
+              0
+            ],
+            [
+              62658722541234765,
+              0
+            ],
+            [
+              689245947953582415,
+              0
+            ],
+            [
+              7581705427489406565,
+              0
+            ],
+            [
+              83398759702383472215,
+              0
+            ],
+            [
+              917386356726218194365,
+              0
+            ],
+            [
+              10091249923988400138015,
+              0
+            ],
+            [
+              111003749163872401518165,
+              0
+            ],
+            [
+              1221041240802596416699815,
+              0
+            ],
+            [
+              13431453648828560583697965,
+              0
+            ],
+            [
+              147745990137114166420677615,
+              0
+            ],
+            [
+              1625205891508255830627453765,
+              0
+            ],
+            [
+              17877264806590814136901991415,
+              0
+            ],
+            [
+              196649912872498955505921905565,
+              0
+            ],
+            [
+              2163149041597488510565140961215,
+              0
+            ]
+          ],
+          "cluster_masses": [
+            [
+              [
+                0,
+                0
+              ],
+              "26876675/2829124"
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              "0"
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              "0"
+            ],
+            [
+              [
+                1,
+                1
+              ],
+              "1"
+            ]
+          ],
+          "joint_gate": "-9901933/1414562",
+          "maximum_fourth": "26876679/4",
+          "maximum_hinge16": "349396775/2829124",
+          "normalized_joint_gate": "-19803866/35364047",
+          "source_loads": [
+            29,
+            1,
+            1,
+            1,
+            29
+          ],
+          "survivor_weights": [
+            "1",
+            "0",
+            "0",
+            "1",
+            "24047551/2829124"
+          ]
+        }
+      },
+      "survivor_mass": "29705799/2829124",
+      "tau": "1/707281"
+    }
+  ],
+  "schema": "e7-actual-deletion-scope-counterexample-v1",
+  "scope": "same prior per tau; actual original labels fixed, phases fixed within each scenario; equal marginals on scopes missing at least one cube prime, not every proper subset of all carrier axes",
+  "searches": {
+    "carrier_scans": 0,
+    "main_tau_values": 2,
+    "optimizers": 0,
+    "phase_layout_scans": 0,
+    "source_points": 5
+  },
+  "status": "pass"
+}

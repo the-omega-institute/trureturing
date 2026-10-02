@@ -1,17 +1,20 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open LeanInformationAudit.Tests.ImportClosureProducer
 
 namespace LeanInformationAudit.Tests.ExpectedManifestContributorMismatch
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.StaleProducer"
 
 /-- error: IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Occurrence.ExpectedManifestContributorMismatch catalog=registry-snapshot component=contributor-modules expected=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem=LeanInformationAudit.Tests.StaleProducer"] actual=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem=LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"] -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.ExpectedManifestContributorMismatch

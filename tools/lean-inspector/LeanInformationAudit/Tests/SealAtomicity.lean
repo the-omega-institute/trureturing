@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -38,21 +41,21 @@ def zeroRealization : PrimitiveRealization zeroArena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
-information_theorem goodTheorem
+test_assess in information_theorem goodTheorem
   in goodArena
   primitives goodRealization
   : goodArena.Law goodRealization := by trivial
 
-information_theorem zeroTheorem
+test_assess in information_theorem zeroTheorem
   in zeroArena
   primitives zeroRealization
   : zeroArena.Law zeroRealization := by trivial
 
-expect_information_occurrence goodTheorem
+test_assess in expect_information_occurrence goodTheorem
   in goodArena
   from "LeanInformationAudit.Tests.SealAtomicity"
 
-expect_information_occurrence zeroTheorem
+test_assess in expect_information_occurrence zeroTheorem
   in zeroArena
   from "LeanInformationAudit.Tests.SealAtomicity"
 
@@ -61,7 +64,7 @@ theorem zeroTheorem.__trivial_in_catalog : True := by trivial
 /-- error: IE-C009 ProofConstructionFailed: LeanInformationAudit.Tests.SealAtomicity.zeroTheorem.__trivial_in_catalog
 generated name collision -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- error: Invalid field `__information_catalog`: The environment does not contain
 `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.__information_catalog`, so it is

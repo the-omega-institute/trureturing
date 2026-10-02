@@ -494,7 +494,7 @@ public sealed partial class WorktreeCommandTests
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
         StrataLint.TestSupport.RegPackageFixture.Write(root);
-        TestGit.Run(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg");
+        TestGit.Run(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg", "tools/lean-inspector-reg");
         TestGit.Run(root, "commit", "-m", "fixture baseline");
     }
 

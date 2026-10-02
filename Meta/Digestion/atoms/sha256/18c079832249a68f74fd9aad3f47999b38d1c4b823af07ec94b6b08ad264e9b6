@@ -1,0 +1,70 @@
+**命题 24.1（两个固定相位的实际分布）。** 将无序对唯一定向为 $p=g^2q$，置 $d_\alpha=A$、$d_\beta=d_\gamma=B$，$f_\alpha=1$、$f_\beta=f_\gamma=-x$ 和 $Z=C\overline{d_p}f_q$。则
+
+$$
+p_{\pm,\phi}(t)=\frac{7+2\cos3t}{18}
+\pm\frac12\operatorname{Re}(e^{-i\phi}Z),\qquad
+D_\phi:=p_{+,\phi}-p_{-,\phi}=\operatorname{Re}(e^{-i\phi}Z).
+\tag{24.3}
+$$
+
+证明。由 $M^3=I+2M$，$U^6=I$ 且 $U^3=\sum_a|a\rangle\langle a|\otimes T_{Ma}$。令全空间投影 $P_\pm=(I\pm U^3)/2$，在六次单位根上分别求值，或直接用 (14.2)，得
+
+$$
+W_t=(AP_++BP_-)+CU(P_++xP_-)+CU^2(P_+-xP_-).
+\tag{24.4}
+$$
+
+$P_+$ 上的谱为 $L=0,3$，$P_-$ 上为 $L=1,4$，故此式是精确谱恒等式。低层从 $10$ 的前两次步进均无 carry，$M10=01$、$M^2 10=11$。令 $\Pi_\pm=(I\pm T_{01})/2$，则两个所需低层角为
+
+$$
+(W_t)_{10,10}=D_H:=A\Pi_++B\Pi_-,
+\qquad
+(W_t)_{11,10}=CV^2F_H,\quad F_H=\Pi_+-x\Pi_- .
+$$
+
+实际事件的高层 Kraus 为 $K_\phi=(D_H+e^{-i\phi}CV^2F_H)/\sqrt2$。在非零标签 $\alpha,\beta,\gamma$ 上，$T_{01}$ 的字符依次为 $+1,-1,-1$，即给所列 $d,f$；$V^2$ 无固定非零标签，且 $|A|^2=|B|^2=(5+4\cos3t)/9$、$|f_p|=1$。于是效果 $K_\phi^\dagger K_\phi$ 的三个对角元均为 $(|A|^2+|C|^2)/2=(7+2\cos3t)/18$，$(p,q)$ 非对角元为 $e^{-i\phi}C\overline{d_p}f_q/2$，给出 (24.3)。零 Fourier 标签不在这项对角元断言中。$\square$
+
+三对的具体式为
+
+$$
+\begin{array}{c|c|c}
+\{p,q\}&(p,q)&Z\\ \hline
+\{\alpha,\gamma\}&(\gamma,\alpha)&
+C\overline B=(x^{-1}+x^{-4}-2x^2)/9\\
+\{\alpha,\beta\}&(\alpha,\beta)&
+-xC\overline A=(x-2x^{-2}+x^4)/9\\
+\{\beta,\gamma\}&(\beta,\gamma)&
+-xC\overline B=(-1-x^{-3}+2x^3)/9 .
+\end{array}
+\tag{24.5}
+$$
+
+对实读出 $\phi=0$，前两对的差为 $(\cos t+\cos4t-2\cos2t)/9$，后一对为 $(\cos3t-1)/9$。前式令 $u=\cos t$ 后其九倍等于 $(u-1)(2u+1)(4u^2+2u-3)$，故另有非共振零点 $u=(\sqrt{13}-1)/4$；实读出单设置不足以普遍见证所有对和所有非共振时钟。
+
+公平随机选 $\phi=0,\pi/2$ 并同时保留设置与二结果记录。每设置的两个联合概率差为 $D_\phi/2,-D_\phi/2$，所以联合分布的总变差精确为
+
+$$
+\operatorname{TV}(P_+,P_-)
+=\frac{|\operatorname{Re}Z|+|\operatorname{Im}Z|}{2},\qquad
+\frac{|Z|}{2}\le\operatorname{TV}\le\frac{|Z|}{\sqrt2}.
+\tag{24.6}
+$$
+
+由 $|f_q|=1$、$|A|=|B|$，
+
+$$
+|Z|^2=\frac{(2-2\cos3t)(5+4\cos3t)}{81}.
+\tag{24.7}
+$$
+
+第二因子至少为 $1$，故非共振时 $|Z|>0$。写 $t=\Delta_*+\delta$，则
+$|Z|=(2/3)|\sin(3\delta/2)|\,|A|$，且 $1/3\le|A|\le1$。对 $|\delta|\le\pi/3$，用正弦弦界及 $|\sin y|\le|y|$ 得
+$2|\delta|/(3\pi)\le|Z|\le|\delta|$，因而
+
+$$
+\frac{|\delta|}{3\pi}\le\operatorname{TV}\le\frac{|\delta|}{\sqrt2}.
+\tag{24.8}
+$$
+
+这是本输入对的一次调用见证和一致的 $\Theta(|\delta|)$ 信号，不替代面对任意输入差的 $S_9$ 张成定理。TV 为非负分布距离；选出实现 TV 的单一联合事件需要依差值符号选择记录集合，不能把保留记录的 TV 当成丢弃设置后的无条件有符号差。重定 Fourier 基相位时必须同时运输物理输入系数；若重新用等实系数定义 $\psi_\pm$ 则一般改变了物理态。
+

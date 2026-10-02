@@ -19,4 +19,4 @@ Every complete finite subtree of local completely positive instruments conserves
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/FiniteLocalProtocol.complete_subtree_trace`
-- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Recovery/RetainedLocalProtocol](RetainedLocalProtocol.md)

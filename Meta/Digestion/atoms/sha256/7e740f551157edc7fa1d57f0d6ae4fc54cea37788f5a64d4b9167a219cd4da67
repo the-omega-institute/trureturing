@@ -1,0 +1,12 @@
+**theorem 2.2 (Total raw-input clock and output growth).** For every Boolean
+word $w$, without any syntax premise, there is a word $o$ such that the same
+fixed machine reaches its exact clean terminal configuration with output $o$
+within $b(|w|)$ actual transitions, where
+
+$$
+b(L)=(4L+20)L+13.
+$$
+
+Its output satisfies $|o|\le b(|w|)P$. This clock statement does not identify
+the output or infer acceptance from it.
+

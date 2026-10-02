@@ -1,0 +1,1 @@
+2. **Fock 态场。** 能否把给定的有理 Heisenberg 模式和生成场二阶局域性扩张到 $F_{\mathbb C}$ 上每个态的 $Y_F$，验证真空、平移、局域性及相容的共形向量？仅生成场的系数对易不算通过。依据：[Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；[Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。

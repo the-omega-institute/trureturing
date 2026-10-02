@@ -1,0 +1,4 @@
+## 31. 新预测信息、相干响应与正的地址粗化
+
+§27 的地址和 §30 的量子标签都是坐标选择；统计信息由实际操作和效果确定。复用定义 11.1，取实际 Hermitian 事件效果的实张成 $\mathcal O_\infty$，以及初始读出的子空间 $\mathcal O_0\subseteq\mathcal O_\infty$。商 $\mathcal O_\infty/\mathcal O_0$ 表示新增预测响应，定义没有规定新增方向必须是相干。
+

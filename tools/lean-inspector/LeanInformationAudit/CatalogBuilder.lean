@@ -23,12 +23,12 @@ private def nameLess (left right : Name) : Bool :=
 
 private def catalogNameFor (env : Environment) (rootId arenaName : Name) (catalogId : CatalogId)
     (localSealNames : Bool) : Name :=
-  if localSealNames then localCompanionName env arenaName "__information_catalog"
+  if localSealNames then localCompanionName env rootId arenaName "__information_catalog"
   else catalogQualifiedName rootId arenaName catalogId arenaName "__information_catalog"
 
 private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
   if entry.objectArenaName.isAnonymous then
-    return (← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
+    return (← RegistrationElaboration.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
   else
     mkConstWithFreshMVarLevels entry.objectArenaName
 
@@ -36,9 +36,9 @@ private def propositionIsTrue (proposition : Expr) : MetaM Bool := do
   let decision ← mkDecide proposition
   reduceEval decision
 
-private def validateEntry (env : Environment) (entry : InformationRegistryEntry) :
+private def validateEntry (rootId : Name) (env : Environment) (entry : InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM Unit := do
-  match ← validatePersistedEntry env entry with
+  match ← validatePersistedEntry rootId env entry with
   | .ok () => pure ()
   | .error message => throwError message
   let unitExpr := mkConst entry.unitName
@@ -58,46 +58,59 @@ def observedSourceValidations (env : Environment) : Array Name :=
   sourceValidationEvents.getState env
 
 /-- Validate every persisted source entry before any seal declaration is staged. -/
-def validateSourceEntries (env : Environment)
+def validateSourceEntries (rootId : Name) (env : Environment)
     (entries : Array InformationRegistryEntry) : CommandElabM Unit := do
   for entry in entries do
     modifyEnv fun current => sourceValidationEvents.modifyState current (·.push entry.theoremName)
-    liftTermElabM <| validateEntry env entry
+    liftTermElabM <| validateEntry rootId env entry
 
 /-- This capability is issued only after source validation and the complete
 available binding join. Consumers cannot construct or retarget a snapshot. -/
 structure ValidatedSourceSnapshot where
   private mk ::
+  rootId : Name
   private environment : Environment
   private options : Options
   private sources : Array InformationRegistryEntry
   private catalogs : Array InformationRegistryEntry
   private bindings : Array BindingRecord
 
+def ValidatedSourceSnapshot.sourceEntries (snapshot : ValidatedSourceSnapshot) :
+    Array InformationRegistryEntry := snapshot.sources
+
 private def sameSnapshotObject (a b : α) : Bool := unsafe ptrEq a b
 
 private def ValidatedSourceSnapshot.requireCurrent (snapshot : ValidatedSourceSnapshot) :
     CommandElabM Unit := do
-  unless sameSnapshotObject snapshot.environment (← getEnv) &&
+  unless sameRegistrationEnvironment snapshot.environment (← getEnv) &&
       sameSnapshotObject snapshot.options (← getOptions) do
     throwError "IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.snapshot_environment"
 
 /-- The two independent entry points obtain the same validation capability.
 Unresolved template metadata is retained separately from mathematical validity. -/
-def validateSourceSnapshot (entries : Array InformationRegistryEntry) :
+def validateSourceSnapshot (rootId : Name) (entries : Array InformationRegistryEntry) :
     CommandElabM ValidatedSourceSnapshot := do
   if entries.isEmpty then throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
   let env ← getEnv
-  validateSourceEntries env entries
-  let bindings ← match TemplateBinding.cachedJoinedRecords (← getEnv) with
-    | .ok records => pure records
-    | .error diagnostic => throwError "IE-C050 ClosedTruthReadout {TemplateAudit.diagnosticFields diagnostic}"
+  validateSourceEntries rootId env entries
+  let bindings ← liftTermElabM do
+    TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture rootId)
   return {
+    rootId
     environment := ← getEnv
     options := ← getOptions
     sources := entries
     catalogs := entries
     bindings }
+
+/-- Assess a captured input without changing its root to the report host.
+The resulting capability remains bound to the assessed environment and options. -/
+def assessRegistrationInput (input : RegistrationAssessmentInput) :
+    CommandElabM ValidatedSourceSnapshot := do
+  unless sameRegistrationEnvironment input.environment (← getEnv) &&
+      sameSnapshotObject input.options (← getOptions) do
+    throwError "IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.assessment_input"
+  validateSourceSnapshot input.rootId (InformationRegistry.forRoot input.environment input.rootId)
 
 /-- Advance a capability through precisely the allowed alias declarations. The
 caller supplies desired entries, not a replacement Environment or a success bit. -/
@@ -105,7 +118,7 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
     (catalogEntries : Array InformationRegistryEntry) : CommandElabM ValidatedSourceSnapshot := do
   snapshot.requireCurrent
   let env ← getEnv
-  let root := env.header.mainModule
+  let root := snapshot.rootId
   unless snapshot.sources.size == catalogEntries.size do
     throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_correspondence"
   let mut aliases : Array (Name × Name) := #[]
@@ -120,7 +133,7 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
         (source.unitName, target.unitName, theoremUnitSuffix)] do
       if oldName != newName then
         unless newName == catalogQualifiedName root source.canonicalObjectArenaName
-            source.effectiveCatalogId source.theoremName suffix && !env.contains newName &&
+            source.effectiveCatalogId source.theoremName suffix &&
             !(aliases.any (·.2 == newName)) do
           throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_alias"
         aliases := aliases.push (oldName, newName)
@@ -128,7 +141,19 @@ def ValidatedSourceSnapshot.stageAliases (snapshot : ValidatedSourceSnapshot)
     for (source, target) in aliases do
       let sourceId := mkIdent (`_root_ ++ source)
       let targetId := mkIdent (`_root_ ++ target)
-      elabCommand (← `(command| abbrev $targetId := $sourceId))
+      if !(← getEnv).contains target then
+        elabCommand (← `(command| abbrev $targetId := $sourceId))
+        modifyEnv (GeneratedDeclarations.record · target)
+      else liftTermElabM do
+        let info ← getConstInfo target
+        let source ← mkConstWithFreshMVarLevels source
+        let mismatch : MetaM Unit :=
+          throwError "IE-C050 ClosedTruthReadout reason=unclassified_form rule=dtr.snapshot_alias"
+        let some value := info.value? | mismatch
+        unless GeneratedDeclarations.ownerOf (← getEnv) target == root do mismatch
+        unless ← isDefEq info.type (← inferType source) do mismatch
+        unless ← isDefEq value source do mismatch
+        checkWithKernel value
       -- Type elaboration may instantiate universe names, but the alias body
       -- must be the original constant with its full rigid universe telescope.
       liftTermElabM do
@@ -195,7 +220,12 @@ private def prepareCatalog (rootId arenaName : Name) (localSealNames : Bool)
   let vector ← makeUnitVector unitExprs
   let value ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
-  let type ← inferType value
+  -- Preserve the independently selected object arena in the public type.
+  -- Inference from a unit can retain its definitionally equal law-arena spelling.
+  let inferred ← inferType value
+  let type := mkApp inferred.getAppFn arena
+  unless ← isDefEq inferred type do
+    throwError "IE-C006 StatementProofMismatch: catalog arena {arenaName}"
   let units := sorted.mapIdx fun index entry => {
     theoremName := entry.theoremName
     unitName := entry.unitName
@@ -241,7 +271,7 @@ def prepareCatalogsFromSnapshot (snapshot : ValidatedSourceSnapshot) :
     CommandElabM (Array PreparedCatalog) := do
   snapshot.requireCurrent
   let env ← getEnv
-  let rootId := env.header.mainModule
+  let rootId := snapshot.rootId
   let localSealNames := snapshot.sources.all fun entry =>
     entry.localRegistrationNames && entry.registrationModuleName == rootId
   let groups := (groupEntries snapshot.catalogs).qsort fun left right => nameLess left.1 right.1
@@ -253,15 +283,15 @@ def prepareCatalogsFromSnapshot (snapshot : ValidatedSourceSnapshot) :
         nameLess left.record.arenaName right.record.arenaName)
 
 /-- Independent callers validate once and use checked alias correspondence. -/
-def prepareCatalogsFromEntries (sourceEntries catalogEntries :
+def prepareCatalogsFromEntries (rootId : Name) (sourceEntries catalogEntries :
     Array InformationRegistryEntry) : CommandElabM (Array PreparedCatalog) := do
-  let snapshot ← validateSourceSnapshot sourceEntries
+  let snapshot ← validateSourceSnapshot rootId sourceEntries
   let snapshot ← snapshot.stageAliases catalogEntries
   prepareCatalogsFromSnapshot snapshot
 
 /-- Validate the registry once and prepare catalogs using their original units. -/
-def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
-  let entries := InformationRegistry.entries (← getEnv)
-  prepareCatalogsFromEntries entries entries
+def prepareCatalogs (rootId : Name) : CommandElabM (Array PreparedCatalog) := do
+  let entries := InformationRegistry.forRoot (← getEnv) rootId
+  prepareCatalogsFromEntries rootId entries entries
 
 end LeanInformationAudit

@@ -4,6 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
 
+[ScribeSharedSource("Blueprint/D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.scribe.cs")]
 internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

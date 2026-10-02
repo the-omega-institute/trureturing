@@ -1,0 +1,21 @@
+**命题 29.2（完整仿射有限阶分类）。** 写 $A=(-1)^\epsilon M^kJ^\delta$。全部情形如下：
+
+| 本章线性型 | 平移条件 | $x\mapsto Ax+t$ 的阶 |
+| --- | --- | --- |
+| 29 · $A=I$ | $t=0$ | 1 |
+| 29 · identity linear part | $t\ne0$ | 无限 |
+| 29 · $A=-I$ | 任意 $t$ | 2 |
+| 29 · $\delta=0,k\ne0$ | 任意 $t$ | 无限 |
+| 29 · $\delta=1,k$ 奇 | 任意 $t$ | 4 |
+| 29 · $\delta=1,k$ 偶 | $(I+A)t=0$ | 2 |
+| 29 · even reflection with drift | $(I+A)t\ne0$ | 无限 |
+
+证明。$g^r(x)=A^rx+\sum_{j=0}^{r-1}A^jt$。$\delta=0,k\ne0$ 的线性部分无限阶。$\delta=1$ 时 $A^2=(-1)^kI$，且正规形唯一性排除 $A=\pm I$。奇 $k$ 给 $I+A+A^2+A^3=0$，所以任意平移都恰为四阶；偶 $k$ 给 $g^2=T_{(I+A)t}$，非零整数平移无限阶。$A=I,-I$ 两行直接由同一公式得到。有限阶中心不必是整数点。对任意 $m\in\mathbb Z$，准确共轭为
+
+$$
+M^{2m}J=(-1)^mM^mJM^{-m}.
+\tag{29.3}
+$$
+
+所以 $k=2m$ 时，反射平移条件还可写成 $t\in\mathbb ZM^m(1,-2)$（$\epsilon+m$ 偶）或 $t\in\mathbb ZM^m(1,0)$（$\epsilon+m$ 奇）；负 $m$ 同样成立。$\square$
+

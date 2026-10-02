@@ -1,0 +1,26 @@
+**引理205.4（饱和小素数核心）。** 当整数 $y\to\infty$ 时，
+
+$$
+\log D_y=\Psi(y)\sim y,
+\qquad
+Z(D_y)=e^\gamma\log y+o(1).
+\tag{205.3}
+$$
+
+证明。第一式为素数定理。对 $p\le y$ 记 $a_p=\lfloor\log y/\log p\rfloor$，则
+
+$$
+Z(D_y)=P(y)\prod_{p\le y}(1-p^{-a_p-1}),
+\qquad P(y)=\prod_{p\le y}(1-1/p)^{-1}.
+$$
+
+对 $p\le\sqrt y$，有 $p^{a_p+1}>y$，故这些截断项之和至多为 $1/\sqrt y$。对 $p>\sqrt y$，有 $a_p=1$，并可用整数平方倒数尾和得到
+
+$$
+\sum_{p\le y}p^{-a_p-1}=O(y^{-1/2}).
+$$
+
+由 $0\le1-\prod(1-t_p)\le\sum t_p$，截断乘积等于 $1+O(y^{-1/2})$。通常有效素数定理经分部求和给标准加性 Mertens 精度 $P(y)=e^\gamma\log y+o(1)$；例如 $\vartheta(t)=t+O(t e^{-c\sqrt{\log t}})$ 使其相对误差为 $O((1+\sqrt{\log y})e^{-c\sqrt{\log y}})$，已足够。于是截断误差为 $O(\log y/\sqrt y)=o(1)$，得到所述加性公式。只使用较弱的 $P(y)\sim e^\gamma\log y$，不足以推出这里的加性 $o(1)$。$\square$
+
+此处使用与 §§87、92、97、200 相同的经典解析输入；Mertens 背景见 Lichtman, *Mertens' prime product formula, dissected*, [Theorem 1.1](https://arxiv.org/html/2002.03361v3)。所需加性精度来自有效素数定理的分部求和，未把该文的较弱渐近表述冒充更强误差界。
+

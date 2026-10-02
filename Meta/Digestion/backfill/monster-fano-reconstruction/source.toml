@@ -1,0 +1,5 @@
+source_id = "monster-fano-reconstruction"
+path = "docs/develop/theory/MONSTER_FANO_RECONSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

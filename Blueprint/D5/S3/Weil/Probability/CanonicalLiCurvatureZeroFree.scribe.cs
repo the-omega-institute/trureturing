@@ -4,6 +4,8 @@ using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiGrowt
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
+[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
+[ScribeSharedSource("Blueprint/D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.scribe.cs")]
 internal sealed class CanonicalLiCurvatureZeroFreeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/Probability/CanonicalLiCurvatureZeroFree.";

@@ -7,7 +7,6 @@ import sys
 import tempfile
 
 REPO = pathlib.Path(__file__).resolve().parents[4]
-CI = REPO / "tools/scripts/workflow/ci.py"
 CACHE = REPO / "tools/scripts/worktree/lean_actions.py"
 REV = "a" * 40
 
@@ -27,7 +26,6 @@ class CacheFixture:
         (self.root / "lakefile.toml").write_text('name = "fixture"\n')
         (self.root / "Meta").mkdir()
         (self.root / "Meta/FILEMAP.toml").write_text(
-            'resources = [{id = "lean", materials = ["lake-manifest.json", "lean-toolchain", "lakefile.toml"]}]\n'
             'files = [{pattern = "Meta/ci-cache-paths.json"}]\n')
         (self.root / "Meta/ci-cache-paths.json").write_bytes((REPO / "Meta/ci-cache-paths.json").read_bytes())
         (self.root / "lean-report-inputs.json").write_text(json.dumps({

@@ -1,6 +1,9 @@
 import Reg.D5.S3.Fourier.Asymptotics.CosineIntegralLattice
 import Reg.D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
 import Reg.D5.S3.Fourier.Asymptotics.CosineIntegralGram
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit MeasureTheory
 open _root_.D5.S3.Fourier.Asymptotics.CosineIntegralLattice (cosineIntegral)

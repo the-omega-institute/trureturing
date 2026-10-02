@@ -1,7 +1,9 @@
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import LeanInformationAudit.Tests.RegistrationGates.ReifierInterrupt
 import LeanInformationAudit.Tests.RegistrationGates.Positive
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.ReifierChecks
 open Lean Meta Elab Command
@@ -13,14 +15,14 @@ elab "reject_via " label:str " expects " reason:str " in " command:command : com
   let before ← getEnv
   let messages := (← get).messages
   modify fun s => { s with messages := {} }
-  elabCommand command
+  elabCommand (← `(command| test_assess in $command))
   let errors := (← get).messages.toList.filter (·.severity == .error)
   modify fun s => { s with messages }
   unless (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries before).size do
     throwError "{label.getString}: rejected command inserted an entry"
   let owner ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
-  let unit := localCompanionName before owner theoremUnitSuffix
-  for name in #[unit, localCompanionName before owner primitiveRealizationSuffix,
+  let unit := localCompanionName before before.header.mainModule owner theoremUnitSuffix
+  for name in #[unit, localCompanionName before before.header.mainModule owner primitiveRealizationSuffix,
       unit.str "__variation", unit.str "__sensitivity", unit.str "__nondegenerate",
       RegistrationGates.diagnosticName unit before.header.mainModule] do
     unless before.contains name == (← getEnv).contains name do
@@ -41,7 +43,7 @@ def expectFailure (label reason : String) (action : MetaM Unit) : MetaM Unit := 
 def eqArena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 def neArena := pointwiseNeArena (Arena.ofFintype Bool) Bool
 theorem clean (renamed : Bool) : renamed.not.not = renamed := Bool.not_not _
-register_information_theorem clean
+test_assess in register_information_theorem clean
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem reflexive (x : Bool) : x = x := rfl
@@ -69,7 +71,7 @@ register_information_theorem poly
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem retained (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
-register_information_theorem retained
+test_assess in register_information_theorem retained
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have y := x.not.not; y) (fun x => x)) in eqArena
 
 theorem collapsed (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
@@ -149,7 +151,7 @@ run_meta do
       cert with occurrence := occurrenceBinding rebound } }
   let corrupt := { entry with statementIdentity := "stale", derivedCertificate := some {
     cert with statementIdentity := "stale" } }
-  match ← validatePersistedEntry (← getEnv) corrupt with
+  match ← validatePersistedEntry (← getEnv).header.mainModule (← getEnv) corrupt with
   | .error reason => unless reason.startsWith "P1.CertificateBindingMismatch" do throwError reason
   | .ok () => throwError "stale statement identity certified"
   let changed := { entry with realizationName := ``otherRealization }
@@ -195,7 +197,7 @@ theorem emptySource : True := True.intro
 theorem emptyBridge : LegacyPrimitiveRealization emptyArena True emptyRealization := ⟨Iff.rfl⟩
 reject_via "empty_slots_derived" expects "UnsupportedDescriptor" in
 register_information_theorem emptySource via emptyBridge in emptyArena
-register_information_theorem emptySource in emptyArena
+test_assess in register_information_theorem emptySource in emptyArena
   primitives (@PrimitiveRealization.toPrimitiveBundle _ _ emptyArena.stateDecidableEq emptyRealization) realization emptyBridge sensitivity emptySensitivity
 
 run_meta do
@@ -242,8 +244,8 @@ run_meta do
     addDecl (.thmDecl { name, levelParams := [], type, value := mkConst ``clean })
     unless (← getConstInfo name).type.equal type do throwError "raw theorem type not retained"
 
-register_information_theorem nestedPositive via (review_readout nested) in eqArena
-register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
+test_assess in register_information_theorem nestedPositive via (review_readout nested) in eqArena
+test_assess in register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
 run_meta do
   for name in #[``nestedPositive, ``annotatedPositive] do
     unless InformationRegistry.hasTheorem (← getEnv) name do throwError "{name}: positive not registered"
@@ -263,7 +265,7 @@ run_meta do
 def expectPersistedRejection (label : String) (edit : InformationRegistryEntry → InformationRegistryEntry) : MetaM Unit := do
   let env ← getEnv
   let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
-  match ← validatePersistedEntry env (edit entry) with
+  match ← validatePersistedEntry env.header.mainModule env (edit entry) with
   | .error reason =>
     unless reason.startsWith "P1.CertificateBindingMismatch" do throwError "{label}: {reason}"
     logInfo m!"P1_REVIEW {label} {reason}"
@@ -274,7 +276,7 @@ run_meta expectPersistedRejection "certificate_omission" fun e => { e with deriv
 run_meta do
   let env ← getEnv
   let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
-  match ← withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) (validatePersistedEntry env entry) with
+  match ← withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) (validatePersistedEntry env.header.mainModule env entry) with
   | .error reason => unless reason.startsWith "P1.IncompleteCheck" do throwError reason
   | .ok () => throwError "original zero fuel accepted"
   withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) <|
@@ -357,7 +359,7 @@ run_meta do
     let some cert := original.derivedCertificate | throwError "missing certificate"
     let descriptor := mkAppN cert.descriptor.getAppFn
       (cert.descriptor.getAppArgs.set! 5 cert.descriptor.getAppArgs[6]!)
-    let e ← prepareRegistrationEntry (← getEnv) { original with
+    let e ← prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) { original with
       theoremName := ``reflexive
       unitName := original.unitName.str "producerBug"
       realizationName := original.realizationName.str "producerBug"
@@ -418,10 +420,11 @@ run_meta do
   expectFailure "arena_universe1" "P1.RigidUniverseMismatch" do
     discard <| freezeArena ``highArena
 
--- A descriptor that would fail if arena resolution did not reject first.
-elab "arena_order_tripwire" : term => throwError "arena_order_tripwire executed"
-reject_via "arena_universe1_early" expects "P1.RigidUniverseMismatch" in
-register_information_theorem wrongArena via arena_order_tripwire in highArena
+-- The recorder elaborates the descriptor without consulting the arena; the
+-- report's P1 gate rejects the universe-1 arena before any derivation.
+reject_via "arena_universe1_report" expects "P1.RigidUniverseMismatch: arena must have three zero universe levels" in
+register_information_theorem wrongArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in highArena
 
 -- Full Name identity survives name resolution, but never unfolds a wrapper.
 theorem aliasPointwise {X Y : Type} [Fintype X] [DecidableEq X] [DecidableEq Y]
@@ -443,16 +446,16 @@ elab "accept_via " label:str " in " command:command : command => do
     elabCommand command
     let some entry := InformationRegistry.find? (← getEnv) ``wrongArena
       | throwError "{label.getString}: missing positive registration"
-    match ← liftTermElabM <| validatePersistedEntry (← getEnv) entry with
+    match ← liftTermElabM <| validatePersistedEntry (← getEnv).header.mainModule (← getEnv) entry with
     | .error reason => throwError reason
     | .ok () => logInfo m!"P1_A5 {label.getString} insertion_and_consumer accepted"
   finally setEnv saved
 
 open D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates in
 accept_via "provider_open_namespace" in
-register_information_theorem wrongArena via (pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+test_assess in register_information_theorem wrongArena via (pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 accept_via "provider_macro" in
-register_information_theorem wrongArena via approved_descriptor in eqArena
+test_assess in register_information_theorem wrongArena via approved_descriptor in eqArena
 reject_via "provider_theorem_alias" expects "P1.UnsupportedDescriptor" in
 register_information_theorem wrongArena via (aliasPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 reject_via "provider_abbrev" expects "P1.UnsupportedDescriptor" in
@@ -474,8 +477,8 @@ elab "check_internal_rollback" : command => do
   let some source := InformationRegistry.find? initial.env ``clean | throwError "missing source"
   let some cert := source.derivedCertificate | throwError "missing source certificate"
   let owner := ``wrongArena
-  let unit := localCompanionName initial.env owner theoremUnitSuffix
-  let names := #[unit, localCompanionName initial.env owner primitiveRealizationSuffix,
+  let unit := localCompanionName initial.env initial.env.header.mainModule owner theoremUnitSuffix
+  let names := #[unit, localCompanionName initial.env initial.env.header.mainModule owner primitiveRealizationSuffix,
     unit.str "__nondegenerate", unit.str "__sensitivity", unit.str "__variation",
     RegistrationGates.diagnosticName unit initial.env.header.mainModule]
   let mut observations : Array String := #[]
@@ -485,11 +488,11 @@ elab "check_internal_rollback" : command => do
     set initial
     let caught ← captureCommandException <| registrationTransaction do
       let entry ← liftTermElabM do
-        let e ← prepareRegistrationEntry (← getEnv) { source with
+        let e ← prepareRegistrationEntry (← getEnv).header.mainModule (← getEnv) { source with
           theoremName := owner, unitName := unit, realizationName := names[1]!,
           statementIdentity := theoremStatementIdentity (← getEnv) owner, derivedCertificate := none }
         derive e (← freezeArena ``eqArena) cert.descriptor
-      registerValidatedEntry entry
+      registerValidatedEntry (← getEnv).header.mainModule entry
       unless names.all (← getEnv).contains &&
           (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries initial.env).size + 1 do
         throwError "internal rollback control did not stage all declarations and row"
@@ -514,14 +517,14 @@ export D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates (pointwise)
 end Exported
 
 theorem exportedClean (x : Bool) : x.not.not = x := Bool.not_not _
-register_information_theorem exportedClean
+test_assess in register_information_theorem exportedClean
   via (Exported.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 run_meta do
   let env ← getEnv
   let some entry := InformationRegistry.find? env ``exportedClean
     | throwError "provider_export: missing registration"
   validateDerivedCertificate entry
-  match ← validatePersistedEntry env entry with
+  match ← validatePersistedEntry env.header.mainModule env entry with
   | .error reason => throwError reason
   | .ok () => logInfo "P1_A7 provider_export insertion_and_consumer accepted"
 

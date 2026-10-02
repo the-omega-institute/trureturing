@@ -1,0 +1,11 @@
+**证明。** $\sqrt y\le2\sqrt a$，且
+$\log y\le\log(4a)=\log4+\log a\le2\log a$，所以
+$0<w(y)/w(a)\le4$。由宽度条件和式（243.1），
+
+$$
+f(y)\ge f(a)-\frac{BL}{w(a)}
+\ge-\frac{K+BL}{w(a)}.
+$$
+
+乘以正数 $w(y)$，再用 $K+BL\ge0$ 即得式（243.2）。$\square$
+
