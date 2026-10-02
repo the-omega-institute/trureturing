@@ -236,7 +236,7 @@ public static class ScribeScriptHost
                 or AliasQualifiedNameSyntax
                 {
                     Alias.Identifier.ValueText: "global",
-                    Name.Identifier.ValueText: "StrataLint",
+                    Name: IdentifierNameSyntax { Identifier.ValueText: "StrataLint" },
                 } => member,
             _ => null,
         };

@@ -245,6 +245,18 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void GenericAliasQualifierDoesNotDeclareSharedSource()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path,
+            "[global::StrataLint<int>.Scribe.ScribeSharedSource(\"Outside/Shared.scribe.cs\")] internal sealed class Probe { }");
+
+        Assert.Equal(ScribeScriptFailureCode.Compilation,
+            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+    }
+
+    [Fact]
     public void ScriptsVerifyReturnsZeroForAnEquivalentSyntheticSet()
     {
         using var root = PrepareCommandRoot();
