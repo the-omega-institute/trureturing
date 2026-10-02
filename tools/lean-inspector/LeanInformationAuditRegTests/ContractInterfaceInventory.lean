@@ -17,7 +17,7 @@ run_meta do
     let entries ← SourceAudit.parse env source owner.toString
     let result := InterfaceGuard.audit env owner entries
     let ok := match result with
-      | .error e => e.startsWith "contract.interface:compiled_non_type:"
+      | .error e => e.startsWith "contract.interface:command_not_allowed:"
       | .ok _ => false
     if ok then logInfo m!"[PASS] interface.inventory.{fixture}"
     else logError m!"[FAIL] interface.inventory.{fixture}"
@@ -30,7 +30,7 @@ run_meta do
   let entries ← SourceAudit.parse env source owner.toString
   let result := InterfaceGuard.audit env owner entries
   let rejected := match result with
-    | .error e => e.startsWith "contract.interface:unattributed_command:"
+    | .error e => e.startsWith "contract.interface:command_not_allowed:"
     | .ok _ => false
   if rejected then logInfo "[PASS] interface.inventory.companion_name_spoof"
   else logError "[FAIL] interface.inventory.companion_name_spoof"

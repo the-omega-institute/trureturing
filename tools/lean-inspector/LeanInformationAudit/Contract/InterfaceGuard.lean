@@ -9,9 +9,7 @@ def auditSource (entries : Array SourceAudit.Entry) : Except String Unit := do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
     let declaration := entry.command[1]
     unless declaration.isOfKind ``Parser.Command.structure ||
-        declaration.isOfKind ``Parser.Command.inductive ||
-        declaration.isOfKind ``Parser.Command.coinductive ||
-        declaration.isOfKind ``Parser.Command.classInductive do
+        declaration.isOfKind ``Parser.Command.inductive do
       throw s!"contract.interface:authored_non_type:{entry.sourceName}:{declaration.getKind}"
 
 /-- Fixed companion families emitted by the pinned Lean compiler. Constructor
@@ -33,29 +31,45 @@ def family (env : Environment) (type : Name) : Except String NameSet := do
       allowed := allowed.insert (type ++ projection)
   return allowed
 
-/-- Pure type source uses only lexical scaffolding and type declarations.
-Retaining the original command prevents wrappers from hiding code generation.
-This also excludes injected constants forged under a compiler companion name. -/
-private partial def permittedCommand (command : Syntax) : Bool :=
-  if command.isOfKind ``Parser.Command.declaration then
+private partial def hasAttribute (command : Syntax) : Bool :=
+  (command.find? (·.isOfKind ``Parser.Term.attributes)).isSome
+
+private partial def hasTermElaboration (command : Syntax) : Bool :=
+  (command.find? fun node => node.isOfKind ``Parser.Term.byTactic ||
+    node.isOfKind ``Parser.Term.do || node.getKind.toString.toLower.contains "term_elab").isSome
+
+private partial def hasDerivingClause (command : Syntax) : Bool :=
+  (command.find? fun node => node.isAtom && node.getAtomVal == "deriving").isSome
+
+private partial def permittedDeclaration (command : Syntax) : Bool :=
+  if !command.isOfKind ``Parser.Command.declaration then false
+  else
     let declaration := command[1]
     (declaration.isOfKind ``Parser.Command.structure ||
-      declaration.isOfKind ``Parser.Command.inductive ||
-      declaration.isOfKind ``Parser.Command.coinductive ||
-      declaration.isOfKind ``Parser.Command.classInductive) &&
-      (declaration.find? fun node => node.isOfKind ``Parser.Term.byTactic ||
-        node.isOfKind ``Parser.Term.do).isNone
-  else if command.isOfKind ``Parser.Command.namespace ||
-      command.isOfKind ``Parser.Command.section || command.isOfKind ``Parser.Command.end ||
-      command.isOfKind ``Parser.Command.open || command.isOfKind ``Parser.Command.universe ||
-      command.isOfKind ``Parser.Command.variable then true
-  else if command.isOfKind ``Parser.Command.mutual || command.getKind == `null then
-    command.getArgs.all fun node => node.isAtom || permittedCommand node
+      declaration.isOfKind ``Parser.Command.inductive) &&
+      !hasAttribute command && !hasTermElaboration declaration &&
+      !hasDerivingClause declaration
+
+/-- Closed interface command allowlist. It is deliberately lexical and
+fail-closed: imports, namespace/section scaffolding, opens, universes, doc
+comments and bare type declarations are the complete accepted set. -/
+private partial def permittedCommand (command : Syntax) : Bool :=
+  if permittedDeclaration command then true
+  else if command.isOfKind ``Parser.Command.import ||
+      command.isOfKind ``Parser.Command.docComment ||
+      command.isOfKind ``Parser.Command.namespace ||
+      command.isOfKind ``Parser.Command.section ||
+      command.isOfKind ``Parser.Command.end ||
+      command.isOfKind ``Parser.Command.open ||
+      command.isOfKind ``Parser.Command.universe then true
   else false
 
 /-- Inventory is read from the imported compiled module; no user command runs. -/
 def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
     : Except String Unit := do
+  for entry in entries do
+    unless permittedCommand entry.originCommand do
+      throw s!"contract.interface:command_not_allowed:{owner}:{entry.originCommand.getKind}"
   auditSource entries
   let some idx := env.getModuleIdx? owner
     | throw s!"contract.interface:module_missing:{owner}"
@@ -70,9 +84,5 @@ def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
   for name in names do
     unless allowed.contains name do
       throw s!"contract.interface:compiled_non_type:{owner}:{name}"
-
-  for entry in entries do
-    unless permittedCommand entry.originCommand do
-      throw s!"contract.interface:unattributed_command:{owner}:{entry.originCommand.getKind}"
 
 end LeanInformationAudit.Contract.InterfaceGuard
