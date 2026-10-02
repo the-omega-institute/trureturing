@@ -588,6 +588,22 @@ $$
 
 This condition is not established. All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note reuses the author's support-independent Gamma input, constructs only the new-width kernel and identifies the common 256-mode remaining finite obligation. It supplies no verified finite sign, full bounded or cofinal positivity, originality claim, kernel theorem or RH proof.
 
+```python
+from fractions import Fraction as F
+
+assert F(3, 2) * F(68, 25)**212 < 2**310
+assert 192 * F(11, 10) < 212
+assert F(11, 10) + F(4, 3) == F(73, 30) < 4
+r, p = F(1, 2**200), F(1, 2**509)
+e, n, h = F(1, 2**188), F(1, 2**390), F(1, 2**386)
+assert 2154*r + 4*p < e
+assert 896*r*r < n and 8996*r*r + 2*p*p < h
+m = F(264, 325)
+assert e + 2*e*e/(m-n) < F(1, 2**187)
+assert (e+n)/m**2 + 2*h*h/(m**2*(m-n)) < F(1, 2**186)
+print('common256-mode projection and consumer allowances passed')
+```
+
 ## The next FIB layer needs a different prime reference
 
 The source's inverse-residual comparison requires a positive reference operator. Its constant-background splitting is therefore subject to a separate scale condition. At $c>1$, put $a_c=\tfrac12\log c$ and use the actual even space $L^2_{\rm even}((-a_c,a_c);\mathbb C)$. With the same compressed shifts as above, define
@@ -651,18 +667,47 @@ print('the next FIB layer requires beta > 4 for a positive prime reference')
 
 Consequently every $c\ge27$ requires $\beta>4$ for a strictly positive constant-background reference, including all subsequent cutoffs of the specified FIB sequence. This rules out reusing the $7/2$ prime background; it does not assert negativity of $Q$.
 
+## Raising the background conflicts with the fixed-band tail
+
+For a variable background $\beta$ at band cutoff $\Omega$, the same exact splitting has exterior weight $A(t)-\beta$. Retaining the source mechanism's **pointwise** condition $A(t)-\beta\ge0$ for $|t|>\Omega$ requires
+
+$$
+\beta\le A(\Omega).
+$$
+
+Continuity gives this necessary boundary inequality even when the frequency endpoint itself is excluded. This is a condition on that particular tail mechanism; no assertion is made that every lower bound for a signed exterior integral requires a pointwise nonnegative multiplier.
+
+At $\Omega=256$, the elementary upper bound $A(256)<4$ suffices. The primary formula [DLMF 5.9.13](https://dlmf.nist.gov/5.9.E13), for $\Re z>0$, is
+
+$$
+\psi(z)=\log z-\int_0^\infty h(t)e^{-zt}\,dt,
+\qquad h(t)=\frac1{1-e^{-t}}-\frac1t.
+$$
+
+The inequalities $1-e^{-t}<t<e^t-1$ give $0<h(t)<1$, hence $|\psi(w)-\log w|\le1/\Re w$. Apply the [digamma recurrence, DLMF 5.5.2](https://dlmf.nist.gov/5.5.E2), to $z=1/4+128i$ and $w=z+64$. Every subtracted reciprocal has positive real part, so
+
+$$
+\Re\psi(z)=\Re\psi(w)-\sum_{k=0}^{63}\Re\frac1{z+k}
+\le\Re\psi(w).
+$$
+
+Now $|w|<144$, $\Re w>64$ and $\pi>3$ give
+
+$$
+A(256)<\log48+\frac1{64}<4.
+\tag{A16}
+$$
+
+For the last comparison, $e^4>\sum_{k=0}^9 4^k/k!>54$ and $e^{1/64}<64/63$ imply $e^{4-1/64}>54\cdot63/64>48$. Its rational replay is:
+
 ```python
 from fractions import Fraction as F
+from math import factorial
 
-assert F(3, 2) * F(68, 25)**212 < 2**310
-assert 192 * F(11, 10) < 212
-assert F(11, 10) + F(4, 3) == F(73, 30) < 4
-r, p = F(1, 2**200), F(1, 2**509)
-e, n, h = F(1, 2**188), F(1, 2**390), F(1, 2**386)
-assert 2154*r + 4*p < e
-assert 896*r*r < n and 8996*r*r + 2*p*p < h
-m = F(264, 325)
-assert e + 2*e*e/(m-n) < F(1, 2**187)
-assert (e+n)/m**2 + 2*h*h/(m**2*(m-n)) < F(1, 2**186)
-print('common256-mode projection and consumer allowances passed')
+assert F(257, 4)**2 + 128**2 < 144**2
+assert sum((F(4)**k / factorial(k) for k in range(10)), F(0)) > 54
+assert F(54) * F(63, 64) > 48
+print('the band256 pointwise tail mechanism requires beta < 4')
 ```
+
+Thus, for every $c\ge27$, no real $\beta$ can satisfy both $M_{c,\beta}\succeq mI$ for some $m>0$ and the pointwise exterior-weight condition at band $256$. Merely raising the constant background cannot continue this fixed-band comparison through the next FIB layer. This is a paper-level obstruction to the stated splitting and sufficient criterion; it refutes neither full Weil positivity nor RH.
