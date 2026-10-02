@@ -115,6 +115,8 @@ def main():
             end = text.index("/-- Missing readout evidence", body)
             mutated = text[:body] + ": MetaM Json := do\n  return Json.null\n\n" + text[end:]
             expected = [
+                "comparator_rejects_stale_target_descriptor", "comparator_rejects_stale_environment_claim",
+                "comparator_rejects_unauthorized_mapping",
                 "comparator_rejects_same_type_readout", "comparator_rejects_same_type_primitive",
                 "comparator_rejects_same_type_template_selection", "comparator_rejects_unauthorized_owner",
             ]

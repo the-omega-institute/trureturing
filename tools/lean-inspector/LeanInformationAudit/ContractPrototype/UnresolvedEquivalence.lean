@@ -78,26 +78,64 @@ private def diagnosticPrefix (key : TemplateOccurrenceKey) (kind rule site : Str
     s!"reason={kind} rule={rule} site=" ++ (toJson site).compress ++
     " readout=" ++ (toJson site).compress
 
+def requireSupportedDiagnostic (diagnostic : String) : MetaM Unit := do
+  let parts := diagnostic.splitOn " provenance="
+  unless parts.length == 2 do throwError "contract.unresolved_equivalence:unsupported_form:missing_provenance"
+  let .ok provenance := Json.parse parts[1]!
+    | throwError "contract.unresolved_equivalence:unsupported_form:invalid_provenance"
+  let .ok site := provenance.getObjValAs? String "site"
+    | throwError "contract.unresolved_equivalence:unsupported_form:null_or_missing_site"
+  let .ok rule := provenance.getObjValAs? String "rule"
+    | throwError "contract.unresolved_equivalence:unsupported_form:missing_rule"
+  let .ok fields := provenance.getObj?
+    | throwError "contract.unresolved_equivalence:unsupported_form:provenance_object"
+  let keys := #["argument_inputs", "extraction_inputs", "plan_identity", "rule", "site", "template_key"]
+  unless fields.toArray.size == keys.size && fields.toArray.all (fun (key, _) => keys.contains key) do
+    throwError "contract.unresolved_equivalence:unsupported_form:provenance_fields"
+  for field in #["plan_identity", "template_key"] do
+    let .ok value := provenance.getObjValAs? String field
+      | throwError "contract.unresolved_equivalence:unsupported_form:identity_field:{field}"
+    if value.isEmpty then throwError "contract.unresolved_equivalence:unsupported_form:empty_identity:{field}"
+  for field in #["argument_inputs", "extraction_inputs"] do
+    let .ok inputs := provenance.getObjValAs? (Array Json) field
+      | throwError "contract.unresolved_equivalence:unsupported_form:input_array:{field}"
+    for input in inputs do
+      let .ok fields := input.getObj?
+        | throwError "contract.unresolved_equivalence:unsupported_form:input_object"
+      let keys := #["name", "owner", "type_identity", "body_identity"]
+      unless fields.toArray.size == keys.size && fields.toArray.all (fun (key, _) => keys.contains key) do
+        throwError "contract.unresolved_equivalence:unsupported_form:input_fields"
+      for key in keys do
+        unless (input.getObjValAs? String key).isOk do
+          throwError "contract.unresolved_equivalence:unsupported_form:input_identity:{key}"
+  unless !site.isEmpty && rule == "E5.unsaturated_definition" &&
+      parts[0]!.startsWith "IE-C050 ClosedTruthReadout key=" &&
+      (parts[0]!.contains " reason=unclassified_form " ||
+        parts[0]!.contains " reason=forbidden_dependency ") do
+    throwError "contract.unresolved_equivalence:unsupported_form:unnamed_or_resource_site"
+
 /-- Verify the named-site unresolved diagnostic and the entire exported record.
 Every dependency and template-plan hash is recomputed by the production encoders;
 failure provenance remains evidence about rejected inputs, never a certificate. -/
-def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
+def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
   let .declaredUnresolved oldDiagnostic := oldRecord.result
     | throwError "contract.unresolved_equivalence:original_not_unresolved"
   let .declaredUnresolved newDiagnostic := newRecord.result
     | throwError "contract.unresolved_equivalence:prototype_not_unresolved"
+  requireSupportedDiagnostic oldDiagnostic
+  requireSupportedDiagnostic newDiagnostic
   let some descriptor := oldRecord.descriptor
-    | throwError "contract.unresolved_equivalence:descriptor_missing"
+    | throwError "contract.unresolved_equivalence:unsupported_form:descriptor_missing"
   let some newDescriptor := newRecord.descriptor
-    | throwError "contract.unresolved_equivalence:prototype_descriptor_missing"
+    | throwError "contract.unresolved_equivalence:unsupported_form:prototype_descriptor_missing"
   let some template := descriptor.getAppFn.constName?
     | throwError "contract.unresolved_equivalence:template_head"
   let some newTemplate := newDescriptor.getAppFn.constName?
     | throwError "contract.unresolved_equivalence:prototype_template_head"
   let oldPlan ← result (selectedPlan oldEnv template)
   let newPlan ← result (selectedPlan newEnv newTemplate)
-  let mapping ← completeMapping oldEnv newEnv prefixes oldRecord newRecord
+  let mapping ← completeMapping oldEnv newEnv authorization oldRecord newRecord
   unless renameName mapping template == newTemplate &&
       renameName mapping oldPlan.enrollmentOwner == newPlan.enrollmentOwner &&
       renameName mapping oldPlan.definitionOwner == newPlan.definitionOwner do

@@ -106,8 +106,8 @@ run_cmd do
       let (_, _, newEnv) ← reportAt reports (2 * index + 1)
       let oldRecords := (TemplateBinding.records oldEnv).filter (·.occurrence.key.registrationModule == oldTarget)
       let newRecords := (TemplateBinding.records newEnv).filter (·.occurrence.key.registrationModule == newTarget)
-      unless !oldRecords.isEmpty && oldRecords.size == newRecords.size do
-        throwError "sample record count mismatch: {oldTarget}/{newTarget}"
+      unless !oldRecords.isEmpty do
+        throwError "contract.pairing:empty_source:{oldTarget}"
       if index == 11 then
         unless oldRecords.size == 3 do throwError "witness_multi_registration_count"
         for record in oldRecords do
@@ -121,17 +121,18 @@ run_cmd do
             unless record.escape.bridgeKind == "witness" &&
                 record.escape.continuation.map (·.kind) == some expectedKind do
               throwError "witness_continuation_control_kind"
-      for oldRecord in oldRecords do
-        let some newRecord := newRecords.find? (fun row =>
-            row.occurrence.key.theoremName == oldRecord.occurrence.key.theoremName)
-          | throwError "prototype theorem missing"
-        let result ← match oldRecord.result with
+      let recordMapping ← ContractPrototype.Equivalence.privateMapping oldEnv newEnv mapping
+      let paired ← ContractPrototype.Equivalence.pairRecords recordMapping oldRecords newRecords
+      let authorization := LeanInformationAuditRegTests.ContractMapping.inlineAuthorization mapping
+      for (oldRecord, newRecord) in paired do
+        phase ("equivalence:" ++ oldRecord.occurrence.key.theoremName.toString)
+        let result ← withCurrHeartbeats <| match oldRecord.result with
           | .declaredUnresolved _ =>
-            ContractPrototype.UnresolvedEquivalence.verifyRecord oldEnv newEnv mapping oldRecord newRecord
+            ContractPrototype.UnresolvedEquivalence.verifyRecord oldEnv newEnv authorization oldRecord newRecord
           | .undeclared =>
-            ContractPrototype.Equivalence.verifyMissingRecord oldEnv newEnv mapping oldRecord newRecord
+            ContractPrototype.Equivalence.verifyMissingRecord oldEnv newEnv authorization oldRecord newRecord
           | .declaredValidated _ =>
-            ContractPrototype.Equivalence.verifyRecord oldEnv newEnv mapping oldRecord newRecord
+            ContractPrototype.Equivalence.verifyRecord oldEnv newEnv authorization oldRecord newRecord
         checked := checked.push <| Json.mkObj [("original", toJson oldTarget.toString),
           ("prototype", toJson newTarget.toString), ("result", result)]
     return checked

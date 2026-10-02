@@ -7,14 +7,14 @@ open Lean Meta TemplateAudit
 def inEnvironment (env : Environment) (action : MetaM α) : MetaM α := do
   let saved ← getEnv
   setEnv (env.setExporting false)
-  try action finally setEnv saved
+  try withCurrHeartbeats action finally setEnv saved
 
 private def result (value : Except String α) : MetaM α :=
   match value with
   | .ok value => pure value
   | .error message => throwError message
 
-private def identity (source : Bool) (levels : List Name) (value : Expr) : MetaM String := do
+private def identity (source : Bool) (levels : List Name) (value : Expr) : MetaM String := withCurrHeartbeats do
   return (← result (← if source then compactIdentity levels value else rawIdentity levels value)).1
 
 private def check (label : String) (actual expected : String) : MetaM Unit := do
@@ -145,11 +145,9 @@ private def actual (env : Environment) (event : TemplateOccurrenceEvent) (source
 def mapEscape (oldEnv _newEnv : Environment) (mapping : NameMapping)
     (record : BindingRecord) : MetaM EscapeRecordEvidence := do
   if record.escape.bridgeKind == "source-equivalence" then return record.escape
-  let raw := (RegistrationInputs.owned oldEnv).find? fun (owner, input) =>
-    owner == record.occurrence.key.registrationModule && input.entry.theoremName == record.occurrence.key.theoremName
+  let raw ← uniqueInput (RegistrationInputs.owned oldEnv) record.occurrence.key
   let fromObject ← record.escape.fromObject.mapM fun origin => do
-    let some (_, input) := raw | throwError "contract.equivalence:escape_input"
-    let some value := input.declaration.bind (·.escapeInput.fromObject)
+    let some value := raw.declaration.bind (·.escapeInput.fromObject)
       | throwError "contract.equivalence:escape_origin"
     let type ← inEnvironment oldEnv <| inferType value
     let oldType ← result (rawStatementIdentity record.occurrence.levelParams type)
@@ -174,16 +172,97 @@ def mapEscape (oldEnv _newEnv : Environment) (mapping : NameMapping)
     return residual
   return { record.escape with fromObject, continuation }
 
+/-- Recompute both sides against their own current environments before mapping.
+The current production assessment independently fixes membership, source-scope
+and escape identities; the same encoders check every certificate field. -/
+def verifyCurrentCertificate (side : String) (env : Environment) (record : BindingRecord)
+    (certificate : TemplateBindingCertificate) : MetaM Unit := inEnvironment env do
+  TemplateBinding.validateEvent record.occurrence
+  unless certificate.key == record.occurrence.key do throwError "contract.equivalence:{side}.certificate_key"
+  let source := certificate.sourceBinding.isSome
+  let some descriptor := record.descriptor | throwError "contract.equivalence:{side}.descriptor_missing"
+  check s!"descriptor.{side}" (← identity source record.occurrence.levelParams descriptor)
+    certificate.descriptorIdentity
+  check s!"actual.{side}" (← identity source record.occurrence.levelParams
+    (← actual env record.occurrence source)) certificate.actualIdentity
+  let some template := descriptor.getAppFn.constName? | throwError "contract.equivalence:{side}.template"
+  let plan ← result (selectedPlan env template)
+  let info ← getConstInfo template
+  check s!"plan.{side}.type" (← identity false info.levelParams info.type) plan.typeIdentity
+  let some body := info.value? | throwError "contract.equivalence:{side}.template_body"
+  check s!"plan.{side}.body" (← identity false info.levelParams body) plan.bodyIdentity
+  for input in plan.dependencies do discard <| dependency env env #[] false input
+  let (bytes, _) ← result (planEncodingWithWork plan)
+  check s!"plan.{side}" (Sha256.hex bytes) certificate.planIdentity
+  let definitionName := certificate.sourceBinding.bind fun binding =>
+    (binding.getObjVal? "definition_entry").toOption.bind fun entry =>
+      (entry.getObjValAs? String "name").toOption
+  for input in certificate.argumentInputs do
+    discard <| dependency env env #[] source input
+  for input in certificate.extractionInputs do
+    discard <| dependency env env #[] source input (definitionName == some input.name.toString)
+  if let some binding := certificate.sourceBinding then
+    let registration := mkConst record.occurrence.realizationName
+      (record.occurrence.levelParams.map Level.param)
+    check s!"source.registration.{side}" (← identity true record.occurrence.levelParams registration)
+      (← result (binding.getObjValAs? String "registration_identity"))
+  let claims := (TemplateBinding.ownedClaims env).filter (fun (_, claim) => claim.key == record.occurrence.key)
+  unless claims.size == 1 do throwError "contract.equivalence:{side}.claim_key_count"
+  let current ← withCurrHeartbeats <| TemplateBinding.assess record.occurrence (some claims[0]!.2)
+  let .declaredValidated recomputed := current.result
+    | throwError "contract.equivalence:{side}.current_not_validated"
+  unless (← TemplateBinding.recordJson { record with result := .declaredValidated recomputed }) ==
+      (← TemplateBinding.recordJson record) do
+    throwError "contract.equivalence:{side}.certificate_consistency"
+  check s!"evidence.{side}" (← result (bindingIdentity record.occurrence.statementIdentity certificate 524288)).1
+    certificate.evidenceRef
+
+/-- Undeclared actuals keep their raw expression shape after proof erasure.
+Repository data/type dependencies are followed; proof bodies are omitted and
+upstream implementations remain pinned. The fixed walk has no candidate rules. -/
+def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
+    (value : Expr) : MetaM (Array DependencyIdentity) := inEnvironment env do
+  let mut pending := ((← eraseProofs value).1.getUsedConstants ++
+    (← inspectionRoots event)).toList
+  let mut seen : NameSet := {}
+  let mut remaining := 524288
+  while let name :: rest := pending do
+    pending := rest
+    if name == ``lcProof || seen.contains name then continue
+    Core.checkMaxHeartbeats "contract undeclared dependency closure"
+    if remaining == 0 then throwError "contract.equivalence:undeclared_dependency_budget"
+    remaining := remaining - 1
+    seen := seen.insert name
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    let (type, work) ← eraseProofs info.type remaining
+    remaining := remaining - work
+    pending := type.getUsedConstants.toList ++ pending
+    if Repository.isModule owner && !(← isProp info.type) then
+      if let some body := info.value? then
+        let (body, work) ← eraseProofs body remaining
+        remaining := remaining - work
+        pending := body.getUsedConstants.toList ++ pending
+  (seen.toArray.qsort Name.quickLt).mapM fun name => withCurrHeartbeats do
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    let typeIdentity ← identity false info.levelParams info.type
+    let bodyIdentity ← if (← isProp info.type) || !Repository.isModule owner then pure ""
+      else pure ((← info.value?.mapM (identity false info.levelParams)).getD "")
+    return { name, owner, typeIdentity, bodyIdentity }
+
 /-- Verify every certificate identity by the production encoder. Dependency
 membership and producer enumeration are checked after declaration renaming.
 Source scopes and their D5 definitions must remain unchanged in this L0 check. -/
-def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
+def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
   let .declaredValidated oldCert := oldRecord.result
     | throwError "contract.equivalence:original_not_validated"
   let .declaredValidated newCert := newRecord.result
     | throwError "contract.equivalence:prototype_not_validated"
-  let mapping ← completeMapping oldEnv newEnv prefixes oldRecord newRecord
+  verifyCurrentCertificate "old" oldEnv oldRecord oldCert
+  verifyCurrentCertificate "new" newEnv newRecord newCert
+  let mapping ← completeMapping oldEnv newEnv authorization oldRecord newRecord
   let some descriptor := oldRecord.descriptor | throwError "contract.equivalence:descriptor_missing"
   let some newDescriptor := newRecord.descriptor | throwError "contract.equivalence:prototype_descriptor_missing"
   let some oldTemplate := descriptor.getAppFn.constName? | throwError "contract.equivalence:descriptor_head"
@@ -272,12 +351,39 @@ def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
 
 /-- Missing readout evidence stays undeclared. No certificate or diagnostic
 normalization can make it look like a validated registration. -/
-def verifyMissingRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
+def verifyMissingRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
   unless (oldRecord.result matches .undeclared) && (newRecord.result matches .undeclared) &&
       oldRecord.descriptor.isNone && newRecord.descriptor.isNone do
     throwError "contract.equivalence:missing_record_state"
-  let mapping ← completeMapping oldEnv newEnv prefixes oldRecord newRecord
+  let mapping ← completeMapping oldEnv newEnv authorization oldRecord newRecord
+  inEnvironment oldEnv <| TemplateBinding.validateEvent oldRecord.occurrence
+  inEnvironment newEnv <| TemplateBinding.validateEvent newRecord.occurrence
+  let source := oldRecord.escape.bridgeKind == "source-equivalence"
+  unless source == (newRecord.escape.bridgeKind == "source-equivalence") do
+    throwError "contract.equivalence:undeclared_source_kind"
+  let oldActual ← actual oldEnv oldRecord.occurrence source
+  let newActual ← actual newEnv newRecord.occurrence source
+  let expected ← inEnvironment newEnv <| identity source oldRecord.occurrence.levelParams
+    (renameExpr mapping oldActual)
+  let observed ← inEnvironment newEnv <| identity source newRecord.occurrence.levelParams newActual
+  check "undeclared.actual" observed expected
+  let oldDependencies ← actualDependencies oldEnv oldRecord.occurrence oldActual
+  let newDependencies ← actualDependencies newEnv newRecord.occurrence newActual
+  let mappedDependencies ← oldDependencies.mapM fun input => do
+    -- The closure fingerprints upstream types but omits pinned upstream bodies.
+    let info ← inEnvironment oldEnv <| getConstInfo input.name
+    let typeIdentity ← inEnvironment newEnv <| identity false info.levelParams (renameExpr mapping info.type)
+    let bodyIdentity ← inEnvironment newEnv do
+      if input.bodyIdentity.isEmpty then return ""
+      let some body := info.value? | throwError "contract.equivalence:undeclared_dependency_body"
+      identity false info.levelParams (renameExpr mapping body)
+    return { input with
+      name := renameName mapping input.name
+      owner := renameName mapping input.owner
+      typeIdentity, bodyIdentity }
+  let mappedDependencies := mappedDependencies.qsort (fun a b => Name.quickLt a.name b.name)
+  discard <| alignDependencies mappedDependencies newDependencies
   let occurrence := oldRecord.occurrence
   let key := occurrence.key
   let key : TemplateOccurrenceKey := {
