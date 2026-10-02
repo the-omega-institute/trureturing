@@ -412,6 +412,25 @@ $$
 
 The positivity of the even pole is used only in the lower complementary bound. Its upper allowance remains in the cross and norm bounds. These bounds cover the entire complement inside the even Hilbert space; they do not assert an odd-sector result or supply the finite sign in (A4).
 
+For this common embedding, (A4) can use $e=1372r+p$, $n=896r^2$ and $h=8996r^2+p$, with $n<1/2<4/5$. The source's sharper prime input $m_*=264/325$, $b_*=2011/325$ can also be used directly in its general equations (18)--(22). The actual finite $J_9,D_9$, an upper matrix bound for $G_9$, their directed source errors, and the resulting finite sign test remain unpaid. The ordinary compression $E^*M_9E$ is an upper bound for $G_9^{-1}$, so it cannot replace a lower bound for that inverse compression. The prime-coupling term $D_9$ does not vanish merely because the retained space is finite-dimensional. A positive floating compression would not discharge these obligations.
+
+The following exact scalar replay checks the new ellipse, width and coefficient comparisons. It uses the source analytic suppliers above and does not prove those suppliers or reconstruct a numerical certificate.
+
+```python
+from fractions import Fraction as F
+
+assert F(396, 5) * F(68, 25)**235 * F(2, 3)**896 < F(1, 2**178)
+assert F(68, 25)**11 < 2**20  # e^(a/2) < 2 for a < 11/10
+assert F(22, 10) < F(9, 4)   # sqrt(2a) < 3/2
+assert F(810, 29) < 28
+r, p, m = F(1, 2**89), F(1, 2**440), F(264, 325)
+e, n, h = 1372*r+p, 896*r*r, 8996*r*r+p
+assert 896 + 8100 == 8996
+assert 1344 + 28 == 1372
+assert n < F(1, 2) < F(4, 5) < m
+print('new-width band, even block and pole parameter comparisons passed')
+```
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
@@ -449,4 +468,4 @@ G_9^{-1}+J_9\succeq
 \tag{A4}
 $$
 
-This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. The tail input itself is supplied by (A5)–(A6). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, their directed source errors, the inverse-compression bound and the finite sign test remain payable. The tail input is supplied by (A5)–(A6), and the explicit even embedding has its cross and complementary-block allowances in (A8)–(A9). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
