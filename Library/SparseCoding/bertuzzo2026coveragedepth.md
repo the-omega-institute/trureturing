@@ -14,7 +14,10 @@ triage: anchor
 
 # Simplex coverage depth and optimality
 
-## Exact sources
+## Verified locator
+
+DOI: 10.48550/arXiv.2603.06489.
+Versioned primary text: https://arxiv.org/html/2603.06489v1.
 
 The primary source is arXiv:2603.06489v1, Section 2 (Problem B and
 the rank-k generator convention), and Section 3, Conjecture 3.2.
