@@ -269,8 +269,8 @@ def publish(root, partition, verification=None):
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
     build = subprocess.run(["make", "lean-report",
-        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root,
-        env={**os.environ, "LEAN_REPORT_CACHE_MISS_POLICY": "build"})
+        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json",
+        "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], cwd=root)
     if build.returncode:
         return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
@@ -587,7 +587,11 @@ def fetch_verification(root, partition, identity):
 
 
 def fetch(root, partition, writer_owned=False, refresh_stale=False):
-    if os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", "").lower() in ("1", "true"):
+    # Refresh-stale is the explicit recovery request from fetch-or-fail.  It
+    # must inspect the published dev snapshot even when Actions seeded a
+    # parent cache and left its marker in the inherited environment.
+    if (not refresh_stale
+            and os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", "").lower() in ("1", "true")):
         receipt("fetch", "skipped", reason="Actions supplied an applicable seed")
         return 0
     try:

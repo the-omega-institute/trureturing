@@ -234,9 +234,14 @@ def recover_and_reuse(repository, report, output):
             if status['reason'] != 'version-matched':
                 # The parent owns the same exclusive guard used by Release fetch
                 # and LeanCacheGuard. Its child must not reacquire that lock.
+                recovery_environment = os.environ.copy()
+                # A local recovery is an explicit fetch request.  Do not let
+                # an inherited Actions seed marker turn it into a skipped
+                # fetch before the release reader examines the dev snapshot.
+                recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
                 fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
                                           'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
-                                         cwd=repository)
+                                         cwd=repository, env=recovery_environment)
                 if fetched.returncode:
                     raise CacheIncompatible(local, current, 'unavailable', 'fetch-unavailable')
                 report = repository / '.lake/build/stratalint/raw-lean-report.json'

@@ -26,7 +26,7 @@ lean-cache-to-github-without-mathlib:
 	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT"
 
 lean-cache-from-github-without-mathlib:
-	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT"
+	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT" $(if $(filter 1,$(REFRESH_STALE)),--refresh-stale,)
 
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
@@ -36,6 +36,8 @@ lean:
 
 lean-report:
 	@/bin/bash tools/scripts/report/lean-report.sh
+lean-report: export REBUILD_REPORT_CACHE := $(value REBUILD_REPORT_CACHE)
+lean-report: export LEAN_REPORT_CACHE_MISS_POLICY := $(value LEAN_REPORT_CACHE_MISS_POLICY)
 
 build: lean
 
