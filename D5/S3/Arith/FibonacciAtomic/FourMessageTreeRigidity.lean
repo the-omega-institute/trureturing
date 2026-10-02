@@ -207,6 +207,20 @@ private theorem suffix_height (k j : ℕ) (u : TreeMessageRealization.Tree (Fin 
     simp only [BinaryTree.height,leaf] at *
     omega
 
+
+/-- The full coordinate set is its full interval. -/
+theorem univ_interval (k : ℕ) :
+    (Finset.univ : Finset (Fin (k + 1))) = interval k 0 (k + 1) := by
+  classical
+  ext i
+  simp [interval, Nat.le_of_lt_succ i.isLt]
+
+/-- A full task tree occurs among its own message nodes. -/
+theorem full_subtree_self (k : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
+  cases u with
+  | nil => simp [Full] at hu
+  | node a l r => cases a <;> simp [subtrees]
+
 set_option maxHeartbeats 2000000 in
 -- Capacity classification and the two spine inductions are elaborated in one proof.
 /-- Arbitrary leaf - labelled full binary trees whose proper blocks are small
@@ -266,10 +280,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     · rw [← hall]
       exact proper_subtree t ht s hs hne
     · exact hcap s hs hne
-  have self (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
-    cases u with
-    | nil => simp [Full] at hu
-    | node a l r => cases a <;> simp [subtrees]
+  have self := full_subtree_self k
   have single (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
       (i : Fin (k + 1)) (hi : leaves u = {i}) : u = leaf i := by
     cases u with
@@ -639,13 +650,7 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
   have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
       capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4 := by
     have he : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val + 1) := by
-      apply Eq.symm
-      apply Finset.eq_singleton_iff_unique_mem.mpr
-      refine ⟨by simp [interval],?_⟩
-      intro j hj
-      apply Fin.ext
-      have hb : i.val ≤ j.val ∧ j.val < i.val + 1 := by simpa [interval] using hj
-      omega
+      exact FirstRejectionCutCapacity.singleton_interval k i
     rw [he, (FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
     obtain ⟨hd,hj,hc,ht,hdel⟩ := FirstRejectionCutCapacity.interval_data k i.val (i.val + 1) (by omega) (by omega)
     have hint : internals (interval k i.val (i.val + 1)) = ∅ := Finset.card_eq_zero.mp (by omega)
@@ -696,9 +701,7 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
     rw [he,singleton_capacity i (by simp [i]) (by dsimp [i]; omega)] at hc
     exact hc.trans (Finset.le_sup hs)
   have full_capacity : capacity (fun _ : Fin (k + 1) => Window) boolean (fun i => i ∈ (Finset.univ : Finset _)) ≤ 4 := by
-    have he : (Finset.univ : Finset (Fin (k + 1))) = interval k 0 (k + 1) := by
-      ext i
-      simp [interval, Nat.le_of_lt_succ i.isLt]
+    have he := univ_interval k
     rw [he,(FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
     have hd := (FirstRejectionCutCapacity.interval_data k 0 (k + 1) (by omega) le_rfl).1
     norm_num [hd]
