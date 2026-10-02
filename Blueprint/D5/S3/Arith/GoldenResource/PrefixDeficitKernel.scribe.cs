@@ -15,6 +15,25 @@ internal sealed class PrefixDeficitKernelDocument : IScribeDocumentDefinition
                 + "of (a-k)t^k. Let D_a(t) = Q_a(t) - log S_a(t), and K_a(t) = t^a P_a(t)/S_a(t). "
                 + "Interval integrability below is with respect to real Lebesgue measure.")),
             Describe.Lean(
+                DescribeId.Create("finite-geometric-prefix-identity"),
+                DeclarationHandle.Create("D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_mul"),
+                H("Finite geometric identity"),
+                StatementSource.FromAuthor(PrefixIdentity()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Multiplying the finite prefix by one minus the "
+                    + "ratio cancels its adjacent terms and leaves one minus the first "
+                    + "omitted power. This identity holds for every real ratio."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-geometric-prefix-unit-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_one_le"),
+                H("Initial unit term"),
+                StatementSource.FromAuthor(PrefixLower()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a nonnegative ratio every power is "
+                    + "nonnegative, and the exponent-zero term equals one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("prefix-deficit-integral-reserve"),
                 DeclarationHandle.Create("D5/S3/Arith/GoldenResource/PrefixDeficitKernel.result"),
                 H("Exact integral and uniform reserve"),
@@ -42,6 +61,27 @@ internal sealed class PrefixDeficitKernelDocument : IScribeDocumentDefinition
                         + "Taylor coefficient positivity, Weil quadratic-form positivity, Robin "
                         + "inequality, or Riemann hypothesis follows from this statement."))),
                 DescribeRole.Theorem))));
+
+    private static Formula PrefixIdentity()
+    {
+        Formula b = F.Id("b");
+        Formula t = F.Id("t");
+        Formula prefix = new Formula.Apply(Seq(F.Id("S"), Underscore, Grp(b)), [t]);
+        return Disp(Seq(Forall, Sp, b, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
+            Comma, Sp, t, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+            Open, D(1), Minus, t, Close, prefix, Sp, Eq, Sp,
+            D(1), Minus, new Formula.Power(t, Seq(b, Plus, D(1)))));
+    }
+
+    private static Formula PrefixLower()
+    {
+        Formula b = F.Id("b");
+        Formula t = F.Id("t");
+        Formula prefix = new Formula.Apply(Seq(F.Id("S"), Underscore, Grp(b)), [t]);
+        return Disp(Seq(Forall, Sp, b, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
+            Comma, Sp, t, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+            D(0), Sp, Le, Sp, t, Sp, Rightarrow, Sp, D(1), Sp, Le, Sp, prefix));
+    }
 
     private static Formula Statement()
     {

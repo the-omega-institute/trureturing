@@ -7,6 +7,7 @@
    digest: An explicit logarithmic comparison of full valuation and prime-support Euler moments. -/
 
 import D5.S3.Arith.GoldenResource.PrefixDeficitKernel
+import D5.S3.Arith.GoldenResource.ChainResponseSelectorGap
 import Mathlib.Analysis.SpecialFunctions.Log.Summable
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Analysis.SpecificLimits.Normed
@@ -34,6 +35,8 @@ def U (s : ℝ) : ℝ := ∏' p : Nat.Primes, localU p s
 /-- The Euler product of prime-support moments. -/
 def W (s : ℝ) : ℝ := ∏' p : Nat.Primes, localW p s
 
+set_option maxHeartbeats 1000000 in
+-- Real-power estimates and finite prime sums are elaborated in one shared proof context.
 /-- Local convergence, positive Euler products, and their explicit logarithmic gap. -/
 theorem result (s : ℝ) (hs : 4 ≤ s) :
     (∀ p : Nat.Primes,
@@ -59,22 +62,20 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
     let P : ℝ := (1 - q) ^ (-s)
     have hP : P = ((1 - q)⁻¹) ^ s := Real.rpow_neg_eq_inv_rpow _ _
     have hSlo (a : ℕ) : 1 ≤ S a q := geometric_prefix_one_le a q hq0.le
+    have hgeo : Summable (fun a : ℕ => q ^ a) := summable_geometric_of_lt_one hq0.le hq1
+    have hgeoeq : ∑' a : ℕ, q ^ a = (1 - q)⁻¹ :=
+      tsum_geometric_of_lt_one hq0.le hq1
     have hSup (a : ℕ) : S a q ≤ (1 - q)⁻¹ := by
-      rw [← one_div]
-      apply (le_div_iff₀ hc).mpr
-      have h := geometric_prefix_mul a q
-      nlinarith [pow_nonneg hq0.le (a + 1)]
+      simpa only [S, hgeoeq] using
+        hgeo.sum_le_tsum (range (a + 1)) (fun b _ => pow_nonneg hq0.le b)
     have hterm0 (a : ℕ) : 0 ≤ S a q ^ s * q ^ a :=
       mul_nonneg (Real.rpow_nonneg (by linarith [hSlo a]) _) (pow_nonneg hq0.le _)
     have htermup (a : ℕ) : S a q ^ s * q ^ a ≤ P * q ^ a := by
       apply mul_le_mul_of_nonneg_right _ (pow_nonneg hq0.le a)
       rw [hP]
       exact Real.rpow_le_rpow (by linarith [hSlo a]) (hSup a) hs0
-    have hgeo : Summable (fun a : ℕ => q ^ a) := summable_geometric_of_lt_one hq0.le hq1
     have hsum : Summable (fun a : ℕ => S a q ^ s * q ^ a) :=
       (hgeo.mul_left P).of_nonneg_of_le hterm0 htermup
-    have hgeoeq : ∑' a : ℕ, q ^ a = (1 - q)⁻¹ :=
-      tsum_geometric_of_lt_one hq0.le hq1
     have hlo : 1 ≤ localU p s := by
       have hcompare : (∑' a : ℕ, q ^ a) ≤ ∑' a : ℕ, S a q ^ s * q ^ a := by
         apply hgeo.tsum_le_tsum _ hsum
@@ -109,7 +110,8 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
       nlinarith
     have hfirst : 1 - q + q * (1 + q) ^ s ≤ localU p s := by
       have hSpair (a : ℕ) : 1 + q ≤ S (a + 1) q := by
-        have htwo : (∑ k ∈ range 2, q ^ k) = 1 + q := by simp [sum_range_succ]
+        have htwo : (∑ k ∈ range 2, q ^ k) = 1 + q := by
+          simpa only [add_comm] using (geom_sum_two (x := q))
         rw [← htwo]
         change (∑ k ∈ range 2, q ^ k) ≤ ∑ k ∈ range (a + 1 + 1), q ^ k
         exact sum_le_sum_of_subset_of_nonneg (range_mono (by omega))
@@ -209,11 +211,9 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
       have h := mul_le_mul_of_nonneg_left huinv hspos.le
       simpa only [mul_inv_cancel₀ hspos.ne'] using h
     have hulog : -2 * u ≤ Real.log (1 - u) := by
-      have h := Real.one_sub_inv_le_log_of_pos huc
-      have hi : (1 - u)⁻¹ ≤ 1 + 2 * u := by
-        rw [← one_div, div_le_iff₀ huc]
-        nlinarith
-      linarith
+      have h := D5.S3.Arith.GoldenResource.ChainResponseSelectorGap.log_remainder_bounds
+        hu0 (show u ≤ 1 / 2 by linarith)
+      nlinarith
     have hpower : Real.exp (-2) ≤ (1 - u) ^ s := by
       rw [Real.rpow_def_of_pos huc]
       apply Real.exp_le_exp.mpr
@@ -284,11 +284,9 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
       simpa only [q, one_div] using one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) hp2
     have hc : 0 < 1 - q := by linarith
     have hlog : -Real.log (1 - q) ≤ 2 * q := by
-      have h := Real.one_sub_inv_le_log_of_pos hc
-      have hi : (1 - q)⁻¹ ≤ 1 + 2 * q := by
-        rw [← one_div, div_le_iff₀ hc]
-        nlinarith
-      linarith
+      have h := D5.S3.Arith.GoldenResource.ChainResponseSelectorGap.log_remainder_bounds
+        hq0.le hqhalf
+      nlinarith
     have hexp : Real.exp (2 * q * s) ≤ 1 + 2 * q * (Real.exp s - 1) := by
       have h := convexOn_exp.2 (Set.mem_univ (0 : ℝ)) (Set.mem_univ s)
         (show 0 ≤ 1 - 2 * q by linarith) (show 0 ≤ 2 * q by positivity)
@@ -332,6 +330,129 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
     hmU, hmW, by rw [heU]; positivity, by rw [heW]; positivity, ?_, ?_⟩
   · rw [hloggap]
     exact tsum_nonneg (fun p => (hlarge p).1)
-  · sorry
+  · classical
+    let x : ℝ := Real.sqrt s
+    let k : ℕ := ⌊x⌋₊
+    have hx0 : 0 ≤ x := Real.sqrt_nonneg s
+    have hx2 : 2 ≤ x := by
+      have h := Real.sq_sqrt hs0
+      dsimp [x]
+      nlinarith [Real.sqrt_nonneg s]
+    have hk2 : 2 ≤ k := by
+      exact (Nat.le_floor_iff hx0).mpr (by simpa using hx2)
+    have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk2
+    have hkpos : (0 : ℝ) < k := by linarith
+    have hxk : (k : ℝ) ≤ x := Nat.floor_le hx0
+    have hxk1 : x < (k : ℝ) + 1 := Nat.lt_floor_add_one x
+    have hsx : s = x ^ 2 := (Real.sq_sqrt hs0).symm
+    have htailconstant : s / (k : ℝ) ≤ 2 * x := by
+      rw [div_le_iff₀ hkpos, hsx]
+      nlinarith
+    let loss : Nat.Primes → ℝ := fun p => Real.log (localW p s) - Real.log (localU p s)
+    let B : ℝ := Real.log s + Real.log 2 + 2
+    have hB0 : 0 ≤ B := by
+      have hl := Real.log_nonneg (show 1 ≤ s by linarith)
+      have hl2 := Real.log_nonneg (show (1 : ℝ) ≤ 2 by norm_num)
+      dsimp [B]
+      linarith
+    have hfinite (F : Finset Nat.Primes) : ∑ p ∈ F, loss p ≤ x * (Real.log s + 5) := by
+      let small : Finset Nat.Primes := F.filter fun p => (p : ℝ) ≤ x
+      let big : Finset Nat.Primes := F.filter fun p => ¬ (p : ℝ) ≤ x
+      have hsmallimage : small.image (fun p : Nat.Primes => (p : ℕ)) ⊆ Icc 1 k := by
+        intro n hn
+        obtain ⟨p, hp, rfl⟩ := mem_image.mp hn
+        obtain ⟨_, hpx⟩ := mem_filter.mp hp
+        exact mem_Icc.mpr ⟨p.prop.one_le,
+          (Nat.le_floor_iff hx0).mpr hpx⟩
+      have hsmallcard : small.card ≤ k := by
+        have h := card_le_card hsmallimage
+        rw [card_image_of_injective small
+          (show Function.Injective (fun p : Nat.Primes => (p : ℕ)) from Subtype.val_injective)] at h
+        simpa only [Nat.card_Icc, Nat.add_sub_cancel] using h
+      have hsmallbound : ∑ p ∈ small, loss p ≤ x * B := by
+        calc
+          ∑ p ∈ small, loss p ≤ ∑ _p ∈ small, B :=
+            sum_le_sum (fun p _ => (hsmall p).2)
+          _ = (small.card : ℝ) * B := by simp
+          _ ≤ (k : ℝ) * B := mul_le_mul_of_nonneg_right (by exact_mod_cast hsmallcard) hB0
+          _ ≤ x * B := mul_le_mul_of_nonneg_right hxk hB0
+      let N : ℕ := (∑ p ∈ big, (p : ℕ)) + k + 1
+      have hkN : k ≤ N := by dsimp [N]; omega
+      have hbigimage : big.image (fun p : Nat.Primes => (p : ℕ)) ⊆ Ico (k + 1) (N + 1) := by
+        intro n hn
+        obtain ⟨p, hp, rfl⟩ := mem_image.mp hn
+        obtain ⟨_, hpx⟩ := mem_filter.mp hp
+        have hlo : k < (p : ℕ) := (Nat.floor_lt hx0).mpr (lt_of_not_ge hpx)
+        have hup : (p : ℕ) ≤ N := by
+          have h := single_le_sum (f := fun p : Nat.Primes => (p : ℕ))
+            (fun _ _ => Nat.zero_le _) hp
+          dsimp [N]
+          omega
+        exact mem_Ico.mpr (by omega)
+      have hinteger (n : ℕ) (hn : n ∈ Ico (k + 1) (N + 1)) :
+          1 / ((n : ℝ) ^ 2 - 1) ≤ 1 / ((n : ℝ) - 1) - 1 / (n : ℝ) := by
+        have hnN : 2 ≤ n := by have := (mem_Ico.mp hn).1; omega
+        have hnR : (2 : ℝ) ≤ n := by exact_mod_cast hnN
+        have hn0 : (0 : ℝ) < n := by linarith
+        have hn1 : 0 < (n : ℝ) - 1 := by linarith
+        have hden : 0 < (n : ℝ) ^ 2 - 1 := by nlinarith
+        have hdecomp : 1 / ((n : ℝ) - 1) - 1 / (n : ℝ) =
+            1 / (((n : ℝ) - 1) * n) := by field_simp; ring
+        rw [hdecomp]
+        apply one_div_le_one_div_of_le (mul_pos hn1 hn0)
+        nlinarith
+      have htelescope : ∑ n ∈ Ico (k + 1) (N + 1),
+          (1 / ((n : ℝ) - 1) - 1 / (n : ℝ)) = 1 / (k : ℝ) - 1 / (N : ℝ) := by
+        have h := sum_Ico_sub (fun n : ℕ => -1 / ((n : ℝ) - 1))
+          (by omega : k + 1 ≤ N + 1)
+        convert h using 1
+        · apply sum_congr rfl
+          intro n hn
+          push_cast
+          ring
+        · push_cast
+          ring
+      have hbigbound : ∑ p ∈ big, loss p ≤ 2 * x := by
+        calc
+          ∑ p ∈ big, loss p ≤ ∑ p ∈ big, s / ((p : ℝ) ^ 2 - 1) :=
+            sum_le_sum (fun p _ => (hlarge p).2)
+          _ = s * ∑ n ∈ big.image (fun p : Nat.Primes => (p : ℕ)), 1 / ((n : ℝ) ^ 2 - 1) := by
+            rw [sum_image]
+            · rw [mul_sum]
+              apply sum_congr rfl
+              intro p hp
+              ring
+            · exact fun _ _ _ _ h => Subtype.val_injective h
+          _ ≤ s * ∑ n ∈ Ico (k + 1) (N + 1), 1 / ((n : ℝ) ^ 2 - 1) := by
+            apply mul_le_mul_of_nonneg_left _ hs0
+            apply sum_le_sum_of_subset_of_nonneg hbigimage
+            intro n hn _
+            have hnN : 2 ≤ n := by have := (mem_Ico.mp hn).1; omega
+            have hnR : (2 : ℝ) ≤ n := by exact_mod_cast hnN
+            have : 0 < (n : ℝ) ^ 2 - 1 := by nlinarith
+            positivity
+          _ ≤ s * ∑ n ∈ Ico (k + 1) (N + 1),
+              (1 / ((n : ℝ) - 1) - 1 / (n : ℝ)) := by
+            exact mul_le_mul_of_nonneg_left (sum_le_sum hinteger) hs0
+          _ = s * (1 / (k : ℝ) - 1 / (N : ℝ)) := by rw [htelescope]
+          _ ≤ s / (k : ℝ) := by
+            have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+            have h := mul_nonneg hs0 (by positivity : 0 ≤ 1 / (N : ℝ))
+            rw [mul_sub, mul_one_div]
+            linarith
+          _ ≤ 2 * x := htailconstant
+      have hsplit : (∑ p ∈ small, loss p) + (∑ p ∈ big, loss p) = ∑ p ∈ F, loss p :=
+        sum_filter_add_sum_filter_not F (fun p => (p : ℝ) ≤ x) loss
+      have hlogtwo : Real.log 2 ≤ 1 := by
+        simpa only [show (2 : ℝ) - 1 = 1 by norm_num] using
+          Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      rw [← hsplit]
+      have h := add_le_add hsmallbound hbigbound
+      dsimp [B] at h
+      nlinarith
+    rw [hloggap]
+    exact hsumloss.tsum_le_of_sum_le hfinite
+
+#print axioms result
 
 end D5.S3.Arith.Robin.EulerValuationMomentComparison
