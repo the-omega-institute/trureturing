@@ -1,0 +1,38 @@
+**Theorem 3.4 (A declared Markov dynamics and its joint functional Gaussian law).** For the Markov path of Hypothesis 3.1 put
+$$
+ m=\frac p{1+p},\qquad v=m(1-m),\qquad r=-p.
+$$
+The count variance is
+$$
+V_n=v\left[n\frac{1-p}{1+p}+\frac{2p(1-(-p)^n)}{(1+p)^2}\right],
+$$
+and for $m_0\le n$ the covariance of prefix counts of lengths $m_0,n$ is
+$$
+V_{m_0}+\frac{vr(1-r^{m_0})(1-r^{n-m_0})}{(1-r)^2}.
+$$
+The pathwise quantity identity of Theorem 3.2 remains valid, so the generation covariance is $F_{k+2}F_{\ell+2}V_n$. If $0<p<1$, fix $0<T<\infty$ and generations $k_1,\ldots,k_d$. Put
+$$
+X_N(t)=\frac{A_{0,\lfloor Nt\rfloor}-m\lfloor Nt\rfloor}{\sqrt N},
+\qquad
+Y_N^{(k)}(t)=
+\frac{Q_{0,\lfloor Nt\rfloor}^{(k)}-(F_{k+4}-mF_{k+2})\lfloor Nt\rfloor}{\sqrt N}.
+$$
+In $D([0,T],\mathbb R^{d+1})$ with the Skorohod $J_1$ topology,
+$$
+\bigl(X_N,Y_N^{(k_1)},\ldots,Y_N^{(k_d)}\bigr)
+\Longrightarrow
+\sigma_p B\,\bigl(1,-F_{k_1+2},\ldots,-F_{k_d+2}\bigr),
+\qquad
+\sigma_p^2=\frac{p(1-p)}{(1+p)^3}>0,
+$$
+where $B$ is one standard Brownian motion shared by all coordinates. In particular, centered prefix counts at finitely many nonnegative times, divided by $\sqrt N$, converge jointly to a centered Gaussian vector with covariance
+$$
+\sigma_p^2\min(t_i,t_j).
+$$
+The corresponding quantity coordinates have covariance $F_{k+2}F_{\ell+2}\sigma_p^2\min(t_i,t_j)$. The anchored spin correlations satisfy
+$$
+K_0=1,\qquad K_1=\frac{p-1}{p+1},\qquad
+K_{n+2}=-(1-p)K_{n+1}-pK_n.
+$$
+At $p=0$ the path is constant zero. At $p=1$ it alternates, with $V_n=0$ for even $n$ and $V_n=1/4$ for odd $n$; both endpoints have zero square-root fluctuation limit.
+
