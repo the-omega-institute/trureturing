@@ -45845,3 +45845,176 @@ $k\ge 2^{a_2}5^{a_5}/4\gg P^2(\log P)^2$，与高度给出的 $k=O(P)$ 矛盾；
 完整素支撑在本证明中迫使约分后的足够小范数成为单位，两个固定素数的大赋值随后排除单位情形。这两个作用来自同一整数对，而不是把独立可达的局部极值拼接起来。所需危险弧排除、廉价乘子命中与独立 Robin 正储备仍未获得。
 
 ## 追加锚（本行以下为增补区）
+
+## 332. CA 赋值可接入量化子空间定理，但方向计数不排除实际点
+
+本节直接使用 Evertse–Ferretti，
+*A further improvement of the Quantitative Subspace Theorem*，
+Annals of Mathematics 177 (2013), 513–590，
+[DOI:10.4007/annals.2013.177.2.4](https://doi.org/10.4007/annals.2013.177.2.4)，
+[原文 pp.523–525，§3、Theorems 3.1、3.3 与 Corollary 3.2](https://annals.math.princeton.edu/wp-content/uploads/annals-v177-n2-p04-p.pdf)。
+不重新证明该定理；下面核对实际 CA 参数可以接入的范围，及其结论仍未供应的点态排除。全部新增对应为纸面应用，没有 Lean 核验或原创性声明。
+
+仍记 $L=\log C$、$S=\sqrt P$。假定 §328 的危险弧发生，对其约化素分母 $q$ 与分子 $a$ 取整数提升 $j$，定义
+
+$$
+m=qj+a,\qquad n=Cq,\qquad
+E=|n\varphi-m|\le B_q:=\frac{q\delta}{2Q}.
+\tag{332.1}
+$$
+
+因 $(a,q)=1$，有 $(m,q)=1$；若 $d=(m,n)$，则 $d\mid C$。约分改变分母为 $(C/d)q$，并可能删去 CA 赋值，不能直接把它当成 $Cq$。
+式（331.13）给
+
+$$
+\frac1{16Q}\le B_q\le\frac1{8Q},\qquad
+E<e^{-\kappa S}\quad\text{最终成立}.
+\tag{332.2}
+$$
+
+危险弧给出的范数上界仍是
+$|K|\le B_q(\sqrt5\,Cq+B_q)$，其上端对数为
+$L-(\kappa-\eta)S+O(1)$；它没有强迫 $K=\pm1$。
+
+### 332.1 保留共因子的乘积形式
+
+令 $\mathcal P_P=\{p:p\le P\}$，
+$[m]_{\mathcal P_P}=\prod_{p\le P}p^{v_p(m)}$。在基域 $\mathbb Q$ 上采用以下两种局部线性形式：
+
+$$
+\begin{array}{c|cc}
+v&L_1^{(v)}&L_2^{(v)}\\ \hline
+\infty&X_1-\varphi X_2&X_2\\
+p\le P&X_1&X_2 .
+\end{array}
+\tag{332.3}
+$$
+
+每处行列式为一。实际向量 $\boldsymbol x=(m,n)$ 的射影高度充分晚时为
+$H(\boldsymbol x)=m/d$。两形式的未归一化局部范数乘积为
+$qE/[m]_{\mathcal P_P}$，各处向量范数的乘积为 $m/d$，因此
+
+$$
+\prod_{v\in\{\infty\}\cup\mathcal P_P}
+\prod_{i=1}^{2}
+\frac{|L_i^{(v)}(m,n)|_v}
+ {\max(|m|_v,|n|_v)}
+=H(\boldsymbol x)^{-2}\frac{qE}{[m]_{\mathcal P_P}}.
+\tag{332.4}
+$$
+
+这是保留同一个未约分整数对的精确公式。取
+
+$$
+q_{\max}=\frac{e^{\eta S}}4,\qquad
+U=2Cq_{\max},\qquad
+\varepsilon_0=\frac{(\kappa-\eta)S}{\log U}.
+\tag{332.5}
+$$
+
+实际候选有 $H<U$、$qE<e^{-(\kappa-\eta)S}$，所以（332.4）满足原文（3.11）相应的 $H^{-2-\varepsilon_0}$ 乘积不等式，
+$\varepsilon_0\sim(\kappa-\eta)/\sqrt P$。其 Corollary 3.2 方向计数中保留了支持大小
+$s=\pi(P)+1$ 的因子
+
+$$
+(36/\varepsilon_0)^{2s},\qquad
+\log\big((36/\varepsilon_0)^{2s}\big)=(1+o(1))P.
+\tag{332.6}
+$$
+
+这里只核对乘积假设和计数中的支持因子，不把方向数量界当成点态距离下界。
+
+### 332.2 处方 CA 赋值后的较强接口
+
+现在明确另加 $(m,n)=1$。于是每个 $p\le P$ 处，$m$ 是单位且
+$|n|_p=p^{-a_p}$。对原文 Theorem 3.1 处方局部指数
+
+$$
+\begin{aligned}
+d_{1,\infty}&=-1-\frac{\kappa S}{\log U},
+&d_{2,\infty}&=0,\\
+d_{1,p}&=0,
+&d_{2,p}&=-\frac{a_p\log p}{\log U}.
+\end{aligned}
+\tag{332.7}
+$$
+
+式（332.2）与 $H=m<U$ 给无穷处的两个归一化局部不等式；有限处由实际赋值直接给出。指数全非正，而且
+
+$$
+\sum_{v,i}d_{i,v}=-2-\varepsilon_C,\qquad
+\varepsilon_C=\frac{(\kappa-\eta)S+\log2}{\log U}
+\sim\frac{\kappa-\eta}{\sqrt P}.
+\tag{332.8}
+$$
+
+所以原文（3.1）–（3.7）的参数可取
+
+$$
+\text{维数}=2,\qquad
+R=3,\qquad D=2,\qquad H^*\le2.
+\tag{332.9}
+$$
+
+$R$ 数的是不同形式 $X_1,X_2,X_1-\varphi X_2$，不等于观察处数。
+系数扩张度不超过二；原文允许形式系数在基域之外。因为实际向量在 $\mathbb Q^2$，原文对其 Galois 共轭取最大值不改变局部读数。
+
+直接代入 Theorem 3.1，候选超过的初始高度门槛是
+
+$$
+C_1=\max(2^{1/18},2^{2/\varepsilon_C}),\qquad
+\log C_1=O_{\eta,\kappa}(\sqrt P).
+\tag{332.10}
+$$
+
+此时所有相应大高度解处于至多
+
+$$
+10^9\,2^{18}\varepsilon_C^{-3}
+\log(18/\varepsilon_C)
+\log\!\left(\varepsilon_C^{-1}\log18\right)
+=O_{\eta,\kappa}\!\left(P^{3/2}(\log P)^2\right)
+\tag{332.11}
+$$
+
+个真有理子空间中。实际本原候选有 $\log H\sim P$，故确实高于（332.10）。
+因此不能把本次文献接口的障碍笼统归为支持增长使定理无法应用，或初始高度门槛太大。处方完整 CA 赋值已经消去了（332.6）的指数级支持计数损失，但仍允许那个实际例外方向。
+
+对同一个固定宿主，初等分数间隔甚至已给出危险弧中的候选约化分数至多一个：
+两个不同分母不超过 $q_{\max}$ 的约化分数在圆上的距离至少为 $1/q_{\max}^2$，而
+$\delta/Q<1/q_{\max}^2$ 最终成立。
+这个至多一个结论同样没有判定候选是否存在。允许任意一个例外的方向计数不能把它排除。
+
+Theorem 3.3 给一个可有效取得、来自有限集合的真子空间 $T$ 以及有限多个高度区间；除 $T$ 外的解须落入
+
+$$
+[1,C_1)\ \cup\ \bigcup_i[H_i,H_i^{\omega_1}),
+\qquad
+H_i\ge C_1,\qquad
+\omega_1=6\varepsilon_C^{-1}\log18=O(\sqrt P).
+\tag{332.12}
+$$
+
+所引陈述没有给这些 $H_i$ 的有效统一上位置。$C_1$ 是大解区的开始，不是例外解高度的上限；不能因实际高度远大于 $C_1$ 就宣告安全。
+一般 $d>1$ 时，本节只使用保留共因子的乘积接口（332.4）；（332.7）–（332.11）的全 CA 处方不能原样搬到约分后的分母。
+
+若改走固定 $\varphi$ 的 convergent 或 Pell 方法，Legendre 的充分条件需
+
+$$
+\left|\varphi-\frac{m/d}{n/d}\right|
+<\frac1{2(n/d)^2}
+\quad\Longleftrightarrow\quad
+2nE<d^2.
+\tag{332.13}
+$$
+
+危险弧没有供应这一条件。本原情形允许的 $nE$ 上尺度仍为
+$Ce^{-(\kappa-\eta)S}\to\infty$。
+相反，弧中的 $m/q$ 确实是 $C\varphi$ 的 convergent，因为 $q^2\delta/Q\to0$；该二次无理数的多项式是
+$X^2-CX-C^2$，其递推数据随宿主变化，不能保留固定 $\varphi$ 的 Fibonacci 递推常数后继续套用。
+
+目前需要的是这些例外方向或高度区间的实际位置控制，或在同一个整数对上把黄金范数下界从 §331 的 $P$ 提升到危险弧上端
+$Ce^{-(\kappa-\eta)\sqrt P}$ 的尺度。
+这两条均未取得；排除某种弧以后还须控制完整未命中集合及独立比较类，不能将本节升格为廉价相位命中、Robin 正储备或 RH 证明。
+
+## 追加锚（本行以下为增补区）
