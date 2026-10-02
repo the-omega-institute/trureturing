@@ -343,6 +343,8 @@ def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
   unless source == newCert.sourceBinding.isSome do throwError "contract.equivalence:source_kind"
   unless (renameExpr mapping oldRecord.occurrence.statement).equal newRecord.occurrence.statement do
     throwError "contract.equivalence:statement_mapping"
+  unless (renameExpr mapping oldRecord.occurrence.arena).equal newRecord.occurrence.arena do
+    throwError "contract.equivalence:arena_mapping"
   check "statement_identity" oldRecord.occurrence.statementIdentity newRecord.occurrence.statementIdentity
   let oldDescriptor ← inEnvironment oldEnv <| identity source oldRecord.occurrence.levelParams descriptor
   check "descriptor.old" oldDescriptor oldCert.descriptorIdentity
