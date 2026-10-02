@@ -45,11 +45,16 @@ internal sealed class PrimePowerAffineBehaviorDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every prime p, natural h and integer x, "
                     + "depth(p,h,x)<=h and gcd(x,p^h)=p^depth(p,h,x)."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("prime-power-affine-normalized-coprime"),
-                DeclarationHandle.Create(Prefix + "normalized_coprime"), H("Coprime normalized coordinate"),
+            Describe.Lean(DescribeId.Create("prime-power-affine-depth-divisibility"),
+                DeclarationHandle.Create(Prefix + "depth_divisibility"), H("Depth thresholds"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime p, natural h,j and integer x, "
+                    + "p^j divides x and j<=h if and only if j<=depth(p,h,x)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("prime-power-affine-normalized-gcd"),
+                DeclarationHandle.Create(Prefix + "normalized_gcd"), H("Normalized gcd"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every prime p, natural h and integer x, "
-                    + "put r=depth(p,h,x). The integers x/p^r and p^(h-r) are coprime. "
+                    + "put r=depth(p,h,x). The gcd of x/p^r and p^(h-r) is one. "
                     + "The division removes their exact common gcd, including the zero residue."))),
                 DescribeRole.Theorem),
             Definition("eta", "Disjoint quotient coordinates",
