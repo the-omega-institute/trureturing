@@ -125,3 +125,45 @@ Theorem 9.1 implies that the parenthesis is nonpositive, since multiplying it by
 **Theorem 10.4 (finite-quotient scope).** Theorem 10.2 holds for an arbitrary $K$-vector space $V$ whenever $V/U$ is finite dimensional; finite dimensionality of $V$ itself is unnecessary. The same physical index set, original columns, subspace $U$, all degrees $d\ge1$, and entire nonnegative orthant are retained.
 
 **Proof.** Keep every index and replace only its represented vector by its image in $V/U$. For each exponent vector, its original support spans together with $U$ if and only if its quotient support spans $V/U$, by the quotient map's span and top-image identities. The exact coefficient formula therefore identifies the original spanning polynomial with the actual quotient spanning polynomial over the same variables and rational coefficients. Their analytic evaluations and formal derivatives are identical. Apply the actual reverse-Hessian induction and positivity suppliers in the finite-dimensional quotient, and carry out the analytic line and boundary argument of Theorem 10.2 for this common polynomial.
+
+## 11. Spanning-filtered physical words and actual sampling
+
+**Definition 11.1 (physical word polynomial).** Let $K$ be any field, $V$ any $K$-vector space, $I$ any finite physical index set, $a:I\to V$, and $U\le V$. For every $t\in\mathbb N$, define the rational polynomial
+
+$$
+W_{U,t}=\sum_{w:\operatorname{Fin}(t)\to I}
+\mathbf1_{\{U+\operatorname{span}\{a_{w(j)}:j<t\}=V\}}
+\prod_{j<t}X_{w(j)}.
+$$
+
+The indicator is implemented by selecting the monomial or zero, not by replacing the represented spanning polynomial. All physical indices remain distinct, including zero, repeated, and scalar-parallel columns. Neither finite dimensionality nor a spanning assumption is imposed; the index set may be empty.
+
+**Theorem 11.2 (exact first-coordinate recurrence and normalization).** For all such data and every $t\ge0$,
+
+$$
+W_{U,0}=\begin{cases}1&U=V,\\0&U\ne V,\end{cases}
+\qquad
+W_{U,t+1}=\sum_{i\in I}X_i W_{U+\operatorname{span}\{a_i\},t},
+\qquad
+W_{U,t}=t!F_{U,t}.
+$$
+
+The last equation is an identity in $\mathbb Q[X_i:i\in I]$ for the existing exact reciprocal-factorial polynomial of Definition 5.1. It therefore holds under every rational-algebra evaluation, without a nonnegativity or probability assumption.
+
+**Proof.** There is a unique length-zero word; its sampled span is zero and its product is one. The equivalence between a length-$(t+1)$ word and its first index together with its length-$t$ tail preserves both the product and the span: the range of the represented word is the union of the first singleton and the represented tail range. The span of this union is the join of their spans. Reindexing the finite sum through this equivalence and distributing multiplication proves the recurrence, also for an empty alphabet. The degree-zero coefficient formula for $F$ gives the same indicator. In degree $t+1$, homogeneity and Euler give $\sum_i X_i\partial_i F_{U,t+1}=(t+1)F_{U,t+1}$, and exact contraction gives $\partial_iF_{U,t+1}=F_{U+\operatorname{span}\{a_i\},t}$. Induction in the recurrence, with $(t+1)t!=(t+1)!$, proves normalization. No histogram counting or unfiltered multinomial identity is substituted for the spanning condition.
+
+**Theorem 11.3 (actual uniform physical recovery probability).** Assume additionally that $I$ is nonempty, has a measurable space with measurable singletons, and sampling has exactly the measure `MinimumRetrievalTime.uniformSamples I`. Write $N=|I|$ and $x_i=1/N\in\mathbb R$. For every $t\ge0$, the actual event `MinimumRetrievalTime.recovered a top t` satisfies
+
+$$
+\Pr(\operatorname{recovered}(a,V,t))
+=\operatorname{ofReal}\bigl(W_{0,t}(x)\bigr)
+=\operatorname{ofReal}\bigl(t!F_{0,t}(x)\bigr).
+$$
+
+This uses the original physical alphabet, not a projective pushforward, and imposes no full-spanning or finite-dimensional hypothesis. It includes zero ambient space, degree zero, and unspanned families. Nonemptiness is necessary for the specified uniform distribution and is not required by Theorem 11.2.
+
+**Proof.** Partition the event by its finite prefix words. Each word cylinder specifies precisely the first $t$ coordinates; distinct words give disjoint measurable cylinders. The finite-cylinder formula for the existing infinite product measure gives each cylinder measure $(N^{-1})^t$, including the empty prefix. A prefix is admitted exactly when its represented span is top, since recovery of top is the inclusion of top in the actual prefix span. Finite additivity over the admitted words gives the spanning-filtered word sum. Evaluating each monomial at the common nonnegative coordinate $1/N$ gives the same cylinder weight. The map `ENNReal.ofReal` preserves these finite sums and products because every evaluated summand is nonnegative. Theorem 11.2 gives the second identity.
+
+**Boundary 11.4.** These all-horizon identities are dependencies, not a settlement of the named optimizer. Projective transport, orbit averaging, zero-column replacement, the all-horizon probability comparison, and its transfer to the original actual expected retrieval time remain separate obligations. The existing `retrieval_time_probability_bridge` supplies the tail and expectation transfer once the appropriate full-spanning hypothesis and probability comparison have been proved.
+
+## 追加锚（本行以下为增补区）
