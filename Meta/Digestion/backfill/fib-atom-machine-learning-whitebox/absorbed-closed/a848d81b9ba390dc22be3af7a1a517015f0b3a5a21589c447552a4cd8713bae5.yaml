@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a848d81b9ba390dc22be3af7a1a517015f0b3a5a21589c447552a4cd8713bae5
   normalized_sha256: sha256:a848d81b9ba390dc22be3af7a1a517015f0b3a5a21589c447552a4cd8713bae5
 cas_ref: sha256:a848d81b9ba390dc22be3af7a1a517015f0b3a5a21589c447552a4cd8713bae5
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/TreePeakHeightFrontier.result
+    target_statement_id: sha256:95af4c7754e700dd2339f07f97f1294ac2532da98fc2820d35a2f0afd5209c4a
 receipts:
   unresolved_subitems: []
