@@ -217,7 +217,9 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     (F : (∀ i, X i) → O) (t : Tree I) (ht : Full t)
     (hall : leaves t = Finset.univ) :
     ∃ (m : Implementation X) (read : m.Message t → O), Correct F t m read ∧
-      ∀ s ∈ subtrees t, reachable m s = capacity X F (fun i => i ∈ leaves s) := by
+      (∀ s ∈ subtrees t, reachable m s = capacity X F (fun i => i ∈ leaves s)) ∧
+      peak m t = optimum F t ∧
+      optimum F t = (subtrees t).sup (fun s => capacity X F (fun i => i ∈ leaves s)) := by
   classical
   let x₀ : ∀ i, X i := fun _ => Classical.choice inferInstance
   let m := responseImplementation F x₀
@@ -322,15 +324,17 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
             simp [m, responseImplementation, responseMessage, Set.piecewise,
               fork, leaves, xl, xr, z, hil, hir]
   let read : m.Message t → O := fun q => q.val (fun i => x₀ i.val)
-  refine ⟨m, read, ?_, ?_⟩
-  · intro x
+  have correct : Correct F t m read := by
+    intro x
     rw [evaluates t ht x]
     change response X F (fun i => i ∈ leaves t) (fun i => x i.val) _ = F x
     unfold response
     congr 1
     funext i
     simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, hall]
-  · intro s hs
+  have sharp : ∀ s ∈ subtrees t,
+      reachable m s = capacity X F (fun i => i ∈ leaves s) := by
+    intro s hs
     have surj : Function.Surjective (evaluate m s) := by
       intro q
       refine ⟨nominal F x₀ s q, ?_⟩
@@ -338,5 +342,27 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     rw [reachable, surj.range_eq]
     simp only [Nat.card_univ]
     rfl
+  have peak_eq : peak m t =
+      (subtrees t).sup (fun s => capacity X F (fun i => i ∈ leaves s)) := by
+    exact Finset.sup_congr rfl sharp
+  have opt_le : optimum F t ≤ peak m t := Nat.sInf_le ⟨m,read,correct,rfl⟩
+  have attained : ∃ (m' : Implementation X) (read' : m'.Message t → O),
+      Correct F t m' read' ∧ peak m' t = optimum F t := by
+    let peaks : Set ℕ := {p | ∃ (a : Implementation X) (g : a.Message t → O),
+      Correct F t a g ∧ peak a t = p}
+    have inhabited : peaks.Nonempty := ⟨peak m t,m,read,correct,rfl⟩
+    exact Nat.sInf_mem inhabited
+  obtain ⟨m',read',correct',attained'⟩ := attained
+  have opt_ge : (subtrees t).sup (fun s => capacity X F (fun i => i ∈ leaves s)) ≤
+      optimum F t := by
+    rw [← attained']
+    apply Finset.sup_le
+    intro s hs
+    exact (implementation_lower_bound F t ht m' read' correct' s hs).trans
+      (Finset.le_sup hs)
+  have opt_eq : optimum F t =
+      (subtrees t).sup (fun s => capacity X F (fun i => i ∈ leaves s)) :=
+    le_antisymm (opt_le.trans_eq peak_eq) opt_ge
+  exact ⟨m,read,correct,sharp,peak_eq.trans opt_eq.symm,opt_eq⟩
 
 end D5.S3.Arith.FibonacciAtomic.TreeMessageRealization

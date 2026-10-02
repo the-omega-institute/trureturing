@@ -26,19 +26,27 @@ internal sealed class FourMessageTreeRigidityDocument : IScribeDocumentDefinitio
                 + "interior singleton. A prefix spine successively peels the largest remaining "
                 + "coordinate; a suffix spine successively peels the smallest. Both predicates allow "
                 + "an independent exchange of the two children at each fork. DoubleComb means that "
-                + "the root joins complementary prefix and suffix spines, in either child order.")),
-            Describe.Lean(DescribeId.Create("four-message-cut-rigidity"),
-                DeclarationHandle.Create(Prefix + "rigidity_from_capacities"), H("Arbitrary Leaf Labels"),
+                + "the root joins complementary prefix and suffix spines, in either child order. "
+                + "DoubleCombAt(j,T) fixes the split after coordinate j-1. An implementation m has "
+                + "arbitrary complete messages, leaf encoders and atomic child mergers; g reads the "
+                + "root message. Correct means g returns F on every input, and Peak includes every "
+                + "node including the root. Height counts parent-child edges, with leaf height zero.")),
+            Describe.Lean(DescribeId.Create("four-message-implementation-rigidity"),
+                DeclarationHandle.Create(Prefix + "rigidity_from_implementation"), H("Arbitrary Leaf Labels"),
                 StatementSource.FromAuthor(Seq(
                     V("k"), Sp, Ge, Sp, D(2), Sp, Land, Sp, Call("Full", V("T")), Sp, Land, Sp,
                     Call("A", V("T")), Sp, Eq, Sp, Call("coordinates", V("k")), Sp, Land, Sp,
-                    Grp(Seq(Forall, Sp, V("S"), Sp, InMacro, Sp, Call("subtrees", V("T")), Comma, Sp,
-                        V("S"), Sp, Neq, Sp, V("T"), Sp, Implies, Sp,
-                        Call("capacity", V("F"), Call("A", V("S"))), Sp, Le, Sp, D(4))),
-                    Sp, Implies, Sp, Call("DoubleComb", V("T")))),
+                    Call("Correct", V("F"), V("T"), V("m"), V("g")), Sp, Land, Sp,
+                    Call("Peak", V("m"), V("T")), Sp, Le, Sp, D(4), Sp, Implies, Sp,
+                    Exists, Sp, V("j"), Comma, Sp, D(0), Sp, Lt, Sp, V("j"), Sp, Lt, Sp,
+                    Call("n", V("k")), Sp, Land, Sp, Call("DoubleCombAt", V("j"), V("T")),
+                    Sp, Land, Sp, Call("height", V("T")), Sp, Eq, Sp,
+                    Call("max", V("j"), Seq(Call("n", V("k")), Minus, V("j"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The exact Boolean capacity is 2^d+epsilon. If epsilon is one, "
+                    Paragraph(Text("Every accurate implementation has at least the cut capacity many reachable "
+                        + "messages at each subtree. Peak at most four therefore bounds all these capacities. "
+                        + "The exact Boolean capacity is 2^d+epsilon. If epsilon is one, "
                         + "capacity at most four allows at most one crossing seam. Nonempty proper "
                         + "blocks with one crossing are prefixes or suffixes. If epsilon is zero, "
                         + "the block owns neither a terminal coordinate nor an internal seam. Two "
@@ -50,6 +58,8 @@ internal sealed class FourMessageTreeRigidityDocument : IScribeDocumentDefinitio
                         + "child contains zero and is again a prefix. The other child contains neither "
                         + "endpoint, hence is a singleton. Disjointness and union force this singleton "
                         + "to be the rightmost remaining coordinate. The suffix argument reverses "
-                        + "the endpoint roles. Structural induction determines both spines."))),
+                        + "the endpoint roles. Structural induction determines both spines. A j-coordinate prefix spine has "
+                        + "height j-1, and its complementary suffix spine has height n-j-1. Their "
+                        + "root merge has height max(j,n-j)."))),
                 DescribeRole.Theorem))));
 }

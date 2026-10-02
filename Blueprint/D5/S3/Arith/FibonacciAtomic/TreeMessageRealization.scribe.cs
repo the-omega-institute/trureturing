@@ -63,7 +63,10 @@ internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
                     Call("Correct", V("F"), V("T"), V("m"), V("g")), Sp, Land, Sp,
                     Forall, Sp, V("S"), Sp, InMacro, Sp, Call("subtrees", V("T")), Comma, Sp,
                     Call("reachable", V("m"), V("S")), Sp, Eq, Sp,
-                    Call("capacity", V("F"), Call("A", V("S"))))),
+                    Call("capacity", V("F"), Call("A", V("S"))), Sp, Land, Sp,
+                    Call("Peak", V("m"), V("T")), Sp, Eq, Sp, Call("Optimum", V("F"), V("T")),
+                    Sp, Land, Sp, Call("Optimum", V("F"), V("T")), Sp, Eq, Sp,
+                    Call("maxCapacity", V("F"), V("T")))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Use each node's actual completion-response range as its message "
                     + "type. Fix a nominal representative for each message. At a fork, merge the two "
@@ -71,5 +74,8 @@ internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
                     + "parent's completion response. Replacing the two blocks successively preserves "
                     + "every external response. Induction proves that each evaluated message is the "
                     + "actual response of the input. Every response is reachable from its representative. "
-                    + "At the root the complement is empty and the response evaluates to F."))), DescribeRole.Theorem))));
+                    + "At the root the complement is empty and the response evaluates to F. "
+                    + "The lower bound holds for all accurate implementations, while this one attains "
+                    + "every capacity simultaneously. Its peak attains the infimum, which equals the "
+                    + "maximum of the subtree capacities."))), DescribeRole.Theorem))));
 }

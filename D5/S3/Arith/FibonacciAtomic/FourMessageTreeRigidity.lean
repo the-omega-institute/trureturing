@@ -49,12 +49,20 @@ def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k+1))) : Prop :=
 set_option maxHeartbeats 2000000 in
 /-- Arbitrary leaf-labelled full binary trees whose proper blocks are small
 have precisely the two peeling spines, with independent child exchanges. -/
-theorem rigidity_from_capacities (k : ℕ) (hk : 2 ≤ k)
+theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     (t : TreeMessageRealization.Tree (Fin (k+1))) (ht : Full t)
     (hall : leaves t = Finset.univ)
-    (hcap : ∀ s ∈ subtrees t, s ≠ t →
-      capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4) : DoubleComb t := by
+    (m : Implementation (fun _ : Fin (k+1) => Window))
+    (read : m.Message t → Bool) (hm : Correct boolean t m read) (hp : peak m t ≤ 4) :
+    ∃ j, 0 < j ∧ j < k+1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
+      (t = fork l r ∨ t = fork r l) ∧ height t = max j (k+1-j) := by
   classical
+  letI : Nonempty Window := ⟨.middle⟩
+  have hcap : ∀ s ∈ subtrees t, s ≠ t →
+      capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4 := by
+    intro s hs _
+    exact (implementation_lower_bound boolean t ht m read hm s hs).trans
+      ((Finset.le_sup hs).trans hp)
   let z : Fin (k+1) := ⟨0, by omega⟩
   let e : Fin (k+1) := Fin.last k
   have mem_interval (a b : ℕ) (i : Fin (k+1)) :
@@ -474,95 +482,122 @@ theorem rigidity_from_capacities (k : ℕ) (hk : 2 ≤ k)
           rw [hle]
           exact SuffixSpine.peel hjk
             (hr hu.2.1 (j+1) (by omega) (by omega) hra hrb)
-  cases t with
-  | nil => simp [Full] at ht
-  | node a l r =>
-    cases a with
-    | some i =>
-      have hz : z = i := by
-        have : z ∈ leaves (.node (some i) l r) := by rw [hall]; simp
-        simpa [leaves] using this
-      have he : e = i := by
-        have : e ∈ leaves (.node (some i) l r) := by rw [hall]; simp
-        simpa [leaves] using this
-      have := congrArg Fin.val (hz.trans he.symm)
-      dsimp [z,e] at this
+  have shape : DoubleComb t := by
+    cases t with
+    | nil => simp [Full] at ht
+    | node a l r =>
+      cases a with
+      | some i =>
+        have hz : z = i := by
+          have : z ∈ leaves (.node (some i) l r) := by rw [hall]; simp
+          simpa [leaves] using this
+        have he : e = i := by
+          have : e ∈ leaves (.node (some i) l r) := by rw [hall]; simp
+          simpa [leaves] using this
+        have := congrArg Fin.val (hz.trans he.symm)
+        dsimp [z,e] at this
+        omega
+      | none =>
+        have hlb : ∀ s ∈ subtrees l, SmallBlock (leaves s) := by
+          intro s hs
+          apply hsmall s (by simp only [subtrees,Finset.mem_insert,Finset.mem_union]; tauto)
+          intro he
+          have hsub := (subtree_structure l ht.1 s hs).2
+          obtain ⟨i,hi⟩ := nonempty r ht.2.1
+          have him : i ∈ leaves s := by rw [he,hall]; simp
+          exact Finset.disjoint_left.mp ht.2.2 (hsub him) hi
+        have hrb : ∀ s ∈ subtrees r, SmallBlock (leaves s) := by
+          intro s hs
+          apply hsmall s (by simp only [subtrees,Finset.mem_insert,Finset.mem_union]; tauto)
+          intro he
+          have hsub := (subtree_structure r ht.2.1 s hs).2
+          obtain ⟨i,hi⟩ := nonempty l ht.1
+          have him : i ∈ leaves s := by rw [he,hall]; simp
+          exact Finset.disjoint_left.mp ht.2.2 hi (hsub him)
+        have hL := hlb l (self l ht.1)
+        have hR := hrb r (self r ht.2.1)
+        have zm : z ∈ leaves l ∨ z ∈ leaves r := by
+          have : z ∈ leaves (.node none l r) := by rw [hall]; simp
+          simpa [leaves] using this
+        have em : e ∈ leaves l ∨ e ∈ leaves r := by
+          have : e ∈ leaves (.node none l r) := by rw [hall]; simp
+          simpa [leaves] using this
+        rcases zm with hzl | hzr
+        · have her : e ∈ leaves r := by
+            rcases em with h | h
+            · exact False.elim (small_endpoints (leaves l) hL ⟨hzl,h⟩)
+            · exact h
+          have hel : e ∉ leaves l := fun h => Finset.disjoint_left.mp ht.2.2 h her
+          obtain ⟨j,hj,hjn,hla⟩ := prefix_at_zero (leaves l) hL hzl hel
+          have hra : leaves r = interval k j (k+1) := by
+            ext i
+            have cover : i ∈ leaves l ∨ i ∈ leaves r := by
+              have : i ∈ leaves (.node none l r) := by rw [hall]; simp
+              simpa [leaves] using this
+            have dis : ¬ (i ∈ leaves l ∧ i ∈ leaves r) := fun h =>
+              Finset.disjoint_left.mp ht.2.2 h.1 h.2
+            rw [hla,mem_interval] at cover dis
+            rw [mem_interval]
+            constructor
+            · intro hi
+              have hn : ¬ (0 ≤ i.val ∧ i.val < j) := fun hp => dis ⟨hp,hi⟩
+              omega
+            · intro hi
+              rcases cover with h | h
+              · omega
+              · exact h
+          exact ⟨j,hj,hjn,l,r,prefix_force l ht.1 j hj hjn hla hlb,
+            suffix_force r ht.2.1 j hj hjn hra hrb,Or.inl rfl⟩
+        · have hel : e ∈ leaves l := by
+            rcases em with h | h
+            · exact h
+            · exact False.elim (small_endpoints (leaves r) hR ⟨hzr,h⟩)
+          have her : e ∉ leaves r := fun h => Finset.disjoint_left.mp ht.2.2 hel h
+          obtain ⟨j,hj,hjn,hra⟩ := prefix_at_zero (leaves r) hR hzr her
+          have hla : leaves l = interval k j (k+1) := by
+            ext i
+            have cover : i ∈ leaves l ∨ i ∈ leaves r := by
+              have : i ∈ leaves (.node none l r) := by rw [hall]; simp
+              simpa [leaves] using this
+            have dis : ¬ (i ∈ leaves l ∧ i ∈ leaves r) := fun h =>
+              Finset.disjoint_left.mp ht.2.2 h.1 h.2
+            rw [hra,mem_interval] at cover dis
+            rw [mem_interval]
+            constructor
+            · intro hi
+              have hn : ¬ (0 ≤ i.val ∧ i.val < j) := fun hp => dis ⟨hi,hp⟩
+              omega
+            · intro hi
+              rcases cover with h | h
+              · exact h
+              · omega
+          exact ⟨j,hj,hjn,r,l,prefix_force r ht.2.1 j hj hjn hra hrb,
+            suffix_force l ht.1 j hj hjn hla hlb,Or.inr rfl⟩
+  have prefix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k+1)))
+      (h : PrefixSpine k j u) : u.height = j ∧ 0 < j := by
+    induction h with
+    | one => simp [leaf]
+    | peel hj h ih =>
+      simp only [fork,BinaryTree.height,leaf] at *
       omega
-    | none =>
-      have hlb : ∀ s ∈ subtrees l, SmallBlock (leaves s) := by
-        intro s hs
-        apply hsmall s (by simp only [subtrees,Finset.mem_insert,Finset.mem_union]; tauto)
-        intro he
-        have hsub := (subtree_structure l ht.1 s hs).2
-        obtain ⟨i,hi⟩ := nonempty r ht.2.1
-        have him : i ∈ leaves s := by rw [he,hall]; simp
-        exact Finset.disjoint_left.mp ht.2.2 (hsub him) hi
-      have hrb : ∀ s ∈ subtrees r, SmallBlock (leaves s) := by
-        intro s hs
-        apply hsmall s (by simp only [subtrees,Finset.mem_insert,Finset.mem_union]; tauto)
-        intro he
-        have hsub := (subtree_structure r ht.2.1 s hs).2
-        obtain ⟨i,hi⟩ := nonempty l ht.1
-        have him : i ∈ leaves s := by rw [he,hall]; simp
-        exact Finset.disjoint_left.mp ht.2.2 hi (hsub him)
-      have hL := hlb l (self l ht.1)
-      have hR := hrb r (self r ht.2.1)
-      have zm : z ∈ leaves l ∨ z ∈ leaves r := by
-        have : z ∈ leaves (.node none l r) := by rw [hall]; simp
-        simpa [leaves] using this
-      have em : e ∈ leaves l ∨ e ∈ leaves r := by
-        have : e ∈ leaves (.node none l r) := by rw [hall]; simp
-        simpa [leaves] using this
-      rcases zm with hzl | hzr
-      · have her : e ∈ leaves r := by
-          rcases em with h | h
-          · exact False.elim (small_endpoints (leaves l) hL ⟨hzl,h⟩)
-          · exact h
-        have hel : e ∉ leaves l := fun h => Finset.disjoint_left.mp ht.2.2 h her
-        obtain ⟨j,hj,hjn,hla⟩ := prefix_at_zero (leaves l) hL hzl hel
-        have hra : leaves r = interval k j (k+1) := by
-          ext i
-          have cover : i ∈ leaves l ∨ i ∈ leaves r := by
-            have : i ∈ leaves (.node none l r) := by rw [hall]; simp
-            simpa [leaves] using this
-          have dis : ¬ (i ∈ leaves l ∧ i ∈ leaves r) := fun h =>
-            Finset.disjoint_left.mp ht.2.2 h.1 h.2
-          rw [hla,mem_interval] at cover dis
-          rw [mem_interval]
-          constructor
-          · intro hi
-            have hn : ¬ (0 ≤ i.val ∧ i.val < j) := fun hp => dis ⟨hp,hi⟩
-            omega
-          · intro hi
-            rcases cover with h | h
-            · omega
-            · exact h
-        exact ⟨j,hj,hjn,l,r,prefix_force l ht.1 j hj hjn hla hlb,
-          suffix_force r ht.2.1 j hj hjn hra hrb,Or.inl rfl⟩
-      · have hel : e ∈ leaves l := by
-          rcases em with h | h
-          · exact h
-          · exact False.elim (small_endpoints (leaves r) hR ⟨hzr,h⟩)
-        have her : e ∉ leaves r := fun h => Finset.disjoint_left.mp ht.2.2 hel h
-        obtain ⟨j,hj,hjn,hra⟩ := prefix_at_zero (leaves r) hR hzr her
-        have hla : leaves l = interval k j (k+1) := by
-          ext i
-          have cover : i ∈ leaves l ∨ i ∈ leaves r := by
-            have : i ∈ leaves (.node none l r) := by rw [hall]; simp
-            simpa [leaves] using this
-          have dis : ¬ (i ∈ leaves l ∧ i ∈ leaves r) := fun h =>
-            Finset.disjoint_left.mp ht.2.2 h.1 h.2
-          rw [hra,mem_interval] at cover dis
-          rw [mem_interval]
-          constructor
-          · intro hi
-            have hn : ¬ (0 ≤ i.val ∧ i.val < j) := fun hp => dis ⟨hi,hp⟩
-            omega
-          · intro hi
-            rcases cover with h | h
-            · exact h
-            · omega
-        exact ⟨j,hj,hjn,r,l,prefix_force r ht.2.1 j hj hjn hra hrb,
-          suffix_force l ht.1 j hj hjn hla hlb,Or.inr rfl⟩
+    | peel_swap hj h ih =>
+      simp only [fork,BinaryTree.height,leaf] at *
+      omega
+  have suffix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k+1)))
+      (h : SuffixSpine k j u) : u.height = k+1-j := by
+    induction h with
+    | one => simp [leaf]
+    | @peel j u hj h ih =>
+      simp only [fork,BinaryTree.height,leaf] at *
+      omega
+    | @peel_swap j u hj h ih =>
+      simp only [fork,BinaryTree.height,leaf] at *
+      omega
+  obtain ⟨j,hj,hjn,l,r,hl,hr,he⟩ := shape
+  refine ⟨j,hj,hjn,l,r,hl,hr,he,?_⟩
+  have hL := (prefix_height j l hl).1
+  have hR := suffix_height j r hr
+  rcases he with rfl | rfl <;>
+    simp only [height,fork,BinaryTree.height,hL,hR,Nat.add_sub_cancel,Nat.max_comm]
 
 end D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity
