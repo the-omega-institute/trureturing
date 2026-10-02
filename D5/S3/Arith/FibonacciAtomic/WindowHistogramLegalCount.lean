@@ -574,7 +574,10 @@ theorem result :
       if b = 0 then 0 else Nat.card (HistogramWords (histogram a (b-1) c r s))) ∧
     (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .low) =
       if a = 0 then 0 else (r+s).choose r * (r+s).choose c *
-        (r+s+1).multichoose (a-1) * (r+s).multichoose b) := by
+        (r+s+1).multichoose (a-1) * (r+s).multichoose b) ∧
+    (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .ends) =
+      if c = 0 then 0 else (r+s).choose r * (r+s).choose (c-1) *
+        (r+s+1).multichoose a * (r+s).multichoose b) := by
   have terminal_shapes (p : Code) :
       ((codeWord p).getLast? = some .low ↔
         0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
@@ -651,6 +654,24 @@ theorem result :
     rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_coe,
       Finset.card_powersetCard]
     simp
+  have contain_card (t c : ℕ) (hc : 0 < c) :
+      Nat.card {Z : {Z : Finset (Fin (t+1)) // Z.card = c} // Fin.last t ∈ Z.val} =
+        t.choose (c-1) := by
+    classical
+    let e : {Z : {Z : Finset (Fin (t+1)) // Z.card = c} // Fin.last t ∈ Z.val} ≃
+        ↑((Finset.univ.powersetCard c).filter
+          (fun Z => ({Fin.last t} : Finset _) ⊆ Z)) :=
+      (Equiv.subtypeSubtypeEquivSubtypeInter
+        (fun Z : Finset (Fin (t+1)) => Z.card = c)
+        (fun Z => Fin.last t ∈ Z)).trans
+        (Equiv.subtypeEquivRight (q := fun Z =>
+          Z ∈ (Finset.univ.powersetCard c).filter
+            (fun Z => ({Fin.last t} : Finset _) ⊆ Z)) (fun Z => by
+          simp [Finset.mem_powersetCard]))
+    rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_coe]
+    simpa using Finset.card_filter_powersetCard_subset
+      ({Fin.last t} : Finset (Fin (t+1))) Finset.univ c
+      (Finset.subset_univ _) (by simp only [Finset.card_singleton]; omega)
   have positive_gap_card (t a : ℕ) (ha : 0 < a) :
       Nat.card {g : Gaps (t+1) a // 0 < g.val (Fin.last t)} =
         (t+1).multichoose (a-1) := by
@@ -665,7 +686,7 @@ theorem result :
   refine ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
     fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
     (histogram_encoding (fun _ => 0)).1,
-    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, absent, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, absent, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b c r s hn
     classical
     letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
@@ -782,6 +803,36 @@ theorem result :
       rw [Nat.card_congr (ends.symm.trans separate)]
       simp only [Nat.card_prod, avoid_card, zero_gap_card,
         positive_gap_card (r+s) a (Nat.pos_of_ne_zero ha)]
+      simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
+
+  · intro a b c r s
+    classical
+    by_cases hc : c = 0
+    · subst c
+      letI := absent (histogram a b 0 r s) .ends rfl
+      simp
+    · rw [if_neg hc]
+      obtain ⟨e, he⟩ := (histogram_count a b c r s).1
+      let restricted := {p : Factors a b c r s //
+        Fin.last (r+s) ∈ p.2.1.val ∧ p.2.2.2.val (Fin.last (r+s)) = 0}
+      let ends : restricted ≃ EndpointWords (histogram a b c r s) .ends :=
+        e.subtypeEquiv (fun p => by
+          rw [he p, (terminal_shapes _).2, raw_terminal]
+          simp [factorRaw])
+      let separate : restricted ≃
+          {R : Finset (Fin (r+s)) // R.card = r} ×
+          {Z : {Z : Finset (Fin (r+s+1)) // Z.card = c} // Fin.last (r+s) ∈ Z.val} ×
+          Gaps (r+s+1) a × {g : Gaps (r+s+1) b // g.val (Fin.last (r+s)) = 0} :=
+        { toFun := fun p => (p.val.1, ⟨p.val.2.1, p.property.1⟩,
+            p.val.2.2.1, ⟨p.val.2.2.2, p.property.2⟩)
+          invFun := fun p => ⟨(p.1, p.2.1.val, p.2.2.1, p.2.2.2.val),
+            p.2.1.property, p.2.2.2.property⟩
+          left_inv := fun _ => rfl
+          right_inv := fun _ => rfl }
+      rw [Nat.card_congr (ends.symm.trans separate)]
+      simp only [Nat.card_prod, contain_card (r+s) c (Nat.pos_of_ne_zero hc), zero_gap_card]
+      rw [Nat.card_eq_fintype_card (α := Gaps (r+s+1) a), Fintype.card_coe,
+        Finset.card_finsuppAntidiag_nat_eq_multichoose]
       simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
 end D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount
