@@ -3217,3 +3217,67 @@ remain unfinished. Full finite-volume Mostow-Prasad, including cusps
 and nonorientable manifolds, remains active and incomplete. The linked
 escape audit remains unfinished; registration stays paused under
 CLAUDE section 3.9.
+
+
+### Corresponding finite-index subgroups for the prescribed homotopy equivalence
+
+The two original determinant characters need not be preserved by an
+arbitrary prescribed group isomorphism. For arbitrary groups A and B,
+homomorphisms rhoA and rhoB into the SAME actual H3 isometry group G,
+and an arbitrary isomorphism d : A equiv B, define
+
+    KM = preimage(rhoA,H) intersect preimage(rhoB composed with d,H)
+    KN = preimage(rhoB,H) intersect preimage(rhoA composed with inverse(d),H).
+
+Here H is the ORIGINAL generated subgroup, already identified with the
+kernel of the original Lorentz/light determinant homomorphism. No premise
+asserts that d preserves either individual determinant character.
+
+KM is exactly the kernel of the homomorphism sending a to the PAIR
+of original determinants det(rhoA(a)) and det(rhoB(d(a))). Each coordinate
+is 1 or -1. Thus this pair has finite range, and its kernel is normal
+and has index at most four. The same construction proves the corresponding
+facts for KN. The restriction of the SAME original d is an actual
+isomorphism KM equiv KN: its underlying value is d(a), and its inverse
+has underlying value inverse(d)(b). The image of KM under d is exactly
+KN, so their indices in the two original groups are equal. The bound
+does not require either original representation to be injective.
+
+For any two ORIGINAL quotient covering maps FM and FN from H3, with
+the charted H3 instance used by the existing lift theorem, any original
+prescribed homotopy equivalence h, original source basepoint and explicitly
+supplied homomorphisms rhoM/rhoN from their full deck groups into G,
+the accepted lift theorem constructs pHN, L and d. The checked application
+retains L's basepoint value, its every-point projection to h, every-point
+FULL deck equivariance, naturality with the actual fundamental-group
+map of h and uniqueness of that same induced d. The corresponding KM
+and KN are then constructed from THIS d, with normality, finite index,
+equal indices and the bound four on each side. The restricted isomorphism
+retains d and inverse(d) pointwise, both represented deck elements lie
+in the SAME H, and the ORIGINAL L is equivariant for this restriction
+at every point. No unrelated isomorphism or lift is substituted.
+
+The general algebraic check and the prescribed-h application each passed
+a complete serial default-resource scoped transient Lean check, with
+seven printed standard-three axiom closures in total and two unsuppressed
+haveILetI warnings. Each module's first whole attempt failed on elaboration
+(product projections and implicit restricted-subgroup binders respectively);
+both whole failed modules are preserved and excluded, and each revised
+whole module passed. This is classical reuse and exact application under
+.lake, with no tracked-Lean, novelty, admission or freeze claim.
+
+This discharges an algebraic correspondence needed for a prescribed-h
+finite-cover reduction. The application keeps rhoM/rhoN explicitly
+supplied; it does not establish their geometric holonomy identities
+from these topological covering inputs. Membership in H is the proved
+original determinant/generated-subgroup condition, without asserting
+smooth orientation identification. Geometric finite-cover realization,
+lifted homotopy equivalence and quotient-volume transfer are not supplied
+by this algebraic construction. Geometric unit-tangent/geodesic-flow
+identification, the boundary map and forced geometric preservation for
+the SAME arbitrary prescribed-h induced deck/lattice isomorphism,
+actual ambient conjugator existence, prescribed isometric representative
+existence and full endpoint assembly remain unfinished. Full finite-volume
+Mostow-Prasad, including cusps and nonorientable manifolds, remains active
+and incomplete. The linked escape audit remains unfinished; registration
+stays paused under CLAUDE section 3.9.
