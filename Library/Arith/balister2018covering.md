@@ -56,8 +56,9 @@ moment input also has the published [KKL](klein2023boundedmultiplicity.md)
 justification. Neither the table nor that citation is new Lean verification.
 
 The same source proves a directly reusable global support restriction. Its
-Theorem 1.4 states that for any finite collection of arithmetic progressions
-with distinct moduli, if (Q=\operatorname{lcm}(D)), then
+Theorem 1.4 states that for any finite nontrivial covering collection of
+arithmetic progressions with distinct moduli \(d>1\), if
+\(Q=\operatorname{lcm}(D)\), then
 
 \[
   2\mid Q\quad\text{or}\quad 9\mid Q\quad\text{or}\quad 15\mid Q.

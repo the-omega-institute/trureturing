@@ -25487,8 +25487,7 @@ Erdős--#7 conclusion follows from (EP1)--(EP3).
 
 Balister--Bollobás--Morris--Sahasrabudhe--Tiba, *On the Erdős covering
 problem: the density of the uncovered set* (Invent. Math. 228 (2022),
-377--414; arXiv:1811.03547), Theorem 1.4, proves that a finite covering
-system with distinct moduli and \(Q\) their least common multiple satisfies
+377--414; arXiv:1811.03547), Theorem 1.4, proves that a finite nontrivial covering system with distinct moduli \(d>1\) and \(Q\) their least common multiple satisfies
 
 \[
   2\mid Q\quad\text{or}\quad 9\mid Q\quad\text{or}\quad 15\mid Q.
@@ -25514,3 +25513,124 @@ not exclude unrestricted distinct odd covers, and it supplies no conclusion
 about prefix separation, equal-prefix bridges, or a common source law for the
 remaining liability. The \(v_3(Q)\ge2\) and \(3,5\)-split branches therefore
 remain within the open whole-cover problem addressed by Sections 217--218.
+
+## 220. An external bridge and deleted-point hull growth are both realizable
+
+The two unresolved alternatives in Section 218 are not empty at the level of
+finite liability arithmetic.  Consider
+
+\[
+ Q=17325=3^2\cdot5^2\cdot7\cdot11,
+ \qquad N=Q/3=5775,
+ \qquad L=25,
+ \qquad R=3L=75.
+\]
+
+Take the equal-prefix phases
+
+\[
+ A=[0]_{75},
+ \qquad B=[231]_{75}.
+\]
+
+They agree modulo \(3\), but are distinct modulo \(75\).  Let the two exact
+liabilities be
+
+\[
+ E_A=[0]_{5775}\mathbin{\dot\cup}[225]_{5775},
+ \qquad
+ E_B=[231]_{5775}\mathbin{\dot\cup}[456]_{5775}.
+\]
+
+The low class
+
+\[
+ C=[0]_{77}
+\]
+
+is an external bridge: \(77\nmid L\), while \(77\mid N\).  It meets the
+first components of both \(E_A\) and \(E_B\), since
+\(231\equiv0\pmod {77}\),
+and it misses both remaining components, since
+
+\[
+ 225\equiv456\equiv71\pmod {77}.
+\]
+
+The deleted-point remainder is therefore
+
+\[
+ F=[225]_{5775}\mathbin{\dot\cup}[456]_{5775}.
+\]
+
+It has complete hull
+
+\[
+ \gamma_N(F)=\gcd(5775,456-225)=231=3\cdot77,
+ \qquad
+ \gamma_N(F)/3=77,
+\]
+
+so its divisor count is \(\tau(77)=4\).  The three high classes
+
+\[
+ H_1=[0]_9,
+ \qquad H_2=[57]_{63},
+ \qquad H_3=[60]_{99}
+\]
+
+cover \(F\).  This is a fibre calculation, not the false claim that one
+class contains an entire \(N\)-fibre.  For \(x=225\), the steps of an
+\(N\)-fibre modulo \((9,63,99)\) are \((6,42,33)\), respectively, and the three
+phases \((0,57,60)\) select its three distinct tails.  For \(x=456\), the same
+three phases select the complementary three tails.  Explicitly,
+
+\[
+ 225\equiv0\pmod9,\qquad 225\equiv36\pmod {63},\qquad225\equiv27\pmod {99},
+\]
+
+while
+
+\[
+ 456\equiv6\pmod9,\qquad456\equiv15\pmod {63},\qquad456\equiv60\pmod {99};
+\]
+
+adding \(N\) cycles through the three residues in each coordinate, and
+\(57\equiv15\pmod {21}\), \(60\equiv27\pmod {33}\).  Each of the three
+classes is necessary for the three-tail cover.
+
+Thus \(C,H_1,H_2,H_3\) cover all of \(E_A\dot\cup E_B\).  Their label cost is
+
+\[
+ 77+9+63+99=248.
+\]
+
+The local deleted packet with labels \((R,9,45,225)\) has cost
+
+\[
+ 75+9+45+225=354,
+\]
+
+so this finite source-compatible liability has a strict four-class versus
+four-class modulus-sum descent: the class count ties, but \(248<354\).  The
+three high phases have witnesses in the same displayed liability, so this is
+not an independently rephased marginal calculation.
+For example, \(225\) witnesses \(H_1\), \(225+2N=11775\) witnesses
+\(H_2\), and \(225+N=6000\) witnesses \(H_3\), all inside
+\([225]_{5775}\subseteq F\).
+
+The period \(Q\) has only the four support primes \(3,5,7,11\).  The
+existing complete-marginal theorem (MF1) already rules out a whole cover
+with at most five support primes, so this example is deliberately only a
+local liability test; it does not reopen the globally excluded
+four-support case.
+
+This is a boundary example, not a whole-cover counterexample.  The four
+liability classes above have not been realized as the complement of one
+fixed retained family \(\mathcal U\) whose original labels and phases remain
+unchanged.  Consequently EB1 for an actual covering system cannot be invoked
+from this calculation alone.  Its precise consequence is negative for a
+stronger proposed forcing lemma: (EP2) and the internal-bridge exclusion
+(EP3) cannot by themselves rule out the external-coordinate bridge or the
+strictly larger deleted-point hull.  Any unrestricted proof must add a
+whole-cover source-compatibility argument at this point.
