@@ -139,7 +139,7 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
                               text=True, capture_output=True, timeout=30)
 
     def assert_continued(self, result, fetched=True, output=None):
-        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(result.returncode, 0, '[FAIL] complete_entry_reuse: ' + result.stdout + result.stderr)
         self.assertIn('complete-entry-reused', result.stdout)
         self.assertEqual((self.root / 'fetch-called').exists(), fetched)
         if fetched:
@@ -156,9 +156,10 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
 
     def assert_blocked(self, result, local, current, dev, reason, fetched=True):
         self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
-        self.assertFalse((self.root / 'report-builds').exists(), 'incompatible seeds must not enter :report')
+        self.assertFalse((self.root / 'report-builds').exists(), '[FAIL] incompatible_seed_must_not_enter_report')
         self.assertIn(f'LEAN_REPORT_CACHE_INCOMPATIBLE local_version={local} current_version={current} '
-                      f'dev_seed_version={dev} reason={reason}', result.stderr)
+                      f'dev_seed_version={dev} reason={reason}', result.stderr,
+                      '[FAIL] incompatible_cache_diagnostic_missing')
         self.assertIn('make lean-report REBUILD_REPORT_CACHE=1', result.stderr)
         self.assertEqual((self.root / 'fetch-called').exists(), fetched)
         if fetched:
@@ -507,7 +508,7 @@ except BlockingIOError:
                     os.write(release_fd, b'r')
                     stdout, stderr = first.communicate(timeout=20)
                     self.assertEqual(first.returncode, 2, stdout + stderr)
-                    self.assertTrue(receipt.is_file(), 'denied caller removed competing writer receipt')
+                    self.assertTrue(receipt.is_file(), '[FAIL] denied_caller_removed_competing_writer_receipt')
                     self.assertEqual(receipt.read_bytes(), refreshed)
                     self.assertFalse((self.root / 'unexpected-writer-entry').exists())
                     self.assertIn('absolute executable lake' if failure == 'require-lake'

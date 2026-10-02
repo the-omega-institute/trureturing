@@ -422,9 +422,19 @@ class ReuseTests(unittest.TestCase):
                           + 'printf "%s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> ensure-producer\n')
         runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
         runner.write_text('#!/bin/bash\nset -euo pipefail\n'
-                          'printf "%s\\n" "$*" >> build-calls\n'
-                          'exit ' + str(build_exit) + '\n')
+                          'exec python3 -B "$(dirname "$0")/program_writer_fixture.py" "$@"\n')
         runner.chmod(0o755)
+        self.write('tools/scripts/worktree/program_writer_fixture.py', '''import subprocess, sys
+from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+with cache_guard(root):
+    raise SystemExit(subprocess.run(sys.argv[1:]).returncode)
+''')
+        self.lake.write_text('#!/bin/bash\nset -euo pipefail\n'
+                             'if [[ "$1" == --version ]]; then printf "fixture lake 1\\n"; exit 0; fi\n'
+                             'printf "%s\\n" "$LAKE_BIN $*" >> build-calls\n'
+                             'exit ' + str(build_exit) + '\n')
         api = self.receipt()
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         if existing_output:
