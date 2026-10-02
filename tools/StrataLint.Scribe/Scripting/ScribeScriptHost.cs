@@ -170,8 +170,10 @@ public static class ScribeScriptHost
                 foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))
                 {
                     var name = attribute.Name.ToString();
-                    if (!name.EndsWith("ScribeSharedSource", StringComparison.Ordinal)
-                        && !name.EndsWith("ScribeSharedSourceAttribute", StringComparison.Ordinal))
+                    var attributeName = typeof(ScribeSharedSourceAttribute).Name;
+                    var shortAttributeName = attributeName[..^"Attribute".Length];
+                    if (!name.EndsWith(attributeName, StringComparison.Ordinal)
+                        && !name.EndsWith(shortAttributeName, StringComparison.Ordinal))
                     {
                         continue;
                     }
