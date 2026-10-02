@@ -1,4 +1,7 @@
+using System.Collections.Immutable;
 using System.Reflection;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
@@ -18,6 +21,52 @@ public sealed class ScribeScriptHostTests
         Assert.True(result.IsSuccess, result.Failure?.ToString());
         Assert.Equal("D5/S0/Test/Synthetic", result.Definition!.Document.Header.Gid.Value);
         Assert.Equal(path, result.Definition.SourcePath);
+    }
+
+    [Fact]
+    public void InvalidPathHasANamedFailure()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/../Probe.scribe.cs";
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.Equal(ScribeScriptFailureCode.InvalidPath, result.Failure?.Code);
+        Assert.Equal(path, result.Failure!.RelativePath);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void MissingAnalyzerHasAHostConfigurationFailure()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var execute = typeof(ScribeScriptHost).GetMethod("ExecuteCore", BindingFlags.NonPublic | BindingFlags.Static)!;
+
+        var result = Assert.IsType<ScribeScriptResult>(execute.Invoke(null,
+            [root.Path, path, ImmutableArray<MetadataReference>.Empty, ImmutableArray<DiagnosticAnalyzer>.Empty]));
+
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
+        Assert.Equal(path, result.Failure!.RelativePath);
+        Assert.Equal("banned API analyzer is unavailable", result.Failure.Message);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void LockedSourceHasASourceReadFailure()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        using var source = new FileStream(root.Resolve(path), FileMode.Open, FileAccess.Read, FileShare.None);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.Equal(ScribeScriptFailureCode.SourceRead, result.Failure?.Code);
+        Assert.Equal(path, result.Failure!.RelativePath);
+        Assert.NotEmpty(result.Failure.Message);
+        Assert.Null(result.Definition);
     }
 
     [Fact]
