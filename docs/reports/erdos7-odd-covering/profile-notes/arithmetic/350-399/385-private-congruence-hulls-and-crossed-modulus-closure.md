@@ -21872,3 +21872,166 @@ odd \(u,v>1\). This contradicts the equal-cardinality modulus-sum bound in
 This consequence is still conditional on finding a reciprocal pair with
 both receiving sets nonempty. It supplies a sharper obstruction inside the
 full-ternary branch, not the missing universal forcing statement.
+
+## 178. A reciprocal pair with a prime parent cannot supply two receiving labels
+
+Keep the reciprocal-pair notation of Section 176. If one parent is a prime,
+write it as \(p\), and define \(J_p,J_g\) as in (RH5). Then
+
+\[
+\boxed{|J_p\cup J_g|\le 1.}
+\tag{PR1}
+\]
+
+Consequently, every reciprocal pair with at least two receiving descendants
+has two composite parents. The proof uses the actual whole-cover phases and
+does not replace a repeated numerical label by an independently chosen copy.
+
+### Proof
+
+If \(p\mid g\), the two parent classes are comparable and hence disjoint.
+The swap criterion (RH4) is then automatic, so (RH6) forbids any nonempty
+receiving union. It remains to consider \(p\nmid g\), and put \(L=pg\).
+
+Irredundancy gives, for every original \(m\ne p\) divisible by \(p\),
+
+\[
+p\mid m\quad\Longrightarrow\quad a_m\not\equiv a_p\pmod p.
+\tag{PR2}
+\]
+
+Take a private point of any such \(m\), preserve all other prime-power
+coordinates, and reset its first \(p\)-digit to \(a_p\). The resulting point
+is private to \(p\): every \(p\)-free original still misses it, and (PR2)
+excludes every other \(p\)-bearing original. Since \(p\nmid g\), this reset
+preserves the residue modulo \(g\). The hypothesis \(g\mid\Gamma_p\)
+therefore gives
+
+\[
+P_m\subseteq w_p\pmod g
+\qquad(p\mid m,\ m\ne p).
+\tag{PR3}
+\]
+
+If \(L\in D\), applying (PR3) to a private point of \(L\) gives
+\(a_L\equiv w_p\pmod g\), so \(L\in J_g\). Thus any receiving union of
+size at least two would contradict (OL1), which requires
+\(L\in D\setminus(J_p\cup J_g)\). Hence the union has size at most one.
+
+The surviving one-sided configurations can be described more precisely.
+The set \(J_p\) cannot be empty. Let \(b=w_g\bmod p\). Since \(w_g\) is
+private to \(g\), \(b\ne a_p\). Resetting the first \(p\)-digit of every
+point of \(P_p\) to \(b\) leaves all \(p\)-free originals false and makes
+\(A_p\) false, so whole coverage supplies a \(p\)-bearing owner in the
+phase \(b\). Thus \(J_p=\{m\}\) for a proper multiple \(m\) of \(p\).
+Restricting to the line \(x=b+pt\) shows that \(v_p(m)=1\): otherwise the
+induced distinct odd cover after division by \(p\) has one fewer class,
+contradicting EB1. Write \(m=pu\), with \(u>1\) and \(p\nmid u\). Repeating
+the reset over \(P_p\) gives
+
+\[
+u\mid\Gamma_p,
+\qquad a_{pu}\equiv w_p\pmod u.
+\tag{PR4}
+\]
+
+If \(J_g\ne\varnothing\), then the union bound forces \(J_g=J_p=\{m\}\).
+Now \(L\mid m\), divisor closure gives \(L\in D\), and (PR3) gives
+\(L\in J_g\); hence \(m=L\) and \(u=g\). Every proper original multiple
+of \(L\) would also lie in \(J_g\), so \(L\) has no proper original multiple.
+If \(J_g=\varnothing\), then \(L\notin D\). The reciprocal swap and deletion
+of \(m=pu\) leave exactly \(K_{p,g}\); one fresh class \(c\bmod L\),
+\(c\in K_{p,g}\), repairs it. The class count is unchanged, and EB1's
+secondary objective gives \(L\ge pu\). Equality is impossible because
+\(pu\in D\) while \(L\notin D\), so \(u<g\).
+
+For two prime parents \(p,q\), the same reset in both directions gives
+\(J_p=J_q=\{pq\}\), \(pq\in D\), and no proper original multiple of
+\(pq\). This is a neutral three-label configuration, not the strict
+cardinality descent required by (RH6).
+
+Thus the occupied-lcm route, if it succeeds, must find a reciprocal pair of
+composite incomparable parents. The argument does not force that pair, and
+it does not exclude the remaining composite-parent configurations.
+
+## 179. Full-ternary reciprocal pairs have no receiving descendant at the moved phase
+
+Assume the hypotheses of Section 177, both \(J_d\) and \(J_g\) are nonempty,
+and \(r=|J_d\cup J_g|\ge2\). Add the full-ternary condition
+
+\[
+v_3(d)=v_3(g)=H=v_3(Q).
+\tag{FT1}
+\]
+
+By (OL4), \(r=2\). Choose \(c\in K_{d,g}\), put
+\(L=\operatorname{lcm}(d,g)\), and define the receiving descendants at the
+moved lcm phase by
+
+\[
+K_L(c)=\{M\in D\setminus\{L\}: L\mid M,\ M>L,
+                         \ a_M\equiv c\pmod L\}.
+\tag{FT2}
+\]
+
+Then
+
+\[
+\boxed{K_L(c)=\varnothing.}
+\tag{FT3}
+\]
+
+This conclusion concerns only the phase \(c\bmod L\); it does not say that
+\(L\) has no proper original multiple at other phases.
+
+### Proof
+
+First, \(J\cap K_L(c)=\varnothing\). For example, if
+\(M\in J_d\cap K_L(c)\), then \(a_M\equiv w_g\pmod d\) by (RH5), while
+\(a_M\equiv c\equiv a_d\pmod d\) because \(c\in A_d\). Hence
+\(w_g\equiv a_d\pmod d\), contradicting \(w_g\in P_g\). The \(J_g\) case is
+the same.
+
+Every \(M\in K_L(c)\) has \(A_M\subseteq c\bmod L\). Its original class
+is disjoint from the original \(A_L\), because \(L\mid M\) and \(M>L\).
+After rephasing \(A_L\) to \(c\bmod L\), all these \(A_M\) are redundant.
+Therefore the reciprocal swap, the lcm rephase, and deletion of
+\(J\cup K_L(c)\) leave exactly the original complete private region \(P_L\).
+
+Write \(T=3^H\), \(d=Tu\), and \(g=Tv\). The three fresh classes
+
+\[
+3T,\qquad 3d,\qquad 3g
+\tag{FT4}
+\]
+
+cover \(A_L\), hence \(P_L\): the \(3T\) class selects the first next
+ternary digit, while the \(3d\) and \(3g\) classes impose respectively
+\(x\equiv a_L\pmod u\) and \(x\equiv a_L\pmod v\). Their ternary height is
+\(H+1\), so they are fresh and pairwise distinct. If
+\(k=|K_L(c)|\), this repair has \(3\) classes after deleting \(r+k\), and
+EB1 cardinality minimality gives
+
+\[
+r+k\le3.
+\tag{FT5}
+\]
+
+Since \(r=2\), \(k\le1\). If \(k=1\), choose distinct
+\(M_d\in J_d\), \(M_g\in J_g\), and let \(M_L\) be the unique member of
+\(K_L(c)\). Full ternary height and proper odd divisibility give
+
+\[
+M_d\ge5d,\qquad M_g\ge5g,\qquad M_L\ge5L.
+\]
+
+The deleted modulus sum is therefore at least \(5(d+g+L)\), whereas the
+fresh repair sum is \(3(T+d+g)\). Since \(u,v\) are distinct odd
+3-free integers greater than one, \(5(d+g+L)>3(T+d+g)\). The new cover has
+the same class count, so this strict modulus-sum decrease contradicts EB1's
+secondary objective. Hence \(k=0\), proving (FT3).
+
+The full-ternary bridge strengthens the liability transfer in Section 177,
+but it still does not force a reciprocal pair in every hypothetical odd
+whole cover, nor does it turn the phase-specific vacancy (FT3) into the
+global statement \(J\cap\{e:e\mid\Gamma_L\}=\varnothing\) from (OL3).
