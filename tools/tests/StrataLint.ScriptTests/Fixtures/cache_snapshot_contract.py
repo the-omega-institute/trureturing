@@ -5,15 +5,245 @@ import io
 import json
 import os
 import pathlib
+import shutil
 import sys
 import subprocess
+import tempfile
 import unittest
 from unittest import mock
+import urllib.error
+import urllib.parse
+import urllib.request
 
 from cache_fixture import CACHE, REV, CacheFixture
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def lookup_keys(self, responses=(), **environment):
+        owner = self.restore_owner()
+        env = dict(self.env, GH_TOKEN="synthetic-token", GITHUB_REPOSITORY="owner/repository",
+                   GITHUB_API_URL="https://cache.example.test/api/v3")
+        env.update(environment)
+        with mock.patch.dict(os.environ, env, clear=True):
+            publication = owner.actions_keys(self.root)["project"]
+            with mock.patch.object(urllib.request, "urlopen", side_effect=responses) as opened, \
+                    mock.patch.object(sys, "argv", [str(CACHE), "keys", "--repository", str(self.root)]), \
+                    contextlib.redirect_stdout(io.StringIO()) as result:
+                code = owner.main()
+        self.assertEqual(0, code, result.getvalue())
+        lines = result.getvalue().splitlines()
+        values = dict(line.split("=", 1) for line in lines if "=" in line)
+        receipts = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                    for line in lines if line.startswith("LEAN_ACTIONS_CACHE ")]
+        self.assertEqual(publication["key"], values["project_key"])
+        self.assertEqual(publication["restore_prefix"], values["project_restore_prefix"])
+        self.assertEqual(1, len(receipts), result.getvalue())
+        self.assertEqual("project", receipts[0]["layer"])
+        saved = (self.root / "outputs").read_text()
+        self.assertIn("project_restore_key=" + values["project_restore_key"] + "\n", saved)
+        return values, receipts[0], opened
+
+    def cache_row(self, suffix, ref="refs/heads/dev", prefix=None, **fields):
+        owner = self.restore_owner()
+        with mock.patch.dict(os.environ, self.env):
+            prefix = prefix or owner.actions_keys(self.root)["project"]["restore_prefix"]
+        return dict(key=prefix + suffix, ref=ref, **fields)
+
+    def cache_page(self, rows=(), total=None, link=None, status=200, body=None):
+        response = mock.MagicMock()
+        response.__enter__.return_value = response
+        response.status = status
+        response.headers = {} if link is None else {"Link": link}
+        response.read.return_value = (body if body is not None else
+            json.dumps(dict(total_count=len(rows) if total is None else total,
+                            actions_caches=list(rows))).encode())
+        return response
+
+    def next_page(self, number, ref="refs/heads/dev"):
+        prefix = self.cache_row("")["key"]
+        query = urllib.parse.urlencode(dict(key=prefix, ref=ref, per_page=100, page=number))
+        return "https://cache.example.test/api/v3/repos/owner/repository/actions/caches?" + query
+
+    def assert_lookup_fallback(self, responses, reason, **environment):
+        values, receipt, opened = self.lookup_keys(responses, **environment)
+        self.assertEqual(values["project_key"], values["project_restore_key"])
+        self.assertEqual("restore-preference-fallback", receipt["status"])
+        self.assertEqual(reason, receipt["reason"])
+        self.assertEqual(values["project_key"], receipt["requested_key"])
+        return opened
+
+    def test_project_lookup_is_optional_without_credentials_repository_or_reader_ref(self):
+        for missing in (dict(GH_TOKEN=""), dict(GITHUB_REPOSITORY=""), dict(GITHUB_REF=""),
+                dict(GITHUB_EVENT_NAME="pull_request", GITHUB_BASE_REF=""),
+                dict(GITHUB_EVENT_NAME="workflow_dispatch")):
+            with self.subTest(missing=missing):
+                opened = self.assert_lookup_fallback([], "lookup-not-configured", **missing)
+                opened.assert_not_called()
+
+    def test_project_lookup_transport_and_http_errors_are_optional(self):
+        for failure, reason in ((OSError("network unavailable"), "lookup-request-failed"),
+                (TimeoutError("transport guard"), "lookup-request-failed"),
+                (RuntimeError("unexpected HTTP-layer failure"), "lookup-request-failed"),
+                (urllib.error.HTTPError("https://cache.example.test", 403, "rate limit", {}, None), "lookup-http-error"),
+                (self.cache_page(status=429), "lookup-http-error"),
+                (self.cache_page(status=500), "lookup-http-error")):
+            with self.subTest(reason=reason, failure=type(failure).__name__):
+                opened = self.assert_lookup_fallback([failure], reason)
+                self.assertEqual(1, opened.call_count)
+
+    def test_project_lookup_invalid_json_and_malformed_listings_are_optional(self):
+        for body in (b"{", b"\xff", b"[]", b"{}",
+                b'{"total_count":true,"actions_caches":[]}',
+                b'{"total_count":-1,"actions_caches":[]}',
+                b'{"total_count":0,"actions_caches":null}',
+                b'{"total_count":1,"actions_caches":[null]}',
+                b'{"total_count":1,"actions_caches":[{"key":"key"}]}',
+                b'{"total_count":1,"actions_caches":[{"key":1,"ref":"ref"}]}',
+                b'{"total_count":0,"total_count":1,"actions_caches":[]}'):
+            with self.subTest(body=body):
+                self.assert_lookup_fallback([self.cache_page(body=body)], "lookup-malformed-listing")
+
+    def test_project_lookup_never_uses_a_partial_listing(self):
+        page = self.cache_page([self.cache_row("999-1")], total=2)
+        self.assert_lookup_fallback([page], "lookup-incomplete-listing")
+        link = '<' + self.next_page(2) + '>; rel="next"'
+        first = self.cache_page([self.cache_row("999-1")], total=2, link=link)
+        for second, reason in ((OSError("second page failed"), "lookup-request-failed"),
+                (self.cache_page(), "lookup-incomplete-listing"),
+                (self.cache_page([self.cache_row("1000-1")], total=3), "lookup-incomplete-listing")):
+            with self.subTest(reason=reason):
+                self.assert_lookup_fallback([first, second], reason)
+
+    def test_project_lookup_rejects_broken_or_cyclic_pagination_without_following_it(self):
+        for link in ("broken", '<' + self.next_page(1) + '>; rel="next"',
+                '<' + self.next_page(3) + '>; rel="next"',
+                '<' + self.next_page(2).replace("cache.example.test", "other.example.test") + '>; rel="next"',
+                '<' + self.next_page(2).replace("refs%2Fheads%2Fdev", "refs%2Fheads%2Fother") + '>; rel="next"',
+                '<' + self.next_page(2) + '>; rel="next", <' + self.next_page(2) + '>; rel="next"'):
+            with self.subTest(link=link):
+                opened = self.assert_lookup_fallback(
+                    [self.cache_page([self.cache_row("999-1")], total=2, link=link)],
+                    "lookup-incomplete-listing")
+                self.assertEqual(1, opened.call_count)
+
+    def test_project_lookup_empty_or_ineligible_listing_uses_the_existing_key(self):
+        self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
+        rows = [self.cache_row(suffix) for suffix in ("0-1", "1-0", "01-1", "1-01",
+                "-1-1", "1-1-tail", "1-1\n", "1", "1-a")]
+        prefix = self.cache_row("")["key"]
+        rows += [self.cache_row("999-1", ref="refs/heads/other"),
+                 self.cache_row("999-1", prefix=prefix.replace("lean-project-push-", "lean-project-v4-")),
+                 self.cache_row("999-1", prefix=prefix.replace(REV, "b" * 40)),
+                 self.cache_row("999-1", prefix=prefix.replace("lean-project-push-", "lean-dependency-v4-"))]
+        self.assert_lookup_fallback([self.cache_page(rows)], "lookup-no-eligible-seed")
+
+    def test_project_lookup_uses_numeric_run_and_attempt_order_not_creation_order(self):
+        rows = [self.cache_row("100-2", created_at="oldest"),
+                self.cache_row("99-9", created_at="newest"),
+                self.cache_row("100-10", created_at="middle"), self.cache_row("100-9"),
+                self.cache_row("10000-1", ref="refs/heads/other")]
+        values, receipt, opened = self.lookup_keys([self.cache_page(rows)])
+        self.assertEqual(values["project_restore_prefix"] + "100-10", values["project_restore_key"])
+        self.assertEqual("restore-preference", receipt["status"])
+        self.assertEqual(values["project_restore_key"], receipt["requested_key"])
+        self.assertEqual(1, opened.call_count)
+
+    def test_project_lookup_does_not_change_snapshot_publication(self):
+        self.native_seed("project")
+        values, _, _ = self.lookup_keys([self.cache_page([self.cache_row("100-10")])])
+        self.assertNotEqual(values["project_key"], values["project_restore_key"])
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("true", ready["project_ready"])
+        self.assertEqual(values["project_key"], receipts["project"]["key"])
+
+    def test_project_lookup_follows_all_pages_before_selecting(self):
+        rows = [self.cache_row("99-9"), self.cache_row("100-1"), self.cache_row("100-12")]
+        responses = [self.cache_page([rows[0]], total=3,
+            link='<' + self.next_page(2) + '>; rel="next", <' + self.next_page(3) + '>; rel="last"'),
+            self.cache_page([rows[1]], total=3, link='<' + self.next_page(3) + '>; rel="next"'),
+            self.cache_page([rows[2]], total=3, link='<' + self.next_page(2) + '>; rel="prev"')]
+        values, _, opened = self.lookup_keys(responses)
+        self.assertEqual(rows[2]["key"], values["project_restore_key"])
+        self.assertEqual(3, opened.call_count)
+        self.assertEqual(self.next_page(2), opened.call_args_list[1].args[0].full_url)
+        self.assertEqual(self.next_page(3), opened.call_args_list[2].args[0].full_url)
+
+    def test_project_lookup_queries_the_pr_base_or_push_ref_with_a_bounded_request(self):
+        for event, ref, base, expected in (("pull_request", "refs/pull/12/merge", "feature/with space", "refs/heads/feature/with space"),
+                ("push", "refs/heads/integration-ci-tests", "ignored", "refs/heads/integration-ci-tests")):
+            with self.subTest(event=event):
+                row = self.cache_row("123-1", ref=expected)
+                values, receipt, opened = self.lookup_keys([self.cache_page([row])],
+                    GITHUB_EVENT_NAME=event, GITHUB_REF=ref, GITHUB_BASE_REF=base)
+                self.assertEqual(row["key"], values["project_restore_key"])
+                self.assertEqual(expected, receipt["base_ref"])
+                request = opened.call_args.args[0]
+                url = urllib.parse.urlsplit(request.full_url)
+                self.assertEqual("/api/v3/repos/owner/repository/actions/caches", url.path)
+                self.assertEqual(dict(key=[values["project_restore_prefix"]], ref=[expected], per_page=["100"]),
+                                 urllib.parse.parse_qs(url.query))
+                self.assertEqual("GET", request.get_method())
+                self.assertEqual("Bearer synthetic-token", request.get_header("Authorization"))
+                self.assertGreater(opened.call_args.kwargs["timeout"], 0)
+                self.assertNotIn("synthetic-token", json.dumps(receipt))
+
+    def test_project_restore_receipt_reports_requested_and_actual_keys_even_on_a_miss(self):
+        owner, keys, _ = self.native_seed("project")
+        preferred = keys["project"]["restore_prefix"] + "100-2"
+        keys["project"]["restore_key"] = preferred
+        actual = keys["project"]["restore_prefix"] + "99-1"
+        for outcome, matched in (("success", preferred), ("success", actual), ("skipped", "")):
+            with self.subTest(outcome=outcome, matched=matched), mock.patch.dict(os.environ, self.env), \
+                    contextlib.redirect_stdout(io.StringIO()) as result:
+                owner.restore(self.root, keys, {"project": matched}, ["project"], outcomes={"project": outcome})
+            entry = next(json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                         for line in result.getvalue().splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))
+            self.assertEqual(preferred, entry["requested_key"])
+            self.assertEqual(matched, entry["key"])
+
+    def test_project_restore_cli_transports_the_requested_key_without_another_lookup(self):
+        owner, keys, _ = self.native_seed("project")
+        actual = keys["project"]["restore_prefix"] + "99-1"
+        preferred = keys["project"]["restore_prefix"] + "100-2"
+        arguments = [str(CACHE), "restore", "--repository", str(self.root), "--layers", "project",
+                     "--project-key", actual, "--project-restore-key", preferred, "--project-outcome", "success"]
+        with mock.patch.dict(os.environ, dict(self.env, GH_TOKEN="synthetic-token"), clear=True), \
+                mock.patch.object(urllib.request, "urlopen") as opened, \
+                mock.patch.object(sys, "argv", arguments), contextlib.redirect_stdout(io.StringIO()) as result:
+            self.assertEqual(0, owner.main())
+        opened.assert_not_called()
+        entry = json.loads(result.getvalue().splitlines()[0].removeprefix("LEAN_ACTIONS_CACHE "))
+        self.assertEqual(preferred, entry["requested_key"])
+        self.assertEqual(actual, entry["key"])
+
+    def test_dependency_only_keys_do_not_perform_a_project_lookup(self):
+        owner = self.restore_owner()
+        arguments = [str(CACHE), "keys", "--repository", str(self.root), "--layers", "dependency"]
+        with mock.patch.dict(os.environ, dict(self.env, GH_TOKEN="synthetic-token"), clear=True), \
+                mock.patch.object(urllib.request, "urlopen") as opened, \
+                mock.patch.object(sys, "argv", arguments), contextlib.redirect_stdout(io.StringIO()) as result:
+            self.assertEqual(0, owner.main())
+        opened.assert_not_called()
+        self.assertNotIn("project_", result.getvalue())
+        self.assertNotIn("LEAN_ACTIONS_CACHE", result.getvalue())
+
+    def test_project_keys_cli_uses_an_explicit_repository_with_spaces_from_another_directory(self):
+        with tempfile.TemporaryDirectory(prefix="cache contract with spaces ") as temporary:
+            directory = pathlib.Path(temporary)
+            root = directory / "repository with spaces"
+            shutil.copytree(self.root, root)
+            result = subprocess.run([sys.executable, "-B", str(CACHE), "keys", "--repository", str(root)],
+                cwd=directory, env=dict(PATH=os.environ.get("PATH", ""), GH_TOKEN="",
+                    GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2", GITHUB_EVENT_NAME="push",
+                    GITHUB_REF="refs/heads/dev", GITHUB_OUTPUT=str(directory / "output with spaces")),
+                capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn('"reason": "lookup-not-configured"', result.stdout)
+            flat = dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
+            self.assertEqual(flat["project_key"], flat["project_restore_key"])
+            self.assertIn("project_restore_key=" + flat["project_key"],
+                          (directory / "output with spaces").read_text())
+
     def work(self, report=1, programs=0, **changes):
         path = self.root / "build/lean-cache/build-work.json"
         path.parent.mkdir(parents=True, exist_ok=True)
