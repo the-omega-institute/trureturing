@@ -1,0 +1,5 @@
+source_id = "monster-short-support-spin"
+path = "docs/develop/theory/MONSTER_SHORT_SUPPORT_SPIN.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
