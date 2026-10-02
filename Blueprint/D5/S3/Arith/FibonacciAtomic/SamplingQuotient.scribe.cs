@@ -14,7 +14,7 @@ internal sealed class SamplingQuotientDocument : IScribeDocumentDefinition
                 DescribeId.Create("fibonacci-readout-iterate"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/SamplingQuotient.readout_iterate"),
                 H("Readout and the iterated step"),
-                StatementSource.FromAuthor(ReadoutFormula(false)),
+                StatementSource.FromAuthor(ReadoutFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural modulus N, time k and state x over Z/NZ, the Fibonacci readout r(N,k,x)=F(k)x.1+F(k+1)x.2 is the second coordinate of S^k(x), where S(a,b)=(b,a+b). This includes the integer ring at N=0."))),
                 DescribeRole.Theorem),
@@ -67,18 +67,13 @@ internal sealed class SamplingQuotientDocument : IScribeDocumentDefinition
     private static Formula Both(params Formula[] xs) =>
         Seq(xs.SelectMany((x, i) => i == 0 ? new[] { Par(x) } : new[] { Sp, Land, Sp, Par(x) }).ToArray());
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula ReadoutFormula(bool shifted)
+    private static Formula ReadoutFormula()
     {
-        Formula n = F.Id("n"), k = F.Id("k"), x = F.Id("x"), a = F.Id("a"), b = F.Id("b");
+        Formula n = F.Id("n"), k = F.Id("k"), x = F.Id("x");
         Formula all(Formula v, Formula type, Formula body) =>
             Seq(Forall, Sp, Open, v, Colon, Sp, type, Close, Comma, Sp, body);
-        Formula state = Pow(Call("ZMod", n), D(2));
-        Formula body = shifted
-            ? all(a, N, all(b, N, all(x, state, Equal(Call("readout", n, Add(a, b), x),
-                Call("readout", n, b, Call("iterate", F.Id("S"), a, x))))))
-            : all(k, N, all(x, state, Equal(Call("readout", n, k, x),
-                Call("snd", Call("iterate", F.Id("S"), k, x)))));
-        return Disp(all(n, N, body));
+        return Disp(all(n, N, all(k, N, all(x, Pow(Call("ZMod", n), D(2)),
+            Equal(Call("readout", n, k, x), Call("snd", Call("iterate", F.Id("S"), k, x)))))));
     }
     private static Formula ResultFormula()
     {
