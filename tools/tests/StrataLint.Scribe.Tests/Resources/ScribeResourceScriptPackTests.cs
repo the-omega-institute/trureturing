@@ -28,23 +28,29 @@ public sealed class ScribeResourceScriptPackTests
     [InlineData("entry-digest")]
     [InlineData("missing-environment")]
     [InlineData("malformed-environment")]
+    [InlineData("missing-backend-data-version")]
+    [InlineData("empty-backend-data-version")]
     public void InvalidReusePackReturnsTwoWithoutOutput(string kind)
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha");
         var old = root.Resolve("input.zip");
         if (kind == "malformed") TemporaryFileSystem.File.WriteAllBytes(old, [0xff]);
-        if (kind is "version" or "entry-digest" or "missing-environment" or "malformed-environment")
+        if (kind is "version" or "entry-digest" or "missing-environment" or "malformed-environment"
+            or "missing-backend-data-version" or "empty-backend-data-version")
         {
             ScribeResourcePackTests.WritePack(old, [ScribeResourcePackTests.Definition("Alpha")]);
             var entries = ScribeResourcePackTests.ReadZip(old);
             if (kind == "entry-digest") entries[0].Bytes[0] ^= 1;
-            else if (kind is "missing-environment" or "malformed-environment")
+            else if (kind is "missing-environment" or "malformed-environment"
+                or "missing-backend-data-version" or "empty-backend-data-version")
             {
                 var index = entries.FindIndex(item => item.Name == "manifest.json");
                 var manifest = JsonNode.Parse(entries[index].Bytes)!;
                 if (kind == "missing-environment") manifest.AsObject().Remove("executionEnvironment");
-                else manifest["executionEnvironment"] = "icu";
+                else if (kind == "malformed-environment") manifest["executionEnvironment"] = "icu";
+                else if (kind == "missing-backend-data-version") manifest["executionEnvironment"]!.AsObject().Remove("globalizationBackendDataVersion");
+                else manifest["executionEnvironment"]!["globalizationBackendDataVersion"] = "";
                 entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
             }
             else
@@ -139,20 +145,24 @@ public sealed class ScribeResourceScriptPackTests
     [Theory]
     [InlineData("dotnetRuntimeVersion")]
     [InlineData("globalizationBackend")]
+    [InlineData("globalizationBackendDataVersion")]
     public void EnvironmentMismatchExecutesEveryPathAndNamesTheChangedField(string field)
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha");
         Definition(root.Path, "Beta");
-        var baseline = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu");
-        var changed = field == "dotnetRuntimeVersion"
-            ? baseline with { DotnetRuntimeVersion = "runtime-b" }
-            : baseline with { GlobalizationBackend = "invariant" };
+        var baseline = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu", "data-a");
+        var changed = field switch
+        {
+            "dotnetRuntimeVersion" => baseline with { DotnetRuntimeVersion = "runtime-b" },
+            "globalizationBackend" => baseline with { GlobalizationBackend = "invariant" },
+            _ => baseline with { GlobalizationBackendDataVersion = "data-b" },
+        };
         Pack(root.Path, "first.zip", environment: baseline);
         var result = Pack(root.Path, "second.zip", "first.zip", environment: changed);
         AssertPaths(result.Executed, "Alpha", "Beta");
         Assert.Empty(result.Reused);
-        Assert.Contains(field, result.ReuseSkippedReason!, StringComparison.Ordinal);
+        Assert.Equal(field, result.ReuseSkippedReason);
         Assert.Equal(Pack(root.Path, "full.zip", environment: changed).Manifest.TotalSha256,
             result.Manifest.TotalSha256);
     }
@@ -162,7 +172,7 @@ public sealed class ScribeResourceScriptPackTests
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha");
-        var environment = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu");
+        var environment = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu", "data-a");
         var written = Pack(root.Path, "first.zip", environment: environment).Manifest;
         var reopened = ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest;
         Assert.Equal(environment, written.ExecutionEnvironment);
@@ -171,7 +181,7 @@ public sealed class ScribeResourceScriptPackTests
             ).Single(item => item.Name == "manifest.json").Bytes)!.AsObject();
         Assert.Equal(["schema", "version", "entryCount", "executionEnvironment", "entries", "totalSha256"],
             manifest.Select(property => property.Key));
-        Assert.Equal(["dotnetRuntimeVersion", "globalizationBackend"],
+        Assert.Equal(["dotnetRuntimeVersion", "globalizationBackend", "globalizationBackendDataVersion"],
             manifest["executionEnvironment"]!.AsObject().Select(property => property.Key));
     }
 

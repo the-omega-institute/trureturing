@@ -16,6 +16,7 @@ internal static class ScribeResourcePackManifestCodec
             {
                 ["dotnetRuntimeVersion"] = manifest.ExecutionEnvironment.DotnetRuntimeVersion,
                 ["globalizationBackend"] = manifest.ExecutionEnvironment.GlobalizationBackend,
+                ["globalizationBackendDataVersion"] = manifest.ExecutionEnvironment.GlobalizationBackendDataVersion,
             },
             ["entries"] = EntriesNode(manifest.Entries),
             ["totalSha256"] = manifest.TotalSha256,
@@ -53,10 +54,11 @@ internal static class ScribeResourcePackManifestCodec
             if (version != ScribeResourcePack.SemanticVersion)
                 throw Error(ScribeResourcePackErrorCode.VersionMismatch, "Unsupported resource pack semantic version.");
             var environmentValue = root.GetProperty("executionEnvironment");
-            RequireFields(environmentValue, "dotnetRuntimeVersion", "globalizationBackend");
+            RequireFields(environmentValue, "dotnetRuntimeVersion", "globalizationBackend", "globalizationBackendDataVersion");
             var environment = new ScribeResourcePackExecutionEnvironment(
                 String(environmentValue, "dotnetRuntimeVersion"),
-                String(environmentValue, "globalizationBackend"));
+                String(environmentValue, "globalizationBackend"),
+                String(environmentValue, "globalizationBackendDataVersion"));
             var entries = root.GetProperty("entries").EnumerateArray().Select(item =>
             {
                 RequireFields(item, "path", "gid", "sha256", "inputKey", "readSet");

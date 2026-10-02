@@ -8,6 +8,28 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task BackendDataVersionIsStableAcrossProcesses(bool invariant)
+    {
+        using var root = new TemporaryRoot();
+        var worker = CreateWorker(root);
+        WriteDefinition(root, "System.StringComparison.Ordinal");
+        var first = await Pack(root, worker, invariant, "first.zip");
+        var second = await Pack(root, worker, invariant, "second.zip");
+        Assert.True(first.Exit == 0, first.Output + first.Error);
+        Assert.True(second.Exit == 0, second.Output + second.Error);
+        var firstVersion = Assert.Single(first.Output.Split('\n'), line => line.StartsWith("backendDataVersion=", StringComparison.Ordinal));
+        var secondVersion = Assert.Single(second.Output.Split('\n'), line => line.StartsWith("backendDataVersion=", StringComparison.Ordinal));
+        Assert.Equal(firstVersion, secondVersion);
+        Assert.Equal(firstVersion["backendDataVersion=".Length..].Trim(),
+            ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.ExecutionEnvironment.GlobalizationBackendDataVersion);
+        Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.ExecutionEnvironment,
+            ScribeResourcePack.Open(root.Resolve("second.zip")).Manifest.ExecutionEnvironment);
+        output.WriteLine($"invariant={invariant}; {firstVersion.Trim()}");
+    }
+
     [Fact]
     public async Task OrdinalPacksMatchAcrossGlobalizationBackendsForFreshAndReuse()
     {
@@ -63,6 +85,9 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
                     };
                     AppContext.TryGetSwitch("System.Globalization.Invariant", out var invariant);
                     Console.WriteLine("globalizationInvariant=" + invariant);
+                    var version = System.Globalization.CultureInfo.InvariantCulture.CompareInfo.Version;
+                    Console.WriteLine("backendDataVersion=" + version.FullVersion.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                        + ":" + version.SortId.ToString("D"));
                     return Run(args);
                 }
                 [MethodImpl(MethodImplOptions.NoInlining)]
