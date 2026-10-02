@@ -44105,3 +44105,129 @@ RH 下系数的绝对和是 $C_\gamma$；共轭配对使和为实数，级数一
 **证明。** 任一有限极限都给相应族一个最终有限下界，定理315.1于是推出 RH。在 RH 下，（315.6）与（315.7）的 liminf、limsup 严格分离，矛盾。也可在 RH 失败时直接使用（313.15）或（314.10）的任意晚深负值排除有限极限。
 
 有限阶段的正储备、统一尾项下界与余量收敛是不同命题。对于这两个实际族，RH 所允许的是带有零点振荡的正储备，而不是半尺度余量的有限常数极限。此障碍只针对定义315.0的归一化与完整指标极限，不排除子序列收敛，也不提供 RH 的真值。$\square$
+
+## 316. 实际5040族的对数累积平均与 RH 强度
+
+**定义 316.0。** 沿用 §§313、315 的完整实际整数族 $T_L$、$m_L=3L+2$、$\mathfrak m_L$、$\kappa=2\sqrt2-2$，并采用假设302.1及这两节列明的经典解析输入。对整数 $L\ge16$、$N\ge17$ 定义
+\[
+\omega_L=\log m_{L+1}-\log m_L>0,\qquad
+D_N=\sum_{L=16}^{N-1}\omega_L=\log(m_N/50),
+\]
+\[
+\mathfrak a_N=\frac1{D_N}\sum_{L=16}^{N-1}\omega_L\mathfrak m_L.
+\tag{316.1}
+\]
+这里平均的是实际整数 $T_L$ 的归一化 Robin 余量，权重按解析尺度的对数长度给出；不是 $T_L$ 上的均匀概率或全部整数的均匀平均。
+
+**定理 316.1（对数平均保留单边 RH 强度）。** 在上述输入下，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists N_0\ge17\ \forall N\ge N_0:\quad\mathfrak a_N\ge-K;\\
+&\mathfrak a_N\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad\mathfrak a_N\longrightarrow\ell.
+\end{aligned}
+\tag{316.2}
+\]
+指标与阈值均为整数，预算 $K$ 固定。该等价式不提供预算的存在证明，也不证明 RH。
+
+**证明。** 先证明第二项推出 RH。记 $Z(x)=\mathcal Z_\psi(x)=\sqrt x\log x\,I_\psi(x)$。定理315.1给
+\[
+\mathfrak m_L=Z(m_L)+\kappa-\mathfrak h_L+\varepsilon_L,
+\qquad\mathfrak h_L\ge0,\quad\varepsilon_L\to0.
+\tag{316.3}
+\]
+正权的总和 $D_N\to\infty$，故收敛误差的加权平均趋零：任取 $\eta>0$，把 $|\varepsilon_L|\le\eta$ 之外的有限初段归入常数 $C_\eta$，得到
+\[
+\frac1{D_N}\left|\sum_{L=16}^{N-1}\omega_L\varepsilon_L\right|
+\le C_\eta/D_N+\eta.
+\]
+于是第二项与非负缺损给某个固定 $K_1\ge0$，使 $\sum\omega_L Z(m_L)\ge-K_1D_N$ 最终成立。
+
+把该离散预算接到连续原函数。经典有效 PNT 保证 $I_\psi(x)$ 连续、有界并趋零；Chebyshev 界与同一核 $k$ 给 $|I_\psi(x)-I_\psi(m_L)|=O(1/(m_L\log m_L))$，一致于 $m_L\le x\le m_L+3$。又 $[\sqrt x\log x]'=(\log x+2)/(2\sqrt x)$，故
+\[
+\sup_{m_L\le x\le m_L+3}|Z(x)-Z(m_L)|
+=O(\log m_L/\sqrt{m_L}).
+\tag{316.4}
+\]
+$\omega_L\le3/m_L$，且 $\sum_{L\ge16}\log m_L/m_L^{3/2}<\infty$，所以
+\[
+\int_{\log50}^{\log m_N}Z(e^t)\,dt
+-\sum_{L=16}^{N-1}\omega_L Z(m_L)=O(1).
+\tag{316.5}
+\]
+任意末尾部分格子的积分也有界，因为 $|Z(m_L)|=O(\sqrt{m_L}\log m_L)$，乘以其对数长度不超过 $3/m_L$，并结合（316.4）。因此连续原函数
+\[
+A(T)=\int_{t_0}^{T} Z(e^t)\,dt,\qquad t_0=\log50,
+\]
+在全部 $T\ge t_0$ 上满足 $A(T)\ge-K_2(T+1)$，可通过紧区间连续性增大 $K_2\ge0$。
+
+必须保留 §92.3 的正逆变换，不能在未预设 RH 时将 $Z(e^t)$ 替换为其零点主和。沿用该节的
+\[
+J(x)=\int_x^\infty\frac{\psi(v)-v}{v^2}\,dv,\quad
+Y(t)=e^{t/2}J(e^t),\quad B(T)=\int_{t_0}^{T}Y(t)\,dt.
+\]
+正逆变换准确给出
+\[
+Y(t)=b(t)Z(e^t)+\int_t^\infty e^{-(u-t)/2}c(u)Z(e^u)\,du,
+\quad b(t)=\frac t{t+1},\quad c(t)=\frac{t+2}{(t+1)^2}.
+\tag{316.6}
+\]
+置 $g=b+2c=1+1/(t+1)+2/(t+1)^2$。有效 PNT 给某个 $a>0$ 使 $I_\psi(e^u)=O(e^{-a\sqrt u}/\sqrt u)$、$Z(e^u)=O(e^{u/2}\sqrt u\,e^{-a\sqrt u})$；这些界保证所需 Fubini 交换、分部积分的绝对收敛及 $e^{-u/2}c(u)A(u)\to0$。对（316.6）先积分，再对含 $A'=Z(e^u)$ 的项分部积分，得
+\[
+\begin{aligned}
+B(T)={}&b(T)A(T)+\int_{t_0}^{T}[-g'(u)]A(u)\,du\\
+&+2\int_T^\infty e^{-(u-T)/2}[c(u)/2-c'(u)]A(u)\,du-C_0,\\
+C_0={}&2\int_{t_0}^\infty e^{-(u-t_0)/2}c(u)Z(e^u)\,du.
+\end{aligned}
+\tag{316.7}
+\]
+这里 $C_0$ 是固定有限实数，不能因 $K_2=0$ 而删去。对 $u\ge0$，全部 $A$ 的系数非负，并有
+\[
+\begin{gathered}
+b(T)(T+1)=T,\qquad
+[-g'(u)](u+1)=\frac1{u+1}+\frac4{(u+1)^2}\le5,\\
+2[c(u)/2-c'(u)](u+1)
+=1+\frac3{u+1}+\frac4{(u+1)^2}\le8.
+\end{gathered}
+\]
+未来指数核的积分为二，故由 $A\ge-K_2(u+1)$ 得
+\[
+B(T)\ge-6K_2T-16K_2-|C_0|
+\ge-(16K_2+|C_0|)(T+1).
+\tag{316.8}
+\]
+这是累积单边预算经过同一正逆变换后仍为线性预算的具体原因。
+
+现在使用 §92.3 的经典积分显式公式。它给实连续函数
+\[
+F(t)=\sum_\rho\frac{e^{(\rho-1/2)t}}{\rho(1-\rho)},\qquad
+Y(t)=-F(t)-\log(2\pi)e^{-t/2}+e^{t/2}R_0(e^t).
+\]
+剩余两项在 $[t_0,\infty)$ 上可积。因此（316.8）给 $\int_{t_0}^{T}F(t)\,dt\le M_0(T+1)$。加上紧区间后，可选常数 $M,C$ 使
+\[
+h(T)=M(T+1)+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
+\]
+标准零点计数给 $|F(t)|=O(e^{t/2})$，所以 $h$ 的真 Laplace 收敛横坐标位于 $[0,1/2]$。在 $\Re z>1/2$ 逐项积分得
+\[
+\mathcal Lh(z)=\frac M{z^2}+\frac{M+C}z
+-\sum_\rho\frac1{z\rho(1-\rho)[z-(\rho-1/2)]}.
+\tag{316.9}
+\]
+与 §92.3 相同，该级数在避开极点和零的紧集上正常收敛，给亚纯延拓，且不存在正实极点。Landau 非负变换定理于是迫使真收敛横坐标为零。若 $\Re\rho_0>1/2$，在 $z_0=\rho_0-1/2\ne0$ 的留数为
+\[
+-\frac{m_{\rho_0}}{(\rho_0-1/2)\rho_0(1-\rho_0)}\ne0.
+\]
+时间积分增加的因子 $1/z$ 没有消去这个非实右半平面极点，同一零点的重数也不能互相抵消，矛盾。零点反射对称性遂给 RH。这里复用经典 Landau 与显式公式，只把实际族的累积预算送入同一非负变换机制。
+
+反向假设 RH。定理315.1及 Nicolas 的经典谱渐近给 $\mathfrak m_L=\kappa-W(m_L)+o(1)$。RH 下 $\mathcal W(t)=W(e^t)$ 是无零频率的一致绝对收敛三角级数。对每个非零纵坐标 $\gamma$，$T^{-1}\int_{t_0}^{T}e^{i\gamma t}\,dt\to0$；先取有限部分和，再用统一尾界，即得 $T^{-1}\int_{t_0}^{T}\mathcal W(t)\,dt\to0$。用（316.5）与收敛误差的正权平均，便得 $\mathfrak a_N\to\kappa$。第三项显然给第四项，任一有限极限给最终有限下界，完成等价链。$\square$
+
+**定理 316.2（实际累积预算的任意晚深负值）。** 在定理316.1的输入下，若 RH 不成立，则
+\[
+\forall K\ge0\ \forall N_0\ge17\ \exists N\ge N_0:\quad\mathfrak a_N<-K.
+\tag{316.10}
+\]
+
+**证明。** 这是（316.2）第二项的精确否定。它不指定负平均出现的频率、可计算的截止或任何单个实际整数的违例幅度。
+
+定理315.3排除 $\mathfrak m_L$ 的有限极限，而定理316.1允许、并在 RH 下确定 $\mathfrak a_N$ 的有限极限；两个结论使用不同对象。对索引区间的互斥递归划分，累计贡献 $\sum\omega_L\mathfrak m_L$ 与总对数长度 $\sum\omega_L$ 各自相加，因此该判据的预算可在区间分块之间合并。这个恒等式没有给未展开块的下界，也不允许用均匀计数权重替代（316.1）的对数权重。$\square$
