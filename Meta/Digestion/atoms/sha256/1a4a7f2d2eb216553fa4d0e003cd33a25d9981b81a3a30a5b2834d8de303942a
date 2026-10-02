@@ -1,0 +1,2 @@
+**Theorem 10.4 (finite-quotient scope).** Theorem 10.2 holds for an arbitrary $K$-vector space $V$ whenever $V/U$ is finite dimensional; finite dimensionality of $V$ itself is unnecessary. The same physical index set, original columns, subspace $U$, all degrees $d\ge1$, and entire nonnegative orthant are retained.
+
