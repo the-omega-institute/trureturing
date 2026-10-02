@@ -334,6 +334,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hivert-scott-2026-okada-discriminant-refutation` (refuted) by `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hivert-scott-2026-okada-discriminant-refutation","declaration_gid":"D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

@@ -58,8 +58,9 @@ with equal propagating labels. Recursive flattening translates these diagrams
 into words in the quotient.
 
 The diagram-coefficient definition takes inverse coordinates when diagram
-expansion is bijective and is zero otherwise. General bijectivity and general
-flattening correctness are not proved in this module. At the rational witness
+expansion is bijective and is zero otherwise. The action-defined cell form is zero when its scalar equation has no solution.
+General scalar existence, bijectivity and flattening correctness are not proved
+in this module. At the rational witness
 N = 3, X = (1,2), Y = (1), the six quotient words form a basis, all six
 diagram flattenings are checked, expansion is bijective, and the cell action's
 ket independence and defining form equation are checked. The cell form selects
