@@ -1,0 +1,58 @@
+**Theorem 6.4 (Sharp cross-correlation obstruction under identical marginal trajectory laws).** For $k=2$, let $Z$ have
+$$
+\Pr(Z=(0,0))=\Pr(Z=(1,1))=\frac{1+\lambda}{4},
+$$
+$$
+\Pr(Z=(0,1))=\Pr(Z=(1,0))=\frac{1-\lambda}{4},
+\qquad -1\le\lambda\le1,
+$$
+ and evolve by bare substitution $E_n(Z)=\rho^nE_0(Z)$ with no stochastic controls. Then every aggregate quantity history is identical throughout the family, and every single-probe process law is identical. Nevertheless,
+$$
+\operatorname{Cov}(R_1(n),R_2(m))
+=\frac{\lambda}{4}F_{n+2}F_{m+2},
+$$
+while
+$$
+q(c(E_n(Z)))=2F_{n+5}.
+$$
+For equal generations,
+$$
+\varphi^{-2n}\operatorname{Cov}(R_1(n),R_2(n))
+\longrightarrow\frac{\lambda\varphi^4}{20}.
+$$
+The fraction of $\beta$ leaves is $F_{n+2}/F_{n+3}\to\varphi^{-1}$ for every $\lambda$. Define the observation map to be the aggregate trajectory law and the two separate marginal trajectory laws:
+$$
+\mathcal O(\lambda)=
+\left(
+\operatorname{Law}_\lambda\bigl((q(c(E_n(Z))))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_1(n))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_2(n))_{n\ge0}\bigr)
+\right).
+$$
+These data withhold paired sample histories and the joint trajectory law
+$$
+\mathsf J_\lambda=
+\operatorname{Law}_\lambda\bigl((R_1(n),R_2(n))_{n\ge0}\bigr).
+$$
+Let $a$ range over deterministic functions of $\mathcal O$ taking values in $[0,1]$, and let $H$ range over deterministic functions of $\mathcal O$ taking values in probabilities on the joint trajectory space. Then the worst-case absolute-error and total-variation radii are
+$$
+\inf_a\sup_{-1\le\lambda\le1}
+\left|a(\mathcal O(\lambda))-\frac{1+\lambda}{2}\right|=\frac12,
+\qquad
+\inf_H\sup_{-1\le\lambda\le1}
+\operatorname{TV}\bigl(H(\mathcal O(\lambda)),\mathsf J_\lambda\bigr)=\frac12.
+$$
+Here “separate histories” means the separate marginal trajectory laws in $\mathcal O$. Paired common-source samples constitute a different observation map: at any generation the two readouts decode both seed bits and hence reveal their equality.
+
+**Proof.** Each $Z_i$ is fair for every $\lambda$, and
+$$
+R_i(n,Z)=F_{n+3}+F_{n+2}Z_i.
+$$
+Thus each marginal trajectory law is the same equal mixture of the two deterministic trajectories, while
+$$
+\operatorname{Cov}(Z_1,Z_2)=\frac\lambda4
+$$
+proves the covariance formula. Binet's formula gives the normalized limit. The complementary pair has composition $(F_{n+1},F_{n+2})$ in each slot, proving the common aggregate history and the limiting leaf fraction. Consequently $\mathcal O(\lambda)$ is constant throughout the family, so each permitted deterministic estimator must return the same estimate for every $\lambda$. At $\lambda=1$ the joint seed is supported on the equal-bit states; at $\lambda=-1$ it is supported on the unequal-bit states. The decoder transports their disjoint supports to disjoint joint-trajectory supports. Any common event estimate has error at least $1/2$ at one endpoint and the constant estimate $1/2$ attains it. The endpoint joint trajectory laws have total variation one, so the triangle inequality gives radius at least $1/2$ for every $H$; the constant estimator $\mathsf J_0$ has distance $|\lambda|/2$ from $\mathsf J_\lambda$, attaining the bound. $\square$
+
+Citation: the finite-fiber and lawful-operation boundary is [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorems 2.2, 2.5 and 57.9, together with [*Recursive Relational Observation Transport Memory Completion*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §3.2. The finite-kernel semantics used inside the proof are described in Tobias Fritz, [*A synthetic approach to Markov kernels, conditional independence and theorems on sufficient statistics*](https://doi.org/10.1016/j.aim.2020.107239).
+

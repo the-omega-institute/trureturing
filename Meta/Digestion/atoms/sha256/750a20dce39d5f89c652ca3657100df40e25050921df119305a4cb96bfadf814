@@ -1,0 +1,84 @@
+**定义 49.1（曲线后验、追加标签噪声与原头合同）。** 固定 $n\ge3$ 及任意一棵叶标号为 $1,\ldots,n$ 的二叉树。输入边缘仍为
+
+$$
+P_n=\operatorname{Unif}(\Sigma)^{\otimes n},\qquad
+\Sigma=\{000,100,010,101,001\}.
+$$
+
+独立单位是完整窗口，窗内两端位不拆成独立样本。沿用定义48.1的教师粗化与实际位函数
+
+$$
+a=h(w_1),\quad b=\ell(w_2),\quad c=h(w_2),\quad d=\ell(w_3),
+\qquad G_1=ab,\quad G_2=(1-ab)cd,\quad C=G_1+2G_2.
+\tag{49.1}
+$$
+
+令 $s=\sqrt2$，取定义48.1的曲线通道参数 $r=1/2$。其参数对应为
+
+$$
+r=\frac12,\quad e=\frac14,\quad A=s-1,\quad
+D=\frac{3-2s}{2},\quad k=\log2,\quad t=\log(1+s).
+\tag{49.2}
+$$
+
+标签 $Y,Y'\in\{0,1,2\}$；所有概率向量按行排列，标签顺序为 $0,1,2$。记
+
+$$
+Q=\begin{pmatrix}r&A&D\\e&r&e\\D&A&r\end{pmatrix},\qquad
+T=\frac12I_3+\frac16J_3
+=\begin{pmatrix}2/3&1/6&1/6\\1/6&2/3&1/6\\1/6&1/6&2/3\end{pmatrix},
+\tag{49.3}
+$$
+
+其中 $J_3$ 是全1矩阵。直接规定同一个联合律
+
+$$
+P(X=x,Y=i,Y'=j)=5^{-n}Q_{C(x),i}T_{ij}.
+\tag{49.4}
+$$
+
+因此 $Y$ 已有曲线后验噪声，$T$ 是在它之后追加的标签通道；$Y$ 不是确定教师标签 $C$。分别记旧律、退化律的后验为
+
+$$
+\rho(X)=Q_{C(X),\cdot},\qquad
+\rho'(X)=Q'_{C(X),\cdot},\qquad
+Q'=QT=\frac12Q+\frac16J_3
+=\begin{pmatrix}r'&A'&D'\\e'&r'&e'\\D'&A'&r'\end{pmatrix},
+\tag{49.5}
+$$
+
+其中
+
+$$
+r'=\frac5{12},\quad e'=\frac7{24},\quad
+A'=\frac{s}{2}-\frac13,\quad D'=\frac{11-6s}{12},\qquad \mu=D'.
+\tag{49.6}
+$$
+
+每片叶只接收其一个完整窗口，可使用任意非线性、有符号实编码。内部合并在整个环境向量空间上分别齐次双线性；不允许免费内部常数、跨子树输入、携带输入的控制或时序通道。树、编码、合并与头参数均固定且与输入无关；全部实际叶、非根、根以及忽略子树的坐标都计费。$q$ 是实际根维数，$w$ 是包括根的消息维数峰值。原头合同仍为
+
+$$
+L_i(z)=u_i\cdot z+v_i,\qquad p_i=\frac{\exp L_i}{\sum_j\exp L_j},\qquad
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right).
+\tag{49.7}
+$$
+
+头允许任意有限、输入无关的偏置，不设偏置跨度预算；编码、消息和其余实参数也无范数上界。头的 $3(q+1)$ 个仿射参数槽、三个 logits 和三个概率输出另计，不混入 $q,w$。本合同不含 softmax 之后的概率适配器。
+
+旧律的风险对 $(X,Y)$ 评分，退化律的风险对 $(X,Y')$ 评分。对 $j\in\{\mathrm{o},\mathrm{g}\}$，令 $Y_{\mathrm{o}}=Y$、$Y_{\mathrm{g}}=Y'$、$\rho^{\mathrm{o}}=\rho$、$\rho^{\mathrm{g}}=\rho'$。使用自然对数损失和完整、不按类平均的三类 Brier 损失，零预测真类概率的对数损失为 $+\infty$；本例的有限 softmax 预测始终为正。各自的风险、Bayes 值及超额记为
+
+$$
+\begin{aligned}
+R_{\log}^j(p)&=\mathbb E[-\log p_{Y_j}(X)],&
+R_2^j(p)&=\mathbb E\sum_{i=0}^2(p_i(X)-\mathbf1_{\{Y_j=i\}})^2,\\
+h_j&=\mathbb E_{P_n}\mathcal E(\rho^j),&
+\mathcal E(p)&=-\sum_i p_i\log p_i,\\
+b_j&=\mathbb E_{P_n}[1-\|\rho^j\|_2^2],&
+\Delta_{\log}^j(p)&=R_{\log}^j(p)-h_j,\qquad
+\Delta_2^j(p)=R_2^j(p)-b_j.
+\end{aligned}
+\tag{49.8}
+$$
+
+准确后验指每个原始词上 $p=\rho^j$；零超额下确界对上述全部有限参数预测器取下确界，不以可靠性校准代替准确后验。
+

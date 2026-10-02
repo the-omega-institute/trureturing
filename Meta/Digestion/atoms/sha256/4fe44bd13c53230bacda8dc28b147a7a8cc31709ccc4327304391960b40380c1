@@ -1,0 +1,20 @@
+**定理 52.2（正信号下的结构恢复）。** 对 $n\ge4$、$0<a\le1$、$0<\delta<1$，若
+
+$$
+ m\ge
+\left\lceil
+\frac{72}{25\tau^2a^2}\log\frac{2n}{\delta}
+\right\rceil,
+\tag{52.15}
+$$
+
+则
+
+$$
+\inf_{\theta\in\Theta_n,\,\alpha\in[a,1]}
+P_{\theta,\alpha}^{m}\{\widehat\theta=\theta\}\ge1-\delta.
+\tag{52.16}
+$$
+
+恢复器本身不需要知道 $a$；$a$ 只出现在统一预算中。对每个固定的 $\alpha>0$，同一规则逐点强一致；式（52.16）不声称在 $\alpha\downarrow0$ 时仍有统一结构准确性。
+

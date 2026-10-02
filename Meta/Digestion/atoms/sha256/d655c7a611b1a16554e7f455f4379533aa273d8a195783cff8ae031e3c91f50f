@@ -1,0 +1,34 @@
+**引理 51.2（匹配计数的显式估计与一个置信区间）。** 对整数 $m\ge1$，令
+
+$$
+Z_i=\mathbf1\{Y_i=C(X_i)\},\qquad
+M_{\mathrm{match}}=\sum_{i=1}^m Z_i,\qquad
+\beta=\operatorname{clip}_{[0,1]}
+\left(\frac{6M_{\mathrm{match}}}{m}-2\right).
+\tag{51.3}
+$$
+
+这些 $Z_i$ 独立同分布，均值为 $(2+\alpha)/6$。对 $r>0$，
+
+$$
+P_\alpha^m\{ |\beta-\alpha|\ge r\}
+\le 2\exp(-mr^2/18).
+\tag{51.4}
+$$
+
+因而给定 $0<\delta<1$，置
+
+$$
+r=\sqrt{\frac{18\log(2/\delta)}m},\qquad
+I=[\max(0,\beta-r),\min(1,\beta+r)],
+\tag{51.5}
+$$
+
+就有 $P_\alpha^m\{\alpha\in I\}\ge1-\delta$，对 $\alpha\in[0,1]$ 一致成立。$m=0$ 不使用式（51.3）或（51.5）。
+
+证明。式（50.2）的三个对角元都为 $R_\alpha=(2+\alpha)/6$，故条件于每个完整输入也有 $\mathbb E_\alpha[Z_i\mid X_i]=R_\alpha$。独立完整记录经同一个确定函数映射，给所述 Bernoulli 抽样。由这个均值倒解参数才得到 $6M_{\mathrm{match}}/m-2$。投影到包含 $\alpha$ 的闭区间不增加与 $\alpha$ 的距离，因此估计偏差至少为 $r$ 时，匹配频率偏差至少为 $r/6$。
+
+此处仅应用成熟 Bernoulli Hoeffding 界。其必要计算也可直接写出：对于均值为 $p$ 的 Bernoulli 变量，中心化对数矩母函数为 $\psi_p(t)=\log(1-p+pe^t)-pt$，满足 $\psi_p(0)=\psi_p'(0)=0$、$\psi_p''(t)\le1/4$，故 $\psi_p(t)\le t^2/8$。独立乘积和指数 Markov 界在 $t=4v$ 给频率上尾 $e^{-2mv^2}$，下尾同理。取 $v=r/6$、合并两尾即得式（51.4）；置信区间只需其严格偏差事件。这是 Hoeffding，[*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，JASA 58(301):13–30 的指数浓缩应用，不是新的一般浓缩定理。
+
+匹配数不被主张为充分统计量。例如条件于 $C=0$，两个不匹配标签的概率比为 $U_\alpha/V_\alpha$，随 $\alpha$ 改变；保留完整 $(X,Y)$ 可看到匹配指示丢弃的这项信息。$\square$
+

@@ -1,0 +1,35 @@
+**Theorem 5.3 (Quadratic passage law in the quantity coordinate).** Put
+$$
+\overline r=\frac{r_\alpha}{\varphi^2}+\frac{r_\beta}{\varphi},
+\qquad
+\widetilde r=\frac{r_\alpha}{\varphi}+\frac{r_\beta}{\varphi^2}.
+$$
+For the ordered source cells,
+$$
+\mathbb E\tau(T_j)=\frac{\overline rL_j^2+\widetilde rL_j}{2\theta}+O(1),
+$$
+where the remainder is bounded in $j$. Since $N(T_j)=q(c(T_j))=F_{j+3}$,
+$$
+\lim_{j\to\infty}\frac{\delta\,\mathbb E\tau(T_j)}{N(T_j)^2}
+=\frac{\delta\,\overline r}{2\theta\varphi^4},
+$$
+and the mean-passage coefficient
+$$
+D_{\mathrm{pass},q}
+=\lim_{j\to\infty}\frac{N(T_j)^2}{2\delta\,\mathbb E\tau(T_j)}
+=\frac{\theta\varphi^4}{\delta\,\overline r}
+$$
+exists.
+
+**Proof.** The Fibonacci two-root formula gives
+$$
+\frac{N(T_j)}{L_j}\to\varphi^2,\qquad
+R_j=\overline rL_j+O(\varphi^{-j}),\qquad
+F_{j-2}=\varphi^{-3}L_j+O(\varphi^{-j}).
+$$
+Insert these estimates in Theorem 5.2. Because $L_j=O(\varphi^j)$, the product of the resistance error with $L_j+1$ is bounded. The coefficient of the linear term is
+$$
+\overline r-(r_\beta-r_\alpha)\varphi^{-3}=\widetilde r.
+$$
+This proves the bounded-remainder expansion and the two limits. $\square$
+

@@ -1,0 +1,65 @@
+### 52.6. 同一事件上的弱信号预测门
+
+恢复和预测共用一份记录，不作样本分割。令
+
+$$
+ e=\sqrt{\frac{18}{25m}\log\frac{4n}{\delta}},qquad
+ r=\sqrt{\frac{2}{m\kappa^2}\log\frac4\delta},
+$$
+
+并定义事件
+
+$$
+\mathcal E=\left\{\max_i|\overline J_i-\mathbb E J_i|\le e,\quad
+|\widehat\alpha-\alpha|\le r\right\}.
+\tag{52.25}
+$$
+
+由两个并集界，$P_{\theta,\alpha}^m(\mathcal E)\ge1-\delta$。令
+$\varepsilon_0=\min\{\varepsilon,K/4\}$，其中
+$K=(4+105\sqrt2)/450$ 是 §51 的统一曲率常数。若
+
+$$
+ m\ge\left\lceil\max\left{
+\frac{32K}{\kappa^2\varepsilon_0}\log\frac4\delta,
+\frac{288K}{25\tau^2\varepsilon_0}\log\frac{4n}{\delta}
+\right\}\right\rceil,
+\tag{52.26}
+$$
+
+则在 $\mathcal E$ 上
+
+$$
+ r\le\frac14\sqrt{\frac{\varepsilon_0}{K}},qquad
+ e\le\frac{\tau}{4}\sqrt{\frac{\varepsilon_0}{K}}.
+\tag{52.27}
+$$
+
+由 $\beta=\widehat\alpha$ 写 $u_I=\min(1,\beta+r)$，并计算三个证书
+
+$$
+U_0=Ku_I^2,qquad
+U_1=Kr^2+\frac{g_\beta^2}{200}+\frac{rg_\beta}{75},qquad
+U_2=Kr^2,
+\tag{52.28}
+$$
+
+其中 $g_\beta$ 是 §51.7 的 secant 几何位移。固定选择规则为：若 $U_0\le\varepsilon_0$ 选均匀根 $p^{(0)}=u$；否则若 $U_1\le\varepsilon_0$ 选 §51.7 的标量 secant 头 $p^{(1)}_\beta$；否则选根二的
+$p^{(2)}_\beta=q_\beta(C_{\widehat\theta})$。等号归前一支。
+
+在 $\widehat\theta=\theta$ 的事件上，必须保留 §51.7 的带符号跨律项，而不能只相加绝对值：
+
+$$
+\begin{aligned}
+\Delta_{\log}(\theta,\alpha;p^{(1)}_\beta)
+ &=D_F(\alpha,\beta)+L_\beta
+   +\frac{(\alpha-\beta)g_\beta}{75},\\
+\Delta_B(\theta,\alpha;p^{(1)}_\beta)
+ &=S(\alpha-\beta)^2+\frac6{25}e_\beta^2
+   +\frac2{25}(\alpha-\beta)e_\beta,
+\end{aligned}
+\tag{52.29}
+$$
+
+式中 $0\le L_\beta\le g_\beta^2/200$、$0\le e_\beta\le g_\beta/8$，并且 $0\le g_\beta\le6A\beta(1-\beta)$。故（52.28）同时控制两种总体超额；它是 §51 的已知教师恒等式在已证明恢复事件上的应用。
+
