@@ -59,6 +59,41 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
                         + "count bound. Infinite deaths are included. Ordered occurrence "
                         + "injections, their composition, sandwiches and stability are not "
                         + "conclusions of this theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mono-ordered-occurrence-injection"),
+                DeclarationHandle.Create(Prefix + "mono_ordered_occurrence_injection"),
+                H("Monomorphism matching by increasing-birth ordinals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Fix a bijective increasing-birth enumeration of each death class in both "
+                        + "finite families, including the essential class. An actual natural "
+                        + "map injective at every real time gives an occurrence embedding "
+                        + "preserving death and class ordinal, with target birth at most source "
+                        + "birth. A finite real sample isolates each death class from the "
+                        + "actual window inequality. The first k+1 source occurrences force "
+                        + "the target occurrence of ordinal k to exist and be born in time. "
+                        + "The enumeration retains tied occurrences separately. With a shared "
+                        + "intermediate enumeration, ordinal preservation forces classwise "
+                        + "composition; no arbitrary Hall matching is selected."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("epi-ordered-occurrence-injection"),
+                DeclarationHandle.Create(Prefix + "epi_ordered_occurrence_injection"),
+                H("Epimorphism matching by decreasing-death ordinals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Fix a bijective decreasing-death enumeration of each birth class, with "
+                        + "infinity first and a fixed order of tied occurrences. An actual "
+                        + "natural map surjective at every real time gives a target-to-source "
+                        + "occurrence embedding preserving birth and class ordinal, with "
+                        + "target death at most source death. An earlier cutoff isolates the "
+                        + "birth class, and a later finite sample isolates all survivors at "
+                        + "a finite or infinite death threshold. Their actual window count "
+                        + "forces the ordinal-k source occurrence to survive long enough. "
+                        + "Shared intermediate ordinals force epimorphism-class composition. "
+                        + "Same-image quantitative sandwiches and exact stability are "
+                        + "additional conclusions, not assertions of these injections."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(string id, string declaration, string heading, string body) =>
