@@ -20524,6 +20524,26 @@ For the particular numerical shape
 
 with pairwise coprime A,B,C>1, the same escape misses BOTH other cylinders. After relabeling its owner asAB, x agrees withv moduloAB but not moduloABC, so it fails moduloC and therefore fails bothAC andBC. TSC5–TSC6 then hold unchanged for both complete cells and their disjoint original payer inventories. A,B,C need not be prime; their complete original powers and literal residues are retained.
 
+### A protected subcollection of cells can supply the whole escape test
+
+Keep the same actual triple d_i=3^H q^2 s_i, with distinct second-q prefixes and compatible literal cofactor cylinders C_i containing ONE v modulo M. Put
+
+    I={i:gcd(s_j,s_k)>1, {i,j,k}={0,1,2}},
+    L=lcm(s_0,s_1,s_2).
+
+For each i in I, the preceding TSC2 exchange with k_i=gcd(s_j,s_k) makes its full top phase a singleton. It is enough that
+
+    I is nonempty and lcm_(i in I)s_i=L.
+
+Indeed the common actual phase v identifies
+
+    intersection_(i in I)C_i=intersection_(i=0..2)C_i
+                           ={w:w=v modulo L}.
+
+Reuse the complete private escape supplied by OHL6–OHL7. It must miss some C_j with j in I; its own cofactor cylinder still contains it, so j is a different owner. TSC1 at this protected cell and the same fixed-cofactor argument then put the ENTIRE beta_j cell in E_J. Its fibre mass is1/q and the existing TPO7 low-row demand applies.
+
+For example, actual cofactors (s_0,s_1,s_2)=(AB,A,B), with coprime A,B>1, satisfy this criterion: I={1,2}, and the two protected cofactor cylinders already have intersection v moduloAB. The private escape must belong to one of those two owners and miss the other's cofactor. More generally s_0 may be any divisor of two coprime cofactors s_1s_2 that meets each of s_1,s_2 nontrivially. This extends the complete one-cell obligation to triples having a coprime cofactor pair. It preserves the full original phases and heights and supplies no repair of the entire E_J.
+
 ### Every aligned low-row payer has a complete private escape from the triangle word
 
 Keep the actual triangle and notation of TSC1–TSC6, and put
@@ -20547,6 +20567,8 @@ Suppose P_m minus U were empty. Then E_K is contained in U. On this entire hole,
 The same fresh H+1 height excludes all numerical collisions. Four classes replace four, and the same inequality TSC3 gives a strictly smaller modulus sum. PH2 forbids the exchange, proving TLE1.
 
 The escape is a COMPLETE private point of the actual payer. It need not preserve w, and the payer need not have any private point inside U. Thus TLE1 does not force two private ternary words, an additional payment in TSC6, decreasing height along an escape path, or termination of a dependency graph. A joint deletion closure still requires its whole E_K and one compatible assignment of actual replacement labels; selected private escapes or a sink component alone supply neither.
+
+The same TLE2 identity and four-row repair apply to a protected cell j of the preceding general cofactor triple, using k_j=gcd(s_i,s_k)>1. Thus every aligned low-row payer at that cell also has a complete private point outside U, including the (AB,A,B) case. No new source is identified with its previous cofactor coordinate, and the full joint-deletion obligation remains.
 
 ## 167. Same-source top cofactors cannot contain two disjoint intersecting pairs
 
