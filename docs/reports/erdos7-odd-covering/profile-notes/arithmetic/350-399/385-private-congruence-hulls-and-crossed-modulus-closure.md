@@ -23427,6 +23427,96 @@ conditions; that unique-bad-digit phase pattern is excluded for every genuine
 EB1 whole cover.
 
 Sections 194--196 still leave the unrestricted problem open. They reduce the
-occupied (R) branch to explicit responsibility-hull and minimum-factor
+occupied \(R\) branch to explicit responsibility-hull and minimum-factor
 conditions, and isolate a concrete phase family that cannot occur, but they do
 not force one of these descent certificates for every hypothetical cover.
+
+## 197. A fixed occupied-label window cannot supply a strict EB1 descent
+
+The preceding sections identify the responsibility that remains after the
+Dalton--Trifonov source class is inserted. There is also an exact negative
+result: if all outside classes are frozen, the small numerical label window
+around the occupied output cannot by itself improve EB1.
+
+Keep the notation of Sections 192--196. Let \(U\) be the union of all retained
+classes other than the occupied \(R\)-class and the \(p\) top-layer classes,
+and let \(A=a_R\pmod R\) and \(B=b\pmod R\) be the two distinct source
+classes. Put
+
+\[
+ n_i=p^e m_i,
+ \qquad V=\{R,pR,n_1,\ldots,n_p\},
+\]
+
+where \(V\) is a set of numerical labels, so \(pR\) is identified with an
+\(n_i\) when the two numbers coincide. Freeze every class in \(U\), and allow
+an arbitrary phase at most once for each label in \(V\).
+
+The replacement is required to remain a distinct-label system: a numerical
+label already present in the frozen part is not added a second time. No
+equal-prefix assumption is being made here. If the two \(p^{e-1}\)-prefixes
+are different, a height-\(e\) class cannot meet both fibres; the argument
+below only uses the weaker fact that a height-\(e\) class meets each fixed
+\(Q_0\)-fibre in at most one point.
+
+### Proposition
+
+Any distinct odd covering obtained in this way uses at least \(p+1\) local
+classes. If it uses exactly \(p+1\), its local modulus sum is at least
+
+\[
+ R+\sum_{i=1}^{p} n_i .
+ \tag{FW1}
+\]
+
+Consequently this fixed window cannot give a strict EB1 improvement over the
+original local block \(A,T_1,\ldots,T_p\).
+
+### Proof
+
+Choose \(x_A\in E_A\) and \(x_B\in E_B\), which are nonempty by
+irredundancy and the source construction. Since every retained class in \(U\)
+has period dividing \(Q_0=Q/p\), the two complete fibres
+
+\[
+ F_A=\{x_A+jQ_0:0\le j<p\},
+ \qquad
+ F_B=\{x_B+jQ_0:0\le j<p\}
+\]
+
+are not covered by \(U\). The fibres lie in the distinct \(R\)-classes \(A\)
+and \(B\), so \(x_A\not\equiv x_B\pmod R\).
+
+An \(R\)-class can meet at most one of these two fibres. Every label of
+\(p\)-height \(e\) in \(V\) meets a fixed \(Q_0\)-fibre in at most one point.
+Thus, if an \(R\)-class is used, at least \(p\) further local classes are
+needed. If \(R\) is not used, using exactly \(p\) height-\(e\) classes to cover
+both fibres would require
+
+\[
+ p^{e-1}m_i\mid x_A-x_B
+ \qquad \text{for every chosen }n_i.
+\]
+
+If \(pR\) is chosen this already gives \(R\mid x_A-x_B\). If it is not chosen,
+the \(p\) available top labels are all the \(n_i\), and their least common
+multiple gives the same conclusion. Both alternatives contradict the distinct
+\(R\)-phases. Hence fewer than \(p+1\) local classes is impossible (and if
+\(V\) has fewer than \(p+1\) labels, no such local repair exists).
+
+For equality, if \(R\) is retained, the other \(p\) labels are either all
+\(n_i\), or replace at most one \(n_j\) by \(pR\). Since
+
+\[
+ n_j=p^e m_j\mid p^eL=pR,
+\]
+
+the replacement cannot lower the modulus sum. If \(R\) is omitted, equality
+requires the \(p+1\) available height-\(e\) labels and adds \(pR-R>0\) relative
+to the original block. This proves (FW1). \square
+
+The proposition is deliberately local. A global descent may still alter a
+retained class in \(U\), use a label outside \(V\), or pay the complete
+responsibility created by that alteration. Therefore (FW1) is a search
+boundary, not a resolution of the occupied-\(R\) branch or of unrestricted
+Erdős #7.
