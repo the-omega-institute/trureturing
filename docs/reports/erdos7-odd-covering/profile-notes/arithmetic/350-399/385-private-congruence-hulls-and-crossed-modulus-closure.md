@@ -14469,3 +14469,86 @@ identifies the exact stronger requirement bypassed by SCV4: section101
 still forbids the asserted exact single-AP inverse, while the present
 descent uses containment with separately checked numerical resources.
 No new Lean verification or unconditional noncoverage is asserted.
+
+## 114. Disjoint complete collision regions strengthen the root obstruction
+
+Keep section113's actual sets B_j,U_j on Omega. Let cd be the largest
+number of pairwise label-disjoint subfamilies of the U_j, each covering
+Omega. The enclosing-AP descent gives
+
+    cd<=p-2.                                       (SCV5)
+
+This is a condition on one actual source at arbitrary height. Distinct
+root labels remain distinct even if their safe sets happen to coincide.
+
+### Globally free roots and disjoint pairs are separate usable groups
+
+Let f0 be the number of nonzero roots with B_j empty. Form a graph G
+on the remaining roots, with an edge jk exactly when the COMPLETE sets
+B_j and B_k are disjoint. Write nu(G) for its maximum matching size.
+Every empty B_j supplies a singleton safe covering group. Every edge
+supplies a two-root safe covering group, because U_j union U_k=Omega.
+A matching makes these latter groups label-disjoint and avoids the
+already counted free roots. Therefore
+
+    f0+nu(G)<=cd<=p-2.
+
+Every actual root appearing in T has a nonempty forbidden region if
+it is nonzero: take a private point of one of its collision originals;
+its ternary word avoids all pure-three guards and lies in that B_j.
+The converse is immediate from SCV1. Since0 belongs to T,
+
+    f0=q-|T|,
+    |T|>=q-p+2+nu(G).                              (SCV6)
+
+SG3 used only globally free roots. SCV6 additionally counts disjoint
+PAIRS of complete collision regions, using each numerical root label
+once. It is not valid to form edges from merely disjoint individual
+prefix occurrences when either root has other occurrences.
+
+### Under two-Helly forbidden regions the matching test is exact
+
+Suppose the nonempty B_j satisfy the two-Helly property: every
+pairwise-intersecting subfamily has nonempty total intersection.
+Then
+
+    cd=f0+nu(G).                                   (SCV7)
+
+Indeed any safe covering group L has intersection_(j in L)B_j empty.
+It therefore contains either one empty B_j or two disjoint nonempty
+B_j. Choosing such a witness in each label-disjoint group gives
+distinct free roots and a matching on the nonempty roots. This bounds
+the number of groups above by f0+nu(G); the converse construction
+was already given.
+
+One sufficient hypothesis is that every nonzero collision root occurs
+at just one paired height. Then each B_j is one ternary prefix cylinder
+intersected with Omega. These sets are laminar; a finite pairwise
+intersecting subfamily is a nested chain with nonempty smallest member.
+Repeated-root unions are not assumed to have this property. No VC
+dimension bound or unrestricted cover-decomposition theorem is used.
+
+### Minimum paired height forces one actual ternary path
+
+Suppose the paired height has its least value permitted by SG1:
+
+    t=min(t_p,t_q)=q-p+1.
+
+SG2 and SCV6 force |T|=t+1=q-p+2 and nu(G)=0. Thus all q-roots j_c,
+c=0,...,t, are distinct. Each nonzero B_(j_c) is one nonempty actual
+prefix cylinder intersected with Omega. Since nu(G)=0, no two of
+these complete sets are disjoint. Their original ternary prefixes
+are therefore compatible at every pair of depths, giving
+
+    alpha_d=alpha_c mod3^c whenever1<=c<d<=t.      (SCV8)
+
+In particular the collision prefixes follow ONE common ternary path,
+and its deepest paired prefix meets Omega. This adds an actual phase
+restriction to the earlier root-distinctness count. It does not put
+the original complete private region on that path, or constrain the
+top H-prefix when it lies beyond the paired heights.
+
+For larger t, repeated-root unions and unmatched overlapping regions
+remain possible under these necessary conditions. No argument here
+forces cd>=p-1 for some opposite pair in every EB1 source. No new
+Lean verification or unrestricted noncoverage is asserted.
