@@ -246,6 +246,43 @@ owner and the surviving top labels avoiding two cofactor primes.
 The resulting reserve and low-row demand use this one unchanged source;
 a positive reserve still requires a bound on that actual top inventory.
 
+[Section156](#156-a-forbidden-prime-pair-gives-an-all-height-prime-cutoff)
+encodes all old heights into two-prime labels forbidden in the original
+family. One source covers the deleted prime's full inverse with retained
+prime classes. Any forbidden pair r,s forces
+P^+(Q)<rs(r-1)(s-1)min(r,s), independent of their heights. Thus the branch
+where R avoids5,7,11,13 has P^+(Q)<15600. The remaining finite carrier
+and the case where R meets that small head remain unresolved.
+
+[Section157](#157-one-complete-source-does-not-bound-small-core-top-multiplicity)
+gives an explicit noncover family with a covered actual top fibre,
+exact shell service at one private source and global qualified-parent
+phase caps, yet unbounded small-core multiplicity there. Another actual
+private source fails shell coverage. Thus a bound needs further EB1 or
+whole-source input; this example does not refute controlled-source
+selection or provide an odd whole cover.
+
+[Section158](#158-forced-mixed-top-owners-supply-both-actual-root-fan-budgets)
+uses forced original mixed top owners to supply actual private points
+at both ternary roots, without assuming two-root privacy of pure q^G.
+The existing two-packet inventory bound then applies. With opposite5,7,
+H_5=H_7=1 and R={q}, the branch q>=49 has q=53 and H_q<=3.
+The packets retain distinct actual sources and one original inventory.
+
+[Section159](#159-retained-pure-guards-reduce-the-forbidden-pair-prefix-alphabet)
+removes the actual pure-prime guards from the initial coding alphabet.
+HPA supplies the needed guard heights only in the large-prime branch
+being excluded. Opposite5 with7,11,13 yields respective support bounds
+3854,10246,14570, sharpening the uniform finite carrier without adding
+an unproved height assumption or excluding every remaining palette.
+
+[Section160](#160-a-missing-two-prime-power-product-forces-a-support-cutoff)
+reuses the four-row code on exponent quotients and retains their
+remainders. Absence of an original p^u ell^v forces a quantified support
+cutoff, so sufficiently large support forces both powers in ONE original
+label. This works without a color assignment; it does not multiply
+separately forced labels or infer their phase compatibility.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19036,3 +19073,501 @@ WHOLE second-prefix cells belong to E_J, and each needs a distinct original low-
 ### Scope and reuse
 
 The new consumer is the exact classification PER2 and its same-source reserve PER3–PER6. PTE already supplies privacy and saturated original parent phases; OHL already supplies the complete J liability. The calculation introduces no new Hall, coloring, generic exchange, or transport theorem. It works with arbitrary q-height and arbitrary full cofactor carrier. It does not force rho(w)>0 in all families, W, a PS skeleton, or a whole-cover contradiction. The outstanding step is to force a sufficiently small ACTUAL complement top inventory or combine its necessary presence with another SAME-family budget.
+
+## 156. A forbidden prime pair gives an all-height prime cutoff
+
+Use ONE original EB1 whole cover with period Q. Suppose r and s are distinct original odd support primes and
+
+    rs does not divide any ORIGINAL numerical modulus.        (FPA1)
+
+Then
+
+    P^+(Q)<rs(r-1)(s-1)min(r,s).                            (FPA2)
+
+No bound on H_r, H_s, any other height or the number of support primes is assumed. CP1 supplies FPA1 for opposite concentrated primes. The argument reuses the source-and-enclosure coverage implication of HPA; the added ingredient is an injective encoding of all old heights into the vacant two-prime labels. This is ordinary mathematics, not Lean verification or a literature-priority claim.
+
+### A single source covers the omitted region with retained prime classes
+
+First prove the ordered bound with
+
+    B=r(r-1)s^2(s-1).
+
+Suppose an original support prime q>B. It differs from r and s. Write
+
+    Q=r^H s^K q^G M, gcd(M,rsq)=1.
+
+Keep the original CRT normalization A_r=0 mod r, A_s=0 mod s and A_q=0 mod q. For 1<=e<=G define
+
+    D_e={(u,v) mod (r^(2e),s^(2e+1)):
+                         u!=0 mod r, v!=0 mod s}.
+
+The first domain has size |D_1|=(r^2-r)(s^3-s^2)=B. Each prefix has r^2 s^2 extensions to the next level. Since q>B and
+
+    B/(r^2 s^2)=(r-1)(s-1)/r>1,
+
+the first domain injects into the q-1 nonzero q-roots, and every later block injects into one q-digit. Choose once, independently of all original labels, prefix-compatible injections
+
+    theta_e:D_e -> Z/q^e Z
+
+whose first q-digits are nonzero. Use the new complete carrier
+
+    Qtilde=r^max(H,2G) s^max(K,2G+1) M.
+
+For z modulo Qtilde let D be the set avoiding the retained prime classes A_r and A_s. Define F(z)=theta_G(z mod r^(2G),z mod s^(2G+1)) on D, and F(z)=0 modulo q^G off D. The ONE old source is the CRT point
+
+    Psi(z)=(z mod r^H, z mod s^K, F(z), z mod M).             (FPA3)
+
+Every old q-free coordinate is preserved at its full height. The complete inverse of A_q is D^c. It is NOT empty, but all of it is covered by the retained originals A_r union A_s. Every other q-bearing original is disjoint from A_q by comparable-original disjointness, and hence has a nonzero first q-phase and empty inverse outside D.
+
+### Complete inverses and the all-height numerical code
+
+By FPA1 each q-bearing original d has the unique form
+
+    d=r^a s^c q^e t, ac=0, t|M, e>=1.                      (FPA4)
+
+For d different from q, an old q^e-phase outside the image of theta_e gives empty inverse. Otherwise its unique inverse prefix (u_d,v_d) fixes z modulo r^(2e) and s^(2e+1). Combine these with the original congruences modulo r^a, s^c and t. Incompatible same-prime congruences again give empty inverse; compatible ones give ONE exact AP C_d of modulus
+
+    m_d=r^max(a,2e) s^max(c,2e+1) t.                        (FPA5)
+
+This is the whole inverse under Psi, not just a selected private point. The old heights H and K are retained in Qtilde even when they exceed the code widths, so no old congruence has been truncated.
+
+Assign positive exponents (U,V) by the following disjoint cases:
+
+| Original exponents | U | V |
+| --- | --- | --- |
+| c=0, a>=2e | a | 2e |
+| a=0, c>=2e+1 | 2e | c |
+| c=0, 0<=a<2e | 2 floor(a/2)+1 | 2e+(a mod2) |
+| a=0, 1<=c<=2e | 2e-1+((c-1) mod2) | 2 floor((c-1)/2)+1 |
+
+The neutral case a=c=0 belongs only to the third row. In each case
+
+    1<=U<=max(a,2e), 1<=V<=max(c,2e+1).
+
+Thus d'=r^U s^V t divides m_d. Reducing C_d's actual phase modulo d' gives one enclosing AP B_d with
+
+    Psi^(-1)(A_d)=C_d subset B_d.                            (FPA6)
+
+The following decoder proves injectivity across ALL old heights:
+
+* If min(U,V) is even and U>=V, then e=V/2, a=U, c=0.
+* If min(U,V) is even and U<V, then e=U/2, a=0, c=V.
+* If min(U,V) is odd and U<V, then e=floor(V/2), a=U-1+(V mod2), c=0.
+* If min(U,V) is odd and U>=V, then e=ceil(U/2), a=0, c=V+U-(2e-1).
+
+These are precisely the four rows, and substitution recovers each original triple (a,c,e). The r,s-free part of d' recovers t. Equality of new numerical moduli therefore forces equality of old numerical moduli. No new-new collision occurs.
+
+Every new label contains rs; no old label does. Therefore no new-retained collision occurs either. Freshness uses the original forbidden pair, not an exponent exceeding an old maximum. All output moduli are odd nonunits dividing Qtilde.
+
+### Whole coverage with one fewer original class
+
+Retain every q-free original, omit A_q, and replace every other nonempty q-bearing inverse by its single B_d. Every point outside D is already covered by retained A_r or A_s. At each z in D evaluate the old whole cover at the ONE point Psi(z). Its owner cannot be A_q. A q-free owner covers z unchanged; any other owner has z in its complete inverse and hence in B_d. This proves coverage of the entire new carrier and all integers.
+
+Each original other than A_q contributes at most one AP, and all output numerical labels are distinct. The resulting whole distinct odd cover has at most |D_original|-1 classes, contradicting EB1's primary objective. Individual moduli need not decrease, and the output need not satisfy the old color partition, divisor closure or height bounds: EB1 compares against ALL distinct odd whole covers.
+
+Hence no support prime is greater than B. Equality is impossible because B is composite, while the anchors themselves are below B. Interchanging r and s gives FPA2.
+
+### Same-family arithmetic consequences
+
+For opposite concentrated primes p<ell, CP1 gives
+
+    P^+(Q)<p^2 ell(p-1)(ell-1).                              (FPA7)
+
+In the branch R intersect {5,7,11,13}=empty, the existing GM1 choice provides5 and an opposite ell in {7,11,13}. Therefore the following bounds hold on EVERY original support prime, including the nonconcentrated ones:
+
+| Opposite pair | Upper bound on P^+(Q) |
+| --- | ---: |
+| 5,7 | 4200 |
+| 5,11 | 11000 |
+| 5,13 | 15600 |
+
+Combining these with the SAME family's OCP9 heights gives
+
+    Q divides 3^64 product_(r prime,5<=r<15600) r^48.        (FPA8)
+
+This is a sharper finite carrier restriction than HPA2, not a proof that the remaining carrier admits no covering phases. HPA and HPM remain valid and can give sharper estimates at particular original heights or force mixed labels absent from a numerical cutoff alone. The large-prime tails in HPM10 are empty under FPA8 in this small-anchor branch; their conditional capacity statements remain valid.
+
+The general statement also has a direct original-label consequence: for ANY two distinct support primes r,s,
+
+    P^+(Q)>=rs(r-1)(s-1)min(r,s)
+         ==> rs is an ORIGINAL numerical label.             (FPA9)
+
+Indeed the negation, together with divisor closure, would prohibit every original rs-multiple and contradict FPA2. Pairwise forced labels do not assert the presence of a product of three or more primes, nor prescribe their phases or one common private point.
+
+When R meets {5,7,11,13}, FPA7 is still valid for any actual opposite pair. The existing small-root intersection condition can instead be supplied by members of R; it does not place an opposite concentrated pair in a uniformly small range or ensure both colors exist. No bound on that unresolved case, no complete-liability descent inside FPA8 and no unrestricted noncoverage is asserted.
+
+## 157. One complete source does not bound small-core top multiplicity
+
+The following explicit NONCOVER family rules out a particular pointwise shortcut. Distinct odd moduli, divisor closure, private points for every original class, global qualified-parent phase caps, and all shell demands at ONE complete private source can coexist with arbitrarily large small-core top multiplicity at that source. Its whole top fibre is covered. The missing whole-source condition is exhibited by another private point with an uncovered adjacent point.
+
+This is a structural counterexample, not an EB1 family or an odd-cover counterexample. Here qualification means the numerical condition tau(f)>=47. No concentrated-color hypothesis is inferred from that chosen threshold. The argument reuses the definitions of top support, lower index and directional shell service; it proves no new generic shell or exchange theorem. No Lean verification is asserted.
+
+### One fixed numerical inventory and its literal phases
+
+Fix
+
+    u=17, g=19*23*29*31*37, h=ug,
+    r>47 prime, M=hr.
+
+Thus g has five prime factors, h and rg have six, and M has seven. In particular tau(g)=32, whereas tau(h)=tau(rg)=64. Write C_d for the original class with numerical modulus d, and omega(d) for the number of distinct prime factors of d.
+
+Include every divisor d>1 of M. Give the prime classes phase zero, every proper composite divisor d<M phase omega(d), and M phase one:
+
+    C_d=0 mod d                         if omega(d)=1,
+    C_d=omega(d) mod d                  if 1<d<M and omega(d)>=2,
+    C_M=1 mod M.
+
+The proper composite phases are in {2,...,6}. Also include the five isolated classes 0 modulo 3,5,7,11,13. No other numerical label contains these five primes.
+
+Choose mutually distinct auxiliary primes, all larger than r:
+
+    v_(q,b) for q|h and 2<=b<=q-1,
+    c_a for 2<=a<=r-1.
+
+For EVERY auxiliary prime t include C_t=0 mod t and C_(t^2)=8 mod t^2. For each v_(q,b), also include the ordinary supplier
+
+    C_(q v_(q,b)):
+        x=b mod q, x=1 mod v_(q,b).
+
+For each c_a include all numerical labels c_a d with d|rg. The case d=1 is the already included C_(c_a). For 1<d<rg prescribe
+
+    C_(c_a d):
+        x=1 mod d, x=omega(d)+1 mod c_a.
+
+For d=rg use instead the full-column class
+
+    E_a=C_(rg c_a):
+        x=1 mod g, x=a mod r, x=1 mod c_a.
+
+Every displayed CRT prescription is compatible. These are fixed original classes, including all column divisors; no phase is chosen later as a function of a sampled source.
+
+### Closure, comparable disjointness and complete private points
+
+All numerical labels are distinct odd nonunits. Auxiliary primes distinguish columns from each other and from ordinary suppliers. The inventory is divisor-closed above one: the base divisors are all present, each column contains its entire c_a-divisor interval, and the remaining divisors of column labels are base divisors. The primes of ordinary suppliers and auxiliary squares are included. Base and isolated primes have global height one; auxiliary primes have height two.
+
+Every pair of comparable distinct original classes is disjoint. For proper base divisors, strict divisibility increases omega, and their residues in {0,2,...,6} are different modulo every common prime. The phase one of M differs from every proper base phase. Within a column, strict proper divisibility increases its c_a-phase omega(d)+1, while the full column has c_a-phase one. A base divisor of a proper-column label has phase zero or 2,...,6 at some base coordinate where the column has phase one. For E_a, any base divisor containing a g-prime is separated there; its only remaining prime divisor r has phase zero, different from a. Auxiliary prime phase zero and square phase eight avoid all mixed auxiliary phases in {1,...,6}. These cases exhaust comparable numerical pairs.
+
+Every original class has a COMPLETE private point. The following CRT recipes prove this directly. Unless an auxiliary coordinate is explicitly targeted, set it to 9 modulo its square; this disables every original using that auxiliary prime. Unless an isolated small prime is targeted, set its coordinate to one.
+
+* For a proper base target C_d, set its own residue on the primes dividing d and set all other base coordinates to one. Any other matching base class would need the same support size within the same support, so it would equal d. The target's non-one coordinate excludes M.
+* The class C_M is private at the complete point x=1. Ordinary suppliers require a base value at least two, full columns require r-value a>=2, and proper columns require auxiliary value in {2,...,6}; all miss x.
+* For an ordinary supplier q v_(q,b), set q to b, all other base coordinates to one, and its auxiliary coordinate to one. For E_a, set r to a, every other base coordinate to one, and c_a to one. Only the respective target is active.
+* For a proper-column target c_a d, set base coordinates in d to one, all other base coordinates to ten, and c_a to omega(d)+1. Another class in this column could match only with the same-size base support contained in d, hence only if identical. Base classes are excluded by the values one and ten; the full column has the wrong c_a-phase.
+* For an auxiliary prime or square target, set all base coordinates to ten and its auxiliary coordinate to its own residue zero or eight. Other classes with that auxiliary prime have different residues. For an isolated small-prime target, use all base coordinates ten, all auxiliary coordinates nine, the target coordinate zero, and the other small-prime coordinates one.
+
+All these literal values are below the relevant base or auxiliary primes, so the indicated distinctions persist in the actual CRT coordinates. Irredundancy here concerns this fixed family and does not assert whole coverage.
+
+### Qualified-parent caps hold globally, including nonempty descendant groups
+
+Every original f with tau(f)>=47 has at most ONE proper original multiple in each phase modulo f. This can be checked exhaustively by numerical type, without enumerating the period.
+
+Such a parent must be squarefree with six or seven prime factors: smaller squarefree supports have divisor count at most32, and auxiliary squares have divisor count three. A six-prime base divisor f of M other than rg has only M as a proper original multiple. The parent rg has M and every E_a; their phases modulo rg are
+
+    (1 mod g, 1 mod r),
+    (1 mod g, a mod r), 2<=a<=r-1,
+
+which are pairwise distinct. A qualified proper-column parent c_a d has omega(d)=5 and only its full-column successor E_a. Seven-prime original labels are maximal. These are all qualified parents and all their descendants.
+
+Thus the global per-phase cap is one, stronger than the comparison cap46. It is nonvacuous at h and rg. The many E_a share the g-phase one, but tau(g)=32 is below qualification. Adding r qualifies the parent and separates their phases; adding u qualifies the parent and excludes all E_a from its descendant inventory.
+
+### A covered top fibre with unbounded primitive multiplicity
+
+Let P_aux be the auxiliary-prime set. The full period and lower carrier are
+
+    Q=(3*5*7*11*13) M product_(t in P_aux)t^2,
+    L=Q/rad(Q)=product_(t in P_aux)t.
+
+Use the actual lower source z=1 modulo L, coming from the private point x=1 of C_M. For an original numerical label m, retain the usual top support
+
+    T_m={p prime dividing Q:v_p(m)=v_p(Q)},
+    lower_m=m/product_(p in T_m)p.
+
+At z=1 every base class, ordinary supplier and E_a is active. Auxiliary prime classes, auxiliary squares and proper-column classes are inactive: their lower residues are respectively zero, eight and 2,...,6. The only empty-top-support classes are the inactive auxiliary prime classes.
+
+The ENTIRE top fibre over z is covered. For any assignment in that fibre, if some q|h differs from one, value zero meets C_q and value b in {2,...,q-1} meets the ordinary supplier q v_(q,b). If every h-coordinate is one, inspect r: zero meets C_r, a in {2,...,r-1} meets E_a, and one meets C_M. Each used class has nonempty top support, and the argument allows every auxiliary top digit and every isolated small-prime coordinate.
+
+Now set A=supp(rg). For every E_a,
+
+    T_(E_a)=A, lower_(E_a)=c_a.
+
+There are r-2 such labels, all active at z, with distinct top r-phases and pairwise-coprime lower indices. The base class C_(rg) has the same top support and is also active, with top phase six. No other active original has this top support. Consequently
+
+    n_A(1)=r-1,                                    (SCO1)
+
+which is unbounded as r ranges over primes. Removing identical top hyperplanes does not reduce this multiplicity. Every prime of A has global height one, so its common lower core is one. Indeed every lower label in the construction is either one or one auxiliary prime, and every common lower gcd has divisor count at most two.
+
+The full-modulus gcd of the E_a is rg, with divisor count64. It cannot replace the lower gcd in LSM: these originals have different actual r top phases.
+
+### Exact shell service and a repeatedly omitted coordinate at the same source
+
+At the COMPLETE private point x=1, the full directional supplier sets of the owner M are exactly
+
+    S_q={q} union {q v_(q,b):2<=b<=q-1}, q|h,
+    S_r={r} union {rg c_a:2<=a<=r-1}.
+
+Each listed original has a nontrivial congruence defect only in its indicated prime direction. Proper composite base classes have defects at several base coordinates; proper-column classes have an auxiliary defect; no other original qualifies for these owner-prime directions. Thus these are complete supplier sets, not selected subsets.
+
+Every displayed supplier has directional modulus height one and defect depth zero, hence shell weight one. Therefore
+
+    sum_(d in S_q) w_(q,d)=q-1 for every q|M.       (SCO2)
+
+All directional demands of M are met exactly at this same source, and different directions use disjoint original labels.
+
+For the qualified parent h=ug and owner M=hr, only r is an increased direction. None of S_r is divisible by h, so the entire r-1 service is escape service. In particular every one of the r-2 E_a omits exactly the SAME h-coordinate u and retains every coordinate of g. The CPA comparison with N=47 requires only r-46; this selected source satisfies it. Its direct divisor-tail count is tau(M/h)=2 and supplies no bound on r. Pigeonholing omitted coordinates therefore cannot by itself produce a qualified common lower core or a uniform pointwise multiplicity bound.
+
+### Another actual private source exposes the missing obligation
+
+Choose x' by CRT with all base coordinates one, every auxiliary coordinate nine modulo its square, and every isolated small-prime coordinate one. It is again a complete private point of C_M. Every auxiliary-bearing original is now disabled.
+
+Change ONLY its r-coordinate to two. The resulting point y satisfies
+
+    y=1 mod h, y=2 mod r,
+    y=9 mod t^2 for every auxiliary t,
+    y=1 mod 3*5*7*11*13.
+
+It is uncovered. C_M fails at r; auxiliary-bearing classes fail at their auxiliary coordinates; every proper composite base class fails at a base coordinate other than r; and every prime class has the wrong zero residue. Accordingly the r-shell at x' has only the prime supplier C_r and service one, which is less than r-1.
+
+The family therefore meets the stated pointwise premises and the global qualified-parent caps while failing the universally quantified private-source shell obligation. It also lacks initial-segment prime support, the actual opposite concentrated-color structure, EB1 minimality, and the HPA/HPM consequences of whole coverage. Its isolated small primes have private points in both nonzero ternary roots. It does not contradict the bounded-support branch proved from those additional hypotheses.
+
+The exact obstruction is to deriving uniform small-core multiplicity from one completed top fibre and its one-source shell service. A valid replacement must use further whole-source information or another actual EB1 condition. This example neither refutes a controlled-source selection theorem nor supplies an odd whole cover.
+
+## 158. Forced mixed top owners supply both actual-root fan budgets
+
+Keep one original EB1 whole cover with the original partition R,S_1,S_2. Let p_1 in S_1 and p_2 in S_2 be opposite concentrated primes, and let q be an original support prime such that
+
+    q>=max(p_1^(H_(p_1)+1), p_2^(H_(p_2)+1)).      (MTR1)
+
+HPM6 supplies the ORIGINAL labels
+
+    M_1=p_1 q^G, M_2=p_2 q^G, G=H_q.              (MTR2)
+
+The opposite-color bound HPM7 also ensures q is nonconcentrated: either concentrated color would violate the bound from the opposite anchor. The two labels M_1,M_2 are separate original owners; CP1 forbids their combined product p_1 p_2 q^G and no such original is inferred.
+
+These owners provide actual private sources at BOTH ternary roots for q-top fan counting. This removes §140's pure-owner two-root premise in the range MTR1. It does not show that the pure original q^G itself is privately nonconcentrated.
+
+### The existing fan argument applies to these actual owners
+
+Choose a complete private point x_i of M_i. The original private-reset containment V_(M_i) subset V_(p_i) places x_i at the concentrated ternary root i. This is the same containment used in CP1; it does not select a free root of a quotient or identify the two private points.
+
+Apply §140's existing opposite-color elimination separately at each x_i: set each prime in S_(3-i) to its §73–74 singleton root, retaining the other coordinates. Every opposite-color-bearing original then vanishes. M_i remains true because its only nonternary prime factors are p_i and q, neither in the opposite color; other originals without opposite-color factors retain their original truth values. Thus M_i still owns the resulting point privately.
+
+Use TS6 at this ONE modified private point, keeping its complete q-free cofactor and prefix modulo q^(G-1). Changing the final q-digit gives q-1 distinct actual suppliers, all at q-height G. Include the original owner M_i itself to obtain q distinct labels at that root.
+
+The owner need not be pure for this step: only its original privacy and q-height G are used. The two packets have different complete sources. They are not claimed to occur at one common integer point or common cofactor.
+
+### Exactly which parts of TQ1–TQ5 are reused
+
+Put H=H_3 and retain §140's numerical inventories
+
+    Q_0=product_(r in R minus {q})r^(H_r), A=tau(Q_0),
+    Q_i=product_(r in S_i)r^(H_r), D_i=tau(Q_i).
+
+For each root i choose an opposite prime ell_i in S_(3-i), and put
+
+    c_i=ell_i-2, C_i=c_i |S_i|.
+
+The R-only labels in its packet still have numerical form 3^a q^G s_0, s_0|Q_0, so their count is at most A(H+1). The actual owner M_i is colored and is counted in that color's inventory; no pure-owner contribution is added to the R-only count.
+
+The TQ1 colored buckets use only actual complete cofactor agreement and the common ternary prefix. Their parent capacities do not require a pure owner. Thus the colored part is at most
+
+    B_i=A(min(H,c_i)+1)(D_i-1)+1_(H>c_i) C_i.
+
+When G>c_i, the common q-prefix permits exactly TQ3's q^c_i ell parent buckets, so B_i may be replaced by min(B_i,C_i). All counted labels, including M_i when assigned to a bucket, remain proper original descendants. No extra owner slot is subtracted.
+
+Now reuse TQ5's inventory counting across the TWO packets. Positive-ternary-height R-only originals can appear in at most one root packet, and have at most H A numerical possibilities. Ternary-free R-only originals have at most A possibilities and may each appear once in each packet, hence contribute at most2A incidences. Color-i originals occur only in packet i after elimination. Therefore
+
+    2q<=A(H+2)+B_1+B_2.                            (MTR3)
+
+What is shared here is the ONE original family's numerical inventory. The sources remain distinct. The positive-height disjointness comes from the originals' literal first-three phases, not from coupling independently optimized laws.
+
+In particular, if G>max(c_1,c_2), then
+
+    2q<=A(H+2)+C_1+C_2,
+    A>=max(1,ceil((2q-C_1-C_2)/(H+2))).             (MTR4)
+
+The substantive new input is the actual availability of both private owner roots from MTR2. No fan, parent-capacity or two-root counting theorem is reproved.
+
+### A low-anchor-height consumer inside the remaining prime range
+
+Suppose5 and7 are opposite concentrated primes, H_5=H_7=1, and R={q}. Suppose also q>=49. HPM7 bounds the color of5 below7^2=49 and the color of7 below5^2=25. Thus all primes at least49 in the original support belong to R. Initial-segment support and R={q} force q=53, the first prime above49.
+
+MTR1 holds because q>=49=max(5^2,7^2), so in particular the original7q^G has a complete private point at the7-color root. Use that forced root, choose opposite prime5, and set c=3. If G>3, the reused TQ3 bound there gives
+
+    q<=A(H_3+1)+3|S_(7-color)|.
+
+Here A=1 because R={q}; OCP6 gives H_3<=28; and the7-color primes belong to
+
+    {7,11,13,17,19,23},
+
+so |S_(7-color)|<=6. Hence q<=29+18=47, contradicting q>=49. Consequently these hypotheses imply
+
+    q=53 and H_q<=3.                               (MTR5)
+
+This uses the favorable root of an ACTUAL mixed top owner, even if the pure q^G has private points at only the other root. It does not require simultaneous realization of the two packets.
+
+The numerical regime is below both the HPA cutoff P<125 supplied by H_5=1 and the forbidden-pair cutoff P<4200 for5,7. Thus this consumer is not removed merely by either large-prime cutoff. It remains a necessary conditional restriction; no actual cover with these parameters is claimed, and the surviving q=53, H_q<=3 branch is not excluded.
+
+For unrestricted R, MTR3–MTR4 retain the actual A=tau(Q_0). They do not replace it by1 or bound all shared cofactors. The new root availability can be consumed by further same-family inventory bounds, but it does not itself yield unrestricted odd noncoverage.
+
+## 159. Retained pure guards reduce the forbidden-pair prefix alphabet
+
+Use the same original EB1 family and the forbidden pair r,s of FPA1. Suppose additionally that
+
+    H_r>=2, H_s>=3.
+
+All original pure classes A_r,A_(r^2),A_s,A_(s^2),A_(s^3) are present by divisor closure. On their respective axes the pure classes are pairwise disjoint by comparable-original disjointness. Replace FPA's first prefix domain by
+
+    D_1={(u mod r^2,v mod s^3):
+          u avoids A_r and A_(r^2),
+          v avoids A_s,A_(s^2),A_(s^3)}.
+
+These are literal original phases, not independently chosen guard placements. Its exact cardinality is
+
+    B_guard=(r^2-r-1)(s^3-s^2-s-1).                 (FPG1)
+
+For e>=1, let D_e be all (r^(2e),s^(2e+1)) prefixes projecting to D_1. Every prefix still has exactly r^2 s^2 children at the next level. Provided B_guard>=r^2 s^2, a support prime q>B_guard supplies both FPA's initial injection into nonzero q-roots and every later block injection.
+
+Use precisely FPA3's source and the same new carrier, defining F=0 outside the resulting D. The complete inverse of A_q is now D^c. Every point of D^c is covered by at least one of the FIVE displayed retained pure guard classes, all q-free because q differs from the anchors.
+
+Every other q-bearing original still has a nonzero first q-phase by comparable disjointness, so its inverse is empty off D. On D, prefix compatibility yields the same exact inverse AP FPA5. Its initial inverse prefix already lies in D_1, making all the added guard-avoidance conditions automatic; no further mask or cofactor dependence appears. The all-height four-row encoding, exponent containment, complete decoder and rs-freshness proof are unchanged.
+
+The same one-source whole-coverage argument therefore drops A_q and assigns at most one AP to each remaining original. Thus, under the two height premises and B_guard>=r^2s^2,
+
+    P^+(Q)<B_guard.                                 (FPG2)
+
+The threshold is composite, so equality with the largest support prime is impossible. This argument uses FPA's established transport and encoding with a smaller actual prefix domain; it does not propose a new generic repair theorem.
+
+### Bootstrap the required original heights from HPA
+
+Return to R intersect {5,7,11,13}=empty. Choose the existing opposite pair5,ell with ell in {7,11,13}, and orient r=ell,s=5. The exact candidate thresholds are
+
+| ell | B_guard=94(ell^2-ell-1) | later alphabet ell^2*25 |
+| --- | ---: | ---: |
+| 7 | 3854 | 1225 |
+| 11 | 10246 | 3025 |
+| 13 | 14570 | 4225 |
+
+Each B_guard exceeds both ell^3 and5^5, and exceeds its later alphabet. Suppose P=P^+(Q)>=B_guard. If H_ell<=1, HPA1 would give P<ell^3; if H_5<=2, it would give P<5^5. Both contradict the assumed lower bound. Therefore the SAME original family has H_ell>=2 and H_5>=3, exactly the premises needed to apply FPG2. That application contradicts P>=B_guard.
+
+Consequently
+
+    opposite5,7  ==> P^+(Q)<3854,
+    opposite5,11 ==> P^+(Q)<10246,
+    opposite5,13 ==> P^+(Q)<14570.                  (FPG3)
+
+In particular the small-anchor branch has the uniform restriction
+
+    P^+(Q)<14570,
+    Q divides 3^64 product_(r prime,5<=r<14570)r^48. (FPG4)
+
+The proof does not assume either anchor's extra height before the contradiction; HPA supplies it only in the branch being excluded. Covers already below the threshold need no such height claim. The full old phase data and all cofactor coordinates stay literal throughout the transport.
+
+This excludes the larger-prime subbranch and sharpens the existing finite carrier restriction. It does not exclude every remaining covering palette, give new height bounds, or provide Lean verification. The construction does not use the externally attributed nine-prime result.
+
+## 160. A missing two-prime power product forces a support cutoff
+
+Keep one original EB1 whole cover. Let p,ell be distinct original support primes and let u,v>=1. Put m=p^u ell^v. Reusing FPA's existing four-row encoding after division of exponents into quotient and remainder gives
+
+    m absent from the ORIGINAL numerical labels
+      ==> P^+(Q)<B_(p,ell;u,v),                     (PPL1)
+
+where
+
+    B_(p,ell;u,v)
+      =(p-1)(ell-1) p^(3u-2) ell^(3v-2)
+         min(p^u,ell^v).                            (PPL2)
+
+Thus a sufficiently large original support prime forces the JOINT original label p^u ell^v. This implication is obtained from one whole-cover descent; it does not multiply separately forced labels or claim a joint private source. The construction is ordinary mathematics and asserts neither Lean verification nor unrestricted noncoverage.
+
+### Quotients reduce the original heights to the existing forbidden-pair domain
+
+Suppose m is absent. Original divisor closure excludes EVERY original multiple of m. To prove one orientation of PPL1, suppose an original support prime q satisfies
+
+    q>B:=p^(3u-2)(p-1)ell^(4v-2)(ell-1).           (PPL3)
+
+This q is distinct from p and ell. Write Q=p^H ell^K q^G M, gcd(M,p ell q)=1, and use the existing simultaneous prime-phase normalization A_p=0 modp, A_ell=0 modell, A_q=0 modq.
+
+Every q-bearing original has numerical form d=p^a ell^c q^e t, with t|M and e>=1. Divide its two anchor heights as
+
+    a=u alpha+i, 0<=i<u,
+    c=v gamma+j, 0<=j<v.
+
+The missing original product implies alpha*gamma=0: if both quotients were positive, m would divide d. Thus (alpha,gamma,e) is precisely an allowed input to FPA's already proved four-row encoding. Denote its output by(U,V). No new lattice encoding is introduced.
+
+### A scaled prefix supplies every needed enclosure depth
+
+For e>=1 use the anchor prefix depths
+
+    L_p(e)=u(2e+1)-1,
+    L_ell(e)=v(2e+2)-1.
+
+As in FPA, restrict to prefixes with nonzero first p- and ell-roots. Their first-level count is exactly
+
+    (p-1)p^(L_p(1)-1)(ell-1)ell^(L_ell(1)-1)=B.
+
+Every prefix has p^(2u)ell^(2v) extensions at the next level. Both alphabets fit under PPL3, since
+
+    B/[p^(2u)ell^(2v)]
+      =p^(u-2)(p-1)ell^(2v-2)(ell-1)
+      >=(p-1)(ell-1)/p>1.
+
+Choose one prefix-compatible injection of these domains into q-prefixes, with first image avoiding root0. Keep FPA's single source: preserve the complete old p^H, ell^K and M coordinates, use the coded q-coordinate on the nonzero-root domain D, and set q to zero on D^c. A complete new carrier is
+
+    Qtilde=p^max(H,L_p(G)) ell^max(K,L_ell(G)) M.
+
+The retained original prime classes A_p,A_ell cover all of D^c. The complete inverse of A_q is exactly D^c. Every other q-bearing original has nonzero first q-phase, by comparable-original disjointness, so its inverse is empty off D.
+
+On D, a selected q^e prefix has one inverse pair of anchor prefixes. Combining them with the literal original p^a, ell^c and t phases gives an empty inverse if incompatible, and otherwise ONE exact AP of modulus
+
+    p^max(a,L_p(e)) ell^max(c,L_ell(e)) t.           (PPL4)
+
+This is the same complete-inverse check as FPA5 with scaled prefix depths. The selected prefixes already belong to D; no further mask splits the AP.
+
+### Only exponent remainders and containment need a new check
+
+Apply FPA's output(U,V) to the quotient heights and assign the ONE new numerical modulus
+
+    d'=p^(uU+i) ell^(vV+j) t.                      (PPL5)
+
+FPA gives U,V>=1 and
+
+    U<=max(alpha,2e), V<=max(gamma,2e+1).
+
+Consequently
+
+    uU+i<=max(a,2eu+i)<=max(a,L_p(e)),
+    vV+j<=max(c,(2e+1)v+j)<=max(c,L_ell(e)).
+
+Thus d' divides the exact inverse modulus in PPL4. Reducing that inverse's one phase modulo d' supplies one enclosing AP containing the ENTIRE inverse.
+
+Both new anchor exponents are at least u and v, so every new label is divisible by the absent m. It therefore collides with no original label, including every retained q-free original.
+
+For new–new collisions, the p-exponent modulo u recovers i, and the ell-exponent modulo v recovers j. Division after subtracting these remainders recovers U and V. The EXISTING four-row decoder then recovers alpha,gamma,e, and the anchor-free part recovers t. Hence it recovers the complete original tuple(a,c,e,t). Numerical distinctness of the original family proves new–new injectivity. This also handles u=1 or v=1, whose corresponding remainder is necessarily zero.
+
+All new moduli are odd nonunits and divide Qtilde. Each surviving original contributes one AP; no original is copied for different remainders or source points.
+
+### The existing source-and-guard coverage argument gives the cutoff
+
+Retain every q-free original, omit A_q, and replace each other nonempty q-bearing inverse by its PPL5 enclosure. Points of D^c are covered by the retained A_p or A_ell. At every point of D, the ONE original source is covered by an original other than A_q. A q-free owner covers the output point unchanged; a q-bearing owner covers it through its complete inverse and enclosure.
+
+This proves whole coverage of the complete new period and all integer lifts. The output has at most one fewer class, since A_q is omitted and every other original contributes at most one AP. Freshness and injectivity have already supplied distinct odd nonunit moduli, so EB1 forbids this descent. It follows that P^+(Q)<B; equality is impossible because B is composite, and both anchor primes are below B.
+
+Interchanging(p,u) with(ell,v) gives the second orientation. Their minimum is exactly PPL2. At u=v=1 this reduces to FPA2, with no stronger claim for that already established case.
+
+### Joint original labels forced by the same-family support
+
+The useful contrapositive is
+
+    P^+(Q)>=B_(p,ell;u,v)
+      ==> p^u ell^v is ORIGINAL.                   (PPL6)
+
+It includes both powers in ONE original numerical label and requires neither a color assignment nor an assumed joint occurrence. The source and arithmetic comparison supplied that occurrence. It does not prescribe the label's phase, prove simultaneous incidence with any other original, or imply products of three or more different primes.
+
+For example, the following are exact substitutions into PPL6 for the original support primes3 and5:
+
+    P^+(Q)>=16200 ==> 3^2*5=45 is ORIGINAL,
+    P^+(Q)>=45000 ==> 3*5^2=75 is ORIGINAL.         (PPL7)
+
+These are consumers in the unrestricted original source. The existing small-opposite-pair bound P^+(Q)<14570 removes both displayed large-P regimes inside that particular small-anchor branch, so PPL7 is not presented as a further exclusion there. PPL6 remains a joint-label constraint when the small-anchor hypotheses are unavailable or for other parameter choices.
+
+The remaining step is to consume such genuinely forced joint labels with an actual original-parent capacity, supplier relation or complete-hole repair. This result supplies no automatic closure under multiplying several separately forced products, no small opposite-color pair when R meets {5,7,11,13}, and no unrestricted contradiction.
