@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-zhang-zhang-2026-cycle-five-strong-one-resistance` (proved) by `D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-zhang-zhang-2026-cycle-five-strong-one-resistance","declaration_gid":"D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zicheng Han; Wanchen Zhang; Xiande Zhang (2026). *A five-qubit 1-resistant graph state and stabilizer marginal certificates*. URL: <https://arxiv.org/abs/2606.08561v1>.

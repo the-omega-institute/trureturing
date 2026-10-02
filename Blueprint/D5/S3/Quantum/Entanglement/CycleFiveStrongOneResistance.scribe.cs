@@ -26,7 +26,10 @@ internal sealed class CycleFiveStrongOneResistanceDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(F.Id("claim"))),
                 AssessedProvenance.FromRepo(Han, Zhang),
                 Blocks(Paragraph(Text("For the initial density matrix rho5 use W = I/2 - rho5; for each four-qubit marginal rho4 use W = I/2 - 2 rho4. In every case the expectation is -1/2, and the partial transpose of W is positive semidefinite across every nontrivial cut. Exact nonnegative graph-basis Gram decompositions establish this positivity. Reindexing the trace pairing shows that these witnesses have nonnegative expectation on each cut-product density matrix and hence on every biseparable mixture, so their negative expectation proves genuine multipartite entanglement. The finite checks include all 30 oriented cuts on five qubits and all 14 oriented cuts for each of the five four-qubit marginals. For each of the ten two-qubit loss sets, the three-qubit marginal is an equal mixture of four product states chosen from local Pauli eigenstates; the four weights are 1/4. All three clauses of strong resistance follow."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("han-zhang-zhang-2026-cycle-five-strong-one-resistance"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
