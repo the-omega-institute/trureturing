@@ -15055,3 +15055,344 @@ pure-prefix boundary by a same-source private-fiber requirement.
 No contradiction to such a fiber has been established. In particular
 the k=p-1 tight branch and larger-height sources remain unresolved.
 No new Lean verification or unrestricted conclusion is asserted.
+
+## 120. The simultaneous auxiliary slice has exact private-prefix traces
+
+Assume section119's distinct collision roots and simultaneous private
+source y_*=(s_*,w_*,v_*). This includes the minimum t=q-p+1 and the
+localized minimum t=q-k. Fix the entire same-color auxiliary
+coordinate w_* and divided q-tail v_*, and put
+
+    Y_*={s:(s,w_*,v_*) in Y}, alpha_c=s_* mod3^c.
+
+Then the COMPLETE collision-private trace on this one slice is
+
+    {s in Y_*:(s,w_*,v_*) in H_(j_c)}
+       =Y_* intersect[alpha_c mod3^c], 0<=c<=t.   (SF1)
+
+These are simultaneous identities on the same auxiliary slice,
+with privacy for every x in the entire actual R_o. They do not
+assert an identity between complete H_j on different slices.
+
+For c=0 both sides equal Y_*, by H_0=Y. For c>=1, take s on the
+right. The unchanged first-q root and the matching ternary prefix
+put the point in its original A_(3^c q). All q-free originals are
+absent because the point lies in the exact demand Y times R_o.
+Consider any other q-bearing original and its ternary exponent h.
+
+If h<c, every coordinate tested by that original agrees with the
+simultaneous private point at s_*: the first h ternary digits,
+the full q-coordinate, and the same-color auxiliary coordinates
+are unchanged. CP1 excludes opposite-color prime factors. The
+original therefore remains absent. If h>=c, its numerical label
+is divisible by3^c q, so comparable-class disjointness prevents
+it from meeting A_(3^c q). Thus the point is private.
+
+Conversely a point in H_(j_c) is private to a collision original
+at that root. Distinctness of j_0,...,j_t identifies the owner as
+3^c q, forcing its ternary prefix. This proves SF1 without replacing
+an actual cofactor trace by a universal one.
+
+In particular, on this fixed slice the traces are nested:
+
+    Y_*=H_(j_0)|_*=H_(j_1)|_*
+       contains H_(j_2)|_* contains ... contains H_(j_t)|_*.
+
+The c=1 equality uses the first ternary root built into Y. If a
+word s remains in Y_* but first differs from s_* at position h,
+numbering the lowest ternary digit as1, SF1 gives exactly
+
+    s in H_(j_c)|_* for c<h,
+    s not in H_(j_c)|_* for c>=h.                 (SF2)
+
+The extra premise s in Y_* is essential. AD13 supplies the common
+word s_* but does not supply a point in either altered child.
+The original pure guards and q-free same-color classes of ternary
+height at least h must be checked at the altered word. A q-free
+owner there removes that word from Y_* and can cover every q-root
+at once. Hence changing a digit does not by itself force distinct
+new q-bearing suppliers or an additional safe covering group.
+
+For comparison, a direct existing-results constraint goes in the
+opposite direction from deep concentration. Write H_q=v_q(Q) and
+h_q=v_3(Gamma_q) for the COMPLETE original prime-private region.
+For opposite primes p<q,
+
+    H_q>=2 implies h_q<=p-3.                      (SF3)
+
+This reuses [Report371, section2](371-private-top-fans-and-ancestor-cuts.md#2-the-private-top-fan-has-an-escaping-first-ancestor)
+and RG6, without a new fan proof. The original highest pure-q
+private point supplies q-1 distinct mixed top originals by varying
+only its highest q-digit. For H_q>=2, those originals and the pure
+top itself share one nonzero first-q root, so its complete group
+has at least q>=p members. RG6 gives SF3. Thus a route requiring
+h_q>=p-2 would first need H_q=1; the simultaneous private slice
+does not provide that full-region concentration.
+
+The remaining obligation is survival of altered-child demand or
+another legal coupling that yields strict whole-cover descent.
+SF1--SF2 identify the slice exactly but do not supply that obligation.
+No new Lean verification or unrestricted noncoverage is asserted.
+
+## 121. Arbitrary heights force a common bundle of collision-private points
+
+Retain section118's ONE actual source, complete private traces H_j,
+active-root count k, collision-root set T and all original heights.
+No root-distinctness or minimum-height assumption is imposed. Put
+
+    f=q-|T|, m=|T|-1=q-1-f, ell=k-f,
+    b(y)=#{j in T minus {0}:y in H_j}, B=max_(y in Y)b(y).
+
+AD8 gives f<=k-1, so ell>=1. Since k<=p-1<q-1, m>=ell.
+Then
+
+    B>=ceil(m/ell)
+      >=ceil((q-1)/k)
+      >=ceil((q-1)/(p-1)).                         (PB1)
+
+Thus at every height a single original base supports private lifts
+for A_q and at least ceil(m/ell) DIFFERENT collision originals.
+All lifts retain the same complete ternary word, full q-tail and
+all other coordinates. The owner associated with a repeated root
+is its unique actual collision occurrence at that base.
+
+### Reuse the forced singleton root before partitioning
+
+DP9 and [Report364, SI1--SI2](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md#1-actual-singleton-roots-and-a-common-cofactor-ideal)
+already give the unique q-bearing original3q at its first-q root
+j_1, with its private region equal to the entire original q-private
+cofactor region times the full q-tail at that root. In AD5's notation,
+
+    H_(j_1)=Y.                                    (PB2)
+
+This is a whole-source singleton fact, not merely SF1's identity
+on one auxiliary slice. Its safe set is empty, so its root provides
+no safe covering group. No new singleton theorem is being proved.
+
+Let d=floor((m-1)/ell). If d=0, PB2 already gives B>=1=d+1.
+Otherwise partition the m-1 other nonfree roots into ell groups,
+each with at least d members. If B<d+1, no group can have a point
+in all its complete H_j: such a point would belong to those at
+least d traces AND the additional universal H_(j_1).
+
+Consequently every group would cover Y by its safe sets. Together
+with the f free singleton roots they would supply ell+f=k disjoint
+safe covers, contradicting AD8. Hence
+
+    B>=d+1=ceil(m/ell).
+
+The uniform bounds in PB1 follow from
+
+    m/ell-(q-1)/k=f*(q-1-k)/(k*(k-f))>=0,
+
+and k<=p-1. The universal3q root is what strengthens the direct
+balanced-partition floor bound to the stated ceiling bound.
+
+### The counted owners are simultaneously private in the original cover
+
+Choose y attaining B. For each root j counted by b(y), AD5 supplies
+an actual private owner A_(3^c q) at that root. The original collision
+classes are pairwise disjoint, so there is exactly one such owner
+at this base. Different roots give different original labels.
+AD5's independence from x then gives these private relations
+simultaneously for EVERY x in the same complete actual R_o.
+H_0=Y supplies the additional private A_q lift. In particular the
+bundle includes the private3q lift, without identifying other
+repeated-root occurrences or adding their private regions together.
+
+At |T|=q-k+1 one has ell=1 and PB1 forces B=m, recovering AD11's
+common intersection. Away from that boundary, PB1 guarantees only
+the displayed number of simultaneous owners; it does not put all
+nonempty H_j through one point or concentrate the entire P_q.
+Their membership yields compatible ternary prefixes along the
+selected common word, with distinct actual heights for distinct
+owners. It supplies no additional numerical modulus or whole-cover
+repair by itself. No new Lean verification or unrestricted
+noncoverage is asserted.
+
+## 122. Lost altered-child demand forces actual suppliers and joint liabilities
+
+### One original private bundle and two complete altered children
+
+Let y_*=(s_*,w_*,v_*) belong to the actual Y of §118. Let C be any set of collision heights containing0 for which, simultaneously for every x in the same complete R_o,
+
+    L_(j_c)(y_*,x) is private to original A_(3^c q), c in C.
+
+Their roots j_c are distinct. This includes §119's C={0,...,t} at t=q-p+1, and it also permits a smaller actual simultaneous bundle. Put
+
+    Y_*={s:(s,w_*,v_*) in Y}.
+
+Fix2<=h<=H. Let D_h be the union of the two COMPLETE ternary children that agree with s_* through digit h-1 and differ at digit h. Higher ternary digits are unrestricted, so |D_h|=2*3^(H-h). Assume exactly the missing-demand condition
+
+    D_h intersect Y_*=empty.                         (AS1)
+
+Every lower-height q-free original remains absent on D_h at w_* because it was absent at s_*. Opposite-color mixed originals are inactive at this unchanged first ternary root, and all opposite-color three-free originals are absent for x in R_o. Therefore the q-free originals covering this lost demand consist of pure-three guards and actual same-color mixed classes
+
+    A_d, d=3^a n, a>=h, n>1, gcd(n,3q)=1,
+    supp(n) subset S_i,
+
+whose cofactor AP contains w_* and whose ternary cylinder lies in D_h. Denote these mixed originals by S_h. They are actual original labels with actual phases, not fresh completions.
+
+### Finite capacity forces a mixed supplier and a numerical row alternative
+
+For a=h,...,H let m_a count members of S_h of ternary height a, and let epsilon_a in {0,1} indicate whether the original pure-three guard of height a lies in D_h. Counting complete ternary cylinders on the fixed cofactor gives the necessary inequality
+
+    sum_(a=h..H) (epsilon_a+m_a)*3^(h-a)>=2.       (AS2)
+
+Possible overlaps only increase the sum relative to the size of the union. There is at most one pure guard at each numerical height, whence
+
+    sum_(a=h..H) m_a*3^(h-a)
+        >=(1+3^(h-H))/2 >1/2.                    (AS3)
+
+In particular S_h is nonempty. Every chosen member3^a n therefore supplies, by original divisor closure, a numerical label
+
+    3^h ell in D for some ell in S_i minus {q}.    (AS4)
+
+No residue is copied from that mixed supplier to the divisor label3^h ell. AS4 concerns numerical height and support only.
+
+There is a sharper finite row alternative. If m_h=0 and every higher m_a<=1, their geometric sum is strictly less than1/2, contradicting AS3. Hence
+
+    m_h>=1, or m_a>=2 at some actual height a>h.   (AS5)
+
+More precisely, if every m_a<=1, then epsilon_h=m_h=1, and these two height-h classes occupy different altered children. Indeed, if their height-h count were at most one, the maximal total capacity would be
+
+    1+2*sum_(r=1..H-h)3^(-r)=2-3^(h-H)<2.
+
+If both occupied the same child, the other child's higher-level capacity would be at most1-3^(h-H)<1. Thus in this sparse-row case one altered child is a pure guard, while the other is an actual mixed height-h supplier whose cofactor contains w_*; each covers its entire fixed-cofactor child. This is a restriction on actual row incidence, not an assertion that all lost demand always has one supplier.
+
+### Every supplier has a global private-root exclusion
+
+Let
+
+    C_<h={c in C:c<h}, J_<h={j_c:c in C_<h},
+    g_h=|C_<h|=|J_<h|.
+
+For EVERY supplier S in S_h and every c in C_<h, the following inclusion holds on the FULL original carrier, without fixing w_*, v_* or the opposite coordinates:
+
+    S intersect {z:z=j_c modq} subset A_(3^c q).  (AS6)
+
+The supplier fixes the first h-1 ternary digits to those of s_*, hence fixes the first c digits to the actual collision prefix. Its q-root restriction is then precisely the other condition of A_(3^c q). Since S is q-free it is a different original. Its COMPLETE original private region therefore obeys
+
+    projection_q(P_S) intersect J_<h=empty,
+    |projection_q(P_S)|<=q-g_h.                  (AS7)
+
+This is stronger than a statement about the selected supplier point. It is an entire-private-region exclusion obtained from the supplier's actual prefix, while retaining all prime-power heights.
+
+In the tight bundle C={0,...,t}, choose h=t (so t>=2). Then g_h=t, and AS1 forces an actual q-free mixed supplier of height at least t for which
+
+    |projection_q(P_S)|<=q-t=p-1.                (AS8)
+
+AS4 simultaneously forces a same-color prime ell different from q with original3^t ell. AS8 is not an application of the prime-private projection theorem to S: that theorem concerns a different complete residual, and cannot be transferred to P_S.
+
+### Deleting the suppliers creates a genuine joint liability
+
+Let B_h contain ALL members of S_h and all pure-three guards counted by epsilon_a. Let K_h be the actual collision originals at heights C_<h. Delete B_h union K_h from the original cover, retaining every other original. Its exact uncovered set E satisfies
+
+    {L_(j_c)((s,w_*,v_*),x):
+       s in D_h, c in C_<h, x in R_o} subset E.   (AS9)
+
+To check this whole rectangle, consider any such source point. Every q-free owner lies in B_h by the definition of D_h and the fixed actual cofactor. Among q-bearing originals, A_(3^c q) is the sole owner: a different one of ternary height at least c is comparable to that collision original and disjoint; one of lower height has unchanged membership from the common original private source and remains absent. All its owners have therefore been deleted.
+
+Each point in this rectangle had BOTH its collision owner and at least one q-free owner from B_h, by AS1. Consequently it belongs to the original private region of NONE of the deleted originals. Thus AS9 exhibits actual joint deletion liabilities that are absent from the union of the deleted classes' individual original private regions. This is a nonempty rectangle since0 belongs to C and R_o is nonempty. Any proposed joint replacement must cover this rectangle and the rest of E; covering the separate old private regions is insufficient.
+
+The numerical height alternative and full-private-root exclusion above are forced consequences of losing both complete altered children. They do not bound the supplier family's total size or cofactor values, do not identify its cofactor APs with a complete original deletion obligation, and do not make a fresh-label repair cheaper than the original family. No strict EB1 descent is established. If at least one altered child survives in Y_*, AS1 does not hold and these lost-demand conclusions are not available.
+
+## 123. Whole private donor obligations can be reassigned to spare original labels
+
+This is a concrete consumer of PH1, PH3--PH4, PI10, AD9 and the existing finite Hall interface. The complete obligations and actual label inventory determine the matching; no general matching or set-cover theorem is added.
+
+Keep the one all-concentrated EB1 source of §118. For each surviving q-bearing original d, let F_d be its COMPLETE stripped cylinder on Y, and let Ptilde_d be its COMPLETE original private trace there. All actual phases and all original exponent heights are retained. Use AD9 label by label: disjoint original-label menus, each covering the same entire Y, produce the fixed enclosing APs at different output p-roots. Do not replace this by separately optimized sources or individual witnesses.
+
+### An extra cover can be assembled by transferring indispensable labels
+
+Let J_free be the f=q-|T| collision-free first-q roots. The complete original batch B_j at each j in J_free covers all of Y. Choose donor subsets D_j subset B_j so that, within each root j, their COMPLETE stripped cylinders are pairwise disjoint. Taking at most one donor per root always meets this requirement; a chain of comparable original labels at one root also does, by original comparable-class disjointness. Empty donor subsets are allowed.
+
+Write D_don for their union. Require that their full cylinders cover Y:
+
+    union_(d in D_don) F_d = Y.                       (LA1)
+
+Let E_spare consist of surviving noncollision original labels at roots outside J_free. Form the actual donor-to-spare graph by
+
+    d is adjacent to e iff Ptilde_d subset F_e.        (LA2)
+
+If this graph has a matching saturating D_don, then the surviving labels contain f+1 pairwise label-disjoint covers of Y. In particular, when f=k-1 this gives the strict whole-cover descent forbidden by EB1.
+
+Here is the source check, rather than a new Hall proof. For a free-root batch, removing D_j leaves exactly
+
+    union_(d in D_j) Ptilde_d                         (LA3)
+
+uncovered on Y. Whole batch coverage and pairwise disjoint donor cylinders ensure that a newly missed point belongs to exactly one removed original; hence it was private inside that root batch. On the actual §118 demand all q-free originals are absent, and original labels at other q-roots cannot own that same source. Thus this is precisely its complete ORIGINAL private trace. LA3 is PI10's existing argument on the fixed original root source.
+
+Replace each donor d in its old batch by its matched e. LA2 repairs the entire LA3 obligation. Each resulting batch still covers all of Y. The donors themselves form the additional cover by LA1. The menus are label-disjoint: donor labels were removed, each spare is used only once, and no spare belonged to an old free-root batch. The actual transport is AD9 applied label by label. RS1 fixes one old root per leaf; the following application permits a menu to mix old roots without duplicating a numerical label.
+
+Assign k disjoint menus to the actual first-p roots r in K. For each original d=q^a u assigned to r, write its original q-phase as j_d+q*beta_d modulo q^a and insert the one enclosing AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                  (LA5)
+
+At any point (y,x) of the exact demand Y times R_o, the first-p root of x chooses a menu. Its full-cylinder coverage supplies an original d containing the SAME y after stripping its first-q root. The literal source is L_(j_d)(y,x), and LA5 covers the output point. This does not require the chosen original root to be constant across the menu.
+
+The map d -> p*d/q is injective. If a>=2, its image still has a q factor and cannot collide with a retained q-free label. If a=1, CP1 confines any collision to C_col, whose labels were excluded. The retained q-free originals cover the exact complement of Y times R_o. Each surviving selected original is used at most once, so at least k menus give a whole cover with at most N-(t+1) classes. For f=k-1 the augmented f+1 menus therefore contradict EB1.
+
+One spare ROOT may supply several different spare LABELS to different output roots. This is the strict extra freedom absent from the root-disjoint safe-group criterion.
+
+### The matching edges are exact arithmetic hull tests
+
+Identify Y with its actual CRT subset of the reduced own-color carrier of period
+
+    M = 3^H * q^(B-1) * product_(ell in S_i minus {q}) ell^H_ell.
+
+For d, choose y_d in its nonempty complete trace Ptilde_d, and define its complete projected congruence hull Gamma_d^* by the PH3 construction on this carrier. For e=q^a u, its stripped numerical modulus is m_e=e/q and its actual stripped phase beta_e is fixed by the literal q-tail and original u-phase. PH4 gives the exact edge test
+
+    Ptilde_d subset F_e
+      iff m_e divides Gamma_d^*
+          and y_d = beta_e modulo m_e.               (LA4)
+
+This uses the whole private trace, not a chosen-point incidence. All m_e divide the same actual M. The existing finite Hall theorem therefore converts existence of the required matching into its usual inequalities on THESE original labels.
+
+Consequently an EB1 source with f=k-1 forbids a saturating LA2 matching for every donor selection satisfying LA1 and the stated same-root disjointness. Such a selection must have a nonempty Hall-deficient donor subset. This is a conditional original-inventory obstruction, not a proof that suitable donors always exist or that the Hall inequalities hold.
+
+### A literal finite AP control separates this from root grouping
+
+The following controlled local source shows that the extra label freedom is real. It is NOT an EB1 whole cover of the integers: it asserts neither global coverage nor divisor closure nor the actual prime-private color hypotheses.
+
+Take q=7 and let Y consist of three actual CRT points a,b,c. Their coordinates are
+
+| point | modulo 27 | modulo 11 | modulo 13 | modulo 17,19,23,29,31 |
+| --- | ---: | ---: | ---: | --- |
+| a | 1 | 1 | 2 | all 1 |
+| b | 10 | 1 | 1 | all 1 |
+| c | 19 | 2 | 1 | all 1 |
+
+All classes below are single actual APs, specified by their first-7 root and their other CRT conditions. Factorized numerical labels remain distinct odd nonunits.
+
+| root | numerical label | other conditions | complete trace on Y |
+| ---: | --- | --- | --- |
+| 0 | 7 | none | Y |
+| 4 | 3*7 | 1 modulo 3 | Y |
+| 5 | 9*7 | 1 modulo 9 | Y |
+| 3 | 27*7 | 10 modulo 27 | {b} |
+| 1 | 7*11 | 1 modulo 11 | {a,b} |
+| 1 | 7*13 | 1 modulo 13 | {b,c} |
+| 2 | 7*13*17 | 1 modulo 13 and 17 | {b,c} |
+| 2 | 7*11*19 | 1 modulo 11 and 19 | {a,b} |
+| 3 | 7*11*13*23 | (1,2,1) modulo (11,13,23) | {a} |
+| 3 | 7*11*13*29 | (2,1,1) modulo (11,13,29) | {c} |
+| 6 | 7*31 | 1 modulo 31 | Y |
+
+These classes cover the entire declared local source Y times Z/7. Every displayed class has a private point on that source, and distinct comparable numerical labels have disjoint actual APs. For the collision chain {7,21,63,189}, the complete private traces are Y,Y,Y,{b} at roots 0,4,5,3 respectively. Thus the free roots are 1,2,6. All nonfree safe sets miss b, so root-disjoint safe decomposition has exactly three covers.
+
+Choose donors 7*11 at root 1 and 7*13*17 at root 2. Their full traces cover Y, and their complete private traces are {a} and {c}. Match them to the two spare labels at root 3. The resulting four disjoint label menus cover Y:
+
+    {7*13,       7*11*13*23},
+    {7*11*19,    7*11*13*29},
+    {7*31},
+    {7*11,       7*13*17}.
+
+No selected point substitutes for a full trace: all traces on the declared finite source are displayed. This control only separates the two allocation interfaces. The theorem consumer above still needs an actual EB1 source to satisfy LA1–LA4; that bridge has not been forced.
+
+### The remaining original-inventory condition
+
+The useful additional interface is one extra complete cover obtained by matching whole private donor liabilities to existing spare original labels, with PH4 giving an exact arithmetic adjacency test. It can share a spare root across output columns without copying any original label.
+
+No unconditional label allocation or strict descent for every EB1 source was obtained. In particular, private-trace coverage is sufficient for the declared single or pairwise-disjoint donor deletions; arbitrary simultaneous donor deletions require their joint original obligation and cannot use LA3. Replacing LA2 by one private witness per donor, or by pointwise covering multiplicity alone, is not justified.
