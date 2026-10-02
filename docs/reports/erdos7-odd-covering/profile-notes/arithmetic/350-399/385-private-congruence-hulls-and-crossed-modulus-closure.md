@@ -20309,3 +20309,29 @@ Since11 is opposite5 and H_11=1, HPM7 controls the other concentrated color as w
     H_p=1 for every p outside {3,7}, P^+(Q)<=113.     (GCB8)
 
 The prime support remains the actual initial odd-prime segment. These are necessary conditions for the remaining R={7},H_5=1 branch. They do not exclude that branch or bound its ternary or shared7 heights by this argument.
+
+### The actual original9 belongs to the color opposite5
+
+In the same remaining branch, use the upper palette C'={11,13,17,19,23} for S. Its guarded envelopes at q=7 are
+
+    L_infinity(C',7)=179951/353430<1,
+    M_infinity(C',7)=2291/3213,
+    M_infinity/(1-L_infinity)=252010/173479<5/3.
+
+Monotonicity and GCB1, under the same fixed product law, therefore imply
+
+    tau_S <= theta M_* /(1-L_*)
+           <= theta*252010/173479
+           <126005/173479,
+    beta_S>47474/173479>1/6.                         (GCB9)
+
+In particular H_3>=2: at H_3=1 there are no pure-three guards and beta_S=0, contrary to GCB9. Original9 consequently exists by divisor closure. Its relative mass in its actual nonzero ternary root is1/3. If that root were the color of5, the shared guard identity CM1 would give
+
+    beta_S<=theta-1/3<1/6,
+
+contradicting GCB9. Hence
+
+    R={7}, H_5=1 ==> H_3>=2 and
+      original9 has the concentrated color opposite5. (GCB10)
+
+This locates the literal first-three root of one actual original class. It does not align the deeper ternary phases, put every high original in that root, or exclude the branch. All comparable-class exclusions and full ternary words remain in force.
