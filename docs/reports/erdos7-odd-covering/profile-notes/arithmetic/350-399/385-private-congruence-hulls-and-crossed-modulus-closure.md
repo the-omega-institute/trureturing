@@ -246,6 +246,14 @@ owner and the surviving top labels avoiding two cofactor primes.
 The resulting reserve and low-row demand use this one unchanged source;
 a positive reserve still requires a bound on that actual top inventory.
 
+[Section156](#156-a-forbidden-prime-pair-gives-an-all-height-prime-cutoff)
+encodes all old heights into two-prime labels forbidden in the original
+family. One source covers the deleted prime's full inverse with retained
+prime classes. Any forbidden pair r,s forces
+P^+(Q)<rs(r-1)(s-1)min(r,s), independent of their heights. Thus the branch
+where R avoids5,7,11,13 has P^+(Q)<15600. The remaining finite carrier
+and the case where R meets that small head remain unresolved.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19036,3 +19044,125 @@ WHOLE second-prefix cells belong to E_J, and each needs a distinct original low-
 ### Scope and reuse
 
 The new consumer is the exact classification PER2 and its same-source reserve PER3–PER6. PTE already supplies privacy and saturated original parent phases; OHL already supplies the complete J liability. The calculation introduces no new Hall, coloring, generic exchange, or transport theorem. It works with arbitrary q-height and arbitrary full cofactor carrier. It does not force rho(w)>0 in all families, W, a PS skeleton, or a whole-cover contradiction. The outstanding step is to force a sufficiently small ACTUAL complement top inventory or combine its necessary presence with another SAME-family budget.
+
+## 156. A forbidden prime pair gives an all-height prime cutoff
+
+Use ONE original EB1 whole cover with period Q. Suppose r and s are distinct original odd support primes and
+
+    rs does not divide any ORIGINAL numerical modulus.        (FPA1)
+
+Then
+
+    P^+(Q)<rs(r-1)(s-1)min(r,s).                            (FPA2)
+
+No bound on H_r, H_s, any other height or the number of support primes is assumed. CP1 supplies FPA1 for opposite concentrated primes. The argument reuses the source-and-enclosure coverage implication of HPA; the added ingredient is an injective encoding of all old heights into the vacant two-prime labels. This is ordinary mathematics, not Lean verification or a literature-priority claim.
+
+### A single source covers the omitted region with retained prime classes
+
+First prove the ordered bound with
+
+    B=r(r-1)s^2(s-1).
+
+Suppose an original support prime q>B. It differs from r and s. Write
+
+    Q=r^H s^K q^G M, gcd(M,rsq)=1.
+
+Keep the original CRT normalization A_r=0 mod r, A_s=0 mod s and A_q=0 mod q. For 1<=e<=G define
+
+    D_e={(u,v) mod (r^(2e),s^(2e+1)):
+                         u!=0 mod r, v!=0 mod s}.
+
+The first domain has size |D_1|=(r^2-r)(s^3-s^2)=B. Each prefix has r^2 s^2 extensions to the next level. Since q>B and
+
+    B/(r^2 s^2)=(r-1)(s-1)/r>1,
+
+the first domain injects into the q-1 nonzero q-roots, and every later block injects into one q-digit. Choose once, independently of all original labels, prefix-compatible injections
+
+    theta_e:D_e -> Z/q^e Z
+
+whose first q-digits are nonzero. Use the new complete carrier
+
+    Qtilde=r^max(H,2G) s^max(K,2G+1) M.
+
+For z modulo Qtilde let D be the set avoiding the retained prime classes A_r and A_s. Define F(z)=theta_G(z mod r^(2G),z mod s^(2G+1)) on D, and F(z)=0 modulo q^G off D. The ONE old source is the CRT point
+
+    Psi(z)=(z mod r^H, z mod s^K, F(z), z mod M).             (FPA3)
+
+Every old q-free coordinate is preserved at its full height. The complete inverse of A_q is D^c. It is NOT empty, but all of it is covered by the retained originals A_r union A_s. Every other q-bearing original is disjoint from A_q by comparable-original disjointness, and hence has a nonzero first q-phase and empty inverse outside D.
+
+### Complete inverses and the all-height numerical code
+
+By FPA1 each q-bearing original d has the unique form
+
+    d=r^a s^c q^e t, ac=0, t|M, e>=1.                      (FPA4)
+
+For d different from q, an old q^e-phase outside the image of theta_e gives empty inverse. Otherwise its unique inverse prefix (u_d,v_d) fixes z modulo r^(2e) and s^(2e+1). Combine these with the original congruences modulo r^a, s^c and t. Incompatible same-prime congruences again give empty inverse; compatible ones give ONE exact AP C_d of modulus
+
+    m_d=r^max(a,2e) s^max(c,2e+1) t.                        (FPA5)
+
+This is the whole inverse under Psi, not just a selected private point. The old heights H and K are retained in Qtilde even when they exceed the code widths, so no old congruence has been truncated.
+
+Assign positive exponents (U,V) by the following disjoint cases:
+
+| Original exponents | U | V |
+| --- | --- | --- |
+| c=0, a>=2e | a | 2e |
+| a=0, c>=2e+1 | 2e | c |
+| c=0, 0<=a<2e | 2 floor(a/2)+1 | 2e+(a mod2) |
+| a=0, 1<=c<=2e | 2e-1+((c-1) mod2) | 2 floor((c-1)/2)+1 |
+
+The neutral case a=c=0 belongs only to the third row. In each case
+
+    1<=U<=max(a,2e), 1<=V<=max(c,2e+1).
+
+Thus d'=r^U s^V t divides m_d. Reducing C_d's actual phase modulo d' gives one enclosing AP B_d with
+
+    Psi^(-1)(A_d)=C_d subset B_d.                            (FPA6)
+
+The following decoder proves injectivity across ALL old heights:
+
+* If min(U,V) is even and U>=V, then e=V/2, a=U, c=0.
+* If min(U,V) is even and U<V, then e=U/2, a=0, c=V.
+* If min(U,V) is odd and U<V, then e=floor(V/2), a=U-1+(V mod2), c=0.
+* If min(U,V) is odd and U>=V, then e=ceil(U/2), a=0, c=V+U-(2e-1).
+
+These are precisely the four rows, and substitution recovers each original triple (a,c,e). The r,s-free part of d' recovers t. Equality of new numerical moduli therefore forces equality of old numerical moduli. No new-new collision occurs.
+
+Every new label contains rs; no old label does. Therefore no new-retained collision occurs either. Freshness uses the original forbidden pair, not an exponent exceeding an old maximum. All output moduli are odd nonunits dividing Qtilde.
+
+### Whole coverage with one fewer original class
+
+Retain every q-free original, omit A_q, and replace every other nonempty q-bearing inverse by its single B_d. Every point outside D is already covered by retained A_r or A_s. At each z in D evaluate the old whole cover at the ONE point Psi(z). Its owner cannot be A_q. A q-free owner covers z unchanged; any other owner has z in its complete inverse and hence in B_d. This proves coverage of the entire new carrier and all integers.
+
+Each original other than A_q contributes at most one AP, and all output numerical labels are distinct. The resulting whole distinct odd cover has at most |D_original|-1 classes, contradicting EB1's primary objective. Individual moduli need not decrease, and the output need not satisfy the old color partition, divisor closure or height bounds: EB1 compares against ALL distinct odd whole covers.
+
+Hence no support prime is greater than B. Equality is impossible because B is composite, while the anchors themselves are below B. Interchanging r and s gives FPA2.
+
+### Same-family arithmetic consequences
+
+For opposite concentrated primes p<ell, CP1 gives
+
+    P^+(Q)<p^2 ell(p-1)(ell-1).                              (FPA7)
+
+In the branch R intersect {5,7,11,13}=empty, the existing GM1 choice provides5 and an opposite ell in {7,11,13}. Therefore the following bounds hold on EVERY original support prime, including the nonconcentrated ones:
+
+| Opposite pair | Upper bound on P^+(Q) |
+| --- | ---: |
+| 5,7 | 4200 |
+| 5,11 | 11000 |
+| 5,13 | 15600 |
+
+Combining these with the SAME family's OCP9 heights gives
+
+    Q divides 3^64 product_(r prime,5<=r<15600) r^48.        (FPA8)
+
+This is a sharper finite carrier restriction than HPA2, not a proof that the remaining carrier admits no covering phases. HPA and HPM remain valid and can give sharper estimates at particular original heights or force mixed labels absent from a numerical cutoff alone. The large-prime tails in HPM10 are empty under FPA8 in this small-anchor branch; their conditional capacity statements remain valid.
+
+The general statement also has a direct original-label consequence: for ANY two distinct support primes r,s,
+
+    P^+(Q)>=rs(r-1)(s-1)min(r,s)
+         ==> rs is an ORIGINAL numerical label.             (FPA9)
+
+Indeed the negation, together with divisor closure, would prohibit every original rs-multiple and contradict FPA2. Pairwise forced labels do not assert the presence of a product of three or more primes, nor prescribe their phases or one common private point.
+
+When R meets {5,7,11,13}, FPA7 is still valid for any actual opposite pair. The existing small-root intersection condition can instead be supplied by members of R; it does not place an opposite concentrated pair in a uniformly small range or ensure both colors exist. No bound on that unresolved case, no complete-liability descent inside FPA8 and no unrestricted noncoverage is asserted.
