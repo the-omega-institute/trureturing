@@ -31,8 +31,7 @@ internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefi
                         + "the N-th harmonic number.")),
                     Paragraph(Text("This is the classical gcd parametrization for "
                         + "the multiplicative energy of an interval. The harmonic "
-                        + "estimate is the standard bound by 1+log(N); "
-                        + "no originality claim is made."))),
+                        + "estimate is the standard bound by 1+log(N)."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("short-cofactor-character-moments"),
@@ -92,11 +91,15 @@ internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefi
         Formula m4 = Seq(F.Id("M"), Underscore, Grp(D(4)));
         Formula logarithm = Seq(D(1), Plus, new Formula.Apply(Log, [h]));
         return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, a, Sp, Gt, Sp, D(0), Comma, Sp, Exists, Sp, r0,
-                Comma, Sp, Forall, Sp, r, Sp, Ge, Sp, r0, Sp, F.Id("prime"), Comma),
-            Seq(new Formula.Power(h, D(2)), Sp, Lt, Sp, F.Id("V"), Comma, Sp,
+            Seq(Forall, Sp, a, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                a, Sp, Gt, Sp, D(0), Sp, Rightarrow, Sp,
+                Exists, Sp, r0, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma),
+            Seq(Forall, Sp, r, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                Open, r, Sp, Ge, Sp, r0, Sp, Land, Sp,
+                new Formula.Apply(F.Id("Prime"), [r]), Close, Sp, Rightarrow),
+            Seq(new Formula.Power(h, D(2)), Sp, Lt, Sp, F.Id("V"), Sp, Land, Sp,
                 m4, Sp, Le, Sp, D(2), Sp, new Formula.Power(h, D(2)),
-                Open, logarithm, Close, Comma),
+                Open, logarithm, Close, Sp, Land),
             Seq(new Formula.Fraction(new Formula.Power(k, new Formula.Fraction(D(3), D(2))),
                 Seq(D(4), Sp, h, Sp, Sqrt, Grp(logarithm))), Sp, Le, Sp, m1)
         ]));
@@ -113,13 +116,15 @@ internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefi
         Formula logarithm = Seq(D(1), Plus, new Formula.Apply(Log, [h]));
         Formula denominator = Seq(D(4), Sp, h, Sp, Sqrt, Grp(logarithm));
         return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, v, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                Forall, Sp, h, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma),
             Seq(D(0), Sp, Lt, Sp, v, Comma, Sp, D(1), Sp, Le, Sp, h,
                 Comma, Sp, new Formula.Power(h, D(2)), Sp, Le, Sp, v, Sp, Rightarrow),
             Seq(m4, Sp, Le, Sp, D(2), Sp, new Formula.Power(h, D(2)), Sp,
-                Open, logarithm, Close, Comma),
-            Seq(D(2), Sp, k, Sp, Le, Sp, q, Sp, Rightarrow, Sp,
+                Open, logarithm, Close, Sp, Land),
+            Seq(Open, D(2), Sp, k, Sp, Le, Sp, q, Sp, Rightarrow, Sp,
                 new Formula.Fraction(new Formula.Power(k, new Formula.Fraction(D(3), D(2))),
-                    denominator), Sp, Le, Sp, m1)
+                    denominator), Sp, Le, Sp, m1, Close)
         ]));
     }
 
