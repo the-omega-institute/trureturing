@@ -22,13 +22,16 @@ internal sealed class SliwaSevenArbitraryOutcomeLocalBoundDocument : IScribeDocu
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The sharp bound for every K", Disp(F.Id("claim")),
                 "Put s = val(S), t = val(T), u_1 = val(-A+b+c), u_2 = val(-B+a+c), u_3 = val(-C+a+b). Work with their integer representatives. The remaining mixed residues are v_i = (u_i+t-s) mod K, and the sum U of the first three satisfies U = 2s-t+Kq for an integer q. If t >= s, let h count the residues with u_i+t-s >= K. Then L = sum_i(u_i+v_i) = s+t+K(2q-h); for h = 0, 1, 2, 3, the residue ranges force q >= 0, 1, 2, 2. When s = 0 < t and h = 0, q >= 1. If s > t, let h count the residues with u_i < s-t. Then L = s+t+K(2q+h), with q >= 0, 0, 0, -1 for h = 0, 1, 2, 3. Thus L >= s+t, with L >= s+t+K at s = 0 < t. The pure residues give the integer identity J-6(K-1) = L-s-t+K(1_{t=0}-1_{s=0}). The strengthened estimate handles its only negative correction, proving the lower bound. The all-zero strategy attains 6(K-1). The result supplies the all-K local bound used to compare classical and quantum values of (B1); it establishes no facet, quantum optimum or visibility optimum.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("grandjean-liang-bancal-brunner-gisin-2012-sliwa-seven-local-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("sliwa-local-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
