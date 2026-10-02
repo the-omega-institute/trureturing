@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16 and retains a positive rank-two Fourier-tail correction in its finite sign test. These fixed-window statements do not cover the first new FIB cutoff c=9 or supply cofinal positivity.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16 and retains a positive Fourier-tail correction. A weighted-Schur application gives a 4/5 lower bound for the actual prime comparison block at c=9; the complete retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -225,3 +225,33 @@ for i, (left, right) in enumerate(zip(ends, ends[1:])):
     assert minimum > floors[i] >= F(1, 50)
     print(i + 1, minimum)
 ```
+
+## The remaining retained-matrix consumer at $c=9$
+
+The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. This removes the need to assume a positive floor for this block; it leaves the complete form's sign undecided.
+
+Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits choosing the even Hilbert space and an even retained dictionary for the existing RH route. If a new-window tail estimate supplies
+
+$$
+T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
+\qquad\tau_9\ge0,
+$$
+
+with $U_9$ bounded self-adjoint, put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
+
+$$
+G_9=E^*M_9^{-1}E,\qquad
+D_9=E^*M_9^2E-(E^*M_9E)^2.
+$$
+
+Suppose the actual new-window blocks satisfy $\|(R_9)_{10}\|\le e$, $(R_9)_{11}\succeq-nI$, $\|(R_9)_{11}\|\le h$, with $0\le n<4/5$. For $\theta,\chi>0$, direct parameter substitution in the existing source theorem makes the following a sufficient target:
+
+$$
+G_9^{-1}+J_9\succeq
+\left(e\theta+\frac{(1+\chi)e^2}{4/5-n}\right)I
++\frac{25}{16}\left(e/\theta+n+
+\frac{(1+\chi^{-1})h^2}{4/5-n}\right)D_9.
+\tag{A4}
+$$
+
+This condition would imply $M_9+V_9\succeq0$ and hence the needed nonnegativity of $Q$ on its legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The new $K_9$, tail-filtered vectors, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. None of the $17/16$ certificate's retained matrices, tail constants or errors has been transported to $\log3$ by (A3). Using another retained basis also requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
