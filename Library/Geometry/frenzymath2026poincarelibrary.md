@@ -2256,3 +2256,310 @@ existence of its ambient lattice conjugator remain open. The full
 finite-volume Mostow-Prasad endpoint, including cusps and nonorientable
 manifolds, remains active and incomplete. The linked escape audit is
 unfinished, and new registration work remains paused.
+
+
+### Constructing an ambient conjugator from scaled future-null-cone data
+
+An independent conditional existence bridge now constructs an actual
+original-H3 ambient isometry from concrete Lorentz cone data. On the
+existing signature-(1,3) kernel B on Fin 4 -> R, use the future null cone
+{v | v(0) > 0 and B(v,v) = 0}. Suppose a map F preserves B(u,v) for every
+pair of cone vectors and has positive time coordinate on every cone
+image. Then there is an actual H3 isometry whose full Lorentz action
+agrees with F on every cone vector. F is presented as a total vector
+function for convenience; only its restriction to the cone is constrained
+or identified with a linear action. No linearity, continuity, surjectivity,
+ambient linear equivalence, interior isometry, local distance preservation
+or ambient conjugator is supplied.
+
+The four explicit future null vectors (1,1,0,0), (1,-1,0,0), (1,0,1,0)
+and (1,0,0,1) span the Lorentz vector space. Their images have the same
+Gram matrix. Using the existing basis kernel-detection theorem, derive
+image linear independence and obtain a full linear equivalence by
+transporting the two bases. Expand both arguments in that basis to prove
+kernel preservation on the entire vector space. Pairing with the image
+basis then shows that this same equivalence agrees with F at every cone
+vector, not just the four frame vectors. These are scaled null vectors,
+not merely projective ideal-boundary points.
+
+The actual reference hyperboloid point is half the sum of the first two
+null vectors. The positive time coordinates of their images put the
+constructed image of this point on the future unit sheet. The existing
+explicit Lorentz future-point inverse and Lorentz converse then construct
+an isometry of the original upper-half-space metric. Its faithful actual
+Lorentz representation is exactly the constructed linear equivalence.
+No supplied frame-image basis or supplied future-sheet interior point is
+used.
+
+For arbitrary abstract groups G,H, an isomorphism d:G ~=* H and actual
+H3 isometric representations rho and sigma, add the exact all-cone-point
+equivariance F(R(rho(g))v)=R(sigma(d(g)))F(v), where R is the existing
+actual full Lorentz representation. The same constructed ambient isometry
+a then satisfies sigma(d(g))=a*rho(g)*a^-1 for every g, and its cone action
+still agrees with the same F at every cone vector. Actual H3 isometries'
+future-null-cone preservation is proved from kernel preservation and the
+positive time of actual hyperboloid coordinates, not supplied as an
+extra action hypothesis. Equivariance on the spanning null frame makes
+the two linear compositions equal; faithfulness of the actual Lorentz
+representation yields the required original-H3 isometry equality.
+
+Future preservation is material. The accepted countermodel F(v)=-v
+preserves every Lorentz pairing, yet its future-cone restriction cannot
+be the Lorentz action of any actual original-H3 isometry. This exhibits
+why preserving the kernel alone does not select the required time sheet.
+The construction imposes no compactness, orientation, dense-orbit,
+faithfulness of the supplied group representations or finite-volume
+hypothesis: its stronger geometric cone data are explicit input.
+
+Two accepted serial scoped transient cache-guarded Lean checks exited
+zero, with ten axiom closures using only propext, Classical.choice and
+Quot.sound and no warning headers. Three exact failed source/log pairs
+are preserved and excluded, including their failed sorryAx closures.
+Default resources and
+original metrics are retained; no suppression, compiler replay, novelty
+or tracked Lean claim. These are classical finite-dimensional Gram and
+hyperboloid constructions checked under ignored .lake. The standard
+hyperbolic-model framework is discussed in Foundations of Hyperbolic
+Manifolds (Springer; DOI 10.1007/978-0-387-47322-2); public bibliography
+metadata identifies that reference but is not evidence for an exact
+theorem page or a completed formalization.
+
+This closes a sufficient cone-data-to-ambient-conjugator construction,
+not ambient conjugator existence for arbitrary lattice isomorphisms.
+Existence of the required future-cone map, its exact pairing preservation
+and equivariance for the SAME arbitrary-h induced deck isomorphism remain
+open. Projective boundary-map construction, cross-ratio lifting and the
+rigidity argument forcing the necessary boundary geometry are separate
+obligations. Finite volume has not been shown to supply these cone inputs.
+The full finite-volume Mostow-Prasad endpoint, including cusps and
+nonorientable manifolds, remains active and incomplete; arbitrary-h
+isometric representative existence remains unproved. The linked escape
+audit is unfinished and registration remains paused. Only this research
+note is intended tracked delivery.
+
+
+### Actual H3 horizontal contraction and the Mautner mechanism
+
+For a jointly continuous isometric action of a group on a metric space,
+let a_i act asymptotically trivially on x along a nonempty filter. If
+a_i*g*a_i^-1 tends to the identity along the same filter, then g fixes x.
+The pseudometric version gives dist(g*x,x)=0; metric separation yields
+point equality. This local Mautner argument needs neither a Hilbert
+space nor compactness, properness or finite volume. The nonempty-filter
+condition is essential: for the actual continuous isometric translation
+action of the additive real line, the bottom filter satisfies both
+convergence conditions, while translation by 1 moves 0.
+
+This mechanism applies to the SAME actual original-H3 isometry group
+with its previously constructed compact-open topology. Horizontal
+translation T(u), u in C, is jointly continuous in u and the H3 point,
+using the original coordinate homeomorphism. Consequently u -> T(u) is
+continuous into that compact-open isometry group. For positive r_i
+with r_i -> 0, the actual identity
+
+    D(r_i)*T(u)*D(r_i)^-1 = T(r_i*u)
+
+and this continuity derive convergence to the identity. Conjugation
+convergence is proved for the original H3 translations and dilations;
+it is not an extra premise supplied to the H3 application. Any jointly
+continuous isometric action of this SAME group on a metric space
+therefore satisfies: if D(r_i)*x -> x along a nonempty filter, every
+horizontal translation fixes x. In particular, invariance under all
+positive dilations implies invariance under all horizontal translations,
+using r_n=(1/2)^n.
+
+There is also an exact finite-p Lp application of the continuous
+isometric domain-pullback action. Its domain action must be continuous
+and measure preserving, the measure locally finite and inner regular
+on compact sets below infinite mass, and the domain must carry the
+stated Borel and R1 structures. The target is a normed additive group,
+and 1 <= p < infinity. These hypotheses remain explicit. Pullback uses
+DomMulAct, whose multiplication reverses the original group product.
+Accordingly choose a_i=mk(D(r_i)^-1). Its conjugation of mk(T(u)) is
+mk(D(r_i)*T(u)*D(r_i)^-1), so the actual H3 contraction proves contraction
+in this opposite group too. Asymptotic inverse-dilation pullback
+invariance of f then implies every horizontal pullback fixes f.
+Invariance under every positive dilation supplies the required inverse
+invariance by the actual dilation inverse formula. No contraction
+hypothesis is supplied to these H3 Lp conclusions.
+
+The original-H3 isometry-group topology, joint evaluation, topological
+group structure and finite nonzero invariant group-quotient measures
+were already constructed. They are available inputs, rather than
+missing constructions. The new Lp application is checked for domain
+actions satisfying its explicit hypotheses; it has not yet been
+instantiated with the previously constructed actual quotient measure
+and its required regularity. Neither finite quotient mass alone nor
+horizontal invariance alone proves the needed ergodicity.
+
+Five accepted serial scoped cache-guarded transient Lean checks exited
+zero, with eleven axiom closures using only propext, Classical.choice
+and Quot.sound and no warning headers. Failed checks are excluded from
+these accepted readings. All new Lean remains under ignored .lake;
+these are classical reuse and construction, with original metrics and
+default resources, no novelty or tracked-Lean claim.
+
+Subgroup generation, the actual quotient Lp specialization, flow
+ergodicity and the boundary rigidity argument remain separate
+obligations. Unipotent generation concerns the identity component:
+for an orientation-preserving lattice, the full disconnected isometry
+group quotient has two components. Full-group ergodicity cannot be
+inferred from the geodesic flow on that quotient; an orientation
+component or orientation-cover argument is still required. The boundary
+map and its geometric preservation for the SAME arbitrary-h induced
+deck isomorphism remain unconstructed. Full finite-volume
+Mostow-Prasad, including cusps and nonorientable manifolds, remains
+active and incomplete. The linked escape audit is unfinished and
+registration remains paused. Only this research note is tracked.
+
+
+### The actual finite quotient measure and its L2 domain action
+
+On the SAME original-H3 compact-open isometry group G, let Gamma be a
+closed subgroup. Every finite measure on the coset space G/Gamma with
+its ORIGINAL quotient measurable structure is regular. The existing
+locally compact, Hausdorff and second-countable quotient topology gives
+sigma compactness and a compatible metrizable topology; the existing
+Polish group structure identifies the quotient measurable structure
+with its Borel structure. The finite-measure regularity theorem then
+supplies compact inner regularity and local finiteness. The original
+H3 metric and isometry-group topology are preserved. No normality of
+Gamma is required, and no new quotient measurable structure replaces
+the one used by the existing quotient-measure constructor.
+
+For a finite G-invariant measure nu on this actual coset domain, a
+normed additive target and 1 <= q < infinity, the existing jointly
+continuous isometric domain-pullback action therefore applies to
+Lp(nu). Regularity and continuous action are derived from this actual
+quotient, rather than supplied as separate hypotheses. If every
+positive actual dilation pullback fixes f, every actual horizontal
+translation pullback fixes f. The reverse multiplication of DomMulAct
+and the inverse-dilation contraction proved in the preceding appendix
+remain the mechanism. Invariance under ALL positive dilations is a
+material premise, not a conclusion obtained from finite volume.
+
+The geometric specialization selects the SAME nu already produced by
+the actual finite-target quotient-measure construction. Its data are
+Riemannian metrics on original H3 and a base M, compatibility of the H3
+metric with its original distance, a quotient covering by the FULL deck
+group, a local diffeomorphism preserving the tangent inner products,
+and an injective actual-H3 isometric deck representation whose point
+evaluation agrees with the original deck action. Base intrinsic volume
+is finite. The existing construction supplies nu on G/rho.range,
+G-invariance, finite nonzero mass and total mass equal to that intrinsic
+base volume. The closedness of the ACTUAL deck image is derived from
+the same covering and representation data. With its original measurable
+carrier, this same nu now supports the exact real L2 application:
+for every f in L2(nu), if all positive dilation pullbacks fix f, all
+horizontal-translation pullbacks fix f. Neither nu, its regularity nor
+a continuous quotient action is supplied to this geometric statement.
+The stated geometric hypotheses remain explicit; this is not a theorem
+from finite base volume alone.
+
+One accepted serial scoped cache-guarded transient Lean check exited
+zero, with three axiom closures using only propext, Classical.choice
+and Quot.sound. Four haveILetI style warnings are retained without
+suppression. Failed checks are excluded from the accepted readings.
+All new Lean remains under ignored .lake; these are classical reuse and
+construction with default resources and the original metric/topology,
+not a novelty or tracked-Lean claim.
+
+This supplies the actual quotient regularity/action integration left
+open in the preceding appendix. It proves a consequence of all-positive-
+dilation fixing; it does not establish the required invariant-function
+constancy or flow ergodicity. Actual H3 subgroup generation, opposite
+unipotent invariance, boundary-map construction and geometric
+preservation for the SAME arbitrary-h induced deck isomorphism remain
+separate obligations. Orientation components and covers still need
+explicit treatment: the full disconnected isometry-group quotient has
+two components for an orientation-preserving lattice. Cusps and the
+nonorientable endpoint remain in the full target. Arbitrary-h ambient
+conjugator and isometric representative existence are still unproved,
+and full finite-volume Mostow-Prasad remains active and incomplete.
+The linked escape audit is unfinished and registration remains paused.
+Only this research note is intended tracked delivery.
+
+
+### Actual inversion-conjugate horizontal contraction and light-null charts
+
+Let J be the existing boundary-centered inversion of ORIGINAL H3,
+T(v) its actual horizontal translation, and D(a) its actual positive
+dilation. The actual coordinate inversion and norm scaling give
+J inverse = J and J D(a) = D(a) inverse J for a > 0. Thus
+J D(a) J inverse = D(a) inverse. Define Uminus(v) = J T(v) J inverse.
+The derived identity
+
+D(r) inverse Uminus(v) D(r) = J (D(r) T(v) D(r) inverse) J inverse
+
+and the existing horizontal contraction imply convergence to identity
+as positive r tends to zero, in the SAME compact-open group topology.
+The original H3 metric and group topology are preserved. Neither the
+inversion/dilation relation nor the opposite contraction is supplied
+as a hypothesis. Here the opposite family means this actual
+inversion-conjugate family; a matrix-unipotent identification and
+its generation of the orientation component remain unproved.
+
+For a jointly continuous isometric action of this actual group on a
+metric space, if ALL positive D(a) fix x, every Uminus(v) fixes x.
+The finite-p domain-pullback version retains a Borel R1 domain with a
+continuous group action, an invariant measure that is locally finite
+and compact inner regular, a normed additive target, and
+1 <= q < infinity. If ALL positive dilation pullbacks fix f in Lp,
+every Uminus(v) pullback fixes f. DomMulAct reverses multiplication:
+this opposite contraction uses the sequence mk(D(r)), whereas the
+preceding horizontal-family argument uses mk(D(r) inverse).
+
+On the SAME actual closed coset quotient G/Gamma with its ORIGINAL
+quotient measurable structure and a finite G-invariant measure nu,
+regularity and the continuous domain action are derived by the
+preceding construction. For a normed additive target and
+1 <= q < infinity, every f in Lp(nu) fixed by ALL positive dilation
+pullbacks is fixed by BOTH T(v) and Uminus(v) pullbacks. The geometric
+real-L2 specialization selects the SAME finite nonzero nu from the
+preceding actual finite-target constructor and preserves total mass
+equal to base intrinsic volume. Its full hypotheses remain: original
+H3 and base Riemannian metrics with original-H3 distance compatibility;
+the base T3/Borel/manifold and H3 manifold structures; a quotient
+covering by the FULL deck group; a local diffeomorphism preserving
+tangent inner products; an injective actual-H3 isometric deck
+representation whose evaluation agrees with the original deck action
+at EVERY point; and finite intrinsic base volume. Closedness of the
+actual deck image is derived from those same data. The selected nu,
+its regularity and its quotient action are not supplied as placeholders.
+For every real L2 f on this SAME nu, ALL-positive-dilation fixing
+implies BOTH horizontal-family invariances. The dilation-fixing
+premise is not obtained from finite volume.
+
+The existing Lorentz light coordinates also now give an explicit
+scaled chart of every future Lorentz-null vector w. Its light
+coordinates are c times either (1,0,0,0) or
+(re(z)^2+im(z)^2,re(z),im(z),1), for c > 0 and z in the complex plane.
+The null equation and positive time coordinate yield a nonnegative
+last light coordinate. If it is zero, the two middle coordinates
+vanish and the first is positive. Otherwise c is the last coordinate
+and z is obtained by dividing the middle coordinates by c. The SAME
+existing infinity frame (1,0,0,1) has light coordinates twice
+(1,0,0,0). Existing actual-isometry future-null-cone preservation
+therefore gives this scaled chart for EVERY actual isometry's image
+of that frame, without supplying null, future or chart data for the
+isometry. Positive scaling is retained; no projective boundary
+topology, boundary action or boundary map between lattices is claimed.
+
+Three serial scoped cache-guarded transient Lean checks exited zero,
+with twelve axiom closures using only propext, Classical.choice and
+Quot.sound. Four haveILetI style warnings in the actual quotient
+application remain unsuppressed; the other two checks have no warnings.
+These are classical reuse and construction under ignored .lake with
+default resources, not a novelty or tracked-Lean claim.
+
+Actual orientation-component identification/generation, invariant-
+function constancy and flow ergodicity remain separate obligations.
+The full disconnected group quotient has two components when the
+lattice preserves orientation; component and orientation-cover
+arguments remain necessary for the nonorientable endpoint. Boundary
+map construction and geometric preservation for the SAME arbitrary-h
+induced deck isomorphism, cusp handling and arbitrary-h ambient
+conjugator/isometric representative existence remain unproved.
+Full finite-volume Mostow-Prasad remains active and incomplete.
+The linked escape audit is unfinished and registration remains paused.
+Only this research note is intended tracked delivery.

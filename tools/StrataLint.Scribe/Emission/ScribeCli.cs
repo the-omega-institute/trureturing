@@ -15,6 +15,7 @@ public static class ScribeCli
         .. EmissionCommands.Order(StringComparer.Ordinal),
         "markdown-check",
         "projections",
+        "resources",
     ];
 
     public static int Run(
@@ -50,6 +51,12 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        if (command == "resources")
+        {
+            return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
+                () => FindRepositoryRoot(workingDirectory), output, error);
+        }
+
         if (command == "projections")
         {
             if (arguments.Count != 4
@@ -216,7 +223,8 @@ public static class ScribeCli
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
-        + "| markdown-check --report <file> [--paths-from <file|->]";
+        + "| markdown-check --report <file> [--paths-from <file|->] "
+        + "| resources pack --out <file> | resources verify --pack <file>";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's
