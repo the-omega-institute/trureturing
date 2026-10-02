@@ -23955,3 +23955,112 @@ This proposition is a finite full-fibre statement.  The actual
 retained family.  It nevertheless rules out a proposed repair strategy that
 keeps only the old cofactor palette and tries to escape the occupied label by
 raising \(p\)-adic exponents.
+
+## 203. A mixed repair has an exact one-low-layer price
+
+The preceding full-fibre obstruction does not cover repairs that introduce a
+new low \(p\)-height label.  For the actual occupied-label liability, however,
+the budget \(p+1\) forces a much smaller interface.  Retain the notation of
+Section 192, let \(N=Q/p\), and write
+
+\[
+ E=E_A\mathbin{\dot\cup}E_B=\mathbb Z\setminus\mathcal U.
+\]
+
+Consider an inclusion-minimal repair of \(E\) with at most \(p+1\) distinct
+odd labels, containing both a low layer \(v_p(d)\le e-1\) and a high layer
+\(v_p(h)\ge e\).  The complete \(p\)-tail over every \(N\)-orbit in \(E\)
+has all \(p\) next digits available.  A high class of exact height \(e\)
+serves at most one digit, while a deeper high class serves at most a
+\(1/p\)-fraction of that digit.  If one next digit has no exact-height class,
+at least \(p\) deeper classes are needed for it and at least one class for
+each of the other digits.  Hence a repair with fewer than \(2p-1\) high
+classes cannot use a deeper class essentially.  In particular, every such
+mixed repair has
+
+\[
+\boxed{|\mathcal L|=1,\qquad |\mathcal H|=p,\qquad
+v_p(h)=e\ (h\in\mathcal H).}
+\tag{MR1}
+\]
+
+Write the unique low class as \(C=[c]_d\), and put \(F=E\setminus C\).
+The equality case on each complete orbit also gives
+
+\[
+F\subseteq [b_j]_{p^{e-1}n_j}\quad (1\le j\le p),
+\qquad h_j=p^e n_j.
+\tag{MR2}
+\]
+
+If \(d\nmid N\), the restrictions of \(C\) and of each shadow in (MR2) to
+an orbit contained in \(E\) are proper odd residue classes.  Their relative
+densities sum to at most \(2/3\), so every shadow would have to contain the
+whole orbit; then the \(p\) high classes alone cover \(E\), contradicting
+minimality.  Thus \(d\mid N\).  Since the shadows contain the nonempty
+\(N\)-periodic set \(F\), this further gives
+
+\[
+ p^{e-1}n_j\mid N,
+ \qquad p^e n_j\mid Q.
+\tag{MR3}
+\]
+
+For a nonempty \(N\)-periodic set \(F\), let
+
+\[
+ \Gamma_N(F)=\gcd\bigl(N,\{x-w:x\in F\}\bigr),
+ \qquad
+ g(F)=\Gamma_N(F)/p^{e-1},
+\]
+
+where (MR2) ensures that the quotient is integral.  The least possible
+ high-layer cost after fixing \(C\) is then
+
+\[
+\boxed{
+ \min\sum_{j=1}^{p} h_j
+ =p^e s_p\bigl(g(F)\bigr),
+ \qquad
+ \operatorname{Cost}(C)=d+p^e s_p\bigl(g(F)\bigr),
+}\tag{MR4}
+\]
+
+where \(s_p(u)\) is the sum of the smallest \(p\) distinct positive divisors
+of \(u\), with value \(+\infty\) when fewer than \(p\) exist.  Necessity is
+the divisibility in (MR3); sufficiency is the CRT lift using those divisors
+and all \(p\) next-digit phases.  This is a complete-source pricing rule,
+not a density estimate on selected private points.
+
+If the two responsibility phases are separated modulo \(p^{e-1}\), the
+prefix-separated high-layer bound of Section 198 gives
+
+\[
+\boxed{E_A\subseteq C\quad\text{or}\quad E_B\subseteq C.}
+\tag{MR5}
+\]
+
+For a complete \(E_A\)-side class, any label other than the released \(R\)
+label would directly replace the deleted top packet and lower the class
+count; the released label gives only the equal-cost source-phase exchange.
+A complete \(E_B\)-side class with an unused label \(d<R\) would replace the
+occupied \(R\)-class and lower the modulus sum.  Thus the only nontrivial
+case is \(E_B\subseteq C\) with \(E_A\setminus C\ne\varnothing\), for which
+the remaining global bridge is the single inequality
+
+\[
+ p^e\left(s_p(g_A)-s_p(g_C)\right)\le d-R,
+ \qquad
+ g_A=\Gamma_N(E_A)/p^{e-1},\quad
+ g_C=\Gamma_N(E_A\setminus C)/p^{e-1},
+\tag{MR6}
+\]
+
+for every such legal low class \(C=[w]_d\) in the same frozen source.  If
+\(E_A\subseteq C\), the preceding class-count argument leaves only the
+released \(R\)-label, so no new comparison is needed.  Existing
+EB1 minimality supplies only the non-strict comparison; (MR6) is the missing
+strict-repair bridge.  When the phases are not prefix-separated, (MR5) is
+unavailable, and the full two-sided responsibility must be retained.  Thus
+(MR1)--(MR6) reduce the mixed branch to an exact finite-period envelope
+comparison, but do not settle unrestricted Erdős #7.
