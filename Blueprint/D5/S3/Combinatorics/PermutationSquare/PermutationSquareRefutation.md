@@ -38,6 +38,10 @@ Lean statement: `D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutati
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/archer-bourne-square-tetranacci-refutation` (refuted) by `D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"archer-bourne-square-tetranacci-refutation","declaration_gid":"D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
