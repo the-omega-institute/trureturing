@@ -633,7 +633,7 @@ $$
 \tag{A15}
 $$
 
-This is an application of the existing compressed-translation formula and scalar test, rather than another prime matrix or certificate. The following exact replay verifies the new downstream comparison and the elementary enclosure for $\log11$; the other logarithm enclosures remain the previously cited analytic inputs.
+This is an application of the existing compressed-translation formula and scalar test, rather than another prime matrix or certificate. The following exact replay verifies the new downstream comparison and the elementary enclosure for $\log11$; the other logarithm enclosures remain the previously cited analytic inputs. For $0<x<N+2$, the first omitted exponential-series term is $x^{N+1}/(N+1)!$ and every subsequent ratio is at most $x/(N+2)<1$, which justifies the geometric-tail upper bound used with $x=239/100$ and $N=12$.
 
 ```python
 from fractions import Fraction as F
@@ -732,7 +732,7 @@ $$
 
 The positive-integral representation matters: a coarse error in two separately estimated weighted sums need not survive their leading cancellation, whereas $S(t)\sim2\sqrt t$ directly yields (A17).
 
-Suppose the same strategy uses $M_{c,\beta_c}\succeq m_cI$ with $m_c>0$ and $A(t)-\beta_c\ge0$ for all $|t|>\Omega_c$. These are conditions on the actual common splitting. They require
+Suppose the same strategy uses $M_{c,\beta_c}\succeq m_cI$ with $m_c>0$ and $A(t)-\beta_c\ge0$ for all $|t|>\Omega_c$, along a specified cofinal family of cutoffs. These are conditions on the actual common splitting. They require
 
 $$
 A(\Omega_c)\ge\beta_c\ge\rho(c)+m_c.
@@ -744,6 +744,8 @@ $$
 \liminf_{c\to\infty}\frac{\log\Omega_c\,\log c}{\sqrt c}\ge8.
 \tag{A18}
 $$
+
+The limit is taken through that asserted family; parameters at intervening cutoffs are not required.
 
 For the specified FIB sequence, write $c_r=3^{k_r}$ with $k_0=k_1=1$ and $k_{r+2}=k_{r+1}+k_r$. Then (A18) requires
 
