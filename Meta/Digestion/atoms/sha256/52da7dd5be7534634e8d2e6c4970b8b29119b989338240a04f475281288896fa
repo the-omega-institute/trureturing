@@ -1,0 +1,9 @@
+**Theorem 3.1 (full directed all-minors identity).** For every commutative ring $R$, including the zero ring, every $n\in\mathbb N$, every $M\in R^{V\times V}$ satisfying $\sum_{i\in V}M_{ij}=0$ for every column $j$, and every $U,W\subseteq V$ of equal cardinality $k\geq1$,
+
+$$
+\det M[W^c,U^c]
+=\sum_{F\in\mathcal F(U,W)}\epsilon(U,W,F)\prod_{(i,j)\in F}M_{ij}.
+$$
+
+Here both complements inherit the increasing order, and the integer signs are mapped into $R$. There are no restrictions on support, signs, characteristic, connectivity, nontriviality or size. In particular, $k=n$ gives the empty determinant and the empty forest, both with value $1$.
+

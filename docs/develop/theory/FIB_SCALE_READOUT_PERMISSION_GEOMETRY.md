@@ -3077,3 +3077,1638 @@ $$
 两个比值为零，非负性保证它们都达到全局最小值。其正分母为十六、三十二，而 $(8,0)-(2,4)=(6,-4)=2(F_4,-F_3)$。实际许可树可取 $\rho^3(\alpha)$ 和 $\rho^3(\langle\alpha,\alpha\rangle)$，另外两端取四片、八片 $\alpha$ 叶的完整有序树；其组成与叶预算由[定义 1.1](#1-有限预算的尺度读出与逆许可分离)实现。故有限阶段的全体极小对不具有无条件的原始差限制或唯一平移性质；定理 9.4 的结论保留了有效起点条件。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 10. 原始共同来源比较与有限阶段唯一响应对
+
+**命题 10.1（低于首次跨类碰撞预算的单位响应隙与唯一组成对）。** 固定整数 $L\ge1$、$1\le k\le L$，令
+
+$$
+ m=3L+3,\qquad A=F_m,\qquad B=F_{m+1},\qquad
+ v=F_{m-1}=B-A,\qquad w=F_{m-2}=A-v,
+$$
+
+并令 $r=r_k$、$R=R_k$、$K=B+\lceil Ar\rceil$。取整数预算
+
+$$
+ B\le H<K,\qquad
+ D_H=\{(a,b)\in\mathbb N_0^2:1\le a+b\le H\},\qquad
+ n_L(a,b)=Aa+Bb,
+$$
+
+以及定理 2.3 的初始组成标签 $\chi_k$。反标签组成对的有限阶段相对值为
+
+$$
+q_L(x,y)=\frac{|n_L(x)-n_L(y)|}{n_L(x)+n_L(y)},\qquad
+ \chi_k(x)\ne\chi_k(y),\quad x,y\in D_H.
+$$
+
+记
+
+$$
+ \theta_k(H,L):=
+ \min_{\substack{x,y\in D_H\\ \chi_k(x)\ne\chi_k(y)}}q_L(x,y).
+$$
+
+在单个已知阶段，对共同已知的 $\epsilon\in\mathbb Q_{\ge0}$ 和有理报告 $q\in\mathbb Q$，采用相对响应合同
+$|q-n_L(c)|\le\epsilon n_L(c)$。所有达到 $\min q_L$ 的组成对都满足
+
+$$
+ |n_L(x)-n_L(y)|=1.
+$$
+
+记 $\mathcal I_k(H)$ 为定义 8.3 的已有候选槽，并在其中保留单位差方向
+
+$$
+ \mathcal I_k^{(1)}(H)=\mathcal I_k(H)\cap
+ \{(m-2,+),(m-2,-),(m-1,+)\}.
+ \tag{10.1}
+$$
+
+这里的槽公式、合法行和每一方向的唯一最大平移均按定义 8.3 与定理 8.4 原样使用；$\mathcal I_k^{(1)}(H)$ 非空。对其每一项 $i=(j_i,\sigma_i)$，置
+
+$$
+ D_i=n_L(x_{j_i,\sigma_i})+n_L(y_{j_i,\sigma_i}),\qquad
+ D_{\max}=\max_{i\in\mathcal I_k^{(1)}(H)}D_i.
+ \tag{10.2}
+$$
+
+把定理 7.4 的有限阶段阈值写作 $\theta_k(H,L)$，则
+
+$$
+ \theta_k(H,L)=\frac1{D_{\max}},\qquad
+ \exists!\,i_*\in\mathcal I_k^{(1)}(H)\quad D_{i_*}=D_{\max}.
+ \tag{10.3}
+$$
+
+因此唯一的无序极小组成对是
+$\{x_{i_*},y_{i_*}\}$。若
+
+$$
+ \mathcal F_H(c)=\{T\in\mathcal T_H:c(T)=c\},
+$$
+
+则全部有序原始树极小对恰为
+
+$$
+ \bigl(\mathcal F_H(x_{i_*})\times\mathcal F_H(y_{i_*})\bigr)\,\cup\,
+ \bigl(\mathcal F_H(y_{i_*})\times\mathcal F_H(x_{i_*})\bigr).
+ \tag{10.4}
+$$
+
+这里唯一性只针对组成对；它不选择括号、叶序、地址或指定树的语法祖先，也不推出实际逆执行。进一步，两个端点的整数响应组成纤维均为单点：对 $c\in\{x_{i_*},y_{i_*}\}$，有
+
+$$
+ \{z\in D_H:n_L(z)=n_L(c)\}=\{c\}.
+ \tag{10.5}
+$$
+
+若 $U=n_L(x_{i_*})$、$V=n_L(y_{i_*})$，则 $|U-V|=1$，并且已有调和有理报告
+
+$$
+ q_*=\frac{2UV}{U+V}\in\mathbb Q_{>0}
+ \tag{10.6}
+$$
+
+满足
+
+$$
+ |q_*-U|=\theta_k(H,L)\,U,\qquad
+ |q_*-V|=\theta_k(H,L)\,V.
+ \tag{10.7}
+$$
+
+所以 $\epsilon<\theta_k(H,L)$ 足以统一恢复 $\chi_k$，而 $\epsilon=\theta_k(H,L)$ 已由同一个 $q_*$ 给出反标签允许报告。
+
+证明。由定理 2.3，$1\le k\le L$ 时 $Ar\le v$。置 $h=H-B$，则
+
+$$
+ h<Ar\le v,\qquad H<B+v<2B,\qquad h\le v-1.
+ \tag{10.8}
+$$
+
+所有 $c=(a,b)\in D_H$ 的响应都是正整数，且
+
+$$
+ 1\le n_L(c)\le BH,
+ \tag{10.9}
+$$
+
+因为 $B>A>0$。预算低于 $K$，再用定理 2.3 的首次碰撞结论，反标签组成不能有相同响应。
+
+先构造单位隙见证。令
+
+$$
+ x_0=(v,A)=S^{L+1}(1,0),\qquad y_0=(0,A+w).
+ \tag{10.10}
+$$
+
+前者对每个 $k\le L$ 都许可，后者是非许可轴点；两者的叶预算分别为 $B$ 与 $A+w\le B$。记 $s=(-1)^m$。定理 2.3 的式 (2.17) 给出
+
+$$
+ n_L(x_0)-n_L(y_0)=s,\qquad
+ D_0:=n_L(x_0)+n_L(y_0)=2B(A+w)+s.
+ \tag{10.11}
+$$
+
+矩阵递推给 $v<2w$，故
+
+$$
+ D_0-B(B+v)=B(3w-v)+s>0.
+ \tag{10.12}
+$$
+
+于是 $D_0>BH$。任意反标签对的整数隙若不为一则至少为二，由 (10.9) 其相对值满足
+
+$$
+ q_L(x,y)\ge\frac2{2BH}=\frac1{BH}>\frac1{D_0}=q_L(x_0,y_0).
+ \tag{10.13}
+$$
+
+所以每一个有限阶段相对极小对的原始整数响应隙都等于一。
+
+现在处理响应组成纤维。由定理 1.4 证明中的整数核式 (1.12)，同一响应的两个不同非负组成之差是 $z(B,-A)$。在 $H<2B$ 下只能取 $|z|=1$；交换两端后可写成
+
+$$
+ c_0=(a,A+b),\qquad c_1=(a+B,b),\qquad a,b\ge0,\qquad T:=a+b\le h<v.
+ \tag{10.14}
+$$
+
+两点都非许可：$a\le T<Ar\le r(A+b)$，而 $c_1$ 的第一坐标至少为 $B$、第二坐标小于 $v$，故 $a+B>Rb$。因此每个非单点响应纤维恰由这两个非许可表示组成。
+
+另一方面，式 (1.8) 在 $j=m-2$ 给出
+$Av-Bw=s$。因此满足 $n_L(d)=s$ 的全部整数差写成
+
+$$
+ d=(v,-w)+z(B,-A),\qquad z\in\mathbb Z.
+$$
+
+对 $d_1$ 使用 $|d_1|\le H<B+v$，并用 $B=2v+w>2v$，只可能有 $z=0,-1$；反向处理 $n_L(d)=-s$。所以所有单位响应差的方向只能是
+
+$$
+ \pm d_{m-2}=\pm(v,-w),\qquad
+ \pm d_{m-1}=\pm(A,-v).
+ \tag{10.15}
+$$
+
+对 (10.14) 的四个有向平移作直接坐标检查。由 $a<v<A$，从 $c_0$ 减去任一方向的第一坐标为负；从 $c_0$ 加上 $d_{m-1}$ 得 $(a+A,b+w)$，而 $b+w<A\le a+A$，故在上墙 $a\le Rb$ 之外；唯一可能的许可邻点是
+
+$$
+ x=c_0+d_{m-2}=(a+v,b+v).
+ \tag{10.16}
+$$
+
+从 $c_1$ 作同样检查，减去 $d_{m-1}$ 给出同一个 $x$，减去 $d_{m-2}$ 给出上述上墙外点；加上 $d_{m-2}$ 时非负情形的第二坐标小于 $v$ 而第一坐标至少为 $B$，加上 $d_{m-1}$ 时第二坐标为负。因此若某个相对极小对的端点响应有非单点组成纤维，其许可端点必为 (10.16)。
+
+这类碰撞端点可以用共同来源严格改进。令
+
+$$
+ p=F_{m-4},\qquad q_0=F_{m-3},\qquad g=(p,q_0)=S^L(1,0).
+ \tag{10.17}
+$$
+
+Fibonacci 递推给
+
+$$
+ p+q_0=w,\qquad A+q_0=2v,\qquad p<v.
+ \tag{10.18}
+$$
+
+因为 $k\le L$，$g$ 的 $k$ 级整数祖先非负；许可锥的加法封闭性故使 $x+g$ 许可。又由 $x$ 的上墙条件和 $R\le2/3$，
+
+$$
+ 3(a+v)\le2(b+v),\qquad 3a+v\le2b.
+ \tag{10.19}
+$$
+
+结合 $a<v$ 得 $b>2a$，再结合 $p<v$ 得
+
+$$
+ 2(a+p)<b+2v.
+ \tag{10.20}
+$$
+
+由 $r\ge1/2$，(10.18) 和 (10.20) 表明
+
+$$
+ c_0+g=(a+p,b+2v)
+$$
+
+严格位于下墙之外，因而仍为非许可组成。两组新组成仍在预算域内，因为
+
+$$
+ |x+g|_1=T+2v+w=T+B\le H,\qquad
+ |c_0+g|_1=T+A+w\le T+B\le H.
+ \tag{10.21}
+$$
+
+且 $n_L(g)>0$。平移前后的反标签响应隙仍为一，而响应和增加了 $2n_L(g)$，所以相对值严格减小。这与极小性矛盾；若原端点取的是 $c_1$，则先用 $n_L(c_1)=n_L(c_0)$ 换成 $c_0$，结论相同。故极小对的两个端点响应组成纤维都必须是单点，得到 (10.5)。
+
+剩下的单位方向正是 (10.1) 所列的三个朝向。槽 $(m-2,-)$ 由 (10.10) 实际取得，故保留集非空；$(m-2,+)$、$(m-1,+)$ 只有在定义 8.3 的精确行条件可行时保留，而 $(m-1,-)$ 的许可端若为 $(a,b)$，则 $a\ge A$、$b\ge3a/2$，其预算至少为 $5A/2>B+v>H$，所以不可能出现。定理 8.4 的行端点和唯一平移证明只用到加权斜率大于一；把其中的 $\phi$ 换成当前有限响应的 $\xi=B/A>1$，同一单调性给出每个保留朝向的唯一最大 $D_i$。
+
+由于 $D_H$ 有限且 (10.10) 给出反标签对，$\theta_k(H,L)$ 的极小值存在。每个极小对都已被证明为单位隙对，因而属于某个保留槽的方向；其响应和不超过相应的 $D_i\le D_{\max}$。有限非空的保留集有最大分母槽，且它的实际反标签端点具有单位隙，所以其比值为 $1/D_{\max}$。这在尚未要求最大槽唯一时已经给出 $\theta_k(H,L)=1/D_{\max}$。任何单位隙对若不是相应槽的唯一最大平移，或来自较小分母的保留槽，其比值都严格大于 $1/D_{\max}$。
+
+对每个达到此值的对，记其两个正整数响应为 $U,V$。由 $|U-V|=1$ 和 $U+V=D_{\max}$，$D_{\max}$ 是同一个奇数，且所有极小对有同一无序响应对 $\{(D_{\max}-1)/2,(D_{\max}+1)/2\}$。前面已证明每个极小端点的响应组成纤维为单点，所以这两个响应确定同一个无序组成对。不同保留槽不能给出该同一组成对：$d_{m-2}=(v,-w)$ 与 $d_{m-1}=(A,-v)$ 的行列式为 $Aw-v^2=(-1)^{m-1}\ne0$，两方向不平行；而 $(m-2,+)$ 与 $(m-2,-)$ 都按定义 8.1、8.3 以唯一的许可端点为起点，若两者给同一无序对，就必须从该同一起点到同一非许可端点同时取 $d_{m-2}$ 与 $-d_{m-2}$，与 $d_{m-2}\ne0$ 矛盾。因此最大分母槽唯一，完成 (10.2)–(10.3) 及唯一无序组成对的结论。每个端点组成的全部完整有序树代表具有同一响应与许可标签，故全部有序原始树极小对恰为 (10.4)。这里使用的全部树存在性仍是定义 1.1 的完整有序树实现，未把组成祖先提升为指定树的逆执行。
+
+最后，(10.6)–(10.7) 是定理 7.4 式 (7.36) 对 $|U-V|=1$ 的直接应用。定理 7.4 的有限候选纤维判据给出 $\epsilon<\theta_k(H,L)$ 的充分性；在等号处，同一个有理调和报告同时满足两端的闭相对误差约束，因而反标签仍不可统一恢复。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 11. 临界深度窗口的预算、奇偶与完整响应纤维
+
+**命题 11.1（临界深度的有限相对极小对与等号报告候选）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的全部非空完整有序树、初始叶预算、组成映射及响应，并沿用[定义 2.1、定理 2.3](#2-许可预算阶梯与深层碰撞前沿)的组成祖先许可。对每个整数 $L\ge1$，置
+
+$$
+\begin{gathered}
+k=L+1,\qquad m=3L+3,\qquad
+A=F_m,\quad B=F_{m+1},\quad v=F_{m-1},\quad w=F_{m-2},\\
+s=(-1)^m,\qquad N=F_{2m},\qquad
+x_0=(v,A),\quad y_0=(0,A+w),\quad y_1=(2v,v),\quad y_2=(B,w).
+\end{gathered}
+\tag{11.1}
+$$
+
+本命题中的 $B$ 是标量响应权重。取任意整数 $B\le H<B+v$，保持原域
+$\mathcal T_H$、$D_H=\{(a,b)\in\mathbb N_0^2:1\le a+b\le H\}$、$S=M^3$、$\chi_k(c)=\mathbf1_{\{S^{-k}c\in\mathbb N_0^2\}}$ 及 $n_L(a,b)=Aa+Bb$。在单个共同已知阶段 $L$，对共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，只观察一个 $r\in\mathbb Q$，合同为 $|r-n_L(c)|\le\epsilon n_L(c)$。统一恢复指存在同一个 $P:\mathbb Q\to\{0,1\}$，对全部 $T\in\mathcal T_H$ 及其全部允许报告输出 $P(r)=\chi_k(c(T))$。记
+
+$$
+\begin{gathered}
+\mathcal F_H(c)=\{T\in\mathcal T_H:c(T)=c\},\qquad
+\Gamma(U)=\{c\in D_H:n_L(c)=U\},\\
+q_L(x,y)=\frac{|n_L(x)-n_L(y)|}{n_L(x)+n_L(y)},\qquad
+\theta=\theta_k(H,L)=
+\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}q_L(x,y).
+\end{gathered}
+$$
+
+则许可组成与三个严格有序的预算阈值准确为
+
+$$
+\{c\in D_H:\chi_k(c)=1\}=\{x_0\},\qquad
+B<3v<B+w=2A<B+v.
+\tag{11.2}
+$$
+
+三个相邻响应的完整组成纤维为
+
+$$
+\begin{aligned}
+\Gamma(N)&=\{x_0\},\\
+\Gamma(N-s)&=
+\begin{cases}
+\{y_0\},&B\le H<B+w,\\
+\{y_0,y_2\},&B+w\le H<B+v,
+\end{cases}\\
+\Gamma(N+s)&=
+\begin{cases}
+\varnothing,&B\le H<3v,\\
+\{y_1\},&3v\le H<B+v.
+\end{cases}
+\end{aligned}
+\tag{11.3}
+$$
+
+所有反标签有限相对极小对的响应隙都等于一。令 $Y$ 表示这些极小对的全部非许可组成端点，则
+
+$$
+(\theta,Y)=
+\begin{cases}
+\bigl(\dfrac1{2N+1},\{y_0\}\bigr),
+ &L\text{ 偶数},\ B\le H<B+w,\\[3pt]
+\bigl(\dfrac1{2N+1},\{y_0,y_2\}\bigr),
+ &L\text{ 偶数},\ B+w\le H<B+v,\\[3pt]
+\bigl(\dfrac1{2N-1},\{y_0\}\bigr),
+ &L\text{ 奇数},\ B\le H<3v,\\[3pt]
+\bigl(\dfrac1{2N+1},\{y_1\}\bigr),
+ &L\text{ 奇数},\ 3v\le H<B+v.
+\end{cases}
+\tag{11.4}
+$$
+
+全部无序极小组成对、全部有序极小组成对以及全部有序原始树极小对分别为
+
+$$
+\begin{gathered}
+\bigl\{\{x_0,y\}:y\in Y\bigr\},\qquad
+\bigcup_{y\in Y}\{(x_0,y),(y,x_0)\},\\
+\bigcup_{y\in Y}
+\left[
+\bigl(\mathcal F_H(x_0)\times\mathcal F_H(y)\bigr)
+\cup
+\bigl(\mathcal F_H(y)\times\mathcal F_H(x_0)\bigr)
+\right].
+\end{gathered}
+\tag{11.5}
+$$
+
+因此无序极小响应对总是唯一；无序极小组成对恰在 $L$ 偶数且 $H\ge B+w$ 时有两对，其余分支只有一对。这里所有 $\mathcal F_H(c)$ 都保留全部叶序和完整二叉括号，没有选择树代表。
+
+对任意 $y\in Y$，响应 $V_*=n_L(y)$ 与 $y$ 的选择无关，且 $|V_*-N|=1$。使用[定理 7.4 式 (7.36)](#7-固定许可深度的最终精确极小对与尖锐预算包络)的调和报告，令
+
+$$
+\begin{gathered}
+r_* =\frac{2NV_*}{N+V_*}\in\mathbb Q_{>0},\qquad
+\mathcal C_\theta(r_*)=\{c\in D_H:|r_*-n_L(c)|\le\theta n_L(c)\},\\
+\mathcal C_\theta^{\mathrm{tree}}(r_*)=
+\{T\in\mathcal T_H:|r_*-n_L(c(T))|\le\theta n_L(c(T))\}.
+\end{gathered}
+$$
+
+在等号合同 $\epsilon=\theta$ 下，完整候选集准确为
+
+$$
+\mathcal C_\theta(r_*)=\{x_0\}\cup Y,\qquad
+\mathcal C_\theta^{\mathrm{tree}}(r_*)=
+\mathcal F_H(x_0)\cup\bigcup_{y\in Y}\mathcal F_H(y).
+\tag{11.6}
+$$
+
+在上述同一原始来源域和报告合同上，统一恢复 $\chi_k$ 当且仅当 $\epsilon<\theta$。许可目标只断言非负组成祖先存在；它不识别指定完整树的替换祖先、规范地址或实际逆执行。
+
+证明。直接使用[定理 2.3 证明中的 Fibonacci 矩阵幂与临界窗口式 (2.12)](#2-许可预算阶梯与深层碰撞前沿)。由于 $3k=m$，每个许可组成都可且只能写成 $c=M^m(p,q)^{\mathsf T}$，其中 $(p,q)\in\mathbb N_0^2\setminus\{(0,0)\}$，并且
+
+$$
+M^m=\begin{pmatrix}v&A\\ A&B\end{pmatrix},\qquad
+|c|_1=Bp+(A+B)q.
+\tag{11.7}
+$$
+
+$m\ge6$，故 $w<v<2w$，其中第二个严格不等式来自 $v=w+F_{m-3}$ 及 $F_{m-3}<w$。递推给 $A=v+w$、$B=2v+w$，于是 $B+v<2B$ 且 $B+v<A+B$。因此 $|c|_1\le H<B+v$ 排除 $q\ge1$ 和 $p\ge2$；非零性迫使 $(p,q)=(1,0)$。反向，此祖先给 $c=x_0$，其叶数为 $v+A=B\le H$。这证明唯一许可组成。又有
+
+$$
+3v-B=v-w>0,\qquad
+(B+w)-3v=2w-v>0,\qquad
+(B+v)-(B+w)=v-w>0,
+$$
+
+且 $B+w=2(v+w)=2A$，证明 (11.2) 的全部阈值。
+
+直接复用[定理 2.3 式 (2.17)](#2-许可预算阶梯与深层碰撞前沿)中的倍角响应与 Cassini 残差 $Av-Bw=s$，在本证明内得到
+
+$$
+\begin{aligned}
+n_L(x_0)&=A(v+B)=N=F_{2m}\ge F_{12}=144,\\
+n_L(y_0)&=B(A+w)=N-s,\\
+n_L(y_2)&=AB+Bw=N-s,\\
+n_L(y_1)&=2Av+Bv=N+s.
+\end{aligned}
+\tag{11.8}
+$$
+
+接下来对每个响应保留全部整数表示，而非只取上式的一个见证。由[定理 1.4 证明的整数核式 (1.12)](#1-有限预算的尺度读出与逆许可分离)，同一响应的全部整数解由任意一个解加 $t(B,-A)$、$t\in\mathbb Z$ 得到。响应 $N$ 的解为 $x_0+t(B,-A)$；由 $v<B$，非负第一坐标迫使 $t\ge0$，由第二坐标 $A-tA\ge0$ 迫使 $t\le1$。故其全部非负解为 $x_0$ 和 $(B+v,0)$。后一组成的叶数为 $B+v>H$，所以 $\Gamma(N)=\{x_0\}$。
+
+响应 $N-s$ 的解为 $y_0+t(B,-A)$。第一坐标为 $tB$，迫使 $t\ge0$；$0<w<A$ 和第二坐标 $A+w-tA\ge0$ 迫使 $t\le1$。全部非负解恰为 $y_0,y_2$。$|y_0|_1=A+w<B$，故 $y_0$ 始终在域内；$|y_2|_1=B+w$，所以 $y_2$ 恰在 $H\ge B+w$ 时加入。响应 $N+s$ 的解为 $y_1+t(B,-A)$。$2v<B$ 排除全部 $t<0$，$v<A$ 排除全部 $t>0$，因此只剩 $y_1$；其叶数为 $3v$，恰在 $H\ge3v$ 时加入。所有这些组成都非空，且 $y_0,y_1,y_2$ 与 $x_0$ 不同；已经证明的唯一许可组成说明它们在各自合法时都非许可。于是 (11.3) 是完整纤维裁剪。
+
+任一反标签对都含 $x_0$。设另一端的正整数响应为 $T$。由 $\Gamma(N)=\{x_0\}$，其整数隙 $d=|T-N|$ 至少为一。若 $d\ge2$，则 $T\le N+d$，并且
+
+$$
+\frac{d}{N+T}
+\ge\frac{d}{2N+d}
+\ge\frac1{N+1}
+>\frac1{2N-1}.
+\tag{11.9}
+$$
+
+中间不等式等价于 $N(d-2)\ge0$；最后一步使用 $N\ge144>2$。另一方面，始终合法的 $y_0$ 给单位隙及比值 $1/(2N-s)\le1/(2N-1)$。所以全部 $d\ge2$ 的对严格劣于这个实际反标签见证，所有极小对只能取 $T=N-1$ 或 $T=N+1$。当高响应 $N+1$ 存在时，其比值 $1/(2N+1)$ 严格小于低响应的 $1/(2N-1)$，故只保留高响应的全部组成纤维；高响应不存在时，始终存在的低响应纤维全部达到极小值。
+
+因 $m=3L+3$，$L$ 偶数时 $s=-1$，所以高响应是 $N-s$，其全部组成由 $H=B+w$ 分成 $\{y_0\}$ 和 $\{y_0,y_2\}$；另一阈值 $3v$ 只加入较差的低响应。$L$ 奇数时 $s=1$，所以在 $H<3v$ 只有低响应 $N-s$，且 $3v<B+w$ 保证其纤维仅为 $\{y_0\}$；在 $H\ge3v$ 高响应纤维恰为 $\{y_1\}$，其后加入的 $y_2$ 仍是较差的低响应。这证明 (11.4)，并证明唯一无序极小响应对和所述组成对数量。
+
+定义 1.1 的组成映射 $c:\mathcal T_H\to D_H$ 满射，每个纤维非空。树的许可标签和响应都通过 $c$ 因子化。因此原始树极小对的组成必为已经列尽的极小组成对；反向，对任何 $y\in Y$，$\mathcal F_H(x_0)$ 和 $\mathcal F_H(y)$ 中的任意两棵树都有相反标签和相应极小比值。两个次序都合法，得到 (11.5) 的两个完整 Cartesian 乘积。这两方向只用原域的全部树，未附加叶序、括号、地址或指定树的替换像条件。
+
+现在 $V_*$ 在每个分支固定为 $N-1$ 或 $N+1$，且 $\theta=1/(N+V_*)<1$。调和报告及两端误差等式直接复用[定理 7.4 式 (7.36)](#7-固定许可深度的最终精确极小对与尖锐预算包络)。对任意正整数真实响应 $T$，等号合同等价于
+
+$$
+\frac{r_*}{1+\theta}\le T\le\frac{r_*}{1-\theta},\qquad
+\frac{r_*}{1+\theta}=\min\{N,V_*\},\qquad
+\frac{r_*}{1-\theta}=\max\{N,V_*\}.
+\tag{11.10}
+$$
+
+两端是相邻整数，所以允许的整数真实响应准确为 $N,V_*$。用 (11.3) 和各分支的 $Y$ 裁剪，便得 (11.6) 的完整组成候选集；再取 $c$ 的全部逆像便得完整树候选集。
+
+若 $\epsilon<\theta$，同一个报告下出现反标签候选 $x,y$ 会由三角不等式给
+$|n_L(x)-n_L(y)|\le\epsilon(n_L(x)+n_L(y))$，与极小值定义矛盾。因 $D_H$ 有限，非空候选集有共同标签；输出该标签，并在空候选集输出零，即得所需总恢复器。若 $\epsilon\ge\theta$，报告 $r_*$ 对 $x_0$ 及任意 $y\in Y$ 都允许，而它们的标签相反，故同一个恢复器不可能对二者均正确。由满射，两端均有原域实际树代表，证明恢复充要条件。
+
+[命题 10.1](#10-原始共同来源比较与有限阶段唯一响应对)使用 $g=S^L e_1$ 的共同平移，其中 $e_1=(1,0)^{\mathsf T}$；其许可保持条件是 $k\le L$。在本命题的 $k=L+1$ 下，$x_0=S^{L+1}e_1$，而
+
+$$
+S^{-k}(x_0+S^Le_1)
+=e_1+S^{-1}e_1
+=(1,0)^{\mathsf T}+(-3,2)^{\mathsf T}
+=(-2,2)^{\mathsf T}.
+\tag{11.11}
+$$
+
+负的第一祖先坐标否定组成许可。矩阵幂给 $|S^Le_1|_1=w$，故即使 $H\ge B+w$ 使 $x_0+S^Le_1$ 仍在原预算域内，该平移也不能保持反标签对的许可端点。这是许可锥的精确适用域边界。
+
+具体地，在同一命题取 $L=2,k=3,H=68$，则 $m=9$、$A=34$、$B=55$、$v=21$、$w=13$、$s=-1$、$N=2584$，且
+
+$$
+\begin{gathered}
+55<63<68=2A<76,\qquad
+x_0=(21,34),\quad y_0=(0,47),\quad y_1=(42,21),\quad y_2=(55,13),\\
+\Gamma(2584)=\{(21,34)\},\qquad
+\Gamma(2585)=\{(0,47),(55,13)\},\qquad
+\Gamma(2583)=\{(42,21)\},\\
+\theta=\frac1{5169},\qquad Y=\{(0,47),(55,13)\},\qquad
+r_* =\frac{2\cdot2584\cdot2585}{5169}.
+\end{gathered}
+\tag{11.12}
+$$
+
+这里 $n_L(a,b)=34a+55b$，三条纤维逐项由上述整数核裁剪取得；$y_1$ 虽然合法，响应较低而不达到相对极小值。无序极小组成对恰为 $\{x_0,y_0\}$、$\{x_0,y_2\}$，而等号报告的组成候选恰为 $\{x_0,y_0,y_2\}$，树候选和两个次序的全部树极小对仍分别由 (11.6)、(11.5) 给出。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 12. 完整树替换像的计数密度、祖先混合与共轭来源偏差
+
+**定义 12.1（完整来源纤维与两个叶数尺度）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的非空有限有序完全二叉树集合 $\mathcal T$、叶标签 $\alpha,\beta$、组成 $c$ 及保持左右括号的替换 $\rho$。树的相等取原始自由语法相等，保留每个括号和每片叶的次序；其完整代码与全部路径读数的等价刻画分别由[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。对 $a,b\in\mathbb N_0$、$a+b\ge1$，记
+
+$$
+\mathcal T_{a,b}=\{T\in\mathcal T:c(T)=(a,b)^{\mathsf T}\}.
+$$
+
+取任意整数 $k\ge1$、$p,q\ge0$、$t=p+q\ge1$，置
+
+$$
+\begin{gathered}
+d=3k,\qquad
+\binom ab=M^d\binom pq=S^k\binom pq,
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad S=M^3,\\
+a=F_{d-1}p+F_dq,\qquad
+b=F_dp+F_{d+1}q,\qquad n=a+b,\\
+\mathcal I_{k,p,q}=\mathcal T_{a,b}\cap\rho^d(\mathcal T),
+\qquad R_{k,p,q}=\frac{|\mathcal I_{k,p,q}|}{|\mathcal T_{a,b}|},
+\qquad N_{t,p}=C_{t-1}\binom tp,\quad
+C_m=\frac1{m+1}\binom{2m}{m}.
+\end{gathered}
+\tag{12.1}
+$$
+
+Fibonacci 编号仍为 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。若使用既有有限预算 $H$，要求 $H\ge n$；待判定的初始树纤维 $\mathcal T_{a,b}$ 因而包含在 $\mathcal T_H$ 内。这里 $d$ 是检验该初始树的组成祖先及语法祖先的替换深度，不是数量观察的末端阶段 $L$。组成许可沿用[定义 2.1、定理 2.3](#2-许可预算阶梯与深层碰撞前沿)；$R_{k,p,q}$ 是该许可组成纤维内部指定树属于替换像的计数比例。
+
+对连续参数 $x\in[0,1]$ 定义
+
+$$
+\begin{gathered}
+u_k(x)=F_{d-1}x+F_d(1-x),\qquad
+v_k(x)=F_dx+F_{d+1}(1-x),\\
+\ell_k(x)=u_k(x)+v_k(x)
+=F_{d+1}x+F_{d+2}(1-x),\qquad
+ y_k(x)=\frac{u_k(x)}{\ell_k(x)},\\
+h(z)=-z\log z-(1-z)\log(1-z),\quad h(0)=h(1)=0,
+\qquad g(z)=\log4+h(z),\\
+J_k(x)=\ell_k(x)g(y_k(x))-g(x),\qquad
+\Gamma_k(x)=\frac{J_k(x)}{\ell_k(x)},\\
+\phi=\frac{1+\sqrt5}{2},\qquad
+\eta=\phi^{-2},\qquad B=g(\eta).
+\end{gathered}
+\tag{12.2}
+$$
+
+全部对数为自然对数。对整数来源参数，以下简写 $x=p/t$、$\ell=\ell_k(x)=n/t$、$y=y_k(x)=a/n$。连续延拓 $J_k$ 比较相同祖先叶数尺度上的指数损失；只有网格 $x=p/t$ 对应实际整数组成。$R_{k,p,q}$ 的定义不赋予实际来源概率律。若另给 $\mathcal T_{a,b}$ 上的均匀律，它才等于该律下的替换像概率；组成、代码、路径读数及计数比例均不自行授权实际逆执行，也不指定物理解释。
+
+**定理 12.1（许可纤维内实际像的统一密度、混合曲率与黄金归一化边界）。** 在定义 12.1 的全部参数范围内，实际像与祖先纤维满足
+
+$$
+\mathcal I_{k,p,q}=\rho^d(\mathcal T_{p,q}),\qquad
+|\mathcal I_{k,p,q}|=N_{t,p}.
+\tag{12.3}
+$$
+
+对每个允许的三元组存在实数 $e_{k,p,q}$，使
+
+$$
+\boxed{\quad
+R_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{y(1-y)}
+ \exp\bigl(-ng(y)+e_{k,p,q}\bigr),
+\qquad |e_{k,p,q}|\le\frac2n.
+\quad}
+\tag{12.4}
+$$
+
+祖先因子 $N_{t,p}$ 在本式中保持精确，包括 $p=0$、$q=0$、$t=1$ 及有界的 $\min(p,q)$。删除指数余项后，所得近似与真实 $R_{k,p,q}$ 的相对误差至多 $\exp(2/n)-1$，所以沿任意允许的 $n\to\infty$ 序列均为相对等价；这包括 $t$ 固定、$k\to\infty$，不要求两个祖先坐标同时增长。
+
+其统一指数损失满足
+
+$$
+\begin{gathered}
+\left|\log R_{k,p,q}+tJ_k(x)\right|
+\le3\log(n+1)+3,\\
+\Gamma_k(x)\ge\gamma_*:=\log2+h(1/3)>0.
+\end{gathered}
+\tag{12.5}
+$$
+
+故沿任意 $n\to\infty$ 的允许序列，$R_{k,p,q}\to0$，且 $-\log R_{k,p,q}/n$ 与 $\Gamma_k(x)$ 的差一致趋零。递归深度与祖先规模同时变化时，进一步有
+
+$$
+\boxed{\quad
+\left|-\frac{\log R_{k,p,q}}n-B\right|
+\le\frac{\log8}{F_{d+1}}
+ + (\log2)\phi^{-2d}
+ +\frac{3\log(n+1)+3}{n}.
+\quad}
+\tag{12.6}
+$$
+
+因此 $k\to\infty$ 时，每片目标叶的实际像指数损失一致趋于 $B$，一致性覆盖所有非零祖先规模及两类祖先叶的全部混合比例。
+
+在 $0<x<1$ 上，连续祖先速率的曲率为
+
+$$
+J_k''(x)
+=\frac1{x(1-x)}
+ -\frac1{\ell_k(x)u_k(x)v_k(x)}
+\ge\frac{23}{6}.
+\tag{12.7}
+$$
+
+每个 $k\ge1$ 恰有一个连续最小点 $x_k\in(1/2,1)$。令 $y_k^*=y_k(x_k)$，它由
+
+$$
+\frac{x_k}{1-x_k}
+=4^{F_d}(y_k^*)^{-F_{d-2}}(1-y_k^*)^{-F_{d-1}}
+\tag{12.8}
+$$
+
+确定，并对所有 $x\in[0,1]$ 满足
+
+$$
+J_k(x)\ge J_k(x_k)+\frac{23}{12}(x-x_k)^2.
+\tag{12.9}
+$$
+
+因此两个纯祖先端点均有严格更大的连续指数损失。对每个固定 $k$，整数网格的最大密度仅在指数尺度上满足
+
+$$
+\lim_{t\to\infty}
+-\frac1t\log\left(\max_{p\in\{0,\ldots,t\}}
+R_{k,p,t-p}\right)=J_k(x_k).
+\tag{12.10}
+$$
+
+若比较时保留共同预算 $H_t$，须取 $H_t\ge F_{d+2}t$，以包含整张祖先网格对应的初始树纤维。本式不指定有限 $t$ 的精确最大点，也不将固定 $k$ 的网格结论扩展成增长 $k$ 的最优前因子。连续最小点的少数祖先叶比例由同一个 $B$ 控制，且对所有 $k\ge1$ 有
+
+$$
+\boxed{\quad
+\left|-\log(1-x_k)-F_d B\right|\le\frac5{F_d}.
+\quad}
+\tag{12.11}
+$$
+
+定义带符号的共轭来源偏差及黄金组成归一化因子
+
+$$
+\begin{gathered}
+D_{k,p,q}=a-\eta n
+=(-1)^k\phi^{-(d+1)}(p-q/\phi),\\
+\mathcal G_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{\eta(1-\eta)}\exp(-nB).
+\end{gathered}
+\tag{12.12}
+$$
+
+它们对所有参数同时满足
+
+$$
+\boxed{\quad
+\left|\log\frac{R_{k,p,q}}{\mathcal G_{k,p,q}}
+ + (\log\phi)D_{k,p,q}\right|
+\le\frac94\frac{D_{k,p,q}^2}{n}
+ +\frac34\frac{|D_{k,p,q}|}{n}+\frac2n.
+\quad}
+\tag{12.13}
+$$
+
+对任意允许的整数参数序列 $(k_i,p_i,q_i)$，只要求 $k_i\to\infty$，不限制 $t_i=p_i+q_i$ 的增长，则
+
+$$
+\boxed{\quad
+\frac{R_{k_i,p_i,q_i}}{\mathcal G_{k_i,p_i,q_i}}\longrightarrow1
+\quad\Longleftrightarrow\quad D_{k_i,p_i,q_i}\longrightarrow0.
+\quad}
+\tag{12.14}
+$$
+
+更一般地，对任意 $z\in\mathbb R$，$D_{k_i,p_i,q_i}\to z$ 时该比值趋于 $\phi^{-z}$；偏差趋于 $+\infty$ 时比值趋于零，偏差趋于 $-\infty$ 时比值趋于 $+\infty$。每个有限 $z$ 都可由合法整数组成达到。允许抵消的混合祖先可以在规模无上界的同时令 $D_{k_i,p_i,q_i}\to0$，故黄金组成归一化的相对有效性由此联合来源偏差决定，不能仅由深度或祖先总规模代替。
+
+证明。由[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#theorem-34-组成观察下的闭合动力学)的组成动力学及其迭代，有 $c\rho^d=M^dc$。直接复用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的完整树替换单射性，$\rho^d$ 仍为单射。若 $U\in\mathcal T_{a,b}$ 且 $U=\rho^d(T)$，则 $M^dc(T)=M^d(p,q)^{\mathsf T}$。因 $\det M=-1$，$M^d$ 在整数上可逆，强制 $c(T)=(p,q)^{\mathsf T}$。反向每棵 $\mathcal T_{p,q}$ 的树都映到 $\mathcal T_{a,b}$。于是 $\rho^d$ 在这两个集合之间给出到 $\mathcal I_{k,p,q}$ 的双射；这一步使用原有单射，不以矩阵可逆性替代树语法单射。
+
+具有 $s\ge1$ 片有序叶的完全二叉树形状有 $C_{s-1}$ 个，复用 [Flajolet–Sedgewick，《Analytic Combinatorics》，第 6–7 页](https://algo.inria.fr/flajolet/Publications/book.pdf) 的 Catalan 计数及 [Stanley，《Enumerative Combinatorics》第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf) 的二叉括号与平面完全二叉树对应。每个形状有固定的从左到右叶序，任选 $a$ 个位置放置 $\alpha$ 给 $\binom{s}{a}$ 种着色。这既不将括号取商，也不将叶位置取商。因此这些既有计数在当前纤维上给
+
+$$
+|\mathcal T_{a,b}|=C_{n-1}\binom na,
+\qquad |\mathcal I_{k,p,q}|=|\mathcal T_{p,q}|=C_{t-1}\binom tp,
+\qquad
+R_{k,p,q}=\frac{N_{t,p}}{C_{n-1}\binom na}.
+\tag{12.15}
+$$
+
+这证明（12.3），同时给出后续联合估计的精确分子。所有纤维非空且有限，故其对数有定义。
+
+由既有深度许可锥，$S^k(p,q)^{\mathsf T}$ 是一步许可组成；一步矩阵的两列比例给
+
+$$
+\frac13\le y\le\frac25,\qquad
+n\ge F_{d+1}t\ge3t.
+\tag{12.16}
+$$
+
+同样的界在整个连续区间上成立。特别地 $u_k(x)\ge F_{d-1}\ge1$、$v_k(x)\ge F_d\ge2$、$\ell_k(x)\ge F_{d+1}\ge3$，没有零目标坐标。经典双根表达直接复用[母卷定义 18.1、命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)的两个嵌入：
+
+$$
+F_s=\frac{\phi^s-(-\phi^{-1})^s}{\sqrt5}.
+$$
+
+代入 $a-\eta n$，两个来源列的系数分别为 $(-1)^d\phi^{-(d+1)}$ 和 $-(-1)^d\phi^{-(d+2)}$，给出（12.12）；$(-1)^d=(-1)^k$。递推与 $\phi^2=\phi+1$ 给 $F_s\ge\phi^{s-2}$（$s\ge2$）及 $F_s\le\phi^s$（$s\ge0$）。从两列各自的偏差除以叶数，并按其叶数作非负加权平均，遂有
+
+$$
+|y-\eta|=\frac{|D_{k,p,q}|}{n}\le\phi^{-2d}.
+\tag{12.17}
+$$
+
+具体地，第一列界为 $\phi^{-(d+1)}/F_{d+1}\le\phi^{-2d}$，第二列界为 $\phi^{-(d+2)}/F_{d+2}\le\phi^{-2d-2}$。该论证也覆盖连续混合。
+
+下面只在正整数上调用 [Robbins，*A Remark on Stirling's Formula*，第 26 页式（1）–（2）](https://dornsife.usc.edu/sergey-lototsky/wp-content/uploads/sites/211/2024/02/Stirling-Robbins.pdf)：
+
+$$
+m!=\sqrt{2\pi}\,m^{m+1/2}e^{-m}\exp(r_m),
+\qquad \frac1{12m+1}<r_m<\frac1{12m},\qquad m\ge1.
+\tag{12.18}
+$$
+
+本证明没有把此供应扩展到零或任意正实数。由标准恒等式 $C_{m-1}=\binom{2m}{m}/(4m-2)$，其对数形式给
+
+$$
+\begin{gathered}
+C_{m-1}=\frac{4^m}{4\sqrt\pi\,m^{3/2}}\exp(E_m),\\
+E_m=-\log\left(1-\frac1{2m}\right)+r_{2m}-2r_m,
+\qquad 0<E_m<\frac1m.
+\end{gathered}
+\tag{12.19}
+$$
+
+最后的界可直接从供应余项取得：下界用 $-\log(1-1/(2m))\ge1/(2m)$ 和 $2r_m<1/(6m)$；上界用
+
+$$
+-\log\left(1-\frac1{2m}\right)
+=\sum_{j\ge1}\frac1{j2^jm^j}\le\frac{\log2}{m},
+\qquad r_{2m}<\frac1{24m},
+\qquad \log2+1/24<1.
+$$
+
+因此 $m=1$ 同样在范围内。在目标二项式上 $a,b,n\ge1$，由（12.18）得
+
+$$
+\binom na
+=\frac{\exp(nh(y))}{\sqrt{2\pi n y(1-y)}}
+ \exp(r_n-r_a-r_b).
+$$
+
+乘上（12.19）在 $m=n$ 的值，再取倒数，得到（12.4），其中
+
+$$
+e_{k,p,q}=-E_n-r_n+r_a+r_b.
+$$
+
+因为 $y\in[1/3,2/5]$，有 $1/a+1/b\le9/(2n)$。故
+
+$$
+-\frac{13}{12n}<e_{k,p,q}<\frac3{8n},
+$$
+
+足以给出所用的 $2/n$。祖先二项式没有作渐近替换，所以纯祖先、固定少数叶、固定 $t$ 及所有端点仍由同一式覆盖。对正近似因子乘上 $\exp(e_{k,p,q})$，即得所述相对误差界。
+
+为取得整个祖先区间上的指数估计，置
+
+$$
+\omega_{t,p}=\binom tp\exp(-th(p/t)).
+$$
+
+有
+
+$$
+\frac1{t+1}\le\omega_{t,p}\le1.
+\tag{12.20}
+$$
+
+$p=0,t$ 时直接等于一；若 $0<p<t$，二项式恒等式 $\sum_{j=0}^t\binom tj x^j(1-x)^{t-j}=1$ 在 $x=p/t$ 的最大项位于 $j=p$。相邻项的比值为 $(t-j)x/((j+1)(1-x))$，随 $j$ 递减，在 $j=p-1$ 时大于一，在 $j=p$ 时小于一。这最大项就是 $\omega_{t,p}$，所以至少为 $1/(t+1)$，至多为一。这只是一条有限多项式不等式，没有给实际树来源赋律。
+
+把（12.19）用于 $m=t$，并保持 $\omega_{t,p}$ 精确，（12.4）成为对数恒等式
+
+$$
+\begin{aligned}
+\log R_{k,p,q}+tJ_k(x)
+={}&2\log n-\frac32\log t
+ +\frac12\log\bigl(2\pi y(1-y)\bigr)\\
+&+\log\omega_{t,p}+E_t+e_{k,p,q}.
+\end{aligned}
+\tag{12.21}
+$$
+
+在（12.16）的区间内，$0<\tfrac12\log(2\pi y(1-y))<1/2$。上界由 $\log\omega\le0$、$E_t\le1$、$|e|\le2/3$ 得到 $2\log n+3$；下界由 $\log\omega\ge-\log(t+1)$、$E_t\ge0$ 得到 $-\tfrac52\log(n+1)-2/3$。两者给（12.5）的绝对误差。又因 $h(x)\le\log2$、$h(y)\ge h(1/3)$ 及 $\ell\ge3$，
+
+$$
+\Gamma_k(x)=g(y)-\frac{g(x)}\ell
+\ge\log4+h(1/3)-\frac{\log8}{3}=\gamma_*.
+$$
+
+正的统一下界和（12.5）证明任意 $n\to\infty$ 序列的衰减。$\eta\in[1/3,2/5]$，且在此区间 $|h'|\le\log2$。由（12.17）、$\ell\ge F_{d+1}$ 及 $g(x)\le\log8$，
+
+$$
+|\Gamma_k(x)-B|
+\le (\log2)\phi^{-2d}+\frac{\log8}{F_{d+1}}.
+$$
+
+再用（12.5）除以 $n$，得到（12.6）。函数 $(3\log(n+1)+3)/n$ 对 $n\ge1$ 递减，而 $n\ge F_{d+1}\to\infty$，所以这确实是对全部祖先规模和混合比例的一致深度极限，不只是逐点极限。
+
+以下曲率将两个来源列的联合约束保留在同一个实现中。为简写置 $j=F_{d-2}$、$f=F_{d-1}$、$w=F_d=j+f$。则 $u=w-jx$、$v=f+w-fx$、$\ell'= -w$。Cassini 等式给
+
+$$
+u'v-uv'=f(f+w)-w^2=(-1)^d.
+$$
+
+熵的齐次表达为
+
+$$
+\ell h(u/\ell)=\ell\log\ell-u\log u-v\log v.
+$$
+
+对仿射函数 $u,v$ 连续求导两次，得到
+
+$$
+\begin{aligned}
+\bigl(\ell h(u/\ell)\bigr)''
+&=\frac{(u'+v')^2}{\ell}-\frac{(u')^2}{u}-\frac{(v')^2}{v}\\
+&=-\frac{(u'v-uv')^2}{\ell uv}=-\frac1{\ell uv}.
+\end{aligned}
+$$
+
+$\ell\log4$ 为仿射项，$h''(x)=-1/(x(1-x))$，所以得（12.7）；$\ell uv\ge6$ 且 $x(1-x)\le1/4$ 给下界 $4-1/6=23/6$。一次导数为
+
+$$
+J_k'(x)
+=\log\frac{x}{1-x}
+ -j\log\frac{4\ell}{u}-f\log\frac{4\ell}{v}.
+\tag{12.22}
+$$
+
+后两个对数在闭区间有限且为正。故 $J_k'(0+)=-\infty$、$J_k'(1-)=+\infty$、$J_k'(1/2)<0$。严格递增的导数恰有一个零点，位于 $(1/2,1)$，就是连续最小点；在零点代入（12.22）得（12.8）。从 $x_k$ 到任意内部 $x$ 积分曲率下界两次，得（12.9）；由连续性延到两个端点。
+
+对固定 $k$，整张网格的 $n$ 处于 $F_{d+1}t$ 与 $F_{d+2}t$ 之间。因此（12.5）除以 $t$ 的误差对 $p=0,\ldots,t$ 一致趋零。连续函数 $J_k$ 的网格最小值趋于 $J_k(x_k)$：下界来自连续最小值，上界取距 $x_k$ 至多 $1/(2t)$ 的网格点并用连续性。$-\log$ 把最大密度变成最小指数损失，遂得（12.10）。这一论证不决定精确有限网格最优点；当 $k$ 增长时，连续最小点到端点的距离还可以小于网格间距。
+
+为取得深层最小点的定量少数比例，令
+
+$$
+A_k=\log\frac{x_k}{1-x_k}
+=w\log4-j\log y_k^*-f\log(1-y_k^*).
+$$
+
+双根式给 $|j-\eta w|=\phi^{-d}$；又有 $w\le\phi^d$。在 $[1/3,2/5]$ 上，$|\log z-\log\eta|\le3|z-\eta|$，$|\log(1-z)-\log(1-\eta)|\le(5/3)|z-\eta|$。用（12.17）的连续版本及 $j+f=w$，得到
+
+$$
+\begin{aligned}
+|A_k-wB|
+&\le(3j+5f/3)|y_k^*-\eta|
+ +|j-\eta w|\left|\log\frac{1-\eta}{\eta}\right|\\
+&\le3w\phi^{-2d}+\phi^{-d}\log\phi
+<\frac4w.
+\end{aligned}
+$$
+
+另一方面 $A_k\ge w\log4$，所以
+
+$$
+0\le-\log(1-x_k)-A_k
+=\log(1+e^{-A_k})\le4^{-w}\le\frac1w.
+$$
+
+相加即为（12.11）。这将每片目标叶的深度熵常数 $B$ 与连续最优祖先的少数叶边界联系起来；其中的少数比例不是有限网格的已取得祖先组成。
+
+最后考察黄金组成归一化的相对有效性。以下简写 $D=D_{k,p,q}$、$R=R_{k,p,q}$、$\mathcal G=\mathcal G_{k,p,q}$。从（12.4）精确相减得到
+
+$$
+\log\frac R{\mathcal G}
+=-n\bigl(h(y)-h(\eta)\bigr)
+ +\frac12\log\frac{y(1-y)}{\eta(1-\eta)}+e_{k,p,q}.
+\tag{12.23}
+$$
+
+$h'(\eta)=\log\phi$，且连接 $\eta,y$ 的整个区间位于 $[1/3,2/5]$，其上 $|h''|\le9/2$。Taylor 定理与 $y-\eta=D/n$ 给
+
+$$
+\left|n\bigl(h(y)-h(\eta)\bigr)-(\log\phi)D\right|
+\le\frac94\frac{D^2}{n}.
+$$
+
+函数 $z\mapsto\tfrac12\log(z(1-z))$ 的导数在同一区间的绝对值至多 $3/4$。将这两个界及 $|e|\le2/n$ 代入（12.23），得到（12.13）。该 Taylor 界同时保留偏差的符号、二次余项和前因子误差，没有先取深度极限。
+
+对任何 $k_i\to\infty$ 的允许序列，（12.17）给 $|D_i|/n_i\le\phi^{-2d_i}\to0$，而 $n_i\ge F_{d_i+1}\to\infty$。因而（12.13）可写为
+
+$$
+\log\frac{R_i}{\mathcal G_i}=-(\log\phi)D_i+\varepsilon_i,
+\qquad
+|\varepsilon_i|\le c_i|D_i|+b_i,
+\quad
+c_i=\frac94\phi^{-2d_i}\to0,
+\quad
+b_i=\frac34\phi^{-2d_i}+\frac2{n_i}\to0.
+$$
+
+偏差有有限极限时，余项趋零，给出 $\phi^{-z}$；偏差趋正无穷或负无穷时，主项的符号和绝对值支配余项，给出零或正无穷的比值极限。特别地 $D_i\to0$ 蕴含比值趋一。反向，比值趋一使其对数趋零；当 $c_i\le(\log\phi)/2$ 时，上式强制
+
+$$
+\frac{\log\phi}{2}|D_i|
+\le\left|\log\frac{R_i}{\mathcal G_i}\right|+b_i\longrightarrow0.
+$$
+
+这证明（12.14）的必要性，未对变化的祖先规模添加条件，也没有把振荡偏差赋予不存在的极限。
+
+各有限相位由实际整数来源实现。沿偶数 $k\to\infty$，若 $z>0$，取 $q=0$、$p=\lfloor z\phi^{d+1}\rfloor$；若 $z<0$，取 $p=0$、$q=\lfloor(-z)\phi^{d+2}\rfloor$。在充分大的深度这些来源非空，取整误差乘以相应收缩因子趋零，故 $D\to z$。$z=0$ 时取 $p=1,q=0$ 即可。另一方面，对每个深度任选正整数 $q$，取距 $q/\phi$ 最近的整数 $p$，则
+
+$$
+|p-q/\phi|\le\frac12,\qquad
+|D|\le\frac12\phi^{-(d+1)}\longrightarrow0.
+$$
+
+$q$ 可以随深度任意快速增长，例如取 $q\ge\lceil\phi^{4d}\rceil$，仍有同一偏差界与相对等价；此时总规模的增长不能替代来源抵消关系。上述序列的每个组成都有完整有序祖先树代表，使用预算时取 $H\ge n$ 即仍在原域内。全部结论只是这些完整树纤维之间的计数及近似关系；它们不增加数量读出、代码或路径观察的取得权限，不将组成祖先许可提升为指定树的逆执行许可。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 13. 完整树像密度的全网格极值与联合少数叶转变
+
+**定义 13.1（原始树网格与少数叶参数）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)、[定义 2.1](#2-许可预算阶梯与深层碰撞前沿)和[定义 12.1](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)的非空自由有序完全二叉树、叶标签、组成及替换 $\rho$。固定任意整数 $k\ge1,t\ge1$，本章所有缩写均在这两个参数下使用，置
+
+$$
+\begin{gathered}
+d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad D=F_d=E+A,
+\quad L=F_{d+1}=A+D,\\
+0\le j\le t,\qquad p=t-j,\quad q=j,\\
+a_j=At+Ej,\qquad b_j=Dt+Aj,\qquad n_j=Lt+Dj,\\
+V_j=|\mathcal T_{a_j,b_j}|=C_{n_j-1}\binom{n_j}{a_j},\qquad
+R_j=R_{k,t-j,j}=\frac{C_{t-1}\binom tj}{V_j},
+\qquad C_s=\frac1{s+1}\binom{2s}{s}.
+\end{gathered}
+\tag{13.1}
+$$
+
+这里 $R_j$ 是实际集合 $\rho^d(\mathcal T_{t-j,j})$ 在完整目标树纤维中的密度，复用（12.3）、（12.15），不将括号、叶序或树的来源取商。若另保留有限预算，整个网格使用同一个 $H_t\ge F_{d+2}t$。本章的 $L$ 只缩写一个 Fibonacci 数，不表示观察阶段。规范代码和全部路径仍按[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)描述完整树；它们不成为这里的额外观察输入。计数密度不指定实际来源的概率律、物理时间或几何，组成祖先许可及下列极值也不授权指定树的实际逆执行。
+
+对 $z\in[0,1]$，定义
+
+$$
+\begin{gathered}
+u(z)=A+Ez,\qquad v(z)=D+Az,\qquad \ell(z)=L+Dz,\\
+K(z)=\ell(z)g\bigl(u(z)/\ell(z)\bigr),\qquad
+P(z)=\ell(z)\sqrt{u(z)v(z)},\qquad
+K(z)-g(z)=J_k(1-z),\\
+\kappa=\frac1{LAD},\qquad
+\sigma=\frac DL+\frac E{2A}+\frac A{2D},\qquad
+\delta=E\log\frac{4L}{A}+A\log\frac{4L}{D},\\
+r=1-x_k\in(0,1/2),\qquad \mu=tr,\qquad
+\lambda=t e^{-\delta},\qquad \varepsilon=\kappa+\frac3t.
+\end{gathered}
+\tag{13.2}
+$$
+
+$g$、$J_k$ 和连续最小点 $x_k$ 均取第12章的原定义，包括熵的端点约定；$r$ 是连续少数比例，不预先断言整数极值的位置。对 $s\ge0$ 再记
+
+$$
+M(s)=\max_{h\in\mathbb N_0}\frac{s^h}{h!},\qquad
+\Pi(s)=e^{-s}M(s),\qquad 0^0=1.
+\tag{13.3}
+$$
+
+最大项存在，因为 $s>0$ 时相邻项之比为 $s/(h+1)$，而 $s=0$ 时只有零次项非零。这些只是指数级数的系数，不附带抽样模型。以下称最大化 $R_j$ 的整数 $j$ 为网格极值指标。
+
+**定理 13.1（全网格严格曲率、精确并列与有界少数叶的联合最优密度）。** 在定义 13.1 的全部原参数范围内，以下结论同时成立。
+
+（一）当 $t\ge2$ 且 $1\le j\le t-1$ 时，整张祖先网格满足
+
+$$
+\Delta^2\log R_j
+:=\log R_{j+1}-2\log R_j+\log R_{j-1}
+<-\frac{55}{36t}<0.
+\tag{13.4}
+$$
+
+记正整数的上升乘积为 $(x)_h=\prod_{s=0}^{h-1}(x+s)$，$(x)_0=1$。全部相邻比值准确为
+
+$$
+Q_j:=\frac{R_{j+1}}{R_j}
+=\frac{t-j}{j+1}\,
+\frac{(n_j)_D(a_j+1)_E(b_j+1)_A}
+     {(2n_j-1)_{2D}},\qquad 0\le j<t.
+\tag{13.5}
+$$
+
+$t\ge2$ 时 $Q_0,\ldots,Q_{t-1}$ 严格递减。集合 $\{j\in\{0,\ldots,t-1\}:Q_j\le1\}$ 总非空，令其最小元素为 $m_*$。若 $Q_{m_*}<1$，唯一极值指标为 $m_*$；若 $Q_{m_*}=1$，恰有 $m_*,m_*+1$ 两个极值指标。所有极值指标都满足
+
+$$
+0\le q\le\lfloor t/2\rfloor,\qquad p=t-q.
+\tag{13.6}
+$$
+
+其中的上界是全网格结论，不是比较域的预先限制。每个有限并列恰由以下正整数等式判定：
+
+$$
+(t-j)(n_j)_D(a_j+1)_E(b_j+1)_A
+=(j+1)(2n_j-1)_{2D},\qquad 0\le j<t.
+\tag{13.7}
+$$
+
+满足等式时，且仅在此时，$j,j+1$ 同为全局极值指标；这里不将参数对的等号集合另作枚举。
+
+（二）在整张有限网格上存在实数 $\theta_j$，使
+
+$$
+Q_j=\frac{\lambda}{j+1}\left(1-\frac jt\right)e^{\theta_j},
+\qquad |\theta_j|\le\varepsilon,\qquad 0\le j<t.
+\tag{13.8}
+$$
+
+置 $w_\pm=e^{-\delta\pm\varepsilon}$、$\nu_\pm=(t+1)w_\pm/(1+w_\pm)$，每个极值指标 $q$ 满足
+
+$$
+\max\{0,\lceil\nu_--1\rceil\}\le q
+\le\min\{t,\lfloor\nu_+\rfloor\}.
+\tag{13.9}
+$$
+
+全部 $0\le j\le t$ 同时满足远网格控制与局部对数误差界
+
+$$
+\frac{R_j}{R_0}\le\frac{(\lambda e^\varepsilon)^j}{j!},
+\tag{13.10}
+$$
+
+$$
+-\frac{j(j-1)}{2(t-j+1)}-\frac4{Lt}
+\le\log\frac{j!R_j}{\lambda^jR_0}
+\le\frac{\kappa j^2}{2t}+\frac{\sigma j}{t}+\frac4{Lt}.
+\tag{13.11}
+$$
+
+（三）连续少数比例和整数比值参数在每个有限 $(k,t)$ 下满足
+
+$$
+\log\frac\lambda\mu=-\log(1-r)-\Delta,
+\qquad \Delta=\delta-K'(r)\in[0,\kappa r],
+\qquad
+(1-\kappa)r\le\log\frac\lambda\mu\le\frac r{1-r}.
+\tag{13.12}
+$$
+
+对任意整数序列 $k_i\to\infty,t_i\to\infty$，只要求 $\mu_i=t_i(1-x_{k_i})$ 有界，将 $R_j$ 在 $j>t_i$ 时延为零，则
+
+$$
+\sum_{j=0}^{\infty}
+\left|\frac{R_j}{R_0}-\frac{\mu_i^j}{j!}\right|
+\longrightarrow0.
+\tag{13.13}
+$$
+
+此式的 $R_j,R_0$ 取同一 $(k_i,t_i)$。它是完整树密度的 $\ell^1$ 相对剖面，不要求 $\mu_i$ 收敛，也不是实际来源的概率分布断言。
+
+（四）在（三）的联合序列上，若 $\mu_i\to\tau\in[0,1)$，最终唯一极值指标为 $q=0$；若 $\tau>0$ 不是整数，最终唯一极值指标为 $q=\lfloor\tau\rfloor$。若 $\mu_i\to m\in\mathbb N_{>0}$，最终每个极值指标都属于 $\{m-1,m\}$，且有限指标的精确选择为
+
+$$
+\begin{array}{c|c}
+Q_{m-1}<1&\{m-1\}\\
+Q_{m-1}>1&\{m\}\\
+Q_{m-1}=1&\{m-1,m\}.
+\end{array}
+\tag{13.14}
+$$
+
+一个整数临界极限本身不保证有限并列。对每个固定正整数 $m$，两个邻近的唯一极值指标确实都能由同一个临界极限实现：令
+
+$$
+\zeta_k=\sqrt{\kappa+r},\qquad
+t_k^- =\left\lfloor\frac{m-\zeta_k}{r}\right\rfloor,
+\qquad
+t_k^+ =\left\lfloor\frac{m+\zeta_k}{r}\right\rfloor.
+\tag{13.15}
+$$
+
+在充分大的 $k$，两个祖先规模均为正整数并趋于无穷，$t_k^\pm r\to m$；负号序列最终唯一极值指标为 $m-1$，正号序列最终唯一极值指标为 $m$。使用预算时分别取共同的 $H_{t_k^\pm}\ge F_{3k+2}t_k^\pm$，每条序列的全网格均处于原树域内。
+
+（五）对（三）的每个联合序列，最优完整树像密度具有原连续速率下的相对渐近式
+
+$$
+\boxed{\quad
+\max_{0\le p\le t}R_{k,p,t-p}
+=(1+o(1))\sqrt{2\pi}\,L\sqrt{AD}\,\sqrt t\,
+\exp\bigl(-tJ_k(x_k)\bigr)\Pi(\mu).
+\quad}
+\tag{13.16}
+$$
+
+最大值仍遍历全部整数 $p$。此式保留精确的 $k$ 依赖指数和 Fibonacci 前因子；有界少数叶条件只施加于本联合渐近式及（三）、（四）的联合极限，不限制（一）、（二）或（13.12）的有限参数结论。
+
+证明。首先固定任意 $(k,t)$，在整张网格上使用同一树来源与替换。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)供应的树替换单射性，第12章已取得实际像的双射（12.3），故可直接使用完整树计数（12.15）。其形状因子所用的经典 Catalan 供应是 [Stanley，*Enumerative Combinatorics* 第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf) 的有序括号和有序完全二叉树计数，不把组成点当作树代表来计数。代入（13.1）并消去阶乘，给
+
+$$
+V_j=\frac{(2n_j-2)!}{(n_j-1)!\,a_j!\,b_j!},
+\qquad
+\frac{V_j}{V_{j+1}}
+=\frac{(n_j)_D(a_j+1)_E(b_j+1)_A}{(2n_j-1)_{2D}}.
+\tag{13.17}
+$$
+
+同时 $n_j\le(L+D)t=F_{d+2}t$，所以定义中的共同预算包含每个目标纤维，不随待比较的 $j$ 删减来源。$a_j\ge At\ge1$、$b_j\ge Dt\ge2$、$n_j\ge Lt\ge3t$。直接复用（12.4）和第12章证明在（12.19）后取得的带符号余项，置 $e_j=e_{k,t-j,j}$，得到恒等式
+
+$$
+\begin{gathered}
+\log R_j=\mathcal C_t+\log\binom tj-tK(j/t)+\log P(j/t)+e_j,\\
+\mathcal C_t=\log\bigl(4\pi\sqrt2\,C_{t-1}t^2\bigr),\qquad
+-\frac{13}{12n_j}<e_j<\frac3{8n_j},\qquad |e_j|\le\frac2{n_j}.
+\end{gathered}
+\tag{13.18}
+$$
+
+这里祖先二项式保持精确，$j=0,t$ 和 $t=1$ 都在同一式内。余项供应来自 [Robbins，*A Remark on Stirling's Formula*，第26页式（1）–（2）](https://dornsife.usc.edu/sergey-lototsky/wp-content/uploads/sites/211/2024/02/Stirling-Robbins.pdf) 在正整数上的阶乘界及其既有应用；没有对零阶乘或实数参数调用该供应，也没有给 $e_j$ 添加导数假设。
+
+下面核算平滑部分与离散余项各自的曲率。Cassini 等式 $|A^2-DE|=1$ 给 $(Ev-uA)^2=1$。使用第12章已有的齐次熵计算，有
+
+$$
+\begin{aligned}
+K(z)&=\ell\log4+\ell\log\ell-u\log u-v\log v,\\
+K'(z)&=E\log\frac{4\ell}{u}+A\log\frac{4\ell}{v},
+\qquad K'(0)=\delta,\\
+K''(z)&=\frac{D^2}{\ell}-\frac{E^2}{u}-\frac{A^2}{v}
+=-\frac{(Ev-uA)^2}{\ell uv}=-\frac1{\ell uv},\\
+(\log P)'(z)&=\frac D\ell+\frac E{2u}+\frac A{2v},\\
+(\log P)''(z)&=-\frac{D^2}{\ell^2}-\frac{E^2}{2u^2}-\frac{A^2}{2v^2}<0.
+\end{aligned}
+\tag{13.19}
+$$
+
+因此在 $[0,1]$ 上
+
+$$
+-\kappa\le K''<0,\qquad
+0\le\delta-K'(z)\le\kappa z,\qquad
+0<(\log P)'\le\sigma.
+\tag{13.20}
+$$
+
+Fibonacci 递推给 $E\le A\le2E$，故 $E/A\in[1/2,1]$。由此 $D/L\le2/3$、$E/(2A)\le1/2$、$A/(2D)\le1/3$；并且 $LAD\ge6$。所以
+
+$$
+\kappa\le\frac16,\qquad \sigma\le\frac32,\qquad L\ge3,
+\qquad \sigma+\frac4L\le\frac{17}{6}<3.
+\tag{13.21}
+$$
+
+对 $1\le j\le t-1$，精确二项式的离散二阶差为
+
+$$
+\Delta^2\log\binom tj
+=-\log\left(1+\frac1j\right)-\log\left(1+\frac1{t-j}\right)
+\le-\frac4{t+1}.
+\tag{13.22}
+$$
+
+为验证最后一步，对 $s\ge0$，$\log(1+s)-2s/(2+s)$ 在零点为零，其导数为 $s^2/((1+s)(2+s)^2)\ge0$。分别代入 $s=1/j,1/(t-j)$，再用两个正数倒数和的界，得到 $2/(2j+1)+2/(2(t-j)+1)\ge4/(t+1)$。
+
+对（13.20）的二阶导数界作三角核积分，得 $\Delta^2[-tK(j/t)]\le\kappa/t$；$\log P$ 的凹性给 $\Delta^2\log P(j/t)\le0$。带符号的离散余项直接给
+
+$$
+\Delta^2e_j
+<\frac38\left(\frac1{n_{j+1}}+\frac1{n_{j-1}}\right)
+  +\frac{13}{6n_j}
+\le\frac{35}{12Lt}.
+\tag{13.23}
+$$
+
+合并以上各项，当 $t\ge2$ 时
+
+$$
+\begin{aligned}
+\Delta^2\log R_j
+&<-\frac4{t+1}+\frac1t\left(\kappa+\frac{35}{12L}\right)\\
+&\le-\frac4{t+1}+\frac{41}{36t}
+\le-\frac{55}{36t}.
+\end{aligned}
+\tag{13.24}
+$$
+
+最后一步使用 $4t/(t+1)\ge8/3$，包含 $t=2$ 的等号；总不等式仍因（13.23）而严格。这证明（13.4），其离散曲率是分子对目标熵曲率和真实余项的联合支配，不要求 $V_j$ 对数凸。
+
+由（13.17）和祖先二项式的相邻比立即取得（13.5）。$\log Q_j-\log Q_{j-1}=\Delta^2\log R_j<0$，给严格递减。为证明全部端点的交叉存在以及（13.6），令 $V(a,b)=C_{a+b-1}\binom{a+b}{a}$。在任意正整数 $a,b$、$n=a+b$ 下，精确计数给
+
+$$
+\frac{V(a+1,b)}{V(a,b)}=\frac{2(2n-1)}{a+1}>1,
+\qquad
+\frac{V(a,b+1)}{V(a,b)}=\frac{2(2n-1)}{b+1}>1.
+\tag{13.25}
+$$
+
+由 $a+1,b+1\le n$ 可直接验证严格性。$j$ 增加一时两个坐标分别增加正整数 $E,A$，故 $V_{j+1}>V_j$，从而
+
+$$
+Q_j<\frac{t-j}{j+1},\qquad
+Q_{\lfloor t/2\rfloor}<1.
+\tag{13.26}
+$$
+
+该索引在 $t\ge1$ 下总小于 $t$。于是首个 $Q_j\le1$ 存在；此前序列严格上升，此后严格下降，只有该比值等于一时才在这一步相邻并列。若此步就在 $\lfloor t/2\rfloor$，其比值已严格小于一；若更早并列，第二点也不超过 $\lfloor t/2\rfloor$。这同时证明全部极值的上界。$t=1$ 时只有 $Q_0<1$，唯一极值为零，不需要二阶差。清除（13.5）的正整数分母得到（13.7），严格递减保证任何一个等号必是唯一的交叉等号，因而必给全局并列。
+
+为取得不依赖网格位置的比值控制，在（13.18）相邻相减，准确写成（13.8），其中
+
+$$
+\begin{aligned}
+\theta_j={}&\delta-t\bigl[K((j+1)/t)-K(j/t)\bigr]\\
+&+\log\frac{P((j+1)/t)}{P(j/t)}+e_{j+1}-e_j.
+\end{aligned}
+\tag{13.27}
+$$
+
+（13.20）使第一行位于 $[0,\kappa(j+1/2)/t]$，第二行的对数位于 $[0,\sigma/t]$；$|e_{j+1}-e_j|\le4/(Lt)$。因 $j<t$，再用（13.21），得 $|\theta_j|\le\kappa+(\sigma+4/L)/t\le\varepsilon$。
+
+每个极值指标 $q$ 若 $q>0$，有 $Q_{q-1}\ge1$；结合（13.8）的上界，$1\le w_+(t-q+1)/q$，等价于 $q\le\nu_+$。若 $q<t$，有 $Q_q\le1$；结合下界，$w_-(t-q)/(q+1)\le1$，等价于 $q\ge\nu_--1$。缺失的端点条件分别由 $q=0\le\nu_+$ 和 $q=t>\nu_--1$ 自动成立。取整数即得（13.9）。连乘 $Q_h\le\lambda e^\varepsilon/(h+1)$，得（13.10），包括 $j=0,t$。
+
+从（13.18）在 $j$ 与零相减并保留精确祖先二项式，得到
+
+$$
+\begin{aligned}
+\log\frac{j!R_j}{\lambda^jR_0}
+={}&\sum_{h=0}^{j-1}\log\left(1-\frac ht\right)
+ +j\delta-t\bigl[K(j/t)-K(0)\bigr]\\
+&+\log\frac{P(j/t)}{P(0)}+e_j-e_0.
+\end{aligned}
+\tag{13.28}
+$$
+
+空和取零。因为 $h\le j-1<t$，$\log(1-s)\ge-s/(1-s)$ 给第一项的上下界 $-j(j-1)/(2(t-j+1))$ 与零，包括 $j=t$。积分（13.20）给第二项位于 $[0,\kappa j^2/(2t)]$，第三项位于 $[0,\sigma j/t]$，第四项绝对值至多 $4/(Lt)$。这证明（13.11）和（二）的全部全网格估计。
+
+现在连接连续与离散参数。第12章（12.7）–（12.11）供应唯一连续最小点及其少数比例；$J_k(1-z)=K(z)-g(z)$ 的驻点条件准确为
+
+$$
+K'(r)=\log\frac{1-r}{r}.
+\tag{13.29}
+$$
+
+以（13.20）代入 $z=r$，得 $0\le\Delta\le\kappa r$，同时
+
+$$
+\log\frac\lambda\mu=-\delta-\log r
+=-\log(1-r)-\Delta.
+$$
+
+由 $r\le-\log(1-r)\le r/(1-r)$，即得（13.12）。这一等式在任意有限 $k,t$ 都成立；连续少数比例没有被直接舍入成整数极值指标。
+
+沿（三）任意指定的联合序列，第12章（12.11）给 $r\to0$；又 $L,A,D\to\infty$，故 $\kappa\to0$，而 $\varepsilon\to0$。由（13.12），$\lambda/\mu\to1$。$\mu$ 有界使 $\lambda-\mu\to0$，且 $\lambda$ 有界。对任意固定非负整数 $j$，$t\to\infty$ 后 $j\le t$；（13.11）的两个误差端点都趋零，故
+
+$$
+\frac{R_j}{R_0}=\frac{\lambda^j}{j!}(1+o(1)),
+\qquad
+\left|\frac{R_j}{R_0}-\frac{\mu^j}{j!}\right|\to0.
+\tag{13.30}
+$$
+
+对 $j=0$ 两者都等于一；$\mu$ 即使趋零也只需有界性和 $\lambda-\mu\to0$，不作除以 $\mu^j$ 的极限操作。可以选同一个有限常数 $C$，在序列的充分大位置使 $\lambda e^\varepsilon\le C$ 和 $\mu\le C$。于是（13.10）连同零延拓，对全部 $j\ge0$ 给
+
+$$
+0\le\frac{R_j}{R_0}\le\frac{C^j}{j!},\qquad
+0\le\frac{\mu^j}{j!}\le\frac{C^j}{j!}.
+\tag{13.31}
+$$
+
+级数 $\sum C^j/j!$ 收敛；先选有限头部以使两条尾和任意小，再在头部使用（13.30），证明（13.13）。这明确控制全部远网格，没有把逐点收敛直接换成无界求和或最大值收敛。
+
+若进一步 $\mu\to\tau$，则 $w_\pm=\lambda e^{\pm\varepsilon}/t$，从而
+
+$$
+\nu_\pm
+=\frac{(1+1/t)\lambda e^{\pm\varepsilon}}
+       {1+\lambda e^{\pm\varepsilon}/t}
+\longrightarrow\tau.
+\tag{13.32}
+$$
+
+若 $0<\tau<1$，两个 $\nu$ 最终都在 $(0,1)$，（13.9）只允许零；$\tau=0$ 时 $\nu_+<1$ 最终成立，同样只允许零。若 $\tau>0$ 非整数，设 $h=\lfloor\tau\rfloor$，两个 $\nu$ 最终都在 $(h,h+1)$，整数包络只允许 $h$。若 $\tau=m\ge1$ 为整数，两个 $\nu$ 最终都在 $(m-1,m+1)$，包络只允许 $m-1,m$；且 $t\to\infty$ 保证 $Q_{m-1}$ 有定义。由（一）的严格交叉，$Q_{m-1}-1$ 的负号、正号或零值恰给（13.14）。这里极限系数在 $m-1,m$ 的相等，不被当作有限 $R_{m-1}=R_m$ 的证据。
+
+为验证（13.15）的两个实现，固定 $m\ge1$。$\zeta_k\to0$，因此 $m-\zeta_k>0$ 最终成立，而 $r\to0$ 使两个 $t_k^\pm\to\infty$。取整误差给
+
+$$
+\mu_k^\pm=t_k^\pm r=m\pm\zeta_k+O(r),\qquad
+\frac1{t_k^\pm}=O(r),\qquad
+\varepsilon=O(\kappa+r).
+\tag{13.33}
+$$
+
+（13.12）给 $\lambda=\mu+O(r)$，再代入（13.32）的准确式，有 $\nu_\pm=\mu+O(\kappa+r)=\mu+O(\zeta_k^2)$，这些估计的常数只需对固定 $m$ 有界。由于 $r\le\zeta_k^2$，负号序列两个包络端点最终严格位于 $(m-1,m)$，正号序列最终严格位于 $(m,m+1)$。因此（13.9）分别只允许 $m-1$ 与 $m$，证明两侧的唯一性。这也表明临界极限单独不能选择有限胜点。例如取 $t_k=\lfloor(3/4)/r\rfloor$，则 $t_kr\to3/4$，唯一极值最终是零，尽管连续少数叶数的最近整数最终是一。
+
+最后取得原速率的相对最优前因子。第12章（12.19）的祖先 Catalan 界与（13.18）在 $j=0$ 联用，给准确端点式
+
+$$
+R_0=\sqrt{2\pi}\,L\sqrt{AD}\,\sqrt t\,
+\exp\bigl(-tJ_k(1)+E_t+e_0\bigr),\qquad
+0<E_t<\frac1t,\quad |e_0|\le\frac2{Lt}.
+\tag{13.34}
+$$
+
+这是 $P(0)=L\sqrt{AD}$ 的精确代入；$E_t$ 是（12.19）原有的 Catalan 对数余项，不是局部 Fibonacci 数 $E$。所以沿任意 $t\to\infty$，端点式相对等价于去掉 $E_t+e_0$ 的右侧，误差对 $k$ 一致，不以黄金组成归一化因子替换 $R_0$。
+
+由（13.13）及任意两个有界序列的上确界差不超过其逐项绝对差之和，
+
+$$
+\max_{0\le j\le t}\frac{R_j}{R_0}=M(\mu)+o(1).
+\tag{13.35}
+$$
+
+$M(\mu)\ge1$，故这也是相对等价；最大值变换已经由可和尾控制，而非仅凭局部展开。还须将精确端点速率换回精确连续最优速率。由（13.29）和熵表达，直接计算
+
+$$
+\begin{gathered}
+J_k(1)-J_k(x_k)
+=K(0)-K(r)+h(r)=-\log(1-r)-I,\\
+I=\int_0^r\bigl(K'(s)-K'(r)\bigr)\,ds,
+\qquad 0\le I\le\frac{\kappa r^2}{2}.
+\end{gathered}
+\tag{13.36}
+$$
+
+最后的界来自 $K'$ 的单调性及（13.20）的 Lipschitz 界。再用 $0\le-\log(1-r)-r\le r^2/(2(1-r))$，在同一联合序列上得到
+
+$$
+\left|t\bigl[J_k(1)-J_k(x_k)\bigr]-\mu\right|
+\le\frac{\mu r}{2(1-r)}+\frac{\kappa\mu r}{2}
+\longrightarrow0.
+\tag{13.37}
+$$
+
+把（13.34）、（13.35）、（13.37）合并，$e^{-\mu}M(\mu)=\Pi(\mu)$ 正好留下（13.16）的前因子。该证明始终使用同一 $(k,t,j)$ 的完整来源树和实际替换像；局部误差、可和尾、临界选择及连续速率转换全部在这些原对象上成立。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 14. 完整来源网格的严格横向穿越与少数叶临界读出
+
+**定义 14.1（固定祖先少数坐标的实有限乘积延拓）。** 固定整数 $k\ge1$、$j\ge0$，置
+
+$$
+ d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad D=F_d=E+A,\quad L=F_{d+1}=A+D.
+$$
+
+对实数 $t\ge j+1$ 定义
+
+$$
+ a=At+Ej,\qquad b=Dt+Aj,\qquad n=Lt+Dj,
+$$
+
+并用 $(x)_m=\prod_{h=0}^{m-1}(x+h)$、$(x)_0=1$ 记上升乘积。置
+
+$$
+ H_{k,j}(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},
+ \qquad q_{k,j}(t)=\frac{t-j}{j+1}H_{k,j}(t).
+ \tag{14.1}
+$$
+
+在整数 $t\ge j+1$ 上，定义 13.1 的相邻密度比为 $Q_{k,t,j}=q_{k,j}(t)$。这是因为
+
+$$
+ (2n-1)_{2D}=4^D(n-\tfrac12)_D(n)_D,
+ \tag{14.2}
+$$
+
+而（13.5）中的 $(n)_D$ 正好约去。故 $q$ 在非整数处只是有限乘积的实辅助延拓，那里没有实叶数的树；整数网格仍由完整有序树、其组成祖先和替换像给出。由（12.3）、（12.15）及[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，每个整数网格使用同一个来源计数和生产者单射性；若同时保留 $0\le j\le t$ 的整张网格，可取共同预算
+
+$$
+ H_t\ge F_{d+2}t.
+ \tag{14.3}
+$$
+
+**定理 14.2（全实域严格增加与唯一穿越）。** 定义 14.1 中 $q_{k,j}$ 在 $[j+1,\infty)$ 上严格增加，并且
+
+$$
+ \frac{q_{k,j}(t)}t\longrightarrow\frac{c_k}{j+1},\qquad
+ c_k=\frac{A^E D^A}{4^D L^D}>0.
+ \tag{14.4}
+$$
+
+存在唯一实数 $\tau_{k,j}$ 使 $q_{k,j}(\tau_{k,j})=1$，且
+
+$$
+ 2j+1<\tau_{k,j}<U_{k,j}:=j+\frac{j+1}{c_k}.
+ \tag{14.5}
+$$
+
+对所有合法整数 $t\ge j+1$，$Q_{k,t,j}<1$、$=1$ 或 $>1$ 分别当且仅当 $t<\tau_{k,j}$、$t=\tau_{k,j}$ 或 $t>\tau_{k,j}$。因此每个 $(k,j)$ 至多有一个整数并列。
+
+证明。先记 $g(t)=(\log q_{k,j})'(t)$。对 $x>0$ 和整数 $m\ge1$，凸性和梯形求积给出
+
+$$
+ \sum_{i=1}^{m}\frac1{x+i}\ge
+ \int_0^m\frac{ds}{x+s}-\frac{m}{2x(x+m)}.
+ \tag{14.6}
+$$
+
+对 $n\ge3$，中点求积先给出
+$\sum_{h=0}^{D-1}(n+h+\tfrac12)^{-1}\le\int_0^D(n+s)^{-1}ds$。把采样点向左移一格后，各差分在求和时望远镜相消，且
+
+$$
+ \sum_{h=0}^{D-1}\left((n+h-\tfrac12)^{-1}-(n+h+\tfrac12)^{-1}\right)
+ =\frac{D}{(n-\tfrac12)(n+D-\tfrac12)},
+$$
+
+得到
+
+$$
+ \sum_{h=0}^{D-1}\frac1{n+h-\tfrac12}\le
+ \int_0^D\frac{ds}{n+s}+\frac{D}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.7}
+$$
+
+对 $0\le s\le1$ 置
+
+$$
+ a_s=At+E(j+s),\quad b_s=Dt+A(j+s),\quad n_s=Lt+D(j+s).
+$$
+
+Cassini 等式 $(A^2-DE)^2=1$ 的直接展开给出
+
+$$
+ \frac{AE}{a_s}+\frac{AD}{b_s}-\frac{LD}{n_s}
+ =-\frac{t(j+s)}{a_sb_sn_s}.
+ \tag{14.8}
+$$
+
+由于 $a_s\ge At$、$b_s\ge Dt$、$n_s\ge Lt$，三项未移位积分的总和至少为
+
+$$
+ -\frac{\kappa_k(j+\tfrac12)}{t^2},\qquad \kappa_k=\frac1{LAD}.
+ \tag{14.9}
+$$
+
+由（14.6）–（14.9），对全部 $t\ge j+1$ 有
+
+$$
+\begin{aligned}
+ g(t)\ge{}&\frac1{t-j}-\frac{\kappa_k(j+\tfrac12)}{t^2}
+ -\frac{AE}{2a(a+E)}-\frac{AD}{2b(b+A)}\\
+ &-\frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.10}
+\end{aligned}
+$$
+
+当 $t\ge2$ 时，Fibonacci 比值给
+$E/A\le1$、$A/D\le2/3$、$D/L\le2/3$、$L\ge3$、$\kappa_k\le1/6$。因而
+
+$$
+ \frac{AE}{2a(a+E)}\le\frac1{2t^2},\qquad
+ \frac{AD}{2b(b+A)}\le\frac1{3t^2},\qquad
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le
+ \frac8{11t^2}.
+ \tag{14.11}
+$$
+
+最后一个界使用 $n-\tfrac12\ge L(t-\tfrac16)$、$n+D-\tfrac12\ge Lt$ 以及 $t\ge2$。在 $j\le t-1$ 下，故
+
+$$
+ g(t)\ge\frac1t-\frac{t-\tfrac12}{6t^2}-\frac{103}{66t^2}
+ =\frac{5}{6t}-\frac{65}{44t^2}>0.
+ \tag{14.12}
+$$
+
+还剩 $j=0$、$1\le t<2$。当 $k\ge2$ 时，递推给
+
+$$
+ \frac35\le\frac EA,\frac AD,\frac DL\le\frac58,\qquad L\ge13,\qquad \kappa_k\le\frac1{520}.
+ \tag{14.13}
+$$
+
+于是（14.10）的两个分子修正各不超过 $25/(128t)$。置 $u=(2L)^{-1}$、$r=D/L$；函数 $t\mapsto t/[(t-u)(t+r-u)]$ 在 $t\ge1$ 上下降，且（14.13）给出
+
+$$
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le\frac{13}{30t},\qquad
+ \frac{\kappa_k}{2t^2}\le\frac1{1040t}.
+ \tag{14.14}
+$$
+
+所以
+
+$$
+ g(t)\ge\frac1t-\frac{25}{64t}-\frac{13}{30t}-\frac1{1040t}
+ =\frac{437}{2496t}>0.
+ \tag{14.15}
+$$
+
+当 $k=1$、$j=0$ 时，$E=A=1,D=2,L=3$，故
+
+$$
+ q_{1,0}(t)=\frac{t(t+1)(2t+1)}{4(36t^2-1)},
+$$
+
+其导数的正分母之外的符号为
+$72t^4-42t^2-6t-1$。对 $t\ge1$，
+
+$$
+ 72t^4-42t^2-6t-1
+ =23t^2+(t-1)(72t^3+72t^2+7t+1)>0.
+ \tag{14.16}
+$$
+
+这覆盖了端点 $t=1$，从而 $g>0$ 的全域证明完成。
+
+在 $t=2j+1$ 时，$q$ 是完整目标纤维的相邻密度比。令
+$V(a,b)=C_{a+b-1}\binom{a+b}{a}$；已有完整树计数给出[（12.15）](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)，而
+
+$$
+ \frac{V(a+1,b)}{V(a,b)}=\frac{2(2(a+b)-1)}{a+1}>1,\qquad
+ \frac{V(a,b+1)}{V(a,b)}=\frac{2(2(a+b)-1)}{b+1}>1.
+ \tag{14.17}
+$$
+
+从而 $q_{k,j}(2j+1)<(2j+1-j)/(j+1)=1$。另一方面（14.1）的最高次项给（14.4），故连续性和严格增加性产生唯一根，并给出根的下界。
+
+为证更强的上界，令
+
+$$
+ H(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},\qquad
+ H_0(t)=\frac{a^Eb^A}{4^Dn^D}.
+$$
+
+右端点求积和左移半步的单调性给
+
+$$
+ \log\frac{H(t)}{H_0(t)}\ge
+ \int_0^1\!\left[E\log\left(1+\frac{Es}{a}\right)+A\log\left(1+\frac{As}{b}\right)-D\log\left(1+\frac{Ds}{n}\right)\right]ds.
+ \tag{14.18}
+$$
+
+括号内函数在 $s=0$ 为零，且其导数为
+
+$$
+ \frac{E^2}{a+Es}+\frac{A^2}{b+As}-\frac{D^2}{n+Ds}
+ =\frac{(Eb-Aa)^2}{(a+Es)(b+As)(n+Ds)}>0,
+ \tag{14.19}
+$$
+
+因为 $Eb-Aa=t(ED-A^2)$ 且 $|ED-A^2|=1$。故 $H(t)>H_0(t)$。令 $z=j/t$；同一 Cassini 展开给
+
+$$
+ \frac{d}{dz}\log\frac{(A+Ez)^E(D+Az)^A}{(L+Dz)^D}
+ =\frac1{(L+Dz)(A+Ez)(D+Az)}>0.
+ \tag{14.20}
+$$
+
+于是 $H_0(t)\ge c_k$，且严格不等式 $H(t)>c_k$ 在整个合法域成立。由（14.1），在 $U_{k,j}$ 处
+$q_{k,j}(U_{k,j})>c_k(U_{k,j}-j)/(j+1)=1$，这证明（14.5）及全部整数比较。证毕。
+
+**定理 14.3（有限精确阈值与整数边界）。** 定义
+
+$$
+\begin{aligned}
+ \mathsf P_{k,j}(T):={}&(T-j)\prod_{i=1}^{E}(AT+Ej+i)\prod_{s=1}^{A}(DT+Aj+s)\\
+ &-(j+1)2^D\prod_{h=0}^{D-1}(2LT+2Dj+2h-1).
+ \tag{14.21}
+\end{aligned}
+$$
+
+并令
+
+$$
+ T_{k,j}=\min\left\{T\in\mathbb Z:\ 2j+2\le T\le\lceil U_{k,j}\rceil,\quad
+ \mathsf P_{k,j}(T)\ge0\right\}.
+ \tag{14.22}
+$$
+
+该集合非空，且 $T_{k,j}=\lceil\tau_{k,j}\rceil$。所有合法 $t<T_{k,j}$ 满足 $Q_{k,t,j}<1$，所有 $t>T_{k,j}$ 满足 $Q_{k,t,j}>1$；在 $T_{k,j}$ 处，恰当且仅当 $\mathsf P_{k,j}(T_{k,j})=0$ 时有整数并列 $Q_{k,T_{k,j},j}=1$。因此这是有限的精确 tie 决定，而不是对所有 $(k,j)$ 的无并列分类。
+
+证明。由（14.1）、（14.2）清除正分母，得到
+
+$$
+ \operatorname{sgn}(q_{k,j}(T)-1)=\operatorname{sgn}\mathsf P_{k,j}(T).
+ \tag{14.23}
+$$
+
+定理 14.2 给出根在 $2j+1$ 与 $U_{k,j}$ 之间，且在 $\lceil U_{k,j}\rceil$ 处符号为正，所以集合非空。严格增加性说明第一个非负整数正是 $\lceil\tau_{k,j}\rceil$，并给出两个分支及至多一个等号。证毕。
+
+**定理 14.4（固定 $j$ 的横向位移）。** 对每个固定 $j\ge0$，令
+
+$$
+ \kappa_k=\frac1{LAD},\qquad
+ \sigma_k=\frac DL+\frac E{2A}+\frac A{2D},\qquad
+ B_{k,j}=\sigma_k+\kappa_k\left(j+\tfrac12\right).
+$$
+
+则 $k\to\infty$ 时
+
+$$
+ \tau_{k,j}=\frac{j+1}{c_k}+j-\sigma_k-\kappa_k\left(j+\tfrac12\right)+O_j(Dc_k).
+ \tag{14.24}
+$$
+
+这里的余项对固定 $j$ 给出完整有限乘积控制：若 $t\ge2(j+1)$，则
+
+$$
+ \log\frac{H(t)}{c_k}=\frac{B_{k,j}}t+\mathcal R_{k,j}(t),\qquad
+ |\mathcal R_{k,j}(t)|\le\frac{2D(j+1)^2}{t^2}.
+ \tag{14.25}
+$$
+
+证明。把每个有限因子按 $t$ 归一化，置
+
+$$
+ \alpha_i=\frac{Ej+i}{A}\ (1\le i\le E),\quad
+ \beta_s=\frac{Aj+s}{D}\ (1\le s\le A),\quad
+ \gamma_h=\frac{Dj+h-\tfrac12}{L}\ (0\le h<D).
+$$
+
+则
+
+$$
+ \frac{H(t)}{c_k}=\frac{\prod_i(1+\alpha_i/t)\prod_s(1+\beta_s/t)}{\prod_h(1+\gamma_h/t)},
+$$
+
+且直接求和得到
+
+$$
+ \sum_i\alpha_i+\sum_s\beta_s-\sum_h\gamma_h
+ =\sigma_k+\kappa_k\left(j+\tfrac12\right)=B_{k,j}.
+ \tag{14.26}
+$$
+
+这里 $E^2/A+A^2/D-D^2/L=\kappa_k$，仍是 Cassini 恒等式。所有这些偏移的绝对值不超过 $j+1$。当 $t\ge2(j+1)$ 时，$|x|\le1/2$ 且
+$|\log(1+x)-x|\le x^2$；分子、分母合计 $2D$ 个因子，故得（14.25）。
+
+令 $M=(j+1)/c_k$。有 $c_k\le4^{-D}$，所以 $Dc_k\to0$。由（14.25），$q_{k,j}(M/2)<1$ 对充分大的 $k$ 成立，而定理 14.2 给 $\tau_{k,j}<M+j$；故 $\tau_{k,j}\asymp M$，并可在根处使用（14.25）。精确根方程为
+
+$$
+ \left|\log\frac{\tau_{k,j}-j}{M}+\frac{B_{k,j}}{\tau_{k,j}}\right|\le
+ \frac{2D(j+1)^2}{\tau_{k,j}^2}.
+ \tag{14.27}
+$$
+
+在 $\log(1+u)=u+O(u^2)$ 中令
+$u=(\tau_{k,j}-M-j)/M$，并用 $\tau_{k,j}\asymp M$，即得
+$\tau_{k,j}=M+j-B_{k,j}+O_j(D/M)$，这就是（14.24）。证明中的 $O_j(D/M)$ 完全由（14.27）及（14.25）给出，而 $1/M=c_k/(j+1)$。证毕。
+
+为比较（14.24）与连续少数坐标，以下在本章另记
+$r_k:=1-x_k$；它只表示定义 12.1 的连续最小点少数比例，不表示定义 2.1 的许可斜率。由（13.12）及其驻点方程，若
+$\Delta_k=\delta-K'(r_k)$，则
+
+$$
+ \frac{c_k}{r_k}=(1-r_k)^{-1}e^{-\Delta_k},\qquad
+ 0\le\Delta_k\le\kappa_k r_k.
+ \tag{14.28}
+$$
+
+因此 $r_k\to0$、$\kappa_k\to0$、$\sigma_k\to2/\phi$，并且
+
+$$
+ \frac1{c_k}-\frac1{r_k}\longrightarrow-1,\qquad
+ \tau_{k,j}-\frac{j+1}{r_k}\longrightarrow
+ -1-\frac2\phi=-\sqrt5.
+ \tag{14.29}
+$$
+
+这个极限固定 $j$；它是加性穿越位移，不是把 $j$ 或 $t$ 一起增长的均匀估计。
+
+**定理 14.5（固定正整数临界中心的整网格唯一模式）。** 对每个固定正整数 $m$，令
+
+$$
+ t_k^-=\left\lfloor\frac m{r_k}\right\rfloor,\qquad
+ t_k^+=\left\lceil\frac m{r_k}\right\rceil.
+ \tag{14.30}
+$$
+
+充分大的 $k$ 下，二者均为合法整数，且
+
+$$
+ t_k^\pm>\tau_{k,m-1}.
+ \tag{14.31}
+$$
+
+于是 $Q_{k,t_k^\pm,m-1}>1$；结合（13.14）的固定 $m$ 临界范围，两个整网格的唯一极值指标均为 $m$。两条序列最终都严格避开整数 tie。
+
+证明。由（14.29），
+$\frac m{r_k}-\tau_{k,m-1}\to\sqrt5$。故
+$t_k^--\tau_{k,m-1}\ge\frac m{r_k}-1-\tau_{k,m-1}\to$ 一个严格大于零的下界 $\sqrt5-1$，而 $t_k^+\ge m/r_k$；（14.31）成立。又 $t_k^\pm r_k\to m$，所以可对两条序列应用（13.14）：有限极值指标只能是 $m-1$ 或 $m$。严格不等式 $Q_{k,t_k^\pm,m-1}>1$ 排除 $m-1$，故唯一指标为 $m$。定义 14.1 的实延拓不把实数树引入结论；所有模式结论都回到整数来源网格和（12.3）的完整树像。证毕。
+
+**推论 14.6（可核验的无并列子族与剩余整数边界）。** 当 $k=1$ 且 $j\equiv0\pmod3$ 时，不存在合法整数 $t$ 使 $Q_{1,t,j}=1$。任意其他 $(k,j)$ 的整数 tie 恰由（14.21）的正整数方程
+
+$$
+ (t-j)(a+1)_E(b+1)_A
+ =(j+1)2^D\prod_{h=0}^{D-1}(2n+2h-1)
+ \tag{14.32}
+$$
+
+决定；本章不把该剩余的参数集合分类为全无并列。
+
+证明。在 $k=1$ 时 $E=A=1,D=2,L=3$，（14.32）化为
+
+$$
+ (t-j)(t+j+1)(2t+j+1)
+ =4(j+1)\bigl(4(3t+2j)^2-1\bigr).
+ \tag{14.33}
+$$
+
+若 $j\equiv0\pmod3$，左边模 $3$ 为 $t(t+1)(2t+1)\equiv0$，右边模 $3$ 为 $-1\equiv2$，矛盾。其余情形仍由（14.22）给出逐个有限的精确判定。证毕。
+
+本章的 $q_{k,j}(t)$ 只是在完整树密度比的整数值上方延拓的有限乘积；它不表示实大小树、概率律、物理时间、Lorentz 含义或指定树的实际逆执行许可。上述跨越、阈值和唯一模式均限于定义 12.1 的组成、完整有序树计数与实际替换像。
+
+## 追加锚（本行以下为增补区）

@@ -4,7 +4,7 @@ authors: trureturing contributors
 year: 2026
 title: Explicit finite Coxeter quotient for pure three-cycle packets of degree (8,9)
 doi: null
-url: https://github.com/the-omega-institute/trureturing/pull/12065
+url: https://github.com/the-omega-institute/trureturing/pull/12077
 claim: The mod-17 Coxeter-sector quotient has orientation image Omega+_4(17) of order 11,985,408 and yields an explicit degree-(8,9) packet triangulation with N=3,995,136 target tetrahedra.
 license: citation-only
 triage: anchor

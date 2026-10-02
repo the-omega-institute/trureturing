@@ -125,3 +125,106 @@ Theorem 9.1 implies that the parenthesis is nonpositive, since multiplying it by
 **Theorem 10.4 (finite-quotient scope).** Theorem 10.2 holds for an arbitrary $K$-vector space $V$ whenever $V/U$ is finite dimensional; finite dimensionality of $V$ itself is unnecessary. The same physical index set, original columns, subspace $U$, all degrees $d\ge1$, and entire nonnegative orthant are retained.
 
 **Proof.** Keep every index and replace only its represented vector by its image in $V/U$. For each exponent vector, its original support spans together with $U$ if and only if its quotient support spans $V/U$, by the quotient map's span and top-image identities. The exact coefficient formula therefore identifies the original spanning polynomial with the actual quotient spanning polynomial over the same variables and rational coefficients. Their analytic evaluations and formal derivatives are identical. Apply the actual reverse-Hessian induction and positivity suppliers in the finite-dimensional quotient, and carry out the analytic line and boundary argument of Theorem 10.2 for this common polynomial.
+
+## 11. Spanning-filtered physical words and actual sampling
+
+**Definition 11.1 (physical word polynomial).** Let $K$ be any field, $V$ any $K$-vector space, $I$ any finite physical index set, $a:I\to V$, and $U\le V$. For every $t\in\mathbb N$, define the rational polynomial
+
+$$
+W_{U,t}=\sum_{w:\operatorname{Fin}(t)\to I}
+\mathbf1_{\{U+\operatorname{span}\{a_{w(j)}:j<t\}=V\}}
+\prod_{j<t}X_{w(j)}.
+$$
+
+The indicator is implemented by selecting the monomial or zero, not by replacing the represented spanning polynomial. All physical indices remain distinct, including zero, repeated, and scalar-parallel columns. Neither finite dimensionality nor a spanning assumption is imposed; the index set may be empty.
+
+**Theorem 11.2 (exact first-coordinate recurrence and normalization).** For all such data and every $t\ge0$,
+
+$$
+W_{U,0}=\begin{cases}1&U=V,\\0&U\ne V,\end{cases}
+\qquad
+W_{U,t+1}=\sum_{i\in I}X_i W_{U+\operatorname{span}\{a_i\},t},
+\qquad
+W_{U,t}=t!F_{U,t}.
+$$
+
+The last equation is an identity in $\mathbb Q[X_i:i\in I]$ for the existing exact reciprocal-factorial polynomial of Definition 5.1. It therefore holds under every rational-algebra evaluation, without a nonnegativity or probability assumption.
+
+**Proof.** There is a unique length-zero word; its sampled span is zero and its product is one. The equivalence between a length-$(t+1)$ word and its first index together with its length-$t$ tail preserves both the product and the span: the range of the represented word is the union of the first singleton and the represented tail range. The span of this union is the join of their spans. Reindexing the finite sum through this equivalence and distributing multiplication proves the recurrence, also for an empty alphabet. The degree-zero coefficient formula for $F$ gives the same indicator. In degree $t+1$, homogeneity and Euler give $\sum_i X_i\partial_i F_{U,t+1}=(t+1)F_{U,t+1}$, and exact contraction gives $\partial_iF_{U,t+1}=F_{U+\operatorname{span}\{a_i\},t}$. Induction in the recurrence, with $(t+1)t!=(t+1)!$, proves normalization. No histogram counting or unfiltered multinomial identity is substituted for the spanning condition.
+
+**Theorem 11.3 (actual uniform physical recovery probability).** Assume additionally that $I$ is nonempty, has a measurable space with measurable singletons, and sampling has exactly the measure `MinimumRetrievalTime.uniformSamples I`. Write $N=|I|$ and $x_i=1/N\in\mathbb R$. For every $t\ge0$, the actual event `MinimumRetrievalTime.recovered a top t` satisfies
+
+$$
+\Pr(\operatorname{recovered}(a,V,t))
+=\operatorname{ofReal}\bigl(W_{0,t}(x)\bigr)
+=\operatorname{ofReal}\bigl(t!F_{0,t}(x)\bigr).
+$$
+
+This uses the original physical alphabet, not a projective pushforward, and imposes no full-spanning or finite-dimensional hypothesis. It includes zero ambient space, degree zero, and unspanned families. Nonemptiness is necessary for the specified uniform distribution and is not required by Theorem 11.2.
+
+**Proof.** Partition the event by its finite prefix words. Each word cylinder specifies precisely the first $t$ coordinates; distinct words give disjoint measurable cylinders. The finite-cylinder formula for the existing infinite product measure gives each cylinder measure $(N^{-1})^t$, including the empty prefix. A prefix is admitted exactly when its represented span is top, since recovery of top is the inclusion of top in the actual prefix span. Finite additivity over the admitted words gives the spanning-filtered word sum. Evaluating each monomial at the common nonnegative coordinate $1/N$ gives the same cylinder weight. The map `ENNReal.ofReal` preserves these finite sums and products because every evaluated summand is nonnegative. Theorem 11.2 gives the second identity.
+
+**Boundary 11.4.** These all-horizon identities are dependencies, not a settlement of the named optimizer. Projective transport, orbit averaging, zero-column replacement, the all-horizon probability comparison, and its transfer to the original actual expected retrieval time remain separate obligations. The existing `retrieval_time_probability_bridge` supplies the tail and expectation transfer once the appropriate full-spanning hypothesis and probability comparison have been proved.
+
+## 追加锚（本行以下为增补区）
+
+## 12. Projective averaging and physical fiber weights
+
+**Theorem 12.1 (all-horizon represented projective maximum).** Let $K$ be any finite field, $k\ge2$, $V=K^k$, and $P=\mathbb P(K,V)$ with every ray retained. Choose a nonzero representative $a_p$ of each ray $p$. For every natural horizon $t$ and every real vector $x:P\to\mathbb R$ with $x_p\ge0$ and $\sum_p x_p=1$, the actual reciprocal-factorial polynomial of Definition 5.1 satisfies
+
+$$
+F_{0,t}(x)\le F_{0,t}\bigl((1/|P|)_{p\in P}\bigr).
+$$
+
+**Proof.** Replacing a representative by a nonzero scalar multiple does not change the span of any selected word, including words whose probability is zero. A linear automorphism maps a selected span to the span of the transformed representatives and preserves the condition that it is the whole space. Reindexing words therefore preserves the evaluated spanning-filtered word polynomial and, by Theorem 11.2 and cancellation of $t!$, the exact polynomial $F_{0,t}$. For the finite linear general linear group $G$, form $A(x)_p=|G|^{-1}\sum_g x_{g^{-1}p}$. Finite reindexing preserves mass and makes this average invariant; pretransitivity makes it constant, and its mass identifies it as $1/|P|$. For $t>0$, apply the closed nonnegative orthant root concavity of Theorem 10.2 and finite Jensen to these actual permuted vectors. Nonnegative coefficients give nonnegative evaluations, so the positive exponent $1/t$ converts the root inequality to the stated polynomial inequality even when either value is zero. At $t=0$ the word polynomial is independent of the weights. No lower bound on $t$ in terms of $k$ is used.
+
+**Theorem 12.2 (physical iid comparison without zero columns).** In the same field and dimension, let $I$ be any nonempty finite physical alphabet and let $b:I\to V$ have no zero column. Distinct physical indices may have equal or scalar-parallel columns. For every $t\ge0$, the actual uniform iid recovery probability of $b$ is at most that of one representative of every projective ray, sampled uniformly. The physical fiber weights are
+
+$$
+x_p=\frac{|\{i\in I:[b_i]=p\}|}{|I|}.
+$$
+
+**Proof.** For arbitrary nonnegative physical weights $y_i$, group the spanning-filtered length-$t$ word sum by its coordinatewise ray image. The image word spans exactly when the physical word spans. Distributing the product of the fiber sums gives its weight as the sum of the weights of all physical words in that fiber. Thus the actual physical word polynomial evaluates to the projective word polynomial at $x_p=\sum_{[b_i]=p}y_i$, without conditioning, renormalization or removal of a physical index. Use $y_i=1/|I|$, finite reindexing for total mass, Theorem 12.1 and the exact factorial identity. Theorem 11.3 transfers both sides to the original infinite iid sample measures and recovery events.
+
+**Boundary 12.3 (local deductions).** Sections 12.1–12.2 are routine deductions used locally inside the full optimizer proof, not independently retained formal declarations. They concern the exact represented polynomial and the original uniform physical-coordinate law at every horizon. The nonzero-column comparison alone is not the named full settlement: original zero columns require a same-index replacement coupling, followed by all-horizon tail comparison and the existing actual integrability and expectation bridge. No new expectation definition, generic orbit surrogate, GL-invariance premise or concavity premise replaces those obligations. The finite group, projectivization action, pretransitivity and finite Jensen are supplied by pinned Mathlib; the projective invariant polynomial and physical fiber transport are composite deductions, not separately assumed suppliers.
+
+## 13. Original physical simplex optimizer
+
+**Theorem 13.1 (Bertuzzo–Ravagnani–Yaakobi simplex optimality).** Let $K$ be any finite field of cardinality $q$, let $k\ge2$, and put $n=(q^k-1)/(q-1)$. For every rank-$k$ matrix $G\in K^{k\times n}$, and every matrix $S\in K^{k\times n}$ whose columns are exactly one nonzero representative of each projective line in $K^k$, let $X_0,X_1,\ldots$ be iid uniform physical positions in $\operatorname{Fin}(n)$. Write $T_C=\min\{t:\operatorname{span}_K(C_{X_0},\ldots,C_{X_{t-1}})=K^k\}$. Then
+
+$$
+\mathbb E[T_S]\le\mathbb E[T_G].
+$$
+
+**Source and scope.** The assertion is arXiv:2603.06489v1, Section 3, Conjecture 3.2 (Problem B), with its predecessor in arXiv:2507.20639v1, Section III, the unnumbered simplex-optimizer paragraph. All zero, repeated and scalar-parallel competitor columns retain their original physical positions. No uniqueness, restricted-field, conditioned-sampling, rank-deficient or projective-only conclusion is asserted. The known simplex closed-form expectation is literature context, not another conclusion here.
+
+**Proof.** Put $V=K^k$ and $P=\mathbb P(K,V)$. The projective cardinality formula gives $|P|=(q^k-1)/(q-1)=n>0$. Fix $v_0\ne0$ and define $G'_i=v_0$ when $G_i=0$, and $G'_i=G_i$ otherwise. All $G'_i$ are nonzero. For every physical sample sequence and natural horizon $t$,
+
+$$
+\operatorname{span}_K\{G_{X_j}:j<t\}
+\subseteq\operatorname{span}_K\{G'_{X_j}:j<t\}.
+$$
+
+Indeed each old generator is either zero, which lies in every subspace, or an unchanged new generator. This is subspace containment, not a claim that the old set of vector values is contained in the new set. The same argument over all positions shows that $G'$ spans $V$, since matrix rank $k$ identifies the old column span with $V$.
+
+Let $e:\operatorname{Fin}(n)\to P$ be the bijection $i\mapsto[S_i]$, and choose $a_p=S_{e^{-1}(p)}$. These representatives span $V$: a nonzero vector $v$ belongs to the singleton span of $a_{[v]}$, because that singleton span is the line of $v$; zero belongs automatically. Thus $S$ also spans $V$. For every $p\in P$, the physical fiber of $S$ contains exactly one position, so its uniform ray weight is $1/n=1/|P|$. The physical word identity of Section 12.2, applied to this actual bijection, therefore identifies uniform projective recovery with uniform physical simplex recovery. It does not require scalar representative choices to be equivariant.
+
+On the original physical sample space, prefix containment and Sections 12.1–12.2 give, for every $t\in\mathbb N$,
+
+$$
+\Pr(T_G\le t)\le\Pr(T_{G'}\le t)\le\Pr(T_S\le t).
+$$
+
+Each recovery event is measurable: it is the inverse image of the set of spanning length-$t$ words under the measurable prefix map, and that finite word space has measurable singletons. Complementing under probability-one measures gives
+
+$$
+\Pr(T_S>t)\le\Pr(T_G>t).
+$$
+
+These statements include the empty prefix and every horizon below $k$; no positive recovery probability at a particular horizon is assumed. For either full-span generator $C=G,S$, uniform iid sampling has finite expectation: failure by time $t$ implies that at least one of the $n$ positions has not appeared, so its probability is at most $n(1-1/n)^t$. Summation gives finiteness. The nonnegative stopping time satisfies the exact tail identity
+
+$$
+\mathbb E[T_C]=\sum_{t=0}^{\infty}\Pr(T_C>t).
+$$
+
+Comparing the nonnegative extended-real sums first gives the claimed order. Their finiteness makes conversion to the ordinary real expectations order-preserving and gives integrability of both stopping times. This proves the assertion for the original physical sampling law without deleting, conditioning away or renormalizing any position. All projective averaging and physical transport deductions are local steps of this argument.
