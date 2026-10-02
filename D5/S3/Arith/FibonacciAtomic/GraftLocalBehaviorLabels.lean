@@ -40,10 +40,8 @@ theorem primitive_hit_phase (p m : ℕ) (hp : p.Prime)
   let : NeZero n := ⟨pow_ne_zero _ hp.ne_zero⟩
   have hcop : IsCoprime x.1 x.2 := by
     rcases hx with h | h
-    · obtain ⟨a, ha⟩ := isUnit_iff_exists_inv'.mp h
-      exact ⟨a, 0, by simpa using ha⟩
-    · obtain ⟨b, hb⟩ := isUnit_iff_exists_inv'.mp h
-      exact ⟨0, b, by simpa using hb⟩
+    · exact (isCoprime_zero_right.mpr h).of_isCoprime_of_dvd_right (dvd_zero _)
+    · exact (isCoprime_zero_left.mpr h).of_isCoprime_of_dvd_left (dvd_zero _)
   have hit_unit : IsUnit (step^[t] x).2 := by
     have h := iterate_coprime x hcop t
     rw [ht] at h
@@ -143,10 +141,8 @@ theorem primitive_no_hit_profile (p H m : ℕ) (hp : p.Prime) (hm : m ≤ H)
       IsUnit (step^[k] z).2 := by
     have cop : IsCoprime z.1 z.2 := by
       rcases hz with h | h
-      · obtain ⟨a, ha⟩ := isUnit_iff_exists_inv'.mp h
-        exact ⟨a, 0, by simpa using ha⟩
-      · obtain ⟨b, hb⟩ := isUnit_iff_exists_inv'.mp h
-        exact ⟨0, b, by simpa using hb⟩
+      · exact (isCoprime_zero_right.mpr h).of_isCoprime_of_dvd_right (dvd_zero _)
+      · exact (isCoprime_zero_left.mpr h).of_isCoprime_of_dvd_left (dvd_zero _)
     have h := iterate_coprime z cop k
     rw [zero] at h
     exact isCoprime_zero_left.mp h

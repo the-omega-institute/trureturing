@@ -66,4 +66,41 @@ register_information_theorem primitive_hit_phase in arena
 
 #print axioms registration
 
+namespace NoHit
+
+@[reducible] def signature : Signature where
+  Params := Σ p : ℕ, Σ H : ℕ, Σ m : ℕ,
+    (ZMod (p ^ H) × ZMod (p ^ H)) × (ZMod (p ^ H) × ZMod (p ^ H))
+  State _ := ℕ × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ a ki =>
+    ((step^[ki.1] (reducePair a.1 a.2.1 ki.2 a.2.2.2.1)).1 = 0 ↔
+      (step^[ki.1] (reducePair a.1 a.2.1 ki.2 a.2.2.2.2)).1 = 0))
+    (fun e => nomatch e)
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ (p H m : ℕ) (hp : p.Prime) (hm : m ≤ H)
+    (x y : ZMod (p ^ H) × ZMod (p ^ H))
+    (hx : IsUnit x.1 ∨ IsUnit x.2) (hy : IsUnit y.1 ∨ IsUnit y.2)
+    (nx : ¬ ∃ k : ℕ, (step^[k] (reducePair p H m x)).1 = 0)
+    (ny : ¬ ∃ k : ℕ, (step^[k] (reducePair p H m y)).1 = 0),
+    (∀ k i : ℕ, i ≤ m → R.readout () ⟨p, H, m, x, y⟩ (k, i)) ↔
+    ∃ j : ℕ, j < m ∧ topHit p H m x = j ∧ topHit p H m y = j ∧
+      direction p H j x = direction p H j y
+
+theorem actual_law : arena.Law actual := primitive_no_hit_profile
+
+#print axioms actual_law
+
+end NoHit
+
+
 end Reg.D5.S3.Arith.FibonacciAtomic.GraftLocalBehaviorLabels
