@@ -25733,7 +25733,8 @@ For \(x=b+Rk\), the congruence \(x\in T_j\) is equivalent to
 
 and hence to \(k\equiv j\pmod3\).  These three actual phases therefore
 partition \(B\), while their odd numerical labels are distinct from one
-another, from \(A,B\), and from all \(U_r\) when \(e\ge10\).  This packet
+another, from the common label \(R\) of \(A,B\), and from all \(U_r\) when
+\(e\ge10\).  This packet
 embedding changes the full liability set, so the earlier formulas for
 \(E_A\) and \(E_B\) are being used only to exhibit the retained-source hull
 before the packet is added.  The enlarged family is still not a cover: for
