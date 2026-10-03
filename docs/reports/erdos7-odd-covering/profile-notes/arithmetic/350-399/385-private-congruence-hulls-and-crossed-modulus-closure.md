@@ -28118,3 +28118,147 @@ They check (PB1)--(PB8) on the indexed control and the Section 240 numerical par
 The indexed control repeats the modulus
 \(3q\), so it is not an odd-distinct or EB1 witness; the factorization is an
 exact local network identity, not an unrestricted Erdős--#7 conclusion.
+
+## 243. The remaining global bridge is an activation problem with complete liability
+
+The factorization in (PB2) removes a tempting but invalid route to a global
+contradiction.  Once every actual private neighbourhood is nonempty, the
+private buckets of different external labels are disjoint.  Hence a Hall
+deficit cannot be extracted from that incidence graph.  The remaining issue is
+the cost of the *coordinates* activated by a simultaneous choice of buckets.
+
+Let \(V_H\) be the fully indexed quotient-coordinate atoms that occur in the
+charge of Section 237.  Keep the component and residue indices in \(V_H\),
+even when two atoms have the same numerical prime and height.  Give
+\(v\in V_H\) weight
+
+\[
+  w_v=p(v)-1.
+\]
+
+For a label \(i\) and an actually adjacent private bucket \(b\in N(i)\), let
+\(T(i,b)\subseteq V_H\) be the atoms activated by routing \(i\) through \(b\).
+Using (PB2), the shared-route minimum has the exact set formulation
+
+\[
+\boxed{
+ \Lambda_H=
+ \min\left\{
+   \sum_{v\in U}w_v:
+   U\subseteq V_H,\quad
+   \forall i\in I_H\ \exists b\in N(i)\; T(i,b)\subseteq U
+ \right\}.
+}
+\tag{243.1}
+\]
+
+Indeed, a saturated flow produces the activated union of its chosen buckets,
+so its union is feasible in (243.1).  Conversely, for each \(i\) choose one
+bucket whose activation set is contained in a feasible \(U\); (PB2) makes all
+these choices simultaneous.  Their activated union is contained in \(U\), so
+minimizing gives (243.1).  This is an exact reformulation of the existing
+source-preserving flow, not a relaxation and not a new Hall condition.
+
+There is a useful dual-looking certificate for lower bounds on (243.1).  Call
+\(R\subseteq V_H\) a blocker for label \(i\) if
+
+\[
+ R\cap T(i,b)\ne\varnothing\qquad(b\in N(i)).
+\tag{243.2}
+\]
+
+It is enough to retain inclusion-minimal blockers.  A set \(U\) is feasible in
+(243.1) exactly when it meets every retained blocker for every label: if no
+option is contained in \(U\), the complement of \(U\) contains a minimal
+blocker.  Consequently any nonnegative numbers \(\alpha_{i,R}\) satisfying
+
+\[
+ \sum_{i,R:\,v\in R}\alpha_{i,R}\le w_v
+ \qquad(v\in V_H)
+\tag{243.3}
+\]
+
+give the certified lower bound
+
+\[
+\boxed{
+ \Lambda_H\ge\sum_{i,R}\alpha_{i,R}.
+}
+\tag{243.4}
+\]
+
+The proof is the weighted hitting-set inequality obtained by summing (243.3)
+over a feasible \(U\).  Unlike the coordinate-wise bounds in (238), a blocker
+can require one of several atoms without forcing any one atom individually.
+Thus (243.3)--(243.4) identify a genuine possible source of a strict lower
+bound.  They do not assert that whole coverage supplies such weights.
+
+The replacement alternative must retain the complete joint liability.  For a
+periodic source \(X_Q=\mathbb Z/Q\mathbb Z\), let
+
+\[
+ O(x)=\{d:x\in A_d\},\qquad
+ E_J=\{x:O(x)\subseteq J\}
+\tag{243.5}
+\]
+
+for a released label set \(J\).  With exact-owner strata
+\(R_T=\{x:O(x)=T\}\),
+
+\[
+ E_J=\bigsqcup_{\varnothing\ne T\subseteq J}R_T.
+\tag{243.6}
+\]
+
+The private regions are only the singleton strata \(R_{\{d\}}\).  A legal
+replacement must cover every higher-owner stratum as well.  For replacements
+whose moduli divide \(Q\), the exact finite constraints are binary variables
+\(y_{d,a}\), at most one phase for each numerical modulus,
+
+\[
+ \sum_a y_{d,a}\le1,
+\tag{243.7}
+\]
+
+and coverage of every \(x\in E_J\),
+
+\[
+ \sum_{d,a:\,x\equiv a\pmod d}y_{d,a}\ge1.
+\tag{243.8}
+\]
+
+Only after (243.7)--(243.8) are satisfied may one compare
+
+\[
+ \left(\sum_{d,a}y_{d,a},\sum_{d,a}d\,y_{d,a}\right)
+\quad\text{with}\quad
+ \left(|J|,\sum_{d\in J}d\right)
+\tag{243.9}
+\]
+
+in the EB1 lexicographic order.  A locally suitable phase for each fibre is not
+enough: one phase assignment must work simultaneously on all of \(E_J\), with
+the original source and labels retained.  New moduli outside the divisor set
+of \(Q\) require lifting (243.5) to a common multiple before the same test can
+be made.
+
+This gives the exact remaining alternatives:
+
+* prove that every hypothetical odd-distinct whole cover has an admissible
+  layer \(H\) with blocker weights satisfying (243.3) and
+  \(\sum\alpha_{i,R}>\mathcal B_H\), contradicting (237.5); or
+* construct a replacement satisfying (243.7)--(243.9), including all
+  higher-owner strata in (243.6), with a strict EB1 decrease.
+
+The private-flow factorization, local ternary barriers, and scalar activation
+inequalities do not imply either alternative.  The finite \(Q=75\) family
+\(D=\{3,5,15,25,75\}\) with phases
+\(0\bmod3,1\bmod5,10\bmod15,5\bmod25,50\bmod75\) witnesses why a strict
+local core surplus cannot replace this global step: its \(25\)-fibre induces
+the essential quotient cover \(0,1,2\bmod3\), attaining
+\(1+(3-1)\), while the family itself leaves \(2\) uncovered.  It is a
+boundary control, not a counterexample to Erdős--#7.
+
+Thus the unrestricted problem remains open at precisely the source-global
+activation/liability bridge; no local-flow identity in this report is being
+promoted to a proof of the original universal statement.
