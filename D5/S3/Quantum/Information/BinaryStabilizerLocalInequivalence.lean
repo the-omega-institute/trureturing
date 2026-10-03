@@ -101,7 +101,7 @@ private def pairOp (A B : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 6 → Fin 2)
 private def tau : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ := ![1, qubitX, qubitX * qubitZ, qubitZ]
 
 /-- The Pauli labels in the order `𝟙, X, Y, Z`. -/
-private def plab : Fin 4 → Pauli := ![.I, .X, .Y, .Z]
+def plab : Fin 4 → Pauli := ![.I, .X, .Y, .Z]
 
 /-- The phase with `pauliMatrix (plab a) = ph a • tau a`. -/
 private def ph : Fin 4 → ℂ := ![1, 1, I, 1]

@@ -199134,3 +199134,41 @@ $$
 Lean 真值锚为 [`D5/S3/VertexAlgebra/PolynomialFockCharacter.lZero_character_euler_product`](../../../D5/S3/VertexAlgebra/PolynomialFockCharacter.lean)。该模块还给出 `energyFiberEquivPartition N`：把指数向量 $d$ 送到将 $i+1$ 重复 $d_i$ 次得到的正整数多重集；其和正好是 $\sum_i(i+1)d_i$，且逆映射由分拆各部分减一后的计数给出。因而定理 2146.1 的具体本征空间维数逐系数等于 `Nat.Partition.genFun (fun _ _ => 1)`。Mathlib 的 `Nat.Partition.hasProd_genFun` 将该生成函数写成按正整数部分的乘积；`PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero` 将每个因子 $1+X^j+X^{2j}+\cdots$ 识别为 $(1-X^j)^{-1}$。$N=0$ 时指数向量和分拆都唯一，故真空系数为 $1$。
 
 该定理只结算问题 2146.2 的形式幂级数系数恒等式。它没有构造全态态场、证明 Virasoro 中心项、Monster 作用、融合结构或带真空能移位的共形角色；这些仍是问题 2146.2 的开放条款。形式角色与 Heisenberg 真空表示的背景可参见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)，共形代数约定参见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+
+**问题 2147.2（实际多项式 Fock 的全整数态场复合律）。** 在同一个复多项式 Fock 空间及已经构造的实际全态场 $Y$ 上，令
+
+$$
+\mu(a,n,b)=((Y a)[[n]])b,\qquad
+C(t,i)=\left(\binom{t}{i}_{\!\mathbb Z}:\mathbb C\right),\qquad
+\varepsilon(r)=(-1: \mathbb C)^r,
+$$
+
+其中 $t,r\in\mathbb Z$、$i\in\mathbb N$，而 $\binom{t}{i}_{\!\mathbb Z}$ 是整数广义二项式系数。对所有 $a,b,c\in F_{\mathbb C}$ 及 $p,q,r\in\mathbb Z$，证明
+
+$$
+\sum_{i\geq0}^{\mathrm{fin}} C(p,i)\,\mu(\mu(a,r+i,b),p+q-i,c)
+=
+\sum_{i\geq0}^{\mathrm{fin}}((-1: \mathbb C)^i C(r,i))
+\left(\mu(a,p+r-i,\mu(b,q+i,c))
+-\varepsilon(r)\,\mu(b,q+r-i,\mu(a,p+i,c))\right).
+$$
+
+这里的三个逐态有限和必须分别证明：左侧支路有限，右侧第一支路有限，右侧第二支路有限；不得把端同态值域的统一有限支撑误作逐态有限性，也不得把负整数 $r$ 的广义二项式系数截为有限多项式。还须从已证明的实际 $Y$ 导出全整数闭包
+
+$$
+Y(\mu(a,r,b))=R_r(Y a,Y b),
+$$
+
+其中对任意 $r,n\in\mathbb Z$、$v\in F_{\mathbb C}$ 和下截断场 $A,B$，residue 场的系数定义为
+
+$$
+\begin{aligned}
+((R_r(A,B))[[n]])v
+={}&\sum_{i\geq0}^{\mathrm{fin}}(-1)^i C(r,i)\,
+ A[[r-i]](B[[n+i]]v)\\
+&-\varepsilon(r)\sum_{i\geq0}^{\mathrm{fin}}(-1)^i C(r,i)\,
+ B[[r+n-i]](A[[i]]v).
+\end{aligned}
+$$
+
+这两条支路分别逐态有限：第一条由 $B$ 在 $v$ 上的下截断保证，第二条由 $A$ 在 $v$ 上的下截断保证。还须证明该系数族本身下截断。所求闭包须由实际 $Y$ 的创生、共同平移及局域性推出，而不是附加假设。这里创生指 $A[[n]]1=0$ 对 $n\geq0$ 成立，且 $A[[-1]]1$ 为初始态；共同平移指 $T1=0$ 及 $[T,A[[n]]]=-n A[[n-1]]$，其中 $T=L(-1)$。负指标 $r=-d-1$ 的 residue 是 $A$ 的第 $d$ 个除幂导数与 $B$ 的正规乘积；非负指标须满足 Dong 型局域性。真空初始态与共同平移、相对于所有 $Yu$ 的局域性共同决定场。依据：[Matsuo–Nagatomo, Lemma 1.5.4, Proposition 1.5.5 and Proposition 3.2.2](https://arxiv.org/abs/hep-th/9706118v1) [文献注](../../../Library/VertexAlgebra/matsuo1997locality.md)。该问题只推进实际 Fock 的全整数态场复合律，不主张 Monster 实现、模块融合、完整边界 CFT、弦论或 AdS/CFT 几何动力学桥梁。
