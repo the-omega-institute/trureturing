@@ -12,8 +12,10 @@ Run with python -B -I -S -O conditional_replica.py --check.  Relative input
 and output paths are resolved beside this file.  Optional --input JSON has
 "fixtures": [{"name": ..., "p": 5, "old_weights": ["1/3", ...],
 "columns": [["label", m, b, residue], ...]}] and optional
-"counterexample_cofactors": [11, 13, 17].  Core routines accept arbitrary
-finite rational old laws and coprime old cofactors, including depth zero.
+"counterexample_cofactors": [11, 13, 17] and
+"shared_prefix_cofactors": [11, 13].  The latter must be a nonempty set of
+distinct primes above seven.  Core routines accept arbitrary finite
+rational old laws and coprime old cofactors, including depth zero.
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ from dataclasses import dataclass
 from fractions import Fraction as F
 from itertools import combinations, product
 import json
-from math import gcd, isqrt
+from math import gcd, isqrt, prod
 from pathlib import Path
 
 
@@ -296,7 +298,104 @@ def counterexample(m):
             ("35m", 35*m, phase(((1, 5), (2, 7), (1, m))))]
 
 
-def run(extra_fixtures=(), cofactors=(11, 13, 17)):
+def shared_prefix_case(cofactors):
+    """Check one common source for multiple cofactors without duplicating prefixes.
+
+    L(x) is the conditional labelled load sum_h 1_C_h(x)/5; alpha(x)
+    is the new-word union probability.  Each reported expectation averages
+    their squares over uniform old x and the same 84 common source maps.
+    """
+    cofactors = tuple(cofactors)
+    require(cofactors and all(prime(q) and q > 7 for q in cofactors),
+            "shared-prefix cofactors must be nonempty primes above seven")
+    require(len(set(cofactors)) == len(cofactors), "repeated shared-prefix cofactor")
+    cofactors = tuple(sorted(cofactors))
+    common_labels = {"3", "5", "7", "35"}
+    by_modulus, subfamily_labels = {}, set()
+    for q in cofactors:
+        for label, modulus, phase in counterexample(q):
+            name = label if label in common_labels else f"{label}:{q}"
+            original = (name, modulus, phase)
+            if modulus in by_modulus:
+                require(label in common_labels and by_modulus[modulus] == original,
+                        ("inconsistent shared prefix", original))
+            else:
+                by_modulus[modulus] = original
+            if label == "7m":
+                subfamily_labels.add(name)
+    originals = list(by_modulus.values())
+    comparable_pairs = structure(originals)
+    old_period = 3 * prod(cofactors)
+    weights = uniform(old_period)
+    totals = {"full_labelled": F(0), "full_union": F(0),
+              "subfamily_labelled": F(0), "subfamily_union": F(0)}
+    counts = {"source_maps": 0, "literal_pullback_checks": 0,
+              "replica_states": 0, "subfamily_replica_states": 0,
+              "ordered_label_pairs": 0, "subfamily_ordered_label_pairs": 0}
+    for u, children in product(range(1, 5), combinations(range(7), 5)):
+        output, checks = verify_pullback(originals, 5, 7, u, children, old_period)
+        counts["source_maps"] += 1
+        counts["literal_pullback_checks"] += checks
+        full = [c for c in output if c.depth == 1]
+        subfamily = [c for c in full if c.label in subfamily_labels]
+        for label, columns, count_prefix in (("full", full, ""),
+                                              ("subfamily", subfamily, "subfamily_")):
+            result = moments(5, columns, weights)
+            totals[label + "_labelled"] += F(result["labelled_pair_bound"])
+            totals[label + "_union"] += F(result["conditional_second_moment"])
+            counts[count_prefix + "replica_states"] += result["replica_states"]
+            counts[count_prefix + "ordered_label_pairs"] += result["ordered_label_pairs"]
+    reciprocal_sum = sum((F(1, q) for q in cofactors), F(0))
+    square_sum = sum((F(1, q*q) for q in cofactors), F(0))
+    union_mass = 1 - prod(1 - F(1, q) for q in cofactors)
+    formulas = {
+        "full_labelled": (19 * (1 + reciprocal_sum**2 - square_sum) + 43 * reciprocal_sum) / 420,
+        "full_union": (19 + 43 * union_mass) / 420,
+        "subfamily_labelled": (reciprocal_sum**2 + reciprocal_sum - square_sum) / 35,
+        "subfamily_union": union_mass / 35,
+    }
+    averages = {key: value / counts["source_maps"] for key, value in totals.items()}
+    require(averages == formulas, ("shared-prefix moment formulas", averages, formulas))
+    # One literal integer outside every original class certifies non-coverage.
+    witness_constraints = [(1, 3), (1, 5), (1, 7)] + [(3, q) for q in cofactors]
+    witness, witness_period = crt(witness_constraints)
+    require(all(witness % n != phase % n for _, n, phase in originals),
+            "shared-prefix uncovered witness lies in an original class")
+    if cofactors == (11, 13):
+        require(len(originals) == 12 and comparable_pairs == 22, "shared-prefix label counts")
+        require(counts["source_maps"] == 84 and counts["literal_pullback_checks"] == 2162160
+                and counts["replica_states"] == 880308
+                and counts["subfamily_replica_states"] == 653796, "shared-prefix state counts")
+        require(averages == {"full_labelled": F(541, 8580), "full_union": F(1853, 30030),
+                             "subfamily_labelled": F(2, 385), "subfamily_union": F(23, 5005)},
+                "shared-prefix reference moments")
+        require(witness == 1576, "shared-prefix reference uncovered witness")
+    summary = {
+        "cofactors": list(cofactors), "originals": [list(t) for t in originals],
+        "label_count": len(originals), "divisor_closed": True,
+        "comparable_disjoint_pairs": comparable_pairs, "old_period": old_period,
+        "safe_coordinates": [1, 2, 3, 4], "common_subsets": 21,
+        "S": str(reciprocal_sum), "T": str(square_sum), "z": str(union_mass),
+        "definitions": {"L": "sum_h 1_C_h(x)/5", "alpha": "H(union of active new-word cylinders)",
+                        "S": "sum_q 1/q", "T": "sum_q 1/q^2", "z": "1-prod_q(1-1/q)"},
+        "averaging": "uniform old x and uniform common (u, five-subset of seven)",
+        "old_law": "uniform on Z/(3*prod_q q), without conditioning on depth-zero classes",
+        "full_depth_one": {"expected_L_squared": str(averages["full_labelled"]),
+                           "expected_alpha_squared": str(averages["full_union"]),
+                           "L_squared_formula": "(19*(1+S^2-T)+43*S)/420",
+                           "alpha_squared_formula": "(19+43*z)/420"},
+        "seven_q_subfamily": {"labels": sorted(subfamily_labels),
+                              "expected_L_squared": str(averages["subfamily_labelled"]),
+                              "expected_alpha_squared": str(averages["subfamily_union"]),
+                              "L_squared_formula": "(S^2+S-T)/35", "alpha_squared_formula": "z/35"},
+        "uncovered_witness": {"residue": witness, "modulus": witness_period,
+                              "constraints": [list(t) for t in witness_constraints]},
+        "scope": "finite common-source incidence family; not a whole cover or a prime-ordered BBMST stage; not Lean evidence",
+    }
+    return summary, counts
+
+
+def run(extra_fixtures=(), cofactors=(11, 13, 17), shared_prefix_cofactors=(11, 13)):
     cases = []
     for name, p, columns, law in [*fixtures(), *extra_fixtures]:
         cases.append({"name": name, **moments(p, columns, law)})
@@ -337,10 +436,12 @@ def run(extra_fixtures=(), cofactors=(11, 13, 17)):
     finite = F(sources[0]["expected_ordered_shared_old"])
     require(finite < coefficient / 3 < upper, "finite admissible-cofactor comparison")
     all_sources = sources + counter_cases
+    shared_prefix, shared_counts = shared_prefix_case(shared_prefix_cofactors)
     return {"schema_version": 1, "status": "PASS",
             "scope": "exact finite conditional replicas and literal common-source maps; no Lean or whole-cover claim",
             "generic_fixtures": cases, "literal_controls": literal_controls,
             "source_controls": sources, "cofactor_counterexamples": counter_cases,
+            "shared_prefix_counterexample": shared_prefix, "shared_prefix_counts": shared_counts,
             "coefficient_comparison": {
                 "candidate_formula": "2*r/((r-2)*(s-1)*(r*s-1)) * sum_m(1/m)",
                 "r": 5, "s": 7, "coefficient": str(coefficient),
@@ -371,7 +472,8 @@ def main():
     inputs = {} if args.input is None else json.loads(beside(args.input).read_text(encoding="utf-8"))
     extra = [(c["name"], c["p"], [Column(*t) for t in c["columns"]], c["old_weights"])
              for c in inputs.get("fixtures", [])]
-    result = run(extra, inputs.get("counterexample_cofactors", [11, 13, 17]))
+    result = run(extra, inputs.get("counterexample_cofactors", [11, 13, 17]),
+                 inputs.get("shared_prefix_cofactors", [11, 13]))
     rendered = json.dumps(result, indent=2, sort_keys=True) + "\n"
     output = beside(args.output)
     if args.check:
@@ -379,6 +481,7 @@ def main():
     else:
         output.write_text(rendered, encoding="utf-8")
     print(json.dumps({"status": result["status"], "counts": result["counts"],
+                      "shared_prefix_counts": result["shared_prefix_counts"],
                       "mode": "check" if args.check else "write"}, sort_keys=True))
 
 

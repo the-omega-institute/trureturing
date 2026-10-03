@@ -7718,6 +7718,148 @@
   ],
   "schema_version": 1,
   "scope": "exact finite conditional replicas and literal common-source maps; no Lean or whole-cover claim",
+  "shared_prefix_counterexample": {
+    "S": "24/143",
+    "T": "290/20449",
+    "averaging": "uniform old x and uniform common (u, five-subset of seven)",
+    "cofactors": [
+      11,
+      13
+    ],
+    "common_subsets": 21,
+    "comparable_disjoint_pairs": 22,
+    "definitions": {
+      "L": "sum_h 1_C_h(x)/5",
+      "S": "sum_q 1/q",
+      "T": "sum_q 1/q^2",
+      "alpha": "H(union of active new-word cylinders)",
+      "z": "1-prod_q(1-1/q)"
+    },
+    "divisor_closed": true,
+    "full_depth_one": {
+      "L_squared_formula": "(19*(1+S^2-T)+43*S)/420",
+      "alpha_squared_formula": "(19+43*z)/420",
+      "expected_L_squared": "541/8580",
+      "expected_alpha_squared": "1853/30030"
+    },
+    "label_count": 12,
+    "old_law": "uniform on Z/(3*prod_q q), without conditioning on depth-zero classes",
+    "old_period": 429,
+    "originals": [
+      [
+        "3",
+        3,
+        0
+      ],
+      [
+        "5",
+        5,
+        0
+      ],
+      [
+        "7",
+        7,
+        0
+      ],
+      [
+        "m:11",
+        11,
+        0
+      ],
+      [
+        "35",
+        35,
+        17
+      ],
+      [
+        "5m:11",
+        55,
+        46
+      ],
+      [
+        "7m:11",
+        77,
+        1
+      ],
+      [
+        "35m:11",
+        385,
+        331
+      ],
+      [
+        "m:13",
+        13,
+        0
+      ],
+      [
+        "5m:13",
+        65,
+        41
+      ],
+      [
+        "7m:13",
+        91,
+        1
+      ],
+      [
+        "35m:13",
+        455,
+        261
+      ]
+    ],
+    "safe_coordinates": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "scope": "finite common-source incidence family; not a whole cover or a prime-ordered BBMST stage; not Lean evidence",
+    "seven_q_subfamily": {
+      "L_squared_formula": "(S^2+S-T)/35",
+      "alpha_squared_formula": "z/35",
+      "expected_L_squared": "2/385",
+      "expected_alpha_squared": "23/5005",
+      "labels": [
+        "7m:11",
+        "7m:13"
+      ]
+    },
+    "uncovered_witness": {
+      "constraints": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          13
+        ]
+      ],
+      "modulus": 15015,
+      "residue": 1576
+    },
+    "z": "23/143"
+  },
+  "shared_prefix_counts": {
+    "literal_pullback_checks": 2162160,
+    "ordered_label_pairs": 715,
+    "replica_states": 880308,
+    "source_maps": 84,
+    "subfamily_ordered_label_pairs": 240,
+    "subfamily_replica_states": 653796
+  },
   "source_controls": [
     {
       "common_subsets": 21,

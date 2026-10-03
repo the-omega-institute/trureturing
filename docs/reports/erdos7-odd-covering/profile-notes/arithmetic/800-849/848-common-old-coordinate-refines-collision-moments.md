@@ -228,3 +228,130 @@ The saved fixtures include 7 generic models, 420 common source maps,
 418,380 literal pullback checks, and 281,274 conditional replica states.
 Replay from the repository root with
 `python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/source-global-collision-moment/conditional_replica.py --check`.
+
+## 6. Cross-column tree bounds retain the original divisibility order
+
+Write \(t=r/s\) and \(\gamma=(r-1)/(s-1)\). For two original tree
+prefixes of depths \(b\le c\), the common-tree calculation in report 388
+has the following unequal-depth form. If the short prefix is an initial
+segment of the long one, including equality, their simultaneous survival
+probability is \(t^c\).
+Otherwise, if they split after \(\ell<b\) common digits, it is
+\[
+ K=\gamma t^{b+c-\ell-1}\le\gamma t^c. \tag{13}
+\]
+This follows by multiplying the common-prefix factor, the one shared
+two-child selection factor, and the two remaining branch factors. Equality
+in the bound occurs at \(\ell=b-1\).
+
+If two distinct originals have comparable numerical moduli, and their safe
+\(r\)-constraints and old cofactor phases are compatible, comparable-class
+disjointness excludes the ancestor case. Thus (13) applies whenever
+\(b\ge1\); at \(b=0\) no such compatible pair survives. For incomparable
+original moduli the ancestor case can remain, so the factor \(\gamma\)
+cannot be imposed on all cross-column terms.
+
+Nor is (13) a negative-correlation bound relative to the two marginal
+survival probabilities. For split prefixes the exact ratio is
+\[
+ \frac K{t^bt^c}=\gamma(s/r)^{\ell+1}. \tag{14}
+\]
+For \(r=5,s=7,\ell=1\), it is \(98/75>1\). Sharing a long selected
+prefix can outweigh the negative dependence of two children at the split.
+Each old-phase contribution still carries its actual joint cylinder
+probability, with the LCM weight only under conditional old Haar.
+
+## 7. A bounded actual union can have an unbounded labelled majorant
+
+The general warning about excessive raw pair demand is already present in
+the [original-owner budget construction](../../../../../../Library/Arith/lettlsun2008cosets.md#distinct-prime-lower-indices-can-carry-arbitrarily-large-raw-pair-capacity).
+Here the same distinction can be computed exactly inside the common-tree,
+divisor-closed model of Section 4. This is a source-specific application of
+union and load moments, not a new general probability theorem.
+
+Let \(\mathcal Q\) be any finite set of primes greater than seven. Take
+the union of Section 4's original families over \(m=q\in\mathcal Q\),
+sharing the four labels \(3,5,7,35\). Thus
+\[
+ D_{\mathcal Q}=\{3,5,7,35\}
+  \cup\bigcup_{q\in\mathcal Q}\{q,5q,7q,35q\}. \tag{15}
+\]
+Every phase is exactly the one specified there. The \(4+4|\mathcal Q|\)
+moduli are odd, distinct and divisor closed. Across different \(q\)'s,
+no additional nonshared moduli are comparable, so comparable-class
+disjointness is preserved as well.
+
+Use the same independent safe \(u\in\{1,2,3,4\}\), common five-child
+subset of seven, and old Haar law on \(3\prod_{q\in\mathcal Q}q\).
+Put
+\[
+ S=\sum_{q\in\mathcal Q}\frac1q,\qquad
+ T=\sum_{q\in\mathcal Q}\frac1{q^2},\qquad
+ z=1-\prod_{q\in\mathcal Q}(1-1/q).
+\]
+For the old word \(x\), let \(N(x)=\sum_q\mathbf1_{\{x\equiv1\pmod q\}}\)
+and \(Z(x)=\mathbf1_{\{N(x)>0\}}\). CRT independence under this one old
+Haar law gives
+\[
+ \mathbb EN=S,\qquad \mathbb EN^2=S^2+S-T,\qquad \mathbb EZ=z.
+ \tag{16}
+\]
+Write \(B_j\) for the indicator that child \(j\) belongs to the common
+selected subset. Then \(\mathbb EB_j=5/7\) and
+\(\mathbb EB_jB_k=10/21\) for \(j\ne k\).
+
+First consider only the \(7q\) labels. Every one has the same original
+seven-child prefix \(1\), hence the same new prefix when that child is
+selected. Its full subfamily has
+\[
+ L(x)=B_1N(x)/5,\qquad \alpha(x)=B_1Z(x)/5.
+\]
+Consequently, averaging on that one joint source,
+\[
+ \mathbb EL^2=\frac{S^2+S-T}{35},\qquad
+ \mathbb E\alpha^2=\frac z{35}<\frac1{35}. \tag{17}
+\]
+The ordered cross-cofactor part alone is \((S^2-T)/35\).
+
+The entire depth-one output block, including the pure \(7\) label, has
+the exact union and load
+\[
+ \alpha_u(x)=\frac{B_0+B_1Z(x)
+       +\mathbf1_{\{u=1\}}B_2Z(x)+\mathbf1_{\{u=2\}}B_3}{5},
+ \qquad
+ L_u(x)=\frac{B_0+B_1N(x)
+       +\mathbf1_{\{u=1\}}B_2N(x)+\mathbf1_{\{u=2\}}B_3}{5}.
+ \tag{18}
+\]
+Distinct selected children have disjoint new cylinders, which justifies
+the union expression. Expanding on this common source gives
+\[
+ \boxed{\mathbb E\alpha_u^2=\frac{19+43z}{420}<\frac{31}{210},
+ \qquad
+ \mathbb EL_u^2=\frac{19(1+S^2-T)+43S}{420}.} \tag{19}
+\]
+Euler's divergence of the sum of prime reciprocals makes the load moment
+unbounded as \(\mathcal Q\) grows, while the union bound in (19) remains
+fixed. The classical divergence is reused, not reproved; the pinned
+Mathlib also supplies `Nat.Primes.not_summable_one_div` in
+`Mathlib/NumberTheory/SumPrimeReciprocals.lean`.
+
+These are local noncovers. CRT coordinates \(1\bmod3\), \(1\bmod5\),
+\(4\bmod7\), and \(3\bmod q\) for every \(q\in\mathcal Q\) avoid all
+listed classes. Neither EB1 minimality nor a legal increasing-prime BBMST
+exposure is supplied. The conclusion is precisely that the local
+conditions do not give a uniform finite bound on the labelled majorant,
+or a uniform comparison of that majorant with the actual union moment.
+Its divergence does not rule out controlling the actual union. A useful
+continuation must preserve shared-prefix unions or use an additional
+whole-cover restriction that excludes this local obstruction.
+
+For \(\mathcal Q=\{11,13\}\), the same checker gives
+\(\mathbb EL_u^2=541/8580\) and
+\(\mathbb E\alpha_u^2=1853/30030\). The \(7q\) subfamily gives
+\(2/385\) and \(23/5005\), respectively. It checks all 84 common source
+maps and 2,162,160 literal original-to-output membership comparisons;
+the whole block and subfamily replica counts are kept separately in its
+data. An independent direct enumeration of 300,300 shared-old replica
+states agrees with these four values. These finite checks and the ordinary
+deductions above are not new Lean verification.
