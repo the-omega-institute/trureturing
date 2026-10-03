@@ -21598,7 +21598,7 @@ $$
 =\{(\lambda(\rho^i))_{i=0}^{\ell-1}:\lambda\in V_\ell^*\}.
 $$
 
-这与增加奇偶约束后的 $C_{\ell,\rho}^{\perp}$ 须分别使用：因为 $C_{\ell,\rho}=\{u:\sigma_\rho(u)=0,\ \sum_i u_i=0\text{ in }\mathbb F_2\}$，对其线性方程作消元即得 $C_{\ell,\rho}^{\perp}=\mathcal R_{\ell,\rho}+\operatorname{span}_{\mathbb F_2}\{(1,\ldots,1)\}$。下式只对评价行求和，归一化为 $2^{-r_\ell}$，没有把这个较大的奇偶增广行空间当作同一指标集。
+这与增加奇偶约束后的 $C_{\ell,\rho}^{\perp}$ 须分别使用：因为 $C_{\ell,\rho}=\{u:\sigma_\rho(u)=0,\ \sum_i u_i=0\text{ in }\mathbb F_2\}$，对其线性方程作消元即得 $C_{\ell,\rho}^{\perp}=\mathcal R_{\ell,\rho}+\operatorname{span}_{\mathbb F_2}\{(1,\ldots,1)\}$。下式只对评价行求和，归一化为 $2^{-r_\ell}$，没有把这个可能扩大的奇偶增广行空间当作同一指标集。
 
 **命题 103.3（具体半字纤维的字符谱及内点界）。** $\dim V_\ell=r_\ell$。采用不含额外 $1/2$ 因子的约定
 
@@ -21614,7 +21614,7 @@ $$
 T_\ell(\rho)&=2^{-r_\ell}\sum_{\lambda\in V_\ell^*}
 S(\ell-w_\lambda,w_\lambda),\\
 \frac{S(\ell-w,w)}{B_\ell}
-&=\frac{\binom\ell w}{\binom{2\ell}{2w}}quad(0\le w\le\ell).
+&=\frac{\binom\ell w}{\binom{2\ell}{2w}}\quad(0\le w\le\ell).
 \end{aligned}
 \tag{103.4}
 $$
