@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:81b6cdb8504fcb4caf6ef15a09fe1e32ed2c433fe42af41346fe6e9a19b96b8f
   normalized_sha256: sha256:81b6cdb8504fcb4caf6ef15a09fe1e32ed2c433fe42af41346fe6e9a19b96b8f
 cas_ref: sha256:81b6cdb8504fcb4caf6ef15a09fe1e32ed2c433fe42af41346fe6e9a19b96b8f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/CommonTreeUnion.union_conditioning
+    target_statement_id: sha256:80f52fb83a35bf7c242c3d7949e958d40deb4388e704b6a2633b4e197d9b399b
 receipts:
   unresolved_subitems: []
