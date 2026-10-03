@@ -1,0 +1,22 @@
+## 53. Mellin smoothing and contour estimates for uniform prime escape
+
+The quantitative prime number theorem used in Theorem 10.6 is a classical
+analytic input. The contracts below specify its consumed Mellin and contour
+arguments, including the hypotheses of the intermediate bounds. They concern
+the usual Riemann zeta function and the second Chebyshev function; they assert
+neither an optimal error exponent nor explicit numerical error constants.
+
+The mathematical source is *PrimeNumberTheoremAnd*, immutable revision
+`6a380f0c4658c04a420a9eb00b1ed62a1e3fde01`, files
+`PrimeNumberTheoremAnd/MellinCalculus.lean` and
+`PrimeNumberTheoremAnd/MediumPNT.lean`:
+https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/6a380f0c4658c04a420a9eb00b1ed62a1e3fde01 .
+The argument belongs to the classical Perron--Mellin smoothing and
+contour-shifting method for the prime number theorem, using the zeta pole at
+one, a zero-free region, and logarithmic-derivative estimates. A classical
+analytic reference is E. C. Titchmarsh, *The Theory of the Riemann Zeta-Function*,
+second edition revised by D. R. Heath-Brown, Oxford University Press (1986),
+Chapter III. The exact intermediate contracts here are those of the cited
+immutable Lean source, rather than claims of novelty or canonical local
+compilation.
+

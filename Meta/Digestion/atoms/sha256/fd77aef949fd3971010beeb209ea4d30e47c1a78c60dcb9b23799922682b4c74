@@ -1,0 +1,7 @@
+Indeed $t$ is even and Cassini gives
+$(F_{t-1}-1)(F_{t-1}+1)=F_t(F_t-F_{t-1})$; the latter two factors are
+$p$-adic units for $p>5$. Thus $Q^t=I+p^{h_p}A$ with $A$ nonzero modulo
+$p$. Binomial expansion raises the depth by exactly one on each $p$th
+power and preserves it on prime-to-$p$ powers. Every return exponent
+is a multiple of $t$, giving the exact local period used above.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9141b6a9587f01ac7ade966443082a4a786715143937bef5366809a2d5044763
+  normalized_sha256: sha256:9141b6a9587f01ac7ade966443082a4a786715143937bef5366809a2d5044763
+cas_ref: sha256:9141b6a9587f01ac7ade966443082a4a786715143937bef5366809a2d5044763
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicThreeSaturation.pure_cubic_three_saturation
+    target_statement_id: sha256:9b862a0a382238566100da197ad38955ce7d86dd1bb68f6595a9adeaf86a9594
+receipts:
+  unresolved_subitems: []

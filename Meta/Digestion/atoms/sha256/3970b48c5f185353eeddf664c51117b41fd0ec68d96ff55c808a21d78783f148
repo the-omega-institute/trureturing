@@ -1,0 +1,14 @@
+**Theorem 69.11 (a nonzero cubic valuation forces ramification).**
+For every $J\geq0$, every $1\leq j\leq J$, every rational
+prime $p$ for which $3\nmid v_p(B_j)$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+3\mid e(\mathfrak P/(p)).
+$$
+
+Proof. The valuation of the actual root equation
+$\theta_j^3=B_j$ equals the ramification index times the base
+valuation of $B_j$. Its left side is divisible by three, while
+the given base valuation is not.
+

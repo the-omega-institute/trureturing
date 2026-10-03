@@ -1,0 +1,15 @@
+**Theorem 71.3 (horizontal cubic trace on a Mordell curve).**
+Let $F$ be a characteristic-zero field containing $\mathbb Q$,
+let $c\in\mathbb Z$, and let $\zeta\in F$ be a primitive cube
+root of unity. If $x\ne0$ and the three points below are
+nonsingular on $y^2=x^3+c$ over $F$, then
+
+$$
+(x,y)+(\zeta x,y)+(\zeta^2x,y)=O.
+$$
+
+Proof. The chord through the first two distinct abscissas is
+horizontal. Its third intersection has the same ordinate and
+abscissa $-(x+\zeta x)=\zeta^2x$, by $1+\zeta+\zeta^2=0$.
+The chord addition law gives the sum.
+

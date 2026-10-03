@@ -1,0 +1,20 @@
+**Theorem 71.4 (coefficient elimination modulo a fixed subgroup).**
+Let $G$ be an abelian group, $A\leq G$, and let $P_1,\ldots,P_J$
+have infinite order. Let $T:G\to G$ and $s_j:G\to G$ be additive
+maps, with each $s_j$ fixing $A$ pointwise. Suppose
+$P_i+TP_i+T^2P_i=0$. Suppose $s_j$ fixes $P_i,TP_i$ when
+$i\ne j$, and sends $P_j,TP_j$ to $TP_j,T^2P_j$, respectively.
+For integers $a_i,b_i$, the relation
+
+$$
+\sum_{i=1}^J(a_iP_i+b_iTP_i)\in A
+$$
+
+forces all $a_i=b_i=0$.
+
+Proof. Applying $s_j-1$ and using the trace gives
+$uP_j+vTP_j=0$, with $u=a_j+b_j$ and $v=2b_j-a_j$.
+Apply $T$ and eliminate $TP_j$ to get
+$(u^2-uv+v^2)P_j=0$. Infinite order forces this positive
+quadratic norm to vanish, so $u=v=0$ and $a_j=b_j=0$.
+
