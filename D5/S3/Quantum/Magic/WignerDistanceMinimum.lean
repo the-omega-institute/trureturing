@@ -6,7 +6,8 @@
    utility: none
    digest: The Wigner free sets are compact nonempty convex hulls, and COne/CTwo attain the source minimum. -/
 /-
-proof_shape: COne_min: content; CTwo_min: content
+proof_shape: spectral_stabilizer: content; spectral_product_stabilizer: content;
+  COne_min: content; CTwo_min: content
 escape_witness: finite_stab constructs an injection of stabilizer projectors into finitely many subgroups;
   spectral_stabilizer and spectral_product_stabilizer give nonempty free sets; compact convex hulls
   and continuous L1 images attain Metric.infDist.
@@ -59,23 +60,21 @@ def Stab {ι : Type*} [Fintype ι] [DecidableEq ι] (P : Set (Matrix ι ι ℂ))
     (∀ v : ι → ℂ, (∀ g : S, (g.val.val : Matrix ι ι ℂ) *ᵥ v = v) ↔
       ∃ c : ℂ, v = c • ψ) ∧
     ρ = Matrix.vecMulVec ψ (star ψ)}
-private def StabOne : Set QubitMatrix := Stab pauliSet
-private def StabTwo : Set TwoQubitMatrix := Stab pauliTwo
 def Wfree {ι α : Type*} [Fintype ι] [DecidableEq ι] (A : α → Matrix ι ι ℂ) (P : Set (Matrix ι ι ℂ)) : Set (α → ℝ) :=
   convexHull ℝ (Wigner A '' Stab P)
 def COne (ρ : QubitMatrix) : ℝ := Metric.infDist (WithLp.toLp 1 (WignerOne ρ)) (WithLp.toLp 1 '' Wfree phasePoint pauliSet)
 def CTwo (ρ : TwoQubitMatrix) : ℝ :=
   Metric.infDist (WithLp.toLp 1 (WignerTwo ρ)) (WithLp.toLp 1 '' Wfree phasePointTwo pauliTwo)
-private def spectral (p : Pauli) (ε : Fin 2) : QubitMatrix :=
+def spectral (p : Pauli) (ε : Fin 2) : QubitMatrix :=
   (1/2 : ℂ) • (1 + ((-1 : ℂ) ^ (ε : ℕ)) • pauliMatrix p)
-private def eigenVector (p : Pauli) (ε : Fin 2) : Fin 2 → ℂ :=
+def eigenVector (p : Pauli) (ε : Fin 2) : Fin 2 → ℂ :=
   let r : ℂ := ((Real.sqrt 2)⁻¹ : ℝ); let t : ℂ := (-1 : ℂ) ^ (ε : ℕ)
   match p with
   | .I => ![1,0]
   | .X => ![r,t*r]
   | .Y => ![r,Complex.I*t*r]
   | .Z => if ε = 0 then ![1,0] else ![0,1]
-private theorem spectral_stabilizer (p : Pauli) (ε : Fin 2) (hp : p ≠ .I) : spectral p ε ∈ StabOne ∧ ∃ U : Multiplicative (ZMod 2) →* Matrix.unitaryGroup (Fin 2) ℂ, Function.Injective U ∧ (∀ x, (U x).val ∈ pauliSet) ∧ (∀ x, ((U x).val).trace = if x = 1 then 2 else 0) ∧ (∑ i, ‖eigenVector p ε i‖ ^ 2 = 1) ∧ ((Fintype.card (Multiplicative (ZMod 2)) : ℂ)⁻¹ • (∑ x, (U x).val) = Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε))) ∧ spectral p ε = Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε)) := by
+theorem spectral_stabilizer (p : Pauli) (ε : Fin 2) (hp : p ≠ .I) : spectral p ε ∈ Stab pauliSet ∧ ∃ U : Multiplicative (ZMod 2) →* Matrix.unitaryGroup (Fin 2) ℂ, Function.Injective U ∧ (∀ x, (U x).val ∈ pauliSet) ∧ (∀ x, ((U x).val).trace = if x = 1 then 2 else 0) ∧ (∑ i, ‖eigenVector p ε i‖ ^ 2 = 1) ∧ ((Fintype.card (Multiplicative (ZMod 2)) : ℂ)⁻¹ • (∑ x, (U x).val) = Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε))) ∧ spectral p ε = Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε)) := by
   classical
   let P : QubitMatrix := ((-1 : ℂ) ^ (ε : ℕ)) • pauliMatrix p; have hPstar : star P = P := by
     cases p <;> fin_cases ε <;> ext i j <;> fin_cases i <;> fin_cases j <;>
@@ -200,7 +199,7 @@ private theorem spectral_stabilizer (p : Pauli) (ε : Fin 2) (hp : p ≠ .I) : s
           (U x).val *ᵥ (eigenVector p ε) = (U x).val *ᵥ (Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε)) *ᵥ (eigenVector p ε)) := by rw [hproj]
           _ = (eigenVector p ε) := by rw [Matrix.mulVec_mulVec,heigen,hproj]
       simpa [← hx,Matrix.mulVec_smul,hf]
-private theorem spectral_product_stabilizer (p q : Pauli) (ε δ : Fin 2) (hp : p ≠ .I) (hq : q ≠ .I) : spectral p ε ⊗ₖ spectral q δ ∈ StabTwo := by
+theorem spectral_product_stabilizer (p q : Pauli) (ε δ : Fin 2) (hp : p ≠ .I) (hq : q ≠ .I) : spectral p ε ⊗ₖ spectral q δ ∈ Stab pauliTwo := by
   classical
   obtain ⟨_,U,hU,hUP,hUt,hψnorm,hUavg,hψ⟩ := spectral_stabilizer p ε hp; obtain ⟨_,V,hV,hVP,hVt,hφnorm,hVavg,hφ⟩ := spectral_stabilizer q δ hq; let G := Multiplicative (ZMod 2)
   let T : G × G →* Matrix.unitaryGroup (Fin 2 × Fin 2) ℂ :=

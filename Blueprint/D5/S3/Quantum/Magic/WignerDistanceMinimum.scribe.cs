@@ -41,10 +41,69 @@ internal sealed class WignerDistanceMinimumDocument : IScribeDocumentDefinition
                 "Page 3, Definition 3.1 (Wigner distance): \"C(ρ) := min_{W_f ∈ Wfree} ‖W_ρ − W_f‖₁.\" COne uses the paper's four-point frame and actual local stabilizer polytope. COne_min proves attainment and minimality for every qubit matrix."),
             Definition("CTwo", "The two-qubit Wigner distance", CFormula(true),
                 "Page 3, Definition 3.1 (Wigner distance): \"C(ρ) := min_{W_f ∈ Wfree} ‖W_ρ − W_f‖₁.\" CTwo uses the sixteen-point frame and actual two-qubit stabilizer polytope, including entangled stabilizers. CTwo_min proves attainment and minimality for every two-qubit matrix."),
+            Auxiliary("spectral", "Pauli spectral projectors", SpectralFormula(), DescribeRole.Definition,
+                "For a nonidentity Pauli p, spectral(p,epsilon) is the rank-one projector onto its eigenvalue (-1)^epsilon. The identity case is included in the definition."),
+            Auxiliary("eigenVector", "Explicit Pauli eigenvectors", EigenVectorFormula(), DescribeRole.Definition,
+                "The bracket notation denotes a two-component complex vector. The scalar r is the complex cast of the inverse square root of 2, and t = (-1)^epsilon. The four cases are I: [1,0], X: [r,tr], Y: [r,itr], and Z: [1,0] for epsilon = 0 and [0,1] otherwise."),
+            Auxiliary("spectral_stabilizer", "Actual local stabilizer subgroups", SpectralStabilizerFormula(), DescribeRole.Theorem,
+                "Each nonidentity Pauli spectral projector is an actual stabilizer state. An injective homomorphism from the multiplicative cyclic group of order two supplies its subgroup. Its nonidentity matrix has trace zero, its eigenvector is normalized, and its group average is exactly the eigenvector's outer product."),
+            Auxiliary("spectral_product_stabilizer", "Actual product stabilizer subgroups", ProductStabilizerFormula(), DescribeRole.Theorem,
+                "Tensoring two Pauli spectral projectors gives a stabilizer state in the full phased two-qubit Pauli group. The construction uses the product of the two local cyclic subgroups and the tensor eigenvector."),
             MinimumTheorem("COne_min", "The single-qubit Wigner distance attains the source minimum", MinimumFormula(false),
                 "For every qubit matrix rho, the source formula C(rho) := min_{W_f ∈ Wfree} ‖W_rho − W_f‖₁ is attained by some f in the compact nonempty free polytope, and COne rho is no larger than every free candidate.") ,
             MinimumTheorem("CTwo_min", "The two-qubit Wigner distance attains the source minimum", MinimumFormula(true),
                 "For every two-qubit matrix rho, the same source minimum C(rho) := min_{W_f ∈ Wfree} ‖W_rho − W_f‖₁ is attained by some f in the compact nonempty two-qubit free polytope, and CTwo rho is no larger than every free candidate."))));
+
+    private static DocumentBlock Auxiliary(string name, string title, Formula formula, DescribeRole role, string prose) =>
+        Describe.Lean(DescribeId.Create("dutta-minimum-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula SpectralFormula() => All("p", V("Pauli"), All("epsilon", Fin(2),
+        Equal(Call("spectral", V("p"), V("epsilon")), Smul(new Formula.Fraction(D(1), D(2)),
+            Parenthesized(Add(D(1), Smul(Pow(NegativeOne(), Call("val", V("epsilon"))), Call("pauliMatrix", V("p")))))))));
+
+    private static Formula Vec2(Formula a, Formula b) => Seq(OpenBracket, a, Comma, b, CloseBracket);
+    private static Formula EigenVectorFormula()
+    {
+        var epsilon = V("epsilon");
+        var r = Call("complexCast", Call("inv", Call("sqrt", D(2))));
+        var t = Pow(NegativeOne(), Call("val", epsilon));
+        var z = Call("ite", Equal(epsilon, D(0)), Vec2(D(1), D(0)), Vec2(D(0), D(1)));
+        return All("epsilon", Fin(2), Conjoin(
+            Equal(Call("eigenVector", V("I"), epsilon), Vec2(D(1), D(0))),
+            Equal(Call("eigenVector", V("X"), epsilon), Vec2(r, Multiply(t, r))),
+            Equal(Call("eigenVector", V("Y"), epsilon), Vec2(r, Multiply(Multiply(V("i"), t), r))),
+            Equal(Call("eigenVector", V("Z"), epsilon), z)));
+    }
+    private static Formula LocalGroup() => Call("Multiplicative", Call("ZMod", D(2)));
+    private static Formula SpectralStabilizerFormula()
+    {
+        var p = V("p"); var epsilon = V("epsilon"); var u = V("U");
+        var matrix = (Formula x) => Call("val", At(u, x));
+        var psi = Call("eigenVector", p, epsilon);
+        var outer = Call("vecMulVec", psi, Call("star", psi));
+        var conditions = Conjoin(
+            Call("Injective", u),
+            All("x", LocalGroup(), Member(matrix(V("x")), V("pauliSet"))),
+            All("x", LocalGroup(), Equal(Call("trace", matrix(V("x"))),
+                Call("ite", Equal(V("x"), D(1)), D(2), D(0)))),
+            Equal(SumOver("j", Fin(2), Pow(Call("norm", At(psi, V("j"))), D(2))), D(1)),
+            Equal(Smul(Call("inv", Call("complexCast", Call("card", LocalGroup()))),
+                SumOver("x", LocalGroup(), matrix(V("x")))), outer),
+            Equal(Call("spectral", p, epsilon), outer));
+        var hom = Call("MonoidHom", LocalGroup(), Call("unitaryGroup", Fin(2), ComplexNumbers()));
+        return All("p", V("Pauli"), All("epsilon", Fin(2), Imp(
+            Rel(p, FormulaRelationOperator.NotEqual, V("I")),
+            And(Member(Call("spectral", p, epsilon), Call("Stab", V("pauliSet"))),
+                ExistsOne("U", hom, conditions)))));
+    }
+    private static Formula ProductStabilizerFormula() =>
+        All("p", V("Pauli"), All("q", V("Pauli"), All("epsilon", Fin(2), All("delta", Fin(2),
+            Imp(Rel(V("p"), FormulaRelationOperator.NotEqual, V("I")),
+                Imp(Rel(V("q"), FormulaRelationOperator.NotEqual, V("I")),
+                    Member(Tensor(Call("spectral", V("p"), V("epsilon")),
+                        Call("spectral", V("q"), V("delta"))), Call("Stab", V("pauliTwo")))))))));
 
     private static DocumentBlock MinimumTheorem(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name),
