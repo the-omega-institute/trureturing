@@ -25743,7 +25743,7 @@ example, choose \(x\) with
  x\equiv0\pmod{35\,3^e},\qquad x\equiv1\pmod{11}.
 \]
 
-Then \(x\) avoids \(A\) and \(B\), avoids every \(U_r\) because its
-\(3^r\)-residue is \(0\) rather than \(1\), and avoids all three \(T_j\)
+Then \(x\) avoids \(A\) and \(B\), and it avoids every \(U_r\) because
+\(x\equiv1\pmod{11}\) whereas \(c_r\ne1\) for all \(r\).  It avoids all three \(T_j\)
 since every \(T_j\)-residue is \(1\pmod P\) while \(x\equiv0\pmod P\).  Thus this remains a
 source-compatible hull example, not a covering-system counterexample.
