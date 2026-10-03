@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cigler-narayana-strip-product` (proved) by `D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cigler-narayana-strip-product","declaration_gid":"D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johann Cigler (2026). *Some sequences and number triangles which are related to Narayana polynomials and to q-Narayana polynomials for q=-1*. DOI: [10.48550/arXiv.2608.03363](https://doi.org/10.48550/arXiv.2608.03363). URL: <https://arxiv.org/abs/2608.03363v2>.
