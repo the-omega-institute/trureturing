@@ -1187,3 +1187,143 @@ additional service. They assert neither independent coordinates nor
 a uniform lower density. The remaining patch-existence problem
 persists. This is an ordinary application of the existing projection
 theorem, without new Lean verification or unrestricted noncoverage.
+
+## 15. A single larger neighbour is excluded in the extremal cover
+
+The remaining condition \(p_0>0\) in Section 13 follows automatically
+when \(A\ge2\). The useful input is again
+[report 375 DP7](375-deep-prime-prefix-projections-and-tree-contraction.md#4-a-dual-subtree-and-a-supported-probability-for-one-prime),
+applied to one larger prime, not a proposed common law for all primes.
+
+First suppose every original modulus divisible by \(r\) has the form
+\(r^as^b\), with \(1\le a\le A\), \(0\le b\le B\).
+The complete \(r\)-free residual \(R_r\) of Section 14 is nonempty.
+Set \(t=s-r+1\ge3\). DP7 supplies one probability \(\nu_s\)
+on this actual residual, on the full \(s^BM\)-carrier, such that
+\[
+ \nu_s([c]\bmod s^b)\le t^{-b}\qquad(0\le b\le B).
+\]
+Use the following single probability on the original full CRT carrier:
+\[
+ \mu=\operatorname{Haar}(\mathbb Z/r^A\mathbb Z)\otimes\nu_s.
+\]
+All original \(r\)-free classes have \(\mu\)-mass zero. For an
+original modulus \(r^as^b\), its actual CRT event has mass at most
+\(r^{-a}t^{-b}\). Independence here is part of this explicitly
+chosen product law; \(\nu_s\) retains all correlations between the
+\(s\)-coordinate and \(M\). There is no exchange of witnesses or
+probabilities between different prime projections.
+
+Numerical distinctness allows at most one original for each pair
+\((a,b)\). Whole coverage and the finite union bound would therefore
+require
+\[
+ \begin{aligned}
+ 1
+ &\le\sum_{a=1}^A r^{-a}\sum_{b=0}^B t^{-b}\\
+ &=\frac{1-r^{-A}}{r-1}\,
+       \frac{t(1-t^{-(B+1)})}{t-1}\\
+ &<\frac{t}{(r-1)(t-1)}\le\frac34,
+ \end{aligned} \tag{SC59}
+\]
+a contradiction. Thus, in this minimum-cardinality cover, a support prime cannot have
+all its mixed-modulus neighbours confined to one larger prime. This statement has
+no height-one restriction.
+
+Now assume \(A\ge2\) and \(p_0=0\). Any original
+\(r^as^bm\), with \(a\ge1\), \(m>1\), and \(m\mid M\),
+would have original divisors \(m\in G\) and \(rm\in D\).
+Since \(1<A\), the latter contributes to \(p_0\), a contradiction.
+Hence every \(r\)-bearing original would be of the excluded form
+\(r^as^b\). It follows that
+\[
+ A\ge2\quad\Longrightarrow\quad p_0\ge1. \tag{SC60}
+\]
+At \(A=1\), the defining range for \(p_0\) is empty, so this
+argument makes no corresponding assertion.
+
+### Complete original columns supply the released-label budget
+
+The complete original column count gives another lower bound without
+using SC60. Let \(\mathcal C\) be all nonunit \(r\)-free cofactors
+\(k\) for which \(r^ak\in D\) for some \(a\ge0\). Divisor
+closure supplies one complete column
+\(k,rk,\ldots,r^{h(k)}k\), where \(0\le h(k)\le A\).
+Set
+\[
+ n_0=|\mathcal C|,\qquad
+ m=\#\{k\in\mathcal C:h(k)=A\},\qquad
+ L_{<A}=\#\{d\in D:1\le v_r(d)<A,\ d/r^{v_r(d)}>1\}.
+\]
+These partition the original labels, together with the \(A\) pure
+\(r\)-powers, so
+\[
+ K=A+n_0+L_{<A}+m.
+\]
+All surviving outputs from one column have the same numerical slot
+\(\pi(k)\). SC44 therefore retains at most one label per column.
+The column \(k=s\) exists and has output slot \(r\), which SC44
+excludes. Hence \(|\mathcal R|\le n_0-1\). The top pool contains
+only nonpure height-\(A\) originals, so \(|\mathcal T|\le m\).
+In particular the exact identity SC45 yields
+\[
+ \begin{aligned}
+ \Delta
+ &=A+L_{<A}+(n_0-|\mathcal R|)+(m-|\mathcal T|)\\
+ &\ge A+L_{<A}+1\\
+ &\ge A+(A-1)m+1.
+ \end{aligned} \tag{SC61}
+\]
+The last inequality uses the \(A-1\) lower mixed originals in every
+top column. Distinct columns have distinct \(r\)-free parts, so no
+original label is counted twice. No survival or phase match with the
+selected lower prefix is required.
+
+The existing private terminal fan of original \(r^A\), used in
+Section 7 and [report 371, Section 2](371-private-top-fans-and-ancestor-cuts.md#2-the-private-top-fan-has-an-escaping-first-ancestor),
+supplies \(m\ge r-1\). For clarity, only its highest-digit argument
+is needed: take one actual private point, keep all other coordinates
+and its \(r^{A-1}\)-prefix fixed, and vary the last digit. Each of
+the \(r-1\) other siblings needs a nonpure original of height exactly
+\(A\); a lower-height owner would also cover the private point.
+One original cannot cover two such full residues, so their cofactors
+are distinct. This argument also applies when \(A=1\); it does
+not use the later ancestor conclusion in report 371 that assumes
+\(A\ge2\). Thus
+\[
+ \Delta\ge r(A-1)+2\qquad(A\ge1). \tag{SC62}
+\]
+This reuses the actual fan and original ancestor inventory; it is not
+a new companion-class theorem.
+
+The counting argument uses only \(\mathcal R\subseteq\mathcal L\),
+output-slot injectivity and exclusion of slot \(r\). It does not use
+\(G\subseteq\mathcal R\). Thus SC61--SC62 remain valid for any
+retained family satisfying those three conditions: it may choose a
+different actually surviving lower representative in a column or omit
+an original \(G\)-class. Every retained phase must still come from
+that actual label. Such a choice changes the complete omitted service;
+SC54 and the \(K_G\) hull conclusion cannot automatically be carried
+over to this different family.
+
+For any complete legal repair retaining \(\mathcal R\), buying one
+root \(S_\rho\), adding \(c\) other classes and omitting \(b\)
+reserved tops, the actual count is
+\[
+ |\mathcal F|=K-\Delta+1+c-b.
+\]
+Here all retained and added numerical moduli must be distinct, and
+all omitted service must be covered by the final family. SC62 gives
+strict count descent whenever \(c-b\le r(A-1)\). In particular,
+at \(r=3,A=2\) the budget is at least five, and a one-root repair can
+afford three further classes when \(b=0\). For every odd \(r\)
+and \(A\ge2\), the \(r-1\) one-per-root patches of Section 13
+are funded without an additional donor hypothesis. An occupied-top
+rescue counts as an added class in \(c\); its removed old top is
+counted once in \(b\). Neither count grants free service.
+
+SC59--SC62 are consumers of the existing single-prime law and actual
+terminal fan. They exclude the \(p_0=0,A\ge2\) branch and enlarge
+the available repair budget, but do not provide the simultaneous
+patches or close the \(A=1\) case. This is ordinary mathematical
+analysis without new Lean verification or unrestricted noncoverage.
