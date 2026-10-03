@@ -86,9 +86,9 @@ frozen module state has statement identity
 The result declaration has statement identity
 `sha256:8dfb1711bc592ab97d98ca9a33fecc3cdefd7764b3779911494541cecaef7b3e`.
 The Freeze event is
-`sha256:de20fca6148f3d61962ff00cb9b2cbd54a1ce4f50d52a0aaaf98afc681077d21`.
+`sha256:49fd15a8c0729c370ecc38cbffc6b1ebe0855b2573c660c5adecb3ac0d5a2adb`.
 Its project-level frozen prerequisites are the Freeze events
-`sha256:4e8b836150fe2870e8d48e5b319b779266b9ea7ffd050d33e8d7f31fb3c2cfc4` of
+`sha256:aaf7e34445852cecbe18de845884cd732e6fdc448dbe81ed05aaf41c732c853c` of
 `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence`, which
 supplies `Pauli`, its `Fintype` instance, `pauliMatrix`, `tensorOp` and
 `wordOp`, and
