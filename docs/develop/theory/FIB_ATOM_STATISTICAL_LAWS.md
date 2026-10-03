@@ -3694,13 +3694,13 @@ $$
 =1-(1-q)\sum_m\frac{a_{j,m}(i)}{1-q\lambda_{j,m}}.
 $$
 
-将 $q=e^{z\epsilon_j}$ 代入时，在有限 resolvent 的收敛域内得到正向矩母函数；若 $i_j/L_j\to x$，其连续极限为
+将 $q=e^{z\epsilon_j}$ 代入时，在有限 resolvent 的收敛域内得到有限链的正向矩母函数。相应连续模型从 $x$ 出发时，对 $0\le z<D\pi^2/4$ 有
 
 $$
 \frac{\cos(x\sqrt{z/D})}{\cos\sqrt{z/D}},
 $$
 
-其中 $x=0$ 的反射端特例才是 $\sec\sqrt{z/D}$。
+其中 $x=0$ 的反射端特例才是 $\sec\sqrt{z/D}$。若 $i_j/L_j\to x$，有限链向该式收敛还需要统一指数尾控制；有限 $j$ 的 resolvent 域本身不提供该控制。
 
 **证明。** 对整数值吸收时间，尾和恒等式为
 
@@ -4042,7 +4042,7 @@ $$
 D=\frac4{\pi^2}\lim_{t\to\infty}\frac{-\log S_\nu(t)}{t}.
 $$
 
-若物理长度 $\ell$ 未知而时间单位已固定，只观察未归一化坐标时至多确定 $D/\ell^2$；若时间校准也未知，则可识别组合是 $D/\eta=\kappa/\ell^2$。必须固定长度单位、时间单位和吸收端位置，才能把无量纲谱率解释为 $D$ 本身。$\nu=\delta_1$ 时生存函数恒为零，$D$ 不可由该读出识别。
+这里的 $D$ 始终是归一化区间上的模型系数。按第37节的校准约定，物理扩散系数为 $\kappa=D\ell^2/\eta$，物理时间曲线识别的组合为 $D/\eta=\kappa/\ell^2$。若模型时间与物理时间一致，即 $\eta=1$，该组合就是 $D$；未知长度仍使 $\kappa$ 无法与 $\ell$ 分开。$\nu=\delta_1$ 时生存函数恒为零，$D$ 不可由该读出识别。
 
 ## 36. 有限频率与有限噪声下的逆问题稳定性
 
@@ -4069,7 +4069,7 @@ $$
 
 位于 $\mathbb R^{m+1}$ 中，存在非零系数 $c_j$ 使其线性组合为零。以这些点上的正基准概率律作足够小的正负扰动，得到所需的 $\nu_+,\nu_-$。$\square$
 
-**推论 36.2（连续但严重病态）。** 对固定整数 $q\in\mathbb N_0$，$\mathcal A_S^{-1}$ 的连续性不提供统一 Lipschitz 或 Hölder 误差率。取 $q+2$ 个不同点 $x_j$，选择非零系数 $c_j$ 使
+**推论 36.2（弱连续逆不蕴含总变差稳定性）。** 固定 $S,D>0$。对每个整数 $q\in\mathbb N_0$，取 $q+2$ 个不同点 $x_j$，选择非零系数 $c_j$ 使
 
 $$
 \sum_j c_jx_j^{2r}=0\quad(0\le r\le q),
@@ -4083,7 +4083,7 @@ $$
 O\left((S/D)^{q+1}\!/(2q+2)!\right).
 $$
 
-令 $q\to\infty$，输出差异趋于零而输入总变差保持为 $1$，所以不存在统一的总变差连续逆，更不存在固定指数的 Lipschitz 或 Hölder 误差率。因此有限噪声下的恢复需要加入某种可量化的正则或紧致先验（例如有限维、解析密度或矩界）；完整无噪声曲线的精确可识别性不能被宣传为稳定的实验重建算法。
+令 $q\to\infty$，输出差异趋于零而输入总变差保持为 $1$，所以不存在统一的总变差连续逆，更不存在以总变差为恢复误差的 Lipschitz 或 Hölder 界。若目标是总变差稳定恢复，必须限制可允许的初态律并证明该限制下的稳定性；有限维、解析密度或矩条件只是候选限制，名称本身不保证稳定。第36.1节在整个概率律空间上的弱连续逆仍然成立，但没有给出定量恢复速率。
 
 这一节仍只讨论归一化连续模型中的数学逆问题，不把有限频率读数解释成温度、热浴或物理仪器的充分统计量。
 
@@ -4144,7 +4144,7 @@ $$
 
 因此只有 $F$ 已知且满足 $C^2$ 严格递增正导数条件时，才可把无量纲 Green 核解释成给定物理介质的算子；若 $p$ 表示密度，还需在推前读出中加入相应 Jacobian。未知 $F$ 时，递归只确定抽象核及其推前测度，不能宣称均匀介质或常系数热流。
 
-**推论 37.2（边界条件是独立模型输入）。** 若左端按坐标导数约定改为 Robin 条件 $h'(0)=\rho h(0)$（取 $\rho\ge0$），右端仍为吸收端 $h(1)=1$，则对 $s>0$ 命中 Laplace 变换为
+**推论 37.2（边界条件是独立模型输入）。** 对固定 $\rho\ge0$，考虑边值问题 $Dh''=sh$、$h'(0)=\rho h(0)$、$h(1)=1$，其中左端导数朝区间内部取正。对 $s>0$，其唯一解为
 
 $$
 h_{\rho}(x,s)=
@@ -4153,7 +4153,19 @@ h_{\rho}(x,s)=
 \qquad k=\sqrt{s/D}.
 $$
 
-在 $s=0$ 处按连续延拓解释。当前的 $\cosh(kx)/\cosh(k)$ 只是 $\rho=0$ 的 Neumann 特例。未知边界类型时，FIB 递归不能选择 Neumann、Robin 或 Dirichlet 的谱；对应的零点、谱隙和 Green 核均需随边界假设重新推导。物理温度、热流、容量和热浴解释还需额外的源项、通量和观测映射，不能由递归本身推出。
+在 $s=0$ 处的连续延拓为
+
+$$
+h_\rho(x,0)=\frac{1+\rho x}{1+\rho}.
+$$
+
+这是由通解 $A\cosh(kx)+B\sinh(kx)$ 和两个边界条件直接得到的边值结论。若另外指定左端按该 Robin 参数通过边界局部时杀死的随机模型，记其杀死时刻为 $\zeta_0$、右端命中时刻为 $\tau_1$，相应读出才解释为缺陷变换
+
+$$
+\mathbb E_x\!\left[e^{-s\tau_1}\mathbf1_{\{\tau_1<\zeta_0\}}\right].
+$$
+
+当 $\rho>0$ 且 $x<1$ 时，零频值小于 $1$，故它不是第32节必达吸收时间的普通概率 Laplace 变换。当前的 $\cosh(kx)/\cosh(k)$ 只是 $\rho=0$ 的 Neumann 特例。未知边界类型时，FIB 递归不能选择 Neumann、Robin 或 Dirichlet 的谱；对应的零点、谱隙和 Green 核均需随边界假设重新推导。物理温度、热流、容量和热浴解释还需额外的源项、通量和观测映射，不能由递归本身推出。
 
 ## 38. 非线性位置映射的坐标约定
 
@@ -4193,7 +4205,14 @@ $$
 \nu_\pm=\sum_j(|c_j|\pm c_j)\delta_{x_j}.
 $$
 
-则 $\nu_\pm$ 是概率律且 $\|\nu_+-\nu_-\|_{\mathrm{TV}}=1$。对 $0\le s\le S$，令 $a=\sqrt{s/D}$，Taylor 展开与前 $q$ 阶矩抵消给出
+由 $r=0$ 得 $\sum_jc_j=0$，故 $\nu_\pm$ 是概率律。沿用第36节的距离约定
+
+$$
+\operatorname{TV}(\mu,\nu)=\sup_B|\mu(B)-\nu(B)|
+=\tfrac12|\mu-\nu|([0,1]),
+$$
+
+有 $\operatorname{TV}(\nu_+,\nu_-)=1$。对 $0\le s\le S$，令 $a=\sqrt{s/D}$，Taylor 展开与前 $q$ 阶矩抵消给出
 
 $$
 \left|\sum_jc_j\cosh(ax_j)\right|
@@ -4209,5 +4228,134 @@ $$
 $$
 
 所以即使输入律在总变差意义下保持固定距离，有限频段读出也可趋于相同；任何由有限频段一致误差控制总变差的统一连续模都不存在。这一结论仍不否定第36节在弱拓扑中的精确连续逆，只说明实验噪声下不能把拓扑注入性宣传成强范数稳定性。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 非退化初态类中的联合弱稳定性
+
+固定 $S>0$、$0<d_-\le d_+<\infty$ 和 $0<\beta\le1$，定义
+
+$$
+a_0(\nu)=\int_{[0,1]}\cos(\pi x/2)\,d\nu(x),
+$$
+
+以及允许的参数类
+
+$$
+\mathcal Q_\beta=\left\{(D,\nu):
+D\in[d_-,d_+],\
+\nu\in\mathcal P([0,1]),\
+a_0(\nu)\ge\beta
+\right\}.
+$$
+
+这里 $\beta$ 是预先给定的首模态投影下界，排除质量全部逼近吸收端的退化。对初态律取有界 Lipschitz 距离
+
+$$
+d_{\mathrm{BL}}(\mu,\nu)=
+\sup_{\substack{\|f\|_\infty\le1\\\operatorname{Lip}(f)\le1}}
+\left|\int f\,d\mu-\int f\,d\nu\right|,
+$$
+
+并对参数对取距离
+
+$$
+d_*\bigl((D,\nu),(\widetilde D,\widetilde\nu)\bigr)
+=|D-\widetilde D|+d_{\mathrm{BL}}(\nu,\widetilde\nu).
+$$
+
+**定理 40.1（联合识别的统一弱连续模）。** 令
+
+$$
+\mathcal A_S(D,\nu)=\mathcal L_{\nu,D}\big|_{[0,S]}.
+$$
+
+在 $\mathcal Q_\beta$ 上存在非减函数 $\omega_\beta$，满足 $\omega_\beta(\varepsilon)\to0$ 当 $\varepsilon\downarrow0$，且
+
+$$
+\|\mathcal A_S(D,\nu)-\mathcal A_S(\widetilde D,\widetilde\nu)\|_\infty
+\le\varepsilon
+\quad\Longrightarrow\quad
+d_*\bigl((D,\nu),(\widetilde D,\widetilde\nu)\bigr)
+\le\omega_\beta(\varepsilon).
+$$
+
+**证明。** 首模态积分 $a_0$ 对初态弱收敛连续，故 $\mathcal Q_\beta$ 是紧参数空间中的闭集。变换核在 $[0,S]\times[0,1]\times[d_-,d_+]$ 上联合连续，所以 $\mathcal A_S$ 对 $d_*$ 连续，输出取一致范数。第35.1节保证其在 $\mathcal Q_\beta$ 上为单射。具体定义
+
+$$
+\omega_\beta(\varepsilon)=\sup\left\{d_*(q,\widetilde q):
+q,\widetilde q\in\mathcal Q_\beta,\
+\|\mathcal A_S(q)-\mathcal A_S(\widetilde q)\|_\infty\le\varepsilon
+\right\}.
+$$
+
+若该上确界不趋于零，可取读出差趋于零而参数距离有正下界的一列参数对；紧性给出收敛子列，连续性使两个极限有相同曲线，单射使两个极限相同，与正下界矛盾。$\square$
+
+**推论 40.2（有限噪声的可行集合）。** 对连续观测曲线 $g$，令
+
+$$
+\mathcal U_\varepsilon(g)=\left\{q\in\mathcal Q_\beta:
+\|\mathcal A_S(q)-g\|_\infty\le\varepsilon
+\right\}.
+$$
+
+若此集合非空，则任意两个可行参数的 $d_*$ 距离不超过 $\omega_\beta(2\varepsilon)$。这是整个固定参数类上的弱误差控制；它不给出 $\omega_\beta$ 的计算方法、幂率、总变差界或从有限频点恢复完整曲线的算法。集合为空表示观测与给定误差和参数类不相容，不能据此任意增大误差或改写初态条件。
+
+**命题 40.3（退化附近的扩散尺度不稳定）。** 取 $D_1\ne D_2$ 以及
+
+$$
+\nu_\varepsilon=(1-\varepsilon)\delta_1+\varepsilon\delta_0,
+\qquad 0<\varepsilon<1.
+$$
+
+每个初态均有内部质量，但
+
+$$
+\mathcal L_{\nu_\varepsilon,D}(s)
+=1-\varepsilon+\varepsilon\,\operatorname{sech}\sqrt{s/D},
+$$
+
+因此
+
+$$
+\sup_{s\ge0}\left|
+\mathcal L_{\nu_\varepsilon,D_1}(s)
+-\mathcal L_{\nu_\varepsilon,D_2}(s)
+\right|\le\varepsilon,
+\qquad |D_1-D_2|>0.
+$$
+
+故在只要求 $\nu([0,1))>0$ 而没有统一非退化限制的参数类上，即使观测全部非负频率，也不存在由曲线一致误差趋零保证 $D$ 误差趋零的统一连续模。这个反例不否定每个固定非退化初态的精确联合识别；它说明精确识别与统一噪声稳定具有不同的量词。
+
+## 41. 吸收端质量的有限频段不稳定性
+
+**命题 41.1（弱初态误差不控制端点原子）。** 固定 $S,D>0$。令 $\nu_n=\delta_{1-1/n}$、$\nu=\delta_1$，$n\ge2$。则 $\nu_n\Rightarrow\nu$，并且
+
+$$
+\sup_{0\le s\le S}\left|\mathcal L_{\nu_n,D}(s)-1\right|
+\le\frac{\sqrt{S/D}\,\tanh\sqrt{S/D}}{n}
+\longrightarrow0,
+$$
+
+但 $\nu_n(\{1\})=0$、$\nu(\{1\})=1$。
+
+**证明。** 令 $a=\sqrt{s/D}$。对核 $K_s(x)=\cosh(ax)/\cosh(a)$，有
+
+$$
+0\le\partial_xK_s(x)=\frac{a\sinh(ax)}{\cosh(a)}
+\le a\tanh a.
+$$
+
+在 $[1-1/n,1]$ 上应用均值定理，并利用 $a\tanh a$ 随 $a\ge0$ 单调递增，即得一致界。端点质量由两个点质量的位置直接给出。$\square$
+
+第34节的高频极限仍能精确识别端点原子，但在本例中不能交换 $n\to\infty$ 与 $s\to\infty$：
+
+$$
+\lim_{n\to\infty}\lim_{s\to\infty}\mathcal L_{\nu_n,D}(s)=0,
+\qquad
+\lim_{s\to\infty}\lim_{n\to\infty}\mathcal L_{\nu_n,D}(s)=1.
+$$
+
+因此第40节的弱误差控制不能被解释成端点原子质量的稳定恢复。端点质量、总变差与弱初态距离必须各按自己的读出精度和极限顺序处理。
 
 ## 追加锚（本行以下为增补区）
