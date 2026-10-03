@@ -1,0 +1,11 @@
+**命题 51.3。** 令
+$$
+M_{n,p}=p\left\lfloor\frac np\right\rfloor
+             \left\lfloor\frac{2n-1}{p}\right\rfloor.
+$$
+若第一投影返回不相干，则每个原第一片都满足
+$$
+|P|\ge\frac{g^{M_{n,p}}}{1-g^{M_{n,p}}}d_{s(P)}.
+\tag{51.6}
+$$
+

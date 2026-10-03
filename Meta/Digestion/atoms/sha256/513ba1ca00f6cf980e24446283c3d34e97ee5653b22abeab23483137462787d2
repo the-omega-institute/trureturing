@@ -1,0 +1,40 @@
+**命题 48.8（局部 $H$ 递归与所有有限视界）。** 对 rival 相位
+$r\pmod7$ 定义
+
+$$
+\mathcal C_r=\{c:y_r\in E_c^\beta\},\qquad
+K_r=\bigcup_{c\in\mathcal C_r}E_c^\beta.
+$$
+
+对 guard $s$ 和 $N\ge0$ 定义
+
+$$
+H_{r,s}^{(0)}=I_s,
+$$
+
+$$
+H_{r,s}^{(N+1)}
+=K_r\cap
+\bigcup_{s\xrightarrow{\ell}s'\ {\rm 合法}}
+ f_\ell\!\left(H_{r+1,s'}^{(N)}\right).
+\tag{48.22}
+$$
+
+这里 $N$ 计未来出发观察坐标数。首对的两标签碰撞尾区间为
+
+$$
+\mathcal I_{3,0}^{1,2}
+=I_0\cap f_3^{-1}(E_1^\beta)\cap f_0^{-1}(E_2^\beta),
+\tag{48.23}
+$$
+
+其中 $f_\ell^{-1}(E)$ 表示集合原像。则
+
+$$
+\boxed{\quad
+x_1=s-\frac{he_-}{D}
+\in\mathcal I_{3,0}^{1,2}\cap H_{1,0}^{(N)}
+\quad\text{对每个 }N\ge0.\quad}
+\tag{48.24}
+$$
+

@@ -1,0 +1,9 @@
+**定理 39.8.1（所有 $\theta<\nu<\lambda$ 的固定有限尾见证）。** 假设定义39.1.2的 stems 不同、$k<a_0$，且 $\theta<\lambda$。对每个固定实预算 $\theta<\nu<\lambda$，这个闭族供应一对固定合法 $D$ 终尾及其实际共同过去，迫使每个合法解码器满足
+
+$$
+B^{\mathrm{worst}}_{\nu,\mathcal A}(N)
+\ge\left\lfloor\frac{N-a_0}{L}\right\rfloor-O(1).
+$$
+
+最优阶数为 $\Theta(N+1)$。该结论不要求 $\theta$ 的单点竞争判据成功；几何替换部分也适用于空 stems，但空 stems 没有本下界的首次不同位置。
+

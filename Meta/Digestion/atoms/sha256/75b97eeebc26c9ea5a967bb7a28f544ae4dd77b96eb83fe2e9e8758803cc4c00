@@ -1,0 +1,57 @@
+### 41.9　精度给出的返回字长界
+
+令 $\mathcal B\subseteq\mathbb Q(t)\cap[0,\lambda)$ 为存在不相干可达含环 SCC 的完整闭预算集合，$R=\inf\mathcal B$。固定有限端点最大值 $\rho_U$ 采用定义33.9的式 (33.34)。令
+
+$$
+\zeta=\frac{2t}{5},\quad z_U=\frac{23+14g}{76},\quad z_V=\frac{6+9g}{76},\quad
+h=z_U-\zeta,\quad \ell_0=\zeta-z_V,
+$$
+
+$$
+\chi=g^{20},\qquad \varsigma=g^{60},\qquad
+\delta_H=\chi(1-\varsigma)h,\qquad \delta_L=\chi(1-\varsigma)\ell_0.
+$$
+
+取定义33.7的式 (33.25) 所定六字返回词 $U,V$ 和颜色词 $d_*$，写
+$P_{U,j}=f_{U_j}\circ\cdots\circ f_{U_5}$、
+$P_{V,j}=f_{V_j}\circ\cdots\circ f_{V_5}$。则
+
+$$
+\begin{aligned}
+\rho_U=\max\{&\operatorname{dist}(P_{U,j}(x),J_{(d_*)_j}):
+ x\in\{\zeta+\chi^2\delta_H,t^2\},\\
+&\operatorname{dist}(P_{V,j}(y),J_{(d_*)_j}):
+ y\in\{0,\zeta-\chi^2\delta_L\},\ 0\le j<6\}.
+\end{aligned}
+$$
+
+这是固定的有限端点最大值，已知 $\rho_U<\lambda$。令
+
+$$
+R_C=\frac{\lambda+g^2t^2}{2},\qquad
+\nu_0=\frac{\lambda+\max\{\rho_U,R_C\}}2.
+$$
+
+定理36.27给出 $R\le\nu_0<\lambda$。有效输入为
+
+$$
+\epsilon\in\mathbb Q(t),\qquad0<\epsilon<\lambda-\nu_0.
+$$
+
+定义
+
+$$
+Q_\epsilon=\left\lceil\frac{2D_X}{(1-g)\epsilon}\right\rceil+1,\qquad
+N_\epsilon=64Q_\epsilon^2,\qquad
+B(\epsilon)=2N_\epsilon(2N_\epsilon-1).
+$$
+
+在证明中若 $0<\epsilon<\lambda-R$，取 $b\in\mathcal B$ 满足
+$R\le b<R+\epsilon/2$，令 $c_*=R+\epsilon$，则
+
+$$
+\Delta=c_*-b>\epsilon/2,\qquad q_\Delta\le Q_\epsilon,\qquad N_\Delta\le N_\epsilon.
+$$
+
+网格、短返回和改根给出一边前缀族，返回长度至多 $B(\epsilon)$。真实网格预算可为任意实数；这里不调用任意实预算的域端点图。域值运算只在提取出有限字后由凸包公式完成。
+

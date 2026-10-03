@@ -1,0 +1,61 @@
+**命题54.8（八行必要偏移与失配）。** 令 $R_{\mathcal D},R_{\mathcal E}$ 为这两个实际rival标签。$R_{\mathcal E}=3$ 时 $y_{\mathcal E}$ 必在 $[\alpha+\delta,-u-\delta]$，$R_{\mathcal E}=0$ 时必在 $[\chi+\delta,\zeta-\delta]$。局部必要标签为
+
+| $(a,b)$ | $\mathcal D$共同色 | $R_{\mathcal E}=3$ 时 $R_{\mathcal D}$ | $R_{\mathcal E}=0$ 时 $R_{\mathcal D}$ |
+| --- | --- | --- | --- |
+| $(3,0)$ | $1$ | $0$ | $0$ |
+| $(0,5)$ | $2$ | $0$ | $5$ |
+| $(5,2)$ | $3$ | $5$ | $2$ |
+| $(2,25)$ | $4$ | $2$ | $2$ |
+
+令同一rival从 $F$ 到 $\mathcal D$ 的词为 $V$，$|V|=h-2$，并置
+$$
+\eta=g^{h-2},\quad f_T(z)=A_T+\eta z,\quad
+f_V(z)=A_V+\eta z,\quad \mathcal D_T=A_T-A_V,
+\quad M_T=\#\{j:T_j\ne V_j\}.
+$$
+则以下八行均为必要条件：
+
+| $(a,b)$ | $(R_{\mathcal D},R_{\mathcal E})$ | 共同链平移 | 共同链失配数 |
+| --- | --- | --- | --- |
+| $(3,0)$ | $(0,3)$ | $\mathcal D_T>\eta t$ | 奇数，至少1 |
+| $(0,5)$ | $(0,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(5,2)$ | $(5,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(2,25)$ | $(2,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(3,0)$ | $(0,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(0,5)$ | $(5,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(5,2)$ | $(2,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(2,25)$ | $(2,0)$ | $\mathcal D_T<-\eta u$ | 奇数，至少1 |
+
+**证明。** $E$ 两支路接同一尾，两当前坐标差恰为 $t$，不能共色；其各自与rival共色，故rival有两色。若rival标签3，只能在色0、1交叠；标签0只能在色1、2交叠，给上述两个实际带。$D$ 同侧且标签为 $(a,b)$，共同色分别只能为1、2、3、4，且 $R_{\mathcal D}\in\{a,b\}$。
+
+逐项排除另一候选可用两个闭外包络 $[\alpha,-u]$、$[\chi,\zeta]$。第一带前接3的最大值低于 $\alpha$；前接5、2、25的最小值依次为 $2g,1+gu,1+2g$，分别严格高于 $\omega,\varphi,\iota$。第二带前接3的最大值仍低于 $\alpha$；前接0的最大值为负、低于 $\chi$；前接5的最大值小于 $u<\varepsilon$；前接25的最小值为 $2-t-g\zeta>\iota$。全部严格比较为
+$$
+\begin{gathered}
+\alpha-f_3(\alpha)=(5-7g)/10>0,\qquad
+\alpha-f_3(\chi)=(11-39g)/10>0,\\
+2g-\omega=(13g-3)/10>0,\quad
+1+gu-\varphi=\chi>0,\quad
+1+2g-\iota=\zeta>0,\\
+\varepsilon-u=(13g-3)/10>0,\qquad
+2-t-g\zeta-\iota=(31g-7)/10>0.
+\end{gathered}
+$$
+它们由 $g^2+4g=1$ 和 $3/13<g<1/4$ 得到；后一个界可将 $x^2+4x-1$ 分别代入 $3/13,1/4$，所得值为 $-4/169,1/16$。这核对了表中八个局部删项；用临界外包络排除，不把其剩余成员升级为原预算成员。
+
+置
+$$
+\gamma=\Delta_b-\Delta_a\in\{t,u\},\quad
+c_-=\Delta_a+gt,\quad c_+=\Delta_b,\quad
+c_R=\Delta_{R_{\mathcal D}}-g\Delta_{R_{\mathcal E}}.
+$$
+因 $t-gt=2g$、$u-gt=g$，有 $c_-<c_+$。两返回固定点 $\xi_-<\xi_+$ 及同相位rival点满足
+$$
+\xi_\pm-y_F=
+\frac{\mathcal D_T+\eta(c_\pm-c_R)}{1-g^h}.
+$$
+两个固定点属于同一个 $P_F$。$R_{\mathcal E}=3$ 时，同标签边从 $E_-$ 翻转负侧，故 $P_F>y_F$，用较小固定点得 $\mathcal D_T>\eta(c_R-c_-)$。四行的 $c_R-c_-$ 依次为 $t,0,0,0$。$R_{\mathcal E}=0$ 时，$E_+$ 同标签边翻转正侧，故 $P_F<y_F$，用较大固定点得 $\mathcal D_T<\eta(c_R-c_+)$；四行右端系数依次为 $0,0,0,-u$。
+
+在 $D$，$R_{\mathcal D}=a$ 给正侧，$R_{\mathcal D}=b$ 给负侧。共同链长 $h-2$ 偶，54.1使其首尾同侧时失配数偶、异侧时奇，得到八行奇偶。偶数行若 $M_T=0$，即 $T=V$、$\mathcal D_T=0$，违反严格偏移；故至少2。$\square$
+
+因此共同链 $T=V$、偏移方向或阈值错误、失配数不符的最小候选均已排除。$T,V$ 分别使用各自实际guard；比较仿射系数未声称同一任意尾能从两种终端guard共同前接。八行只有必要性，还须满足同一个实际奇本原rival、原预算、共同链全部原片与guard及全包含，未给任何一行的实现。
+

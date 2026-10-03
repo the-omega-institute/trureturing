@@ -1,0 +1,74 @@
+**定理 6.3（正常空间的完整周期分类）。** $\delta$ 在 $K$ 上的全部周期点为
+
+$$
+p_0=(0^\infty,0),\qquad
+p_1=((10)^\infty,\iota(1,-1)),\qquad
+p_2=((01)^\infty,\iota(-1,0)).
+$$
+
+$p_0$ 固定，$p_1,p_2$ 组成一个二周期。因此对每个 $n\ge1$，
+
+$$
+|\operatorname{Fix}(\delta^n)|=
+\begin{cases}1,&n\text{ 为奇数},\\3,&n\text{ 为偶数}.\end{cases}
+$$
+
+证明。命题 6.2 使任意周期点的算术坐标为整数 $z=(a,b)$。将其地址沿周期双向延伸为 $(\omega_j)_{j\in\mathbb Z}$，相应算术轨道 $(z_j)$ 也周期，且
+
+$$
+z_j=\omega_j\alpha+Mz_{j+1},\qquad
+P(Mz)=\phi P(z),\qquad E(Mz)=\psi E(z),\qquad
+P(\alpha)=1,\quad E(\alpha)=-\phi.
+$$
+
+沿负索引迭代 $P(z_0)=\phi^{-1}(P(z_{-1})-\omega_{-1})$，周期有界项乘 $\phi^{-n}$ 后趋零，得到
+
+$$
+P(z)=-\sum_{n\ge1}\omega_{-n}\phi^{-n}.
+$$
+
+沿正索引迭代 $E(z_j)=-\phi\omega_j+\psi E(z_{j+1})$，同理得到
+
+$$
+E(z)=-\phi\sum_{j\ge0}\omega_j(-\phi^{-1})^j.
+$$
+
+两个级数都绝对收敛。循环接缝合法，使双向列仍无相邻一。第一式按位置 $(2j+1,2j+2)$ 分组，每对最多选一位，最大贡献来自较低指数，因此
+
+$$
+0\le\sum_{n\ge1}\omega_{-n}\phi^{-n}
+\le\sum_{j\ge0}\phi^{-(2j+1)}=1.
+$$
+
+第二式的偶位贡献非正，奇位贡献非负。舍去不利项、将有利位全取一，分别给
+
+$$
+-1\le P(z)\le0,\qquad
+-\frac{\phi}{1-\phi^{-2}}=-\phi^2
+\le E(z)\le\frac1{1-\phi^{-2}}=\phi.
+$$
+
+反解线性坐标为
+
+$$
+a=\frac{P-\phi E}{\phi+2},\qquad
+b=\frac{\phi P+E}{\phi+2}.
+$$
+
+由此得到明确格点界
+
+$$
+-1\le a\le\frac{\phi^3}{\phi+2}<2,\qquad
+-2<-\frac{\phi^3}{\phi+2}\le b\le\frac{\phi}{\phi+2}<1.
+$$
+
+整数性迫 $a\in\{-1,0,1\}$、$b\in\{-1,0\}$。再施加 $-1\le a+\phi b\le0$：$b=0$ 时仅 $a=-1,0$；$b=-1$ 时仅 $a=1$。只剩 $(-1,0),(0,0),(1,-1)$。
+
+$z=0$ 时，$P=0$ 迫所有负索引位零，周期性迫整个地址全零。$z=(-1,0)$ 时，$E=\phi$。上界等号要求每个偶位零、每个奇位一：任何遗漏的正项或出现的负项都会使和严格减小。因此地址为 $(01)^\infty$。$z=(1,-1)$ 时，$E=-\phi^2$；下界等号同理要求全部偶位一、奇位零，给 $(10)^\infty$。直接代入 $M^{-1}$ 验证
+
+$$
+\delta p_0=p_0,\qquad \delta p_1=p_2,\qquad \delta p_2=p_1.
+$$
+
+三个候选均实现，分类完整。二周期点地址无限支持且组成有负坐标，故不属于 $\Gamma$。$\square$
+

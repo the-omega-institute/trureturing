@@ -1,0 +1,19 @@
+**60.3 合流条带与同一共同片。** 记 $r=R_{\mathcal E}$。必有 $r\in\{3,0\}$，且 $T_0=R_F=3$。置
+$$
+s_1=\frac{g-7}{10},\qquad s_2=\frac{g-2}{5},\qquad
+\theta=\frac{1+g}{5},\qquad \kappa=\frac{5+3g}{10}.
+$$
+$P_F,P_Z$ 分别表示 $F,Z$ 的既有原第一片，$y_F,y_Z$ 分别表示同一个 rival 在这两个顶点的实际相位坐标。下表的片栏均为整片包含，点栏均为成员关系：
+
+| $r$ | $P_F$ 所在区间 | $y_F$ 所在区间 |
+| --- | --- | --- |
+| $3$ | $[s_1+\delta/g,-u-\delta]$ | $[-1+\delta/g,s_1-\delta/g]$ |
+| $0$ | $[-1,s_1-\delta/g]$ | $[s_1+\delta/g,-u-\delta]$ |
+
+两分量在 $F$ 共色 $0$，在 $Z$ 共色 $2$，并满足
+
+| $r$ | $P_Z$ 所在区间 | $y_Z$ 所在区间 | $T_1$ | $R_Z$ |
+| --- | --- | --- | --- | --- |
+| $3$ | $[C+\delta,\theta-\delta/g^2]$ | $[\theta+\delta/g^2,D-\delta]$ | $0$ 或 $5$ | $5$ |
+| $0$ | $[\theta+\delta/g^2,D-\delta]$ | $[C+\delta,\theta-\delta/g^2]$ | $5$ | $0$ 或 $5$ |
+

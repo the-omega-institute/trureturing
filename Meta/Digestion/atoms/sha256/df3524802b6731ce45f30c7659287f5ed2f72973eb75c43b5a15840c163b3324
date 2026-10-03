@@ -1,0 +1,50 @@
+**定理58.7。** anchor 输出为
+
+$$
+Y_j=A_j+\rho\chi X_j,\qquad X_j<Y_j<Z_{j,1},\qquad
+Y_j>Z_{j,R}\quad(R\ge2).
+\tag{58.25}
+$$
+
+anchor 有限帽族的后缀下确界及全槽阈值为
+
+$$
+\widehat\mu_{j,R}=\begin{cases}Y_j,&R=1,\\Z_{j,R},&R\ge2,\end{cases}
+\qquad
+\widehat\Theta_R=\begin{cases}
+\Theta_1,&R=1,\\
+\Psi_R:=\lambda-g^2\chi^RZ_{H,R},&R\ge2.
+\end{cases}
+\tag{58.26}
+$$
+
+其中 $R=1$ 的阈值由 anchor **自身**的输入 $\chi X_H$ 决定。阈值处分类为：
+
+| anchor cap | 有限历史达到上确界 | 阈值处整族闭供应 | 整族逐槽严格及逐记录余量 | 全族统一正余量 |
+| --- | --- | --- | --- | --- |
+| $R=1$ | 每条历史在 anchor 达到 | 恰需 $o_1=1$ | 不可 | 不可 |
+| $R\ge2$ | 无有限历史达到 | 任意归属可 | 任意归属可 | 不可 |
+
+在阈值以下整族失败，在阈值以上任意归属都有统一正余量。并且
+
+$$
+\widehat\Theta_1=\Theta_1,\qquad
+\Theta_1<\Psi_2<\Theta_2,\qquad
+\widehat\Theta_R=\Theta_R\quad(R\ge3).
+\tag{58.27}
+$$
+
+**引用与参数对应。** [命题56.3][ch58-pub56-3] 给同一实际锚输出 $Y_j$ 及 (58.25) 的次序；56.2取 $T=Y_j$ 给本章 $\widehat\mu_{j,R}$，即56中的 $\nu_{j,R}$。[定理56.5][ch58-pub56-5] 必须与 [56.100][ch58-pub56-100] 合读，本章 $\widehat\Theta_R$ 对应其包括锚自身槽的实际整族量 $B_R^{\rm anc}$；从固定实际尾 $X_j$ 初始化的非空完整返回列表严格高于 $X_j$ 仅限 $R=1,2$；$R\ge3$ 的下端为 $Z_{j,R}$，不用于任意内部截断。全槽 max 接口仍为
+
+$$
+\max\{\Theta_1,\lambda-g^2\chi^R\widehat\mu_{H,R}\}.
+$$
+
+$R=1$ 时锚自身高侧位置4的输入是 $\chi X_H$，本章 $\widehat\Theta_1=\Theta_1$；56中的公式量 $\widehat\Theta_1<\Theta_1$ 不是实际锚族阈值。只有 $R\ge2$ 时，本章 $\Psi_R$ 才对应56中的公式量 $\widehat\Theta_R$。保留以实际 $Y_j$ 初始化的完整外列表有限见证记号（$R\ge2$）：
+
+$$
+\widehat D_{j,k}=Z_{j,R}+a_R^k(Y_j-Z_{j,R})\downarrow Z_{j,R},
+$$
+
+[定理56.6][ch58-pub56-6] 与 [推论56.7][ch58-pub56-7] 直接给表中合同端点及 (58.27)，固定锚只在 $R=2$ 改善完整整族阈值。在原预算 $\Theta_2$，anchor cap 2 整族甚至有统一正余量；$R\ge3$ 在共同阈值处仍只有逐记录余量。锚始终是外列表与原两尾之间的固定 $(1,1)$，不随 $R$ 或预算改变；整族分类不转移为每条预算过滤列表的分类。
+

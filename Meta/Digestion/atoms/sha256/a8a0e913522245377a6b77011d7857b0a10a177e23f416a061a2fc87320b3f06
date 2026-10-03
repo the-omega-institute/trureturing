@@ -1,0 +1,70 @@
+**定理49.6（逐字保留旧尾）。** 另固定原百窗的两条字面尾
+
+$$
+\widehat\xi_H=(CU^{10}C)5\,0^\infty,\qquad
+\widehat\xi_L=(CV^{10}C)0^\infty.
+$$
+
+它们合法且在 $D_1$，位移为
+
+$$
+\widehat X_j=\chi(1-s_{10})h_j+s_{10}\chi^2E_j.
+\tag{49.14}
+$$
+
+返回词和 stems 均仍为定理49.4的原词时，精确全历史闭阈值为
+
+$$
+\boxed{\widehat\beta_m=
+\begin{cases}
+\beta_m,&1\le m\le10,\\
+\Gamma:=\lambda-g^{42}\widehat X_H,&m\ge11.
+\end{cases}}
+\tag{49.15}
+$$
+
+并且
+
+$$
+\begin{gathered}
+b_\infty<\Gamma<\beta_{10},\\
+\Gamma-b_\infty=g^{122}(h_H-\chi E_H)>0,\\
+\beta_{10}-\Gamma=g^{142}(E_H-\chi r_{10}h_H)>0.
+\end{gathered}
+\tag{49.16}
+$$
+
+对 $m\ge11$，预算恰为 $\Gamma$ 的闭误差整族可行，当且仅当 $o_1=1$。每种归属下实际可行预算的下确界仍为 $\Gamma$。
+
+**证明。** guard 合法性与返回词相同。由(49.1)，$\chi E_j<h_j$，故 $0<\widehat X_j<\chi h_j<h_j$，且 $\widehat X_H<\widehat X_L$。规范下端的比较为
+
+$$
+\widehat X_j-\chi r_{10}h_j
+=a_{10}(E_j-\chi r_{10}h_j)>0.
+$$
+
+又因 $\chi E_j/h_j<1/16$，
+
+$$
+1-\frac{\widehat X_j}{\chi h_j}
+=s_{10}(1-\chi E_j/h_j)>15s_{10}/16,
+$$
+
+而
+
+$$
+1-r_{11}=\frac{s_{11}(1-\chi^2)}{1-s_{11}\chi^2}
+<s_{11}=\rho s_{10}<s_{10}/4.
+$$
+
+因此
+
+$$
+\chi r_{10}h_j<\widehat X_j<\chi r_{11}h_j.
+\tag{49.17}
+$$
+
+在 $m\le10$ 时，由(49.17)及 $\widehat X_j<\chi h_j<(1-\rho)h_j<r_1h_j$，旧尾仍在规范区间内部，(49.10)—(49.11)给 $\beta_m$，每个有限槽严格小于它。在 $m\ge11$ 时 $\mu_j=\widehat X_j$，给 $\Gamma$。其他非活跃槽仍严格小于 $\Gamma$，因为 $g^{42}\widehat X_H<g^6$。代入(49.14)及 $a_{10}=g^{100}$ 即得(49.16)。所以旧尾阈值在前十个参数严格下降，$m=11$ 仍下降一次，此后恒定。
+
+此时空剩余词取得最小位移。任何非空返回后缀都严格增加 $\widehat X_j$：$F_{j1}^{(m)}$ 的固定点在其上方，且 $F_{j0}^{(m)}>F_{j1}^{(m)}$。所以全部达到 $\Gamma$ 的槽恰是以类型0结束的历史中，最右类型0返回最内层高侧 $U$ 的位置4；其后恰为 $C^2\widehat\xi_H$。低侧、其他高侧槽及 stems 均严格较小。等号坐标为 $q_1-\Gamma$，唯一最近目标为 $q_1$，故逐点拥有规则给整族端点可行当且仅当 $o_1=1$；严格误差小于 $\Gamma$ 的合同在这些槽失败。预算大于 $\Gamma$ 可选内部目标。停滞来自这个实际有限槽，而不是规范阈值极限。证毕。
+
