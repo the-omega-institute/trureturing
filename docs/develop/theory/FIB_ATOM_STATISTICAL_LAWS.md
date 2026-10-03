@@ -7601,3 +7601,425 @@ Q_\Psi(x,\mu)=\Psi(\mu).
 常值 \(\Psi\) 给出独立重采样；依赖 \(\alpha\) 占比的 \(\Psi\) 可给出合作或竞争流；选择带空间嵌入的 \(\Psi\) 可给出不同反应—扩散极限。它们共享同一 FIB 词序和计数，却有不同固定点、波速、扩散系数与反应项。因此不存在仅凭 FIB 递归唯一确定的传播混沌常数、PDE 或“物理定律”。
 
 本节的适用边界是：有限时域不能升级成长时稳定；\(N\to\infty\) 与 \(j\to\infty\) 的次序及联合缩放必须声明；初态、核、相互作用、位置嵌入、边界、噪声和观测通道均为外加条件。缺乏统一 Lipschitz 或矩界、初态不渐近乘积、公共噪声未条件化或 PDE 不唯一时，结论相应降为条件极限、随机极限或开放边界。水动力结论是所给离散模型的弱极限，不是 FIB 自身推出的真实热力学、能量守恒、普适性或物理实在性。
+
+## 73. FIB 状态载体上的外加量子信道、退相干与谱隙
+
+令 \(S\) 是有限 FIB 状态集，外加 Hilbert 空间为
+\(\mathcal H=\mathbb C^S\)，基态记为 \(\lvert i\rangle\)。FIB 只提供 \(S\)、标签和组合索引；密度矩阵、Hamiltonian、CP/CPTP 映射及所有速率均是外加结构。经典概率 \(p\) 可嵌入为
+\[
+\iota(p)=\sum_i p_i\lvert i\rangle\langle i\rvert.
+\]
+若标签 \(g:S\to\mathcal A\)，令
+\[
+P_a=\sum_{g(i)=a}\lvert i\rangle\langle i\rvert,
+\qquad
+\Delta_g(\rho)=\sum_{a\in\mathcal A}P_a\rho P_a.
+\]
+对 \(\eta\in[0,1]\) 定义 CPTP 通道
+\[
+\Phi_\eta=(1-\eta)\operatorname{Id}+\eta\Delta_g.
+\]
+若 \(X\in\ker\Delta_g\) 是跨标签相干块，则
+\[
+\Phi_\eta^n(X)=(1-\eta)^nX.
+\]
+因此离散退相干率可记为
+\(\gamma_d=-\log(1-\eta)\)；\(\eta=1\) 时跨标签相干一步消失。固定点代数
+\(\{\rho:\Delta_g(\rho)=\rho\}\) 通常包含多个块对角态，所以退相干率不等于唯一平衡态的混合隙。
+
+**定理 73.1（量子通道扰动稳定性）。** 设 \(\Phi,\widetilde\Phi\) 是同一有限维空间上的 CPTP 通道，且 \(\widetilde\Phi\) 在迹零厄米空间上有收缩系数 \(\kappa<1\)。令
+\[
+\delta=\sup_{\rho}\|\Phi(\rho)-\widetilde\Phi(\rho)\|_1,
+\qquad
+\delta_0=\|\rho_0-\widetilde\rho_0\|_1.
+\]
+则
+\[
+\|\Phi^n\rho_0-\widetilde\Phi^n\widetilde\rho_0\|_1
+\le
+\kappa^n\delta_0+
+\delta\frac{1-\kappa^n}{1-\kappa}.
+\]
+没有收缩假设时，望远镜估计给出
+\[
+\|\Phi^n-\widetilde\Phi^n\|_\diamond
+\le n\|\Phi-\widetilde\Phi\|_\diamond.
+\]
+若两通道各有唯一不变态，则其不变态的迹距离至多为
+\(\delta/(1-\kappa)\)。迹范数和 diamond 范数是外加量子模型的稳定距离，不是 FIB 内生量。
+
+**定义 73.2（Lindblad 半群与量子谱隙）。** 在 \(\mathcal H\) 上给定外加 GKLS 生成元
+\[
+\mathcal L(\rho)
+=-i[H,\rho]
++\sum_\ell\gamma_\ell
+\left(
+V_\ell\rho V_\ell^\dagger
+-\tfrac12\{V_\ell^\dagger V_\ell,\rho\}
+\right),
+\qquad
+\mathcal T_t=e^{t\mathcal L}.
+\]
+若存在唯一忠实不变态 \(\sigma\)，并满足相对于
+\[
+\langle A,B\rangle_\sigma
+=\operatorname{Tr}(\sigma^{1/2}A^\dagger\sigma^{1/2}B)
+\]
+的量子详细平衡，定义
+\[
+\gamma_2
+=\inf_{\operatorname{Tr}(\sigma A)=0}
+\frac{-\operatorname{Re}\langle A,\mathcal L^\dagger A\rangle_\sigma}
+{\|A\|_{2,\sigma}^2}.
+\]
+则
+\[
+\operatorname{Var}_\sigma(\mathcal T_t^\dagger A)
+\le e^{-2\gamma_2t}\operatorname{Var}_\sigma(A),
+\]
+有限维范数等价进一步给出迹距离的指数收敛。无详细平衡时只能使用非零谱实部和可能的 Jordan 多项式前因子；不能无条件写成无常数的纯指数界。若另有量子对数 Sobolev 常数 \(\alpha>0\)，则
+\[
+D(\mathcal T_t\rho\Vert\sigma)
+\le e^{-2\alpha t}D(\rho\Vert\sigma).
+\]
+这些谱隙、\(\sigma\)、\(H\)、\(V_\ell\) 与速率都必须由外加量子模型给定，FIB 不自动产生量子退相干、耗散、温度或热平衡。
+
+## 74. 有限替换闭包的尺度重整化、固定点与临界谱分岔
+
+令 \(\mathcal C=\{1,\ldots,d\}\) 是已声明有限且闭合的 FIB 上下文，给定外加非负加权替换矩阵
+\(A(\theta)\in\mathbb R_+^{d\times d}\)。\(\nu\) 是外加初态，定义
+\[
+Z_n(\theta)=\nu^{\mathsf T}A(\theta)^n\mathbf1,
+\qquad
+p(\theta)=\log\rho(A(\theta)).
+\]
+FIB 只给出 \(\mathcal C\) 和可行边；权重、参数、尺度和观测均是外加。
+
+对整数 \(b\ge2\)，在正标量射影类上定义块重整化
+\[
+R_b[A]=[A^b],
+\qquad
+\widetilde R_b(A)=\frac{A^b}{\rho(A)^b}.
+\]
+若 \(A\) primitive，Perron 根为 \(\rho\)，左右向量满足
+\(\ell^{\mathsf T}r=1\)，则
+\[
+\widetilde R_b^k(A)=\frac{A^{b^k}}{\rho^{b^k}}
+\longrightarrow r\ell^{\mathsf T}.
+\]
+若 \(q=|\lambda_2|/\rho<1\)，且 \(A\) 可对角化，误差为
+\[
+\left\|\widetilde R_b^k(A)-r\ell^{\mathsf T}\right\|
+\le Cq^{b^k}.
+\]
+一般存在任意 \(\bar q\in(q,1)\) 使误差
+\(O(\bar q^{\,b^k})\)，或带次谱 Jordan 多项式因子。尺度这里指递归块长度，不自动等于物理长度。
+
+若参数族在阻塞后仍闭合：
+\[
+[A(\Phi_b\theta)]=[A(\theta)^b],
+\qquad
+\Phi_{b_1b_2}=\Phi_{b_1}\circ\Phi_{b_2},
+\]
+且 \(\theta_\ast\) 为固定点，则线性化
+\(J_b=D\Phi_b(\theta_\ast)\) 满足
+\[
+J_{b_1b_2}=J_{b_1}J_{b_2}.
+\]
+沿特征方向 \(\Lambda_i(b)\) 定义
+\[
+y_i=\frac{\log|\Lambda_i(b)|}{\log b}.
+\]
+在声明的尺度律下，\(|\Lambda_i|>1\)、\(=1\)、\(<1\) 分别称为相关、边缘和无关方向。若外加观测 \(M\) 满足
+\(M(\Phi_b\theta)=b^{s_M}M(\theta)\)，则相关方向可推出幂律
+\(M(\theta)\asymp|\delta\theta_i|^{s_M/y_i}\)；这需要重整化闭合和观测尺度律，不能由 FIB 递归单独推出。
+
+谱隙比
+\[
+q(\theta)=\frac{|\lambda_2(\theta)|}{\rho(\theta)}
+\]
+给出离散相关长度
+\[
+\xi(\theta)=-\frac1{\log q(\theta)}.
+\]
+块变换后 \(q\mapsto q^b\)、\(\xi\mapsto\xi/b\)。若外加临界参数满足
+\(1-q(t)\sim c|t-t_c|^\gamma\)，则
+\[
+\xi(t)\sim c^{-1}|t-t_c|^{-\gamma}.
+\]
+但若 \(A_t\) 在邻域内严格正且条目解析，Perron 根简单解析，\(p(t)=\log\rho(A_t)\) 也解析；有限维本身没有真正非解析相变。非解析性必须来自失去 primitive、可约极限、维数或尺度趋于无穷，或另加奇异极限。
+
+例：
+\[
+A_{t,\varepsilon}
+=\begin{pmatrix}1+t&\varepsilon\\ \varepsilon&1-t\end{pmatrix},
+\qquad
+\rho=1+\sqrt{t^2+\varepsilon^2}.
+\]
+\(\varepsilon>0\) 时压力光滑；\(\varepsilon=0\) 时
+\(p(t)=\log(1+|t|)\) 在 \(t=0\) 出现导数跳变，且
+\[
+p''(0)=\frac1{\varepsilon(1+\varepsilon)}
+\]
+在 \(\varepsilon\downarrow0\) 时发散。这是外加矩阵的谱分岔，不是 FIB 自身的真实相变。
+
+## 75. 熵正则最优传输、Schrödinger 桥与信息几何梯度流
+
+固定一代有限上下文闭包 \(E_j\)。FIB 只确定有限状态、标签、词序和可选位置嵌入；代价、参考耦合、度量、时间尺度和端点律均为外加数据。设
+\(\mu_0,\mu_1\in\mathcal P(E_j)\)，\(r_j(x,y)\ge0\) 为参考耦合，\(c_j\) 为有界代价，\(\varepsilon>0\)。定义
+\[
+\mathsf{OT}_{\varepsilon,j}
+=\inf_{\pi\in\Pi(\mu_0,\mu_1),\ \pi\ll r_j}
+\left\{
+\langle c_j,\pi\rangle+
+\varepsilon D_{\mathrm{KL}}(\pi\Vert r_j)
+\right\}.
+\]
+若可行集非空且 \(\varepsilon>0\)，有限单纯形的严格凸性给出唯一最优耦合。若参考支撑在允许坐标上为正，则存在 \(a_x,b_y\ge0\) 使
+\[
+\pi^\varepsilon_j(x,y)
+=a_xb_yr_j(x,y)e^{-c_j(x,y)/\varepsilon},
+\]
+并满足两个边缘约束。若支撑图不具端点可达性，只能在可行分量上使用此表示。
+
+当 \(r_j=\mu_0\otimes\mu_1\)、正质量坐标下界为 \(m>0\) 时，吸收 KL 常数后有
+\[
+0\le
+\mathsf{OT}_{\varepsilon,j}
+-\inf_{\pi\in\Pi(\mu_0,\mu_1)}
+\langle c_j,\pi\rangle
+\le\varepsilon\log|E_j|^2.
+\]
+因此固定 \(j\) 时 \(\varepsilon\downarrow0\) 的聚点是未正则化最优耦合；若未正则化解不唯一，熵项只选择其中一个聚点。
+
+令 \(Q_j\) 为外加 Markov 核，\(R_j\) 为由初始律 \(\rho_0\) 与 \(Q_j\) 生成的路径律。给定端点律，Schrödinger 桥为
+\[
+\mathsf{SB}_{\varepsilon,j}
+=\inf_{P:\,P_0=\mu_0,\ P_T=\mu_T}
+\varepsilon D_{\mathrm{KL}}(P\Vert R_j).
+\]
+在端点可行且 \(R_j\) 支撑正时，最优桥唯一，并可写成 Doob 型变换
+\[
+Q_t^{\mathrm{SB}}(x,y)
+=Q_j(x,y)\frac{\varphi_{t+1}(y)}{\varphi_t(x)},
+\]
+其中 \(\varphi_t\) 与其对偶势满足前向、后向 Schrödinger 方程。候选路径律的 KL 链式分解为
+\[
+D_{\mathrm{KL}}(P\Vert R_j)
+=D_{\mathrm{KL}}(P_0\Vert\rho_0)
++\sum_{t=0}^{T-1}
+\mathbb E_P
+D_{\mathrm{KL}}\!\left(
+P(X_{t+1}\mid X_{0:t})
+\middle\Vert Q_j(X_t,\cdot)
+\right).
+\]
+对固定端点，最优桥可由马尔可夫化取得，因而等价于逐步控制相对熵最小化。该分解不赋予 KL 热力学温度或真实耗散含义。
+
+给定外加图迁移率和能量
+\[
+\mathcal F_j(\mu)
+=\sum_xV_j(x)\mu_x
++\beta\sum_x\mu_x\log\frac{\mu_x}{m_j(x)}
++\frac12\sum_{x,y}W_j(x,y)\mu_x\mu_y,
+\]
+以及保持总质量的半正定 Onsager 算子 \(K_j(\mu)\)，定义
+\[
+\dot\mu_t=-K_j(\mu_t)\nabla\mathcal F_j(\mu_t).
+\]
+沿正坐标解有
+\[
+\frac{d}{dt}\mathcal F_j(\mu_t)
+=-\langle\nabla\mathcal F_j,
+K_j(\mu_t)\nabla\mathcal F_j\rangle\le0.
+\]
+若再给定外加度量 \(d_j\)，JKO 离散化为
+\[
+\mu_{\tau,j}^{n+1}\in
+\operatorname*{argmin}_{\mu\in\mathcal P(E_j)}
+\left\{
+\frac{1}{2\tau}W_{2,j}^2(\mu,\mu_{\tau,j}^n)
++\mathcal F_j(\mu)
+\right\}.
+\]
+有限状态下极小值存在；凸性、能量界、速度平方可积和极限唯一性成立时，\(\tau\downarrow0\) 给出能量耗散解，否则只能声称子列极限满足能量不等式。若同时让 \(\varepsilon\downarrow0\)、\(\tau\downarrow0\) 或 \(j\to\infty\)，必须声明联合缩放与极限次序。
+
+同一 \(E_j\) 与 FIB 递归可选择不同的
+\((c_j,r_j,Q_j,d_j,V_j,m_j)\)，从而得到不同最优耦合、桥路径、Fisher 度量和耗散率。故 FIB 只提供可承载这些模型的有限组合状态，不能单独确定 Wasserstein 距离、温度、耗散或真实物理定律。
+
+## 76. FIB 替换词的符号动力学、频率与谱测度
+
+取有限字母表 \(\mathcal A=\{\alpha,\beta\}\) 及外加替换
+\[
+\sigma(\alpha)=\alpha\beta,\qquad
+\sigma(\beta)=\alpha.
+\]
+其按列计数的替换矩阵为
+\[
+M=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\]
+令 \(\mathcal L(\sigma)\) 为所有 \(\sigma^n(a)\) 的有限子词，并定义双边 hull
+\[
+X_\sigma
+=\{x\in\mathcal A^{\mathbb Z}:
+\text{每个有限子块均属于 }\mathcal L(\sigma)\},
+\qquad
+(Tx)_k=x_{k+1}.
+\]
+FIB 递归 \(W_{j+2}=W_{j+1}W_j\) 只有在指定了与某个 \(X_\sigma\) 的合法嵌入、平移极限和双边延拓后，才能使用下述结论；原始有限词本身不自动给出平移不变概率律。
+
+**定理 76.1（primitive 替换的唯一遍历性与频率）。** 若 \(\sigma\) primitive，则 \((X_\sigma,T)\) 最小，并存在唯一 \(T\)-不变概率测度 \(\mu\)。对任意连续 \(f:X_\sigma\to\mathbb C\)，
+\[
+\lim_{N\to\infty}\frac1N\sum_{k=0}^{N-1}f(T^kx)
+=\int f\,d\mu
+\]
+对所有 \(x\in X_\sigma\) 一致成立。特别地，每个合法有限词 \(u\) 的圆柱频率
+\[
+\operatorname{freq}(u)=\mu([u])
+\]
+存在且与起点和相位无关。若 \(r,\ell\) 是 \(M\) 的正右、左 Perron 向量，则字母频率由 \(r\) 归一化给出；标准 Fibonacci 规范下
+\[
+\operatorname{freq}(\alpha)=\varphi^{-1},
+\qquad
+\operatorname{freq}(\beta)=\varphi^{-2}.
+\]
+有限 \(W_j\) 的端点只产生边界误差，前提是 \(W_j\) 确实来自该 primitive hull 的合法超词序列。
+
+**定义 76.2（自相关与谱测度）。** 给定有界字母权重 \(w:\mathcal A\to\mathbb C\)，定义加权梳
+\[
+\omega_x=\sum_{n\in\mathbb Z}w(x_n)\delta_n.
+\]
+唯一遍历性保证自相关系数
+\[
+\eta(m)=\int_{X_\sigma}
+w(x_0)\overline{w(x_{-m})}\,d\mu(x)
+\]
+存在且与 \(x\) 无关。令
+\[
+\gamma=\sum_{m\in\mathbb Z}\eta(m)\delta_m.
+\]
+\(\gamma\) 是正定测度，其 Fourier 变换 \(\widehat\gamma\) 是正测度，可称为该加权符号模型的数学衍射测度。对中心化观测
+\[
+f(x)=w(x_0)-\int w(x_0)\,d\mu,
+\]
+Koopman 谱测度 \(\sigma_f\) 由
+\[
+\int_{\mathbb T}z^m\,d\sigma_f(z)
+=\langle f\circ T^m,f\rangle_{L^2(\mu)}
+\]
+确定。零频原子来自常数均值；其余峰型取决于替换、权重和位置实现。标准 Fibonacci 的纯离散结论需要另用相应模型集或替换谱定理，不能只由递归拼接式推出。
+
+**定理 76.3（Perron 尺度分解）。** 令 \(c_n=M^nc_0\) 是替换词的字母计数向量，\(P=r\ell^{\mathsf T}/(\ell^{\mathsf T}r)\)。则
+\[
+c_n=\varphi^nPc_0+
+(-\varphi^{-1})^n(I-P)c_0.
+\]
+任意字母权重和均为主尺度 \(C\varphi^n\) 加次尺度
+\(D(-\varphi^{-1})^n\)，归一化频率误差为
+\(O(\varphi^{-2n})\)。对局部块计数，应使用相应的高阶块替换矩阵；其次特征值不必等于 \(-\varphi^{-1}\)，所以 \(\varphi\) 的长度增长不自动是任何相关函数的临界指数。
+
+本节的边界是：FIB 递归本身未指定 primitive 替换、双边 hull、平移不变测度、权重、格点位置或 Fourier 观测。非 primitive、上下文不闭合、单边序列或固定长度时，最多得到指定有限词的计数恒等式或子序列结论，不能宣称唯一遍历、衍射谱或物理材料结构。
+
+## 77. 外加连续时间链的亚稳态、准平稳寿命与稀有跃迁
+
+固定一代 \(j\)，令 \(E_j\) 为 FIB 递归产生的有限上下文集合。给定外加速率 \(r_{\varepsilon,j}(x,y)\ge0\)，定义
+\[
+(\mathcal L_{\varepsilon,j}f)(x)
+=\sum_{y\ne x}r_{\varepsilon,j}(x,y)[f(y)-f(x)].
+\]
+取互不相交的亚稳井 \(A\)、目标 \(B\)，
+\(D=E_j\setminus B\)，
+\[
+\tau_B=\inf\{t:X_t\in B\},
+\]
+并以杀死边界限制生成器。若 \(D\) 内核不可约，杀死半群有唯一准平稳分布 \(\nu_{\varepsilon,j}\) 与主特征值 \(\lambda_{\varepsilon,j}>0\)：
+\[
+\nu_{\varepsilon,j}P_t^B
+=e^{-\lambda_{\varepsilon,j}t}\nu_{\varepsilon,j},
+\qquad
+\Pr_{\nu_{\varepsilon,j}}(\tau_B>t)
+=e^{-\lambda_{\varepsilon,j}t},
+\qquad
+\mathbb E_{\nu_{\varepsilon,j}}\tau_B
+=\lambda_{\varepsilon,j}^{-1}.
+\]
+出口位置的通量律为
+\[
+\Pr_{\nu_{\varepsilon,j}}(X_{\tau_B}=y)
+=\lambda_{\varepsilon,j}^{-1}
+\sum_{x\in D}\nu_{\varepsilon,j}(x)r_{\varepsilon,j}(x,y),
+\qquad y\in B.
+\]
+若杀死算子有次主谱隙 \(\gamma_{\varepsilon,j}>0\)，任意初态在存活条件下以
+\(O(e^{-\gamma_{\varepsilon,j}t})\) 收敛到 \(\nu_{\varepsilon,j}\)；只有当该混合时间远小于 \(\lambda_{\varepsilon,j}^{-1}\) 时，才称 \(A\) 为亚稳井。
+
+**定理 77.1（可逆图的 Arrhenius 势垒）。** 另加可逆结构
+\[
+\pi_\varepsilon(x)=Z_\varepsilon^{-1}e^{-U(x)/\varepsilon},
+\qquad
+c_\varepsilon(x,y)
+=\pi_\varepsilon(x)r_\varepsilon(x,y)
+=Z_\varepsilon^{-1}a(x,y)e^{-H(x,y)/\varepsilon},
+\]
+其中 \(a(x,y)=a(y,x)\) 有统一正下上界，\(H(x,y)=H(y,x)\)，且图上 \(A\) 至 \(B\) 连通。定义
+\[
+\Phi(A,B)
+=\min_{\gamma:A\leadsto B}
+\max_{(x,y)\in\gamma}H(x,y),
+\qquad
+U_A=\min_{x\in A}U(x),
+\qquad
+\Gamma(A,B)=\Phi(A,B)-U_A.
+\]
+容量为
+\[
+\operatorname{cap}_\varepsilon(A,B)
+=\inf_{h|_A=1,\ h|_B=0}
+\frac12\sum_{x,y}c_\varepsilon(x,y)[h(y)-h(x)]^2.
+\]
+若井内混合时间为 \(e^{o(1/\varepsilon)}\)，且容量渐近确实由最小通信高度给出，则
+\[
+\lim_{\varepsilon\downarrow0}
+\varepsilon\log\mathbb E_{\nu^A_\varepsilon}\tau_B
+=\Gamma(A,B),
+\qquad
+\lim_{\varepsilon\downarrow0}
+[-\varepsilon\log\lambda_\varepsilon]
+=\Gamma(A,B).
+\]
+若还存在正的门 prefactor \(C_A,C_{\mathrm{cap}}\) 使
+\[
+\pi_\varepsilon(A)
+=C_Ae^{-(U_A-U_\ast)/\varepsilon}(1+o(1)),
+\qquad
+\operatorname{cap}_\varepsilon(A,B)
+=C_{\mathrm{cap}}
+e^{-(\Phi(A,B)-U_\ast)/\varepsilon}(1+o(1)),
+\]
+则
+\[
+\lambda_\varepsilon
+=\frac{C_{\mathrm{cap}}}{C_A}
+e^{-\Gamma(A,B)/\varepsilon}(1+o(1)),
+\qquad
+\mathbb E\tau_B
+=\frac{C_A}{C_{\mathrm{cap}}}
+e^{\Gamma(A,B)/\varepsilon}(1+o(1)).
+\]
+有限图只给出门边缘和局部速率决定的 prefactor；经典 Hessian 版 Eyring–Kramers 公式还需要外加的小噪声扩散、非退化极小点和鞍点，不能由 FIB 图自动推出。
+
+对固定 \(\varepsilon\) 的有限不可约链，连续时间经验测度
+\[
+\widehat\mu_T=\frac1T\int_0^T\delta_{X_s}\,ds
+\]
+满足 Donsker–Varadhan 形式
+\[
+I_\varepsilon(\mu)
+=\sup_{g>0}
+-\sum_x\mu(x)\frac{(\mathcal L_\varepsilon g)(x)}{g(x)},
+\qquad
+\Pr(\widehat\mu_T\approx\mu)\asymp e^{-TI_\varepsilon(\mu)}.
+\]
+只有另给 \(\varepsilon\downarrow0\) 的容量、谱或速率估计，才能从 \(I_\varepsilon\) 提取 \(\Gamma\)；大偏差符号本身不是势垒证明。
+
+同一 \(E_j\) 可取所有跨井速率为 \(1\)，也可取跨割速率 \(e^{-c/\varepsilon}\)，从而产生完全不同的寿命指数。FIB 递归只给 \(E_j\)、词序和标签；连续时间速率、\(\varepsilon\)、井与目标、势函数、边界、时间单位和初态均为外加条件。若杀死核不可约性失败，准平稳分布可能不唯一；多门等高时 prefactor 需相加；非可逆链不能直接使用上述容量势垒。有限 \(j\)、固定 \(\varepsilon\) 无真正相变，且 \(j\to\infty\)、\(\varepsilon\to0\)、\(t\to\infty\) 的次序必须显式声明。因此这些是指定连续时间模型中的亚稳态结论，不是 FIB 自动给出的物理激活能。
