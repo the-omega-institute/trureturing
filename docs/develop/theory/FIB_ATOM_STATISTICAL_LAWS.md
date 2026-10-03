@@ -2105,4 +2105,186 @@ $$
 
 本节仍只讨论固定单位速度、给定阻抗与时钟、左反射右吸收、初态 $0$ 及同一随机历史下的占用量。它不宣称 $m$ 随 $j$ 增长时的全场收敛、函数空间中的随机测度弱收敛、跨 $j$ 的路径耦合、速度扩展中的同一律，亦不推出物理热流、温度、量子输运或经验普适性。
 
+## 17. 连续探针占用随机测度的 Fredholm 极限
+
+**定义 17.1（占用随机测度）。** 在定义 15.1 的固定单位速度、左反射右吸收、初态 $0$ 及同一随机历史下，令
+
+$$
+\mu_j=\epsilon_j\sum_{0\le n<\tau_j}\delta_{X_n/L_j}
+=\epsilon_j\sum_{i=0}^{L_j-1}V_i\,\delta_{i/L_j}.
+$$
+
+对连续函数 $f$，记 $\langle f,\mu_j\rangle=\int f\,d\mu_j$。定义连续核
+
+$$
+C(u,v)=\frac{1-\max(u,v)}{D}
+=\kappa(\max(u,v)),
+\qquad
+\kappa(u)=\frac{1-u}{D},
+$$
+
+并令 $\mathsf C$ 为 $L^2([0,1])$ 上的积分算子
+
+$$
+(\mathsf C f)(u)=\int_0^1 C(u,v)f(v)\,dv.
+$$
+
+**定理 17.2（连续探针的随机测度弱收敛）。** 对每个非负连续函数 $f\in C([0,1])$，
+
+$$
+\mathbb E_0\exp\bigl(-\langle f,\mu_j\rangle\bigr)
+\longrightarrow
+\det\nolimits_F\!\left(I+\mathsf C M_f\right)^{-1},
+$$
+
+其中 $M_f$ 是乘法算子，$\det_F$ 是 Fredholm 行列式。若
+
+$$
+\Lambda(u)=\frac{B_1(\kappa(u))^2+B_2(\kappa(u))^2}{2},
+\qquad
+\mu(du)=\Lambda(u)\,du,
+$$
+
+且 $B_1,B_2$ 是同一对独立标准布朗运动，则
+
+$$
+\det\nolimits_F\!\left(I+\mathsf C M_f\right)^{-1}
+=
+\mathbb E\exp\left(-\int_0^1 f(u)\Lambda(u)\,du\right).
+$$
+
+因此
+
+$$
+\mu_j\Longrightarrow\mu
+$$
+
+于 $[0,1]$ 上有限非负 Borel 测度的弱拓扑。特别地，对任意有限个连续探针 $f_1,\ldots,f_r$，向量
+
+$$
+\bigl(\langle f_1,\mu_j\rangle,\ldots,\langle f_r,\mu_j\rangle\bigr)
+$$
+
+收敛到相应的 $\mu$ 积分向量。极限测度几乎处处具有连续密度 $\Lambda$；这仍不等同于路径过程 $X_n/L_j$ 的函数空间收敛。
+
+**证明。** 先把全部暂态切点都作为势的支持。对 $f_i=f(i/L_j)$，令
+
+$$
+d_{j,i}=e^{f_i\epsilon_j}-1.
+$$
+
+第 16 节的首步方程与嵌套 Green 矩阵的 Cramer 计算，在支持取为全部切点时给出有限维精确式
+
+$$
+\mathbb E_0e^{-\langle f,\mu_j\rangle}
+=\det\nolimits_{L_j}\!\left(I+G_j\operatorname{diag}(d_{j,i})\right)^{-1}.
+$$
+
+这里零势坐标可以先删去，再由连续性恢复；全部坐标的式子是同一行列式恒等式的全支持版本。
+
+写
+
+$$
+g_{j,i}=\frac{e^{f_i\epsilon_j}-1}{\epsilon_j},
+\qquad
+\mathcal K_j(i/L_j,k/L_j)=h_jG_j(i,k).
+$$
+
+由 $h_j=\epsilon_jL_j$，上式的有限行列式可写成
+
+$$
+\det\nolimits_{L_j}\!\left(I+\mathsf T_jM_{g_j}\right)^{-1},
+\qquad
+(\mathsf T_j\psi)(i/L_j)
+=\frac1{L_j}\sum_{k=0}^{L_j-1}
+\mathcal K_j(i/L_j,k/L_j)\psi(k/L_j).
+$$
+
+由于 $f$ 连续且 $\epsilon_j\to0$，有 $g_j\to f$ 一致成立。定理 10.2 给出
+
+$$
+\sup_{u,v\in[0,1]}
+\left|\mathcal K_j(u,v)-C(u,v)\right|\longrightarrow0.
+$$
+
+将 $\mathsf T_j$ 嵌入 $L^2([0,1])$ 的分片常数子空间，并记其核为相应的阶梯核。Green 矩阵 $G_j(i,k)=q_{\max(i,k)}$ 对称正定，所以正对称化算子
+
+$$
+\mathsf A_j=M_{\sqrt{g_j}}\mathsf T_jM_{\sqrt{g_j}},
+\qquad
+\mathsf A=M_{\sqrt f}\mathsf C M_{\sqrt f}
+$$
+
+都是正自伴算子；$\mathsf A$ 为迹类。均匀核收敛与 $g_j\to f$ 一致收敛给出 $\|\mathsf A_j-\mathsf A\|_{\mathrm{op}}\to0$。同时，对角线的黎曼和给出
+
+$$
+\operatorname{tr}\mathsf A_j
+=\frac1{L_j}\sum_{i=0}^{L_j-1}
+g_{j,i}\mathcal K_j(i/L_j,i/L_j)
+\longrightarrow
+\int_0^1 f(u)C(u,u)\,du
+=\operatorname{tr}\mathsf A.
+$$
+
+对正自伴算子，算子范数收敛与迹收敛结合有限秩谱截断给出迹范数收敛，因此
+
+$$
+\|\mathsf A_j-\mathsf A\|_1\longrightarrow0.
+$$
+
+有限维行列式的循环恒等式给出
+
+$$
+\det\nolimits_{L_j}(I+\mathsf T_jM_{g_j})
+=\det\nolimits_F(I+\mathsf A_j),
+$$
+
+Fredholm 行列式对迹范数连续，因而
+
+$$
+\det\nolimits_{L_j}(I+\mathsf T_jM_{g_j})
+\longrightarrow
+\det\nolimits_F(I+\mathsf A)
+=\det\nolimits_F(I+\mathsf C M_f).
+$$
+
+再用两条独立布朗运动的高斯二次型公式。对 $T_k=\kappa(u_k)$ 及 $r=1,2$，向量 $(B_r(T_k))_k$ 的协方差核为 $C$，故对非负 $f$
+
+$$
+\mathbb E\exp\left(
+-\frac12\int f(u)B_r(\kappa(u))^2\,du
+\right)
+=\det\nolimits_F(I+\mathsf A)^{-1/2}.
+$$
+
+两条独立布朗运动相乘，得到 $\mu$ 的 Laplace 泛函。最后，
+
+$$
+\mathbb E_0\mu_j([0,1])
+=\frac1{L_j}\sum_{i=0}^{L_j-1}
+\mathcal K_j(0,i/L_j)
+\longrightarrow
+\int_0^1 C(0,v)\,dv
+=\frac1{2D},
+$$
+
+所以总质量族紧。有限底空间上的随机有限测度由全部非负连续函数的 Laplace 泛函唯一确定，故得到所述弱收敛。$\square$
+
+**推论 17.3（连续探针的均值、协方差与通过时间核对）。** 对连续 $f,g$，
+
+$$
+\mathbb E\langle f,\mu\rangle
+=\int_0^1 f(u)\kappa(u)\,du,
+$$
+
+$$
+\operatorname{Cov}\bigl(\langle f,\mu\rangle,\langle g,\mu\rangle\bigr)
+=\int_0^1\int_0^1
+f(u)g(v)C(u,v)^2\,du\,dv.
+$$
+
+取 $f=g=1$，得到 $\operatorname{Var}(\mu([0,1]))=1/(6D^2)$，与定理 15.3 及定理 10.3 的通过时间方差一致。 对常数探针 $f\equiv s$，Fredholm 行列式满足 $\det_F(I+s\mathsf C)=\cosh\sqrt{s/D}$，其逆为 $\operatorname{sech}\sqrt{s/D}$，恢复定理 10.3 的通过时间变换。
+
+本节的随机测度收敛只覆盖连续测试函数的占用积分。它不推出 $\ell_j(\cdot)$ 在 $C([0,1])$ 中一致收敛、不推出 $m=m(j)$ 的逐点行列式律、不指定跨 $j$ 的样本耦合，也不延伸到第 11、14 节的速度权重扩展或物理热流、温度与经验普适性。
+
 ## 追加锚（本行以下为增补区）
