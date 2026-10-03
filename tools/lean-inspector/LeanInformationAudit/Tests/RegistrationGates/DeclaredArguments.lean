@@ -1,6 +1,8 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import InformationSourceFixture
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredArguments
 open Lean Meta Elab Command

@@ -132,7 +132,7 @@ public static class DocumentDefinitions
         return definition;
     }
 
-    private static void ValidateBijection(DocumentDefinition definition)
+    internal static void ValidateBijection(DocumentDefinition definition)
     {
         var gid = definition.Document.Header.Gid.Value;
         var expected = "Blueprint/D5/" + gid["D5/".Length..] + ".scribe.cs";

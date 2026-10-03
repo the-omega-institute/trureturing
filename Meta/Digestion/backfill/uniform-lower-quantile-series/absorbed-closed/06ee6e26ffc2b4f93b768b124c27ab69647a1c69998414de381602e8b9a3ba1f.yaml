@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:06ee6e26ffc2b4f93b768b124c27ab69647a1c69998414de381602e8b9a3ba1f
+  normalized_sha256: sha256:06ee6e26ffc2b4f93b768b124c27ab69647a1c69998414de381602e8b9a3ba1f
+cas_ref: sha256:06ee6e26ffc2b4f93b768b124c27ab69647a1c69998414de381602e8b9a3ba1f
+coverage_gids:
+  - gid: D5/S0/Asymptotics/WeightedProbability/UniformLowerQuantileSeries.ae_tsum_eq_top_of_uniform_lower_quantiles
+    target_statement_id: sha256:9c0eeee8117953796bdd7fd8846a8f5ec8a795687fc43d6fd4872f86cf6e036f
+receipts:
+  unresolved_subitems: []

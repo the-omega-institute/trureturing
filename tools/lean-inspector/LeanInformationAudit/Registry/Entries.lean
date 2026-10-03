@@ -1,19 +1,11 @@
 import LeanInformationAudit.Registry.Reifier
-import LeanInformationAuditInterface.RootContract
+import LeanInformationAuditInterface.Store
 import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
 
 open Lean
 open Lean.Meta
-
-private initialize rootCatalogExt :
-    SimplePersistentEnvExtension RootCatalogContract (Array RootCatalogContract) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
-
-
 
 private def theoremUnitName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -27,10 +19,8 @@ private def primitiveRealizationName : Name :=
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
 
-def theoremUnitSuffix := "__information_unit"
-
-def primitiveRealizationSuffix := "__primitive_realization"
-
+/-- Judge-owned output names. The recorder admits any resolvable theorem; the
+report rejects a registration of one of these companions (IE-C011). -/
 def generatedCompanionSuffixes : Array String := #[
   theoremUnitSuffix,
   primitiveRealizationSuffix,
@@ -45,16 +35,19 @@ def generatedCompanionSuffixes : Array String := #[
   "__information_registration_diagnostic"
 ]
 
+def isCompanionName : Name -> Bool
+  | .str _ suffix =>
+      -- Every reserved suffix starts with "__". Ordinary names avoid the
+      -- interpreted array scan; the registry remains the suffix authority.
+      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
+  | _ => false
+
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
 
 /-- A correctness bound, independent of host speed and caller heartbeat options.
 Every head transition, declaration lookup and environment lookup spends one unit. -/
 def arenaAliasWorkBudget : Nat := 4096
-
-/-- Elaboration provenance for a structure literal, retained across olean imports.
-Lean's structure elaborator eta-contracts field-copy literals before storing them. -/
-def arenaConstructionMarker : Name := ArenaProvenance.construction
 
 private inductive AliasClosure where
   | mk (term : Expr) (bindings : List AliasClosure)
@@ -123,37 +116,11 @@ def acquireProvenance (contract : RootCatalogContract) : MetaM Unit := do
   for row in contract.expected ++ contract.source ++ contract.baseline do
     discard <| resolveCanonicalArenaName row.objectArenaName
 
-def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
-  (rootCatalogExt.getState env).find? (·.rootId == rootId)
-
-/-- A root declares its contract before registering/sealing. Imported contracts
-remain keyed by their original root and cannot change a downstream root. -/
-def declare (contract : RootCatalogContract) : Elab.Command.CommandElabM Unit := do
-  let env ← getEnv
-  unless contract.rootId == env.header.mainModule do
-    throwError "IE-C028 RootContractOwnerMismatch: {contract.rootId}"
-  if (find? env contract.rootId).isSome then
-    throwError "IE-C028 DuplicateRootContract: {contract.rootId}"
-  Elab.Command.liftTermElabM <| acquireProvenance contract
-  modifyEnv fun current =>
-    let current := match contract.companionPrefix with
-      | some companionPrefix => current.registerNamespace companionPrefix
-      | none => current
-    rootCatalogExt.addEntry current contract
-
 end RootCatalogs
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
   (entry.canonicalObjectArenaName, entry.theoremName)
-
-/-- The naming function used for all occurrence-qualified companions. -/
-def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
-    (theoremName : Name) (suffix : String) : Name :=
-  theoremName
-    |>.str (rootId.toString ++ "/" ++ objectArenaName.toString ++ "/" ++
-      catalogId.toString)
-    |>.str suffix
 
 private def jsonStringArray (values : Array String) : String :=
   (Json.arr <| values.map Json.str).compress
@@ -188,22 +155,16 @@ catalog={catalogId} address={address} consumer={consumer}"
 per-node identity guard. Both views belong to the same environment state, so
 imports, insertion and transaction rollback cannot leave the index stale.
 Only entries are persisted; the index is reconstructed on import. -/
-private structure InformationRegistryState where
+structure InformationRegistryState where
   entries : Array InformationRegistryEntry := #[]
   theoremNames : NameSet := {}
   deriving Inhabited
 
-private initialize informationRegistryExt :
-    SimplePersistentEnvExtension InformationRegistryEntry InformationRegistryState ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := fun state entry => {
-      entries := state.entries.push entry
-      theoremNames := state.theoremNames.insert entry.theoremName }
-    addImportedFn := fun ess =>
-      let entries := ess.foldl (· ++ ·) #[]
-      { entries, theoremNames := entries.foldl (fun names entry =>
-          names.insert entry.theoremName) {} }
-  }
+private initialize informationRegistryExt : EnvExtension InformationRegistryState ←
+  registerEnvExtension (pure {})
+
+def InformationRegistry.reset (env : Environment) : Environment :=
+  informationRegistryExt.setState env {}
 
 def InformationRegistry.entries (env : Environment) :
     Array InformationRegistryEntry :=
@@ -224,46 +185,50 @@ def InformationRegistry.hasOccurrence (env : Environment)
 def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
   (entries env).any fun entry => entry.unitName == n
 
+/-- Reachability is relative to the requested registration root, which can be
+an imported module in a report environment containing unrelated roots. -/
+def moduleReachable (env : Environment) (root owner : Name) : Bool := Id.run do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    if name == owner then return true
+    seen := seen.insert name
+    let imports := if name == env.header.mainModule then env.header.imports else
+      match env.getModuleIdx? name with
+      | some index => env.header.moduleData[index.toNat]!.imports
+      | none => #[]
+    pending := imports.toList.map (·.module) ++ pending
+  return false
+
+/-- Every module reachable from `root`, including `root`: the same relation as
+`moduleReachable`, computed once so that a caller filtering many owners
+traverses the import graph once rather than once per owner. -/
+def reachableModules (env : Environment) (root : Name) : NameSet := Id.run do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    seen := seen.insert name
+    let imports := if name == env.header.mainModule then env.header.imports else
+      match env.getModuleIdx? name with
+      | some index => env.header.moduleData[index.toNat]!.imports
+      | none => #[]
+    pending := imports.toList.map (·.module) ++ pending
+  return seen
+
+def InformationRegistry.forRoot (env : Environment) (root : Name) :
+    Array InformationRegistryEntry :=
+  let reachable := reachableModules env root
+  entries env |>.filter (fun entry => reachable.contains entry.registrationModuleName)
+
 /-- A deterministic identity for the theorem type stored in the elaborated environment. -/
 def theoremStatementIdentity (env : Environment) (theoremName : Name) : String :=
   match env.find? theoremName with
   | some (.thmInfo info) => "sha256:" ++ Sha256.hex (toString info.type).toUTF8
   | _ => ""
-
-/-- One independently declared row in a sealing root's expected-occurrence manifest. -/
-structure ExpectedOccurrence where
-  rootId : Name
-  objectArenaName : Name
-  theoremName : Name
-  statementIdentity : String
-  registrationModuleName : Name
-  deriving Inhabited, Repr
-
-private initialize expectedOccurrenceExt :
-    SimplePersistentEnvExtension ExpectedOccurrence (Array ExpectedOccurrence) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
-
-namespace ExpectedOccurrenceManifest
-
-def declaredEntries (env : Environment) (rootId : Name) : Array ExpectedOccurrence :=
-  expectedOccurrenceExt.getState env |>.filter (·.rootId == rootId)
-
-def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
-  expectedOccurrenceExt.addEntry env entry
-
-end ExpectedOccurrenceManifest
-
-/-- The root contract selects published companion ownership. Without an explicit
-prefix, imported objects receive private names local to this compilation. -/
-def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
-  let name := owner.str suffix
-  if !env.isImportedConst owner then name
-  else match (RootCatalogs.find? env env.header.mainModule).bind (·.companionPrefix) with
-    | some companionPrefix => companionPrefix ++ name
-    | none => mkPrivateName env name
 
 def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
@@ -271,23 +236,25 @@ def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     rootId
     objectArenaName := row.objectArenaName
     theoremName := row.theoremName
-    statementIdentity := row.statementIdentity
+    statementIdentity := if !row.statementIdentity.isEmpty then row.statementIdentity
+      else row.capturedStatement.map
+        (fun type => "sha256:" ++ Sha256.hex (toString type).toUTF8) |>.getD ""
+    capturedStatement := row.capturedStatement
     registrationModuleName := row.registrationModuleName
   }
 
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  match RootCatalogs.find? env rootId with
-  | some contract => snapshotExpectations rootId contract.expected
-  | none => ExpectedOccurrenceManifest.declaredEntries env rootId
+  let rows := match RootCatalogs.find? env rootId with
+    | some contract => snapshotExpectations rootId contract.expected
+    | none => ExpectedOccurrenceManifest.declaredEntries env rootId
+  rows.map fun row =>
+    let identity := if !row.statementIdentity.isEmpty then row.statementIdentity
+      else row.capturedStatement.map
+        (fun type => "sha256:" ++ Sha256.hex (toString type).toUTF8) |>.getD ""
+    { row with statementIdentity := identity }
 
-def isCompanionName : Name -> Bool
-  | .str _ suffix =>
-      -- Every reserved suffix starts with "__". Ordinary names avoid the
-      -- interpreted array scan; the registry remains the suffix authority.
-      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
-  | _ => false
 
 /-- Complete, deterministic payload shared by prechecks, insertion and sealing.
 `entries` contains every contributing registration, including a prospective one
@@ -301,7 +268,7 @@ theorem_name={entry.theoremName} registration_modules={jsonStringArray modules} 
 count={entries.size}"
 
 /-- Resolve the prospective owner before any admission precheck. -/
-def prepareRegistrationEntry (env : Environment)
+def prepareRegistrationEntry (rootId : Name) (env : Environment)
     (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
   let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
     else entry.objectArenaName
@@ -309,11 +276,17 @@ def prepareRegistrationEntry (env : Environment)
   return { entry with
     resolvedArenaName
     registrationModuleName := if entry.registrationModuleName.isAnonymous then
-      env.header.mainModule else entry.registrationModuleName }
+      rootId else entry.registrationModuleName }
 
 
 private def statementMismatchError (name : Name) : String :=
   s!"IE-C006 StatementProofMismatch: {name}"
+
+/-- The report checks the supplied bridge, including before a recorder alias. -/
+def isTheoremBridge (env : Environment) (name : Name) : Bool :=
+  match env.find? name with
+  | some (.thmInfo _) => true
+  | _ => false
 
 /-- Perform the environment-only checks shared by admission and sealing. -/
 private def validateEntryDeclarations (env : Environment)
@@ -337,7 +310,7 @@ private def validateEntryDeclarations (env : Environment)
     throw (statementMismatchError entry.theoremName)
 
 def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
-  let arenaExpr := (← RegistrationGates.normalizeArena arenaExpr).law
+  let arenaExpr := (← RegistrationElaboration.normalizeArena arenaExpr).law
   let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
   unless realizationType.getAppFn.constName? == some primitiveRealizationName do
     throwError "realization type mismatch"
@@ -401,7 +374,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     if unitArgs.isEmpty then
       return .error (statementMismatchError entry.theoremName)
     let arenaExpr <- mkConstWithFreshMVarLevels entry.arenaName
-    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let normalized ← RegistrationElaboration.normalizeArena arenaExpr
     let expectedArena := normalized.finite
     let objectArenaExpr <- if entry.objectArenaName.isAnonymous then
       pure expectedArena
@@ -445,19 +418,18 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         return .error (statementMismatchError entry.theoremName)
     else if realizationHead == some legacyPrimitiveRealizationName ||
         realizationHead == some `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
-        realizationHead == some RegistrationGates.witnessBridgeName then
-      match env.find? entry.realizationName with
-      | some (.thmInfo _) =>
+        realizationHead == some RegistrationElaboration.witnessBridgeName then
+      if isTheoremBridge env entry.realizationName then
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)
-        let expectedBridgeArena := if realizationHead == some RegistrationGates.witnessBridgeName then
+        let expectedBridgeArena := if realizationHead == some RegistrationElaboration.witnessBridgeName then
           arenaExpr else normalized.law
         unless ← isDefEq legacyArgs[0]! expectedBridgeArena do
           return .error (statementMismatchError entry.theoremName)
         unless ← isDefEq legacyArgs[1]! theoremType do
           return .error (statementMismatchError entry.theoremName)
-        if realizationHead == some RegistrationGates.witnessBridgeName then
+        if realizationHead == some RegistrationElaboration.witnessBridgeName then
           discard <| RegistrationGates.witnessStatement arenaExpr legacyArgs[1]! entry.theoremName
         let primitivesExpr <- mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
@@ -465,7 +437,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         let compiledBundle <- compilePrimitiveBundle arenaExpr legacyArgs[2]!
         unless ← isDefEq primitivesExpr compiledBundle do
           return .error (statementMismatchError entry.theoremName)
-      | _ => return .error (statementMismatchError entry.theoremName)
+      else return .error (statementMismatchError entry.theoremName)
     else
       return .error (statementMismatchError entry.theoremName)
     return .ok ()) fun e => do
@@ -491,12 +463,12 @@ def sameEntry (left right : InformationRegistryEntry) : Bool :=
     sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
-def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
+def validateNewEntry (rootId : Name) (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
   match ← validateEntryCore env entry with
   | .error message => return .error message
   | .ok () => pure ()
-  let entries := InformationRegistry.entries env
+  let entries := InformationRegistry.forRoot env rootId
   let occurrenceMatches := entries.filter fun candidate =>
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
       candidate.theoremName == entry.theoremName
@@ -505,19 +477,19 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
   let unitMatches := entries.filter fun candidate =>
     candidate.unitName == entry.unitName
   if !unitMatches.isEmpty then
-    return .error <| qualifiedNameCollisionError env.header.mainModule
+    return .error <| qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.unitName (unitMatches.push entry)
   let realizationMatches := entries.filter fun candidate =>
     candidate.realizationName == entry.realizationName
   if !realizationMatches.isEmpty then
-    return .error <| qualifiedNameCollisionError env.header.mainModule
+    return .error <| qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.realizationName (realizationMatches.push entry)
   return .ok ()
 
 /-- Validate an entry already stored in the persistent registry exactly once. -/
-def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry) :
+def validatePersistedEntry (rootId : Name) (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
-  let entries := InformationRegistry.entries env
+  let entries := InformationRegistry.forRoot env rootId
   let occurrenceMatches := entries.filter fun candidate =>
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
       candidate.theoremName == entry.theoremName
@@ -537,33 +509,33 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   match unitMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error <| qualifiedNameCollisionError env.header.mainModule
+      return .error <| qualifiedNameCollisionError entry.registrationModuleName
         entry.effectiveCatalogId entry.unitName #[candidate, entry]
-  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+  | _ => return .error (qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.unitName unitMatches)
   let realizationMatches := entries.filter fun candidate =>
     candidate.realizationName == entry.realizationName
   match realizationMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error <| qualifiedNameCollisionError env.header.mainModule
+      return .error <| qualifiedNameCollisionError entry.registrationModuleName
         entry.effectiveCatalogId entry.realizationName #[candidate, entry]
-  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+  | _ => return .error (qualifiedNameCollisionError entry.registrationModuleName
       entry.effectiveCatalogId entry.realizationName realizationMatches)
   return .ok ()
 
 
 
-def registerSemanticEntry (entry : InformationRegistryEntry) :
+def registerSemanticEntry (rootId : Name) (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM InformationRegistryEntry := do
   let env ← getEnv
   let entry ← if entry.resolvedArenaName.isAnonymous then
-      Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry env entry
+      Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry rootId env entry
     else pure entry
   let entry := { entry with statementIdentity := if entry.statementIdentity.isEmpty then
     theoremStatementIdentity env entry.theoremName else entry.statementIdentity }
   let result <- Lean.Elab.Command.liftTermElabM <|
-    validateNewEntry (← getEnv) entry
+    validateNewEntry rootId (← getEnv) entry
   match result with
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
@@ -572,12 +544,13 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
       if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
           diagnostic.isSome then
         throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity: {diagnostic.get!}"
-      if type.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+      if type.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
         if let some diagnostic := diagnostic then throwError diagnostic
       if entry.derivedCertificate.isSome && diagnostic.isSome then
         RegistrationReifier.checkDiagnostic diagnostic.get!
-      RegistrationGates.publishDiagnostic entry.unitName diagnostic
-    modifyEnv fun env => informationRegistryExt.addEntry env entry
+      RegistrationGates.publishDiagnostic entry.registrationModuleName entry.unitName diagnostic
+    modifyEnv fun env => informationRegistryExt.modifyState env fun state => {
+      entries := state.entries.push entry, theoremNames := state.theoremNames.insert entry.theoremName }
     return entry
   | .error message => throwError message
 

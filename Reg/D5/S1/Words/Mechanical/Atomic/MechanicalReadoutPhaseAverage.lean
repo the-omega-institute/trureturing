@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration
 import Reg.Support.PointwiseEqualityRegistrations
@@ -98,15 +101,5 @@ register_information_theorem
   realization phaseAverageBridge
   variation phaseAverageVariation sensitivity phaseAverageSensitivity
   escape from (Set ℝ) escape continues (open)
-
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "phase-average information registration is not declaredValidated"
 
 end Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage

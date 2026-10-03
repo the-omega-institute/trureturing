@@ -1,0 +1,83 @@
+**证明。** 所需实际逆分支恒等式为
+$$
+F_0(C)=F_5(D)=s_2,\quad F_5(\theta)=\kappa,\quad
+F_5(g)=t,\quad F_5(t)=-1,\quad F_5(\kappa)=-\frac45.
+\tag{60.11}
+$$
+由 $g^2+4g=1$ 可得
+$$
+A<s_2<B<g,\quad -u<s_2<C,\quad
+g<E<\kappa<H_3,\quad D<\kappa<L_4,\quad\kappa<t,\quad -\tfrac45<A.
+\tag{60.12}
+$$
+例如 $s_2+u=(1-3g)/10>0$，$g-B=(1-g)/10>0$，$\kappa-D=(1-2g)/5>0$，$t-\kappa=g/5>0$；其余直接作差为正。于是临界六色中 $s_2$ 只属色 $1$，$\kappa$ 只属色 $3$，$-4/5$ 只属色 $0$。次临界缩小色不添加其他可用颜色。
+
+第一种：$r=3,T_1=0$。实际根域给 $P_Z\subseteq[-u,g]$，与60.3低条带共同作用。原边 $P_Q\subseteq F_0(P_Z)$ 及 $F_0$ 反序给
+$$
+P_Q\subseteq[-1,s_2-\delta/g].
+\tag{60.13}
+$$
+同一 rival 从高条带按标签 $5$ 前进，真实等式给
+$$
+y_Q=F_5(y_Z)\in[s_2+\delta/g,\kappa-\delta/g^3].
+\tag{60.14}
+$$
+共同色包含片与点之间的 $s_2$，只能是色 $1$，故
+$$
+P_Q\subseteq[A+\delta,s_2-\delta/g],\qquad
+y_Q\in[s_2+\delta/g,B-\delta].
+$$
+由 $-u<s_2$ 和 $B<g$，rival 在 $Q$ 只能用 $0$；第一片只可能用 $3$ 或 $0$。$Q$ 的第一入守卫由 $T_1=0$ 给零，第二入守卫由 $R_Z=5$ 给一，所列标签在各自守卫下都合法。这证明第一行。
+
+第二种：$r=3,T_1=5$。原根域 $P_Z\subseteq[g,t]$ 给
+$$
+P_Q\subseteq F_5(P_Z)\subseteq[\kappa+\delta/g^3,t],
+\tag{60.15}
+$$
+而 rival 仍满足(60.14)。共同色须含 $\kappa$，只能是色 $3$，所以 $y_Q\ge E+\delta$。两分量都在 $(g,t]$，且两入守卫均由 $Z$ 的 $5$ 输出为一。因此两标签均被强制为 $5$，包括可能的闭端点 $t$，不能在这里改选标签 $2$。
+
+再沿同一原 $Q\xrightarrow5K$ 边，而非重选尾，得到
+$$
+P_K\subseteq F_5(P_Q)\subseteq[-1,-\tfrac45-\delta/g^4],
+\qquad y_K=F_5(y_Q)\ge-\tfrac45+\delta/g^4.
+\tag{60.16}
+$$
+第一片在 $A$ 以下，只允许色 $0$，故 $K$ 的共同色是 $0$，特别 $y_K\le-u-\delta$。两分量都在 $[-1,-u)$，入守卫均为一，唯一实际标签均为 $3$，证明第二行。这里先强制 $Q$ 用 $5$，再强制 $K$ 用 $3$，没有把两个索引混同。
+
+第三种：$r=0,R_Z=0$。60.3给第一片高条带且 $T_1=5$，原边给
+$$
+P_Q\subseteq[s_2+\delta/g,\kappa-\delta/g^3].
+$$
+对同一个 rival，必须同时使用实际标签 $0$ 的根域
+$$
+y_Z\in[-u,g],\qquad
+C+\delta\le y_Z\le\min(g,\theta-\delta/g^2).
+\tag{60.17}
+$$
+尤其 $y_Z\le g$，所以 $F_0(y_Z)\ge-1$；仅有低条带本身不能给这个下界。真实分支于是给
+$$
+y_Q=F_0(y_Z)\in[-1,s_2-\delta/g].
+$$
+共同色含 $s_2$，只能为色 $1$，所以
+$$
+P_Q\subseteq[s_2+\delta/g,B-\delta],\qquad
+y_Q\in[A+\delta,s_2-\delta/g].
+$$
+第一片严格在 $(-u,g)$，故 $T_2=0$；rival 只可能用 $3$ 或 $0$。$Q$ 第一入守卫为一，第二入守卫为零，所列标签均合法。第三行得证。
+
+第四种：$r=0,R_Z=5$。同一 rival 的根域给 $y_Z\ge g$，与低条带合用，得到
+$$
+P_Q\subseteq[s_2+\delta/g,\kappa-\delta/g^3],\qquad
+y_Q=F_5(y_Z)\in[\kappa+\delta/g^3,t].
+$$
+共同色含 $\kappa$，只能是色 $3$，故
+$$
+P_Q\subseteq[E+\delta,\kappa-\delta/g^3].
+$$
+两分量在 $(g,t]$，两入守卫均为一，所以 $T_2=R_Q=5$。再沿既有原边到 $K$，
+$$
+P_K\subseteq[-\tfrac45+\delta/g^4,\infty),\qquad
+y_K=F_5(y_Q)\in[-1,-\tfrac45-\delta/g^4].
+$$
+这里第一包含仍同时受原状态区间约束。rival 点只允许色 $0$，故同一个 $P_K$ 整片也须属于 $E_0^\beta$。两分量都在根 $3$ 内、入守卫均为一，实际标签均为 $3$。第四行得证。整个证明保留两个来源的身份和各自原守卫，不以交换分量供应新来源。$\square$
+

@@ -1,0 +1,22 @@
+*Proof.* At a left step, specialize the actual minimum-cut Cartesian
+kernel to its specified left shape; at a right step specialize it to
+its specified right shape. The surviving factor maps are injective.
+Opposite cut signs cannot coexist, since comparison of the first and
+last entries would require two opposite strict inequalities. Induction
+therefore proves source membership, the actual minimum-cut certificates,
+and injectivity of reconstruction. The terminal actual class is in
+bijection with the resulting full actual-permutation event. The ratios
+telescope, since each source class is nonempty: an identity or reversal
+gives a concrete witness for each $J$ class, including small lengths.
+
+For coordinate transport split each actual value list at the cut. A
+left step contributes its entire first block and then the child prefix.
+A right step contributes only the child prefix: the pending suffix is
+after a child interval at least as long as the terminal interval.
+The literal block-sum equations give precisely the stated low-offset
+updates. At a skew left step every high label is at least the remaining
+child length, which is no smaller than the terminal length and is
+therefore outside the finite alphabet. Induction gives the same literal
+prefix for every terminal shape. Restricting a cylinder to this constant
+word proves the last assertion. $\square$
+

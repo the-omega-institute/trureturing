@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -25,18 +28,18 @@ def fixtureRealization : PrimitiveRealization arena.signature where
   readout := fun index => index.elim0
   anchor := fun index => index.elim0
 
-information_theorem theoremWithoutPrimitives
+test_assess in information_theorem theoremWithoutPrimitives
   in arena
   primitives fixtureRealization
   : arena.Law fixtureRealization := by trivial
 
-expect_information_occurrence theoremWithoutPrimitives
+test_assess in expect_information_occurrence theoremWithoutPrimitives
   in arena
   from "LeanInformationAudit.Tests.SealEmptyBundle"
 
 /-- error: IE-C013 MissingPrimitiveBundle:
 LeanInformationAudit.Tests.SealEmptyBundle.theoremWithoutPrimitives -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.SealEmptyBundle

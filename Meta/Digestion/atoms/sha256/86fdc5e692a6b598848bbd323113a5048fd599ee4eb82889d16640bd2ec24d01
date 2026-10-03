@@ -1,0 +1,47 @@
+**命题 40.7（固定内点极限、系数分母与共轭增长）。** 固定以上 $J,H_A,\xi,w$，置 $m=|w|$，定义
+
+$$
+b_*=c_--f_w(\alpha),\qquad
+b_n=c_--f_w(y_n).
+$$
+
+存在一个 $n_0\ge1$，使所有 $n\ge n_0$ 的 $b_n$ 两两不同，属于 $J\cap\mathbb Q(t)$，趋于同一个固定内点 $b_*\in J$，并满足 $10b_n\in\mathbb Z[t]$。若撇号表示非平凡共轭嵌入，则
+
+$$
+b_n'=b_*'-g^{-(m+6n)}(x'-\alpha'),\qquad |b_n'|\longrightarrow\infty.
+$$
+
+**证明。** 引理40.6给 $u<b_*<v$。$f_w$ 的斜率为 $(-g)^m$，故
+
+$$
+b_n=b_*-(-g)^m g^{6n}(x-\alpha).
+$$
+
+右侧扰动非零，绝对值严格递减至零。于是预算两两不同，趋于这个固定 $b_*$；取 $n_0$ 使扰动小于 $\min\{b_*-u,v-b_*\}$，便同时得到全部尾项属于 $J$。
+
+端点 $f_w(y_n)$ 有字面上的实际地址
+
+$$
+wA^n\xi\in D.
+$$
+
+它属于 $\mathbb Z[t]$，而 $10c_-=10g-3t^2\in\mathbb Z[t]$，所以
+
+$$
+10b_n=10c_--10f_w(y_n)\in\mathbb Z[t].
+$$
+
+等价地 $b_n\in\frac1{10}\mathbb Z[t]\subset\mathbb Q(t)$。这里是系数公分母可取十，约分后的共同系数分母整除十；并未要求每个约分分母恰为十。
+
+[引理31.2的共轭恒等式](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8360)给出 $g'=-g^{-1}$，从而 $(-g)'=g^{-1}$。共轭上述精确预算式，因 $6n$ 为偶数，得到
+
+$$
+b_n'=b_*'-g^{-m}g^{-6n}(x'-\alpha').
+$$
+
+共轭为单射，$x\ne\alpha$ 意味着 $x'\ne\alpha'$；$0<g<1$ 于是强制 $|b_n'|\to\infty$。$\square$
+
+实预算被限制在固定有界区间且系数分母受限，仍不足以统一控制另一嵌入。引理31.2的端点有限性同时使用实坐标界与共轭界；上式说明其共轭参数不会从本章两个限制自动获得统一界。下面的任意逆闭合长链还将给出独立于那一特定构造的必要性。
+
+$w$ 只用于定位一个根端点。这里没有要求、也没有推导穿过 $w$ 的共同歧义颜色史；已证明的共同历史属于随后的固定 $A,B$ 配对。
+

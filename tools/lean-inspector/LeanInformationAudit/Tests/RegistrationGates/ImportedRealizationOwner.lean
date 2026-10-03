@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Designated
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog

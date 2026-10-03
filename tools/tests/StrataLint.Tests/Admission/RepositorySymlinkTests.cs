@@ -58,8 +58,7 @@ public sealed class RepositorySymlinkTests
         var historicalManifest = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
         var currentManifest = inline
             ? $$"""
-                schema_version = 5
-                resources = []
+                schema_version = 6
                 evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 files = [
                   { pattern = "alias", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "skills", kind = "{{kind}}" } },
@@ -70,12 +69,12 @@ public sealed class RepositorySymlinkTests
                 known_violation_count = 0
                 status = "closed"
                 """ + "\n"
-            : historicalManifest.Replace("schema_version = 2", "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }", StringComparison.Ordinal)
+            : historicalManifest.Replace("schema_version = 2", "schema_version = 6\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }", StringComparison.Ordinal)
                 .Replace("[[files]]\n", "[[files]]\nrequire = []\n", StringComparison.Ordinal);
         Write(repository.Path, "Meta/FILEMAP.toml", currentManifest);
         Write(repository.Path, targetPath, "current target\n");
         Assert.StartsWith("schema_version = 2\n", historicalManifest, StringComparison.Ordinal);
-        Assert.StartsWith("schema_version = 5\n", currentManifest, StringComparison.Ordinal);
+        Assert.StartsWith("schema_version = 6\n", currentManifest, StringComparison.Ordinal);
         var current = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
         var historical = GitRepositorySnapshotReader.ReadRevision(repository.Path, historicalRevision);
         Assert.Equal(currentManifest, Text(current, "Meta/FILEMAP.toml"));
@@ -249,6 +248,48 @@ public sealed class RepositorySymlinkTests
             path => path != "unrelated.md"), "alias"));
         Assert.DoesNotContain(GitRepositorySnapshotReader.ReadCurrent(repository.Path,
             path => path != "alias").Entries, entry => entry.Path == "alias");
+    }
+
+    [Theory]
+    [InlineData("file")]
+    [InlineData("directory")]
+    public void ScopedReadKeepsTheReferentOfADeclaredLinkOutsideItsScope(string kind)
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        var (target, member) = kind == "file"
+            ? ("../docs/reference.md", "docs/reference.md")
+            : ("../docs/reference", "docs/reference/page.md");
+        Write(repository.Path, member, "reference\n");
+        Write(repository.Path, "docs/unrelated.md", "unrelated\n");
+        Declare(repository.Path, ("Meta/reference", target, kind));
+        Link(repository.Path, "Meta/reference", target);
+        string[] scope = [":(glob)Meta/*"];
+
+        var scoped = GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope);
+        Assert.Equal(["Meta/FILEMAP.toml", "Meta/reference", member], scoped.Entries.Select(entry => entry.Path));
+        File.Delete(Path.Combine(repository.Path, member));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
+    }
+
+    [Fact]
+    public void ScopedReadValidatesTheWholeReferentDirectoryWhenItsScopeCoversPart()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "docs/page.md", "page\n");
+        Write(repository.Path, "docs/deep/page.md", "deep\n");
+        Declare(repository.Path, ("Meta/reference", "../docs", "directory"));
+        Link(repository.Path, "Meta/reference", "../docs");
+        string[] scope = [":(glob)Meta/*", ":(glob)docs/*"];
+
+        Assert.Contains(GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope).Entries,
+            entry => entry.Path == "docs/deep/page.md");
+        Link(repository.Path, "docs/deep/alias", "page.md");
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
     }
 
     [Fact]

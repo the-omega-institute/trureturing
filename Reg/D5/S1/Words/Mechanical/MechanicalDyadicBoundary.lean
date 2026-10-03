@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 import Reg.Support.MechanicalDyadicRegistration
@@ -164,17 +167,5 @@ register_information_theorem
   realization stableBridge
   variation stableVariation sensitivity stableSensitivity
   escape from (ℝ) escape continues (open)
-
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
-      `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "mechanical dyadic information registration is not declaredValidated: {theoremName}"
 
 end Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary

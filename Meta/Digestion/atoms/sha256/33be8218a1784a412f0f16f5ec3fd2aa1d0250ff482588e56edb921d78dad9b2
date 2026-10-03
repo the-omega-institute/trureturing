@@ -1,0 +1,12 @@
+**命题（储备的下一项）。** 使用经典有效素数定理时，
+
+$$
+\boxed{R(x)=\frac{c_R}{\sqrt x\,t}
++\frac{c_2}{\sqrt x\,t^2}
++O\!\left(\frac1{\sqrt x\,t^3}\right),
+\qquad c_2=-c_R-\sqrt2\log2<0.}
+\tag{247.8}
+$$
+
+这里的 $R$ 是 §§87、93 的同一实际储备，未替换成另一个极值包络。
+

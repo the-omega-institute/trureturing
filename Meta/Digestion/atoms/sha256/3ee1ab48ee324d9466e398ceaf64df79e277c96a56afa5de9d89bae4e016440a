@@ -1,0 +1,46 @@
+## 198. 混合二十四窗口补足固定平方范数原例
+
+本节继续固定 $v=(16,29)=\phi(3+2\phi)^2$、$Q(v)=-121$，把第196节的二次幂窗口改为固定窗口 $24=8\cdot3$。这里的模三约束与模八约束来自同一个共同根域；联合密度由中国剩余定理下的真实群作用计算。以下为明确文献输入上的纸面推导，未作新增 Lean 核验。
+
+沿用 $K=\mathbb Q(\sqrt5)$、$w=3+2\phi$、$\operatorname N(w)=11$、$\tau=-\phi^2$ 与迹多项式 $\mathcal D_d$。固定 $k=24,n=12$，对每个偶数 $r\in\{0,2,\ldots,22\}$ 定义
+
+$$
+\begin{aligned}
+a_r&=\tau^{-(r+4)/2}w'/w,\qquad t_r=a_r+a_r^{-1},\\
+A_r&=\operatorname{Tr}(v^2\tau^{r+3}),\\
+P_r(X)&=Q\mathcal D_{24}(X)-A_r.
+\end{aligned}
+\tag{198.1}
+$$
+
+与式（196.2）相同的恒等式给
+
+$$
+\frac{P_r(X)}Q
+=\bigl(\mathcal D_{12}(X)-t_r\bigr)
+ \bigl(\mathcal D_{12}(X)+t_r\bigr).
+\tag{198.2}
+$$
+
+对 $j=r+24\ell$，令 $W_j=\phi^{j/2+2}w$、$U_{1,j}=[\phi]W_j$、$U_{2,j}=\operatorname{Tr}(W_j)$。实际整数满足
+
+$$
+V_j=U_{1,j}U_{2,j},\qquad
+\frac{W_j'}{W_j}=a_r\tau^{-12\ell},
+\qquad \operatorname N(W_j)=11(-1)^{j/2}.
+$$
+
+因此引理196.1的证明逐项适用：对 $p\nmid110$ 与 $z_\ell=\operatorname{Tr}(\tau^\ell)$，
+
+$$
+\begin{aligned}
+p\mid U_{1,j}&\Longrightarrow
+ \mathcal D_{12}(z_\ell)-t_r\equiv0\pmod p,\\
+p\mid U_{2,j}&\Longrightarrow
+ \mathcal D_{12}(z_\ell)+t_r\equiv0\pmod p.
+\end{aligned}
+\tag{198.3}
+$$
+
+这一实际因子桥先于任何密度组合；只有对应同一个 $j$ 的真正素因子才被送入相应允许集合。
+

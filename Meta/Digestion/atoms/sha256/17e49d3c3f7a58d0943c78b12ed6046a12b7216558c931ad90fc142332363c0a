@@ -1,0 +1,8 @@
+## 22. 有限调用的实际效果张成
+
+固定 $d=e=2$。令 $S_N$ 为每条分支至多调用 $N$ 次固定 $W=W(\Delta)$、允许任意有限低层仪器、有限经典记录和自适应控制所得实际事件效果的复线性张成，令 $S_\infty=\bigcup_{N\ge0}S_N$。把低层端的免费操作写成 $K$，并令
+
+$$
+T_N=\{X\in\mathcal B(H):I_A\otimes X\in S_N\},\qquad T_\infty=\bigcup_{N\ge0}T_N.
+$$
+

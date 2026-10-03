@@ -1,0 +1,33 @@
+**推论58.4.1（列表的精确全槽判据）。** 对模板 $\mathsf T$，令右端初值为 $D_{j,k+1}=X_j$（原模板）或 $Y_j=G_{j,1,1}(X_j)$（anchor 模板），并递归定义实际完整后缀
+
+$$
+D_{j,i}=G_{j,m_i,r_i}(D_{j,i+1}),\qquad i=k,k-1,\ldots,1.
+\tag{58.18}
+$$
+
+空列表时 $D_{j,1}$ 就是相应右端初值。高低后缀满足 $0<D_{H,i}<h_H$、$0<D_{L,i}<h_L$ 及 $D_{H,i}<D_{L,i}$。定义
+
+$$
+\tau_{\mathsf O}(\mathbf a)
+=\min\bigl(\{\chi D_{H,1}\}\cup
+\{\chi^{r_i}D_{H,i+1}:1\le i\le k\}\bigr),
+$$
+
+$$
+\tau_{\mathsf A}(\mathbf a)
+=\min\bigl(\{\chi D_{H,1},\chi X_H\}\cup
+\{\chi^{r_i}D_{H,i+1}:1\le i\le k\}\bigr).
+\tag{58.19}
+$$
+
+两来源全部历史槽的最大闭距离恰为 $\lambda-g^2\tau_{\mathsf T}(\mathbf a)$。当 $b\ge\Theta_1:=\lambda-g^2\chi X_H$ 且 $b<\lambda$，置 $s=(\lambda-b)/g^2$。该列表闭联合可供应，当且仅当
+
+$$
+\tau_{\mathsf T}(\mathbf a)>s
+\quad\text{或}\quad
+\tau_{\mathsf T}(\mathbf a)=s\text{ 且 }o_1=1;
+\tag{58.20}
+$$
+
+严格及逐记录余量联合可供应，当且仅当 $\tau_{\mathsf T}(\mathbf a)>s$。
+

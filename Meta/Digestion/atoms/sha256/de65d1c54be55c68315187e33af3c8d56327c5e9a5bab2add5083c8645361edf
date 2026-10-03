@@ -1,0 +1,21 @@
+**定理 301.1。** 对全部 $L,H\ge1$，签名（301.2）唯一确定 $B_L(H)$，且
+\[
+\gcd(H,Q_L)=\operatorname{lcm}_{0\le a<L}\gcd(H,3a+5),\qquad B_L(H)\mid H.
+\tag{301.4}
+\]
+对每个素数 $p$，有
+\[
+v_p(B_L(H))\ge\min\{v_p(H),A_L(p)\},\qquad
+v_3(B_L(H))=v_3(H).
+\tag{301.5}
+\]
+进一步，若 $L\ge2$、$X\ge L$ 为实数，则
+\[
+\boxed{
+1\le\frac{U_H}{U_{B_L(H)}}\le
+\delta_L^{-1}\frac{P(X)}{P(L)}
+\exp\!\left(\frac{\log H}{(X-1)\log X}\right).
+}
+\tag{301.6}
+\]
+

@@ -1,0 +1,18 @@
+**命题 43.4（共同等幅的环必要条件）。** 设两个纯周期参考为
+
+$$
+ h=\frac{A_U}{1-(-g)^{L_U}},\qquad y=\frac{A_V}{1-(-g)^{L_V}},\qquad A_U,A_V\in R,
+$$
+
+其中 $U,V$ 是实际合法返回词。给定 $\varepsilon_1\in\{-1,0,1\}$、$\varepsilon_2\in\{-1,+1\}$，若存在 $\kappa>0$ 使
+
+$$
+ x_1=h+\varepsilon_1\kappa\in T_{s_1},\qquad x_2=y+\varepsilon_2\kappa\in T_{s_2},
+$$
+
+且两个方向均非零，则必有
+
+$$\boxed{h-\varepsilon_1\varepsilon_2y\in R.}$$
+
+当这个条件成立时，两个允许幅度的环陪集相交；它本身不保证实际 $D/D$ 尾。
+

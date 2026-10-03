@@ -8,7 +8,7 @@ using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.TruthRelease.Tests;
 
-public sealed class TruthReleaseCommandTests
+public sealed partial class TruthReleaseCommandTests
 {
     private const string ProducerCommit = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
     private const string ProducerRepository = "the-omega-institute/trureturing";
@@ -89,6 +89,7 @@ public sealed class TruthReleaseCommandTests
         Assert.Equal(1, exitCode);
         Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
         Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
+        Assert.Contains("[--scribe-pack FILE --scribe-pack-digest HEX64]", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
@@ -109,7 +110,8 @@ public sealed class TruthReleaseCommandTests
     private static (int ExitCode, BufferedConsole Console) Run(
         Fixture fixture,
         string outputDirectory,
-        IReadOnlyList<string> trustArguments)
+        IReadOnlyList<string> trustArguments,
+        IReadOnlyList<string>? extraArguments = null)
     {
         var console = new BufferedConsole();
         var arguments = new List<string>
@@ -121,6 +123,7 @@ public sealed class TruthReleaseCommandTests
             "--produced-at", "2026-08-23T00:00:00Z",
         };
         arguments.AddRange(trustArguments);
+        if (extraArguments is not null) arguments.AddRange(extraArguments);
         var exitCode = CliApplication.Run(
             arguments,
             fixture.Environment,
@@ -135,7 +138,7 @@ public sealed class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -189,6 +192,24 @@ public sealed class TruthReleaseCommandTests
         }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);
+        if (productionVerifier)
+        {
+            files[blueprintSourcePath] = """
+                using StrataLint.Scribe;
+
+                return DocumentDefinition.Create(
+                    ScribeDocument.Create(DefinitionDsl.Header("D5/S3/Midline/GoldenSpectralMarker", "Resource fixture"),
+                        Heading.Create("Resource fixture"),
+                        DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body")))),
+                    "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs");
+                """;
+            files[blueprintProjectionPath] = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+                SimpleDefinition(BlueprintGid).Document, DeclarationCatalog.Create(report)).AsSpan());
+            files["Golden/Projection/statement-projection-pilot-v1.json"] =
+                "{\"schema\":\"statement-projection-pilot-fixture-v1\",\"declarations\":[]}";
+            files["Golden/Projection/statement-projection-expansion-v1.json"] =
+                "{\"schema\":\"statement-projection-expansion-fixture-v1\",\"declarations\":[]}";
+        }
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshotWithoutLedger, report)).Capability;
         var dag = TruthDagProjectionAssembler.Build(snapshotWithoutLedger, lean);
@@ -240,7 +261,8 @@ public sealed class TruthReleaseCommandTests
             gitRoot,
             gateway,
             mutableSource,
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            productionVerifier ? new ProductionScribeEmissionVerifier()
+                : new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
         return new Fixture(
             temporary,
             cli,
@@ -345,7 +367,6 @@ public sealed class TruthReleaseCommandTests
         ..TestFileMap.Canonical.IndexOf("[[files]]", StringComparison.Ordinal)] + """
         [[files]]
         pattern = "Blueprint/**/*.md"
-        require = []
         kind = "generated"
         admission_plane = "content"
         produced_by = "ScribeEmitter"
@@ -356,7 +377,6 @@ public sealed class TruthReleaseCommandTests
 
         [[files]]
         pattern = "Blueprint/**/*.scribe.cs"
-        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"

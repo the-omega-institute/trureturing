@@ -2903,3 +2903,276 @@ $$
 证明。对角坐标实部之和是非负有号测度，因而给出有限的 $\mu$。若 $\mu(E)=0$，则正半定矩阵 $C(E)$ 的迹为零，故 $C(E)=0$；每个复坐标的实部与虚部遂绝对连续于 $\mu$。逐坐标应用非参数化有号 Radon–Nikodym 定理。由所有事件上的积分恒等式及积分唯一性，导数矩阵几乎处处 Hermitian，迹几乎处处为一。对可数个有理复向量，正半定事件矩阵的二次型积分非负，故导数二次型同时几乎处处非负；该向量集稠密，二次型连续性将正性推广到每个复向量。取包含这些例外点的一个可测零集，在其上统一置为 $B$，便得到处处规范的 $R$。最后逐坐标应用积分唯一性，证明任意同表测密度与 $R$ 几乎处处相等。
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 可观测补空间上的导数层与一致指数余项
+
+设 $V$ 为任意有限维实内积空间，$W$ 为任意完备实内积空间，$B:V\to V$ 与 $C:V\to W$ 为线性映射。令 $n=\dim V$，并定义
+
+$$
+N_j=\bigcap_{0\le k<j}\ker(CB^k),\qquad
+U=N_n^\perp,\qquad
+E_j=N_j\cap N_{j+1}^\perp\quad(0\le j<n).
+$$
+
+空交为 $V$。以 $i:U\hookrightarrow V$ 表示包含映射，以 $\Pi_j:V\to V$ 表示值域为 $E_j$ 的正交投影。保留全部 $n$ 个层，包括零维层；允许 $V$ 或 $U$ 为零维。以下范数均为内积诱导的算子范数。写 $b,c$ 为 $B,C$ 对应的连续线性映射。对连续线性自映射 $X$，置 $L_j(X)=cX\Pi_j i$，并令
+
+$$
+F(T,s)=\sum_{j=0}^{n-1}T^{-j}L_j(e^{Ts b}),\qquad
+P(s)=\sum_{j=0}^{n-1}\frac{s^j}{j!}L_j(b^j).
+$$
+
+**定理 19.1（补空间分解与一致轨迹估计）。** 对每个 $x\in U$，有 $\sum_{j<n}\Pi_j x=x$。存在 $K\ge0$，使得对每个 $T>0$ 满足 $T\|b\|<1$ 以及每个 $s\in[0,1]$，
+
+$$
+\|F(T,s)-P(s)\|\le KT.
+$$
+
+证明。下降链满足 $N_j=N_{j+1}\oplus E_j$；逐层分解给出 $V=N_n\oplus\bigoplus_{j<n}E_j$，从而这些正交投影在 $U$ 上的和为恒等。若 $k<j$，则 $L_j(b^k)=0$。指数幂级数在单位球上具有共同的几何余项界：存在 $0<a<1$ 与 $A>0$，使第 $r$ 个 Taylor 余项的范数不超过 $A(a\|X\|)^r$。取 $X=Ts b$、$r=j+1$，施加 $L_j$，前 $j$ 项全部消失。除以 $T^j$ 后，第 $j$ 层余项不超过 $\|L_j\|A(a\|b\|)^{j+1}T$。对有限个层求和即得结论。
+
+## 20. 导数层多项式的正 Gramian
+
+沿用 §19 的全部空间、映射和正交投影，定义
+
+$$
+H=\int_0^1P(s)^*P(s)\,ds.
+$$
+
+星号为 Hilbert 伴随，积分为连续线性算子空间中的实际 Bochner 区间积分。
+
+**定理 20.1（可观测补空间上的严格正性）。** 对每个非零 $x\in U$，有
+
+$$
+\langle x,Hx\rangle>0.
+$$
+
+证明。二次型等于 $\int_0^1\|P(s)x\|^2\,ds$，故非负。若其为零，非负连续被积函数在整个区间上为零。对每个 $j<n$，将向量多项式 $P(s)x$ 与 $CB^j\Pi_jx$ 作内积，所得标量多项式在无限多个点为零，故所有系数为零；第 $j$ 个系数给出 $CB^j\Pi_jx=0$。另一方面，$\Pi_jx\in N_j\cap N_{j+1}^\perp$，较低阶读出已为零，故 $\Pi_jx\in N_{j+1}$，遂 $\Pi_jx=0$。§19 的分解于是给出 $x=0$，矛盾。
+
+## 21. 实际时间 Gramian 的可逆缩放与定量极限
+
+沿用 §19–20。令 $Q_j:U\to U$ 为 $\Pi_j$ 在 $U$ 上的限制，定义
+
+$$
+d_T=\sum_{j<n}\sqrt{T}\,T^jQ_j,\qquad
+e_T=\sum_{j<n}(\sqrt{T}\,T^j)^{-1}Q_j,
+$$
+
+$$
+A(t)=ce^{tb}i,\qquad
+G_T=\int_0^T A(t)^*A(t)\,dt,\qquad
+Z(T,s)=\sqrt{T}\,A(Ts)e_T.
+$$
+
+**定理 21.1（逆合法性与实际积分极限）。** 对每个 $T>0$，有
+
+$$
+d_Te_T=e_Td_T=I_U,\qquad
+e_TG_Te_T=\int_0^1 Z(T,s)^*Z(T,s)\,ds.
+$$
+
+此外，$H$ 在 $U$ 的每个非零向量上严格为正，并存在 $R\ge0$，使得对每个 $0<T\le1$ 满足 $T\|b\|<1$，
+
+$$
+\|e_TG_Te_T-H\|\le RT.
+$$
+
+证明。各 $Q_j$ 为两两正交的自伴随投影，其和为 $I_U$；$T>0$ 时每个缩放系数非零，所以两个乘积均为 $I_U$。这也涵盖零维 $U$。自伴随性以及实际换元 $t=Ts$ 给出积分恒等式。由投影分解，$Z(T,s)=F(T,s)$。§19 的一致估计和多项式 $P$ 在 $[0,1]$ 上的有界性给出
+
+$$
+\|Z(T,s)^*Z(T,s)-P(s)^*P(s)\|
+\le \|Z(T,s)-P(s)\|\bigl(\|Z(T,s)\|+\|P(s)\|\bigr)
+\le RT
+$$
+
+其中 $R$ 可统一选择为非负常数。对单位区间积分即得误差界，严格正性由定理 20.1 给出。
+
+## 追加锚（本行以下为增补区）
+
+## 22. 固定噪声的指数轨迹信息泛函
+
+**定理 22.1（实际指数 Gramian 的二次余项）。** 设 $V$ 为任意有限维实内积空间，$W$ 为任意完备实内积空间，$B:V\to V$ 和 $C:V\to W$ 为有界线性映射。允许零维空间与不可观测方向。固定先验精度 $\beta>0$ 和坐标噪声方差 $\eta>0$，定义实际算子
+
+$$
+H=C^*C,\qquad G(T)=\int_0^T (Ce^{tB})^*(Ce^{tB})\,dt.
+$$
+
+积分是算子空间中的 Bochner 区间积分。行列式和迹作用于有限维状态空间，范数是内积诱导的算子范数。存在 $K\ge0$ 和 $\delta>0$，使得对每个 $0<T\le\delta$，
+
+$$
+\left|\frac12\log\det\left(I_V+(\beta\eta)^{-1}G(T)\right)-\frac{T}{2\beta\eta}\operatorname{tr}(C^*C)\right|\le K T^2.
+$$
+
+证明。指数函数的解析性给出被积函数 $f(t)=(Ce^{tB})^*(Ce^{tB})$ 在零点可微且 $f(0)=H$。因而在零点附近有 $\|f(t)-H\|\le R|t|$，对实际区间积分得到 $\|G(T)-TH\|\le RT^2$。$G(T)$ 为半正定自伴随算子；在其实际正交特征基中，$\log\det(I+sG(T))$ 是 $\sum_i\log(1+s\lambda_i)$。对 $x\ge0$ 有 $|\log(1+x)-x|\le x^2/2$，且 $0\le\lambda_i\le\|G(T)\|$。这给出对数余项的二次界。再用 $|\operatorname{tr}(L)|\le\dim(V)\|L\|$ 控制 $G(T)-TH$ 的迹，即得结论。
+
+## 追加锚（本行以下为增补区）
+## 23. 分层标量谱的全部噪声日程
+
+**定理 23.1（信息首项、阈值风险与完整恢复日程）。** 设 $n\ge0$，指标 $i$ 属于 $\{0,\ldots,n\}$。给定整数 $q_i\ge0$，满足 $q_i\le q_n$，以及实函数 $\lambda_i(T)$。固定 $\beta,c,C>0$，并假设在充分小的正时间上同时有
+
+$$
+cT^{q_i}\le\lambda_i(T)\le CT^{q_i}\qquad(0\le i\le n).
+$$
+
+对每个实数 $\alpha$ 定义
+
+$$
+I_\alpha(T)=\frac12\sum_{i=0}^n\log\left(1+\frac{\lambda_i(T)}{\beta T^\alpha}\right),\qquad
+R_\alpha(T)=\frac12\sum_{i=0}^n\frac{T^\alpha}{\beta T^\alpha+\lambda_i(T)}.
+$$
+
+每个实数 $\alpha$（包括 $\alpha=q_i$ 的情形）均满足
+
+$$
+I_\alpha(T)=\frac12\sum_{i=0}^n(\alpha-q_i)_+\log(1/T)+O(1).
+$$
+
+对每个在全部正时间上为正的函数 $\varepsilon(T)$，不要求连续性或幂律形式，令
+
+$$
+R_\varepsilon(T)=\frac12\sum_{i=0}^n\frac{\varepsilon(T)}{\beta\varepsilon(T)+\lambda_i(T)}.
+$$
+
+则
+
+$$
+\lim_{T\downarrow0}R_\varepsilon(T)=0
+\quad\Longleftrightarrow\quad
+\varepsilon(T)=o(T^{q_n}).
+$$
+
+若 $\alpha\ne q_i$ 对所有指标成立，则
+
+$$
+\lim_{T\downarrow0}R_\alpha(T)=\frac1{2\beta}\#\{i:q_i>\alpha\}.
+$$
+
+证明。置 $h=(\alpha-q_i)_+$。当 $0<T\le1$ 时，$T^h(1+\lambda_i/(\beta T^\alpha))$ 位于固定正区间 $[\min(1,c/\beta),1+C/\beta]$，因此取对数得到各指标共同的有界余项；有限求和给出信息首项。置 $\delta(T)=\varepsilon(T)/T^{q_n}$，则每个风险项非负且不超过 $\delta(T)/c$，而最深指标的风险项至少为 $\delta(T)/(\beta\delta(T)+C)$。上界证明充分性；若总风险趋零，该下界也趋零，由恒等式 $\delta=Cv/(1-\beta v)$（其中 $v=\delta/(\beta\delta+C)$）得到必要性。最后按 $\alpha<q_i$ 或 $\alpha>q_i$ 分别将单项分母除以 $T^\alpha$ 或 $T^{q_i}$，得到阈值风险极限并求和。
+
+## 追加锚（本行以下为增补区）
+
+### 追加定理 18.1：平移的最大弱导数域
+
+**定理 18.1（光滑紧支测试与实际 L² 平移轨道）。** 设 $f,h:\mathbb R\to\mathbb C$ 均对 Lebesgue 测度 $dx$ 平方可积，记 $[f],[h]\in L^2(\mathbb R;\mathbb C)$ 为它们的几乎处处等价类，并令 $V(t)[f]=[x\mapsto f(x+t)]$。则
+\[
+ \bigl(\forall\varphi\in C_c^\infty(\mathbb R;\mathbb R),\quad
+ \int_{\mathbb R}\varphi'(x)f(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)h(x)\,dx\bigr)
+ \quad\Longleftrightarrow\quad
+ \left.\frac{d}{dt}V(t)[f]\right|_{t=0}=[h]
+ \quad\text{在 }L^2\text{ 范数中}.
+\]
+
+证明。紧支测试导数的支撑在有界平移下落入同一个紧集。其一致有界性与该集的有限测度使测试配对的差商可在平方可积假设下控制；不需要 $f$ 全局可积。对每个平移后的测试应用弱等式与标量微积分基本定理，再将连续线性配对与 Bochner 区间积分交换。紧支光滑测试分离局部可积函数的几乎处处类，故 $V(t)[f]-[f]=\int_0^t V(r)[h]\,dr$，向量微积分基本定理给强导数。反向把同一测试配对的导数分别由强轨道导数和移位测试微分计算，并用导数唯一性得到所示负号。
+
+此结论只识别一维平移的最大一阶弱导数域。定理 2.4 的多维振子闭图、张量算子域、一般辛实现与 Gibbs 迹公式仍需各自的解析桥梁。
+
+## 25. 有限 Gaussian 观测的实际条件概率与信息
+
+**定理 25.1（Gaussian 观测律的后验、似然与条件自由能）。** 设 $n,p\ge0$，$M:\mathbb R^n\to\mathbb R^p$ 是任意实矩阵，$\beta>0$，$\sigma\in\mathbb R$ 满足 $\sigma^2>0$，置 $\tau=\sigma^{-2}$。在同一个概率律中取相互独立的 $X\sim\mathcal N(0,\beta^{-1}I_n)$ 与 $N\sim\mathcal N(0,\tau^{-1}I_p)$，令 $Y=MX+N$。具体地，共同输入律是 $\mathbb R^{n+p}$ 上块对角协方差 $\operatorname{diag}(\beta^{-1}I_n,\tau^{-1}I_p)$ 的中心 Gaussian 律，$X,N,Y$ 是其坐标线性映射。令 $P$ 为 $(Y,X)$ 的实际推前联合律，$\mu$ 为 $Y$ 的实际边缘律，并置
+
+$$
+Q=\beta I_n+\tau M^{\mathsf T}M,\qquad
+\Sigma=Q^{-1},\qquad A=\tau\Sigma M^{\mathsf T},\qquad
+K_y=\mathcal N(Ay,\Sigma).
+$$
+
+这里 $K$ 作为概率核是中心律 $\mathcal N(0,\Sigma)$ 经 $x\mapsto Ay+x$ 的推前。它给出实际联合律的条件分解 $P=\mu\otimes K$。对实际概率密度定义
+
+$$
+h(\nu)=-\int\log\left(\frac{d\nu}{dx}\right)\,d\nu,
+\qquad \mathcal F_\beta(\nu)=\int\frac{\|x\|^2}{2}\,d\nu-\beta^{-1}h(\nu).
+$$
+
+令 $\ell=\log\bigl(dP/d(P_Y\otimes P_X)\bigr)$ 是实际 Radon–Nikodym 导数的对数。则 $\ell$ 对 $P$ 可积，$D_{\rm KL}(P\Vert P_Y\otimes P_X)<\infty$，而其积分和互信息满足
+
+$$
+\begin{aligned}
+\int \ell\,dP
+=I(X:Y)
+&=\frac12\left(\log\det(\beta^{-1}I_n)-\log\det\Sigma\right)\\
+&=\frac12\log\det\left(I_n+\frac{\tau}{\beta}M^{\mathsf T}M\right),\\
+\int\mathcal F_\beta(K_y)\,d\mu(y)
+ -\mathcal F_\beta\bigl(\mathcal N(0,\beta^{-1}I_n)\bigr)
+&=\beta^{-1}I(X:Y).
+\end{aligned}
+$$
+
+空指标与零维空间均在范围内，空行列式为 $1$。$\sigma$ 可以为负；概率律依赖其平方，不要求 $M$ 单射。这些式子没有把有限积分矩 Gramian 与完整轨迹 Gramian 在正时间上混同。
+
+证明。精度 $Q$ 正定，因为 $\beta I_n$ 正定而 $\tau M^{\mathsf T}M$ 半正定。Gaussian 创新 $R=X-AY$ 的协方差是 $\Sigma$，且与 $Y$ 的交叉协方差为零；Gaussian 独立性与 $X=AY+R$ 给出所述条件分解。标准 Gaussian 的密度由实际一维 Gaussian 密度的可积乘积和矩形集上的积分得到。经可逆平方根与平移的 Haar 测度变换给出一般正定 Gaussian 密度，其 Jacobian 用绝对行列式。这个密度的 Radon–Nikodym 导数给出实际对数似然比，Gaussian 二阶矩使其可积。对联合律积分得到两协方差的对数行列式之差；平均条件能量等于先验能量，平均条件熵的差因此给出自由能恒等式。
+
+## 追加锚（本行以下为增补区）
+## 26. 可观测轨迹像的归一积分坐标
+
+**定理 26.1（轨迹像坐标与连续 Gramian 的精确相等）。** 设 $d,p\ge0$，$E=\mathbb R^d$、$W=\mathbb R^p$ 取欧氏内积，$B:E\to E$、$C:E\to W$ 为实线性映射，并满足 $\bigcap_{0\le k<d}\ker(CB^k)=\{0\}$。对每个 $T>0$，在实 Hilbert 空间 $H_T=L^2((0,T];W)$ 中存在有界线性轨迹映射 $F_T:E\to H_T$，其任意代表满足
+
+$$
+(F_Tx)(t)=Ce^{tB}x\quad\text{对几乎所有 }t\in(0,T].
+$$
+
+此映射单射，像的维数恰为 $d$。取其像的一个正交归一基 $b_0,\ldots,b_{d-1}$，令 $P_T$ 为 $H_T$ 到该像的实际正交投影，$U_T$ 为 $P_T$ 后接这个基的坐标映射。对每个 $f\in H_T$ 及每个 $i<d$，系数函数 $t\mapsto\langle b_i(t),f(t)\rangle$ 可积，且
+
+$$
+(U_Tf)_i=\int_0^T\langle b_i(t),f(t)\rangle\,dt,
+\qquad \|U_Tf\|\le\|f\|,
+\qquad U_T^*U_T=P_T.
+$$
+
+在 $E$ 的标准欧氏基中令 $M_T$ 表示 $U_TF_T$，则
+
+$$
+(U_TF_T)^*(U_TF_T)=F_T^*F_T
+ =\int_0^T(Ce^{tB})^*(Ce^{tB})\,dt,
+\qquad
+M_T^{\mathsf T}M_T=\int_0^T e^{tB^{\mathsf T}}C^{\mathsf T}Ce^{tB}\,dt.
+$$
+
+这些积分是实际连续算子的积分；坐标公式适用于全部 $L^2$ 类，不要求噪声代表连续。当 $d=0$ 时基与坐标指标为空，上述单射、投影与矩阵等式仍成立。
+
+证明。连续轨迹在有限区间上属于 $L^2$，逐点线性和有限维定义域使 $F_T$ 有界线性。若 $F_Tx=0$，连续性将几乎处处的轨迹消失提升为区间上的消失。指数轨迹实解析，连通性与唯一性使其在整个实轴消失；零点的指数幂级数系数给出 $CB^kx=0$，可观测性于是给出 $x=0$。像的维数为 $d$，故可取所述正交归一基。正交投影收缩与基坐标的等距性给出范数界；$L^2$ 内积的可积性给出全部系数公式。轨迹位于投影像内，故坐标映射保持轨迹内积。将该内积写成积分，并与有限维连续线性算子的积分交换，得到算子与矩阵的两个 Gramian 等式。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 一阶最大域上的弱正则交换关系
+
+本节使用 $H=L^2(\mathbb R,\mathbb C;dx)$，内积在第一变量共轭线性、第二变量线性。对平方可积代表函数 $u$，记 $[u]$ 为其 $L^2$ 类；所有积分均为实直线的 Lebesgue 体积积分。真实平移取 $V(t)[u]=[x\mapsto u(x+t)]$，真实调制取 $U(s)[u]=[x\mapsto e^{isx}u(x)]$。
+
+**定理 27.1（一阶域上的弱 CCR）。** 任取 $\hbar>0$ 及函数 $f,g,d_f,d_g:\mathbb R\to\mathbb C$。假设 $f,g,d_f,d_g,x\mapsto xf(x),x\mapsto xg(x)$ 均平方可积，并对每个实值紧支 $C^\infty$ 测试函数 $\varphi$ 有
+
+$$
+\int_{\mathbb R}\varphi'(x)f(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_f(x)\,dx,
+\qquad
+\int_{\mathbb R}\varphi'(x)g(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_g(x)\,dx.
+$$
+
+定义实际位置与动量输出 $QF=[xf]$、$QG=[xg]$、$PF=-i\hbar[d_f]$、$PG=-i\hbar[d_g]$，以及 $F=[f]$、$G=[g]$。则
+
+$$
+\langle QF,PG\rangle-\langle PF,QG\rangle
+ =i\hbar\langle F,G\rangle.
+$$
+
+证明。调制差商由 $|xf|$ 控制，平方误差由 $4|xf|^2$ 控制，支配收敛给出真实 $L^2$ 调制轨道的强导数 $iQF$；对 $g$ 同理。定理 18.1 将两个紧支弱测试等式识别为真实平移轨道的强导数。实际公式给出 $V(t)U(s)=e^{ist}U(s)V(t)$。将这一有界关系写成差分配对后依次对两实参数求导，仅使用各自的一阶强导数。第一槽的共轭线性与 $P=-i\hbar d/dx$ 给出所示正号。无需 $QP$ 或 $PQ$ 的乘积域、全局 $L^1$、二阶导数或四阶矩。
+
+本结论是第一域上的纯向量形式等式。一般正常态的有限二阶矩对应、多模态闭图与完成张量算子域、一般辛实现、Gibbs 及基无关迹仍各需其实际解析桥梁。
+
+## 追加锚（本行以下为增补区）
+
+## 28. 有限 Euclidean 空间中的最大方向平移域
+
+**定理 28.1（方向弱导数与真实强平移导数）。** 任意 $n\in\mathbb N$（包括 $n=0$），令 $E_n=\mathrm{EuclideanSpace}\;\mathbb R\;(\mathrm{Fin}\,n)$，使用 Lebesgue 测度 $\mathrm{volume}$。任取 $b\in E_n$（包括 $b=0$）及 $f,h:E_n\to\mathbb C$，只假设 $\mathrm{MemLp}(f,2,\mathrm{volume})$ 与 $\mathrm{MemLp}(h,2,\mathrm{volume})$。用 $[f]$、$[h]$ 表示其实际 $L^2$ 等价类。令 $\mathcal T_n$ 为所有实值紧支 $C^\infty$ 测试函数，即 $\mathrm{ContDiff}\;\mathbb R\;(\mathrm{WithTop.some}\;\mathrm{ENat.top})$ 与 $\mathrm{HasCompactSupport}$ 同时成立的函数。记 $D_b\varphi(x)=\mathrm{fderiv}\;\mathbb R\;\varphi\;x\;b$，并令真实正平移 $V_b(t)[f]=[x\mapsto f(x+tb)]$ 为 $\mathrm{DomAddAct.mk}(t\mathbin\bullet b)$ 在实际 $L^2$ 上的作用。则
+
+$$
+\left(\forall\varphi\in\mathcal T_n,\quad
+  \int_{E_n}D_b\varphi(x)f(x)\,dx
+  =-\int_{E_n}\varphi(x)h(x)\,dx\right)
+\quad\Longleftrightarrow\quad
+\mathrm{HasDerivAt}\bigl(t\mapsto V_b(t)[f]\bigr)\;[h]\;0.
+$$
+
+积分中的实测试值和实方向导数均嵌入 $\mathbb C$；右端是以实时间为参数、取值于实际复 $L^2$ 空间的范数导数。结论不要求全局 $L^1$、其他方向的导数、正维数或非零方向。
+
+证明。将测试导数的紧支扩充一个有界方向线段，以局部可积函数控制所有小平移的差商，得到配对积分的导数。对真实平移后的紧支测试应用弱等式，标量微积分基本定理与连续线性映射的 Bochner 区间积分交换给出每个测试配对的积分恒等式。紧支测试分离及 $L^2$ 的几乎处处外延性将其提升为 $V_b(t)[f]-[f]=\int_0^t V_b(r)[h]\,dr$。真实平移作用的强连续性和向量微积分基本定理给出正向结论；反向结论通过配对求导及导数唯一性得到。
+
+此结论识别单个任意方向的最大一阶平移域；多模态能量算子的闭图、完成张量域、辛实现、一般正常态的有限二阶矩和 Gibbs 迹仍需各自的实际解析桥梁。

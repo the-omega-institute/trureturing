@@ -1,0 +1,12 @@
+**定理 303.3（该饱和纤维中 Robin 违例的新素轴数量门槛）。** 假设302.1成立。对每个 $\varepsilon>0$，存在 $L_1$，使全部 $L\ge L_1$ 及全部 $H>5040$ 满足
+\[
+\mathcal O_L(H)=\mathcal O_L(A_L),\qquad U_H\ge R(H)
+\tag{303.19}
+\]
+时，必有
+\[
+K_L(H)\frac{\log m_L}{m_L}>\frac d2-\varepsilon.
+\tag{303.20}
+\]
+每个被计数的新素数都大于 $m_L/2$。这是一条违例的必要条件，不断言这样的违例存在。
+

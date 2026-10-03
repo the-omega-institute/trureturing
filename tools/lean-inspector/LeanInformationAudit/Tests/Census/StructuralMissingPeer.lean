@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.StructuralTrivial
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 open LeanInformationAudit.Tests.Census.StructuralTrivial
 structural_theorem newPeer in law realization readouts nondegeneracy nondegenerate := fun _ => rfl

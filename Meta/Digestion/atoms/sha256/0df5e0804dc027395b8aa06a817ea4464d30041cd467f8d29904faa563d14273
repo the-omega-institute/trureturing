@@ -1,0 +1,32 @@
+**引理 36.24（固定终尾近似与内部目标的统一余量）。** 设 $0\le b_0<\nu<\lambda$，$\Delta=\nu-b_0$。一个合法长度 $M$ 前缀接实际 $\Omega$ 终尾 $\xi\in A_s$，其标量为 $x$；选固定合法 $\widehat\xi\in D_s$，标量 $\widehat x$ 满足 $|\widehat x-x|<\Delta/4$。若原来前缀各坐标满足规定闭格 $E_{i_j}^{b_0}$，则替换尾后的同一个实际有限来源可取得全部规定色，统一误差严格小于
+
+$$
+r_*:=b_0+\Delta/2=\frac{b_0+\nu}{2}<\nu.
+$$
+
+该近似不依赖前缀的长度或内容，目标均在相应格内部，归属无关；替换轨迹不必留在旧图的片中。
+
+证明。合法空尾截断在每个 guard 的标量区间稠密，所以可选择上述一个尾，保留终端 guard。前缀的合法接缝不变，精确来源等式给
+
+$$
+\widehat x_j-x_j=(-g)^{M-j}(\widehat x-x),\qquad
+|\widehat x_j-x_j|<\Delta/4.
+$$
+
+到闭格的距离是1-Lipschitz，故
+$\operatorname{dist}(\widehat x_j,J_{i_j})<b_0+\Delta/4$。设 $D_X=\phi^2$，$\alpha=\Delta/(4D_X)\in(0,1)$，$m_i$ 为格中点，定义
+
+$$
+T_i(y)=(1-\alpha)\operatorname{proj}_{J_i}(y)+\alpha m_i.
+$$
+
+所有格正长度，故 $T_i(y)$ 是内部点，且
+
+$$
+|T_i(\widehat x_j)-\widehat x_j|
+\le \operatorname{dist}(\widehat x_j,J_i)+\alpha D_X
+<b_0+\Delta/2.
+$$
+
+目标在 $X$ 内，裁剪固定它；取误差为该目标与实际新坐标之差。没有长度累积误差，因为所有扰动都由一个终尾差乘收缩幂产生。终尾可以来自 $\Omega$ 单点，其有限近似可以离开单点和旧闭片；新来源的合法 guard 和实际目标已经足够，无需在旧图里强行重新实现。$\square$
+

@@ -10,15 +10,11 @@ public sealed class RegReportMembershipTests
     private const string Source = "theorem support : True := True.intro\n";
 
     [Fact]
-    public void RegModuleIsOptionalInClosureAndRoundTripsInRawReport()
+    public void RegModuleIsRequiredInClosureAndRoundTripsInRawReport()
     {
         var snapshot = Snapshot(PathName);
-        Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(
-            snapshot, LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>())));
-        Assert.False(LeanClosureValidator.IsRequiredReportLean(PathName));
-        Assert.True(LeanClosureValidator.IsRequiredReportLean("D5/S3/Arith/X.lean"));
         Assert.IsType<LeanValidationOutcome.InfrastructureFailure>(LeanClosureValidator.Validate(
-            Snapshot("D5/S3/Arith/X.lean"), LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>())));
+            snapshot, LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>())));
         var report = Report(PathName, []);
         var raw = RawLeanReportArtifact.Write(snapshot, report);
         Assert.Contains("Reg.D5.S3.Arith.X", Encoding.UTF8.GetString(raw.AsSpan()), StringComparison.Ordinal);

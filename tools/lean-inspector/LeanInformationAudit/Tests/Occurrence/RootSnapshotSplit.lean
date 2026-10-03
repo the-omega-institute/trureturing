@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog

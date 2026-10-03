@@ -90,16 +90,6 @@ register_information_theorem result in arena
       stateBinder := 7 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.result
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "surjective-column registration is not declaredValidated"
-
 #print axioms registration
 
 end

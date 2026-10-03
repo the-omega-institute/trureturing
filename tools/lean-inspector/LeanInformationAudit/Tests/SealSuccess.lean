@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Sha256
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! Positive seal fixtures stay in this test module so their persistent registry
 entries are never imported by a production root. -/
@@ -44,12 +47,12 @@ def sndRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state.2
   anchor := Fin.elim0
 
-information_theorem fstTheorem
+test_assess in information_theorem fstTheorem
   in arena
   primitives fstRealization
   : arena.Law fstRealization := by trivial
 
-information_theorem sndTheorem
+test_assess in information_theorem sndTheorem
   in arena
   primitives sndRealization
   : arena.Law sndRealization := by trivial
@@ -82,7 +85,7 @@ def notRealization : PrimitiveRealization notArena.signature where
   readout := fun _ state => !state
   anchor := Fin.elim0
 
-information_theorem notTheorem
+test_assess in information_theorem notTheorem
   in notArena
   primitives notRealization
   : notArena.Law notRealization := by trivial
@@ -97,28 +100,28 @@ def idRealization : PrimitiveRealization t001Arena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem idTheorem
+test_assess in information_theorem idTheorem
   in t001Arena
   primitives idRealization
   : t001Arena.Law idRealization := by trivial
 
-expect_information_occurrence fstTheorem
+test_assess in expect_information_occurrence fstTheorem
   in arena
   from "LeanInformationAudit.Tests.SealSuccess"
 
-expect_information_occurrence sndTheorem
+test_assess in expect_information_occurrence sndTheorem
   in arena
   from "LeanInformationAudit.Tests.SealSuccess"
 
-expect_information_occurrence notTheorem
+test_assess in expect_information_occurrence notTheorem
   in notArena
   from "LeanInformationAudit.Tests.SealSuccess"
 
-expect_information_occurrence idTheorem
+test_assess in expect_information_occurrence idTheorem
   in t001Arena
   from "LeanInformationAudit.Tests.SealSuccess"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 private def artifactAddress (json : Json) : Except String String := do
   let arenasJson ← Json.getObjVal? json "arenas"

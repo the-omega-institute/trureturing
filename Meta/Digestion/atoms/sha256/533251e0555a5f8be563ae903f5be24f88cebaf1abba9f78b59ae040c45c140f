@@ -1,0 +1,48 @@
+**定理 192.1（平均尾界与稀疏例外计数）。** 有
+
+$$
+\sum_{j=X}^{2X}T_j(y)
+\ll_v Xy^{-1/2}+\log X.
+\tag{192.1}
+$$
+
+证明。由于种子固定且非负非零，有 $1\le V_j\le\exp(C_v X)$（$X\le j\le2X$），其中 $C_v>0$ 只依赖种子。用有限求和交换、第一节的零点计数与 $\log(p/(p-1))\le2/p$，得到
+
+$$
+\begin{aligned}
+\sum_{j=X}^{2X}T_j(y)
+&\le2\sum_{y<p\le e^{C_vX}}\frac1p
+\left(\frac{X+1}{z(p)}+1\right)\\
+&\le32(X+1)y^{-1/2}
++2\sum_{p\le e^{C_vX}}\frac1p.
+\end{aligned}
+$$
+
+经典 Mertens 素数倒数和上界 $\sum_{p\le t}1/p=\log\log t+O(1)$ 给最后一项为 $O_v(\log X)$。该输入可见 Lichtman, *Mertens' prime product formula, dissected*, https://arxiv.org/html/2002.03361v3 ，Theorem 1.1、式 (1.1)。$\square$
+
+定义坏指标集合
+
+$$
+\mathcal E_v=
+\left\{j\ge3:
+T_j(j^{5/6})>\frac1{(\log j)^2}\right\}.
+$$
+
+在 $[X,2X]$ 中若 $j$ 是坏指标，则 $T_j(X^{5/6})>1/(\log(2X))^2$。由非负性、式（192.1）与 Markov 计数，
+
+$$
+\#(\mathcal E_v\cap[X,2X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^3.
+\tag{192.2}
+$$
+
+二倍区间累加得到
+
+$$
+\#(\mathcal E_v\cap[1,X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^4=o(X).
+\tag{192.3}
+$$
+
+也可把第二项吸收到第一项，写成 $O_v(X^{7/12}(\log X)^2)$。这不是声称坏指标不存在，而是给出明确的稀疏上界。
+

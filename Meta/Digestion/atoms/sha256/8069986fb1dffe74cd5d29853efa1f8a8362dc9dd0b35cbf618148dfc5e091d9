@@ -1,0 +1,22 @@
+**命题 22.7（一次实标量首窗任务的零统一噪声余量）。** 对每个 $\eta>0$，若当前一次记录允许全部实误差 $|e|\le\eta$，不存在对所有 $D$ 来源正确的首窗解码器；允许全部 $|e|<\eta$ 时也不存在。此结论允许任意解码函数，不限于 $Q_5$。
+
+证明。复用命题14.9的实际有限来源
+
+$$
+L_m=(3,25)^m\mathrm{null}^{\infty},\qquad
+R_m=(25,3)^m\mathrm{null}^{\infty},\qquad
+\epsilon_m=\gamma^{2m}=a^{2m}.
+$$
+
+其坐标为 $-1+\epsilon_m$ 与 $\phi(1-\epsilon_m)$。两个合法有限来源 $3L_m$ 与 $\mathrm{null}R_m$ 的首窗不同，当前值分别为
+
+$$
+x_m=e_1-a\epsilon_m,\qquad
+y_m=e_1+t^2\epsilon_m,\qquad
+y_m-x_m=t\epsilon_m\longrightarrow0.
+$$
+
+选 $m$ 使 $t\epsilon_m/2<\eta$。同一实际记录 $(x_m+y_m)/2$ 距两个值均为 $t\epsilon_m/2$，同时符合两种误差合同，却要求两个不同首窗答案。$\square$
+
+每个固定 $x\in P$ 距相邻根切点仍为正，因而有个别的局部首窗误差余量；缺少的是全 $D$ 的统一正余量。若只取得一次有误差的初值，再沿正确标签计算分支逆，初值误差在第 $j$ 步放大为 $a^{-j}|r_0-z_0|$；这些计算值不是重新取得的同精度实际样本。
+

@@ -1,0 +1,13 @@
+**Theorem 53.5 (Continuity of the smoothed indicator).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] and every positive epsilon, its smoothed indicator is continuous at every positive argument.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1ContinuousAt {SmoothingF : ℝ → ℝ}
+    (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFpos : ∀ x > 0, 0 ≤ SmoothingF x)
+    (suppSmoothingF : SmoothingF.support ⊆ Icc (1 / 2) 2)
+    {ε : ℝ} (εpos : 0 < ε) {y : ℝ} (ypos : 0 < y) :
+    ContinuousAt (fun x ↦ Smooth1 SmoothingF ε x) y
+```
+

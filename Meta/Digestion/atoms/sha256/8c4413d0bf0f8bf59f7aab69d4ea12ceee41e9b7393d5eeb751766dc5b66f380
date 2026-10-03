@@ -1,0 +1,56 @@
+**定理 336.2（完整格与部分格的精确有限面积）。** 对任意 $0<s\le t$ 定义
+
+$$
+\mathfrak J(u,v;s,t)=u\log(t/s)+v(t-s).
+\tag{336.6}
+$$
+
+在 $M>0$ 的实际格上，置 $c=c_{a,b}$，则谱下证书的部分格面积为
+
+$$
+\mathfrak A_{a,b}(X)=
+\begin{cases}
+\mathfrak J(z_a+Ma,-M;a,X),&a\le X\le c,\\
+\mathfrak J(z_a+Ma,-M;a,c)
++\mathfrak J(z_b-Mb,M;c,X),&c\le X\le b.
+\end{cases}
+\tag{336.7}
+$$
+
+特别地，其完整格面积是
+
+$$
+\boxed{\quad
+\mathfrak A_{a,b}(b)
+=(z_a+Ma)\log(c/a)+(z_b-Mb)\log(b/c)
++M(a+b-2c).
+\quad}
+\tag{336.8}
+$$
+
+每个检查点的实际预算由有限前缀及部分面积给出：
+
+$$
+G_{K,D}(t)=G_{K,D}(a)+\mathfrak A_{a,b}(t)+K\log(t/a),
+\qquad t\in\mathscr T_{a,b}(K).
+\tag{336.9}
+$$
+
+$M=0$ 时面积为 $z_a\log(X/a)$。从 $A_0$ 开始，递归更新实际携带量
+
+$$
+G_{K,D}(b)=G_{K,D}(a)+\mathfrak A_{a,b}(b)+K\log(b/a),
+\qquad G_{K,D}(A_0)=D.
+\tag{336.10}
+$$
+
+这条更新及每格检查只读既有有限真实谱节点、同块斜率界和已经累计的前缀；没有读取无限素数和或无限有符号尾项的新下界。
+
+**证明。** 复用经典恒等式
+
+$$
+\int_s^t\frac{u+vX}{X}\,dX=\mathfrak J(u,v;s,t).
+$$
+
+将（336.4）的两段仿射式分别代入，并在 $c$ 处拼接，得到（336.7）和（336.8）；$c=a$ 或 $c=b$ 时零长度一段为零，公式仍成立。实际前缀相加及对数长度相加得到（336.9）–（336.10）。$\square$
+

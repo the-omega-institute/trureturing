@@ -61,7 +61,7 @@ def main():
     previous = str(case.root)
     if not args.fixture:
         shutil.move(case.root, fixture)
-        for relative in ('lakefile.toml', 'lake-manifest.json', 'Reg/lake-manifest.json'):
+        for relative in ('lakefile.toml', 'lake-manifest.json', 'Reg/lake-manifest.json', 'tools/lean-inspector-reg/lake-manifest.json'):
             config = fixture / relative
             config.write_text(config.read_text().replace(previous, str(fixture)))
     case.root = fixture

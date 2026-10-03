@@ -1,0 +1,8 @@
+## 192. 一般种子的密度一估计与共同公因子
+
+对 $X\ge2$、$y\ge2$，设
+
+$$
+T_j(y)=\sum_{\substack{p\mid V_j\\p>y}}\log\frac p{p-1}.
+$$
+

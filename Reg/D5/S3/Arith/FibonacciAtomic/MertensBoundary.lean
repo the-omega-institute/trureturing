@@ -102,16 +102,6 @@ register_information_theorem power_bounds_iff in arena
       functionOperand := true }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Arith.FibonacciAtomic.MertensBoundary.power_bounds_iff
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "Mertens boundary registration is not declaredValidated"
-
 #print axioms registration
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.MertensBoundary

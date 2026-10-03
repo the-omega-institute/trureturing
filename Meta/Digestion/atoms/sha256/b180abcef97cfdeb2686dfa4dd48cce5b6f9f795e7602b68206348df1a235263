@@ -1,0 +1,21 @@
+**定理 9.2（均匀区域态的至多二阶接缝）。** 有 $|\mathcal W_L|=F_{L+2}$。当 $\ell,r\ge1$ 时，等振幅合法态
+
+$$
+|\Omega_{\ell+r}\rangle
+=\frac1{\sqrt{F_{\ell+r+2}}}\sum_{w\in\mathcal W_{\ell+r}}|w\rangle
+$$
+
+在 $\ell|r$ 切口上的 Schmidt 秩至多为 $2$，因而熵不超过 $\log2$。
+
+证明。记 $N_L=|\mathcal W_L|$。初值为 $N_0=1,N_1=2$；对 $L\ge2$，合法字以 $0$ 开头时余下任意合法长 $L-1$ 字，以 $1$ 开头时下一位必须为 $0$、余下任意合法长 $L-2$ 字，故 $N_L=N_{L-1}+N_{L-2}$，得到 $N_L=F_{L+2}$。
+
+令 $|l_i\rangle$ 为所有以 $i$ 结尾的左侧合法字之未归一化和，$|r_j\rangle$ 为所有以 $j$ 开头的右侧合法字之未归一化和。唯一被禁止的接缝是 $11$，所以
+
+$$
+|\Omega_{\ell+r}\rangle
+=\frac{|l_0\rangle\otimes(|r_0\rangle+|r_1\rangle)
++|l_1\rangle\otimes|r_0\rangle}{\sqrt{F_{\ell+r+2}}}.
+$$
+
+这是两个乘积向量之和，因此系数矩阵秩至多为 $2$。Schmidt 分解及概率熵的标准秩界给出 $S\le\log2$。这利用了所有合法字振幅相同这一具体条件。$\square$
+

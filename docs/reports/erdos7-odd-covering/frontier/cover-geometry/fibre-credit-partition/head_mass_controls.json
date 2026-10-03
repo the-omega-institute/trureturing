@@ -1,0 +1,89 @@
+{
+  "checks": 455,
+  "contract": "Supported-head actual probability min cap and exact geometric allowance; no new optimization or uniform survivor claim.",
+  "counterexamples": {
+    "cap_times_row": {
+      "actual_mass": "1/200",
+      "correct_min_bound": "1/200",
+      "incorrect_product": "1/800",
+      "modulus": 275
+    },
+    "sum_max": {
+      "correct": "3/16",
+      "incorrect_max_sum": "5/32",
+      "scope": "Scalar algebraic interchange counterexample, not claimed as a complete AP family.",
+      "undercharge": "1/32"
+    }
+  },
+  "geometric_examples": [
+    {
+      "free": "3269/63550",
+      "lower": {
+        "5": 2
+      },
+      "selected": "7359/254200",
+      "support": [
+        5,
+        11
+      ],
+      "tail_start": {
+        "5": 2
+      }
+    },
+    {
+      "free": "1908697/33249360",
+      "lower": {
+        "5": 1,
+        "7": 1
+      },
+      "selected": "3773/101680",
+      "support": [
+        5,
+        7
+      ],
+      "tail_start": {
+        "5": 2,
+        "7": 2
+      }
+    },
+    {
+      "free": "181/656",
+      "lower": {
+        "5": 1
+      },
+      "selected": "99/656",
+      "support": [
+        5,
+        11,
+        13
+      ],
+      "tail_start": {
+        "5": 2
+      }
+    },
+    {
+      "free": "782/1025",
+      "lower": {},
+      "selected": "99/205",
+      "support": [
+        11,
+        13
+      ],
+      "tail_start": {}
+    }
+  ],
+  "limits": [
+    "The complete geometric result sums per-original upper allowances, not actual deleted mass.",
+    "All head-depth maxima remain inside the numerical-original sums.",
+    "Zero-row tests use exact rational zero; no approximation to row positivity.",
+    "No array optimization or Lean verification is asserted."
+  ],
+  "statistics": {
+    "actual_finite_sources": 12,
+    "actual_free_same_address_bounds": 48,
+    "actual_original_root_bounds": 96,
+    "actual_selected_once_bounds": 48,
+    "geometric_inventory_controls": 48,
+    "strict_min_vs_zero_candidate_bounds": 12
+  }
+}

@@ -39,8 +39,8 @@ internal sealed class RiemannZetaDerivativeNegativeTwoDocument : IScribeDocument
 
     private static Formula TheoremFormula()
     {
-        Formula zetaPrime = Seq(Zeta, Apos);
-        Formula numerator = Seq(Zeta, Open, D(3), Close);
+        Formula zetaPrime = Seq(StrataLint.Scribe.FormulaDsl.Zeta, Apos);
+        Formula numerator = Seq(StrataLint.Scribe.FormulaDsl.Zeta, Open, D(3), Close);
         Formula denominator = Multiply(D(4), Seq(Pi, Caret, D(2)));
 
         return Disp(Seq(

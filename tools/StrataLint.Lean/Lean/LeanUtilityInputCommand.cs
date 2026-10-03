@@ -8,9 +8,12 @@ namespace StrataLint.EngineeringScope;
 // The inspector consumes this structured contract; utility header syntax has one parser.
 internal static class LeanUtilityInputCommand
 {
+    // Managed Lean plus FILEMAP policy documents: enumeration follows the inputs, not the repository.
+    private static readonly string[] Scope = ["D5", "Trureturing.lean", ":(glob)Meta/*"];
+
     internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
         Run(() => GitRepositorySnapshotReader.ReadCurrent(repositoryRoot,
-            readContents: LeanClosureValidator.IsManagedLean), arguments);
+            readContents: LeanClosureValidator.IsManagedLean, pathspecs: Scope), arguments);
 
     internal static ExplicitCommandResult Run(Func<RawRepositorySnapshot> readCurrent, IReadOnlyList<string> arguments)
     {

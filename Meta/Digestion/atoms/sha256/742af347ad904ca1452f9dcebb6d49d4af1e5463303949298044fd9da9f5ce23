@@ -1,0 +1,35 @@
+## 48. 七周期 singleton rival 的实际持续碰撞与相干回返环
+
+本章使用原 FIB 地址、原 guards、原六个闭颜色及其实际全包含图。所用已发布前提均取自[固定版本 `cfe06a9`](https://github.com/the-omega-institute/trureturing/blob/cfe06a9/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)：定义 14.5、命题 14.6、定理 14.7 和定理 17.2 的实际地址及状态相对编码，式 (28.1) 的六格布局，引理 31.2、定义 31.3 和定理 31.4 的有限闭图与共同来源提升，定理 36.22—36.23 的同步相干和完整分歧图，以及命题 39.6.1 的 singleton 传播与相干性。
+
+记
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=2t-1=t^3,\qquad
+\lambda=\frac{t^2}{10}=\frac{1-g}{20}.
+$$
+
+原状态区间为 $I_0=[-1,\phi]$、$I_1=[-1,t]$，原前接映射和删除逆映射为
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t).
+$$
+
+原 guard 表为
+
+$$
+0\to0:3,0,2,\qquad 0\to1:5,25,\qquad
+1\to0:3,0,\qquad 1\to1:5.
+$$
+
+窗口 $0$ 是原来的 $\mathrm{null}=000$。原地址空间为
+$A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$，三位删除为 $T$。
+两个状态使用同一个窗口级数，故在合法状态尾上
+$\kappa_s(\omega)=\kappa_0(\omega)$。前接词始终按
+$f_{\ell_0\cdots\ell_{n-1}}=f_{\ell_0}\circ\cdots\circ f_{\ell_{n-1}}$
+解释；坐标、guard 和标签都由同一实际地址承担。
+

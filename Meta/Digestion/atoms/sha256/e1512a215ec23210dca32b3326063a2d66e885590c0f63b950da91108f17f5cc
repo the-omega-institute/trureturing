@@ -1,0 +1,1 @@
+| [ConditionalExpectationRefinementPythagoras.lean](../../../D5/S3/ConceptDynamics/Prediction/ConditionalExpectationRefinementPythagoras.lean)，`conditional_expectation_refinement_pythagoras` | 嵌套条件 $\sigma$-代数下，旧风险等于新风险加两条件期望的平方距离；对应式（14.4）的结构 

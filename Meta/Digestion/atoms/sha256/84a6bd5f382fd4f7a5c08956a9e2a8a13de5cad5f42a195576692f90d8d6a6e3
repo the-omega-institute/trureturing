@@ -1,0 +1,10 @@
+**定义 3.1（进位扇区）。** 记
+
+$$
+A_i=\{a\in A:k(a)=i\},\qquad
+\mathcal H_i=\operatorname{span}\{|a\rangle:a\in A_i\},\qquad
+P_i=\sum_{a\in A_i}E_{aa}\quad(i=0,1).
+$$
+
+$P_0+P_1=I_A$。本节的 $P_i$ 是进位扇区投影，与第 2 节带采样记录下标的 $P_y$ 分属不同定义。令 $\Delta_A$ 为计算基对角代数，$\alpha(B)=U_d^\dagger B U_d$。
+

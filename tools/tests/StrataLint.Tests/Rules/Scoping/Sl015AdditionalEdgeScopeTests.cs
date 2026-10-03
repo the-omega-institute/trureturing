@@ -63,8 +63,8 @@ public sealed class Sl015AdditionalEdgeScopeTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
             files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
                 files[EngineeringRegistrationFixture.Path],
-                new EngineeringProjectFixture(first, "One", "test-support", false, []),
-                new EngineeringProjectFixture(second, "Two", "test-support", false, []));
+                new EngineeringProjectFixture(first, "One", "test-support", []),
+                new EngineeringProjectFixture(second, "Two", "test-support", []));
         return fixture;
     }
 

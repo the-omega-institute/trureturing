@@ -28,9 +28,9 @@ class NativeRegSupport:
         return result
 
     def build_reg_report(self, success=True):
-        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report',
+        return self.run_lake('-d', str(self.root / 'tools/lean-inspector-reg'), 'build', ':report',
                              'trureturing/Audit', 'leanInspector/reportInspector',
-                             'reg/LeanInformationAuditRegTests', success=success)
+                             'regInspector/LeanInformationAuditRegTests', success=success)
 
 
 class NativeRegTests(NativeRegSupport):
@@ -62,11 +62,9 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.reg_package()
         self.run_lake('build', 'Fixture')
         self.make_lean()
-        # Escape-registration audit is paused (#11269): a bare build no longer
-        # compiles the Reg package; explicit Reg targets still do.
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
-        self.assertFalse((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').exists())
-        self.assertFalse((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
+        self.assertTrue((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
                    'def registrationValue := value\n')
         self.make_lean('Reg.Support.Entry', 'D5.Alone')
@@ -79,14 +77,12 @@ class NativeRegConsumerTests(NativeRegSupport):
         downstream = 'tools/lean-inspector/LeanInformationAuditRegTests/Required.lean'
         self.write(downstream, 'def requiredCheck : Bool := missingRequiredCheck\n')
         self.make_lean('Reg.Support.Entry')
-        self.make_lean()  # Paused: the broken Reg test library is not in the bare build.
-        failed = self.make_lean('LeanInformationAuditRegTests', success=False)
+        failed = self.make_lean(success=False)
         self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         self.write(downstream, 'def requiredCheck : Bool := true\n')
-        self.make_lean('LeanInformationAuditRegTests')
-        self.write('Reg/Support/Entry.lean', 'this must fail\n')
         self.make_lean()
-        self.make_lean('Reg.Support.Entry', success=False)
+        self.write('Reg/Support/Entry.lean', 'this must fail\n')
+        self.make_lean(success=False)
 
     def test_reg_report_rows_relocation_and_defaults(self):
         self.reg_package()

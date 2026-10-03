@@ -1,4 +1,7 @@
 import Reg.D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.NegativeNamedEntry

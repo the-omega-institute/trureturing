@@ -1,11 +1,14 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaContractSource
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit ImportedContractProbe
 
 local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 
-register_information_theorem target in lawArena object_arena arena catalog absentEvidence
+test_assess in register_information_theorem target in lawArena object_arena arena catalog absentEvidence
   primitives readout.toPrimitiveBundle realization bridge
 
 -- Bypass only compilation acquisition to model an imported input with missing
@@ -21,7 +24,7 @@ run_cmd do
 
 /-- error: IE-C003 ArenaSourceUnavailable declaration=ImportedContractProbe.missingEvidence reason=provenance -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd do
   let env ← getEnv

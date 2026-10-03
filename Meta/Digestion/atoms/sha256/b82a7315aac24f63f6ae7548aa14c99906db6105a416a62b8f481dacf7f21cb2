@@ -1,0 +1,29 @@
+**定义 2.1（深度许可、跨类间距与统一任务恢复）。** 完全沿用定义 1.1 的非空有序完全二叉树、替换 $\rho$、初始组成域 $D_H$、已知整数 $H\ge1,L\ge0$ 和单个末端报告合同 $\mathcal E_{H,L,E}$，其中 $E\in\mathbb Q_{\ge0}$。记
+
+$$
+m=3L+3,\qquad A=F_m,\qquad B_{\mathrm{num}}=F_{m+1},
+\qquad v=F_{m-1}=B_{\mathrm{num}}-A.
+$$
+
+对整数 $k\ge1$，定义深度许可目标
+
+$$
+\chi_k(c)=\mathbf1_{\{S^{-k}c\in\mathbb N_0^2\}},
+\qquad S=M^3,
+\qquad \chi_0(c)=1\quad(c\in D_H).
+\tag{2.1}
+$$
+
+因此 $\chi_1$ 就是定义 1.3 的 $\chi$；$k=0$ 只给定义边界。许可表示存在具有相应组成的非空祖先树，不判定指定树是否具有该语法祖先，也不授权实际逆执行；这一区别直接沿用定理 1.4。定理 1.2 的 $h(c)$ 仍只计数组成祖先深度，母卷定义 263.1 与定理 263.2 的规范来源条件保持其原有适用域。
+
+定义跨类末端读数间距
+
+$$
+\delta_k(H,L)=
+\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}
+|n_L(x)-n_L(y)|,
+\tag{2.2}
+$$
+
+跨类点对集合为空时取 $+\infty$，故 $\delta_0(H,L)=+\infty$。统一恢复 $\chi_k$ 指存在同一个 $P:\mathbb Q\to\{0,1\}$，使全部 $(c,r)\in\mathcal E_{H,L,E}$ 都满足 $P(r)=\chi_k(c)$；$P$ 可使用已知的 $H,L,E,k$。观察仍只有这一个报告，不增加历史、第二通道、标签或地址。归一化仍为定义 1.1 的 $\eta=\lambda^{-L}E$，$\lambda=\phi^3$。
+

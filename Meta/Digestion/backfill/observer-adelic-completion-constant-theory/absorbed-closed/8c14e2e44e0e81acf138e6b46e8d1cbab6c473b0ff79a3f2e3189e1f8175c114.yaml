@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:8c14e2e44e0e81acf138e6b46e8d1cbab6c473b0ff79a3f2e3189e1f8175c114
+  normalized_sha256: sha256:8c14e2e44e0e81acf138e6b46e8d1cbab6c473b0ff79a3f2e3189e1f8175c114
+cas_ref: sha256:8c14e2e44e0e81acf138e6b46e8d1cbab6c473b0ff79a3f2e3189e1f8175c114
+coverage_gids:
+  - gid: D5/S3/Analytic/Dilation/ActualRegularLedgerCollision.actual_ledger_collision
+    target_statement_id: sha256:6cd2e2d2a59dc5ddf93563728b0f5acff250fbbe8536295d4bfcafbf02f71c7d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 2b9f47e3c7883bf3953a76343135dd4209ba1316a6db0105d60eb3cad746874f
+    - c7693eeaacac0ffb603a8a6fc27fc82da0e4001c08b8656110455506d6165ea6

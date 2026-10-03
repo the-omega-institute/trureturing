@@ -1,0 +1,8 @@
+**Theorem 5.2 (exact coefficients and contraction).** At every natural exponent vector $\alpha$, the coefficient of $F_{U,m}$ is $c(\alpha)$ if $\sum_i\alpha_i=m$ and $R_U(\alpha)=V$, and zero otherwise. For each represented index $i$,
+
+$$
+\partial_i F_{U,m+1}=F_{U+\operatorname{span}\{a_i\},m}.
+$$
+
+**Proof.** Injectivity of the finite encoding gives the coefficient formula with exactly one summand at each admitted exponent. The support of $\alpha+e_i$ is the union of the support of $\alpha$ with $\{i\}$, including when $\alpha_i$ is already positive. Consequently $R_U(\alpha+e_i)=R_{U+\operatorname{span}\{a_i\}}(\alpha)$. Its total is $\sum_j\alpha_j+1$. Factorial successor and cancellation in $\mathbb Q$ give $(\alpha_i+1)c(\alpha+e_i)=c(\alpha)$. Coefficientwise polynomial differentiation now gives the asserted identity, including zero columns and every zero-polynomial case.
+

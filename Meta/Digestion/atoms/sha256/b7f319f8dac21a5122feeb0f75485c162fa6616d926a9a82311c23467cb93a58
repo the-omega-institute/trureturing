@@ -1,0 +1,12 @@
+**定理 17.1（实际像正实例的精确证书基数）。** 对每个 $d=3k$、$k\ge1$，每个 $V\in\mathcal I_d$ 及每个 $h\in\mathbb N_0$，若 $c(V)=(a,b)^{\mathsf T}$，则
+
+$$
+\boxed{\qquad
+\tau_d(V,h)=
+\begin{cases}
++\infty,&h<\operatorname{ht}(V),\\[2pt]
+a,&h\ge\operatorname{ht}(V).
+\end{cases}\qquad}
+\tag{17.3}
+$$
+

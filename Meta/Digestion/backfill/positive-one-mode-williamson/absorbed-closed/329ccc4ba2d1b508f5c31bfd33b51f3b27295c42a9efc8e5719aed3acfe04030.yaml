@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:329ccc4ba2d1b508f5c31bfd33b51f3b27295c42a9efc8e5719aed3acfe04030
+  normalized_sha256: sha256:329ccc4ba2d1b508f5c31bfd33b51f3b27295c42a9efc8e5719aed3acfe04030
+cas_ref: sha256:329ccc4ba2d1b508f5c31bfd33b51f3b27295c42a9efc8e5719aed3acfe04030
+coverage_gids:
+  - gid: D5/S3/Quantum/Thermal/PositiveOneModeWilliamson.positive_one_mode_williamson
+    target_statement_id: sha256:e7e55547374cd0912a40bcbdaf3872d160f0612917f71608268188c936d0c1c1
+receipts:
+  unresolved_subitems: []

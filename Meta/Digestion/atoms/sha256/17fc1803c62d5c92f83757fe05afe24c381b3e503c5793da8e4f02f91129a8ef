@@ -1,0 +1,20 @@
+### 定理 300.1 种子线精确删去系数的全部目标素轴
+
+令 $C_k=F_{k+3}$。对每个 $H>0$、$k\ge1$，
+\[
+\boxed{\qquad
+S_H(k)=\sum_{\substack{d\mid H\\\gcd(d,C_k)=1}}\frac1d
+=\frac{U_H}{D_H(k)},\qquad
+D_H(k)=\prod_{\substack{p\mid H\\p\mid C_k}}
+U_p(v_p(H)).
+\qquad}
+\tag{300.2}
+\]
+因此
+\[
+S_H(k)\le U_H,
+\qquad S_H(k)=U_H\ \Longleftrightarrow\ \gcd(H,C_k)=1.
+\tag{300.3}
+\]
+若 $H\mid F_L$、$L\ge4$，则 $k=L-2\ge1$ 给 $S_H(k)=U_H$。
+

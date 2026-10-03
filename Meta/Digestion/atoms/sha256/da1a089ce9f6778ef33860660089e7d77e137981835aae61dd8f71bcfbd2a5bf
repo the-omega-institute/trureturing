@@ -1,0 +1,17 @@
+### 144.3 与二元图微分的关系及边界
+
+对简单图取 $E=G.\operatorname{Dart}$，以 dart 的尾、头作为上述端点映射。整数边界取模 $2$ 后，$+1$ 与 $-1$
+相同；因此其转置作用于顶点函数时，在 dart 上给出两个端点值的和。令
+$q(d)=\langle d.\operatorname{edge},d.\operatorname{edge\_mem}\rangle:G.\operatorname{Dart}\to G.\operatorname{edgeSet}$。
+对顶点函数 $x:V\to\mathbb Z/2\mathbb Z$，dart 上的端点和等于无向边函数
+`edgeDifferential G x` 沿 $q$ 的拉回，即
+$$
+\bigl((\operatorname{edgeDifferential}\ G\ x)\circ q\bigr)(d)
+=x(d.\operatorname{fst})+x(d.\operatorname{snd}).
+$$
+所以方向是先得到无向边上的 `edgeDifferential`，再沿
+$d\mapsto\langle d.\operatorname{edge},d.\operatorname{edge\_mem}\rangle$ 拉回到 dart；不是把 dart 值拉回到无向边。
+这里载体、方向和取模映射不同，关系用于解释连接，不另造纯包装声明。
+
+定理 144.3 只证明端点边界矩阵的全幺模性；它不单独证明流的整数性、矩阵树定理，也不改判既有二元循环空间的声明。
+

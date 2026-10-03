@@ -3,6 +3,7 @@ using static StrataLint.Scribe.Blueprint.D5.S3.Zeros.ActualZeroGeometryDocument;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
+[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
 internal sealed class CanonicalLiNonnegativeConverseDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

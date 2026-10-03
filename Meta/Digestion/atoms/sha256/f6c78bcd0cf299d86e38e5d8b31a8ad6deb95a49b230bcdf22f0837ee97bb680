@@ -1,0 +1,98 @@
+### 197.1 同一递推的两个因子
+
+固定 §§195–196 的本原种子
+
+$$
+v=(16,29)=\phi(3+2\phi)^2,
+\qquad Q(v)=-121,
+\qquad w=3+2\phi,\quad \operatorname N(w)=11.
+$$
+
+对偶数指标 $j=2t$，令
+
+$$
+z=\phi^{t+2}w=A_t+B_t\phi,
+\qquad U_1=B_t,
+\qquad U_2=\operatorname{Tr}(z)=2A_t+B_t.
+$$
+
+由式（195.3），实际数量满足
+
+$$
+V_{2t}=U_1U_2,
+\qquad N=gV_{2t}=gU_1U_2,
+\qquad U_2^2-5U_1^2=44(-1)^t.
+\tag{197.1}
+$$
+
+这里 $g$ 为正整数。由于 $w$ 的组成坐标 $(3,2)$ 本原，乘以 $\phi$ 的整数矩阵行列式为 $-1$，所以 $(A_t,B_t)$ 始终本原。于是
+
+$$
+\gcd(U_1,U_2)=\gcd(B_t,2A_t)\mid2.
+\tag{197.2}
+$$
+
+两个实际因子不共享任何奇素数。记
+
+$$
+L_i=\log U_i,\qquad L=L_1+L_2=\log V_{2t},
+\qquad h=\log g,
+\qquad \lambda=\frac{L_1}{L},\quad s=\frac hL.
+$$
+
+因 $z' /z\to0$，有
+
+$$
+\frac{U_2}{U_1}\longrightarrow\sqrt5,
+\qquad L_2-L_1\longrightarrow\frac12\log5,
+\qquad \lambda\longrightarrow\frac12.
+\tag{197.3}
+$$
+
+固定 $t$ 的奇偶类，令 $D=11(-1)^t$。式（197.1）给两个允许素数集：$S_1$ 是满足 $\chi_D(p)=1$ 的素数，$S_2$ 是满足 $\chi_{-5D}(p)=1$ 的素数，并分别补入有限异常素数。则
+
+$$
+p\mid U_1\ \Longrightarrow\ p\in S_1,
+\qquad p\mid U_2\ \Longrightarrow\ p\in S_2.
+\tag{197.4}
+$$
+
+两个二次字符独立，故四个联合类别
+
+$$
+C_{11}=S_1\cap S_2,\quad
+C_{10}=S_1\setminus S_2,\quad
+C_{01}=S_2\setminus S_1,\quad
+C_{00}=(S_1\cup S_2)^c
+\tag{197.5}
+$$
+
+各有素数密度 $1/4$。补入有限异常不改变这些密度。
+
+第196节给出更细的实际因子桥。固定 $k=2^m\ge4$、$n=k/2$，写 $j=r+k\ell$，其中 $r$ 为偶数。沿用
+
+$$
+\tau=-\phi^2,\qquad
+a_r=\tau^{-(r+4)/2}\frac{w'}w,
+\qquad t_r=a_r+a_r^{-1},
+\qquad z_\ell=\operatorname{Tr}(\tau^\ell).
+$$
+
+实际黄金整数 $z=\phi^{j/2+2}w$ 满足
+
+$$
+\frac{z'}z=a_r\tau^{-n\ell}.
+$$
+
+在 $p\nmid110$ 时，$z$ 在 $R/pR$ 中可逆。因此 $p\mid U_1$ 给 $z'=z$，而 $p\mid U_2$ 给 $z'=-z$。引理196.1据此得到
+
+$$
+\begin{aligned}
+p\mid U_1&\ \Longrightarrow\ \mathcal D_n(z_\ell)-t_r\equiv0\pmod p,\\
+p\mid U_2&\ \Longrightarrow\ \mathcal D_n(z_\ell)+t_r\equiv0\pmod p.
+\end{aligned}
+\tag{197.6}
+$$
+
+因此以下 $S_1,S_2$ 也可取为这两个多项式各自的有根素数集，并加入有限异常。它们分别限制同一个 $j$ 的两个实际因子；不能仅凭抽象根轨道的分组就代替式（197.6）。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:224f414fa521eb94b6343ccb836b808630ebfb9ffebfb0305ade66b1941757aa
+  normalized_sha256: sha256:224f414fa521eb94b6343ccb836b808630ebfb9ffebfb0305ade66b1941757aa
+cas_ref: sha256:224f414fa521eb94b6343ccb836b808630ebfb9ffebfb0305ade66b1941757aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only bind-only settlement under CLAUDE 3.2, not nonmathematical prose. ST22.1 on finite-dimensional complex Hilbert spaces follows from pinned Mathlib LinearIsometry.adjoint_comp_self, ContinuousLinearMap.adjoint_comp and adjoint_adjoint, composition distributivity, norm_sub_le, opNorm_comp_le and adjoint.norm_map. With Q=I-UU-adjoint, Q is self-adjoint and idempotent; expansion gives the product defect, subtraction with A and B exchanged gives the commutator defect, and the two composition norm bounds give exactly twice the product of the normal-block norms. The complete three-clause exact application compiled with standard-three axioms and independent review; no surjectivity or nonzero-dimension premise. No complete frozen project GID was identified, so no cover edge or new Lean wrapper is supplied. Neighbor ST22.3 and its example are excluded.
+    previous_atom_id: 4b1c2209beb8c74daed2d715dbe91a2cd8e7a656c8a07ccdcbc793f322d6536e
+    next_atom_id: b9bb0016a50d16b1fc1c18c876c9cb828a8ae713fcbd248526f593cf510c1e77

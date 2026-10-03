@@ -1,0 +1,32 @@
+**定理 8.3（逐 Fourier 标签边界对 $W(t)$ 不充分）。** 在命题 8.2 的空间中，令
+
+$$
+|\psi_\pm\rangle=\frac{u\pm iv}{\sqrt2},\qquad
+\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|.
+$$
+
+两输入的全部 $\sigma_p$ 相同，但施加 $W(t)$ 后，低层结果 $01$ 的概率分别为
+
+$$
+p_\pm(01;t)=\frac{7+2\cos3t}{18}\pm\frac13\sin3t.
+$$
+
+因此 $p_+(01;t)-p_-(01;t)=\frac23\sin3t$；在 $t=\pi/6$ 时，两概率精确为 $13/18$ 与 $1/18$。
+
+证明。$u$ 与 $v$ 的高层 Fourier 标签不同，所以两态的高层对角块均只有
+
+$$
+\sigma_{10}=\frac12|10\rangle\langle10|,
+\qquad
+\sigma_{11}=\frac12|01\rangle\langle01|,
+$$
+
+其余块为零。相对相位仅位于被 $q_{\mathrm{disc}}$ 舍去的跨标签块中。令 $a_t=(1+2\exp(-3it))/3$、$b_t=(1-\exp(-3it))/3$。命题 8.2 给出 $v$ 的输出振幅为 $(b_t\pm ia_t)/\sqrt2$，而 $\mathcal V$ 中只有 $v$ 的低层标签为 $01$，故
+
+$$
+p_\pm(01;t)=\frac12|b_t\pm ia_t|^2
+=\frac{7+2\cos3t}{18}\pm\frac13\sin3t.
+$$
+
+代入 $3t=\pi/2$ 得两精确数值。于是即使最终只测低层，加入 $W(t)$ 也会使原先舍弃的高层标签相干产生可读差异。$\square$
+

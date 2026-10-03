@@ -42,6 +42,19 @@ deduction, not a literal statement of the paper's distinct-modulus
 Theorem 7.1. The rational program checks the finite endpoint; it does not
 machine-verify the measure argument or replace the analytic tail proof.
 
+Section 6, p.17, equations (19)--(20), permits any initial index i_0 and
+positive kappa satisfying the subsequent second-moment bound. The original
+surviving-mass quantity mu_(i_0) must be retained. Thus a support-restricted
+prefix product can be used as kappa at a checkpoint, then enlarged to the
+all-prime product for subsequent stages. Lemma 6.2, p.18, supplies the
+recurrence and its positive-denominator condition; Corollary 6.3, p.20,
+accepts f_k<=g_k. Table 1, p.19, explicitly gives downward-rounded lower
+bounds g_4>=5.860938, g_5>=9.032082 and g_6>=13.30344. Report348 reuses
+these published numerical bounds through the smaller rational thresholds
+5, 9 and 133/10; it does not claim to recompute that table. Its repeated-label
+moment input also has the published [KKL](klein2023boundedmultiplicity.md)
+justification. Neither the table nor that citation is new Lean verification.
+
 Theorem 10.1 of the [primary v1](https://arxiv.org/pdf/1811.03547v1),
 printed pp. 25--27 (statement p. 25, proof pp. 26--27), constructs, for
 every M>0 and epsilon>0, a finite distinct-modulus family with all

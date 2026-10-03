@@ -1,0 +1,66 @@
+{
+  "schema": "ACTUAL_C9_RETAINED_INPUTS_V1",
+  "prime": {
+    "path": "c9-prime-ball-256.json",
+    "sha256": "29fb7e7197098fb3daef8d6058541a6103335dad57abd482af60f9a53e905aba",
+    "bytes": 21496789,
+    "packed": {
+      "path": "prime-input.json.zlib.b64",
+      "encoding": "base64-zlib",
+      "sha256": "cbd78f41aa77ed4654bbdf560d587cb90009af3f5c004dbb53a1f73ce4dd7060",
+      "bytes": 13043748
+    }
+  },
+  "kernel": {
+    "path": "c9-kernel-ball-256-repaired.json",
+    "sha256": "1c627477649520e1a0b9f26d57202841d392873e5d61a7d3cd16d190b6e4bce9",
+    "bytes": 8675605,
+    "packed": {
+      "path": "kernel-input.json.zlib.b64",
+      "encoding": "base64-zlib",
+      "sha256": "48b7548420208fa434c6cc54dc260ca3ab6c7b0a78d586488d17cf8cd95dedf9",
+      "bytes": 5210720
+    }
+  },
+  "consumer": {
+    "path": "c9_retained_ball_consumer.py",
+    "sha256": "fbc63dac28828fee3effca02cfacd890fe594a6e1eaf5c6857733d6491ce71e9",
+    "bytes": 7844
+  },
+  "programs": {
+    "c9_prime_ball_matrices.py": {
+      "path": "c9_prime_ball_matrices.py",
+      "sha256": "f7112ddea70d225c296714113cd54f3a93cd7dbf9895c27b8369cc8ca19ee9de",
+      "bytes": 6104
+    },
+    "c9_kernel_ball_matrices.py": {
+      "path": "c9_kernel_ball_matrices.py",
+      "sha256": "306ae60f76b8b9b7c8efa9d4c9e5bc6ad8fb172af545000148a1c1b3d9b1914e",
+      "bytes": 6756
+    },
+    "c9_retained_ball_consumer.py": {
+      "path": "c9_retained_ball_consumer.py",
+      "sha256": "fbc63dac28828fee3effca02cfacd890fe594a6e1eaf5c6857733d6491ce71e9",
+      "bytes": 7844
+    },
+    "reproduce.py": {
+      "path": "reproduce.py",
+      "sha256": "daa62083abbf588124161597660278c936192216448a9d3a33dbc2d14262cc6b",
+      "bytes": 3010
+    }
+  },
+  "arithmetic_versions": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "numpy": "2.5.3"
+  },
+  "prime_parameters": {
+    "size": 256,
+    "bits": 4096
+  },
+  "kernel_parameters": {
+    "size": 256,
+    "bits": 3072
+  },
+  "source_moment_premise": "Author packet containment, not independently regenerated"
+}

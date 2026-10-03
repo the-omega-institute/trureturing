@@ -1,0 +1,117 @@
+{
+  "checks": 53191,
+  "contract": "Finite evaluation of explicitly supplied common-source arrays under the new same-array residual and joint remainder functional. Positive fixed-array values do not establish a uniform lower bound or an AP-family realization and do not prove Erd\u0151s #7.",
+  "limits": [
+    "Exactly two predeclared gamma values per stored array, not an optimization over gamma.",
+    "No new array search and no minimization over feasible sources.",
+    "Joint fee uses 1-max(x,y), an upper bound on true per-coordinate survivor even with overlap, while group residual uses 1-x-y.",
+    "No Lean verification or unrestricted E7 conclusion."
+  ],
+  "results": {
+    "first_layer_witness": {
+      "points": [
+        {
+          "by_head_support": {
+            "5": {
+              "free_fee": "1774566665197956572/37635551893346281875",
+              "old_free_fee": "904529607772292/17068277502651375",
+              "old_selected_fee": "277912938260148188/9677713344003329625",
+              "selected_fee": "3895779768361998598/145165700160049944375",
+              "support_count": 511
+            },
+            "5,7": {
+              "free_fee": "100712605849/1216989483255",
+              "old_free_fee": "100712605849/1216989483255",
+              "old_selected_fee": "13179686608999/310332318230025",
+              "selected_fee": "13179686608999/310332318230025",
+              "support_count": 512
+            },
+            "7": {
+              "free_fee": "821260060044807632/37635551893346281875",
+              "old_free_fee": "29554372744301/1137885166843425",
+              "old_selected_fee": "14764223519/924787666075",
+              "selected_fee": "6810347382032/485513524689375",
+              "support_count": 511
+            },
+            "none": {
+              "free_fee": "181572587545556254/3225904448001109875",
+              "old_free_fee": "249122840130844/3413655500530275",
+              "old_selected_fee": "5471122596/132112523725",
+              "selected_fee": "15605770040278/485513524689375",
+              "support_count": 502
+            }
+          },
+          "gain": "40418103883752669416/1016159901120349610625",
+          "gain_decimal": 0.03977533834900431,
+          "gamma": "1323008/3415967",
+          "gamma_decimal": 0.3873011653801105,
+          "joint_free_fee": "1806628501130071529/8685127360002988125",
+          "joint_score": "38834482703110653584/1016159901120349610625",
+          "joint_score_decimal": 0.0382169013560704,
+          "joint_selected_fee": "117342368407286056051/1016159901120349610625",
+          "old_free_fee": "364177608783932/1551661591150125",
+          "old_score": "-527873726880671944/338719967040116536875",
+          "old_score_decimal": -0.0015584369929339088,
+          "old_selected_fee": "1244205272331350348/9677713344003329625",
+          "positive": true,
+          "weighted_group_residual": "13613051323800558464/37635551893346281875"
+        },
+        {
+          "by_head_support": {
+            "5": {
+              "free_fee": "30475395040379/594947141538750",
+              "old_free_fee": "138135803159/2428355679750",
+              "old_selected_fee": "1139869/30748410",
+              "selected_fee": "763418103421/22035079316250",
+              "support_count": 511
+            },
+            "5,7": {
+              "free_fee": "1059127/12113010",
+              "old_free_fee": "1059127/12113010",
+              "old_selected_fee": "65536/1211301",
+              "selected_fee": "65536/1211301",
+              "support_count": 512
+            },
+            "7": {
+              "free_fee": "6398444999602/297473570769375",
+              "old_free_fee": "4200844847/161890378650",
+              "old_selected_fee": "75203727889/5666163252750",
+              "selected_fee": "3405173691016/297473570769375",
+              "support_count": 511
+            },
+            "none": {
+              "free_fee": "2439229761086/42496224395625",
+              "old_free_fee": "2011382866/26981729775",
+              "old_selected_fee": "2770832018/67993959033",
+              "selected_fee": "343412031847/11017539658125",
+              "support_count": 502
+            }
+          },
+          "gain": "12220167788138/297473570769375",
+          "gain_decimal": 0.041079843686725494,
+          "gamma": "1/2",
+          "gamma_decimal": 0.5,
+          "joint_free_fee": "4978537715362/22882582366875",
+          "joint_score": "3248409174919/118989428307750",
+          "joint_score_decimal": 0.027299981360675428,
+          "joint_selected_fee": "78155793414137/594947141538750",
+          "old_free_fee": "594501419129/2428355679750",
+          "old_score": "-482252335393/34996890678750",
+          "old_score_decimal": -0.013779862326050071,
+          "old_selected_fee": "1234075170046/8499244879125",
+          "positive": true,
+          "weighted_group_residual": "37306636648024/99157856923125"
+        }
+      ],
+      "root_residuals": {
+        "1": "693613711312/1573934236875",
+        "2": "30915609483392/99157856923125"
+      },
+      "witness_path": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json"
+    }
+  },
+  "source_sha256": {
+    "first_layer_witness": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70"
+  },
+  "support_count": 2036
+}

@@ -1,0 +1,5591 @@
+{
+  "scope": "Finite exact affine divisor moments, joint-lcm counts, and a pointwise core counterexample; no analytic or Lean proof.",
+  "source_sha256": "6459b89d35fbe489d0e6efee9d6d4f79cdb63784f1d28feb2ddb4945a41d6fe6",
+  "arithmetic": "Python 3.9+ standard-library integers and rational numbers; no floating point.",
+  "fibonacci_settings": [
+    {
+      "prime_index": 7,
+      "integer_core_cutoff": 8
+    },
+    {
+      "prime_index": 11,
+      "integer_core_cutoff": 13
+    },
+    {
+      "prime_index": 13,
+      "integer_core_cutoff": 16
+    },
+    {
+      "prime_index": 17,
+      "integer_core_cutoff": 22
+    },
+    {
+      "prime_index": 19,
+      "integer_core_cutoff": 24
+    },
+    {
+      "prime_index": 23,
+      "integer_core_cutoff": 30
+    },
+    {
+      "prime_index": 29,
+      "integer_core_cutoff": 39
+    },
+    {
+      "prime_index": 31,
+      "integer_core_cutoff": 42
+    }
+  ],
+  "total_actual_integers": 189527,
+  "moment_enclosure": {
+    "orders": [
+      1,
+      2,
+      3
+    ],
+    "per_sample_denominator": 1000000000000,
+    "method": "For each exact (sigma(N)/N)^k, sum floor(Q*x) and ceil(Q*x); divide the totals by Q*T.",
+    "maximum_mean_interval_width": "1/1000000000000",
+    "inequalities": "lower <= (1/T)*sum_g Z(g*V+1)^k <= upper"
+  },
+  "enumeration_digest_columns": "g,N,sigma(N),C_y(N),R_y(N), in increasing g, comma-separated, one newline per row",
+  "fibonacci_intervals": [
+    {
+      "prime_index": 7,
+      "V": 13,
+      "g_interval_inclusive": [
+        2,
+        2
+      ],
+      "integer_count": 1,
+      "maximum_N": 27,
+      "integer_core_cutoff": 8,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "1481481481481/1000000000000",
+          "upper": "740740740741/500000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "548696844993/250000000000",
+          "upper": "2194787379973/1000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "1625768429609/500000000000",
+          "upper": "3251536859219/1000000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 1,
+      "radical_gt_V_count": 0,
+      "enumeration_sha256": "5ba2f4297d306606f9a034d0561c00aec536390728d0350d1f22e9a5ba4da6cd",
+      "witnesses": {
+        "first": {
+          "g": 2,
+          "N": 27,
+          "factorization": [
+            [
+              3,
+              3
+            ]
+          ],
+          "sigma": 40,
+          "Z_exact": "40/27",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              4,
+              6
+            ],
+            "primitive_composition": [
+              2,
+              3
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 2,
+          "N": 27,
+          "factorization": [
+            [
+              3,
+              3
+            ]
+          ],
+          "sigma": 40,
+          "Z_exact": "40/27",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              4,
+              6
+            ],
+            "primitive_composition": [
+              2,
+              3
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 2,
+          "N": 27,
+          "factorization": [
+            [
+              3,
+              3
+            ]
+          ],
+          "sigma": 40,
+          "Z_exact": "40/27",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              4,
+              6
+            ],
+            "primitive_composition": [
+              2,
+              3
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 2,
+          "N": 27,
+          "factorization": [
+            [
+              3,
+              3
+            ]
+          ],
+          "sigma": 40,
+          "Z_exact": "40/27",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              4,
+              6
+            ],
+            "primitive_composition": [
+              2,
+              3
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 2,
+          "N": 27,
+          "factorization": [
+            [
+              3,
+              3
+            ]
+          ],
+          "sigma": 40,
+          "Z_exact": "40/27",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              4,
+              6
+            ],
+            "primitive_composition": [
+              2,
+              3
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 11,
+      "V": 89,
+      "g_interval_inclusive": [
+        9,
+        17
+      ],
+      "integer_count": 9,
+      "maximum_N": 1514,
+      "integer_core_cutoff": 13,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "14774625994099/9000000000000",
+          "upper": "3693656498527/2250000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "25891041588179/9000000000000",
+          "upper": "6472760397047/2250000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "5998802465317/1125000000000",
+          "upper": "9598083944509/1800000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 2,
+      "radical_gt_V_count": 0,
+      "enumeration_sha256": "0300474118cb91f3b27e1b7572f738bb96d557bfbc359918e48d2f7b27e117f7",
+      "witnesses": {
+        "first": {
+          "g": 9,
+          "N": 802,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              401,
+              1
+            ]
+          ],
+          "sigma": 1206,
+          "Z_exact": "603/401",
+          "core": 2,
+          "radical": 2,
+          "source": {
+            "composition": [
+              117,
+              189
+            ],
+            "primitive_composition": [
+              13,
+              21
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 9,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              15,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 17,
+          "N": 1514,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              757,
+              1
+            ]
+          ],
+          "sigma": 2274,
+          "Z_exact": "1137/757",
+          "core": 2,
+          "radical": 2,
+          "source": {
+            "composition": [
+              221,
+              357
+            ],
+            "primitive_composition": [
+              13,
+              21
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 17,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              16,
+              14,
+              12,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 11,
+          "N": 980,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              2
+            ]
+          ],
+          "sigma": 2394,
+          "Z_exact": "171/70",
+          "core": 980,
+          "radical": 70,
+          "source": {
+            "composition": [
+              143,
+              231
+            ],
+            "primitive_composition": [
+              13,
+              21
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 11,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              15,
+              13,
+              11,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 11,
+          "N": 980,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              2
+            ]
+          ],
+          "sigma": 2394,
+          "Z_exact": "171/70",
+          "core": 980,
+          "radical": 70,
+          "source": {
+            "composition": [
+              143,
+              231
+            ],
+            "primitive_composition": [
+              13,
+              21
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 11,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              15,
+              13,
+              11,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 11,
+          "N": 980,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              2
+            ]
+          ],
+          "sigma": 2394,
+          "Z_exact": "171/70",
+          "core": 980,
+          "radical": 70,
+          "source": {
+            "composition": [
+              143,
+              231
+            ],
+            "primitive_composition": [
+              13,
+              21
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 11,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              15,
+              13,
+              11,
+              9,
+              7,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 13,
+      "V": 233,
+      "g_interval_inclusive": [
+        24,
+        46
+      ],
+      "integer_count": 23,
+      "maximum_N": 10719,
+      "integer_core_cutoff": 16,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "937333567861/575000000000",
+          "upper": "37493342714463/23000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "67708922421053/23000000000000",
+          "upper": "16927230605269/5750000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "134515745771381/23000000000000",
+          "upper": "33628936442851/5750000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 2,
+      "radical_gt_V_count": 2,
+      "enumeration_sha256": "d62941610a090a6fcc70fe01c4f47f40c29d80735305ffa700936a659e8431de",
+      "witnesses": {
+        "first": {
+          "g": 24,
+          "N": 5593,
+          "factorization": [
+            [
+              7,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              47,
+              1
+            ]
+          ],
+          "sigma": 6912,
+          "Z_exact": "6912/5593",
+          "core": 7,
+          "radical": 7,
+          "source": {
+            "composition": [
+              816,
+              1320
+            ],
+            "primitive_composition": [
+              34,
+              55
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 24,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              19,
+              16,
+              14,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 46,
+          "N": 10719,
+          "factorization": [
+            [
+              3,
+              3
+            ],
+            [
+              397,
+              1
+            ]
+          ],
+          "sigma": 15920,
+          "Z_exact": "15920/10719",
+          "core": 27,
+          "radical": 3,
+          "source": {
+            "composition": [
+              1564,
+              2530
+            ],
+            "primitive_composition": [
+              34,
+              55
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 46,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              20,
+              18,
+              16,
+              14,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 27,
+          "N": 6292,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              13,
+              1
+            ]
+          ],
+          "sigma": 13034,
+          "Z_exact": "6517/3146",
+          "core": 6292,
+          "radical": 286,
+          "source": {
+            "composition": [
+              918,
+              1485
+            ],
+            "primitive_composition": [
+              34,
+              55
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 27,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              19,
+              17,
+              14,
+              11,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 38,
+          "N": 8855,
+          "factorization": [
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              23,
+              1
+            ]
+          ],
+          "sigma": 13824,
+          "Z_exact": "13824/8855",
+          "core": 385,
+          "radical": 385,
+          "source": {
+            "composition": [
+              1292,
+              2090
+            ],
+            "primitive_composition": [
+              34,
+              55
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 38,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              20,
+              17,
+              14,
+              11,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 31,
+          "N": 7224,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              43,
+              1
+            ]
+          ],
+          "sigma": 21120,
+          "Z_exact": "880/301",
+          "core": 168,
+          "radical": 42,
+          "source": {
+            "composition": [
+              1054,
+              1705
+            ],
+            "primitive_composition": [
+              34,
+              55
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 31,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              20,
+              14,
+              10,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 17,
+      "V": 1597,
+      "g_interval_inclusive": [
+        160,
+        319
+      ],
+      "integer_count": 160,
+      "maximum_N": 509444,
+      "integer_core_cutoff": 22,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "263269018213547/160000000000000",
+          "upper": "263269018213707/160000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "240838542045059/80000000000000",
+          "upper": "240838542045139/80000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "487144446095571/80000000000000",
+          "upper": "487144446095651/80000000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 9,
+      "radical_gt_V_count": 0,
+      "enumeration_sha256": "4c3c2ad8e0d50977cc85c98992eefdeafa6eefb8f7cc1330fb34d6dc6de60b6a",
+      "witnesses": {
+        "first": {
+          "g": 160,
+          "N": 255521,
+          "factorization": [
+            [
+              7,
+              1
+            ],
+            [
+              173,
+              1
+            ],
+            [
+              211,
+              1
+            ]
+          ],
+          "sigma": 295104,
+          "Z_exact": "295104/255521",
+          "core": 7,
+          "radical": 7,
+          "source": {
+            "composition": [
+              37280,
+              60320
+            ],
+            "primitive_composition": [
+              233,
+              377
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 160,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              27,
+              24,
+              21,
+              17,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 319,
+          "N": 509444,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              97,
+              1
+            ],
+            [
+              101,
+              1
+            ]
+          ],
+          "sigma": 979608,
+          "Z_exact": "244902/127361",
+          "core": 52,
+          "radical": 26,
+          "source": {
+            "composition": [
+              74327,
+              120263
+            ],
+            "primitive_composition": [
+              233,
+              377
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 319,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              28,
+              26,
+              24,
+              22,
+              19,
+              17,
+              14,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 317,
+          "N": 506250,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "sigma": 1417878,
+          "Z_exact": "26257/9375",
+          "core": 506250,
+          "radical": 30,
+          "source": {
+            "composition": [
+              73861,
+              119509
+            ],
+            "primitive_composition": [
+              233,
+              377
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 317,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              28,
+              26,
+              24,
+              22,
+              18,
+              14,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 307,
+          "N": 490280,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              103,
+              1
+            ]
+          ],
+          "sigma": 1347840,
+          "Z_exact": "33696/12257",
+          "core": 4760,
+          "radical": 1190,
+          "source": {
+            "composition": [
+              71531,
+              115739
+            ],
+            "primitive_composition": [
+              233,
+              377
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 307,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              28,
+              26,
+              24,
+              19,
+              14,
+              12,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 227,
+          "N": 362520,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              19,
+              1
+            ],
+            [
+              53,
+              1
+            ]
+          ],
+          "sigma": 1263600,
+          "Z_exact": "3510/1007",
+          "core": 6840,
+          "radical": 570,
+          "source": {
+            "composition": [
+              52891,
+              85579
+            ],
+            "primitive_composition": [
+              233,
+              377
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 227,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              28,
+              23,
+              21,
+              19,
+              15,
+              13,
+              10,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 19,
+      "V": 4181,
+      "g_interval_inclusive": [
+        419,
+        836
+      ],
+      "integer_count": 418,
+      "maximum_N": 3495317,
+      "integer_core_cutoff": 24,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "687775248577589/418000000000000",
+          "upper": "687775248578007/418000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "629345593355203/209000000000000",
+          "upper": "157336398338853/52250000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "1276031924917403/209000000000000",
+          "upper": "319007981229403/52250000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 14,
+      "radical_gt_V_count": 2,
+      "enumeration_sha256": "000b987e27e4b8a4090f1d2ae367cbd9cf000403e8c9e9ade882b10001af83fd",
+      "witnesses": {
+        "first": {
+          "g": 419,
+          "N": 1751840,
+          "factorization": [
+            [
+              2,
+              5
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              10949,
+              1
+            ]
+          ],
+          "sigma": 4139100,
+          "Z_exact": "206955/87592",
+          "core": 160,
+          "radical": 10,
+          "source": {
+            "composition": [
+              255590,
+              413553
+            ],
+            "primitive_composition": [
+              610,
+              987
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 419,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              31,
+              28,
+              25,
+              21,
+              17,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 836,
+          "N": 3495317,
+          "factorization": [
+            [
+              7,
+              2
+            ],
+            [
+              71333,
+              1
+            ]
+          ],
+          "sigma": 4066038,
+          "Z_exact": "4066038/3495317",
+          "core": 49,
+          "radical": 7,
+          "source": {
+            "composition": [
+              509960,
+              825132
+            ],
+            "primitive_composition": [
+              610,
+              987
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 836,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              32,
+              30,
+              28,
+              26,
+              23,
+              21,
+              19,
+              17,
+              14,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 654,
+          "N": 2734375,
+          "factorization": [
+            [
+              5,
+              8
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "sigma": 3906248,
+          "Z_exact": "3906248/2734375",
+          "core": 2734375,
+          "radical": 35,
+          "source": {
+            "composition": [
+              398940,
+              645498
+            ],
+            "primitive_composition": [
+              610,
+              987
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 654,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              32,
+              29,
+              23,
+              21,
+              17,
+              15,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 681,
+          "N": 2847262,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              23,
+              1
+            ],
+            [
+              331,
+              1
+            ]
+          ],
+          "sigma": 5163264,
+          "Z_exact": "2581632/1423631",
+          "core": 8602,
+          "radical": 8602,
+          "source": {
+            "composition": [
+              415410,
+              672147
+            ],
+            "primitive_composition": [
+              610,
+              987
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 681,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              32,
+              29,
+              26,
+              23,
+              19,
+              14,
+              11,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 619,
+          "N": 2588040,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              79,
+              1
+            ]
+          ],
+          "sigma": 10483200,
+          "Z_exact": "320/79",
+          "core": 32760,
+          "radical": 2730,
+          "source": {
+            "composition": [
+              377590,
+              610953
+            ],
+            "primitive_composition": [
+              610,
+              987
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 619,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              32,
+              28,
+              25,
+              21,
+              19,
+              17,
+              12,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 23,
+      "V": 28657,
+      "g_interval_inclusive": [
+        2866,
+        5731
+      ],
+      "integer_count": 2866,
+      "maximum_N": 164233268,
+      "integer_core_cutoff": 30,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "4714031460704207/2866000000000000",
+          "upper": "4714031460707073/2866000000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "861183932422377/286600000000000",
+          "upper": "2152959831056659/716500000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "3478254097463701/573200000000000",
+          "upper": "17391270487321371/2866000000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 41,
+      "radical_gt_V_count": 6,
+      "enumeration_sha256": "fb74e6e3c6721aa66944cc0fbfabf3b2aa869321e171bda9c7ea356af4f02c53",
+      "witnesses": {
+        "first": {
+          "g": 2866,
+          "N": 82130963,
+          "factorization": [
+            [
+              397,
+              1
+            ],
+            [
+              206879,
+              1
+            ]
+          ],
+          "sigma": 82338240,
+          "Z_exact": "82338240/82130963",
+          "core": 1,
+          "radical": 1,
+          "source": {
+            "composition": [
+              11982746,
+              19388490
+            ],
+            "primitive_composition": [
+              4181,
+              6765
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 2866,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              39,
+              36,
+              33,
+              28,
+              25,
+              23,
+              20,
+              17,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 5731,
+          "N": 164233268,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              41058317,
+              1
+            ]
+          ],
+          "sigma": 287408226,
+          "Z_exact": "143704113/82116634",
+          "core": 4,
+          "radical": 2,
+          "source": {
+            "composition": [
+              23961311,
+              38770215
+            ],
+            "primitive_composition": [
+              4181,
+              6765
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 5731,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              40,
+              38,
+              36,
+              34,
+              31,
+              29,
+              27,
+              25,
+              23,
+              21,
+              19,
+              17,
+              14,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 4607,
+          "N": 132022800,
+          "factorization": [
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              31,
+              1
+            ]
+          ],
+          "sigma": 585272064,
+          "Z_exact": "30256/6825",
+          "core": 4258800,
+          "radical": 2730,
+          "source": {
+            "composition": [
+              19261867,
+              31166355
+            ],
+            "primitive_composition": [
+              4181,
+              6765
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 4607,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              40,
+              37,
+              33,
+              31,
+              29,
+              26,
+              22,
+              19,
+              17,
+              15,
+              13,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 5153,
+          "N": 147669522,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              23,
+              1
+            ],
+            [
+              1069,
+              1
+            ]
+          ],
+          "sigma": 414167040,
+          "Z_exact": "9861120/3515941",
+          "core": 138138,
+          "radical": 138138,
+          "source": {
+            "composition": [
+              21544693,
+              34860045
+            ],
+            "primitive_composition": [
+              4181,
+              6765
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 5153,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              40,
+              38,
+              34,
+              29,
+              23,
+              16,
+              14,
+              10,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 4607,
+          "N": 132022800,
+          "factorization": [
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              31,
+              1
+            ]
+          ],
+          "sigma": 585272064,
+          "Z_exact": "30256/6825",
+          "core": 4258800,
+          "radical": 2730,
+          "source": {
+            "composition": [
+              19261867,
+              31166355
+            ],
+            "primitive_composition": [
+              4181,
+              6765
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 4607,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              40,
+              37,
+              33,
+              31,
+              29,
+              26,
+              22,
+              19,
+              17,
+              15,
+              13,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 29,
+      "V": 514229,
+      "g_interval_inclusive": [
+        51423,
+        102845
+      ],
+      "integer_count": 51423,
+      "maximum_N": 52885881506,
+      "integer_core_cutoff": 39,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "84587407838041327/51423000000000000",
+          "upper": "338349631352371/205692000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "51510535984157399/17141000000000000",
+          "upper": "2575526799208727/857050000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "312084926273105153/51423000000000000",
+          "upper": "9752653946036143/1606968750000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 175,
+      "radical_gt_V_count": 11,
+      "enumeration_sha256": "315760475d8381087029977180c15d7f088d3f8ec76feed0a040e007819ac80c",
+      "witnesses": {
+        "first": {
+          "g": 51423,
+          "N": 26443197868,
+          "factorization": [
+            [
+              2,
+              2
+            ],
+            [
+              991,
+              1
+            ],
+            [
+              6670837,
+              1
+            ]
+          ],
+          "sigma": 46322299072,
+          "Z_exact": "11580574768/6610799467",
+          "core": 4,
+          "radical": 2,
+          "source": {
+            "composition": [
+              3858010575,
+              6242392239
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 51423,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              51,
+              48,
+              45,
+              40,
+              37,
+              35,
+              23,
+              20,
+              17,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 102845,
+          "N": 52885881506,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              229,
+              1
+            ],
+            [
+              2381,
+              1
+            ],
+            [
+              48497,
+              1
+            ]
+          ],
+          "sigma": 79710342840,
+          "Z_exact": "39855171420/26442940753",
+          "core": 2,
+          "radical": 2,
+          "source": {
+            "composition": [
+              7715946125,
+              12484663085
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 102845,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              52,
+              50,
+              48,
+              46,
+              44,
+              32,
+              30,
+              24,
+              22,
+              20,
+              18,
+              16,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 75085,
+          "N": 38610884466,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              19,
+              1
+            ],
+            [
+              37,
+              2
+            ]
+          ],
+          "sigma": 125764863840,
+          "Z_exact": "530640/162911",
+          "core": 38610884466,
+          "radical": 5521362,
+          "source": {
+            "composition": [
+              5633252125,
+              9114793405
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 75085,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              52,
+              48,
+              44,
+              40,
+              38,
+              35,
+              22,
+              16,
+              12,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 76972,
+          "N": 39581234589,
+          "factorization": [
+            [
+              3,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              23,
+              1
+            ],
+            [
+              31,
+              2
+            ],
+            [
+              37,
+              1
+            ],
+            [
+              73,
+              1
+            ]
+          ],
+          "sigma": 67551708672,
+          "Z_exact": "608573952/356587699",
+          "core": 542208693,
+          "radical": 17490603,
+          "source": {
+            "composition": [
+              5774824300,
+              9343861996
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 76972,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              52,
+              48,
+              45,
+              43,
+              41,
+              39,
+              37,
+              30,
+              27,
+              21,
+              19,
+              17,
+              15,
+              12,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 86371,
+          "N": 44414472960,
+          "factorization": [
+            [
+              2,
+              8
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              19,
+              1
+            ],
+            [
+              43,
+              1
+            ]
+          ],
+          "sigma": 200952998400,
+          "Z_exact": "250390/55341",
+          "core": 1032894720,
+          "radical": 81510,
+          "source": {
+            "composition": [
+              6479984275,
+              10484834803
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 86371,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              52,
+              49,
+              47,
+              44,
+              35,
+              32,
+              28,
+              25,
+              22,
+              20,
+              18,
+              16,
+              13,
+              11,
+              8,
+              5,
+              2
+            ]
+          }
+        },
+        "pointwise_core_counterexample": {
+          "g": 75085,
+          "N": 38610884466,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              19,
+              1
+            ],
+            [
+              37,
+              2
+            ]
+          ],
+          "sigma": 125764863840,
+          "Z_exact": "530640/162911",
+          "core": 38610884466,
+          "radical": 5521362,
+          "source": {
+            "composition": [
+              5633252125,
+              9114793405
+            ],
+            "primitive_composition": [
+              75025,
+              121393
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 75085,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              52,
+              48,
+              44,
+              40,
+              38,
+              35,
+              22,
+              16,
+              12,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    },
+    {
+      "prime_index": 31,
+      "V": 1346269,
+      "g_interval_inclusive": [
+        134627,
+        269253
+      ],
+      "integer_count": 134627,
+      "maximum_N": 362486967058,
+      "integer_core_cutoff": 42,
+      "moments": [
+        {
+          "order": 1,
+          "lower": "44290419421641461/26925400000000000",
+          "upper": "55363024277085483/33656750000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 2,
+          "lower": "101142943801607737/33656750000000000",
+          "upper": "16182871008262623/5385080000000000",
+          "width": "1/1000000000000"
+        },
+        {
+          "order": 3,
+          "lower": "817081308263314613/134627000000000000",
+          "upper": "20427032706586231/3365675000000000",
+          "width": "1/1000000000000"
+        }
+      ],
+      "core_gt_V_count": 340,
+      "radical_gt_V_count": 24,
+      "enumeration_sha256": "91fdfbf061655488048596c1cd9fcc94b27187f82d8f03ef395b5381bed9711c",
+      "witnesses": {
+        "first": {
+          "g": 134627,
+          "N": 181244156664,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              149,
+              1
+            ],
+            [
+              50683489,
+              1
+            ]
+          ],
+          "sigma": 456151410000,
+          "Z_exact": "19006308750/7551839861",
+          "core": 24,
+          "radical": 6,
+          "source": {
+            "composition": [
+              26443166086,
+              42785941497
+            ],
+            "primitive_composition": [
+              196418,
+              317811
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 134627,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              55,
+              52,
+              49,
+              44,
+              41,
+              39,
+              23,
+              20,
+              17,
+              12,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "last": {
+          "g": 269253,
+          "N": 362486967058,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              41,
+              1
+            ],
+            [
+              113,
+              1
+            ],
+            [
+              1657,
+              1
+            ],
+            [
+              23609,
+              1
+            ]
+          ],
+          "sigma": 562284238320,
+          "Z_exact": "281142119160/181243483529",
+          "core": 82,
+          "radical": 82,
+          "source": {
+            "composition": [
+              52886135754,
+              85571565183
+            ],
+            "primitive_composition": [
+              196418,
+              317811
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 269253,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              56,
+              54,
+              52,
+              50,
+              48,
+              36,
+              34,
+              32,
+              24,
+              22,
+              20,
+              18,
+              16,
+              5,
+              2
+            ]
+          }
+        },
+        "largest_core": {
+          "g": 148427,
+          "N": 199822668864,
+          "factorization": [
+            [
+              2,
+              6
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              31,
+              1
+            ],
+            [
+              37,
+              1
+            ],
+            [
+              59,
+              1
+            ]
+          ],
+          "sigma": 705692467200,
+          "Z_exact": "525068800/148677581",
+          "core": 3386824896,
+          "radical": 626262,
+          "source": {
+            "composition": [
+              29153734486,
+              47171733297
+            ],
+            "primitive_composition": [
+              196418,
+              317811
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 148427,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              55,
+              53,
+              48,
+              46,
+              42,
+              35,
+              31,
+              26,
+              24,
+              22,
+              18,
+              13,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "largest_radical": {
+          "g": 142317,
+          "N": 191596965274,
+          "factorization": [
+            [
+              2,
+              1
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              23,
+              1
+            ],
+            [
+              29,
+              1
+            ],
+            [
+              41,
+              1
+            ],
+            [
+              131,
+              1
+            ]
+          ],
+          "sigma": 401355440640,
+          "Z_exact": "18243429120/8708952967",
+          "core": 1462572254,
+          "radical": 132961114,
+          "source": {
+            "composition": [
+              27953620506,
+              45229908087
+            ],
+            "primitive_composition": [
+              196418,
+              317811
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 142317,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              55,
+              52,
+              50,
+              48,
+              45,
+              43,
+              39,
+              37,
+              35,
+              32,
+              29,
+              27,
+              25,
+              23,
+              19,
+              16,
+              9,
+              7,
+              2
+            ]
+          }
+        },
+        "largest_Z": {
+          "g": 187571,
+          "N": 252521022600,
+          "factorization": [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              9743,
+              1
+            ]
+          ],
+          "sigma": 1128100296960,
+          "Z_exact": "447658848/100206755",
+          "core": 25918200,
+          "radical": 39270,
+          "source": {
+            "composition": [
+              36842320678,
+              59612127081
+            ],
+            "primitive_composition": [
+              196418,
+              317811
+            ],
+            "primitive_norm": 1,
+            "coordinate_gcd": 187571,
+            "unit_bit": 1,
+            "greedy_fibonacci_indices": [
+              56,
+              51,
+              48,
+              45,
+              42,
+              39,
+              37,
+              34,
+              30,
+              27,
+              25,
+              22,
+              19,
+              16,
+              13,
+              10,
+              8,
+              5,
+              2
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "joint_lcm_checks": {
+    "ranges": {
+      "V_inclusive": [
+        1,
+        6
+      ],
+      "G0_inclusive": [
+        1,
+        4
+      ],
+      "interval_lengths_inclusive": [
+        1,
+        4
+      ],
+      "orders": [
+        1,
+        2,
+        3
+      ],
+      "divisors": "all ordered tuples in [1,X]^k, X=V*G1+1",
+      "maximum_X": 43
+    },
+    "interval_cases": 96,
+    "ordered_tuples_checked": 779360,
+    "noncoprime_joint_tuples": 603584,
+    "modulus_gt_interval_length_hits": 8403,
+    "modulus_gt_interval_length_misses": 768749,
+    "coprime_tuples_with_lcm_not_product": 105682,
+    "counting_method": "Intersect actual divisor incidence masks, compare with the one-residue floor formula, then sum exact rational joint moments.",
+    "rows": [
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 2,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "3/2",
+            "truncated_joint_sum": "5/4",
+            "absolute_error": "1/4",
+            "harmonic_error_bound": "3/2"
+          },
+          {
+            "order": 2,
+            "actual_moment": "9/4",
+            "truncated_joint_sum": "13/8",
+            "absolute_error": "5/8",
+            "harmonic_error_bound": "9/4"
+          },
+          {
+            "order": 3,
+            "actual_moment": "27/8",
+            "truncated_joint_sum": "35/16",
+            "absolute_error": "19/16",
+            "harmonic_error_bound": "27/8"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 3,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "17/12",
+            "truncated_joint_sum": "49/36",
+            "absolute_error": "1/18",
+            "harmonic_error_bound": "11/12"
+          },
+          {
+            "order": 2,
+            "actual_moment": "145/72",
+            "truncated_joint_sum": "419/216",
+            "absolute_error": "2/27",
+            "harmonic_error_bound": "121/72"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1241/432",
+            "truncated_joint_sum": "3733/1296",
+            "absolute_error": "5/648",
+            "harmonic_error_bound": "1331/432"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 4,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "55/36",
+            "truncated_joint_sum": "205/144",
+            "absolute_error": "5/48",
+            "harmonic_error_bound": "25/36"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1021/432",
+            "truncated_joint_sum": "3727/1728",
+            "absolute_error": "119/576",
+            "harmonic_error_bound": "625/432"
+          },
+          {
+            "order": 3,
+            "actual_moment": "19189/5184",
+            "truncated_joint_sum": "71563/20736",
+            "absolute_error": "577/2304",
+            "harmonic_error_bound": "15625/5184"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 5,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "347/240",
+            "truncated_joint_sum": "5269/3600",
+            "absolute_error": "4/225",
+            "harmonic_error_bound": "137/240"
+          },
+          {
+            "order": 2,
+            "actual_moment": "30709/14400",
+            "truncated_joint_sum": "492203/216000",
+            "absolute_error": "1973/13500",
+            "harmonic_error_bound": "18769/14400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2771873/864000",
+            "truncated_joint_sum": "48544711/12960000",
+            "absolute_error": "870827/1620000",
+            "harmonic_error_bound": "2571353/864000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 3,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "4/3",
+            "truncated_joint_sum": "49/36",
+            "absolute_error": "1/36",
+            "harmonic_error_bound": "11/6"
+          },
+          {
+            "order": 2,
+            "actual_moment": "16/9",
+            "truncated_joint_sum": "419/216",
+            "absolute_error": "35/216",
+            "harmonic_error_bound": "121/36"
+          },
+          {
+            "order": 3,
+            "actual_moment": "64/27",
+            "truncated_joint_sum": "3733/1296",
+            "absolute_error": "661/1296",
+            "harmonic_error_bound": "1331/216"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 4,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "37/24",
+            "truncated_joint_sum": "205/144",
+            "absolute_error": "17/144",
+            "harmonic_error_bound": "25/24"
+          },
+          {
+            "order": 2,
+            "actual_moment": "697/288",
+            "truncated_joint_sum": "3727/1728",
+            "absolute_error": "455/1728",
+            "harmonic_error_bound": "625/288"
+          },
+          {
+            "order": 3,
+            "actual_moment": "13357/3456",
+            "truncated_joint_sum": "71563/20736",
+            "absolute_error": "8579/20736",
+            "harmonic_error_bound": "15625/3456"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 5,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "257/180",
+            "truncated_joint_sum": "5269/3600",
+            "absolute_error": "43/1200",
+            "harmonic_error_bound": "137/180"
+          },
+          {
+            "order": 2,
+            "actual_moment": "22609/10800",
+            "truncated_joint_sum": "492203/216000",
+            "absolute_error": "4447/24000",
+            "harmonic_error_bound": "18769/10800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2042873/648000",
+            "truncated_joint_sum": "48544711/12960000",
+            "absolute_error": "284713/480000",
+            "harmonic_error_bound": "2571353/648000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 6,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "377/240",
+            "truncated_joint_sum": "5369/3600",
+            "absolute_error": "143/1800",
+            "harmonic_error_bound": "49/80"
+          },
+          {
+            "order": 2,
+            "actual_moment": "37009/14400",
+            "truncated_joint_sum": "517183/216000",
+            "absolute_error": "593/3375",
+            "harmonic_error_bound": "2401/1600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "3770873/864000",
+            "truncated_joint_sum": "53251001/12960000",
+            "absolute_error": "1656047/6480000",
+            "harmonic_error_bound": "117649/32000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 4,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "7/4",
+            "truncated_joint_sum": "205/144",
+            "absolute_error": "47/144",
+            "harmonic_error_bound": "25/12"
+          },
+          {
+            "order": 2,
+            "actual_moment": "49/16",
+            "truncated_joint_sum": "3727/1728",
+            "absolute_error": "1565/1728",
+            "harmonic_error_bound": "625/144"
+          },
+          {
+            "order": 3,
+            "actual_moment": "343/64",
+            "truncated_joint_sum": "71563/20736",
+            "absolute_error": "39569/20736",
+            "harmonic_error_bound": "15625/1728"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 5,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "59/40",
+            "truncated_joint_sum": "5269/3600",
+            "absolute_error": "41/3600",
+            "harmonic_error_bound": "137/120"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1801/800",
+            "truncated_joint_sum": "492203/216000",
+            "absolute_error": "5933/216000",
+            "harmonic_error_bound": "18769/7200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "56699/16000",
+            "truncated_joint_sum": "48544711/12960000",
+            "absolute_error": "2618521/12960000",
+            "harmonic_error_bound": "2571353/432000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 6,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "33/20",
+            "truncated_joint_sum": "5369/3600",
+            "absolute_error": "571/3600",
+            "harmonic_error_bound": "49/60"
+          },
+          {
+            "order": 2,
+            "actual_moment": "3401/1200",
+            "truncated_joint_sum": "517183/216000",
+            "absolute_error": "94997/216000",
+            "harmonic_error_bound": "2401/1200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "40233/8000",
+            "truncated_joint_sum": "53251001/12960000",
+            "absolute_error": "11926459/12960000",
+            "harmonic_error_bound": "117649/24000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 7,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "853/560",
+            "truncated_joint_sum": "266681/176400",
+            "absolute_error": "1007/88200",
+            "harmonic_error_bound": "363/560"
+          },
+          {
+            "order": 2,
+            "actual_moment": "192249/78400",
+            "truncated_joint_sum": "182119729/74088000",
+            "absolute_error": "55553/9261000",
+            "harmonic_error_bound": "131769/78400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "45495757/10976000",
+            "truncated_joint_sum": "132836063861/31116960000",
+            "absolute_error": "1927796383/15558480000",
+            "harmonic_error_bound": "47832147/10976000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 5,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "6/5",
+            "truncated_joint_sum": "5269/3600",
+            "absolute_error": "949/3600",
+            "harmonic_error_bound": "137/60"
+          },
+          {
+            "order": 2,
+            "actual_moment": "36/25",
+            "truncated_joint_sum": "492203/216000",
+            "absolute_error": "181163/216000",
+            "harmonic_error_bound": "18769/3600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "216/125",
+            "truncated_joint_sum": "48544711/12960000",
+            "absolute_error": "26149831/12960000",
+            "harmonic_error_bound": "2571353/216000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 6,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "8/5",
+            "truncated_joint_sum": "5369/3600",
+            "absolute_error": "391/3600",
+            "harmonic_error_bound": "49/40"
+          },
+          {
+            "order": 2,
+            "actual_moment": "68/25",
+            "truncated_joint_sum": "517183/216000",
+            "absolute_error": "70337/216000",
+            "harmonic_error_bound": "2401/800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "608/125",
+            "truncated_joint_sum": "53251001/12960000",
+            "absolute_error": "9786439/12960000",
+            "harmonic_error_bound": "117649/16000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 7,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "152/105",
+            "truncated_joint_sum": "266681/176400",
+            "absolute_error": "11321/176400",
+            "harmonic_error_bound": "121/140"
+          },
+          {
+            "order": 2,
+            "actual_moment": "8264/3675",
+            "truncated_joint_sum": "182119729/74088000",
+            "absolute_error": "15517489/74088000",
+            "harmonic_error_bound": "43923/19600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "481088/128625",
+            "truncated_joint_sum": "132836063861/31116960000",
+            "absolute_error": "16451254901/31116960000",
+            "harmonic_error_bound": "15944049/2744000"
+          }
+        ]
+      },
+      {
+        "V": 1,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 8,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1741/1120",
+            "truncated_joint_sum": "1077749/705600",
+            "absolute_error": "19081/705600",
+            "harmonic_error_bound": "761/1120"
+          },
+          {
+            "order": 2,
+            "actual_moment": "804521/313600",
+            "truncated_joint_sum": "1494734837/592704000",
+            "absolute_error": "25809853/592704000",
+            "harmonic_error_bound": "579121/313600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "391020181/87808000",
+            "truncated_joint_sum": "2223993406811/497871360000",
+            "absolute_error": "6908980541/497871360000",
+            "harmonic_error_bound": "440711081/87808000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 3,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "4/3",
+            "truncated_joint_sum": "10/9",
+            "absolute_error": "2/9",
+            "harmonic_error_bound": "11/6"
+          },
+          {
+            "order": 2,
+            "actual_moment": "16/9",
+            "truncated_joint_sum": "34/27",
+            "absolute_error": "14/27",
+            "harmonic_error_bound": "121/36"
+          },
+          {
+            "order": 3,
+            "actual_moment": "64/27",
+            "truncated_joint_sum": "118/81",
+            "absolute_error": "74/81",
+            "harmonic_error_bound": "1331/216"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 5,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "19/15",
+            "truncated_joint_sum": "259/225",
+            "absolute_error": "26/225",
+            "harmonic_error_bound": "137/120"
+          },
+          {
+            "order": 2,
+            "actual_moment": "362/225",
+            "truncated_joint_sum": "4577/3375",
+            "absolute_error": "853/3375",
+            "harmonic_error_bound": "18769/7200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6916/3375",
+            "truncated_joint_sum": "82831/50625",
+            "absolute_error": "20909/50625",
+            "harmonic_error_bound": "2571353/432000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 7,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "386/315",
+            "truncated_joint_sum": "12916/11025",
+            "absolute_error": "66/1225",
+            "harmonic_error_bound": "121/140"
+          },
+          {
+            "order": 2,
+            "actual_moment": "49876/33075",
+            "truncated_joint_sum": "1627676/1157625",
+            "absolute_error": "39328/385875",
+            "harmonic_error_bound": "43923/19600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6472376/3472875",
+            "truncated_joint_sum": "210243916/121550625",
+            "absolute_error": "1809916/13505625",
+            "harmonic_error_bound": "15944049/2744000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 9,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1613/1260",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "38219/396900",
+            "harmonic_error_bound": "7129/10080"
+          },
+          {
+            "order": 2,
+            "actual_moment": "655909/396900",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "26348347/125023500",
+            "harmonic_error_bound": "50822641/25401600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "268950527/125023500",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "13522156961/39382402500",
+            "harmonic_error_bound": "362314607689/64012032000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 5,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "6/5",
+            "truncated_joint_sum": "259/225",
+            "absolute_error": "11/225",
+            "harmonic_error_bound": "137/60"
+          },
+          {
+            "order": 2,
+            "actual_moment": "36/25",
+            "truncated_joint_sum": "4577/3375",
+            "absolute_error": "283/3375",
+            "harmonic_error_bound": "18769/3600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "216/125",
+            "truncated_joint_sum": "82831/50625",
+            "absolute_error": "4649/50625",
+            "harmonic_error_bound": "2571353/216000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 7,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "41/35",
+            "truncated_joint_sum": "12916/11025",
+            "absolute_error": "1/11025",
+            "harmonic_error_bound": "363/280"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1682/1225",
+            "truncated_joint_sum": "1627676/1157625",
+            "absolute_error": "38186/1157625",
+            "harmonic_error_bound": "131769/39200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "69044/42875",
+            "truncated_joint_sum": "210243916/121550625",
+            "absolute_error": "14504176/121550625",
+            "harmonic_error_bound": "47832147/5488000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 9,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1193/945",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "7796/99225",
+            "harmonic_error_bound": "7129/7560"
+          },
+          {
+            "order": 2,
+            "actual_moment": "479509/297675",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "5282698/31255875",
+            "harmonic_error_bound": "50822641/19051200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "194862527/93767625",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "2661250574/9845600625",
+            "harmonic_error_bound": "362314607689/48009024000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 11,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "16903/13860",
+            "truncated_joint_sum": "14312974/12006225",
+            "absolute_error": "1316999/48024900",
+            "harmonic_error_bound": "83711/110880"
+          },
+          {
+            "order": 2,
+            "actual_moment": "72308989/48024900",
+            "truncated_joint_sum": "60827825302/41601569625",
+            "absolute_error": "7239345677/166406278500",
+            "harmonic_error_bound": "7007531521/3073593600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "313372175437/166406278500",
+            "truncated_joint_sum": "266147299287466/144149438750625",
+            "absolute_error": "21245390739341/576597755002500",
+            "harmonic_error_bound": "586607471154431/85200014592000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 7,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "8/7",
+            "truncated_joint_sum": "12916/11025",
+            "absolute_error": "316/11025",
+            "harmonic_error_bound": "363/140"
+          },
+          {
+            "order": 2,
+            "actual_moment": "64/49",
+            "truncated_joint_sum": "1627676/1157625",
+            "absolute_error": "115676/1157625",
+            "harmonic_error_bound": "131769/19600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "512/343",
+            "truncated_joint_sum": "210243916/121550625",
+            "absolute_error": "28803916/121550625",
+            "harmonic_error_bound": "47832147/2744000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 9,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "163/126",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "21787/198450",
+            "harmonic_error_bound": "7129/5040"
+          },
+          {
+            "order": 2,
+            "actual_moment": "13465/7938",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "15905381/62511750",
+            "harmonic_error_bound": "50822641/12700800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1126819/500094",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "8769868603/19691201250",
+            "harmonic_error_bound": "362314607689/32006016000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 11,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "2549/2079",
+            "truncated_joint_sum": "14312974/12006225",
+            "absolute_error": "407501/12006225",
+            "harmonic_error_bound": "83711/83160"
+          },
+          {
+            "order": 2,
+            "actual_moment": "2200801/1440747",
+            "truncated_joint_sum": "60827825302/41601569625",
+            "absolute_error": "2720303573/41601569625",
+            "harmonic_error_bound": "7007531521/2305195200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1931877305/998437671",
+            "truncated_joint_sum": "266147299287466/144149438750625",
+            "absolute_error": "12767486621909/144149438750625",
+            "harmonic_error_bound": "586607471154431/63900010944000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 13,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "42839/36036",
+            "truncated_joint_sum": "2430898831/2029052025",
+            "absolute_error": "75181549/8116208100",
+            "harmonic_error_bound": "1145993/1441440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "466064173/324648324",
+            "truncated_joint_sum": "134969789585779/91398648466125",
+            "absolute_error": "15032641523491/365594593864500",
+            "harmonic_error_bound": "1313299956049/519437318400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "5157572095493/2924756750916",
+            "truncated_joint_sum": "7715138697290744911/4117052120156600625",
+            "absolute_error": "1820200408977706519/16468208480626402500",
+            "harmonic_error_bound": "1505032556532461657/187184432058624000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 9,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "13/9",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "25856/99225",
+            "harmonic_error_bound": "7129/2520"
+          },
+          {
+            "order": 2,
+            "actual_moment": "169/81",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "20147128/31255875",
+            "harmonic_error_bound": "50822641/6350400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2197/729",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "11872543364/9845600625",
+            "harmonic_error_bound": "362314607689/16003008000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 11,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "251/198",
+            "truncated_joint_sum": "14312974/12006225",
+            "absolute_error": "1814077/24012450",
+            "harmonic_error_bound": "83711/55440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "32113/19602",
+            "truncated_joint_sum": "60827825302/41601569625",
+            "absolute_error": "14651992021/83203139250",
+            "harmonic_error_bound": "7007531521/1536796800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "4183919/1940598",
+            "truncated_joint_sum": "266147299287466/144149438750625",
+            "absolute_error": "89276252913193/288298877501250",
+            "harmonic_error_bound": "586607471154431/42600007296000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 13,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "4649/3861",
+            "truncated_joint_sum": "2430898831/2029052025",
+            "absolute_error": "12266894/2029052025",
+            "harmonic_error_bound": "1145993/1081080"
+          },
+          {
+            "order": 2,
+            "actual_moment": "7348093/4969107",
+            "truncated_joint_sum": "134969789585779/91398648466125",
+            "absolute_error": "186440498096/91398648466125",
+            "harmonic_error_bound": "1313299956049/389577988800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "11854570499/6395240709",
+            "truncated_joint_sum": "7715138697290744911/4117052120156600625",
+            "absolute_error": "83544074469200536/4117052120156600625",
+            "harmonic_error_bound": "1505032556532461657/140388324043968000"
+          }
+        ]
+      },
+      {
+        "V": 2,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 15,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "33541/25740",
+            "truncated_joint_sum": "487983368/405810405",
+            "absolute_error": "163262611/1623241620",
+            "harmonic_error_bound": "1195757/1441440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "289709941/165636900",
+            "truncated_joint_sum": "136300792347868/91398648466125",
+            "absolute_error": "94246060933433/365594593864500",
+            "harmonic_error_bound": "1429834803049/519437318400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2573275726711/1065873451500",
+            "truncated_joint_sum": "7862843241463827808/4117052120156600625",
+            "absolute_error": "8306856386770758053/16468208480626402500",
+            "harmonic_error_bound": "1709734974589463093/187184432058624000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 4,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "7/4",
+            "truncated_joint_sum": "21/16",
+            "absolute_error": "7/16",
+            "harmonic_error_bound": "25/12"
+          },
+          {
+            "order": 2,
+            "actual_moment": "49/16",
+            "truncated_joint_sum": "117/64",
+            "absolute_error": "79/64",
+            "harmonic_error_bound": "625/144"
+          },
+          {
+            "order": 3,
+            "actual_moment": "343/64",
+            "truncated_joint_sum": "687/256",
+            "absolute_error": "685/256",
+            "harmonic_error_bound": "15625/1728"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 7,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "81/56",
+            "truncated_joint_sum": "26909/19600",
+            "absolute_error": "1441/19600",
+            "harmonic_error_bound": "363/280"
+          },
+          {
+            "order": 2,
+            "actual_moment": "3425/1568",
+            "truncated_joint_sum": "5485927/2744000",
+            "absolute_error": "507823/2744000",
+            "harmonic_error_bound": "131769/39200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "150417/43904",
+            "truncated_joint_sum": "1178279831/384160000",
+            "absolute_error": "137868919/384160000",
+            "harmonic_error_bound": "47832147/5488000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 10,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "219/140",
+            "truncated_joint_sum": "21929/15680",
+            "absolute_error": "2599/15680",
+            "harmonic_error_bound": "7381/7560"
+          },
+          {
+            "order": 2,
+            "actual_moment": "149129/58800",
+            "truncated_joint_sum": "46018111/21952000",
+            "absolute_error": "28970147/65856000",
+            "harmonic_error_bound": "54479161/19051200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "11601711/2744000",
+            "truncated_joint_sum": "4111207799/1229312000",
+            "absolute_error": "1086358729/1229312000",
+            "harmonic_error_bound": "402110687341/48009024000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 13,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "10501/7280",
+            "truncated_joint_sum": "452973321/320640320",
+            "absolute_error": "9532723/320640320",
+            "harmonic_error_bound": "1145993/1441440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "29044401/13249600",
+            "truncated_joint_sum": "137196515004977/64192192064000",
+            "absolute_error": "3518960735863/64192192064000",
+            "harmonic_error_bound": "1313299956049/519437318400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "83996413201/24114272000",
+            "truncated_joint_sum": "1767874727760219879/514051074048512000",
+            "absolute_error": "22701675383804617/514051074048512000",
+            "harmonic_error_bound": "1505032556532461657/187184432058624000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 7,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "8/7",
+            "truncated_joint_sum": "26909/19600",
+            "absolute_error": "4509/19600",
+            "harmonic_error_bound": "363/140"
+          },
+          {
+            "order": 2,
+            "actual_moment": "64/49",
+            "truncated_joint_sum": "5485927/2744000",
+            "absolute_error": "1901927/2744000",
+            "harmonic_error_bound": "131769/19600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "512/343",
+            "truncated_joint_sum": "1178279831/384160000",
+            "absolute_error": "604839831/384160000",
+            "harmonic_error_bound": "47832147/2744000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 10,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "103/70",
+            "truncated_joint_sum": "21929/15680",
+            "absolute_error": "1143/15680",
+            "harmonic_error_bound": "7381/5040"
+          },
+          {
+            "order": 2,
+            "actual_moment": "5569/2450",
+            "truncated_joint_sum": "46018111/21952000",
+            "absolute_error": "3880129/21952000",
+            "harmonic_error_bound": "54479161/12700800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "314047/85750",
+            "truncated_joint_sum": "4111207799/1229312000",
+            "absolute_error": "390969993/1229312000",
+            "harmonic_error_bound": "402110687341/32006016000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 13,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1829/1365",
+            "truncated_joint_sum": "452973321/320640320",
+            "absolute_error": "70016347/961920960",
+            "harmonic_error_bound": "1145993/1081080"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1181261/621075",
+            "truncated_joint_sum": "137196515004977/64192192064000",
+            "absolute_error": "45316230247571/192576576192000",
+            "harmonic_error_bound": "1313299956049/389577988800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "807610259/282589125",
+            "truncated_joint_sum": "1767874727760219879/514051074048512000",
+            "absolute_error": "896311045683305653/1542153222145536000",
+            "harmonic_error_bound": "1505032556532461657/140388324043968000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 16,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "43369/29120",
+            "truncated_joint_sum": "1823446969/1282561280",
+            "absolute_error": "86697267/1282561280",
+            "harmonic_error_bound": "2436559/2882880"
+          },
+          {
+            "order": 2,
+            "actual_moment": "501353841/211993600",
+            "truncated_joint_sum": "1115643969769321/513537536512000",
+            "absolute_error": "98845601745899/513537536512000",
+            "harmonic_error_bound": "5936819760481/2077749273600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6114175828489/1543313408000",
+            "truncated_joint_sum": "832627883448192761/234994776707891200",
+            "absolute_error": "491778294614223543/1174973883539456000",
+            "harmonic_error_bound": "14465411618777824879/1497475456468992000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 10,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "9/5",
+            "truncated_joint_sum": "21929/15680",
+            "absolute_error": "1259/3136",
+            "harmonic_error_bound": "7381/2520"
+          },
+          {
+            "order": 2,
+            "actual_moment": "81/25",
+            "truncated_joint_sum": "46018111/21952000",
+            "absolute_error": "25106369/21952000",
+            "harmonic_error_bound": "54479161/6350400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "729/125",
+            "truncated_joint_sum": "4111207799/1229312000",
+            "absolute_error": "611627957/245862400",
+            "harmonic_error_bound": "402110687341/16003008000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 13,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "187/130",
+            "truncated_joint_sum": "452973321/320640320",
+            "absolute_error": "8255447/320640320",
+            "harmonic_error_bound": "1145993/720720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "18589/8450",
+            "truncated_joint_sum": "137196515004977/64192192064000",
+            "absolute_error": "4018710826703/64192192064000",
+            "harmonic_error_bound": "1313299956049/259718659200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1944613/549250",
+            "truncated_joint_sum": "1767874727760219879/514051074048512000",
+            "absolute_error": "52116899474553113/514051074048512000",
+            "harmonic_error_bound": "1505032556532461657/93592216029312000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 16,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1669/1040",
+            "truncated_joint_sum": "1823446969/1282561280",
+            "absolute_error": "234817239/1282561280",
+            "harmonic_error_bound": "2436559/2162160"
+          },
+          {
+            "order": 2,
+            "actual_moment": "8819009/3244800",
+            "truncated_joint_sum": "1115643969769321/513537536512000",
+            "absolute_error": "840283471920917/1540612609536000",
+            "harmonic_error_bound": "5936819760481/1558311955200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "5382162741/1124864000",
+            "truncated_joint_sum": "832627883448192761/234994776707891200",
+            "absolute_error": "1458785239992384659/1174973883539456000",
+            "harmonic_error_bound": "14465411618777824879/1123106592351744000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 19,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "115933/79040",
+            "truncated_joint_sum": "191072063660801/133808335781120",
+            "absolute_error": "5193141198923/133808335781120",
+            "harmonic_error_bound": "275295799/310390080"
+          },
+          {
+            "order": 2,
+            "actual_moment": "3616302249/1561830400",
+            "truncated_joint_sum": "37908217898421066722707/17305325019903624704000",
+            "absolute_error": "2160976419446896265033/17305325019903624704000",
+            "harmonic_error_bound": "75787776947048401/24085500440601600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "119747674721557/30861768704000",
+            "truncated_joint_sum": "9170711073372496533142871401/2557810103501851268649779200",
+            "absolute_error": "3769623267412160520861297863/12789050517509256343248896000",
+            "harmonic_error_bound": "20864056609071470244967399/1868975102149591468032000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 13,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "14/13",
+            "truncated_joint_sum": "452973321/320640320",
+            "absolute_error": "107668361/320640320",
+            "harmonic_error_bound": "1145993/360360"
+          },
+          {
+            "order": 2,
+            "actual_moment": "196/169",
+            "truncated_joint_sum": "137196515004977/64192192064000",
+            "absolute_error": "62748765628977/64192192064000",
+            "harmonic_error_bound": "1313299956049/129859329600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2744/2197",
+            "truncated_joint_sum": "1767874727760219879/514051074048512000",
+            "absolute_error": "1125837337141595879/514051074048512000",
+            "harmonic_error_bound": "1505032556532461657/46796108014656000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 16,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "627/416",
+            "truncated_joint_sum": "1823446969/1282561280",
+            "absolute_error": "109644191/1282561280",
+            "harmonic_error_bound": "2436559/1441440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "212585/86528",
+            "truncated_joint_sum": "1115643969769321/513537536512000",
+            "absolute_error": "146032911695679/513537536512000",
+            "harmonic_error_bound": "5936819760481/1038874636800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "76690251/17997824",
+            "truncated_joint_sum": "832627883448192761/234994776707891200",
+            "absolute_error": "168704744841601039/234994776707891200",
+            "harmonic_error_bound": "14465411618777824879/748737728234496000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 19,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "16073/11856",
+            "truncated_joint_sum": "191072063660801/133808335781120",
+            "absolute_error": "29010375949523/401425007343360",
+            "harmonic_error_bound": "275295799/232792560"
+          },
+          {
+            "order": 2,
+            "actual_moment": "31349595/15618304",
+            "truncated_joint_sum": "37908217898421066722707/17305325019903624704000",
+            "absolute_error": "3172376496093030752707/17305325019903624704000",
+            "harmonic_error_bound": "75787776947048401/18064125330451200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "598009727609/185170612224",
+            "truncated_joint_sum": "9170711073372496533142871401/2557810103501851268649779200",
+            "absolute_error": "2730738836320571648933602603/7673430310505553805949337600",
+            "harmonic_error_bound": "20864056609071470244967399/1401731326612193601024000"
+          }
+        ]
+      },
+      {
+        "V": 3,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 22,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "247939/173888",
+            "truncated_joint_sum": "958415240019669/669041678905600",
+            "absolute_error": "4459102585369/669041678905600",
+            "harmonic_error_bound": "19093197/20692672"
+          },
+          {
+            "order": 2,
+            "actual_moment": "16440233481/7559259136",
+            "truncated_joint_sum": "38233763887845567835611/17305325019903624704000",
+            "absolute_error": "597326417816949114111/17305325019903624704000",
+            "harmonic_error_bound": "364550171680809/107046668624896"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1155922617611035/328616113160192",
+            "truncated_joint_sum": "233035388690324984129875866141/63945252587546281716244480000",
+            "absolute_error": "8104958335063459003681403641/63945252587546281716244480000",
+            "harmonic_error_bound": "6960428244285507356373/553770400636915990528"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 5,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "6/5",
+            "truncated_joint_sum": "259/225",
+            "absolute_error": "11/225",
+            "harmonic_error_bound": "137/60"
+          },
+          {
+            "order": 2,
+            "actual_moment": "36/25",
+            "truncated_joint_sum": "4577/3375",
+            "absolute_error": "283/3375",
+            "harmonic_error_bound": "18769/3600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "216/125",
+            "truncated_joint_sum": "82831/50625",
+            "absolute_error": "4649/50625",
+            "harmonic_error_bound": "2571353/216000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 9,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "119/90",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "27457/198450",
+            "harmonic_error_bound": "7129/5040"
+          },
+          {
+            "order": 2,
+            "actual_moment": "7141/4050",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "20089841/62511750",
+            "harmonic_error_bound": "50822641/12700800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "432089/182250",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "11086426483/19691201250",
+            "harmonic_error_bound": "362314607689/32006016000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 13,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "2177/1755",
+            "truncated_joint_sum": "2430898831/2029052025",
+            "absolute_error": "86050604/2029052025",
+            "harmonic_error_bound": "1145993/1081080"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1603729/1026675",
+            "truncated_joint_sum": "134969789585779/91398648466125",
+            "absolute_error": "7800476667836/91398648466125",
+            "harmonic_error_bound": "1313299956049/389577988800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1199346533/600604875",
+            "truncated_joint_sum": "7715138697290744911/4117052120156600625",
+            "absolute_error": "506193483021841424/4117052120156600625",
+            "harmonic_error_bound": "1505032556532461657/140388324043968000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 17,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "47539/39780",
+            "truncated_joint_sum": "141433003757/117279207045",
+            "absolute_error": "5114999069/469116828180",
+            "harmonic_error_bound": "42142223/49008960"
+          },
+          {
+            "order": 2,
+            "actual_moment": "574358581/395612100",
+            "truncated_joint_sum": "673473997291506809/449041559914072125",
+            "absolute_error": "86181279102579251/1796166239656288500",
+            "harmonic_error_bound": "1775966959381729/600469540070400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "7059965393629/3934362334500",
+            "truncated_joint_sum": "662292227239742754693613/343860310127599440800625",
+            "absolute_error": "181026238462502436552847/1375441240510397763202500",
+            "harmonic_error_bound": "74843195642896765643567/7357096917632157696000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 9,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "13/9",
+            "truncated_joint_sum": "117469/99225",
+            "absolute_error": "25856/99225",
+            "harmonic_error_bound": "7129/2520"
+          },
+          {
+            "order": 2,
+            "actual_moment": "169/81",
+            "truncated_joint_sum": "45065747/31255875",
+            "absolute_error": "20147128/31255875",
+            "harmonic_error_bound": "50822641/6350400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2197/729",
+            "truncated_joint_sum": "17799314761/9845600625",
+            "absolute_error": "11872543364/9845600625",
+            "harmonic_error_bound": "362314607689/16003008000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 13,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "295/234",
+            "truncated_joint_sum": "2430898831/2029052025",
+            "absolute_error": "254188213/4058104050",
+            "harmonic_error_bound": "1145993/720720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "44437/27378",
+            "truncated_joint_sum": "134969789585779/91398648466125",
+            "absolute_error": "26757165798067/182797296932250",
+            "harmonic_error_bound": "1313299956049/259718659200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6827185/3203226",
+            "truncated_joint_sum": "7715138697290744911/4117052120156600625",
+            "absolute_error": "2119453082725663303/8234104240313201250",
+            "harmonic_error_bound": "1505032556532461657/93592216029312000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 17,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "7121/5967",
+            "truncated_joint_sum": "141433003757/117279207045",
+            "absolute_error": "1472347922/117279207045",
+            "harmonic_error_bound": "42142223/36756720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "17277529/11868363",
+            "truncated_joint_sum": "673473997291506809/449041559914072125",
+            "absolute_error": "19775709362445434/449041559914072125",
+            "harmonic_error_bound": "1775966959381729/450352155052800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "42882566921/23606174007",
+            "truncated_joint_sum": "662292227239742754693613/343860310127599440800625",
+            "absolute_error": "37641542374417171854238/343860310127599440800625",
+            "harmonic_error_bound": "74843195642896765643567/5517822688224118272000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 21,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "71063/55692",
+            "truncated_joint_sum": "51270597630767/42337793743245",
+            "absolute_error": "11009733069277/169351174972980",
+            "harmonic_error_bound": "18858053/20692672"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1296717577/775399716",
+            "truncated_joint_sum": "4662884674502295107021/3079976059450620705375",
+            "absolute_error": "1951301414606062429291/12319904237802482821500",
+            "harmonic_error_bound": "355626162950809/107046668624896"
+          },
+          {
+            "order": 3,
+            "actual_moment": "24258437859599/10795890245868",
+            "truncated_joint_sum": "87688849785979188134782927963/44812219476138886724578250625",
+            "absolute_error": "52018032877103354294778536273/179248877904555546898313002500",
+            "harmonic_error_bound": "6706417029112992514877/553770400636915990528"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 13,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "14/13",
+            "truncated_joint_sum": "2430898831/2029052025",
+            "absolute_error": "245765881/2029052025",
+            "harmonic_error_bound": "1145993/360360"
+          },
+          {
+            "order": 2,
+            "actual_moment": "196/169",
+            "truncated_joint_sum": "134969789585779/91398648466125",
+            "absolute_error": "28968990181279/91398648466125",
+            "harmonic_error_bound": "1313299956049/129859329600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2744/2197",
+            "truncated_joint_sum": "7715138697290744911/4117052120156600625",
+            "absolute_error": "2573039918178449911/4117052120156600625",
+            "harmonic_error_bound": "1505032556532461657/46796108014656000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 17,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "236/221",
+            "truncated_joint_sum": "141433003757/117279207045",
+            "absolute_error": "16193669537/117279207045",
+            "harmonic_error_bound": "42142223/24504480"
+          },
+          {
+            "order": 2,
+            "actual_moment": "55700/48841",
+            "truncated_joint_sum": "673473997291506809/449041559914072125",
+            "absolute_error": "161371155678644309/449041559914072125",
+            "harmonic_error_bound": "1775966959381729/300234770035200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "13147088/10793861",
+            "truncated_joint_sum": "662292227239742754693613/343860310127599440800625",
+            "absolute_error": "243465103474220753163613/343860310127599440800625",
+            "harmonic_error_bound": "74843195642896765643567/3678548458816078848000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 21,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "16984/13923",
+            "truncated_joint_sum": "51270597630767/42337793743245",
+            "absolute_error": "375246579193/42337793743245",
+            "harmonic_error_bound": "18858053/15519504"
+          },
+          {
+            "order": 2,
+            "actual_moment": "99140584/64616643",
+            "truncated_joint_sum": "4662884674502295107021/3079976059450620705375",
+            "absolute_error": "62687733212436465979/3079976059450620705375",
+            "harmonic_error_bound": "355626162950809/80285001468672"
+          },
+          {
+            "order": 3,
+            "actual_moment": "597203601184/299885840163",
+            "truncated_joint_sum": "87688849785979188134782927963/44812219476138886724578250625",
+            "absolute_error": "1551838716191147369571052037/44812219476138886724578250625",
+            "harmonic_error_bound": "6706417029112992514877/415327800477686992896"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 25,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "568471/464100",
+            "truncated_joint_sum": "3400039831130408821/2799586611272075625",
+            "absolute_error": "116572418606553491/11198346445088302500",
+            "harmonic_error_bound": "34052522467/35694859200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "82661729641/53847202500",
+            "truncated_joint_sum": "7134641396055662821501825781/4684258589416962765287203125",
+            "absolute_error": "224965229614297805157425401/18737034357667851061148812500",
+            "harmonic_error_bound": "1159574286365539766089/318530743326956160000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "12309272623265311/6247621670062500",
+            "truncated_joint_sum": "15483219876411866815331504293369913041/7837685194013863874932938895719140625",
+            "absolute_error": "164604226916261456132273514655541389/31350740776055455499731755582876562500",
+            "harmonic_error_bound": "39486429438618034659327597221563/2842477508481759923943168000000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 17,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "18/17",
+            "truncated_joint_sum": "141433003757/117279207045",
+            "absolute_error": "17255019827/117279207045",
+            "harmonic_error_bound": "42142223/12252240"
+          },
+          {
+            "order": 2,
+            "actual_moment": "324/289",
+            "truncated_joint_sum": "673473997291506809/449041559914072125",
+            "absolute_error": "170050241540090309/449041559914072125",
+            "harmonic_error_bound": "1775966959381729/150117385017600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "5832/4913",
+            "truncated_joint_sum": "662292227239742754693613/343860310127599440800625",
+            "absolute_error": "254111211838936742328613/343860310127599440800625",
+            "harmonic_error_bound": "74843195642896765643567/1839274229408039424000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 21,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "461/357",
+            "truncated_joint_sum": "51270597630767/42337793743245",
+            "absolute_error": "3400895130118/42337793743245",
+            "harmonic_error_bound": "18858053/10346336"
+          },
+          {
+            "order": 2,
+            "actual_moment": "219410/127449",
+            "truncated_joint_sum": "4662884674502295107021/3079976059450620705375",
+            "absolute_error": "639452316796661251729/3079976059450620705375",
+            "harmonic_error_bound": "355626162950809/53523334312448"
+          },
+          {
+            "order": 3,
+            "actual_moment": "107499668/45499293",
+            "truncated_joint_sum": "87688849785979188134782927963/44812219476138886724578250625",
+            "absolute_error": "18187492425053942529066494537/44812219476138886724578250625",
+            "harmonic_error_bound": "6706417029112992514877/276885200318457995264"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 25,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "34117/26775",
+            "truncated_joint_sum": "3400039831130408821/2799586611272075625",
+            "absolute_error": "167224274071062854/2799586611272075625",
+            "harmonic_error_bound": "34052522467/26771144400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "396740989/238966875",
+            "truncated_joint_sum": "7134641396055662821501825781/4684258589416962765287203125",
+            "absolute_error": "642325120734711329209312894/4684258589416962765287203125",
+            "harmonic_error_bound": "1159574286365539766089/238898057495217120000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "4714834062763/2132779359375",
+            "truncated_joint_sum": "15483219876411866815331504293369913041/7837685194013863874932938895719140625",
+            "absolute_error": "1843178638987680549437828203759998884/7837685194013863874932938895719140625",
+            "harmonic_error_bound": "39486429438618034659327597221563/2131858131361319942957376000000"
+          }
+        ]
+      },
+      {
+        "V": 4,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 29,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1257143/1035300",
+            "truncated_joint_sum": "25789165074168004597399/21190071060718340405625",
+            "absolute_error": "234031093601848921621/84760284242873361622500",
+            "harmonic_error_bound": "9227046511387/9316358251200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "405349234249/267961522500",
+            "truncated_joint_sum": "4720492448594933929385210992196593/3084598333906838231829919119421875",
+            "absolute_error": "217505419799566808745741073888297/12338393335627352927319676477687500",
+            "harmonic_error_bound": "85138387323299007120663769/21698632766175580575360000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "134185102191101807/69355141061062500",
+            "truncated_joint_sum": "894117532113850785487865024756480756890734451/449019111558292892081441960363353489531640625",
+            "absolute_error": "101504930581477189304143678772410451300663029/1796076446233171568325767841453413958126562500",
+            "harmonic_error_bound": "785575859736561288556601501511256837603/50538059102729637590301394852608000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 6,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "2",
+            "truncated_joint_sum": "209/144",
+            "absolute_error": "79/144",
+            "harmonic_error_bound": "49/20"
+          },
+          {
+            "order": 2,
+            "actual_moment": "4",
+            "truncated_joint_sum": "3923/1728",
+            "absolute_error": "2989/1728",
+            "harmonic_error_bound": "2401/400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "8",
+            "truncated_joint_sum": "78797/20736",
+            "absolute_error": "87091/20736",
+            "harmonic_error_bound": "117649/8000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 11,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "17/11",
+            "truncated_joint_sum": "46350781/30735936",
+            "absolute_error": "1150211/30735936",
+            "harmonic_error_bound": "83711/55440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "314/121",
+            "truncated_joint_sum": "420103370569/170400029184",
+            "absolute_error": "22091746487/170400029184",
+            "harmonic_error_bound": "7007531521/1536796800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6188/1331",
+            "truncated_joint_sum": "4096145095891843/944697761796096",
+            "absolute_error": "295883266237565/944697761796096",
+            "harmonic_error_bound": "586607471154431/42600007296000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 16,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "295/176",
+            "truncated_joint_sum": "31787529541/20777492736",
+            "absolute_error": "3038381579/20777492736",
+            "harmonic_error_bound": "2436559/2162160"
+          },
+          {
+            "order": 2,
+            "actual_moment": "277049/92928",
+            "truncated_joint_sum": "7652345342949917/2994950912937984",
+            "absolute_error": "1276590558807955/2994950912937984",
+            "harmonic_error_bound": "5936819760481/1558311955200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "30114639/5451776",
+            "truncated_joint_sum": "285278933034957118597/61672029199218966528",
+            "absolute_error": "55386364976541933995/61672029199218966528",
+            "harmonic_error_bound": "14465411618777824879/1123106592351744000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 21,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "24217/14784",
+            "truncated_joint_sum": "68193313567421/44238674278656",
+            "absolute_error": "29904368951449/309670719950592",
+            "harmonic_error_bound": "18858053/20692672"
+          },
+          {
+            "order": 2,
+            "actual_moment": "153898033/54641664",
+            "truncated_joint_sum": "262257500414031939765983/100924655516077939273728",
+            "absolute_error": "21996397218496138605133/100924655516077939273728",
+            "harmonic_error_bound": "355626162950809/107046668624896"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1015318811305/201955590144",
+            "truncated_joint_sum": "22361542230095893669155293923931/4698901784941180928611136372736",
+            "absolute_error": "1261885927171993370435040331489/4698901784941180928611136372736",
+            "harmonic_error_bound": "6706417029112992514877/553770400636915990528"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 11,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "12/11",
+            "truncated_joint_sum": "46350781/30735936",
+            "absolute_error": "12820669/30735936",
+            "harmonic_error_bound": "83711/27720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "144/121",
+            "truncated_joint_sum": "420103370569/170400029184",
+            "absolute_error": "217313253193/170400029184",
+            "harmonic_error_bound": "7007531521/768398400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1728/1331",
+            "truncated_joint_sum": "4096145095891843/944697761796096",
+            "absolute_error": "2869670466001795/944697761796096",
+            "harmonic_error_bound": "586607471154431/21300003648000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 16,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "533/352",
+            "truncated_joint_sum": "31787529541/20777492736",
+            "absolute_error": "326155597/20777492736",
+            "harmonic_error_bound": "2436559/1441440"
+          },
+          {
+            "order": 2,
+            "actual_moment": "153145/61952",
+            "truncated_joint_sum": "7652345342949917/2994950912937984",
+            "absolute_error": "248843316189077/2994950912937984",
+            "harmonic_error_bound": "5936819760481/1038874636800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "46729709/10903552",
+            "truncated_joint_sum": "285278933034957118597/61672029199218966528",
+            "absolute_error": "20969102814584405821/61672029199218966528",
+            "harmonic_error_bound": "14465411618777824879/748737728234496000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 21,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "16825/11088",
+            "truncated_joint_sum": "68193313567421/44238674278656",
+            "absolute_error": "7456923041147/309670719950592",
+            "harmonic_error_bound": "18858053/15519504"
+          },
+          {
+            "order": 2,
+            "actual_moment": "99256369/40981248",
+            "truncated_joint_sum": "262257500414031939765983/100924655516077939273728",
+            "absolute_error": "17818510925431754302799/100924655516077939273728",
+            "harmonic_error_bound": "355626162950809/80285001468672"
+          },
+          {
+            "order": 3,
+            "actual_moment": "611407631017/151466692608",
+            "truncated_joint_sum": "22361542230095893669155293923931/4698901784941180928611136372736",
+            "absolute_error": "3394042780248526759331211910667/4698901784941180928611136372736",
+            "harmonic_error_bound": "6706417029112992514877/415327800477686992896"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 26,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "296341/192192",
+            "truncated_joint_sum": "36242100972824849/23402258693409024",
+            "absolute_error": "1106975768707379/163815810853863168",
+            "harmonic_error_bound": "34395742267/35694859200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "22798569817/9234441216",
+            "truncated_joint_sum": "248226953443964200441940233/94457714128009252857188352",
+            "absolute_error": "15023802335005294650946309/94457714128009252857188352",
+            "harmonic_error_bound": "1183067086097890299289/318530743326956160000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1810840245425245/443696431546368",
+            "truncated_joint_sum": "6383944799811169688180089370134833245/1314945374399725012243469013682814976",
+            "absolute_error": "1017311590253908089650754825738879905/1314945374399725012243469013682814976",
+            "harmonic_error_bound": "40692470577993733466783937348163/2842477508481759923943168000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 16,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "31/16",
+            "truncated_joint_sum": "31787529541/20777492736",
+            "absolute_error": "8468862635/20777492736",
+            "harmonic_error_bound": "2436559/720720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "961/256",
+            "truncated_joint_sum": "7652345342949917/2994950912937984",
+            "absolute_error": "3590419607571187/2994950912937984",
+            "harmonic_error_bound": "5936819760481/519437318400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "29791/4096",
+            "truncated_joint_sum": "285278933034957118597/61672029199218966528",
+            "absolute_error": "163273660195983367691/61672029199218966528",
+            "harmonic_error_bound": "14465411618777824879/374368864117248000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 21,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1163/672",
+            "truncated_joint_sum": "68193313567421/44238674278656",
+            "absolute_error": "58579911133021/309670719950592",
+            "harmonic_error_bound": "18858053/10346336"
+          },
+          {
+            "order": 2,
+            "actual_moment": "685945/225792",
+            "truncated_joint_sum": "262257500414031939765983/100924655516077939273728",
+            "absolute_error": "44346643346491382827897/100924655516077939273728",
+            "harmonic_error_bound": "355626162950809/53523334312448"
+          },
+          {
+            "order": 3,
+            "actual_moment": "410112179/75866112",
+            "truncated_joint_sum": "22361542230095893669155293923931/4698901784941180928611136372736",
+            "absolute_error": "3039480692091249616452337866781/4698901784941180928611136372736",
+            "harmonic_error_bound": "6706417029112992514877/276885200318457995264"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 26,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "22175/13104",
+            "truncated_joint_sum": "36242100972824849/23402258693409024",
+            "absolute_error": "23519548813273657/163815810853863168",
+            "harmonic_error_bound": "34395742267/26771144400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "165711841/57238272",
+            "truncated_joint_sum": "248226953443964200441940233/94457714128009252857188352",
+            "absolute_error": "25239752622985601187277223/94457714128009252857188352",
+            "harmonic_error_bound": "1183067086097890299289/238898057495217120000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1252314488879/250016772096",
+            "truncated_joint_sum": "6383944799811169688180089370134833245/1314945374399725012243469013682814976",
+            "absolute_error": "202513903098957015905425946349051379/1314945374399725012243469013682814976",
+            "harmonic_error_bound": "40692470577993733466783937348163/2131858131361319942957376000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 31,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "827201/541632",
+            "truncated_joint_sum": "12957965856211314747798049/8340954435317893173168384",
+            "absolute_error": "219342861540769893103237/8340954435317893173168384",
+            "harmonic_error_bound": "290774257297357/288807105787200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "178786409377/73341305856",
+            "truncated_joint_sum": "4903661734161000275440691226970109641/1853020699974669087326361666528055296",
+            "absolute_error": "29730373710546669564248311096759993/142540053844205314409720128194465792",
+            "harmonic_error_bound": "84549668706829570565919185449/20852386088294732932920960000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "40038550800874865/9930999543349248",
+            "truncated_joint_sum": "341701228892415347091442384431217227622430792520649/69571520892049234170291167122713144177113217171456",
+            "absolute_error": "61211549946059180930367735737417681449108400489869/69571520892049234170291167122713144177113217171456",
+            "harmonic_error_bound": "24584867122965955044590941285748217620558293/1505579318729418633452668854054044928000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 21,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "32/21",
+            "truncated_joint_sum": "68193313567421/44238674278656",
+            "absolute_error": "5474002666283/309670719950592",
+            "harmonic_error_bound": "18858053/5173168"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1024/441",
+            "truncated_joint_sum": "262257500414031939765983/100924655516077939273728",
+            "absolute_error": "27910908013887246304991/100924655516077939273728",
+            "harmonic_error_bound": "355626162950809/26761667156224"
+          },
+          {
+            "order": 3,
+            "actual_moment": "32768/9261",
+            "truncated_joint_sum": "22361542230095893669155293923931/4698901784941180928611136372736",
+            "absolute_error": "5735517644311138602884943350363/4698901784941180928611136372736",
+            "harmonic_error_bound": "6706417029112992514877/138442600159228997632"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 26,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "857/546",
+            "truncated_joint_sum": "36242100972824849/23402258693409024",
+            "absolute_error": "3430109860117513/163815810853863168",
+            "harmonic_error_bound": "34395742267/17847429600"
+          },
+          {
+            "order": 2,
+            "actual_moment": "367537/149058",
+            "truncated_joint_sum": "248226953443964200441940233/94457714128009252857188352",
+            "absolute_error": "15319596056463115177328905/94457714128009252857188352",
+            "harmonic_error_bound": "1183067086097890299289/159265371663478080000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "157757417/40692834",
+            "truncated_joint_sum": "6383944799811169688180089370134833245/1314945374399725012243469013682814976",
+            "absolute_error": "1286182727958456174989461095924721757/1314945374399725012243469013682814976",
+            "harmonic_error_bound": "40692470577993733466783937348163/1421238754240879961971584000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 31,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "35303/25389",
+            "truncated_joint_sum": "12957965856211314747798049/8340954435317893173168384",
+            "absolute_error": "1360001602793394282542881/8340954435317893173168384",
+            "harmonic_error_bound": "290774257297357/216605329340400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "429520753/214867107",
+            "truncated_joint_sum": "4903661734161000275440691226970109641/1853020699974669087326361666528055296",
+            "absolute_error": "1199461228600570556832148599933830857/1853020699974669087326361666528055296",
+            "harmonic_error_bound": "84549668706829570565919185449/15639289566221049699690720000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "5366462602103/1818420326541",
+            "truncated_joint_sum": "341701228892415347091442384431217227622430792520649/69571520892049234170291167122713144177113217171456",
+            "absolute_error": "136384031548497647610981537715196354712003203142601/69571520892049234170291167122713144177113217171456",
+            "harmonic_error_bound": "24584867122965955044590941285748217620558293/1129184489047063975089501640540533696000000"
+          }
+        ]
+      },
+      {
+        "V": 5,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 36,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "680347/406224",
+            "truncated_joint_sum": "51949687513215842482983181/33363817741271572692673536",
+            "absolute_error": "3928284514091482211624627/33363817741271572692673536",
+            "harmonic_error_bound": "54801925434709/52510382870400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "127751525953/41254484544",
+            "truncated_joint_sum": "39462530743684865114136338052726683381/14824165599797352698610893332224442368",
+            "absolute_error": "6443018611421902568116153759674362635/14824165599797352698610893332224442368",
+            "harmonic_error_bound": "3003251031351405218621914681/689335077298999435799040000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "26190640263987415/4189640432350464",
+            "truncated_joint_sum": "5528325156531510298286264953449359831456092789946875/1113144334272787746724658673963410306833811474743296",
+            "absolute_error": "1430258352382747761026288963987032170448752289543685/1113144334272787746724658673963410306833811474743296",
+            "harmonic_error_bound": "164583939081832610023264782886474834062829/9049312208741809968160293638191104000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          1,
+          1
+        ],
+        "X": 7,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "8/7",
+            "truncated_joint_sum": "1299/1225",
+            "absolute_error": "101/1225",
+            "harmonic_error_bound": "363/140"
+          },
+          {
+            "order": 2,
+            "actual_moment": "64/49",
+            "truncated_joint_sum": "48593/42875",
+            "absolute_error": "7407/42875",
+            "harmonic_error_bound": "131769/19600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "512/343",
+            "truncated_joint_sum": "1833351/1500625",
+            "absolute_error": "406649/1500625",
+            "harmonic_error_bound": "47832147/2744000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          1,
+          2
+        ],
+        "X": 13,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "101/91",
+            "truncated_joint_sum": "26918501/25050025",
+            "absolute_error": "884274/25050025",
+            "harmonic_error_bound": "1145993/720720"
+          },
+          {
+            "order": 2,
+            "actual_moment": "10210/8281",
+            "truncated_joint_sum": "146030383101/125375375125",
+            "absolute_error": "8550293149/125375375125",
+            "harmonic_error_bound": "1313299956049/259718659200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1033028/753571",
+            "truncated_joint_sum": "799578426419501/627503752500625",
+            "absolute_error": "60631091247999/627503752500625",
+            "harmonic_error_bound": "1505032556532461657/93592216029312000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          1,
+          3
+        ],
+        "X": 19,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1886/1729",
+            "truncated_joint_sum": "2824662807079/2613444058225",
+            "absolute_error": "26092250071/2613444058225",
+            "harmonic_error_bound": "275295799/232792560"
+          },
+          {
+            "order": 2,
+            "actual_moment": "3561340/2989441",
+            "truncated_joint_sum": "4979099659500437717/4224932866187408375",
+            "absolute_error": "54089626947384783/4224932866187408375",
+            "harmonic_error_bound": "75787776947048401/18064125330451200"
+          },
+          {
+            "order": 3,
+            "actual_moment": "6733215368/5168743489",
+            "truncated_joint_sum": "8860005405358285570927291/6830089845471557190150625",
+            "absolute_error": "37411541375755399317709/6830089845471557190150625",
+            "harmonic_error_bound": "20864056609071470244967399/1401731326612193601024000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          1,
+          4
+        ],
+        "X": 25,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "195049/172900",
+            "truncated_joint_sum": "37476802201347441/34562797670025625",
+            "absolute_error": "6054367197868261/138251190680102500",
+            "harmonic_error_bound": "34052522467/35694859200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "9550365301/7473602500",
+            "truncated_joint_sum": "7625336796609552256777029/6425594772862774712328125",
+            "absolute_error": "2343202604394589504630109/25702379091451098849312500",
+            "harmonic_error_bound": "1159574286365539766089/318530743326956160000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "469601507655799/323046468062500",
+            "truncated_joint_sum": "1567093285229877535929371441770521/1194586982779128772280588156640625",
+            "absolute_error": "677746425142889896017589055859691/4778347931116515089122352626562500",
+            "harmonic_error_bound": "39486429438618034659327597221563/2842477508481759923943168000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          2,
+          2
+        ],
+        "X": 13,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "14/13",
+            "truncated_joint_sum": "26918501/25050025",
+            "absolute_error": "58449/25050025",
+            "harmonic_error_bound": "1145993/360360"
+          },
+          {
+            "order": 2,
+            "actual_moment": "196/169",
+            "truncated_joint_sum": "146030383101/125375375125",
+            "absolute_error": "624622601/125375375125",
+            "harmonic_error_bound": "1313299956049/129859329600"
+          },
+          {
+            "order": 3,
+            "actual_moment": "2744/2197",
+            "truncated_joint_sum": "799578426419501/627503752500625",
+            "absolute_error": "15841377324501/627503752500625",
+            "harmonic_error_bound": "1505032556532461657/46796108014656000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          2,
+          3
+        ],
+        "X": 19,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "263/247",
+            "truncated_joint_sum": "2824662807079/2613444058225",
+            "absolute_error": "41926826054/2613444058225",
+            "harmonic_error_bound": "275295799/155195040"
+          },
+          {
+            "order": 2,
+            "actual_moment": "69178/61009",
+            "truncated_joint_sum": "4979099659500437717/4224932866187408375",
+            "absolute_error": "188455560808235967/4224932866187408375",
+            "harmonic_error_bound": "75787776947048401/12042750220300800"
+          },
+          {
+            "order": 3,
+            "actual_moment": "18198548/15069223",
+            "truncated_joint_sum": "8860005405358285570927291/6830089845471557190150625",
+            "absolute_error": "611556371381768257479791/6830089845471557190150625",
+            "harmonic_error_bound": "20864056609071470244967399/934487551074795734016000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          2,
+          4
+        ],
+        "X": 25,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "20807/18525",
+            "truncated_joint_sum": "37476802201347441/34562797670025625",
+            "absolute_error": "4030829204900702/103688393010076875",
+            "harmonic_error_bound": "34052522467/26771144400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "48367383/38130625",
+            "truncated_joint_sum": "7625336796609552256777029/6425594772862774712328125",
+            "absolute_error": "525308606707383433469046/6425594772862774712328125",
+            "harmonic_error_bound": "1159574286365539766089/238898057495217120000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1017631847393/706369828125",
+            "truncated_joint_sum": "1567093285229877535929371441770521/1194586982779128772280588156640625",
+            "absolute_error": "461666138410919235423167097630212/3583760948337386316841764469921875",
+            "harmonic_error_bound": "39486429438618034659327597221563/2131858131361319942957376000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          2,
+          5
+        ],
+        "X": 31,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "842617/765700",
+            "truncated_joint_sum": "30351071177332589339891/27933687639712380150625",
+            "absolute_error": "1554576870460822608461/111734750558849520602500",
+            "harmonic_error_bound": "290774257297357/288807105787200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "178488925189/146574122500",
+            "truncated_joint_sum": "5563295381047560352950062081693621/4668661736799198179365194354859375",
+            "absolute_error": "487651612226424283111871749944791/18674646947196792717460777419437500",
+            "harmonic_error_bound": "84549668706829570565919185449/20852386088294732932920960000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "38031712541684863/28057951399562500",
+            "truncated_joint_sum": "1029999392221880400768135139583956233779271071/780290905153020203537072526727754497687890625",
+            "absolute_error": "110646212772671739864413890265470727141967491/3121163620612080814148290106911017990751562500",
+            "harmonic_error_bound": "24584867122965955044590941285748217620558293/1505579318729418633452668854054044928000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          3,
+          3
+        ],
+        "X": 19,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "20/19",
+            "truncated_joint_sum": "2824662807079/2613444058225",
+            "absolute_error": "73669061579/2613444058225",
+            "harmonic_error_bound": "275295799/77597520"
+          },
+          {
+            "order": 2,
+            "actual_moment": "400/361",
+            "truncated_joint_sum": "4979099659500437717/4224932866187408375",
+            "absolute_error": "297733602783087717/4224932866187408375",
+            "harmonic_error_bound": "75787776947048401/6021375110150400"
+          },
+          {
+            "order": 3,
+            "actual_moment": "8000/6859",
+            "truncated_joint_sum": "8860005405358285570927291/6830089845471557190150625",
+            "absolute_error": "893724786642371075927291/6830089845471557190150625",
+            "harmonic_error_bound": "20864056609071470244967399/467243775537397867008000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          3,
+          4
+        ],
+        "X": 25,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1089/950",
+            "truncated_joint_sum": "37476802201347441/34562797670025625",
+            "absolute_error": "4286156992374393/69125595340051250",
+            "harmonic_error_bound": "34052522467/17847429600"
+          },
+          {
+            "order": 2,
+            "actual_moment": "596921/451250",
+            "truncated_joint_sum": "7625336796609552256777029/6425594772862774712328125",
+            "absolute_error": "1749093531044697565371667/12851189545725549424656250",
+            "harmonic_error_bound": "1159574286365539766089/159265371663478080000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "329336469/214343750",
+            "truncated_joint_sum": "1567093285229877535929371441770521/1194586982779128772280588156640625",
+            "absolute_error": "536749100133318687084020605025733/2389173965558257544561176313281250",
+            "harmonic_error_bound": "39486429438618034659327597221563/1421238754240879961971584000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          3,
+          5
+        ],
+        "X": 31,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "48959/44175",
+            "truncated_joint_sum": "30351071177332589339891/27933687639712380150625",
+            "absolute_error": "1823215205026233324602/83801062919137140451875",
+            "harmonic_error_bound": "290774257297357/216605329340400"
+          },
+          {
+            "order": 2,
+            "actual_moment": "268227027/216825625",
+            "truncated_joint_sum": "5563295381047560352950062081693621/4668661736799198179365194354859375",
+            "absolute_error": "212134795760671716644750934900304/4668661736799198179365194354859375",
+            "harmonic_error_bound": "84549668706829570565919185449/15639289566221049699690720000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "13323070747979/9578271984375",
+            "truncated_joint_sum": "1029999392221880400768135139583956233779271071/780290905153020203537072526727754497687890625",
+            "absolute_error": "166081088044216483597625491687861944236863562/2340872715459060610611217580183263493063671875",
+            "harmonic_error_bound": "24584867122965955044590941285748217620558293/1129184489047063975089501640540533696000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          3,
+          6
+        ],
+        "X": 37,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "2371033/2179300",
+            "truncated_joint_sum": "41609767450533550654564429/38241218378766248426205625",
+            "absolute_error": "16474039712738286166491/152964873515064993704822500",
+            "harmonic_error_bound": "2040798836801833/1942884166204800"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1414704602389/1187337122500",
+            "truncated_joint_sum": "282714473700706632443541550424559361783/236481722954089785379385189656691921875",
+            "absolute_error": "3792041291516832383484406518214510557/945926891816359141517540758626767687500",
+            "harmonic_error_bound": "4164859892291714602775712159889/943699720822330227608885760000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "850046482706255287/646890947766062500",
+            "truncated_joint_sum": "1941228817917182028167516034718091514321269635657741/1462390783092489497681243383764615097141234781640625",
+            "absolute_error": "78301966581245111688236969327332273350389171445189/5849563132369957990724973535058460388564939126562500",
+            "harmonic_error_bound": "8499641223631538635804818140059974697504276537/458374811309398900317223353655293990912000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          4,
+          4
+        ],
+        "X": 25,
+        "integer_count": 1,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "31/25",
+            "truncated_joint_sum": "37476802201347441/34562797670025625",
+            "absolute_error": "5381066909484334/34562797670025625",
+            "harmonic_error_bound": "34052522467/8923714800"
+          },
+          {
+            "order": 2,
+            "actual_moment": "961/625",
+            "truncated_joint_sum": "7625336796609552256777029/6425594772862774712328125",
+            "absolute_error": "2254657726144250140898696/6425594772862774712328125",
+            "harmonic_error_bound": "1159574286365539766089/79632685831739040000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "29791/15625",
+            "truncated_joint_sum": "1567093285229877535929371441770521/1194586982779128772280588156640625",
+            "absolute_error": "710534926224396080391332671796254/1194586982779128772280588156640625",
+            "harmonic_error_bound": "39486429438618034659327597221563/710619377120439980985792000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          4,
+          5
+        ],
+        "X": 31,
+        "integer_count": 2,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "1761/1550",
+            "truncated_joint_sum": "30351071177332589339891/27933687639712380150625",
+            "absolute_error": "2770404656345790926993/55867375279424760301250",
+            "harmonic_error_bound": "290774257297357/144403552893600"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1563521/1201250",
+            "truncated_joint_sum": "5563295381047560352950062081693621/4668661736799198179365194354859375",
+            "absolute_error": "1026667372984203558989362692644533/9337323473598396358730388709718750",
+            "harmonic_error_bound": "84549668706829570565919185449/10426193044147366466460480000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "1399503681/930968750",
+            "truncated_joint_sum": "1029999392221880400768135139583956233779271071/780290905153020203537072526727754497687890625",
+            "absolute_error": "285987574416240982879161970560047368641134633/1560581810306040407074145053455508995375781250",
+            "harmonic_error_bound": "24584867122965955044590941285748217620558293/752789659364709316726334427027022464000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          4,
+          6
+        ],
+        "X": 37,
+        "integer_count": 3,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "94607/86025",
+            "truncated_joint_sum": "41609767450533550654564429/38241218378766248426205625",
+            "absolute_error": "1339379327908971919760438/114723655136298745278616875",
+            "harmonic_error_bound": "2040798836801833/1457163124653600"
+          },
+          {
+            "order": 2,
+            "actual_moment": "1002587583/822255625",
+            "truncated_joint_sum": "282714473700706632443541550424559361783/236481722954089785379385189656691921875",
+            "absolute_error": "5630940829253558328648710145442033742/236481722954089785379385189656691921875",
+            "harmonic_error_bound": "4164859892291714602775712159889/707774790616747670706664320000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "96431118578693/70734540140625",
+            "truncated_joint_sum": "1941228817917182028167516034718091514321269635657741/1462390783092489497681243383764615097141234781640625",
+            "absolute_error": "157266220815465130293253832832526149101821089212552/4387172349277468493043730151293845291423704344921875",
+            "harmonic_error_bound": "8499641223631538635804818140059974697504276537/343781108482049175237917515241470493184000000"
+          }
+        ]
+      },
+      {
+        "V": 6,
+        "g_interval_inclusive": [
+          4,
+          7
+        ],
+        "X": 43,
+        "integer_count": 4,
+        "moments": [
+          {
+            "order": 1,
+            "actual_moment": "5329801/4932100",
+            "truncated_joint_sum": "129465180787834460461391372576751/118860169487111511604631111250625",
+            "absolute_error": "4082778509034221349732476884979/475440677948446046418524445002500",
+            "harmonic_error_bound": "532145396070491417/489329255002723200"
+          },
+          {
+            "order": 2,
+            "actual_moment": "7153240212901/6081402602500",
+            "truncated_joint_sum": "1552429700356362741040272387610565264336797303751/1295849357701440388556229157424738985877609390625",
+            "absolute_error": "112755754406479620515159098616573860888628203479/5183397430805761554224916629698955943510437562500",
+            "harmonic_error_bound": "283178722559020182033101303870667889/59860779950380026963609853954560000"
+          },
+          {
+            "order": 3,
+            "actual_moment": "9675432633949144351/7498521443947562500",
+            "truncated_joint_sum": "18812491977092883737635739915550597630548313633661863492448592451/14127739890504874419621454869562847474630867580915665451562890625",
+            "absolute_error": "2333195394042313207333150052945170428477664322257975806926850029/56510959562019497678485819478251389898523470323662661806251562500",
+            "harmonic_error_bound": "150692253474905597557431977219484148390780008232008713/7322907714250352109235999208917737751772264448000000"
+          }
+        ]
+      }
+    ]
+  },
+  "pointwise_core_counterexample": {
+    "prime_index": 29,
+    "V": 514229,
+    "integer_core_cutoff": 39,
+    "witness": {
+      "g": 75085,
+      "N": 38610884466,
+      "factorization": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          17,
+          1
+        ],
+        [
+          19,
+          1
+        ],
+        [
+          37,
+          2
+        ]
+      ],
+      "sigma": 125764863840,
+      "Z_exact": "530640/162911",
+      "core": 38610884466,
+      "radical": 5521362,
+      "source": {
+        "composition": [
+          5633252125,
+          9114793405
+        ],
+        "primitive_composition": [
+          75025,
+          121393
+        ],
+        "primitive_norm": 1,
+        "coordinate_gcd": 75085,
+        "unit_bit": 1,
+        "greedy_fibonacci_indices": [
+          52,
+          48,
+          44,
+          40,
+          38,
+          35,
+          22,
+          16,
+          12,
+          8,
+          5,
+          2
+        ]
+      }
+    },
+    "core_modulus_interval_hits": 1,
+    "scope": "Refutes pointwise C_39(N)<=V and R_39(N)<=V for this actual source; not an asymptotic or Robin counterexample."
+  },
+  "limitations": [
+    "The integer cutoffs are fixed input choices, not certified evaluations of a logarithmic formula.",
+    "Only representatives are independently greedy-decoded; the exact enumerated integer ranges are stated separately.",
+    "Finite moments and joint counts do not certify limiting Euler constants or an infinite-family theorem.",
+    "No Euler-gamma, logarithmic Robin budget, Robin margin, or RH claim is computed."
+  ]
+}

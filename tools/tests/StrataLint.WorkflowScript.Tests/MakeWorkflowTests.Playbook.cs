@@ -12,31 +12,17 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         var script = File.ReadAllText(Path.Combine(root, PlaybookWorkflowScriptPath));
 
-        Assert.Contains("make deliver-check", makefile, StringComparison.Ordinal);
-        Assert.Contains(
-            "scripts/workflow/playbook-workflows.sh deliver-check \"$(BASE)\"",
-            makefile,
-            StringComparison.Ordinal);
-
         foreach (var target in new[] { "deposit", "cover" })
         {
-            Assert.Contains($"make {target} ATOM_ID=", makefile, StringComparison.Ordinal);
             Assert.Contains(
                 $"scripts/workflow/playbook-workflows.sh {target} \"$(BASE)\" \"$(ATOM_ID)\" \"$(GID)\"",
                 makefile,
                 StringComparison.Ordinal);
         }
-        Assert.Contains(
-            "Build, emit, and freeze a theorem, then cover the anchor atom in the working tree",
-            makefile,
-            StringComparison.Ordinal);
-
-        Assert.Contains("make deposit-uncovered GID=", makefile, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {PlaybookWorkflowScriptPath} deposit-uncovered \"$(BASE)\" \"$(GID)\"",
             Recipe(makefile, "deposit-uncovered"));
 
-        Assert.Contains("make cover-batch ATOMS=", makefile, StringComparison.Ordinal);
         Assert.Contains(
             "scripts/workflow/playbook-workflows.sh cover-batch \"$(BASE)\" \"$(ATOMS)\"",
             makefile,

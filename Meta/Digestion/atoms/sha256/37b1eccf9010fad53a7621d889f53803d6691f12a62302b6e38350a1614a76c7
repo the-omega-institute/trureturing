@@ -1,0 +1,43 @@
+**证明。** 因 $1\le U\le\rho$，
+
+$$
+2U^2\le\rho(U+\rho),\qquad
+0\le\log U\le\frac\ell2.
+$$
+
+第一式由 $(\rho-U)(2U+\rho)\ge0$ 与 $\rho^2=2$ 得到。
+式（248.1）的精确位移恒等式给出
+
+$$
+(\rho-U)t=\frac{2U^2\log U}{U+\rho}
+\le\frac{\rho\ell}{2}=\frac\ell\rho,
+$$
+
+即得结论。这个估计不依赖渐近展开的余项符号。
+
+定义二项修正
+
+$$
+W_2(x)=\Phi(x)+b(x)\left(c_R+\frac{c_2}{t}\right),
+\qquad
+H=c-\frac32c_2=4c+\frac32\rho\ell>0.
+\tag{248.3}
+$$
+
+对同侧的实际状态记 $d=(A-\Psi)/\sqrt x$。
+直接微分修正项并复用 §247 的实际导数，得到
+
+$$
+\frac{W_2'-\mathfrak D'}{\sqrt x\,w}
+=d-\frac{2ct(t+2)+c_2(t+4)}{2t(t+1)}.
+\tag{248.4}
+$$
+
+其中心项有精确分解
+
+$$
+\frac{2ct(t+2)+c_2(t+4)}{2t(t+1)}
+=c-\frac{\ell}{\rho t}-\frac{H}{t(t+1)}.
+\tag{248.5}
+$$
+

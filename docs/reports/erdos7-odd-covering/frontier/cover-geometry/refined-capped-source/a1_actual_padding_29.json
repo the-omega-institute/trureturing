@@ -1,0 +1,1251 @@
+{
+  "scope": "One explicit36-original nine-prime family and specified countable pure completion; all original phases fixed, all pure heights allowed. Not a theorem for arbitrary A1 families.",
+  "originals": [
+    {
+      "modulus": 3,
+      "phase": 0
+    },
+    {
+      "modulus": 5,
+      "phase": 0
+    },
+    {
+      "modulus": 7,
+      "phase": 0
+    },
+    {
+      "modulus": 9,
+      "phase": 1
+    },
+    {
+      "modulus": 11,
+      "phase": 0
+    },
+    {
+      "modulus": 13,
+      "phase": 0
+    },
+    {
+      "modulus": 15,
+      "phase": 2
+    },
+    {
+      "modulus": 17,
+      "phase": 0
+    },
+    {
+      "modulus": 19,
+      "phase": 0
+    },
+    {
+      "modulus": 21,
+      "phase": 1
+    },
+    {
+      "modulus": 23,
+      "phase": 0
+    },
+    {
+      "modulus": 25,
+      "phase": 1
+    },
+    {
+      "modulus": 27,
+      "phase": 4
+    },
+    {
+      "modulus": 29,
+      "phase": 0
+    },
+    {
+      "modulus": 35,
+      "phase": 29
+    },
+    {
+      "modulus": 45,
+      "phase": 8
+    },
+    {
+      "modulus": 63,
+      "phase": 16
+    },
+    {
+      "modulus": 75,
+      "phase": 11
+    },
+    {
+      "modulus": 105,
+      "phase": 44
+    },
+    {
+      "modulus": 165,
+      "phase": 89
+    },
+    {
+      "modulus": 203,
+      "phase": 88
+    },
+    {
+      "modulus": 609,
+      "phase": 382
+    },
+    {
+      "modulus": 1015,
+      "phase": 669
+    },
+    {
+      "modulus": 1827,
+      "phase": 1285
+    },
+    {
+      "modulus": 3045,
+      "phase": 1369
+    },
+    {
+      "modulus": 5075,
+      "phase": 4904
+    },
+    {
+      "modulus": 5481,
+      "phase": 4624
+    },
+    {
+      "modulus": 9135,
+      "phase": 7144
+    },
+    {
+      "modulus": 15225,
+      "phase": 529
+    },
+    {
+      "modulus": 25375,
+      "phase": 4
+    },
+    {
+      "modulus": 27405,
+      "phase": 15964
+    },
+    {
+      "modulus": 45675,
+      "phase": 36754
+    },
+    {
+      "modulus": 76125,
+      "phase": 21004
+    },
+    {
+      "modulus": 137025,
+      "phase": 27304
+    },
+    {
+      "modulus": 228375,
+      "phase": 194254
+    },
+    {
+      "modulus": 685125,
+      "phase": 367504
+    }
+  ],
+  "future29": [
+    {
+      "a": 0,
+      "b": 0,
+      "modulus": 203,
+      "phase": 88,
+      "root29": 1,
+      "old_modulus": 7,
+      "old_phase": 4
+    },
+    {
+      "a": 0,
+      "b": 1,
+      "modulus": 1015,
+      "phase": 669,
+      "root29": 2,
+      "old_modulus": 35,
+      "old_phase": 4
+    },
+    {
+      "a": 0,
+      "b": 2,
+      "modulus": 5075,
+      "phase": 4904,
+      "root29": 3,
+      "old_modulus": 175,
+      "old_phase": 4
+    },
+    {
+      "a": 0,
+      "b": 3,
+      "modulus": 25375,
+      "phase": 4,
+      "root29": 4,
+      "old_modulus": 875,
+      "old_phase": 4
+    },
+    {
+      "a": 1,
+      "b": 0,
+      "modulus": 609,
+      "phase": 382,
+      "root29": 5,
+      "old_modulus": 21,
+      "old_phase": 4
+    },
+    {
+      "a": 1,
+      "b": 1,
+      "modulus": 3045,
+      "phase": 1369,
+      "root29": 6,
+      "old_modulus": 105,
+      "old_phase": 4
+    },
+    {
+      "a": 1,
+      "b": 2,
+      "modulus": 15225,
+      "phase": 529,
+      "root29": 7,
+      "old_modulus": 525,
+      "old_phase": 4
+    },
+    {
+      "a": 1,
+      "b": 3,
+      "modulus": 76125,
+      "phase": 21004,
+      "root29": 8,
+      "old_modulus": 2625,
+      "old_phase": 4
+    },
+    {
+      "a": 2,
+      "b": 0,
+      "modulus": 1827,
+      "phase": 1285,
+      "root29": 9,
+      "old_modulus": 63,
+      "old_phase": 25
+    },
+    {
+      "a": 2,
+      "b": 1,
+      "modulus": 9135,
+      "phase": 7144,
+      "root29": 10,
+      "old_modulus": 315,
+      "old_phase": 214
+    },
+    {
+      "a": 2,
+      "b": 2,
+      "modulus": 45675,
+      "phase": 36754,
+      "root29": 11,
+      "old_modulus": 1575,
+      "old_phase": 529
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "modulus": 228375,
+      "phase": 194254,
+      "root29": 12,
+      "old_modulus": 7875,
+      "old_phase": 5254
+    },
+    {
+      "a": 3,
+      "b": 0,
+      "modulus": 5481,
+      "phase": 4624,
+      "root29": 13,
+      "old_modulus": 189,
+      "old_phase": 88
+    },
+    {
+      "a": 3,
+      "b": 1,
+      "modulus": 27405,
+      "phase": 15964,
+      "root29": 14,
+      "old_modulus": 945,
+      "old_phase": 844
+    },
+    {
+      "a": 3,
+      "b": 2,
+      "modulus": 137025,
+      "phase": 27304,
+      "root29": 15,
+      "old_modulus": 4725,
+      "old_phase": 3679
+    },
+    {
+      "a": 3,
+      "b": 3,
+      "modulus": 685125,
+      "phase": 367504,
+      "root29": 16,
+      "old_modulus": 23625,
+      "old_phase": 13129
+    }
+  ],
+  "a1_node": [
+    2,
+    4,
+    1,
+    8,
+    1,
+    2,
+    1,
+    0,
+    13
+  ],
+  "xi": [
+    1,
+    4,
+    7,
+    14
+  ],
+  "eta165": 14,
+  "complete_pure_antichains": "Exact formulas in pure_phase and companion proof; sampled pair checks are supplementary.",
+  "pure_prefix_sample_pair_checks": 1710,
+  "physical_coarse_source": [
+    {
+      "cell": 7,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 11,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 13,
+      "anchor_relative_mass": "1/2",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/270"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/270"
+      }
+    },
+    {
+      "cell": 14,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 16,
+      "anchor_relative_mass": "3/4",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 22,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 23,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 26,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 29,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 34,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2,
+          3
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2,
+          4
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 38,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 41,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 43,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 44,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 49,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 52,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 56,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 59,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 61,
+      "anchor_relative_mass": "3/4",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 67,
+      "anchor_relative_mass": "1/2",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/270"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/270"
+      }
+    },
+    {
+      "cell": 68,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 71,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 74,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 76,
+      "anchor_relative_mass": "3/4",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/180"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/180"
+      }
+    },
+    {
+      "cell": 79,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2,
+          3
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2,
+          3
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 83,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 86,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 88,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 89,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 94,
+      "anchor_relative_mass": "1/2",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/315"
+      }
+    },
+    {
+      "cell": 97,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 101,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 103,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 104,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 106,
+      "anchor_relative_mass": "3/4",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 113,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 116,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 119,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 121,
+      "anchor_relative_mass": "3/8",
+      "baseline": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/360"
+      },
+      "changed": {
+        "padded7_roots": [
+          1
+        ],
+        "good7_haar": "5/7",
+        "live7_density": "7/5",
+        "coarse_mass23": "1/360"
+      }
+    },
+    {
+      "cell": 124,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2,
+          3
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2,
+          3
+        ],
+        "good7_haar": "3/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "1/210"
+      }
+    },
+    {
+      "cell": 128,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "1/135"
+      }
+    },
+    {
+      "cell": 131,
+      "anchor_relative_mass": "11/20",
+      "baseline": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      },
+      "changed": {
+        "padded7_roots": [],
+        "good7_haar": "5/6",
+        "live7_density": "6/5",
+        "coarse_mass23": "11/2700"
+      }
+    },
+    {
+      "cell": 133,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    },
+    {
+      "cell": 134,
+      "anchor_relative_mass": "1",
+      "baseline": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      },
+      "changed": {
+        "padded7_roots": [
+          1,
+          2
+        ],
+        "good7_haar": "4/7",
+        "live7_density": "3/2",
+        "coarse_mass23": "2/315"
+      }
+    }
+  ],
+  "head23_mass": "49/200",
+  "conditional_caps": {
+    "7": "3/2",
+    "11": "5/3",
+    "13": "3/2",
+    "17": "2",
+    "19": "9/5",
+    "23": "11/5",
+    "29": "7/3"
+  },
+  "actual_changed_cell": 34,
+  "actual_target_prefix": {
+    "mod27": 7,
+    "mod125": 4,
+    "mod7": 4
+  },
+  "actual_target_old_phase": 3004,
+  "source_mass_on_target_3_5_prefix": "1/5250",
+  "baseline_mass_on_target_prefix_and7root": "1/15750",
+  "future29_hit_count_histogram": {
+    "0": 20250,
+    "1": 1800,
+    "2": 960,
+    "3": 272,
+    "4": 238,
+    "6": 64,
+    "8": 26,
+    "9": 8,
+    "12": 6,
+    "16": 1
+  },
+  "actual_old_prefix_points_checked": 23625,
+  "baseline_29_loss": "1/456750",
+  "changed_29_loss": "0",
+  "baseline_29_mass": "447611/1827000",
+  "changed_29_mass": "49/200",
+  "strict_actual29_mass_gain": "1/456750",
+  "cell34_uniform_padding_live7_density": "9/8",
+  "cell34_uniform_padding_29_loss": "1/609000",
+  "cell34_uniform_padding_actual29_mass_gain": "1/1827000",
+  "half_survival_sharpness_control": {
+    "only_phase_change": {
+      "modulus": 105,
+      "phase": 79
+    },
+    "cell": 34,
+    "active_roots": [
+      1,
+      1,
+      2,
+      2
+    ],
+    "survival_factor": "1/2"
+  },
+  "same_all_query_comparison_caps": true,
+  "rho_s_used_as_actual_event": false,
+  "actual_full_query_sum_upper_bound": "404/85",
+  "actual_full_query_bound_ratio": "16160/833",
+  "arbitrary_single29_first_moment_reserve": "1791/23800",
+  "query_bound_scope": "Same bound for both sources; no claim that their exact query maxima agree or differ.",
+  "all_height_claim_basis": "Explicit pure antichain sums and full conditional current kernels; no finite-height inference.",
+  "lean_verification": false
+}

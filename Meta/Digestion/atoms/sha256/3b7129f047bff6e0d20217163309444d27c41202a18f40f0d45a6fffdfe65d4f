@@ -1,0 +1,12 @@
+**定义 12.4（Strict-progress finite-candidate model）。** Let $K$ be a known finite set of actual sources and $\theta:K\to T$ a target. An information state is a nonempty subset $S\subseteq K$ containing the one actual source. An allowed action $a\in\mathcal A(S)$ has a finite positive cost $c(S,a)$ and a deterministic outcome map $o_a:S\to\Omega_a$. Its children are the nonempty outcome classes
+
+$$
+S_{a,o}=\{x\in S:o_a(x)=o\}.
+$$
+
+The menu $\mathcal A(S)$ is finite; an empty menu is allowed. Because $S$ is finite, only finitely many outcome classes are nonempty. Outcomes restrict the same actual source. If actions or costs depend on additional history, that history must first be incorporated into the information state.
+
+A terminal state has an available valid certificate that $\theta$ is constant on it. In the ideal semantic model all target-homogeneous sets are certified terminals, with the certificate test available and its cost already included or separately represented. For composition recovery these sets are singletons. For prime/composite targets proposition 12.3 can justify arithmetic certificates when its checks are available. Homogeneity without such a check does not assert executability.
+
+At every nonterminal $S$, impose strict progress: each action under consideration has every nonempty child strictly smaller than $S$. A proper certifying decision tree uses these actions and ends at certified terminals on every possible branch.
+

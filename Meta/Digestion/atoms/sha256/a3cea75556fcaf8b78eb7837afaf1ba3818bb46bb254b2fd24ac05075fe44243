@@ -1,0 +1,26 @@
+**命题 51.5.1。** 在引理51.5的奇 rival、第一不相干条件下，另取同一基点两条第一词不同、共同实际长度 $L$ 为奇数的原返回。令
+$$
+b=g^L,\quad f_{U_i}(x)=A_i-bx,\quad
+c_i=A_i-(1+b)y,\quad c_-<c_+
+$$
+为两 $c_i$ 的递增排列，$\ell=u-y$、$r=v-y$。则其最小不变包络满足
+$$
+H-y=\left[
+\frac{c_--bc_+}{1-b^2},
+\frac{c_+-bc_-}{1-b^2}\right]\subseteq P-y,
+\tag{51.8}
+$$
+并有必要条件
+$$
+\begin{array}{ll}
+P>y:&0<bc_+<c_-<c_+,\quad c_-/c_+>b,\\
+P<y:&c_-<c_+<bc_-<0,\quad |c_+|/|c_-|>b,
+\end{array}
+\tag{51.9}
+$$
+$$
+\ell+br\le c_-,\qquad c_+\le r+b\ell,\qquad
+g^Ld_s\le c_+-c_-\le(1-g^L)|P|.
+\tag{51.10}
+$$
+

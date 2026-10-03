@@ -1,0 +1,7 @@
+### 144.4 文献锚
+
+Jan Vondrák，Richard Pang（scribe）的 *MATH233B: Polyhedral techniques in combinatorial optimization* Lecture 3，
+2017 年 1 月 17 日，印刷第 3 页 Lemma 10 给出有向图 signed incidence matrix 的全幺模性及稀疏列/行和归纳。
+本节把图结构改写为任意端点表示，并显式保留平行标签与环列；这是文献已知定理的诚实形式化，不声称原创。
+Kevin Cheung 的 MATH5801 Proposition 7.1 给出每列至多一个正项、至多一个负项的同一类判据与归纳说明。
+

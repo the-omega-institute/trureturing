@@ -1,0 +1,30 @@
+**推论 199.4（任意稀薄的固定素切面）。** 对每个固定 $k,r$，把 $P_{r,k}$ 的有根素数集与所有整除 $10Q$、多项式首项或判别式的有限异常素数合并，得到 $S_{r,k}$。在与推论193.4相同的固定域 Chebotarev 输入下，
+
+$$
+\vartheta_{S_{r,k}}(x)=\delta_kx+o(x),
+\qquad \delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right).
+\tag{199.9}
+$$
+
+每个实际 $V_j$ 的素因子均属于相应的 $S_{r,k}$。对任意 $\eta>0$，都能选择一个满足式（199.3）的固定 $k$，使 $0<\delta_k<\eta$。
+
+证明。$k$ 平方自由。CRT 同时分解同一个仿射群、其群乘法与根索引集合：
+
+$$
+\operatorname{AGL}_1(\mathbb Z/k\mathbb Z)
+\cong\prod_{\ell\mid k}\operatorname{AGL}_1(\mathbb F_\ell),
+\qquad
+\mathbb Z/k\mathbb Z\cong\prod_{\ell\mid k}\mathbb F_\ell.
+$$
+
+一个元素固定某个根，当且仅当每个分量都有固定点。在 $\operatorname{AGL}_1(\mathbb F_\ell)$ 中，斜率不为一时，全部 $\ell$ 个平移都有唯一固定点；斜率为一时，只有零平移有固定点。故有固定点的比例为
+
+$$
+\frac{\ell(\ell-2)+1}{\ell(\ell-1)}
+=1-\frac1\ell.
+$$
+
+相乘得到式（199.9），随后由固定域 Chebotarev 转成加权素数密度。这里的乘法来自一个已识别群作用的精确 CRT，不是假设不同数域独立。引理199.2给实际素因子包含关系。
+
+式（199.3）只排除有限多个素数。素数倒数和在删去有限集合后仍发散，所以有限乘积 $\prod(1-1/\ell)$ 可任意小。每次先选有限个允许素数，取它们的乘积作为固定 $k$，即可得到最后断言。$\square$
+

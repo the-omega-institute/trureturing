@@ -1,0 +1,21 @@
+**定理 4.6（One actual labelled history for every finite prefix）。** There exists one function $p:\mathbb N\to\mathbb N^2$ such that, simultaneously,
+
+$$
+\begin{aligned}
+&\forall N\in\mathbb N\ \forall t,z\in\mathbb R,\quad
+\mathcal W_{W(C_N)}(t,z)\ \Longleftrightarrow\ \mathcal U_{p,N}(t,z),\\
+&\forall n\in\mathbb N,\quad n>0\Rightarrow
+(p_n^x,p_n^y)\text{ is a history optimum after }N=n-1\text{ for width }n,\\
+&\forall n\in\mathbb N,\quad n>0\Rightarrow
+(p_n^x,p_n^y)\text{ has closed bottom support after }N=n-1\text{ for width }n,\\
+&\forall i,j\in\mathbb N,\quad 0<i<j\Rightarrow
+\forall t,z\in\mathbb R,\quad
+(t,z)\in\mathcal B_i(p_i^x,p_i^y)\Rightarrow
+(t,z)\notin\mathcal B_j(p_j^x,p_j^y).
+\end{aligned}
+$$
+
+证明。Theorem 3.4 gives ordered widths at every positive endpoint, and the empty endpoint is ordered as well. Choose the natural optimum of Theorem 4.4 for width $N+1$ above $W(C_N)$ and set it to be $p_{N+1}$; the value at zero is immaterial. Theorem 3.6 transports that theorem's union to $W(C_{N+1})$. Induction on $N$ therefore proves the exact labelled-union identity.
+
+Using that same identity, history legality is equivalent to row legality. In one direction an old supporting brick identifies an integer upper-face height, and every supporting point is in the corresponding occupied row. Conversely a supporting row point lies in the labelled union, whose rectangle containing it has exactly the required row height. This proves both support directions, without substituting an optimum as a legality premise. Thus each chosen position is a history optimum. An earlier rectangle belongs to the preceding union for any later label, so that later placement's nonoverlap proves the final disjointness statement. For closed support, the half-open support already covers every point short of the new right endpoint. Cover the point half a unit before that endpoint by an old supporting brick. Its integer right endpoint must extend at least to the new integer endpoint, and its left endpoint is no larger, supplying the missing closed endpoint. $\square$
+

@@ -1,0 +1,17 @@
+**定义 24.2（上锚高度亏量与候选平台宽度）。** 对整数 $m\ge8$、$0\le t\le F_{m-2}$，定义
+
+$$
+\lambda_m(t)=F_{m-1}-C(F_m-t),\qquad
+p_m=\left\lfloor\frac{2m-9}{3}\right\rfloor.
+\tag{24.5}
+$$
+
+$\lambda_m(t)$ 是上锚 Fibonacci 高度的亏量。由 $U$ 非减，它是非负整数；它与规范黄金缺陷 $E(n)=C(n)-G(n)$ 的准确关系是
+
+$$
+E(F_m-t)=F_{m-1}-G(F_m-t)-\lambda_m(t).
+\tag{24.6}
+$$
+
+因而高度亏量为零不等于规范缺陷为零。这里的 $\lambda_m$ 也不沿用供应源终端编码中同名字母的右侧轮廓含义。
+

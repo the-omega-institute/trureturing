@@ -1,0 +1,14 @@
+**命题 31.4（pair-address 正性与非单射求和障碍）。** 有限地址集 $X$ 的 density kernel 必须满足 $\rho\ge0$、$\rho=\rho^\dagger$、$\operatorname{Tr}\rho=1$。对非单射 $\kappa:X\to Y$，振幅求和 $A|x\rangle=|\kappa(x)\rangle$ 一般不给 TP 通道。
+
+证明。取 $x\ne x'$、$\kappa(x)=\kappa(x')=y$。对 $\psi_\pm=(|x\rangle\pm|x'\rangle)/\sqrt2$，$A\psi_+=\sqrt2|y\rangle$、$A\psi_-=0$，故 $A\rho A^\dagger$ 的迹分别为二、零。事后归一化非线性，且第二态上无定义。$\square$
+
+有效经典粗化可用 Kraus $|\kappa(x)\rangle\langle x|$：
+
+$$
+\mathcal Q_{\mathrm{mp}}(\rho)
+=\sum_y\operatorname{Tr}(P_y\rho)|y\rangle\langle y|,
+\qquad P_y=\sum_{\kappa(x)=y}|x\rangle\langle x|.
+$$
+
+Kraus 伴随乘积和为 $I_X$，所以 CPTP；它明确舍去纤维内部量子信息。若要保留内部相干，应改用块提取 $\rho\mapsto(P_y\rho P_y)_y$ 到 $\bigoplus_yB(P_y\mathcal H)$，或指定等距及重数系统和其处置。后者保留 rank-two 块而非单个 $|y\rangle$。§35 将证明这些正粗化何时还能保留所声明的全部条件续接。
+

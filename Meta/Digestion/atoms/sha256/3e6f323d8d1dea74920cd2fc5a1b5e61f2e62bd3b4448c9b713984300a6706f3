@@ -1,0 +1,11 @@
+**推论58.12.1（平台的完整刻画）。** 在 $\Theta_1<b<\lambda$ 中，固定任意 $\mathsf T,o,\kappa$。若 $K(b)=1$，率为 $\alpha_1$；若 $K(b)=K\ge2$，则
+
+$$
+\eta^{\mathsf T}_{b,o,\kappa}=\alpha_{K(b)}
+\quad\Longleftrightarrow\quad
+\Psi_{K(b)}\le b\le Q_{K(b)+1}.
+\tag{58.57}
+$$
+
+**证明。** 正向的排除来自过渡带 (58.52) 的严格上界，反向来自平台 (58.46)；(58.38) 穷尽同一帽值单元。这里不声称在过渡带内某个较小帽的率不能偶然出现其他平台。证毕。
+

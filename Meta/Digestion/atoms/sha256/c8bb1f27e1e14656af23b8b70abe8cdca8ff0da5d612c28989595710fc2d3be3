@@ -1,0 +1,6 @@
+**Definition 2.2 (component matching).** For each $u\in U$, let $\pi_F(u)$ be the unique element of $W$ in its connected component. The uniqueness of both roots in every component makes $\pi_F:U\to W$ a bijection. Write $U=\{u_0<\cdots<u_{k-1}\}$ and $W=\{w_0<\cdots<w_{k-1}\}$, and let $\sigma_F\in S_k$ be the unique permutation satisfying $\pi_F(u_a)=w_{\sigma_F(a)}$. Define
+
+$$
+\epsilon(U,W,F)=(-1)^{n+k+\sum_{u\in U}u+\sum_{w\in W}w}\operatorname{sgn}(\sigma_F).
+$$
+

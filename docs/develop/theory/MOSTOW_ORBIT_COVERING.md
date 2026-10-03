@@ -8,7 +8,7 @@ finite-volume hyperbolic lattice satisfies the stated hypotheses.
 ## 1. The representation action
 
 **Definition 1.1.** Let (G) be a group, (X) a metric space, and
-(ho:G\to\operatorname{Isom}(X)) a homomorphism. Its associated action is
+(\rho:G\to\operatorname{Isom}(X)) a homomorphism. Its associated action is
 (g\cdot x=\rho(g)(x)). Write (X/\rho) for the equivalence classes of the
 relation (x\sim_\rho y\iff \exists g,\rho(g)(x)=y).
 
@@ -146,3 +146,84 @@ identities into Definition 3.1 cancels the same factor in the numerator
 and denominator. The involution and distance identity give the stated
 isometric equivalence. The cancellation for arbitrary (E) is the new
 geometric content; Mathlib supplies the Euclidean inversion identities.
+
+## 6. Completeness of upper half-space
+
+**Theorem 6.1 (complete horizontal space gives complete hyperbolic space).**
+Let (E) be a complete real inner product space. Then the upper half-space
+(U_E,d_H) of Definition 3.1 is a complete metric space. For all (p,q),
+
+\[
+ |\log h(p)-\log h(q)|\leq d_H(p,q).
+\]
+
+In particular, a hyperbolic Cauchy sequence cannot approach the height-zero
+boundary.
+
+**Proof.** The Euclidean separation is at least the separation of the two
+heights. Compare the distance formula with the vertical-line formula in
+the ordinary upper half-plane, where the distance is the absolute
+difference of the logarithms of the heights. Thus log-height is
+1-Lipschitz. Exponentiating gives
+(h(p)\leq h(q)\exp d_H(p,q)). For a hyperbolic Cauchy sequence (p_n), its
+hyperbolic distances are bounded, so its heights admit a common positive
+upper bound (B). The defining distance identity then gives
+
+\[
+ d_2(p_n,p_m)
+ =2\sqrt{h(p_n)h(p_m)}\sinh\frac{d_H(p_n,p_m)}2
+ \leq 2B\sinh\frac{d_H(p_n,p_m)}2.
+\]
+
+Consequently the Euclidean coordinates form a Cauchy sequence, and
+completeness of (E\times\mathbb R) supplies a limit. The logarithms of the
+heights also converge, say to (a), so the limit height is (\exp a>0).
+Finally the distance formula, continuity of square root and inverse
+hyperbolic sine, and positivity of the limiting height show convergence
+in (d_H). This establishes metric completeness of the model; it does not
+establish manifold curvature, quotient completeness, finite volume or
+Mostow--Prasad rigidity.
+
+## 7. Coordinate topology and compact hyperbolic balls
+
+**Theorem 7.1 (coordinate topology and properness).** Let (E) be a real
+inner product space and equip (U_E) with the metric of Definition 3.1. The
+coordinate bijection from this hyperbolic metric space to the positive-height
+subspace of (E\times\mathbb R), with its Euclidean subspace topology, is a
+homeomorphism. If (E) is a proper metric space, then the hyperbolic metric
+space is proper: every closed hyperbolic ball is compact.
+
+**Proof.** The logarithmic height bound of Theorem 6.1 makes log-height
+continuous in the hyperbolic topology, hence height is continuous by
+exponentiation. The exact identity
+
+\[
+ d_2(p,q)=2\sqrt{h(p)h(q)}\sinh\frac{d_H(p,q)}2
+\]
+
+then proves continuity of the Euclidean coordinates at each point. Conversely,
+the distance formula of Definition 3.1 is continuous in the Euclidean
+coordinates, with a positive denominator. These two continuities give the
+coordinate homeomorphism.
+
+For a closed hyperbolic ball of radius (r\geq0) about (p), write
+(U=h(p)\exp r), (L=h(p)\exp(-r)>0), and
+(R=2U\sinh(r/2)). Every point (q) of the ball satisfies
+
+\[
+ L\leq h(q)\leq U,\qquad d_E(q_{\mathrm{horizontal}},p_{\mathrm{horizontal}})
+ \leq d_2(q,p)\leq R.
+\]
+
+The height estimates follow by exponentiating the logarithmic bound. The
+distance estimate follows from the displayed identity and monotonicity of
+square root and hyperbolic sine. Thus the ball lies in the continuous image
+of the compact Euclidean product
+(\overline B_E(p_{\mathrm{horizontal}},R)\times[L,U]). Its height lower bound
+ensures that this compact product maps into the positive-height space.
+The hyperbolic ball is closed, so it is a closed subset of that compact
+image and is compact. Negative-radius balls are empty. Properness supplies
+local compactness and second countability by the standard metric-space
+theorems. This establishes topological and compactness properties of the
+model; curvature, quotient metric completeness, finite covolume, and
+Mostow--Prasad rigidity remain separate obligations.

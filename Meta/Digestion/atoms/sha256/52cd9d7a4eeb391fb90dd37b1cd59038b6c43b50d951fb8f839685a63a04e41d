@@ -1,0 +1,119 @@
+**定理 14.1（$d=e=2$ 的固定时钟三分）。** 固定 $d=e=2$，采用同一标准提升与定义 11.1 的 $\Sigma_\Delta$，其中任意 $\Delta>0$ 均只许可正向重复 $W=W(\Delta)$、任意低层有限仪器及低层读出。输入为全部联合态，历史有限且可自适应。置 $x=e^{-i\Delta}$、$V=U_{M,2}$，令 $\mathcal D_F$ 为四个完整高层 Fourier 标签的对角代数，则
+
+$$
+S_\Delta=
+\begin{cases}
+\mathcal B(\mathbb C^4)\otimes I_4,&x=1,\\
+\mathcal B(\mathbb C^4)\otimes\mathcal D_F,&x^3=1, x\ne1,\\
+\mathcal B(\mathbb C^4)\otimes
+\bigl(\mathbb C\oplus\mathcal B(\mathbb C^3)\bigr)
+=\mathcal A_{\mathrm{orb}},&x^3\ne1.
+\end{cases}
+\tag{14.1}
+$$
+
+三者复维数依次为 $16,64,160$。因此模 $2\pi$ 的时钟类 $0$、$\{2\pi/3,4\pi/3\}$ 和其余类恰对应这三种边界。两联合输入的全部实际事件概率相同，当且仅当按三行分别有相同的低层偏迹、相同的全部 Fourier 对角条件矩阵、相同的全部 $g$ 轨道完整块。
+
+证明。整数恒等式 $M^3=I+2M$ 与 $M^6\equiv I\pmod4$ 给 $U^6=I$。令
+
+$$
+P_\pm=\frac{I\pm U^3}{2},\qquad
+A=\frac{1+2x^3}{3},\quad
+B=\frac{x(2+x^3)}3,\quad C=\frac{1-x^3}{3}.
+$$
+
+在 $P_+$ 上，$U$ 的谱属于三次单位根，$L$ 取值 $0,3$；在 $P_-$ 上，$U=-1$ 对应 $L=4$，另两枚六次单位根对应 $L=1$。对这些谱点求值，得到精确恒等式
+
+$$
+W=(AP_++BP_-)
++C\,U(P_++xP_-)+C\,U^2(P_+-xP_-).
+\tag{14.2}
+$$
+
+例如 $P_+$ 上的表达为 $AI+C(U+U^2)$；$P_-$ 上为 $BI+xC(U-U^2)$，在 $U=-1$ 处等于 $x^4$，在另外两点等于 $x$。此外
+
+$$
+|A|^2=|B|^2=\frac{5+4\operatorname{Re}(x^3)}9\ge\frac19,
+\qquad A-B=-\frac{(x-1)^3(x+1)}3.
+\tag{14.3}
+$$
+
+因此 $|A|=|B|\ge1/3$，而 $A=B$ 恰在 $x=1,-1$。
+
+标准 digits $a+2h$ 中，$M^3(a+2h)\equiv a+2(h+Ma)\pmod4$，所以
+
+$$
+U^3=\sum_{a\in(\mathbb Z/2)^2}E_{aa}\otimes T_{Ma}.
+\tag{14.4}
+$$
+
+低层非零三点按 $10\to01\to11\to10$ 循环，故 (14.2) 的 $U,U^2$ 项不贡献其低层对角角。将 $W$ 写成低层分块 $W_{ba}$，对每个 $a\ne0$ 有
+
+$$
+D_a:=W_{aa}=A\frac{I+T_{Ma}}2+B\frac{I-T_{Ma}}2.
+\tag{14.5}
+$$
+
+仍以定理 11.2 从实际效果构造 $\mathfrak D=\mathfrak D(S_\Delta)$，于是低层全矩阵包含于 $\mathfrak D\subseteq S_\Delta$，且 $W^\dagger\mathfrak DW=\mathfrak D$。对任意低层指标 $a,b,c,d$，$W^\dagger(E_{cd}\otimes I)W$ 的 $a,b$ 角为 $W_{ca}^\dagger W_{db}$。用低层矩阵单位夹取并复制到全部低层对角，得
+
+$$
+I_A\otimes W_{ca}^\dagger W_{db}\in\mathfrak D.
+\tag{14.6}
+$$
+
+后续乘法都在此乘子代数中进行。
+
+先设 $A\ne B$。三个非零 $Ma$ 遍历高层的三个非零平移方向；适当排列三个 $D_a$ 后，四个 Fourier 标签上的数值轮廓为
+
+$$
+p_0:(A,A,A),\quad p_1:(A,B,B),\quad
+p_2:(B,A,B),\quad p_3:(B,B,A).
+$$
+
+置 $\kappa=|A|^2>0$、$z_0=B/A$，则 $|z_0|=1$、$z_0\ne1$。两个已由 (14.6) 取得的归一化乘子 $\kappa^{-1}D_{a_1}^\dagger D_{a_2}$、$\kappa^{-1}D_{a_1}^\dagger D_{a_3}$ 的联合特征值依次为
+
+$$
+(1,1),\quad(z_0,z_0),\quad(\overline z_0,1),\quad(1,\overline z_0).
+$$
+
+这四对两两不同，包括 $z_0=-1$。为取得目标标签 $p$ 的投影，对每个 $q\ne p$ 选一个在 $p,q$ 处数值不同的乘子 $R_q$，将三个因子
+
+$$
+\frac{R_q-R_q(q)I}{R_q(p)-R_q(q)}
+$$
+
+相乘，即在 $p$ 上取值 $1$，在其余三点取值 $0$。因此全部 $\Pi_p=I_A\otimes|p\rangle\langle p|$ 属于 $\mathfrak D$。
+
+若 $x^3\ne1$ 且 $x\ne-1$，则 $C\ne0$、$A\ne B$。低层 $10\to01$ 的 $U$ 步无进位，$U^2$ 则到 $11$，所以
+
+$$
+W_{01,10}=C\,V\left(\frac{I+T_{(0,1)}}2
++x\frac{I-T_{(0,1)}}2\right).
+\tag{14.7}
+$$
+
+在每个 Fourier 标签 $p$ 上，这个角都是振幅为 $C$ 或 $xC$ 的非零 $p\to gp$ 单项。任取 $a_*\ne0$，(14.6) 给 $I_A\otimes D_{a_*}^\dagger W_{01,10}\in\mathfrak D$；$D_{a_*}$ 在每个标签上的值是非零的 $A$ 或 $B$。用 $\Pi_{gp},\Pi_p$ 夹取便取得每条 $g$ 邻边的矩阵单位。沿轨道相乘并取伴随，得 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D\subseteq S_\Delta$。轨道投影与 $W$ 及全部低层分支交换，给反向包含。
+
+剩余 $x=-1$ 时，(14.2) 化为
+
+$$
+W=-\frac13I+\frac23(U^2+U^4).
+$$
+
+每个非零低层对角角是 $-I_H/3$；在 (14.6) 中固定这个标量角，便将所有 $W_{db}$ 放入高层乘子部分。两步进位直接给
+
+$$
+W_{11,10}=\frac23V^2,\qquad
+W_{10,01}=\frac23T_{(0,1)}V^2.
+$$
+
+第一条的两步均无进位；第二条仅 $11\to10$ 有进位。$U^4$ 的低层位移是 $f$，不贡献这两个 $f^2$ 角。由 $V^3=I$，$(V^2)^2=V$；再以乘积取得 $T_{(0,1)}$，用 $V^\dagger T_{(0,1)}V=T_{(1,0)}$ 得全部平移。Fourier 反演及 $V$ 邻边遂给全部轨道矩阵单位，仍有 $S_\Delta=\mathcal A_{\mathrm{orb}}$。
+
+若 $x^3=1$、$x\ne1$，则 $C=0,A=1,B=x$，故
+
+$$
+W=P_++xP_-=\frac{1+x}{2}I+\frac{1-x}{2}U^3.
+$$
+
+由 (14.4)，这是按低层控制的 Fourier 对角门。每个高层单点投影均与它及所有低层分支交换，故 $S_\Delta\subseteq\mathcal B(\mathbb C^4)\otimes\mathcal D_F$；$A\ne B$ 时已证明的标签分离给反向包含。最后 $x=1$ 时 (14.2) 给 $W=I$，只有低层操作，张成恰为 $\mathcal B(\mathbb C^4)\otimes I_4$。$L$ 谱包含于 $\{0,1,3,4\}$，$W$ 以 $2\pi$ 为周期，上述互斥情形穷尽全部正时钟。模 $2$ 的 $g$ 轨道大小为 $1,3$，故三种维数分别为 $16$、$16\cdot4$、$16(1+9)$。在各已证明的实际效果线性空间上使用非退化迹配对，即得所列统计等价条件。$\square$
+

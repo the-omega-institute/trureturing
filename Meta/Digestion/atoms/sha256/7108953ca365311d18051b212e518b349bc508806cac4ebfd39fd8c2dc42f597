@@ -1,0 +1,10 @@
+**Theorem 53.3 (Exact upper smoothing threshold).** For a kernel supported in [1/2, 2] and epsilon strictly between zero and one, the smoothed indicator vanishes when x is at least 1 plus twice epsilon times log two.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1Properties_above {ν : ℝ → ℝ} (suppν : ν.support ⊆ Icc (1 / 2) 2) :
+    ∃ (c : ℝ), 0 < c ∧ c = 2 * Real.log 2 ∧
+      ∀ (ε x) (_ : ε ∈ Ioo 0 1), 1 + c * ε ≤ x → Smooth1 ν ε x = 0
+```
+

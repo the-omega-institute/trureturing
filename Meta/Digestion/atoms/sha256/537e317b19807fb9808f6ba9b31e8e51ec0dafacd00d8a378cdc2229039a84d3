@@ -1,0 +1,4 @@
+## 57. 原菱形合流后的实际条带、原片宽度与奇数 rival 的最小排除
+
+本章只讨论已经给定的原 FIB 完整闭图。原图保留六个闭色、实际 incoming guard、有限逆闭合端点集、规范原片以及逐边的整片包含规则；原片不细分，外部可达顶点不因可达性而自动获得返回。公开来源固定为 [FIB_SOURCE_COMPLETION_DYNAMICS.md](https://github.com/the-omega-institute/trureturing/blob/12e9e70a44e06fb3f915721ee5490d10da0b043e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的定义14.5、命题14.6、定理14.7、定理17.2、引理31.2、定义31.3、定理31.4、引理36.16、定理36.22、命题39.6.1及42.8。第51章的返回宽度、单点传播和奇 rival 侧别结论，以及第54章的实际侧别、等号菱形和返回几何，作为已经写成的数学前件使用。
+

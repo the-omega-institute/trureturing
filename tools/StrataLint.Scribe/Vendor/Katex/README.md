@@ -17,8 +17,10 @@ Only the parser is exercised: the gate calls `katex.renderToString` with
 `throwOnError` and keeps the verdict, never the HTML. Fonts, stylesheets and the
 browser bundle are therefore not vendored.
 
-The gate itself runs on the change: `make test` routes a Blueprint delta through
-`scribe-content-checks.sh`, which hands `markdown-check` the paths the change touched.
+`scribe-content-checks.sh` invokes `content-check` with an explicit Lean report and an
+optional paths file. The command loads the report once, runs `projections --check`,
+`describe-report --check`, and `markdown-check` in order, and stops at the first failure.
+The optional paths file scopes `markdown-check` to the paths the change touched.
 
 The bundle is a program this assembly executes, not declarative data, which is why it
 lives inside the project that runs it rather than in a data residence.

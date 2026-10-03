@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c9ac45a7df2f3d9536de1a392baed870f098cd77d5b78d9685c5b52be19869d7
+  normalized_sha256: sha256:c9ac45a7df2f3d9536de1a392baed870f098cd77d5b78d9685c5b52be19869d7
+cas_ref: sha256:c9ac45a7df2f3d9536de1a392baed870f098cd77d5b78d9685c5b52be19869d7
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff
+    target_statement_id: sha256:a3a32abb9ae36b320414f94c607d80474af48c9ded2f30fa4c373f81e615a95e
+receipts:
+  unresolved_subitems: []

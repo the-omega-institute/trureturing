@@ -1,0 +1,36 @@
+**证明。** 新增素数都大于 $m_L$，与 $A_L\mid D_{m_L}$ 互素，也与三互素。定理302.1给相同签名、相同核心及5040整除性。由（302.4）或经典 Chebyshev 界，$\log D_m=O(m)$，故 $\log A_L=O(m_L)$。经典初等 primorial 界给 $\log T_L\le4x_L$。充分大 $L$ 时，$m_L\le4L$、$\log m_L\le2\log L$，于是
+\[
+\log T_L\le32\kappa L\log L=\tfrac C8L\log L,
+\qquad \log A_L=O(L)=o(L\log L).
+\tag{302.11}
+\]
+对固定 $C$，合并两式即可得到所述高度界；阈值允许依赖 $C$。
+
+约数权重的互素乘法性给
+\[
+\frac{U_{H_L}}{U_{A_L}}=\prod_{m_L<p\le x_L}(1+p^{-1}).
+\tag{302.12}
+\]
+对（302.4）的两类 $\vartheta_r$ 作分部求和，得到
+\[
+\sum_{m<p\le x}\frac1p
+=\log\log x-\log\log m+O((\log m)^{-3})
+\quad(x\ge m\longrightarrow\infty).
+\tag{302.13}
+\]
+平方项总和为 $O(1/m)$。对 $x=\kappa m\log m$，因此
+\[
+\log\prod_{m<p\le x}(1+p^{-1})
+\sim\frac{\log\log m}{\log m}.
+\tag{302.14}
+\]
+该对数趋零，指数展开给相同比值速率。又由下一个定理的权重计算，$U_{A_L}\sim E\log m_L$。因 $\log m_L/\log L\to1$、$\log\log m_L/\log\log L\to1$，得到（302.10）。这里（302.12）的平方自由块速率与 §189.2 的阶乘块推导相同；新增承重关系是该速率发生在实际饱和短签名的纤维内，且对每个固定 $C>0$ 都满足高度界。
+
+最后，对任何共同读数 $z_L$，三角不等式给
+\[
+\max\{|z_L-U_{A_L}|,|z_L-U_{H_L}|\}
+\ge\tfrac12(U_{H_L}-U_{A_L})\longrightarrow\infty.
+\tag{302.15}
+\]
+这限制所指定签名上的数值估计；它没有给两点 Robin 真值不同的结论，也不限制额外读取目标整数或其他观测的估计器。$\square$
+

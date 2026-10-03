@@ -25,7 +25,7 @@ public sealed class FileMapGlobTests
         {
             Assert.Throws<FileMapPatternException>(() => FileMapGlob.Create(pattern));
             var manifest = Encoding.UTF8.GetBytes($$"""
-                schema_version = 5
+                schema_version = 6
                 [[files]]
                 pattern = '''{{pattern}}'''
                 """ + "\n");

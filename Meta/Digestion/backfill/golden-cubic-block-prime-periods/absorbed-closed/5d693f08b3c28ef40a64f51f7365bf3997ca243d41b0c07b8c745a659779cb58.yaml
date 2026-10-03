@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5d693f08b3c28ef40a64f51f7365bf3997ca243d41b0c07b8c745a659779cb58
+  normalized_sha256: sha256:5d693f08b3c28ef40a64f51f7365bf3997ca243d41b0c07b8c745a659779cb58
+cas_ref: sha256:5d693f08b3c28ef40a64f51f7365bf3997ca243d41b0c07b8c745a659779cb58
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GoldenCubicBlockCoordinateActions.cubic_coordinate_automorphism
+    target_statement_id: sha256:5e7d710df00420b420d1f026e2558a16b6b1b6197bf17c56114e012ea674c3e2
+receipts:
+  unresolved_subitems: []

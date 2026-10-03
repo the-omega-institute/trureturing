@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a782743a5e3075b1c2d776cfbe4ecc15891b760d893e2a08c3da5d7faf3db6a8
+  normalized_sha256: sha256:a782743a5e3075b1c2d776cfbe4ecc15891b760d893e2a08c3da5d7faf3db6a8
+cas_ref: sha256:a782743a5e3075b1c2d776cfbe4ecc15891b760d893e2a08c3da5d7faf3db6a8
+coverage_gids:
+  - gid: D5/S3/Resource/SimplexCoverageWords.wordPolynomial_eq_factorial_smul
+    target_statement_id: sha256:7b005eb60a550343b5e266c8bd03a94e83c257a3a79b3f13a01bc1768a252554
+receipts:
+  unresolved_subitems: []

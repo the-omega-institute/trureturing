@@ -1,0 +1,11 @@
+**假设 17.1（Campbell 的已给尺度公式）。** 使用 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 的公式作为本节前提：对 $n\geq2$，取相应半开区间中唯一的 $s=3^k$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\leq n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\leq n<9s.
+\end{aligned}
+$$
+
+这是所引文献前提，本节的推导对象是它与本卷五窗同步关系的相容性。
+

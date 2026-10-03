@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Coverage
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 

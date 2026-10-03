@@ -122,9 +122,9 @@ public sealed class LegacyContextCausalEvidenceTests
             var rows = changed["modules"]!.AsArray();
             rows.Remove(rows.Single(row => row!["source_path"]!.GetValue<string>() == missingPath));
             File.WriteAllBytes(completePath, StructuredCanonicalWriter.WriteJson(changed.ToJsonString()).AsSpan());
-            var partial = RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true);
-            Assert.Equal(files.Count - 1, partial.Files.Count);
-            Assert.DoesNotContain(partial.Files.Keys, path => path.Value == missingPath);
+            var rejected = Assert.Throws<FormatException>(() =>
+                RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true));
+            Assert.Contains("Raw Lean report is missing modules:", rejected.Message, StringComparison.Ordinal);
         }
         File.WriteAllBytes(completePath, completeBytes);
         var selected = Registrations.Select(RepoPath.CreateKnown).ToArray();
@@ -134,7 +134,7 @@ public sealed class LegacyContextCausalEvidenceTests
         foreach (var path in Registrations)
         {
             var wire = JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())!;
-            Assert.Equal(15, wire["compatibility_version"]!.GetValue<int>());
+            Assert.Equal(17, wire["compatibility_version"]!.GetValue<int>());
             var record = Assert.Single(wire["records"]!.AsArray(),
                 row => row!["registration_source_path"]!.GetValue<string>() == path)!;
             Assert.Equal("declared_validated", record["state"]!.GetValue<string>());

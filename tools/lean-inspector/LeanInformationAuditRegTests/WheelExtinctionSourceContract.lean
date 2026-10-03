@@ -1,4 +1,7 @@
 import Reg.D5.S3.Combinatorics.WheelHivExtinctionRefutation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.WheelExtinctionSourceContract

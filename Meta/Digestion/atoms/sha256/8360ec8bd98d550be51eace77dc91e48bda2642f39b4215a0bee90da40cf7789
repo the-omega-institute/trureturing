@@ -1,0 +1,13 @@
+**推论 15.5（算术量代入已声明的相干端口）。** 对所有 $d,e\ge2$，沿用定义 11.7 的全部输入、单份精确、共同 CPTP 状态编解码、免费有限经典 flag 与公共量子端口合同，三个已确定实际效果空间的最优值为
+
+$$
+q_g(d,e)=d^2T_e,\qquad
+q_N(d,e)=d^2h_e,\qquad
+q_\Gamma(d,e)=d^2b_e.
+\tag{15.5}
+$$
+
+$g$ 项用于 $\Sigma_{\mathrm{orb}}$、$\Sigma_W$ 及已证明 $S_\Delta=\mathcal A_{\mathrm{orb}}$ 的固定时钟，特别是所有 $0<\Delta\le\pi/4$；$N$ 项用于定义 12.1 的混合合同；$\Gamma$ 项用于定理 12.3 加入标准 $W_J$ 或 $W_C$ 的合同。三者的最小全计费 Hilbert 记忆均为 $d^2e^2$。
+
+证明。实际效果线性张成分别由第 11、13、14 节及[定理 12.2](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1252)、[定理 12.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1309)给出。各轨道块维数为 $d^2|O|$，命题 11.8 的统计到 pinching 桥梁及最大块结论可直接应用；代入定理 15.2 与 $b_e$ 的定义即得 (15.5)。全计费值为全部块维数之和 $d^2e^2$。此推论不改变许可字母表，也不将无共同状态解码的逐测量访问归入同一资源问题。$\square$
+

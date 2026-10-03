@@ -41,6 +41,13 @@ No Lean implementation of these public theorems is supplied by this note.
 
 No source text or code is vendored.
 
+## Verified locator
+
+The declared source is https://arxiv.org/abs/math/0411144,
+DOI https://doi.org/10.48550/arXiv.math/0411144.
+The verified text is https://arxiv.org/pdf/math/0411144v2,
+Theorem 1.3, equation (1.5).
+
 ## Derived phase-shell accounting and active-depth cuts
 
 The following is an ordinary finite-measure application of the weighted theorem above. Every quantity belongs to one fixed cover; it introduces no new source theorem or Lean declaration.

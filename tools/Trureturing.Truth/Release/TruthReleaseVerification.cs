@@ -9,8 +9,8 @@ namespace Trureturing.Truth;
 /// Fail-closed INTEGRITY verification of a truth-release bundle against an out-of-band expected digest.
 /// This proves the bundle's bytes are internally consistent with the digest the caller already trusts;
 /// it does NOT establish provenance (that the digest names a real protected-dev release) — that is done
-/// independently using <see cref="TruthReleasePushRunSelector"/> for the commit's dev push evidence
-/// and re-deriving the bundle.
+/// independently by verifying the commit's protected checks
+/// and re-deriving the bundle. This reader does not query CI or certify release eligibility.
 /// <para>
 /// The bytes that SHA256SUMS covers (the seven artifacts) are fully bound. The manifest's own bytes are
 /// NOT bound (it cannot list its own SHA256SUMS digest and be inside SHA256SUMS), so its trust / producer /

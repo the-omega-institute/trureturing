@@ -1,0 +1,15 @@
+## 277. Lucas 饱和来源的小素数停止与 5040 指标剖面
+
+本节考察 §265 的同一实际整数
+\[
+d_k=L_k^2-(-1)^k=F_{3k}/F_k,\qquad
+N_{k,a}=d_kF_{2k+3-a},\qquad k\ge2,\quad a\in\{1,2\}.
+\]
+使用 §95 所引 Lengyel 的 Fibonacci 赋值公式作为中间前置，
+包括素数 $2,5$ 的独立公式及首次指标 $z(3)=4,z(7)=8,z(11)=10$ 的提升式。
+原文为 *The Order of the Fibonacci and Lucas Numbers*，Fibonacci Quarterly 33(3) (1995), 234–239，
+[Lemmas 1–2、§3](https://fq.math.ca/Scanned/33-3/lengyel.pdf)；
+另见 Medina–Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*，
+[Theorem 1.4](https://arxiv.org/pdf/0910.2907v4)。
+强整除性与三倍指标恒等式是经典前置，本节的对象是它们在 §265 实际来源上的联合停止条件与剖面传递。
+

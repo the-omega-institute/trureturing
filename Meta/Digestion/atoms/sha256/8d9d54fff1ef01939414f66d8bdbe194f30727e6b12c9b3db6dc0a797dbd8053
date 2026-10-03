@@ -1,0 +1,39 @@
+**定义 3.1（中间深度与方向预算）。** 沿用定义 1.1、2.1 的实际非空有序完全二叉树、全局替换 $\rho$、初始组成域 $D_H$ 与单个末端有理报告合同。以下固定整数 $L\ge2$、$2\le k\le L$，并记
+
+$$
+\begin{gathered}
+t=3k,\qquad m=3L+3,\qquad
+A=F_m,\qquad B_{\mathrm{num}}=F_{m+1},\\
+a_0=F_{t-1},\qquad b_0=F_t,\qquad
+N=F_{t+1}=a_0+b_0,\qquad Q=N+a_0,\\
+r_k=\min\{a_0/b_0,b_0/N\},\qquad
+R_k=\max\{a_0/b_0,b_0/N\},\qquad
+K=B_{\mathrm{num}}+\lceil Ar_k\rceil.
+\end{gathered}
+\tag{3.1}
+$$
+
+这里 $N=N_k$、$K=K_{k,L}$ 分别复用式 (2.9)、(2.10)。对所有整数 $j\ge t-2$，定义
+
+$$
+C_{k,j}=
+\begin{cases}
+N,&j=t-2,\\
+2b_0,&j=t-1,\\
+F_{j+1}+\lceil r_kF_j\rceil,&j\ge t.
+\end{cases}
+\tag{3.2}
+$$
+
+将式 (2.1) 的 $\chi_k$ 仍定义在全部非零非负整数组成上。差方向的最小共同实际来源叶预算为
+
+$$
+\mathfrak B_{k,j}=
+\min_{\substack{x,y\in\mathbb N_0^2\setminus\{0\}\\
+\chi_k(x)\ne\chi_k(y),\ y-x=\pm(F_{j+1},-F_j)}}
+\max\{|x|_1,|y|_1\}.
+\tag{3.3}
+$$
+
+组成点的实际来源均取自定义 1.1 的树域；祖先树只作存在见证，不成为观察输入。$H$ 只界定初始来源叶数，末端仍恰好经过 $3L$ 次 $\rho$。$k=1$ 的全部分支引用定理 2.2，$k=L+1$ 与 $k\ge L+2$ 的全部分支引用定理 2.3；以下不重证这些深度。
+

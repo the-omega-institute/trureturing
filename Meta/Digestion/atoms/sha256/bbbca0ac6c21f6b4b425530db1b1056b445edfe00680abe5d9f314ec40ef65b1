@@ -1,0 +1,79 @@
+**定义 48.1（等分类难度的对称通道与曲线通道）。** 固定 $n\ge3$、任意一棵二叉树及 $B\ge0$。原始输入仍为
+
+$$
+X=(w_1,\ldots,w_n)\sim P_n=\operatorname{Unif}(\Sigma)^{\otimes n},
+\qquad \Sigma=\{000,100,010,101,001\}.
+$$
+
+独立单位是整窗。令 $\ell,h$ 分别取窗口的最低位、最高位，沿用定义45.1的首次诊断粗化 $C=C_n$，并写
+
+$$
+a=h(w_1),\quad b=\ell(w_2),\quad c=h(w_2),\quad d=\ell(w_3),
+\qquad G_1=ab,\quad G_2=(1-ab)cd,
+\qquad C=G_1+2G_2.
+\tag{48.1}
+$$
+
+$G_1,G_2$ 不同时为一；类0包括原诊断中没有被单独保留的全部标签。固定
+
+$$
+\begin{aligned}
+\frac13<r<1,\qquad e&=\frac{1-r}{2},\qquad K=\frac re=\frac{2r}{1-r},\qquad k=\log K,\\
+x&=\frac{K^2+\sqrt{K^4+8K}}4,\qquad t=\log x,\qquad
+A=\frac{Kr}{x},\qquad D=\frac r{x^2},\qquad \eta=D.
+\end{aligned}
+\tag{48.2}
+$$
+
+这里是两个不同的联合律 $P^{\mathrm{s}}$、$P^{\mathrm{c}}$，两者均有输入边缘 $P_n$，标签均为 $Y\in\{0,1,2\}$。按标签顺序 $0,1,2$，分别规定
+
+$$
+\rho^{\mathrm{s}}(X)=e\mathbf1+(r-e)e_C,
+\qquad
+\rho^{\mathrm{c}}(X)=
+\begin{cases}
+(r,A,D),&C=0,\\
+(e,r,e),&C=1,\\
+(D,A,r),&C=2.
+\end{cases}
+\tag{48.3}
+$$
+
+$\rho^j=P^j(Y=\,\cdot\mid X)$ 是相应通道的后验；不把两套条件律置于同一个未声明的联合律内。
+
+每片叶接收恰一个完整窗口，原始编码可为任意有符号、非线性实函数。每个内部合并在整个环境实向量空间上分别双线性，没有免费内部仿射常数、跨子树输入或携带输入的控制／时序。树、所有映射及参数固定且与输入无关。所有实际叶、非根、根及忽略子树中的常数坐标均计费；峰值 $w$ 包括根，实际根维数为 $q$，中窗叶维数为 $m$。维数零也纳入比较。固定头为
+
+$$
+L_y(z)=u_y\cdot z+v_y,\qquad
+p_y(X)=\frac{e^{L_y(z)}}{\sum_{j=0}^2e^{L_j(z)}},\qquad
+B_v=\max_yv_y-\min_yv_y\le B.
+\tag{48.4}
+$$
+
+头的 $3(q+1)$ 个仿射实参数槽及三个概率输出另计，不充作内部消息。除实际相对截距跨度外，不限制斜率、编码、消息或合并系数的范数，也不假定学习参数紧致。令
+
+$$
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right),\qquad
+\beta=(v_1-v_0,v_2-v_0),\qquad
+\mathfrak b(\beta)=\max\{0,\beta_1,\beta_2\}-\min\{0,\beta_1,\beta_2\}.
+\tag{48.5}
+$$
+
+$\mathfrak b(\beta)=B_v$，可行性等价于 $|\beta_1|,|\beta_2|,|\beta_1-\beta_2|\le B$；共同平移三个截距不改变这个费用。
+
+对 $j\in\{\mathrm{s},\mathrm{c}\}$，自然对数损失、完整且不按类平均的 Brier 损失，以及各自的 Bayes 基线和超额，约定为
+
+$$
+\begin{aligned}
+R_{\log}^{j}(p)&=\mathbb E_{P^j}[-\log p_Y(X)],&
+h_j&=\mathbb E_{P_n}\left[-\sum_y\rho_y^j\log\rho_y^j\right],\\
+R_2^{j}(p)&=\mathbb E_{P^j}\sum_y(p_y(X)-\mathbf1_{\{Y=y\}})^2,&
+b_j&=\mathbb E_{P_n}[1-\|\rho^j\|_2^2],\\
+\Delta_{\log}^{j}(p)&=R_{\log}^{j}(p)-h_j,&
+\Delta_2^{j}(p)&=R_2^{j}(p)-b_j.
+\end{aligned}
+\tag{48.6}
+$$
+
+准确后验是逐原始词 $p=\rho^j$；零超额下确界则对本定义允许的全部有限实参数预测器取下确界。本节关于准确后验或零超额下确界的陈述，均不以可靠性校准 $P^j(Y=y\mid p(X))=p_y(X)$ 替换。
+

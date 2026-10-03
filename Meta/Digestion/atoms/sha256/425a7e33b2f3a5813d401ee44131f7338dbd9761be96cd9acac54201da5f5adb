@@ -1,0 +1,146 @@
+**定理 185.1（任意公因子规范族的最终严格 Robin 与加性余量）。** 在 §163 的已发表 Fibonacci 秩性质与 §160.1 的 Axler 解析输入下，
+
+$$
+\liminf_{g\to\infty}
+\left(e^\gamma\log\log N_g-Z(N_g)\right)
+\ge e^\gamma\log2>0.
+\tag{185.1}
+$$
+
+一个保守的显式充分条件是
+
+$$
+\log\log g\ge200.
+$$
+
+在该范围有更具体的严格余量
+
+$$
+e^\gamma\log\log N_g-Z(N_g)>\frac{19}{50}e^\gamma>0.
+\tag{185.2}
+$$
+
+这给出该族的尾区间，未声称如此巨大的阈值具有计算实用性，也没有覆盖阈值以下的全部公因子。
+
+证明。令 $\ell=\log g$、$v=\log\ell$。由命题 183.1，
+
+$$
+r=\frac{\ell}{\log\phi}+O(1),\qquad
+\log N_g=2\ell+O(1),\qquad
+\log\log N_g=v+\log2+o(1).
+\tag{185.3}
+$$
+
+取整数切面
+
+$$
+y=\lceil r^{5/6}\rceil,\qquad
+A=\prod_{\substack{p\mid F_r\\p\le y}}p,\qquad
+B=gA.
+$$
+
+$A\mid F_r$，所以 $B\mid N_g$，并且同一个 $N_g$ 的所有 $p\le y$ 的 Fibonacci 素因子已经包含在 $B$ 中。对剩余素因子按引理 184.1 付款，得到
+
+$$
+Z(N_g)<\frac{N_g}{\varphi(N_g)}
+\le\frac B{\varphi(B)}e^{T(r,y)}.
+\tag{185.4}
+$$
+
+这里后一个比较可为真不等式：若某个 $p>y$ 同时整除 $g$ 与 $F_r$，尾部再次计入它，只会扩大上界，不会漏计。
+
+由 §178 证明中的初等 Chebyshev 界，
+
+$$
+\log A\le\vartheta(y)\le4(\log2)y=O(r^{5/6}),
+$$
+
+故
+
+$$
+L_B:=\log\log B=v+O(r^{-1/6}).
+$$
+
+引理 184.1 给
+
+$$
+T(r,y)=O(r^{-1/12}),\qquad vT(r,y)\to0.
+$$
+
+$B\ge g\to\infty$，因此可使用 §160.1 所引 Axler 的原始精确 totient 包络
+
+$$
+\frac B{\varphi(B)}
+<e^\gamma\left(L_B+\frac{a_0}{L_B^2}\right),
+\qquad a_0=0.0094243.
+\tag{185.5}
+$$
+
+这里保留 $a_0/L_B^2\to0$，不把它改成 §164.1 中固定的加性误差。式（185.4）—（185.5）于是给
+
+$$
+Z(N_g)<e^\gamma\bigl(v+o(1)\bigr).
+\tag{185.6}
+$$
+
+与式（185.3）的实际预算比较，即得式（185.1）。
+
+下面核对显式阈值。若 $v\ge200$，由 $2/5<\log\phi<1$、$\ell/\log\phi<j\le\ell/\log\phi+2$，得到
+
+$$
+\ell<r<6\ell,\qquad
+y\le2r^{5/6},\qquad
+\frac{\log A}{\ell}<48\ell^{-1/6}.
+$$
+
+因而
+
+$$
+v\le L_B<v+48e^{-v/6}.
+$$
+
+又 $r>e$，且 $\log y\ge(5/6)\log r$，所以
+
+$$
+\frac{1+\log r}{\log y}\le\frac{12}{5},
+\qquad
+T(r,y)<16r^{-1/12}<16e^{-v/12}=:t.
+$$
+
+§164.1 已核对 $\log\log N_K<63/2$，故 $B\ge g$ 与 $v\ge200$ 保证 $B>N_K$，式（185.5）的解析阈值确实通过。因此
+
+$$
+Z(N_g)
+<e^\gamma\left(v+48e^{-v/6}+\frac{a_0}{v^2}\right)
+\exp(16e^{-v/12}).
+$$
+
+对 $v\ge200$，直接有
+
+$$
+48e^{-v/6}+a_0/v^2<1/50,\qquad 0<t<1/2.
+$$
+
+例如前一式的两项分别小于 $48\cdot2^{-33}$ 与 $1/4000000$，其和小于 $1/50$。由 $e^t\le1+2t$（$0\le t\le1/2$），以及 $(v+1)e^{-v/12}$ 在 $v\ge200$ 递减，得到
+
+$$
+\begin{aligned}
+(v+1/50)e^t
+&\le v+1/50+2(v+1/50)t\\
+&<v+1/50+32(v+1)e^{-v/12}\\
+&\le v+1/50+6432e^{-200/12}\\
+&<v+1/50+6432\cdot2^{-16}\\
+&<v+3/25.
+\end{aligned}
+$$
+
+最后一个有理比较为 $64320<65536$。命题 183.1 的下界给
+
+$$
+N_g>\frac{\phi^3}{\sqrt5}g^2>g^2,
+$$
+
+所以 $\log\log N_g>v+\log2>v+1/2$。两端比较得到式（185.2）。$\square$
+
+证明的作用是把实际公因子的全部素数先放在同一个 $B$ 中，再控制真实 Fibonacci 因子带来的新增素数；不要求 $g/\varphi(g)$ 小，也没有把互不相容来源的极值拼接。这里的基本判别式虽恒为四，最终安全性来自大小素支撑与共同秩尾界的组合，而非仅凭字符筛选。
+

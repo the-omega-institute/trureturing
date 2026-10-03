@@ -1,0 +1,64 @@
+**约定 53.0（原模型、字面数据与成本）。** 置
+
+$$
+\begin{gathered}
+t=\frac{\sqrt5-1}{2},\quad g=2t-1,\quad \phi=1+t,\quad T_2=t^2,\quad
+\lambda=\frac{T_2}{10},\quad c=\frac{2t}{5},\quad \rho=g^6,\quad\chi=g^{20},\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,T_2,1,2-t),
+\qquad f_\ell(x)=\Delta_\ell-gx .
+\end{gathered}
+$$
+
+来源标签仍是 $3,0,5,2,25$，其中 $0$ 是空窗，$25$ 是一个窗口标签。原合法 guard 边为
+
+$$
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5.
+$$
+
+两种 guard 的区间为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$；$A_s$ 为从 guard $s$ 出发的全部合法地址，$\Omega=A_0$，$D_s\subset A_s$ 是最终为空的实际地址，$D=D_0$。字面词按外到内排列，$f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}}$，最右映射先作用；块位置从0编号。实际后缀坐标由同一窗口级数 $\kappa_s(\xi)=\sum_{a\ge0}(-g)^a\Delta_{\xi_a}$ 给出。
+
+固定一次归属 $o_a\in\{a-1,a\}$，规定切点 $q_a$ 的拥有颜色。原六个观察颜色为 $0,\ldots,5$，切点及闭格为
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,\quad
+q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\quad
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+$$
+
+实际色格 $C_i^o$ 保留端点归属，支撑外端点 $-1,\phi$ 分别属于颜色0、5，观察为 $\mathcal Q_o(\operatorname{clip}_X(x+\eta))$。闭合同要求 $|\eta|\le b$，逐槽严格合同要求 $|\eta|<b$；逐记录正余量是每条完整记录各有某个 $\varepsilon>0$，家族统一正余量则要求同一个 $\varepsilon$ 对全部记录成立。成本指真坐标到指定闭格的距离。距离严格小于正预算时，可将目标取在色格内部；正距离等于预算时，命题43.18要求唯一最近点由指定颜色拥有。裁剪固定这些内部目标，且非扩张性保证距离条件的必要性。
+
+保留原字面词
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),\\
+d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2).
+\end{aligned}
+$$
+
+$U,V,d$ 长6，$C,e$ 长20。固定 stems、共同色词及两条字面尾为
+
+$$
+P=UC,\quad Q=VC,\quad h=de,\quad |P|=|Q|=|h|=26,\qquad
+\xi_H=UC^3\,5\,0^\infty,\quad \xi_L=VC^3\,0^\infty .
+$$
+
+两尾属于 $D_1$。高、低侧位移写成 $D_H=x-c$、$D_L=c-y$。由命题49.2，
+
+$$
+\begin{gathered}
+h_H=\frac{39-6g}{380},\quad h_L=\frac{46+31g}{380},\quad
+E_H=T_2-c,\quad E_L=c,\quad X_j=(1-\rho)h_j+\rho\chi^3E_j,\\
+0<\chi E_j<(1-\rho)h_j<X_j<h_j<E_j<1,\quad
+X_j>\chi h_j,\quad X_H<X_L,\quad h_H<h_L .
+\end{gathered}
+$$
+
+$X_j$ 是原尾的实际位移；$U/V$ 给 $T_j(D)=(1-\rho)h_j+\rho D$，$C$ 给 $D\mapsto\chi D$。只观察 departure 位置：长 $M$ 的历史读取位置 $0,\ldots,M-1$，其终端位置 $M$ 尚未观察。记 $S_\xi$ 为从该终端开始按 $\mathcal Q_o$ 零误差读取同一尾 $\xi$ 的完整未来。
+

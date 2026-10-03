@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-006: one product-valued identity readout captures all 12 ordered
 off-diagonal pairs in the four-state arena. -/
@@ -28,16 +31,16 @@ def idRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem idTheorem
+test_assess in information_theorem idTheorem
   in arena
   primitives idRealization
   : arena.Law idRealization := by trivial
 
-expect_information_occurrence idTheorem
+test_assess in expect_information_occurrence idTheorem
   in arena
   from "LeanInformationAudit.Tests.SealIdentity"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 example :
     arena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 12 := by

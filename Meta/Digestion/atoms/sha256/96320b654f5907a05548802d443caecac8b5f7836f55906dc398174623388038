@@ -1,0 +1,94 @@
+**定理 197.3（任意密度的严格小乘子范围）。** 固定素数集合 $S$，设
+
+$$
+\vartheta_S(x)=\delta x+o(x),\qquad 0<\delta<1,
+$$
+
+并采用式（194.2）的 Axler 包络。给定
+
+$$
+0<s_0<\frac{1-\delta}{\delta},
+$$
+
+定义
+
+$$
+H(\delta)=-\delta\log\delta-(1-\delta)\log(1-\delta),
+\qquad
+f_\delta(s)=\log(1+s)-H(\delta)-(1-\delta)\log s.
+$$
+
+则
+
+$$
+\liminf_{\substack{U\to\infty\\p\mid U\Rightarrow p\in S}}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le U^{s_0}}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma f_\delta(s_0)>0.
+\tag{197.15}
+$$
+
+证明。记 $L=\log U$、$h=\log g$，沿用引理194.1对同一个 $N=gU$ 的预算
+
+$$
+A+B\le L+h,\qquad B\le h,
+$$
+
+其中 $A,B$ 分别为 $S$ 及其补集中实际素因子的无重复对数质量。固定 $0<\varepsilon<s_0$，先令 $s=h/L\in[\varepsilon,s_0]$。取
+
+$$
+x_S=L/\delta,\qquad x_T=h/(1-\delta).
+$$
+
+由于 $s_0<(1-\delta)/\delta$，有 $x_S>x_T$。引理194.1的截断不等式及递减权重 $\kappa$ 因而给
+
+$$
+\begin{aligned}
+\log\frac N{\varphi(N)}
+\le{}&\log P_S(x_S)+\log P_T(x_T)\\
+&+\kappa(x_S)(L-\vartheta_S(x_S))
++\kappa(x_T)(h-\vartheta_T(x_T)).
+\end{aligned}
+\tag{197.16}
+$$
+
+所有截点与 $L$ 的比值属于固定紧区间。引理194.2的固定倍数窗口论证只要求 $0<\delta<1$，所以式（197.16）与完整乘积的加性精度给
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log s+o(1),
+\tag{197.17}
+$$
+
+误差一致于 $s\in[\varepsilon,s_0]$。这里直接采用第194节的完整乘积界 $P(L)/e^\gamma\le\log L+o(1)$，没有以未指定速度的相对渐近代替加性 $o(1)$。
+
+实际 Robin 预算为 $\log\log(gU)=\log L+\log(1+s)$。且
+
+$$
+f_\delta'(s)=\frac{\delta s-(1-\delta)}{s(1+s)}<0
+\quad\text{于 }0<s<(1-\delta)/\delta,
+$$
+
+而 $f_\delta((1-\delta)/\delta)=0$，故 $f_\delta(s)\ge f_\delta(s_0)>0$。
+
+还须独立处理 $0\le h\le\varepsilon L$。将同一实际整数的预算同时放宽为
+
+$$
+A+B\le(1+\varepsilon)L,\qquad B\le\varepsilon L.
+$$
+
+在上面的截断论证中以 $\varepsilon L$ 替换 $h$，得
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log\varepsilon+o(1).
+$$
+
+预先选取固定 $\varepsilon\in(0,s_0)$，使
+
+$$
+-H(\delta)-(1-\delta)\log\varepsilon\ge f_\delta(s_0).
+$$
+
+因实际预算至少为 $\log L$，该分支也有式（197.15）的下界。合并两范围即得结论，包含 $g=1$。$\square$
+

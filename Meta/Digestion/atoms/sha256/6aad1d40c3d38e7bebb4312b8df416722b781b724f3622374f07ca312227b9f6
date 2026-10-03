@@ -1,0 +1,18 @@
+**定义 33.3（尾等价与全配对的分离）。** 令 $\Omega_0$ 为所有初态零的无限合法路径，带紧 cylinder 拓扑。AF 使用等深 tail equivalence
+
+$$
+R_{\mathrm{tail}}=
+\{(x,y):\text{某共同深度之后的实际边尾部完全相同}\}.
+$$
+
+其组合为 $(x,y)(y,z)=(x,z)$，逆为 $(y,x)$；拓扑取有限深度尾关系的 inductive-limit topology。每类至多可数，因为只有有限前缀替换。全 null 与全 $[3]$ 流不尾等价，所以 $R_{\mathrm{tail}}\ne\Omega_0^2$。
+
+若选择全 pair groupoid $\Omega_0^2$，解析结构必须另定。将 $\Omega_0$ 离散化，有限支撑核按计数卷积作用于 $\ell^2(\Omega_0)$，其范数完成是 $\mathcal K(\ell^2(\Omega_0))$；$\{\mathrm{null},3\}^{\mathbb N}\subseteq\Omega_0$ 已不可数，故这个 Hilbert 空间不可分。另一选择保留紧拓扑，并指定 full-support Radon 概率测度 $\mu$，例如各合法出边均有正概率的 Markov 测度。连续核按
+
+$$
+(f*g)(x,z)=\int f(x,y)g(y,z)\,d\mu(y),\qquad
+f^*(x,y)=\overline{f(y,x)}
+$$
+
+作用于 $L^2(\Omega_0,\mu)$；它们是 Hilbert–Schmidt 从而 compact，continuous rank-one kernels 又因连续函数在 $L^2$ 稠密而范数稠密于全部 compacts，故完成为 $\mathcal K(L^2(\Omega_0,\mu))$。nonatomic 情形单点 delta 不给归一化 $L^2$ 向量；无限维 identity 也不属于这个 compact 范数完成。取强闭包会得到另一表示相关的 $B(\mathcal H)$。这些选择均不从地址集推断物理态或唯一测度；§37 只使用已声明的含幺 AF 极限。
+

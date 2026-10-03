@@ -1,0 +1,40 @@
+**Proof.** The transition equation at each interior cut is the divergence identity for the displayed net current; at the absorbing cut only the incoming current remains. Summing over cuts cancels internal currents and leaves total mass one. Multiplying by $x_k$ and summing leaves $(x_{i+1}-x_i)J_n(i)$, which is the displacement formula with the actual increments $2$ and $3$.
+
+Absorption has finite expectation. From every nonabsorbed state, a string of at most $L$ right crossings has probability at least
+$$
+\left(\frac{\theta}{\max(r_\alpha,r_\beta)}\right)^L>0,
+$$
+so the tail is bounded geometrically. Let $h_k=\mathbb E_k\tau$ and $d_i=h_i-h_{i+1}$. The first-step equations give
+$$
+\frac{\theta d_0}{r_{s_0}}=1,\qquad
+\frac{\theta d_i}{r_{s_i}}-\frac{\theta d_{i-1}}{r_{s_{i-1}}}=1,
+$$
+whence $d_i=(i+1)r_{s_i}/\theta$ and $h_0=A(w)/\theta$.
+
+For concatenation, direct index shifting gives
+$$
+A(uv)=A(u)+A(v)+|u|R(v).
+$$
+Since $w(T_{j+2})=w(T_{j+1})w(T_j)$, the recurrence follows. To extract the order term, let $b(u)$ count $\beta$ leaves, put $B(u)=\sum_{i:u_i=\beta}(i+1)$ and
+$$
+C(u)=2B(u)-(|u|+1)b(u).
+$$
+Then
+$$
+C(uv)=C(u)+C(v)+|u|b(v)-|v|b(u).
+$$
+For $w(T_j)$, $b_j=F_j$ and $L_j=F_{j+1}$, so
+$$
+C_{j+2}=C_{j+1}+C_j+F_{j+2}F_j-F_{j+1}^2.
+$$
+Cassini's identity makes the last term $(-1)^{j+1}$, and $C_0=C_1=0$ gives
+$$
+C_j=-F_{j-2}-(-1)^j\qquad(j\ge2).
+$$
+Finally,
+$$
+2A_j=(L_j+1)R_j+(r_\beta-r_\alpha)C_j,
+$$
+which is the asserted correction. The first-step and network-current identities are the standard finite-chain calculation; see [J. R. Norris, *Markov Chains*](https://doi.org/10.1017/CBO9780511810633), §§1.1–1.3, for the corresponding passage equations.
+$\square$
+

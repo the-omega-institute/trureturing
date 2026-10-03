@@ -1,0 +1,16 @@
+**引理 199.2（任意窗口的实际根）。** 若 $j=r+k\ell$、$\ell\ge0$，且素数 $p\nmid10Q$ 整除 $V_j$，则
+
+$$
+P_{r,k}\bigl(\operatorname{Tr}(\tau^\ell)\bigr)\equiv0\pmod p.
+\tag{199.6}
+$$
+
+证明。$\phi^{j+3}v$ 的 $\phi$ 系数等于 $V_j$。所以在 $R/pR$ 内有
+
+$$
+\phi^{j+3}v=\psi^{j+3}v',\qquad
+\tau^{j+3}=v'/v.
+$$
+
+这里 $v$ 因 $p\nmid Q$ 可逆，$\phi,\psi$ 本身是单位。于是 $\tau^{k\ell}=\rho_r$。取迹，并使用 $\mathcal D_k(y+y^{-1})=y^k+y^{-k}$ 及式（199.5），即得式（199.6）。该论证在整个二次代数内有效，不要求 $p$ 在 $K$ 中不分裂。$\square$
+

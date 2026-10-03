@@ -1,0 +1,60 @@
+**定理 343.1（实际证书的单频率窄窗覆盖）。** 在定义343.1的条件下，可取固定常数 $K>0$，使每个 $T\in E$ 均满足 $T\Delta_\triangle(T)\le K$。对 $k\ge1$ 定义
+
+$$
+c_k=L\left(k+\frac14\right),\qquad
+J_k=\left[L\left(k-\frac14\right),L\left(k+\frac34\right)\right],
+$$
+
+$$
+w_k=\sqrt{\frac{KL}{8a_0k}},\qquad
+H=\sqrt{\frac{KL}{2a_0}},\qquad
+I_k=J_k\cap[c_k-w_k,c_k+w_k].
+\tag{343.5}
+$$
+
+则
+
+$$
+E\cap J_k\subseteq I_k,\qquad E\subseteq\bigcup_{k\ge1}I_k.
+\tag{343.6}
+$$
+
+每个非空 $I_k=[\alpha_k,\beta_k]$ 满足
+
+$$
+\alpha_k\ge\frac{Lk}{2},\qquad
+\beta_k\le L\left(k+\frac34\right),\qquad
+0\le\beta_k-\alpha_k\le\frac H{\sqrt k}.
+\tag{343.7}
+$$
+
+证明。$F$ 有界；取 $B_F\ge\sup|F|$，再取 $K>B_F+C$。由（343.3），对非正截止有
+
+$$
+T\Delta_\triangle(T)
+\le-F(T)-TR_1(T)\le B_F+\frac CT\le B_F+C<K.
+\tag{343.8}
+$$
+
+由于（343.1）各项非负，任何一个实际正权重都给
+
+$$
+\Delta_\triangle(T)\ge2a_0[1-\sin(\gamma_0T)].
+\tag{343.9}
+$$
+
+当 $T\in J_k$ 时，令 $d=T-c_k$，则 $|\gamma_0d|\le\pi$，且 $\sin(\gamma_0T)=\cos(\gamma_0d)$。经典 Jordan 正弦界等价地给 $1-\cos x\ge2x^2/\pi^2$（$|x|\le\pi$），故
+
+$$
+\Delta_\triangle(T)\ge\frac{16a_0}{L^2}(T-c_k)^2.
+\tag{343.10}
+$$
+
+同时 $T\ge L(k-1/4)\ge Lk/2$。因此非正截止满足
+
+$$
+\frac{8a_0k}{L}(T-c_k)^2\le T\Delta_\triangle(T)\le K,
+$$
+
+即 $|T-c_k|\le w_k$。这些闭区间 $J_k$ 覆盖 $[L,\infty)$：对任意 $T\ge L$，自然数 $k=\lfloor T/L+1/4\rfloor\ge1$，且 $T\in J_k$。裁剪到 $J_k$ 保证（343.7）的下端界；不裁剪的窄窗在小 $k$ 时可能伸出该单元，不能直接使用这一界。宽度至多 $2w_k=H/\sqrt k$。$\square$
+

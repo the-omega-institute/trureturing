@@ -1,0 +1,10 @@
+### theorem 239.1 边界尺度的统一估计
+
+对上述全部参数都有
+
+$$
+\left|n^2\Delta_{n-1}\!\left(1-\frac{c}{n^2}\right)
+-\frac{1-c}{2}\right|\le\frac{12}{n}.
+\tag{239.1}
+$$
+

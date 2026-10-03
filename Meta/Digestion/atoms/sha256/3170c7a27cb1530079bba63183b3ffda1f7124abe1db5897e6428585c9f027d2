@@ -1,0 +1,21 @@
+### definition 256.1 价格倒数坐标与有限脉冲核
+
+取 $1<a<b$，定义
+
+$$
+q(x)=\frac1{x\log x},\qquad A=q(a),\quad B=q(b),\quad z=q(y),
+\qquad F_0(x)=\log\log x-\frac1{\log x}.
+$$
+
+对 $y\in[a,b]$，$B\le z\le A$ 且 $A>B$。置
+
+$$
+\lambda_y=\frac{z-B}{A-B},\qquad
+G_{A,B}(z,u)=\frac{(\min(z,u)-B)(A-\max(z,u))}{A-B}
+\quad(B\le u\le A).
+\tag{256.1}
+$$
+
+该核非负；当 $B<z,u<A$ 时严格为正。
+对同一实际区间内的素数幂事件 $r=p^h\in(a,b)$，其质量为 $\log p$，位置为 $u=q(r)$。
+

@@ -1,0 +1,46 @@
+**定义 12.1（完整来源纤维与两个叶数尺度）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的非空有限有序完全二叉树集合 $\mathcal T$、叶标签 $\alpha,\beta$、组成 $c$ 及保持左右括号的替换 $\rho$。树的相等取原始自由语法相等，保留每个括号和每片叶的次序；其完整代码与全部路径读数的等价刻画分别由[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。对 $a,b\in\mathbb N_0$、$a+b\ge1$，记
+
+$$
+\mathcal T_{a,b}=\{T\in\mathcal T:c(T)=(a,b)^{\mathsf T}\}.
+$$
+
+取任意整数 $k\ge1$、$p,q\ge0$、$t=p+q\ge1$，置
+
+$$
+\begin{gathered}
+d=3k,\qquad
+\binom ab=M^d\binom pq=S^k\binom pq,
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad S=M^3,\\
+a=F_{d-1}p+F_dq,\qquad
+b=F_dp+F_{d+1}q,\qquad n=a+b,\\
+\mathcal I_{k,p,q}=\mathcal T_{a,b}\cap\rho^d(\mathcal T),
+\qquad R_{k,p,q}=\frac{|\mathcal I_{k,p,q}|}{|\mathcal T_{a,b}|},
+\qquad N_{t,p}=C_{t-1}\binom tp,\quad
+C_m=\frac1{m+1}\binom{2m}{m}.
+\end{gathered}
+\tag{12.1}
+$$
+
+Fibonacci 编号仍为 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。若使用既有有限预算 $H$，要求 $H\ge n$；待判定的初始树纤维 $\mathcal T_{a,b}$ 因而包含在 $\mathcal T_H$ 内。这里 $d$ 是检验该初始树的组成祖先及语法祖先的替换深度，不是数量观察的末端阶段 $L$。组成许可沿用[定义 2.1、定理 2.3](#2-许可预算阶梯与深层碰撞前沿)；$R_{k,p,q}$ 是该许可组成纤维内部指定树属于替换像的计数比例。
+
+对连续参数 $x\in[0,1]$ 定义
+
+$$
+\begin{gathered}
+u_k(x)=F_{d-1}x+F_d(1-x),\qquad
+v_k(x)=F_dx+F_{d+1}(1-x),\\
+\ell_k(x)=u_k(x)+v_k(x)
+=F_{d+1}x+F_{d+2}(1-x),\qquad
+ y_k(x)=\frac{u_k(x)}{\ell_k(x)},\\
+h(z)=-z\log z-(1-z)\log(1-z),\quad h(0)=h(1)=0,
+\qquad g(z)=\log4+h(z),\\
+J_k(x)=\ell_k(x)g(y_k(x))-g(x),\qquad
+\Gamma_k(x)=\frac{J_k(x)}{\ell_k(x)},\\
+\phi=\frac{1+\sqrt5}{2},\qquad
+\eta=\phi^{-2},\qquad B=g(\eta).
+\end{gathered}
+\tag{12.2}
+$$
+
+全部对数为自然对数。对整数来源参数，以下简写 $x=p/t$、$\ell=\ell_k(x)=n/t$、$y=y_k(x)=a/n$。连续延拓 $J_k$ 比较相同祖先叶数尺度上的指数损失；只有网格 $x=p/t$ 对应实际整数组成。$R_{k,p,q}$ 的定义不赋予实际来源概率律。若另给 $\mathcal T_{a,b}$ 上的均匀律，它才等于该律下的替换像概率；组成、代码、路径读数及计数比例均不自行授权实际逆执行，也不指定物理解释。
+

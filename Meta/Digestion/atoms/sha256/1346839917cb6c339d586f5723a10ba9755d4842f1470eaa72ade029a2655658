@@ -1,0 +1,30 @@
+## 332. CA 赋值可接入量化子空间定理，但方向计数不排除实际点
+
+本节直接使用 Evertse–Ferretti，
+*A further improvement of the Quantitative Subspace Theorem*，
+Annals of Mathematics 177 (2013), 513–590，
+[DOI:10.4007/annals.2013.177.2.4](https://doi.org/10.4007/annals.2013.177.2.4)，
+[原文 pp.523–525，§3、Theorems 3.1、3.3 与 Corollary 3.2](https://annals.math.princeton.edu/wp-content/uploads/annals-v177-n2-p04-p.pdf)。
+以下给出实际 CA 参数的对应与尚缺的点态排除。
+
+仍记 $L=\log C$、$S=\sqrt P$。假定 §328 的危险弧发生，对其约化素分母 $q$ 与分子 $a$ 取整数提升 $j$，定义
+
+$$
+m=qj+a,\qquad n=Cq,\qquad
+E=|n\varphi-m|\le B_q:=\frac{q\delta}{2Q}.
+\tag{332.1}
+$$
+
+因 $(a,q)=1$，有 $(m,q)=1$；若 $d=(m,n)$，则 $d\mid C$。约分改变分母为 $(C/d)q$，并可能删去 CA 赋值，不能直接把它当成 $Cq$。
+式（331.13）给
+
+$$
+\frac1{16Q}\le B_q\le\frac1{8Q},\qquad
+E<e^{-\kappa S}\quad\text{最终成立}.
+\tag{332.2}
+$$
+
+危险弧给出的范数上界仍是
+$|K|\le B_q(\sqrt5\,Cq+B_q)$，其上端对数为
+$L-(\kappa-\eta)S+O(1)$；它没有强迫 $K=\pm1$。
+

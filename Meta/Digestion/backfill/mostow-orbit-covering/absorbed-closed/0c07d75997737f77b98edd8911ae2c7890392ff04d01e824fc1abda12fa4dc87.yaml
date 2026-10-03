@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c07d75997737f77b98edd8911ae2c7890392ff04d01e824fc1abda12fa4dc87
+  normalized_sha256: sha256:0c07d75997737f77b98edd8911ae2c7890392ff04d01e824fc1abda12fa4dc87
+cas_ref: sha256:0c07d75997737f77b98edd8911ae2c7890392ff04d01e824fc1abda12fa4dc87
+coverage_gids:
+  - gid: D5/S3/Geometry/HyperbolicTopology.coordinatesHomeomorph
+    target_statement_id: sha256:196f7c9e1308b921e696020aa9db2f43dc604975c986fe6c338ad9b79bf153b6
+  - gid: D5/S3/Geometry/HyperbolicTopology.hyperbolicProperSpace
+    target_statement_id: sha256:6d5142fb676984f5f596ec216a5c52167ae95c58065a021618da40049244b2fd
+receipts:
+  unresolved_subitems: []

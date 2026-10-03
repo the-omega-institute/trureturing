@@ -1,5 +1,8 @@
 import Reg.Support.LegacyCausalSlots
 import Reg.Support.CausalSourceFamily
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /- Full original statements and lawful transports, isolated from production
 catalogs. This fixture exposes the current finite extraction boundary. -/
@@ -7,7 +10,7 @@ namespace LeanInformationAuditRegTests.LegacyCausalBindingBoundary
 open Reg.Support.LegacyCausalCoordinates Reg.Support.LegacyCausalSlots LeanInformationAudit
 
 namespace Candidate0
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
+test_assess in register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
   in Reg.Support.LegacyCausalSlots.localDomainArena
   object_arena icObjectArena catalog Reg.Support.LegacyCausalCoordinates.icObjectArena
   readout via (slotRealization (fun i x =>
@@ -30,7 +33,7 @@ register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.Interven
 end Candidate0
 
 namespace Candidate1
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
+test_assess in register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
   in Reg.Support.LegacyCausalSlots.icDomainArena
   object_arena objectArena catalog «causal-unified-transitions»
   readout via (slotRealization (fun i x =>
@@ -53,7 +56,7 @@ register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.Interven
 end Candidate1
 
 namespace Candidate2
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention
+test_assess in register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention
   in Reg.Support.LegacyCausalSlots.oiDomainArena
   object_arena objectArena catalog «causal-unified-transitions»
   readout via (slotRealization (fun i x =>

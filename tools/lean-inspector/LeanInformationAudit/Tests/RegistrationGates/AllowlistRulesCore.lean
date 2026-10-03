@@ -5,6 +5,9 @@ import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Logic.Equiv.Defs
 import LeanInformationAuditAnalysis.Tests.AllowlistSources
 import LeanInformationAuditAnalysis.Tests.ExternalAllowlistTypes
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit.RegistrationGates
 open D5.S3.ConceptDynamics.InformationEscape

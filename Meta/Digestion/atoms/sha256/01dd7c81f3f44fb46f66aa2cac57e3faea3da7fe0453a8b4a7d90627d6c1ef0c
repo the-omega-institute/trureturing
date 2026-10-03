@@ -1,0 +1,4 @@
+**精确归属与较大预算。** 对任一固定合法归属，预算恰为 $B_n$ 时的充要条件是(43.22.7)中每个现存槽的两端实际坐标都属于 $O_{c_\alpha}^{B_n}$。必要性来自端点见证；充分性来自 $O_{c_\alpha}^{B_n}$ 的区间性。按开头的投影规则检查等号端点即可；$B_n=0$ 时仍保留实际坐标归属，空观察则无约束。闭格最短距离在 $J_i\subset X$ 中取得，裁剪不改变闭成本。
+
+任意 $b>B_n$ 都可把这有限族的全部目标选在指定格内部，并保持每个误差严格小于 $b$，因此适用于每一种固定合法归属，且来源、共同词和两条实际尾不变。例如 $b_n=(\theta+B_n)/2<\theta$ 实现全部 $|z|\le n$，包括空词。由于 $B_n\uparrow\theta$，任何一个固定 $b<\theta$ 都不能覆盖这个同一无界族。在 $\theta$ 的全族内部尾归属结论与定理39.4.1一致。本推论要求两个非退化包络，不转移到单点竞争包络；后者应使用[定理39.5.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13415)的旗标轨道判据。
+

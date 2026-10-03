@@ -1,0 +1,94 @@
+**定义 33.1（临界分隔表）。** 令 $\delta=\lambda-\nu$。在 $0\le\nu\le\lambda$ 时，临界闭扩张区间为
+
+$$
+\begin{aligned}
+E_0^\lambda&=[-1,-t^2],&
+E_1^\lambda&=[-6t^2/5,g-t^2/5],\\
+E_2^\lambda&=[g-2t^2/5,t-2t^2/5],&
+E_3^\lambda&=[t-3t^2/5,2t-3t^2/5],\\
+E_4^\lambda&=[2t-4t^2/5,2t+t^2/5],&
+E_5^\lambda&=[2t,\phi].
+\end{aligned}
+\tag{33.4}
+$$
+
+内部区间在半径 $\nu$ 下两端各向内移动 $\delta$，而
+
+$$
+E_0^\nu=[-1,-t^2-\delta],\qquad
+E_5^\nu=[2t+\delta,\phi].
+\tag{33.5}
+$$
+
+四种内部当前颜色的唯一可能分隔类型、下一共同颜色和下一共同标签如下：
+
+$$
+\begin{array}{c|c|c|c|c}
+ i&(\ell_i,m_i)&s_i&H(i)&q_i\\ \hline
+1&(3,0)&-1+\phi/5&0&3\\
+2&(0,5)&-1+2\phi/5&1&0\\
+3&(5,2)&-1+3\phi/5&1&0\\
+4&(2,25)&-1+4\phi/5&2&5
+\end{array}
+\tag{33.6}
+$$
+
+其中 $\ell_i$ 是较低分支、$m_i$ 是较高分支；并且
+
+$$
+E_i^\lambda=[f_{\ell_i}(s_i),f_{m_i}(s_i)].
+\tag{33.7}
+$$
+
+在 $0\le\nu<\lambda$ 时，端颜色不能产生不同当前标签：$E_0^\nu$ 只涉及标签 $3$，$E_5^\nu$ 只涉及标签 $25$。在 $\nu=\lambda$ 的完成域 $\Omega$ 上，另有两个实际接触：$0(25,3)^\infty$ 的当前值为 $f_0(\phi)=-t^2$，当 $Q(a)=0$ 时误差 $-\lambda$ 给出颜色 $0$；$2(3,25)^\infty$ 的当前值为 $f_2(-1)=2t$，当 $Q(e)=5$ 时误差 $+\lambda$ 给出颜色 $5$。这些归属各自在整条记录上固定。定理33.3使用 $\nu\le\nu_*<\lambda$，不包含这两个接触。四个 $s_i$ 分别落在唯一的 $E_{H(i)}^\lambda$ 内；相邻排除所需的正差为
+
+$$
+\begin{aligned}
+\min E_1^\lambda-s_1&=(5t-2)/5,\\
+s_2-\max E_0^\lambda&=(2-3t)/5,&
+\min E_2^\lambda-s_2&=(10t-4)/5,\\
+s_3-\max E_0^\lambda&=(3-2t)/5,&
+\min E_2^\lambda-s_3&=(9t-5)/5,\\
+s_4-\max E_1^\lambda&=(5-7t)/5,&
+\min E_3^\lambda-s_4&=(4t-2)/5.
+\end{aligned}
+\tag{33.8}
+$$
+
+这些量为正可由 $3/5<t<5/8$ 得到。若两个实际来源在颜色 $i$ 处使用不同标签，并在下一处仍有共同颜色，则令 $u,v$ 为按 (33.6) 排序的两个实际下一尾坐标。负斜率和 (33.7) 给出
+
+$$
+u\le s_i-\frac\delta g,\qquad
+v\ge s_i+\frac\delta g.
+\tag{33.9}
+$$
+
+因而下一共同颜色只能是 $H(i)$；若下一标签也共同，则只能是 $q_i$。对 $q_i$ 的负斜率逆映射再用一次 (33.9)，得到两步中心
+
+$$
+(z_1,z_2,z_3,z_4)=\left(\frac{2t}{5},\ 1+\frac{4t}{5},\ \frac t5,\ \frac{3t}{5}\right),
+\tag{33.10}
+$$
+
+以及两步后的闭区间必要条件
+
+$$
+\boxed{
+[z_i-\delta/g^2,z_i+\delta/g^2]
+\subseteq E_r^\nu\cap D_i,
+}
+\tag{33.11}
+$$
+
+其中 $r$ 是第三个共同颜色，$D_1=D_2=D_3=X$，$D_4=I$。这里的 $D_i$ 是实际合法尾域；它保留了标签 $5,25$ 的尾域限制。若相关候选区间端点写成 $L+\alpha\delta$ 与 $U-\beta\delta$，且分母为正，则 (33.11) 的一侧精确给出
+
+$$
+\delta\le \min\left\{
+\frac{g^2(z_i-L)}{1+\alpha g^2},
+\frac{g^2(U-z_i)}{1+\beta g^2}
+\right\}.
+\tag{33.12}
+$$
+
+本章五次使用中速度只有 $0$ 或 $1$，所以 (33.12) 的两个分母都严格为正。
+

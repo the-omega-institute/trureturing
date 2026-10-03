@@ -1,0 +1,17 @@
+**Theorem 2.2 (Exact hidden fibers and failure of uniform genealogical transport).** The fiber cardinality is
+$$
+N(a,b)=|\mathcal F(a,b)|=C_{L-1}\binom La .
+$$
+Every probability on $\mathcal F(a,b)$ has the same complete quantity trajectory $q(M^n(a,b))$. Nevertheless,
+$$
+\operatorname{TV}\bigl(\rho_*U(a,b),U(b,L)\bigr)
+ =1-\frac{N(a,b)}{N(b,L)},
+\qquad
+N(b,L)=C_{L+b-1}\binom{L+b}{b}.
+$$
+For $L\ge2$ this is at least $1-2^{-b}$, and for $(a,b)=(1,1)$ it is $2/3$. For every nonempty initial fiber,
+$$
+\operatorname{TV}\bigl((\rho^n)_*U(a,b),U(M^n(a,b))\bigr)\longrightarrow1,
+$$
+although the two laws have identical composition and quantity observations at every generation.
+

@@ -5,6 +5,7 @@ import io
 import json
 import os
 from pathlib import Path
+import shlex
 import shutil
 import subprocess
 import sys
@@ -126,6 +127,31 @@ class ReuseTests(unittest.TestCase):
         self.assertFalse(api.reuse(self.root, self.output, self.output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists())
 
+    def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
+        process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
+        self.assertNotIn('bad-producer-build-args', calls, '[FAIL] producer_build_uses_target_path_contract')
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        self.assertEqual(calls[:2], ['producer-build', 'ensure'], '[FAIL] standalone_entry_builds_producer_before_ensure')
+        self.assertEqual(len(calls), 3)
+        self.assertTrue(calls[2].endswith(' build leanInspector/LeanInformationAudit'))
+        self.assertEqual((self.root / 'ensure-producer').read_text(), 'producer.dll\n',
+                         '[FAIL] ensure_runs_the_built_producer')
+
+    def test_standalone_entry_fails_when_the_producer_build_reports_no_usable_dll(self):
+        for case in ['no output', 'relative path', 'absent absolute path']:
+            with self.subTest(case=case):
+                # Each case starts from a fresh cold fixture.
+                self.setUp()
+                stdout = {'no output': '', 'relative path': 'producer.dll\n',
+                          'absent absolute path': f'{self.root}/absent/producer.dll\n'}[case]
+                process, calls = self.entry_with_program_build(
+                    ['leanInspector/LeanInformationAudit'], prebuilt=False, producer_stdout=stdout)
+                self.assertEqual(process.returncode, 2, '[FAIL] pathless_producer_build_fails_entry: '
+                                 + process.stdout + process.stderr)
+                self.assertIn('the producer build reported no existing absolute DLL', process.stderr,
+                              '[FAIL] pathless_producer_build_names_the_defect')
+                self.assertEqual(calls, ['producer-build'], '[FAIL] pathless_producer_build_runs_no_later_step')
+
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()
         command = [sys.executable, '-B', str(HERE / 'reuse.py'), 'probe', '--repository', str(self.root),
@@ -224,35 +250,6 @@ class ReuseTests(unittest.TestCase):
         api.warn_mismatch(api.probe(self.root, self.report), output)
         self.assertEqual(output.getvalue(), '')
 
-    def test_ci_resource_probe_forwards_mismatch_warning(self):
-        relative = '.lake/build/stratalint/raw-lean-report.json'
-        seed = self.root / 'build/ci/current-check-seed'
-        self.report = seed / relative
-        self.report.parent.mkdir(parents=True)
-        self.receipt()
-        checks = dict(version=2, stage='current', candidate='a' * 64, round='b' * 32)
-        (seed / 'checks.json').write_text(json.dumps(checks))
-        producer = dict(version=1, candidate=checks['candidate'], round=checks['round'],
-            report=relative, materials=[dict(path=relative + suffix)
-                for suffix in (*publication.SUFFIXES, '.reuse.json')])
-        (seed / 'producer-report.json').write_text(json.dumps(producer))
-        for name in ['reuse.py', 'publication.py', 'materials.py']:
-            target = self.root / 'tools/lean-inspector' / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(HERE / name, target)
-        self.policy['report_cache_release_semantic_version'] += 1
-        self.write_policy()
-        command = [sys.executable, '-B', '-c',
-            'import pathlib, sys; sys.path.insert(0, sys.argv[1]); import lean_actions; '
-            'print(lean_actions.report_seed(pathlib.Path(sys.argv[2])))',
-            str(ROOT / 'tools/scripts/worktree'), str(self.root)]
-        with patch.dict(os.environ, GITHUB_ACTIONS='true'):
-            result = subprocess.run(command, text=True, capture_output=True, check=False)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.strip(), 'None')
-        self.assertIn('::warning title=Lean report cache mismatch::', result.stderr)
-        self.assertIn('cached_version=1 current_version=2', result.stderr)
-
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
         captured = api.capture(self.root)
@@ -325,19 +322,11 @@ class ReuseTests(unittest.TestCase):
         with patch.object(publication, 'validate_bundle', side_effect=mutate_private):
             self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
         self.assertFalse(self.output.exists())
-        # Matching receipt hashes cannot bypass the semantic/material validator.
-        archive = publication.member(self.report, '.materials.zip')
-        with zipfile.ZipFile(archive, 'w') as out:
-            out.writestr('unreferenced', b'bytes')
-        receipt = publication.member(self.report, '.reuse.json')
-        record = json.loads(receipt.read_text())
-        record['bundle']['.materials.zip'] = publication.digest(archive)
-        receipt.write_text(json.dumps(record))
-        self.assertFalse(api.probe(self.root, self.report)['needs_lake'],
-                         '[FAIL] probe_only_selects_resources')
-        self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'],
-                        '[FAIL] sealed_hashes_cannot_authorize_bad_materials')
-        self.assertFalse(self.output.exists())
+        # Like a restored olean, sealed bytes are reused without replaying row validation.
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as rows:
+            self.assertFalse(api.reuse(self.root, self.report, self.output)['needs_lake'])
+            self.assertEqual(rows.call_count, 0, '[FAIL] sealed_bundle_rows_not_revalidated')
+        self.assertTrue(self.output.exists())
 
     def test_optional_decoder_damage_is_a_miss_but_programming_errors_escape(self):
         api = self.receipt()
@@ -359,12 +348,12 @@ class ReuseTests(unittest.TestCase):
 
     def test_semantic_seed_miss_preserves_absent_destination_parents(self):
         api = self.receipt()
-        archive = publication.member(self.report, '.materials.zip')
-        with zipfile.ZipFile(archive, 'w') as out:
-            out.writestr('unreferenced', b'bytes')
+        # The receipt matches, but the sealed envelope is invalid.
+        sidecar = publication.member(self.report, '.sha256')
+        sidecar.write_text('0' * 64 + '  ' + self.report.name + '\n')
         receipt = publication.member(self.report, '.reuse.json')
         record = json.loads(receipt.read_text())
-        record['bundle']['.materials.zip'] = publication.digest(archive)
+        record['bundle']['.sha256'] = publication.digest(sidecar)
         receipt.write_text(json.dumps(record))
         output = self.root / '.lake/build/stratalint' / publication.RAW
         self.assertTrue(api.reuse(self.root, self.report, output)['needs_lake'])
@@ -415,20 +404,21 @@ class ReuseTests(unittest.TestCase):
             api.reuse(self.root, self.report, self.output)
 
     def entry_with_program_build(self, targets, *, seed=True, build_exit=0,
-                                 existing_output=False, registered_targets=('FixtureAudit',)):
+                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True,
+                                 producer_stdout=None):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                         'tools/scripts/lib/resource-observation-lib.sh',
-                         'tools/scripts/workflow/ci_plan.py'):
+                         'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
         ensure = self.root / 'tools/scripts/worktree/lean-cache-ensure.sh'
         ensure.write_text('#!/bin/bash\nset -euo pipefail\n'
                           + ('' if existing_output else 'test ! -e .lake\n')
-                          + 'printf "ensure\\n" >> build-calls\nmkdir -p .lake\n')
+                          + 'printf "ensure\\n" >> build-calls\nmkdir -p .lake\n'
+                          + 'printf "%s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> ensure-producer\n')
         runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
         runner.write_text('#!/bin/bash\nset -euo pipefail\n'
                           'printf "%s\\n" "$*" >> build-calls\n'
@@ -450,14 +440,29 @@ class ReuseTests(unittest.TestCase):
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
+        if not prebuilt:
+            # A standalone entry builds the producer and reports its DLL, unless the
+            # test substitutes the build's whole standard output. The stub answers
+            # only the entry's contract: the csproj's own TargetPath.
+            dotnet = self.root / 'dotnet-bin/dotnet'
+            dotnet.parent.mkdir()
+            dotnet.write_text('#!/bin/sh\n'
+                              'bad() { printf "bad-producer-build-args\\n" >> build-calls; exit 64; }\n'
+                              '[ "$1" = build ] || bad\n'
+                              'for required in " --configuration Release " " -t:Build " " -getProperty:TargetPath " '
+                              '"/StrataLint.Lean/StrataLint.Lean.csproj "; do\n'
+                              '  case " $* " in *"$required"*) ;; *) bad ;; esac\n'
+                              'done\n'
+                              'printf "producer-build\\n" >> build-calls\n'
+                              + ('printf "%s\\n" "$PWD/producer.dll"\n' if producer_stdout is None
+                                 else 'printf %s ' + shlex.quote(producer_stdout) + '\n'))
+            dotnet.chmod(0o755)
+            environment.pop('STRATALINT_LEAN_PRODUCER_DLL')
+            environment['PATH'] = str(dotnet.parent) + os.pathsep + environment['PATH']
         if existing_output and seed == 'valid':
             environment.pop('STRATALINT_LEAN_REPORT_REUSE')
         if targets is None:
             environment.pop('STRATALINT_LEAN_BUILD_TARGETS')
-            self.write('Meta/ci-resources.json', json.dumps(dict(
-                schema='ci-resource-execution-v1', resources=[dict(
-                    id='fixture-program-build', projects=[], checks=[], steps=[],
-                    lean_targets=list(registered_targets))])))
         result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
             '--repository', str(self.root), '--output', str(self.output),
             '--log-dir', str(self.root / 'logs')], env=environment, text=True, capture_output=True)

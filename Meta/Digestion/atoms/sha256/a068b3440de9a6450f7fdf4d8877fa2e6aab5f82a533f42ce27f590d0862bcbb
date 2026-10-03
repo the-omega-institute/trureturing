@@ -1,0 +1,22 @@
+**定义 294.1（同一整包的剩余证书）。** 对素父指标 $s$ 和正整数 $K$，令
+\[
+a_s(k)=\begin{cases}6ks+1,&k\text{ 为偶数},\\6ks-1,&k\text{ 为奇数},\end{cases}
+\qquad
+D_s(K)=\prod_{\substack{1\le k\le K\\k\bmod10\text{ 属于定理291.1的实际父表}}}a_s(k),
+\qquad P_s(K)=6(K+1)s-1.
+\tag{294.2}
+\]
+取 $m_s$ 的有限不同素因子集 $\mathcal C_s$，保留每个素因子的实际完整赋值，定义
+\[
+C_s=\prod_{q\in\mathcal C_s}q^{v_q(m_s)},\qquad
+R_s=m_s/C_s.
+\]
+要求 $\gcd(C_s,R_s)=\gcd(R_s,D_s(K))=1$。对应的证书预算为
+\[
+\mathcal B_s(K,C_s)=\sum_{q\in\mathcal C_s}w(q)
++\frac{\log m_s-\log C_s}{P_s(K)}
+\left(1+\frac{c}{\log P_s(K)}\right).
+\tag{294.3}
+\]
+空核心允许 $C_s=1$。证书始终保留同一个实际整数，不以必要地址本身充当实际素因子。
+

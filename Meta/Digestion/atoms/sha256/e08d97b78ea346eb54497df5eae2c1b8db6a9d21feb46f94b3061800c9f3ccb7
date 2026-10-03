@@ -1,0 +1,14 @@
+**定义 4.1（Cells, supported frontiers and exact addition）。** For a top-first width list $w$, let $O_w(u,y)$ denote occupancy of the natural cell $(u,y)$, recursively defined by $O_{[]}(u,y)$ false and
+
+$$
+O_{a::v}(u,y)\ \Longleftrightarrow\ (y=|v|\ \land\ u<a)\ \lor\ O_v(u,y).
+$$
+
+An existing-row frontier at $(x,y)$ for width $n$ is specified recursively: there is none in $[]$; for $[a]$ it is $x=a,y=0$; for $a::b::v$ it is either $x=a,y=|v|+1,a+n\le b$, or an existing-row frontier in $b::v$. A placement frontier additionally permits $x=0,y=|w|$ when $w=[]$ or its first width is at least $n$.
+
+A legal cell brick at $(x,y)\in\mathbb N^2$ satisfies, for every natural $u$ in $[x,x+n)$, nonoccupancy $\neg O_w(u,y)$ and, unless $y=0$, support $O_w(u,y-1)$. It also satisfies $x=0$ or $O_w(x-1,y)$. An exact brick addition from $w$ to $v$ requires these same three constraints and, for all natural $u,z$,
+
+$$
+O_v(u,z)\ \Longleftrightarrow\ O_w(u,z)\ \lor\ (z=y\ \land\ x\le u<x+n).
+$$
+
