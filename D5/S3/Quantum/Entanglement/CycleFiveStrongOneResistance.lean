@@ -43,7 +43,9 @@ open D5.S3.Quantum.Entanglement.CycleSixStrongTwoResistanceRefutation
 open scoped BigOperators ComplexOrder MatrixOrder
 def claim : Prop := IsStrongResistant 1 (cycleGraphState 5)
 variable {V : Type} [Fintype V] [DecidableEq V]
-private def transposePart (A : Finset V) (W : Matrix (V → Bool) (V → Bool) ℂ) :
+/-- The partial transposition on the vertices in `A`: the entry at `(x, y)` is the entry of `W`
+at the labels with the `A` parts of `x` and `y` exchanged. -/
+def transposePart (A : Finset V) (W : Matrix (V → Bool) (V → Bool) ℂ) :
     Matrix (V → Bool) (V → Bool) ℂ :=
   fun x y => W (A.piecewise y x) (A.piecewise x y)
 private def pairing (W ρ : Matrix (V → Bool) (V → Bool) ℂ) : ℂ :=
