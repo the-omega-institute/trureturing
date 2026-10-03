@@ -1,0 +1,85 @@
+**定理 350.1（相位反推与两种弱极限）。** 在定义350.1和假设350.1下，先固定
+
+$$
+\begin{aligned}
+K_{\rm inv}&=2\alpha+3B,&Y_0&=16/T_0,&C_M&=B+136K_{\rm inv},\\
+C_2&=\max\bigl(C_M,Y_0^2A+\alpha\log^2Y_0\bigr),\\
+C_4&=\max\bigl(64K_{\rm inv},Y_0^2A\bigr),&
+C_T&=\max\bigl(32K_{\rm inv},Y_0^2A\bigr),\\
+C_{\rm num}&=C_2+C_4/8,&
+L_*&=\max\bigl(1,\log Y_0,4B/\alpha\bigr),\\
+t_*&=e^{-L_*},&Q_{\rm cdf}&=4(C_{\rm num}+B)/\alpha.
+\end{aligned} \tag{350.2}
+$$
+
+这些常数可以依赖总权重 $A$，不主张与谱质量无关。它们在任何时间、分位参数或截断的选择之前确定，并满足以下全部结论。
+
+对每个 $Y\ge1$ 和 $\diamond\in\{\le,<\}$，有
+
+$$
+\begin{aligned}
+\left|M_2^\diamond(Y)-\alpha\log^2Y\right|&\le C_2(\log Y+1),\\
+M_4^\diamond(Y)&\le C_4Y^2(\log Y+1),\\
+\mathcal T^{\ge}(Y),\ \mathcal T^{>}(Y)&\le C_TY^{-2}(\log Y+1).
+\end{aligned} \tag{350.3}
+$$
+
+对每个带符号的时间 $0<|t|\le t_*$，记 $L_t=\log(1/|t|)$。同时有
+
+$$
+\delta(t)\ge\frac\alpha2t^2L_t^2>0,
+\qquad
+\sup_{0\le s\le1}
+\left|\frac{\delta_{\diamond\exp(sL_t)}(t)}{\delta(t)}-s^2\right|
+\le\frac{Q_{\rm cdf}}{L_t},
+\quad\diamond\in\{\le,<\}. \tag{350.4}
+$$
+
+同一阈值和同一误差常数包括 $s=0,1$ 以及任何随 $t$ 变化而仍在 $[0,1]$ 内的 $s$。
+
+在上述邻域中，以原指标集形成离散概率质量及位置
+
+$$
+p_i(t)=\frac{2a_i(1-\cos(\gamma_i t))}{\delta(t)},
+\qquad x_i(t)=\frac{\log\gamma_i}{L_t}.
+$$
+
+令 $\operatorname{PMF}(I)$ 表示非负扩展实数族且其可和总质量为 $1$ 的离散概率空间。将 $p(t)\in\operatorname{PMF}(I)$ 先沿 $i\mapsto x_i(t)$ 映至 $\operatorname{PMF}(\mathbb R)$，再取对应的 Borel 概率测度，得到
+
+$$
+\mu_t=\sum_i p_i(t)\,\delta_{x_i(t)}
+\in\operatorname{ProbabilityMeasure}(\mathbb R).
+$$
+
+这里 $\delta_x$ 为 Dirac 测度；重复位置的质量相加，而不是删除原指标。无需在 $I$ 上另给可测结构。设
+
+$$
+\nu(E)=\int_{E\cap[0,1]}2s\,ds,
+\qquad E\subseteq\mathbb R\text{ 为 Borel 集}.
+$$
+
+则 $\nu$ 为 $\operatorname{Beta}(2,1)$ 概率测度，且在概率测度的通常弱拓扑中
+
+$$
+\mu_t\longrightarrow\nu
+\quad\bigl(t\to0,\ t\ne0\bigr). \tag{350.5}
+$$
+
+具体地，对每个固定的有界连续实函数 $f$，$\int f\,d\mu_t\to\int f\,d\nu$。此极限的时间滤子是实数的穿孔邻域滤子 $\mathcal N[\ne](0)$。
+
+再令 $\mathcal H=\operatorname{lp}(I;\mathbb C,2)=\ell^2(I;\mathbb C)$，赋予通常的复 Hilbert 结构。在同一邻域内定义
+
+$$
+w_t(i)=\frac{\sqrt{a_i}\,(e^{\mathrm i\gamma_i t}-1)}{\sqrt{\delta(t)}}.
+$$
+
+则 $w_t\in\mathcal H$、$\|w_t\|=1$，并在
+$\operatorname{WeakSpace}(\mathbb C,\mathcal H)$ 的通常复弱拓扑中有
+
+$$
+w_t\rightharpoonup0
+\quad\bigl(t\to0,\ t\ne0\bigr). \tag{350.6}
+$$
+
+即每个固定连续复线性泛函 $\lambda:\mathcal H\to\mathbb C$ 均满足 $\lambda(w_t)\to0$。若需要在全部实数上定义这两个族，可在邻域以外置 $\mu_t=\nu$、$w_t=0$；单位范数只在 $0<|t|\le t_*$ 内断言。
+
