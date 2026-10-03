@@ -82,6 +82,10 @@ $$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; (1 \leq M \Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ahn-corcoran-staudacher-2021-hypereclectic-non-shortening` (proved) by `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ahn-corcoran-staudacher-2021-hypereclectic-non-shortening","declaration_gid":"D5/S3/Quantum/SpinChains/HypereclecticNonShortening.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

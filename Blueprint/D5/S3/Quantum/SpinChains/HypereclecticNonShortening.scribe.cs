@@ -42,7 +42,10 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
         DescribeId.Create("hypereclectic-" + (name == "W" ? "w" : name == "H" ? "h" : name)), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula),
         role == DescribeRole.Theorem ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(Source),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("ahn-corcoran-staudacher-2021-hypereclectic-non-shortening"),
+            ResolutionKind.Proved) : null);
 
     private static Formula All(string variable, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable),
