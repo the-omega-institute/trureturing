@@ -11,13 +11,24 @@ public static class ScribeCli
 
     public static ImmutableArray<string> ImplementedCommands { get; } =
     [
+        "content-check",
         "describe-report",
         .. EmissionCommands.Order(StringComparer.Ordinal),
         "markdown-check",
         "projections",
         "resources",
+        "resources release",
+        "resources verify-release",
         "scripts",
     ];
+
+    public static int Run(
+        Func<Assembly> documentsAssembly,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error) =>
+        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null);
 
     public static int Run(
         Assembly documentsAssembly,
@@ -38,6 +49,19 @@ public static class ScribeCli
 
     internal static int Run(
         Assembly documentsAssembly,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport? leanReport,
+        TextReader? input = null)
+    {
+        ArgumentNullException.ThrowIfNull(documentsAssembly);
+        return Run(() => documentsAssembly, arguments, workingDirectory, output, error, leanReport, input);
+    }
+
+    internal static int Run(
+        Func<Assembly> documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
@@ -72,6 +96,41 @@ public static class ScribeCli
             }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
                 or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "content-check")
+        {
+            if (arguments.Count is not (3 or 5)
+                || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(arguments[2])
+                || (arguments.Count == 5
+                    && !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+
+            try
+            {
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
+                    FindRepositoryRoot(workingDirectory), arguments[2]);
+                // InspectRepository also calls ReadRepository with the script's explicit report.
+                var exit = Run(documentsAssembly, ["projections", "--check", "--report", arguments[2]],
+                    workingDirectory, output, error, report);
+                if (exit != 0) return exit;
+                exit = Run(documentsAssembly, ["describe-report", "--check"],
+                    workingDirectory, output, error, report);
+                if (exit != 0) return exit;
+                return Run(documentsAssembly, ["markdown-check", .. arguments.Skip(1)],
+                    workingDirectory, output, error, report, input);
+            }
+            catch (Exception exception) when (
+                exception is IOException or UnauthorizedAccessException or ArgumentException
+                    or FormatException or InvalidOperationException)
             {
                 error.WriteLine(exception.Message);
                 return 2;
@@ -136,7 +195,7 @@ public static class ScribeCli
                     repositoryRoot,
                     arguments[2]);
 
-                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
                 // An explicit scope remains caller-owned; current mode needs no Git history.
                 IEnumerable<string> paths = arguments.Count == 5
                     ? ReadPaths(arguments[4], input)
@@ -182,7 +241,7 @@ public static class ScribeCli
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var reportMaterial = leanReport
                     ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
-                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
                 var report = DescribeReport.Build(
                     repositoryRoot,
                     definitions.Select(static definition => definition.Document),
@@ -228,9 +287,10 @@ public static class ScribeCli
                 return FileMapEmitter.Emit(repositoryRoot, check, output, error);
             }
 
+            var assembly = documentsAssembly();
             return leanReport is null
-                ? ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error)
-                : ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error, leanReport);
+                ? ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error)
+                : ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error, leanReport);
         }
         catch (Exception exception) when (
             exception is IOException or UnauthorizedAccessException or ArgumentException)
@@ -243,9 +303,12 @@ public static class ScribeCli
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
+        + "| content-check --report <file> [--paths-from <file|->] "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
         + "| resources pack --out <file> | resources verify --pack <file> "
+        + "| resources release --out <directory> "
+        + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "
         + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>
