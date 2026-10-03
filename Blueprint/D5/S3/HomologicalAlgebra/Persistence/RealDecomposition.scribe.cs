@@ -9,7 +9,7 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/HomologicalAlgebra/bauer2015persistence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Construct and uniquely classify the actual natural real interval-sum decomposition.",
+        "Classify real interval sums, estimate image matching and construct actual interleavings.",
         H("Actual Natural Real Classification"),
         Blocks(
             Describe.Lean(
@@ -73,5 +73,26 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                         + "full target coverage and equal births. Empty and zero families are "
                         + "allowed. Exact stability, natural converse interleavings and equality "
                         + "of extended-distance feasible sets remain separate conclusions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("matching-interleaving"),
+                DeclarationHandle.Create(Prefix + "matching_interleaving"),
+                H("Actual interleaving from a partial occurrence matching"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Two occurrence embeddings specify the matched pairs without identifying "
+                        + "repeated intervals. Both birth inequalities and both extended death "
+                        + "inequalities have the same nonnegative radius. Every unmatched death "
+                        + "is at most its birth plus twice that radius. Each forward component "
+                        + "copies a matched source coordinate when the shifted target survives, "
+                        + "and is zero otherwise; the reverse component is constructed symmetrically. "
+                        + "The birth inequalities ensure supported values, and the death inequalities "
+                        + "give every naturality square. A coordinate surviving the double shift "
+                        + "necessarily survives the intermediate matched interval. Both composites "
+                        + "therefore equal the actual double-shift structure maps. Unmatched "
+                        + "coordinates vanish by their length bounds. No overlap, nonempty family "
+                        + "or nonzero radius is assumed; essential deaths remain infinite. "
+                        + "This is the supported-sum converse, not the full classification-based "
+                        + "equivalence or extended-distance equality."))),
                 DescribeRole.Theorem))));
 }

@@ -5,7 +5,7 @@
    anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
      D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
    utility: none
-   digest: Natural interval classification and fixed same-image quantitative matching. -/
+   digest: Natural interval classification, quantitative image matching and actual converse maps. -/
 
 import D5.S3.HomologicalAlgebra.Persistence.FiniteIntervalDecomposition
 import D5.S3.HomologicalAlgebra.Persistence.RealIntervalUniqueness
@@ -20,6 +20,7 @@ import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
 import Mathlib.Data.Finset.Sort
 import Mathlib.Data.Fintype.Sort
 import Mathlib.Data.Prod.Lex
+import Mathlib.Algebra.Order.Group.OrderIso
 
 namespace D5.S3.HomologicalAlgebra.Persistence.RealDecomposition
 
@@ -1551,5 +1552,243 @@ theorem exists_quantitative_image_matching {Source Target : Type v}
     linarith
 
 
+
+set_option maxHeartbeats 800000 in
+set_option backward.isDefEq.respectTransparency false in
+theorem matching_interleaving {Source Target Match : Type v}
+    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ))
+    (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
+    (sourceEmbedding : Match ↪ Source) (targetEmbedding : Match ↪ Target)
+    (epsilon : ℝ) (nonnegative : 0 ≤ epsilon)
+    (birth_bounds : ∀ occurrence,
+      targetFamily.1 (targetEmbedding occurrence) ≤
+        sourceFamily.1 (sourceEmbedding occurrence) + epsilon ∧
+      sourceFamily.1 (sourceEmbedding occurrence) ≤
+        targetFamily.1 (targetEmbedding occurrence) + epsilon)
+    (death_bounds : ∀ occurrence,
+      targetFamily.2 (targetEmbedding occurrence) ≤
+        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+          (sourceFamily.2 (sourceEmbedding occurrence)) ∧
+      sourceFamily.2 (sourceEmbedding occurrence) ≤
+        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+          (targetFamily.2 (targetEmbedding occurrence)))
+    (source_unmatched : ∀ occurrence, (¬ ∃ matched, sourceEmbedding matched = occurrence) →
+      sourceFamily.2 occurrence ≤ ((sourceFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ))
+    (target_unmatched : ∀ occurrence, (¬ ∃ matched, targetEmbedding matched = occurrence) →
+      targetFamily.2 occurrence ≤ ((targetFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) :
+    let intervalSpace := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+      Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+        (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+    let intervalArrow := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+        (ordered : source ≤ target) =>
+      (((LinearMap.pi fun occurrence : Index =>
+          if (target : WithTop ℝ) < family.2 occurrence then
+            (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+          (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+        classical
+        intro coordinates occurrence unsupported
+        by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+        · have not_born : ¬ family.1 occurrence ≤ source := by
+            intro born
+            exact unsupported ⟨born.trans ordered, survives⟩
+          simpa [survives] using coordinates.property occurrence (by tauto)
+        · simp [survives]));
+    let intervalSum := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+      ({ obj time := ModuleCat.of K (intervalSpace family time)
+         map {source target} arrow :=
+           ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+         map_id time := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+           · simp [intervalArrow, survives]
+           · have zero : coordinates.val occurrence = 0 :=
+               coordinates.property occurrence (by tauto)
+             simp [intervalArrow, survives, zero]
+         map_comp {source middle target} first second := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+           · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+               lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+             simp [intervalArrow, survives, middle_survives]
+           · simp [intervalArrow, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+    let shift := (OrderIso.addRight epsilon).monotone.functor;
+    ∃ (forward : intervalSum sourceFamily ⟶ shift ⋙ intervalSum targetFamily)
+      (reverse : intervalSum targetFamily ⟶ shift ⋙ intervalSum sourceFamily),
+      (∀ time, (reverse.app (time + epsilon)).hom.comp (forward.app time).hom =
+        intervalArrow sourceFamily time (time + epsilon + epsilon) (by linarith)) ∧
+      (∀ time, (forward.app (time + epsilon)).hom.comp (reverse.app time).hom =
+        intervalArrow targetFamily time (time + epsilon + epsilon) (by linarith)) := by
+  classical
+  intro intervalSpace intervalArrow intervalSum shift
+  have shift_lt (time : ℝ) (death : WithTop ℝ) :
+      ((time + epsilon : ℝ) : WithTop ℝ) <
+        WithTop.map (fun endpoint : ℝ => endpoint + epsilon) death ↔
+      (time : WithTop ℝ) < death := by
+    cases death <;> simp
+  have construction {First Second : Type v}
+      (firstFamily : (First → ℝ) × (First → WithTop ℝ))
+      (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
+      (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
+      (born_bound : ∀ occurrence, secondFamily.1 (secondEmbedding occurrence) ≤
+        firstFamily.1 (firstEmbedding occurrence) + epsilon)
+      (dies_bound : ∀ occurrence, secondFamily.2 (secondEmbedding occurrence) ≤
+        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+          (firstFamily.2 (firstEmbedding occurrence))) :
+      ∃ transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily,
+        (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+          ((transformation.app time).hom coordinates).val (secondEmbedding occurrence) =
+            if ((time + epsilon : ℝ) : WithTop ℝ) <
+              secondFamily.2 (secondEmbedding occurrence) then
+              coordinates.val (firstEmbedding occurrence) else 0) ∧
+        (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+          (¬ ∃ matched, secondEmbedding matched = occurrence) →
+          ((transformation.app time).hom coordinates).val occurrence = 0) := by
+    let component (time : ℝ) :=
+      (LinearMap.pi fun occurrence : Second =>
+        if paired : ∃ matched, secondEmbedding matched = occurrence then
+          if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence then
+            (LinearMap.proj (firstEmbedding (Classical.choose paired)) :
+              (First → K) →ₗ[K] K) else 0
+        else 0).domRestrict (intervalSpace firstFamily time)
+    have supported (time : ℝ) (coordinates : intervalSpace firstFamily time) :
+        component time coordinates ∈ intervalSpace secondFamily (time + epsilon) := by
+      intro occurrence unsupported
+      by_cases paired : ∃ matched, secondEmbedding matched = occurrence
+      · have paired_eq := Classical.choose_spec paired
+        by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
+        · have not_born : ¬ firstFamily.1 (firstEmbedding (Classical.choose paired)) ≤ time := by
+            intro born
+            apply unsupported
+            refine ⟨?_, survives⟩
+            have bound := born_bound (Classical.choose paired)
+            rw [paired_eq] at bound
+            linarith
+          have zero : coordinates.val (firstEmbedding (Classical.choose paired)) = 0 :=
+            coordinates.property _ (by tauto)
+          simpa [component, paired, survives, LinearMap.proj, LinearMap.pi,
+            ← WithTop.coe_add] using zero
+        · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
+            ← WithTop.coe_add]
+      · simp [component, paired, LinearMap.proj, LinearMap.pi]
+    let transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily := {
+      app time := ModuleCat.ofHom ((component time).codRestrict
+        (intervalSpace secondFamily (time + epsilon)) (supported time))
+      naturality {start finish} arrow := by
+        apply ModuleCat.hom_ext
+        apply LinearMap.ext
+        intro coordinates
+        apply Subtype.ext
+        funext occurrence
+        change ((component finish) (intervalArrow firstFamily start finish
+          (leOfHom arrow) coordinates)) occurrence =
+          (intervalArrow secondFamily (start + epsilon) (finish + epsilon)
+            (by have ordered := leOfHom arrow; linarith)
+            ⟨component start coordinates, supported start coordinates⟩).val occurrence
+        by_cases paired : ∃ matched, secondEmbedding matched = occurrence
+        · have paired_eq := Classical.choose_spec paired
+          by_cases survives : ((finish + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
+          · have start_survives : ((start + epsilon : ℝ) : WithTop ℝ) <
+                secondFamily.2 occurrence := lt_of_le_of_lt
+                  (WithTop.coe_le_coe.mpr (by have ordered := leOfHom arrow; linarith)) survives
+            have first_survives : (finish : WithTop ℝ) <
+                firstFamily.2 (firstEmbedding (Classical.choose paired)) := by
+              apply (shift_lt finish _).mp
+              have bound := dies_bound (Classical.choose paired)
+              rw [paired_eq] at bound
+              exact survives.trans_le bound
+            simp [component, intervalArrow, paired, survives, start_survives, first_survives,
+              LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+          · simp [component, intervalArrow, paired, survives,
+              LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+        · simp [component, intervalArrow, paired, LinearMap.proj, LinearMap.pi,
+            apply_ite, ite_apply] }
+    refine ⟨transformation, ?_, ?_⟩
+    · intro time coordinates occurrence
+      have paired : ∃ matched, secondEmbedding matched = secondEmbedding occurrence :=
+        ⟨occurrence, rfl⟩
+      have chosen : Classical.choose paired = occurrence :=
+        secondEmbedding.injective (Classical.choose_spec paired)
+      change component time coordinates (secondEmbedding occurrence) = _
+      by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) <
+          secondFamily.2 (secondEmbedding occurrence)
+      · simp [component, paired, chosen, survives, LinearMap.proj, LinearMap.pi,
+          ← WithTop.coe_add]
+      · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
+          ← WithTop.coe_add]
+    · intro time coordinates occurrence unmatched
+      change component time coordinates occurrence = _
+      simp [component, unmatched, LinearMap.proj, LinearMap.pi]
+  obtain ⟨forward, forward_paired, forward_unmatched⟩ :=
+    construction sourceFamily targetFamily sourceEmbedding targetEmbedding
+      (fun occurrence => (birth_bounds occurrence).1) (fun occurrence => (death_bounds occurrence).1)
+  obtain ⟨reverse, reverse_paired, reverse_unmatched⟩ :=
+    construction targetFamily sourceFamily targetEmbedding sourceEmbedding
+      (fun occurrence => (birth_bounds occurrence).2) (fun occurrence => (death_bounds occurrence).2)
+  have composite {First Second : Type v}
+      (firstFamily : (First → ℝ) × (First → WithTop ℝ))
+      (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
+      (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
+      (firstMap : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily)
+      (secondMap : intervalSum secondFamily ⟶ shift ⋙ intervalSum firstFamily)
+      (first_paired : ∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+        ((firstMap.app time).hom coordinates).val (secondEmbedding occurrence) =
+          if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 (secondEmbedding occurrence)
+            then coordinates.val (firstEmbedding occurrence) else 0)
+      (second_paired : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
+        ((secondMap.app time).hom coordinates).val (firstEmbedding occurrence) =
+          if ((time + epsilon : ℝ) : WithTop ℝ) < firstFamily.2 (firstEmbedding occurrence)
+            then coordinates.val (secondEmbedding occurrence) else 0)
+      (second_unmatched : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
+        (¬ ∃ matched, firstEmbedding matched = occurrence) →
+        ((secondMap.app time).hom coordinates).val occurrence = 0)
+      (dies_bound : ∀ occurrence, firstFamily.2 (firstEmbedding occurrence) ≤
+        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+          (secondFamily.2 (secondEmbedding occurrence)))
+      (unmatched_bound : ∀ occurrence, (¬ ∃ matched, firstEmbedding matched = occurrence) →
+        firstFamily.2 occurrence ≤ ((firstFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) :
+      ∀ time, (secondMap.app (time + epsilon)).hom.comp (firstMap.app time).hom =
+        intervalArrow firstFamily time (time + epsilon + epsilon) (by linarith) := by
+    intro time
+    apply LinearMap.ext
+    intro coordinates
+    apply Subtype.ext
+    funext occurrence
+    change ((secondMap.app (time + epsilon)).hom ((firstMap.app time).hom coordinates)).val
+      occurrence = (intervalArrow firstFamily time (time + epsilon + epsilon)
+        (by linarith) coordinates).val occurrence
+    by_cases paired : ∃ matched, firstEmbedding matched = occurrence
+    · obtain ⟨matched, rfl⟩ := paired
+      rw [second_paired]
+      by_cases survives : ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
+          firstFamily.2 (firstEmbedding matched)
+      · have middle_survives : ((time + epsilon : ℝ) : WithTop ℝ) <
+            secondFamily.2 (secondEmbedding matched) := by
+          apply (shift_lt (time + epsilon) _).mp
+          exact survives.trans_le (dies_bound matched)
+        rw [if_pos survives, first_paired, if_pos middle_survives]
+        simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+      · simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+    · rw [second_unmatched _ _ _ paired]
+      by_cases born : firstFamily.1 occurrence ≤ time
+      · have not_survives : ¬ ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
+            firstFamily.2 occurrence := by
+          apply not_lt_of_ge
+          exact (unmatched_bound occurrence paired).trans
+            (WithTop.coe_le_coe.mpr (by linarith))
+        simp [intervalArrow, not_survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+      · have zero : coordinates.val occurrence = 0 := coordinates.property _ (by tauto)
+        simp [intervalArrow, zero, LinearMap.proj, LinearMap.pi, apply_ite, ite_apply]
+  exact ⟨forward, reverse,
+    composite sourceFamily targetFamily sourceEmbedding targetEmbedding forward reverse
+      forward_paired reverse_paired reverse_unmatched
+      (fun occurrence => (death_bounds occurrence).2) source_unmatched,
+    composite targetFamily sourceFamily targetEmbedding sourceEmbedding reverse forward
+      reverse_paired forward_paired forward_unmatched
+      (fun occurrence => (death_bounds occurrence).1) target_unmatched⟩
 
 end D5.S3.HomologicalAlgebra.Persistence.RealDecomposition

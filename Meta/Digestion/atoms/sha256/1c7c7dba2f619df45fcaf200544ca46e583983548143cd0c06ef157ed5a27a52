@@ -1,0 +1,12 @@
+**Lemma 5.3 (actual matched-coordinate converse).** Let $A,B$ be finite occurrence families and $s:C\hookrightarrow A$, $t:C\hookrightarrow B$ two embeddings. For $\epsilon\ge0$, assume on every matched occurrence $c$ that
+
+$$b_{t(c)}\le b_{s(c)}+\epsilon,\qquad b_{s(c)}\le b_{t(c)}+\epsilon,$$
+
+and
+
+$$d_{t(c)}\le T_\epsilon(d_{s(c)}),\qquad d_{s(c)}\le T_\epsilon(d_{t(c)}),$$
+
+where $T_\epsilon(d)=d+\epsilon$ for finite $d$ and $T_\epsilon(\infty)=\infty$. Assume every unmatched occurrence $a$ or $b$ has death at most its birth plus $2\epsilon$. Then the actual supported interval sums admit natural maps $I_A\to I_B(\epsilon)$ and $I_B\to I_A(\epsilon)$ with both shifted composites equal to their actual $2\epsilon$ structure maps. These extended death inequalities are exactly finite death deviations at most $\epsilon$ and essential-to-essential pairing; unmatched essentials are excluded by the length inequality.
+
+**Proof.** At time $r$, the target coordinate indexed by $t(c)$ copies the source coordinate indexed by $s(c)$ if $r+\epsilon<d_{t(c)}$, and is zero otherwise. Unmatched target coordinates are zero. Injectivity of the occurrence embeddings makes this well-defined even for tied intervals. If the copied target has not been born, the birth bound forces the source coordinate to vanish. If a target coordinate survives a later shifted time, its death bound forces the corresponding source coordinate to survive the unshifted later time; this proves every naturality square. Construct the reverse maps symmetrically. A matched source coordinate surviving $r+2\epsilon$ has its intermediate target surviving $r+\epsilon$ by the other death inequality, so the reverse-after-forward composite is its actual structure-map coordinate. The forward-after-reverse argument uses the opposite death inequality. An unmatched coordinate either is not born at $r$ or is dead by $r+2\epsilon$. These arguments include short or disjoint pairs, exact length $2\epsilon$, $\epsilon=0$, empty families and essential intervals; no separate overlap assumption is required. Transfer through the natural classifications, the forward implication and equality of extended feasible-set infima are separate conclusions.
+
