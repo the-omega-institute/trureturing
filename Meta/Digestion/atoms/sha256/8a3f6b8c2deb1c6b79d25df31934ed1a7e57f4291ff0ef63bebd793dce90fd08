@@ -1,0 +1,14 @@
+**证明。** $f(H_1)$ 是一个闭区间，$f(x_1)$ 到它的两个端点均至少为 $d_1g^D$。若 $J_c=[l,r]$，在未裁剪扩张内有
+
+$$
+ \beta-\operatorname{dist}(q,J_c)=\min\{\beta,\ q-(l-\beta),\ (r+\beta)-q\}.
+$$
+
+物理支撑把扩张区间与 $X$ 相交。由于 $J_c\subseteq X$ 且 $f(x_1)\in f(H_1)\subseteq X$，到 $J_c$ 的距离仍是实轴上的距离；被裁剪的边界不会成为 $J_c$ 的新点，也不会减少 $f(x_1)$ 到原扩张两端的有效单侧距离。因此
+
+$$
+\beta-\operatorname{dist}(f(x_1),J_c)\ge\min\{\beta,d_1g^D\}\ge\min\{\beta,d_1\}g^D.
+$$
+
+一条深度 $k\le n$ 的历史的 departure 到终端长度满足 $D\le d+nL$；因 $g^D\ge g^{d+nL}=g^da^n$，得到结论。这个证明处理了物理支撑裁剪，没有把未裁剪端点当成实际目标。证毕。
+

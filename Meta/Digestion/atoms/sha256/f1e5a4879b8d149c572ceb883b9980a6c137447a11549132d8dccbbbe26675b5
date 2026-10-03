@@ -1,0 +1,105 @@
+**定理 7.4（有限阶段行列式误差、实际调和报告与未定比较带）。** 对定义 7.1 的任意整数 $L\ge0$，令
+
+$$
+\begin{gathered}
+m=3L+3,\qquad \xi_L=\frac{F_{m+1}}{F_m},\qquad
+\delta_L=|\xi_L-\phi|
+=\frac{\phi^{-m}}{F_m}
+=\frac{\sqrt5}{\phi^{2m}-(-1)^m},\\
+R_z(x,y)=\frac{|x_1-y_1+z(x_2-y_2)|}
+ {x_1+y_1+z(x_2+y_2)}\quad(z>0).
+\end{gathered}
+\tag{7.29}
+$$
+
+对同一个 $D_H$ 内的任意实际组成对 $x,y$，置 $A=x_1+y_1$、$B=x_2+y_2$，则
+
+$$
+\begin{aligned}
+|R_{\xi_L}(x,y)-R_\phi(x,y)|
+&\le E_L(x,y),\\
+E_L(x,y)&=
+\frac{2\delta_L|\det(x,y)|}
+ {(A+\xi_LB)(A+\phi B)}
+\le E_L:=\frac{2\delta_L}{(\sqrt{\xi_L}+\sqrt\phi)^2}
+\le\frac{\delta_L}{3}
+\le\frac{\sqrt5}{3(\phi^{6L+6}-1)}.
+\end{aligned}
+\tag{7.30}
+$$
+
+该行列式误差保留同一实际点对，不要求差方向指标 $j\le m$。对每个 $H\ge N$，
+
+$$
+\boxed{
+|\theta_k(H,L)-\Theta_k(H)|\le E_L,
+\qquad
+\lim_{L\to\infty}\theta_k(H,L)=\Theta_k(H).}
+\tag{7.31}
+$$
+
+对 $H<N$，两个量始终为 $+\infty$，不作无穷值相减。
+
+在固定已知阶段分支，共同有理误差 $\epsilon<\Theta_k(H)-E_L$ 足以保证初始许可恢复。对 $H\ge H_0$，使用式 (7.4) 的实际树对，$\epsilon\ge\Theta_k(H)+E_L(x_H,y_H)$ 足以保证失败。因此，仅由这两个比较作出的判断留下如下带：
+
+$$
+\epsilon\in\mathbb Q_{\ge0},\qquad
+\Theta_k(H)-E_L\le\epsilon
+<\Theta_k(H)+E_L(x_H,y_H).
+\tag{7.32}
+$$
+
+此带内的恢复与失败不能由上述误差夹逼决定，须使用准确的有限阶段 $\theta_k(H,L)$；在它的等号处失败。任意准确有限阈值都由达到它的实际反标签初始树对及一个共同有理调和报告实现。对任意 $0<\eta<1$，还有有限阶段的联合充分范围
+
+$$
+\phi^{6L+6}\ge1+\frac{\sqrt5H^2}{3\eta c_k},\quad H\ge N
+\quad\Longrightarrow\quad
+\theta_k(H,L)\ge(1-\eta)\frac{c_k}{H^2}.
+\tag{7.33}
+$$
+
+本定理只比较同一已知阶段的组成对，不凭这一界分类隐藏阶段联合域的跨阶段间距。
+
+证明。由[母卷命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)的双嵌入式，在本合同中 Binet 正确给
+$n_L(c)=(\phi^m\ell(c)-\psi^m\ell'(c))/\sqrt5$。同时 $F_{m+1}-\phi F_m=(-1)^m\phi^{-m}$，并且 $F_m=(\phi^m-(-1)^m\phi^{-m})/\sqrt5$，所以式 (7.29) 的 $\delta_L$ 等式成立。对非空初始组成，两种 $R_z$ 的分母都正；有限阶段比值恰为 $R_{\xi_L}(x,y)$，此等式只是约去共同正系数 $F_m$，未给观察增加或变更任何报告。
+
+暂时去掉绝对值，写 $S_z=(x_1-y_1+z(x_2-y_2))/(A+zB)$。直接交叉相减给
+
+$$
+S_{\xi_L}-S_\phi
+=\frac{-2\det(x,y)(\xi_L-\phi)}
+ {(A+\xi_LB)(A+\phi B)}.
+\tag{7.34}
+$$
+
+用 $\bigl||a|-|b|\bigr|\le|a-b|$ 得来源敏感误差。非负坐标保证 $|\det(x,y)|\le AB$；而
+
+$$
+\begin{aligned}
+(A+\xi_LB)(A+\phi B)
+&=A^2+(\xi_L+\phi)AB+\xi_L\phi B^2\\
+&\ge(\sqrt{\xi_L}+\sqrt\phi)^2AB.
+\end{aligned}
+\tag{7.35}
+$$
+
+当 $AB>0$ 时相除即得 $E_L(x,y)\le E_L$；当 $AB=0$ 时行列式为零，两个比值相等。Fibonacci 比值满足 $\xi_L\ge3/2$，且 $\phi>3/2$，故 $(\sqrt{\xi_L}+\sqrt\phi)^2>6$，给 $E_L\le\delta_L/3$；式 (7.29) 的分母至少为 $\phi^{6L+6}-1$，完成式 (7.30)。
+
+$H\ge N$ 时，两种比值在同一个非空有限反标签集合上取最小值。对达到任一最小值的点对应用式 (7.30)，分别得到两方向的不等式，从而证明式 (7.31)。这也是有限族的最小值连续性在本整数任务上的应用，直接识别固定 $H$ 的数学极限，没有引入无限观察。
+
+固定阶段的准确恢复判据 $\epsilon<\theta_k(H,L)$ 直接复用[定理 6.3](#6-共同相对响应下的阶段隐藏与许可分离)的显露阶段证明，将候选限制为此阶段即可。其充分性来自同一允许报告不能包含反标签候选。若相应最小值有限，取实际达到点对 $T,T'$，置 $U=n_L(c(T))>0$、$V=n_L(c(T'))>0$，则
+
+$$
+\begin{gathered}
+r_* =\frac{2UV}{U+V}\in\mathbb Q_{>0},\qquad
+\vartheta=\frac{|U-V|}{U+V}=\theta_k(H,L),\\
+|r_*-U|=\vartheta U,\qquad
+|r_*-V|=\vartheta V.
+\end{gathered}
+\tag{7.36}
+$$
+
+$\vartheta$ 本身也是有理数。故 $\epsilon=\vartheta$ 时报告已经同时合法，且两标签相反；更大的共同误差继续允许它。若 $U=V$，这一式仍给 $\vartheta=0$ 及共同精确报告，包含有限阶段的精确碰撞。来源实现由定义 1.1 保证，所以等号失败有实际初始树见证。
+
+由式 (7.31)，$\epsilon<\Theta_k(H)-E_L$ 保证 $\epsilon<\theta_k(H,L)$。对最终实际极小对，式 (7.30) 给 $R_{\xi_L}(x_H,y_H)\le\Theta_k(H)+E_L(x_H,y_H)$；故达到或超过右端的 $\epsilon$ 允许这对树的共同调和报告，得到失败侧及式 (7.32)。比较带并非对准确有限阈值的不可判断言，而是这些充分条件没有决定的范围。式 (7.33) 则使 $E_L\le\eta c_k/H^2$，再结合定理 7.3 的下界即可。$\ell,\xi_L$ 及以上代数比较始终只在证明中使用；观察仍是原合同的单个有理 $r$，没有历史、伴随通道、无理报告或依赖隐藏阶段的缩放。证毕。
+

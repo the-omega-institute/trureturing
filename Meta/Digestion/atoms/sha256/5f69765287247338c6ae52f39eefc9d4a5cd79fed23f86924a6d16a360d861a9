@@ -1,0 +1,19 @@
+**引理 44.3（guard、分歧及返回方向）。** 两 stems 合法地从 guard 零进入 guard 一，首次分歧位置为 $k=0$；四个返回均是合法的 guard 一自返回，两尾在 $D_1$，故 (44.5) 的两来源在 $D$。两种第一来源返回、第二来源返回和共同颜色块分别不同。置
+
+$$
+\begin{gathered}
+z_U=\frac{23+14g}{76},\qquad z_V=\frac{6+9g}{76},\\
+h_H=z_U-c=\frac{39-6g}{380},\qquad
+h_L=c-z_V=\frac{46+31g}{380},\\
+\chi=g^{20},\quad s=g^{60},\quad a=s\chi^2=g^{100},
+\qquad b_j=(1-s)h_j\quad(j=H,L).
+\end{gathered}
+$$
+
+在高侧位移 $D=x-c$ 和低侧位移 $D=c-y$ 中，实际返回恰为
+
+$$
+F_{j0}(D)=b_j+aD,\qquad F_{j1}(D)=\chi b_j+aD.
+\tag{44.7}
+$$
+

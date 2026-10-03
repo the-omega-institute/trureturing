@@ -1,0 +1,27 @@
+**定理 22.2（共同有声性不推出共同终止）。** 在定义 22.2 的二元档案域，考虑以下同种子策略：依次查询 $q_1,q_2,\ldots$，在第一次 $x_n\ne\omega_n$ 时停止并返回已经观察到的 $x_1$。令
+
+$$
+T_x(\omega)=\inf\{n\ge1:x_n\ne\omega_n\},\qquad \inf\varnothing=+\infty.
+\tag{22.10}
+$$
+
+每个实际 $x$ 的 $T_x$ 和费用可测，且对每个整数 $n\ge0$，
+
+$$
+\mu_\infty(T_x>n)=2^{-n},\qquad
+\mu_\infty(T_x<\infty)=1,\qquad
+\mathbb E_{\mu_\infty}C_x=2.
+\tag{22.11}
+$$
+
+每个种子上的每个有限返回记录均有声，然而
+
+$$
+\forall\omega\in\Omega_\infty\ \exists x\in X_\infty,\quad T_x(\omega)=+\infty,
+\qquad
+\bigcap_{x\in X_\infty}\{\omega:T_x(\omega)<\infty\}=\varnothing.
+\tag{22.12}
+$$
+
+相同结论在（22.9）明确声明的无限窗口流接口上成立。（22.11）是此特定策略的期望费用，不是最优费用断言；一次确定性查询 $q_1$ 已可返回目标，费用为 $1$。
+

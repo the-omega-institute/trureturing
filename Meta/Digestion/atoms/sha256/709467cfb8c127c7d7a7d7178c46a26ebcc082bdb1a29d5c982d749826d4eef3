@@ -1,0 +1,20 @@
+**证明。** 将 $f_3(x)=-t-gx$、$f_5(x)=t^2-gx$、
+$f_2(x)=1-gx$ 依次代入参考链，用 $t^2+t=1$ 化简，逐项得到
+
+$$
+\begin{aligned}
+f_3\!\left(\frac{2t}{5}\right)&=s,&
+f_5\!\left(\frac{1+3t}{5}\right)&=\frac{2t}{5},\\
+f_5\!\left(-\frac45\right)&=\frac{1+3t}{5},&
+f_3\!\left(\frac{2+3t}{5}\right)&=-\frac45,\\
+f_2\!\left(\frac{3+3t}{5}\right)&=\frac{2+3t}{5},&
+f_2(z)&=\frac{3+3t}{5}.
+\end{aligned}
+$$
+
+复合斜率为 $(-g)^6=h$，所以
+$f_w(v)-f_w(z)=h(v-z)$，而 $f_w(z)=s$。
+最后两式由
+$-t-g(-4+t)/5=3(g-1)/5$ 和
+$-g(-4+t)/5=(11g-1)/10$ 得到；这些等式只用 (48.3)。$\square$
+

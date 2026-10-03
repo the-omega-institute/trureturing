@@ -1,0 +1,34 @@
+**定义 9.1（极限并列项与原来源的有限阶段比值）。** 固定整数 $k\ge1$、$H\ge N_k=F_{3k+1}$，再令整数 $L\ge0$ 变化。来源、初始叶预算与许可沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)、[定义 2.1](#2-许可预算阶梯与深层碰撞前沿)、[定义 7.1](#7-固定许可深度的最终精确极小对与尖锐预算包络)：$\mathcal T_H$ 包含全部非空有限有序完全二叉树，叶标记为 $\alpha,\beta$，$D_H=c(\mathcal T_H)$，$\chi_k(c)=\mathbf1_{\{S^{-k}c\in\mathbb N_0^2\}}$。置
+
+$$
+\begin{gathered}
+\ell_z(a,b)=a+zb,\qquad
+\phi=(1+\sqrt5)/2,\qquad \psi=1-\phi,\\
+m=3L+3,\qquad A_L=F_m,\qquad B_L=F_{m+1},\qquad
+\xi_L=B_L/A_L,\\
+R_L(x,y)=\frac{|n_L(x)-n_L(y)|}{n_L(x)+n_L(y)}
+=\frac{|\ell_{\xi_L}(x-y)|}{\ell_{\xi_L}(x+y)},\qquad
+n_L(a,b)=A_La+B_Lb.
+\end{gathered}
+\tag{9.1}
+$$
+
+允许响应仍为单个 $r\in\mathbb Q$ 满足 $|r-n_L(c(T))|\le\epsilon n_L(c(T))$，其中 $L,H,k$ 和共同的 $\epsilon\in\mathbb Q_{\ge0}$ 已知；$H$ 计 $T$ 的初始叶数。$\ell_\phi,\ell_\psi$ 是代数量，不属于允许响应的坐标。
+
+取[定义 8.3、定理 8.4](#8-全预算相对极小对的实际域相邻性与整数平移优化)的全部最大得分项，记
+
+$$
+\begin{gathered}
+\mathcal J_k(H)=\{i=(j,\sigma)\in\mathcal I_k(H):W_i=W\},\qquad
+W=\max_{h\in\mathcal I_k(H)}W_h,\\
+x_i=(a_\sigma,b_\sigma),\qquad
+y_i=x_i+\sigma(F_{j+1},-F_j),\\
+\alpha_i=x_{i,1}+y_{i,1},\qquad
+\beta_i=x_{i,2}+y_{i,2},\qquad
+s_i=(-1)^j,\qquad T_i(L)=A_L\alpha_i+B_L\beta_i.
+\end{gathered}
+\tag{9.2}
+$$
+
+$\mathcal J_k(H)$ 非空，$x_i$ 许可而 $y_i$ 非许可。其全部项均保留；按定理 8.4，$\{\{x_i,y_i\}:i\in\mathcal J_k(H)\}$ 恰为全部无序极限极小组成对。对组成 $c\in D_H$，记原来源纤维 $\mathcal F_H(c)=\{T\in\mathcal T_H:c(T)=c\}$。
+

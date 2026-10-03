@@ -1,0 +1,33 @@
+**定理 15.4（外部标签数的精确阈值）。** 对每个 $r\ge1$，定义15.1的有限读者存在恰当且仅当
+
+$$
+k\ge\lceil\phi^r\rceil.
+\tag{15.5}
+$$
+
+$k=0$ 时不存在策略；$r=1$ 时恰需 $k\ge2$，且所有可行 $k$ 都有 $N_1(k)=2$。
+
+证明。设 $x=(u,v)^{\mathsf T}$ 是式（15.3）的正整数可行点。由于 $Q(\phi,1)^{\mathsf T}=\phi(\phi,1)^{\mathsf T}$ 且 $Q$ 对称，正行向量 $w=(\phi,1)$ 满足 $wQ^r=\phi^r w$。把 $Q^rx\le kx$ 左乘 $w$，得到 $\phi^r wx\le kwx$；$wx>0$，故 $k\ge\phi^r$。递推恒等式 $\phi^r=F_r\phi+F_{r-1}$ 与 $F_r\ge1$ 说明它是无理数，因此整数 $k$ 必严格大于 $\phi^r$，即满足式（15.5）。
+
+反过来，设 $k\ge\lceil\phi^r\rceil$。由 $A_r=B_r+C_r$ 与 $\phi^r=B_r\phi+C_r$，有 $k>A_r\ge C_r$。$Q^r$ 的特征值为 $\phi^r,\psi^r$，其中 $\psi=-\phi^{-1}$，所以
+
+$$
+\Delta_r(k)=(k-A_r)(k-C_r)-B_r^2
+ =(k-\phi^r)(k-\psi^r)>0.
+$$
+
+取整数点
+
+$$
+u=B_r,\qquad v=k-A_r.
+$$
+
+它的两个坐标为正，且
+
+$$
+ku-(A_ru+B_rv)=0,\qquad
+kv-(B_ru+C_rv)=\Delta_r(k)>0.
+$$
+
+因此容量可行，定理15.2给出有限读者。$k=0$ 时，全零输入也需要在第一步选标签，而 $\mathcal C_0$ 为空，故直接不可能。$r=1$ 的两个容量约束为 $ku\ge u+v$、$kv\ge u$；$k\ge2$ 时 $(u,v)=(1,1)$ 可行，而两个不同初始化读出迫使至少两个状态，所以 $N_1(k)=2$。证毕。
+

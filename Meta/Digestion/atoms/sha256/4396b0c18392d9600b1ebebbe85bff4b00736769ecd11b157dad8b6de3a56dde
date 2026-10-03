@@ -1,0 +1,26 @@
+**推论 44.9（实际 H+ 供应与预算缺口容量）。** 对定义44.2的同一个字面固定族，H+ 的实际族条件由 (44.13)、(44.15)、(44.18) 满足。固定一个由引理44.8得到的 $n_0$，对每个
+
+$$
+0<\delta<\min\{\beta,\kappa a^{n_0}\},\qquad b=\beta-\delta\in(0,\lambda),
+$$
+
+每种固定合法归属，以及在该预算与归属下满足定义36.9完整恢复合同的解码器 $\mathcal D$，令 $\mathcal C_{b,\mathcal D}(N)$ 为处理完恰好 $N$ 次取得后，全部实际记录上可能出现的完整配置数。置
+
+$$
+T=\frac{\log(\kappa/\delta)}{\log(1/a)},\qquad
+n=\lceil T\rceil-1,\qquad N_n=26+100n,\qquad
+\rho=\frac{\log2}{100\log(1/g)}.
+$$
+
+则
+
+$$
+\boxed{\mathcal C_{b,\mathcal D}(N_n)\ge2^n
+\ge\frac12\left(\frac\kappa\delta\right)^\rho,\qquad
+H^{\mathrm{fix}}_{b,\mathcal D}(N_n)\ge n,\quad
+H^{\mathrm{var}}_{b,\mathcal D}(N_n)\ge n.}
+\tag{44.19}
+$$
+
+这里两个 $H$ 分别是截至该视界的最坏完整配置固定宽度、可变长度二进制最大位容量。合同要求确定、因果、固定初态，每次取得允许有限计算及有限输出批次，输出按序只追加、不可回读；全部实际 $\Omega$ 记录上安全，全部实际 $D$ 记录上每个位置最终生效，包括无限空窗补齐。完整配置计入所有影响未来的可读控制、持久与临时数据、计数器、输入与输出位置、时序、可读时钟及输出侧信息；没有 End、支持上界或免费重放。
+

@@ -1,0 +1,51 @@
+### 41.2　重叠网格、裁剪和全包含边
+
+取
+
+$$
+h=(1-g)\Delta,\qquad r=\frac{1+g}{2(1-g)}h=\frac{1+g}{2}\Delta,
+$$
+
+中心为
+
+$$
+a_j=-1+jh,\qquad 0\le j\le\left\lceil D_X/h\right\rceil.
+$$
+
+末中心可在 $X$ 右侧，但所有片都实际裁剪，右端覆盖不丢失；每个 $x\in X$ 距某中心至多 $h/2$。对八个合法 $(s,\ell)$ 和每个中心保留非空闭片
+
+$$
+P(s,\ell,j)=I_s\cap f_\ell(I_{s'})\cap[a_j-r,a_j+r],
+$$
+
+其中 $s\xrightarrow{\ell}s'$ 合法。顶点 $(s,\ell,j)$ 的 $s$ 是真实 incoming guard，$\ell$ 是当前出发边的来源标签装饰，不是额外观察。单点片、闭端点和同片的不同装饰全部保留，故单来源顶点不超过 $8q_\Delta$。
+
+若 $v=(s,\ell,j)$、$w=(s',m,k)$，定义边
+
+$$
+v\xrightarrow{\ell}w
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法且 }f_\ell(P_w)\subseteq P_v.
+$$
+
+颜色 $i$ 在 $v$ 容许，当且仅当 $P_v\subseteq E_i^c$。边使用原始 $f_\ell$，不引入宏步、重置或新系数；初态 guard 为零。
+
+固定一条预算 $b$ 下实际满足颜色约束的完整来源，保留其真实 guard $s_j$、标签 $\ell_j$ 和坐标 $x_j$，并对每个 $x_j$ 选最近中心 $a_{k_j}$。则 $x_j\in P(s_j,\ell_j,k_j)$。对 $z\in P_{j+1}$，有
+
+$$
+\begin{aligned}
+|f_{\ell_j}(z)-a_{k_j}|
+&\le gr+g\frac h2+\frac h2\\
+&=gr+\frac{1+g}{2}h=r.
+\end{aligned}
+$$
+
+又 $f_{\ell_j}(z)\in f_{\ell_j}(I_{s_{j+1}})\subseteq I_{s_j}$，所以 guard 和下一标签的分支裁剪不会破坏包含。若 $x_j\in E_i^b$，则对任意 $z\in P_j$ 有
+
+$$
+|z-x_j|\le r+\frac h2=\Delta,\qquad
+\operatorname{dist}(z,J_i)\le b+\Delta=c,
+$$
+
+故 $P_j\subseteq E_i^c$。最近中心选择沿同一来源地址完成，不能为不同观察位置另换来源；有限历史结束后仍沿同一地址选中心，只解除后续颜色约束。
+

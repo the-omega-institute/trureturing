@@ -1,0 +1,11 @@
+**证明。** 带5给 $2t+\delta\le Y=y_0\le i-\delta$，相位零标签25，输出一，
+$$
+y_1\in[s_4+\delta/g,t-\delta/g].
+$$
+低首标签2必须取色4，给共同尾 $x_1\le s_4-\delta/g$。两相位一共享色2，rival 标签5，且
+$$
+s_2+\delta/g\le y_2\le\eta-\delta/g^2.
+\tag{45.27}
+$$
+共同尾此处仅可用0或5。
+

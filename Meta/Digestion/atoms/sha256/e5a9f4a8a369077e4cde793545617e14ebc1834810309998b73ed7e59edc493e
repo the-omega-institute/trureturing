@@ -1,0 +1,8 @@
+**推论 40.12（转变附近的窗口定位与任务边界）。** [定理36.27](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11893)给出
+
+$$
+\rho<g-\frac15<\widehat\nu\le R\le\nu_0<\lambda.
+$$
+
+因而在 $R$ 上方任意小的邻域中，都可选一个开窗口 $J$ 使推论40.10成立；在任意 $\rho<u<v<R$ 的窗口中也成立。后一窗口的每个固定预算同时具有定义36.9合同下的最优完整记忆阶数 $\Theta(\log(N+2))$。
+

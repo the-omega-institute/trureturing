@@ -1,0 +1,44 @@
+**定义 20.1（同源阶段标量与原始地址证书）。** 沿用定义 16.1 的非空有限自由有序满二叉树集合 $\mathcal T$、替换 $\rho$、实际像 $\mathcal I_d=\rho^d(\mathcal T)$、四值原始地址响应 $\operatorname{out}$ 与窗口 $\Sigma_{\le h}$。树替换的组成作用直接取自[规范编译卷命题 4.2](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，树作用的单射性与实际像边界取自同卷命题 4.3；完整树编码及全路径读数接口取自[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。固定 $d=3k$、$k\ge1$，以及完整已知的正实例 $V\in\mathcal I_d$，记
+
+$$
+c(V)=(a,b)^{\mathsf T},\qquad
+A=A(V),\qquad B=B(V),\qquad
+|A|=a,\quad |B|=b,\quad D=\operatorname{ht}(V).
+$$
+
+$A,B$ 始终是原始 $V$ 的字面 $\alpha,\beta$ 叶地址。另给已知整数 $L\ge0$，并按定义 1.1 的式（1.2）给出精确标量
+
+$$
+f=F_{3L+3},\qquad g=F_{3L+4},\qquad
+N=n_L(c(V))=fa+gb.
+\tag{20.1}
+$$
+
+$N$ 与地址响应共同来源于同一棵 $V$，作为已给输入；其取得不计入查询成本，也不属于本合同授予的操作。替换像的迭代数 $d$、标量阶段 $L$ 与独立地址深度上限 $h\in\mathbb N_0$ 分别固定，地址查询不转移到 $\rho^{3L}(V)$ 上。
+
+对任意有限集合 $Q\subseteq\Sigma_{\le h}$，称 $Q$ **阶段标量有声**，当且仅当
+
+$$
+\forall U\in\mathcal T,\qquad
+\left(
+n_L(c(U))=N
+\ \land\
+\forall u\in Q,\
+\operatorname{out}_U(u)=\operatorname{out}_V(u)
+\right)
+\Longrightarrow U\in\mathcal I_d.
+\tag{20.2}
+$$
+
+竞争树 $U$ 遍历全部合法非空有限自由有序满二叉树，不附加组成相等、实际像、括号形状、叶数或高度承诺。$Q$ 可以含空地址、原始分支地址及原始缺失地址，不要求前缀闭包。成本只计原始 $V$ 上不同地址的数目 $|Q|$，不计地址描述与定位成本；选址在完整 $V$ 已知后进行。定义
+
+$$
+\tau_{d,L}(V,h)
+=\min\{|Q|:Q\subseteq\Sigma_{\le h}
+\text{ 阶段标量有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{20.3}
+$$
+
+这里的结论只取完整树的实际像成员关系，不取组成祖先许可或逆执行动作。
+

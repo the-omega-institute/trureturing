@@ -1,0 +1,79 @@
+**定理 52.1（固定 $r$ 的等长解析、生成函数与供应率）**
+令 $\mathbf m=(m_1,\ldots,m_k)$ 为非空正列表，$m_i\ge1$，并令
+$$
+ n(\mathbf m)=\sum_{i=1}^k(3m_i+10r),\qquad
+ L(\mathbf m)=2n(\mathbf m).
+ \tag{52.3}
+$$
+定义
+$$
+ \alpha_{\mathbf m,r}
+ =P A_{m_1,r}\cdots A_{m_k,r}\xi_H,\qquad
+ \gamma_{\mathbf m,r}
+ =Q B_{m_1,r}\cdots B_{m_k,r}\xi_L,
+$$
+$$
+ H_{\mathbf m,r}
+ =hW_{m_1,r}\cdots W_{m_k,r}.
+ \tag{52.4}
+$$
+则下列结论同时成立。
+
+1. 对固定的 $n$，所有列表的返回长度都是同一个 $L=2n$。不同列表给出不同的有限第一来源词、不同的有限颜色词，因而在接上同一条对应固定尾后仍给出不同的 $D$ 记录。这里的注入只比较相同 $L$ 的有限前缀。
+
+2. 设 $f_{a,n}$ 为满足 $n(\mathbf m)=n$ 的非空正列表数，并约定 $f_{a,0}=0$、$f_{a,n}=0$（$n<0$）。则在 $\mathbb Z[[x]]$ 中
+$$
+ \sum_{n\ge0}f_{a,n}x^n
+ =\frac{x^a}{1-x^3-x^a},
+ \tag{52.5}
+$$
+且
+$$
+ f_{a,n}=f_{a,n-3}+f_{a,n-a}
+       +\mathbf 1_{\{n=a\}}\qquad(n\ge0).
+ \tag{52.6}
+$$
+有 $\gcd(3,a)=1$，并且 $f_{a,n}>0$ 对一切 $n\ge3a$ 成立。
+
+3. 方程
+$$
+ z^3+z^a=1
+ \tag{52.7}
+$$
+在 $(0,1)$ 有唯一根 $\zeta_a$。置
+$$
+ \alpha_r:=-\log_2\sqrt{\zeta_a}.
+ \tag{52.8}
+$$
+则对 $n\ge3a$
+$$
+ \zeta_a^{\,4a-1}\zeta_a^{-n}
+ \le f_{a,n}\le \zeta_a^{-n},
+ \tag{52.9}
+$$
+从而
+$$
+ \lim_{n\to\infty}\frac{\log_2 f_{a,n}}{2n}
+ =\alpha_r .
+ \tag{52.10}
+$$
+实际返回长度为奇数时精确计数为零；若
+$$
+ \mathfrak f_r(L)=
+ \begin{cases}
+ f_{a,L/2},&L\ {\rm even},\\
+ 0,&L\ {\rm odd},
+ \end{cases}
+ \qquad
+ \mathfrak F_r(L)=\sum_{0\le \ell\le L}\mathfrak f_r(\ell),
+ \tag{52.11}
+$$
+则 $\mathfrak F_r(L)$ 的指数率同样为 $\alpha_r$。这里 $L$ 是返回长度，stem 的26个标签不计入 $\mathfrak f_r,\mathfrak F_r$。
+
+4. 严格地
+$$
+ \alpha_1>\frac1{16},\qquad
+ \alpha_2>\frac1{26}.
+ \tag{52.12}
+$$
+

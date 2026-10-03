@@ -1,0 +1,33 @@
+### 37.3 守卫预测内核与操作次序
+
+在 $X=K\sqcup\{\bot\}$ 上把非法 $h_1$ 总化为 $\bot$，全部动作固定 $\bot$。对任意关系 $E\subseteq X\times X$ 和动作族 $A$ 定义
+
+$$
+\mathcal I_A(E)=\bigcap_{v\in A^*}(T_v\times T_v)^{-1}E,
+\qquad T_{a_1\cdots a_t}=a_t\circ\cdots\circ a_1,
+\qquad T_\varepsilon=\mathrm{id}_X.
+$$
+
+这里 $a_1\cdots a_t$ 按实际执行顺序写，交包括空词。该关系是包含于 $E$ 的最大 $A$ 不变子关系；若 $E$ 是等价关系，它也是等价关系。置
+
+$$
+\mathcal I_+=\mathcal I_{\{h_0,h_1\}},\qquad
+\mathcal I_-=\mathcal I_{\{\delta\}},\qquad
+\mathcal I_{\rm mix}=\mathcal I_{\{h_0,h_1,\delta\}}.
+$$
+
+复合算子同样从右向左：$\mathcal I_-\mathcal I_+(E)=\mathcal I_-(\mathcal I_+(E))$ 先形成插入内关系，再作剥离细化，其实验先剥离后插入；$\mathcal I_+\mathcal I_-(E)$ 的实验先插入后剥离。每个中间输出都是一个脚本前缀的终点输出，故全词终点比较也包含全部中间读数及首次失败；并未保存隐藏的已删位。
+
+令 $E_1$ 只区分正常结果和失败，$E_m$（$m\ge2$）再要求 $qz\bmod m$ 相同，令 $E_{\rm all}=\bigcap_{m\ge1}E_m$。定义
+
+$$
+S_m=\ker(U_0,z\bmod m),\quad
+B_m=\ker(\omega,z\bmod m),
+$$
+
+$$
+D_2=\ker\bigl(\sigma\omega,M^{-1}(z-\omega_0\alpha)\bmod2\bigr).
+$$
+
+上述 $S_m,B_m,D_2$ 都将 $\bot$ 单列；模一算术坐标平凡，所以 $S_1$ 只记首位、$B_1$ 记完整地址。表中纯插入、纯剥离和混合列分别为 $\mathcal I_+(E)$、$\mathcal I_-(E)$ 和 $\mathcal I_{\rm mix}(E)$。
+

@@ -1,0 +1,18 @@
+### 43.22 负返回的余量交换与奇偶预算尾式
+
+固定[定义39.1.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13209)中的合法来源数据：$P,Q$ 从 guard 零进入 $s_1,s_2$，共同颜色词为 $h$，且 $|P|=|Q|=|h|=m\ge0$；$U_i,V_i$ 分别合法返回各自 guard，$W_i$ 为指定共同颜色词，且
+
+$$
+|U_i|=|V_i|=|W_i|=L\ge1,\qquad U_0\ne U_1.
+$$
+
+一次固定实际尾 $\xi_1\in D_{s_1}$、$\xi_2\in D_{s_2}$。每个二进制词 $z=z_1\cdots z_k$ 同时指定
+
+$$
+\alpha_z=PU_{z_1}\cdots U_{z_k}\xi_1,\qquad
+\beta_z=QV_{z_1}\cdots V_{z_k}\xi_2,\qquad
+h_z=hW_{z_1}\cdots W_{z_k}.
+$$
+
+两来源都在 $D$ 中。历史长 $m+kL$，只观察各条来源的出发坐标 $0,\ldots,m+kL-1$；终端坐标未观察。两个分量始终使用同一个 $z$，不逐坐标另选来源。
+

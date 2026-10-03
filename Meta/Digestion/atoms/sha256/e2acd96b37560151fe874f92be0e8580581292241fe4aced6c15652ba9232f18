@@ -1,0 +1,110 @@
+**定理 7.3（全部非恒值预算的来源敏感范数下界与实际上界）。** 在定义 7.1 的条件下，令
+
+$$
+\begin{gathered}
+c_k=\frac{1+r_-}{\phi(\phi+\kappa)},\\
+E_k=\frac{\phi^{-(t-2)}}
+ {F_{t-1}+\phi F_t+\phi(F_t+F_{t-2})},\qquad
+U_k=\max\{3,(Q-1)^2E_k\}.
+\end{gathered}
+\tag{7.20}
+$$
+
+$H<N$ 时 $\Theta_k(H)=+\infty$，且所有有限阶段的 $\theta_k(H,L)=+\infty$。对每个整数 $H\ge N$，反标签集合非空，式 (7.2) 的最小值正且由实际初始树对达到，并有
+
+$$
+\boxed{
+\frac{c_k}{H^2}\le\Theta_k(H)\le\frac{U_k}{H^2},
+\qquad
+\begin{cases}
+\Theta_k(H)\le E_k,&N\le H<Q,\\
+\Theta_k(H)<3/H^2,&H\ge Q.
+\end{cases}}
+\tag{7.21}
+$$
+
+在 $H\ge H_0$ 的范围，式 (7.5) 还给 $\Theta_k(H)<g/H^2$。这些有限预算界与式 (7.6) 的尖锐渐近常数具有不同的适用断言。
+
+证明。由[定理 2.3](#2-许可预算阶梯与深层碰撞前沿)，每个许可初始组成的叶数至少为 $N$，$S^k(1,0)$ 则达到 $N$；非零坐标轴点非许可。因此反标签集合恰在 $H\ge N$ 时非空，且有限。对非零整数差 $d=(d_1,d_2)$，重用[母卷定义 15.5](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-155-共轭与范数)与[定义 18.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-181-算术的两个实嵌入)的范数及两个实嵌入，有
+
+$$
+\mathcal N(d)=d_1^2+d_1d_2-d_2^2
+=\ell(d)\ell'(d)\in\mathbb Z\setminus\{0\}.
+\tag{7.22}
+$$
+
+非零性可直接核对：若 $d_2=0$，范数就是非零平方；若 $d_2\ne0$ 且范数为零，$d_1/d_2$ 会是 $z^2+z-1=0$ 的无理根，矛盾。因此 $|\mathcal N(d)|\ge1$，也给 $\ell$ 在整数组成上的单射性。每个非空有限反标签集合的比值遂正且取得。
+
+取许可端点 $x$ 和任意另一端 $y\in D_H$。对 $x$ 用闭锥，对 $y$ 用原始整数三角域，得到
+
+$$
+\begin{gathered}
+H\frac{r_- -1/\phi}{1+r_-}
+\le\ell'(x)\le
+H\frac{r_+ -1/\phi}{1+r_+},\qquad
+-\frac H\phi\le\ell'(y)\le H,\\
+|\ell'(x-y)|\le\frac{\phi H}{1+r_-},\qquad
+\ell(x)+\ell(y)\le(\kappa+\phi)H.
+\end{gathered}
+\tag{7.23}
+$$
+
+第一行中关于 $x$ 的两端来自函数 $(v-1/\phi)/(1+v)$ 在 $v\in[r_-,r_+]$ 上递增，以及 $|x|_1\le H$；下端为负，上端为正，故缩小叶数仍保持这两个界。两端相减的两个可能绝对上界分别为 $\phi H/(1+r_-)$ 与 $\phi r_+H/(1+r_+)$。因为 $r_-r_+<1$，后者不大于前者。结合式 (7.22)，每个反标签比值满足
+
+$$
+\frac{|\ell(x-y)|}{\ell(x)+\ell(y)}
+=\frac{|\mathcal N(x-y)|}
+ {|\ell'(x-y)|\,[\ell(x)+\ell(y)]}
+\ge\frac{c_k}{H^2}.
+\tag{7.24}
+$$
+
+这是保留许可来源条件的下界，而非用一个任意实锥极值替换实际端点。
+
+给出全部预算的实际上界。在 $N\le H<Q$，取
+
+$$
+x_0=(F_{t-1},F_t)=c(\rho^t(\alpha)),\qquad
+y_0=(0,F_t+F_{t-2}).
+\tag{7.25}
+$$
+
+$x_0$ 许可，$y_0$ 非许可；其叶数分别为 $N$、$F_t+F_{t-2}\le N$，包含 $k=1$ 的等号情形。$x_0-y_0=(F_{t-1},-F_{t-2})$，正确的 Fibonacci 双根残差给分子 $\phi^{-(t-2)}$；分母恰是式 (7.20) 保留的三项和，所以比值为 $E_k$。这里 $F_{t-1}+\phi F_t=\phi^t$ 可由初值 $(F_0,F_1)$ 和乘以 $\phi$ 的递推验证，但无须将其他 Fibonacci 加权和替换为幂。$y_0$ 由全 $\beta$ 叶的完整有序树实现。
+
+对 $H\ge Q=C_t$，取唯一 $j\ge t$ 满足 $C_j\le H<C_{j+1}$，并令 $a_j=\lceil r_-F_j\rceil$。实际点对
+
+$$
+\widetilde x_j=(a_j,F_j),\qquad
+\widetilde y_j=(a_j+F_{j+1},0),\qquad
+\frac{|\ell(\widetilde x_j)-\ell(\widetilde y_j)|}
+ {\ell(\widetilde x_j)+\ell(\widetilde y_j)}
+=\frac{\phi^{-j}}{2a_j+F_{j+1}+\phi F_j}
+\tag{7.26}
+$$
+
+是[定理 3.2 的式 (3.14)、(3.15)](#3-任意中间深度的许可噪声阶梯与共同实现预算)所给来源构造；$k\ge2$ 仍只在辅助 $L^\dagger\ge k$ 下调用方向预算，$k=1$ 取定理 2.2 的式 (2.7)。也可直接核对 $M^je_1=S^kM^{j-t}e_1$，其中祖先非零非负且整数，故 $r_-F_j\le a_j\le F_{j-1}\le r_+F_j$。两点分别许可与非许可，共同叶数为 $C_j\le H$；每点按定义 1.1 实现，许可端点还可先实现其整数祖先再替换。
+
+同一整数锥构造用于 $j+1$，给 $a_{j+1}\le F_j=w$。记 $u=F_{j+1}$，则 $H<C_{j+1}\le u+2w\le4w$；又因 $j\ge3$，$u\ge3w/2$，故式 (7.26) 的分母严格大于 $3w$。Binet 给 $w\phi^{-j}\le(1+\phi^{-6})/\sqrt5$。于是
+
+$$
+H^2\frac{\phi^{-j}}{2a_j+u+\phi w}
+<\frac{16(1+\phi^{-6})}{3\sqrt5}
+<\frac{6344}{2187}<3.
+\tag{7.27}
+$$
+
+第二个严格界只用 $\phi>3/2$、$\sqrt5>2$。早期预算则有 $H^2E_k\le(Q-1)^2E_k$，合并即得式 (7.21)。这些上界全部由初始非零整数点及实际树代表给出。
+
+在 $H\ge H_0$，式 (7.14) 给 $D_{j,H}>H$。递推归纳给 $F_{j+1}\le\phi^j$、$F_j\le\phi^{j-1}$，再用 $H<su+w$，得到 $H\phi^{-j}<s+1/\phi=g$，故式 (7.5) 给更强的最终上界。
+
+该实际极小差 $d=(u,-w)$ 还满足
+
+$$
+\ell(d)=(-1)^j\phi^{-j},\qquad
+\ell'(d)=u+w/\phi=F_{j-1}+\phi F_j=\phi^j,
+\qquad \mathcal N(d)=(-1)^j.
+\tag{7.28}
+$$
+
+中间等式使用 $u=w+F_{j-1}$、$1+1/\phi=\phi$，再用已经验证的幂表达。因而范数一的整数差确由极小实际来源对实现。$\ell$ 作为实线性泛函有核 $\mathbb R(\phi,-1)$，但该核不含非零整数点；预算增长中的相对裕度消失不是整数核非零。不同实际树仍可共享同一组成，整数组成单射不分离那些树。证毕。
+

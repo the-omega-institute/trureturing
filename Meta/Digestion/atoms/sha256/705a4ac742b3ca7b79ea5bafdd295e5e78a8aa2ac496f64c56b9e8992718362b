@@ -1,0 +1,22 @@
+**证明。** 应用[引理59.2](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24498-L24558)于相同的两条原字面尾和同列表完整返回，取其 $c=c_0$、$T_j(z)=A_j+\rho z$，原初态为 $X_j$，付费 anchor 初态为 $Y_j$；外到内返回下标按本章执行反序对应。所引实际返回映射为 $G_{j,m,r}(D)=h_j-\rho^m(h_j-\chi^rD)$，在 $0<D<h_j$ 上给
+
+$$
+A_j<G_{j,m,r}(D)<h_j.
+$$
+
+其同列表次序接口在本章记号下是
+
+$$
+G_{L,m,r}(D_L)-G_{H,m,r}(D_H)
+=(1-\rho^m)(h_L-h_H)+\rho^m\chi^r(D_L-D_H)>0,
+$$
+
+故 (62.12) 直接沿用完整返回边界结论，不能扩张到任意内部切口。所引逐实际块接口仍对同一组成块 $B$ 的每个出发位置 $p$ 使用唯一实际坐标
+
+$$
+x_{B,p}=F_{B[p:]}(c_0)+(-g)^{|B|-p}\sigma_jD_j,
+\qquad \sigma_H=1,\quad\sigma_L=-1.
+$$
+
+[推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)以同一实际 $\chi^{r}D_j$ 为最内六字输入，直接给位置4控制成本 (62.13)、高低比较和更外 $T_j$ 迭代的成本下降；其非活跃槽界是 $\lambda-g^6$。比较域由引理59.2对真实 $\chi$ 幂、$T_j$ 迭代与整条后缀检验，覆盖所有六字和 $C$ 块。每个槽的 $D_j$ 仍来自同一整条实际后缀，没有逐槽另选状态。证毕。
+

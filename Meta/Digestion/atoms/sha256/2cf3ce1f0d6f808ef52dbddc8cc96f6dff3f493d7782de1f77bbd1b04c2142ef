@@ -1,0 +1,40 @@
+**命题 7.5（起点与渐近常数的两个精确早期反例）。** 定理 7.2 的起点条件不能直接删去，式 (7.6) 的下包络常数也不能直接充作全部非恒值预算的下界。具体地，$k=1,H=5$ 时预算窗口为 $C_{1,3}=4\le5<C_{1,4}=7$，将式 (7.4) 的取整构造直接代入会给
+
+$$
+u=3,\quad w=2,\quad \tau=4,\quad B_H=2,\quad
+x_H=(2,2),\quad y_H=(5,0),\qquad
+S^{-1}x_H=(-2,2).
+\tag{7.37}
+$$
+
+因而两端均非许可，该构造不是反标签见证。另在 $k=1,H=4$，实际树
+$T=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 和
+$T'=\langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle$
+满足
+
+$$
+\begin{gathered}
+c(T)=(1,2),\quad c(T')=(4,0),\quad
+\chi_1(c(T))=1,\quad \chi_1(c(T'))=0,\\
+\Theta_1(4)\le\frac{2\phi-3}{5+2\phi},\qquad
+16\frac{2\phi-3}{5+2\phi}
+<\frac{\phi+1/2}{2\sqrt5}.
+\end{gathered}
+\tag{7.38}
+$$
+
+证明。第一项直接使用[定义 1.3](#1-有限预算的尺度读出与逆许可分离)的整数矩阵 $S^{-1}=\begin{pmatrix}-3&2\\2&-1\end{pmatrix}$；负的祖先坐标否定许可。它只否定将取整构造外推到每个 $H\ge C_{1,3}$，不否定定理 7.2 的最终范围。
+
+第二项两棵树的初始叶数为三、四，均在 $\mathcal T_4$ 内。许可点的祖先组成为 $(1,0)$，横轴点非许可。两个 $\ell$ 值为 $1+2\phi$、$4$，且 $2\phi>3$，故分子为 $2\phi-3$、分母为 $5+2\phi$。最后的严格比较用 $\sqrt5=2\phi-1$ 和 $\phi^2=\phi+1$ 交叉相乘，等价于
+
+$$
+439<272\phi
+\quad\Longleftrightarrow\quad
+303<136\sqrt5;
+\qquad
+303^2=91809<92480=5\cdot136^2.
+\tag{7.39}
+$$
+
+所以 $\Theta_k(H)\ge(\phi+r_k)/(2\sqrt5H^2)$ 的全预算断言已被这对实际来源否定。式 (7.21) 的来源敏感有限下界与式 (7.6) 的渐近下包络必须各守其范围。证毕。
+

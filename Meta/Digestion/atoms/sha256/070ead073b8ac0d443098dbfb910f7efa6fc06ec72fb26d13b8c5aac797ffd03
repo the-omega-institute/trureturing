@@ -1,0 +1,24 @@
+**命题 43.13（rival 的凹余量，允许进入或穿过颜色格）。** 对命题43.11的每个第二分量槽 $\alpha$，令其后缀斜率为 $\gamma_\alpha=(-g)^{s_\alpha}$，并置
+
+$$
+ q_\alpha(t)=\beta-\operatorname{dist}\bigl(r_\alpha(y)+t\gamma_\alpha h,J_{c_\alpha}\bigr),\qquad 0\le t\le1.
+$$
+
+由于 $r_\alpha(y+t h)=r_\alpha(y)+t\gamma_\alpha h$ 沿同一合法 guard 区间的仿射像且位于物理支撑 $X$，而 $J_{c_\alpha}\subseteq X$，物理裁剪不改变到 $J_{c_\alpha}$ 的距离表达式。函数 $q_\alpha$ 在整个 $[0,1]$ 上都是凹函数；即使扰动进入或穿过颜色格，下列界仍成立。若 $q_\alpha(0)=0$，则
+
+$$
+ t q_\alpha(1)\le q_\alpha(t)\le|\gamma_\alpha h|t;
+$$
+
+若 $q_\alpha(0)>0$，则
+
+$$
+ q_\alpha(t)\ge\min\{q_\alpha(0),q_\alpha(1)\}>0.
+$$
+
+所以命题43.11的有限槽清单给出 $c_2>0$，使所有深度不超过 $n$ 的 rival departure 均满足
+
+$$
+\beta-\operatorname{dist}(r_\alpha(F^k(x_2)),J_{c_\alpha})\ge c_2a^n.
+$$
+
