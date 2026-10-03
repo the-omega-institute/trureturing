@@ -1105,3 +1105,492 @@ $$
 Multiplying by two proves the second-moment formula. Its excess over the unit-weight second moment is $\kappa^2/(12D^2)>0$. The limiting law is therefore different, despite identical aggregate source trajectories, normalized total speed mass and limiting first passage mean. This supplies the missing local speed-measure distinction within the actual Fibonacci carrier; it does not alter the fixed-unit-speed conclusion of Theorem 10.3. The speed-measure distinction is part of the classical one-dimensional framework in Stone's [*Limit theorems for random walks, birth and death processes, and diffusion processes*](https://doi.org/10.1215/ijm/1255645101); the explicit common-source construction and its two moments are calculated here. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 路径级反射—吸收极限
+
+**定义 12.1（单位速度路径、时钟与边界测试域）。** 取第10.1节的逐字斐波那契词 $W_j$，固定 $r_\alpha,r_\beta>0$、$0<\theta\le\min(r_\alpha,r_\beta)/2$ 与 $\delta>0$，保留
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+\overline r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,\qquad
+D=\frac{\theta\varphi^4}{\delta\overline r}.
+$$
+
+记 $r_i=r_{(W_j)_i}$。链的每个暂态切点具有单位速度权重：内部从 $i$ 右跳的概率为 $\theta/r_i$，左跳的概率为 $\theta/r_{i-1}$，其余概率持留；$0$ 只有右跳，$L_j$ 吸收。使用定义5.1的同一转移核，允许初态为任意切点概率律，并要求
+
+$$
+\operatorname{Law}(X_0/L_j)\Longrightarrow\nu_0
+\quad\text{于 }[0,1].
+$$
+
+这是对初态的扩充，单位速度、边界和转移规则均保持定义5.1的含义。定义吸收后永久保持终点的阶梯路径
+
+$$
+Z_j(t)=\frac{X_{\lfloor t/\epsilon_j\rfloor}}{L_j},\qquad
+Q_j(t)=\frac{x_{X_{\lfloor t/\epsilon_j\rfloor}}}{N_j}.
+$$
+
+以 $\widehat K_j$ 表示包括吸收点的完整核，以 $K_j$ 表示第10节的暂态子核。完整生成元为 $A_j=(\widehat K_j-I)/\epsilon_j$。连续吸收过程的测试域取
+
+$$
+\mathscr D_A=
+\{f\in C^2([0,1]):f'(0)=0,\ f''(1)=0\},\qquad
+Af(u)=Df''(u)\ (u<1),\qquad Af(1)=0.
+$$
+
+这里 $f(1)$ 可以任意取值；$f''(1)=0$ 使生成元在吸收点连续。若使用在命中 $1$ 时被杀死的半群，则另取 $f(1)=0$，对应诺伊曼左边界与狄利克雷右边界。完整吸收过程的测试函数值条件与被杀死半群的值条件须分别使用。
+
+**定理 12.2（精确格林逆给出的路径测试校正）。** 对任意 $f\in C^2([0,1])$ 且 $f'(0)=0$，令
+
+$$
+b_f(u)=Df''(u),\qquad
+\overline b_{j,i}=L_j\int_{i/L_j}^{(i+1)/L_j}b_f(v)\,dv,
+$$
+
+并以第10.2节的精确逆定义
+
+$$
+f_{j,i}=f(1)-\epsilon_j\sum_{m=0}^{L_j-1}
+G_j(i,m)\overline b_{j,m}\quad(0\le i<L_j),\qquad
+f_{j,L_j}=f(1).
+$$
+
+则在固定参数下
+
+$$
+\max_{0\le i\le L_j}|f_{j,i}-f(i/L_j)|=O(L_j^{-1}),
+\qquad
+(A_jf_j)_i=\overline b_{j,i}\ (i<L_j),\qquad
+(A_jf_j)_{L_j}=0.
+$$
+
+将 $b_f$ 在吸收点的生成元值定义为 $0$ 后，暂态点上的生成元误差不超过 $b_f$ 的连续模 $\omega_{b_f}(L_j^{-1})$，吸收点上的误差为零。特别地，对 $f\in\mathscr D_A$，此为连续测试域上的一致生成元逼近。相邻校正值还满足
+
+$$
+f_{j,i+1}-f_{j,i}
+=\frac{\epsilon_jr_i}{\theta}
+\sum_{m=0}^{i}\overline b_{j,m},\qquad
+\max_{i<L_j}|f_{j,i+1}-f_{j,i}|
+\le\frac{\epsilon_jL_j\max(r_\alpha,r_\beta)}{\theta}
+\|b_f\|_\infty=O(L_j^{-1}).
+$$
+
+**证明。** 第10.2节的连续格林算子满足
+
+$$
+\mathcal T b_f=f(1)-f,
+$$
+
+因为两边的二阶导数均为 $-f''$，左端导数为零，右端值为零。单元平均使 $\epsilon_jG_j\overline b_j$ 恰为 $\mathcal T_jb_f$ 的阶梯值；第10.2节的核一致误差给出校正值的 $O(L_j^{-1})$ 误差。完整生成元作用于常数 $f(1)$ 为零，而作用于吸收端为零的暂态向量时为 $-B_j/\epsilon_j$。由 $B_jG_j=I$，得到 $A_jf_j=\overline b_j$，包括所述吸收端值。单元平均与左端采样的差由连续模控制。最后将第10.2节的累积通量公式用于 $\overline b_j$，即得相邻差；$\epsilon_jL_j^2\to\delta/\varphi^4$ 给出其量级。若 $f''(1)\ne0$，上述离散恒等式仍成立，但分段定义的 $Af$ 在吸收点不连续，不能将它直接作为连续生成元域的元素。$\square$
+
+**定理 12.3（逐字切链的反射—吸收路径极限）。** 在定义12.1的全部假设下，对每个固定 $T<\infty$，
+
+$$
+Z_j\Longrightarrow Z
+\quad\text{于 }D([0,T],[0,1])\text{ 的 }J_1\text{ 拓扑}.
+$$
+
+极限从 $\nu_0$ 出发，是扩散系数为 $D$、在 $0$ 反射、首次到达 $1$ 后永久保持 $1$ 的布朗过程。在吸收时间 $\tau=\inf\{t:Z_t=1\}$ 之前可写成
+
+$$
+dZ_t=\sqrt{2D}\,dB_t+dK_t,\qquad
+K_0=0,\qquad K\text{ 连续且单调不减},\qquad
+\int_0^{t\wedge\tau}\mathbf1_{\{Z_s>0\}}\,dK_s=0;
+\qquad Z_t=1\ (t\ge\tau).
+$$
+
+其中 $B$ 是标准布朗运动，独立于所给初态。
+
+**证明。** 先证明停时紧性，而不从格林收敛直接推断路径收敛。取
+
+$$
+h(u)=u^2-u^3/3,\qquad h'(0)=0,\qquad h''(1)=0.
+$$
+
+$h$ 将 $[0,1]$ 连续且严格递增地映到 $[0,2/3]$，其逆在这个紧区间上一致连续。用定理12.2构造 $h_j$。若 $\mathcal F_n$ 为切链历史，则
+
+$$
+M_{j,n}=h_{j,X_n}-h_{j,X_0}
+-\epsilon_j\sum_{k=0}^{n-1}
+\mathbf1_{\{X_k<L_j\}}\overline b_{h,j,X_k}
+$$
+
+是鞅。其漂移每步绝对值不超过 $\epsilon_j\|Dh''\|_\infty$。相邻校正差为 $O(L_j^{-1})$，故
+
+$$
+\mathbb E\bigl[(M_{j,n+1}-M_{j,n})^2\mid\mathcal F_n\bigr]
+\le C L_j^{-2}\le C'\epsilon_j.
+$$
+
+常数与 $j$、初态和停时无关。把连续时间停时上取整至时钟格点只引入至多一跳的误差。鞅可选停止与有界漂移于是给出：对 $\sigma_j\le T$ 及 $0\le a_j\le\eta_j\to0$ 的确定增量，
+
+$$
+\mathbb E\left|h_{j,X_{\lfloor(\sigma_j+a_j)/\epsilon_j\rfloor}}
+-h_{j,X_{\lfloor\sigma_j/\epsilon_j\rfloor}}\right|^2
+\le C_T\bigl(\eta_j+\epsilon_j+(\eta_j+\epsilon_j)^2\bigr).
+$$
+
+这就是阿尔杜斯停时增量准则所需的控制。值域有界，$h_j-h=O(L_j^{-1})$，再由 $h^{-1}$ 的一致连续性，得到 $Z_j$ 的紧性。原路径每跳至多 $1/L_j\to0$，配合上述停时控制，任意子序列极限均为连续路径。
+
+对 $f\in\mathscr D_A$ 使用同样的校正鞅。校正值一致趋于 $f$，生成元一致趋于连续的 $Af$，阶梯积分与格点求和的差为 $O(\epsilon_j)$。在任意收敛子序列上，对有界连续的过去历史函数乘以上述鞅增量再取期望；所有项一致有界，$J_1$ 收敛到连续路径使积分也收敛。因此极限满足
+
+$$
+f(Z_t)-f(Z_0)-\int_0^t Af(Z_s)\,ds
+\quad\text{为鞅},\qquad f\in\mathscr D_A,
+\qquad\operatorname{Law}(Z_0)=\nu_0.
+$$
+
+最后识别并唯一化这一边界鞅问题。对任意 $\lambda>0$ 与 $g\in C([0,1])$，其预解边值问题为
+
+$$
+\lambda f-Df''=g\quad(0\le u<1),\qquad
+f'(0)=0,\qquad f(1)=g(1)/\lambda.
+$$
+
+线性二阶方程有唯一 $C^2$ 解；连续延伸给出 $f''(1)=0$，所以解属于 $\mathscr D_A$。唯一性也可由齐次差的能量恒等式
+
+$$
+\lambda\int_0^1 f^2\,du+D\int_0^1(f')^2\,du=0
+$$
+
+直接得到。该域在 $C([0,1])$ 中稠密，满足正最大值原理，而且每个 $\lambda-A$ 的值域均为整个连续函数空间；预解式的唯一性给出相应费勒生成元及鞅问题的唯一性。将反射布朗运动停在首次到达 $1$ 的时刻，由伊藤公式、$f'(0)=0$ 与吸收后的 $Af(1)=0$ 可知它解此鞅问题。因此所有子序列极限均为所述反射—吸收过程，得到整列收敛。
+
+一维尺度与速度测度方法的文献背景见查尔斯·斯通的[《随机游走、生灭过程与扩散过程的极限定理》](https://doi.org/10.1215/ijm/1255645101)。此处连接逐字斐波那契源的具体步骤是第10.2节的精确逆、上述离散校正、停时紧性和边界鞅问题；一般扩散极限框架作为背景，不替代这些步骤。$\square$
+
+**定理 12.4（数量嵌入、插值及缺失缩放的边界）。** 定理12.3的数量路径 $Q_j$ 在 $J_1$ 拓扑下具有同一极限。分别将 $Z_j$、$Q_j$ 在相邻时钟格点间作线性插值，所得连续路径在 $C([0,T])$ 的一致范数拓扑下弱收敛到 $Z$。初态律收敛与平方时钟缩放不能由源递归代替。
+
+**证明。** 第10.2节给出确定性控制
+
+$$
+\sup_{t\le T}|Q_j(t)-Z_j(t)|
+\le\max_{0\le k\le L_j}\left|\frac{x_k}{N_j}-\frac{k}{L_j}\right|
+\longrightarrow0.
+$$
+
+这比 $J_1$ 距离控制更强。切点插值与原阶梯路径的距离不超过 $1/L_j$，数量插值与其原阶梯路径的距离不超过 $3/N_j$。极限路径连续，故紧性与这些消失的误差给出所述连续路径弱收敛；阶梯路径本身仍视为 $D([0,T])$ 的元素。
+
+若交替取初态 $X_0=0$ 与 $X_0=L_j$，时刻零的边缘律交替为 $\delta_0$ 与 $\delta_1$，整列路径律不能收敛。若从 $0$ 出发却只保留未缩放时钟 $X_{\lfloor t/\delta\rfloor}/L_j$，则
+
+$$
+\sup_{t\le T}\frac{X_{\lfloor t/\delta\rfloor}}{L_j}
+\le\frac{\lfloor T/\delta\rfloor}{L_j}\longrightarrow0.
+$$
+
+极限退化为零路径，而非定理12.3的扩散。$\square$
+
+**定理 12.5（路径桥的结论范围）。** 定理12.3在第10.2、10.3节的格林与通过时间结论上增加了路径紧性和边界鞅问题识别；其结论是所给数学模型的路径律弱收敛。它不提供原概率空间上的逐样本一致收敛、物理热流或热力学实现，也不推出第11节一般速度测度扩展的路径极限。源生成律和多个探针的联合律须另给共同实现与耦合条件。
+
+**证明。** 紧性与唯一鞅问题只决定路径分布；弱收敛不指定不同 $j$ 之间的样本耦合。第11.2节已有同源、同总速度质量、同左端极限均值而通过律不同的扩展，第6.4节已有边缘轨迹律相同而联合律不同的模型，第8.1节区分空间计数、输运时钟及物理实现。定理12.3补足的是单位速度切链的输运路径桥，未增添这些额外识别前提。首次命中时间泛函并非在所有连续吸收路径上都具有 $J_1$ 连续性；例如停在 $1$ 的路径可由始终低于 $1$ 的路径一致逼近。因此这里只保留第10.3节的通过时间分布与固定矩结论，不据路径收敛宣称路径和吸收时间的联合收敛。$\square$
+
+## 13. 半群收敛的范围与负谱边界
+
+**定义 13.1（单元嵌入、投影与被杀死半群）。** 以下始终使用第12节的固定单位速度模型及暂态子核。令
+
+$$
+(J_jv)(u)=v_i\quad\left(u\in I_{j,i}
+=[i/L_j,(i+1)/L_j)\right),\qquad (J_jv)(1)=0,
+$$
+
+$$
+(P_jf)_i=L_j\int_{I_{j,i}}f(u)\,du,\qquad
+P_jJ_j=I,\qquad
+H_j=\frac{I-K_j}{\epsilon_j},\qquad T_j=H_j^{-1}=\epsilon_jG_j.
+$$
+
+离散向量的 $p$ 范数使用质量 $1/L_j$。于是 $J_j$ 为等距嵌入，$P_j$ 为压缩投影。连续算子为 $H=-D\partial^2$，具有诺伊曼左边界和狄利克雷右边界，其逆为第10节的 $\mathcal T$。记
+
+$$
+S_j(t)=J_jK_j^{\lfloor t/\epsilon_j\rfloor}P_j,
+\qquad S(t)=e^{-tH},\qquad
+C_D=\{f\in C([0,1]):f(1)=0\}.
+$$
+
+$S(t)$ 是反射于 $0$、命中 $1$ 时被杀死的热半群。对 $f\in C_D$，它等于第12节完整吸收过程的期望作用；这里不把完整吸收过程在常数函数上的作用与被杀死半群混用。$S_j$ 是用阶梯时钟采样的算子族，一般不满足所有实数时刻的半群恒等式。
+
+**定理 13.2（正预解式与原阶梯时钟的拉普拉斯公式）。** 对固定 $\lambda>0$，定义
+
+$$
+R_j(\lambda)=T_j(I+\lambda T_j)^{-1}
+=(\lambda+H_j)^{-1},\qquad
+\mathcal R_j(\lambda)=J_jR_j(\lambda)P_j,
+\qquad R(\lambda)=(\lambda+H)^{-1}.
+$$
+
+对每个 $1\le p\le\infty$，有
+
+$$
+\|\mathcal R_j(\lambda)-R(\lambda)\|_{p\to p}
+=O(L_j^{-1}).
+$$
+
+原阶梯时钟的精确公式则为
+
+$$
+\gamma_j(\lambda)=\frac{e^{\lambda\epsilon_j}-1}{\epsilon_j},
+\qquad
+\int_0^\infty e^{-\lambda t}S_j(t)\,dt
+=\frac{\gamma_j(\lambda)}{\lambda}
+\mathcal R_j(\gamma_j(\lambda)),
+$$
+
+从而该拉普拉斯算子与 $R(\lambda)$ 的范数差为 $O(L_j^{-1})+O(\epsilon_j)$。此积分按单元函数的核积分理解；$p=\infty$ 时也可逐点使用同一公式。
+
+**证明。** 嵌入的 $J_jT_jP_j=\mathcal T_j$ 正是第10节的积分算子。其核一致误差为 $O(L_j^{-1})$，故在所有上述 $p$ 空间中都有同量级算子误差。$K_j$ 对计数测度对称且为次随机核，连续与离散的被杀死半群在这些空间中均为压缩。因此正预解式满足 $\|\mathcal R_j(\lambda)\|,\|R(\lambda)\|\le1/\lambda$，且
+
+$$
+\|(I+\lambda\mathcal T_j)^{-1}\|,
+\|(I+\lambda\mathcal T)^{-1}\|\le2,
+$$
+
+这里在阶梯子空间之外，前一逆算子为恒等作用。预解式恒等式给出
+
+$$
+\mathcal R_j(\lambda)-R(\lambda)
+=(I+\lambda\mathcal T_j)^{-1}
+(\mathcal T_j-\mathcal T)(I+\lambda\mathcal T)^{-1},
+$$
+
+证明第一项估计。再对每个时钟区间积分并求几何级数，得到
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-\lambda t}S_j(t)\,dt
+&=\frac{1-e^{-\lambda\epsilon_j}}{\lambda}
+J_j(I-e^{-\lambda\epsilon_j}K_j)^{-1}P_j\\
+&=\frac{\gamma_j(\lambda)}{\lambda}
+J_j(H_j+\gamma_j(\lambda))^{-1}P_j.
+\end{aligned}
+$$
+
+固定 $\lambda$ 时，$\gamma_j(\lambda)-\lambda=O(\epsilon_j)$；用正预解式恒等式控制参数误差，即得第二项估计。泊松化算子 $J_je^{-tH_j}P_j$ 的拉普拉斯算子才是 $\mathcal R_j(\lambda)$。泊松化是另一种时钟，不能把它写成原来的 $S_j(t)$。$\square$
+
+**定理 13.3（固定初值的强收敛）。** 对任意固定 $1\le p<\infty$、任意固定 $f\in L^p([0,1],du)$ 及任意 $0<a<b<\infty$，
+
+$$
+\lim_{j\to\infty}\sup_{a\le t\le b}
+\|S_j(t)f-S(t)f\|_p=0.
+$$
+
+对任意固定 $f\in C_D$，相应地有
+
+$$
+\lim_{j\to\infty}\sup_{a\le t\le b}
+\sup_{u\in[0,1]}|S_j(t)f(u)-S(t)f(u)|=0.
+$$
+
+这些量词先固定初值，再令 $j\to\infty$；没有在单位球上对所有初值同时取上确界，也没有给整个 $L^\infty$ 或所有有界可测初值的强收敛结论。
+
+**证明。** 不能仅以正预解式收敛替代离散时钟的谱控制。$\mathcal T_j$ 是非负、自伴、有限秩算子，且在 $L^2$ 算子范数下趋于紧算子 $\mathcal T$。后者的简单特征对为
+
+$$
+e_m(u)=\sqrt2\cos((m+1/2)\pi u),\qquad
+\rho_m=\frac1{D(m+1/2)^2\pi^2},\qquad m=0,1,\ldots.
+$$
+
+固定 $m$，孤立简单特征值的扰动给出 $\rho_{j,m}\to\rho_m$ 及适当定向的阶梯特征函数 $e_{j,m}\to e_m$ 于 $L^2$。由核一致逼近，还具有 $\mathcal T_j\to\mathcal T$ 于 $L^2\to L^\infty$ 的算子范数；将
+
+$$
+e_{j,m}=\rho_{j,m}^{-1}\mathcal T_je_{j,m},\qquad
+e_m=\rho_m^{-1}\mathcal Te_m
+$$
+
+相减，得到包括右端零值在内的一致收敛。在这个固定模态上，原离散时钟给出
+
+$$
+S_j(t)e_{j,m}
+=\left(1-\frac{\epsilon_j}{\rho_{j,m}}\right)^{\lfloor t/\epsilon_j\rfloor}e_{j,m}
+\longrightarrow e^{-t/\rho_m}e_m,
+$$
+
+收敛在 $[a,b]$ 上一致。$S_j(t)$ 与 $S(t)$ 的 $p$ 范数及上确界范数均不增，所以把 $e_m$ 换成 $e_{j,m}$ 的误差也一致消失。
+
+这些余弦函数的有限线性组合在 $C_D$ 中一致稠密：把连续函数在 $0$ 偶反射、在 $1$ 反号延拓，使用保持这两种对称性的三角多项式逼近即可。$C_D$ 又在每个有限 $p$ 的 $L^p$ 中稠密。先在有限模态组合上收敛，再用压缩性控制初值逼近误差，得到两项结论。该稠密性不适用于整个 $L^\infty$，故不作相应外推。$\square$
+
+**定理 13.4（允许端点的近负一模态阻止算子范数收敛）。** 取定义5.1允许的参数
+
+$$
+r_\alpha=r_\beta=r>0,\qquad\theta=r/2,
+\qquad D=\frac{\varphi^4}{2\delta}.
+$$
+
+对长度 $L=L_j$，暂态核在 $0$ 的持留概率为 $1/2$，相邻暂态切点间的跳率均为 $1/2$，其余暂态对角元为零。令
+
+$$
+q_L=\frac{2\pi}{2L+1},\qquad
+\lambda_L=-\cos q_L,\qquad
+v_i=(-1)^i\sin\bigl(q_L(i+1/2)\bigr),\quad0\le i<L.
+$$
+
+则 $K_jv=\lambda_Lv$。对每个固定 $t>0$ 及每个 $1\le p\le\infty$，有
+
+$$
+\liminf_{j\to\infty}\|S_j(t)-S(t)\|_{p\to p}
+\ge e^{-D\pi^2t}>0.
+$$
+
+因此原离散时钟下的全空间算子范数收敛失败，甚至固定正时间也失败；这与定理13.3对每个固定初值的强收敛相容。
+
+**证明。** 暂态矩阵的边界可写为虚点条件 $v_{-1}=v_0$、$v_L=0$。所给向量满足
+
+$$
+v_{-1}=\sin(q_L/2)=v_0,\qquad
+v_L=(-1)^L\sin\pi=0,
+$$
+
+且内部恒等式为 $(v_{i-1}+v_{i+1})/2=-\cos(q_L)v_i$，所以左端半系数和右端吸收条件也逐项成立。随着 $L\to\infty$，$\lambda_L\to-1$，并且
+
+$$
+1-|\lambda_L|=\frac{\pi^2}{2L^2}+o(L^{-2}),\qquad
+\epsilon_jL_j^2\longrightarrow\frac1{2D},\qquad
+|\lambda_{L_j}|^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow e^{-D\pi^2t}.
+$$
+
+把 $J_jv$ 按其 $p$ 范数归一化为 $\widetilde v_j$。有限 $p$ 时归一化前的范数趋于 $(\int_0^1\sin^p(\pi u)\,du)^{1/p}>0$，$p=\infty$ 时趋于 $1$。它是逐单元交替的符号乘以一致趋于 $\sin(\pi u)$ 的振幅。对固定 $t>0$，混合边界热核在闭正方形上连续；配对相邻单元并使用核的一致连续性，得到
+
+$$
+\|S(t)\widetilde v_j\|_\infty\longrightarrow0,
+\qquad S_j(t)\widetilde v_j
+=\lambda_{L_j}^{\lfloor t/\epsilon_j\rfloor}\widetilde v_j.
+$$
+
+由三角不等式即得所述下界。这一初值随 $j$ 改变，所以不反驳固定初值结论。此高频模态在正预解式中的逆特征值仅为 $\epsilon_j/(1-\lambda_{L_j})=O(\epsilon_j)$，说明第10.2节的格林范数收敛与此反例可以同时成立。泊松化对该模态使用 $e^{-t(1-\lambda_{L_j})/\epsilon_j}$，也不同于原离散时钟的交替衰减。$\square$
+
+## 14. 平滑速度校准的有限精确反例
+
+**定义 14.1（非原子极限的局部速度扩展）。** 此节在定义5.1之外允许局部速度权重。固定 $r_\alpha=r_\beta=1$、$\theta=1/8$，保留逐字源 $W_j$、左右边界、$\delta>0$ 及 $\epsilon_j=\delta/N_j^2$。对 $L=L_j$ 和 $0\le i<L$ 定义
+
+$$
+z_i=\frac{i+1/2}{L},\qquad
+a_{L,i}=6z_i^2-6z_i+1+\frac1{2L^2},\qquad
+\eta=\frac9{16},\qquad v_{j,i}=1+\eta a_{L,i}.
+$$
+
+从切点 $i$ 跨越任一邻边的概率改为 $\theta/v_{j,i}$，其余概率持留；$L$ 吸收。令 $V_j=\operatorname{diag}(v_{j,i})$。单位模型的 $B_j,G_j$ 满足扩展模型关系
+
+$$
+B_j^{(v)}=V_j^{-1}B_j,\qquad
+G_j^{(v)}=G_jV_j.
+$$
+
+**定理 14.2（质量、一阶矩和有限均值均相同而路径律不同）。** 定义14.1的权重满足
+
+$$
+v_{j,i}\ge\frac{23}{32},\qquad
+\sum_{i=0}^{L-1}v_{j,i}=L,\qquad
+\sum_{i=0}^{L-1}i v_{j,i}=\frac{L(L-1)}2.
+$$
+
+扩展链为随机核，且从 $0$ 出发的离散步数均值与单位模型在每个有限 $L$ 上精确相同：
+
+$$
+\mathbb E_0\tau_j^{(v)}=\mathbb E_0\tau_j=4L(L+1).
+$$
+
+但是在 $W_3=\beta\alpha\beta$、$L=3$ 上，扩展权重为 $(9/8,3/4,9/8)$，并有
+
+$$
+\mathbb E_0\tau_3^2=3920,\qquad
+\mathbb E_0(\tau_3^{(v)})^2=3912,\qquad
+\Pr_0(X_1=1)=\frac18,\qquad
+\Pr_0(X_1^{(v)}=1)=\frac19.
+$$
+
+相同源、速度总质量、切点坐标的一阶矩和精确左端均值仍不识别路径律。
+
+**证明。** 配方给出
+
+$$
+a_{L,i}=6(z_i-1/2)^2-1/2+1/(2L^2)\ge-1/2,
+$$
+
+所以 $v_{j,i}\ge1-9/32=23/32$。内部两次跳跃的总概率至多 $2\theta/(23/32)=8/23<1$。进一步展开
+
+$$
+L^2a_{L,i}=6i^2+(6-6L)i+L^2-3L+2.
+$$
+
+代入 $\sum i=L(L-1)/2$、$\sum i^2=L(L-1)(2L-1)/6$、$\sum i^3=L^2(L-1)^2/4$，得到 $\sum a_{L,i}=\sum i a_{L,i}=0$，证明两项校准恒等式。等阻抗下，第10.2节的逆为 $G_j(i,m)=8(L-\max(i,m))$，故
+
+$$
+\mathbb E_0\tau_j^{(v)}
+=8\sum_{m=0}^{L-1}(L-m)v_{j,m}
+=8\left(L^2-\frac{L(L-1)}2\right)=4L(L+1).
+$$
+
+$L=3$ 时，令 $\mathbf1=(1,1,1)^{\mathsf T}$，则
+
+$$
+G_3=8\begin{pmatrix}3&2&1\\2&2&1\\1&1&1\end{pmatrix},\qquad
+G_3\mathbf1=(48,40,24)^{\mathsf T},\qquad
+G_3V_3\mathbf1=(48,39,24)^{\mathsf T}.
+$$
+
+任意离散吸收链的二阶矩向量为 $2G^2\mathbf1-G\mathbf1$，如第10.3节的离散校正公式。代入 $G_3$ 与 $G_3V_3$，左端分量分别为
+
+$$
+2\cdot1984-48=3920,\qquad
+2\cdot1980-48=3912.
+$$
+
+首步右跳概率为 $\theta/v_{3,0}=(1/8)/(9/8)=1/9$，已经与单位模型不同。这些计算均使用同一实际三边载体，无需中点原子。$\square$
+
+**定理 14.3（平滑速度密度的通过矩边界）。** 定义14.1的归一化速度测度及其极限为
+
+$$
+\mu_j^{(v)}=\frac1{L_j}\sum_{i=0}^{L_j-1}v_{j,i}\delta_{i/L_j}
+\Longrightarrow w_\eta(u)\,du,
+\qquad w_\eta(u)=1+\eta(6u^2-6u+1).
+$$
+
+在此节的 $D=\varphi^4/(8\delta)$ 下，从 $0$ 出发的缩放通过时间收敛到具有下列矩的通过律：
+
+$$
+\lim_j\mathbb E_0[\epsilon_j\tau_j^{(v)}]=\frac1{2D},\qquad
+\lim_j\mathbb E_0[(\epsilon_j\tau_j^{(v)})^2]
+=\frac{5/12+\eta^2/210}{D^2}.
+$$
+
+这给出平滑、严格正速度密度下同均值而不同通过律的边界，不把该扩展移入第12节的单位速度路径定理。
+
+**证明。** 权重是连续多项式的中点采样加 $O(L_j^{-2})$ 常数，且始终有正下界；将采样点由中点改到左端只引入 $O(L_j^{-1})$ 误差，所以所述测度弱收敛成立。第10.2节的核估计给出对每个连续 $f$ 的一致格林收敛
+
+$$
+(\mathcal T_\eta f)(u)
+=\frac1D\int_0^1(1-\max(u,v))f(v)w_\eta(v)\,dv.
+$$
+
+这些算子范数一致有界。第11.2节的通过变换紧性和离散矩递推同样适用：变换的极限满足 $h+s\mathcal T_\eta h=1$，等价于
+
+$$
+Dh''=s w_\eta h,\qquad h'(0)=0,\qquad h(1)=1.
+$$
+
+正密度的能量恒等式给出唯一性，固定矩逐次收敛到 $p!\mathcal T_\eta^p\mathbf1$。此论证只使用通过律和连续测试格林收敛。令
+
+$$
+A_\eta(u)=\frac{1-u^2}{2}
+-\frac\eta2 u^2(1-u)^2.
+$$
+
+直接求导得 $-A_\eta''=w_\eta$、$A_\eta'(0)=0$、$A_\eta(1)=0$，故 $\mathcal T_\eta\mathbf1=A_\eta/D$。其左端值为 $1/(2D)$。二阶矩为
+
+$$
+\frac2{D^2}\int_0^1(1-u)w_\eta(u)A_\eta(u)\,du
+=\frac{5/12+\eta^2/210}{D^2}.
+$$
+
+展开积分时一次项为零，二次项为 $\eta^2/210$；$\eta=9/16$ 时系数为 $22481/53760$，严格大于单位密度的 $5/12$。因此无原子的平滑速度扩展也保留第11节的不可识别性机制。$\square$
+
+**定理 14.4（所有起点精确均值的校准能力）。** 固定有限载体、阻抗、$\theta$、反射与吸收边界，在定义14.1的局部行缩放规则下，允许任意使转移核随机的正权重 $v$。令 $m=(\mathbb E_i\tau^{(v)})_{i=0}^{L-1}$ 为所有暂态起点的精确离散均值向量，则
+
+$$
+v=B_jm.
+$$
+
+因此所有起点的均值向量识别全部速度权重，并在初态律也给定时识别完整路径律。若给的是实际经过时间均值，须先用给定时钟除以 $\delta$ 得到上述步数均值。单一起点的均值在 $L\ge2$ 的一般局部速度类中不能完成这一识别。
+
+**证明。** 首步方程为 $B_j^{(v)}m=\mathbf1$。由 $B_j^{(v)}=V_j^{-1}B_j$，得到 $B_jm=V_j\mathbf1=v$。固定阻抗与跳尺度后，每个局部权重确定该行的两次跳跃概率及持留概率，因而确定核与所给初态的所有路径分布。单一起点 $i$ 的均值仅为 $m_i=\sum_kG_j(i,k)v_k$，是一个线性约束。在具有严格持留余量的正权重内部，$L\ge2$ 时该线性泛函具有非零核，可作足够小的权重扰动并保持随机性与同一均值；定义14.1与定理14.2进一步同时保持了总质量及一阶矩。校准结论依赖完整均值向量和固定动力学参数，不把源递归或数量坐标当作这些数据的替代。$\square$
+
+## 追加锚（本行以下为增补区）
