@@ -27,8 +27,7 @@ public static class CanonicalMarkdownWriter
             .Append(document.Header.Digest.Value)
             .Append("\n\n");
         var describeNumber = 0;
-        var referencedDescribeIds = graph?.ReferencedDescribeIds(document)
-            ?? ReferencedDescribeIds(document, DocumentGraphAssembler.Extract(document));
+        var referencedDescribeIds = ReferencedDescribeIds(document, document.Edges);
         WriteBlocks(
             builder,
             document.Content,

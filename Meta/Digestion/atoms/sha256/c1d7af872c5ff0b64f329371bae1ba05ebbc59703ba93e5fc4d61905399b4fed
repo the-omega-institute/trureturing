@@ -1,0 +1,24 @@
+**引理 26.2（任意块表的全部地址报告与信息叶恒等式）。** 给定整数 $m,T\ge1$ 和任意表 $X_{ij}\in\{A,U,V\}$，令 $P_i=B_T(X_{i1},\ldots,X_{iT})$。对每个有限地址 $w$，原始四值报告精确为
+
+$$
+\operatorname{out}_{P_i}(w)=
+\begin{cases}
+\mathsf{branch},&w\prec p_j\text{ 对某个 }j,\\
+\operatorname{out}_{X_{ij}}(v),&w=p_jv\text{ 对唯一的 }j.
+\end{cases}
+\tag{26.6}
+$$
+
+两种情形互斥且穷尽。对每个 $S\subseteq[m]$、$|S|\ge2$，有精确不交并
+
+$$
+\boxed{\quad
+\Delta_{\boldsymbol P}(S)=
+\bigsqcup_{\substack{1\le j\le T\\
+\{X_{ij}:i\in S\}=\{U,V\}}}p_jD.
+\quad}
+\tag{26.7}
+$$
+
+因此，信息叶非空当且仅当某列在 $S$ 上同时出现 $U,V$ 且不出现 $A$。
+

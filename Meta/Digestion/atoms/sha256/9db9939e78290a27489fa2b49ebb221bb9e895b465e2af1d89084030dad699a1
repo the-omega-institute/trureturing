@@ -1,0 +1,18 @@
+**定理 26.4（全部有限遗传相容模式的精确实际实现）。** 在定义 26.1 的全来源合同下，对每个 $m\ge2$ 和每个满足式（26.9）的 $K$，存在定理 26.3 的两两不同同组成完整树 $Q_i$ 及两两不同同组成正来源 $P_i=\rho^3(Q_i)$，使对每个 $S\subseteq[m]$，
+
+$$
+\boxed{
+\begin{aligned}
+S\in K
+&\ \Longleftrightarrow\quad
+\exists\pi\in\mathfrak D_3\ \forall i\in S:
+C_\pi(P_i)=n_{P_i}\\
+&\ \Longleftrightarrow\quad
+\exists\Pi\in\mathfrak R_3\ \forall i\in S:
+\mathbb E_\mu C_\Pi(\cdot,P_i)=n_{P_i}.
+\end{aligned}}
+\tag{26.18}
+$$
+
+反之，每个由有限个不同正来源的共同个体最优取得所定义的指标相容族，必下闭且包含空集和所有单元素集。因此，在此实际同组成接口中，这些条件完整刻画有限相容模式。
+

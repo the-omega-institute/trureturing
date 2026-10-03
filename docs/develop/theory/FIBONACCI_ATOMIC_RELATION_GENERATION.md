@@ -51578,3 +51578,766 @@ $$
 式（358.5）只处理这个实际 lcm 前缀族最终越过 $5040$ 后的固定严格 Robin 缺口；$5040$ 在这里是 Robin 的整数阈值，没有由拓扑数字七或 Fibonacci 巧合来证明它的特殊性。该族结论不推出任意整数的 Robin 不等式或 RH，不给出新的数值认证区间，也不确定此族比值的精确极限。缺失素支撑机制与秩预算机制的连接成立，但二者的优化目标仍不同。
 
 ## 追加锚（本行以下为增补区）
+## 359. 三次 Clifford 叶积窗口的共同来源正规形与实际像
+
+**定义 359.1（正叶词、状态代表与整数部分）。** 仍令
+$\mathcal T$ 为全部自由有序非空二叉树，叶为 $\alpha,\beta$，左右次序和括号均属于原树的相等关系。把 $a,b$ 分别作为 $\alpha,\beta$ 的字母记号。每个非空树有唯一保序叶词；反过来，每个非空正词的每一种有序二叉括号化都是一个实际来源。空词只在代数计算中表示空积，不属于来源域。
+
+沿用 §§355–357 的 Clifford 代数关系
+$$
+ A^2=1,\qquad B^2=-1,\qquad AB+BA=1,
+$$
+并置
+$$
+ S=BA,\qquad D=A+B.
+$$
+定义三个叶积三元组
+$$
+ g=(A,B,S),\qquad h=(B,S,D),
+$$
+以及四个状态代表
+$$
+\begin{aligned}
+ R_{00}&=(1,1,1),& R_{10}&=g,\\
+ R_{01}&=h,& R_{11}&=gh=(-S^{-1},-A,S^3A).
+\end{aligned}
+$$
+对 $u,v,w\in\mathbb Z$，定义
+$$
+ L(u,v,w)=\bigl((-1)^vS^{2u},\;(-1)^wS^{2v},\;(-1)^uS^{2w}\bigr).
+$$
+三元组的乘法逐坐标进行。
+
+**引理 359.2（偶部关系与状态右乘表）。** 在上述代数中
+$$
+ S^2=S+1,\qquad S^{-1}=S-1,\qquad ASA=AB=1-S=-S^{-1},
+$$
+且 $D=S^2A$。因此 $S$ 是可逆元，并且
+$$
+ AS^n=(-1)^nS^{-n}A\qquad(n\in\mathbb Z).
+$$
+若在状态 $(p,q)\in\{0,1\}^2$ 右乘 $g$ 或 $h$，所得状态和整数增量如下；表中的增量 $(\Delta u,\Delta v,\Delta w)$ 定义为
+$R_{pq}g^{\,\text{或}\,h}=L(\Delta u,\Delta v,\Delta w)R_{p'q'}$。
+
+| 当前状态 | 右乘 | 下一状态 | $(\Delta u,\Delta v,\Delta w)$ |
+|---|---|---|---|
+| $00$ | $a$ | $10$ | $(0,0,0)$ |
+| $00$ | $b$ | $01$ | $(0,0,0)$ |
+| $10$ | $a$ | $00$ | $(0,0,1)$ |
+| $10$ | $b$ | $11$ | $(0,0,0)$ |
+| $01$ | $a$ | $11$ | $(1,1,-1)$ |
+| $01$ | $b$ | $00$ | $(0,1,0)$ |
+| $11$ | $a$ | $01$ | $(-1,-1,0)$ |
+| $11$ | $b$ | $10$ | $(0,-1,0)$ |
+
+**证明。** 由 $S=BA$、$AB+BA=1$ 和 $B^2=-1$，有
+$$
+S^2=B(AB)A=B(1-S)A=S-BSA=S+1,
+$$
+因为 $BSA=B(BA)A=B^2A^2=-1$。于是 $S(S-1)=1$，并且
+$ASA=A(BA)A=AB=1-S$。再由 $AS=-S^{-1}A$ 归纳得到整数次幂公式；负指数由可逆性给出。最后
+$S^2A=(S+1)A=SA+A=B+A=D$。
+
+把 $R_{00},R_{10},R_{01},R_{11}$ 的三坐标分别右乘 $g,h$，在每一坐标使用上述恒等式，逐项得到表。例如
+$$
+R_{01}g=(S,SB,-B)=L(1,1,-1)R_{11},
+$$
+其余七行完全相同地由 $AS^n=(-1)^nS^{-n}A$ 化简。 $\square$
+
+**定理 359.3（完整实际三窗口像的唯一正规形）。** 令 $W_3(t)=(E(t),E(\rho t),E(\rho^2t))$。一个三元组 $\Xi$ 属于全部实际非空原树的 $W_3$ 像，当且仅当存在唯一
+$$
+(u,v,w,p,q)\in\mathbb Z^3\times\{0,1\}^2
+$$
+使
+$$
+\Xi=L(u,v,w)R_{pq}.
+\tag{359.1}
+$$
+因此每个实际三元组同时具有唯一的三个整数参数和唯一的四状态参数；状态满足
+$p\equiv\#\alpha\pmod2$、$q\equiv\#\beta\pmod2$。
+
+**证明。** 原替换保持叶序二元构造，故对叶词连接有
+$$
+W_3(xy)=W_3(x)W_3(y)
+$$
+逐坐标成立。对任意原树作结构归纳，观察只由其保序叶词的 $g,h$ 乘积决定；括号仍作为原树数据保留。引理 359.2 的表因此按词长归纳给出：每个实际词都唯一地落在四个状态之一，并且其整数增量为各步增量之和。
+
+反过来，六个正词块和一个非空单位块的三窗口如下：
+
+| 整数增量 | 正词 |
+|---|---|
+| $(1,0,0)$ | $baba$ |
+| $(-1,0,0)$ | $abab$ |
+| $(0,1,0)$ | $bb$ |
+| $(0,-1,0)$ | $abaaba$ |
+| $(0,0,1)$ | $aa$ |
+| $(0,0,-1)$ | $babbab$ |
+| $(0,0,0)$ | $aababbab$ |
+
+直接套用表或相乘可得这些窗口分别是对应的 $L$，并且最后一个词的窗口是 $(1,1,1)$。由于 $L(u,v,w)L(u',v',w')=L(u+u',v+v',w+w')$，按 $u,v,w$ 的符号重复相应块，再在末尾接上 $a,b,ab$ 中与 $(p,q)=(1,0),(0,1),(1,1)$ 对应的状态代表，就得到 (359.1) 的正叶词来源。若全部整数块和状态代表都省略，则使用八叶词 $aababbab$，所以不引入空来源。
+
+更具体地，该构造的组成是
+$$
+\left(
+2|u|+4\max(-v,0)+2|w|+p,
+2|u|+2|v|+4\max(-w,0)+q
+\right),
+$$
+而全省略情形的组成是 $(4,4)$。因此负整数参数也由非空正词实现，负幂只出现在代数记号中。
+
+最后证明唯一性。等级对合给出三坐标的奇偶等级：$L$ 的每个坐标均为偶，四个 $R_{pq}$ 的等级模式分别为
+$$
+(0,0,0),\ (1,1,0),\ (1,0,1),\ (0,1,1).
+$$
+故相等三元组先迫使 $(p,q)$ 相同。右消去同一状态代表后，比较 $L$ 的三个坐标。偶子代数以基 $1,S$ 表示，关系为 $S^2-S-1=0$；将 $S$ 取为正根
+$\varphi=(1+\sqrt5)/2>1$，则每个坐标的绝对值分别为
+$\varphi^{2u},\varphi^{2v},\varphi^{2w}$，符号分别记录 $v,w,u$ 的模二值。三坐标依次迫使 $u,v,w$ 全部相等，唯一性成立。 $\square$
+
+**推论 359.4（逐分量的显式联合检验）。** 设候选三元组的三个分量已经各自写成唯一形式
+$$
+\Xi_\nu=(-1)^{\varepsilon_\nu}S^{k_\nu}A^{e_\nu},
+\qquad \varepsilon_\nu\in\{0,1\},\ k_\nu\in\mathbb Z,\ e_\nu\in\{0,1\}.
+$$
+它属于实际 $W_3$ 像，当且仅当
+$$
+ p=e_1,\qquad q=e_2,\qquad e_0\equiv p+q\pmod2,
+$$
+并且
+$$
+\begin{aligned}
+ u&=\frac{k_0-q+2pq}{2},&
+ v&=\frac{k_1-p-q+2pq}{2},&
+ w&=\frac{k_2-p-2q}{2}
+\end{aligned}
+\tag{359.2}
+$$
+都是整数，且
+$$
+\varepsilon_0\equiv v+pq,\qquad
+\varepsilon_1\equiv w+pq,\qquad
+\varepsilon_2\equiv u
+\pmod2.
+\tag{359.3}
+$$
+
+**证明。** 四个状态代表的右侧 $S^kA^e$ 指数偏移依次为
+$$
+(k_0,k_1,k_2)=(0,0,0),\ (0,1,1),\ (1,1,2),\ (-1,0,3)
+$$
+对应 $00,10,01,11$，而前两个坐标在状态 $11$ 还各有一个负号。将这些偏移与 $L(u,v,w)$ 相加，得到
+$$
+\begin{aligned}
+ k_0&=2u+q-2pq,& k_1&=2v+p+q-2pq,& k_2&=2w+p+2q,\\
+ \varepsilon_0&\equiv v+pq,&
+ \varepsilon_1&\equiv w+pq,&
+ \varepsilon_2&\equiv u\pmod2.
+\end{aligned}
+$$
+反解即为 (359.2)–(359.3)。 $\square$
+
+**命题 359.5（实际正像中的非分裂有限商）。** 令
+$$
+X=L(1,0,0),\qquad Y=L(0,1,0),\qquad Z=L(0,0,1),
+$$
+并令 $H=\langle g,h\rangle$ 为三元组单位所生成的群。则
+$$
+N=\langle X,Y,Z\rangle\cong\mathbb Z^3
+$$
+在 $H$ 中正规，且
+$$
+1\longrightarrow N\longrightarrow H\longrightarrow(\mathbb Z/2\mathbb Z)^2\longrightarrow1
+$$
+不分裂。其四个陪集代表为 $1,g,h,gh$。
+
+**证明。** 由三坐标直接相乘，$X,Y,Z$ 交换，并且右正规形的唯一性表明 $N$ 是秩三自由阿贝尔群。同一定义给出
+$$
+ g^2=Z,\qquad h^2=Y,\qquad (gh)^2=X^{-1}.
+$$
+共轭关系为
+$$
+\begin{aligned}
+ gXg^{-1}=X^{-1},&\quad gYg^{-1}=Y^{-1},&\quad gZg^{-1}=Z,\\
+ hXh^{-1}=X^{-1},&\quad hYh^{-1}=Y,&\quad hZh^{-1}=Z^{-1}.
+\end{aligned}
+$$
+所以 $N$ 正规。在商中 $g,h,gh$ 的平方均为单位，故 $g,h$ 是交换的对合，商至多有四个元；四个代表的等级模式互异，商恰为四元初等阿贝尔群。共轭 $gh$ 对 $X$ 保持，对 $Y,Z$ 反演。对任意 $n=X^rY^sZ^t$，使用
+$(nR)^2=n(RnR^{-1})R^2$，得到
+$$
+(ng)^2=Z^{2t+1},\qquad (nh)^2=Y^{2s+1},\qquad (ngh)^2=X^{2r-1}.
+$$
+三个指数均为非零奇数，故这三个平方都是 $N$ 的非单位元。由于 $N$ 无挠，三个非平凡陪集中的每个元素也有无限阶，因而 $H$ 无挠。若扩张分裂，四元商的非单位对合会给出 $H$ 中的二阶元，矛盾。
+
+与成熟群结构的具体对应使用 Gardam，arXiv:2102.11818v1，§§2、3.1 的 Hantzsche–Wendt、Promislow（Fibonacci $F(2,6)$）群 $P$。该文的生成元 $a,b$ 对应本段的 $g,h$，而其平方生成元的字典为
+$$
+ x=a^2\longmapsto Z,\qquad
+ y=b^2\longmapsto Y,\qquad
+ z=(ab)^2\longmapsto X^{-1}.
+$$
+该文采用右共轭 $s^t=t^{-1}st$；核上的各共轭作用都是对合，所以与本段的左共轭表给出同一作用。以 $00,10,01,11$ 为行列次序，取两边截面分别为 $1,a,b,ab$ 和 $1,g,h,gh$。原文的因子系
+$f(\eta,\theta)=\sigma_\eta\sigma_\theta\sigma_{\eta+\theta}^{-1}$ 经上述字典，逐项成为本段的
+$F(\eta,\theta)=R_\eta R_\theta R_{\eta+\theta}^{-1}$：
+
+| $F(\eta,\theta)$ | $00$ | $10$ | $01$ | $11$ |
+|---|---|---|---|---|
+| $00$ | $1$ | $1$ | $1$ | $1$ |
+| $10$ | $1$ | $Z$ | $1$ | $Z$ |
+| $01$ | $1$ | $XYZ^{-1}$ | $Y$ | $XZ^{-1}$ |
+| $11$ | $1$ | $X^{-1}Y^{-1}$ | $Y^{-1}$ | $X^{-1}$ |
+
+该文的核 $\langle x,y,z\rangle\cong\mathbb Z^3$ 与四个陪集给出唯一正规形
+$x^iy^jz^k\sigma_{pq}$。将其送到
+$$
+ x^iy^jz^k\sigma_{pq}\longmapsto L(-k,j,i)R_{pq}
+ \qquad(i,j,k\in\mathbb Z)
+$$
+时，核上作用与上表因子系一致，故正规形的乘法被保持。两边正规形唯一，且整数坐标变换 $(i,j,k)\mapsto(-k,j,i)$ 是双射，因此这是实际群同构。这里使用的是群本身的正规形，不把该文的群环单位结论移植到 Clifford 叶积。 $\square$
+
+## 360. 单个实际历史纤维的八边消元与 Euler 充要判据
+
+**定义 360.1（四状态边图与固定历史）。** 固定一个实际目标
+$$
+\Omega=L(u,v,w)R_{pq}
+$$
+及其唯一参数。四个状态为 $00,10,01,11$，分别对应 $R_{00},R_{10},R_{01},R_{11}$。把表 359.2 的八条转移视为带字母的有向边：
+$$
+\begin{array}{llll}
+ x_{00}:00\xrightarrow{a}10,&x_{10}:10\xrightarrow{a}00,&
+ x_{01}:01\xrightarrow{a}11,&x_{11}:11\xrightarrow{a}01,\\
+ y_{00}:00\xrightarrow{b}01,&y_{01}:01\xrightarrow{b}00,&
+ y_{10}:10\xrightarrow{b}11,&y_{11}:11\xrightarrow{b}10.
+\end{array}
+$$
+这里下标是出发状态。对组成 $(a_c,b_c)\in\mathbb N^2$ 且 $a_c+b_c\ge1$，定义
+$$
+ X=\frac{a_c-p-2w+2u}{4},\qquad
+ Y=\frac{b_c-q-2u+2v}{4}.
+\tag{360.1}
+$$
+
+**定理 360.2（固定组成和单个历史纤维的充要条件）。** 存在实际非空原树 $t$ 满足
+$$
+W_3(t)=\Omega,\qquad c(t)=(a_c,b_c),
+$$
+当且仅当下列条件同时成立：
+
+1. $X,Y$ 是整数；
+2. 八个边重数
+$$
+\begin{aligned}
+ x_{00}&=X+w-u+p,& x_{10}&=X+w,& x_{01}&=X,& x_{11}&=X-u,\\
+ y_{00}&=Y+u+q(1-p),& y_{01}&=Y,& y_{10}&=Y-v+pq,& y_{11}&=Y+u-v
+\end{aligned}
+\tag{360.2}
+$$
+全为非负整数；
+3. 忽略方向后，所有正重数边的端点与起点 $00$ 构成一个弱连通图。
+
+这三个条件是单个实际历史纤维在指定组成下的完整算术判据；它们允许 $a_c=0$ 或 $b_c=0$，但不允许空来源。
+
+**证明。** 对任意实际正词，从状态 $00$ 出发读取表 359.2。若各类边的使用次数为上述八个数，则累计增量为
+$$
+ u=x_{01}-x_{11},\qquad
+ v=x_{01}-x_{11}+y_{01}-y_{11},\qquad
+ w=x_{10}-x_{01}.
+\tag{360.3}
+$$
+路径在四个顶点的出度减入度等于
+$\mathbf1_{\{\text{顶点}=00\}}-\mathbf1_{\{\text{顶点}=(p,q)\}}$。令 $X=x_{01}$、$Y=y_{01}$，由 (360.3) 和三个独立顶点流量方程依次得到
+$$
+\begin{aligned}
+ x_{11}&=X-u,&x_{10}&=X+w,&y_{11}&=Y+u-v,\\
+ y_{10}&=Y-v+pq,&x_{00}&=X+w-u+p,&
+ y_{00}&=Y+u+q(1-p).
+\end{aligned}
+$$
+这正是 (360.2)，所以八数非负是必要条件。再求和得到
+$$
+ a_c=4X+2w-2u+p,\qquad b_c=4Y+2u-2v+q,
+$$
+即 (360.1)；整数性和弱连通性也由同一条实际路径立即得到。
+
+反设 (360.1)–(360.2) 成立。把八个数作为四顶点有向多重图的边重数。直接代入可验证四个顶点的出入差正是起点 $00$ 与终点 $(p,q)$ 的差，并且边总数为 $a_c+b_c\ge1$。若终点不同于起点，临时添一条从 $(p,q)$ 指向 $00$ 的辅助边；若两者相同则不添。加入后，有效支撑上的每个顶点入度等于出度，且弱连通。
+
+从 $00$ 沿未使用出边行走。平衡性保证一旦回到已经出发的顶点之外，不会在别的顶点耗尽而停下；有限性保证所得闭迹有限。删去这条闭迹后，剩余图仍在每个顶点平衡。若仍有未用边，弱连通性保证已得闭迹的某个顶点与剩余支撑相接，从该接点再取闭迹并插入。有限次插入覆盖全部边，得到使用每条边的 Euler 闭迹。若曾加入辅助边，从辅助边之后切开并删去该边，便得到从 $00$ 到 $(p,q)$ 的 Euler 路。
+
+将这条路的边标签读成正叶词，得到组成 $(a_c,b_c)$，而表 359.2 保证累计参数正是 $(u,v,w)$，故窗口为 $\Omega$。对该词取任意有序二叉括号化，均得到实际原树；相反，任一满足条件的原树都给出一条这样的路径。因此全部来源没有遗漏，连通条件也不能删去。 $\square$
+
+**推论 360.3（组成、叶序与括号的精确回接）。** 在定理 360.2 的条件下，固定组成的该历史纤维的全部叶词，恰为具有 (360.2) 八种边次数、从 $00$ 到 $(p,q)$ 的全部有向 Euler 路的字母序列；平行边的人工编号被忽略。全部实际原树恰为这些非空叶词的全部有序二叉括号化。
+
+**证明。** 定理 360.2 的正向部分把任一来源送到一条满足次数的路径，反向部分从每条 Euler 路构造正词；状态路径决定字母次序。观察对叶序乘法结合，而原树语法保留每一种左右括号，所以恰得到所述来源集合。 $\square$
+
+**推论 360.4（单位历史纤维）。** 观察单位
+$$
+\Omega=(1,1,1)=L(0,0,0)R_{00}
+$$
+的组成集合恰为
+$$
+\{(4r,4s):r,s\ge1\}.
+\tag{360.4}
+$$
+对每个 $r,s\ge1$，正词
+$$
+\omega_{r,s}=a^{2r-1}b^{2s}ab^{2s-1}a^{2r}b
+\tag{360.5}
+$$
+给出一个单位来源，且其组成是 $(4r,4s)$。
+
+**证明。** 在 (360.2) 中代入 $u=v=w=p=q=0$，得到四条 $a$ 边的次数全为 $X=a_c/4$，四条 $b$ 边的次数全为 $Y=b_c/4$。当 $X,Y>0$ 时支撑是完整四边形，连通条件成立；当恰有一个为零时，支撑分成两个互不相连的二边回路；二者均不满足定理 360.2，且 $X=Y=0$ 是空来源。因此组成恰为 (360.4)。
+
+为验证 (360.5)，置 $Z_0=L(0,0,1)=g^2$、$Y_0=L(0,1,0)=h^2$。由表 359.2 直接得到
+$$
+ gY_0g^{-1}=Y_0^{-1},\qquad hZ_0h^{-1}=Z_0^{-1},\qquad Z_0Y_0=Y_0Z_0.
+$$
+于是 (360.5) 的前半段和后半段分别为
+$$
+\begin{aligned}
+ g^{2r-1}h^{2s}g
+ &=Z_0^{r-1}(gY_0^sg^{-1})g^2=Z_0^rY_0^{-s},\\
+ h^{2s-1}g^{2r}h
+ &=Y_0^{s-1}(hZ_0^rh^{-1})h^2=Y_0^sZ_0^{-r}.
+\end{aligned}
+$$
+由 $Z_0,Y_0$ 交换，两段乘积为单位；字母计数给出 $(4r,4s)$。 $\square$
+
+**推论 360.5（每个固定历史纤维的组成差集）。** 对任意一个非空实际历史纤维 $\mathcal F_\Omega$，其组成差集恰为
+$$
+\{c(t')-c(t):t,t'\in\mathcal F_\Omega\}=4\mathbb Z^2.
+\tag{360.6}
+$$
+
+**证明。** 由定理 357.3，同一 $W_3$ 的两个来源具有相同的组成模四，所以左侧包含于 $4\mathbb Z^2$。另一方面，取纤维中的任一来源 $t$，把 (360.5) 的树按叶序接在其右侧；观察乘以单位，仍在同一历史纤维，而组成增加任意 $(4r,4s)$，其中 $r,s\ge1$。给定任意 $(4m,4n)$，选取正整数 $r_1,r_2,s_1,s_2$ 使 $r_1-r_2=m$、$s_1-s_2=n$，则两次右接所得来源的组成差为该向量。故反向包含也成立。这个结论是每个固定纤维内部的差集，不是跨不同历史纤维取并。 $\square$
+
+**命题 360.6（联合来源的尖锐边界）。** 三个分量分别可实现、并且满足旧的有限字符与等级条件，并不足以保证共同来源。具体地，正词 $\omega=aababbab$ 给出
+$$
+W_3(\omega)=(1,1,1),
+$$
+而正词 $v=ababaa$ 给出
+$$
+W_3(v)=(S^{-2},-1,-S^2).
+$$
+因此候选三元组 $(1,1,-S^2)$ 的三个坐标各有实际正来源，前两个还由同一个来源共同实现，但候选三元组本身不在实际像中。
+
+**证明。** 两个具体乘积由表 359.2 或直接使用 $A^2=1,B^2=-1,AB+BA=1$ 得到。若 $(1,1,-S^2)$ 属于实际像，推论 359.4 先由前两个坐标的奇偶得到 $p=q=0$，由前两个坐标的指数和符号分别得到 $u=v=0$ 且 $w$ 为偶数，于是第三坐标只能是 $S^{4m}$，不可能为 $-S^2$。等价地，(359.1) 的唯一性直接排除该三元组。
+
+更精确地，完整截面满足
+$$
+(1,1,z)\text{ 属于实际像}
+\quad\Longleftrightarrow\quad
+z=S^{4m}\quad(m\in\mathbb Z).
+\tag{360.7}
+$$
+其中 $m>0$ 由 $a^{4m}$ 实现，$m=0$ 由 $\omega$ 实现，$m<0$ 由正词 $(bbabaab)^{-4m}$ 实现；这里指数均表示正整数次重复。 $\square$
+
+**命题 360.7（流量条件不能替代支撑连通）。** 在单位历史纤维中，组成 $(4,0)$ 使 (360.1)–(360.2) 给出八个非负整数且所有流量方程成立，但其正重数支撑是两个不相接的二边回路，因而不存在该组成的实际来源。
+
+**证明。** 此时 $X=1,Y=0$，四条 $a$ 边均有重数一，四条 $b$ 边均为零。$00\leftrightarrow10$ 与 $01\leftrightarrow11$ 是两个不同连通分量；定理 360.2 的连通条件失败。 $\square$
+
+数学范围与文献：Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1、2.3，提供这里沿用的 Clifford 平方约定、极化关系和保持乘法次序的等级对合；Gardam，*A counterexample to the unit conjecture for group rings*，arXiv:2102.11818v1，§§2、3.1，提供命题 359.5 所指的 Hantzsche–Wendt/Promislow 群结构。§§355–357 的六周期、等级、模五字符、模四恢复和完整历史同纤维关系作为既有前置使用。本文新增的是这些既有关系在实际有序正原树上的三窗口联合正规形、正来源构造、单纤维八边消元与 Euler 充要判据；不把成熟群结构或群环单位结论冒称为本卷原创，也不把不同括号的原树识别为同一来源。
+
+## 追加锚（本行以下为增补区）
+
+## 361. 任意 Fibonacci 指标删除与实际对数截止下的共同 Robin 包络
+
+以下为普通数学的定义与证明，未作内核形式化。完整结论是本卷实际 Fibonacci 关系与所引经典供给的仓内综合推导，不主张文献优先权。
+
+**定义 361.1（选定指标、实际整数与比值）。** 沿用实际递推 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi$。对整数 $m\ge1$ 和集合 $S\subseteq\{1,\ldots,m\}$，定义
+
+$$
+\begin{aligned}
+K&=|S|,& H_m&=\sum_{j=1}^m\frac1j,\\
+D(S)&=\{d\in\mathbb N_{>0}:\exists n\in S,\ d\mid n\},&
+M(S)&=\operatorname{lcm}\{F_n:n\in S\},\qquad b(S)=\log M(S).
+\end{aligned}
+\tag{361.1}
+$$
+
+空集的最小公倍数取一。所有对数均为自然对数；对实数 $a$ 和 $t>0$，实幂的约定是 $t^a=\exp(a\log t)$。对 $M>5040$，定义归一化 Robin 比值
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},\qquad
+\sigma(M)=\sum_{d\mid M}d,
+\tag{361.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。此定义只在所示整数尾部使用。
+
+**定理 361.2（任意子集的共同最终 Robin 包络）。** 固定实参数
+
+$$
+\frac56<\beta\le1,\qquad
+\max\left(\frac12,\frac1{2\beta}\right)<\eta<\frac35,
+\qquad c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad C_{\beta,\eta}=(2\beta\eta)^{-c(\eta)}.
+\tag{361.3}
+$$
+
+则 $0<C_{\beta,\eta}<1$，而且精确量词为
+
+$$
+\begin{gathered}
+\forall\varepsilon\in\mathbb R_{>0}\ \exists m_0\in\mathbb N_{\ge2}\\
+\ \forall m\in\mathbb N_{\ge m_0}\ \forall S\subseteq\{1,\ldots,m\},\\
+|S|\ge m^\beta\quad\Longrightarrow\quad
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le C_{\beta,\eta}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.4}
+$$
+
+$m_0$ 仅依赖先已固定的 $\beta,\eta,\varepsilon$ 及证明中的固定解析供给，不依赖 $m$ 或 $S$。特别地，对每个固定 $\beta\in(5/6,1]$，可先选一个满足（361.3）的 $\eta$，再取共同整数阈值，使所有 $|S|\ge m^\beta$ 的子集同时满足 $\mathcal R(M(S))<1$。式（361.4）是带任意正误差的上包络，不断言最终有 $\mathcal R(M(S))\le C_{\beta,\eta}$。
+
+同一定理还给出以下两种尾部结论。若任意集合族 $S_m\subseteq\{1,\ldots,m\}$ 在某个尾部有 $K_m=|S_m|>0$，并且
+
+$$
+\frac{\log K_m}{\log m}\longrightarrow1,
+\tag{361.5}
+$$
+
+则 $M(S_m)>5040$ 最终成立，且
+
+$$
+\limsup_{m\to\infty}\mathcal R(M(S_m))
+\le\left(\frac{10}{11}\right)^{5/18}<1.
+\tag{361.6}
+$$
+
+更确切地，给定任意固定函数 $g:\{2,3,\ldots\}\to[0,\infty)$，满足 $g(m)\to0$，则对每个 $\varepsilon>0$，存在整数 $m_0(g,\varepsilon)\ge2$，使所有 $m\ge m_0(g,\varepsilon)$ 及所有 $S\subseteq\{1,\ldots,m\}$ 同时满足
+
+$$
+\begin{gathered}
+|S|\ge m^{1-g(m)}\quad\Longrightarrow\\
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le\left(\frac{10}{11}\right)^{5/18}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.7}
+$$
+
+允许（361.5）的族在有限初段任意取值；（361.6）的对数与比值只在最终合法的尾部使用。式（361.7）的共同阈值依赖给定的函数 $g$，不宣称存在一个阈值同时适用于所有仅有（361.5）而无收敛速率的族。参数范围 $\beta>5/6$ 是下面 KR 路线的充分条件，不宣称它锐利、必要或已涵盖等号 $\beta=5/6$。
+
+**证明。** *实际首现秩与任意子集的乘积。* 对每个整数 $a\ge2$，矩阵
+
+$$
+B=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+B^n=\begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}\quad(n\ge1)
+$$
+
+在 $\mathbb Z/a\mathbb Z$ 上可逆，因为其行列式是 $-1$。有限群中某个正幂为单位矩阵，所以存在正指标 $n$ 满足 $a\mid F_n$。令 $z(a)$ 为最小这样的正指标。§358 证明内由加法公式和指标的 Euclid 递降核对的经典强整除律是
+
+$$
+\gcd(F_r,F_s)=F_{\gcd(r,s)}\quad(r,s\ge1).
+$$
+
+若 $a\mid F_n$，则 $a\mid F_{\gcd(n,z(a))}$，而这个正指标不超过 $z(a)$，最小性迫使 $\gcd(n,z(a))=z(a)$。反向使用 $z(a)\mid n\Rightarrow F_{z(a)}\mid F_n$。因此
+
+$$
+a\mid F_n\quad\Longleftrightarrow\quad z(a)\mid n.
+\tag{361.8}
+$$
+
+对素数 $p$，记 $r_j=z(p^j)$（$j\ge1$）；由（361.8）有 $r_j\mid r_{j+1}$。在正有理数中定义 $\Psi_d=\prod_{e\mid d}F_e^{\mu(d/e)}$，其中 $\mu$ 为 Möbius 函数。对固定 $p,d$，
+
+$$
+\begin{aligned}
+v_p(F_e)&=\sum_{j\ge1}\mathbf1_{r_j\mid e},\\
+v_p(\Psi_d)
+&=\sum_{e\mid d}\mu(d/e)\sum_{j\ge1}\mathbf1_{r_j\mid e}
+=\sum_{\substack{j\ge1\\r_j\mid d}}\quad
+\sum_{r_j\mid e\mid d}\mu(d/e)
+=\sum_{j\ge1}\mathbf1_{r_j=d}.
+\end{aligned}
+\tag{361.9}
+$$
+
+凡参与交换的 $j$ 都有 $p^j\mid F_d$，故交换的非零项有限。内层 Möbius 和等于 $\sum_{h\mid d/r_j}\mu(h)$。每个有理数赋值非负，故 $\Psi_d$ 是正整数，$\log\Psi_d\ge0$。重复秩在（361.9）中保留重数；例如 $z(2)=3$、$z(4)=z(8)=6$，给 $v_2(\Psi_6)=2$ 和 $\Psi_6=4$。
+
+对同一个选定集合 $S$，正整数 lcm 的赋值满足 $v_p(M(S))=\max(\{v_p(F_n):n\in S\}\cup\{0\})$。$r_j\in D(S)$ 当且仅当某个 $n\in S$ 满足 $p^j\mid F_n$。这些 $j$ 恰为初段 $1,\ldots,v_p(M(S))$。于是
+
+$$
+\sum_{d\in D(S)}v_p(\Psi_d)
+=\#\{j\ge1:r_j\in D(S)\}=v_p(M(S)),
+\qquad
+M(S)=\prod_{d\in D(S)}\Psi_d.
+\tag{361.10}
+$$
+
+最后一步用正整数的唯一素分解，空集时两侧均为一。这里没有假设原子两两互素；例如 $\Psi_3=2$ 与 $\Psi_6=4$ 已否定这种假设。经典强整除序列的 lcm 增量重构参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；正 Fibonacci 项满足该文非零 gcd-domain 条件。上面用实际素幂秩写出此消费者所需的任意子集版本，以免把不同首次秩的集合大小误当素幂重数。
+
+*Binet 误差与内部有限增长界。* 令 $q=\Phi^{-2}\in(0,1)$。Binet 公式给
+
+$$
+\log F_e=eL-\tfrac12\log5+\epsilon_e,
+\qquad \epsilon_e=\log(1-(-q)^e),
+\qquad (1-q)^2=q.
+$$
+
+由于 $|\log(1-t)|\le |t|/(1-|t|)$（$|t|<1$），
+
+$$
+\sum_{e\ge1}|\epsilon_e|
+\le\sum_{e\ge1}\frac{q^e}{1-q^e}
+\le\frac1{1-q}\sum_{e\ge1}q^e
+=\frac{q}{(1-q)^2}=1.
+$$
+
+$n>1$ 时 Möbius 反演消去常数项，并用 $\sum_{e\mid n}e\mu(n/e)=\varphi(n)$，得到 $|\log\Psi_n-L\varphi(n)|\le1$。$n=1$ 时 $\Psi_1=1$，误差为 $L<1$，同样成立。原子的整性、正性、Fibonacci 因式分解和 $\log\Psi_n=L\varphi(n)+O(1)$ 的文献背景为 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（4）及 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；该文的 $\Phi_n$ 与这里的 $\Psi_n$ 由因式分解及 Möbius 反演对应。显示误差一由上述计算承担，不归因于其 $O(1)$ 陈述。
+
+由 $S\subseteq D(S)$、（361.10）和非负原子对数，
+
+$$
+b(S)\ge\sum_{n\in S}\log\Psi_n
+\ge L\sum_{n\in S}\varphi(n)-K.
+\tag{361.11}
+$$
+
+为给这一式提供不依赖子集的显式有限下界，先展开真实的 reciprocal-totient 恒等式：
+
+$$
+\frac n{\varphi(n)}
+=\prod_{p\mid n}\left(1+\frac1{p-1}\right)
+=\sum_{d\mid n}\frac{\mu(d)^2}{\varphi(d)}.
+\tag{361.12}
+$$
+
+对每个 $d\ge1$，
+
+$$
+\frac{\varphi(d)^2}{d}
+=\prod_{p^a\parallel d}p^{a-2}(p-1)^2\ge\frac12.
+$$
+
+每个奇素数因子至少为一；唯一小于一的可能因子是 $p=2,a=1$，等于 $1/2$。故 $1/(d\varphi(d))\le\sqrt2\,d^{-3/2}$。把 $d=1$ 项精确取出，再作积分比较，得到收敛及常数
+
+$$
+\sum_{d\ge1}\frac1{d\varphi(d)}
+\le1+\sqrt2\sum_{d\ge2}d^{-3/2}
+\le1+\sqrt2\int_1^\infty t^{-3/2}\,dt
+=1+2\sqrt2<4.
+$$
+
+在（361.12）中除以 $n$，交换有限的约数和，因而
+
+$$
+\sum_{n\le m}\frac1{\varphi(n)}
+=\sum_{d\le m}\frac{\mu(d)^2}{d\varphi(d)}H_{\lfloor m/d\rfloor}
+\le4H_m.
+$$
+
+Cauchy–Schwarz 不等式给
+
+$$
+K^2\le
+\left(\sum_{n\in S}\varphi(n)\right)
+\left(\sum_{n\in S}\frac1{\varphi(n)}\right)
+\le4H_m\sum_{n\in S}\varphi(n).
+$$
+
+合并（361.11），并用递推归纳所得 $F_n\le\Phi^{n-1}$，证明内部有限界
+
+$$
+\frac{LK^2}{4H_m}-K\le b(S)
+\le L\sum_{n\in S}(n-1)
+\le LK(m-1)\le m^2.
+\tag{361.13}
+$$
+
+这包括 $S=\varnothing$ 或 $S\subseteq\{1,2\}$ 时的 $M(S)=1$，这些情形没有双重对数断言。任意 Lucas 子序列的对数 lcm 增长已有 Shigeki Akiyama、Florian Luca，*On the least common multiple of Lucas subsequences*，Acta Arithmetica **161.4** (2013)，327–349，[doi:10.4064/aa161-4-2](https://doi.org/10.4064/aa161-4-2)，§2，式（14）–（16），印刷页 330–331 的供给，原文明确不要求指标序列有任何算术条件。这里 $A=B=u_1=1$、$\gcd(A^2,B)=1$，其 $w_n=F_n$。增长与重构在本证明中均只充当实际 Robin 消费者的中间步骤。
+
+现在固定（361.3）的 $\beta,\eta$。由 $H_m\le1+\log m$，先有一个只依赖 $\beta$ 的阈值，保证 $m^\beta\ge8H_m/L$。凡 $K\ge m^\beta$ 且越过该阈值，（361.13）的 $-K$ 项便至多吸收一半二次项，所以
+
+$$
+\begin{gathered}
+b(S)\ge\frac{LK^2}{8H_m}\ge\frac{Lm^{2\beta}}{8H_m},\\
+\log b(S)\ge\lambda_m:=2\beta\log m-\log H_m+\log(L/8),
+\qquad b(S)\le m^2,\\
+\frac{\lambda_m}{\log m}\longrightarrow2\beta.
+\end{gathered}
+\tag{361.14}
+$$
+
+因此 $M(S)>5040$ 最终对这些子集统一成立；也得到 $\log\log M(S)\ge2\beta\log m-\log H_m+O(1)$，其中显示常数 $\log(L/8)$ 独立于 $S$。这里只是下界，没有断言每个 $K\ge m^\beta$ 的子集都有精确增长指数 $2\beta$。
+
+*固定大阶素数集与同一实际整数的缺失区间。* 在任何 $m,S$ 之前选定
+
+$$
+\frac1\eta<\alpha<2\beta,\qquad 0<\rho<c(\eta),
+\qquad
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix}.
+\tag{361.15}
+$$
+
+$T$ 是固定整矩阵，$\det T=1$、$\operatorname{tr}T=18>2$，特征值为 $\Phi^6,\Phi^{-6}$，且模二为单位矩阵，满足固定双曲 cat map 的条件。对任意素数 $p$，在 $n=z(p)$ 处有 $B^n=cI\pmod p$，因为 $F_n=0\pmod p$ 且 $F_{n+1}=F_{n-1}\pmod p$。行列式给 $c^2=(-1)^n$，所以 $B^{4n}=I$，$T^{2n}=B^{12n}=I$，从而
+
+$$
+\operatorname{ord}_p(T)\mid2z(p).
+\tag{361.16}
+$$
+
+这里 $\operatorname{ord}_p(T)$ 是 $\mathrm{SL}_2(\mathbb F_p)$ 中的阶；这个论证同样包括 $p=2,5$。
+
+Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，Communications in Mathematical Physics **222** (2001)，201–227，[作者 PDF，Theorem 14，印刷页 20，式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)，对固定双曲 cat map $A$、$1/2<\eta<3/5$ 给出
+
+$$
+\#\{p\le y:\operatorname{ord}_p(A)>y^\eta\}
+\ge c(\eta)\pi(y)+o(\pi(y)).
+$$
+
+原文阈值是 $y^\eta$。定义一个不随截止或子集改变的素数集合
+
+$$
+\mathcal P_\eta=\{p\text{ 为素数}:\operatorname{ord}_p(T)>p^\eta\},
+\qquad N_\eta(y)=\#\{p\in\mathcal P_\eta:p\le y\}.
+$$
+
+$p\le y$ 时 $p^\eta\le y^\eta$，故 KR 原文计数的集合包含于 $\mathcal P_\eta\cap[1,y]$。固定 $\rho<c(\eta)$ 后，其渐近余项给一个共同阈值，保证 $N_\eta(y)\ge\rho\pi(y)$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），印刷页 9](https://arxiv.org/pdf/1002.0442v1)，给出
+
+$$
+\pi(y)\ge\frac y{\log y}\left(1+\frac1{\log y}\right)\quad(y\ge599),
+\qquad
+\pi(y)\le\frac y{\log y}\left(1+\frac{1.2762}{\log y}\right)\quad(y>1).
+$$
+
+所以可先固定 $X_{\eta,\rho}\ge599$，使所有实数 $y\ge X_{\eta,\rho}$ 都有
+
+$$
+N_\eta(y)\ge\rho\frac y{\log y}.
+\tag{361.17}
+$$
+
+这里没有使用 RH，也没有把存在阈值赋成已知数值。
+
+对充分大 $m$，令 $u=m^\alpha$，并对每个满足 $K\ge m^\beta$ 的实际子集取
+
+$$
+x=b=b(S)=\log M(S).
+\tag{361.18}
+$$
+
+由（361.14），先取共同阈值保证 $\lambda_m>\alpha\log m$、$e^{\lambda_m}>2973$、$u\ge X_{\eta,\rho}$，从而对所有这些 $S$ 同时有 $u<b$、$b\ge2973$。再令共同阈值满足 $m^{\alpha\eta-1}>2$，这是因为 $\alpha\eta>1$。于是每个
+
+$$
+p\in\mathcal A_{m,S}:=\mathcal P_\eta\cap(u,b]
+$$
+
+都由（361.16）满足
+
+$$
+z(p)\ge\tfrac12\operatorname{ord}_p(T)
+>\tfrac12p^\eta>\tfrac12m^{\alpha\eta}>m.
+\tag{361.19}
+$$
+
+（361.8）因而排除它整除任一 $n\in S$ 的 $F_n$，即 $p\nmid M(S)$。这是整个移动区间上的共同秩阈值，而不是为每个素数另取非统一阈值。区间上端正是同一子集的 $b(S)$。
+
+对这个固定计数函数在完整区间 $(u,b]$ 作 Abel 部分求和，保留下端项：
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_{m,S}}\frac1p
+&=\frac{N_\eta(b)}b-\frac{N_\eta(u)}u
++\int_u^b\frac{N_\eta(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}
++\rho\int_u^b\frac{dy}{y\log y}\\
+&=\rho\log\frac{\log b}{\alpha\log m}
+-\frac2{\alpha\log m}.
+\end{aligned}
+\tag{361.20}
+$$
+
+其中舍去非负上端项，使用 $N_\eta(u)\le\pi(u)$ 及 Dusart 上界在 $u\ge599$ 时给出的 $\pi(u)/u\le2/\log u$。（361.17）在每个积分点均成立，不仅在 $b$ 成立。
+
+*实际 Euler 支撑及精确分母抵消。* 对素数 $p$ 令 $w(p)=-\log(1-1/p)$。由 $1/p\le w(p)\le1/(p-1)$，对任意正整数 $M$、实数 $x>1$ 及素数集合 $\mathcal A\subseteq\{p\le x:p\nmid M\}$，低素数支撑比较与全部实际高素因子的费用为
+
+$$
+\begin{aligned}
+\sum_{p\mid M}w(p)
+&\le\sum_{p\le x}w(p)-\sum_{p\in\mathcal A}\frac1p
++\frac{\log M}{(x-1)\log x},\\
+w(p)&\le\frac1{p-1}\le\frac{\log p}{(x-1)\log x}\quad(p>x),
+\qquad\sum_{p\mid M}\log p\le\log M.
+\end{aligned}
+\tag{361.21}
+$$
+
+第二行说明第一行支付了每个 $p>x$ 的实际费用，不以 $x$ 为最大素因子界。有限几何级数的 Euler 恒等式则给
+
+$$
+\log\frac{\sigma(M)}M
+=\sum_{p\mid M}w(p)+E(M),
+\qquad E(M)=\sum_{p\mid M}\log(1-p^{-v_p(M)-1})\le0.
+$$
+
+Dusart 同文 [Theorem 6.12，印刷页 11](https://arxiv.org/pdf/1002.0442v1)，给出 $x\ge2973$ 时
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right).
+$$
+
+取对数并用 $\log(1+t)\le t$，再代入（361.21），对 $M>5040$、$b=\log M$ 有
+
+$$
+\log\mathcal R(M)
+\le-\sum_{p\in\mathcal A}\frac1p+\frac{0.2}{(\log x)^2}
++\frac b{(x-1)\log x}
++\log\log x-\log\log b+E(M).
+$$
+
+现在取（361.18）的 $x=b(S)$ 及（361.19）的 $\mathcal A=\mathcal A_{m,S}$，得到
+
+$$
+\log\mathcal R(M(S))
+\le-\sum_{p\in\mathcal A_{m,S}}\frac1p
++\frac{0.2}{(\log b)^2}
++\frac b{(b-1)\log b}+E(M(S)).
+\tag{361.22}
+$$
+
+分母项 $\log\log x-\log\log b$ 在 $x=b$ 处恒等于零；没有以渐近等价偷换 $\log\log M(S)$。实际高素因子仍全部计费，$E(M(S))$ 的非正性即已足够，不要求它趋零。
+
+*对全部子集统一取误差和参数极限。* 因 $\log b\ge\lambda_m>0$、$b\ge2973$，有 $b/(b-1)\le2$。把（361.20）代入（361.22），便对所有满足基数界的子集同时得到
+
+$$
+\log\mathcal R(M(S))
+\le-\rho\log\frac{\lambda_m}{\alpha\log m}
++\frac2{\alpha\log m}+\frac{0.2}{\lambda_m^2}+\frac2{\lambda_m}.
+\tag{361.23}
+$$
+
+右侧完全不依赖 $S$，且随 $m\to\infty$ 收敛至 $-\rho\log(2\beta/\alpha)<0$。因此对任意先固定的 $\delta>0$，存在共同阈值，使全部这些 $S$ 满足
+
+$$
+\log\mathcal R(M(S))
+\le-\rho\log(2\beta/\alpha)+\delta.
+\tag{361.24}
+$$
+
+这也说明统一的上极限不等式；其根据是（361.23）的共同误差，而非逐个子集的点态极限。
+
+最后给定 $\varepsilon>0$。先在（361.15）的开区间内选定 $\alpha,\rho$，使
+
+$$
+C':=(2\beta/\alpha)^{-\rho}<C_{\beta,\eta}+\varepsilon/2;
+$$
+
+可这样选择，因为 $\alpha\downarrow1/\eta$、$\rho\uparrow c(\eta)$ 时 $C'\to C_{\beta,\eta}$。然后在任何 $m,S$ 之前固定
+
+$$
+\delta=\log\frac{C_{\beta,\eta}+\varepsilon}{C'}>0.
+$$
+
+取（361.24）及此前所有条件所需阈值的最大值，指数化便给（361.4）。$c(\eta)>0$、$2\beta\eta>1$ 证明 $C_{\beta,\eta}<1$；取 $\varepsilon=(1-C_{\beta,\eta})/2$，即给共同严格 Robin 安全阈值。存在 $\eta$ 的条件正是 $1/(2\beta)<3/5$，即本路线所用的 $\beta>5/6$；这只论证充分性。
+
+对于（361.5），固定 $\eta=11/20$，则 $c(\eta)=5/18$。对每个先固定的 $\beta\in(10/11,1)$，（361.5）保证最终有 $K_m\ge m^\beta$，而此 $\beta,\eta$ 满足（361.3）。由（361.4）对所有正误差成立，得到
+
+$$
+\limsup_{m\to\infty}\mathcal R(M(S_m))
+\le\left(\frac{11\beta}{10}\right)^{-5/18}.
+$$
+
+再令 $\beta\uparrow1$，便得（361.6）。对固定 $g$ 和 $\varepsilon>0$，先取 $\beta\in(10/11,1)$，使右侧小于 $(10/11)^{5/18}+\varepsilon/2$，再使用（361.4）的误差 $\varepsilon/2$。$g(m)\le1-\beta$ 最终在一个仅依赖 $g,\beta$ 的尾部成立，故 $m^{1-g(m)}\ge m^\beta$，给出（361.7）的共同阈值。
+
+不存在所有速率未定的族共享的起点：给定任意整数 $N\ge2$，令 $S_m=\{1\}$（$m\le N$），而 $S_m=\{1,\ldots,m\}$（$m>N$）。这个族满足（361.5），但直到 $N$ 都有 $M(S_m)=1$。因此允许任意有限初段与族依赖的尾部阈值是必要的量词区别。
+
+本定理的结论仅关于所定义的实际子集 lcm 族；它不给一般整数的 Robin 不等式、RH、有符号 Robin 尾项、精确比值极限或数值认证区间，也不提供 KR 存在阈值的数值。$\square$
+
+## 追加锚（本行以下为增补区）
