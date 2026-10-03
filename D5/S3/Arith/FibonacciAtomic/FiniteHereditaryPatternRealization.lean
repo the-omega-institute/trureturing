@@ -18,7 +18,8 @@ noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.FiniteHereditaryPatternRealization
 
 open GenealogicalFiberTransport (Source substitution composition Fiber fiberMap)
-open ActualImageAddressCertificate (Address Output out ActualImage)
+open ActualImageAddressCertificate (Output out ActualImage)
+open D5.S0.History.FiniteDescriptionSelfCode (FiniteDescription)
 open scoped BigOperators
 
 /-- The three blocks in a column. -/
@@ -34,12 +35,12 @@ def preimage : Block → Source
 def block (b : Block) : Source := substitution^[3] (preimage b)
 
 /-- Information leaves are shared leaves bearing both labels among the indices. -/
-def Delta {ι : Type*} (P : ι → Source) (S : Finset ι) : Set Address :=
+def Delta {ι : Type*} (P : ι → Source) (S : Finset ι) : Set FiniteDescription :=
   {w | (∀ i ∈ S, out (P i) w = .leafAlpha ∨ out (P i) w = .leafBeta) ∧
     (∃ i ∈ S, out (P i) w = .leafAlpha) ∧ ∃ i ∈ S, out (P i) w = .leafBeta}
 
 /-- Residual information leaves shared by U and V. -/
-def D : Set Address := Delta (fun b : Bool => if b then block .u else block .v) Finset.univ
+def D : Set FiniteDescription := Delta (fun b : Bool => if b then block .u else block .v) Finset.univ
 
 /-- A column contributes precisely when it contains U and V and contains no A. -/
 def Mixed {ι : Type*} (X : ι → Block) (S : Finset ι) : Prop :=
@@ -51,12 +52,12 @@ def B_T : (n : ℕ) → (Fin (n + 1) → Source) → Source
   | n + 1, X => .mul (X 0) (B_T n (fun j => X j.succ))
 
 /-- Root-first hole addresses in the right-comb context. -/
-def hole : (n : ℕ) → Fin (n + 1) → Address
+def hole : (n : ℕ) → Fin (n + 1) → FiniteDescription
   | 0, _ => []
   | n + 1, j => Fin.cases [false] (fun k => true :: hole n k) j
 
 /-- None denotes an internal context node; some records the unique hole and suffix. -/
-def locate : (n : ℕ) → Address → Option (Fin (n + 1) × Address)
+def locate : (n : ℕ) → FiniteDescription → Option (Fin (n + 1) × FiniteDescription)
   | 0, w => some (0, w)
   | n + 1, [] => none
   | n + 1, false :: v => some (0, v)
@@ -105,20 +106,25 @@ set_option maxHeartbeats 2000000 in -- Full address decomposition and finite fac
 /-- Right-comb block reports and the equal-composition actual realization of every
 finite hereditary family containing the singleton faces. -/
 theorem result :
-    (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : Address,
+    (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : FiniteDescription,
       out (B_T n X) w = match locate n w with
         | none => .branch
         | some p => out (X p.1) p.2) ∧
-    (∀ n : ℕ, ∀ w : Address, locate n w = none ↔
-      ∃ j : Fin (n + 1), ∃ r : Address, r ≠ [] ∧ hole n j = w ++ r) ∧
-    (∀ m n : ℕ, ∀ X : Fin m → Fin (n + 1) → Block, ∀ S : Finset (Fin m), ∀ w : Address,
+    (∀ n : ℕ, ∀ w : FiniteDescription, locate n w = none ↔
+      ∃ j : Fin (n + 1), ∃ r : FiniteDescription, r ≠ [] ∧ hole n j = w ++ r) ∧
+    (∀ m n : ℕ, ∀ X : Fin m → Fin (n + 1) → Block, ∀ S : Finset (Fin m), ∀ w : FiniteDescription,
       w ∈ Delta (fun i => B_T n (fun j => block (X i j))) S ↔
         ∃ j v, w = hole n j ++ v ∧ Mixed (fun i => X i j) S ∧ v ∈ D) ∧
-    (∀ n : ℕ, ∀ j k : Fin (n + 1), ∀ v u : Address,
+    (∀ n : ℕ, ∀ j k : Fin (n + 1), ∀ v u : FiniteDescription,
       hole n j ++ v = hole n k ++ u → j = k ∧ v = u) ∧
     (∀ m : ℕ, 2 ≤ m → ∀ K : Finset (Finset (Fin m)), Hereditary K →
-      (∀ i : Fin m, {i} ∈ K) → ∃ T N : ℕ, ∃ Q P : Fin m → Source,
-        1 ≤ T ∧ Function.Injective Q ∧ Function.Injective P ∧
+      (∀ i : Fin m, {i} ∈ K) →
+        let T := Nat.card (Column K)
+        let N := M K
+        1 ≤ T ∧ ∀ e : Fin (T - 1 + 1) ≃ Column K,
+        let Q : Fin m → Source := fun i => B_T (T - 1) (fun j => preimage (entry i (e j)))
+        let P : Fin m → Source := fun i => B_T (T - 1) (fun j => block (entry i (e j)))
+        Function.Injective Q ∧ Function.Injective P ∧
         (∀ i, substitution^[3] (Q i) = P i ∧ P i ∈ ActualImage 3 ∧
           composition (Q i) = (T + N, N) ∧
           composition (P i) = (T + 3 * N, 2 * T + 5 * N) ∧
@@ -139,16 +145,16 @@ theorem result :
     · simp [faceEntry, hi]
 
   have address_facts :
-      (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : Address,
+      (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : FiniteDescription,
         out (B_T n X) w = match locate n w with
           | none => .branch
           | some p => out (X p.1) p.2) ∧
-      (∀ n : ℕ, ∀ j : Fin (n + 1), ∀ v : Address,
+      (∀ n : ℕ, ∀ j : Fin (n + 1), ∀ v : FiniteDescription,
         locate n (hole n j ++ v) = some (j, v)) ∧
-      (∀ n : ℕ, ∀ w : Address, ∀ j : Fin (n + 1), ∀ v : Address,
+      (∀ n : ℕ, ∀ w : FiniteDescription, ∀ j : Fin (n + 1), ∀ v : FiniteDescription,
         locate n w = some (j, v) ↔ w = hole n j ++ v) := by
     classical
-    have read (n : ℕ) (X : Fin (n + 1) → Source) (w : Address) :
+    have read (n : ℕ) (X : Fin (n + 1) → Source) (w : FiniteDescription) :
         out (B_T n X) w = match locate n w with
           | none => .branch
           | some p => out (X p.1) p.2 := by
@@ -163,7 +169,7 @@ theorem result :
           | true =>
             have h := hn (fun j => X j.succ) w
             cases hl : locate n w <;> simpa [B_T, locate, out, hl] using h
-    have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : Address) :
+    have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : FiniteDescription) :
         locate n (hole n j ++ v) = some (j, v) := by
       induction n with
       | zero => have hj : j = 0 := Fin.ext (by omega); subst j; rfl
@@ -171,9 +177,9 @@ theorem result :
         refine Fin.cases ?_ (fun k => ?_) j
         · rfl
         · simpa [hole, locate] using congrArg
-            (fun p : Option (Fin (n + 1) × Address) => p.map (fun q => (q.1.succ, q.2)))
+            (fun p : Option (Fin (n + 1) × FiniteDescription) => p.map (fun q => (q.1.succ, q.2)))
             (hn k)
-    have locate_eq (n : ℕ) (w : Address) (j : Fin (n + 1)) (v : Address) :
+    have locate_eq (n : ℕ) (w : FiniteDescription) (j : Fin (n + 1)) (v : FiniteDescription) :
         locate n w = some (j, v) ↔ w = hole n j ++ v := by
       induction n generalizing w with
       | zero =>
@@ -235,10 +241,10 @@ theorem result :
 
   have block_facts :
       [false, true, false, true] ∈ D ∧
-      (∀ {ι : Type} (X : ι → Block) (S : Finset ι) (w : Address),
+      (∀ {ι : Type} (X : ι → Block) (S : Finset ι) (w : FiniteDescription),
         w ∈ Delta (fun i => block (X i)) S ↔ Mixed X S ∧ w ∈ D) := by
     classical
-    have a_leaf (w : Address) :
+    have a_leaf (w : FiniteDescription) :
         (out (block .a) w = .leafAlpha ∨ out (block .a) w = .leafBeta) ↔
         w = [false, false] ∨ w = [false, true] ∨ w = [true] := by
       cases w with
@@ -249,12 +255,12 @@ theorem result :
         | cons c w =>
           cases c <;> cases w <;>
             simp [block, preimage, out, Function.iterate_succ_apply', substitution]
-    have incompatible (b : Block) (hb : b ≠ .a) (w : Address)
+    have incompatible (b : Block) (hb : b ≠ .a) (w : FiniteDescription)
         (ha : out (block .a) w = .leafAlpha ∨ out (block .a) w = .leafBeta) :
         ¬ (out (block b) w = .leafAlpha ∨ out (block b) w = .leafBeta) := by
       rcases (a_leaf w).mp ha with rfl | rfl | rfl <;>
         cases b <;> simp_all [block, preimage, out, Function.iterate_succ_apply', substitution]
-    have D_spec (w : Address) : w ∈ D ↔
+    have D_spec (w : FiniteDescription) : w ∈ D ↔
         (out (block .u) w = .leafAlpha ∧ out (block .v) w = .leafBeta) ∨
         (out (block .u) w = .leafBeta ∧ out (block .v) w = .leafAlpha) := by
       simp only [D, Delta, Set.mem_setOf_eq, Finset.mem_univ, forall_true_left,
@@ -346,8 +352,8 @@ theorem result :
     rw [face_count, padding_count, Nat.add_sub_of_le]
     exact Finset.le_sup (Finset.mem_univ i)
 
-  have context_prefix (n : ℕ) (w : Address) :
-      locate n w = none ↔ ∃ j : Fin (n + 1), ∃ r : Address,
+  have context_prefix (n : ℕ) (w : FiniteDescription) :
+      locate n w = none ↔ ∃ j : Fin (n + 1), ∃ r : FiniteDescription,
         r ≠ [] ∧ hole n j = w ++ r := by
     induction n generalizing w with
     | zero =>
@@ -399,7 +405,7 @@ theorem result :
                 exact ⟨k, r, hr, by simpa [hole] using hp⟩
             simp [locate, htail]
   have delta_comb {ι : Type} (n : ℕ) (X : ι → Fin (n + 1) → Block)
-      (S : Finset ι) (w : Address) :
+      (S : Finset ι) (w : FiniteDescription) :
       w ∈ Delta (fun i => B_T n (fun j => block (X i j))) S ↔
         ∃ j v, w = hole n j ++ v ∧ Mixed (fun i => X i j) S ∧ v ∈ D := by
     cases hl : locate n w with
@@ -495,11 +501,13 @@ theorem result :
     obtain ⟨F, hF, h0F⟩ := maximal_contains K {⟨0, by omega⟩} (hsingle ⟨0, by omega⟩)
     let c0 : FaceColumn K := ⟨(F, ⟨0, by omega⟩), hF, h0F (by simp)⟩
     letI : Nonempty (Column K) := ⟨.inl c0⟩
-    let T := Fintype.card (Column K)
-    have hT : 1 ≤ T := Fintype.card_pos
+    let T := Nat.card (Column K)
+    have hcard : T = Fintype.card (Column K) := Nat.card_eq_fintype_card
+    have hT : 1 ≤ T := by rw [hcard]; exact Fintype.card_pos
     let n := T - 1
     have hsize : n + 1 = T := by omega
-    let e : Fin (n + 1) ≃ Column K := (finCongr hsize).trans (Fintype.equivFin _).symm
+    refine ⟨hT, ?_⟩
+    intro e
     let Q : Fin m → Source := fun i => B_T n (fun j => preimage (entry i (e j)))
     let P : Fin m → Source := fun i => B_T n (fun j => block (entry i (e j)))
     have hPQ (i : Fin m) : substitution^[3] (Q i) = P i := substitution_comb _ _
@@ -544,7 +552,7 @@ theorem result :
       intro i j hij
       apply hP_inj
       rw [← hPQ i, ← hPQ j, hij]
-    refine ⟨T, M K, Q, P, hT, hQ_inj, hP_inj, ?_, ?_, ?_⟩
+    refine ⟨hQ_inj, hP_inj, ?_, ?_, ?_⟩
     · intro i
       refine ⟨hPQ i, ⟨Q i, hPQ i⟩, hQc i, hPc i, ?_⟩
       rw [hPc i]

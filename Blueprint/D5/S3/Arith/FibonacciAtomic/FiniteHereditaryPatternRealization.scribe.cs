@@ -9,7 +9,7 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual third-substitution images realize every finite hereditary information-leaf pattern at equal composition.",
+        "The specified padded face tables give actual third-substitution images with every finite hereditary information-leaf pattern at equal composition.",
         H("Finite Hereditary Patterns in Actual Tree Images"), Blocks(
             Paragraph(Text("Sources are complete nonempty ordered binary trees with alpha and beta leaves. "
                 + "The native substitution rho sends alpha to beta and beta to (beta,alpha), preserving every pairing. "
@@ -48,8 +48,12 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
                         + "and Xj denotes its j-th column. Bblocks(n,X)(i) means B(n,j maps to block(X(i,j))). A concatenation is written concat. Empty denotes the empty address. "
                         + "read(n,X,w) is branch when locate(n,w)=none and is out(X(j),v) when locate(n,w)=some(j,v). "
                         + "K is a finite family of subsets of Fin(m); Singletons(K) means every singleton belongs to K. "
-                        + "Q and P map Fin(m) to Source. I(3) is the actual range of the third native substitution. "
-                        + "N is the common padded non-A row count, denoted M in the source. "
+                        + "T=card(Column(K)) and N=M(K) are fixed by the complete padded table. "
+                        + "The result holds for every column enumeration e: Fin(T-1+1) equivalent to Column(K). "
+                        + "Qtable(K,e)(i) is B(T-1,j maps to preimage(entry(i,e(j)))); "
+                        + "Ptable(K,e)(i) uses block in place of preimage, with the same e. "
+                        + "The displayed let-bindings set Q=Qtable(K,e) and P=Ptable(K,e). "
+                        + "I(3) is the actual range of the third native substitution. "
                         + "c1 and c2 are the two coordinates of composition, card is finite cardinality, and Nonempty means there exists an address.")),
                     Paragraph(Text("The report holds at every finite address. Its internal-node case is exactly the strict-prefix condition "
                         + "in the second conjunct. The third conjunct describes all information leaves. The fourth makes contributions "
@@ -58,7 +62,7 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
                     Paragraph(Text("Every face lies in a maximal face. Each face column singles out one V row among the U rows of that face. "
                         + "A set of at least two indices has a contributing original column exactly when it is a face of K. "
                         + "Private padding contributes no information leaf on any such set. Padding equalizes the non-A counts without "
-                        + "changing this equivalence. The complete trees therefore have the displayed common compositions. "
+                        + "changing this equivalence. For every fixed column order, the specified complete Q and P trees have the displayed common compositions and exact leaf count. "
                         + "The face columns distinguish every pair of rows, and injective native transport gives the unique complete preimages.")),
                     Paragraph(Text("Downward-closed finite set families and Helly terminology are classical background. "
                         + "The equal-composition block-table realization and its exact information-leaf equivalence are the tree-specific derivation."))),
@@ -89,6 +93,9 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
         i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray());
     private static Formula All(string names, Formula body) => Seq(Forall, Sp, Names(names), Comma, Sp, Par(body));
     private static Formula Exists(string names, Formula body) => Seq(F.Exists, Sp, Names(names), Comma, Sp, Par(body));
+    private static Formula Let(string name, Formula value, Formula body) => Seq(
+        Operatorname, Grp(V("let")), Sp, EqOf(V(name), value), Sp,
+        Operatorname, Grp(V("in")), Sp, Par(body));
     private static Formula ResultFormula()
     {
         Formula n=V("n"), m=V("m"), x=V("X"), w=V("w"), j=V("j"), k=V("k"), v=V("v"), u=V("u"), r=V("r");
@@ -108,9 +115,13 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
         Formula unique=All("i,R",IffOf(EqOf(Call("rho3",a),pi),EqOf(a,qi)));
         Formula pattern=All("S",Imp(LeOf(D(2),Call("card",s)),
             IffOf(Call("Nonempty",Call("Delta",p,s)),InOf(s,family))));
-        Formula realization=All("m",Imp(LeOf(D(2),m),All("K",Imp(And(Call("Hereditary",family),
-            Call("Singletons",family)),Exists("T,N,Q,P",And(LeOf(D(1),t),Call("Injective",q),
-                Call("Injective",p),data,unique,pattern))))));
+        Formula trees=Let("Q",Call("Qtable",family,V("e")),
+            Let("P",Call("Ptable",family,V("e")),
+                And(Call("Injective",q),Call("Injective",p),data,unique,pattern)));
+        Formula table=Let("T",Call("card",Call("Column",family)),
+            Let("N",Call("M",family),And(LeOf(D(1),t),All("e",trees))));
+        Formula realization=All("m",Imp(LeOf(D(2),m),All("K",
+            Imp(And(Call("Hereditary",family),Call("Singletons",family)),table))));
         return Disp(And(report,prefix,leaves,disjoint,realization));
     }
 }
