@@ -5,7 +5,7 @@ year: 2026
 title: Bounds for Mertens sums
 doi: null
 url: https://arxiv.org/abs/2608.01498v1
-claim: Weighted Mertens estimates supply a finite error moment for the higher-prime-power part of the Weil form; its smooth autocorrelation application retains a rank-one term, a scalar correction and a derivative-norm remainder, without a sign bound for the remaining prime contribution.
+claim: Weighted Mertens estimates supply the higher-prime-power derivative budget. A separate paper application of the entire-xi Hadamard expansion gives an upper budget in the actual shifted Gamma energy, retaining the pole term and an actual-zero contribution; the primary-prime comparison remains unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Weighted Mertens input and the Weil prime-power budget
 
-This is a paper-level application of classical weighted Mertens asymptotics and existing effective estimates. It is not a new prime-distribution theorem, a priority claim, or a compiled Lean result. The primary statements and the indicated constants were inspected on 1 October 2026; neither preprint's complete proofs or table-generating computations were independently rerun.
+This is a paper-level application of classical weighted Mertens asymptotics and existing effective estimates. It is not a new prime-distribution theorem, a priority claim, or a compiled Lean result. The Mertens and prime-counting statements and their indicated constants were inspected on 1 October 2026; neither preprint's complete proofs or table-generating computations were independently rerun.
 
 ## Exact source and error moment
 
@@ -161,4 +161,170 @@ The project's [Mertens estimates](../../D5/S3/Weil/Mertens/Estimates.lean) alrea
 
 The [earlier triangular-kernel account](../../docs/develop/theory/QUANTUM-RH.md) already treats a prime-square correction with a different kernel and scaling. Equation (1) specifies the current smooth autocorrelation, norm and uniformity; no priority claim follows from changing that formulation.
 
-In the full Weil form the contribution is $-T(g)$. Omitting higher prime powers on the ground that their ordinary counting mass is $o(X)$ therefore loses the displayed linear and scalar terms in this normalization. Equation (1) is uniform in support and coefficients with its **derivative-norm** weight; it is not an estimate in the weaker logarithmic Weil form norm. It supplies no sign bound for the remaining primary-prime/continuum discrepancy. The [actual localization residual](frankliebseiringer2006hardy.md) retains that separate obligation. No all-support positivity, Robin inequality or RH conclusion has been established here.
+In the full Weil form the contribution is $-T(g)$. Omitting higher prime powers on the ground that their ordinary counting mass is $o(X)$ therefore loses the displayed linear and scalar terms in this normalization. Equation (1) is uniform in support and coefficients with its **derivative-norm** weight. The complementary logarithmic budget below uses a different supplier. Neither supplies a sign bound for the remaining primary-prime/continuum discrepancy. The [actual localization residual](frankliebseiringer2006hardy.md) retains that separate obligation. No all-support positivity, Robin inequality or RH conclusion has been established here.
+
+## An upper budget in the actual logarithmic Gamma energy
+
+Keep every definition of the same compact smooth complex $g$ above. The following is a paper application of classical Hadamard and Gamma identities, with their specific boundary pairing made explicit. It is not a new Hadamard theorem, a priority claim, or a Lean-verified estimate. In particular the Mertens derivative estimate is reused rather than proved again.
+
+Fix the angular Fourier convention
+
+$$
+\widehat g(\tau)=\int_{\mathbb R}g(x)e^{-i\tau x}dx,
+\qquad \|g\|_2^2=\frac1{2\pi}\int_{\mathbb R}|\widehat g(\tau)|^2d\tau.
+$$
+
+Write $\Psi=\Gamma'/\Gamma$ for digamma and use the **entire** function
+
+$$
+\xi(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+\qquad
+c_1=\frac{\xi'}{\xi}(1)=1+\frac\gamma2-\log2-\frac12\log\pi.
+$$
+
+The removable value at one is understood. This is not the meromorphic completion $\pi^{-s/2}\Gamma(s/2)\zeta(s)$ used in the project's [XiLogDeriv](../../D5/S3/Weil/ZetaExplicit/XiLogDeriv.lean). The [entire reading](../../D5/S3/Zeros/CompletedZeta.lean) has the appropriate pole removal, but its existing declarations alone do not supply the global Hadamard expansion used here.
+
+The source for that expansion is [Lagarias, arXiv:math/0404394v4](https://arxiv.org/pdf/math/0404394v4): the paragraph before Theorem 2.1 identifies $\xi(s,\pi_{\rm triv})=2\xi(s)$; Theorem 2.1(3), (4), (6), printed p.7, supplies the strict zero strip, counting estimate and order one; Lemma 4.1's proof, printed p.14, supplies the Hadamard product and cancellation of its linear coefficient by the starred reciprocal-zero sum. The factor two leaves the logarithmic derivative unchanged. The inspected PDF has SHA-256 `86f3d3c49f5a889f121bb1f04f67694cb9066dc8360f6988165788679594a4a7`. These classical results are cited, not reproved or independently certified here.
+
+The direct positive-logarithmic-derivative supplier is [Matiyasevich–Saidak–Zvengrowski, *Horizontal Monotonicity of the Modulus of the Riemann Zeta Function and Related Functions*, arXiv:1205.2773v1](https://arxiv.org/pdf/1205.2773v1), §2, the proof of Theorem 1.1, printed p.4. It displays the conjugate-paired Hadamard logarithmic-derivative series and its positive real summands to the right of all zeros. Its definition on printed p.2 is $(s-1)\Gamma(1+s/2)\pi^{-s/2}\zeta(s)$, equal to the entire $\xi$ above by Gamma recurrence. Its $\xi$ calculation has no height restriction; the height restrictions for its later $\zeta$ and $\eta$ comparisons are not used. This known positivity is reused, not claimed as a new result.
+
+Taking real parts of that expansion gives, for $1\le\sigma\le2$,
+
+$$
+\Re\frac{\xi'}{\xi}(\sigma+2i\tau)
+=\sum_{\rho=\beta+i\gamma_\rho}
+\frac{\sigma-\beta}{(\sigma-\beta)^2+(2\tau-\gamma_\rho)^2}. \tag{3}
+$$
+
+Every zero is counted with its actual multiplicity. The real series is absolutely convergent; the strict strip $0<\beta<1$ makes each term positive. This uses no RH. The zero-counting estimate also gives $\sum_\rho(1+\gamma_\rho^2)^{-1}<\infty$.
+
+### The actual even-power boundary pairing
+
+Let $h(\tau)=|\widehat g(\tau)|^2$, a nonnegative Schwartz function, and put
+
+$$
+F(s)=-\frac{\zeta'}{\zeta}(s)-\frac1{s-1},\qquad F(1)=-\gamma.
+$$
+
+For $0<\delta\le1$, absolute convergence in $\Re s>1$ and Parseval give
+
+$$
+2\sum_p\sum_{j\ge1}\log p\,p^{-j(1+\delta)}R_g(2j\log p)
+=\frac1{2\pi}\int_{\mathbb R}
+2\Re\left(-\frac{\zeta'}{\zeta}(1+\delta+2i\tau)\right)h(\tau)d\tau. \tag{4}
+$$
+
+The left side has finitely many nonzero correlations, so its limit is the actual sum of every even prime power. No ordinarily convergent undamped Dirichlet series on $\Re s=1$ is asserted.
+
+The regular-part pairing on the right also converges to its stated boundary value. Here is the needed uniform justification, which does not require a quantitative zero-free region. For $0<a\le2$ and a real ordinate $u$,
+
+$$
+\int_{\mathbb R}\frac{a}{a^2+(2\tau-u)^2}h(\tau)d\tau
+\le\frac{C_h}{1+u^2}, \tag{5}
+$$
+
+where $C_h$ depends only on $h$. For $|u|\ge2$, split at $|2\tau|=|u|/2$. On the first region the kernel is at most $8/u^2$; on the second, $h\le16\sup_\tau(1+\tau^2)h(\tau)/(1+u^2)$ and the full kernel integral is $\pi/2$. For $|u|<2$ the same full integral and $\|h\|_\infty$ give a uniform bound. For each fixed zero, its width $a=1+\delta-\beta$ tends to the positive width $1-\beta$. Equation (5) and reciprocal-square zero summability therefore allow the limit through the paired sum in (3).
+
+The identity
+
+$$
+2\Re F(s)=-2\Re\frac{\xi'}{\xi}(s)
++2\Re\frac1s-\log\pi+\Re\Psi(s/2)
+$$
+
+reduces the remaining pairing to a bounded rational term and digamma. The classical [digamma asymptotic, DLMF 5.11.2](https://dlmf.nist.gov/5.11.E2), gives logarithmic growth uniformly in $1/2\le\Re(s/2)\le1$, so Schwartz decay dominates these terms. Thus
+
+$$
+\lim_{\delta\downarrow0}\frac1{2\pi}\int 2\Re F(1+\delta+2i\tau)h(\tau)d\tau
+=\frac1{2\pi}\int 2\Re F(1+2i\tau)h(\tau)d\tau. \tag{6}
+$$
+
+The pole is accounted for separately:
+
+$$
+\Re\frac1{\delta+2i\tau}=\frac{\delta}{\delta^2+4\tau^2}
+\longrightarrow\frac\pi2\delta_0.
+$$
+
+Its factor two in (4), followed by $1/(2\pi)$, contributes exactly $\tfrac12|\widehat g(0)|^2$. In particular the pole is not absorbed into the regular multiplier or silently discarded.
+
+### Positive residual accounting
+
+The remaining odd powers have an absolutely and uniformly convergent series
+
+$$
+O(\tau)=\sum_p\sum_{\substack{k\ge3\\k\text{ odd}}}\log p\,p^{-k/2}e^{-ik\tau\log p},
+\qquad C_{\rm odd}=\sum_p\frac{\log p}{\sqrt p(p-1)},
+\qquad \kappa=-\gamma+C_{\rm odd}.
+$$
+
+Combining (4)–(6) with these odd powers identifies the actual residual as
+
+$$
+\epsilon(g)=\frac1{2\pi}\int m_\epsilon(\tau)h(\tau)d\tau,
+\qquad
+m_\epsilon=2\Re F(1+2i\tau)+2\Re O(\tau)-2\kappa. \tag{7}
+$$
+
+Use the shifted energy appearing in the full-form account,
+
+$$
+E_*(g)=\int_0^\infty\frac{e^{-5t/2}}{1-e^{-2t}}
+\|g-\tau_tg\|_2^2dt,
+\qquad
+a_*(\tau)=\Re\Psi(5/4+i\tau/2)-\Psi(5/4).
+$$
+
+The existing [Gamma energy decomposition](../../D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.lean) supplies the unshifted representation for its bundled even tests. Here its paper-level Fourier calculation is used for a general compact smooth complex $g$; Parseval and Tonelli apply to the nonnegative translation energy without an evenness restriction. The kernel difference $e^{-t/2}$ and the digamma recurrence give $a_*=a_\Gamma-16\tau^2/(1+4\tau^2)$, where $a_\Gamma=\Re\Psi(1/4+i\tau/2)-\Psi(1/4)$. The classical [duplication](https://dlmf.nist.gov/5.5.E8) and [reflection](https://dlmf.nist.gov/5.5.E4) formulas give
+
+$$
+\Re\Psi(1/2+i\tau)-\Psi(1/2)
+=a_\Gamma(\tau)+\frac\pi2\left(\frac1{\cosh(\pi\tau)}-1\right).
+$$
+
+Consequently, with $S(\tau)=\Re(\xi'/\xi)(1+2i\tau)$ and
+
+$$
+d_\xi=2-\frac\pi2+2c_1
+=4+\gamma-\log(4\pi)-\frac\pi2,
+\qquad
+j(\tau)=\frac2{1+4\tau^2}-\frac\pi{2\cosh(\pi\tau)},
+$$
+
+the exact multiplier identity is
+
+$$
+m_\epsilon=a_*+d_\xi-2S-2(C_{\rm odd}-\Re O)-j.
+$$
+
+Pairing with the same $h$ yields the paper-level decomposition
+
+$$
+\boxed{E_*(g)-\epsilon(g)+d_\xi\|g\|_2^2
+=\mathcal Z(g)+\mathcal D_{\rm odd}(g)+\mathcal J(g),} \tag{8}
+$$
+
+$$
+\mathcal Z(g)=\frac1{2\pi}\int 2S(\tau)h(\tau)d\tau,\qquad
+\mathcal D_{\rm odd}(g)=\sum_p\sum_{\substack{k\ge3\\k\text{ odd}}}\log p\,p^{-k/2}\|g-\tau_{k\log p}g\|_2^2,
+\qquad
+\mathcal J(g)=\frac1{2\pi}\int j(\tau)h(\tau)d\tau.
+$$
+
+All three contributions are nonnegative and finite. For $\mathcal Z$, use (3) and (5). For the odd energy, $\mathcal D_{\rm odd}\le4C_{\rm odd}\|g\|_2^2$. For $\mathcal J$, its multiplier is bounded and nonnegative because
+
+$$
+\cosh(\pi\tau)\ge1+\frac{\pi^2\tau^2}{2}
+\ge\frac\pi4+\pi\tau^2,
+\qquad 2<\pi<4.
+$$
+
+Thus (8) supplies the upper budget
+
+$$
+\boxed{\epsilon(g)\le E_*(g)+d_\xi\|g\|_2^2.} \tag{9}
+$$
+
+It is uniform over all compact supports and complex coefficients. The logarithmic energy replaces the derivative expense on the upper side needed by the full form. The original two-sided derivative estimate remains useful on slow dilations and is not superseded by a two-sided logarithmic claim.
+
+This pairing argument and its all-test application have not been compiled in Lean. The original-source Hadamard expansion and classical Gamma identities are reused inputs; the displayed accounting is a repository synthesis with no claim of worldwide novelty. No extension beyond the stated compact smooth core is asserted without an additional domain argument.

@@ -1,0 +1,22 @@
+**定理 53.6（所有全支撑整窗律上的正指纹）。** 令 $\varphi=h+\ell$，$T_i=(\varphi(W_i)-e)w_Y$，$\gamma_i=\operatorname{Cov}(\varphi(W_i),F_\theta)$。则
+$\mathbb ET_i=\alpha\kappa\gamma_i$。非活动位置的 $\gamma_i=0$，活动位置全为正，准确为
+
+$$
+\begin{aligned}
+K_h&=\operatorname{Cov}_\mu(\varphi,h)=Ht+(1-H)z,\\
+K_\ell&=\operatorname{Cov}_\mu(\varphi,\ell)=Lt+(1-L)z,\\
+\gamma_p&=L(1-z)K_h,\qquad \gamma_r=H(1-z)K_\ell,\\
+\gamma_q&=tuH+tvL+2tz(H+L-HL)+uzL(1-H)+vzH(1-L).
+\end{aligned}
+\tag{53.11}
+$$
+
+在（53.5）的律上，$(\gamma_p,\gamma_q,\gamma_r)=(55,145,55)/512$。
+对 $0<\rho\le1/5$，定义已知律族
+$\mathcal M_\rho=\{\mu:\mu(s)\ge\rho\text{ 对全部 }s\in\Sigma\}$，则统一有
+
+$$
+\min(\gamma_p,\gamma_q,\gamma_r)\ge8\rho^3.
+\tag{53.12}
+$$
+

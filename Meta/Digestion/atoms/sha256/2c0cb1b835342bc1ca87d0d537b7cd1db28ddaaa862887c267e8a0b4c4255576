@@ -1,0 +1,16 @@
+### 58.11. 成熟供应与模型特定的关系增量
+
+§54 的共同候选矩、 §55 的未知强度接口、 §56 的半质量未知律、 §57 的共同未知五质量及困难子类都是各自有效的供应。本节新增的关系是：实际异质重叠仍给（58.5）的尖锐分离；第一门身份（58.3）精确定位原始范数偏移；合法异质族在保留总体方向时推翻目标阶原始置信；实际通道的教师无关标签列可以逐记录补偿这项偏移；表差仍严格支持于同一个实际教师分歧。全窗取得随后继续支付由共同子类达到的 $\rho^2$ 信息瓶颈。
+
+[Natarajan、Dhillon、Ravikumar、Tewari，*Learning with Noisy Labels*](https://proceedings.neurips.cc/paper/2013/hash/3871bd64012152bfb53fdf04b401193f-Abstract.html) 给二元类条件噪声下无偏损失修正及经验最小化的成熟背景。损失修正思想本身不是本节新意，其二元类条件翻转接口也不直接给未知强度三值通道的固定表和异质五符号全重叠结论。
+
+[Bartlett、Mendelson，*Empirical Minimization*](https://www.stat.berkeley.edu/~bartlett/papers/bm-em-05.pdf) 的均值—二阶矩联系及 Definition 2.6 给快率背景；（58.22）—（58.23）具体有 $\mathbb EW^2\le(36/\alpha)\mathbb EW$。这里使用逐竞争者的有限并集，没有把候选差类当成满足额外条件的星形类。[Tropp，*User-Friendly Tail Bounds for Sums of Random Matrices*](https://arxiv.org/pdf/1004.4389v7) Theorem 6.1(ii) 的维数一形式供应实际用到的单侧 Bernstein。一般浓缩与有限模型选择不获得模型特定新意。
+
+[Gerchinovitz、Ménard、Stoltz，*Fano's inequality for random variables*](https://arxiv.org/html/1702.05985v3) 给 Fano、检验与数据处理的成熟背景；本节下界的实际模型合同由定理57.9直接承担。仓内 [FanoMethodSampleComplexity](../../../D5/S3/Estimation/FanoMethodSampleComplexity.lean) 的独立重复信息界、 [LiteralWindowEnd](../../../D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean) 的低到高位及接缝合同、 [FirstRejectionProfileMass](../../../D5/S3/Arith/FibonacciAtomic/FirstRejectionProfileMass.lean) 的均匀五符号全相邻扫描各有自己的范围。它们不直接给当前异质三窗优先门分离或固定补偿表。钉版 Mathlib 的 `Probability/Moments/SubGaussian.lean` 中区间有界变量及独立和尾界供应成熟 Hoeffding 背景，不承担本节异质模型的对应证明。
+
+[Jan Arpe，*Learning Juntas in the Presence of Noise*，ECCC TR05-088](https://eccc.weizmann.ac.il/report/2005/088/download/) 的相关变量发现与非均匀属性讨论属于 Boolean junta、属性翻转和分类翻转通道；其非均匀扩展还有相应单调性限制。位置稀疏、非均匀或噪声参数同名不能将它直接迁移为相关端点的五符号整窗、三值优先门和本节通道。
+
+[尺度读出卷§24](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#24-两两叶最优与三个实际来源的共同费用障碍)区分各对分别可达与共同策略可达； [边界动力学卷§98](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#98-固定付费-read-切面的执行残余与终局摘要条件桥)保留同一实现、多切相容、终端摘要条件化与新取得许可的区别。独立窗口乘积律不能从归档条件化或合成桥免费继承，分开的边缘最优值也不能替代当前同一对象的联合质量。因此本节各交集、方差和下界使用同一个实际记录实现，完整取得与反复读取费用由自己的明确接口承担；两卷不供应这里的教师样本率。
+
+文献背景、成熟损失修正、似然因子消去、枚举、浓缩和 Fano 均不承担全局原创性声明。当前结论是模型内的解析理论结果；这里不宣称 Lean kernel 核验、穷尽文献无先例、最优常数、最优批次／计数器／时间或物理取得能力。既有 §52.11 的条件与未决边界继续保留。
+

@@ -1,0 +1,61 @@
+**定义 59.1（原教师的源—目标实验）。** 训练端完整沿用定义58.1：低到高字母顺序为
+
+$$
+\Sigma=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3,
+$$
+
+第 $i$ 个窗口律为未知的 $\mu_i=(u_i,x_i,v_i,t_i,z_i)$，五质量同时至少为 $\rho$、和为1。不同位置独立，完整记录独立同分布；记源输入律为 $\mu=\bigotimes_{i=1}^n\mu_i$。参数范围为 $n\ge4$、 $0<\rho\le1/8$、 $0<a\le1$。实际同窗联合量仍是
+
+$$
+H_i=t_i+z_i,\qquad L_i=t_i+x_i,\qquad
+\mathbb E[h_i\ell_i]=t_i,
+\tag{59.1}
+$$
+
+其中 $(h,\ell)$ 的四质量依次为 $u_i+v_i,x_i,t_i,z_i$，不能将交集替成 $H_iL_i$。
+
+未知递增三元组 $\theta=(p<q<r)\in\Theta_n$ 定义同一个确定函数
+
+$$
+A_\theta=h_p\ell_q,\qquad B_\theta=h_q\ell_r,\qquad
+C_\theta=A_\theta+2(1-A_\theta)B_\theta.
+\tag{59.2}
+$$
+
+只取得完整源记录 $(X,Y)$，其中 $X$ 包含全部 $n$ 个窗口， $Y$ 的条件行是（58.4）的
+
+$$
+R_\alpha=\alpha
+\begin{pmatrix}1/2&1/4&1/4\\3/8&1/4&3/8\\1/4&1/4&1/2\end{pmatrix}
++(1-\alpha)J/3,\qquad \alpha\in[a,1].
+\tag{59.3}
+$$
+
+共同强度 $\alpha$ 未知；实际位置律描述、原类 $C_\theta$、预加噪标签均不作为训练输入。
+
+唯一改变是独立测试输入取已知的
+
+$$
+\nu=\operatorname{Unif}(\Sigma)^{\otimes n}.
+\tag{59.4}
+$$
+
+训练后固定分类器 $f:\Sigma^n\to\{0,1,2\}$，其随机性包含在训练记录及独立于训练记录和未知参数的种子 $\xi$ 内。源、目标的条件原任务风险分别为
+
+$$
+L_\mu(\theta,f)=P_\mu(f(X)\ne C_\theta(X)),\qquad
+L_\nu(\theta,f)=5^{-n}\sum_{x\in\Sigma^n}
+\mathbf1_{\{f(x)\ne C_\theta(x)\}}.
+\tag{59.5}
+$$
+
+允许 $f$ 为任意分类器，未限定为教师候选。训练置信指
+$P_{D_m,\xi}(L_\nu(\theta,f)>\varepsilon)\le\delta$；它不同于训练平均风险，也不同于一次随机测试的成功率。测试不提供原标签、观测标签、干预或标签查询。取固定目标
+
+$$
+\varepsilon_0=3/125.
+\tag{59.6}
+$$
+
+独立整窗律是这里的模型前提，不是原 FIB 卷定义104.2的全局接缝条件化地址律； $000$ 仍是实际占位窗口。 §51–§52 的旧 $Q$ 标签、root-phase 和 proper-risk 结论不迁移到（59.3）。
+

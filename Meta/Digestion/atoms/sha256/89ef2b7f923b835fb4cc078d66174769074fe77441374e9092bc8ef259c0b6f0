@@ -1,0 +1,26 @@
+### 59.2. 复用目标几何，补齐异质源 Hamming 几何
+
+记两个教师在律 $\lambda$ 下的 Hamming 距离为
+$D_\lambda(\theta,\tau)=P_\lambda(C_\theta\ne C_\tau)$，平方距离为
+$d_\lambda(\theta,\tau)=\mathbb E_\lambda(C_\theta-C_\tau)^2$。
+
+均匀目标的确定教师与 §52.2 完全相同。因此（52.8）—（52.9）直接供应
+
+$$
+\Delta_{\rm all}:=\min_{\theta\ne\tau}D_\nu(\theta,\tau)
+=96/625,
+\tag{59.8}
+$$
+
+等号由 $(1,2,3),(1,2,4)$ 达到。该事实不涉及标签通道；复用它不等于迁移旧 $Q$ 的统计结论。第一位置对不同的距离至少为 $24/125$；第一位置对相同、第三位置不同的差只取 $0,\pm2$，故其平方距离是 Hamming 的四倍。结合（58.12）的确定函数恒等式在均匀律上的代入，得到
+
+$$
+\min_{\theta\ne\tau}d_\nu(\theta,\tau)=24/125,
+\qquad
+D_\nu(\theta_i,\theta_j)=d_\nu(\theta_i,\theta_j)=24/125,
+\quad \theta_i=(i,n-1,n),\ i\ne j.
+\tag{59.9}
+$$
+
+后一族的差为 $(h_i-h_j)\ell_{n-1}(1-2h_{n-1}\ell_n)$，非零幅度为1，距离为 $2H(1-H)L$。这正是全类两个度量的最小值不同的原因。
+
