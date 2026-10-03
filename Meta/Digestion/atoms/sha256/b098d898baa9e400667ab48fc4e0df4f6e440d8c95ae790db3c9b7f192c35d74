@@ -1,0 +1,83 @@
+**推论 37.3（同一实际历史源的带指数入口恢复）。** 显式声明一个实际联合
+历史源 $H$，及同一历史上的入口树、运输指数、当前树
+
+$$
+x:H\to\mathcal T,\qquad k:H\to\mathbb N,\qquad y:H\to\mathcal T,
+\qquad y(h)=\rho^{k(h)}(x(h)).
+\tag{PG.3714}
+$$
+
+条件是记录 $R(h)=(k(h),y(h))$ 已经取得，并已认证
+$y(h)\in I_{k(h)}$。在带有这一像成员条件的记录域上定义
+
+$$
+\mathscr R=\{(j,z)\in\mathbb N\times\mathcal T:z\in I_j\},
+\qquad
+D:\mathscr R\to\mathcal T,
+\qquad D(j,z)=\delta_j(z)=(\rho^j)^{-1}(z).
+\tag{PG.3715}
+$$
+
+则入口唯一恢复，且纯代数的正向记录更新保持这个入口：
+
+$$
+D(R(h))=x(h),\qquad
+D(j,\rho^j(a))=a\quad(j\in\mathbb N,\ a\in\mathcal T),
+\tag{PG.3716}
+$$
+
+$$
+U(j,z)=(j+1,\rho(z))\in\mathscr R,
+\qquad D(U(j,z))=D(j,z)\quad((j,z)\in\mathscr R).
+\tag{PG.3717}
+$$
+
+若擦去指数，只保留 $y(h)$，在这个声明的实际源上恢复入口的充要条件是
+
+$$
+\begin{aligned}
+&\exists d:y[H]\to\mathcal T\quad
+ \forall h\in H:\ d(y(h))=x(h)\\
+&\qquad\iff
+\forall h,h'\in H:\ y(h)=y(h')\Longrightarrow x(h)=x(h').
+\end{aligned}
+\tag{PG.3718}
+$$
+
+这个条件并非自动成立。声明两历史源 $H=\{h_0,h_1\}$，令
+
+$$
+(k(h_0),x(h_0),y(h_0))=(0,\beta,\beta),
+\qquad
+(k(h_1),x(h_1),y(h_1))=(1,\alpha,\beta).
+\tag{PG.3719}
+$$
+
+两条历史都满足 (PG.3714)，但擦去指数后当前树相同、入口树不同。
+若另有共同合同明确 $k(h)=k_0$ 对所有实际历史成立，而且固定的 $k_0$ 已知，
+则直接在 $I_{k_0}$ 上用 $\delta_{k_0}$ 解码，单独的指数记录字段可以冗余。
+
+证明。(PG.3713) 在每个实际像上给出唯一原像，得到 (PG.3716)。若
+$z=\rho^j(a)$，则 $\rho(z)=\rho^{j+1}(a)$，得到 (PG.3717)。
+若只从 $y$ 解码，相同的 $y$ 必须给出相同的 $x$；反向在 $y[H]$ 上，
+将每个当前值送到其实际历史共同的入口值便良定义，得到 (PG.3718)。
+(PG.3719) 由 $\rho^0(\beta)=\beta=\rho(\alpha)$ 直接验证，而
+$\alpha\ne\beta$ 排除无指数解码。固定已知 $k_0$ 的结论仍来自 (PG.3713)。证毕。
+
+这里的 $k$ 是自入口起的运输次数，不是绝对纪元。若实际合同还要求来源身份
+$\xi$、绝对纪元 $\nu$、参考 $r$、权限 $\pi$、档案 $A$、writer 记录 $W$
+及档案／writer 事件次序 $\omega$，这些保持为同一历史中的独立字段，例如
+
+$$
+J(h)=\bigl(\xi(h),\nu(h),r(h),\pi(h),A(h),W(h),\omega(h);\ k(h),y(h)\bigr).
+\tag{PG.3720}
+$$
+
+该列举不声称 $J$ 已足够完成其他任务。若合同中的合法正向一步保持入口，
+使指数增一、当前树替换为 $\rho(y)$，其代数记录按 (PG.3717) 更新；
+合法性、实际取得以及其他字段的事件更新须由该合同另行给出。
+解码 $D$ 只恢复入口树，不授予记录取得、回滚、逆向执行或四视图恢复。
+本卷 §36 的联合端点码与取得义务，以及
+[Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)
+§80 的合法性、事件—后继摘要—writer 记录联合核下降义务，仍分别承担其原有条件。
+

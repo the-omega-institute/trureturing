@@ -1,0 +1,29 @@
+**空间因子。**
+support 与 incidence 不是由端点商凭空补出的字段；它们必须作为已经声明的端点图字段
+函数给出。写
+
+$$
+\operatorname{support}:H_R\to\mathsf{Supp},\qquad
+\operatorname{incidence}:H_R\to\mathsf{Inc},
+\qquad
+\mathsf{Space}(h):=
+\bigl(\eta_{\rm cfg}(h),\operatorname{support}(h),\operatorname{incidence}(h)\bigr)\in X_S,
+\tag{PG.3400d0a}
+$$
+
+其中 $\mathsf{Supp}$、$\mathsf{Inc}$ 及其值域均由实际图签名声明，并把
+$\mathsf{Space}$ corestrict 到其实际像。这里明确要求端点不变量
+
+$$
+\eta_{\rm cfg}(h)=\eta_{\rm cfg}(k)\Longrightarrow
+\bigl(\operatorname{support}(h),\operatorname{incidence}(h)\bigr)=
+\bigl(\operatorname{support}(k),\operatorname{incidence}(k)\bigr).
+\tag{PG.3400d}
+$$
+
+此处要求 support/incidence 由工作态投影及其标签给出，比仅要求完整端点不变更强；
+完整端点仍通过 $\operatorname{cfg}$ 决定这个空间因子。若任务要求度量或不可约性，
+还必须把相应的 support/metric irreducibility 条件写进合同；PG.3007 只在
+(PG.3400d) 及该不可约性假设同时成立时提供 endpoint$\to$space 的接口。单有端点
+值或相同读数，不会自动产生空间支持。
+

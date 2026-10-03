@@ -1,0 +1,14 @@
+**失效对一（遗漏分支地址）。** 取同一 FIB 根的两个合法游标
+$\operatorname{DownL}(r)$ 与 $\operatorname{DownR}(r)$。它们可以具有相同的深度、
+叶标签、组成计数、当前 reference、Boundary 和被动 Memory；若取得码只保存这些
+字段而遗漏左、右分支地址，则
+
+$$
+c_K(\operatorname{DownL}(r))
+=c_K(\operatorname{DownR}(r)),
+$$
+
+而两个游标端点不同。于是 (PG.3505) 失败，任何声称由该码恢复端点的函数都会把
+不同地址送到同一个值。下一步 `Up` 或 `ApplyRho` 也可能读取不同的邻接子项，所以
+这不是只影响静态显示的差异。
+
