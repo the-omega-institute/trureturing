@@ -12471,3 +12471,585 @@ $$
 固定乘法区间的素数定理、Hermite–Lindemann、有限加权 Gram 插值与迹理想连续性是复用工具；实际正负谱配对复用 Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv)、式 (77)，固定小支撑正性复用该文 Theorem 6.11、式 (141)。新增综合内容是精确最小活跃集上微小尾部与角能量失稳的共同实现，以及该实际族对舍弃负能量证书的必要误差约束；这些纸面推导未作 Lean 核验，也不认证世界原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 原扩张测试的 Laplace 延拓与多项式余量障碍
+
+本章保留第 19.3 节的固定标准实偶 bump $\phi$ 及原扩张测试 $f_R$，并直接使用包含全部极点与纯素数幂的经典全 Weil 显式公式。只在回接实际 Sonin 迹时使用第 18—21 节的物理合同；标量延拓不要求变动素数集的评价密度渐近式。
+
+**定义 28.1（原测试族的完整标量与尾部变换）。** 令
+
+$$
+\Phi(z)=\widehat\phi(z),\qquad p(z)=z^2(1+4z^2)^2,\qquad
+\mathcal W(R)=Q_{\rm full}(f_R),\qquad q(R)=R^{-3}\mathcal W(R),\quad R\ge1.
+$$
+
+对非平凡零点 $\rho=\beta+i\gamma$，置 $z_\rho=\gamma-i(\beta-1/2)$，并按不同零点求和、用 $m_\rho$ 计入重数。第 19.3 节的精确 Fourier 身份与完整显式公式给出
+
+$$
+\widehat H_{f_R}(z)=R^3p(z)\Phi(Rz)^2,\qquad
+q(R)=2\sum_{\gamma>0}m_\rho p(z_\rho)\Phi(Rz_\rho)^2.
+$$
+
+这里是复数平方，不是把离线零点项改成绝对平方；正纵坐标之和由零点对称性为实数。所用显式公式可在 Suzuki, arXiv:2206.03682v4, 式 (5.15) 中逐项核对：两个极点项、两份完整 von Mangoldt 和及 Gamma 项均保留。其 Fourier 零点坐标的符号差由 $H_{f_R}$ 的偶性消除；两个极点评价则由 $\widehat H_{f_R}(\pm i/2)=0$ 精确消失。
+
+采用经典零点事实
+
+$$
+|\Im z_\rho|<\frac12,\qquad
+\gamma_*:=\inf_{\gamma>0}\gamma>0,\qquad
+\sum_{\gamma>0}m_\rho(1+\gamma)^{-2}<\infty.
+$$
+
+正的纵坐标间隔只用非平凡实零点不存在及有界条带内的离散性，不要求数值零点验证。固定标准 $\phi$ 的支撑是 $[-1/2,1/2]$，不能为它选严格小于 $1/2$ 的支撑半径。Paley–Wiener 的分部积分界在 $b=1/2$ 时给出
+
+$$
+|\Phi(w)|\le C_N(1+|w|)^{-N}e^{|\Im w|/2}
+\quad(N\ge0).
+$$
+
+因此上述零点和在紧的 $R$ 区间上正常收敛，且 $|q(R)|\le Ce^{R/2}$。定义初始 Laplace 变换
+
+$$
+L(s)=\int_1^\infty e^{-sR}q(R)\,dR,\qquad \Re s>1/2.
+$$
+
+**候签定理 28.1（最终非负时的全尾矩约束）。** 对这一原固定形状测试族，若存在 $R_0\ge1$ 使 $\mathcal W(R)\ge0$ 对所有实数 $R\ge R_0$ 成立，则
+
+$$
+\boxed{
+\int_{R_0}^\infty R^n\mathcal W(R)\,dR<\infty
+\qquad(n=0,1,2,\ldots).
+}
+$$
+
+因此，对任意实数 $M\ge0$、$c>0$ 与 $R_1\ge1$，存在实数 $R\ge R_1$ 满足
+
+$$
+\mathcal W(R)<cR^{-M},\qquad
+\liminf_{R\to\infty}R^M\mathcal W(R)\le0.
+$$
+
+后一结论不假定最终非负，也不声称某个测试的实际 Weil 值为负。
+
+证明。对 $z=\gamma+iy$、$\gamma\ge\gamma_*$、$|y|<1/2$，令
+
+$$
+I_z(s)=\frac1z\int_0^\infty
+ e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+它在 $\Re(s/z)>0$ 上全纯。令 $K=\phi*\phi$，则 $\widehat K=\Phi^2$、$\operatorname{supp}K=[-1,1]$。对实数 $s>1/2$，两种积分均可由 Fubini 精确计算为
+
+$$
+I_z(s)=\int_1^\infty e^{-sR}\Phi(Rz)^2\,dR
+=\int_{-1}^1K(u)\frac{e^{-(s+izu)}}{s+izu}\,du.
+$$
+
+左侧的水平射线积分使用 $\Re(s/z)>0$；中间的尺度积分使用 $\Re(s+izu)\ge s-1/2>0$。没有以未经验证的弧积分消失代替这份身份。
+
+置
+
+$$
+\Omega=\left\{s:\Re s>\frac{|\Im s|}{2\gamma_*}\right\},\qquad
+G(s)=2\sum_{\gamma>0}m_\rho p(z_\rho)I_{z_\rho}(s).
+$$
+
+在 $\Omega$ 内，
+
+$$
+\Re(s/z_\rho)
+=\frac{\gamma\Re s+y\Im s}{|z_\rho|^2}>0.
+$$
+
+水平射线 $z_\rho+t$ 始终处于 $|\Im w|<1/2$ 的固定条带，故 $\Phi(z_\rho+t)$ 在 $\gamma+t$ 上任意快速下降。这同时支付 $p$ 的六次增长与零点重数，证明 $G$ 在 $\Omega$ 的紧子集上正常收敛并全纯。它与初始 $L$ 相等，所以 $L$ 可全纯延拓穿过每个正实数点。
+
+进一步，对任意整数 $j\ge0$，
+
+$$
+I_z^{(j)}(s)=\frac{(-1)^j}{z^{j+1}}
+\int_0^\infty (z+t)^j e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+当 $s\ge0$ 为实数时，指数的模不超过一。取 $2N>j+1$，上述条带下降界给出
+
+$$
+|I_z^{(j)}(s)|\le C_{j,N}|z|^{-j-1}
+\int_0^\infty(1+\gamma+t)^{j-2N}\,dt
+\le C'_{j,N}(1+\gamma)^{-2N}.
+$$
+
+增大 $N$ 后可在所有 $s\ge0$ 上统一求和，故 $G^{(j)}(s)$ 在 $s\downarrow0$ 时具有有限右极限。这只给出端点的右侧光滑性，不主张 $G$ 在零点附近全纯。
+
+若 $q$ 最终非负，扣除紧初始区间后，
+
+$$
+L_0(s)=G(s)-\int_1^{R_0}e^{-sR}q(R)\,dR
+$$
+
+是非负尾部的初始 Laplace 变换。直接复用 Landau–Widder 的非负函数收敛横坐标定理：有限实收敛横坐标必为奇点。由于 $L_0$ 在每个正实数点附近均全纯，它的收敛横坐标不能为正，故定义积分对每个实数 $s>0$ 收敛。该标准定理在 Suzuki, arXiv:2209.12832v1, §3 中明确引用 Widder, *The Laplace Transform*, Chapter II, Theorem 5b；这里验证的是原 $f_R$ 的变换延拓，不把 Suzuki 的 screw-function 判据直接当成这一族的结论。
+
+于是
+
+$$
+(-1)^jL_0^{(j)}(s)=\int_{R_0}^\infty R^j e^{-sR}q(R)\,dR.
+$$
+
+令 $s\downarrow0$，左侧具有有限极限，右侧按非负性单调增加，得到全部 $q$ 尾矩有限。取 $j=n+3$ 即得 $\mathcal W$ 的陈述。若有最终下界 $\mathcal W(R)\ge cR^{-M}$，它本身给出最终非负，而任一整数 $n\ge M$ 的尾矩都会发散，矛盾。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 29. 同一固定伸缩轨道的零点检测与有符号目标
+
+本章继续使用第 19.3 节的唯一固定 bump 及第 28 节的完整标量 $\mathcal W(R)$。所讨论的量词是全部充分大的**实尺度**，不是整数尺度、一个离散子序列或一个有界支撑区间。正性仍是待证目标；下面给出检测能力的纸面桥，未作 Lean 核验。
+
+一形状伸缩与最终符号检测已有直接文献先例。[Suzuki, arXiv:2206.03682v4](https://arxiv.org/html/2206.03682v4), §3.4、式 (3.9)—(3.11)，给出 $\Delta_t(x)=\tfrac12(t-|x|)_+$ 是矩形函数的自相关，且 $W(\Delta_t)=\Psi(t)$、$\widehat\Delta_t(z)=(1-\cos(tz))/z^2$。其 Theorem 11.1 取 $\omega=0$，已经给出 $\Psi(t)$ 在全部充分大实数上的非负性等价于 RH。直接复用这份既有结果即可取得一般现象；它的矩形／三角形测试不等于本卷带三个精确 Fourier 零点的光滑 $f_R$，没有直接支付前几章所保留的原测试比较。下述推导只核对这份固定权重与实际有符号目标的接口。
+
+**候签定理 29.1（原固定族的最终非负检测）。** 对第 19.3 节定义的同一 $f_R$ 及经典完整 Weil 形式，
+
+$$
+\boxed{
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\exists R_0\ge1\ \forall R\in\mathbb R,
+\quad R\ge R_0\Longrightarrow Q_{\rm full}(f_R)\ge0.
+}
+$$
+
+此处不假设非临界零点具有全局最大实部，不截断零点和，也不将非临界谱项改成模平方。
+
+证明。沿用第 28 节的 $q(R)=R^{-3}\mathcal W(R)$、$z_\rho=\gamma-i(\beta-1/2)$、$p(z)=z^2(1+4z^2)^2$、$K=\phi*\phi$ 与水平射线积分 $I_z$。只取正纵坐标零点并计入重数。原 bump 在 $(-1/2,1/2)$ 严格为正，故 $K$ 为实偶光滑函数、支撑恰为 $[-1,1]$，且
+
+$$
+K(u)>0\qquad(-1<u<1).
+$$
+
+第 28 节的 Fubini 身份提供每个单项的另一个表达：
+
+$$
+F_z(s)=\int_{-1}^1
+ K(u)\frac{e^{-(s+izu)}}{s+izu}\,du,
+\qquad s\notin[-iz,iz].
+$$
+
+它在所示切段外全纯。在半平面 $\Re(s/z)>0$ 中，切段位于边界，$F_z$ 与 $I_z$ 均全纯；二者在实数 $s>1/2$ 上相等，恒等定理给出该半平面内的相等。对完整零点和仍保留水平表达的快速下降，不把所有单项的 Cauchy 表达直接作绝对求和。
+
+第一步：将完整变换接到正半平面的局部有限切段外。置
+
+$$
+\lambda_\rho=iz_\rho=\rho-1/2,\qquad
+\mathcal C=\bigcup_{\gamma>0}[-\lambda_\rho,\lambda_\rho],\qquad
+D=\{\Re s>0\}\setminus\mathcal C.
+$$
+
+设一个紧集满足 $\Re s\ge\delta>0$、$|\Im s|\le T$。若 $s=t\lambda_\rho$ 落在该紧集、$|t|\le1$，则 $|\Re\lambda_\rho|<1/2$ 强迫 $|t|\ge2\delta$，因而 $\gamma\le T/(2\delta)$。有界零点计数说明只有限多切段能遇到该紧集。于是 $\mathcal C$ 在正半平面相对闭，$D$ 为开集。
+
+同时，对所有充分大的 $\gamma$，该紧集上
+
+$$
+\Re(s/z_\rho)
+\ge \frac{\delta\gamma-T/2}{|z_\rho|^2}>0.
+$$
+
+因此在每个这样的局部窗口中，只需把有限多个低零点项写成 $F_z$，其余项用 $I_z$。第 28 节的固定条带下降界使高零点尾部正常收敛且全纯。不同窗口的表达在重叠处相等，因为替换的单项满足 $F_z=I_z$。它们定义了 $D$ 上单值全纯函数 $\widetilde G$，延拓原 $G$。
+
+$D$ 是连通的：从任一 $s\in D$ 沿 $t\mapsto ts$、$t\ge1$ 向外走，不会遇到同射线的切段，否则 $s$ 原本就属于那条切段；其他射线不相交。走到 $\Re s>1/2$ 后，所有切段已在左侧，而该右半平面连通。因此后续恒等定理可以使用同一个连通域，不能为不同端点独立选择解析分支。
+
+第二步：最终非负强迫真实 Laplace 变换在整个正半平面全纯。若 $q(R)\ge0$ 对所有 $R\ge R_0$ 成立，第 28 节所复用的 Landau–Widder 收敛横坐标定理给出
+
+$$
+\int_{R_0}^\infty e^{-sR}q(R)\,dR<\infty
+\qquad(s>0).
+$$
+
+其非负性与在较小正实数参数上的收敛，使定义积分在整个 $\Re s>0$ 正常收敛并全纯。加回有限初始区间，得到真实变换 $L(s)$ 在整个正半平面全纯。在 $\Re s>1/2$ 它等于 $\widetilde G$；由 $D$ 连通，在全部 $D$ 上相等。
+
+第三步：任一离线零点给出正半平面内不能消除的端点。若 RH 不成立，零点对称性给出 $\lambda_0=\rho_0-1/2=a_0+i\gamma_0$，其中 $a_0>0$、$\gamma_0>0$。在同一正射线上，零点只能是 $t\lambda_0$，且
+
+$$
+0<t<\frac1{2a_0}.
+$$
+
+因此该射线上纵坐标有界，零点只有有限多个。选此射线上模最大的零点，仍记为 $\lambda_0$。这里仅选**一条射线上的最外点**，没有假设全部零点中存在最右点。
+
+由局部有限性，可取以 $\lambda_0$ 为中心、闭包位于正半平面的圆盘 $B$，使它不遇到任何其他切段；较短同射线切段也已在圆盘外。同一个零点的全部重数合并。故在 $B$ 去掉末端切段后，
+
+$$
+\widetilde G(s)=H(s)+2m_{\rho_0}p(z_{\rho_0})F_{z_{\rho_0}}(s),
+$$
+
+其中 $H$ 在整个 $B$ 全纯。系数不为零，因为 $z_{\rho_0}$ 的实部为 $\gamma_0>0$，不可能是 $p$ 的根 $0,\pm i/2$。负纵坐标配对已通过 $p$ 和 $\Phi^2$ 的偶性成为前面的系数二，不能在这里再按相反符号抵消。
+
+使用整函数身份
+
+$$
+\frac{e^{-v}}v=\frac1v+E(v),\qquad E\text{ 整函数},
+$$
+
+得到 $F_{z_{\rho_0}}$ 的奇性部分
+
+$$
+\int_{-1}^1\frac{K(u)}{s+\lambda_0u}\,du
+=\frac1{\lambda_0}
+\int_{-1}^1\frac{K(u)}{s/\lambda_0-u}\,du,
+$$
+
+其中第二式用 $K$ 的偶性。其余项在整个 $s$ 平面全纯。这个 Cauchy 变换沿末端切段两侧的边界值之差，在 $s=\lambda_0t$、$t<1$ 且充分靠近一时为非零常数乘 $K(t)$。$K(t)>0$，故差不为零。虽然 $K$ 在端点平坦，任意靠近端点的内部仍具有非零跳跃，因此不能通过端点全纯延伸。
+
+第二步却要求它等于整个 $B$ 上全纯的 $(L-H)/(2m_{\rho_0}p(z_{\rho_0}))$。圆盘去掉从边界到端点的切段是连通的，这份身份同时约束切段两侧；两侧来自同一全纯延拓，跳跃必须为零，矛盾。因而不存在离线零点。
+
+反向直接复用经典 Weil 正性：RH 下所有 $z_\rho=\gamma$ 为实数，$p(\gamma)\ge0$ 且 $\Phi(R\gamma)$ 为实数，所以完整正常收敛的谱和逐项非负，所有实尺度 $R\ge1$ 均满足 $\mathcal W(R)\ge0$。$\square$
+
+**候签推论 29.2（同测试证书的尾部误差要求）。** 若原普通 Sonin 迹合同对同一实际 $f_R$ 及支撑完整的 $S_R$ 给出
+
+$$
+\mathcal W(R)=\sigma_{S_R}(f_R)-D_{{\rm lin},S_R}(f_R)-N_{S_R}(f_R),
+$$
+
+且实际单侧上估 $U_R\ge N_{S_R}(f_R)$ 在全部充分大的实尺度上提供非负证书，置
+
+$$
+\epsilon_R=U_R-N_{S_R}(f_R)\ge0,\qquad
+c_R=\sigma_{S_R}(f_R)-D_{{\rm lin},S_R}(f_R)-U_R\ge0.
+$$
+
+若这两项可测，则对每个整数 $n\ge0$，
+
+$$
+\int_{R_0}^\infty R^n\epsilon_R\,dR<\infty,
+\qquad
+\int_{R_0}^\infty R^nc_R\,dR<\infty.
+$$
+
+特别地，对任意 $n\ge0$，其 dyadic 总质量均为 $o(T^{-n})$。它们不能具有最终严格正的多项式下界；这里没有推出逐点超多项式下降，稀疏尖峰仍被允许。
+
+证明。精确账本是 $\mathcal W=\epsilon_R+c_R$，两份非负量均不超过 $\mathcal W$。复用候签定理 28.1 的尾矩即可。对 dyadic 区间用 $R\ge T$ 后再取尾积分趋于零，得到所述 $o$ 界。第 19.3 节的 $\|f_R\|_2^2\ge v^2/4>0$ 同时排除最终证书余量 $cR^{-M}\|f_R\|_2^2$，而一个只有 $O(R^{-M})$ 的误差上界并未被此论证反驳。$\square$
+
+回接物理几何时保留 $P_{S_R}=TPK_{S_R}^{-1}PT^*$ 的普通逆、$C_{S_R}=Q\mathcal F_{S_R}Q$ 及完整有符号项 $N=E^+-E^-$。候签定理 29.1 不需要假设 $C_{S_R}^2$ 为迹类，也不需要 $A_f$ 与 $C_{S_R}$ 交换；实际普通迹身份仍按第 18—21 节的原合同承担。
+
+这份桥将一个受限族的目标与原 RH 目标接上，但尚未给出 $\mathcal W(R)$ 的最终非负估计。下一步真正承重的是同一测试上的完整有符号比较，而不是再次命名检测判据、证明标准块代数或重做有限支撑正性。五模式地址和四相运输也尚未供应实际素数项的符号；FIB 到物理素数伸缩的交织，以及全部目标整数的 Robin 上界，仍各有未证义务。
+
+本章复用完整显式公式、Landau–Widder 和 Cauchy 边界跳跃等经典工具；一般的一形状最终非负判据复用 Suzuki 的上述三角形族。第 28—29 节提供的是原固定光滑族的接口推导，未认证世界原创性。所核对的 Suzuki 式 (5.15)、§3.4、Theorem 11.1 及 arXiv:2209.12832v1 的 §3，分别供应完整显式公式、既有三角形检测族与正性—收敛横坐标工具，没有在这些段落直接供应本卷的多项式加权光滑族命题。未找到该精确供应者只说明限定的检索范围，不能推出文献不存在，也不把变换形状本身计为新方法。
+
+## 追加锚（本行以下为增补区）
+
+## 30. 原测试族的正尺度平均与低零点贡献
+
+本章保留第 19.3 节的同一个 $\phi$、$f_R$，以及第 28 节的完整显式公式，不另换一个更容易取正的测试形状。所增加的是这一实际测试族的正权混合；Hardy 空间的 Poisson–Jensen 对数主控、凸 Jensen 不等式及有限高度零点资料均作为既有输入复用。下面的估计是纸面接口推导，未作 Lean 核验。
+
+**定义 30.1（黄金尺度带上的同测试平均）。** 令
+
+$$
+b=\varphi^3=2+\sqrt5,\qquad M=\int_{\mathbb R}\phi(x)\,dx>0,
+$$
+
+$$
+w(u)=\frac{\phi\bigl((u-(1+b)/2)/(b-1)\bigr)}{(b-1)M}.
+$$
+
+这个权重的支撑为 $[1,b]$，在内部严格为正，且 $\int_1^bw(u)\,du=1$。沿用 $q(R)=R^{-3}\mathcal W(R)$，定义
+
+$$
+\bar q(R)=\int_1^b w(u)q(uR)\,du,\qquad
+\bar{\mathcal W}(R)=R^3\bar q(R)
+=\int_1^bw(u)u^{-3}\mathcal W(uR)\,du.
+$$
+
+这里是同一来源族的正混合，不断言它等于某个单独 $f_R$ 的 Weil 值。因 $u^{-3}>0$，若每个被混合的完整形式非负，则平均非负；反向不能从平均非负推出每个尺度都非负。
+
+设 $K=\phi*\phi$，则
+
+$$
+\bar K(v)=\int_1^b\frac{w(u)}uK(v/u)\,du,
+\qquad
+\widehat{\bar K}(z)=\int_1^bw(u)\Phi(uz)^2\,du.
+$$
+
+$\bar K$ 为实偶光滑函数，支撑恰为 $[-b,b]$，且在 $(-b,b)$ 严格为正。该身份仍保留多项式因子 $p(z)=z^2(1+4z^2)^2$；复零点处依旧是解析平方。选择 $b=\varphi^3$ 只规定了尺度带宽，没有建立 FIB 来源递归与实际素数伸缩的交织。
+
+**候签引理 30.1（正尺度平均的实频率下界）。** 对原实偶非负 bump，设 $0<a_1<b_1$，$\Delta=b_1-a_1$。若可积权重 $w$ 在整个积分域非负，并在 $[a_1,b_1]$ 上几乎处处满足 $w\ge w_0>0$，则对每个实数 $r>0$，
+
+$$
+\int w(u)\Phi(ur)^2\,du
+\ge w_0M^2\Delta
+\exp\!\left(-\frac{\pi b_1^2r}{2\Delta}\right).
+$$
+
+证明。直接应用经典有界解析函数的 Poisson–Jensen 对数主控。置
+
+$$
+B(z)=e^{iz/2}\Phi(z)/M,
+\qquad \ell(t)=-\log|\Phi(t)/M|\ge0.
+$$
+
+在上半平面，$B$ 是非零的有界全纯函数且 $|B|\le1$：将它写成 $M^{-1}\int\phi(x)e^{iz(1/2-x)}dx$，指数中的 $1/2-x$ 属于 $[0,1]$。偶性与非负性又给出 $B(iy)\ge e^{-y/2}$，$y>0$。经典对数主控的准确方向是
+
+$$
+\frac y\pi\int_{\mathbb R}\frac{\ell(t)}{t^2+y^2}\,dt
+\le-\log|B(iy)|\le\frac y2.
+$$
+
+不需要 $B$ 无零点或为外函数。内零点及奇异内因子的损耗非负，不能把这个不等式错误地替换为无损耗等式。令 $y\downarrow0$ 并用非负函数单调收敛，再用偶性，得到
+
+$$
+\int_0^\infty\frac{\ell(t)}{t^2}\,dt\le\frac\pi4.
+$$
+
+$\Phi(0)=M$，且偶解析性给出 $\ell(t)=O(t^2)$；实零点处的对数按局部可积函数解释。故
+
+$$
+\int_{a_1}^{b_1}\ell(ur)\,du
+=\frac1r\int_{a_1r}^{b_1r}\ell(t)\,dt
+\le\frac{\pi b_1^2r}{4}.
+$$
+
+原 $\Phi$ 在实轴为实数。对 $e^{-2\ell}$ 用凸 Jensen 不等式，并保留整个积分域上的 $w\ge0$，即得陈述。$\square$
+
+该对数主控是经典 Jensen 公式／Hardy 内外因子分解的直接应用，可直接核对 [Khabibullin, arXiv:2005.00408v1](https://arxiv.org/html/2005.00408v1), §1.1、式 (1.1) 所重述的经典 Poisson–Jensen 公式。对本章有界解析函数作圆盘映射，再用 Jensen 与 Fatou 取得所需方向；不是建立新的 Hardy 理论。Ahlfors, *Complex Analysis*, §5.3.1 与 Rudin, *Real and Complex Analysis*, Theorem 17.17 是标准书籍来源，其原书原页未独立复核。
+
+**候签推论 30.2（已验证低零点部分的正指数下界）。** 令 $T\ge15$，假设所有 $0<\gamma\le T$ 的实际非平凡零点都在临界线上，且其中有一个实际零点的纵坐标 $\gamma_0\in[14,15]$。重数保持为实际 $m_\rho$。定义
+
+$$
+P_T(R)=2\sum_{0<\gamma\le T}m_\rho p(\gamma)
+\int_1^bw(u)\Phi(uR\gamma)^2\,du.
+$$
+
+则所有实数 $R\ge1$ 满足
+
+$$
+P_T(R)\ge e^{-120R}>0.
+$$
+
+证明。只保留所指定的一个实际临界零点，其余低零点项非负。对原 $\phi$，
+
+$$
+M\ge\frac12e^{-4/3},\qquad M\le1.
+$$
+
+第一式只在 $[-1/4,1/4]$ 积分。取 $[a_1,b_1]=[5/4,5/2]$，$\Delta=5/4$。由 $b=2+\sqrt5$ 得整个核心区间上
+
+$$
+\left|\frac{u-(1+b)/2}{b-1}\right|\le\frac37,
+\qquad
+w(u)\ge\frac{e^{-49/13}}{(b-1)M}\ge\frac{e^{-4}}{4M}.
+$$
+
+因此 $w_0M^2\Delta\ge(5/32)e^{-16/3}$。候签引理 30.1 取 $r=R\gamma_0$，并用 $m_{\rho_0}\ge1$、$\gamma_0\in[14,15]$，得到
+
+$$
+P_T(R)\ge\frac{5p(14)}{16}e^{-16/3}
+\exp\!\left(-\frac{75\pi}{2}R\right).
+$$
+
+其中 $p(14)=196\cdot785^2=120780100$，所以前因子大于一；$75\pi/2<120$。这些粗化可分别用 $e<3$ 与 $\pi<22/7$ 支付，给出陈述。$\square$
+
+这份下界使用实际低零点，不把非临界复谱项换成模平方；它也不依赖逐一计算 $T$ 以下所有变换值。正平均的作用是跨过 $\Phi$ 实轴上的孤立零点，以同一个固定低零点取得所有实尺度上的正贡献。指数下界与第 28 节排除的最终正多项式下界不同；完整高零点余项仍须另行支付。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 完整高零点尾界与有限实尺度正性
+
+本章把第 30 节的正贡献下界与同一平均的全部未知高零点尾部比较。使用已发表的有限高度验证，不重算零点，不把它升级为无界高度验证；零点计数亦直接复用现成显式界。新增纸面内容是这些输入对原 constrained 测试族的共同参数应用，未作 Lean 核验，也不认证文献原创性。
+
+**候签引理 31.1（原 bump 的全复方向衰减常数）。** 对第 19.3 节的原 $\phi$ 及 Fourier 约定 $\Phi(z)=\int\phi(x)e^{-izx}dx$，所有整数 $n\ge0$ 与所有 $z\in\mathbb C$ 满足
+
+$$
+\|\phi^{(n)}\|_1\le12^n(n!)^2,
+\qquad
+|\Phi(z)|\le4\exp\!\left(\frac{|\Im z|}{2}-\frac{\sqrt{|z|}}6\right).
+$$
+
+证明。在 $|x|<1/2$ 置 $d_x=1/2-|x|$。考虑以 $x$ 为心、半径 $d_x/2$ 的复圆盘。由
+
+$$
+\frac1{1-4\zeta^2}
+=\frac14\left(\frac1{1/2-\zeta}+\frac1{1/2+\zeta}\right),
+$$
+
+以及 $a>r$、$|h|\le r$ 时 $\Re(1/(a+h))\ge1/(a+r)$，离 $x$ 最近的端点贡献至少 $1/(6d_x)$，另一端点项的实部为正。因此
+
+$$
+\Re\frac1{1-4\zeta^2}\ge\frac1{6d_x}.
+$$
+
+圆盘不遇到分母的零点。Cauchy 导数估计给出
+
+$$
+|\phi^{(n)}(x)|\le n!\left(\frac2{d_x}\right)^n e^{-1/(6d_x)}
+\le12^n(n!)^2,
+$$
+
+其中第二步取 $t=1/(6d_x)$ 并用 $t^ne^{-t}\le n!$。第一份界在两个端点趋于零，零延拓平坦；支撑长度为一，所以同样的常数支付 $L^1$ 范数。对 $z\ne0$ 作 $n$ 次 Fourier 分部积分，端点项消失，得到
+
+$$
+|\Phi(z)|\le e^{|\Im z|/2}\frac{12^n(n!)^2}{|z|^n}.
+$$
+
+取 $n=\lfloor\sqrt{|z|/48}\rfloor$。由 $n!\le n^n$，右侧不超过 $e^{|\Im z|/2}4^{-n}$，而
+
+$$
+4^{-n}\le4\exp\!\left(-\frac{\log4}{\sqrt{48}}\sqrt{|z|}\right)
+\le4e^{-\sqrt{|z|}/6}.
+$$
+
+$n=0$ 及 $z=0$ 直接用 $|\Phi(z)|\le Me^{|\Im z|/2}$。$\square$
+
+标准 bump 的实频率鞍点渐近已有 [Johnson, arXiv:1508.04376v1](https://arxiv.org/html/1508.04376v1), §2 的直接分析；[Tlas, arXiv:2003.12364v2](https://arxiv.org/html/2003.12364v2) 的引理与定理还提供相关渐近及另一种具有正、单调 Fourier 变换的紧支撑构造。它们不在所述陈述中直接给出本章原固定 $\Phi$ 的全复方向显式常数；换成 Tlas 的函数会改变指定测试。本章使用标准 Cauchy/Gevrey 方法支付当前需要的常数，不把这些成熟方法当成新理论。在非实方向必须保留 $e^{|\Im z|/2}$；只有实轴衰减不足以支付未验证零点。
+
+**定义 31.1（按实际高度切开的完整余项）。** 假设 $T\ge5$ 以下的全部实际非平凡零点均在临界线上。对第 30 节的同一 $w$，按实际解析重数置
+
+$$
+\bar q(R)=P_T(R)+\mathcal R_T(R),
+$$
+
+$$
+\mathcal R_T(R)=2\sum_{\gamma>T}m_\rho p(z_\rho)
+\int_1^bw(u)\Phi(uRz_\rho)^2\,du,
+\qquad z_\rho=\gamma-i(\beta-1/2).
+$$
+
+$P_T$ 包含所有 $0<\gamma\le T$ 的零点；尾部包含所有更高零点，不把实际 $\beta$ 设成 $1/2$。实尺度上的完整和及余项均为实数，估计其绝对值时仍先保留解析平方再用三角不等式。
+
+令 $N_+(Y)$ 按重数计数 $0<\gamma\le Y$ 的全部零点。直接供应者是 [Trudgian, arXiv:1208.5846v2](https://arxiv.org/pdf/1208.5846v2), Corollary 1，PDF p.2：对 $Y\ge Y_0\ge e$，
+
+$$
+\left|N(Y)-\frac Y{2\pi}\log\frac Y{2\pi e}-\frac78\right|
+\le0.111\log Y+0.275\log\log Y+2.450+\frac{0.2}{Y_0}.
+$$
+
+取 $Y_0=e$，用 $\log\log Y\le\log Y$ 与 $\pi>3$，在 $Y\ge5$ 上粗化为
+
+$$
+N_+(Y)\le\left(\frac Y6+4\right)\log Y
+\le Y\log Y.
+$$
+
+原文对 $0<\gamma<Y$ 计数；从非零点高度取右极限即可保留含端点的约定。该作者稿的定理与量词已核读，不重新证明计数界，也不宣称它与出版版逐字一致。更尖锐的计数常数不是这份宽包络所需的新输入。
+
+**候签命题 31.2（同平均的完整未知尾部）。** 在上述计数界下，若 $R\ge1$ 且 $X=\sqrt{RT}/3\ge28$，则
+
+$$
+|\mathcal R_T(R)|\le6000\,T^7\log T
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RT}}3\right).
+$$
+
+证明。对 $\gamma\ge1$，$|\Im z_\rho|<1/2$ 给出
+
+$$
+|p(z_\rho)|\le45\gamma^6.
+$$
+
+候签引理 31.1 对所有 $1\le u\le b$ 给出
+
+$$
+|\Phi(uRz_\rho)|^2
+\le16\exp\!\left(\frac{bR}{2}-\frac{\sqrt{R\gamma}}3\right).
+$$
+
+由于 $w\ge0$、$\int w=1$，先得到完整尾部绝对界
+
+$$
+|\mathcal R_T(R)|
+\le1440e^{bR/2}
+\sum_{\gamma>T}m_\rho\gamma^6e^{-\sqrt{R\gamma}/3}.
+$$
+
+置 $\alpha=\sqrt R/3$、$F(t)=t^6e^{-\alpha\sqrt t}$，则 $F$ 在 $[T,\infty)$ 上递减。对实际含重数计数作 Stieltjes 分部积分，保留高度 $T$ 的头尾约定：
+
+$$
+\begin{aligned}
+\sum_{\gamma>T}m_\rho F(\gamma)
+&=-N_+(T)F(T)+\int_T^\infty N_+(t)(-F'(t))\,dt\\
+&\le\frac\alpha2\int_T^\infty t^{13/2}\log t\,e^{-\alpha\sqrt t}\,dt.
+\end{aligned}
+$$
+
+$T$ 处全部零点重数在 $P_T$ 中，不在余项中；末端 $N_+(t)F(t)$ 趋于零。取 $y=\alpha\sqrt t$，上述积分等于
+
+$$
+T^7\int_X^\infty
+\left(\frac yX\right)^{14}
+\left(\log T+2\log\frac yX\right)e^{-y}\,dy.
+$$
+
+再写 $y=X+s$。因为 $X\ge28$，
+
+$$
+(1+s/X)^{14}\le e^{s/2},\qquad
+\log(1+s/X)\le s/X,
+$$
+
+所以该值不超过
+
+$$
+T^7e^{-X}\left(2\log T+\frac8X\right)
+\le4T^7\log T\,e^{-X}.
+$$
+
+$1440\cdot4=5760\le6000$，给出陈述。这份可和界也支付有限尺度区间上的求和、平均交换；没有以有限零点截断代替完整显式公式。$\square$
+
+**候签定理 31.3（原族平均在有限实尺度带上的正性）。** 采用已发表的实际零点资料：所有 $0<\gamma\le H$ 的零点在临界线上，其中
+
+$$
+H=3\,000\,175\,332\,800,
+$$
+
+且有一个实际临界零点 $\gamma_0\in[14,15]$。则第 30 节的同一平均对所有实数 $1\le R\le H/250000$ 满足纸面估计
+
+$$
+\boxed{\bar q(R)\ge\frac12e^{-120R}>0,}
+\qquad
+\bar{\mathcal W}(R)\ge\frac{R^3}{2}e^{-120R}.
+$$
+
+上端点是 $12\,000\,701.3312$；不只是在这个区间中抽取整数或样本尺度。
+
+所用验证高度直接来自 [Platt–Trudgian, arXiv:2004.09765v1](https://arxiv.org/html/2004.09765v1), Theorem 1。这是该文以区间算术和零点总数核对取得的有限验证；本章复用其结论，没有重跑计算。[Odlyzko 的公开零点表](https://www-users.cse.umn.edu/~odlyzko/zeta_tables/) 的 `zeros1` 首项为 $14.134725142$，表索引说明误差不超过 $3\cdot10^{-9}$，因此供应所需宽区间 $[14,15]$；其 [MathWorld 表项](https://mathworld.wolfram.com/RiemannZetaFunctionZeros.html) 给出相同首项。这里只复用既有资料，不新增首零点认证。
+
+证明。候签推论 30.2 及候签命题 31.2 对同一谱分解给出
+
+$$
+\bar q(R)\ge e^{-120R}-A_H
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RH}}3\right),
+\qquad A_H=6000H^7\log H.
+$$
+
+无需扫描尺度即可支付剩余常数：$H<e^{30}$、$\log6000<9$、$\log\log H<4$ 给出 $\log A_H<230$，同时 $\sqrt H/12>100000$、$b<5$。若 $1\le R\le H/250000$，则 $\sqrt{RH}\ge500R$，且 $X\ge28$。拆开 $1/3=1/4+1/12$，尾界与正下界之比的对数满足
+
+$$
+\begin{aligned}
+\log\frac{A_He^{bR/2-\sqrt{RH}/3}}{e^{-120R}}
+&=\log A_H+\left(120+\frac b2\right)R
+-\frac{\sqrt{RH}}4-\frac{\sqrt{RH}}{12}\\
+&<230+\frac{245}{2}R-125R-100000\\
+&<-\log2.
+\end{aligned}
+$$
+
+所以完整未知余项的绝对值小于正下界的一半，得到陈述。$\square$
+
+**定义 31.2（同一支撑完整切面上的物理消费者）。** 回接第 18—21 节的普通 Sonin 迹合同时，对固定 $R$，选一份包含所有实际素数 $p\le e^{bR}$ 的共同支撑完整集合 $S_R$，使整个 $1\le u\le b$ 上的 $f_{uR}$ 均使用这同一集合。定义
+
+$$
+\bar\sigma_R=\int_1^bw(u)u^{-3}\sigma_{S_R}(f_{uR})\,du,
+$$
+
+并以相同权重定义 $\bar D_{{\rm lin},R}$、$\bar N_R$。在原普通迹合同及这些积分的存在条件下，精确身份是
+
+$$
+\bar{\mathcal W}(R)=\bar\sigma_R-\bar D_{{\rm lin},R}-\bar N_R,
+\qquad \bar N_R=\overline{E^+}_R-\overline{E^-}_R.
+$$
+
+因此候签定理 31.3 对这同一实际正混合供应的是有限尺度内的共同有符号余量。仍使用 $P_{S_R}=TPK_{S_R}^{-1}PT^*$ 的普通逆；不假设 $C_{S_R}^2$ 为迹类，也不假设 $A_f$ 与 $C_{S_R}$ 交换。不能为正迹、线性迹和角能量分别优化不同 $S$ 后把所得最佳值合在一起；也没有把这些条件性的普通迹接口当成已取得全域解析证明。
+
+固定 $H$ 的以上绝对尾界含 $e^{bR/2}$，其与正下界之比的对数为
+
+$$
+\log A_H+(120+b/2)R-\sqrt{RH}/3.
+$$
+
+该表达在 $R\to\infty$ 时趋于正无穷。这说明当前比较不能支付全部充分大尺度，不说明实际余项变成负值。要延伸至无界 $R$，仍须取得实际未知零点尾部的更强共同有符号估计，或另一份能支付全部尺度的独立信息；不能把 $H\to\infty$ 当成合法已验证输入。
+
+这份有限正平均不推出每个 $q(uR)$ 非负，不推出第 29 节所需的全部充分大实尺度正性，也不证明 RH、Robin 或 FIB 到实际素数作用的交织。Suzuki 的已有一形状最终符号判据、经典 Poisson–Jensen/Gevrey 方法、Trudgian 的计数界与 Platt–Trudgian 的零点验证均归各自来源；本章只填原测试族此前缺少的一个有限尺度共同估计接口，不把改换平均或重述文献结果当成新判据。
+
+## 追加锚（本行以下为增补区）
