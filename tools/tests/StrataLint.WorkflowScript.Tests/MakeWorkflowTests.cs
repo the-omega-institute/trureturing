@@ -50,6 +50,8 @@ public sealed partial class MakeWorkflowTests
         "build",
         "emit",
         "scribe-release",
+        "scribe-release-publish",
+        "scribe-release-fetch",
         "ingest",
         "align-digestion-status",
         "refresh-source-registry",

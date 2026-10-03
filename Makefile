@@ -6,10 +6,10 @@ WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
 CENSUS_OUT ?= build/census/$(shell date -u +%Y%m%dT%H%M%S)
 CENSUS_PREFIX ?= D5
-.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit scribe-release ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr-open pr-watch gate census census-derivational
+.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit scribe-release scribe-release-publish scribe-release-fetch ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr-open pr-watch gate census census-derivational
 
 help:
-	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make scribe-release  Rebuild and verify local Scribe release assets'
+	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack'
 
 test:
 	@set -e; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)"
@@ -44,6 +44,16 @@ emit:
 
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
+
+scribe-release-publish:
+	@/bin/bash tools/scripts/scribe-release.sh publish --prefix "$$PREFIX" --target "$$TARGET"
+
+scribe-release-fetch:
+	@/bin/bash tools/scripts/scribe-release.sh fetch "$$DIGEST" --prefix "$$PREFIX"
+
+scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources
+scribe-release-publish: export TARGET ?=
+scribe-release-fetch: export DIGEST ?=
 
 ingest:
 	@/bin/bash tools/scripts/ingest.sh ingest "$(BASE)" "$(SOURCE)"

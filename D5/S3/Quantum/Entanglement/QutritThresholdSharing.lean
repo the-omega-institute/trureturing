@@ -66,7 +66,8 @@ private theorem encoding_entry (a b c s : ZMod 3) :
     simp [Prod.mk.injEq, Ne.symm hja]
   · simp
 
-private theorem normalization :
+/-- The squared Fourier normalization `(1/√3)^2 = 1/3`. -/
+theorem normalization :
     (Real.sqrt 3 : ℂ)⁻¹ * (Real.sqrt 3 : ℂ)⁻¹ = (3 : ℂ)⁻¹ := by
   have h : (Real.sqrt 3 : ℂ) * (Real.sqrt 3 : ℂ) = 3 := by
     norm_cast
