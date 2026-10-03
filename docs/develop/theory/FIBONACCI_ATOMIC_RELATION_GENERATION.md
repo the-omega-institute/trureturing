@@ -51565,7 +51565,7 @@ $$
 \le\lambda B+L\sum_{3\le n<h+1}(1-\lambda n).
 $$
 
-正收益的秩只有有限多个，故该界同样覆盖无限可行点；所给填充达到等号。于是 $h\sim\sqrt{2B/L}$、$\mathcal J(B)\sim\sqrt{2LB}$。用 $b_m\sim\kappa m^2/2$ 和 $J_m\sim\kappa m$ 得（358.15）。这是 §353.6 的同一经典放松优化，实际 $x_n=c_n/n$ 只是其中一个可行点。
+正收益的秩只有有限多个，故该界同样覆盖无限可行点；所给填充达到等号。于是 $h\sim\sqrt{2B/L}$、$\mathcal J(B)\sim\sqrt{2LB}$。用 $b_m\sim\kappa m^2/2$ 和 $J_m\sim\kappa m$ 得（358.15）。这是 §353.6 的同一经典放松优化，对每个 $m\ge1$，实际前缀在指标 $n\ge3$ 上给出可行点 $x_n^{(m)}=c_n/n$（$3\le n\le m$）、$x_n^{(m)}=0$（$n>m$），满足盒约束 $0\le x_n^{(m)}\le L$，且有限成本 $\sum_{n\ge3}nx_n^{(m)}=b_m$、收益 $\sum_{n\ge3}x_n^{(m)}=J_m$；$m=1,2$ 时取零序列，因 $c_1=c_2=0$，上述等式仍成立。
 
 上述目标对同一素数的每个首现素幂分别收费 $\log p/z(p^k)$；Robin 的饱和支撑目标却是
 
