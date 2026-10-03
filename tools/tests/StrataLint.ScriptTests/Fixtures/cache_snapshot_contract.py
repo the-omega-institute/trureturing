@@ -377,6 +377,26 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual(preferred, entry["requested_key"])
         self.assertEqual(actual, entry["key"])
 
+    def test_dependency_restore_receipt_shape_excludes_project_requested_and_miss_keys(self):
+        for outcome in ("success", "skipped", "failure"):
+            with self.subTest(outcome=outcome):
+                owner, keys, _ = self.native_seed("dependency")
+                key = keys["dependency"]["key"]
+                with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as result:
+                    owner.restore(self.root, keys, {"dependency": key}, ["dependency"],
+                                  outcomes={"dependency": outcome})
+                entries = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                           for line in result.getvalue().splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
+                self.assertEqual(1, len(entries), result.getvalue())
+                entry = entries[0]
+                if outcome == "success":
+                    self.assertEqual(dict(layer="dependency", status="restored", key=key,
+                                          partition=keys["partition"], transport="actions-native"), entry)
+                else:
+                    reason = ("Actions supplied no cache" if outcome == "skipped" else
+                              "Actions restore did not succeed or supplied no matched cache")
+                    self.assertEqual(dict(layer="dependency", status="miss", reason=reason), entry)
+
     def test_dependency_only_keys_do_not_perform_a_project_lookup(self):
         owner = self.restore_owner()
         arguments = [str(CACHE), "keys", "--repository", str(self.root), "--layers", "dependency"]
