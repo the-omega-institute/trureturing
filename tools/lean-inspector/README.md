@@ -91,29 +91,12 @@ pass. The ordinary parser kinds are `declaration`, `end`, `moduleDoc`,
 `in` and `mutual` recursively audit their inner commands. Unknown commands,
 `run_meta`, `run_elab`, macros, syntax, elaborators, initialization and evaluation
 commands receive `contract.reg:metaprogramming_not_allowed`.
+`run_cmd` and `notation`, including local notation, receive the same
+metaprogramming rejection for every Reg module and command body. Catalogs use
+typed RootCatalog entries; seals use typed Seal entries in SealedCatalog modules.
+No audit executes a source command or macro.
 
-The sole `run_cmd` exception is the 84 exact module/syntax fingerprints in
-`Contract.RegPolicy.catalogCommands`: 65 direct catalog literals, 16 snapshot
-do bindings, and 3 named contracts. The entire tree contributes identifiers,
-atoms, node kinds and child order; source positions and whitespace do not.
-The final expression must be a one-argument call, whose name resolves uniquely
-to `LeanInformationAudit.RootCatalogs.declare`. The three pinned named forms
-use the existing `RootCatalogs.declare` short spelling under `open
-LeanInformationAudit`; their resolved target is fully qualified. References,
-quoted Names, suffix matches, changed arguments and additional statements
-have no entry. No audit executes a source command or macro.
-
-Local notation has exactly eighteen module/syntax bindings:
-
-| Module | Exact notation |
-| --- | --- |
-| `Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau` | `local notation "F" => Nat.fib` |
-| `Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry` | `local notation "F" => Nat.fib` |
-| `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost` | `local notation "kact" => fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X` |
-| `Reg.D5.S3.Weil.PrimeNumberTheorem.{PntContourBound,PntLongVertical,PntShortContour,PntSmoothing,PntTail}` | each admits `local notation "ζ" => riemannZeta`, `local notation "ζ'" => deriv ζ`, and `local notation "𝓜" => mellin` |
-
-Changing the token or right hand term loses permission; duplicate catalog or
-notation commands are rejected. Standalone `attribute` and `@[…]` accept
+Standalone `attribute` and `@[…]` accept
 only `instance` and `reducible`, with no priority or other attribute arguments.
 Local/scoped markers do not expand the attribute-name table. Unlisted names
 receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
@@ -187,17 +170,14 @@ Typed expected occurrences come only from RootCatalog. `ExpectedDeclaration`
 remains an interface type for negative compatibility probes, but an entry of that
 type always receives `contract.root_structure:independent_expected_not_allowed`.
 Its decoder and snapshot output are absent; there is no independent-expected
-fallback. Removing this type in P3 affects only the retired negative fixtures and
-the interface companion inventory; P0 has zero production declarations of it.
+fallback.
 
-The production report consumes legacy inputs pending the typed migration.
-Existing Reg modules pass the command/reference audit; typed discovery finds
-zero production typed entries. P2b splits catalogs and seals from D5 mirrors
-into `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
+The production report consumes legacy inputs. Typed discovery enforces the
+source command and reference rules above. Catalogs and seals from D5 mirrors
+use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
 `SealedCatalog.lean`. Mirrors retain their registrations at their original paths;
 catalogs import those leaves, and leaves do not import catalogs. Catalog root IDs
-use the catalog module; registrationModuleName retains the leaf owner. P3
-installs typed discovery and removes the pinned legacy command permissions.
+use the catalog module; registrationModuleName retains the leaf owner.
 Catalogs and seals are optional analysis groups: registration assessment does
 not require catalog membership. Missing seals remain visible as absent report
 artifacts; migration correspondence is checked separately.
@@ -207,14 +187,11 @@ recorded projections and the pinned compiler's explicitly listed recursor,
 noConfusion, constructor and sizeOf companions. Unknown compiler products
 receive `contract.interface:compiled_non_type`.
 
-P2b rewrites all 544 legacy commands (426 registrations, 23 enrollments,
-84 catalogs and 11 seals), the three local notations, and all attribute/reducible
-uses to the fixed grammar. P3 removes all 84 catalog `run_cmd` permissions and
-their table, all three notation permissions and their table, the temporary
-instance/reducible attribute permissions, and legacy registration/enrollment/seal
-command kinds. Attribute uses required by mathematical code must first be
-expressed by the fixed grammar rather than retained as exceptions. P3 also deletes
-the four legacy evalExpr paths; typed discovery has no evaluation fallback.
+Reg source migration uses an external generator to produce the fixed grammar.
+Catalog commands become typed RootCatalog entries, seals become typed Seal
+entries, and local notation is expanded at its use sites and removed.
+Mathematical attributes obey the finite attribute grammar above.
+Typed discovery has no evaluation fallback.
 
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
