@@ -8732,3 +8732,736 @@ $$
 全部结论依赖公开 $t=1/2$、共同全支撑整窗产品律、原递增优先模板、已知通道族及正 $a,\rho$。未知 $t$、异质窗口律、跨窗依赖、主动查询、任意教师或噪声、隐藏标签反转均不在此合同中。样本下界是最坏律而非每个固定律的 $\rho^{-1}$ 下界；没有计数器数量、批次数、运行时间、物理费用或有限精度树头的最优性结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 自由五质量的尖锐教师重叠、整数相关分数与二次稀有信息代价
+
+同一个递增三窗口教师，在共同整窗律下具有与位置无关的类分布和平方范数。这个不变性使有符号标签相关分数无需输入质量即可排序；但消去质量描述不消去取得稀有分歧的代价。本节允许五种字母的质量全部未知，证明所有教师重叠模式的精确最小平方分离为 $8\rho^2(1-2\rho)$，并把它同时接到有限整数排序的置信上界和不限资源的完整记录下界。半质量子类的线性稀有阶与自由质量类的二次稀有阶，由实际共同实现的门关系区分。
+
+### 57.1. 五质量全部未知的同律完整记录实验
+
+**定义 57.1（自由整窗律与原教师）。** 固定 $n\ge4$、 $0<\rho\le1/8$、 $0<a\le1$。按低到高位序取
+
+$$
+\begin{aligned}
+\Sigma&=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3,\\
+\mathcal M_\rho^{\rm free}
+&=\{\mu=(u,x,v,t,z):u,x,v,t,z\ge\rho,\quad u+x+v+t+z=1\},\\
+H&=t+z,\qquad L=t+x,\qquad \mathbb E_\mu[h\ell]=t.
+\end{aligned}
+\tag{57.1}
+$$
+
+五个质量均不作为学习器输入；尤其 $t=\mu(101)$ 不固定为 $1/2$。实际端点对 $(h,\ell)$ 的四格质量为 $(0,0):u+v$、 $(0,1):x$、 $(1,1):t$、 $(1,0):z$。因此窗内相关性由同一个字母决定， $t$ 不能换成 $HL$。局部字母及位序取[原卷定义104.2、§141.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#104-规范三位窗口正值-end-与任务相关的联合未来商)；高位优先的素项记号须反转，空窗仍消耗位置。
+
+每份记录的 $n$ 个整个窗口相互独立，同律于同一个未知 $\mu$；不同记录也独立。未知递增三元组及原教师为
+
+$$
+\begin{aligned}
+\Theta_n&=\{(p,q,r):1\le p<q<r\le n\},\qquad N=\binom n3,\\
+A_\theta&=h_p\ell_q,\qquad B_\theta=h_q\ell_r,\\
+G_{1,\theta}&=A_\theta,\qquad
+G_{2,\theta}=(1-A_\theta)B_\theta,\qquad
+C_\theta=A_\theta+2(1-A_\theta)B_\theta.
+\end{aligned}
+\tag{57.2}
+$$
+
+这些门取自本卷式（44.22）、（49.21）的点态多项式，目标保持三值 $C_\theta$，其中系数2不可删去。三个选中窗口组成虚拟教师；没有对跳过的位置进行完整首失败扫描，也没有对产品样本附加接缝或正值 End 筛选。
+
+固定类名和标签名 $0,1,2$，通道准确为
+
+$$
+R=\begin{pmatrix}
+1/2&1/4&1/4\\
+3/8&1/4&3/8\\
+1/4&1/4&1/2
+\end{pmatrix},
+\qquad
+R_\alpha=\alpha R+(1-\alpha)J/3,\qquad \alpha\in[a,1].
+$$
+
+$J$ 是全一矩阵，共同未知 $\alpha$ 在采样前固定。完整记录和标签对比为
+
+$$
+P_{\mu,\alpha,\theta}(w,j)
+=\mu^{\otimes n}(w)(R_\alpha)_{C_\theta(w),j},
+\qquad
+Z=\mathbf1_{\{Y=2\}}-\mathbf1_{\{Y=0\}}.
+\tag{57.3}
+$$
+
+测试记录独立于训练且同律。公开合同包括有限字母表、通道族和递增模板；它不认证某个实际采样装置满足这些假设。定义55.1已允许未知 $\alpha$，定义56.1还要求公开 $t=1/2$。这里比较的自由质量类包含那个半质量子类，准确恢复目标及记录接口保持相同。以下 $\log$ 为自然对数。
+
+### 57.2. 至多六个窗口与共同教师范数
+
+**引理 57.2（有限支撑约化与共同矩）。** 对同一个 $\mu$，所有 $\theta\in\Theta_n$ 的类质量及前两个矩相同，准确为
+
+$$
+\begin{aligned}
+\pi_1&=HL,\qquad \pi_2=HL(1-t),\qquad
+\pi_0=1-HL(2-t),\\
+\mathbb E_\mu C_\theta&=HL(3-2t),\qquad
+\mathbb E_\mu C_\theta^2=HL(5-4t).
+\end{aligned}
+\tag{57.4}
+$$
+
+三个类都具有正质量。任意两个教师的平方分歧
+
+$$
+d_\mu(\theta,\tau)=\mathbb E_{\mu^{\otimes n}}(C_\theta-C_\tau)^2
+\tag{57.5}
+$$
+
+只依赖其至多六个选中位置的升序重叠模式。
+
+**证明。** 不同窗口独立，故
+$\mathbb EA_\theta=\mathbb EB_\theta=HL$，而
+
+$$
+\mathbb E[A_\theta B_\theta]
+=\mathbb E h_p\,\mathbb E(\ell_qh_q)\,\mathbb E\ell_r
+=HtL.
+$$
+
+$C_\theta=1$ 当且仅当 $A_\theta=1$，而 $C_\theta=2$ 当且仅当 $A_\theta=0,B_\theta=1$。这给类质量和两个矩；中窗必须使用实际联合质量 $t$。 $H,L>0,t<1$ 给前两个非零类正质量；事件 $h_p=h_q=0$ 保证类0，故 $\pi_0\ge(1-H)^2>0$。
+
+令 $U=\{p,q,r,p',q',r'\}$， $k=|U|\le6$。对只依赖 $W_U$ 的任意函数 $f$，对其他窗口逐个求和得到
+
+$$
+\mathbb E_{\mu^{\otimes n}}f(W_U)
+=\sum_{w_U\in\Sigma^U}f(w_U)\prod_{i\in U}\mu(w_i),
+\tag{57.6}
+$$
+
+因为每个被积分窗口的质量和为1。把 $U$ 按升序双射到 $\{1,\ldots,k\}$，保留每个教师的三个角色与每个窗内的 $h,\ell$，便得到相同的乘积质量和同一门表达式。绝对位置及未选中窗口不贡献额外项。这是完整产品律中的解析约化，不依赖有限枚举。共同矩是总体结论，不能理解为不同候选的经验均值或经验平方范数也相等。证毕。 $\square$
+
+### 57.3. 全部递增重叠模式的尖锐分离
+
+**定理 57.3（自由五质量的精确最小分离）。** 对定义57.1的参数，
+
+$$
+\inf_{\mu\in\mathcal M_\rho^{\rm free}}\ 
+\inf_{\substack{\theta,\tau\in\Theta_n\\\theta\ne\tau}}
+d_\mu(\theta,\tau)
+=\gamma_\rho,\qquad
+\gamma_\rho:=8\rho^2(1-2\rho).
+\tag{57.7}
+$$
+
+特别，所有不同递增三元组在每个允许律上都给不同的原函数。
+
+**证明。** 先比较第一对 $(p,q)$ 和 $(p',q')$，写
+$A=h_p\ell_q,A'=h_{p'}\ell_{q'}$。如果 $A\ne A'$，恰有一个教师值为1，另一个值属于 $\{0,2\}$，无论第三位置怎样重叠，两个教师都不同。因此
+
+$$
+d_\mu(\theta,\tau)\ge P_\mu(A\ne A').
+$$
+
+两个不同递增第一对只能共用一个位置，或不共用位置；若共用位置，它具有相同角色或交叉角色。两个交叉相等不能同时成立，否则违背递增顺序。全部可能性为
+
+$$
+\begin{array}{c|c|c}
+\text{第一对关系}&\mathbb E[AA']&P(A\ne A')\\ \hline
+p=p',\ q\ne q'&HL^2&2HL(1-L)\\
+q=q',\ p\ne p'&LH^2&2LH(1-H)\\
+q=p'\ \text{或}\ q'=p&HtL&2HL(1-t)\\
+\{p,q\}\cap\{p',q'\}=\varnothing&H^2L^2&2HL(1-HL)
+\end{array}.
+\tag{57.8}
+$$
+
+每行由 $P(A=1)=P(A'=1)=HL$ 及
+$P(A\ne A')=2HL-2\mathbb E[AA']$ 得到。交叉行的共享窗口实际贡献 $t$，不是 $HL$。某个第三位置属于另一教师的第一对，或者两个第三位置相同，都不改变 $C=1\iff A=1$ 的强制区别，所以表中不遗漏这种交叠。
+
+同一个允许律满足
+
+$$
+2\rho\le H,L\le1-3\rho,\qquad
+H(1-H),L(1-L)\ge b_\rho:=2\rho(1-2\rho).
+\tag{57.9}
+$$
+
+后一个界来自凹函数 $s(1-s)$ 的区间端点：
+$3\rho(1-3\rho)-2\rho(1-2\rho)=\rho(1-5\rho)\ge0$。
+前两行于是至少为 $4\rho b_\rho=\gamma_\rho$。
+第三行用 $t\le H$，得到
+$2HL(1-t)\ge2L H(1-H)\ge4\rho b_\rho$；
+第四行用 $HL\le L$，得到
+$2HL(1-HL)\ge2H L(1-L)\ge4\rho b_\rho$。
+这些不等式全部作用于正在比较的同一个 $\mu$，没有将分别可达的极值假装成一个共同实现。
+
+剩下的情形是第一对完全相同而 $r\ne r'$。两个第三窗均在 $\{p,q\}$ 之外且彼此不同；直接相减得
+
+$$
+C_\theta-C_\tau
+=2(1-h_p\ell_q)h_q(\ell_r-\ell_{r'}),
+\qquad
+d_\mu(\theta,\tau)=8HL(1-t)(1-L).
+\tag{57.10}
+$$
+
+其中 $\mathbb E[(1-h_p\ell_q)h_q]=H-Ht=H(1-t)$，
+$P(\ell_r\ne\ell_{r'})=2L(1-L)$。由
+$H(1-t)\ge H(1-H)$，此距离至少为
+$8b_\rho^2$。又
+
+$$
+\frac{8b_\rho^2}{\gamma_\rho}=4(1-2\rho)\ge3,
+$$
+
+故同第一对的所有情形也满足所需界。这两个分支穷尽不同递增教师。
+
+为取得等号，取实际全支撑律和同一末位锚点族
+
+$$
+\mu_*=\left(\frac{1-3\rho}{2},\rho,
+\frac{1-3\rho}{2},\rho,\rho\right),\qquad
+H=L=2\rho,\qquad
+\theta_i=(i,n-1,n),\quad 1\le i\le n-2.
+\tag{57.11}
+$$
+
+所有五质量至少为 $\rho$，因为 $\rho\le1/8<1/5$。
+置 $B=h_{n-1}\ell_n$。对 $i\ne j$，
+
+$$
+C_{\theta_i}-C_{\theta_j}
+=(h_i-h_j)\ell_{n-1}(1-2B).
+$$
+
+$B\in\{0,1\}$ 使 $(1-2B)^2=1$，故差的绝对值在分歧上恰为1，且
+
+$$
+d_{\mu_*}(\theta_i,\theta_j)
+=P_{\mu_*}(C_{\theta_i}\ne C_{\theta_j})
+=2H(1-H)L=8\rho^2(1-2\rho).
+\tag{57.12}
+$$
+
+$n\ge4$ 保证至少两个这样的教师。这取得全类下界。系数2使上述末因子为正负一；将任务换成二值非零指示会改变这条分歧恒等式。证毕。 $\square$
+
+### 57.4. 共同范数如何消去排序中的干扰参数
+
+**引理 57.4（有符号分数与分歧方差）。** 对任意真实参数，每个条件通道行的坐标至少为 $1/4$，且
+
+$$
+\mathbb E[Z\mid X]=\frac{\alpha}{4}(C_\theta-1),
+\qquad
+\mathbb E[Z^2\mid X]=\beta:=\frac{8+\alpha}{12}\le\frac34.
+\tag{57.13}
+$$
+
+令 $D=C_\theta-C_\tau$、 $W=ZD$，则
+
+$$
+\mathbb EW=\frac{\alpha}{8}d_\mu(\theta,\tau),\qquad
+\mathbb EW^2=\beta d_\mu(\theta,\tau),\qquad
+\operatorname{Var}(W)\le\frac34d_\mu(\theta,\tau).
+\tag{57.14}
+$$
+
+所以正 $\alpha$ 时，真实教师唯一最大化总体分数
+$\mathbb E[ZC_\tau(X)]$。
+
+**证明。** 通道的每一行在标签2与0之差为
+$\alpha(c-1)/4$，在这两个标签上的质量和均为 $\beta$，给（57.13）。由引理57.2，
+
+$$
+\begin{aligned}
+\mathbb EW
+&=\frac\alpha4\mathbb E[(C_\theta-1)(C_\theta-C_\tau)]\\
+&=\frac\alpha4\bigl(\mathbb EC_\theta^2-\mathbb EC_\theta C_\tau\bigr)
+=\frac\alpha8\mathbb E(C_\theta-C_\tau)^2.
+\end{aligned}
+$$
+
+最后一步使用共同平方范数，前一步还使用共同一阶矩。条件二阶矩给第二式，减去均值平方只会降低方差。 $W$ 在两个教师相同的输入上严格为零；因此方差随实际分歧质量下降，而不是仅由全域范围控制。定理57.3再给严格正总体分数差。证毕。 $\square$
+
+通道的严格正性同时保留了标签不确定性。任意正质量输入事件 $E$ 上，令 $g_E=\mathbb E[C_\theta\mid E]$，则条件均值为 $\alpha(g_E-1)/4$、条件二阶矩仍为 $\beta$，故
+
+$$
+\operatorname{Var}(Z\mid E)
+=\beta-\frac{\alpha^2(g_E-1)^2}{16}
+\ge\frac23+\frac\alpha{12}-\frac{\alpha^2}{16}\ge\frac23.
+$$
+
+即使 $\alpha=1$，也没有无噪声教师标签。分数的稀有方差来自教师差在大部分输入上为零，而非该事件内标签确定。
+
+不同教师也不能通过更换未知干扰描述形成相同完整记录律。若
+$P_{\mu,\alpha,\theta}=P_{\nu,\alpha',\tau}$，输入边缘先给
+$\mu=\nu$；标签1的概率是 $(4-\alpha)/12$，给
+$\alpha=\alpha'$。正 $\alpha$ 时三条件行两两不同，输入全支撑遂给逐词 $C_\theta=C_\tau$，定理57.3给 $\theta=\tau$。零强度另按 §57.10 处理。
+
+### 57.5. 单批整数候选分数及质量敏感置信界
+
+**定义 57.5（有限候选排序器）。** 排序器只接收整数 $n,m$ 及 $m$ 份完整记录。对每个递增候选保存整数
+
+$$
+S_\tau=\sum_{s=1}^m Z_sC_\tau(X_s),
+\qquad
+\widehat\theta=\text{字典序最小的 }S_\tau\text{ 最大者}.
+\tag{57.15}
+$$
+
+输出函数直接为 $C_{\widehat\theta}$。它不接收
+$\mu,\alpha,H,L,t$，不估计这些量，也不对实参数优化。
+$m=0$ 时约定返回 $(1,2,3)$；这个回退不附带正信号准确恢复保证。
+
+**定理 57.6（自由未知质量的统一恢复）。** 对所有定义57.1的参数及整数 $m\ge1$，
+
+$$
+P_{\mu,\alpha,\theta}^{m}(\widehat\theta\ne\theta)
+\le(N-1)\exp\left(-\frac{m\alpha^2\gamma_\rho}{128}\right).
+\tag{57.16}
+$$
+
+因而对任意 $0<\delta<1$，以下整数预算足以使统一失败概率不超过 $\delta$：
+
+$$
+m\ge
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{N-1}{\delta}\right\rceil.
+\tag{57.17}
+$$
+
+**证明。** 固定竞争者 $\tau\ne\theta$，写
+$d=d_\mu(\theta,\tau)>0,\lambda=\mathbb EW=\alpha d/8$。
+不同完整记录使 $W_s$ 独立同分布；同一记录内的候选分数可以依赖。
+$|W_s|\le2$，故 $|W_s-\lambda|\le4$，方差至多 $3d/4$。
+标量单侧 Bernstein 给
+
+$$
+\begin{aligned}
+P(S_\theta-S_\tau\le0)
+&\le\exp\left[
+-\frac{m\lambda^2}{2(3d/4+4\lambda/3)}
+\right]\\
+&=\exp\left[-\frac{m\alpha^2d}{64(3/2+\alpha/3)}\right]
+\le\exp(-m\alpha^2d/128).
+\end{aligned}
+\tag{57.18}
+$$
+
+所用供应是 Tropp 的 [*User-Friendly Tail Bounds for Sums of Random Matrices*](https://arxiv.org/pdf/1004.4389v7)，Theorem 6.1(ii) 的维数一特例：对独立零均值变量
+$\lambda-W_s$ 取上界4、总方差 $3md/4$、阈值 $m\lambda$。
+最后一步用 $\alpha\le1$ 和 $64(3/2+1/3)<128$。
+
+对 $N-1$ 个竞争者取并集界；若所有真实分数差严格正，破平规则不会改变结果。即使真实候选在平局中排后，失败仍包含于这个并集，因此（57.16）包括平局。定理57.3给 $d\ge\gamma_\rho$。
+又 $\gamma_\rho\ge6\rho^2$，故（57.17）令指数至少达到
+$\log((N-1)/\delta)$。没有使用经验候选范数相等或候选间独立的假设。证毕。 $\square$
+
+共同范数下的相关排序是成熟的内积代数，本卷式（54.44）已给其总体恒等式。它在总体上与适当平方距离排序对应，却不等于经验最小二乘：经验的 $\sum_s C_\tau(X_s)^2$ 通常因候选而异。若只对有界 $ZC_\tau$ 分别作范围浓缩，会把小均值差平方，失去这里由（57.14）保留的稀有尺度。方差与均值的联系也属成熟快率机制；此处仅逐候选用标量 Bernstein 和有限并集，不使用星形函数类结论。
+
+### 57.6. 同一困难族的精确完整记录 KL
+
+**命题 57.7（相邻行与完整输入条件化）。** 固定任意同一个全支撑 $\mu$、同一个 $0<\alpha\le1$ 和
+$q=n-1,r=n$，只让第一位置 $i\in\{1,\ldots,n-2\}$ 改变。
+令 $P_i=P_{\mu,\alpha,\theta_i}$。置
+
+$$
+U_\alpha=\frac{2+\alpha}{6},\qquad
+V_\alpha=\frac{4-\alpha}{12},\qquad
+M_\alpha=\frac{U_\alpha+V_\alpha}{2}.
+$$
+
+三个条件行为
+
+$$
+r_0=(U_\alpha,V_\alpha,V_\alpha),\quad
+r_1=(M_\alpha,V_\alpha,M_\alpha),\quad
+r_2=(V_\alpha,V_\alpha,U_\alpha).
+\tag{57.19}
+$$
+
+定义相邻行的 Jeffreys 散度为两向 KL 的和，则
+
+$$
+\begin{aligned}
+J_\alpha
+&=\operatorname{KL}(r_1\Vert r_0)+\operatorname{KL}(r_0\Vert r_1)\\
+&=\operatorname{KL}(r_1\Vert r_2)+\operatorname{KL}(r_2\Vert r_1)
+=\frac\alpha8\log\frac{4+2\alpha}{4-\alpha},\\
+\operatorname{KL}(P_i\Vert P_j)&=H(1-H)LJ_\alpha,\qquad i\ne j.
+\end{aligned}
+\tag{57.20}
+$$
+
+在（57.11）的同类困难律上，
+
+$$
+K_\alpha:=\operatorname{KL}(P_i\Vert P_j)
+=4\rho^2(1-2\rho)J_\alpha
+\le\frac{\alpha^2\rho^2}{2},\qquad
+\operatorname{KL}(P_i^m\Vert P_j^m)=mK_\alpha.
+\tag{57.21}
+$$
+
+**证明。** $M_\alpha-V_\alpha=U_\alpha-M_\alpha=\alpha/8$。
+对两个正向量，
+$\operatorname{KL}(s\Vert t)+\operatorname{KL}(t\Vert s) =\sum_y(s_y-t_y)\log(s_y/t_y)$。
+对 $r_1,r_0$ 代入，两非零项给
+$(\alpha/8)\log(U_\alpha/V_\alpha)$；交换标签0和2给另一相邻对。
+
+对完整输入取 $B=h_q\ell_r$，教师差仍为
+$(h_i-h_j)\ell_q(1-2B)$。写 $g=H(1-H)L$。全部有序分歧的实际质量为
+
+$$
+\begin{array}{c|cccc}
+(C_{\theta_i},C_{\theta_j})&(1,0)&(0,1)&(1,2)&(2,1)\\ \hline
+P_\mu&g(1-t)&g(1-t)&g t&g t
+\end{array}.
+\tag{57.22}
+$$
+
+例如 $P(h_i=1,h_j=0)=H(1-H)$，而
+$P(\ell_q=1,B=1)=tL$、
+$P(\ell_q=1,B=0)=L(1-t)$。
+这一步保留同一中窗的实际交集 $t$。
+其余输入两教师相同；不存在类0与2的分歧。
+
+两个实验的完整 $X$ 边缘相同，故在完整五符号记录空间上准确有
+
+$$
+\operatorname{KL}(P_i\Vert P_j)
+=\sum_{w\in\Sigma^n}\mu^{\otimes n}(w)
+\operatorname{KL}(r_{C_{\theta_i}(w)}\Vert r_{C_{\theta_j}(w)}).
+$$
+
+按（57.22）合并两种方向，得到
+$g(1-t)J_\alpha+gtJ_\alpha=gJ_\alpha$。
+这不是对分数、端点摘要或内存状态的 KL；中间位及全部未选中窗口仍在完整记录求和中。
+
+在 $\mu_*$ 上 $g=4\rho^2(1-2\rho)$。对 $0<\alpha\le1$，
+
+$$
+\log\frac{4+2\alpha}{4-\alpha}
+=\log\left(1+\frac{3\alpha}{4-\alpha}\right)
+\le\frac{3\alpha}{4-\alpha}\le\alpha.
+$$
+
+因此 $J_\alpha\le\alpha^2/8$，给所述上界。独立记录的对数似然比逐份相加，取期望即得准确的 $m$ 倍 KL，包括 $m=0$。证毕。 $\square$
+
+### 57.7. 不限计算与存储的准确恢复样本阶
+
+**定义 57.8（未知干扰参数的 minimax 风险）。** 学习器可使用公开 $n,a,\rho$、任意完整记录计算和独立参数无关随机化，但不可读取真实 $\mu,\alpha,\theta$。置
+
+$$
+\begin{aligned}
+\mathfrak R_m^{\rm free}(n,a,\rho)
+&=\inf_{\mathcal A}
+\sup_{\mu\in\mathcal M_\rho^{\rm free},\,\alpha\in[a,1],\,\theta\in\Theta_n}
+P_{\mu,\alpha,\theta}^m\{\mathcal A(D_m)\ne\theta\},\\
+m_*^{\rm free}(n,a,\rho,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m^{\rm free}\le\delta\},
+\qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{57.23}
+$$
+
+准确函数版本允许输出任意 $f:\Sigma^n\to\{0,1,2\}$，成功指逐词
+$f=C_\theta$。这些定义不限制计数器、特征、批次数或运行时间。
+
+**定理 57.9（完整记录的匹配阶）。** 对 $n\ge4$、 $0<a\le1$、 $0<\rho\le1/8$，任何全参数准确恢复错误不超过 $0<\delta<1/2$ 的规则都满足
+
+$$
+mK_a\ge\bigl[(1-\delta)\log(n-2)-\log2\bigr]_+,\qquad
+mK_a\ge\operatorname{kl}(1-\delta,\delta).
+\tag{57.24}
+$$
+
+下界即使向规则揭示 $\mu_*,\alpha=a,q=n-1,r=n$ 仍成立。
+特别对 $0<\delta\le1/4$，两种准确恢复目标均满足
+
+$$
+\begin{aligned}
+\left\lceil
+\frac{\log n+\log(1/\delta)}{8a^2\rho^2}
+\right\rceil
+&\le m_*^{\rm free}(n,a,\rho,\delta)\\
+&\le
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{\binom n3-1}{\delta}\right\rceil,\\
+m_*^{\rm free}
+&=\Theta\left(\frac{\log n+\log(1/\delta)}{a^2\rho^2}\right),
+\end{aligned}
+\tag{57.25}
+$$
+
+其中常数为统一绝对常数，未声称尖锐。
+
+**证明。** 限制到同类子实验（57.11）、 $\alpha=a$，并提供上述附加信息。每条未知参数规则都是这个较易实验中忽略附加信息的一条规则；因此较易实验的全规则下界作用于原规则。附加值在各假设下相同，既不携带第一位置索引，也不增加 KL。允许随机计算整个 $X,Y$，并没有限制为（57.15）的分数。
+
+令第一位置索引 $I$ 均匀分布于 $M=n-2$ 个值，记
+$\overline P=M^{-1}\sum_iP_i^m$。由 $-\log$ 的凸性及命题57.7，
+
+$$
+I(I;D_m)
+=\frac1M\sum_i\operatorname{KL}(P_i^m\Vert\overline P)
+\le\frac1{M^2}\sum_{i,j}\operatorname{KL}(P_i^m\Vert P_j^m)
+\le mK_a.
+\tag{57.26}
+$$
+
+输出不在子族时改报固定子族元素，不增加子族错误。共同随机决定核不增加互信息；等价地加入独立种子不增加索引信息。有限 Fano 的
+$H(I\mid\widehat I)\le\log2+P(\widehat I\ne I)\log M$
+便给（57.24）第一式。该有限信息不等式的作用与 §55.6 相同，此处供应的是不同同类困难律和准确完整记录 KL。
+
+另取第一位置1与2。以输出第一教师为事件 $E$，统一成功给
+$P_1^m(E)\ge1-\delta$、 $P_2^m(E)\le\delta$。二元 KL 数据处理给
+
+$$
+mK_a\ge
+\operatorname{kl}(P_1^m(E),P_2^m(E))
+\ge\operatorname{kl}(1-\delta,\delta)
+=(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{57.27}
+$$
+
+随机决定可先加入同一条件决定核，再将联合空间分成 $E,E^c$ 两块；log-sum 不等式给同一结果。于是这个下界也覆盖任意内部随机化，不遗漏完整输入的其他可用特征。
+
+当 $\delta\le1/4$ 时，
+$\operatorname{kl}(1-\delta,\delta)\ge\frac14\log(1/\delta)$；
+证明用 $1-2\delta\ge1/2$、 $1-\delta\ge\sqrt\delta$。
+若 $n\ge6$，则 $M\ge4$，
+$(1-\delta)\log M-\log2\ge\frac14\log M$，且 $M\ge\sqrt n$。
+再用 $K_a\le a^2\rho^2/2$，得到
+$m\ge\log n/(4a^2\rho^2)$ 及
+$m\ge\log(1/\delta)/(2a^2\rho^2)$；
+它们的最大值不小于（57.25）的左端未取整值。
+若 $n=4,5$，则 $\log n\le2\log(1/\delta)$，仅二元项也足够。
+
+若风险下确界没有达到，取最坏错误至多 $\delta+\varepsilon<1/2$ 的逼近规则，先使用（57.24），再令 $\varepsilon\downarrow0$。右端连续，故同一数值界适用于 $\mathfrak R_m^{\rm free}\le\delta$，整数性给向上取整。定理57.6给上界； $\log(\binom n3-1)\le3\log n$，所以阶相合。
+
+最后，不同三元组给不同原函数，也可由三个必要坐标直接看出：固定 $W_q=100,W_r=000$，切换 $W_p=000,001$ 得0、1；固定 $W_p=001,W_r=000$，切换 $W_q=000,100$ 得0、1；固定 $W_p=000,W_q=001$，切换 $W_r=000,100$ 得0、2。其余坐标不出现，递增支撑指定全部角色。全支撑使几乎处处相等等价于逐词相等。任意准确输出函数可在有限词域上与有限教师类比较，匹配时解码唯一三元组，否则报固定值；成功函数必解码成功。此计算只用于不限资源的下界归约，不成为免费部署操作。反向按学到的三元组求原门即可。证毕。 $\square$
+
+### 57.8. 有限预算、完整取得与候选库的全部费用
+
+**命题 57.10（整数预算接口）。** 排序例程本身只需给定 $n,m$。
+若还需一个全部有限描述的充分预算构造，可给正整数
+$A,R,d$，承诺
+
+$$
+1/A\le a,\qquad 1/R\le\rho,\qquad 2^{-d}\le\delta.
+$$
+
+整数算术计算 $N=\binom n3$，以 $N-1$ 的二进制位长取得
+$b_N=\lceil\log_2 N\rceil$，然后取
+
+$$
+m=32A^2R^2(b_N+d).
+\tag{57.28}
+$$
+
+它满足定理57.6的统一保证，无需计算任何实对数或输入真实质量描述。
+
+**证明。** $\log N+\log(1/\delta)\le(b_N+d)\log2\le b_N+d$，
+且 $A^2R^2\ge1/(a^2\rho^2)$。所以（57.28）至少为（57.17）未取整的右端，并且已经是整数。 对 $N\ge2$，准确有 $b_N=\operatorname{bitlength}(N-1)$：若 $2^{b-1}\le N-1<2^b$，则 $2^{b-1}<N\le2^b$。整数 $d$ 本身的有限描述不要求物化长度为 $2^d$ 的对象。证毕。 $\square$
+
+这些正整数是公开预算证书，不是从未知分布自动提取的下界。
+若 $A,R$ 在相应逆下界的固定常数倍内、 $d$ 在
+$\log_2(1/\delta)$ 的常数倍内，预算仍具有（57.25）的样本阶；
+过于保守的证书会增加样本。实际 $\mu,\alpha$ 可以是无理数，排序仍有限执行；从任意实概率合成精确样本不属于这个付费统计端口的算法承诺。
+
+**命题 57.11（候选分数的明确有限实现）。** 对 $n\ge4,m\ge1$，一条充分实现如下。
+
+1. 初始化字典序候选库的 $N$ 个分数整数。
+2. 每次付费取得完整 $n$ 窗口记录和标签，并缓存整份记录。
+3. 以三个递增索引枚举所有 $p<q<r$，读取四个端点位，计算
+    $G_1=h_p\ell_q$、 $G_2=(1-G_1)h_q\ell_r$ 及
+    $C=G_1+2G_2$，向当前候选加上 $ZC$。
+4. 完成 $m$ 份记录后按同一候选次序读出全部分数，仅在严格变大时更新最佳三元组，保证字典序破平。
+5. 输出三个索引及原优先门的有限描述；测试时按该固定三元组求 $C$。
+
+准确取得量是 $mn$ 个整个窗口、 $m$ 个标签。
+候选工作为 $mN$ 次评价与更新，另有 $N$ 次初始化、
+$N$ 次最终读出、 $N-1$ 次极值比较。三元组枚举、索引递增、边界检测、缓存写读、候选寻址、样本计数、破平及输出控制均收费。
+因此该路线支付 $\Theta(mn^3)$ 量级的候选工作，不给线性时间或线性计数器结论。
+
+每个分数在 $[-2m,2m]$，可移位存入区间 $[0,4m]$，单计数器宽度为
+
+$$
+B_m=\left\lceil\log_2(4m+1)\right\rceil.
+$$
+
+令 $L_{\rm in}$ 为实际有限输入的总位长，包括 $n,m$，或包括
+$n,A,R,d$ 及生成批长所需的有限描述。一条包含完整记录缓冲和控制的存储上界是
+
+$$
+NB_m+O(n+\log n+\log(m+1)+L_{\rm in})\quad\text{比特}.
+\tag{57.29}
+$$
+
+**证明。** 单次加数 $ZC\in\{-2,-1,0,1,2\}$，部分和范围为
+$[-2s,2s]$，最终范围及固定移位编码随之成立。 $m\ge1$ 时， $B_m$ 恰为 $4m$ 的二进制位长，可用整数操作取得。记录用每窗三位加标签两位缓存，费用为 $3n+2$ 比特；顺序端口的标签或第三角色可能晚到，故先取得再更新。库可按候选次序连续存储，不必再保存 $N$ 个三元组索引表。枚举当前三元组与最佳三元组、样本及候选计数、整数暂存和回退控制使用所列对数空间；更新和最终读出时逐候选推进库指针。证毕。 $\square$
+
+在声明的字寻址 RAM 上，令一个字足以保存分数、索引和库地址，取
+$w=O(\log(n+m+2)+L_{\rm in})$ 位。候选阶段只使用有限门运算、字整数加减、移位、比较和连续地址递增；完整缓冲与紧密计数器数组的读写同样计入。其字操作／传输量为
+$O(mn+(m+1)N)$。若每个这样的字运算、地址处理与字传输收费 $O(w)$，学校式预算整数乘法／除法预处理另收费 $O(L_{\rm in}^2)$，得到一条充分费用界
+
+$$
+O\bigl([mn+(m+1)N]w+L_{\rm in}^2\bigr).
+\tag{57.30}
+$$
+
+预处理包括 $N$、位长、预算乘积、批长、字段宽度和循环界的生成及保存；生成整数的位长为 $O(L_{\rm in})$。计数器可紧密打包，连续指针读写时只访问常数个足宽字，暂存亦在（57.29）内。这个收费模型明确给字传输单价，不将任意大整数乘法默认为线性位费用，不声称最优图灵机、物理位操作或物理时间界。
+
+$n=3$ 时唯一三元组可直接返回，不必取得训练记录。 $m=0$ 的固定回退不需要库； $n<3$、负批长、非正证书、非法窗口或标签等有限域非法输入返回有限错误响应，不断言统计保证；逐窗和标签的有限解码检查计入取得处理。每次后续完整测试记录仍支付 $n$ 窗口取得、缓冲和标签接口约定的费用；取得以后，原 $C$ 的求值仅用常数个门运算与地址读取。若另选原仿射-softmax 树头，其实系数、消息和概率输出费用依 §55.9 单独计算，不包含在上述整数实现中。
+
+### 57.9. 半质量子类、条件招募与剖面似然的比较
+
+**命题 57.12（共同实现决定稀有指数）。** 在
+$t=1/2,\mu(s)\ge\rho$ 的子类中，所有不同教师均满足
+
+$$
+d_\mu(\theta,\tau)\ge\frac32\rho.
+$$
+
+另一方面，只改变第一位置、固定末两个位置的族在实际子类律
+
+$$
+\mu_{\rm half}=(\rho,\rho,\rho,1/2,1/2-3\rho)
+\tag{57.31}
+$$
+
+上具有距离
+$6\rho(1-3\rho)(1/2+\rho)=\Theta(\rho)$。
+该子类的准确恢复样本阶为
+$\Theta((\log n+\log(1/\delta))/(a^2\rho))$，取实际定理55.7及56.13的范围 $n\ge4,0<\delta\le1/4$。
+
+**证明。** 在这个同一子类中，
+$H,L\ge1/2$、 $1-H,1-L\ge3\rho$。
+（57.8）的同角色两行各至少为 $3\rho/2$；
+交叉行等于 $HL\ge1/4\ge3\rho/2$；
+不交行用 $1-HL\ge1-L$，也至少为 $3\rho/2$。
+（57.10）等于 $4HL(1-L)$，至少为 $3\rho$。
+（57.31）可行，且 $H=1-3\rho,L=1/2+\rho$，直接用（57.12）之前的一般第一位置差恒等式得所列距离。其线性阶在
+$\rho\le1/8$ 上具有统一正上下常数。所述子类样本阶已有完整记录下界和未知律条件排序上界；也与本节的分歧方差及一般 KL 公式相容。证毕。 $\square$
+
+自由类允许 $H=L=2\rho$ 的共同实现，半质量子类则不允许这两个边缘同时变小。全类与子类的指数差因此来自真实门分歧的几何和共同质量预算，不是把某个未知 $t$ 填入已知系数，也不是删除一个输入参数的计算优势。保留半质量子类可继续使用 §56 的线性更新条件排序；它没有解决自由类的统一目标。完整质量和未知 $\alpha$ 的 §55 仍是有效的另一个接口，未知 $\alpha$ 不单独构成本节比较的增量。
+
+条件招募也可揭示同一个稀有代价。只在已揭示 $q,r$ 的第一位置族中，取
+
+$$
+B=h_q\ell_r,\qquad T=(1-2B)Z.
+$$
+
+在事件 $\ell_q=1$ 上，
+$C_\theta-1=(1-2B)(h_p-1)$，故
+
+$$
+\mathbb E[T\mid X]=\frac\alpha4(h_p-1)
+\quad(\ell_q=1).
+\tag{57.32}
+$$
+
+进一步条件于 $h_i=1$，若 $i=p$，均值为0；若
+$i\ne p$ 且 $i\notin\{q,r\}$，均值为
+$-\alpha(1-H)/4$。这个条件间隙在 $\mu_*$ 上为
+$\alpha$ 阶，但每个条件组 $\{\ell_q=1,h_i=1\}$ 的原记录质量是
+$LH=4\rho^2$。只保存命中组不能让未命中的取得免费。
+这是一个已知锚点子实验中的具体关系，不是一条完整的所有三元组比率学习器；它不能突破定理57.9对完整记录的下界。
+
+另一个合法替代是候选剖面似然。对任意已取得完整记录，
+
+$$
+\mathcal L(\mu,\alpha,\tau;D_m)
+=\left[\prod_{s=1}^m\prod_{i=1}^n\mu(W_{s,i})\right]
+\left[\prod_{s=1}^m(R_\alpha)_{C_\tau(X_s),Y_s}\right].
+\tag{57.33}
+$$
+
+参数域是 $\mathcal M_\rho^{\rm free}$ 与 $(\alpha,\tau)$ 的直积。
+第一因子严格正、与候选和通道标量无关；对 $\mu$ 剖面化产生同一个正因子，可从比较中消去。这准确复用命题56.14的乘积分解，未使用半质量。条件于完整 $X$ 也已经移除这项输入律干扰。
+
+对固定 $\tau$，第二因子是 $\alpha$ 的有理系数多项式。
+若优化区间端点具有给定有理描述，例如证书给定的 $[1/A,1]$，端点及导数实根的有限隔离、代数值比较可以实现精确剖面；常值多项式单独处理。候选评价、系数生成、根隔离、比较、状态或记录重访都须付费，因此这种替代不必依靠免费实数预言机。本节没有为它给尖锐运行时间或统一样本证书，也没有证明它或正确的质量代入法劣于整数分数。当前分数路线的证书是有限整数执行与（57.25）的记录阶；代价是显式穷举全部候选。
+
+### 57.10. 准确识别、原任务风险与不确定性端点
+
+在（57.11）的困难子族中，不看训练而始终输出原类0的预测器满足
+
+$$
+P_{\mu_*}(C_\theta\ne0)
+=HL(2-t)=4\rho^2(2-\rho)\le8\rho^2
+\quad\text{对每个 }\theta=\theta_i.
+\tag{57.34}
+$$
+
+因此该子族不能供应随 $\rho\downarrow0$ 仍保持固定正预测容差的识别尺度下界。这个零训练风险仅针对所列困难子族，不是自由全类的统一预测保证。
+
+下界向预测迁移须给缩小的风险门。在该子族中，任意两教师的 Hamming 距离及平方 $L^2(\mu_*^{\otimes n})$ 距离均为
+$\gamma_\rho$。若一个训练后固定的分类器 $f$ 的条件原任务错误为
+$\varepsilon<\gamma_\rho/2$，最近教师解码必为真实索引：
+错误解码将由三角不等式和最近性迫使
+$\gamma_\rho\le2P(f\ne C_\theta)$。
+$\varepsilon=\gamma_\rho/4$ 是一个明确安全门。
+对实值预测器，若条件平方风险为
+$\varepsilon<\gamma_\rho/4$， $L^2$ 三角不等式给同样结论，因为错误最近教师将迫使
+$\sqrt{\gamma_\rho}\le2\sqrt\varepsilon$；
+$\varepsilon=\gamma_\rho/16$ 是明确安全门。
+若同一学习器在每个困难教师下以训练置信至少 $1-\delta$ 达到该门，最近教师归约保持这份置信，才可调用定理57.9。归约可以用被揭示的 $\mu_*$ 和不限计算，不给部署算法额外免费能力。
+
+相反，定理57.6的恢复好事件已经给全部词域上的
+$C_{\widehat\theta}=C_\theta$；失败事件上的独立同律原任务错误至多一，所以训练平均原任务测试错误不超过 $\delta$。
+置信失败概率与任意期望预测容差仍是不同量。
+
+观测标签动作也不是原教师动作。正 $\alpha$ 时，类1的标签0、2各比标签1多 $\alpha/8$；类0、2的最佳标签为自身。
+因此完美原 $C$ 的观测标签零一超额准确为
+$\alpha HL/8$，取式（54.43）的同通道计算。
+旧 $Q$ 的后验、proper-risk、root-phase 和原教师等于标签 Bayes 的结论不进入本实验。共同 $\mu,\alpha$ 下， $X$ 边缘显然与教师无关；引理57.2还使 $Y$ 边缘与教师无关。分别拥有这两个总体边缘不等于保留配对记录，后者才含位置关系。§52.11的共同律决策界解释这个信息区别，不把仅标签标量校准当作教师发现。
+
+确定通道行在 $\alpha>0$ 时单射。因此每个切面上，对共同外部补全 $c$，
+
+$$
+(R_\alpha)_{C_\theta(b,c),\cdot}
+=(R_\alpha)_{C_\theta(b',c),\cdot}
+\iff C_\theta(b,c)=C_\theta(b',c).
+\tag{57.35}
+$$
+
+对全部 $c$ 取量词，便保留[边界卷定义14、43、定理43.1](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md#定义-43响应函数与固定赋值输运)的同一完成响应商及固定赋值限制。未知质量不改变点态门及其确定响应，但记录数量按平均统计区别计费；一个正概率见证词的逆概率不自动给全部样本阶。条件通道向量的单射也不允许从一次随机标签反演原类别。
+
+端点另行量化。 $n=3$ 时只有一个三元组，任意噪声下均无需样本。
+$n\ge4,m=0$ 时，任意参数无关随机输出的最小教师成功率至多
+$1/N$，均匀猜测达到它；固定字典序回退不承诺达到这个 minimax 值。
+若允许 $\alpha=0$，完整记录与教师无关，任意样本数的 minimax 成功率仍为 $1/N$。
+若要求 $\delta=0$，所有允许正质量律及 $\alpha\le1$ 的有限完整记录均严格正。
+固定同一 $\mu,\alpha$ 下任取两个不同教师，其有限记录重叠量
+$\sum_d\min(P_1^m(d),P_2^m(d))>0$；
+任意共同随机规则的两种错误之和至少为这个量，故最坏错误有规则无关的正下界。准确零错误不能由有限 $m$ 达到。
+（57.25）的匹配范围要求正 $a,\rho$ 及 $0<\delta\le1/4$；
+上界（57.16）—（57.17）覆盖 $0<\delta<1$。
+$\rho\downarrow0$ 没有质量无关分离， $a\downarrow0$ 没有强度无关统一恢复。
+
+### 57.11. 成熟供应、实际重叠与关系范围
+
+本卷的实际五点代数和多项式供应是 §2—3、式（44.22）、（49.21）；式（54.44）已经给共同教师矩的相关排序。
+§55—56提供半质量子类的稀有方差、条件取得、整数比较和不限资源完整记录下界。
+本节使用这些对象和接口，将自由五质量下的全重叠尖锐分离、取得等号的共同困难族、准确相邻行 KL 和分歧支持方差接在一起。移除输入律描述、有限候选数或一般相关排序本身不取得新意资格。
+
+[Bartlett、Mendelson，*Empirical Minimization*](https://www.stat.berkeley.edu/~bartlett/papers/bm-em-05.pdf)，§1.1、Definition 2.6 给均值控制二阶矩的 Bernstein 类背景。这里（57.14）准确有
+$\mathbb EW^2\le(6/\alpha)\mathbb EW$，体现同一成熟机制；
+未把有限候选差类假设成星形类，也未调用其需要额外结构的整体经验过程结论。Tropp 上引 Theorem 6.1(ii) 供应实际使用的单侧标量不等式。
+
+[Gerchinovitz、Ménard、Stoltz，*Fano's inequality for random variables*，v3](https://arxiv.org/pdf/1702.05985v3)，§1、§2.1、Lemma 1及Corollary 2给有限检验、KL 和二元数据处理背景。仓内
+[FanoMethodSampleComplexity](../../../D5/S3/Estimation/FanoMethodSampleComplexity.lean) 的独立重复信息界、
+[LiteralWindowEnd](../../../D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean) 的低到高字母及
+[FirstRejectionProfileMass](../../../D5/S3/Arith/FibonacciAtomic/FirstRejectionProfileMass.lean) 的完整首失败质量具有各自合同。前者是成熟信息工具；后两者不将完整相邻扫描或均匀质量模型转成当前未知三窗口教师。信息工具的通用形式不供应（57.7）的模型特定分离，也不把均匀首失败律换成未知三窗口律。
+
+[Jan Arpe，*Learning Juntas in the Presence of Noise*，ECCC TR05-088](https://eccc.weizmann.ac.il/report/2005/088/download/)，摘要、§§4.3—4.4研究带独立属性翻转及分类翻转的 Boolean junta，先发现相关变量再学习响应。
+该问题提供稀疏带噪发现的成熟比较，但其独立位、Boolean 输出及翻转通道不供应相关五符号整窗、三值优先门和（57.7）的质量指数。
+相关性或同名噪声参数不能替代这些对应条件。
+
+输入因子消去准确复用命题56.14并由（57.33）直接证明；
+[Will Fithian，*Sufficiency*](https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html) 的 factorization theorem 给共同条件律和参数无关因子消去的标准背景。
+[尺度读出卷§22](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#22-可数只读记录的有声返回与终止精确探针许可的分界)将理想精确参数查询、可数记录和有限描述区分；
+[边界动力学卷§96](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#96-同一四态反馈的停止记录共同恢复与有限饱和)将记录的共同律恢复、实际已发生记录与计数器取得区分。
+这些边界使有限整数预算、付费样本端口和反复取得的控制条件不能相互免费替代；它们的来源、停止记录和观察合同不直接提供本节教师样本率。
+
+结论限于共享整窗 IID 律、所列五符号、已知三标签通道族、共同正信号下界及递增原教师。
+异质窗口律、跨窗依赖、主动查询、任意教师或未知通道须另给共同矩、合法操作和信息比较。
+本节不声明全局文献优先权、计数器／时间／批次最优性、物理资源最优性或有限精度实数树头保证。
+精确最小分离与完整记录样本阶由上面的全称解析证明承担，有限整数实现由所列预算和操作承担。
+
+## 追加锚（本行以下为增补区）
