@@ -27373,3 +27373,92 @@ capacities, an independent global lower bound on that new cost, or a
 phase-sensitive refinement of (237.1) that is not already absorbed by the
 minimal quotient core. The unrestricted whole-cover bridge therefore remains
 open.
+
+## 238. Coordinate-wise capacity gives a flow-independent lower bound
+
+The upper budget in Section 237 can be paired with a lower bound that comes
+from the fact that every external label is routed exactly once. For a quotient
+coordinate \(v=(p,j)\), put
+
+\[
+I_v=\{i\in I_H:v\in D_i\}.
+\tag{238.1}
+\]
+
+For a saturated flow \(z\), let
+
+\[
+R_v(z)=\{r\in U_H:K_r(z)\cap I_v\ne\varnothing\},\qquad
+n_v(z)=|R_v(z)|.
+\tag{238.2}
+\]
+
+Thus \(n_v(z)\) counts the distinct \(H\)-fibres in which a label using \(v\)
+is actually routed. Exchanging the finite sums in (237.3) gives
+\[
+\Gamma_H(z)=\sum_{v:I_v\ne\varnothing}(p(v)-1)\,n_v(z).
+\tag{238.2a}
+\]
+Since every \(i\in I_H\) saturates its unit source arc, every
+label in \(I_v\) is routed to one of the buckets adjacent to \(I_v\). Define the
+available capacity at \(r\) by
+
+\[
+M_{v,r}=
+\sum_{\substack{\beta=(B,r,t)\\\beta\in N(I_v)}}c(\beta),
+\tag{238.3}
+\]
+
+where \(N(I_v)\) is the bucket neighbourhood of \(I_v\) in the network of
+(233.3). This is an upper bound on the number of \(I_v\)-labels that any flow
+can route over \(r\); it may count capacity usable by labels outside a chosen
+subfamily, so it is deliberately safe.
+
+Let \(M_{v,(1)}\ge M_{v,(2)}\ge\cdots\) be the non-increasing rearrangement of
+\((M_{v,r})_{r\in U_H}\), and define
+
+\[
+\kappa_v=\min\left\{k\ge1:
+   \sum_{j=1}^{k}M_{v,(j)}\ge |I_v|
+\right\}
+\tag{238.4}
+\]
+
+for \(I_v\ne\varnothing\). If the set in (238.4) is empty, the private-point
+flow already fails. Otherwise every saturated flow satisfies
+
+\[
+|I_v|\le\sum_{r\in R_v(z)}M_{v,r}\le
+\sum_{j=1}^{n_v(z)}M_{v,(j)},
+\]
+
+so \(n_v(z)\ge\kappa_v\). Consequently
+
+\[
+\boxed{
+\Gamma_H(z)\ge
+\sum_{v:I_v\ne\varnothing}(p(v)-1)\,\kappa_v
+\qquad(z\in\mathcal Z_H).
+}
+\tag{238.5}
+\]
+
+The coarse bound \(\sum_v(p(v)-1)\) is recovered by replacing every nonzero
+\(\kappa_v\) by \(1\). Combining (238.5) with (237.5) gives the finite necessary
+condition
+
+\[
+\boxed{
+\sum_{v:I_v\ne\varnothing}(p(v)-1)\,\kappa_v
+\le \mathcal B_H.
+}
+\tag{238.6}
+\]
+
+This test preserves the original labels, phases, and bucket capacities. It is
+only a necessary condition under the hypothetical whole-cover and EB1
+assumptions; failure of (238.6) rules out that candidate configuration, while
+passing it does not construct a cover or settle Erdős #7. The unrestricted
+bridge remains the task of proving that every putative whole cover violates a
+condition of this kind, or of finding a different global descent that uses the
+same source-compatible private witnesses.
