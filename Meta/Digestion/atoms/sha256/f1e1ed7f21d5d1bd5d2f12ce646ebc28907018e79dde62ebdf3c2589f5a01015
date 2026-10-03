@@ -1,0 +1,20 @@
+### proposition 35.2 有限相干态的边界谱
+
+明确选择有限 Hilbert 空间和等权相干叠加，令
+
+$$
+|\Psi_B\rangle=\frac1{\sqrt{|G|}}\sum_{x\in G}|x\rangle|Bx\rangle.
+$$
+
+边界约化态为
+
+$$
+\rho_\partial=\frac{|\ker B|}{|G|}\sum_{y\in\operatorname{im}B}|y\rangle\langle y|,
+$$
+
+所以
+
+$$
+\boxed{S(\rho_\partial)=\log|G|-\log|\ker B|.}
+$$
+
