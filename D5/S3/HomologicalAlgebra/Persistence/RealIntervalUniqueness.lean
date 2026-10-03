@@ -1122,11 +1122,19 @@ theorem mono_cokernel_trim_estimates {Source Target : Type v}
          map_comp {source middle target} first second := by
            classical
            ext coordinates occurrence
+           change (if (target : WithTop ℝ) < family.2 occurrence then
+             (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0) coordinates.val =
+             (if (target : WithTop ℝ) < family.2 occurrence then
+               (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0)
+               (fun middleOccurrence => (if (middle : WithTop ℝ) <
+                 family.2 middleOccurrence then
+                   (LinearMap.proj middleOccurrence : (Index → K) →ₗ[K] K) else 0)
+                 coordinates.val)
            by_cases survives : (target : WithTop ℝ) < family.2 occurrence
            · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
                lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
-             simp [LinearMap.proj, LinearMap.pi, LinearMap.proj_apply, LinearMap.pi_apply, apply_ite, ite_apply, intervalArrow, apply_ite, ite_apply, survives, middle_survives]
-           · simp [LinearMap.proj, LinearMap.pi, LinearMap.proj_apply, LinearMap.pi_apply, apply_ite, ite_apply, intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+             simp only [if_pos survives, LinearMap.proj_apply, if_pos middle_survives]
+           · simp only [if_neg survives, LinearMap.zero_apply] } : ℝ ⥤ ModuleCat.{max u v} K);
     ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
       (injective : ∀ time, Function.Injective (morphism.app time).hom)
       (sourceEnumeration : ∀ death, Fin (Fintype.card
