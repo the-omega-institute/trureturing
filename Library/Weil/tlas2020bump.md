@@ -279,3 +279,79 @@ $$
 Both subsets retain reflected pairs, actual multiplicities and analytic squares; the common positive majorant gives absolute convergence. Equality in the transverse cap belongs to $\mathcal S_H(R)$, and height $H$ remains in the head. The remaining height restriction improves the earlier $250000R$ cutoff without changing the fixed verified height. The height cutoff is finite for each $R$ and grows linearly with $R$; no fixed height cutoff for the remainder is established.
 
 The outstanding estimate is still a signed comparison for this same $E_{\mathrm{rem}}$. Any hypothetical fixed off-line zero eventually leaves $\mathcal S_H(R)$, so (6)–(9) do not exclude one. They control a larger parameter region and specify the residual more tightly; they do not establish complete eventual nonnegativity or RH/Robin. The golden value of $b$ fixes the existing dilation band and supplies no additional FIB-to-prime transport.
+
+## Identify the complex transform with an existing function family
+
+The integral definition of the extended confluent hypergeometric function in [Mondal, arXiv:1611.08423v1, equation (1.3), PDF p.1](https://arxiv.org/pdf/1611.08423v1) gives a direct source coordinate for the unchanged bump. Write that family as
+
+$$
+\mathcal F_\sigma(B;C;\zeta)=
+\frac1{\mathrm B(B,C-B)}
+\int_0^1v^{B-1}(1-v)^{C-B-1}
+\exp\!\left(\zeta v-\frac\sigma{v(1-v)}\right)\,dv,
+\qquad \Re C>\Re B>0,\quad \sigma>0.
+$$
+
+Here $\mathrm B$ is the classical beta function. Substituting $x=v-1/2$ gives $1-4x^2=4v(1-v)$ and $\mathrm B(1,1)=1$, hence, for every complex $s$,
+
+$$
+\Phi(s)=e^{is/2}\mathcal F_{1/4}(1;2;-is),
+\qquad
+M=\mathcal F_{1/4}(1;2;0).
+\tag{10}
+$$
+
+The finite integral is entire in its last parameter; the fixed endpoint damping is $1/4$. The original defining paper cited by Mondal is Chaudhry–Qadir–Srivastava–Paris, *Extended hypergeometric and confluent hypergeometric functions*, Applied Mathematics and Computation 159 (2004), 589–602. The defining integral used here was inspected in Mondal; no complex asymptotic is attributed to the uninspected full text of the 2004 paper.
+
+The same substitution also retains the outer bump. Put $d=b-1$ and $u=1+dv$. The original normalized weight satisfies
+
+$$
+w(1+dv)d\,dv=
+\frac1M e^{-1/[4v(1-v)]}\,dv.
+$$
+
+Thus the exact analytic average, including both endpoint phases, is
+
+$$
+A_R(z)=\frac1M\int_0^1
+e^{-1/[4v(1-v)]}e^{i(1+dv)Rz}
+\mathcal F_{1/4}(1;2;-i(1+dv)Rz)^2\,dv.
+\tag{11}
+$$
+
+Equations (10)–(11) identify published terminology and parameters; they supply no sign estimate. In particular, Mondal's Theorem 2.5, PDF pp.6–7, gives real-argument monotonicity and log-convexity statements. They do not establish a lower bound for the real part of (11) at the complex arguments of the residual.
+
+## Preserve the source hypotheses at the complex interface
+
+Two inspected complex asymptotic sources provide tools for a possible remainder estimate:
+
+| Source and exact location | Conditions needed by an application to (11) |
+| --- | --- |
+| [Nemes, *An extension of Laplace's method*, arXiv:1802.03962v2](https://arxiv.org/pdf/1802.03962v2), Conditions 1.1 and Theorem 1.1, PDF p.3; remainders (29)–(30), p.8 | Parameter-independent analytic data and path, convergent endpoint power expansions with the source's $\mu>\nu\ge0$ and $\Re\lambda>0$, uniform convergence, and a uniform positive phase gap away from the initial endpoint on a fixed closed sector of width less than $\pi$. The source also requires its tail-growth condition $r(t)=O(|p(t)-p(a)|)$. The original essential endpoint singularities and a transformed parameter-dependent amplitude require an additional application proof. |
+| [Bennett–Howls–Nemes–Olde Daalhuis, *Globally exact asymptotics for integrals with arbitrary order saddles*, arXiv:1710.10073v2](https://arxiv.org/pdf/1710.10073v2), assumptions and sector (7), PDF pp.4–6; exact remainder (9), (12), pp.6–7; bound (42), p.18 | Admissible convergent steepest-descent contours, a finite nonempty adjacent-saddle set, and the corresponding contour deformation. The bound retains angular factors and adjacent-contour integrals; uniform constants for this moving nested integral must be justified. |
+
+Neither inspected statement directly supplies a uniform remainder for (11) or a signed estimate for the actual multiplicity-weighted residual. A local saddle and Gaussian coefficient alone do not discharge contour deformation, connecting faces, parameter-dependent amplitude bounds, or the full rescaled tails.
+
+For a residual representative with positive displacement, write $s=T-i\alpha$, $T=R\gamma$ and $\alpha=R\delta_\rho$. Equations (8)–(9) give the strict domain
+
+$$
+HR<T<\kappa_HR^2,
+\qquad a_H\sqrt T<\alpha<R/2.
+\tag{12}
+$$
+
+When $\alpha/\sqrt T$ stays bounded and $T\to\infty$, $\arg(is)\to\pi/2$. Uniformity only on $|\arg(is)|\le\pi/2-\epsilon$ for a fixed $\epsilon>0$ does not cover this part of (12). A two-endpoint expansion also needs an additive remainder that remains meaningful when the endpoint terms cancel. Subsequently integrating the modulus of an inner remainder can lose the exponentially small cancellation of the outer integral; its analytic transport or a direct outer-integral remainder remains a separate obligation.
+
+The required consumer is still the actual signed sum in (9). With
+
+$$
+B_H(R)=6000H^7\log H\,e^{-11\sqrt R},
+$$
+
+a sufficient comparison is
+
+$$
+E_{\mathrm{rem}}(R)\ge-P_H(R)+B_H(R)
+$$
+
+for all sufficiently large real $R$. A relative version $E_{\mathrm{rem}}\ge-(1-\varepsilon(R))P_H$ pays the known safe-error bound when $\varepsilon(R)P_H(R)\ge B_H(R)$; an unspecified $o(1)$ reserve does not ensure this. This is a sufficient use of the absolute-error certificate, not a necessary condition for the unknown complete scalar. Pointwise complex asymptotics alone do not bound the summed error relative to $P_H$. The source mapping and these transfer obligations are paper-level applications, with the signed comparison and RH/Robin unresolved.
