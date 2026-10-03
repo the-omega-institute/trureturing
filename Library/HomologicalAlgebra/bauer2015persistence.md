@@ -17,6 +17,10 @@ triage: anchor
 
 # Finite-chain persistence and exact algebraic stability
 
+## Verified locator
+
+Bauer and Lesnick, *Induced Matchings and the Algebraic Stability of Persistence Barcodes*, https://arxiv.org/abs/1311.3681v4, Sections 4–6 and 8, is the versioned anchor for induced matchings, algebraic stability and its converse. The decomposition input is Crawley-Boevey, *Decomposition of pointwise finite-dimensional persistence modules*, arXiv:1210.0819v3, Theorem 1.1 and its proof. The source scope is finite-constructible one-parameter persistence over an arbitrary field, with essential intervals and unrestricted last tails retained.
+
 ## 1. Sources and objects
 
 Crawley-Boevey, *Decomposition of pointwise finite-dimensional persistence modules*, arXiv:1210.0819v3, Theorem 1.1 and its proof, supplies interval decomposition over a field. Bauer and Lesnick, *Induced Matchings and the Algebraic Stability of Persistence Barcodes*, arXiv:1311.3681v4, Sections 4–6 and 8, supplies induced matchings, algebraic stability and its converse. Chazal, de Silva, Glisse and Oudot, *The structure and stability of persistence modules*, arXiv:1207.3674, supplies the general stability framework. These are known mathematical results, not claims of new discovery. This note is reference input, not a kernel-verified assertion.
