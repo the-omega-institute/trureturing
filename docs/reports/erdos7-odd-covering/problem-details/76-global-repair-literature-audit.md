@@ -193,6 +193,60 @@ Recent odd-cover constructions allowing repeated labels, including Bispels et
 al., [arXiv:2507.16135](https://arxiv.org/abs/2507.16135), likewise do not meet
 the distinct-label condition.
 
+### Cremona--Koymans' extra prime-support term cancels under the natural lift
+
+Cremona--Koymans, [arXiv:2601.03212](https://arxiv.org/abs/2601.03212), prove
+for an irredundant lattice covering with index lcm \(N\) that, for every
+proper divisor \(D\) of \(N\),
+
+\[
+ \#\{L:[\mathbb Z^2:L]\nmid D\}
+ \ge 1+G(N)-G(D),
+ \qquad
+ G(n)=\sum_{p^a\parallel n}a(p-1)+\omega(n).
+\tag{CK1}
+\]
+
+The \(\omega(n)\) term might appear to strengthen Simpson's divisor cut for a
+congruence cover.  It does not under the phase-preserving lift relevant here.
+Given a hypothetical source cover
+\(a_i\pmod {m_i}\) with \(Q=\operatorname{lcm}(m_i)\), lift each class to
+
+\[
+ L_i=\{(x,y):x-a_i y\equiv0\pmod {m_i}\},
+\]
+
+and add, for each prime \(p\) dividing \(Q\), the boundary lattice
+\(H_p=\{(x,y):y\equiv0\pmod p\}\).  The lifted family covers
+\(\mathbb Z^2\): if \(y\) is not invertible modulo \(Q\), some \(H_p\) contains
+\((x,y)\); otherwise \(xy^{-1}\pmod Q\) is covered by an original class.
+The original private points \((x_i,1)\) preserve irredundancy.  Each \(H_p\)
+also has a private point: the subfamily with \(p\nmid m_i\) cannot itself
+cover, or every class whose modulus is divisible by \(p\) would be redundant;
+choose \(u\) outside that subfamily modulo \(Q/p^{v_p(Q)}\), and use CRT with
+\(x\equiv1\pmod p\), \(y\equiv0\pmod p\), and \(y\equiv1\) at the other
+prime coordinates.
+
+For a divisor \(D\mid Q\), let
+\[
+ k_D=\#\{i:m_i\nmid D\}.
+\]
+The added boundary lattices contribute exactly
+\(\omega(Q)-\omega(D)\) to the left side of (CK1).  Since the same difference
+appears in \(G(Q)-G(D)\), (CK1) reduces exactly to
+
+\[
+\boxed{k_D\ge1+\sum_{p^a\parallel Q}a(p-1)
+             -\sum_{p^a\parallel D}a(p-1).}
+\tag{CK2}
+\]
+
+Thus this natural source- and phase-preserving lattice lift supplies no new
+prime-support surplus beyond the already available Simpson cut.  This is a
+negative result about one proposed bridge, not a claim that all lattice
+methods are exhausted; it leaves the phase-preserving strict repair (G1)--(G2)
+open.
+
 Mian--Siddique, [arXiv:2607.25628](https://arxiv.org/abs/2607.25628), provide
 an independent Lean-kernel exclusion
 `odd_covering_lcm_gt_10000`: every distinct odd cover has lcm greater than
