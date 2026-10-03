@@ -27,14 +27,6 @@ internal sealed class TypedPortTransportDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("RouteEndpoints contains a finite path type, its endpoint kind, per-path left and slack terminal counts, and their totals. LL contributes (2,0), HH contributes (0,2), and LH contributes (1,1)."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("capacity-ledger"),
-                DeclarationHandle.Create(Prefix + "CapacityLedger"),
-                H("Computed matching terminals"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For actual and pairing matching graphs on the same finite port type, leftTerminalsOf contains ports of degree pair (1,0), and slackTerminalsOf contains ports of degree pair (0,1). These are computed from the graphs rather than supplied as endpoint labels."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("matching-balance"),
                 DeclarationHandle.Create(Prefix + "matching_defect_eq_terminal_difference"),
                 H("Partial matching balance"),
