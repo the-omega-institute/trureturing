@@ -8023,3 +8023,315 @@ I_\varepsilon(\mu)
 只有另给 \(\varepsilon\downarrow0\) 的容量、谱或速率估计，才能从 \(I_\varepsilon\) 提取 \(\Gamma\)；大偏差符号本身不是势垒证明。
 
 同一 \(E_j\) 可取所有跨井速率为 \(1\)，也可取跨割速率 \(e^{-c/\varepsilon}\)，从而产生完全不同的寿命指数。FIB 递归只给 \(E_j\)、词序和标签；连续时间速率、\(\varepsilon\)、井与目标、势函数、边界、时间单位和初态均为外加条件。若杀死核不可约性失败，准平稳分布可能不唯一；多门等高时 prefactor 需相加；非可逆链不能直接使用上述容量势垒。有限 \(j\)、固定 \(\varepsilon\) 无真正相变，且 \(j\to\infty\)、\(\varepsilon\to0\)、\(t\to\infty\) 的次序必须显式声明。因此这些是指定连续时间模型中的亚稳态结论，不是 FIB 自动给出的物理激活能。
+
+## 78. FIB 上下文图的外加拉普拉斯、热核与谱维数
+
+取 FIB 递归产生的有限上下文集 \(V_j\)，另行指定无向边集、对称导通率 \(c_{uv}=c_{vu}\ge0\)、质量 \(m_u>0\) 和可选杀死率 \(\kappa_u\ge0\)。定义
+\[
+(L_jf)(u)
+=\frac1{m_u}\left[
+\sum_{v\ne u}c_{uv}(f(u)-f(v))+\kappa_uf(u)
+\right].
+\]
+在
+\(\langle f,g\rangle_m=\sum_um_u\overline{f(u)}g(u)\) 下，
+\[
+\langle f,L_jf\rangle_m
+=\frac12\sum_{u,v}c_{uv}|f(u)-f(v)|^2
++\sum_u\kappa_u|f(u)|^2\ge0.
+\]
+导通率、质量、边界和杀死率均为外加模型；FIB 只提供候选顶点、标签和可能的邻接顺序。
+
+若
+\(L_j\phi_{j,k}=\lambda_{j,k}\phi_{j,k}\)，取 \(m\)-正交归一基，令 \(H_t=e^{-tL_j}\)，则
+\[
+(H_tf)(u)=\sum_vp_{j,t}(u,v)m_vf(v),
+\]
+\[
+p_{j,t}(u,v)
+=\sum_ke^{-\lambda_{j,k}t}
+\phi_{j,k}(u)\overline{\phi_{j,k}(v)}.
+\]
+热迹与根点局部谱测度分别为
+\[
+\Theta_j(t)=\sum_um_up_{j,t}(u,u)=\sum_ke^{-\lambda_{j,k}t},
+\]
+\[
+\rho_{j,u}
+=\sum_km_u|\phi_{j,k}(u)|^2\delta_{\lambda_{j,k}},
+\qquad
+m_up_{j,t}(u,u)
+=\int e^{-t\lambda}\,d\rho_{j,u}(\lambda).
+\]
+当 \(\kappa=0\) 且图连通时，常数函数是唯一零模；有杀死或 Dirichlet 边界时零模可消失。
+
+对图序列取归一化谱计数
+\[
+\nu_j=|V_j|^{-1}\sum_k\delta_{\lambda_{j,k}}.
+\]
+只有在指定根点或热力学极限并证明 \(\nu_j\Rightarrow\nu\) 后，才定义积分谱密度 \(N(E)=\nu([0,E])\)。若
+\[
+N(E)\sim CE^{d_s/2}\qquad(E\downarrow0),
+\]
+并满足相应 Tauberian 条件，则热迹低能端具有
+\[
+\Theta(t)/|V_j|\sim C't^{-d_s/2}.
+\]
+单个有限连通图在长时间趋向有限尺寸平台，不能直接由此定义非零扩散维数。若另加体积 \(|V_j|\asymp a^j\)、低模尺度 \(\lambda_{j+1}\asymp s^{-2}\lambda_j\) 及边界误差控制，则
+\[
+d_s=\frac{\log a}{\log s}.
+\]
+这需要外加图重整化，FIB 长度增长本身不提供 \(a,s\)。
+
+若再把 \(m_u\) 解释为质量、\(c_{uv}\) 解释为弹簧刚度，则外加机械模型
+\[
+M\ddot q+Cq=0,\qquad L=M^{-1}C
+\]
+的正常模满足 \(\omega_{j,k}=\sqrt{\lambda_{j,k}}\)。只有平移不变局部图另有 Bloch 参数并满足 \(\lambda(k)\sim c^2|k|^2\) 时，才可称低频模为声学支；非周期 FIB 图必须使用谱测度，不能预设 Bloch 波矢。故本节不推出真实材料声子、热扩散、Weyl 普适律或物理维数。
+
+## 79. 外加小噪声路径的大偏差、Hamilton–Jacobi 作用量与最小路径
+
+固定 FIB 第 \(j\) 代并任选嵌入
+\(\iota_j:E_j\to D_j\subset\mathbb R^d\)。给定外加漂移、噪声和小参数
+\[
+dX_t^{\varepsilon,j}
+=b_j(X_t^{\varepsilon,j})\,dt
++\sqrt{\varepsilon}\,\sigma_j(X_t^{\varepsilon,j})\,dW_t,
+\qquad
+a_j=\sigma_j\sigma_j^{\mathsf T}.
+\]
+反射、吸收或周期边界、初态律和时间单位均需另行指定。若 \(a_j\) 可逆，对绝对连续路径 \(\phi\) 定义
+\[
+I_{j,T}(\phi\mid x_0)
+=
+\frac12\int_0^T
+(\dot\phi_t-b_j(\phi_t))^{\mathsf T}
+a_j(\phi_t)^{-1}
+(\dot\phi_t-b_j(\phi_t))\,dt
+\]
+（\(\phi(0)=x_0\)，否则为 \(+\infty\)）。退化时使用控制形式
+\[
+I_{j,T}(\phi\mid x_0)
+=
+\inf_{\dot\phi=b_j(\phi)+\sigma_j(\phi)u}
+\frac12\int_0^T|u_t|^2\,dt.
+\]
+若初态速率为 \(I_{0,j}\)，则在适当局部 Lipschitz、增长和紧性条件下，路径律以速度 \(1/\varepsilon\) 满足
+\[
+\limsup_{\varepsilon\downarrow0}\varepsilon\log\Pr(X^\varepsilon\in F)
+\le-\inf_F I,
+\qquad
+\liminf_{\varepsilon\downarrow0}\varepsilon\log\Pr(X^\varepsilon\in G)
+\ge-\inf_G I,
+\]
+其中 \(I=I_{0,j}(\phi(0))+I_{j,T}(\phi\mid\phi(0))\)。
+
+对有界连续终点泛函 \(F\)，弱控制表示为
+\[
+-\varepsilon\log\mathbb E e^{-F(X^\varepsilon)/\varepsilon}
+=
+\inf_u\mathbb E\left[
+F(X^{\varepsilon,u})+\frac12\int_0^T|u_t|^2dt
+\right],
+\]
+\[
+dX^{\varepsilon,u}
+=(b_j+\sigma_ju)\,dt+\sqrt{\varepsilon}\sigma_j\,dW_t.
+\]
+Hamilton 量和 Lagrangian 为
+\[
+H_j(x,p)=p\cdot b_j(x)+\tfrac12p^{\mathsf T}a_j(x)p,
+\qquad
+L_j(x,v)=\sup_p\{p\cdot v-H_j(x,p)\}.
+\]
+有限终点代价的值函数在光滑处满足
+\[
+\partial_tV+b_j\cdot\nabla V
+-\tfrac12\nabla V^{\mathsf T}a_j\nabla V=0,
+\]
+非光滑时按黏性解理解。吸引集 \(A\) 的准势
+\[
+V_{A,j}(x)
+=\inf_{T>0,\ \phi(0)\in A,\ \phi(T)=x}I_{j,T}(\phi)
+\]
+在适当条件下满足
+\(H_j(x,\nabla V_{A,j})=0\)，达到下确界的路径是最小作用路径；若极小值不存在，只能使用任意 \(\delta\)-最优路径。多个最小路径可同时存在，不能宣称唯一。
+
+梯度扩散的外加特例
+\[
+dX_t=-D\nabla U(X_t)\,dt+\sqrt{2\varepsilon D}\,dW_t
+\]
+中，跨越目标集的指数代价为
+\[
+\Pr(\text{跨越 }B)
+=\exp[-\Gamma(A,B)/\varepsilon+o(1/\varepsilon)],
+\]
+其中 \(\Gamma\) 是势垒差。这一结论依赖梯度结构、噪声协方差和边界，不由 FIB 递归给出。离散核若满足
+\[
+-\varepsilon\log P_{\varepsilon,j}(x,y)\to c_j(x,y),
+\]
+固定步数路径代价才可写成 \(\sum_kc_j(x_{k-1},x_k)\)；步数随 \(\varepsilon\) 或 \(j\) 增长时需另证指数紧性和连续作用量。
+
+## 80. FIB 状态载体上的因果干预、反馈控制与 Bellman 识别
+
+固定一代有限上下文闭包 \(E_j\)。FIB 递归只给状态、类型、词序和组合关系；动作集 \(\mathcal A\)、代价、受控核、观测、初态和时间协议均为外加数据。给定受控核 \(Q_j^a(x,y)\)、阶段代价 \(\ell_t(x,a)\) 和终端代价 \(G\)，策略 \(\pi_t(a\mid h_t)\) 产生路径律
+\[
+P_j^\pi(x_{0:T},a_{0:T-1})
+=\mu_0(x_0)
+\prod_{t<T}\pi_t(a_t\mid h_t)Q_j^{a_t}(x_t,x_{t+1}).
+\]
+这就是受控 g-formula；观察相关性不能自动解释为 \(do(A_t=a)\) 效应。
+
+若 \(X_t\) 是受控 Markov 充分状态，值函数满足
+\[
+V_T(x)=G(x),
+\]
+\[
+V_t(x)
+=\min_{a\in\mathcal A}
+\left\{\ell_t(x,a)+\sum_yQ_j^a(x,y)V_{t+1}(y)\right\}.
+\]
+有限时域下逐时达到最小值的确定性 Markov 策略最优。折扣 \(\gamma\in(0,1)\) 时
+\[
+(\mathcal BV)(x)
+=\min_a\{\ell(x,a)+\gamma\sum_yQ_j^a(x,y)V(y)\}
+\]
+是 \(\gamma\)-压缩，故有唯一不动点；平均代价问题还需外加遍历性与通信类条件。
+
+若加入参考动作律 \(\alpha_0(a\mid x)>0\) 和熵正则，则软 Bellman 值为
+\[
+V_t^\varepsilon(x)
+=-\varepsilon\log\sum_a\alpha_0(a\mid x)
+\exp\left[
+-\frac{\ell_t(x,a)+\sum_yQ_j^a(x,y)V_{t+1}^\varepsilon(y)}
+{\varepsilon}
+\right],
+\]
+最优动作律为对应 Gibbs 权重。KL 正则是外加控制选择，不能自动等同于物理温度或耗散。
+
+若只能观察 \(Y_t=g_j(X_t)\)，且 \(g_j\) 不满足受控 lumpability，标签过程一般不是 Markov；充分状态应改为后验信念
+\[
+b_{t+1}(y)
+=\frac{O_j^{a_t}(y,Y_{t+1})
+\sum_xb_t(x)Q_j^{a_t}(x,y)}
+{\sum_{y',x}O_j^{a_t}(y',Y_{t+1})
+b_t(x)Q_j^{a_t}(x,y')}.
+\]
+信念空间上的 Bellman 方程才给出 POMDP 控制。完整状态可见、顺序可忽略性、一致性和 positivity 成立时，观察数据才识别 \(Q_j^a\) 和有限时域策略值。若始终只观察动作 \(a=0\)，两个模型可以有相同观测律而在 \(do(a=1)\) 下给出不同终端分布；无 positivity 时反事实不可识别。
+
+核扰动满足
+\[
+\sup_{x,a}\operatorname{TV}(Q_j^a(x,\cdot),
+\widetilde Q_j^a(x,\cdot))\le\delta
+\]
+时，固定时域和有界路径代价下值差至多按 \(T\delta\) 线性累积；\(T\) 随 \(j\) 增长时必须控制 \(T\delta\)。FIB 不指定动作、干预语义、成本、可观测性或物理单位，故本节不推出真实因果律或普适控制常数。
+
+## 81. 随机替换环境的频率、Lyapunov 率与衍射波动
+
+确定性 FIB 拼接已经给出 primitive hull 的一个外加实现。本节考虑另一种外加延拓：每一层从有限替换族 \(\{\sigma_e:e\in E\}\) 中按平稳遍历环境 \(e_t\) 选择替换。FIB 只提供字母、合法上下文和可用的组合载体；环境律、替换族、位置实现和权重均为外加。
+
+令 \(M_e\) 为 \(\sigma_e\) 的非负计数矩阵，并定义随机乘积
+\[
+C_n=M_{e_0}M_{e_1}\cdots M_{e_{n-1}}.
+\]
+若 \(\mathbb E\log^+\|M_{e_0}\|<\infty\)，且矩阵族在共同正锥上具有投影收缩，则 Furstenberg–Kesten 率
+\[
+\lambda_q
+=\lim_{n\to\infty}\frac1n\log\|C_n\|
+\]
+几乎处处存在。若环境独立，则一阶平均计数的 annealed 率由
+\(\log\rho(\mathbb E M_e)\) 给出，并满足
+\[
+\lambda_q\le\log\rho(\mathbb E M_e)
+\]
+在相应正性和初态条件下；严格不等的一般来源是矩阵乘积的次序相关性。若环境不是独立的，必须把环境状态并入联合乘积，不能逐层替换为 \(\mathbb E M_e\)。
+
+设 \(\widehat c_n=C_nc_0/\mathbf1^{\mathsf T}C_nc_0\) 是归一化字母频率。若共同锥收缩足以使投影过程遗忘初态，则 \(\widehat c_n\) 在平稳遍历环境下收敛到由环境路径决定的平稳投影；环境本身遍历且投影观测可积时，该极限的分布不依赖初始相位。若环境退化为常值，恢复确定性 Perron 频率；若投影不收缩，则频率可能只在子序列收敛或保留初态记忆。
+
+给定有界字母权重 \(w\)，随机替换产生的加权梳记为 \(\omega_\omega\)。在 quenched 语义下，若加权圆柱函数具有平稳自相关，则
+\[
+\eta_\omega(m)
+=\lim_{N\to\infty}\frac1N
+\sum_{n=0}^{N-1}
+w(e_n)\overline{w(e_{n-m})}
+\]
+在适用的遍历定理下存在；其 Fourier 变换是该环境实现的衍射测度。annealed 自相关为
+\[
+\overline\eta(m)=\mathbb E\,\eta_\omega(m),
+\]
+一般不等于先把权重或替换矩阵平均后所得确定性模型的自相关。环境相关性可以把确定性纯点峰扩展为连续或奇异连续部分，具体类型需由替换族和环境谱证明，不能只由 FIB 拼接式判断。
+
+若环境混合且中心化柱函数 \(F(T^ne)\) 的协方差绝对可和，则
+\[
+\frac1{\sqrt N}\sum_{n=0}^{N-1}
+\bigl(F(T^ne)-\mathbb EF\bigr)
+\Longrightarrow
+\mathcal N(0,\sigma_F^2),
+\]
+\[
+\sigma_F^2
+=\operatorname{Var}(F)+
+2\sum_{m\ge1}\operatorname{Cov}(F,F\circ T^m).
+\]
+这给出有限窗口频率和衍射强度估计的统计误差；若环境长记忆、协方差不可和或投影不收缩，只能保留遍历平均或标记为 open。随机替换的长度 Lyapunov 率、频率波动和谱测度是外加环境模型的结论，不是 FIB 递归自动产生的无序材料普适律。
+
+## 82. 外加连续时间链的亚稳态、准平稳寿命与稀有跃迁
+
+固定一代 \(j\)，令 \(E_j\) 为 FIB 递归产生的有限上下文集合。给定外加速率 \(r_{\varepsilon,j}(x,y)\ge0\)，定义
+\[
+(\mathcal L_{\varepsilon,j}f)(x)
+=\sum_{y\ne x}r_{\varepsilon,j}(x,y)[f(y)-f(x)].
+\]
+对互不相交的亚稳井 \(A\)、目标 \(B\)，令 \(D=E_j\setminus B\) 和
+\[
+\tau_B=\inf\{t:X_t\in B\}.
+\]
+若 \(D\) 内核不可约，杀死半群有准平稳分布 \(\nu_{\varepsilon,j}\) 和主特征值 \(\lambda_{\varepsilon,j}>0\)：
+\[
+\nu_{\varepsilon,j}P_t^B
+=e^{-\lambda_{\varepsilon,j}t}\nu_{\varepsilon,j},
+\qquad
+\Pr_{\nu_{\varepsilon,j}}(\tau_B>t)
+=e^{-\lambda_{\varepsilon,j}t}.
+\]
+出口位置满足
+\[
+\Pr_{\nu_{\varepsilon,j}}(X_{\tau_B}=y)
+=\lambda_{\varepsilon,j}^{-1}
+\sum_{x\in D}\nu_{\varepsilon,j}(x)r_{\varepsilon,j}(x,y).
+\]
+次主谱隙控制从其他初态到准平稳律的条件收敛；只有井内混合时间远小于 \(\lambda_{\varepsilon,j}^{-1}\) 时，才是亚稳态。
+
+另加可逆 Arrhenius 结构
+\[
+\pi_\varepsilon(x)=Z_\varepsilon^{-1}e^{-U(x)/\varepsilon},
+\qquad
+c_\varepsilon(x,y)
+=Z_\varepsilon^{-1}a(x,y)e^{-H(x,y)/\varepsilon},
+\]
+其中 \(a,H\) 对称且有统一正性。定义通信高度
+\[
+\Phi(A,B)=\min_{\gamma:A\leadsto B}
+\max_{(x,y)\in\gamma}H(x,y),
+\qquad
+\Gamma(A,B)=\Phi(A,B)-\min_{x\in A}U(x).
+\]
+容量为
+\[
+\operatorname{cap}_\varepsilon(A,B)
+=\inf_{h|_A=1,h|_B=0}
+\frac12\sum_{x,y}c_\varepsilon(x,y)[h(y)-h(x)]^2.
+\]
+若井内混合为 \(e^{o(1/\varepsilon)}\)，且容量确由最低通信高度控制，则
+\[
+\lim_{\varepsilon\downarrow0}
+\varepsilon\log\mathbb E_{\nu^A_\varepsilon}\tau_B
+=\Gamma(A,B),
+\qquad
+\lim_{\varepsilon\downarrow0}
+[-\varepsilon\log\lambda_\varepsilon]
+=\Gamma(A,B).
+\]
+Eyring–Kramers 前因子还需外加的门结构、局部几何和小噪声扩散；非可逆链不能直接使用此容量势垒。固定有限 \(j\) 和 \(\varepsilon\) 没有真正相变，且 \(j\to\infty\)、\(\varepsilon\to0\)、\(t\to\infty\) 的次序必须声明。
+
+因此，同一 \(E_j\) 可用跨井速率 \(1\) 产生普通寿命，也可用 \(e^{-c/\varepsilon}\) 产生指数寿命。FIB 只提供状态、词序和标签，不唯一确定准势、激活能、温度或稀有跃迁律。
