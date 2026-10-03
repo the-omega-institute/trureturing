@@ -1,0 +1,5 @@
+source_id = "rectangular-grid-parity-transport"
+path = "docs/develop/theory/RECTANGULAR_GRID_PARITY_TRANSPORT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
