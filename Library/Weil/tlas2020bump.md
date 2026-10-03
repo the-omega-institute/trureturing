@@ -321,6 +321,53 @@ $$
 
 Equations (10)–(11) identify published terminology and parameters; they supply no sign estimate. In particular, Mondal's Theorem 2.5, PDF pp.6–7, gives real-argument monotonicity and log-convexity statements. They do not establish a lower bound for the real part of (11) at the complex arguments of the residual.
 
+## Reuse the Bessel expansion through its exact integral
+
+[Paris, *The asymptotic expansion of Krätzel's integral and an integral related to an extension of the Whittaker function*, arXiv:2112.02928v1, §6, PDF pp.9–11](https://arxiv.org/pdf/2112.02928v1), supplies a closer special-function interface. Its equation (6.1) is, writing the second endpoint exponent as $c$ and the damping parameter as $h$ to distinguish them from this note's dilation bound and polynomial,
+
+$$
+I_{\nu,h}(a,c;\zeta)=\sqrt{\frac{2h}{\pi}}
+\int_0^1v^{a-1/2}(1-v)^{c-1/2}e^{\zeta v}
+K_\nu\!\left(\frac{h}{v(1-v)}\right)\,dv,
+\qquad \nu\ge-1/2,\quad h>0.
+$$
+
+Here $K_\nu$ is the modified Bessel function. The exact half-integer identity [DLMF 10.39.2](https://dlmf.nist.gov/10.39.E2) is
+
+$$
+K_{1/2}(y)=\sqrt{\frac{\pi}{2y}}e^{-y},\qquad y>0.
+$$
+
+It cancels the integral's prefactor and half powers, giving the unchanged family exactly:
+
+$$
+\mathcal F_{1/4}(1;2;\zeta)=I_{1/2,1/4}(0,0;\zeta),
+\qquad \Phi(s)=e^{is/2}I_{1/2,1/4}(0,0;-is).
+$$
+
+This uses (6.1), rather than the displayed definition of $J$ immediately before (6.8). The latter literally has $\exp(+h/[v(1-v)])$ with $h>0$ in both the inspected PDF and original TeX. At the target endpoint exponents its ordinary improper integral diverges. Changing that sign silently would give a different definition; the half-integer specialization of $I$ avoids relying on it.
+
+In the coefficients preceding (6.6), $a_0(1/2)=1$ and $a_k(1/2)=0$ for $k\ge1$. Thus (6.6) specializes to
+
+$$
+I_{1/2,1/4}(0,0;-x)
+\sim e^{-1/4}x^{-1/2}
+\sum_{r=0}^\infty
+\frac{(-1)^r c_r(0)}{r!\,2^r x^{r/2}}
+K_{1+r}(\sqrt x),
+\qquad |x|\to\infty,\quad |\arg x|<\pi/2,
+$$
+
+with principal roots and the coefficients defined by
+
+$$
+e^{-1/[4(1-v)]}
+=e^{-1/4}\sum_{r=0}^\infty\frac{(-1)^r c_r(0)}{r!}v^r,
+\qquad |v|<1.
+$$
+
+This is an existing one-endpoint asymptotic expansion, not an exact convergent representation or a new saddle construction. The source records a local $O(e^{-x})$ error when extending an intermediate upper limit, but gives no constant uniform as the argument approaches the sector boundary and no remainder transported through (11). Its Kummer relation (6.2) supplies the opposite-sector representation; it does not alone justify adding both endpoint expansions with one controlled remainder near the Fourier direction. The actual signed aggregate estimate remains unprovided by this interface.
+
 ## Preserve the source hypotheses at the complex interface
 
 Two inspected complex asymptotic sources provide tools for a possible remainder estimate:
