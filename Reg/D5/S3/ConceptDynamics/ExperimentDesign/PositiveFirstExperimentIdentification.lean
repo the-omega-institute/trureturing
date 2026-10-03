@@ -19,7 +19,7 @@ open GuardedEqualityRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
 
-noncomputable def _root_.Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena (∀ (model : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))), @Eq.{1} Bool (D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping.E_X model) Bool.true → @Eq.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) model D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping.M_XY) D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstRealization D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirst_bridge D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model) (type_of% (positiveFirstArena)) (type_of% (positiveFirstArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
@@ -55,7 +55,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations
 open GuardedEqualityRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
-example : _root_.Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirst_bridge.toTheoremUnit _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model).Statement =
     (∀ (model : Fin 3) (_hpositive : E_X model = true), model = M_XY) := rfl
 end
 

@@ -20,7 +20,7 @@ open ExistentialWitnessRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.Diagonal.EscapeCount
 open _root_.D5.S0.Diagonal.Lawvere.QualitativeEscape
 
-noncomputable def _root_.Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena (@Exists.{1} (Bool → Bool) fun (f : Bool → Bool) => @Exists.{1} (Unit → Unit → Bool) fun (g : Unit → Unit → Bool) => Not (@D5.S0.Diagonal.EscapeCount.IsEscaped.{0, 0} Unit Bool f g)) D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedRealization D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.captured_bridge D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint) (type_of% (capturedArena)) (type_of% (capturedArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Unit → Unit → Bool)) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w) true))) (type_of% (captured_lawSensitive)) (type_of% (captured_slotSensitive)) (Unit) (Unit) (Unit) := {
   unitName := `Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint.__information_unit,
@@ -53,7 +53,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrati
 open ExistentialWitnessRegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.Diagonal.EscapeCount
 open _root_.D5.S0.Diagonal.Lawvere.QualitativeEscape
-example : _root_.Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.captured_bridge.toTheoremUnit _root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint).Statement =
     (∃ (f : Bool → Bool) (g : Unit → Unit → Bool), ¬ IsEscaped f g) := rfl
 end
 

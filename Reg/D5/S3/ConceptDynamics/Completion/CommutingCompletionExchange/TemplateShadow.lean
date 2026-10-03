@@ -22,7 +22,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
 open InformationEscapeArenas.CommutingCompletionExchange
 
-noncomputable def _root_.Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.TemplateShadow.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.CommutativityNecessaryStatement D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completion_bridge D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) (type_of% (commutingCompletionArena)) (type_of% (commutingCompletionArena)) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
     Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)) (type_of% (Reg.Support.LegacyRelations.Completion.finite_variation)) (type_of% (Reg.Support.LegacyRelations.Completion.finite_sensitivity)) (Unit) (Unit) (type_of% (Reg.Support.LegacyRelations.Completion.registration)) := {
@@ -59,7 +59,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeArenas
 open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
 open InformationEscapeArenas.CommutingCompletionExchange
-example : _root_.Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.TemplateShadow.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completion_bridge.toTheoremUnit _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary).Statement =
     (InformationEscapeRealizations.CommutingCompletionExchange.commutativity_hypothesis_is_necessary_realization.toTheoremUnit
       commutativity_hypothesis_is_necessary).Statement := rfl
 end

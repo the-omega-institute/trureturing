@@ -22,7 +22,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
 open InformationEscapeArenas.EndStateOmitsPreemptingCause
 
-noncomputable def _root_.Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.EndStateOmitsPreemptingCauseStatement D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemptionRealization D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemption_bridge D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause) (type_of% (endStateOmitsPreemptingCauseArena)) (type_of% (endStateOmitsPreemptingCauseArena)) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
     Reg.Support.LegacyRelations.Preemption.signature Reg.Support.LegacyRelations.Preemption.actual.readout Reg.Support.LegacyRelations.Preemption.actual.anchor)) (type_of% (Reg.Support.LegacyRelations.Preemption.finite_variation)) (type_of% (Reg.Support.LegacyRelations.Preemption.finite_sensitivity)) (Unit) (Unit) (type_of% (Reg.Support.LegacyRelations.Preemption.registration)) := {
@@ -59,7 +59,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeArenas
 open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
 open InformationEscapeArenas.EndStateOmitsPreemptingCause
-example : _root_.Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemption_bridge.toTheoremUnit _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause).Statement =
     (InformationEscapeRealizations.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause_realization.toTheoremUnit
       end_state_omits_preempting_cause).Statement := rfl
 end

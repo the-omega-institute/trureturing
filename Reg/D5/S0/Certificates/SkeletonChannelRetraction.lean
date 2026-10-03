@@ -19,7 +19,7 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
-noncomputable def _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena (∀ (d : Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))), @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract d) (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (nat_lit 2) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (nat_lit 2)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentRealization D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrent_bridge D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
@@ -56,7 +56,7 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
-noncomputable def _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena (∀ (d : Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))), @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (D5.S0.Certificates.SkeletonChannelRetraction.transientRetract d) (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (nat_lit 0) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (nat_lit 0)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientRealization D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transient_bridge D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero
+
 
 noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
@@ -92,7 +92,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistra
 open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
-example : _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrent_bridge.toTheoremUnit _root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two).Statement =
     (∀ d : Fin 4, recurrentRetract d ≠ 2) := rfl
 end
 
@@ -105,7 +105,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistra
 open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
-example : _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transient_bridge.toTheoremUnit _root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero).Statement =
     (∀ d : Fin 4, transientRetract d ≠ 0) := rfl
 end
 

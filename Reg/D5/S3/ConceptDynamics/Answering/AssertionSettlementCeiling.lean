@@ -18,7 +18,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 open IffRegistrationTemplates PointwiseRegistrationTemplates RegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
 
-noncomputable def _root_.Reg.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena (∀ (c : D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.Claim), Iff (@Eq.{1} Bool (D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.permits D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.Outcome.open c) Bool.true) (@Eq.{1} D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.Claim c D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.Claim.unsettled)) D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openRealization D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.open_bridge D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled) (type_of% (openCodeArena)) (type_of% (openCodeArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
     (Fin 5) (fun i => openPermissionReadout i) (fun i => openUnsettledReadout i))) (type_of% (open_lawSensitive)) (type_of% (open_slotSensitive)) (Unit) (Unit) (Unit) := {
@@ -51,7 +51,7 @@ set_option relaxedAutoImplicit false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 open IffRegistrationTemplates PointwiseRegistrationTemplates RegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
-example : _root_.Reg.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.open_bridge.toTheoremUnit _root_.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled).Statement =
     (∀ c : Claim, permits .open c = true ↔ c = .unsettled) := rfl
 end
 

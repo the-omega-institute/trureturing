@@ -18,7 +18,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations
 open GuardedEqualityRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups
 
-noncomputable def _root_.Reg.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.dimension_eq_40_of_outer.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.outerDimensionCodeArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.outerDimensionCodeArena (∀ (g : D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.PhysicalSourceGroup), @Eq.{1} Bool (D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.PhysicalSourceGroup.isOuter g) Bool.true → @Eq.{1} Nat (D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.PhysicalSourceGroup.dimension g) (@OfNat.ofNat.{0} Nat (nat_lit 40) (instOfNatNat (nat_lit 40)))) D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.outerDimensionRealization D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.outerDimension_bridge D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.dimension_eq_40_of_outer
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.dimension_eq_40_of_outer) (type_of% (outerDimensionCodeArena)) (type_of% (outerDimensionCodeArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
     (Fin 6) (Fin 2) (instDecidableEqFin 2)
@@ -53,7 +53,7 @@ set_option relaxedAutoImplicit false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations
 open GuardedEqualityRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups
-example : _root_.Reg.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.dimension_eq_40_of_outer.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.outerDimension_bridge.toTheoremUnit _root_.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups.dimension_eq_40_of_outer).Statement =
     (∀ (g : PhysicalSourceGroup) (_h : g.isOuter = true), g.dimension = 40) := rfl
 end
 

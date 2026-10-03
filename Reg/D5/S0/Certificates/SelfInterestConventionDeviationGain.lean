@@ -18,7 +18,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 open IffRegistrationTemplates PointwiseRegistrationTemplates RegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.Certificates.SelfInterestConventionDeviationGain
 
-noncomputable def _root_.Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualArena (∀ (convention : D5.S0.Certificates.SelfInterestConventionDeviationGain.Convention), Iff (@Eq.{1} D5.S0.Certificates.SelfInterestConventionDeviationGain.Convention (D5.S0.Certificates.SelfInterestConventionDeviationGain.dual convention) convention) (Or (@Eq.{1} D5.S0.Certificates.SelfInterestConventionDeviationGain.Convention convention D5.S0.Certificates.SelfInterestConventionDeviationGain.FvF) (@Eq.{1} D5.S0.Certificates.SelfInterestConventionDeviationGain.Convention convention D5.S0.Certificates.SelfInterestConventionDeviationGain.AvA))) D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dualRealization D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dual_bridge D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff) (type_of% (dualArena)) (type_of% (dualArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
     Convention (fun convention => dualFixedReadout convention)
@@ -53,7 +53,7 @@ set_option relaxedAutoImplicit false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 open IffRegistrationTemplates PointwiseRegistrationTemplates RegistrationTemplates LeanInformationAudit
 open _root_.D5.S0.Certificates.SelfInterestConventionDeviationGain
-example : _root_.Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.dual_bridge.toTheoremUnit _root_.D5.S0.Certificates.SelfInterestConventionDeviationGain.dual_fixed_iff).Statement =
     (∀ convention : Convention, dual convention = convention ↔
       convention = FvF ∨ convention = AvA) := rfl
 end

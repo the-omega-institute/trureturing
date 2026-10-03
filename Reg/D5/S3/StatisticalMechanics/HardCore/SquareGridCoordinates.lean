@@ -20,7 +20,7 @@ open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory
 open _root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
 
-noncomputable def _root_.Reg.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterArena (∀ (d : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))), @Eq.{1} D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory.Point (D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory.recenter d (D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory.direction d)) (@Prod.mk.{0, 0} Int Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))) D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenterRealization D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenter_bridge D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction
+
 
 noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction) (type_of% (recenterArena)) (type_of% (recenterArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 2) (instDecidableEqFin 2)
@@ -57,7 +57,7 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S3.StatisticalMechanics.HardCore.OrderedGridMemory
 open _root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates
-example : _root_.Reg.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction.__information_unit.Statement =
+example : (_root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations.recenter_bridge.toTheoremUnit _root_.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates.recenter_direction).Statement =
     (∀ d : Fin 3, recenter d (direction d) = (0, 0)) := rfl
 end
 
