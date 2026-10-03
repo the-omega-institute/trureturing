@@ -5,9 +5,10 @@ year: 2022
 title: "Cross-Frame Potential"
 doi: 10.1080/01630563.2022.2128818
 url: https://arxiv.org/abs/2205.05613v3
-claim: "Conjecture 42: If a frame F for F^n forms an exclusive Grassmannian pair with one of its duals, then that dual must be the canonical dual frame of F."
+claim: "Conjecture 41: Let F be a frame for Fⁿ, and let G be one of its dual frames. Then µ(Gr(F, G)) ≥ √((nk − n²)/(k²(k − 1))). (21) Conjecture 42: If a frame F for F^n forms an exclusive Grassmannian pair with one of its duals, then that dual must be the canonical dual frame of F."
 strata_touched:
   - D5/S3/QuantumBounds/Designs/CrossFrameExclusiveDualRefutation
+  - D5/S3/QuantumBounds/Designs/CrossFrameWelchBoundRefutation
 license: citation-only
 triage: anchor
 ---
@@ -24,6 +25,10 @@ Definition 1 (p. 3):
 $$A\|f\|^2 \le \sum_{i=1}^k |\langle f,f_i\rangle|^2 \le B\|f\|^2$$
 
 > for every f ∈ H.
+
+The sentence immediately following Definition 1 states:
+
+> In a finite-dimensional space H, frames are simply spanning sets of H.
 
 Definition 3 (p. 3):
 
@@ -50,6 +55,16 @@ The explanation in §4.2 (p. 17):
 
 > Note that the frame in Example 32 forms an exclusive Grassmannian pair with its canonical dual, that is, its canonical dual is the only dual frame that satisfies (14), while the frame in Example 31 has at least two duals which satisfy (14).
 
+Conjecture 41 (§4.2, p. 17):
+
+> Let F be a frame for Fⁿ, and let G be one of its dual frames. Then
+> $\mu(\mathrm{Gr}(F,G)) \ge \sqrt{\frac{nk-n^2}{k^2(k-1)}}$. (21)
+
+The real case of Conjecture 41 is encoded by `Fin k → EuclideanSpace ℝ (Fin n)`,
+with `n ≤ k` and `2 ≤ k`. Its frame predicate is spanning, and its dual-frame
+predicate includes both frame conditions and both reconstruction equations.
+All arithmetic inside the square root is real arithmetic.
+
 Conjecture 42 (§4.2, p. 17):
 
 > If a frame F for F^n forms an exclusive Grassmannian pair with one of its duals, then that dual must be the canonical dual frame of F.
@@ -63,6 +78,6 @@ This is the counterexample formalized in
 
 - arXiv v3: https://arxiv.org/abs/2205.05613v3 — Definitions 1 and 3 (p. 3),
   canonical dual (p. 4), off-diagonal magnitude (p. 12), Definition 34 (p. 13),
-  exclusivity sentence (p. 14), Conjectures 42 and 43 (p. 17).
+  exclusivity sentence (p. 14), Conjectures 41, 42 and 43 (p. 17).
 - Journal DOI: https://doi.org/10.1080/01630563.2022.2128818.
   The journal text has not been checked against the arXiv conjecture.
