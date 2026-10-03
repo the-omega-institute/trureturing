@@ -28398,3 +28398,112 @@ the required map from the §844 collision groups to this chain with a strict
 subunit budget.  The resulting status is precise: the charge route is a
 conditional reusable bridge; its caps and strict budget remain open, and no
 unrestricted Erdős--#7 conclusion follows yet.
+
+## 246. Pair collisions are not current cylinder-chain events
+
+The collision source in §844 can be written as an ordinary finite event
+cover, but it is not yet an instance of the cylinder chain used by the
+reusable charge theorem.  For a fixed support-prime pair \(r<s\), let
+
+\[
+ \Omega_{r,s}=U_r\times\Theta_{r,s},
+\]
+
+where \(U_r\) is the safe \(r\)-coordinate set and
+\(\Theta_{r,s}\) is the finite set of one common compatible rooted-tree
+embeddings.  For \(P=\{d,d'\}\in\mathscr P_{r,s}\), let
+\(E_P\subseteq\Omega_{r,s}\) be
+the event that the same \((u,\theta)\) makes both pullbacks nonempty.  The
+source-global statement supplies
+
+\[
+ \Pr(E_P)=\rho_{d,d'}\kappa_{r,s}(w_d,w_{d'}),
+ \qquad
+ \bigcup_{P\in\mathscr P_{r,s}}E_P=\Omega_{r,s},
+\]
+
+and therefore \(\sum_P\Pr(E_P)=\Psi_{r,s}\ge1\).  This is the exact
+part that can be reused as a finite event-cover premise.
+
+The route in
+`D5/S3/Arith/Congruence/ActualCylinderChain.lean` has a stronger event
+syntax.  Its charge-producing construction takes
+\(C:\kappa\to\texttt{Cylinder}\ r\ p\ H\), uses
+`hit C c j x`, and obtains its cylinders from
+`PrimePowerCover.actualCylinder`.  The latter comes with
+`actualCylinder_depthInjective`; in
+`D5/S3/Arith/Congruence/ConditionalComparison/Cylinders.lean`,
+`DepthInjective` is injectivity of the full depth vector.  A collision pair
+has two pullbacks with the same numerical output modulus \(r^b m\), hence
+the same output prime-power depth vector.  Keeping both pair members as
+labels therefore violates this injectivity.  Merging them into one label
+forgets that the two original phases are distinct, which is precisely the
+phase information §844 requires to retain.
+
+There is a second mismatch before depth injectivity is considered.  The
+event \(E_P\) says that two paths are simultaneously selected by one common
+tree \(\theta\).  This is a relation on the subset choice at every node of
+the tree.  `hit` tests one prefix of one arithmetic word for one cylinder;
+it does not express simultaneous membership of two paths in one shared
+embedding.  Encoding tree subsets by auxiliary prime-power words would
+require a new source map, a proof that each \(E_P\) is a cylinder in that
+map, and a proof that the resulting law has the residual-coordinate caps
+used by `ActualCylinderChain.base`.  No such representation is present in
+the current interface.
+
+The abstract `PhysicalChain` is more permissive because its `bad` field has
+type
+\[
+ (\mathrm{Fin}\ n\to\Omega)\to\Omega\to\mathrm{Bool}.
+\]
+One could therefore put arbitrary events into a separately constructed
+chain.  That does not supply the missing bridge: the theorem
+`ordinary_cover_forces_charge_and_caps` is the result that connects an
+actual odd cover to `BaseCaps`, and its proof uses the cylinder `hit` events
+and the common product residual law.  For arbitrary collision events one
+would still have to prove, under the *same* \(\mu\) and every preceding
+distortion, conditional bounds of the form
+
+\[
+ \Pr_{\mu_i}(E_i\mid\text{complete earlier history})
+ \le (1-\delta_i)R_i.\mathrm{survival}(h_i),
+\tag{246.1}
+\]
+
+and then a strict budget
+
+\[
+ \mathbb E_{\text{one common source}}[\texttt{totalCharge}]<1.
+\tag{246.2}
+\]
+
+The current \(\Psi\) formula gives only the undistorted marginal masses in
+the first display.  It gives neither (246.1) for cross-cofactor events nor
+(246.2).  The issue is not repaired by choosing one event per source map:
+that produces a partition with total mass one and discards the collision
+multiplicity that is needed for a strict upper estimate.
+
+The finite 51-label control in §844 makes this limitation explicit.  It has
+12 designated pair events, all 20 common source maps are covered, and each
+event has \(\rho\kappa=3/20\), so \(\Psi=9/5\).  Thus the direct
+undistorted marginal assignment (the \(\delta_i=0\) specialization) charges
+\(9/5\), not a subunit amount.  This does not rule out a new distortion
+scheme; it rules out deriving (246.2) from the first-moment collision data
+alone.  The exact checker linked in §844 verifies this obstruction.
+
+Consequently, a reusable generalized chain theorem would have to take as
+input a finite common source \((\Omega,\mu)\), pair events with their
+original labels and phases, an order and depth/run specification, and prove
+all three clauses simultaneously:
+
+1. the pair events cover \(\Omega\) (the existing §844 clause);
+2. the conditional caps (246.1) hold after every preceding update; and
+3. the same source and phase data imply the strict budget (246.2).
+
+Only then could `PhysicalChain.one_le_charge_of_cover` be applied to derive
+the contradiction.  In particular, a theorem that stores only the numerical
+output modulus or only \(\Psi\) is insufficient: it cannot distinguish the
+phase-compatible replacement obligation from a numerical collision.  This
+section records an interface failure and its exact missing hypotheses; it
+does not assert a generalized chain theorem or settle unrestricted
+Erdős--#7.
