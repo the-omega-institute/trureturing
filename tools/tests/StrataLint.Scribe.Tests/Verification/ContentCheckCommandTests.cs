@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
-[Collection("Lean report environment")]
+[Collection("Process environment")]
 public sealed class ContentCheckCommandTests
 {
     private const string SourcePath = "D5/S0/Synthetic/CurrentMarkdown.lean";
