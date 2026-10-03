@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 internal sealed class FibonachosScoreDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/kagey2025a382814");
+        LibraryNoteRef.Create("D5/L/ArithSums/kagey2025a382814");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fibonachos ties and large-heap majority follow Fibonacci blocks.",
