@@ -30,11 +30,12 @@ Quoted from arXiv:2405.02727v1:
 
 > “We do not know the answer to this question, in general.”
 
-The concrete target is the unresolved base-4 phi instance: prove that the
-paper's 22-state Walnut DFAO is minimal among DFAOs which are correct on the
-Zeckendorf encodings of all `4^i`, ignore leading zeroes, and obey the
-Zeckendorf/Ostrowski validity rules. Equivalently, prove that no such DFAO with
-at most 21 states exists.
+The concrete target was the base-4 phi instance: determine whether the paper's
+22-state Walnut DFAO is minimal among machines correct on the Zeckendorf
+encodings of all `4^i`, ignoring leading zeroes and obeying the
+Zeckendorf/Ostrowski validity rules. The target is refuted below by a
+21-live-state partial DFAO satisfying these conventions and agreeing on every
+admissible encoding.
 
 The paper also says:
 
@@ -84,12 +85,12 @@ representation length of each digit position can be arbitrarily large.
   that certificate. Still absent: the sparse powers language itself, the target
   digit function, Myhill-Nerode equivalence for the output setting, and any
   automaton minimization theorem.
-- The actual 22-state Walnut transition/output table must be imported from the
-  paper artifact and independently checked.
-- No SAT encoding, UNSAT proof checker, or certificate format exists in the
-  repository.
-- Correctness on every `4^i` is an infinite sparse-language property; matching a
-  finite digit dictionary is not enough.
+- The actual 22-state Walnut transition/output table is imported and checked by
+  the delivered module's finite certificates and structural induction.
+- No SAT encoding is needed for the refutation: a concrete 21-live-state
+  witness is enough.
+- Correctness on every `4^i` follows from the stronger theorem for every valid
+  Zeckendorf encoding, rather than from a finite digit dictionary.
 
 ## Route
 
@@ -108,12 +109,12 @@ representation length of each digit position can be arbitrarily large.
    bound extracted through `state_lower_bound_of_distinguishing_family` can never
    exceed the output alphabet on such a domain. The exact counts are under
    Evidence. Do not spend a seat on this step.
-4. Therefore the surviving route is the paper's own: reproduce the incomplete-data
-   SAT model incrementally and require a DRAT/LRAT UNSAT certificate for 21 states
-   plus a theorem connecting the finite constraint family to all powers. A cheaper
-   certificate would need the sparseness itself to be broken, for example by
-   certifying a larger domain than the powers, which changes the question the paper
-   asked and must not be done silently.
+4. **Closed, 2026-09-29.** The delivered `reducedBase4AdmissibleDFAO` has 21
+   live states. `legal_transition_certificate` checks all finite table cases;
+   `reduced_run_is_lift_compatible` lifts the resulting run by induction on
+   every valid word; and `reduced_obeys_zeckendorf_ostrowski_rules` checks the
+   partial-machine convention. `paper_base4_golden_ratio_dfao_is_not_minimal`
+   packages the exact counterexample.
 5. Treat uniqueness only after minimality; multiple machines agreeing on all
    observed digits are not proof of non-uniqueness.
 
@@ -129,8 +130,8 @@ that certificate.
 
 ## Evidence
 
-1. Transcribe the 22-state table and verify its outputs against exact integer
-   arithmetic for the first 100,000 base-4 digits of phi.
+1. The 22-state table and the 21-live-state reduction are retained in the
+   Evidence receipt and checked by the module's finite table certificates.
 2. **Done, 2026-09-12; result is the closure of Route step 3.** The `i`th base-4
    digit of phi was computed as `(4^i + isqrt(5 * 16^i)) / 2 mod 4` and the
    Zeckendorf words by greedy Fibonacci, each checked to contain no `11` and to
@@ -144,36 +145,31 @@ that certificate.
    414, 311 and 622 components respectively. The mechanism is visible in the
    counts: of the 19,828 distinct prefixes at `a <= 120`, **19,637 have exactly one
    continuation**, and no two of the 121 words share a 16-digit tail.
-3. Run incremental SAT for 13 through 21 states, preserving per-bound wall time,
-   dictionary extent, candidate automata, and a proof certificate for every
-   UNSAT result.
-4. Whenever SAT finds a smaller candidate, use exact arithmetic to locate its
-   first wrong digit and feed that witness back as a new constraint.
+3. No SAT lower-bound search is required after the explicit counterexample.
 
-The first meaningful result is either a reproducible 21-state-or-smaller
-candidate with its first failure, or a mechanically checked UNSAT certificate at
-a stated finite constraint level. Neither alone proves the infinite minimality
-theorem.
+The exact refutation is a universal structural proof, not a finite-prefix
+candidate: every legal transition is checked and the run compatibility theorem
+inducts over arbitrary valid words.
+
+## Resolution
+
+`D5/S1/Words/Automata/GoldenRatioBase4DfaoMinimality.paper_base4_golden_ratio_dfao_is_not_minimal`
+constructs a 21-live-state partial DFAO. It agrees with the literal 22-state
+paper table on every valid Zeckendorf encoding, ignores leading zeroes, and
+obeys the rule that a second consecutive one enters the implicit dead state.
+Therefore the paper's 22-state minimality claim for the fixed base-4 instance
+is false. The broader general minimality and uniqueness questions remain open.
 
 ## Triage
 
-`window`. The problem has a finite 22-state target, but one of its two
-certificate-shaped attacks is now closed by theorem and measurement, and the
-repository still lacks the SAT proof layer that the remaining attack needs. The
-automata layer is no longer entirely absent: `D5/S0/Automata/DFAOStateLowerBound`
-supplies the output automaton, its correctness predicate on a declared domain, and
-the distinguishing-family lower bound, and `D5/S0/Automata/DistinguishingFamilyCardinalityBound`
-supplies the matching upper bound on what that certificate can ever prove. The
-paper already reports severe scaling on the route that remains.
+`theorem`; the fixed base-4 minimality claim is refuted by the universal
+21-live-state witness above. The broader paper question about minimality and
+uniqueness in general is not settled.
 
 ## ASSUMED-UNVERIFIED
 
-- The paper's base-4 Walnut automaton has exactly 22 reachable states under the
-  conventions relevant to the question.
-- Exact digit generation through a large finite range will expose all faulty
-  small DFAO candidates quickly enough for incremental SAT.
-- Whether the fixed base-4 minimality question was resolved after arXiv v1 is
-  unverified; novelty of any certificate construction is unassessed.
+- Whether the 2026 journal follow-up independently reports the same 21-state
+  reduction is unverified; no priority claim is made.
 - The maximum distinguishing family was measured on the finite samples listed under
   Evidence, not proved for every `a`. The theorem that explains those numbers is
   proved, but its rigidity hypothesis is stated about a family's own prefixes and is
