@@ -43,3 +43,13 @@ At a future Mathlib pin of this repository, retire the port when an exact direct
 application proves the same totality statement for every positive Gaussian width
 and the actual Hermite and physical-graph consumers still validate with the port
 removed. Upstream acceptance at another pin is insufficient.
+
+## Verified locator
+
+https://github.com/TauCetiProject/TauCeti/tree/f749c1bb6b118c898f8d152e8ff9ad3d2b339dfd
+
+Attributed donor source scope at this revision:
+
+- `TauCeti/Probability/Moments/Determinacy.lean`;
+- `TauCeti/Probability/Moments/VanishingMoments.lean`;
+- `TauCeti/Probability/Distributions/Gaussian/PolynomialMemLp.lean`.
