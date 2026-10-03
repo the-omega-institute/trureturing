@@ -24,6 +24,10 @@ $$\forall n \in \mathit{Nat},\; (1 \le n) \Rightarrow (\forall y \in \mathit{Rea
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/StaggeredM1EndpointDensity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/beccaria-hagendorf-2012-staggered-m1-endpoint-density` (proved) by `D5/S3/Quantum/SpinChains/StaggeredM1EndpointDensity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"beccaria-hagendorf-2012-staggered-m1-endpoint-density","declaration_gid":"D5/S3/Quantum/SpinChains/StaggeredM1EndpointDensity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

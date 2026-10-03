@@ -15,12 +15,16 @@ internal sealed class StaggeredM1EndpointDensityDocument : IScribeDocumentDefini
             Node("claim", "claim", F0(),
                 "Section 3.2.3, printed page 13: “As similar pattern is found by probing if a particle is present on the last site. The data is consistent with ρ_n^{(N)}(y) = y^{−2} ρ_n^{(1)}(y) for finite n ≤ 8. We conjecture this to hold for arbitrary system sizes.” Here N = 3n with n ≥ 1, y is real and nonzero, and density(j,psi) is the normalized occupation expectation at the one-based site j. The claim quantifies over every nonzero zero-energy state; it contains the source ground-state assertion without assuming existence or uniqueness.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", F1(),
-                "The period-three identity for R has expectation zero in every zero-energy state, since Q and its Hilbert adjoint both annihilate that state. With couplings (y,y,1) the remaining boundary term gives density(N,psi)=y⁻² density(1,psi). The argument holds for every nonzero zero-energy state and does not prove its existence or uniqueness.", DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                "The period-three identity for R has expectation zero in every zero-energy state, since Q and its Hilbert adjoint both annihilate that state. With couplings (y,y,1) the remaining boundary term gives density(N,psi)=y⁻² density(1,psi). The argument holds for every nonzero zero-energy state and does not prove its existence or uniqueness.", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("beccaria-hagendorf-2012-staggered-m1-endpoint-density"),
+                    ResolutionKind.Proved)))));
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("m1-staggeredm1endpointdensity-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula N(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula Call(string name, params Formula[] arguments) =>
