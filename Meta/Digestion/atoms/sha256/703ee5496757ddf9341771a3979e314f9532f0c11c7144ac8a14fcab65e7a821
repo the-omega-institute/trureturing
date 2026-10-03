@@ -1,0 +1,89 @@
+**证明。** 设 $m\ge3$，取任意实际代表 $W_m(t)=(x_0,\ldots,x_{m-1})$。前 $m-1$ 个坐标显然是 $E(\rho t),\ldots,E(\rho^{m-1}t)$；由（356.2）在 $n=m-3$ 处
+
+$$
+E(\rho^m t)=J\bigl(E(\rho^{m-3}t)\bigr)=J(x_{m-3}).
+$$
+
+故（356.3）满足 $F_m(W_m(t))=W_m(\rho t)$，并且所得元组确实属于 $W_m(\mathcal T)$。若一个实际窗口有两个代表 $t,u$，它们给出相同的 $x_i$，右侧（356.3）只依赖这 $m$ 个坐标，因而给出同一个输出；所以定义与代表无关。任何满足后继条件的函数都必须在每个实际窗口上取值为 $W_m(\rho t)$，故该函数唯一。
+
+下面排除较短窗口。令
+
+$$
+ t_2=\langle\alpha,\alpha\rangle,
+ \qquad
+ t_4=\langle t_2,t_2\rangle.
+$$
+
+则 $E(t_2)=A^2=1$、$E(t_4)=(A^2)^2=1$，而
+
+$$
+E(\rho t_2)=B^2=-1,
+\qquad
+E(\rho t_4)=(B^2)^2=1.
+$$
+
+因此 $W_1(t_2)=W_1(t_4)$ 而下一项不同；由 §355 的线性无关性（或其矩阵表示中的 $-I\ne I$），$1\ne-1$，所以 $m=1$ 不闭合。
+
+对 $m=2$，令
+
+$$
+ p=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+ \qquad
+ q=\langle\beta,\langle\alpha,\alpha\rangle\rangle,
+ \qquad S=BA.
+$$
+
+$p,q$ 都有组成 $(2,1)$，且都是同一右结合树形；直接按有序叶次序相乘，得到
+
+$$
+E(p)=A(AB)=B,\qquad E(q)=B(AA)=B,
+\qquad
+E(\rho p)=B(BS)=-S,\qquad E(\rho q)=S(BB)=-S.
+$$
+
+另一方面，由 $S^2=S+1$、
+
+$$
+S(A+B)=A+2B,
+\qquad
+(A+B)S=-B,
+\tag{356.4}
+$$
+
+有
+
+$$
+E(\rho^2p)=S^2(A+B)=2A+3B,
+\qquad
+E(\rho^2q)=(A+B)S^2=A.
+\tag{356.5}
+$$
+
+这些等式的有序乘法展开为
+
+$$
+\begin{aligned}
+S^2&=B(AB)A=B(1-BA)A=BA-B^2A^2=S+1,\\
+S(A+B)&=BA^2+BAB=B+(A+B)=A+2B,\\
+(A+B)S&=ABA+B^2A=(A-B)-A=-B.
+\end{aligned}
+$$
+
+因为 $\rho^2(\alpha)=T_2$、$\rho^2(\beta)=T_3$，$p,q$ 的第三项分别是 $S(S(A+B))$ 和 $(A+B)(SS)$。所以
+
+$$
+\begin{aligned}
+S^2(A+B)&=(S+1)(A+B)=(A+2B)+(A+B)=2A+3B,\\
+(A+B)S^2&=(A+B)(S+1)=-B+(A+B)=A.
+\end{aligned}
+$$
+
+由 $1,A,B,AB$ 线性无关，$2A+3B\ne A$。故两棵实际树满足
+
+$$
+W_2(p)=W_2(q)=(B,-BA),\qquad
+W_2(\rho p)=(-BA,2A+3B)\ne(-BA,A)=W_2(\rho q),
+$$
+
+$m=2$ 也不闭合。综上，恰当条件是 $m\ge3$。$\square$
+

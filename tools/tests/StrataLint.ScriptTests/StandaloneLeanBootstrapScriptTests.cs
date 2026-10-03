@@ -109,6 +109,8 @@ public sealed class StandaloneLeanBootstrapScriptTests
                 TestBudgets.ScriptProcessHangGuard, 1024);
             AssertSuccess(physicalRoot);
             root = Encoding.UTF8.GetString(physicalRoot.StandardOutput).Trim();
+            AssertSuccess(TestProcessRunner.Run("git", ["init", "--quiet", root], root,
+                TestBudgets.ScriptProcessHangGuard, 1024));
             Write(projectDirectory + "/" + projectName + ".csproj", $$"""
                 <Project Sdk="Microsoft.NET.Sdk">
                   <PropertyGroup>
@@ -127,8 +129,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
                 printf '%s\n' "$*" >> "$LEAN_BOOTSTRAP_ROOT/lake.log"
                 exit "$LEAN_BOOTSTRAP_PRODUCER_EXIT"
                 """);
-            foreach (var command in new[] { "git", "gh" })
-                WriteExecutable(Path.Combine(bin, command), "exit 97");
+            WriteExecutable(Path.Combine(bin, "gh"), "exit 97");
         }
 
         internal string[] CliCalls => Calls("cli.log");

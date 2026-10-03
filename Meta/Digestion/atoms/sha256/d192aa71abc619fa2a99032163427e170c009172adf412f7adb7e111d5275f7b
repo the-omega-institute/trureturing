@@ -1,0 +1,105 @@
+**证明。** We establish well-definedness, both inverse identities, and the
+integer weight identity for these explicit maps.
+
+First the bounds on the first column imply
+
+$$
+1\leq A\leq k+1,\qquad1\leq B\leq k,\qquad
+A\leq B+1,\qquad0\leq L\leq B.
+$$
+
+For $i\in[k-1]$, the tail remains nonincreasing with
+$\mu_{i+1}\leq\lambda_{i+1}$, and
+$\lambda_{i+1}\leq k-i$, $\mu_{i+1}\leq k-1-i$, precisely the admissibility
+bounds at size $k-1$. Moreover,
+
+$$
+f'_i\geq A-1=L,\qquad g'_i\geq B.
+$$
+
+For the ordinary deletion, eligibility gives $a\leq A$ and
+$c=\sigma_{t+1}\leq g_1=B+1$. The successor $c$ exists because $t\leq k$,
+including when $t=k$. Since $c\ne a$, its standardized label satisfies
+$\delta_a(c)\leq B$: for $c<a$ it is at most $a-1\leq B$, and for $c>a$
+it is $c-1\leq B$. Thus $s_t\leq B$.
+
+Consider a surviving column $i+1$. Its front row is unchanged except for
+standardization. For any unchanged row $x\ne a$ with $x\leq f_{i+1}$,
+the inequality $a\leq A\leq f_{i+1}$ implies
+$\delta_a(x)\leq f_{i+1}-1$: if $x<a$, use
+$x\leq a-1\leq f_{i+1}-1$; if $x>a$, subtract one. The same reasoning
+applies to an unchanged back row because $a\leq A\leq B+1\leq g_{i+1}$.
+There is only one possible changed back row. If $t>1$, the surviving column
+with original path position $t-1$ previously had successor $a$ and now has
+successor $\delta_a(c)\leq B\leq g'_i$. If $t=1$, the changed successor
+belongs to the unconstrained distinguished endpoint instead. Hence
+$(s,p)\in\mathcal E(P')$ in all cases. This is the ordinary cycle
+contraction used in the hyperrook argument of the cited source, expressed
+in row-word coordinates.
+
+Conversely, suppose $(s,p)\in\mathcal E(P')$, $a\in[A]$, and $t\in[k]$
+with $s_t\leq B$. Ordinary insertion has first front row $a\leq A$ and
+first back row $\ell_a(s_t)\leq B+1$. In any surviving column its front
+row is the lift of its previous front row, so is at most $f'_i+1=f_{i+1}$.
+An unchanged back row is similarly at most $g'_i+1=g_{i+1}$.
+If $t>1$, the one predecessor column now has back row $a\leq B+1$,
+which meets every original back threshold. If $t=1$, that predecessor
+is the unconstrained endpoint. Therefore insertion is eligible.
+Deletion and insertion are inverse operations on both words: the deleted
+position and column value are $t$, and $\delta_a\ell_a$ and
+$\ell_a\delta_a$ undo the row relabeling; the corresponding identities
+with $t$ undo the column relabeling. This proves both ordinary inverse
+identities on these domains.
+
+We next identify the low-row symmetry of the actual tail. Fix $p$, the
+positions of labels in $[L]$ in $s$, and every label greater than $L$.
+Permute the labels $1,\ldots,L$ arbitrarily in their fixed positions.
+Eligibility is preserved: every low row is below every front and back
+threshold of the tail, while high rows are unchanged. Both $H_f$ and $H_b$
+are also preserved. Indeed, a forbidden target row is greater than its
+threshold and therefore greater than $L$. A low row cannot be a forbidden
+target, and a low source is automatically smaller than any forbidden
+target. All high-row comparisons, column comparisons, and the endpoint
+condition remain the same. This argument includes the case that the back
+endpoint itself is a low row.
+
+Cross inversions between a low and a high row do not depend on which low
+label is used; high-high inversions are fixed. Only inversions within the
+low subword change. Thus, if $\eta$ is the low subword of $s$, there is an
+integer $C$, depending on the fixed slots, high rows, and $p$, such that
+
+$$
+E_{P'}(s,p)=C+\operatorname{inv}(\eta).
+\tag{2.1}
+$$
+
+This proves the required symmetry without treating the two faces as
+independent boards. In particular, replacing the low subword by $\rho$
+preserves eligibility, and
+
+$$
+E_{P'}(s^\dagger,p)-E_{P'}(s,p)
+=\operatorname{inv}(\rho)-\operatorname{inv}(\eta).
+\tag{2.2}
+$$
+
+For the forward map, the low subword $\eta$ is exactly $\theta$ with $a$
+deleted and standardized. A surviving original label $x\leq A$ becomes
+a label at most $A-1=L$, and an original label $x>A$ becomes $x-1>L$.
+Thus there are exactly $L$ low slots. Both $\eta$ and $\rho$ permute
+$[L]$, so the replacement gives a permutation $s^\dagger$.
+The maximum $A$ has between zero and $A-1$ entries after it, hence
+$0\leq d<A$. The row $s_t$ is one of the exactly $B$ rows at most $B$,
+so $0\leq b<B$. This proves that $\Phi_P$ takes values in its stated
+codomain.
+
+For the inverse map, $s^\dagger\in\mathfrak S_k$ has exactly $B$ entries
+at most $B$, so the selected $t$ exists and lies in $[k]$. Also
+$0\leq j\leq L=A-1$, so $\theta_{j+1}$ exists and belongs to $[A]$.
+Deleting it and standardizing gives a permutation $\eta$ of $[L]$.
+The low-row symmetry proves that the restored $(s,p)$ is eligible for
+$P'$. Because $L\leq B$, this relabeling preserves the set of positions
+with labels at most $B$, as well as the low slots themselves. Consequently
+$s_t\leq B$, and ordinary insertion is eligible for $P$. This proves
+well-definedness of $\Psi_P$ for every tail and every allowed digit pair.
+

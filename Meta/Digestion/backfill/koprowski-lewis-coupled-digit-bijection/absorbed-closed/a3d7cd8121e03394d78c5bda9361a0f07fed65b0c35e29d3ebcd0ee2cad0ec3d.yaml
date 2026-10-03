@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a3d7cd8121e03394d78c5bda9361a0f07fed65b0c35e29d3ebcd0ee2cad0ec3d
+  normalized_sha256: sha256:a3d7cd8121e03394d78c5bda9361a0f07fed65b0c35e29d3ebcd0ee2cad0ec3d
+cas_ref: sha256:a3d7cd8121e03394d78c5bda9361a0f07fed65b0c35e29d3ebcd0ee2cad0ec3d
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Permutation/CoupledRepairedLeftInverse.actual_full_left_composition
+    target_statement_id: sha256:89c3549f08266b65997ba7fe7a12e9ae39e19a1cfae279e5dac2c51aaf6a4d8e
+receipts:
+  unresolved_subitems: []
