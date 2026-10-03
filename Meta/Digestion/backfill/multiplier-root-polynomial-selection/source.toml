@@ -1,0 +1,5 @@
+source_id = "multiplier-root-polynomial-selection"
+path = "docs/develop/theory/MULTIPLIER_ROOT_POLYNOMIAL_SELECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f4a9d580fa78e38c6eb2d51d4668389881dce5a098732fdb71f9217c56700ec6
+  normalized_sha256: sha256:f4a9d580fa78e38c6eb2d51d4668389881dce5a098732fdb71f9217c56700ec6
+cas_ref: sha256:f4a9d580fa78e38c6eb2d51d4668389881dce5a098732fdb71f9217c56700ec6
+coverage_gids:
+  - gid: D5/S3/ArithUnits/MultiplierRootPolynomialSelection.coeff_zero_of_mul_invariant
+    target_statement_id: sha256:1d4da9380d87ca0ed212263f01b904cbc4f1c5bb0d10317d5e836f4e7231a308
+receipts:
+  unresolved_subitems: []
