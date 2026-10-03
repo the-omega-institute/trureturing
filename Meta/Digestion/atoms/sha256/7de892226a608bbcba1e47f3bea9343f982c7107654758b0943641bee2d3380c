@@ -1,0 +1,68 @@
+**证明。** 先在 $A>0$ 时定义
+
+$$
+\begin{aligned}
+\mathcal T&=\left\{t\in\mathbb R^I:
+0\le t_d\le1,\ \sum_{d\in I}dt_d\le N/A\right\}.
+\end{aligned}
+$$
+
+则 $t_d=x_d/A$ 与 $x_d=At_d$ 是互逆的可行集对应，且全部可行目标值满足确切集合等式
+
+$$
+\left\{\sum_{d\in I}x_d:x\in\mathcal X\right\}
+=\left\{A\sum_{d\in I}t_d:t\in\mathcal T\right\}.
+\tag{353.5}
+$$
+
+在这个归一化下，使用经典有限分数背包强对偶，成本为 $d$、收益为 $1$、预算为 $N/A$，得到
+
+$$
+\max_{x\in\mathcal X}\sum_{d\in I}x_d
+=A\inf_{\lambda\ge0}
+\left\{\lambda\frac NA+
+\sum_{d\in I}\max(0,1-\lambda d)\right\}.
+\tag{353.6}
+$$
+
+此处优化允许在固定秩集上重新分配占位；实际 Fibonacci 纤维给出的占位仅是其中一个可行点，不要求它达到该最大值。$A=0$ 时只有零占位，最大目标值为零，不使用除以 $A$ 的归一化。
+
+若 $x\in\mathcal X$，则除以正数 $A$ 给 $0\le x_d/A\le1$，且
+
+$$
+\sum_{d\in I}d\frac{x_d}{A}
+=\frac1A\sum_{d\in I}dx_d\le\frac NA,
+\qquad
+A\sum_{d\in I}\frac{x_d}{A}=\sum_{d\in I}x_d.
+$$
+
+这证明（353.5）左侧包含于右侧。反之，若 $t\in\mathcal T$，取 $x_d=At_d$，则 $0\le x_d\le A$，且
+
+$$
+\sum_{d\in I}dx_d=A\sum_{d\in I}dt_d\le N,
+\qquad \sum_{d\in I}x_d=A\sum_{d\in I}t_d.
+$$
+
+这证明反向包含及两个对应互逆。可行集非空、紧，目标连续，所以最大值存在。
+
+为明确这里应用的既有强对偶，记 $M_0=N/A$。对任意可行 $t$ 和价格 $\lambda\ge0$，有
+
+$$
+\sum_{d\in I}t_d
+=\lambda\sum_{d\in I}dt_d+
+\sum_{d\in I}(1-\lambda d)t_d
+\le\lambda M_0+\sum_{d\in I}\max(0,1-\lambda d).
+$$
+
+这个经典上界可达：将非空 $I$ 排为 $d_1<\cdots<d_m$。若 $M_0\ge\sum_i d_i$，全取 $t_i=1$ 并选 $\lambda=0$；若 $0\le M_0<\sum_i d_i$，令 $j$ 为首个满足 $\sum_{i\le j}d_i>M_0$ 的指标，置
+
+$$
+t_i=1\ (i<j),\qquad
+t_j=\frac{M_0-\sum_{i<j}d_i}{d_j},\qquad
+t_i=0\ (i>j),\qquad \lambda=\frac1{d_j}.
+$$
+
+该点可行，且原目标和价格表达式都等于 $j-1+t_j$。空集时两侧为零，$M_0=0$ 也包含在上述构造中。这核对了（353.6）所使用的有限分数背包强对偶及其归一化，而非另一个整数预算强对偶假设。收益成本比 $1/d$ 随秩严格下降，所以所给最优点先填低秩、至多有一个部分占位；稀疏秩集的这种最优点未必满足（353.4）的完整整数前缀条件。实际 Fibonacci 占位由固定素数集合确定，不随这里的价格优化而重分配。
+
+对于所取实际素数集合，$F_1=F_2=1$、$F_3=2$，故 $z(2)=3$，实际 $c_3=\log2$、$x_3=\log2/3$。放松后的点 $x_3=\log2$ 满足盒约束，且预算 $3\log2\le8\log2$，所以最大值为 $\log2>\log2/3$。这里的 $N$ 正是（352.3）在 $Y=b=2$ 时的上界预算；没有将实际纤维等同于可自由选择的最优占位。$\square$
+
