@@ -329,8 +329,8 @@ $$
 $$
 
 A finite prefix and the existing summable global theta majorant bound
-this expression. No numerical values or certified effective convergence
-rate are supplied here.
+this expression. The effective original-series estimates below give a
+specified convergence rate without discarding the shifted adjoints.
 
 The same equation, $a_p\ge0$ and (BD) also give
 
@@ -361,3 +361,293 @@ complete spectral certification remain separate obligations. The
 $1/\varepsilon$ loss is uncontrolled as $\varepsilon\to0$; threshold
 accumulation and subthreshold eigenvectors are not excluded. The
 RH-strength exact-half bound remains unproved.
+
+## Effective original-measure cutoff inputs
+
+Reuse the [original theta series majorants](../Analytic/romik2021orthogonal.md)
+and the [explicit prime-diagonal transfer](trudgian2014pnt.md).
+The following bounds evaluate the inputs to (LT) and (FN) for the same
+individual eigenvector, measure, minimal form and cutoff. They do not
+construct a finite spectral certificate.
+
+### Full prime off-diagonal tail
+
+Let $C_\Phi=144/5$. From the theta majorant (ST), the exact $b_n$
+coefficient and $\cosh\ge1$,
+
+$$
+b_n(x)\le\frac{C_\Phi}{2}w_n
+ \exp\left[-\frac34
+       \bigl(e^{2|x|}+e^{2|x+\log n|}\bigr)\right].
+$$
+
+The quantity in parentheses is at least $2n$, by the arithmetic-geometric
+mean and $|x|+|x+\log n|\ge\log n$. For $|x|>R$ it is also at least
+$e^{2R}$. Its mean lower bound is thus $(e^{2R}+2n)/2$.
+Exactly the same two bounds hold for the shifted adjoint $b_n(x-\log n)$:
+its pair is $x-\log n,x$, so the exterior endpoint is still retained.
+Using $w_n\le n$, $e^{-3/4}<1/2$ and
+$\sum_{n\ge2}n2^{-n}=3/2$ in the full two-direction norm sum gives
+
+$$
+\boxed{b_R\le\frac{216}{5}
+          \exp\left(-\frac38e^{2R}\right)}\quad(R\ge0). \tag{BT}
+$$
+
+Both prime powers and crossing edges occur in this bound. Because
+$(3/8)e^{2R}\ge R$ for $R\ge1$, a simpler consequence is
+
+$$
+b_R\le44e^{-R}\quad(R\ge1). \tag{BR}
+$$
+
+The nonlinear inequality follows at $R=1$ from $e^2>7$ and thereafter
+from its positive derivative. No individual translation is claimed compact.
+
+### Gamma cutoff error
+
+For $t>0$ the elementary bound
+$1-e^{-2t}\ge2t/(1+2t)$ gives
+$\psi(t)t^2\le3/2$ for $0<t\le1$.
+For $t\ge1$ one has $\psi(t)\le d e^{-t/2}$ with
+$d=(1-e^{-2})^{-1}<7/6$. Thus
+$k(t)=\psi(t)\min(1,t^2)\le3/2$ everywhere.
+
+For $|x|\ge R$, divide the cutoff row by
+$2\cosh(x/2)\ge e^{|x|/2}$ and split at $|x-y|=1$.
+On long jumps, use
+$e^{-|x-y|/2}\le e^{-|x|/2}e^{|y|/2}$ and the original normalization
+$\int\Phi(y)e^{|y|/2}\,dy\le1$.
+On short jumps, the Lipschitz cutoff bound applies and $|y|>R-1$.
+Hence
+
+$$
+e_R(x)\le d e^{-R}
+       +\frac32e^{-R/2}T(R-1)\quad(|x|\ge R).
+$$
+
+For $|x|\le R$, $\eta_R(x)=0$; a nonzero row term requires $|y|>R$.
+The same $k$ bound and $2\cosh(x/2)\ge2$ give
+$e_R(x)\le(3/4)T(R)$. Combining the two ranges,
+
+$$
+E_R\le d e^{-R}+\frac94T(R-1)\quad(R\ge1).
+$$
+
+The theta integrated tail (IT) gives $T(R-1)\le e^{-R}$ for $R\ge4$.
+Indeed, its ratio to $e^{-R}$ is at most
+$(96/5)e^{2-R}\exp[-(3/2)e^{2(R-1)}]$, which decreases; at $R=4$
+it is less than $24/35$ using $e^2>7$ and $e^{3/2}>4$.
+Therefore the actual ordered Gamma cutoff error satisfies
+
+$$
+\boxed{E_R\le4e^{-R}\quad(R\ge4).} \tag{ER}
+$$
+
+This sharpens the coarse rate (TR) for these cutoffs. It keeps the singular
+Gamma kernel and all endpoint interactions; it is not a fractional-kernel
+substitution or a censored exterior energy.
+
+### A specified fixed-gap form-approximation radius
+
+Fix $0<\varepsilon\le1/2$ and a tolerance $0<\tau\le1$.
+Use $R_{\rm PNT}(\varepsilon)$ from (PR) in the linked prime-diagonal
+note, and take
+
+$$
+R\ge\max\left\{
+R_{\rm PNT}(\varepsilon),
+\log\frac{11264}{\varepsilon\tau},
+2\log\frac{256}{\sqrt\varepsilon\,\tau},
+\log\frac8{\tau^2}
+\right\}. \tag{FR}
+$$
+
+For any actual normalized eigenvector $Ah=\lambda h$ with
+$\lambda\le1/2-\varepsilon$, (LT), (BR) and (ER) give
+
+$$
+t_R\le\frac{2b_R}{\varepsilon}
+               +\sqrt{\frac{E_R}{\varepsilon}}
+\le\frac{88e^{-R}}{\varepsilon}
+               +\frac{2e^{-R/2}}{\sqrt\varepsilon}
+\le\frac\tau{64}.
+$$
+
+Let $h_R=(1-\eta_R)h$. With $\|a_p\|_\infty<432$ from (AC),
+the three terms in (FN) are at most
+$(1731/8192)\tau^2$, $(11/128)\tau^3$ and $\tau^2/4$,
+respectively. The middle estimate uses (BR) and the last radius in (FR).
+Thus
+
+$$
+\boxed{
+\|h-h_R\|_\nu^2+D(h-h_R)
+\le\frac{1121}{2048}\tau^2<\tau^2.
+} \tag{FA}
+$$
+
+The reducing projection $P_{\mathcal R}$ retains at most this error for
+$h\in\mathcal R$; its image generally remains noncompact. These are
+coarse analytic constants, with no directed numerical computation,
+new Lean certification or originality claim.
+
+The conclusion concerns each individual actual eigenvector under the
+stated fixed gap. The whole-projector estimate below uses a separate
+bounded commutator and separated-spectra argument for mixtures of
+different eigenvalues. Interior discretization, a complete lower spectral
+certificate and control uniform as $\varepsilon\downarrow0$ remain missing. The radius in (FR) diverges
+with shrinking gap; threshold accumulation, RH and full Robin remain
+unresolved.
+
+## Full fixed-gap low-spectral-subspace cutoff
+
+The effective scalar and cutoff bounds also yield a uniform estimate for
+all vectors in the low spectral subspace. This is a model transfer of the
+standard separated-spectra integral argument; it is not a new general
+spectral criterion, interior discretization or complete spectral exclusion.
+
+### Bounded Gamma cutoff commutator
+
+For the same even cutoff define
+
+$$
+q_R(x)=\frac{1}{2\cosh(x/2)}\int\Phi(y)\psi(|x-y|)
+                  |\eta_R(x)-\eta_R(y)|\,dy,
+\qquad Q_R=\|q_R\|_\infty.
+$$
+
+This row uses the first power of the cutoff difference. The short-jump
+bound is now $\psi(t)t\le3/2$ for $0<t\le1$, still following from
+$1-e^{-2t}\ge2t/(1+2t)$. On long jumps use the same $d e^{-t/2}$ bound.
+The two spatial ranges used for (ER) therefore give, with no squared-row
+substitution,
+
+$$
+Q_R\le d e^{-R}+\frac94 T(R-1)\le4e^{-R}\quad(R\ge4). \tag{QC}
+$$
+
+On the compact smooth core, the Gamma commutator is
+
+$$
+K_Rh(x):=[A_\Gamma,M_{\eta_R}]h(x)
+=\frac{1}{2\cosh(x/2)}\int\Phi(y)\psi(|x-y|)
+            (\eta_R(x)-\eta_R(y))h(y)\,dy.
+$$
+
+The absolute kernel is symmetric relative to $\nu$ and has row mass
+$q_R$. The weighted Schur estimate gives $\|K_R\|\le Q_R$ on
+$L^2(\nu)$, including the singular Gamma neighborhood.
+The existing cutoff multiplier bound and core approximation extend
+
+$$
+D_\Gamma(\eta_Rh,k)-D_\Gamma(h,\eta_Rk)=\langle K_Rh,k\rangle_\nu
+$$
+
+to the Gamma minimal form domain, with the inner product linear in its
+first argument. For $h\in D(A_\Gamma)$ the operator representation of
+this identity shows
+$\eta_Rh\in D(A_\Gamma)$ and
+$A_\Gamma\eta_Rh=\eta_RA_\Gamma h+K_Rh$.
+The bounded potential commutes with the cutoff, so the same domain and
+commutator statement holds for $C=A_\Gamma+M_{a_p}$.
+
+### The killed exterior operator and separated spectra
+
+Work in the even Hilbert space. Fix $0<\varepsilon\le1/2$, put
+$a=1/2-\varepsilon$, and let $P_\varepsilon=\mathbf1_{[0,a]}(A_{\rm even})$.
+Write $\mathcal L=\operatorname{ran}P_\varepsilon$ and
+$A_\mathcal L=A|_\mathcal L$; it is bounded with $0\le A_\mathcal L\le a$.
+
+Let $\mathcal H_R$ consist of even functions zero on $[-R,R]$.
+Restrict the global closed form of $C$ to its form-domain intersection
+with $\mathcal H_R$, and let $C_R$ be the associated operator on
+$\mathcal H_R$. The restricted form is closed, and smooth even tests
+supported outside $[-R,R]$ give density. It keeps the Gamma jumps into
+the removed interval as killing terms. Hence
+
+$$
+C_R\ge b:=1/2-\delta_R.
+$$
+
+For $R\ge R_{\rm PNT}(\varepsilon)$, $b-a\ge\varepsilon/2>0$.
+Let $T_R=M_{\eta_R}|_\mathcal L:\mathcal L\to\mathcal H_R$.
+The commutator domain statement implies $T_R\mathcal L\subset D(C_R)$.
+Indeed, restriction of the global operator identity to exterior form
+tests gives
+
+$$
+C_RT_R-T_RA_\mathcal L=F_R,
+\qquad F_R=\mathbf1_{\{|x|>R\}}(K_R+M_{\eta_R}B_p)|_\mathcal L,
+\qquad \|F_R\|\le Q_R+b_R. \tag{SY}
+$$
+
+Every prime power and shifted adjoint still occurs in $B_p$.
+For each vector in $\mathcal L$, differentiation of
+$e^{-tC_R}T_Re^{tA_\mathcal L}$ and integration on $t\ge0$ give the
+strong-operator identity
+
+$$
+T_R=\int_0^\infty e^{-tC_R}F_Re^{tA_\mathcal L}\,dt.
+$$
+
+Its endpoint at infinity vanishes in operator norm, since the separated
+spectra give exponential decay by $e^{-(b-a)t}$. Thus
+
+$$
+\boxed{
+\|M_{\eta_R}P_\varepsilon\|
+\le\frac{Q_R+b_R}{\varepsilon-\delta_R}
+\le\frac{96}{\varepsilon}e^{-R}=:s_R.
+} \tag{LP}
+$$
+
+This proves an operator-norm bound for the whole low spectral subspace;
+it does not assign a scalar eigenvalue to a mixture of eigenvectors.
+
+### Uniform form approximation on that subspace
+
+For a unit vector $h\in\mathcal L$, put $h_R=(1-\eta_R)h$.
+Use the global identity
+$C\eta_Rh=\eta_RAh+(K_R+\eta_RB_p)h$.
+Because $Ah\in\mathcal L$ and $\|Ah\|\le a$, (LP) gives
+$\|\eta_RAh\|\le a s_R$. Therefore
+
+$$
+D_\Gamma(\eta_Rh)\le\langle C\eta_Rh,\eta_Rh\rangle_\nu
+\le a s_R^2+(Q_R+b_R)s_R.
+$$
+
+The complete prime energy bound (BD) gives
+
+$$
+\|h-h_R\|_\nu^2+D(h-h_R)
+\le(3/2+2\|a_p\|_\infty)s_R^2+(Q_R+b_R)s_R
+\le866s_R^2. \tag{UF}
+$$
+
+For the last step use $\|a_p\|_\infty<432$,
+$Q_R+b_R\le48e^{-R}=\varepsilon s_R/2$ and $\varepsilon\le1/2$.
+Consequently, for $0<\tau\le1$, the radius
+
+$$
+R\ge\max\left\{R_{\rm PNT}(\varepsilon),
+                         \log\frac{2880}{\varepsilon\tau}\right\}
+\tag{UR}
+$$
+
+ensures, simultaneously for every unit $h\in\mathcal L$,
+
+$$
+\|h-h_R\|_\nu^2+D(h-h_R)\le\frac{433}{450}\tau^2<\tau^2.
+$$
+
+For $h\in\mathcal L\cap\mathcal R$, the reducing projection
+$P_\mathcal R$ retains at most the same form error, while its output
+generally has noncompact support. The bound concerns the original
+operator's whole fixed-gap spectral subspace, not the eventual finite
+discretization of its interior. Interior approximation with a complete
+lower spectral certificate and control uniform as
+$\varepsilon\downarrow0$ remain unresolved. Subthreshold accumulation is
+not excluded; RH and full Robin remain unresolved. These are paper-level model
+deductions, without new Lean certification or an originality claim.
