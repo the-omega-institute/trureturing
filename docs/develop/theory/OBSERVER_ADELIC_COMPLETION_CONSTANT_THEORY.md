@@ -199194,3 +199194,37 @@ $$
 空幂为 $1$，$q^{\underline0}=1$；$B(0,0)=1$，$B(0,d)=0$ 对 $d\ne0$ 成立。该有限和包含 $k=0$，覆盖 $p=0$ 或 $q=0$、所有负模式以及奇异和正则系数。右侧由独立的形式幂级数系数与组合数定义，不以所求等式或递推作定义或假设。
 
 创生支路的逐态截断、$A^{r+1}$ 的有限卷积及二项式与下降阶乘的配对计数，是从实际右嵌套正规乘积到此等式所需的关系；仅有抽象算子 Wick 恒等式或模式对易式不足以确定该输出多项式。模式及 Heisenberg 归一化见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；下截断与正规乘积系数约定见 [Matsuo–Nagatomo 1997, §§1.2, 1.4](https://arxiv.org/html/hep-th/9706118v1) [文献注](../../../Library/VertexAlgebra/matsuo1997locality.md)。这是经典 Heisenberg 正规乘积在指定实际表示中的实现问题。它推进 [PR 10310](https://github.com/the-omega-institute/trureturing/pull/10310) 所关联的实际 OPE 接口，但不证明模块融合、Monster 实现、完整边界 CFT、解析收敛、弦论或 AdS/CFT 的时空动力学桥梁；融合仍需问题 2143.7(3) 中独立的模范畴与典范模变换数据。
+
+
+**问题 2147.4（实际 Fock 除幂导数幂态场的全整数系数）。** 在同一个零电荷复多项式 Fock 空间 $F=\mathbb C[X_0,X_1,\ldots]$ 上，模式归一化为 $\alpha_{-j-1}v=X_jv$、$\alpha_0v=0$、$\alpha_{j+1}v=(j+1)\partial_{X_j}v$（$j\in\mathbb N$）。实际态场 $Y$ 沿用单项式基底和右嵌套正规乘积构造，不另引入抽象态场。令 $J(z)=\sum_{i\in\mathbb Z}\alpha_i z^{-i-1}$，并使用除幂导数 $D_a(z)=\frac1{a!}\partial_z^aJ(z)$；因此 $Y(X_a^p)$ 是 $p$ 个 $D_a$ 的右嵌套正规乘积，$p=0$ 时为恒等场，且
+
+$$
+D_a[[i]]=\binom{a-i-1}{a}_{\!\mathbb Z}\alpha_{i-a}
+\qquad(a\in\mathbb N,\ i\in\mathbb Z).
+$$
+
+独立于 $Y$ 定义
+
+$$
+\begin{aligned}
+A(a)&=\operatorname{PowerSeries.mk}\!\left(j\mapsto
+ \left(\binom{j+a}{a}:\mathbb C\right)X_{j+a}\right),\\
+B(a,r,d)&=\begin{cases}[z^{d}]A(a)^r,&d\geq0,\\0,&d<0,\end{cases}\\
+c(a,b)&=(-1)^a(b+1)\binom{a+b+1}{a}\in\mathbb C
+\qquad(a,b,r\in\mathbb N,\ d\in\mathbb Z).
+\end{aligned}
+$$
+
+能否对所有 $a,b,p,q\in\mathbb N$ 及 $n\in\mathbb Z$，无附加假设地证明
+
+$$
+((Y(X_a^p))[[n]])(X_b^q)
+=\sum_{k\in\operatorname{Finset.range}(\min(p,q)+1)}
+\left(\binom pk\,q^{\underline{k}}:\mathbb C\right)c(a,b)^k
+\cdot B\!\left(a,p-k,(a+b+2)k-n-1\right)X_b^{q-k},
+\qquad q^{\underline{k}}=q(q-1)\cdots(q-k+1)?
+$$
+
+所有零次幂与 $q^{\underline0}$ 均为 $1$，包括 $c(a,b)^0=1$。整数延拓系数满足 $B(a,0,0)=1$、$B(a,0,d)=0$（$d\ne0$）；故 $p=0$ 时左侧为 $\delta_{n,-1}X_b^q$，$q=0$ 时为 $B(a,p,-n-1)$。负模式、非负模式、任意导数标签及任意幂均在量词范围内；$a=b=0$ 时退回问题 2147.3。创生支路的权重来自 $D_a[[-j-1]]v=\binom{j+a}{a}X_{j+a}v$，非负支路作用于 $X_b^q$ 时仅 $i=a+b+1$ 可贡献，系数为 $q\,c(a,b)$。从实际逐态有限正规乘积到独立幂级数的支撑截断、加权卷积及配对计数仍须证明，不能以所求递推定义右侧。
+
+[Matsuo–Nagatomo, *A Note on Free Bosonic Vertex Algebra and its Conformal Vectors*, §§2.1–2.3](https://arxiv.org/abs/hep-th/9704060v1) [文献注](../../../Library/VertexAlgebra/matsuo1997freeboson.md) 给出经典自由玻色子的背景：印刷第 19 页的除幂导数收缩系数为 $(-1)^a(a+b+1)!/(a!b!)=c(a,b)$，第 20 页为多项式 Fock 模式，第 21–22 页讨论真空及态场。对应为 $x_{j+1}=X_j$、零电荷。原文 Theorem 2.1 的补指标范围与 §2.3 的 $x_i$ 索引存在表面不一致，本问题不复制这些显示式，也不声称原文逐字陈述本式。这是经典实际表示的系数实现问题，无新颖性主张；它不结算 Monster 实现、模块融合、解析收敛、完整边界 CFT、弦论或 AdS/CFT 几何动力学桥梁。
