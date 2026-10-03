@@ -138,7 +138,8 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
+        IReadOnlyDictionary<string, string>? resourceFiles = null)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -177,6 +178,8 @@ public sealed partial class TruthReleaseCommandTests
                 + "unregistered_genres = []\n",
             ["docs/fixture.md"] = "# Fixture\n",
         };
+        if (resourceFiles is not null)
+            foreach (var (path, contents) in resourceFiles) files.Add(path, contents);
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
             [dependencyPath] = new(

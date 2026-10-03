@@ -137,6 +137,33 @@ public sealed partial class CoverBatchCommandTests
         AssertDagFileImage(before, world.Root);
     }
 
+    [Fact]
+    public void DagResourcePackCorrespondsToUncommittedWorkingTreeDefinition()
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
+        WriteEmissionInputs(world.Root);
+        var definition = new BatchClaimDefinition().Create();
+        const string definitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        WriteScribeFixture(world.Root, definitionPath, "// definition fixture\n");
+        world.WriteReportBundle();
+        var repository = new GitRepositoryGateway(world.Root);
+        var revision = SnapshotDecoder.Decode(repository.ReadRevision(repository.ResolveCurrentRevision().Revision));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(revision).Snapshot;
+        var committed = snapshot.Files.Single(file => file.Key.Value == definitionPath).Value.RawBytes.ToArray();
+        File.AppendAllText(Path.Combine(world.Root, definitionPath), "\n");
+        Assert.NotEqual(committed, File.ReadAllBytes(Path.Combine(world.Root, definitionPath)));
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, [definition]).TotalSha256;
+
+        var result = DagRenderCommand.Run(world.Root, repository, new PrecomputedLeanReportSource(world.Root),
+            ["--scribe-pack", packPath, "--scribe-pack-digest", digest]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
+        Assert.True(File.Exists(Path.Combine(world.Root, "Generated/truth-graph.v1.json")));
+    }
+
     private static ScribeResourcePackManifest WriteCorrespondingDagPack(
         string root, string path, IEnumerable<DocumentDefinition> definitions)
     {

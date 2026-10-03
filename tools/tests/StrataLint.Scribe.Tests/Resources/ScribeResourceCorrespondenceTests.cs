@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
+using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Tests;
@@ -93,6 +94,44 @@ public sealed class ScribeResourceCorrespondenceTests
         Assert.Empty(result.InputsChanged);
         Assert.Empty(result.PackOnly);
         Assert.Empty(result.DiskOnly);
+    }
+
+    [Fact]
+    public void SnapshotComparisonPreservesCapturedInputsAndDefinitionInventory()
+    {
+        using var root = Prepare();
+        var raw = RawRepositorySnapshot.Create(Directory.GetFiles(root.Path, "*", SearchOption.AllDirectories)
+            .Select(path => new RawRepositoryEntry(Path.GetRelativePath(root.Path, path).Replace('\\', '/'),
+                ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var pack = Pack(root);
+        TemporaryFileSystem.File.AppendAllText(root.Resolve(PathFor("Alpha")), "\n");
+        TemporaryFileSystem.File.AppendAllText(root.Resolve(Shared), "\n");
+        TemporaryFileSystem.File.AppendAllText(root.Resolve(Data), "\n");
+        TemporaryFileSystem.File.Delete(root.Resolve(PathFor("Beta")));
+        TemporaryFileSystem.File.WriteAllText(root.Resolve(Absent), "{}");
+        TemporaryFileSystem.File.WriteAllText(root.Resolve(PathFor("Gamma")), "// definition fixture\n");
+
+        var result = ScribeResourceCorrespondence.Compare(pack, new SnapshotScribeResourceFileView(snapshot));
+
+        Assert.True(result.IsCorresponding);
+        Assert.Equal(3, result.ConsistentCount);
+        var workingTree = ScribeResourceCorrespondence.Compare(pack, new WorkingTreeScribeResourceFileView(root.Path));
+        Assert.False(workingTree.IsCorresponding);
+        Assert.Equal(PathFor("Beta"), Assert.Single(workingTree.PackOnly).DefinitionPath);
+        Assert.Equal(PathFor("Gamma"), Assert.Single(workingTree.DiskOnly).DefinitionPath);
+    }
+
+    [Fact]
+    public void SnapshotViewDistinguishesEmptyFilesFromMissingFiles()
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(Data, string.Empty)]))).Snapshot;
+        var files = new SnapshotScribeResourceFileView(snapshot);
+
+        Assert.Equal(ImmutableArray<byte>.Empty, files.ReadBytes(Data));
+        Assert.Null(files.ReadBytes(Absent));
+        Assert.Empty(files.EnumerateDefinitionPaths());
     }
 
     private static TemporaryRoot Prepare()

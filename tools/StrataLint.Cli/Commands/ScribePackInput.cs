@@ -9,7 +9,7 @@ internal static class ScribePackInput
         value is { Length: 64 } && value.All(Uri.IsHexDigit);
 
     internal static ImmutableArray<DocumentDefinition> ReadDefinitions(
-        string path, string expectedDigest, string repositoryRoot)
+        string path, string expectedDigest, IScribeResourceFileView files)
     {
         try
         {
@@ -20,7 +20,7 @@ internal static class ScribePackInput
                     $"scribe pack digest mismatch: expected {expectedDigest}, actual {pack.Manifest.TotalSha256}");
             }
 
-            var correspondence = ScribeResourceCorrespondence.Compare(pack, repositoryRoot);
+            var correspondence = ScribeResourceCorrespondence.Compare(pack, files);
             if (!correspondence.IsCorresponding)
             {
                 var differences = correspondence.InputsChanged.Take(5).Select(difference => difference.ToString())

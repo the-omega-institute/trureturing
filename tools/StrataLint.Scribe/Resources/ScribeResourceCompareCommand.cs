@@ -13,7 +13,8 @@ internal static class ScribeResourceCompareCommand
         try
         {
             var pack = ScribeResourcePack.Open(Path.GetFullPath(arguments[3], workingDirectory));
-            var result = ScribeResourceCorrespondence.Compare(pack, repositoryRoot());
+            var result = ScribeResourceCorrespondence.Compare(pack,
+                new WorkingTreeScribeResourceFileView(repositoryRoot()));
             var differences = result.InputsChanged.Select(difference => (Difference: difference, Suffix: ""))
                 .Concat(result.PackOnly.Select(difference => (Difference: difference, Suffix: " (packOnly)")))
                 .OrderBy(item => item.Difference.DefinitionPath, StringComparer.Ordinal);

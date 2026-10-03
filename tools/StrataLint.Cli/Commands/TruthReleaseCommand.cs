@@ -27,9 +27,6 @@ internal static class TruthReleaseCommand
 
         try
         {
-            var suppliedDefinitions = options.ScribePackPath is null
-                ? (IReadOnlyList<DocumentDefinition>?)null
-                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!, repositoryRoot);
             var verifier = scribeEmissionVerifier
                 ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
             TruthExportValidation.RequireGitObjectId(
@@ -38,6 +35,10 @@ internal static class TruthReleaseCommand
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevision(identity.Revision)));
+            var suppliedDefinitions = options.ScribePackPath is null
+                ? (IReadOnlyList<DocumentDefinition>?)null
+                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!,
+                    new SnapshotScribeResourceFileView(snapshot));
             var rawLeanReportBytes = ImmutableArray.CreateRange(
                 File.ReadAllBytes(options.CandidateLeanReport));
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
