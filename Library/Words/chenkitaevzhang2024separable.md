@@ -11,6 +11,7 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/MinimumCutKernel
   - D5/S1/Words/Patterns/Separable/CutFactorization
   - D5/S1/Words/Patterns/Separable/ProperCut
+  - D5/S1/Words/Patterns/Separable/RecordPeak
 license: citation-only
 triage: anchor
 ---
@@ -74,9 +75,9 @@ the no-proper-cut prefix class, $J$ its exact record fiber, and $U$ the
 full avoiding record fiber. Both factor lengths are positive. At lengths
 zero and one there are no proper cuts. These helper formulas are known
 source and normalization reductions, obtained by strict block comparisons
-and weighting the existing minimum-cut reconstruction. They are source/library
-intake, with four ingested definition/theorem atoms still open, and carry no
-retained new Lean formalization, theorem settlement, or novelty claim.
+and weighting the existing minimum-cut reconstruction. They are used locally
+in the actual right-maximum proof below; no new standalone normalization helper
+theorems are retained.
 
 `ActualCardinality.actual_schroder_cardinality` supplies the existing actual
 signed least-cut equivalence with exact dependent-length reconstruction.
@@ -87,11 +88,22 @@ equivalence. The least-cut reconstruction used by the mathematical source is
 the existing project supplier. Fu–Lin–Zeng's later greatest-cut tree
 construction is a separate decomposition.
 
-The full actual record generating-function bridge, its unmarked series
-identification and boundary corrections, universal coefficient positivity
-and peak-three inequalities, and avoidance/class/record symmetry transports
-for all four pairs remain missing. The signed record helpers supply none of
-these full assertions by themselves. The relevant scalar cut and cardinality
+For every $n\ge4$, the actual $2413/3142$ avoiders with no proper direct cut
+and exactly two strict right maxima are at most those with exactly three:
+$a_{\mathrm{irreducible},\mathrm{rmax}}(n,2)\le
+a_{\mathrm{irreducible},\mathrm{rmax}}(n,3)$. This is supplied by
+[`RecordPeak.actual_record_rising`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordPeak.md)
+with no generating-function premise. Local finite-fiber and scalar
+generating-function derivations, together with a universal positive quotient
+and derivative composition argument, establish this adjacent comparison.
+
+Beyond this local actual right-maximum route, the complete four-distribution
+generating-function bridge, unmarked series identification and boundary
+corrections, and positivity for the full target remain incomplete. The
+remaining rising comparisons, all $k\ge3$ decreasing inequalities, and actual
+reverse/complement transports remain open. Full CKZ Conjecture 2 and C15
+remain OPEN; this adjacent comparison is not a full external resolution or a
+novelty or priority claim. The relevant scalar cut and cardinality
 results are in `ActualCardinality`, `MinimumCutKernel`, `CutFactorization`,
 and `ProperCut`; descent statistics in Fu–Lin–Zeng are a different question.
 
