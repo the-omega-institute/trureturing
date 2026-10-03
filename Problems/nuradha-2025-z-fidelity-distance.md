@@ -90,7 +90,12 @@ The canonical source is
 `D5/S3/Quantum/Information/ZFidelityDistanceRefutation.lean`. Its public
 declarations are `zFidelity`, `zDistance`, `claim`, `stateP`, `stateQ`,
 `stateT` and `result`.
-FREEZE_IDENTITIES
+The frozen module state has statement identity
+`sha256:d866fa5e83c63b73da8b9b52c100b5b90a5f875e77e0143dd5df09995201a53d`. The
+result declaration has statement identity
+`sha256:a521043012bd4f147b375855d7613ce89c400f08fe096f2504b7091c0814ab88`. The Freeze event is
+`sha256:921a10c25e0933654f9ac9fdbaf43577bacd306483ff951e950b41eba048f8cb`; it has no
+project-level frozen prerequisites.
 The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
