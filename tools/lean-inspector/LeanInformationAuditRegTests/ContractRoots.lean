@@ -58,8 +58,11 @@ run_meta do
     catch ex => ex.toMessageData.toString
     assertTest s!"root.negative.{label}" (error.startsWith diagnostic)
   for (path, expected) in #[
-      ("Reg/Arbitrary/RootCatalog.lean", RootStructure.Kind.catalog),
-      ("Reg/Arbitrary/SealedCatalog.lean", RootStructure.Kind.sealedCatalog),
+      ("Reg/Catalogs/Arbitrary/RootCatalog.lean", RootStructure.Kind.catalog),
+      ("Reg/Catalogs/Arbitrary/SealedCatalog.lean", RootStructure.Kind.sealedCatalog),
+      ("Reg/D5/S3/RootCatalog.lean", RootStructure.Kind.ordinary),
+      ("Reg/D5/S3/SealedCatalog.lean", RootStructure.Kind.ordinary),
+      ("Outside/RootCatalog.lean", RootStructure.Kind.ordinary),
       ("Reg/Catalogs/Ordinary.lean", RootStructure.Kind.ordinary),
       ("Reg/SealedCatalog/Ordinary.lean", RootStructure.Kind.ordinary)] do
     assertTest s!"root.path.{path}"

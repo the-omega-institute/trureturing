@@ -138,13 +138,13 @@ source command trees. All other compiled constants,
 including named elaboration children, obey the ordinary direct-reference rule.
 Private compiler identities and source user spellings remain distinct.
 
-Reg module kinds come from source-file leaves: `RootCatalog.lean` is a catalog,
-`SealedCatalog.lean` is a sealed catalog, and every other leaf is ordinary.
-Directory names do not alter the kind. This rule uses the Reg source tree,
-without an instance table or a discovered-entry classifier. The loaded Reg
-import closure and canonical source paths construct all obligations before
-entry discovery. Every required source must exist; omitting a loaded Reg module
-from discovery receives `contract.root_structure:required_module_missing`.
+Reg module kinds come from the `Reg/Catalogs/**` subtree: its exact
+`RootCatalog.lean` leaf is a catalog and `SealedCatalog.lean` is a sealed catalog.
+Every other file is ordinary, including D5 mirrors with either reserved leaf
+name. The loaded Reg import closure and canonical source paths construct these
+obligations before entry discovery, without an instance table. Every required
+source must exist; omitting a loaded Reg module from discovery receives
+`contract.root_structure:required_module_missing`.
 
 Ordinary modules contain no RootCatalog or Seal; catalog modules contain exactly
 one RootCatalog and no Seal; sealed catalogs contain exactly one of each. Root
@@ -162,11 +162,17 @@ Its decoder and snapshot output are absent; there is no independent-expected
 fallback. Removing this type in P3 affects only the retired negative fixtures and
 the interface companion inventory; P0 has zero production declarations of it.
 
-P2a keeps the production report on legacy inputs. The command/reference audit
-accepts existing Reg modules; strict typed discovery reports missing RootCatalogs
-for the 84 catalog modules until P2b/P3 rewrite them. This diagnostic is a migration
-state, not a successful typed inventory, and does not change production build
-acceptance. P3 installs typed discovery with the independent manifest.
+The production report consumes legacy inputs pending the typed migration.
+Existing Reg modules pass the command/reference audit; typed discovery finds
+zero production typed entries. P2b splits catalogs and seals from D5 mirrors
+into `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
+`SealedCatalog.lean`. Mirrors retain their registrations at their original paths;
+catalogs import those leaves, and leaves do not import catalogs. Catalog root IDs
+use the catalog module; registrationModuleName retains the leaf owner. P3
+installs typed discovery and removes the pinned legacy command permissions.
+Catalogs and seals are optional analysis groups: registration assessment does
+not require catalog membership. Missing seals remain visible as absent report
+artifacts; migration correspondence is checked separately.
 
 The compiled interface inventory admits only source types, kernel constructors,
 recorded projections and the pinned compiler's explicitly listed recursor,

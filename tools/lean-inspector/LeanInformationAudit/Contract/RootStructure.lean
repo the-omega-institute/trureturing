@@ -15,10 +15,12 @@ structure Requirement where
   rootId : Name
   kind : Kind
 
-/-- Module kinds are a rule on source-tree leaves, independent of entry
-content. Ordinary names impose no structural entry; the two reserved leaves
-impose catalog and sealed-catalog obligations before discovery. -/
+/-- Only the Reg/Catalogs subtree reserves structural leaf names. D5 mirrors
+and all other source files remain ordinary, independently of entry content. -/
 def kindFromPath (path : System.FilePath) : Kind :=
+  if (path.components.dropWhile (· != "Reg")).take 2 != ["Reg", "Catalogs"] then
+    .ordinary
+  else
   match path.fileName with
   | some "RootCatalog.lean" => .catalog
   | some "SealedCatalog.lean" => .sealedCatalog
