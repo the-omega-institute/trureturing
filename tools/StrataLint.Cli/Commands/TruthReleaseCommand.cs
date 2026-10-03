@@ -13,6 +13,7 @@ internal static class TruthReleaseCommand
     private const string ProducerRepository = "the-omega-institute/trureturing";
 
     internal static ExplicitCommandResult Run(
+        string repositoryRoot,
         IRepositoryGateway repository,
         IScribeEmissionVerifier? scribeEmissionVerifier,
         IReadOnlyList<string> arguments)
@@ -28,7 +29,7 @@ internal static class TruthReleaseCommand
         {
             var suppliedDefinitions = options.ScribePackPath is null
                 ? (IReadOnlyList<DocumentDefinition>?)null
-                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!);
+                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!, repositoryRoot);
             var verifier = scribeEmissionVerifier
                 ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
             TruthExportValidation.RequireGitObjectId(

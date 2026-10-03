@@ -8,7 +8,8 @@ internal static class ScribePackInput
     internal static bool IsDigest(string? value) =>
         value is { Length: 64 } && value.All(Uri.IsHexDigit);
 
-    internal static ImmutableArray<DocumentDefinition> ReadDefinitions(string path, string expectedDigest)
+    internal static ImmutableArray<DocumentDefinition> ReadDefinitions(
+        string path, string expectedDigest, string repositoryRoot)
     {
         try
         {
@@ -17,6 +18,17 @@ internal static class ScribePackInput
             {
                 throw new FormatException(
                     $"scribe pack digest mismatch: expected {expectedDigest}, actual {pack.Manifest.TotalSha256}");
+            }
+
+            var correspondence = ScribeResourceCorrespondence.Compare(pack, repositoryRoot);
+            if (!correspondence.IsCorresponding)
+            {
+                var differences = correspondence.InputsChanged.Take(5).Select(difference => difference.ToString())
+                    .Concat(correspondence.PackOnly.Take(5).Select(difference => difference + " (packOnly)"))
+                    .Concat(correspondence.DiskOnly.Take(5).Select(difference => difference + " (diskOnly)"));
+                throw new FormatException(FormattableString.Invariant(
+                    $"ScribePackCorrespondenceMismatch: 该包与当前文件不对应: consistent={correspondence.ConsistentCount} inputsChanged={correspondence.InputsChanged.Length} packOnly={correspondence.PackOnly.Length} diskOnly={correspondence.DiskOnly.Length}")
+                    + Environment.NewLine + string.Join(Environment.NewLine, differences));
             }
 
             return pack.ReadAll().ToImmutableArray();

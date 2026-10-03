@@ -61,7 +61,7 @@ internal static class DagRenderCommand
         {
             try
             {
-                definitions = ScribePackInput.ReadDefinitions(packPath, packDigest!);
+                definitions = ScribePackInput.ReadDefinitions(packPath, packDigest!, repositoryRoot);
             }
             catch (FormatException exception)
             {
