@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b00b843657cab88e7059ca44545f87247a28e715822d43b01ce09524cb1dda41
+  normalized_sha256: sha256:b00b843657cab88e7059ca44545f87247a28e715822d43b01ce09524cb1dda41
+cas_ref: sha256:b00b843657cab88e7059ca44545f87247a28e715822d43b01ce09524cb1dda41
+coverage_gids:
+  - gid: D5/S0/Computability/BinaryNameDeduplication.dictionary_build_run
+    target_statement_id: sha256:9a73f740b38b10543ccd8b70b27804aea22d1b406973609f6fde87288ef84363
+receipts:
+  unresolved_subitems: []
