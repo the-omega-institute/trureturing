@@ -1,0 +1,5 @@
+source_id = "pure-cubic-local-saturation"
+path = "docs/develop/theory/PURE_CUBIC_LOCAL_SATURATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

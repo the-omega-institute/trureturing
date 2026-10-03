@@ -1,0 +1,67 @@
+**Theorem 56.1 (GIR3, common field and discriminants).** For every
+$J\geq1$,
+
+$$
+[F_J:\mathbb Q]=3^J,\qquad
+[N_J:\mathbb Q]=2\cdot3^J,\qquad
+\operatorname{Gal}(N_J/\mathbb Q)
+\simeq(\mathbb Z/3\mathbb Z)^J\rtimes C_2.
+$$
+
+Complex conjugation acts by inversion on the cubic coordinates.
+$F_J$ has signature $(1,(3^J-1)/2)$: its designated embedding lies
+in $\mathbb R$, but it is not totally real. The exact absolute
+discriminants and root discriminant are
+
+$$
+\begin{aligned}
+|\Delta(F_J)|
+&=3^{(3^J-1)/2}(R^{(J)})^{2\cdot3^{J-1}},\\
+|\Delta(N_J)|
+&=3^{3^J}(R^{(J)})^{4\cdot3^{J-1}},\\
+\operatorname{rd}(N_J)
+&=\sqrt3\,(R^{(J)})^{2/3}.
+\end{aligned}
+$$
+
+Proof. Suppose $\prod_{j=1}^J B_j^{a_j}$ is a cube in $E$.
+For each $j$, choose a prime $p\mid B_j$ with
+$3\nmid h_p$. The block supports are disjoint. Valuation at either
+prime of $E$ over $p$ gives $3\mid a_jh_p$ and hence $3\mid a_j$.
+Thus the block classes are independent in
+$E^\times/(E^\times)^3$. Kummer theory gives degree $3^J$
+over $E$. Positive cube roots are fixed by conjugation, which
+inverts $\omega$, yielding the semidirect action. Since $F_J$
+lies in $\mathbb R$ in the chosen embedding, $F_J\cap E=\mathbb Q$.
+An embedding is real exactly when all positive cube roots map to
+their unique real conjugates; precisely one does, giving the
+signature.
+
+At a rational prime $p\mid R^{(J)}$, exactly one radicand has
+valuation nonzero modulo three. Over the maximal unramified
+local extension, units have cube roots because $p\ne3$, so
+inertia in $N_J$ has order three and translates one coordinate.
+No other prime away from three ramifies. At three, each actual
+$B_j\equiv1\pmod9$ is a cube in $\mathbb Q_3$ by the Hensel
+calculation in Theorem 11.1; a completion of $N_J$ is
+$\mathbb Q_3(\omega)$, with inertia order two and residue
+degree one.
+
+All these ramification steps are tame. The tame discriminant
+exponent is the extension degree minus the number of inertia
+orbits on embeddings. On the $3^J$ embeddings of $F_J$, a
+nonzero coordinate translation has $3^{J-1}$ orbits;
+inversion has one fixed point and $(3^J-1)/2$ two-cycles.
+This gives the first discriminant formula. On the regular
+action for $N_J$, inertia orders three and two give exponents
+$4\cdot3^{J-1}$ and $3^J$, respectively. Taking the
+$(2\cdot3^J)$-th root gives the root discriminant.
+No bounded-root-discriminant claim is made as $J$ increases.
+
+Fix the two curves over $\mathbb Q$,
+
+$$
+\mathcal E^-:y^2=x^3-3,\qquad
+\mathcal E^+:y^2=x^3+125.
+$$
+

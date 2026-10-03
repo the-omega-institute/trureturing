@@ -1,0 +1,33 @@
+**Theorem 32.1 (two remaining residue classes).** Let $q\geq7$ be a
+prime with $q\equiv49$ or $71\pmod{120}$. For every $k\geq0$, the
+integer quotient
+
+$$
+C_{q,k+1}=\frac{F_{q^{k+1}}}{F_{q^k}}
+$$
+
+is positive and satisfies
+
+$$
+C_{q,k+1}\equiv
+\begin{cases}
+27\pmod{31},&k\text{ even},\\
+23\pmod{31},&k\text{ odd}.
+\end{cases}
+$$
+
+In particular, $C_{q,k+1}$ is not a square. This covers the $49$ and
+$71$ classes left open by Theorem 30.1; it does not address the $1$
+and $119$ classes or the complete prime-power statement of Lemma 10.2.
+
+Proof. The Fibonacci pair $(F_n,F_{n+1})$ has period $30$ modulo $31$:
+$F_{30}\equiv0$ and $F_{31}\equiv1\pmod{31}$. In the two stated
+classes, $q\equiv19$ or $11\pmod{30}$, respectively, and both residues
+square to $1$ modulo $30$. Consequently $q^k\equiv1\pmod{30}$ for
+even $k$ and $q^k\equiv19$ or $11\pmod{30}$ for odd $k$. Since
+$F_1\equiv1$ and $F_{11}\equiv F_{19}\equiv27\pmod{31}$, the values
+$F_{q^k}$ alternate between $1$ and $27$ modulo $31$. Fibonacci
+divisibility makes the displayed quotient an integer; positivity
+follows from positivity of both Fibonacci values. Its residue is $27$
+on even $k$ and $27^{-1}\equiv23\pmod{31}$ on odd $k$.
+Neither $27$ nor $23$ is a square modulo $31$.

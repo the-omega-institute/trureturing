@@ -1,0 +1,5 @@
+**Theorem 5.1 (finite least closure).** For every such $S$, $H(S)$
+contains $H_0$; every element of $H(S)$ is prime and at most $B$;
+$T(H(S))=H(S)$; and $H(S)$ is contained in every finite $K$ satisfying
+$H_0\subseteq K$ and $T(K)\subseteq K$.
+

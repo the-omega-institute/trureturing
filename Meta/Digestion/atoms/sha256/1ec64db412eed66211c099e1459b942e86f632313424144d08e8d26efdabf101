@@ -1,0 +1,8 @@
+## 2. Native periods of block powers
+
+For $j\geq 1$, retain $B_j=L_{3^j}^2+3$ and $C_j=L_{3^j}^2+1$.
+For a prime $p$ dividing either block, let $h_p$ be the valuation of
+$F_{\rho(p)}$ at $p$, where $\rho(p)$ is the first positive Fibonacci zero
+modulo $p$. Write $\pi(m)$ for the order of $Q$ modulo the positive integer
+$m$.
+
