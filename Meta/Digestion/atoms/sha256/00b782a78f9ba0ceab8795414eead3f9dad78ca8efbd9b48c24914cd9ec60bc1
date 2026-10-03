@@ -1,0 +1,53 @@
+### 38.3 与完整历史的取得 cube
+
+令 \(H_\nu\) 是同一实际历史源的当前域。当前历史的边界表示为
+\(a_{n,\nu}:H_\nu\to J_{n,\nu}\)。完整的 `ApplyRho` 过程若可能失败，写成
+
+$$
+\widehat T_{\rho,n}:H_\nu\longrightarrow
+\operatorname{Option}(L_{\rho,n}\times H_{\nu+1}).
+$$
+
+把实际取得后的联合输出记为
+
+$$
+A_{n,\nu}
+:=
+\operatorname{Option.map}
+   (\operatorname{id}\times a_{n,\nu+1})\circ\widehat T_{\rho,n}.
+$$
+
+取得合同要求
+
+$$
+ r_{mn,\nu}\circ a_{n,\nu}=a_{m,\nu},
+ \qquad
+ A_{n,\nu}=Q_{n,\nu}\circ a_{n,\nu}.
+\tag{PG.3807}
+$$
+
+第二式现在两边都取值于同一个 `Option` 输出空间；它只对声明的实际历史和事件标签
+成立。若采用前视版本，则将 \(a_{n,\nu}\) 换成
+\(a_{j_\rho(n),\nu}\)，并把第一式中的粗化换成
+\(r_{j_\rho(m),j_\rho(n),\nu}\)。于是 (PG.3804) 给出真正的跨层、跨 epoch 取得 cube：
+
+$$
+\boxed{
+ \operatorname{Option.map}(\lambda_{mn}\times r_{mn,\nu+1})\circ A_{n,\nu}
+ =A_{m,\nu}
+ =Q_{m,\nu}\circ r_{mn,\nu}\circ a_{n,\nu}.
+}
+\tag{PG.3808}
+$$
+
+这条式子同时保留来源、参考、权限、档案和 writer 的共同见证。只证明语义游标
+\(x' = X_n(b)\) 的更新，不能推出 \(a_{n,\nu}\) 或 \(\widehat T_{\rho,n}\)
+存在；只证明每个字段各自下降，也不能把分别可达的边缘拼成一个实际联合状态。
+前视版本的相应 cube 为
+\[
+\operatorname{Option.map}(\Lambda_{mn})\circ A^+_{n,\nu}
+=A^+_{m,\nu}
+=Q^+_{m,\nu}\circ r_{j_\rho(m),j_\rho(n),\nu}\circ a_{j_\rho(n),\nu},
+\]
+其中 \(A^+_{n,\nu}=Q^+_{n,\nu}\circ a_{j_\rho(n),\nu}\)。
+

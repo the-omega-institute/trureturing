@@ -1,0 +1,70 @@
+### 36.4 形式线程更新与可执行实际后继
+
+对 $x\in L^a$，令 $y_n=U_{e,n}(x_{j_e(n)})$。由 (PG.3611) 和线程相容性，
+若 $y_0=\operatorname{none}$，则每个 $y_n$ 都是 $\operatorname{none}$；若
+$y_0=\operatorname{some}(\ell,z_0)$，则每个 $y_n$ 都是
+$\operatorname{some}(\ell,z_n)$，且 $(z_n)_n\in L^b$。这使用了限制不会把
+$\operatorname{some}$ 变为 $\operatorname{none}$，且事件标签保持不变。因此
+
+$$
+\begin{aligned}
+U_{e,\infty}:L^a&\longrightarrow\operatorname{Option}(L_e\times L^b),\\
+U_{e,\infty}(x)&=
+\begin{cases}
+\operatorname{none},&y_0=\operatorname{none},\\
+\operatorname{some}(\ell,(z_n)_n),&
+y_n=\operatorname{some}(\ell,z_n)\ \text{对所有 }n.
+\end{cases}
+\end{aligned}
+\tag{PG.3613}
+$$
+
+(PG.3612) 则逐坐标给出实际下降的整体交换式
+
+$$
+U_{e,\infty}\circ c^a_\infty=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_\infty)\circ T_e.
+\tag{PG.3614}
+$$
+
+若只在实际输入码上检查 (PG.3611)，这个构造仅保证 $I^a$ 上的更新，不能
+宣称已经得到全 $L^a$ 上的自然更新。即便给出了 (PG.3613)，可执行实际后继
+仍须满足
+
+$$
+x\in I^a,\quad U_{e,\infty}(x)=\operatorname{some}(\ell,z)
+\Longrightarrow z\in I^b.
+\tag{PG.3615}
+$$
+
+当 (PG.3614) 由一个目标始终在 $D^b_\infty$ 中的实际 $T_e$ 提供时，
+(PG.3615) 随之成立。若先构造码上的更新，则必须另供应这个实际来源实现，
+不能把各层分别存在的后继代表视为一个共同后继。即使 $z$ 有实际代表，也不
+据此得到有限成本取得代表或实际执行动作的算法。
+
+要把端点与行为语义扩到全部形式线程，至少须有源完备性
+
+$$
+I^a=L^a\quad\text{及所涉及目标类型的 }I^b=L^b.
+\tag{PG.3616}
+$$
+
+Transport–Memory §5.1.1 的共同紧 Hausdorff 载体、连续满射观察、Hausdorff
+层及闭纤维可以供应这项实现性；这些拓扑前提须在本节实际域和联合码上重新
+给出。码空间的紧性本身不证明实际历史域紧，紧化得到的新点也不自动成为
+原域中的历史。不采用 (PG.3616) 时，恢复只在 $I^a$ 上成立，幽灵线程的
+实际解释保持 open。
+
+同层闭合是 $j_e(n)=n$ 的特殊情形，而不是每个分辨率的默认性质。对有限
+有类型接续 $e:a\to b$、$f:b\to d$，为求第 $n$ 层的复合后继，可先在
+$j_f(n)$ 层执行 $e$，再在第 $n$ 层执行 $f$；一个足够的输入深度为
+
+$$
+j_{f\circ e}(n)=j_e(j_f(n)).
+\tag{PG.3617}
+$$
+
+事件按执行顺序配对，$\operatorname{none}$ 按部分复合传播。每个有限动作词
+因而有有限的声明前视深度；这不是无界续接的统一深度界，也不保证获得该层
+码的费用有限或均匀有界。
+

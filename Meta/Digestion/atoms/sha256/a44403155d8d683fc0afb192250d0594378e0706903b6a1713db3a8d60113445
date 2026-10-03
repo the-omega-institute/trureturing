@@ -1,0 +1,52 @@
+**定理 56.4（条件归一化的角色证书）。** 定义
+
+$$
+\begin{aligned}
+T_i&=\mathbb E[Z\mid W_i=001]-\mathbb E[Z\mid W_i=000],\\
+R_i&=\mathbb E[Z\mid\ell_i=1]-\mathbb E[Z\mid\ell_i=0],\\
+U_i&=\mathbb E[Z\mid h_i=1,\ell_r=1]-\mathbb E[Z\mid h_i=1,\ell_r=0]\\
+&\hspace{1em}-\mathbb E[Z\mid h_i=0,\ell_r=1]+\mathbb E[Z\mid h_i=0,\ell_r=0],\qquad i\ne r.
+\end{aligned}
+\tag{56.11}
+$$
+
+它们准确满足
+
+$$
+\begin{aligned}
+T_i&=\begin{cases}\alpha L/2,&i=q,\\0,&i\ne q,\end{cases}\\
+R_i&=\begin{cases}
+\alpha H/4,&i=r,\\
+\alpha(1-2HL)/(4(1-L)),&i=q,\\
+0,&i\notin\{q,r\},
+\end{cases}\\
+U_i&=\begin{cases}-\alpha/4,&i=p,\\+\alpha/4,&i=q,\\0,&i\notin\{p,q,r\}.
+\end{cases}
+\end{aligned}
+\tag{56.12}
+$$
+
+特别 $T_q\ge a/4$、$R_r\ge a/8$。这些是同一实际律下的观察条件对比，不是干预响应。
+
+**证明。** 对（56.7）和（56.8）应用（56.5）；差分消去共同的 $-\alpha/4$。单字母 $001,000$ 的中位差为 $2L$，其余为零。第一位置的全部条件行恒定，末位的 $\ell$ 斜率为 $H$。为给完整中位值，实际字母质量还给
+
+$$
+\mathbb E[C\mid\ell_q=1]=1,\qquad
+\mathbb E[C\mid\ell_q=0]=\frac{2Lz}{1-L}.
+$$
+
+两者相减为 $(1-2HL)/(1-L)$。四格差分依次为 $-1,+1,0$，故 $U_q$ 全域恰为正 $\alpha/4$。算法排除 $q,r$ 后只剩 $p$ 的负对比。$\square$
+
+这些量与实际 §55 的矩之间有精确总体对应：
+
+$$
+\begin{aligned}
+\mathbb E[(u\mathbf1_{\{001\}}(W_i)-z\mathbf1_{\{000\}}(W_i))Z]&=uzT_i,\\
+\mathbb E[(\ell_i-L)Z]&=L(1-L)R_i,\\
+\mathbb E[(h_i-H)(\ell_r-L)Z]&=H(1-H)L(1-L)U_i,\qquad i\ne r.
+\end{aligned}
+\tag{56.13}
+$$
+
+第一式由两个真实字母质量 $z,u$ 给出；第二式是 Bernoulli 条件均值分解；第三式把四个真实格子求和，使用不同整窗的独立性。它将 §55 的中心化信号除以正总体质量因子，保留同一教师和记录实验；这些因子不必取得后再做经验排序。
+

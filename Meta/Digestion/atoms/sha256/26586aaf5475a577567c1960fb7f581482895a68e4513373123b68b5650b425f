@@ -1,0 +1,9 @@
+**命题 54.3（相同完整单窗观察，不同完整记录律）。** 对 $\alpha>0$、$t=1/2$ 的任意全支撑 $\mu$，$W_p$ 与 $Y$ 独立，但 $p$ 仍是 $C_\theta$ 的必要坐标。对 $n=4$，教师 $\theta=(1,3,4)$ 与 $\tau=(2,3,4)$ 满足
+
+$$
+\operatorname{Law}_{\theta,\alpha}(W_i,Y)
+=\operatorname{Law}_{\tau,\alpha}(W_i,Y)\quad(1\le i\le4),
+\qquad P_{\theta,\alpha}\ne P_{\tau,\alpha}.
+\tag{54.10}
+$$
+

@@ -1,0 +1,10 @@
+**本节导航与边界。** §41 给出了实际历史到带类型状态和部分后继的嵌入，但其中的实际行为
+\(\beta(h)\) 还没有递归定义，也没有把实际根读出与 typed 根读出接上。本节只补这一个
+自然性接口：在 PG.4101--PG.4103 的前提上定义实际路径响应，保留失败、标签顺序和起始类型，
+然后把有限核和完整行为核拉回实际历史。它引用
+[TypedFiniteViewKernel.lean](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+的抽象核以及
+[ControlledBehaviorUniversality.lean](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)
+的行为商思想；后者是总动作词版本，不能冒充本节的有类型部分后继实例。以下仍是理论接口，
+没有新增 Lean 声明或具体 FIB 实例。
+

@@ -1,0 +1,40 @@
+### 40.2 两条同终点路径的记忆分离
+
+沿用第 39.4 节的共同初态 \((\alpha,\beta)\)，取
+
+$$
+ w_L=\texttt{RhoL;RhoR;Pair},
+ \qquad
+ w_R=\texttt{RhoR;RhoL;Pair}.
+ \tag{PG.4005}
+$$
+
+两词都合法、长度都是 \(3\)，并得到相同终点
+
+$$
+ t_L=t_R=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+ \tag{PG.4006}
+$$
+
+令观察者档案按实际执行追加事件：
+
+$$
+ m_L=m_0\Vert[\texttt{RhoL},\texttt{RhoR},\texttt{Pair}],
+ \qquad
+ m_R=m_0\Vert[\texttt{RhoR},\texttt{RhoL},\texttt{Pair}].
+ \tag{PG.4007}
+$$
+
+考虑一个获准读取档案首事件的策略。它在首事件为 \(\texttt{RhoL}\) 时选择后续动作 \(\texttt{ProbeL}\)，在首事件为 \(\texttt{RhoR}\) 时选择 \(\texttt{ProbeR}\)；两种选择的输出或后继至少有一项不同。于是由 (PG.4001)–(PG.4002)，两条历史被策略行为核分离：
+
+$$
+ (t_L,3)=(t_R,3),
+ \qquad
+ q_{\Pi,\mathcal V}(h_L)\ne q_{\Pi,\mathcal V}(h_R).
+ \tag{PG.4008}
+$$
+
+因此，终点项加总步数不是这个策略的动态充分边界；任何支持该策略的精确摘要都必须保留足以区分 (PG.4007) 的路径关系。这个区分只使用观察者实际拥有的事件档案，不使用系统外的历史 oracle。它是**并行路径依赖**；在 \(\rho\) 没有声明逆箭头时，不把它称作闭路 holonomy。只有在给定合法逆、并把两词接成同端点可逆回路时，才可进一步采用 holonomy 术语。
+
+这个见证也说明“当前目标信息没有增加”不是删除步骤的充分理由。事件可能暂时不改变目标读数，却改变下一次选择所需的可访问关系。只有当一个步骤在全部声明续接上的合法性、标签、档案和后继都不变时，才可以在相应行为商中消去。
+

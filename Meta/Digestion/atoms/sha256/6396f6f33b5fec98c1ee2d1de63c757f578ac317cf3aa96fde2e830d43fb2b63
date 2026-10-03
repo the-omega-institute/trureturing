@@ -1,0 +1,65 @@
+### 36.3 带前视深度的部分动作自然性
+
+对每条已声明的有类型动作 $e:a\to b$，目标合同须另给
+$D^b_\infty,c^b_n,r^b_{mn},L^b,I^b,\eta_b$。实际动作是
+
+$$
+T_e:D^a_\infty\longrightarrow
+\operatorname{Option}(L_e\times D^b_\infty).
+\tag{PG.3609}
+$$
+
+$\operatorname{none}$ 表示动作不合法；执行后报告失败若属于任务响应，则是
+带失败事件的 $\operatorname{some}(\ell,h')$，必要时把目标合同按终止类型分支。
+事件标签 $L_e$ 保留该任务要求的读数、writer 记录、grade 与权限结果，不能在
+限制时丢弃影响续接的事件区别。
+
+允许第 $n$ 层的后继依赖更细的输入。指定前视函数 $j_e:\mathbb N\to\mathbb N$
+及跨层更新
+
+$$
+\begin{gathered}
+j_e(n)\ge n,\qquad m\le n\Longrightarrow j_e(m)\le j_e(n),\\
+U_{e,n}:C^a_{j_e(n)}\longrightarrow
+\operatorname{Option}(L_e\times C^b_n).
+\end{gathered}
+\tag{PG.3610}
+$$
+
+单调性保证比较两层时存在所需的输入限制。以下交换式在每个
+$C^a_{j_e(n)}$ 的全部码上要求成立：
+
+$$
+\boxed{
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times r^b_{mn})
+\circ U_{e,n}=U_{e,m}\circ r^a_{j_e(m),j_e(n)}
+\qquad(m\le n).
+}
+\tag{PG.3611}
+$$
+
+左侧先更新到目标第 $n$ 层，再限制到第 $m$ 层；右侧先把输入限制到
+$j_e(m)$，再更新。$\operatorname{Option.map}(\operatorname{id}\times r)$
+保持 $\operatorname{none}$，并把 $\operatorname{some}(\ell,z)$ 送到
+$\operatorname{some}(\ell,r(z))$。所以 (PG.3611) 同时约束合法性、事件标签
+与后继，不能只检查成功后继的四视图。
+
+与实际动作的下降还需逐层等式
+
+$$
+\boxed{
+U_{e,n}(c^a_{j_e(n)}(h))=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_n)(T_e(h)),
+\qquad h\in D^a_\infty.
+}
+\tag{PG.3612}
+$$
+
+若 $a=b$ 且动作保持同一比较域，下降式写为
+$U_{e,n}(c_{j_e(n)}(h))=\operatorname{Option.map}(\operatorname{id}\times c_n)(T_e(h))$。
+若动作改变来源、纪元、参考类或权限，必须使用 (PG.3609)–(PG.3612) 的目标
+合同：目标码记录实际的 $\xi(h'),\nu(h'),r(h'),\pi(h')$，并声明它们与旧字段
+的更新关系，不能默认为仍等于旧值。尤其 `ApplyRho` 的绝对纪元更新复用
+Transport–Memory §§23.5、24.2 的不重置来源约定，旧句柄是否持续有效另受
+目标权限合同约束；它不使 $h'$ 自动回到旧的固定纪元域。
+

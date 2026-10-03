@@ -1,0 +1,37 @@
+### 42.1 根读出和实际递归响应
+
+PG.4102 的 typed 根读出记为 \(r_i:S_i\to O_i\)，并令 \(r:=(r_i)_i\)。在每个实际纤维定义
+
+$$
+r_i^{\mathrm{act}}:=r_i\circ\iota_i.
+\tag{PG.4201}
+$$
+
+对可组合路径按 `TypedFiniteViewKernel.Path` 的方向递归定义实际响应；若 \(p:i\rightsquigarrow k\)，则其值域明确为
+\(\operatorname{Option}(\mathrm{Labels}\,\mathrm{Label}\,p\times O_k)\)。空路径满足
+
+$$
+\operatorname{resp}^{\mathrm{act}}_{\varepsilon_i}(h)
+ :=\operatorname{some}(\mathrm{PUnit.unit},r_i^{\mathrm{act}}(h)).
+$$
+
+若路径为 `cons(p',e)`，其中 \(e:i\to j\)、\(p':j\rightsquigarrow k\)，则
+
+$$
+\begin{aligned}
+T_{\varepsilon}^{\mathrm{act}}(h)&:=\operatorname{some}(\mathrm{PUnit.unit},h),\\
+T_{\operatorname{cons}(p',e)}^{\mathrm{act}}(h)&:=(T_e^{\mathrm{act}}h).\operatorname{bind}\!\left(\lambda(\ell,h_1).\,T_{p'}^{\mathrm{act}}(h_1).\operatorname{map}\!\left(\lambda(\Lambda,h_2).((\ell,\Lambda),h_2)\right)\right).
+\end{aligned}
+\tag{PG.4202}
+$$
+
+这里的 `cons(p',e)` 先执行 \(e\)、再执行 \(p'\)；`none` 是吸收的失败，成功标签按执行顺序
+嵌套，且空标签明确属于 `PUnit`。定义
+
+$$
+\operatorname{actualResponse}(p,h):=
+T_p^{\mathrm{act}}(h).\operatorname{map}\!\left(\lambda(\Lambda,h').(\Lambda,r_k^{\mathrm{act}}(h'))\right),
+\qquad p:i\rightsquigarrow k.
+\tag{PG.4203}
+$$
+

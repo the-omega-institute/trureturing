@@ -1,0 +1,18 @@
+**引理 53.5（已知 $Q$ 的归一对比）。** 置
+
+$$
+w=(-1,1,11-8\sqrt2),\qquad \kappa=20\sqrt2-28>0,\qquad B=31-22\sqrt2.
+\tag{53.9}
+$$
+
+则 $|w_j|\le1$，且
+
+$$
+Qw=B\mathbf1+\kappa(0,1,1),\qquad
+\mathbb E[w_Y\mid X]=\alpha\kappa F_\theta+\alpha B+(1-\alpha)\bar w,\quad \bar w=(w_0+w_1+w_2)/3.
+\tag{53.10}
+$$
+
+**证明。** 利用 $(\sqrt2)^2=2$ 逐行相乘即得。也可先取
+$b=(-1-3\sqrt2/2,5/2+\sqrt2,-\sqrt2/2)$，其 $Qb=(0,1,1)$，然后写 $w=B\mathbf1+\kappa b$。这是已知通道的线性期望反演再作仿射归一；没有反演未知 $Q_\alpha$，也没有估计 $\alpha$。这些有符号系数是训练读数，不是概率或实现的隐藏标签。成熟的已知通道反演机制见 Patrini 等，[*Making Deep Neural Networks Robust to Label Noise: A Loss Correction Approach*](https://openaccess.thecvf.com/content_cvpr_2017/papers/Patrini_Making_Deep_Neural_CVPR_2017_paper.pdf)，§4.1、Theorem 1；这里不借用其优化器保证。 $\square$
+
