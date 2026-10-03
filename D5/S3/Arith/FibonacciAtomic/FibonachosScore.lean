@@ -39,7 +39,7 @@ termination_by n
 def a (n : ℕ) : ℕ := (play n 1).1
 
 /-- Signed advantage of the player to move. -/
-def advantage (n i : ℕ) : ℤ := (play n i).1 - (play n i).2
+private def advantage (n i : ℕ) : ℤ := (play n i).1 - (play n i).2
 
 set_option maxHeartbeats 2000000 in
 -- The proof includes kernel-checked finite heap computations and a uniform bound.

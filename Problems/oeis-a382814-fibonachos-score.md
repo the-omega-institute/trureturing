@@ -51,6 +51,17 @@ Additional Loogle name searches and GitHub Lean code searches for
 b-file were accessible; the text interface returned HTTP 403. Individual
 historical revisions were not exhaustively inspected. This bounded search makes no first-proof claim.
 
+Peter Kagey's [Fibonachos blog post](https://peterkagey.com/blog/2025/05/fibonachos/)
+(2025-05-26) discusses the restart-count sequences and A382814, including
+the conjecture that for a heap greater than 32 the player taking the last
+move before the first reset receives the larger final total.
+Nathan Fox's [Fibonachos proof](https://oeis.org/A280523/a280523.pdf)
+(2017-01-28) treats different questions: Theorem 1 gives `F(2n+1)-n`
+as the smallest initial heap requiring `n>=1` rounds, or `n-1` restarts
+after the initial round; Theorem 2 proves `A280523(n)=A215004(2n-2)`.
+Neither theorem states the two score conjectures resolved by this module.
+Both linked originals were retrieved with HTTP 200 on 2026-10-03.
+
 ## Route
 
 Let `D(n)=2a(n)-n`. For `m>=3`, a heap in the interval
@@ -103,8 +114,9 @@ has `D(0)=0`, so the block formula gives
 theorems. The first ten scores and the tie classification through 32 are
 kernel computations within that proof.
 
-Open: analogous classifications for different reset indices, different
-player alternation rules or other recurrence sequences. The argument
+Analogous classifications for different reset indices, different player
+alternation rules or other recurrence sequences are not treated by this
+module; their external open-problem status has not been checked. The argument
 would require a corresponding prefix sum, signed prefix identity and
 remainder bound; none is proved here. No further conclusion in the
 checked OEIS comment block is stated as depending on these two conjectures.
@@ -115,5 +127,6 @@ The literature check is bounded to the sources above. The preregistration's
 reports of a full historical search and author-discussion checks were not
 independently reproduced here. No global novelty or publication-priority
 claim is made. Source fidelity and the additive interval translation remain
-subject to independent review. Generalized reset rules and recurrence
-sequences remain open.
+subject to independent review. Generalized reset rules, player alternation
+rules and recurrence sequences are not treated by this module; their
+external open-problem status has not been checked.
