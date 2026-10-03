@@ -647,9 +647,13 @@ $P_\mathcal R$ retains at most the same form error, while its output
 generally has noncompact support. The bound concerns the original
 operator's whole fixed-gap spectral subspace. The
 [quantitative interior construction](jarohsweth2020local.md) provides a
-finite-rank existence map with uniform error in the original form norm.
-Computed basis functions, a complete lower spectral certificate and
-control uniform as
+finite-rank map with uniform error in the original form norm, including
+a prescribed even translated-kernel family indexed by the existing legal
+FIB interval mesh. Verified finite matrix signs, a complete lower spectral
+certificate and control uniform as
 $\varepsilon\downarrow0$ remain unresolved. Subthreshold accumulation is
-not excluded; RH and full Robin remain unresolved. These are paper-level model
+not excluded. That construction also gives a conditional complete-window
+exclusion from PSD at $c_\varepsilon=1/2-\varepsilon/2$, with its uniform
+form error chosen below $\varepsilon/8$; the matrix condition is not
+verified. RH and full Robin remain unresolved. These are paper-level model
 deductions, without new Lean certification or an originality claim.

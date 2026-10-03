@@ -5,7 +5,7 @@ year: 2020
 title: Local compactness and nonvanishing for weakly singular nonlocal quadratic forms
 doi: 10.1016/j.na.2019.01.021
 url: https://arxiv.org/abs/1811.12850v1
-claim: The source supplies local compactness and a quantitative averaging estimate for a weakly singular comparison kernel. Original-model cutoff and graph estimates transport them to uniform finite-rank approximation in the mixed minimal form norm, with explicit analytic bounds but no computed lower spectral certificate.
+claim: The source supplies local compactness and a quantitative averaging estimate for a weakly singular comparison kernel. Original-model cutoff and graph estimates transport them to uniform finite-rank approximation in the mixed minimal form norm, with explicit analytic bounds and a prescribed translated-kernel spanning family, but no computed lower spectral certificate.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -361,3 +361,210 @@ A complete lower spectral certificate and control uniform as
 $\varepsilon\downarrow0$ remain missing. These model deductions are
 paper-level and have no new Lean certification or originality claim;
 RH and full Robin remain unresolved.
+
+## Explicit translated kernels and the legal FIB mesh
+
+The original-form graph transfer and (IB), (UC), (AF), (FP) also give a
+prescribed finite spanning family, without using unknown singular
+functions. Fix $0<\varepsilon\le1/2$ and $0<\tau<1$; retain the preceding
+$R,\ell,m,C_0,B,G,L,I,J$, using the radius and averaging choices of (FP)
+but replacing its SVD rank choice by the mesh below. For a unit even
+$h\in\operatorname{ran}P_\varepsilon$, put $g=\chi_Rh$ and
+$w=w_\delta$, $\delta=e^{-\ell}$. Standard BV translation estimates,
+Hilbert-space kernel estimates and the existing FIB interval tiling are
+reused here. The model interface is their uniform error estimate in the
+original mixed minimal form norm.
+
+### Translation modulus in the original form norm
+
+Set $A_\delta=2/(\ell^2\delta^2)$. The reused BV translation inequality
+gives $\|\tau_sw-w\|_2^2\le A_\delta|s|$. For $0<s\le1$ and
+$v_s=\tau_sw-w$, commuting flat translations and the triangle inequality
+give
+
+$$
+\|\tau_tv_s-v_s\|_2^2
+\le4A_\delta\min(s,t)\qquad(0<t<1).
+$$
+
+Using the existing one-half energy convention,
+
+$$
+\mathcal E_{j_0}(v_s)
+=\int_0^1\|\tau_tv_s-v_s\|_2^2\frac{dt}{t}
+\le4A_\delta s(1+\log(1/s)). \tag{TM}
+$$
+
+For $y,c\in I$, $|y-c|\le\Delta\le1$, the kernels lie in the previously
+proved original minimal domain and are supported in $I+[-1,1]\Subset J$.
+Apply (UC) to their difference. The function $s(1+\log(1/s))$ is
+nondecreasing on $(0,1]$, hence
+
+$$
+\|w(\cdot-y)-w(\cdot-c)\|_{\mathcal F}^2
+\le A_\delta\Delta[C_0+28(1+\log(1/\Delta))]. \tag{FM}
+$$
+
+At $y=c$ the difference is zero. This bound also supplies continuity and
+Bochner measurability of the form-valued kernel. It uses full original
+form upper comparison, not a prime truncation or convolution commutation
+with $A_\Gamma$.
+
+### A prescribed symmetric mesh map
+
+Partition $I$ into cells $I_j$ of maximal width $\Delta\le1$, using
+half-open cells at endpoints of measure zero, and take their midpoints
+$c_j$. Define
+
+$$
+K^{\rm mesh}u(x)=\sum_j w(x-c_j)\int_{I_j}u(y)\,dy.
+$$
+
+The Hilbert-space-valued kernel bound (FM) gives
+
+$$
+\|K_\delta-K^{\rm mesh}\|_{\rm HS(L^2(I),\mathcal F)}^2
+\le2LA_\delta\Delta[C_0+28(1+\log(1/\Delta))].
+$$
+
+For the actual $g$, (IB) states $\|g\|_2^2\le1/(2m)$, so
+
+$$
+\|K_\delta g-K^{\rm mesh}g\|_{\mathcal F}^2
+\le\frac{LA_\delta}{m}\Delta[C_0+28(1+\log(1/\Delta))]. \tag{ME}
+$$
+
+Use $\Delta\le\sqrt\Delta$ and
+$\Delta(1+\log(1/\Delta))\le2\sqrt\Delta$ to set
+
+$$
+d_*:=\min\left\{1,
+\left[\frac{m\tau^2}{9LA_\delta(C_0+56)}\right]^2\right\}. \tag{MS}
+$$
+
+Every mesh of maximal width at most $d_*$ makes (ME) at most $\tau^2/9$.
+For a symmetric partition with zero inserted, list its positive cells
+$I_j^+$ and midpoints $c_j>0$. Define the explicit even real functions
+
+$$
+b_j(x)=w(x-c_j)+w(x+c_j),\qquad
+Vh=\sum_j b_j(x)\int_{I_j^+}\chi_R(y)h(y)\,dy. \tag{EB}
+$$
+
+For even $h$ this equals $K^{\rm mesh}g$. Each $b_j$ belongs to the
+original minimal form domain by the already proved kernel membership;
+no eigenfunction or singular-vector computation is used. The outer
+error is $<\tau/3$ by (FP); the averaging error is $\le\tau/3$ by (AF);
+the mesh error is $\le\tau/3$ by (MS). Thus the single prescribed map
+satisfies
+
+$$
+\sup_{h\in\operatorname{ran}P_\varepsilon,\ \|h\|_\nu=1}
+\|h-Vh\|_{\mathcal F}<\tau. \tag{EA}
+$$
+
+The real spanning family need not be linearly independent; matrix PSD
+on that family is nevertheless equivalent to form nonnegativity on its
+span. Its size is a rank upper bound; no computed Gram matrix is given.
+
+### Reuse the existing FIB five-mode interval partition
+
+Use the existing
+[FIB interval tiling](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+§§150–151 and
+[legal address graph](../../docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)
+Definition 14.5 and Proposition 14.6.
+Their graph is
+$0\to0:\mathrm{null},2,3$; $0\to1:25,5$;
+$1\to0:\mathrm{null},3$; $1\to1:5$.
+Their contraction is $\lambda=-\phi^{-3}$ and state intervals are
+$K_0=[-1,\phi]$, $K_1=[-1,\phi^{-1}]$. Legal cylinder intervals tile
+with disjoint interiors; shared endpoints have zero length measure.
+
+At depth $n$, the state-zero partition has $p_n=F_{3n+2}$ intervals
+(the count of no-adjacent-one bit strings of length $3n$), with maximal
+width $\phi^2\phi^{-3n}$, where $F_0=0,F_1=1$. The affine map
+
+$$
+y=-L+\frac{2L}{\phi^2}(t+1)
+$$
+
+sends it to a partition of $I$ of maximal width $2L\phi^{-3n}$.
+Take the common refinement with its reflection and insert zero. There
+are at most $2p_n$ cells: the two original endpoint sets share $-L,L$,
+and insertion of zero adds at most one endpoint. Symmetry pairs all
+positive and negative cells, so (EB) uses at most $p_n$ functions. Take
+
+$$
+n\ge\left\lceil\frac{\log(2L/d_*)}{3\log\phi}\right\rceil. \tag{FD}
+$$
+
+Then (EA) holds and, because $\tau<1$, $V$ is injective on the low
+subspace in $L^2(\nu)$, giving $\operatorname{rank}P_\varepsilon\le p_n$.
+FIB labels index this mesh only; they are not prime weights, and no
+active golden rotation of the single contracting interval is asserted.
+An ordinary sufficiently fine symmetric mesh gives the same guarantee;
+the FIB addressing supplies no proved improvement in approximation rate.
+
+### A conditional finite matrix target with completeness paid
+
+For the fixed-gap target, use the explicit approximation above with
+
+$$
+a=\tfrac12-\varepsilon,\qquad
+c_\varepsilon=\tfrac12-\varepsilon/2,\qquad
+\tau=\varepsilon/8.
+$$
+
+Let $Y=\operatorname{span}\{b_j\}$ and
+$\mathcal W_c(v)=D(v)-c\operatorname{Var}_\nu(v)$, where
+$\operatorname{Var}_\nu(v)=\|v-\langle1,v\rangle_\nu1\|_\nu^2$
+and $\langle u,v\rangle_\nu=\int\overline u v\,d\nu$.
+Because the spanning functions are real and $\nu(\mathbb R)=1$, its
+exact Hermitian matrix is
+
+$$
+T_{ij}^{(\varepsilon)}=D(b_i,b_j)-c_\varepsilon
+\left[\langle b_i,b_j\rangle_\nu-\mu_i\mu_j\right],
+\qquad \mu_i=\int b_i\,d\nu. \tag{MT}
+$$
+
+Here $D(\cdot,\cdot)$ is the sesquilinear polarization of the complete
+prime-plus-Gamma energy, retaining every prime power and crossing edge.
+Suppose (MT) is verified positive semidefinite. If a mean-zero unit $h$
+were in $\operatorname{ran}P_\varepsilon$, then $D(h)\le a$ and
+$\mathcal W_{c_\varepsilon}(h)\le-\varepsilon/2$. For $v=Vh$, (EA),
+Cauchy–Schwarz for the energy form and the norm-one projection onto
+constants' complement give
+
+$$
+|\mathcal W_{c_\varepsilon}(v)-\mathcal W_{c_\varepsilon}(h)|
+\le[2\sqrt a+2c_\varepsilon+(1+c_\varepsilon)\tau]\tau
+\le3\tau\qquad(\tau\le1/3).
+$$
+
+Thus $\mathcal W_{c_\varepsilon}(v)<-\varepsilon/8$, contradicting
+PSD on $Y$. The conditional conclusion is
+
+$$
+T^{(\varepsilon)}\succeq0
+\quad\Longrightarrow\quad
+\operatorname{ran}P_\varepsilon\subseteq\mathbb C1. \tag{PC}
+$$
+
+This conclusion covers the whole fixed-gap window because (EA) is
+uniform on its actual spectral subspace. Generic matrix PSD and form
+perturbation are reused, not new spectral theorems. The finite hypothesis
+requires the lower level $c_\varepsilon<1/2$: on the same span,
+half-threshold PSD implies this condition since
+$\mathcal W_{c_\varepsilon}=\mathcal W_{1/2}
++(\varepsilon/2)\operatorname{Var}_\nu$. This implication certifies no
+actual matrix sign or strict separation of signs.
+
+The entries and signs in (MT) are uncomputed; (PC) is not an actual
+lower spectral certificate. A cofinal sequence
+$\varepsilon\downarrow0$, or a separate uniform theorem, is still
+needed to exclude every nonconstant spectral value below one-half.
+The bounds do not establish computational feasibility. These explicit
+model transfers are paper-level, without new Lean certification or an
+originality claim; RH and full Robin remain unresolved.
