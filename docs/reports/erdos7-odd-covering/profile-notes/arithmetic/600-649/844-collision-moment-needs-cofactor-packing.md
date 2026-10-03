@@ -189,3 +189,341 @@ the uncovered witness two. Negative controls reject a coordinate absent
 from its modulus and a genuinely contained comparable class. These checks
 remain active under Python optimization. The program checks only the finite
 obstruction and makes no whole-cover claim.
+
+## 6. Whole output classes admit an exact divisor-matching test
+
+Collision-free output is sufficient for report 388's descent, but it is
+stronger than necessary. Fix an odd period \(N>1\) and a finite labelled
+family
+\[
+ C_i=c_i\pmod{n_i},\qquad 1<n_i\mid N,\qquad i\in I.
+ \tag{DM1}
+\]
+Different original identities remain different demands, even when their
+numerical moduli coincide. Put \(\mathcal P_N=\{h>1:h\mid N\}\).
+A subset \(J\subseteq\mathcal P_N\) is downward closed if it contains
+every nonunit divisor of each of its elements. Define
+\[
+ L_J=\#\{i\in I:n_i\in J\},\qquad
+ \Delta=\max_{J\text{ downward closed}}(L_J-|J|).
+ \tag{DM2}
+\]
+The empty set is allowed, so \(\Delta\ge0\). The maximum number of
+labels admitting distinct assignments \(i\mapsto h_i\in\mathcal P_N\)
+with \(h_i\mid n_i\) is exactly
+\[
+ \boxed{|I|-\Delta.} \tag{DM3}
+\]
+This applies Hall's marriage theorem to divisor neighborhoods; it is not
+a new matching theorem. The pinned Mathlib provides
+`Finset.all_card_le_biUnion_card_iff_existsInjective'` in
+`Mathlib/Combinatorics/Hall/Finite.lean`.
+[Report 385, section 69](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#69-cross-cofactor-divisor-payment-reduces-exactly-to-nonconcentrated-ancestors)
+already uses Hall deficiency for original payer labels. Those payers do
+not automatically cover transported demands; this application instead
+replaces the complete output classes in (DM1).
+
+Give label \(i\) the neighborhood \(\{h>1:h\mid n_i\}\). For a
+label subset \(S\), its union \(J_S\) is downward closed and
+\(|S|-|J_S|\le L_{J_S}-|J_S|\le\Delta\). Conversely, all neighbors
+of \(S_J=\{i:n_i\in J\}\) lie in \(J\), so every matching leaves
+at least \(L_J-|J|\) labels unmatched. Adding \(\Delta\) universally
+adjacent dummy slots makes Hall's condition hold for every nonempty label
+subset. A saturating matching followed by deletion of dummy assignments
+proves (DM3).
+
+For every assigned label use
+\[
+ B_i=c_i\pmod{h_i}. \tag{DM4}
+\]
+Its phase is forced by the original output and \(C_i\subseteq B_i\).
+Containment \((c\bmod n)\subseteq(b\bmod h)\) holds exactly when
+\(h\mid n\) and \(b\equiv c\pmod h\): test \(c\) and \(c+n\)
+for necessity. Thus \(\Delta=0\) exactly characterizes repairs that
+assign a different containing nonunit coset to every label. It does not
+characterize arbitrary covers of their union or grouping several
+compatible labels into one coset.
+
+Apply this to **all** nonempty pullbacks of one actual common source
+\((u,\theta)\) in report 388. Under the hypothetical EB1 whole-cover
+assumption they cover the complete output period and have fewer identities
+than the original cover. Therefore
+\[
+ \boxed{\Delta(u,\theta)\ge1
+ \quad\text{for every safe }u\text{ and common }\theta.} \tag{DM5}
+\]
+Otherwise (DM4) supplies a distinct odd nonunit whole cover with fewer
+classes. This replaces the entire output family; it does not append new
+classes to an unchanged inventory whose slots could already be occupied.
+
+The criterion is strictly broader than numerical collision-freeness. For
+distinct odd primes \(r,q\), output moduli \(q,rq,rq\) can be assigned
+slots \(q,r,rq\), inheriting every phase by (DM4). If \(k_n\) is the
+number of outputs at modulus \(n\), matching one label to each occupied
+modulus gives
+\[
+ 0\le\Delta\le\sum_n(k_n-1)_+
+ \le\sum_n\binom{k_n}{2}=X. \tag{DM6}
+\]
+Hence \(\mathbb E\Delta<1\), under any specified law on actual common
+sources, would contradict (DM5). No unrestricted bound of this strength
+has been established. Bounds on each fixed \(\mathbb E L_J\) do not
+bound the expectation of the maximum in (DM2).
+
+## 7. Every averaged Hall constraint can hold while every tree fails
+
+Fix odd primes \(r\ge3\), \(s>2r\), and arbitrary finite heights
+\(A,B\ge1\). Let \(V=\{1,\ldots,s-1\}\), and choose a distinct
+prime \(q_e>s\) for each pair \(e=\{i,j\}\subset V\), with
+\(i<j\). Use the original numerical moduli
+\[
+ D=\{r^a:1\le a\le A\}\cup\{s^b:1\le b\le B\}
+ \cup\{rs\}\cup\bigcup_e\{q_e,rq_e,sq_e,rsq_e\}.
+ \tag{DM7}
+\]
+For each pure power \(p^k\), \(p\in\{r,s\}\), prescribe the
+least-significant-first digit word \(1^{k-1}0\). All remaining phases
+are fixed by this CRT table; a dash means the coordinate is absent from
+that modulus.
+
+| Original modulus | Modulo \(r\) | Modulo \(s\) | Modulo \(q_e\) |
+| --- | ---: | ---: | ---: |
+| \(rs\) | 2 | 1 | — |
+| \(q_e\) | — | — | 0 |
+| \(rq_e\) | 2 | — | 2 |
+| \(sq_e\) | — | \(i\) | 1 |
+| \(rsq_e\) | 1 | \(j\) | 1 |
+
+These are distinct odd nonunit moduli and \(D\) is divisor closed.
+The pure-power words are prefix incompatible. Each mixed class has
+nonzero first \(r\)- or \(s\)-digit whenever that coordinate is
+present, so it is disjoint from the comparable pure-prime class. The
+\(q_e\)-class has phase zero, unlike all its proper extensions;
+\(rq_e,rsq_e\) disagree modulo \(r\), and \(sq_e,rsq_e\) disagree
+modulo \(s\). The classes at \(rs,rsq_e\) disagree modulo \(r\).
+Mixed moduli from different cofactor packets are incomparable. These
+checks account for every comparable pair.
+
+Every class has a private integer. For a class in the \(e\)-packet,
+set all other cofactor coordinates to 3 and use the triples
+\((x\bmod r,x\bmod s,x\bmod q_e)\)
+\[
+ (1,1,0),\quad(2,2,2),\quad(1,i,1),\quad(1,j,1)
+ \tag{DM8}
+\]
+for \(q_e,rq_e,sq_e,rsq_e\), respectively. Fill higher \(r\)- and
+\(s\)-digits with ones. For \(rs\), use first digits \((2,1)\),
+higher digits one and all cofactor coordinates 3. For the pure
+\(r^a\)-class, use its designated prefix followed by ones, the
+\(s\)-word \(2^B\), and all cofactor coordinates 3. For the pure
+\(s^b\)-class, use the \(r\)-word \(1^A\), its designated
+\(s\)-prefix followed by ones, and all cofactor coordinates 3. CRT
+realizes every prescription. The table and prefix incompatibility show
+that each point meets exactly its named class.
+
+### One fixed safe coordinate and the actual output inventory
+
+Fix \(u=1^A\) at \(r\), which avoids every pure \(r\)-power class.
+It also kills \(rs\) and every \(rq_e\). Sample one common uniform
+\(r\)-branch subtree of the \(s\)-ary tree through height \(B\), as
+in report 388. Its root subset is
+\(S\subseteq\{0,\ldots,s-1\}\), \(|S|=r\); put
+\(z_a=\mathbf1_{\{a\in S\}}\). Every original uses this same tree.
+The output period is \(N=r^B\prod_e q_e\), and the nonzero numerical
+loads are
+\[
+ k_{q_e}=1,\qquad k_{rq_e}=z_i+z_j,\qquad k_r=z_0.
+ \tag{DM9}
+\]
+For each \(2\le b\le B\), there is additionally one output at
+\(r^b\) exactly when its pure \(s^b\)-prefix survives. With
+\(\rho=r/s\),
+\[
+ \mathbb E k_{q_e}=1,\qquad
+ \mathbb E k_{rq_e}=2\rho<1,\qquad
+ \mathbb E k_{r^b}=\rho^b<1\quad(1\le b\le B).
+ \tag{DM10}
+\]
+Every other output modulus has load zero. Thus \(\mathbb E L_J\le|J|\)
+for **every fixed** downward-closed \(J\subseteq\mathcal P_N\).
+These inequalities hold simultaneously as inequalities of expectations;
+they do not assert that one tree satisfies them all.
+
+### The exact pointwise deficit
+
+Put \(T=S\setminus\{0\}\), \(t=|T|=r-z_0\), and let \(E_T\)
+be the pairs contained in \(T\). For \(k=|E_T|=\binom t2\), the
+set
+\[
+ J_S=\{r\}\cup\bigcup_{e\in E_T}\{q_e,rq_e\}
+ \tag{DM11}
+\]
+is downward closed. Every selected pair contributes three labels to
+\(L_{J_S}\), and the pure \(r\)-output contributes \(z_0\). Hence
+\[
+ L_{J_S}-|J_S|=(3k+z_0)-(2k+1)=k+z_0-1.
+ \tag{DM12}
+\]
+This lower bound is attained. Match each \(q_e\)-label to \(q_e\),
+one label in each nonempty \(rq_e\)-bin to \(rq_e\), and each
+surviving pure-power label of exponent at least two to its own modulus.
+If \(0\in S\), the pure output occupies \(r\), leaving \(k\)
+unmatched labels. Otherwise put one of the \(k\) extra double-bin
+labels at \(r\), leaving \(k-1\). Therefore
+\[
+ \boxed{\Delta(\theta)=
+ \begin{cases}
+ \binom{r-1}{2},&0\in S,\\
+ \binom r2-1,&0\notin S.
+ \end{cases}} \tag{DM13}
+\]
+Both values are positive for \(r\ge3\). Higher tree choices do not
+change the deficit: the deficient ideal contains no higher pure power,
+and no higher pure-power modulus can divide \(q_e\) or \(rq_e\).
+This proves the assertion uniformly in both finite heights.
+
+Since \(\Pr(0\in S)=r/s\),
+\[
+ \boxed{
+ \max_J\mathbb E(L_J-|J|)=0,\qquad
+ \mathbb E\Delta=\binom r2-1-\frac{r(r-2)}s>0.
+ } \tag{DM14}
+\]
+For \(r=3,s=7\), 15 root subsets contain zero and have deficit one;
+the other 20 have deficit two. Their mean is \(11/7\). This rules
+out exact common-tree rounding based only on averaged divisor
+inequalities, even with the stated local arithmetic conditions and
+private witnesses.
+
+### Compatible grouping still cannot repair these whole classes
+
+Allow several output labels to share a containing divisor coset, with
+at most one replacement phase at each numerical modulus. The output
+\(0\bmod q_e\) forces slot \(q_e\) with phase zero: its only
+nonunit divisor is \(q_e\). Neither mixed output in that packet can
+use this slot, since its \(q_e\)-phase is one. If both \(i,j\)
+survive, their outputs at \(rq_e\) have distinct inverse root digits
+\(\theta_1^{-1}(i),\theta_1^{-1}(j)\). They cannot share an
+\(rq_e\)-coset, so at least one must use slot \(r\).
+
+If zero belongs to \(S\), the pure output forces slot \(r\) to
+have phase \(\theta_1^{-1}(0)\), incompatible with every mixed
+output. Otherwise a chosen \(r\)-phase can absorb only labels
+belonging to one target digit \(a\in S\). The complete graph on
+\(S\), with \(|S|=r\ge3\), has an edge not incident with \(a\);
+neither output of that edge can use slot \(r\). Thus grouping does
+not remove the obstruction. This conclusion concerns repairs placing
+each **whole** output class inside one replacement class, not arbitrary
+covers of their union.
+
+The CRT point with \(r\)-word \(1^A\), \(s\)-word \(1^B\), and
+every cofactor coordinate equal to 3 avoids all original classes. The
+construction is explicitly a **noncover**. For general \(r\), the
+tree obstruction above is proved at the fixed safe coordinate
+\(u=1^A\); it does not assert failure for every other safe coordinate.
+It does not disprove a theorem using whole coverage or EB1 minimality.
+
+### At the ternary prime every safe coordinate fails
+
+Specialize the same construction to \(r=3\) and any prime \(s>6\).
+Every safe \(u\bmod3^A\) has first digit 1 or 2, since the original
+pure 3-class has phase zero. If its first digit is 1, all mixed-class
+activity is exactly (DM9), independently of the higher safe digits.
+Thus every common tree has deficit one or two as in (DM13), and the
+whole-class grouping obstruction also applies.
+
+If its first digit is 2, both original classes \(q_e\) and \(3q_e\)
+survive, with output modulus \(q_e\) and phases 0 and 2. Their only
+nonunit divisor slot is \(q_e\), so they leave one unmatched label
+per packet under every tree. The \(3sq_e\)-class is inactive. A
+surviving \(sq_e\)-class contributes at most one label at \(3q_e\),
+which can be assigned its own modulus. The pure \(s\)-class and
+the \(3s\)-class contribute \(z_0\) and \(z_1\) outputs at 3.
+The higher pure powers contribute at most one output at each
+\(3^b\), \(b\ge2\). Writing \(m=\binom{s-1}{2}\), this gives
+the exact deficit
+\[
+ \boxed{\Delta(u,\theta)=m+z_0z_1
+ \quad\text{when }u\equiv2\pmod3.} \tag{DM14a}
+\]
+For the lower bound, use the downward-closed set of all \(q_e\),
+and include slot 3 when both first-digit outputs occur. It contains
+\(2m\) labels in \(m\) slots, with two additional labels in one
+slot in the latter case. For the matching attaining the bound, retain
+one label at each \(q_e\), every surviving \(3q_e\)-label at its
+own slot, at most one output at 3, and all higher pure-power outputs
+at their own slots. No higher power is a divisor available to a
+\(q_e\)- or 3-demand.
+
+Grouping complete classes cannot help this branch either: the two
+distinct \(q_e\)-phases cannot share their only containing nonunit
+coset. Consequently this ternary noncover defeats every joint choice
+of a safe coordinate and a common tree, even for the grouped repair
+class above, at arbitrary finite heights. The averaged Hall feasibility
+in (DM10)--(DM14) is still asserted only under the tree law with a
+fixed safe coordinate of first digit 1. Averaging uniformly over **all** safe
+coordinates introduces the overloaded prime slots and does not satisfy
+those feasibility inequalities. Whole coverage and EB1 minimality
+remain excluded from this counterexample.
+
+## 8. Original-phase compatibility supplies a precise repair interface
+
+For surviving original labels \(i,j\) in one common source of report
+388 and a divisor slot \(h=r^tm>1\) common to their output moduli,
+with \(\gcd(m,rs)=1\),
+\[
+ \boxed{c_i\equiv c_j\pmod{r^tm}
+ \quad\Longleftrightarrow\quad
+ \alpha_i\equiv\alpha_j\pmod{s^tm}.} \tag{DM15}
+\]
+The old \(m\)-coordinate is unchanged. Compatibility of the same tree
+gives \(\theta_t(c_i\bmod r^t)=\alpha_i\bmod s^t\), and likewise
+for \(j\). Injectivity proves the equivalence at this coordinate;
+CRT combines the two. Thus compatibility is determined by the original
+phases, even though the source determines which labels survive.
+
+Here is a sufficient alternating-path repair. Let \(M\) be a partial
+divisor matching of all outputs, leaving precisely \(U\) unmatched.
+For each \(u\in U\), suppose there is a simple label path
+\[
+ i_0=u,i_1,\ldots,i_t,\qquad t\ge1,\qquad
+ M(i_j)=h_j\mid n_{i_{j-1}}\quad(1\le j\le t),
+ \tag{DM16}
+\]
+whose labels \(i_1,\ldots,i_t\) are matched, and whose terminal
+phases satisfy \(c_{i_{t-1}}\equiv c_{i_t}\pmod{h_t}\). Require
+vertex-disjoint paths for different unmatched labels. For \(j<t\),
+replace slot \(h_j\)'s phase by \(c_{i_{j-1}}\bmod h_j\), and
+keep the terminal slot at \(c_{i_t}\bmod h_t\). Every earlier
+incoming class is wholly contained in its assigned slot. The terminal
+slot contains both terminal classes by the assumed compatibility.
+Off-path matched labels retain their containing replacements. Distinct
+paths use distinct slots, yielding \(|I|-|U|\) classes with distinct
+numerical moduli covering **every complete output class**. Equation
+(DM15) checks terminal compatibility in the original coordinates.
+
+This conditional exchange does not force paths to exist. The standard
+Hall consequence for an inclusion-minimal deficient label set gives
+deficit exactly one: deletion of any label leaves a Hall-feasible proper
+subset. If outside labels reserve slots, apply this consequence to the
+residual graph with those slots removed, not to an artificially freed
+divisor palette.
+
+A sufficient unrestricted target is to find, for every hypothetical EB1
+whole cover, support primes \(r<s\), one safe \(u\), and one common
+finite-height tree whose complete output family has either a full divisor
+matching or disjoint compatible absorption paths for all unmatched labels.
+No such existence result is established here. The support and heights
+remain arbitrary and finite. Section 7 prevents deriving it from local
+divisor closure, comparable disjointness, private points and averaged
+Hall inequalities alone.
+
+This does not improve the fixed-old-law averaged convex bound in
+[report 849](../800-849/849-actual-unions-admit-sharp-common-tree-moment-transport.md#the-averaged-transport-budget-is-dominated-by-the-original-block).
+It changes the possible descent certificate to actual numerical inventory
+and whole-class liability. The missing arithmetic assertion must use
+whole coverage and source ancestry to force a compatible repair of a
+terminal deficient block, accounting for outside reservations. These
+matching arguments and the all-height construction are ordinary
+mathematical deductions, not new Lean verification or a resolution of
+Erdős #7.
