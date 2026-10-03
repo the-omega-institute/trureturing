@@ -1,0 +1,7 @@
+# Integral lattices in pure cubic fields
+
+This volume records an integral lattice calculation used in Section 11 of
+`GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md`. The displayed discriminants belong to
+the specified lattices; identifying the full ring of integers requires an
+additional maximality argument.
+

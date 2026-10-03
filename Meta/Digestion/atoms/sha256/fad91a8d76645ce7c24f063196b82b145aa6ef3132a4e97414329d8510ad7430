@@ -1,0 +1,10 @@
+### theorem 255.3 任意选阶的最终证书仍有同一 RH 强度
+
+在定理 92.3 的经典分析输入下，以下四个陈述等价：
+
+1. RH 成立。
+2. 存在 $T\ge1000$，使全部 $t\ge T$、全部 $N\ge0$ 满足 $\mathscr C_N(t)>1/4$。
+3. 存在 $T\ge100$，使全部 $t\ge T$ 满足 $\mathscr C_0(t)\ge0$。
+4. 存在函数 $\nu:[100,\infty)\to\mathbb N$ 与 $T\ge100$，
+   使全部 $t\ge T$ 满足 $\mathscr C_{\nu(t)}(t)\ge0$。
+

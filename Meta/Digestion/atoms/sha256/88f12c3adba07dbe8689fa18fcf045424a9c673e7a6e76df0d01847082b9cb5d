@@ -1,0 +1,73 @@
+**引理 55.2（角色均值、二阶矩与范围）。** 置 $Z=\mathbf1_{\{Y=2\}}-\mathbf1_{\{Y=0\}}$，以及
+
+$$
+\eta_i=u\mathbf1_{\{W_i=001\}}-z\mathbf1_{\{W_i=000\}},\qquad
+A_i^{\rm obs}=\eta_i Z,\qquad B_i^{\rm obs}=(\ell_i-L)Z.
+$$
+
+以真实 $r$ 为锚，对 $i\notin\{q,r\}$ 另置
+$T_i^{\rm obs}=(h_i-H)(\ell_r-L)Z$。有
+
+$$
+\mathbb E[Z\mid X]=\frac\alpha4(C_\theta-1),\qquad
+\mathbb E[Z^2\mid X]=\beta:=\frac23+\frac\alpha{12}\le\frac34.
+\tag{55.6}
+$$
+
+三个分数族的均值准确为
+
+$$
+\begin{aligned}
+\mathbb EA_i^{\rm obs}&=\begin{cases}\alpha uzL/2,&i=q,\\0,&i\ne q,\end{cases}\\
+\mathbb EB_i^{\rm obs}&=\begin{cases}
+\alpha HV_L/4,&i=r,\\
+\alpha L(1-2HL)/4,&i=q,\\
+0,&i\notin\{q,r\},
+\end{cases}\\
+\mathbb ET_i^{\rm obs}&=\begin{cases}-\alpha D/4,&i=p,\\0,&i\notin\{p,q,r\}.
+\end{cases}
+\end{aligned}
+\tag{55.7}
+$$
+
+相应的原始二阶矩和绝对范围为
+
+$$
+\begin{array}{c|c|c}
+\text{分数}&\mathbb E[(\text{分数})^2]&|\text{分数}|\text{ 的上界}\\\hline
+A_i^{\rm obs}&\beta uz(u+z)&M_q=\max(u,z)\\
+B_i^{\rm obs}&\beta V_L&M_r=L\\
+T_i^{\rm obs},\ i\notin\{q,r\}&\beta D&M_p=HL
+\end{array}
+\tag{55.8}
+$$
+
+证明。三行的标签对比均值是 $\alpha(-1/4,0,1/4)$，而各行在标签 0、2 的概率和都是 $2/3+\alpha/12$，给（55.6）。所以任意输入特征 $f$ 都满足 $\mathbb E[f(X)^2Z^2]=\beta\mathbb Ef(X)^2$；并未假设 $Z$ 与 $X$ 独立。
+
+展开原门
+
+$$
+C=h_p\ell_q+2h_q\ell_r-2h_p\ell_qh_q\ell_r
+\tag{55.9}
+$$
+
+并使用实际中窗矩 $\mathbb E[h_q\ell_q]=t=1/2$，得到
+
+$$
+\mathbb E[C\mid W_p]=2HL,\qquad
+\mathbb E[C\mid W_q]=H\ell_q+2Lh_q-2HL\ell_qh_q,
+\qquad
+\mathbb E[C\mid W_r]=HL+H\ell_r.
+\tag{55.10}
+$$
+
+对 $\eta$，有 $\mathbb E\eta=0$、$\mathbb E[\eta\ell]=\mathbb E[\eta\ell h]=0$、$\mathbb E[\eta h]=uz$。中窗条件式留下 $2Luz$；第一窗的条件式为常数，末窗仅经 $\ell$，其余窗与标签及活动窗独立，故第一组均值为（55.7）。二阶矩由 $u^2z+z^2u=uz(u+z)$ 给出。
+
+对 $\ell-L$，有 $\mathbb E[(\ell-L)\ell]=V_L$、$\mathbb E[(\ell-L)h]=t-HL$、$\mathbb E[(\ell-L)\ell h]=t(1-L)$。末窗留下 $HV_L$，中窗留下
+$HV_L+2L(t-HL)-2HLt(1-L)=L(1-2HL)$，第一窗和非活动窗为零。中心 Bernoulli 特征的二阶矩为 $V_L$。
+
+最后对 $(h_p-H)(\ell_r-L)$，式（55.9）的前两项各缺少一个中心化因子，期望为零；第三项贡献
+$-2V_HtV_L=-D$。乘 $\alpha/4$ 给唯一负均值。允许的其他 $i$ 不活动，其中心化因子独立于 $(C,W_r)$，所以均值为零。对任意不同的 $i,r$，整窗独立给该乘积特征的二阶矩 $V_HV_L$。由于 $H,L>1/2$，分别有 $|h-H|\le H$、$|\ell-L|\le L$，得到最后两个范围。全部方差都不超过所列原始二阶矩。$\square$
+
+这保留 §54 的 $q$ 对比，但更换了末位和锚点特征。$B_q^{\rm obs}$ 的均值可以消失或变号；恢复末位之前确实需要排除已学到的 $q$。
+

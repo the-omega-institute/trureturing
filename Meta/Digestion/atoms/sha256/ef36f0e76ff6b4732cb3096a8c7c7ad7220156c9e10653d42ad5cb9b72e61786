@@ -1,0 +1,30 @@
+**Theorem 1.1 (actual minimum-cut Cartesian kernel).** For every sign and
+every positive $m,k$, actual block sum is a bijection
+$$
+J_m^\varepsilon\times U_k\longrightarrow V_{m,k}^\varepsilon.
+$$
+For arbitrary shape predicates $A$ on $J_m^\varepsilon$ and $B$ on
+$U_k$, its image event has cardinality $|A||B|$. Under the uniform law
+on the actual full $U_{m+k}$, its probability is $|A||B|/s_{m+k}$.
+Conditional on this minimum-cut fiber, the joint shape probability is
+$$
+\frac{|A||B|}{|J_m^\varepsilon|s_k}
+=\frac{|A|}{|J_m^\varepsilon|}\frac{|B|}{s_k}.
+$$
+Ratios with zero denominator use the field convention zero; conditioning
+as a probability law requires the fiber to be nonempty. A specified
+left shape consequently contributes $s_k/s_{m+k}$ before sign
+conditioning, and a specified right shape contributes
+$|J_m^\varepsilon|/s_{m+k}$. The right numerator is not $s_m$.
+
+*Proof.* The frozen fixed-cut factorization supplies the unique two
+actual avoiding factors. For every $0<r<m$, a same-sign cut at $r$
+of the block sum is equivalent to a cut at $r$ of the left factor.
+The forward implication restricts comparisons to the left positions.
+For the reverse implication a right position either lies in the left
+factor, where its comparisons are given, or in the right factor, where
+the block-sum crossing comparison applies. Thus minimality is exactly
+left indecomposability. Restricting the bijection to $A\times B$ gives
+the cardinality and uniform-law formulas. No recursively substituted
+permutation carrier is used. $\square$
+

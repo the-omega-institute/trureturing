@@ -1,0 +1,71 @@
+### 38.2 交换方程及其字段判据
+
+对事件限制和联合限制定义
+\(\Lambda_{mn}=\lambda_{mn}\times r_{mn,\nu+1}\)。希望取得先在细层执行再粗化，
+与先粗化再执行相同：
+
+$$
+\boxed{
+ \operatorname{Option.map}(\Lambda_{mn})\circ Q_{n,\nu}
+ =
+ Q_{m,\nu}\circ r_{mn,\nu}.
+}
+\tag{PG.3804}
+$$
+
+该等式只在共同实际像上比较；它同时比较 `None` 与 `Some`，所以包含合法性和失败
+分支，而不是只比较成功读数。
+
+前视版本的交换式明确为
+\[
+\operatorname{Option.map}(\Lambda_{mn})\circ Q^+_{n,\nu}
+=Q^+_{m,\nu}\circ r_{j_\rho(m),j_\rho(n),\nu},
+\qquad
+\Lambda_{mn}=\lambda_{mn}\times r_{mn,\nu+1}.
+\tag{PG.3804+}
+\]
+
+为使 (PG.3804) 成为可检验的字段合同，设 `Some` 输出的字段由实际输入 \(b\) 和
+事件 \(\ell\) 写成
+
+$$
+\begin{aligned}
+ \xi'&=\xi,&\nu'&=\nu+1,&x'&=X_n(b),\\
+ r'&=R_n(b),&\pi'&=P_n(b),\\
+ A'&=A\mathbin{\Vert}\operatorname{Rec}^A_n(b,\ell),&
+ W'&=W\mathbin{\Vert}\operatorname{Rec}^W_n(b,\ell).
+\end{aligned}
+\tag{PG.3805}
+$$
+
+在输出元组没有隐藏字段、且所有记录追加都由同一 \((b,\ell)\) 产生的条件下，
+(PG.3804) 等价于以下逐项合同：
+
+这里的每个 \(r_{mn,\nu}\) 都按联合状态
+\((\xi,\nu,x,r,\pi,A,W)\) 的相应字段分解，并假定来源与绝对纪元字段满足
+\(r^\xi_{mn,\nu}(\xi)=\xi\)、\(r^\nu_{mn,\nu}(\nu)=\nu\)；\(\ell_n\) 只在两侧输出都为
+`Some` 时量化，并令 \(\ell_m=\lambda_{mn}(\ell_n)\)。若一侧为 `None`，只比较 `None` 分支及其质量和推前。隐藏字段若会影响后继或记录，必须加入联合状态；否则下面的
+逐字段条件只能给出必要条件。
+
+$$
+\begin{aligned}
+ \operatorname{enabled}_n(b)&=\operatorname{enabled}_m(r_{mn,\nu}b),\\
+ \lambda_{mn}(\ell_n)&=\ell_m,\\
+ r^x_{mn,\nu+1}X_n(b)&=X_m(r_{mn,\nu}b),\\
+ r^r_{mn,\nu+1}R_n(b)&=R_m(r_{mn,\nu}b),\\
+ r^\pi_{mn,\nu+1}P_n(b)&=P_m(r_{mn,\nu}b),\\
+ r^A_{mn,\nu+1}\!\left(A\Vert\operatorname{Rec}^A_n(b,\ell_n)\right)
+ &=r^A_{mn,\nu}(A)\Vert
+   \operatorname{Rec}^A_m(r_{mn,\nu}b,\lambda_{mn}\ell_n),\\
+ r^W_{mn,\nu+1}\!\left(W\Vert\operatorname{Rec}^W_n(b,\ell_n)\right)
+ &=r^W_{mn,\nu}(W)\Vert
+   \operatorname{Rec}^W_m(r_{mn,\nu}b,\lambda_{mn}\ell_n).
+\end{aligned}
+\tag{PG.3806}
+$$
+
+若任意一项只在细输入上变化，或权限域在两个层次不同，(PG.3804) 即失败。正向
+由 `Option` 外延和元组外延逐项得到；反向由所有投影重建 `Some` 输出，`None` 分支
+由第一项的合法性等式重建。若输出存在隐藏字段，逐项条件只是必要条件，必须把隐藏
+字段加入 (PG.3801) 或改写成联合核相等。
+

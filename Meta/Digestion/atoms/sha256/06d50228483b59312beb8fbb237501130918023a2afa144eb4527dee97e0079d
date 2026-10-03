@@ -1,0 +1,26 @@
+**定理 19.1（最低位的整数部公式）。** 对每个 $N\ge0$，
+
+$$
+b_0(N)=1+\lfloor(N+1)\alpha\rfloor-\lfloor(N+2)\alpha\rfloor.
+$$
+
+证明。宽度一的两柱区间由定理 18.2 为
+
+$$
+I_0=[-\alpha^3,\alpha^2],\qquad I_1=[-\alpha,-\alpha^3].
+$$
+
+实际来源在内部。$\operatorname{int}(I_1)$ 的圆周像在 $[0,1)$ 中恰为
+
+$$
+(1-\alpha,1-\alpha^3)=(1-\alpha,2-2\alpha),
+$$
+
+其中 $\alpha^3=2\alpha-1$；闭 $I_1$ 的像则包含两个端点，不能与此开区间混同。令 $z=\{N\alpha\}$、$y=\{(N+1)\alpha\}=\{z+\alpha\}$。若 $z<1-\alpha$，则 $y=z+\alpha\ge\alpha>1-\alpha$；若 $z>1-\alpha$，则 $y=z+\alpha-1$，而 $y<1-\alpha$ 等价于 $z<2-2\alpha$。定理 17.6 排除了 $z=1-\alpha$ 与 $z=2-2\alpha$；无理性还排除 $y=0$。因此
+
+$$
+b_0(N)=1\quad\Longleftrightarrow\quad 0<y<1-\alpha.
+$$
+
+任意实数 $u$ 的整数部增量 $\lfloor u+\alpha\rfloor-\lfloor u\rfloor$ 在 $\{u\}<1-\alpha$ 时为零，在 $\{u\}\ge1-\alpha$ 时为一。代入 $u=(N+1)\alpha$ 即得公式；边界 $y=1-\alpha$ 会使 $(N+2)\alpha$ 为整数，已被排除。论证包括 $N=0$。$\square$
+

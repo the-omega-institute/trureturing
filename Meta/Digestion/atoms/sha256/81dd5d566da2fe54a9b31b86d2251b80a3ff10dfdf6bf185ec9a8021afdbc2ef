@@ -1,0 +1,21 @@
+## 283. 首次深度的唯一指数读出与黄金分裂相位
+
+沿用 §282 的实际来源。对奇素数 $p\ne5$、正整数 $a,n$，定义
+\[
+m=p^a,\qquad k=p^an-1,\qquad
+A_{p,a,n}=d_kF_{2p^an},\qquad B_{p,a,n}=4p^aF_n,
+\qquad d_k=F_{3k}/F_k.
+\tag{283.1}
+\]
+此时 $p^an\ge3$，所有来源均在 §282 的定义域内。
+记 $z=z(p)$、$h=h_p=v_p(F_z)$ 为原 Fibonacci 序列的实际首次秩与首次深度，并定义
+\[
+\mathcal E_{p,a}=\{n\ge1:\ \exists M\ge1,\ A_{p,a,n}=B_{p,a,n}M,
+\ \gcd(B_{p,a,n},M)=1\}.
+\tag{283.2}
+\]
+以下秩界与赋值公式使用 Lengyel (1995), §3, Theorem A 及同节赋值定理，
+见 [既有文献条目](../../../Library/Scale/lengyel1995fibonacciorder.md)。
+尤其 $z\mid p-\varepsilon_p$、$p\nmid z$，其中 $\varepsilon_p=(5/p)\in\{1,-1\}$。
+这些经典输入不把 $h$ 置为一。
+

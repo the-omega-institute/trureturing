@@ -14192,6 +14192,89 @@ $H=1$ 时这是空合取，每个 $S$ 都充分，包括空表。
 
 最后，$\gcd(y,1)=1$ 包括 $y=0$，所以模 1 只有一个未来，空表即可识别。模数大于一时，首层覆盖至少两个不同相位，故空表不充分。$\square$
 
+**定理 138.4（实际移位子相位的稀疏 gcd 判据）。** 对素数 $p$、精度 $e\ge1$ 和有限自然时间表 $S$，令 $r_j=\operatorname{zeroRank}(p^j)$，其中 zeroRank 是 Fibonacci 序列的最小正零索引。对整数观察对 $x=(n,z)$ 和实际非负来源 $v=(a,b)$，采用
+
+$$
+y(k,x)=F_{k-1}n+F_kz,\qquad
+g(H,k,x)=\gcd(|y(k,x)|,H),\qquad
+h(H,k,v)=\gcd(F_{k+3}a+F_{k+4}b,H).
+$$
+
+$k-1$ 是自然数截断减法；识别与碰撞结论只查询正时刻。实际来源的观察坐标为 $(2a+3b,3a+5b)$，因而 $k>0$ 时 $h(H,k,v)=g(H,k,(2a+3b,3a+5b))$。整数对在 $p$ 处本原是指至少一个坐标不被 $p$ 整除；实际来源的本原性按其原始坐标 $a,b$ 判断。所有未加本原限制的域都包括零对和非本原对。
+
+在 $e\ge2$ 时，令 $R=r_{e-1}$，并以实际查询定义移位子相位集合
+
+$$
+A_{p,e,t}(S)=\left\{u\in\mathbb Z/p\mathbb Z:\exists k\in S,
+\ (k-1)\bmod r_e=(t+\operatorname{val}(u)R)\bmod r_e\right\},
+$$
+
+其中 $\operatorname{val}(u)\in\{0,\ldots,p-1\}$ 是自然代表。它是集合，同一子相位的重复访问只计一次。定义末层条件 $D^{\mathrm{sh}}_{p,e}(S)$ 为
+
+$$
+\begin{array}{ll}
+e=1:&\left(\text{若 }r_1=p+1\text{ 则 }r_1-1\text{，否则 }r_1\right)
+\le|\{k\bmod r_1:k\in S\}|;\\
+e\ge2,\ r_e=R:&\forall t<r_e,\ \exists k\in S,\ (k-1)\bmod r_e=t;\\
+e\ge2,\ r_e\ne R:&\forall t<R,\quad p-1\le|A_{p,e,t}(S)|.
+\end{array}
+$$
+
+全塔条件为 $D^{\mathrm{sh}}_{p,e}(S)\land\bigwedge_{1\le j<e}D^{\mathrm{sh}}_{p,j}(S)$。称 $S$ 识别读出 $f$ 的正未来，若任意两个指定域内的固定来源在 $S$ 上读数相同，就在每个正时刻有相同读数。
+
+对每个有限正时间表 $S$，以下六项等价：$D^{\mathrm{sh}}_{p,e}(S)$；全塔条件；识别全部本原整数观察对的 $g(p^e,\cdot,\cdot)$ 未来；识别全部整数观察对的该未来；识别全部实际非负来源的 $h(p^e,\cdot,\cdot)$ 未来；识别全部在 $p$ 处本原的实际非负来源的该未来。所有六项使用同一个 $S$，不提供共同含量或额外读数。
+
+对任意有限时间表，若 $e\ge2$ 且 $D^{\mathrm{sh}}_{p,e}(S)$ 成立，则每个 $1\le j<e$ 和每对 $\alpha,\beta\in\mathbb Z/r_j\mathbb Z$ 都有 $k\in S$ 满足 $[k-1]_{r_j}+\alpha=\beta$；这一纯相位覆盖结论不要求 $S$ 中时刻为正。对有限正时间表，$D^{\mathrm{sh}}$ 还给出 $S\ne\varnothing$ 和两个不同的首层相位。更一般地，只要一个非空正时间表含两个不同首层相位，则对所有整数观察对
+
+$$
+\min_{k\in S}g(p^e,k,x)=\gcd(\gcd(|n|,|z|),p^e).
+$$
+
+特别地，$D^{\mathrm{sh}}$ 给出的同一表恢复所有实际非负来源的共同含量：
+
+$$
+\min_{k\in S}h(p^e,k,(a,b))=\gcd(\gcd(a,b),p^e).
+$$
+
+这些最小值均包括零来源和饱和来源。
+
+若 $D^{\mathrm{sh}}_{p,e}(S)$ 失败，则存在两个固定的本原整数观察对 $x,x'$，在整个 $S$ 上有相同 $g(p^e,k,\cdot)$ 答案。它们在选择任何 $Q>0$ 之前固定。对每个这样的 $Q$，存在固定实际非负来源 $v,w$，四个坐标均严格小于 $Qp^e$，对所有正时刻满足
+
+$$
+h(Qp^e,k,v)=Q g(p^e,k,x),\qquad
+h(Qp^e,k,w)=Q g(p^e,k,x').
+$$
+
+两者在整个 $S$ 上答案相同。对每个截止 $B\in\mathbb N$，又有 $k>B$、$k>0$、$k\notin S$，在该时刻的两个整数答案为 $p^e,p^{e-1}$，两个实际答案为 $Qp^e,Qp^{e-1}$。来源 $v,w$ 在选择 $B$ 之前已经固定。仅当 $p\nmid Q$ 时断言这两个实际来源在 $p$ 处本原；缩放允许 $p\mid Q$。这同时涵盖首层满轨道的两个遗漏相位、首层非满轨道的遗漏相位与无命中方向、高层增长的两个遗漏子相位以及高层停滞的退出方向。
+
+对所有 $H>0$ 和同一个有限正时间表，
+
+$$
+S\text{ 识别全部实际来源的模 }H\text{ gcd 未来}
+\quad\Longleftrightarrow\quad
+\bigwedge_{p^e\parallel H}D^{\mathrm{sh}}_{p,e}(S).
+$$
+
+这里 $p^e\parallel H$ 指 $p$ 为素数、$e\ge1$、$p^e\mid H$ 且 $p^{e+1}\nmid H$。若一个完整因子失败，则 $p\nmid H/p^e$，并有坐标均小于 $H$ 的固定实际来源，在整个 $S$ 上相同，而在每个截止之后的某个未查询正时刻分别为 $H,H/p$。$H=1$ 时，对包括零来源在内的每个实际来源和每个自然时刻（含零）都有 $h(1,k,v)=1$，所以空表也充分。
+
+此判据使用的实际 affine 解码同时具有如下准确陈述。对任意 $e\ge2$、$t,j\in\mathbb N$ 和整数对 $x$，若 $p^{e-1}\mid y(t+1,x)$，令
+
+$$
+c=F_{R-1},\qquad
+A=\left[c\,\frac{y(t+1,x)}{p^{e-1}}\right]_p,\qquad
+B=\left[\frac{F_R}{p^{e-1}}\,y(t+2,x)\right]_p.
+$$
+
+第一个商为整数商，Fibonacci 商为自然数商；取商后才映入 $\mathbb Z/p\mathbb Z$。则
+
+$$
+p^e\mid y(t+1+jR,x)\quad\Longleftrightarrow\quad A+[j]_pB=0.
+$$
+
+该等价对增长与停滞均成立，不限制 $j$ 的大小，也不排除 $p=2,5$。
+
+证明。秩及提升事实给 $M^R=cI+F_RM$ 和 $p^{e-1}\mid F_R$。当 $e\ge2$，$F_R^2=0\pmod{p^e}$，而相邻 Fibonacci 数互素使 $c$ 为单位；消去单位标量后得到上述实际 affine 等价。增长时，本原父命中的斜率非零，因此至多漏测一个子相位足以识别唯一根；两个遗漏子相位通过逆 Fibonacci 作用给出固定碰撞。停滞时，逆作用构造保持低层命中而退出末层的本原状态。首层两种情况由有限素数相位结果给出。全部整数域先用两个首层相位恢复共同含量，再在剩余精度中识别。模可逆观察矩阵把每个固定整数剩余对实现为有界自然来源，并在全部正时刻保持同一缩放关系。对完整因子的 gcd 投影分别应用局部结果，再由素数幂整除关系重组完整 gcd；必要性用同一有界来源隔离失败因子。$\square$
+
 ## 139. 准确非自适应查询数及同一表的三项最小值
 
 **定理 139.1（任意索引查询数等于连续时域）。** 沿用定理 126.5 的局部连续长度，显式写为
@@ -46734,5 +46817,3082 @@ $$
 因此局部检查中的常数是携带值 $D+\mathcal C^{\rm fin}(a)$；把它每格重置为 $D$ 会改变命题。相邻端点合并后有 $N+1$ 个端点，每格另至多一个内部根，给出计数。任意实数截止落在某个格内，有限检查的充分性覆盖该截止，故没有从离散点到全实数的运输缺口。$\square$
 
 上述加强归入本仓同源证书的推导：Fibonacci 五分平方密度负责使累计插值损失有有限极限；积分零点振荡负责增加频率分母；精确正向累计变换负责排除额外漂移。它们共同把 §336 的可允许对数增长预算收紧为 $K=0$ 的固定总储备。该储备的存在仍等价于未决的 RH，没有给出其无条件值。§335 的 $z_{\rm fin}=\ell_L^*+\mathfrak h_L$ 关系仍保留实际整数 Robin 核心修正；此谱累计储备不直接给所有 $n>5040$ 的逐点 Robin 余量下界。
+
+## 追加锚（本行以下为增补区）
+
+## 338. 同源零点频率群、四分之一相位障碍与固定储备的振幅
+
+**定义 338.1（实际累计量的频率群与振幅）。** 固定 §337 的实际 Fibonacci 五分证书、起点 $A_0$ 及同一组已证实的块斜率。在本节的谱结论中假设 RH，正零点纵坐标按不同频率组成可数集 $\Gamma$，重数为 $m_\gamma$。置
+
+$$
+a_\gamma=\frac{m_\gamma}{\gamma(1/4+\gamma^2)}>0,\qquad
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma<\infty,
+$$
+
+$$
+\phi(t)=(e^{i\gamma t})_{\gamma\in\Gamma},\qquad
+H=\overline{\phi(\mathbb R)}\subset\mathbb T^\Gamma,\qquad
+s_H(z)=-2\sum_{\gamma\in\Gamma}a_\gamma\operatorname{Im}z_\gamma,
+\qquad A_* =\max_{z\in H}s_H(z).
+\tag{338.1}
+$$
+
+这里 $\mathbb T=\{z\in\mathbb C:|z|=1\}$，乘法逐坐标定义。$\phi$ 是连续群同态，$H$ 是紧闭子群；权重可和使 $s_H$ 一致绝对收敛且连续，故最大值存在。反演 $z\mapsto z^{-1}=\overline z$ 将 $s_H$ 变为 $-s_H$。整数关系均指有限支撑的 $h\in\mathbb Z^{(\Gamma)}$ 满足 $\sum_\gamma h_\gamma\gamma=0$；本节不假设频率有理线性独立。
+
+**定理 338.1（实际原始证书的精确尾振幅）。** 在定义338.1及 §337 的既有解析输入下，定理337.1的同一常数 $c_0$ 满足
+
+$$
+\limsup_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0+A_*,\qquad
+\liminf_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0-A_*,
+\qquad 0<A_*\le B_\triangle.
+\tag{338.2}
+$$
+
+因此实际累计量的尾振荡宽度恰为 $2A_*$，由同源零点的频率关系与权重共同决定。
+
+**证明。** 先说明每个正时间尾轨道仍稠密于 $H$。可数个圆的乘积是紧度量群；由序列 $\phi(n)$ 的紧性，可取严格递增的整数 $n_j$ 使 $\phi(n_j)\to z$。于是
+
+$$
+q_j=n_{2j}-n_j\longrightarrow\infty,\qquad
+\phi(q_j)=\phi(n_{2j})\phi(n_j)^{-1}\longrightarrow1.
+$$
+
+对任意固定实数 $t$，$t+q_j\to\infty$ 且 $\phi(t+q_j)\to\phi(t)$。故任意 $R\in\mathbb R$ 都有 $\overline{\phi([R,\infty))}=H$。这一步是经典紧群回归机制，整数 $n$ 只用于构造回归时间，最终稠密性是连续时间尾轨道的稠密性。
+
+定理337.1给
+
+$$
+\mathcal C^{\rm fin}(e^T)=c_0+s_H(\phi(T))+o(1).
+\tag{338.3}
+$$
+
+连续性、紧性及每个尾轨道的稠密性给 $s_H(\phi(T))$ 的上、下极限分别为 $\max_Hs_H$ 和 $\min_Hs_H=-A_*$；趋零误差不改变两端。三角不等式给 $A_*\le B_\triangle$。若 $A_*=0$，反演对称性迫使 $s_H$ 恒为零，从而其沿轨道的所有 Fourier–Bohr 系数都为零，与（337.10）的非零实际零点系数矛盾。因此 $A_*>0$。$\square$
+
+**定理 338.2（实际三角振幅的模四障碍与关系亏损）。** 对定义338.1的同一实际频率群，下列条件等价：
+
+$$
+\begin{aligned}
+&A_*=B_\triangle;\\
+&(i)_{\gamma\in\Gamma}\in H;\\
+&\text{对每个有限支撑整数关系 }h,\quad
+\sum_\gamma h_\gamma\gamma=0\ \Longrightarrow\
+\sum_\gamma h_\gamma\equiv0\pmod4.
+\end{aligned}
+\tag{338.4}
+$$
+
+对任意非零有限支撑整数关系 $h$，还有显式界
+
+$$
+B_\triangle-A_*
+\ge
+\frac{|1-i^{\sum_\gamma h_\gamma}|^2}
+{\displaystyle\sum_{\gamma\in\operatorname{supp}h}h_\gamma^2/a_\gamma}.
+\tag{338.5}
+$$
+
+若关系的系数和不被 $4$ 整除，分子为 $2$ 或 $4$，从而严格改进三角振幅上界。这是关系存在时的条件性证书；没有在此断言真实 $\zeta$ 零点具有一个这样的关系。
+
+**证明。** 对每个 $z\in H$，单位圆的精确距离恒等式给
+
+$$
+|z_\gamma-i|^2=2(1-\operatorname{Im}z_\gamma),\qquad
+B_\triangle+s_H(z)=\sum_\gamma a_\gamma|z_\gamma-i|^2\ge0.
+\tag{338.6}
+$$
+
+所有权重严格为正。若 $A_*=B_\triangle$，在一个最小值点 $s_H(z)=-B_\triangle$，右侧非负可和级数为零，故每个 $z_\gamma=i$。反之全四分之一相位在 $H$ 中就达到最小值 $-B_\triangle$，反演给最大值 $B_\triangle$。符号在这里有区别：$i$ 达到最小值，$-i$ 达到最大值。
+
+余下相位可达性复用经典 Kronecker 紧群判据；来源为 [Onishchik，Kronecker theorem，Encyclopedia of Mathematics，2020 修订](https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528)。对任意有限频率集 $F$，连续时间轨道闭包的整数特征为
+
+$$
+\chi_h(\phi(t))=\exp\!\left(it\sum_{\gamma\in F}h_\gamma\gamma\right).
+$$
+
+它对所有实数 $t$ 恒为 $1$ 当且仅当频率线性组合严格等于零。经典有限环面子群判据因而说：目标相位属于有限投影闭包，当且仅当其满足每个这种零关系。乘积拓扑的基本邻域只限制有限个坐标，将判据传递到 $H$；在目标 $z_\gamma=i$ 上，特征值为 $i^{\sum h_\gamma}$，即（338.4）。连续时间的零关系不能替换为整数采样的 $\sum h_\gamma\gamma\in2\pi\mathbb Z$。
+
+为证定量界，取 $F=\operatorname{supp}h$。每个 $z\in H$ 都满足 $\prod_{\gamma\in F}z_\gamma^{h_\gamma}=1$。单位圆上整数幂的距离界与有限乘积的望远镜分解给
+
+$$
+|1-i^{\sum h_\gamma}|
+\le\sum_{\gamma\in F}|h_\gamma|\,|z_\gamma-i|.
+$$
+
+按 $a_\gamma$ 加权使用 Cauchy–Schwarz，得到
+
+$$
+|1-i^{\sum h_\gamma}|^2
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+\left(\sum_{\gamma\in F}a_\gamma|z_\gamma-i|^2\right)
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+(B_\triangle+s_H(z)).
+$$
+
+分母正且有限；在最小值点 $s_H(z)=-A_*$ 代入即得（338.5）。幂距离界、乘积估计和加权平方和不等式均为经典中间步骤，此处将它们施于（337.2）的实际正弦谱。
+
+例如只取频率 $\lambda,2\lambda$、权重均为 $1$ 的谐波模型，关系 $h=(2,-1)$ 的系数和为 $1$，分母为 $5$，故对每个实数 $t$ 有 $\sin(\lambda t)+\sin(2\lambda t)\le9/5<2$。这是关系如何阻止同向正弦饱和的模型，并非实际零点关系，也不将 $9/5$ 称为该模型的精确最大值。$\square$
+
+**定理 338.3（同一证书的最终储备下确界）。** 在定义338.1下，定义最终可行储备集合
+
+$$
+\mathscr D_{\rm ev}
+=\{D\ge0:\ \exists T_D,\ \forall T\ge T_D,
+\ D+\mathcal C^{\rm fin}(e^T)\ge0\}.
+$$
+
+则
+
+$$
+\inf\mathscr D_{\rm ev}=\max(0,A_*-c_0).
+\tag{338.7}
+$$
+
+每个非负 $D>A_*-c_0$ 都最终可行；若非负 $D<A_*-c_0$，则任意晚仍有失败截止。若 $c_0>A_*$，下确界 $0$ 已最终可行；只有在 $A_*-c_0\ge0$ 时，非负临界储备 $D=A_*-c_0$ 的可行性不能仅由（338.3）决定。
+
+**证明。** 令 $\ell=c_0-A_*$。由（338.2），对每个 $\varepsilon>0$，全部充分大的 $T$ 满足 $\mathcal C^{\rm fin}(e^T)\ge\ell-\varepsilon$，而任意晚仍有 $\mathcal C^{\rm fin}(e^T)<\ell+\varepsilon$。分别在 $D> -\ell$ 和 $D< -\ell$ 时取小于严格间距的 $\varepsilon$，便得两面判据及下确界。其非空性也由定理337.2保证。
+
+临界点确实需要额外误差信息：谐波模型 $C_\pm(T)=-\sin T\pm1/T$（$T>0$）具有同一非恒定正弦谱、$c_0=0$、$A_*=1$ 和趋零误差。临界储备 $D=1$ 对 $C_+$ 在每个 $T>0$ 都可行，而对 $C_-$ 在 $T=\pi/2+2\pi n$ 的任意晚截止失败。这是谱渐近式的边界模型，并非实际零点谱。因此下确界不是已证成的最小可行值。全起点区间的最小储备还需考虑有限早段及实际误差，不能由（338.7）直接替代。$\square$
+
+**定理 338.4（有效递归加密平移中心而保持谱振幅）。** 比较两个固定实际证书，起点同为 $A_0$，块边界及每块的共同斜率 $M_k$ 相同；在每块内，新证书的节点包含所有旧节点，两者均使用同源实际标签 $z_{\rm fin}$ 和相邻节点的双锥下包络。则
+
+$$
+\mathcal E^{\rm fin}_{\rm new}\ge\mathcal E^{\rm fin}_{\rm old},\qquad
+\mathcal C^{\rm fin}_{\rm new}(X)-\mathcal C^{\rm fin}_{\rm old}(X)
+=\mathcal L_{\rm old}(X)-\mathcal L_{\rm new}(X)
+\nearrow\delta\ge0,
+$$
+
+$$
+\delta=\mathcal L_{{\rm old},\infty}-\mathcal L_{{\rm new},\infty}<\infty.
+\tag{338.8}
+$$
+
+RH 下，新证书的常数为 $c_{0,\rm new}=c_{0,\rm old}+\delta$；$H$、$A_*$、尾振荡宽度 $2A_*$ 及（338.4）的相位可达性均相同，而最终储备下确界降为
+
+$$
+\max(0,A_*-c_{0,\rm old}-\delta).
+\tag{338.9}
+$$
+
+**证明。** 在旧格 $[a,b]$ 的任一新子格 $[c,d]$ 上，同一 Lipschitz 界给
+
+$$
+z_{\rm fin}(c)-M_k(x-c)\ge z_{\rm fin}(a)-M_k(x-a),\qquad
+z_{\rm fin}(d)-M_k(d-x)\ge z_{\rm fin}(b)-M_k(b-x).
+$$
+
+取最大值得包络单调；两者仍不超过同源 $Z$，故新证书的非负累计损失不超过旧证书。旧损失由定理335.1有有限极限，故新损失也有有限极限。累计量之差的导数为非负的包络之差乘以 $1/X$，因而（338.8）的差从零单调增至 $\delta$。将该极限加到同一（337.2）即得中心位移，正弦谱逐项保持相同，最后用定理338.3。
+
+此结论比较预先固定的两个证书。若整数格点最终重复，则重复节点不增加包络；它不推出无限加密使损失趋零。特别在 $m=3L+2$ 的实际原子格上，最细可用格距仍受该整数结构限制。五分迭代控制证书中心的插值亏损，零点频率群控制剩余谱振幅；二者通过同一累计储备相连。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 339. 临界储备的一阶相位陪集、低零点负修正与逼近速度
+
+**定义 339.1（同一实际证书的一阶坐标）。** 固定 §§337–338 的实际证书、起点和块斜率，并在本节假设 RH。沿用其正频率集 $\Gamma$、重数 $m_\gamma$、权重 $a_\gamma$、紧群 $H$、轨道 $\phi(T)$、中心 $c_0$ 和振幅 $A_*$。置
+
+$$
+D_\gamma=\frac14+\gamma^2,\qquad
+S(T)=-2\sum_{\gamma\in\Gamma}a_\gamma\sin(\gamma T),\qquad
+Y_0(T)=S'(T)=-2\sum_{\gamma\in\Gamma}\frac{m_\gamma}{D_\gamma}\cos(\gamma T),
+$$
+
+$$
+(Qf)(T)=\int_0^\infty e^{-v/2}f(T+v)\,dv,\qquad
+F(T)=S(T)-(QS)(T),\qquad
+\Delta(T)=A_*+S(T)\ge0.
+\tag{339.1}
+$$
+
+$Q$ 是向未来平移的指数积分，核的总质量为 $2$。§337 的标准零点计数给 $\sum_\gamma a_\gamma\gamma=\sum_\gamma m_\gamma/D_\gamma<\infty$，保证 $S$ 为 $C^1$；零频空洞另给 $\sum_\gamma a_\gamma/\gamma<\infty$，所以
+
+$$
+U(T)=2\sum_{\gamma\in\Gamma}\frac{a_\gamma}{\gamma}\cos(\gamma T)
+\quad\text{满足}\quad U'=S,\qquad \sup_{T\in\mathbb R}|U(T)|<\infty.
+\tag{339.2}
+$$
+
+不要求 $Y_0$ 可微；形式上的下一次频率导数不具有这里所需的绝对可和保证。
+
+**定理 339.1（实际固定证书的一阶展开）。** 对定义339.1的同一 $c_0$，全部实数截止满足
+
+$$
+\mathcal C^{\rm fin}(e^T)
+=c_0+S(T)+\frac{F(T)}T+O(T^{-2}),
+\qquad T\longrightarrow\infty.
+\tag{339.3}
+$$
+
+因此 §338 的趋零误差具有明确的第一项，它不是可以任意选择符号的模型误差。
+
+**证明。** 复用 §337 的精确累计恒等式及 $Y=Y_0+r$，其中 $r(T)=O(e^{-T/2})$。记 $I_p(T)=\int_{t_0}^Tp(u)Y(u)\,du$。对 $pS'$ 分部积分并把 $pr$ 的尾积分计入指数小项，得
+
+$$
+I_p(T)-I_p(\infty)
+=p(T)S(T)+\int_T^\infty p'(u)S(u)\,du+O(e^{-T/2}/T),
+$$
+
+$$
+p(T)=-T^{-1}+8T^{-3},\quad
+p'(T)=T^{-2}-24T^{-4},\quad
+p''(T)=-2T^{-3}+96T^{-5}.
+\tag{339.4}
+$$
+
+仅由 $S$ 有界，第二项至多得到 $O(T^{-1})$，不足以识别一阶系数。这里使用（339.2）的有界原函数，再次分部积分：
+
+$$
+\int_T^\infty p'(u)S(u)\,du
+=-p'(T)U(T)-\int_T^\infty p''(u)U(u)\,du=O(T^{-2}).
+$$
+
+故 $I_p(T)-I_p(\infty)=-S(T)/T+O(T^{-2})$。本推导是经典 Dirichlet 分部积分机制在实际同源谱上的应用。
+
+对 $T\ge1$、$v\ge0$，§337 的 $d$ 满足
+
+$$
+\left|d(T+v)-T^{-2}\right|\le\frac{2v+2}{T^3}.
+$$
+
+指数核的零阶、一阶矩分别为 $2$、$4$，因而
+
+$$
+R(T)=T^{-2}(QY_0)(T)+O(T^{-3}),\qquad
+QY_0=-S+\frac12QS.
+\tag{339.5}
+$$
+
+最后的等式只对有界的 $C^1$ 函数 $S$ 分部积分：无穷端的 $e^{-v/2}S(T+v)$ 为零，起点项为 $-S(T)$。没有微分 $Y_0$。
+
+另一方面，$\mathscr B(T)=b_0+S(T)+O(e^{-T/2})$。实际 Fibonacci 块端点 $A_k=3F_k+2$ 给 $\log A_k\asymp k$；当 $e^T$ 落在第 $k$ 块时，$k\asymp T$。定理335.1遂给
+
+$$
+\mathcal L_\infty-\mathcal L(e^T)
+=O((1+T)e^{-c'\sqrt T})=o(T^{-N})
+\quad\text{对每个固定}\ N>0.
+\tag{339.6}
+$$
+
+这是对全部实数截止的尾界，包括部分末块。将这些估计代回（337.6），累计修正的一阶项为
+
+$$
+-S(T)-2(QY_0)(T)
+=-S(T)-2\left[-S(T)+\frac12(QS)(T)\right]
+=S(T)-(QS)(T).
+$$
+
+常数项保持 §337–338 的同一 $c_0$，即得（339.3）。$\square$
+
+**定理 339.2（逐频率等幅变换与相位陪集）。** 定义
+
+$$
+u_\gamma=1-\frac1{1/2-i\gamma}
+=\frac{-1/2-i\gamma}{1/2-i\gamma}
+=\frac{2\gamma-i}{2\gamma+i},\qquad |u_\gamma|=1.
+\tag{339.7}
+$$
+
+对 $z\in\mathbb T^\Gamma$，置
+
+$$
+F_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}(u_\gamma z_\gamma),\qquad
+(QS)_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}\frac{z_\gamma}{1/2-i\gamma}.
+\tag{339.8}
+$$
+
+把 §338 的同一可和公式 $s_H$ 延拓到整个 $\mathbb T^\Gamma$，记为 $s$，使 $s|_H=s_H$。两级数一致绝对收敛，并满足 $F(T)=F_H(\phi(T))$、$F_H|_H=s_H-(QS)_H|_H$。$F$ 的尾部聚点值集合为 $s(uH)$；其逐频率振幅与 $S$ 相同，但整体极值及反演对称性不必相同。特别地，不能在未证明 $u\in H$ 时把 $uH$ 换回 $H$。
+
+**证明。** 指数频率的经典 Laplace 积分给
+
+$$
+\int_0^\infty e^{-v/2}e^{i\gamma v}\,dv=\frac1{1/2-i\gamma}.
+$$
+
+可和权重与可积指数核允许逐项交换求和和积分；（339.7）随即给（339.8）。分子和分母为共轭复数的适当倍数，故模长为 $1$。§338 的每个尾轨道稠密于 $H$，逐坐标乘以 $u$ 将其闭包送到陪集 $uH$；连续性保证尾部聚点值集合正是该陪集上的值域；这不保证极值在某个实际轨道时刻取得。逐频率模长不变不决定整个谱的可达相位集合。$\square$
+
+**命题 339.1（谐波陪集可以改变极值和对称性）。** 只在本命题取模型频率 $\lambda,2\lambda$、权重均为 $1$，与实际 $\zeta$ 频率区别。存在 $\lambda>0$，使原谱的最大值不超过 $18/5$，而对应的一阶修正谱的精确范围为
+
+$$
+[-9/4,4].
+\tag{339.9}
+$$
+
+**证明。** 令 $x=2\lambda$ 为 $2x^3=3x^2+1$ 在 $(1,2)$ 中的唯一根；端点值异号，导数 $6x(x-1)>0$ 给存在与唯一性，且 $0<x\le1$ 不可能满足等式。模型群为 $H=\{(z,z^2):|z|=1\}$。§338 的谐波界及反演对称性给原谱最大值不超过 $18/5<4$。写
+
+$$
+u_1=\frac{x-i}{x+i},\qquad u_2=\frac{2x-i}{2x+i},\qquad
+\frac{u_1^2}{u_2}
+=\frac{2x^3-i(3x^2+1)}{2x^3+i(3x^2+1)}=-i.
+$$
+
+因而对 $w\in uH$，$w_2=iw_1^2$。令 $y=\operatorname{Im}w_1\in[-1,1]$，得到
+
+$$
+-2\operatorname{Im}(w_1+w_2)
+=4(y-1/4)^2-9/4.
+$$
+
+$y=1/4$ 达到最小值 $-9/4$；取 $z=-i/u_1$，则 $w_1=w_2=-i$，达到最大值 $4$。关系特征 $w_1^2/w_2$ 从 $H$ 上的 $1$ 变为陪集上的 $-i$，故两个相位集合不同。这是支持性模型，不断言真实零点具有该谐波关系或实际修正谱振幅必然增加。$\square$
+
+**定理 339.3（实际低零点预算强迫最低相位的一阶负修正）。** 消费经典零点总和与已验证的首零点输入：
+
+$$
+2\sum_{\gamma>0}\frac{m_\gamma}{D_\gamma}
+=2+\gamma_E-\log(4\pi)<\frac1{20},\qquad
+\gamma\ge14\ (\gamma\in\Gamma),\qquad
+\exists\gamma_1\in\Gamma:\ \gamma_1\le15.
+\tag{339.10}
+$$
+
+其中 $\gamma_E$ 是 Euler 常数，不是零点纵坐标。置
+
+$$
+\kappa=\frac1{3390}-\frac1{3920}=\frac{53}{1328880}>0.
+$$
+
+则对每个 $z\in H$，均有
+
+$$
+|(QS)_H(z)|<\frac1{3920},\qquad
+A_*\ge\frac1{3390},\qquad
+F_H(z)<A_*+s_H(z)-\kappa.
+\tag{339.11}
+$$
+
+特别地，在每个最低值相位 $s_H(z_*)=-A_*$ 上都有 $F_H(z_*)<-\kappa$。这一实际符号结论不需要频率线性独立。
+
+**证明。** 经典零点总和见 Nicolas，*Small values of the Euler function and the Riemann hypothesis*，[arXiv:1202.0729v2](https://arxiv.org/abs/1202.0729v2)，式（1.3），其值为 $0.0461914179\ldots<1/20$；本卷 §92 已使用同一总和。首零点范围消费 [LMFDB 首零点数据](https://www.lmfdb.org/zeros/zeta/list?limit=1&N=0) 及其 [来源与可靠性说明](https://www.lmfdb.org/zeros/zeta/Source)：索引 $1$ 的纵坐标为 $14.1347251417346937904572519835625$，说明页给出 Platt 算法、绝对精度 $\pm2^{-102}$，以及严格 Turing 方法对列表完整性的验证；算法来源为 [Platt，Math. Comp.，DOI 10.1090/S0025-5718-2014-02884-6](https://doi.org/10.1090/S0025-5718-2014-02884-6)。这里使用已验证外部输入，没有重新执行该零点计算或把普通舍入表当作本地新证书。
+
+因 $\gamma\sqrt{D_\gamma}\ge196$，（339.8）及（339.10）给
+
+$$
+|(QS)_H(z)|
+\le2\sum_\gamma\frac{m_\gamma}{\gamma D_\gamma\sqrt{D_\gamma}}
+\le\frac2{196}\sum_\gamma\frac{m_\gamma}{D_\gamma}
+<\frac1{3920}.
+$$
+
+§337 的 Fourier–Bohr 系数在频率 $\gamma_1$ 上的模为 $a_{\gamma_1}$，而 $|S(T)|\le A_*$；平均积分的模不超过 $A_*$，取极限得到
+
+$$
+A_*\ge a_{\gamma_1}
+=\frac{m_{\gamma_1}}{\gamma_1D_{\gamma_1}}
+\ge\frac1{15\cdot226}=\frac1{3390}.
+$$
+
+这里仅用重数至少为 $1$，不需要首零点单纯性。于是对 $\Delta_H(z)=A_*+s_H(z)$，
+
+$$
+F_H(z)=\Delta_H(z)-A_*-(QS)_H(z)
+<\Delta_H(z)-\kappa,
+$$
+
+给出全相位界和最低值处的严格负号。$\square$
+
+**定理 339.4（实际临界储备的速度门槛）。** 若 $D_{\rm crit}=A_*-c_0\ge0$，则
+
+$$
+T\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^T)\bigr]
+=T\Delta(T)+F(T)+O(T^{-1}).
+\tag{339.12}
+$$
+
+由此有三项判据：若 $\liminf_{T\to\infty}[T\Delta(T)+F(T)]>0$，临界储备最终可行；若该下极限小于零，任意晚仍失败；等于零不由这一阶展开决定。在（339.10）的实际输入下，还得到
+
+$$
+\liminf_{T\to\infty}T\Delta(T)<\kappa
+\quad\Longrightarrow\quad
+\text{临界储备在任意晚截止仍失败}.
+\tag{339.13}
+$$
+
+另一方面，$|F(T)|\le B_\triangle$，故 $\liminf T\Delta(T)>B_\triangle$ 足以给最终可行；尤其 $T\Delta(T)\to\infty$ 时最终可行。
+
+**证明。** 在（339.3）代入同一临界常数得到（339.12），其误差为 $O(T^{-1})$。严格正、负下极限分别保留最终正号和任意晚负号。对（339.13），定理339.3给
+
+$$
+T\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^T)\bigr]
+<(T+1)\Delta(T)-\kappa+O(T^{-1}).
+$$
+
+若下极限小于 $\kappa$，可取趋向无穷的序列，使 $T\Delta(T)$ 与 $\kappa$ 保持固定正间距；该序列上 $\Delta(T)\to0$，趋零误差最终小于该间距，所以原始余量为负。最后的充分可行界由（339.7）的逐频率模长 $1$ 和三角界推出。
+
+§338 的尾轨道稠密性只保证 $\Delta(T)$ 在任意晚可以任意小，未给出 $T\Delta(T)$ 的速度。这里没有建立真实轨道满足（339.13），也没有据此判定实际临界储备；所缺输入已从未知误差符号缩为具体的相位逼近速度。$\square$
+
+**命题 339.2（递归加密在临界重定心后只留下亏损尾）。** 对定理338.4的两个预先固定证书，记 $\delta=c_{0,\rm new}-c_{0,\rm old}\ge0$。则它们具有同一 $S$、$F$ 和 $\Delta$，且
+
+$$
+0\le\delta-\bigl[\mathcal C^{\rm fin}_{\rm new}(e^T)-\mathcal C^{\rm fin}_{\rm old}(e^T)\bigr]
+\le\mathcal L_{{\rm old},\infty}-\mathcal L_{\rm old}(e^T)
+=o(T^{-N})
+\tag{339.14}
+$$
+
+对每个固定 $N>0$ 成立。若两个谱临界储备均非负，则
+
+$$
+D_{{\rm crit},\rm new}+\mathcal C^{\rm fin}_{\rm new}(e^T)
+\le D_{{\rm crit},\rm old}+\mathcal C^{\rm fin}_{\rm old}(e^T),
+$$
+
+两者之差比任意固定负幂都小。
+
+**证明。** 包络加密单调给旧亏损尾不小于新亏损尾，两者之差恰为（339.14）的中间项；上界和超多项式尾界来自（339.6）。因此新中心上移 $\delta$，一阶谱仍相同。临界储备同时下降 $\delta$，相减后剩下的恰为未兑现的尾部节省的负数。对固定原始 $D$ 加密提高余量；在把 $D$ 同时减至新临界值时，则不能把这份固定预算的改善再次算入临界一阶余量。这解释了五分递归与相位群的分工：前者控制插值亏损和中心，后者及其逼近速度决定临界谱障碍。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 340. 临界相位的两种速度：Fibonacci 四分之一回归与四次范数障碍
+
+**定义 340.1（用于 §339 临界消费者的有限谱模型）。** 固定有限个实频率 $\gamma_j\ge14$，令
+
+$$
+D_j=\frac14+\gamma_j^2,\qquad
+a_j=\frac1{\gamma_jD_j}>0,\qquad
+S(T)=-2\sum_j a_j\sin(\gamma_jT),\qquad B=2\sum_j a_j.
+\tag{340.1}
+$$
+
+沿用 §339 的算子 $Qf(T)=\int_0^\infty e^{-v/2}f(T+v)\,dv$，令 $F=S-QS$。令 $\Delta$ 定义于全部实数。取任意实函数 $r(T)=O(T^{-2})$，将 $C$ 定义于 $T\ge1$，固定 $D_{\rm crit}=B$，即
+
+$$
+C(T)=S(T)+\frac{F(T)}T+r(T),\qquad
+\Delta(T)=B+S(T),\qquad D_{\rm crit}=B.
+\tag{340.2}
+$$
+
+这里固定中心 $c_0=0$，所以临界储备非负。$C$ 是为检验 §339 的临界消费者而构造的模型函数，未识别为任何实际素数证书的 $\mathcal C^{\rm fin}(e^T)$。这些频率的权重与 §339 的重数为 $1$ 时同形，不把频率识别为实际 $\zeta$ 零点。
+
+对正频率的有限族，指数核的经典三角积分给出
+
+$$
+F(T)=\sum_j a_j\left[
+\left(\frac1{D_j}-2\right)\sin(\gamma_jT)
++\frac{2\gamma_j}{D_j}\cos(\gamma_jT)\right],
+\qquad
+T[D_{\rm crit}+C(T)]=T\Delta(T)+F(T)+O(T^{-1}).
+\tag{340.3}
+$$
+
+当各相位均为 $\pi/2$ 时，$S=-B$，而 $F=\sum_j a_j(1/D_j-2)<0$。这个负号和 §339 的最低值修正相容，但本身不决定临界储备的最终符号。
+
+**定理 340.1（同一临界消费者中的快速回归与范数阻滞）。** 对定义340.1，有以下两个支持模型。
+
+第一，取 $\varphi=(1+\sqrt5)/2$ 和两频率 $(14,14\varphi)$。其连续相位轨道的闭包为整个二维圆环，且 $\inf S=-B$。令
+
+$$
+n_k=6k+1,\qquad q_k=F_{n_k},\qquad p_k=F_{n_k+1},\qquad
+T_k=\frac{\pi q_k}{28}\quad(k\ge0),
+\tag{340.4}
+$$
+
+其中 $F_n$ 是 Fibonacci 数。则 $T_k\to\infty$，存在常数 $C_1>0$ 使
+
+$$
+0\le\Delta(T_k)\le\frac{C_1}{T_k^2},\qquad
+T_k\Delta(T_k)\to0.
+\tag{340.5}
+$$
+
+对任意预先固定的 $r(T)=O(T^{-2})$，所有充分大的这些 $T_k$ 均有 $D_{\rm crit}+C(T_k)<0$，所以临界储备任意晚仍失败。
+
+第二，取正实数 $\alpha=2^{1/4}$ 和四频率 $(14,14\alpha,14\alpha^2,14\alpha^3)$。其连续相位轨道的闭包为整个四维圆环，且 $\inf S=-B$。对所有实数 $T\ge1$，定义
+
+$$
+t=\frac{7T}{\pi},\qquad
+d(T)=\max_{0\le j\le3}\operatorname{dist}\left(t\alpha^j,\mathbb Z+\frac14\right),\qquad
+K=27\,216\,000,\qquad c=\frac{16}{21959}.
+\tag{340.6}
+$$
+
+则
+
+$$
+1\le KT\,d(T)^3,\qquad
+\Delta(T)\ge c\,d(T)^2,\qquad
+c^3T\le K^2[T\Delta(T)]^3.
+\tag{340.7}
+$$
+
+因此 $T\Delta(T)\to\infty$。对任意预先固定的 $r(T)=O(T^{-2})$，存在 $T_0$，使所有实数 $T\ge T_0$ 均有 $D_{\rm crit}+C(T)>0$，即临界储备最终严格可行。两模型均满足 $\sum_jD_j^{-1}<1/40$。
+
+**证明。** 两模型的精确最低值使用经典连续 Kronecker 轨道闭包定理：$1,\varphi$ 在 $\mathbb Q$ 上线性无关；$1,\alpha,\alpha^2,\alpha^3$ 的线性无关性来自 $X^4-2$ 的 Eisenstein 不可约性。连续时间的闭包条件是不存在 $\sum_j m_j\gamma_j=0$ 的非零整数关系，不是离散整数时刻的模 $2\pi$ 条件。故两族相位均可逼近各坐标 $\pi/2$，给出 $\inf S=-B$。这里不要求实际时刻取得最低值，也不从闭包定理取得逼近速度；后面的速度各自另证。Kronecker 的经典前置可见本库所引 Onishchik 的 *Kronecker theorem*，Eisenstein 是经典不可约性判据。
+
+对第一模型，§120.5 已有的六步矩阵恒等式 $M^6=5I+8M$ 给出
+
+$$
+(F_{n+6},F_{n+7})=(5F_n+8F_{n+1},\ 8F_n+13F_{n+1})
+\equiv(F_n,F_{n+1})\pmod4.
+$$
+
+由初对 $(F_1,F_2)=(1,1)$，得所有 $k\ge0$ 的 $q_k\equiv p_k\equiv1\pmod4$。此处是实际矩阵模 $4$ 恒等，不能只以射影周期代替。经典 Fibonacci 残差恒等式（Binet 公式的直接推论）给出
+
+$$
+q_k\varphi-p_k=\varphi^{-n_k}>0.
+\tag{340.8}
+$$
+
+这一经典恒等式的共轭形式为 $F_{n+1}-\varphi F_n=\psi^n$，其中 $\psi=-\varphi^{-1}$；$n_k$ 为奇数，故得到（340.8）。不以比值 $F_{n+1}/F_n\to\varphi$ 替代这里的误差速率。
+
+令 $\eta_k=(\pi/2)\varphi^{-n_k}\in(0,\pi/2)$。在（340.4）的时刻，第一相位精确为 $\pi/2\pmod{2\pi}$，第二相位为 $\pi/2+\eta_k\pmod{2\pi}$。因此
+
+$$
+\Delta(T_k)=2a_1(1-\cos\eta_k)\le a_1\eta_k^2.
+$$
+
+经典递推界 $F_n\le\varphi^n$ 来自 $\varphi^2=\varphi+1$ 与二步归纳，故 $q_k\varphi^{-n_k}\le1$，得到
+
+$$
+\Delta(T_k)\le\frac{a_1\pi^2}{4q_k^2},\qquad
+T_k\Delta(T_k)\le\frac{a_1\pi^3}{112q_k}.
+\tag{340.9}
+$$
+
+又经典界 $n\le F_n+1$ 给出 $q_k\to\infty$。沿这些时刻，（340.3）成为
+
+$$
+F(T_k)=a_0\left(\frac1{D_0}-2\right)
++a_1\left(\frac1{D_1}-2\right)\cos\eta_k
+-\frac{2a_1\gamma_1}{D_1}\sin\eta_k
+<a_0\left(\frac1{D_0}-2\right)<0.
+\tag{340.10}
+$$
+
+于是趋零的 $T_k\Delta(T_k)$ 与 $T_kr(T_k)$ 最终小于这个固定负号储备的绝对值，证明任意晚失败；同时 $F(T_k)\to\sum_{j=0}^1a_j(1/D_j-2)<0$。
+
+对第二模型，给每个 $t\alpha^j$ 选择最近的四分之一整数 $k_j+1/4$。写
+
+$$
+q=4k_0+1,\qquad p_j=4k_j+1\ (j=1,2,3),\qquad
+e_j=p_j-q\alpha^j,\qquad \varepsilon=\max_{1\le j\le3}|e_j|.
+$$
+
+$0\le d(T)\le1/2$，且 $|q-4t|\le4d(T)\le2$。由 $T\ge1$、$3<\pi<4$ 和 $1<\alpha^j<2$（$j=1,2,3$）得到
+
+$$
+|p_j-q\alpha^j|\le |p_j-4t\alpha^j|+\alpha^j|4t-q|
+\le4(1+\alpha^j)d(T),
+$$
+
+从而
+
+$$
+0<q\le12T,\qquad \varepsilon\le12d(T)\le6.
+\tag{340.11}
+$$
+
+使用经典代数整数范数方法。设
+
+$$
+\begin{aligned}
+L_0&=p_3+\alpha p_2+\alpha^2p_1+\alpha^3q,\\
+L_1&=p_3-\alpha p_2+\alpha^2p_1-\alpha^3q,\\
+L_2&=p_3+i\alpha p_2-\alpha^2p_1-i\alpha^3q,\qquad L_3=\overline{L_2},\\
+U&=p_3^2+2p_1^2-4p_2q,\qquad V=2p_3p_1-p_2^2-2q^2.
+\end{aligned}
+$$
+
+由 $\alpha^4=2$ 的直接展开，
+
+$$
+N=L_0L_1|L_2|^2=U^2-2V^2\in\mathbb Z.
+\tag{340.12}
+$$
+
+因为 $q,p_1,p_2,p_3$ 皆为奇数，$U,V$ 皆奇；奇数平方模 $8$ 为 $1$，所以 $N\equiv7\pmod8$。于是 $N\ne0$ 且 $|N|\ge1$。这里范数的非零性由同余直接供应，不须再以不可约性证明 $L_0\ne0$。
+
+代入 $p_j=q\alpha^j+e_j$，其余共轭的共同 $q$ 项消去，而
+
+$$
+\begin{aligned}
+|L_0|&\le4q\alpha^3+(1+\alpha+\alpha^2)\varepsilon
+\le8q+5\varepsilon\le126T,\\
+|L_1|&\le5\varepsilon\le60d(T),\qquad
+|L_2|=|L_3|\le5\varepsilon\le60d(T).
+\end{aligned}
+$$
+
+因此（340.12）给出
+
+$$
+1\le|N|\le126T[60d(T)]^3=KTd(T)^3.
+\tag{340.13}
+$$
+
+经典 Jordan 正弦不等式 $\sin(\pi d)\ge2d$（$0\le d\le1/2$）给出
+
+$$
+1-\sin(2\pi x)=2\sin^2\left(\pi\operatorname{dist}\left(x,\mathbb Z+\frac14\right)\right)
+\ge8\operatorname{dist}\left(x,\mathbb Z+\frac14\right)^2.
+$$
+
+取达到最大距离的坐标，得到 $\Delta(T)\ge16a_{\min}d(T)^2$。每个 $\gamma_j<28$，故
+
+$$
+a_{\min}>\frac1{28(28^2+1/4)}=\frac1{21959}.
+$$
+
+这证明（340.7）的前两项。将（340.13）平方，再乘以 $c^3T$，并使用 $\Delta^3\ge c^3d^6$，得到第三项。它蕴含 $[T\Delta(T)]^3\ge(c^3/K^2)T$，从而 $T\Delta(T)\to\infty$；等价地，$\Delta(T)\ge cK^{-2/3}T^{-2/3}$。
+
+有限三角和 $F$ 有界，$Tr(T)\to0$。故（340.3）的右侧最终严格正，且是对全部充分大的实数 $T$ 成立，不只对子序列成立。
+
+最后，每个 $D_j\ge14^2+1/4=785/4$。四频模型满足 $\sum_jD_j^{-1}\le16/785<1/40$；两频模型满足 $\sum_jD_j^{-1}\le8/785<1/40$。两种结局因而不是破坏 §339 的低谱预算所致。$\square$
+
+**推论 340.2（递归信息与临界判定所需的速度信息）。** 在定义340.1的模型类中，“相位闭包为整个圆环”与“所有最低值相位上的一阶修正严格为负”合在一起，仍不能判定临界储备最终可行或任意晚失败：定理340.1的两模型具有这些共同性质而有相反结局。
+
+**证明。** 第一模型给出任意晚的负余量，第二模型给出全部充分晚时刻的正余量，所以这些共同性质对临界结局不是充分统计量。Fibonacci 模型的六步同余保证每次回归仍命中正确的四分之一陪集，精确残差供应 $O(T_k^{-1})$ 相位误差；四次模型的模 $8$ 范数则供应 $\Omega(T^{-1/3})$ 相位障碍。两者的不同均在定量速度，不在仅有的闭包或最低相位负号。
+
+这与 §339 的实际速度缺口形成可计算的对照；没有建立实际 $\zeta$ 零点的任何一种速度。§240 的五种合法窗口也不是五个独立谱方向；本条没有把其递推增长特征值识别为 $\zeta$ 的振荡频率。与五分递归的精确关系仍是命题339.2及定理338.4的固定证书重定心：插值加密控制中心与亏损尾，不能替代实际相位速度的证明。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 341. 两频临界回归的普遍性与任意微弱新频率的范数阻滞
+
+**定义 341.1（共同余项与各自临界储备）。** 本节只使用定义340.1的有限支持模型，固定同一个实函数 $r(T)=O(T^{-2})$，$T\ge1$。对一组频率 $\gamma_j\ge14$，仍令
+
+$$
+D_j=\frac14+\gamma_j^2,\qquad
+a_j=\frac1{\gamma_jD_j},\qquad
+B=2\sum_j a_j,\qquad
+\Delta(T)=2\sum_j a_j[1-\sin(\gamma_jT)],
+$$
+
+并使用（340.3）的同一 $F$。记在模型自身三角储备处的余量为
+
+$$
+\mathfrak M(T)=B+C(T)=\Delta(T)+\frac{F(T)}T+r(T).
+\tag{341.1}
+$$
+
+以下频率族均在 $\mathbb Q$ 上线性无关，故经典连续 Kronecker 定理及 §338 的判据给 $A_*=B$；此时 $B$ 是该模型自身的临界储备。比较不同频率族时，相应的 $B$ 也随之改变。这里没有把任一有限频率族识别为实际 $\zeta$ 零点，或把 $\mathfrak M$ 识别为实际整数的 Robin 余量。
+
+**定理 341.1（任意无理比两频率的临界储备任意晚失败）。** 取任意无理实数 $\beta>1$，令两频率为 $(14,14\beta)$。存在正整数对 $(q_n,p_n)$，满足
+
+$$
+q_n\equiv p_n\equiv1\pmod4,\qquad
+q_n\longrightarrow\infty,\qquad
+|q_n\beta-p_n|\le\frac{36}{q_n}.
+\tag{341.2}
+$$
+
+置 $T_n=\pi q_n/28$。则对全部充分大的 $n$，
+
+$$
+0\le\Delta(T_n)\le\frac{324a_1\pi^2}{q_n^2},\qquad
+0\le T_n\Delta(T_n)\le\frac{81a_1\pi^3}{7q_n},
+\tag{341.3}
+$$
+
+且
+
+$$
+F(T_n)\longrightarrow
+f_*=\sum_{j=0}^1a_j\left(\frac1{D_j}-2\right)<0,\qquad
+\mathfrak M(T_n)<0.
+\tag{341.4}
+$$
+
+因此 §340 的 Fibonacci 六步回归是这一两频率结论的显式特例；任意晚失败不要求 $\beta$ 为二次无理数或具有有界连分数部分商。
+
+**证明。** 使用经典简单连分数的相邻收敛子 $P_n/Q_n$ 与 $P_{n-1}/Q_{n-1}$。其分子、分母为整数，且对充分大的 $n$，
+
+$$
+0<Q_{n-1}\le Q_n,\quad Q_{n-1}\to\infty,\quad
+|Q_n\beta-P_n|\le Q_{n+1}^{-1}\le Q_n^{-1},\quad
+|Q_{n-1}\beta-P_{n-1}|\le Q_n^{-1},
+$$
+
+以及 $d_n=Q_nP_{n-1}-Q_{n-1}P_n\in\{1,-1\}$。这些是经典连分数行列式、误差界和分母增长定理；一般书目指引为 Khinchin，*Continued Fractions*，本证明采用上面明确写出的形式。模条件逼近也是经典数论主题，以下构造只作为本临界消费者的中间步骤，不宣称该逼近定理本身为新结果。
+
+取整数余数代表
+
+$$
+u_n=d_n(P_{n-1}-Q_{n-1})\bmod4,\qquad
+v_n=d_n(Q_n-P_n)\bmod4,\qquad 0\le u_n,v_n\le3.
+$$
+
+直接展开原整数式得
+
+$$
+d_n(P_{n-1}-Q_{n-1})Q_n+
+d_n(Q_n-P_n)Q_{n-1}=d_n^2=1;
+$$
+
+将末两因子 $Q_n,Q_{n-1}$ 分别换为 $P_n,P_{n-1}$，仍得到 $1$。故
+
+$$
+q_n=u_nQ_n+v_nQ_{n-1},\qquad
+p_n=u_nP_n+v_nP_{n-1}
+$$
+
+都为 $1\bmod4$，且 $u_n,v_n$ 不能同时为零。于是
+
+$$
+Q_{n-1}\le q_n\le6Q_n,\qquad
+|q_n\beta-p_n|\le\frac{u_n+v_n}{Q_n}\le\frac6{Q_n}\le\frac{36}{q_n}.
+$$
+
+$\beta>1$ 使这些整数对充分晚时为正；丢去有限初段不影响结论。该序列不要求严格递增，$q_n\ge Q_{n-1}\to\infty$ 已足以给 $T_n\to\infty$。
+
+令 $\varepsilon_n=(\pi/2)(q_n\beta-p_n)$。在 $T_n$ 时刻，第一相位精确为 $\pi/2\bmod2\pi$，第二相位为 $\pi/2+\varepsilon_n\bmod2\pi$，其中误差允许正、负。因此
+
+$$
+\Delta(T_n)=2a_1(1-\cos\varepsilon_n)
+\le a_1\varepsilon_n^2
+\le\frac{324a_1\pi^2}{q_n^2}.
+$$
+
+乘以 $\pi q_n/28$ 给（341.3）。由 $\varepsilon_n\to0$ 和（340.3）的有限三角表达式得到（341.4）的极限；每个 $D_j>1/2$，所以 $f_*<0$。又 $T_nr(T_n)\to0$，故 $T_n\mathfrak M(T_n)\to f_*<0$。这证明同一预固定余项下全部充分晚的该序列余量严格负。$\square$
+
+**定理 341.2（保持两频率不动而加入任意微弱的最终正号方向）。** 令 $\alpha=2^{1/4}>0$，对每个正整数 $M$，取
+
+$$
+\gamma^{(M)}=14(1,\alpha,M\alpha^2,M\alpha^3).
+\tag{341.5}
+$$
+
+前两频率及其权重不随 $M$ 改变。设后两频率的权重和为 $w_M$，四频率模型的自身临界储备为 $B_M$，前两频率模型的自身临界储备为 $B_{\rm pair}$。则
+
+$$
+0<w_M\le\frac1{1372M^3},\qquad
+B_M-B_{\rm pair}=2w_M,\qquad
+\sum_{j=0}^3(D_j^{(M)})^{-1}\le\frac{16}{785}<\frac1{40}.
+\tag{341.6}
+$$
+
+令 $t=7T/\pi$，
+
+$$
+d_M(T)=\max\left\{
+\operatorname{dist}(t,\mathbb Z+\tfrac14),
+\operatorname{dist}(t\alpha,\mathbb Z+\tfrac14),
+\operatorname{dist}(tM\alpha^2,\mathbb Z+\tfrac14),
+\operatorname{dist}(tM\alpha^3,\mathbb Z+\tfrac14)\right\}.
+$$
+
+对所有实数 $T\ge1$，取 $K=27\,216\,000$、$c=16/21959$，有
+
+$$
+1\le KM^4T\,d_M(T)^3,\qquad
+\Delta_M(T)\ge\frac c{M^3}d_M(T)^2,\qquad
+c^3T\le K^2M^{17}[T\Delta_M(T)]^3.
+\tag{341.7}
+$$
+
+因此对每个固定正整数 $M$，$T\Delta_M(T)\to\infty$，$\mathfrak M_M(T)>0$ 对全部充分大的实数 $T$ 成立；而前两频率模型 $\mathfrak M_{\rm pair}$ 由定理341.1在任意晚仍有负值。
+
+**证明。** $X^4-2$ 的经典 Eisenstein 不可约性给 $1,\alpha,\alpha^2,\alpha^3$ 的有理线性无关性，乘以非零整数 $M$ 保持该性质。连续 Kronecker 定理给四频率模型的全环面闭包，所以 $A_*=B_M$。每个频率至少为 $14$，得到（341.6）的总质量界；后两频率至少为 $14M$，且 $a(\gamma)\le\gamma^{-3}$，故 $w_M\le2/(14M)^3$。
+
+给四个坐标选择最近的四分之一整数，得到 $q,p_1,p_2,p_3\equiv1\bmod4$。令
+
+$$
+Q=Mq,\qquad P_1=Mp_1,\qquad P_2=p_2,\qquad P_3=p_3.
+$$
+
+与（340.11）相同的起点估计给 $0<q\le12T$、$d_M\le1/2$。三角不等式及 $1<\alpha^j<2$（$j=1,2,3$）给
+
+$$
+|P_1-Q\alpha|\le12M d_M,\qquad
+|P_j-Q\alpha^j|\le4(1+M\alpha^j)d_M\le12M d_M
+\quad(j=2,3).
+$$
+
+使用（340.12）的同一个经典四次范数多项式，对整数 $(Q,P_1,P_2,P_3)$ 置
+
+$$
+U=P_3^2+2P_1^2-4P_2Q,\qquad
+V=2P_3P_1-P_2^2-2Q^2,\qquad N=U^2-2V^2.
+$$
+
+$P_3$ 为奇数已保证 $U$ 为奇数，$P_2$ 为奇数已保证 $V$ 为奇数；$Q,P_1$ 的奇偶性不参与这两项结论。因此对全部正整数 $M$，仍有 $N\equiv7\bmod8$ 和 $|N|\ge1$。这是 §340 非零范数前提的弱化，不要求 $M$ 为奇数。
+
+三项误差均不超过 $12Md_M\le6M$，且 $Q\le12MT$。将（340.12）的四个共轭界逐项应用，得
+
+$$
+|L_0|\le126MT,\qquad |L_j|\le60Md_M\quad(j=1,2,3),
+$$
+
+故 $1\le|N|\le126MT(60Md_M)^3=KM^4Td_M^3$。所有频率小于 $28M$，而 $M\ge1$，从而
+
+$$
+a_{\min}^{(M)}>
+\frac1{28M[1/4+(28M)^2]}
+\ge\frac1{21959M^3}.
+$$
+
+经典 Jordan 正弦界给 $\Delta_M\ge16a_{\min}^{(M)}d_M^2\ge cM^{-3}d_M^2$。将范数界平方并与该不等式的三次方相乘，即得（341.7）的末项。对每个固定 $M$，它使 $T\Delta_M\to\infty$；有限三角和 $F_M$ 有界，$Tr(T)\to0$，故同一临界表达式最终严格正。$\square$
+
+**推论 341.3（全时间一致逼近仍不能给统一最终正号时刻）。** 在定义341.1的共同余项下，对全部实数 $T\ge1$，
+
+$$
+|\mathfrak M_M(T)-\mathfrak M_{\rm pair}(T)|
+\le(4+2/T)w_M\le6w_M
+\le\frac3{686M^3}.
+\tag{341.8}
+$$
+
+因此余量在整个 $[1,\infty)$ 上一致趋近于前两频率模型。但对任意实数 $R\ge1$，存在一个固定时刻 $T_*>R$ 和正整数 $M_R$，使每个整数 $M\ge M_R$ 均有 $\mathfrak M_M(T_*)<0$。所以定理341.2中“此后全部严格为正”的起始时刻没有独立于 $M$ 的统一上界。
+
+**证明。** 余量相减时共同的 $r$ 消去，得到
+
+$$
+\mathfrak M_M-\mathfrak M_{\rm pair}
+=\Delta_{\rm extra}+F_{\rm extra}/T.
+$$
+
+每个 $1-\sin$ 在 $[0,2]$ 中，故 $0\le\Delta_{\rm extra}\le4w_M$。定理339.2的逐频率等幅变换给 $|F_{\rm extra}|\le2w_M$，所以得到（341.8）。这是一致控制未乘 $T$ 的临界余量，不是一致控制 $T\mathfrak M$。
+
+给定 $R$，定理341.1给某个固定 $T_*>R$，使 $\mathfrak M_{\rm pair}(T_*)<0$。由（341.8），所有充分大的整数 $M$ 在这个同一 $T_*$ 仍为负。另一方面，每个固定 $M$ 的全部充分晚时刻均正，所以不存在统一起始时刻。
+
+在这组具体模型中，每个预固定的晚时刻负值，都会由所有充分小的新频率权重保留；而每组固定的正新权重最终又改变临界符号。其算术来源是：两频率的同余陪集有 $O(T^{-1})$ 相位回归，而新增代数方向的非零范数阻止所有四相位以同样速度回归。正权重的坐标亏损相加，已有两坐标的快速命中不能给整个谱的亏损上界。
+
+这解释了为何递归、有限截断和振幅很小的尾部不能单独填补 §339 的实际无限谱速度缺口。这里各模型均按自身 $B$ 重定心；（341.6）说明预算差也趋于零，却没有给固定原预算的改善。实际 $\zeta$ 频率是否有所需相位关系和定量范数障碍仍未建立；本结论没有增加任何实际 Robin 安全区间。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 342. 实际 Robin 累计证书的二阶展开与临界抵消后的正修正
+
+**定义 342.1（同源谱的第二层有界原函数）。** 固定 §§337–339 的实际证书、起点、块斜率与中心 $c_0$，本节假设 RH。沿用 $S,Y_0,U,Q,F,\Delta,H$，并明确取
+
+$$
+V(T)=2\sum_{\gamma\in\Gamma}\frac{a_\gamma}{\gamma^2}\sin(\gamma T),
+\qquad V'=U,
+\qquad
+(Q_1f)(T)=\int_0^\infty v e^{-v/2}f(T+v)\,dv.
+\tag{342.1}
+$$
+
+§337 的零频空洞与可和权重保证 $U,V$ 为有界的同源谱原函数。这里沿用（339.2）明确给定的 $U$，不以任意加常数的原函数替换它；若 $U$ 加非零常数，其原函数就不能在整个实轴上有界。指数核的一阶矩为 $4$，故 $Q_1$ 将有界连续函数送到有界函数。对有界连续的 $f$，经典绝对 Fubini 给 $Q_1f=Q(Qf)$：双积分按 $v+w=s$ 合并，其内层区间长度为 $s$。这不涉及 $f$ 的高阶导数。
+
+**定理 342.1（同一实际证书的二阶项）。** 对定义342.1的固定对象，全部实数截止满足
+
+$$
+\mathcal C^{\rm fin}(e^T)
+=c_0+S(T)+\frac{F(T)}T+\frac{G(T)}{T^2}+O(T^{-3}),
+$$
+
+$$
+G(T)=-U(T)-4(QS)(T)+2(Q_1S)(T),
+\qquad T\longrightarrow\infty.
+\tag{342.2}
+$$
+
+这是 §339 实际同源证书误差的下一项，不是另选模型余项。推导使用 $S'=Y_0$ 与两个有界原函数，不要求 $Y_0'$ 存在。
+
+证明。先复用（337.6）及 §339 的指数误差分离。置 $I_p(T)=\int_{t_0}^Tp(u)Y(u)\,du$，沿用
+
+$$
+p(u)=-u^{-1}+8u^{-3},\qquad p'(u)=u^{-2}-24u^{-4},
+\qquad d(u)=u^{-2}+2u^{-3}.
+$$
+
+§339 的同一分部积分式给
+
+$$
+I_p(T)-I_p(\infty)
+=p(T)S(T)+\int_T^\infty p'(u)S(u)\,du+O(e^{-T/2}/T).
+$$
+
+两个有界原函数使经典分部积分能够再向前一步：
+
+$$
+\begin{aligned}
+\int_T^\infty\frac{S(u)}{u^2}\,du
+&=-\frac{U(T)}{T^2}+2\int_T^\infty\frac{U(u)}{u^3}\,du,\\
+\int_T^\infty\frac{U(u)}{u^3}\,du
+&=-\frac{V(T)}{T^3}+3\int_T^\infty\frac{V(u)}{u^4}\,du.
+\end{aligned}
+\tag{342.3}
+$$
+
+所有右端积分均绝对存在，无穷端的有界函数乘逆幂趋零。若 $|S|\le C_S$、$|V|\le C_V$，则（342.3）给
+
+$$
+\left|\int_T^\infty\frac{S(u)}{u^2}\,du+\frac{U(T)}{T^2}\right|
+\le\frac{4C_V}{T^3}.
+$$
+
+再用 $8|S(T)|/T^3$ 与 $24\int_T^\infty C_Su^{-4}\,du=8C_S/T^3$，得到
+
+$$
+\left|p(T)S(T)+\int_T^\infty p'(u)S(u)\,du
++\frac{S(T)}T+\frac{U(T)}{T^2}\right|
+\le\frac{4C_V+16C_S}{T^3}.
+\tag{342.4}
+$$
+
+其次，对全部 $T>0$、$v\ge0$，直接有理式估计给
+
+$$
+\left|d(T+v)-T^{-2}-(2-2v)T^{-3}\right|
+\le(3v^2+6v)T^{-4}.
+\tag{342.5}
+$$
+
+具体地，把左端未取绝对值的表达式拆为 $E_1+E_2$，其中
+
+$$
+\begin{aligned}
+E_1&=(T+v)^{-2}-T^{-2}+2vT^{-3}
+=\frac{v^2(3T+2v)}{T^3(T+v)^2},\\
+E_2&=2(T+v)^{-3}-2T^{-3}
+=-\frac{2v(3T^2+3Tv+v^2)}{T^3(T+v)^3}.
+\end{aligned}
+$$
+
+由 $0\le E_1\le3v^2/T^4$、$-6v/T^4\le E_2\le0$ 得（342.5）。这是经典核矩展开的精确有理式实现，不是对 $Y_0$ 作 Taylor 展开。
+
+记 $R_0(T)=\int_0^\infty e^{-v/2}d(T+v)Y_0(T+v)\,dv$。若 $|Y_0|\le C_Y$，指数矩 $2,4,16$ 分别对应 $v^0,v^1,v^2$；连续性与（342.5）的可积支配同时保证 $R_0$ 的积分存在，并给
+
+$$
+\begin{aligned}
+R_0(T)&=\frac{(QY_0)(T)}{T^2}
++\frac{2(QY_0)(T)-2(Q_1Y_0)(T)}{T^3}+E_R(T),\\
+|E_R(T)|&\le\frac{72C_Y}{T^4}.
+\end{aligned}
+\tag{342.6}
+$$
+
+实际 $Y-Y_0=O(e^{-T/2})$ 按 §339 单独处理；不要求包含素数阶跃的实际 $Y$ 连续。对 $T\ge2$，乘以 $-2(T-2)$ 后，一阶系数为 $-2QY_0$，二阶系数为
+
+$$
+4QY_0-2(2QY_0-2Q_1Y_0)=4Q_1Y_0.
+$$
+
+剩余误差不超过 $192C_Y/T^3$：这里 $|2QY_0-2Q_1Y_0|\le12C_Y$，乘法留下的第三阶项至多 $48C_Y/T^3$，（342.6）的误差至多 $144C_Y/T^3$。
+
+对有界的 $C^1$ 函数 $S$ 作经典指数核分部积分，得到
+
+$$
+QY_0=-S+\frac12QS,\qquad
+Q_1Y_0=-QS+\frac12Q_1S.
+\tag{342.7}
+$$
+
+第二个式子的起点边界为零，因为核含 $v$；两式的无穷边界都为零。累计恒等式中的二阶系数遂为
+
+$$
+-U+4Q_1Y_0=-U-4QS+2Q_1S.
+$$
+
+其解析核心的第三阶余项有显式预算 $(4C_V+16C_S+192C_Y)/T^3$。实际证书还继承 §339 的指数小误差和 $\mathcal L_\infty-\mathcal L(e^T)=o(T^{-N})$；取 $N=3$ 即可吸收入（342.2）。起点、损失极限与中心保持为原来固定的对象。$\square$
+
+**定理 342.2（实际四分之一最低相位的二阶正号）。** 额外假设 §338 的实际三角振幅上界饱和，即 $A_*=B_\triangle=2\sum_\gamma a_\gamma$；等价地，全四分之一相位 $\iota=(i)_\gamma$ 属于实际轨道闭包 $H$。则同源连续函数 $G_H$ 在该相位满足
+
+$$
+(U_H)(\iota)=0,\qquad
+(QS)_H(\iota)=-\sum_\gamma\frac{a_\gamma}{D_\gamma},
+\qquad
+(Q_1S)_H(\iota)=2\sum_\gamma a_\gamma\frac{\gamma^2-1/4}{D_\gamma^2},
+$$
+
+$$
+G_*:=G_H(\iota)=8\sum_{\gamma\in\Gamma}a_\gamma\frac{\gamma^2}{D_\gamma^2}>0,
+\qquad D_\gamma=\frac14+\gamma^2.
+\tag{342.8}
+$$
+
+证明。指数核在频率 $\gamma$ 上的乘子为 $(1/2-i\gamma)^{-1}$，含 $v$ 的核乘子为 $(1/2-i\gamma)^{-2}$。在 $e^{i\gamma T}=i$ 的相位代入 $S=-2\sum a_\gamma\operatorname{Im}(e^{i\gamma T})$ 即得前三个式子。可和权重及零频空洞允许交换积分与求和，并使 $U_H,G_H$ 连续。逐频率合并时
+
+$$
+\frac{4a_\gamma}{D_\gamma}
++\frac{4a_\gamma(\gamma^2-1/4)}{D_\gamma^2}
+=\frac{8a_\gamma\gamma^2}{D_\gamma^2}.
+$$
+
+各项为正且谱非空，故总和严格正。这里的饱和条件没有由 RH 自动推出；§338 的频率关系限制仍然存在。$\square$
+
+**定理 342.3（实际一阶抵消后的条件序列判别）。** 保持定理342.2的饱和条件，并假设实际临界预算 $D_{\rm crit}=B_\triangle-c_0\ge0$。若一个实际时间序列 $T_n\to\infty$ 满足
+
+$$
+T_n\bigl[T_n\Delta(T_n)+F(T_n)\bigr]\longrightarrow\ell\in\mathbb R,
+\tag{342.9}
+$$
+
+则
+
+$$
+T_n^2\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^{T_n})\bigr]
+\longrightarrow\ell+G_*.
+\tag{342.10}
+$$
+
+若 $\ell+G_*>0$，该序列的全部充分晚点具有严格正余量；若 $\ell+G_*<0$，该序列提供任意晚的负余量。等号情形在本阶仍未判定。
+
+证明。$F$ 有界，（342.9）给 $T_n\Delta(T_n)+F(T_n)=O(T_n^{-1})$，从而 $\Delta(T_n)=O(T_n^{-1})\to0$。在饱和条件下
+
+$$
+\Delta(T_n)=2\sum_\gamma a_\gamma[1-\sin(\gamma T_n)].
+$$
+
+所有权重严格正，每个非负坐标亏损都趋零，所以 $e^{i\gamma T_n}\to i$。可和尾与 $G_H$ 的连续性给 $G(T_n)\to G_*$。将（342.2）乘以 $T_n^2$，第三阶余项变为 $O(T_n^{-1})$，即得（342.10）。极限的严格符号给上述判别。正号只覆盖给定序列，不能升级为所有实数截止的最终正号。$\square$
+
+**注记 342.1（二尺度的启发与未决速度）。** 在上述振幅饱和条件下，§339 的最低相位一阶修正为负，定理342.2的下一阶修正为正；同一实际证书在临界预算处因此有确定的两层竞争，而非一个任意符号的 $o(1)$。在定理342.3的条件下，若实际序列使 $T\Delta+F=o(T^{-1})$，则（342.10）给二阶正储备 $G_*$；若抵消残差的极限低于 $-G_*$，则得到证书余量的晚期负值。这只表示该临界预算下的充分证书未保持正号，不是 Robin 不等式的反例。递归研究下一层之前，应先问当前相位亏损和修正是否真的在所需尺度抵消。
+
+本节没有生产满足（342.9）的实际零点相位序列，也没有证明实际振幅饱和或增加 Robin 的安全整数区间。经典积分存在、分部积分、核矩及有理式归一化只是本新组合的中介；这里承重的新增组合是固定实际证书的明确二阶系数、条件最低相位的正号及其临界抵消判别。有限频率模型的返回速度仍不能代替实际无限谱的速度。
+
+## 追加锚（本行以下为增补区）
+
+## 343. 实际三角预算的窄相位窗口与稀疏非正截止点
+
+**定义 343.1（固定三角预算与晚期截止集）。** 固定 §§337–339 的同一实际累计证书、起点与块斜率，在本节假设 RH。沿用实际正频率集 $\Gamma$、正权重 $a_\gamma=m_\gamma/[\gamma(1/4+\gamma^2)]$、中心 $c_0$ 与谱函数 $S,F$，其中 $\sum_\gamma a_\gamma<\infty$。定义
+
+$$
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma,\qquad
+D_\triangle=B_\triangle-c_0,\qquad
+\Delta_\triangle(T)=B_\triangle+S(T)
+=2\sum_{\gamma\in\Gamma}a_\gamma[1-\sin(\gamma T)].
+\tag{343.1}
+$$
+
+以下要求 $D_\triangle\ge0$，并使用这一预先固定的预算。它与 §339 的实际临界预算 $D_{\rm crit}=A_*-c_0$ 区别；本节不假设 $A_*=B_\triangle$。记
+
+$$
+M_\triangle(T)=D_\triangle+\mathcal C^{\rm fin}(e^T).
+\tag{343.2}
+$$
+
+这里的“非正截止点”指 $M_\triangle(T)\le0$，包括零余量。它表示该固定累计预算的证书未给出严格正余量，不把这些截止点定义为 Robin 不等式的反例。
+
+由定理339.1，存在固定 $C\ge0$ 和起点 $T_b\ge1$，使全部 $T\ge T_b$ 满足
+
+$$
+M_\triangle(T)=\Delta_\triangle(T)+\frac{F(T)}T+R_1(T),
+\qquad |R_1(T)|\le\frac C{T^2}.
+\tag{343.3}
+$$
+
+取任意实际频率 $\gamma_0\in\Gamma$，记 $a_0=a_{\gamma_0}>0$，并置
+
+$$
+L=\frac{2\pi}{\gamma_0},\quad
+T_0=\max(T_b,L,1),\quad
+E=\{T\ge T_0:M_\triangle(T)\le0\},\quad
+\mathcal B=\{r\in\mathbb N:r\ge2,\ \log r\in E\}.
+\tag{343.4}
+$$
+
+由于 $T_0\ge1$，$\mathcal B$ 中的整数均大于 $1$。累计证书连续，故 $E$ 为可测集。若纳入证书定义域中 $T_0$ 以前的非正截止，以下渐近结论只增加一个有界连续区间或有限整数集。
+
+**定理 343.1（实际证书的单频率窄窗覆盖）。** 在定义343.1的条件下，可取固定常数 $K>0$，使每个 $T\in E$ 均满足 $T\Delta_\triangle(T)\le K$。对 $k\ge1$ 定义
+
+$$
+c_k=L\left(k+\frac14\right),\qquad
+J_k=\left[L\left(k-\frac14\right),L\left(k+\frac34\right)\right],
+$$
+
+$$
+w_k=\sqrt{\frac{KL}{8a_0k}},\qquad
+H=\sqrt{\frac{KL}{2a_0}},\qquad
+I_k=J_k\cap[c_k-w_k,c_k+w_k].
+\tag{343.5}
+$$
+
+则
+
+$$
+E\cap J_k\subseteq I_k,\qquad E\subseteq\bigcup_{k\ge1}I_k.
+\tag{343.6}
+$$
+
+每个非空 $I_k=[\alpha_k,\beta_k]$ 满足
+
+$$
+\alpha_k\ge\frac{Lk}{2},\qquad
+\beta_k\le L\left(k+\frac34\right),\qquad
+0\le\beta_k-\alpha_k\le\frac H{\sqrt k}.
+\tag{343.7}
+$$
+
+证明。$F$ 有界；取 $B_F\ge\sup|F|$，再取 $K>B_F+C$。由（343.3），对非正截止有
+
+$$
+T\Delta_\triangle(T)
+\le-F(T)-TR_1(T)\le B_F+\frac CT\le B_F+C<K.
+\tag{343.8}
+$$
+
+由于（343.1）各项非负，任何一个实际正权重都给
+
+$$
+\Delta_\triangle(T)\ge2a_0[1-\sin(\gamma_0T)].
+\tag{343.9}
+$$
+
+当 $T\in J_k$ 时，令 $d=T-c_k$，则 $|\gamma_0d|\le\pi$，且 $\sin(\gamma_0T)=\cos(\gamma_0d)$。经典 Jordan 正弦界等价地给 $1-\cos x\ge2x^2/\pi^2$（$|x|\le\pi$），故
+
+$$
+\Delta_\triangle(T)\ge\frac{16a_0}{L^2}(T-c_k)^2.
+\tag{343.10}
+$$
+
+同时 $T\ge L(k-1/4)\ge Lk/2$。因此非正截止满足
+
+$$
+\frac{8a_0k}{L}(T-c_k)^2\le T\Delta_\triangle(T)\le K,
+$$
+
+即 $|T-c_k|\le w_k$。这些闭区间 $J_k$ 覆盖 $[L,\infty)$：对任意 $T\ge L$，自然数 $k=\lfloor T/L+1/4\rfloor\ge1$，且 $T\in J_k$。裁剪到 $J_k$ 保证（343.7）的下端界；不裁剪的窄窗在小 $k$ 时可能伸出该单元，不能直接使用这一界。宽度至多 $2w_k=H/\sqrt k$。$\square$
+
+**定理 343.2（连续与整数截止的稀疏性）。** 保持定理343.1的同一实际证书与预算。令 $|\cdot|$ 表示实轴上的 Lebesgue 测度，则
+
+$$
+|E\cap[T_0,R]|=O(\sqrt R),\qquad
+\int_E\frac{dT}{T}<\infty.
+\tag{343.11}
+$$
+
+对实际整数截止点 $\mathcal B$，有
+
+$$
+\sum_{\substack{r\le X\\r\in\mathcal B}}\frac1r
+=O(\sqrt{\log X}),\qquad
+\sum_{r\in\mathcal B}\frac1{r\log r}<\infty,
+\tag{343.12}
+$$
+
+以及普通计数界
+
+$$
+\#\{r\le X:r\in\mathcal B\}
+=O\!\left(\frac X{\sqrt{\log X}}\right).
+\tag{343.13}
+$$
+
+所有隐含常数可以依赖预先固定的证书、$\gamma_0,a_0,K,T_0$，不依赖 $R,X$。因此这个非正证书截止集的连续时间密度、整数自然密度与整数调和密度均为零。
+
+证明。若 $J_k$ 与 $[T_0,R]$ 相交，则 $k\le R/L+1/4$。有限并测度的次可加性及经典求和界 $\sum_{k=1}^N k^{-1/2}\le2\sqrt N$ 给出第一式。由（343.7），
+
+$$
+\int_{E\cap I_k}\frac{dT}{T}
+\le\frac{2H}{Lk^{3/2}}.
+\tag{343.14}
+$$
+
+经典 $p$ 级数的可和性与可数并的积分上界给（343.11）第二式。交叠边界只使这个上界重复计入，不能使它失效。
+
+整数运输需要保留取整项。对任意 $[\alpha,\beta]$、$\alpha>0$，令 $m=\lceil e^\alpha\rceil$、$n=\lfloor e^\beta\rfloor$；若 $m>n$，对应和为空。否则经典递减函数的和积分比较给
+
+$$
+\begin{aligned}
+\sum_{m\le r\le n}\frac1r
+&\le\frac1m+\int_m^n\frac{dx}{x}
+=\frac1m+\log\frac nm\\
+&\le e^{-\alpha}+\beta-\alpha.
+\end{aligned}
+\tag{343.15}
+$$
+
+应用到非空裁剪窗 $I_k$，得到
+
+$$
+\sum_{\log r\in I_k}\frac1r
+\le\frac H{\sqrt k}+e^{-Lk/2},\qquad
+\sum_{\log r\in I_k}\frac1{r\log r}
+\le\frac{2H}{Lk^{3/2}}+\frac{2e^{-Lk/2}}{Lk}.
+\tag{343.16}
+$$
+
+第一式累计至 $N=\lfloor\log X/L+1/4\rfloor$ 即得（343.12）的首式。第二式在全部 $k\ge1$ 可和：首项为 $p=3/2$ 的经典 $p$ 级数，次项由正比率小于 $1$ 的几何级数控制。这也处理了整数取整而产生的离散误差。
+
+对普通计数，$\log r\in[\alpha_k,\beta_k]$ 的整数个数至多 $e^{\beta_k}-e^{\alpha_k}+1$。由指数函数的均值估计和（343.7），
+
+$$
+\#\{r:\log r\in I_k\}
+\le e^{L(k+3/4)}\frac H{\sqrt k}+1.
+\tag{343.17}
+$$
+
+对固定 $L>0$，经典几何加权求和满足
+
+$$
+\sum_{k=1}^N\frac{e^{Lk}}{\sqrt k}
+=O_L\!\left(\frac{e^{LN}}{\sqrt N}\right).
+\tag{343.18}
+$$
+
+具体地，$k>N/2$ 的部分由 $k^{-1/2}\le\sqrt2/\sqrt N$ 及几何和控制；$k\le N/2$ 的部分至多 $2\sqrt N e^{LN/2}$，而 $Ne^{-LN/2}$ 有界，故也被右侧吸收。将（343.17）累计至上述 $N$，利用 $e^{LN}\le e^{L/4}X$、$N\asymp\log X$，并将取整的 $O(N)$ 吸收入 $O(X/\sqrt{\log X})$，得到（343.13）。有限初段不改变这些结论。$\square$
+
+**注记 343.1（三角预算与实际临界预算的分岔）。** 保持定义343.1，并沿用 §338 的实际振幅 $A_*$。若 $A_*<B_\triangle$，则 $M_\triangle(T)$ 对全部充分晚的 $T$ 严格正；若 $A_*=B_\triangle$，则定理343.1–343.2仍成立，但其结论不蕴含最终严格正号。
+
+证明。第一种情形由 $S(T)\ge-A_*$ 及（343.3）直接得
+
+$$
+M_\triangle(T)\ge B_\triangle-A_*-\frac{|F(T)|}{T}-\frac C{T^2},
+$$
+
+其中正的固定间隙保留最终正号。这是 §338 的超临界判据在本预算上的直接应用，不把超临界判据本身作为新结果。第二种情形允许亏损趋零；定理343.1把任何可能的失败限制到窄窗，却没有排除这些窄窗内还存在无穷多个非正点。
+
+这一逻辑边界在 §341 的两频率消费者中确有实现：对任意无理 $\beta>1$，取模型频率 $(14,14\beta)$ 及该节允许的余项 $r(T)\equiv0$。其连续余量在自身三角预算处具有任意晚的负值，同时有限正权重谱满足本节同样的窄窗推导与稀疏界。因此“任意晚失败”和“失败截止集密度零”可以同时成立。选取零余项保证非正集可测；单凭任意实函数的 $r(T)=O(T^{-2})$ 不提供可测性。该模型未被识别为实际 $\zeta$ 谱，不构成对实际证书最终符号的判定。$\square$
+
+本节的相位关系只用一个实际频率的正权重，未使用零点频率的线性独立、振幅饱和或返回速度，也不需要 §342 的二阶正修正。各项非负亏损将同一个累计预算的失败转成二次相位距离，随后由连续单元覆盖运输至整数截止。这与五分递归控制中心和插值亏损相接：递归可改善固定预算的证书，而三角边界附近的符号还受同源相位约束。本节没有把密度零提升为全部截止点严格正，也没有增加已认证的 Robin 安全整数区间。
+
+## 追加锚（本行以下为增补区）
+
+## 344. 移动极小相位的二阶储备与实际频率关系的投影约束
+
+**定义 344.1（同一实际谱的相位包络）。** 固定 §§337–342 的同一实际累计证书，在本节假设 RH，并沿用其实际正频率集 $\Gamma$、重数 $m_\gamma$、正权重 $a_\gamma=m_\gamma/(\gamma D_\gamma)$、$D_\gamma=1/4+\gamma^2$、中心 $c_0$ 与轨道闭包 $H\subseteq\mathbb T^\Gamma$。使用 §339 的实际输入 $\gamma\ge14$。定义
+
+$$
+\begin{aligned}
+b_\gamma&=D_\gamma^{-1}-2,& c_\gamma&=2\gamma/D_\gamma,\\
+g_\gamma&=8\gamma^2/D_\gamma^2,&
+h_\gamma&=-2/\gamma+8\gamma/D_\gamma-4\gamma/D_\gamma^2.
+\end{aligned}
+\tag{344.1}
+$$
+
+将同源谱延拓到整个自由圆环，置
+
+$$
+\begin{aligned}
+s(z)&=-2\sum_\gamma a_\gamma\operatorname{Im}z_\gamma,\\
+f(z)&=\sum_\gamma a_\gamma[b_\gamma\operatorname{Im}z_\gamma+c_\gamma\operatorname{Re}z_\gamma],\\
+g(z)&=\sum_\gamma a_\gamma[g_\gamma\operatorname{Im}z_\gamma+h_\gamma\operatorname{Re}z_\gamma].
+\end{aligned}
+\tag{344.2}
+$$
+
+四族系数绝对值均不超过 $2$，$\sum a_\gamma<\infty$，故这些函数连续。§339 的逐频率公式及 §342 的 $G=-U-4QS+2Q_1S$ 给 $s(\phi(T))=S(T)$、$f(\phi(T))=F(T)$、$g(\phi(T))=G(T)$。记
+
+$$
+B=2\sum_\gamma a_\gamma,\qquad
+f_*:=\sum_\gamma a_\gamma b_\gamma<0,\qquad
+A:=\sum_\gamma a_\gamma\frac{\gamma^2}{D_\gamma^2}>0,
+$$
+
+$$
+J_\varepsilon(z)=B+s(z)+\varepsilon f(z)+\varepsilon^2g(z),\qquad
+\iota=(i)_\gamma,\qquad \varepsilon\longrightarrow0^+.
+\tag{344.3}
+$$
+
+这些常数可和，严格符号使用实际频率非空及全部权重正。特别 $J_\varepsilon(\iota)=f_*\varepsilon+8A\varepsilon^2$。这里 $\varepsilon$ 是独立参数，相位最小化并未要求其极小点恰为时间 $T=1/\varepsilon$ 的实际轨道相位。
+
+**定理 344.1（自由相位移动后的七份二阶储备）。** 对定义344.1，整个自由圆环上的精确下包络为
+
+$$
+\begin{aligned}
+\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+&=B-\sum_\gamma a_\gamma\sqrt{p_\gamma(\varepsilon)^2+q_\gamma(\varepsilon)^2},\\
+p_\gamma(\varepsilon)&=-2+b_\gamma\varepsilon+g_\gamma\varepsilon^2,\\
+q_\gamma(\varepsilon)&=c_\gamma\varepsilon+h_\gamma\varepsilon^2.
+\end{aligned}
+\tag{344.4}
+$$
+
+当 $0\le\varepsilon\le1/8$ 时，
+
+$$
+\left|\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+-f_*\varepsilon-7A\varepsilon^2\right|
+\le21\left(\sum_\gamma a_\gamma\right)\varepsilon^3.
+\tag{344.5}
+$$
+
+因此，在 §343 的同一非负三角预算 $D_\triangle=B-c_0$ 下，存在固定 $C_1\ge0$，使全部充分晚的实际截止满足
+
+$$
+D_\triangle+\mathcal C^{\rm fin}(e^T)
+\ge\frac{f_*}{T}+\frac{7A}{T^2}-\frac{C_1}{T^3}.
+\tag{344.6}
+$$
+
+这个实际下界不要求 $H=\mathbb T^\Gamma$ 或 $\iota\in H$。
+
+证明。实线性函数 $p\sin\theta+q\cos\theta$ 在单位圆上的最小值为 $-\sqrt{p^2+q^2}$。分别选取各坐标的极小相位，一致可和级数给（344.4）；这是经典圆周线性最小化的同源谱应用。
+
+统一余项不能只依靠每个固定频率的 Taylor 展开。对任意 $|b|,|c|,|g|,|h|\le2$，置 $y=2-b\varepsilon+(c^2/4-g)\varepsilon^2$。当 $0\le\varepsilon\le1/8$ 时 $y\ge1$，且
+
+$$
+\begin{aligned}
+&(-2+b\varepsilon+g\varepsilon^2)^2+(c\varepsilon+h\varepsilon^2)^2-y^2\\
+&\qquad=\varepsilon^3\left[\frac{bc^2}{2}+2ch
++\varepsilon\left(h^2+\frac{c^2g}{2}-\frac{c^4}{16}\right)\right].
+\end{aligned}
+\tag{344.7}
+$$
+
+两个方括号系数的绝对值分别至多 $12$、$9$。因 $\sqrt X+y\ge1$，有 $|\sqrt X-y|\le|X-y^2|$，故逐频误差至多 $21\varepsilon^3$。实际系数满足
+
+$$
+g_\gamma-\frac{c_\gamma^2}{4}
+=\frac{7\gamma^2}{D_\gamma^2}.
+\tag{344.8}
+$$
+
+乘以正权重并求和即得（344.5）。将定理342.1的同一实际展开写为 $D_\triangle+\mathcal C^{\rm fin}(e^T)=J_{1/T}(\phi(T))+O(T^{-3})$，再用自由相位下包络，得到（344.6）。静止四分之一相位的 $8A$ 因允许相位移动扣去 $A$；二阶系数仍正。$\square$
+
+**定义 344.2（实际频率关系的有限能量方向）。** 令 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$ 为实 Hilbert 空间，
+
+$$
+\|v\|_a^2=\sum_\gamma a_\gamma v_\gamma^2,\qquad
+\langle v,w\rangle_a=\sum_\gamma a_\gamma v_\gamma w_\gamma.
+$$
+
+定义 $r_\gamma=\gamma/D_\gamma$，则 $r\in\mathcal E$ 且 $\|r\|_a^2=A$。令
+
+$$
+V=\left\{v\in\mathcal E:
+\sum_\gamma n_\gamma v_\gamma=0\ \text{对每个有限支撑整数族 }n
+\text{ 满足 }\sum_\gamma n_\gamma\gamma=0\right\}.
+\tag{344.9}
+$$
+
+每条有限支撑关系给一个连续实线性泛函，因此 $V$ 为闭子空间，具有经典正交投影 $P_V$。本定义没有断言 $H$ 是局部流形，也没有把实际轨道速度 $(\gamma)_\gamma$ 假定为有限能量向量。
+
+**定理 344.2（实际关系群约束下的投影储备）。** 额外假设实际振幅饱和，即 $\iota\in H$。则
+
+$$
+\min_{z\in H}J_\varepsilon(z)
+=f_*\varepsilon+
+\left(8A-\|P_Vr\|_a^2\right)\varepsilon^2+o(\varepsilon^2),
+\tag{344.10}
+$$
+
+并且
+
+$$
+7A\le8A-\|P_Vr\|_a^2\le8A.
+\tag{344.11}
+$$
+
+特别，没有非零有限整数频率关系时，$V=\mathcal E$，二阶系数为 $7A$；一般关系限制相位的有限能量移动，保留的储备为 $8A-\|P_Vr\|_a^2$。
+
+证明。先建立下界。$H$ 紧且 $J_\varepsilon$ 连续，故存在极小点 $z_\varepsilon$。取主值角 $\theta_{\varepsilon,\gamma}\in[-\pi,\pi]$，使 $z_{\varepsilon,\gamma}=i e^{i\theta_{\varepsilon,\gamma}}$。记
+
+$$
+\delta_\varepsilon=B+s(z_\varepsilon)
+=2\sum_\gamma a_\gamma(1-\cos\theta_{\varepsilon,\gamma}).
+$$
+
+由 $|b_\gamma|\le2$、$c_\gamma=2r_\gamma$、$\sin^2\theta\le2(1-\cos\theta)$ 及经典加权 Cauchy–Schwarz，
+
+$$
+|f(z_\varepsilon)-f_*|
+\le\delta_\varepsilon+2\sqrt{A\delta_\varepsilon}.
+\tag{344.12}
+$$
+
+取 $C_G\ge\sup|g|$。与 $\iota$ 比较给
+
+$$
+(1-\varepsilon)\delta_\varepsilon
+\le2\varepsilon\sqrt{A\delta_\varepsilon}+2C_G\varepsilon^2.
+$$
+
+当 $\varepsilon\le1/2$ 时，Young 不等式 $2\varepsilon\sqrt{A\delta}\le\delta/4+4A\varepsilon^2$ 给
+
+$$
+\delta_\varepsilon\le(16A+8C_G)\varepsilon^2,
+\qquad
+\|\theta_\varepsilon/\varepsilon\|_a=O(1).
+\tag{344.13}
+$$
+
+第二式使用经典 Jordan 界 $2(1-\cos\theta)\ge4\theta^2/\pi^2$。每个固定坐标的主值角因此趋零，故 $z_\varepsilon\to\iota$ 于乘积拓扑，$g(z_\varepsilon)\to8A$。
+
+为控制下极限，先选取归一化极小值实现其下极限的趋零正参数子列；定理344.1与相位 $\iota$ 的比较保证这些值有界。从该子列的有界缩放角中再抽取弱收敛子列，记其弱极限为 $v\in\mathcal E$；这是实 Hilbert 空间的经典弱紧性。对每条固定有限整数关系 $n$，§338 的字符判据及 $z_\varepsilon,\iota\in H$ 给
+
+$$
+\sum_\gamma n_\gamma\theta_{\varepsilon,\gamma}\in2\pi\mathbb Z.
+$$
+
+左边趋零，所以充分晚时恰为零。连续有限坐标泛函的弱收敛给 $v\in V$。对每个固定有限频率集，$2(1-\cos\theta)/\theta^2\to1$；非负项及有限部分和下界遂给
+
+$$
+\liminf\frac{\delta_\varepsilon}{\varepsilon^2}\ge\|v\|_a^2.
+\tag{344.14}
+$$
+
+这里不对整个无限缩放角族使用统一 Taylor 余项。
+
+再写 $f(z_\varepsilon)-f_*=
+\sum a_\gamma b_\gamma(\cos\theta_\gamma-1)
+-2\sum a_\gamma r_\gamma\sin\theta_\gamma$。第一项为 $O(\varepsilon^2)$。第二项用有限坐标的 $\sin\theta-\theta=o(\theta)$、$r\in\mathcal E$ 的可小加权尾及（344.13）的范数界，得到
+
+$$
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}
+\longrightarrow-2\langle r,v\rangle_a.
+$$
+
+结合（344.14），缩放极小值的下极限至少为
+
+$$
+8A+\|v\|_a^2-2\langle r,v\rangle_a
+=8A-\|P_Vr\|_a^2+\|v-P_Vr\|_a^2.
+\tag{344.15}
+$$
+
+子列已实现归一化极小值的下极限，故给出所需的全下极限界。
+
+反向建立上界。对任意 $v\in V$，所有有限关系字符在 $e^{itv}$ 上都为 $1$，故 §338 的完整字符判据给 $e^{itv}\in H$。因此 $z_\varepsilon=\iota e^{i\varepsilon v}\in H$ 是真实允许的群内相位路径。经典支配收敛、$2(1-\cos x)\le x^2$ 与加权 Cauchy–Schwarz 给
+
+$$
+\frac{B+s(z_\varepsilon)}{\varepsilon^2}\to\|v\|_a^2,
+\quad
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}\to-2\langle r,v\rangle_a,
+\quad g(z_\varepsilon)\to8A.
+$$
+
+取 $v=P_Vr$，与（344.15）匹配，即得（344.10）。投影范数不增加，$0\le\|P_Vr\|_a^2\le\|r\|_a^2=A$，所以（344.11）成立。这些 Hilbert 投影与弱紧性是经典前置，本节新增的是它们对同一实际二阶谱及完整有限关系群的组合。$\square$
+
+**注记 344.1（相位约束与实际时间的区别）。** 定理344.2把频率关系对移动相位的影响写成具体投影能量，无需局部流形假设。虽然二阶储备至少为 $7A>0$，但 $f_*<0$，相位下包络仍在充分小的正 $\varepsilon$ 处为负。群内路径 $\iota e^{i\varepsilon P_Vr}$ 未被识别为时间 $T=1/\varepsilon$ 的实际轨道相位；尾轨道稠密性也没有提供随 $T$ 移动的极小点所需的逼近速度。因此本节没有从包络负号推出实际证书余量任意晚为负，也没有从二阶正储备推出全部实际截止点最终为正。五分递归控制中心和插值亏损的关系仍如 §339；本节的新增约束作用于同一谱的一阶移动方向，不把递归分类数识别为零点频率关系数。
+
+## 追加锚（本行以下为增补区）
+
+## 345. 同一频率关系的静态相容与移动方向亏损
+
+**定义 345.1（实际关系的滤波读数）。** 在 §§338、344 的同一实际频率谱、正权重及 RH 假设下，额外假设全四分之一相位 $\iota\in H$，并沿用 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$、$r_\gamma=\gamma/(1/4+\gamma^2)$、$A=\|r\|_a^2$ 与闭子空间 $V$。记二阶相位储备为
+
+$$
+R_2:=8A-\|P_Vr\|_a^2.
+$$
+
+对每个非零有限支撑整数关系 $n$，即 $\sum_\gamma n_\gamma\gamma=0$，定义
+
+$$
+Q_n:=\sum_{\gamma\in\operatorname{supp}n}\frac{n_\gamma^2}{a_\gamma}>0,
+\qquad
+L_n:=\sum_{\gamma\in\operatorname{supp}n}
+\frac{n_\gamma\gamma}{1/4+\gamma^2}.
+\tag{345.1}
+$$
+
+$Q_n$ 是该关系的加权代价；$L_n$ 将同一零关系送过实际谱的一阶相位滤波。原频率组合为零，并不在定义上强迫这个滤波组合为零。
+
+**定理 345.1（关系见证给出的二阶储备增益）。** 对定义345.1，有
+
+$$
+R_2=7A+\|r-P_Vr\|_a^2
+\ge7A+\frac{L_n^2}{Q_n}
+\tag{345.2}
+$$
+
+对每个非零有限支撑实际关系 $n$ 成立。因此存在一个 $L_n\ne0$ 的实际关系就严格增加自由相位的二阶系数。更精确地，
+
+$$
+R_2=7A
+\quad\Longleftrightarrow\quad
+L_n=0\ \text{对全部有限支撑整数频率关系 }n.
+\tag{345.3}
+$$
+
+证明。定义有限支撑向量 $w^{(n)}_\gamma=n_\gamma/a_\gamma$。它属于 $\mathcal E$，范数平方为 $Q_n$；由 $V$ 的定义，对每个 $v\in V$ 有 $\langle w^{(n)},v\rangle_a=0$。故
+
+$$
+\langle w^{(n)},r-P_Vr\rangle_a=L_n.
+$$
+
+经典 Cauchy–Schwarz 给 $L_n^2\le Q_n\|r-P_Vr\|_a^2$。正交分解 $r=P_Vr+(r-P_Vr)$ 给 $A=\|P_Vr\|_a^2+\|r-P_Vr\|_a^2$，得到（345.2）。等号 $R_2=7A$ 当且仅当 $r\in V$；按定义344.2，这当且仅当所有 $L_n$ 为零，得到（345.3）。这里没有把所有关系见证的逐项下界相加；不同关系的法向量可能相关。$\square$
+
+**定理 345.2（等和四频率关系必有非零滤波读数）。** 假设四个不同的实际频率满足
+
+$$
+14\le x_1<x_2<x_3<x_4,\qquad x_1+x_4=x_2+x_3=s.
+\tag{345.4}
+$$
+
+取关系 $n_{x_1}=n_{x_4}=1$、$n_{x_2}=n_{x_3}=-1$，其余系数为零。则 $\sum n_\gamma=0$，所以该关系本身不阻止四分之一相位，但
+
+$$
+L_n=r(x_1)+r(x_4)-r(x_2)-r(x_3)>0.
+\tag{345.5}
+$$
+
+在定义345.1的整体振幅饱和假设下，因而有显式严格界
+
+$$
+R_2\ge7A+
+\frac{[r(x_1)+r(x_4)-r(x_2)-r(x_3)]^2}
+{a_{x_1}^{-1}+a_{x_2}^{-1}+a_{x_3}^{-1}+a_{x_4}^{-1}}
+>7A.
+\tag{345.6}
+$$
+
+证明。置 $\kappa=1/4$、$p=x_1x_4$、$q=x_2x_3$，并写 $r(x)=x/(\kappa+x^2)$。由等和条件，
+
+$$
+q-p=(x_2-x_1)(x_3-x_1)>0.
+$$
+
+通分的精确恒等式为
+
+$$
+r(x_1)+r(x_4)-r(x_2)-r(x_3)
+=
+\frac{s(q-p)[pq+\kappa(p+q)-\kappa s^2-3\kappa^2]}
+{\prod_{j=1}^4(\kappa+x_j^2)}.
+\tag{345.7}
+$$
+
+为核对分子，任意等和正对 $x+y=s$、$xy=p$ 满足
+
+$$
+r(x)+r(y)=\frac{s(\kappa+p)}{(p-\kappa)^2+\kappa s^2}.
+$$
+
+两对相减，分子除去共同 $s$ 后恰为 $(q-p)[pq+\kappa(p+q)-\kappa s^2-3\kappa^2]$。
+
+每个频率至少为 $14$。对任意 $x,y\ge14$，分别用 $xy\ge14x$、$xy\ge14y$，相加得 $xy\ge7(x+y)$。故 $p,q\ge7s$、$s\ge28$，于是
+
+$$
+pq+\kappa(p+q)-\kappa s^2-3\kappa^2
+\ge\left(49-\frac14\right)s^2-\frac3{16}>0.
+$$
+
+（345.7）的分母及其余分子因子均正，证明（345.5）；代入定理345.1便得（345.6）。这也是函数 $x/(\kappa+x^2)$ 在当前高频区间严格凸的等和消费者，但上述推导直接给可计算的正差值。$\square$
+
+**推论 345.1（三频率中点关系）。** 若三个不同的实际频率 $x<y<z$ 均至少为 $14$，且 $x+z=2y$，则关系 $(1,-2,1)$ 的系数和为零，滤波读数 $r(x)-2r(y)+r(z)>0$。在同一整体振幅饱和假设下，
+
+$$
+R_2\ge7A+
+\frac{[r(x)-2r(y)+r(z)]^2}{a_x^{-1}+4a_y^{-1}+a_z^{-1}}
+>7A.
+\tag{345.8}
+$$
+
+证明。取（345.7）中的 $x_1=x$、$x_2=x_3=y$、$x_4=z$。其正号证明只需 $x_1<x_2\le x_3<x_4$，故仍成立；重复中间坐标后，关系系数合并为 $-2$，所以 $Q_n=a_x^{-1}+4a_y^{-1}+a_z^{-1}$，不能按四个不同坐标记为四项倒权重。再用定理345.1。$\square$
+
+**注记 345.1（同一关系代价的两种作用）。** §338 的（338.5）已给出静态相位障碍的下界 $|1-i^{\sum n_\gamma}|^2/Q_n$；本节复用该结论，不将其当作新证明。这一静态分支仅采用 §338 的前提，暂不采用定义345.1的额外饱和假设：若某个实际关系的系数和不被 $4$ 整除，它提供固定正振幅间隙；结合 §343 的同一非负三角预算，实际累计证书余量最终严格为正。若整体振幅饱和成立，则每个实际关系均模四相容；此时定理345.1用同一代价 $Q_n$ 读出移动方向的法向能量 $L_n^2/Q_n$。等和四频率和中点关系展示了静态相容仍可保留严格二阶储备。
+
+这种条件推导没有证明实际零点存在上述加法关系。单个关系的模四相容也不保证整个 $H$ 饱和，仍须全部关系满足 §338 的判据。即使（345.6）或（345.8）给严格增益，§344 的 $f_*<0$ 仍支配充分小参数的相位下包络；实际时间达到移动极小相位的速度也仍未给出。因此二阶改进没有推出全部实际截止点最终正号或任意晚负号，没有增加已认证的 Robin 安全整数区间。
+
+本节组合来自同一实际谱与经典正交几何、有理恒等式。定理338.4的五分递归加密平移证书中心 $c_0$，而这里的 $Q_n$、$L_n$ 和 $R_2$ 取决于零点频率与权重；在该节固定斜率和同源节点加密的比较中，它们保持不变。递归改善中心与频率关系限制相位移动，作用于同一累计储备的不同数学坐标。
+
+## 追加锚（本行以下为增补区）
+
+## 346. 实际时间流的奇异曲率、对数频带能量与更细的相位收益
+
+**定义 346.1（实际时间路径及其能量）。** 沿用定义344.1的实际正频率集 $\Gamma$、重数 $m_\gamma$、$D_\gamma=1/4+\gamma^2$ 和 $a_\gamma=m_\gamma/(\gamma D_\gamma)$。令
+
+$$
+\delta(t)=2\sum_{\gamma\in\Gamma}a_\gamma(1-\cos\gamma t),\qquad
+K=\sum_{\gamma\in\Gamma}a_\gamma\frac{\gamma^2}{D_\gamma}
+=\sum_{\gamma\in\Gamma}\frac{m_\gamma\gamma}{D_\gamma^2}>0.
+\tag{346.1}
+$$
+
+在 $0<|t|<1$ 时记 $L_t=\log(1/|t|)$。谱计数包含全部非平凡零点的正纵坐标，同一纵坐标的重数相加，使用经典重数约定
+
+$$
+N(Y)=\sum_{0<\gamma\le Y}m_\gamma
+=\frac{Y}{2\pi}\log Y+O(Y).
+\tag{346.2}
+$$
+
+这是 Riemann–von Mangoldt 公式的粗余项形式，其系数对应正纵坐标，不能换成双边零点数。以下谱能量计算仅使用这些纵坐标、正重数与（346.2）；将它们解释为 §§337–345 的同一 Robin 相位谱时仍使用该路线的 RH 假设。
+
+**定理 346.1（实际时间速度的无限能量与一阶奇异渐近）。** 同一实际谱满足
+
+$$
+\begin{aligned}
+\sum_{\gamma\le Y}a_\gamma\gamma^2
+&=\frac1{4\pi}\log^2Y+O(\log Y),\\
+\delta(t)&=\frac{t^2}{4\pi}L_t^2+O(t^2L_t),\\
+\delta'(t)&=\frac{t}{2\pi}L_t^2+O(|t|L_t).
+\end{aligned}
+\tag{346.3}
+$$
+
+函数 $\delta$ 为 $C^1$，$\delta(0)=\delta'(0)=0$，但不存在有限的 $\delta''(0)$；时间速度 $(\gamma)_\gamma$ 不属于定义344.2的加权 Hilbert 空间。
+
+证明。将经典实纵坐标分部求和应用于（346.2），有
+
+$$
+\sum_{\gamma\le Y}\frac{m_\gamma}{\gamma}
+=\frac{N(Y)}Y+\int_{\gamma_0}^Y\frac{N(u)}{u^2}\,du
+=\frac1{4\pi}\log^2Y+O(\log Y),
+\tag{346.4}
+$$
+
+其中 $0<\gamma_0\le\min\Gamma$ 固定；首个频率处的跳跃由 $N(Y)/Y$ 与积分共同计入，不另删去端点重数。差项
+
+$$
+\frac{m_\gamma}{\gamma}-a_\gamma\gamma^2
+=\frac{m_\gamma}{4\gamma D_\gamma}
+$$
+
+绝对可和，所以（346.3）的首式成立。相同分部求和给
+
+$$
+\sum_{\gamma\le Y}a_\gamma\gamma^4=O(Y^2\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma=O(Y^{-2}\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma\gamma=O(Y^{-1}\log Y).
+\tag{346.5}
+$$
+
+这些步骤复用经典计数分部求和与幂衰减尾界，不把它们作为独立新定理。由于 $\sum a_\gamma\gamma<\infty$，相位级数可以绝对一致地作一次求导。以 $Y=1/|t|$ 分割，低频使用 $2(1-\cos x)=x^2+O(x^4)$ 和 $\sin x=x+O(x^3)$，高频使用有界三角函数。两个低频误差分别被 $t^4\sum_{\gamma\le Y}a_\gamma\gamma^4=O(t^2L_t)$ 和 $|t|^3\sum_{\gamma\le Y}a_\gamma\gamma^4=O(|t|L_t)$ 控制；两个高频尾分别由（346.5）的第二、三式控制。这给余下两式。最后 $\delta'(t)/t\to+\infty$，故不能再在零点处交换二次求导；首式亦直接给 $\sum a_\gamma\gamma^2=\infty$。$\square$
+
+**定理 346.2（对数频带的统一能量分布）。** 对全部充分小的 $t\ne0$，$\delta(t)>0$。定义
+
+$$
+P_t(s)=\frac{2}{\delta(t)}
+\sum_{\gamma\le |t|^{-s}}a_\gamma(1-\cos\gamma t),\qquad 0\le s\le1.
+$$
+
+则
+
+$$
+\sup_{0\le s\le1}|P_t(s)-s^2|=O(L_t^{-1}).
+\tag{346.6}
+$$
+
+特别，每个固定有限频率集承载的相位能量比例趋零，而把频率投到 $\log\gamma/L_t$ 后，其能量概率测度弱收敛到 $[0,1]$ 上具有密度 $2s\,ds$ 的概率测度。若
+
+$$
+u_{t,\gamma}=\frac{e^{i\gamma t}-1}{\sqrt{\delta(t)}},
+$$
+
+则在复加权空间 $\ell^2(\Gamma,a;\mathbb C)$ 中 $\|u_t\|_a=1$，但 $u_t\rightharpoonup0$。
+
+证明。取实际频率 $\gamma_*>0$，并限制 $0<|t|<2\pi/\gamma_*$，它的一项严格正，因此总能量严格正。选择 $1<\gamma_0\le\min\Gamma$，令 $Y_s=|t|^{-s}=e^{sL_t}$。将矩与尾渐近的固定早段吸收入统一常数后，对全部 $Y_s\ge\gamma_0$ 和 $s\in[0,1]$ 使用同一个低频展开及（346.5），得到
+
+$$
+\begin{aligned}
+2\sum_{\gamma\le Y_s}a_\gamma(1-\cos\gamma t)
+&=\frac{t^2}{4\pi}s^2L_t^2
+ +O\!\left(t^2(sL_t+1)+t^4Y_s^2\log Y_s\right)\\
+&=\frac{t^2}{4\pi}s^2L_t^2+O(t^2L_t).
+\end{aligned}
+\tag{346.7}
+$$
+
+隐含常数不依赖 $s$，因为 $|t|Y_s\le1$。若 $Y_s<\gamma_0\le\min\Gamma$，和为空且 $sL_t<\log\gamma_0$，所以同一个统一误差界仍成立。除以定理346.1的总能量即得（346.6），包括 $s\to0$ 的端点，而不是只对固定非零 $s$ 成立。
+
+在 $s=1$ 处 $P_t(1)\to1$，故该对数坐标之外的高频能量比例趋零；$\gamma>1$ 保证没有负对数坐标的质量。区间内的统一分布函数极限给上述弱极限，这是经典概率分布函数收敛判据的应用。对固定有限频率集，三角函数的二次上界与 $t^2/\delta(t)=O(L_t^{-2})$ 给其能量比例趋零。范数恒等式使用 $|e^{ix}-1|^2=2(1-\cos x)$。每个固定坐标 $u_{t,\gamma}\to0$；对任意加权平方可和测试向量，先将其分成有限坐标与任意小的平方范数尾，再用 Cauchy–Schwarz 及 $\|u_t\|_a=1$，即得弱收敛。$\square$
+
+**定理 346.3（饱和相位附近实际时间路径的对数收益）。** 额外假设 $\iota\in H$，置 $z(t)=\iota\phi(t)\in H$，并沿用定义344.1的 $J_\varepsilon,f_*,A$。存在充分小的固定 $t_0>0$，使
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{4\pi K^2\varepsilon^2}{\log^2(1/\varepsilon)}
++o\!\left(\frac{\varepsilon^2}{\log^2(1/\varepsilon)}\right).
+\tag{346.8}
+$$
+
+对该固定区间的任意极小点选取 $t_\varepsilon$，都有
+
+$$
+t_\varepsilon\sim\frac{4\pi K\varepsilon}{\log^2(1/\varepsilon)},\qquad
+t_\varepsilon>0\quad\text{充分晚时成立}.
+\tag{346.9}
+$$
+
+不要求极小点唯一，也不要求有限能量方向空间 $V$ 为零。
+
+证明。群闭包 $H$ 包含 $\phi(t)$，故振幅饱和使整条平移路径允许。将（344.1）的实际系数代入，得
+
+$$
+\begin{aligned}
+J_\varepsilon(z(t))&=\delta(t)+\varepsilon F_\iota(t)+\varepsilon^2G_\iota(t),\\
+F_\iota(t)&=\sum_\gamma a_\gamma[b_\gamma\cos\gamma t-c_\gamma\sin\gamma t],\\
+G_\iota(t)&=\sum_\gamma a_\gamma[g_\gamma\cos\gamma t-h_\gamma\sin\gamma t].
+\end{aligned}
+\tag{346.10}
+$$
+
+系数有界且 $\sum a_\gamma\gamma<\infty$，所以 $F_\iota,G_\iota$ 为 $C^1$，并且
+
+$$
+F_\iota(0)=f_*,\quad F_\iota'(0)=-2K,\quad G_\iota(0)=8A.
+\tag{346.11}
+$$
+
+取 $t_0<2\pi/\gamma_*$，使 $\delta$ 在 $[-t_0,t_0]$ 上仅于零点为零。紧区间上存在极小点；与 $t=0$ 的目标值比较及 $F_\iota,G_\iota$ 的一致有界性给 $\delta(t_\varepsilon)=O(\varepsilon)$。唯一零点及紧性迫使所有极小点选取趋零，边界最终被排除。零点处目标导数为 $-2K\varepsilon+O(\varepsilon^2)<0$，故它也不是极小点。一阶驻点方程为
+
+$$
+\delta'(t_\varepsilon)
+=-\varepsilon F_\iota'(t_\varepsilon)-\varepsilon^2G_\iota'(t_\varepsilon)
+=2K\varepsilon(1+o(1)).
+\tag{346.12}
+$$
+
+由定理346.1，充分近零处的 $\delta'(t)$ 与 $t$ 同号，因此极小点在正侧，并满足
+
+$$
+t_\varepsilon\log^2(1/t_\varepsilon)=4\pi K\varepsilon(1+o(1)).
+$$
+
+取对数并用 $\log L/L\to0$，先得到 $\log(1/t_\varepsilon)/\log(1/\varepsilon)\to1$，再得（346.9）；这里没有先假定极小点尺度。将它与 $F_\iota(t)=f_*-2Kt+o(t)$、$G_\iota(t)=8A+O(t)$ 代入（346.10），二次相位成本给 $+4\pi K^2\varepsilon^2/\log^2(1/\varepsilon)$，一阶驱动给其负两倍，余项均更小，即得（346.8）。$\square$
+
+**定理 346.4（有限能量切向储备与奇异时间路径的相容边界）。** 在定理346.3的假设下，（346.8）给 $\min_{z\in H}J_\varepsilon(z)$ 的上界。即使另外 $V=\{0\}$，定理344.2的二阶系数 $8A$ 与本节严格更低的时间路径值仍相容，因为收益是 $o(\varepsilon^2)$，其归一化弦方向弱逃逸到高频。这些结论不蕴含时间 $T=1/\varepsilon$ 的实际轨道达到该极小路径，也不蕴含实际 Robin 累计证书最终正或负。
+
+证明。允许的路径是 $H$ 的子集，取极小值得到上界；当 $V=\{0\}$ 时，（344.10）的二阶项为 $8A\varepsilon^2$，而（346.8）多减去的量除以 $\varepsilon^2$ 趋零，故没有矛盾。定理346.2进一步给出这一时间路径在加权空间中没有非零的归一化弱切向极限。包络的独立相位参数 $t_\varepsilon$ 与实际证书截止 $T=1/\varepsilon$ 没有被识别，正储备亦不能消除仍为负的一阶项 $f_*\varepsilon$。因此这些谱结构没有增加已认证的 $n>5040$ 安全区间，也没有把 Fibonacci 递归的五分类或 $7!=5040$ 识别为零点频率关系。$\square$
+
+
+**定理 346.5（原始实频率计数产生的统一相位界）。** 设指标集 $I$ 任意，实频率 $\gamma_i$、实重数 $m_i$ 满足 $\gamma_i\ge L>1$、$m_i\ge0$，且每个严格截断 $\{i:\gamma_i<Y\}$ 有限。令 $c\ge0$、$C\in\mathbb R$，假设对每个 $u\ge L$ 均有
+
+$$
+\left|N_<(u)-cu\log u\right|\le Cu,\qquad N_<(u)=\sum_{\gamma_i<u}m_i.
+$$
+
+置 $a_i=m_i/[\gamma_i(1/4+\gamma_i^2)]$、$A=\sum_i a_i$、$M(Y)=\sum_{\gamma_i<Y}a_i\gamma_i^2$，并定义
+
+$$
+\delta(t)=\sum_i2a_i(1-\cos\gamma_it),\quad v(t)=\sum_i2a_i\gamma_i\sin\gamma_it,
+$$
+
+$$
+R(L,Y)=c\log Y+C+\frac c2\log^2L+C(\log Y-\log L)+\frac A4.
+$$
+
+则 $\sum_i a_i$ 与 $\sum_i a_i\gamma_i$ 绝对可和，$\delta'(t)=v(t)$ 对每个实 $t$（包括零）成立，且 $v$ 连续。对 $0<|t|$、$L|t|\le1$ 和 $Y=1/|t|$，同时有
+
+$$
+\begin{aligned}
+|\delta(t)-t^2M(Y)|&\le t^2(9c\log Y+8c+9C),\\
+|v(t)-2tM(Y)|&\le |t|(5c\log Y+4c+5C),\\
+|\delta(t)-\tfrac c2t^2\log^2Y|&\le t^2(9c\log Y+8c+9C+R(L,Y)),\\
+|v(t)-ct\log^2Y|&\le |t|(5c\log Y+4c+5C+2R(L,Y)).
+\end{aligned}
+$$
+
+证明。严格截断的有限层积分给出精确恒等式
+
+$$
+\sum_{\gamma_i<Y}\frac{m_i}{\gamma_i}
+=\frac{N_<(Y)}Y+\int_L^Y\frac{N_<(u)}{u^2}\,du.
+$$
+
+计数误差除以 $u^2$ 后积分，其绝对值不超过 $C(\log Y-\log L)$。恒等式 $m_i/\gamma_i-a_i\gamma_i^2=a_i/4$ 给出 $|M(Y)-(c/2)\log^2Y|\le R(L,Y)$。对任意有限高频集合使用同一层积分，得到包含截断端点的界
+
+$$
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^2}
+\le\frac{2[c(\log Y+1)+C]}Y,\qquad
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^3}
+\le\frac{2[c(\log Y+1)+C]}{Y^2}.
+$$
+
+有限集合和的一致上界先产生无限可和性，再允许无限和比较。这两界控制 $\sum_{\gamma_i\ge Y}a_i\gamma_i$ 与 $\sum_{\gamma_i\ge Y}a_i$；低频四阶矩满足 $\sum_{\gamma_i<Y}a_i\gamma_i^4\le Y^2(c\log Y+C)$。在 $Y=1/|t|$ 分割，低频的四阶余弦余项和三阶正弦余项与高频有界三角函数给出前两式，随后代入矩界得到后两式。导数项的一致可和主控为 $2a_i\gamma_i$，而相位在零时逐项为零，因此在全部实时间可以作一次求导并取得连续导数；本论证不交换二次求导。$\square$
+
+**定理 346.6（完整正纵坐标零点模型的主项与有限早段恢复）。** 令 $I_+$ 为所有满足 $\zeta(\rho)=0$、$0<\Re\rho<1$、$\Im\rho>0$ 的不同复零点，$m_\rho$ 为解析零点阶数，$\gamma_\rho=\Im\rho$，$a_\rho=m_\rho/[\gamma_\rho(1/4+\gamma_\rho^2)]$。以此指标集定义 $\delta_+(t)=\sum_{\rho\in I_+}2a_\rho(1-\cos\gamma_\rho t)$ 和 $v_+(t)=\sum_{\rho\in I_+}2a_\rho\gamma_\rho\sin\gamma_\rho t$。无需 RH，$\sum a_\rho$、$\sum a_\rho\gamma_\rho$ 绝对可和，且 $\delta_+'(t)=v_+(t)$ 对所有实 $t$ 成立，$v_+$ 连续。存在 $L\ge2$、$B\ge0$，使对每个 $0<|t|$ 且 $L|t|\le1$ 均有
+
+$$
+\begin{aligned}
+\left|\delta_+(t)-\frac{t^2}{4\pi}\log^2(1/|t|)\right|
+&\le t^2B[\log(1/|t|)+1],\\
+\left|v_+(t)-\frac{t}{2\pi}\log^2(1/|t|)\right|
+&\le |t|B[\log(1/|t|)+1].
+\end{aligned}
+$$
+
+同一纵坐标上不同复零点分别计数，其解析重数均被保留。本定理规定的是纵坐标相位模型；将其与 §§337–345 中涉及实际 $\rho$ 的 Robin 相位表达式识别，仍采用那条路线的 RH 假设。
+
+证明。复用无条件 dyadic Riemann–von Mangoldt 计数源。记 $c=1/(2\pi)$、$N(Y)=\sum_{0<\Im\rho\le Y}m_\rho$。其 dyadic 余项给 $E(T)=N(T)-cT\log T$ 满足 $|E(2T)-E(T)|\le KT$，固定基环带内 $|E(u)|\le D_0u$。取 $D\ge\max(K,D_0)$，倍增归纳给 $|E(2^nu)|\le D2^nu$；任意充分大实高度均可写成 $2^nu$、$u$ 在该基环带中，故累计粗界成立。
+
+选择 $L\ge2$ 位于粗界有效域，令 $S_L(Y)=\sum_{L<\Im\rho<Y}m_\rho$。对 $Y\ge L+1$，精确的端点夹逼为
+
+$$
+N(Y-1)-N(L)\le S_L(Y)\le N(Y).
+$$
+
+由于 $Y\log Y-(Y-1)\log(Y-1)\le2Y$，粗界 $|N(Y)-cY\log Y|\le DY$ 直接给严格高频计数的 $O(Y)$ 误差。区间 $L\le Y<L+1$ 用非负性控制；一个可用常数为 $C=D+2c+N(L)/L+c\log(L+1)$。因此无需另求 $O(\log Y)$ 的单位窗口误差，就能应用定理346.5。所需精度在这里决定了接口的证明成本：$O(Y)$ 计数余项经 $u^{-2}$ 积分已经足以给 $O(\log Y)$ 的矩余项。
+
+有限早段 $0<\Im\rho\le L$ 的二阶矩和记为 $M_0$，则其相位和与斜率和分别不超过 $t^2M_0$、$2|t|M_0$。这些界把高频结论恢复到完整正纵坐标谱，不需要假定第一零点的数值高度。令高频总权重为 $A_h$，取 $P=10c+2C$、$Q=8c+10C+c\log^2L+A_h/2+2M_0$、$B=P+Q+1$，高频的两个误差依次被 $t^2(P\log Y+Q-M_0)$、$|t|(P\log Y+Q-2M_0)$ 控制；加入早段后，使用 $P\log Y+Q\le B(\log Y+1)$ 即得两式。早段有限性与定理346.5的一阶可和主控同时给全部实时间的连续导数。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 347. 奇异时间极小路径的双重对数校正
+
+**定义 347.1（极小位移的两个对数尺度）。** 沿用定义344.1和定理346.3的同一谱、相位包络及固定允许区间。置
+
+$$
+c=\frac1{2\pi},\qquad C_* = \frac{2K}{c}=4\pi K,
+\qquad D_* = \frac{2K^2}{c}=4\pi K^2,
+\qquad L_\varepsilon=\log(1/\varepsilon).
+$$
+
+对于该固定区间的任意极小点选取 $t_\varepsilon$，其充分晚时为正，置
+$\ell_\varepsilon=\log(1/t_\varepsilon)$。
+
+**定理 347.1（同源极小路径的普适双重对数项）。** 在定理346.3的全部假设下，对每个极小点选取，同时有
+
+$$
+\ell_\varepsilon=L_\varepsilon+2\log L_\varepsilon-\log C_*
++O\!\left(\frac{\log L_\varepsilon}{L_\varepsilon}\right),
+\tag{347.1}
+$$
+
+$$
+t_\varepsilon=\frac{C_*\varepsilon}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right],
+\tag{347.2}
+$$
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{D_*\varepsilon^2}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right].
+\tag{347.3}
+$$
+
+各隐含常数可对全部极小点共同选择，不要求极小点唯一。
+这些渐近使用同一谱给出的驱动导数模连续性；仅假设驱动为 $C^1$ 时不能据此保留双重对数项。
+
+证明。定理346.1给总相位和斜率的量化余项
+
+$$
+\delta(t)=\frac c2 t^2\log^2(1/|t|)+O(t^2\log(1/|t|)),\qquad
+\delta'(t)=ct\log^2(1/|t|)+O(|t|\log(1/|t|)).
+\tag{347.4}
+$$
+
+先补足驱动的余项，而不将连续性自动视为所需速率。
+同源系数 $b_\gamma=D_\gamma^{-1}-2$、$c_\gamma=2\gamma/D_\gamma$
+给出精确分解。记 $M_0=\sum_\gamma a_\gamma$，置
+
+$$
+R(t)=\sum_\gamma\frac{a_\gamma}{D_\gamma}\cos\gamma t
+-\sum_\gamma\frac{2a_\gamma\gamma}{D_\gamma}\sin\gamma t,
+\qquad F_\iota(t)=\delta(t)-2M_0+R(t).
+\tag{347.5}
+$$
+
+$R(0)=f_*+2M_0$、$R'(0)=-2K$，其中
+$K=\sum_\gamma a_\gamma\gamma^2/D_\gamma
+=\sum_\gamma m_\gamma\gamma/D_\gamma^2\le M_0$。
+一阶导数的级数主控为可和权重 $a_\gamma\gamma/D_\gamma$
+及 $2a_\gamma\gamma^2/D_\gamma$。
+经典 $|\sin x|\le|x|$、$|1-\cos x|\le|x|$ 与
+$\gamma^2/D_\gamma\le1$ 给全部实数 $t$ 上
+
+$$
+|R'(t)-R'(0)|
+\le |t|\left(K+2\sum_\gamma a_\gamma\gamma\right).
+$$
+
+因而 $R(t)=R(0)-2Kt+O(t^2)$，并且
+
+$$
+F_\iota(t)=f_*+\delta(t)-2Kt+O(t^2),\qquad
+F_\iota'(t)=\delta'(t)-2K+O(|t|),\qquad
+G_\iota(t)=8A+O(|t|),\qquad G_\iota'(t)=O(1).
+\tag{347.6}
+$$
+
+这些结论复用可和权重和已知相位的一阶导数；无需重新取得累计计数或矩尾的速率。
+
+复用定理346.3的极小点存在、内点性、正性及初阶尺度结论。
+这些结论可以对任意极小点选取使用。驻点方程与（347.6）给
+
+$$
+(1+\varepsilon)\delta'(t_\varepsilon)
+=2K\varepsilon+O(\varepsilon|t_\varepsilon|)
++O(\varepsilon^2).
+$$
+
+已有初阶尺度给 $t_\varepsilon=O(\varepsilon)$，
+所以除以 $1+\varepsilon$ 后右侧仍为 $2K\varepsilon+O(\varepsilon^2)$。
+再由（347.4）并利用 $\varepsilon=O(1/\ell_\varepsilon)$，得到
+
+$$
+t_\varepsilon\ell_\varepsilon^2
+=C_*\varepsilon[1+O(1/\ell_\varepsilon)].
+\tag{347.7}
+$$
+
+经典对数反演可由 Lambert $W$ 的负分支实现；精确模型
+$t\log^2(1/t)=C_*\varepsilon$ 的大对数解为
+$\ell=-2W_{-1}(-\sqrt{C_*\varepsilon}/2)$。
+这里使用 [DLMF §4.13](https://dlmf.nist.gov/4.13) 及 [Corless 等（1996），§4](https://cs.uwaterloo.ca/research/tr/1993/03/W.pdf) 的经典反演机制，
+不将该已知反演另列为新结论。对本式也可直接取对数：
+
+$$
+\ell_\varepsilon
+=L_\varepsilon+2\log\ell_\varepsilon-\log C_*
++O(1/\ell_\varepsilon).
+\tag{347.8}
+$$
+
+定理346.3已给 $\ell_\varepsilon/L_\varepsilon\to1$，
+故先得 $\ell_\varepsilon-L_\varepsilon=O(\log L_\varepsilon)$，
+再用 $\log\ell_\varepsilon-\log L_\varepsilon
+=O(\log L_\varepsilon/L_\varepsilon)$ 得（347.1）。
+将（347.1）代入（347.7）的
+$t_\varepsilon=C_*\varepsilon\ell_\varepsilon^{-2}
+[1+O(1/\ell_\varepsilon)]$，得到（347.2）。
+未知的斜率余项只影响相对 $O(1/L_\varepsilon)$，
+小于已显示的 $\log L_\varepsilon/L_\varepsilon$ 项。
+
+最后将（347.6）代入 $J_\varepsilon$，并用驻点尺度替换二次相位成本：
+
+$$
+\frac c2 t_\varepsilon^2\ell_\varepsilon^2
+-2K\varepsilon t_\varepsilon
+=-K\varepsilon t_\varepsilon
++O(t_\varepsilon^2\ell_\varepsilon)
++O(\varepsilon^2t_\varepsilon).
+$$
+
+来自（347.4）的成本余项也是 $O(t_\varepsilon^2\ell_\varepsilon)
+=O(\varepsilon^2/L_\varepsilon^3)$；
+驱动中的 $\varepsilon\delta(t_\varepsilon)$ 为
+$O(\varepsilon t_\varepsilon^2\ell_\varepsilon^2)$，
+$R$ 的余项为 $O(\varepsilon t_\varepsilon^2)$，
+以及 $\varepsilon^2[G_\iota(t_\varepsilon)-G_\iota(0)]$
+均为 $O(\varepsilon^3/L_\varepsilon^2)$，
+被同一余项吸收。于是目标偏移为
+$-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
+代入（347.2）且 $KC_*=D_*$，得到（347.3）。
+
+所有谱界、函数余项、初阶极小点排除和驻点比较均在固定区间上共同控制；
+若某个共同结论失败，可选择违反它的极小点列，与以上逐选择推导矛盾，
+故可采用对全部极小点共同的常数。$\square$
+
+本命题保留 $\iota\in H$ 的相位相容假设。
+独立平移参数 $t_\varepsilon$ 与实际截止 $T=1/\varepsilon$ 仍未被识别；
+该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
+
+## 追加锚（本行以下为增补区）
+
+## 352. 整数秩容量、未填满余量与实际 Fibonacci 素数尾
+
+**定义 352.1（合并后的整数秩容量）。** 设 $r\in\mathbb N$、$r\ge1$，$I\subseteq\{r,r+1,\ldots\}$ 为有限集合，$A,N\ge0$ 为实数。对每个 $d\in I$ 给定质量 $c_d$，满足
+
+$$
+0\le c_d\le Ad,\qquad \sum_{d\in I}c_d\le N.
+$$
+
+定义
+
+$$
+x_d=\frac{c_d}{d},\qquad
+J=\sum_{d\in I}x_d,\qquad
+B=\sum_{d\in I}dx_d=\sum_{d\in I}c_d,
+\qquad D=\sum_{d\in I}x_d(A-x_d),\qquad C=(2r-1)A.
+$$
+
+因 $d\ge1$，上述条件等价于 $0\le x_d\le A$ 和 $B\le N$。若原载体是有限集合 $E$，带整数秩映射 $\rho:E\to\{r,r+1,\ldots\}$ 与非负质量 $a_e$，则这里的 $I=\rho(E)$、$c_d=\sum_{\rho(e)=d}a_e$；容量条件要求这个合并后的总质量满足 $c_d\le Ad$，而不是仅要求每个 $a_e\le A\rho(e)$。
+
+**定理 352.2（由最大秩归纳得到的容量与余量界）。** 定义352.1的全部参数满足
+
+$$
+D\ge0,\qquad J^2+CJ+D\le2AB\le2AN,
+\tag{352.1}
+$$
+
+且 $C^2+8AN-4D\ge0$，并有
+
+$$
+J\le\frac{\sqrt{C^2+8AN-4D}-C}{2}
+\le\frac{\sqrt{C^2+8AN}-C}{2}.
+\tag{352.2}
+$$
+
+这些结论包含空集、$A=0$ 和 $N=0$ 的情形。
+
+**证明。** 每项 $x_d(A-x_d)$ 非负，故 $D\ge0$。先证明（352.1）中以 $B$ 为右侧预算的部分。对 $I$ 按最大秩归纳；空集的各项均为零。加入最大秩 $a$ 时，旧集合 $I_0\subseteq\{r,\ldots,a-1\}$。互异整数秩给
+
+$$
+|I_0|\le a-r,\qquad
+J_0=\sum_{d\in I_0}x_d\le |I_0|A\le(a-r)A.
+$$
+
+置 $x=x_a$。平方项、线性项与未填满余量的总增量为
+
+$$
+\begin{aligned}
+&(J_0+x)^2-J_0^2+Cx+x(A-x)\\
+&\hspace{2em}=2J_0x+2rAx\le2Aax.
+\end{aligned}
+$$
+
+右侧恰是预算 $2AB$ 加入新秩时的增量；这证明归纳步骤，而未把前缀质量上界作为额外假设。再以 $B\le N$ 得到（352.1）。因为 $J,C\ge0$，将该不等式乘四并完成平方，得
+
+$$
+0\le(2J+C)^2\le C^2+8AN-4D.
+$$
+
+两侧开非负平方根给（352.2）的第一界；$D\ge0$ 与平方根的单调性给第二界。$A=0$ 时盒约束迫使全部 $x_d=0$；$N=0$ 时全部 $c_d=0$。这两种情形以及空集都给 $J=D=0$，符合上述公式。$\square$
+
+**命题 352.3（逐索引容量不能替代合并容量）。** 令 $E$ 有两个元素，二者的秩均为 $1$、质量均为 $1$，并取 $r=A=1$、$N=2$。每个索引分别满足容量条件，但不能对未合并的两个索引使用定理352.2。
+
+**证明。** 若将两个索引当作不同秩求和，则 $J=2$、逐索引的 $D=0$、$C=1$，会得到错误的 $J^2+CJ+D=6\le2AN=4$。真正合并后的秩集是 $I=\{1\}$，其质量为 $c_1=2>A\cdot1$，不满足定理的假设。$\square$
+
+**定义 352.4（实际 Fibonacci 零秩与严格截止权重）。** 令
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对素数 $p$，$z(p)$ 表示满足 $p\mid F_d$ 的最小正整数 $d$。对实数 $x\ge0$，记 $\vartheta(x)=\sum_{p\le x,\ p\ \mathrm{prime}}\log p$。对实数 $y\ge2$，在自然数载体上定义同一实际权重
+
+$$
+w_y(n)=
+\begin{cases}
+\displaystyle\frac1{n z(n)},&n\text{ 是素数且 }y<n,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+此定义只在素数分支使用 $z(n)$；任意有限 $T\subseteq\mathbb N$ 的尾质量为 $\sum_{n\in T}w_y(n)$。
+
+**定理 352.6（两个初始空秩后的半开壳界）。** 对每个实数 $Y\ge2$、$b>1$ 及有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{25+16bY}-5\right),
+\tag{352.4}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{25+16bY}-5\right)}{2Y\log Y}.
+\tag{352.5}
+$$
+
+**证明。** 先建立实际秩、合并纤维容量与素数预算。每个素数的 $z(p)$ 存在，且 $z(p)\ge3$、$p\mid F_{z(p)}$。若 $S$ 是任意有限素数集合，定义
+
+$$
+I=z(S),\qquad
+c_d=\sum_{\substack{p\in S\\z(p)=d}}\log p.
+$$
+
+则对每个 $d\in I$，$0\le c_d\le d\log2$。此外，对全部实数 $x\ge0$ 有 $\vartheta(x)\le2x\log2$；若 $S\subseteq[Y,bY)$、$Y\ge2$、$b>1$，则
+
+$$
+\sum_{d\in I}c_d=\sum_{p\in S}\log p\le2bY\log2.
+\tag{352.3}
+$$
+
+Fibonacci 模周期与首次整除秩的经典背景见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。这里所需的存在性也可直接证明：矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+在 $\mathrm{GL}_2(\mathbb F_p)$ 中可逆，该群有限，故某个正整数 $h$ 满足 $M^h=I$。因 $M^h(0,1)^{\mathsf T}=(F_h,F_{h+1})^{\mathsf T}$，有 $p\mid F_h$，故最小正秩存在。$F_1=F_2=1$ 排除秩 $1,2$。
+
+由递推归纳得 $0<F_d<2^d$（$d\ge1$）。固定纤维中各素数互异、两两互素，且均整除 $F_d$，所以
+
+$$
+\prod_{\substack{p\in S\\z(p)=d}}p\mid F_d,
+\qquad
+c_d=\log\prod_{\substack{p\in S\\z(p)=d}}p
+\le\log F_d<d\log2.
+$$
+
+非负性来自 $p\ge2$。
+
+为核对 Chebyshev 常数，对整数 $n$ 作强归纳。$n=0,1,2$ 的界直接成立；偶数 $n\ge4$ 不是素数，故 $\vartheta(n)=\vartheta(n-1)\le2(n-1)\log2$。对奇数 $n=2m+1\ge3$，区间 $(m+1,2m+1]$ 中每个素数均整除 $\binom{2m+1}{m}$。第 $m$、$m+1$ 个二项式系数相等，而所有系数之和为 $2^{2m+1}$，故 $\binom{2m+1}{m}\le2^{2m}$。于是
+
+$$
+\begin{aligned}
+\vartheta(2m+1)
+&\le\vartheta(m+1)+\log\binom{2m+1}{m}\\
+&\le2(m+1)\log2+2m\log2
+=2(2m+1)\log2.
+\end{aligned}
+$$
+
+实数情形由 $\vartheta(x)=\vartheta(\lfloor x\rfloor)$ 得到。按秩分纤维不改变总质量，而壳内素数均不超过 $bY$，故（352.3）成立。
+
+用上述合并质量，取定理352.2中的 $r=3$、$A=\log2$、$N=2bY\log2$。此时 $C=5\log2$，并且
+
+$$
+J=\sum_{d\in z(S)}\frac{c_d}{d}
+=\sum_{p\in S}\frac{\log p}{z(p)}.
+$$
+
+在（352.2）中舍弃非负 $D$，再将 $\log2>0$ 从平方根提出，便得（352.4）。因为 $p\ge Y\ge2$，有 $p\log p\ge Y\log Y>0$，逐项写成
+
+$$
+\frac1{p z(p)}
+=\frac{\log p/z(p)}{p\log p}
+\le\frac{\log p/z(p)}{Y\log Y},
+$$
+
+相加即得（352.5）。全程使用的是同一素数集合与合并纤维，不对纤维中的素数分别假设独立容量。$\square$
+
+**定理 352.8（所有实数截止下的完整四倍壳尾界）。** 对实数 $y\ge2$，定义
+
+$$
+W(y)=\sum_{n\ge0}w_y(n)
+=\sum_{\substack{p>y\\p\ \mathrm{prime}}}\frac1{p z(p)},
+\qquad
+E_3(y,k)=\frac{\log2\left(\sqrt{25+64y4^k}-5\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则 $E_3(y,k)\ge0$、$\sum_{k\ge0}E_3(y,k)$ 可和，且
+
+$$
+W(y)\le\sum_{k\ge0}E_3(y,k)
+\le\frac{8\log2}{\sqrt y\log y}.
+\tag{352.7}
+$$
+
+**证明。** 对每个实数 $y\ge2$，$w_y$ 可和。每个满足 $p>y$ 的素数唯一属于某个半开壳
+
+$$
+[y4^k,y4^{k+1}),\qquad k\in\mathbb N.
+\tag{352.6}
+$$
+
+素数 $p=y$ 不在活跃集合中，内部边界 $p=y4^k$（$k\ge1$）属于以该边界为左端点的壳。
+
+先核对同一实际权重的可和性，再形成其无穷和。引理191.2的确切粗界是：对全部实数 $y\ge2$，实际 Fibonacci 素数权重的尾和不超过 $16/\sqrt y$。因此每个有限 $T\subseteq\mathbb N$ 满足
+
+$$
+0\le\sum_{n\in T}w_y(n)\le\frac{16}{\sqrt y}.
+$$
+
+非负级数的有界有限部分和判据给 $w_y$ 可和。这里复用的是相同的 $p$、$z(p)$ 和严格筛选 $p>y$，不是从一个不同权重的结论作替换。
+
+已发表的另一项充分输入见 Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，arXiv:1704.00151v2，Lemma2.4 与 Lemma2.2(v)：记 $\ell(p)=\operatorname{lcm}(p,z(p))$，则
+
+$$
+\sum_{p>y}\frac1{\varphi(\ell(p))}\ll y^{-1/4},
+\qquad \ell(p)=p z(p)\quad(p\ne5).
+$$
+
+由于 $\varphi(m)\le m$，这也给 $y\ge5$ 时同一实际权重的可和性；较小截止只增加有限项。此文献界在这里仅作为已知的可和性输入，不作为（352.5）的常数来源。
+
+对 $p>y>0$，取 $k=\lfloor\log(p/y)/\log4\rfloor$，便有 $k\ge0$ 与 $4^k\le p/y<4^{k+1}$，证明存在性。若两个不同壳都含 $p$，较早壳的严格上端点条件与较晚壳的下端点条件矛盾，证明唯一性及边界归属。
+
+记 $Y_k=y4^k$。因 $Y_k\ge y\ge2$，分母为正；平方比较给
+
+$$
+0\le\sqrt{25+64Y_k}-5\le8\sqrt{Y_k}.
+$$
+
+由 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到共同几何主控
+
+$$
+0\le E_3(y,k)\le
+\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{352.8}
+$$
+
+所以右侧壳级数可和，其和不超过（352.7）的第二个右侧。
+
+对任意有限 $T\subseteq\mathbb N$，先保留其中满足 $p$ 为素数且 $p>y$ 的活跃子集，再按本证明中已确定的唯一壳编号分组。每组是 $[Y_k,4Y_k)$ 内的有限素数集合，定理352.6给其贡献不超过 $E_3(y,k)$。只有有限多个组非空，故
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_3(y,k)
+\le\sum_{k\ge0}E_3(y,k).
+$$
+
+本证明已先核对左侧同一实际权重可和，现对所有有限 $T$ 取上确界，得到完整尾和的第一界。没有以右側壳级数的可和性代替左侧权重的核对，也没有把严格截止改成 $p\ge y$。$\square$
+
+## 353. 秩递归的精确预算缺口、零缺口条件与价格归一化
+
+**定义 353.1（前缀缺口）。** 在定义352.1的整数秩与占位条件下，令 $\widetilde x_i=x_i$（$i\in I$），其余整数 $i$ 的 $\widetilde x_i=0$。对 $d\in I$ 定义
+
+$$
+g_d=A(d-r)-\sum_{\substack{i\in I\\i<d}}x_i,
+\qquad H=\sum_{d\in I}x_dg_d.
+$$
+
+$D$ 记录单秩的未填满余量，$H$ 记录相对于完整整数前缀的缺口；二者均按合并后的秩集合计算。
+
+**定理 353.2（精确恒等式与最大秩预算不变量）。** 定义353.1的量满足
+
+$$
+J^2+CJ+D+2H=2AB.
+\tag{353.1}
+$$
+
+加入最大秩 $a$、占位 $x=x_a$ 时，旧秩的 $g_d$ 均不变。若 $J_0$ 是旧总占位，则
+
+$$
+\begin{aligned}
+\Delta(J^2+CJ+D)&=2x(J_0+rA),\\
+\Delta H&=x\bigl(A(a-r)-J_0\bigr)=xg_a,\\
+2Aax-\Delta(J^2+CJ+D)&=2xg_a.
+\end{aligned}
+\tag{353.2}
+$$
+
+因此每步以新增预算 $ax$ 同时支付主项增量与精确缺口；在 $B\le N$ 时，$J^2+CJ+D+2H\le2AN$。
+
+**证明。** 空集满足（353.1）。若 $a$ 大于所有旧秩，则它不进入任何旧秩的前缀，故旧 $g_d$ 不变，$H$ 只增加 $xg_a$。定理352.2证明中的代数展开给（353.2）的第一式；第二式来自 $g_a$ 的定义。二者相加得到
+
+$$
+\Delta(J^2+CJ+D+2H)=2Aax=\Delta(2AB),
+$$
+
+完成最大秩归纳，也证明第三式。最后用 $A\ge0$ 和 $B\le N$ 即得预算上界。该恒等式描述的是每步预算如何分配，而不是对递归分支数量的估计。$\square$
+
+**定理 353.3（整数空台阶分解与零缺口的充要条件）。** 对每个 $d\in I$，有
+
+$$
+g_d=\sum_{i=r}^{d-1}(A-\widetilde x_i)\ge0,
+\qquad H\ge0.
+\tag{353.3}
+$$
+
+当 $A>0$ 时，
+
+$$
+H=0
+\quad\Longleftrightarrow\quad
+\forall d\in I\text{ 满足 }x_d>0,\quad
+\forall i\in\mathbb Z\text{ 满足 }r\le i<d,
+\quad i\in I\text{ 且 }x_i=A.
+\tag{353.4}
+$$
+
+这个条件不要求最后一个活跃秩填满。当 $A=0$ 时，所有 $x_d$、$J$、$B$、$D$、$g_d$、$H$ 都为零，零缺口本身不提供任何额外的秩集合归属信息。
+
+**证明。** $[r,d)$ 恰有 $d-r$ 个整数，其中属于 $I$ 的占位总和是 $\sum_{i\in I,i<d}x_i$，故（353.3）的等式成立。缺失秩的一项等于 $A$，已出现秩的一项等于 $A-x_i$，均非负。因此 $g_d\ge0$，进而 $x_dg_d\ge0$ 与 $H\ge0$。
+
+设 $A>0$。若 $H=0$，有限个非负项 $x_dg_d$ 都为零；对每个 $x_d>0$ 的秩有 $g_d=0$。再次用非负项之和为零，（353.3）的每个前缀项都为零。缺失秩的一项会等于 $A>0$，不可能为零，所以每个 $i\in[r,d)$ 都属于 $I$，且 $A-x_i=0$。反之，若所有活跃秩的严格前缀都存在并填满，则这些秩的 $g_d=0$；不活跃秩的 $x_d=0$，所以每项 $x_dg_d=0$，得到 $H=0$。最大活跃秩自己的占位不在它的严格前缀内，故可以部分填满。$A=0$ 的情形直接由 $0\le x_d\le A$ 及各定义得到，单独成立而不使用 $A>0$ 的排除步骤。$\square$
+
+**命题 353.4（两种余量互不替代及零容量例）。** 取 $r=3$、$A=1$。对 $I=\{3,5\}$、$x_3=x_5=1$，有 $D=0$、$H=1$。对 $I=\{3,4,5\}$、$x_3=x_4=1$、$x_5=1/2$，有 $D=1/4$、$H=0$。另外，取 $A=0$、$I=\{5\}$、$x_5=0$，则 $H=0$，但 $3,4\notin I$。
+
+**证明。** 第一例每项占位都为 $A$，所以 $D=0$；$g_3=0$、$g_5=2-1=1$，故 $H=1$。第二例 $g_3=g_4=g_5=0$，只有最后一项对 $D$ 有贡献，即 $(1/2)(1-1/2)=1/4$。零容量例中每项乘数和每个前缀缺口都为零，而所取集合确实不含 $3,4$。因此局部饱和不能消除缺失中间整数秩的损失，完整严格前缀也不能消除末端部分占位的余量。$\square$
+
+**命题 353.6（实际纤维不必实现放松后的最大值）。** 对有限 $I\subseteq\{r,r+1,\ldots\}$、$r\ge1$、$A,N\ge0$，定义放松可行集
+
+$$
+\mathcal X=\left\{x\in\mathbb R^I:
+0\le x_d\le A,\ \sum_{d\in I}dx_d\le N\right\}.
+$$
+
+取半开壳 $[2,4)$ 中的实际素数集合 $S=\{2\}$，以及 $r=3$、$A=\log2$、$N=8\log2$。它的秩集为 $I=\{3\}$，实际目标值严格小于同一 $I,A,N$ 下的 $\max_{x\in\mathcal X}\sum_{d\in I}x_d$。
+
+**证明。** 先在 $A>0$ 时定义
+
+$$
+\begin{aligned}
+\mathcal T&=\left\{t\in\mathbb R^I:
+0\le t_d\le1,\ \sum_{d\in I}dt_d\le N/A\right\}.
+\end{aligned}
+$$
+
+则 $t_d=x_d/A$ 与 $x_d=At_d$ 是互逆的可行集对应，且全部可行目标值满足确切集合等式
+
+$$
+\left\{\sum_{d\in I}x_d:x\in\mathcal X\right\}
+=\left\{A\sum_{d\in I}t_d:t\in\mathcal T\right\}.
+\tag{353.5}
+$$
+
+在这个归一化下，使用经典有限分数背包强对偶，成本为 $d$、收益为 $1$、预算为 $N/A$，得到
+
+$$
+\max_{x\in\mathcal X}\sum_{d\in I}x_d
+=A\inf_{\lambda\ge0}
+\left\{\lambda\frac NA+
+\sum_{d\in I}\max(0,1-\lambda d)\right\}.
+\tag{353.6}
+$$
+
+此处优化允许在固定秩集上重新分配占位；实际 Fibonacci 纤维给出的占位仅是其中一个可行点，不要求它达到该最大值。$A=0$ 时只有零占位，最大目标值为零，不使用除以 $A$ 的归一化。
+
+若 $x\in\mathcal X$，则除以正数 $A$ 给 $0\le x_d/A\le1$，且
+
+$$
+\sum_{d\in I}d\frac{x_d}{A}
+=\frac1A\sum_{d\in I}dx_d\le\frac NA,
+\qquad
+A\sum_{d\in I}\frac{x_d}{A}=\sum_{d\in I}x_d.
+$$
+
+这证明（353.5）左侧包含于右侧。反之，若 $t\in\mathcal T$，取 $x_d=At_d$，则 $0\le x_d\le A$，且
+
+$$
+\sum_{d\in I}dx_d=A\sum_{d\in I}dt_d\le N,
+\qquad \sum_{d\in I}x_d=A\sum_{d\in I}t_d.
+$$
+
+这证明反向包含及两个对应互逆。可行集非空、紧，目标连续，所以最大值存在。
+
+为明确这里应用的既有强对偶，记 $M_0=N/A$。对任意可行 $t$ 和价格 $\lambda\ge0$，有
+
+$$
+\sum_{d\in I}t_d
+=\lambda\sum_{d\in I}dt_d+
+\sum_{d\in I}(1-\lambda d)t_d
+\le\lambda M_0+\sum_{d\in I}\max(0,1-\lambda d).
+$$
+
+这个经典上界可达：将非空 $I$ 排为 $d_1<\cdots<d_m$。若 $M_0\ge\sum_i d_i$，全取 $t_i=1$ 并选 $\lambda=0$；若 $0\le M_0<\sum_i d_i$，令 $j$ 为首个满足 $\sum_{i\le j}d_i>M_0$ 的指标，置
+
+$$
+t_i=1\ (i<j),\qquad
+t_j=\frac{M_0-\sum_{i<j}d_i}{d_j},\qquad
+t_i=0\ (i>j),\qquad \lambda=\frac1{d_j}.
+$$
+
+该点可行，且原目标和价格表达式都等于 $j-1+t_j$。空集时两侧为零，$M_0=0$ 也包含在上述构造中。这核对了（353.6）所使用的有限分数背包强对偶及其归一化，而非另一个整数预算强对偶假设。收益成本比 $1/d$ 随秩严格下降，所以所给最优点先填低秩、至多有一个部分占位；稀疏秩集的这种最优点未必满足（353.4）的完整整数前缀条件。实际 Fibonacci 占位由固定素数集合确定，不随这里的价格优化而重分配。
+
+对于所取实际素数集合，$F_1=F_2=1$、$F_3=2$，故 $z(2)=3$，实际 $c_3=\log2$、$x_3=\log2/3$。放松后的点 $x_3=\log2$ 满足盒约束，且预算 $3\log2\le8\log2$，所以最大值为 $\log2>\log2/3$。这里的 $N$ 正是（352.3）在 $Y=b=2$ 时的上界预算；没有将实际纤维等同于可自由选择的最优占位。$\square$
+
+## 354. 素数截止排除低秩后的二十三阶容量与完整尾界
+
+**命题 354.1（早期 Fibonacci 因子的截止结论）。** 每个 $F_d$（$1\le d\le22$）的素因子都不超过 $1597$。因此每个素数 $p>1597$ 满足 $z(p)\ge23$；特别地，每个素数 $p>5040$ 满足同一结论。
+
+**证明。** 正指标的 Fibonacci 数列非减，$F_{17}=1597$，故 $1\le F_d\le1597$（$1\le d\le17$）。其后五项的精确因子分解为
+
+$$
+\begin{aligned}
+F_{18}&=2584=2^3\cdot17\cdot19,\\
+F_{19}&=4181=37\cdot113,\\
+F_{20}&=6765=3\cdot5\cdot11\cdot41,\\
+F_{21}&=10946=2\cdot13\cdot421,\\
+F_{22}&=17711=89\cdot199.
+\end{aligned}
+$$
+
+所列因子均为不超过 $1597$ 的素数。若 $p>1597$ 而 $1\le z(p)<23$，则 $p\mid F_{z(p)}$ 与上述因子结论矛盾，故 $z(p)\ge23$。$p>5040$ 的情形仅用 $5040>1597$ 作一次截止包含。该论证只用正指标 $1,\ldots,22$，不把 $F_0=0$ 的整除关系计入早期因子界。$\square$
+
+**定理 354.2（二十三阶起始秩的全部实数半开壳界）。** 对每个实数 $Y>1597$、$b>1$ 和有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{2025+16bY}-45\right),
+\tag{354.1}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{2025+16bY}-45\right)}{2Y\log Y}.
+\tag{354.2}
+$$
+
+**证明。** 每个 $p\in S$ 满足 $p\ge Y>1597$，所以命题354.1给 $z(p)\ge23$。按同一实际秩合并 $c_d=\sum_{p\in S,z(p)=d}\log p$，定理352.6证明中建立的实际纤维容量与素数预算仍给 $0\le c_d\le d\log2$ 与 $\sum c_d\le2bY\log2$。在定理352.2中取 $r=23$、$A=\log2$、$N=2bY\log2$，得到 $C=45\log2$。舍弃非负 $D$，根号内为
+
+$$
+C^2+8AN=(\log2)^2(2025+16bY),
+$$
+
+因而得到（354.1）。再用与定理352.6完全相同的逐项恒等式和 $p\log p\ge Y\log Y>0$，得到（354.2）。此处没有更换素数权重、纤维质量或预算；改变的只是已由实际截止证明的最小可用整数秩。$\square$
+
+**定义 354.3（二十三阶四倍壳包络）。** 对实数 $y>1597$、$k\in\mathbb N$，定义
+
+$$
+E_{23}(y,k)=
+\frac{\log2\left(\sqrt{2025+64y4^k}-45\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+完整尾 $W(y)$ 仍采用定义352.4的严格截止实际权重 $w_y$，与定理352.8的尾为同一对象。
+
+**定理 354.4（严格截止的完整二十三阶尾界）。** 对每个实数 $y>1597$，有 $E_{23}(y,k)\ge0$、$\sum_{k\ge0}E_{23}(y,k)$ 可和，并且
+
+$$
+W(y)\le\sum_{k\ge0}E_{23}(y,k),
+\qquad
+E_{23}(y,k)\le\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{354.3}
+$$
+
+**证明。** 置 $Y_k=y4^k>1597$。平方比较给
+
+$$
+0\le\sqrt{2025+64Y_k}-45\le8\sqrt{Y_k}.
+$$
+
+与（352.8）相同的计算，使用 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到（354.3）的逐项几何主控，因此包络可和。
+
+左侧是定理352.8证明中已经核对可和性的同一 $w_y$，不是另行选择的占位模型。对任意有限 $T\subseteq\mathbb N$，保留满足素性与 $p>y$ 的活跃子集，按唯一半开壳 $[Y_k,4Y_k)$ 分组，再应用定理354.2的 $b=4$ 情形，得到
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_{23}(y,k)
+\le\sum_{k\ge0}E_{23}(y,k).
+$$
+
+对所有有限 $T$ 取上确界，便得完整尾界。该过程保留 $p>y$ 的严格筛选，并将每个内部边界归入下一壳，因而没有漏项或重复计数。$\square$
+
+**命题 354.5（初始空秩包络的严格比较）。** 对 $u>0$，函数 $c\mapsto\sqrt{c^2+u}-c$ 在 $c\ge0$ 上严格下降。对共同适用域 $y>1597$，令
+
+$$
+E_1(y,k)=\frac{\log2\left(\sqrt{1+64y4^k}-1\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则这是仅用正秩 $z(p)\ge1$ 的四倍壳容量包络，并有
+
+$$
+0<E_{23}(y,k)<E_3(y,k)<E_1(y,k),
+\qquad
+\sum_{k\ge0}E_{23}(y,k)
+<\sum_{k\ge0}E_3(y,k)
+<\sum_{k\ge0}E_1(y,k).
+\tag{354.4}
+$$
+
+三个包络均界定同一 $W(y)$；较小包络不表示实际纤维达到容量最大值，也不识别某个唯一素数截止。
+
+**证明。** 有理化得到
+
+$$
+\sqrt{c^2+u}-c=\frac{u}{\sqrt{c^2+u}+c}.
+$$
+
+分母在 $c\ge0$ 上严格增加，分子为正，故函数严格下降。取 $u=64y4^k>0$，比较 $c=45,5,1$，并乘同一正因子 $\log2/[2y4^k\log(y4^k)]$，得到逐项严格不等式。$E_1$ 的几何主控仍是（352.8）的右侧，故三个级数均可和。各项差非负，且第零项差严格为正，得到级数和的严格比较。
+
+在定理352.2中用 $r=1$，同时保留定理352.6证明中的实际纤维容量和预算，再按四倍壳分组，即得 $W(y)\le\sum_k E_1(y,k)$；另两条尾界分别是定理352.8、354.4。因此比较的三个左侧权重完全相同。命题353.6已经给出实际纤维不实现放松最大值的具体实例。最后，二十三阶结论对每个实数 $y>1597$ 都成立，包含不同截止 $y=1600$、$y=5040$，并不选择其中之一为唯一截止。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 355. Clifford 叶积的组成余数与进位恢复边界
+
+**定义 355.1（有序原树的 Clifford 叶积观察）。** 沿用定义2.1的自由有序二叉树 $\mathcal T$、定义3.1的替换 $\rho$ 及规范轨道 $T_j=\rho^j(\alpha)$，不改变原树的相等关系。取实向量空间 $V=\mathbb R^2$，在其上使用定理22.1的二次型
+
+$$
+Q(a,b)=a^2+ab-b^2.
+$$
+
+令 $C=\operatorname{Cl}(V,Q)$ 为采用 $v^2=Q(v)1$ 约定的实 Clifford 代数，$A,B$ 分别为 $(1,0),(0,1)$ 的典范像。按定理2.2的结构解释定义
+
+$$
+E(\alpha)=A,\qquad E(\beta)=B,\qquad
+E(\langle s,t\rangle)=E(s)E(t),\qquad X_j=E(T_j).
+\tag{355.1}
+$$
+
+这里每个叶像按原树的叶次序相乘，乘法的结合性使读数不记录括号；代数关系还可使不同叶序列具有相同读数。因此 $E$ 是观察映射，其像中的相等不作为原树的相等。Clifford 构造、平方约定、极化关系与结合乘法使用 [Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1–2.3](https://arxiv.org/abs/0907.5356v1) 的标准定义；本定义的 $Q$、叶序及替换取自本卷 §§2、3、22。
+
+**定义 355.2（同一规范来源的余数、下一次进位与高位）。** 沿用定义3.3及定理3.4，记
+
+$$
+z_j=c(T_j)=M^j\binom10,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad j\ge0.
+\tag{355.2}
+$$
+
+对正整数 $m$，$[w]_m$ 表示整数向量 $w$ 的逐坐标标准代表，坐标取值于 $\{0,\ldots,m-1\}$；$w\bmod m$ 表示其剩余类。对任意正整数 $d,e$，定义
+
+$$
+r_j=[z_j]_d,\qquad
+\kappa_j=\left\lfloor\frac{r_{j,0}+r_{j,1}}d\right\rfloor,
+\qquad
+K_{d,e}(j)=(0,\kappa_j)\bmod e,
+\tag{355.3}
+$$
+
+$$
+H_{d,e}(j)=\frac{z_j-r_j}{d}\bmod e,\qquad
+L_{d,e}(j)=\bigl(r_j,H_{d,e}(j)\bigr).
+\tag{355.4}
+$$
+
+$K_{d,e}(j)$ 是定义26.1中作用于该来源低位的 $c_M(r_j)$，即更新 $z_j\mapsto Mz_j$ 所需的下一次进位；$H_{d,e}(j)$ 是当前来源本身的高位，二者不是同一个目标。这里的分解使用定义25.1的标准数字截面，并逐坐标应用定义26.1的运输式：
+
+$$
+L_{d,e}(j+1)
+=\bigl([Mr_j]_d,\,MH_{d,e}(j)+K_{d,e}(j)\bigr).
+\tag{355.5}
+$$
+
+令 $\mathcal X=\{X_j:j\ge0\}\subset C$。对任意集合 $Y$ 及目标 $g:\mathbb N\to Y$，称 $g$ 通过规范叶积因子化，是指存在函数 $\bar g:\mathcal X\to Y$，使所有 $j\ge0$ 同时满足 $g(j)=\bar g(X_j)$；该函数不能另读 $j$、$T_j$ 或 $z_j$。余数环模 $1$ 按单元素集合处理。
+
+**定理 355.3（规范叶积的尖锐恢复边界与原树替换障碍）。** 对定义355.1–355.2的同一观察、同一规范来源族及所有非负整数 $j$，有以下结论。
+
+1. 对每个整数 $D\ge1$，存在
+
+   $$
+   f_D:\mathcal X\longrightarrow(\mathbb Z/D\mathbb Z)^2,
+   \qquad f_D(X_j)=z_j\bmod D\quad(j\ge0)
+   $$
+
+   当且仅当 $D\mid4$。
+
+2. 对每个整数 $d\ge1$ 及 $e\ge2$，存在
+
+   $$
+   k_{d,e}:\mathcal X\longrightarrow(\mathbb Z/e\mathbb Z)^2,
+   \qquad k_{d,e}(X_j)=K_{d,e}(j)\quad(j\ge0)
+   $$
+
+   当且仅当 $d\mid4$。若 $e=1$，则对每个 $d\ge1$，模 $e$ 的进位输出恒为零并能因子化。若 $d=1$，则低位 $r_j=(0,0)$，整数进位 $\kappa_j=0$，故对所有 $e\ge1$ 均有 $K_{1,e}(j)=0$。
+
+3. 对每个整数 $d,e\ge1$，完整低高位目标 $L_{d,e}$ 通过 $X_j$ 因子化，当且仅当 $de\mid4$。特别地，在 $d\mid4$ 时，当前高位 $H_{d,e}$ 能因子化当且仅当 $de\mid4$；下一次进位能恢复并不保证当前高位能恢复。退化情形 $d=1$ 的完整分解恢复条件是 $e\mid4$。
+
+4. 同一规范轨道存在碰撞
+
+   $$
+   X_0=X_6=A,\qquad z_0=(1,0),\qquad z_6=(5,8).
+   \tag{355.6}
+   $$
+
+   其旧数量读数 $q_{2,3}(a,b)=2a+3b$ 分别为 $2,34$。在 $d=3$ 时，两个低位分别为 $(1,0),(2,2)$，所以对每个 $e\ge2$，下一次进位分别为 $(0,0),(0,1)$，在模 $e$ 下仍不同。在 $d=4,e=2$ 时，这两个来源的低位同为 $(1,0)$，下一次进位同为零，但当前高位分别为 $(0,0),(1,0)$。
+
+5. 在规范像 $\mathcal X$ 上，后继 $X_j\mapsto X_{j+1}$ 是良定义的；在全部原树像 $E(\mathcal T)$ 上，却不存在函数 $R:E(\mathcal T)\to C$ 使
+
+   $$
+   R(E(t))=E(\rho(t))\qquad(t\in\mathcal T).
+   \tag{355.7}
+   $$
+
+   一个全树域反例是
+
+   $$
+   t_2=\langle\alpha,\alpha\rangle,\qquad
+   t_4=\langle t_2,t_2\rangle:
+   \qquad E(t_2)=E(t_4)=1,
+   \quad E(\rho(t_2))=-1,\quad E(\rho(t_4))=1.
+   \tag{355.8}
+   $$
+
+   此外，$E$ 不能恢复全部原树的括号结构，即使组成和叶序已固定。
+
+本定理的量词覆盖完整无限轨道。若只给定有限的来源子集，以上整除条件仍是充分条件，但不再一概必要；例如限制到 $0\le j\le5$ 时，任意目标都能通过这些叶积因子化。各项只针对这里声明的 $E$ 及目标，不断言所有几何代数编码都有相同障碍。
+
+数学引文：Clifford 的标准构造与关系使用定义355.1所引的 Lundholm–Svensson，§§2.1–2.3；本条的模数分类、规范进位必要性及来源碰撞是由本卷 §§2、3、18、22、25、26 的定义推导的仓内结果。相关文献 [Flaut，*A Clifford algebra associated to generalized Fibonacci quaternions*，DOI:10.1186/1687-1847-2014-279](https://doi.org/10.1186/1687-1847-2014-279) 研究广义 Fibonacci 四元数关联的 Clifford 构造，属于不同对象，不能作为本条叶积恢复分类的依据。本条的全球原创性未确立。
+
+证明。先在恢复边界的推导内部确定 $X_j$ 的精确观察纤维。由标准平方约定和 $Q(1,1)=1$，
+
+$$
+A^2=1,\qquad B^2=-1,\qquad
+AB+BA=(A+B)^2-A^2-B^2=1.
+\tag{355.9}
+$$
+
+定理3.2保持原树的左、右子树次序，因而给出
+
+$$
+X_{j+2}=X_{j+1}X_j\qquad(j\ge0).
+\tag{355.10}
+$$
+
+按此乘法次序计算：$X_2=BA$；$X_3=BAB=A+B$；由 $ABA=A-B$ 得
+$X_4=(A+B)BA=-B$；再得 $X_5=-B(A+B)=1-BA=AB$、
+$X_6=(AB)(-B)=A$、$X_7=A(AB)=B$。于是
+
+$$
+(X_0,\ldots,X_7)=(A,B,BA,A+B,-B,AB,A,B).
+\tag{355.11}
+$$
+
+$(X_6,X_7)=(X_0,X_1)$ 及确定性的二项递推（355.10）给出 $X_{j+6}=X_j$。还须排除六项内部的额外碰撞，不能只凭递推把周期当成相等关系。为此，在 $M_2(\mathbb R)$ 中取
+
+$$
+\widehat A=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\widehat B=\begin{pmatrix}1/2&1\\-5/4&-1/2\end{pmatrix}.
+\tag{355.12}
+$$
+
+直接相乘有 $\widehat A^2=I$、$\widehat B^2=-I$、
+$\widehat A\widehat B+\widehat B\widehat A=I$。因此每个实数 $a,b$ 满足
+$(a\widehat A+b\widehat B)^2=Q(a,b)I$，由 Clifford 泛性质得到代数同态 $C\to M_2(\mathbb R)$。若
+
+$$
+sI+t\widehat A+u\widehat B+v\widehat A\widehat B=0,
+$$
+
+右上和左下元素分别给 $u+v=0$、$-5u/4+5v/4=0$，故 $u=v=0$；两个对角元素再给 $s+t=s-t=0$，故 $s=t=0$。所以 $1,A,B,AB$ 线性无关。用 $BA=1-AB$，六项的系数向量依次为
+
+$$
+(0,1,0,0),\ (0,0,1,0),\ (1,0,0,-1),\
+(0,1,1,0),\ (0,0,-1,0),\ (0,0,0,1),
+$$
+
+彼此不同。结合（355.11）和六周期，得到精确等价
+
+$$
+X_j=X_\ell\quad\Longleftrightarrow\quad j\equiv\ell\pmod6
+\qquad(j,\ell\ge0).
+\tag{355.13}
+$$
+
+因此任意目标 $g$ 能因子化当且仅当它满足 $g(j+6)=g(j)$：必要性由同叶积给同输出；充分性是在六个不同值 $X_0,\ldots,X_5$ 上规定 $\bar g(X_i)=g(i)$。这也证明规范叶积后继良定义，且在六个来源组成的有限片段上没有因子化限制。
+
+第一项中，矩阵计算给出
+
+$$
+M^6=\begin{pmatrix}5&8\\8&13\end{pmatrix},\qquad
+M^6-I=\begin{pmatrix}4&8\\8&12\end{pmatrix}.
+\tag{355.14}
+$$
+
+若 $z_j\bmod D$ 六周期，则在 $j=0,1$ 处，
+$(M^6-I)z_j\equiv0\pmod D$。由于 $z_0=(1,0)$、$z_1=(0,1)$ 是整数标准基，这等价于 $M^6-I$ 的每个元素均被 $D$ 整除；这些元素的最大公因数为 $4$，故 $D\mid4$。反向若 $D\mid4$，则（355.14）给 $M^6\equiv I\pmod D$，从而所有 $z_j\bmod D$ 六周期；再用（355.13）即得第一项，包括单元素输出的 $D=1$。
+
+第二项先处理退化参数。$d=1$ 时标准低位恒为零，故整数进位为零；$e=1$ 时输出剩余类恒为零，无须整数进位本身为零。以下设 $d\ge2,e\ge2$。由 $0\le r_{j,0},r_{j,1}<d$，有
+
+$$
+\kappa_j\in\{0,1\}.
+\tag{355.15}
+$$
+
+模 $e$ 在这个二元素集合上是单射，所以 $K_{d,e}$ 六周期当且仅当整数序列 $\kappa_j$ 六周期。充分性是第一项在 $D=d$ 的直接应用：若 $d\mid4$，则 $r_j$ 六周期，（355.3）给整数进位六周期。
+
+为证必要性，设 $\kappa_{j+6}=\kappa_j$ 对所有 $j\ge0$ 成立。沿用 §18 的 $F_0=0,F_1=1$ 及 $F_{j+2}=F_{j+1}+F_j$。由（355.2）归纳得到 $z_{j+1}=(F_j,F_{j+1})$。置
+
+$$
+u_j=[F_j]_d\in\{0,\ldots,d-1\}\qquad(j\ge0).
+$$
+
+实际低位相加的整数关系为
+
+$$
+u_{j+2}=u_{j+1}+u_j-d\kappa_{j+1}.
+\tag{355.16}
+$$
+
+这是同一来源的标准代表关系，不能用无来源的独立进位替换。定义整数差分
+
+$$
+\Delta_j=u_{j+6}-u_j.
+$$
+
+将（355.16）的 $j+6$ 式减去 $j$ 式，六周期进位项恰好消去，故
+
+$$
+\Delta_{j+2}=\Delta_{j+1}+\Delta_j,\qquad
+|\Delta_j|\le d-1\quad(j\ge0).
+\tag{355.17}
+$$
+
+以下有界性论证适用于每个有限正整数 $d$，不使用模数枚举。复用 §18 的两个根
+$\varphi=(1+\sqrt5)/2$、$\psi=(1-\sqrt5)/2$。由两根不同，存在唯一实系数 $a,b$ 使
+$\Delta_0=a+b$、$\Delta_1=a\varphi+b\psi$；递推归纳给
+
+$$
+\Delta_j=a\varphi^j+b\psi^j\qquad(j\ge0).
+\tag{355.18}
+$$
+
+因 $\varphi>1$、$|\psi|<1$，将（355.18）除以 $\varphi^j$，有界性使左侧趋零，右侧趋于 $a$，故 $a=0$。于是 $\Delta_j=b\psi^j\to0$。每个 $\Delta_j$ 是整数，所以存在 $N$ 使所有 $j\ge N$ 都有 $\Delta_j=0$。最后由反向递推
+$\Delta_j=\Delta_{j+2}-\Delta_{j+1}$，从相邻的两个零逐次回推，得到所有 $j\ge0$ 都有 $\Delta_j=0$。特别地，
+
+$$
+F_6\equiv F_0\pmod d,\qquad F_7\equiv F_1\pmod d.
+$$
+
+$F_6=8,F_7=13$ 给 $d\mid8$、$d\mid12$，因而 $d\mid\gcd(8,12)=4$。这证明第二项的全模数必要性。该推导需要无限序列的有界性，不能从有限来源检查推出同一必要条件。
+
+第三项逐坐标使用定义25.1的集合双射
+
+$$
+(\mathbb Z/de\mathbb Z)^2
+\longleftrightarrow
+\{0,\ldots,d-1\}^2\times(\mathbb Z/e\mathbb Z)^2,
+\qquad
+w\longmapsto\left([w]_d,\frac{w-[w]_d}{d}\bmod e\right).
+\tag{355.19}
+$$
+
+它的逆映射是 $(r,h)\mapsto r+dh\bmod de$，而 $z_j\bmod de$ 对应的恰是 $L_{d,e}(j)$。故完整分解能因子化当且仅当组成模 $de$ 能因子化，第一项即给 $de\mid4$。若 $d\mid4$，低位已能因子化，于是高位能因子化等价于完整分解能因子化；这给出第三项的高位结论及 $d=1$ 的条件。
+
+第四项由（355.11）、（355.14）取第一列得到（355.6），旧数量读数为 $2\cdot1+3\cdot0=2$ 及 $2\cdot5+3\cdot8=34$。在 $d=3$ 时，标准低位为 $(1,0)$、$(2,2)$，相应进位第二坐标是
+$\lfloor1/3\rfloor=0$、$\lfloor4/3\rfloor=1$；由 $e\ge2$ 的单射性知输出仍不同。在 $d=4,e=2$ 时，两个低位均为 $(1,0)$，进位均为零，而
+
+$$
+\frac{z_0-(1,0)}4=(0,0),\qquad
+\frac{z_6-(1,0)}4=(1,2)\equiv(1,0)\pmod2.
+$$
+
+所以相同叶积与可恢复进位仍不能在此模数下恢复高位。这些碰撞均来自实际的 $T_0,T_6$，没有改换来源。
+
+第五项在全部原树域内使用（355.9）和原替换：
+
+$$
+E(t_2)=A^2=1,\qquad E(t_4)=(A^2)^2=1,
+$$
+
+$$
+E(\rho(t_2))=B^2=-1,\qquad
+E(\rho(t_4))=(B^2)^2=1.
+$$
+
+矩阵表示（355.12）中 $-I\ne I$，故 $-1\ne1$；任何满足（355.7）的函数都须同时给 $R(1)=-1$ 和 $R(1)=1$，矛盾。$t_2,t_4$ 是自由语法中的不同树，这个反例不把二者当作同一个来源。最后，
+
+$$
+p=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad
+q=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+$$
+
+具有相同组成 $(3,0)$ 和相同叶序，却按定义2.1有 $p\ne q$；结合乘法给 $E(p)=E(q)=A$。因此在全部原树上不存在从 $E$ 恢复括号结构的函数。规范轨道的模组成与进位恢复、完整低高位恢复以及全部原树的结构恢复是不同的任务；上述各项已分别在它们的声明域内证成。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 356. 连续 Clifford 叶积窗口的尖锐闭合与历史纤维
+
+**定义 356.1（连续叶积窗口）。** 沿用定义 2.1、定义 3.1、定义 355.1 的自由有序二叉树 $\mathcal T$、替换 $\rho$、观察 $E$ 及 Clifford 代数 $C$。对整数 $m\ge1$ 定义
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr)\in C^m,
+\qquad
+W_m(\mathcal T)=\{W_m(t):t\in\mathcal T\}.
+$$
+
+窗口的 $m$ 个坐标必须来自同一棵实际原树 $t$。称全原树上的长度 $m$ 窗口闭合，是指存在唯一的函数
+
+$$
+F_m:W_m(\mathcal T)\longrightarrow W_m(\mathcal T),
+\qquad
+F_m(W_m(t))=W_m(\rho(t))\quad(t\in\mathcal T).
+$$
+
+这里的定义域和值域都是实际窗口像，不把 $C^m$ 中任意代数元组当作可实现的窗口。
+
+**引理 356.2（等级对合与共轭构成的代数自同构）。** 令 $\gamma$ 为 Clifford 代数的标准保持乘法次序的等级对合：$\gamma(1)=1$，$\gamma(v)=-v$ 对每个 $v\in V$ 成立，并按乘法延拓，满足 $\gamma^2=\operatorname{id}_C$。这里的等级对合使用 Lundholm–Svensson，§2.3 的标准运算，而非反转乘法次序的反对合。令
+
+$$
+J(x)=B\,\gamma(x)\,B^{-1}.
+$$
+
+则 $B^{-1}=-B$，$J$ 是保单位的代数自同构，且
+
+$$
+J(A)=A+B,\qquad J(B)=-B,\qquad J^2=\operatorname{id}_C.
+$$
+
+在向量子空间 $V=\mathbb RA\oplus\mathbb RB$ 上，$J$ 的坐标为
+
+$$
+J(aA+bB)=aA+(a-b)B,
+$$
+
+并保持二次型 $Q$：
+
+$$
+Q(a,a-b)=a^2+a(a-b)-(a-b)^2=a^2+ab-b^2=Q(a,b).
+$$
+
+更一般地，按 $1,A,B,AB$ 展开时有
+
+$$
+J(s+tA+uB+vAB)=(s+v)+tA+(t-u)B-vAB.
+\tag{356.1}
+$$
+
+**证明。** 由 $B^2=-1$，有 $B(-B)=(-B)B=1$，所以 $B^{-1}=-B$。等级对合是保单位的乘法自同构，内共轭 $x\mapsto BxB^{-1}$ 也是保单位的代数自同构，二者复合即为 $J$。
+
+由 $\gamma(A)=-A$、$\gamma(B)=-B$ 及 $B^{-1}=-B$，并用 $AB+BA=1$，得到
+
+$$
+J(A)=B(-A)(-B)=BAB=A+B,
+\qquad
+J(B)=B(-B)(-B)=-B.
+$$
+
+对任意 $x\in C$，利用 $\gamma(B)=-B$、$\gamma(B^{-1})=B$ 可得
+
+$$
+\begin{aligned}
+J^2(x)
+ &=B\,\gamma\bigl(B\gamma(x)B^{-1}\bigr)B^{-1}\\
+ &=B\,\gamma(B)\,x\,\gamma(B^{-1})B^{-1}\\
+ &=B(-B)xB(-B)=x.
+\end{aligned}
+$$
+
+又有 $J(AB)=J(A)J(B)=(A+B)(-B)=1-AB$。将 $J$ 作用于 $s+tA+uB+vAB$ 并收集四个基项，得到（356.1）。向量坐标公式和 $Q$ 的保持性由 $J(A),J(B)$ 的两式直接计算。这里的 $J$ 是 Clifford 代数上的自同构，不是组成矩阵 $M^3$，二者的作用域与含义不同。这里使用的 $1,A,B,AB$ 线性无关性沿用 §355 的矩阵表示；它也保证后文比较的系数确实给出不等元。$\square$
+
+**引理 356.3（全部原树的三步关系）。** 对任意 $t\in\mathcal T$ 及整数 $n\ge0$，有
+
+$$
+E\bigl(\rho^{n+3}(t)\bigr)=J\bigl(E(\rho^n(t))\bigr).
+\tag{356.2}
+$$
+
+**证明。** 记 §355 中的规范叶积为 $X_j=E(T_j)$。由 $AB+BA=1$，
+
+$$
+X_3=BAB=A+B,
+\qquad
+X_4=(A+B)BA=-B.
+$$
+
+这正好分别等于 $J(A)$ 和 $J(B)$。先证 $n=0$ 的情形。对 $t$ 作自由树结构归纳：在 $\alpha$、$\beta$ 两个原子处，上式就是 $X_3=J(A)$、$X_4=J(B)$；若 $t=\langle s,u\rangle$，则 $\rho$ 保持有序构造且 $E$ 保持乘法次序，于是由归纳假设
+
+$$
+\begin{aligned}
+E(\rho^3\langle s,u\rangle)
+ &=E\bigl(\langle\rho^3s,\rho^3u\rangle\bigr)\\
+ &=E(\rho^3s)E(\rho^3u)\\
+ &=J(E(s))J(E(u))\\
+ &=J(E(s)E(u))
+ =J(E(\langle s,u\rangle)).
+\end{aligned}
+$$
+
+对任意 $n$，把同一结论应用于实际原树 $\rho^n(t)$ 即得（356.2）。规范二项递推只用于原子处的 $X_3,X_4$；全原树上的关系由有序构造与 $J$ 的乘法性通过结构归纳得到。$\square$
+
+**定理 356.4（全原树连续窗口的尖锐闭合）。** 对每个整数 $m\ge1$，长度 $m$ 窗口在全原树 $\mathcal T$ 上闭合，当且仅当 $m\ge3$。当 $m\ge3$ 时，闭合后继唯一地由
+
+$$
+F_m(x_0,\ldots,x_{m-1})
+ =\bigl(x_1,\ldots,x_{m-1},J(x_{m-3})\bigr)
+\tag{356.3}
+$$
+
+给出。
+
+**证明。** 设 $m\ge3$，取任意实际代表 $W_m(t)=(x_0,\ldots,x_{m-1})$。前 $m-1$ 个坐标显然是 $E(\rho t),\ldots,E(\rho^{m-1}t)$；由（356.2）在 $n=m-3$ 处
+
+$$
+E(\rho^m t)=J\bigl(E(\rho^{m-3}t)\bigr)=J(x_{m-3}).
+$$
+
+故（356.3）满足 $F_m(W_m(t))=W_m(\rho t)$，并且所得元组确实属于 $W_m(\mathcal T)$。若一个实际窗口有两个代表 $t,u$，它们给出相同的 $x_i$，右侧（356.3）只依赖这 $m$ 个坐标，因而给出同一个输出；所以定义与代表无关。任何满足后继条件的函数都必须在每个实际窗口上取值为 $W_m(\rho t)$，故该函数唯一。
+
+下面排除较短窗口。令
+
+$$
+ t_2=\langle\alpha,\alpha\rangle,
+ \qquad
+ t_4=\langle t_2,t_2\rangle.
+$$
+
+则 $E(t_2)=A^2=1$、$E(t_4)=(A^2)^2=1$，而
+
+$$
+E(\rho t_2)=B^2=-1,
+\qquad
+E(\rho t_4)=(B^2)^2=1.
+$$
+
+因此 $W_1(t_2)=W_1(t_4)$ 而下一项不同；由 §355 的线性无关性（或其矩阵表示中的 $-I\ne I$），$1\ne-1$，所以 $m=1$ 不闭合。
+
+对 $m=2$，令
+
+$$
+ p=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+ \qquad
+ q=\langle\beta,\langle\alpha,\alpha\rangle\rangle,
+ \qquad S=BA.
+$$
+
+$p,q$ 都有组成 $(2,1)$，且都是同一右结合树形；直接按有序叶次序相乘，得到
+
+$$
+E(p)=A(AB)=B,\qquad E(q)=B(AA)=B,
+\qquad
+E(\rho p)=B(BS)=-S,\qquad E(\rho q)=S(BB)=-S.
+$$
+
+另一方面，由 $S^2=S+1$、
+
+$$
+S(A+B)=A+2B,
+\qquad
+(A+B)S=-B,
+\tag{356.4}
+$$
+
+有
+
+$$
+E(\rho^2p)=S^2(A+B)=2A+3B,
+\qquad
+E(\rho^2q)=(A+B)S^2=A.
+\tag{356.5}
+$$
+
+这些等式的有序乘法展开为
+
+$$
+\begin{aligned}
+S^2&=B(AB)A=B(1-BA)A=BA-B^2A^2=S+1,\\
+S(A+B)&=BA^2+BAB=B+(A+B)=A+2B,\\
+(A+B)S&=ABA+B^2A=(A-B)-A=-B.
+\end{aligned}
+$$
+
+因为 $\rho^2(\alpha)=T_2$、$\rho^2(\beta)=T_3$，$p,q$ 的第三项分别是 $S(S(A+B))$ 和 $(A+B)(SS)$。所以
+
+$$
+\begin{aligned}
+S^2(A+B)&=(S+1)(A+B)=(A+2B)+(A+B)=2A+3B,\\
+(A+B)S^2&=(A+B)(S+1)=-B+(A+B)=A.
+\end{aligned}
+$$
+
+由 $1,A,B,AB$ 线性无关，$2A+3B\ne A$。故两棵实际树满足
+
+$$
+W_2(p)=W_2(q)=(B,-BA),\qquad
+W_2(\rho p)=(-BA,2A+3B)\ne(-BA,A)=W_2(\rho q),
+$$
+
+$m=2$ 也不闭合。综上，恰当条件是 $m\ge3$。$\square$
+
+**推论 356.5（六周期后继与实际像上的逆）。** 对每个 $(x,y,z)\in W_3(\mathcal T)$，有
+
+$$
+F_3(x,y,z)=(y,z,Jx),
+\qquad
+F_3^{-1}(x,y,z)=(Jz,x,y).
+\tag{356.6}
+$$
+
+逆函数仍把实际像送回实际像，且在该实际像上 $F_3^6=\operatorname{id}$。对实际窗口，$F_3^5(W_3(t))=W_3(\rho^5t)$，所以逆的实际像性也由实际原树代表得到。
+
+**证明。** （356.3）在 $m=3$ 时就是第一式。由 $J^2=\operatorname{id}$，
+
+$$
+F_3^2(x,y,z)=(z,Jx,Jy),
+\quad
+F_3^3(x,y,z)=(Jx,Jy,Jz),
+$$
+
+继续迭代得 $F_3^6(x,y,z)=(x,y,z)$。直接组合（356.6）两式也得到左右逆。另一方面，每次应用 $F_3$ 都把 $W_3(t)$ 送到实际窗口 $W_3(\rho t)$；故 $F_3^5(W_3(t))=W_3(\rho^5t)$，逆确实在 $W_3(\mathcal T)$ 内。$\square$
+
+**推论 356.6（完整历史的六周期与最短充分窗口）。** 对任意实际原树 $t$，令 $x_r=E(\rho^r t)$（$r=0,1,2$）。对整数 $n=3q+r$，其中 $q\ge0$ 且 $r\in\{0,1,2\}$，有
+
+$$
+E(\rho^n t)=J^q(x_r).
+\tag{356.7}
+$$
+
+因而
+
+$$
+W_6(t)=(x_0,x_1,x_2,Jx_0,Jx_1,Jx_2),
+$$
+
+且 $W_3$、$W_6$ 与完整历史
+
+$$
+\mathscr H(t)=\bigl(E(t),E(\rho t),E(\rho^2t),\ldots\bigr)
+$$
+
+在 $\mathcal T$ 上具有相同的纤维，即任意 $t,u\in\mathcal T$ 满足 $W_3(t)=W_3(u)$、$W_6(t)=W_6(u)$、$\mathscr H(t)=\mathscr H(u)$ 三者等价。每棵树历史的最小正周期存在且整除 $6$，并不要求它恰好等于 $6$。
+
+**证明。** 对 $q$ 作归纳。$q=0$ 时是定义；若结论对 $q$ 成立，则由（356.2）
+
+$$
+E(\rho^{3(q+1)+r}t)=J\bigl(E(\rho^{3q+r}t)\bigr)=J^{q+1}(x_r).
+$$
+
+因为 $J^2=\operatorname{id}$，右侧只依赖 $q$ 模 $2$，故 $E(\rho^{n+6}t)=E(\rho^nt)$。
+
+若 $W_3(t)=W_3(u)$，式（356.7）逐项给出 $\mathscr H(t)=\mathscr H(u)$，同时 $W_6(t)=W_6(u)$。反向地，$W_6$ 的前三个坐标就是 $W_3$，而完整历史相等也当然蕴含前三项相等；三种观察的纤维因此相同。最小正周期存在，因为 $6$ 已经是周期；将 $6$ 除以最小正周期，若所得余数为正，则它也必是周期，最小性迫使该余数为零。$\square$
+
+**定理 356.7（历史纤维不能恢复组成与指定来源关系）。** 完整 Clifford 叶积历史在全部原树上不能恢复组成；即使限制到规范轨道，也不能恢复定义 355.2 在 $d=3,e\ge2$ 时的下一次进位或 $d=4,e=2$ 时的当前高位。更具体地，对任意 $t\in\mathcal T$ 及整数 $k\ge0$，令
+
+$$
+ t_k=\rho^{6k}(t),
+ \qquad c(t)=(a,b)^{\mathsf T}.
+$$
+
+则 $\mathscr H(t_k)=\mathscr H(t)$，而
+
+$$
+ c(t_k)=M^{6k}c(t),
+ \qquad
+M^6-I=
+\begin{pmatrix}4&8\\8&12\end{pmatrix}.
+\tag{356.8}
+$$
+
+本原树域不含空树，因此 $c(t)$ 的坐标非负且非零；$k=0$ 时 $t_0=t$，而对每个 $k\ge1$，$c(t_k)-c(t)$ 的两个坐标都严格为正。特别地，$T_0=\alpha$ 与 $T_6$ 具有同一完整历史而组成分别为 $(1,0)$ 与 $(5,8)$。
+
+**证明。** 由推论 356.6，叶积历史六周期，所以
+
+$$
+E(\rho^n t_k)=E(\rho^{n+6k}t)=E(\rho^nt)
+$$
+
+对每个 $n\ge0$ 成立。组成的等式来自定理 3.4。直接相乘得到（356.8）；于是
+
+$$
+(M^6-I)(a,b)^{\mathsf T}=(4a+8b,\,8a+12b)^{\mathsf T}.
+$$
+
+对非负且非零的 $(a,b)$，两坐标均为正。对每个 $i\ge0$，$M^{6i}c(t)$ 仍是非负非零向量，故
+
+$$
+c(t_{i+1})-c(t_i)=(M^6-I)M^{6i}c(t)
+$$
+
+的两坐标均为正。对 $i=0,\ldots,k-1$ 求和，得到所有 $k\ge1$ 的严格增长。取 $t=T_0$、$k=1$ 即得到 $c(T_0)=(1,0)$、$c(T_6)=(5,8)$。
+
+同一对 $T_0,T_6$ 还给出 §355 的两个具体目标碰撞。模 $d=3$ 时，低位分别是 $(1,0)$、$(2,2)$，所以整数进位分别为 $0$、$1$；因此对每个 $e\ge2$，$K_{3,e}$ 分别为 $(0,0)$ 和 $(0,1)$。$e=1$ 时目标值域是单元素集合，进位输出恒为零，本反例不构成障碍。模 $d=4,e=2$ 时，低位都为 $(1,0)$ 且进位都为零，但当前高位分别是
+
+$$
+\frac{(1,0)-(1,0)}4\equiv(0,0)\pmod2,
+\qquad
+\frac{(5,8)-(1,0)}4=(1,2)\equiv(1,0)\pmod2.
+$$
+
+因此不存在函数
+
+$$
+R_c:\mathscr H(\mathcal T)\longrightarrow\mathbb N^2,
+\qquad R_c(\mathscr H(t))=c(t)\quad(t\in\mathcal T).
+$$
+
+对每个整数 $e\ge2$，在规范历史像 $\{\mathscr H(T_j):j\ge0\}$ 上，也不存在分别满足
+
+$$
+R_{K,e}(\mathscr H(T_j))=K_{3,e}(j),
+\qquad
+R_H(\mathscr H(T_j))=H_{4,2}(j)\quad(j\ge0)
+$$
+
+的函数 $R_{K,e}$ 和 $R_H$，其值域分别是 $(\mathbb Z/e\mathbb Z)^2$ 和 $(\mathbb Z/2\mathbb Z)^2$：同一输入 $\mathscr H(T_0)=\mathscr H(T_6)$ 不能给出两种不同目标。任意有限窗口只是完整历史的前缀，故增加任何有限观察长度也不能恢复这些特定目标。该结论复用 §355 的实际来源反例，不重新进行其规范模数分类。$\square$
+
+**命题 356.8（固定组成下的叶序与固定叶序下的括号仍不可恢复）。** 令
+
+$$
+ s=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+ \qquad
+ u=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+则 $c(s)=c(u)=(2,2)$，且
+
+$$
+W_3(s)=W_3(u)=(-1,-S^2,S^2).
+\tag{356.9}
+$$
+
+因此二者的完整历史相同，而 $s\ne u$ 仍是自由有序树中的不同叶序。另令
+
+$$
+ p_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad
+ q_3=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+它们具有同一叶序和组成 $(3,0)$，但括号不同；对每个 $n\ge0$，
+
+$$
+E(\rho^n p_3)=X_n^3=E(\rho^n q_3).
+\tag{356.10}
+$$
+
+**证明。** 记 $X_n=E(T_n)$。对 $s$，前三个读数依次为
+
+$$
+A^2B^2=-1,
+\qquad
+B^2(BA)^2=-S^2,
+\qquad
+(BA)^2(A+B)^2=S^2,
+$$
+
+其中 $(A+B)^2=1$；对 $u$ 只是交换两个平方因子的次序，三式分别仍为 $-1,-S^2,S^2$。因此（356.9）成立，完整历史相同则由推论 356.6 得到。$s\ne u$ 是因为自由构造保留左右次序。
+
+对 $p_3,q_3$，替换 $\rho^n$ 保持两种括号而把三个 $\alpha$ 叶子都解释为 $T_n$，故两式的观察分别为 $(X_nX_n)X_n$ 与 $X_n(X_nX_n)$；结合律使它们都等于 $X_n^3$。原始语法不采用结合律。两棵替换后树的左子树分别是 $\langle T_n,T_n\rangle$ 和 $T_n$；前者叶数是后者的两倍，而 $T_n$ 的叶数为正，所以对每个 $n$ 两棵实际树仍不同。$\square$
+
+**推论 356.9（规范轨道与全原树范围的区别）。** 在规范轨道
+
+$$
+\mathcal X=\{X_j:j\ge0\}
+$$
+
+上，存在唯一函数 $F_{\mathcal X}:\mathcal X\to\mathcal X$ 满足
+
+$$
+F_{\mathcal X}(X_j)=X_{j+1}\quad(j\ge0).
+$$
+
+因而单次叶积已闭合；最小长度三只针对全原树的连续窗口。
+
+**证明。** §355 已证明 $X_j=X_\ell$ 当且仅当 $j\equiv\ell\pmod6$。所以相同规范叶积的后继仍相同，可以在六个不同值上规定 $F_{\mathcal X}(X_r)=X_{r+1}$（$r=0,\ldots,5$），其中 $X_6=X_0$；这也给出值域在 $\mathcal X$ 内及唯一性。定理 356.4 的两个较短窗口反例位于全原树域，其结论与本规范轨道的单次闭合兼容。$\square$
+
+这两个结论只涉及同一实际树产生的初始窗口；窗口长度 $m$ 不等同于任意编码的维数、状态总数、比特成本或实测加速。连续窗口的闭合只说明存在代数后继函数，不说明该函数恢复组成、来源身份、原始括号或叶序。
+
+数学引文与边界：等级对合、Clifford 泛性质及乘法关系沿用 Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，[arXiv:0907.5356v1](https://arxiv.org/abs/0907.5356v1)，§§2.1、2.3，以及 §355 的具体实例。原替换接口、三步关系、全原树最小窗口、历史纤维及其不可恢复见证是本卷对既有定义的综合推导；全球原创性未确立。本节没有 Lean 内核证明，纸面证明、精确有限代数计算与内核验证不混同。
 
 ## 追加锚（本行以下为增补区）

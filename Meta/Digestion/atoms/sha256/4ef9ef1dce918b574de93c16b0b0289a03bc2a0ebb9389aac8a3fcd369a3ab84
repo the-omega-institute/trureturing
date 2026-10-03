@@ -1,0 +1,45 @@
+**定义 31.1（有限闭观察的共同来源合同）。** 沿用定义14.5、定理17.2与 (29.7)—(29.8) 的地址、编码和 incoming guard。置
+
+$$
+\mathbb F=\mathbb Q(t)=\mathbb Q(\sqrt5),\qquad
+t=\frac{\sqrt5-1}{2},\quad \phi=1+t,\quad g=t^3=2t-1,
+\qquad I_0=X=[-1,\phi],\quad I_1=[-1,t].
+\tag{31.1}
+$$
+
+$\mathbb F$ 只表示系数域，不表示本卷已有的联合完成域 $K=\Omega\times G$。$A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$ 始终表示来源地址域，不用来命名闭覆盖。窗口标签为 $\Lambda=\{3,0,5,2,25\}$，其中 $0=\mathrm{null}$，$25$ 是一个三位窗口标签。合法边及其仿射数据为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),\\
+f_\ell(y)=\Delta_\ell-gy,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+D_{s,\ell}=f_\ell(I_{s'})\quad
+\text{当 }s\xrightarrow{\ell}s'\text{ 合法}.
+\end{gathered}
+\tag{31.2}
+$$
+
+给定有限族 $E_1,\ldots,E_r$，每个成员为端点在 $\mathbb F$ 中的闭区间，或为空集；允许单点区间。只使用其有效部分 $\bar E_i=E_i\cap X$。非空有效部分仍为端点在 $\mathbb F$ 中的闭区间。对一个初始 guard $s_0$ 和一条地址 $\omega\in A_{s_0}$，记其实际窗口、后续 guard 和坐标为
+
+$$
+\ell_j=\sigma_j(\omega),\qquad
+s_j\xrightarrow{\ell_j}s_{j+1},\qquad
+x_j=\kappa_{s_j}(T^j\omega).
+\tag{31.3}
+$$
+
+两个状态的编码使用同一个窗口级数；在 $T^j\omega\in A_{s_j}$ 上，$x_j$ 也等于 $\kappa_0(T^j\omega)$。给每个指定时刻一个指标集 $H_j\subseteq\{1,\ldots,r\}$，所要求的正成员关系是
+
+$$
+x_j\in\bar E_i\qquad(i\in H_j).
+\tag{31.4}
+$$
+
+$H_j=\varnothing$ 表示此时没有观察约束，不表示这些区间的成员位全为零。时刻可以只取一个有限前缀，也可以取全部非负整数；同一时刻允许多个闭约束。区间之间允许重叠。所有窗口、guard 和观察坐标必须来自 (31.3) 的同一条实际地址，不能为各坐标分别选择来源。
+
+本章直接使用定理17.2的状态相对满像 $\kappa_s(A_s)=I_s$、合法前接等式和完整端点尾。命题14.8所示同标量、不同实际后继仍被保留；这里没有把标量观察替换为全空间上的单值自主删除映射。
+

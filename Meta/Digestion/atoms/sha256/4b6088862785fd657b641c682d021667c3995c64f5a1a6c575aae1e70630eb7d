@@ -1,0 +1,63 @@
+**60.1 固定来源、原图与结论合同。** 本节采用公开数学源 [FIB_SOURCE_COMPLETION_DYNAMICS.md，固定版本12e9e70a44e06fb3f915721ee5490d10da0b043e](https://github.com/the-omega-institute/trureturing/blob/12e9e70a44e06fb3f915721ee5490d10da0b043e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 中定义14.5、命题14.6、定理14.7及17.2的实际来源，引理31.2、定义31.3及定理31.4的有限端点和原全包含图，引理36.16、定理36.22、命题39.6.1、第42.9节及定义45.1、引理45.2的相关证明。以下展开所需的侧别、最小菱形、合流条带和周期提升，沿用54.7—54.9的同一原片含义。
+
+一个时间步删除一个三位窗口，$25$ 是单个标签，$0$ 是空窗口标签。置
+$$
+g=\sqrt5-2,\quad g^2+4g=1,\quad
+t=\frac{1+g}{2},\quad u=\frac{1-g}{2}=t^2,\quad
+\phi=1+t,\quad \lambda=\frac u{10},\quad
+0\le\beta<\lambda,\quad \delta=\lambda-\beta>0.
+$$
+来源地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$，状态区间为 $I_0=[-1,\phi]$、$I_1=[-1,t]$。全部实际分支及守卫为
+$$
+f_a(x)=\Delta_a-gx,\qquad F_a(x)=\frac{\Delta_a-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+$$
+0\to0:3,0,2;\quad0\to1:5,25;\qquad
+1\to0:3,0;\quad1\to1:5.
+$$
+根像按空间次序为
+$$
+3:[-1,-u],\quad0:[-u,g],\quad5:[g,t],\quad
+2:[t,2t],\quad25:[2t,\phi].
+\tag{60.1}
+$$
+守卫一只允许前三块；特别在闭端点 $t$，守卫一允许标签 $5$，不允许标签 $2$。复合 $f_{a_0\cdots a_{L-1}}=f_{a_0}\circ\cdots\circ f_{a_{L-1}}$ 表示前接同一终尾。
+
+记
+$$
+\begin{aligned}
+A&=3(g-1)/5,&B&=(11g-1)/10,&C&=(6g-1)/5,&D&=(3+7g)/10,\\
+E&=(1+4g)/5,&H_3&=(7+13g)/10,&L_4&=(3+7g)/5,&H_4&=(11+9g)/10.
+\end{aligned}
+$$
+六个原闭色恰为
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&E_1^\beta&=[A+\delta,B-\delta],\\
+E_2^\beta&=[C+\delta,D-\delta],&E_3^\beta&=[E+\delta,H_3-\delta],\\
+E_4^\beta&=[L_4+\delta,H_4-\delta],&E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{60.2}
+$$
+两端色分别只允许标签 $3,25$；内色的可能标签对为 $(3,0),(0,5),(5,2),(2,25)$，色宽依次为 $t-2\delta,u-2\delta,t-2\delta,u-2\delta$，严格小于相应平移差。非相邻色不交，每点至多有两个相邻色。这里始终保留闭成员和原端点所有权；闭色成员不自动表示另一个端点归属规则下的实际观察取得。
+
+固定已经给定的有限完整原图。其共同端点集 $B_{\rm end}$ 含全部观察、守卫和根端点，并满足 $x\in B_{\rm end},F_a(x)\in I_0\Rightarrow F_a(x)\in B_{\rm end}$。每个守卫保留全部端点单点及相邻端点间的整个闭片。全部来源边恰按
+$$
+(s,P)\xrightarrow a(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow a s'\text{ 合法},\quad
+P\subseteq f_a(I_{s'}),\quad f_a(Q)\subseteq P
+\tag{60.3}
+$$
+保留；最后一个包含等价于 $Q\subseteq F_a(P)$。配对顶点保留两个实际守卫和两片，每条边保留两条原边，出发顶点有一个共同原闭色，有限路径终端不重复观察。
+
+根像覆盖每个 $I_s$；给定其中一点，逐步选含它的合法根并取逆像，所得坐标始终在相应状态区间，且 $x_0=\sum_{j=0}^{N-1}(-g)^j\Delta_{a_j}+(-g)^Nx_N$ 的有界尾项趋零。因此状态相对编码满像，任何终端片内的点都具有同守卫合法尾。有限路径只在终端选择一次这样的尾，逐边前接就同时实现全部坐标。无限路径的前缀闭像嵌套，直径不超过 $g^N\operatorname{diam}I_0$，故由同一地址实现。一个返回无限重复，其收缩复合的唯一固定点及各中间坐标均属于该返回的原片。此为31.4的联合提升内容，也是以下两条实际返回的供应方式。
+
+设原配对图中含环 SCC $S$ 的第一投影返回不相干，第二投影为一个已具原单点成员资格的相干 rival；其字面本原周期 $p$ 为奇数。相干按同步返回的字面词相等定义。第二投影的相位由基点至顶点的路径长度模 $p$ 给出：两条路径接同一返程，所得返回词都是同一本原块的幂，故长度同余；边使相位加一。全部返回长另被 $2p$ 整除，令这些长度的最大公约数为 $h$，并假设
+$$
+|V(S)|=h+2.
+\tag{60.4}
+$$
+循环类按路径长模 $h$ 定义，同一返程证明其良定义，边只进入下一类，且 $2p\mid h$。一般实预算仍以这种有限原图已给为条件；域内端点的存在构造只在60.8用于每个固定 rival 的另一份初始输入。
+

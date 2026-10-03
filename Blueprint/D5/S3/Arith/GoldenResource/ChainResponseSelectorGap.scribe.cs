@@ -35,6 +35,10 @@ internal sealed class ChainResponseSelectorGapDocument : IScribeDocumentDefiniti
                 + "diagonal entries of the effective matrix therefore differ, while a scalar "
                 + "diagonal matrix has them equal. This holds for every scalar, not only two.",
                 DescribeRole.Lemma),
+            Node("log_remainder_bounds", "Quadratic logarithm remainder", LogRemainderFormula(),
+                "For every real y between zero and one half, the logarithm remainder "
+                + "after its linear term lies between zero and twice y squared.",
+                DescribeRole.Lemma),
             Node("chain_response_loss_bounds", "Two sided bound on the loss", BoundsFormula(),
                 "For y between zero and one half the remainder of the logarithm past its "
                 + "linear term is non-negative and at most twice y squared. The lower side "
@@ -72,6 +76,16 @@ internal sealed class ChainResponseSelectorGapDocument : IScribeDocumentDefiniti
         Forall, Sp, F.Id("c"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
         Call("effective", N(), D(2), D(1)), Sp, Neq, Sp,
         Call("diagonal", F.Id("c"), F.Id("c"))));
+
+    private static Formula LogRemainderFormula()
+    {
+        Formula y = F.Id("y");
+        Formula remainder = Sub(Neg2(Call("log", Sub(D(1), y))), y);
+        return Disp(Seq(Forall, Sp, y, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+            D(0), Sp, Le, Sp, y, Sp, Le, Sp, new Formula.Fraction(D(1), D(2)), Sp,
+            Rightarrow, Sp, D(0), Sp, Le, Sp, remainder, Sp, Le, Sp,
+            D(2), Sp, new Formula.Power(y, D(2))));
+    }
 
     private static Formula BoundsFormula() => Disp(Seq(NatBound("n"), Sp,
         D(0), Sp, Le, Sp, Call("L", N()), Sp, Land, Sp, Call("L", N()), Sp, Le, Sp,

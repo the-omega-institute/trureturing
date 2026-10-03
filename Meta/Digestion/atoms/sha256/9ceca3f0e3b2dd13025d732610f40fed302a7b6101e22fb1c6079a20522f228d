@@ -1,0 +1,7 @@
+**Theorem 2 (nonzero stabilizing directions).** Let $n=3m$ with $m>0$,
+and let $S\in\mathcal T_n$. If $t\in G_n$ is nonzero and $S+t=S$, then
+
+\[
+  t\in\{(m,m),(m,2m),(2m,m),(2m,2m)\}.
+\]
+

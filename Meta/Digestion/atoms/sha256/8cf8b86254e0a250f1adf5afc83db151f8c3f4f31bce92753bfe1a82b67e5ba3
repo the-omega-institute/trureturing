@@ -1,0 +1,38 @@
+**定义 53.1（同律完整记录实验）。** 令 $n\ge3$，
+$\Sigma=\{000,100,010,101,001\}$，位按低到高顺序写作
+$(b_1,b_2,b_3)$，$\ell=b_1,h=b_3$。给定一个已知概率律
+$\mu$，满足 $\mu(s)>0$ 对每个 $s\in\Sigma$ 成立。输入
+$X=(W_1,\ldots,W_n)$ 的整窗彼此独立，公共律为 $\mu$；窗内位保持五符号的实际联合关系。未知教师为递增三元组
+$\theta=(p,q,r)$，$1\le p<q<r\le n$，
+
+$$
+G_1=h_p\ell_q,\qquad G_2=(1-G_1)h_q\ell_r,\qquad
+C_\theta=G_1+2G_2,\qquad F_\theta=G_1+G_2=\mathbf1_{\{C_\theta\ne0\}}.
+\tag{53.1}
+$$
+
+预测目标始终是 $C_\theta$；$F_\theta$ 只用于训练时发现位置。已知且按固定标签 $0,1,2$ 排列的通道为
+
+$$
+Q=\begin{pmatrix}1/2&A&D\\1/4&1/2&1/4\\D&A&1/2\end{pmatrix},\qquad
+A=\sqrt2-1,\quad D=(3-2\sqrt2)/2=1/2-A.
+\tag{53.2}
+$$
+
+开始采样前固定但未知的 $\alpha\in[0,1]$ 给出
+
+$$
+P(Y=j\mid X)=\alpha Q_{C_\theta(X),j}+(1-\alpha)/3.
+$$
+
+训练取得 $m$ 份完整独立同分布 $(X,Y)$ 记录；测试独立于训练且服从同一输入律与通道。树、叶、环境的齐次双线性合并、原仿射-softmax 头及常数与忽略分支的计费合同沿用 §49.1。没有跨窗接缝或 positive-End 条件化：原卷 §104 供应局部字母与位序，其规范终止语言不替代这里的 $\Sigma^n$ 产品域。
+
+记
+
+$$
+u=\mu(100),\quad v=\mu(001),\quad z=\mu(101),\quad t=\mu(000)+\mu(010),\quad H=v+z,\quad L=u+z,\quad e=H+L.
+\tag{53.3}
+$$
+
+于是 $t=1-H-L+z>0$，$\mathbb E h=H,\mathbb E\ell=L,\mathbb E[h\ell]=z$。全支撑保证确定任务的区别有正概率，不保证指定响应的有符号平均不抵消。
+

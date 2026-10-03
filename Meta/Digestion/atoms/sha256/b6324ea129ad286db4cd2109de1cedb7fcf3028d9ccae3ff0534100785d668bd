@@ -1,0 +1,26 @@
+## 28. 六格完整记录的有限来源临界半径与完成域统一噪声间隙
+
+沿用第27章的实际地址、三位删除和误差合同。来源标签为 $\Lambda=\{3,0,5,2,25\}$，其中 $0=\mathrm{null}$；六个颜色按空间顺序编号为 $\mathcal C=\{0,1,2,3,4,5\}$。这两个字母表不同，合法地址的 guard 状态也不是颜色状态。置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad
+X=[-1,\phi],\qquad I=[-1,t],
+$$
+
+$$
+\lambda:=\lambda_{\mathrm{noise}}=\frac{t^2}{10}
+=\frac{1-g}{20}.
+$$
+
+这里的 $\lambda$ 只表示本章噪声半径。固定同一个六格连通量化器 $Q:X\to\mathcal C$，各格非空，允许任意合法切点归属及单点格；同一实际地址始终给出
+
+$$
+x_j(\omega)=\kappa_0(T^j\omega),\qquad
+R_j=Q\!\left(\operatorname{clip}_X(x_j(\omega)+\varepsilon_j)\right).
+$$
+
+闭预算 $\nu$ 指每个 $|\varepsilon_j|\le\nu$，正开预算指每个 $|\varepsilon_j|<\nu$。误差在裁剪前分别任意选择，正开合同不要求统一的严格上确界余量。解码器是一个固定确定函数，只接收合同规定的实际颜色记录，目标是恢复 $\sigma_0(\omega)$。$D$ 是最终为空尾的来源域，$\Omega$ 是完整合法来源域。
+
+以下先证明 $D$ 的完整记录合同，再用一对真实周期来源给出 $\Omega$ 的全布局定量上界。两者使用不同的来源域，完整记录和每个固定有限视界也分别处理。
+

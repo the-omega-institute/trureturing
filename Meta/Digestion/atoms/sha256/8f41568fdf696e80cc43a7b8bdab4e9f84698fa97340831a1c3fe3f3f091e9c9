@@ -1,0 +1,29 @@
+**定理 53.2（固定最内层锚的非取得锐利上确界）。** 保留同一原尾，在任意外层混合列表后固定一个 $(1,1)$ 返回：
+
+$$
+\begin{aligned}
+\widetilde\alpha_{\mathbf a}
+ &=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\,UC\,\xi_H,\\
+\widetilde\gamma_{\mathbf a}
+ &=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\,VC\,\xi_L,\\
+\widetilde H_{\mathbf a}
+ &=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}\,de .
+\end{aligned}
+$$
+
+令
+
+$$
+Z_j=\frac{(1-\rho)h_j}{1-\rho\chi^2},\qquad
+Y_j=G_{j,1,1}(X_j),\qquad
+\widehat\Theta=\lambda-g^2\chi^2Z_H.
+$$
+
+则 $X_j<Z_j<Y_j<h_j$，每个外层返回及 stem 右侧的完整实际混合后缀位移都严格大于 $Z_j$。锚族的精确闭成本上确界是 $\widehat\Theta$，任何有限历史均不取得它，且
+
+$$
+0<\Theta_1<\widehat\Theta<\Theta_2<\lambda .
+$$
+
+在 $b=\widehat\Theta$，每个有限列表都给任意归属下具有自身正严格余量的两条无限实际记录；家族没有统一正严格余量。在 $b=\Theta_2$ 则对全部列表与归属都有统一严格余量 $\varepsilon=(\Theta_2-\widehat\Theta)/2$。
+

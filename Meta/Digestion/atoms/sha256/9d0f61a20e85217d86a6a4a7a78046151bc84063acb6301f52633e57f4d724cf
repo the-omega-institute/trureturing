@@ -1,0 +1,31 @@
+**定理 53.9（未知强度下的排序恢复）。** 对 $n\ge4,m\ge1$，选取
+
+$$
+S_i=m^{-1}\sum_{j=1}^m\varphi(W_{j,i})w_{Y_j}
+$$
+
+最大的三个位置，固定按索引破平，再递增排序为 $\widehat\theta$。这个规则不使用 $\alpha$ 或其下界。固定全支撑 $\mu$，令
+
+$$
+\gamma_\mu=\min(\gamma_p,\gamma_q,\gamma_r),\quad M_\mu=\max(e,2-e),\quad R_\mu=\max_{k,y}(k-e)w_y-\min_{k,y}(k-e)w_y. \tag{53.16}
+$$
+
+其中 $k\in\{0,1,2\}$，且 $R_\mu\le2M_\mu\le4$。对 $0<a\le1,0<\delta<1$，以下任一充分预算保证对全部 $\theta$ 与 $\alpha\in[a,1]$ 有 $P(\widehat\theta=\theta)\ge1-\delta$：
+
+$$
+m\ge\left\lceil\frac{2R_\mu^2}{a^2\kappa^2\gamma_\mu^2}\log\frac{2n}{\delta}\right\rceil,\qquad
+m\ge\left\lceil\frac{8M_\mu^2}{a^2\kappa^2\gamma_\mu^2}\log\frac{2n}{\delta}\right\rceil. \tag{53.17}
+$$
+
+在已知律族 $\mathcal M_\rho$ 中，一条更保守的统一充分条件为
+
+$$
+m\ge\left\lceil\frac{1}{2a^2\kappa^2\rho^6}\log\frac{2n}{\delta}\right\rceil.
+\tag{53.18}
+$$
+
+在 $\mu_*$ 上，$R_\mu=5/2,M_\mu=5/4,\gamma_\mu=55/512$，所以式（53.17）的精确系数为 $25/[2\kappa^2(55/512)^2]=13404.74896865\ldots$。
+
+**证明。** $S_i$ 与 $\overline T_i$ 之差是对所有位置相同的 $e\overline w$，故排序完全相同。每个 $T_i$ 在区间长度 $R_\mu$ 中。Hoeffding 的成熟有界独立样本界给
+$P(|\overline T_i-\mathbb ET_i|\ge b)\le2\exp(-2mb^2/R_\mu^2)$。取 $b=a\kappa\gamma_\mu/2$，再对 $n$ 个位置作并集界。在全部偏差严格小于 $b$ 的事件上，每个活动分数严格大于每个非活动分数。这里只要求不同完整记录独立，不要求同一记录的坐标分数独立。（53.12）与 $M_\mu\le2$ 给（53.18）。对每个固定全支撑 $\mu$ 与 $\alpha>0$，有限个经验均值由强大数律同时收敛，故此排序最终几乎必然正确；没有 $\alpha\downarrow0$ 或最小符号质量趋零时的统一有限预算。
+

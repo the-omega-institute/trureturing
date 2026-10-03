@@ -1,0 +1,10 @@
+**定义 6.1（Temporal prefixes）。** Let $Y$ be a set, $\rho:Y\to Y$ and $O:Y\to A$. For $h\in\mathbb N$, put
+
+$$
+B_h(y)=(O(y),O(\rho y),\ldots,O(\rho^h y)),\qquad
+R_h=\ker B_h,\qquad
+\mathcal P(R)=\{(x,y):(\rho x,\rho y)\in R\}.
+$$
+
+Thus $h$ indexes a prefix containing $h+1$ observations. An equivalence $E$ is forward-stable if $xEy$ implies $\rho x\,E\,\rho y$.
+

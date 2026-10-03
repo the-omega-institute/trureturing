@@ -1,0 +1,53 @@
+### 42.2 路径响应自然性与视图定义
+
+对每个 \(h\in H_i^{\mathrm{act}}\) 和每条 \(p:i\to k\)，有
+
+$$
+\operatorname{actualResponse}(p,h)
+=\operatorname{response}\ \mathrm{Label}\ r\ \mathrm{step}\ p\ (\iota_i h).
+\tag{PG.4204}
+$$
+
+证明按路径结构归纳：空词使用 PG.4201；`cons(p',e)` 情形先用 PG.4103 将
+`step e (ι_i h)` 改写为 `Option.map (id × ι_j) (T_e^act h)`，再对成功后继应用归纳假设。
+`Option.bind` 的同态性同时处理 `none`、标签和后继，故不会把非法边改成失败标签或正常状态。
+递归构造中的标签嵌套与 typed `response` 完全相同，所以事件顺序、终点读出和目标类型一起保留。
+
+令 \(H^{\mathrm{act},\Sigma}:=\Sigma_{i:I}H_i^{\mathrm{act}}\)，并定义实际历史载体到 typed
+载体的带类型映射
+
+$$
+\widehat\iota:H^{\mathrm{act},\Sigma}\to\Sigma_{i:I}S_i,
+\qquad
+\widehat\iota(\langle i,h\rangle):=\langle i,\iota_i(h)\rangle.
+\tag{PG.4205}
+$$
+
+对 \(h\in H_i^{\mathrm{act}}\)，实际有限视图和完整行为分别**直接**定义为
+
+$$
+\begin{aligned}
+\operatorname{actualFiniteView}_n(h)
+  &:=\left\langle i,\ (j,p,h_p)\mapsto
+      \operatorname{actualResponse}(p,h)\right\rangle,\\
+\operatorname{actualBehavior}(h)
+  &:=\left\langle i,\ (j,p)\mapsto
+      \operatorname{actualResponse}(p,h)\right\rangle.
+\end{aligned}
+\tag{PG.4206}
+$$
+
+第一式的 \(h_p\) 只表示 \(p.length\le n\) 的证书参数，并非额外状态字段。由 PG.4204，逐坐标有
+
+$$
+\operatorname{actualFiniteView}_n(h)
+ =\operatorname{finiteView}\ \mathrm{Label}\ r\ \mathrm{step}\ n\ \bigl(\widehat\iota\langle i,h\rangle\bigr),
+\qquad
+\operatorname{actualBehavior}(h)
+ =\operatorname{behavior}\ \mathrm{Label}\ r\ \mathrm{step}\ \bigl(\widehat\iota\langle i,h\rangle\bigr).
+\tag{PG.4207}
+$$
+
+这里 \(\widehat\iota\) 只保留实际历史的起始类型和 typed 状态；它不是把非实际的 ambient 状态
+加入实际来源。
+

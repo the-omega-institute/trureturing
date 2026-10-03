@@ -1,0 +1,5 @@
+**Theorem 4.1 (Lucas congruences).** For every $j\geq1$,
+$x_j\equiv4\pmod{72}$, $v_2(x_j)=2$,
+$B_j\equiv1\pmod9$, $x_j^2\equiv1\pmod5$, and
+$B_j\equiv19\pmod{80}$. Moreover $x_{j+1}=x_jB_j$.
+

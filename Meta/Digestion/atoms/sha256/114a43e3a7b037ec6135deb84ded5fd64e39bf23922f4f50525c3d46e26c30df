@@ -1,0 +1,4 @@
+## 266. 2026 解析前沿：Fibonacci zeta 与 Möbius 平均不能替代点值桥
+
+本节补入两项 2026 年与当前 FIB/RH 接口直接相关的来源。它们分别给出 Fibonacci Dirichlet 级数的零点边界和 Möbius 部分和的平均振荡；两者都没有把 FIB 递归输送到 Riemann zeta 的点态判据。
+

@@ -1,0 +1,50 @@
+**命题58.2（公开实际数据及其域）。** 保留公开 §49.2 的词
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),\\
+d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2).
+\end{aligned}
+\tag{58.4}
+$$
+
+stems 为 $P=UC$、$Q=VC$，共同观察为 $h=de$，长度26；以下两条字面尾始终固定：
+
+$$
+\xi_H=UC^3\,5\,0^\infty,\qquad
+\xi_L=VC^3\,0^\infty.
+\tag{58.5}
+$$
+
+置
+
+$$
+h_H=\frac{39-6g}{380},\quad h_L=\frac{46+31g}{380},\qquad
+E_H=T_2-c,\quad E_L=c,
+$$
+
+$$
+A_j=(1-\rho)h_j,\qquad X_j=A_j+\rho\chi^3E_j\quad(j=H,L).
+\tag{58.6}
+$$
+
+高侧位移为 $D_H=x-c$，低侧位移为 $D_L=c-y$。六字词与返回的实际作用为
+
+$$
+T_j(D)=A_j+\rho D,\qquad
+G_{j,m,r}(D)=(1-\rho^m)h_j+\rho^m\chi^rD
+\quad(m,r\ge1).
+\tag{58.7}
+$$
+
+它们满足
+
+$$
+0<\chi E_j<A_j<X_j<h_j<E_j<1,\qquad
+\chi h_j<A_j,
+\qquad X_H<X_L,\quad h_H<h_L.
+\tag{58.8}
+$$
+

@@ -1,0 +1,27 @@
+**定义 333.2（实际单边谱证书）。** 在定义333.1的一个 Fibonacci 块上，保留全部节点，包括右端点。取实际分解
+\[
+q_{k,s}=\mathfrak m_{U_{k,s}}
+=Z(a_{k,s})+\kappa-H_{k,s}+\varepsilon_{k,s},
+\qquad H_{k,s}\ge0,
+\]
+以及每点明确的有限上界 $\varepsilon_{k,s}\le e_{k,s}$，置
+\[
+\ell_{k,s}=q_{k,s}-\kappa-e_{k,s}\le Z(a_{k,s}),
+\qquad
+\mathcal E_k(x)=\max_{0\le s\le b_k}
+[\ell_{k,s}-M_k|x-a_{k,s}|].
+\tag{333.12}
+\]
+$M_k$ 采用（333.8）；有限早段可取其它已证实的共同导数界。对块端点 $A_k=3F_k+2$、$A_{k+1}=3F_{k+1}+2$，记
+\[
+\mathcal C_K=\sum_{k=k_0}^{K-1}
+\int_{A_k}^{A_{k+1}}\mathcal E_k(x)\frac{dx}{x},
+\qquad
+\mathcal C(X)=\mathcal C_K+\int_{A_K}^{X}\mathcal E_K(x)\frac{dx}{x}
+\quad(A_K\le X\le A_{K+1}),\qquad
+\overline{\mathcal C}(X)=\frac{\mathcal C(X)}{\log(X/A_{k_0})}
+\quad(X>A_{k_0}).
+\tag{333.13}
+\]
+每块单独使用其共同 $M_k$，不跨块把不同斜率混成全局共同常数。
+

@@ -1,0 +1,27 @@
+**命题 56.3（单窗与末位锚定的条件表）。** 按（56.1）的字母顺序，$\mathbb E[C\mid W_i=w]$ 为
+
+$$
+\begin{array}{c|ccccc}
+i\backslash w&000&100&010&101&001\\\hline
+p&2HL&2HL&2HL&2HL&2HL\\
+q&0&H&0&H+2L-2HL&2L\\
+r&HL&HL+H&HL&HL+H&HL\\
+i\notin\{p,q,r\}&2HL&2HL&2HL&2HL&2HL
+\end{array}.
+\tag{56.7}
+$$
+
+对 $i\ne r$，置 $g_i(b,c)=\mathbb E[C\mid h_i=b,\ell_r=c]$。四格的完整表为
+
+$$
+\begin{array}{c|cccc}
+i\backslash(b,c)&(0,0)&(0,1)&(1,0)&(1,1)\\\hline
+p&0&2H&L&L+2H-1\\
+q&Hx/(1-H)&Hx/(1-H)&1/2&3/2\\
+i\notin\{p,q,r\}&HL&HL+H&HL&HL+H
+\end{array}.
+\tag{56.8}
+$$
+
+每格的标签行由（56.5）给出。
+

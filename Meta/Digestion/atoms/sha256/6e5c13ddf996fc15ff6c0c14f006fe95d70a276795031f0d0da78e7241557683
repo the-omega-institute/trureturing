@@ -1,0 +1,22 @@
+**证明。** $g_k/\varphi^k\to1$、$d_k/\varphi^{2k}\to1$，而 Binet 公式给
+\[
+\frac{U_{k,a}}{\varphi^{2k}}\longrightarrow
+\frac{\varphi^{3-a}}{\sqrt5}.
+\]
+由 $N_{k,a}=d_kU_{k,a}$ 得式（265.9）。由于 $g_k\to\infty$，对 $\rho<4$ 有
+\[
+\frac{N_{k,a}}{g_k^\rho}
+=\frac{N_{k,a}}{g_k^4}g_k^{4-\rho}\longrightarrow\infty,
+\]
+得到式（265.10）。
+
+对 $a=1$，$c_1=\varphi^2/\sqrt5>1$，因为
+$\varphi^2-\sqrt5=2-\varphi>0$。因此 $N_{k,1}>g_k^4$ 最终成立，给式（265.11）。
+这里必须保留“最终”：$k=2$ 时 $N_{2,1}=64<81=g_2^4$。
+$U_{k,1}\to\infty$ 与 $D_{k,1}=1$ 给式（265.12）。
+这些来源正好满足 $\alpha=1/4$、$\beta=0$ 的数值限制并保留单位范数，故不能将该临界点纳入 §264 原来的统一慢范数排除结论。$\square$
+
+本定理只给固定短平移上的四次乘子指数可达性，不声称 $4\alpha+3\beta=1$ 的其它点最优。
+式（265.5）的饱和还说明，二次公因子上界的代价在实际来源上能够全部发生。
+其中 $a=2$ 的 $c_2=\varphi/\sqrt5<1$，本节不把它说成满足 $g_k\le N_{k,2}^{1/4}$ 的临界点。
+

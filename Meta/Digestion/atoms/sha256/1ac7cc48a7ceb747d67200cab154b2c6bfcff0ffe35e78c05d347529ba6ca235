@@ -1,0 +1,26 @@
+**Theorem 66.1 (terminal noncube persistence).**
+Suppose that for every $0\le n\le J$, $P_n(a)$ excludes a cube
+root of $a$ in $K$, and is preserved under multiplication by
+$a_i^e$ for $1\le i\le n$ and $e\in\mathbb N$. Suppose also that
+$P_n(a_{n+1})$ holds for $0\le n<J$. Then
+
+$$
+[K_J:K]=3^J,\qquad
+P_J(a)\Longrightarrow \forall x\in K_J,\quad x^3\ne a.
+$$
+
+This includes the empty tower. Theorem 62.1 requires no terminal
+predicate: apply this assertion to
+$Q_n(a)=(n<J)\land P_n(a)$, whose terminal predicate is empty,
+and take its degree conclusion.
+
+Proof. Induct on $m$ with the invariant that for
+$0\le m\le n\le J$, $P_n(a)$ excludes a cube root in $K_m$.
+The base case is the base-field test. The fresh predicate proves
+that the next cubic polynomial is irreducible. Cubic descent from
+a hypothetical cube root at the next stage produces a cube root
+in the preceding stage of $a a_{m+1}^e$. Saturation puts this
+element in the same predicate and the preceding invariant
+excludes it. Thus the invariant persists through $m=J$.
+Multiplication of the degree-three stage degrees gives $3^J$.
+

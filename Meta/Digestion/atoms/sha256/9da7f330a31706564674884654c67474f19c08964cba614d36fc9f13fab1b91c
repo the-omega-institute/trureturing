@@ -1,0 +1,21 @@
+**命题 16.3（The closedness and compactness assumptions cannot simply be dropped）。** Compact ambient space alone, a closed target alone, or closed fibers without compactness do not imply theorem 16.1. The same examples delimit the exchange of extrema.
+
+证明。For failure of wrong-target closedness, take $K=[0,1]$, $D_r=[0,1/(r+1)]$, $T=\{0\}$ and $W=(0,1]$. The fibers are nonempty closed nested sets with intersection $\{0\}\subseteq T$, but each finite fiber contains a positive point, so none is contained in $T$. Here $W$ is not closed, although $T$ is. For $f(0)=1$ and $f(t)=0$ at $t>0$, the finite infima are all 0 and the limit-fiber infimum is 1; $f$ is not lower semicontinuous at 0. For $g=1-f$, the finite suprema are 1 and the limit-fiber supremum is 0; $g$ is not upper semicontinuous there.
+
+For failure of closed fibers, again take $K=[0,1]$, but set
+
+$$
+D_r=\{1\}\cup(0,1/(r+2)),\qquad T=(1/2,1],\qquad W=[0,1/2].
+$$
+
+These nonempty fibers are nested and not closed. Their intersection is $\{1\}\subseteq T$, and $W$ is closed, yet every finite fiber meets $W$. Even the continuous function $f(t)=t$ has finite infima 0 and limit-fiber infimum 1. A compact ambient space has not made these fibers compact closed constraints.
+
+For failure of compactness, take
+
+$$
+K=\mathbb R,\qquad D_r=\{0\}\cup[r+1,\infty),\qquad
+T=(-1/2,1/2),\qquad W=\mathbb R\setminus T.
+$$
+
+Both $D_r$ and $W$ are closed, the full nested intersection satisfies $\bigcap_r D_r=\{0\}\subseteq T$, and every finite fiber meets $W$. This proves that compactness has a separate role. $\square$
+

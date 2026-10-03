@@ -1,0 +1,72 @@
+**引理 48.2（正通道、有限像重编码与不同 proper 基线）。** 式（48.2）满足
+
+$$
+t>k>0,\qquad r>A>e>D>0,\qquad A+D=2e.
+\tag{48.7}
+$$
+
+两个通道都严格以 $C$ 为唯一后验最大类，每个对角概率都为 $r$，两者对各自观测标签的 Bayes 零一风险同为 $1-r$。两组三点后验像之间有双射
+
+$$
+\rho_C^{\mathrm{s}}\longmapsto\rho_C^{\mathrm{c}},
+\qquad \rho_C^{\mathrm{c}}\longmapsto\rho_C^{\mathrm{s}}.
+\tag{48.8}
+$$
+
+对于任意切面 $J\subseteq\{1,\ldots,n\}$，两种后验任务与教师 $C$ 的补全响应等价关系完全相同，故有相同的任务响应商及相容拼接。式（48.8）只定义在这两组三点像上，不宣称全概率单纯形上的仿射等价、随机后处理或 Blackwell 等价。
+
+置 $h_E=-r\log r-A\log A-D\log D$、$b_E=1-r^2-A^2-D^2$。各自的 proper 基线为
+
+$$
+\begin{aligned}
+h_{\mathrm{s}}&=-r\log r-2e\log e,&
+b_{\mathrm{s}}&=1-r^2-2e^2,\\
+h_{\mathrm{c}}&=\frac{21}{25}h_E+\frac4{25}h_{\mathrm{s}},&
+b_{\mathrm{c}}&=\frac{21}{25}b_E+\frac4{25}b_{\mathrm{s}},\\
+h_{\mathrm{s}}-h_{\mathrm{c}}
+&=\frac{21}{25}\left[A\log\frac Ae+D\log\frac De\right]>0,&
+b_{\mathrm{s}}-b_{\mathrm{c}}&=\frac{21}{50}(A-D)^2>0.
+\end{aligned}
+\tag{48.9}
+$$
+
+并且每个通道独立满足
+
+$$
+\Delta_{\log}^{j}(p)=\mathbb E_{P_n}\mathrm{KL}(\rho^j\Vert p),\qquad
+\Delta_2^{j}(p)=\mathbb E_{P_n}\|p-\rho^j\|_2^2.
+\tag{48.10}
+$$
+
+证明。$K>1$，$x$ 是 $2x^2-K^2x-K=0$ 的唯一正根；两根乘积为 $-K/2$。该多项式在 $x=K$ 处为 $-K(K-1)^2<0$，故 $x>K>1$，即 $t>k>0$。又 $r=K/(K+2)$，根方程等价于
+
+$$
+\frac{x}{x^{-1}+K+x}=r.
+\tag{48.11}
+$$
+
+所以在 $\zeta=-t,0,t$ 处，$\operatorname{softmax}(-\zeta,k,\zeta)$ 依次给式（48.3）的三个曲线行，其中两端的正确类概率由式（48.11）给 $r$，中间为 $K/(K+2)=r$。两端的竞争概率分别为 $A,D$，因而行和为一、$A+D=1-r=2e$。$x>K$ 给 $A<r$；$A/D=Kx>1$ 与竞争概率之和给 $A>e>D$，而 $r>e$。故两通道严格保留教师赢家，且曲线通道的所有后验坐标至少为 $\eta=D$。
+
+整窗独立与实际中窗关系给 $\mathbb E[a]=\mathbb E[b]=\mathbb E[c]=\mathbb E[d]=2/5$、$\mathbb E[bc]=1/5$。于是
+
+$$
+P_n(C=1)=\frac4{25},\qquad
+P_n(C=2)=\frac25\left(\frac25-\frac25\frac15\right)=\frac{16}{125},\qquad
+P_n(C=0)=\frac{89}{125}.
+\tag{48.12}
+$$
+
+这里没有把中窗两位当成独立样本。每个输入的最大后验都为 $r$，积分得到 Bayes 零一风险 $1-r$。
+
+三行各有不同的唯一最大类，故两种类到后验的映射均单射，其逆在各自三点像上就是 $\arg\max$。这证明式（48.8）。对于局部赋值 $u,u'$，逐一对全部补全 $v$ 应用这些单射，得到
+
+$$
+\rho^j(u,v)=\rho^j(u',v)\ \Longleftrightarrow\ C(u,v)=C(u',v).
+$$
+
+因此任意切面的响应等价关系相同；在代表元上拼接给相同的商运算。这是 §21 输出单射重编码原则在指定后验像上的应用，也可由观察边界代数卷定理19的任务细化映射分别沿两个方向得到。
+
+曲线边缘类0、2的总质量为 $105/125=21/25$，中间类1的质量为 $20/125=4/25$，故条件熵与 $1-\|\rho\|_2^2$ 的积分给式（48.9）的前两行。对数基线之差由 $A+D=2e$ 化简；其中方括号内的量等于 $2e$ 乘概率对 $(A/(2e),D/(2e))$ 相对 $(1/2,1/2)$ 的 KL，且 $A\ne D$，故严格正。平方基线之差用 $A^2+D^2-2e^2=(A-D)^2/2$。给定输入时，对数风险减熵为 $\mathrm{KL}(\rho^j\Vert p)$，平方风险展开为 $1-\|\rho^j\|_2^2+\|p-\rho^j\|_2^2$，证明式（48.10）。因此两个 proper Bayes 值均由相应后验唯一达到，不能用一个通道的完整风险代替另一个通道的超额。
+
+这些评分恒等式使用 Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 的负评分损失约定：完整 Brier divergence 是平方欧氏距离，logarithmic divergence 的顺序是 $\mathrm{KL}(\rho\Vert p)$。$\square$
+

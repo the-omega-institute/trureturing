@@ -1,0 +1,14 @@
+**定义 330.1（有限实际采样与连续累计量）。** 沿用 §325 的实际整数 $T_L$、价格截止 $m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$ 与 $\kappa=2\sqrt2-2$。取有限严格递增自然数列 $16\le L_0<\cdots<L_N$，$N\ge1$，置
+\[
+a_i=m_{L_i},\quad q_i=\mathfrak m_{L_i},\quad
+\omega_i=\log(a_{i+1}/a_i),\qquad
+\mathcal I(x)=\int_{a_0}^x Z(y)\frac{dy}{y},
+\quad Z(y)=\sqrt y\log y\,\Phi(y).
+\tag{330.1}
+\]
+对 $0<a\le b$ 记
+\[
+D(a,b)=(b-a)-a\log(b/a).
+\tag{330.2}
+\]
+

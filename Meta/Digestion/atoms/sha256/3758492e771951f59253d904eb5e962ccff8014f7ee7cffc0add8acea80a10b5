@@ -1,0 +1,22 @@
+**推论 15.2（All composite sources versus all prime directions）。** For one fixed tower as above, the following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\forall x\in X\text{ with composite }q(x),\ \exists R=R(x),\quad
+C_R(x)\subseteq X\setminus P;\\
+&\forall\text{ primes }p,\ \exists r=r(p),\quad p\mid L_r.
+\end{aligned}
+$$
+
+This requires a prime to appear as a divisor somewhere. It requires neither all its powers, nor divisibility by every integer modulus, nor a common stage for all composite sources.
+
+证明。If every prime appears, choose a prime divisor $p$ of the composite quantity $n=q(x)$. Some $L_r$ is divisible by $p$, and theorem 15.1 supplies a possibly later $R\ge r$ with $L_R>n$ and universal compositeness. The certificate persists at subsequent layers.
+
+Conversely suppose a prime $p$ divides no $L_r$. Its square is an actual composite quantity. For $p=2$ use $x=(2,0)$, whose quantity is 4. For odd $p$, use
+
+$$
+x=((p^2-3)/2,1),\qquad q(x)=p^2.
+$$
+
+The first coordinate is a nonnegative integer and the source is nonzero. The only prime divisor of $p^2$ is $p$, so $\gcd(p^2,L_r)=1$ for every $r$. Theorem 14.2 gives prime actual witnesses at every layer, precluding a universal composite certificate. This proves the equivalence with the displayed source-dependent quantifiers. $\square$
+

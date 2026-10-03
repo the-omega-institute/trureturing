@@ -1,0 +1,6 @@
+**Theorem 12.1 (all-horizon represented projective maximum).** Let $K$ be any finite field, $k\ge2$, $V=K^k$, and $P=\mathbb P(K,V)$ with every ray retained. Choose a nonzero representative $a_p$ of each ray $p$. For every natural horizon $t$ and every real vector $x:P\to\mathbb R$ with $x_p\ge0$ and $\sum_p x_p=1$, the actual reciprocal-factorial polynomial of Definition 5.1 satisfies
+
+$$
+F_{0,t}(x)\le F_{0,t}\bigl((1/|P|)_{p\in P}\bigr).
+$$
+

@@ -1,0 +1,7 @@
+**Theorem 7 (prime-modulus census).** For every prime $p$, the same
+unordered, coordinate-distinct, zero-determinant triples satisfy
+
+\[
+  A(p)=p(p-1)\binom p3.
+\]
+

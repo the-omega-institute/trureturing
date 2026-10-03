@@ -30,7 +30,7 @@ public sealed record ScribeResourcePackManifest(
 public sealed class ScribeResourcePack
 {
     public const string SchemaName = "trureturing.scribe.resource-pack";
-    public const int SemanticVersion = 1;
+    public const int SemanticVersion = 3;
     private static readonly DateTimeOffset EntryTimestamp = new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private readonly IReadOnlyDictionary<string, byte[]> resources;
 
@@ -77,10 +77,24 @@ public sealed class ScribeResourcePack
     public static ScribeResourcePack Open(string path)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        using var file = File.OpenRead(path);
+        return Open(file);
+    }
+
+    public static ScribeResourcePack Open(byte[] bytes)
+    {
+        ArgumentNullException.ThrowIfNull(bytes);
+        using var stream = new MemoryStream(bytes, writable: false);
+        return Open(stream);
+    }
+
+    /// <summary>Reads a pack without taking ownership of the caller's stream.</summary>
+    public static ScribeResourcePack Open(Stream stream)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
         try
         {
-            using var file = File.OpenRead(path);
-            using var zip = new ZipArchive(file, ZipArchiveMode.Read);
+            using var zip = new ZipArchive(stream, ZipArchiveMode.Read, leaveOpen: true);
             RequireUnique(zip.Entries.Select(item => item.FullName), ScribeResourcePackErrorCode.DuplicatePath);
             var manifestEntry = zip.GetEntry("manifest.json")
                 ?? throw Error(ScribeResourcePackErrorCode.MissingManifest, "The archive has no manifest.json.");

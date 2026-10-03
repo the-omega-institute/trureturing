@@ -9,6 +9,10 @@ import pathlib
 import re
 import shutil
 import tempfile
+import threading
+import urllib.error
+import urllib.parse
+import urllib.request
 
 from cache_material import sha
 from lean_cache import binary_platform, partition_path, resolved_mathlib
@@ -89,10 +93,13 @@ def actions_keys(root: pathlib.Path) -> dict:
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
+        "project_save_allowed": push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }
     for layer in LAYERS:
-        prefix = f"lean-{layer}-v4-{revision}-{system}-{machine}-"
+        generation = "project-push" if layer == "project" else "dependency-v4"
+        prefix = f"lean-{generation}-{revision}-{system}-{machine}-"
         result[layer] = {
             "restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
             "path": ".lake/packages" if layer == "dependency" else ".lake/build",
@@ -110,6 +117,136 @@ def output(values, destination="GITHUB_OUTPUT"):
 
 def receipt(layer, status, **fields):
     print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True), flush=True)
+
+
+class SeedLookupUnavailable(ValueError):
+    pass
+
+
+def wait_for_seed_lookup(completed, seconds):
+    return completed.wait(seconds)
+
+
+def guarded_seed_lookup(lookup):
+    completed = threading.Event()
+    result = []
+
+    def run():
+        try:
+            result.append((lookup(), None))
+        except Exception as error:
+            result.append((None, error))
+        finally:
+            completed.set()
+
+    threading.Thread(target=run, daemon=True).start()
+    # One transport hang guard covers DNS, headers, bodies and every page.
+    if not wait_for_seed_lookup(completed, 10):
+        raise SeedLookupUnavailable("lookup-transport-hang-guard")
+    key, error = result[0]
+    if error is not None:
+        raise error
+    return key
+
+
+def lookup_project_seed(spec, ref, token, repository, api):
+    endpoint = api + "/repos/" + repository + "/actions/caches"
+    query = dict(key=spec["restore_prefix"], ref=ref, per_page="100", sort="created_at", direction="desc")
+    url = endpoint + "?" + urllib.parse.urlencode(query)
+    total, seen, page, best = None, set(), 1, None
+    pattern = re.compile(re.escape(spec["restore_prefix"]) + r"([1-9][0-9]*)-([1-9][0-9]*)")
+
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            result[key] = value
+        return result
+
+    while True:
+        request = urllib.request.Request(url, headers={
+            "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"})
+        with urllib.request.urlopen(request, timeout=10) as response:
+            if response.status != 200:
+                raise SeedLookupUnavailable("lookup-http-error")
+            try:
+                value = json.loads(response.read(), object_pairs_hook=unique)
+            except (ValueError, UnicodeError):
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            link = response.headers.get("Link", "")
+        if (not isinstance(value, dict) or type(value.get("total_count")) is not int
+                or value["total_count"] < 0 or not isinstance(value.get("actions_caches"), list)):
+            raise SeedLookupUnavailable("lookup-malformed-listing")
+        if total is None:
+            total = value["total_count"]
+        elif total != value["total_count"]:
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        rows = value["actions_caches"]
+        for row in rows:
+            if (not isinstance(row, dict) or not isinstance(row.get("key"), str)
+                    or not isinstance(row.get("ref"), str)):
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            cache_id = row.get("id")
+            if type(cache_id) is not int or cache_id <= 0 or cache_id in seen:
+                raise SeedLookupUnavailable("lookup-incomplete-listing")
+            seen.add(cache_id)
+            match = pattern.fullmatch(row["key"])
+            if row["ref"] == ref and match:
+                candidate = (int(match[1]), int(match[2]), row["key"])
+                if best is None or candidate[:2] > best[:2]:
+                    best = candidate
+        if len(seen) > total or not isinstance(link, str):
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        links = {}
+        if link:
+            for entry in link.split(","):
+                match = re.fullmatch(r'\s*<([^<>]+)>;\s*rel="([^"]+)"\s*', entry)
+                if not match or match[2] in links:
+                    raise SeedLookupUnavailable("lookup-incomplete-listing")
+                links[match[2]] = match[1]
+        next_url = links.get("next")
+        if next_url is None:
+            if len(seen) != total:
+                raise SeedLookupUnavailable("lookup-incomplete-listing")
+            break
+        next_parts = urllib.parse.urlsplit(next_url)
+        if (not rows or len(seen) >= total or next_parts._replace(query="").geturl() != endpoint
+                or urllib.parse.parse_qs(next_parts.query) != {
+                    **{key: [item] for key, item in query.items()}, "page": [str(page + 1)]}):
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        url, page = next_url, page + 1
+    if best is None:
+        raise SeedLookupUnavailable("lookup-no-eligible-seed")
+    return best[2]
+
+
+def project_restore_key(keys):
+    spec = keys["project"]
+    fallback = spec["key"]
+    token = os.environ.get("GH_TOKEN", "")
+    repository = os.environ.get("GITHUB_REPOSITORY", "")
+    event = os.environ.get("GITHUB_EVENT_NAME", "")
+    base = os.environ.get("GITHUB_BASE_REF", "")
+    ref = ("refs/heads/" + base if base else "") if event == "pull_request" else (
+        os.environ.get("GITHUB_REF", "") if event == "push" else "")
+    reason = "lookup-not-configured"
+    try:
+        if not token or not repository or not ref:
+            raise SeedLookupUnavailable(reason)
+        api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
+        preferred = guarded_seed_lookup(lambda: lookup_project_seed(spec, ref, token, repository, api))
+        receipt("project", "restore-preference", base_ref=ref, requested_key=preferred)
+        return preferred
+    except SeedLookupUnavailable as error:
+        reason = str(error)
+    except urllib.error.HTTPError:
+        reason = "lookup-http-error"
+    except Exception:
+        reason = "lookup-request-failed"
+    receipt("project", "restore-preference-fallback", base_ref=ref, requested_key=fallback, reason=reason)
+    return fallback
 
 
 def dependency_inputs(root: pathlib.Path):
@@ -158,11 +295,13 @@ def stamp_restored_dependency(root, keys):
 
 def restore_native(root, keys, layer, key, outcome):
     spec = keys[layer]
+    requested = {"requested_key": spec.get("restore_key", spec["key"])} if layer == "project" else {}
+    transport = {"key": key, **requested} if layer == "project" else {}
     record = dependency_restored_record(root)
     if layer == "dependency":
         record.unlink(missing_ok=True)
     if outcome in ("", "skipped"):
-        receipt(layer, "miss", reason="Actions supplied no cache")
+        receipt(layer, "miss", reason="Actions supplied no cache", **transport)
         return False
     target = root / spec["path"]
     try:
@@ -181,14 +320,14 @@ def restore_native(root, keys, layer, key, outcome):
                     write_small_record(record, {"snapshot_key": spec["key"], "matched_key": key, "inputs_sha256": digest})
             except (OSError, ValueError, TypeError, KeyError):
                 pass
-        receipt(layer, "restored", key=key, partition=keys["partition"], transport="actions-native")
+        receipt(layer, "restored", key=key, partition=keys["partition"], transport="actions-native", **requested)
         return True
     except (OSError, ValueError, TypeError) as error:
         if target.is_symlink() or target.is_file():
             target.unlink()
         elif target.exists():
             shutil.rmtree(target)
-        receipt(layer, "miss", reason=str(error))
+        receipt(layer, "miss", reason=str(error), **transport)
         return False
 
 
@@ -201,13 +340,56 @@ def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if seeded else "0"}, "GITHUB_ENV")
 
 
+def project_work(root):
+    path = pathlib.Path(os.environ.get("STRATALINT_LEAN_BUILD_WORK_FILE", str(root / "build/lean-cache/build-work.json")))
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate work field")
+            result[key] = value
+        return result
+    try:
+        if (not path.is_absolute() or path.is_symlink()
+                or path.resolve().is_relative_to(root.resolve() / ".lake")):
+            raise ValueError("work fact must be outside the restored tree")
+        value = json.loads(path.read_text(), object_pairs_hook=unique)
+        if (not isinstance(value, dict) or set(value) != {"schema_version", "run_id", "run_attempt", "repository", "report", "programs"}
+                or type(value["schema_version"]) is not int or value["schema_version"] != 1
+                or value["run_id"] != os.environ.get("GITHUB_RUN_ID")
+                or value["run_attempt"] != os.environ.get("GITHUB_RUN_ATTEMPT")
+                or value["repository"] != str(root.resolve())
+                or any(type(value[name]) is not int or value[name] < 0 for name in ("report", "programs"))):
+            raise ValueError("invalid or stale invocation work fact")
+        return value["report"] + value["programs"]
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError):
+        return None
+
+
+def project_publication(root):
+    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
+        return False, "pull-requests-do-not-publish-project-seeds", None
+    work = project_work(root)
+    if work is None:
+        return False, "build-work-unknown", work
+    if work == 0:
+        return False, "no-build-work", work
+    return True, "built-project-artifacts", work
+
+
 def snapshot(root, keys, layers=LAYERS):
     for layer in layers:
         if layer not in LAYERS:
             continue
         ready = False
         try:
-            if not keys["save_allowed"]:
+            if layer == "project":
+                allowed, reason, work = project_publication(root)
+                if not allowed:
+                    receipt(layer, "save-disabled", reason=reason)
+                    output({layer + "_ready": False})
+                    continue
+            if not keys["project_save_allowed" if layer == "project" else "save_allowed"]:
                 receipt(layer, "save-disabled")
                 output({layer + "_ready": False})
                 continue
@@ -229,7 +411,7 @@ def snapshot(root, keys, layers=LAYERS):
                     pass
                 write_small_record(target / ".stratalint-actions-inputs.json", {"inputs_sha256": fingerprint})
             ready = True
-            receipt(layer, "snapshot", key=keys[layer]["key"])
+            receipt(layer, "snapshot", key=keys[layer]["key"], **({"build_work": work} if layer == "project" else {}))
         except (OSError, ValueError, TypeError) as error:
             receipt(layer, "save-failed", reason=str(error))
         output({layer + "_ready": ready})
@@ -240,6 +422,7 @@ def main():
     parser.add_argument("command", choices=("keys", "restore", "snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--layers", choices=LAYERS, nargs="+")
+    parser.add_argument("--project-restore-key", default="")
     for layer in LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
         parser.add_argument("--" + layer + "-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
@@ -250,15 +433,18 @@ def main():
         keys = actions_keys(root)
         if args.command == "keys":
             archive_paths = native_archive_paths(root, args.layers)
+            if "project" in args.layers:
+                keys["project"]["restore_key"] = project_restore_key(keys)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
             system, arch = binary_platform()
-            values["elan_key"] = f"elan-v1-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+            values["elan_key"] = f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             output(values)
             for layer, paths in archive_paths.items():
                 output_archive_paths(layer, paths)
         elif args.command == "restore":
+            keys["project"]["restore_key"] = args.project_restore_key or keys["project"]["key"]
             restore(root, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers,
                     outcomes={layer: getattr(args, layer + "_outcome") for layer in args.layers})
         else:

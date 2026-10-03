@@ -1,0 +1,39 @@
+**Theorem 31.1 (local cubic character and composite denominator).** For
+every $a\notin P$, there is a unique $\chi_P(a)\in\mu_3$ such that
+
+$$
+\chi_P(a)\equiv a^{(q-1)/3}\pmod P.
+$$
+
+For $a,b\notin P$, one has
+$\chi_P(ab)=\chi_P(a)\chi_P(b)$. Given a finite indexed family
+$(P_i)_{i\in S}$ of such ideals and multiplicities $e_i\geq0$, define
+the character of the specified factored denominator by
+
+$$
+\chi_{(P,e)}(a)=\prod_{i\in S}\chi_{P_i}(a)^{e_i},
+\qquad a\notin P_i\text{ for every }i\in S.
+$$
+
+It is multiplicative in $a$, and addition of multiplicities gives
+
+$$
+\chi_{(P,e+f)}(a)=\chi_{(P,e)}(a)\chi_{(P,f)}(a).
+$$
+
+This definition uses the prime-ideal factors and their multiplicities;
+it does not use a single Euler exponent in the quotient by a composite
+ideal. In particular, the oriented factorization in Theorem 8.1
+supplies the denominator factors and multiplicities for $\eta_j$.
+
+Proof. The nonzero class of $a$ in the field $E/P$ satisfies
+$a^{q-1}=1$, so $a^{(q-1)/3}$ is a root of $T^3-1$. This polynomial
+factors as $(T-1)(T-\omega)(T-\omega^2)$. The three displayed roots
+remain distinct modulo $P$: their pairwise differences have norm
+three, and $3\notin P$. This proves existence and uniqueness of
+$\chi_P(a)$. The Euler condition for $ab$ is the product of the
+conditions for $a$ and $b$, so uniqueness proves local
+multiplicativity. Multiplying these local equalities over $S$ proves
+numerator multiplicativity; the identity
+$z^{e_i+f_i}=z^{e_i}z^{f_i}$ proves the denominator law.
+

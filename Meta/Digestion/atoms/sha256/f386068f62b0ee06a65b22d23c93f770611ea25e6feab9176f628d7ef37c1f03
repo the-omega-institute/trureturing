@@ -1,0 +1,25 @@
+**定理 16.1（实际像正纤维的尖锐性）。** 设 $V\in\mathcal I_d$，$H\ge|\operatorname{Leaves}(V)|$。则
+
+$$
+\mathcal F^{c,O}_{H,h}(V)\text{ 在 }\iota_d\text{ 下单色}
+\quad\Longleftrightarrow\quad
+h\ge\operatorname{ht}(V).
+\tag{16.4}
+$$
+
+当 $h\ge\operatorname{ht}(V)$ 时，纤维恰为 $\{V\}$。当 $h<\operatorname{ht}(V)$ 时，纤维中存在 $W$ 满足
+
+$$
+\iota_d(W)=0,\qquad c(W)=c(V),\qquad O_h(W)=O_h(V),\qquad
+|\operatorname{Leaves}(W)|=|\operatorname{Leaves}(V)|.
+\tag{16.5}
+$$
+
+证明。规范编译卷命题 4.3 已给出树作用的单射性及其实际像的非满性；这里沿用该作用，只分析固定实际像中的有限路径纤维。先记录一个由替换规则直接得到的像障碍：任何 $\rho$-像中的 $\alpha$ 叶都来自某个 $\beta$ 叶的替换 $\langle\beta,\alpha\rangle$，而任意来源子树的像都不以 $\alpha$ 为根（命题 4.3 的实际像描述）。因此 $\rho(\mathcal T)$ 中不存在以 $\alpha$ 为左孩子的叶。
+
+对任意树 $X$，$\rho^2(X)$ 的每个末端樱桃都是 $\langle\beta,\alpha\rangle$。确实，$\rho^2(\alpha)=\langle\beta,\alpha\rangle$，$\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle$；若 $X=\langle X_0,X_1\rangle$，则 $\rho^2(X)=\langle\rho^2(X_0),\rho^2(X_1)\rangle$，末端樱桃不会跨过来源二叉节点。因 $d\ge3$，$\mathcal I_d\subseteq\rho^2(\mathcal T)$，故 $V$ 的每个末端樱桃（特别是最深叶所在的那个）均为 $\langle\beta,\alpha\rangle$。
+
+若 $h\ge\operatorname{ht}(V)$，有限窗口已经包含 $V$ 的所有节点。沿根递归比较，另一棵具有相同 $O_h$ 的树在每个已见节点都必须有相同的分支或叶；叶处的结果又禁止继续延伸。因此另一棵树只能等于 $V$，纤维为单点。
+
+反设 $h<\operatorname{ht}(V)=D$。取深度为 $D$ 的一片叶。其兄弟必也是叶，否则会出现更深叶；故其父节点是深度 $D-1$ 的末端樱桃 $\langle\beta,\alpha\rangle$。把该处替换成 $\langle\alpha,\beta\rangle$ 得树 $W$。括号形状、所有叶地址及组成均不变，只有深度 $D>h$ 的两片叶标签互换；所以所有地址的分支和 $\mathsf{absent}$ 结果都不变，且 $O_h(W)=O_h(V)$。新树有一个 $\alpha$ 左孩子，故由上述像障碍 $W\notin\rho(\mathcal T)$，从而 $W\notin\mathcal I_d$。它与 $V$ 叶数相同，故 $W\in\mathcal T_H$，得到（16.5）。证毕。
+

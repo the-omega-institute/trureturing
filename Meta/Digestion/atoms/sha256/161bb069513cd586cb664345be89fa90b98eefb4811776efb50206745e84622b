@@ -1,0 +1,8 @@
+### 46.8. 供应、具体新增内容与边界
+
+本节直接复用 §45 的实际三类粗化和质量、定理45.5的峰值一分类必要性、命题45.7的根一维偏置证书及命题45.6的完整损失恒等式；§§44–45 的计费常数和齐次路径线性提供共同树接口。原卷 §104 提供低到高五窗、单位初始化及词外 End 的结构合同，观察边界代数卷定理19提供任务粗化的响应商解释。本节的具体新增推导是实际十二词的三乘四严格符号障碍、逐尾赋值的有限预算损失底，以及 W 的准确并列分类与共同三通道置信搬运联立得到的尖锐根／峰值前沿；属于具体任务的普通综合推导（repo-derived）。
+
+成熟工具各按原范围署名：Noga Alon、Shay Moran、Amir Yehudayoff，[*Sign rank versus VC dimension*](https://arxiv.org/pdf/1503.07648v2)，§1 的 Sign rank 定义与过原点半空间表示提供严格符号秩语言，式（46.4）的实际小矩阵在本节直接证明，不借其 VC 维或学习界；Stephen Boyd、Lieven Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§2.1.5 的凸锥、§2.2.1 的半空间及 §3.1.5 的 log-sum-exp 提供正方向、仿射差和归一化的成熟工具；Tilmann Gneiting、Adrian E. Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 给 quadratic/Brier 与 logarithmic score，式（46.3）取其负评分损失约定，Brier 保留全部三类平方和。
+
+以上署名不把通用符号秩、凸锥或 proper score 框架称作新理论，不主张全局文献优先权。这里只给普通理论证明，没有新增 Lean kernel 核验身份。结论不覆盖完整 $T_n$ 的最小诊断资源、一般机器学习模型、概率张量的错误秩推断、唯一隐藏基、物理神经元或比特下界、训练收敛、泛化、因果结论、有限精度实现或无条件运行时间；也未求出不足宽度时的精确总体最优风险。
+

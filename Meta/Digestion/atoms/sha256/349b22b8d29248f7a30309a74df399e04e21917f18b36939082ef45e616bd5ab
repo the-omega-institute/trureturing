@@ -1,0 +1,30 @@
+**定义 13.5（实际来源的完整逆历史）。** 在无统一支持上界的实际域 $D=\bigcup_{N\ge0}D_N$ 上，定义
+
+$$
+\mathcal H_D
+=\left\{(x^{(n)})_{n\ge0}\in D^{\mathbb N}:
+\delta x^{(n+1)}=x^{(n)}\text{ 对所有 }n\ge0\right\},
+\qquad \pi_0((x^{(n)}))=x^{(0)}.
+$$
+
+每个历史坐标都是实际有限来源，不是任意无限右尾。历史动力学及其逆定义为
+
+$$
+\begin{aligned}
+\widehat\delta(x^{(0)},x^{(1)},x^{(2)},\ldots)
+&=(\delta x^{(0)},x^{(0)},x^{(1)},\ldots),\\
+\widehat\delta^{-1}(x^{(0)},x^{(1)},x^{(2)},\ldots)
+&=(x^{(1)},x^{(2)},x^{(3)},\ldots).
+\end{aligned}
+$$
+
+兼容关系保证二者都落在 $\mathcal H_D$ 且互逆，并有 $\pi_0\widehat\delta=\delta\pi_0$。双边地址空间取
+
+$$
+Z_D=\{z\in\{0,1\}^{\mathbb Z}:z_jz_{j+1}=0\text{ 对所有 }j\in\mathbb Z,
+\ \exists J\in\mathbb Z\ \forall j\ge J, z_j=0\},
+\qquad (Sz)_j=z_{j+1}.
+$$
+
+右方最终为零，左方不施加最终为零的条件；负指标表示较早来源的已删地址位，不是定义 1.1 的外部单位位。$D$ 取 $\{0,1\}^{\mathbb N}$ 前缀乘积拓扑的子空间拓扑，$\mathcal H_D$ 取 $D^{\mathbb N}$ 乘积拓扑的子空间拓扑，$Z_D$ 取 $\{0,1\}^{\mathbb Z}$ 乘积拓扑的子空间拓扑；二元字母表均取离散拓扑。
+

@@ -1,0 +1,47 @@
+### 33.1 成功历史、端点映射与两个核
+
+固定一组带来源标签的根 \(R\)。实际配置载体取为不交并 \(\mathsf C=\coprod_{(\xi,\nu,i)}S_{\xi,\nu,i}\)，其中 \(\xi\) 是来源身份，\(i\) 是当前类型，\(\nu\) 是使用时声明的 epoch；不使用纪元时略去该索引。根 \(r\in R\subseteq\mathsf C\) 的标签保留在其配置身份中，不能仅因内部状态值相同而抹去来源、类型或纪元。第32节的 \(\operatorname{step}_e\) 与 \(q_i\) 在此按标签提升为 \(\operatorname{step}_{\xi,\nu,e}:S_{\xi,\nu,i}\to\operatorname{Option}(L_e\times S_{\xi,\nu,j})\)（\(e\in E_{ij}\)）及 \(q_{\xi,\nu,i}:S_{\xi,\nu,i}\to O_i\)，其中 step 保持来源及声明的固定 epoch，返回的后继仍带这些标签。本节在标签由输入确定时，用 \(\operatorname{step}_e\) 和 \(q_i\) 或 \(q\) 简记这些带标签的提升；\(\operatorname{Reach}(R)\) 是此带标签载体中的可达闭包。根标记是指定映射 \(R\to\operatorname{Reach}(R),\ r\mapsto r\)，不额外把出发根写成每个后继顶点的路径属性。同源的不同根可以到达同一配置；跨根的 \(\operatorname{EqEnd}\) 只在显式共同 source identity 合同及同一声明的 epoch 范围内有意义。
+
+令 \(H_R\) 为所有从 \(R\) 出发的成功有类型历史。历史允许长度为零，并以 \(\varepsilon_r\) 表示根 \(r\) 的空历史。若 \(h\) 的端点上有合法 typed edge \(e\)，且该步返回事件 \(\ell\) 与带标签后继 \(s'\)，则把扩展记为 \(he\)，并要求 \(he\in H_R\)。端点求值 \(\eta:H_R\to\operatorname{Reach}(R)\) 递归定义为
+
+$$
+\eta(\varepsilon_r)=r,
+\qquad
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')
+\Longrightarrow
+\eta(he)=s'.
+\tag{EG.3301}
+$$
+
+这里的 \(\operatorname{Reach}(R)\) 只包括从声明根反复执行成功 typed edge 得到的实际配置。令 \(U_R\) 为 \(H_R\) 的有类型前缀展开：其顶点是历史，其边为
+
+$$
+h\xrightarrow{e}_{U_R}he
+\quad\Longleftrightarrow\quad
+he\in H_R.
+\tag{EG.3302}
+$$
+
+给每个可达配置 \(s\) 的完整未来响应记为 \(\beta(s)\)。它对每个允许的有限 typed continuation 返回当前读出、合法或失败、事件与标签以及该 continuation 的单步 grade 序列；若要把 grade 纳入某次任务响应，就按该任务的声明合同纳入，而不把端点本身偷偷加入响应。令 \(H_{R;\xi,\nu,i}=\{h\in H_R:\eta(h)\in S_{\xi,\nu,i}\}\)，这些纤维按端点的来源、声明的 epoch 与当前类型划分 \(H_R\)。以 \(\beta_{\xi,\nu,i}\) 表示 \(\beta\) 在 \(\operatorname{Reach}(R)\cap S_{\xi,\nu,i}\) 上的限制，只在同一纤维内比较响应。定义端点核及这些纤维内行为核的并
+
+$$
+K_{\mathrm{end}}
+ :=\{(h,k)\in H_R^2:\eta(h)=\eta(k)\},
+\qquad
+K_{\mathrm{beh}}
+ :=\bigcup_{(\xi,\nu,i)}
+ \{(h,k)\in H_{R;\xi,\nu,i}^{\,2}:\beta_{\xi,\nu,i}(\eta(h))=\beta_{\xi,\nu,i}(\eta(k))\}.
+\tag{EG.3303}
+$$
+
+后文的 \(H_R/K_{\mathrm{beh}}\) 及 \(\beta\) 在商上的诱导映射均使用这个保留标签的关系。
+
+于是历史相等的对角关系、端点核和行为核满足
+
+$$
+\Delta_{H_R}\subseteq K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}.
+\tag{EG.3304}
+$$
+
+第二个包含关系只使用“同一实际端点产生同一未来响应”：若 \(\eta(h)=\eta(k)\)，则两边的所有后缀执行完全相同。它不反向断言未来响应能够识别端点。
+

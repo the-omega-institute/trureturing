@@ -1,0 +1,12 @@
+**Theorem 1.1 (Lucas block).** For every natural number $j\geq 1$ and every prime
+$p$ dividing $B_j$, one has $\tau_p=2\cdot 3^{j+1}$.
+
+The rank of apparition of $p$ is $2n$. The cubic Lucas identity gives
+$L_n=L_{3^j}B_j$, so $L_n=0$ modulo $p$. In the quadratic golden algebra,
+the element $\phi^n$ has trace zero and norm $-1$, since $n$ is odd.
+Its quadratic identity therefore gives $(\phi^n)^2=1$ modulo $p$.
+Thus the order of $\phi$ divides $2n$. Conversely, the second coordinate
+of $\phi^t$ is $F_t$; if $\phi^t=1$, then $p$ divides $F_t$, so the rank
+$2n$ divides $t$. The faithful multiplication-matrix representation sends
+$\phi$ to $Q$ and preserves its order. Hence $\tau_p=2n$.
+

@@ -1,0 +1,9 @@
+**推论58.12.1（平台的完整刻画）。** 在 $\Theta_1<b<\lambda$ 中，固定任意 $\mathsf T,o,\kappa$。若 $K(b)=1$，率为 $\alpha_1$；若 $K(b)=K\ge2$，则
+
+$$
+\eta^{\mathsf T}_{b,o,\kappa}=\alpha_{K(b)}
+\quad\Longleftrightarrow\quad
+\Psi_{K(b)}\le b\le Q_{K(b)+1}.
+\tag{58.57}
+$$
+

@@ -1,0 +1,16 @@
+### 定理 285.4 跨全部整包系数和幂次的一致 Robin 尾段
+
+取 $C\in\{4,5040\}$、全部素数 $s\ge5$、全部正整数 $a,n$，令
+\[
+B_{C,s,a,n}=Cm_s^aF_n,\qquad R=n+as.
+\tag{285.13}
+\]
+则对每个 $\varepsilon>0$，存在同一个 $R_0$，使两种 $C$ 及所有 $R\ge R_0$ 的这些参数均满足
+\[
+\boxed{\quad
+0<\frac{Z(B_{C,s,a,n})}{e^\gamma\log\log B_{C,s,a,n}}<\varepsilon.
+\quad}
+\tag{285.14}
+\]
+因此该完整参数族有一个共同的最终 Robin 安全阈值；它不只逐个固定 $s$ 或 $a$ 取得阈值。
+

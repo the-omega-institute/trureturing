@@ -1,0 +1,66 @@
+**证明。** 由定理311.1，$x^\lambda B(x)\to c$。以下反演使用同一批素数的经典 Abel 分部求和；相应正向恒等式也见 `Library/ArithSums/nicolas2025comparison.md` 的同截断端点核算。记 $B_1$ 为 Meissel–Mertens 常数，置
+\[
+s(x)=\sum_{p\le x}\frac1p-\log\log x-B_1,
+\qquad
+\tau(x)=\sum_{p>x}\sum_{j\ge2}\frac1{jp^j}.
+\tag{311.9}
+\]
+经典 Mertens 常数恒等式给 $s=e+\tau$，而整数幂尾和给 $0\le\tau(x)=O(1/x)$。对有限素数和直接分部求和，若
+\[
+c_0=2\log2(\log\log2+B_1)-2,\qquad
+J(x)=\frac1x\left[\int_2^x(\log t+1)s(t)\,dt-c_0\right],
+\tag{311.10}
+\]
+则精确有
+\[
+a(x)=\log x\,[e(x)+\tau(x)]-J(x),\qquad
+J'(x)=\frac{a(x)+e(x)+\tau(x)}x
+\quad\text{几乎处处}.
+\tag{311.11}
+\]
+$J$ 局部绝对连续；导数式只在几乎处处使用，不要求在素数跳点上有通常导数。假设302.1的加性乘积误差给 $\log x\,e(x)\to0$，且 $a(x)\to0$、$\log x\,\tau(x)\to0$，故 $J(x)\to0$。这个终端条件来自实际素数输入，未由待证缩放极限指定。
+
+在 $a,e$ 足够小的域，经典指数 Taylor 余项及有界分母给
+\[
+a=B-e+O(e^2+B^2),\qquad
+|a|\le2|B|+4|e|.
+\tag{311.12}
+\]
+具体地，对 $|a|\le1/2,|e|\le1$，有
+$|B-a-e|\le e^2+2a^2$；用（311.2）解出 $a$，便可把二次项改为 $O(e^2+B^2)$。将（311.12）代入（311.11），对 $\log x\ge8$ 得正确的逆界
+\[
+|e(x)|\le C\frac{|J(x)|+|B(x)|}{\log x}+\frac Cx.
+\tag{311.13}
+\]
+这里保留 $O(1/x)$，不把它未经证明地加强为 $O(1/(x\log x))$。
+
+由 $B=O(x^{-\lambda})$，几乎处处有
+\[
+|J'(x)|\le Cx^{-\lambda-1}
++C\frac{J(x)^2}{x\log^2x}+\frac C{x^2}.
+\tag{311.14}
+\]
+因 $J\to0$，右端可积，故可从 $J(\infty)=0$ 积分回来。定义真实尾部上确界 $M(x)=\sup_{t\ge x}|J(t)|$，则 $M(x)\to0$。对每个 $u\ge x$，经典幂积分与 $\int_u^\infty dt/(t\log^2t)=1/\log u$ 给
+\[
+|J(u)|\le\frac C\lambda u^{-\lambda}
++\frac{CM(x)^2}{\log u}+\frac Cu.
+\]
+各项随 $u$ 递减，取上确界并吸收固定 $\lambda$ 后的常数得到
+\[
+M(x)\le Cx^{-\lambda}+\frac{CM(x)^2}{\log x}+\frac Cx.
+\tag{311.15}
+\]
+最终 $M\le1$ 且 $\log x\ge2C$，中间项不超过 $M/2$，所以 $M=O(x^{-\lambda})$。于是（311.13）给
+\[
+e=O(x^{-\lambda}/\log x)+O(1/x)=o(x^{-\lambda}).
+\tag{311.16}
+\]
+再回到（311.12），二次余项乘 $x^\lambda$ 趋零，得到 $x^\lambda(a-B)\to0$，证明前两个极限。常数与阈值允许依赖固定的 $\lambda$，没有断言 $\lambda\uparrow1/2$ 时的一致性。
+
+经典素幂分解给 $\psi(x)-\vartheta(x)=O(\sqrt x\log^2x)=o(x^{1-\lambda})$，故
+\[
+\psi(x)-x=cx^{1-\lambda}+o(x^{1-\lambda}).
+\tag{311.17}
+\]
+若 $c\ne0$，右侧最终严格与 $c$ 同号。这与命题111.2已引用的无条件 Littlewood 双侧振荡矛盾，故 $c=0$。该结论限制的是全序列的有限极限；没有排除任意子列上的非零极限、持续振荡或发散。$\square$
+

@@ -1,0 +1,13 @@
+## 59. Simultaneous square periods and sinks in a finite support
+
+Let $S$ be a nonempty finite set of rational primes greater than five,
+and put $M=\prod_{p\in S}p$. Let $Q$ be the Fibonacci matrix
+$\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$.
+Write $\pi(m)$ for its order modulo $m$ and $\pi_s(m)$ for the order
+of $Q^s$ modulo $m$. For each $p\in S$, retain the original rank
+$\rho(p)$ and depth $h_p=v_p(F_{\rho(p)})$. Put $\tau_p=\pi(p)$.
+Draw a directed edge $p\longrightarrow q$ when $p\mid\tau_q$;
+a sink has no outgoing edge to any member of $S$.
+These are the objects of PCL.3--PCL.4 in
+Problems/wall-sun-sun-golden-unit-lift.md.
+

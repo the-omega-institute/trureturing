@@ -1,0 +1,21 @@
+**引理 33.8（闭返回矩形与每个中间输入）。** 置
+
+$$
+\delta_H=\chi(1-\varsigma)h,\qquad
+\delta_L=\chi(1-\varsigma)\ell,\qquad
+H_0=[\theta+\delta_H,t^2],\qquad L_0=[0,\theta-\delta_L],
+\tag{33.32}
+$$
+
+以及
+
+$$
+H_1=[\theta+\chi^2\delta_H,t^2],\qquad
+L_1=[0,\theta-\chi^2\delta_L].
+\tag{33.33}
+$$
+
+则四个映射 (33.31) 保持 $H_0\times L_0$。在任一选择的十次 $U$ 或 $V$ 运行中，每个单独 $U/V$ 块的实际终尾都在 $H_1\times L_1$；固定词 $UC,VC$ 的单独块也有此性质。每个 $C$ 块的终尾属于 $[0,t^2]$。
+
+证明。$h<t^2-\theta$、$\ell<\theta$ 且 $0<\chi,\varsigma<1$，故 (33.32) 非空。映射的常数项至少为 $\delta_H$ 或 $\delta_L$；在上端点使用单调性和凸组合即得上界 $t^2-\theta$ 或 $\theta$，所以矩形不变。选择 $0$ 在进入最内层 $U/V$ 前已经通过 $C^2$，选择 $1$ 通过一个 $C$；因此每个十次运行的最小位移至少为 (33.33) 的端点。再向外应用 (33.28)，因 $h>\chi^2\delta_H$、$\ell>\chi^2\delta_L$，下界和上界均保持。词 $UC,VC$ 的终尾经过一个 $C$，给出更大的下界。$C$ 在两侧半区间内保持实际尾域，故其终尾都在 $[0,t^2]$。$\square$
+

@@ -1,0 +1,14 @@
+## 250. 无穷远锚定将有效导数预算变为点值间隔
+
+本节使用 §249 的同一价格源、Dusart 输入及实际配对导数，仍取
+$t=\log x\ge100$，$c=\sqrt2-1$，$c_R=2c$，$c_2=-2c-\sqrt2\log2$。
+定义同源差
+
+$$
+\mathcal G(t)=\mathfrak D(e^t)-W_2(e^t)
+=R(e^t)-e^{-t/2}\left(\frac{c_R}{t}+\frac{c_2}{t^2}\right).
+\tag{250.1}
+$$
+
+第二个等号由 $\mathfrak D=\Phi+R$ 与 $W_2$ 的定义给出；共同的有符号源 $\Phi$ 精确消去。
+

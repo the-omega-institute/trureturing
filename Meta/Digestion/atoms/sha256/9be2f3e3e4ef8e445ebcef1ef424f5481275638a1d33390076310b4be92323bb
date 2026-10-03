@@ -1,0 +1,31 @@
+**命题 43.4（完整原始矩阵的加权等距提升）。** 记 $k=|\mathcal P_A|=\kappa_A(T_n)$、$\nu_b=P_B(b)$，令 $r_s(b,y)=\mathbf1_{\{T_n(a_s\sqcup b)=y\}}$，定义
+
+$$
+\begin{aligned}
+X_{s,(b,y)}&=\sqrt{\mu_A(s)\nu_b}\,r_s(b,y),\\
+W_{a,(b,y)}&=\sqrt{P_A(a)\nu_b}\,M_A(T_n)_{a,(b,y)},\\
+U_{a,s}&=\mathbf1_{\{\Pi_A(a)=s\}}\sqrt{P_A(a)/\mu_A(s)}.
+\end{aligned}
+\tag{43.9}
+$$
+
+则 $W=UX$、$U^{\mathsf T}U=I_k$，实际全部原始行与全部完整查询列的非零奇异值平方就是
+
+$$
+\mathsf{C}_A=XX^{\mathsf T},\qquad
+(\mathsf{C}_A)_{s,t}=\sqrt{\mu_A(s)\mu_A(t)}\,\Gamma_A(s,t),
+\qquad \operatorname{tr}\mathsf{C}_A=1,\quad \operatorname{rank}\mathsf{C}_A=k.
+\tag{43.10}
+$$
+
+令 $u_s=\sqrt{\mu_A(s)}$、$P=I_k-uu^{\mathsf T}$，则
+
+$$
+\mathsf{C}_A^0=P\mathsf{C}_AP,\qquad
+\operatorname{rank}\mathsf{C}_A^0=k-1,\qquad
+\operatorname{tr}\mathsf{C}_A^0=1-u^{\mathsf T}\mathsf{C}_Au.
+\tag{43.11}
+$$
+
+证明。同剖面的原始响应行完全相同，故逐项得到 $W=UX$；不同纤维不交，且第 $s$ 列的平方范数为 $\sum_{\Pi_A(a)=s}P_A(a)/\mu_A(s)=1$，所以 $U$ 是等距嵌入。这识别的是完整原始矩阵，而不是 §42 的标签隔离子矩阵。两个一热完整标签向量的内积恰是标签相等的指示值，按同一个 $b$ 求和即得核公式。对角核为一，质量和为一，故迹为一。引理42.2给规范行独立，所有行列权重正，故 $\mathsf{C}_A$ 正定、秩为 $k$。$u$ 是单位向量；$v^{\mathsf T}P\mathsf{C}_APv=(Pv)^{\mathsf T}\mathsf{C}_A(Pv)$ 为零当且仅当 $Pv=0$，所以中心化核空间恰为 $\operatorname{span}\{u\}$。最后由 $P^2=P$ 和迹的循环性得到式（43.11）。$\square$
+

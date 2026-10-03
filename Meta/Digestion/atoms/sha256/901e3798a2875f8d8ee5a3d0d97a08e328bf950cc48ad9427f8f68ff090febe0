@@ -1,0 +1,30 @@
+**Theorem 19.1 (actual points have no affine cubic-map preimage).**
+For every $j\geq1$,
+
+$$
+\neg\mathcal A_{-3d_j^2}(d_jc_j,d_jL_{3^j})
+\quad\text{and}\quad
+\neg\mathcal A_{125d_j^2}(5d_jc_j,25d_jF_{3^j}).
+$$
+
+Proof. Since $B_j$ is not a cube, some prime $p$ divides $d_j$ to an
+exponent $e\in\{1,2\}$. The block congruences give $p>5$. Write
+$k=v_p(c_j)\geq0$. For either displayed point, $v_p(X)=e+k$ and
+$v_p(b)=2e$, while $v_p(9)=v_p(108)=0$. A putative affine preimage
+would satisfy
+
+$$
+s^3=9Xs^2+108b.
+$$
+
+Put $r=v_p(s)\in\mathbb Z$. The three terms have valuations
+$3r$, $e+k+2r$, and $2e$. If $r\leq0$, or if $e=2$ and $r=1$,
+the first valuation is strictly smaller than the other two. In every
+remaining case the last valuation is strictly smaller than the other
+two. A sum cannot have exactly one term of least $p$-adic valuation,
+so no such $s$ exists.
+
+The statement uses the displayed rational affine relation. Identifying
+that relation with the rational image of a global degree-three isogeny
+requires the separate map construction and image theorem of Section 13.
+

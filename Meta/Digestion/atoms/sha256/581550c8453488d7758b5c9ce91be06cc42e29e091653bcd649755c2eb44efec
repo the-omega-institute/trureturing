@@ -1,0 +1,54 @@
+### 定理 285.4 跨全部整包系数和幂次的一致 Robin 尾段
+
+取 $C\in\{4,5040\}$、全部素数 $s\ge5$、全部正整数 $a,n$，令
+\[
+B_{C,s,a,n}=Cm_s^aF_n,\qquad R=n+as.
+\tag{285.13}
+\]
+则对每个 $\varepsilon>0$，存在同一个 $R_0$，使两种 $C$ 及所有 $R\ge R_0$ 的这些参数均满足
+\[
+\boxed{\quad
+0<\frac{Z(B_{C,s,a,n})}{e^\gamma\log\log B_{C,s,a,n}}<\varepsilon.
+\quad}
+\tag{285.14}
+\]
+因此该完整参数族有一个共同的最终 Robin 安全阈值；它不只逐个固定 $s$ 或 $a$ 取得阈值。
+
+**证明。** Euler 局部因子给标准次乘法性 $Z(xy)\le Z(x)Z(y)$，无须互素条件。
+由定理285.3，
+\[
+Z(B_{C,s,a,n})\le\frac{16}{15}Z(CF_n).
+\tag{285.15}
+\]
+§172.1分别在固定乘子四与 $5040$、单个 Fibonacci 因子上给 Robin 比值趋零。
+结合 Binet 的 $\log\log(CF_n)\sim\log n$，得到
+\[
+Z(CF_n)=o(\log n)\qquad(n\to\infty).
+\tag{285.16}
+\]
+此处只把已有固定乘子结论用于这两个固定基础族；变化乘子的成本由式（285.15）另行支付。
+
+记 $c=(\log2)/4>0$。递推增长给 $F_n\ge2^{(n-2)/2}$ 对 $n\ge2$ 成立，
+单独检查 $n=1,2,3$，遂得 $\log(4F_n)\ge cn$ 对全部正指标成立。
+又 $m_s\ge L_s\ge F_s$，$s\ge5$ 给 $\log m_s\ge cs$。
+所以
+\[
+\log B_{C,s,a,n}\ge c(n+as)=cR.
+\tag{285.17}
+\]
+当 $R$ 足够大时，$\log(cR)\ge\tfrac12\log R>0$，因此分母至少为 $\tfrac12e^\gamma\log R$。
+
+给定 $\varepsilon>0$，对两份式（285.16）取共同的 $N\ge2$，使全部 $n\ge N$ 都满足
+$Z(CF_n)<15\varepsilon e^\gamma\log n/32$。
+在这一范围内，$n\le R$ 与式（285.15）使所求比值严格小于 $\varepsilon$。
+对剩下的 $1\le n<N$，取有限最大值 $C_N=\max_{C\in\{4,5040\},\ 1\le n<N}Z(CF_n)$。
+只要再令 $\log R>32C_N/(15\varepsilon e^\gamma)$，同一估计亦严格小于 $\varepsilon$。
+两范围共享一个 $R_0$，证明式（285.14）。
+
+此外 $F_n\le\phi^n$、$m_s<\phi^{2s}$ 给
+\[
+\log B_{C,s,a,n}<\log5040+2R\log\phi.
+\]
+所以充分大的实际整数规模也强制 $R$ 超过该共同阈值。
+取 $\varepsilon=1$，得到整个参数族的最终 Robin 安全性。$\square$
+

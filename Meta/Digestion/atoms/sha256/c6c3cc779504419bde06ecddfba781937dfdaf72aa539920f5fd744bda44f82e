@@ -1,0 +1,49 @@
+### 42.7 固定族的 A 或 B 轨道判据
+
+固定一个共同 stem $(P,Q,h)$ 和两条等长返回
+$$
+(U_0,V,W_0),\qquad(U_1,V,W_1),
+\quad |U_i|=|V|=L.
+\tag{42.36}
+$$
+第一规范 hull $H_1$ 非退化，第二返回映射为
+$$
+F(x)=y+a(x-y),\qquad a=(-g)^L,\qquad 0<|a|<1.
+\tag{42.37}
+$$
+沿用第 39 章的固定族合同：stems 从初始 guard 零进入指定基点，两个返回各自回到同一 guard；由完整后缀清单与 hull 端点最大成本得到该族自身最小闭预算 $\beta>0$，并有 $\beta<\lambda$。每个第一后缀将 $H_1$ 整体送入所选 $E_c^\beta$，第二参考点也满足全部闭槽。以下只是定理 39.5.2 的有限 active/slack 展开，不重新分类解码器。
+
+列出 rival 的全部观察槽，包括 stem 后的空返回词和 stem-only 槽：
+$$
+\mathscr S=
+\{(f_{Q[j:]},h_j):0\le j<|Q|\}
+\cup
+\{(f_{V[j:]},(W_i)_j):i=0,1,\ 0\le j<L\}.
+\tag{42.38}
+$$
+相同后缀若配有不同颜色仍保留两次。对槽 $\alpha$ 写 $(G_\alpha,c_\alpha)$，并定义
+$$
+T_\omega=I_r\cap\bigcap_{\alpha\in\mathscr S}
+G_\alpha^{-1}(O_{c_\alpha,\omega}^{\beta}),\qquad
+K_\omega=\bigcap_{n\ge0}F^{-n}(T_\omega).
+\tag{42.39}
+$$
+空返回词的槽要求 $n=0$，所以 (42.39) 没有漏掉最早观察；若 stem 为空，第一集合为空，也不添加虚构 terminal 观察。
+
+令 $\mathscr A$ 是在周期点 $y$ 处达到 $\beta$ 的 active 槽，令 $\sigma_\alpha$ 为其下侧 $-1$ 或上侧 $+1$ 符号，$\gamma_\alpha=G_\alpha'$。定义
+$$
+\mathrm A:\quad y\in T_\omega,
+\tag{42.40}
+$$
+即周期参考自身的每个等号槽均满足实际归属；严格 slack 槽自动满足。定义
+$$
+\mathrm B:\quad a>0,\quad
+\exists\eta\in\{-1,+1\},\ \exists\varepsilon>0:
+\begin{cases}
+y+\eta u\in I_r\ (0\le u\le\varepsilon),\\
+\sigma_\alpha\gamma_\alpha\eta<0\quad(\alpha\in\mathscr A).
+\end{cases}
+\tag{42.41}
+$$
+这是同一个合法 guard 方向改善全部 active 槽；不能只检查未 owned 的 active 槽。
+

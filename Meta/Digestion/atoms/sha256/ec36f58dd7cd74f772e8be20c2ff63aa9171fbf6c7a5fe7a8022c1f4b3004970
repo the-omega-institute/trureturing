@@ -1,0 +1,24 @@
+**定义 23.1（带时间的切点集合与圆周编码）。** 对正宽度 $m$、固定有限 $S\subseteq\mathbb N_0$，令
+
+$$
+K_m(S)=\bigcup_{t\in S}\{t+1,t+2,\ldots,t+G_m\},\qquad
+\mathcal E_m(S)=\{E_k:k\in K_m(S)\}.
+$$
+
+每个整数区间都含两端点。时刻 $t$ 的标签 $p$ 在来源相位坐标中的开弧是
+
+$$
+\mathcal A_{m,t}(p)=\mathcal A_m(p)-[t\alpha].
+$$
+
+在 $\mathbb T\setminus\mathcal E_m(S)$ 上，圆周编码为这些逐时标签组成的元组；其给定标签的圆周纤维是所选弧的交。下文说这个纤维连通，是指圆周上的开弧集合，不能与其内实际自然数来源构成的可数集合混同。公共细分单元指 $\mathbb T\setminus\mathcal E_m(S)$ 的连通分支。$S=\varnothing$ 时编码为常值，定义域为整个圆周。
+
+定理 17.6 与定理 18.3，以及假设 18.4 的精确有限桥，给出对每个实际来源的等式
+
+$$
+q_m(N+t)=p\quad\Longleftrightarrow\quad
+z_N\in\mathcal A_{m,t}(p).
+$$
+
+因此时刻 $t$ 的全部切点恰为 $E_{t+1},\ldots,E_{t+G_m}$；全部时刻的切点并恰为 $\mathcal E_m(S)$。实际 $z_N$ 避免这些切点，逐时标签在每个公共细分单元上恒定。但这些事实本身还没有排除不同单元具有同一元组标签。
+

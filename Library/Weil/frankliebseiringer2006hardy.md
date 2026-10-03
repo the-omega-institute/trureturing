@@ -348,6 +348,64 @@ $$
 
 No such lower bound for $C_L(f)$ has been supplied. The derivative budget is useful on fixed smooth slow dilations, where it decreases quadratically, and need not be affordable on oscillatory tests. The Mertens supplier closes one paper-level debit estimate while leaving the signed primary-prime comparison unresolved. It provides no FIB-to-prime-translation intertwiner, all-support positivity, or RH conclusion.
 
+The complementary [logarithmic budget](broadbent2026mertens.md#an-upper-budget-in-the-actual-logarithmic-gamma-energy) applies the classical entire-xi Hadamard expansion to the actual even-power boundary pairing, with the pole retained. In that note's equation (8), the same test satisfies
+
+$$
+E_*(f)-\epsilon(f)+d_\xi\|f\|_2^2
+=\mathcal Z(f)+\mathcal D_{\rm odd}(f)+\mathcal J(f),
+\qquad d_\xi=4+\gamma-\log(4\pi)-\frac\pi2.
+$$
+
+The three terms on the right are nonnegative; $\mathcal Z$ is the actual zero-strip Poisson contribution, not a critical-line zero sum or an RH assumption. Reusing the classical digamma values gives $2\kappa-a_0+d_\xi=2C_{\rm odd}+\log2$, where $C_{\rm odd}=\sum_p\log p/(\sqrt p(p-1))$. The full same-test account becomes
+
+$$
+Q_{\rm full}(f)=C_L(f)-\tfrac12|\int f|^2
+-(2C_{\rm odd}+\log2)\|f\|_2^2
++\mathcal Z(f)+\mathcal D_{\rm odd}(f)+\mathcal J(f). \tag{15}
+$$
+
+Dropping all three positive terms yields a sufficient condition for an individual test,
+
+$$
+C_L(f)\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2)\|f\|_2^2.
+$$
+
+This condition cannot hold for every compact smooth test. For a normalized test supported in an interval of width $d<\log2$, all primary-prime correlations vanish and the continuum estimate (9) gives $|C_L(f)|\le2(e^{d/2}-1)$. This tends to zero as $d\downarrow0$, while the required scalar is at least $\log2>0$. Such tests refute the universal sufficient condition, not positivity of their full Weil form. A useful all-test comparison must retain the actual positive contributions or a sharper joint estimate. In the basic budget (8), $E_*$ has been spent; it cannot also be added to (15) as an independent reserve. Equation (15) and this domain boundary remain paper-level deductions without a new Lean declaration, Robin estimate or RH conclusion.
+
+The [classical Stechkin application](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison) supplies a stronger paper-level bound for the actual $\mathcal Z$ on this same test:
+
+$$
+\mathcal Z(f)\ge\kappa_S E_*(f)-2\|f\|_2^2,
+\qquad \kappa_S=1/\sqrt5.
+$$
+
+Thus the independently justified remainder
+
+$$
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2\|f\|_2^2\ge0
+$$
+
+gives the exact account
+
+$$
+\begin{aligned}
+Q_{\rm full}(f)={}&C_L(f)-\tfrac12|\int f|^2
+-(2C_{\rm odd}+\log2+2)\|f\|_2^2\\
+&+\kappa_S E_*(f)+\mathcal R_S(f)
++\mathcal D_{\rm odd}(f)+\mathcal J(f). \tag{16}
+\end{aligned}
+$$
+
+The retained fraction is paid for by a lower bound on $\mathcal Z$, including the scalar cost $2\|f\|_2^2$. It is not a second use of the full $E_*$ and is not obtained by defining an unknown Robin or Weil margin to be positive. A sufficient joint comparison is now
+
+$$
+C_L(f)+\kappa_S E_*(f)
+\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2+2)\|f\|_2^2
+\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0. \tag{17}
+$$
+
+No uniform all-test bound (17) has been supplied. It is sufficient rather than necessary: retaining the actual $\mathcal R_S$, $\mathcal D_{\rm odd}$ and $\mathcal J$ can reduce the required margin. Every term belongs to the same actual $f$; separate extrema for $C_L$ and $E_*$ do not prove their joint comparison. The source reuse preserves a positive Gamma fraction without an RH hypothesis, but does not solve the remaining signed primary-prime/pole estimate or identify its tests with the Robin configurations.
+
 ## A prime edge crossing an intermediate FIB window
 
 The five first-level internal-coordinate intervals have geometric order $[3],[null],[5],[2],[2\ 5]$. Put $\varphi=(1+\sqrt5)/2$. In particular

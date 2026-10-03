@@ -1,0 +1,20 @@
+**命题 13.4（Zero padding and a separate End certificate）。** The mode $\mathsf E$ consumes three positions and is not a terminator. For positive canonical End, the eligibility flag is initialized by $\chi=\varepsilon$ and updated by
+
+$$
+\chi_{\mathrm{new}}=\mathbf1_{\{w_j\ne\mathsf E\}},
+$$
+
+without taking a logical OR with the old flag. An empty window word may End positively exactly when $\varepsilon=1$; zero has its separate structural representation. A nonempty positive word can End exactly when its last entire window is nonzero, even if its highest bit is zero. Bare $Z_\ell$ never certifies that every unread higher bit is zero.
+
+证明。The End clauses are the precise convention of definition [104.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L6937), restated in definition [116.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L9805). A last zero window must clear eligibility even after a nonzero earlier window, which explains the replacement update. Modes $100$ and $010$ can be last windows although their highest bit is zero. End is a separate terminal query, not a sixth window transition.
+
+For the last assertion, fix a finite $Z_\ell(n)$ and choose a bit position $t>3\ell$ above the entire support of $b(n)$, with at least one zero bit between that support and $t$. Add one bit 1 at $t$ and keep every old bit. The result is finite-support and nonadjacent, and therefore, by the canonical encoding premise, is the canonical code of
+
+$$
+n'=n+F_{t+2}>n.
+$$
+
+Its unit and first $\ell$ windows have not changed. If $n=q(x)$ for $x\in X$, then $n,n'\ge2$. Every integer at least 2 has a nonzero nonnegative $2,3$ composition: for an even $t'$ use $(t'/2,0)$, and for an odd $t'\ge3$ use $((t'-3)/2,1)$. This is the elementary realization underlying theorem [117.3](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L10037). It supplies an actual $y$ with $q(y)=n'$. The same finite bare positional prefix thus admits a different actual quantity and a nonzero unread bit.
+
+If instead a separate certificate establishes that the observed complete prefix is at its actual canonical End, the unread tail is known to be zero and the sum of its observed bits fixes the quantity. On $X$ this still fixes only the quantity fiber. Merely knowing a farther End position while leaving intervening digits unread is not that complete-prefix certificate. $\square$
+

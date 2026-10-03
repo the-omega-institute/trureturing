@@ -1,0 +1,18 @@
+### 30.1 有类型原子过程关系
+
+取类型集 \(I\)，每类接口的载体为 \(X_i\)，令
+
+$$
+X=\coprod_{i\in I}X_i .
+$$
+
+一个**有类型过程关系**由以下数据组成：
+
+$$
+\mathfrak P=(X,\tau,E,s,t,a,\lambda,\iota,\mathsf D,\circ,1,\delta_1,\sigma).
+\tag{PG.3001}
+$$
+
+其中：
+
+* \(\tau:X\to I\) 给出接口类型；

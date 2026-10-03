@@ -1,0 +1,38 @@
+**定理 346.2（对数频带的统一能量分布）。** 对全部充分小的 $t\ne0$，$\delta(t)>0$。定义
+
+$$
+P_t(s)=\frac{2}{\delta(t)}
+\sum_{\gamma\le |t|^{-s}}a_\gamma(1-\cos\gamma t),\qquad 0\le s\le1.
+$$
+
+则
+
+$$
+\sup_{0\le s\le1}|P_t(s)-s^2|=O(L_t^{-1}).
+\tag{346.6}
+$$
+
+特别，每个固定有限频率集承载的相位能量比例趋零，而把频率投到 $\log\gamma/L_t$ 后，其能量概率测度弱收敛到 $[0,1]$ 上具有密度 $2s\,ds$ 的概率测度。若
+
+$$
+u_{t,\gamma}=\frac{e^{i\gamma t}-1}{\sqrt{\delta(t)}},
+$$
+
+则在复加权空间 $\ell^2(\Gamma,a;\mathbb C)$ 中 $\|u_t\|_a=1$，但 $u_t\rightharpoonup0$。
+
+证明。取实际频率 $\gamma_*>0$，并限制 $0<|t|<2\pi/\gamma_*$，它的一项严格正，因此总能量严格正。选择 $1<\gamma_0\le\min\Gamma$，令 $Y_s=|t|^{-s}=e^{sL_t}$。将矩与尾渐近的固定早段吸收入统一常数后，对全部 $Y_s\ge\gamma_0$ 和 $s\in[0,1]$ 使用同一个低频展开及（346.5），得到
+
+$$
+\begin{aligned}
+2\sum_{\gamma\le Y_s}a_\gamma(1-\cos\gamma t)
+&=\frac{t^2}{4\pi}s^2L_t^2
+ +O\!\left(t^2(sL_t+1)+t^4Y_s^2\log Y_s\right)\\
+&=\frac{t^2}{4\pi}s^2L_t^2+O(t^2L_t).
+\end{aligned}
+\tag{346.7}
+$$
+
+隐含常数不依赖 $s$，因为 $|t|Y_s\le1$。若 $Y_s<\gamma_0\le\min\Gamma$，和为空且 $sL_t<\log\gamma_0$，所以同一个统一误差界仍成立。除以定理346.1的总能量即得（346.6），包括 $s\to0$ 的端点，而不是只对固定非零 $s$ 成立。
+
+在 $s=1$ 处 $P_t(1)\to1$，故该对数坐标之外的高频能量比例趋零；$\gamma>1$ 保证没有负对数坐标的质量。区间内的统一分布函数极限给上述弱极限，这是经典概率分布函数收敛判据的应用。对固定有限频率集，三角函数的二次上界与 $t^2/\delta(t)=O(L_t^{-2})$ 给其能量比例趋零。范数恒等式使用 $|e^{ix}-1|^2=2(1-\cos x)$。每个固定坐标 $u_{t,\gamma}\to0$；对任意加权平方可和测试向量，先将其分成有限坐标与任意小的平方范数尾，再用 Cauchy–Schwarz 及 $\|u_t\|_a=1$，即得弱收敛。$\square$
+

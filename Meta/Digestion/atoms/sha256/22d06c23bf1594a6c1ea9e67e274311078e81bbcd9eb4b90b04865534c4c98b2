@@ -1,0 +1,44 @@
+**定义 44.1（实际来源与观察）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad \phi=1+t,\quad g=2t-1=t^3,
+\quad \lambda=\frac{t^2}{10},\quad c=\frac{2t}{5},
+\quad I_0=X=[-1,\phi],\quad I_1=[-1,t].
+$$
+
+来源窗口标签为 $\{3,0,5,2,25\}$，其中 $0$ 是空窗，$25$ 是一个窗口标签。保留原合法 guard 边及原前接映射：
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx,\\
+f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}},\qquad f_\varnothing=\mathrm{id}.
+\end{gathered}
+\tag{44.1}
+$$
+
+以 $\mathcal A_s$ 记定义14.5中从 guard $s$ 出发的合法完成地址域，$D_s$ 是其中最终空尾的地址，$\Omega=\mathcal A_0$、$D=D_0$；编码为 $\kappa_s(\xi)=\sum_{r\ge0}(-g)^r\Delta_{\xi_r}$。合法前接满足 $\kappa_s(w\xi)=f_w(\kappa_{s'}(\xi))$，不识别字面不同的来源。
+
+一次固定任意合法切点归属，以 $\mathcal Q$ 表示对应六格量化器，实际格为 $C_i=\mathcal Q^{-1}(i)$。式 (28.1)、定义39.1.1给出
+
+$$
+\begin{gathered}
+q_1=-t^2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\ J_1=[q_1,q_2],\ J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\ J_4=[q_4,q_5],\ J_5=[q_5,\phi],
+\qquad J_i=\overline{C_i}.
+\end{gathered}
+\tag{44.2}
+$$
+
+实际观察为 $\mathcal Q(\operatorname{clip}_X(x+e))$。对 $b\ge0$，记
+
+$$
+O_i^b=\{x\in X:\exists y\in C_i, |x-y|\le b\}.
+$$
+
+由裁剪非扩张且固定 $X$，此集合恰表示预算 $b$ 下的实际可取得性。一个点属于 $O_i^b$ 当且仅当其到 $J_i$ 的距离小于 $b$，或距离等于 $b$ 且唯一最近点被 $C_i$ 拥有。$b=0$ 时仍须检查实际归属；$O_i^b$ 是保留端点旗标的区间。
+

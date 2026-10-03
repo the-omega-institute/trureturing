@@ -1,0 +1,21 @@
+**定理 302.1（实际饱和签名的精确纤维）。** 对 $L\ge2$，有
+\[
+D_L\mid A_L\mid D_{m_L},\qquad B_L(A_L)=A_L.
+\tag{302.5}
+\]
+对每个正整数 $H$，
+\[
+\mathcal O_L(H)=\mathcal O_L(A_L)
+\quad\Longleftrightarrow\quad
+H=A_Lt\text{，其中 }t\ge1\text{ 且 }(t,3)=1.
+\tag{302.6}
+\]
+纤维内全部整数都有同一核心 $B_L(H)=A_L$。当 $L\ge16$ 时，$5040\mid A_L$。此外，对每个素数 $p$，
+\[
+p\mid Q_L\quad\Longleftrightarrow\quad
+\bigl(p\equiv1\pmod3\ \land\ 2p\le m_L\bigr)
+\ \lor\
+\bigl(p\equiv2\pmod3\ \land\ p\le m_L\bigr).
+\tag{302.7}
+\]
+

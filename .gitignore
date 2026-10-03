@@ -20,6 +20,7 @@ __pycache__/
 /Generated/DAG.md
 /Generated/FILEMAP.md
 /Generated/echo-residuals/
+/Generated/scribe-release/
 /tools/Generated/scribe-emissions.v1.json
 /Golden/Frozen/accepted/.ledger-stage-*/
 /Golden/Frozen/accepted/.ledger-write.lock

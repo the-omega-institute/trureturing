@@ -1,0 +1,41 @@
+### 35.5 两个叶生成元与端点完备性的区别
+
+FIB 源层可写成
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\tag{PG.3511}
+$$
+
+并在组合层记录
+
+$$
+c(\alpha)=(1,0),\quad c(\beta)=(0,1),\quad
+c(\langle s,t\rangle)=c(s)+c(t).
+\tag{PG.3512}
+$$
+
+因此“只有两个不可约关系”在严格意义上是“只有两个叶标签生成元”。二元组合
+$\langle-,-\rangle$ 仍是独立的构造原语，$\rho$ 仍是独立的后继作用；没有它们，
+只能得到两个标签的静态集合，不能得到 Fibonacci 结构。
+
+对只要求组成数量及其替换后继的任务，$c$ 配合两次数量读数可以成为动态充分边界。
+但它不能成为原始端点的完整取得码，因为
+
+$$
+c(\langle\alpha,\beta\rangle)
+=c(\langle\beta,\alpha\rangle),
+\qquad
+\langle\alpha,\beta\rangle\ne\langle\beta,\alpha\rangle .
+\tag{PG.3513}
+$$
+
+若端点任务要求左右地址、括号结构或替换路径，(PG.3513) 的两个历史落在同一计数
+纤维，却必须落在不同的端点纤维。因此要满足 (PG.3505)，$A_h$ 或
+$\operatorname{cursor}_h$ 至少要包含能区分这些结构的路径码；只保存 $\#\alpha$、
+$\#\beta$、深度或一个标量读数不够。
+

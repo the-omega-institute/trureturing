@@ -1,0 +1,14 @@
+**定理 9.2（Injection into the tower and its failure of surjectivity）。** For a positive unbounded divisibility tower, the map
+
+$$
+x\longmapsto(\pi_{L_r}(x))_{r\ge0}
+$$
+
+is injective from $X$ into the coherent residue threads. The coherent thread $z_r=(-1\bmod L_r,0)$ is not in its image, though every finite prefix of it is realized by an actual source. No finite prefix of this tower uniquely identifies an unrestricted actual composition.
+
+证明。Suppose $x=(a,b)$ and $y=(a',b')$ have equal residues at every layer. Each $L_r$ divides the integer differences $a-a'$ and $b-b'$. If a difference is nonzero, choose $r$ with $L_r$ greater than its absolute value. A positive integer that large cannot divide a smaller nonzero integer. Both differences are zero, proving injection.
+
+The residues of $-1$ and 0 reduce compatibly, so $z$ is coherent. If an actual $(a,b)$ realized it, every $L_r$ would divide $a+1$ and $b$. Choosing $L_r>a+1$ contradicts divisibility of the positive integer $a+1$. Hence there is no actual source for the entire thread. Any finite prefix, however, is realized by an actual representative of its final residue pair, using theorem 8.1; divisibility then gives all earlier coordinates. If the final modulus is 1, the representative pair $(0,0)$ can be replaced by $(1,0)$, so this case is also actual.
+
+At any layer $r$, both $x$ and the distinct point $x+(L_r,0)$ belong to $F_{L_r}(x)$. Every finite set of tower indices is dominated by its largest index. Thus no finite collection of layers gives unique unrestricted composition recovery. This realizes, in the present source domain, the distinction between separation and realization in [动态边界卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md?plain=1#L256), proposition [6.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md?plain=1#L256), and [过程几何卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L167), theorem [4.4](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L167): coherent compatibility is not an actual-source existence theorem. $\square$
+

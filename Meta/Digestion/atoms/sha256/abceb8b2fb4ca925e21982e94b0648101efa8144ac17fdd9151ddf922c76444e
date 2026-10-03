@@ -1,0 +1,25 @@
+**定义 18.1（本章唯一分析的函数与区间族）。** 本章的 $Q$ 严格指第17章的函数：端点颜色为 $(4,1,2,3,4,5)$，核心外使用定义17.5的 $\mathcal K_a,h_x$，永久 $O$ 尾使用 $Q(x)=h_x(4)$。颜色集取离散拓扑，定义域 $X=[-1,\phi]$ 取实直线的相对拓扑。令
+
+$$
+F=f_2,\qquad F(y)=1-gy,\qquad z=\frac\phi2,
+$$
+
+$$
+b=F(t)=3t-1,\qquad c=2t,\qquad
+u=f_3(t)=-2t^2,\qquad v=f_0(t)=-t^4.
+$$
+
+区间端点 $u$ 与第17章的首次返回时间 $\nu(x)$ 是不同记号。对 $n\ge0$ 定义
+
+$$
+s_n=F^n(\phi),\qquad r_n=F^n(c),\qquad
+J_n=F^n([c,\phi)),\qquad H_n=F^n([b,c)).
+$$
+
+于是 $s_0=\phi$、$s_1=t$、$s_2=b$。记
+
+$$
+V_4=\{z\}\cup\bigcup_{n\ge0}J_n,\qquad
+V_5=\{\phi\}\cup\bigcup_{n\ge0}H_n.
+$$
+

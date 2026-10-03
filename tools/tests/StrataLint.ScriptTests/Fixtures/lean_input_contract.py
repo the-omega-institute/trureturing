@@ -1,4 +1,5 @@
 """Mathlib-only cache partition and Actions snapshot transport identities."""
+import hashlib
 import importlib.util
 import json
 import os
@@ -38,6 +39,7 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
     def test_actions_snapshots_share_partition_and_pr_writes_stay_isolated(self):
         def keys(run, attempt, event, ref, success="true"):
             environment = {"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
+                           "GH_TOKEN": "",
                            "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref,
                            "GITHUB_SHA": "a" * 40, "CANDIDATE_SHA": "a" * 40,
                            "STRATALINT_CACHE_WRITES": "true",
@@ -47,7 +49,9 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
                                     text=True, capture_output=True,
                                     env={**os.environ, **environment})
             self.assertEqual(0, result.returncode, result.stderr)
-            flat = dict(line.split("=", 1) for line in result.stdout.splitlines())
+            flat = dict(line.split("=", 1) for line in result.stdout.splitlines()
+                        if not line.startswith("LEAN_ACTIONS_CACHE "))
+            self.assertEqual(flat["project_key"], flat["project_restore_key"])
             self.assertFalse(any(key.startswith("report_") for key in flat), flat)
             flat["save_allowed"] = flat["save_allowed"] == "true"
             return {**flat, **{
@@ -63,6 +67,11 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
         write(self.root / "D5/A.lean", "def a := 2\n")
         second = keys("13", "2", "pull_request", "refs/pull/42/merge")
         self.assertTrue(first["save_allowed"])
+        system, arch = first["os"], first["arch"]
+        pinned = hashlib.sha256(b"leanprover/lean4:v4.33.0\n").hexdigest()
+        self.assertEqual(f"elan-pinned-{system}-{arch}-{pinned}", first["elan_key"])
+        self.assertFalse(any(key.startswith("elan_restore") for key in first))
+        self.assertNotEqual(first["elan_key"], second["elan_key"])
         self.assertTrue(second["save_allowed"])
         self.assertFalse(keys("14", "1", "push", "refs/heads/dev", "false")["save_allowed"])
         self.assertFalse(keys("16", "1", "pull_request", "refs/pull/42/head")["save_allowed"])
@@ -99,7 +108,8 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
                 self.assertEqual(f"{REV}/{expected}", keys["partition"])
                 self.assertEqual(f"lean-cache-v2-{REV}-{expected}-", keys["release_prefix"])
                 for layer in ["dependency", "project"]:
-                    prefix = f"lean-{layer}-v4-{REV}-{expected}-"
+                    generation = "project-push" if layer == "project" else "dependency-v4"
+                    prefix = f"lean-{generation}-{REV}-{expected}-"
                     self.assertEqual(prefix, keys[layer]["restore_prefix"])
                     self.assertEqual(prefix + "12-1", keys[layer]["key"])
 

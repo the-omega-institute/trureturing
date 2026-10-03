@@ -1,0 +1,20 @@
+**命题 13.3（Seams, truncation and the exact positional intersection）。** The mode and seam conditions are exactly global nonadjacency. For $0\le\ell\le k$, let $\pi_\ell^k$ retain the unit and first $\ell$ windows. Then
+
+$$
+Z_\ell=\pi_\ell^k\circ Z_k,\qquad \pi_\ell^\ell=\mathrm{id},\qquad
+\pi_\ell^j\circ\pi_j^k=\pi_\ell^k\quad(\ell\le j\le k),
+$$
+
+and for every actual $x$,
+
+$$
+P_k(x)\subseteq P_\ell(x),\qquad
+\bigcap_{\ell\ge0}P_\ell(x)=\{y\in X:q(y)=q(x)\}.
+$$
+
+证明。Every adjacent pair of bit positions lies inside a window, crosses from the unit to the first window, or crosses between two windows. Internal mode legality covers the first kind and the two seam rules cover the other kinds; conversely global nonadjacency supplies all these rules. The truncation equalities follow entry by entry, also when $\ell=0$. Composing them with $q$ shows that equality at precision $k$ implies equality at precision $\ell$. Every fiber contains the same actual $x$.
+
+If $q(y)=q(x)$, uniqueness of the canonical code gives equality of all bits, hence membership in every $P_\ell(x)$. Conversely membership in every fiber first gives the same unit at $\ell=0$. Each other bit belongs to a finite window, so choosing a precision including that window gives equality of that bit as well. The full finite-support sequences agree; their defining sums therefore give $q(y)=q(x)$. This proves both inclusions.
+
+This is the truncation framework of definition [116.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L9805) applied on the domain $X$, using the actual-image target criterion of convention [116.3](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L9840). Its limiting target is quantity: $(3,0)$ and $(0,2)$ both have quantity 6 and agree at all positional precisions. By contrast theorem 11.1 gives a singleton intersection for the double-modulus composition tower. Even that singleton composition does not distinguish the two ordered trees in proposition 5.2. $\square$
+

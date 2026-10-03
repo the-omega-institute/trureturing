@@ -1,0 +1,14 @@
+### 定理 286.4 无界整包数量、任意幂次与 Fibonacci 指标的共同 Robin 尾段
+
+对定理286.2的全部有限前缀，取全部正整数 $n$，令
+\[
+B=5040M_kF_n,\qquad R=n+\sum_{j=0}^{k-1}a_js_j.
+\tag{286.14}
+\]
+则对每个 $\varepsilon>0$，存在同一个 $R_0$，使全部链选择、长度、指数及 $n$ 在 $R\ge R_0$ 时均满足
+\[
+\boxed{\quad 0<\frac{Z(B)}{e^\gamma\log\log B}<\varepsilon.\quad}
+\tag{286.15}
+\]
+该结论不要求 $n\in\mathcal E(m_k)$。
+

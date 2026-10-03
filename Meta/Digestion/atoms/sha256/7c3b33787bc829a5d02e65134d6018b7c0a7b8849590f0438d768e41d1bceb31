@@ -1,0 +1,50 @@
+**命题 43.11（树的 guarded 证书）。** 令 $0<\beta$，并固定两个同长、实际合法的 stem $P,Q$，其来源 guard 都从 $0$ 出发，分别到达 $s_1,s_2$，且 $d=|P|=|Q|$. 固定两个实际合法的正偶长度返回 $U_0,U_1:s_1\to s_1$，令 $L=|U_i|$，以及一个实际合法的正偶长度返回 $V:s_2\to s_2$，三者长度同为 $L$. 要求
+
+$$
+ U_0\ne U_1,\qquad a=g^L\in(0,1).
+$$
+
+所有 stem、return 和接缝的来源标签、incoming guard 与 outgoing guard 均取自实际合法边；这些是证书的一部分。第一分量返回映射写成
+
+$$
+ G_i(x)=A_i+ax,\qquad A_0\ne A_1,\qquad i=0,1.
+$$
+
+第二分量使用同一个返回词 $V$，其映射为
+
+$$
+ F(x)=y+a(x-y).
+$$
+
+以下 $J_c$ 是固定六格仪器的闭颜色区间，$E_c^\beta=J_c+[-\beta,\beta]$ 与物理支撑的交按已发表闭合同理解。记 stem 颜色块为 $H=(H_r)_{0\le r<d}$，第一返回颜色块为 $W_i=((W_i)_r)_{0\le r<L}$；同一 $W_i$ 也标在 rival 的共同返回 $V$ 上。所谓固定实际 $D/D$ 尾，是一次选定的两个实际地址 $\xi\in D_{s_1}$、$\eta\in D_{s_2}$；它们的来源标签、guard 接缝和尾字面量在所有 $z$ 中均不变。
+
+令 $H_1=[u,v]$ 是第一分量两映射的规范最小不变区间，取一个固定实际尾标量
+
+$$
+ x_1\in T_{s_1}\cap(u,v),
+$$
+
+并取一个固定实际尾标量 $x_2=y+h\in T_{s_2}$. 对第一分量的每个实际 stem/return departure suffix $\alpha$，令 $f_\alpha$ 为该 departure 到所在 stem 或返回块末端的固定后缀映射，即 $f_{P[r:]}$ 或 $f_{U_i[r:]}$；完整历史的后缀再复合其后所有返回，$c_\alpha$ 为 $H_r$ 或 $(W_i)_r$，并要求有限证书
+
+$$
+ f_\alpha(H_1)\subseteq E_{c_\alpha}^{\beta}
+ \qquad\text{for every such actual }\alpha.
+$$
+
+单独记 rival 的有限槽：对 stem $Q$ 的每个位置使用同一个 $H_r$，对共同返回 $V$ 的每个位置分别使用 $(W_0)_r$ 和 $(W_1)_r$. 对所得每一个实际槽 $\alpha$，令 $r_\alpha$ 为固定后缀 $f_{Q[r:]}$ 或 $f_{V[r:]}$，并要求
+
+$$
+ q_\alpha(0):=\beta-\operatorname{dist}(r_\alpha(y),J_{c_\alpha})\ge0,
+ \qquad
+ q_\alpha(1):=\beta-\operatorname{dist}(r_\alpha(x_2),J_{c_\alpha})>0.
+$$
+
+这里的 rival 清单分别包含两种 $W_i$ 发生，不能用一个颜色块代替；清单有限且每一项都来自实际 guard/source 词。对每个二进制词 $z=z_1\cdots z_k$（包括空词）固定来源
+
+$$
+ \alpha_z=PU_{z_1}\cdots U_{z_k}\xi,\qquad
+ \beta_z=QV^k\eta,\qquad |z|=k,
+$$
+
+以及共同指定颜色历史 $H W_{z_1}\cdots W_{z_k}$. 每个观察都是 departure observation，位置为 $0\le r<d+kL$；终端坐标 $d+kL$ 没有额外颜色。
+
