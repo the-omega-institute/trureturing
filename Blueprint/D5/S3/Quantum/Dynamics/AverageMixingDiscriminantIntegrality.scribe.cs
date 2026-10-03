@@ -29,7 +29,10 @@ internal sealed class AverageMixingDiscriminantIntegralityDocument : IScribeDocu
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Write the squarefree minimal polynomial as the product of the factors t minus theta over the distinct eigenvalues. For each theta let q_theta be the product with that factor deleted. Polynomial evaluation at the adjacency matrix gives q_theta(A) = q_theta(theta) E_theta. The resultant identity disc((t - theta) q_theta) = disc(q_theta) q_theta(theta)^2 cancels the squared spectral denominator. Thus each entry of D times the average mixing matrix is the sum over theta of disc(q_theta) times the square of the corresponding entry of q_theta(A). This sum is an integer polynomial in the distinct eigenvalues and is invariant under their permutations. The fundamental theorem of symmetric polynomials expresses it as an integer polynomial in the elementary symmetric functions; Vieta identifies these with signed coefficients of the monic integer minimal polynomial. Consequently every scaled entry is an integer. The argument sharpens the D squared bound in Lemma 3.1 to D."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("godsil-2011-average-mixing-discriminant-integrality"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

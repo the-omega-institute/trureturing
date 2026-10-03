@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; \forall G \in \operatorname{SimpleGraph}\left(\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/AverageMixingDiscriminantIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/godsil-2011-average-mixing-discriminant-integrality` (proved) by `D5/S3/Quantum/Dynamics/AverageMixingDiscriminantIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"godsil-2011-average-mixing-discriminant-integrality","declaration_gid":"D5/S3/Quantum/Dynamics/AverageMixingDiscriminantIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chris Godsil (2013). *Average mixing of continuous quantum walks*. DOI: [10.1016/j.jcta.2013.05.006](https://doi.org/10.1016/j.jcta.2013.05.006). URL: <https://arxiv.org/abs/1103.2578v3>.
