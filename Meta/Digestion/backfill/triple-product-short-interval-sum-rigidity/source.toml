@@ -1,0 +1,5 @@
+source_id = "triple-product-short-interval-sum-rigidity"
+path = "docs/develop/theory/TRIPLE_PRODUCT_SHORT_INTERVAL_SUM_RIGIDITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
