@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
+using Microsoft.CodeAnalysis;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -104,6 +105,28 @@ public sealed class ScribeResourceInputContractTests
         RewriteManifest(root, manifest);
         Assert.Equal(2, Compare(root, out _, out var error));
         Assert.Contains("Definition input is missing: " + PathFor("Alpha"), error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SourceCompilationUsesTheRecordedEntryAndSharedBytes()
+    {
+        using var root = Prepare();
+        var entry = PathFor("Alpha");
+        var expected = new[] { entry, Shared }
+            .Select(path => new ScribeResourceInput(path, Digest(File.ReadAllBytes(root.Resolve(path)))))
+            .ToArray();
+        using var inputs = new ScribeInputRecorder(root.Path);
+        var options = ScribeScriptHost.ScriptParseOptions!;
+        var graph = ScribeScriptHost.ReadSourceGraph(root.Path, entry, options);
+        Assert.Null(graph.Failure);
+
+        foreach (var input in expected)
+            TemporaryFileSystem.File.WriteAllText(root.Resolve(input.Path), "#error source changed after capture");
+
+        var compilation = ScribeScriptHost.CreateSourceCompilation(root.Path, graph.Sources!.Value,
+            ScribeScriptHost.ReferenceAssemblies(), options);
+        Assert.DoesNotContain(compilation.GetDiagnostics(), diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
+        Assert.Equal(expected, inputs.Inputs);
     }
 
     [Fact]

@@ -1,0 +1,10 @@
+## 7. Faithful golden matrix
+
+For each natural modulus $m$, write a golden residue as $z=a+b\phi$,
+where $\phi^2=\phi+1$. On the basis $(\phi,1)$, multiplication by $z$
+has matrix
+$$
+M_m(z)=\begin{pmatrix}a+b&b\\b&a\end{pmatrix}
+\quad\text{over }\mathbb Z/m\mathbb Z.
+$$
+

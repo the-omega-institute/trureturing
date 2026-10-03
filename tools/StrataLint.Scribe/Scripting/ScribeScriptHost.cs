@@ -200,7 +200,7 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
+    internal static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
         string root,
         string entry,
         CSharpParseOptions parseOptions)
@@ -307,18 +307,8 @@ public static class ScribeScriptHost
         CSharpParseOptions parseOptions,
         string? allowlistPath)
     {
-        var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
-            ScribeInputRecorder.ReadText(root, path),
-            parseOptions,
-            path: path)).Append(CSharpSyntaxTree.ParseText(
-                "global using System; global using System.Collections.Generic; global using System.IO; "
-                + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
-                + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
-        var compilation = CSharpCompilation.Create(
-            "StrataLint.Scribe.Documents",
-            trees,
-            references,
-            ScriptCompilationOptions);
+        var compilation = CreateSourceCompilation(root, sources, references, parseOptions);
+        var trees = compilation.SyntaxTrees;
 
         if (analyzers.IsEmpty)
             return (null, null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration, "banned API analyzer is unavailable"));
@@ -388,7 +378,25 @@ public static class ScribeScriptHost
         return (image, entryTypes[0], null);
     }
 
-    private static ImmutableArray<MetadataReference> ReferenceAssemblies()
+    internal static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
+        ImmutableArray<MetadataReference> references, CSharpParseOptions parseOptions)
+    {
+        var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
+            ScribeInputRecorder.ReadText(root, path),
+            parseOptions,
+            path: path)).Append(CSharpSyntaxTree.ParseText(
+                "global using System; global using System.Collections.Generic; global using System.IO; "
+                + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
+                + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
+        return CSharpCompilation.Create(
+            "StrataLint.Scribe.Documents",
+            trees,
+            references,
+            ScriptCompilationOptions);
+
+    }
+
+    internal static ImmutableArray<MetadataReference> ReferenceAssemblies()
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var runtimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
@@ -429,7 +437,7 @@ public static class ScribeScriptHost
         public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(File.ReadAllText(path));
     }
 
-    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
+    internal static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
         typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
             .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value);
 
@@ -444,7 +452,7 @@ public static class ScribeScriptHost
                 SourceCodeKind.Regular, symbols);
     }
 
-    private static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
+    internal static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
         OutputKind.DynamicallyLinkedLibrary,
         optimizationLevel: OptimizationLevel.Release,
         nullableContextOptions: NullableContextOptions.Enable,
@@ -452,7 +460,7 @@ public static class ScribeScriptHost
         generalDiagnosticOption: ReportDiagnostic.Error,
         deterministic: true);
 
-    private static string? NormalizePath(string path)
+    internal static string? NormalizePath(string path)
     {
         if (string.IsNullOrWhiteSpace(path) || Path.IsPathRooted(path)) return null;
         var normalized = path.Replace('\\', '/');

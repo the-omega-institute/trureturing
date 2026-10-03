@@ -1,0 +1,24 @@
+**定理 65.1（Symmetric-square addition and subtraction）。**
+Let $F$ be any field and $W$ an affine Weierstrass curve over $F$.
+For its nonsingular point group and any $P,Q$, let $s(P,Q)$ be the
+three homogeneous coefficients of the unordered pair of their
+projective $x$-coordinates. There is $t\in F^\times$ such that
+
+$$
+t\,s(P+Q,P-Q)=\operatorname{addSubMap}_W(s(P,Q)).
+$$
+
+The assertion includes points at infinity, inverse points and
+doubling, in every characteristic. The map on the right is the
+homogeneous quadratic addition-and-subtraction map of the Weierstrass
+coefficients.
+
+Proof. Infinity and inverse-point cases reduce to their homogeneous
+representatives. For distinct finite points, substitute the affine
+addition formula and clear the two nonzero coordinate differences.
+For doubling, the duplication denominator and numerator cannot both
+vanish at a nonsingular point: their simultaneous vanishing, together
+with the curve equation, forces both partial derivatives to vanish.
+Use the nonzero one as the projective scale. Substitution then gives
+the same three-coordinate identity, including characteristic two.
+

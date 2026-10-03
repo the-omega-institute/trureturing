@@ -1,0 +1,25 @@
+**Theorem 9.1 (canonical mixed-radicand factors).** Let $B$ be a positive
+integer. For every prime $p$, write $e_p=v_p(B)$, and define
+
+$$
+c=\prod_{p\mid B}p^{\lfloor e_p/3\rfloor},\qquad
+m=\prod_{e_p\equiv1\pmod3}p,\qquad
+n=\prod_{e_p\equiv2\pmod3}p.
+$$
+
+Then $c,m,n$ are positive, $m$ and $n$ are squarefree and coprime, and
+
+$$
+B=c^3mn^2.
+$$
+
+The displayed prime-exponent formulas determine these three factors
+uniquely. In particular, the cubefree factor $B/c^3$ is $mn^2$, and its
+radical is $mn$.
+
+Proof. For each $p$, division with remainder gives
+$e_p=3\lfloor e_p/3\rfloor+(e_p\bmod3)$. The remainder is one of
+$0,1,2$, so the $p$-exponent of $c^3mn^2$ is $e_p$. Every exponent in
+$m$ and $n$ is at most one, and no prime occurs in both. Comparing all
+prime exponents proves the product identity and uniqueness; the same
+comparison gives the cubefree and radical statements.

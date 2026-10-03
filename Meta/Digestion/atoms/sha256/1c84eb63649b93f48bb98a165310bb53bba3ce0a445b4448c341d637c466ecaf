@@ -1,0 +1,8 @@
+**Theorem 8.1 (oriented block factorization).** Put
+$\eta_j=-2+(x_j-1)\omega=\omega(x_j+\lambda)$. Then
+
+$$
+N(\eta_j)=B_j,\qquad
+\eta_j\equiv1+\lambda^3\pmod9.
+$$
+

@@ -741,3 +741,367 @@ The Markov Brownian limit concerns spatial prefix counts. It supplies no identif
 For the cut chain, the positive probability of absorption within $L$ steps from every nonabsorbed state bounds the tail geometrically and proves finite mean. The passage asymptotic then follows from the exact first-step equations and the Fibonacci estimates along $T_j$. An expectation asymptotic alone does not specify a continuum process or its convergence. The finite-state probabilities $\nu(z_0)\prod_{j<N}K(z_j,z_{j+1})$ in Theorem 6.3 are consistent under summing out the last state, so the standard cylinder extension defines their infinite trajectory law; the encoding transports this law because it transports every cylinder. This construction does not select an external physical realization. Finally, the countermodels in Theorem 7.1 vary data not selected by the native recursion; they do not refute the functional limit under the fixed $P_p$ hypotheses. The distinction is between these established mathematical process laws and the further continuum or physical identifications, which have not been specified. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Exact discounted response to a Fibonacci terminal swap
+
+**Definition 9.1 (Ordered finite response).** Retain the resistances, jump scale, reflecting left cut and absorbing right cut of Definition 5.1. For a nonempty word $w=w_0\cdots w_{L-1}$, let $K_w$ be the transient transition matrix on cuts $0,\ldots,L-1$, and put
+$$
+B_w=I-K_w,\qquad G_w=B_w^{-1},\qquad
+f_w(s)=\mathbb E_0(1+s)^{-\tau_w},\qquad D_w(s)=f_w(s)^{-1},\qquad s\ge0.
+$$
+Here $\tau_w$ counts discrete steps; $s$ in this section is a dimensionless discount parameter. The inverse exists because absorption has a geometric tail, as in Theorem 5.2. Define
+$$
+W_0=\alpha,\qquad W_1=\beta,\qquad W_{j+2}=W_{j+1}W_j,
+$$
+so $W_j=w(T_j)$. For $j\ge1$, set
+$$
+U_j=W_{j+1}W_j,\qquad V_j=W_jW_{j+1},\qquad
+\Delta_j=(-1)^{j+1}(r_\beta-r_\alpha).
+$$
+The corresponding trees $\langle T_{j+1},T_j\rangle$ and $\langle T_j,T_{j+1}\rangle$ have equal composition and equal aggregate quantity trajectories $q(M^n c)$ for every $n\ge0$. Both words have length $L=F_{j+3}$. Write $\mu_w=\mathbb E_0\tau_w$ and $m_{2,w}=\mathbb E_0\tau_w^2$.
+
+**Theorem 9.2 (Full terminal-swap factorization and moment response).** The words $U_j,V_j$ have a common prefix $P_j$ of length $L-2$ and opposite final pairs. For odd $j$ the pairs are $\alpha\beta$ and $\beta\alpha$, respectively; for even $j$ their roles reverse. For every $s\ge0$,
+$$
+D_{U_j}(s)-D_{V_j}(s)
+=\frac{s\Delta_j}{\theta}D_{P_j}(s),
+$$
+and consequently
+$$
+f_{U_j}(s)-f_{V_j}(s)
+=-\frac{s\Delta_j}{\theta}\,
+\frac{D_{P_j}(s)}{D_{U_j}(s)D_{V_j}(s)}.
+$$
+For $s>0$ and unequal resistances, the sign of the transform difference is $-\operatorname{sgn}(\Delta_j)$. The exact first and second moment differences are
+$$
+\mu_{U_j}-\mu_{V_j}=\frac{\Delta_j}{\theta},
+\qquad
+m_{2,U_j}-m_{2,V_j}
+=\frac{\Delta_j}{\theta}
+\left[2(\mu_{U_j}+\mu_{V_j}-\mu_{P_j})-1\right].
+$$
+These statements compare discounted responses; they assert no stochastic dominance of the passage-time tails.
+
+**Proof.** At $j=1$ one has $U_1=\beta\alpha\beta$ and $V_1=\beta\beta\alpha$, so $P_1=\beta$. The recurrence gives
+$$
+U_{j+1}=W_{j+1}V_j,\qquad V_{j+1}=W_{j+1}U_j.
+$$
+Thus $P_{j+1}=W_{j+1}P_j$ and the final pairs reverse at every step. Their total length is $F_{j+2}+F_{j+1}=F_{j+3}$, proving the prefix and parity assertions. Equal composition gives equal aggregate trajectories by Definition 1.1.
+
+For a fixed word let $h_i=\mathbb E_i(1+s)^{-\tau_w}$, including $h_L=1$. Put
+$$
+J_{-1}=0,\qquad J_i=\frac{\theta}{r_{w_i}}(h_{i+1}-h_i).
+$$
+The exact first-step equation is $(1+s)h_i=\mathbb E_i h_{X_1}$, hence $J_i-J_{i-1}=s h_i$. Therefore
+$$
+\binom{h_{i+1}}{J_i}
+=\mathsf T_{r_{w_i}}(s)\binom{h_i}{J_{i-1}},\qquad
+\mathsf T_r(s)=
+\begin{pmatrix}1+sr/\theta&r/\theta\\s&1\end{pmatrix}.
+$$
+With $e=(1,0)^{\mathsf T}$ and $h_L=1$, this gives
+$$
+D_w(s)=e^{\mathsf T}\mathsf T_{r_{w_{L-1}}}(s)\cdots
+\mathsf T_{r_{w_0}}(s)e.
+$$
+The order of multiplication is the reverse of the order of letters. Direct multiplication yields
+$$
+\mathsf T_{r_\beta}(s)\mathsf T_{r_\alpha}(s)
+-\mathsf T_{r_\alpha}(s)\mathsf T_{r_\beta}(s)
+=\frac{s(r_\beta-r_\alpha)}{\theta}
+\begin{pmatrix}1&0\\-s&-1\end{pmatrix}.
+$$
+The first row of the matrix on the right is $e^{\mathsf T}$. Multiplying the appropriate signed commutator by the transfer product for $P_j$ proves the factorization. All $D_w(s)$ are positive for $s\ge0$, so inversion proves the signed transform comparison.
+
+The same finite response has the resolvent representation
+$$
+(B_w+sI)h=B_w\mathbf1,\qquad
+D_w(s)=\frac{\det(B_w+sI)}{\det B_w}=\det(I+sG_w).
+$$
+The determinant identity is the finite birth-death spectral generating-function formula of J. A. Fill, [*The passage time distribution for a birth-and-death chain: Strong stationary duality gives a first stochastic proof*](https://arxiv.org/pdf/0707.4042v4), Theorem 1.2, used here as a proof ingredient. Indeed, if $\lambda_0,\ldots,\lambda_{L-1}$ are the transient eigenvalues, its formula at $z=(1+s)^{-1}$ gives
+$$
+f_w(s)=\prod_{a=0}^{L-1}\frac{1-\lambda_a}{1+s-\lambda_a}.
+$$
+All birth probabilities and all interior death probabilities are positive in Definition 5.1; no nonnegativity assumption on the transient eigenvalues is needed for that generating-function identity.
+
+The geometric tail permits differentiation at $s=0$. Since
+$$
+D_w'(0)=\mu_w,\qquad
+D_w''(0)=2\mu_w^2-m_{2,w}-\mu_w,
+$$
+the first derivative of the factorization gives $\mu_{U_j}-\mu_{V_j}=\Delta_j/\theta$. Its second derivative gives
+$$
+2(\mu_{U_j}^2-\mu_{V_j}^2)
+-(m_{2,U_j}-m_{2,V_j})-(\mu_{U_j}-\mu_{V_j})
+=\frac{2\Delta_j}{\theta}\mu_{P_j}.
+$$
+Substitution of the first difference proves the second. The ordered recurrence and composition bridge used here are those in [this volume, §§1 and 5](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md), with the underlying source identities in [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Theorems 3.2, 3.4 and 8.2. $\square$
+
+**Theorem 9.3 (A native two-edge obstruction to a single-resistance passage model).** On $W_2=\beta\alpha$ the exact response is
+$$
+D_{\beta\alpha}(s)
+=1+\frac{s(r_\beta+2r_\alpha)}{\theta}
++\frac{s^2r_\alpha r_\beta}{\theta^2}.
+$$
+Replacing the two edges by one edge of resistance $R=r_\alpha+r_\beta$ and the same $\theta$ gives a different passage transform. Even choosing a single-edge resistance to match the mean cannot preserve the full transform for positive $r_\alpha,r_\beta$.
+
+**Proof.** The transfer product $\mathsf T_{r_\alpha}\mathsf T_{r_\beta}$ gives the displayed polynomial. A single reflecting-to-absorbing edge of resistance $R$ has geometric passage time and denominator $1+sR/\theta$. The sum $r_\alpha+r_\beta$ already gives the wrong linear coefficient. A mean-matching resistance $r_\beta+2r_\alpha$ fixes that coefficient but still has zero quadratic coefficient, whereas $r_\alpha r_\beta/\theta^2>0$. This obstruction concerns collapsing the cut carrier to one edge. It does not exclude a model retaining the extra state or a memory variable. $\square$
+
+## 10. Literal Fibonacci Green operators and passage laws
+
+**Definition 10.1 (Quantity-scaled finite cells).** For the literal words $W_j=w(T_j)$ with $j\ge1$, retain the fixed parameters of Definition 5.1 and put
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+\overline r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,\qquad
+D=\frac{\theta\varphi^4}{\delta\overline r}.
+$$
+Thus $\epsilon_j\tau_j$ is elapsed time divided by the squared total quantity. Write $K_j=K_{W_j}$, $B_j=B_{W_j}$ and $G_j=B_j^{-1}$. Embed a transient vector $f=(f_0,\ldots,f_{L_j-1})$ as the step function with value $f_i$ on $I_{j,i}=[i/L_j,(i+1)/L_j)$. Extend $G_j(i,m)$ by zero when either index is $L_j$. For $u,v\in[0,1]$ define
+$$
+\iota_j(u)=\begin{cases}\lfloor L_j u\rfloor,&u<1,\\L_j,&u=1,\end{cases}
+\qquad
+\mathcal K_j(u,v)=\epsilon_jL_jG_j(\iota_j(u),\iota_j(v)),
+$$
+and
+$$
+(\mathcal T_j f)(u)=\int_0^1\mathcal K_j(u,v)f(v)\,dv,
+\qquad
+\mathcal K(u,v)=\frac{1-\max(u,v)}D,\qquad
+(\mathcal T f)(u)=\int_0^1\mathcal K(u,v)f(v)\,dv.
+$$
+On step functions $\mathcal T_j$ is exactly $\epsilon_jG_j$. Kernel and operator estimates use the supremum norm, with the displayed endpoint extensions. The parameter $s$ used for Laplace transforms below has reciprocal rescaled-time units; $s\epsilon_j$ and $s/D$ are dimensionless.
+
+**Theorem 10.2 (Mechanical discrepancy gives a uniform quantity-scaled Green limit).** For every $0\le a\le b\le L_j$,
+$$
+\left|\sum_{k=a}^{b-1}r_{(W_j)_k}-\overline r(b-a)\right|
+\le |r_\alpha-r_\beta|,
+\qquad
+|x_k-\varphi^2k|<1\quad(0\le k\le L_j).
+$$
+The transient Green matrix is exactly
+$$
+G_j(i,m)=\frac1\theta\sum_{k=\max(i,m)}^{L_j-1}r_{(W_j)_k},
+\qquad 0\le i,m<L_j.
+$$
+If $c_j=\epsilon_j\overline rL_j^2/\theta$, then
+$$
+\sup_{u,v\in[0,1]}|\mathcal K_j(u,v)-\mathcal K(u,v)|
+\le |c_j-D^{-1}|+
+\frac{\epsilon_jL_j}{\theta}(\overline r+|r_\alpha-r_\beta|)
+=O(L_j^{-1}).
+$$
+Consequently $\mathcal T_j\to\mathcal T$ in operator norm on bounded measurable functions, and
+$$
+\sup_{0\le k\le L_j}\left|\frac{x_k}{N_j}-\frac{k}{L_j}\right|\longrightarrow0.
+$$
+For continuous $f$, $y=\mathcal T f$ is the solution of
+$$
+-D y''=f,\qquad y'(0)=0,\qquad y(1)=0.
+$$
+Thus the limiting kernel has the reflecting Neumann condition at $0$ and the absorbing Dirichlet condition at $1$.
+
+**Proof.** Put $a_F=\varphi^{-2}$. For $j\ge1$ the nested words $W_j$ are prefixes of the mechanical word of Theorem 3.2 with intercept $a_F$. Its $\alpha$ indicators are
+$$
+C_k=\lfloor(k+2)a_F\rfloor-\lfloor(k+1)a_F\rfloor.
+$$
+For an interval $[a,b)$ its $\alpha$ count $A_{a,b-a}$ differs from $a_F(b-a)$ by less than one. Therefore
+$$
+\sum_{k=a}^{b-1}r_{(W_j)_k}-\overline r(b-a)
+=(r_\alpha-r_\beta)\bigl(A_{a,b-a}-a_F(b-a)\bigr).
+$$
+Also $x_k=3k-A_{0,k}$ and $3-a_F=\varphi^2$, proving both discrepancy estimates for the actual ordered cells, without a random-phase hypothesis. The mechanical-prefix identification is the one in [this volume, Theorems 3.2–3.3](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md); its rotation-coding background is J. Berstel, [*Sturmian and Episturmian Words*](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf), §3.
+
+To check the inverse, give a vector $f$ the absorbing value $f_{L_j}=0$ and define
+$$
+y_i=\frac1\theta\sum_{k=i}^{L_j-1}r_{(W_j)_k}\sum_{m=0}^k f_m,
+\qquad y_{L_j}=0.
+$$
+Then $(\theta/r_{(W_j)_i})(y_i-y_{i+1})=\sum_{m=0}^i f_m$. Taking the difference of consecutive fluxes, with zero left flux at cut $0$, gives $B_jy=f$. Exchanging the two finite sums gives the stated entries of $G_j$.
+
+For $i=\iota_j(u)$ and $m=\iota_j(v)$ with $u,v<1$, the interval bound gives
+$$
+\mathcal K_j(u,v)
+=c_j\left(1-\frac{\max(i,m)}{L_j}\right)+E_j(u,v),\qquad
+|E_j(u,v)|\le\frac{\epsilon_jL_j}{\theta}|r_\alpha-r_\beta|.
+$$
+Replacing $\max(i,m)/L_j$ by $\max(u,v)$ changes the expression by at most $c_j/L_j=\epsilon_j\overline rL_j/\theta$. If either argument is $1$, both kernels vanish. The two-root Fibonacci formula gives
+$$
+N_j=\varphi^2L_j+O(L_j^{-1}),\qquad
+c_j=D^{-1}+O(L_j^{-2}),\qquad \epsilon_jL_j=O(L_j^{-1}),
+$$
+which proves the uniform estimate and hence the operator norm limit. The same quantity discrepancy gives
+$$
+\left|\frac{x_k}{N_j}-\frac{k}{L_j}\right|
+\le\frac1{N_j}+\left|\frac{\varphi^2L_j}{N_j}-1\right|.
+$$
+Finally, differentiating the limiting integral gives $y'(u)=-D^{-1}\int_0^u f(v)\,dv$ and $y''(u)=-f(u)/D$, with the stated boundary values. $\square$
+
+**Theorem 10.3 (Passage-law and fixed-moment continuation of the native mean law).** For initial cuts $0\le i_j\le L_j$ with $i_j/L_j\to x\in[0,1]$, and every fixed $s\ge0$,
+$$
+\mathbb E_{i_j}\exp(-s\epsilon_j\tau_j)
+\longrightarrow
+\frac{\cosh(x\sqrt{s/D})}{\cosh(\sqrt{s/D})}.
+$$
+In particular the transform at the reflecting cut is $\operatorname{sech}(\sqrt{s/D})$. The nonnegative passage times converge in distribution to the law specified by this transform. For each fixed integer $p\ge1$ their moments converge to
+$$
+M_p(x)=p!\,(\mathcal T^p\mathbf1)(x),\qquad M_0(x)=1.
+$$
+Equivalently, for $p\ge1$,
+$$
+-D M_p''=pM_{p-1},\qquad M_p'(0)=0,\qquad M_p(1)=0.
+$$
+In particular,
+$$
+M_1(x)=\frac{1-x^2}{2D},\qquad
+M_2(x)=\frac{5-6x^2+x^4}{12D^2},
+$$
+and at $x=0$ the limiting mean, second moment and variance are
+$$
+\frac1{2D},\qquad \frac5{12D^2},\qquad \frac1{6D^2}.
+$$
+These are passage-time and Green-operator limits for the fixed-unit-speed cut chain. They specify no spatial path topology, physical heat flow or physical realization, and retain the qualification of Theorem 8.1.
+
+**Proof.** Let $h_{j,i}(s)=\mathbb E_i e^{-s\epsilon_j\tau_j}$ and set $h_{j,L_j}=1$. The discrete first-step equation gives exactly
+$$
+\bigl(B_j+(e^{s\epsilon_j}-1)I\bigr)h_j=B_j\mathbf1.
+$$
+Writing
+$$
+\gamma_j(s)=\frac{e^{s\epsilon_j}-1}{\epsilon_j}\longrightarrow s,
+$$
+its embedded version is
+$$
+h_j+\gamma_j(s)\mathcal T_jh_j=\mathbf1.
+$$
+This uses the discrete clock itself. Since $0\le h_j\le1$, Theorem 10.2 shows that $h_j$ is uniformly close to $1-\gamma_j(s)\mathcal T h_j$. The latter functions are uniformly bounded and have a common Lipschitz bound for fixed $s$, because $| (\mathcal T h_j)' |\le D^{-1}$. They therefore have uniformly convergent subsequences. Every subsequential limit satisfies
+$$
+h+s\mathcal T h=1.
+$$
+It is continuous, and differentiating twice gives
+$$
+D h''=s h,\qquad h'(0)=0,\qquad h(1)=1.
+$$
+The unique solution is the displayed hyperbolic-cosine ratio, including $h\equiv1$ at $s=0$. Uniqueness proves uniform convergence of the embedded transforms and hence convergence at the moving cuts. The bounded scaled first moments proved below give tightness. Every weak subsequential limit has this Laplace transform; uniqueness of a nonnegative law from its Laplace transform proves convergence in distribution.
+
+For the moment calculation, write $M_{j,p}(i)=\mathbb E_i[(\epsilon_j\tau_j)^p]$ with $M_{j,p}(L_j)=0$ for $p\ge1$. Its first-step equation, separating the constant term from lower positive moments, is
+$$
+B_jM_{j,p}=\epsilon_j^p\mathbf1+
+\sum_{k=1}^{p-1}\binom pk\epsilon_j^{p-k}K_jM_{j,k}.
+$$
+Since $G_jK_j=G_j-I$, on embedded transient vectors this becomes
+$$
+M_{j,p}=\epsilon_j^{p-1}\mathcal T_j\mathbf1+
+\sum_{k=1}^{p-1}\binom pk\epsilon_j^{p-k-1}
+(\mathcal T_j-\epsilon_j I)M_{j,k}.
+$$
+For $p=1$ this says $M_{j,1}=\mathcal T_j\mathbf1$. The operator norms are uniformly bounded. Induction therefore gives a uniform bound for each fixed moment, and all terms other than $k=p-1$ vanish in the limit for $p\ge2$. Applying the operator norm convergence and the induction hypothesis gives uniformly
+$$
+M_{j,p}\longrightarrow p\mathcal T M_{p-1}=p!\mathcal T^p\mathbf1.
+$$
+The next-moment bound also gives uniform integrability, so these functions are the moments of the limiting passage law. In particular the exact discrete second-moment identity is
+$$
+M_{j,2}=2\mathcal T_j^2\mathbf1-\epsilon_j\mathcal T_j\mathbf1;
+$$
+the discrete correction vanishes but has not been omitted before taking the limit. Differentiating $p\mathcal T M_{p-1}$ proves the boundary recurrence. Solving it for $p=1,2$ gives the two polynomials and the variance. The value $D=\theta\varphi^4/(\delta\overline r)$ is precisely the coefficient of [this volume, Theorem 5.3](https://github.com/the-omega-institute/trureturing/blob/82197d4bd68d6491767cb20e99d3ed8ceb5520e3/docs/develop/theory/FIB_ATOM_STATISTICAL_LAWS.md); here it controls the full passage transform and every fixed moment under the same hypotheses. The general scale-and-speed framework is classical, as in C. Stone, [*Limit theorems for random walks, birth and death processes, and diffusion processes*](https://doi.org/10.1215/ijm/1255645101). The literal-prefix estimates and quantity-scaled passage calculation above provide the required source-specific bridge directly, without invoking a path-process limit from that framework. $\square$
+
+## 11. A literal-source speed-measure obstruction
+
+**Definition 11.1 (An extension with nonconstant speed-measure weights).** Fix $0<\kappa<1$ and use the same words $W_j$, edge resistances, quantity coordinates, $\delta$ and $\epsilon_j$ as in Definition 10.1, but choose the common jump scale to satisfy
+$$
+0<\theta\le\frac{(1-\kappa)\min(r_\alpha,r_\beta)}2.
+$$
+At the transient cuts put
+$$
+b_j=\lfloor L_j/2\rfloor,\qquad
+v_{j,i}=1-\kappa+\kappa L_j\mathbf1_{\{i=b_j\}},\qquad
+V_j^{\mathrm{spd}}=\operatorname{diag}(v_{j,0},\ldots,v_{j,L_j-1}).
+$$
+Replace the probability of crossing either incident edge $k$ from cut $i$ by $\theta/(v_{j,i}r_{(W_j)_k})$, and hold with the remaining probability. Cut $0$ still reflects and $L_j$ still absorbs. The $v_{j,i}$ are weights of the speed measure, rather than jump probabilities: larger weights slow the chain. This is an extension outside Definition 5.1, whose weights remain identically one. Let $\tau_j^{(\kappa)}$ denote its passage time and define its normalized speed measure by
+$$
+\mu_j^{(\kappa)}=\frac1{L_j}\sum_{i=0}^{L_j-1}v_{j,i}\delta_{i/L_j},
+\qquad
+\mu^{(\kappa)}=(1-\kappa)\,du+\kappa\delta_{1/2}.
+$$
+Here $\delta_a$ denotes the unit point mass at $a$, distinct from the fixed time unit $\delta$; $du$ is Lebesgue measure on $[0,1]$.
+
+**Theorem 11.2 (Equal mean speed measure and limiting first passage mean, unequal passage law).** The extended chains are stochastic, have exactly the same source words, resistances and aggregate quantity trajectories as the unit-weight chains, and satisfy
+$$
+\frac1{L_j}\sum_{i=0}^{L_j-1}v_{j,i}=1,
+\qquad \mu_j^{(\kappa)}\Longrightarrow\mu^{(\kappa)}.
+$$
+Their scaled passage times from $0$ converge in distribution to a law with
+$$
+\lim_j\mathbb E_0(\epsilon_j\tau_j^{(\kappa)})=\frac1{2D},
+\qquad
+\lim_j\mathbb E_0[(\epsilon_j\tau_j^{(\kappa)})^2]
+=\frac{5+\kappa^2}{12D^2}.
+$$
+Thus the limiting first moment agrees with Theorem 10.3, but the second moment and the limiting passage law differ whenever $\kappa>0$. The equality of first passage means asserted here is a limit equality; finite-cell passage means need not coincide. The ordered source, global mean speed-measure weight and common clock do not determine the passage law in this enlarged class.
+
+**Proof.** Every $v_{j,i}\ge1-\kappa$, so the sum of the two possible crossing probabilities is at most $2\theta/((1-\kappa)\min(r_\alpha,r_\beta))\le1$. The boundary has only one incident crossing. All right crossings have positive probability and each finite chain has a geometric absorption tail. The sum of the weights is $L_j(1-\kappa)+\kappa L_j=L_j$. The uniform lattice measure converges to $du$, and $b_j/L_j\to1/2$, proving convergence of the speed measures. No source tree or quantity readout is changed.
+
+If $B_j^{(\kappa)}$ is the new transient $I-K$, row scaling gives
+$$
+B_j^{(\kappa)}=(V_j^{\mathrm{spd}})^{-1}B_j,
+\qquad (B_j^{(\kappa)})^{-1}=G_jV_j^{\mathrm{spd}}.
+$$
+Its rescaled Green action on an embedded vector is therefore
+$$
+(\mathcal T_j^{(\kappa)} f)(u)
+=\int\mathcal K_j(u,v)f(v)\,d\mu_j^{(\kappa)}(v).
+$$
+For continuous $f$ this converges uniformly to
+$$
+(\mathcal T_\kappa f)(u)
+=\frac1D\int (1-\max(u,v))f(v)\,d\mu^{(\kappa)}(v).
+$$
+Indeed, Theorem 10.2 bounds the kernel error uniformly and the measures have total mass one. For the limiting kernel, convergence of the lattice integral is a Riemann-sum statement uniform in $u$, since $(1-\max(u,v))f(v)$ is uniformly continuous on the square; the single atomic term converges uniformly as well. Moreover, $\|\mathcal T_j^{(\kappa)}\|$ is uniformly bounded. Induction in the discrete moment recurrence of Theorem 10.3 consequently gives, for every fixed $p$,
+$$
+\mathbb E_i[(\epsilon_j\tau_j^{(\kappa)})^p]
+\longrightarrow p!\,(\mathcal T_\kappa^p\mathbf1)(x)
+\quad\text{when }i/L_j\to x,
+$$
+with convergence uniform over the cuts. In this induction the limiting moment functions are continuous; the uniform operator bound controls the error from the preceding finite-cell moment, and the displayed Riemann-sum convergence applies to that fixed continuous limit. This requires no operator norm convergence of atomic measures to Lebesgue measure.
+
+For completeness, the same compactness argument as in Theorem 10.3 gives convergence of the passage transforms. The exact equation is $h_j+\gamma_j(s)\mathcal T_j^{(\kappa)}h_j=1$. Replacing $\mathcal K_j$ by $\mathcal K$ gives continuous approximants with a common Lipschitz bound, because $0\le h_j\le1$ and the speed measures have mass one. Every uniform subsequential limit solves
+$$
+h+s\mathcal T_\kappa h=1.
+$$
+This equation has at most one solution. To see this, a difference $g$ of solutions is continuous, is twice differentiable away from $1/2$, and satisfies
+$$
+g''=\frac{s(1-\kappa)}Dg,\qquad
+g'(0)=0,\qquad g(1)=0,\qquad
+g'(1/2+)-g'(1/2-)=\frac{s\kappa}Dg(1/2).
+$$
+Integration by parts on the two intervals gives
+$$
+\int_0^1|g'|^2\,du+
+\frac sD\left((1-\kappa)\int_0^1g^2\,du+\kappa g(1/2)^2\right)=0,
+$$
+so $g=0$, also at $s=0$ using $g(1)=0$. The uniform moment bounds give tightness and uniform integrability. Uniqueness of the limiting Laplace transforms then gives a limiting passage law with the computed moments.
+
+Put $H(u,v)=1-\max(u,v)$ and $p_\kappa=1-\kappa$. The limiting first moment function is
+$$
+(\mathcal T_\kappa\mathbf1)(u)
+=\frac1D\left[p_\kappa\frac{1-u^2}{2}
++\kappa H(u,1/2)\right].
+$$
+At $u=0$, $H(0,1/2)=1/2$, so this is $1/(2D)$. The second moment at $0$ is $2\mathcal T_\kappa^2\mathbf1(0)$. Expanding the two integrations over the continuous and atomic parts gives
+$$
+D^2(\mathcal T_\kappa^2\mathbf1)(0)
+=p_\kappa^2\frac5{24}
++p_\kappa\kappa\left(\frac{11}{48}+\frac3{16}\right)
++\frac{\kappa^2}{4}
+=\frac{5+\kappa^2}{24}.
+$$
+Here the four coefficients are, respectively,
+$$
+\int_0^1(1-u)\frac{1-u^2}{2}\,du=\frac5{24},\qquad
+\int_0^1(1-u)H(u,1/2)\,du=\frac{11}{48},
+$$
+$$
+H(0,1/2)\frac{1-(1/2)^2}{2}=\frac3{16},\qquad
+H(0,1/2)H(1/2,1/2)=\frac14.
+$$
+Multiplying by two proves the second-moment formula. Its excess over the unit-weight second moment is $\kappa^2/(12D^2)>0$. The limiting law is therefore different, despite identical aggregate source trajectories, normalized total speed mass and limiting first passage mean. This supplies the missing local speed-measure distinction within the actual Fibonacci carrier; it does not alter the fixed-unit-speed conclusion of Theorem 10.3. The speed-measure distinction is part of the classical one-dimensional framework in Stone's [*Limit theorems for random walks, birth and death processes, and diffusion processes*](https://doi.org/10.1215/ijm/1255645101); the explicit common-source construction and its two moments are calculated here. $\square$
+
+## 追加锚（本行以下为增补区）

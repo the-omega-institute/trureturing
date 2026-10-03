@@ -12,7 +12,7 @@ $$p_{312} : Perm\left(Fin\left(3\right)\right) := [2, 0, 1].$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$p_{321} : Perm\left(Fin\left(3\right)\right) := [2, 1, 0].$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ $$\forall n \in \mathbb{N}, \forall \pi \in Perm\left(Fin\left(n\right)\right), 
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -54,7 +54,7 @@ $$\forall n \in \mathbb{N}, \forall \pi \in Perm\left(Fin\left(n\right)\right), 
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -66,7 +66,7 @@ $$\forall d \in List\left(\mathbb{N}\right), (\forall i \in Fin\left(length\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.rotationSumPerm_avoids_312_321` (`✓ std3`). ∎
 
-*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -80,7 +80,7 @@ $$\forall n \in \mathbb{N}, \forall c \in Composition\left(n\right), rotationSum
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -92,7 +92,7 @@ $$\forall n \in \mathbb{N}, \forall c \in Composition\left(n\right), \left(Avoid
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.rotationSumComposition_avoids_312_321` (`✓ std3`). ∎
 
-*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -104,7 +104,7 @@ $$\forall n \in \mathbb{N}, \forall \pi \in Perm\left(Fin\left(n\right)\right), 
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.avoids_312_321_iff_exists_rotationSumComposition` (`✓ std3`). ∎
 
-*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -116,7 +116,7 @@ $$\forall n \in \mathbb{N}, \forall c, e \in Composition\left(n\right), rotation
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.rotationSumComposition_injective` (`✓ std3`). ∎
 
-*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Citation.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
@@ -134,7 +134,7 @@ $$\forall n \in \mathbb{N}, card\left(\{\pi \in Perm\left(Fin\left(n\right)\righ
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199).
+*Acknowledgement.* Kassie Archer, Noel Bourne (2026). *Pattern avoidance in compositions and powers of permutations*. DOI: [10.46298/dmtcs.17199](https://doi.org/10.46298/dmtcs.17199). URL: <https://arxiv.org/abs/2505.05218v3>.
 
 *Commentary.*
 
