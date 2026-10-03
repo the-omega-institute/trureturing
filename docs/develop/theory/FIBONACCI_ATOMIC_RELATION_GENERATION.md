@@ -50747,3 +50747,466 @@ $\delta_{\le\varepsilon^{-1}}(t)=D_*\varepsilon^2/L^2-8D_*\varepsilon^2H/L^3+O(\
 $-2D_*\varepsilon^2/L^2+8D_*\varepsilon^2H/L^3+O(\varepsilon^2/L^3)$，因为 $2KC_*=2D_*$。这解释了相消的位置，并没有交换先截断与先优化的顺序。
 
 上述定义和估计只涉及完整纵坐标模型以及其原区间上的全部极小点，不蕴含实际 Robin 有符号尾的符号、实际截止轨道逼近移动极小点的速率、截断目标与 $\sigma(n)/n$ 的算术恒等式、新的整数证书范围或 RH。§§237、240、241 的五窗递归与 Fibonacci 转移保留其有限语言和算术预算的条件；加法分裂的范数恒等式不把这些频率识别为零点纵坐标。将本节纵坐标模型接回§349的实际相位路线时，仍保留那里的 RH 识别和相位轨道闭包条件。$\square$
+
+## 357. 全原树 Clifford 历史的有限字符与尖锐算术恢复
+
+**定义 357.1（实际来源、同源观察与恢复量词）。** 沿用 §§2、3、355、356 的原始对象。来源域是全部自由有序非空二叉树
+
+$$
+t::=\alpha\mid\beta\mid\langle s,u\rangle,
+\qquad s,u\in\mathcal T.
+$$
+
+原树的相等保留左右次序与括号，不施加交换律或结合律，也不添加空树。组成与原替换为
+
+$$
+\begin{aligned}
+c(\alpha)&=(1,0),&c(\beta)&=(0,1),&
+c(\langle s,u\rangle)&=c(s)+c(u),\\
+\rho(\alpha)&=\beta,&\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho(\langle s,u\rangle)&=\langle\rho(s),\rho(u)\rangle.
+\end{aligned}
+$$
+
+因此每个 $c(t)=(a,b)$ 满足 $a,b\ge0$、$a+b\ge1$；允许其中一个坐标为零。定理 3.4 给出同一实际来源的组成运输
+
+$$
+c(\rho(t))=Mc(t)=(b,a+b),
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+令 $C=\operatorname{Cl}(\mathbb R^2,Q)$，其中 $Q(a,b)=a^2+ab-b^2$，采用 $v^2=Q(v)1$ 的平方约定。典范叶像 $A,B$ 满足 §355 的关系
+
+$$
+A^2=1,\qquad B^2=-1,\qquad BA=1-AB.
+$$
+
+观察保持叶序：$E(\alpha)=A$、$E(\beta)=B$、$E(\langle s,u\rangle)=E(s)E(u)$。对 $m\ge1$，定义同源窗口与完整历史
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr),
+\qquad
+\mathscr H(t)=\bigl(E(\rho^n(t))\bigr)_{n\ge0}.
+$$
+
+特别地，$W_2$ 与 $W_3$ 分别保留前两项和前三项；$W_m(\mathcal T)$、$\mathscr H(\mathcal T)$ 均指实际像，坐标必须来自同一棵树。直接复用 §355 的 $1,A,B,AB$ 线性无关性，以及推论 356.6 的历史六周期与同纤维结论
+
+$$
+W_3(t)=W_3(u)\quad\Longleftrightarrow\quad
+\mathscr H(t)=\mathscr H(u).
+\tag{357.1}
+$$
+
+这些供应结果并未把全原树域限制为规范轨道 $T_j=\rho^j(\alpha)$。
+
+对整数 $m\ge1$，$[z]_m$ 是逐坐标取 $0,\ldots,m-1$ 的标准代表，$z\bmod m$ 是剩余类；对标量采用相同记号。对全部整数参数 $D,d,e\ge1$ 和每个实际来源 $t$，定义
+
+$$
+\begin{aligned}
+R_D(t)&=c(t)\bmod D,&r_d(t)&=[c(t)]_d,\\
+\kappa_d(t)&=\left\lfloor\frac{r_{d,0}(t)+r_{d,1}(t)}d\right\rfloor,&
+K_{d,e}(t)&=(0,\kappa_d(t))\bmod e,\\
+H_{d,e}(t)&=\frac{c(t)-r_d(t)}d\bmod e
+             =\left\lfloor\frac{c(t)}d\right\rfloor\bmod e,&
+L_{d,e}(t)&=\bigl(r_d(t),H_{d,e}(t)\bigr).
+\end{aligned}
+\tag{357.2}
+$$
+
+向量的取整逐坐标进行。$R_D$ 的值域是 $(\mathbb Z/D\mathbb Z)^2$；$K_{d,e}$、$H_{d,e}$ 的值域是 $(\mathbb Z/e\mathbb Z)^2$；$L_{d,e}$ 的值域是 $\{0,\ldots,d-1\}^2\times(\mathbb Z/e\mathbb Z)^2$。模 $1$ 为单元素集合。这里 $K_{d,e}$ 是下一次组成更新的进位，$H_{d,e}$ 是当前组成的高位；定义 26.1 的运输式逐坐标给出
+
+$$
+L_{d,e}(\rho(t))
+=\bigl([Mr_d(t)]_d,\,MH_{d,e}(t)+K_{d,e}(t)\bigr).
+$$
+
+对 $\Omega\in\{W_2,W_3,\mathscr H\}$ 及指定目标 $g:\mathcal T\to Y$，称 $g$ 可由 $\Omega$ 恢复，是指存在来源无关的函数
+
+$$
+f:\Omega(\mathcal T)\longrightarrow Y,
+\qquad
+\forall t\in\mathcal T,\quad f(\Omega(t))=g(t).
+\tag{357.3}
+$$
+
+函数只读取实际观察，不能另读代表树、叶词、组成或迭代次数。下文所有充分性都给出这样的函数；所有必要性反例都在 $\mathcal T$ 中实现。
+
+**引理 357.2（整数子环的模五字符）。** 在实代数 $C$ 中令
+
+$$
+\mathcal O=\mathbb Z\cdot1\oplus\mathbb Z\cdot A
+           \oplus\mathbb Z\cdot B\oplus\mathbb Z\cdot AB.
+$$
+
+每个元素的四个整数系数唯一，$\mathcal O$ 是含单位的子环，且所有 $E(\rho^n(t))$ 都属于 $\mathcal O$。映射
+
+$$
+\eta:\mathcal O\longrightarrow\mathbb F_5,
+\qquad
+\eta(s+tA+uB+vAB)=[s+t+3u+3v]_5
+\tag{357.4}
+$$
+
+保单位、加法和乘法。对 $c(t)=(a,b)$，有
+
+$$
+\eta(E(t))=3^b\ne0\quad\text{于 }\mathbb F_5.
+\tag{357.5}
+$$
+
+这里 $\eta$ 只定义于整数子环，不是整个实 Clifford 代数的降模映射。
+
+**证明。** §355 的实线性无关性也排除了非零整数线性关系，因此四系数表示唯一。由 $BA=1-AB$ 得 $ABA=A-B$；对 $x=s+tA+uB+vAB$，保持乘法次序计算
+
+$$
+\begin{aligned}
+xA&=(t+u)+(s+v)A-vB-uAB,\\
+xB&=-u-vA+sB+tAB.
+\end{aligned}
+\tag{357.6}
+$$
+
+两式证明 $\mathcal O$ 对右乘 $A,B$ 封闭，故也对右乘 $AB$ 封闭。对任意 $y=s'+t'A+u'B+v'AB\in\mathcal O$，展开
+
+$$
+xy=s'x+t'xA+u'xB+v'xAB\in\mathcal O.
+$$
+
+整数线性组合的加法与负号仍在 $\mathcal O$ 中，且 $1\in\mathcal O$，所以它是含单位子环。叶像 $A,B$ 在其中；按原树结构归纳得到 $E(t)\in\mathcal O$，再将结论应用于实际树 $\rho^n(t)$。
+
+$\eta$ 的定义与系数唯一性给出良定义和加法性，且 $\eta(1)=1$。将（357.6）代入（357.4），在 $\mathbb F_5$ 中得到
+
+$$
+\begin{aligned}
+\eta(xA)&=[s+t-2u-2v]_5=\eta(x),\\
+\eta(xB)&=[3s+3t-u-v]_5=3\eta(x),\\
+\eta(xAB)&=3\eta(xA)=3\eta(x).
+\end{aligned}
+$$
+
+因此对上述任意 $y$，
+
+$$
+\eta(xy)
+=[s'+t'+3u'+3v']_5\,\eta(x)
+=\eta(x)\eta(y).
+$$
+
+特别地，$\eta(A)=1$、$\eta(B)=3$。在两类原子处，（357.5）分别为 $1=3^0$ 和 $3=3^1$；在有序构造处，乘法性与 $\beta$ 叶数相加给出 $3^{b_s}3^{b_u}=3^{b_s+b_u}$，完成结构归纳。$3$ 在 $\mathbb F_5$ 中非零，故实际叶积的 $\eta$ 值始终非零。证明覆盖纯 $\alpha$、纯 $\beta$ 及任意混合来源。
+
+对任意整数 $a,b$，这个有限字符与原二次型的几何关系是
+
+$$
+[Q(a,b)]_5=[a^2+ab-b^2]_5=[(a+3b)^2]_5,
+$$
+
+因为 $6\equiv1$、$9\equiv-1\pmod5$；即向量方向 $aA+bB$ 的标量像 $[a+3b]_5$ 保留了平方关系。此对应不能扩张成含单位环同态 $C\to\mathbb F_5$：$5\cdot1$ 在 $C$ 中有逆 $(1/5)\cdot1$，却会被任何这样的同态送到零，从而将 $1$ 也送到零，矛盾。上述构造只使用 $\mathcal O$ 的整数乘法封闭性。$\square$
+
+**定理 357.3（两个同源读数恢复组成模四）。** 定义
+
+$$
+\begin{aligned}
+\ell:\mathbb F_5^\times&\longrightarrow\mathbb Z/4\mathbb Z,\\
+\ell(1)&=0,\quad\ell(3)=1,\quad\ell(4)=2,\quad\ell(2)=3,
+\end{aligned}
+$$
+
+并在 $\{x\in\mathcal O:\eta(x)\ne0\}$ 上定义 $\chi(x)=\ell(\eta(x))$。则来源无关的函数
+
+$$
+f_4:W_2(\mathcal T)\longrightarrow(\mathbb Z/4\mathbb Z)^2,
+\qquad
+f_4(x_0,x_1)=\bigl(\chi(x_1)-\chi(x_0),\chi(x_0)\bigr)
+\tag{357.7}
+$$
+
+满足 $f_4(W_2(t))=c(t)\bmod4$。对每个正整数 $m\mid4$，令 $\widehat f_4(x)\in\{0,1,2,3\}^2$ 为 $f_4(x)$ 的标准代表，并定义
+
+$$
+v_m(x)=[\widehat f_4(x)]_m\in\{0,\ldots,m-1\}^2.
+\tag{357.8}
+$$
+
+那么 $v_m(W_2(t))=[c(t)]_m$。对 $W_3$ 或完整历史，取其前两项后使用同一函数。
+
+**证明。** $3$ 在 $\mathbb F_5^\times$ 中的幂依次为 $1,3,4,2,1$，且前四项不同，所以阶恰为 $4$。由引理 357.2，$\chi(E(t))=b\bmod4$。同一棵树的下一次组成是 $(b,a+b)$，故
+
+$$
+\chi(E(\rho(t)))=a+b\bmod4.
+$$
+
+两者之差给 $a\bmod4$，得到（357.7）。实际像上每个所用 $\eta$ 值非零，故 $\chi$ 处处有定义。该公式直接读取两项的四系数，不选择任何来源代表。
+
+若 $m\mid4$，把模四标准代表再约化模 $m$ 与直接约化 $c(t)$ 相同，证明（357.8）。这一约化的良定义依赖 $m\mid4$。$W_3$ 与完整历史的前两项正是 $W_2$，因此相同公式适用；无需假设 $W_2$ 在替换下闭合。$\square$
+
+**命题 357.4（组成恰差四的实际历史碰撞及共同后缀）。** 令
+
+$$
+U=\rho^6(\alpha),\qquad V=\rho^6(\beta)=\rho^7(\alpha).
+$$
+
+只对非空树列表定义固定右结合拼接：$\operatorname{Conc}(s_1)=s_1$，且
+
+$$
+\operatorname{Conc}(s_1,\ldots,s_k)
+=\langle s_1,\operatorname{Conc}(s_2,\ldots,s_k)\rangle
+\qquad(k\ge2).
+$$
+
+取实际来源
+
+$$
+P=\operatorname{Conc}(U,U,U,\beta,\beta),
+\qquad
+Q=\operatorname{Conc}(\alpha,\alpha,\alpha,V,V).
+\tag{357.9}
+$$
+
+则 $c(P)=(15,26)$、$c(Q)=(19,26)$，而 $\mathscr H(P)=\mathscr H(Q)$。定义实际叶追加操作
+
+$$
+\operatorname{App}_{\alpha}(s)=\langle s,\alpha\rangle,
+\qquad
+\operatorname{App}_{\beta}(s)=\langle s,\beta\rangle.
+$$
+
+对任意整数 $p,q\ge0$，令
+
+$$
+P_{p,q}=\operatorname{App}_{\beta}^{q}
+          \bigl(\operatorname{App}_{\alpha}^{p}(P)\bigr),
+\qquad
+Q_{p,q}=\operatorname{App}_{\beta}^{q}
+          \bigl(\operatorname{App}_{\alpha}^{p}(Q)\bigr).
+\tag{357.10}
+$$
+
+次数零表示恒等操作，不表示空树。两棵树始终非空，且
+
+$$
+\begin{aligned}
+c(P_{p,q})&=(15+p,26+q),\\
+c(Q_{p,q})&=(19+p,26+q),\\
+\mathscr H(P_{p,q})&=\mathscr H(Q_{p,q}).
+\end{aligned}
+\tag{357.11}
+$$
+
+**证明。** 定理 3.4 的实际组成运输给 $c(U)=(5,8)$、$c(V)=(8,13)$。以 $a,b$ 分别表示叶字母 $\alpha,\beta$，原替换的正叶词为
+
+$$
+\operatorname{word}(U)=\mathtt{babbababbabba},
+\qquad
+\operatorname{word}(V)=\mathtt{babbababbabbababbabab}.
+$$
+
+这两个非空词来自上述指定实际树；$P,Q$ 的块顺序分别是 $UUUbb$ 与 $aaaVV$，括号由 $\operatorname{Conc}$ 固定。因此
+
+$$
+c(P)=3(5,8)+2(0,1)=(15,26),
+\qquad
+c(Q)=3(1,0)+2(8,13)=(19,26).
+$$
+
+记 $X_n=E(\rho^n(\alpha))$，则 $E(\rho^n(\beta))=X_{n+1}$。直接复用推论 356.6 的六周期，得到对每个 $n\ge0$
+
+$$
+E(\rho^n(U))=X_n,
+\qquad
+E(\rho^n(V))=X_{n+1}.
+$$
+
+于是按（357.9）的叶序，两边每个时刻的读数分别都是
+
+$$
+E(\rho^n(P))=X_n^3X_{n+1}^2=E(\rho^n(Q)).
+\tag{357.12}
+$$
+
+这里仅在观察代数中使用结合性，没有交换两个因子，也没有把原树括号商掉。按 §355 的 $X_0,X_1,X_2,X_3$ 及其关系，前三项具体为
+
+$$
+W_3(P)=W_3(Q)=(-A,\,A-B,\,3-2AB).
+$$
+
+最后，在每个时刻共同追加一个 $\alpha$ 叶子，使两侧读数都在右边乘 $X_n$；共同追加一个 $\beta$ 叶子，使两侧都在右边乘 $X_{n+1}$。因此依次追加所指定的 $p,q$ 个叶子保留全部历史相等，同时把两侧组成共同平移 $(p,q)$，得到（357.11）。所有反例只使用非负次数的实际替换与叶追加，不含负指数来源。$\square$
+
+**定理 357.5（四个目标的全参数尖锐分类）。** 在全部自由有序非空原树域 $\mathcal T$ 上，对每个 $D,d,e\ge1$，以下条件分别等价于指定目标可由完整历史恢复，也分别等价于可由 $W_3$ 或 $W_2$ 恢复：
+
+| 目标 | 恢复的充要条件 |
+| --- | --- |
+| $R_D$ | $D\mid4$ |
+| $K_{d,e}$ | $e=1$ 或 $d\mid4$ |
+| $H_{d,e}$ | $e=1$ 或 $de\mid4$ |
+| $L_{d,e}$ | $de\mid4$ |
+
+所有允许参数都有来源无关的显式恢复函数；所有不允许参数都有命题 357.4 的实际历史碰撞作为反例。
+
+**证明。** 先给充分性的函数。令 $x=(x_0,x_1)\in W_2(\mathcal T)$，采用定理 357.3 的 $v_m(x)$。
+
+当 $D\mid4$ 时，定义
+
+$$
+\mathcal R_D(x)=v_D(x)\bmod D.
+$$
+
+则 $\mathcal R_D(W_2(t))=R_D(t)$。模 $1$ 的向量只有零，因此包括 $D=1$。
+
+当 $e=1$ 时，对任意 $d$ 定义 $\mathcal K_{d,1}(x)=0$、$\mathcal H_{d,1}(x)=0$。当 $d\mid4$ 时，对任意 $e\ge1$ 令 $r=v_d(x)$，定义
+
+$$
+\mathcal K_{d,e}(x)
+=\left(0,\left\lfloor\frac{r_0+r_1}{d}\right\rfloor\right)\bmod e.
+\tag{357.13}
+$$
+
+由于 $r_d(t)=v_d(W_2(t))$，这正是下一次进位。特别地，$d=1$ 时 $r=(0,0)$，所以 $K_{1,e}$ 对所有 $e$ 恒为零。
+
+当 $de\mid4$ 时，令 $v=v_{de}(x)$，并定义
+
+$$
+\begin{aligned}
+\mathcal H_{d,e}(x)&=\left\lfloor\frac vd\right\rfloor\bmod e,\\
+\mathcal L_{d,e}(x)&=
+\left([v]_d,\left\lfloor\frac vd\right\rfloor\bmod e\right).
+\end{aligned}
+\tag{357.14}
+$$
+
+对实际来源 $t$，有 $c(t)=v_{de}(W_2(t))+de\,z$，其中 $z\in\mathbb N^2$。因此逐坐标
+
+$$
+\left\lfloor\frac{c(t)}d\right\rfloor
+=\left\lfloor\frac{v_{de}(W_2(t))}d\right\rfloor+e\,z,
+\qquad
+[c(t)]_d=[v_{de}(W_2(t))]_d.
+$$
+
+约化模 $e$ 后，得到（357.14）的两个恢复等式。以上函数只读 $x_0,x_1$；对 $W_3$ 与完整历史，先取前两项即可。它们没有使用第三项或来源代表。
+
+下面用同一实际碰撞族证明所有必要性。由于完整历史相同的两棵树也有相同 $W_3$ 与 $W_2$，以下否定结论同时排除三种观察。
+
+对 $R_D$，若 $D\nmid4$，取 $P,Q$。它们第一组成坐标相差 $4$，所以 $R_D(P)\ne R_D(Q)$；完整历史却相同，违背（357.3）。因此必须 $D\mid4$。
+
+对 $K_{d,e}$，只需处理 $e\ge2$ 且 $d\nmid4$。置
+
+$$
+r=[4]_d\in\{1,\ldots,d-1\},
+\qquad
+p=[-15]_d,
+\qquad
+q=[d-r-26]_d.
+\tag{357.15}
+$$
+
+这些是非负整数，共同后缀（357.10）合法。由（357.11），两棵树的标准低位分别为
+
+$$
+r_d(P_{p,q})=(0,d-r),
+\qquad
+r_d(Q_{p,q})=(r,d-r).
+$$
+
+前者两坐标和为 $d-r<d$，后者两坐标和为 $d$，所以整数进位恰为 $0$ 与 $1$。$e\ge2$ 时它们的模 $e$ 剩余类不同，故 $K_{d,e}$ 不可恢复。这排除了所有不满足 $e=1$ 或 $d\mid4$ 的参数。
+
+对当前高位 $H_{d,e}$，设 $e\ge2$ 且 $de\nmid4$。对任意这样的 $d$ 作整数除法
+
+$$
+4=jd+r,\qquad j\ge0,\quad0\le r<d.
+$$
+
+如果 $e\nmid j$，取 $s=0$。如果 $e\mid j$，则必有 $r>0$，否则 $4=dj$ 会推出 $de\mid4$；此时取 $s=d-r$。统一置
+
+$$
+p=[s-15]_d\ge0,
+\qquad a=15+p,
+\qquad [a]_d=s,
+$$
+
+并使用同历史的实际树 $P_{p,0},Q_{p,0}$。第一组成坐标为 $a,a+4$，第二组成坐标相同，第一当前高位的整数差为
+
+$$
+\left\lfloor\frac{a+4}{d}\right\rfloor
+-\left\lfloor\frac ad\right\rfloor
+=j+\left\lfloor\frac{s+r}{d}\right\rfloor.
+\tag{357.16}
+$$
+
+在 $e\nmid j$ 的分支，$s=0$ 且 $r<d$，该差等于 $j$，模 $e$ 非零。在 $e\mid j$ 的分支，$s=d-r$，该差等于 $j+1\equiv1\pmod e$，仍非零。因而 $H_{d,e}$ 在同一历史纤维中取不同值。这一必要性证明没有预设 $d\mid4$，也没有预设低位可恢复；它覆盖全部 $d\ge1$。$e=1$ 时高位值域为单元素集合，已由恒零函数处理。
+
+最后，对任意 $d,e\ge1$，定义 25.1 的逐坐标标准数字双射为
+
+$$
+\mathbb Z/de\mathbb Z
+\longleftrightarrow
+\{0,\ldots,d-1\}\times\mathbb Z/e\mathbb Z,
+\qquad
+w\longmapsto\left([w]_d,\left\lfloor\frac wd\right\rfloor\bmod e\right),
+\tag{357.17}
+$$
+
+其中右侧用整数代表计算，逆为 $(r,h)\mapsto r+dh\bmod de$。换代表 $w\mapsto w+de\,k$ 不改 $[w]_d$，并使商增加 $e\,k$，所以正向映射也良定义。逐坐标使用这套数字分解，$L_{d,e}(t)$ 与 $R_{de}(t)$ 相互决定。若 $de\nmid4$，取 $P,Q$，其第一组成坐标相差 $4$，故 $R_{de}$ 不同；若 $L_{d,e}$ 相同，经逆映射便得到 $R_{de}$ 相同，矛盾。这同时覆盖 $e=1$ 与 $d=1$ 的否定参数。
+
+充分性函数与上述全部参数反例给出表中的四个充要条件。$e=1$ 时 $K,H$ 对任意 $d$ 恒零，但 $L$ 仍要求 $d\mid4$；$d=1$ 时 $K$ 恒零，而 $H,L$ 的恢复条件为 $e\mid4$。例如 $(d,e)=(4,2)$ 时，下一次进位可恢复，当前高位与完整低高位不可恢复。上述结论均包含零组成坐标与模 $1$，并且每个否定见证保持非空实际来源。$\square$
+
+**推论 357.6（跨全部历史纤维的组成差格）。** 令
+
+$$
+\Delta=\{c(u)-c(t):t,u\in\mathcal T,\ \mathscr H(u)=\mathscr H(t)\}.
+$$
+
+等价地可用 $W_3(u)=W_3(t)$ 定义同一集合。则
+
+$$
+\Delta=4\mathbb Z^2.
+$$
+
+这个集合跨全部实际纤维取并，不断言每个单独纤维都有全部这些差，也不断言组成模四相同就有相同历史。
+
+**证明。** 同历史的两棵树有相同 $W_2$，由定理 357.3 得组成模四相同，故 $\Delta\subseteq4\mathbb Z^2$。命题 357.4 的 $Q,P$ 给 $(4,0)\in\Delta$。对这一对实际来源同时施加 $\rho$，仍有相同历史，因为新历史是旧历史的共同后继；组成差经 $M$ 变为 $M(4,0)=(0,4)$，所以第二轴差也实际可达。
+
+交换一对来源给差的负号。同一棵非空树与自身给零差。若两对来源 $(t_1,u_1)$、$(t_2,u_2)$ 分别同历史，则对每个 $n\ge0$
+
+$$
+E(\rho^n\langle t_1,t_2\rangle)
+=E(\rho^n(t_1))E(\rho^n(t_2))
+=E(\rho^n(u_1))E(\rho^n(u_2))
+=E(\rho^n\langle u_1,u_2\rangle).
+$$
+
+所以有序拼接保留同历史，并实现两个差向量的和。有限次拼接两个轴差及其交换来源实现 $4\mathbb Z^2$ 中的每个向量，整个构造仍只使用非空正叶词与实际树。由（357.1）也得到 $W_3$ 的等价表述。$\square$
+
+**命题 357.7（指定算术恢复与历史闭合的窗口区别）。** 定理 357.5 中所有可恢复目标至多需要两个同源初始读数，这与定理 356.4 的完整历史后继闭合恰需三项相容。单项 $E$ 已能恢复 $R_2$，但不能恢复 $R_4$；对任何 $e\ge2$，单项 $E$ 也不能恢复 $K_{4,e}$。
+
+**证明。** 双读数充分性由（357.7）、（357.13）、（357.14）直接给出。为说明单读数边界，复用 §356 的保持乘法次序的等级对合 $\gamma$。$A^{-1}=A$、$B^{-1}=-B$，故每个实际叶积是单位，从而非零。对实际 $x=E(t)$，存在唯一 $\delta(x)\in\{0,1\}$ 满足
+
+$$
+\gamma(x)=(-1)^{\delta(x)}x.
+$$
+
+存在性来自向量叶像的奇偶等级与等级对合的乘法性；唯一性来自 $x\ne0$ 和实数特征非二。按叶序相乘给 $\delta(E(t))=a+b\bmod2$，而引理 357.2 给 $\chi(E(t))=b\bmod4$。所以实际单读数上的来源无关函数
+
+$$
+x\longmapsto
+\bigl(\delta(x)-\chi(x),\chi(x)\bigr)\bmod2
+$$
+
+恢复 $R_2$。此处先将 $\chi(x)$ 从模四约化模二。
+
+令 $t_2=\langle\alpha,\alpha\rangle$、$t_4=\langle t_2,t_2\rangle$。它们的叶积均为 $1$，组成分别是 $(2,0)$、$(4,0)$，模四不同。因此单项 $E$ 不能恢复 $R_4$。
+
+再取 $b_2=\langle\beta,\beta\rangle$，令
+
+$$
+s_2=\langle t_2,b_2\rangle,
+\qquad
+s_4=\langle t_4,b_2\rangle.
+$$
+
+这两棵实际正叶词树的叶积均为 $-1$，组成分别为 $(2,2)$、$(4,2)$。在 $d=4$ 时，标准低位分别是 $(2,2)$、$(0,2)$，整数进位分别为 $1$、$0$；当 $e\ge2$，两者模 $e$ 仍不同。因此单项 $E$ 不能恢复 $K_{4,e}$，而两项足够。
+
+恢复指定目标只要求该目标在观察纤维上恒定；恢复完整历史后继则必须同时决定之后的叶积。§356 已给出 $W_2$ 相同而第三项不同的实际树，这与 $W_2$ 恢复上述特定算术目标没有冲突。这里不分类一般编码、任意状态表示或每个历史纤维的完整来源集合。$\square$
+
+数学引文与范围：Clifford 平方约定、极化关系与泛性质直接沿用 Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，[arXiv:0907.5356v1](https://arxiv.org/abs/0907.5356v1)，§2.1，特别是 Proposition 2.1；保持乘法次序的等级对合沿用该文 §2.3，式（2.17），区别于反转次序的 reversion。整数子环字符、同源双读数恢复、统一实际碰撞及四目标全参数分类是本卷既有定义上的综合推导，未归因于该文。Flaut 的广义 Fibonacci 四元数关联代数与本节有序替换叶积历史是不同对象，不作为这里恢复分类的依据。§355 的规范轨道分类提供其声明域内的必要限制，§356 提供全原树的历史关系；全域充分性由（357.7）的显式函数承担。本节为纸面推导，尚未 Lean 形式化；有限精确核验不替代全参数证明或 Lean 内核验证，全球原创性未确立。
+
+## 追加锚（本行以下为增补区）
