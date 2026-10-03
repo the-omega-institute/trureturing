@@ -1,0 +1,51 @@
+**定理 351.1（全有界实指数带上的共同截止律）。** 在定义351.1和假设351.1下，令定理350.1的常数由该完整谱的 $\alpha,B,T_0,\sum a_\rho$ 确定。保持上述同一个 $a$。对每个固定 $R>0$，存在 $\varepsilon_R>0$、$Q_R\ge1$ 和 $C_R\ge0$，在选择 $\varepsilon,t,q$ 之前确定，使下述结论同时成立。对任意
+
+$$
+0<\varepsilon<\varepsilon_R,\quad
+t\in[-a,a],\quad
+\operatorname{IsMinOn}(\mathcal J_\varepsilon,[-a,a],t),\quad |q|\le R,
+$$
+
+有 $0<t<\varepsilon$、$\delta(t)>0$，并可定义实指数截止
+
+$$
+T_q(\varepsilon)=\varepsilon^{-1}L^q
+=\varepsilon^{-1}\exp(q\log L),\qquad
+\log T_q=L+qH,
+$$
+
+以及 $\operatorname{high}_q(t)=\delta_{>T_q}(t)$。同时有
+
+$$
+\left|\frac{\operatorname{high}_q(t)}{\delta(t)}
+ -(4-2q)_+\frac HL\right|\le\frac{Q_R}{L},
+\qquad x_+=\max(x,0), \tag{351.3}
+$$
+
+$$
+\begin{aligned}
+\delta(t)&=D_*\frac{\varepsilon^2}{L^2}
+ -4D_*\frac{\varepsilon^2H}{L^3}
+ +O(\varepsilon^2/L^3),\\
+\operatorname{high}_q(t)&=D_*(4-2q)_+\frac{\varepsilon^2H}{L^3}
+ +O_R(\varepsilon^2/L^3),
+\end{aligned} \tag{351.4}
+$$
+
+$$
+\mathcal J^{\rm phase}_{\varepsilon,\le T_q}(t)-\mathcal J_\varepsilon(0)
+=-D_*\frac{\varepsilon^2}{L^2}
+ +D_*\min(2q,4)\frac{\varepsilon^2H}{L^3}
+ +O_R(\varepsilon^2/L^3), \tag{351.5}
+$$
+
+$$
+\left|\mathcal J_{\varepsilon,\le T_q}(t)-\mathcal J_{\varepsilon,\le T_q}(0)
+ +D_*\frac{\varepsilon^2}{L^2}
+ -D_*\min(2q,4)\frac{\varepsilon^2H}{L^3}\right|
+\le C_R\frac{\varepsilon^2}{L^3}. \tag{351.6}
+$$
+
+各 $O_R$ 均对全部这些完整极小点和 $|q|\le R$ 一致。其量词次序是
+$\exists a>0\ \forall R>0\ \exists\varepsilon_R,Q_R,C_R\ \forall\varepsilon\ \forall t\ \forall q$，其中 $a$ 已由原完整目标固定，不随 $R$ 改变。特别地，$q=0$ 时（351.5）和（351.6）的双重对数项精确消去；$q\ge2$ 时系数为 $4$。这些是原完整目标的每个极小点处的评价，不断言它们是任何截断目标的极小点。
+
