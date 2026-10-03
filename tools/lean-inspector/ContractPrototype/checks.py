@@ -66,14 +66,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
-    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved", "opaque", "arena", "imports", "validated-opaque"], required=True)
-    parser.add_argument("--baseline", action="store_true", help="expect opaque body regressions to fail when the comparator omits opaque bodies")
+    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved", "opaque", "arena", "imports", "validated-opaque", "implementation"], required=True)
+    parser.add_argument("--baseline", action="store_true", help="expect opaque or compiler implementation regressions to fail without the corresponding reader")
     parser.add_argument("--reference", type=pathlib.Path)
     args = parser.parse_args()
     if sys.platform != "darwin":
         parser.error("these probes require macOS vm_stat")
-    if args.baseline and args.unit not in ("opaque", "validated-opaque"):
-        parser.error("--baseline requires an opaque unit")
+    if args.baseline and args.unit not in ("opaque", "validated-opaque", "implementation"):
+        parser.error("--baseline requires opaque, validated-opaque or implementation")
     for tool in ("make", "vm_stat"):
         if shutil.which(tool) is None:
             parser.error("missing required tool: " + tool)
@@ -162,6 +162,122 @@ def main():
                     raise RuntimeError("validated opaque restoration failed")
                 results[-1]["restored_source_sha256"] = hashlib.sha256(original).hexdigest()
                 build("validated-opaque-" + side + "-restored", probe, 0)
+        elif args.unit == "implementation":
+            probe = "LeanInformationAuditRegTests.ContractImplementationProbe"
+            labels = ["Implemented", "Partial", "Extern", "OpaqueImplemented", "EqPartial", "SymbolExtern"]
+            validated = ["ValidatedImplemented", "ValidatedPartial", "ValidatedExtern"]
+            build("implementation-control", probe, 0)
+            for side in ("old", "new"):
+                changes = {}
+                for label in labels:
+                    path = root / ("Reg/ContractPrototype/Controls" if side == "old" else "Reg/ContractPrototype") / (label + ".lean")
+                    original = path.read_bytes()
+                    before, after = {
+                        "Implemented": (b"hiddenImpl (_ : Nat) : Bool := false", b"hiddenImpl (_ : Nat) : Bool := true"),
+                        "OpaqueImplemented": (b"runtimeBit (_ : Unit) : Bool := false", b"runtimeBit (_ : Unit) : Bool := true"),
+                        "Partial": (b"then false else hiddenBit", b"then true else hiddenBit"),
+                        "EqPartial": (b"then false else hiddenBit", b"then true else hiddenBit"),
+                        "Extern": (b"((uint8_t)0)", b"((uint8_t)1)"),
+                        "SymbolExtern": (b"lean_nat_dec_eq", b"lean_nat_dec_lt"),
+                    }[label]
+                    changed = original.replace(before, after)
+                    if changed == original:
+                        raise RuntimeError("implementation input not changed: " + label)
+                    changes[path] = (original, changed)
+                for label in validated:
+                    path = root / "tools/lean-inspector/ContractPrototypeFixtures" / (label + side.title() + ".lean")
+                    original = path.read_bytes()
+                    before, after = {
+                        "ValidatedImplemented": (b"hiddenImpl (_ : Nat) : Bool := false", b"hiddenImpl (_ : Nat) : Bool := true"),
+                        "ValidatedPartial": (b"then false else hiddenBit", b"then true else hiddenBit"),
+                        "ValidatedExtern": (b"((uint8_t)0)", b"((uint8_t)1)"),
+                    }[label]
+                    changed = original.replace(before, after)
+                    if changed == original:
+                        raise RuntimeError("validated implementation input not changed: " + label)
+                    changes[path] = (original, changed)
+                expected = ["comparator_rejects_implementation_" + label + "_" + state + "_" + side
+                    for label in labels + validated
+                    for state in (["validated"] if label in validated else ["unresolved", "undeclared"])]
+                (out / ("implementation-" + side + "-prediction.json")).write_text(json.dumps({
+                    "mutation_locations": [str(path.relative_to(root)) for path in changes],
+                    "expected_red_tests": expected, "expected_compile_errors": 0}, indent=2) + "\n")
+                try:
+                    for path, (_, changed) in changes.items():
+                        path.write_bytes(changed)
+                    build("implementation-" + side, probe, 2 if args.baseline else 0,
+                        r"\[FAIL\] " + expected[0] if args.baseline else r"\[PASS\] " + expected[0],
+                        os.environ | {"STRATALINT_CONTRACT_IMPLEMENTATION_MUTATION": side})
+                    row = results[-1]
+                    if row["compile_errors"] or sorted(row["named_failures"]) != sorted(expected if args.baseline else []):
+                        raise RuntimeError("implementation named outcomes differ from prediction")
+                    if not args.baseline:
+                        implementation = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype/Implementation.lean"
+                        body = implementation.read_bytes()
+                        text = body.decode()
+                        start = text.index("    MetaM ImplementationIdentity := do")
+                        end = text.index("\ndef renameImplementation", start)
+                        disabled = text[:start] + "    MetaM ImplementationIdentity := do\n  return {}\n" + text[end:]
+                        (out / ("implementation-reader-" + side + "-prediction.json")).write_text(json.dumps({
+                            "mutation_location": str(implementation.relative_to(root)),
+                            "expected_red_tests": expected, "expected_compile_errors": 0}, indent=2) + "\n")
+                        try:
+                            implementation.write_text(disabled)
+                            build("implementation-reader-" + side, probe, 2,
+                                r"\[FAIL\] " + expected[0],
+                                os.environ | {"STRATALINT_CONTRACT_IMPLEMENTATION_MUTATION": side})
+                            row = results[-1]
+                            if row["compile_errors"] or sorted(row["named_failures"]) != sorted(expected):
+                                raise RuntimeError("implementation reader mutant outcomes differ from prediction")
+                        finally:
+                            implementation.write_bytes(body)
+                        if implementation.read_bytes() != body:
+                            raise RuntimeError("implementation reader restoration failed")
+                        results[-1]["restored_reader_sha256"] = hashlib.sha256(body).hexdigest()
+                        build("implementation-reader-" + side + "-restored", probe, 0,
+                            env=os.environ | {"STRATALINT_CONTRACT_IMPLEMENTATION_MUTATION": side})
+                finally:
+                    for path, (original, _) in changes.items():
+                        path.write_bytes(original)
+                if any(path.read_bytes() != original for path, (original, _) in changes.items()):
+                    raise RuntimeError("implementation source restoration failed")
+                results[-1]["restored_source_sha256"] = {
+                    str(path.relative_to(root)): hashlib.sha256(original).hexdigest()
+                    for path, (original, _) in changes.items()}
+                build("implementation-" + side + "-restored", probe, 0)
+            if not args.baseline:
+                metadata_probe = "LeanInformationAuditRegTests.ContractImplementationMetadataProbe"
+                build("implementation-metadata-control", metadata_probe, 0)
+                implementation = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype/Implementation.lean"
+                original = implementation.read_bytes()
+                text = original.decode()
+                start = text.index("    MetaM ImplementationIdentity := do")
+                end = text.index("\ndef renameImplementation", start)
+                expected = ["comparator_rejects_implementation_metadata_" + label for label in (
+                    "implemented_by_target", "implemented_by_presence_old", "implemented_by_presence_new",
+                    "extern_symbol", "extern_presence_old", "extern_presence_new", "extern_inline", "tagged_return",
+                    "csimp_presence_old", "csimp_presence_new", "init_presence_old", "init_presence_new",
+                    "builtin_init_presence_old", "builtin_init_presence_new")]
+                expected += ["comparator_rejects_implementation_shape_" + label for label in (
+                    "extern_adhoc", "extern_opaque", "extern_empty", "extern_backend", "missing_target", "init_anonymous", "unsafe_rec", "cpass")]
+                (out / "implementation-metadata-prediction.json").write_text(json.dumps({
+                    "mutation_location": str(implementation.relative_to(root)),
+                    "expected_red_tests": expected, "expected_compile_errors": 0}, indent=2) + "\n")
+                try:
+                    disabled = text[:start] + "    MetaM ImplementationIdentity := do\n  return {}\n" + text[end:]
+                    guard_start = disabled.index("def verifyCompilerPasses")
+                    guard_end = disabled.index("/-- Lean", guard_start)
+                    disabled = disabled[:guard_start] + "def verifyCompilerPasses (_env : Environment) : MetaM (Array Name) := pure #[]\n\n" + disabled[guard_end:]
+                    implementation.write_text(disabled)
+                    build("implementation-metadata-disabled", metadata_probe, 2, r"\[FAIL\] " + expected[0])
+                    if results[-1]["compile_errors"] or sorted(results[-1]["named_failures"]) != sorted(expected):
+                        raise RuntimeError("metadata mutant outcomes differ from prediction")
+                finally:
+                    implementation.write_bytes(original)
+                if implementation.read_bytes() != original:
+                    raise RuntimeError("metadata reader restoration failed")
+                results[-1]["restored_source_sha256"] = hashlib.sha256(original).hexdigest()
+                build("implementation-metadata-restored", metadata_probe, 0)
         elif args.unit in ("repair", "current", "unresolved", "opaque", "arena", "imports"):
             package = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype"
             mapping = package / "NameMapping.lean"
@@ -334,7 +450,11 @@ def main():
             else:
                 build("repair-control", mapping_probe, 0)
                 mutation("stale-descriptor", equivalence,
-                         lambda s: s.replace('  check s!"descriptor.{side}" (← identity source record.occurrence.levelParams descriptor)\n    certificate.descriptorIdentity\n', '').replace('  unless descriptorsEqual do throwError "contract.equivalence:{side}.current_descriptor"', '  unless true do throwError "contract.equivalence:{side}.current_descriptor"'),
+                         lambda s: s.replace('  check s!"descriptor.{side}" (← identity source record.occurrence.levelParams descriptor)\n    certificate.descriptorIdentity\n', '').replace('  unless descriptorsEqual do throwError "contract.equivalence:{side}.current_descriptor"', '  unless true do throwError "contract.equivalence:{side}.current_descriptor"').replace(
+                             '  verifyActualDependencies "validated" oldEnv newEnv mapping\n'
+                             '    oldRecord.occurrence newRecord.occurrence source #[descriptor] #[newDescriptor]\n'
+                             '    (oldPlan.dependencies ++ oldCert.argumentInputs ++ oldCert.extractionInputs |>.map (·.name))\n'
+                             '    (newPlan.dependencies ++ newCert.argumentInputs ++ newCert.extractionInputs |>.map (·.name))\n', ''),
                          mapping_probe, ["comparator_rejects_stale_target_descriptor"])
                 mutation("environment-claim", equivalence,
                          lambda s: without_current_record(s),

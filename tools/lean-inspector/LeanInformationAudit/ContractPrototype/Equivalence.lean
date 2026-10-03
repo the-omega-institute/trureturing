@@ -1,4 +1,4 @@
-import LeanInformationAudit.ContractPrototype.NameMapping
+import LeanInformationAudit.ContractPrototype.Implementation
 
 /- L0 原型 -/
 namespace LeanInformationAudit.ContractPrototype.Equivalence
@@ -248,11 +248,12 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
 Repository data/type dependencies are followed; proof bodies are omitted and
 upstream implementations remain pinned. The fixed walk has no candidate rules. -/
 def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
-    (value : Expr) (extraRoots : Array Expr := #[]) :
-    MetaM (Array DependencyIdentity) := inEnvironment env do
-  let mut roots := (← eraseProofs value).1.getUsedConstants ++ (← inspectionRoots event)
+    (value : Expr) (extraRoots : Array Expr := #[]) (memberRoots : Array Name := #[]) :
+    MetaM (Array ImplementationDependencyIdentity) := inEnvironment env do
+  let compilerPasses ← verifyCompilerPasses env
+  let mut roots := #[event.realizationName] ++ (← eraseProofs value).1.getUsedConstants ++ (← inspectionRoots event)
   for value in extraRoots do roots := roots ++ (← eraseProofs value).1.getUsedConstants
-  let mut pending := roots.toList
+  let mut pending := memberRoots.toList ++ roots.toList
   let mut seen : NameSet := {}
   let mut remaining := 524288
   while let name :: rest := pending do
@@ -264,6 +265,8 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     seen := seen.insert name
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    let implementation ← implementationIdentity env info owner compilerPasses
+    pending := implementation.targets.toList.map Prod.snd ++ pending
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
@@ -277,22 +280,24 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     let typeIdentity ← identity false info.levelParams info.type
     let bodyIdentity ← (← dependencyBody info owner).mapM (identity false info.levelParams)
     let bodyIdentity := bodyIdentity.getD ""
-    return { name, owner, typeIdentity, bodyIdentity }
+    let implementation ← implementationIdentity env info owner compilerPasses
+    return { name, owner, typeIdentity, bodyIdentity, implementation }
 
 /-- Independently extract both actuals and their fixed data/type closures.
 Repository data bodies are compared, proof bodies and pinned upstream bodies
 are omitted, and supplied descriptor roots follow the same traversal. -/
 def verifyActualDependencies (label : String) (oldEnv newEnv : Environment)
     (mapping : NameMapping) (oldEvent newEvent : TemplateOccurrenceEvent) (source : Bool)
-    (oldRoots newRoots : Array Expr := #[]) : MetaM Unit := do
+    (oldRoots newRoots : Array Expr := #[])
+    (oldMembers newMembers : Array Name := #[]) : MetaM Unit := do
   let oldActual ← actual oldEnv oldEvent source
   let newActual ← actual newEnv newEvent source
   let expected ← inEnvironment newEnv <| identity source oldEvent.levelParams
     (renameExpr mapping oldActual)
   let observed ← inEnvironment newEnv <| identity source newEvent.levelParams newActual
   check s!"{label}.actual" observed expected
-  let oldDependencies ← actualDependencies oldEnv oldEvent oldActual oldRoots
-  let newDependencies ← actualDependencies newEnv newEvent newActual newRoots
+  let oldDependencies ← actualDependencies oldEnv oldEvent oldActual oldRoots oldMembers
+  let newDependencies ← actualDependencies newEnv newEvent newActual newRoots newMembers
   let mappedDependencies ← oldDependencies.mapM fun input => do
     -- The closure fingerprints upstream types but omits pinned upstream bodies.
     let info ← inEnvironment oldEnv <| getConstInfo input.name
@@ -304,9 +309,16 @@ def verifyActualDependencies (label : String) (oldEnv newEnv : Environment)
     return { input with
       name := renameName mapping input.name
       owner := renameName mapping input.owner
-      typeIdentity, bodyIdentity }
+      typeIdentity, bodyIdentity
+      implementation := renameImplementation mapping input.implementation }
   let mappedDependencies := mappedDependencies.qsort (fun a b => Name.quickLt a.name b.name)
-  discard <| alignDependencies mappedDependencies newDependencies
+  discard <| alignDependencies (mappedDependencies.map (·.toDependencyIdentity))
+    (newDependencies.map (·.toDependencyIdentity))
+  for input in mappedDependencies do
+    let some actual := newDependencies.find? (·.name == input.name)
+      | throwError "contract.equivalence:implementation_member_missing:{input.name}"
+    unless input.implementation == actual.implementation do
+      throwError "contract.equivalence:dependency.mapped.implementation:{input.name}"
 
 /-- Verify every certificate identity by the production encoder. Dependency
 membership and producer enumeration are checked after declaration renaming.
@@ -352,6 +364,8 @@ def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
   check "actual.mapped" actualIdentity newCert.actualIdentity
   verifyActualDependencies "validated" oldEnv newEnv mapping
     oldRecord.occurrence newRecord.occurrence source #[descriptor] #[newDescriptor]
+    (oldPlan.dependencies ++ oldCert.argumentInputs ++ oldCert.extractionInputs |>.map (·.name))
+    (newPlan.dependencies ++ newCert.argumentInputs ++ newCert.extractionInputs |>.map (·.name))
   let planIdentity ← planIdentity oldEnv newEnv mapping descriptor newCert.planIdentity
   let arguments ← oldCert.argumentInputs.mapM fun input =>
     dependency oldEnv newEnv mapping source input
