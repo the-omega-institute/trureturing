@@ -15,7 +15,7 @@ internal sealed class PrefixCylinderDensityDocument : IScribeDocumentDefinition
             Node("legal-prefix", "Legal occupied prefix indices", "LegalPrefix",
                 Disp(Seq(Call("LegalPrefix", F.Id("m"), F.Id("w")), Leftrightarrow,
                     Call("IsZeckendorfRep", F.Id("w")), Land, Forall, Sp, F.Id("k"),
-                    InMacro, F.Id("w"), Comma, F.Id("k"), Lt, F.Id("m"), Plus, D(2))),
+                    InMacro, Sp, F.Id("w"), Comma, F.Id("k"), Lt, F.Id("m"), Plus, D(2))),
                 "A prefix of length m is represented by its descending list w of occupied "
                     + "Fibonacci indices. All indices are at least two, successive occupied "
                     + "indices differ by at least two, and every index is less than m+2. "
@@ -38,7 +38,7 @@ internal sealed class PrefixCylinderDensityDocument : IScribeDocumentDefinition
             Node("counting", "Counting below a real cutoff", "counting",
                 Disp(Equal(Call("N", F.Id("m"), F.Id("w"), F.Id("X")),
                     Abs(Seq(OpenBrace, F.Id("n"), InMacro, Call("C", F.Id("m"), F.Id("w")),
-                        Mid, F.Id("n"), Lt, F.Id("X"), CloseBrace)))),
+                        Mid, Sp, F.Id("n"), Lt, F.Id("X"), CloseBrace)))),
                 "N(m,w,X) counts cylinder members n with n<X, where X is any real number. "
                     + "The set is finite and empty when X is nonpositive.", DescribeRole.Definition),
             Describe.Lean(
@@ -94,13 +94,13 @@ internal sealed class PrefixCylinderDensityDocument : IScribeDocumentDefinition
         Formula np = Call("N", F.Id("mPrime"), F.Id("wPrime"), x);
         return Disp(Seq(Forall, Sp, F.Id("m"), Comma, F.Id("w"), Comma,
             Call("LegalPrefix", F.Id("m"), F.Id("w")), Rightarrow,
-            Call("StrictMono", Seq(F.Id("t"), Mapsto, F.Id("V"), Plus,
+            Call("StrictMono", Seq(F.Id("t"), Mapsto, Sp, F.Id("V"), Plus,
                 Seq(Pow(F.Id("s"), h), Open, F.Id("t"), Close))), Land,
-            Call("range", Seq(F.Id("t"), Mapsto, F.Id("V"), Plus,
+            Call("range", Seq(F.Id("t"), Mapsto, Sp, F.Id("V"), Plus,
                 Seq(Pow(F.Id("s"), h), Open, F.Id("t"), Close))), Eq,
             Call("C", F.Id("m"), F.Id("w")), Land,
             Exists, Sp, F.Id("C"), Comma, Forall, Sp, x, Ge, D(0), Comma,
-            Abs(Seq(n, Minus, Pow(Varphi, Seq(Minus, h)), Cdot, x)), Le, F.Id("C"), Land,
+            Abs(Seq(n, Minus, Pow(Varphi, Seq(Minus, h)), Cdot, Sp, x)), Le, Sp, F.Id("C"), Land,
             Limit(x, Infty, new Formula.Fraction(n, x)), Eq, Pow(Varphi, Seq(Minus, h)), Land,
             Forall, Sp, F.Id("mPrime"), Comma, F.Id("wPrime"), Comma,
             Call("LegalExtension", F.Id("m"), F.Id("w"), F.Id("mPrime"), F.Id("wPrime")),
