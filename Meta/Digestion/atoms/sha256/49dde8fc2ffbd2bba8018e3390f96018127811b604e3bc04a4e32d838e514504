@@ -1,0 +1,20 @@
+**定义 39.3.1（完整端点证书）。** 对词 $w$，以 $w[r:]$ 表示从位置 $r$ 开始的后缀。保留下列所有带索引的区间／颜色条目，值相同的条目也不删除：
+
+$$
+\begin{array}{ll}
+(f_{P[r:]}(H_1),h_r),\quad(f_{Q[r:]}(H_2),h_r),
+&0\le r<a_0,\\
+(f_{U_i[r:]}(H_1),(W_i)_r),\quad
+(f_{V_i[r:]}(H_2),(W_i)_r),
+&i=0,1,\quad 0\le r<L.
+\end{array}
+$$
+
+记这张带索引清单为 $\mathscr L$，其长度恰为 $2a_0+4L$。空 stems 使前两类为空，但 $L\ge1$ 保证清单非空。若 $H=[l,u]$，定义
+
+$$
+d(H,J_i)=\max\{\operatorname{dist}(l,J_i),
+\operatorname{dist}(u,J_i)\},\qquad
+\theta=\max_{(H,i)\in\mathscr L}d(H,J_i).
+$$
+

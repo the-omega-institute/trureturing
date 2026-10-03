@@ -1,0 +1,21 @@
+**命题 14.15（联合完成 $K=\Omega\times G$ 的预测商）。** 沿用本卷第3.1节和第5.2节的联合完成域
+\[
+K=\Omega\times G,\qquad
+T_K(\omega,z)=\delta^3(\omega,z)
+=\bigl(T\omega,M^{-3}(z-d_{\mathrm{first\ window}})\bigr).
+\]
+令 $\kappa_K(\omega,z)=\kappa_0(\omega)$。则对任意两点 $(\omega,z),(\nu,z')\in K$，
+\[
+\kappa_K(T_K^n(\omega,z))=\kappa_K(T_K^n(\nu,z'))
+\ \forall n\ge0
+\quad\Longleftrightarrow\quad
+\omega=\nu.
+\]
+因此所有未来 $\kappa_K$ 响应的最小预测商是 $\Omega$，而不是 $K$；当前坐标的纤维为 $\kappa_0^{-1}(x)\times G$，完整未来的纤维为 $\{\omega\}\times G$。在实际有限图
+\[
+\Gamma=\{(\omega,g_\Gamma(\omega)):\omega\in D\}\subset K
+\]
+上，$\kappa_K$ 单射；若改用 $D\times G$，该单射性一般消失。
+
+证明。$\kappa_K$ 只取地址坐标，故联合 $z$ 从所有未来响应中消失。若所有响应相同，定理14.11逐位恢复 $\omega$；反之同一 $\omega$ 对任意 $z,z'$ 给出同一响应。对当前时刻只需用定理14.7的纤维，再与 $G$ 作直积；全未来时地址被完全恢复而 $z$ 仍未被观察。$\Gamma$ 是图，且 $\kappa_0|_D$ 单射，故其限制单射；把图扩成 $D\times G$ 后，同一地址的不同 $z$ 重新进入同一观察纤维。证毕。
+

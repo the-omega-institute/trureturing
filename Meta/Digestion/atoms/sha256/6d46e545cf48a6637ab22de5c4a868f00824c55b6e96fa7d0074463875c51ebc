@@ -1,0 +1,10 @@
+**引理 40.4（对整个预算窗口固定的来源邻域）。** 给定 $\rho<u<v<\lambda$，可固定选取 $\varepsilon>0$，使
+
+$$
+\rho+\varepsilon<u,\qquad
+H_A=[\alpha-\varepsilon,\alpha+\varepsilon]\subset\operatorname{int}I_0,\qquad
+H_B=[\beta-\varepsilon,\beta+\varepsilon]\subset\operatorname{int}I_1.
+$$
+
+两个区间分别在 $f_A,f_B$ 下不变。任取终尾标量于 $H_A\times H_B$，前接一对 $A,B$ 块时，其六个对应坐标到共同所需闭格的距离均至多 $\rho+\varepsilon$。固定每个分量的一条合法终尾后，这个性质可重复任意有限次；在每个 $b\in J$ 下，整段共同色历史均可由实际内部目标取得，误差严格小于 $b$。
+

@@ -1,0 +1,34 @@
+**定理58.11。** 固定 $\Theta_1<b<\lambda$，始终绑定 $K=K(b)$。对两个模板、任意归属及 $\kappa\in\{\mathrm{cl},\mathrm{st},\mathrm{rm}\}$，
+
+$$
+0<\alpha_1\le\eta^{\mathsf T}_{b,o,\kappa}
+\le\alpha_K<\alpha_\infty.
+\tag{58.43}
+$$
+
+当 $K=1$，上界恰在整个
+
+$$
+\boxed{\Theta_1<b\le Q_2}
+\tag{58.44}
+$$
+
+达到，率为 $\alpha_1$。当 $K\ge2$，置
+
+$$
+Z_K:=Z_{H,K}=\frac{A_H}{1-\rho\chi^K},\qquad
+\Psi_K=\lambda-g^2\chi^KZ_K.
+\tag{58.45}
+$$
+
+有 $Q_K<\Psi_K<Q_{K+1}$。对于给定帽值 $K=K(b)\ge2$，平台准确为
+
+$$
+\boxed{\Psi_K\le b\le Q_{K+1},\qquad
+\eta^{\mathsf O}_{b,o,\kappa}
+=\eta^{\mathsf A}_{b,o,\kappa}=\alpha_K.}
+\tag{58.46}
+$$
+
+“准确”指在 $K(b)=K$ 的预算单元内，低于 $\Psi_K$ 时将由定理58.12得到严格小于 $\alpha_K$ 的上界；高于 $Q_{K+1}$ 时帽值已经改变，不能沿用这里的 $K$。
+

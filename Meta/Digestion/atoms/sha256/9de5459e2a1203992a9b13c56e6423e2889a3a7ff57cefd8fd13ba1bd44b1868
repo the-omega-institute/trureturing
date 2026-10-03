@@ -1,0 +1,41 @@
+**定理 7.3（Additional bounded-discrepancy Bellman theorem）。** Independently of the discrete choice, let $\delta:A\times A\to[0,D]$, where $D\ge0$ is finite. Define $d_h,d_\infty$ by the same formulas with $\delta$ in place of $\delta_{01}$. On bounded real functions on $Y^2$, set
+
+$$
+(\Phi f)(x,y)=\max\{\delta(Ox,Oy),\eta f(\rho x,\rho y)\}.
+$$
+
+Then $d_\infty$ is its unique bounded fixed point, and
+
+$$
+0\le d_\infty-d_h\le D\eta^{h+1},\qquad
+\Phi^{h+1}(0)=d_h,\qquad
+d_\infty(\rho x,\rho y)\le\eta^{-1}d_\infty(x,y).
+$$
+
+If $\delta$ is a pseudometric, the distances are pseudometrics; if it is an ultrapseudometric, they are ultrapseudometrics. If $\delta$ separates observation values, zero infinite distance is exactly $R_\infty$; a genuine metric on $Y$ additionally requires these observations to separate $Y$.
+
+证明。Every term lies in $[0,D]$, so its supremum exists and is bounded. Separate $k=0$ and write $k=j+1$ in the tail. This gives
+
+$$
+d_\infty(x,y)=\max\{\delta(Ox,Oy),\eta d_\infty(\rho x,\rho y)\},
+$$
+
+so existence is explicit. The map $\Phi$ sends bounded functions to bounded functions. For real $u,v,c$, the inequality $|\max(c,u)-\max(c,v)|\le|u-v|$ follows by considering both arguments below $c$, both above it, or on opposite sides. Therefore
+
+$$
+\|\Phi f-\Phi g\|_\infty\le\eta\|f-g\|_\infty.
+$$
+
+If $f,g$ are bounded fixed points, their finite supremum distance $A$ satisfies $A\le\eta A$, and $1-\eta>0$ forces $A=0$. On an empty domain uniqueness is immediate. No additional fixed-point existence theorem is needed.
+
+For $k\ge h+1$, the corresponding term is at most $D\eta^{h+1}$. The full supremum is the maximum of $d_h$ and this tail supremum; $d_h\ge0$ gives the difference bound. Induction using $\delta\ge0$ gives $\Phi^{h+1}(0)=d_h$. Reindexing also gives
+
+$$
+\eta d_\infty(\rho x,\rho y)
+=\sup_{j\ge1}\eta^j\delta(O(\rho^jx),O(\rho^jy))\le d_\infty(x,y).
+$$
+
+The factor $\eta^{-1}>1$ is a Lipschitz bound for the action, not a contraction bound for it.
+
+If $\delta$ is a pseudometric, each weighted pullback has diagonal zero and symmetry. At each $k$, its $x,z$ term is at most the sum of its $x,y$ and $y,z$ terms, hence at most $d_\infty(x,y)+d_\infty(y,z)$. Taking the supremum proves the triangle inequality; the finite maximum works in the same way. Under the ultrapseudometric hypothesis, replace this sum by a maximum to get the strong inequality. Since all weights are strictly positive, $d_\infty(x,y)=0$ if and only if every observed discrepancy is zero. With separation in $A$, this is precisely $R_\infty$. It separates actual states only when $R_\infty$ is equality. $\square$
+

@@ -1,0 +1,20 @@
+**推论58.13.2（平台和过渡带的必要完整记忆）。** 在平台 (58.44) 或 (58.46)，对每个正确解码器有
+
+$$
+\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}N
+\ge\alpha_{K(b)}.
+\tag{58.63}
+$$
+
+在过渡带 (58.48)，有
+
+$$
+\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}N
+\ge\alpha_{K(b)-1},\qquad
+\limsup_{N\to\infty}\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}N
+\ge\eta^{\mathsf T}_{b,o,\kappa}.
+\tag{58.64}
+$$
+

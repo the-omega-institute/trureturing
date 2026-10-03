@@ -1,0 +1,29 @@
+**定义 62.10（双无限辅助语言）。** 对 $\omega\in\{\mathsf u,\mathsf c\}^{\mathbb Z}$，定义转移前状态
+
+$$
+x_i(\omega)=\lim_{n\to\infty}
+f_{\omega_{i-1}}\circ\cdots\circ f_{\omega_{i-n}}(0).
+\tag{62.23}
+$$
+
+两映射保持 $[0,h]$，有限过去作用于0、$h$ 的像差为
+
+$$
+h\,g^{\ell(\omega_{i-n}\cdots\omega_{i-1})}
+\le h\rho^n\longrightarrow0.
+\tag{62.24}
+$$
+
+更长过去的0像不减，$h$ 像不增；二者收敛到同一个状态。由此 $x_i$ 唯一、连续，满足 $0\le x_i\le h$ 及 $x_{i+1}=f_{\omega_i}(x_i)$。
+
+置 $\tau=\chi^{K-1}d$。令 $X_d$ 为不含 $\mathsf c^{K+1}$，且在一个 $\mathsf c$ 串的第 $K$ 个字母 $\omega_i=\mathsf c$ 处满足
+
+$$
+x_i\ge\tau
+\tag{62.25}
+$$
+
+的全部双无限序列。这里检查当前 $\mathsf c$ 转移之前的状态；转移后等价于 $x_{i+1}\ge\chi^Kd=s$。完整 $\mathsf c^K\mathsf u^m$ 从状态 $D$ 开始时，检查值是 $\chi^{K-1}D$，所以(62.25)恰为 $D\ge d$。
+
+局部禁词及连续非严格守卫使 $X_d$ 成为非空紧致子移位，全 $\mathsf u$ 序列属于其中。任意长 $m$ 由任意长 $\mathsf u$ 串保留。$[0,h]$、双无限过去和无限 $\mathsf u$ 尾是辅助计数对象，不替代(62.4)的实际尾，也不被断言为最终空窗的实际来源。
+

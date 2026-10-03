@@ -1,0 +1,6 @@
+**命题 16.4（A known finite candidate set gives eventual equality）。** If all nonempty nested fibers $D_r$ lie in one known finite set $K$, then some finite $D_R$ equals $\bigcap_rD_r$. In particular a singleton intersection is attained at a finite layer; an intersection contained in $T$ gives a finite universal certificate. Every bounded real objective then has eventual exact equality of worst-case values without semicontinuity assumptions.
+
+证明。For every $y\in K$ outside the intersection, choose an index $r_y$ with $y\notin D_{r_y}$. There are only finitely many such points, so choose $R$ at least all their indices, or $R=0$ if there are none. Nestedness excludes all of them from $D_R$, while the intersection is always contained in $D_R$. Thus equality holds. For certification alone one can take the maximum only over the wrong-target points in $K\setminus T$. Eventual equality of sets gives the claimed equality of every objective's extrema.
+
+For the present sources, a known uniform $q\le B_0$ supplies the finite set $K_{B_0}$. A layer $L_R>B_0$ gives $C_R(x)\cap K_{B_0}=\{x\}$ by proposition 12.2. The promise must restrict every admissible source: the fact that each individual natural pair has some finite size does not supply a common known finite candidate set. $\square$
+

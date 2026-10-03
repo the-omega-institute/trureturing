@@ -1,0 +1,59 @@
+### 37.1 原始操作合同与记号
+
+本章固定
+
+$$
+G=\widehat{\mathbb Z}^{\,2},\qquad K=\Omega\times G,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+\alpha=\binom10,\quad q=(2,3),
+$$
+
+其中 $\Omega$ 是无相邻一的单边地址空间。定义总的零插入、带守卫的一插入和总剥离
+
+$$
+h_0(\omega,z)=(0\omega,Mz),\qquad
+h_1(\omega,z)=(1\omega,\alpha+Mz)\quad(\omega_0=0),
+$$
+
+$$
+\delta(\omega,z)=\bigl(\sigma\omega,M^{-1}(z-\omega_0\alpha)\bigr).
+$$
+
+在首位为一时执行 $h_1$ 进入单独的吸收失败结果；失败不是可逆操作，也不产生额外读数。每条脚本从同一点、同一初始记录独立开始。实际有限来源图记为 $\Gamma$，而本章的独立坐标载体始终是 $K$。只使用原有标量余数读数，不加入已删除位输出、$\operatorname{End}$ 测试、$K$ 上的精确整数读出、自由时钟或圆柱测试逆命令。
+
+对 $p=(\omega,z_0)$ 写
+
+$$
+\delta^jp=(\sigma^j\omega,z_j),\qquad U_j=\omega_j,\qquad c_j=qz_j,
+$$
+
+并定义
+
+$$
+L_n=\ker\delta^n,\qquad
+T_{m,r}(p)=(c_0,\ldots,c_r)\bmod m,
+$$
+
+$$
+Q^{\rm save}_{m,n}(p)=\bigl(\delta^np,(c_j\bmod m)_{0\le j<n}\bigr).
+$$
+
+$L_n$ 只表示没有保留记录时的剥离损失；$T_{m,r}$ 有 $r+1$ 次读数；$Q^{\rm save}_{m,n}$ 有 $n$ 次剥离前保存的读数和一个精确终端点。观察的核是观察值相等的等价关系，关系的细化不等于从已丢弃的商中重建信息。
+
+对合法有限词 $u=u_0\cdots u_{s-1}$ 写 $t_u=\sum_{i<s}u_iM^i\alpha$，令 $\Omega_0=\{\eta\in\Omega:\eta_0=0\}$，并明确规定
+
+$$
+F_u=\begin{cases}
+\Omega,&u=\varepsilon\text{ 或 }u_{s-1}=0,\\
+\Omega_0,&u_{s-1}=1.
+\end{cases}
+$$
+
+$[u]$ 是地址以 $u$ 开头的圆柱。复用定义 5.1 与命题 5.2，原有前缀映射 $h_u=P_u$ 及其数学分支逆为
+
+$$
+P_u(\eta,r)=(u\eta,t_u+M^{|u|}r),\qquad D_u=\delta^{|u|}|_{[u]\times G}.
+$$
+
+函数复合从右向左作用，$h_u=h_{u_0}\circ\cdots\circ h_{u_{s-1}}$，实际动作依次插入 $u_{s-1},\ldots,u_0$；$u=\varepsilon$ 时是恒等。于是 $\delta^s h_u=D_uP_u=\mathrm{id}$ 于 $F_u\times G$，而 $h_u\delta^s=P_uD_u=\mathrm{id}$ 只在圆柱 $[u]\times G$ 上成立。这里的 $D_u$ 只是描述已有总剥离在圆柱上的分支，不是新授权的圆柱测试逆；固定原语脚本在有限输入圆柱上是有限个 $P_vD_u$ 分支的并，失败分支进入吸收态。
+

@@ -1,0 +1,11 @@
+**引理 63.1（内部同源点提升为全包含边）。** 设 $P,Q$ 是固定 $B$ 的非退化原片，$s\xrightarrow{\ell}s'$ 合法且 $P\subseteq f_\ell(I_{s'})$。若
+
+$$
+x\in\operatorname{int}P,\qquad z\in\operatorname{int}Q,\qquad x=f_\ell(z),
+\tag{63.10}
+$$
+
+则 $Q\subseteq F_\ell(P)$，因而原边 $P\xrightarrow{\ell}Q$ 存在。
+
+**证明。** $P$ 的端点属于 $B$。合法根域保证其逆像端点位于 $I_{s'}$，而 $B$ 的实际逆闭合保证这两个逆像仍属于 $B_{s'}$。于是 $F_\ell(P)$ 是端点在 $B_{s'}$ 中的闭区间。由 (63.10)，它与相邻端点之间的基本片 $Q$ 的内部相交；$Q$ 内部没有 $B_{s'}$ 端点，所以 $F_\ell(P)$ 必须包含整个 $Q$。这正是 (63.1) 的方向，不能把它替换成 $F_\ell(P)\subseteq Q$。证毕。
+

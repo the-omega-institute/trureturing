@@ -1,0 +1,13 @@
+**定义 14.10（有限未来响应塔）。** 对 $h\ge0$ 定义
+\[
+Z_h(\omega)=\bigl(\kappa_0\omega,\kappa_0T\omega,\ldots,\kappa_0T^h\omega\bigr),
+\qquad
+\mathcal R_h=Z_h(A_0)\subset\mathbb R^{h+1}.
+\]
+一个长度 $h$ 的合法窗口前缀记为 $w=(\sigma_0,\ldots,\sigma_{h-1})$，末状态为 $s(w)$。对 $y\in I_{s(w)}$ 定义
+\[
+\Psi_w(y)_j=
+\sum_{k=j}^{h-1}\gamma^{k-j}\Delta_{\sigma_k}
++\gamma^{h-j}y,\qquad 0\le j\le h.
+\]
+

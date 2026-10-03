@@ -1,0 +1,40 @@
+**定义 14.5（本章的状态地址与区间编码）。** 为区分本卷的首位类、联合柱与母卷的路径状态，令
+\[
+A_0=\Omega,\qquad A_1=\{\omega\in\Omega:\omega_0=0\},
+\]
+其中本卷定义3.1的 $\Omega_i$ 仍表示 first-bit class，$K_i=\Omega_i\times G$ 仍表示 joint cylinder；它们不与此处的状态地址 $A_s$ 混用。令
+\[
+\phi=\frac{1+\sqrt5}{2},\qquad t=\phi^{-1},\qquad
+\psi=-t,\qquad \gamma=\psi^3=-t^3,
+\]
+\[
+I_0=[-1,\phi],\qquad I_1=[-1,t].
+\]
+这两个区间就是母卷 ATOM §§150–151 的 $K_0,K_1$；本章用 $I_i$ 避免与本卷的 joint cylinder $K_i$ 和 joint-domain $K$ 冲突。窗口按低到高读为
+\[
+\Sigma=\{\mathrm{null},2,3,25,5\}
+=\{000,100,010,101,001\},
+\]
+并置
+\[
+\Delta_{\mathrm{null}}=0,\quad
+\Delta_2=1,\quad
+\Delta_3=-t,\quad
+\Delta_{25}=2-t,\quad
+\Delta_5=t^2.
+\]
+合法图为
+\[
+0\to0:\mathrm{null},2,3,\qquad
+0\to1:25,5,\qquad
+1\to0:\mathrm{null},3,\qquad
+1\to1:5.
+\]
+若 $\omega\in A_s$ 是位地址，记其第 $n$ 个低到高三位窗口为
+$\sigma_n(\omega)\in\Sigma$，定义
+\[
+\kappa_s(\omega)=\sum_{n\ge0}\gamma^n\Delta_{\sigma_n(\omega)}.
+\]
+删除动力学为 $T=\sigma^3$（在位地址上删除最低三位），这里使用 $M^3$ 所对应的三位窗口，而不使用第13章双边历史中的移位符号 $S$。
+本章的一个时间步始终是一个三位窗口步；若改用第13章的单位删位时钟，三位窗口对应三个单位步，二者的视界参数不可混用。
+

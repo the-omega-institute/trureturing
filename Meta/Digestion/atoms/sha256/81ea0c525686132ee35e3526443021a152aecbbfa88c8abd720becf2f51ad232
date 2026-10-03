@@ -1,0 +1,15 @@
+**定义 7.1（Discounted observations）。** With $Y,\rho,O$ as in definition 6.1, fix $0<\eta<1$. The original discrepancy is
+
+$$
+\delta_{01}(u,v)=\mathbf1_{\{u\ne v\}}.
+$$
+
+For this discrepancy define
+
+$$
+d_h(x,y)=\max_{0\le k\le h}\eta^k\delta_{01}(O(\rho^kx),O(\rho^ky)),\qquad
+d_\infty(x,y)=\sup_{k\ge0}\eta^k\delta_{01}(O(\rho^kx),O(\rho^ky)).
+$$
+
+If a distinguishing index exists, $\tau(x,y)$ is its least value; otherwise write $\tau=\infty$ and set $\eta^\infty=0$. This is the same first-distinction construction as definition [5.1](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L197) and theorem [5.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L199)(a) of [过程几何卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L197), with a single future path and discount $\eta$ in place of $1/2$. The following proofs spell out the quotient and the separate bounded-discrepancy extension needed for the present observations.
+

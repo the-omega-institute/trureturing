@@ -1,0 +1,38 @@
+**命题 43.1（固定证书的范围）。** 固定同一个 guarded FIB 来源：两个合法 stem、同一组来源标签、同一共同颜色历史、一对固定实际 $D/D$ 终尾，以及一个正闭预算 $\beta$. 观察只发生在 departure 位置，未观察的终端不附加颜色。以下分别刻画共同等幅扰动的实际性、不等幅 active seed 的精确等号预算，以及深度不超过 $n$ 的整棵二返回树的闭成本；第43.22—43.24节再给出负斜率的奇偶尾式、实际相邻平台和 H+ 下的条件容量代入。区间编码、前接仿射式、完成地址满像、有限来源唯一性和两返回规范 hull 使用[定义14.5](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1854)、[命题14.6](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1894)、[定理14.7](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1921)、[定理17.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L3305)、[定理34.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L9847)、[命题35.9](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L10708)、[定理36.11](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11299)、[定理39.2.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13238)、[推论39.2.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13295)、[定理39.3.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13336)及[定理39.4.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13358)的已发表结论；这里只把它们应用到同时固定的实际来源。
+
+环陪集只说明环成员相容；实际 $D$ 尾还必须满足 incoming guard、严格物理条带和 $Q\ge0$. 精确等号预算只看当前前缀中已经出现的 active 槽。整树最大值由逐个实际端点取得的有限清单给出，且其阈值属于这个固定有限族；没有选定 tight 锁时，中心只能写成该族的 $B_*$. 这些量词不推出全局阈值、统一跨预算常数或任何物理生成结论。
+
+本章的来源与观察记号沿用[定义39.1.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13123)及[式(28.1)](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7138)，引用均指本卷[固定修订 `cfe06a9af05aff5b3d2ffa4d478cea124842a1a3`](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)。$I_0=X=[-1,\phi]$、$I_1=[-1,t]$ 是闭 guard 支撑；$A_0=\Omega$、$D_0=D$，$D_s\subset A_s$ 是最终空尾地址。来源标签为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是空窗、$25$ 是一个窗口标签；它们与观察颜色 $0,\ldots,5$ 分开。实际合法边、平移量和前接次序为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx,\\
+f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}},\qquad f_\varnothing=\mathrm{id}.
+\end{gathered}
+$$
+
+两个 guard 的编码都是 $\kappa_s(\xi)=\sum_{j\ge0}(-g)^j\Delta_{\xi_j}$。一次固定合法切点归属，令 $\lambda=t^2/10$，颜色切点与闭包为
+
+$$
+\begin{gathered}
+q_1=-t^2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+$$
+
+实际拥有格 $C_c$ 是闭包 $J_c$ 的内部加上归属于它的端点，观察为 $\mathcal Q(\operatorname{clip}_X(x+e))$。对 $b\ge0$，沿用
+
+$$
+E_c^b=\{x\in X:\operatorname{dist}(x,J_c)\le b\},\qquad
+O_c^b=\{x\in X:\exists v\in C_c,\ |x-v|\le b\}.
+$$
+
+裁剪非扩张且固定 $x\in X$，反向取 $e=v-x$ 即可，故 $O_c^b$ 恰为实际可取得区间。对 $x\in E_c^b$，实际取得的充要条件是距离严格小于 $b$，或距离等于 $b$ 且唯一最近点 $\operatorname{proj}_{J_c}(x)$ 被 $C_c$ 拥有；$b=0$ 时仍须 $x\in C_c$。以下把严格 guard 条带记为 $J_s^{\mathrm{fin}}$，与颜色闭包 $J_c$ 区分。
+
+### 43.2 实际有限尾的精确条带
+

@@ -1,0 +1,116 @@
+**定理 17.6（端点盆、首次常值回传与 Borel 单值性）。** 定义
+
+$$
+\mathcal B_E=\bigcup_{n\ge0}T_{\mathrm{sel}}^{-n}(E),
+\qquad Y=X\setminus\mathcal B_E.
+$$
+
+则 $\mathcal B_E$ 是可数 Borel 集，且
+
+$$
+T_{\mathrm{sel}}^{-1}(\mathcal B_E)=\mathcal B_E.
+$$
+
+以下规则与定义17.3的核心颜色联合定义一个全域单值 Borel 函数 $Q$。在 $\mathcal B_E\setminus E$ 上，令
+
+$$
+n_E(x)=\min\{n\ge1:T_{\mathrm{sel}}^n x\in E\},
+\qquad
+Q(x)=\mathcal K_{\alpha(x)}\bigl(Q(T_{\mathrm{sel}}x)\bigr),
+$$
+
+按 $n_E$ 递增定义。在 $Y$ 上，令 $x_j=T_{\mathrm{sel}}^j x$ 及
+
+$$
+\nu(x)=\min\{n\ge0:x_{n+1}<t\},
+$$
+
+若集合为空则令 $\nu(x)=\infty$。定义
+
+$$
+Q(x)=
+\begin{cases}
+(h_{x_0}\circ h_{x_1}\circ\cdots\circ h_{x_n})(1),
+&\nu(x)=n<\infty,\\
+h_x(4),&\nu(x)=\infty.
+\end{cases}
+$$
+
+这个函数满足
+
+$$
+Q(I)\subseteq S_I,\qquad Q(O)\subseteq S_O,
+$$
+
+且在 $Y$ 上有 $Q(x)\in U_{\iota(x)}$ 和统一递推
+
+$$
+Q(x)=h_x\bigl(Q(T_{\mathrm{sel}}x)\bigr).
+$$
+
+永久 $O$ 尾情形精确为
+
+$$
+\{x\in Y:\nu(x)=\infty\}
+=\left\{-\frac\phi2,-\frac{t^2}{2},\frac\phi2\right\},
+$$
+
+这三个点的颜色依次为 $1,2,4$。
+
+证明。由定理17.4，每层 $T_{\mathrm{sel}}^{-n}(E)$ 至多有 $6\cdot5^n$ 个点。因此 $\mathcal B_E$ 可数，亦为 Borel 集。若 $x\in\mathcal B_E$，某次迭代到达 $E$，下一次仍在 $E$，所以 $T_{\mathrm{sel}}x\in\mathcal B_E$；反过来，若 $T_{\mathrm{sel}}x\in\mathcal B_E$，再加一次前置迭代便有 $x\in\mathcal B_E$。这证明完全不变等式，特别是 $T_{\mathrm{sel}}(Y)\subseteq Y$。
+
+若 $n_E(x)=1$，盆内规则只读取已经指定的核心颜色；若 $n_E(x)>1$，则 $n_E(T_{\mathrm{sel}}x)=n_E(x)-1$。故它是自然数深度上的良定义递推，无循环选择。定理17.4使每个非核心标量使用唯一后继；定义17.5的类型保持性质又按深度归纳保证所有映射均有合法输入，所得颜色属于相应 $S_I$ 或 $S_O$。核心本身不应用盆内延伸规则。例如 $f_3(e_5)=e_0$ 的核心颜色为 $4$，而 $\mathcal K_3(5)=2$；核心的解码已经由十条联合等式满足，故这并不是两份冲突的规定。
+
+在 $Y$ 上，全部 $x_j$ 避开 $E$，特别是 $x_j\ne t$，所以每个点有唯一类型。若 $\nu(x)=n<\infty$，则 $x_{n+1}$ 的类型是 $I$，末尾输入 $1\in U_I$ 合法；沿表中的类型箭头向左复合，每一步输入和输出均合法。最右的 $h_{x_n}$ 是尾类型为 $I$ 的常值映射，所以其值不依赖末尾取 $U_I$ 中哪一种颜色。这只是到首次常值边的有限回传，并没有假定尚未着色的尾点颜色是 $1$。寻找从 $x_1$ 开始的首次 $I$ 尾也保留了当前点在 $I$、而其首个尾在 $O$ 的情形。
+
+若 $\nu(x)=\infty$，则 $x_j\in O$ 对所有 $j\ge1$ 成立。首个映射 $h_x$ 的输入域是 $U_O$，所以 $h_x(4)$ 合法，但当前点未必属于 $O$。从 $x_1$ 开始，每一条边都是 $2:O\leftarrow O$，其颜色映射为恒等。因此 $Q(T_{\mathrm{sel}}x)=4$，首步回传正是 $h_x(4)$；对于当前点在 $I$ 的两种首边，它分别给出 $1,2$，不能用统一常数 $4$ 代替。
+
+进一步令
+
+$$
+z=\frac1{1+g}=\frac\phi2,
+\qquad f_2(z)=z.
+$$
+
+对于永久 $O$ 尾，$x_1=f_2^m(x_{m+1})$ 对每个 $m\ge1$ 成立。因 $f_2$ 的收缩比为 $g$，而全部尾点有统一界，
+
+$$
+|x_1-z|=g^m|x_{m+1}-z|\longrightarrow0.
+$$
+
+故 $x_1=z$。$z>t$，只有标签 $3,0,2$ 可以前接这个尾值，其当前值为
+
+$$
+f_3(z)=-\frac\phi2,\qquad
+f_0(z)=-\frac{t^2}{2},\qquad f_2(z)=z.
+$$
+
+$z\notin E$ 且 $T_{\mathrm{sel}}z=z$，所以 $z\notin\mathcal B_E$；其余两点的选定后继是 $z$，完全不变性使它们也不在 $\mathcal B_E$。反向包含随即成立，三点颜色由带类型表得到。
+
+现在核对 $Y$ 上的统一递推。若 $\nu(x)=0$，则 $h_x$ 为常值，且 $Q(T_{\mathrm{sel}}x)\in U_I$，所以把末尾输入 $1$ 换为这一已定义颜色不改变结果。若 $1\le\nu(x)=n<\infty$，则 $\nu(T_{\mathrm{sel}}x)=n-1$；将有限复合的首项 $h_x$ 分离便得到递推。若 $\nu(x)=\infty$，前述恒等尾给出 $Q(T_{\mathrm{sel}}x)=4$，亦得到递推。三种情形同时证明所有 $Y$ 点的颜色属于对应 $U$ 类型。
+
+最后证明可测性。对有限 $n\ge0$，首次返回层是 Borel 集
+
+$$
+C_n=Y\cap\bigcap_{k=1}^{n}\{x:T_{\mathrm{sel}}^k x>t\}
+\cap\{x:T_{\mathrm{sel}}^{n+1}x<t\},
+$$
+
+其中 $n=0$ 的中间部分为空交。永久层为
+
+$$
+C_\infty=Y\cap\bigcap_{k\ge1}\{x:T_{\mathrm{sel}}^k x>t\}.
+$$
+
+$T_{\mathrm{sel}}$ 的每个有限迭代都是 Borel，故这些层两两不交、均为 Borel，且覆盖 $Y$。映射 $x\mapsto h_x$ 由有限值的 Borel 数据 $\alpha(x),\iota(x),\iota(T_{\mathrm{sel}}x)$ 决定。在 $C_n$ 上按长度 $n+1$ 的带类型分支词分片，有限复合在每片上常值，所以 $Q|_{C_n}$ 为 Borel；在 $C_\infty$ 上 $h_x(4)$ 也为 Borel。$\mathcal B_E$ 上每个颜色纤维是可数个单点的并。于是全域每个纤维满足
+
+$$
+\begin{aligned}
+Q^{-1}(\{d\})={}&\{x\in\mathcal B_E:Q(x)=d\}\\
+&\cup\bigcup_{n\ge0}\{x\in C_n:Q(x)=d\}
+\cup\{x\in C_\infty:Q(x)=d\},
+\end{aligned}
+$$
+
+右端全为 Borel 集，证明 $Q$ 是 Borel 函数。构造始终由点态公式及有限深度递推给值，没有选择任意组件代表，也没有对不同循环独立选色。轨道若汇合，读到的是汇合点同一个 $Q$；周期中的递推也由上面的逐点等式同时闭合。证毕。
+

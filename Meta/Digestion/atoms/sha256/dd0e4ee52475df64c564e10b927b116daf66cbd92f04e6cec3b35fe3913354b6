@@ -1,0 +1,66 @@
+### 假设与定义 45.1（原来源、闭观察及给定完整图）
+
+本章使用同一实际 FIB 来源地址，保留所有 $\Omega$ 地址、单点、根端点及无有限尾地址。置
+$$
+t=\frac{\sqrt5-1}{2},\qquad g=t^3=2t-1=\sqrt5-2,\qquad
+g^2+4g=1,\qquad \phi=1+t,
+$$
+$$
+X=I_0=[-1,\phi],\qquad I_1=[-1,t],\qquad
+\lambda=\frac{1-g}{20},\qquad 0<\beta<\lambda,\qquad
+\delta=\lambda-\beta>0.
+$$
+地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$。三位窗口标签按根像的空间次序为
+$$
+(r_1,r_2,r_3,r_4,r_5)=(3,0,5,2,25),
+\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,t^2,1,2-t).
+$$
+其中 $0=\mathrm{null}=000$，$25=101$ 是一个窗口标签。实际分支、逆分支和全部 guard 为
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad F_\ell(x)=\frac{\Delta_\ell-x}{g},
+$$
+$$
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad1\to1:5.
+\tag{45.1}
+$$
+从 guard $s$ 出发的合法地址编码为
+$\kappa_s(\omega)=\sum_{n\ge0}(-g)^n\Delta_{\ell_n}$。
+同一个实际地址给出全部坐标、窗口及后续 guard，满足
+$x_n=f_{\ell_n}(x_{n+1})$。合法根像依次为
+$$
+3:[-1,-t^2],\quad0:[-t^2,g],\quad5:[g,t],\quad
+2:[t,2t],\quad25:[2t,\phi];
+\tag{45.2}
+$$
+guard 一只允许前三块。合法根像覆盖各 $I_s$；逐步选择含给定点的合法块并取逆像，余项 $(-g)^Nx_N$ 趋零，故 $\kappa_s(A_s)=I_s$。合法前接使用同一个级数，且 $A_1\subset A_0$ 的两种编码一致。
+
+对字面有限词 $W=\ell_0\cdots\ell_{n-1}$，统一记 $f_W=f_{\ell_0}\circ\cdots\circ f_{\ell_{n-1}}$，即把该词前接到同一个终尾；其斜率为 $(-g)^n$。后文 $f_{333}$、$f_T$ 等均取这一顺序。
+
+原六格闭包 $J_0,\ldots,J_5$ 的切点为
+$$
+q_1=\frac{11(g-1)}{20},\quad q_2=\frac{23g-3}{20},\quad
+q_3=\frac{1+3g}{4},\quad q_4=\frac{13+27g}{20},\quad
+q_5=\frac{21+19g}{20}.
+$$
+即 $J_0=[-1,q_1]$、$J_j=[q_j,q_{j+1}]$（$1\le j\le4$）、$J_5=[q_5,\phi]$。本章的允许色始终指原预算的**闭成员关系**
+$E_i^\beta=\{x\in X:\operatorname{dist}(x,J_i)\le\beta\}$，不指另外指定端点归属后的可取得集合。记临界端点
+$$
+\begin{aligned}
+a&=\frac{3(g-1)}5,&b&=\frac{11g-1}{10},&c&=\frac{6g-1}5,&d&=\frac{3+7g}{10},\\
+e&=\frac{1+4g}5,&f&=\frac{7+13g}{10},&h&=\frac{3+7g}5,&i&=\frac{11+9g}{10}.
+\end{aligned}
+$$
+于是
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-t^2-\delta],&E_1^\beta&=[a+\delta,b-\delta],\\
+E_2^\beta&=[c+\delta,d-\delta],&E_3^\beta&=[e+\delta,f-\delta],\\
+E_4^\beta&=[h+\delta,i-\delta],&E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{45.3}
+$$
+原色 $0,5$ 分别只允许标签 $3,25$；原色 $1,2,3,4$ 的标签集合依次为
+$\{3,0\},\{0,5\},\{5,2\},\{2,25\}$。这些限制由 (45.2)—(45.3) 直接得到。
+

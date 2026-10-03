@@ -1,0 +1,57 @@
+**命题 48.8（局部 $H$ 递归与所有有限视界）。** 对 rival 相位
+$r\pmod7$ 定义
+
+$$
+\mathcal C_r=\{c:y_r\in E_c^\beta\},\qquad
+K_r=\bigcup_{c\in\mathcal C_r}E_c^\beta.
+$$
+
+对 guard $s$ 和 $N\ge0$ 定义
+
+$$
+H_{r,s}^{(0)}=I_s,
+$$
+
+$$
+H_{r,s}^{(N+1)}
+=K_r\cap
+\bigcup_{s\xrightarrow{\ell}s'\ {\rm 合法}}
+ f_\ell\!\left(H_{r+1,s'}^{(N)}\right).
+\tag{48.22}
+$$
+
+这里 $N$ 计未来出发观察坐标数。首对的两标签碰撞尾区间为
+
+$$
+\mathcal I_{3,0}^{1,2}
+=I_0\cap f_3^{-1}(E_1^\beta)\cap f_0^{-1}(E_2^\beta),
+\tag{48.23}
+$$
+
+其中 $f_\ell^{-1}(E)$ 表示集合原像。则
+
+$$
+\boxed{\quad
+x_1=s-\frac{he_-}{D}
+\in\mathcal I_{3,0}^{1,2}\cap H_{1,0}^{(N)}
+\quad\text{对每个 }N\ge0.\quad}
+\tag{48.24}
+$$
+
+**证明。** 命题 48.4 给 $1,2\in\mathcal C_0$。
+又 $f_3(x_1)=x_0\in E_1^\beta$、
+$f_0(x_1)=z_0\in J_2\subseteq E_2^\beta$，且 $x_1\in I_0$，
+故 $x_1\in\mathcal I_{3,0}^{1,2}$。
+
+下面对 $N$ 归纳，同时证明所有周期相位
+$x_r\in H_{r,s_r}^{(N)}$。$N=0$ 时，实际 guard 给
+$x_r\in I_{s_r}$。若命题对 $N$ 成立，
+推论 48.6 在相位 $r$ 给一个共同色 $c_r$，使
+$y_r,x_r\in E_{c_r}^\beta$，故 $x_r\in K_r$。
+又原 guard 合法且
+$x_r=f_{U_r}(x_{r+1})$，归纳假设给
+$x_{r+1}\in H_{r+1,s_{r+1}}^{(N)}$，因此 (48.22) 给
+$x_r\in H_{r,s_r}^{(N+1)}$。归纳完成，取 $r=1$ 即得 (48.24)。
+同一个明确字面尾 $\tau$ 承担所有 $N$；每个有限视界都是它和
+$T\eta$ 的同一实际无限记录的前缀。$\square$
+

@@ -1,0 +1,84 @@
+### 57.3 合流前的双色重叠与实际逆像恒等式
+
+在把条带倒算出来以前，先证明 $\mathcal E$ 的 rival 点确实处在双色重叠中。对同一 $z\in P_F$，两条实际 $E$-片中的点分别为 $f_3(z)$ 与 $f_0(z)$，且
+$$
+f_0(z)-f_3(z)=t.
+\tag{57.18}
+$$
+每一个单独闭色的宽度都小于 $t$：色 $0$ 的宽度为 $t-\delta$，色 $5$ 的宽度为 $u-\delta$，中间色的宽度由(57.8)给出。因此，如果 $y_{\mathcal E}$ 只有一个允许色，那么这两个点都必须落入同一个长度小于 $t$ 的闭区间，违背(57.18)。
+
+根像和次临界闭色进一步决定重叠的类型。若 $R_{\mathcal E}=3$，则 $y_{\mathcal E}$ 位于标签 $3$ 的根像，并且唯一可能的双色是 $E_0^\beta\cap E_1^\beta$；若 $R_{\mathcal E}=0$，则唯一可能的双色是 $E_1^\beta\cap E_2^\beta$。于是
+$$
+\begin{array}{c|c}
+R_{\mathcal E}&y_{\mathcal E}\text{ 的实际必要区间}\\ \hline
+3&[A+\delta,-u-\delta]\\
+0&[C+\delta,B-\delta].
+\end{array}
+\tag{57.19}
+$$
+这一步发生在任何条带反演以前，并且保留了同一 $P_F$、同一实际 rival 尾和两条原全包含边。
+
+所需逆分支恒等式为
+$$
+\begin{gathered}
+F_3(A)=F_0(B)=s_1,\qquad
+F_3(-u)=-1,\qquad
+F_3(s_1)=\theta,\\
+F_5(D)=s_2,\qquad
+F_5(\theta)=\kappa,
+\end{gathered}
+\tag{57.20}
+$$
+其中
+$$
+s_1=\frac{g-7}{10},\qquad
+s_2=\frac{g-2}{5},\qquad
+\theta=\frac{1+g}{5}=\frac{2t}{5},\qquad
+\kappa=\frac{5+3g}{10}.
+\tag{57.21}
+$$
+例如
+$$
+F_3(A+\delta)=s_1-\frac{\delta}{g},\quad
+F_0(B-\delta)=s_1+\frac{\delta}{g},\quad
+F_3(-u-\delta)=-1+\frac{\delta}{g},
+$$
+以及
+$$
+F_3(s_1+\delta/g)=\theta-\frac{\delta}{g^2},\qquad
+F_3(s_1-\delta/g)=\theta+\frac{\delta}{g^2},
+$$
+$$
+F_5(D-\delta)=s_2+\frac{\delta}{g},\qquad
+F_5(\theta+\delta/g^2)=\kappa-\frac{\delta}{g^3}.
+\tag{57.22}
+$$
+所需次序均为严格次序。由 $3/13<g<1/4$ 及 $g^2+4g=1$ 可直接核对
+$$
+s_1<A,\qquad
+B<\theta<E,\qquad
+g<\theta<D<t,\qquad
+-u<s_2<\kappa<t,
+\tag{57.23}
+$$
+以及
+$$
+\theta-g=\frac{g^2}{5},\qquad
+s_2+u=\frac{1-3g}{10}>0,\qquad
+t-\kappa=\frac g5>0.
+\tag{57.24}
+$$
+为避免把符号核对隐藏在数值近似中，还可直接写成
+$$
+A-s_1=\frac{1+5g}{10}>0,\quad
+\theta-B=\frac{3-9g}{10}>0,\quad
+E-\theta=\frac{3g}{5}>0,
+$$
+$$
+D-\theta=\frac{1+5g}{10}>0,\quad
+t-D=\frac{1-g}{5}>0,\quad
+\theta-g=\frac{g^2}{5}>0.
+\tag{57.24a}
+$$
+这些符号关系将用于唯一色和下一标签的判断。
+

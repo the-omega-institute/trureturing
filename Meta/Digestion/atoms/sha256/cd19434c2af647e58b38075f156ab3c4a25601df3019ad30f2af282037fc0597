@@ -1,0 +1,24 @@
+**定义 59.3。** 以下固定
+
+$$
+\boxed{K=K(b)\ge2,\qquad Q_K<b<\Psi_K,}
+\tag{59.13}
+$$
+
+并记
+
+$$
+s=\frac{\lambda-b}{g^2},\qquad
+d_b=\frac{s}{\chi^K},\qquad
+Z_K=\frac{A_H}{1-\rho\chi^K}.
+$$
+
+这些条件等价于
+
+$$
+Z_K<d_b<h_H.
+\tag{59.14}
+$$
+
+$Q_K<\Psi_K<Q_{K+1}$，所以这里的预算区间确实使 $K(b)=K$；没有另外自由选择一个与预算不相符的帽。
+

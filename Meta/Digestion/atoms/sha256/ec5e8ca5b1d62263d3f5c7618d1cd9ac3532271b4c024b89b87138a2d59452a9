@@ -1,0 +1,8 @@
+**命题 6.2（The reused stable-kernel framework in the single-action setting）。** The temporal relations satisfy
+
+$$
+R_h=\bigcap_{k=0}^h\mathcal P^k(R_0),\qquad
+R_{h+1}=R_0\cap\mathcal P(R_h),\qquad
+R_\infty=\bigcap_{h\ge0}R_h.
+$$
+
