@@ -167,6 +167,34 @@ module's `claim`.
   and $N(\rho_\varepsilon)=\frac{1-\varepsilon}{34}-\frac\varepsilon9$; so
   the failure is not confined to rank-deficient states, and counterexamples
   form an open set.
+- **Effect on the paper's other conclusions (checked by reading the v2
+  source):**
+  - *Refuted:* the identification of the negativity with the PPT member
+    $Q_{\mathrm{PPT}}(\rho)=\inf_{\sigma\in\mathrm{PPT}}d_T(\rho,\sigma)$ of the
+    distance-based family (l. 342–345, l. 554); only $N\le Q_{\mathrm{PPT}}$
+    holds in general (the triangle-inequality bound of l. 246–249 applied to
+    $\sigma^{T_B}$ for PPT $\sigma$, l. 342), and the
+    alternative form of Appendix B (l. 637–638) fails for this state: no PPT
+    state lies below $(\rho^{T_B})_+$.
+  - *Unaffected:* the definition of $Q_X$ and the ordering
+    $Q_{\mathrm{PROD}}\ge Q_{\mathrm{CC}}\ge Q_{\mathrm{PPT}}$, which follow from
+    $\mathrm{PROD}\subset\mathrm{CC}\subset\mathrm{PPT}$ (l. 347–361); the
+    equality for states of positive binegativity (Theorem 1), hence the
+    pure-state results $Q_{\mathrm{PPT}}(\psi)=Q_{\mathrm{CC}}(\psi)=N(\psi)$
+    (l. 385–389) and the pure-state subadditivity (l. 439–470); and the
+    non-decomposability bound (l. 477–520), which uses only
+    $N\le Q_{\mathrm{PPT}}$.
+  - *Needs another justification:* the non-Markovianity witness (l.
+    541–545) chooses $\sigma$ closest to $\rho$ in the PPT set and uses
+    $d_{T_C}(\rho,\sigma)=N_{AB:C}(\rho)$, which is Conjecture 1 and fails in
+    general. The conclusion that an increase of $N_{AB:C}$ under
+    $\Lambda_t\otimes\mathrm{id}_{BC}$ witnesses non-Markovianity still holds
+    by a standard argument (not stated in Lean): the propagator of
+    CP-divisible dynamics acts on $A$ only, so it commutes with $T_C$ and
+    does not increase the trace norm of $\rho^{T_C}$; this is the monotonicity
+    of the negativity under local operations (Vidal–Werner, Phys. Rev. A 65,
+    032314 (2002)). The analogous witness for $I_T$ uses only the
+    contractivity of $d_T$ and is unaffected.
 - **Open here:** the smallest local dimensions in which the equality fails
   (two qubits satisfy it by positive binegativity; qubit–qutrit systems were
   not examined); the largest possible gap between the PPT distance and the

@@ -44,6 +44,12 @@ The paper proves the equality for states of positive binegativity,
 $|\rho^{T_B}|^{T_B}\ge0$, and reports that $10^6$ random mixed states of two
 qudits for each $d=2,\dots,6$ show no counterexample.
 
+The counterexample state of the settlement belongs to the punch-card family
+of L. Lami, F. A. Mele, B. Regula, arXiv:2405.09613v2 (Phys. Rev. Lett. 134,
+090202 (2025)), Eq. (15), where the family is used for the additivity of the
+κ-entanglement; the separation of the PPT distance from the negativity is
+not stated there.
+
 The encoding takes states on $\mathbb C^d\otimes\mathbb C^d$, indexes
 matrices by `Fin d × Fin d`, transposes the second factor, and uses the
 trace norm $\operatorname{Re}\operatorname{Tr}\sqrt{A^\dagger A}$; the
