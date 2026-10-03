@@ -25908,3 +25908,154 @@ for every releasable \(h\) in this equal-prefix branch.  The conclusion only
 closes Type II of Section 208.  The Type I phase-sensitive problem, the
 external-coordinate bridge, deleted-point hull growth, and the unrestricted
 whole-cover forcing step remain open.
+## 224. Type-I finite-fibre normal form and the joint-release obstruction
+
+Continue with the \(p=3\) Type-I branch of Section 208.  Write
+
+\[
+ Q=3^eM,\qquad 3\nmid M,\qquad N=Q/3.
+\]
+
+A Type-I repair class is either a low class \([c]_d\) with \(d\mid N\), or a high class
+
+\[
+ [a_k]_{3^e s_k},\qquad s_k\mid M.
+\]
+
+For a fixed low subfamily, let \(Y_0\) be the set of \(N\)-fibre bases whose complete fibre is not already covered by that low subfamily.  On the fibre \(y+N\mathbb Z\), a high class is active precisely when its cofactor congruence holds at \(y\); when active, it occupies one of the three \(3\)-adic tails.  Thus the remaining Type-I problem is a finite incidence problem between \(Y_0\), cofactor phases, and ternary tails.
+
+The tail count gives the following normal form for a minimal five-class Type-I repair.  If three high classes are active on a fibre, they must occupy the three different ternary tails, and their cofactors must all be compatible with the actual \(Y_0\)-hull.  With four high classes, the fibre sets on which a class is inactive are pairwise disjoint; when one class is inactive, the other three occupy all three tails.  With five high classes, the intersection of the inactive fibre sets of every three classes is empty.  These conditions are source conditions: replacing \(Y_0\) by its numerical hull can add phases that are absent from the actual liability.
+
+This immediately separates an arithmetic candidate from an attainable repair.  The arithmetic candidate may be obtained by taking divisors of a gcd, whereas a source-constrained candidate must be active on the actual fibres, have distinct fresh labels, and cover every integer lift of the liability.  The former is a lower bound for the latter; equality is an attainment statement that still needs proof.
+
+There is a second correction when several retained classes are released.  Let \(U_H\) be the retained family before releasing a set \(K\), let \(A_k\) be the class set of the released label \(k\), and let
+
+\[
+ S_H=\mathbb Z\setminus\bigcup_{u\in U_H}A_u.
+\]
+
+The newly exposed part is
+
+\[
+ B_{H,K}
+ =
+ \left(\bigcup_{k\in K}A_k\right)
+ \setminus
+ \bigcup_{u\in U_H\setminus\{A_k:k\in K\}}A_u.
+\tag{224.1}
+\]
+
+Consequently the liability after the release is exactly
+
+\[
+ S_{H\cup K}=S_H\cup B_{H,K}.
+\tag{224.2}
+\]
+
+The union in (224.1) cannot be used without the subtraction: released classes can overlap retained classes and each other.  A repair of \(B_{H,K}\) alone therefore does not prove a replacement of the released packet.
+
+Two necessary consequences are useful.  First, if a same-source Type-I repair with \(|K|\) classes covers all of \(B_{H,K}\) and has strictly smaller modulus sum than the released labels, EB1 gives a contradiction at unchanged cardinality.  If \(B_{H,K}\) were covered by fewer than \(|K|\) fresh classes, the class-count coordinate would already decrease, also contradicting EB1.  Second, for a retained class \(A_u\), define its newly exposed part by
+
+\[
+ X_u=A_u\setminus
+ \bigcup_{v\in U_H\setminus\{u\}}A_v.
+\tag{224.3}
+\]
+
+An \(H\)-optimal repair cannot cover the whole of \(X_u\) with a class whose modulus divides \(u\) and whose phase agrees with \(A_u\): that class would contain all of \(A_u\), so it would merely reproduce the retained class while paying no genuine replacement cost.  This is a necessary source-sensitive obstruction, not a numerical hull inequality.
+
+The correct Type-I state is therefore a source-conditioned future quotient.  It must retain, at minimum, the actual residual fibres and phases, the ownership of retained classes, the fresh-label inventory, and the allowed continuation operations.  The arithmetic pair \((\Gamma_h,\tau(\Gamma_h))\) is a projection of that state and is not generally dynamically sufficient.
+
+## 225. A numerical Type-I forcing obstruction
+
+The arithmetic projection can fail to force a strict descent even when the reciprocal mass and the usual divisor-cut inequalities have the desired sign.  Let \(e\ge5\), and take
+
+\[
+ Q=35\cdot3^e,\qquad
+ R=35\cdot3^{e-1},\qquad
+ D=\mathcal D(Q)\setminus\{Q\},
+\]
+
+where \(\mathcal D(Q)=\{d>1:d\mid Q\}\).  The set \(D\) is odd, distinct, divisor-closed, and its only unoccupied non-unit divisor is \(Q\).  Direct divisor enumeration gives
+
+\[
+ |D|=4e+2,
+ \qquad
+ \sum_{d\in D}\frac1d
+ =
+ \frac{37}{35}-\frac5{7\cdot3^e}>1.
+\tag{225.1}
+\]
+
+For \(C=3^a5^b7^c\mid Q\), the number of labels in \(D\) that do not divide \(C\) is
+
+\[
+ 4e+3-(a+1)2^{b+c}.
+\tag{225.2}
+\]
+
+The corresponding slack in the Simpson-type divisor-cut lower bound is
+
+\[
+\begin{array}{c|c}
+(b,c)&\text{slack}\\
+\hline
+(1,1)&2(e-a-1)\\
+(1,0)&2e-6\\
+(0,1)&2e-4\\
+(0,0)&2e+a-9 .
+\end{array}
+\tag{225.3}
+\]
+
+For \(e\ge5\), these quantities are nonnegative throughout the stated range.  Thus the reciprocal-mass and divisor-cut tests do not exclude this inventory.
+
+The five-label numerical relaxation also gives no strict descent.  If \(J_h\) is the released five-label set and \(U\) is the set of unoccupied divisors after the release, define
+
+\[
+ \psi_h=
+ \min_{\substack{F\subseteq\mathcal D(Q)\setminus(D\setminus J_h)\\ |F|=5}}
+ \sum_{d\in F}d.
+\]
+
+The exact comparison is
+
+\[
+ \psi_h<\sum_{d\in J_h}d
+ \quad\Longleftrightarrow\quad
+ \min U<\max J_h.
+\tag{225.4}
+\]
+
+Here \(U=\{Q\}\), and every occupied label is smaller than \(Q\).  Hence (225.4) never holds.  No argument that sees only the numerical divisor inventory can force a five-label strict decrease in this model.
+
+The obstruction is not merely numerical.  Use the CRT carrier
+
+\[
+ \mathbb Z/3^e\mathbb Z
+ \times\mathbb Z/5\mathbb Z
+ \times\mathbb Z/7\mathbb Z.
+\]
+
+Choose the displayed phases for the divisor labels as follows: the \(5\)-class has coordinate \(2\), the \(7\)-class has coordinate \(2\), and the \(35\)-class has both coordinates \(3\).  For \(1\le j<e\), use ternary phase \(3^{j-1}\) for \(3^j\), ternary phase \(2\cdot3^{j-1}\) for \(5\cdot3^j\) and \(7\cdot3^j\), and the same ternary phase with both cofactor coordinates \(1\) for \(35\cdot3^j\).  At height \(e-1\), use the \(R\)-class with ternary coordinate \(0\) and cofactor coordinates \((1,1)\); at height \(e\), use the three top labels with ternary coordinates \(0,3^{e-1},2\cdot3^{e-1}\), and the corresponding missing cofactor coordinate.
+
+Then
+
+\[
+ (u,v,w)=(3^{e-1},4,4)
+\]
+
+is outside every class in \(D\).  For \(e=5\), its CRT representative is \(5184\bmod8505\).  Thus the same inventory passes the mass and cut tests while failing to be a whole cover.
+
+The missing implication is a source condition of the form
+
+\[
+ X_Q\setminus
+ \bigcup_{d\in D\setminus J_0}A_d
+ \subseteq A_R\cup B,
+\tag{225.5}
+\]
+
+where \(X_Q\) is the full \(Q\)-periodic carrier and \(B\) is the permitted external bridge.  Without (225.5), a finite numerical Type-I model cannot be promoted to an EB1 whole-cover replacement.  This is a counterexample to numerical forcing criteria, not a covering-system counterexample and not a counterexample to Erdős #7.
+
+The exact remaining task is therefore to prove a whole-cover/source bridge that rules out (225.5)-type residual points, or to construct a pair of actual same-numerical-boundary sources with different future repair responses.  Either result would settle the present Type-I forcing proposal; neither follows from (225.1)--(225.4).
