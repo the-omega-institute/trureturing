@@ -534,3 +534,131 @@ classwise. A more general repair must explicitly pay the complete
 liabilities of splitting or replacing those classes and satisfy SC23.
 Sections 7--10 are ordinary mathematical deductions; no new Lean
 verification, originality claim, or unrestricted noncoverage is asserted.
+
+## 11. An explicit digit split can spend the pooled deletion budget
+
+The rigidity in Section 10 concerns containment of each whole class in
+one replacement. The existing full-class digit split in
+[report 385, LP2--LP4](385-private-congruence-hulls-and-crossed-modulus-closure.md#200-a-vacant-lower-prime-layer-gives-a-whole-cover-descent)
+can instead be used inside SC18. The following is its concrete
+interface with the pooled budget, not a new general splitting theorem.
+
+Suppose \(C=\alpha_d\bmod m\) is one lower output with
+\(d=r^am\), \(1\le a<A\), and \(\gcd(m,rs)=1\).
+Supply a family \(\mathcal B_0\) of distinct odd nonunit divisor
+slots of \(N\) covering the entire union of all other lower outputs,
+with \(|\mathcal B_0|=|\mathcal L|-1\). This existence is a
+hypothesis. Put
+\[
+ H_0=\operatorname{moduli}(\mathcal B_0),\quad
+ H_T=\{n_d:d\in\mathcal T\},\quad b_0=|H_0\cap H_T|,
+\]
+\[
+ V=\{rh:h\mid m,\ rh\notin H_0\},\qquad
+ v_0=|V\setminus H_T|,\quad v_1=|V\cap H_T|.
+ \tag{SC28}
+\]
+The divisor \(h=1\) is allowed: its candidate modulus is \(r>1\).
+All these labels divide \(N\), since \(m\mid M\) and \(B\ge1\).
+Use the actual value \(\sigma=K-|\mathcal L|-|\mathcal T|\).
+If the integer interval
+\[
+ \boxed{
+ \max\{0,r-v_0,r-\sigma-b_0\}
+ \ \le t\le\
+ \min\{v_1,r-2-b_0\}
+ }
+ \tag{SC29}
+\]
+is nonempty, choose \(t\) labels from \(V\cap H_T\) and
+\(r-t\) from \(V\setminus H_T\). Assign the resulting distinct
+labels \(rh_j\) bijectively to the digits \(0\le j<r\), with
+replacement phases
+\[
+ z\equiv j\pmod r,\qquad z\equiv\alpha_d\pmod{h_j}.
+ \tag{SC30}
+\]
+This is precisely the LP digit construction: the \(r\) classes
+cover the entire \(C\). Add them to \(\mathcal B_0\), producing
+one actual lower repair \(\mathcal B\). Its excess count and its
+reserved top slots are
+\[
+ e=r-1,\qquad b=b_0+t\le r-2,\qquad e-b<\sigma.
+ \tag{SC31}
+\]
+These counts come from the chosen slots before invoking EB1. At most
+\(r-2\) members of the pooled top family are discarded, so SC15
+still covers all of \(E\). The lower union is covered by
+\(\mathcal B\), and SC23 gives a distinct odd whole cover with
+strictly fewer than \(K\) classes. Thus a hypothetical EB1 cover
+cannot supply both the stated \(\mathcal B_0\) and SC29.
+For \(r=3,\sigma=2,b_0=0\), the criterion is exactly
+\(v_0\ge2\) and \(v_1\ge1\): two vacant non-top slots and one
+top slot fund a three-piece split, while at most one top class is lost.
+
+Counting all reservations as losses is conservative. Given any actual
+lower repair, let \(\ell\) count the reserved top classes not
+contained in any member of that repair. SC15 still pays the whole
+complement if \(\ell\le r-2\), while SC23 still uses the full
+\(b\). A split slot \(rh_j\) retains its same-slot top class
+exactly when that class has phase \(\alpha_d\bmod h_j\) and
+\(j\bmod r\). Such compatibility must hold for the same chosen
+labels and digit assignment. In particular the candidate \(h_j=m\),
+if it is a top slot, cannot be a compatible reservation: its original
+top label is \(r^Asm\), divisible by \(r^am\); the matching
+lower \(r\)-prefix and comparable disjointness force different
+phases modulo \(m\).
+
+The split pieces can also pay a top class jointly, without any one
+piece containing it. Denote the classes in SC30 by \(D_j\) and put
+\(L_h=\operatorname{lcm}_j h_j\). For an \(r\)-free top output
+\(C_n=\gamma\bmod n\), both \(n\) and all \(h_j\) divide
+\(M\). The existing tailwise union test
+[JCE2 in report 385](385-private-congruence-hulls-and-crossed-modulus-closure.md#139-compatible-shallow-certificates-force-a-complete-joint-escape)
+reduces to
+\[
+ C_n\subseteq\bigcup_jD_j
+ \quad\Longleftrightarrow\quad
+ L_h\mid n\ \text{ and }\ \gamma\equiv\alpha_d\pmod{L_h}.
+ \tag{SC32}
+\]
+Indeed, \(C_n\) has every \(r\)-digit, and on digit \(j\)
+only \(D_j\) can serve it. Thus its cofactor AP must be contained
+in each \(\alpha_d\bmod h_j\). This tests the split union
+alone; \(\mathcal B_0\) may supply additional coverage.
+If \(L_h=m\), no such top can pass SC32: its original label is
+\(r^An\), divisible by \(r^am\), and the common lower
+\(r\)-prefix together with SC32 would contradict comparable
+disjointness. This particular service channel therefore needs a proper
+cofactor divisor \(L_h<m\), as well as the actual phase agreement.
+
+More generally the same SC15 argument uses the whole-union loss count
+\[
+ \ell_{\cup}=\#\{d\in\mathcal T:n_d\in H,\quad
+                       C_d\not\subseteq\bigcup\mathcal B\}.
+ \tag{SC33}
+\]
+The two conditions \(\ell_{\cup}\le r-2\) and
+\(e-b<\sigma\) suffice. Every unreserved top is retained and
+every reserved top outside this loss set is fully paid by the same
+\(\mathcal B\). SC32 supplies one concrete way to certify that
+payment. No selected point or separately optimized digit assignment
+replaces containment of a complete top class.
+
+No partial-fibre saving follows from the cofactor ideal alone. The
+liability \(J=C\setminus\bigcup_{g\in G}C_g\) is
+\((\mathbb Z/r^B\mathbb Z)\times J_M\); if nonempty, each
+of its cofactor fibres has all \(r\) first digits. Subtracting
+additional \(s\)-bearing lower service can reduce that liability,
+but then its actual full complement must be used. The positive
+retained-service term of report 385 Section 240 is unavailable under
+its inherited definitions, as corrected by
+[PB8 in Section 242](385-private-congruence-hulls-and-crossed-modulus-closure.md#242-exact-private-bucket-factorization-and-the-section-240-service-correction).
+
+Neither a suitable \(\mathcal B_0\) nor a nonempty interval SC29
+has been forced from the original inventory. In particular
+\(\tau(m)<r\) already prevents this particular full-digit split.
+The unresolved step is an arithmetic supply of these simultaneous
+slots and full lower coverage, or another paid split construction.
+This application has no new Lean verification and does not settle
+unrestricted Erdős #7.
