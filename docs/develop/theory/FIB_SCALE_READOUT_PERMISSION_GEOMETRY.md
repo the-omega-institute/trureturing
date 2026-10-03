@@ -5888,3 +5888,576 @@ $$
 由既有组成作用及 $\rho^3(\alpha)$ 的树形，得到 $(a,b)=(4,8)$、$D=4$。在同一个原始 $V$ 上，对任意 $h\ge4$，$L=0,1,2$ 的极小值分别为 $8,5,4$。$L=1$ 时 $(f,g)=(8,13)$、$N=136$，所有 $A$ 加一个 $\beta$ 端点的集合都最优。单独 $A$ 则不有声：在五个 $\beta$ 槽位嫁接 $\langle\alpha,\alpha\rangle$，把其余三个 $\beta$ 槽位改成 $\alpha$，得到组成 $(17,0)$ 的实际合法树，其标量仍为 $136$，匹配全部 $A$，却因 $\alpha$ 左孩子而不属于 $\mathcal I_1$。这正是式（20.11）–（20.12）在该实例中的嫁接与改标。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 固定标量纤维的未知来源发现与正实例费用耦合
+
+**定义 21.1（未知完整树的固定纤维与发现费用）。** 沿用[定义 16.1](#16-实际树像与尖锐有限路径观察前沿)的非空有限自由有序满二叉树集合 $\mathcal T$、替换 $\rho$、四值原始地址响应 $\operatorname{out}$ 与窗口 $\Sigma_{\le h}$，固定实际像迭代数 $d=3$。树形和叶标记不取任何结合或交换商；组成 $c(U)=(a(U),b(U))^{\mathsf T}$ 只计两类叶。完整来源编码与全部路径恢复的接口取自[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。给定已知整数 $L\ge0$，按[定义 1.1 的式（1.2）](#1-有限预算的尺度读出与逆许可分离)置
+
+$$
+\begin{gathered}
+f_L=F_{3L+3},\qquad g_L=F_{3L+4},\qquad f=f_L,\quad g=g_L,\\
+m=3f+5g,\qquad
+X_L=\{U\in\mathcal T:n_L(c(U))=m\},\\
+P=\rho^3(\langle\alpha,\beta\rangle),\qquad
+Q=\rho^3(\langle\beta,\alpha\rangle),\qquad
+\iota_3(U)=\mathbf1_{\{U\in\rho^3(\mathcal T)\}}.
+\end{gathered}
+\tag{21.1}
+$$
+
+实际输入是未知的 $U\in X_L$；精确标量 $m$ 与所有地址响应来自这同一棵原始 $U$。候选全集恰为 $X_L$ 中的全部合法树，不另给实际像、组成、形状、叶数或高度承诺。标量的取得及控制器计算在下述收费和授权的观察操作之外；观察只是在原始 $U$ 上选取 $u\in\Sigma_{\le h}$ 并返回 $\operatorname{out}_U(u)$，不改变 $U$，不转移到 $\rho^{3L}(U)$，也不解锁动作。$h\in\mathbb N_0$ 独立固定，不要求所选地址前缀闭合。任务的终端值只取 $\iota_3(U)$；组成祖先许可与实际逆执行各是另一个目标。
+
+确定性策略在每个有限地址—响应记录后，依据已知 $L,m,h$ 与该记录选择下一个合法地址，或输出 $0,1$ 并停止。策略不能读取该记录以外的 $U$ 信息。允许缓存重复地址的响应；若在 $U$ 上有限停止，记其所查询的不同地址集合为 $J_\pi(U)$，费用为
+
+$$
+C_\pi(U)=|J_\pi(U)|.
+\tag{21.2}
+$$
+
+费用不计地址文字长度、定位、标量取得或控制器计算。令 $\Pi_{L,h}$ 为在每棵 $U\in X_L$ 上均有限停止且输出 $\iota_3(U)$ 的确定性策略族，并定义全输入最坏费用
+
+$$
+D_{L,h}=\inf_{\pi\in\Pi_{L,h}}\ \sup_{U\in X_L}C_\pi(U),
+\qquad \inf\varnothing=+\infty.
+\tag{21.3}
+$$
+
+有限候选集与纯观察决策的解释沿用[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)：停止叶须在全部仍相容的候选上给出同一个任务值。此处证书检查属于控制器计算，所声明的费用只为不同地址数。
+
+**定理 21.1（固定纤维的两个实际正例与确定性发现代价）。** 对定义 21.1 的每个 $L$，整个 $X_L$ 有限，其组成集合恰为
+
+$$
+c(X_L)=
+\begin{cases}
+\{(0,7),(3,5),(6,3),(9,1)\},&L=0,\\[2pt]
+\{(3,5)\},&L\ge1,
+\end{cases}
+\qquad
+X_L\cap\rho^3(\mathcal T)=\{P,Q\},\quad P\ne Q.
+\tag{21.4}
+$$
+
+每组组成的全部自由有序满二叉树实现都保留在 $X_L$ 中。置
+
+$$
+k_L=
+\begin{cases}
+5,&L=0,\\
+3,&L\ge1.
+\end{cases}
+\tag{21.5}
+$$
+
+若 $h<4$，则 $\Pi_{L,h}=\varnothing$。若 $h\ge4$，每个 $\pi\in\Pi_{L,h}$ 都满足
+
+$$
+C_\pi(P)\ge k_L,\qquad C_\pi(Q)\ge k_L,\qquad
+C_\pi(P)+C_\pi(Q)\ge2k_L+1,
+\tag{21.6}
+$$
+
+并有精确的全输入最优值
+
+$$
+\boxed{
+D_{L,h}=
+\begin{cases}
++\infty,&h<4,\\
+6,&h\ge4,\ L=0,\\
+4,&h\ge4,\ L\ge1.
+\end{cases}}
+\tag{21.7}
+$$
+
+对于 $h\ge4$，有两种在整个 $X_L$ 上正确的策略 $\pi_P,\pi_Q$，仅查询深度至多 $4$ 的地址，不重复地址，全部输入的费用均至多 $k_L+1$，而正例费用分别为
+
+$$
+\bigl(C_{\pi_P}(P),C_{\pi_P}(Q)\bigr)=(k_L,k_L+1),\qquad
+\bigl(C_{\pi_Q}(P),C_{\pi_Q}(Q)\bigr)=(k_L+1,k_L).
+\tag{21.8}
+$$
+
+**证明。** 先确定完整竞争域。由[定理 1.4 的整数核式（1.12）](#1-有限预算的尺度读出与逆许可分离)，与组成 $(3,5)$ 具有相同 $n_L$ 的整数点全部形如
+
+$$
+(a(U),b(U))=(3+zg,5-zf),\qquad z\in\mathbb Z.
+\tag{21.9}
+$$
+
+当 $L=0$ 时，$f=2,g=3$；两个坐标非负恰给 $-1\le z\le2$，四个整数值分别产生（21.4）中的四组组成。当 $L\ge1$ 时，$f\ge8,g\ge13$；$z\ge1$ 会使第二坐标为负，$z\le-1$ 会使第一坐标为负，故仅有 $z=0$。[规范编译卷命题 4.2](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)供应每个非零非负组成的树实现；标量只依组成，所以对应组成的全部形状及叶序都属于 $X_L$。上述四组的总叶数依次为 $7,8,9,10$，而 $L\ge1$ 时总叶数为 $8$。满二叉树的分支数为叶数减一，沿用定理 17.1 证明中的既有计数恒等式；母卷定理 9.2 的单射结构码对 $n$ 片叶的长度为 $2n+(n-1)=3n-1$。因此 $X_L$ 的结构码长度至多为 $29$，来自有限二字母词集，整个 $X_L$ 有限。这是由给定标量导出的结论，不是输入的叶数承诺。
+
+现在只在条件 $U\in\rho^3(\mathcal T)$ 下取一个实际前像 $T\in\mathcal T$，$U=\rho^3(T)$。由规范编译卷命题 4.2 的组成作用，
+
+$$
+\begin{gathered}
+c(U)=S\,c(T),\qquad S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\\
+(f_{L+1},g_{L+1})=(f,g)S=(f+2g,2f+3g),\\
+n_{L+1}(c(T))=n_L(c(U))=3f+5g=f_{L+1}+g_{L+1}.
+\end{gathered}
+\tag{21.10}
+$$
+
+把定理 1.4 的式（1.12）应用于阶段 $L+1$，相同读数的前像组成必为
+
+$$
+c(T)=(1+z g_{L+1},1-z f_{L+1})^{\mathsf T},\qquad z\in\mathbb Z.
+\tag{21.11}
+$$
+
+由于 $f_{L+1}\ge8,g_{L+1}\ge13$，非负性迫使 $z=0$。所以 $T$ 有且仅有两片叶，一片 $\alpha$、一片 $\beta$；自由有序满二叉语法只允许 $\langle\alpha,\beta\rangle$ 和 $\langle\beta,\alpha\rangle$。两者的三步像正是 $P,Q$，组成均为 $S(1,1)^{\mathsf T}=(3,5)^{\mathsf T}$，因而都在 $X_L$ 中。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树作用单射性及其迭代直接给出 $P\ne Q$。这证明实际正例分类；式（21.11）只约束已经假设存在的实际前像，不从组成逆运算授予任意树前像。
+
+为使用既有证书供应，写 $A_P=A(P),B_P=B(P),A_Q=A(Q),B_Q=B(Q)$。由替换的字面树形，
+
+$$
+\begin{gathered}
+A_3=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,\\
+B_3=\rho^3(\beta)=
+\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+       \langle\beta,\alpha\rangle\rangle,\\
+P=\langle A_3,B_3\rangle,\qquad Q=\langle B_3,A_3\rangle.
+\end{gathered}
+\tag{21.12}
+$$
+
+它们的所有原始叶地址及标签为
+
+$$
+\begin{aligned}
+A_P&=\{\mathtt{LLR},\mathtt{RLLR},\mathtt{RRR}\},\\
+B_P&=\{\mathtt{LLL},\mathtt{LR},\mathtt{RLLL},\mathtt{RLR},\mathtt{RRL}\},\\
+A_Q&=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLR}\},\\
+B_Q&=\{\mathtt{LLLL},\mathtt{LLR},\mathtt{LRL},\mathtt{RLL},\mathtt{RR}\}.
+\end{aligned}
+\tag{21.13}
+$$
+
+在 $A_P,A_Q$ 中的响应是 $\mathsf{leaf}_\alpha$，在 $B_P,B_Q$ 中是 $\mathsf{leaf}_\beta$；各树未列的真叶前缀为分支，越过叶的地址为缺失。特别地，两树高度都是 $4$，并且
+
+$$
+A_P\cap A_Q=\varnothing,\qquad B_P\cap B_Q=\varnothing.
+\tag{21.14}
+$$
+
+对于这两棵已知正例，证书的竞争合同恰是[定义 20.1](#20-已给阶段标量的尖锐地址证书与全部最优解)中标量为 $m$ 的整个 $X_L$，没有删去负例。$L=0$ 时直接复用[定理 19.1](#19-纯数量竞争域的尖锐地址证书前沿)的 $a=3\ge2,b=5$ 情形：最小证书基数是 $5$，唯一最小集合分别是 $B_P,B_Q$。$L\ge1$ 时 $f\ge8>b=5$，直接复用[定理 20.1 的式（20.4）–（20.5）](#20-已给阶段标量的尖锐地址证书与全部最优解)：最小基数是 $3$，唯一最小集合分别是 $A_P,A_Q$。因而对 $h\ge4$，可统一记唯一最小集合为
+
+$$
+K_P=
+\begin{cases}B_P,&L=0,\\A_P,&L\ge1,\end{cases}
+\qquad
+K_Q=
+\begin{cases}B_Q,&L=0,\\A_Q,&L\ge1,\end{cases}
+\qquad |K_P|=|K_Q|=k_L,\quad K_P\cap K_Q=\varnothing.
+\tag{21.15}
+$$
+
+有声性、唯一性与全部地址下界由这些供应直接给出，不另限制证书必须查询叶。
+
+深度障碍同样复用[定理 17.1](#17-已知正实例的地址证书基数与尖锐深度障碍)。在 $P$ 的深度 $3$ 地址 $\mathtt{RLL}$ 处，把最深末端樱桃 $\langle\beta,\alpha\rangle$ 换序，得到该定理的见证 $W$。于是对每个 $h<4$，
+
+$$
+c(W)=c(P)=(3,5)^{\mathsf T},\qquad O_h(W)=O_h(P),\qquad
+W\notin\rho^3(\mathcal T).
+\tag{21.16}
+$$
+
+这里的非像结论使用既有[运输记忆完成卷命题 22.2 的式（RA.2207）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)：交换产生 $\alpha$ 左孩子，违反实际一步像语法。组成相同给 $W\in X_L$。任何确定性策略在 $P,W$ 上从相同空记录开始；每次查询的地址和响应相同，下一步也相同。有限停止时两输入输出相同，不能分别等于 $1,0$。故 $h<4$ 时没有全输入正确策略。
+
+以下设 $h\ge4$，取任意 $\pi\in\Pi_{L,h}$。在正例 $V\in\{P,Q\}$ 上，它有限停止并接受。其接受路径的不同地址集合 $J_\pi(V)$ 必是定义 20.1 的有声集合。事实上，若 $U\in X_L$ 匹配该集合上的全部 $V$ 响应，则按路径长度归纳：初始记录相同；若前面的有序记录相同，确定性使下一次所选地址相同，该地址属于 $J_\pi(V)$，故下一次响应也相同；重复地址的缓存响应同样相同。于是 $U$ 跟随整个同一接受路径并在同一处停止。全输入正确性给 $U\in\rho^3(\mathcal T)$，恰为有声性所需的全纤维蕴含。因此（21.15）给 $C_\pi(P),C_\pi(Q)\ge k_L$。
+
+由（21.16），$X_L$ 同时有正例和负例，所以全输入正确的策略不能在空记录上停止，必有一个第一查询地址 $u_0$；它在 $P,Q$ 上相同。若两正例费用同时为 $k_L$，唯一最优证书性迫使
+
+$$
+J_\pi(P)=K_P,\qquad J_\pi(Q)=K_Q.
+$$
+
+但第一地址属于两个接受路径集合，这要求 $u_0\in K_P\cap K_Q$，与（21.15）矛盾。费用是整数且各至少 $k_L$，故费用和至少 $2k_L+1$。全输入最坏费用因包含 $P,Q$，至少为 $\lceil(2k_L+1)/2\rceil=k_L+1$。这证明（21.6）及（21.7）的有限分支下界。
+
+上界由两个总策略给出。对有限叶地址集合 $S$ 与标签 $\ell\in\{\alpha,\beta\}$，在本证明中记 $\mathrm T_\ell(S)$ 为以下有限测试：按 $\mathtt L<\mathtt R$ 的字典序依次查询 $S$；每次只有响应 $\mathsf{leaf}_\ell$ 时继续，其余三个响应各立即输出 $0$ 并停止；全部通过后输出 $1$ 并停止。此记法只描述所列固定纤维的策略分支。下表定义首次查询及其全部四种响应分支，$\mathrm{Reject}$ 表示立即输出 $0$ 并停止。
+
+| 阶段及策略 | 首地址 | $\mathsf{leaf}_\alpha$ | $\mathsf{leaf}_\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+|---|---|---|---|---|---|
+| $L=0,\ \pi_P$ | $\mathtt{LR}$ | $\mathrm{Reject}$ | $\mathrm T_\beta(B_P\setminus\{\mathtt{LR}\})$ | $\mathrm T_\beta(B_Q)$ | $\mathrm{Reject}$ |
+| $L=0,\ \pi_Q$ | $\mathtt{RR}$ | $\mathrm{Reject}$ | $\mathrm T_\beta(B_Q\setminus\{\mathtt{RR}\})$ | $\mathrm T_\beta(B_P)$ | $\mathrm{Reject}$ |
+| $L\ge1,\ \pi_P$ | $\mathtt{LLR}$ | $\mathrm T_\alpha(A_P\setminus\{\mathtt{LLR}\})$ | $\mathrm T_\alpha(A_Q)$ | $\mathrm{Reject}$ | $\mathrm{Reject}$ |
+| $L\ge1,\ \pi_Q$ | $\mathtt{RLR}$ | $\mathrm T_\alpha(A_Q\setminus\{\mathtt{RLR}\})$ | $\mathrm T_\alpha(A_P)$ | $\mathrm{Reject}$ | $\mathrm{Reject}$ |
+
+由（21.12）–（21.13），首地址在两正例上的实际响应为
+
+$$
+\begin{array}{c|cc}
+ &P&Q\\\hline
+\mathtt{LR}&\mathsf{leaf}_\beta&\mathsf{branch}\\
+\mathtt{RR}&\mathsf{branch}&\mathsf{leaf}_\beta\\
+\mathtt{LLR}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta\\
+\mathtt{RLR}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha
+\end{array}
+\tag{21.17}
+$$
+
+故 $P,Q$ 在每一种策略下都进入对应的完整证书检查并通过。任意接受路径要么把首次符合预期的叶响应与余下测试合成整个 $K_P$ 或 $K_Q$，要么在另一首次响应后检查整个另一正例证书。供应定理的有声性在整个 $X_L$ 上有效，故每次接受都判定了真实正例。反过来，实际正例只有 $P,Q$，且两者均按（21.17）接受；因此每次拒绝都属于负例。表中每个首次响应以及每次后续响应均有指定的有限终端行为，策略在每棵输入上总定义且有限停止。
+
+每条测试最多含 $k_L$ 个地址；在偏向的正例路径上首次地址已经属于其证书，余下只有 $k_L-1$ 个，而另一正例路径需在首次查询后另查 $k_L$ 个。首次地址不属于另一证书，来自（21.14）；测试内部每个地址只列一次。因此所有输入的费用至多 $k_L+1$，两正例的费用恰为（21.8），没有重复地址。所列地址全部长度至多 $4$，故在每个 $h\ge4$ 可用。最坏费用由不受偏向的那个正例达到，结合下界得到（21.7）。证毕。
+
+**定义 21.2（全纤维逐输入零错误与正例期望费用）。** 固定定义 21.1 的 $L,h$。随机策略使用一个与输入 $U$ 无关的概率空间 $(\Omega,\mathcal A,\mu)$；种子 $\omega$ 固定后得到同一合法接口上的确定性策略 $\pi_\omega$。对于每个有限记录，下一地址或停止值作为 $\omega$ 的函数可测。要求对整个 $X_L$ 的每个输入分别满足
+
+$$
+\forall U\in X_L,\qquad
+\mu(E_U)=1,\qquad
+E_U=\{\omega:\pi_\omega\text{ 在 }U\text{ 上有限停止且输出 }\iota_3(U)\}.
+\tag{21.18}
+$$
+
+这些要求同时包含正确性和有限终止，且包括每个负例；$E_U$ 是可测事件。终止时 $C_\omega(U)$ 仍按（21.2）计不同地址，未终止时约定为 $+\infty$。费用是非负可测随机变量，期望只对这一种子律取。没有给输入 $U$ 赋予概率律，也不允许为不同输入更换种子律。定义
+
+$$
+R^+_{L,h}
+=\inf_{(\Omega,\mathcal A,\mu,\pi_\omega)\ \text{满足（21.18）}}
+\max\{\mathbb E_\mu C_\omega(P),\mathbb E_\mu C_\omega(Q)\},
+\qquad\inf\varnothing=+\infty.
+\tag{21.19}
+$$
+
+这是在全纤维上要求逐输入零错误、仅在两个正例上取期望费用最大值的目标；它与（21.3）的全输入确定性最坏费用分别定义。这里沿用 [Frédéric Magniez、Ashwin Nayak、Miklos Santha、Jonah Sherman、Gábor Tardos、David Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第2页](https://arxiv.org/pdf/1309.7565v1#page=2) 的分布在确定性决策策略上、固定输入费用取该分布期望的框架。该页的标准零错误 $R_0$ 在整个布尔输入域取最大期望费用；（21.19）只对 $P,Q$ 取最大值，因而不定义此纤维的全输入随机最优费用。本文的四值地址查询也不继承该文布尔函数或递归多数函数的数值界。
+
+**定理 21.2（固定纤维的共同种子事件与尖锐正例期望值）。** 在定义 21.2 的合同下，$h<4$ 时不存在满足（21.18）的随机策略。对于每个 $h\ge4$，任意满足（21.18）的策略都有
+
+$$
+\mathbb E_\mu C_\omega(P)+\mathbb E_\mu C_\omega(Q)\ge2k_L+1.
+\tag{21.20}
+$$
+
+其正例期望费用的精确最优值为
+
+$$
+\boxed{
+R^+_{L,h}=
+\begin{cases}
++\infty,&h<4,\\[2pt]
+11/2,&h\ge4,\ L=0,\\[2pt]
+7/2,&h\ge4,\ L\ge1.
+\end{cases}}
+\tag{21.21}
+$$
+
+有限值由以同一个公平种子在定理 21.1 的 $\pi_P,\pi_Q$ 中择一达到；这个达到策略对每个种子、每个 $U\in X_L$ 都正确并有限终止。
+
+**证明。** 定理 21.1 已证明整个 $X_L$ 有限，因此（21.18）的全部事件，包括每个负例的事件，有一个共同的满概率交集
+
+$$
+E=\bigcap_{U\in X_L}E_U,\qquad\mu(E)=1.
+\tag{21.22}
+$$
+
+对每个固定 $\omega\in E$，$\pi_\omega$ 在整个 $X_L$ 上正确且有限停止，而不仅是在两个正例上正确。在这个固定纤维上，每个输入的执行路径有限，有限多个输入的这些路径的并集也有限；删去不能由 $X_L$ 输入到达的分支，并把已问地址用缓存响应继续，得到有限的纯观察决策树，费用仍计原来的不同地址数。每个终端记录的相容候选全部输出同一个正确任务值，所以它符合[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)的有限认证模型。此处只把该固定纤维的有限路径放入既有模型，不另建立解析、单射或 Bellman 结论。
+
+若 $h<4$，（21.16）的 $P,W$ 具有相同的全部合法地址响应。对任何同一个固定种子，它们的执行记录逐步相同；若二者都有限终止，则终端值相同，不能同时正确。故 $E_P\cap E_W$ 为空，与（21.18）要求它为满概率事件矛盾。这个障碍针对共享的输入无关种子，允许任意自适应查询及重复缓存。
+
+设 $h\ge4$。对 $E$ 中的每个种子，定理 21.1 的确定性接受路径论证和两个唯一最小证书适用，给
+
+$$
+C_\omega(P)+C_\omega(Q)\ge2k_L+1.
+$$
+
+对共同种子律积分，非负费用的期望可加性给（21.20）；若任一期望为无穷，下界同样成立。于是
+
+$$
+\max\{\mathbb E_\mu C_\omega(P),\mathbb E_\mu C_\omega(Q)\}
+\ge\frac{\mathbb E_\mu C_\omega(P)+\mathbb E_\mu C_\omega(Q)}2
+\ge k_L+\frac12.
+\tag{21.23}
+$$
+
+上界取 $\Omega=\{P\text{ 偏向},Q\text{ 偏向}\}$，两种子各占概率 $1/2$，依次使用 $\pi_P,\pi_Q$。定理 21.1 已给出这两种策略对全纤维的每种输入都正确、有限终止及其完整四响应行为；故此同一分布满足（21.18），而且正确性和有限终止对每个种子都成立。由（21.8），
+
+$$
+\mathbb E_\mu C_\omega(P)
+=\mathbb E_\mu C_\omega(Q)
+=\frac{k_L+(k_L+1)}2
+=k_L+\frac12.
+\tag{21.24}
+$$
+
+这达到（21.23），给出（21.21）。每个种子上的全部输入费用仍分别受 $6$ 或 $4$ 限制，但（21.21）的优化域只取正例期望费用；它不结算全输入随机期望费用的最优值。所有期望都来自策略种子，未引入输入先验。证毕。
+
+## 追加锚（本行以下为增补区）
+## 22. 可数只读记录的有声返回与终止、精确探针许可的分界
+
+**定义 22.1（完整初始化纤维、记录与逐来源部分正确性）。** 在带选择公理的通常集合论中，设 $X\ne\varnothing$ 是实际来源集合，$\tau:X\to\mathbb B$，$\mathbb B=\{0,1\}$。全部 $x\in X$ 位于同一完整可访问初始化 $I_0$ 的纤维；$I_0$ 包含已经取得的联合记录、控制器初态、已知设置、接口与任务承诺。$X$ 保留符合这些条件的全部实际实现，不以期望的答案删去竞争来源。来源在以下操作中不改变。
+
+取可数的完整动作—报告字母表 $\mathcal L$。动作的精确查询地址、参数及有效设置均在记录中；种子生成的参数也不能从记录中略去。每一步的动作菜单是此前可见记录的函数，合法性对匹配该记录的来源相同。实际报告由同一来源、此前记录及所选完整动作确定；执行耗时、费用、许可变化或其他量若可被策略观察，须作为报告保留。无报告的内部状态与种子不要求属于可数字母表，但在固定种子后，内部状态、控制、停止与输出须能由 $I_0$ 和此前完整记录重建，不能另外读取来源。
+
+令 $\mathcal H\subseteq\mathcal L^{<\mathbb N}$ 为该接口的全部实际可行有限记录，包括空记录；可行性只依接口和实际来源域，不依某个选定策略。对 $h\in\mathcal H$ 定义完整实际相容纤维
+
+$$
+\mathcal C(h)=\{x\in X:\text{依次执行 }h\text{ 中的合法动作时，全部报告恰为 }h\text{ 所记}\},
+\qquad \mathcal C(h)\ne\varnothing.
+\tag{22.1}
+$$
+
+终端记录 $(h,y)$ 的有声性定义为 $\tau(\mathcal C(h))=\{y\}$。这是[延拓卷定义 11.1、11.2](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)在完整实际竞争域上的停止证书合同；这里只使用其纤维判据，不把证书存在当作免费取得或有效认证。静态查询族的判据另由既有 [`QueryFamilyIdentification` 的 `identification_iff_kernel_inclusion`](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)供应。
+
+随机策略 $\pi$ 使用与输入无关的同一个概率空间 $(\Omega,\mathcal A,\mu)$。固定 $\omega$ 后策略确定，所有实际随机选择均包含在 $\omega$ 中；动作须对每个实际运行合法。若该种子在 $x$ 上生成有限前缀 $h$，则它在每个 $z\in\mathcal C(h)$ 上生成相同前缀；若此处返回 $y$，在这些 $z$ 上也同时返回 $y$。此同种子重放采用[运输记忆完成卷第 6.4 节、式（CE.19）—（CE.21）之后的完整初始化合同](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#64-商观察的全部未来与行为纤维)的下降条件；这里的操作是只读接口，不假设平移群或赋予来源平移权限。
+
+记错误返回与未终止的种子集合为
+
+$$
+\begin{aligned}
+W_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上有限返回 }y\ne\tau(x)\},\\
+N_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上不有限终止}\}.
+\end{aligned}
+\tag{22.2}
+$$
+
+核心正确性合同仅为 $W_x^\pi\in\mathcal A$ 及 $\mu(W_x^\pi)=0$，对每个 $x\in X$ 分别要求。它不包含有限终止，不要求各个历史事件可测，不给 $X$ 指定 $\sigma$ 代数、来源概率律或来源—种子联合可测性。涉及终止概率或费用期望时，另要求相应 $N_x^\pi$ 或费用随机变量可测。携带来源信息的种子不属于此输入无关合同。
+
+在原始有限 FIB 树接口上，可取既有定义 21.1 的 $X_L$、$\tau=\iota_3$ 和原始地址四值响应；这不改变定义 21.2 只在 $P,Q$ 上优化的 $R^+_{L,h}$。完整树码与全部路径响应采用[母卷定理 9.2、9.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，实际替换单射性采用[规范编译卷命题 4.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。组成、规范数量地址、原始树响应、组成祖先许可与实际逆执行是不同对象或任务；组成上的代数逆不增加此只读菜单，也不供应实际树前像。
+
+**定理 22.1（策略无关的可数错误见证域与有声有限返回）。** 在定义 22.1 的合同下，存在至多可数的实际来源集合 $D\subseteq X$：为每个 $h\in\mathcal H$ 的每个已出现目标值，至多选取一个实际代表。固定这些选择后，$D$ 只依接口、来源域与任务，不依策略、种子空间或种子律。对每个满足同种子重放的策略，逐种子有精确集合等式
+
+$$
+\bigcup_{x\in X}W_x^\pi=\bigcup_{d\in D}W_d^\pi.
+\tag{22.3}
+$$
+
+因此，对每个满足核心正确性合同的 $\pi$，有可测的共同满测度集合
+
+$$
+G_\pi=\Omega\setminus\bigcup_{d\in D}W_d^\pi,
+\qquad \mu(G_\pi)=1.
+\tag{22.4}
+$$
+
+对每个 $\omega\in G_\pi$ 及每个实际来源，凡有限返回的终端记录均有声。$G_\pi$ 可依赖 $\pi$；本结论不对所有策略再取共同交集，也不要求 $G_\pi$ 上的策略在任何来源上终止。
+
+其不同查询数的推论须满足以下附加合同：动作只读取固定的确定性查询族 $q_a:X\to Y_a$，不改变来源或解锁查询；记录中其他报告均由 $I_0$、精确查询及已获响应决定，不额外区分来源；查询权限与所比较确定性证书完全相同。对实际来源 $x$ 定义
+
+$$
+\begin{aligned}
+k(x)=\inf\bigl\{|J|:\;&J\text{ 是该接口允许的有限查询集合，}\\[-2pt]
+&\forall z\in X,\ (\forall a\in J,\ q_a(z)=q_a(x))\Longrightarrow\tau(z)=\tau(x)\bigr\},
+\qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{22.5}
+$$
+
+这里比较的是相同原始来源域、初始化、参数精度、报告和许可上的证书，不是删除竞争来源后的证书。有限返回时以 $J_\pi(\omega,x)$ 表示所问的不同查询集合，重复查询只用缓存；未终止时费用规定为 $+\infty$。若这一费用 $C_\pi(\cdot,x)$ 可测，则对每个 $x$ 有
+
+$$
+C_\pi(\omega,x)\ge k(x)\quad(\omega\in G_\pi),
+\qquad \mathbb E_\mu C_\pi(\cdot,x)\ge k(x).
+\tag{22.6}
+$$
+
+更一般地，若可测非负费用 $K_\pi(\cdot,x)$ 在未终止时为 $+\infty$，而相同费用合同下每个有声有限记录在 $x$ 上均至少花费 $\lambda(x)\in[0,+\infty]$，则 $\mathbb E_\mu K_\pi(\cdot,x)\ge\lambda(x)$，包括 $\lambda(x)=+\infty$。这一积分结论只使用有声返回下界；依赖全输入有限终止的确定性不等式，须另满足其全输入有限终止及其他实际前提才能使用。
+
+若 $X$ 本身有限或可数，且另有每个 $N_x^\pi\in\mathcal A$、$\mu(N_x^\pi)=0$，则
+
+$$
+G_\pi^{\mathrm{tot}}=G_\pi\setminus\bigcup_{x\in X}N_x^\pi,
+\qquad \mu(G_\pi^{\mathrm{tot}})=1,
+\tag{22.7}
+$$
+
+其中每个种子在整个 $X$ 上正确且有限终止。有限 $X$ 时每个这样的种子有一个覆盖该有限域的有限执行步数上界；可数 $X$ 时不保证存在这种统一上界。
+
+对于只把输出 $1$ 解释为接受的合同，同一结论有接受专用子句：只要求每个负来源 $x\in\tau^{-1}(0)$ 的错误接受事件可测且为零测，即可使共同满测度种子上的每个有限接受记录满足 $\mathcal C(h)\subseteq\tau^{-1}(1)$。不要求负返回有声、正来源被接受或任何来源终止。
+
+**证明。** 对每个可行 $h$ 及每个 $b\in\tau(\mathcal C(h))$，在通常的选择集合论中固定
+
+$$
+d_{h,b}\in\mathcal C(h),\qquad \tau(d_{h,b})=b,
+\qquad
+D=\{d_{h,b}:h\in\mathcal H,\ b\in\tau(\mathcal C(h))\}.
+\tag{22.8}
+$$
+
+$\mathcal H$ 可数，每个记录至多选两个代表，故 $D$ 至多可数。此选取是证明中的实际见证，不授予策略发现代表或读取来源的权限。
+
+任取 $\omega\in W_x^\pi$。设它在 $x$ 上返回 $(h,y)$，则 $x\in\mathcal C(h)$，$\tau(x)=1-y$。代表 $d_{h,1-y}$ 已固定；同种子重放给它完全相同的返回 $(h,y)$，故 $\omega\in W_{d_{h,1-y}}^\pi$。这给（22.3）的一向；另一向由 $D\subseteq X$ 即得。等式是集合论等式，没有把可能不可测的逐历史事件拿来求并。其右边是可数个可测零测集的并，标准可数零测并的测度仍为零，得到（22.4），同时得到左边并集的可测性。未使用来源上的积分、逐历史可测性或联合可测性。
+
+取 $\omega\in G_\pi$ 上实际返回的 $(h,y)$。若存在 $z\in\mathcal C(h)$、$\tau(z)\ne y$，同种子重放使它在 $z$ 上错误返回；由（22.3）这使 $\omega\notin G_\pi$，矛盾。于是该记录有声。这一步使用完整相容纤维；只比较已经运行过的来源不足以给该结论。
+
+在（22.5）的静态只读合同下，若 $z$ 匹配 $J_\pi(\omega,x)$ 上的全部响应，则它匹配执行记录的全部原始报告；其余报告不带额外来源信息，菜单也相同，故 $z\in\mathcal C(h)$。有声性因此使 $J_\pi(\omega,x)$ 成为同一合同下的确定性证书，给 $|J_\pi(\omega,x)|\ge k(x)$。未终止的费用为无穷，同样满足下界。可测非负函数的扩展积分在满测度集上保持下界，给（22.6）；即使零测集上的费用为无穷，该零测部分的非负积分仍为零。一般费用 $K_\pi$ 同理；$\lambda(x)=+\infty$ 时，每个有声有限返回的费用与未终止费用都为 $+\infty$，故费用几乎处处无穷。证书取得或验证若另有收费动作、额外报告或来源相关许可，必须把它们放入新的费用及接口合同，不能沿用（22.5）未计入的资源。
+
+静态证书的使用只取其已知纤维含义。有限布尔坐标域上的标准先例是 [Chandrima Kayal、Sophie Laplante、Émile Larroque、Krišjānis Prūsis、Jevgenijs Vihrovs，*Certification complexity of Boolean functions*，arXiv:2609.26757v1，定义 1—2、定理 3(1)](https://arxiv.org/pdf/2609.26757v1#page=3)：该文的已知输入认证与证书复杂度等式属于有限布尔查询域。这里（22.3）的任意实际来源域及完整自适应报告合同由上述代表构造承担，不由该有限域等式扩张而来。
+
+若另满足终止假设，有限或可数个 $N_x^\pi$ 的并可测且零测，得（22.7）。有限 $X$ 上取各来源有限执行步数的最大值即得该种子的有限上界；此上界未被要求对种子一致。可数域上取来源 $x^{(m)}=0^{m-1}10^\infty$，$m\ge1$，只读二元档案坐标，任务恒为 $0$。确定性策略按顺序查询到第一个 $1$ 后返回 $0$，在每个来源上有限且正确，终止步数恰为 $m$，却无有限的全来源上界。该例满足相同初始化和可数记录合同。
+
+接受专用子句只为每个 $h$ 中存在的负来源固定 $d_{h,0}$。若某种子在某负来源上接受，同种子重放在相应代表上也接受，故全部负来源错误接受事件的并等于这些代表事件的可数并。去除此零测并后，任何实际接受记录若含相容负来源便有相同矛盾。它没有给拒绝记录或终止添加结论。证毕。
+
+**定义 22.2（另行声明的无限二元档案及五窗嵌入）。** 取实际来源域 $X_\infty=\mathbb B^{\mathbb N_{\ge1}}$，$\tau(x)=x_1$，共同初始化只含这一域、任务及接口声明，不含 $x$ 的坐标或有限支持承诺。动作 $q_n$ 只读原始 $x_n$，$n\ge1$，所有坐标始终可用；费用计所问的不同坐标，未终止时为 $+\infty$。种子域 $\Omega_\infty=\mathbb B^{\mathbb N_{\ge1}}$ 配备乘积 $\sigma$ 代数和独立公平二元乘积概率 $\mu_\infty$，与来源无关。来源域无需概率律。
+
+相应的另一实际对象域可明确声明为无限低到高窗口流
+
+$$
+\varepsilon=0,\qquad
+w_{n-1}(x)=
+\begin{cases}
+\mathsf E=000=\mathrm{null},&x_n=0,\\
+\mathsf B=010=[3],&x_n=1.
+\end{cases}
+\tag{22.9}
+$$
+
+这里 $[3]$ 是窗口模式名，不是窗口在任意位置的整数权重。只读第 $n-1$ 个窗口并区分这两个模式对应 $q_n$；费用仍为一次坐标查询。模式、单位位与有限接缝采用[规范编译卷定义 13.2、命题 13.4](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#13-canonical-position-temporal-iteration-and-modulus-precision)。此域中的对象是已声明的无限流，不要求最终为零，不含 $\mathrm{End}$ 查询或终端证书；$\mathsf E$ 消耗三个位置而不终止。有限自然数编码、完整有限树、组成祖先许可及物理实现都未被声明为该无限流的来源。
+
+**定理 22.2（共同有声性不推出共同终止）。** 在定义 22.2 的二元档案域，考虑以下同种子策略：依次查询 $q_1,q_2,\ldots$，在第一次 $x_n\ne\omega_n$ 时停止并返回已经观察到的 $x_1$。令
+
+$$
+T_x(\omega)=\inf\{n\ge1:x_n\ne\omega_n\},\qquad \inf\varnothing=+\infty.
+\tag{22.10}
+$$
+
+每个实际 $x$ 的 $T_x$ 和费用可测，且对每个整数 $n\ge0$，
+
+$$
+\mu_\infty(T_x>n)=2^{-n},\qquad
+\mu_\infty(T_x<\infty)=1,\qquad
+\mathbb E_{\mu_\infty}C_x=2.
+\tag{22.11}
+$$
+
+每个种子上的每个有限返回记录均有声，然而
+
+$$
+\forall\omega\in\Omega_\infty\ \exists x\in X_\infty,\quad T_x(\omega)=+\infty,
+\qquad
+\bigcap_{x\in X_\infty}\{\omega:T_x(\omega)<\infty\}=\varnothing.
+\tag{22.12}
+$$
+
+相同结论在（22.9）明确声明的无限窗口流接口上成立。（22.11）是此特定策略的期望费用，不是最优费用断言；一次确定性查询 $q_1$ 已可返回目标，费用为 $1$。
+
+**证明。** $\{T_x>n\}$ 正是前 $n$ 个种子坐标与实际 $x$ 匹配的柱集；$n=0$ 时为全空间。各柱集可测，独立公平坐标给测度 $2^{-n}$。$\{T_x=\infty\}$ 是这些递减柱集的交，即单点 $\{x\}$，其测度为 $\lim_n2^{-n}=0$。同时 $\{T_x=n\}$ 是两个可测柱集之差，故 $T_x$ 可测，且几乎处处有限。查询从 $1$ 开始且不重复，费用等于 $T_x$，包含无穷的情形。非负整数值变量的尾和公式给
+
+$$
+\mathbb E_{\mu_\infty}C_x
+=\sum_{n=0}^{\infty}\mu_\infty(T_x>n)
+=\sum_{n=0}^{\infty}2^{-n}=2.
+\tag{22.13}
+$$
+
+每条有限返回记录包含真实 $x_1$；全部相容档案的第一位等于这一报告，所以返回对整个纤维有声，而不仅对该次运行正确。特别地，定义 22.1 的全部错误返回事件为空，共同部分正确性集合可取整个种子域。另一方面，对任意声明种子 $\omega$，实际来源 $x=\omega$ 与它每一位相同，永不触发停止，给（22.12）。于是逐来源零测的未终止事件在这个不可数域上的并是整个种子空间；并没有与（22.3）关于错误返回的可数见证关系冲突。
+
+对窗口流，$\mathsf E$ 与 $\mathsf B$ 的首末位都为零，内部无相邻的两个 $1$；$\varepsilon=0$，故每个有限首窗接缝及窗口间接缝都满足定义 13.2 的乘积为零条件。读取模式逐坐标返回同一二元值，完整相容记录和费用随（22.9）保持，故档案证明原样适用于这个已声明流域。命题 13.4 的 $\mathrm{null}\ne\mathrm{End}$ 防止把匹配到空窗误作终止；没有由合法有限接缝推出整条流有有限支持或有限树实现。确定性读 $q_1$ 返回 $x_1$ 的策略直接给费用 $1$，故期望 $2$ 的扫描不是优化结论。证毕。
+
+**定义 22.3（精确实参数探针及两种逐种子合同）。** 另取实际来源域
+
+$$
+X_{\mathrm{probe}}=[0,1]\times\mathbb B,
+\qquad \tau(x,b)=b,
+\qquad O_a(x,b)=b\mathbin\oplus\mathbf1_{\{a=x\}},\quad a\in[0,1],
+\tag{22.14}
+$$
+
+其中 $\oplus$ 是二元异或。共同初始化只给出此来源域、任务和探针规则，不给任何 $x$、$b$、身份或类别信息。每个实参数 $a$ 始终可选，查询只读 $O_a$，不改变来源、不解锁动作；动作和记录保留 $a$ 的精确值，不把实参数编码的位长算入费用。有限记录 $h=((a_1,r_1),\ldots,(a_m,r_m))$ 的完整相容纤维为
+
+$$
+\mathcal C_{\mathrm{probe}}(h)
+=\{(z,c)\in[0,1]\times\mathbb B:
+\forall i\le m,\ c\oplus\mathbf1_{\{a_i=z\}}=r_i\}.
+\tag{22.15}
+$$
+
+每次有限终止的费用为不同精确参数的个数；任意未终止运行的费用为 $+\infty$，即使它只重复有限个参数或在内部计算中停滞。控制器的纯计算、随机种子取得、相等判断及比较不收费。本接口授予理想精确实参数查询，不声明这些操作在有限表示、图灵机或物理装置上的实现。
+
+有限记录空间取各 $([0,1]\times\mathbb B)^m$ 的不交并及其 Borel 结构。策略允许自适应与重复参数；在给定种子和记录后决定下一个精确参数、有限返回值或不再返回的内部停滞，控制映射须对种子—记录乘积可测。采用同一输入无关概率空间 $(\Omega,\mathcal A,\mu)$，相同种子与相同记录的内部状态和决定相同，不能隐读来源。来源域在此另配积 Borel 结构，以核对响应的联合可测性，仍不给来源概率律。要求每个来源上的终止、错误事件和扩展非负费用可测。
+
+令 $\Pi_{\mathrm{det}}$ 为在整个 $X_{\mathrm{probe}}$ 上正确且有限终止的确定性策略族；令 $\Pi_{\mathrm w}$ 为对每个固定来源分别以概率一正确且有限终止的策略族；令 $\Pi_{\mathrm s}$ 为对每个声明种子、每个实际来源都正确且有限终止的策略族。强合同中的“每个种子”包含零测种子，不仅指概率一事件。定义
+
+$$
+\begin{aligned}
+D_{\mathrm{probe}}&=\inf_{\pi\in\Pi_{\mathrm{det}}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}C_\pi(x,b),\\
+R_{\mathrm w}&=\inf_{\pi\in\Pi_{\mathrm w}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}\mathbb E_\mu C_\pi(\omega;x,b),\\
+R_{\mathrm s}&=\inf_{\pi\in\Pi_{\mathrm s}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}\mathbb E_\mu C_\pi(\omega;x,b).
+\end{aligned}
+\tag{22.16}
+$$
+
+每个期望只对各策略自己的共同种子律取，$\inf\varnothing=+\infty$。它们在全来源域取上确界，与定义 21.2 的正例专用目标不同。固定输入的查询期望惯例采用 [Magniez、Nayak、Santha、Sherman、Tardos、Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第 2 页](https://arxiv.org/pdf/1309.7565v1#page=2)；该页的输入为有限布尔词，不能将其有限域合同无条件移到此实参数域。
+
+弱合同只要求可测性及逐来源概率一性质，不等于在全输入正确策略上取分布。它也不提供可计算表示或失败识别： [Vasco Brattka、Guido Gherardi、Rupert Hölzl，*Probabilistic Computability and Choice*，arXiv:1312.7305v3，定义 3.1](https://arxiv.org/pdf/1312.7305v3#page=13)的 Las Vegas 可计算性在表示空间上要求可计算 $F_1,F_2$，后者在每个输入表示名及建议上定义，用 Sierpiński 输出识别失败，且前者在成功建议上正确。这些额外合同未包含在（22.14）—（22.16）中，不能仅由弱合同赋予无条件的标准 Las Vegas 算法称谓。
+
+**定理 22.3（证书、确定性发现及两种随机合同的锐值）。** 在定义 22.3 的理想探针接口上，每个实际来源的最小有声证书均需且只需 $2$ 个不同精确参数；而全输入优化值分别为
+
+$$
+\boxed{D_{\mathrm{probe}}=3,\qquad R_{\mathrm w}=1,\qquad R_{\mathrm s}=2.}
+\tag{22.17}
+$$
+
+这些下界对自适应、重复参数及允许零查询返回的策略均成立。弱值由在 $[0,1]$ 上均匀抽取 $u$，只查询 $O_u$ 并返回该响应达到：每个 $(x,b)$ 的错误种子集恰为单点 $\{x\}$，但每个声明种子都有错误来源。
+
+强值可用 $u$ 在 $[0,1)$ 上的均匀律达到。先查询
+
+$$
+a=u,\qquad
+c=s(u)=
+\begin{cases}
+u+\tfrac12,&0\le u<\tfrac12,\\
+u-\tfrac12,&\tfrac12\le u<1.
+\end{cases}
+\tag{22.18}
+$$
+
+若两个响应相等则返回其值；若不同则查询常数参数 $1$ 并返回第三个响应。每个声明种子在每个来源上正确并有限终止，且
+
+$$
+\forall(x,b),\quad \mathbb E C(\cdot;x,b)=2,
+\qquad
+\forall u\in[0,1),\quad \sup_{(x,b)}C(u;x,b)=3.
+\tag{22.19}
+$$
+
+响应、两种达到策略的控制、错误和终止事件以及费用均按定义 22.3 可测。
+
+**证明。** 先在同一个实际域上确定证书。空记录的纤维含两种目标。只问一个不同参数 $a$，即使重复任意有限次，得到的唯一响应 $r$ 仍同时匹配来源
+
+$$
+(a,1-r),\qquad (z,r)\quad(z\in[0,1]\setminus\{a\}).
+\tag{22.20}
+$$
+
+它们的目标相反，所以零或一个不同参数不能有声。对任意给定来源 $(x,b)$，选两个互异参数 $a,c\ne x$；这种选择始终存在，包括 $x=0,1$。两个响应都为 $b$。任意匹配来源 $(z,d)$ 若有 $d=1-b$，须同时满足 $z=a$ 和 $z=c$ 才能将两个响应都翻成 $b$，与 $a\ne c$ 矛盾。因此完整纤维的目标恰为 $b$，得到每个来源的最小证书数 $2$。此存在证书的参数选择可依赖已经指定的来源；它不等于未知来源下的两查询发现策略。
+
+现在取任意全输入正确且有限终止的确定性策略。它不能零查询返回，由（22.20）也不能在只问过一个不同参数时返回。其首个参数记为 $a$，固定首响应 $r\in\mathbb B$。在实际来源 $(a,1-r)$ 上首响应就是 $r$；有限终止及上述证书障碍迫使它在有限时刻第一次查询不同于 $a$ 的参数 $c$。截至这一时刻，控制只依由重复 $a$ 形成的同一记录，故 $c$ 也在另一实际来源 $(c,r)$ 上被同样选取。两来源截至第二个不同参数的全部有序响应一致，最后这次的响应都为 $1-r$：前者在 $a$ 翻转、在 $c$ 不翻转，后者在 $a$ 不翻转、在 $c$ 翻转。
+
+这两个相容来源的目标相反。以后只重复 $a,c$ 也保持相同记录，不能产生正确停止叶；有限终止要求沿这条共同前缀询问第三个不同参数。因此该策略的全输入最坏费用至少为 $3$。这同时处理自适应第二参数、任意重复查询及内部停滞；全输入总性排除在该实际前缀停滞。上界固定查询 $0,\tfrac12$：响应相等时返回共同响应，不同时查询 $1$ 并返回第三响应。相等时实际 $x$ 不等于前两参数；不同时 $x$ 恰是前两参数之一，所以 $x\ne1$，第三响应为 $b$。所有输入均正确、至多三次，且 $x=0$ 或 $\tfrac12$ 时恰三次，故 $D_{\mathrm{probe}}=3$。
+
+弱合同下先排除零查询降低期望。设 $A_j$ 是策略不问任何参数而有限返回 $j$ 的种子事件，$j=0,1$。这些事件由相同初始化和种子决定，与实际来源无关，并按控制可测性可测。在任意固定来源 $(0,1-j)$ 上，$A_j$ 都是错误返回事件的子集，因此弱正确性给 $\mu(A_j)=0$。对任意固定来源，有限终止具有概率一，且 $A_0\cup A_1$ 零测，故费用至少为 $1$ 几乎处处，扩展非负期望也至少为 $1$；未终止的零测种子不降低下界。这适用于全部弱策略，不要求固定种子在全来源上正确。
+
+弱达到策略取 Lebesgue 概率空间 $[0,1]$，精确查询 $u$ 并返回 $O_u(x,b)$。所有来源、所有种子都在一次查询后返回，费用恒为 $1$。固定 $(x,b)$ 时仅 $u=x$ 翻转正确目标，其错误集 $\{x\}$ 可测且零测，包括两个端点；故逐来源正确且有限终止具有概率一。对每个声明的 $u$，来源 $(u,0)$ 使它错误返回 $1$，于是
+
+$$
+\bigcup_{(x,b)\in X_{\mathrm{probe}}}\{u:O_u(x,b)\ne b\}=[0,1],
+\qquad
+\bigcap_{(x,b)}\{u:O_u(x,b)=b\}=\varnothing.
+\tag{22.21}
+$$
+
+结合弱下界得到 $R_{\mathrm w}=1$。单点错误随实际坐标 $x$ 改变，不随标签 $b$ 改变。固定任何种子得到的策略均不是全输入正确策略，所以这个达到分布不在全输入正确确定性策略族上。
+
+强合同下，每个种子在所有实际来源上正确且有限终止。同种子重放使任意有限终端记录有声，故由（22.20）每个来源、每个种子的费用至少为 $2$，积分给 $R_{\mathrm s}\ge2$。不需要把不可数来源的逐来源零测集求并，因为强合同本身逐种子规定全部来源。
+
+对于（22.18）的达到策略，$u,s(u)$ 都属于 $[0,1)$；两者相差 $\tfrac12$ 或 $-\tfrac12$，故始终互异，而且都不同于常数 $1$。这些断言对 $u=0,\tfrac12$ 也成立：两参数分别是 $(0,\tfrac12)$、$(\tfrac12,0)$，没有重合端点。当 $x$ 不在前两参数中，两响应相同且等于 $b$；当 $x$ 恰等于其中一个时，两响应相反，且 $x<1$，第三参数 $1$ 不翻转，返回 $b$。当 $x=1$ 时，前两参数均不翻转，立即以费用 $2$ 返回 $b$。因此每个种子、每个标签、每个来源都有限且正确。
+
+具体费用为
+
+$$
+C(u;x,b)=2+\mathbf1_{\{x=u\ \mathrm{或}\ x=s(u)\}}.
+\tag{22.22}
+$$
+
+固定 $x<1$ 时，$s(s(x))=x$ 且 $s(x)\ne x$，额外一次查询的种子恰为 $\{x,s(x)\}$；固定 $x=1$ 时该集合为空。这些有限种子集的 Lebesgue 测度均为零，给所有来源期望恰为 $2$。反之，对任意固定 $u$，来源 $x=u$ 需要第三参数，不论标签，费用为 $3$；所有来源费用又至多 $3$，得（22.19）并证明强上界 $R_{\mathrm s}\le2$。因此三个锐值都已在原对象、原权限和原费用下达到，而逐种子最坏费用与逐来源期望上确界分别为 $3$ 与 $2$。
+
+最后核对测度合同。精确响应的异常集合
+
+$$
+\{(a,x,b):a=x\}\subseteq[0,1]\times[0,1]\times\mathbb B
+\tag{22.23}
+$$
+
+是闭对角线与离散标签域的乘积，所以 $O_a(x,b)$ 联合 Borel 可测。$s$ 是在两个 Borel 半区间上定义的平移，故 Borel；比较两个二元响应、返回其值或选择常数 $1$ 的控制是可测分支。有限次响应组合保持可测性；（22.22）的两条对角线条件是 Borel，费用可测。弱策略的错误集为可测单点、终止事件为全空间、费用恒定；强策略错误集为空、终止事件为全空间、费用由（22.22）给出。对允许的一般可测控制，逐步组合可测控制与（22.14）给可测有限执行事件，正确返回与终止是其可数并；非终止是补集。不同参数数目在每个有限记录上由有限个对角线相等判断给出，连同非终止费用为无穷的约定得到可测扩展费用。
+
+该接口的参数记录不可数：例如单查询记录 $(a,r)$ 随 $a$ 连续变化。因此定义 22.1 的可数完整记录假设不满足，（22.21）不反驳定理 22.1。既有 [`UncountableSingletonCutCountermodel` 的 `uncountable_singleton_cut_countermodel`](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/D5/S3/ConceptDynamics/EscapeSpectrum/UncountableSingletonCutCountermodel.lean)供应不可数单点切割的静态零测现象；（22.17）—（22.22）另外使用此处精确响应、完整相容来源和发现策略，静态现象本身不授予探针权限或任何上述费用最优值。整个论证未把来源分布、有限树实现或物理测量添入模型。证毕。
+
+## 追加锚（本行以下为增补区）
