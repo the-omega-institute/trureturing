@@ -64,6 +64,13 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(result.returncode, 66)
         self.assertIn("NoSealedRoots", result.stderr)
 
+    def test_unreadable_source_names_root(self):
+        self.source("Reg/Catalogs/Broken.lean", "")
+        (self.repository / "Reg/Catalogs/Broken.lean").write_bytes(b"\xff")
+        result = self.invoke("--list")
+        self.assertEqual(result.returncode, 66)
+        self.assertIn("UnreadableRoot root=Reg.Catalogs.Broken", result.stderr)
+
     def test_typed_reserved_root_without_seal_named(self):
         self.source("Reg/Catalogs/Missing/SealedCatalog.lean", "def x := 1\n")
         result = self.invoke("--list")
@@ -136,6 +143,18 @@ class ProducerResultTests(unittest.TestCase):
             self.program.check_export("Reg.Catalogs.Example", 7, Path("missing.json"))
         self.assertEqual(caught.exception.code, 7)
         self.assertIn("ExportFailed root=Reg.Catalogs.Example exit=7", str(caught.exception))
+
+    def test_invalid_dependency_manifest_named(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            manifest = repository / "tools/lean-inspector-reg/lake-manifest.json"
+            manifest.parent.mkdir(parents=True)
+            for value in ('broken json', '{}', '{"packages":[{}]}'):
+                manifest.write_text(value)
+                with self.assertRaises(self.program.ExportError) as caught:
+                    self.program.export_manifest(repository)
+                self.assertEqual(caught.exception.code, 66)
+                self.assertIn("InvalidBuildManifest", str(caught.exception))
 
     def test_success_without_artifact_named(self):
         with tempfile.TemporaryDirectory() as directory:

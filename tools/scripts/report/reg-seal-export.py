@@ -89,7 +89,10 @@ def enumerate_roots(repository):
     for path in sorted((repository / "Reg").rglob("*.lean")):
         relative = path.relative_to(repository)
         root = ".".join(relative.with_suffix("").parts)
-        code = source_code(path.read_text(encoding="utf-8"))
+        try:
+            code = source_code(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError) as error:
+            raise ExportError(66, f"UnreadableRoot root={root} path={path}: {error}") from error
         old = SEAL_COMMAND.search(code) is not None
         typed = relative.parts[:2] == ("Reg", "Catalogs") and path.name == "SealedCatalog.lean"
         if typed and not TYPED_SEAL.search(code) and not old:
@@ -149,6 +152,27 @@ def validate_build(repository):
     for tool in ("make", "bash", "dotnet", "lake"):
         if shutil.which(tool) is None:
             raise ExportError(69, f"MissingTool tool={tool}")
+    export_manifest(repository)
+
+
+def export_manifest(repository):
+    manifest_base = repository / "tools/lean-inspector-reg"
+    path = manifest_base / "lake-manifest.json"
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(manifest, dict) or not isinstance(manifest.get("packages"), list):
+            raise ValueError("missing package inventory")
+        for dependency in manifest["packages"]:
+            if dependency["type"] == "path":
+                dependency["dir"] = str((manifest_base / dependency["dir"]).resolve())
+            elif dependency["type"] != "git":
+                raise ValueError("unknown dependency type")
+            dependency["inherited"] = dependency["name"] not in ("reg", "leanInspector")
+        manifest["name"] = "p4SealExport"
+        manifest["packagesDir"] = str(repository / ".lake/packages")
+        return manifest
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
+        raise ExportError(66, f"InvalidBuildManifest path={path}: {error}") from error
 
 
 def write_package(repository, directory, root, artifact):
@@ -164,14 +188,7 @@ def write_package(repository, directory, root, artifact):
         '[[require]]\nname = "leanInspector"\n'
         f'path = {quote(repository / "tools/lean-inspector")}\n\n'
         '[[lean_lib]]\nname = "SealExport"\n', encoding="utf-8")
-    manifest_base = repository / "tools/lean-inspector-reg"
-    manifest = json.loads((manifest_base / "lake-manifest.json").read_text(encoding="utf-8"))
-    manifest["name"] = "p4SealExport"
-    manifest["packagesDir"] = str(repository / ".lake/packages")
-    for dependency in manifest["packages"]:
-        if dependency["type"] == "path":
-            dependency["dir"] = str((manifest_base / dependency["dir"]).resolve())
-        dependency["inherited"] = dependency["name"] not in ("reg", "leanInspector")
+    manifest = export_manifest(repository)
     (package / "lake-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     shutil.copyfile(repository / "lean-toolchain", package / "lean-toolchain")
     (package / "SealExport.lean").write_text(f"""import {root}
