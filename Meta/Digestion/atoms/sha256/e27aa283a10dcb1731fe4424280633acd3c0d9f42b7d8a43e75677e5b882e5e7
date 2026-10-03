@@ -1,0 +1,16 @@
+**定义 22.2（另行声明的无限二元档案及五窗嵌入）。** 取实际来源域 $X_\infty=\mathbb B^{\mathbb N_{\ge1}}$，$\tau(x)=x_1$，共同初始化只含这一域、任务及接口声明，不含 $x$ 的坐标或有限支持承诺。动作 $q_n$ 只读原始 $x_n$，$n\ge1$，所有坐标始终可用；费用计所问的不同坐标，未终止时为 $+\infty$。种子域 $\Omega_\infty=\mathbb B^{\mathbb N_{\ge1}}$ 配备乘积 $\sigma$ 代数和独立公平二元乘积概率 $\mu_\infty$，与来源无关。来源域无需概率律。
+
+相应的另一实际对象域可明确声明为无限低到高窗口流
+
+$$
+\varepsilon=0,\qquad
+w_{n-1}(x)=
+\begin{cases}
+\mathsf E=000=\mathrm{null},&x_n=0,\\
+\mathsf B=010=[3],&x_n=1.
+\end{cases}
+\tag{22.9}
+$$
+
+这里 $[3]$ 是窗口模式名，不是窗口在任意位置的整数权重。只读第 $n-1$ 个窗口并区分这两个模式对应 $q_n$；费用仍为一次坐标查询。模式、单位位与有限接缝采用[规范编译卷定义 13.2、命题 13.4](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#13-canonical-position-temporal-iteration-and-modulus-precision)。此域中的对象是已声明的无限流，不要求最终为零，不含 $\mathrm{End}$ 查询或终端证书；$\mathsf E$ 消耗三个位置而不终止。有限自然数编码、完整有限树、组成祖先许可及物理实现都未被声明为该无限流的来源。
+

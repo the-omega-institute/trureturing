@@ -1,0 +1,79 @@
+**定理 53.2（固定最内层锚的非取得锐利上确界）。** 保留同一原尾，在任意外层混合列表后固定一个 $(1,1)$ 返回：
+
+$$
+\begin{aligned}
+\widetilde\alpha_{\mathbf a}
+ &=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\,UC\,\xi_H,\\
+\widetilde\gamma_{\mathbf a}
+ &=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\,VC\,\xi_L,\\
+\widetilde H_{\mathbf a}
+ &=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}\,de .
+\end{aligned}
+$$
+
+令
+
+$$
+Z_j=\frac{(1-\rho)h_j}{1-\rho\chi^2},\qquad
+Y_j=G_{j,1,1}(X_j),\qquad
+\widehat\Theta=\lambda-g^2\chi^2Z_H.
+$$
+
+则 $X_j<Z_j<Y_j<h_j$，每个外层返回及 stem 右侧的完整实际混合后缀位移都严格大于 $Z_j$。锚族的精确闭成本上确界是 $\widehat\Theta$，任何有限历史均不取得它，且
+
+$$
+0<\Theta_1<\widehat\Theta<\Theta_2<\lambda .
+$$
+
+在 $b=\widehat\Theta$，每个有限列表都给任意归属下具有自身正严格余量的两条无限实际记录；家族没有统一正严格余量。在 $b=\Theta_2$ 则对全部列表与归属都有统一严格余量 $\varepsilon=(\Theta_2-\widehat\Theta)/2$。
+
+**证明。** $Z_j$ 是 $G_{j,1,2}$ 的唯一固定点，且 $(1-\rho)h_j<Z_j<h_j$。于是
+
+$$
+Z_j-X_j=\rho\chi^2(Z_j-\chi E_j)>0,\qquad
+Y_j-Z_j=\rho\chi(X_j-\chi Z_j)>0,
+$$
+
+分别由 $(1-\rho)h_j>\chi E_j$ 和 $X_j>\chi h_j>\chi Z_j$ 得到。定理53.1给 $Y_j<h_j$，并且 $Z_H<Z_L$。对 $Z_j\le D<h_j$，
+
+$$
+G_{j,m,r}(D)\ge G_{j,1,2}(D)
+=Z_j+\rho\chi^2(D-Z_j)\ge Z_j ;
+$$
+
+第一步因 $r\le2$、$\rho^m\le\rho$ 及 $h_j-\chi^rD>0$ 成立，$D>Z_j$ 时末步严格。包含锚的初始后缀位移为 $Y_j>Z_j$，所以任意外层混合返回和 stem 均具有所述严格后缀界。
+
+逐类检查所有活跃输入：外层 $r=2$ 为 $\chi^2D_j>\chi^2Z_j\ge\chi^2Z_H$；外层 $r=1$ 与 stem 为 $\chi D_j>\chi Z_j>\chi^2Z_H$；固定锚自身为 $\chi X_j>\chi^2Z_j\ge\chi^2Z_H$。同一幂的更外侧输入只会增加。非活跃成本至多 $\lambda-g^6<\widehat\Theta$，因为 $g^{42}Z_H<g^6$。所有有限实际槽遂严格低于 $\widehat\Theta$。$Z_H>X_H$ 给 $\widehat\Theta<\Theta_2$，$X_H>\chi Z_H$ 给 $\Theta_1<\widehat\Theta$。
+
+为证上确界锐利，取 $n+1$ 个外层 $(1,2)$ 返回。在最外层测试返回右侧，实际位移为
+
+$$
+D_{H,n}=G_{H,1,2}^{\,n}(Y_H)
+=Z_H+(\rho\chi^2)^n(Y_H-Z_H).
+$$
+
+该测试返回中最内侧高侧 $U$ 的位置4成本为
+
+$$
+\widehat\Theta-g^2\chi^2(\rho\chi^2)^n(Y_H-Z_H)
+\uparrow\widehat\Theta .
+$$
+
+因此任何更小预算都被某个有限实际槽否定，且上确界不被有限历史取得。
+
+对固定列表，令 $c_{\mathbf a}$ 为其有限历史两分量全部槽成本的最大值，则 $0\le c_{\mathbf a}<\widehat\Theta$。置
+
+$$
+\varepsilon_{\mathbf a}=\frac{\widehat\Theta-c_{\mathbf a}}2>0.
+$$
+
+每个槽可选内部目标使 $|\eta|<c_{\mathbf a}+\varepsilon_{\mathbf a}
+=\widehat\Theta-\varepsilon_{\mathbf a}$；再接各自原尾的零误差未来。由于 $\widehat\Theta-\varepsilon_{\mathbf a}>0$，两条无限记录的每一个位置都满足同一记录自身的正余量。上述逼近成本又使任何家族统一正余量均不可能，即使允许重新选择目标。预算为 $\Theta_2$ 时则选内部目标使
+
+$$
+|\eta|<\frac{\Theta_2+\widehat\Theta}{2}
+=\Theta_2-\frac{\Theta_2-\widehat\Theta}{2};
+$$
+
+零误差未来也满足这一统一严格界。所有端点归属均适用。证毕。
+

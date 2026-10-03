@@ -1,0 +1,23 @@
+**命题 43.12（第一分量的统一 margin，含物理裁剪）。** 在命题43.11的条件下，置
+
+$$
+ d_1=\min\{x_1-u,v-x_1\}>0.
+$$
+
+对第一分量任意 departure 槽，其完整后缀仿射映射 $f$ 的斜率绝对值为 $g^D$，其中 $D\ge1$ 是该 departure 到未观察终端的来源长度。若该槽在闭预算 $\beta$ 下有
+
+$$
+ f(H_1)\subseteq (J_{c}+[-\beta,\beta])\cap X,\qquad
+ X=[-1,\phi],
+$$
+
+则
+
+$$\boxed{\beta-\operatorname{dist}(f(x_1),J_c)\ge\min\{\beta,d_1\}g^D.}$$
+
+因此对深度不超过 $n$ 的所有第一分量观察，统一有
+
+$$
+\beta-\operatorname{dist}(f(x_1),J_c)\ge c_1a^n,\qquad c_1=\min\{\beta,d_1\}g^d>0.
+$$
+

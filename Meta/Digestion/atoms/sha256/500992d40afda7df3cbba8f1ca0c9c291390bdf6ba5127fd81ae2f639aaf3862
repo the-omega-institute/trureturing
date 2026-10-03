@@ -1,0 +1,40 @@
+**命题 24.14（保标签的严格余量转移）。** 对每个 $\ell\in\Lambda$，有 $\overline{S_\ell^D}=S_\ell$。对任何固定 $Q$ 和固定解码器、任意 $\nu>0$：
+
+$$
+\begin{aligned}
+D\text{ 上闭预算 }\nu\text{ 正确}
+&\ \Longrightarrow\ \Omega\text{ 上开预算 }\nu\text{ 正确},\\
+D\text{ 上开预算 }\nu\text{ 正确}
+&\ \Longleftrightarrow\ \Omega\text{ 上开预算 }\nu\text{ 正确}.
+\end{aligned}
+$$
+
+$\Omega$ 上任一预算正确均可限制到 $D$。上述转移不要求 $Q$ 连续或纤维连通。
+
+证明。按定理17.2，对合法尾坐标 $y$ 取合法尾地址 $\eta$。保留其前 $n$ 个窗口，后续置为 $0^\infty$，记为 $\eta^{(n)}$。将位改为零不制造相邻一；前接 $\ell$ 的接缝也保持合法。于是 $\ell\eta^{(n)}\in D$，首标签始终为 $\ell$。窗口级数给出
+
+$$
+\kappa(\eta)-\kappa(\eta^{(n)})
+=(-g)^n\kappa(T^n\eta),\qquad
+|\kappa(\eta)-\kappa(\eta^{(n)})|\le\phi g^n\longrightarrow0.
+$$
+
+当前坐标差是尾坐标差的 $g$ 倍，故相邻点的最大范数差也不超过 $\phi g^n$。这是逐标签稠密性；其反向包含由闭图的闭性得到。
+
+现在固定 $\Omega$ 中标签为 $\ell$ 的真实点 $p$，以及由严格小于 $\nu$ 的误差产生的实际裁剪目标 $z$。裁剪不增加误差，故 $\|z-p\|_\infty<\nu$。可取同标签有限真实点 $p_D$，满足
+
+$$
+\|p_D-p\|_\infty<\nu-\|z-p\|_\infty.
+$$
+
+为这个有限来源直接选新误差 $\varepsilon_D=z-p_D$。则
+
+$$
+\|\varepsilon_D\|_\infty<\nu,\qquad
+\operatorname{clip}_{X^2}(p_D+\varepsilon_D)=z.
+$$
+
+目标是完全相同的 $z$，不是仅仅接近 $z$；因此箱号完全相同，切点归属和 $Q$ 的连续性均无关。$D$ 上的闭或开正确性都强迫该记录解码为 $\ell$。限制方向直接，证明结论。$\square$
+
+特别地，$D$ 上闭预算 $\nu>0$ 给同一仪器在 $\Omega$ 上每个闭预算 $0\le r<\nu$ 的正确性。严格余量是关键：当目标距真实点恰为 $\nu$ 时，有限近似的新误差可超过 $\nu$，故这里没有得到 $D$ 闭预算 $\nu$ 推出 $\Omega$ 闭预算 $\nu$。闭临界失败须另有实际有限见证。
+

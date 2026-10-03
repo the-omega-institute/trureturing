@@ -1,0 +1,13 @@
+# Fibonacci 规范窗口与编译几何
+
+**定位与证明范围。** 本卷研究 Fibonacci 正接枝的实际词编译、同源观察的商与恢复，以及规范低位窗在普通加法下的连续和固定稀疏记录。正文是参考输入与普通数学证明，未经 Lean kernel 验证；不主张 Robin 不等式或黎曼猜想的证明。
+
+**对象与来源合同。** 正接枝以实际非负整数组成为来源，使用替换矩阵、原子接枝、同源重置和唯一终端完整 gcd 答复；收费问数、执行字母、实际前缀与控制空间各按正文合同计量。有序树、组成与数量是不同恢复目标，非空树的组成域去掉原点。规范低位窗则观察同一个实际自然数在普通加法时刻的规范 Fibonacci 数位；固定稀疏时刻不依赖读数。来源上界、终止标记、共同来源、端点归属、紧性与资源限制只在明确给出的假设内使用。
+
+**引用命名空间。** 未带外部来源链接的章节号与条目号均为本卷局部编号。母卷《[Fibonacci 原子关系生成](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)》的引用保留其原编号；[过程几何卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)、[动态边界卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)和[恢复几何卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)的具名条目同样属于各自卷。上述四卷固定于修订 `5f1ab91c544d8be1f123accd453787f0819fd47d`，正文链接定位该修订的原条目，均不指向本卷的同号条目。
+
+**引用前提与适用边界。** 无限柱集引用保留修订 `cd4bbbef4e52b52ce922b848cd52601c839d2918`，并在对应假设中给出完整的端点流与有限来源映射；Dirichlet 素数定理保留正文所列 Mathlib 修订及参数对应。引用形式化声明不等于本卷的普通证明已被形式化；逐层可分离、存在相容线程、存在实际来源和有限可认证性分别按各自命题的条件判断。
+
+**追加约定。** 卷首与既有正文合入后保留原字节；增补和勘误写在文末追加锚之后，以递增的新章节和条目编号指向所补充或修正的旧条目，并以同一追加锚结尾。
+
+

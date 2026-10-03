@@ -1,0 +1,17 @@
+**命题 9.2（直接不变性与满支撑）。** $\lambda$ 在 $\delta$ 下不变且满支撑。
+
+证明。对每个固定符号 $s$，$F_s(z)=M^{-1}(z-s\alpha)$ 保持 Haar 测度。因此对任意有界 Borel 函数 $f$，
+
+$$
+\begin{aligned}
+\int_K f\circ\delta\,d\lambda
+&=\int_\Omega\int_G
+f(\sigma\omega,F_{\omega_0}(z))\,d\mu(z)\,d\nu(\omega)\\
+&=\int_\Omega\int_G
+f(\sigma\omega,w)\,d\mu(w)\,d\nu(\omega)\\
+&=\int_\Omega\int_G f(\eta,w)\,d\mu(w)\,d\nu(\eta).
+\end{aligned}
+$$
+
+最后一步使用 $\nu$ 的移位不变性，故直接证明联合不变。每个非空合法柱的 $\nu$ 测度正，每个模余数陪集的 $\mu$ 测度为 $m^{-2}>0$；这些乘积构成开集基，遂满支撑。$\square$
+

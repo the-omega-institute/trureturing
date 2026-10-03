@@ -1,0 +1,19 @@
+**定义 33.9（统一 U/V 端点余量）。** 对六个后缀仿射图
+
+$$
+P_{U,j}=f_{U_j}\circ\cdots\circ f_{U_5},\qquad
+P_{V,j}=f_{V_j}\circ\cdots\circ f_{V_5},\qquad 0\le j<6,
+$$
+
+定义 $\rho_U$ 为下列有限端点集上的最大距离：
+
+$$
+\begin{aligned}
+\rho_U=\max\{&\operatorname{dist}(P_{U,j}(x),J_{(d_*)_j}):
+ x\in\{\theta+\chi^2\delta_H,t^2\},\\
+&\operatorname{dist}(P_{V,j}(y),J_{(d_*)_j}):
+ y\in\{0,\theta-\chi^2\delta_L\},\ 0\le j<6\}.
+\end{aligned}
+\tag{33.34}
+$$
+

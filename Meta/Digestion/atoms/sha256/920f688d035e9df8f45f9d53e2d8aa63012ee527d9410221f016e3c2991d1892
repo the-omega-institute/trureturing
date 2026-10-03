@@ -1,0 +1,48 @@
+**定理 19.1（纯数量的尖锐证书前沿与全部极小解）。** 对每个定义 19.1 的 $V$，有 $a\ge1$，并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=+\infty\qquad(h<D).
+}
+\tag{19.5}
+$$
+
+当 $h\ge D$ 时，若 $a\ge2$，则
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=b,
+\qquad\text{唯一达到极小值的集合为 }Q=B.
+}
+\tag{19.6}
+$$
+
+若 $a=1$，则必有
+
+$$
+ d=3,\qquad
+ V=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+ \qquad b=2,
+\tag{19.7}
+$$
+
+并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=2,
+}
+\tag{19.8}
+$$
+
+恰有三组极小查询，即该树三片叶地址的三组二元子集
+
+$$
+\{\mathtt{LL},\mathtt{LR}\},
+\qquad
+\{\mathtt{LL},\mathtt R\},
+\qquad
+\{\mathtt{LR},\mathtt R\}.
+\tag{19.9}
+$$
+

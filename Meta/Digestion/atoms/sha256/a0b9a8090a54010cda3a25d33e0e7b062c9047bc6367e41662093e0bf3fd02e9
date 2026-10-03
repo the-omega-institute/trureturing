@@ -1,0 +1,86 @@
+**命题 48.3（guard、固定点和相位差）。** 两个词 $U,V$ 都从 guard 零返回 guard 零，七个相位的 guard 为
+
+$$
+(s_0,\ldots,s_6)=(0,0,0,1,1,0,0).
+\tag{48.8}
+$$
+
+它们是原 $A_0=\Omega$ 中的合法地址，且均为本原窗口周期七。记
+
+$$
+x_j=\kappa_0(T^jU^\infty),\qquad
+y_j=\kappa_0(T^jV^\infty),\qquad j\pmod7.
+$$
+
+则
+
+$$
+\begin{aligned}
+x_0&=L+m_-,&
+x_1&=s-\frac{he_-}{D},\\
+y_0&=B_*-m_+,&
+y_1&=s+\frac{he_+}{D},
+\end{aligned}
+\tag{48.9}
+$$
+
+并且对 $1\le j\le6$
+
+$$
+x_j-y_j=(-g)^{7-j}(x_0-y_0),\qquad
+x_0-y_0=-\frac{t}{D}\ne0.
+\tag{48.10}
+$$
+
+**证明。** 由本章开头的原 guard 表，$U$ 的 guard 链为
+
+$$
+0\xrightarrow3 0\xrightarrow3 0\xrightarrow5 1
+\xrightarrow5 1\xrightarrow3 0\xrightarrow2 0\xrightarrow2 0,
+$$
+
+$V$ 的链为
+
+$$
+0\xrightarrow0 0\xrightarrow3 0\xrightarrow5 1
+\xrightarrow5 1\xrightarrow3 0\xrightarrow2 0\xrightarrow2 0.
+$$
+
+重复这些合法闭链得到实际地址。七个标签中 $U$ 含 $3,5,2$，
+$V$ 含 $0,3,5,2$，两词都不恒定。若其无限重复词有小于七的周期，
+最小周期必整除七；七为素数，唯一可能是周期一，与非恒定性矛盾。
+
+由 (48.6)，
+
+$$
+x_1=s+h(x_0-z),\qquad x_0=f_3(x_1),
+$$
+
+从而
+
+$$
+(1+a)x_0=L+az=L(1+a)+ae_-.
+$$
+
+这给出 $x_0=L+m_-$，再代回得到
+$x_1=s-he_-/D$。同理，$y_1=s+h(y_0-z)$ 和
+$y_0=f_0(y_1)$ 给
+
+$$
+(1+a)y_0=B_*+az=B_*(1+a)-ae_+,
+$$
+
+即 $y_0=B_*-m_+$ 和 $y_1=s+he_+/D$。
+此外，对所有相位有
+
+$$
+x_j=f_{U_j\cdots U_6}(x_0),\qquad
+y_j=f_{V_j\cdots V_6}(y_0)\quad(0\le j\le6).
+$$
+
+对 $j=0$，这就是各自的固定点方程；对 $1\le j\le6$，
+两个词使用同一后缀，复合斜率为 $(-g)^{7-j}$。
+又 $m_-+m_+=at/D$，故
+$x_0-y_0=L-B_*+at/D=-t/D$，得到 (48.10)。
+全部相位由同一周期地址的实际后缀决定。$\square$
+

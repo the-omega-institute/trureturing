@@ -1,0 +1,68 @@
+### 51.1 同一来源与完整原图
+
+置
+$$
+t=\frac{\sqrt5-1}{2},\quad \phi=1+t,\quad
+g=t^3=2t-1,\quad \lambda=\frac{t^2}{10},\quad
+I_0=[-1,\phi],\quad I_1=[-1,t],\quad
+d_0=\phi^2,\quad d_1=\phi.
+$$
+一个时间步删除一个三位窗口。来源标签按空间顺序为 $3,0,5,2,25$，其中 $0$ 是空窗，$25$ 是一个标签；颜色另用 $0,\ldots,5$。实际分支及 guard 为
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),
+$$
+$$
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad 1\to1:5.
+$$
+从 guard $s$ 出发的地址域为 $A_s$，其中 $A_1\subset A_0$；两者使用同一窗口级数。每条实际地址的全部坐标满足 $x_j=f_{\ell_j}(x_{j+1})$，且 $\kappa_s(A_s)=I_s$。五个闭根像依次为
+$$
+[-1,-t^2],\quad[-t^2,g],\quad[g,t],\quad[t,2t],\quad[2t,\phi],
+$$
+guard 一只允许前三块。这些来源、端点和满像合同取自[定义14.5—定理14.7][51源14]及[定理17.2][51源17]。
+
+原六格闭包 $J_c$ 的切点为
+$$
+q_1=-\frac{11t^2}{10},\quad q_2=g-3\lambda,\quad
+q_3=t-5\lambda,\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda.
+$$
+令 $E_c^\beta=\{x\in I_0:\operatorname{dist}(x,J_c)\le\beta\}$。沿用[式(28.1)—(28.2)][51源28]，其临界闭扩张为
+$$
+\begin{array}{ll}
+E_0^\lambda=[-1,-t^2],&E_1^\lambda=[-6t^2/5,g-t^2/5],\\
+E_2^\lambda=[g-2t^2/5,t-2t^2/5],&E_3^\lambda=[t-3t^2/5,2t-3t^2/5],\\
+E_4^\lambda=[2t-4t^2/5,2t+t^2/5],&E_5^\lambda=[2t,\phi].
+\end{array}
+$$
+
+以下固定 $\beta\in\mathbb Q(t)\cap[0,\lambda)$ 以及**已经供应的完整原规范图**。它的共同有限端点集 $B$ 包含原观察、guard、分支端点，并满足
+$$
+b\in B,\quad F_\ell(b)\in I_0\quad\Longrightarrow\quad F_\ell(b)\in B.
+$$
+每个 guard 中保留 $B_s=B\cap I_s$ 的全部单点片和相邻端点间整个闭片；全部来源边恰为
+$$
+(s,P)\xrightarrow{\ell}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\quad
+P\subseteq f_\ell(I_{s'}),\quad Q\subseteq F_\ell(P).
+\tag{51.1}
+$$
+节点允许色 $c$ 当且仅当 $P\subseteq E_c^\beta$。配对顶点是具有共同允许色的两个原节点，配对边由两条原来源边组成；共同色在出发顶点选取，有限路径的终端不另观察一次。这正是[定义31.3、定理31.4][51源31]及[公开原图定义45.1][51源图]的合同。本文不改变 $B$、原片、全包含边或原初始条件。
+
+由 (51.1)，$f_{\ell_j}(P_{j+1})\subseteq P_j$；有限路径可用任意一对与终端 guard 匹配、且标量分别属于两终端原片的合法终尾联合提升，无限路径由嵌套闭像和直径界 $g^N\operatorname{diam}I_0$ 联合提升。因而所有坐标、guard 和逐步共同色来自同一对实际地址。这里的共同色表示闭成员相容；指定切点归属后的实际误差取得还需要相应目标属于该实际颜色，不能由闭端点成员自动推出。
+
+设 $S$ 为此原配对图的含环 SCC，$n=|V(S)|$。以下假设 $S$ 中至少一个顶点的第二来源片为单点。若所给的是原可达闭分歧图中的 SCC，所有路径仍限制于它；否则不增添初始可达性。由此单点假设，[命题39.6.1][51源单点]交换分量给出整个第二投影单点且返回相干；第一不相干时，每个第一片都非退化。[定理36.22][51源相位]应用于第二标签投影，给实际 rival 的本原周期词 $V$、周期 $p\le n$ 和边相位
+$$
+\vartheta:V(S)\to\mathbb Z/p\mathbb Z,\qquad
+\vartheta(w)=\vartheta(v)+1\quad(v\to w).
+\tag{51.2}
+$$
+第二单点 $y_{\vartheta(v)}$ 就是这同一个周期地址的坐标。每个非空返回长被 $p$ 整除，但未必等于 $p$。固定基点 $o$，第一 guard 为 $s$、原片为 $P=[u,v]$、宽度为 $w=v-u$。每条长 $L$ 的返回，其第一词 $U$ 从 $s$ 合法返回 $s$，并满足
+$$
+f_U(x)=A_U+(-g)^Lx,\qquad f_U(P)\subseteq P.
+\tag{51.3}
+$$
+

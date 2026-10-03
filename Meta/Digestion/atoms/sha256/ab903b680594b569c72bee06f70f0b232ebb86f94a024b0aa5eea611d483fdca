@@ -1,0 +1,43 @@
+**命题 13.4（无限时域障碍与全局交换合同）。** 对有限 $X$ 和确定映射 $f:X\to X$，一个有限的 $(E,P,\eta,i)$ 同时满足
+
+$$
+\eta(P^t i(x))=f^t(x)\qquad(x\in X,\ t\ge0)
+$$
+
+当且仅当 $f$ 为置换。对有界 FIB 来源，即使只指定一个非零 $x\in D_N$，也不存在有限置换 $P$、固定读出 $\eta$ 和初始化状态 $e$，使 $\eta(P^t e)=\delta^t x$ 对所有 $t\ge0$ 成立。
+
+另一个合同是全局可逆因子：对任意集合 $E,X$、映射 $f:X\to X$、双射 $g:E\to E$ 和满射 $\eta:E\to X$，若
+
+$$
+\eta g=f\eta\quad\text{在全部 }E\text{ 上成立},
+$$
+
+则 $f$ 必满射。因此 $N\ge1$ 时，$\delta:D_N\to D_N$ 也没有这种全局可逆因子。全局交换要求强于定义 13.1 仅在初始化轨道及指定时域上的等式。
+
+证明。一个全时域的有限模拟也是每个有限时域 $H$ 的模拟。由定理 13.2，固定的 $|E|$ 必大于等于 $|X|+H|L|$，所以 $L=\varnothing$。有限集上的满射是置换；反之取 $E=X,P=f,\eta=i=\operatorname{id}_X$ 即可，空集也包括在内。
+
+对单一非零 $x\in D_N$，若有上述有限实现，则存在 $q\ge1$ 使 $P^q e=e$。取整数 $a$ 使 $aq\ge N$，得到
+
+$$
+x=\eta(e)=\eta(P^{aq}e)=\delta^{aq}x=0^\infty,
+$$
+
+矛盾。对于全局因子，任取 $x\in X$，由 $\eta$ 满射可取 $e$ 使 $\eta(e)=x$；再由 $g$ 可逆，
+
+$$
+x=\eta(gg^{-1}e)=f(\eta(g^{-1}e))\in f(X).
+$$
+
+故 $f$ 满射。推论 13.3 的像计算说明 $N\ge1$ 时 $\delta(D_N)=D_{N-1}\subsetneq D_N$，给出 FIB 结论。
+
+有限状态的限制可以在初始化合同中用可数状态解除。B. V. Rajarama Bhat、Sandipan De、Narayan Rakshit，*A caricature of dilation theory* (2021)，arXiv:2004.09255v1，[预印本 Theorem 1.20](https://arxiv.org/html/2004.09255v1)，给出经典集合论构造。将其读出写为 $X$ 值，构造为
+
+$$
+\begin{aligned}
+E&=X\times\mathbb Z,& P(x,n)&=(x,n+1),& i(x)&=(x,0),\\
+\eta(x,n)&=\begin{cases}f^n(x),&n\ge0,\\x,&n<0.\end{cases}
+\end{aligned}
+$$
+
+从初始化状态出发，$P^t i(x)=(x,t)$，所以对所有 $t\ge0$ 都有正确读出；对于有限或可数 $X$，$E$ 至多可数。它适用于这里的 $D_N$ 以及可数的实际来源 $D$，是上述有限成本与无限时域障碍的经典边界比较。在 $n\ge0$ 时有 $\eta P(x,n)=f\eta(x,n)$；在 $n<0$ 时，两边分别为 $x$ 与 $f(x)$，故只在 $f(x)=x$ 时相等。因此该初始化构造不提供任意 $f$ 的全局交换等式，负时刻的交换也不是处处失败。$\square$
+

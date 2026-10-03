@@ -1,0 +1,11 @@
+**定理 37.4（一个守卫 CRT 候选规则）。** $J_L$ 中的候选恰为所有合法词 $uw$（$|u|=n$）及 $y\bmod L$，满足
+
+$$
+y\equiv t_u+M^nr\pmod\ell,
+$$
+
+$$
+qM^{-j}(y-t_{u|_j})\equiv b_j\pmod m\qquad(0\le j<n).
+\tag{37.4}
+$$
+

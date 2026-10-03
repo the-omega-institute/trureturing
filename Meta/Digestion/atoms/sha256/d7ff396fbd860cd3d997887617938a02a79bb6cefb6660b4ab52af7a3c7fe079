@@ -1,0 +1,20 @@
+### 引理 47.2（原规范片及有限观察的精确仿射像）
+
+每个非空 $\mathcal I_a$ 是原 $s_a$-片的并。对其任一点 $x$，原规范片 $P_{s_a}(x)$ 整个包含于 $\mathcal I_a$；若 $x$ 同时属于若干所选闭色，则同一规范片同时包含于这些闭色。
+
+对 $N\ge1$，令 $\Gamma_{a,N}$ 为从 $\mathcal J_a$ 出发、具有 $N$ 个顶点的 $\mathcal P$ 路径。写一条路径为
+
+$$
+\pi=((r+1+j,s_j,P_j))_{0\le j<N},\qquad
+P_j\xrightarrow{a_j}P_{j+1}\quad(0\le j<N-1).
+$$
+
+以 $f_w=f_{a_0}\circ\cdots\circ f_{a_{N-2}}$，空词时取恒等映射，则有集合等式
+
+$$
+\boxed{\displaystyle
+\mathcal I_a\cap H_{r+1,s_a}^{(N)}
+=\bigcup_{\pi\in\Gamma_{a,N}} f_w(P_{N-1}).}
+\tag{47.10}
+$$
+

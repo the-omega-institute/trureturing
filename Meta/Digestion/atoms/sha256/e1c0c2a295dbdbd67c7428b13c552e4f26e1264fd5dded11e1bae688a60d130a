@@ -1,0 +1,6 @@
+## 59. 付费重置的实际严格率增益与有限高串的平台左连续性
+
+本章在第58章固定预算模板夹界内，构造两个确实由同一对实际来源供应的子语言。第一个在每个固定过渡预算下支付一个固定有限重置，严格提高已有的下界率，并给每个正确完整解码器全视界的线性系数下界。第二个限制连续最大填充返回的个数，以显式正长度有限图证明其精确偶数长度率，再用先固定有限串长、后提高预算的夹逼证明帽平台左端的左连续性。精确率只指所构造的计数语言；固定过渡预算下整个模板的精确率仍未确定。
+
+公开来源固定为 [FIB_SOURCE_COMPLETION_DYNAMICS.md，修订 c99e47275ca3ebcebbff8fbb06ae894ff29aa122](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)。实际标签、guards、字面尾和逐槽坐标使用该正文的[约定49.1、命题49.2与引理49.3](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L19534)，最低返回供应使用[定理49.8](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L20082)，完整记忆使用[定义36.9](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11179)，粗线性存在性上界使用[定理33.13](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L9588)。第58章是本章的数学前篇，以下按其确切编号复用供应、计数和必要禁串接口；所有新的复合、重置、图及极限步骤均在本章证明。
+

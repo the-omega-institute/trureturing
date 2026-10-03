@@ -1,0 +1,30 @@
+**定义 22.1（完整初始化纤维、记录与逐来源部分正确性）。** 在带选择公理的通常集合论中，设 $X\ne\varnothing$ 是实际来源集合，$\tau:X\to\mathbb B$，$\mathbb B=\{0,1\}$。全部 $x\in X$ 位于同一完整可访问初始化 $I_0$ 的纤维；$I_0$ 包含已经取得的联合记录、控制器初态、已知设置、接口与任务承诺。$X$ 保留符合这些条件的全部实际实现，不以期望的答案删去竞争来源。来源在以下操作中不改变。
+
+取可数的完整动作—报告字母表 $\mathcal L$。动作的精确查询地址、参数及有效设置均在记录中；种子生成的参数也不能从记录中略去。每一步的动作菜单是此前可见记录的函数，合法性对匹配该记录的来源相同。实际报告由同一来源、此前记录及所选完整动作确定；执行耗时、费用、许可变化或其他量若可被策略观察，须作为报告保留。无报告的内部状态与种子不要求属于可数字母表，但在固定种子后，内部状态、控制、停止与输出须能由 $I_0$ 和此前完整记录重建，不能另外读取来源。
+
+令 $\mathcal H\subseteq\mathcal L^{<\mathbb N}$ 为该接口的全部实际可行有限记录，包括空记录；可行性只依接口和实际来源域，不依某个选定策略。对 $h\in\mathcal H$ 定义完整实际相容纤维
+
+$$
+\mathcal C(h)=\{x\in X:\text{依次执行 }h\text{ 中的合法动作时，全部报告恰为 }h\text{ 所记}\},
+\qquad \mathcal C(h)\ne\varnothing.
+\tag{22.1}
+$$
+
+终端记录 $(h,y)$ 的有声性定义为 $\tau(\mathcal C(h))=\{y\}$。这是[延拓卷定义 11.1、11.2](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)在完整实际竞争域上的停止证书合同；这里只使用其纤维判据，不把证书存在当作免费取得或有效认证。静态查询族的判据另由既有 [`QueryFamilyIdentification` 的 `identification_iff_kernel_inclusion`](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)供应。
+
+随机策略 $\pi$ 使用与输入无关的同一个概率空间 $(\Omega,\mathcal A,\mu)$。固定 $\omega$ 后策略确定，所有实际随机选择均包含在 $\omega$ 中；动作须对每个实际运行合法。若该种子在 $x$ 上生成有限前缀 $h$，则它在每个 $z\in\mathcal C(h)$ 上生成相同前缀；若此处返回 $y$，在这些 $z$ 上也同时返回 $y$。此同种子重放采用[运输记忆完成卷第 6.4 节、式（CE.19）—（CE.21）之后的完整初始化合同](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#64-商观察的全部未来与行为纤维)的下降条件；这里的操作是只读接口，不假设平移群或赋予来源平移权限。
+
+记错误返回与未终止的种子集合为
+
+$$
+\begin{aligned}
+W_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上有限返回 }y\ne\tau(x)\},\\
+N_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上不有限终止}\}.
+\end{aligned}
+\tag{22.2}
+$$
+
+核心正确性合同仅为 $W_x^\pi\in\mathcal A$ 及 $\mu(W_x^\pi)=0$，对每个 $x\in X$ 分别要求。它不包含有限终止，不要求各个历史事件可测，不给 $X$ 指定 $\sigma$ 代数、来源概率律或来源—种子联合可测性。涉及终止概率或费用期望时，另要求相应 $N_x^\pi$ 或费用随机变量可测。携带来源信息的种子不属于此输入无关合同。
+
+在原始有限 FIB 树接口上，可取既有定义 21.1 的 $X_L$、$\tau=\iota_3$ 和原始地址四值响应；这不改变定义 21.2 只在 $P,Q$ 上优化的 $R^+_{L,h}$。完整树码与全部路径响应采用[母卷定理 9.2、9.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，实际替换单射性采用[规范编译卷命题 4.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。组成、规范数量地址、原始树响应、组成祖先许可与实际逆执行是不同对象或任务；组成上的代数逆不增加此只读菜单，也不供应实际树前像。
+

@@ -1,0 +1,19 @@
+**60.2 最小原菱形及 $h\ge6$ 的自足前置。** 在60.1的合同下，存在原内部路径
+$$
+G\longrightarrow D_a\xrightarrow a E_-\xrightarrow3 F,
+\qquad
+G\longrightarrow D_b\xrightarrow b E_+\xrightarrow0 F,
+\tag{60.5}
+$$
+其中
+$$
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\},\qquad
+P_{E_-}<y_{\mathcal E}<P_{E_+}.
+$$
+$\mathcal D,\mathcal E$ 是相邻的两个双顶点循环类，其余类均为单顶点。两条实际返回的第一词为
+$$
+U_-=Ta3,\qquad U_+=Tb0,\qquad |T|=h-2,
+\tag{60.6}
+$$
+并且 $h\ge6$。从 $F$ 将循环类编号为 $0,1,\ldots,h-1$，则 $\mathcal D,\mathcal E$ 编号为 $h-2,h-1$，$G$ 编号为 $h-3$。$F$ 后的原顶点 $Z,Q,K$ 编号分别为 $1,2,3$，均在共同单顶点链上；当 $h=6$ 时 $K=G$。
+

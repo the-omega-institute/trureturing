@@ -1,0 +1,72 @@
+**定理 35.3（严格余量、初始平台与固定深度的阶）。** 对全部 $n\ge1,K\ge0$，
+
+$$
+\boxed{\frac{q^2r}{3}\le\mu_{n,K}
+\le\min\{qd,\ 2\phi qr\}.}
+$$
+
+而且
+
+$$
+\boxed{d_{n,K}=\delta\quad(0\le K\le n).}
+$$
+
+$d_{n,K}$ 随 $K$ 非增且趋于 $d$；每个有限 $K$ 的余量严格为正。对固定 $n$，有 $\mu_{n,K}=\Theta_n(g^K)$，这里不把隐含常数宣称为同时独立于 $n,K$。
+
+证明。先使用推论34.6的代数障碍并写出其数值：$\delta$ 是 $R$ 的单位，而
+
+$$
+|N(1+q)|=
+\begin{cases}
+q^{-1}-q,&n\text{ 奇},\\
+2+q+q^{-1},&n\text{ 偶}
+\end{cases}
+\ge4.
+$$
+
+故 $d\notin R$。实际尾的共轭是非负位和，支持低于 $3K$ 给出
+
+$$
+0\le y'\le\sum_{j<3K}\phi^j
+=\phi(r^{-1}-1),\qquad
+|h'|\le\phi(r^{-1}-1)\quad(h\in H_K).
+$$
+
+对 $h\in H_K$，非零代数整数 $W=(1+q)h-\delta$ 满足 $|N(W)|\ge1$。由于 $1+sq>0$，
+
+$$
+\begin{aligned}
+|W'|&\le\frac{1+sq}{q}\phi(r^{-1}-1)+\frac tq\\
+&\le\frac{\phi(1+sq)}{qr}.
+\end{aligned}
+$$
+
+最后一步用 $t\le\phi(1+sq)$；其最小右侧至少是 $\phi(1-g)>t$。于是
+
+$$
+|h-d|\ge\frac{qr}{\phi(1+q)(1+sq)},\qquad
+F(h)-d\ge\frac{q^2r}{\phi(1+q)(1+sq)}.
+$$
+
+分母不超过 $\phi(1+g)^2=4t<3$。对实际最小值应用此式即得下界。这只共轭了选定的代数表达式 $W$，没有将最大值或绝对值函数当成可共轭的运算。
+
+零尾兄弟对给出上界 $\mu_{n,K}\le\delta-d=qd$。当 $K\ge1$ 时，置 $z=d-\phi r$。由 $d\le t/2<t$ 及 $\phi r\le\phi g=t^2<1$，有 $-1<z<t$。定义14.5、命题14.6与定理17.2的状态相对区间实现提供一条标量为 $z$ 的合法 guard 一完成尾。将它截到前 $K$ 个窗口再补零，得到实际有限尾 $\widetilde y$。同一地址的剩余标量绝对值不超过 $\phi$，故
+
+$$
+|\widetilde y-z|\le\phi r,\qquad
+d-2\phi r\le\widetilde y\le d.
+$$
+
+若 $\widetilde y<0$，以整条零尾替换；否则保持原尾。所得 $y\in T_{1,K}$ 满足 $0\le y\le d$ 且 $d-y\le2\phi r$。将它与零 guard 零尾相比较，命题35.2给出 $\mu_{n,K}\le q(d-y)\le2\phi qr$。$K=0$ 时两条尾都为零，$\mu_{n,0}=qd$，且 $qd\le2\phi q$，所以同一上界成立。
+
+初始平台的 $K=0$ 情形就是前缀码本间距。若 $1\le K\le n$，两个不同尾标量均属于 $S_{3K}$，定理23.2给出尾差绝对值至少为 $t^{3K-1}=\phi r\ge\delta$。若两条尾相同，则当前坐标差就是不同前缀码差，仍至少为 $\delta$。零尾兄弟对达到此值，证明平台。
+
+零延长使实际来源域随 $K$ 嵌套，因此最小距离非增；上界 $2\phi qr\to0$ 又使其趋于 $d$。固定 $n$ 时可取阶比较常数 $q^2/3$ 与 $2\phi q$。这些常数不能换成同时独立于两参数的正下界常数：在 $K=n$，
+
+$$
+g^{-n}\mu_{n,n}=d=\frac{\phi g^n}{1+g^n}\longrightarrow0
+\quad(n\to\infty).
+$$
+
+$\square$
+

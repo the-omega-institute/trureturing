@@ -1,0 +1,136 @@
+**定理 8.4（全部深度和预算的精确得分规则与所有并列取得对）。** 对每个整数 $k\ge1$ 和 $H\ge N_k$，定义 8.3 的集合 $\mathcal I_k(H)$ 非空。其每项给原初始预算内的实际反标签组成对，而且
+
+$$
+\boxed{\quad
+\Theta_k(H)=\frac{1}{\displaystyle\max_{(j,\sigma)\in\mathcal I_k(H)}W_{j,\sigma}}.
+\quad}
+\tag{8.11}
+$$
+
+每个最大得分项均达到此值；反过来，每个达到此值的组成对，在交换端点之外，恰为某个最大得分项的 $(x_{j,\sigma},y_{j,\sigma})$。所有相等的最大得分都须保留，不能仅按指标大小选一项。对每个固定 $(j,\sigma)$，式 (8.8)、(8.9) 是该方向和朝向下唯一的最大分母平移。每个取得组成的任意完整有序树代表均为合法初始来源。$H<N_k$ 时仍有 $\Theta_k(H)=+\infty$。
+
+证明。先核对许可行与整数来源的对应。复用定理 2.3 的整数逆和矩阵幂：$S^k=M^t$ 的两列分别是 $(F_{t-1},F_t)^{\mathsf T}$、$(F_t,F_{t+1})^{\mathsf T}$，行列式为 $(-1)^t=\pm1$。它们生成闭许可锥；整数点在此闭锥中时，唯一实逆系数非负，而整数逆矩阵使这两个系数同时为整数。于是对每个整数 $b\ge0$，
+
+$$
+\begin{aligned}
+\lceil rb\rceil\le\lfloor Rb\rfloor
+&\quad\Longleftrightarrow\quad
+\exists a\in\mathbb N_0:\ rb\le a\le Rb\\
+&\quad\Longleftrightarrow\quad
+b=vm+Nn\text{，其中 }m,n\in\mathbb N_0.
+\end{aligned}
+\tag{8.12}
+$$
+
+$b=0$ 时，两边共同对应零组成；它只用于行判据，后面的 $L_\sigma>0$ 排除零来源。$b>0$ 时对应的组成与祖先均非零。这不是连续锥的松弛，而是原整数组成的准确等价。
+
+$\gcd(v,N)=1$，且任何半群表示 $b=vm+Nn$ 都可将 $n=n_0+vh$ 归约为
+
+$$
+b=v(m+Nh)+Nn_0,\qquad 0\le n_0<v,\quad h\in\mathbb N_0.
+$$
+
+新系数仍非负。对于固定余数 $n_0$ 和上界 $B\ge0$，必须有 $Nn_0\le B$；最大允许的第一系数为 $\lfloor(B-Nn_0)/v\rfloor$。因此式 (8.7) 恰为 $\mathcal S_k$ 中不超过 $B$ 的最大元素；$B<0$ 时没有非负半群元素。该余数公式保留了所有行空洞。
+
+固定方向 $u=F_{j+1}$、$w=F_j$，其中 $u\ge w\ge1$。在正朝向 $y=(a+u,b-w)$ 下，非负性要求 $b\ge w$，且 $y$ 的第一坐标为正。许可端点满足 $a\ge rb$，因此 $a+u-r(b-w)\ge u+rw>0$，另一端不能落在下墙外。由于许可墙闭合，它非许可的准确条件是
+
+$$
+a+u>R(b-w)
+\quad\Longleftrightarrow\quad
+ a\ge\lfloor R(b-w)\rfloor-u+1.
+\tag{8.13}
+$$
+
+两端叶数分别为 $a+b$、$a+b+u-w$；因 $u-w\ge0$，共同预算准确归结为 $a+b\le T_+$。在给定 $b\ge w$ 的行上，允许整数 $a$ 的完整区间遂为
+
+$$
+\max\{\lceil rb\rceil,\lfloor R(b-w)\rfloor-u+1\}
+\quad\le a\le\quad
+\min\{\lfloor Rb\rfloor,T_+-b\}.
+\tag{8.14}
+$$
+
+额外越界下端总不大于 $\lfloor Rb\rfloor$，因为 $u\ge1$、$R\ge0$ 及 $b-w\le b$。故除式 (8.12) 的行条件之外，只须使两个下端均不超过 $T_+-b$。下墙给
+
+$$
+\lceil rb\rceil\le T_+-b
+\quad\Longleftrightarrow\quad
+ b\le\left\lfloor\frac{T_+}{1+r}\right\rfloor.
+$$
+
+越界下端给严格的整数墙：
+
+$$
+\begin{aligned}
+\lfloor R(b-w)\rfloor-u+1\le T_+-b
+&\quad\Longleftrightarrow\quad
+ R(b-w)<H+w-b\\
+&\quad\Longleftrightarrow\quad
+ (1+R)b<H+(1+R)w\\
+&\quad\Longleftrightarrow\quad
+ b\le w+\left\lceil\frac H{1+R}\right\rceil-1.
+\end{aligned}
+\tag{8.15}
+$$
+
+因此正朝向可行的行恰为 $b\in\mathcal S_k\cap[L_+,B_+]$，没有删去轴情形 $b=w$；此时 $y$ 在非零横轴上，式 (8.13) 仍是严格外墙。半群前驱为最大可行行，当且仅当 $M_k(B_+)\ge L_+$ 才有可行行。
+
+在负朝向 $y=(a-u,b+w)$ 下，非负性要求 $a\ge u$，且 $y$ 的第二坐标为正。$a\le Rb$ 给 $a-u-R(b+w)\le-u-Rw<0$，故另一端不能落在上墙外；其非许可条件准确为
+
+$$
+a-u<r(b+w)
+\quad\Longleftrightarrow\quad
+ a\le u+\lceil r(b+w)\rceil-1.
+\tag{8.16}
+$$
+
+较大叶数在 $x$，共同预算为 $a+b\le H$，故行上完整区间为
+
+$$
+\max\{u,\lceil rb\rceil\}
+\quad\le a\le\quad
+\min\{\lfloor Rb\rfloor,H-b,
+ u+\lceil r(b+w)\rceil-1\}.
+\tag{8.17}
+$$
+
+因 $r(b+w)>0$、$u\ge1$ 及 $\lceil r(b+w)\rceil\ge\lceil rb\rceil$，额外越界上端同时不小于 $u$ 和 $\lceil rb\rceil$。除式 (8.12) 之外，剩余条件恰为
+
+$$
+u\le\lfloor Rb\rfloor,\qquad u\le H-b,\qquad
+\lceil rb\rceil\le H-b,
+$$
+
+也就是 $b\ge\lceil u/R\rceil$、$b\le H-u$、$b\le\lfloor H/(1+r)\rfloor$。所以负朝向可行的行恰为 $b\in\mathcal S_k\cap[L_-,B_-]$，存在性准确等价于 $M_k(B_-)\ge L_-$。此处 $L_->0$；$x$ 的第一坐标至少为 $u$，$y$ 的第二坐标至少为 $w$，两端均非零。$a=u$ 的非零纵轴终点也保留在式 (8.17) 中。以上推导在 $j=1$ 的 $u=w=1$、两端叶数相等时同样成立。
+
+在固定可行行 $b$ 上，分母 $2(a+\phi b)+\sigma e_j$ 随整数 $a$ 严格增加，故唯一最大值在式 (8.14) 或 (8.17) 的上端。正朝向的 $a_{\max}(b)+\phi b$ 是
+
+$$
+\min\{\lfloor Rb\rfloor+\phi b,
+ T_++(\phi-1)b\};
+$$
+
+负朝向的相应量是
+
+$$
+\min\{\lfloor Rb\rfloor+\phi b,
+ H+(\phi-1)b,
+ u+\lceil r(b+w)\rceil-1+\phi b\}.
+$$
+
+每个分支都随整数 $b$ 严格增加：取整项非递减，且 $\phi>1$。有限个严格递增分支的最小值也严格递增，因为较大 $b$ 的每个分支值都严格大于较小 $b$ 的最小分支值。因此即使可行行有空洞，唯一最大分母仍在最大可行行 $b_\sigma=M_k(B_\sigma)$，再取式 (8.9) 的 $a_\sigma$。
+
+两朝向的分子均为 $|e_j|=\phi^{-j}$，所以比值为 $1/W_{j,\sigma}$。定理 8.2 把每个全局极小对限制在有限指标 $F_{j+1}\le H$ 的两朝向中，而刚才的整数区间已在每个朝向中给唯一最大分母平移。若极小对采用了该朝向的另一平移，换成最大分母平移会严格减小同一分子的比值，矛盾。这证明式 (8.11) 及全部取得对的双向刻画，也证明 $\mathcal I_k(H)$ 非空。它使用原三角域的相邻性与逐朝向的显式平移最大化，不要求枚举并排序全部来源。
+
+所有得分比较均可在 $\mathbb Q(\phi)$ 中精确进行。复用式 (7.8) 证明中的正确幂表达 $\phi^j=F_{j-1}+F_j\phi$（$j\ge1$），置 $A=2a_\sigma+\sigma u$、$B=2b_\sigma-\sigma w$，由 $\phi^2=\phi+1$ 得
+
+$$
+W_{j,\sigma}=
+(F_{j-1}A+F_jB)+(F_jA+F_{j+1}B)\phi.
+\tag{8.18}
+$$
+
+两得分相等，当且仅当这两个整数系数分别相等，因为 $\phi$ 无理。比较差 $c+d\phi$ 时，比较两倍的差 $(2c+d)+d\sqrt5$ 即可。若 $2c+d$ 与 $d$ 同号，或其中一个为零，符号直接确定；两者异号时，比较 $(2c+d)^2$ 与 $5d^2$，较大绝对项的符号就是总和的符号。非零整数的平方不可能等于另一个非零整数平方的五倍，故异号比较没有未定等号。两个整数系数都为零时才是得分并列，此时必须保留全部对应项。
+
+最后，定义 1.1 使每个非零非负取得组成都能由原预算内的完整有序树实现；证明量仅依赖组成，故同一组成的任意树代表均达到同一比值。许可端点的整数祖先非零，可以实现后施加 $\rho^{3k}$ 取得一个具有该组成的来源，但不由此断言任意选定括号树具有此语法祖先。$H<N_k$ 时没有许可来源，结论直接复用定理 7.3。证毕。
+
