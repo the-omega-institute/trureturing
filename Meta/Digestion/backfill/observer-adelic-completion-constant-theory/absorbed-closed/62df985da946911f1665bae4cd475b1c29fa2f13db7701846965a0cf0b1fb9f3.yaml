@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:62df985da946911f1665bae4cd475b1c29fa2f13db7701846965a0cf0b1fb9f3
+  normalized_sha256: sha256:62df985da946911f1665bae4cd475b1c29fa2f13db7701846965a0cf0b1fb9f3
+cas_ref: sha256:62df985da946911f1665bae4cd475b1c29fa2f13db7701846965a0cf0b1fb9f3
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockJacobi.borcherds
+    target_statement_id: sha256:8037f74b87ed9311101f6885d96eab1fc7223b226e00d567092a455b1f62328a
+  - gid: D5/S3/VertexAlgebra/PolynomialFockJacobi.relative_vacuum_uniqueness
+    target_statement_id: sha256:c7452a49a4aeac813a31b98fc5bf19623d6d6e498750b1b29f915ebf4f73240b
+  - gid: D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_closure
+    target_statement_id: sha256:1d5faaf7e368581f617337ffb9d4b016998d77372c54dd0962a29d7785159f79
+  - gid: D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_nonnegative_locality
+    target_statement_id: sha256:ffd1b81d1ce34a130acb2de3df40db851a81447d07bfd11cc73581b1559a3e65
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,25 @@
+**问题 2147.2（实际多项式 Fock 的全整数态场复合律）。** 在同一个复多项式 Fock 空间及已经构造的实际全态场 $Y$ 上，令
+
+$$
+\mu(a,n,b)=((Y a)[[n]])b,\qquad
+C(t,i)=\left(\binom{t}{i}_{\!\mathbb Z}:\mathbb C\right),\qquad
+\varepsilon(r)=(-1: \mathbb C)^r,
+$$
+
+其中 $t,r\in\mathbb Z$、$i\in\mathbb N$，而 $\binom{t}{i}_{\!\mathbb Z}$ 是整数广义二项式系数。对所有 $a,b,c\in F_{\mathbb C}$ 及 $p,q,r\in\mathbb Z$，证明
+
+$$
+\sum_{i\geq0}^{\mathrm{fin}} C(p,i)\,\mu(\mu(a,r+i,b),p+q-i,c)
+=
+\sum_{i\geq0}^{\mathrm{fin}}((-1: \mathbb C)^i C(r,i))
+\left(\mu(a,p+r-i,\mu(b,q+i,c))
+-\varepsilon(r)\,\mu(b,q+r-i,\mu(a,p+i,c))\right).
+$$
+
+这里的三个逐态有限和必须分别证明：左侧支路有限，右侧第一支路有限，右侧第二支路有限；不得把端同态值域的统一有限支撑误作逐态有限性，也不得把负整数 $r$ 的广义二项式系数截为有限多项式。还须从已证明的实际 $Y$ 导出全整数闭包
+
+$$
+Y(\mu(a,r,b))=R_r(Y a,Y b),
+$$
+
+其中 $R_r$ 的每个系数由上述两条逐态有限支路的 residue 和定义。闭包证明必须通过实际的创生、共同平移、下截断和与所有 $Yc$ 的局域性，不能把闭包、Jacobi 恒等式或 Dong 引理当作假设。$r=-d-1$ 时应在证明中识别实际 residue 与 `normalMinusOne (dividedDerivative d A) B`；非负 $r$ 的 Dong 型有限消去、负整数的导数分支、真空唯一性以及缺陷递推均须在同一个 Fock 消费者中完成。依据：[Matsuo–Nagatomo, Proposition 1.5.5 and Proposition 3.2.2](https://arxiv.org/abs/hep-th/9706118v1) [文献注](../../../Library/VertexAlgebra/matsuo1997locality.md)。该问题只推进实际 Fock 的全整数态场复合律，不主张 Monster 实现、模块融合、完整边界 CFT、弦论或 AdS/CFT 几何动力学桥梁。
