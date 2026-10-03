@@ -165,6 +165,32 @@ $$
 
 The original odd domain becomes $g(1-t)=-g(t)$. Extension of this core calculation requires the actual transported closed-form domain and common form-core contract. This affine map is not identified with the exponential $U_A$ or the paper's complete collar gauge. The benchmark states which scalar and regular-kernel terms occur before that identification; it neither supplies a new lower bound nor contradicts Proposition 5.3. Reusing the later $\mathfrak b$ estimates still requires the complete realization and allocation of these terms in the same direct/source forms. The displayed calculation is paper-level source bookkeeping, without a Lean validation of the integral or domain transport.
 
+There is also a benchmark in the actual parent-cell coordinate of §6.9. Transport the same archimedean formula by $R_a$ from (8), before odd restriction. Its physical gamma kernel is $\rho(|y-z|)$, and its multiplication coefficient is
+
+$$
+c_0(a)+V(y/a)=-\log(2\pi)-\gamma-\frac12\log(a^2-y^2).
+$$
+
+Write $\mathfrak h_J$ for the singular quarter difference form on an interval $J$. Let $I=(\ell,r)\subset(-a,a)$, $w=r-\ell$, $f\in C_c^\infty(I)$, and let $E_If$ be its zero extension. The exterior strips give
+
+$$
+\mathfrak h_{(-a,a)}[E_If]-\mathfrak h_I[f]
+=\frac12\int_I\log\frac{a^2-y^2}{(y-\ell)(r-y)}|f(y)|^2\,dy.
+$$
+
+The physical endpoint potential is $-\tfrac12\log(a^2-y^2)$; it cancels the numerator in this strip contribution. With $g(u)=\sqrt w\,f(\ell+wu)$, the resulting compression is
+
+$$
+\mathfrak a_{\mathrm{arch},a}^{\mathrm{ph}}[E_If]
+=\mathfrak b[g]-\bigl[\log(2\pi w)+\gamma\bigr]\|g\|_2^2
+-\langle g,K_{\gamma,w}^{(0,1)}g\rangle,
+\qquad K_{\gamma,w}^{(0,1)}(u,v)=w\rho(w|u-v|).
+$$
+
+For a Mellin parent $C_m=[m,m+1)$ within $[1,e^{2a}]$, use $t=e^{y+a}$. Its physical interval is $I_m=(\log m-a,\log(m+1)-a)$, with $w=w_m$. The coordinate $u=\log(t/m)/w_m$ is the one used in (103)–(104). This calculation is a compression, whereas Theorem 6.53 takes an infimum over a free common complement. For the same form, prescribed data and admissible complement, zero extension is only one competitor and gives an upper comparison for that infimum. The physical compression has not been identified with the theorem's short of $\mathfrak b$. A nonsymmetric single-parent test also needs its reflected component and all cross terms to become an odd test. The pole and prime terms are excluded from these archimedean benchmarks; no counterexample to the actual odd Weil form is asserted.
+
+The remaining realization must specify its full potential, starting interval, preceding map from the odd physical space, and relation between $A$, $a$ and $w_m$. The displayed proof of Proposition 5.3 does not identify these data. Lemma 6.16 preserves the target ground line and its orthogonal splitting; that alone is not a transformed-potential identity. Lemma 6.51 and Theorem 6.53 calculate on the already-specified $\mathfrak b$, and Lemma 8.4 invokes Proposition 5.3 again. These source dependencies locate the missing correspondence without proving that no such correspondence can exist.
+
 The [existing small-support spectral supplier](suzuki2026screw.md) and [localization account](frankliebseiringer2006hardy.md) already cover the corresponding basic boundary energy and its small-window use. They should be reused; neither supplies this paper's all-scale collar correspondence. The supplementary scalarization audit limits its PASS to the stated scalarization risk and does not independently establish the complete diagonal identification.
 
 ## Relation to the FIB research gap
