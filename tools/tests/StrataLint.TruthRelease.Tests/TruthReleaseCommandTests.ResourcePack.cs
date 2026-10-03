@@ -1,4 +1,6 @@
+using System.Collections.Immutable;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
@@ -17,7 +19,7 @@ public sealed partial class TruthReleaseCommandTests
         using var resources = new TemporaryDirectory();
         using var output = new TemporaryDirectory();
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
         if (input == "digest") digest = new string('0', 64);
         if (input == "missing") File.Delete(packPath);
         if (input == "malformed") File.WriteAllBytes(packPath, [0xff]);
@@ -72,7 +74,8 @@ public sealed partial class TruthReleaseCommandTests
             ? [SimpleDefinition(BlueprintGid), SimpleDefinition("D5/S0/Carrier/Extra")]
             : [];
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, definitions).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, definitions).TotalSha256;
+        if (!extra) File.Delete(Path.Combine(ReleaseRepositoryRoot(fixture), "Blueprint/" + BlueprintGid + ".scribe.cs"));
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
 
@@ -92,7 +95,7 @@ public sealed partial class TruthReleaseCommandTests
         var (referenceExit, referenceConsole) = Run(fixture, reference.Path, GreenTrustArguments());
         Assert.True(referenceExit == 0, referenceConsole.Error);
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, PackDefinitions(fixture)).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, PackDefinitions(fixture)).TotalSha256;
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest.ToUpperInvariant()));
 
@@ -110,7 +113,7 @@ public sealed partial class TruthReleaseCommandTests
         using var resources = new TemporaryDirectory();
         using var output = new TemporaryDirectory();
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
 
@@ -119,6 +122,50 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Empty(graph.RootElement.GetProperty("documents").GetProperty("describe_nodes").EnumerateArray());
         Assert.Equal(BlueprintGid, Assert.Single(
             graph.RootElement.GetProperty("documents").GetProperty("document_nodes").EnumerateArray()).GetProperty("gid").GetString());
+    }
+
+    [Fact]
+    public void ResourcePackRejectsChangedDefinitionWithoutWritingBundle()
+    {
+        using var fixture = CreateFixture();
+        using var resources = new TemporaryDirectory();
+        using var output = new TemporaryDirectory();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, PackDefinitions(fixture)).TotalSha256;
+        var definitionPath = "Blueprint/" + BlueprintGid + ".scribe.cs";
+        File.AppendAllText(Path.Combine(ReleaseRepositoryRoot(fixture), definitionPath), "\n");
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
+        Assert.Contains("ScribePackCorrespondenceMismatch", console.Error, StringComparison.Ordinal);
+        Assert.Contains("该包与当前文件不对应", console.Error, StringComparison.Ordinal);
+        Assert.Contains("inputsChanged=1", console.Error, StringComparison.Ordinal);
+        Assert.Contains(definitionPath, console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+    }
+
+    private static string ReleaseRepositoryRoot(Fixture fixture) =>
+        Path.Combine(Path.GetDirectoryName(fixture.ReportPath)!, "repository");
+
+    private static ScribeResourcePackManifest WriteCorrespondingReleasePack(
+        Fixture fixture, string path, IEnumerable<DocumentDefinition> definitions)
+    {
+        var list = definitions.ToArray();
+        var inputs = list.ToDictionary(definition => definition.Document.Header.Gid.Value, definition =>
+        {
+            var sourcePath = "Blueprint/" + definition.Document.Header.Gid.Value + ".scribe.cs";
+            var fullPath = Path.Combine(ReleaseRepositoryRoot(fixture), sourcePath);
+            if (!File.Exists(fullPath))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+                File.WriteAllText(fullPath, "// definition fixture\n");
+            }
+            return ImmutableArray.Create(new ScribeResourceInput(sourcePath,
+                Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(fullPath)))));
+        }, StringComparer.Ordinal);
+        return ScribeResourcePack.Write(path, list, inputs);
     }
 
     private const string PackUsage = "[--scribe-pack FILE --scribe-pack-digest HEX64]";
@@ -130,7 +177,7 @@ public sealed partial class TruthReleaseCommandTests
         using var resources = new TemporaryDirectory();
         using var output = new TemporaryDirectory();
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
 
@@ -153,7 +200,7 @@ public sealed partial class TruthReleaseCommandTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body")))),
             "Blueprint/" + BlueprintGid + ".scribe.cs");
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [definition]).TotalSha256;
+        var digest = WriteCorrespondingReleasePack(fixture, packPath, [definition]).TotalSha256;
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
 

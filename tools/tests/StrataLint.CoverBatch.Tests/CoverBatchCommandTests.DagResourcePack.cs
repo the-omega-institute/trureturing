@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -16,7 +18,7 @@ public sealed partial class CoverBatchCommandTests
         using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
         if (input == "digest") digest = new string('0', 64);
         if (input == "missing") File.Delete(packPath);
         if (input == "malformed") File.WriteAllBytes(packPath, [0xff]);
@@ -72,7 +74,7 @@ public sealed partial class CoverBatchCommandTests
         var paths = new[] { "Generated/DAG.md", "Generated/truth-graph.v1.json" };
         var expected = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(world.Root, path)));
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, DocumentDefinitions.Discover(assembly, world.Root)).TotalSha256;
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, DocumentDefinitions.Discover(assembly, world.Root)).TotalSha256;
         foreach (var path in paths) File.Delete(Path.Combine(world.Root, path));
         string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest.ToUpperInvariant()];
 
@@ -95,7 +97,7 @@ public sealed partial class CoverBatchCommandTests
         var packPath = Path.Combine(resources.Path, "resources.zip");
         var document = ScribeDocument.Create(DefinitionDsl.Header("D5/S0/Carrier/Probe", "Resource fixture"),
             Heading.Create("Resource fixture"), DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Body"))));
-        var digest = ScribeResourcePack.Write(packPath,
+        var digest = WriteCorrespondingDagPack(world.Root, packPath,
             [DocumentDefinition.Create(document, "Blueprint/D5/S0/Carrier/Probe.scribe.cs")]).TotalSha256;
 
         var result = RunPackedDag(world, ["--scribe-pack", packPath, "--scribe-pack-digest", digest]);
@@ -105,6 +107,49 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(graph.RootElement.GetProperty("documents").GetProperty("describe_nodes").EnumerateArray());
         Assert.Equal("D5/S0/Carrier/Probe", Assert.Single(
             graph.RootElement.GetProperty("documents").GetProperty("document_nodes").EnumerateArray()).GetProperty("gid").GetString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DagResourcePackRejectsChangedDefinitionWithoutWritingArtifacts(bool check)
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
+        WriteEmissionInputs(world.Root);
+        world.WriteReportBundle();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        const string definitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        File.AppendAllText(Path.Combine(world.Root, definitionPath), "\n");
+        var before = DagFileImage(world.Root);
+        string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest];
+
+        var result = RunPackedDagCli(world, check ? ["--check", ..arguments] : arguments);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("ScribePackCorrespondenceMismatch", result.Console.Error, StringComparison.Ordinal);
+        Assert.Contains("该包与当前文件不对应", result.Console.Error, StringComparison.Ordinal);
+        Assert.Contains("inputsChanged=1", result.Console.Error, StringComparison.Ordinal);
+        Assert.Contains(definitionPath, result.Console.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
+        Assert.False(File.Exists(Path.Combine(world.Root, "Generated/truth-graph.v1.json")));
+        AssertDagFileImage(before, world.Root);
+    }
+
+    private static ScribeResourcePackManifest WriteCorrespondingDagPack(
+        string root, string path, IEnumerable<DocumentDefinition> definitions)
+    {
+        var list = definitions.ToArray();
+        var inputs = list.ToDictionary(definition => definition.Document.Header.Gid.Value, definition =>
+        {
+            var sourcePath = "Blueprint/" + definition.Document.Header.Gid.Value + ".scribe.cs";
+            var fullPath = Path.Combine(root, sourcePath);
+            if (!File.Exists(fullPath)) WriteScribeFixture(root, sourcePath, "// definition fixture\n");
+            return ImmutableArray.Create(new ScribeResourceInput(sourcePath,
+                Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(fullPath)))));
+        }, StringComparer.Ordinal);
+        return ScribeResourcePack.Write(path, list, inputs);
     }
 
     private const string DagPackUsage =
@@ -120,7 +165,7 @@ public sealed partial class CoverBatchCommandTests
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
         string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest];
         var emitted = RunPackedDag(world, arguments);
         Assert.True(emitted.Success, emitted.Error);
@@ -144,7 +189,7 @@ public sealed partial class CoverBatchCommandTests
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        var digest = WriteCorrespondingDagPack(world.Root, packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
         string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest];
         var emitted = RunPackedDag(world, arguments);
         Assert.True(emitted.Success, emitted.Error);
