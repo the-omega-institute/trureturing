@@ -34,7 +34,7 @@ public sealed class ScribeResourcePackTests
             case "EntryDigestMismatch": entries[0].Bytes[0] ^= 1; break;
             case "TotalDigestMismatch": manifest["totalSha256"] = new string('0', 64); break;
             case "SchemaMismatch": manifest["schema"] = "unknown"; break;
-            case "VersionMismatch": manifest["version"] = 2; break;
+            case "VersionMismatch": manifest["version"] = 1; break;
             case "DuplicateGid": manifest["entries"]![1]!["gid"] = manifest["entries"]![0]!["gid"]!.DeepClone(); break;
             case "DuplicatePath": manifest["entries"]![1]!["path"] = manifest["entries"]![0]!["path"]!.DeepClone(); break;
             case "InvalidManifest": manifest["entryCount"] = 9; break;
@@ -122,7 +122,7 @@ public sealed class ScribeResourcePackTests
 
         Assert.Equal(2, pack.Manifest.EntryCount);
         Assert.Equal(ScribeResourcePack.SchemaName, pack.Manifest.Schema);
-        Assert.Equal(1, pack.Manifest.Version);
+        Assert.Equal(2, pack.Manifest.Version);
         Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
         Assert.Equal(definitions.Sum(item => (long)ScribeResourceCodec.Encode(item).Length), pack.TotalUncompressedBytes);
         Assert.Equal(["D5/S0/Synthetic/First.scribe.json", "D5/S0/Synthetic/Second.scribe.json"],
@@ -136,7 +136,7 @@ public sealed class ScribeResourcePackTests
             Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(bytes)), entry.Sha256);
         }
         var list = "[" + string.Join(",", pack.Manifest.Entries.Select(item =>
-            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\"}}")) + "]";
+            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\",\"inputs\":[]}}")) + "]";
         Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(list))), pack.Manifest.TotalSha256);
         Assert.Throws<KeyNotFoundException>(() => pack.Read("D5/S0/Synthetic/Missing"));
         using var zip = new ZipArchive(new MemoryStream(File.ReadAllBytes(path)), ZipArchiveMode.Read);
@@ -157,7 +157,9 @@ public sealed class ScribeResourcePackTests
 
         var rewritten = ScribeResourcePack.Open(path);
         Assert.Equal(original.TotalSha256, rewritten.Manifest.TotalSha256);
-        Assert.Equal(original.Entries.ToArray(), rewritten.Manifest.Entries.ToArray());
+        Assert.Equal(original.Entries.Select(entry => (entry.Path, entry.Gid, entry.Sha256)),
+            rewritten.Manifest.Entries.Select(entry => (entry.Path, entry.Gid, entry.Sha256)));
+        Assert.All(rewritten.Manifest.Entries, entry => Assert.Empty(entry.Inputs));
         Assert.False(originalBytes.SequenceEqual(File.ReadAllBytes(path)));
         Assert.Equal(2, rewritten.ReadAll().Count());
     }
