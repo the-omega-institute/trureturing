@@ -1,0 +1,47 @@
+import LeanInformationAuditRegTests.ContractGuards
+import LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary
+import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationEquation
+import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationDefinition
+
+namespace LeanInformationAuditRegTests.ContractAuxiliaries
+open Lean Meta Elab Command LeanInformationAudit.Contract
+open LeanInformationAuditRegTests.ContractGuards
+
+run_meta do
+  for fixture in #["ElaborationEquation", "ElaborationDefinition"] do
+    let owner := `LeanInformationAuditRegTests.ContractReferenceFixtures ++ fixture.toName
+    let error ← try
+      discard <| Discovery.discoverWithStructure #[] #[owner]
+      pure "accepted"
+    catch ex => ex.toMessageData.toString
+    assertTest s!"auxiliary.negative.{fixture}"
+      (error.startsWith "contract.reg:contract_reference_outside_entry:")
+    logInfo m!"CONTRACT_DIAGNOSTIC auxiliary.{fixture} {error}"
+    let parent := `ContractReferenceFixtures ++ fixture.toName ++ `entry
+    let .defnInfo info ← getConstInfo parent | throwError "fixture:definition"
+    let definition : Discovery.Definition := ⟨owner, info, ← Discovery.requireRange parent⟩
+    let source ← IO.FS.readFile (← Discovery.moduleSource owner)
+    let entries ← SourceAudit.parse (← getEnv) source owner.toString
+    assertTest s!"auxiliary.authored_elaboration.{fixture}"
+      (!(← Discovery.generatedEntryAuxiliary owner entries #[definition] (← getEnv)
+        (parent.str "eq_def")))
+    let entryOnly := entries.filter (·.sourceName == some parent)
+    let name := parent.str (if fixture == "ElaborationEquation" then "eq_2" else "eq_def")
+    let permission ← Discovery.generatedEntryAuxiliary owner entryOnly #[definition] (← getEnv) name
+    assertTest s!"auxiliary.permission.{fixture}" (!permission)
+  let owner := `LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary
+  let source ← IO.FS.readFile (← Discovery.moduleSource owner)
+  let definitions ← Discovery.auditModule owner source
+  let entries ← SourceAudit.parse (← getEnv) source owner.toString
+  for suffix in #["eq_1", "eq_def"] do
+    let name := `ContractReferenceFixtures.Auxiliary.entry |>.str suffix
+    assertTest s!"auxiliary.positive.{suffix}"
+      (← Discovery.generatedEntryAuxiliary owner entries definitions (← getEnv) name)
+    let authored := entries.map fun entry =>
+      if entry.sourceName == some `ContractReferenceFixtures.Auxiliary.entry then
+        { entry with authoredNames := entry.authoredNames.push name } else entry
+    assertTest s!"auxiliary.authored_inventory.{suffix}"
+      (!(← Discovery.generatedEntryAuxiliary owner authored definitions (← getEnv) name))
+    assertTest s!"auxiliary.same_module.{suffix}"
+      (!(← Discovery.generatedEntryAuxiliary `Other.Module entries definitions (← getEnv) name))
+end LeanInformationAuditRegTests.ContractAuxiliaries
