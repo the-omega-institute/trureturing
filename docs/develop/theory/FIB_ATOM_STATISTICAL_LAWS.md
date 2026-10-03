@@ -1594,3 +1594,348 @@ $$
 **证明。** 首步方程为 $B_j^{(v)}m=\mathbf1$。由 $B_j^{(v)}=V_j^{-1}B_j$，得到 $B_jm=V_j\mathbf1=v$。固定阻抗与跳尺度后，每个局部权重确定该行的两次跳跃概率及持留概率，因而确定核与所给初态的所有路径分布。单一起点 $i$ 的均值仅为 $m_i=\sum_kG_j(i,k)v_k$，是一个线性约束。在具有严格持留余量的正权重内部，$L\ge2$ 时该线性泛函具有非零核，可作足够小的权重扰动并保持随机性与同一均值；定义14.1与定理14.2进一步同时保持了总质量及一阶矩。校准结论依赖完整均值向量和固定动力学参数，不把源递归或数量坐标当作这些数据的替代。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 同轨占用二点联合律
+
+**定义 15.1（固定单位速度模型与同轨占用量）。** 始终使用定义5.1与定义10.1的模型：固定 $r_\alpha,r_\beta>0$、$0<\theta\le\min(r_\alpha,r_\beta)/2$ 与 $\delta>0$，取逐字源
+
+$$
+W_0=\alpha,\qquad W_1=\beta,\qquad W_{j+2}=W_{j+1}W_j,
+\qquad j\ge0,
+$$
+
+对 $j\ge1$ 保留
+
+$$
+\begin{aligned}
+L_j&=F_{j+1},& N_j&=F_{j+3},& \epsilon_j&=\frac{\delta}{N_j^2},\\
+\overline r&=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,
+&D&=\frac{\theta\varphi^4}{\delta\overline r},
+&h_j&=\epsilon_jL_j.
+\end{aligned}
+$$
+
+在切点 $0,\ldots,L_j$ 上，每个暂态切点的速度权重恒为一。内部从 $i$ 向右跨边的概率为 $\theta/r_{(W_j)_i}$，向左跨边的概率为 $\theta/r_{(W_j)_{i-1}}$，其余概率持留；$0$ 只有右跳而反射，$L_j$ 吸收。初态固定为 $X_0=0$，令 $\tau_j=\inf\{n\ge0:X_n=L_j\}$。以下所有联合量都由这条链的同一次随机历史读取，期望与协方差均取其初态为 $0$ 的概率律。
+
+固定 $j$ 时暂记 $L=L_j$、$\tau=\tau_j$，对 $0\le a<L$ 定义
+
+$$
+V_a=\sum_{0\le n<\tau}{\bf1}_{\{X_n=a\}},\qquad
+q_a=\frac1\theta\sum_{k=a}^{L-1}r_{(W_j)_k}.
+$$
+
+同时规定 $V_L=q_L=0$。占用计数包含 $n=0$，排除吸收步 $n=\tau$。沿用 $K_j$、$B_j=I-K_j$、$G_j=B_j^{-1}$，以及定义10.1的映射
+
+$$
+\iota_j(u)=\begin{cases}\lfloor L_j u\rfloor,&0\le u<1,\\L_j,&u=1,\end{cases}
+\qquad
+\ell_j(u)=h_jV_{\iota_j(u)},\qquad
+\kappa(u)=\frac{1-u}{D}\quad(0\le u\le1).
+$$
+
+$u$ 是归一化切点坐标；数量缩放通过 $N_j$ 与 $\epsilon_j$ 实现，和数量位置 $x_k/N_j$ 的对应由定理10.2给出。
+
+**定理 15.2（数量缩放的二点极限、指数边缘与一致协方差）。** 固定 $0\le u<v<1$ 及 $s,t\ge0$，则
+
+$$
+\mathbb E_0 e^{-s\ell_j(u)-t\ell_j(v)}
+\longrightarrow
+\left[1+\kappa(u)s+\kappa(v)t
++\kappa(v)\bigl(\kappa(u)-\kappa(v)\bigr)st\right]^{-1}.
+$$
+
+每个固定 $u<1$ 的 $\ell_j(u)$ 依分布收敛到均值为 $\kappa(u)$ 的指数随机变量；$u=1$ 时 $\ell_j(1)$ 恒为零。协方差在整个闭方形上一致满足
+
+$$
+\sup_{u,v\in[0,1]}
+\left|\operatorname{Cov}_0\bigl(\ell_j(u),\ell_j(v)\bigr)
+-\frac{(1-\max(u,v))^2}{D^2}\right|
+=O(L_j^{-1}).
+$$
+
+此估计的常数可依赖固定的阻抗、跳尺度与时钟参数，均不随 $u,v,j$ 变化。
+
+**证明。** 先在固定有限链上应用离散费曼—卡茨（Feynman–Kac）与卡茨（Kac）矩公式框架。以下有限二点变换与时序混合矩是这些经典框架在定义15.1模型中的具体使用。
+
+先求有限二点变换与同点合并。对 $0\le a<b<L$ 与 $s,t\ge0$，记 $A=q_a$、$R=q_b$，则
+
+$$
+\mathbb E_0 e^{-sV_a-tV_b}
+=\left[1+A(e^s-1)+R(e^t-1)
++R(A-R)(e^s-1)(e^t-1)\right]^{-1}.
+$$
+
+这里用 $R$ 表示二点公式中的右侧尾阻抗，避免与矩阵 $B_j$ 混用。同点的精确式为
+
+$$
+\mathbb E_0 e^{-sV_a-tV_a}
+=\left[1+q_a(e^{s+t}-1)\right]^{-1}.
+$$
+
+若一个探针位于吸收点，其占用恒为零，变换只保留另一个探针的单点式。
+
+给暂态切点设置非负行势 $s_i$，令
+
+$$
+H_i=\mathbb E_i\exp\left(-\sum_{0\le n<\tau}s_{X_n}\right),
+\qquad H_L=1,\qquad d_i=e^{s_i}-1.
+$$
+
+$H_i$ 是首步计算所需的继续运行期望，最终读取的是 $H_0$。由于当前步也计入占用，首步式为
+
+$$
+e^{s_i}H_i=\sum_{m<L}K_j(i,m)H_m+
+\left(1-\sum_{m<L}K_j(i,m)\right).
+$$
+
+右侧最后一项是下一步吸收的贡献。于是，在暂态向量上恰有
+
+$$
+\bigl(B_j+\operatorname{diag}(d)\bigr)H=B_j\mathbf1,
+\qquad
+H+G_j\operatorname{diag}(d)H=\mathbf1.
+$$
+
+对二点势，只令 $s_a=s$、$s_b=t$，其余为零。定理10.2给出
+
+$$
+G_j(0,a)=G_j(a,a)=A,\qquad
+G_j(0,b)=G_j(a,b)=G_j(b,a)=G_j(b,b)=R.
+$$
+
+写 $d_s=e^s-1$、$d_t=e^t-1$，上式的 $a,b$ 两行为
+
+$$
+\begin{pmatrix}1+Ad_s& Rd_t\\Rd_s&1+Rd_t\end{pmatrix}
+\binom{H_a}{H_b}=\binom11.
+$$
+
+其行列式为
+
+$$
+\Delta=(1+Ad_s)(1+Rd_t)-R^2d_sd_t
+=1+Ad_s+Rd_t+R(A-R)d_sd_t.
+$$
+
+因 $A\ge R>0$ 且行势非负，$\Delta\ge1$。直接解得
+
+$$
+H_a=\Delta^{-1},\qquad
+H_b=\frac{1+(A-R)d_s}{\Delta}.
+$$
+
+第 $0$ 行与第 $a$ 行的非零势项相同，故
+
+$$
+H_0=1-Ad_sH_a-Rd_tH_b=H_a.
+$$
+
+这也覆盖 $a=0$，给出二点式。同点时两项势必须先合成 $s+t$；唯一非零势所在行给出 $H_a[1+q_a(e^{s+t}-1)]=1$，而第 $0$ 行仍给出 $H_0=H_a$。吸收点未进入 $n<\tau$ 的求和，其势没有贡献。
+
+再计算时序混合矩与离散对角校正。对任意暂态切点 $a,b$，有
+
+$$
+\begin{aligned}
+\mathbb E_0V_a&=G_j(0,a)=q_a,\\
+\mathbb E_0(V_aV_b)
+&=G_j(0,a)G_j(a,b)+G_j(0,b)G_j(b,a)
+-{\bf1}_{\{a=b\}}G_j(0,a),\\
+\operatorname{Cov}_0(V_a,V_b)
+&=q_{\max(a,b)}^2-{\bf1}_{\{a=b\}}q_a.
+\end{aligned}
+$$
+
+特别地，$\operatorname{Var}_0(V_a)=q_a(q_a-1)$。按定义15.1的零延拓，协方差式也适用于吸收点。
+
+每个暂态起点在至多 $L$ 步内连续向右到达吸收点的概率至少为 $(\theta/\max(r_\alpha,r_\beta))^L>0$。分块使用马尔可夫性质，吸收尾概率受到几何尾控制，故固定有限链的 $\tau$ 具有各阶有限矩。暂态核因此满足
+
+$$
+G_j=\sum_{n\ge0}K_j^n,
+\qquad
+G_j(i,a)=\mathbb E_i\sum_{0\le n<\tau}{\bf1}_{\{X_n=a\}}.
+$$
+
+这证明均值式，并使以下二阶求和可积。把 $V_aV_b$ 按两个读取时刻 $n,m$ 排序。在区域 $n\le m$，条件于时刻 $n$ 的未吸收状态，马尔可夫性质给出
+
+$$
+\begin{aligned}
+&\mathbb E_0\sum_{0\le n\le m<\tau}
+{\bf1}_{\{X_n=a\}}{\bf1}_{\{X_m=b\}}\\
+&\qquad=\sum_{n\ge0}K_j^n(0,a)
+\sum_{k\ge0}K_j^k(a,b)
+=G_j(0,a)G_j(a,b).
+\end{aligned}
+$$
+
+这里 $k=m-n$ 从零开始，确实包含同时刻。交换 $a,b$ 得到区域 $m\le n$ 的第二项；两个区域的交集 $n=m$ 只有在 $a=b$ 时有贡献，其期望为 $G_j(0,a)$，必须减去一次。因而得到所述混合矩，包含初始步并排除吸收步。
+
+当 $a\le b$ 时，定理10.2给出 $G_j(a,b)=G_j(b,a)=q_b$。两个有序区域的期望和为 $q_aq_b+q_b^2$；减去同时刻项，再减去均值乘积 $q_aq_b$，便得到 $q_b^2-{\bf1}_{\{a=b\}}q_a$。交换两点处理 $a>b$；吸收点占用恒为零。
+
+接着作数量缩放。定理10.2给出
+
+$$
+h_j=O(L_j^{-1}),\qquad
+h_jq_{\iota_j(u)}=\mathcal K_j(0,u)
+=\kappa(u)+O(L_j^{-1}),
+$$
+
+第二式对 $u\in[0,1]$ 一致成立，并沿用 $q_{L_j}=0$。固定 $u<v<1$ 后，两格点 $a=\iota_j(u)$、$b=\iota_j(v)$ 最终满足 $a<b$。在上述有限二点式中代入 $s h_j,t h_j$，令
+
+$$
+\gamma_j(z)=\frac{e^{z h_j}-1}{h_j}\longrightarrow z
+\qquad(z\ge0\text{ 固定}).
+$$
+
+二点变换的分母精确改写为
+
+$$
+\begin{aligned}
+1&+\mathcal K_j(0,u)\gamma_j(s)
++\mathcal K_j(0,v)\gamma_j(t)\\
+&+\mathcal K_j(0,v)
+\bigl(\mathcal K_j(0,u)-\mathcal K_j(0,v)\bigr)
+\gamma_j(s)\gamma_j(t).
+\end{aligned}
+$$
+
+逐项取极限得到所述式，极限分母至少为一。有限 $j$ 时若两个坐标落在同一格点，必须使用上述同点式；固定 $u<v$ 最终分格，所以不影响这个极限。
+
+为直接识别边缘律，上述单点式给出，对 $0<z\le1$，
+
+$$
+\mathbb E_0 z^{V_a}
+=\frac{z/q_a}{1-(1-q_a^{-1})z}.
+$$
+
+模型的参数界保证 $q_a\ge\min(r_\alpha,r_\beta)/\theta\ge2$。展开几何级数并比较概率生成函数的系数，得到
+
+$$
+\Pr_0(V_a=m)=q_a^{-1}(1-q_a^{-1})^{m-1}
+\qquad(m\ge1).
+$$
+
+对固定 $u<1$，$h_jq_{\iota_j(u)}\to\kappa(u)>0$，因而 $q_{\iota_j(u)}\to\infty$。每个 $x\ge0$ 都满足
+
+$$
+\Pr_0\bigl(\ell_j(u)>x\bigr)
+=\left(1-q_{\iota_j(u)}^{-1}\right)^{\lfloor x/h_j\rfloor}
+\longrightarrow e^{-x/\kappa(u)}.
+$$
+
+当 $x>0$ 时，取对数并用 $\log(1-y)=-y+O(y^2)$：主项趋于 $-x/\kappa(u)$，余项为 $O(h_j)$；$x=0$ 时两边均为一。这是均值为 $\kappa(u)$ 的指数分布的生存函数。吸收端占用恒为零，故其边缘为零点质量。
+
+最后，上述有限协方差式在任意 $u,v\in[0,1]$ 上给出精确恒等式
+
+$$
+\operatorname{Cov}_0\bigl(\ell_j(u),\ell_j(v)\bigr)
+=\mathcal K_j(u,v)^2
+-h_j{\bf1}_{\{\iota_j(u)=\iota_j(v)\}}\mathcal K_j(0,u).
+$$
+
+这是同格指示函数，即使 $u\ne v$ 也可能等于一；不能在缩放前用 $u=v$ 的指示函数替代。由定理10.2，$\mathcal K_j$ 一致有界且与 $\mathcal K$ 的一致误差为 $O(L_j^{-1})$，故
+
+$$
+\sup_{u,v}|\mathcal K_j(u,v)^2-\mathcal K(u,v)^2|
+\le\|\mathcal K_j-\mathcal K\|_\infty
+\bigl(\|\mathcal K_j\|_\infty+\|\mathcal K\|_\infty\bigr)
+=O(L_j^{-1}).
+$$
+
+同格修正的绝对值至多 $h_j\sup_u\mathcal K_j(0,u)=O(L_j^{-1})$。合并两项，使用 $\mathcal K(u,v)^2=(1-\max(u,v))^2/D^2$，即得包含端点与同格情形的一致估计。
+
+通用的卡茨矩公式与费曼—卡茨框架属于文献已证工具，参见 P. J. Fitzsimmons、J. Pitman，〈马尔可夫过程加性泛函的卡茨矩公式与费曼—卡茨公式〉，《随机过程及其应用》79（1999），117–134，[DOI：10.1016/S0304-4149(98)00081-7](https://doi.org/10.1016/S0304-4149(98)00081-7)。$\square$
+
+**定理 15.3（连续探针的同轨协方差）。** 对任意连续实函数 $f,g\in C([0,1],\mathbb R)$，定义
+
+$$
+\mathcal A_j(f)=\epsilon_j\sum_{0\le n<\tau_j}f(X_n/L_j).
+$$
+
+则
+
+$$
+\operatorname{Cov}_0\bigl(\mathcal A_j(f),\mathcal A_j(g)\bigr)
+\longrightarrow
+\frac1{D^2}\int_0^1\int_0^1
+f(u)g(v)(1-\max(u,v))^2\,du\,dv.
+$$
+
+当 $f,g$ 非负时，有限链及极限的上述协方差均非负。取 $f=g=1$，极限为 $1/(6D^2)$。
+
+**证明。** 依切点重新排列同一历史上的占用和，并使用 $h_j=\epsilon_jL_j$，得到精确恒等式
+
+$$
+\mathcal A_j(f)
+=\epsilon_j\sum_{i=0}^{L_j-1}f(i/L_j)V_i
+=\frac1{L_j}\sum_{i=0}^{L_j-1}f(i/L_j)\ell_j(i/L_j).
+$$
+
+连续探针有界，固定链的 $\tau_j$ 二阶可积，故协方差可以按有限和展开为
+
+$$
+\frac1{L_j^2}\sum_{i,m=0}^{L_j-1}
+f(i/L_j)g(m/L_j)
+\operatorname{Cov}_0\bigl(\ell_j(i/L_j),\ell_j(m/L_j)\bigr).
+$$
+
+定理15.2证明中的有限协方差式给出上述每一项；以该定理的一致极限核替换这些项，总误差至多为 $C\|f\|_\infty\|g\|_\infty/L_j$。替换后的和是连续函数
+
+$$
+(u,v)\longmapsto\frac{f(u)g(v)(1-\max(u,v))^2}{D^2}
+$$
+
+在闭方形上的左端点黎曼和，因而趋于所述积分。这里只对核替换误差给出 $O(L_j^{-1})$；一般连续 $f,g$ 的黎曼和误差由连续性保证趋零。
+
+由定理15.2证明中的有限协方差式，有限链的协方差矩阵逐项非负：异点项是 $q_{\max(i,m)}^2$，同点项是 $q_i(q_i-1)$，而 $q_i\ge2$。非负探针的有限和遂非负；极限积分的被积函数也非负。常数探针的积分系数可直接算为
+
+$$
+\int_0^1\int_0^1(1-\max(u,v))^2\,du\,dv
+=2\int_0^1v(1-v)^2\,dv
+=2\left(\frac12-\frac23+\frac14\right)=\frac16.
+$$
+
+此时 $\mathcal A_j(1)=\epsilon_j\tau_j$，积分值与定理10.3的既有通过时间方差相符；此项是连续探针协方差公式的核对，不另立通过时间结论。$\square$
+
+**命题 15.4（共同随机历史的边界）。** 在逐字源 $W_2=\beta\alpha$ 上取 $r_\alpha=2$、$r_\beta=3$、$\theta=1/4$，并固定同一个 $\delta>0$。暂态核与格林矩阵为
+
+$$
+K=\begin{pmatrix}11/12&1/12\\1/12&19/24\end{pmatrix},
+\qquad
+G=\begin{pmatrix}20&8\\8&8\end{pmatrix}.
+$$
+
+一条初态为 $0$ 的链 $X$ 给出
+
+$$
+\operatorname{Cov}_0\bigl(V_0(X),V_1(X)\bigr)=64.
+$$
+
+取两个独立副本 $X,Y$，它们具有相同逐字源、核、初态与数值时钟，则
+
+$$
+\operatorname{Cov}\bigl(V_0(X),V_1(Y)\bigr)=0.
+$$
+
+这两个联合模型保留每个对应探针各自的完整轨迹边缘律，却给出不同的联合占用律。同源、同初态与同数值时钟因此不足以指定共同随机历史；此例具体核对第6.4节的边缘轨迹与联合实现边界。
+
+**证明。** 从 $0$ 向右跳的概率为 $\theta/r_\beta=1/12$，所以持留概率为 $11/12$。从 $1$ 向左跳的概率为 $1/12$，向吸收点 $2$ 右跳的概率为 $\theta/r_\alpha=1/8$，所以暂态持留概率为 $19/24$。于是
+
+$$
+I-K=\begin{pmatrix}1/12&-1/12\\-1/12&5/24\end{pmatrix},
+\qquad
+\det(I-K)=\frac1{96},
+$$
+
+直接求逆即为所列 $G$。因此 $q_0=20$、$q_1=8$，定理15.2证明中的有限协方差式给出同链协方差 $q_1^2=64$；亦可从混合矩 $20\cdot8+8\cdot8=224$ 减去均值乘积 $160$ 核对。
+
+独立副本的可积占用量相互独立，故协方差为零。具体地，对任何链 $Z$ 令
+
+$$
+\mathcal R_a(Z)=\bigl({\bf1}_{\{n<\tau(Z),\ Z_n=a\}}\bigr)_{n\ge0}.
+$$
+
+比较联合过程 $(\mathcal R_0(X),\mathcal R_1(X))$ 与 $(\mathcal R_0(X),\mathcal R_1(Y))$：第一坐标的轨迹边缘相同；第二坐标的轨迹边缘也相同，因为 $X,Y$ 的完整链律相同。保持时钟 $n\delta$ 不改变这些边缘等式。然而两种联合过程的占用协方差不同，故联合律不同。这是边界实例，未给源递归增加新的动力学或耦合条件。$\square$
+
+全部结论依赖固定单位速度、左反射右吸收、初态 $0$、给定阻抗与时钟，以及同一条随机历史的模型条件。本节结论不推出完整多点占用律、函数空间占用场收敛、高斯极限、物理热流、物理普适性或第11、14节速度扩展的占用结论。
+
+## 追加锚（本行以下为增补区）
