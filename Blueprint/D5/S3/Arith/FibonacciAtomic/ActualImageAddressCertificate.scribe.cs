@@ -51,7 +51,31 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                     Paragraph(Text("The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, "
                         + "all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. "
                         + "The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general "
-                        + "decision-tree certificate complexity supplies neighboring background."))), DescribeRole.Theorem))));
+                        + "decision-tree certificate complexity supplies neighboring background."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-address-height-frontier"),
+                DeclarationHandle.Create(Prefix + "heightFrontier"), H("Sharp leaf budget above a height"),
+                StatementSource.FromAuthor(FrontierFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For natural k at least one put d=3k, A=rho iterated d times on alpha and B=rho iterated d times on beta. "
+                        + "F denotes the Fibonacci sequence with F(0)=0 and F(1)=1. Write a=F(d+1), b=F(d+2), and n(X) for the total number of leaves. "
+                        + "The height D counts edges. The budget C(d,h) is a when h is at most d-2, "
+                        + "and b plus a times m otherwise, where m=h+1-d uses natural truncated subtraction. "
+                        + "Thus at h=d-1 the value of m is zero.")),
+                    Paragraph(Text("Let U(0)=beta and U(m+1)=(alpha,U(m)). Define V(d,h)=A in the low range "
+                        + "and rho iterated d times on U(m) in the high range. Define r(d,h) as d-2 left steps "
+                        + "in the low range and m right steps followed by d-1 left steps in the high range. "
+                        + "The subtree at r is J=(beta,alpha). Let W(d,h) replace that subtree by (alpha,beta). "
+                        + "In the formula c is composition, I is the actual image, sub is the addressed subtree, "
+                        + "some is the present-subtree constructor and R(m) is the address of m right steps.")),
+                    Paragraph(Text("Each source leaf becomes one A or B block. Every sibling subtree along a source path "
+                        + "contains at least a output leaves. Induction on the source gives a lower bound a for every image "
+                        + "and b plus a times (D-d) whenever its height D is at least d. "
+                        + "The strict relation b<2a handles a deepest alpha block as well as a deepest beta block. "
+                        + "The right comb attains the high bound, with its beta block at R(m).")),
+                    Paragraph(Text("Swapping the specified terminal pair preserves exact composition and changes only the "
+                        + "two leaf labels at depths above h. Every endpoint observation within the window therefore agrees, "
+                        + "including branches and absent endpoints. The left alpha leaf excludes W from the actual image. "
+                        + "The universal lower bound together with the explicit attaining image characterizes the minimum "
+                        + "leaf budget over images whose height exceeds h."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
@@ -97,6 +121,32 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Call("U",d,t,leaves),EqOf(Call("card",leaves),n),bounds)));
         return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),All("V",V("Source"),
             Imp(InOf(t,Call("I",d)),And(unique,full,shallow,attained))))));
+    }
+
+    private static Formula FrontierFormula()
+    {
+        Formula k=V("k"), h=V("h"), d=Seq(D(3),Sp,Cdot,Sp,k);
+        Formula a=Call("F",Seq(d,Sp,Plus,Sp,D(1))), b=Call("F",Seq(d,Sp,Plus,Sp,D(2)));
+        Formula prev=Call("F",Seq(d,Sp,Minus,Sp,D(1))), curr=Call("F",d);
+        Formula m=Call("m",d,h), budget=Call("C",d,h), t=Call("V",d,h), w=Call("W",d,h);
+        Formula alpha=Call("A",d), beta=Call("B",d), r=Call("r",d,h);
+        Formula pair(Formula x, Formula y) => Seq(Open,x,Comma,Sp,y,Close);
+        Formula blocks=And(EqOf(Call("D",alpha),Seq(d,Sp,Minus,Sp,D(1))),
+            EqOf(Call("D",beta),d),EqOf(Call("c",alpha),pair(prev,curr)),
+            EqOf(Call("c",beta),pair(curr,a)),EqOf(Call("n",alpha),a),EqOf(Call("n",beta),b),
+            EqOf(b,Seq(a,Sp,Plus,Sp,curr)),Seq(b,Sp,Lt,Sp,D(2),Sp,Cdot,Sp,a));
+        Formula lower=All("X",V("Source"),Imp(InOf(V("X"),Call("I",d)),
+            Imp(Seq(h,Sp,Lt,Sp,Call("D",V("X"))),LeOf(budget,Call("n",V("X"))))));
+        Formula observe=All("u",V("FiniteDescription"),Imp(LeOf(Call("length",V("u")),h),
+            EqOf(Call("out",w,V("u")),Call("out",t,V("u")))));
+        Formula high=Imp(LeOf(Seq(d,Sp,Minus,Sp,D(1)),h),And(
+            EqOf(Call("c",t),pair(Seq(prev,Sp,Cdot,Sp,m,Sp,Plus,Sp,curr),
+                Seq(curr,Sp,Cdot,Sp,m,Sp,Plus,Sp,a))),
+            EqOf(Call("sub",t,Call("R",m)),Call("some",beta))));
+        return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),All("h",V("Nat"),And(blocks,lower,
+            InOf(t,Call("I",d)),Seq(h,Sp,Lt,Sp,Call("D",t)),EqOf(Call("sub",t,r),Call("some",V("J"))),
+            Seq(Neg,Sp,Par(InOf(w,Call("I",d)))),EqOf(Call("c",w),Call("c",t)),observe,
+            EqOf(Call("n",t),budget),high)))));
     }
 
 }

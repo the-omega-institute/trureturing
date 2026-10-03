@@ -42,8 +42,28 @@ Without a composition promise, omitting any leaf permits a single label flip. An
 
 The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general decision-tree certificate complexity supplies neighboring background.
 
+**Theorem 1.3 (Sharp leaf budget above a height).**
+
+$$\forall k \in Nat, ((1 \leq k) \implies (\forall h \in Nat, (((\operatorname{D}\left(\operatorname{A}\left(3 \cdot k\right)\right) = 3 \cdot k - 1) \land (\operatorname{D}\left(\operatorname{B}\left(3 \cdot k\right)\right) = 3 \cdot k) \land (\operatorname{c}\left(\operatorname{A}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right), \operatorname{F}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{B}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{n}\left(\operatorname{A}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 1\right)) \land (\operatorname{n}\left(\operatorname{B}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 2\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) = \operatorname{F}\left(3 \cdot k + 1\right) + \operatorname{F}\left(3 \cdot k\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) < 2 \cdot \operatorname{F}\left(3 \cdot k + 1\right))) \land (\forall X \in Source, ((X \in \operatorname{I}\left(3 \cdot k\right)) \implies ((h < \operatorname{D}\left(X\right)) \implies (\operatorname{C}\left(3 \cdot k, h\right) \leq \operatorname{n}\left(X\right))))) \land (\operatorname{V}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right)) \land (h < \operatorname{D}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{r}\left(3 \cdot k, h\right)\right) = \operatorname{some}\left(J\right)) \land (\neg (\operatorname{W}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{W}\left(3 \cdot k, h\right)\right) = \operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\forall u \in FiniteDescription, ((\operatorname{length}\left(u\right) \leq h) \implies (\operatorname{out}\left(\operatorname{W}\left(3 \cdot k, h\right), u\right) = \operatorname{out}\left(\operatorname{V}\left(3 \cdot k, h\right), u\right)))) \land (\operatorname{n}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = \operatorname{C}\left(3 \cdot k, h\right)) \land ((3 \cdot k - 1 \leq h) \implies ((\operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{R}\left(\operatorname{m}\left(3 \cdot k, h\right)\right)\right) = \operatorname{some}\left(\operatorname{B}\left(3 \cdot k\right)\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.heightFrontier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural k at least one put d=3k, A=rho iterated d times on alpha and B=rho iterated d times on beta. F denotes the Fibonacci sequence with F(0)=0 and F(1)=1. Write a=F(d+1), b=F(d+2), and n(X) for the total number of leaves. The height D counts edges. The budget C(d,h) is a when h is at most d-2, and b plus a times m otherwise, where m=h+1-d uses natural truncated subtraction. Thus at h=d-1 the value of m is zero.
+
+Let U(0)=beta and U(m+1)=(alpha,U(m)). Define V(d,h)=A in the low range and rho iterated d times on U(m) in the high range. Define r(d,h) as d-2 left steps in the low range and m right steps followed by d-1 left steps in the high range. The subtree at r is J=(beta,alpha). Let W(d,h) replace that subtree by (alpha,beta). In the formula c is composition, I is the actual image, sub is the addressed subtree, some is the present-subtree constructor and R(m) is the address of m right steps.
+
+Each source leaf becomes one A or B block. Every sibling subtree along a source path contains at least a output leaves. Induction on the source gives a lower bound a for every image and b plus a times (D-d) whenever its height D is at least d. The strict relation b<2a handles a deepest alpha block as well as a deepest beta block. The right comb attains the high bound, with its beta block at R(m).
+
+Swapping the specified terminal pair preserves exact composition and changes only the two leaf labels at depths above h. Every endpoint observation within the window therefore agrees, including branches and absent endpoints. The left alpha leaf excludes W from the actual image. The universal lower bound together with the explicit attaining image characterizes the minimum leaf budget over images whose height exceeds h.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.heightFrontier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rigidity`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAddresses](ActualImageAddresses.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](SourceTransportCentralizer.md)

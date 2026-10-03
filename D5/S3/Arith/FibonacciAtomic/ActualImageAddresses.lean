@@ -84,4 +84,9 @@ def leafAddresses : Source → Finset FiniteDescription
 def UnSound (d : ℕ) (V : Source) (Q : Finset FiniteDescription) : Prop :=
   ∀ U : Source, (∀ u ∈ Q, out U u = out V u) → U ∈ ActualImage d
 
+/-- A right comb with alpha side leaves and a single terminal beta leaf. -/
+def rightComb : ℕ → Source
+  | 0 => .of false
+  | m + 1 => .mul (.of true) (rightComb m)
+
 end D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate

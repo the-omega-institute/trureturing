@@ -25,7 +25,8 @@ internal sealed class ActualImageAddressesDocument : IScribeDocumentDefinition
             Def("UnSound", "Certificates without a composition promise", "Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately."),
             Def("subtree", "Complete addressed subtree", "The addressed subtree is present exactly when the path reaches a node; otherwise it is absent."),
             Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
-            Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."))));
+            Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
+            Def("rightComb", "Right comb source", "The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps."))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

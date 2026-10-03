@@ -4,9 +4,10 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Sharp cardinality and depth for actual substitution image certificates. -/
+   digest: Sharp certificates and the weighted height frontier of actual substitution images. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageAddresses
+import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -142,6 +143,56 @@ private theorem no_left_alpha (t : Source) : ∀ r : FiniteDescription,
       exact fun he => no_alpha s (Option.some.inj he)
     | cons b r => cases b <;> first | exact hs r | exact ht r
 
+private theorem swap_local (V : Source) (r : FiniteDescription)
+    (hr : subtree V r = some (.mul (.of false) (.of true))) :
+    composition (replace V r (.mul (.of true) (.of false))) = composition V ∧
+    subtree (replace V r (.mul (.of true) (.of false))) (r ++ [false]) =
+      some (.of true) ∧
+    (∀ u : FiniteDescription, u ≠ r ++ [false] → u ≠ r ++ [true] →
+      out (replace V r (.mul (.of true) (.of false))) u = out V u) := by
+  induction r generalizing V with
+  | nil =>
+    have he : V = .mul (.of false) (.of true) :=
+      Option.some.inj (by simpa only [subtree] using hr)
+    subst V
+    refine ⟨rfl, rfl, ?_⟩
+    intro u hL hR
+    cases u with
+    | nil => rfl
+    | cons b u =>
+      cases u with
+      | nil => cases b <;> simp_all
+      | cons c u => cases b <;> rfl
+  | cons b r ih =>
+    cases V with
+    | of c => simp [subtree] at hr
+    | mul s t =>
+      cases b with
+      | false =>
+        obtain ⟨hc, hl, ho⟩ := ih s hr
+        refine ⟨congrArg (fun v => v + composition t) hc, hl, ?_⟩
+        intro u hL hR
+        cases u with
+        | nil => rfl
+        | cons b u =>
+          cases b with
+          | true => rfl
+          | false =>
+            exact ho u (fun he => hL (congrArg (List.cons false) he))
+              (fun he => hR (congrArg (List.cons false) he))
+      | true =>
+        obtain ⟨hc, hl, ho⟩ := ih t hr
+        refine ⟨congrArg (fun v => composition s + v) hc, hl, ?_⟩
+        intro u hL hR
+        cases u with
+        | nil => rfl
+        | cons b u =>
+          cases b with
+          | false => rfl
+          | true =>
+            exact ho u (fun he => hL (congrArg (List.cons true) he))
+              (fun he => hR (congrArg (List.cons true) he))
+
 set_option maxHeartbeats 2000000 in -- Combined reconstruction and swap-counting proof.
 /-- Exact positive certificate cardinality for d = 3k, k at least one.
 The same-composition competitor domain is all complete ordered source trees. -/
@@ -226,55 +277,6 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
           have hy : composition y = composition t := by
             apply Prod.ext <;> omega
           exact congrArg₂ FreeMagma.mul (hes hx) (het hy)
-  have swap_local (V : Source) (r : FiniteDescription)
-      (hr : subtree V r = some (.mul (.of false) (.of true))) :
-      composition (replace V r (.mul (.of true) (.of false))) = composition V ∧
-      subtree (replace V r (.mul (.of true) (.of false))) (r ++ [false]) =
-        some (.of true) ∧
-      (∀ u : FiniteDescription, u ≠ r ++ [false] → u ≠ r ++ [true] →
-        out (replace V r (.mul (.of true) (.of false))) u = out V u) := by
-    induction r generalizing V with
-    | nil =>
-      have he : V = .mul (.of false) (.of true) :=
-        Option.some.inj (by simpa only [subtree] using hr)
-      subst V
-      refine ⟨rfl, rfl, ?_⟩
-      intro u hL hR
-      cases u with
-      | nil => rfl
-      | cons b u =>
-        cases u with
-        | nil => cases b <;> simp_all
-        | cons c u => cases b <;> rfl
-    | cons b r ih =>
-      cases V with
-      | of c => simp [subtree] at hr
-      | mul s t =>
-        cases b with
-        | false =>
-          obtain ⟨hc, hl, ho⟩ := ih s hr
-          refine ⟨congrArg (fun v => v + composition t) hc, hl, ?_⟩
-          intro u hL hR
-          cases u with
-          | nil => rfl
-          | cons b u =>
-            cases b with
-            | true => rfl
-            | false =>
-              exact ho u (fun he => hL (congrArg (List.cons false) he))
-                (fun he => hR (congrArg (List.cons false) he))
-        | true =>
-          obtain ⟨hc, hl, ho⟩ := ih t hr
-          refine ⟨congrArg (fun v => composition s + v) hc, hl, ?_⟩
-          intro u hL hR
-          cases u with
-          | nil => rfl
-          | cons b u =>
-            cases b with
-            | false => rfl
-            | true =>
-              exact ho u (fun he => hL (congrArg (List.cons true) he))
-                (fun he => hR (congrArg (List.cons true) he))
   have endpoint_parent (r s : FiniteDescription) (b c : Bool)
       (he : r ++ [b] = s ++ [c]) : r = s := by
     have hr := congrArg List.reverse he
@@ -695,5 +697,201 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
       exact (Finset.eq_of_subset_of_card_le hsub (by rw [(leaf_data V).1, hcard])).symm
     · intro he
       rw [he, (leaf_data V).1]
+
+set_option maxHeartbeats 4000000 in -- Weighted height induction and prescribed path witnesses.
+/-- The sharp leaf budget above each height, with explicit same-composition
+swaps invisible throughout the finite depth window. -/
+theorem heightFrontier (k : ℕ) (hk : 1 ≤ k) (h : ℕ) :
+    let d := 3 * k
+    let A := substitution^[d] (.of true)
+    let B := substitution^[d] (.of false)
+    let a := Nat.fib (d + 1)
+    let b := Nat.fib (d + 2)
+    let m := h + 1 - d
+    let C := if h ≤ d - 2 then a else b + a * m
+    let V := if h ≤ d - 2 then A else substitution^[d] (rightComb m)
+    let r := if h ≤ d - 2 then List.replicate (d - 2) false
+      else List.replicate m true ++ List.replicate (d - 1) false
+    let W := replace V r (.mul (.of true) (.of false))
+    height A = d - 1 ∧ height B = d ∧
+    composition A = (Nat.fib (d - 1), Nat.fib d) ∧
+    composition B = (Nat.fib d, Nat.fib (d + 1)) ∧
+    (leafAddresses A).card = a ∧ (leafAddresses B).card = b ∧
+    b = a + Nat.fib d ∧ b < 2 * a ∧
+    (∀ X : Source, X ∈ ActualImage d → h < height X → C ≤ (leafAddresses X).card) ∧
+    V ∈ ActualImage d ∧ h < height V ∧
+    subtree V r = some (.mul (.of false) (.of true)) ∧
+    W ∉ ActualImage d ∧ composition W = composition V ∧
+    (∀ u : FiniteDescription, u.length ≤ h → out W u = out V u) ∧
+    (leafAddresses V).card = C ∧
+    (d - 1 ≤ h → composition V =
+      (Nat.fib (d - 1) * m + Nat.fib d, Nat.fib d * m + Nat.fib (d + 1)) ∧
+      subtree V (List.replicate m true) = some B) := by
+  classical
+  dsimp only
+  let d := 3 * k
+  let T : ℕ → Source := fun j => substitution^[j] (.of true)
+  let A := T d
+  let B := substitution^[d] (.of false)
+  let a := Nat.fib (d + 1)
+  let b := Nat.fib (d + 2)
+  let N : Source → ℕ := fun X => (composition X).1 + (composition X).2
+  have hd : 3 ≤ d := by dsimp only [d]; omega
+  have hom (j : ℕ) : Function.Semiconj₂ (substitution^[j]) FreeMagma.mul FreeMagma.mul :=
+    Function.Semiconj₂.iterate (fun s t => substitution.map_mul s t) j
+  have pairN (S R : Source) : N (.mul S R) = N S + N R := by
+    dsimp only [N, composition, Prod.fst_add, Prod.snd_add]; omega
+  have recurrence (j : ℕ) : T (j + 2) = .mul (T (j + 1)) (T j) := by
+    have he := (SourceTransportCentralizer.source_transport_centralizer.1 (T j)).mpr ⟨j, rfl⟩
+    simpa only [T, Function.iterate_succ_apply', Nat.add_assoc] using he
+  have blocks (j : ℕ) : height (T (j + 1)) = j ∧ height (T (j + 2)) = j + 1 ∧
+      subtree (T (j + 2)) (List.replicate j false) = some (.mul (.of false) (.of true)) := by
+    induction j with
+    | zero => exact ⟨rfl, rfl, rfl⟩
+    | succ j ih =>
+      refine ⟨ih.2.1, ?_, ?_⟩
+      · rw [recurrence]
+        change max (height (T (j + 1 + 1))) (height (T (j + 1))) + 1 = j + 1 + 1
+        rw [show j + 1 + 1 = j + 2 by omega, ih.2.1, ih.1, max_eq_left (by omega)]
+      · rw [recurrence (j + 1), List.replicate_succ]
+        exact ih.2.2
+  have block_comp (j : ℕ) (hj : 0 < j) : composition (T j) =
+      (Nat.fib (j - 1), Nat.fib j) := by
+    let c := GraftAffineClosure.atomicBlock j
+    have hc := (GenealogicalFiberTransport.fiberMap (1, 0) j ⟨.of true, rfl⟩).property
+    change composition (T j) = c at hc
+    have hall := GraftAffineClosure.result.2 1 (by decide) c
+    have ha := hall.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 j rfl
+    exact hc.trans (ha.2.2.2.2.1 hj)
+  have hB : B = T (d + 1) := (Function.iterate_succ_apply substitution d (.of true)).symm
+  have hAheight : height A = d - 1 := by
+    have he := (blocks (d - 2)).2.1
+    simpa only [show d - 2 + 2 = d by omega, show d - 2 + 1 = d - 1 by omega] using he
+  have hBheight : height B = d := by rw [hB]; exact (blocks d).1
+  have hAc : composition A = (Nat.fib (d - 1), Nat.fib d) := block_comp d (by omega)
+  have hBc : composition B = (Nat.fib d, Nat.fib (d + 1)) := by
+    rw [hB, block_comp (d + 1) (by omega), Nat.add_sub_cancel]
+  have hNa : N A = a := by
+    dsimp only [N, a]; rw [hAc]
+    have hf := Nat.fib_add_two (n := d - 1)
+    rw [show d - 1 + 1 = d by omega, show d - 1 + 2 = d + 1 by omega] at hf
+    exact hf.symm
+  have hNb : N B = b := by dsimp only [N, b]; rw [hBc]; exact Nat.fib_add_two.symm
+  have hba : b = a + Nat.fib d := by dsimp only [a, b]; rw [Nat.fib_add_two, Nat.add_comm]
+  have hgap : b < 2 * a := by
+    have hl := Nat.fib_lt_fib_succ (n := d) (by omega)
+    dsimp only [a] at *; omega
+  have envelope (X : Source) : a ≤ N (substitution^[d] X) ∧
+      (d ≤ height (substitution^[d] X) →
+        b + a * (height (substitution^[d] X) - d) ≤ N (substitution^[d] X)) := by
+    have extend (D n p : ℕ) (hn : a ≤ n) (hp : a ≤ p)
+        (he : d ≤ D → b + a * (D - d) ≤ n) (hD : d ≤ D + 1) :
+        b + a * (D + 1 - d) ≤ n + p := by
+      by_cases hx : d ≤ D
+      · have ht := he hx
+        rw [show D + 1 - d = (D - d) + 1 by omega, Nat.mul_add, Nat.mul_one]
+        omega
+      · have hz : D + 1 - d = 0 := by omega
+        rw [hz, Nat.mul_zero, Nat.add_zero]; omega
+    induction X with
+    | of c => cases c with
+      | true => refine ⟨by rw [hNa], ?_⟩; intro he; rw [hAheight] at he; omega
+      | false => refine ⟨by rw [hNb]; omega, ?_⟩; intro _; rw [hBheight, hNb]; simp
+    | mul S R hs hr =>
+      rw [hom d, pairN]
+      change a ≤ N (substitution^[d] S) + N (substitution^[d] R) ∧
+        (d ≤ max (height (substitution^[d] S)) (height (substitution^[d] R)) + 1 →
+        b + a * (max (height (substitution^[d] S)) (height (substitution^[d] R)) + 1 - d) ≤
+          N (substitution^[d] S) + N (substitution^[d] R))
+      refine ⟨by omega, ?_⟩
+      rcases le_total (height (substitution^[d] S)) (height (substitution^[d] R)) with he | he
+      · rw [max_eq_right he]; intro hl
+        simpa only [Nat.add_comm] using extend _ _ _ hr.1 hs.1 hr.2 hl
+      · rw [max_eq_left he]; exact extend _ _ _ hs.1 hr.1 hs.2
+  have comb (m : ℕ) : height (substitution^[d] (rightComb m)) = m + d ∧
+      N (substitution^[d] (rightComb m)) = b + a * m ∧
+      composition (substitution^[d] (rightComb m)) =
+        (Nat.fib (d - 1) * m + Nat.fib d, Nat.fib d * m + Nat.fib (d + 1)) ∧
+      subtree (substitution^[d] (rightComb m)) (List.replicate m true) = some B := by
+    induction m with
+    | zero =>
+      simp only [rightComb, Nat.zero_add, Nat.mul_zero, Nat.add_zero, List.replicate_zero]
+      exact ⟨hBheight, hNb, hBc, by simp only [subtree]; rfl⟩
+    | succ m ih =>
+      rw [rightComb, hom d]
+      refine ⟨?_, ?_, ?_, ?_⟩
+      · change max (height A) (height (substitution^[d] (rightComb m))) + 1 = m + 1 + d
+        rw [hAheight, ih.1, max_eq_right (by omega)]; omega
+      · rw [pairN]
+        change N A + N (substitution^[d] (rightComb m)) = b + a * (m + 1)
+        rw [hNa, ih.2.1]; ring
+      · change composition A + composition (substitution^[d] (rightComb m)) = _
+        rw [hAc, ih.2.2.1]; ext <;> simp only [Prod.fst_add, Prod.snd_add] <;> ring
+      · rw [List.replicate_succ]; exact ih.2.2.2
+  have cherryA : subtree A (List.replicate (d - 2) false) =
+      some (.mul (.of false) (.of true)) := by
+    simpa only [show d - 2 + 2 = d by omega] using (blocks (d - 2)).2.2
+  have cherryB : subtree B (List.replicate (d - 1) false) =
+      some (.mul (.of false) (.of true)) := by
+    rw [hB]; simpa only [show d - 1 + 2 = d + 1 by omega] using (blocks (d - 1)).2.2
+  let m := h + 1 - d
+  let C := if h ≤ d - 2 then a else b + a * m
+  let V := if h ≤ d - 2 then A else substitution^[d] (rightComb m)
+  let r := if h ≤ d - 2 then List.replicate (d - 2) false
+    else List.replicate m true ++ List.replicate (d - 1) false
+  let W := replace V r (.mul (.of true) (.of false))
+  have lower (X : Source) (hX : X ∈ ActualImage d) (hh : h < height X) :
+      C ≤ (leafAddresses X).card := by
+    obtain ⟨Y, rfl⟩ := hX
+    rw [(leaf_data _).1]
+    by_cases hlo : h ≤ d - 2
+    · simpa only [C, if_pos hlo] using (envelope Y).1
+    · simp only [C, if_neg hlo]
+      have hD : d ≤ height (substitution^[d] Y) := by omega
+      have hm : m ≤ height (substitution^[d] Y) - d := by dsimp only [m]; omega
+      exact (Nat.add_le_add_left (Nat.mul_le_mul_left a hm) b).trans ((envelope Y).2 hD)
+  have witness : V ∈ ActualImage d ∧ h < height V ∧
+      N V = C ∧ subtree V r = some (.mul (.of false) (.of true)) ∧ h < r.length + 1 := by
+    by_cases hlo : h ≤ d - 2
+    · simp only [V, r, C, if_pos hlo]
+      exact ⟨⟨.of true, rfl⟩, by rw [hAheight]; omega, hNa, cherryA,
+        by rw [List.length_replicate]; omega⟩
+    · simp only [V, r, C, if_neg hlo]
+      refine ⟨⟨rightComb m, rfl⟩, ?_, (comb m).2.1, ?_, ?_⟩
+      · rw [(comb m).1]; dsimp only [m]; omega
+      · have append_sub (X Y : Source) (u v : FiniteDescription)
+            (hu : subtree X u = some Y) : subtree X (u ++ v) = subtree Y v := by
+          induction u generalizing X with
+          | nil => have he := Option.some.inj (by simpa only [subtree] using hu); subst X; rfl
+          | cons c u ih => cases X with
+            | of c => simp [subtree] at hu
+            | mul S R => cases c <;> first | exact ih S hu | exact ih R hu
+        rw [append_sub _ B _ _ (comb m).2.2.2]; exact cherryB
+      · rw [List.length_append, List.length_replicate, List.length_replicate]
+        dsimp only [m]; omega
+  obtain ⟨hV, hh, hNV, hcherry, hdepth⟩ := witness
+  obtain ⟨hcomp, hleft, hobs⟩ := swap_local V r hcherry
+  have hW : W ∉ ActualImage d := by
+    rintro ⟨Y, hY⟩
+    have he : substitution (substitution^[d - 1] Y) = W := by
+      rw [← Function.iterate_succ_apply' (f := (substitution : Source → Source))
+        (d - 1) Y, show (d - 1).succ = d by omega]; exact hY
+    have hl : subtree W (r ++ [false]) = some (.of true) := hleft
+    rw [← he] at hl
+    exact no_left_alpha (substitution^[d - 1] Y) r hl
+  refine ⟨hAheight, hBheight, hAc, hBc, (leaf_data A).1.trans hNa,
+    (leaf_data B).1.trans hNb, hba, hgap, lower, hV, hh, hcherry, hW, hcomp, ?_,
+    (leaf_data V).1.trans hNV, ?_⟩
+  · intro u hu
+    apply hobs u <;> intro he <;>
+      have he := congrArg List.length he <;>
+      simp only [List.length_append, List.length_singleton] at he <;> omega
+  · intro hhigh
+    have hlo : ¬ h ≤ d - 2 := by omega
+    change composition V =
+      (Nat.fib (d - 1) * m + Nat.fib d, Nat.fib d * m + Nat.fib (d + 1)) ∧
+      subtree V (List.replicate m true) = some B
+    rw [show V = substitution^[d] (rightComb m) from if_neg hlo]
+    exact ⟨(comb m).2.2.1, (comb m).2.2.2⟩
 
 end D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate

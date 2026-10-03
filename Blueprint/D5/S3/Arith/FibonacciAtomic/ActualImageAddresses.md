@@ -150,6 +150,18 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.AlphaCovered`
 
 Every internal node has an alpha leaf descendant, recursively throughout the tree.
 
+**Definition 1.13 (Right comb source).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.rightComb`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.rightComb` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.ActualImage`
@@ -163,6 +175,7 @@ Every internal node has an alpha leaf descendant, recursively throughout the tre
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.leafAddresses`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.out`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.replace`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.rightComb`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddresses.subtree`
 - Dependency: [D5/S0/History/FiniteDescriptionSelfCode](../../../S0/History/FiniteDescriptionSelfCode.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](GenealogicalFiberTransport.md)
