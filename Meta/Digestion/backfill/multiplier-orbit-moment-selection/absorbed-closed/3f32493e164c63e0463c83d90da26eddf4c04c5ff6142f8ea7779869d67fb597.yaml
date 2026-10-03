@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3f32493e164c63e0463c83d90da26eddf4c04c5ff6142f8ea7779869d67fb597
+  normalized_sha256: sha256:3f32493e164c63e0463c83d90da26eddf4c04c5ff6142f8ea7779869d67fb597
+cas_ref: sha256:3f32493e164c63e0463c83d90da26eddf4c04c5ff6142f8ea7779869d67fb597
+coverage_gids:
+  - gid: D5/S3/ArithUnits/MultiplierOrbitMomentSelection.power_sum_zero_of_mul_invariant
+    target_statement_id: sha256:9f9d7fa445735db9e262eb5052ddff7e0d71446f80c7c12cc76262bff2bc6c53
+receipts:
+  unresolved_subitems: []
