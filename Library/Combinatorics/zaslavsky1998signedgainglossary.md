@@ -3,11 +3,12 @@ bibkey: zaslavsky1998signedgainglossary
 authors: Thomas Zaslavsky
 year: 1998
 title: "Glossary of Signed and Gain Graphs and Allied Areas"
+doi: null
 url: https://people.math.binghamton.edu/zaslav/Bsg/glossary.html
 claim: "The unsigned incidence matrix is an incidence matrix of the all-negative signature; signed incidence distinguishes equal and opposite endpoint signs."
 strata_touched: []
 license: citation-only
-triage: note-only
+triage: anchor
 ---
 
 # Signed incidence, switching, and the grid transport interface
