@@ -1,0 +1,43 @@
+**定理 3.1（Arbitrary-board factorization）。** Let $k\geq0$ and let $P$ be
+any admissible board of size $k$. For $i\in[k]$ put
+
+$$
+\alpha_i=k+2-i-\lambda_i,\qquad
+\beta_i=k+1-i-\mu_i.
+$$
+
+Both are positive integers. Repeated application of $\Phi$ defines a
+bijection of the actual eligible set with the full digit box
+
+$$
+\mathcal E(P)\longrightarrow
+\prod_{i=1}^k
+\bigl(\{0,\ldots,\alpha_i-1\}\times
+      \{0,\ldots,\beta_i-1\}\bigr),
+\qquad
+(\sigma,\pi)\longmapsto((d_i,b_i))_{i=1}^k,
+$$
+
+whose inverse reconstructs the pairs in reverse order from the unique
+size-zero pair using the explicit maps $\Psi$. Moreover,
+
+$$
+E_P(\sigma,\pi)=\sum_{i=1}^k(d_i+b_i)\geq0.
+$$
+
+For an indeterminate $q$ and a positive integer $r$, let
+$[r]_q=\sum_{e=0}^{r-1}q^e$. Define, now using the proved nonnegative
+integer exponents,
+
+$$
+F_P(q)=\sum_{(\sigma,\pi)\in\mathcal E(P)}q^{E_P(\sigma,\pi)}
+\in\mathbb Z[q].
+$$
+
+Then the factorization is
+
+$$
+F_P(q)=\prod_{i=1}^k
+[k+2-i-\lambda_i]_q\,[k+1-i-\mu_i]_q.
+$$
+
