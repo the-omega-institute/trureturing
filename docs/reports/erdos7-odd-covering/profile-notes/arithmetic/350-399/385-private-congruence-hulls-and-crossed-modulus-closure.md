@@ -25718,21 +25718,32 @@ classes \(U_r\) are a retained source family for the displayed liability, but
 they do not by themselves cover all integers.
 
 The construction can also be embedded in the standard three-class top packet.
-Put (b=1+P), and add
+Put \(b=1+P\), and add
 
 \[
  T_0=[b]_{3^e},\qquad T_1=[b+R]_{5\cdot3^e},qquad
  T_2=[b+2R]_{7\cdot3^e}.
 \]
 
-For (x=b+Rk), the congruence (x\in T_j) is equivalent to
+For \(x=b+Rk\), the congruence \(x\in T_j\) is equivalent to
 
 \[
  3m_j\mid35(k-j),\qquad (m_0,m_1,m_2)=(1,5,7),
 \]
 
-and hence to (k\equiv j\pmod3).  These three actual phases therefore
-partition (B), while their odd numerical labels are distinct from one
-another, from (A,B), and from all (U_r) when (e\ge10).  The enlarged
-family still leaves integers uncovered, so it remains a source-compatible
-hull counterexample rather than a covering-system counterexample.
+and hence to \(k\equiv j\pmod3\).  These three actual phases therefore
+partition \(B\), while their odd numerical labels are distinct from one
+another, from \(A,B\), and from all \(U_r\) when \(e\ge10\).  This packet
+embedding changes the full liability set, so the earlier formulas for
+\(E_A\) and \(E_B\) are being used only to exhibit the retained-source hull
+before the packet is added.  The enlarged family is still not a cover: for
+example, choose \(x\) with
+
+\[
+ x\equiv0\pmod{35\,3^e},\qquad x\equiv1\pmod{11}.
+\]
+
+Then \(x\) avoids \(A\) and \(B\), avoids every \(U_r\) because its
+\(3^r\)-residue is \(0\) rather than \(1\), and avoids all three \(T_j\)
+since every \(T_j\)-residue is \(1\pmod P\) while \(x\equiv0\pmod P\).  Thus this remains a
+source-compatible hull example, not a covering-system counterexample.
