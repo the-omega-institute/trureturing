@@ -35,8 +35,8 @@ Retire the port when this repository's changed Mathlib pin provides an equivalen
 declaration, replacing consumers by direct applications of that declaration.
 
 For the predictive symplectic completion, the supplier applies separately to the
-symplectic form restricted to the actual visible image im(J O-transpose) and the
-hidden kernel of O, after nondegeneracy of these restrictions has been established.
+alternating form restricted to im L and to ker O, assuming both restrictions are
+nondegenerate. The supplier does not establish these nondegeneracy hypotheses.
 The basis convention has B(p_i,q_i)=+1; Mathlib's Matrix.J has the opposite sign.
 The supplier alone does not prove that these spaces are complementary, that the
 mixed S-energy vanishes, or that their positive energies have Williamson frequency
