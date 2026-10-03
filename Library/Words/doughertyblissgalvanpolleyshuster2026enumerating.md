@@ -24,7 +24,7 @@ The paper's Conjecture 15 states that `b_n / s_n` tends to zero. Thus the
 limiting ratio remains a conjecture in this source, and numerical monotonicity
 or fitted asymptotics do not settle it. This note makes no claim about the
 separate largest-limit question following Vatter's Question 4.3 and has no
-formal D5 declaration attached to it. The source is released under CC BY 4.0;
+full formal D5 settlement attached to it. The source is released under CC BY 4.0;
 this repository note records citation and status only.
 
 ## Related asymptotic inputs and resolution boundary
@@ -47,10 +47,15 @@ Proposition 1.3. A recursive sampler cannot replace the actual uniform class.
 The official arXiv record remains v1. A bounded check of arXiv metadata and
 the related primary sources above identified no complete resolution of the
 full actual-class, all-length limit. Forward-citation coverage is incomplete;
-this is not a global originality certificate. The finite history and capped
-exploration results do not settle the conjecture: stable bounded codes,
-successful full-history fiber equality or restriction control, actual
-asymptotic interfaces, coupled-law tails and hitting transfer remain needed.
+this is not a global originality certificate. The finite bridge in
+`D5/S1/Words/Patterns/Separable/StableEndpointCodes.lean` supplies bounded codes
+independent of the initial length, complete successful-history fibers, and
+exact fixed-family mass and absolute-coordinate cylinder sums under
+`n > H*K + max(2*K, max(m,B))`. Cap fibers retain their selected-leaf counts,
+including the threshold-satisfying four-of-twenty-two example. These finite
+statements do not settle the conjecture: actual count-ratio and sign-half
+interfaces, the infinite coupled law, truncation tails, occupation and hitting
+transfer remain needed.
 
 ## Verified locator
 
