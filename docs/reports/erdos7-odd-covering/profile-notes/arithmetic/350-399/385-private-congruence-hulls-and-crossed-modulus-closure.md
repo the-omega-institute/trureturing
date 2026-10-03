@@ -25786,3 +25786,125 @@ external-coordinate and deleted-point-hull alternatives as Section 218, and
 it does not force an eligible \(h\) outside \(\operatorname{Div}(R)\).
 Consequently (222.1) supplies no unrestricted Erdős--#7 conclusion by
 itself.
+
+## 223. The equal-prefix pure index-five branch is impossible
+
+Continue in the equal-prefix, occupied-\(R\), \(p=3\) branch of Sections
+192, 194, and 208, and retain the initial-support condition \(5\mid Q\).
+Let \(E\) be the complete two-sided liability of Section 218 and put
+
+\[
+  \Gamma_0:=\gamma_N(E).
+\]
+
+The equal-prefix identities (EP1)--(EP2) give
+
+\[
+  \Gamma_0=3^{e-1}G,\qquad 3\nmid G,\qquad \tau(G)\le2.
+  \tag{223.1}
+\]
+
+For a released label \(h\), Section 208 has \(E\subseteq S_h\).  Choose the
+same anchor \(w\in E\) in both complete-hull definitions.  Adding points to
+a periodic set can only add differences, so
+
+\[
+  \Gamma_h\mid\Gamma_0.
+  \tag{223.2}
+\]
+
+Write \(\nu=v_5(N)\).  Since \(5\mid Q\) and \(N=Q/3\), \(\nu\ge1\).
+The Type II formula of Section 208 says that the pure index-five price
+\(P_{5,h}\) is finite exactly when
+
+\[
+  v_5(\Gamma_h)=\nu
+  \quad\text{and}\quad
+  \tau\!\left(\Gamma_h/5^\nu\right)\ge5.
+  \tag{223.3}
+\]
+
+If \(P_{5,h}\) is finite, (223.2)--(223.3) imply
+\(\nu\le v_5(G)\).  Because \(3\nmid G\) and \(\tau(G)\le2\), \(G\) is
+either \(1\) or a prime.  The inequality \(\nu\ge1\) therefore forces
+
+\[
+  G=5,\qquad v_5(G)=1,\qquad \nu=1.
+\]
+
+Consequently \(\Gamma_h=5\cdot3^a\) for some \(0\le a\le e-1\).
+The second condition in (223.3) now reads \(a+1\ge5\), so
+
+\[
+  e\ge5,\qquad \Gamma_h=5\cdot3^a,\quad a\ge4.
+  \tag{223.4}
+\]
+
+Under (223.4), the five smallest divisors of
+\(\Gamma_h/5=3^a\) are
+
+\[
+  1,\ 3,\ 9,\ 27,\ 81,
+\]
+
+and the exact price formula of Section 208 gives
+
+\[
+  P_{5,h}=25(1+3+9+27+81)=3025.
+  \tag{223.5}
+\]
+
+On the other hand, the three \(m_i\) are distinct positive odd integers
+prime to \(3\), so \(m_1+m_2+m_3\ge1+5+7=13\).  Since \(R>0\),
+\(h>0\), and \(e\ge5\), the deletion price satisfies
+
+\[
+  \Sigma_h=R+3^e(m_1+m_2+m_3)+h
+  >13\cdot3^5=3159>3025.
+  \tag{223.6}
+\]
+
+Thus a finite pure index-five price would be strictly cheaper than the
+deleted five-label packet.  The comparison can be realized with the actual
+source phases, so it is a whole-liability exchange rather than a numerical
+hull estimate.  Put \(N=5N'\), choose one \(w\in S_h\), and define
+
+\[
+  d_j=25\cdot3^j,\qquad 0\le j<5,
+\]
+
+with phases \(c_j\) satisfying
+
+\[
+  c_j\equiv w\pmod {3^j},
+  \qquad c_j\equiv w+5j\pmod {25}.
+  \tag{223.7}
+\]
+
+Choose \(k_j\) with \(k_jN'\equiv j\pmod5\), and set
+
+\[
+  x_j=w+k_jN.
+\]
+
+The \(x_j\) lie in the same actual liability \(S_h\), and (223.7) makes
+\(x_j\) a private witness for the \(j\)-th repair class.  Every point of
+\(S_h\) has one of these five \(5\)-adic next digits, while the congruences
+modulo \(3^j\) are inherited from the complete hull.  Consequently the five
+classes \(c_j\pmod {d_j}\) cover all of \(S_h\), including every integer lift.
+Their labels are pairwise distinct and fresh: \(v_5(d_j)=2>v_5(Q)=1\).
+
+Replacing the released five-label packet by these five classes preserves the
+whole cover and changes the modulus sum by (223.5)--(223.6), a strict
+decrease at unchanged cardinality.  This contradicts the EB1 lexicographic
+choice.  Therefore
+
+\[
+  \boxed{P_{5,h}=+\infty}
+  \tag{223.8}
+\]
+
+for every releasable \(h\) in this equal-prefix branch.  The conclusion only
+closes Type II of Section 208.  The Type I phase-sensitive problem, the
+external-coordinate bridge, deleted-point hull growth, and the unrestricted
+whole-cover forcing step remain open.
