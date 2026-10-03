@@ -27348,17 +27348,20 @@ For a fibre with \(K_r(z)\ne\varnothing\), the slack has an exact local
 interpretation. Put
 
 \[
-\delta_r=|C_r|-1-\Gamma_r(z),\qquad
+s_r=|C_r|-1-w(D(C_r)),\qquad
+\lambda_r=w(D(C_r))-\Gamma_r(z),\qquad
 \rho_r=|J_{B_r}(r)|-|C_r|,
 \]
-where \(\Gamma_r(z)\) is the \(r\)-summand in (237.3). Then
-\(\delta_r\ge0\) is the multivalued Tarsi surplus of the selected core and
-\(\rho_r\ge0\) is the number of locally redundant active labels. Since
-\(W(r)=\{B_r\}\) makes the corresponding term of (237.4) equal to
-\(|J_{B_r}(r)|-1\),
+where \(\Gamma_r(z)\) is the \(r\)-summand in (237.3), \(D(C_r)\) is
+the union of the coordinate supports of the selected core, and \(w\) is
+the coordinate weight used in (237.1). Then \(s_r\ge0\) is the standard
+multivalued Tarsi surplus of the selected core, \(\lambda_r\ge0\) is the
+support omitted by the routed labels \(K_r(z)\), and \(\rho_r\ge0\) is
+the number of locally redundant active labels. Since \(W(r)=\{B_r\}\)
+makes the corresponding term of (237.4) equal to \(|J_{B_r}(r)|-1\),
 
 \[
-\bigl(|J_{B_r}(r)|-1\bigr)-\Gamma_r(z)=\rho_r+\delta_r.
+\bigl(|J_{B_r}(r)|-1\bigr)-\Gamma_r(z)=\rho_r+s_r+\lambda_r.
 \tag{237.6}
 \]
 
@@ -27567,4 +27570,4 @@ so the coarse comparison would collapse to
 available from whole coverage and EB1 alone; proving it, or charging the
 missing coordinates through the capacity-refined \(\kappa_v\) terms, is exactly
 a remaining whole-cover/source bridge. Thus (239.3)--(239.4) are a conditional
-diagnostic, not an unrestricted exclusion.\n
+diagnostic, not an unrestricted exclusion.
