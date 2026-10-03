@@ -3,6 +3,25 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 [[ $# -gt 0 ]] || { echo 'lean-cache-run: COMMAND is required' >&2; exit 2; }
 cd "$ROOT"
+if [[ "$1" == --build ]]; then
+  # All linked worktrees share this Git directory. Keep the descriptor open
+  # through cache preparation and every build phase; never unlink the lock file.
+  lean_common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+  exec 9>>"$lean_common_dir/stratalint-lean-build.lock"
+  python3 - <<'PY'
+import fcntl
+import sys
+
+try:
+    try:
+        fcntl.flock(9, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print("lean-cache-run: waiting for another Lean build to finish", file=sys.stderr, flush=True)
+        fcntl.flock(9, fcntl.LOCK_EX)
+except KeyboardInterrupt:
+    raise SystemExit(130)
+PY
+fi
 # Lake checks each pinned Git dependency with `git diff --exit-code HEAD`.
 # Restoring the dependency files changes their stat data, so Git's optional
 # index refresh would change an otherwise identical cache. Keep the content
