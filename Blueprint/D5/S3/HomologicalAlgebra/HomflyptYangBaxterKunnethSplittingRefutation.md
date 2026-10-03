@@ -118,6 +118,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/HomflyptYangBaxterKunnethSplittingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/christiana-2025-homflypt-yang-baxter-kunneth-splitting-refutation` (refuted) by `D5/S3/HomologicalAlgebra/HomflyptYangBaxterKunnethSplittingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"christiana-2025-homflypt-yang-baxter-kunneth-splitting-refutation","declaration_gid":"D5/S3/HomologicalAlgebra/HomflyptYangBaxterKunnethSplittingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Christiana; B. Clingenpeel; H. Guo; J. Oh; J. H. Przytycki; X. Wang; H. Yun (2025). *Low Dimensional Homology of the Yang-Baxter Operators Yielding the HOMFLYPT Polynomial*. URL: <https://arxiv.org/abs/2502.20659v1>.

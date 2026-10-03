@@ -43,14 +43,18 @@ internal sealed class HomflyptYangBaxterKunnethSplittingRefutationDocument : ISc
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "The universal chain splitting is false", Disp(Seq(F.Neg, Sp, F.Id("claim"))),
                 "Take m = 2, A = {2}, B = {1}, encoded in Fin 2 by A = {1}, B = {0}. These blocks are disjoint and strictly ordered. In degree five the six block generators 2^i 1^(5-i), for 0 ≤ i ≤ 5, have zero boundary. Linearity therefore makes the boundary zero on their entire span. The chain c = t(t+1)11112 + (t³+t²+t+1)11121 + t11212 - t12112 + t³12211 + t²12221 has boundary q(2221 - 2111), where q = t³(t² - 1). Both four-letter words belong to the block submodule. A chain retraction would fix this boundary and also make it zero by the degree-five chain-map equation. Its coefficient at 2221 is q, whose coefficient of t^5 is 1, a contradiction. This settles the chain-splitting assertion. The argument does not determine every possible abstract decomposition of the homology groups and does not contradict the subcomplex or tensor-product statements of Proposition 5.5.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("christiana-2025-homflypt-yang-baxter-kunneth-splitting-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("homfly-kunneth-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name)
     {
