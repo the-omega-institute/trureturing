@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "depth": 1,
+      "embedding_count": 3,
+      "joint": "4/9",
+      "kappa": "2/3",
+      "kappa_checks": 9,
+      "r": 2,
+      "rho": "2/3",
+      "s": 3
+    },
+    {
+      "depth": 2,
+      "embedding_count": 27,
+      "joint": "8/189",
+      "kappa": "4/27",
+      "kappa_checks": 81,
+      "r": 2,
+      "rho": "2/7",
+      "s": 3
+    },
+    {
+      "depth": 1,
+      "embedding_count": 10,
+      "joint": "9/40",
+      "kappa": "3/5",
+      "kappa_checks": 25,
+      "r": 3,
+      "rho": "3/8",
+      "s": 5
+    },
+    {
+      "depth": 2,
+      "embedding_count": 10000,
+      "joint": "81/6500",
+      "kappa": "27/250",
+      "kappa_checks": 625,
+      "r": 3,
+      "rho": "3/26",
+      "s": 5
+    }
+  ],
+  "checks": 740,
+  "scope": "finite common-tree probability identities only",
+  "status": "PASS"
+}
