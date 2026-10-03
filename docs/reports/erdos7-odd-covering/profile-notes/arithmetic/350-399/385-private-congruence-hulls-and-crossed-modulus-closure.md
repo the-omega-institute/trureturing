@@ -27270,3 +27270,106 @@ component and satisfies (236.2) on its covered fibre. A closing argument
 therefore needs an independent upper bound on these weighted singleton-fibre
 masses, or a strict EB1 replacement that consumes the same source-compatible
 private slots.
+
+## 237. A common clause-surplus budget for the private flow
+
+Section 343 already supplies the relevant translation to finite multivalued
+clauses and the weighted Tarsi/surplus inequality; the following is its
+source-compatible application to the private-point flow. It does not introduce
+a new SAT theorem.
+
+For \(r\in U_H\) and a component \(B\) with \(R_B(r)=\varnothing\), let
+\(J_B(r)\) be the active external labels in \(B\). Write the quotient
+coordinates of \(G_B=\mathbb Z/L_B\mathbb Z\) as \(v=(p,j)\), with
+\(1\le j\le v_p(L_B)\), and give \(v\) domain size \(p\) and weight \(p-1\).
+For \(i\in J_B(r)\), let \(D_i\) be the initial coordinate set fixed by its
+quotient modulus \(\ell_i\). The complement of \(C_{i,r}\) is the corresponding
+multivalued clause of digit disequalities.
+
+Let \(\mathcal Z_H\) be the integral flows of value \(|I_H|\) in (233.3). For
+\(z\in\mathcal Z_H\), let \(K_r(z)\) be the labels whose unit flow uses a
+bucket over \(r\). Whenever \(K_r(z)\ne\varnothing\), all those buckets have the
+same component \(B_r\), because a bucket exists only when \(W(r)=\{B_r\}\).
+Choose an inclusion-minimal subcover
+\(C_r\subseteq J_{B_r}(r)\) of the full product \(G_{B_r}\) that contains
+\(K_r(z)\). This is a genuine inclusion-minimal subcover, not merely a
+subcover minimal relative to \(K_r(z)\): each selected flow bucket uses a
+point \(t_{B_r}\in P_{i,r}\), so every label in \(K_r(z)\) is indispensable,
+and finite deletion then removes all unnecessary labels outside \(K_r(z)\).
+Consequently the complementary digit-disequality clauses form a finite
+minimally unsatisfiable generalized clause-set on the free CRT coordinates.
+
+The weighted surplus inequality from [Report 343, §2](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#2-全-q-缺陷界确实是既有-simpson-结果) gives, for every nonempty coordinate set \(T\subseteq\bigcup_{i\in C_r}D_i\),
+
+\[
+\left|\{i\in C_r:D_i\cap T\ne\varnothing\}\right|
+\ge
+1+\sum_{v\in T}(p(v)-1).
+\tag{237.1}
+\]
+
+Taking \(T=\bigcup_{i\in K_r(z)}D_i\) yields
+
+\[
+\sum_{v\in T}(p(v)-1)\le |C_r|-1\le |J_{B_r}(r)|-1.
+\tag{237.2}
+\]
+
+Define the coordinate activation cost of one flow by
+
+\[
+\Gamma_H(z)=\sum_{r\in U_H}\sum_v
+(p(v)-1)\,\mathbf 1\{\exists i\in K_r(z):v\in D_i\}.
+\tag{237.3}
+\]
+
+Under whole coverage, put
+
+\[
+\mathcal B_H=\sum_{r\in U_H}
+\max_{B:R_B(r)=\varnothing}\bigl(|J_B(r)|-1\bigr),
+\tag{237.4}
+\]
+
+with an empty maximum already witnessing noncoverage. If \(K_r(z)\ne\varnothing\),
+the selected labels all lie in the same \(B_r\), and the preceding private-point
+argument supplies \(C_r\). Hence (237.2) applies to every such fibre of every
+saturated flow. Summing over \(r\) gives the pointwise constraint
+
+\[
+\boxed{
+\forall z\in\mathcal Z_H,\qquad
+\Gamma_H(z)\le\mathcal B_H.
+}
+\tag{237.5}
+\]
+
+For a fibre with \(K_r(z)\ne\varnothing\), the slack has an exact local
+interpretation. Put
+
+\[
+\delta_r=|C_r|-1-\Gamma_r(z),\qquad
+\rho_r=|J_{B_r}(r)|-|C_r|,
+\]
+where \(\Gamma_r(z)\) is the \(r\)-summand in (237.3). Then
+\(\delta_r\ge0\) is the multivalued Tarsi surplus of the selected core and
+\(\rho_r\ge0\) is the number of locally redundant active labels. Since
+\(W(r)=\{B_r\}\) makes the corresponding term of (237.4) equal to
+\(|J_{B_r}(r)|-1\),
+
+\[
+\bigl(|J_{B_r}(r)|-1\bigr)-\Gamma_r(z)=\rho_r+\delta_r.
+\tag{237.6}
+\]
+
+Fibres with no selected flow bucket contribute \(\Gamma_r(z)=0\) and a
+nonnegative term to (237.4). Thus (237.5) is a bookkeeping refinement of a
+hypothetical whole-cover flow, not a lower-bound mechanism: the same hypotheses
+that produce the flow also produce this upper bound. In particular, searching
+for a lower bound on the current \(\Gamma_H\) that exceeds \(\mathcal B_H\)
+cannot close the problem; it would contradict (237.5). The remaining useful
+directions are a different cost that charges uncovered extension labels or
+capacities, an independent global lower bound on that new cost, or a
+phase-sensitive refinement of (237.1) that is not already absorbed by the
+minimal quotient core. The unrestricted whole-cover bridge therefore remains
+open.
