@@ -136,11 +136,14 @@ There is no digestion atom or coverage edge.
 - **已算 — square-branch boundary.** The local `square_bound`
   requires `r>=2`. Replacing this with `r>=1` fails at `r=1,m=2`:
   `P(1)=1`, `P(2)=2`, and `P(2)|2P(1)^2=2`, although `2>1`.
-- **已算 — source dependency check.** In arXiv:2409.01296v1
+- **已算(符号代入与原文依赖核对) — source dependency check.** In arXiv:2409.01296v1
   [Section 4.5](https://arxiv.org/html/2409.01296v1#S4.SS5),
   Theorem 19 uses the identities `S(4k)=2P(2k)P(2k+1)` and
-  `S(4k-1)=2P(2k)^2`, which supply the same multiplier `2P(2k)`
-  at adjacent sum and term indices, followed by
+  `S(4k-1)=2P(2k)^2`. Substituting `n = 4k` and `m = 2k + 1`
+  supplies the common multiplier `2P(2k)` at adjacent sum and
+  term indices: `S(n-1)=2P(2k)P(m-1)` and
+  `S(n)=2P(2k)P(m)`. For `k = 1`, these are
+  `S(3) = 8 = 4P(2)` and `S(4) = 20 = 4P(3)`. Theorem 19 then uses
   [Theorem 13](https://arxiv.org/html/2409.01296v1#Thmtheorem13)'s
   transfer to sequences with the same recurrence. Its proof does
   not require Conjecture 18's maximality. Settling the conjecture
