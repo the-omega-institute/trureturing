@@ -130,3 +130,4 @@ This identity concerns the literal permutation maps. The opposite composition, p
 - Truth anchor: `D5/S3/Combinatorics/Permutation/CoupledRepairedLeftInverse.put`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/CoupledRepairedLeftInverse.replace`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/CoupledRepairedLeftInverse.slotOrder`
+- Dependency: [D5/S3/Combinatorics/Permutation/CoupledOrderedRecovery](CoupledOrderedRecovery.md)

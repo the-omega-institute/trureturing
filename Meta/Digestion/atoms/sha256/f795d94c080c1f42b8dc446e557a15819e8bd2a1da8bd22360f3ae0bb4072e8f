@@ -1,0 +1,18 @@
+Starting with $(\sigma,\pi)$, form its ordinary deletion $(s,p)$ as in
+Definition 2.1. Let $\theta$ be the subword of $\sigma$ on $[A]$, let $\rho$
+be $\theta$ with its maximum label $A$ removed, and put
+
+$$
+d=\#\{\text{entries after }A\text{ in }\theta\},\qquad
+b=\#\{u<t:s_u\leq B\}.
+$$
+
+Replace the entries in the low-row slots $\{u:s_u\leq L\}$, in their
+existing order, by the word $\rho$, and leave all other entries unchanged.
+Call the resulting row word $s^\dagger$. Then
+
+$$
+\Phi_P(\sigma,\pi)=((s^\dagger,p),d,b),\qquad
+E_P(\sigma,\pi)=E_{P'}(s^\dagger,p)+d+b.
+$$
+
