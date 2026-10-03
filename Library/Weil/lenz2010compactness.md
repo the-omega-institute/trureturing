@@ -645,9 +645,11 @@ $$
 For $h\in\mathcal L\cap\mathcal R$, the reducing projection
 $P_\mathcal R$ retains at most the same form error, while its output
 generally has noncompact support. The bound concerns the original
-operator's whole fixed-gap spectral subspace, not the eventual finite
-discretization of its interior. Interior approximation with a complete
-lower spectral certificate and control uniform as
+operator's whole fixed-gap spectral subspace. The
+[quantitative interior construction](jarohsweth2020local.md) provides a
+finite-rank existence map with uniform error in the original form norm.
+Computed basis functions, a complete lower spectral certificate and
+control uniform as
 $\varepsilon\downarrow0$ remain unresolved. Subthreshold accumulation is
 not excluded; RH and full Robin remain unresolved. These are paper-level model
 deductions, without new Lean certification or an originality claim.
