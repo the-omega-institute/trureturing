@@ -58,6 +58,10 @@ $$\forall n \in \mathrm{Nat},\; \forall R \in \operatorname{Fin}\left(n\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Latin/AlternatingSignMargins.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ernst-lia-obrien-sheekey-zumbragel-2026-alternating-sign-margins` (proved) by `D5/S3/Combinatorics/Latin/AlternatingSignMargins.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ernst-lia-obrien-sheekey-zumbragel-2026-alternating-sign-margins","declaration_gid":"D5/S3/Combinatorics/Latin/AlternatingSignMargins.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

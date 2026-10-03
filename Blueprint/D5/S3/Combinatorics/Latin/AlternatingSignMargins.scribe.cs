@@ -23,16 +23,18 @@ internal sealed class AlternatingSignMarginsDocument : IScribeDocumentDefinition
             Node("claim", "Problem 8.3 and its exact answer", "claim", ClaimFormula(),
                 "Section 8, p. 27: “Problem 8.3. For which (0, ±1)-vectors R and S of order n does there exist X ∈ W_n with row-sums R and column-sums S?” Section 8, p. 27: “Section 4 introduces the set W_n consisting of all (0, ±1)-matrices in which the non-zero entries of each row and column alternate in sign, and the sum of each row/column is in {0, ±1}.” The quantified proposition encodes the complete answer: equality of the two total sums is necessary and sufficient. Both vectors have integer entries in {−1,0,1}; every sum ranges over all of Fin n. All natural orders, including zero, are included.", true, DescribeRole.Definition),
             Node("result", "Equal totals are the only obstruction", "result", Disp(ClaimBody()),
-                "Summing all entries in either order gives necessity. For sufficiency, orient the margins so that the positive row count is at least the positive column count. Equality of totals makes the positive and negative row surpluses equal. Match the required signed columns to rows of the same sign and place each remaining positive-negative row pair in its own zero-margin column. The zero-column capacity follows from the three sign-class counts. Rows then have at most one nonzero entry, and columns at most one of each sign, so every line alternates. Transposition handles the other orientation.", false, DescribeRole.Theorem)),
+                "Summing all entries in either order gives necessity. For sufficiency, orient the margins so that the positive row count is at least the positive column count. Equality of totals makes the positive and negative row surpluses equal. Match the required signed columns to rows of the same sign and place each remaining positive-negative row pair in its own zero-margin column. The zero-column capacity follows from the three sign-class counts. Rows then have at most one nonzero entry, and columns at most one of each sign, so every line alternates. Transposition handles the other orientation.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("ernst-lia-obrien-sheekey-zumbragel-2026-alternating-sign-margins"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, bool literature, DescribeRole role) =>
+        Formula formula, string prose, bool literature, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("alternating-sign-margins-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
