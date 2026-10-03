@@ -9,6 +9,7 @@ claim: "Weighted bounded Dyck paths with Narayana weights and q = -1 weights; Co
 strata_touched:
   - D5/S3/Combinatorics/NarayanaStrip/CiglerStripExpansion
   - D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct
+  - D5/S3/Combinatorics/NarayanaStrip/CiglerCycleWalk
 license: citation-only
 triage: anchor
 ---
