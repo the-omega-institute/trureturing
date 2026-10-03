@@ -234,3 +234,130 @@ deductions from the inspected sources, without new Lean certification or
 an originality claim. They advance an actual weaker lower bound and
 essential-threshold identification; the global RH-strength lower bound
 remains unresolved.
+
+
+## Fixed-gap eigenfunction tails and FIB approximation
+
+Qualitative uniform tails on each spectral subspace strictly below one-half
+already follow from the finite-rank projections above. The following
+model estimate supplies explicit inputs for the actual noncompact
+vectors. It reuses the [nonlocal IMS calculation](frankliebseiringer2006hardy.md)
+and the complete prime decomposition, without a new generic theorem or
+originality claim.
+
+For $R\ge4$, choose even smooth $0\le\eta_R\le1$, zero on $[-R,R]$, one
+outside $[-R-2,R+2]$, with $|\eta_R'|\le1$. Put
+
+$$
+\begin{aligned}
+e_R(x)&=\frac1{2\cosh(x/2)}\int\Phi(y)\psi(|x-y|)
+                 |\eta_R(y)-\eta_R(x)|^2\,dy,\\
+E_R&=\|e_R\|_\infty,\qquad b_R=\|M_{\eta_R}B_p\|,\\
+\delta_R&=\sup_{|x|\ge R}(\tfrac12-a_p(x))_+.
+\end{aligned}
+$$
+
+The first expression is exactly the Gamma conductance row divided by the
+original speed density $\rho$, with the squared cutoff difference.
+Let $k(t)=\psi(|t|)\min(1,t^2)$ for $t\ne0$, $k(0)=0$,
+$K=\|k\|_\infty<\infty$, $P=\int\Phi$, $T(r)=\int_{|y|>r}\Phi(y)\,dy$
+and $d=(1-e^{-2})^{-1}$. Then
+
+$$
+E_R\le\tfrac12\bigl(dP e^{-R/8}+K T(R/4)\bigr)
+\longrightarrow0. \tag{TR}
+$$
+
+For $|x|\ge R/2$, the cutoff difference is bounded by
+$\min(1,|x-y|)$. Split the integral at $|y|=R/4$: on the inner part
+$|x-y|\ge R/4\ge1$ gives $k(x-y)\le d e^{-R/8}$; on the outer part
+$k\le K$. Divide by $2\cosh(x/2)\ge2$. For $|x|<R/2$, $\eta_R(x)=0$
+and a nonzero difference requires $|y|>R$. This gives the smaller bound
+$d e^{-R/4}T(R)/2$. Thus (TR) concerns the actual Gamma kernel, rather
+than a fractional-kernel replacement.
+
+On the compact smooth core, the product estimate gives
+$D_\Gamma(\eta_R h)\le2D_\Gamma(h)+E_R\|h\|_\nu^2$.
+Core approximants extend this bounded multiplier to the Gamma minimal
+domain. The same argument applies to $\eta_R^2$, whose cutoff rate is
+at most $4e_R$. The common minimal domain and (BD) give legality in the
+original mixed form domain. No maximal-domain identification is used.
+The exact ordered-jump identity is
+
+$$
+\begin{aligned}
+D_\Gamma(\eta_R h)-\Re D_\Gamma(h,\eta_R^2h)
+&=\tfrac12\iint |\eta_R(y)-\eta_R(x)|^2
+       \Re\bigl(h(x)\overline{h(y)}\bigr)\,J_\Gamma(dx,dy),\\
+\left|D_\Gamma(\eta_R h)-\Re D_\Gamma(h,\eta_R^2h)\right|
+&\le\tfrac12 E_R\|h\|_\nu^2.
+\end{aligned} \tag{GI}
+$$
+
+Here $J_\Gamma(dx,dy)=\Phi(x)\Phi(y)\psi(|x-y|)\,dx\,dy$.
+The factor one-half uses both ordered endpoints. Symmetry and
+$|\Re(h(x)\overline{h(y)})|\le(|h(x)|^2+|h(y)|^2)/2$ give the bound;
+form approximation extends the identity.
+
+Let $Ah=\lambda h$, $\|h\|_\nu=1$, and $t_R=\|\eta_Rh\|_\nu$.
+Testing the original eigen-equation with $\eta_R^2h$, using (GI), gives
+
+$$
+(\tfrac12-\delta_R-\lambda)t_R^2
+\le b_Rt_R+\tfrac12E_R. \tag{EL}
+$$
+
+Indeed the left diagonal is at least $(1/2-\delta_R)t_R^2$,
+$D_\Gamma(\eta_Rh)\ge0$, and the full prime off-diagonal contribution
+has modulus at most $\|\eta_R B_ph\|_\nu t_R\le b_Rt_R$.
+All crossing prime-power edges and shifted adjoints remain present.
+For $\lambda\le1/2-\varepsilon$ and $\delta_R\le\varepsilon/2$,
+the quadratic inequality yields
+
+$$
+\|\mathbf1_{\{|x|\ge R+2\}}h\|_\nu\le t_R
+\le\frac{b_R+\sqrt{b_R^2+\varepsilon E_R}}{\varepsilon}
+\longrightarrow0\quad\text{for fixed }\varepsilon>0. \tag{LT}
+$$
+
+The approved potential limit gives $\delta_R\to0$ and the complete prime
+operator-tail argument gives $b_R\to0$. An upper input for $b_R$ is
+
+$$
+\sum_{n\ge2}\left(\sup_{|x|>R}b_n(x)
+                 +\sup_{|x|>R}b_n(x-\log n)\right).
+$$
+
+A finite prefix and the existing summable global theta majorant bound
+this expression. No numerical values or certified effective convergence
+rate are supplied here.
+
+The same equation, $a_p\ge0$ and (BD) also give
+
+$$
+D(\eta_Rh)\le(\tfrac12+2\|a_p\|_\infty)t_R^2
+                       +b_Rt_R+\tfrac12E_R. \tag{FE}
+$$
+
+Thus the compactly supported form-domain vector $h_R=(1-\eta_R)h$
+approximates the actual eigenvector in the original form norm:
+
+$$
+\|h-h_R\|_\nu^2+D(h-h_R)
+\le(\tfrac32+2\|a_p\|_\infty)t_R^2+b_Rt_R+\tfrac12E_R. \tag{FN}
+$$
+
+No smoothness of $h_R$ or effective interior discretization is asserted.
+If $h\in\mathcal R$, cutting it off need not preserve that remainder.
+Its established reducing projection $P_{\mathcal R}$ is a contraction
+in both the Hilbert and nonnegative form norms, so $P_{\mathcal R}h_R$
+approximates $h$ with at most the same error. The projected vector generally
+has noncompact support; a support-limited positivity certificate does
+not thereby become a remainder certificate.
+
+These fixed-$\varepsilon$ paper estimates provide a finite-support source
+for approximating actual low eigenvectors. Interior discretization and
+complete spectral certification remain separate obligations. The
+$1/\varepsilon$ loss is uncontrolled as $\varepsilon\to0$; threshold
+accumulation and subthreshold eigenvectors are not excluded. The
+RH-strength exact-half bound remains unproved.
