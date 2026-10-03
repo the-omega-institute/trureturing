@@ -11016,3 +11016,202 @@ e^{-C_iD_{\infty,i}e^{-\theta_*x}}
 \tag{122.6}
 \]
 其中 \(D_{\infty,i}\) 是需单独证明收敛的临界导数鞅极限。有限容量的分枝—选择会删除领先以外的后裔，速度一般低于无选择过程；连续 Brownian 位移和指数分枝时，还可在额外合作型条件下得到两类型 Fisher–KPP 前沿。所有位移、时钟、容量、选择和连续极限均为外加，FIB 递归本身只给出类型骨架与计数关系。
+
+## 123. FIB 合法上下文图上的外加二聚体、随机铺砖与高度涨落
+
+固定有限合法上下文图，并另选无向图
+\[
+\Gamma_\partial=(V_\partial,E_\partial)
+\]
+作为匹配载体。FIB 接缝只筛选候选边；无向化、完美匹配约束、铺砖几何、边界和边权均为外加。完美匹配配置为
+\[
+\mathcal M_\partial
+=\left\{M\subseteq E_\partial:
+\sum_{e\ni v}1_{\{e\in M\}}=1
+\ \text{对所有 }v\in V_\partial\right\}.
+\tag{123.1}
+\]
+若采用二分图，还须满足两侧等势与 Hall 条件；FIB 的两个字母不自动是二分颜色。给每条允许边正权 \(\omega_e\)，配分函数和概率律为
+\[
+Z_\partial=\sum_{M\in\mathcal M_\partial}\prod_{e\in M}\omega_e,
+\qquad
+\mathbb P_\partial(M)=Z_\partial^{-1}\prod_{e\in M}\omega_e.
+\tag{123.2}
+\]
+无完美匹配时 \(Z_\partial=0\)，概率模型尚未定义；允许单体则是另一模型。
+
+若 \(\Gamma_\partial\) 已给定平面二分嵌入并满足 Kasteleyn 符号条件，黑点为行、白点为列的 Kasteleyn 矩阵 \(K\) 给出
+\[
+Z_\partial=|\det K|.
+\tag{123.3}
+\]
+平面非二分情形改用 Pfaffian；环面边界需要多个绕行扇区的扭转矩阵组合。普通邻接矩阵不能替代 Kasteleyn 矩阵，因为其行列式会发生符号抵消。
+
+当 \(K\) 可逆时，边占用具有行列式相关核。对互不相同的边 \(e_i=(b_i,w_i)\)，
+\[
+\mathbb P_\partial(e_1,\ldots,e_r\in M)
+=\left(\prod_i k_{e_i}\right)
+\det[(K^{-1})_{w_i b_j}]_{i,j=1}^r,
+\tag{123.4}
+\]
+并且
+\[
+\frac{\partial\log Z_\partial}{\partial\log\omega_e}
+=\mathbb P_\partial(e\in M),\qquad
+\frac{\partial^2\log Z_\partial}
+{\partial\log\omega_e\,\partial\log\omega_f}
+=\operatorname{Cov}(1_e,1_f).
+\tag{123.5}
+\]
+相关核不必 Hermitian，不能仅凭形式符号断言所有边负相关。若另给平面二分取向和参考匹配，匹配差流可积成面高度；高度增量的方差由 (123.4) 的协方差双重和决定。连续液态高度极限、熵密度和高斯涨落需要额外周期图列、嵌入、权重归一化与紧性假设。FIB 只提供合法关系，不内生生成匹配、铺砖或高度场。
+
+## 124. FIB 类型与上下文路径上的外加 Hawkes 自激、分枝簇与长时统计
+
+固定有限类型集 \(I=\{1,\ldots,d\}\)，类型可来自 FIB 标签或上下文接口，但不因此获得概率律。给出连续时间、初始历史、移民率 \(\mu_i\ge0\) 和非负核 \(h_{ij}\)，定义
+\[
+\lambda_i(t)
+=\mu_i+\sum_{j=1}^d\int_{(-\infty,t)}
+h_{ij}(t-s)\,N_j(\mathrm ds),
+\qquad
+K_{ij}=\int_0^\infty h_{ij}(u)\,\mathrm du.
+\tag{124.1}
+\]
+\(\lambda_i(t)\) 是外加历史滤过下的可预测条件强度；FIB 替换次数不是此处的物理时钟。
+
+Hawkes 过程具有移民—分枝簇表示：每个类型 \(j\) 事件独立地产生类型 \(i\) 后代，平均直接后代矩阵为 \(K\)。若谱半径 \(\rho(K)<1\)，则
+\[
+R=(I-K)^{-1}=\sum_{n\ge0}K^n,
+\qquad
+\bar\lambda=R\mu
+\tag{124.2}
+\]
+给出有限簇均值与平稳平均强度。对临界 \(\rho(K)=1\)，单簇可几乎必然灭绝但期望簇大小发散；持续移民下不能继续使用有限逆矩阵。对超临界 \(\rho(K)>1\)，可达类型有正概率生成无限簇；这不等同于有限时间爆炸。
+
+若核具有统一指数尾界并满足亚临界条件，平稳计数在长时间下满足遍历大数律和中心极限定型
+\[
+\frac{N((0,T])}{T}\to\bar\lambda,
+\qquad
+\frac{N((0,Tt])-Tt\bar\lambda}{\sqrt T}
+\Longrightarrow\Sigma^{1/2}W(t),
+\tag{124.3}
+\]
+其中 \(\Sigma\) 保留同一分枝簇造成的跨类型共同涨落。只观测 FIB 类型边缘频率，不能区分移民率、触发核和共同父事件；需要完整事件时间与类型联合观测。所有 Hawkes 核、移民、时间和观测协议均为外加，FIB 关系只提供标记载体。
+
+## 125. FIB 词序与替换层上的外加 Floquet 驱动、准能谱和子谐响应
+
+固定 FIB 词 \(W_j=w_1\cdots w_{L_j}\)，在位置上配置自旋自由度。替换层 \(j\) 表示不同有限纹理或规模，物理时间另由外部周期 \(T\) 给出。令 \(H_{z,j}\) 是按字母选择耦合和纵向场得到的外加 Ising 算子，周期脉冲为横向旋转，则
+\[
+U_{F,j}
+=e^{-\mathrm i\tau H_{z,j}}
+e^{-\mathrm i(\pi/2+\delta)\sum_iX_i}
+\tag{125.1}
+\]
+是一个周期 Floquet 算子。字母到耦合的映射、脉冲形状、周期、初态与采样相位均不是 FIB 递归的输出；若按 Fibonacci 词依次改变脉冲，有限词重复形成的超周期也需另行声明。
+
+准能由
+\[
+U_{F,j}|\phi_a\rangle
+=e^{-\mathrm i\varepsilon_aT}|\phi_a\rangle,
+\qquad
+\varepsilon_a\in\mathbb R/(2\pi/T)\mathbb Z
+\tag{125.2}
+\]
+定义。在理想 \(\delta=0\) 且纵向算子与 \(H_{z,j}\) 对易时，
+\[
+U_{F,j}^\dagger Z_iU_{F,j}=-Z_i,
+\tag{125.3}
+\]
+所以纵向磁化在每周期翻转、两周期恢复，并产生准能相差 \(\pi/T\) 的配对。这是精确脉冲模型的代数结论；非零误差会产生漂移包络，不能仅据此宣称稳定时间晶体。
+
+多体子谐响应需要额外的多体局域化或预热机制、局域序、准能配对和稳定参数区域。预热正规形可写成
+\[
+U_F\simeq R^\dagger P e^{-\mathrm iTD}R,
+\qquad
+P^2=I,\qquad [D,P]=0,
+\tag{125.4}
+\]
+但必须同时给出准局域误差和有效时间窗。固定有限一维短程链、高频或有限样本中看到的周期二信号，都不足以推出热力学时间晶体。FIB 只供给纹理与词序，周期驱动、相互作用、噪声和观测协议均外加。
+
+## 126. FIB 上下文图上的外加离散非线性 Schrödinger、孤子与调制不稳定
+
+固定有限无向耦合图 \(G=(V,E)\)，给顶点正权 \(m_i\) 和边权 \(w_{ij}=w_{ji}\ge0\)。加权图拉普拉斯为
+\[
+(L\psi)_i=\frac1{m_i}\sum_jw_{ij}(\psi_i-\psi_j).
+\tag{126.1}
+\]
+FIB 关系的方向被对称化是新的动力学选择。给实势 \(V_i\)、三次系数 \(g_i\) 和耦合尺度 \(\kappa>0\)，Hamiltonian 与离散 NLS/Gross–Pitaevskii 方程为
+\[
+\mathcal H(\psi)
+=\kappa\sum_{\{i,j\}}w_{ij}|\psi_i-\psi_j|^2
++\sum_im_iV_i|\psi_i|^2
++\frac12\sum_im_ig_i|\psi_i|^4,
+\tag{126.2}
+\]
+\[
+\mathrm i\dot\psi_i
+=\kappa(L\psi)_i+V_i\psi_i+g_i|\psi_i|^2\psi_i.
+\tag{126.3}
+\]
+整体相位对称性给出质量守恒
+\[
+\mathcal N(\psi)=\sum_im_i|\psi_i|^2,
+\qquad
+\frac{\mathrm d\mathcal N}{\mathrm dt}=0,
+\qquad
+\frac{\mathrm d\mathcal H}{\mathrm dt}=0.
+\tag{126.4}
+\]
+这些守恒量依赖自伴图拉普拉斯和实系数，FIB 计数矩阵不承担其证明。
+
+驻波 \(\psi_i(t)=e^{-\mathrm i\omega t}\phi_i\) 满足
+\[
+\omega\phi_i=\kappa(L\phi)_i+V_i\phi_i+g_i|\phi_i|^2\phi_i.
+\tag{126.5}
+\]
+其存在、局域化和孤子形状由边权、势、非线性和边界决定。对驻波作 Bogoliubov 线性化，得到每个图谱模态的有限维块；若某块存在正实部特征值，则产生调制不稳定。均匀正则图上，线性增长率依赖 \(L\) 的特征值、背景幅度和 \(g\)，改变同一 FIB 图的边权即可在稳定、呼吸子和不稳定区间之间切换。
+
+若另加图列嵌入与尺度，使 \(L\) 收敛到 \(-\Delta\)，并同步缩放 \(\kappa,V,g,m\)，才可得到连续 Gross–Pitaevskii 或 NLS 极限。孤子、散射、崩塌与离散呼吸子的结论需分别满足维数、符号、正则性和边界假设；FIB 上下文骨架本身不指定粒子数、相互作用或物理空间。
+
+## 127. FIB 类型与上下文图上的外加多型 SIR/SEIR、再生数与最终规模
+
+固定有限类型集 \(I=\{1,\ldots,d\}\)，类型可保留 FIB 标签、守卫或上下文类别。另指定传播接触矩阵 \(C\)、传播概率 \(p_{ij}\)、恢复率 \(\gamma_j>0\) 和人口比例 \(n_j\)，令
+\[
+\beta_{ij}=p_{ij}C_{ij}/n_j,
+\qquad
+B=(\beta_{ij}),
+\qquad
+\Gamma=\operatorname{diag}(\gamma_1,\ldots,\gamma_d).
+\tag{127.1}
+\]
+合法上下文延拓不自动成为感染接触，FIB 组成矩阵的谱半径也不自动是再生数。
+
+多型 SIR 方程为
+\[
+\dot s_i=-s_i\sum_j\beta_{ij}i_j,
+\qquad
+\dot i_i=s_i\sum_j\beta_{ij}i_j-\gamma_i i_i,
+\qquad
+\dot r_i=\gamma_i i_i,
+\tag{127.2}
+\]
+并满足 \(s_i+i_i+r_i=n_i\)。SEIR 只需另加潜伏变量 \(e_i\) 和转出率 \(\kappa_i\)。无疫情平衡附近的下一代矩阵为
+\[
+K=B\Gamma^{-1},
+\qquad
+\mathcal R_0=\rho(K).
+\tag{127.3}
+\]
+当 \(\mathcal R_0\le1\) 时早期多型分枝近似在适用条件下灭绝；当 \(\mathcal R_0>1\) 时存在正概率大疫情。有限人口、初始感染数和类型可达性仍会改变实际灭绝概率。
+
+在封闭人口、无出生和无免疫衰退的确定性 SIR 合同下，最终易感比例满足隐式关系
+\[
+s_i(\infty)
+=s_i(0)\exp\!\left[
+-\sum_j\frac{\beta_{ij}}{\gamma_j}
+\bigl(r_j(\infty)-r_j(0)\bigr)
+\right],
+\tag{127.4}
+\]
+再结合 \(s_i(\infty)+r_i(\infty)=n_i\) 求最终规模。多型混合矩阵的非对称性使最终规模不能只由单一平均接触率确定。随机有限人群还需外加个体接触过程、抽样和观测噪声；早期分枝的灭绝率不等于整场疫情的最终规模。
+
+本节与第99节接触过程的区别是：SIR/SEIR 具有永久移除状态，同一个体在一次疫情中至多感染一次；接触过程通常允许恢复后再次感染。感染率、恢复率、潜伏率、混合矩阵、人口解释和观测通道均为外加，FIB 递归只提供类型或上下文骨架。
