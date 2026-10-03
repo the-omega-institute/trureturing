@@ -720,28 +720,6 @@ $$
 
 $V\ne0$ 时 $\Delta_H$ 本身不被断言为非负数据处理缺陷。
 
-### 6.2.1 奇异谱的相对熵极限辅助估计
-
-恢复恒等式的奇异态分支需要在同一实际矩阵上控制趋于零的特征值，不能用严格正定的下界替换支持条件。下述幂差商估计用于该解析桥梁，对子系统维数没有额外限制，包含一维子系统；它本身不证明数据处理、不提供量子 Pinsker，也不覆盖定理 6.2 或 6.3 的完整结论。
-
-**引理 6.4（有界非负谱上的一致幂差商）。** 任取实数 $K$。对每个 $\varepsilon>0$，存在 $\delta>0$，使得所有满足 $0<|h|<\delta$ 的实数 $h$ 以及所有 $x\in[0,K]$ 都满足
-$$
-\left|\frac{x^{1+h}-x}{h}-x\log x\right|<\varepsilon.
-$$
-这里使用自然对数，$0\log0=0$；$K<0$ 时区间为空。差商从正负两侧趋近，包含 $x=0$，不要求非零谱或正下界。
-
-**证明。** 对 $0<x$ 写 $x^{1+h}=x\exp(h\log x)$。指数余项给出差商的界
-$$
-\left|\frac{x^{1+h}-x}{h}\right|
-\le x(|\log x|+1)\exp\bigl(|h|(|\log x|+1)\bigr).
-$$
-当 $|h|<1/2$ 时，右端由 $x(|\log x|+1)\exp((|\log x|+1)/2)$ 控制；令 $y=-\log x$，它化为常数乘 $(y+1)e^{-y/2}$，在 $x\downarrow0$ 时趋于零。$x\log x$ 同样趋于零。故靠近零的共同小区间内两项均可一致控制。在剩余紧区间 $[a,K]$（$a>0$）上，指数的二阶余项给出
-$$
-\left|\frac{x^{1+h}-x}{h}-x\log x\right|
-\le |h|x(\log x)^2\exp(|h||\log x|),
-$$
-其除 $|h|$ 之外的因子在该紧区间上一致有界。选择共同的 $\delta$ 即得结论；$x=0$ 且 $|h|<1/2$ 时 $1+h>0$，两项均为零。该论证取自 Alex Meiburg 的 [Physlib 原始证明](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/Entropy/Relative.lean)，声明 `rpow_slope_tendsto_uniformly`；此处只摄入这一辅助估计及其证明。
-
 ### 6.3 少量读数闭合的反例
 
 $H=Z\otimes Z$ 中 $\operatorname{span}\{I,Z\}\otimes I$ 闭合，但 $V=H,\delta=2$。$|+\rangle\langle+|\otimes|0\rangle\langle0|$ 与隐藏态 $|1\rangle$ 的版本有相同可见初态，之后可见因子分别按 $e^{-itZ}$ 与 $e^{itZ}$ 旋转；$t=\pi/4$ 的 $Y$ 期望相反，$Z$ 读数却始终相同。热态
