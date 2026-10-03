@@ -53,16 +53,27 @@ public static class DocumentGraphAssembler
                 .ThenBy(CanonicalKey, StringComparer.Ordinal)
                 .ToImmutableArray();
             edges.Add(document.Header.Gid.Value, assembled);
+            var describeIds = DescribeIds(document.Content);
             foreach (var edge in assembled)
             {
-                if (edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe }
-                    && !string.Equals(describe.DocumentGid.Value, document.Header.Gid.Value,
-                        StringComparison.Ordinal))
+                if (edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe })
                 {
-                    findings.Add(new DocumentGraphFinding(
-                        "cross-document-describe-reference", document.Header.Gid.Value,
-                        $"Describe reference targets another document: {describe.DocumentGid.Value}"
-                        + $"#describe/{describe.DescribeId.Value}; use a document-level reference"));
+                    if (!string.Equals(describe.DocumentGid.Value, document.Header.Gid.Value,
+                        StringComparison.Ordinal))
+                    {
+                        findings.Add(new DocumentGraphFinding(
+                            "cross-document-describe-reference", document.Header.Gid.Value,
+                            $"Describe reference targets another document: {describe.DocumentGid.Value}"
+                            + $"#describe/{describe.DescribeId.Value}; use a document-level reference"));
+                        continue;
+                    }
+
+                    if (!describeIds.Contains(describe.DescribeId.Value))
+                    {
+                        findings.Add(new DocumentGraphFinding(
+                            "dangling-describe-edge", document.Header.Gid.Value,
+                            $"Describe edge does not resolve: {describe.DocumentGid.Value}#describe/{describe.DescribeId.Value}"));
+                    }
                     continue;
                 }
                 var isExplicit = document.Edges.Any(candidate => string.Equals(
@@ -251,11 +262,9 @@ public static class DocumentGraphAssembler
             DocumentEdge.Dependency dependency => dependency.Target,
             DocumentEdge.NarrativeReference { Target: NarrativeTarget.Document document } =>
                 document.DocumentGid,
-            DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe } =>
-                describe.DocumentGid,
             _ => throw new InvalidOperationException("Unknown document edge."),
         };
-        if (!documents.TryGetValue(target.Value, out var targetDocument))
+        if (!documents.ContainsKey(target.Value))
         {
             findings.Add(new DocumentGraphFinding(
                 isExplicit ? "dangling-document-edge" : "dangling-gid", source,
@@ -263,13 +272,6 @@ public static class DocumentGraphAssembler
             return;
         }
 
-        if (edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describeTarget }
-            && !DescribeIds(targetDocument.Content).Contains(describeTarget.DescribeId.Value))
-        {
-            findings.Add(new DocumentGraphFinding(
-                "dangling-describe-edge", source,
-                $"Describe edge does not resolve: {target.Value}#describe/{describeTarget.DescribeId.Value}"));
-        }
     }
 
     private static HashSet<string> DescribeIds(BlockSequence blocks)

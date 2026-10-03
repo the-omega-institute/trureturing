@@ -140,8 +140,56 @@ public sealed class ScribeDefinitionSelectionTests
         Assert.False(File.Exists(root.Resolve("Blueprint/D5/S0/Test/Source.md")));
     }
 
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void EmitRejectsDanglingSelfDescribeReferenceInFullAndScopedModes(bool scoped, bool check)
+    {
+        using var root = new TemporaryRoot();
+        File.WriteAllText(root.Resolve("global.json"), "{}\n");
+        const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
+        Add(root, path, """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Local : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Local"), Blocks(Describe.Remark(
+                        DescribeId.Create("target"), H("Target"), Num(1),
+                        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("body"))))),
+                        [DocumentEdge.NarrativeReference.ToDescribe(
+                            GidRef.Create("D5/S0/Test/Local"), DescribeId.Create("targte"))]));
+            }
+            """);
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+        var error = new StringWriter();
+        int exit;
+        if (scoped)
+        {
+            exit = ScribeCli.Run(
+                () => throw new InvalidOperationException("documents assembly must not be loaded"),
+                check ? ["emit", "--paths-from", "-", "--check"] : ["emit", "--paths-from", "-"],
+                root.Path, TextWriter.Null, error, report, new StringReader(path));
+        }
+        else
+        {
+            var result = ScribeScriptHost.Execute(root.Path, path);
+            Assert.True(result.IsSuccess, result.Failure?.ToString());
+            exit = ScribeEmitter.Emit(root.Path, check, TextWriter.Null, error, report,
+                [result.Definition!]);
+        }
+
+        Assert.Equal(1, exit);
+        Assert.Contains("code=dangling-describe-edge path=D5/S0/Test/Local",
+            error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("D5/S0/Test/Local#describe/targte", error.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(root.Resolve("Blueprint/D5/S0/Test/Local.md")));
+    }
+
     [Fact]
-    public void ScriptSelfDescribeReferencePreservesFullEmissionBytesInScopedCheck()
+    public void ScriptSelfDescribeReferencePreservesFullEmissionBytesInScopedEmitAndCheck()
     {
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
@@ -168,6 +216,11 @@ public sealed class ScribeDefinitionSelectionTests
         var bytes = File.ReadAllBytes(root.Resolve("Blueprint/D5/S0/Test/Local.md"));
         Assert.Contains("<a id=\"describe-target\"></a>",
             System.Text.Encoding.UTF8.GetString(bytes), StringComparison.Ordinal);
+        Assert.Equal(0, ScribeEmitter.Emit(root.Path, true, TextWriter.Null, error, report,
+            [result.Definition!]));
+        File.Delete(root.Resolve("Blueprint/D5/S0/Test/Local.md"));
+        Assert.Equal(0, ScribeEmitter.EmitPaths(root.Path, [path], false, TextWriter.Null, error, report));
+        Assert.Equal(bytes, File.ReadAllBytes(root.Resolve("Blueprint/D5/S0/Test/Local.md")));
         Assert.Equal(0, ScribeEmitter.EmitPaths(root.Path, [path], true, TextWriter.Null, error, report));
         Assert.Empty(error.ToString());
         Assert.Equal(bytes, File.ReadAllBytes(root.Resolve("Blueprint/D5/S0/Test/Local.md")));
