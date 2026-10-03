@@ -253,7 +253,40 @@ configuration violates it, all conditionally faithful literal-endpoint
 adapters with cap \(C_*\) are excluded. If it holds, the tree incidences and
 the global charge estimate still require proof.
 
-## 7. A positive reduction that does not close the adapter
+## 7. The two moment summaries alone do not imply scalar capacity
+
+The source facts (E1)--(E2) cannot by themselves prove (12). Consider the
+finite probability space \(\Omega=\{1,2,3\}\) with the uniform law. Use the
+three columns
+
+\[
+ (b,m)=(0,9),(0,11),(0,13).
+\]
+
+At outcome \(j\), put \(k_{0,m}=2\) in the \(j\)-th column and put all other
+\(k_{b,m}=0\). Then \(N(\omega)=1\) at every outcome, while for each of the
+three columns
+
+\[
+ \mathbb E_\mu N_{0,m}=\frac13<\frac5{12},
+\]
+
+so (E1)--(E2) hold exactly. The two labels in the active column can be given
+distinct phases, so this toy law also retains the collision-versus-duplicate
+distinction. Its endpoint capacity is \(W(\omega)=2/m\), and
+
+\[
+ C_*W(\omega)=\frac{2C_*}{m}<1=N(\omega)
+ \qquad(m\in\{9,11,13\}).
+\]
+
+This is deliberately not a whole-cover construction and makes no claim about
+an admissible original family. It proves a narrower but necessary point:
+the scalar packing obligation requires the whole-cover, original-phase, and
+EB1 structure in addition to the two recorded moment summaries. A proof that
+uses only (E1)--(E2) cannot close the endpoint adapter.
+
+## 8. A positive reduction that does not close the adapter
 
 The capacity obstruction is not caused by a lack of a bare injective depth
 routing. For a labelled pair
@@ -282,7 +315,7 @@ support-rank conditions or the BaseCaps estimate. In particular, cofactor
 digits absent from the common source cannot be counted as depth merely because
 they occur in an original modulus.
 
-## 8. Scope
+## 9. Scope
 
 The result assumes conditional accounting at each common-source outcome, the
 full labelled-pair count \(N\), literal output endpoint support, one common
