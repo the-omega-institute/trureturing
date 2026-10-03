@@ -2,13 +2,16 @@ import D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 import LeanInformationAudit.Tests.RegistrationGates.EscapeRecords
 import LeanInformationAudit.Tests.SourceIsolation
 import Mathlib.Algebra.Polynomial.Basic
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredWitnessRegistration
 open Lean Meta Elab Command
 open D5.S3.ConceptDynamics.InformationEscape CounterexampleRecord
 
 -- The witness fixture owns enrollment of its pure template input.
-register_information_template counterexampleRealization
+test_assess in register_information_template counterexampleRealization
 
 def claim : Prop := ∀ n : Nat, n ≠ 0 ∧ ∀ b : Bool, b = b
 theorem result : ¬ claim := fun h => (h 0).1 rfl
@@ -78,7 +81,7 @@ theorem fakeSensitivity : FiniteSlotSensitivity fakeArena.toPrimitiveLawArena :=
 
 elab "observe_declared_witness" : command => do
   let start (theoremName arenaName bridgeName : String) :=
-    s!"register_information_theorem {theoremName} in {arenaName} " ++
+    s!"test_assess in register_information_theorem {theoremName} in {arenaName} " ++
     "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
     s!"primitives reads.toPrimitiveBundle realization {bridgeName} "
   let tail := " escape from (Nat) escape continues (open)"
@@ -87,7 +90,7 @@ elab "observe_declared_witness" : command => do
   let cases : Array (String × String × Option String) := #[
     ("named", normal ++ evidence ++ tail, none),
     ("literal", start "literalResult" "arena" "bridge" ++ evidence ++ tail, none),
-    ("occurrence", "register_information_theorem result in arena " ++
+    ("occurrence", "test_assess in register_information_theorem result in arena " ++
       "object_arena objectArena catalog witnessCatalog " ++
       "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
       "primitives reads.toPrimitiveBundle realization bridge " ++ evidence ++ tail, none),
@@ -99,7 +102,7 @@ elab "observe_declared_witness" : command => do
       some "IE-C006"),
     ("named_claim_required", start "result" "arena" "unnamedClaimBridge" ++ evidence ++ tail,
       some "dtr.witness_statement_identity"),
-    ("missing_bridge", "register_information_theorem result in arena " ++
+    ("missing_bridge", "test_assess in register_information_theorem result in arena " ++
       "readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)) " ++
       "primitives reads.toPrimitiveBundle" ++ tail, some "parse"),
     ("wrong_origin", normal ++ evidence ++ " escape from (Bool) escape continues (open)",
@@ -197,7 +200,7 @@ private theorem witnessLaw : witnessArena.Law witnessReads := ⟨(0 : Fin 1), rf
 private theorem witnessBridge : WitnessPrimitiveRealization witnessArena (¬ claim) witnessReads := ⟨witnessArena.law_refutes⟩
 private theorem witnessVariation : witnessArena.Law witnessReads ∧ ¬ witnessArena.Law witnessArena.constantTrue := witnessArena.variation witnessLaw
 private theorem witnessSensitivity : FiniteSlotSensitivity witnessArena.toPrimitiveLawArena := witnessArena.sensitivity witnessLaw
-register_information_theorem result in witnessArena
+test_assess in register_information_theorem result in witnessArena
   readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
   primitives witnessReads.toPrimitiveBundle realization witnessBridge
   variation witnessVariation sensitivity witnessSensitivity
@@ -205,7 +208,7 @@ register_information_theorem result in witnessArena
 end AuthorExample
 
 run_meta LeanInformationAudit.Tests.withPrivateSources do
-  let records ← TemplateBinding.assessJoined
+  let records ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let some record := records.find? (·.occurrence.key.theoremName == ``result)
     | throwError "missing author example"
   let .declaredValidated certificate := record.result | throwError "author example was not validated"
@@ -214,7 +217,7 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
   let assessments (env : Environment) := ((TemplateBinding.observedAssessments env).filter
     (·.theoremName == ``result)).size
   let before := assessments primed
-  discard <| TemplateBinding.assessJoined
+  discard <| (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   unless assessments (← getEnv) == before do throwError "cache not reused"
   logInfo "[PASS] witness_author_example_and_cache_reuse"
   let path := TemplateAudit.sourcePath primed.header.mainModule
@@ -229,7 +232,7 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
     try
       IO.FS.writeFile path changed
       let rejected ← try
-        let rows ← TemplateBinding.assessJoined
+        let rows ← (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
         pure <| rows.any fun row => row.occurrence.key.theoremName == ``result &&
           (row.result matches .declaredUnresolved _)
       catch _ => pure true
@@ -253,7 +256,7 @@ theorem law : arena.Law reads := ⟨(0 : Fin 1), rfl⟩
 theorem bridge : WitnessPrimitiveRealization arena (¬ claim) reads := ⟨arena.law_refutes⟩
 theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue := arena.variation law
 theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena := arena.sensitivity law
-register_information_theorem result in arena
+test_assess in register_information_theorem result in arena
   readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
   primitives reads.toPrimitiveBundle realization bridge
   variation variation sensitivity sensitivity

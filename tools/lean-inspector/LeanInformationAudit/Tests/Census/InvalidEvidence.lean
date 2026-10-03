@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Evidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open Lean.Elab.Command

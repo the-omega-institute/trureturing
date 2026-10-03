@@ -1,0 +1,21 @@
+**定义 2.1（同一来源的采样仪器）。** 固定 $n\ge2$、$m\ge2$ 和整数 $0\le t_0<\cdots<t_{m-1}$。本节空间为 $\mathcal K_n=\mathbb C^{(\mathbb Z/n\mathbb Z)^2}$，不预设 $n=d$ 或 $n=de$。置 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并令
+
+$$
+r_t(x)=(M^t x)_1=F_t x_0+F_{t+1}x_1\pmod n,\qquad
+O_{\mathcal T}(x)=(r_{t_0}(x),\ldots,r_{t_{m-1}}(x)),
+$$
+
+$$
+g=\gcd(t_1-t_0,\ldots,t_{m-1}-t_0),\qquad
+Q_z=\sum_{x:x_1=z}|x\rangle\langle x|.
+$$
+
+对实际可达的 $y=(y_0,\ldots,y_{m-1})\in\operatorname{im}O_{\mathcal T}$，来源坐标投影为
+
+$$
+P_y=\sum_{x:O_{\mathcal T}(x)=y}|x\rangle\langle x|
+=\prod_{i=0}^{m-1}U_n^{-t_i}Q_{y_i}U_n^{t_i}.
+$$
+
+乘积中的投影在来源计算基上均对角，因而交换。来源坐标 Lüders 分支是 $\rho\mapsto P_y\rho P_y$；实际时钟次序在命题 2.2 中显式给出。采样核公式使用 [FIB 第 44.2 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L2782)。
+

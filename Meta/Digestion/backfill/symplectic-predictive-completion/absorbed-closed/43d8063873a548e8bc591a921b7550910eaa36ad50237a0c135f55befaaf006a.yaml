@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:43d8063873a548e8bc591a921b7550910eaa36ad50237a0c135f55befaaf006a
+  normalized_sha256: sha256:43d8063873a548e8bc591a921b7550910eaa36ad50237a0c135f55befaaf006a
+cas_ref: sha256:43d8063873a548e8bc591a921b7550910eaa36ad50237a0c135f55befaaf006a
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/DerivativeLayerGramianPositivity.derivative_layer_gramian_pos
+    target_statement_id: sha256:cfb46fe008ba948d76699a110effa21f97bcce60f0bdfdeea1afbc33a6cb8ae5
+receipts:
+  unresolved_subitems: []

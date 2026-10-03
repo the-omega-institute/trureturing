@@ -1,0 +1,30 @@
+### 定义 44：锚定分离与输运缺陷
+
+对 \(A\subseteq C\) 和 \(e\in X_{C\setminus A}\)，称 \(e\) 满足从 \(A\) 到 \(C\) 的**锚定分离条件**，若
+
+$$
+\forall a,a'\in X_A,
+\quad
+a\not\sim_A^F a'
+\Longrightarrow
+\exists u\in X_{I\setminus C},
+\quad
+F(a\sqcup e\sqcup u)\neq F(a'\sqcup e\sqcup u).
+$$
+
+定义该锚的输运缺陷关系为
+
+$$
+\operatorname{Def}_{A,C;e}^F
+=
+\left\{
+([a]_A,[a']_A):
+\begin{array}{l}
+[a]_A\neq[a']_A,\\
+[a\sqcup e]_C=[a'\sqcup e]_C
+\end{array}
+\right\}.
+$$
+
+它记录固定 \(e\) 后被合并的原边界类型对。这个缺陷是关系，而不是一个未经指定量纲的标量；若需要资源估计，应直接使用其商类数或输运像的基数。
+

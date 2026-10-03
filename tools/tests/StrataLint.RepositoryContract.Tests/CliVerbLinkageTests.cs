@@ -75,8 +75,8 @@ public sealed class CliVerbLinkageTests
             // 一致,漂移时两侧必有一红。
             [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
             {
-                "emit", "emit-values", "filemap", "describe-report", "markdown-check",
-                "projections",
+                "content-check", "emit", "emit-values", "filemap", "describe-report", "markdown-check",
+                "projections", "resources", "scripts",
             },
         };
         var dangling = invocations

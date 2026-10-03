@@ -1,6 +1,9 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S3.ConceptDynamics.CIRPT.SemanticIntegrity
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-CIRPT-016: a closed truth readout has no unique object capture. -/
 
@@ -30,7 +33,7 @@ def closedTruthRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => true
   anchor := Fin.elim0
 
-information_theorem closedTruthTheorem
+test_assess in information_theorem closedTruthTheorem
   in arena
   primitives closedTruthRealization
   : arena.Law closedTruthRealization := by trivial
@@ -46,11 +49,11 @@ private def fixtureCatalog : Catalog arena.toArena :=
 
 example : fixtureCatalog.uniqueCaptureCount (0 : Fin 1) = 0 := by decide
 
-expect_information_occurrence closedTruthTheorem
+test_assess in expect_information_occurrence closedTruthTheorem
   in arena
   from "LeanInformationAudit.Tests.CirptClosedTruth"
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.CirptClosedTruth

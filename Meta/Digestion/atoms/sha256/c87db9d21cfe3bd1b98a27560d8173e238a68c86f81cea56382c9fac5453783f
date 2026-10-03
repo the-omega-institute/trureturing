@@ -1,0 +1,17 @@
+**证明。** $j_{k,a}\ge4$、$h_{k,a}\ge2$。原窗口组成的收缩读数为
+$w_{k,a}=g_k\psi^{j_{k,a}}$。由 Binet 公式与 $a\le2$、$k\ge2$，
+\[
+\begin{aligned}
+|w_{k,a}|&=L_k\varphi^{-3k+a}\\
+&\le\varphi^{a-2k}+\varphi^{a-4k}
+\le\varphi^{-2}+\varphi^{-6}<\varphi-1.
+\end{aligned}
+\tag{265.4}
+\]
+最后一个严格不等式可用 $\varphi^{-2}=2-\varphi$、$\varphi^{-6}=13-8\varphi$ 化为 $\varphi>8/5$。
+因此 $-1<w_{k,a}<\varphi-1$；§182.1 的严格规范条带识别与引理205.1的单位位一初始化桥给出所述实际来源，数量与单位位仍为同一个 $N_{k,a}$。
+
+$\varphi^{h_{k,a}}$ 的坐标是连续 Fibonacci 数，非负且互素；也可由范数 $(-1)^{h_{k,a}}$ 的绝对值为一直接得到互素性。
+故乘以正整数 $d_k$ 后，坐标公因子正好是 $d_k$。
+除去该真实因子得到式（265.3）。这里没有要求平移后地址仍是规范单位位零地址。$\square$
+

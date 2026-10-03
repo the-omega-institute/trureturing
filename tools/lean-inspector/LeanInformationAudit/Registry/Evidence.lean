@@ -44,10 +44,6 @@ def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) := do
   let (result, remaining) ← (erase e 0).run limit
   return (result, limit - remaining)
 
-register_option informationTemplate.work : Nat := {
-  defValue := 524288
-  descr := "Lower-only DTR expression, substitution and byte-work quota" }
-
 private structure WireState where
   bytes : ByteArray := {}
   remaining : Nat := 524288
@@ -244,7 +240,7 @@ into the finite seal closure. Both bridges retain the exact statement check. -/
 def escapeForwardBridge : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
 
-def escapeWitnessBridge : Name := RegistrationGates.witnessBridgeName
+def escapeWitnessBridge : Name := RegistrationElaboration.witnessBridgeName
 
 def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
   let type := (← getConstInfo event.realizationName).type
@@ -298,7 +294,7 @@ def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
     roots := roots ++ event.arena.getUsedConstants
     let type := (← getConstInfo event.realizationName).type
     roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
-    let arena := RegistrationGates.witnessArenaName
+    let arena := RegistrationElaboration.witnessArenaName
     roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
       "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
     roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
@@ -352,7 +348,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     let continuation := if input.openContinuation then
       some ({ kind := "open" } : EscapeContinuationIdentity) else none
     return { bridgeKind := kind, continuation }
-  let normalized ← RegistrationGates.normalizeArena event.arena
+  let normalized ← RegistrationElaboration.normalizeArena event.arena
   let arena := normalized.finite
   let fromObject ← input.fromObject.mapM fun origin => do
     unless ← statementContainsOrigin event.statement origin do
@@ -363,7 +359,7 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
       throwError "unclassified_form:dtr.escape_from_identity"
     let type ← inferType origin
     let state ← if normalized.witness then
-        mkAppM (RegistrationGates.witnessArenaName.str "Domain") #[normalized.original]
+        mkAppM (RegistrationElaboration.witnessArenaName.str "Domain") #[normalized.original]
       else match normalized.domain with
         | some domain => pure domain
         | none => mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
@@ -509,11 +505,6 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
   return (state.bytes, limit - state.remaining)
 def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=
   (planEncodingWithWork plan fuel).map Prod.fst
-
-def sourcePath (name : Name) : String :=
-  (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"
-    else if (`LeanInformationAudit).isPrefixOf name then "tools/lean-inspector/" else "") ++
-    name.toString.replace "." "/" ++ ".lean"
 
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
@@ -781,7 +772,6 @@ private partial def exports (env : Environment) (name : Name)
     allTransitive := allTransitive
     transitive := transitive }
   return (some value, memo.insert name value)
-
 
 private def unchanged (inputs : Array SourceInput) : IO Bool := do
   if inputs.isEmpty then return true

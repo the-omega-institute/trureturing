@@ -1,0 +1,21 @@
+**命题 52.4（式（52.32）的统一教师量词）。** 令 $n\ge4$、$N=\binom n3$、$0<\varepsilon\le d_0/9$、$0<\delta<1$，并置
+$\alpha_*=3\sqrt{\varepsilon/d_0}\in(0,1]$。固定同一个完整记录学习器 $\mathcal A$；它可以依赖 $n,m,\varepsilon,\delta$，但其规则及内部随机种子 $U\sim\nu$ 的分布不依赖未知 $\theta,\alpha$，且 $U$ 独立于记录。若这个学习器对每个 $\theta\in\Theta_n$ 都满足
+
+$$
+(P_{\theta,\alpha_*}^{m}\otimes\nu)
+\left\{\Delta_B\!\left(\theta,\alpha_*;
+p_{\mathcal A(D_m,U)}\right)\le\varepsilon\right\}
+\ge1-\delta,
+\tag{52.44}
+$$
+
+则在 $(1-\delta)\log N-\log2>0$ 时必有
+
+$$
+m\ge
+\frac{d_0\bigl((1-\delta)\log N-\log2\bigr)}{27S\varepsilon}.
+\tag{52.45}
+$$
+
+对所有 $\theta\in\Theta_n,\alpha\in[0,1]$ 的同一学习器统一成功保证是式（52.44）的充分较强前提；只在一个固定教师上成功则不是此命题的前提。学习器的输出可以属于树模型之外的概率预测器族。
+

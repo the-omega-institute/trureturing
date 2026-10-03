@@ -1,0 +1,58 @@
+### 213.3 在同一个有限配置中只降低一个素数的指数
+
+取 §211.2 的有限整数 $m$。它只依赖 $A$，满足
+
+$$
+\delta=y/\ell^3,\qquad
+m\le A e^{-\delta/2},\qquad
+P_s(m)=\sum_{d\mid m}\frac{b_s(d)}d,
+$$
+
+$$
+\log P_s(m)\ge s\log t-y+\vartheta_0R_y-C_1\delta.
+\tag{213.9}
+$$
+
+该构造及常数不依赖 $X$，所以在式（213.2）的整个范围中一致适用。
+因为 $p=O(\ell^{3/2})$，最终 $p\le\sqrt s<y-\delta$，故它在 $m$
+中的指数为
+$e_p=\lceil\log s/\log p\rceil-1\ge1$。
+令
+
+$$
+m'=m/p^{e_p-1}.
+\tag{213.10}
+$$
+
+这仍是同一个确定的有限整数，满足 $m'\le m$、$v_p(m')=1$。
+对有限局部因子
+$V_p(s,e)=\sum_{a=0}^e b_s(p^a)/p^a$，有精确比值
+
+$$
+\frac{P_s(m')}{P_s(m)}
+=\frac{V_p(s,1)}{V_p(s,e_p)}.
+$$
+
+又 $V_p(s,e_p)\le U_p(s)\le W_p(s)$，而
+$V_p(s,1)=1-p^{-1}+p^{-1}(1+p^{-1})^s$。
+§210 的正系数比值估计给
+
+$$
+0\le\log\frac{V_p(s,e_p)}{V_p(s,1)}
+\le\log\frac{W_p(s)}{V_p(s,1)}
+\le\frac s{p^2-1}
+\le\frac1{10}R_y+O(y/\ell^5).
+\tag{213.11}
+$$
+
+这里仅对降低指数所产生的额外有限因子损失作上界，
+没有把较大的 $W_p$ 当成 $V_p(s,e_p)$ 的下界。
+由式（213.9）可得
+
+$$
+\log P_s(m')
+\ge s\log t-y+
+\left(\vartheta_0-\frac1{10}\right)R_y-C_2\delta.
+\tag{213.12}
+$$
+

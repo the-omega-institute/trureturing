@@ -1,0 +1,26 @@
+### proposition 256.6 单侧曲率类仍允许更粗网格的深负谷
+
+取 $B>0$，对整数 $j\ge2$ 置 $a_j=j^6,b_j=(j+1)^6$。
+在 $[64,\infty)$ 定义连续的分段函数
+
+$$
+f_B(x)=\frac{B(x-a_j)(x-b_j)}{2b_j^2\log b_j}
+\quad(a_j\le x\le b_j).
+\tag{256.10}
+$$
+
+相邻公式在端点均为零，故定义相容。
+该函数满足 $f_B(j^6)=0$，光滑段内
+
+$$
+f_B''(x)=\frac{B}{b_j^2\log b_j}\le\frac{B}{x^2\log x},
+$$
+
+并且导数在每个接缝向下跳。
+但在 $m_j=(a_j+b_j)/2$，有
+
+$$
+w(m_j)f_B(m_j)\le-\frac{9B}{16384}j\longrightarrow-\infty.
+\tag{256.11}
+$$
+

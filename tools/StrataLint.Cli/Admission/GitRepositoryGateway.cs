@@ -83,6 +83,8 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 $"origin/{defaultBranch} at {defaultHead} is not available locally; fetch the default branch before topology verification");
         }
 
+        // Observe only the installed default-branch contract. This query does not gate
+        // check-current/check-delta; those remain runnable while the new workflow lands.
         var workflowObject = $"{defaultHead}:{AdmissionWorkflowTopology.WorkflowPath}";
         var objectType = GitRaw(new[] { "cat-file", "-t", workflowObject }, allowNonzero: true);
         if (objectType.ExitCode != 0

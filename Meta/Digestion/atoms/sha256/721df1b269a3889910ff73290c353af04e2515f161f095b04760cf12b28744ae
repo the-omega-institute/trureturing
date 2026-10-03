@@ -1,0 +1,2 @@
+**Theorem 10.2 (actual root concavity on the entire nonnegative orthant).** Let $K$ be any field, $V$ any finite-dimensional $K$-vector space, $I$ any finite physical index set, $a:I\to V$, $U\le V$, and $d\ge1$. Then $x\mapsto F_{U,d}(x)^{1/d}$, with the nonnegative real root, is concave on $\{x\in\mathbb R^I:\forall i,\ x_i\ge0\}$. All universes are independent. The statement has no full-spanning, nonempty-index, positive-evaluation, Hessian, derivative, or concavity premise. Zero, repeated, and scalar-parallel columns are retained.
+

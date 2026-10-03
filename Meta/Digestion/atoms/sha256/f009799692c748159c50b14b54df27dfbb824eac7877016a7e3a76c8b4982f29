@@ -1,0 +1,45 @@
+## 217. 实际互补除数切换、核权重计数与二阶预算
+
+沿用 §210、§215 的实际整数族与解析参数：
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,
+\quad t=e^\gamma\ell,
+\quad R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},
+\quad b_2=\frac{\pi^2}{6}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$。这里 $H$ 仅为互补因子大小上限，
+没有附带粗糙性条件。继续使用
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s,
+\qquad U(s)=\sum_{d\ge1}\frac{b_s(d)}d,
+\qquad\mu_s(d)=\frac{b_s(d)}{dU(s)},
+$$
+
+$$
+A_I(d)=\#\{g\in I:d\mid N_g\},\qquad
+\mathcal H_D=\{d\in\mathbb N:D<d\le X,\ A_I(d)>0\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$，其中 $a$ 固定。已有大小关系给
+$X/A\to2$、$T\asymp V$、$y=2\log V+O(1)$、$H=V^{o(1)}$ 和 $D/T\to\infty$。
+$V$ 为奇数，且 $p\mid V$ 蕴含 $p\ge2r-1$。因此
+
+$$
+\sum_{p\mid V}\frac1p=O(1/\ell),\qquad
+\frac V{\varphi(V)}=1+O(1/\ell),\qquad
+\sum_{p\mid V}\frac1{p^2}=o(1).
+\tag{217.1}
+$$
+
+第一式来自 $\omega(V)\le\log V/\log(2r-1)$；后两式由该界和素因子的下界推出。
+

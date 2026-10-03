@@ -1,0 +1,14 @@
+### 208.2 显式矩阶使主要指数恰好抵消
+
+Weingartner 的 Lemma 5 以 $s\ge e$、$s=z\log z$ 为条件，给每个固定整数 $m\ge2$ 的展开。取 $m=2$，当 $z\to\infty$ 时，
+
+$$
+\log W(s)
+=s\log(e^\gamma\log z)-z
++\frac{\pi^2}{6}\frac z{(\log z)^2}
++O\left(\frac z{(\log z)^3}\right).
+\tag{208.6}
+$$
+
+其中 $\pi^2/6$ 是原文的 $b_2$，不是本节拟合的常数。所引 $O$ 项的常数在固定 $m=2$ 后与 $z$ 无关。
+

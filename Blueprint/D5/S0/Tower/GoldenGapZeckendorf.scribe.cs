@@ -18,6 +18,17 @@ internal sealed class GoldenGapZeckendorfDocument : IScribeDocumentDefinition
                     + "absent from wdigits i. The right side is inlined in both public theorems; "
                     + "this node does not define a second public word object.")),
                 Describe.Lean(
+                    DescribeId.Create("separated-fibonacci-zeckendorf-prefix"),
+                    DeclarationHandle.Create("D5/S0/Tower/GoldenGapZeckendorf.wdigits_fib_add"),
+                    H("Separated Fibonacci digit prefix"),
+                    StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every Q and j below F(Q+2), the canonical digits of "
+                        + "F(Q+3)+j are Q+3 followed by the canonical digits of j. "
+                        + "The separation condition permits direct reuse of canonical uniqueness."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("fibonacci-word-least-zeckendorf-digit"),
                     DeclarationHandle.Create("D5/S0/Tower/GoldenGapZeckendorf.fibWord_eq_zeckendorf_word"),
                     H("The Fibonacci word is the least-digit test"),

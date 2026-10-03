@@ -1,0 +1,19 @@
+**定义 11.7（FIB 历史的共同 CPTP 状态解码资源）。** 选取定理 11.2–11.4 中一个已确定实际效果张成的 FIB 字母表 $\Sigma$，并取相应 Fourier 分割 $\mathcal P$：离散合同使用全部单点，轨道合同使用 $\langle g\rangle$ 轨道。置
+
+$$
+\mathcal H_O=\mathcal H_A\otimes\mathbb C^O,\qquad
+P_O=I_A\otimes Q_O,\qquad
+\mathcal E_{\mathcal P}(\rho)=\sum_{O\in\mathcal P}P_O\rho P_O.
+$$
+
+编码 $\mathrm{Enc}$ 与同一个状态解码 $\mathrm{Dec}$ 均为 CPTP；它们固定且不随随后选择的协议改变。只给一份未知的 $AH$ 输入，解码返回同一 $\mathcal H$ 上的状态。中间资源有两种计费合同：其一是普通有限 Hilbert 空间 $\mathcal K$，全部 $\dim\mathcal K$ 计费；其二是任意有限的免费经典 flag 集 $F$ 及公共 $q$ 维量子端口，中间态代数为 $\bigoplus_{f\in F}\mathcal B(\mathbb C^q)$，只计 $q$。后一合同允许一般编码分支 $\mathrm{Enc}_f$，各分支完全正、总和保迹，概率和量子态均可依赖整个输入；不预设 $f$ 是原块标签。解码写为 $\mathrm{Dec}(\bigoplus_f\sigma_f)=\sum_f\mathrm{Dec}_f(\sigma_f)$，每个 $\mathrm{Dec}_f$ 为 CPTP。
+
+中间传递资源恰为以上所列空间，没有隐藏量子旁路或预共享纠缠。允许固定局部辅助态并将其丢弃，均吸收入 CPTP 映射；经典 flag 是有限字母，不承载未知态的无限精度经典描述。统计任务要求 $T=\mathrm{Dec}\circ\mathrm{Enc}$ 对全部输入及全部实际历史效果满足
+
+$$
+\operatorname{Tr}(E T(\rho))=\operatorname{Tr}(E\rho)
+\quad(E\in\mathscr F_\Sigma).
+$$
+
+对应的精确块恢复任务要求 $T=\mathcal E_{\mathcal P}$。密度算子复线性张成全部算子，故对全部输入态的精确恢复也是线性映射恒等式，张量任意参考系统的恒等映射后仍成立。这是在 FIB 操作合同之外另行指定的编解码资源合同；不要求编码中的高层操作属于原有低层协议字母表。共同 CPTP 编解码及免费有限经典寄存器采用 Bluhm–Rauber–Wolf, [*Quantum Compression Relative to a Set of Measurements*，定义 4.1](https://arxiv.org/pdf/1708.04898v4)的约定。
+

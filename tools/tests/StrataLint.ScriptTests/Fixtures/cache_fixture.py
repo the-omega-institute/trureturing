@@ -7,7 +7,6 @@ import sys
 import tempfile
 
 REPO = pathlib.Path(__file__).resolve().parents[4]
-CI = REPO / "tools/scripts/workflow/ci.py"
 CACHE = REPO / "tools/scripts/worktree/lean_actions.py"
 REV = "a" * 40
 
@@ -19,7 +18,8 @@ class CacheFixture:
         self.env = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                         GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev",
                         CI_WORKFLOW_INPUTS="", GITHUB_EVENT_PATH="",
-                        STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_CACHE_WRITES="true",
+                        STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_REPORT_SUCCEEDED="true",
+                        STRATALINT_CACHE_WRITES="true",
                         HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))
@@ -27,7 +27,6 @@ class CacheFixture:
         (self.root / "lakefile.toml").write_text('name = "fixture"\n')
         (self.root / "Meta").mkdir()
         (self.root / "Meta/FILEMAP.toml").write_text(
-            'resources = [{id = "lean", materials = ["lake-manifest.json", "lean-toolchain", "lakefile.toml"]}]\n'
             'files = [{pattern = "Meta/ci-cache-paths.json"}]\n')
         (self.root / "Meta/ci-cache-paths.json").write_bytes((REPO / "Meta/ci-cache-paths.json").read_bytes())
         (self.root / "lean-report-inputs.json").write_text(json.dumps({

@@ -1,0 +1,18 @@
+### 206.1 实际区间上的联合矩公式
+
+先令 $V\ge1$ 为任意整数，$I=[G_0,G_1]\cap\mathbb Z$ 为非空正整数区间，并置
+
+$$
+T=G_1-G_0+1,\qquad X=VG_1+1,\qquad
+H_X=\sum_{d=1}^{X}\frac1d,\qquad Z(n)=\sum_{d\mid n}\frac1d.
+$$
+
+对每个正整数 $k$，定义
+
+$$
+S_k(V,X)=
+\sum_{\substack{1\le d_1,\ldots,d_k\le X\\
+\gcd(d_1\cdots d_k,V)=1}}
+\frac1{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}.
+$$
+

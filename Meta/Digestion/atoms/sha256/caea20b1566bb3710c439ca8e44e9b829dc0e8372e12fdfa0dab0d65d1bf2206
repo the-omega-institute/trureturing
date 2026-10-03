@@ -1,0 +1,16 @@
+## 3. Ordinary physical rational responses
+
+For a raw clause family $F$ over $n$ declared Boolean variables, let
+$H_F=(n+1)\sum_{c\in F}\Pi_c$ and
+$H=|1\rangle\langle1|\otimes I+I\otimes H_F$, with the original raw-clause
+violation projectors. Write
+$Z_F=\operatorname{Tr}(\exp(-\log(2)H))$ for the full complex trace.
+The independently defined satisfying count counts assignments to all $n$
+declared variables using the ordinary CNF evaluation.
+
+A physical response word for $F$ is the ordinary binary numerator, one slash,
+and the ordinary binary denominator of a positive reduced rational $r$ whose
+complex cast equals $Z_F$. Both fields have no leading zero, and the denominator
+one is explicit. This definition imposes no count, divisibility or dyadic
+condition on the response.
+

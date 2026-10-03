@@ -1,0 +1,39 @@
+**定理 30.2（完整四相重数与基）。** 令 $g=\gcd(2,n)$。有
+
+$$
+\operatorname{Tr}U_C=g,\quad
+\operatorname{Tr}U_C^2=g^2,\quad
+\operatorname{Tr}U_C^3=g.
+$$
+
+特征值 $1,-1,i,-i$ 的重数分别为
+
+$$
+\frac{n^2+2g+g^2}{4},\qquad
+\frac{n^2-2g+g^2}{4},\qquad
+\frac{n^2-g^2}{4},\qquad
+\frac{n^2-g^2}{4}.
+\tag{30.1}
+$$
+
+对应 character projectors 和每条四循环上的单位向量为
+
+$$
+P_j=\frac14\sum_{r=0}^3i^{-jr}U_C^r,\qquad
+\chi_j=\frac12\sum_{r=0}^3i^{-jr}|C^rx_0\rangle,
+\quad j=0,1,2,3.
+\tag{30.2}
+$$
+
+证明。置换矩阵的迹数固定标签。$Cx=x$ 要求 $a=b$、$2a=0$，共 $g$ 个；$C^2x=x$ 要求 $2a=2b=0$，共 $g^2$ 个；$C^3$ 与 $C$ 固定点相同。有限几何级数给 $P_j^*=P_j$、$P_jP_k=\delta_{jk}P_j$、$\sum_jP_j=I$、$U_CP_j=i^jP_j$；取迹即得 (30.1)。直接循环计数也给 $g$ 条一循环、$(g^2-g)/2$ 条二循环、$(n^2-g^2)/4$ 条四循环；每条二循环贡献 $\pm1$，每条四循环贡献四根。在 (30.2) 中重标 $r+1$ 得 $U_C\chi_j=i^j\chi_j$，彼此正交且覆盖该四循环。$\square$
+
+$n=1$ 时作用 trivial；$n=2$ 时是坐标交换，阶二且重数为 $3,1,0,0$。$n\ge3$ 时 $(1,0),(0,1),(-1,0),(0,-1)$ 四点不同，故所有四相出现，$U_C$ 及其密度共轭动作都有阶四。以下三个载体应保持分离：
+
+| 本章动作载体 | amplitude unitary 阶 | density conjugation 阶 |
+| --- | --- | --- |
+| 30 · scalar $iI$ | 4 | 1 |
+| 30 · literal $2\times2$ matrix $C$ on $\mathbb C^2$ | 4 | 2 |
+| 30 · label permutation $U_C$, $n\ge3$ | 4 | 4 |
+
+中行 $C^2=-I$ 是全局相位，且 $C$ 非标量；末行平方却把 $|x\rangle$ 送到 $|-x\rangle$，不是 $-|x\rangle$。沿四循环的基态投影在前三次作用后都不同，证明 density 阶确为四。模二末行退为阶二，模一为 identity。单个 eigenspace 中的相位是全局相位；只有跨 eigensector 的叠加及相应 recombination/readout 能读相对相位。这些制备和控制是额外权限：单凭基置换，从一个基态不能制备 (30.2) 的 Fourier 向量。
+

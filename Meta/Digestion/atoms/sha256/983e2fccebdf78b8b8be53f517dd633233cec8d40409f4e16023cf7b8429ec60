@@ -1,0 +1,18 @@
+**定理 5.2（Literal realization of a first-zero rest block）。** For every rest state $s=(N,c)$, there exists a rest state $t$ such that
+
+$$
+R(s,t,Z(c))\qquad\text{and}\qquad
+L(N,\operatorname{rev}(c),Z(c))=\operatorname{rev}(\operatorname{capacity}(t)).
+$$
+
+证明。An ineligible top prefix passes through a transfer whose tail has no carry. Induct on a bounded bottom-first list to prove the relay identity, for $a>0$ and every lower list $v$,
+
+$$
+L(N,\operatorname{rev}(c)\mathbin{+\!+}((N+a)::v),Z(c))
+=\operatorname{rev}(D_N(c))\mathbin{+\!+}((a-1)::v),
+$$
+
+where $+\!+$ denotes list concatenation and every entry of $c$ is at most $N$. The next width $N+1$ skips all those bounded higher bins, subtracts from the donor $N+a$, and transfers to its immediate recipient. A zero recipient ends the relay; a positive one enables the induction at endpoint $N+1$. The floor version of this argument gives $L(N,\operatorname{rev}(c),Z(c))=\operatorname{rev}(D_N(c))$.
+
+A separate induction on $c$ shows $0<Z(c)\le|c|+1$, that the target entries are at most $N+Z(c)$, and that its height is $\max(|c|,Z(c))$. Every earlier bin was positive and decreases by one, the selected old bin was zero if present and resets to $N+Z(c)$, and every higher bin is unchanged. Hence $t=(N+Z(c),D_N(c))$ is a rest state and satisfies every clause of $R$. The floor realization above supplies the second conclusion, including the empty-list and first-bin cases. $\square$
+

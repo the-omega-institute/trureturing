@@ -1,0 +1,14 @@
+**Definition 4.1 (Scale response).** For a stationary law $\mu$ on $X_M$, let
+$$
+O_r(\mu)=\bigl(\mu[v]\bigr)_{|v|=r}
+$$
+be its length-$r$ cylinder vector, and let
+$$
+\Phi_r(\mu)=\bigl(O_r(R^n\mu)\bigr)_{n\ge0}
+$$
+be its complete forward scale response. The response records all iterates of the chosen spatial inflation, but only at the fixed window size $r$. For either map $H=O_r$ or $H=\Phi_r$, define its equality kernel by
+$$
+\ker H=\{(\mu,\eta):H(\mu)=H(\eta)\}.
+$$
+This is an equivalence relation on stationary laws, rather than a linear null space.
+

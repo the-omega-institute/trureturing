@@ -1,0 +1,10 @@
+**Definition 11.1 (physical word polynomial).** Let $K$ be any field, $V$ any $K$-vector space, $I$ any finite physical index set, $a:I\to V$, and $U\le V$. For every $t\in\mathbb N$, define the rational polynomial
+
+$$
+W_{U,t}=\sum_{w:\operatorname{Fin}(t)\to I}
+\mathbf1_{\{U+\operatorname{span}\{a_{w(j)}:j<t\}=V\}}
+\prod_{j<t}X_{w(j)}.
+$$
+
+The indicator is implemented by selecting the monomial or zero, not by replacing the represented spanning polynomial. All physical indices remain distinct, including zero, repeated, and scalar-parallel columns. Neither finite dimensionality nor a spanning assumption is imposed; the index set may be empty.
+

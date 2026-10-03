@@ -4,6 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
+[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
 internal sealed class AnalyticLogarithmicContinuationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/Probability/AnalyticLogarithmicContinuation.";

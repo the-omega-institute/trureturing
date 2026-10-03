@@ -1,0 +1,18 @@
+## 已形式化的声明
+
+源码为 [`D5/S3/VertexAlgebra/MonsterShortSupportSpin.lean`](../../../D5/S3/VertexAlgebra/MonsterShortSupportSpin.lean)。
+
+* `labelQuadratic` 独立定义在 `Label` 上；它不展开 `fullMap`，因此不是把支持谓词改名。
+* `labelQuadratic_groundSection` 证明
+  \(Q(s_f(g))=f(g,g)\)。因此 `labelQuadratic_groundSection_nonzero` 使用
+  `IsSignTable.diagonal` 得到所有非零地面截面的奇偶值为 1。
+* `labelQuadratic_groundSection_polar` 使用
+  `IsSignTable.opposite` 证明不同非零地面截面的极化配对为 1。这是二次律真正消耗的符号表几何。
+* `shortWeight` 将七段支持大小公开为可复用 API；唯一支持至多 3 的结论继续由
+  `MonsterShortSupport.unique_short_support` 提供。
+* `labelQuadratic_fullMap` 将七段系数和的二次值形式化为
+  \(\binom{\operatorname{shortWeight}(c)+1}{2}\bmod 2\)。证明先对有限支持集合归纳，
+  再使用每个地面截面的二次值为 1、不同截面的极化值为 1，以及七段补集关系。
+
+这些声明的 `#print axioms` 只包含 Lean 的 `propext`、`Classical.choice` 和 `Quot.sound`，没有 `sorryAx`、自定义公理或 `native_decide`。
+

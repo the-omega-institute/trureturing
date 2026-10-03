@@ -1,0 +1,32 @@
+**定理 27.2（串接、代入与读取方向）。** 对可串接路径 $u,v$，
+
+$$
+D_{uv}=D_u+S^{|u|}D_v,\qquad
+\Phi_{uv}=\Phi_u\circ\Phi_v,
+\qquad
+D_{uv}=\Phi_u(D_v).
+\tag{27.2}
+$$
+
+故路径的低到高串接与单孔上下文代入完全相容，但相对于 $v\circ u$ 的 chronological 组合约定，这是反变解释。真正低到高在线执行的协变累加器为
+
+$$
+(s,n,a)\xmapsto{\sigma}
+(t,n+1,a+S^nd_\sigma),
+\tag{27.3}
+$$
+
+其 guard 是表中的输入接缝要求。
+
+证明。将 $uv$ 的求和在 $|u|$ 处切开即得第一式；把两仿射函数复合得到第二式，代入零得第三式。逐边应用 (27.3) 从 $(s,0,0)$ 得 $(t,|w|,D_w)$。通常函数复合最右边先执行，故 $\Phi_w=F_{\sigma_0}\circ\cdots\circ F_{\sigma_{n-1}}$ 的 Horner 执行顺序是高窗先做。保留 $V_t\to V_s$ 的方向，或使用目标范畴的对偶，即使反变性有正式类型；不能默默把输入字倒写而沿用原 seam 表。$\square$
+
+例如单位位零的合法字 $89=[\mathrm{null}][\mathrm{null}][5]$ 满足
+
+$$
+D_w=S^2(1,1)=(13,21),\qquad
+S^3=\begin{pmatrix}21&34\\34&55\end{pmatrix},
+\qquad N=2\cdot13+3\cdot21=89.
+$$
+
+它同时给对象 $(13,21)$ 和上下文 $x\mapsto S^3x+(13,21)$。低位 null 保留位次；删去它们便只剩数量 $5$。
+

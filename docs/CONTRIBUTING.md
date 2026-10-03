@@ -153,7 +153,7 @@ Make and Bash, with these tools on `PATH`:
   selected by [global.json](../global.json) using its declared roll-forward
   policy. The
   repository's Lean wrapper also uses .NET.
-- **Python 3.11+** as `python3` for CI/preflight scripts, which import
+- **Python 3.11+** as `python3` for CI/local checks scripts, which import
   standard-library `tomllib`.
 
 The shell examples below use macOS/Linux conventions. Install the SDK version
@@ -247,60 +247,26 @@ git diff --check
 make lean LEAN_TARGETS=D5.S0.Conventions.WDigits
 ```
 
-The second command is a **targeted Lean build**; replace the module with the
-one you changed when doing mathematical work. It is not a full repository
-check. For harness changes, `make preflight MODE=fast` runs the selected quick .NET
-structure checks (no Lean or admission proof), and `make -C tools test` runs the full .NET harness test suite.
+The second command is a targeted Lean build; use your changed module. For harness
+iteration use `make -C tools check-fast` and the affected test project:
 
-Commit each logical change and push it to your fork immediately; run any local
-checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
-local preflight modes are **optional** early feedback and
-diagnostics. Current remote CI checks remain **required and authoritative**.
-CI stages print progress summaries every 30 seconds and once at completion:
-the active step, latest reported work count or percentage, elapsed time, new
-information count and latest activity. Quiet stages keep reporting their last
-known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
-interval. Warnings and errors appear immediately with their details; complete
-command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
-JSON and check evidence keep their complete contents.
-Bare `make preflight` lists modes and exits 2. For delta validation, select an
-explicit baseline:
+```sh
+make -C tools test TEST_PROJECT=tools/tests/<Project>/<Project>.csproj
+```
+
+`make test` generates the Lean report and runs check-current. For local validation
+of cross-tree constraints, resolve an explicit base and run the independent commands:
 
 ```sh
 base_sha="$(git rev-parse upstream/dev^{commit})"
-make preflight MODE=push BASE="$base_sha"
+make gate BASE="$base_sha"
 ```
 
-Push requires an existing nonzero 40-hex commit, with no implicit parent or remote
-fallback and no ancestry requirement. Its scope includes all committed changes
-since BASE plus staged, unstaged, untracked and deleted inputs. FILEMAP selects
-the applicable engineering/current checks; a no-resource documentation delta can
-avoid .NET work. Only a complete CI_PUSH_BEFORE/CI_PUSH_AFTER pair matching BASE
-and HEAD is accepted. Local shared modes reject inherited native push events,
-reusable workflow candidate inputs and stale CANDIDATE_SHA.
-
-For deliberate whole-current-tree diagnostics use `make preflight MODE=full`.
-It selects all current inputs plus removed dirty endpoints for ownership checks,
-while preserving valid caches and incremental builds. fast/full accept neither BASE nor push endpoints. During iteration choose
-fast for harness structure, targeted `make lean` for Lean, and push when delta
-validation is useful; full is a deliberate diagnostic choice.
-
-Optionally, check the combination with the project's `dev` branch before
-merge. To run this diagnostic, start from a clean, committed worktree and pass
-an immutable base SHA:
-
-```sh
-git fetch upstream dev
-base_sha="$(git rev-parse upstream/dev)"
-make preflight MODE=pr BASE="$base_sha"
-```
-
-PR-mode preflight checks an isolated merge-tree candidate and its delta. It
-does not merge your branch. If you have only the project remote, use
-`git fetch origin dev`, then `git rev-parse origin/dev` to resolve the base SHA.
-A targeted build, local preflight and
-remote CI are distinct results: report the command and actual exit code, and
-say explicitly which checks you did not run.
+The gate runs lean-report, check-current, Scribe, filemap-conform and check-delta.
+Base supplies data only. Use `origin/dev` when that is your project remote.
+Commit and push each logical change; local checks provide early feedback alongside
+remote CI. Report actual commands and exit codes. Local success does not replace
+required checks on the PR.
 
 ## Open a pull request
 
@@ -316,7 +282,7 @@ resume command. Disclose AI assistance. Keep useful results and necessary
 diagnostics; omit process transcripts.
 
 Arrange independent review. The repository's documented merge checks are
-`push / engineering`, `push / current` and `delta`; inspect the actual check
+one required check per independent CI workflow; inspect the actual check
 results on your PR and address failures. GitHub branch-protection configuration
 is an external setting, not a guarantee supplied by this guide. An open PR or
 green local check is not a merged contribution: completion is **MERGED** into
@@ -342,7 +308,7 @@ python3 tools/scripts/agent/contribution_queue.py --pr 123
 Run these from the checkout, replacing `123` with the PR number to inspect.
 From another directory, pass the script's absolute path. `--help` describes the
 options; `--repo ORGANIZATION/REPOSITORY` selects another repository using the
-same `ci-pr.yml` policy adapter. The authenticated account must have active
+same required-check policy adapter. The authenticated account must have active
 organization membership and visibility of all organization owners (Members
 read / `read:org`), plus read access to PRs, Issues, Actions, Checks, commit
 statuses, branch protection and rules (including Administration read).
@@ -353,55 +319,18 @@ their PRs and Issues are excluded before queue checks. Missing owner or author
 identity aborts classification rather than treating an owner as external.
 `--pr` refreshes only that PR and skips the Issue and other PR lists.
 
-A PR enters `ready` only after the existing required contexts succeed for its
-current head and PR association, with GitHub Actions app, workflow, run attempt,
-job and check provenance verified. Workflow path/ID alone is insufficient: the
-run must expose exactly the local `ci-push.yml` reusable workflow, with its
-immutable commit SHA and `refs/pull/NUMBER/merge` reference. That executed
-commit must have exactly two ordered parents: the run-associated base and the
-current PR head. The base must be reachable from the observed protected target
-branch (`dev` or `integration-*`). The adapter supports non-strict branch
-protection with required checks bound to GitHub Actions. Active rulesets are
-supported only when every active rule is a non-strict required-checks rule
-whose GitHub Actions-bound contexts are exactly the protected required checks;
-any other active rule keeps the PR waiting with `unsupported_rulesets`.
+A PR enters `ready` only when its current head has all configured required
+contexts successful, bound to the configured GitHub Actions app. The observer
+uses the latest matching checks, checks commit attachment and rejects conflicting
+unsuccessful commit statuses. It supports non-strict branch protection and
+rulesets that restate the same Actions-bound required checks; other active rules
+keep the PR waiting with `unsupported_rulesets`.
 
-Both the executed candidate and PR head must preserve all base Git object
-identities and modes outside this narrow supported content boundary:
-
-- Regular, non-executable `.lean` and `.md` files under `D5/`.
-- Regular, non-executable `.md` files under `docs/develop/theory/`.
-
-Content additions, edits and deletions are supported; path components must
-start with an ASCII letter, digit or underscore, followed by those characters,
-dots or hyphens. Changed symlinks, submodules and executable files are excluded.
-These roots follow the existing FILEMAP content boundary; this observer does
-not classify CI work or replace its material policies. Other changes, including
-workflow definitions, reused workflows, scripts, harness code, build settings,
-material manifests and content metadata outside these roots, remain waiting
-with `ci_automation_changed_manual_review` and the first unsupported path.
-This may also require manual review when an older PR head has different
-automation from its executed merge base, even if its merge candidate is clean.
-Owners are excluded before all these lookups.
-
-The observer reads commit/tree metadata, skips identical subtrees, and verifies
-each fetched non-recursive tree's Git hash. Truncated, omitted or inconsistent
-tree evidence, missing workflow references, or unproven base/merge provenance
-leave the PR waiting with `ci_definition_unproven`. The current merge SHA and
-timestamps never substitute for executed-candidate evidence. An older run can
-qualify after the target branch advances only with its own proven base and
-candidate; the output exposes those identities separately from the current PR.
-Run references, branch reachability, checks, protection and PR identity are
-rechecked before selection.
-
-This establishes successful CI provenance with checked-in automation identical
-to a trusted base. It does not certify arbitrary Lean/Markdown semantics,
-runtime side effects, mathematics, or permission to merge. Trusted GitHub,
-maintainer branch contents and the canonical workflow's execution contract
-remain assumptions; changes to that contract require updating this adapter.
-Unsupported policy, conflicting evidence or observed changes keep a PR waiting;
-API, permission or identity failures return an error snapshot and exit 2.
-Observations are not atomic and must be refreshed before acting.
+The observer refreshes the PR identity, checks, protection and organization owners
+before selection. These are perishable API observations, not workflow-execution
+certificates or permission to merge. Missing, conflicting or changed evidence
+keeps the PR waiting; API, permission or identity failures return an error snapshot
+and exit 2. Refresh before acting.
 
 The command makes only GitHub GET requests and fetches no blob contents. It executes no contribution text,
 changes no PR or Issue metadata, and starts no builds, writes, daemon or merge.

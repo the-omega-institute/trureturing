@@ -1,0 +1,20 @@
+**定理 305.3（共同素数误差消去后的成对比较）。** 在假设302.1下，两个指定整数族满足
+\[
+\sqrt m\,[U_{\widetilde C_L}-U_{C_L}]\longrightarrow\sqrt2 E,
+\qquad
+\sqrt m\,[R(\widetilde C_L)-R(C_L)]\longrightarrow\frac E{\sqrt2},
+\tag{305.18}
+\]
+\[
+\sqrt m\,[\Delta(C_L)-\Delta(\widetilde C_L)]
+\longrightarrow\frac E{\sqrt2}>0.
+\tag{305.19}
+\]
+因此充分大 $L$ 时，提升已有素数的平方层使余量严格下降，虽两点的签名、素支撑和新增素数个数完全相同。若还另行证明某一族在每个充分大 $L$ 上满足
+\[
+\sqrt m\,S(m)>-\kappa+\varepsilon
+\quad\text{，其中固定 }\varepsilon>0,
+\tag{305.20}
+\]
+且该族对应（305.8）的系数为 $\kappa$，则该族最终严格满足 Robin 不等式。本节未建立（305.20）。
+

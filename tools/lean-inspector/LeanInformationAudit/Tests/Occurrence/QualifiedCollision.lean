@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open Lean
@@ -63,7 +66,7 @@ theorem legacyA : LegacyPrimitiveRealization lawA True realizationA where
 theorem legacyB : LegacyPrimitiveRealization lawB True realizationB where
   equivalence := Iff.rfl
 
-register_information_theorem shared
+test_assess in register_information_theorem shared
   in lawA
   object_arena object
   catalog «catalog/y»

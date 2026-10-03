@@ -1,0 +1,3796 @@
+{
+  "scope": "FC647-FC648 omitted labels3^t*h*q^e, t>=2, e>=1, on each fixed canonical head table; pure3 powers and singleton supports still excluded",
+  "evidence": "ordinary analytic depth-sum identities and exact fixed-table arithmetic; no Lean claim",
+  "design_sha256": "731e7f362c896f174790d2e4b7d506b94e1408e0eea787624c928a7d21189231",
+  "consumer_sha256": "eb6df6d979fdde6cb3a7919811bcadf48127acb6185d8593f4d2c3a52abe3e5a",
+  "table_inputs": {
+    "FC110": {
+      "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70",
+      "hash_role": "saved input identity, not mathematical premise"
+    },
+    "FC131": {
+      "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6",
+      "hash_role": "saved input identity, not mathematical premise"
+    }
+  },
+  "saved_scores_input": {
+    "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json",
+    "sha256": "4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4",
+    "hash_role": "saved input identity, not mathematical premise"
+  },
+  "formula": "G=sum_q b_q*(B5q+B7q), B=max_(root,headrow)(w_head/2)*sum_(otherheadrow)w_other*product_(private!=q)K",
+  "ternary_height_tail_factor": "1/2",
+  "no_parameter_search": true,
+  "producer_or_controls_executed": false,
+  "continuation_executed": false,
+  "old_full_fee_recomputed": false,
+  "actual_zero_fee_case": "if a new nonternary cylinder lies in an already avoided original free group hole, its actual R_N intersection is empty; arbitrary phases need not satisfy containment",
+  "negative_margin_next_gap": "same-source grouped-hole/high-label joint hit masses; no moment or clipping scan",
+  "cases": {
+    "FC110": {
+      "saved_score": "17062109570167/198315713846250",
+      "saved_selected_fee": "1106517130288/10257709336875",
+      "old_all_height_margin": "1123372466597/34996890678750",
+      "G": "6616627710514/99157856923125",
+      "G_by_head": {
+        "5": "1458538215476/33052618974375",
+        "7": "2241013064086/99157856923125"
+      },
+      "additional_high_ternary_fee_G_over_2": "3308313855257/99157856923125",
+      "new_margin_J_minus_half_S_plus_G": "-107507314199/84992448791250",
+      "margin_sign": "negative",
+      "absolute_gap_to_zero": "107507314199/84992448791250",
+      "pair_supports": [
+        {
+          "head": 5,
+          "private_prime": 11,
+          "b_q": "1/9",
+          "B_max": "2168723384/24003354375",
+          "G_pair": "2168723384/216030189375",
+          "zeta_live_max": "74468/189805",
+          "old_deep_pair_selected_fee": "74468/25623675",
+          "lower_from_old_pair": "74468/8541225",
+          "upper_from_old_pair": "297872/25623675",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "2181611059/2331754425",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "23324704/31652775",
+              "selected_candidate": "11662352/158263875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1084361692/1600223625",
+              "selected_candidate": "2168723384/24003354375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "148936/189805",
+              "selected_candidate": "74468/949025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "2181611059/2331754425",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "3155199232/6995263275",
+              "selected_candidate": "6310398464/104928949125"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "420074912/1088152065",
+              "selected_candidate": "840149824/16322280975"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "42088408448/104928949125",
+              "selected_candidate": "84176816896/1573934236875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "599124464/1399052655",
+              "selected_candidate": "299562232/6995263275"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "3155199232/6995263275",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 13,
+          "b_q": "1/11",
+          "B_max": "17349787072/176751973125",
+          "G_pair": "17349787072/1944271704375",
+          "zeta_live_max": "181964/465885",
+          "old_deep_pair_selected_fee": "181964/76871025",
+          "lower_from_old_pair": "181964/25623675",
+          "upper_from_old_pair": "727856/76871025",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "197417483/211977675",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "95077216/129488625",
+              "selected_candidate": "47538608/647443125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "8674893536/11783464875",
+              "selected_candidate": "17349787072/176751973125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "363928/465885",
+              "selected_candidate": "181964/2329425"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "197417483/211977675",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "956293504/2452884525",
+              "selected_candidate": "1912587008/36793267875"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "184168832/494614575",
+              "selected_candidate": "368337664/7419218625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "661365376/1752060375",
+              "selected_candidate": "1322730752/26280905625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "785445184/1907799075",
+              "selected_candidate": "392722592/9538995375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "7443958784/17170191675",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 17,
+          "b_q": "1/15",
+          "B_max": "39573808/474791625",
+          "G_pair": "39573808/7121874375",
+          "zeta_live_max": "39573808/94958325",
+          "old_deep_pair_selected_fee": "39573808/21365623125",
+          "lower_from_old_pair": "39573808/7121874375",
+          "upper_from_old_pair": "158295232/21365623125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 1
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "432455549/466350885",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "79147616/94958325",
+              "selected_candidate": "39573808/474791625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1754275168/2880402525",
+              "selected_candidate": "3508550336/43206037875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "27512/35343",
+              "selected_candidate": "13756/176715"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "432455549/466350885",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "4711299968/12591473895",
+              "selected_candidate": "9422599936/188872108425"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "247086592/652891239",
+              "selected_candidate": "494173184/9793368585"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "427597888/1284844275",
+              "selected_candidate": "855195776/19272664125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "6978804544/17628063453",
+              "selected_candidate": "3489402272/88140317265"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "36658453504/88140317265",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 19,
+          "b_q": "1/17",
+          "B_max": "1970596/22609125",
+          "G_pair": "1970596/384355125",
+          "zeta_live_max": "1970596/4521825",
+          "old_deep_pair_selected_fee": "1970596/1153065375",
+          "lower_from_old_pair": "1970596/384355125",
+          "upper_from_old_pair": "7882384/1153065375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "127008389/137162025",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "1039873952/1424374875",
+              "selected_candidate": "519936976/7121874375"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "673793504/1107847125",
+              "selected_candidate": "1347587008/16617706875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3941192/4521825",
+              "selected_candidate": "1970596/22609125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "127008389/137162025",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "83746448/226737225",
+              "selected_candidate": "167492896/3401058375"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "203199856/576080505",
+              "selected_candidate": "406399712/8641207575"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "104301944/317432115",
+              "selected_candidate": "208603888/4761481725"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "4560807808/11110124025",
+              "selected_candidate": "2280403904/55550620125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "4560807808/11110124025",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 23,
+          "b_q": "1/21",
+          "B_max": "913146688/10287151875",
+          "G_pair": "913146688/216030189375",
+          "zeta_live_max": "1987756/5124735",
+          "old_deep_pair_selected_fee": "1987756/1614291525",
+          "lower_from_old_pair": "1987756/538097175",
+          "upper_from_old_pair": "7951024/1614291525",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "718298123/777251475",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "148255328/203482125",
+              "selected_candidate": "74127664/1017410625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "456573344/685810125",
+              "selected_candidate": "913146688/10287151875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3975512/5124735",
+              "selected_candidate": "1987756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "718298123/777251475",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "2326279424/6424221375",
+              "selected_candidate": "4652558848/96363320625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "10745984/31090059",
+              "selected_candidate": "21491968/466350885"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "2137783424/6424221375",
+              "selected_candidate": "4275566848/96363320625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "1145940608/2997969975",
+              "selected_candidate": "572970304/14989849875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "18094262272/44969549625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 29,
+          "b_q": "1/27",
+          "B_max": "49742912/615470625",
+          "G_pair": "49742912/16617706875",
+          "zeta_live_max": "985298/2467465",
+          "old_deep_pair_selected_fee": "985298/999323325",
+          "lower_from_old_pair": "985298/333107775",
+          "upper_from_old_pair": "3941192/999323325",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "238978921/259083825",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "39573808/52754625",
+              "selected_candidate": "19786904/263773125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "24871456/41031375",
+              "selected_candidate": "49742912/615470625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "1970596/2467465",
+              "selected_candidate": "985298/12337325"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "238978921/259083825",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "356269696/999323325",
+              "selected_candidate": "712539392/14989849875"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "212210688/604528925",
+              "selected_candidate": "141473792/3022644625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1586698816/4996616625",
+              "selected_candidate": "3173397632/74949249375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "175488832/466350885",
+              "selected_candidate": "87744416/2331754425"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "2770777088/6995263275",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 31,
+          "b_q": "1/29",
+          "B_max": "85969984/1064188125",
+          "G_pair": "85969984/30861455625",
+          "zeta_live_max": "492649/1237005",
+          "old_deep_pair_selected_fee": "492649/538097175",
+          "lower_from_old_pair": "492649/179365725",
+          "upper_from_old_pair": "1970596/538097175",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "74132341/80405325",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "257229752/343814625",
+              "selected_candidate": "128614876/1719073125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "42984992/70945875",
+              "selected_candidate": "85969984/1064188125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "985298/1237005",
+              "selected_candidate": "492649/6185025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "74132341/80405325",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "6938060032/19538493975",
+              "selected_candidate": "13876120064/293077409625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "3157424896/9117963855",
+              "selected_candidate": "6314849792/136769457825"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "10299743744/32564156625",
+              "selected_candidate": "20599487488/488462349375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "488204672/1302566265",
+              "selected_candidate": "244102336/6512831325"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "1101154304/2791213425",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 37,
+          "b_q": "1/35",
+          "B_max": "8674893536/104928949125",
+          "G_pair": "8674893536/3672513219375",
+          "zeta_live_max": "1979716/5124735",
+          "old_deep_pair_selected_fee": "1979716/2690485875",
+          "lower_from_old_pair": "1979716/896828625",
+          "upper_from_old_pair": "7918864/2690485875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "306759007/333107775",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "514459504/691839225",
+              "selected_candidate": "257229752/3459196125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "4337446768/6995263275",
+              "selected_candidate": "8674893536/104928949125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3959432/5124735",
+              "selected_candidate": "1979716/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "306759007/333107775",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "15972224/45347445",
+              "selected_candidate": "31944448/680211675"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "288829696/839431593",
+              "selected_candidate": "577659392/12591473895"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1210057408/3854532825",
+              "selected_candidate": "2420114816/57817992375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "44580160/119918799",
+              "selected_candidate": "4458016/119918799"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "2111519744/5396345955",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 41,
+          "b_q": "1/39",
+          "B_max": "456573344/5539235625",
+          "G_pair": "456573344/216030189375",
+          "zeta_live_max": "1978756/5124735",
+          "old_deep_pair_selected_fee": "152212/230613075",
+          "lower_from_old_pair": "152212/76871025",
+          "upper_from_old_pair": "608848/230613075",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "165096013/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "351998608/474791625",
+              "selected_candidate": "175999304/2373958125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "228286672/369282375",
+              "selected_candidate": "456573344/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3957512/5124735",
+              "selected_candidate": "1978756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "165096013/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "242571008/691839225",
+              "selected_candidate": "485142016/10377588375"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "85335808/251112015",
+              "selected_candidate": "170671616/3766680225"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1080583808/3459196125",
+              "selected_candidate": "2161167616/51887941875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "13275008/35873145",
+              "selected_candidate": "6637504/179365725"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "1886255104/4842874575",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 11,
+          "b_q": "1/9",
+          "B_max": "43716754432/847503050625",
+          "G_pair": "43716754432/7627527455625",
+          "zeta_live_max": "21858377216/72643118625",
+          "old_deep_pair_selected_fee": "21858377216/22882582366875",
+          "lower_from_old_pair": "21858377216/4576516473375",
+          "upper_from_old_pair": "43716754432/7627527455625",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "52827486472/104928949125",
+              "selected_candidate": "52827486472/1224171073125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "328802272/691839225",
+              "selected_candidate": "328802272/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1381565968/2997969975",
+              "selected_candidate": "1381565968/34976316375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "52827486472/104928949125",
+              "selected_candidate": "52827486472/1224171073125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "10474928/22444695",
+              "selected_candidate": "10474928/261854775"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "52827486472/104928949125",
+              "selected_candidate": "26413743236/734502643875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "52827486472/104928949125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "6124585856/11658772125",
+              "selected_candidate": "3062292928/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "20956003072/44969549625",
+              "selected_candidate": "20956003072/524644745625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "43716754432/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "11134222336/24214372875",
+              "selected_candidate": "11134222336/282501016875"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1486164496/2690485875",
+              "selected_candidate": "743082248/18833401125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 13,
+          "b_q": "1/11",
+          "B_max": "10361913344/231137195625",
+          "G_pair": "10361913344/2542509151875",
+          "zeta_live_max": "5180956672/19811759625",
+          "old_deep_pair_selected_fee": "5180956672/7627527455625",
+          "lower_from_old_pair": "5180956672/1525505491125",
+          "upper_from_old_pair": "10361913344/2542509151875",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 4
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4956526312/9538995375",
+              "selected_candidate": "4956526312/111288279375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "277518112/566050275",
+              "selected_candidate": "277518112/6603919875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1941940432/4088140875",
+              "selected_candidate": "1941940432/47694976875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "41588556736/85850958375",
+              "selected_candidate": "41588556736/1001594514375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "286636736/561117375",
+              "selected_candidate": "286636736/6546369375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "4956526312/9538995375",
+              "selected_candidate": "2478263156/66772967625"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "4956526312/9538995375",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "11143503872/19811759625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "4688516608/9538995375",
+              "selected_candidate": "2344258304/66772967625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5349486592/12264422625",
+              "selected_candidate": "5349486592/143084930625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2996564992/6603919875",
+              "selected_candidate": "2996564992/77045731875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "10361913344/19811759625",
+              "selected_candidate": "10361913344/231137195625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1137532736/2201306625",
+              "selected_candidate": "568766368/15409146375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "11143503872/19811759625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 17,
+          "b_q": "1/15",
+          "B_max": "3540768328/81611404875",
+          "G_pair": "3540768328/1224171073125",
+          "zeta_live_max": "1770384164/6995263275",
+          "old_deep_pair_selected_fee": "1770384164/3672513219375",
+          "lower_from_old_pair": "1770384164/734502643875",
+          "upper_from_old_pair": "3540768328/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3540768328/6995263275",
+              "selected_candidate": "3540768328/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "330910816/691839225",
+              "selected_candidate": "330910816/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3400002344/6995263275",
+              "selected_candidate": "3400002344/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "29487954368/62957369475",
+              "selected_candidate": "29487954368/734502643875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "192276352/411486075",
+              "selected_candidate": "192276352/4800670875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "3540768328/6995263275",
+              "selected_candidate": "1770384164/48966842925"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "3540768328/6995263275",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "308448247808/566616325275",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "3328834048/6995263275",
+              "selected_candidate": "1664417024/48966842925"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "39120376576/80945189325",
+              "selected_candidate": "39120376576/944360542125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "82695321088/188872108425",
+              "selected_candidate": "82695321088/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "78533033984/188872108425",
+              "selected_candidate": "78533033984/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "10496498624/20985789825",
+              "selected_candidate": "5248249312/146900528775"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "308448247808/566616325275",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 19,
+          "b_q": "1/17",
+          "B_max": "3114387656/72010063125",
+          "G_pair": "3114387656/1224171073125",
+          "zeta_live_max": "1557193828/6172291125",
+          "old_deep_pair_selected_fee": "1557193828/3672513219375",
+          "lower_from_old_pair": "1557193828/734502643875",
+          "upper_from_old_pair": "3114387656/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3114387656/6172291125",
+              "selected_candidate": "3114387656/72010063125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3880736/8139285",
+              "selected_candidate": "3880736/94958325"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "424218512/881755875",
+              "selected_candidate": "424218512/10287151875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "25940225728/55550620125",
+              "selected_candidate": "25940225728/648090568125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "573730688/1234458225",
+              "selected_candidate": "573730688/14402012625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "3114387656/6172291125",
+              "selected_candidate": "1557193828/43206037875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "3114387656/6172291125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "20659070464/38458121625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "2894580992/6172291125",
+              "selected_candidate": "1447290496/43206037875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "78240753152/166651860375",
+              "selected_candidate": "78240753152/1944271704375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5540563904/12819373875",
+              "selected_candidate": "5540563904/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5255217152/12819373875",
+              "selected_candidate": "5255217152/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "702257632/1424374875",
+              "selected_candidate": "351128816/9970624125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "20659070464/38458121625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 23,
+          "b_q": "1/21",
+          "B_max": "7497647176/174881581875",
+          "G_pair": "7497647176/3672513219375",
+          "zeta_live_max": "291460544/1153065375",
+          "old_deep_pair_selected_fee": "291460544/847503050625",
+          "lower_from_old_pair": "291460544/169500610125",
+          "upper_from_old_pair": "582921088/282501016875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "7497647176/14989849875",
+              "selected_candidate": "7497647176/174881581875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "26755912/54907875",
+              "selected_candidate": "26755912/640591875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "980666672/2141407125",
+              "selected_candidate": "980666672/24983083125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "62732827328/134908648875",
+              "selected_candidate": "62732827328/1573934236875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "81724928/176351175",
+              "selected_candidate": "81724928/2057430375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "7497647176/14989849875",
+              "selected_candidate": "3748823588/104928949125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "7497647176/14989849875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "16488359936/31132765125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "2402812928/4996616625",
+              "selected_candidate": "1201406464/34976316375"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "7918885376/19272664125",
+              "selected_candidate": "7918885376/224847748125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4430020096/10377588375",
+              "selected_candidate": "4430020096/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "12600639488/31132765125",
+              "selected_candidate": "12600639488/363215593125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "582921088/1153065375",
+              "selected_candidate": "291460544/8071457625"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "16488359936/31132765125",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 29,
+          "b_q": "1/27",
+          "B_max": "5769651716/136019008125",
+          "G_pair": "5769651716/3672513219375",
+          "zeta_live_max": "2884825858/11658772125",
+          "old_deep_pair_selected_fee": "2884825858/11017539658125",
+          "lower_from_old_pair": "2884825858/2203507931625",
+          "upper_from_old_pair": "5769651716/3672513219375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5769651716/11658772125",
+              "selected_candidate": "5769651716/136019008125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "31544816/66621555",
+              "selected_candidate": "31544816/777251475"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "90740296/199864665",
+              "selected_candidate": "90740296/2331754425"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "16031186656/34976316375",
+              "selected_candidate": "16031186656/408057024375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "12528448/27432405",
+              "selected_candidate": "12528448/320044725"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "5769651716/11658772125",
+              "selected_candidate": "2884825858/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "5769651716/11658772125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "164529446912/314786847375",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "5706680704/11658772125",
+              "selected_candidate": "2853340352/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "6083439104/14989849875",
+              "selected_candidate": "6083439104/174881581875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "44138732032/104928949125",
+              "selected_candidate": "44138732032/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "41884123136/104928949125",
+              "selected_candidate": "41884123136/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "5597139776/11658772125",
+              "selected_candidate": "2798569888/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "164529446912/314786847375",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 31,
+          "b_q": "1/29",
+          "B_max": "1787434354/42212795625",
+          "G_pair": "1787434354/1224171073125",
+          "zeta_live_max": "893717177/3618239625",
+          "old_deep_pair_selected_fee": "893717177/3672513219375",
+          "lower_from_old_pair": "893717177/734502643875",
+          "upper_from_old_pair": "1787434354/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1787434354/3618239625",
+              "selected_candidate": "1787434354/42212795625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "15772408/33399135",
+              "selected_candidate": "15772408/389656575"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "234251852/516891375",
+              "selected_candidate": "234251852/6030399375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "14900409872/32564156625",
+              "selected_candidate": "14900409872/379915160625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "19407968/42567525",
+              "selected_candidate": "19407968/496621125"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1787434354/3618239625",
+              "selected_candidate": "893717177/25327677375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "1787434354/3618239625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "11743172608/22544416125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "45653445632/97692469875",
+              "selected_candidate": "22826722816/683847289125"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5644442368/13956067125",
+              "selected_candidate": "5644442368/162820783125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3150533888/7514805375",
+              "selected_candidate": "3150533888/87672729375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "8968241152/22544416125",
+              "selected_candidate": "8968241152/263018188125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "11075500672/22544416125",
+              "selected_candidate": "5537750336/157810912875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "11743172608/22544416125",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 37,
+          "b_q": "1/35",
+          "B_max": "1475211928/34976316375",
+          "G_pair": "1475211928/1224171073125",
+          "zeta_live_max": "737605964/2997969975",
+          "old_deep_pair_selected_fee": "737605964/3672513219375",
+          "lower_from_old_pair": "737605964/734502643875",
+          "upper_from_old_pair": "1475211928/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1475211928/2997969975",
+              "selected_candidate": "1475211928/34976316375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1837408/3953367",
+              "selected_candidate": "1837408/46122615"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "193202288/428281425",
+              "selected_candidate": "193202288/4996616625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "12314257664/26981729775",
+              "selected_candidate": "12314257664/314786847375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "275246464/599593995",
+              "selected_candidate": "275246464/6995263275"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1475211928/2997969975",
+              "selected_candidate": "737605964/20985789825"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "1475211928/2997969975",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "9654132736/18679659075",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "41022976/90847575",
+              "selected_candidate": "20511488/635933025"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "272941568/680211675",
+              "selected_candidate": "272941568/7935802875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2590378496/6226553025",
+              "selected_candidate": "2590378496/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2590478336/6226553025",
+              "selected_candidate": "2590478336/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "36488512/76871025",
+              "selected_candidate": "18244256/538097175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "9654132736/18679659075",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 41,
+          "b_q": "1/39",
+          "B_max": "1321254104/31389001875",
+          "G_pair": "1321254104/1224171073125",
+          "zeta_live_max": "660627052/2690485875",
+          "old_deep_pair_selected_fee": "660627052/3672513219375",
+          "lower_from_old_pair": "660627052/734502643875",
+          "upper_from_old_pair": "1321254104/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "1321254104/31389001875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "21393632/46122615",
+              "selected_candidate": "21393632/538097175"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "173042224/384355125",
+              "selected_candidate": "173042224/4484143125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "11028641152/24214372875",
+              "selected_candidate": "11028641152/282501016875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "14486656/31652775",
+              "selected_candidate": "14486656/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "660627052/18833401125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "112198221824/217929355875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1210192384/2690485875",
+              "selected_candidate": "605096192/18833401125"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4147947008/10377588375",
+              "selected_candidate": "4147947008/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "30106545664/72643118625",
+              "selected_candidate": "30106545664/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "29125378048/72643118625",
+              "selected_candidate": "29125378048/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "3891392128/8071457625",
+              "selected_candidate": "1945696064/56500203375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "112198221824/217929355875",
+              "selected_candidate": "0"
+            }
+          ]
+        }
+      ],
+      "evaluation_counts": {
+        "pair_supports": 18,
+        "row_candidates": 216,
+        "eight_factor_cells": 1260,
+        "scalar_K_factors": 10080
+      },
+      "interpretation": "strict negative limit obstructs this additive certificate at sufficiently large finite depths; not actual coverage"
+    },
+    "FC131": {
+      "saved_score": "25372782312134/297473570769375",
+      "saved_selected_fee": "64392844043743/594947141538750",
+      "old_all_height_margin": "37098285204793/1189894283077500",
+      "G": "6682868375032/99157856923125",
+      "G_by_head": {
+        "5": "1477611570308/33052618974375",
+        "7": "2250033664108/99157856923125"
+      },
+      "additional_high_ternary_fee_G_over_2": "3341434187516/99157856923125",
+      "new_margin_J_minus_half_S_plus_G": "-2998925045399/1189894283077500",
+      "margin_sign": "negative",
+      "absolute_gap_to_zero": "2998925045399/1189894283077500",
+      "pair_supports": [
+        {
+          "head": 5,
+          "private_prime": 11,
+          "b_q": "1/9",
+          "B_max": "170491484/1846411875",
+          "G_pair": "170491484/16617706875",
+          "zeta_live_max": "1967032/5124735",
+          "old_deep_pair_selected_fee": "1967032/691839225",
+          "lower_from_old_pair": "1967032/230613075",
+          "upper_from_old_pair": "7868128/691839225",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "503443109/538097175",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "23324704/31652775",
+              "selected_candidate": "11662352/158263875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "85245742/123094125",
+              "selected_candidate": "170491484/1846411875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3934064/5124735",
+              "selected_candidate": "1967032/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "503443109/538097175",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "54112000/119918799",
+              "selected_candidate": "21644800/359756397"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1105856/2826369",
+              "selected_candidate": "2211712/42395535"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "2005453952/4996616625",
+              "selected_candidate": "4010907904/74949249375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "28541648/66621555",
+              "selected_candidate": "14270824/333107775"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "54112000/119918799",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 13,
+          "b_q": "1/11",
+          "B_max": "1363931872/13596305625",
+          "G_pair": "1363931872/149559361875",
+          "zeta_live_max": "106856/279531",
+          "old_deep_pair_selected_fee": "106856/46122615",
+          "lower_from_old_pair": "106856/15374205",
+          "upper_from_old_pair": "427424/46122615",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "45576361/48917925",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "95077216/129488625",
+              "selected_candidate": "47538608/647443125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "681965936/906420375",
+              "selected_candidate": "1363931872/13596305625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "213712/279531",
+              "selected_candidate": "106856/1397655"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "45576361/48917925",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "319168384/817628175",
+              "selected_candidate": "638336768/12264422625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "3959296/10474191",
+              "selected_candidate": "7918592/157112865"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "61794688/163525635",
+              "selected_candidate": "123589376/2452884525"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "337052096/817628175",
+              "selected_candidate": "168526048/4088140875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "39437312/90847575",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 17,
+          "b_q": "1/15",
+          "B_max": "39573808/474791625",
+          "G_pair": "39573808/7121874375",
+          "zeta_live_max": "39573808/94958325",
+          "old_deep_pair_selected_fee": "39573808/21365623125",
+          "lower_from_old_pair": "39573808/7121874375",
+          "upper_from_old_pair": "158295232/21365623125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 1
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "19959263/21523887",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "79147616/94958325",
+              "selected_candidate": "39573808/474791625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "12537872/20142675",
+              "selected_candidate": "25075744/302140125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "2341712/3074841",
+              "selected_candidate": "1170856/15374205"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "19959263/21523887",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "85696384/228935889",
+              "selected_candidate": "171392768/3434038335"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1752320/4565673",
+              "selected_candidate": "700928/13697019"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "6988452928/20985789825",
+              "selected_candidate": "13976905856/314786847375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "997400896/2518294779",
+              "selected_candidate": "498700448/12591473895"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "1047841792/2518294779",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 19,
+          "b_q": "1/17",
+          "B_max": "5784056/67827375",
+          "G_pair": "5784056/1153065375",
+          "zeta_live_max": "5784056/13565475",
+          "old_deep_pair_selected_fee": "5784056/3459196125",
+          "lower_from_old_pair": "5784056/1153065375",
+          "upper_from_old_pair": "23136224/3459196125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "29309299/31652775",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "1039873952/1424374875",
+              "selected_candidate": "519936976/7121874375"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "688630832/1107847125",
+              "selected_candidate": "1377261664/16617706875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "11568112/13565475",
+              "selected_candidate": "5784056/67827375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "29309299/31652775",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "13032784/35270235",
+              "selected_candidate": "26065568/529053525"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "535168/1496313",
+              "selected_candidate": "1070336/22444695"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "869727128/2645267625",
+              "selected_candidate": "1739454256/39679014375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "10489216/25540515",
+              "selected_candidate": "5244608/127702575"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "10489216/25540515",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 23,
+          "b_q": "1/21",
+          "B_max": "71785888/791319375",
+          "G_pair": "71785888/16617706875",
+          "zeta_live_max": "5834216/15374205",
+          "old_deep_pair_selected_fee": "5834216/4842874575",
+          "lower_from_old_pair": "5834216/1614291525",
+          "upper_from_old_pair": "23336864/4842874575",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "165724333/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "148255328/203482125",
+              "selected_candidate": "74127664/1017410625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "35892944/52754625",
+              "selected_candidate": "71785888/791319375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "11668432/15374205",
+              "selected_candidate": "5834216/76871025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "165724333/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "1825024/5038605",
+              "selected_candidate": "3650048/75579075"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "14866304/42395535",
+              "selected_candidate": "29732608/635933025"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "28522112/85656285",
+              "selected_candidate": "57044224/1284844275"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "9632384/25193025",
+              "selected_candidate": "4816192/125965125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "10139648/25193025",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 29,
+          "b_q": "1/27",
+          "B_max": "60071008/727374375",
+          "G_pair": "60071008/19639108125",
+          "zeta_live_max": "2892028/7402395",
+          "old_deep_pair_selected_fee": "2892028/2997969975",
+          "lower_from_old_pair": "2892028/999323325",
+          "upper_from_old_pair": "11568112/2997969975",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "238937441/259083825",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "39573808/52754625",
+              "selected_candidate": "19786904/263773125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "30035504/48491625",
+              "selected_candidate": "60071008/727374375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "5784056/7402395",
+              "selected_candidate": "2892028/37011975"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "238937441/259083825",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "118799552/333107775",
+              "selected_candidate": "237599104/4996616625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "2008064/5685225",
+              "selected_candidate": "4016128/85278375"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "529427552/1665538875",
+              "selected_candidate": "1058855104/24983083125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "15959392/42395535",
+              "selected_candidate": "7979696/211977675"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "102659584/259083825",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 31,
+          "b_q": "1/29",
+          "B_max": "47303008/573024375",
+          "G_pair": "47303008/16617706875",
+          "zeta_live_max": "1446014/3711015",
+          "old_deep_pair_selected_fee": "1446014/1614291525",
+          "lower_from_old_pair": "1446014/538097175",
+          "upper_from_old_pair": "5784056/1614291525",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "17104691/18555075",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "257229752/343814625",
+              "selected_candidate": "128614876/1719073125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "23651504/38201625",
+              "selected_candidate": "47303008/573024375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "2892028/3711015",
+              "selected_candidate": "1446014/18555075"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "17104691/18555075",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "126186752/355245345",
+              "selected_candidate": "252373504/5328680175"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "58233856/165781161",
+              "selected_candidate": "116467712/2486717415"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "229001984/723647925",
+              "selected_candidate": "458003968/10854718875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "488362624/1302566265",
+              "selected_candidate": "244181312/6512831325"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "1542121472/3907698795",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 37,
+          "b_q": "1/35",
+          "B_max": "681965936/8071457625",
+          "G_pair": "681965936/282501016875",
+          "zeta_live_max": "341848/904365",
+          "old_deep_pair_selected_fee": "341848/474791625",
+          "lower_from_old_pair": "341848/158263875",
+          "upper_from_old_pair": "1367392/474791625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "70798517/76871025",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "514459504/691839225",
+              "selected_candidate": "257229752/3459196125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "340982968/538097175",
+              "selected_candidate": "681965936/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "683696/904365",
+              "selected_candidate": "341848/4521825"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "70798517/76871025",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "54310208/154181313",
+              "selected_candidate": "108620416/2312719695"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "10040320/28945917",
+              "selected_candidate": "4016128/86837751"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "241997984/770906565",
+              "selected_candidate": "483995968/11563598475"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "14861344/39972933",
+              "selected_candidate": "7430672/199864665"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "422341120/1079269191",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 41,
+          "b_q": "1/39",
+          "B_max": "456573344/5539235625",
+          "G_pair": "456573344/216030189375",
+          "zeta_live_max": "1978756/5124735",
+          "old_deep_pair_selected_fee": "152212/230613075",
+          "lower_from_old_pair": "152212/76871025",
+          "upper_from_old_pair": "608848/230613075",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "165096013/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "351998608/474791625",
+              "selected_candidate": "175999304/2373958125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "228286672/369282375",
+              "selected_candidate": "456573344/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "3957512/5124735",
+              "selected_candidate": "1978756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "165096013/179365725",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "16173824/46122615",
+              "selected_candidate": "32347648/691839225"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "54272/157437",
+              "selected_candidate": "108544/2361555"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_T": "6549376/20964825",
+              "selected_candidate": "13098752/314472375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_T": "17070464/46122615",
+              "selected_candidate": "8535232/230613075"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_T": "17967104/46122615",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 11,
+          "b_q": "1/9",
+          "B_max": "43716754432/847503050625",
+          "G_pair": "43716754432/7627527455625",
+          "zeta_live_max": "21858377216/72643118625",
+          "old_deep_pair_selected_fee": "21858377216/22882582366875",
+          "lower_from_old_pair": "21858377216/4576516473375",
+          "upper_from_old_pair": "43716754432/7627527455625",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4069383064/8071457625",
+              "selected_candidate": "4069383064/94167005625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "326030272/691839225",
+              "selected_candidate": "326030272/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "531824288/1153065375",
+              "selected_candidate": "531824288/13452429375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4069383064/8071457625",
+              "selected_candidate": "4069383064/94167005625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "44783912/94958325",
+              "selected_candidate": "44783912/1107847125"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "4069383064/8071457625",
+              "selected_candidate": "2034691532/56500203375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "4069383064/8071457625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "750505928/1399052655",
+              "selected_candidate": "375252964/9793368585"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "20956003072/44969549625",
+              "selected_candidate": "20956003072/524644745625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "43716754432/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "179227136/381559815",
+              "selected_candidate": "179227136/4451531175"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "44041544/81529875",
+              "selected_candidate": "22020772/570709125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "43716754432/72643118625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 13,
+          "b_q": "1/11",
+          "B_max": "1835170304/40063780575",
+          "G_pair": "166833664/40063780575",
+          "zeta_live_max": "917585152/3434038335",
+          "old_deep_pair_selected_fee": "83416832/120191341725",
+          "lower_from_old_pair": "83416832/24038268345",
+          "upper_from_old_pair": "166833664/40063780575",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 4
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "382103984/733768875",
+              "selected_candidate": "382103984/8560636875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "275250112/566050275",
+              "selected_candidate": "275250112/6603919875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "16624544/34941375",
+              "selected_candidate": "16624544/407649375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3209701312/6603919875",
+              "selected_candidate": "3209701312/77045731875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "22279552/43162875",
+              "selected_candidate": "22279552/503566875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "382103984/733768875",
+              "selected_candidate": "191051992/5136382125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "382103984/733768875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "11143503872/19811759625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "574705312/1144679445",
+              "selected_candidate": "287352656/8012756115"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5349486592/12264422625",
+              "selected_candidate": "5349486592/143084930625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2996564992/6603919875",
+              "selected_candidate": "2996564992/77045731875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1835170304/3434038335",
+              "selected_candidate": "1835170304/40063780575"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "370936544/733768875",
+              "selected_candidate": "185468272/5136382125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "11143503872/19811759625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 17,
+          "b_q": "1/15",
+          "B_max": "272454832/6277800375",
+          "G_pair": "272454832/94167005625",
+          "zeta_live_max": "136227416/538097175",
+          "old_deep_pair_selected_fee": "136227416/282501016875",
+          "lower_from_old_pair": "136227416/56500203375",
+          "upper_from_old_pair": "272454832/94167005625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "272454832/538097175",
+              "selected_candidate": "272454832/6277800375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "328138816/691839225",
+              "selected_candidate": "328138816/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "261488336/538097175",
+              "selected_candidate": "261488336/6277800375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "454272064/968574915",
+              "selected_candidate": "454272064/11300040675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "14928832/31652775",
+              "selected_candidate": "14928832/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "272454832/538097175",
+              "selected_candidate": "136227416/3766680225"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "272454832/538097175",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "308448247808/566616325275",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "408279904/839431593",
+              "selected_candidate": "204139952/5876021151"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "39120376576/80945189325",
+              "selected_candidate": "39120376576/944360542125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "82695321088/188872108425",
+              "selected_candidate": "82695321088/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "97282048/228935889",
+              "selected_candidate": "97282048/2670918705"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "311367136/635933025",
+              "selected_candidate": "155683568/4451531175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "308448247808/566616325275",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 19,
+          "b_q": "1/17",
+          "B_max": "239379632/5539235625",
+          "G_pair": "239379632/94167005625",
+          "zeta_live_max": "119689816/474791625",
+          "old_deep_pair_selected_fee": "119689816/282501016875",
+          "lower_from_old_pair": "119689816/56500203375",
+          "upper_from_old_pair": "239379632/94167005625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "239379632/474791625",
+              "selected_candidate": "239379632/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "132544/280665",
+              "selected_candidate": "132544/3274425"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "6521408/13565475",
+              "selected_candidate": "6521408/158263875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1995967936/4273124625",
+              "selected_candidate": "1995967936/49853120625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "8909632/18991665",
+              "selected_candidate": "8909632/221569425"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "239379632/474791625",
+              "selected_candidate": "119689816/3323541375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "239379632/474791625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "20659070464/38458121625",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "354840656/740674935",
+              "selected_candidate": "177420328/5184724545"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "78240753152/166651860375",
+              "selected_candidate": "78240753152/1944271704375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5540563904/12819373875",
+              "selected_candidate": "5540563904/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "84608512/202002255",
+              "selected_candidate": "84608512/2356692975"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "6940016/14387625",
+              "selected_candidate": "3470008/100713375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "20659070464/38458121625",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 23,
+          "b_q": "1/21",
+          "B_max": "577461232/13452429375",
+          "G_pair": "577461232/282501016875",
+          "zeta_live_max": "288730616/1153065375",
+          "old_deep_pair_selected_fee": "288730616/847503050625",
+          "lower_from_old_pair": "288730616/169500610125",
+          "upper_from_old_pair": "577461232/282501016875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "577461232/1153065375",
+              "selected_candidate": "577461232/13452429375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "26524912/54907875",
+              "selected_candidate": "26524912/640591875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "75488096/164723625",
+              "selected_candidate": "75488096/1921775625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4836925376/10377588375",
+              "selected_candidate": "4836925376/121071864375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "6352064/13565475",
+              "selected_candidate": "6352064/158263875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "577461232/1153065375",
+              "selected_candidate": "288730616/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "577461232/1153065375",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "16488359936/31132765125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "294586304/599593995",
+              "selected_candidate": "147293152/4197157965"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "7918885376/19272664125",
+              "selected_candidate": "7918885376/224847748125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4430020096/10377588375",
+              "selected_candidate": "4430020096/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "40573952/98115381",
+              "selected_candidate": "40573952/1144679445"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1920448/3882375",
+              "selected_candidate": "960224/27176625"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "16488359936/31132765125",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 29,
+          "b_q": "1/27",
+          "B_max": "641074744/15113223125",
+          "G_pair": "641074744/408057024375",
+          "zeta_live_max": "320537372/1295419125",
+          "old_deep_pair_selected_fee": "320537372/1224171073125",
+          "lower_from_old_pair": "320537372/244834214625",
+          "upper_from_old_pair": "641074744/408057024375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "641074744/1295419125",
+              "selected_candidate": "641074744/15113223125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "31267616/66621555",
+              "selected_candidate": "31267616/777251475"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "755772272/1665538875",
+              "selected_candidate": "755772272/19431286875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "16048228096/34976316375",
+              "selected_candidate": "16048228096/408057024375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1916416/4156425",
+              "selected_candidate": "1916416/48491625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "641074744/1295419125",
+              "selected_candidate": "320537372/9067933875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "641074744/1295419125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "164529446912/314786847375",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "5597139776/11658772125",
+              "selected_candidate": "2798569888/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "6083439104/14989849875",
+              "selected_candidate": "6083439104/174881581875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "44138732032/104928949125",
+              "selected_candidate": "44138732032/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1334669312/3179665125",
+              "selected_candidate": "1334669312/37096093125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "165997984/353296125",
+              "selected_candidate": "82998992/2473072875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "164529446912/314786847375",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 31,
+          "b_q": "1/29",
+          "B_max": "137498668/3247138125",
+          "G_pair": "137498668/94167005625",
+          "zeta_live_max": "68749334/278326125",
+          "old_deep_pair_selected_fee": "68749334/282501016875",
+          "lower_from_old_pair": "68749334/56500203375",
+          "upper_from_old_pair": "137498668/94167005625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "137498668/278326125",
+              "selected_candidate": "137498668/3247138125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "15633808/33399135",
+              "selected_candidate": "15633808/389656575"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2572904/5680125",
+              "selected_candidate": "2572904/66268125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1147431584/2504935125",
+              "selected_candidate": "1147431584/29224243125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1507232/3274425",
+              "selected_candidate": "1507232/38201625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "137498668/278326125",
+              "selected_candidate": "68749334/1948282875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "137498668/278326125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "11743172608/22544416125",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "5597139776/11723096385",
+              "selected_candidate": "2798569888/82061674695"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "5644442368/13956067125",
+              "selected_candidate": "5644442368/162820783125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "3150533888/7514805375",
+              "selected_candidate": "3150533888/87672729375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "144407552/355245345",
+              "selected_candidate": "144407552/4144529025"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "36488512/75907125",
+              "selected_candidate": "18244256/531349875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "11743172608/22544416125",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 37,
+          "b_q": "1/35",
+          "B_max": "113545216/2690485875",
+          "G_pair": "113545216/94167005625",
+          "zeta_live_max": "56772608/230613075",
+          "old_deep_pair_selected_fee": "56772608/282501016875",
+          "lower_from_old_pair": "56772608/56500203375",
+          "upper_from_old_pair": "113545216/94167005625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "113545216/230613075",
+              "selected_candidate": "113545216/2690485875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1821568/3953367",
+              "selected_candidate": "260224/6588945"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2972512/6588945",
+              "selected_candidate": "2972512/76871025"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "948827168/2075517675",
+              "selected_candidate": "948827168/24214372875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4276064/9224523",
+              "selected_candidate": "4276064/107619435"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "113545216/230613075",
+              "selected_candidate": "56772608/1614291525"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "113545216/230613075",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "9654132736/18679659075",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "165997984/359756397",
+              "selected_candidate": "82998992/2518294779"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "272941568/680211675",
+              "selected_candidate": "272941568/7935802875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "2590378496/6226553025",
+              "selected_candidate": "2590378496/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1334669312/3237807573",
+              "selected_candidate": "1334669312/37774421685"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "36488512/76871025",
+              "selected_candidate": "18244256/538097175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "9654132736/18679659075",
+              "selected_candidate": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 41,
+          "b_q": "1/39",
+          "B_max": "1321254104/31389001875",
+          "G_pair": "1321254104/1224171073125",
+          "zeta_live_max": "660627052/2690485875",
+          "old_deep_pair_selected_fee": "660627052/3672513219375",
+          "lower_from_old_pair": "660627052/734502643875",
+          "upper_from_old_pair": "1321254104/1224171073125",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "1321254104/31389001875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "21393632/46122615",
+              "selected_candidate": "21393632/538097175"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "173042224/384355125",
+              "selected_candidate": "173042224/4484143125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "11028641152/24214372875",
+              "selected_candidate": "11028641152/282501016875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "14486656/31652775",
+              "selected_candidate": "14486656/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "660627052/18833401125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "1321254104/2690485875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_T": "112198221824/217929355875",
+              "selected_candidate": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "151274048/322858305",
+              "selected_candidate": "75637024/2260008135"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "4147947008/10377588375",
+              "selected_candidate": "4147947008/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "30106545664/72643118625",
+              "selected_candidate": "30106545664/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_T": "35375104/88052265",
+              "selected_candidate": "35375104/1027276425"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_T": "12820288/27176625",
+              "selected_candidate": "6410144/190236375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_T": "112198221824/217929355875",
+              "selected_candidate": "0"
+            }
+          ]
+        }
+      ],
+      "evaluation_counts": {
+        "pair_supports": 18,
+        "row_candidates": 216,
+        "eight_factor_cells": 1260,
+        "scalar_K_factors": 10080
+      },
+      "interpretation": "strict negative limit obstructs this additive certificate at sufficiently large finite depths; not actual coverage"
+    }
+  },
+  "both_margins_positive": false,
+  "common_reserve_if_both_positive": null,
+  "execution": {
+    "python": "3.14.3",
+    "isolated": true,
+    "site_disabled": true,
+    "bytecode_disabled": true
+  },
+  "checks": 23069
+}

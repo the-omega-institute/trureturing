@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit D5.S3.ConceptDynamics.InformationEscape
 open LeanInformationAudit.Tests.ImportClosureProducer
@@ -11,7 +14,7 @@ def expensive := twice (twice (twice (twice (twice (twice (twice (twice (twice (
 
 /-- error: IE-C003 ArenaResolutionBudgetExceeded arena=AliasBudget.expensive limit=4096 -/
 #guard_msgs (error) in
-information_theorem budgetTarget
+test_assess in information_theorem budgetTarget
   in lawArena object_arena expensive catalog budget
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial

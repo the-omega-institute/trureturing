@@ -11,10 +11,13 @@ public static class ScribeCli
 
     public static ImmutableArray<string> ImplementedCommands { get; } =
     [
+        "content-check",
         "describe-report",
         .. EmissionCommands.Order(StringComparer.Ordinal),
         "markdown-check",
         "projections",
+        "resources",
+        "scripts",
     ];
 
     public static int Run(
@@ -50,6 +53,67 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        if (command == "resources")
+        {
+            return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
+                () => FindRepositoryRoot(workingDirectory), output, error);
+        }
+
+        if (command == "scripts")
+        {
+            try
+            {
+                return ScribeScriptVerifyCommands.Run(
+                    documentsAssembly,
+                    arguments,
+                    FindRepositoryRoot(workingDirectory),
+                    input,
+                    output,
+                    error);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "content-check")
+        {
+            if (arguments.Count is not (3 or 5)
+                || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(arguments[2])
+                || (arguments.Count == 5
+                    && !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+
+            try
+            {
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
+                    FindRepositoryRoot(workingDirectory), arguments[2]);
+                // InspectRepository also calls ReadRepository with the script's explicit report.
+                var exit = Run(documentsAssembly, ["projections", "--check", "--report", arguments[2]],
+                    workingDirectory, output, error, report);
+                if (exit != 0) return exit;
+                exit = Run(documentsAssembly, ["describe-report", "--check"],
+                    workingDirectory, output, error, report);
+                if (exit != 0) return exit;
+                return Run(documentsAssembly, ["markdown-check", .. arguments.Skip(1)],
+                    workingDirectory, output, error, report, input);
+            }
+            catch (Exception exception) when (
+                exception is IOException or UnauthorizedAccessException or ArgumentException
+                    or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
         if (command == "projections")
         {
             if (arguments.Count != 4
@@ -215,8 +279,11 @@ public static class ScribeCli
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
+        + "| content-check --report <file> [--paths-from <file|->] "
         + "| projections --check --report <file> "
-        + "| markdown-check --report <file> [--paths-from <file|->]";
+        + "| markdown-check --report <file> [--paths-from <file|->] "
+        + "| resources pack --out <file> | resources verify --pack <file> "
+        + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's

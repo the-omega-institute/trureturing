@@ -1,0 +1,25 @@
+**定理 5.3（Initialized unbounded literal trace and exact clock coupling）。** There exists an initialized unbounded rest trace $T$, with states $s_e$ and labels $k_e$ as in Definition 1.2, satisfying all six assertions below:
+
+$$
+\begin{aligned}
+&\forall e\in\mathbb N,\quad k_{e+1}=Z(\operatorname{capacity}(s_e)),\\
+&\forall e\in\mathbb N,\quad
+\operatorname{rev}(\operatorname{capacity}(s_e))=C_{\operatorname{endpoint}(s_e)},\\
+& e\longmapsto\operatorname{endpoint}(s_e)\text{ is strictly increasing},\\
+&\forall N\in\mathbb N,\quad\exists e\in\mathbb N,\ N\le\operatorname{endpoint}(s_e),\\
+&\forall e,d\in\mathbb N,\quad
+L(\operatorname{endpoint}(s_e),\operatorname{rev}(\operatorname{capacity}(s_e)),d)
+=C_{\operatorname{endpoint}(s_e)+d},\\
+&\forall N\in\mathbb N,\quad 1\le N\Rightarrow
+\exists e,d\in\mathbb N,\quad d<k_{e+1}\ \land\
+N=\operatorname{endpoint}(s_e)+d\ \land\
+C_N=L(\operatorname{endpoint}(s_e),\operatorname{rev}(\operatorname{capacity}(s_e)),d).
+\end{aligned}
+$$
+
+证明。Start with $s_0=(1,[1])$ and $k_0=1$. Choose the successor supplied by Theorem 5.2 at each state and iterate that choice over the natural event indices, setting $k_{e+1}=Z(\operatorname{capacity}(s_e))$. Brick induction gives $L(N,C_N,d)=C_{N+d}$. Event induction using Theorem 5.2 then gives the sampled reversed-capacity equality, starting from $C_1=[1]$. The endpoint increment is the positive label, so endpoints are strictly increasing and cofinal; in particular the endpoint at event $N$ is at least $N$.
+
+Theorem 3.3 makes literal height nondecreasing. For each $h$, Theorem 3.5 supplies a literal endpoint of height $h+1$, and cofinality supplies a sampled endpoint at least that large. Coupling transfers its height to the same rest state. Thus the constructed trace is unbounded, rather than having unboundedness assumed. The brick induction and sampled equality give every intermediate-offset equality.
+
+Finally, for a positive brick $N$, choose the least event $f$ whose endpoint is strictly above $N$. It exists by cofinality and is positive since the initial endpoint is one. Leastness gives $\operatorname{endpoint}(s_{f-1})\le N$. Put $e=f-1$ and $d=N-\operatorname{endpoint}(s_e)$. The endpoint increment gives $d<k_{e+1}$ and the asserted endpoint decomposition, and the intermediate-offset equality gives its literal trajectory value. This proves all six assertions in the same initialized unbounded trace. $\square$
+

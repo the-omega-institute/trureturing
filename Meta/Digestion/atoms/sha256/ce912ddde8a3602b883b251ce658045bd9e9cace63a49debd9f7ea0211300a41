@@ -1,0 +1,45 @@
+**引理 51.6（负熵势、曲率与统一参数损失）。** 定义负 Shannon 熵势函数
+
+$$
+\begin{aligned}
+F(t)&=\sum_c\pi_c\sum_y q_t(c,y)\log q_t(c,y),\\
+F''(t)&=\sum_c\pi_c\sum_y\frac{w_{cy}^2}{q_t(c,y)},\\
+M&=F''(1)=\frac{4+105\sqrt2}{225},\qquad
+K=\frac M2=\frac{4+105\sqrt2}{450}.
+\end{aligned}
+\tag{51.16}
+$$
+
+$F$ 是负熵，$F''$ 才是曲率。对整个闭区间和任意 $a,b$，
+
+$$
+\begin{aligned}
+\Delta_{\log}(a,q_b)&=\operatorname{KL}(P_a\Vert P_b)
+=D_F(a,b):=F(a)-F(b)-F'(b)(a-b)
+\le K(a-b)^2,\\
+\Delta_B(a,q_b)&=S(a-b)^2\le K(a-b)^2.
+\end{aligned}
+\tag{51.17}
+$$
+
+证明。每行的 $w_c$ 和为零。对正的仿射概率逐项求导，得到式（51.16）的曲率与式（51.17）的准确 Bregman 恒等式。每个正仿射函数的倒数凸，故 $F''$ 凸，在区间上不超过两个端点的较大值。端点直接求和为
+
+$$
+F''(0)=3S,\qquad
+F''(1)=\frac{21}{25}
+\left[\frac{(1/6)^2}{1/2}
++\frac{(\sqrt2-4/3)^2}{\sqrt2-1}
++\frac{(7/6-\sqrt2)^2}{(3-2\sqrt2)/2}\right]
++\frac4{25}\frac19=M.
+\tag{51.18}
+$$
+
+$M-3S=(2940\sqrt2-4064)/225>0$，例如 $\sqrt2>7/5$ 已足够；因此 $K>S>0$。所有概率在闭区间至少为 §50 的 $D=(3-2\sqrt2)/2$，求导和积分均合法。Taylor 积分余项在任意方向给
+
+$$
+D_F(a,b)=(a-b)^2\int_0^1(1-v)F''(b+v(a-b))\,dv
+\le\frac M2(a-b)^2.
+$$
+
+平方差则直接由 $q_a-q_b=(a-b)w$ 得到。$\square$
+

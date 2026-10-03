@@ -1,0 +1,574 @@
+{
+  "P": "3181062826519439838446223390324180812800000/11314427222967695596967677738798675563563751",
+  "P_minus_gamma_squared": "28402195878141452580027134956328469949423441/113144272229676955969676777387986755635637510000",
+  "c5_over_5": "625/2344",
+  "carrier": "1563/2344",
+  "checks": 26622,
+  "contract": "One fixed FC36 height profile and complete star/root metadata; the selected 2138 mixed inventory and the full bounded 3-free debit. Same-source FC34 enlarged root-1 carrier. Positive lower mass excludes a cover with this fixed mixed inventory; not uniform over all numerical inventories and not unrestricted Erdos #7.",
+  "corrected_L1_rational": "10815759664343846497416905566104186603965410151/333407076019427500882530974648211486549631720896",
+  "corrected_L1_simple_strict_lower": "4/125",
+  "decimals": {
+    "P": 0.28115102636941697,
+    "corrected_L1": 0.03244010233218211,
+    "full_haar_lower": 0.004164378756513131,
+    "gain": 0.0604679638109367,
+    "old_L1": -0.028027861478754596,
+    "old_group_charge": 0.31110789555155105,
+    "source_density_cap": 7.789901982725624,
+    "sum_T": 1.166779051476537,
+    "union_upper": 0.25063993174061433
+  },
+  "fixture_best_checked_partition": [
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1
+  ],
+  "fixture_best_checked_two_row_union": "208435358354553512820030914990098833625802/221851514175837168567993681152915207128701",
+  "fixture_two_row_assignments": 1024,
+  "fixture_two_row_scope": "Lower witness in the relaxed model, not a global maximum.",
+  "full_free_charge": "2997582507490764544372269304715762233498576991/6240239390737947877480526263469198946116101728",
+  "full_haar_survivor_lower": "1491828919219840896195435250497129186753849676/358235647246688431023825109314434475063818896875",
+  "full_haar_survivor_simple_strict_lower": "1/250",
+  "gain_rational": "15722273735446829819254449914994306178822675/260009974614081161561688594311216622754837572",
+  "gamma": "53/100",
+  "gamma_minus_rho": "73/2500",
+  "gamma_squared": "2809/10000",
+  "group_free_charge": "194350320686583182481752204459216685096758125/1040039898456324646246754377244866491019350288",
+  "group_free_label_count": 37,
+  "group_selected_charge": "1266806896194243233947629123092508901909375/10196469592709065159281905659263396970777944",
+  "group_selected_label_count": 28,
+  "haar_bridge": "Choose normalized Haar on retained ternary root1 and the actual pure-survivor coordinate laws. Their product density relative to full normalized Haar is at most 3*product(c_q). The FC34 enlarged carrier does not change that probability law.",
+  "heights": [
+    5,
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    3
+  ],
+  "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "large_prime_tail": {
+    "analytic_dependency": "Chapter33 SH6 and SH11--SH13 with its existing Rosser--Schoenfeld/source attribution; not proved by this finite rational computation.",
+    "analytic_product_constant": "201/199",
+    "boundary": "Final reserve is distorted-measure mass, not a natural-density lower bound for the full family. This does not include arbitrary head-only palettes or additional small primes.",
+    "complete_tail_loss_upper": "269619747602928287188796845491/308475661132619977601166622720000",
+    "contract": "Head-only originals satisfy the fixed finite profile and 187-label palette contract. Every actual support prime outside the twelve-prime head exceeds 100000. Originals touching those primes may have arbitrary finite head and tail exponents, including higher ternary depth. All phases remain globally fixed and numerical moduli distinct.",
+    "cutoff": 100000,
+    "distorted_survivor_mass_lower": "964282896927551623215869645389/308475661132619977601166622720000",
+    "distorted_survivor_mass_lower_decimal": 0.003125961034938788,
+    "head_joint_haar_cap": "1",
+    "head_mass_floor": "1/250",
+    "head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41
+    ],
+    "head_second_moment": "17517439415203/525533184000",
+    "integral_polynomial": "305593/125000",
+    "level": 10,
+    "simple_strict_lower": "1/320",
+    "source": "Unnormalized actual Haar restriction to the head-only survivor, uniformly lifted to full-family head query heights.",
+    "surplus_over_1_over_320": "296455888114193212223949389/308475661132619977601166622720000",
+    "tau7": "16202267391964665023172/617896138521372358365262955"
+  },
+  "negative_control": {
+    "P": "1/64",
+    "T": [
+      "3/4",
+      "3/4",
+      "3/4"
+    ],
+    "actual_union": "15/8",
+    "invalid_unconditional_upper": "7/4",
+    "rho": "1/2"
+  },
+  "old_L1": "-65412811398963818975709603474259586033354459743/2333849532135992506177716822537480405847422046272",
+  "old_group_charge": "323564624098395992344410375014652593091514375/1040039898456324646246754377244866491019350288",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "q_groups": [
+    {
+      "T": "3193/14006",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "free_q_budget": "2801/14006",
+      "prime": 7,
+      "root1_selected_exponents": [
+        2,
+        3
+      ],
+      "selected_q_budget": "196/7003"
+    },
+    {
+      "T": "2927/13177",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "free_q_budget": "1464/13177",
+      "prime": 11,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "1463/13177"
+    },
+    {
+      "T": "4759/26181",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "free_q_budget": "2380/26181",
+      "prime": 13,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "793/8727"
+    },
+    {
+      "T": "5526/78301",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "free_q_budget": "5220/78301",
+      "prime": 17,
+      "root1_selected_exponents": [
+        2,
+        3
+      ],
+      "selected_q_budget": "306/78301"
+    },
+    {
+      "T": "14479/123081",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "free_q_budget": "7240/123081",
+      "prime": 19,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "2413/41027"
+    },
+    {
+      "T": "25439/267121",
+      "free_exponents": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "free_q_budget": "12720/267121",
+      "prime": 23,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "12719/267121"
+    },
+    {
+      "T": "871/11759",
+      "free_exponents": [
+        1,
+        2,
+        3
+      ],
+      "free_q_budget": "871/23518",
+      "prime": 29,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "871/23518"
+    },
+    {
+      "T": "993/14399",
+      "free_exponents": [
+        1,
+        2,
+        3
+      ],
+      "free_q_budget": "993/28798",
+      "prime": 31,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "993/28798"
+    },
+    {
+      "T": "1407/24623",
+      "free_exponents": [
+        1,
+        2,
+        3
+      ],
+      "free_q_budget": "1407/49246",
+      "prime": 37,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "1407/49246"
+    },
+    {
+      "T": "1723/33599",
+      "free_exponents": [
+        1,
+        2,
+        3
+      ],
+      "free_q_budget": "1723/67198",
+      "prime": 41,
+      "root1_selected_exponents": [
+        1,
+        2,
+        3
+      ],
+      "selected_q_budget": "1723/67198"
+    }
+  ],
+  "rho": "313/625",
+  "rho_squared": "97969/390625",
+  "root1_allowable_palette": [
+    55,
+    65,
+    95,
+    115,
+    145,
+    155,
+    175,
+    185,
+    205,
+    245,
+    275,
+    325,
+    425,
+    455,
+    475,
+    575,
+    605,
+    665,
+    715,
+    725,
+    775,
+    805,
+    845,
+    875,
+    925,
+    935,
+    1015,
+    1025,
+    1045,
+    1085,
+    1105,
+    1225,
+    1235,
+    1265,
+    1295,
+    1375,
+    1435,
+    1445,
+    1495,
+    1595,
+    1615,
+    1625,
+    1705,
+    1715,
+    1805,
+    1885,
+    1955,
+    2015,
+    2035,
+    2125,
+    2185,
+    2255,
+    2275,
+    2375,
+    2405,
+    2465,
+    2635,
+    2645,
+    2665,
+    2755,
+    2875,
+    2945,
+    2975,
+    3025,
+    3145,
+    3185,
+    3325,
+    3335,
+    3485,
+    3515,
+    3565,
+    3575,
+    3625,
+    3875,
+    3895,
+    4025,
+    4165,
+    4205,
+    4255,
+    4495,
+    4655,
+    4715,
+    4805,
+    5365,
+    5635,
+    5735,
+    5915,
+    5945,
+    6355,
+    6655,
+    6845,
+    7585,
+    7865,
+    8405,
+    9295,
+    10285,
+    10985,
+    11495,
+    12155,
+    13585,
+    13915,
+    14365,
+    15895,
+    16055,
+    17545,
+    17765,
+    18755,
+    18785,
+    19435,
+    19855,
+    20735,
+    20995,
+    21505,
+    22165,
+    23465,
+    24035,
+    24505,
+    24565,
+    25415,
+    26195,
+    27455,
+    28405,
+    30685,
+    32045,
+    33235,
+    34295,
+    37145,
+    41515,
+    41905,
+    44795,
+    44965,
+    46835,
+    50065,
+    50255,
+    52345,
+    53465,
+    55955,
+    56695,
+    59245,
+    59755,
+    60605,
+    60835,
+    63365,
+    66215,
+    66785,
+    67735,
+    74005,
+    76705,
+    79895,
+    80845,
+    81995,
+    85405,
+    89585,
+    91295,
+    96715,
+    97865,
+    103385,
+    108445,
+    110515,
+    121945,
+    123395,
+    130355,
+    131905,
+    136735,
+    139345,
+    146165,
+    148955,
+    155585,
+    157435,
+    166315,
+    172405,
+    174455,
+    177785,
+    184295,
+    193315,
+    197005,
+    212195,
+    219965,
+    235135,
+    243745,
+    253265,
+    260555,
+    280645,
+    310985,
+    344605,
+    10354117,
+    1035044771
+  ],
+  "root1_mixed_count": 187,
+  "row_sum": "1563/625",
+  "selected_root1_charge": "23835644359680314408085864305518549639033296793/111135692006475833627510324882737162183210573632",
+  "small_assignment_count": 4183,
+  "small_model_count": 8,
+  "small_models": [
+    {
+      "P": "1",
+      "T": [],
+      "gamma": "1",
+      "max_over_checked_sources_and_assignments": "0",
+      "rho": "0"
+    },
+    {
+      "P": "1/4",
+      "T": [
+        "1/2",
+        "1/2"
+      ],
+      "gamma": "1/2",
+      "max_over_checked_sources_and_assignments": "1",
+      "rho": "1/2"
+    },
+    {
+      "P": "2/3",
+      "T": [
+        "1/3"
+      ],
+      "gamma": "4/5",
+      "max_over_checked_sources_and_assignments": "1/3",
+      "rho": "1/3"
+    },
+    {
+      "P": "1/2",
+      "T": [
+        "1/5",
+        "1/4",
+        "1/6"
+      ],
+      "gamma": "7/10",
+      "max_over_checked_sources_and_assignments": "7/12",
+      "rho": "1/2"
+    },
+    {
+      "P": "3/7",
+      "T": [
+        "1/7",
+        "1/6",
+        "1/5",
+        "1/4"
+      ],
+      "gamma": "3/5",
+      "max_over_checked_sources_and_assignments": "29/42",
+      "rho": "1/4"
+    },
+    {
+      "P": "2/15",
+      "T": [
+        "2/3",
+        "1/3",
+        "1/4",
+        "1/5"
+      ],
+      "gamma": "1/3",
+      "max_over_checked_sources_and_assignments": "19/15",
+      "rho": "0"
+    },
+    {
+      "P": "6561/10000",
+      "T": [
+        "1/10",
+        "1/10",
+        "1/10",
+        "1/10"
+      ],
+      "gamma": "4/5",
+      "max_over_checked_sources_and_assignments": "19/50",
+      "rho": "3/4"
+    },
+    {
+      "P": "1/4",
+      "T": [
+        "3/4",
+        "0"
+      ],
+      "gamma": "1/2",
+      "max_over_checked_sources_and_assignments": "3/4",
+      "rho": "1/2"
+    }
+  ],
+  "small_source_assignment_checks": 12549,
+  "source_to_full_haar_density_cap": "473822896595812134889805482765418601878125/60825270670482213092093639674969620903168",
+  "sum_T": "517703398557433587751056600023444148946423/443703028351674337135987362305830414257402",
+  "union_upper_rational": "1175/4688"
+}

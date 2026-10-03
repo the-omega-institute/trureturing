@@ -1,0 +1,44 @@
+**定理 224.2（完整源与单位条件源的 Shannon 主阶）。** 两个源的 Shannon 熵均有限，且
+
+$$
+\boxed{
+H(\mu_s)=(2b_2+o(1))R,\qquad
+H(\widetilde\mu_s)=(2b_2+o(1))R,\qquad
+H(\nu_s)\le(2b_2+o(1))R=o(\log N).
+}
+\tag{224.8}
+$$
+
+证明。取 $P=\mu_s$ 或 $P=\widetilde\mu_s$。§223 及命题 224.1 对每个固定 $q\in(1/2,1)\cup(1,\infty)$ 给
+
+$$
+H_q(P)=b_2(1+q^{-1})(R-\delta)+O_q(y/\ell^4).
+\tag{224.9}
+$$
+
+先固定 $1/2<q_-<1$。随机变量 $L_P(d)=\log(1/P(d))$ 在 $P$ 的支撑上非负，且
+
+$$
+\mathbb E_P e^{(1-q_-)L_P}=S_{q_-}(P)<\infty.
+$$
+
+因此 $\mathbb E_PL_P<\infty$，Shannon 熵有限。对这个指数矩使用 Jensen 不等式，得 $H(P)\le H_{q_-}(P)$。再取任意固定 $q_+>1$，对 $e^{-(q_+-1)L_P}$ 使用 Jensen 不等式，得到
+
+$$
+H_{q_+}(P)\le H(P)\le H_{q_-}(P).
+\tag{224.10}
+$$
+
+先令 $r\to\infty$，由式（224.9）及 $\delta=o(R)$ 得
+
+$$
+b_2(1+q_+^{-1})
+\le\liminf\frac{H(P)}R
+\le\limsup\frac{H(P)}R
+\le b_2(1+q_-^{-1}).
+$$
+
+再令两侧的固定指数分别趋向 $1$，得到前两项。确定性模观察不增加 Shannon 熵，给出最后一项。$\square$
+
+式（224.10）只夹出主阶；本节没有对固定阶余项求导，也不由此主张 Shannon 熵的 $\delta$ 项。下端点 $q=1/2$ 仍须排除：§223 的 $\mu_s(p)\sim s/(U(s)p^2)$ 及素数倒数和发散，给出每个固定 $s>0$、$0<q\le1/2$ 的 $S_q(\mu_s)=\infty$。单位条件只删除有限个 $p\mid V$，所以条件源的同一幂和也发散。
+

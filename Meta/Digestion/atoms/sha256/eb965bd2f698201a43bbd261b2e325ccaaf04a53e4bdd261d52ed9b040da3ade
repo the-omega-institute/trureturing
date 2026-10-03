@@ -1,0 +1,21 @@
+**命题 2.2（纤维维数与末钟条件态）。** 对定义 2.1 的每个实际可达 $y$，有
+
+$$
+\operatorname{rank}P_y=\gcd(n,F_g).
+$$
+
+若从时钟 $0$ 的密度算子 $\rho$ 出发，在相邻采样时刻间施加 $U_n$，在每个 $t_i$ 执行 $\{Q_z\}$ 的 Lüders 仪器，则整条记录 $y$ 的 Kraus 算子、概率与末钟条件态分别为
+
+$$
+\begin{aligned}
+K_y&=Q_{y_{m-1}}U_n^{t_{m-1}-t_{m-2}}\cdots
+Q_{y_1}U_n^{t_1-t_0}Q_{y_0}U_n^{t_0}
+=U_n^{t_{m-1}}P_y,\\
+p_y&=\operatorname{Tr}(P_y\rho),\\
+\rho_{y,\mathrm{last}}&=
+\frac{U_n^{t_{m-1}}P_y\rho P_yU_n^{-t_{m-1}}}{p_y}\qquad(p_y>0).
+\end{aligned}
+$$
+
+证明。采样映射是有限加法群同态，每个非空纤维是其核的陪集。FIB 第 44.2 节的 Smith 因子 $1,F_g$ 给出核大小 $\gcd(n,F_g)$，这就是投影的维数。将每个 $Q_{y_i}$ 拉回来源时钟并消去相邻酉，得到 $K_y=U_n^{t_{m-1}}P_y$。于是 $K_y^\dagger K_y=P_y$，取迹和正概率归一化得到其余公式。若输入为纯态且 $p_y>0$，条件态是一个归一化向量的投影，其秩为 $1$；$\operatorname{rank}P_y$ 是容许纤维的维数，不是该条件纯态的秩。$\square$
+

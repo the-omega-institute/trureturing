@@ -1,0 +1,64 @@
+**定理 312.1（实际整数的自身漂移积分表示）。** 在假设312.1下，$\mathcal H(x)$ 对充分大的 $x$ 绝对收敛，且
+\[
+\sqrt{m_L}\left[\frac{\Delta(T_L)}E-\mathcal H(m_L)\right]\longrightarrow0.
+\tag{312.3}
+\]
+
+**证明。** 对 $\lambda=1/4$ 应用定理311.2得 $\beta=0$。定理311.3及其正向分部求和证明进一步给
+\[
+a(x)=o(x^{-1/4}),\qquad
+e(x)=o(x^{-1/4}/\log x),\qquad
+B(x)=o(x^{-1/4}).
+\tag{312.4}
+\]
+其中 $\tau=O(1/x)=o(x^{-1/4}/\log x)$ 已被吸收。终端 $J\to0$ 仍来自假设302.1的加性 Mertens 输入。
+
+令 $D=S/E$、$q_a=a-\log(1+a)$ 与 $q_e=\exp e-1-e$。经典对数凹性、指数凸性给 $q_a,q_e\ge0$，且在 $|a|\le1/2,|e|\le1$ 时有 $q_a=O(a^2),q_e=O(e^2)$。同一实际素数截断满足精确式
+\[
+D=-J+\log x\,\tau-q_a-\log x\,q_e,
+\tag{312.5}
+\]
+因为 $D=\log(1+a)-\log x(\exp e-1)$，而 $J=\log x(e+\tau)-a$。再由（311.2）、（311.11），几乎处处有
+\[
+J'(x)=\frac{B(x)+r(x)}x,
+\qquad r(x)=\frac{a(x)^2}{1+a(x)}-q_e(x)+\tau(x).
+\tag{312.6}
+\]
+这两个恒等式只使用经典分部求和与代数，不将其另立为新的素数分析原理。
+
+式（312.4）给 $r(x)=o(x^{-1/2})$；终端 $J\to0$、局部绝对连续及尾部可积遂给
+\[
+-J(x)=\int_x^\infty\frac{B(t)+r(t)}t\,dt.
+\]
+将（312.5）代入，完整余项为
+\[
+\frac{S(x)}E-\int_x^\infty\frac{B(t)}t\,dt
+=\int_x^\infty\frac{r(t)}t\,dt
++\log x\,\tau(x)-q_a(x)-\log x\,q_e(x)
+=o(x^{-1/2}).
+\tag{312.7}
+\]
+这里 $r=o(x^{-1/2})$ 的尾积分仍为 $o(x^{-1/2})$：对任意 $\eta>0$，在整个充分大的尾域上有 $|r(t)|\le\eta/\sqrt t$，积分上界为 $2\eta/\sqrt x$。其余三项分别由 $\log x\,\tau=O(\log x/x)$、$q_a=O(a^2)=o(x^{-1/2})$ 及 $\log x\,q_e=O(\log x\,e^2)=o(x^{-1/2})$ 控制。所有小 $o$ 都在全部实数尾域上使用，不只在某条子列上成立。
+
+按（311.3）及相邻格点的 $O(\log t/t)$ 变化界，阶梯延拓满足
+\[
+\bar b(t)-B(t)=\frac{\sqrt2+o(1)}{\sqrt t}
+\quad(t\to\infty\text{ 为全部实数}).
+\tag{312.8}
+\]
+这里 $o(1)$ 在整个充分大的尾域有效：所用是完整整数序列的极限，而非稀疏子列。对任意 $\eta>0$，充分大 $t$ 时，其减去 $\sqrt2/\sqrt t$ 后的绝对值至多为 $\eta/\sqrt t$。经典积分 $\int_x^\infty t^{-3/2}dt=2/\sqrt x$ 因而给
+\[
+\int_x^\infty\frac{\bar b(t)-B(t)}t\,dt
+=\frac{2\sqrt2+o(1)}{\sqrt x}.
+\tag{312.9}
+\]
+$\bar b(t)=o(t^{-1/4})$ 也给（312.1）的绝对收敛。
+
+另一方面，同一实际 $T_L$ 的（305.8）给
+\[
+\frac{\Delta(T_L)}E=\frac{S(m_L)}E
++\frac{2\sqrt2+o(1)}{\sqrt{m_L}}.
+\tag{312.10}
+\]
+将（312.7）、（312.9）代入，两个相同平方层系数抵消，得到（312.3）。抵消发生在该实际整数的权重与高度漂移及其自身绝对余量之间，没有将独立最大值或任意整数的误差替代进来。$\square$
+

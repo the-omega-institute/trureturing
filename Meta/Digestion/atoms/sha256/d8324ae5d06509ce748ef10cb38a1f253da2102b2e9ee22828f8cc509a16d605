@@ -1,0 +1,17 @@
+**Theorem 9.1 (represented reverse Hessian bound).** Let $K$ be any field, $V$ a finite-dimensional $K$-vector space, $I$ any finite physical index set, $a:I\to V$, and $U\le V$. For every integer $d\ge2$, every strictly positive real coordinate vector $x$, and every signed real vector $y$, put $f=F_{U,d}$, $g_i=(\partial_i f)(x)$, and $H_{ij}=(\partial_i\partial_j f)(x)$. Then
+
+$$
+d f(x)\sum_{i,j\in I}y_iH_{ij}y_j
+\le (d-1)\left(\sum_{i\in I}g_i y_i\right)^2.
+$$
+
+Empty index sets, unspanned families, loops, repeated columns, and scalar-parallel columns are included. At degrees zero and one the Hessian vanishes; the same displayed inequality holds, with the degree-zero gradient also zero. There is no finite-field restriction on $K$, and no full-spanning premise in the conclusion.
+
+**Proof.** Induct on degree with $U$ generalized. Homogeneity and Euler give $x\cdot g=df(x)$, $Hx=(d-1)g$, and $\sum_i x_iH_i=(d-2)H$, where $H_i$ is the Hessian of the actual contraction $F_{U+\operatorname{span}\{a_i\},d-1}$. The degree-two inequality is the quotient-rank classification bound. An unspanned family has zero polynomial. At zero evaluation the left side is zero and the right side nonnegative.
+
+For $d\ge3$ and $f(x)>0$, let $A=\{i:g_i>0\}$. Euler makes $A$ nonempty. The exact positive-evaluation criterion and rank obstruction imply that every inactive contracted polynomial is identically zero, hence its Hessian row vanishes. For each active $i$, the induction hypothesis for its actual contraction gives $(d-1)g_i y^TH_i y\le(d-2)(Hy)_i^2$. Multiply by $x_i/((d-1)g_i)$ and sum. Third-derivative Euler and $d-2>0$ give $y^THy\le y^THDH y$, where $D_i=x_i/((d-1)g_i)>0$ on $A$.
+
+Set $a_i=\sqrt{D_i}$, $S_{ij}=a_iH_{ij}a_j$, and $v_i=x_i/a_i$ on $A$. The actual contraction identities supply symmetry and nonnegative Hessian entries. Euler gives $Sv=v$; positive diagonal factors preserve the actual active-support cut connectivity. Substituting $y_i=a_i z_i$ into the preceding quadratic estimate proves $z^TSz\le z^TS^2z$. The connected normalization theorem therefore gives $y^THy\le0$ whenever $g\cdot y=0$, since $(y/a)\cdot v=(d-1)g\cdot y$.
+
+Finally replace arbitrary $y$ by $y-(g\cdot y)/(df(x))\,x$. Euler makes this vector gradient-orthogonal, while $x^THx=d(d-1)f(x)$ and $x^THy=(d-1)g\cdot y$. Expanding its nonpositive quadratic form and multiplying by the positive denominator yields the displayed division-free inequality. This polynomial statement alone asserts neither analytic root concavity nor a sampling or expected-time optimizer.
+

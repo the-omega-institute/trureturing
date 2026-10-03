@@ -1,0 +1,25 @@
+**定理 335.1（实际五分谱证书的全实数有限累计亏损）。** 在上述已有解析输入下，不预设 RH，有
+\[
+\mathcal E^{\rm fin}(x)\le Z(x),\qquad
+0\le\mathcal L(X)\nearrow\mathcal L_\infty<\infty
+\quad(X\to\infty\text{，遍及全部实数截止}).
+\tag{335.4}
+\]
+更具体地，在块 $k$ 的相邻节点 $a\le b$ 上，
+\[
+0\le Z(x)-\mathcal E_k^{\rm fin}(x)
+\le2M_k\min\{x-a,b-x\},\qquad a\le x\le b,
+\]
+\[
+0\le\int_a^b[Z(x)-\mathcal E_k^{\rm fin}(x)]\frac{dx}{x}
+\le\frac{M_k(b-a)^2}{2a}.
+\tag{335.5}
+\]
+存在只依赖已固定输入的常数 $C,c>0$，使所有充分晚的块及 $X\ge A_k$ 满足
+\[
+0\le\mathcal L_\infty-\mathcal L(X)
+\le C(1+k)e^{-c\sqrt k}.
+\tag{335.6}
+\]
+保留旧节点及同一 $M_k$ 的五分递归加密使 $\mathcal E_k^{\rm fin}$ 逐点不减，从而在同一截止 $X$ 的亏损不增。此加密方向与固定证书下 $\mathcal L(X)$ 随截止增长不减的方向不同。
+

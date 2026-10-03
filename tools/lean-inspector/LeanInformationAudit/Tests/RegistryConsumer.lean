@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistryProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit
@@ -36,6 +39,7 @@ run_cmd do
   let some entry := InformationRegistry.find? env
       `LeanInformationAudit.Tests.probeTheorem
     | throwError "missing imported singleton"
-  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env entry with
+  match ← Lean.Elab.Command.liftTermElabM <|
+      validatePersistedEntry env.header.mainModule env entry with
   | .ok () => pure ()
   | .error message => throwError message

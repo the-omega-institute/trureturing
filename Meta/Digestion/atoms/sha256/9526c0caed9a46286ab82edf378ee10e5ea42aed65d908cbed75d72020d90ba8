@@ -1,0 +1,53 @@
+**定义 47.1（内点噪声与有界相对截距合同）。** 固定 $n\ge3$、任意一棵二叉树，以及在目标声明之前选定的
+
+$$
+0<\varepsilon<\frac13,\qquad B\ge0,\qquad
+\gamma=\log\frac{1-2\varepsilon}{\varepsilon}>0.
+\tag{47.1}
+$$
+
+保留 $X=(w_1,\ldots,w_n)\sim P_n=\operatorname{Unif}(\Sigma)^{\otimes n}$，其中 $\Sigma=\{000,100,010,101,001\}$；独立因子是整窗。沿用式（45.1）–（45.3）的三类粗化 $C=C_n$、位 $a=h(w_1),b=\ell(w_2),c=h(w_2),d=\ell(w_3)$，以及
+
+$$
+G_1=ab,\qquad G_2=(1-ab)cd,\qquad
+\pi=P_n(C=0,1,2)=\frac1{125}(89,20,16).
+\tag{47.2}
+$$
+
+中窗 $(b,c)$ 四种位对 $00,10,01,11$ 的质量仍为 $(2,1,1,1)/5$，不能把 $b,c$ 当作独立变量。新联合律明确规定
+
+$$
+r(X)=P_\varepsilon(Y=\,\cdot\mid X)
+=\varepsilon\mathbf1+(1-3\varepsilon)e_C,
+\qquad Y\in\{0,1,2\}.
+\tag{47.3}
+$$
+
+即真教师类的条件概率为 $1-2\varepsilon$，另两类各为 $\varepsilon$。它没有重写原来的无噪声联合律或完整诊断 $T_n$。教师类仍是唯一的条件概率最大类，预测观测噪声标签的 Bayes 零一风险为 $2\varepsilon$，准确率为 $1-2\varepsilon$。
+
+每片叶只接收一个完整窗口，原始编码可以是任意非线性、有符号实函数；内部合并在整个环境消息空间上分别双线性。没有免费内部仿射常数、跨子树输入、携带输入的控制或时序。树、编码、合并及读出参数固定且与输入无关。所有实际叶、非根、忽略子树中的常数坐标和根坐标均计费，峰值记为 $w$，实际根维数记为 $q$。头取三个有限实仿射 logits
+
+$$
+L_y(z)=u_y\cdot z+v_y,\qquad
+p_y(X)=\frac{e^{L_y(z)}}{\sum_{k=0}^2e^{L_k(z)}},\qquad
+B_v=\max_yv_y-\min_yv_y\le B.
+\tag{47.4}
+$$
+
+头参数槽与概率输出另计，不暗作内部消息。除声明的相对截距资源外，不对消息、斜率、合并系数或其他参数施加范数或紧致性假设。置
+
+$$
+\beta=(v_1-v_0,v_2-v_0),\qquad
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right).
+\tag{47.5}
+$$
+
+可行相对偏置恰为 $|\beta_1|,|\beta_2|,|\beta_1-\beta_2|\le B$：三者分别是三对截距差；反之取 $(v_0,v_1,v_2)=(0,\beta_1,\beta_2)$ 即可。概率内点性使 log-odds 有限，准确目标为
+
+$$
+H^\star=H(r)=\gamma(2G_1+G_2-1,\ G_1+2G_2-1).
+\tag{47.6}
+$$
+
+三类对应的目标点依次是 $(-\gamma,-\gamma),(\gamma,0),(0,\gamma)$。
+

@@ -1,0 +1,11 @@
+**定义 11.4（紧致候选的极值支撑）。** 在固定紧致度量空间 $K_0$ 中，若 $C_1\supseteq C_2\supseteq\cdots$ 为非空闭候选集，$\tau:K_0\to\mathbb R$ 连续，则经典紧致极值论给
+
+$$
+\lim_r\min_{C_r}\tau=\min_{\cap_r C_r}\tau,\qquad
+\lim_r\max_{C_r}\tau=\max_{\cap_r C_r}\tau.
+$$
+
+支撑推导。嵌套闭集具有有限交性质，在紧致空间中交集非空。最小值 $m_r$ 单调递增并有界，故趋向 $m$。取各层极小点 $x_r$，紧致度量性给收敛子列 $x_{r_k}\to x$；任一固定 $C_j$ 含子列的充分远项，闭性使 $x\in C_j$。所以 $x$ 属于交集，且连续性给 $\tau(x)=m$。交集包含于每个 $C_r$，故其最小值不小于 $m$；点 $x$ 给相反不等式，得等号。对 $-\tau$ 用同一证明即得最大值结论。
+
+此支撑不提供有限停止、有限精度证书或收敛率，也不把无紧致控制的候选逃向无穷问题消去。相关共同来源的紧性条件见 [观察运输、记忆与完成](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)。
+

@@ -1,0 +1,30 @@
+**定理 315.2（两种实际族达到同一精确正储备）。** 在上述输入及 RH 下，
+\[
+\liminf_{L\to\infty}\mathfrak m_L
+=\liminf_{j\to\infty}\mathfrak q_j
+=\kappa-C_\gamma>0.
+\tag{315.6}
+\]
+若 $\rho_1=1/2+i\gamma_1$ 是首个正纵坐标的非平凡零点，记 $\alpha_1=1/(\rho_1(1-\rho_1))=1/(1/4+\gamma_1^2)>0$，则
+\[
+\limsup_{L\to\infty}\mathfrak m_L\ge\kappa+\alpha_1,
+\qquad
+\limsup_{j\to\infty}\mathfrak q_j\ge\kappa+\alpha_1.
+\tag{315.7}
+\]
+
+**证明。** 使用 Nicolas 的经典零点和
+\[
+W(x)=\sum_\rho\frac{x^{i\Im\rho}}{\rho(1-\rho)},\qquad
+\mathcal W(t)=W(e^t).
+\]
+RH 下系数的绝对和是 $C_\gamma$；共轭配对使和为实数，级数一致绝对收敛，每个有限部分和一致连续，故 $\mathcal W$ 一致连续。Nicolas Lemma2.5、式2.14–2.15给 $\mathcal Z_\psi(x)=-W(x)+o(1)$；§4 的经典同时逼近论证给 $\limsup W=C_\gamma$，文末未编号段陈述，利用 Landau 定理可得 $\liminf W\le-\alpha_1$。这些谱结论直接作为已知中间结果使用，不要求零点纵坐标线性独立。
+
+需要将这些连续极值运输到确切实际尺度。完整网格 $m_L$ 与四次网格 $\mu_j$ 各自严格递增、趋于无穷，且相邻区间覆盖全部充分大的实数。对 $a\le x\le b$、$a>0$，有
+\[
+0\le\log x-\log a\le(x-a)/a.
+\]
+完整网格的右端界不超过 $3/m_L\to0$；四次网格由（314.6）得右端界不超过 $9/j\to0$。因此每个充分大的 $t=\log x$ 都有相应左端点 $s=\log m_L$ 或 $s=\log\mu_j$，且 $|t-s|\to0$ 一致成立。一致连续性给 $\mathcal W(t)-\mathcal W(s)\to0$。格点趋于无穷，所以连续尾域的 limsup、liminf 与各自采样值相同：连续域中的逼近极值点可移至左端点，采样值又属于连续域。
+
+定理315.1遂给 $\mathfrak m_L=\kappa-W(m_L)+o(1)$、$\mathfrak q_j=\kappa-W(\mu_j)+o(1)$。运输 $\limsup W=C_\gamma$ 得（315.6），运输负 liminf 界得（315.7）。正性由 §313 的常数界得出。Nicolas 文末明确指出 $\liminf W=-C_\gamma$ 是否成立未知；故这里没有给实际余量的精确 limsup。$\square$
+

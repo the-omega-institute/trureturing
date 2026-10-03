@@ -1,0 +1,11 @@
+**定理 338.1（实际原始证书的精确尾振幅）。** 在定义338.1及 §337 的既有解析输入下，定理337.1的同一常数 $c_0$ 满足
+
+$$
+\limsup_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0+A_*,\qquad
+\liminf_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0-A_*,
+\qquad 0<A_*\le B_\triangle.
+\tag{338.2}
+$$
+
+因此实际累计量的尾振荡宽度恰为 $2A_*$，由同源零点的频率关系与权重共同决定。
+

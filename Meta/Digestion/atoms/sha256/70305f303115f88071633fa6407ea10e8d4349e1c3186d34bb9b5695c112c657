@@ -1,0 +1,7 @@
+**Theorem 11.2 (exact first-coordinate recurrence and normalization).** For all such data and every $t\ge0$,
+
+$$
+W_{U,0}=\begin{cases}1&U=V,\\0&U\ne V,\end{cases}
+\qquad
+W_{U,t+1}=\sum_{i\in I}X_i W_{U+\operatorname{span}\{a_i\},t},
+\qquad

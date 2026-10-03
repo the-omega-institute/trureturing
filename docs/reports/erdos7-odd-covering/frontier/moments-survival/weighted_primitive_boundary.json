@@ -1,0 +1,66 @@
+{
+  "actual_deleted_hinge": "1/21",
+  "arithmetic": "Exact integers, cyclotomic remainders, rational probabilities",
+  "boundaries": [
+    {
+      "maximal_periods": [
+        1
+      ],
+      "name": "one_label",
+      "period": 3
+    },
+    {
+      "maximal_periods": [
+        21
+      ],
+      "name": "two_incomparable",
+      "period": 105
+    },
+    {
+      "maximal_periods": [
+        105
+      ],
+      "name": "one_cut_retains_other_axes",
+      "period": 315
+    },
+    {
+      "maximal_periods": [
+        21
+      ],
+      "name": "both_selected_axes_required",
+      "period": 315
+    }
+  ],
+  "bucket_debit": "1/105",
+  "bucket_fixture": {
+    "H": "1/105",
+    "S": "0",
+    "X": "1/105",
+    "beta": "1/105",
+    "identity": "1/105"
+  },
+  "counts": {
+    "families": 4,
+    "periods": 34,
+    "residual_kernel_values": 2481,
+    "safe_fibres": 457,
+    "termwise_iff": 102
+  },
+  "full_conductor_bound": "4/175",
+  "residual_bound": "4/105",
+  "residual_fixture": {
+    "H": "-4/105",
+    "S": "4/105",
+    "X": "0",
+    "beta": "1/105",
+    "identity": "1/105"
+  },
+  "scope": "Four declared finite families; no all-family computational claim",
+  "sharp_failure": {
+    "H": "-13/105",
+    "S": "2/15",
+    "X": "1/105",
+    "beta": "1/15",
+    "identity": "8/105"
+  }
+}

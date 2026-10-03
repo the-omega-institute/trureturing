@@ -5,7 +5,7 @@ year: 2026
 title: Growing-modulus interfaces for affine Fibonacci Robin candidates
 doi: null
 url: https://github.com/the-omega-institute/trureturing
-claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8: positive moment bounds transfer to finite intervals, while the quoted distribution theorems do not supply the required fixed Fibonacci modulus estimate at logarithmic smoothness with growing weights and a subpower cofactor."
+claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8 and Bourgain–Garaev's subpower prime-modulus reciprocal cancellation: finite positive moments and unweighted cancellation do not supply the same-candidate strict Robin budget with the actual low-loss weights."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -237,6 +237,109 @@ $$
 
 当前 $C H\equiv1\pmod V$ 需要固定 $a=1$，核心集合稀疏，而余因子区间长为 $V^{o(1)}$，远小于 $V^{1/2}$。该均方定理没有因此给出指定 $a=1$ 的无命中结论。也可对每个核心写 $g_C=-V^{-1}\bmod C$，但这样模数 $C$ 随核心改变；不能直接当成一个固定模数逆元分布。逆元映射是单位群置换，只保持整个单位群的计数，并不自动使光滑稀疏子集在短区间均匀分布。
 
+## Bourgain–Garaev：素数模的次幂长度消去与逐点误差
+
+Jean Bourgain, M. Z. Garaev, *Sumsets of reciprocals in prime fields and multilinear Kloosterman sums*, arXiv:1211.4184v1 (2012)。
+
+- 原文：https://arxiv.org/pdf/1211.4184v1
+- 精确位置：Theorem 16，第10页；§12.2 的证明从第54页开始。
+
+在素数模 $p$ 下，令 $n^{-1}$ 为模 $p$ 逆元、$e_p(z)=\exp(2\pi iz/p)$。对 $2\le M<p$，所引定理给
+
+$$
+\max_{a\not\equiv0\pmod p}
+\left|\sum_{n\le M}e_p(an^{-1})\right|
+\ll M\frac{(\log\log p)^3\log p}{(\log M)^{3/2}},
+$$
+
+隐常数绝对。原文列出的非平凡使用范围包括
+
+$$
+M>\exp\bigl((\log p)^{2/3}(\log\log p)^3\bigr).
+$$
+
+这里的 $M$ 是从1开始的未加权区间端点；不能把该式当作任意平移区间、任意系数或低亏损子集上的同一估计。素指标 $r$ 也不保证 $F_r$ 为素数。
+
+仅在另外满足 $p=V=F_r$ 为素数时，可以比较旧大除数分支的最大余因子尺度。令 $y=\log(1+V\lceil V/10\rceil)$，固定 $a_0>0$，取整数端点
+
+$$
+M=\left\lfloor\exp\left(\frac{a_0y}{(\log y)^2}\right)\right\rfloor.
+$$
+
+由于 $y=2\log p+O(1)$，这个端点充分大时在上述消去范围内。写
+
+$$
+\varepsilon_p(M)=\frac{(\log\log p)^3\log p}{(\log M)^{3/2}},
+$$
+
+则在这个端点尺度有
+
+$$
+\varepsilon_p(M)\asymp_{a_0}
+\frac{(\log\log p)^6}{\sqrt{\log p}}\longrightarrow0,
+\qquad M\varepsilon_p(M)\longrightarrow\infty.
+$$
+
+因此，“次幂区间一律太短而没有消去”不是这里的正确障碍。即使以该统一频率界控制一个指定逆元剩余类的未加权计数，误差尺度仍是 $M\varepsilon_p(M)$；主项 $M/p$ 加这个误差的上界不能降到1以下以证明无命中。相对消去不等于指定单点排除。
+
+此外，一个实际余因子 $h\le M$ 未必达到定理的非平凡尺度。实际约束还包括 $d\mid N$、$dh=N=1+Vk$、共同乘积窗口以及 $J_s(d)\le J_0$。定理没有给这个子集的加权消去，更没有给同一个 $N$ 的完整价格损失。以所有 $n\le M$ 的消去替换经过低亏损筛选的部分和，没有可直接引用的支配关系。
+
+Jean Bourgain, M. Z. Garaev, *Kloosterman sums in residue rings*, arXiv:1309.1124v1 (2013)。
+
+- 原文：https://arxiv.org/pdf/1309.1124v1
+- 精确位置：Theorem 5，第4页；§6.2 的证明从第14页开始。
+
+其复合模数版本对固定小常数 $c>0$ 和 $M>m^c$ 给
+
+$$
+\max_{(a,m)=1}
+\left|\sum_{\substack{n\le M\\(n,m)=1}}e_m(an^{-1})\right|
+\ll_c M\frac{(\log\log m)^{O(1)}}{\sqrt{\log m}}.
+$$
+
+不能令 $c$ 随 $m$ 趋于0来覆盖 $M=m^{o(1)}$，因为定理固定 $c$，且隐常数依赖它。这个版本不弥补上述次幂余因子尺度在一般 $F_r$ 模数下的接口；素数模版本的全部非零频率界也不能直接运输到这里只控制可逆 $a$ 的陈述。
+
+## Garaev–Shparlinski：选择模数产生的逆元聚集
+
+Moubariz Z. Garaev, Igor E. Shparlinski, *On the distribution of modular inverses from short intervals*, arXiv:2304.07953v1 (2023)。
+
+- 原文：https://arxiv.org/pdf/2304.07953v1
+- 精确位置：Theorem 1.1，第3页；§3.1，第6—7页。
+
+该定理对任意固定 $A_0>1$ 和充分大的整数 $M$，给出**存在某个素数** $p$，满足
+
+$$
+M\asymp(\log p)^{A_0},\qquad D_p(M)\gg1,
+$$
+
+其中 $D_p(M)$ 是序列 $n^{-1}/p$（$1\le n\le M$）的归一化 discrepancy。证明先取 $[M,2M]$ 中的 $(2M)^{1/A_0}$-光滑数集合 $\mathcal S$，令 $m=\operatorname{lcm}(\mathcal S)$，再选素数 $p\equiv-1\pmod m$。于是每个 $z\in\mathcal S$ 的标准逆元代表恰好是 $(p+1)/z$，由这份共同模数选择产生聚集；正文在长度 $2M$ 上完成论证。
+
+它反驳的是把所有短逆元区间一律当作均匀分布的外推。它没有把模数限制为 Fibonacci 数，也没有保留实际同价参考 $C_s$、低亏损筛选或 $N=1+F_rk$ 的窗口。因此这是自由选模数下的障碍实例，不能登记为原 FIB 候选的反例，更不能登记为 Robin 反例。其长度范围也不同于前一节已经有非平凡消去的次幂端点，两个结论不矛盾。
+
+## 近期模双曲线与光滑相邻数：共同来源条件
+
+Tsz Ho Chan, *Close Points on a Modular Hyperbola*, INTEGERS 26A (2026), #A5，发表版本 2026-09-28。
+
+- 原文：https://math.colgate.edu/~integers/aap5/aap5.pdf
+- 精确位置：Theorem 2，第3页；§4，第5—7页。
+
+令 $p>2$ 为素数、$(c,p)=1$，$\mathcal M$ 是具有正下密度 $\delta$ 的乘法封闭正整数集。该定理对每个固定 $\epsilon>0$ 给常数 $C_{\delta,\epsilon}$，保证模双曲线 $xy\equiv c\pmod p$ 上存在两个点 $(x,y)$、$(x+h,y+k)$，且
+
+$$
+h,k\in\mathcal M\cap
+\left[1,C_{\delta,\epsilon}p^{1/4}
+\exp\bigl((\log p)^{1/2+\epsilon}\bigr)\right].
+$$
+
+基点 $(x,y)$ 是存在性结论的一部分，没有固定为实际低亏损除数及其余因子；$h,k$ 是两点之间的增量。定理的方向是存在两点，而当前目标是排除指定的危险共同实现或支付其预算。固定光滑界的光滑数集合虽乘法封闭，下密度却为0；让光滑界随 $p$ 增长也不能忽略所需密度与常数的一致性。对数光滑稀疏核心不由这里的正下密度假设直接覆盖。仅出现同一模双曲线方程，不足以运输结论。
+
+Erik Mulder, Bruno Sterner, Wessel van Woerden, *Large smooth twins from short lattice vectors*, arXiv:2509.17699v3，版本 2026-09-17。
+
+- 原文：https://arxiv.org/pdf/2509.17699v3
+- 精确位置：Theorem 1.3，第2页；Heuristic 3.1 及其应用，第5—6页。
+
+论文给出搜索连续 $B$-光滑整数的短格向量算法；Theorem 1.3 的极值渐近明确以 Heuristic 3.1 为前提，不是无条件的相邻光滑数排除界。实际来源 $N=1+Vk$ 没有要求 $N$ 与 $N-1$ 同时 $B$-光滑，且素指标 Fibonacci 模数与低亏损权重也是额外条件。可以复用其候选搜索工具时，仍须另作这些实际来源检查；启发式极值和有限搜索不能支付 §233.5 的统一完整预算。
+
 ## Munsch–Shparlinski–Yau：另一个光滑度范围的存在下界
 
 Marc Munsch, Igor E. Shparlinski, Kam Hung Yau,
@@ -259,6 +362,81 @@ $$
 $$
 
 当前 $V=F_r$ 不假设为素数，且 $Y=V^{o(1)}$，相当于光滑度指数趋于0，超出该固定 $\beta$ 范围。它给存在性下界，本来也不是排除 Robin 反例的上界。不能因目标中出现逆元、素指标、光滑核心等相同术语就转移其结论。
+
+## 素数乘积覆盖与小子群：保持结论方向和实际尺度
+
+Kaisa Matomäki, Joni Teräväinen,
+*Products of primes in arithmetic progressions*,
+[arXiv:2301.07679v3](https://arxiv.org/pdf/2301.07679v3)，
+版本 2024-02-15，Theorem 1.1，第1—2页。记
+
+$$
+E_3(Q)=\{a\in(\mathbb Z/q\mathbb Z)^\times:
+a\equiv p_1p_2p_3\pmod q,\ p_1,p_2,p_3\le Q\text{ 为素数}\}.
+$$
+
+该定理给充分大的无立方因子模数 $q$ 上
+$E_3(q)=(\mathbb Z/q\mathbb Z)^\times$；对任意固定
+$\varepsilon>0$，充分大的任意模数则有
+$E_3(q^{1+\varepsilon})=(\mathbb Z/q\mathbb Z)^\times$。
+后一结论直接覆盖可能有重复素因子的 $V=F_r$。它强于
+[Szabó 的 arXiv:2208.05762v1](https://arxiv.org/pdf/2208.05762v1)
+Theorem 3 的 $q^{6/5+\varepsilon}$ 三素数覆盖界；该旧界不作为
+额外可推进目标的结果重做。
+
+这里覆盖的是每个单位余类中存在某个素数乘积。实际来源需要
+$N=1+Vk$ 的固定实大小窗口、同价参考的可移除层库存和真实低亏损
+约数权重。定理没有保证这些条件，也没有给价格约为
+$s=y\log y$ 的添加成本下界。尤其所允许的素数上限是
+$V^{1+\varepsilon}$（无立方因子分支是 $V$），而核心光滑界
+$Y\asymp\log X=V^{o(1)}$。不能把所有余类的存在覆盖反向用成
+某个实际低成本来源的排除或严格预算。
+
+Marc Munsch, Igor E. Shparlinski,
+*On smooth square-free numbers in arithmetic progressions*,
+[arXiv:1710.04705v3](https://arxiv.org/pdf/1710.04705v3)，
+版本 2018-06-11，Theorem 1.1，第3页，给素数模数 $p$ 上、每个固定
+$\alpha>1/(4\sqrt e)$ 的单位余类一个 $p^\alpha$-光滑平方自由代表，
+其大小不超过 $p^{2+o(1)}$。Theorem 1.3 的更小固定
+$\alpha>0$ 版本允许在 $[Q,2Q]$ 中有 $Q^{o(1)}$ 个例外素数。
+即使另有 $V$ 为素数的条件，当前 $Y=V^{o(1)}$ 也不满足第一项
+固定正指数光滑度；例外计数没有保证特殊 Fibonacci 模数不在其中。
+二者仍是存在方向，没有实际成本权重或指定窗口的排除结论。
+
+Jean Bourgain, Sergei Konyagin, Igor Shparlinski,
+*Distribution of elements of cosets of small subgroups and applications*,
+[arXiv:1103.0567v1](https://arxiv.org/pdf/1103.0567v1)，
+Theorems 1—5，第3—4页，给素数模数 $p$ 中某子群陪集内小整数
+及低有理高度元素的计数上界；Theorem 4 的参数还保留
+$K\le\sqrt{p/2}$。应用时须指定实际素数 $p\mid V$、子群阶和
+该高度范围，不能直接用整个复合 $V$ 代替素数模数。
+
+[四次特征成本应用](erdosnicolas1975repartition.md)中的四个相位值
+不是一个四元素核。在素数模数 $p$ 上，阶四特征的核有
+$(p-1)/4$ 个元素；$t^2=-1$ 的四元素根群与这个核是两个不同对象。
+这篇论文的“小子群”条件及计数强度因而不能由“有四相”自动取得。
+即使某个实际参数满足其计数界，一个不小于1的上界也不排除指定点，
+而无权计数并不控制 §233.5 的完整加权贡献。上述来源条件可直接复用，
+尚未提供当前共同来源的统一严格预算；这不是完整文献搜索或原创性结论。
+
+## 全部低亏损除数的范围与退化端点
+
+上面的完整赋值光滑核心 $C$ 及其粗余因子 $H$，与 [FIB §232—233](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的任意低亏损除数 $d$ 及其补因子 $h=N/d$ 是不同分解；同价 CA 参考 $C_s$ 也不是这个 $C$。它们不能共用未证的素数下界或余因子阈值。
+
+对实际来源仍取
+
+$$
+V=F_r,\quad r>5\text{ 为素数},\quad
+\lceil V/10\rceil\le k\le\lfloor V/5\rfloor,\quad N=1+Vk>5040.
+$$
+
+§231 的大除数分支还要求 $d>X/\exp(aR)$，从而给 $h<\exp(aR)$；§232—233 的全部低亏损除数不保留这项阈值。前一节取 $M=\lfloor\exp(a_0y/\log^2y)\rfloor$ 所做的逆元消去比较，因而只覆盖相应旧子分支的端点比较，不能扩大成所有 §233 候选的补因子界。
+
+[Erdős–Nicolas 来源笔记](erdosnicolas1975repartition.md)的 “Low increment loss supplies a smaller reconstruction height” 已给低亏损集合的 $O_K(y/\log y)$ 编辑高度；[Monagan 来源笔记](../Arith/monagan2004reconstruction.md)的 “Whole-host bounds and actual-source filters” 已处理完整补因子约分。这些结果直接复用，不另造重建定理；可取得唯一共同来源仍不提供价格损失的符号。
+
+令 $c=\gcd(d,C_s)$、$b=C_s/c$、$\tau=\gcd(h,b)$。已有完整补因子公式保留如下退化端点：$h=1$ 时没有新增补因子成本；$h=\tau$ 时补因子只恢复缺失的参考素幂层，没有外加素幂成本。若全部素因子很小，也不能先当作粗余因子收费。这些是必须覆盖的代数情形，尚未断言它们在一个实际未支付候选上发生。
+
+所需估计仍是 [同价价格笔记](erdosnicolas1975repartition.md)中同一个实际 $N$ 的 $D_s(N)>T_s(N)$，或直接支付 FIB §233.5 的完整低亏损与高亏损贡献。参考 $C_s$ 保留全部零成本 ties；实际素幂重数、乘积窗口、指定余类和低亏损条件须同时保留。仅在旧大除数分支证明估计、仅在 $F_r$ 另外为素数时得到消去，或只对无权逆元的整体给相对误差，都不是这个全范围结论。
 
 ## 仍缺的联合关系
 

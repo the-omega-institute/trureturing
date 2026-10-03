@@ -25,5 +25,6 @@ __pycache__/
 /Golden/Frozen/accepted/.ledger-write.lock
 /tools/lean-inspector/.lake/
 /tools/lean-inspector-interface/.lake/
+/tools/lean-inspector-reg/.lake/
 
 /Reg/.lake/

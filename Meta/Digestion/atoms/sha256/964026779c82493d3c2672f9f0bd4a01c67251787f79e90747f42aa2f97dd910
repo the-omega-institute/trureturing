@@ -1,0 +1,17 @@
+**定理 3.2（One-step capacity invariants）。** For every $n\in\mathbb N$ with $n>0$ and every finite natural list $c$ whose entries are at most $2n-1$,
+
+$$
+|c|\le |S_n(c)|\le |c|+1,\qquad
+\forall a\in S_n(c),\ a\le2n-1,\qquad
+A(S_n(c))=A(c)+n.
+$$
+
+证明。Induction on the input list gives, for $F_n(c)=(d,b)$, the same length and capacity bound and the identity
+
+$$
+A(d)+\begin{cases}|c|n,&b=\mathrm{true},\\0,&b=\mathrm{false}\end{cases}
+=A(c)+\begin{cases}0,&b=\mathrm{true},\\n,&b=\mathrm{false}.\end{cases}
+$$
+
+At a donor $a\ge n$, subtracting $n$ preserves the cap and the area loss is its row weight times $n$. If the recursive tail carries, the preceding ineligible capacity $a<n$ receives $n$, remains at most $2n-1$, and cancels all but one unit of that weighted loss. If it does not carry, that capacity is unchanged. The empty tail is the floor case. A final carry adds one top row of capacity $n$; without it the length is unchanged. Substitution in the displayed transfer identity proves the area increment. $\square$
+

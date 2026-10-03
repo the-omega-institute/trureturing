@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
@@ -84,15 +87,5 @@ register_information_theorem
   realization regularityBridge
   variation regularityVariation sensitivity regularitySensitivity
   escape from (ℝ) escape continues (open)
-
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "mechanical regularity registration is not declaredValidated"
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutRegularity

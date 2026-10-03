@@ -21,15 +21,6 @@
    "configFile": "lakefile.toml"
   },
   {
-   "type": "path",
-   "scope": "",
-   "name": "leanInspector",
-   "manifestFile": "lake-manifest.json",
-   "inherited": false,
-   "dir": "../tools/lean-inspector",
-   "configFile": "lakefile.lean"
-  },
-  {
    "url": "https://github.com/leanprover-community/mathlib4",
    "type": "git",
    "subDir": null,

@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredAliases
 open Lean Meta Elab Command TemplateAudit
@@ -49,7 +52,7 @@ elab "observe_template_alias_boundaries" : command => do
     ("independent_fixed_proof_leaf_accepted", ``fixedProposition, none)]
   for (label, name, expected) in cases do
     let saved ← get
-    let result ← enroll name
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name
     let actual := match result with | .ok () => none | .error message => some message
     let present := (selectedPlan (← getEnv) name).isOk
     set saved
@@ -59,7 +62,7 @@ observe_template_alias_boundaries
 
 run_cmd do
   let saved ← get
-  let .ok () ← enroll ``proofFamily | throwError "setup: proof family enrollment failed"
+  let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``proofFamily | throwError "setup: proof family enrollment failed"
   let .ok plan := selectedPlan (← getEnv) ``proofFamily
     | throwError "setup: proof family plan absent"
   let valid := plan.slots[2]?.map (·.kind) == some SlotKind.proof

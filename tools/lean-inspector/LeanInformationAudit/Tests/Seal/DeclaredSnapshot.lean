@@ -1,11 +1,14 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredSnapshot
 open Lean Meta Elab Command
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
 
-register_information_template cutRealization
+test_assess in register_information_template cutRealization
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -14,12 +17,12 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
-information_theorem selected in arena
+test_assess in information_theorem selected in arena
   readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
 
-expect_information_occurrence selected in arena
+test_assess in expect_information_occurrence selected in arena
   from "LeanInformationAudit.Tests.Seal.DeclaredSnapshot"
 
 private def observe (label : String) (ok : Bool) : CommandElabM Unit :=
@@ -35,12 +38,12 @@ private def counts : CommandElabM (Nat × Nat) := do
 run_cmd do
   let saved ← get
   let before ← counts
-  let catalogs ← prepareCatalogs
+  let catalogs ← (prepareCatalogs (← getEnv).header.mainModule)
   let after ← counts
   let independent := catalogs.size == 1 && after.1 - before.1 == 1 && after.2 == before.2
   set saved
   let before ← counts
-  prepareSealPublication
+  prepareSealPublication (← validateSourceSnapshot (← getEnv).header.mainModule (InformationRegistry.entries (← getEnv)))
   let after ← counts
   let published := (SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule).size == 1
   let once := after.1 - before.1 == 1 && after.2 == before.2
@@ -53,7 +56,7 @@ run_cmd do
 run_cmd do
   let saved ← get
   let entries := InformationRegistry.entries (← getEnv)
-  let snapshot ← validateSourceSnapshot entries
+  let snapshot ← validateSourceSnapshot (← getEnv).header.mainModule entries
   let root := (← getEnv).header.mainModule
   let qualified := entries.map fun entry => { entry with
     unitName := catalogQualifiedName root entry.canonicalObjectArenaName
@@ -70,7 +73,7 @@ run_cmd do
 
 run_cmd do
   let saved ← get
-  let snapshot ← validateSourceSnapshot (InformationRegistry.entries (← getEnv))
+  let snapshot ← validateSourceSnapshot (← getEnv).header.mainModule (InformationRegistry.entries (← getEnv))
   elabCommand (← `(command| def snapshotExtra : Bool := true))
   let rejected ← try
     let _ ← prepareCatalogsFromSnapshot snapshot
@@ -83,7 +86,7 @@ run_cmd do
 run_cmd do
   let saved ← get
   let entries := InformationRegistry.entries (← getEnv)
-  let snapshot ← validateSourceSnapshot entries
+  let snapshot ← validateSourceSnapshot (← getEnv).header.mainModule entries
   let wrong := entries.map fun entry => { entry with statementIdentity := "changed" }
   let rejected ← try
     let _ ← snapshot.stageAliases wrong

@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open Lean.Meta
@@ -11,19 +14,19 @@ namespace LeanInformationAudit.Tests.Seal.ReflectedRoute
 
 set_option maxRecDepth 100000
 
-register_information_theorem
+test_assess in register_information_theorem
   agenda_power
   in agendaPowerArena
   primitives agendaPowerRealization.toPrimitiveBundle
   realization agenda_power_realization
 
-expect_information_occurrence agenda_power
+test_assess in expect_information_occurrence agenda_power
   in agendaPowerArena
   from "LeanInformationAudit.Tests.Seal.ReflectedRoute"
 
 /-- info: information seal: arena=D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena theorem=D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power unique=570 method=reflected-fused-counts -/
 #guard_msgs (info) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /- Mutation pin: corrupting a reflected role bin at the snapshot boundary makes the
 guarded seal above fail with IE-C009 `role histogram mismatch`. -/

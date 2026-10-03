@@ -1,0 +1,25 @@
+### 206.4 全体乘子的实际小素数核心归约
+
+对同一个实际整数 $N=gV+1$ 和实数 $y>1$，定义完整赋值核心与其平方自由支撑
+
+$$
+C_y(N)=\prod_{p\le y}p^{v_p(N)},\qquad
+R_y(N)=\prod_{\substack{p\le y\\p\mid N}}p,\qquad
+H_y(N)=N/C_y(N).
+$$
+
+这里 $\gcd(C_y,H_y)=1$，且 $H_y$ 的全部素因子大于 $y$。由实际尾部的大小，
+
+$$
+0\le\log Z(H_y)
+\le\sum_{p\mid H_y}\frac1{p-1}
+\le\frac{\log H_y}{(y-1)\log y}.
+$$
+
+因而有对同一个 $N$ 成立的显式联合上界
+
+$$
+Z(C_y)\le Z(N)
+\le Z(C_y)\exp\left(\frac{\log(N/C_y)}{(y-1)\log y}\right).
+$$
+

@@ -1,0 +1,60 @@
+### 200.1 固定窗口与允许变化的种子
+
+固定奇平方自由整数 $k>1$。记
+
+$$
+K=\mathbb Q(\sqrt5),\qquad R=\mathbb Z[\phi],\qquad
+F=K(\zeta_k),\qquad
+m=[F:\mathbb Q]=
+\begin{cases}
+2\varphi(k),&5\nmid k,\\
+\varphi(k),&5\mid k.
+\end{cases}
+$$
+
+对非零本原非负种子 $v=a+b\phi$，沿用
+
+$$
+Q=a^2+ab-b^2,\qquad \rho=v'/v,\qquad
+V_j=aF_{j+3}+bF_{j+4}.
+$$
+
+本节称该种子满足固定窗口条件，是指存在位于有理素数 $p_0$ 上方的素理想 $\mathfrak p$，使
+
+$$
+e=v_{\mathfrak p}(\rho)\ne0,
+\qquad \gcd(k,p_0e)=1.
+\tag{200.1}
+$$
+
+这里 $p_0,e$ 可以随种子变化；$k$ 保持固定。该条件排除单位共轭比情形，其作用是保证 Kummer 次数与实际根群保持不变，而不是先假定任何素数分布结论。
+
+对 $0\le r<k$，令
+
+$$
+\rho_r=\tau^{-r-3}\rho,\qquad u^k=\rho_r,
+\qquad \mathcal L=F(u),\qquad n=[\mathcal L:\mathbb Q]=km.
+$$
+
+当 $5\nmid k$ 时，§199.3 已给 $\mathcal L/\mathbb Q$ 为 Galois 扩张，$\mathcal L/F$ 为 $k$ 阶循环扩张。允许 $5\mid k$ 时，结论仍成立，证明如下。此时 $F=\mathbb Q(\zeta_k)$ 已包含 $K$，而 $p_0\nmid k$ 仍保证 $F/K$ 在所选赋值处不分歧。§199.3 的赋值论证给 $[\mathcal L:F]=k$。
+
+$F/\mathbb Q$ 的自同构由 $A\in(\mathbb Z/k\mathbb Z)^\times$ 指定，其在 $K$ 上的符号是 $\varepsilon=\chi_5(A)$。它的全部 $k$ 个延伸为
+
+$$
+\zeta_k\longmapsto\zeta_k^A,\qquad
+u\longmapsto\zeta_k^b u^{\chi_5(A)},\qquad b\pmod k.
+$$
+
+故 $\mathcal L/\mathbb Q$ 正规且可分，$\mathcal L/F$ 为 $k$ 阶循环扩张。两种情形中，特征零迹根
+
+$$
+x_h=u\zeta_k^h+u^{-1}\zeta_k^{-h},\qquad h\in\mathbb Z/k\mathbb Z
+$$
+
+仍彼此不同，因为非零赋值排除 $\rho_r$ 为单位根。根作用为 $h\mapsto\varepsilon Ah+\varepsilon b$。$5\mid k$ 时，映射 $A\mapsto\chi_5(A)A$ 是单位群的自逆同构：$\chi_5(-1)=1$，故施行两次恰好回到 $A$。所以斜率与平移仍遍历完整仿射群 $\operatorname{AGL}_1(\mathbb Z/k\mathbb Z)$。这时根作用忠实；$5\nmid k$ 时核为 §199.3 的二元核。两者有固定根的比例均为
+
+$$
+\delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right).
+\tag{200.2}
+$$
+

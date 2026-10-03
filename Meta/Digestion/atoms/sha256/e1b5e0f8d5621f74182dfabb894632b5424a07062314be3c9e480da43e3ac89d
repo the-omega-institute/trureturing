@@ -1,0 +1,23 @@
+## 324. 把成本与响应合成同一个量的加权选择
+
+本节复用 §322 的区间Bohr计数及既有非负有限除数求和接口，将大小与响应共同估计。参数随宿主变化的矩界在本节单独写明；不把 §321 的固定 $\chi$ 渐近直接代入变化参数。所用加权组合属于纸面推导，没有Lean核验或原创性声明。
+
+保留实际 CA宿主 $C$、$P=P^+(C)$、$F_C$ 与其最优价格 $\epsilon$，定义
+
+$$
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{324.1}
+$$
+
+由全局价格及 $\mathcal A_P\epsilon\le P\log(1+1/P)<1$，有 $0\le\mathcal D_C(t)\le\log t$。既有价格损失 $\operatorname{Ben}_{C,\epsilon}(tC)=\epsilon\log t-\log F_C(t)$ 给精确账本
+
+$$
+\mathcal D_C(t)
+=\mathcal A_P\operatorname{Ben}_{C,\epsilon}(tC)
+ +(1-\mathcal A_P\epsilon)\log t.
+\tag{324.2}
+$$
+
+这两个非负项来自同一个实际 $C,t,\epsilon$，不预设Robin符号。
+

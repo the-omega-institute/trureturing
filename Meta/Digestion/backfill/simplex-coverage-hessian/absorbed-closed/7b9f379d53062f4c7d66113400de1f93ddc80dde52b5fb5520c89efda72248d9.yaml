@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7b9f379d53062f4c7d66113400de1f93ddc80dde52b5fb5520c89efda72248d9
+  normalized_sha256: sha256:7b9f379d53062f4c7d66113400de1f93ddc80dde52b5fb5520c89efda72248d9
+cas_ref: sha256:7b9f379d53062f4c7d66113400de1f93ddc80dde52b5fb5520c89efda72248d9
+coverage_gids:
+  - gid: D5/S3/Resource/SimplexCoverageRoot.evaluateAt_line_hasDerivAt
+    target_statement_id: sha256:c2c6c6489a11d0468213dad714e207ea324e239adb93d19d0936612e89309e70
+receipts:
+  unresolved_subitems: []

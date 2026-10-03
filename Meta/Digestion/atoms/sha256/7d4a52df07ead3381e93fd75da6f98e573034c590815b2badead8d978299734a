@@ -1,0 +1,24 @@
+### 225.2 分离估计所需的两组准确范数
+
+在全部 $Q$ 个字符上使用归一计数测度，并把主字符坐标置零，定义
+
+$$
+\|F\|_{p,*}=
+\left(\frac1Q\sum_{\chi\ne1}|F_\chi|^p\right)^{1/p}
+\quad(1\le p<\infty),\qquad
+\|F\|_{\infty,*}=\max_{\chi\ne1}|F_\chi|.
+\tag{225.5}
+$$
+
+这是同一个概率空间上的范数，所以关于 $p$ 单调。
+若 $1/p+1/p'=1$，完整分布的分离预算为
+
+$$
+\mathscr C_p=\Lambda\|\widehat\mu_s\|_{p,*}\|B\|_{p',*},
+\qquad
+\Lambda\left|S_{\rm full}-\frac{c_Vk}{Q}\right|\le\mathscr C_p.
+\tag{225.6}
+$$
+
+下面证明的是这个上界表达式本身的下界，不是左侧相关和的下界。
+

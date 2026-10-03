@@ -1,0 +1,11 @@
+**定理 4.4（同一自主低层代数的最大值）。** 在全部满足
+
+$$
+\mathcal N\subseteq\mathcal D_{\mathrm{out}},\qquad
+\alpha(\mathcal N)\subseteq\mathcal N
+$$
+
+的含幺 $C^*$ 子代数中，按包含关系最大的代数恰为 $\Delta_A$。这一结论针对每一步使用同一边界的未修正 $U$。
+
+证明。有限维性和 $\alpha$ 的可逆性给出 $\dim\alpha(\mathcal N)=\dim\mathcal N$，因此包含关系必为相等。于是 $B\in\mathcal N$ 的全部正、负整数次 $\alpha$ 共轭仍在 $\mathcal N$ 中。对每个 $j\ge0$，将定理 3.2 用于 $\alpha^{-j-1}(B)\in\mathcal N$，可知 $\alpha^{-j}(B)=U_d^jBU_d^{-j}$ 在 $k$ 的扇区上成块。若 $B_{aa'}\ne0$，后者在 $(f^j(a),f^j(a'))$ 的矩阵元也非零，故 $k(f^j(a))=k(f^j(a'))$。定理 4.3 迫使 $a=a'$，所以 $\mathcal N\subseteq\Delta_A$。反之，$U_d$ 是置换，故 $\alpha(\Delta_A)=\Delta_A$，且 $\Delta_A\subseteq\mathcal D_{\mathrm{out}}$。$\square$
+

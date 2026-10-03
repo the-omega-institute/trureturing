@@ -1,5 +1,8 @@
 import Reg.Catalogs.InformationRoot
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean
 open LeanInformationAudit
@@ -89,9 +92,8 @@ run_meta do
     for name in #[record.catalog.catalogName, record.verdict.name] ++
         record.theorems.flatMap (fun row => #[row.unitName, row.realizationName,
           row.certificateName]) do
-      let some index := env.getModuleIdxFor? name | throwError "missing compiler owner: {name}"
-      unless env.header.moduleNames[index.toNat]! == root do
-        throwError "companion has wrong compiler owner: {name}"
+      unless GeneratedDeclarations.ownerOf env name == root do
+        throwError "companion has wrong report owner: {name}"
   let owners := (expected.map (·.registrationModuleName)).toList.eraseDups
   for owner in owners do
     let count := (expected.filter (·.registrationModuleName == owner)).size
@@ -103,7 +105,7 @@ run_meta do
         entry.occurrence.key.registrationModule == row.registrationModuleName
       | throwError "missing production binding row"
     unless observed.result matches .declaredValidated _ do
-      throwError "completed production binding regressed"
+      throwError "completed production binding regressed: {(← TemplateBinding.recordJson observed).compress}"
   logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 11 validated and 0 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline

@@ -6,7 +6,19 @@ Read each Fibonacci gap-word letter from the least Zeckendorf digit.
 
 For every valid position i, the letter is large exactly when index 2 is absent from wdigits i. The right side is inlined in both public theorems; this node does not define a second public word object.
 
-**Theorem 1.1 (The Fibonacci word is the least-digit test).**
+**Theorem 1.1 (Separated Fibonacci digit prefix).**
+
+Lean statement: `D5/S0/Tower/GoldenGapZeckendorf.wdigits_fib_add`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Tower/GoldenGapZeckendorf.wdigits_fib_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Q and j below F(Q+2), the canonical digits of F(Q+3)+j are Q+3 followed by the canonical digits of j. The separation condition permits direct reuse of canonical uniqueness.
+
+**Theorem 1.2 (The Fibonacci word is the least-digit test).**
 
 $$\operatorname{fibWord}\left(Q\right) = \operatorname{ofFn}\left(\operatorname{leastZeckendorfDigitTest}\left(Q\right)\right)$$
 
@@ -18,7 +30,7 @@ $$\operatorname{fibWord}\left(Q\right) = \operatorname{ofFn}\left(\operatorname{
 
 The least-digit table has the same two-step Fibonacci concatenation as fibWord. The upper block follows from Zeckendorf uniqueness after prefixing index Q+3, and the cases Q=0 and Q=1 are computed from the canonical representations of zero and one.
 
-**Theorem 1.2 (The frozen gap word is the least-digit test).**
+**Theorem 1.3 (The frozen gap word is the least-digit test).**
 
 $$\operatorname{goldenGapWord}\left(Q\right) = \operatorname{ofFn}\left(\operatorname{leastZeckendorfDigitTest}\left(Q\right)\right)$$
 
@@ -36,5 +48,6 @@ Deferred: the explicit Beatty form, with a large letter exactly when floor((i+2)
 
 - Truth anchor: `D5/S0/Tower/GoldenGapZeckendorf.fibWord_eq_zeckendorf_word`
 - Truth anchor: `D5/S0/Tower/GoldenGapZeckendorf.goldenGapWord_eq_zeckendorf_word`
+- Truth anchor: `D5/S0/Tower/GoldenGapZeckendorf.wdigits_fib_add`
 - Dependency: [D5/S0/Conventions/WDigits](../Conventions/WDigits.md)
 - Dependency: [D5/S0/Tower/GoldenGapWord](GoldenGapWord.md)

@@ -1,0 +1,51 @@
+### 221.1 局部价格亏损与同整数的欠赋值量
+
+记 $U_p(s)=\sum_{j\ge0}b_s(p^j)/p^j$。§216 给局部边缘
+
+$$
+\nu_{p,s}(j)=\mu_s\{d:v_p(d)=j\}
+=\frac{b_s(p^j)}{p^jU_p(s)},
+$$
+
+以及对 $s\ge4$ 的估计
+
+$$
+P_p=(1-p^{-1})^{-s},\qquad
+U_p(s)\ge\frac{P_p}{2e^2s},\qquad
+b_s(p^j)\le s p^{-j}P_p\quad(j\ge1),
+\tag{221.1}
+$$
+
+$$
+\nu_{p,s}(j)\le2e^2s^2p^{-2j}\quad(j\ge1).
+\tag{221.2}
+$$
+
+§218 给 $M_s=\max_d b_s(d)/d$ 及
+$J_s(d)=\log M_s-\log(b_s(d)/d)\ge0$。
+记
+
+$$
+m_{p,s}=\max_{j\ge0}\frac{b_s(p^j)}{p^j},\qquad
+j_{p,s}(k)=\log m_{p,s}-\log\frac{b_s(p^k)}{p^k}.
+$$
+
+则
+
+$$
+J_s(d)=\sum_p j_{p,s}(v_p(d)),\qquad j_{p,s}(k)\ge0.
+\tag{221.3}
+$$
+
+这是一份有限和：$p\ge y+2$ 且 $p\nmid d$ 时该项为零。
+这些因子来自实际增量 $b_s$；经典目标 $Z(n)^s/n$ 的局部价格因子与之不同。
+
+对正整数 $n$，定义欠赋值量，并记
+
+$$
+E_s^-(n)=\sum_{p\le\sqrt s}
+\left[\frac{s}{p^{v_p(n)+1}}-\log(2e p^2s)\right]_+,
+\qquad G_s=\frac{XM_s}{t^s},
+\qquad [u]_+=\max\{u,0\}.
+$$
+

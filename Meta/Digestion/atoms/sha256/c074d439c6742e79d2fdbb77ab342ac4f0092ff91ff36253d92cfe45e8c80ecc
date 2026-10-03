@@ -1,0 +1,32 @@
+**定理 4.3（完整进位签名分离组成标签）。** 对任意 $a,a'\in A$，若
+
+$$
+k(f^j(a))=k(f^j(a'))\qquad\text{对每个 }j\ge0,
+$$
+
+则 $a=a'$。因此 $\mathcal S_N$ 随 $N$ 增大而递减，且其全体交为 $\Delta_A$。若 $P\ge1$ 是有限置换 $f$ 的周期，即 $f^P=\mathrm{id}$，则已经有 $\mathcal S_P=\Delta_A$。
+
+进一步，令 $\varphi=(1+\sqrt5)/2$、$D=d-1$。对任意 $N\ge1$，若 $a\ne a'$ 而 $s_N(a)=s_N(a')$，则
+
+$$
+\varphi^N\le\varphi^3(d-1)^2.
+$$
+
+因此 $N>3+2\log_\varphi(d-1)$ 保证 $s_N$ 单射。特别地，取
+
+$$
+N_d=\left\lfloor3+2\log_\varphi(d-1)\right\rfloor+1,
+$$
+
+则每个 $N\ge N_d$ 均有 $\mathcal S_N=\Delta_A$；$d=2$ 时此充分界为 $N_d=4$。该界独立于 $e\ge2$，不主张最优，也不推断每个更短前缀都保留非对角相干。它只适用于全前缀代数 $\mathcal S_N$，不适用于定理 4.5 的单终点代数。
+
+证明。把 $a,a'$ 和全部 $f^j(a),f^j(a')$ 取为整数代表。由
+
+$$
+f^{j+1}(a)=M f^j(a)-d(0,k(f^j(a)))
+$$
+
+及相同的进位，归纳得 $f^j(a)-f^j(a')=M^j(a-a')$。取 $j=P$，有 $(M^P-I)(a-a')=0$。$M$ 的两个实特征值为 $\varphi=(1+\sqrt5)/2$ 与 $-\varphi^{-1}$；对任何 $P\ge1$，两者的 $P$ 次幂均不为 $1$，故 $M^P-I$ 可逆，得到 $a=a'$。若只给前 $P$ 个进位相等，上述归纳仍足以到达 $j=P$，所以这个有限前缀已经分离全部标签。全体交与 $\mathcal S_P$ 的结论由定理 4.2 的块描述立即得到。
+
+对于显式界，设 $z=a-a'\ne0$ 且 $s_N(a)=s_N(a')$。同一整数递推给出 $M^Nz=f^N(a)-f^N(a')$，故 $z$ 与 $M^Nz$ 的坐标绝对值均不超过 $D$。沿用 [FIB 第 18.1 节的两个实嵌入](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L1020)，置 $\psi=(1-\sqrt5)/2$、$\sigma_+(z)=z_0+\varphi z_1$、$\sigma_-(z)=z_0+\psi z_1$。两根的无理性保证两个嵌入对非零整数向量均非零，故 $Q(z)=\sigma_+(z)\sigma_-(z)=z_0^2+z_0z_1-z_1^2$ 是非零整数，$|Q(z)|\ge1$。又 $|\sigma_-(z)|\le(1+|\psi|)D=\varphi D$、$|\sigma_+(M^Nz)|\le(1+\varphi)D=\varphi^2D$，且 $\sigma_+(M^Nz)=\varphi^N\sigma_+(z)$，从而 $1\le|Q(z)|=\varphi^{-N}|\sigma_+(M^Nz)|\,|\sigma_-(z)|\le\varphi^{3-N}D^2$，得到所述界。取逆否命题及整数阈值，再用定理 4.2 即得 $\mathcal S_N=\Delta_A$。此推导使用整数进位相等，没有使用累计进位模 $e$ 的相消。$\square$
+

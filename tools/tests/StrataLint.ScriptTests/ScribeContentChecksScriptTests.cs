@@ -19,7 +19,7 @@ public sealed class ScribeContentChecksScriptTests
 
         Assert.True(childExit == result.ExitCode, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(
-            childExit == 0 ? new[] { "projections", "describe-report", "markdown-check" } : ["projections"],
+            new[] { "content-check" },
             fixture.Invocations);
     }
 

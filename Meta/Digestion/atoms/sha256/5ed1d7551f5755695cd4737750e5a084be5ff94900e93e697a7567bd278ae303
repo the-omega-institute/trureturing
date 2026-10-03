@@ -1,0 +1,9 @@
+**假设 302.1。** 本节的解析结论以如下固定模三的误差与全局加性误差为前提：
+\[
+\vartheta_r(y)=\frac y2+O\!\left(\frac{y}{(\log y)^3}\right)
+\quad(r=1,2),\qquad
+P(y)=E\log y+o(1),\qquad y\longrightarrow\infty.
+\tag{302.4}
+\]
+这些前提属于经典素数分布与 Mertens 乘积的解析输入，不是本节新结论。固定模的有效素数定理可见 Qian–Hong，*Asymptotic behavior of the least common multiple of consecutive arithmetic progression terms*，arXiv:1204.5415v2，式（1.2），DOI:10.1007/s00013-013-0510-7；该文所列指数误差蕴含这里的 $O(y/(\log y)^3)$。固定剩余类乘积的背景见 Languasco–Zaccagnini，*On the constant in the Mertens product for arithmetic progressions. I. Identities*，arXiv:0706.2807v4，Introduction 式（1），以及 `Library/Scale/languasco2008mertensprogressions.md`。该式给出的相对 $O(1/\log y)$ 精度本身不推出（302.4）的加性 $o(1)$ 精度；本节明确采用（302.4），不以较弱乘积渐近替代它。
+

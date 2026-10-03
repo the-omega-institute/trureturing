@@ -1,0 +1,27 @@
+### theorem 263.2 同一来源的核心大小与推进深度
+
+定义 263.1 的核心与深度唯一，并且
+
+$$
+x=M^j(r,s),\qquad \gcd(r,s)=1,\qquad r>s\ge0,
+\qquad D=r^2+rs-s^2.
+\tag{263.2}
+$$
+
+定义同一来源的绝对深度亏损
+
+$$
+\mathcal L(x)=\frac{\log U}{\log\varphi}-j.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac{\log D-\log(5/4)}{2\log\varphi}+1
+\ \le\ \mathcal L(x)
+\ \le\ \frac{\log D}{2\log\varphi}+4.
+\quad}
+\tag{263.3}
+$$
+

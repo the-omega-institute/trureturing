@@ -1,0 +1,49 @@
+### 216.2 可计算的互补因子尾与实际赋值约束
+
+由独立性和有限尾和公式，对每个实数 $\tau$ 有
+
+$$
+M_n(\tau):=\mathbb E_n H_n^\tau
+=\prod_{p\mid n}\left[
+1+(p^\tau-1)\sum_{j=1}^{v_p}p^{\tau(j-1)}q_{p,j}
+\right],
+\tag{216.6}
+$$
+
+以及
+
+$$
+\mathbb E_n\log H_n
+=\sum_{p\mid n}\log p\sum_{j=1}^{v_p}q_{p,j}.
+\tag{216.7}
+$$
+
+因此对 $H\ge1$、$\tau>0$，
+
+$$
+\mathbb P_n(H_n\le H)\le H^\tau M_n(-\tau),\qquad
+\mathbb P_n(H_n>H)\le H^{-\tau}M_n(\tau).
+\tag{216.8}
+$$
+
+也可直接作有限盒估计。若各 $j_p\in\{0,\ldots,v_p\}$ 满足 $\sum_pj_p\log p\le\log H$，则
+
+$$
+\prod_{p\mid n}(1-q_{p,j_p+1})
+\le\mathbb P_n(H_n\le H)
+\le\prod_{p\mid n}\left(1-q_{p,\min(v_p,\lfloor\log H/\log p\rfloor)+1}\right).
+\tag{216.9}
+$$
+
+左侧事件是所有局部互补指数同时不超过指定预算；右侧使用总乘积不超过 $H$ 的每个必要局部条件。两边都来自同一 $n$ 的联合分布。
+
+特别地，
+
+$$
+\mathbb P_n(H_n=1)=\prod_{p\mid n}(1-q_{p,1})
+\ge1-\sum_{p\mid n}\exp\left(-\frac{s(p-1)}{p^{v_p+1}-1}\right).
+\tag{216.10}
+$$
+
+所以小互补因子权重并不必然小；是否集中在 $1$ 附近取决于实际最高指数的局部增益。
+

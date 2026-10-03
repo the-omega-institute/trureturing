@@ -1,0 +1,6 @@
+**命题 35.4（section 是附加充分假设）。** 非平凡 qubit depolarizing channel $E_p(X)=pX+(1-p)\operatorname{Tr}(X)I/2$，$0<p<1$，没有正 section，但 random-unitary instruments 仍下降。
+
+证明。$E_p$ 线性可逆，唯一右逆为 $Y/p-(1-p)\operatorname{Tr}(Y)I/(2p)$，在 $|0\rangle\langle0|$ 上特征值为 $(1+p)/(2p)$、$-(1-p)/(2p)$，所以不正。对 $J_e(X)=w_eU_eXU_e^\dagger$，$w_e\ge0,\sum_ew_e=1$，酉协变性给 $E_pJ_e=J_eE_p$，直接取 $J'_e=J_e$ 即为 target instrument。$\square$
+
+仅保 branch probability 只检查 $J_e^\dagger I\in\operatorname{ran}E^\dagger$，没有检查全部 boundary effects。直接的 Hadamard 例说明差别：计算基 dephasing $Q$ 将 $|+\rangle\langle+|,|-\rangle\langle-|$ 都送到 $I/2$；单结果 Hadamard branch 的效果为 $I$，两输入事件概率都一，但 $Q\operatorname{Ad}_H$ 分别输出 $|0\rangle\langle0|,|1\rangle\langle1|$。所以这个原概率保留合同没有确定的条件后继。这里 $H|+\rangle=|0\rangle,H|-\rangle=|1\rangle$ 已直接证明反例，不需要外部归属。无 section 时可另找真正 CP $J'_e$ 并核验 intertwining；不能由线性效果闭包直接猜一个未构造的 quantum decoder。
+

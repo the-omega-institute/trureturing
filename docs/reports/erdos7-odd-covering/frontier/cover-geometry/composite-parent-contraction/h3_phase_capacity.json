@@ -125,6 +125,206 @@
     },
     "two_phase_pairs_checked": 525
   },
+  "retained_mixed_repair": {
+    "uniform_multiple105_count": 44,
+    "cases": {
+      "different_guarded": 384,
+      "different_unguarded": 720,
+      "same_guarded": 432,
+      "same_unguarded": 720
+    },
+    "redundant_original35_cases": 48,
+    "case_maxima": {
+      "same_guarded": 40,
+      "same_unguarded": 44,
+      "different_guarded": 39,
+      "different_unguarded": 43
+    },
+    "comparison_extrema": {
+      "same_guarded": {
+        "phases": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "allowed": [
+          15,
+          23
+        ],
+        "double_cells": [
+          [],
+          [
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              1
+            ]
+          ]
+        ],
+        "inventory_ceiling": 40,
+        "original105_singleton": [
+          1,
+          2,
+          2
+        ]
+      },
+      "same_unguarded": {
+        "phases": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2
+        ],
+        "allowed": [
+          14,
+          23
+        ],
+        "double_cells": [
+          [
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              3
+            ]
+          ],
+          [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              1
+            ]
+          ]
+        ],
+        "inventory_ceiling": 44,
+        "original105_singleton": [
+          1,
+          2,
+          3
+        ]
+      },
+      "different_guarded": {
+        "phases": [
+          1,
+          1,
+          2,
+          1,
+          1,
+          2
+        ],
+        "allowed": [
+          18,
+          19
+        ],
+        "double_cells": [
+          [
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        "inventory_ceiling": 39,
+        "original105_singleton": [
+          1,
+          2,
+          1
+        ]
+      },
+      "different_unguarded": {
+        "phases": [
+          1,
+          1,
+          2,
+          1,
+          2,
+          2
+        ],
+        "allowed": [
+          17,
+          19
+        ],
+        "double_cells": [
+          [
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              2
+            ]
+          ]
+        ],
+        "inventory_ceiling": 43,
+        "original105_singleton": [
+          1,
+          2,
+          1
+        ]
+      }
+    },
+    "fresh_labels": [
+      9,
+      45,
+      63
+    ],
+    "joint_period": 315,
+    "original_target_pairs_checked": 19584
+  },
   "literal_noncover_comb_overfull_packet": [
     {
       "modulus": 15015,
@@ -142,5 +342,5 @@
       "phase105": 103
     }
   ],
-  "premises": "One globally number-then-modulus-sum-minimal whole distinct odd cover, H3=1, divisor closure, comparable disjointness. Presence of any105 multiple forces all seven nonunit divisors including105. Each surviving phase has at most2 multiples; the original105 phase has exactly1. The shared four-label repair forces at most3 occupants in any two cells on one row or column of one ternary root, so double-occupied cells form a matching. The old75/46 independent-phase bounds are retained;45/27 are the stronger joint constraints. Finite occupancy extrema are not whole-cover constructions."
+  "premises": "One globally number-then-modulus-sum-minimal whole distinct odd cover, H3=1, divisor closure, comparable disjointness. Presence of any105 multiple forces all seven nonunit divisors including105. Each surviving phase has at most2 multiples; the original105 phase has exactly1. The shared four-label repair forces at most3 occupants in any two cells on one row or column of one ternary root, so double-occupied cells form a matching. The old75/46 independent-phase bounds are retained;45/27 are the stronger joint constraints. The retained mixed repair further gives44 total, or43/40/39 under the actual phase cases; it rules out48 redundant original35 phase choices. The earlier45 and root27 bounds remain valid. Finite occupancy extrema are not whole-cover constructions."
 }

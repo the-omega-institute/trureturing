@@ -1,0 +1,65 @@
+**定理 333.1（实际平方密度的有限总谱误差）。** 在假设333.1下，对定义333.1的两种网格均有
+\[
+\sum_i\left|\int_{a_i}^{a_{i+1}}Z(x)\frac{dx}{x}
+-\omega_iZ(a_i)\right|<\infty,
+\qquad
+\mathcal Q(X)\longrightarrow Q_\infty\in\mathbb R
+\quad(X\to\infty).
+\tag{333.4}
+\]
+有限常数允许依赖网格初点。这将 §325 平方分支的粗积分误差加强为具有有限极限的误差。
+
+**证明。** 先从同一经典 PNT 生产导数预算，而非只使用 Chebyshev 粗界。置 $v=\sqrt{\log x}$。当 $x\ge\max\{x_0,e\}$ 时，对 $t\ge x$，核 $k(t)=(1+\log t)/(t^2\log^2t)$ 满足
+\[
+|\psi(t)-t|k(t)
+\le\frac{2A}{\sqrt{\log x}}
+\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}.
+\]
+经典换元或微积分基本定理给
+\[
+\int_x^\infty\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}\,dt
+=\frac2c e^{-c\sqrt{\log x}},
+\]
+因为被积函数是 $-(2/c)e^{-c\sqrt{\log t}}$ 的导数，且该原函数趋零。因此尾积分绝对收敛，且
+\[
+|\Phi(x)|\le\frac{4A}{c}
+\frac{e^{-c\sqrt{\log x}}}{\sqrt{\log x}}.
+\tag{333.5}
+\]
+代入（325.7），利用 $\log x+2\le3\log x$、$\log x+1\le2\log x$，得到同源点值及几乎处处导数界
+\[
+|Z(x)|\le C\sqrt{x\log x}\,e^{-c\sqrt{\log x}},
+\qquad
+|Z'(x)|\le C\frac{\sqrt{\log x}}{\sqrt x}
+ e^{-c\sqrt{\log x}}.
+\tag{333.6}
+\]
+可取 $C$ 大于 $4A/c$ 及 $A(6/c+2)$；有限初段的积分误差由连续性保证有限；如需共同有限导数界，则另用（325.7）及局部 $\psi$ 有界性，不从绝对连续性单独推断导数有界。
+
+普通平方网格满足 $a_j\asymp j^2$、$a_{j+1}-a_j\asymp j$、$a_{j+1}\le2a_j$。由（333.6）在每格取共同导数界，再使用（330.6），逐格绝对误差至多
+\[
+C'\frac{\sqrt{\log j}}j e^{-c'\sqrt{\log j}}
+\tag{333.7}
+\]
+其中 $c'>0$ 固定。此正函数充分晚时递减，经典积分比较及 $u=\sqrt{\log t}$ 给可和性，因为相应尾积分等于 $2\int u^2e^{-c'u}\,du$ 的尾部，有限。
+
+Fibonacci 块上 $x\asymp F_k$、$\log x\asymp\log F_k$，故可统一取
+\[
+M_k=C_0\frac{\sqrt{\log F_k}}{\sqrt{F_k}}
+ e^{-c_0\sqrt{\log F_k}},\qquad C_0,c_0>0.
+\tag{333.8}
+\]
+本块使用同一个 $M_k$。由 $b_k\asymp\sqrt{F_k}$ 和（330.11），全部叶的绝对谱误差之和至多
+\[
+\beta_k=C_1\sqrt{\log F_k}\,e^{-c_0\sqrt{\log F_k}}.
+\tag{333.9}
+\]
+经典 Fibonacci 几何增长给 $\log F_k\asymp k$，从而 $\sum\beta_k<\infty$。例如按 $n^2\le k<(n+1)^2$ 分组，每组至多 $2n+1$ 项，每项不超过 $C(n+1)e^{-c_2n}$，组总量为 $O((n+1)^2e^{-c_2n})$，由指数级数乘多项式的经典可和性得出。
+
+这些比较只是在实际网格上应用经典积分与级数估计。绝对可和的逐格误差使完整格子截止的 $\mathcal Q$ 趋于有限常数。还需处理所有实数 $X$：由（333.6）及两种网格的最大格宽 $O(\sqrt x)$，任一末格的部分积分绝对值至多
+\[
+C_2\sqrt{\log a_i}\,e^{-c_3\sqrt{\log a_i}}\longrightarrow0.
+\tag{333.10}
+\]
+在 Fibonacci 块内部，尚未加到完整块末的误差绝对总和不超过 $\beta_k\to0$。所以完成格左和的任意实数截止也趋于同一个误差常数，得到（333.4）。$\square$
+

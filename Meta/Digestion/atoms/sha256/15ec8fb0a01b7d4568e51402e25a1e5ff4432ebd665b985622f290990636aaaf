@@ -1,0 +1,43 @@
+**命题 324.2（半预算以下的实际平方根空窗与正差额）。** 固定 $\kappa>0$ 和 $0<\eta<\kappa/2$，令 $Q_C=\lfloor e^{\kappa\sqrt P}\rfloor$、$K_C=\lceil e^{\eta\sqrt P}\rceil$。每个充分大的实际 CA宿主都有一个乘子 $1\le t_C\le Q_C$，使同一整数 $N_C=t_CC$ 满足
+
+$$
+\begin{gathered}
+\|N_C\varphi\|<1/K_C,\qquad
+\log t_C\ge(\kappa-2\eta-o(1))\sqrt P,\\
+e^\gamma(\kappa-2\eta)-o(1)
+\le W(N_C)-W(C)
+\le e^\gamma\kappa+o(1),\\
+h(N_C)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2.
+\end{gathered}
+\tag{324.6}
+$$
+
+证明。取
+
+$$
+\beta_P=\frac12-\frac{2\log\log P}{\log P}.
+\tag{324.7}
+$$
+
+它最终位于命题324.1的统一参数区间，且 $P^{\beta_P}=\sqrt P/(\log P)^2$，因此 $\log M_C(\beta_P\mathcal A_P)=O(\sqrt P/\log P)=o(\sqrt P)$。原相位命中集合 $\mathcal H_C=\{1\le t\le Q_C:\|tC\varphi\|<1/K_C\}$ 由 §322 至少有 $Q_C/(4K_C)$ 个元素。在这同一集合上使用（324.3）的非负总和上界，至少有一个实际乘子满足
+
+$$
+\mathcal D_C(t_C)\ge\log Q_C-
+\frac{\log(4K_C)+\log M_C(\beta_P\mathcal A_P)-\log(1-\beta_P)}{\beta_P}
+=(\kappa-2\eta-o(1))\sqrt P.
+\tag{324.8}
+$$
+
+$\mathcal D_C(t_C)\le\log t_C$ 自动给出所需大小下界，无须先从相位命中中删去小乘子再对响应作独立筛选。
+
+对全部 $t\le Q_C$，令 $\ell=\log t$、$v=\log F_C(t)$。同源价格给 $0\le v\le\epsilon\ell=O_\kappa((\sqrt P\log P)^{-1})$。在精确余量账本（317.4）中统一展开 $\log(1+\ell/\log C)$ 与 $e^v-1$，再使用 $\log C\sim P$、$Z(C)\sim e^\gamma\log P$ 以及既有归一化运输，得到
+
+$$
+W(tC)-W(C)=\frac{e^\gamma}{\sqrt P}\mathcal D_C(t)+o(1).
+\tag{324.9}
+$$
+
+二次项的归一化误差分别为 $O_\kappa(P^{-1/2})$ 与 $O_\kappa((\sqrt P\log P)^{-1})$；一阶系数替换只使用已有渐近。根尺度改变项仍由 $\Delta(C)\to0$ 控制，不假设 $W(C)$ 有界。将（324.8）及 $0\le\mathcal D_C(t_C)\le\kappa\sqrt P$ 代入即得差额界。真实单位位、null深度、接缝和正值End直接复用 §323 的严格相位来源接口。$\square$
+

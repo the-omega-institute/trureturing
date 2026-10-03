@@ -1,0 +1,31 @@
+### 定义 297.1 固定来源的时间重采样法则
+
+固定 §296 的 $H=115920$、$Q=5040$ 与两个自然来源 $(a_\pm,b_\pm)$，记
+\[
+g_\pm(k)=\gcd(H,N_k(a_\pm,b_\pm)),\qquad
+D_H=\{d>0:d\mid H\}.
+\]
+一个时间重采样由实权重
+\[
+\omega_{\epsilon,k}\ge0,
+\qquad \epsilon\in\{+,-\},\quad 1\le k\le120,
+\qquad \sum_{\epsilon,k}\omega_{\epsilon,k}=1
+\]
+定义。它在 gcd 值上的概率法则为
+\[
+\nu_\omega(d)=\sum_{\epsilon,k}\omega_{\epsilon,k}[g_\epsilon(k)=d],
+\qquad d\in D_H.
+\]
+允许每个“来源—时刻”有独立权重，而不只允许混合两个均匀周期。§296 已证明 gcd 探针以 $120$ 为周期，所以任意有限或可求和的后续时间概率采样都可按周期折回此有限权重形式。
+
+均匀翻译相位的 gcd 值法则由式（273.1）给出：
+\[
+\mu_H(d)=\frac{\varphi(H/d)}H,\qquad d\in D_H.
+\]
+以下全变差距离均在 $D_H$ 上定义：
+\[
+\operatorname{TV}(\nu,\mu_H)
+=\frac12\sum_{d\in D_H}|\nu(d)-\mu_H(d)|.
+\]
+它不等同于完整模 $H$ 剩余类上的法则距离。
+
