@@ -34,6 +34,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/Rule84ModThreeCenterColumn.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nersissian-2026-rule84-mod-three-center-column` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/Rule84ModThreeCenterColumn.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nersissian-2026-rule84-mod-three-center-column","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/Rule84ModThreeCenterColumn.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tigran Nersissian (2026). *Diagonal Bases and Diagonal Periods of Elementary Cellular Automata*. DOI: [10.48550/arXiv.2609.25078](https://doi.org/10.48550/arXiv.2609.25078). URL: <https://arxiv.org/abs/2609.25078v1>.

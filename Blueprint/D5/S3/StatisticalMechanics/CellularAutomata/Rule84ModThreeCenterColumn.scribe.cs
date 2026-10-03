@@ -22,16 +22,20 @@ internal sealed class Rule84ModThreeCenterColumnDocument : IScribeDocumentDefini
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The pattern holds for all time", Disp(F.Id("claim")),
                 "The half-plane x < 0 remains zero by induction on time, since the polynomial vanishes when its left and center inputs are zero. From time 1 onward, every length-seven window starting at x ≥ −5 lies in one of three finite languages, indexed by time modulo three. They have sizes 35, 37 and 38. Every compatible length-nine word maps to a word in the next language. The distinguished window at x = −5 cycles through 0000011, 0000020 and 0000021 at phases 1, 2 and 0; its left input is zero, and its neighboring window controls the right input. Induction preserves both the language membership and this boundary word. Its sixth letter is the value at x = 0, yielding 1, 2 and 2 in the three phases.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nersissian-2026-rule84-mod-three-center-column"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
         string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create("rule84-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => new Formula.Integers();
