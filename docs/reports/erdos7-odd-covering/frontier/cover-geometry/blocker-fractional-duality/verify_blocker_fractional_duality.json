@@ -1,0 +1,203 @@
+{
+  "exact_checks": 67475,
+  "failures": [],
+  "representative_checks": 11,
+  "schema": "section243_blocker_fractional_duality_v1",
+  "scope": {
+    "arithmetic": "all LP values and certificates use Fraction and exact Gaussian elimination",
+    "exhaustive": "all option families on universes n=0..3, one/two labels (three labels for n<=2), two positive integer weight vectors",
+    "meaning": "finite audit of the blocker LP pair; no unrestricted whole-cover or EB1 conclusion",
+    "representatives": "three one-label and two two-label systems at each of n=4,5"
+  },
+  "status": "PASS",
+  "strict_integrality_gaps": [
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        85
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        160
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        0,
+        85
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        0,
+        160
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        8,
+        85
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        8,
+        160
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        9,
+        85
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "fractional": "3/2",
+      "gap": "4/3",
+      "integral": 2,
+      "label_indices": [
+        9,
+        160
+      ],
+      "n": 3,
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "catalogue_size": 1,
+      "instances": 6,
+      "max_labels": 3,
+      "universe_size": 0,
+      "weights_per_instance": 2
+    },
+    {
+      "catalogue_size": 3,
+      "instances": 38,
+      "max_labels": 3,
+      "universe_size": 1,
+      "weights_per_instance": 2
+    },
+    {
+      "catalogue_size": 15,
+      "instances": 1630,
+      "max_labels": 3,
+      "universe_size": 2,
+      "weights_per_instance": 2
+    },
+    {
+      "catalogue_size": 255,
+      "instances": 65790,
+      "max_labels": 2,
+      "universe_size": 3,
+      "weights_per_instance": 2
+    }
+  ],
+  "triangle_gap": {
+    "fractional_cover": "3/2",
+    "fractional_packing": "3/2",
+    "integral_lambda": 2,
+    "integrality_gap": "4/3",
+    "minimal_blockers": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "options": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "universe_size": 3,
+    "weights": [
+      1,
+      1,
+      1
+    ]
+  }
+}
