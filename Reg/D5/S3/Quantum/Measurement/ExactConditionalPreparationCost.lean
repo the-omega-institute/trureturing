@@ -13,7 +13,6 @@ open Lean Elab Command
 open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
 
-local notation "kact" => fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X
 
 noncomputable section
 namespace Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
@@ -43,23 +42,23 @@ def arena : Arena where
     (R : Matrix ι ι ℂ) (hR : R.PosDef),
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ), ExactPreparationContract R K →
       ∃ c : ℝ, 0 < c ∧ ∀ X : Matrix ι ι ℂ,
-        kact K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) ∧
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) ∧
     (∀ c : ℝ, 0 < c →
       let Kc : Fin 1 → Matrix ι ι ℂ := fun _ =>
         (Real.sqrt c) • CFC.sqrt R;
       (∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
-        0 < (kact Kc ρ).trace.re ∧
-        kact Kc ρ = ((kact Kc ρ).trace / (R * ρ).trace) •
+        0 < ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ).trace.re ∧
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ = (((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kc ρ).trace / (R * ρ).trace) •
           (CFC.sqrt R * ρ * CFC.sqrt R)) ∧
       (TraceNonincreasing Kc ↔ (1 - c • R).PosSemidef)) ∧
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ) (c : ℝ), 0 < c →
       (∀ X : Matrix ι ι ℂ,
-        kact K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) →
+        (fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K X = (c : ℂ) • (CFC.sqrt R * X * CFC.sqrt R)) →
       (TraceNonincreasing K ↔ (1 - (c : ℂ) • R).PosSemidef)) ∧
     (∀ {m : ℕ} (K : Fin m → Matrix ι ι ℂ), ExactPreparationContract R K →
       TraceNonincreasing K → ∃ ρ : Matrix ι ι ℂ,
         ρ.PosSemidef ∧ ρ.trace = 1 ∧
-        (kact K ρ).trace.re ≤
+        ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace.re ≤
           leastEigenvalue R hR / greatestEigenvalue R hR) ∧
     (let Kopt : Fin 1 → Matrix ι ι ℂ := fun _ =>
         (((1 / Real.sqrt (greatestEigenvalue R hR) : ℝ) : ℂ) • CFC.sqrt R);
@@ -69,11 +68,11 @@ def arena : Arena where
         (Kopt 0)ᴴ * Kopt 0 + Kfailᴴ * Kfail = 1 ∧
         ∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
           leastEigenvalue R hR / greatestEigenvalue R hR ≤
-            (kact Kopt ρ).trace.re) ∧
+            ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) Kopt ρ).trace.re) ∧
     ((∃ (m : ℕ) (K : Fin m → Matrix ι ι ℂ),
         ExactPreparationContract R K ∧ TraceNonincreasing K ∧
         ∀ ρ : Matrix ι ι ℂ, ρ.PosSemidef → ρ.trace = 1 →
-          (kact K ρ).trace = 1) ↔
+          ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace = 1) ↔
       ∃ scalar : ℝ, 0 < scalar ∧
         Q.readout () ι R = (scalar : ℂ) • 1)
 
@@ -90,7 +89,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
         ExactPreparationContract 1 K ∧ TraceNonincreasing K ∧
         ∀ ρ : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ,
           ρ.PosSemidef → ρ.trace = 1 →
-          (kact K ρ).trace = 1 := by
+          ((fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X) K ρ).trace = 1 := by
     exact (exact_conditional_preparation_cost
       (R := (1 : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ))
         Matrix.PosDef.one).2.2.2.2.2.mpr

@@ -11,9 +11,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.Support.PntAuditFacts
 open LeanInformationAudit
 
-local notation "ζ" => riemannZeta
-local notation "ζ'" => deriv ζ
-local notation "𝓜" => mellin
 
 noncomputable section
 

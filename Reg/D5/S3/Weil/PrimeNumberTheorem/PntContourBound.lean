@@ -11,9 +11,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.Support.PntAuditFacts
 open LeanInformationAudit
 
-local notation "ζ" => riemannZeta
-local notation "ζ'" => deriv ζ
-local notation "𝓜" => mellin
 
 noncomputable section
 theorem Smooth1LeOne {ν : ℝ → ℝ} (νnonneg : ∀ x > 0, 0 ≤ ν x)
@@ -117,7 +114,7 @@ theorem Smooth1MellinDifferentiable {Ψ : ℝ → ℝ} {ε : ℝ} (diffΨ : Cont
     (suppΨ : Ψ.support ⊆ Icc (1 / 2) 2) (hε : ε ∈ Ioo 0 1)
     (Ψnonneg : ∀ x > 0, 0 ≤ Ψ x) (mass_one : ∫ x in Ioi 0, Ψ x / x = 1)
     {s : ℂ} (hs : 0 < s.re) :
-    DifferentiableAt ℂ (𝓜 (fun x ↦ (Smooth1 Ψ ε x : ℂ))) s := by
+    DifferentiableAt ℂ (mellin (fun x ↦ (Smooth1 Ψ ε x : ℂ))) s := by
   apply mellin_differentiableAt_of_isBigO_rpow_exp zero_lt_one _ _ _ hs
   · apply ContinuousOn.locallyIntegrableOn _ (by measurability)
     apply continuousOn_of_forall_continuousAt
@@ -139,7 +136,7 @@ theorem Smooth1MellinDifferentiable {Ψ : ℝ → ℝ} {ε : ℝ} (diffΨ : Cont
 
 theorem joint_zeta_rectangle : ∃ σ₂ σ₁ : ℝ,
     σ₂ ∈ Ioo 0 1 ∧ σ₁ ∈ Ioo σ₂ 1 ∧ LogDerivZetaIsHoloSmall σ₂ ∧
-    HolomorphicOn (ζ' / ζ) ((Icc σ₁ 2 ×ℂ Icc (-4) 4) \ {1}) := by
+    HolomorphicOn ((deriv riemannZeta) / riemannZeta) ((Icc σ₁ 2 ×ℂ Icc (-4) 4) \ {1}) := by
   obtain ⟨a, ha, hzero⟩ := ZetaNoZerosInBox 4
   let σ₂ : ℝ := max a (1 / 2)
   have hσ₂pos : 0 < σ₂ := by dsimp [σ₂]; bound
@@ -147,7 +144,7 @@ theorem joint_zeta_rectangle : ∃ σ₂ σ₁ : ℝ,
   let σ₁ : ℝ := (σ₂ + 1) / 2
   have horder : σ₂ < σ₁ := by dsimp [σ₁]; linarith
   have hσ₁lt : σ₁ < 1 := by dsimp [σ₁]; linarith
-  have hb : HolomorphicOn (fun s => ζ' s / ζ s)
+  have hb : HolomorphicOn (fun s => (deriv riemannZeta) s / riemannZeta s)
       ((Icc σ₂ 2 ×ℂ Icc (-4) 4) \ {1}) := by
     apply LogDerivZetaHoloOn (by simp)
     intro s hs
@@ -156,7 +153,7 @@ theorem joint_zeta_rectangle : ∃ σ₂ σ₁ : ℝ,
       (le_trans (le_max_left a (1 / 2)) hmem.1.1)
     simpa only [Complex.re_add_im] using hz
   refine ⟨σ₂, σ₁, ⟨hσ₂pos, hσ₂lt⟩, ⟨horder, hσ₁lt⟩, ?_, ?_⟩
-  · change HolomorphicOn (fun s => ζ' s / ζ s)
+  · change HolomorphicOn (fun s => (deriv riemannZeta) s / riemannZeta s)
       ((uIcc σ₂ 2 ×ℂ uIcc (-3) 3) \ {1})
     rw [uIcc_of_le (by linarith), uIcc_of_le (by norm_num)]
     apply hb.mono
@@ -177,12 +174,12 @@ theorem smoothed_integrand_holo {ν : ℝ → ℝ}
     HolomorphicOn (SmoothedChebyshevIntegrand ν (1 / 2) 4)
       ((Icc σ₂ 2 ×ℂ Icc (-3) 3) \ {1}) := by
   have holo2 := hholo
-  change HolomorphicOn (fun s => ζ' s / ζ s)
+  change HolomorphicOn (fun s => (deriv riemannZeta) s / riemannZeta s)
     ((uIcc σ₂ 2 ×ℂ uIcc (-3) 3) \ {1}) at holo2
   rw [uIcc_of_le (by linarith [hσ₂.2]), uIcc_of_le (by norm_num)] at holo2
   apply DifferentiableOn.mul
   · apply DifferentiableOn.mul
-    · rw [(by ext; ring : (fun s => -ζ' s / ζ s) = (fun s => -(ζ' s / ζ s)))]
+    · rw [(by ext; ring : (fun s => -(deriv riemannZeta) s / riemannZeta s) = (fun s => -((deriv riemannZeta) s / riemannZeta s)))]
       exact DifferentiableOn.neg holo2
     · intro s hmem
       apply DifferentiableAt.differentiableWithinAt
@@ -226,11 +223,11 @@ def arena : Arena where
     {σ₂ : ℝ} (holoSmall : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1),
     ∃ C₅ > 0, ∀ (X ε T σ₁ : ℝ), 3 < X → 0 < ε → ε < 1 → 3 < T →
       0 < σ₁ → σ₁ < 1 → σ₂ < σ₁ →
-      HolomorphicOn (ζ' / ζ) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
+      HolomorphicOn ((deriv riemannZeta) / riemannZeta) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
       HolomorphicOn (SmoothedChebyshevIntegrand SmoothingF ε X)
         (Icc σ₂ 2 ×ℂ Icc (-3) 3 \ {1}) →
       ‖SmoothedChebyshev SmoothingF ε X -
-          𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
+          mellin (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
         r.readout () ⟨SmoothingF, σ₂, X, ε, T, σ₁⟩ C₅
 
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -254,11 +251,11 @@ def registration : Registration arena
     {σ₂ : ℝ} (holoSmall : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1),
     ∃ C₅ > 0, ∀ (X ε T σ₁ : ℝ), 3 < X → 0 < ε → ε < 1 → 3 < T →
       0 < σ₁ → σ₁ < 1 → σ₂ < σ₁ →
-      HolomorphicOn (ζ' / ζ) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
+      HolomorphicOn ((deriv riemannZeta) / riemannZeta) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
       HolomorphicOn (SmoothedChebyshevIntegrand SmoothingF ε X)
         (Icc σ₂ 2 ×ℂ Icc (-3) 3 \ {1}) →
       ‖SmoothedChebyshev SmoothingF ε X -
-          𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
+          mellin (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
         ‖I₁ SmoothingF ε X T‖ + ‖I₂ SmoothingF ε T X σ₁‖ +
         ‖I₃ SmoothingF ε T X σ₁‖ + ‖I₄ SmoothingF ε X σ₁ σ₂‖ +
         C₅ * X ^ σ₂ / ε + ‖I₆ SmoothingF ε X σ₁ σ₂‖ +

@@ -8,7 +8,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry
 
-local notation "F" => Nat.fib
 noncomputable section
 
 abbrev signature : Signature where
@@ -35,19 +34,19 @@ def sourceStatement : Prop := ∀ U : ℕ → ℕ, Hyp21_1 U →
           rank t k (i + 1) = rank t k i - stepSize t (rank t k i) ∧
           (stepSize t (rank t k i) = 1 ∨ stepSize t (rank t k i) = 2)) ∧
         (∀ i : ℕ, i ≤ L →
-          subtreeAt (actualTree (F k + t)) (address t k i) =
-            some (actualTree (F (rank t k i) + t))) ∧
+          subtreeAt (actualTree (Nat.fib k + t)) (address t k i) =
+            some (actualTree (Nat.fib (rank t k i) + t))) ∧
         (∀ i : ℕ, i < L →
-          subtreeAt (actualTree (F k + t))
+          subtreeAt (actualTree (Nat.fib k + t))
               (address t k i ++ [!(retainedBit t (rank t k i))]) =
-            some (actualTree (F (anchorRank t (rank t k i)))) ∧
-          totalCarry (actualTree (F (anchorRank t (rank t k i)))) = 0 ∧
-          totalCarry (actualTree (F (rank t k i) + t)) =
-            totalCarry (actualTree (F (rank t k (i + 1)) + t))) ∧
-        canonicalDefect (F (rank t k L) + t) = widthDefect t ∧
-        totalCarry (actualTree (F k + t)) =
-          totalCarry (actualTree (F (rank t k L) + t)) ∧
-        totalCarry (actualTree (F (rank t k L) + t)) = (widthDefect t : ℤ)
+            some (actualTree (Nat.fib (anchorRank t (rank t k i)))) ∧
+          totalCarry (actualTree (Nat.fib (anchorRank t (rank t k i)))) = 0 ∧
+          totalCarry (actualTree (Nat.fib (rank t k i) + t)) =
+            totalCarry (actualTree (Nat.fib (rank t k (i + 1)) + t))) ∧
+        canonicalDefect (Nat.fib (rank t k L) + t) = widthDefect t ∧
+        totalCarry (actualTree (Nat.fib k + t)) =
+          totalCarry (actualTree (Nat.fib (rank t k L) + t)) ∧
+        totalCarry (actualTree (Nat.fib (rank t k L) + t)) = (widthDefect t : ℤ)
 
 def arena : Arena where
   signature := signature
@@ -62,19 +61,19 @@ def arena : Arena where
           rank t k (i + 1) = rank t k i - stepSize t (rank t k i) ∧
           (stepSize t (rank t k i) = 1 ∨ stepSize t (rank t k i) = 2)) ∧
         (∀ i : ℕ, i ≤ L →
-          subtreeAt (actualTree (F k + t)) (address t k i) =
-            some (actualTree (F (rank t k i) + t))) ∧
+          subtreeAt (actualTree (Nat.fib k + t)) (address t k i) =
+            some (actualTree (Nat.fib (rank t k i) + t))) ∧
         (∀ i : ℕ, i < L →
-          subtreeAt (actualTree (F k + t))
+          subtreeAt (actualTree (Nat.fib k + t))
               (address t k i ++ [!(retainedBit t (rank t k i))]) =
-            some (actualTree (F (anchorRank t (rank t k i)))) ∧
-          R.readout () () (F (anchorRank t (rank t k i))) = 0 ∧
-          R.readout () () (F (rank t k i) + t) =
-            R.readout () () (F (rank t k (i + 1)) + t)) ∧
-        canonicalDefect (F (rank t k L) + t) = widthDefect t ∧
-        R.readout () () (F k + t) =
-          R.readout () () (F (rank t k L) + t) ∧
-        R.readout () () (F (rank t k L) + t) = (widthDefect t : ℤ)
+            some (actualTree (Nat.fib (anchorRank t (rank t k i)))) ∧
+          R.readout () () (Nat.fib (anchorRank t (rank t k i))) = 0 ∧
+          R.readout () () (Nat.fib (rank t k i) + t) =
+            R.readout () () (Nat.fib (rank t k (i + 1)) + t)) ∧
+        canonicalDefect (Nat.fib (rank t k L) + t) = widthDefect t ∧
+        R.readout () () (Nat.fib k + t) =
+          R.readout () () (Nat.fib (rank t k L) + t) ∧
+        R.readout () () (Nat.fib (rank t k L) + t) = (widthDefect t : ℤ)
 
 theorem source_bridge : sourceStatement ↔ arena.Law actual := Iff.rfl
 
