@@ -107,6 +107,54 @@ $$
 
 for some $c>0$ and finite $R_0$. Neither constant is numerically certified here. This applies the existing saddle supplier and a standard positive average; it is not a new saddle theorem, zero computation or RH criterion.
 
+## Connect the average to the existing sign detector
+
+The average retains the detection mechanism of [the volume, §§28–29](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md), without recovering each pointwise $q(uR)$ from its average. This is a paper-level application of that existing argument, not a result attributed to Tlas. With exactly the kernel of §30,
+
+$$
+J(v)=\int_1^b\frac{w(u)}uK(v/u)\,du,
+\qquad K=\phi*\phi,
+\qquad
+\widehat J(z)=\int_1^bw(u)\Phi(uz)^2\,du,
+$$
+
+the complete scalar is
+
+$$
+\bar q(R)=2\sum_{\gamma>0}m_\rho p(z_\rho)\widehat J(Rz_\rho).
+$$
+
+Here $J$ is real, even and smooth, has exact support $[-b,b]$, and is positive on $(-b,b)$; these properties are already supplied by §30. The factor $1/u$ belongs in $J$, and introduces no further factor in $\widehat J$. In terms of the unnormalized form, $R^3\bar q(R)=\int_1^bw(u)u^{-3}\mathcal W(uR)\,du$.
+
+Apply the existing detector with $K$ replaced by $J$. The initial Laplace half-plane becomes $\Re s>b/2$. Its single-zero representations are
+
+$$
+I_z^J(s)=\frac1z\int_0^\infty
+ e^{-s(1+t/z)}\widehat J(z+t)\,dt,
+\qquad
+F_z^J(s)=\int_{-b}^bJ(v)\frac{e^{-(s+izv)}}{s+izv}\,dv.
+$$
+
+They agree in $\Re(s/z)>0$, first by the same Fubini calculation for real $s>b/2$ and then by analytic continuation. Arbitrary polynomial Fourier decay on a fixed horizontal strip remains uniform after integrating over $1\le u\le b$, and pays the unchanged degree-six factor $p$ and actual zero multiplicities. The horizontal-ray cone is still $\Re s>|\Im s|/(2\gamma_*)$, where $\gamma_*=\inf_{\gamma>0}\gamma>0$.
+
+Writing $\lambda_\rho=iz_\rho=\rho-1/2$, the cuts are now $[-b\lambda_\rho,b\lambda_\rho]$. On a compact set $\Re s\ge\delta>0$, $|\Im s|\le T$, membership $s=t\lambda_\rho$ implies $|t|\ge2\delta$ and $\gamma\le T/(2\delta)$. The cuts are therefore locally finite; the finite-low-term and convergent-horizontal-tail patching remains valid. Their complement in the positive half-plane is connected by outward radial escape to $\Re s>b/2$.
+
+If an off-line zero exists, choose the outermost zero on one ray, as in §29. Its exposed endpoint is $b\lambda_0$. The Cauchy jump at $s=\lambda_0t$, for $t<b$ sufficiently near $b$, is
+
+$$
+\pm\frac{2\pi i}{\lambda_0}J(t)
+$$
+
+multiplied by the unchanged nonzero coefficient $2m_{\rho_0}p(z_{\rho_0})$. Positivity of $J(t)$ makes this jump nonzero despite its flat endpoint. Eventual nonnegativity of $\bar q$ would, by the already-used Landau–Widder argument, make its actual Laplace transform holomorphic throughout $\Re s>0$, contradicting that jump. Conversely RH makes every real-frequency square in $\widehat J(R\gamma)$ nonnegative. Thus the existing proof supplies the application
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\exists R_0\ge1\ \forall R\in\mathbb R,
+\quad R\ge R_0\Longrightarrow\bar q(R)\ge0.
+$$
+
+This requires all sufficiently large real scales. It does not follow from one average, a bounded scale interval or sampled scales. No factorization of $\widehat J$ as the Fourier square of another compact test is needed. The application validates the signed target; it does not supply its missing sign estimate.
+
 ## What the strengthened reserve pays
 
 For actual zeros $\rho=\beta+i\gamma$, put $z_\rho=\gamma-i(\beta-1/2)$ and keep the analytic square. Consider precisely the infinite subset
