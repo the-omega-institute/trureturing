@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight
 import Reg.Support.GraphCutRegistrationTemplates
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses

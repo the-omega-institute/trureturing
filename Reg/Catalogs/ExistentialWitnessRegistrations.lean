@@ -1,6 +1,5 @@
 import Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape
 import Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

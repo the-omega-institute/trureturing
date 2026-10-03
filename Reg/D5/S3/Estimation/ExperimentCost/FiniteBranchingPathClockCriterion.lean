@@ -1,7 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.ExperimentCost.FiniteBranchingPathClockCriterion
 import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

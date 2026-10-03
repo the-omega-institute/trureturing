@@ -3,6 +3,7 @@ import codecs
 import hashlib
 import io
 import json
+import re
 import math
 import os
 import signal

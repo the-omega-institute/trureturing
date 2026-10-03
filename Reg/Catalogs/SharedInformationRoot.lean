@@ -1,7 +1,6 @@
 import Reg.Catalogs.UnifiedCausalRegistration
 import Reg.Catalogs.InformationRoot
 import Reg.Support.SharedInformationRootContract
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

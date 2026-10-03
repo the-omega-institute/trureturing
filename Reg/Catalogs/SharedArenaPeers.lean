@@ -4,7 +4,6 @@ import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers
 import Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.SharedArenaPeers
 import Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
