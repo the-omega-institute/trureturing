@@ -56,3 +56,16 @@ than the larger terminal surplus eleven. The archive identity above and
 the source attribution and local kernel-verification boundary remain the
 same; reading this corollary is not an independent verification of the
 whole arbitrary-height argument.
+
+The same pinned manuscript's corollary
+cor:strengthened-lcm-lower-bound also states the explicit lower bound
+
+\[
+  \operatorname{lcm}(D)\ge 9{,}704{,}539{,}845
+\]
+
+for every finite distinct odd covering family in scope.  This is stronger
+than the product of the first nine odd primes
+\(3{,}234{,}846{,}615\).  The bound is an attributed source result with the
+same arbitrary-height verification boundary above; it is a reusable
+quantitative restriction, not a local proof of unrestricted noncoverage.
