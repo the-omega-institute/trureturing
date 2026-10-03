@@ -66,8 +66,20 @@ cleanup() {
   local rc="$?"
   trap - EXIT
   if [[ -n "$DRAFT_TAG" ]]; then
-    gh release delete "$DRAFT_TAG" --repo "$REPO" --yes \
-      || { printf 'SCRIBE_RELEASE DraftCleanupFailed tag=%s\n' "$DRAFT_TAG" >&2; rc=1; }
+    TAG="$DRAFT_TAG"
+    RELEASE_STATE_CLEANUP=1
+    if release_state; then
+      case "$STATE" in
+        true)
+          gh release delete "$DRAFT_TAG" --repo "$REPO" --yes \
+            || { printf 'SCRIBE_RELEASE DraftCleanupFailed tag=%s\n' "$DRAFT_TAG" >&2; rc=1; }
+          ;;
+        false|missing) ;;
+      esac
+    else
+      printf 'SCRIBE_RELEASE DraftCleanupFailed tag=%s\n' "$DRAFT_TAG" >&2
+      rc=1
+    fi
   fi
   if [[ -n "$TEMP_DIRECTORY" ]]; then rm -rf -- "$TEMP_DIRECTORY" || rc=1; fi
   exit "$rc"
@@ -85,13 +97,24 @@ release_state() {
   if response="$(gh release view "$TAG" --repo "$REPO" --json isDraft --jq .isDraft 2>&1)"; then
     case "$response" in
       true|false) STATE="$response" ;;
-      *) fail 1 "InvalidReleaseMetadata: tag=$TAG" ;;
+      *)
+        if [[ "${RELEASE_STATE_CLEANUP:-0}" == 1 ]]; then
+          return 1
+        fi
+        fail 1 "InvalidReleaseMetadata: tag=$TAG"
+        ;;
     esac
   else
     rc="$?"
     case "$response" in
       *'release not found'*|*'(HTTP 404)'*) STATE=missing ;;
-      *) printf '%s\n' "$response" >&2; fail "$rc" "ReleaseQueryFailed: tag=$TAG" ;;
+      *)
+        if [[ "${RELEASE_STATE_CLEANUP:-0}" == 1 ]]; then
+          return "$rc"
+        fi
+        printf '%s\n' "$response" >&2
+        fail "$rc" "ReleaseQueryFailed: tag=$TAG"
+        ;;
     esac
   fi
 }
@@ -154,9 +177,10 @@ fi
 if [[ "$STATE" == true ]]; then
   gh release delete "$TAG" --repo "$REPO" --yes || fail "$?" "DraftDeleteFailed: tag=$TAG"
 fi
+DRAFT_TAG="$TAG"
+printf 'SCRIBE_RELEASE draft-requested tag=%s digest=%s\n' "$TAG" "$DIGEST"
 gh release create "$TAG" --repo "$REPO" --draft --target "$TARGET" --title "$TAG" \
   --notes 'Verified Scribe resource pack.' --latest=false || fail "$?" "DraftCreateFailed: tag=$TAG"
-DRAFT_TAG="$TAG"
 printf 'SCRIBE_RELEASE draft-created tag=%s digest=%s\n' "$TAG" "$DIGEST"
 gh release upload "$TAG" "$DIRECTORY/$ASSET" --repo "$REPO" || fail "$?" "UploadFailed: tag=$TAG"
 download_pack

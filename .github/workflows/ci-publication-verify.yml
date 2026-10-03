@@ -181,7 +181,7 @@ jobs:
           set -euo pipefail
           log="$RUNNER_TEMP/scribe-release-publish.log"
           [[ -f "$log" ]] || exit 0
-          tag="$(sed -n 's/^SCRIBE_RELEASE draft-created tag=\(scribe-resources-verify-[0-9a-f]\{64\}\) digest=[0-9a-f]\{64\}$/\1/p' "$log")"
+          tag="$(sed -n 's/^SCRIBE_RELEASE draft-requested tag=\(scribe-resources-verify-[0-9a-f]\{64\}\) digest=[0-9a-f]\{64\}$/\1/p' "$log")"
           [[ -n "$tag" ]] || exit 0
           [[ "$tag" =~ ^scribe-resources-verify-[0-9a-f]{64}$ ]] \
             || { echo 'SCRIBE_RELEASE InvalidCleanupTag' >&2; exit 2; }
