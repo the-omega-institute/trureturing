@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2204.09910v4
 claim: "Conjectures on the generating functions of Hankel determinants of Motzkin path polynomials: reduced denominators and numerator degrees for the columns of the Motzkin triangle (Conjectures 1.2, 1.3) and for a boundary weight s at height zero (Conjecture 2.1)."
 strata_touched:
   - D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinHankel
+  - D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinColumn
 license: citation-only
 triage: anchor
 ---
