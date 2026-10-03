@@ -1,0 +1,13 @@
+**定理 30.7（实际分离约束下的有限容量上界）。** 设 $n\ge11$、$t\in\mathbb N_0$，$F\subseteq\mathcal I_3(n)$ 为非空有限族。若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+t$，则
+
+$$
+\boxed{\quad
+|F|\le M(n-6,t)
+=\sum_{j=0}^{t}2^j\binom{n+j-7}{j},\qquad
+\mathsf{Cap}(n,t)\le\min\{N_n,M(n-6,t)\}.
+\quad}
+\tag{30.12}
+$$
+
+对任意 $r\ge1,t\ge0$，式（30.11）的闭式为 $M(r,t)=\sum_{j=0}^t2^j\binom{r+j-1}{j}$。式（30.12）亦适用于将费用前提替换为 $W(F)\le n+t$ 或 $W_{\mathrm u}(F)\le n+t$ 的情形。
+

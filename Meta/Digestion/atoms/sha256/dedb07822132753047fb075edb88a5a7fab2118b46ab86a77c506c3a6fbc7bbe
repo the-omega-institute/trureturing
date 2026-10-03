@@ -1,0 +1,39 @@
+**定理 30.4（等规模非冲突实际像的七叶分离）。** 对任意不同的 $P,Q\in\mathcal I_3$，若 $n(P)=n(Q)=n$ 且 $\operatorname{NC}(P,Q)$，则
+
+$$
+\boxed{\qquad
+n\ge11,\qquad
+\nu(P,Q)=\nu(Q,P)\ge7,\qquad
+s(P,Q)\le n-7.
+\qquad}
+\tag{30.5}
+$$
+
+未共享叶的常数 $7$ 在实际同组成来源中达到。具体地，
+
+$$
+\begin{gathered}
+P_{13}=\langle C,\langle A,C\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\beta\rangle\rangle\bigr),\\
+Q_{13}=\langle\langle A,C\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\beta\rangle,\beta\rangle\bigr),\\
+c(P_{13})=c(Q_{13})=(5,8)^{\mathsf T},\qquad
+n(P_{13})=n(Q_{13})=13,\qquad s(P_{13},Q_{13})=6.
+\end{gathered}
+\tag{30.6}
+$$
+
+**证明。** 在引理 30.3 的分解中，全部非零大小差的和为零。因此至少有一个孔在 $P$ 侧为原子像，另一个孔在 $Q$ 侧为原子像；只有一种朝向时，所有差同号，不可能相加为零。在这两个不同的孔上，$P$ 分别含有至少 $3$ 和至少 $8$ 片叶，$Q$ 也分别含有至少 $8$ 和至少 $3$ 片叶。其余项非负，故 $n\ge11$。同样，引理 30.2 使 $P$ 在这两孔分别至少有 $2$ 和 $5$ 片未共享叶，$Q$ 分别至少有 $5$ 和 $2$ 片；式（30.4）遂给两侧至少为 $7$。等叶数使两个未共享叶数相等，再用式（30.1）得到共享叶上界。
+
+式（30.6）的前像由替换同态规则直接给出，两个前像字面不同，既有单射性供应像的不同性。比较 $C$ 与 $\langle A,C\rangle$ 时，引理 30.2 的 $X=A,Y=C$ 情形恰共享左侧的三片 $A$ 叶，其他叶均不共享，且共享标签相同。在根的左右孩子处各作一次相反朝向的该比较，所以 $P_{13},Q_{13}$ 满足 $\operatorname{NC}$，恰有以下六个共同带标签叶：
+
+$$
+\begin{array}{c|cccccc}
+u&\mathtt{LLLL}&\mathtt{LLLR}&\mathtt{LLR}&\mathtt{RLLL}&\mathtt{RLLR}&\mathtt{RLR}\\
+\lambda(u)&\beta&\alpha&\beta&\beta&\alpha&\beta
+\end{array}
+\tag{30.7}
+$$
+
+$A$ 的组成为 $(1,2)^{\mathsf T}$，$C$ 的组成为 $(2,3)^{\mathsf T}$，每棵所示树都由一个 $A$ 和两个 $C$ 组成，故组成为 $(5,8)^{\mathsf T}$、叶数为 $13$，两侧各有 $13-6=7$ 片未共享叶。这只取得式（30.5）的分离常数，不给后续容量上界的取等构造。证毕。
+

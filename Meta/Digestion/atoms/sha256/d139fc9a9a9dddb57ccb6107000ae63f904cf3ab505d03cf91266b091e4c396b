@@ -1,0 +1,27 @@
+**定义 30.1（等规模实际像与共享叶）。** 固定定义 23.1、29.1 的 $d=3$ 原始只读合同。来源域仍为全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$，正来源集合为 $\mathcal I_3=\rho^3(\mathcal T)$；来源相等保留字面括号、次序和叶标签。有限评价族的共同叶数只约束评价对象，不给未知输入任何组成、叶数、高度、正性或候选身份承诺。所有有限左右地址均合法，报告仍为同一不变来源的四值，费用仍计真实缓存后的不同实际地址。
+
+对任意树 $P,Q$，记
+
+$$
+\begin{gathered}
+n(P)=|L(P)|,\qquad
+s(P,Q)=|L(P)\cap L(Q)|,\qquad
+\nu(P,Q)=|L(P)\setminus L(Q)|=n(P)-s(P,Q),\\
+\operatorname{NC}(P,Q)\quad\Longleftrightarrow\quad
+\forall u\in L(P)\cap L(Q),\ \lambda_P(u)=\lambda_Q(u).
+\end{gathered}
+\tag{30.1}
+$$
+
+$\operatorname{NC}$ 只要求共享叶地址上的标签一致；它允许在同一地址分别报告叶、分支或不存在。沿用命题 23.3 的字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+B=\langle C,A\rangle.
+\tag{30.2}
+$$
+
+它们的叶数分别为 $2,3,5,8$。由原替换的二叉同态规则，每个 $P\in\mathcal I_3$ 按其前像根类型写成 $A$、$C$ 或 $\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。该前像和相应递归解析的唯一性直接采用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的单射性；这是对既有实际像的解析，不将组成点或任意响应表当作完整树。原语法、替换及编码分别沿用[母卷定义 2.1、3.1、9.1 与定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。
+
