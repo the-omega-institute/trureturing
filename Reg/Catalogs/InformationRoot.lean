@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Core
 import Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.InformationRoot
@@ -9,7 +10,6 @@ import Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot
-import Reg.Support.InformationRootContract
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

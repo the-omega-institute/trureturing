@@ -56,12 +56,6 @@ choices are checked across alternatives. Unrelated mathematical notation and
 mathematical payload expansion remain available. Core numeric instances are
 verified separately by the expression decoder.
 
-The existing arena structure decorators are admitted as direct delegates to the
-core structure elaborators: their module owner, private-aware identity and
-compiled direct delegation shape and marker body SHA-256 are checked. They annotate mathematical arena
-expressions without changing contract fields. Other repository term elaborators
-on metadata syntax fail closed.
-
 The four `Contract` interface modules accept imports, namespace/section
 scaffolding, `open`, `universe`, documentation comments, and bare
 `structure`/`inductive` declarations. Declaration syntax has a finite node
@@ -79,15 +73,10 @@ permission to rejected source commands.
 
 Reg commands also have a complete finite command-kind table in
 `Contract.SourceAudit.ordinaryRegCommands`. Only listed ordinary mathematical
-and legacy registration scaffolding, bare `set_option` and allowed attributes
+scaffolding, bare `set_option` and allowed attributes
 pass. The ordinary parser kinds are `declaration`, `end`, `moduleDoc`,
 `namespace`, `open`, `printAxioms`, `section`, `universe` and `variable` in
-`Lean.Parser.Command`. The legacy kinds in `LeanInformationAudit` are
-`command__`, `registerInformationFiniteSourceTheoremCmd`,
-`registerInformationSourceTheoremCmd`,
-`registerInformationTheoremOccurrenceReadoutCmd`,
-`registerInformationTheoremReadoutCmd`, `sealInformationTheoryCmd` and
-`«command__Constructors_[_,,]»`.
+`Lean.Parser.Command`.
 `in` and `mutual` recursively audit their inner commands. Unknown commands,
 `run_meta`, `run_elab`, macros, syntax, elaborators, initialization and evaluation
 commands receive `contract.reg:metaprogramming_not_allowed`.
@@ -160,19 +149,18 @@ Ordinary modules contain no RootCatalog or Seal; catalog modules contain exactly
 one RootCatalog and no Seal; sealed catalogs contain exactly one of each. Root
 IDs equal their owning module. Missing, extra, duplicate entries and wrong root
 IDs receive `contract.root_structure:*` failures. Expected/source/baseline arrays
-and contributor identities retain the existing snapshot checks. Files at other
-leaves that still use legacy catalog commands have a pre-migration state: the
-path rule imposes ordinary typed-entry obligations. Typed catalog and seal
+and contributor identities retain the existing snapshot checks. Typed catalog and seal
 entries belong in reserved leaves within Reg/Catalogs; D5 registration mirrors
 retain their original addresses.
 
-Typed expected occurrences come only from RootCatalog. `ExpectedDeclaration`
-remains an interface type for negative compatibility probes, but an entry of that
-type always receives `contract.root_structure:independent_expected_not_allowed`.
+Typed expected occurrences come only from RootCatalog. An entry of type
+`ExpectedDeclaration` always receives
+`contract.root_structure:independent_expected_not_allowed`.
 Its decoder and snapshot output are absent; there is no independent-expected
 fallback.
 
-The production report consumes legacy inputs. Typed discovery enforces the
+The production report uses Contract.Discovery/Decoder as its sole input path.
+Typed discovery enforces the
 source command and reference rules above. Catalogs and seals from D5 mirrors
 use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
 `SealedCatalog.lean`. Mirrors retain their registrations at their original paths;
@@ -187,9 +175,8 @@ recorded projections and the pinned compiler's explicitly listed recursor,
 noConfusion, constructor and sizeOf companions. Unknown compiler products
 receive `contract.interface:compiled_non_type`.
 
-Reg source migration uses an external generator to produce the fixed grammar.
-Catalog commands become typed RootCatalog entries, seals become typed Seal
-entries, and local notation is expanded at its use sites and removed.
+Reg sources use the fixed typed declaration grammar. Catalogs use RootCatalog
+entries and seals use Seal entries; local notation is not admitted.
 Mathematical attributes obey the finite attribute grammar above.
 Typed discovery has no evaluation fallback.
 
@@ -290,7 +277,7 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-`InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新其中的 `compatibility_version`。
+`LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新当前 wire 的 `compatibility_version`。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
@@ -347,3 +334,19 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
+
+The interface consists of typed contract structures and inductives. Every Reg
+entry uses `def x.{u…} : Contract.<type> := {…}` with literal metadata and typed
+mathematical fields. The report reconstructs companions, E1–E8 assessments and
+seal proofs inside its kernel environment. Runtime DTOs live in Impl; no recorder
+or registration command runs during Reg compilation. Implementation edits rebuild
+no Reg modules; report reuse depends on Lake inputs and the manual semantic
+version. Interface edits atomically migrate every use, remove the old path and
+bump that version. Historical compatibility is not supported. Existing
+representation upgrades preserving mathematical evidence and registration
+semantics are outside the registration pause.
+
+The report driver calls the Inspector once per completed target. The consumer
+serializes that target before the driver releases its Environment and proof
+objects. Cross-target collision checks retain only names and digest strings;
+there is no array of target environments or constant bodies.

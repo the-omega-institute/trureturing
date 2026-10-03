@@ -19,7 +19,7 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S1.Words.Powers _root_.D5.S0.Tower.GoldenGapWord
 
-noncomputable def _root_.D5.S1.Words.Powers.substLength_pos.«Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.strictArena (∀ (b : Bool), @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) (@List.length.{0} Bool (D5.S0.Tower.GoldenGapWord.subst b))) D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positiveRealization := D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positive_bridge
+theorem _root_.D5.S1.Words.Powers.substLength_pos.«Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.strictArena (∀ (b : Bool), @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) (@List.length.{0} Bool (D5.S0.Tower.GoldenGapWord.subst b))) D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positiveRealization := D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.positive_bridge
 
 
 
@@ -58,7 +58,7 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S1.Words.Powers _root_.D5.S0.Tower.GoldenGapWord
 
-noncomputable def _root_.D5.S1.Words.Powers.substLength_le_two.«Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.weakArena (∀ (b : Bool), @LE.le.{0} Nat instLENat (@List.length.{0} Bool (D5.S0.Tower.GoldenGapWord.subst b)) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upperRealization := D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upper_bridge
+theorem _root_.D5.S1.Words.Powers.substLength_le_two.«Reg.D5.S1.Words.Powers.GoldenDesubstitution/D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.objectArena/substitutionBounds».__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.weakArena (∀ (b : Bool), @LE.le.{0} Nat instLENat (@List.length.{0} Bool (D5.S0.Tower.GoldenGapWord.subst b)) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upperRealization := D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations.upper_bridge
 
 
 

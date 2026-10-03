@@ -178,7 +178,7 @@ class CompareTests(unittest.TestCase):
 
     def test_duplicate_json_members_and_nonfinite_numbers(self):
         self.assertEqual(self.run_compare(report(), report(), raw='{"schema":"a","schema":"b","modules":[]}')[0], 2)
-        raw = json.dumps(report()).replace('"compatibility_version": 17', '"compatibility_version": NaN')
+        raw = json.dumps(report()).replace('"compatibility_version": 18', '"compatibility_version": NaN')
         self.assertEqual(self.run_compare(report(), report(), raw=raw)[0], 2)
 
     def test_duplicate_modules_and_declarations(self):

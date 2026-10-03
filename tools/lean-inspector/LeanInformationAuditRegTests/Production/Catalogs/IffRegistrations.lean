@@ -1,4 +1,4 @@
-import Reg.Catalogs.IffRegistrations
+import Reg.Catalogs.IffRegistrations.SealedCatalog
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Assessment

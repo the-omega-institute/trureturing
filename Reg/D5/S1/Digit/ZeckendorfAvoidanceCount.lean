@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfAvoidanceCount
 import Reg.Support.DependentFamily
@@ -64,7 +64,7 @@ def registration : Registration arena (arena.Law actual) where
     norm_num [actual,realize,legalWords,avoid [] (by simp),
       avoid [0] (by simp),avoid [1] (by simp)]
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfAvoidanceCount
   coordinates := #[]
   readouts := #[{path := #["body","fn","arg","arg"], stateOperand := some #["arg","arg","fn","arg"]}] }

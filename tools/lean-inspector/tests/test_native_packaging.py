@@ -192,7 +192,7 @@ class NativeCompilerConsumerTests:
     def test_mapped_image_matches_loaded_bytes(self):
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
         self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
@@ -207,7 +207,7 @@ private structure RegionLayout where
 @[noinline, export lean_dtr_mapped_image_match]
 unsafe def mappedImageMatch (_root : NonScalar) (_coordinates : Array USize)
     (_bytes : ByteArray) : Nat := 0
-unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
   let env ← getEnv
   let some region := env.header.regions.find? (·.filePath.toString.endsWith "D5/Alone.olean")
     | throwError "setup: missing loaded native fixture"
@@ -227,7 +227,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
     ("mapped_image_root_out_of_range_falls_back", toJson (!test (coordinates.set! 2 view.size) bytes)),
     ("mapped_image_scalar_root_falls_back", toJson (mappedImageMatch (unsafeCast (0 : Nat)) coordinates bytes == 0))]
   let debug := s!"mapped={view.isMemoryMapped} size={view.size} base={view.baseAddr} offset={view.bufferOffset} root={ptrAddrUnsafe view.root}"
-  return names.map (fun _ => (Json.mkObj [("checks", checks), ("debug", toJson debug)], #[], env))
+  for name in names do consume name (Json.mkObj [("checks", checks), ("debug", toJson debug)]) #[] env
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
@@ -260,7 +260,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         # These fixture records test lifetime only, not binding admission.
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
   Lean.registerSimplePersistentEnvExtension {
     addEntryFn := fun entries entry => entries.push entry
@@ -268,13 +268,14 @@ initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array
 ''')
         self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
   let env ← Lean.getEnv
   let entries := fixtureExtension.getState env
-  return names.map (fun name => (Lean.Json.mkObj [
+  for name in names do
+    consume name (Lean.Json.mkObj [
     ("fixture_root", Lean.toJson name.toString),
     ("fixture_modules", Lean.toJson env.header.moduleNames.size),
-    ("fixture_entries", Lean.toJson entries.size)], #[], env))
+    ("fixture_entries", Lean.toJson entries.size)]) #[] env
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
@@ -308,12 +309,12 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         # records make no declaration-admission claim.
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
         self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean Meta
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
   let context ← readThe Core.Context
   unless context.maxHeartbeats == Core.getMaxHeartbeats {} do
     throwError "changed production heartbeat limit"
@@ -324,7 +325,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
   | some "ordinary" => throwError "ordinary fixture failure"
   | _ => pure ()
   let env ← getEnv
-  return names.map (fun _ => (Json.mkObj [("fixture", toJson true)], #[], env))
+  for name in names do consume name (Json.mkObj [("fixture", toJson true)]) #[] env
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()

@@ -40,9 +40,8 @@ def main():
     env = lean_env(repository)
     # Lake checks every retained fixture through the inspector lean_lib glob.
     # Reimporting each fixture in another Environment would repeat that work.
-    cases = ["Query/Streaming", "Query/Contract", "Query/DirectEvidence", "Query/Enumeration", "Query/Ownership",
-             "Query/StreamingOutside", "Query/ReceiptHash", "Query/Coverage", "Query/Publication",
-             "AssessmentCommand", "Command", "CommandRejection", "InvalidEvidence", "LandedFinite",
+    cases = ["Query/Streaming", "Query/Ownership", "Query/StreamingOutside", "Query/ReceiptHash",
+             "Query/Coverage", "Assessment",
              "Manifest/Contract", "Manifest/Environment", "Manifest/Precedence"]
     for case in ["Query/Streaming"]:
         path = repository / "tools/lean-inspector/LeanInformationAudit/Tests/Census" / (case + ".lean")

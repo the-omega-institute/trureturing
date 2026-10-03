@@ -19,7 +19,6 @@ import Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot
-import Reg.Support.InformationRootContract
 
 namespace Reg.Catalogs.InformationRoot.SealedCatalog
 open LeanInformationAudit

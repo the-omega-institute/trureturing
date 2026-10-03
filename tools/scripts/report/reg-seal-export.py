@@ -7,7 +7,7 @@ must be on PATH. Run from any directory:
   python3 tools/scripts/report/reg-seal-export.py --repository REPOSITORY \
     --roots Reg.Catalogs.Example --output-dir EXTERNAL_DIRECTORY
 
-Default discovery scans Reg for #seal_information_theory commands and
+Default discovery scans Reg for
 Reg/Catalogs/**/SealedCatalog.lean for typed Contract.Seal definitions. This is
 source enumeration; the production producer checks the actual sealed root.
 --list enumerates without building. --output-dir fixes the path prefix; otherwise
@@ -33,9 +33,8 @@ import time
 
 
 MODULE = re.compile(r"Reg(?:\.[A-Za-z_][A-Za-z_0-9']*)+")
-SEAL_COMMAND = re.compile(r"(?<![\w'])#seal_information_theory(?![\w'])")
-TYPED_SEAL = re.compile(r"\bdef\s+[\w'.]+(?:\.\{[^}]*\})?\s*:\s*"
-                        r"(?:LeanInformationAuditInterface\.)?Contract\.Seal\s*:=")
+TYPED_SEAL = re.compile(r"\bdef\s+(?:«[^»]+»|[\w'.]+)(?:\.\{[^}]*\})?\s*:\s*"
+                        r"(?:LeanInformationAudit\.)?Contract\.Seal\s*:=")
 
 
 class ExportError(Exception):
@@ -93,11 +92,10 @@ def enumerate_roots(repository):
             code = source_code(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeError) as error:
             raise ExportError(66, f"UnreadableRoot root={root} path={path}: {error}") from error
-        old = SEAL_COMMAND.search(code) is not None
         typed = relative.parts[:2] == ("Reg", "Catalogs") and path.name == "SealedCatalog.lean"
-        if typed and not TYPED_SEAL.search(code) and not old:
+        if typed and not TYPED_SEAL.search(code) :
             raise ExportError(66, f"MissingTypedSeal root={root}")
-        if old or typed:
+        if typed:
             if not MODULE.fullmatch(root):
                 raise ExportError(64, f"InvalidRoot root={root}")
             roots.add(root)
@@ -201,7 +199,7 @@ set_option maxHeartbeats 16000000
 
 run_cmd do
   let root := `{root}
-  liftTermElabM <| assessRecordedRegistrations root
+  liftTermElabM <| assessTypedRegistrations root
   unless !(SealRecords.forRoot (← getEnv) root).isEmpty do
     throwError "MissingSealRecords root={{root}}"
   let rootId := mkIdent (`_root_ ++ root)

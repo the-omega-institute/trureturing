@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfResidualNormalForm
 import Reg.Support.DependentFamily
@@ -69,7 +69,7 @@ def registration : Registration arena (arena.Law actual) where
     simpa [actual,realize,_root_.D5.S1.Digit.ZeckendorfRawWindow.residual,NoAdjacentOnes,value,
       D5.S1.Digit.GoldenBase4IntervalMachine.fibPair,parity,h0,h1] using ee
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfResidualNormalForm
   coordinates := #[0]
   readouts := #[{path := #["body","body","body","body","arg","body",

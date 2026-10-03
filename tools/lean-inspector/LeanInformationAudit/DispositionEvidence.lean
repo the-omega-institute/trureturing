@@ -225,8 +225,8 @@ open Elab Command Term
 There is no command that registers a pre-existing theorem. -/
 syntax (name := structuralTheoremCmd)
   "structural_theorem " ident " in " ident
-    " realization " term (" nondegeneracy " ident)?
-    (" domain " ident)? (" sensitivity " ident)?
+    &" realization " term:max (&" nondegeneracy " ident)?
+    (&" domain " ident)? (&" sensitivity " ident)?
     " := " term : command
 
 @[command_elab structuralTheoremCmd]
@@ -355,10 +355,33 @@ def replayStructuralRegistrations (rootId : Name) : CommandElabM Unit := do
       | some declaration => TemplateBinding.withDeclaration declaration publish
       | none => publish
 
+open Lean.Elab.Command Lean.Elab.Term
+
+private partial def descriptorHead (stx : Syntax) : Option Syntax :=
+  if stx.isIdent then some stx
+  else if stx.getKind == ``Parser.Term.paren then descriptorHead stx[1]
+  else if stx.getKind == ``Parser.Term.app then descriptorHead stx[0]
+  else none
+
+/-- Resolve the written head first so a missing template is evidence failure.
+Other term/type errors keep the standard elaborator's error/rollback behavior. -/
+def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Expr × Option String) := do
+  if let some head := descriptorHead term then
+    let resolved ← try
+      discard <| liftCoreM <| realizeGlobalConstNoOverloadWithInfo head
+      pure true
+    catch _ => pure false
+    unless resolved do return (none, some "unclassified_form:dtr.missing_template")
+  let value ← liftTermElabM do
+    let value ← elabTerm term none
+    synthesizeSyntheticMVarsNoPostponing
+    instantiateMVars value
+  return (some value, none)
+
 syntax (name := structuralTheoremReadoutCmd)
-  "structural_theorem " ident " in " ident &"readout " "via " "(" term ")"
-    " realization " term (" nondegeneracy " ident)?
-    (" domain " ident)? (" sensitivity " ident)? " := " term : command
+  "structural_theorem " ident " in " ident &"readout " &"via " "(" term ")"
+    &" realization " term:max (&" nondegeneracy " ident)?
+    (&" domain " ident)? (&" sensitivity " ident)? " := " term : command
 
 @[command_elab structuralTheoremReadoutCmd]
 private def elabStructuralReadout : CommandElab := fun stx => registrationTransaction do
@@ -860,19 +883,16 @@ open Lean Meta
 
 /-- Each requested report module is assessed from its own root, finite and
 structural registrations alike; loaded peers it does not import are inert. -/
-def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames consume => do
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    let owners := recordedInputOwners (← getEnv) ++
-      (DispositionCensus.structuralProvenanceEntries (← getEnv)).map (·.registrationModule)
-    let reports ← assessReportTargets moduleNames owners fun target => do
-      assessRecordedRegistrations target
+    assessReportTargets moduleNames (fun target => do
+      assessTypedRegistrations target
       (liftCommandElabM <| DispositionCensus.replayStructuralRegistrations target : CoreM Unit)
       let structural := (DispositionCensus.structuralProvenanceEntries (← getEnv)).filter
         (·.registrationModule == target) |>.map fun entry => {
           root := target, registrationModule := target, theoremName := entry.theoremName,
           objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-      return registeredKeys (← getEnv) target ++ structural
+      return registeredKeys (← getEnv) target ++ structural) consume
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    return reports
 
 end LeanInformationAudit

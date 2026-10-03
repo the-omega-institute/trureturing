@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.TranslationDomainWeakStrong
 import Reg.Support.DependentFamily
@@ -63,7 +63,7 @@ def registration : Registration arena (arena.Law actual) where
     refine ⟨(0 : ℝ), (0 : H), nonzeroVector, ?_⟩
     intro he
     exact nonzeroVector_ne (by simpa [actual, realize] using he.symm)
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.Quantum.Analysis.TranslationDomainWeakStrong
   coordinates := #[4]
   readouts := #[{

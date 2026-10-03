@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfProblem1Refutation
 import Reg.Support.DependentFamily
@@ -63,7 +63,7 @@ def registration : Registration arena (¬ Problem1) where
     simp only [actual,realize,Nat.cast_one,mul_one] at hbad
     linarith [hbad.1]
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfProblem1Refutation
   definition := some {
     owner := `D5.S1.Digit.ZeckendorfProblem1Refutation

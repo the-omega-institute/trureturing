@@ -1,6 +1,6 @@
 import LeanInformationAuditRegTests.ContractAssertions
 import LeanInformationAuditRegTests.ContractSealFixtures.Reg.Catalogs.PointwiseDisequality.SealedCatalog
-import Reg.Catalogs.PointwiseDisequalityRegistrations
+import Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.SealCommand
 
@@ -8,7 +8,7 @@ namespace LeanInformationAuditRegTests.ContractSealSnapshot
 open Lean Meta Elab Command LeanInformationAudit LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
-private def oldRoot : Name := `Reg.Catalogs.PointwiseDisequalityRegistrations
+private def oldRoot : Name := `Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
 private def typedRoot : Name :=
   `LeanInformationAuditRegTests.ContractSealFixtures.Reg.Catalogs.PointwiseDisequality.SealedCatalog
 
@@ -33,26 +33,19 @@ private unsafe def layout (typed : Bool) : IO Json := do
       { module := `LeanInformationAudit.Contract.Discovery }] {} (trustLevel := 0) (loadExts := true)
   finally searchPathRef.set search
   let action : MetaM Json := do
-    let (contract, sealInput) ← if typed then do
-      let requirements ← RootStructure.requiredFor #[root] Discovery.moduleSource
-      let snapshot ← Discovery.discoverWithStructure requirements #[root]
-      unless snapshot.roots.size == 1 && snapshot.seals.size == 1 do
-        throwError "control:typed_catalog_seal_cardinality"
-      let contract := snapshot.roots[0]!.2
-      RootCatalogs.acquireProvenance contract
-      liftCommandElabM <| RootCatalogs.declare contract
-      let some (_, sealInput) := snapshot.seals[0]?
-        | throwError "control:typed_seal_missing"
-      pure (contract, sealInput)
-    else do
-      let some contract := RootCatalogs.find? (← getEnv) root
-        | throwError "control:recorded_catalog_missing"
-      let some (_, sealInput) := (SealInputs.owned (← getEnv)).find? (·.2.rootId == root)
-        | throwError "control:recorded_seal_missing"
-      pure (contract, sealInput)
+    let reachable := reachableModules (← getEnv) root
+    let owners := ((← getEnv).header.moduleNames.filter fun owner =>
+      reachable.contains owner && (`Reg).isPrefixOf owner).filter (· != root) |>.push root
+    let requirements ← RootStructure.requiredFor owners Discovery.moduleSource
+    let snapshot ← Discovery.discoverWithStructure requirements owners
+    unless snapshot.roots.size == 1 && snapshot.seals.size == 1 do
+      throwError "control:typed_catalog_seal_cardinality"
+    let contract := snapshot.roots[0]!.2
+    let some (_, sealInput) := snapshot.seals[0]?
+      | throwError "control:typed_seal_missing"
+    TypedAssessment.assessSnapshot snapshot
     unless contract.rootId == root && sealInput.rootId == root do
       throwError "control:root_identity"
-    replayRegistrationInputs (← RegistrationAssessmentInput.capture root)
     liftCommandElabM <| validateRegistrySnapshot root (← getEnv)
     let expected := expectedOccurrencesForRoot (← getEnv) root
     withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner root do

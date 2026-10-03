@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ArithSums.GreedyBrickCapacityTotality
 import Reg.Support.DependentFamily
@@ -54,7 +54,7 @@ def registration : Registration arena RowTransitionCorrespondence where
     refine ⟨1, [], [2], ?_⟩
     cases i <;> decide
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality
   definition := some {
     owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality
@@ -140,7 +140,7 @@ def registration : Registration arena (arena.Law actual) where
     cases i
     exact ⟨1, [], [2], by decide⟩
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality
   coordinates := #[0]
   readouts := #[{

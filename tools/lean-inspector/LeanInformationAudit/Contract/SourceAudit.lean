@@ -206,14 +206,7 @@ no term subtree is mistaken for an authorized command. -/
 private def ordinaryRegCommands : Array Name := #[
   ``Parser.Command.declaration, ``Parser.Command.end, ``Parser.Command.moduleDoc,
   ``Parser.Command.namespace, ``Parser.Command.open, ``Parser.Command.printAxioms,
-  ``Parser.Command.section, ``Parser.Command.universe, ``Parser.Command.variable,
-  `LeanInformationAudit.command__,
-  `LeanInformationAudit.registerInformationFiniteSourceTheoremCmd,
-  `LeanInformationAudit.registerInformationSourceTheoremCmd,
-  `LeanInformationAudit.registerInformationTheoremOccurrenceReadoutCmd,
-  `LeanInformationAudit.registerInformationTheoremReadoutCmd,
-  `LeanInformationAudit.sealInformationTheoryCmd,
-  `LeanInformationAudit.«command__Constructors_[_,,]»]
+  ``Parser.Command.section, ``Parser.Command.universe, ``Parser.Command.variable]
 
 /-- Exact source option names and their literal types. The table applies also
 inside terms and tactics; option name prefixes grant no permission. -/

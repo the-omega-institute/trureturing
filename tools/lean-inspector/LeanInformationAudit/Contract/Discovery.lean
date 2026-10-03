@@ -42,29 +42,6 @@ def moduleSource (name : Name) : IO System.FilePath := do
     Repository.source ("tools/lean-inspector/" ++ name.toString.replace "." "/" ++ ".lean")
   else ArenaProvenance.moduleSource name
 
-/-- The existing arena marker delegates syntax unchanged to a core structure
-elaborator. It only annotates mathematical arena expressions; contract metadata
-is assembled by the core delegate. This permission names its compiler owner,
-private-aware identity and exact direct delegation shape. -/
-private def coreStructureDelegate (env : Environment) (name : Name) : Bool := Id.run do
-  let some idx := env.getModuleIdxFor? name | return false
-  unless env.header.moduleNames[idx.toNat]! == `LeanInformationAuditInterface.Syntax do
-    return false
-  unless #[`LeanInformationAudit.elabArenaConstruction,
-      `LeanInformationAudit.elabDefaultArenaConstruction].contains (privateToUserName name) do
-    return false
-  let some info := env.find? name | return false
-  let some body := info.value? (allowOpaque := true) | return false
-  let some marker := body.getAppFn.constName? | return false
-  unless privateToUserName marker == `LeanInformationAudit.markArenaConstruction &&
-      env.getModuleIdxFor? marker == some idx && body.getAppArgs.size == 1 do return false
-  let some markerInfo := env.find? marker | return false
-  let some markerBody := markerInfo.value? (allowOpaque := true) | return false
-  unless Sha256.hex (reprStr markerBody).toUTF8 ==
-      "13a94365395add495532e09e0c8968203c92a091e569a11a3e26fb059e84a2b1" do return false
-  return #[`Lean.Elab.Term.StructInst.elabStructInst,
-    `Lean.Elab.Term.StructInst.elabStructInstDefault].any (body.getAppArgs[0]!.isConstOf ·)
-
 /-- Audit the compiler import DAG, restricted to source files inside this
 checkout. Core Lean and pinned external libraries supply the permitted builtin
 syntax. Missing repository sources are errors, never silently skipped. -/
@@ -94,19 +71,21 @@ def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
     unless moduleName == owner ||
         ((root.toString ++ "/").isPrefixOf path.toString &&
           !((root / ".lake").toString ++ "/").isPrefixOf path.toString) do continue
-    let entries ← SourceAudit.parse env (← IO.FS.readFile path) moduleName.toString
-    let mut delegates : NameSet := {}
-    if let some idx := env.getModuleIdx? moduleName then
-      for name in env.header.moduleData[idx.toNat]!.constNames do
-        if coreStructureDelegate env name then delegates := delegates.insert (privateToUserName name)
-    for key in (SourceAudit.expansionKeys entries delegates).toArray do keys := keys.insert key
+    let source ← IO.FS.readFile path
+    -- Ordinary imported mathematics needs no source expander inventory.
+    -- Compiled exported attributes are inspected below independently.
+    if moduleName == owner || #["macro_rules", "elab_rules", "term_elab",
+        "builtin_macro", "command_elab", "tactic_elab", "@[macro"].any
+        (fun token => (source.splitOn token).length > 1) then
+      let entries ← SourceAudit.parse env source moduleName.toString
+      for key in (SourceAudit.expansionKeys entries {}).toArray do keys := keys.insert key
     if let some idx := env.getModuleIdx? moduleName then
       for entry in Elab.macroAttribute.ext.ext.getModuleEntries env idx do
         let value := match entry with | .global e | .scoped _ e => e
         keys := keys.insert value.key
       for entry in Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx do
         let value := match entry with | .global e | .scoped _ e => e
-        unless coreStructureDelegate env value.declName do keys := keys.insert value.key
+        keys := keys.insert value.key
       for entry in Elab.Tactic.tacticElabAttribute.ext.ext.getModuleEntries env idx do
         let value := match entry with | .global e | .scoped _ e => e
         keys := keys.insert value.key

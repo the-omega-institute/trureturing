@@ -29,7 +29,7 @@ private def dependencies (statement : Name) : MetaM (Array Name) := do
 run_meta do
   let env ← getEnv
   unless (RegistrationReifier.declaringModuleOf env
-      ``TemplateBinding.ResolvedDeclaration.escapeInput._default) == some `LeanInformationAuditInterface.Store do
+      ``TemplateBinding.ResolvedDeclaration.escapeInput._default) == some `LeanInformationAudit.RuntimeInputs do
     throwError "[FAIL] interface_default_compiler_owner"
   let names ← dependencies ``interfaceDefaultClaim
   unless names.contains ``EscapeRecordInput.mk do

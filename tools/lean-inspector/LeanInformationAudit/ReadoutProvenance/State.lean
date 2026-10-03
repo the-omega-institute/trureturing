@@ -41,9 +41,6 @@ register_option provenanceDefEqLimit : Nat := {
   descr := "Maximum raw heartbeats for native occurrence inference; legacy option name; zero is incomplete" }
 
 def provenanceJudgeAPIs : Array Name := #[
-  `LeanInformationAudit.RegistrationInputs.owned,
-  `LeanInformationAudit.TemplateEnrollmentInputs.owned,
-  `LeanInformationAudit.SealInputs.owned,
   `LeanInformationAudit.InformationRegistry.entries,
   `LeanInformationAudit.InformationRegistry.find?,
   `LeanInformationAudit.InformationRegistry.hasTheorem,
@@ -56,8 +53,8 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.TemplateAudit.assessedPlanBytes,
   `LeanInformationAudit.TemplateBinding.inventory,
   `LeanInformationAudit.TemplateBinding.records,
-  `LeanInformationAudit.replayRegistrationInputs,
-  `LeanInformationAudit.assessRecordedRegistrations,
+  `LeanInformationAudit.TypedAssessment.assessSnapshot,
+  `LeanInformationAudit.assessTypedRegistrations,
   `LeanInformationAudit.TemplateBinding.assessJoined,
   `LeanInformationAudit.TemplateBinding.exportSnapshot,
   `LeanInformationAudit.TemplateBinding.joinedSnapshot,

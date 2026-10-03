@@ -1,5 +1,5 @@
 import LeanInformationAudit.Registry.Repository
-import LeanInformationAuditInterface.Store
+import LeanInformationAudit.RuntimeInputs
 
 namespace LeanInformationAudit.Contract.RootStructure
 open Lean Meta

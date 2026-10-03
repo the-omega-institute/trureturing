@@ -54,7 +54,7 @@ class Contract(unittest.TestCase):
                 'lean-toolchain': 'leanprover/lean4:v4.33.0\n',
                 'lake-manifest.json': '{}\n', 'lakefile.toml': 'name = "fixture"\n',
                 'tools/lean-inspector/Inspector.lean': '-- inspector\n',
-                'tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean': '-- grammar\n',
+                'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean': '-- grammar\n',
                 'tools/lean-inspector-interface/lakefile.toml': 'name = "interface"\n',
                 'tools/lean-inspector-interface/lake-manifest.json': '{"packages": []}\n',
                 'Blueprint/Probe.scribe.cs': '// document\n'}.items():
@@ -167,9 +167,9 @@ class Contract(unittest.TestCase):
         self.write('Engine/Main.cs', '// producer changed')
         producer = self.address()
         self.assertEqual(policy, producer)
-        self.write('tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean', '-- compatible grammar\n')
+        self.write('tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean', '-- compatible grammar\n')
         self.assertEqual(producer, self.address())
-        interface_source = 'tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean'
+        interface_source = 'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean'
         self.assertIn(interface_source, self.selection().expand('inspector_sources'))
         self.assertIn(interface_source, self.selection().dependency_sources())
         self.write('tools/lean-inspector-interface/lakefile.toml', 'name = "changedInterface"\n')

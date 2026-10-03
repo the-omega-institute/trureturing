@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.QuantumBounds.MabkSelfTestingPositivity
 import Reg.Support.DependentFamily
@@ -115,7 +115,7 @@ def registration : Registration arena claim where
       exact nomatch i
   dependence := dependence
 
-def selection : SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.QuantumBounds.MabkSelfTestingPositivity
   definition := some {
     owner := `D5.S3.QuantumBounds.MabkSelfTestingPositivity

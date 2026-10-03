@@ -300,8 +300,8 @@ public sealed partial class LeanReportInputScriptTests
     [Theory]
     [InlineData("repository", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
     [InlineData("repository[cache]", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
-    [InlineData("repository", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
-    [InlineData("repository[cache]", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
+    [InlineData("repository", "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean")]
+    [InlineData("repository[cache]", "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean")]
     public void CompatibleInspectorLibraryEditPreservesReportAddress(string repositoryName, string judgeSource)
     {
         using var fixture = new LeanReportInputFixture(repositoryName);

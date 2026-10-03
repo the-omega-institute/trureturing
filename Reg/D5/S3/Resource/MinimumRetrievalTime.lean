@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Resource.MinimumRetrievalTime
 import Reg.Support.CounterexampleRecord
@@ -632,7 +632,7 @@ private theorem rejectedChangesEveryRole (role : Fin 2) :
   have impossible := congrFun (congrFun equality ()) (fun _ => (1 : ℝ))
   norm_num [actual, rejected, realize, integral_const] at impossible
 
-private def selection : SourceSelection := {
+private def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.Resource.MinimumRetrievalTime
   coordinates := #[]
   readouts := #[

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.FirstDomainWeakCCR
 import Reg.Support.DependentFamily
@@ -95,7 +95,7 @@ def registration : Registration arena (arena.Law actual) where
       simpa [actual, realize] using (congrFun he nonzeroVector).symm
     exact nonzeroVector_ne (inner_self_eq_zero.mp hz)
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR
   coordinates := #[]
   readouts := #[

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
 import Reg.Support.DependentFamily
@@ -120,7 +120,7 @@ def registration : Registration arena
     simp only [actual, realize, hg0, hg1]
     decide
 
-def selection : LeanInformationAudit.SourceSelection where
+def selection : _root_.Reg.Support.SourceSelection where
   owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
   coordinates := #[0, 2]
   readouts := #[

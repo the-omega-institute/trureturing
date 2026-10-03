@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.OutputSyntax
+import LeanInformationAudit.OutputSyntax
 import LeanInformationAudit.CatalogBuilder
 
 namespace LeanInformationAudit
@@ -7,7 +7,7 @@ open Lean Lean.Elab.Command
 /-!
 T-041 is closed by destination-free publication and terminal export commands.
 
-`#seal_information_theory` has no output clause. Its fixed terminal combinator
+The report seal publisher has no output clause. Its fixed terminal combinator
 discards command syntax and passes only a validated snapshot to publication.
 The owned-definition audit rejects ambient command-reference access, direct
 runtime input capabilities, and the enumerated Lean-core module loaders before

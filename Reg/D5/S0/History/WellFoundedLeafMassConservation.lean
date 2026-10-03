@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.History.WellFoundedLeafMassConservation
 import Reg.Support.DependentFamily
@@ -90,7 +90,7 @@ def registration : Registration arena.{u} (arena.Law actual) where
     exact ⟨⟨ULift.{u} Unit, {[]}, sample⟩, [], [⟨()⟩], by
       simp [actual, realize, sample]⟩
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S0.History.WellFoundedLeafMassConservation
   coordinates := #[0, 2, 5]
   readouts := #[{path := #["body", "body", "body", "body", "body", "body",

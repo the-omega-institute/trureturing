@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Records
+import LeanInformationAudit.InputTypes
 
 namespace LeanInformationAudit
 open Lean

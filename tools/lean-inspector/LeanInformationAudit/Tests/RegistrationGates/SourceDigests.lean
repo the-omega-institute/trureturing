@@ -85,9 +85,9 @@ run_meta do
   let some index := env.getModuleIdxFor? ``LeanInformationAudit.InformationRegistryEntry
     | throwError "missing imported Interface declaration"
   let name := env.allImportedModuleNames[index.toNat]!
-  unless name == `LeanInformationAuditInterface.Records do
+  unless name == `LeanInformationAudit.InputTypes do
     throwError "wrong Interface declaration owner"
-  unless sourcePath name == "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean" do
+  unless sourcePath name == "tools/lean-inspector/LeanInformationAudit/InputTypes.lean" do
     throwError "incorrect Interface source path"
   let input ← readSourceInput (sourcePath name)
   unless input.path == sourcePath name do throwError "logical path changed"

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.HomologicalAlgebra.ElementaryTwoThirdCohomologyDetection
 import Reg.Support.DependentFamily
@@ -103,7 +103,7 @@ def registration : Registration arena (arena.Law actual) where
     intro he
     exact hc (he ▸ rfl)
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.HomologicalAlgebra.ElementaryTwoThirdCohomologyDetection
   coordinates := #[0, 3, 4]
   readouts := #[{ path := #["body", "body", "body", "body", "body", "body"], stateBinder := 4 }] }

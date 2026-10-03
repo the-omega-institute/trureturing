@@ -1,4 +1,3 @@
-import LeanInformationAuditInterface.Records
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
 import Reg.Support.DependentFamily
@@ -82,7 +81,6 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     have he := congrArg (fun F => F (ULift.up 0) (ULift.up 0) (ULift.up 0) (ULift.up 0)) h
     exact zero_ne_one he
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{max ((max u_1 u_2) + 2) ((max (u_1 + 1) (u_2 + 1)) + 2), max ((max u_1 u_2) + 2) ((max (u_1 + 1) (u_2 + 1)) + 2), max (u_1 + 1) (u_2 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0, 0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} signature.{u_1, u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_kraus_gram") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration,
@@ -182,7 +180,6 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_2.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{u_2 + 3, u_2 + 3, u_2 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_2 + 1, u_2, 0, u_2, 0, 0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_trace_pairing") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration,
@@ -249,7 +246,6 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_3.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "represented_matrix_mul") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration,
@@ -320,7 +316,6 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_4.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{u_2 + 3, u_2 + 3, u_2 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_2 + 1, u_2, 0, u_2, 0, 0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "matrix_unit_decoder_channel") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration,
@@ -396,7 +391,6 @@ def registration : Registration arena.{u, v} (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_5.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "MatrixUnitDecoder") "decoder_recovers_commutant_weight") "Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder/Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration,

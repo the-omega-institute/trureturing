@@ -116,7 +116,11 @@ def source_digest(repository):
     inspector = repository / "tools/lean-inspector"
     paths = [(inspector / name).resolve() for name in [
         "LeanInformationAudit/Census/Stream.lean", "LeanInformationAudit/Census/Ownership.lean",
-        "../lean-inspector-interface/LeanInformationAuditInterface/Records.lean",
+        "LeanInformationAudit/Contract/Literal.lean",
+        "../lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean",
+        "../lean-inspector-interface/LeanInformationAuditInterface/Contract/Implementation.lean",
+        "../lean-inspector-interface/LeanInformationAuditInterface/Contract/Registration.lean",
+        "../lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean",
         "LeanInformationAudit/NameWire.lean",
         "Inspector.lean", "Census/scan.lean",
         "Census/extraction.py", "materials.py"]]

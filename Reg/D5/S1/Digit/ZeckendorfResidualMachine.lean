@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfResidualMachine
 import Reg.Support.DependentFamily
@@ -58,7 +58,7 @@ def registration : Registration arena (arena.Law actual) where
     intro he
     simpa [actual, realize] using he
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S1.Digit.ZeckendorfResidualMachine
   coordinates := #[]
   readouts := #[{path := #["body","arg","fn","arg"], stateBinder := 0}] }

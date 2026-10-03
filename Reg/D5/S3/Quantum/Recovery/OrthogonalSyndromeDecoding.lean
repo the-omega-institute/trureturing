@@ -1,4 +1,3 @@
-import LeanInformationAuditInterface.Records
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 import Reg.Support.DependentFamily
@@ -159,7 +158,6 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{u_3 + 3, u_3 + 3, u_3 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_3 + 1, u_3, 0, u_3, 0, 0} (@_root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{u_3 + 1, u_3, 0, u_3, 0} matrixSignature.{u_3} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "OrthogonalSyndromeDecoding") "decoding_syndrome_block") "Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding/Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration,
@@ -247,7 +245,6 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{u_3 + 3, u_3 + 3, u_3 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_3 + 1, u_3, 0, u_3, 0, 0} (@_root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{u_3 + 1, u_3, 0, u_3, 0} matrixSignature.{u_3} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "OrthogonalSyndromeDecoding") "orthogonal_syndrome_recovery") "Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding/Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration,
@@ -325,7 +322,6 @@ def registration : Registration arena.{u,v,w} (arena.Law familyActual) where
       exact nomatch i
   dependence := familyDependence
 
-set_option trace.InformationRegistration.check true in
 noncomputable def registration_3.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{max ((max u_1 u_3) + 2) ((max (u_1 + 1) (u_3 + 1)) + 2), max ((max u_1 u_3) + 2) ((max (u_1 + 1) (u_3 + 1)) + 2), max (u_1 + 1) (u_3 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0, 0} (@_root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0} familySignature.{u_1, u_3} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
   unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "OrthogonalSyndromeDecoding") "syndrome_transport_orthogonal") "Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding/Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena/[anonymous]") "__information_unit"),
   realizationName := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration,

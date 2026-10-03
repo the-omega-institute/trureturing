@@ -20,9 +20,9 @@ from unittest.mock import patch
 import zipfile
 import zlib
 
-def copy_recorder_interface(source, target):
-    """Copy the core recorder modules without the D5-dependent contract types."""
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Contract'))
+def copy_contract_interface(source, target):
+    """Copy the core and catalog contracts used by these isolated fixtures."""
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
     config = target / 'lakefile.toml'
     config.write_text(re.sub(r'\n\[\[require\]\]\nname = "trureturing"\npath = "../.."\n', '', config.read_text()))
     manifest = target / 'lake-manifest.json'
@@ -135,7 +135,7 @@ defaultFacets = ["static"]
         host = json.loads((ROOT / 'tools/lean-inspector-reg/lake-manifest.json').read_text())
         host['packages'] = [p for p in host['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('tools/lean-inspector-reg/lake-manifest.json', json.dumps(host))
-        copy_recorder_interface(ROOT / 'tools/lean-inspector-interface',
+        copy_contract_interface(ROOT / 'tools/lean-inspector-interface',
                                 self.root / 'tools/lean-inspector-interface')
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')

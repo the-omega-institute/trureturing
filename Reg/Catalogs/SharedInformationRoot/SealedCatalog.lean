@@ -10,7 +10,6 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import Reg.Catalogs.InformationRoot
 import Reg.Catalogs.UnifiedCausalRegistration
-import Reg.Support.SharedInformationRootContract
 
 namespace Reg.Catalogs.SharedInformationRoot.SealedCatalog
 open LeanInformationAudit

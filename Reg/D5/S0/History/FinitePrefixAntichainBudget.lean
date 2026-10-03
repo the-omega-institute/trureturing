@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.SourceSelection
+import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.History.FinitePrefixAntichainBudget
 import Reg.Support.DependentFamily
@@ -70,7 +70,7 @@ def registration : Registration arena.{u,v} (arena.Law actual) where
       have := congrFun he (ULift.up ())
       simpa [actual, realize, sample] using this⟩
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S0.History.FinitePrefixAntichainBudget
   coordinates := #[0, 1, 6]
   readouts := #[{path := #["body", "body", "body", "body", "body", "body",

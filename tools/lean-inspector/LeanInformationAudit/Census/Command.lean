@@ -8,7 +8,7 @@ open Lean Meta Elab Command DispositionCensus
 /-- One Environment imports only candidate owners and discovered evidence. Each
 key retains its original root scope, supplied by the streamed header closure. -/
 elab "#census_validate " requestPath:str " using " membershipPath:str
-    " output " destination:str : command => do
+    &" output " destination:str : command => do
   let result ← liftTermElabM do
     let (input, _) ← CensusReceipt.readRequest requestPath.getString
     let head ← ofExcept <| stringField input "head"

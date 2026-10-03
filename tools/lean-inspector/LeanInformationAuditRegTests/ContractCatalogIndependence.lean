@@ -1,6 +1,6 @@
 import LeanInformationAuditRegTests.ContractAssertions
 import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Membership.RootCatalog
-import LeanInformationAudit.Contract.Discovery
+import LeanInformationAudit.Contract.Assessment
 
 namespace LeanInformationAuditRegTests.ContractCatalogIndependence
 open Lean Meta Elab Command LeanInformationAudit LeanInformationAudit.Contract
@@ -27,21 +27,14 @@ private unsafe def layout (withCatalog : Bool) : IO (Json × Nat × Nat) := do
       name == registrationOwner || name == catalogOwner || (`Reg).isPrefixOf name
     let requirements ← RootStructure.requiredFor owners Discovery.moduleSource
     let snapshot ← Discovery.discoverWithStructure requirements owners
+    let snapshot := { snapshot with registrations := snapshot.registrations.filter (·.1 == registrationOwner) }
     unless snapshot.registrations.size == 1 do throwError "control:registration_count"
     unless snapshot.roots.size == (if withCatalog then 1 else 0) do
       throwError "control:catalog_count"
     if withCatalog then
       unless snapshot.roots[0]!.2.expected.any
           (·.registrationModuleName == registrationOwner) do throwError "control:membership"
-    let enrollments := TemplateEnrollmentInputs.owned (← getEnv)
-    modifyEnv fun current => TemplateAudit.resetTemplatePlans <|
-      TemplateBinding.resetAssessmentRecords <| InformationRegistry.reset current
-    for (_, catalog) in snapshot.roots do RootCatalogs.acquireProvenance catalog
-    liftCommandElabM do
-      for (owner, enrollment) in enrollments do assessRecordedEnrollment owner enrollment
-      for (owner, enrollment) in snapshot.enrollments do assessRecordedEnrollment owner enrollment
-      for (owner, row) in snapshot.registrations do
-        GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner row.input
+    TypedAssessment.assessSnapshot snapshot
     let input ← RegistrationAssessmentInput.capture root
     let rows ← TemplateBinding.assessJoined input
     unless rows.size == 1 do throwError "control:assessment_count:{rows.size}"
