@@ -1,0 +1,16 @@
+**定义 355.1（有序原树的 Clifford 叶积观察）。** 沿用定义2.1的自由有序二叉树 $\mathcal T$、定义3.1的替换 $\rho$ 及规范轨道 $T_j=\rho^j(\alpha)$，不改变原树的相等关系。取实向量空间 $V=\mathbb R^2$，在其上使用定理22.1的二次型
+
+$$
+Q(a,b)=a^2+ab-b^2.
+$$
+
+令 $C=\operatorname{Cl}(V,Q)$ 为采用 $v^2=Q(v)1$ 约定的实 Clifford 代数，$A,B$ 分别为 $(1,0),(0,1)$ 的典范像。按定理2.2的结构解释定义
+
+$$
+E(\alpha)=A,\qquad E(\beta)=B,\qquad
+E(\langle s,t\rangle)=E(s)E(t),\qquad X_j=E(T_j).
+\tag{355.1}
+$$
+
+这里每个叶像按原树的叶次序相乘，乘法的结合性使读数不记录括号；代数关系还可使不同叶序列具有相同读数。因此 $E$ 是观察映射，其像中的相等不作为原树的相等。Clifford 构造、平方约定、极化关系与结合乘法使用 [Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1–2.3](https://arxiv.org/abs/0907.5356v1) 的标准定义；本定义的 $Q$、叶序及替换取自本卷 §§2、3、22。
+

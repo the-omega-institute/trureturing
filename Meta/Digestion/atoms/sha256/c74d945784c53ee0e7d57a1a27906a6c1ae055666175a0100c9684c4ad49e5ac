@@ -1,0 +1,12 @@
+**定义 1.3（来源与合法条件分歧）。** 每个顶点 $v$ 配有有理数概率律 $m_v:A\to\mathbb Q_{\ge0}$，满足 $\sum_{a\in A}m_v(a)=1$。设 $\rho\in\mathbb Q$ 且 $\rho>0$，并假设对全部 $v,a$ 有 $m_v(a)\ge\rho$。原始独立乘积质量、合法正规化因子与分歧分子为
+
+$$
+\begin{aligned}
+w(x)&=\prod_{v\in V}m_v(x_v),\\
+Z_G&=\sum_{x\in\mathcal L_G}w(x),\\
+D_G(t,u)&=\sum_{\substack{x\in\mathcal L_G\\C_t(x)\ne C_u(x)}}w(x).
+\end{aligned}
+$$
+
+当 $Z_G>0$ 时，合法条件分歧概率为 $D_G(t,u)/Z_G$。条件化后的顶点状态不要求独立；$Z_G$ 与 $D_G$ 必须由同一个原始乘积来源计算。
+
