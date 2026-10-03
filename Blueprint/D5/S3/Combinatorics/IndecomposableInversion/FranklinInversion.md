@@ -24,6 +24,10 @@ Lean statement: `D5/S3/Combinatorics/IndecomposableInversion/FranklinInversion.r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/IndecomposableInversion/FranklinInversion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/franklin-indecomposable-321-1342-count` (refuted) by `D5/S3/Combinatorics/IndecomposableInversion/FranklinInversion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"franklin-indecomposable-321-1342-count","declaration_gid":"D5/S3/Combinatorics/IndecomposableInversion/FranklinInversion.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Atli Fannar Franklín (2024). *Pattern avoiding permutations enumerated by inversions*. DOI: [10.48550/arXiv.2410.07467](https://doi.org/10.48550/arXiv.2410.07467). URL: <https://arxiv.org/abs/2410.07467v4>.
