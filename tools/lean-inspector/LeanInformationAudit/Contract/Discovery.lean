@@ -256,9 +256,9 @@ def discoverWithStructure (requirements : Array RootStructure.Requirement)
     return result
   finally setEnv original
 
-/-- Production discovery always reads the independent Reg package manifest.
-The lower-level pipeline takes a fixed requirement inventory for isolated tests;
-production callers never infer that inventory from decoded contract entries. -/
+/-- Production constructs obligations from the Reg source-tree path rule before
+discovery. Isolated tests can supply requirements from their own source tree;
+no decoded contract entry determines its module kind. -/
 def discover (moduleNames : Array Name)
     (sourceOf : Name → IO System.FilePath := moduleSource) : MetaM Snapshot := do
   let env ← getEnv

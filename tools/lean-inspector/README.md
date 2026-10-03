@@ -136,20 +136,22 @@ elaboration grants no equation permission. All other compiled constants,
 including named elaboration children, obey the ordinary direct-reference rule.
 Private compiler identities and source user spellings remain distinct.
 
-`Meta/reg-contract-structure.json` is the independent package module-kind inventory;
-it is registered in FILEMAP and the report configuration inputs. Its 84 catalog
-modules include 11 sealed catalogs. Ordinary modules contain no RootCatalog or
-Seal; catalog modules contain exactly one RootCatalog and no Seal; sealed catalog
-modules contain exactly one of each. Root IDs equal their owning module. A Seal
-covers only that module root, whose catalog retains the ordered expected/source/
-baseline arrays and contributor identities checked by the existing snapshot judge.
-The entire manifest is validated, including required source paths, before entry
-discovery. The compiled environment import inventory selects applicable module
-obligations independently of discovered entries; omitting an applicable module
-from the discover argument is a named failure. Production discovery also requires
-every loaded Reg module to be included, so a filtered ordinary helper module
-cannot hide the origin of a direct interface reference. Missing, extra and duplicate entries
-and wrong root IDs receive `contract.root_structure:*` failures.
+Reg module kinds come from source-file leaves: `RootCatalog.lean` is a catalog,
+`SealedCatalog.lean` is a sealed catalog, and every other leaf is ordinary.
+Directory names do not alter the kind. This rule uses the Reg source tree,
+without an instance table or a discovered-entry classifier. The loaded Reg
+import closure and canonical source paths construct all obligations before
+entry discovery. Every required source must exist; omitting a loaded Reg module
+from discovery receives `contract.root_structure:required_module_missing`.
+
+Ordinary modules contain no RootCatalog or Seal; catalog modules contain exactly
+one RootCatalog and no Seal; sealed catalogs contain exactly one of each. Root
+IDs equal their owning module. Missing, extra, duplicate entries and wrong root
+IDs receive `contract.root_structure:*` failures. Expected/source/baseline arrays
+and contributor identities retain the existing snapshot checks. Files at other
+leaves that still use legacy catalog commands have a pre-migration state: the
+path rule imposes ordinary typed-entry obligations until their migration moves
+them to a reserved leaf and rewrites their entries.
 
 Typed expected occurrences come only from RootCatalog. `ExpectedDeclaration`
 remains an interface type for negative compatibility probes, but an entry of that

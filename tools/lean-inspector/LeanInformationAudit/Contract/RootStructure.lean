@@ -15,39 +15,38 @@ structure Requirement where
   rootId : Name
   kind : Kind
 
-/-- The package manifest fixes obligations independently of source/compiled
-candidate discovery. Its entire inventory is checked, then the loaded import
-closure selects obligations even if the caller omits those modules from discover.
-No discovered entry content selects a module kind. -/
-def readManifest (env : Environment) (json : Json) : IO (Array Requirement) := do
-  unless (← IO.ofExcept (json.getObjValAs? Nat "schema_version")) == 1 do
-    throw <| IO.userError "contract.root_structure:manifest_version"
-  let rows ← IO.ofExcept <| json.getObjValAs? (Array Json) "modules"
+/-- Module kinds are a rule on source-tree leaves, independent of entry
+content. Ordinary names impose no structural entry; the two reserved leaves
+impose catalog and sealed-catalog obligations before discovery. -/
+def kindFromPath (path : System.FilePath) : Kind :=
+  match path.fileName with
+  | some "RootCatalog.lean" => .catalog
+  | some "SealedCatalog.lean" => .sealedCatalog
+  | _ => .ordinary
+
+/-- Enumerated source members, not discovered contract values, supply every
+obligation. The production caller uses the loaded Reg import closure and its
+canonical source paths; isolated tests use their own source tree. -/
+def requiredFor (owners : Array Name) (sourceOf : Name → IO System.FilePath)
+    : IO (Array Requirement) := do
   let mut seen : NameSet := {}
   let mut result := #[]
-  for row in rows do
-    let owner := (← IO.ofExcept (row.getObjValAs? String "module")).toName
-    unless (`Reg).isPrefixOf owner do
-      throw <| IO.userError s!"contract.root_structure:manifest_owner:{owner}"
+  for owner in owners do
     if seen.contains owner then
       throw <| IO.userError s!"contract.root_structure:duplicate_requirement:{owner}"
     seen := seen.insert owner
-    let kind ← match ← IO.ofExcept (row.getObjValAs? String "kind") with
-      | "catalog" => pure Kind.catalog
-      | "sealed_catalog" => pure Kind.sealedCatalog
-      | _ => throw <| IO.userError s!"contract.root_structure:manifest_kind:{owner}"
-    unless ← (← Repository.source
-        (owner.toString.replace "." "/" ++ ".lean")).pathExists do
+    let path ← sourceOf owner
+    unless ← path.pathExists do
       throw <| IO.userError s!"contract.root_structure:required_source_missing:{owner}"
-    if owner == env.header.mainModule || (env.getModuleIdx? owner).isSome then
-      result := result.push ⟨owner, owner, kind⟩
+    result := result.push ⟨owner, owner, kindFromPath path⟩
   return result
 
-/-- Production obligations come from the registered package module manifest. -/
-def required (env : Environment) : IO (Array Requirement) := do
-  let json ← IO.ofExcept <| Json.parse (← IO.FS.readFile
-    (← Repository.source "Meta/reg-contract-structure.json"))
-  readManifest env json
+/-- The loaded Reg source tree fixes obligations before candidate discovery.
+Unmoved legacy files are ordinary under this rule; their typed-entry migration
+state is measured separately rather than inferred from legacy catalog commands. -/
+def required (env : Environment) : IO (Array Requirement) :=
+  requiredFor (env.header.moduleNames.push env.header.mainModule |>.filter ((`Reg).isPrefixOf ·))
+    fun owner => Repository.source (owner.toString.replace "." "/" ++ ".lean")
 
 /-- Required owners cannot disappear through the discover module filter. -/
 def checkScope (requirements : Array Requirement) (modules : Array Name) : MetaM Unit := do
