@@ -4,23 +4,9 @@
 
 A nonzero finite diagram over any field admits an actual natural interval retraction, vertexwise line/kernel isomorphisms and strict dimension descent.
 
-**Definition 1.1 (Actual forward maps).**
+**Theorem 1.1 (A natural interval and its complementary kernel diagram).**
 
-Lean statement: `D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit.Diagram`
-
-*Formalization.* `D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit.Diagram` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Ulrich Bauer and Michael Lesnick; William Crawley-Boevey; Frédéric Chazal, Vin de Silva, Marc Glisse and Steve Oudot (2015). *Interval decomposition and induced matching for persistence modules*. URL: <https://arxiv.org/abs/1311.3681v4>.
-
-*Commentary.*
-
-The vertices are Fin(n), with arbitrary K-vector spaces V(i). For each i <= k the diagram contains the actual linear map F(i,k), identity maps at equal indices and the composition equations. No barcode, basis, common ambient space or dimension bound is supplied.
-
-**Theorem 1.2 (A natural interval and its complementary kernel diagram).**
-
-$$\forall K \in Type, n \in \operatorname{Nat}\left(\right), V \in \operatorname{VertexSpaces}\left(n\right), F \in \operatorname{Diagram}\left(K, V\right),\; \left(\operatorname{Field}\left(K\right) \land \left(\operatorname{FiniteDimensionalVertices}\left(K, V\right) \land \operatorname{NonzeroVertex}\left(V\right)\right)\right) \Rightarrow \left(\exists b \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right), w \in \operatorname{VertexVectors}\left(V\right), p \in \operatorname{VertexFunctionals}\left(K, V\right),\; b \le j \land \left(\operatorname{EarlierZero}\left(V, b\right) \land \left(\operatorname{SupportedNormalized}\left(b, j, w, p\right) \land \left(\operatorname{NaturalVectors}\left(F, b, j, w\right) \land \left(\operatorname{NaturalFunctionals}\left(F, b, j, p\right) \land \left(\operatorname{VertexSplittings}\left(K, V, w, p\right) \land \left(\operatorname{NaturalProjectors}\left(F, w, p\right) \land \left(\operatorname{NaturalKernels}\left(F, p\right) \land \operatorname{StrictDescent}\left(K, V, p\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall K \in Type, n \in \operatorname{Nat}\left(\right), V \in \operatorname{VertexSpaces}\left(n\right), F \in \operatorname{ModuleCatFunctor}\left(K, V\right),\; \left(\operatorname{Field}\left(K\right) \land \left(\operatorname{FiniteDimensionalVertices}\left(K, V\right) \land \operatorname{NonzeroVertex}\left(V\right)\right)\right) \Rightarrow \left(\exists b \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right), w \in \operatorname{VertexVectors}\left(V\right), p \in \operatorname{VertexFunctionals}\left(K, V\right),\; b \le j \land \left(\operatorname{EarlierZero}\left(V, b\right) \land \left(\operatorname{SupportedNormalized}\left(b, j, w, p\right) \land \left(\operatorname{NaturalVectors}\left(F, b, j, w\right) \land \left(\operatorname{NaturalFunctionals}\left(F, b, j, p\right) \land \left(\operatorname{VertexSplittings}\left(K, V, w, p\right) \land \left(\operatorname{NaturalProjectors}\left(F, w, p\right) \land \left(\operatorname{NaturalKernels}\left(F, p\right) \land \operatorname{StrictDescent}\left(K, V, p\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit.exists_interval_split` (`✓ std3`). ∎
 
@@ -42,5 +28,4 @@ The last vertex may lie in the support. No artificial terminal zero is appended.
 
 ## References
 
-- Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit.Diagram`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalSplit.exists_interval_split`
