@@ -46,6 +46,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/CubicGroverTwiceOddPeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kubota-sekido-yoshino-2023-cubic-grover-twice-odd-period` (proved) by `D5/S3/Quantum/Dynamics/CubicGroverTwiceOddPeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kubota-sekido-yoshino-2023-cubic-grover-twice-odd-period","declaration_gid":"D5/S3/Quantum/Dynamics/CubicGroverTwiceOddPeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Kubota, H. Sekido and K. Yoshino (2025). *Regular graphs to induce even periodic Grover walks*. DOI: [10.1016/j.disc.2024.114345](https://doi.org/10.1016/j.disc.2024.114345). URL: <https://arxiv.org/abs/2307.13227v1>.

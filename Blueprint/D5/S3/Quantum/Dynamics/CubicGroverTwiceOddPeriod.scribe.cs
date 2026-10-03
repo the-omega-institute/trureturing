@@ -34,7 +34,10 @@ internal sealed class CubicGroverTwiceOddPeriodDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The integer matrix W=3U has entries 2−3 on a reversed arc and 2 on every other composable transition. Modulo 2 it is the arc-reversal permutation, whose square is the identity. The diagonal of W² is 1. If U^(2l)=I for odd l, the difference-of-powers factor Q is congruent to the identity modulo 2, so its determinant is nonzero; the adjugate identity then forces W²=9I, contradicting the diagonal. Thus U^(2l)≠I for every odd l, which answers Question 4.11."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kubota-sekido-yoshino-2023-cubic-grover-twice-odd-period"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role) =>
