@@ -1,0 +1,7 @@
+**Corollary 6 (Burnside form of Theorem 1).** If $n=3m$ with $m>0$ and
+$O(n)$ is the number of translation orbits on $\mathcal T_n$, then
+
+\[
+  A(n)+4\frac{n^2}{3}=n^2 O(n),\qquad O(n)\ge2.
+\]
+
