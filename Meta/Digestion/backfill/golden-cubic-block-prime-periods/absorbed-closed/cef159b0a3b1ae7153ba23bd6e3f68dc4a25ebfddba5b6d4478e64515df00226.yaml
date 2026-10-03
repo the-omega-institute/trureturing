@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cef159b0a3b1ae7153ba23bd6e3f68dc4a25ebfddba5b6d4478e64515df00226
+  normalized_sha256: sha256:cef159b0a3b1ae7153ba23bd6e3f68dc4a25ebfddba5b6d4478e64515df00226
+cas_ref: sha256:cef159b0a3b1ae7153ba23bd6e3f68dc4a25ebfddba5b6d4478e64515df00226
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GoldenCubicCompatibilityDensity.actual_compatibility_density
+    target_statement_id: sha256:4595d5d4d06a21a79e6f200454314af132a9f5e70978a1a8111c5c23cff41a41
+receipts:
+  unresolved_subitems: []

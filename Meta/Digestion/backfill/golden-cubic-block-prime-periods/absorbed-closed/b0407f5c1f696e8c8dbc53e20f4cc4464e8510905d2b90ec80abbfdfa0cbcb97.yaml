@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b0407f5c1f696e8c8dbc53e20f4cc4464e8510905d2b90ec80abbfdfa0cbcb97
+  normalized_sha256: sha256:b0407f5c1f696e8c8dbc53e20f4cc4464e8510905d2b90ec80abbfdfa0cbcb97
+cas_ref: sha256:b0407f5c1f696e8c8dbc53e20f4cc4464e8510905d2b90ec80abbfdfa0cbcb97
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/GoldenCubicThueDescent.golden_cubic_exact_thue_descent
+    target_statement_id: sha256:a6964155e569698182edf6585e302231e4d8692468d702bae07a39c3f8270a45
+receipts:
+  unresolved_subitems: []
