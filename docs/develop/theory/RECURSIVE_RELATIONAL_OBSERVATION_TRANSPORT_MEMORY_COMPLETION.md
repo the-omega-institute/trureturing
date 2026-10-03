@@ -10066,7 +10066,18 @@ $$
 \eta(s)=\bigl(\mathbf u(v)^{-1}\odot\mathbf u(w),c(w)-c(v)\bigr).
 $$
 
-对于任意供应的 $w,v$，右侧候选是某个实际行为分解的剩余边界，当且仅当它属于 $\mathcal J$；组成非负本身不充分。这只认证存在 $s\in\mathcal T$ 使 $\eta(\langle s,v\rangle)=\eta(w)$，不认证供应原树 $w$ 的根分解。
+对于任意供应的 $w,v$，记前两式给出的右拼接消去候选与左拼接消去候选分别为 $q_R$ 与 $q_L$。则
+
+$$
+\begin{aligned}
+q_R\in\mathcal J
+&\iff \exists s\in\mathcal T,\quad \eta(\langle s,v\rangle)=\eta(w),\\
+q_L\in\mathcal J
+&\iff \exists s\in\mathcal T,\quad \eta(\langle v,s\rangle)=\eta(w).
+\end{aligned}
+$$
+
+组成非负本身不充分；每个候选属于 $\mathcal J$ 只认证相应拼接方向上的行为分解，不认证供应原树 $w$ 的根分解。
 
 同样，若 $c(t)=(a,b)$，唯一环境前驱候选是
 
@@ -10077,7 +10088,7 @@ $$
 
 它属于 $\mathcal J$ 当且仅当存在实际 $s$ 使 $\eta(\rho s)=\eta(t)$，并不等价于供应原树 $t$ 在 $\rho(\mathcal T)$ 中。
 
-证明。三项 Clifford 值均为群单位，逐坐标乘法左右分别可消去；组成相加在整数群中也可消去。若候选属于 $\mathcal J$，选择实现它的非空树 $s$，代回闭合更新便得到 $\eta(w)$；若实际行为分解存在，消去唯一性迫使候选就是 $\eta(s)$。实际根分解是更强条件，等式 $\eta(\langle s,v\rangle)=\eta(w)$ 没有原树单射性可用。替换部分用 $F$ 的逆及 $M^{-1}(a,b)=(b-a,a)$ 作完全相同的双向代入。实际像成员资格仍是条件，非负组成与相位恢复式没有代替它；此处不提供一般实际像求解器。$\square$
+证明。三项 Clifford 值均为群单位，逐坐标乘法左右分别可消去；组成相加在整数群中也可消去。若候选属于 $\mathcal J$，选择实现它的非空树 $s$，按相应拼接方向代回闭合更新便得到 $\eta(w)$；若实际行为分解存在，消去唯一性迫使候选就是 $\eta(s)$。实际根分解是更强条件，等式 $\eta(\langle s,v\rangle)=\eta(w)$ 没有原树单射性可用。替换部分用 $F$ 的逆及 $M^{-1}(a,b)=(b-a,a)$ 作完全相同的双向代入。实际像成员资格仍是条件，非负组成与相位恢复式没有代替它；此处不提供一般实际像求解器。$\square$
 
 **命题 29.12（非负候选与原树前驱的两个失效）。** 取 $t=\langle\alpha,\beta\rangle$。其替换前驱候选组成为 $(0,1)$，却不存在实际前驱行为类。另取
 
