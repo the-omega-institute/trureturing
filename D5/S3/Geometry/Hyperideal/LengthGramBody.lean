@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.StdSimplex]
    utility: none
-   digest: The common six-length cut simplex avoids the null cone and
-   admits a compact injective radial normalization. -/
+   digest: The common six-length cut simplex avoids the null cone and admits a compact injective radial normalization. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 import D5.S3.Geometry.HyperbolicTopology
