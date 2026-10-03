@@ -2,17 +2,33 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/MeshPattern/MeshPatternS21Seven
    mirror-E: none(waiver:elementary-rank-three-local-construction)
-   anchors: [mathlib/module/Mathlib.Order.Monotone.Defs]
+   anchors: [mathlib/module/Mathlib.Data.List.GetD, mathlib/module/Mathlib.Order.Monotone.Defs]
    utility: none
    digest: The partial seven-state rule succeeds on every rank-bounded permutation rectangle. -/
 
-import D5.S3.Combinatorics.MeshPattern.MeshPatternS21Region
+import D5.S3.Combinatorics.MeshPattern.MeshPatternS21Defs
+import Mathlib.Data.List.GetD
 import Mathlib.Order.Monotone.Defs
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.MeshPattern.MeshPatternS21
+
+def rectangle (p : List ℕ) (width height : ℕ) : Finset ℕ :=
+  (Finset.range width).filter (fun position => p.getD position 0 ≤ height)
+
+def ferrersRegion (n : ℕ) : Set (ℕ × ℕ) :=
+  {cell | ∃ maximum, 3 ≤ maximum ∧ maximum ≤ n ∧
+    1 ≤ cell.1 ∧ cell.1 ≤ n - maximum + 3 ∧ 1 ≤ cell.2 ∧ cell.2 ≤ maximum}
+
+def active (n : ℕ) (p : List ℕ) : Finset ℕ :=
+  (Finset.range (n + 1)).filter (fun maximum => 3 ≤ maximum ∧
+    (rectangle p (n - maximum + 3) maximum).card = 3)
+
+def activeRegion (n : ℕ) (p : List ℕ) : Set (ℕ × ℕ) :=
+  {cell | 1 ≤ cell.1 ∧ 1 ≤ cell.2 ∧ ∃ maximum ∈ active n p,
+    cell.1 ≤ n - maximum + 3 ∧ cell.2 ≤ maximum}
 
 inductive SevenLabel
   | empty | one | twoRow | twoCol | threeRow | hook | threeCol

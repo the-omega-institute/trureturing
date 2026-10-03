@@ -60,6 +60,12 @@ def sevenArea : List Bool → ℕ
   | false :: tail => sevenArea tail
   | true :: tail => tail.count false + sevenArea tail
 
+def sevenCells (column : ℕ) : List Bool → List (ℕ × ℕ)
+  | [] => []
+  | false :: tail => sevenCells column tail
+  | true :: tail => sevenCells (column + 1) tail ++
+    (List.range (tail.count false)).reverse.map (fun row => (column + 1, row + 1))
+
 theorem seven_boundary_peeling (start : SevenLabel) (column : ℕ)
     (boundary : List (Bool × SevenLabel)) (hboundary : sevenPath start boundary) :
     ∃ axes cells, sevenPeel start column boundary = some (axes, cells) ∧
@@ -69,7 +75,9 @@ theorem seven_boundary_peeling (start : SevenLabel) (column : ℕ)
       axes.foldl (fun _ step => step.2) start =
         boundary.foldl (fun _ step => step.2) start ∧
       (start = .empty → boundary.foldl (fun _ step => step.2) start = .empty →
-        ∀ step ∈ axes, step.2 = .empty) := by
+        ∀ step ∈ axes, step.2 = .empty) ∧
+      cells.map (fun cell => (cell.1, cell.2.1)) =
+        sevenCells column (boundary.map Prod.fst) := by
   have hlocal : ∀ northeast northwest southeast : SevenLabel,
       sevenEdge northwest northeast = true → sevenEdge southeast northeast = true →
       ∃ southwest entry, sevenInverse northeast northwest southeast = some (southwest, entry) ∧
@@ -176,9 +184,89 @@ theorem seven_boundary_peeling (start : SevenLabel) (column : ℕ)
         · simp [sevenPeel, hcomputed, hslid]
         · exact hpermOutput.trans (hperm.cons true)
         · simpa using hlastOutput.trans hlast
+  have htraceSlide : ∀ tail : List (Bool × SevenLabel), ∀ northwest northeast column axes cells,
+      tail.Pairwise (fun first second => first.1 = false ∨ second.1 = true) →
+      sevenSlide column northwest northeast tail = some (axes, cells) →
+      cells.map (fun cell => (cell.1, cell.2.1)) =
+        (List.range ((tail.map Prod.fst).count false)).reverse.map
+          (fun row => (column + 1, row + 1)) := by
+    intro tail
+    induction tail with
+    | nil =>
+      intro northwest northeast column axes cells hsorted hcomputed
+      simp only [sevenSlide, Option.some.injEq, Prod.mk.injEq] at hcomputed
+      obtain ⟨rfl, rfl⟩ := hcomputed
+      rfl
+    | cons step tail ih =>
+      obtain ⟨direction, next⟩ := step
+      cases direction with
+      | true =>
+        intro northwest northeast column axes cells hsorted hcomputed
+        simp only [sevenSlide, Option.some.injEq, Prod.mk.injEq] at hcomputed
+        obtain ⟨rfl, rfl⟩ := hcomputed
+        have hzero : (tail.map Prod.fst).count false = 0 := by
+          apply List.count_eq_zero.mpr
+          intro hmem
+          obtain ⟨step, hstep, hequal⟩ := List.mem_map.mp hmem
+          have := (List.pairwise_cons.mp hsorted).1 step hstep
+          simp [hequal] at this
+        simp [hzero]
+      | false =>
+        intro northwest northeast column axes cells hsorted hcomputed
+        cases hinverse : sevenInverse northeast northwest next with
+        | none => simp [sevenSlide, hinverse] at hcomputed
+        | some output =>
+          obtain ⟨southwest, entry⟩ := output
+          cases hrecursive : sevenSlide column southwest next tail with
+          | none => simp [sevenSlide, hinverse, hrecursive] at hcomputed
+          | some output =>
+            obtain ⟨remaining, points⟩ := output
+            simp only [sevenSlide, hinverse, hrecursive, Option.bind_eq_bind,
+              Option.bind_some, Option.some.injEq, Prod.mk.injEq] at hcomputed
+            obtain ⟨rfl, rfl⟩ := hcomputed
+            have htail := ih southwest next column remaining points
+              (List.pairwise_cons.mp hsorted).2 hrecursive
+            simp [htail, List.range_succ, List.reverse_append]
+  have htrace : ∀ path : List (Bool × SevenLabel), ∀ start column axes cells,
+      sevenPath start path → sevenPeel start column path = some (axes, cells) →
+      cells.map (fun cell => (cell.1, cell.2.1)) = sevenCells column (path.map Prod.fst) := by
+    intro path
+    induction path with
+    | nil =>
+      intro start column axes cells hpath hcomputed
+      simp only [sevenPeel, Option.some.injEq, Prod.mk.injEq] at hcomputed
+      obtain ⟨rfl, rfl⟩ := hcomputed
+      rfl
+    | cons step tail ih =>
+      obtain ⟨direction, next⟩ := step
+      cases direction with
+      | false =>
+        intro start column axes cells hpath hcomputed
+        obtain ⟨middle, points, hmiddle, _, _, _, _⟩ :=
+          hbuild tail next column hpath.2
+        simp only [sevenPeel, hmiddle, Option.bind_eq_bind, Option.bind_some,
+          Option.some.injEq, Prod.mk.injEq] at hcomputed
+        obtain ⟨rfl, rfl⟩ := hcomputed
+        exact ih next column middle points hpath.2 hmiddle
+      | true =>
+        intro start column axes cells hpath hcomputed
+        obtain ⟨middle, points, hmiddle, _, hsorted, hperm, _⟩ :=
+          hbuild tail next (column + 1) hpath.2
+        cases hslid : sevenSlide column start next middle with
+        | none => simp [sevenPeel, hmiddle, hslid] at hcomputed
+        | some output =>
+          obtain ⟨remaining, strip⟩ := output
+          simp only [sevenPeel, hmiddle, hslid, Option.bind_eq_bind, Option.bind_some,
+            Option.some.injEq, Prod.mk.injEq] at hcomputed
+          obtain ⟨rfl, rfl⟩ := hcomputed
+          have hpoints := ih next (column + 1) middle points hpath.2 hmiddle
+          have hstrip := htraceSlide middle start next column remaining strip hsorted hslid
+          have hcount := hperm.count_eq false
+          simp [sevenCells, List.map_append, hpoints, hstrip, hcount]
   obtain ⟨axes, cells, hcomputed, haxes, hsorted, hperm, hlast⟩ :=
     hbuild boundary start column hboundary
-  refine ⟨axes, cells, hcomputed, haxes, hsorted, hperm, hlast, ?_⟩
+  refine ⟨axes, cells, hcomputed, haxes, hsorted, hperm, hlast, ?_,
+    htrace boundary start column axes cells hboundary hcomputed⟩
   have hdown : ∀ label : SevenLabel, sevenEdge label .empty = true → label = .empty := by
     intro label
     cases label <;> decide
