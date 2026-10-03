@@ -48,6 +48,10 @@ $$\forall d \in \mathbb{N},\; \forall k \in \mathbb{N},\; \exists T \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/ShiftedBinomialPowerLinearization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/thanatipanonda-2014-shifted-binomial-power-linearization` (proved) by `D5/S3/Combinatorics/BinomialBases/ShiftedBinomialPowerLinearization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"thanatipanonda-2014-shifted-binomial-power-linearization","declaration_gid":"D5/S3/Combinatorics/BinomialBases/ShiftedBinomialPowerLinearization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Thotsaporn Thanatipanonda (2014). *Beyond Zudilin's Conjectured q-analog of Schmidt's problem*. DOI: [10.1080/10236198.2014.917635](https://doi.org/10.1080/10236198.2014.917635). URL: <https://arxiv.org/abs/1403.4962v1>.

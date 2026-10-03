@@ -25,15 +25,18 @@ internal sealed class ShiftedBinomialPowerLinearizationDocument : IScribeDocumen
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Integral linearization for every nonnegative shift", ClaimFormula(false),
                 "Vandermonde's identity expresses each B(d,t,n) as an integer combination of choose(n,v), with diagonal coefficient one. Strong induction constructs an integral triangular inverse. The binomial product identity and this inverse give integer structure constants for B(d,k,n) times B(d,i,n), supported at j≤i+k. Induction on the positive power then gives the fixed recursion and the bound j≤rk. Conjecture 4.2 on holonomicity is a separate question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("thanatipanonda-2014-shifted-binomial-power-linearization"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("shifted-binomial-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
             name == "claim" ? Blocks(SourceQuotation(), Paragraph(Text(prose)))
-                : Blocks(Paragraph(Text(prose))), role);
+                : Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
