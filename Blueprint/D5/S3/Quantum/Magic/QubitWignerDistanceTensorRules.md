@@ -46,6 +46,10 @@ $$claimEquatorial$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultEquatorial` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dutta-tushar-2026-wigner-distance-equatorial-multiplicativity` (proved) by `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultEquatorial`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dutta-tushar-2026-wigner-distance-equatorial-multiplicativity","declaration_gid":"D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultEquatorial","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Soumyojyoti Dutta; Tushar (2026). *A Phase-Space Geometric Measure of Magic in Qubit Systems*. DOI: [10.48550/arXiv.2603.20792](https://doi.org/10.48550/arXiv.2603.20792). URL: <https://arxiv.org/abs/2603.20792v3>.
@@ -59,6 +63,10 @@ Every qubit Wigner vector has at most one negative coordinate. On the nonpositiv
 $$claimSelfTensor$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultSelfTensor` (`✓ std3`). ∎
+
+*Resolves.* `Problems/dutta-tushar-2026-wigner-distance-self-tensor-superadditivity` (proved) by `D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultSelfTensor`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dutta-tushar-2026-wigner-distance-self-tensor-superadditivity","declaration_gid":"D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.resultSelfTensor","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

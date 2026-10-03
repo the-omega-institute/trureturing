@@ -32,7 +32,10 @@ internal sealed class QubitWignerDistanceTensorRulesDocument : IScribeDocumentDe
     private static DocumentBlock Theorem(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(NodeId(name)), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create(name == "resultEquatorial"
+                ? "dutta-tushar-2026-wigner-distance-equatorial-multiplicativity"
+                : "dutta-tushar-2026-wigner-distance-self-tensor-superadditivity"), ResolutionKind.Proved));
 
     private static string NodeId(string name) => name switch
     {
