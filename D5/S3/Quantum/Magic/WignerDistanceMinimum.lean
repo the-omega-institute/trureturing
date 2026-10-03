@@ -7,7 +7,7 @@
    digest: The Wigner free sets are compact nonempty convex hulls, and COne/CTwo attain the source minimum. -/
 /-
 proof_shape: COne_min: content; CTwo_min: content
-escape_witness: finite_stab and normalized_projector_unique give finite stabilizer projector images;
+escape_witness: finite_stab constructs an injection of stabilizer projectors into finitely many subgroups;
   spectral_stabilizer and spectral_product_stabilizer give nonempty free sets; compact convex hulls
   and continuous L1 images attain Metric.infDist.
 admission_basis: escape-witness
@@ -274,30 +274,6 @@ private theorem spectral_product_stabilizer (p q : Pauli) (ε δ : Fin 2) (hp : 
           (T x).val *ᵥ ψ = (T x).val *ᵥ (Matrix.vecMulVec ψ (star ψ) *ᵥ ψ) := by rw [hproj]
           _ = ψ := by rw [Matrix.mulVec_mulVec,heigen,hproj]
       simpa [← hx,Matrix.mulVec_smul,hf]
-private theorem normalized_projector_unique {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (S : Subgroup (Matrix.unitaryGroup ι ℂ)) (ψ φ : ι → ℂ)
-    (hψ : (∑ i, ‖ψ i‖ ^ 2) = 1) (hφ : (∑ i, ‖φ i‖ ^ 2) = 1)
-    (huψ : ∀ v : ι → ℂ, (∀ g : S, (g.val.val : Matrix ι ι ℂ) *ᵥ v = v) ↔
-      ∃ c : ℂ, v = c • ψ)
-    (huφ : ∀ v : ι → ℂ, (∀ g : S, (g.val.val : Matrix ι ι ℂ) *ᵥ v = v) ↔
-      ∃ c : ℂ, v = c • φ) :
-    Matrix.vecMulVec ψ (star ψ) = Matrix.vecMulVec φ (star φ) := by
-  obtain ⟨c, hc⟩ := (huψ φ).mp ((huφ φ).mpr ⟨1, by simp⟩)
-  have hcnorm : ‖c‖ ^ 2 = 1 := by
-    calc
-      ‖c‖ ^ 2 = ‖c‖ ^ 2 * (∑ i, ‖ψ i‖ ^ 2) := by rw [hψ, mul_one]
-      _ = ∑ i, ‖c * ψ i‖ ^ 2 := by simp_rw [norm_mul, mul_pow]; rw [Finset.mul_sum]
-      _ = 1 := by simpa [hc, Pi.smul_apply, smul_eq_mul] using hφ
-  have hphase : c * star c = 1 := by
-    simpa [Complex.mul_conj, Complex.normSq_eq_norm_sq, hcnorm]
-  rw [hc]
-  ext i j
-  simp only [Matrix.vecMulVec, Pi.star_apply, Pi.smul_apply, smul_eq_mul, star_mul]
-  change ψ i * star (ψ j) = c * ψ i * (star (ψ j) * star c)
-  calc
-    ψ i * star (ψ j) = (c * star c) * (ψ i * star (ψ j)) := by rw [hphase, one_mul]
-    _ = c * ψ i * (star (ψ j) * star c) := by ring
-
 private theorem finite_stab {ι : Type*} [Fintype ι] [DecidableEq ι]
     (P : Set (Matrix ι ι ℂ)) (hP : P.Finite) : (Stab P).Finite := by
   classical
@@ -321,7 +297,24 @@ private theorem finite_stab {ι : Type*} [Fintype ι] [DecidableEq ι]
       ∃ c : ℂ, v = c • φ := by rw [heq]; exact hunique'
     apply Subtype.ext
     rw [hr, hs]
-    exact normalized_projector_unique (pick ρ) ψ φ hnorm hnorm' hunique hu
+    have normalized_projector_unique :
+        Matrix.vecMulVec ψ (star ψ) = Matrix.vecMulVec φ (star φ) := by
+      obtain ⟨c, hc⟩ := (hunique φ).mp ((hu φ).mpr ⟨1, by simp⟩)
+      have hcnorm : ‖c‖ ^ 2 = 1 := by
+        calc
+          ‖c‖ ^ 2 = ‖c‖ ^ 2 * (∑ i, ‖ψ i‖ ^ 2) := by rw [hnorm, mul_one]
+          _ = ∑ i, ‖c * ψ i‖ ^ 2 := by simp_rw [norm_mul, mul_pow]; rw [Finset.mul_sum]
+          _ = 1 := by simpa [hc, Pi.smul_apply, smul_eq_mul] using hnorm'
+      have hphase : c * star c = 1 := by
+        simpa [Complex.mul_conj, Complex.normSq_eq_norm_sq, hcnorm]
+      rw [hc]
+      ext i j
+      simp only [Matrix.vecMulVec, Pi.star_apply, Pi.smul_apply, smul_eq_mul, star_mul]
+      change ψ i * star (ψ j) = c * ψ i * (star (ψ j) * star c)
+      calc
+        ψ i * star (ψ j) = (c * star c) * (ψ i * star (ψ j)) := by rw [hphase, one_mul]
+        _ = c * ψ i * (star (ψ j) * star c) := by ring
+    exact normalized_projector_unique
   letI : Finite {S // S ∈ T} := hsub.to_subtype
   letI : Finite {ρ // ρ ∈ Stab P} := Finite.of_injective
     (fun ρ => (⟨pick ρ, hpick ρ⟩ : {S // S ∈ T}))

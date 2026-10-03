@@ -58,7 +58,7 @@ internal sealed class WignerDistanceMinimumDocument : IScribeDocumentDefinition
         var objective = Call("norm", Call("toLp", D(1),
             Subtract(Call(two ? "WignerTwo" : "WignerOne", V("rho")), V("f"))));
         return Equal(Call(two ? "CTwo" : "COne", V("rho")),
-            Seq(V("min"), Underscore, Grp(Member(V("f"), free)), Sp, objective));
+            Seq(Min, Underscore, Grp(Member(V("f"), free)), Sp, objective));
     }
 
     private static Formula MinimumFormula(bool two)

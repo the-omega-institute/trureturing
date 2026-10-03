@@ -147,7 +147,7 @@ $$\forall rho \in QubitMatrix,\; \exists f \in PhasePoint \to \mathbb{R},\; (f \
 *Commentary.*
 
 $$
-\operatorname{COne}\left(rho\right) = min_{f \in \operatorname{Wfree}\left(phasePoint, pauliSet\right)} \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerOne}\left(rho\right) - f\right)\right)
+\operatorname{COne}\left(rho\right) = \min_{f \in \operatorname{Wfree}\left(phasePoint, pauliSet\right)} \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerOne}\left(rho\right) - f\right)\right)
 $$
 
 For every qubit matrix rho, the source formula C(rho) := min_{W_f ∈ Wfree} ‖W_rho − W_f‖₁ is attained by some f in the compact nonempty free polytope, and COne rho is no larger than every free candidate.
@@ -163,7 +163,7 @@ $$\forall rho \in TwoQubitMatrix,\; \exists f \in PhasePoint \times PhasePoint \
 *Commentary.*
 
 $$
-\operatorname{CTwo}\left(rho\right) = min_{f \in \operatorname{Wfree}\left(phasePointTwo, pauliTwo\right)} \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerTwo}\left(rho\right) - f\right)\right)
+\operatorname{CTwo}\left(rho\right) = \min_{f \in \operatorname{Wfree}\left(phasePointTwo, pauliTwo\right)} \operatorname{norm}\left(\operatorname{toLp}\left(1, \operatorname{WignerTwo}\left(rho\right) - f\right)\right)
 $$
 
 For every two-qubit matrix rho, the same source minimum C(rho) := min_{W_f ∈ Wfree} ‖W_rho − W_f‖₁ is attained by some f in the compact nonempty two-qubit free polytope, and CTwo rho is no larger than every free candidate.

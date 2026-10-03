@@ -20,7 +20,7 @@ Direct frozen dependencies:
   D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence (owner module; statement id tracked by its canonical pin).
   D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.pauliSet
     statement_id: sha256:856f9c10bdadcb60566b2de31e839e712c75cb4be32af461b413c9fdc95a1014
-  D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence (module statement_id sha256:ab10c4e49f670a73f093e056a7673eb35a14d3f611048c114baa8a5aef84c396).
+  D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence (owner module; statement id tracked by its canonical pin).
   D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix
     statement_id: sha256:7f853eaeda888a9eccbab5fe25474fc62b519a3229013530986887de25cb28d7
   D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.instFintypePauli
