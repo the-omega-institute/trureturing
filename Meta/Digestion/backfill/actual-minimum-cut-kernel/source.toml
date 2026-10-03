@@ -1,0 +1,5 @@
+source_id = "actual-minimum-cut-kernel"
+path = "docs/develop/theory/ACTUAL_MINIMUM_CUT_KERNEL.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ef36f0e76ff6b4732cb3096a8c7c7ad7220156c9e10653d42ad5cb9b72e61786
+  normalized_sha256: sha256:ef36f0e76ff6b4732cb3096a8c7c7ad7220156c9e10653d42ad5cb9b72e61786
+cas_ref: sha256:ef36f0e76ff6b4732cb3096a8c7c7ad7220156c9e10653d42ad5cb9b72e61786
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/MinimumCutKernel.minimum_cut_cartesian_kernel
+    target_statement_id: sha256:5195927bd126e8d938baf9f46e7175e649bf9cab7d562fa18a25c0369ca281e8
+receipts:
+  unresolved_subitems: []
