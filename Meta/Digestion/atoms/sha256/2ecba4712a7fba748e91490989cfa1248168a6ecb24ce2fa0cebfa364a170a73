@@ -1,0 +1,16 @@
+## 62. Cubic towers certified by saturated base-field tests
+
+Let $K\subseteq L$ be fields and let $\zeta\in K$ be a primitive
+cube root of unity. Fix $J\in\mathbb N$, elements $a_j\in K$ and
+$\beta_j\in L$ for $1\leq j\leq J$, with
+$\beta_j^3=a_j$. Put
+
+$$
+K_0=K,\qquad K_m=K(\beta_1,\ldots,\beta_m)
+\quad(0\leq m\leq J).
+$$
+
+For each $0\leq n<J$, let $P_n$ be a predicate on $K$. These
+predicates describe tests in the base field; they are not tests
+assumed to hold in an extension field.
+

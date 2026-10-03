@@ -1,0 +1,18 @@
+**Theorem 53.10 (Short horizontal bound).** For a once continuously differentiable kernel supported in [1/2, 2], a small-strip holomorphic logarithmic derivative, a lower real part strictly between zero and one, and A strictly positive and at most one half, there are a nonnegative bound constant and a T threshold greater than three. Above that threshold the short horizontal piece satisfies the stated logarithmic-power bound for X greater than three and epsilon strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+lemma I4Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {σ₂ : ℝ} (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1)
+    {A : ℝ} (hA : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 ≤ C) (Tlb : ℝ) (_ : 3 < Tlb),
+    ∀ (X : ℝ) (_ : 3 < X)
+    {ε : ℝ} (_ : 0 < ε) (_ : ε < 1)
+    {T : ℝ} (_ : Tlb < T),
+    let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+    ‖I₄ SmoothingF ε X σ₁ σ₂‖ ≤ C * X * X ^ (- A / (Real.log T ^ 9)) / ε
+```
+

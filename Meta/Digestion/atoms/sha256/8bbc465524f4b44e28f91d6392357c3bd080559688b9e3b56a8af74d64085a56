@@ -1,0 +1,5 @@
+**Theorem 7.1 (faithful period representation).** The map $M_m$ is an
+injective ring homomorphism for every natural modulus $m$. It sends
+$\phi$ to $Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$, and the
+multiplicative orders of $\phi$ and $Q$ are equal.
+

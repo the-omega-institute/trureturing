@@ -1,0 +1,9 @@
+**Definition 53.104 (SmoothedChebyshevIntegrand).** For a real smoothing kernel $\nu$, write $h_{\nu,\epsilon,X}(s)$ for minus the logarithmic derivative of zeta times $\mathcal M(S_{\nu,\epsilon})(s)X^s$. Complex powers and the coercion of the real smoothed indicator are exactly as displayed.
+
+```lean
+noncomputable abbrev SmoothedChebyshevIntegrand
+    (SmoothingF : ℝ → ℝ) (ε : ℝ) (X : ℝ) : ℂ → ℂ :=
+  fun s ↦ (- deriv riemannZeta s) / riemannZeta s *
+    𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) s * (X : ℂ) ^ s
+```
+

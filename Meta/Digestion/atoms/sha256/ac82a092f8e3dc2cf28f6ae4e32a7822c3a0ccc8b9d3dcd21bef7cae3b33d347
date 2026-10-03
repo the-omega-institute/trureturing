@@ -1,0 +1,7 @@
+**Definition 53.102 (DeltaSpike).** The dilation kernel associated with a real kernel $\nu$ is $\Delta_{\nu,\epsilon}(x)=\nu(x^{1/\epsilon})/\epsilon$. Its total real-power definition is the one displayed below; its analytic uses impose the required positive-parameter conditions.
+
+```lean
+noncomputable def DeltaSpike (ν : ℝ → ℝ) (ε : ℝ) : ℝ → ℝ :=
+  fun x ↦ ν (x ^ (1 / ε)) / ε
+```
+

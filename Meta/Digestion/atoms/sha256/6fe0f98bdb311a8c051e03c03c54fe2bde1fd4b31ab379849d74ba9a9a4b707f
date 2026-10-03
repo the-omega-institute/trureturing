@@ -1,0 +1,38 @@
+**Theorem 55.5 (GCC1, conjugate and rational balances).** For every
+$j\geq1$ and every $p\in S_j$,
+
+$$
+\prod_{q\mid B_j}
+\left(\frac{\overline{\varpi_p}}{\varpi_{j,q}}\right)_3^{h_q}
+=\kappa_p^{-1},\qquad
+\prod_{q\mid B_j}
+\left(\frac{p}{\varpi_{j,q}}\right)_3^{h_q}=1.
+$$
+
+If exactly one current prime $P\mid B_j$ has $3\nmid h_P$, then
+for every $p\in S_j$,
+
+$$
+p^{(P-1)/3}\equiv1\pmod P.
+$$
+
+This applies when $B_j=P^2Q^3$. No individual cubic-residuosity
+conclusion is made when two or more current depths are nonzero
+modulo three.
+
+Proof. The defining residue-field exponent gives
+$(\overline a/\overline b)_3
+=\overline{(a/b)_3}$. Since
+$\overline\lambda=-\lambda$ and $-1$ is a cube,
+$(\lambda/\overline{\varpi_p})_3=\kappa_p^{-1}$.
+Also $(\omega/\overline{\varpi_p})_3=1$ because
+$p\equiv1\pmod9$. As $p\mid x_j$, both prime factors of $p$
+divide $x_j$, and
+$\eta_j\equiv\omega\lambda\pmod{\overline{\varpi_p}}$.
+Cubic reciprocity and Theorem 8.1 give the first product.
+Multiplying it by Theorem 55.2 and using
+$\varpi_p\overline{\varpi_p}=p$ gives the second.
+If only $P$ has depth nonzero modulo three, the other terms are
+one, and exponentiation by $h_P$ is invertible on cube roots of
+unity. The residue field at $\varpi_{j,P}$ is $\mathbb F_P$.
+

@@ -1,0 +1,20 @@
+**Theorem 8.2 (cubic balance).** For every $j\geq1$,
+
+$$
+\prod_{p\mid B_j}\left(\frac{3}{\varpi_{j,p}}\right)_3^{h_p}
+=\omega.
+$$
+
+If $(3/\varpi_{j,p})_3=\omega^{c_{j,p}}$ with
+$c_{j,p}\in\{0,1,2\}$, equivalently
+
+$$
+\sum_{p\mid B_j}h_pc_{j,p}\equiv1\pmod3.
+$$
+
+The supplementary laws applied to Theorem 8.1 give
+$(\omega/\eta_j)_3=1$ and $(\lambda/\eta_j)_3=\omega^2$.
+Since $3=-\lambda^2$ and $-1$ is a cube, their product gives
+$(3/\eta_j)_3=\omega$. Multiplicativity and the oriented factorization
+give the displayed product and sum.
+

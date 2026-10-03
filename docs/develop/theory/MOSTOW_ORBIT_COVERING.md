@@ -8,7 +8,7 @@ finite-volume hyperbolic lattice satisfies the stated hypotheses.
 ## 1. The representation action
 
 **Definition 1.1.** Let (G) be a group, (X) a metric space, and
-(ho:G\to\operatorname{Isom}(X)) a homomorphism. Its associated action is
+(\rho:G\to\operatorname{Isom}(X)) a homomorphism. Its associated action is
 (g\cdot x=\rho(g)(x)). Write (X/\rho) for the equivalence classes of the
 relation (x\sim_\rho y\iff \exists g,\rho(g)(x)=y).
 

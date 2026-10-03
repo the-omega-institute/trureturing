@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3162fda0fd911d62f1873951039bdc7d301504901d49af631cca8fb78d8b93a8
+  normalized_sha256: sha256:3162fda0fd911d62f1873951039bdc7d301504901d49af631cca8fb78d8b93a8
+cas_ref: sha256:3162fda0fd911d62f1873951039bdc7d301504901d49af631cca8fb78d8b93a8
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/EisensteinOddIdealFactorization.eisenstein_odd_ideal_factorization
+    target_statement_id: sha256:db58f9ade16d10b605c0ecf8f50367a2ed6e2d3d78aba53dd35c379b46268fe8
+receipts:
+  unresolved_subitems: []
