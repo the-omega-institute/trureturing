@@ -51210,3 +51210,371 @@ $$
 数学引文与范围：Clifford 平方约定、极化关系与泛性质直接沿用 Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，[arXiv:0907.5356v1](https://arxiv.org/abs/0907.5356v1)，§2.1，特别是 Proposition 2.1；保持乘法次序的等级对合沿用该文 §2.3，式（2.17），区别于反转次序的 reversion。整数子环字符、同源双读数恢复、统一实际碰撞及四目标全参数分类是本卷既有定义上的综合推导，未归因于该文。Flaut 的广义 Fibonacci 四元数关联代数与本节有序替换叶积历史是不同对象，不作为这里恢复分类的依据。§355 的规范轨道分类提供其声明域内的必要限制，§356 提供全原树的历史关系；全域充分性由（357.7）的显式函数承担。本节为纸面推导，尚未 Lean 形式化；有限精确核验不替代全参数证明或 Lean 内核验证，全球原创性未确立。
 
 ## 追加锚（本行以下为增补区）
+
+## 358. 实际 Fibonacci 首现层、模矩阵大阶与固定 Robin 缺口
+
+本节把递推、首次整除秩和缺失素支撑接到同一个最小公倍前缀上。以下是普通数学的综合推导，未作内核形式化；所用经典恒等式是推导中的中间步骤，解析供给的出处与适用条件在证明中明确列出，不主张文献原创性。
+
+**定义 358.1（实际前缀与首现层）。** 取实际整数序列
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对整数 $m\ge1$，令 $Q_m=\operatorname{lcm}(F_1,\ldots,F_m)$、$b_m=\log Q_m$。对整数 $d\ge2$，$z(d)$ 是满足 $d\mid F_n$ 的最小正指标；其存在性由下述有限模数论证保证。对 $n\ge1$，先在正有理数中定义
+
+$$
+\Psi_n=\prod_{d\mid n}F_d^{\mu(n/d)},\qquad
+\Phi=\frac{1+\sqrt5}{2},\quad L=\log\Phi,\quad
+\kappa=\frac{L}{\zeta(2)},\quad H_m=\sum_{j=1}^m\frac1j.
+\tag{358.1}
+$$
+
+这里 $\mu$ 是 Möbius 函数，$\varphi$ 是 Euler totient 函数，$\zeta(2)=\sum_{j\ge1}j^{-2}$；$\Psi_n$ 的整性是结论，不是定义中的假设。对素数 $p$，$v_p$ 在正整数上是通常赋值，在正有理数上以分子赋值减分母赋值延拓。另取 $\gamma$ 为 Euler 常数，$\sigma(M)=\sum_{a\mid M}a$，并定义
+
+$$
+\begin{aligned}
+w(p)&=-\log(1-1/p),&
+A(M)&=\sum_{p\mid M}w(p),\\
+E(M)&=\sum_{p\mid M}\log(1-p^{-v_p(M)-1}),&
+B_0(x)&=\sum_{p\le x}w(p)\quad(x>1),\\
+G(M)&=\log\frac{\sigma(M)}{e^\gamma M\log\log M}\quad(M>5040).
+\end{aligned}
+\tag{358.2}
+$$
+
+各素数和均只取素数；$A(1)=E(1)=0$。
+
+**定理 358.2（首现层恒等式、二次规模与最终严格缺口）。** 对所有整数 $d\ge2$、$n,m\ge1$ 及素数 $p$，有
+
+$$
+\begin{gathered}
+d\mid F_n\ \Longleftrightarrow\ z(d)\mid n,\qquad
+v_p(\Psi_n)=\#\{k\ge1:z(p^k)=n\},\\
+v_p(Q_m)=\#\{k\ge1:z(p^k)\le m\},\qquad
+\Psi_n\in\mathbb N_{>0},\qquad Q_m=\prod_{n\le m}\Psi_n.
+\end{gathered}
+\tag{358.3}
+$$
+
+这些公式包括 $p=2,5$ 和多个素幂具有相同首次秩的情形，不需任何首赋值为一的假设。实际规模满足
+
+$$
+\begin{gathered}
+|\log\Psi_n-L\varphi(n)|\le1,\\
+\left|b_m-\frac\kappa2m^2\right|
+\le L\left(mH_m+\frac m2+\frac12\right)+m,\\
+\frac\kappa4m^2\le b_m\quad(m\ge256),\qquad
+0\le b_m\le\frac L2m(m-1)<m^2\quad(m\ge1).
+\end{gathered}
+\tag{358.4}
+$$
+
+使用下述 Kurlberg–Rudnick Theorem 14 和 Dusart Theorems 6.9、6.12 的已发表普通数学结论，则存在整数 $m_0$，使每个整数 $m\ge m_0$ 都满足
+
+$$
+Q_m>5040,\qquad
+G(Q_m)\le-\frac18\log\frac{16}{15},\qquad
+\frac{\sigma(Q_m)}{e^\gamma Q_m\log\log Q_m}
+\le\left(\frac{15}{16}\right)^{1/8}<1.
+\tag{358.5}
+$$
+
+这里 $m_0$ 是存在阈值，不是已给出的数值截止。
+
+**证明。** *有限模数与首次秩。* 递推矩阵
+
+$$
+B=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+B^n=\begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}\quad(n\ge1)
+\tag{358.6}
+$$
+
+的行列式是 $-1$，故在每个有限环 $\mathbb Z/d\mathbb Z$ 上可逆。有限群 $\mathrm{GL}_2(\mathbb Z/d\mathbb Z)$ 中某个正幂 $B^h=I$，于是 $d\mid F_h$，最小正秩存在，且 $z(d)\ge3$。这个论证适用于合数模数。经典 Fibonacci 模周期背景可参见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。
+
+为核对随后所用的经典强整除律，（358.6）的行列式先给 $\gcd(F_j,F_{j+1})=1$。矩阵相乘给加法公式；当 $a>b\ge1$ 时，
+
+$$
+F_a=F_{a-b}F_{b+1}+F_{a-b-1}F_b,
+\qquad \gcd(F_a,F_b)=\gcd(F_{a-b},F_b).
+$$
+
+对指标作 Euclid 递降，连同 $F_0=0$，得到 $\gcd(F_a,F_b)=F_{\gcd(a,b)}$，因而 $a\mid b$ 蕴含 $F_a\mid F_b$。若 $d\mid F_n$，则 $d\mid F_{\gcd(n,z(d))}$；这个正指标不超过 $z(d)$，最小性迫使它等于 $z(d)$。反向用 $z(d)\mid n$ 及强整除律。这证明（358.3）的第一式，也给
+
+$$
+z(p^k)\mid z(p^{k+1})\quad(k\ge1).
+$$
+
+*素幂首现层与实际 lcm。* 对固定 $p,n$，上述整除判据给
+
+$$
+v_p(F_n)=\sum_{k\ge1}\mathbf1_{z(p^k)\mid n}.
+$$
+
+因此按定义对正有理数 $\Psi_n$ 取赋值，再交换有限个非零项，得到
+
+$$
+\begin{aligned}
+v_p(\Psi_n)
+&=\sum_{d\mid n}\mu(n/d)\sum_{k\ge1}\mathbf1_{z(p^k)\mid d}\\
+&=\sum_{\substack{k\ge1\\z(p^k)\mid n}}
+\sum_{z(p^k)\mid d\mid n}\mu(n/d)
+=\sum_{k\ge1}\mathbf1_{z(p^k)=n}.
+\end{aligned}
+$$
+
+内层和是 $\sum_{e\mid n/z(p^k)}\mu(e)$。凡在交换中出现的 $k$ 都满足 $p^k\mid F_n$，故非零项确实有限。所得赋值非负，证明 $\Psi_n$ 是正整数；还给出 $\Psi_n\mid F_n$。另一方面，
+
+$$
+p^k\mid Q_m
+\ \Longleftrightarrow\ \exists j\in\{1,\ldots,m\},\ p^k\mid F_j
+\ \Longleftrightarrow\ z(p^k)\le m.
+$$
+
+按 $k$ 计数得到 $v_p(Q_m)$，再按首次秩 $n\le m$ 分组，所有素数赋值相同便给出实际乘积恒等式（358.3）。重复秩按素幂逐个计数，不能以不同秩的集合大小替代。特别地，$p\mid Q_m$ 当且仅当 $z(p)\le m$。
+
+*Binet 误差与二次规模。* 令 $q=\Phi^{-2}\in(0,1)$。经典 Binet 公式可由递推及初值直接核对，给
+
+$$
+\log F_j=jL-\tfrac12\log5+\epsilon_j,
+\qquad \epsilon_j=\log(1-(-q)^j).
+$$
+
+由 $|\log(1-u)|\le |u|/(1-|u|)$（$|u|<1$），以及 $(1-q)^2=q$，有
+
+$$
+\sum_{j\ge1}|\epsilon_j|
+\le\sum_{j\ge1}\frac{q^j}{1-q^j}
+\le\frac{q}{(1-q)^2}=1.
+$$
+
+对 $n>1$，$\sum_{d\mid n}\mu(n/d)=0$、$\sum_{d\mid n}d\mu(n/d)=\varphi(n)$，故 $\log\Psi_n=L\varphi(n)+\sum_{d\mid n}\mu(n/d)\epsilon_d$，误差绝对值至多一。$n=1$ 时 $\Psi_1=1$，误差是 $L<1$，单独满足同一界。
+
+为明确 summatory totient 的误差，令 $S_m=\sum_{n\le m}\varphi(n)$。经典互素有序对计数给
+
+$$
+2S_m-1=\sum_{d\le m}\mu(d)\lfloor m/d\rfloor^2.
+$$
+
+因为 $|\lfloor y\rfloor^2-y^2|\le2y$（$y\ge1$），而绝对收敛的 Möbius Euler 乘积给 $\sum_{d\ge1}\mu(d)/d^2=1/\zeta(2)$，尾和以 $\sum_{d>m}d^{-2}\le1/m$ 控制，所以
+
+$$
+\left|S_m-\frac{m^2}{2\zeta(2)}\right|
+\le mH_m+\frac m2+\frac12.
+$$
+
+将每层 Binet 误差相加，并用实际乘积恒等式，即得（358.4）的二次误差。下界也可完全用初等常数核对：$H_m\le1+\log m$；$\Phi>3/2$ 和 $\log(3/2)>1/3$ 给 $L>1/3$；积分比较给 $\zeta(2)<2$。于是该误差不超过 $Lm(\log m+5)$。对 $m\ge256$，$\log m+5\le m/8$：在 $256$ 处由 $\log256<8$ 成立，且 $m/8-\log m-5$ 此后递增。因此误差不超过 $Lm^2/8<\kappa m^2/4$，给出所示下界。上界由递推归纳的 $F_n\le\Phi^{n-1}$ 和 $Q_m\le\prod_{n\le m}F_n$ 得到；$\Phi<2<e$ 给 $L<1$ 及最后的严格不等式。特别地，$b_m=\kappa m^2/2+O(m\log m)$。
+
+*从模矩阵大阶到缺素数区间。* 固定
+
+$$
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix}\in\mathrm{SL}_2(\mathbb Z).
+$$
+
+它的迹为 $18>2$，且模二为单位矩阵，满足此处所用 cat map 的条件。对每个素数 $p$，在 $n=z(p)$ 处（358.6）成为 $B^n=cI$，其中 $c\ne0$ 且 $c^2=(-1)^n$；故 $B^{4n}=I$，从而 $T^{2n}=B^{12n}=I$。所以
+
+$$
+\operatorname{ord}_p(T)\mid2z(p),
+\tag{358.7}
+$$
+
+包括 $p=2,5$，无需删去分歧素数。
+
+使用 Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，Communications in Mathematical Physics **222** (2001)，201–227，[作者 PDF 的 Theorem 14，印刷页 20，式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)：对固定双曲矩阵 $A\in\mathrm{SL}_2(\mathbb Z)$ 和 $1/2<\eta<3/5$，满足 $p\le x$、$\operatorname{ord}_p(A)>x^\eta$ 的素数个数至少为
+
+$$
+c(\eta)\pi(x)+o(\pi(x)),\qquad
+c(\eta)=\frac{3-5\eta}{2(1-\eta)}.
+$$
+
+这里原文的阈值是 $x^\eta$。取 $A=T$、$\eta=11/20$，则 $c(\eta)=5/18>1/4$。定义固定素数集合
+
+$$
+\mathcal P=\{p:\operatorname{ord}_p(T)>p^{11/20}\},\qquad
+N_{\mathcal P}(x)=\#\{p\in\mathcal P:p\le x\}.
+$$
+
+原文计数的集合包含于这个固定集合，故存在固定 $X_A\ge599$，使所有实数 $x\ge X_A$ 满足 $N_{\mathcal P}(x)\ge\pi(x)/4$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），印刷页 9](https://arxiv.org/pdf/1002.0442v1)，给出所用的确切计数界
+
+$$
+\pi(x)\ge\frac{x}{\log x}\left(1+\frac1{\log x}\right)\quad(x\ge599),
+\qquad
+\pi(x)\le\frac{x}{\log x}\left(1+\frac{1.2762}{\log x}\right)\quad(x>1).
+$$
+
+所以 $N_{\mathcal P}(x)\ge x/(4\log x)$（$x\ge X_A$）。这些是无 RH 假设的普通数学供给；$X_A$ 的数值没有由 KR 的渐近陈述给出。
+
+先固定 $\alpha=15/8$、$\rho=1/4$、$r=\log(16/15)/4$。对 $m\ge2^{33}$，令 $u=m^{15/8}$、$v=m^2$。若 $p\in\mathcal P\cap(u,v]$，则（358.7）给
+
+$$
+z(p)>\frac12p^{11/20}>\frac12m^{33/32}>m.
+$$
+
+故这些素数都不整除 $Q_m$。若再有 $u\ge X_A$，对同一个固定计数函数作部分求和，得到
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal P\cap(u,v]}\frac1p
+&=\frac{N_{\mathcal P}(v)}v-\frac{N_{\mathcal P}(u)}u
++\int_u^v\frac{N_{\mathcal P}(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}
++\frac14\log\frac{\log v}{\log u}
+=r-\frac2{\log u}.
+\end{aligned}
+\tag{358.8}
+$$
+
+这里保留严格下端和闭上端；$N_{\mathcal P}(v)/v\ge0$ 被舍去，$N_{\mathcal P}(u)\le\pi(u)$ 和上述 Dusart 上界给 $\pi(u)/u\le2/\log u$，因为 $u\ge599$。计数下界在整个积分区间成立，而非仅在右端点成立。
+
+*有限支撑比较与全部高素数费用。* 对任意整数 $M\ge1$、实数 $x>1$ 及有限素数集 $S\subseteq\{p\le x:p\nmid M\}$，经典 Euler 支撑分拆给
+
+$$
+A(M)\le B_0(x)-\sum_{p\in S}w(p)
++\frac{\log M}{(x-1)\log x}.
+\tag{358.9}
+$$
+
+确切地，$1/p\le w(p)\le1/(p-1)$；低素数的实际支撑是全部 $p\le x$ 去掉一个包含 $S$ 的集合。对每个实际高素因子 $p>x$，
+
+$$
+w(p)\le\frac1{p-1}
+\le\frac{\log p}{(x-1)\log x},\qquad
+\sum_{p\mid M}\log p=\log\operatorname{rad}(M)\le\log M.
+$$
+
+因此（358.9）支付了每个 $p>x$ 的实际支撑费用，不假设最大素因子不超过 $x$；$M=1$ 也成立。这个经典比较作为当前实际族推导的中间步骤使用。
+
+Dusart 同文 [Theorem 6.12，印刷页 11](https://arxiv.org/pdf/1002.0442v1) 直接给出
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right)
+\quad(x\ge2973).
+$$
+
+取对数及 $\log(1+y)\le y$，得 $B_0(x)\le\gamma+\log\log x+0.2/(\log x)^2$。若只使用 Mertens 第三定理的较弱误差 $B_0(x)=\gamma+\log\log x+O(1/\log x)$，在 $x=m^2$ 处误差仍趋零，足以保留最终固定缺口；这里的显示常数使用 Dusart 的上述供给。有限约数和的几何乘积则给确切恒等式
+
+$$
+\log\frac{\sigma(M)}M=A(M)+E(M),\qquad E(M)\le0.
+$$
+
+所以对 $M>5040$、$x\ge2973$，同一个有限比较推出
+
+$$
+\begin{aligned}
+G(M)\le{}&-\sum_{p\in S}\frac1p+\frac{0.2}{(\log x)^2}
++\frac{\log M}{(x-1)\log x}\\
+&+\log\log x-\log\log\log M+E(M).
+\end{aligned}
+\tag{358.10}
+$$
+
+*实际分母与固定储备。* 令 $d=\log(4/\kappa)>0$，所有常数和存在阈值 $X_A$ 均先于 $m$ 固定。可取
+
+$$
+\begin{gathered}
+W=\max\left(2^{33},256,X_A^{8/15},e^d,
+\exp\left(\frac{2(d+3)}r\right),
+\sqrt{\frac{4\log5040}{\kappa}}\right),\qquad
+m_0=\lceil W\rceil+1.
+\end{gathered}
+\tag{358.11}
+$$
+
+这个表达式依赖未指定数值的 $X_A$，故仍只给存在阈值。现在对所有 $m\ge m_0$ 同时取 $t=\log m$、$x=v$、$S=\mathcal P\cap(u,v]$。规模下界给 $Q_m>5040$，且 $t\ge d$、$v\ge2973$。实际分母误差满足
+
+$$
+\begin{aligned}
+\log\log v-\log\log b_m
+&\le\log(2t)-\log(2t-d)\\
+&=-\log\left(1-\frac{d}{2t}\right)\le\frac dt.
+\end{aligned}
+\tag{358.12}
+$$
+
+最后一步用 $0\le d/(2t)\le1/2$。因此不能把 $\log\log Q_m$ 偷换成 $\log v$ 而直接删去误差。全部高素数项则由 $b_m<m^2$ 给
+
+$$
+\frac{b_m}{(v-1)\log v}\le\frac1t.
+$$
+
+将（358.8）、（358.12）代入（358.10），得到
+
+$$
+\begin{aligned}
+G(Q_m)
+&\le-r+\frac1{20t^2}+\frac{16}{15t}+\frac1t+\frac dt+E(Q_m)\\
+&\le-r+\frac{d+3}{t}\le-\frac r2
+=-\frac18\log\frac{16}{15}.
+\end{aligned}
+$$
+
+这里 $t\ge1$，而 $E(Q_m)\le0$；最后用（358.11）的共同阈值。指数化即为（358.5）。固定正储备来自缺失素数区间的调和质量 $r$，不是来自有限素幂的负修正。
+
+为进一步明确修正项的边界，对任意实数 $Y>1$、整数 $K\ge1$，若 $m\ge\max_{p\le Y}z(p^K)$（空集最大值约定为零），则
+
+$$
+0\le-E(Q_m)
+\le\pi(Y)\frac{2^{-K-1}}{1-2^{-K-1}}+\frac{4}{3(Y-1)}.
+\tag{358.13}
+$$
+
+低素数的实际指数至少为 $K$，故以 $-\log(1-y)\le y/(1-y)$ 得第一项。高素数只对实际支撑求和，其指数至少为一，费用至多 $\frac43\sum_{p>Y}p^{-2}\le4/(3(Y-1))$。先取大 $Y$，再取大 $K$，最后取指标阈值，证明 $E(Q_m)\to0$。它的非正性可帮助有限上界，但它的消失不会供应（358.5）的固定缺口。$\square$
+
+**命题 358.3（秩预算的实际占位与 Euler 目标不同）。** 令 $c_n=\log\Psi_n$，则 $c_1=c_2=0$、$0\le c_n\le Ln$，并且对 $m\ge1$，
+
+$$
+J_m:=\sum_{n\le m}\frac{c_n}{n}
+=\sum_{\substack{p\ \mathrm{prime},\ k\ge1\\z(p^k)\le m}}
+\frac{\log p}{z(p^k)},\qquad
+|J_m-\kappa m|\le L(H_m+1)+H_m.
+\tag{358.14}
+$$
+
+若仅保留整数秩盒约束和实际总预算，定义放松目标
+
+$$
+\mathcal J(B)=\sup\left\{\sum_{n\ge3}x_n:
+0\le x_n\le L,\quad \sum_{n\ge3}nx_n\le B\right\},
+$$
+
+其中各和按非负级数理解，则
+
+$$
+\mathcal J(b_m)\sim\frac{L}{\sqrt{\zeta(2)}}m,
+\qquad
+\frac{J_m}{\mathcal J(b_m)}\longrightarrow\frac1{\sqrt{\zeta(2)}}<1.
+\tag{358.15}
+$$
+
+所以即使以固定比例接近这种放松的秩预算最大值，也不能据此认定实际 Fibonacci 占位最优，更不能认定 Robin Euler 乘积最优。
+
+**证明。** （358.3）给 $c_n=\sum_{p,k:z(p^k)=n}\log p$，以及 $\Psi_n\mid F_n$，后者和 $F_n\le\Phi^{n-1}$ 给盒约束。按有限首现层分组得（358.14）的等式。经典公式 $\varphi(n)/n=\sum_{d\mid n}\mu(d)/d$ 给
+
+$$
+\left|\sum_{n\le m}\frac{\varphi(n)}n-\frac{m}{\zeta(2)}\right|
+\le H_m+1:
+$$
+
+取整误差至多 $\sum_{d\le m}1/d$，补齐 $\sum\mu(d)/d^2$ 的尾误差至多一。再将（358.4）的每层误差乘 $1/n$ 相加，得到 $J_m$ 的误差。
+
+为核对放松的渐近而不把放松极值当作实际可实现值，令 $C_h=L\sum_{n=3}^h n$（整数 $h\ge2$，$C_2=0$）。当 $C_h\le B<C_{h+1}$ 时，经典分数背包填充 $x_3=\cdots=x_h=L$、$x_{h+1}=(B-C_h)/(h+1)$，其余为零。这个点达到上界：以价格 $\lambda=1/(h+1)$，对每个可行点逐项有
+
+$$
+\sum_{n\ge3}x_n
+\le\lambda B+L\sum_{3\le n<h+1}(1-\lambda n).
+$$
+
+正收益的秩只有有限多个，故该界同样覆盖无限可行点；所给填充达到等号。于是 $h\sim\sqrt{2B/L}$、$\mathcal J(B)\sim\sqrt{2LB}$。用 $b_m\sim\kappa m^2/2$ 和 $J_m\sim\kappa m$ 得（358.15）。这是 §353.6 的同一经典放松优化，实际 $x_n=c_n/n$ 只是其中一个可行点。
+
+上述目标对同一素数的每个首现素幂分别收费 $\log p/z(p^k)$；Robin 的饱和支撑目标却是
+
+$$
+A(Q_m)=\sum_{z(p)\le m}-\log(1-1/p),
+$$
+
+每个素数只出现一次，较高素幂只通过实际截断修正 $E(Q_m)$ 影响 $\sigma(Q_m)/Q_m$。例如 $z(2)=3$、$z(4)=z(8)=6$，而 $\Psi_6=4$：秩六有两份 $\log2$ 的素幂质量，radical 在秩六却没有新增二方向。由 $F_1,\ldots,F_6=1,1,2,3,5,8$ 直接核对这些数值。故 radical 分配、素幂分配以及两种收益权重不能相互替换。$\square$
+
+式（358.5）只处理这个实际 lcm 前缀族最终越过 $5040$ 后的固定严格 Robin 缺口；$5040$ 在这里是 Robin 的整数阈值，没有由拓扑数字七或 Fibonacci 巧合来证明它的特殊性。该族结论不推出任意整数的 Robin 不等式或 RH，不给出新的数值认证区间，也不确定此族比值的精确极限。缺失素支撑机制与秩预算机制的连接成立，但二者的优化目标仍不同。
+
+## 追加锚（本行以下为增补区）
