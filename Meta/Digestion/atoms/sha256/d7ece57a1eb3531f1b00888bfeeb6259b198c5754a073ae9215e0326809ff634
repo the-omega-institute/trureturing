@@ -1,0 +1,37 @@
+**定义 30.6（固定叶数的零超额容量）。** 对 $n,t\in\mathbb N_0$，令
+
+$$
+\begin{gathered}
+\mathcal I_3(n)=\{P\in\mathcal I_3:n(P)=n\},\qquad
+\mathcal N=\{3p+5q:p,q\in\mathbb N_0, p+q\ge1\},\\
+K(F)=\left\{S\subseteq F:\exists\pi\in\mathfrak D_3,
+\forall P\in S, C_\pi(P)=n(P)\right\},\qquad
+K_\circ(F)=\{\varnothing\}\cup\{\{P\}:P\in F\},\\
+\mathsf{Cap}(n,t)=\max\left\{|F|:
+F\subseteq\mathcal I_3(n),\ F\text{ 有限},\
+K(F)=K_\circ(F),\ D(F)\le n+t\right\}.
+\end{gathered}
+\tag{30.9}
+$$
+
+$D$ 对非空族仍是式（29.4）的全域确定性最坏取得费用；只为该容量定义约定 $D(\varnothing)=0$。空族允许，空或不可行叶数的容量取零。由[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)，$K(F)$ 亦等于共同取得全部个体最优期望所定义的复形。实际三步像的有限计数直接复用[第 12 章式（12.3）、（12.15）](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)，记
+
+$$
+N_n=|\mathcal I_3(n)|=
+\sum_{\substack{p,q\ge0,\ p+q\ge1\\3p+5q=n}}
+\mathrm{Cat}_{p+q-1}\binom{p+q}{p},
+\qquad
+\mathrm{Cat}_j=\frac1{j+1}\binom{2j}{j},
+\tag{30.10}
+$$
+
+空和为零；因此式（30.9）取有限集合上的最大值。这里的 Catalan 形状及有序叶着色计数沿用第 12 章所引 [Flajolet–Sedgewick，*Analytic Combinatorics*，第 6–7 页](https://algo.inria.fr/flajolet/Publications/book.pdf) 与 [Stanley，*Enumerative Combinatorics* 第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf)。另定义用于路由计数的整数函数
+
+$$
+M(0,t)=M(r,0)=1\quad(r,t\ge0),\qquad
+M(r,t)=M(r-1,t)+2M(r,t-1)\quad(r,t\ge1).
+\tag{30.11}
+$$
+
+该函数的边界值 $1$ 是单个终端队列的计数界；它不是空孩子的元素数，空孩子始终贡献零。
+

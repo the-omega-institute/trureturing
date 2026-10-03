@@ -1,0 +1,25 @@
+**定理 30.4（等规模非冲突实际像的七叶分离）。** 对任意不同的 $P,Q\in\mathcal I_3$，若 $n(P)=n(Q)=n$ 且 $\operatorname{NC}(P,Q)$，则
+
+$$
+\boxed{\qquad
+n\ge11,\qquad
+\nu(P,Q)=\nu(Q,P)\ge7,\qquad
+s(P,Q)\le n-7.
+\qquad}
+\tag{30.5}
+$$
+
+未共享叶的常数 $7$ 在实际同组成来源中达到。具体地，
+
+$$
+\begin{gathered}
+P_{13}=\langle C,\langle A,C\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\beta\rangle\rangle\bigr),\\
+Q_{13}=\langle\langle A,C\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\beta\rangle,\beta\rangle\bigr),\\
+c(P_{13})=c(Q_{13})=(5,8)^{\mathsf T},\qquad
+n(P_{13})=n(Q_{13})=13,\qquad s(P_{13},Q_{13})=6.
+\end{gathered}
+\tag{30.6}
+$$
+
