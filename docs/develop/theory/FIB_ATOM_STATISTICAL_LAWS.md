@@ -8335,3 +8335,292 @@ c_\varepsilon(x,y)
 Eyring–Kramers 前因子还需外加的门结构、局部几何和小噪声扩散；非可逆链不能直接使用此容量势垒。固定有限 \(j\) 和 \(\varepsilon\) 没有真正相变，且 \(j\to\infty\)、\(\varepsilon\to0\)、\(t\to\infty\) 的次序必须声明。
 
 因此，同一 \(E_j\) 可用跨井速率 \(1\) 产生普通寿命，也可用 \(e^{-c/\varepsilon}\) 产生指数寿命。FIB 只提供状态、词序和标签，不唯一确定准势、激活能、温度或稀有跃迁律。
+
+## 83. 分数高斯环境、非马尔可夫记忆与异常响应
+
+取已指定的 FIB hull 或有限上下文过程 \(X_t\)，令有界观测 \(a_t=a(X_t)\)。另行加入独立分数高斯噪声 \(\xi_t\)，其协方差为
+\[
+R_H(k)=\frac{\sigma^2}{2}
+\left(|k+1|^{2H}-2|k|^{2H}+|k-1|^{2H}\right),
+\qquad 0<H<1.
+\]
+令 \(Y_t=a_t\xi_t\)。若 \(a_t\) 平稳且独立于 \(\xi\)，则
+\[
+\operatorname{Cov}(Y_0,Y_k)
+=R_H(k)\,\mathbb E[a_0a_k].
+\]
+当 \(\mathbb E[a_0a_k]=\bar a^2+r_a(k)\) 且 \(r_a\) 可和时，长记忆主项由 \(\bar a^2R_H(k)\) 决定。部分和方差恒等式为
+\[
+\operatorname{Var}\left(\sum_{t=0}^{n-1}Y_t\right)
+=nC_Y(0)+2\sum_{k=1}^{n-1}(n-k)C_Y(k).
+\]
+在精确分数高斯或残差可忽略的条件下，\(H>1/2\) 时
+\[
+\operatorname{Var}\left(\sum_{t<n}Y_t\right)
+\sim \bar a^2\sigma^2n^{2H},
+\qquad
+n^{-H}\sum_{t<\lfloor ns\rfloor}Y_t
+\Longrightarrow \bar a\sigma B_H(s).
+\]
+\(H=1/2\) 回到普通平方根标度；\(H<1/2\) 时零频抵消可能产生次扩散，但 FIB 调制的短程残差也可能重新产生平方根项。若 \(\bar a=0\)，主标度由 \(r_a\) 和联合谱决定，不能只由 \(H\) 判断。
+
+更一般地，定义外加 Volterra 过程
+\[
+Z_t=\sum_{m\ge0}K_ma_{t-m}+\varepsilon_t,
+\qquad
+K_m\sim\kappa m^{d-1},\quad 0<d<\tfrac12.
+\]
+若创新谱在零频正且尾部满足线性过程的 Lindeberg 条件，则
+\[
+f_Z(\lambda)\asymp|\lambda|^{-2d},
+\qquad
+H=d+\tfrac12,
+\]
+并有
+\[
+\operatorname{Var}\sum_{t<n}Z_t\asymp n^{2H},
+\qquad
+n^{-H}\sum_{t<\lfloor ns\rfloor}Z_t
+\Longrightarrow cB_H(s).
+\]
+\(\sum_m|K_m|<\infty\) 时恢复短记忆 CLT。若把该核解释为转移核，还必须另加非负性、归一化和历史条件概率一致性；线性记忆公式本身不是 Markov 核。
+
+有限时域的粗糙响应可由
+\[
+U_a(t)=\int_0^t
+\frac{(t-s)^{H_r-1/2}}{\Gamma(H_r+1/2)}
+a_s\,dW_s,
+\qquad 0<H_r<\tfrac12
+\]
+定义。在局部正则条件下，
+\[
+\mathbb E|U_a(t+h)-U_a(t)|^2\asymp h^{2H_r}.
+\]
+分数高斯噪声、Volterra 核、创新律、独立性和平稳测度都由外部模型指定；FIB 只提供调制状态。因此 \(H\) 和粗糙指数不是 FIB 自动推出的物理常数。
+
+## 84. 外加多粒子平均场涨落、线性化流与 SPDE 协方差
+
+固定 FIB 第 \(j\) 代有限上下文集 \(E_j\)，给定外加平均场核 \(Q_j(x,\mu)\)。令
+\[
+\mu_t^{N,j}=N^{-1}\sum_i\delta_{X_t^{N,i}},
+\qquad
+\Pr(X_{t+1}^{N,i}=y\mid\mathcal F_t)
+=Q_j(X_t^{N,i},\mu_t^{N,j})(y),
+\]
+并设
+\(\Phi_j(\mu)=\mu Q_{j,\mu}\)、\(\mu_{t+1,j}=\Phi_j(\mu_{t,j})\)。若 \(Q_j\) 对 \(\mu\) 可微、导数和二阶矩在固定时间窗内一致有界，初态为 iid，则
+\[
+\eta_t^{N,j}=\sqrt N(\mu_t^{N,j}-\mu_{t,j})
+\]
+收敛到高斯递推
+\[
+\eta_{t+1}=A_{t,j}\eta_t+\xi_{t+1,j},
+\qquad
+A_{t,j}=D\Phi_j(\mu_{t,j}).
+\]
+对测试函数 \(f,g\)，抽样噪声协方差为
+\[
+\Sigma_{t,j}(f,g)
+=\sum_x\mu_{t,j}(x)
+\sum_yQ_j(x,\mu_{t,j})(y)
+[f(y)-Q_jf(x)]
+[g(y)-Q_jg(x)].
+\]
+初态协方差为
+\[
+\Gamma_{0,j}(f,g)
+=\mu_{0,j}(fg)-\mu_{0,j}f\,\mu_{0,j}g,
+\]
+并递推
+\[
+\Gamma_{t+1,j}
+=A_{t,j}\Gamma_{t,j}A_{t,j}^{*}
++\Sigma_{t,j}.
+\]
+若初态仅交换而非渐近乘积，极限需条件于 de Finetti 变量，不能自动称为中心高斯。
+
+连续时间外加速率 \(q_j(x,y;\mu)\) 给出
+\[
+\frac d{dt}\langle f,\mu_{t,j}\rangle
+=\langle\mathcal A_{j,\mu_{t,j}}f,\mu_{t,j}\rangle,
+\quad
+\mathcal A_{j,\mu}f(x)
+=\sum_yq_j(x,y;\mu)[f(y)-f(x)].
+\]
+线性化涨落满足
+\[
+d\eta_t(f)
+=\eta_t(\mathcal A_{j,\mu_t}f)\,dt
++\langle D_\mu\mathcal A_{j,\mu_t}[\eta_t]f,\mu_t\rangle\,dt
++dM_t(f),
+\]
+其中
+\[
+d\langle M(f),M(g)\rangle_t
+=\sum_x\mu_t(x)\sum_yq_j(x,y;\mu_t)
+[f(y)-f(x)][g(y)-g(x)]\,dt.
+\]
+若水动力极限为反应—扩散密度 \(\rho_t\)，则 \(\sqrt N(\rho_t^N-\rho_t)\) 的漂移是 \(D\mathcal F(\rho_t)\)，噪声协方差由扩散梯度项和反应跳跃项共同给出。若有公共噪声，\(\rho_t\) 本身随机，CLT 必须条件于公共噪声。
+
+若存在嵌入 \(\iota_j:E_j\to E_\infty\) 和流逼近误差 \(\eta_j\)，则
+\[
+\sqrt N[(\iota_j)_\#\mu_t^{N,j}-\mu_t^\infty]
+=\eta_t^{N,j}
++\sqrt N[(\iota_j)_\#\mu_{t,j}-\mu_t^\infty].
+\]
+只有 \(\sqrt N\eta_j\to0\) 才能使用极限流作无偏 CLT 中心；若 \(\sqrt N\eta_j\to b_t\)，极限均值产生偏移。时间窗增长、网格粒子数不足或缺少统一可微性时，不能升级为统一 SPDE。所有噪声协方差和线性化系数均为外加模型数据。
+
+## 85. FIB 多主体反馈、平均场 HJB–FP 系统与均衡不可辨识
+
+固定有限上下文闭包 \(E_j\)，给定主体数 \(N\)、动作集 \(\mathcal A\)、受控核 \(Q_j^a(x,\mu,y)\)、相互作用代价 \(\ell_j(x,\mu,a)\) 和终端代价 \(G_j(x,\mu)\)。FIB 只给状态和组合关系。对经验测度 \(\mu\) 和动作律 \(\alpha(a\mid x)\)，定义
+\[
+\Phi_j(\mu,\alpha)(y)
+=\sum_{x,a}\mu(x)\alpha(a\mid x)Q_j^a(x,\mu,y),
+\]
+\[
+L_j(\mu,\alpha)
+=\sum_{x,a}\mu(x)\alpha(a\mid x)\ell_j(x,\mu,a).
+\]
+规划者的分布值函数满足
+\[
+U_T(\mu)=G_j(\mu),
+\qquad
+U_t(\mu)
+=\inf_\alpha\{L_j(\mu,\alpha)+U_{t+1}(\Phi_j(\mu,\alpha))\}.
+\]
+这是概率单纯形上的 HJB；统一 Lipschitz 和近乘积初态下，有限时域 \(N\)-主体值可在适当范数中以 \(O(N^{-1/2})\) 逼近该分布控制值。
+
+给定人口流 \(m_t\)，个体最佳响应满足
+\[
+v_T(x)=G_j(x,m_T),
+\]
+\[
+v_t(x)
+=\min_a\left\{\ell_j(x,m_t,a)
++\sum_yQ_j^a(x,m_t,y)v_{t+1}(y)\right\}.
+\]
+要求前向一致性
+\[
+m_{t+1}(y)
+=\sum_{x,a}m_t(x)\alpha_t^\ast(a\mid x;m_t)
+Q_j^a(x,m_t,y)
+\]
+便得到有限时域 HJB–FP 均衡。有限状态下存在性可由混合策略紧性得到；唯一性仍需单调性、压缩性或严格凸势。单状态、动作 \(\{-1,+1\}\)、代价
+\[
+\ell(a,p)=-a(2p-1)
+\]
+已有至少两个纯均衡，说明 FIB 递归不能选择均衡分支。
+
+若只有标签观察，受控核须满足 lumpability 才能在标签空间递推；否则必须使用信念状态。观察均衡流只识别动作加权核
+\[
+\bar Q_t(x,m_t,\cdot)
+=\sum_a\alpha_t^\ast(a\mid x;m_t)Q_j^a(x,m_t,\cdot),
+\]
+没有动作 positivity、受控干预或已知核时，不能分解各 \(Q_j^a\)。给所有动作代价加同一状态基线也不改变 argmin，故代价本身还存在规范不可辨识。连续 HJB–FP 或 master 方程需要另加位置嵌入、生成器极限、边界和唯一性；它们不是 FIB 递归自动产生的物理均衡。
+
+## 86. 随机导通率图的 quenched/annealed 热核同质化
+
+令 \(V_j\) 是 FIB 上下文图的有限顶点集。边集、质量 \(m_u\) 和导通率环境 \(\omega\) 均外加；给定
+\[
+c_{uv}(\omega)=c_{vu}(\omega)\ge0,
+\qquad
+(L_j^\omega f)(u)
+=\frac1{m_u}\sum_{v}c_{uv}(\omega)[f(u)-f(v)].
+\]
+对固定环境得到 quenched 热核
+\(H_t^\omega=e^{-tL_j^\omega}\)；对环境平均得到
+\[
+\overline H_t=\mathbb E_\omega H_t^\omega.
+\]
+一般
+\[
+\mathbb E_\omega e^{-tL_j^\omega}
+\ne e^{-t\mathbb E_\omega L_j^\omega},
+\]
+因为矩阵指数和环境平均不交换。只有环境在时间上快速独立切换，并满足相应谱隙和有界性时，才可在有限时间窗得到平均生成器的极限。
+
+若 \(c_{uv}(\omega)\) 是平稳遍历随机场，且存在统一椭圆性
+\[
+0<c_-\le c_{uv}(\omega)\le c_+<\infty
+\]
+及尺度均匀的连通性，则在图序列的共同嵌入和紧性条件下，根点热核可有 quenched 同质化极限
+\[
+p_{j,t}^\omega(u_j,v_j)
+\longrightarrow p_t^{\mathrm{eff}}(x,y)
+\]
+或相应的弱半群极限。有效导通率由环境的联合结构决定，通常不是边导通率的逐边算术平均；一维串联的有效系数呈调和平均，而并联结构呈算术型组合。若环境相关长度随 \(j\) 增长、统一椭圆性失效或图不具共同嵌入，只能给子列或有限窗结论。
+
+随机热迹的涨落可写成
+\[
+\Theta_j^\omega(t)
+=\sum_k e^{-t\lambda_{j,k}^\omega}.
+\]
+在环境混合且单边热迹方差可和时，中心化热迹可能满足
+\[
+\frac{\Theta_j^\omega(t)-\mathbb E\Theta_j^\omega(t)}
+{\sqrt{|V_j|}}
+\Longrightarrow\mathcal N(0,\sigma_\Theta^2(t)).
+\]
+若低能谱满足 quenched/annealed 两个不同的正则变分律，则其 Tauberian 热核幂律也可能不同；不能把一个平均谱密度自动当作典型环境的局部谱。
+
+若把 \(m_u\) 与 \(c_{uv}\) 外加解释成质量和弹簧刚度，则每个环境给出不同正常模
+\(\omega_k^\omega=\sqrt{\lambda_k^\omega}\)。只有另加周期或随机晶格的谱极限定理，才能讨论声子带、局域化或有效声速。FIB 递归只给候选顶点和组合关系，不决定随机导通率、有效介质、局域化长度或真实材料热传导。
+
+## 87. 风险敏感 Bellman、非线性谱与小噪声作用量
+
+固定有限 FIB 状态集 \(E_j\)，给定外加核 \(Q_j^a\)、阶段代价 \(\ell_j\)、终端代价 \(G_j\) 和风险参数 \(\theta>0\)。风险敏感值函数定义为
+\[
+V_t^\theta(x)
+=\frac1\theta\log
+\inf_\pi
+\mathbb E_x^\pi
+\exp\left[
+\theta\left(
+\sum_{s=t}^{T-1}\ell_j(X_s,A_s)+G_j(X_T)
+\right)\right].
+\]
+它满足非线性 Bellman 递推
+\[
+V_T^\theta=G_j,
+\]
+\[
+V_t^\theta(x)
+=\frac1\theta\log\min_a
+\left\{
+e^{\theta\ell_j(x,a)}
+\sum_yQ_j^a(x,y)e^{\theta V_{t+1}^\theta(y)}
+\right\}.
+\]
+\(\theta\downarrow0\) 恢复普通期望代价；\(\theta>0\) 放大上尾，\(\theta<0\) 偏向下尾。若无限时域折扣或齐次核使乘法算子
+\[
+(\mathcal T_\theta f)(x)
+=\min_a e^{\theta\ell_j(x,a)}
+\sum_yQ_j^a(x,y)f(y)
+\]
+具有正性和原始性，则长期风险率由其非线性 Perron 根给出。动作并列、核不可约性或代价无界时，不能无条件声称唯一风险率。
+
+对固定策略的路径奖励 \(A_T\)，有
+\[
+\frac1\theta\log\mathbb E e^{\theta A_T}
+=\frac1\theta\Lambda_T(\theta),
+\]
+其一阶导数是平均奖励，二阶导数是方差；当 \(T\to\infty\) 且压力极限存在时，
+\[
+\Lambda(\theta)
+=\lim_{T\to\infty}T^{-1}\log\mathbb E e^{\theta A_T}
+\]
+与奖励大偏差率函数通过 Legendre 对偶相连。此处的“自由能”只是风险敏感路径的谱量，不是热力学自由能。
+
+若核本身由小噪声扩散或小步长 FIB 嵌入产生，令 \(\theta=1/\varepsilon\)，则风险敏感 Bellman 的对数变换在形式上趋向 Hamilton–Jacobi 方程；其 Lagrangian 由外加漂移 \(b_j\) 和扩散矩阵 \(a_j\) 决定。控制表示为
+\[
+-\varepsilon\log\mathbb E
+e^{-F(X^\varepsilon)/\varepsilon}
+=
+\inf_u\mathbb E\left[
+F(X^{\varepsilon,u})
++\frac12\int|u_t|^2dt
+\right],
+\]
+但从有限状态核到连续作用量仍需统一嵌入、指数紧性和时间尺度。单步代价极限不自动给出长路径 LDP。
+
+核扰动的风险敏感值对小的总变差并不总是稳定：指数代价会放大稀有路径，必须同时给出共同支撑、代价上界和 \(T\theta\) 的控制。故相同 FIB 状态载体上改变动作代价、风险参数或核，可产生不同非线性谱、最优策略和稀有事件偏好；FIB 递归不决定风险厌恶、温度、作用量或任何真实物理自由能。
