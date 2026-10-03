@@ -27164,3 +27164,67 @@ This exact control rules out the universal estimate
 support primes and one connected quotient component. It does not produce an
 odd whole cover. A closing proof must use a stronger across-fibre constraint
 from whole coverage or EB1, beyond the pointwise component payment.
+
+## 236. Whole-cover private witnesses impose a weighted component-mass bound
+
+The exact flow in Section 233 yields a useful scalar consequence that keeps the
+other-component fibres. Define
+\[
+E_B=\{r\in U_H:W(r)=\{B\}\}.
+\]
+Every private witness of a label in \(B\) lies above \(E_B\). Summing the
+capacities of all buckets available to \(B\) gives
+\[
+|B|
+\le
+\sum_{r\in E_B}L_B\prod_{B'\ne B}|R_{B'}(r)|.
+\tag{236.1}
+\]
+Indeed, the left side is the source capacity of the labels in \(B\), while
+the right side is the total sink capacity of all buckets adjacent to those
+labels; this is the \(S=B\) case of (233.5), with possible label-to-bucket
+edges discarded.
+
+Using
+\[
+Q/H=\prod_{B\in\mathfrak B_H}L_B,
+\qquad
+\Delta_B(r)=\frac{|R_B(r)|}{L_B},
+\]
+(236.1) becomes
+\[
+\boxed{
+\frac{|B|}{Q/H}
+\le
+\sum_{r\in E_B}\prod_{B'\ne B}\Delta_{B'}(r).
+}
+\tag{236.2}
+\]
+The \(E_B\) are disjoint. Summing (236.2) over all quotient components gives
+the joint source-compatible requirement
+\[
+\boxed{
+\frac{|I_H|}{Q/H}
+\le
+\sum_{r\in U_H}
+\ \sum_{\substack{B\in\mathfrak B_H\\W(r)=\{B\}}}
+\prod_{B'\ne B}\Delta_{B'}(r).
+}
+\tag{236.3}
+\]
+Only fibres with a unique empty component contribute. Fibres with two or more
+empty components cannot contain a private witness for any label, because a
+second empty component would cover every quotient point in that fibre.
+
+This is stronger than counting the \(H\)-residues: several labels may use one
+\(r\), but their demand is charged against the actual product of the other
+components' surviving coordinates. It is also weaker than the full flow,
+because it forgets which \(t_B\) each label can use.
+
+The bound alone does not contradict the unrestricted problem. The factor
+\(\prod_{B'\ne B}\Delta_{B'}(r)\) may be close to one, and \(Q/H\) can be
+large. The explicit nine-support control in Section 235 has one quotient
+component and satisfies (236.2) on its covered fibre. A closing argument
+therefore needs an independent upper bound on these weighted singleton-fibre
+masses, or a strict EB1 replacement that consumes the same source-compatible
+private slots.
