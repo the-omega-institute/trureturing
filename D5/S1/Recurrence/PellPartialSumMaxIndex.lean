@@ -7,6 +7,7 @@
    digest: Pell partial sums have greatest dividing indices in four residue classes. -/
 
 import D5.S1.Recurrence.PellCompanionGcd
+import Mathlib.Data.Nat.DvdSequence
 import Mathlib.Algebra.Order.Ring.Abs
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Order.Bounds.Basic
@@ -135,9 +136,7 @@ theorem result :
         _ = P (Nat.gcd (b % a) a) := ih
         _ = P (Nat.gcd a b) := by rw [← Nat.gcd_rec]
   have pell_dvd (a b : ℕ) (h : a ∣ b) : P a ∣ P b := by
-    have he := gcd_pell b a
-    rw [Nat.gcd_eq_right h] at he
-    exact he ▸ Nat.gcd_dvd_left (P b) (P a)
+    exact Nat.IsStrongDvdSequence.isDvdSequence gcd_pell a b h
   have odd_coprime (m j : ℕ) (hm : Odd m) : Nat.Coprime (P m) (Q j) := by
     let g := Nat.gcd (P m) (Q j)
     have hgq : g ∣ Q j := Nat.gcd_dvd_right _ _
