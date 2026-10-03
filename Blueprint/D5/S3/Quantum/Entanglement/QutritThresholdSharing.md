@@ -78,7 +78,19 @@ $$\forall rho \in \operatorname{DensityState}(\operatorname{ZMod}(3)),\; \forall
 
 rho ranges over the canonical FiniteStateChannel.DensityState (ZMod 3): positive complex matrices of trace one. val(rho) denotes exactly CStarMatrix.ofMatrix.symm rho.1, the underlying ordinary matrix. Linearity and the frozen trace-one theorem extend the matrix-unit calculation to every input state, including mixed states.
 
-**Theorem 1.7 (Every pair reconstructs every input amplitude).**
+**Theorem 1.7 (The squared amplitude normalization).**
+
+$$\operatorname{Complex.ofReal}(\sqrt{3})^{-1} \cdot \operatorname{Complex.ofReal}(\sqrt{3})^{-1} = 3^{-1}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/QutritThresholdSharing.normalization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The encoding amplitudes are 1/sqrt 3, and the product of two of them is 1/3, since sqrt 3 times sqrt 3 is 3.
+
+**Theorem 1.8 (Every pair reconstructs every input amplitude).**
 
 $$\forall psi \in (\operatorname{ZMod}(3) \to \mathbb{C}),\; \forall i \in \operatorname{Fin}(3),\; \forall r \in \operatorname{ZMod}(3),\; \operatorname{mulVec}(\operatorname{Equiv.Perm.permMatrix}(\mathbb{C}, qutritDecoder^{-1}), (p: \operatorname{ZMod}(3) \times \operatorname{ZMod}(3) \mapsto \operatorname{mulVec}(V, psi)(\operatorname{cyclicShares}(i, (p_{1}, p_{2}, r))))) = (p: \operatorname{ZMod}(3) \times \operatorname{ZMod}(3) \mapsto psi(p_{1}) \cdot (\frac{1}{\operatorname{Complex.ofReal}(\sqrt{3})} \cdot \sum_{j: \operatorname{ZMod}(3)} (\operatorname{ite}((p_{2}, r) = (j, j), 1, 0))))$$
 
@@ -93,6 +105,7 @@ mulVec is ordinary matrix action on column amplitudes. Both sides are functions 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritThresholdSharing.cyclicShares`
+- Truth anchor: `D5/S3/Quantum/Entanglement/QutritThresholdSharing.normalization`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritThresholdSharing.qutritDecoder`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritThresholdSharing.qutritEncoding`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritThresholdSharing.qutrit_matrix_unit_marginal`
