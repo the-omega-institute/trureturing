@@ -1,0 +1,41 @@
+**Proposition 1 (three-row common-short-hull square-root lock).** For every even integer $S\ge8$, every odd integer $k$, and all real numbers $h,l,b,c,d,Q,P,\epsilon$, suppose
+
+$$
+\begin{gathered}
+0\le h\le S-2,\qquad l\le0\le l+h,\\
+l\le b\le l+h,\quad l\le c\le l+h,\quad l\le d\le l+h,\\
+1\le |b|,\quad 1\le |c|,\quad 1\le |d|,\quad Q>0,\quad P>0,\\
+Q^2=(N+b)(N+c)(N+d),\qquad P^2=bcd,\\
+\epsilon\in\{1,-1\},\qquad Q+\epsilon P=Nk,\qquad N=S^2.
+\end{gathered}
+$$
+
+Then $b>0$, $c>0$, $d>0$, and $k=S+1$.
+
+Proof. The common interval gives $-h\le b,c,d\le h$, so every shifted factor $N+b,N+c,N+d$ is positive. Since $P^2=bcd>0$ and the offsets are nonzero, their signs are either all positive or exactly two negative.
+
+First obtain a bound valid for either sign pattern. The product of the absolute offsets is at most $h^3$, hence $P^2\le h^3<S^3$. Since $S\ge8$, one has $S^3<(9/64)S^4$, and therefore $P<(3/8)N$.
+
+For the two-negative pattern let the negative magnitudes be $s_1,s_2$, set $s=\max(s_1,s_2)$, and let the positive offset be $r$. The absolute-magnitude assumptions give $r\ge1$. The same interval containing these offsets gives $s+r\le h\le S-2$. The norms imply $Q\ge S(N-s)$ and $P\le s\sqrt r\le sr$. Consequently
+
+$$
+s(S+r)\le(S-r-2)(S+r)=N-2S-r^2-2r<N,
+$$
+
+and $Q-P>N(S-1)$. Also $Q^2\le N^2(N+r)$. Since $r\le S-2<S+1/4$, comparison with $(NS+N/2)^2$ gives $Q<NS+N/2$. Together with $P<(3/8)N$ this puts both $Q+P$ and $Q-P$ strictly between $N(S-1)$ and $N(S+1)$. Thus the integer $k$ must equal $S$, contrary to odd $k$ and even $S$. Symmetry excludes every placement of the two negative offsets.
+
+All offsets are therefore positive. Set $S_1=b+c+d$ and $S_2=bc+bd+cd$. The inequality $(b-c)^2\ge0$ gives $2P\le\sqrt d(b+c)$. Since $d\le h<S<N$, one has $\sqrt d<S$, hence $2SP<N(b+c)<NS_1$. Expansion now yields
+
+$$
+Q^2-(NS+P)^2=N(NS_1+S_2-2SP)>0.
+$$
+
+Both roots are positive, so $Q-P>NS$. For the other end, $Q^2\le(N+h)^3<(N+S)^3$, while
+
+$$
+\left(NS+\frac{13}{8}N\right)^2-(N+S)^3
+=\frac{S^3}{64}(16S^2-23S-64)>0.
+$$
+
+The last factor is positive for $S\ge8$. Thus $Q<NS+(13/8)N$, and $Q+P<N(S+2)$. Either value of $\epsilon$ gives $S<k<S+2$, whose only integer is $S+1$. QED.
+

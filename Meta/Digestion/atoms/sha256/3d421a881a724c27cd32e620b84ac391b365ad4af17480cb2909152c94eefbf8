@@ -1,0 +1,28 @@
+**定理 53.9（未知强度下的排序恢复）。** 对 $n\ge4,m\ge1$，选取
+
+$$
+S_i=m^{-1}\sum_{j=1}^m\varphi(W_{j,i})w_{Y_j}
+$$
+
+最大的三个位置，固定按索引破平，再递增排序为 $\widehat\theta$。这个规则不使用 $\alpha$ 或其下界。固定全支撑 $\mu$，令
+
+$$
+\gamma_\mu=\min(\gamma_p,\gamma_q,\gamma_r),\quad M_\mu=\max(e,2-e),\quad R_\mu=\max_{k,y}(k-e)w_y-\min_{k,y}(k-e)w_y. \tag{53.16}
+$$
+
+其中 $k\in\{0,1,2\}$，且 $R_\mu\le2M_\mu\le4$。对 $0<a\le1,0<\delta<1$，以下任一充分预算保证对全部 $\theta$ 与 $\alpha\in[a,1]$ 有 $P(\widehat\theta=\theta)\ge1-\delta$：
+
+$$
+m\ge\left\lceil\frac{2R_\mu^2}{a^2\kappa^2\gamma_\mu^2}\log\frac{2n}{\delta}\right\rceil,\qquad
+m\ge\left\lceil\frac{8M_\mu^2}{a^2\kappa^2\gamma_\mu^2}\log\frac{2n}{\delta}\right\rceil. \tag{53.17}
+$$
+
+在已知律族 $\mathcal M_\rho$ 中，一条更保守的统一充分条件为
+
+$$
+m\ge\left\lceil\frac{1}{2a^2\kappa^2\rho^6}\log\frac{2n}{\delta}\right\rceil.
+\tag{53.18}
+$$
+
+在 $\mu_*$ 上，$R_\mu=5/2,M_\mu=5/4,\gamma_\mu=55/512$，所以式（53.17）的精确系数为 $25/[2\kappa^2(55/512)^2]=13404.74896865\ldots$。
+

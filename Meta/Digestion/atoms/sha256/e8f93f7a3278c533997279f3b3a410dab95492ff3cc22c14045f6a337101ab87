@@ -1,0 +1,9 @@
+**证明。** 若某 $f$ 对 $k$ 个位置均好，则把这 $k$ 个位置取作 $S$，其平均风险不超过 $\varepsilon$；由（60.4）必有 $r_k\le\varepsilon$，故好位置数不超过 $K_M$。反向取任意 $S$、$|S|=K_M$，使用 $F_S$。对 $j\notin S$，当 $K_M<M$ 时
+
+$$
+L_s(j,F_S)=\tau\left[\tau+(1-2\tau)P\{B_{K_M}>K_M/2\}\right]>\tau^2>\varepsilon,
+\tag{60.10}
+$$
+
+所以其好集合恰为 $S$；$K_M=M$ 时直接使用 $F_{[M]}$。$\square$
+

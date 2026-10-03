@@ -1,0 +1,20 @@
+**命题 58.6（准确补偿与分歧支持方差）。** 对全部合法异质律，
+
+$$
+\begin{aligned}
+\mathbb E[v(Y)\mid X]&=1-3V=\alpha/4,\\
+\mathbb E[s_\tau\mid X]
+&=\frac\alpha4\left[f_\theta^2-(f_\theta-f_\tau)^2\right],\\
+\mathbb E[s_\theta-s_\tau]&=\alpha d_{\boldsymbol\mu}(\theta,\tau)/4.
+\end{aligned}
+\tag{58.22}
+$$
+
+令 $W=s_\theta-s_\tau,D=C_\theta-C_\tau$，逐记录还有
+
+$$
+W=0\text{ 当 }D=0,\qquad |W|\le4,\qquad W^2\le9D^2,
+\qquad \operatorname{Var}(W)\le9\mathbb ED^2.
+\tag{58.23}
+$$
+

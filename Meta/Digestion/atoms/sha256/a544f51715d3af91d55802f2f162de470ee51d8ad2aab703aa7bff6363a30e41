@@ -1,0 +1,16 @@
+**定理 352.6（两个初始空秩后的半开壳界）。** 对每个实数 $Y\ge2$、$b>1$ 及有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{25+16bY}-5\right),
+\tag{352.4}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{25+16bY}-5\right)}{2Y\log Y}.
+\tag{352.5}
+$$
+

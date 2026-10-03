@@ -1,0 +1,29 @@
+**证明。** 通道的每一行在标签2与0之差为
+$\alpha(c-1)/4$，在这两个标签上的质量和均为 $\beta$，给（57.13）。由引理57.2，
+
+$$
+\begin{aligned}
+\mathbb EW
+&=\frac\alpha4\mathbb E[(C_\theta-1)(C_\theta-C_\tau)]\\
+&=\frac\alpha4\bigl(\mathbb EC_\theta^2-\mathbb EC_\theta C_\tau\bigr)
+=\frac\alpha8\mathbb E(C_\theta-C_\tau)^2.
+\end{aligned}
+$$
+
+最后一步使用共同平方范数，前一步还使用共同一阶矩。条件二阶矩给第二式，减去均值平方只会降低方差。 $W$ 在两个教师相同的输入上严格为零；因此方差随实际分歧质量下降，而不是仅由全域范围控制。定理57.3再给严格正总体分数差。证毕。 $\square$
+
+通道的严格正性同时保留了标签不确定性。任意正质量输入事件 $E$ 上，令 $g_E=\mathbb E[C_\theta\mid E]$，则条件均值为 $\alpha(g_E-1)/4$、条件二阶矩仍为 $\beta$，故
+
+$$
+\operatorname{Var}(Z\mid E)
+=\beta-\frac{\alpha^2(g_E-1)^2}{16}
+\ge\frac23+\frac\alpha{12}-\frac{\alpha^2}{16}\ge\frac23.
+$$
+
+即使 $\alpha=1$，也没有无噪声教师标签。分数的稀有方差来自教师差在大部分输入上为零，而非该事件内标签确定。
+
+不同教师也不能通过更换未知干扰描述形成相同完整记录律。若
+$P_{\mu,\alpha,\theta}=P_{\nu,\alpha',\tau}$，输入边缘先给
+$\mu=\nu$；标签1的概率是 $(4-\alpha)/12$，给
+$\alpha=\alpha'$。正 $\alpha$ 时三条件行两两不同，输入全支撑遂给逐词 $C_\theta=C_\tau$，定理57.3给 $\theta=\tau$。零强度另按 §57.10 处理。
+

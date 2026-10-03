@@ -1,0 +1,44 @@
+**Theorem 6.2 (exact fixed-family mass sums).** Under the same threshold,
+every allowed actual permutation has a unique code in the fixed family.
+For every actual event $A$, let $F_n(c)$ be the actual classifier fiber
+and $L_n(c)$ its selected terminal leaves. Then
+$$
+\begin{aligned}
+|U_n\cap t\cap A|
+  &=\sum_{c\in\mathcal C(t,m,K,H)}|F_n(c)\cap A|,\\
+\Pr(U_n\cap t\cap A)
+  &=\sum_{c\in\mathcal C(t,m,K,H)}\Pr(F_n(c)\cap A),\\
+\Pr(F_n(c)\mid t)
+  &=P_n(c)\frac{|L_n(c)|}{|\operatorname{Leaf}(h_n(c))|}.
+\end{aligned}
+$$
+Here probabilities are under the actual uniform full $U_n$ law, and $t$
+denotes its allowed source event. On successful codes the last fraction
+is exactly one. For every literal $m$-coordinate test in alphabet $B$,
+the successful summand is $\Pr(t)P_n(c)$ if the test accepts
+$w(c;B,0)_{<m}$, and zero otherwise. Non-successful summands retain
+their actual restricted tested mass. The same fixed-family sum applies
+to the absolute test $\pi(i)\ne i$ for every $i<m$, using alphabet $m$
+and the literal word, not standardized endpoint coordinates.
+
+*Proof.* The actual explorer is recoded action by action using its unique
+recovered factors. Recompression implies injectivity of decoded outcomes,
+so the ordinary deterministic fibers give a disjoint fixed-family
+partition. Partition each tested actual event, count its fibers, and
+divide by $s_n$. The restricted terminal count formula is the supplied
+restricted-fiber kernel. The complete successful fiber equality and the
+literal history cylinder kernel give the successful summands. $\square$
+
+A cap stop remains restricted. For $n=4$ and $m=B=H=K=1$ in state $U$,
+the stopped cap fiber has four selected leaves although the whole leaf
+carrier has $22$ members. This threshold-satisfying example cannot be
+assigned the whole leaf mass. At $K=0$ there are no endpoint actions;
+at $H=0$ there are no transitions; at $m=0$ the good code is the immediate
+stop. These conventions are included in the symbolic statements.
+
+These finite formulas do not supply actual all-length count-ratio
+asymptotics, sign-half, the infinite coupled law, horizon or cap tails,
+occupation, discrepancy, filtration, hitting transfer, or the full
+derangement-ratio limit.
+
+<!-- APPEND -->

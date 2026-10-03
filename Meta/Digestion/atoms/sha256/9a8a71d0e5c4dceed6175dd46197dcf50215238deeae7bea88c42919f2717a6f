@@ -1,0 +1,11 @@
+**定理 54.4（完整联合律与完成响应商）。** 对同一个已知全支撑 $\mu$，全部递增教师及 $\alpha,\beta\in[0,1]$ 满足
+
+$$
+P_{\theta,\alpha}=P_{\tau,\beta}
+\quad\Longleftrightarrow\quad
+\alpha=\beta\ \text{且}\ (\alpha=0\ \text{或}\ \theta=\tau).
+\tag{54.14}
+$$
+
+给定 $\alpha>0$，确定任务 $C_\theta(X)$ 与向量任务 $B_{\theta,\alpha}(X)=(R_\alpha)_{C_\theta(X),\cdot}$ 在每个切面有相同的完成响应等价关系。
+

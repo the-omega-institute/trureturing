@@ -1,0 +1,27 @@
+### 39.3 跨分辨率的实际像交换
+
+设 $s\succeq r$，并给出只在实际来源上定义的限制
+
+$$
+\pi_{sr}:\mathsf H^{\mathrm{act}}_{s,\nu}\longrightarrow
+\mathsf H^{\mathrm{act}}_{r,\nu}.
+$$
+
+跨分辨率的 FIB 实例必须同时满足
+
+$$
+\pi_{sr}(T_a h)=T_a^{(r)}(\pi_{sr}h),
+\qquad
+E_i^{(r)}\pi_{sr}=\lambda^i_{sr}E_i^{(s)},
+\tag{PG.3908}
+$$
+
+并保留 `None` 失败分支、事件顺序、参考、权限和 writer 的联合推前。连续限制还要满足
+
+$$
+\pi_{rt}\pi_{sr}=\pi_{st}.
+\tag{PG.3909}
+$$
+
+式（PG.3908）是第 26 节四视图自然性与第 38 节 `ApplyRho` cube 在具体二叶历史上的接合；它不能由各字段分别下降推出。若 $\mathsf H^{\mathrm{act}}_{r,\nu}$ 只是某个更大的 ambient 候选集的子集，还必须另加实际像闭合或满射假设。否则，所有有限层都相容的环境线程仍可能是幽灵线程，不能声称它来自一个实际无限历史。
+

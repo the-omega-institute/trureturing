@@ -1,0 +1,38 @@
+**定义60.1（暴露律与揭示族）。** 仍取
+
+$$
+\Sigma=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3,
+$$
+
+源端位置相互独立，第 $i$ 个窗口的五质量为
+$\mu_i=(u_i,x_i,v_i,t_i,z_i)$，每项至少为 $\rho$；完整 $(X,Y)$ 记录独立同分布，$n\ge4$、$0<\rho\le1/8$、$0<a\le1$，且 $\alpha\in[a,1]$ 未知。教师
+
+$$
+A_\theta=h_p\ell_q,\qquad B_\theta=h_q\ell_r,\qquad
+C_\theta=A_\theta+2(1-A_\theta)B_\theta
+$$
+
+使用定义59.1的实际行 $R_\alpha$。唯一改变为已知目标律
+
+$$
+\nu_s=\left(\frac{1-3s}{2},s,\frac{1-3s}{2},s,s\right)^{\! \otimes n},
+\qquad 0<s\le\frac15 .
+\tag{60.1}
+$$
+
+令 $\tau=2s\in(0,2/5]$。于是每个窗口有 $P(h=1)=P(\ell=1)=\tau$、$P(h\ell=1)=s=\tau/2$。目标样本和训练记录独立，学习器在训练和一个与参数无关的随机种子 $\xi$ 条件化后输出任意固定 $f:\Sigma^n\to\{0,1,2\}$，并记
+
+$$
+L_s(i,f)=P_{\nu_s}\{f(X)\ne C_i(X)\}.
+\tag{60.2}
+$$
+
+揭示族把 $q=n-1,r=n$ 作为真实、无噪声 side information 揭示，只让 $p=i$ 在
+$[M]=\{1,\ldots,M\}$ 中变化，其中 $M=n-2$。记
+
+$$
+d(X)=2h_q\ell_r.
+$$
+
+在同一个输入上，若 $\ell_q=0$，则所有教师输出 $d$；若 $\ell_q=1$，第 $i$ 个教师输出 $1$ 当且仅当 $h_i=1$，否则输出 $d$。由于 $d\in\{0,2\}$，这两个输出始终不同。
+

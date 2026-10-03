@@ -1,0 +1,44 @@
+**命题 56.3（单窗与末位锚定的条件表）。** 按（56.1）的字母顺序，$\mathbb E[C\mid W_i=w]$ 为
+
+$$
+\begin{array}{c|ccccc}
+i\backslash w&000&100&010&101&001\\\hline
+p&2HL&2HL&2HL&2HL&2HL\\
+q&0&H&0&H+2L-2HL&2L\\
+r&HL&HL+H&HL&HL+H&HL\\
+i\notin\{p,q,r\}&2HL&2HL&2HL&2HL&2HL
+\end{array}.
+\tag{56.7}
+$$
+
+对 $i\ne r$，置 $g_i(b,c)=\mathbb E[C\mid h_i=b,\ell_r=c]$。四格的完整表为
+
+$$
+\begin{array}{c|cccc}
+i\backslash(b,c)&(0,0)&(0,1)&(1,0)&(1,1)\\\hline
+p&0&2H&L&L+2H-1\\
+q&Hx/(1-H)&Hx/(1-H)&1/2&3/2\\
+i\notin\{p,q,r\}&HL&HL+H&HL&HL+H
+\end{array}.
+\tag{56.8}
+$$
+
+每格的标签行由（56.5）给出。
+
+**证明。** 单窗表直接使用实际式（55.10）；非活动窗独立于活动窗及条件标签，其均值为 $\mathbb EC=2HL$。对锚定表，展开实际优先多项式（55.9），只对未条件化的整窗平均。第一角色给
+
+$$
+g_p(b,c)=bL+2Hc-2bc\mathbb E[\ell_qh_q]=bL+2Hc-bc.
+\tag{56.9}
+$$
+
+中窗须保留其相关位的条件概率
+
+$$
+\mathbb E[\ell_q\mid h_q=0]=\frac{x}{1-H},\qquad
+\mathbb E[\ell_q\mid h_q=1]=\frac{1/2}{H}.
+\tag{56.10}
+$$
+
+于是 $g_q(0,c)=Hx/(1-H)$，而 $g_q(1,c)=1/2+c$。非活动 $i$ 的条件 $h_i$ 不改变 $\mathbb E[C\mid\ell_r=c]=HL+Hc$。这给所有四格；未把 $h_q,\ell_q$ 的联合矩替换为 $HL$。$\square$
+

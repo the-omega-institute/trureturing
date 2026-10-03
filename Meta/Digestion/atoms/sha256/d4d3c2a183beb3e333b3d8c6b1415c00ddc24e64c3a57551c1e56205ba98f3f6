@@ -1,0 +1,35 @@
+**边界因子。**
+仍令 $Q(h):=(\xi(h),\nu(h),i(h))$ 为 $h$ 的 source/epoch/type 标签，
+$H_Q:=\{h\in H_R:Q(h)=Q\}$，并为每个 $Q$ 给出带标签的共同纤维定义
+
+$$
+\beta_Q:\operatorname{im}(\eta|_{H_Q})\longrightarrow Y_Q.
+$$
+
+把边界值域固定为不交并
+
+$$
+X_B:=\coprod_QY_Q,\qquad
+\mathsf{Boundary}(h):=
+\bigl(Q(h),\beta_{Q(h)}(\eta(h))\bigr)\in X_B.
+\tag{PG.3400f}
+$$
+
+每个 $\beta_Q$ 是声明完整的 typed-continuation response：对每个合同允许的延续给出
+合法性或失败、事件、标签和读出；只有当本次任务合同把 grade 纳入 response 时，才把
+相应 grade 序列也纳入。于是全局边界核为
+
+$$
+\begin{aligned}
+\ker(\mathsf{Boundary})
+&=\bigcup_Q\{(h,k)\in H_Q^2:
+\beta_Q(\eta(h))=\beta_Q(\eta(k))\}\\
+&=K_{\mathrm{beh}}.
+\end{aligned}
+\tag{PG.3400g}
+$$
+
+不交并的 $Q$ 标签阻止全局核合并跨 source、epoch 或 type 的历史；因此这里的全局
+$\ker(\mathsf{Boundary})$ 与共同纤维内的 $K_{\mathrm{beh}}$ 完全一致，而不是把
+不同 $Q$ 的相同 response 当成同一边界点。
+

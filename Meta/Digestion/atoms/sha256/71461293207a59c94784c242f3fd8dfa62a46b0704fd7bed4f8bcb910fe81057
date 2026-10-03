@@ -1,0 +1,20 @@
+### 54.10. 成熟供应、替代方案与关系范围
+
+产品空间的一阶和二阶投影属于成熟的正交分解。O’Donnell，[*Analysis of Boolean Functions*](https://www.cs.cmu.edu/~odonnell/papers/Analysis-of-Boolean-Functions-by-Ryan-ODonnell.pdf)，§8.3、Theorem 8.35，适用于这里的 $\Omega=\Sigma,\pi=\mu$，每个独立坐标是整个窗口。第一位置的 $\mathbb E[C\mid W_p]-\mathbb EC$ 为零，而 $\mathbb E[\psi_p\psi_r C]$ 可以非零；一般分解并不给出式（54.7）、（54.18）的 FIB 系数和符号。
+
+边际无关而联合相关也是既有筛选障碍，见 Fan、Samworth、Wu，[*Ultrahigh Dimensional Feature Selection: Beyond The Linear Model*](https://jmlr.org/papers/volume10/fan09a/fan09a.pdf)，摘要及 §2.3。这里不增加一般筛选或 ANOVA 算法。Mossel、O’Donnell、Servedio，[*Learning juntas*](https://www.cs.cmu.edu/~odonnell/papers/juntas.pdf)，§5.1 的单调 junta 一阶系数结论使用均匀独立位及 Boolean 响应；本实验的位只在整窗间独立，$C$ 为三值，且固定 $W_q=101,W_r=100$ 时增大 $h_p$ 把 $C$ 从 2 降到 1，不能使用该单调捷径。O’Donnell 的 Definition 6.15 及 Siegenthaler 讨论也要求对应的 Boolean cube 条件；这里的 $q,r$ 一阶观察仍可见，不称为整个函数的一阶相关免疫。式（54.29）是经典 Hoeffding 有界独立样本界，来源为 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)；其所需证明已给出。
+
+不改变观察阶时，任意单窗函数或标签对比都不能切开（54.10）；增加样本预算也不能改变这个精确总体碰撞。完整记录的候选对比则仍是可行替代：对 $T=\binom n3$ 个教师计算 $S_\eta=m^{-1}\sum_b C_\eta(X_b)Z_b$。所有教师的 $\mathbb EC$ 与 $\mathbb EC^2$ 相同，所以
+
+$$
+\mathbb E S_\theta-\mathbb E S_\eta
+=\frac\alpha8\mathbb E_X(C_\theta-C_\eta)^2>0\quad(\eta\ne\theta,\ \alpha>0).
+\tag{54.44}
+$$
+
+这是（54.6）及相同第二矩的直接展开，给有限候选排序的逐点一致性。流式候选库要付 $T$ 个范围在 $[-2m,2m]$ 的计数器和 $O(mT)$ 次候选评价；减少库则另付记录保留或重访。它不是旧通道的未校正标签匹配，也不解释最小总体观察阶。
+
+本节的两个二阶充分实现作用不同。稠密位置最大值由互补边的中位数间隙取得（54.28）的 $\rho^{-2}$ 统一样本证书，支付二次计数库与每记录二次更新；锚点分批方案将活计数器与每记录更新降为线性，但所给统一样本证书为 $\rho^{-4}$，并取得两批完整记录。两个充分上界在所声明的样本与计数坐标上各有优势，不能据此宣称方法支配、最优样本阶或最优总费用。
+
+保留的具体关系是：相同优先门的覆盖质量和通道行重心把必要原子的整个单窗关系消去，逐词完成响应仍保留，两个确定符号的配对关系及第三条互补边使总体二阶恰好充分。有限置信恢复把该关系接回付费的原教师读出；通道改变同时改变观测损失。这些结论限于已知整窗律、已知通道族、共同标量退化和递增三元组。它们没有扩展到未知输入律或未知通道的联合校准、任意教师、一次标签反演、因果辨识、优化器、有限精度头或物理资源最优性，也不声称全局文献优先权。
+

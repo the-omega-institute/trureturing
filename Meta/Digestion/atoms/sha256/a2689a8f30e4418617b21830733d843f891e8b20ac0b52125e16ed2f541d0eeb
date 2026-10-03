@@ -1,0 +1,45 @@
+### 61.1. 原始位置律、合法事件与条件来源
+
+位置由 $\operatorname{Fin}(n)$ 编号，五窗字母为
+$\Sigma=\{000,100,010,101,001\}$，三位从低到高书写。记窗口首位与末位为 $\ell$ 与 $h$。输入 $x\in\Sigma^{\operatorname{Fin}(n)}$ 保留全部位置，包括空窗及末尾空窗；单位位为零，不施加 End 查询。接缝合法域沿用第60节“接缝合法域上的优先教师等价与可辨识对象”（合法历史节）：
+
+$$
+\mathcal L_n=\{x:\ h(x_i)\ell(x_{i+1})=0\text{ 对每个 }i+1<n\}.
+\tag{61.1}
+$$
+
+在每个位置给定一个非负有理概率律 $\mu_i:\Sigma\to\mathbb Q$，满足
+
+$$
+\mu_i(b)\ge0,\qquad \sum_{b\in\Sigma}\mu_i(b)=1.
+\tag{61.2}
+$$
+
+原始联合律、合法事件的归一化常数及其条件来源分别定义为
+
+$$
+P_\mu(x)=\prod_{i\in\operatorname{Fin}(n)}\mu_i(x_i),\qquad
+Z_\mu=\sum_{x\in\mathcal L_n}P_\mu(x),\qquad
+Q_\mu(x)=\frac{\mathbf1_{\mathcal L_n}(x)P_\mu(x)}{Z_\mu}.
+\tag{61.3}
+$$
+
+$Q_\mu$ 的概率律解释使用 $Z_\mu>0$；下面的定理同时给出这一条件。原始 $P_\mu$ 是位置乘积律，而 $Q_\mu$ 对全部接缝一起条件化，各窗在 $Q_\mu$ 下无需独立。它没有用逐行归一化的前向过程替代全局条件来源。
+
+严格三元组 $t=(p,q,r)$ 满足 $p<q<r$。教师 $C_t$ 先检查 $h(x_p)\ell(x_q)$，成立时返回1；否则检查 $h(x_q)\ell(x_r)$，成立时返回2；否则返回0。记
+
+$$
+\sigma(t)=\bigl(e(p,q),e(q,r)\bigr),\qquad
+e(i,j)=\begin{cases}(i,j),&i+1<j,\\\varnothing,&j=i+1.\end{cases}
+\tag{61.4}
+$$
+
+两个教师在同一个实际条件来源中的分歧为
+
+$$
+D_\mu(t,u)
+=\frac{\displaystyle\sum_{x\in\mathcal L_n}
+ \mathbf1_{C_t(x)\ne C_u(x)}P_\mu(x)}{Z_\mu}.
+\tag{61.5}
+$$
+

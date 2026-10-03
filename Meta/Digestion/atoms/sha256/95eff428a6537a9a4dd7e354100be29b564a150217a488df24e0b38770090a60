@@ -1,0 +1,10 @@
+**定理60.5（任意分类器风险球的精确容量）。** 在揭示族中
+
+$$
+\max_f\left|\{i\in[M]:L_s(i,f)\le\varepsilon\}\right|
+=K_M(s,\varepsilon).
+\tag{60.9}
+$$
+
+等号边界按 $r_k\le\varepsilon$ 计入。
+
