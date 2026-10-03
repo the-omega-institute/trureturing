@@ -12,7 +12,13 @@ def catalog : Contract.RootCatalog := {
       objectArenaName := `Nat
       statementIdentity := none
       registrationModuleName := `LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary }]
-    source := #[]
+    source := #[{
+      statement := _
+      proof := entry.eq_def
+      theoremName := `ContractReferenceFixtures.Auxiliary.entry.eq_def
+      objectArenaName := `Nat
+      statementIdentity := none
+      registrationModuleName := `LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary }]
     baseline := #[]
     companionPrefix := none } }
 end ContractReferenceFixtures.Auxiliary

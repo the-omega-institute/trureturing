@@ -71,6 +71,9 @@ def audit (command : Syntax) (head : Name) : Except String Unit := do
   let rhs := decl[3]
   unless rhs.isOfKind ``Parser.Command.declValSimple do
     throw "contract.discovery:structure_literal"
+  unless rhs.getArgs.size == 4 && rhs[2].getArgs.all (·.getArgs.isEmpty) &&
+      rhs[3].getArgs.isEmpty && decl[4].getArgs.isEmpty do
+    throw "contract.entry:declaration_suffix_not_allowed"
   let body := rhs[1]
   if body.isOfKind ``Parser.Term.fun then throw "contract.discovery:lambda"
   unless body.isOfKind ``Parser.Term.structInst do
@@ -85,6 +88,7 @@ structure Entry where
   stop : String.Pos.Raw
   originCommand : Syntax
   catalogTarget : Option Name := none
+  authoredNames : Array Name := #[]
 
 /-- Examples emit no named constant; every other author declaration belongs
 to the source inventory, independently of its result-type spelling. -/
@@ -98,6 +102,23 @@ private def declarationName (ns : Name) (command : Syntax) : Option Name := do
   guard id[0].isIdent
   let name := id[0].getId
   return if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else ns ++ name
+
+/-- Nested where/let-rec declarations retain their own source ownership, even
+when their compiler names share the enclosing entry prefix. -/
+private partial def nestedDeclarationNames (parent : Name) (stx : Syntax) : Array Name :=
+  if stx.isOfKind ``Parser.Term.letRecDecl then
+    match stx.find? (·.isOfKind ``Parser.Term.letId) >>= (·.find? (·.isIdent)) with
+    | some id =>
+      let name := parent ++ id.getId
+      #[name] ++ stx.getArgs.flatMap (nestedDeclarationNames name)
+    | none => stx.getArgs.flatMap (nestedDeclarationNames parent)
+  else stx.getArgs.flatMap (nestedDeclarationNames parent)
+
+/-- Authored elaboration has no compiler-equation permission. This includes
+named children emitted by term elaboration rather than declaration syntax. -/
+def hasAuthoredElaboration (entries : Array Entry) : Bool :=
+  entries.any fun entry => (entry.command.find? fun stx =>
+    stx.isAtom && #["by_elab", "run_tac", "run_elab", "run_meta"].contains stx.getAtomVal).isSome
 
 private partial def declarations (command : Syntax) : Array Syntax :=
   if command.isOfKind ``Parser.Command.declaration then #[command]
@@ -253,11 +274,15 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
       some name
     let authorDeclarations := declarations command
     if authorDeclarations.isEmpty then
-      entries := entries.push ⟨command, none, start, stop, command, catalogTarget⟩
+      entries := entries.push ⟨command, none, start, stop, command, catalogTarget, #[]⟩
     else
       for declaration in authorDeclarations do
-        entries := entries.push ⟨declaration, declarationName ns declaration,
-          declaration.getPos?.getD start, declaration.getTailPos?.getD stop, command, catalogTarget⟩
+        let sourceName := declarationName ns declaration
+        let authoredNames := sourceName.map (fun name =>
+          #[name] ++ nestedDeclarationNames name declaration) |>.getD #[]
+        entries := entries.push ⟨declaration, sourceName,
+          declaration.getPos?.getD start, declaration.getTailPos?.getD stop,
+          command, catalogTarget, authoredNames⟩
     if command.isOfKind ``Parser.Command.namespace then
       scopes := (ns, parserEnv, opens) :: scopes
       ns := ns ++ command[1].getId

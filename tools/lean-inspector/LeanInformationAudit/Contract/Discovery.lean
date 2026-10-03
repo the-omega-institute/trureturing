@@ -109,24 +109,35 @@ def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
         unless coreStructureDelegate env value.declName do keys := keys.insert value.key
   return keys
 
-/-- Compiler ownership is a strict descendant of a validated entry in the same
-module, with no independently authored declaration of that name. If the compiler
-publishes a range, it must lie inside the owning entry. Source-name exclusion
-prevents a user-written `entry.eq_1` or private descendant from gaining permission;
-the command inventory prohibits external declaration-generating metaprogramming. -/
+/-- Exact nonrecursive equation suffixes emitted for literal entries by the
+pinned compiler. No numbered family, matcher, where or let-rec prefix is allowed. -/
+def entryEquationSuffixes : Array String := #["eq_1", "eq_def"]
+
+/-- Equation permission requires the compiler reserved identity, a theorem with
+its simple reflexive equation shape, no authored ownership or elaboration, and
+same-module ownership. Every other compiled constant is audited normally. -/
 def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
     (definitions : Array Definition) (env : Environment) (name : Name) : MetaM Bool := do
-  if entries.any (fun entry => entry.sourceName == some (privateToUserName name)) then
+  if SourceAudit.hasAuthoredElaboration entries then return false
+  if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) then
     return false
   let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
     else env.getModuleIdxFor? name == env.getModuleIdx? owner
   unless belongs do return false
+  let some (.thmInfo info) := env.find? name | return false
+  let .str _ suffix := name | return false
+  unless entryEquationSuffixes.contains suffix do return false
   for definition in definitions do
     let parent := privateToUserName definition.info.name
     let child := privateToUserName name
-    unless definition.info.name != name && parent.isPrefixOf child do continue
-    if entries.any (fun entry => entry.sourceName.any fun authored =>
+    unless name == Meta.mkEqLikeNameFor env definition.info.name suffix &&
+        isReservedName env name do continue
+    if entries.any (fun entry => entry.authoredNames.any fun authored =>
         authored != parent && authored.isPrefixOf child) then continue
+    unless info.type.isAppOfArity ``Eq 3 &&
+        info.type.getAppArgs[1]!.isConstOf definition.info.name &&
+        info.value.isAppOfArity ``Eq.refl 2 &&
+        info.value.getAppArgs[1]!.isConstOf definition.info.name do continue
     if let some range ← findDeclarationRanges? name then
       let outer := definition.range.range
       let inner := range.range

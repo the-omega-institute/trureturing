@@ -41,6 +41,13 @@ run_meta do
     "contract.discovery:not_def"
   sourceRejected "source.where" "def x : LeanInformationAudit.Contract.Seal where\n rootId := Lean.Name.anonymous\n options := #[]"
     "contract.discovery:structure_literal"
+  for (label, suffix) in #[
+      ("where_suffix", "\nwhere\n child : Nat := 0"),
+      ("termination_suffix", "\ntermination_by 0"),
+      ("decreasing_suffix", "\ndecreasing_by trivial"),
+      ("deriving_suffix", "\nderiving Inhabited")] do
+    sourceRejected s!"source.{label}" (diagnosticPrefix ++ value ++ suffix)
+      "contract.entry:declaration_suffix_not_allowed"
   let mut error := "accepted"
   try
     discard <| Discovery.auditModule `Synthetic.sourceOnly

@@ -124,12 +124,17 @@ restrictions. Entry heads, closed terms, literal metadata, Reg command permissio
 interface command permissions and source/compiled inventory reconciliation remain
 checked.
 
-An entry auxiliary belongs to a validated entry only when its compiled owner is
-the same module, its name is a strict descendant of that entry, no independently
-authored declaration owns that descendant, and any published compiler range lies
-inside the entry range. Private names are compared using their original compiler
-identity for ownership and their user spelling for source ownership. A source
-declaration that merely uses an entry prefix receives no exemption.
+Contract entries have no declaration suffix: `where`, termination hints,
+`decreasing_by` and `deriving` receive
+`contract.entry:declaration_suffix_not_allowed`.
+
+Only `eq_1` and `eq_def` have entry auxiliary permission. Both must be
+same-module theorem constants at Lean v4.33.0 reserved equation identities, with
+the simple reflexive equation shape for the validated literal entry. Source
+where/let-rec declarations retain their own authored inventory. Authored term
+elaboration grants no equation permission. All other compiled constants,
+including named elaboration children, obey the ordinary direct-reference rule.
+Private compiler identities and source user spellings remain distinct.
 
 `Meta/reg-contract-structure.json` is the independent package module-kind inventory;
 it is registered in FILEMAP and the report configuration inputs. Its 84 catalog

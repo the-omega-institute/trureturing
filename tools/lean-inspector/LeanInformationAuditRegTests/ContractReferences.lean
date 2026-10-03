@@ -1,5 +1,8 @@
 import LeanInformationAuditRegTests.ContractGuards
 import LeanInformationAuditRegTests.ContractReferenceFixtures.AuthoredAuxiliary
+import LeanInformationAuditRegTests.ContractReferenceFixtures.NestedDeclaration
+import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationChild
+import LeanInformationAuditRegTests.ContractReferenceFixtures.LetRecursive
 import LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ComputedSignature
 import LeanInformationAuditRegTests.ContractReferenceFixtures.NestedCarrier
@@ -19,7 +22,7 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
-  for fixture in #["AuthoredAuxiliary", "ComputedSignature", "NestedCarrier", "OptionPayload", "Projection", "PrimitiveProjection", "RefPayload", "SigmaPayload", "StoredType", "TypeAlias", "TypeLambda", "TypeLet"] do
+  for fixture in #["ElaborationChild", "LetRecursive", "AuthoredAuxiliary", "ComputedSignature", "NestedCarrier", "OptionPayload", "Projection", "PrimitiveProjection", "RefPayload", "SigmaPayload", "StoredType", "TypeAlias", "TypeLambda", "TypeLet"] do
     let owner := (`LeanInformationAuditRegTests.ContractReferenceFixtures).str fixture
     let error ← try
       discard <| Discovery.discoverWithStructure #[] #[owner]
@@ -28,6 +31,21 @@ run_meta do
     assertTest s!"reference.negative.{fixture}"
       (error.startsWith "contract.reg:contract_reference_outside_entry:")
     logInfo m!"CONTRACT_DIAGNOSTIC reference.{fixture} {error}"
+  let nested := `LeanInformationAuditRegTests.ContractReferenceFixtures.NestedDeclaration
+  let error ← try
+    discard <| Discovery.discoverWithStructure #[] #[nested]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  assertTest "reference.negative.NestedDeclaration"
+    (error.startsWith "contract.entry:declaration_suffix_not_allowed:")
+  logInfo m!"CONTRACT_DIAGNOSTIC reference.NestedDeclaration {error}"
+  let source ← IO.FS.readFile (← Discovery.moduleSource nested)
+  let entries ← SourceAudit.parse (← getEnv) source nested.toString
+  assertTest "reference.inventory.NestedDeclaration"
+    (entries.any fun e => e.authoredNames.contains
+      `ContractReferenceFixtures.NestedDeclaration.entry.child)
+  assertTest "reference.equation_suffix_allowlist"
+    (Discovery.entryEquationSuffixes == #["eq_1", "eq_def"])
   for fixture in #["Ordinary", "Auxiliary"] do
     let owner := (`LeanInformationAuditRegTests.ContractReferenceFixtures).str fixture
     try
