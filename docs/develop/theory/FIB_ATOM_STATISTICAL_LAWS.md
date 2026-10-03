@@ -6667,3 +6667,383 @@ H_{u,v}=r_uc_v,\qquad
 若可达后验与观测延续空间均为全维，则线性预测维数达到 \(|S|\)；若秩更低，任何输出序列统计都不能提供同样数量的独立隐状态方向。
 
 FIB 边界是：递归只提供可编号的状态标签、词序与组合结构；\(Q,\nu,O\)、平稳初态、正性条件、先验和噪声均由外加模型声明。贝叶斯滤波给出声明模型中的后验与预测充分性，熵率给出输出序列的长期编码量，转移熵给出加入另一段历史后的预测 KL 增益；这些量不能自动推出真实物理中的测量、温度、熵产生、因果流、能量或普适定律。
+
+## 63. 随机环境下杀死半群的 quenched/annealed 谱与两尺度极限
+
+本节把环境明确作为外加随机过程。FIB 递归只提供有限状态的词序、长度、组合索引和阻抗标签；环境、杀死核、初态、时钟和读出协议均不由递归决定。
+
+**定义 63.1（quenched 与 annealed 半群）。** 令 \(S\) 为有限暂态状态集，\(K_\eta\) 为环境状态 \(\eta\) 下的非负子随机核，行和不超过一。对环境序列 \(\eta_0,\eta_1,\ldots\) 定义
+
+\[
+P_n^\eta=K_{\eta_0}K_{\eta_1}\cdots K_{\eta_{n-1}},
+\qquad
+Z_n^\eta(\nu)=\nu^{\mathsf T}P_n^\eta\mathbf 1,
+\qquad
+G_z^\eta=\sum_{n\ge0}z^nP_n^\eta .
+\]
+
+若环境平稳遍历、\(\log^+\|K_\eta\|\) 可积，并且这些核在共同锥上满足不可约性与适当正性，则次可加遍历定理给出几乎处处存在的常数
+
+\[
+\lambda_q=\lim_{n\to\infty}\frac1n\log\|P_n^\eta\|.
+\]
+
+在初态全支撑且正性足以比较 \(Z_n^\eta\) 与矩阵范数时，\(n^{-1}\log Z_n^\eta\) 具有同一极限。定义 annealed 率为
+
+\[
+\lambda_a=\limsup_{n\to\infty}\frac1n\log\mathbb E Z_n^\eta .
+\]
+
+若 \(n^{-1}\mathbb E\log Z_n^\eta\to\lambda_q\)，Jensen 不等式给出
+
+\[
+\lambda_q\le
+\liminf_{n\to\infty}\frac1n\log\mathbb E Z_n^\eta,
+\]
+
+从而在 annealed 极限存在时 \(\lambda_q\le\lambda_a\)。quenched Green 矩阵的指数半径为 \(R_q=e^{-\lambda_q}\)，但它与先取环境平均再求逆的半径一般不同。
+
+**定理 63.2（环境协议决定平均 resolvent）。** 若 \(\eta_t\) 独立同分布，令 \(\overline K=\mathbb E K_\eta\)，则
+
+\[
+\mathbb E P_n^\eta=\overline K^{\,n},
+\qquad
+G_a(z):=\sum_{n\ge0}z^n\mathbb E P_n^\eta
+=(I-z\overline K)^{-1}
+\]
+
+在该级数收敛域内；当 \(\overline K\) primitive 时，\(\lambda_a=\log\rho(\overline K)\)。这一步使用的是逐时刻独立性。若只在初时抽取一次静态环境，则
+
+\[
+G_a^{\rm stat}(z)=\mathbb E\,(I-zK_\eta)^{-1},
+\]
+
+一般不等于 \((I-z\mathbb E K_\eta)^{-1}\)。例如标量环境 \(k_t\in\{0.1,0.9\}\) 等概率时，逐时刻独立给出
+
+\[
+\lambda_q=\tfrac12(\log0.1+\log0.9)=\log0.3,
+\qquad
+\lambda_a=\log0.5,
+\]
+
+而一次静态抽样给出每个实现的率 \(\log k\)、静态 annealed 生存率 \(\log0.9\)，以及
+
+\[
+G_a^{\rm stat}(z)=\tfrac12\frac1{1-0.1z}+\tfrac12\frac1{1-0.9z}.
+\]
+
+若环境是马尔可夫链，不能把 \(\mathbb E K_{\eta_t}\) 逐步相乘。给定环境转移矩阵 \(A(e,f)\)，并约定先用 \(K_e\) 从 \(i\) 到 \(j\)，再由 \(e\) 到 \(f\)，联合子核为
+
+\[
+J_{(i,e),(j,f)}=K_e(i,j)A(e,f).
+\]
+
+于是 annealed resolvent 是 \((q\otimes I)(I-zJ)^{-1}(\mathbf1\otimes I)\) 的投影；除非投影闭合，否则不存在只在 \(S\) 上的单一有效核。
+
+**定理 63.3（快速环境的两尺度响应）。** 令环境集 \(E\) 有限，\(B\) 是不可约、具有谱隙的环境生成器，平稳律为 \(\pi\)，并令 \(L_e\) 是状态集 \(S\) 上的有界杀死生成器。环境以速率 \(B/\varepsilon\) 独立切换时，联合生成器为
+
+\[
+\mathcal L_\varepsilon=\varepsilon^{-1}B\otimes I+\operatorname{diag}_{e\in E}L_e,
+\qquad
+\overline L=\sum_{e\in E}\pi_eL_e .
+\]
+
+在初始环境取 \(\pi\)、有限时间窗 \([0,T]\) 和有限维有界性条件下，对任意状态探针 \(f\) 有
+
+\[
+\sup_{0\le t\le T}
+\left|(\nu\otimes\pi)e^{t\mathcal L_\varepsilon}(\mathbf1_E\otimes f)
+-\nu e^{t\overline L}f\right|\le C_T\varepsilon,
+\]
+
+至少有同样的无速率收敛结论。故对 \(w\in L^1[0,T]\)，窗口响应满足
+
+\[
+\int_0^Tw(t)(\nu\otimes\pi)e^{t\mathcal L_\varepsilon}
+(\mathbf1_E\otimes f)\,dt
+\longrightarrow
+\int_0^Tw(t)\nu e^{t\overline L}f\,dt .
+\]
+
+在慢子空间的识别下，对 \(\lambda>0\) 还有投影 resolvent 收敛
+
+\[
+(\pi\otimes I)(\lambda I-\mathcal L_\varepsilon)^{-1}
+(\mathbf1_E\otimes I)
+\longrightarrow
+(\lambda I-\overline L)^{-1}.
+\]
+
+快速平均不表示任意有限切换频率都等于简单平均。周期交替时，Baker–Campbell–Hausdorff 展开给出
+
+\[
+L_{\rm eff}=
+\frac1{2\delta}\log(e^{\delta L_1}e^{\delta L_2})
+=\tfrac12(L_1+L_2)+\tfrac\delta4[L_1,L_2]+O(\delta^2).
+\]
+
+静态或慢环境的极限一般是 \(\mathbb E e^{tL_\eta}\) 或联合状态空间上的半群，而不是 \(e^{t\overline L}\)；环境依赖于状态时还需条件不变律；无谱隙或重尾停留会引入记忆并可能失去确定的平稳投影。固定切换尺度的长期 quenched 率与先取快速极限的有限窗率也不能无条件交换。上述谱、resolvent 和均质化结论属于外加随机模型，不能解释为 FIB 递归自动产生的真实物理定律。
+
+## 64. FIB 类型递归的多型计数、标记奖励与路径谱
+
+本节先假定所讨论的 FIB 词在一个有限上下文闭包内；若上下文无限或替换不闭合，有限矩阵 Perron 结论不能直接套用。
+
+**定理 64.1（有限类型的 Perron 计数）。** 令有限类型集为 \(\mathcal T\)，每种类型替换产生的子类型数由非负矩阵 \(A\) 给出。若 \(A\) primitive，令 \(\rho=\rho(A)\)，右、左 Perron 向量分别为 \(r,\ell\)，归一化为 \(\ell^{\mathsf T}r=1\)。从初始计数行向量 \(\nu^{\mathsf T}\) 出发，\(Z_n=\nu^{\mathsf T}A^n\)，则
+
+\[
+\rho^{-n}A^n\longrightarrow r\ell^{\mathsf T},
+\qquad
+\rho^{-n}Z_n\longrightarrow(\nu^{\mathsf T}r)\ell^{\mathsf T}.
+\]
+
+对任意类型奖励列向量 \(c\)，只要 \(\nu^{\mathsf T}r>0\)，有
+
+\[
+\frac{Z_nc}{Z_n\mathbf1}
+\longrightarrow
+\frac{\ell^{\mathsf T}c}{\ell^{\mathsf T}\mathbf1}.
+\]
+
+例如，若某个有限闭包恰为 \(\alpha\mapsto\alpha\beta\)、\(\beta\mapsto\alpha\)，则
+
+\[
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\qquad \rho=\varphi.
+\]
+
+从单个 \(\alpha\) 出发，总数按 \(C\varphi^n\) 增长；极限类型比例为 \(\alpha:\beta=\varphi^{-1}:\varphi^{-2}\)。这只是该闭包的计数结论，不能把任意 FIB 递归直接替换成这个矩阵。
+
+**定理 64.2（外加多型分枝与 many-to-one）。** 令每个类型 \(i\) 的子代向量服从外加分枝律，均值矩阵为 primitive 的 \(M\)，\(\rho(M)>1\)。在标准非退化条件和 \(\mathbb E[\xi_i\log^+\xi_i]<\infty\) 条件下，若 \(Z_n\) 是第 \(n\) 代类型计数行向量，则
+
+\[
+W_n=\rho(M)^{-n}Z_nr
+\]
+
+是非负鞅并收敛到 \(W\)；在存活事件上，\(\rho^{-n}Z_n\to W\ell^{\mathsf T}\)。若对每个从 \(i\) 出发的子代边赋予奖励 \(G_{i,k}\)，定义直接的倾斜均值矩阵
+
+\[
+M_\vartheta(i,j)=
+\mathbb E_i\!\left[\sum_{k:\,\mathrm{type}(k)=j}
+e^{\vartheta G_{i,k}}\right],
+\qquad
+\psi(\vartheta)=\log\rho(M_\vartheta).
+\]
+
+这里不假定子代数目与奖励独立；直接使用联合期望才覆盖相关情形。若 \(M_\vartheta\) 在邻域内保持 primitive 且具有指数矩，\(\psi'(0)\) 是相应 spine 路径的平均奖励率，\(\psi''(0)\) 是含边奖励自协方差的长期方差，并在常规非退化条件下给出路径 CLT 与奖励大偏差的 Legendre 率函数。
+
+倾斜后的 spine 核可写为
+
+\[
+P_\vartheta(i,j)=
+\frac{M_\vartheta(i,j)r_\vartheta(j)}
+{\rho_\vartheta r_\vartheta(i)},
+\]
+
+其中 \(r_\vartheta\) 是 \(M_\vartheta\) 的右 Perron 向量；其平稳律加权的边奖励给出 \(\psi'(\vartheta)\)。many-to-one 公式把期望的系谱和化为该 spine 链的路径期望，但它描述的是期望和，不是随机树中均匀粒子的典型律。
+
+相同的均值矩阵不决定二阶系谱统计。单型时取均值 \(M=[2]\)：模型一每个个体恒生两个子代，模型二以概率一半生零个、以概率一半生四个，二者均值和 Perron 增长相同；但灭绝概率、极限变量方差、最近共同祖先分布和奖励协方差不同。因此，FIB 的确定性计数至多固定一阶矩阵谱；分枝噪声、独立性、标记和观测均是额外结构，不能由计数递归自动推出。
+
+## 65. 不同初态与核的共同耦合、混合稳定性及不可辨识边界
+
+本节固定有限 FIB 状态载体 \(S\)。递归只提供状态标签、词序、长度和组合索引；初态律、转移核、状态度量、共同随机源、观测通道及参数化均为外加声明。对杀死链，可把暂态子核增广到 \(S\cup\{\dagger\}\)，令 \(\dagger\) 为吸收态。
+
+**定理 65.1（有限时域的共同源耦合界）。** 令 \(Q,\widetilde Q\) 是同一状态集上的两个核，\(\nu,\widetilde\nu\) 是初态律，并记
+
+\[
+\varepsilon_0=\operatorname{TV}(\nu,\widetilde\nu),
+\qquad
+\varepsilon_Q=\sup_i\operatorname{TV}(Q(i,\cdot),\widetilde Q(i,\cdot)).
+\]
+
+在初态和每个共同状态上取最大耦合，未分歧前用同一组外加随机源驱动，并令 \(\tau_c=\inf\{t:X_t\ne\widetilde X_t\}\)。则
+
+\[
+\Pr(\tau_c>T)\ge(1-\varepsilon_0)(1-\varepsilon_Q)^T,
+\]
+
+从而路径律满足
+
+\[
+\operatorname{TV}(P_{0:T}^{\nu,Q},P_{0:T}^{\widetilde\nu,\widetilde Q})
+\le1-(1-\varepsilon_0)(1-\varepsilon_Q)^T
+\le\varepsilon_0+T\varepsilon_Q.
+\]
+
+任意标签或噪声观测是路径律的推前，数据处理不等式保持同一上界；有界路径泛函 \(F\) 的期望差至多为 \(2\|F\|_\infty\) 乘以上述总变差界。证明只用最大耦合在每一步的条件不分歧概率至少为 \(1-\varepsilon_Q\)，再作乘法归纳。
+
+**定理 65.2（Wasserstein 收缩与探针响应）。** 给 \(S\) 一个外加有限度量 \(d\)，假定两核均以同一 \(\kappa<1\) 满足 Wasserstein 收缩。置
+
+\[
+\eta_0=W_d(\nu,\widetilde\nu),
+\qquad
+\eta=\sup_iW_d(Q(i,\cdot),\widetilde Q(i,\cdot)).
+\]
+
+则 \(\delta_t=W_d(\nu Q^t,\widetilde\nu\widetilde Q^t)\) 满足
+
+\[
+\delta_t\le\kappa^t\eta_0+\eta\frac{1-\kappa^t}{1-\kappa};
+\]
+
+当 \(\kappa=1\) 时改为 \(\eta_0+t\eta\)。因此对 \(L\)-Lipschitz 探针 \(h\)，有 \(|\mathbb Eh(X_t)-\mathbb Eh(\widetilde X_t)|\le L\delta_t\)；对 \(A_T=\sum_{t=0}^Ta_th(X_t)\)，有
+
+\[
+|\mathbb EA_T-\mathbb E\widetilde A_T|
+\le L\sum_{t=0}^T|a_t|\delta_t.
+\]
+
+若两核有不变律 \(\pi,\widetilde\pi\)，则令 \(t\to\infty\) 得 \(W_d(\pi,\widetilde\pi)\le\eta/(1-\kappa)\)。总变差 Dobrushin 系数 \(\alpha<1\) 下有相应的 \(\operatorname{TV}(\pi,\widetilde\pi)\le\varepsilon_Q/(1-\alpha)\)。这些是外加核的混合稳定性。
+
+**定理 65.3（参数路径的 score 敏感性）。** 对固定支撑的 \(C^1\) 族 \((\nu_\theta,Q_\theta)\)，有
+
+\[
+\partial_a(\nu_\theta Q_\theta^T)
+=\nu'_aQ^T+\sum_{s=0}^{T-1}
+\nu Q^sQ'_aQ^{T-1-s}.
+\]
+
+路径分数
+
+\[
+S_a=\partial_a\log\nu_\theta(X_0)
++\sum_{t=0}^{T-1}\partial_a\log Q_\theta(X_t,X_{t+1})
+\]
+
+满足 \(\mathbb ES_a=0\)，且任意固定路径泛函 \(F\) 有
+
+\[
+\partial_a\mathbb EF=\mathbb E(FS_a)
+=\operatorname{Cov}(F,S_a),
+\qquad
+|\partial_a\mathbb EF|
+\le\sqrt{\operatorname{Var}(F)\,I_a},
+\quad I_a=\mathbb ES_a^2.
+\]
+
+若支撑随参数变化或出现零转移，不能无条件使用对数 score；应回到路径密度的直接差分或总变差界。
+
+**命题 65.4（观测推前与不可辨识）。** 对任意标签或含噪通道 \(O_T\)，令 \(P_T^O=O_{T\#}P_T\)，则
+
+\[
+\operatorname{TV}(P_T^O,\widetilde P_T^O)
+\le\operatorname{TV}(P_T,\widetilde P_T).
+\]
+
+若通道对路径度量为 \(L\)-Lipschitz，则 Wasserstein 距离也至多乘以 \(L\)。一般没有逆向下界，因此观测律只确定 \((\nu,Q)\) 的观测商类。若完整状态路径可见、\(T\ge1\) 且 \(\nu(i)>0\) 对所有 \(i\) 成立，则
+
+\[
+\nu(i)=\Pr(X_0=i),
+\qquad
+Q(i,j)=\Pr(X_1=j\mid X_0=i)
+\]
+
+唯一恢复 \(\nu,Q\)；只观测端点、标签或未到达状态时，核行和初态方向可保持不可辨。
+
+一个显式反例是 \(S=\{0,1,2,3\}\)，标签 \(g(0)=g(1)=A\)、\(g(2)=g(3)=B\)。取
+
+\[
+Q:\;0\to(0,2)=\tfrac12(1,1),\;1\to(1,3)=\tfrac12(1,1),
+\quad 2\to(0,2)=\tfrac14(1,3),\;3\to(1,3)=\tfrac14(1,3),
+\]
+
+而 \(\widetilde Q\) 把每一行的隐藏状态对调：
+
+\[
+0\to(1,3)=\tfrac12(1,1),\;1\to(0,2)=\tfrac12(1,1),
+\quad 2\to(1,3)=\tfrac14(1,3),\;3\to(0,2)=\tfrac14(1,3).
+\]
+
+取 \(\nu=\delta_0\)、\(\widetilde\nu=\delta_1\)。每个 \(A\) 类状态到 \((A,B)\) 的概率都是 \((1/2,1/2)\)，每个 \(B\) 类状态到 \((A,B)\) 的概率都是 \((1/4,3/4)\)，所以两模型的完整标签路径律相同，而隐藏初态和核不同。这个例子说明观测压缩可以把总变差距离降为零；FIB 递归本身不选择可辨识的观测通道。
+
+## 66. 有界占用泛函的 Poisson 方程、停止鞅与非渐近浓缩
+
+令 \(Q\) 是有限杀死链的暂态子核，假定 \(\sup_i\sum_jQ(i,j)\le q<1\)，令 \(\tau\) 为吸收时间，\(f:S\to\mathbb R\) 有界，并定义
+
+\[
+A_\tau=\sum_{t=0}^{\tau-1}f(X_t),
+\qquad
+h=(I-Q)^{-1}f=\sum_{n\ge0}Q^nf.
+\]
+
+于是 \(h(i)=\mathbb E_iA_\tau\)，且 \(\|h\|_\infty\le\|f\|_\infty/(1-q)\)。令 \(h(\dagger)=0\)，对 \(N\ge1\) 定义
+
+\[
+M_N=\sum_{t<\tau\wedge N}
+\bigl(h(X_{t+1})-h(X_t)+f(X_t)\bigr).
+\]
+
+由 \((I-Q)h=f\)，\((M_N)\) 是停止鞅，且每个增量绝对值不超过
+
+\[
+b=2\|h\|_\infty+\|f\|_\infty.
+\]
+
+若其条件方差和为 \(V_N\)，则 Freedman 不等式给出
+
+\[
+\Pr(M_N\ge x,\;V_N\le v)
+\le\exp\!\left(-\frac{x^2}{2(v+bx/3)}\right),
+\]
+
+对下尾同样成立；只用 \(|\Delta M_t|\le b\) 和 \(V_N\le Nb^2\) 即得 Azuma 型界。又因为 \(\Pr(\tau>N)\le q^N\)，有
+
+\[
+\mathbb E|A_\tau-A_{\tau\wedge N}|
+\le\frac{\|f\|_\infty q^N}{1-q}.
+\]
+
+因此先对 \(A_{\tau\wedge N}\) 使用 Freedman 或 Azuma，再以概率至多 \(q^N\) 的尾事件和上式的截断偏差拼接，可得到随机首达时间的非渐近浓缩：给定 \(x>0\) 和偏差预算，取 \(N\) 使 \(q^N\) 小于该预算，剩余概率按上式的指数项衰减。精确常数随所选的中心化方式和条件方差上界而变，但其结构必含几何首达尾与鞅浓缩两项。
+
+这个结论把三件事分开：Poisson 方程给出均值，停止鞅给出有限时域波动，几何尾把确定时域界延伸到随机吸收时刻。若 \(q=1\)、状态空间无限、\(f\) 无界或杀死尾部重尾，不能直接保留上述几何拼接；需另给 Lyapunov、截断或重尾估计。\(Q,f\) 和吸收机制均为外加声明，FIB 递归不自动产生“热噪声”或普适浓缩常数。
+
+## 67. 有限 primitive 核经验测度的 Donsker–Varadhan 大偏差
+
+令 \(Q\) 为有限状态集上的 primitive 随机核，令
+
+\[
+L_n=\frac1n\sum_{t=0}^{n-1}\delta_{X_t}
+\]
+
+为经验测度。对任意函数 \(f:S\to\mathbb R\)，定义压力
+
+\[
+\psi(f)=\log\rho\!\left(\operatorname{diag}(e^f)Q\right).
+\]
+
+由于 \(Q\) primitive，\(L_n\) 满足 Donsker–Varadhan 大偏差原理：对适当集合 \(A\)，
+
+\[
+\Pr(L_n\in A)\asymp
+\exp\left(-n\inf_{\mu\in A}I(\mu)\right),
+\qquad
+I(\mu)=\sup_f\{\langle f,\mu\rangle-\psi(f)\}.
+\]
+
+等价地，在有限状态且 \(\mu\) 为概率向量时，
+
+\[
+I(\mu)=
+\sup_{u>0}-\sum_i\mu_i\log\frac{(Qu)_i}{u_i}.
+\]
+
+初态只贡献次指数因子；若 \(Q\) 不可约但非 primitive，周期性需在取极限时保留相位类，不能直接套用无周期表述。
+
+还可记录经验转移流
+
+\[
+\eta_{ij}^{(n)}=\frac1n\sum_{t=0}^{n-1}
+\mathbf1_{\{X_t=i,X_{t+1}=j\}}.
+\]
+
+其极限流须满足守恒约束 \(\sum_j\eta_{ij}=\sum_j\eta_{ji}=\mu_i\)。在 \(\eta_{ij}=0\) 且 \(Q_{ij}=0\) 时采用标准零项约定，联合速率为
+
+\[
+J(\eta)=\sum_{i,j}\eta_{ij}
+\log\frac{\eta_{ij}}{\mu_iQ_{ij}},
+\qquad
+I(\mu)=\inf_{\eta:\,\text{流守恒且边缘为 }\mu}J(\eta).
+\]
+
+因此经验占用偏离平稳律的指数代价由核的相对熵结构决定；压力的梯度给出典型测度，压力的 Hessian 在可微点给出长期协方差。这里的“压力”“自由能”只是有限 Markov 模型的谱和大偏差术语，不能据此宣称真实热力学自由能。
+
+对 FIB 的结论边界是：只有在明确声明有限状态闭包、核 \(Q\)、初态和采样协议后，才可使用上述 LDP、Poisson 浓缩或分枝压力；递归本身不指定这些概率律，也不把词序统计自动升级成温度、熵产生、能量守恒或普适物理定律。
