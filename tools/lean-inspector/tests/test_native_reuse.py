@@ -125,6 +125,7 @@ class NativeReportConsumerTests:
             exit_code=result.returncode, phases=phases,
             work=list(dict.fromkeys(line for line in [*result.stdout.splitlines(), *lines]
                                     if line.startswith('LEAN_INSPECTOR_WORK '))),
+            build_work=[line for line in result.stdout.splitlines() if line.startswith('LEAN_BUILD_WORK ')],
             lake_built_lines=sum('Built' in line.split() for line in lines)))
         if success:
             self.assertEqual(result.returncode, 0, '[FAIL] report_entry_success\n' + result.stdout + result.stderr)
@@ -159,6 +160,8 @@ class NativeReportConsumerTests:
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         first = self.inspect(phase='initial-publication')
+        fact = self.root / 'build/lean-cache/build-work.json'
+        self.assertTrue(fact.is_file(), '[FAIL] invocation_work_fact')
         self.assertIn('phase=report status=completed', first.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file(), '[FAIL] defaults_report_success_sealed')
         expected = output.read_bytes()
@@ -195,6 +198,8 @@ class NativeReportConsumerTests:
         self.assertNotIn('phase=ensure status=started', reused.stderr, '[FAIL] heavy_cache_not_required')
         self.assertNotIn('phase=report status=started', reused.stderr)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', reused.stdout)
+        work = json.loads(fact.read_text())
+        self.assertEqual((0, 0), (work['report'], work['programs']))
         self.assertEqual(expected, output.read_bytes())
         self.assertFalse((self.root / '.lake/packages').exists())
         # Resource planning neither parses material semantics nor vouches for
@@ -231,6 +236,9 @@ class NativeReportConsumerTests:
         probe(phase='valid-audit-probe')
         clear_calls()
         compiled = self.inspect(phase='valid-audit-reuse')
+        work = json.loads(fact.read_text())
+        self.assertEqual(0, work['report'])
+        self.assertGreater(work['programs'], 0)
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertNotIn('phase=report status=started', compiled.stderr)
         self.assertEqual(expected, output.read_bytes())
@@ -241,6 +249,7 @@ class NativeReportConsumerTests:
         probe(phase='invalid-audit-probe')
         clear_calls()
         failed = self.inspect(success=False, phase='invalid-audit-reuse')
+        self.assertFalse(fact.exists(), '[FAIL] failed_build_has_no_successful_work_fact')
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())

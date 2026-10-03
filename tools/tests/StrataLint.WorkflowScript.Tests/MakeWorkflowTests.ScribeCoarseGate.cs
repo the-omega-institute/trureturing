@@ -13,7 +13,7 @@ public sealed partial class MakeWorkflowTests
     [InlineData("docs/develop/notes.md")]
     [InlineData("Golden/values-kernels.toml")]
     [UnsupportedOSPlatform("windows")]
-    public void CurrentScribeRunsEveryConsistencyCheckWithoutGitOrBase(string changedPath)
+    public void CurrentScribeRunsContentChecksInOneProcessWithoutGitOrBase(string changedPath)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -42,16 +42,14 @@ public sealed partial class MakeWorkflowTests
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(new[]
         {
-            $"{dll} projections --check --report {report}",
-            $"{dll} describe-report --check",
-            $"{dll} markdown-check --report {report}",
+            $"{dll} content-check --report {report}",
         }, File.ReadAllLines(log));
         foreach (var invalid in new[] { new string('a', 40), root, "" })
         {
             var rejected = Run(invalid);
             Assert.True(rejected.ExitCode == 2, Encoding.UTF8.GetString(rejected.StandardError));
             Assert.Contains("PATHS_FILE must be a readable regular file", Encoding.UTF8.GetString(rejected.StandardError), StringComparison.Ordinal);
-            Assert.Equal(3, File.ReadAllLines(log).Length);
+            Assert.Single(File.ReadAllLines(log));
         }
         var paths = Path.Combine(root, "selected paths.txt");
         File.WriteAllText(paths, "Blueprint/D5/Probe.md\n");
@@ -59,9 +57,32 @@ public sealed partial class MakeWorkflowTests
         Assert.True(selected.ExitCode == 0, Encoding.UTF8.GetString(selected.StandardError));
         Assert.Equal(new[]
         {
-            $"{dll} projections --check --report {report}",
-            $"{dll} describe-report --check",
-            $"{dll} markdown-check --report {report} --paths-from {paths}",
-        }, File.ReadAllLines(log).Skip(3));
+            $"{dll} content-check --report {report} --paths-from {paths}",
+        }, File.ReadAllLines(log).Skip(1));
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(29)]
+    [UnsupportedOSPlatform("windows")]
+    public void ScribeContentChecksPreserveChildOutputAndExitCode(int childExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var root = new TemporaryDirectory();
+        var bin = Path.Combine(root.Path, "bin");
+        var report = Path.Combine(root.Path, "report.json");
+        var dll = Path.Combine(root.Path, "scribe.dll");
+        File.WriteAllText(report, "candidate report");
+        File.WriteAllText(dll, "candidate binary");
+        WriteExecutable(Path.Combine(bin, "dotnet"),
+            "#!/bin/bash\nprintf 'check output\\n'\nprintf 'check error\\n' >&2\nexit \"$CHILD_EXIT\"\n");
+        var result = TestProcessRunner.Run("/usr/bin/env",
+            [$"PATH={bin}:/usr/bin:/bin", $"CHILD_EXIT={childExit}", "/bin/bash",
+             Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath), report, dll],
+            root.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        Assert.Equal(childExit, result.ExitCode);
+        Assert.Equal("check output\n", Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal("check error\n", Encoding.UTF8.GetString(result.StandardError));
     }
 }
