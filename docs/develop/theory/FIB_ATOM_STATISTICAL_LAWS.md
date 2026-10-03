@@ -9345,3 +9345,431 @@ W(t)=W(0)+\alpha^{\mathsf T}\theta\,t+\sigma_W B(t)+L(t),
 故聚合队列长度和聚合离开过程与模型 A 的 \(M/M/1\) 队列完全相同；但隐藏服务尝试数、路由矩阵和内部完成计数不同。若 \(p\) 改变而不按 (97.17) 同步调整尝试率，则同一 FIB 可由稳定模型变为临界或不稳定模型；若把指数服务改为重尾服务，又可把有限方差重载极限换成稳定反射极限。因而相同 FIB 递归能够承载指数尾、重尾、平稳、临界或发散的排队统计。
 
 队列稳定性、反射方向、重载缩放、尾部指数、路由矩阵、服务纪律、到达相关、物理时钟和观察通道全部属于外加模型。FIB 递归只提供类型、标签、词序和组合上下文；它不单独推出排队稳定定理、反射布朗运动、稳定尾或路由可识别性。
+
+## 98. FIB 上下文图上的外加弹簧网络、线性弹性与机械涨落
+
+令 \(G_j=(V_j,E_j)\) 是从 FIB 上下文递归抽取的有限图：顶点可以是 ATOM、上下文或经过外加映射后的等价类，边表示被选定的相邻关系或组合关系。FIB 只给出顶点的来源、标签和边的组合候选；要把 \(G_j\) 解释为弹性体或机械网络，还要外加嵌入
+\(x:V_j\to\mathbb R^d\)、质量 \(m_v>0\)、弹簧常数 \(k_e\ge0\)、静止长度 \(\ell_e\)、阻尼矩阵以及物理单位。改变这些数据而保持同一 FIB 图不变，可以改变刚性、共振、应力和涨落的全部数值结论。
+
+对每条边 \(e=(a,b)\) 设外加单位方向
+\(\hat n_e=(x_b-x_a)/|x_b-x_a|\)，并令 \(B\) 为带方向的图关联矩阵。在线性化位移 \(u=(u_v)_{v\in V_j}\) 下，一维轴向伸长的线性算子可写为
+\[
+R u=\bigl(\hat n_e\cdot(u_b-u_a)\bigr)_{e\in E_j},
+\qquad
+K=R^{\mathsf T}W R,
+\qquad
+W=\operatorname{diag}(k_e).
+\]
+若保留横向位移、弯曲或超边相互作用，则 \(R\) 和 \(W\) 要按外加几何与本构律扩展；不能把简单图拉普拉斯自动当作物理刚度。在线性弹性范围内，势能为
+\[
+E(u)=\frac12u^{\mathsf T}Ku-f^{\mathsf T}u,
+\tag{98.1}
+\]
+其中 \(f\) 是外加节点力。固定边界或刚性约束由矩阵 \(Cu=b\) 给出；自由平衡满足
+\[
+Ku-f+C^{\mathsf T}\lambda=0,
+\qquad
+Cu=b.
+\tag{98.2}
+\]
+等价的 KKT 系统为
+\[
+\begin{pmatrix}K&C^{\mathsf T}\\ C&0\end{pmatrix}
+\begin{pmatrix}u\\\lambda\end{pmatrix}
+=
+\begin{pmatrix}f\\b\end{pmatrix}.
+\tag{98.3}
+\]
+只有在约束消除了刚体平移、转动及其他零能机制，并且剩余刚度在允许子空间上正定时，平衡位移才唯一。若 \(K\) 在该子空间上仍有核，则外力必须满足 Fredholm 相容条件；否则能量沿零模无界，不能声称存在有限平衡。用 Moore--Penrose 逆写出的 \(u=K^+f\) 只是在选定正交规范下的解，不能替代边界条件。
+
+边的轴向应力（或等效内力）为
+\[
+\sigma_e=k_e(Ru)_e,
+\qquad
+\mathcal E=\frac12\sum_{e\in E_j}k_e(Ru)_e^2.
+\tag{98.4}
+\]
+在节点、边或弹簧常数由外加随机机制生成时，\(K\) 是随机矩阵。给定固定约束空间和确定力，位移、应力与柔度成为随机变量；例如若随机力 \(f\) 有协方差 \(\Sigma_f\)，则在可逆约束子空间上
+\[
+\operatorname{Cov}(u)=K^{-1}\Sigma_fK^{-1},
+\qquad
+\operatorname{Cov}(\sigma)
+=WRK^{-1}\Sigma_fK^{-1}R^{\mathsf T}W.
+\tag{98.5}
+\]
+若 \(K\) 本身随机，式 (98.5) 只能在条件于 \(K\) 后使用，再对其随机律取平均；\(\mathbb E[K^{-1}]\) 一般不等于 \(\mathbb E[K]^{-1}\)。因此只知道 FIB 图的平均度数或平均标签频率，不能推出平均柔度、应力方差或失稳概率。稀疏边、近零弹簧常数和接近机构的几何会使最小特征值趋近零，从而放大 (98.5) 的长程响应。
+
+在外加热浴温度 \(T>0\)、固定约束和 \(f=0\) 时，若允许位移服从谐近似的 Gibbs 分布
+\[
+\mathrm d\mathbb P_T(u)
+\propto
+\exp\!\left(-\frac{1}{2k_{\mathrm B}T}u^{\mathsf T}Ku\right)\mathrm du,
+\tag{98.6}
+\]
+则约束子空间上的协方差为
+\[
+\mathbb E_T[u]=0,
+\qquad
+\operatorname{Cov}_T(u)=k_{\mathrm B}T\,K^{-1}.
+\tag{98.7}
+\]
+带有静力 \(f\) 时，均值移到 \(K^{-1}f\)，协方差仍为 (98.7)。这给出外加谐网络中的涨落—响应关系：柔度矩阵就是位移对小力的导数，也是热涨落协方差除以 \(k_{\mathrm B}T\)。若存在未约束零模，(98.6) 不可归一化；必须固定规范、加边界或给零模有限体积正则化。温度、Boltzmann 权重和热浴并非 FIB 递归的内生对象。
+
+若每个顶点有质量矩阵 \(M=\operatorname{diag}(m_vI_d)\)，无阻尼的小振动方程为
+\[
+M\ddot u+Ku=0.
+\tag{98.8}
+\]
+在约束子空间上求解广义本征问题
+\[
+K\phi_\alpha=\omega_\alpha^2M\phi_\alpha.
+\tag{98.9}
+\]
+其非负本征频率、零频机构和模态密度由 \(G_j\)、嵌入、\(k_e\) 与 \(m_v\) 的联合数据决定。加入外加黏性阻尼 \(C\succeq0\) 和简谐驱动 \(f(t)=\Re(f_0e^{-\mathrm i\omega t})\) 后，频率响应为
+\[
+\widehat u(\omega)
+=\bigl(K-\omega^2M-\mathrm i\omega C\bigr)^{-1}f_0,
+\tag{98.10}
+\]
+只在该逆存在的频率上定义。共振峰、耗散宽度、局部放大和相位滞后由外加 \(M,C\)、边界和观测向量决定；它们不是 FIB 词序的必然后果。若网络含随机 \(k_e,m_v,C\)，可以研究样本平均响应、谱测度或共振峰的尾分布，但首先必须登记这些随机变量的联合律。相同图在均匀刚度、双峰刚度和具有零刚度概率的模型下可分别得到窄谱、分裂谱和准静态软模。
+
+对一列增大的 FIB 图，定义约束后的柔度观测
+\[
+J_j(a,b)=a^{\mathsf T}K_j^+b,
+\qquad
+\rho_j(\omega)=\frac1{|V_j|}\sum_\alpha\delta_{\omega_\alpha}(\omega).
+\tag{98.11}
+\]
+在外加随机图模型、边参数分布、嵌入尺度、质量归一化和边界抽样规则下，\(J_j\) 或 \(\rho_j\) 才可能有概率极限、集中界或经验谱测度极限。若这些规则使最小特征值以概率趋近零，则柔度可能发散；若边界锚定、刚度下界和几何条件统一控制，则可得到有界响应。仅有 FIB 递归的上下文深度或标签频率，既不能选择哪一种极限，也不能保证极限存在。
+
+一个不可识别性构造是：保持同一 \(G_j\) 和同一外加标签读出，模型 A 取所有 \(k_e=1\)，模型 B 取所有 \(k_e=\varepsilon\)，并同时将外力单位缩放为模型 A 的 \(\varepsilon\) 倍。两模型可以产生相同的无量纲位移标签序列，却有不同的物理力、能量和频率尺度；若不缩放外力，位移、柔度和应力则按 \(\varepsilon^{-1}\)、\(\varepsilon\) 等比例改变。再令部分边的 \(k_e=0\)，还可在不改动 FIB 递归的情况下引入机构和不可归一化的热涨落。由此，任何声称“FIB 递归推出刚度、杨氏模量、声子谱、热应力或普适弹性阈值”的陈述，都缺少外加几何、本构、质量、边界、温度和尺度假设。
+
+结论是：FIB 上下文图可以作为弹簧、阻抗或质量—弹簧网络的组合载体；给定外加嵌入、边参数、约束、力和热浴，线性平衡、应力协方差、机械模态和频率响应可以按 (98.1)–(98.11) 推导。由 FIB 本身固定的只有候选节点、边及其组合来源；刚度矩阵、零模结构的物理解释、涨落定律、共振统计和任何单位化机械定律都属于外加模型。
+
+## 99. FIB 上下文图上的外加接触过程、吸收相变与准平稳感染波
+
+固定第 \(j\) 层 FIB 递归给出的上下文集合 \(V_j\)，以及由上下文相容、相邻或替换关系选出的候选有向图 \(G_j=(V_j,E_j)\)。FIB 只提供顶点的组合来源和候选关联；有向性、边权 \(a^{(j)}_{uv}\)、度归一化、时间单位、感染率和恢复率都由外加模型指定。令 \(\eta_t\in\{0,1\}^{V_j}\) 表示占据或感染状态，\(\eta^v\) 表示把顶点 \(v\) 改为占据，\(\eta_v\) 表示把它改为空，则一个外加接触过程的生成元可写成
+\[
+\begin{aligned}
+(\mathcal L_j f)(\eta)
+={}&\sum_{v\in V_j}\delta^{(j)}_v\eta(v)\,[f(\eta_v)-f(\eta)]\\
+&+\sum_{(u,v)\in E_j}\lambda^{(j)}_{uv}a^{(j)}_{uv}\eta(u)(1-\eta(v))\,[f(\eta^v)-f(\eta)].
+\tag{99.1}
+\end{aligned}
+\]
+若采用按出度归一化，应将 \(a_{uv}^{(j)}\) 换成 \(a_{uv}^{(j)}/d_u^{(j)}\)；这会改变临界参数。无外加免疫、输入或自发出生时，全空状态 \(\mathbf0\) 是吸收态，\(\tau_j=\inf\{t:\eta_t=\mathbf0\}\) 是灭绝时间。式 (99.1) 是选择的粒子系统，不是 FIB 递归的推论。
+
+在每个有限连通 \(G_j\) 上，只要恢复率为正且感染不能从空集重新产生，\(\tau_j<\infty\) 几乎处处成立；因此有限图不存在严格的正密度平稳感染态。若把所有非空状态组成瞬态集合，限制生成矩阵记为 \(Q_j^\circ\)，并设其不可约，则存在 \(\alpha_j>0\) 和概率向量 \(\nu_j\) 使
+\[
+\nu_jQ_j^\circ=-\alpha_j\nu_j,\qquad
+\Pr_{\nu_j}(\eta_t\in\cdot\mid \tau_j>t)=\nu_j(\cdot),
+\tag{99.2}
+\]
+且
+\[
+\Pr_{\nu_j}(\tau_j>t)=e^{-\alpha_jt}.
+\tag{99.3}
+\]
+对一般初态，若瞬态半群有唯一主特征值且与其余谱分离，则在条件 \(\tau_j>t\) 下趋于 \(\nu_j\)；不可约性、谱隙或初态可达性失败时，可能出现多个准平稳极限，不能从图的大小自动推出唯一 \(\nu_j\)。\(\alpha_j\) 与 \(\nu_j\) 依赖全部外加速率和边权，而非仅依赖 FIB 词长。
+
+要定义无限体积的生存相变，需先给出图列的极限。设带根图 \((G_j,o_j)\) 在局部弱拓扑下收敛到带根图 \((G_\infty,o)\)，并同时规定速率场的局部收敛与统一界。对从根单点感染的过程定义
+\[
+\lambda_c=\inf\{\lambda:\Pr_{\{o\}}^{\,G_\infty,\lambda}(\tau=\infty)>0\}.
+\tag{99.4}
+\]
+在平移不变、遍历且过程具有适当单调耦合的模型中，\(\lambda<\lambda_c\) 时从有限初集灭绝，\(\lambda>\lambda_c\) 时有正生存概率，并可由从全占据初态所得的上不变测度 \(\bar\nu_\lambda\) 描述活动相。非齐次或非规则图上，生存概率可能依赖根和类型；弱生存与强生存的阈值也可能不同，式 (99.4) 必须逐项注明所用根、初态和极限。局部弱收敛单独不足以传递生存事件，因为生存是无限时间事件；还需尾部紧性、耦合或单调性等附加条件。
+
+一个可检验的灭绝上界来自外加线性支配。令
+\[
+B_j=(\lambda^{(j)}_{uv}a^{(j)}_{uv})_{u,v},
+\qquad
+D_j=\operatorname{diag}(\delta_v^{(j)}).
+\]
+若
+\[
+\rho(D_j^{-1}B_j)<1
+\tag{99.5}
+\]
+（或更强的 \(\|D_j^{-1}B_j\|_\infty<1\)），且速率有统一界，则一阶感染数被次临界多型分枝过程支配，给出有限时间存活尾界和无限图上的灭绝充分条件。均匀恢复 \(\delta_v^{(j)}=\delta\) 时，这简化为 \(\rho(B_j)/\delta<1\)。这是充分条件而非一般临界值公式；相反方向需要构造在图上嵌入的定向渗流、分枝过程或块过程，并验证相关长度、独立性和边界误差。故从 \(\rho(B_j)=\delta\) 直接断言接触过程临界点，只在额外的树状、均场或比较模型中成立。
+
+有限尺寸的“临界点”只能是伪临界定义。例如令
+\[
+p_j(\lambda,t)=\Pr_{\{o_j\}}(\tau_j>t),
+\qquad
+\rho_j^{\rm qs}(\lambda)
+=\nu_j[|\eta|/|V_j|].
+\]
+选择观测窗 \(T_j\) 后可定义 \(\lambda_c^{(j)}\) 为 \(p_j(\lambda,T_j)=1/2\)，或定义为响应率、方差、寿命的峰值位置。不同的 \(T_j\)、边界、根和归一化会给出不同的 \(\lambda_c^{(j)}\)。只有在指定图极限、时间窗口与统一有限尺寸估计后，才能讨论 \(\lambda_c^{(j)}\to\lambda_c\)。在活动相且满足额外准平稳混合和稀有吸收假设时，可有
+\[
+\mathbb E_{\nu_j}\tau_j\asymp \exp\{c_j|V_j|\},
+\tag{99.6}
+\]
+从而在 \(1\ll t\ll\mathbb E\tau_j\) 的窗口内观察到近似稳定感染密度；(99.6) 是吸收接触过程的有限尺寸条件式，不能与一般连续时间亚稳态结论混同，也不是所有图列都成立。临界处可能是多项式寿命或无统一标度，必须由具体模型估计。
+
+若图列是稠密、边权按总度归一化，并且初态与局部相关满足传播混沌条件，经验感染密度
+\[
+\rho_j(t)=|V_j|^{-1}\sum_{v\in V_j}\eta_t(v)
+\]
+可在有限时间上收敛到外加均场方程
+\[
+\dot\rho=\beta_{\rm eff}\rho(1-\rho)-\delta\rho,
+\qquad
+\beta_{\rm eff}=\lim_j\text{（所选归一化下的有效感染度）},
+\tag{99.7}
+\]
+其线性化阈值为 \(\beta_{\rm eff}=\delta\)。稀疏局部树图通常保留邻居相关，(99.7) 需改成成对闭合、消息传递或随机图上的接触过程，不能把均场阈值移植到任意 FIB 图。若另加嵌入 \(x_j:V_j\to\mathbb R^d\)、网格尺度 \(h_j\) 和扩散标度，使邻居交换项收敛为 \(D\Delta u\)，并满足局部混合与界面紧性，则可得到反应—扩散近似
+\[
+\partial_tu=D\Delta u+ru-ku^2,
+\qquad r=\beta_{\rm eff}-\delta,
+\tag{99.8}
+\]
+其前沿速度、形状和各向异性由 \(D\)、嵌入、边界和初始感染集决定。若没有这些空间和缩放假设，“感染波”只是一组图上的占据边界，FIB 不提供物理距离或速度。
+
+多型或带免疫的吸收粒子系统可令感染类型为 \(a\in\{1,\ldots,m\}\)，外加邻接—转移核给出下一代矩阵 \(K\)。在稀疏早期阶段，若可由多型分枝过程支配或被其支配，\(\rho(K)<1\) 给出灭绝的充分条件，\(\rho(K)>1\) 在满足嵌入和非退化条件时给出正生存的候选条件；类型转换、恢复和竞争使临界面成为矩阵而非单一标量。观测若只给 FIB 标签总数、词频或上下文聚合，则不同的 \((B,\delta,K)\) 可能诱导相同观测律，感染率、恢复率、临界点和准平稳密度不可由 FIB 结构单独识别。
+
+结论是：FIB 递归可提供生成接触过程所需的状态索引、候选邻接和类型来源；吸收态、恢复—感染时钟、速率矩阵、图列极限、边界、观测和极限缩放均须外加。生存阈值、准平稳律、有限尺寸相变和感染波可以在这些外加条件下成立，也可以因改换同一 FIB 图上的速率、归一化或观测而消失或反向；它们不是 FIB 递归内生的普适物理定律。
+
+## 100. FIB 标签观测族的 Fisher 信息、局部渐近正态与统计实验等价
+
+固定第 \(j\) 个 FIB 上下文闭包 \(C_j\)。递归只给出 \(c\in C_j\) 的状态、标签、词序和可组合关系；令 \(a\) 表示外加探针或实验动作，\(\theta\in\Theta\subset\mathbb R^d\) 为连续参数，观测由外加核 \(K^a_{\theta,j}(dc,dy)\) 产生。动作可以依赖过去历史，但策略 \(q_t(a\mid H_t)\) 不显含未知参数。由该实验得到的观测律记为 \(P^{\mathsf E_j}_\theta\)，其中噪声、时钟、初态、转移核和参数化均属于外加模型。
+
+**定义 100.1（外加观测实验与 Fisher 信息）。** 在具有密度的观测实验中，设
+\[
+L_{j,T}(\theta;y)=\frac{dP^{\mathsf E_j}_{\theta,T}}{d\mu}(y),
+\qquad
+\ell_{j,T}(\theta)=\log L_{j,T}(\theta;Y),
+\]
+并令 \(S_{j,T}(\theta)=\nabla_\theta\ell_{j,T}(\theta)\)。若微分与积分可交换且 \(\mathbb E_\theta S_{j,T}=0\)，则
+\[
+\mathcal I_{j,T}(\theta)
+=\mathbb E_\theta[S_{j,T}S_{j,T}^{\mathsf T}]
+=-\mathbb E_\theta[\nabla_\theta^2\ell_{j,T}(\theta)]
+\tag{100.1}
+\]
+是该外加统计实验的 Fisher 信息矩阵。若观测由条件密度 \(p_\theta(y_t\mid H_{t-1},a_t)\) 逐步生成，且策略与 \(\theta\) 无关，则在正则条件下分数为条件得分之和，信息分解为
+\[
+\mathcal I_{j,T}(\theta)
+=\mathbb E_\theta\!\left[
+\sum_{t<T}\mathcal I_\theta(H_{t-1},a_t)
+\right],
+\]
+\[
+\mathcal I_\theta(h,a)
+=\mathbb E_\theta[
+\nabla\log p_\theta(Y_t\mid h,a)
+\nabla\log p_\theta(Y_t\mid h,a)^{\mathsf T}
+\mid h,a].
+\tag{100.2}
+\]
+这里需要条件得分为鞅差；依赖观测、隐藏状态或自适应动作会改变条件期望与长期协方差，它们不由 FIB 递归确定。
+
+若读出为外加高斯噪声
+\[
+Y_t=m_\theta(c_t,a_t)+\varepsilon_t,
+\qquad
+\varepsilon_t\sim N(0,\Sigma_\theta(c_t,a_t)),
+\]
+且条件独立，则每个观测的 Fisher 信息为
+\[
+\mathcal I_\theta(c,a)
+=J_\theta(c,a)^{\mathsf T}\Sigma_\theta^{-1}J_\theta(c,a)
++\frac12\left[
+\operatorname{tr}\!\left(
+\Sigma_\theta^{-1}\partial_r\Sigma_\theta
+\Sigma_\theta^{-1}\partial_s\Sigma_\theta
+\right)\right]_{r,s},
+\tag{100.3}
+\]
+其中 \(J_\theta=\nabla_\theta m_\theta\)。协方差未知时，第二项是参数信息的一部分；把它误当作已知噪声会虚增信息。若 \(J_\theta h=0\) 且 \(\partial_h\Sigma_\theta=0\)，则 \(h\) 是该观测的零信息方向。
+
+**定理 100.2（连续 FIB 近似下的 LAN 条件形式）。** 设 \(j_n\) 为一列 FIB 上下文及其外加观测实验，真实参数为 \(\theta_0\)。令 \(r_n\to\infty\) 为有效信息尺度，并假定对每个固定 \(h\in\mathbb R^d\)，局部参数 \(\theta_n=\theta_0+h/r_n\) 仍在参数域内。若在 \(P_{\theta_0}^{\mathsf E_{j_n}}\) 概率下
+\[
+\Delta_n:=r_n^{-1}S_{j_n,T_n}(\theta_0)\Longrightarrow N(0,\mathcal I),
+\qquad
+r_n^{-2}\mathcal I_{j_n,T_n}(\theta_0)\longrightarrow\mathcal I,
+\tag{100.4}
+\]
+且三阶余项满足局部均匀的 \(o_{P_{\theta_0}}(1)\)，则
+\[
+\log\frac{dP^{\mathsf E_{j_n}}_{\theta_0+h/r_n}}
+{dP^{\mathsf E_{j_n}}_{\theta_0}}
+=h^{\mathsf T}\Delta_n-\frac12h^{\mathsf T}\mathcal I h
++o_{P_{\theta_0}}(1).
+\tag{100.5}
+\]
+这就是以 \(r_n^{-1}\) 为局部尺度的 LAN。若条件得分是鞅差，(100.4) 可由条件方差的稳定极限和 Lindeberg 条件验证；若观测是平稳混合序列，则 \(\mathcal I\) 还含有跨时协方差的长程和。FIB 层数趋于无穷并不自动给出 (100.4)：必须另加读出噪声、重复数、混合率和设计矩阵的极限。
+
+在确定性标签加高斯独立噪声的特例
+\[
+Y_{n,k}=m_\theta(c_{n,k},a_{n,k})+\sigma_n\varepsilon_{n,k},
+\qquad
+\varepsilon_{n,k}\stackrel{\rm iid}{\sim}N(0,I),
+\]
+若 \(g_{n,k}=\nabla_\theta m_{\theta_0}(c_{n,k},a_{n,k})\) 且
+\[
+\frac1n\sum_{k<n}g_{n,k}g_{n,k}^{\mathsf T}\longrightarrow G,
+\qquad G\succeq0,
+\]
+则
+\[
+\mathcal I_n(\theta_0)
+=\sigma_n^{-2}\sum_{k<n}g_{n,k}g_{n,k}^{\mathsf T}.
+\tag{100.6}
+\]
+当 \(G\) 满秩时，有效局部尺度为 \(r_n=\sqrt n/\sigma_n\)；若 \(G\) 奇异，只能在 \(\operatorname{ran}G\) 上作 LAN，\(\ker G\) 中的方向在该近似下不可见。故重复数、噪声缩放和 FIB 上下文的经验 Gram 矩阵共同决定连续参数极限，递归本身不决定 \(\sqrt n\) 还是其他速率。
+
+**推论 100.3（Cramér–Rao 与零信息方向）。** 对固定外加实验和正则参数点，若估计量 \(\widehat\psi\) 无偏且估计 \(\psi(\theta)\in\mathbb R^r\)，则
+\[
+\operatorname{Cov}_\theta(\widehat\psi)
+\succeq
+D\psi(\theta)\,\mathcal I_{j,T}(\theta)^\dagger
+D\psi(\theta)^{\mathsf T}
+\tag{100.7}
+\]
+在 \(D\psi\) 消灭 \(\ker\mathcal I\) 的条件下成立；\(\dagger\) 为 Moore--Penrose 逆。满秩时退化为通常的 \(D\psi\,\mathcal I^{-1}D\psi^{\mathsf T}\)。若存在 \(h\ne0\) 满足 \(\mathcal I h=0\)，则局部似然沿 \(h\) 没有二阶变化；需要区分 \(\theta\) 与 \(\theta+th\) 的估计不可能得到有限的统一方差界。若分解 \(\theta=(\psi,\lambda)\)，其中 \(\lambda\) 为噪声、时钟或初态等 nuisance 参数，则有效信息为
+\[
+\mathcal I_{\psi\cdot\lambda}
+=\mathcal I_{\psi\psi}
+-\mathcal I_{\psi\lambda}
+\mathcal I_{\lambda\lambda}^{\dagger}
+\mathcal I_{\lambda\psi},
+\tag{100.8}
+\]
+其核还包含与 nuisance 方向混合的不可辨识切向量。未知噪声不能在事后以“已知”处理而删除 (100.8) 的损失。
+
+**定义 100.4（统计实验等价与 FIB 观测压缩）。** 两个实验
+\(\mathsf E=(P_\theta:\theta\in\Theta)\) 和
+\(\mathsf F=(Q_\theta:\theta\in\Theta)\) 的 Le Cam 缺陷定义为
+\[
+\delta(\mathsf E,\mathsf F)
+=\inf_M\sup_{\theta\in\Theta}
+\|MP_\theta-Q_\theta\|_{\rm TV},
+\qquad
+\Delta(\mathsf E,\mathsf F)
+=\max\{\delta(\mathsf E,\mathsf F),\delta(\mathsf F,\mathsf E)\},
+\tag{100.9}
+\]
+其中 \(M\) 遍历参数无关的 Markov 核。若 \(Y=\Phi(C,Z)\) 是从完整 FIB 状态或路径 \(Z\) 的参数无关观测压缩，则由数据处理不等式
+\[
+\mathcal I_Y(\theta)\preceq\mathcal I_Z(\theta),
+\qquad
+\|P^Y_\theta-P^Y_{\theta'}\|_{\rm TV}
+\le\|P^Z_\theta-P^Z_{\theta'}\|_{\rm TV}.
+\tag{100.10}
+\]
+若完整似然比对 \(Y\) 的 sigma 代数可测，即 \(Y\) 是参数族的充分统计量，则压缩不损失信息，\(\delta(\mathsf Z,\mathsf Y)=0\)；若还存在参数无关的恢复核在所有 \(\theta\) 上精确复原完整律，则两实验等价。仅有同一 Fisher 矩阵或同一前两阶矩不推出实验等价。
+
+**命题 100.5（可达动作下的实验不可辨识）。** 令 \(\mathcal A_q\) 为策略 \(q\) 以正概率访问的动作—历史对。若存在 \(h\ne0\)，使对所有可达 \((a,H)\)
+\[
+\partial_h p_{\theta_0}(y\mid H,a)=0
+\quad\text{几乎处处},
+\tag{100.11}
+\]
+则 \(h\) 属于总 Fisher 信息的核；任何自适应重复仍只能识别商空间
+\(\Theta/\!\sim_{\mathcal A_q}\)，其中
+\[
+\theta\sim_{\mathcal A_q}\theta'
+\Longleftrightarrow
+p_\theta(\cdot\mid H,a)=p_{\theta'}(\cdot\mid H,a)
+\quad\forall(H,a)\text{ 可达}.
+\tag{100.12}
+\]
+若一个动作的条件信息矩阵在其访问频率 \(\rho_a>0\) 下补足其余方向，则总信息可能恢复满秩；但这依赖外加策略和成本约束。始终重复同一 FIB 标签探针无法补回观测通道已合并的差异。
+
+精确例子取两个参数 \((\theta_1,\theta_2)\)，在所有上下文上外加读出
+\[
+Y_k=(\theta_1+\theta_2)\phi(c_k)+\sigma\varepsilon_k,
+\qquad
+\varepsilon_k\sim N(0,1).
+\]
+此时 \(g_k=\phi(c_k)(1,1)^{\mathsf T}\)，故 Fisher 矩阵的秩至多为 \(1\)，方向 \((1,-1)\) 精确不可辨。若另加动作 \(a=1\)，读出改为 \(Y_k=\theta_1\phi(c_k)+\sigma\varepsilon_k\) 并以正频率访问，联合 Gram 矩阵可满秩；若该动作永不访问，任何样本量仍保持原不可辨识。若把 \(\sigma\) 也未知，则均值方向与噪声尺度必须同时纳入参数，Cramér–Rao 界按 (100.8) 重新计算。
+
+若先验 \(\Pi_0\) 在 \(\theta_0\) 邻域具有正连续密度，且 (100.5) 中 \(\mathcal I\succ0\)，则标准后验局部极限为均值偏移的正态律，协方差为 \(\mathcal I^{-1}\)；先验只在一阶局部极限中提供平移项。若 \(\mathcal I\) 奇异，后验只能沿可辨识商空间收缩，零信息方向的极限由先验和更高阶项决定，不能宣称普适的正态收缩率。
+
+FIB 边界是：FIB 递归只提供 \(C_j\) 的组合载体、标签和上下文；参数族、观测核、噪声协方差、重复尺度、动作策略、先验、时钟和连续极限均由外加模型声明。Fisher 信息、LAN、Cramér–Rao 界、Le Cam 实验距离和后验收缩只对该外加统计实验成立；相同 FIB 递归可在不同噪声和探针下产生满秩、奇异或完全等价的统计实验，因而不能单独推出任何真实物理测量定律或普适信息率。
+
+## 101. FIB 上下文上的外加随机界面生长与 KPZ 型极限
+
+固定第 \(j\) 层上下文图 \(G_j=(V_j,E_j)\)，另给位置嵌入、边长和边界条件，并在每个顶点放置高度 \(h_t^{(j)}(v)\)。离散梯度 \(\nabla_j\)、拉普拉斯算子 \(\Delta_j\)、沉积率、噪声强度以及时间单位都由外加模型规定。一个有限图上的随机界面可写成
+\[
+\mathrm dh_t^{(j)}(v)
+=\left[
+\nu_j\Delta_jh_t^{(j)}(v)
++\frac{\lambda_j}{2}
+\left|\nabla_jh_t^{(j)}(v)\right|^2
++F_j(v,h_t^{(j)})
+\right]\mathrm dt
++\sqrt{2D_j}\,\mathrm dW_t(v).
+\tag{101.1}
+\]
+在离散跳跃模型中，(101.1) 可由外加沉积、黏附和局部重排事件的生成元近似；有限图上无需对非线性项作连续场的重整化。FIB 递归只提供顶点的组合来源和词序，不提供 \(\Delta_j\)、\(\nabla_j\)、\(\nu_j\)、\(\lambda_j\)、\(D_j\)、噪声或外力。
+
+若存在共同空间嵌入、网格尺度 \(h_j\to0\)、统一稳定性和噪声紧性，并且离散初值和边界收敛，则可能得到外加连续模型
+\[
+\partial_t h
+=\nu\Delta h+\frac{\lambda}{2}|\nabla h|^2+\sqrt{2D}\,\xi
+\tag{101.2}
+\]
+的弱极限或重整化极限。取 \(\lambda=0\) 时得到 Edwards--Wilkinson 型线性高斯界面；取 \(\lambda\ne0\) 时，在一维平移型局部模型和适当短程噪声条件下，典型 KPZ 标度假设写成
+\[
+W(L,t)\asymp L^\alpha
+f(t/L^z),
+\qquad
+\beta_{\rm grow}=\alpha/z.
+\tag{101.3}
+\]
+标准一维 KPZ 模型的候选指数为
+\(\alpha=1/2\)、\(z=3/2\)、\(\beta_{\rm grow}=1/3\)；这些指数属于附加模型的普适性结论，不能从任意 FIB 词序直接推出。若噪声是长程、淬火或具有强相关，或若 \(\lambda=0\)，指数和极限可能改变。
+
+有限图上的粗糙度例如定义为
+\[
+W_j^2(t)=|V_j|^{-1}\sum_{v\in V_j}
+\left(h_t^{(j)}(v)-\overline h_t^{(j)}\right)^2,
+\qquad
+\overline h_t^{(j)}=|V_j|^{-1}\sum_vh_t^{(j)}(v).
+\tag{101.4}
+\]
+其均值、方差和生长速度取决于沉积规则、边界、初态和噪声协方差。若把同一 FIB 图置于无噪声且 \(\lambda_j=0\) 的规则下，平坦初态可保持确定性；若加入独立沉积噪声，则会产生高斯粗糙化；若加入非线性斜率增强，则可进入 KPZ 型涨落；若改为淬火障碍，则可能出现钉扎与退钉扎。FIB 词长 \(|W_j|\) 只有在另加位置嵌入、样本窗口和时间标度后才可作为界面尺寸，不能自动充当 \(L\)。
+
+界面高度的物理单位、沉积通量、表面张力、噪声温度、边界驱动和观测方式都属于外加模型。因而 (101.1)–(101.4) 可以在声明的离散规则下产生平滑、线性高斯、KPZ 或钉扎界面，但 FIB 递归本身不决定粗糙度指数、增长速度、普适类或真实表面生长定律。
+
+## 102. FIB 上下文图上的外加自旋 Gibbs 场、相变与相共存
+
+固定有限上下文图 \(G_j=(V_j,E_j)\)，在每个顶点放置自旋
+\(\sigma_v\in\{-1,+1\}\)。给定外加耦合 \(J_{uv}\)、外场 \(h_v\) 和逆温 \(\beta\)，定义
+\[
+H_j(\sigma)
+=-\sum_{\{u,v\}\in E_j}J_{uv}\sigma_u\sigma_v
+-\sum_{v\in V_j}h_v\sigma_v,
+\qquad
+\mu_j^{\beta,J,h}(\sigma)
+=\frac{e^{-\beta H_j(\sigma)}}{Z_j(\beta,J,h)}.
+\tag{102.1}
+\]
+有限图上的 \(Z_j\) 是有限和，因此对有限 \(j\) 的 \(\beta\) 和 \(h\) 依赖解析；真正的相变只能讨论一列图、边界条件和参数极限。FIB 只给出上下文和候选组合关系，不给出自旋解释、耦合、逆温、边界或极限图列。
+
+在一列图上，若外加相互作用满足 Dobrushin 型高温条件，例如
+\[
+\sup_{u\in V_j}\sum_{v\ne u}
+\tanh\!\bigl(\beta |J_{uv}|\bigr)<1
+\tag{102.2}
+\]
+并且该界在 \(j\) 上一致，则可得到唯一 Gibbs 状态、边界影响的指数衰减和相关函数的统一控制。相反，若图列具有合适的可分离边界、耦合为铁磁且满足 Peierls 型低温界，则正、负边界条件可能收敛到不同的无限体积状态 \(\mu^+\) 与 \(\mu^-\)，形成相共存；这需要图的几何、割集增长和低温能垒等外加条件，不能从词频或替换矩阵直接推出。
+
+有限图的磁化和易感率可定义为
+\[
+m_j=\frac1{|V_j|}\sum_{v\in V_j}
+\mathbb E_{\mu_j}[\sigma_v],
+\qquad
+\chi_j=\frac{\beta}{|V_j|}
+\operatorname{Var}_{\mu_j}\!\left(\sum_{v\in V_j}\sigma_v\right).
+\tag{102.3}
+\]
+若只改变均匀外场 \(h\)，有限体积恒等式为
+\[
+\partial_hm_j=\chi_j.
+\tag{102.4}
+\]
+在相共存极限中，先取 \(j\to\infty\) 再取 \(h\downarrow0\) 与先取 \(h=0\) 的次序可能不同；有限尺寸峰值位置只能定义伪临界参数。临界指数、关联长度和有限尺寸标度还需另加图列、边界和统一估计，不能把 FIB 代数增长率直接当作临界指数。
+
+同一个 FIB 上下文载体可取 \(J_{uv}=0\)，得到独立自旋和零外场磁化；也可取强铁磁耦合并选择正、负边界，得到非零磁化与相共存；取反铁磁耦合或受挫边图，还可得到不同的有序或无序状态。若再给出外加 Glauber 或其他 Markov 动力学，混合时间、亚稳态和动力学相变仍由翻转率和时钟决定。故 Gibbs 权重、相变、相共存、磁化和响应均是外加统计力学模型的结论，FIB 递归本身不选择任何一种真实物理相。
