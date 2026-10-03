@@ -5,7 +5,7 @@ year: 2026
 title: Bounds for Mertens sums
 doi: null
 url: https://arxiv.org/abs/2608.01498v1
-claim: Weighted Mertens estimates supply the higher-prime-power derivative budget. A separate paper application of the entire-xi Hadamard expansion gives an upper budget in the actual shifted Gamma energy, retaining the pole term and an actual-zero contribution; the primary-prime comparison remains unresolved.
+claim: Weighted Mertens estimates supply the higher-prime-power derivative budget. The entire-xi account and classical Stechkin comparison retain a positive fraction of the shifted Gamma energy in the logarithmic upper budget; the same-test primary-prime comparison remains unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -182,7 +182,7 @@ $$
 c_1=\frac{\xi'}{\xi}(1)=1+\frac\gamma2-\log2-\frac12\log\pi.
 $$
 
-The removable value at one is understood. This is not the meromorphic completion $\pi^{-s/2}\Gamma(s/2)\zeta(s)$ used in the project's [XiLogDeriv](../../D5/S3/Weil/ZetaExplicit/XiLogDeriv.lean). The [entire reading](../../D5/S3/Zeros/CompletedZeta.lean) has the appropriate pole removal, but its existing declarations alone do not supply the global Hadamard expansion used here.
+The removable value at one is understood. This is not the meromorphic completion $\pi^{-s/2}\Gamma(s/2)\zeta(s)$ used in the project's [XiLogDeriv](../../D5/S3/Weil/ZetaExplicit/XiLogDeriv.lean). The [entire reading](../../D5/S3/Zeros/CompletedZeta.lean) has the appropriate pole removal. The existing [normalized resolvent](../../D5/S3/Zeros/Resolvent/XiNormalizedResolvent.lean), `xi_reading_normalized_resolvent_hasSum`, supplies the global multiplicity-weighted sum of $1/(s-\rho)+1/\rho$ for every actual exhaustive injective `ZeroData` and nonzero entire reading, without RH. The [first-Li normalization](../../D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.lean), `first_li_coefficient_normalization`, fixes the derivative at one. These are source-level reuse addresses, not a current build or a claim that the unnormalized positive-real series and the pairings below have already been compiled; no replacement Hadamard or normalized-resolvent implementation is needed.
 
 The source for that expansion is [Lagarias, arXiv:math/0404394v4](https://arxiv.org/pdf/math/0404394v4): the paragraph before Theorem 2.1 identifies $\xi(s,\pi_{\rm triv})=2\xi(s)$; Theorem 2.1(3), (4), (6), printed p.7, supplies the strict zero strip, counting estimate and order one; Lemma 4.1's proof, printed p.14, supplies the Hadamard product and cancellation of its linear coefficient by the starred reciprocal-zero sum. The factor two leaves the logarithmic derivative unchanged. The inspected PDF has SHA-256 `86f3d3c49f5a889f121bb1f04f67694cb9066dc8360f6988165788679594a4a7`. These classical results are cited, not reproved or independently certified here.
 
@@ -328,3 +328,90 @@ $$
 It is uniform over all compact supports and complex coefficients. The logarithmic energy replaces the derivative expense on the upper side needed by the full form. The original two-sided derivative estimate remains useful on slow dilations and is not superseded by a two-sided logarithmic claim.
 
 This pairing argument and its all-test application have not been compiled in Lean. The original-source Hadamard expansion and classical Gamma identities are reused inputs; the displayed accounting is a repository synthesis with no claim of worldwide novelty. No extension beyond the stated compact smooth core is asserted without an additional domain argument.
+
+## Retaining a Gamma fraction by the classical Stechkin comparison
+
+[Kadiri, *Explicit zero-free regions for Dedekind zeta functions*, arXiv:1106.1868v1](https://arxiv.org/pdf/1106.1868v1), printed p.4, equation (2.2), fixes
+
+$$
+\kappa_S=\frac1{\sqrt5},\qquad
+\sigma_1(\sigma)=\frac{1+\sqrt{1+4\sigma^2}}2.
+$$
+
+The constant $\kappa_S$ is distinct from the Mertens constant $\kappa=-\gamma+C_{\rm odd}$. The definition on printed p.5 and Lemma 2.1, equation (2.15), printed p.8, give
+
+$$
+F_K(s,z)=\Re\left(\frac1{s-z}+\frac1{s-1+\overline z}\right),\qquad
+F_K(\sigma+it,z)\ge\kappa_S F_K(\sigma_1(\sigma)+it,z)
+\quad(0<\Re z<1). \tag{10}
+$$
+
+The source's standing range $1<\sigma<1.15$ suffices for the limit used here. Equation (2.15) has no requirement $\Im z=t$; that condition belongs to the separate equation (2.16), which is not used. Kadiri attributes the lemma to Stechkin, *Zeros of the Riemann zeta-function*, Mat. Zametki 8 (1970), 419–429, English translation Math. Notes 8, 706–711. The inspected Kadiri PDF has SHA-256 `8c20f3fc7b27d080e97b1304bcf95f54cbf5905fba59fbf1a3f0dc4d3e78d368`. This is a source application of a published inequality, not a new zero-comparison theorem or a certification of either source's proof.
+
+Write $Q_\sigma(t)=\Re(\xi'/\xi)(\sigma+it)$ and $\varphi=(1+\sqrt5)/2$. The reflected zero $1-\overline\rho$ has the same real ordinate $\Im\rho$. Reflection preserves actual multiplicities, so half of the full reflected sum gives $Q_\sigma(t)$ by (3), including zeros on the critical line. Sum (10) using the already supplied absolute convergence. Continuity of the entire-$\xi$ logarithmic derivative on the zero-free line $\Re s=1$, including its removable value at one, then yields
+
+$$
+Q_\sigma(t)\ge\kappa_S Q_{\sigma_1(\sigma)}(t),\qquad
+Q_1(t)\ge\kappa_S Q_\varphi(t). \tag{11}
+$$
+
+The auxiliary golden line is a parameter in the classical Stechkin comparison. Its appearance is not a proved FIB ATOM-to-prime intertwiner. No fixed-width zero-count estimate or new boundary-pairing argument is needed for (11).
+
+To match the actual shifted energy, put $c=\varphi/2<5/4$. The classical [digamma series, DLMF 5.7.6](https://dlmf.nist.gov/5.7.E6), gives, for $c>0$,
+
+$$
+G_c(v)=\Re\Psi(c+iv)-\Psi(c)
+=\sum_{n\ge0}\frac{v^2}{(n+c)((n+c)^2+v^2)}.
+$$
+
+Each summand increases with $v^2$ and decreases with $n+c>0$. Thus
+
+$$
+G_{\varphi/2}(\tau)\ge G_{5/4}(\tau/2)=a_*(\tau). \tag{12}
+$$
+
+On the auxiliary line, define
+
+$$
+R(t)=\Re\left(\frac1{\varphi+it}+\frac1{\varphi-1+it}\right),\qquad
+L(t)=\Re\frac{\zeta'}{\zeta}(\varphi+it).
+$$
+
+Here $R(t)\ge0$ and $R(0)=\sqrt5$. The absolutely convergent logarithmic derivative of the Euler product, entirely in $\Re s=\varphi>1$, gives
+
+$$
+L(t)-L(0)=\sum_{n\ge2}\Lambda(n)n^{-\varphi}(1-\cos(t\log n))\ge0.
+$$
+
+Subtract the entire-$\xi$ logarithmic-derivative identity at $t=0$ from the one at $t=2\tau$. This keeps both the rational terms and the Gamma frequency:
+
+$$
+\begin{aligned}
+2Q_\varphi(2\tau)
+&=2Q_\varphi(0)+G_{\varphi/2}(\tau)
++2(R(2\tau)-R(0))+2(L(2\tau)-L(0))\\
+&\ge a_*(\tau)+2Q_\varphi(0)-2\sqrt5.
+\end{aligned}
+$$
+
+Since (3) gives $Q_\varphi(0)\ge0$, equations (11)–(12) and $S(\tau)=Q_1(2\tau)$ imply the pointwise bound
+
+$$
+2S(\tau)\ge\kappa_S a_*(\tau)-2. \tag{13}
+$$
+
+Pair (13) with the same nonnegative $h=|\widehat g|^2$ and angular measure $d\tau/(2\pi)$. The previously identified energy multiplier and Parseval give
+
+$$
+\boxed{\mathcal Z(g)\ge\frac1{\sqrt5}E_*(g)-2\|g\|_2^2.} \tag{14}
+$$
+
+Consequently (8), retaining the independent odd and rational energies, gives
+
+$$
+\boxed{\epsilon(g)\le\left(1-\frac1{\sqrt5}\right)E_*(g)
++(d_\xi+2)\|g\|_2^2
+-\mathcal D_{\rm odd}(g)-\mathcal J(g).} \tag{15}
+$$
+
+Dropping the last two terms preserves an upper bound. Equations (14)–(15) hold at paper level for every $g\in C_c^\infty(\mathbb R;\mathbb C)$, with no fixed support, parity, mean or frequency restriction. They strengthen only the upper budget; the two-sided derivative estimate is still available independently. They do not supply the remaining signed primary-prime/pole comparison, an all-test positivity result, Robin's inequality or RH. The parameter application has not been compiled in Lean and is not presented as a new formal declaration.

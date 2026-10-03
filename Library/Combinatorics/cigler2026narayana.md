@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2608.03363v2
 claim: "Weighted bounded Dyck paths with Narayana weights and q = -1 weights; Conjecture 2 (a finite-height product formula) and Conjecture 3 (expansions in even strips)."
 strata_touched:
   - D5/S3/Combinatorics/NarayanaStrip/CiglerStripExpansion
+  - D5/S3/Combinatorics/NarayanaStrip/CiglerStripProduct
 license: citation-only
 triage: anchor
 ---
