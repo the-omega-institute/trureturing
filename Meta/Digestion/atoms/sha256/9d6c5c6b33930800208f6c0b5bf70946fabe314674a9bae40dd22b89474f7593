@@ -1,0 +1,144 @@
+**定理 26.1（实际效果 frame 的统一端口约束）。** 存在有精确有限 frame 定义的常数 $c_0,\delta_0>0$，使对任一共振 $\Delta_*$、已知 $0<|\delta|\le\delta_0$ 和正物理时钟 $\Delta\equiv\Delta_*+\delta\pmod{2\pi}$，若上述共同编解码器对所有每分支至多
+
+$$
+N_\delta=9k,\qquad
+k=3\operatorname{round}\!\left(\frac{\pi}{3|\delta|}\right),
+\qquad
+N_\delta\le9\left(\frac{\pi}{|\delta|}+\frac32\right)
+\tag{26.1}
+$$
+
+次调用的允许实验具有统一误差 $\epsilon$，则
+
+$$
+\epsilon\ge c_0(1-q/12),\qquad1\le q\le12.
+\tag{26.2}
+$$
+
+误差可为第 23 节的可访问输出半 diamond 距离，也可为包括全部 $XB$ 纠缠输入与终端 $B$ 测试的实际事件概率误差；后者已经足够。该断言不适用于未扩展输入的较弱统计。
+
+证明。在 $t=\pi$，第 22 节给真实至多九次调用事件效果的复张成为
+
+$$
+S_9(\pi)=\mathcal A_{\mathrm{orb}}
+=\mathcal B(\mathbb C^4)\oplus\mathcal B(\mathbb C^{12}).
+$$
+
+其 Hermitian 部分实维数为 $4^2+12^2=160$。因全部真实事件效果均为 Hermitian，从生成集中选出 $160$ 个复线性无关的正效果 $0\le F_j(\pi)\le I_X$；它们也是 Hermitian 部分的实基（对任意复展开取伴随，唯一性强制 Hermitian 元素的系数为实数）。每个 $F_j$ 配有一个实际有限协议，每分支至多九次正调用。固定这些协议的所有低层仪器、控制树和事件，只让时钟变化为 $W(t)$，得到 $F_j(t)$。
+
+每条分支效果是有限 Kraus 与 $W(t)$ 的有限乘积之和，故 $F_j(t)$ 连续；每个轨道投影与所有低层分支及 $W(t)$ 交换，故对任意 $t$ 均有 $F_j(t)\in\mathcal A_{\mathrm{orb}}$。这正是 $\pi$ 邻域所需的上界，不用它推断较小共振代数。定义
+
+$$
+G_{j\ell}(t)=\operatorname{Tr}_X(F_j(t)F_\ell(t)),\qquad
+\lambda_0=\lambda_{\min}G(\pi)>0.
+$$
+
+选择固定 $0<r<\pi/3$，使在闭区间 $|t-\pi|\le r$ 上
+$\|G(t)-G(\pi)\|_{\mathrm{op}}\le\lambda_0/2$；连续性允许这样的正 $r$。于是 $\lambda_{\min}G(t)\ge\lambda_*:=\lambda_0/2>0$。令
+
+$$
+D_j(t)=\sum_\ell(G(t)^{-1})_{j\ell}F_\ell(t),
+\qquad
+\operatorname{Tr}_X(D_j(t)F_\ell(t))=\delta_{j\ell}.
+$$
+
+这些 Hermitian 对偶满足
+
+$$
+\|D_j(t)\|_{\mathrm{HS}}^2=(G(t)^{-1})_{jj}\le1/\lambda_*,
+\qquad
+\|V^\dagger D_j(t)V\|_{\mathrm{op}}\le1/\sqrt{\lambda_*}.
+\tag{26.3}
+$$
+
+令 $|\Omega_V\rangle=12^{-1/2}\sum_{a=1}^{12}V|a\rangle\otimes|a\rangle_B$，$P_\Omega=|\Omega_V\rangle\langle\Omega_V|$。以固定 Bell 基取转置，定义
+
+$$
+C_j(t)=\frac{(V^\dagger D_j(t)V)^T}{12}.
+$$
+
+在整个 $X\otimes B$ 上，而不只在压缩后的轨道块上，有
+
+$$
+P_\Omega=\sum_{j=1}^{160}F_j(t)\otimes C_j(t).
+\tag{26.4}
+$$
+
+确实每个 $V|a\rangle\langle b|V^\dagger$ 属于完整的 $\mathcal A_{\mathrm{orb}}$，其在 $F_j$ 基中的系数为
+$\operatorname{Tr}(D_jV|a\rangle\langle b|V^\dagger)=\langle b|V^\dagger D_jV|a\rangle$。把这些展开代入
+$P_\Omega=12^{-1}\sum_{a,b}V|a\rangle\langle b|V^\dagger\otimes|a\rangle\langle b|$
+即得 (26.4)。完整 $160$ 维基保证另一四维块上的项正确相消为零；因此无需假设解码输出留在十二维输入块。
+
+写 $C_j=C_j^+-C_j^-$，令
+$a_j=\|C_j^+\|_{\mathrm{op}}$、$b_j=\|C_j^-\|_{\mathrm{op}}$。
+对非零系数，$Q_j^+=C_j^+/a_j$、$Q_j^-=C_j^-/b_j$ 为 $B$ 上的实际二结果测量效果。先运行 $F_j$ 的低层协议，保持 $B$ 静止，再测试对应 $Q_j^\pm$，接受两事件的交，得到真实效果
+
+$$
+E_j^\pm=F_j(t)\otimes Q_j^\pm,\qquad
+P_\Omega=\sum_j a_jE_j^+-\sum_j b_jE_j^- .
+$$
+
+这是真实正事件的有限带符号展开，总系数变差为
+
+$$
+0<\Gamma(t):=\sum_j(a_j+b_j)
+\le\frac2{12}\sum_{j=1}^{160}\|V^\dagger D_j(t)V\|_{\mathrm{op}}
+\le\frac{320}{12\sqrt{\lambda_0/2}}.
+\tag{26.5}
+$$
+
+取 $\beta(t)=\sum_jb_j$。以概率 $a_j/\Gamma$ 运行 $E_j^+$ 并保留成功，以概率 $b_j/\Gamma$ 运行 $E_j^-$ 并保留其补事件，得到真正二元事件
+
+$$
+Z(t)=\frac{P_\Omega+\beta(t)I_{XB}}{\Gamma(t)}.
+\tag{26.6}
+$$
+
+这些选择概率和为 $1$，故 $0\le Z(t)\le I$ 由实际凸混合直接保证。每个分支至多九次 $W(t)$ 调用，只测低层与终端 $B$，未授权任意 $AH$ Bell 测量。对任意两个归一化输入 $\rho,\sigma$，标量项严格消去，
+
+$$
+\Pr(Z(t)\mid\rho)-\Pr(Z(t)\mid\sigma)
+=\operatorname{Tr}(P_\Omega(\rho-\sigma))/\Gamma(t).
+\tag{26.7}
+$$
+
+设共同重构为 $\mathcal T=\mathrm{Dec}\circ\mathrm{Enc}$。编码的带 flag Kraus 为 $E_{f,\ell}:X\to\mathbb C^q$，解码为 $D_{f,j}:\mathbb C^q\to X$。作用于 Bell 输入块的复合算子
+$K_{f,j,\ell}=D_{f,j}E_{f,\ell}V:\mathbb C^{12}\to X$
+均秩至多 $q$，迹保持给 $\sum_K\operatorname{Tr}(K^\dagger K)=12$。重构 Bell 重叠为
+
+$$
+\begin{aligned}
+F&=\operatorname{Tr}\!\left[
+P_\Omega(\mathcal T\otimes\operatorname{id}_B)(P_\Omega)\right]\\
+&=\frac1{12^2}\sum_K|\operatorname{Tr}(V^\dagger K)|^2
+\le\frac q{12^2}\sum_K\|K\|_{\mathrm{HS}}^2
+=\frac q{12}.
+\end{aligned}
+\tag{26.8}
+$$
+
+这里 $\operatorname{rank}(V^\dagger K)\le q$、$\|V^\dagger K\|_{\mathrm{HS}}\le\|K\|_{\mathrm{HS}}$，再用迹的核范数界。输出泄漏到另一块和任意有限 flags 都已经包含在这个计算中。原 Bell 输入重叠为 $1$，实际事件 (26.6) 的差为 $(1-F)/\Gamma(t)$，故在该 $\pi$ 邻域
+
+$$
+\epsilon\ge\frac{1-q/12}{\Gamma(t)}
+\ge c_0(1-q/12),\qquad
+c_0:=\frac{12\sqrt{\lambda_0/2}}{320}>0.
+\tag{26.9}
+$$
+
+frame、随机分支及终端 $B$ 效果都与被检验的编解码器无关；编解码器必须对所有这些分支共同适用。
+
+最后置 $\delta_0=\min\{\pi/3,2r/3\}$，取 (26.1) 的最近整数，平局任择一个。对 $0<|\delta|\le\delta_0$，所取整数为正，且
+
+$$
+\bigl|k|\delta|-\pi\bigr|\le3|\delta|/2,\qquad
+h=\operatorname{sgn}(\delta)(k|\delta|-\pi).
+$$
+
+由于 $k$ 是 $3$ 的倍数，$k\Delta_*\in2\pi\mathbb Z$；$\delta<0$ 时 $-\pi\equiv\pi$，所以完全精确地有
+$W_\Delta^k=W_{\pi+h}$，$|h|\le3|\delta|/2\le r$。把 (26.6) 协议中每一次有效时钟调用替换为 $k$ 次连续正向原始调用，即以最坏 $9k$ 次预算实现同一个实际事件。没有 inverse clock 或近似门合成。这证明 (26.1)、(26.2)；允许更大的预算当然仍含该事件。$\square$
+
+$c_0,\delta_0$ 的定义取自固定有限实际 frame 的 $\lambda_0,r$，对三个共振一致，不含任何数值条件数或数值阈值断言。若容许误差 $\epsilon<c_0/12$，则每个整数 $q<12$ 均被排除。已有精确 $q=12$ 方案在相同扩张合同中仍充分：测出零/非零轨道的有限经典 flag，在最多十二维端口内保留该轨道的完整量子块，解码作对应嵌入；共同重构就是轨道 pinching。全部允许分支逐轨道作用，最终丢弃 $H$，所以该 pinching 保持可访问输出，包括与受保护 $B,R$ 的关联。编解码的这项状态任务不把轨道测量变成实验原语。
+
+此处构造的是有非零统一对比度的实际随机 Bell 事件，没有构造从十二维块到可访问系统的完整量子态转移。第 23 节在小 $N|\delta|$ 时以 $q=4$ 给 $\epsilon_N\le4N|\delta|$；本节在逆失谐预算且精度 $\epsilon<c_0/12$ 时要求 $q\ge12$。调用与精度的量词决定这两个资源结论的适用区域，不给完整转变曲线、最优常数或 $q=5,\ldots,11$ 的中间分类。这些端口结论均限于所述共同 CPTP、参考保持及无额外量子通道合同，不是无条件的物理定律。
+

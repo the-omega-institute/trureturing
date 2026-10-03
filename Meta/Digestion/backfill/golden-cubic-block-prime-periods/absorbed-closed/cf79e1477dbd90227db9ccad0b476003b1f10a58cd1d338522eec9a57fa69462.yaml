@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cf79e1477dbd90227db9ccad0b476003b1f10a58cd1d338522eec9a57fa69462
+  normalized_sha256: sha256:cf79e1477dbd90227db9ccad0b476003b1f10a58cd1d338522eec9a57fa69462
+cas_ref: sha256:cf79e1477dbd90227db9ccad0b476003b1f10a58cd1d338522eec9a57fa69462
+coverage_gids:
+  - gid: D5/S1/Scale/GoldenCubicBlockCongruences.golden_cubic_lucas_block
+    target_statement_id: sha256:3c579a5903f6aa20d62147fa57bbc7f0e668ed22664c559a9e2c7c2eca6946c3
+receipts:
+  unresolved_subitems: []

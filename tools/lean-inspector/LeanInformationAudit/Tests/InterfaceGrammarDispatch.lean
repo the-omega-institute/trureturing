@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command
 
@@ -27,7 +30,7 @@ private def checkDispatch (source kind diagnostic : String) : CommandElabM Unit 
   let some handlerOwner := env.getModuleIdxFor? handler.declName
     | throwError "handler owner missing: {stx.getKind}"
   let implementation := env.allImportedModuleNames[handlerOwner.toNat]!
-  unless implementation == `LeanInformationAudit.Syntax ||
+  unless implementation == `LeanInformationAuditInterface.Syntax ||
       implementation == `LeanInformationAudit.SealCommand do
     throwError "unexpected handler owner: {implementation}"
   let saved ← get

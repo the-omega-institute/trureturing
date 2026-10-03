@@ -1,0 +1,80 @@
+### theorem 244.1 全部几何端点为零的连续反例
+
+对任意固定实数 $q>1$，定义
+
+$$
+f_q(x)=-\frac{|\sin(\pi\log x/\log q)|}{\log x},
+\qquad x>1,
+\qquad B_q=\frac{\pi}{\log q}+1.
+\tag{244.1}
+$$
+
+$f_q$ 在 $(1,\infty)$ 连续，$B_q>0$，且具有以下三个性质：
+
+$$
+f_q(q^n)=0\qquad(n\in\mathbb N,\ n\ge1),
+\tag{244.2}
+$$
+
+$$
+|f_q(y)-f_q(a)|\le B_q\frac{y-a}{a\log a}
+\qquad(4\le a\le y),
+\tag{244.3}
+$$
+
+$$
+\forall K\ge0\ \forall X\in\mathbb R\ \exists x\ge\max(4,X),
+\qquad \sqrt x\log x\,f_q(x)<-K.
+\tag{244.4}
+$$
+
+因此，即使所有几何端点的归一值都为零，该函数也没有最终有限的归一下界。
+
+**证明。** 连续性来自对数、正弦、绝对值和非零分母的连续性。
+在 $x=q^n$ 处，正弦的相位为 $n\pi$，给出式（244.2）。
+
+为证明式（244.3），写 $s=\log a$、$t=\log y$、
+$u=|\sin(\pi t/\log q)|$、$v=|\sin(\pi s/\log q)|$。
+此时 $1\le s\le t$；下界使用 $\log4=2\log2\ge1$。
+正弦与绝对值的 Lipschitz 界给出
+
+$$
+|u-v|\le\frac\pi{\log q}(t-s),\qquad 0\le v\le1.
+$$
+
+精确分解为
+
+$$
+f_q(y)-f_q(a)=-\frac{u-v}{t}+v\frac{t-s}{st}.
+$$
+
+因为 $t\ge s\ge1$，三角不等式遂给
+
+$$
+|f_q(y)-f_q(a)|
+\le\frac\pi{\log q}\frac{t-s}{s}+\frac{t-s}{s}
+=B_q\frac{t-s}{s}.
+$$
+
+对 $y/a>0$ 使用 $\log(y/a)\le y/a-1=(y-a)/a$，即得式（244.3）。
+
+取几何区间内的点
+
+$$
+x_n=\sqrt q\,q^n=q^{n+1/2}.
+$$
+
+它的相位为 $(n+1/2)\pi$，所以绝对正弦等于 $1$，并有
+
+$$
+\sqrt{x_n}\log x_n\,f_q(x_n)=-\sqrt{x_n}.
+\tag{244.5}
+$$
+
+$q>1$ 使 $q^n$ 无界。对给定 $K\ge0$ 和 $X$，可选 $n$ 使
+$x_n>\max(4+|X|,(K+1)^2)$。
+于是 $x_n\ge\max(4,X)$ 且 $\sqrt{x_n}>K$，得到式（244.4）。$\square$
+
+这个反例由经典周期正弦、对数界和幂增长构造，所否定的是上述两类信息之间的普遍传递命题。
+它不否定携带额外素数结构、事件状态或谱信息的证明路线。
+

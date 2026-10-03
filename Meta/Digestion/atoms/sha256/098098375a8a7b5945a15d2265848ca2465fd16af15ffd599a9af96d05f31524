@@ -1,0 +1,9 @@
+**定义 19.1（同一周期上的振幅）。** 固定外部索引 $n\geq3$，令 $O\subseteq D_n$ 为 $T_{n,C}$ 的一条周期的全部不同索引。取
+
+$$
+\ell=|O|,\qquad s=\max O-\min O,\qquad
+\Delta_O=\max_{x\in O}E_C(x)-\min_{x\in O}E_C(x).
+$$
+
+这里 $E_C=C-G$ 是定义 15.1 的规范黄金缺陷。它与 [Fibonacci collars，§7](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的局部轮廓缺陷 $C(F_k+t)-F_{k-1}-\max(0,t)$ 不同；本节只用同一实际周期上的规范缺陷振幅。
+

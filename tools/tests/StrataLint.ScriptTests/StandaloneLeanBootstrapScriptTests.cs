@@ -13,8 +13,8 @@ public sealed class StandaloneLeanBootstrapScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new BootstrapFixture(target);
 
-        var makeCalls = target == "lean" ? 2 : 1;
-        var lakeCalls = target == "lean" ? new[] { "build", fixture.InspectorBuild } : [];
+        var makeCalls = target == "lean" ? 3 : 1;
+        var lakeCalls = target == "lean" ? new[] { "build", fixture.InspectorBuild, fixture.RegInspectorBuild } : [];
         fixture.AssertSuccess(fixture.Make(target));
         Assert.Equal(Enumerable.Repeat("candidate-first", makeCalls), fixture.CliCalls);
         Assert.Equal(makeCalls, fixture.BuildCalls.Length);
@@ -61,9 +61,9 @@ public sealed class StandaloneLeanBootstrapScriptTests
 
         Assert.True(result.ExitCode == 23, fixture.Text(result));
         Assert.Equal(builds + (prebuilt ? 0 : 1), fixture.BuildCalls.Length);
-        Assert.Equal(prebuilt ? (target == "lean" ? 3 : 2) : 1, fixture.CliCalls.Length);
+        Assert.Equal(prebuilt ? (target == "lean" ? 4 : 2) : 1, fixture.CliCalls.Length);
         Assert.Equal(target == "lean"
-            ? prebuilt ? new[] { "build", fixture.InspectorBuild, "build" } : new[] { "build" }
+            ? prebuilt ? new[] { "build", fixture.InspectorBuild, fixture.RegInspectorBuild, "build" } : new[] { "build" }
             : [], fixture.LakeCalls);
     }
 
@@ -135,6 +135,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
         internal string[] BuildCalls => Calls("bootstrap.log");
         internal string[] LakeCalls => Calls("lake.log");
         internal string InspectorBuild => $"-d {root}/tools/lean-inspector build";
+        internal string RegInspectorBuild => $"-d {root}/tools/lean-inspector-reg build";
 
         internal void ChangeSource(string marker) => Write(projectDirectory + "/Program.cs", $$"""
             using System;

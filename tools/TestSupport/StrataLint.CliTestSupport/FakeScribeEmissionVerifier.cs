@@ -11,6 +11,12 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
+        IReadOnlyList<StrataLint.Scribe.DocumentDefinition> definitions) =>
+        Verify(snapshot, report);
+
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
         RawChangeSet? changes = null,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null)

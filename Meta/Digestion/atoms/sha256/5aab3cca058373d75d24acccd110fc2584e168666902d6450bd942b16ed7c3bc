@@ -1,0 +1,19 @@
+**定义 346.1（实际时间路径及其能量）。** 沿用定义344.1的实际正频率集 $\Gamma$、重数 $m_\gamma$、$D_\gamma=1/4+\gamma^2$ 和 $a_\gamma=m_\gamma/(\gamma D_\gamma)$。令
+
+$$
+\delta(t)=2\sum_{\gamma\in\Gamma}a_\gamma(1-\cos\gamma t),\qquad
+K=\sum_{\gamma\in\Gamma}a_\gamma\frac{\gamma^2}{D_\gamma}
+=\sum_{\gamma\in\Gamma}\frac{m_\gamma\gamma}{D_\gamma^2}>0.
+\tag{346.1}
+$$
+
+在 $0<|t|<1$ 时记 $L_t=\log(1/|t|)$。谱计数包含全部非平凡零点的正纵坐标，同一纵坐标的重数相加，使用经典重数约定
+
+$$
+N(Y)=\sum_{0<\gamma\le Y}m_\gamma
+=\frac{Y}{2\pi}\log Y+O(Y).
+\tag{346.2}
+$$
+
+这是 Riemann–von Mangoldt 公式的粗余项形式，其系数对应正纵坐标，不能换成双边零点数。以下谱能量计算仅使用这些纵坐标、正重数与（346.2）；将它们解释为 §§337–345 的同一 Robin 相位谱时仍使用该路线的 RH 假设。
+

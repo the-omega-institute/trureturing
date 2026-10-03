@@ -1,0 +1,80 @@
+## 21. 全局容量上界与可实现下界
+
+沿用第 15 节，$T(e)=\operatorname{ord}_e(g)=\pi(e)$ 是同一 Fibonacci 矩阵的 Pisano 周期。另令
+
+$$
+\eta=-z^2,\qquad L(e)=\operatorname{ord}_{R_e^\times}(\eta).
+$$
+
+在 $H_e/\langle\eta\rangle$ 中 $[-1]=[z]^{-2}$，所以此商由 $[z]$ 生成且 $[z]^4=1$，有
+
+$$
+ h(e)\le4L(e),\qquad b(e)\le8L(e),
+\tag{21.1}
+$$
+
+而显然 $h(e)\le2T(e)$、$b(e)\le4T(e)$。CRT 对同一全局元素给出
+
+$$
+T(e)=\operatorname{lcm}_{p^a\parallel e}T(p^a),\qquad
+L(e)=\operatorname{lcm}_{p^a\parallel e}L(p^a).
+\tag{21.2}
+$$
+
+对奇素数 $p\ne5$，局部周期满足
+
+$$
+T(p^a)\mid
+\begin{cases}
+p^{a-1}(p-1),&(5/p)=1,\\
+2p^{a-1}(p+1),&(5/p)=-1.
+\end{cases}
+\tag{21.3}
+$$
+
+证明这些界时，分裂域中 $z$ 的两个坐标属于 $\mathbb F_p^\times$；惰性域中 Frobenius 为共轭，故 $z^{p+1}=-1$。于是 $T(p)\mid2(p+1)$ 却不整除 $p+1$，所以 $v_2(T(p))=v_2(p+1)+1$。约化使 $T(p)\mid T(p^a)$，二项式展开使 $T(p^a)\mid p^{a-1}T(p)$；因此商是 $p$ 的幂且可能小于 $p^{a-1}$，特别允许所有奇素数的提升平台。惰性情形的 $2$-进赋值在提升中不变。
+
+惰性局部令 $T=T(p^a)$。模 $p$ 有 $z^{T/2}=-1$，因为有限域乘法群中唯一非平凡二阶元为 $-1$，而 $T/T(p)$ 为奇数。令 $A=z^{T/2}$，则 $A^2=1$ 且 $A-1$ 为单位，故 $(A-1)(A+1)=0$ 强制 $A=-1$。所以
+
+$$
+L(p^a)=\frac{T}{\gcd(T,T/2+2)}.
+$$
+
+写 $T=4t$、$t$ 奇时，分母为 $4$；写 $T=2^st$、$s\ge3$、$t$ 奇时，分母为 $2$。结合 $T$ 的 $2$-进赋值，得
+
+$$
+\begin{array}{c|c}
+p\equiv1\pmod4,\ (5/p)=-1&
+L(p^a)=T(p^a)/4\mid p^{a-1}(p+1)/2\\
+p\equiv3\pmod4,\ (5/p)=-1&
+L(p^a)=T(p^a)/2\mid p^{a-1}(p+1),\quad4\mid L(p^a).
+\end{array}
+\tag{21.3a}
+$$
+
+在 $5$ 处，
+
+$$
+T(5^a)=4\cdot5^a,\qquad L(5^a)=5^a.
+\tag{21.4}
+$$
+
+确实模 $5$ 有 $g=2(I+B)$、$B^2=0$、$B\ne0$。$g^k=2^k(I+kB)$ 等于恒等时，非标量项迫使 $5\mid k$，标量项迫使 $4\mid k$，所以 $T(5)=20$。又
+
+$$
+M^5=3I+5M,\qquad M^{20}-I\equiv5(I+3M)\not\equiv0\pmod{25}.
+$$
+
+若 $X=I+5^sB$ 且 $B\not\equiv0\pmod5$，则 $X^5\equiv I+5^{s+1}B\pmod{5^{s+2}}$。约化核为 $5$ 群，故周期逐层恰乘 $5$。$z^{T/2}\equiv-1\pmod5$ 且平方为 $1$，前述单位因子论证给 $z^{T/2}=-1$；$T/4=5^a$ 为奇数，故同一最大公因子计算给 $L=T/4$。
+
+在 $2$ 处，
+
+$$
+T(2^a)=3\cdot2^{a-1},\qquad
+L(2)=3,\quad L(4)=6,\quad
+L(2^a)=3\cdot2^{a-2}\quad(a\ge3).
+\tag{21.5}
+$$
+
+模 $2$ 的 $M$ 阶为 $3$，$M^3=I+2M$ 给 $T(4)=6$，并且 $M^6=I+4(I+2M)$。当 $s\ge2$ 时，对 $I+2^sB$ 逐次平方使矩阵差的最小 $2$-进赋值恰增一，故得到 $T(2^a)$。模 $4$ 的六阶循环群唯一二阶元 $g^3$ 非标量，故 $-1\notin\langle z\rangle$ 模 $4$ 及其所有提升。当 $a\ge2$，$\eta^k=1$ 因而等价于 $k$ 偶且 $T(2^a)\mid2k$；否则奇 $k$ 会给出 $z^{2k}=-1$。最小这样的 $k$ 就是 (21.5) 所列值；$a=1$ 则 $\eta=z^2$ 阶为 $3$。
+

@@ -1,0 +1,40 @@
+**假设 30.1（同一实际递归、来源尾部与亏四坐标）。** 本节条件于完整假设 24.1，包括其继承的计算辅助基础，始终使用同一个实际序列
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&T_N(x)&=N-C(x),\\
+d_N&=C(N-1),&g_N&=T_N^{d_N}(N-1),\\
+C(N)&=C(g_N)+C(N-g_N)\qquad(N\ge3).
+\end{aligned}
+\tag{30.1}
+$$
+
+直接复用 [Exact collars，H.1–H.6](https://github.com/the-omega-institute/nested-recurrences/blob/a66f6dcb64baaab8c2268bf010bfb2f6fab61413/cloitre-conway/exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure) 的完整零至三子水平、外侧 shelf、尾部周期排除及规定边界相位，以及 [Recursive descent，C.1–C.7](https://github.com/the-omega-institute/nested-recurrences/blob/a66f6dcb64baaab8c2268bf010bfb2f6fab61413/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 的亏量包络与局部轮廓接口。H.1–H.5 的有限整块前提和假设 24.1 的计算辅助基础均作为来源条件保留，未在这里独立验证，记为 `ASSUMED-UNVERIFIED`；以下是条件纸面结论，不是 Lean 核验结论。
+
+沿用 $F_0=0,F_1=1$、$\alpha=(\sqrt5-1)/2$ 及式 (24.5) 的自然闭块亏量，另记
+
+$$
+\begin{aligned}
+\lambda_m(t)&=F_{m-1}-C(F_m-t),&0\le t&\le F_{m-2},\\
+p_m&=\left\lfloor\frac{2m-9}{3}\right\rfloor,\\
+Z_m&=3m+\left\lfloor\frac{m-1}{3}\right\rfloor-24,&
+B_m&=4m-34,\\
+\Phi_m(t)&=[t-B_m]_+,&[x]_+&=\max(x,0).
+\end{aligned}
+\tag{30.2}
+$$
+
+本节的 $B_m$ 是亏四阈值，与推论 29.4 的亏二阈值分别使用。来源的 $Q_m,L_m$ 在这里分别对应 $\lambda_m,p_m$。对实际根 $N=F_m-b$，式 (24.3)–(24.4) 给同一被选点及其互补子
+
+$$
+\begin{aligned}
+g_N&=F_{m-1}-z,&N-g_N&=F_{m-2}-w,&z+w&=b,\\
+0\le z&\le F_{m-3},&0\le w&\le F_{m-4},\\
+\lambda_m(b)&=\lambda_{m-1}(z)+\lambda_{m-2}(w),\\
+K(N)&=g_N-T_N(g_N),&K(N)^+&=[K(N)]_+.
+\end{aligned}
+\tag{30.3}
+$$
+
+周期缺口的内步为 $r\mapsto b-\lambda_{m-1}(r)$，但亏量相加只在实际规定深度所选的 $z$ 上使用。两子的上锚亏量阶数分别为 $m-1,m-2$，对应自然闭块阶标 $m-2,m-3$；上端点不重新归阶。全部后裔保留继承阶数与出现标签；重复的物理索引共享同一个 $C,g,d$，所有共同窗口 $H\ge L(\mathrm{root})$ 及其更大的高端补零均保留。这里不假设 $C$ 单调、收敛、独立分枝或自由选择相位。
+

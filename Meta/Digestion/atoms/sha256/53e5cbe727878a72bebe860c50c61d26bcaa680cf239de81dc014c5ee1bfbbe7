@@ -1,0 +1,18 @@
+**定义 1.1（组成标签与有限提升）。** 固定整数 $d,e\ge2$，置
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+A=(\mathbb Z/d\mathbb Z)^2,\qquad
+H=(\mathbb Z/e\mathbb Z)^2.
+$$
+
+模 $r$ 的向量 $[x]_r$ 一律取坐标位于 $\{0,\ldots,r-1\}$ 的代表。有限 Hilbert 空间记为 $\mathcal H_A=\mathbb C^A$、$\mathcal H_H=\mathbb C^H$；$\mathcal B(\mathcal H)$ 表示其全部线性算子，$E_{aa'}=|a\rangle\langle a'|$。对任意 $r\ge2$ 定义置换酉
+
+$$
+U_r|x\rangle=|[Mx]_r\rangle.
+$$
+
+因 $\det M=-1$，此定义在每个模数上都可逆。由 [FIB 第 25 节的数字分解](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L1760)，逐坐标写 $x=a+dh$，将模 $de$ 的组成空间识别为 $\mathcal H_A\otimes\mathcal H_H$；$U$ 表示 $U_{de}$ 在这一指定识别下的算子。
+
+这里的标签是组成余数。[FIB 第 3.3 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L67)中的有序二叉树到组成向量的映射忘记叶序和括号，再取模又忘记整数提升。上述 Hilbert 空间没有把被忘记的树结构补回；第 9 节的区域字标签另行定义。
+

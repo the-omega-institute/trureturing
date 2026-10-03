@@ -1,0 +1,47 @@
+**定义 50.1（保留原头合同的连续 Markov 族）。** 固定定义49.1的任意 $n\ge3$ 和叶标号二叉树，沿用其完整输入域 $\Sigma^n$、整窗独立律 $P_n$、实际位函数 $a,b,c,d$、互斥指示 $G_1,G_2$、教师 $C=G_1+2G_2$ 及矩阵 $Q$。窗口位序与原卷 §104 的五种低到高字母一致；这里的概率域仍是完整乘积，不另加跨窗接缝合法性筛选。置
+
+$$
+s=\sqrt2,\qquad A=s-1,\qquad \chi=3-2s=A^2,\qquad D=\frac\chi2,
+\qquad t=\log(1+s).
+$$
+
+对每个预先固定、输入无关的 $\alpha\in[0,1]$，令
+
+$$
+T_\alpha=\alpha I_3+\frac{1-\alpha}{3}J_3,\qquad
+P(X=x,Y=i,Y_\alpha=j)=5^{-n}Q_{C(x),i}(T_\alpha)_{ij}.
+\tag{50.1}
+$$
+
+$Y$ 是定义49.1已有噪声的标签，不是确定教师 $C$。按标签顺序 $0,1,2$ 写
+
+$$
+\begin{aligned}
+R&=\frac{2+\alpha}{6},& E&=\frac{4-\alpha}{12},\\
+U&=\frac{1+(3s-4)\alpha}{3},& V&=\frac{2+(7-6s)\alpha}{6},\\
+Q_\alpha&=QT_\alpha
+=\begin{pmatrix}R&U&V\\E&R&E\\V&U&R\end{pmatrix},&
+\rho_\alpha(X)&=(Q_\alpha)_{C(X),\cdot}.
+\end{aligned}
+\tag{50.2}
+$$
+
+每个预测器仍满足定义49.1的有符号非线性叶编码、全环境分别齐次双线性合并和实际坐标计费条件；无免费内部常数、跨子树输入或携带输入的控制。实际根维数为 $q$，原头只有有限、输入无关的仿射 logits 和 softmax，偏置、斜率及所有消息参数无范数预算。全文仅用同一坐标图
+
+$$
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right).
+\tag{50.3}
+$$
+
+本合同不含概率后适配器。$\alpha$ 只指定一个联合律和该律下的固定模型参数，不是额外输入通道。
+
+沿用式（49.8）的自然对数损失与完整、不按类平均的三类 Brier 损失，各自对 $(X,Y_\alpha)$ 评分。令 $h(\alpha),b(\alpha)$ 为这个律的 Bayes 基线，$\Delta_\ell^\alpha(p)=R_\ell^\alpha(p)-R_{\ell,\mathrm{Bayes}}^\alpha$。对固定 $n$ 和树，定义
+
+$$
+E_\ell(\alpha)=\inf_{p:\ q\le1}\Delta_\ell^\alpha(p),
+\qquad \ell\in\{\log,2\}.
+\tag{50.4}
+$$
+
+下确界包括该树上全部准入的有限参数、全部非根维数和叶编码；不额外限制峰值。不同 $\alpha$ 分别使用自己的联合律和基线。
+

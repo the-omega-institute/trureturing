@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredDiscardedObligations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredTelescopeObligations
 open Lean Meta Elab Command
@@ -29,16 +32,16 @@ run_meta do
       throwError "setup: telescope domains do not isolate public/body paths"
     logInfo m!"[PASS] raw_telescope_domains_isolate_{name}"
 
-register_information_template domainTemplate
-register_information_template bodyDomainTemplate
+test_assess in register_information_template domainTemplate
+test_assess in register_information_template bodyDomainTemplate
 
-information_theorem domainTarget in targetArena primitives (domainTemplate 0 true)
+test_assess in information_theorem domainTarget in targetArena primitives (domainTemplate 0 true)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem domainIndependent in independentArena primitives (domainTemplate 0 true)
+test_assess in information_theorem domainIndependent in independentArena primitives (domainTemplate 0 true)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
-information_theorem bodyDomainTarget in targetArena primitives (bodyDomainTemplate 0 true)
+test_assess in information_theorem bodyDomainTarget in targetArena primitives (bodyDomainTemplate 0 true)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem bodyDomainIndependent in independentArena primitives (bodyDomainTemplate 0 true)
+test_assess in information_theorem bodyDomainIndependent in independentArena primitives (bodyDomainTemplate 0 true)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
 
 run_meta do

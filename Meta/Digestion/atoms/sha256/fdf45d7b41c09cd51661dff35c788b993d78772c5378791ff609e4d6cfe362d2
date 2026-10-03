@@ -1,0 +1,11 @@
+## 265. Lucas 乘子短平移的真实公因子饱和与四次成本边界
+
+本节沿用 §§203、264 的 $q(a,b)=2a+3b$、$Q(a,b)=a^2+ab-b^2$ 及两个实嵌入。
+使用经典 Binet 公式
+\[
+F_n=\frac{\varphi^n-(-1)^n\varphi^{-n}}{\sqrt5},\qquad
+L_n=\varphi^n+(-1)^n\varphi^{-n},
+\]
+以及 Fibonacci 加法公式作为中间前置；相关恒等式见 *Fibonacci and Lucas Identities*，DOI: `10.1002/9781118033067.ch5`。
+本节的关系是：在 §264 的实际规范来源中，增长的 Lucas 乘子能够使固定短平移达到完整的新公因子上界，并在四次乘子成本的临界规模保留单位本原范数。
+

@@ -18,7 +18,7 @@ private def zeckendorfCriterion (Q : Nat) : List Bool :=
   List.ofFn fun i : Fin (Nat.fib (Q + 2)) =>
     if 2 ∈ wdigits i.1 then false else true
 
-private theorem wdigits_fib_add (Q : Nat) (j : Fin (Nat.fib (Q + 2))) :
+theorem wdigits_fib_add (Q : Nat) (j : Fin (Nat.fib (Q + 2))) :
     wdigits (Nat.fib (Q + 3) + j.1) = (Q + 3) :: wdigits j.1 := by
   symm
   apply wdigits_unique

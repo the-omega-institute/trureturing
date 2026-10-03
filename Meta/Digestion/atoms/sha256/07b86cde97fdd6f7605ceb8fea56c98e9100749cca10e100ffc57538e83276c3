@@ -1,0 +1,58 @@
+### 214.4 筛选后的全区间矩仍保留完整的半积分下界
+
+§211.2 构造了只依赖 $A$ 的实际有限整数
+
+$$
+m=\prod_{p\le y-\delta}p^{e_p},
+\qquad
+e_p=\lceil\log s/\log p\rceil-1\quad(p\le\sqrt s),
+$$
+
+较大素数的指数为一，并证明
+
+$$
+m\le A e^{-\delta/2},\qquad
+\log P_s(m)\ge s\log t-y+\frac{\pi^2}{12}R_y-C\delta,
+$$
+
+$$
+P_s(m)=\sum_{d\mid m}\frac{b_s(d)}d,
+\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\ge0.
+\tag{214.10}
+$$
+
+本节的 $K$ 最终整除同一个 $m$。确实，$w=O(\ell^3)$、$h=O(\log\ell)$，所以
+
+$$
+\log(w^h)=O((\log\ell)^2)=o(\log s),
+\qquad w<\sqrt s.
+$$
+
+故对每个 $p\le w$ 有 $p^h<s$，从而 $e_p\ge h$。此外，甚至不用素数定理，仅用素数数量不超过 $w$ 即有
+
+$$
+\log K\le hw\log w
+=O(\ell^3(\log\ell)^2)=o(\delta).
+\tag{214.11}
+$$
+
+令 $Q=X-A+1\ge A/2$。充分大时 $m\le Q/2$。对于每个 $d\mid m$，
+
+$$
+\operatorname{lcm}(K,d)\mid m,
+\qquad \operatorname{lcm}(K,d)\le Kd.
+$$
+
+所以在同一集合 $\mathcal J_K$ 中，
+
+$$
+\#\{n\in\mathcal J_K:d\mid n\}
+\ge\frac{Q}{2\operatorname{lcm}(K,d)}
+\ge\frac{Q}{2Kd}.
+\tag{214.12}
+$$
+
+这里先用倍数计数 $Q/\operatorname{lcm}(K,d)-1$，再用
+$\operatorname{lcm}(K,d)\le m\le Q/2$ 吸收取整误差，没有假设各整除事件独立。
+

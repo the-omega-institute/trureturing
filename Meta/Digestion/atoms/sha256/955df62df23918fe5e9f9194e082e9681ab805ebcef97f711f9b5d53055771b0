@@ -1,0 +1,14 @@
+**定义 5.1（Least zero and the literal block）。** For a bottom-first capacity list $c$, put $Z([])=1$ and $Z(a::c)=1$ if $a=0$, and $Z(c)+1$ otherwise. Thus $Z(c)$ is the one-based least zero bin, or $|c|+1$ when every old entry is positive. For an arbitrary top-first list $v$, define successive literal placements by
+
+$$
+L(N,v,0)=v,\qquad L(N,v,k+1)=L(N+1,S_{N+1}(v),k).
+$$
+
+Define the bottom-first candidate rest update by $D_N([])=[N+1]$ and
+
+$$
+D_N(a::c)=\begin{cases}(N+1)::c,&a=0,\\(a-1)::D_{N+1}(c),&a>0.\end{cases}
+$$
+
+Reversal of a list is denoted $\operatorname{rev}$. The rest-state and transition relation retain exactly Definition 1.1.
+

@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-013: a stage readout computes the engine's own leave-one-out census.
 
@@ -61,7 +64,7 @@ def systemRealization : PrimitiveRealization arena.signature where
   readout := fun (_ : Fin 1) (stage : Bool) => systemReadout stage
   anchor := Fin.elim0
 
-information_theorem systemTheorem
+test_assess in information_theorem systemTheorem
   in arena
   primitives systemRealization
   : arena.Law systemRealization := by
@@ -88,11 +91,11 @@ example : SystemCharacterization ↔
 example : systemReadout false = 0 := by decide
 example : systemReadout true = 2 := by decide
 
-expect_information_occurrence systemTheorem
+test_assess in expect_information_occurrence systemTheorem
   in arena
   from "LeanInformationAudit.Tests.SealSystemTheorem"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 #check systemTheorem.__lowers_escape
 

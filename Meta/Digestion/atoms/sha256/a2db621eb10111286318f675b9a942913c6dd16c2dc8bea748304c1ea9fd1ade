@@ -1,0 +1,13 @@
+**命题 31.3（粗事件保留块内相干）。** 定义 2.1 的 Lüders 粗采样只删跨事件块相干，rank 大于一的块可保留量子相干。具体在模二时刻 $0,3$ 读第二坐标，可达记录为 $(z,z)$，
+
+$$
+P_z=|0,z\rangle\langle0,z|+|1,z\rangle\langle1,z|,
+\qquad\operatorname{rank}P_z=2.
+$$
+
+两输入 $\chi_\pm=(|00\rangle\pm|10\rangle)/\sqrt2$ 都以概率一给 $(0,0)$，末钟条件态仍为 $|\chi_\pm\rangle\langle\chi_\pm|$。
+
+证明。$U_2^3=I$，所以两个来源投影相同，且两向量都在 $P_0$ 的像内；命题 2.2 的 $U^3P_0$ 分支就是 $P_0$。块内矩阵元 $00,10$ 分别为 $\pm1/2$。一般 $P_y\rho P_y/p_y$ 仅在 $p_y>0$ 时定义，完全可能仍有内部非对角项。$\square$
+
+经典记录不使条件态自动逐地址对角；相同效果也不规定相同更新。若要求细 dephasing 或 measure-and-prepare，须另行声明那个实际分支。
+

@@ -1,0 +1,10 @@
+### theorem 238.1 指数增量的两种符号区域
+
+对任意整数 $a\ge1$，有
+
+$$
+\forall z\in(0,\tfrac12],\quad D_{a+1}(z)<D_a(z),
+\qquad D_{a+1}(1)>D_a(1).
+\tag{238.1}
+$$
+

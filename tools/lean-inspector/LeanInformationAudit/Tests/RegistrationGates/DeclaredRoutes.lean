@@ -1,5 +1,11 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredArgumentIntegration
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredP1
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
+run_cmd do
+  LeanInformationAudit.DispositionCensus.replayStructuralRegistrations
+    (← Lean.getEnv).header.mainModule
 
 namespace LeanInformationAudit.Tests.DeclaredRoutes
 open Lean Meta Elab Command
@@ -10,19 +16,19 @@ local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 theorem legacyBridge : LegacyPrimitiveRealization arena (arena.Law good) good := ⟨Iff.rfl⟩
 
 theorem legacy : arena.Law good := rfl
-register_information_theorem legacy in arena
+test_assess in register_information_theorem legacy in arena
   readout via (missingTemplate good) primitives good.toPrimitiveBundle
   realization legacyBridge variation lawVariation sensitivity slotSensitivity
 
 theorem legacyOccurrence : arena.Law good := rfl
-register_information_theorem legacyOccurrence in arena object_arena objectArena catalog declared
+test_assess in register_information_theorem legacyOccurrence in arena object_arena objectArena catalog declared
   readout via (missingTemplate good) primitives good.toPrimitiveBundle
   realization legacyBridge variation lawVariation sensitivity slotSensitivity
 
-information_theorem native in arena readout via (missingTemplate good) primitives good
+test_assess in information_theorem native in arena readout via (missingTemplate good) primitives good
   variation lawVariation sensitivity slotSensitivity : arena.Law good := rfl
 
-information_theorem nativeOccurrence in arena object_arena objectArena catalog declared
+test_assess in information_theorem nativeOccurrence in arena object_arena objectArena catalog declared
   readout via (missingTemplate good) primitives good
   variation lawVariation sensitivity slotSensitivity : arena.Law good := rfl
 

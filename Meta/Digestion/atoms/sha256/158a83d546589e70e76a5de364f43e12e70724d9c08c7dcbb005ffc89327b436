@@ -1,0 +1,14 @@
+**定义 15.1（两个递归及其实际内轨道）。** Campbell 递归与 Cloitre 递归分别为
+
+$$
+\begin{aligned}
+b(1)&=1,&T_{n,b}(x)&=n-b(x),&
+b(n)&=T_{n,b}^{\,b(n-1)}(n-1)\quad(n\geq2),\\
+C(1)&=C(2)=1,&T_{n,C}(x)&=n-C(x),&
+C(n)&=C(g_n)+C(n-g_n)\quad(n\geq3),\\
+&&g_n&=T_{n,C}^{\,C(n-1)}(n-1).
+\end{aligned}
+$$
+
+幂表示固定外部参数 $n$ 后的函数迭代。其原始定义及有效性论证分别见 [Campbell note，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 与 [Cloitre foundations，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md)。二者已有前缀都满足 $1\leq p(k)\leq k$，故 $T_{n,p}$ 保持 $D_n=\{1,\ldots,n-1\}$。在该前缀上定义缺陷 $E_p(k)=p(k)-G(k)$，不预设其符号。
+

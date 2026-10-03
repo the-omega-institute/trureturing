@@ -1,0 +1,16 @@
+**定义 1.1（有序来源与替换）。** 原始来源是自由有序二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+叶标签、左右顺序和括号都是来源的一部分。替换 $\rho$ 由
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle
+$$
+
+唯一递归定义。写 $\beta=\rho(\alpha)$ 只是对这条替换规则的缩写，并不把树商成交换的数量；特别地，$\rho^2(\alpha)=\langle\rho(\alpha),\alpha\rangle$。
+

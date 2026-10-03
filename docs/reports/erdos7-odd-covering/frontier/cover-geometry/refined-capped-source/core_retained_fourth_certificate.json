@@ -1,0 +1,210 @@
+{
+  "schema": "core-retained-fourth-v1",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "leaves": [
+    4,
+    7,
+    2,
+    5,
+    8
+  ],
+  "source_definition": "V=U intersect G; nu=lambda|V/lambda(V)",
+  "core": "short:no hits; long:at most one hit",
+  "reference_digits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "selected_labels": [
+    15,
+    21,
+    45,
+    33,
+    35,
+    39,
+    63,
+    51,
+    57,
+    55,
+    105,
+    75,
+    69,
+    65,
+    99,
+    77,
+    85,
+    117,
+    95,
+    165,
+    91,
+    147,
+    225
+  ],
+  "actual_family": [
+    {
+      "modulus": 3,
+      "phase": 0
+    },
+    {
+      "modulus": 9,
+      "phase": 1
+    },
+    {
+      "modulus": 15,
+      "phase": 10
+    },
+    {
+      "modulus": 21,
+      "phase": 7
+    },
+    {
+      "modulus": 45,
+      "phase": 40
+    },
+    {
+      "modulus": 33,
+      "phase": 22
+    },
+    {
+      "modulus": 35,
+      "phase": 0
+    },
+    {
+      "modulus": 39,
+      "phase": 13
+    },
+    {
+      "modulus": 63,
+      "phase": 49
+    },
+    {
+      "modulus": 51,
+      "phase": 34
+    },
+    {
+      "modulus": 57,
+      "phase": 19
+    },
+    {
+      "modulus": 55,
+      "phase": 0
+    },
+    {
+      "modulus": 105,
+      "phase": 70
+    },
+    {
+      "modulus": 75,
+      "phase": 25
+    },
+    {
+      "modulus": 69,
+      "phase": 46
+    },
+    {
+      "modulus": 65,
+      "phase": 0
+    },
+    {
+      "modulus": 99,
+      "phase": 22
+    },
+    {
+      "modulus": 77,
+      "phase": 0
+    },
+    {
+      "modulus": 85,
+      "phase": 0
+    },
+    {
+      "modulus": 117,
+      "phase": 13
+    },
+    {
+      "modulus": 95,
+      "phase": 0
+    },
+    {
+      "modulus": 165,
+      "phase": 55
+    },
+    {
+      "modulus": 91,
+      "phase": 0
+    },
+    {
+      "modulus": 147,
+      "phase": 49
+    },
+    {
+      "modulus": 225,
+      "phase": 175
+    }
+  ],
+  "cases": [
+    {
+      "name": "arbitrary_pure_inventory_3000",
+      "weights": [
+        "7/26",
+        "7/26",
+        "2/13",
+        "2/13",
+        "2/13"
+      ],
+      "source_mode": "box",
+      "fixed_threshold": 16,
+      "expected_source_lower": "572908282021678/19219130054499375",
+      "tails": [
+        {
+          "cutoff": 3000,
+          "ell": 7,
+          "mass_floor": "7/400",
+          "expected_pass": true,
+          "expected_worst_mask": 127
+        },
+        {
+          "cutoff": 1600,
+          "ell": 6,
+          "mass_floor": "0",
+          "expected_pass": false,
+          "expected_worst_mask": 127
+        }
+      ]
+    },
+    {
+      "name": "empty_pure_inventory_1600",
+      "weights": [
+        "1/4",
+        "1/4",
+        "1/6",
+        "1/6",
+        "1/6"
+      ],
+      "source_mode": "haar",
+      "fixed_threshold": 12,
+      "expected_source_lower": "44628705330203/788477130441000",
+      "tails": [
+        {
+          "cutoff": 1600,
+          "ell": 6,
+          "mass_floor": "19/100",
+          "expected_pass": true,
+          "expected_worst_mask": "haar"
+        }
+      ]
+    }
+  ]
+}

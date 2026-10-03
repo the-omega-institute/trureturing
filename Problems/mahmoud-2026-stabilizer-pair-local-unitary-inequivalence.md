@@ -105,16 +105,17 @@ relabelling, as the invariance requires.
 
 The canonical source is
 `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.lean`. Its
-public declarations are `Pauli`, `pauliMatrix`, `tensorOp`, `wordOp`,
-`qubitPermutation`, `codespace`, `SA`, `SB`, `Splus`, `Sminus`, `claim`, and
-`result`; the invariant span, the sign tables, the word lists and the check
-functions are private non-proposition definitions. The frozen module state has
+public declarations are `Pauli` with its `Fintype` instance, `pauliMatrix`,
+`tensorOp`, `wordOp`, `localOp`, `qubitPermutation`, `codespace`, `SA`, `SB`,
+`Splus`, `Sminus`, `claim`, `anticomm`, `sgn` and `result`; the invariant
+span, the bit and phase tables, the word lists and the check functions are
+private non-proposition definitions. The frozen module state has
 statement identity
-`sha256:3d5bbaf9c10ebfd0e926df3da017b2060f9eee45370a9d50ccd2a2ee92b57ecc`.
+`sha256:57b03b6377edd87565365a4bf8b1483ddda69f41c1608cccee5836ef273d7405`.
 The result declaration has statement identity
 `sha256:f99e62fb5f547191da43251f22f5e051189451d572f258bccd3f67b58f51e507`.
 The Freeze event is
-`sha256:7d80fa860d71aa317b50182a5f0c68dfb59cf6fb386e1a33f2580091f3c59ba1`.
+`sha256:aaf7e34445852cecbe18de845884cd732e6fdc448dbe81ed05aaf41c732c853c`.
 Its frozen prerequisite is `D5/S3/Quantum/FiniteDimensional` (the Pauli
 matrices `qubitX`, `qubitZ` and their squares). The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,

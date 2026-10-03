@@ -1,0 +1,20 @@
+**定义 334.1（有限素数幂修正）。** 沿用 §§313、315、333 的实际 $T_L$、$m=3L+2\ge50$、$E=e^\gamma$、$X_L=\log T_L$、$U_L=\sigma(T_L)/T_L$、$\kappa=2\sqrt2-2$、$w(m)=\sqrt m\log m$、$D(m)=\log\vartheta(m)-P(m)/E$、$Z=wI_\psi$ 和非负端点缺损 $\mathfrak h_L$。置
+\[
+V(t)=\frac1{t\log t},\qquad
+\mathcal P_m=\{(p,r):p\text{ 为素数},\ r\ge2,\ p^r\le m^2\},
+\]
+\[
+K_m=w(m)\sum_{(p,r)\in\mathcal P_m}\log p
+\,[V(\max\{m,p^r\})-V(m^2)],\qquad
+ d_m=\frac{w(m)}{2(m-1)}.
+\tag{334.1}
+\]
+集合 $\mathcal P_m$ 有限，且每个素数底数 $p\le m$。定义同一个实际整数的有限核心修正及残差上界候选
+\[
+R_L=\sqrt m\left[\log\frac{X_L}{\vartheta(m)}
+ +\frac{P(m)-U_L}{E}\right],\qquad
+ e_L^{\rm cut}=R_L-\kappa+d_m-K_m.
+\tag{334.2}
+\]
+这些量只使用截止 $m$ 内的素数及实际 $T_L$ 的有限因子；不从 $\varepsilon_L\to0$ 选择不可计算的阈值。
+

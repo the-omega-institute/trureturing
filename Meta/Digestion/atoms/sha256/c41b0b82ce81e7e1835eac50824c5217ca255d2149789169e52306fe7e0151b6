@@ -1,0 +1,26 @@
+**定理 35.1（CP section 下的逐分支实现判据）。** $\mathcal X,\mathcal Y$ 是有限矩阵代数或有限直和矩阵代数，各用声明的普通矩阵迹之和。设 $E:\mathcal X\to\mathcal Y$ CPTP，存在 CP 线性 section $R:\mathcal Y\to\mathcal X$、$ER=\mathrm{id}_{\mathcal Y}$。则 $R$ 自动 TP。对有限 source instrument $\{J_e\}_e$，各分支 CP、总和 TP，下列逐分支条件等价：
+
+$$
+\begin{aligned}
+&\text{存在 target instrument 满足 }EJ_e=J'_eE;\\
+&EJ_e=EJ_eRE;\\
+&\ker E\subseteq\ker(EJ_e);\\
+&J_e^\dagger(\operatorname{ran}E^\dagger)
+\subseteq\operatorname{ran}E^\dagger.
+\end{aligned}
+\tag{35.1}
+$$
+
+满足时 target branch 唯一，且
+
+$$
+J'_e=EJ_eR.
+\tag{35.2}
+$$
+
+证明。$\operatorname{Tr}R(Y)=\operatorname{Tr}ER(Y)=\operatorname{Tr}Y$，所以 TP。若 intertwining 成立，右复合 $R$ 得 (35.2)，再右复合 $E$ 得第二条件。若第二条件成立，(35.2) 是 CP maps 的复合，且分支和 $E(\sum_eJ_e)R$ TP，故为整个 $\mathcal Y$ 上的合法 instrument，并满足 intertwining；CP 分支与总和 TP 也保证每支次保迹。
+
+第二条件给核包含。反向 $X-REX\in\ker E$，故核包含使 $EJ_e(X-REX)=0$。有限维 Hilbert–Schmidt 迹配对下 $\operatorname{ran}E^\dagger=(\ker E)^\perp$。对全部 $X\in\ker E$、$Y\in\mathcal Y$，等式 $\langle Y,EJ_eX\rangle_{\mathrm{HS}}=\langle J_e^\dagger E^\dagger Y,X\rangle_{\mathrm{HS}}=0$ 恰要求最后的 range 包含。这证明全部等价与唯一性。$\square$
+
+这里合法是 CP、总 TP 和空间类型合法。给定设备另有限制的 primitives、支撑、权限或成本时，仍需证明 (35.2) 可实施；有 CP 公式不自动成为已有 primitive 或廉价控制。
+

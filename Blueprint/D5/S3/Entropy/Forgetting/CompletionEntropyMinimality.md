@@ -4,7 +4,19 @@
 
 A deterministic completion that factors through another has no more conditional entropy under the same observation.
 
-**Theorem 1.1 (A factorized completion has no more conditional entropy).**
+**Theorem 1.1 (Deterministic pushforward preserves probability laws).**
+
+$$\forall p, f, \operatorname{ProbabilityLaw}(p) \implies \operatorname{ProbabilityLaw}(\operatorname{pushforward}\left(f, p\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.pushforward_is_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite carriers X and Y, a nonnegative real mass p with sum one pushes forward along every function f : X -> Y to a nonnegative real mass with sum one. The mass at y is the sum of p(x) over all x with f(x)=y. Surjectivity is unnecessary.
+
+**Theorem 1.2 (A factorized completion has no more conditional entropy).**
 
 $$\begin{gathered}\operatorname{ProbabilityLaw}(p),\\\operatorname{Surjective}(factor),\\completion = factor \circ otherCompletion \Rightarrow\\H_{p}(completion(Y) \mid observation(Y)) \leq H_{p}(otherCompletion(Y) \mid observation(Y)).\end{gathered}$$
 
@@ -23,4 +35,5 @@ The proof pushes the refined joint law through the first-coordinate-preserving m
 ## References
 
 - Truth anchor: `D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.completion_conditional_entropy_le_of_factorization`
+- Truth anchor: `D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.pushforward_is_law`
 - Dependency: [D5/S3/Entropy/Forgetting/CapacityMonotone](CapacityMonotone.md)

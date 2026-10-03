@@ -1,0 +1,26 @@
+**定理 25.2（已知标签对、未知失谐）。** 以匹配设置取
+
+$$
+Q_0=\left\lceil\frac{2\pi}{3\delta_{\min}}\right\rceil,
+$$
+
+独立均匀抽取 $n\in\{1,\ldots,Q_0\}$，连续调用 $n$ 次 $W_\Delta$ 后作该低层测量。最终事件是对所有 $n$ 的成功读出取并，记录可以全部保留。则
+
+$$
+p_-(E)-p_+(E)\ge1/18,\qquad
+N_{\max}=Q_0\le\frac{2\pi}{3\delta_{\min}}+1.
+\tag{25.4}
+$$
+
+证明。$3\Delta_*\in2\pi\mathbb Z$，所以未条件化差为
+$[1-Q_0^{-1}\sum_{n=1}^{Q_0}\cos(3n\delta)]/9$，每分支的差均非负。对 $J\ge1$、$\theta\notin2\pi\mathbb Z$，有限几何级数给
+
+$$
+\left|\frac1J\sum_{n=1}^Je^{in\theta}\right|
+=\frac{|\sin(J\theta/2)|}{J|\sin(\theta/2)|}
+\le\frac1{J|\sin(\theta/2)|}.
+\tag{25.5}
+$$
+
+在此区间 $|\sin(3\delta/2)|\ge3|\delta|/\pi\ge3\delta_{\min}/\pi$，故平均余弦的绝对值至多 $\pi/(3Q_0\delta_{\min})\le1/2$，给 (25.4)。调度只用 $\delta_{\min}$，设置只用已知标签对。$\square$
+

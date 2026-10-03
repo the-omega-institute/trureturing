@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.JointImport.Shared
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit LeanInformationAudit.Tests.Occurrence.JointImport
 
@@ -16,11 +19,11 @@ run_cmd do
     rootId := root, expected, source := expected, baseline := expected
     companionPrefix := some root }
 
-register_information_theorem shared in arena
+test_assess in register_information_theorem shared in arena
   primitives readout.toPrimitiveBundle
   realization inline readout := by exact ⟨Iff.rfl⟩
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd do
   let env ← getEnv
@@ -28,6 +31,6 @@ run_cmd do
   for suffix in #[theoremUnitSuffix, primitiveRealizationSuffix,
       "__lowers_escape", "__escape_enriched"] do
     let generated := env.header.mainModule ++ owner.str suffix
-    unless localCompanionName env owner suffix == generated &&
+    unless localCompanionName env env.header.mainModule owner suffix == generated &&
         env.contains generated && !(env.contains (owner.str suffix)) do
       throwError "root contract must publish qualified companions without old-name aliases"

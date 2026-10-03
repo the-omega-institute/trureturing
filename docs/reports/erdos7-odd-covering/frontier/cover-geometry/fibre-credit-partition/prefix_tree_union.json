@@ -1,0 +1,515 @@
+{
+  "carrier": "1563/2344",
+  "checks": 75,
+  "contract": "Fixed FC36 source/profile and numerical inventory diagnostics; exact common-prefix interface and counterexamples. No source-uniform full-pair gain beyond the prior shallow credit is asserted. New overlap credit is conditional on a certified actual ancestor relation and source masses.",
+  "counts": {
+    "deep_free": 148,
+    "deep_selected": 20,
+    "shallow_free": 37,
+    "shallow_selected": 28
+  },
+  "cross_depth_condition": {
+    "deep_nested": {
+      "modulus": 525,
+      "residue": 4
+    },
+    "deep_separate": {
+      "modulus": 525,
+      "residue": 466
+    },
+    "nested_overlap": "399466375/432601753328",
+    "new_full_pair_upper_if_condition_certified": "39139606481427866744054749478002534468532717/115559988717369405138528264138318499002150032",
+    "overlap_pair": "The specified shallow_parent A0 with the indicated deep original; separated_overlap is not the overlap with the whole shallow union A.",
+    "rule": "Union(shallow,deep) <= U_shallow + sum(deep caps) - epsilon if one deep event has actual overlap at least epsilon with the shallow union.",
+    "separated_overlap": "0",
+    "shallow_parent": {
+      "modulus": 55,
+      "residue": 4
+    }
+  },
+  "decimals": {
+    "averaging_underestimate": 0.00018468088579249163,
+    "conditional_credit": 0.0009234044289624581,
+    "conditional_new_upper": 0.3386951393457945,
+    "deep_charge": 0.08897861203414259,
+    "existing_upper": 0.3396185437747569,
+    "full_pair_charge": 0.40008650758569364
+  },
+  "deep_independent_charge": "10282367402752707000174885883050245563534267/115559988717369405138528264138318499002150032",
+  "existing_full_pair_upper": "19623157543410168670498141572340421024890671/57779994358684702569264132069159249501075016",
+  "existing_shallow_union_upper": "1175/4688",
+  "first_root_average_counterexample": {
+    "A": {
+      "modulus": 525,
+      "residue": 4
+    },
+    "B_same_child": {
+      "modulus": 825,
+      "residue": 4
+    },
+    "B_separate_child": {
+      "modulus": 825,
+      "residue": 334
+    },
+    "product_of_averages": "1551275525/108150438332",
+    "same_child_union": "735691125/54075219166",
+    "scope": "These add two literal odd classes to the same pure/star source; not a full divisor-closed mixed inventory or a globally minimal cover.",
+    "separate_child_union": "6284995375/432601753328",
+    "source": "Original FC36 85-class pure/star source, conditioned on ternary root1.",
+    "underestimate_in_separated_case": "79893275/432601753328"
+  },
+  "full_pair_independent_charge": "245635142103406349082635388407381820049187/613955075830179838398320175469224610991352",
+  "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "q_records": [
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "1995625/32830064",
+          "q_budget": "3193/14006",
+          "selected_q_depths": [
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "693125/32830064",
+          "q_budget": "5545/14006",
+          "selected_q_depths": [
+            1,
+            2
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "65025/16415032",
+          "q_budget": "2601/7003",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "14005/32830064",
+          "q_budget": "2801/14006",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "2801/32830064",
+          "q_budget": "2801/14006",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 7,
+      "raw_first_root_lift": "9771/7003",
+      "weighted_first_root_average": "1417803/4376875"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "1829375/30886888",
+          "q_budget": "2927/13177",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "91125/7721722",
+          "q_budget": "2916/13177",
+          "selected_q_depths": [
+            1,
+            2
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "69875/30886888",
+          "q_budget": "2795/13177",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "915/3860861",
+          "q_budget": "1464/13177",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "183/3860861",
+          "q_budget": "1464/13177",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 11,
+      "raw_first_root_lift": "11566/13177",
+      "weighted_first_root_average": "2272534/8235625"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "2974375/61368264",
+          "q_budget": "4759/26181",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "572125/61368264",
+          "q_budget": "4577/26181",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "114425/61368264",
+          "q_budget": "4577/26181",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "2975/15342066",
+          "q_budget": "2380/26181",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "595/15342066",
+          "q_budget": "2380/26181",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 13,
+      "raw_first_root_lift": "18673/26181",
+      "weighted_first_root_average": "735041/3272625"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "1726875/91768772",
+          "q_budget": "5526/78301",
+          "selected_q_depths": [
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "1266625/183537544",
+          "q_budget": "10133/78301",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "253325/183537544",
+          "q_budget": "10133/78301",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "6525/45884386",
+          "q_budget": "5220/78301",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "1305/45884386",
+          "q_budget": "5220/78301",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 17,
+      "raw_first_root_lift": "36232/78301",
+      "weighted_first_root_average": "1001004/9787625"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "9049375/288501864",
+          "q_budget": "14479/123081",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "1762375/288501864",
+          "q_budget": "14099/123081",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "352475/288501864",
+          "q_budget": "14099/123081",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "4525/36062733",
+          "q_budget": "7240/123081",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "905/36062733",
+          "q_budget": "7240/123081",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 19,
+      "raw_first_root_lift": "57157/123081",
+      "weighted_first_root_average": "320219/2197875"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "15899375/626131624",
+          "q_budget": "25439/267121",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "3110875/626131624",
+          "q_budget": "24887/267121",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "622175/626131624",
+          "q_budget": "24887/267121",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "7950/78266453",
+          "q_budget": "12720/267121",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "1590/78266453",
+          "q_budget": "12720/267121",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 23,
+      "raw_first_root_lift": "100653/267121",
+      "weighted_first_root_average": "3941749/33390125"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "544375/27563096",
+          "q_budget": "871/11759",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "13375/3445387",
+          "q_budget": "856/11759",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "2675/3445387",
+          "q_budget": "856/11759",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "4355/55126192",
+          "q_budget": "871/23518",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "871/55126192",
+          "q_budget": "871/23518",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 29,
+      "raw_first_root_lift": "314/1069",
+      "weighted_first_root_average": "675388/7349375"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "620625/33751256",
+          "q_budget": "993/14399",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "122125/33751256",
+          "q_budget": "977/14399",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "24425/33751256",
+          "q_budget": "977/14399",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "4965/67502512",
+          "q_budget": "993/28798",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "993/67502512",
+          "q_budget": "993/28798",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 31,
+      "raw_first_root_lift": "3940/14399",
+      "weighted_first_root_average": "10002/116875"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "879375/57716312",
+          "q_budget": "1407/24623",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "43375/14429078",
+          "q_budget": "1388/24623",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "35175/115432624",
+          "q_budget": "1407/49246",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "7035/115432624",
+          "q_budget": "1407/49246",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "1407/115432624",
+          "q_budget": "1407/49246",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 37,
+      "raw_first_root_lift": "9811/49246",
+      "weighted_first_root_average": "2149367/30778750"
+    },
+    {
+      "depths": [
+        {
+          "five_depth": 1,
+          "independent_charge": "1076875/78756056",
+          "q_budget": "1723/33599",
+          "selected_q_depths": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "five_depth": 2,
+          "independent_charge": "106375/39378028",
+          "q_budget": "1702/33599",
+          "selected_q_depths": [
+            1
+          ]
+        },
+        {
+          "five_depth": 3,
+          "independent_charge": "43075/157512112",
+          "q_budget": "1723/67198",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 4,
+          "independent_charge": "8615/157512112",
+          "q_budget": "1723/67198",
+          "selected_q_depths": []
+        },
+        {
+          "five_depth": 5,
+          "independent_charge": "1723/157512112",
+          "q_budget": "1723/67198",
+          "selected_q_depths": []
+        }
+      ],
+      "q": 41,
+      "raw_first_root_lift": "12019/67198",
+      "weighted_first_root_average": "2632663/41998750"
+    }
+  ],
+  "raw_first_root_clipped_product": "0",
+  "shallow_independent_charge": "323564624098395992344410375014652593091514375/1040039898456324646246754377244866491019350288",
+  "unused_carrier": "2363131927307527450517928465151981659974217/7222499294835587821158016508644906187634377"
+}

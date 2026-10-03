@@ -1,0 +1,42 @@
+**定义 228.1（截断幂和与正范数证书）。** 对每个固定 $q\ge2$，置
+
+$$
+S_{q,D,V}=\sum_{\substack{D<d\le X\\(d,V)=1}}\mu_s(d)^q.
+\tag{228.1}
+$$
+
+保留同一大小窗口的变换为
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},\qquad
+C_H(\chi,\tau)=\sum_{\substack{1\le h<H\\(h,V)=1}}
+h^{-1+i\tau}\chi(h).
+\tag{228.2}
+$$
+
+字符侧范数均以全部 $Q$ 个字符上的平均测度计算，将主字符坐标置零；
+记为 $\|\cdot\|_{p,*}$，无穷范数取剩余坐标的最大值。
+对 $1<p\le\infty$，令 $p'$ 为共轭指数，定义
+
+$$
+\mathscr P_{p,\eta}
+=\frac\Lambda{2\pi}\int_{\mathbb R}|\widehat k_\eta(\tau)|
+\|F_D(\cdot,\tau)\|_{p,*}
+\|C_H(\cdot,\tau)\|_{p',*}\,d\tau.
+\tag{228.3}
+$$
+
+这份积分有限：有限源变换的模至多为 $1$，补因子变换的模至多为
+$1+\log H$，而 §226 给 $\widehat k_\eta\in L^1$。
+设 $M_\eta$ 为该节精确表示的主字符项，则 Hölder 不等式和积分三角不等式给
+
+$$
+\Lambda|B_D-M_\eta|\le\mathscr P_{p,\eta}.
+\tag{228.4}
+$$
+
+本节研究式（228.3）的大小，不将其下界替代为式（228.4）左侧的下界。
+
+### 228.1 大小截断保留的固定幂和
+

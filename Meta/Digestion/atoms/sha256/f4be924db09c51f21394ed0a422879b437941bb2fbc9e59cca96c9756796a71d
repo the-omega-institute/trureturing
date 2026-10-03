@@ -1,0 +1,9 @@
+### 206.2 收敛 Euler 常数与前两阶矩
+
+令
+
+$$
+C_k=\sum_{d_1,\ldots,d_k\ge1}
+\frac1{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}.
+$$
+

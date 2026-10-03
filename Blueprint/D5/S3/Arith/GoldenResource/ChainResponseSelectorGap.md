@@ -32,7 +32,19 @@ $$\forall n \in \mathbb{N}, \forall c \in \mathbb{R}, \operatorname{effective}\l
 
 The endpoint is the reciprocal of a positive integer determinant and the mass coefficient is positive, so eta is positive at every length. The two diagonal entries of the effective matrix therefore differ, while a scalar diagonal matrix has them equal. This holds for every scalar, not only two.
 
-**Lemma 1.3 (Two sided bound on the loss).**
+**Lemma 1.3 (Quadratic logarithm remainder).**
+
+$$\forall y \in \mathbb{R}, 0 \le y \le \frac{1}{2} \Rightarrow 0 \le -\operatorname{log}\left(1 - y\right) - y \le 2 y^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/ChainResponseSelectorGap.log_remainder_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real y between zero and one half, the logarithm remainder after its linear term lies between zero and twice y squared.
+
+**Lemma 1.4 (Two sided bound on the loss).**
 
 $$\forall n \in \mathbb{N}, 0 \le \operatorname{L}\left(n\right) \land \operatorname{L}\left(n\right) \le \frac{\operatorname{eta}\left(n\right)^{2}}{2}$$
 
@@ -44,7 +56,7 @@ $$\forall n \in \mathbb{N}, 0 \le \operatorname{L}\left(n\right) \land \operator
 
 For y between zero and one half the remainder of the logarithm past its linear term is non-negative and at most twice y squared. The lower side applies the logarithm bound to one minus y; the upper side applies it to the reciprocal and then uses that the reciprocal of one minus y is at most two. Substituting half of eta gives the stated pair.
 
-**Lemma 1.4 (The loss falls geometrically).**
+**Lemma 1.5 (The loss falls geometrically).**
 
 $$\forall n \in \mathbb{N}, \operatorname{L}\left(n\right) \le \frac{1}{2} \cdot \frac{1}{81}^{n + 1}$$
 
@@ -56,7 +68,7 @@ $$\forall n \in \mathbb{N}, \operatorname{L}\left(n\right) \le \frac{1}{2} \cdot
 
 The mass coefficient is at least one, so eta is at most the squared endpoint, which the companion module bounds by the reciprocal of nine to the length. Squaring and halving gives the reciprocal of eighty one to the length. This estimate is where the integer recurrence enters the conclusion.
 
-**Theorem 1.5 (No uniform gap survives elimination).**
+**Theorem 1.6 (No uniform gap survives elimination).**
 
 $$\forall e \in \mathbb{R}, 0 < e \implies \exists n \in \mathbb{N}, \operatorname{effective}\left(n, 2, 1\right) \neq \operatorname{diagonal}\left(2, 2\right) \land 0 \le \operatorname{L}\left(n\right) \land \operatorname{L}\left(n\right) < e$$
 
@@ -75,4 +87,5 @@ Given a positive bound, choose a length at which the geometric estimate falls be
 - Truth anchor: `D5/S3/Arith/GoldenResource/ChainResponseSelectorGap.chain_response_loss_le_geometric`
 - Truth anchor: `D5/S3/Arith/GoldenResource/ChainResponseSelectorGap.chain_response_selector_gap_refuted`
 - Truth anchor: `D5/S3/Arith/GoldenResource/ChainResponseSelectorGap.effective_ne_scalar`
+- Truth anchor: `D5/S3/Arith/GoldenResource/ChainResponseSelectorGap.log_remainder_bounds`
 - Dependency: [D5/S3/Arith/GoldenResource/ChainSchurResponse](ChainSchurResponse.md)

@@ -1,0 +1,15 @@
+**定理 144.3（整数端点边界全幺模）。** 对任意上述 $V,E,\operatorname{tail},\operatorname{head}$，
+矩阵 $\partial_{\operatorname{tail},\operatorname{head}}$ 是全幺模的；等价地，对所有 $k,f,g$，
+式（144.3）成立。
+
+**证明。** 对 $k$ 归纳。$k=0$ 时行列式为 $1$。设 $k+1$ 阶 minor 已给定。
+若存在所选列是环，或者该列的一个端点没有出现在所选行中，则该列全为零或至多只有一个非零项。
+沿该列作 Laplace 展开，零列立即给出零行列式；单非零项只留下一个 $k$ 阶 minor，行、列选取分别变为
+$f\circ\operatorname{succAbove}$ 与 $g\circ\operatorname{succAbove}$，仍为单射。归纳假设给出剩余行列式属于
+$\{-1,0,1\}$，再乘 Laplace 符号与该项的 $+1$ 或 $-1$，结果仍在同一集合中。
+
+否则每一所选列都有两个不同的所选端点：一个位置取 $+1$，另一个位置取 $-1$。因此所选矩阵的所有行之和是零行，
+行族线性相关，行列式为零。两种情形覆盖所有有限 minor，故定理成立。Lean 内核核验的声明为
+`D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signed_incidence_is_totally_unimodular`。
+证毕。
+

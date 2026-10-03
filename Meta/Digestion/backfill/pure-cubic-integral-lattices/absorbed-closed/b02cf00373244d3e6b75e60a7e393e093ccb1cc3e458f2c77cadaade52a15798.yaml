@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b02cf00373244d3e6b75e60a7e393e093ccb1cc3e458f2c77cadaade52a15798
+  normalized_sha256: sha256:b02cf00373244d3e6b75e60a7e393e093ccb1cc3e458f2c77cadaade52a15798
+cas_ref: sha256:b02cf00373244d3e6b75e60a7e393e093ccb1cc3e458f2c77cadaade52a15798
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation
+    target_statement_id: sha256:0a02735ce19215a055ed34cb4e417f245c99aff290d5d566a64f4113c91f0478
+receipts:
+  unresolved_subitems: []

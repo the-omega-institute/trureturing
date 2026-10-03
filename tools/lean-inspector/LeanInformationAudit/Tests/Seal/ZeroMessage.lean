@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Lean.Elab.Command LeanInformationAudit
 namespace LeanInformationAudit.Tests
 def checkZeroMessages (kind : String) (count : Nat) (before : MessageLog) : CommandElabM Unit := do

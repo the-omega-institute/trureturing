@@ -79,14 +79,17 @@ public sealed class RegisteredCachePathTests
         Assert.Equal(ReadOutput(after.Output, "project_archive_path"), ReadOutput(reordered.Output, "project_archive_path"));
     }
 
-    [Fact]
-    public void NonNativeLayerDoesNotRequireUnselectedNativeRegistration()
+    [Theory]
+    [InlineData("judge")]
+    [InlineData("engineering")]
+    [InlineData("current")]
+    public void RemovedEvidenceLayersCannotBeSelected(string layer)
     {
         using var fixture = new Fixture();
-        var result = fixture.Keys("judge");
-        Assert.True(result.Exit == 0, result.Text);
-        Assert.Equal("build/lean-cache/judge", ReadOutput(result.Output, "judge_path"));
-        Assert.DoesNotContain("project_archive_path", result.Output, StringComparison.Ordinal);
+        var result = fixture.Keys(layer);
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("invalid choice", result.Text, StringComparison.Ordinal);
+        Assert.Empty(result.Output);
     }
 
     private static string ReadOutput(string commands, string key)
@@ -125,7 +128,7 @@ public sealed class RegisteredCachePathTests
             var output = Path.Combine(Root, "outputs");
             File.Delete(output);
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py");
-            var result = EngineeringProcess.Process(Root, "env", ["GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
+            var result = EngineeringProcess.Process(Root, "env", ["GH_TOKEN=", "GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
                 "python3", "-B", script, "keys", "--repository", Root, "--layers", layer],
                 hangGuard: TestBudgets.WorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
             return (result.Exit, result.Text,

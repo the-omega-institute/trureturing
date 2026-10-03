@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.EscapeRecords
 open Lean Meta Elab Command
@@ -40,12 +43,12 @@ theorem legacy : LegacyPrimitiveRealization arena (∀ x : Bool, x = x) reads :=
   ⟨⟨fun _ => rfl, fun _ => statement⟩⟩
 theorem forward : EscapePrimitiveRealization arena (∀ x : Bool, x = x) reads := ⟨fun _ => rfl⟩
 
-register_information_template cutRealization
+test_assess in register_information_template cutRealization
 
 /-- Runtime parsing keeps missing grammar and deliberately broken gates as named
 test failures, with a separately compiled oracle. Every case rolls back. -/
 elab "observe_escape_records" : command => do
-  let commandStart := "register_information_theorem statement in arena " ++
+  let commandStart := "test_assess in register_information_theorem statement in arena " ++
     "readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x)) " ++
     "primitives reads.toPrimitiveBundle realization "
   let cases : Array (String × String × Option String) := #[
@@ -142,7 +145,7 @@ theorem domainSensitivity : FiniteSlotSensitivity domainArena.toPrimitiveLawAren
   · intro i; exact Fin.elim0 i
 
 elab "observe_object_domain" : command => do
-  let commandStartDomain := "register_information_theorem domainStatement in domainArena " ++
+  let commandStartDomain := "test_assess in register_information_theorem domainStatement in domainArena " ++
     "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) " ++
     "primitives domainReads.toPrimitiveBundle realization domainBridge " ++
     "variation domainVariation sensitivity domainSensitivity "
@@ -179,31 +182,31 @@ elab "observe_object_domain_routes" : command => do
   let occurrence := " object_arena domainObjectArena catalog domain "
   let cases : Array (String × String × Name × Option String) := #[
     ("object_domain_native_validated",
-      "information_theorem domainNative in domainArena " ++ readout ++
+      "test_assess in information_theorem domainNative in domainArena " ++ readout ++
         "primitives domainReads " ++ slots ++
         " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
       `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
     ("object_domain_inline_validated",
-      "register_information_theorem domainStatement in domainArena " ++ readout ++
+      "test_assess in register_information_theorem domainStatement in domainArena " ++ readout ++
         "primitives domainReads.toPrimitiveBundle " ++
         "realization inline domainReads := domainBridge " ++ slots,
       ``domainStatement, none),
     ("object_domain_occurrence_native_validated",
-      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+      "test_assess in information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
         "primitives domainReads " ++ slots ++
         " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
       `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
     ("object_domain_occurrence_named_validated",
-      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+      "test_assess in register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
         "primitives domainReads.toPrimitiveBundle realization domainBridge " ++ slots,
       ``domainStatement, none),
     ("object_domain_occurrence_inline_validated",
-      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+      "test_assess in register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
         "primitives domainReads.toPrimitiveBundle " ++
         "realization inline domainReads := domainBridge " ++ slots,
       ``domainStatement, none),
     ("object_domain_occurrence_wrong_origin",
-      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+      "test_assess in information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
         "primitives domainReads variation domainVariation sensitivity domainSensitivity " ++
         "escape from (Bool) escape continues (open)" ++
         " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
@@ -252,9 +255,9 @@ elab "observe_escape_record_routes" : command => do
   let descriptor := "readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x)) "
   let slots := "escape from (Bool) escape continues (emptyProof)"
   let cases := #[
-    ("escape_native_route", #["information_theorem native in nativeArena " ++ descriptor ++
+    ("escape_native_route", #["test_assess in information_theorem native in nativeArena " ++ descriptor ++
       "primitives reads " ++ slots ++ " : ∀ x : Bool, x = x := fun _ => rfl"]),
-    ("escape_occurrence_route", #["register_information_theorem statement in arena " ++
+    ("escape_occurrence_route", #["test_assess in register_information_theorem statement in arena " ++
       "object_arena objectArena catalog complete " ++ descriptor ++
       "primitives reads.toPrimitiveBundle realization forward " ++
       "variation lawVariation sensitivity slotSensitivity " ++ slots])]
@@ -267,7 +270,7 @@ elab "observe_escape_record_routes" : command => do
       | .error message => ok := false; logInfo message
       | .ok command =>
         try elabCommand command catch error => ok := false; logInfo error.toMessageData
-    let rows ← liftTermElabM TemplateBinding.assessJoined
+    let rows ← liftTermElabM do (TemplateBinding.assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     let moduleName := (← getEnv).header.mainModule
     ok := ok && !(← get).messages.hasErrors && rows.any fun row =>
       row.occurrence.key.registrationModule == moduleName &&

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bf200289ecaa69ef7467907e7663ccbbf0f0a72d0b8b5b46ab5b86384970fe16
+  normalized_sha256: sha256:bf200289ecaa69ef7467907e7663ccbbf0f0a72d0b8b5b46ab5b86384970fe16
+cas_ref: sha256:bf200289ecaa69ef7467907e7663ccbbf0f0a72d0b8b5b46ab5b86384970fe16
+coverage_gids:
+  - gid: D5/S3/ArithSums/GreedyBrickCapacityTotality.birth_totality
+    target_statement_id: sha256:9eb12c410ceffa0cae4af72efd89661d924e8e0aa35a6f8e335e51873072d796
+receipts:
+  unresolved_subitems: []

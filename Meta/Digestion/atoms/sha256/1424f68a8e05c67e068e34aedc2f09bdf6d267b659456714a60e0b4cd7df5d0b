@@ -1,0 +1,7 @@
+**命题 35.5（整窗独立乘积下的接受关系不可分解）。** 令 $n\ge2$，$\mathcal L_n=\{w\in\Sigma^n:F_n(w)=1\}$。对任意非空真子集 $A\subset[n]$，不存在关系 $U\subseteq\Sigma^A$、$V\subseteq\Sigma^B$ 使
+
+$$
+\mathcal L_n=\{a\sqcup b:a\in U,\ b\in V\}.
+\tag{35.11}
+$$
+

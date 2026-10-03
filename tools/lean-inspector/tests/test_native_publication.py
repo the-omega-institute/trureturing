@@ -68,6 +68,34 @@ class NativePublicationConsumerTests:
             self.assertEqual(compressors.call_count, 0, '[FAIL] aggregate_materials_not_recompressed')
         self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
 
+    def test_aggregation_rejects_a_malformed_module_artifact(self):
+        self.build()
+        state = native.state(self.root)
+        config = publication.read_json((state / 'inputs.json').read_bytes())
+        artifacts = [state / 'modules' / (name + '.zip') for name in config['modules']]
+        def entries(artifact):
+            with zipfile.ZipFile(artifact) as archive:
+                return {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        original, provenance = entries(artifacts[0]), publication.RAW + '.provenance.json'
+        origin = json.loads(original[provenance])
+        cases = {
+            'extra_member': (dict(original, extra=b''), 'invalid native artifact members'),
+            'missing_materials': ({key: value for key, value in original.items()
+                                   if not key.endswith('.materials.zip')}, 'invalid native artifact members'),
+            'other_module': (entries(artifacts[1]), 'membership mismatch'),
+            'compatibility': (dict(original, **{provenance: materials.canonical_json(
+                dict(origin, compatibility_sha256='0' * 64))}), 'compatibility mismatch')}
+        for damage, (members, message) in cases.items():
+            with self.subTest(damage=damage):
+                candidate = self.root / (damage + '.zip')
+                with zipfile.ZipFile(candidate, 'w') as archive:
+                    for name, data in members.items():
+                        archive.writestr(name, data)
+                output = self.root / 'rejected' / damage / 'report.zip'
+                with self.assertRaisesRegex(ValueError, message, msg='[FAIL] aggregate_rejects_' + damage):
+                    native.aggregate(self.root, output, candidate, *artifacts[1:])
+                self.assertFalse(output.exists())
+
 
     def test_coordinates_reuse_warm_tree_memo(self):
         self.ensure()

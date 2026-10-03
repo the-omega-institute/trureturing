@@ -1,0 +1,29 @@
+### 226.2 保留实际约数权重的精确变换
+
+对 $W\in C_c^\infty(\mathbb R)$，置
+
+$$
+k(u)=e^uW(u),\qquad
+\widehat k(\tau)=\int_{\mathbb R}k(u)e^{-i\tau u}\,du,
+\qquad
+k(u)=\frac1{2\pi}\int_{\mathbb R}\widehat k(\tau)e^{i\tau u}\,d\tau.
+\tag{226.7}
+$$
+
+定义同一字符与实频率上的截断源变换和倒数补因子变换
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},\qquad
+C_H(\chi,\tau)=\sum_{h\in\mathcal H}h^{-1+i\tau}\chi(h),
+\tag{226.8}
+$$
+
+并定义实际同余对上的光滑窗口和
+
+$$
+B_W=\sum_{\substack{D<d\le X,\ h\in\mathcal H\\dh\equiv1\pmod V}}
+\frac dX\mu_s(d)W(\log(dh/X)).
+\tag{226.9}
+$$
+

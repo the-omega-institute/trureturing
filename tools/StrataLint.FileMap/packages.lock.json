@@ -45,12 +45,6 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
-      "stratalint.inspectionscope": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
       "stratalint.scribe": {
         "type": "Project",
         "dependencies": {

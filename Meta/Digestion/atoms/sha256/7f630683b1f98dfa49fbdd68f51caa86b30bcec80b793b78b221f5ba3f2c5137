@@ -1,0 +1,18 @@
+**定理 309.2（一个质量极限强制宽度与矩极限）。** 取最终位于 $[m/2,m]$ 的实际截止序列 $z_L$。若对有限实数 $a$ 有
+\[
+h_L/\rho^3\longrightarrow a,
+\tag{309.10}
+\]
+则 $a\ge0$，并且
+\[
+D_L/\rho^3\longrightarrow2a,\qquad
+D_L/m\longrightarrow0,\qquad
+M_L/\rho^6\longrightarrow a^2.
+\tag{309.11}
+\]
+因此该实际完整末端族在 §308 的有限极限域中满足 $j=a^2$。若 $a>0$，其实际加权平均删除距离还满足
+\[
+\frac{M_L/h_L}{m^{3/4}}\longrightarrow a.
+\tag{309.12}
+\]
+

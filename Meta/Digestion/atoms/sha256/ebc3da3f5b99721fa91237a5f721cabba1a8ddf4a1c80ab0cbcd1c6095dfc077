@@ -1,0 +1,16 @@
+**推论（临界主项抵消后的严格方向）。** 取 $K=c_R$，则最终有
+
+$$
+\mathfrak D-V_{c_R}=R-c_Rb
+=\frac{c_2}{\sqrt x\,t^2}+O\!\left(\frac1{\sqrt x\,t^3}\right)<0,
+\tag{247.19}
+$$
+
+并且在共同无事件点及配对的两侧导数中
+
+$$
+\boxed{\frac{V_{c_R}'-\mathfrak D'}{\sqrt x\,w}
+=\frac{c_2}{2t}+O(t^{-2})<0.}
+\tag{247.20}
+$$
+

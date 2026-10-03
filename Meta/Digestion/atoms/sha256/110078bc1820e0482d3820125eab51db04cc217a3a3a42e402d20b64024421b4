@@ -1,0 +1,72 @@
+### 234.2 源亏损等于价格损失加局部差分修正
+
+在同一个 $C,s$ 下，定义经典价格损失与两个差分修正量：
+
+$$
+\begin{aligned}
+\operatorname{Ben}_{C,1/s}(n)
+&=\frac1s\log\frac nC-\log\frac{Z(n)}{Z(C)}\ge0,\\
+\delta_s&=\log(\mathcal Q_s/M_s),\\
+\Lambda_s(n)&=-\log r_s(n)\ge0.
+\end{aligned}
+\tag{234.4}
+$$
+
+式（234.3）给 $0\le\delta_s\le\log(C/\varphi(C))$。直接代入实际源，得到精确关系
+
+$$
+\boxed{
+J_s(n)=s\operatorname{Ben}_{C,1/s}(n)+\Lambda_s(n)-\delta_s.
+}
+\tag{234.5}
+$$
+
+从而对任意正整数都有
+
+$$
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac{J_s(n)+\log(C/\varphi(C))}{s}.
+\tag{234.6}
+$$
+
+这是一个方向明确的传递：低增量亏损强制低经典价格损失。反向传递还要上界 $\Lambda_s(n)$；不能删除该项而把两种损失直接相等。式（234.5）中的 $\delta_s$ 只依赖价格，$\Lambda_s(n)$ 则依赖同一实际整数的完整素幂重数。
+
+取当前尺度 $s=y\ell$、$\ell=\log y$、$R=y/\ell^2$，并令 $y\to\infty$。由删除素数层的条件及
+
+$$
+\frac{Z(p^a)}{Z(p^{a-1})}=1+\frac{p^{-a}}{Z(p^{a-1})}\le1+1/p,
+$$
+
+得到
+
+$$
+p\mid C\quad\Longrightarrow\quad
+\log p\le s\log(1+1/p)\le s/p
+\quad\Longrightarrow\quad p\le y.
+$$
+
+于是由 [Mertens 乘积估计](../../../Library/Weil/dusart2010estimates.md)，
+
+$$
+\log\frac C{\varphi(C)}
+\le\log\prod_{p\le y}(1-1/p)^{-1}
+=\gamma+\log\ell+O(\ell^{-2}).
+\tag{234.7}
+$$
+
+特别地，对任意固定 $K>0$，
+
+$$
+\begin{aligned}
+J_s(n)\le KR
+&\Longrightarrow
+\operatorname{Ben}_{C,1/s}(n)
+\le\frac K{\ell^3}+O\!\left(\frac{\log\ell}{y\ell}\right),\\
+J_s(C)&=O(\log\ell)=o(R),\\
+0\le\log \mathcal Q_s-\log M_s&=O(\log\ell)=o(R).
+\end{aligned}
+\tag{234.8}
+$$
+
+因此，§232 的 $J_s\le8b_2R$ 过滤会保留全部同价 CA 极值整数。这个结论没有证明任何这样的整数属于 $[A,X]\cap(1+F_r\mathbb Z)$；实际窗口和余类命中仍是独立的算术义务。它说明：源亏损集中本身不能以正价格损失为由删去这些极值配置，因为它们的 benefit 恰为零。
+

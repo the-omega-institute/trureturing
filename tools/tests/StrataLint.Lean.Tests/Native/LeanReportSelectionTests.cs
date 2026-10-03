@@ -190,7 +190,7 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
+                     ? new[] { "", "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
                      : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
@@ -235,12 +235,15 @@ public sealed class LeanReportSelectionTests
             fi
             """);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(stubDirectory, "dotnet"), """
-            printf 'utility-input-build\n' >> "$INSPECTOR_TEST_PHASES"
-            [[ "$INSPECTOR_TEST_FAILURE" != utility-input-build ]] || exit 23
+            printf 'producer-build\n' >> "$INSPECTOR_TEST_PHASES"
+            [[ "$INSPECTOR_TEST_FAILURE" != producer-build ]] || exit 23
+            printf '%s\n' "$PWD/fixture-producer.dll"
             """);
+        // Every later step runs the producer the entry built or received.
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(fixture, "tools/scripts/worktree/lean-cache-ensure.sh"), """
             printf 'ensure\n' >> "$INSPECTOR_TEST_PHASES"
             [[ "$INSPECTOR_TEST_FAILURE" != ensure ]] || exit 23
+            [[ "${STRATALINT_LEAN_PRODUCER_DLL##*/}" == fixture-producer.dll ]] || exit 29
             """);
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(fixture, "tools/scripts/worktree/lean-cache-run.sh"), """
             printf 'report\n' >> "$INSPECTOR_TEST_PHASES"
@@ -272,7 +275,7 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "utility-input-build", "ensure", "report", "publish", "seal" }
+            ? new[] { "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
             : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));

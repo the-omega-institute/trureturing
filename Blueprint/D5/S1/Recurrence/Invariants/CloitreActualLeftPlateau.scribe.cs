@@ -1,0 +1,93 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Invariants;
+
+internal sealed class CloitreActualLeftPlateauDocument : IScribeDocumentDefinition
+{
+    private const string Prefix =
+        "D5/S1/Recurrence/Invariants/CloitreActualLeftPlateau.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual Cloitre sequence has exact maximal left Fibonacci platforms, a simultaneous upper cone, and a prescribed boundary phase under its full source hypotheses.",
+        H("Actual Cloitre Left Fibonacci Platforms"),
+        Blocks(
+            Paragraph(Text(
+                "F denotes the Fibonacci sequence with F(0)=0 and F(1)=1. "
+                + "C, D, T, X, d and g are the actual finite-prefix sequence, legal domain, "
+                + "inner map, orbit, depth and selected point of CloitreActualRightProfile. "
+                + "Every occurrence uses this same actual sequence and prescribed orbit. "
+                + "In particular, T(N,x)=N-C(x), X(N,i) starts at N-1, "
+                + "d(N)=C(N-1), g(N)=X(N,d(N)), and "
+                + "C(N)=C(g(N))+C(N-g(N)) for N at least three.")),
+            Node("heightDeficit", "Upper-anchor height deficit",
+                "heightDeficit(m,t)=F(m-1)-C(F(m)-t), with natural subtraction. "
+                + "For m at least eight and t at most F(m-2), the theorem also "
+                + "proves C(F(m)-t)<=F(m-1), so the subtraction records the exact "
+                + "nonnegative integer deficit. This differs from C(n)-G(n)."),
+            Node("platformWidth", "Left platform width",
+                "platformWidth(m)=(2*m-9)/3 using natural integer division. "
+                + "On the stated domain this is floor((2*m-9)/3)."),
+            Node("Hyp24_1", "Complete conditional source hypotheses",
+                "Hyp24_1(U) extends the unchanged Hyp21_1(U): its conditional "
+                + "SourceFoundations, global golden and U bounds, piecewise U formula, "
+                + "positive-index monotonicity and unit increment of U, Fibonacci "
+                + "anchor and successor values, all right-collar domain, invariance, "
+                + "capture and periodic containment clauses, and prescribed DepthEntry. "
+                + "It also requires C(F(j)-1)=F(j-1) for j at least five. "
+                + "For j at least six, b at most F(j-1), and N=F(j+1)-b, "
+                + "the negative interval [F(j)-b,F(j)] intersect D(N) is invariant "
+                + "and captures every legal starting point. Each legal periodic point "
+                + "of the same T(N) lies between max(F(j-1),F(j)-b) and "
+                + "min(F(j),F(j)+F(j-3)-b). No inhabitant of these conditional "
+                + "foundations, monotonicity of C, or limiting ratio is asserted."),
+            Describe.Lean(
+                DescribeId.Create("cloitre-actual-full24-3"),
+                DeclarationHandle.Create(Prefix + "full24_3"),
+                H("Maximal platforms, upper cone, actual routes and boundary phase"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every U satisfying Hyp24_1 and every m at least eight, "
+                        + "the complete closed block 0<=t<=F(m-2) has zero height "
+                        + "deficit exactly when t<=platformWidth(m). Beyond it, "
+                        + "1<=heightDeficit(m,t)<=max(1,t-platformWidth(m)-1). "
+                        + "Thus the left platform is maximal and the block has no "
+                        + "disconnected platform at the same height.")),
+                    Paragraph(Text(
+                        "For every natural W and m>=max(8,(3*W+10)/2), "
+                        + "all t<=W satisfy C(F(m)-t)=F(m-1). The threshold equals "
+                        + "ceil((3*W+9)/2), and the legal closed-block domain follows "
+                        + "from the bound on the platform width.")),
+                    Paragraph(Text(
+                        "For j at least nine, b<=F(j-1), and N=F(j+1)-b, put "
+                        + "z=F(j)-g(N) and w=F(j-1)-(N-g(N)). The actual children "
+                        + "reconstruct as g(N)=F(j)-z and N-g(N)=F(j-1)-w, "
+                        + "with z+w=b, z<=F(j-2), and w<=F(j-3). Parent deficit "
+                        + "zero is equivalent to either (z,w)=(b,0), b<=platformWidth(j), "
+                        + "or (z,w)=(platformWidth(j),1), b=platformWidth(j)+1, "
+                        + "and F(j) odd.")),
+                    Paragraph(Text(
+                        "At N=F(j+1)-(platformWidth(j)+1), the selected minimal "
+                        + "period is exactly two, d(N)=F(j)-1, and g(N)=F(j)-platformWidth(j) "
+                        + "when F(j) is odd, or F(j)-platformWidth(j)-1 when it is even. "
+                        + "Both branches hold without a zero-deficit assumption.")),
+                    Paragraph(Text(
+                        "The proof simultaneously carries the zero set and upper cone "
+                        + "from the complete literal base rows at orders eight and nine. "
+                        + "Every periodic predecessor is an iterate of the same legal "
+                        + "cycle. The adjacent physical row determines the boundary depth. "
+                        + "Absolute even orbit times lie strictly above the critical lower "
+                        + "endpoint and odd times lie at or below it, which fixes the "
+                        + "actual selected phase while keeping interval and periodic entry "
+                        + "distinct. The split recurrence and orbit legality directly use "
+                        + "actual_foundations; Fibonacci parity directly uses "
+                        + "GoldenFibDivisibility.fib_dvd_iff at index three."))),
+                DescribeRole.Theorem))));
+
+    private static DocumentBlock.Describe Node(string name, string title, string description) =>
+        Describe.Lean(DescribeId.Create("cloitre-actual-left-" + name.ToLowerInvariant().Replace('_', '-')),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(description))), DescribeRole.Definition);
+}

@@ -10,7 +10,27 @@ internal static class RegManifestAgreement
     internal const string LakefilePath = "Reg/lakefile.toml";
     internal const string ManifestPath = "Reg/lake-manifest.json";
 
-    internal static string? Validate(string? rootManifest, string? regManifest, bool hasLakefile)
+    internal const string HostLakefilePath = "tools/lean-inspector-reg/lakefile.toml";
+    internal const string HostManifestPath = "tools/lean-inspector-reg/lake-manifest.json";
+
+    internal static string? ValidateHost(string? rootManifest, string? hostManifest, bool hasLakefile) =>
+        ValidatePackage(rootManifest, hostManifest, hasLakefile, "../../.lake/packages",
+            [("reg", "../../Reg", "lakefile.toml", false),
+             ("leanInspector", "../lean-inspector", "lakefile.lean", false),
+             ("trureturing", "../..", "lakefile.toml", true),
+             ("leanInspectorInterface", "../lean-inspector-interface", "lakefile.toml", true)]);
+
+    // A path package listed by the root manifest may reach Reg through `trureturing`;
+    // Lake then records it once as an inherited Reg entry relative to the Reg directory.
+    internal static string? Validate(string? rootManifest, string? regManifest, bool hasLakefile) =>
+        ValidatePackage(rootManifest, regManifest, hasLakefile, "../.lake/packages",
+            [("trureturing", "..", "lakefile.toml", false),
+             ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml", false)],
+            inheritedRootPathPrefix: "../");
+
+    private static string? ValidatePackage(string? rootManifest, string? regManifest, bool hasLakefile, string packagesDir,
+        (string Name, string Directory, string Config, bool Inherited)[] expectedPaths,
+        string? inheritedRootPathPrefix = null)
     {
         if (regManifest is null)
             return "REG-MANIFEST-MISSING: Reg requires Reg/lakefile.toml and Reg/lake-manifest.json";
@@ -20,8 +40,8 @@ internal static class RegManifestAgreement
         {
             using var root = JsonDocument.Parse(rootManifest);
             using var reg = JsonDocument.Parse(regManifest);
-            if (String(reg.RootElement, "packagesDir") != "../.lake/packages")
-                return "REG-MANIFEST-PACKAGES-DIR: expected ../.lake/packages";
+            if (String(reg.RootElement, "packagesDir") != packagesDir)
+                return $"REG-MANIFEST-PACKAGES-DIR: expected {packagesDir}";
             var rootPackages = Packages(root.RootElement);
             var regPackages = Packages(reg.RootElement);
             var rootGit = GitEntries(rootPackages);
@@ -34,10 +54,16 @@ internal static class RegManifestAgreement
                     || inherited.ValueKind != JsonValueKind.True))
                 return "REG-MANIFEST-INHERITED: every Reg git package must be inherited";
             var paths = regPackages.Where(item => String(item, "type") == "path").ToArray();
-            if (paths.Length != 3 || !PathEntry(paths, "trureturing", "..", "lakefile.toml")
-                || !PathEntry(paths, "leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml")
-                || !PathEntry(paths, "leanInspector", "../tools/lean-inspector", "lakefile.lean"))
-                return "REG-MANIFEST-PATH-AGREEMENT: expected exactly the D5, Interface and inspector path requires";
+            var inheritedRootPaths = inheritedRootPathPrefix is null ? [] : rootPackages
+                .Where(item => String(item, "type") == "path"
+                    && !expectedPaths.Any(own => own.Name == String(item, "name")))
+                .Select(item => (Name: String(item, "name"), Directory: inheritedRootPathPrefix + String(item, "dir"),
+                    Config: String(item, "configFile"), Inherited: true))
+                .Where(inherited => PathEntry(paths, inherited.Name, inherited.Directory, inherited.Config, true))
+                .ToArray();
+            if (paths.Length != expectedPaths.Length + inheritedRootPaths.Length || expectedPaths.Any(expected =>
+                    !PathEntry(paths, expected.Name, expected.Directory, expected.Config, expected.Inherited)))
+                return "REG-MANIFEST-PATH-AGREEMENT: path requires differ from package ownership";
             return null;
         }
         catch (Exception error) when (error is JsonException or InvalidOperationException or FormatException)
@@ -70,12 +96,12 @@ internal static class RegManifestAgreement
         .GroupBy(key => key, StringComparer.Ordinal)
         .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
 
-    private static bool PathEntry(JsonElement[] paths, string name, string directory, string config) =>
+    private static bool PathEntry(JsonElement[] paths, string name, string directory, string config, bool isInherited) =>
         paths.Count(item => String(item, "name") == name
             && String(item, "dir") == directory && String(item, "configFile") == config
             && String(item, "manifestFile") == "lake-manifest.json"
             && item.TryGetProperty("inherited", out var inherited)
-            && inherited.ValueKind == JsonValueKind.False) == 1;
+            && inherited.ValueKind == (isInherited ? JsonValueKind.True : JsonValueKind.False)) == 1;
 
     private static string String(JsonElement element, string name) =>
         element.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String

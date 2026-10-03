@@ -1,0 +1,34 @@
+**推论 23.3（事件参考态、条件精度与四维必要性）。** 对 (23.4) 比较中的事件，令 $\omega,\omega'$ 为保留下来的次归一化参考态，$p=\operatorname{Tr}\omega$、$p'=\operatorname{Tr}\omega'$。将失败输出替换为同一正交标志，迹距离收缩给
+
+$$
+\frac12\|\omega-\omega'\|_1+\frac12|p-p'|\le\epsilon_N.
+\tag{23.6}
+$$
+
+若两成功概率均至少为 $s>0$，则
+
+$$
+\frac12\|\omega/p-\omega'/p'\|_1
+\le\min\{1,\epsilon_N/s\}.
+\tag{23.7}
+$$
+
+证明。成功与失败的输出态为 $\omega\oplus(1-p)|\mathrm f\rangle\langle\mathrm f|$ 及其带撇版本，迹范数在直和上相加即得 (23.6)。若 $p\ge p'>0$，三角不等式给归一化距离至多
+$[\|\omega-\omega'\|_1/2+(p-p')/2]/p$；对换两者给分母 $\max(p,p')$。故 (23.7) 没有额外因子 $2$，且缺少成功概率下界时不保证条件态的统一精度。
+
+进一步，采用同一个共同 CPTP 编解码器、有限免费 flags、无额外量子通信或预共享纠缠的参考保持合同。令受保护可访问 $B$ 为四维，取 $AB$ 的归一化 Bell 态及固定纯 $H$；零调用后联合测量 $AB$ 的 Bell 投影是允许的低层加辅助测试。先固定 $H$，再编解码并丢弃输出 $H$，得到 $A$ 上的通道。把带 flag 的编码 Kraus 与对应解码 Kraus 合成，所有 $K:\mathbb C^4\to\mathbb C^4$ 都满足 $\operatorname{rank}K\le q$，且 $\sum_K\operatorname{Tr}(K^\dagger K)=4$。于是重构后 Bell 投影概率
+
+$$
+F=\frac1{16}\sum_K|\operatorname{Tr}K|^2
+\le\frac q{16}\sum_K\operatorname{Tr}(K^\dagger K)=\frac q4,
+$$
+
+其中 $|\operatorname{Tr}K|\le\|K\|_1\le\sqrt{\operatorname{rank}K}\|K\|_2$。原概率为 $1$，故对 $q\le4$，
+
+$$
+\epsilon\ge1-q/4.
+\tag{23.8}
+$$
+
+任何包括零调用的统一误差合同若要求 $\epsilon<1/4$，必有整数 $q\ge4$。在 $\epsilon_N<1/4$ 的区域，定理 23.2 的四维方案因此达到量子端口维数最优；没有断言其误差本身最优。该下界要求受保护参考与允许的联合终端测试，不是未扩展输入统计的下界，也不是物理存储定律。$\square$
+

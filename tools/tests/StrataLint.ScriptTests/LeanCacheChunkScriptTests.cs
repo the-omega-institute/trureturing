@@ -231,7 +231,7 @@ public sealed class LeanCacheChunkScriptTests
         var other = fixture.CandidateTag(4243, partition);
         fixture.AddRelease(other, partition: partition);
 
-        AssertMiss(fixture.Fetch(allowSeed: true), "no published snapshot in this partition");
+        AssertMiss(fixture.Fetch(), "no published snapshot in this partition");
         Assert.Null(fixture.Unpacked);
         Assert.Null(fixture.UnpackedReport);
         Assert.DoesNotContain(other, fixture.DownloadTags);

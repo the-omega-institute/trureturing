@@ -292,3 +292,276 @@ $$
 This is a fixed-modulus, fixed-product result, and for $M<p^{1/4}$ it is $M^{o(1)}$. In the present problem only the complementary factor is known to lie in a short interval. The core residues need not occupy a single short interval, and $V$ need not be prime. Cutting all core residues into short intervals introduces their number as a loss. Using this interface requires an additional common-source concentration or weighted covering estimate and a suitable prime-modulus or composite-modulus bridge.
 
 The remaining objective is a joint bound for the actual weighted relation $CH-gV=1$, with the core, the cofactor, and the source interval kept together. The cited local estimates refine its comparison models; they do not yet prove that the fixed Fibonacci residue contains no Robin violation.
+
+## Complete support and ordered exponents do not fix the canonical window
+
+The [weighted Beatty note](guloglunevans2008beatty.md) identifies the
+actual canonical rotation $r_n=\{n\varphi\}$ and residual $E$ for the
+same integer. A classical density theorem supplies a useful restriction
+on attempts to control that window using prime support alone.
+Frantzikinakis–Host–Kra, *Bohr recurrence and density of non-lacunary
+semigroups of $\mathbb N$*, Proc. AMS **153** (2025), 181–192,
+[DOI:10.1090/proc/17006](https://doi.org/10.1090/proc/17006),
+[arXiv:2406.01353v3](https://arxiv.org/pdf/2406.01353v3), updated
+2024-11-02, defines non-lacunarity on printed p.3 as containing two
+multiplicatively independent integers. On p.4 it recalls Furstenberg's
+irrational linear-orbit density theorem before stating the polynomial
+extension in Theorem 3. The classical linear theorem is sufficient
+here; the polynomial extension is not required.
+
+Fix $P\ge3$, put $R=P\#$, and consider the actual integers
+
+$$
+n=R\,2^u6^v,\qquad u,v\in\mathbb Z_{\ge0}.
+$$
+
+They retain every prime through $P$ and have nonincreasing exponents:
+$v_2(n)=1+u+v$, $v_3(n)=1+v$, and $v_p(n)=1$ for $5\le p\le P$.
+The generators 2 and 6 are multiplicatively independent, even though
+they are not coprime. For each integer $U\ge0$, the subfamily $u,v\ge U$ is
+$R12^U\langle2,6\rangle$. Applying the recalled theorem with the
+irrational coefficient $R12^U\varphi$ proves density of its rotations
+in $\mathbb R/\mathbb Z$. This separate application controls arbitrarily
+large exponent tails; deleting infinite edges from one dense orbit
+would not justify it.
+
+Choose an open arc strictly inside a canonical rotation branch where
+$|E|$ is bounded below by a fixed positive constant. For arbitrarily
+large members of the same fixed-$P$ family, the exact canonical
+certificate
+
+$$
+D=5h^2+E\bigl(2\sqrt5(n-h)+E\bigr)
+$$
+
+then has $|D|\asymp n$. Consequently complete initial support and
+ordered exponents **alone** do not force every canonical source into
+the small-discriminant windows used by the nonresidue estimate.
+
+The fixed-$P$ quantifier is essential. Here
+$Z(n)\le\prod_{p\le P}(1-1/p)^{-1}$, so the Robin ratio tends to zero;
+these are not asymptotic SA/CA candidates or a near-boundary family.
+The density theorem provides no hitting-rate bound when $P$ grows,
+and no assertion about the squarefree kernel or conductor of the
+actual $D$. The extremal exponent heights and their size budget are
+therefore additional joint conditions to retain, rather than optional
+labels on the support. This is a classical-source application without
+Lean verification or an originality claim.
+
+## Support-conditioned discriminants and already covered norm branches
+
+The [Baier square-sieve note](../Fourier/baier2016squaresieve.md) records a
+different joint obstruction on the **same actual integer**. Its canonical
+certificate $c^2-D=5n(n-2h)$ forces $(D/p)\in\{0,1\}$ at every odd support
+prime. For a finite weighted population sharing $L$ such primes, the
+ordered-pair correlation term is exactly
+
+$$
+\sum_n a_n\frac{k(n)(k(n)-1)}{L^2},
+\qquad k(n)=\#\{p\text{ selected}:p\nmid D(n)\}.
+$$
+
+Thus preselecting full prime support does not leave independent quadratic
+signs for a square sieve to cancel. Zeros retain the joint incidence of
+the canonical lift and the support. For unit bit zero they are precisely
+the selected odd primes dividing the composition gcd; for unit bit one
+the zero locus is affine and this gcd identification fails. Neither a
+support-only phase average nor the unconditional square-sieve statement
+controls the remaining weighted incidence or the extremal exponent cost.
+
+The primitive norm $\pm1$ branch with unit bit zero already has a uniform
+Robin tail bound in [the FIB theory, §199.6 and §201.6](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+Those paper results allow the actual canonical composition gcd to grow;
+they are not merely fixed-multiplier statements. A new safety proof for
+this branch would not expand the covered Robin family. Remaining norm
+and affine-unit branches still require estimates with their own actual
+support, gcd, discriminant and price budget kept together.
+
+## Actual CA prime-step chains cannot stay in raw small-discriminant windows
+
+The fixed-support family above does not consist of asymptotic CA
+candidates. A different application uses an unbounded chain of actual
+CA integers and the exact canonical lift already recorded in the
+[Beatty note](guloglunevans2008beatty.md). This is a paper derivation from
+classical CA optimization and quadratic irrational separation, without
+a Lean-verification or originality claim.
+
+For the canonical source of each integer $n>1$, retain
+
+$$
+n=h+2A+3B,\quad h\in\{0,1\},\quad c=4A+7B,
+\quad E(n)=c-\sqrt5(n-h),
+\quad D(n)=5h^2-4(A^2+AB-B^2).
+$$
+
+The existing rotation branches give $|E(n)|<1$. Also $E(n)\ne0$,
+because $n-h>0$ and $\sqrt5$ is irrational. The actual-source identity is
+
+$$
+D(n)=5h^2+E(n)\bigl(2\sqrt5(n-h)+E(n)\bigr).
+\tag{A1}
+$$
+
+The classical local CA objective and tied-price convention, recalled
+in [Nicolas's comparison note](nicolas2025comparison.md), permit an
+unbounded chain $n_{j+1}=p_jn_j$ of actual CA maximizers, with each $p_j$
+prime. To obtain it, order the prime-power activation prices
+$\log[Z(p^a)/Z(p^{a-1})]/\log p$ decreasingly and include each activated
+layer. At a tied price, include the tied layers one at a time. Every
+intermediate product includes all layers having strictly positive gain
+at that price and a subset having zero gain, so is still a global
+maximizer. The activation prices strictly decrease at each fixed prime,
+and only finitely many layers exceed any fixed positive price. Letting
+the price tend to zero gives the unbounded chain. No bound on the number
+of simultaneous ties is needed, and the chain need not contain every CA
+integer.
+
+Put $L_j=\log n_j$. Initial prime support gives
+$\vartheta(p_j)\le\log n_{j+1}=L_j+\log p_j$. Ordinary PNT and
+$\log p\le p/4$ for large $p$ imply $p_j\le4L_j$ eventually. Bounded
+step primes also satisfy this bound once $L_j$ is large.
+
+For integers $k,t$ with $t\ne0$, the elementary quadratic irrational
+bound is
+
+$$
+|k+\sqrt5t|\ge\frac1{6|t|}.
+\tag{A2}
+$$
+
+If the absolute value is at least one, the bound is immediate.
+Otherwise $|k-\sqrt5t|\le1+2\sqrt5|t|<6|t|$, while the nonzero integer
+$|k^2-5t^2|$ is at least one. Their product proves (A2).
+
+Suppose that every sufficiently large actual CA integer satisfied
+$|E(n)|\le1/[240(\log n)^2]$. Write $h_j,c_j$ for the two actual
+canonical readouts. Their exact neighbor relation is
+
+$$
+E(n_{j+1})-p_jE(n_j)
+=(c_{j+1}-p_jc_j)-\sqrt5(p_jh_j-h_{j+1}).
+\tag{A3}
+$$
+
+On the late chain, its left side has absolute value at most
+$(p_j+1)/(240L_j^2)\le1/(48L_j)$. If
+$t=p_jh_j-h_{j+1}\ne0$, then $|t|\le p_j$ and (A2) instead gives
+at least $1/(6p_j)\ge1/(24L_j)$. Hence $t=0$, which forces
+$h_j=h_{j+1}=0$. The remaining integer $c_{j+1}-p_jc_j$ has absolute
+value below one and is zero. Thus $E(n_{j+1})=p_jE(n_j)$ throughout
+the late chain. At a fixed late index $J$, this gives
+$E(n_j)=(n_j/n_J)E(n_J)$, unbounded in absolute value, contrary to the
+canonical bound. Therefore arbitrarily large actual CA integers satisfy
+$|E(n)|>1/[240(\log n)^2]$.
+
+At those same integers, (A1) gives
+$|D(n)|\ge2\sqrt5(n-1)|E(n)|-6$. Consequently an unbounded subset of
+the CA test set satisfies
+
+$$
+\boxed{|D(n)|\ge\frac{n}{240(\log n)^2}.}
+\tag{A4}
+$$
+
+For the last constant it suffices to take members large enough that
+$3n-4\ge1440(\log n)^2$. In particular, for every fixed real $K$ and
+$C>0$, an eventual upper bound $|D(n)|\le C(\log n)^K$ cannot hold
+on the whole CA test set. This addresses actual extremal integers,
+rather than only the non-CA fixed-support examples above.
+
+The conclusion concerns the raw canonical discriminant. It gives no
+lower bound for its radical, squarefree kernel, primitive conductor or
+exception-adjusted modulus; large square factors and square $D$ remain
+possible. It neither identifies these CA integers as Robin violations
+nor excludes an independently justified RH-equivalent thinning whose
+members have small discriminants. A small-discriminant bound restricted
+to actual violations is also not refuted. The
+[Pollack application](../Scale/pollack2017nonresidues.md) remains usable
+under its same-source cutoff and exception hypotheses, while those
+hypotheses cannot be supplied for every CA integer merely by assuming a
+uniform raw-discriminant log-power bound. No signed Robin margin or RH
+proof is obtained here.
+
+### A finite stopping bound for consecutive tiny-residual sources
+
+The same calculation also bounds an entire finite run, rather than only
+refuting an eventual bound. Suppose $n_0,\ldots,n_m$, $m\ge1$, is a
+prime-step CA chain with $n_0>e$, $p_j\le4\log n_j$ at every step, and
+
+$$
+|E(n_i)|\le\frac1{240(\log n_i)^2}\qquad(0\le i\le m).
+$$
+
+Then (A2)–(A3) force $h_i=0$ at all these sources and
+$E(n_m)=(n_m/n_0)E(n_0)$. Apply (A2) again with $t=n_0$ and
+$k=-c_0$. Since $h_0=0$, $|E(n_0)|\ge1/(6n_0)$. The upper bound at
+the same final source consequently requires
+
+$$
+\boxed{n_m(\log n_m)^2\le\frac{n_0^2}{40}.}
+\tag{A5}
+$$
+
+For any sufficiently large CA anchor $n_0$, the tied layers can be
+ordered so that the unbounded chain passes through that actual anchor.
+Continue to its first member at least $n_0^2$. The preceding member is
+below $n_0^2$, so the prime-step bound puts this first member below
+$8n_0^2\log n_0$. If every source in that finite chain segment had a
+tiny residual, (A5) would fail. Thus the segment contains an actual CA
+integer satisfying (A4), once $n_0$ is large enough for the preceding
+eventual bounds. This gives a quadratic-scale stopping interval for
+this observation; no effective starting threshold or bound for gaps
+between actual Robin violations is supplied.
+
+### Recurring doubling activations improve the unbounded-subset rate
+
+The layer-refined chain processes every prime-power layer, so it has
+infinitely many steps with $p_j=2$. This additional relation improves
+the unbounded-subset bound, without changing the finite stopping
+hypotheses of (A5).
+
+Suppose every sufficiently late member of such a complete chain had
+$|E(n)|\le1/[100\log n]$. At every late step, (A3) and $p_j\le4L_j$
+give
+
+$$
+|E(n_{j+1})-p_jE(n_j)|
+\le\frac{p_j+1}{100L_j}\le\frac1{20}.
+$$
+
+Choose a late doubling step. Here $t=2h_j-h_{j+1}$ has $|t|\le2$,
+and (A2) would give at least $1/12$ if $t\ne0$. Thus both unit bits
+are zero, and the remaining integer difference is zero. Once the
+current bit is zero, the next arbitrary prime step has
+$t=-h_{j+1}\in\{0,-1\}$. The nonzero alternative would give at least
+$1/6$, so the bit stays zero and $E(n_{j+1})=p_jE(n_j)$.
+
+Induction after that doubling step contradicts $E(n)\to0$, since the
+initial nonzero residual scales by the unbounded ratio of the actual
+integers. Therefore every complete layer-refined CA chain contains
+arbitrarily large members with $|E(n)|>1/[100\log n]$.
+
+For those same members, $c\ge2(n-h)$ and (A1) give
+$|D(n)|\ge(2+\sqrt5)(n-1)|E(n)|-5$. Hence an unbounded subset obeys
+the stronger rate
+
+$$
+\boxed{|D(n)|>\frac{n}{100\log n}.}
+\tag{A6}
+$$
+
+This still makes no assertion about the distribution of the witnesses
+or a thinning that omits the recurring doubling steps. For a nonsquare
+witness, write $D=f^2\Delta$ with $\Delta$ a signed fundamental
+discriminant and $q=|\Delta|$ the primitive quadratic conductor.
+If an independent same-candidate bound $q\le C(\log n)^K$ held, then
+(A6) would require
+
+$$
+f^2>\frac{n}{100C(\log n)^{K+1}}.
+$$
+
+Thus a small-conductor route must also account for a square factor of
+that size on these witnesses. This conditional alternative supplies
+neither a lower bound for $q$ nor a bound for the faithful exception
+mask; square $D$ remains outside the nonprincipal-character application.

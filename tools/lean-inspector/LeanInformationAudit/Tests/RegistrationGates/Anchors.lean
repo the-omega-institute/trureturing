@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -26,7 +29,7 @@ theorem slotSensitivity : FiniteSlotSensitivity arena := by
     · exact ⟨fun _ => Bool.noConfusion, fun _ => rfl⟩
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
-information_theorem positive in arena primitives good
+test_assess in information_theorem positive in arena primitives good
   variation lawVariation sensitivity slotSensitivity : arena.Law good := rfl
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``positive
@@ -84,7 +87,7 @@ theorem partialSensitivity :
   · trivial
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
-information_theorem positive in arena primitives good
+test_assess in information_theorem positive in arena primitives good
   variation lawVariation sensitivity partialSensitivity : arena.Law good := ⟨rfl, rfl⟩
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``positive

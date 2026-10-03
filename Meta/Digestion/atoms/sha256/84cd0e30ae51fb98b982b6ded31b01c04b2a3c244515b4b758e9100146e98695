@@ -1,0 +1,33 @@
+**theorem 3.1 (Unique physical response and actual count recovery).** For every
+$n\in\mathbb N$ and every raw clause family $F$ over $n$ variables, there is a
+unique physical response word $w$. Put $K=(n+1)|F|$. The word satisfies
+
+$$
+|w|\le n+2K+5.
+$$
+
+It is arithmetically suitable in the sense of Theorem 1.2: its numerator is
+divisible by three, its denominator is $2^e$, and its numerator is odd when
+$e>0$. The fixed four-stack postprocessor reaches the exact clean terminal
+configuration for its total word output in at most $3|w|+10$ transitions.
+The ordinary binary value of that output is exactly the independently defined
+satisfying count of $F$.
+
+Indeed, write $S=\sum_a2^{K-(n+1)v_F(a)}$. The full trace identity gives
+$Z_F=3S/2^{K+1}$, and $0<S\le2^{n+K}$. Rational normalization gives a common
+positive natural factor $c$ with $3S=pc$ and $2^{K+1}=qc$. The prime-power
+divisor law implies that $q$ is a power of two and $3$ does not divide $c$;
+hence $3$ divides $p$. Reducedness gives oddness of $p$ when $q>1$.
+The inequalities $p<2^{n+K+2}$ and $q<2^{K+2}$ bound the two ordinary binary
+fields. Injectivity of the rational-to-complex cast proves uniqueness.
+The postprocessor's actual arithmetic output equals
+$\lfloor(2/3)\operatorname{Re}Z_F\rfloor$, which is the count by the physical
+recovery identity. The denominator-one branch uses actual doubling, and the
+positive-exponent branch uses actual low-bit truncation.
+
+The zero-variable one-empty-clause query has response `11/100` and output zero;
+the zero-variable empty formula has response `11/10` and output one. Empty,
+repeated and tautological clauses and unused declared variables are retained.
+The rational response statement does not identify arithmetic suitability with
+physical validity or replace the conventional appearing-name encoding problem.
+

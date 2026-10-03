@@ -1,0 +1,13 @@
+**Theorem 69.7 (inertia fixes all unit radical coordinates).**
+For every $J\geq0$, every rational prime $p\ne3$, every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$ and every
+$\sigma$ in its inertia group, $\sigma$ fixes $\omega$.
+For every integer $j$ with $1\leq j\leq J$, if $p\nmid d_j$,
+then $\sigma$ fixes the designated element $\theta_j$ of $N_J$.
+
+Proof. Distinct cubic roots of unity have distinct reductions
+away from three. Divide each radical by its integral cube factor;
+when $p\nmid d_j$ the result is a unit. An inertia automorphism
+cannot multiply that unit by a nontrivial cubic root of unity,
+because its residue must remain fixed.
+

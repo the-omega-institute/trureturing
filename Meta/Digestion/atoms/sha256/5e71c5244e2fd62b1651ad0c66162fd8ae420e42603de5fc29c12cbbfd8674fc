@@ -1,0 +1,13 @@
+### 229.2 同一个实际整数上的余因子尾界
+
+以下固定 $a>b_2$，仍取 $H=e^{aR}$、$D=X/H$。
+每个实际命中的 $d>D$ 至多对应一个 $N_g$，其唯一补因子记为
+$h(d)=N_g/d<H$。对实数 $1\le K<H$，定义
+
+$$
+B_D^{\ge K}
+=\sum_{\substack{d\in\mathcal H_D\\h(d)\ge K}}
+\frac dX\mu_s(d).
+\tag{229.4}
+$$
+

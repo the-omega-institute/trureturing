@@ -1,0 +1,13 @@
+## 4. Actual endpoint histories and finite-alphabet cylinders
+
+Use source states $U$ and $J^\varepsilon$. At length at least two,
+$J^\varepsilon$ is exactly the class admitting the opposite proper-cut
+sign; at lengths zero and one it retains the genuine small-class
+convention. An endpoint history has a terminal actual source class and
+successive specified finite actual shapes. An emitted left shape belongs
+to $J^\varepsilon$, with its remaining child in $U$. A removed right shape
+belongs to $U$, with its remaining child in $J^\varepsilon$. The parent
+is $U$ or $J^{1-\varepsilon}$, never $J^\varepsilon$. Both factors at
+every continued step have positive length. These are descriptions of
+events in actual permutations, not replacement permutation types.
+

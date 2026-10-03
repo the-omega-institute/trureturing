@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from contextlib import contextmanager
 from functools import lru_cache
+import io
 import os
 from pathlib import Path
 import stat
@@ -340,10 +341,14 @@ def aggregate(root, output, *artifacts):
         rows = []
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
-            with tempfile.TemporaryDirectory(prefix='row.', dir=directory) as row_dir:
-                report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
-                current = public.read_json(report.read_bytes())['modules']
-                origin = public.read_json(public.member(report, '.provenance.json').read_bytes())
+            # Read members in place; a module artifact is never unpacked to disk.
+            with zipfile.ZipFile(artifact) as bundle:
+                data = {}
+                for member, info in public.bundle_members(bundle, ROW_SUFFIXES).items():
+                    with public.open_zip_member(bundle, info) as reader:
+                        data[member[len(public.RAW):]] = reader.read()
+                current = public.read_json(data[''])['modules']
+                origin = public.read_json(data['.provenance.json'])
                 if [row['module'] for row in current] != [name]:
                     raise ValueError('native aggregate membership mismatch')
                 if origin['compatibility_sha256'] != config['coordinates']['producer']:
@@ -352,7 +357,7 @@ def aggregate(root, output, *artifacts):
                 rows.extend(current)
                 # Produced materials matched their content addresses; move their
                 # deflated bytes without decompressing or compressing again.
-                with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
+                with zipfile.ZipFile(io.BytesIO(data['.materials.zip'])) as archive:
                     for entry in archive.infolist():
                         shape = (entry.CRC, entry.file_size)
                         if entry.filename in material_offsets:

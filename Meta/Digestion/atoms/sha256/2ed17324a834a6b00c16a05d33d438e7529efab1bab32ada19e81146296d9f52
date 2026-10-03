@@ -1,0 +1,35 @@
+### theorem 252.1 解析截止不能消去连续储备的阶乘尾部
+
+方程
+
+$$
+U(s)^2\bigl(1+2s\log U(s)\bigr)=2,\qquad U(0)=\sqrt2,
+$$
+
+在 $s=0$ 附近有唯一解析分支，与小正 $s$ 时的实际连续截止一致。
+存在在零点解析的 $\mathcal H$，使小正 $s$ 时
+
+$$
+\mathcal F(s)=\mathcal J(s)+\mathcal H(s),\qquad
+\mathcal J(s)=\int_0^\infty\frac{e^{-z}}{1+2sz}\,dz,
+$$
+
+$$
+\mathcal H(s)=U(s)-1
+-2\int_0^{\log U(s)}\frac{e^{-z}}{1+2sz}\,dz.
+\tag{252.1}
+$$
+
+记 $h_n$ 为 $\mathcal H$ 的 Taylor 系数，$m_n$ 为式（251.8）的归一化连续储备系数。
+则存在 $C,q>0$ 使所有 $n\ge0$ 满足
+
+$$
+m_n=(-2)^n n!+h_n,\qquad |h_n|\le Cq^n,
+\qquad
+\lim_{n\to\infty}\frac{m_n}{(-2)^n n!}=1.
+\tag{252.2}
+$$
+
+因此形式级数 $\sum_{n\ge0}m_n s^n$ 的收敛半径为零，
+而 $U(s)$ 的 Taylor 级数具有正收敛半径。
+

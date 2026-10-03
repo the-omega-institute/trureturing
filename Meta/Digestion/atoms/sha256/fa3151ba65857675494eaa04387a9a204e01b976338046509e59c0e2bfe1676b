@@ -1,0 +1,63 @@
+**定理 220.2（累计深度的实际命中过滤）。** 在上述唯一命中范围内，对任意
+$s\ge4$、$q\ge4$、$B>0$，有
+
+$$
+\mathcal B_D^{\mathrm{exc}}(B;q):=
+\sum_{\substack{d\in\mathcal H_D\\E_q(n(d))>B}}
+\frac dX\mu_s(d)
+\le\frac{W_{s,q}}B\le\frac{\mathfrak A_{s,q}}B.
+\tag{220.6}
+$$
+
+将筛选条件改成 $E_q(n(d))\ge B$，同一个上界仍成立。
+
+证明。逐素数使用
+
+$$
+(v_p(d)+v_p(h)-k_p(q))_+
+\le(v_p(d)-k_p(q))_++v_p(h)
+$$
+
+得 $E_q(dh)\le E_q(d)h$。在同一个实际分解 $n(d)=dh$ 上，
+
+$$
+\frac dX\le\frac1h\le\frac{E_q(d)}{E_q(n(d))}.
+\tag{220.7}
+$$
+
+所选每项因此至多为 $E_q(d)\mu_s(d)/B$。每个 $d$ 只出现一次，
+扩大到全部正整数后应用定理 220.1 即得。$\square$
+
+对任意固定 $0<\varepsilon<1$，取
+
+$$
+B_{\mathrm{exc}}(\varepsilon)
+=\frac{\Lambda}{\varepsilon}\mathfrak A_{s,s^2}.
+\tag{220.8}
+$$
+
+则
+
+$$
+\Lambda\mathcal B_D^{\mathrm{exc}}(B_{\mathrm{exc}}(\varepsilon);s^2)
+\le\varepsilon,
+\qquad
+\log B_{\mathrm{exc}}(\varepsilon)
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.9}
+$$
+
+与 §219 的大幂过滤各分配 $1/4$ 预算，由并集上界得到充分目标
+
+$$
+\limsup_{r\to\infty}\Lambda
+\sum_{\substack{d\in\mathcal H_D\\
+B(n(d))\le B_\dagger\\
+E_{s^2}(n(d))\le4\Lambda\mathfrak A_{s,s^2}}}
+\frac dX\mu_s(d)<\frac12.
+\tag{220.10}
+$$
+
+小除数部分的归一贡献仍为 $o(1)$。式（220.10）是待证的充分条件；
+累计深度过滤本身没有给出其中剩余和的上界。
+

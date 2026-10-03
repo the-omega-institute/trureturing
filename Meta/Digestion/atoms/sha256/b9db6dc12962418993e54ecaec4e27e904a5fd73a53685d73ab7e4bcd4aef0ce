@@ -1,0 +1,49 @@
+### 217.3 切换后的实际剩余类偏差
+
+对有限整数区间 $J$ 和 $(c,V)=1$，定义有符号偏差
+
+$$
+\Delta_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\mu_s(d).
+$$
+
+式（217.3）逐个加减互素余数类的平均值，精确给出
+
+$$
+\mu_s(\mathcal H_D)=M_0+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta_{V,h^{-1}}(J_h),
+\qquad 0\le M_0\le\frac H{\varphi(V)}.
+\tag{217.9}
+$$
+
+每个平均项至多为 $1/\varphi(V)$，所以得到所述上界。
+由 $H^2/\varphi(V)\to0$，该平均主项为 $o(H^{-1})$。
+这只估计全部互素余数类的平均值，没有得到被选中的逆元余数类的等分布，
+也没有控制式（217.9）的偏差和。
+
+保留核时，定义
+
+$$
+\Delta^K_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\frac dX\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\frac dX\mu_s(d),
+\qquad
+B_D=\sum_{d\in\mathcal H_D}\frac dX\mu_s(d).
+$$
+
+同样有
+
+$$
+B_D=M_0^K+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta^K_{V,h^{-1}}(J_h),
+\qquad 0\le M_0^K\le\frac{1+\log H}{\varphi(V)}.
+\tag{217.10}
+$$
+
+这里 $d/X\le1/h$ 在 $J_h$ 上逐点成立，平均项可逐个以
+$1/(h\varphi(V))$ 控制，再求调和和。式（217.9）和式（217.10）都保留了
+待控制的实际相关项；小的平均主项不能替代实际总质量的上界。
+

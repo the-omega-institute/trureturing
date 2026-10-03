@@ -1,0 +1,21 @@
+**证明。** （305.11）、（305.16）在 $c=2$ 的平方层给
+\[
+\frac{X_L-\vartheta(m)}{\sqrt m}\longrightarrow\sqrt2,
+\qquad \sqrt m\,[U_L-P(m)]\longrightarrow-\sqrt2 E.
+\]
+由 $X_L/m,\vartheta(m)/m\to1$，精确相减得
+\[
+\sqrt m\,[b_L-B(m)]
+=\frac{\sqrt m\,[U_L-P(m)]}{E\log m}
++\frac{m^2}{X_L\vartheta(m)}\frac{X_L-\vartheta(m)}{\sqrt m}
+\longrightarrow\sqrt2.
+\tag{311.6}
+\]
+再乘 $m^{\lambda-1/2}\to0$ 得（311.4）。
+
+每个充分大的实数 $x$ 都在一个 $m_L\le x<m_L+3$ 内。这段长度小于三的区间至多含三个整数素数，故 $\vartheta(x)-\vartheta(m_L)=O(\log x)$，$P(x)-P(m_L)=O(\log x/x)$。利用 $\vartheta(x)\sim x$、$P(x)\sim E\log x$，得到
+\[
+|B(x)-B(m_L)|=O(\log x/x).
+\]
+又 $x/m_L\to1$。因此格点上的有限缩放极限可延伸到全部实数截断；反向只需取格点子列。与（311.4）合并得到（311.5）。这一步必须使用全部 $L$；任意选取的稀疏子列不供应相邻格点之间的控制。$\square$
+

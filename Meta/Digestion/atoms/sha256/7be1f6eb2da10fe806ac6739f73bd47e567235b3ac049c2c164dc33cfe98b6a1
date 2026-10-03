@@ -1,0 +1,14 @@
+**Theorem 69.12 (no ramification outside the cubefree support).**
+For every $J\geq0$, every rational prime $p\ne3$ satisfying
+$3\mid v_p(B_j)$ for every $1\leq j\leq J$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+e(\mathfrak P/(p))=1.
+$$
+
+Proof. Every normalized radical is a unit at this prime.
+Inertia fixes the base and all radical coordinates, hence is
+trivial. The Galois ramification-inertia identity gives the
+ramification index.
+

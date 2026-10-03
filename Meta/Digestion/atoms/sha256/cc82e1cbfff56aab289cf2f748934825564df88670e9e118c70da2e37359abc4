@@ -1,0 +1,56 @@
+**定理 5.1（全部联合输入上的极小极大误差）。** 对任意 $d,e\ge2$，令 $\Phi$ 遍历低层到低层的全部完全正保迹映射。上确界遍历 $\mathcal H_A\otimes\mathcal H_H$ 上的全部密度算子，允许任意层间关联。则
+
+$$
+\boxed{
+\inf_{\Phi\ \mathrm{CPTP}}\ \sup_{\rho_{AH}}
+D\left(\operatorname{Tr}_H(U\rho_{AH}U^\dagger),
+\Phi(\operatorname{Tr}_H\rho_{AH})\right)=\frac12.}
+$$
+
+达到上界的映射为
+
+$$
+\Phi_0(X)=U_d(P_0XP_0+P_1XP_1)U_d^\dagger.
+$$
+
+此极小极大式没有额外参考系统。
+
+证明。先给上界。记 $\eta=\operatorname{Tr}_H(U\rho_{AH}U^\dagger)$ 和 $\widetilde P_i=U_dP_iU_d^\dagger$。同扇区的高层算子相同，偏迹消去其共轭，故
+
+$$
+\Phi_0(\operatorname{Tr}_H\rho_{AH})
+=\widetilde P_0\eta\widetilde P_0+\widetilde P_1\eta\widetilde P_1
+=\frac{\eta+Z\eta Z}{2},\qquad
+Z=\widetilde P_0-\widetilde P_1.
+$$
+
+$Z$ 是酉，两个密度算子的迹范数差不超过 $2$，因此
+
+$$
+D\left(\eta,\frac{\eta+Z\eta Z}{2}\right)
+=\frac14\|\eta-Z\eta Z\|_1\le\frac12.
+$$
+
+再给下界。取任意 $a\in A_0,b\in A_1$；这两集合均非空，例如可取 $a=(0,0),b=(d-1,1)$。令 $\xi=(|a\rangle+|b\rangle)/\sqrt2$、$\omega=\exp(2\pi i/e)$。对每个 $j=0,\ldots,e-1$，归一化高层向量 $|r_j\rangle=\frac1{\sqrt e}\sum_{h_0=0}^{e-1}\omega^{-jh_0}|h_0,0\rangle$ 满足 $R|r_j\rangle=\omega^j|r_j\rangle$。输入 $|\xi\rangle\langle\xi|\otimes|r_j\rangle\langle r_j|$ 的低层边缘均相同，输出低层却分别是
+
+$$
+|\psi_j\rangle=
+\frac{|f(a)\rangle+\omega^j|f(b)\rangle}{\sqrt2}.
+$$
+
+任何给定 $\Phi$ 对这些输入都预测同一密度算子 $\sigma$。由单位根和为零，
+
+$$
+\frac1e\sum_j|\psi_j\rangle\langle\psi_j|
+=\frac12\left(|f(a)\rangle\langle f(a)|+|f(b)\rangle\langle f(b)|\right)=\frac P2.
+$$
+
+因此至少一个 $j$ 满足 $\langle\psi_j|\sigma|\psi_j\rangle\le\operatorname{Tr}(P\sigma)/2\le1/2$。半迹距离对效果的标准变分界给出
+
+$$
+D(|\psi_j\rangle\langle\psi_j|,\sigma)
+\ge1-\langle\psi_j|\sigma|\psi_j\rangle\ge\frac12.
+$$
+
+这个下界对每个 $\Phi$ 成立，且前面已经构造达到它的 CPTP 映射。所用迹范数与效果不等式见 Watrous 上引书第 3 章。$\square$
+

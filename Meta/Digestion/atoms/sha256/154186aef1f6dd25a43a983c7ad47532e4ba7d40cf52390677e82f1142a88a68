@@ -1,0 +1,30 @@
+**引理 207.2（大核心的精确同源不等式）。** 假设 $N\ge N_K^4$、$C\ge N^{1/4}$、$\Lambda>\log4$，则
+
+$$
+\log\frac{Z(N)}{e^\gamma\Lambda}
+<\frac{\log(1-u)+\vartheta_{r,N}u}{\Lambda}
++\frac{a_0}{(\Lambda-\log4)^3}.
+\tag{207.3}
+$$
+
+证明。$C\ge N^{1/4}\ge N_K$ 保证式（207.2）现在确实适用。设
+
+$$
+t=\log\log C=\Lambda+\log(1-u)
+\ge\Lambda-\log4>0.
+$$
+
+$\gcd(C,H)=1$ 给 $Z(N)=Z(C)Z(H)$。依次使用式（207.2）、式（207.1）与 $\log(1+x)\le x$，得到
+
+$$
+\begin{aligned}
+\log\frac{Z(N)}{e^\gamma\Lambda}
+&<\log(t/\Lambda)+\log(1+a_0/t^3)
+ +\frac{\vartheta_{r,N}u}{\Lambda}\\
+&\le\frac{\log(1-u)+\vartheta_{r,N}u}{\Lambda}
+ +\frac{a_0}{(\Lambda-\log4)^3}.
+\end{aligned}
+$$
+
+这里 $0\le u\le3/4$，所有对数都在其定义域内。$\square$
+

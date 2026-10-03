@@ -5,12 +5,11 @@ import unittest
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
-from cache_deadline_cases import CacheDeadlineCases
 from lean_release_verification import ReleaseVerificationCases
 from lean_release_legacy import ReleaseLegacyCases
 
 
-class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadlineCases, ReleaseTransportCases, unittest.TestCase):
+class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransportCases, unittest.TestCase):
     """Release transport cases exposed under their existing test identity."""
 
     def test_publication_requires_current_report_before_transport(self):
@@ -18,18 +17,18 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadline
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
-    def test_transition_fetch_flag_cannot_widen_partition_compatibility(self):
+    def test_fetch_cannot_widen_partition_compatibility(self):
         self.assertEqual(0, self.transport("publish").returncode)
         shutil.rmtree(self.root / ".lake/build")
         self.manifest["packages"][0]["rev"] = OTHER
         self.save_manifest()
-        missed = self.transport("fetch", arguments=("--allow-seed",))
+        missed = self.transport("fetch")
         self.assertEqual(1, missed.returncode, missed.stdout + missed.stderr)
         self.assertIn('"status":"miss"', missed.stdout)
         self.assertFalse((self.root / ".lake/build").exists())
         self.manifest["packages"][0]["rev"] = REV
         self.save_manifest()
-        restored = self.transport("fetch", arguments=("--allow-seed",))
+        restored = self.transport("fetch")
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 

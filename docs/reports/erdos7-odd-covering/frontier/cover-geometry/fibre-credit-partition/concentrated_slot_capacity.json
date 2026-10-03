@@ -1,0 +1,1810 @@
+{
+  "buckets": [
+    {
+      "capacity_after_shared_pq": 11,
+      "full_slots": 12,
+      "labels": 8,
+      "pair": [
+        5,
+        7
+      ],
+      "root": 1,
+      "slack": 3
+    },
+    {
+      "capacity_after_shared_pq": 19,
+      "full_slots": 20,
+      "labels": 19,
+      "pair": [
+        5,
+        11
+      ],
+      "root": 1,
+      "slack": 0
+    },
+    {
+      "capacity_after_shared_pq": 23,
+      "full_slots": 24,
+      "labels": 22,
+      "pair": [
+        5,
+        13
+      ],
+      "root": 1,
+      "slack": 1
+    },
+    {
+      "capacity_after_shared_pq": 31,
+      "full_slots": 32,
+      "labels": 26,
+      "pair": [
+        5,
+        17
+      ],
+      "root": 1,
+      "slack": 5
+    },
+    {
+      "capacity_after_shared_pq": 35,
+      "full_slots": 36,
+      "labels": 32,
+      "pair": [
+        5,
+        19
+      ],
+      "root": 1,
+      "slack": 3
+    },
+    {
+      "capacity_after_shared_pq": 43,
+      "full_slots": 44,
+      "labels": 36,
+      "pair": [
+        5,
+        23
+      ],
+      "root": 1,
+      "slack": 7
+    },
+    {
+      "capacity_after_shared_pq": 55,
+      "full_slots": 56,
+      "labels": 29,
+      "pair": [
+        5,
+        29
+      ],
+      "root": 1,
+      "slack": 26
+    },
+    {
+      "capacity_after_shared_pq": 59,
+      "full_slots": 60,
+      "labels": 29,
+      "pair": [
+        5,
+        31
+      ],
+      "root": 1,
+      "slack": 30
+    },
+    {
+      "capacity_after_shared_pq": 71,
+      "full_slots": 72,
+      "labels": 24,
+      "pair": [
+        5,
+        37
+      ],
+      "root": 1,
+      "slack": 47
+    },
+    {
+      "capacity_after_shared_pq": 79,
+      "full_slots": 80,
+      "labels": 24,
+      "pair": [
+        5,
+        41
+      ],
+      "root": 1,
+      "slack": 55
+    },
+    {
+      "capacity_after_shared_pq": 49,
+      "full_slots": 50,
+      "labels": 0,
+      "pair": [
+        7,
+        11
+      ],
+      "root": 1,
+      "slack": 49
+    },
+    {
+      "capacity_after_shared_pq": 59,
+      "full_slots": 60,
+      "labels": 2,
+      "pair": [
+        7,
+        13
+      ],
+      "root": 1,
+      "slack": 57
+    },
+    {
+      "capacity_after_shared_pq": 79,
+      "full_slots": 80,
+      "labels": 1,
+      "pair": [
+        7,
+        17
+      ],
+      "root": 1,
+      "slack": 78
+    },
+    {
+      "capacity_after_shared_pq": 89,
+      "full_slots": 90,
+      "labels": 2,
+      "pair": [
+        7,
+        19
+      ],
+      "root": 1,
+      "slack": 87
+    },
+    {
+      "capacity_after_shared_pq": 109,
+      "full_slots": 110,
+      "labels": 2,
+      "pair": [
+        7,
+        23
+      ],
+      "root": 1,
+      "slack": 107
+    },
+    {
+      "capacity_after_shared_pq": 139,
+      "full_slots": 140,
+      "labels": 1,
+      "pair": [
+        7,
+        29
+      ],
+      "root": 1,
+      "slack": 138
+    },
+    {
+      "capacity_after_shared_pq": 149,
+      "full_slots": 150,
+      "labels": 1,
+      "pair": [
+        7,
+        31
+      ],
+      "root": 1,
+      "slack": 148
+    },
+    {
+      "capacity_after_shared_pq": 179,
+      "full_slots": 180,
+      "labels": 1,
+      "pair": [
+        7,
+        37
+      ],
+      "root": 1,
+      "slack": 178
+    },
+    {
+      "capacity_after_shared_pq": 199,
+      "full_slots": 200,
+      "labels": 1,
+      "pair": [
+        7,
+        41
+      ],
+      "root": 1,
+      "slack": 198
+    },
+    {
+      "capacity_after_shared_pq": 107,
+      "full_slots": 108,
+      "labels": 6,
+      "pair": [
+        11,
+        13
+      ],
+      "root": 1,
+      "slack": 101
+    },
+    {
+      "capacity_after_shared_pq": 143,
+      "full_slots": 144,
+      "labels": 4,
+      "pair": [
+        11,
+        17
+      ],
+      "root": 1,
+      "slack": 139
+    },
+    {
+      "capacity_after_shared_pq": 161,
+      "full_slots": 162,
+      "labels": 4,
+      "pair": [
+        11,
+        19
+      ],
+      "root": 1,
+      "slack": 157
+    },
+    {
+      "capacity_after_shared_pq": 197,
+      "full_slots": 198,
+      "labels": 3,
+      "pair": [
+        11,
+        23
+      ],
+      "root": 1,
+      "slack": 194
+    },
+    {
+      "capacity_after_shared_pq": 251,
+      "full_slots": 252,
+      "labels": 2,
+      "pair": [
+        11,
+        29
+      ],
+      "root": 1,
+      "slack": 249
+    },
+    {
+      "capacity_after_shared_pq": 269,
+      "full_slots": 270,
+      "labels": 2,
+      "pair": [
+        11,
+        31
+      ],
+      "root": 1,
+      "slack": 267
+    },
+    {
+      "capacity_after_shared_pq": 323,
+      "full_slots": 324,
+      "labels": 1,
+      "pair": [
+        11,
+        37
+      ],
+      "root": 1,
+      "slack": 322
+    },
+    {
+      "capacity_after_shared_pq": 359,
+      "full_slots": 360,
+      "labels": 1,
+      "pair": [
+        11,
+        41
+      ],
+      "root": 1,
+      "slack": 358
+    },
+    {
+      "capacity_after_shared_pq": 175,
+      "full_slots": 176,
+      "labels": 5,
+      "pair": [
+        13,
+        17
+      ],
+      "root": 1,
+      "slack": 170
+    },
+    {
+      "capacity_after_shared_pq": 197,
+      "full_slots": 198,
+      "labels": 4,
+      "pair": [
+        13,
+        19
+      ],
+      "root": 1,
+      "slack": 193
+    },
+    {
+      "capacity_after_shared_pq": 241,
+      "full_slots": 242,
+      "labels": 3,
+      "pair": [
+        13,
+        23
+      ],
+      "root": 1,
+      "slack": 238
+    },
+    {
+      "capacity_after_shared_pq": 307,
+      "full_slots": 308,
+      "labels": 3,
+      "pair": [
+        13,
+        29
+      ],
+      "root": 1,
+      "slack": 304
+    },
+    {
+      "capacity_after_shared_pq": 329,
+      "full_slots": 330,
+      "labels": 2,
+      "pair": [
+        13,
+        31
+      ],
+      "root": 1,
+      "slack": 327
+    },
+    {
+      "capacity_after_shared_pq": 395,
+      "full_slots": 396,
+      "labels": 1,
+      "pair": [
+        13,
+        37
+      ],
+      "root": 1,
+      "slack": 394
+    },
+    {
+      "capacity_after_shared_pq": 439,
+      "full_slots": 440,
+      "labels": 1,
+      "pair": [
+        13,
+        41
+      ],
+      "root": 1,
+      "slack": 438
+    },
+    {
+      "capacity_after_shared_pq": 269,
+      "full_slots": 270,
+      "labels": 8,
+      "pair": [
+        17,
+        19
+      ],
+      "root": 1,
+      "slack": 261
+    },
+    {
+      "capacity_after_shared_pq": 329,
+      "full_slots": 330,
+      "labels": 6,
+      "pair": [
+        17,
+        23
+      ],
+      "root": 1,
+      "slack": 323
+    },
+    {
+      "capacity_after_shared_pq": 419,
+      "full_slots": 420,
+      "labels": 4,
+      "pair": [
+        17,
+        29
+      ],
+      "root": 1,
+      "slack": 415
+    },
+    {
+      "capacity_after_shared_pq": 449,
+      "full_slots": 450,
+      "labels": 3,
+      "pair": [
+        17,
+        31
+      ],
+      "root": 1,
+      "slack": 446
+    },
+    {
+      "capacity_after_shared_pq": 539,
+      "full_slots": 540,
+      "labels": 2,
+      "pair": [
+        17,
+        37
+      ],
+      "root": 1,
+      "slack": 537
+    },
+    {
+      "capacity_after_shared_pq": 599,
+      "full_slots": 600,
+      "labels": 2,
+      "pair": [
+        17,
+        41
+      ],
+      "root": 1,
+      "slack": 597
+    },
+    {
+      "capacity_after_shared_pq": 373,
+      "full_slots": 374,
+      "labels": 8,
+      "pair": [
+        19,
+        23
+      ],
+      "root": 1,
+      "slack": 365
+    },
+    {
+      "capacity_after_shared_pq": 475,
+      "full_slots": 476,
+      "labels": 4,
+      "pair": [
+        19,
+        29
+      ],
+      "root": 1,
+      "slack": 471
+    },
+    {
+      "capacity_after_shared_pq": 509,
+      "full_slots": 510,
+      "labels": 4,
+      "pair": [
+        19,
+        31
+      ],
+      "root": 1,
+      "slack": 505
+    },
+    {
+      "capacity_after_shared_pq": 611,
+      "full_slots": 612,
+      "labels": 3,
+      "pair": [
+        19,
+        37
+      ],
+      "root": 1,
+      "slack": 608
+    },
+    {
+      "capacity_after_shared_pq": 679,
+      "full_slots": 680,
+      "labels": 3,
+      "pair": [
+        19,
+        41
+      ],
+      "root": 1,
+      "slack": 676
+    },
+    {
+      "capacity_after_shared_pq": 587,
+      "full_slots": 588,
+      "labels": 6,
+      "pair": [
+        23,
+        29
+      ],
+      "root": 1,
+      "slack": 581
+    },
+    {
+      "capacity_after_shared_pq": 629,
+      "full_slots": 630,
+      "labels": 6,
+      "pair": [
+        23,
+        31
+      ],
+      "root": 1,
+      "slack": 623
+    },
+    {
+      "capacity_after_shared_pq": 755,
+      "full_slots": 756,
+      "labels": 5,
+      "pair": [
+        23,
+        37
+      ],
+      "root": 1,
+      "slack": 750
+    },
+    {
+      "capacity_after_shared_pq": 839,
+      "full_slots": 840,
+      "labels": 5,
+      "pair": [
+        23,
+        41
+      ],
+      "root": 1,
+      "slack": 834
+    },
+    {
+      "capacity_after_shared_pq": 809,
+      "full_slots": 810,
+      "labels": 5,
+      "pair": [
+        29,
+        31
+      ],
+      "root": 1,
+      "slack": 804
+    },
+    {
+      "capacity_after_shared_pq": 971,
+      "full_slots": 972,
+      "labels": 4,
+      "pair": [
+        29,
+        37
+      ],
+      "root": 1,
+      "slack": 967
+    },
+    {
+      "capacity_after_shared_pq": 1079,
+      "full_slots": 1080,
+      "labels": 4,
+      "pair": [
+        29,
+        41
+      ],
+      "root": 1,
+      "slack": 1075
+    },
+    {
+      "capacity_after_shared_pq": 1043,
+      "full_slots": 1044,
+      "labels": 4,
+      "pair": [
+        31,
+        37
+      ],
+      "root": 1,
+      "slack": 1039
+    },
+    {
+      "capacity_after_shared_pq": 1159,
+      "full_slots": 1160,
+      "labels": 4,
+      "pair": [
+        31,
+        41
+      ],
+      "root": 1,
+      "slack": 1155
+    },
+    {
+      "capacity_after_shared_pq": 1399,
+      "full_slots": 1400,
+      "labels": 4,
+      "pair": [
+        37,
+        41
+      ],
+      "root": 1,
+      "slack": 1395
+    },
+    {
+      "capacity_after_shared_pq": 14,
+      "full_slots": 15,
+      "labels": 10,
+      "pair": [
+        5,
+        7
+      ],
+      "root": 2,
+      "slack": 4
+    },
+    {
+      "capacity_after_shared_pq": 26,
+      "full_slots": 27,
+      "labels": 7,
+      "pair": [
+        5,
+        11
+      ],
+      "root": 2,
+      "slack": 19
+    },
+    {
+      "capacity_after_shared_pq": 32,
+      "full_slots": 33,
+      "labels": 4,
+      "pair": [
+        5,
+        13
+      ],
+      "root": 2,
+      "slack": 28
+    },
+    {
+      "capacity_after_shared_pq": 44,
+      "full_slots": 45,
+      "labels": 4,
+      "pair": [
+        5,
+        17
+      ],
+      "root": 2,
+      "slack": 40
+    },
+    {
+      "capacity_after_shared_pq": 50,
+      "full_slots": 51,
+      "labels": 2,
+      "pair": [
+        5,
+        19
+      ],
+      "root": 2,
+      "slack": 48
+    },
+    {
+      "capacity_after_shared_pq": 62,
+      "full_slots": 63,
+      "labels": 2,
+      "pair": [
+        5,
+        23
+      ],
+      "root": 2,
+      "slack": 60
+    },
+    {
+      "capacity_after_shared_pq": 80,
+      "full_slots": 81,
+      "labels": 1,
+      "pair": [
+        5,
+        29
+      ],
+      "root": 2,
+      "slack": 79
+    },
+    {
+      "capacity_after_shared_pq": 86,
+      "full_slots": 87,
+      "labels": 0,
+      "pair": [
+        5,
+        31
+      ],
+      "root": 2,
+      "slack": 86
+    },
+    {
+      "capacity_after_shared_pq": 104,
+      "full_slots": 105,
+      "labels": 0,
+      "pair": [
+        5,
+        37
+      ],
+      "root": 2,
+      "slack": 104
+    },
+    {
+      "capacity_after_shared_pq": 116,
+      "full_slots": 117,
+      "labels": 0,
+      "pair": [
+        5,
+        41
+      ],
+      "root": 2,
+      "slack": 116
+    },
+    {
+      "capacity_after_shared_pq": 35,
+      "full_slots": 36,
+      "labels": 28,
+      "pair": [
+        7,
+        11
+      ],
+      "root": 2,
+      "slack": 7
+    },
+    {
+      "capacity_after_shared_pq": 43,
+      "full_slots": 44,
+      "labels": 37,
+      "pair": [
+        7,
+        13
+      ],
+      "root": 2,
+      "slack": 6
+    },
+    {
+      "capacity_after_shared_pq": 59,
+      "full_slots": 60,
+      "labels": 44,
+      "pair": [
+        7,
+        17
+      ],
+      "root": 2,
+      "slack": 15
+    },
+    {
+      "capacity_after_shared_pq": 67,
+      "full_slots": 68,
+      "labels": 43,
+      "pair": [
+        7,
+        19
+      ],
+      "root": 2,
+      "slack": 24
+    },
+    {
+      "capacity_after_shared_pq": 83,
+      "full_slots": 84,
+      "labels": 41,
+      "pair": [
+        7,
+        23
+      ],
+      "root": 2,
+      "slack": 42
+    },
+    {
+      "capacity_after_shared_pq": 107,
+      "full_slots": 108,
+      "labels": 37,
+      "pair": [
+        7,
+        29
+      ],
+      "root": 2,
+      "slack": 70
+    },
+    {
+      "capacity_after_shared_pq": 115,
+      "full_slots": 116,
+      "labels": 37,
+      "pair": [
+        7,
+        31
+      ],
+      "root": 2,
+      "slack": 78
+    },
+    {
+      "capacity_after_shared_pq": 139,
+      "full_slots": 140,
+      "labels": 35,
+      "pair": [
+        7,
+        37
+      ],
+      "root": 2,
+      "slack": 104
+    },
+    {
+      "capacity_after_shared_pq": 155,
+      "full_slots": 156,
+      "labels": 34,
+      "pair": [
+        7,
+        41
+      ],
+      "root": 2,
+      "slack": 121
+    },
+    {
+      "capacity_after_shared_pq": 87,
+      "full_slots": 88,
+      "labels": 49,
+      "pair": [
+        11,
+        13
+      ],
+      "root": 2,
+      "slack": 38
+    },
+    {
+      "capacity_after_shared_pq": 119,
+      "full_slots": 120,
+      "labels": 54,
+      "pair": [
+        11,
+        17
+      ],
+      "root": 2,
+      "slack": 65
+    },
+    {
+      "capacity_after_shared_pq": 135,
+      "full_slots": 136,
+      "labels": 57,
+      "pair": [
+        11,
+        19
+      ],
+      "root": 2,
+      "slack": 78
+    },
+    {
+      "capacity_after_shared_pq": 167,
+      "full_slots": 168,
+      "labels": 62,
+      "pair": [
+        11,
+        23
+      ],
+      "root": 2,
+      "slack": 105
+    },
+    {
+      "capacity_after_shared_pq": 215,
+      "full_slots": 216,
+      "labels": 65,
+      "pair": [
+        11,
+        29
+      ],
+      "root": 2,
+      "slack": 150
+    },
+    {
+      "capacity_after_shared_pq": 231,
+      "full_slots": 232,
+      "labels": 63,
+      "pair": [
+        11,
+        31
+      ],
+      "root": 2,
+      "slack": 168
+    },
+    {
+      "capacity_after_shared_pq": 279,
+      "full_slots": 280,
+      "labels": 58,
+      "pair": [
+        11,
+        37
+      ],
+      "root": 2,
+      "slack": 221
+    },
+    {
+      "capacity_after_shared_pq": 311,
+      "full_slots": 312,
+      "labels": 52,
+      "pair": [
+        11,
+        41
+      ],
+      "root": 2,
+      "slack": 259
+    },
+    {
+      "capacity_after_shared_pq": 149,
+      "full_slots": 150,
+      "labels": 63,
+      "pair": [
+        13,
+        17
+      ],
+      "root": 2,
+      "slack": 86
+    },
+    {
+      "capacity_after_shared_pq": 169,
+      "full_slots": 170,
+      "labels": 68,
+      "pair": [
+        13,
+        19
+      ],
+      "root": 2,
+      "slack": 101
+    },
+    {
+      "capacity_after_shared_pq": 209,
+      "full_slots": 210,
+      "labels": 84,
+      "pair": [
+        13,
+        23
+      ],
+      "root": 2,
+      "slack": 125
+    },
+    {
+      "capacity_after_shared_pq": 269,
+      "full_slots": 270,
+      "labels": 77,
+      "pair": [
+        13,
+        29
+      ],
+      "root": 2,
+      "slack": 192
+    },
+    {
+      "capacity_after_shared_pq": 289,
+      "full_slots": 290,
+      "labels": 75,
+      "pair": [
+        13,
+        31
+      ],
+      "root": 2,
+      "slack": 214
+    },
+    {
+      "capacity_after_shared_pq": 349,
+      "full_slots": 350,
+      "labels": 72,
+      "pair": [
+        13,
+        37
+      ],
+      "root": 2,
+      "slack": 277
+    },
+    {
+      "capacity_after_shared_pq": 389,
+      "full_slots": 390,
+      "labels": 67,
+      "pair": [
+        13,
+        41
+      ],
+      "root": 2,
+      "slack": 322
+    },
+    {
+      "capacity_after_shared_pq": 237,
+      "full_slots": 238,
+      "labels": 96,
+      "pair": [
+        17,
+        19
+      ],
+      "root": 2,
+      "slack": 141
+    },
+    {
+      "capacity_after_shared_pq": 293,
+      "full_slots": 294,
+      "labels": 101,
+      "pair": [
+        17,
+        23
+      ],
+      "root": 2,
+      "slack": 192
+    },
+    {
+      "capacity_after_shared_pq": 377,
+      "full_slots": 378,
+      "labels": 94,
+      "pair": [
+        17,
+        29
+      ],
+      "root": 2,
+      "slack": 283
+    },
+    {
+      "capacity_after_shared_pq": 405,
+      "full_slots": 406,
+      "labels": 91,
+      "pair": [
+        17,
+        31
+      ],
+      "root": 2,
+      "slack": 314
+    },
+    {
+      "capacity_after_shared_pq": 489,
+      "full_slots": 490,
+      "labels": 87,
+      "pair": [
+        17,
+        37
+      ],
+      "root": 2,
+      "slack": 402
+    },
+    {
+      "capacity_after_shared_pq": 545,
+      "full_slots": 546,
+      "labels": 85,
+      "pair": [
+        17,
+        41
+      ],
+      "root": 2,
+      "slack": 460
+    },
+    {
+      "capacity_after_shared_pq": 335,
+      "full_slots": 336,
+      "labels": 103,
+      "pair": [
+        19,
+        23
+      ],
+      "root": 2,
+      "slack": 232
+    },
+    {
+      "capacity_after_shared_pq": 431,
+      "full_slots": 432,
+      "labels": 99,
+      "pair": [
+        19,
+        29
+      ],
+      "root": 2,
+      "slack": 332
+    },
+    {
+      "capacity_after_shared_pq": 463,
+      "full_slots": 464,
+      "labels": 97,
+      "pair": [
+        19,
+        31
+      ],
+      "root": 2,
+      "slack": 366
+    },
+    {
+      "capacity_after_shared_pq": 559,
+      "full_slots": 560,
+      "labels": 93,
+      "pair": [
+        19,
+        37
+      ],
+      "root": 2,
+      "slack": 466
+    },
+    {
+      "capacity_after_shared_pq": 623,
+      "full_slots": 624,
+      "labels": 91,
+      "pair": [
+        19,
+        41
+      ],
+      "root": 2,
+      "slack": 532
+    },
+    {
+      "capacity_after_shared_pq": 539,
+      "full_slots": 540,
+      "labels": 107,
+      "pair": [
+        23,
+        29
+      ],
+      "root": 2,
+      "slack": 432
+    },
+    {
+      "capacity_after_shared_pq": 579,
+      "full_slots": 580,
+      "labels": 106,
+      "pair": [
+        23,
+        31
+      ],
+      "root": 2,
+      "slack": 473
+    },
+    {
+      "capacity_after_shared_pq": 699,
+      "full_slots": 700,
+      "labels": 103,
+      "pair": [
+        23,
+        37
+      ],
+      "root": 2,
+      "slack": 596
+    },
+    {
+      "capacity_after_shared_pq": 779,
+      "full_slots": 780,
+      "labels": 97,
+      "pair": [
+        23,
+        41
+      ],
+      "root": 2,
+      "slack": 682
+    },
+    {
+      "capacity_after_shared_pq": 753,
+      "full_slots": 754,
+      "labels": 114,
+      "pair": [
+        29,
+        31
+      ],
+      "root": 2,
+      "slack": 639
+    },
+    {
+      "capacity_after_shared_pq": 909,
+      "full_slots": 910,
+      "labels": 109,
+      "pair": [
+        29,
+        37
+      ],
+      "root": 2,
+      "slack": 800
+    },
+    {
+      "capacity_after_shared_pq": 1013,
+      "full_slots": 1014,
+      "labels": 104,
+      "pair": [
+        29,
+        41
+      ],
+      "root": 2,
+      "slack": 909
+    },
+    {
+      "capacity_after_shared_pq": 979,
+      "full_slots": 980,
+      "labels": 110,
+      "pair": [
+        31,
+        37
+      ],
+      "root": 2,
+      "slack": 869
+    },
+    {
+      "capacity_after_shared_pq": 1091,
+      "full_slots": 1092,
+      "labels": 107,
+      "pair": [
+        31,
+        41
+      ],
+      "root": 2,
+      "slack": 984
+    },
+    {
+      "capacity_after_shared_pq": 1325,
+      "full_slots": 1326,
+      "labels": 104,
+      "pair": [
+        37,
+        41
+      ],
+      "root": 2,
+      "slack": 1221
+    }
+  ],
+  "checks": 672,
+  "contract": "FC36 original profile/star roots and numerical inventory; separate source-concentrated full-grid first-depth pair relaxations, one common old pq phase (3,3); no joint mixed-phase realization or all-height inference",
+  "input": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/fibre_credit_actual_roots_input.json",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "minimum_slack_after_shared_cell": 0,
+  "source_layout": "pure q at 0; pure q^e at 1+q^(e-1); first star at 2; higher star at 1+2q^(e-1)",
+  "source_vectors": [
+    {
+      "full_roots": [
+        3,
+        4
+      ],
+      "partial_mass": "313/625",
+      "prime": 5,
+      "root": 1,
+      "sum": "1563/625"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "partial_mass": "2001/2401",
+      "prime": 7,
+      "root": 1,
+      "sum": "14006/2401"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "partial_mass": "1198/1331",
+      "prime": 11,
+      "root": 1,
+      "sum": "13177/1331"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "partial_mass": "2014/2197",
+      "prime": 13,
+      "root": 1,
+      "sum": "26181/2197"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "partial_mass": "4606/4913",
+      "prime": 17,
+      "root": 1,
+      "sum": "78301/4913"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "partial_mass": "6478/6859",
+      "prime": 19,
+      "root": 1,
+      "sum": "123081/6859"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "partial_mass": "11614/12167",
+      "prime": 23,
+      "root": 1,
+      "sum": "267121/12167"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "partial_mass": "811/841",
+      "prime": 29,
+      "root": 1,
+      "sum": "23518/841"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "partial_mass": "929/961",
+      "prime": 31,
+      "root": 1,
+      "sum": "28798/961"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "partial_mass": "1331/1369",
+      "prime": 37,
+      "root": 1,
+      "sum": "49246/1369"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "partial_mass": "1639/1681",
+      "prime": 41,
+      "root": 1,
+      "sum": "67198/1681"
+    },
+    {
+      "full_roots": [
+        2,
+        3,
+        4
+      ],
+      "partial_mass": "469/625",
+      "prime": 5,
+      "root": 2,
+      "sum": "2344/625"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "partial_mass": "1601/2401",
+      "prime": 7,
+      "root": 2,
+      "sum": "11205/2401"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "partial_mass": "1065/1331",
+      "prime": 11,
+      "root": 2,
+      "sum": "11713/1331"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "partial_mass": "1831/2197",
+      "prime": 13,
+      "root": 2,
+      "sum": "23801/2197"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "partial_mass": "4299/4913",
+      "prime": 17,
+      "root": 2,
+      "sum": "73081/4913"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "partial_mass": "6097/6859",
+      "prime": 19,
+      "root": 2,
+      "sum": "115841/6859"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "partial_mass": "11061/12167",
+      "prime": 23,
+      "root": 2,
+      "sum": "254401/12167"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "partial_mass": "781/841",
+      "prime": 29,
+      "root": 2,
+      "sum": "22647/841"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "partial_mass": "897/961",
+      "prime": 31,
+      "root": 2,
+      "sum": "27805/961"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "partial_mass": "1293/1369",
+      "prime": 37,
+      "root": 2,
+      "sum": "47839/1369"
+    },
+    {
+      "full_roots": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "partial_mass": "1597/1681",
+      "prime": 41,
+      "root": 2,
+      "sum": "65475/1681"
+    }
+  ],
+  "zero_deficit_buckets": 110
+}

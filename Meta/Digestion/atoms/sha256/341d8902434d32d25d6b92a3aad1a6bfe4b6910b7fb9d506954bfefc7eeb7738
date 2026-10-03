@@ -1,0 +1,22 @@
+## 331. 实际 CA 素赋值对辅助黄金范数的排除界
+
+沿用 §317 的实际 CA 宿主、完整素支撑和同源最优价格，将这些输入与既有黄金单位分类及 Fibonacci 赋值公式组合。
+
+记 $P=P^+(C)$，$a_p=v_p(C)$。取使 $C$ 最大化 $Z(n)n^{-\epsilon}$ 的任一正价格，允许并列极大点。既有接口给
+
+$$
+p\le P\Longrightarrow a_p\ge1,\qquad
+\epsilon P\log P<1,\qquad \log C\sim P.
+\tag{331.1}
+$$
+
+设正整数 $n$ 被 $C$ 整除，$m$ 为 $n\varphi$ 的最近整数，定义
+
+$$
+E=|m-n\varphi|=\|n\varphi\|,\qquad
+K=m^2-mn-n^2,\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{331.2}
+$$
+
+这里 $K=Q(m-n,n)$，其中 $Q(a,b)=a^2+ab-b^2$ 是项目已有的黄金范数。组成 $(m-n,n)$ 是为相位误差构造的辅助黄金整数，不是数量 $n$ 的规范五窗口组成；不能把两份来源未经证明地认成同一个地址。
+

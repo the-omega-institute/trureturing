@@ -1,0 +1,56 @@
+**定理 208.2（整个有限区间的潜在 Robin 反例计数）。** 设 $1<A\le X$，令 $A\to\infty$。则存在绝对常数 $C_0$ 和阈值 $A_0$，使每个 $X\ge A\ge A_0$ 都有
+
+$$
+\begin{aligned}
+&\#\{n\in\mathbb N:A\le n\le X,
+\ Z(n)\ge e^\gamma\log\log n\}\\
+&\quad\le
+\exp\left(
+\log\frac XA
++\frac{\pi^2}{6}\frac{\log A}{(\log\log A)^2}
++C_0\frac{\log A}{(\log\log A)^3}
+\right).
+\end{aligned}
+\tag{208.7}
+$$
+
+证明。令
+
+$$
+t=e^\gamma\log\log A,\qquad
+y=\log A,\qquad s=y\log y.
+$$
+
+增大固定阈值 $A_0$ 后，$t\ge1$ 且 $s\ge e$。若 $n\ge A$ 且
+$Z(n)\ge e^\gamma\log\log n$，则 $Z(n)\ge t$。式（208.5）给计数至多为 $XW(s)t^{-s}$。
+
+现在式（208.6）中的 $z$ 恰好等于 $y$，且
+
+$$
+t=e^\gamma\log y.
+$$
+
+因此式（208.6）的第一项与 $s\log t$ 精确相消：
+
+$$
+\log\bigl(XW(s)t^{-s}\bigr)
+=\log X-y
++\frac{\pi^2}{6}\frac y{(\log y)^2}
++O\left(\frac y{(\log y)^3}\right).
+$$
+
+代入 $y=\log A$，并取所引余项的一侧绝对上界，得到式（208.7）。$\square$
+
+原文 Lemma 6 还对 $t\ge1$、$y=e^{t e^{-\gamma}}$ 给出
+
+$$
+\min_{s\ge e}W(s)t^{-s}
+=\exp\left(
+-y+\frac{\pi^2}{6}\frac y{(\log y)^2}
++O\left(\frac y{(\log y)^3}\right)
+\right)
+\quad(t\to\infty).
+$$
+
+这是与式（208.7）一致的最优化背景；本节证明已由 Lemma 5 的显式矩阶完成，不依赖最小值存在或另行求解鞍点。
+

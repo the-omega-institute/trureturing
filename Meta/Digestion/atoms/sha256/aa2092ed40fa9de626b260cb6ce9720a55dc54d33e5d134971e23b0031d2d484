@@ -1,0 +1,57 @@
+**定理 220.1（累计过深赋值的有限一阶矩）。** 对所有 $s\ge4$、$q\ge4$，
+
+$$
+1\le W_{s,q}:=\mathbb E_{\mu_s}E_q(d)
+\le\mathfrak A_{s,q}:=
+\exp\!\left(\frac{2e^2s^2(2+\log q)}{q^2}\right).
+\tag{220.3}
+$$
+
+证明。有限组素赋值在同一个 Euler 概率 $\mu_s$ 下独立。
+由 §216 的局部界 $\mu_s\{v_p(d)=j\}\le2e^2s^2p^{-2j}$，记 $k=k_p(q)$，得
+
+$$
+\begin{aligned}
+\mathbb E_{\mu_s}p^{(v_p(d)-k)_+}
+&=1+\sum_{j>k}(p^{j-k}-1)\mu_s\{v_p(d)=j\}\\
+&\le1+2e^2s^2\sum_{j>k}p^{j-k}p^{-2j}
+=1+\frac{2e^2s^2p^{-2k}}{p-1}.
+\end{aligned}
+\tag{220.4}
+$$
+
+令 $N=\lfloor q\rfloor$。对 $p\le q$，有 $p^{k_p(q)}\ge q$，所以
+
+$$
+\sum_{p\le q}\frac{p^{-2k_p(q)}}{p-1}
+\le q^{-2}\sum_{m=1}^{N-1}\frac1m
+\le\frac{1+\log q}{q^2}.
+$$
+
+对 $p>q$，有 $k_p(q)=1$。利用
+
+$$
+\frac1{m^2(m-1)}
+\le\frac12\left(\frac1{(m-1)^2}-\frac1{m^2}\right)
+$$
+
+与 $N\ge3q/4$，得到
+
+$$
+\sum_{p>q}\frac{p^{-2k_p(q)}}{p-1}
+\le\sum_{m>N}\frac1{m^2(m-1)}
+\le\frac1{2N^2}\le\frac1{q^2}.
+$$
+
+先对有限素数集合相乘，再用 $\log(1+u)\le u$，得到式（220.3）的统一上界。
+有限乘积逐点递增至 $E_q(d)$，单调收敛给出完整一阶矩及其有限性。$\square$
+
+尤其有
+
+$$
+W_{s,s}\le e^{4e^2}s^{2e^2},\qquad
+W_{s,s^2}\le\exp\!\left(\frac{4e^2(1+\log s)}{s^2}\right)
+=1+O(\log s/s^2).
+\tag{220.5}
+$$
+

@@ -1,0 +1,16 @@
+### 232.1 公共核心的有限分离条件
+
+取正整数 $m,n_\circ$、整数 $c$，满足 $(c,m)=1$。令 $I$ 为非空有限连续整数区间，并要求每个
+
+$$
+N_g=c+mg\quad(g\in I)
+$$
+
+均为正整数。记 $T_I=|I|$、$X=\max_{g\in I}N_g$ 及
+$\operatorname{diam}(I)=\max I-\min I=T_I-1$。给定一个非负亏损函数 $J(d)$、阈值 $J_0\ge0$，定义全部低亏损除数命中的集合
+
+$$
+E^*=\{g\in I:\exists d\mid N_g,\ J(d)\le J_0\}.
+\tag{232.1}
+$$
+

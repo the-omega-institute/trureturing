@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7e740f551157edc7fa1d57f0d6ae4fc54cea37788f5a64d4b9167a219cd4da67
+  normalized_sha256: sha256:7e740f551157edc7fa1d57f0d6ae4fc54cea37788f5a64d4b9167a219cd4da67
+cas_ref: sha256:7e740f551157edc7fa1d57f0d6ae4fc54cea37788f5a64d4b9167a219cd4da67
+coverage_gids:
+  - gid: D5/S0/Computability/ClausePreprocessorClock.pre_total_clock
+    target_statement_id: sha256:cd746424857023515e8447a166e1ada3cc1141020cf87529e16e95c31912340b
+receipts:
+  unresolved_subitems: []

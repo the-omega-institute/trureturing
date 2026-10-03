@@ -45,7 +45,8 @@ private theorem density_hermitian {n : Type*} [Fintype n] [DecidableEq n]
   (Matrix.nonneg_iff_posSemidef.mp
     (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)).isHermitian
 
-private theorem entropy_eq_sum {n : Type*} [Fintype n] [DecidableEq n]
+/-- The von Neumann entropy is the sum of `negMulLog` over the eigenvalues. -/
+theorem entropy_eq_sum {n : Type*} [Fintype n] [DecidableEq n]
     (rho : DensityState n) :
     vonNeumannEntropy rho = ∑ i, Real.negMulLog ((density_hermitian rho).eigenvalues i) := by
   let M : Matrix n n ℂ := CStarMatrix.ofMatrix.symm rho.1

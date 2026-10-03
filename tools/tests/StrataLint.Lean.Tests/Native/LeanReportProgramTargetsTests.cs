@@ -20,8 +20,10 @@ public sealed class LeanReportProgramTargetsTests
     [InlineData("valid", "invalid", 0, 2, "", false, false, "lean_targets requires")]
     [InlineData("valid", "malformed", 0, 2, "", false, true, "JSONDecodeError", true)]
     [InlineData("valid", "non-list", 0, 2, "", false, true, "lean_targets requires", true)]
-    [InlineData("valid", "invalid-registered", 0, 2, "", false, true, "lean_targets requires", true)]
-    [InlineData("valid", "registered", 0, 0, "ensure|build FixtureAudit", true, true, null)]
+    [InlineData("valid", "invalid-registered", 0, 0,
+        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector leanInspectorInterface/LeanInformationAuditInterface reg/Reg regInspector/LeanInformationAuditRegTests", true, true, null, true)]
+    [InlineData("valid", "registered", 0, 0,
+        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector leanInspectorInterface/LeanInformationAuditInterface reg/Reg regInspector/LeanInformationAuditRegTests", true, true, null)]
     [InlineData("valid", "both", 0, 0,
         "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
     [InlineData("valid", "none", 0, 0, "", true, true, null, true)]
@@ -57,7 +59,7 @@ public sealed class LeanReportProgramTargetsTests
                         else ['FixtureAudit'])
                 print(json.dumps(dict(exit=process.returncode, stdout=process.stdout,
                     stderr=process.stderr, calls=calls, lake=str(fixture.lake),
-                    workspace=str((fixture.root / 'Reg').resolve()),
+                    workspace=str((fixture.root / 'tools/lean-inspector-reg').resolve()),
                     receipt_exists=publication.member(fixture.output, '.reuse.json').is_file(),
                     seed_unchanged=all(path.read_bytes() == before
                         for path, before in fixture.seed_before.items()),

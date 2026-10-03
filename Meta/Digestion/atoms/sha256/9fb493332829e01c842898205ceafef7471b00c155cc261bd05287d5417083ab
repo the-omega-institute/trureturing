@@ -1,0 +1,21 @@
+### 定理 283.4 非分裂素数 137 的相位交替与实际分支消失
+
+对原 Fibonacci 序列，素数 $137$ 满足
+\[
+z(137)=69=3\cdot23,\qquad h_{137}=1,\qquad\varepsilon_{137}=-1.
+\tag{283.15}
+\]
+从而
+\[
+r_+=24,\quad r_-=114,\qquad
+\mathcal E_{137,a}=
+\{n\ge1:\ n\equiv0\pmod{138}\}
+\cup
+\begin{cases}
+\{n\ge1:\ n\equiv114\pmod{138}\},&a=1,\\
+\varnothing,&a\ge2.
+\end{cases}
+\tag{283.16}
+\]
+指数升到二时，候选相位移到 $24\pmod{138}$，但实际互素扩张仍失败；相位合法与深度匹配是须分别核对的两个要求。
+

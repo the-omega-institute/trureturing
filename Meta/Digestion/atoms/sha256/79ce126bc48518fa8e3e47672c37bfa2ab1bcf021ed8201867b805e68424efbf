@@ -1,0 +1,16 @@
+**Theorem 53.8 (Long horizontal-tail bound).** For a once continuously differentiable kernel supported in [1/2, 2], a positive logarithmic-derivative bound constant, and A strictly positive and at most one half, one positive constant bounds the horizontal tail by C times X divided by epsilon times T. The left endpoint is 1 minus A divided by the ninth power of log T; X and T exceed three and epsilon lies strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+lemma I2Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {A C₂ : ℝ} (has_bound : LogDerivZetaHasBound A C₂) (C₂pos : 0 < C₂) (A_in : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 < C),
+    ∀(X : ℝ) (_ : 3 < X) {ε : ℝ} (_ : 0 < ε)
+    (_ : ε < 1) {T : ℝ} (_ : 3 < T),
+    let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+    ‖I₂ SmoothingF ε T X σ₁‖ ≤ C * X / (ε * T)
+```
+

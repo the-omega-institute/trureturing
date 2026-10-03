@@ -1,0 +1,19 @@
+**Theorem 4.1 (explicit normalization witness).** Under the hypotheses
+of Theorem 3.1, let $p$ be a positive prime other than $3$ and suppose
+$p^2\mid 1+9a$. Then
+
+$$
+z=\frac{\theta^2}{p}
+$$
+
+is integral over $\mathbb Z$ but does not belong to
+$A=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot(1+\theta+\theta^2)/3$. Consequently $A$ is a proper
+subring of the full ring of integers of $K$.
+
+Proof. Write $1+9a=p^2t$ with $t\in\mathbb Z$. Then
+$z^3=(1+9a)^2/p^3=pt^2$, so $z$ satisfies a monic polynomial over
+$\mathbb Z$. If $z=u+v\theta+w(1+\theta+\theta^2)/3$ with
+$u,v,w\in\mathbb Z$, compare the coefficient of $\theta^2$ in the
+rational power basis $(1,\theta,\theta^2)$. This gives $1/p=w/3$,
+or $pw=3$, contradicting primality and $p\ne3$.

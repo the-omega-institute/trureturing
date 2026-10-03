@@ -1,0 +1,12 @@
+**定理 313.1（实际全序列的单边检验集合）。** 在上述解析输入下，以下四个命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists L_0\ge16\ \forall L\ge L_0:\quad \mathfrak m_L\ge-K;\\
+&\exists L_0\ge16\ \forall L\ge L_0:\quad\Delta(T_L)\ge0;\\
+&\exists L_0\ge16\ \forall L\ge L_0:\quad\Delta(T_L)>0.
+\end{aligned}
+\tag{313.3}
+\]
+第二项不预设 $m_L^{1/4}b_L$ 有有限极限，不要求 $\mathfrak m_L$ 收敛，也不要求其双边有界。所用整数是（305.1）的确切实际构造，保留（305.3）的同一签名、核心及5040整除性。
+

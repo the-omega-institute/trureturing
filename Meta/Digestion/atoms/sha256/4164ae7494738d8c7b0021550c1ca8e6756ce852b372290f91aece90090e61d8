@@ -1,0 +1,31 @@
+**命题 19.1（零指标、标量返回与完整周期）。** 对每个 $e\ge2$，令
+
+$$
+r(e)=\min\{r\ge1:F_r\equiv0\pmod e\},\qquad
+c_e=F_{r(e)-1}\pmod e,\qquad
+\omega_e=\operatorname{ord}_{B_e^\times}(c_e).
+$$
+
+则
+
+$$
+M^{r(e)}=c_eI,\qquad c_e^2=(-1)^{r(e)},\qquad
+\pi(e)=r(e)\omega_e,\qquad\omega_e\in\{1,2,4\},
+\qquad g^{r(e)}=c_e^{-1}I.
+\tag{19.1}
+$$
+
+若 $r(e)$ 偶，则 $\omega_e\in\{1,2\}$；若 $r(e)$ 奇且 $e>2$，则 $\omega_e=4$。特征二例外为 $r(2)=3,c_2=1,\omega_2=1,\pi(2)=3$。对 $\alpha=(1,0)$，按共同单位倍数取商后的轨道长为 $r(e)$，完整向量轨道长为 $\pi(e)$，每个射影纤维有 $\omega_e$ 个实际轨道标签。
+
+证明。这里的 $r(e)$ 对应母卷[命题 105.2](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L7125)中的 $\rho(e)$；[推论 105.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L7177)给出标量返回子群和零指标整除性质。[定理 120.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L10571)在素数幂本原射影标签上明确区分此返回阶与矩阵／Pisano 周期。以下只把这些既有关系接到完整 Fourier 标签；经典标量乘数公式亦见 Robinson [第 31–32 页](https://www.fq.math.ca/Scanned/1-2/robinson.pdf)。
+
+$M$ 在有限环上可逆，故有正有限阶，$r(e)$ 存在。矩阵式
+
+$$
+M^n=F_{n-1}I+F_nM
+$$
+
+表明 $M^n$ 为标量恰当 $F_n=0$。标量幂在循环群中构成子群，其在整数指数中的原像为 $r(e)\mathbb Z$；因此全部零指标恰是 $r(e)$ 的倍数。在最小返回处得到 $M^{r(e)}=c_eI$；它可逆，$c_e$ 是单位。取行列式得 $c_e^2=(-1)^{r(e)}$，所以 $c_e^4=1$。完整返回 $M^n=I$ 必先有 $n=r(e)t$，此时恰要求 $c_e^t=1$，得到 $\pi(e)=r(e)\omega_e$ 及所列奇偶情形。$e=2$ 的数值由 $F_1=F_2=1,F_3=2$ 给出。一个周期内的零指标为 $0,r(e),\ldots,(\omega_e-1)r(e)$，故 $\omega_e$ 也等于每周期零点数。
+
+取逆转置给 $g^{r(e)}=c_e^{-1}I$。若 $g^k\alpha=u\alpha$，其中 $u\in B_e^\times$，交换性使 $g^k(g\alpha)=u(g\alpha)$；$\alpha,g\alpha$ 成基，故 $g^k=uI$。因此该标签的射影返回恰在标量返回指数发生，轨道长为 $r(e)$；完整轨道长为 $\pi(e)$，每个纤维就是 $\langle c_e\rangle$ 的 $\omega_e$ 个倍数。$\square$
+

@@ -1,0 +1,14 @@
+**假设 308.1（实际质量、矩与核心比值）。** 令 $L\to\infty$，取最终满足 $m/2\le z_L\le m$ 的序列，$D_L=m-z_L$，并假设对有限实数 $a,j$，
+\[
+\frac{D_L}{m}\longrightarrow0,\qquad
+\frac{h_L}{\rho_L^3}\longrightarrow a,\qquad
+\frac{M_L}{\rho_L^6}\longrightarrow j,
+\tag{308.10}
+\]
+\[
+\frac{U_L}{E\ell}\longrightarrow1,
+\qquad\frac m{X_L}\longrightarrow1.
+\tag{308.11}
+\]
+各和按 $z=z_L$ 取值。本假设直接保留实际质量与矩的极限，不要求 $D_L/\rho_L^3$ 收敛，也不从普通素数短区间估计推断模三剩余类规律。
+

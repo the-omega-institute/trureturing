@@ -1,0 +1,4 @@
+## 234. 实际增量亏损与经典极值价格的有限比较
+
+本节把 §232 的源亏损直接接到 [Erdős–Nicolas 的 benefit](../../../Library/ArithSums/erdosnicolas1975repartition.md)。所用增量仍是 [Fan–Kobayashi–Molnar 的既有函数](../../../Library/ArithSums/fankobayashimolnar2025family.md)。以下是经典价格最优条件与局部差分因子的纸面综合，不作原创性声明，也未新增 Lean 证明。参考极值整数不预设属于指定 FIB 窗口或剩余类。
+

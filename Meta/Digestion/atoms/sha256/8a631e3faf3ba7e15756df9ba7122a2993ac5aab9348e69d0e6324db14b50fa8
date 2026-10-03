@@ -1,0 +1,46 @@
+**Theorem 6.4 (Sharp cross-correlation obstruction under identical marginal trajectory laws).** For $k=2$, let $Z$ have
+$$
+\Pr(Z=(0,0))=\Pr(Z=(1,1))=\frac{1+\lambda}{4},
+$$
+$$
+\Pr(Z=(0,1))=\Pr(Z=(1,0))=\frac{1-\lambda}{4},
+\qquad -1\le\lambda\le1,
+$$
+ and evolve by bare substitution $E_n(Z)=\rho^nE_0(Z)$ with no stochastic controls. Then every aggregate quantity history is identical throughout the family, and every single-probe process law is identical. Nevertheless,
+$$
+\operatorname{Cov}(R_1(n),R_2(m))
+=\frac{\lambda}{4}F_{n+2}F_{m+2},
+$$
+while
+$$
+q(c(E_n(Z)))=2F_{n+5}.
+$$
+For equal generations,
+$$
+\varphi^{-2n}\operatorname{Cov}(R_1(n),R_2(n))
+\longrightarrow\frac{\lambda\varphi^4}{20}.
+$$
+The fraction of $\beta$ leaves is $F_{n+2}/F_{n+3}\to\varphi^{-1}$ for every $\lambda$. Define the observation map to be the aggregate trajectory law and the two separate marginal trajectory laws:
+$$
+\mathcal O(\lambda)=
+\left(
+\operatorname{Law}_\lambda\bigl((q(c(E_n(Z))))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_1(n))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_2(n))_{n\ge0}\bigr)
+\right).
+$$
+These data withhold paired sample histories and the joint trajectory law
+$$
+\mathsf J_\lambda=
+\operatorname{Law}_\lambda\bigl((R_1(n),R_2(n))_{n\ge0}\bigr).
+$$
+Let $a$ range over deterministic functions of $\mathcal O$ taking values in $[0,1]$, and let $H$ range over deterministic functions of $\mathcal O$ taking values in probabilities on the joint trajectory space. Then the worst-case absolute-error and total-variation radii are
+$$
+\inf_a\sup_{-1\le\lambda\le1}
+\left|a(\mathcal O(\lambda))-\frac{1+\lambda}{2}\right|=\frac12,
+\qquad
+\inf_H\sup_{-1\le\lambda\le1}
+\operatorname{TV}\bigl(H(\mathcal O(\lambda)),\mathsf J_\lambda\bigr)=\frac12.
+$$
+Here “separate histories” means the separate marginal trajectory laws in $\mathcal O$. Paired common-source samples constitute a different observation map: at any generation the two readouts decode both seed bits and hence reveal their equality.
+

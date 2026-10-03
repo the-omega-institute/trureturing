@@ -1,0 +1,78 @@
+**定理 341.2（保持两频率不动而加入任意微弱的最终正号方向）。** 令 $\alpha=2^{1/4}>0$，对每个正整数 $M$，取
+
+$$
+\gamma^{(M)}=14(1,\alpha,M\alpha^2,M\alpha^3).
+\tag{341.5}
+$$
+
+前两频率及其权重不随 $M$ 改变。设后两频率的权重和为 $w_M$，四频率模型的自身临界储备为 $B_M$，前两频率模型的自身临界储备为 $B_{\rm pair}$。则
+
+$$
+0<w_M\le\frac1{1372M^3},\qquad
+B_M-B_{\rm pair}=2w_M,\qquad
+\sum_{j=0}^3(D_j^{(M)})^{-1}\le\frac{16}{785}<\frac1{40}.
+\tag{341.6}
+$$
+
+令 $t=7T/\pi$，
+
+$$
+d_M(T)=\max\left\{
+\operatorname{dist}(t,\mathbb Z+\tfrac14),
+\operatorname{dist}(t\alpha,\mathbb Z+\tfrac14),
+\operatorname{dist}(tM\alpha^2,\mathbb Z+\tfrac14),
+\operatorname{dist}(tM\alpha^3,\mathbb Z+\tfrac14)\right\}.
+$$
+
+对所有实数 $T\ge1$，取 $K=27\,216\,000$、$c=16/21959$，有
+
+$$
+1\le KM^4T\,d_M(T)^3,\qquad
+\Delta_M(T)\ge\frac c{M^3}d_M(T)^2,\qquad
+c^3T\le K^2M^{17}[T\Delta_M(T)]^3.
+\tag{341.7}
+$$
+
+因此对每个固定正整数 $M$，$T\Delta_M(T)\to\infty$，$\mathfrak M_M(T)>0$ 对全部充分大的实数 $T$ 成立；而前两频率模型 $\mathfrak M_{\rm pair}$ 由定理341.1在任意晚仍有负值。
+
+**证明。** $X^4-2$ 的经典 Eisenstein 不可约性给 $1,\alpha,\alpha^2,\alpha^3$ 的有理线性无关性，乘以非零整数 $M$ 保持该性质。连续 Kronecker 定理给四频率模型的全环面闭包，所以 $A_*=B_M$。每个频率至少为 $14$，得到（341.6）的总质量界；后两频率至少为 $14M$，且 $a(\gamma)\le\gamma^{-3}$，故 $w_M\le2/(14M)^3$。
+
+给四个坐标选择最近的四分之一整数，得到 $q,p_1,p_2,p_3\equiv1\bmod4$。令
+
+$$
+Q=Mq,\qquad P_1=Mp_1,\qquad P_2=p_2,\qquad P_3=p_3.
+$$
+
+与（340.11）相同的起点估计给 $0<q\le12T$、$d_M\le1/2$。三角不等式及 $1<\alpha^j<2$（$j=1,2,3$）给
+
+$$
+|P_1-Q\alpha|\le12M d_M,\qquad
+|P_j-Q\alpha^j|\le4(1+M\alpha^j)d_M\le12M d_M
+\quad(j=2,3).
+$$
+
+使用（340.12）的同一个经典四次范数多项式，对整数 $(Q,P_1,P_2,P_3)$ 置
+
+$$
+U=P_3^2+2P_1^2-4P_2Q,\qquad
+V=2P_3P_1-P_2^2-2Q^2,\qquad N=U^2-2V^2.
+$$
+
+$P_3$ 为奇数已保证 $U$ 为奇数，$P_2$ 为奇数已保证 $V$ 为奇数；$Q,P_1$ 的奇偶性不参与这两项结论。因此对全部正整数 $M$，仍有 $N\equiv7\bmod8$ 和 $|N|\ge1$。这是 §340 非零范数前提的弱化，不要求 $M$ 为奇数。
+
+三项误差均不超过 $12Md_M\le6M$，且 $Q\le12MT$。将（340.12）的四个共轭界逐项应用，得
+
+$$
+|L_0|\le126MT,\qquad |L_j|\le60Md_M\quad(j=1,2,3),
+$$
+
+故 $1\le|N|\le126MT(60Md_M)^3=KM^4Td_M^3$。所有频率小于 $28M$，而 $M\ge1$，从而
+
+$$
+a_{\min}^{(M)}>
+\frac1{28M[1/4+(28M)^2]}
+\ge\frac1{21959M^3}.
+$$
+
+经典 Jordan 正弦界给 $\Delta_M\ge16a_{\min}^{(M)}d_M^2\ge cM^{-3}d_M^2$。将范数界平方并与该不等式的三次方相乘，即得（341.7）的末项。对每个固定 $M$，它使 $T\Delta_M\to\infty$；有限三角和 $F_M$ 有界，$Tr(T)\to0$，故同一临界表达式最终严格正。$\square$
+

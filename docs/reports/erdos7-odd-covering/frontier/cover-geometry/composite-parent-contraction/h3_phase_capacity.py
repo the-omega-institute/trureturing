@@ -87,6 +87,77 @@ for axis,other in ((5,7),(7,5)):
 demand(dict(joint_repair_cases)=={'5':315,'7':210},'all525 same-row or same-column pairs')
 demand(9+45+63+315==432<16*105,'four-class strict modulus-sum descent')
 
+# Actual retained mixed originals permit a moved35 parent with full old liability.
+# All proper-phase tables are inherited from the existing complete2304 list.
+cross_cases=Counter();cross_extrema={};cross_maxima={};redundant_pq=0
+moved_repair_checks=0
+for row in joint_rows:
+    r15,u,r21,v,x0,y0=row['phases']
+    ep,eq=x0==u,y0==v
+    same=r15==r21
+    if not same and ep and eq:
+        redundant_pq+=1
+        demand(all(x%3==0 or(x%3==r15 and x%5==u) or
+                   (x%3==r21 and x%7==v)
+                   for x in range(105) if x%5==x0 and x%7==y0),
+               'both guards cover the entire original35 class')
+        continue
+    guarded=ep or eq
+    case=('same' if same else 'different')+('_guarded' if guarded else '_unguarded')
+    cross_cases[case]+=1
+    cells=tuple({(a,b) for a in range(1,5) for b in range(1,7)
+        if not(r==r15 and a==u) and not(r==r21 and b==v)
+        and(a,b)!=(x0,y0)} for r in(1,2))
+    phase_count=sum(map(len,cells))
+    expected=38-int(not guarded) if same else 36+int(guarded)
+    demand(phase_count==expected,'exact proper-divisor count with guard status')
+    if guarded:
+        single=tuple(cells[i]-cells[1-i] for i in(0,1))
+        doubles=tuple(maximum_matching(table) for table in single)
+        demand(sum(map(len,doubles))<=2,'single-only cross or strip matching capacity')
+        ceiling=phase_count+sum(map(len,doubles))
+        guarded_root=r15 if ep else r21
+        repair_root=3-guarded_root
+        fresh=[crt([(9,repair_root)]),crt([(9,repair_root+3),(5,x0)]),
+               crt([(9,repair_root+6),(7,y0)])]
+        demand({m for _,m in fresh}=={9,45,63},'fresh mixed-guard repair labels')
+        def retained_or_fresh(x):
+            return(x%3==0 or(x%3==r15 and x%5==u) or
+                   (x%3==r21 and x%7==v) or any(x%m==a for a,m in fresh))
+        old=[x for x in range(315) if x%5==x0 and x%7==y0]
+        demand(all(retained_or_fresh(x) for x in old),'full old35 liability is repaired')
+        for a,b in product(range(1,5),range(1,7)):
+            moved=crt([(5,a),(7,b)])
+            target=[x for x in range(315) if x%3 and x%5==a and x%7==b]
+            demand(len(target)==6,'two actual105 roots with three lifts each modulo315')
+            demand(all(x%moved[1]==moved[0] or retained_or_fresh(x)
+                       for x in set(old+target)),'same replacement covers all old and target liability')
+            moved_repair_checks+=1
+    else:
+        doubles=tuple(maximum_matching(table) for table in cells)
+        ceiling=phase_count+sum(map(len,doubles))
+    universal={'same_unguarded':44,'different_unguarded':43,
+               'same_guarded':40,'different_guarded':39}[case]
+    demand(ceiling<=universal,'case-specific inventory bound')
+    # A baseline single per allowed cell plus these doubles realizes this
+    # relaxation; guarded doubles occur only where the opposite root is absent.
+    occupancy={(r,a,b):1+int((a,b) in doubles[r-1])
+               for r in(1,2) for a,b in cells[r-1]}
+    if guarded:
+        demand(all(sum(occupancy.get((r,a,b),0) for r in(1,2))<=2
+                   for a,b in product(range(1,5),range(1,7))),
+               'cross-root capacity in the attained comparison')
+    singleton=next((key for key,value in sorted(occupancy.items()) if value==1),None)
+    demand(singleton is not None,'original105 can occupy a single cell')
+    if ceiling>cross_maxima.get(case,-1):
+        cross_maxima[case]=ceiling
+        cross_extrema[case]=dict(phases=row['phases'],allowed=tuple(map(len,cells)),
+            double_cells=doubles,inventory_ceiling=ceiling,original105_singleton=singleton)
+demand(redundant_pq==48 and sum(cross_cases.values())==2256,'actual nonredundant proper-phase cases')
+demand(cross_maxima=={'same_unguarded':44,'different_unguarded':43,
+                     'same_guarded':40,'different_guarded':39},'attained four case ceilings')
+demand(moved_repair_checks==19584,'all guarded original/target phase pairs')
+
 packet=[]
 for large in (13,17,19):
     support=(5,7,11,large)
@@ -104,8 +175,12 @@ payload=dict(scope='Pure prime phases translated to0 once. All2304 actual choice
     repair=dict(labels=repair_labels,sum=117,joint_period=315,target_phases_checked=105),
     shared_two_phase_repair=dict(labels=(9,45,63,315),sum=432,joint_period=315,
         cases_by_shared_prime=dict(joint_repair_cases),two_phase_pairs_checked=525),
+    retained_mixed_repair=dict(uniform_multiple105_count=44,
+        cases=dict(sorted(cross_cases.items())),redundant_original35_cases=redundant_pq,
+        case_maxima=cross_maxima,comparison_extrema=cross_extrema,
+        fresh_labels=(9,45,63),joint_period=315,original_target_pairs_checked=moved_repair_checks),
     literal_noncover_comb_overfull_packet=packet,
-    premises='One globally number-then-modulus-sum-minimal whole distinct odd cover, H3=1, divisor closure, comparable disjointness. Presence of any105 multiple forces all seven nonunit divisors including105. Each surviving phase has at most2 multiples; the original105 phase has exactly1. The shared four-label repair forces at most3 occupants in any two cells on one row or column of one ternary root, so double-occupied cells form a matching. The old75/46 independent-phase bounds are retained;45/27 are the stronger joint constraints. Finite occupancy extrema are not whole-cover constructions.')
+    premises='One globally number-then-modulus-sum-minimal whole distinct odd cover, H3=1, divisor closure, comparable disjointness. Presence of any105 multiple forces all seven nonunit divisors including105. Each surviving phase has at most2 multiples; the original105 phase has exactly1. The shared four-label repair forces at most3 occupants in any two cells on one row or column of one ternary root, so double-occupied cells form a matching. The old75/46 independent-phase bounds are retained;45/27 are the stronger joint constraints. The retained mixed repair further gives44 total, or43/40/39 under the actual phase cases; it rules out48 redundant original35 phase choices. The earlier45 and root27 bounds remain valid. Finite occupancy extrema are not whole-cover constructions.')
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output',type=Path,help='write the exact result to this explicit path')
 args=parser.parse_args()

@@ -1,0 +1,17 @@
+**定义 337.1（固定证书的对数累计坐标）。** 固定定义335.1的实际 Fibonacci 五分平方密度网格、同一已证实的块导数界及有限真谱标签，不随截止重新选择证书。沿用其 $Z,\mathcal E^{\rm fin},\mathcal S,\mathcal C^{\rm fin},\mathcal L$，以及 §92 的经典积分观察器 $J$。取网格起点 $A_0=A_{k_0}$ 足够晚，使 $t_0=\log A_0\ge2$；有限早段的恢复只改变累计量的一个常数。置
+
+$$
+Y(t)=e^{t/2}J(e^t),\qquad
+\mathscr B(T)=\int_{t_0}^T Y(u)\,du,\qquad
+\mathscr A(T)=\mathcal S(e^T)=\int_{t_0}^T Z(e^u)\,du,
+$$
+
+$$
+d(u)=\frac1{u^2}+\frac2{u^3},\qquad
+R(t)=\int_t^\infty e^{-(u-t)/2}d(u)Y(u)\,du,\qquad
+p(u)=-\frac1u+\frac8{u^3}.
+\tag{337.1}
+$$
+
+本节的 $R$ 专指此谱变换尾积分；它不是 §334 的整数 Robin 正主项。零点频率 $\gamma>0$ 按不同纵坐标列出，重数记为 $m_\gamma$。
+

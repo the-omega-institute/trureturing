@@ -165,7 +165,7 @@ theorem orthogonal_mixture_entropy {ι : Type*} [Fintype ι]
 
 #print axioms orthogonal_mixture_entropy
 
-private noncomputable def pointerState (i : n) : DensityState n := by
+noncomputable def pointerState (i : n) : DensityState n := by
   refine ⟨CStarMatrix.ofMatrix (Matrix.diagonal (fun j => if j = i then 1 else 0)), ?_, ?_⟩
   · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
     apply Matrix.PosSemidef.nonneg
@@ -200,7 +200,7 @@ private theorem pointerState_orthogonal :
   ext a b
   simp [Matrix.diagonal_apply]
 
-private theorem entropy_pointerState (i : n) : vonNeumannEntropy (pointerState i) = 0 := by
+theorem entropy_pointerState (i : n) : vonNeumannEntropy (pointerState i) = 0 := by
   rw [entropy_eq_trace_cfc]
   have hz : cfc Real.negMulLog (pointerState i).1 = 0 := by
     calc

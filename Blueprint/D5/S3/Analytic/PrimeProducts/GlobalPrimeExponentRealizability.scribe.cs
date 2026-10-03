@@ -145,7 +145,7 @@ internal sealed class GlobalPrimeExponentRealizabilityDocument
     private static Formula ZetaRealizationFormula()
     {
         Formula s = F.Id("s");
-        Formula zetaLaw = Seq(Zeta, Underscore, Grp(s));
+        Formula zetaLaw = Seq(StrataLint.Scribe.FormulaDsl.Zeta, Underscore, Grp(s));
         return Disp(Seq(
             D(1), Lt, s, Sp, Rightarrow, Sp,
             Call("Realizes", s, zetaLaw), Dot));
@@ -160,7 +160,7 @@ internal sealed class GlobalPrimeExponentRealizabilityDocument
     {
         Formula s = F.Id("s");
         Formula q = F.Id("q");
-        Formula zetaLaw = Seq(Zeta, Underscore, Grp(s));
+        Formula zetaLaw = Seq(StrataLint.Scribe.FormulaDsl.Zeta, Underscore, Grp(s));
         return Disp(Seq(
             D(1), Lt, s, Sp, Land, Sp, Call("Realizes", s, q),
             Sp, Rightarrow, Sp, q, Eq, zetaLaw, Dot));
@@ -169,7 +169,7 @@ internal sealed class GlobalPrimeExponentRealizabilityDocument
     private static Formula MassFormula() => Disp(Seq(
         F.Id("q"), Open, F.Id("n"), Close, Eq,
         Frac, Grp(F.Id("n"), Caret, Grp(Minus, F.Id("s"))),
-        Grp(Zeta, Open, F.Id("s"), Close), Dot));
+        Grp(StrataLint.Scribe.FormulaDsl.Zeta, Open, F.Id("s"), Close), Dot));
 
     private static Formula ZeroNonrealizationFormula() => Disp(new Formula.Not(Seq(
         Exists, Sp, F.Id("q"), Comma, Sp,
