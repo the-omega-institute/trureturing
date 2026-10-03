@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53abda9c06fcde984123e8a2b688bd082784ff7a5eeced4142c2de58803cbaad
+  normalized_sha256: sha256:53abda9c06fcde984123e8a2b688bd082784ff7a5eeced4142c2de58803cbaad
+cas_ref: sha256:53abda9c06fcde984123e8a2b688bd082784ff7a5eeced4142c2de58803cbaad
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciDyadicQuotientNonsquare.fibonacci_dyadic_quotient_nonsquare
+    target_statement_id: sha256:62d2493b11d0813daea7587cefb23fe7fc24675f1a1729f2326a3182ab327840
+receipts:
+  unresolved_subitems: []

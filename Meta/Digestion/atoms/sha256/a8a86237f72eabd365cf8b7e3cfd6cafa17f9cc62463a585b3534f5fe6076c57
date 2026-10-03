@@ -1,0 +1,13 @@
+**Theorem 1.2 (Fibonacci block).** For every natural number $j\geq 1$ and every
+prime $p$ dividing $C_j$, one has $\tau_p=4\cdot 3^{j+1}$.
+
+The rank of apparition of $p$ is $n$, so $F_n=0$ modulo $p$.
+The Fibonacci-coordinate formula for $\phi^n$ makes it the scalar
+$F_{n-1}$ modulo $p$. Cassini's identity at this odd $n$ gives
+$F_{n-1}^2=-1$ modulo $p$. The block $C_j$ is odd, hence $p\ne2$;
+therefore $-1\ne1$ modulo $p$. Consequently $\phi^n$ has order exactly
+four. The rank $n$ divides the order of $\phi$, because every return
+$\phi^t=1$ forces $F_t=0$ modulo $p$. The order-of-a-power formula now
+gives $\operatorname{ord}(\phi)=4n$, and the faithful matrix representation
+transfers this order to $Q$.
+

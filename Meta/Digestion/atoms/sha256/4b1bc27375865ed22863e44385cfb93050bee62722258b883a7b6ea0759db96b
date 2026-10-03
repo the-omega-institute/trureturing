@@ -1,0 +1,8 @@
+**Definition 53.117 (LogDerivZetaIsHoloSmall).** The predicate $\mathsf{SmallHolo}(\sigma_2)$ requires the logarithmic derivative to be holomorphic on the unordered closed rectangle with real endpoints $\sigma_2,2$ and imaginary endpoints $-3,3$, with the point one removed.
+
+```lean
+def LogDerivZetaIsHoloSmall (σ₂ : ℝ) : Prop :=
+    HolomorphicOn (fun (s : ℂ) ↦ ζ' s / (ζ s))
+    (((uIcc σ₂ 2)  ×ℂ (uIcc (-3) 3)) \ {1})
+```
+

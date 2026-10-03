@@ -1,0 +1,22 @@
+**Theorem 3.1 (cubic suborder).** Let $a$ be an integer, let $K$ be a
+characteristic-zero field with a rational power basis $(1,\theta,\theta^2)$
+of dimension three, and suppose $\theta^3=1+9a$. Set
+$\beta=(1+\theta+\theta^2)/3$. Then
+
+$$
+\theta^2=3\beta-\theta-1,\qquad
+\theta\beta=\beta+3a,\qquad
+\beta^2=\beta+a\theta+2a.
+$$
+
+The integer span $A=\mathbb Z\cdot1+\mathbb Z\cdot\theta+
+\mathbb Z\cdot\beta$ is a subring of $K$ consisting of algebraic
+integers, and its rational span is $K$. Thus $A$ is an order in $K$.
+
+Proof. The first identity is the definition of $\beta$. Multiplying
+that identity by $\theta$ and reducing $\theta^3=1+9a$ gives the
+second; squaring the definition and reducing the same cubic relation
+gives the third. These three products close the integer span under
+multiplication. The integrality and rational-basis claims are the
+$m=1+9a$, $n=c=v=1$, $k=0$ case of Theorem 1.1.
+

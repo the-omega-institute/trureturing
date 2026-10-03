@@ -1,0 +1,23 @@
+# Finite-support square periods
+
+## Abstract
+
+Sink primes determine the exact square-period ratio on finite prime support.
+
+**Theorem 1.1 (Square-period ratio and sinks).**
+
+Lean statement: `D5/S3/Arith/Primes/GoldenFiniteSupportSquarePeriod.golden_finite_support_square_period`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/GoldenFiniteSupportSquarePeriod.golden_finite_support_square_period` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let S be a nonempty finite set of primes greater than five and let M be their product. Write pi(m) for the order of the Fibonacci matrix modulo m, pi_s(m) for the order of its s-th power, and h_p for the p-adic valuation of F_(rho(p)), where rho(p) is the first positive Fibonacci index divisible by p. Draw p to q when p divides pi(q), and call p a sink if no such q belongs to S. Every edge increases its prime label, so the directed graph has no nonempty cycle and its largest prime is a sink. For every positive s coprime to M, pi_s(M^2) divided by pi_s(M) is the product of exactly those sink primes whose depth h_p equals one. The two stride periods are equal exactly when every sink has depth at least two; equality therefore forces depth at least two for the largest prime of S. The equality criterion imposes no depth condition on nonsinks.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Primes/GoldenFiniteSupportSquarePeriod.golden_finite_support_square_period`
+- Dependency: [D5/S3/Arith/GoldenFibonacciModulusPeriod](../GoldenFibonacciModulusPeriod.md)
+- Dependency: [D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod](GoldenPrimePowerMatrixPeriod.md)

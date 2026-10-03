@@ -1,0 +1,14 @@
+**Theorem 69.3 (relative residue degree at three).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+$\mathfrak p\mid(3)$ in $\mathcal O_E$ and every
+$\mathfrak P\mid\mathfrak p$ in $\mathcal O_{N_J}$,
+
+$$
+f(\mathfrak P/\mathfrak p)=1.
+$$
+
+Proof. Approximate an integral element of the tower completion
+by an element of the dense image of the base, close enough to
+preserve its residue. The compatible surjective completion map
+therefore makes the base residue-field map surjective.
+

@@ -1,0 +1,10 @@
+## 5. Finite Fibonacci rank closure
+
+For every natural $p$, let $\rho(p)$ be the least positive $r$ for which
+$p\mid F_r$ when $p$ is prime, and set $\rho(p)=1$ otherwise. For a
+finite set $S$ of primes greater than five, set
+$B=\max(5,\sup S)$, where $\sup\varnothing=0$,
+$H_0=S\cup\{2,3,5\}$, and
+$T(H)=H\cup\bigcup_{p\in H}\operatorname{PrimeDivisors}(\rho(p))$.
+Let $U$ be the set of primes at most $B$, and set $H(S)=T^{|U|}(H_0)$.
+

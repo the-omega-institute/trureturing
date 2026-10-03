@@ -1,0 +1,34 @@
+## 69. Local and Galois structure of the actual common cubic fields
+
+For each integer $j\geq1$, retain the actual Lucas block
+$B_j=L_{3^j}^2+3$ and its designated positive real cube root
+$\theta_j=B_j^{1/3}$. Put $\omega=\exp(2\pi i/3)$ and
+$E=\mathbb Q(\omega)$. For every integer $J\geq0$, define the
+actual subfields of $\mathbb C$
+
+$$
+F_J=\mathbb Q(\theta_1,\ldots,\theta_J),\qquad
+N_J=E(\theta_1,\ldots,\theta_J),
+$$
+
+with $F_0=\mathbb Q$ and $N_0=E$. Write
+
+$$
+c_j=\prod_{p\mid B_j}p^{\lfloor v_p(B_j)/3\rfloor},\qquad
+ d_j=B_j/c_j^3,\qquad
+ R_J=\prod_{j=1}^J\operatorname{rad}(d_j),\qquad R_0=1.
+$$
+
+Thus $c_j$ is the largest positive integer whose cube divides
+$B_j$; it is not the ordinary real cube root rounded down.
+Here $\operatorname{rad}(a)$ is the product of the distinct
+rational prime divisors of the positive integer $a$.
+For a number field $K$, write $\mathcal O_K$ for its integer ring.
+For primes $\mathfrak P\mid\mathfrak p$, write
+$e(\mathfrak P/\mathfrak p)$ and $f(\mathfrak P/\mathfrak p)$
+for the ramification index and residue degree. All primes below
+are nonzero prime ideals. The inertia group at $\mathfrak P$
+is the subgroup acting trivially on its residue field.
+These assertions give separate local and group statements used
+by the discriminant calculation of Theorem 56.1.
+
