@@ -2200,7 +2200,7 @@ $$
 \mathcal K_j(i/L_j,k/L_j)\psi(k/L_j).
 $$
 
-由于 $f$ 连续且 $\epsilon_j\to0$，有 $g_j\to f$ 一致成立。定理 10.2 给出
+由于 $f$ 连续且 $\epsilon_j\to0$，有 $g_j\to f$ 一致成立。下文把 $g_j$ 延拓为阶梯函数：在 $[i/L_j,(i+1)/L_j)$ 上取值 $g_{j,i}$，并在 $u=1$ 取右端极限。定理 10.2 给出
 
 $$
 \sup_{u,v\in[0,1]}
@@ -2215,7 +2215,8 @@ $$
 \mathsf A=M_{\sqrt f}\mathsf C M_{\sqrt f}
 $$
 
-都是正自伴算子；$\mathsf A$ 为迹类。均匀核收敛与 $g_j\to f$ 一致收敛给出 $\|\mathsf A_j-\mathsf A\|_{\mathrm{op}}\to0$。同时，对角线的黎曼和给出
+都是正自伴算子；$\mathsf A$ 为迹类。第 13.3 节给出的特征值
+$\rho_m=[D(m+1/2)^2\pi^2]^{-1}$ 也直接说明了 $\mathsf C$ 的迹类性质。均匀核收敛与 $g_j\to f$ 一致收敛给出 $\|\mathsf A_j-\mathsf A\|_{\mathrm{op}}\to0$。同时，对角线的黎曼和给出
 
 $$
 \operatorname{tr}\mathsf A_j
