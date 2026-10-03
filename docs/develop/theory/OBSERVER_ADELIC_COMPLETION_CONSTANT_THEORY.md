@@ -199172,3 +199172,25 @@ $$
 $$
 
 这两条支路分别逐态有限：第一条由 $B$ 在 $v$ 上的下截断保证，第二条由 $A$ 在 $v$ 上的下截断保证。还须证明该系数族本身下截断。所求闭包须由实际 $Y$ 的创生、共同平移及局域性推出，而不是附加假设。这里创生指 $A[[n]]1=0$ 对 $n\geq0$ 成立，且 $A[[-1]]1$ 为初始态；共同平移指 $T1=0$ 及 $[T,A[[n]]]=-n A[[n-1]]$，其中 $T=L(-1)$。负指标 $r=-d-1$ 的 residue 是 $A$ 的第 $d$ 个除幂导数与 $B$ 的正规乘积；非负指标须满足 Dong 型局域性。真空初始态与共同平移、相对于所有 $Yu$ 的局域性共同决定场。依据：[Matsuo–Nagatomo, Lemma 1.5.4, Proposition 1.5.5 and Proposition 3.2.2](https://arxiv.org/abs/hep-th/9706118v1) [文献注](../../../Library/VertexAlgebra/matsuo1997locality.md)。该问题只推进实际 Fock 的全整数态场复合律，不主张 Monster 实现、模块融合、完整边界 CFT、弦论或 AdS/CFT 几何动力学桥梁。
+
+**问题 2147.3（实际 Fock 幂态场的全整数系数）。** 在问题 2143.7(3) 的同一复多项式 Fock 表示 $F=\mathbb C[X_0,X_1,\ldots]$ 及实际全态场 $Y$ 中，独立定义形式幂级数及其整数延拓系数
+
+$$
+A=\operatorname{PowerSeries.mk}(j\mapsto X_j),\qquad
+B(r,d)=\begin{cases}[z^{d}]A^r,&d\geq0,\\0,&d<0,\end{cases}
+\quad(r\in\mathbb N,\ d\in\mathbb Z).
+$$
+
+能否对所有 $p,q\in\mathbb N$ 和 $n\in\mathbb Z$，证明实际输出多项式的精确等式
+
+$$
+((Y(X_0^p))[[n]])(X_0^q)
+=\sum_{k\in\operatorname{Finset.range}(\min(p,q)+1)}
+\left(\binom pk\,q^{\underline{k}}:\mathbb C\right)\cdot
+\left(B(p-k,2k-n-1)\,X_0^{q-k}\right),
+\qquad q^{\underline{k}}=q(q-1)\cdots(q-k+1)?
+$$
+
+空幂为 $1$，$q^{\underline0}=1$；$B(0,0)=1$，$B(0,d)=0$ 对 $d\ne0$ 成立。该有限和包含 $k=0$，覆盖 $p=0$ 或 $q=0$、所有负模式以及奇异和正则系数。右侧由独立的形式幂级数系数与组合数定义，不以所求等式或递推作定义或假设。
+
+创生支路的逐态截断、$A^{r+1}$ 的有限卷积及二项式与下降阶乘的配对计数，是从实际右嵌套正规乘积到此等式所需的关系；仅有抽象算子 Wick 恒等式或模式对易式不足以确定该输出多项式。模式及 Heisenberg 归一化见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；下截断与正规乘积系数约定见 [Matsuo–Nagatomo 1997, §§1.2, 1.4](https://arxiv.org/html/hep-th/9706118v1) [文献注](../../../Library/VertexAlgebra/matsuo1997locality.md)。这是经典 Heisenberg 正规乘积在指定实际表示中的实现问题。它推进 [PR 10310](https://github.com/the-omega-institute/trureturing/pull/10310) 所关联的实际 OPE 接口，但不证明模块融合、Monster 实现、完整边界 CFT、解析收敛、弦论或 AdS/CFT 的时空动力学桥梁；融合仍需问题 2143.7(3) 中独立的模范畴与典范模变换数据。

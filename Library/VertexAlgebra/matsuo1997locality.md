@@ -2,7 +2,7 @@
 bibkey: matsuo1997locality
 authors: Atsushi Matsuo; Kiyokazu Nagatomo
 year: 1997
-title: On axioms for a vertex algebra and locality of quantum fields
+title: On axioms for a vertex algebra and the locality of quantum fields
 doi: null
 url: https://arxiv.org/abs/hep-th/9706118v1
 claim: Pairwise local creative fields with a common translation operator reconstruct a vertex algebra; residue products preserve locality.
@@ -96,3 +96,32 @@ Lemma 1.5.4, Propositions 1.5.5 and 3.2.2, and Theorems 5.2.1 and 5.4.1:
   https://arxiv.org/abs/hep-th/9706118v1
 - Carnahan source:
   https://github.com/ScottCarnahan/vertexAlg/blob/4453e34ec390e82a0c789c731ada8f9a6e86bdea/VertexAlg/VertexBasic/VertexOperator.lean
+
+## Power-state coefficient conventions
+
+Sections 1.2 and 1.4 use the expansion $A(z)=\sum_{n\in\mathbb Z}A_n z^{-n-1}$
+and the lower truncation condition on each input vector. For the minus-one
+residual product, Section 1.4 gives
+
+$$
+(A_{(-1)}B)_n v
+=\sum_{j\geq0} A_{-j-1}B_{n+j}v
+ +\sum_{j\geq0} B_{n-j-1}A_jv.
+$$
+
+Each branch is finite on the specified vector. The operator order is the
+order of the displayed products; normal products need not commute. In the
+complex polynomial realization, $Y(X_0^p)$ is the right-nested word of
+$p$ currents. Its coefficients on $X_0^q$ require evaluating those finite
+branches, the creation-series convolution, and the falling-factorial
+multiplicities. This realization calculation is a classical formalization
+contribution, not a new abstract Wick theorem.
+
+Tong, *String Theory*, Section 4.3.3, printed pages 80–82, explains summing
+over pair contractions and gives multiplicities 2 and 4 in the stress-tensor
+example, equation (4.28):
+https://davidtong.org/pdfs/teaching/string-theory/string4.pdf .
+His holomorphic derivative contraction is $-\alpha'/2$ times the inverse
+squared separation.
+This is background for pairing counts, not an exact source for the
+all-integer polynomial output formula with the unit Heisenberg normalization.
