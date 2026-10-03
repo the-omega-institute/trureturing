@@ -48,6 +48,10 @@ $$(\forall (n : \mathbb{N}), (3 \le n) \Rightarrow ((\operatorname{a}\left(n + 5
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CycleItalianDominationRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shao-zhao-2026-cycle-italian-domination-recurrence` (proved) by `D5/S3/Combinatorics/Graph/CycleItalianDominationRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shao-zhao-2026-cycle-italian-domination-recurrence","declaration_gid":"D5/S3/Combinatorics/Graph/CycleItalianDominationRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pingping Shao; Chengye Zhao (2026). *Counting Weight-k Italian Dominating Sets on Trees and Cycles*. DOI: [10.48550/arXiv.2610.00108](https://doi.org/10.48550/arXiv.2610.00108). URL: <https://arxiv.org/abs/2610.00108v1>.

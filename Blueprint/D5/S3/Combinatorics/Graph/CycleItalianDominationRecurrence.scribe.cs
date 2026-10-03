@@ -25,14 +25,18 @@ internal sealed class CycleItalianDominationRecurrenceDocument : IScribeDocument
                 "claim", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "A complete order-five recurrence", Disp(ClaimBody()),
                 "Use pair states (a,b) in {0,1,2}². A transition from (a,b) to (b,c) is allowed exactly when b ≠ 0 or a+c ≥ 2. Mapping f to the sequence of pairs (f at the predecessor of i, f at i), and decoding the second coordinates, gives mutually inverse maps between Italian functions and closed state sequences. An induction expands a matrix power as a sum of path products; closing the paths gives the trace. The transition rows agree in the five groups {(0,0)}, {(1,0)}, {(2,0)}, {(*,1)}, {(*,2)}. Their indicator matrix R and representative-row matrix S satisfy T = R S and S R = Q, with Q having rows (0,0,0,0,1), (0,0,0,1,1), (1,0,0,1,1), (0,1,0,1,1), (0,0,1,1,1). Cyclicity of trace gives a(n) = trace(Q^n) for positive n. The identity Q^5 − 2Q^4 − 2Q^3 − Q^2 + Q + I = 0, multiplied by Q^n and traced, yields the recurrence. The traces of Q^3 through Q^7 give the five initial values.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shao-zhao-2026-cycle-italian-domination-recurrence"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("italian-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
