@@ -13,11 +13,10 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
         H("Exact Address Certificates for Actual Tree Images"), Blocks(
             Paragraph(Text("Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. "
                 + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
-                + "Composition c counts alpha and beta leaves. Paths are root-first Boolean lists: false is left, true is right. "
+                + "Composition c counts alpha and beta leaves. Paths reuse the existing FiniteDescription type of finite Boolean lists, including the empty root address. "
                 + "Leaf labels use true for alpha and false for beta.")),
-            Def("Address", "Raw addresses", "An address is a finite Boolean list, including the empty root address."),
             Def("Output", "Four endpoint results", "The endpoint result is leafAlpha, leafBeta, branch or absent."),
-            Def("out", "Raw endpoint observation", "A valid path reads its original endpoint. Continuing beyond a leaf reads absent."),
+            Def("out", "Raw endpoint observation", "Paths are root-first: false is left and true is right. A valid path reads its original endpoint. Continuing beyond a leaf reads absent."),
             Def("height", "Maximum leaf depth", "Height is the height of the existing ordered shape decomposition. A leaf has height zero."),
             Def("ActualImage", "Actual substitution image", "ActualImage(d) is the range of the d-fold native substitution on complete source trees."),
             Def("Within", "Finite depth window", "Within(h,Q) means that each address in the finite set Q has length at most h."),
@@ -89,7 +88,7 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
     private static Formula ResultFormula()
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
-        Formula a=Call("a",t), depth=Call("D",t), queries=Call("Finset",V("Address"));
+        Formula a=Call("a",t), depth=Call("D",t), queries=Call("Finset",V("FiniteDescription"));
         Formula sound=Call("S",d,t,h,q);
         Formula small=Imp(Seq(h,Sp,Lt,Sp,depth),Seq(Neg,Exists("R",queries,Call("S",d,t,h,V("R")))));
         Formula attained=Imp(LeOf(depth,h),Exists("R",queries,And(Call("S",d,t,h,V("R")),EqOf(Call("card",V("R")),a))));
@@ -102,7 +101,7 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
         Formula a=Call("a",t), n=Call("n",t), depth=Call("D",t);
-        Formula alpha=Call("A",t), leaves=Call("L",t), queries=Call("Finset",V("Address"));
+        Formula alpha=Call("A",t), leaves=Call("L",t), queries=Call("Finset",V("FiniteDescription"));
         Formula within=Call("W",h,q), sound=Call("S",d,t,h,q), un=Call("U",d,t,q);
         Formula unique=All("h",V("Nat"),Imp(LeOf(depth,h),All("Q",queries,
             Imp(within,IffOf(And(sound,EqOf(Call("card",q),a)),EqOf(q,alpha))))));

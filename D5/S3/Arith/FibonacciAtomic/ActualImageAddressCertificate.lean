@@ -6,6 +6,7 @@
    utility: none
    digest: Sharp cardinality and depth for actual substitution image certificates. -/
 
+import D5.S0.History.FiniteDescriptionSelfCode
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 
 set_option autoImplicit false
@@ -14,18 +15,17 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
 
 open GenealogicalFiberTransport (Source substitution composition decompose)
-
-/-- Root-first paths: false is left and true is right. Leaf labels use true for
-alpha and false for beta, as in GenealogicalFiberTransport.Source. -/
-abbrev Address := List Bool
+open D5.S0.History.FiniteDescriptionSelfCode (FiniteDescription)
 
 /-- The four original endpoint observations, including the empty root address. -/
 inductive Output
   | leafAlpha | leafBeta | branch | absent
   deriving DecidableEq
 
-/-- Read the raw endpoint; continuing beyond a leaf gives absent. -/
-def out : Source → Address → Output
+/-- Read the raw endpoint along a root-first finite description: false is left
+and true is right. Leaf labels use true for alpha and false for beta, as in
+GenealogicalFiberTransport.Source. Continuing beyond a leaf gives absent. -/
+def out : Source → FiniteDescription → Output
   | .of true, [] => .leafAlpha
   | .of false, [] => .leafBeta
   | .mul _ _, [] => .branch
@@ -40,29 +40,29 @@ def height (t : Source) : ℕ := (decompose t).1.height
 def ActualImage (d : ℕ) : Set Source := Set.range (substitution^[d])
 
 /-- A finite query set obeys the raw path depth budget. -/
-def Within (h : ℕ) (Q : Finset Address) : Prop := ∀ u ∈ Q, u.length ≤ h
+def Within (h : ℕ) (Q : Finset FiniteDescription) : Prop := ∀ u ∈ Q, u.length ≤ h
 
 /-- Soundness ranges over every complete source of the same exact composition. -/
-def Sound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+def Sound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset FiniteDescription) : Prop :=
   Within h Q ∧ ∀ U : Source, composition U = composition V →
     (∀ u ∈ Q, out U u = out V u) → U ∈ ActualImage d
 
 /-- All addresses carrying an alpha leaf. -/
-def alphaAddresses : Source → Finset Address
+def alphaAddresses : Source → Finset FiniteDescription
   | .of true => {[]}
   | .of false => ∅
   | .mul s t => (alphaAddresses s).image (List.cons false) ∪
       (alphaAddresses t).image (List.cons true)
 
 /-- The complete subtree at an address, absent when the path passes a leaf. -/
-def subtree : Source → Address → Option Source
+def subtree : Source → FiniteDescription → Option Source
   | t, [] => some t
   | .of _, _ :: _ => none
   | .mul s _, false :: u => subtree s u
   | .mul _ t, true :: u => subtree t u
 
 /-- Replace the subtree at a valid address; invalid addresses leave the tree alone. -/
-def replace : Source → Address → Source → Source
+def replace : Source → FiniteDescription → Source → Source
   | _, [], v => v
   | .of b, _ :: _, _ => .of b
   | .mul s t, false :: u, v => .mul (replace s u v) t
@@ -75,7 +75,7 @@ def AlphaCovered : Source → Prop
       (alphaAddresses (.mul s t)).Nonempty
 
 private theorem alpha_card (t : Source) : (alphaAddresses t).card = (composition t).1 := by
-  have prefix_disjoint (A B : Finset Address) :
+  have prefix_disjoint (A B : Finset FiniteDescription) :
       Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
     apply Finset.disjoint_left.mpr
     intro u hu hv
@@ -89,7 +89,7 @@ private theorem alpha_card (t : Source) : (alphaAddresses t).card = (composition
       Finset.card_image_of_injective _ List.cons_injective, composition,
       Prod.fst_add, hs, ht]
 
-private theorem alpha_spec (t : Source) (u : Address) :
+private theorem alpha_spec (t : Source) (u : FiniteDescription) :
     u ∈ alphaAddresses t ↔ out t u = .leafAlpha := by
   induction t generalizing u with
   | of b => cases b <;> cases u <;> simp [alphaAddresses, out]
@@ -107,7 +107,7 @@ private theorem positive (t : Source) : 0 < (composition t).1 + (composition t).
 
 private theorem structural (t : Source) :
     AlphaCovered (substitution (substitution t)) ∧
-    (∀ u ∈ alphaAddresses (substitution (substitution t)), ∃ r : Address,
+    (∀ u ∈ alphaAddresses (substitution (substitution t)), ∃ r : FiniteDescription,
       u = r ++ [true] ∧ subtree (substitution (substitution t)) r =
         some (.mul (.of false) (.of true))) ∧
     (∃ u ∈ alphaAddresses (substitution (substitution t)),
@@ -135,7 +135,7 @@ private theorem structural (t : Source) :
     let S := substitution (substitution s)
     let T := substitution (substitution t)
     change AlphaCovered (.mul S T) ∧
-      (∀ u ∈ alphaAddresses (.mul S T), ∃ r : Address,
+      (∀ u ∈ alphaAddresses (.mul S T), ∃ r : FiniteDescription,
         u = r ++ [true] ∧ subtree (.mul S T) r =
           some (.mul (.of false) (.of true))) ∧
       (∃ u ∈ alphaAddresses (.mul S T), u.length = height (.mul S T))
@@ -161,7 +161,7 @@ private theorem structural (t : Source) :
         change us.length + 1 = max (height S) (height T) + 1
         rw [hds, max_eq_left hle]
 
-private theorem no_left_alpha (t : Source) : ∀ r : Address,
+private theorem no_left_alpha (t : Source) : ∀ r : FiniteDescription,
     subtree (substitution t) (r ++ [false]) ≠ some (.of true) := by
   have no_alpha (t : Source) : substitution t ≠ .of true := by
     have hc := (GenealogicalFiberTransport.fiberMap (composition t) 1 ⟨t, rfl⟩).property
@@ -205,12 +205,12 @@ set_option maxHeartbeats 2000000 in -- Combined reconstruction and swap-counting
 The same-composition competitor domain is all complete ordered source trees. -/
 theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) :
-    (h < height V → ¬ ∃ Q : Finset Address, Sound (3 * k) V h Q) ∧
-    (height V ≤ h → ∃ Q : Finset Address,
+    (h < height V → ¬ ∃ Q : Finset FiniteDescription, Sound (3 * k) V h Q) ∧
+    (height V ≤ h → ∃ Q : Finset FiniteDescription,
       Sound (3 * k) V h Q ∧ Q.card = (composition V).1) ∧
-    (∀ Q : Finset Address, Sound (3 * k) V h Q → (composition V).1 ≤ Q.card) := by
+    (∀ Q : Finset FiniteDescription, Sound (3 * k) V h Q → (composition V).1 ≤ Q.card) := by
   classical
-  have alpha_depth (t : Source) (u : Address) (hu : u ∈ alphaAddresses t) :
+  have alpha_depth (t : Source) (u : FiniteDescription) (hu : u ∈ alphaAddresses t) :
       u.length ≤ height t := by
     induction t generalizing u with
     | of b => cases b <;> simp_all [alphaAddresses, height, decompose, BinaryTree.height]
@@ -284,12 +284,12 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
           have hy : composition y = composition t := by
             apply Prod.ext <;> omega
           exact congrArg₂ FreeMagma.mul (hes hx) (het hy)
-  have swap_local (V : Source) (r : Address)
+  have swap_local (V : Source) (r : FiniteDescription)
       (hr : subtree V r = some (.mul (.of false) (.of true))) :
       composition (replace V r (.mul (.of true) (.of false))) = composition V ∧
       subtree (replace V r (.mul (.of true) (.of false))) (r ++ [false]) =
         some (.of true) ∧
-      (∀ u : Address, u ≠ r ++ [false] → u ≠ r ++ [true] →
+      (∀ u : FiniteDescription, u ≠ r ++ [false] → u ≠ r ++ [true] →
         out (replace V r (.mul (.of true) (.of false))) u = out V u) := by
     induction r generalizing V with
     | nil =>
@@ -333,7 +333,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
             | true =>
               exact ho u (fun he => hL (congrArg (List.cons true) he))
                 (fun he => hR (congrArg (List.cons true) he))
-  have endpoint_parent (r s : Address) (b c : Bool)
+  have endpoint_parent (r s : FiniteDescription) (b c : Bool)
       (he : r ++ [b] = s ++ [c]) : r = s := by
     have hr := congrArg List.reverse he
     simp only [List.reverse_append, List.reverse_singleton, List.singleton_append,
@@ -350,7 +350,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
   obtain ⟨hcovered, hterminal, udeep, hudeep, hdepth⟩ := structural S
   rw [← hv2] at hcovered hterminal hudeep hdepth
   have original : V ∈ ActualImage (3 * k) := ⟨T, hT⟩
-  have swapped_negative (r : Address)
+  have swapped_negative (r : FiniteDescription)
       (hr : subtree V r = some (.mul (.of false) (.of true))) :
       replace V r (.mul (.of true) (.of false)) ∉ ActualImage (3 * k) := by
     rintro ⟨W, hW⟩
@@ -362,9 +362,9 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       exact hW
     rw [← hw] at hl
     exact no_left_alpha (substitution^[3 * k - 1] W) r hl
-  have hits (Q : Finset Address) (hQ : Sound (3 * k) V h Q)
-      (u : Address) (hu : u ∈ alphaAddresses V) :
-      ∃ r : Address, u = r ++ [true] ∧ (r ++ [false] ∈ Q ∨ r ++ [true] ∈ Q) := by
+  have hits (Q : Finset FiniteDescription) (hQ : Sound (3 * k) V h Q)
+      (u : FiniteDescription) (hu : u ∈ alphaAddresses V) :
+      ∃ r : FiniteDescription, u = r ++ [true] ∧ (r ++ [false] ∈ Q ∨ r ++ [true] ∈ Q) := by
     obtain ⟨r, hur, hr⟩ := hterminal u hu
     refine ⟨r, hur, ?_⟩
     by_contra hn
@@ -404,13 +404,13 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
         (hm u hu).trans ((alpha_spec V u).mp hu))).2.2 hc
       exact hu ▸ original
   · intro Q hQ
-    have query_for (u : {u : Address // u ∈ alphaAddresses V}) :
-        ∃ q : {q : Address // q ∈ Q}, ∃ r : Address, ∃ b : Bool,
+    have query_for (u : {u : FiniteDescription // u ∈ alphaAddresses V}) :
+        ∃ q : {q : FiniteDescription // q ∈ Q}, ∃ r : FiniteDescription, ∃ b : Bool,
           u.val = r ++ [true] ∧ q.val = r ++ [b] := by
       obtain ⟨r, hu, hL | hR⟩ := hits Q hQ u.val u.property
       · exact ⟨⟨r ++ [false], hL⟩, r, false, hu, rfl⟩
       · exact ⟨⟨r ++ [true], hR⟩, r, true, hu, rfl⟩
-    let f : {u : Address // u ∈ alphaAddresses V} → {q : Address // q ∈ Q} :=
+    let f : {u : FiniteDescription // u ∈ alphaAddresses V} → {q : FiniteDescription // q ∈ Q} :=
       fun u => Classical.choose (query_for u)
     have hf : Function.Injective f := by
       intro u v he
@@ -420,18 +420,18 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
         hq.symm.trans ((congrArg Subtype.val he).trans hp)
       have hrs := endpoint_parent r s b c heq
       apply Subtype.ext
-      exact hu.trans ((congrArg (fun r : Address => r ++ [true]) hrs).trans hv.symm)
+      exact hu.trans ((congrArg (fun r : FiniteDescription => r ++ [true]) hrs).trans hv.symm)
     rw [← alpha_card V]
     exact Finset.card_le_card_of_injective hf
 
 /-- All leaf addresses, with both labels retained. -/
-def leafAddresses : Source → Finset Address
+def leafAddresses : Source → Finset FiniteDescription
   | .of _ => {[]}
   | .mul s t => (leafAddresses s).image (List.cons false) ∪
       (leafAddresses t).image (List.cons true)
 
 /-- Soundness with no composition or leaf-count promise on competitors. -/
-def UnSound (d : ℕ) (V : Source) (Q : Finset Address) : Prop :=
+def UnSound (d : ℕ) (V : Source) (Q : Finset FiniteDescription) : Prop :=
   ∀ U : Source, (∀ u ∈ Q, out U u = out V u) → U ∈ ActualImage d
 
 private theorem leaf_data (t : Source) :
@@ -440,7 +440,7 @@ private theorem leaf_data (t : Source) :
     (∀ u ∈ leafAddresses t, u.length ≤ height t) ∧
     ((leafAddresses t).filter (fun u => out t u = .leafBeta)).card = (composition t).2 := by
   classical
-  have prefix_disjoint (A B : Finset Address) :
+  have prefix_disjoint (A B : Finset FiniteDescription) :
       Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
     apply Finset.disjoint_left.mpr
     intro u hu hv
@@ -494,7 +494,7 @@ private theorem leaf_data (t : Source) :
         Finset.card_image_of_injective _ List.cons_injective, hbs, hbt]
       rfl
 
-private theorem subtree_out (t v : Source) (r u : Address)
+private theorem subtree_out (t v : Source) (r u : FiniteDescription)
     (hr : subtree t r = some v) : out t (r ++ u) = out v u := by
   induction r generalizing t with
   | nil => have he := Option.some.inj (by simpa only [subtree] using hr); subst t; rfl
@@ -503,7 +503,7 @@ private theorem subtree_out (t v : Source) (r u : Address)
     | of c => simp [subtree] at hr
     | mul s t => cases b <;> first | exact ih s hr | exact ih t hr
 
-private theorem leaf_subtree (t : Source) (s : Address) (b : Bool)
+private theorem leaf_subtree (t : Source) (s : FiniteDescription) (b : Bool)
     (hs : out t s = out (.of b) []) : subtree t s = some (.of b) := by
   induction s generalizing t with
   | nil => cases t with
@@ -513,7 +513,7 @@ private theorem leaf_subtree (t : Source) (s : Address) (b : Bool)
     | of x => cases b <;> simp [out] at hs
     | mul x y => cases c <;> first | exact ih x hs | exact ih y hs
 
-private theorem leaf_change (t : Source) (s : Address) (b c : Bool)
+private theorem leaf_change (t : Source) (s : FiniteDescription) (b c : Bool)
     (hs : subtree t s = some (.of b)) :
     subtree (replace t s (.of c)) s = some (.of c) ∧
     composition (replace t s (.of c)) + composition (.of b) =
@@ -558,7 +558,7 @@ private theorem leaf_change (t : Source) (s : Address) (b c : Bool)
             | false => rfl
             | true => exact ho u (fun he => hu (congrArg (List.cons true) he))
 
-private theorem no_beta_cherry (t : Source) (hc : AlphaCovered t) (r : Address)
+private theorem no_beta_cherry (t : Source) (hc : AlphaCovered t) (r : FiniteDescription)
     (hl : out t (r ++ [false]) = .leafBeta)
     (hr : out t (r ++ [true]) = .leafBeta) : False := by
   induction r generalizing t with
@@ -614,20 +614,20 @@ set_option maxHeartbeats 2000000 in -- Two leaf replacements and whole-tree reco
 certificates when competitors have no composition or leaf-count promise. -/
 theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) :
-    (∀ h, height V ≤ h → ∀ Q : Finset Address, Within h Q →
+    (∀ h, height V ≤ h → ∀ Q : Finset FiniteDescription, Within h Q →
       (Sound (3 * k) V h Q ∧ Q.card = (composition V).1 ↔ Q = alphaAddresses V)) ∧
-    (∀ h, ∀ Q : Finset Address, Within h Q →
+    (∀ h, ∀ Q : Finset FiniteDescription, Within h Q →
       (UnSound (3 * k) V Q ↔ leafAddresses V ⊆ Q)) ∧
-    (∀ h, h < height V → ¬ ∃ Q : Finset Address, Within h Q ∧ UnSound (3 * k) V Q) ∧
+    (∀ h, h < height V → ¬ ∃ Q : Finset FiniteDescription, Within h Q ∧ UnSound (3 * k) V Q) ∧
     (∀ h, height V ≤ h → Within h (leafAddresses V) ∧
       UnSound (3 * k) V (leafAddresses V) ∧
       (leafAddresses V).card = (composition V).1 + (composition V).2 ∧
-      ∀ Q : Finset Address, Within h Q → UnSound (3 * k) V Q →
+      ∀ Q : Finset FiniteDescription, Within h Q → UnSound (3 * k) V Q →
         (composition V).1 + (composition V).2 ≤ Q.card ∧
         (Q.card = (composition V).1 + (composition V).2 ↔ Q = leafAddresses V)) := by
   classical
   have image_structure (U : Source) (hU : U ∈ ActualImage (3 * k)) :
-      AlphaCovered U ∧ ∀ u ∈ alphaAddresses U, ∃ r : Address,
+      AlphaCovered U ∧ ∀ u ∈ alphaAddresses U, ∃ r : FiniteDescription,
         u = r ++ [true] ∧ subtree U r = some (.mul (.of false) (.of true)) := by
     obtain ⟨T, hT⟩ := hU
     let S := substitution^[3 * k - 2] T
@@ -654,8 +654,8 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
     simp [Function.iterate_succ_apply', GraftAffineClosure.step] at ha hb
     have hp := positive Z
     omega
-  have distinct (r : Address) : r ++ [false] ≠ r ++ [true] := by simp
-  have optimal_unique (h : ℕ) (Q : Finset Address)
+  have distinct (r : FiniteDescription) : r ++ [false] ≠ r ++ [true] := by simp
+  have optimal_unique (h : ℕ) (Q : Finset FiniteDescription)
       (hQ : Sound (3 * k) V h Q) (hcard : Q.card = (composition V).1) :
       Q = alphaAddresses V := by
     have hsub : alphaAddresses V ⊆ Q := by
@@ -709,7 +709,7 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
         have hsW : out W s = .leafBeta := (ho₂ s hst).trans hsW₁
         exact no_beta_cherry W (image_structure W hW).1 r hl (hsr ▸ hsW)
     exact (Finset.eq_of_subset_of_card_le hsub (by rw [alpha_card V, hcard])).symm
-  have leaf_iff (Q : Finset Address) : UnSound (3 * k) V Q ↔ leafAddresses V ⊆ Q := by
+  have leaf_iff (Q : Finset FiniteDescription) : UnSound (3 * k) V Q ↔ leafAddresses V ⊆ Q := by
     constructor
     · intro hQ s hs
       by_contra hsQ

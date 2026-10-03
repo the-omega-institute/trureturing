@@ -4,21 +4,9 @@
 
 Alpha leaf queries give exact positive certificates for actual Fibonacci tree images.
 
-Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. Composition c counts alpha and beta leaves. Paths are root-first Boolean lists: false is left, true is right. Leaf labels use true for alpha and false for beta.
+Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. Composition c counts alpha and beta leaves. Paths reuse the existing FiniteDescription type of finite Boolean lists, including the empty root address. Leaf labels use true for alpha and false for beta.
 
-**Definition 1.1 (Raw addresses).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Address`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Address` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-An address is a finite Boolean list, including the empty root address.
-
-**Definition 1.2 (Four endpoint results).**
+**Definition 1.1 (Four endpoint results).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Output`
 
@@ -30,7 +18,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Outpu
 
 The endpoint result is leafAlpha, leafBeta, branch or absent.
 
-**Definition 1.3 (Raw endpoint observation).**
+**Definition 1.2 (Raw endpoint observation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.out`
 
@@ -40,9 +28,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.out`
 
 *Commentary.*
 
-A valid path reads its original endpoint. Continuing beyond a leaf reads absent.
+Paths are root-first: false is left and true is right. A valid path reads its original endpoint. Continuing beyond a leaf reads absent.
 
-**Definition 1.4 (Maximum leaf depth).**
+**Definition 1.3 (Maximum leaf depth).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.height`
 
@@ -54,7 +42,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.heigh
 
 Height is the height of the existing ordered shape decomposition. A leaf has height zero.
 
-**Definition 1.5 (Actual substitution image).**
+**Definition 1.4 (Actual substitution image).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.ActualImage`
 
@@ -66,7 +54,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Actua
 
 ActualImage(d) is the range of the d-fold native substitution on complete source trees.
 
-**Definition 1.6 (Finite depth window).**
+**Definition 1.5 (Finite depth window).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Within`
 
@@ -78,7 +66,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Withi
 
 Within(h,Q) means that each address in the finite set Q has length at most h.
 
-**Definition 1.7 (Positive address certificate).**
+**Definition 1.6 (Positive address certificate).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound`
 
@@ -90,7 +78,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound
 
 Sound(d,V,h,Q) means Within(h,Q) and: every complete tree U with c(U)=c(V) and out(U,u)=out(V,u) for every u in Q belongs to ActualImage(d). Exact composition is the only competitor promise, no prefix-closure condition on Q, and no adaptive or random query order.
 
-**Definition 1.8 (Alpha leaf addresses).**
+**Definition 1.7 (Alpha leaf addresses).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alphaAddresses`
 
@@ -102,7 +90,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alpha
 
 The finite set contains exactly the root-first addresses of alpha leaves.
 
-**Definition 1.9 (Complete leaf frontier).**
+**Definition 1.8 (Complete leaf frontier).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leafAddresses`
 
@@ -114,7 +102,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leafA
 
 The finite set contains exactly all alpha and beta leaf addresses.
 
-**Definition 1.10 (Certificates without a composition promise).**
+**Definition 1.9 (Certificates without a composition promise).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSound`
 
@@ -126,7 +114,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSou
 
 Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately.
 
-**Definition 1.11 (Complete addressed subtree).**
+**Definition 1.10 (Complete addressed subtree).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.subtree`
 
@@ -138,7 +126,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.subtr
 
 The addressed subtree is present exactly when the path reaches a node; otherwise it is absent.
 
-**Definition 1.12 (Subtree replacement).**
+**Definition 1.11 (Subtree replacement).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.replace`
 
@@ -150,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.repla
 
 Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged.
 
-**Definition 1.13 (Alpha coverage of branches).**
+**Definition 1.12 (Alpha coverage of branches).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.AlphaCovered`
 
@@ -162,9 +150,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Alpha
 
 Every internal node has an alpha leaf descendant, recursively throughout the tree.
 
-**Theorem 1.14 (Sharp cardinality and depth).**
+**Theorem 1.13 (Sharp cardinality and depth).**
 
-$$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies (\forall h \in Nat, (((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), (\operatorname{S}\left(3 \cdot k, V, h, R\right)))) \land ((\operatorname{D}\left(V\right) \leq h) \implies (\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, R\right)) \land (\operatorname{card}\left(R\right) = \operatorname{a}\left(V\right))))) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \implies (\operatorname{a}\left(V\right) \leq \operatorname{card}\left(Q\right)))))))))$$
+$$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies (\forall h \in Nat, (((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(FiniteDescription\right), (\operatorname{S}\left(3 \cdot k, V, h, R\right)))) \land ((\operatorname{D}\left(V\right) \leq h) \implies (\exists R \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{S}\left(3 \cdot k, V, h, R\right)) \land (\operatorname{card}\left(R\right) = \operatorname{a}\left(V\right))))) \land (\forall Q \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \implies (\operatorname{a}\left(V\right) \leq \operatorname{card}\left(Q\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.result` (`✓ std3`). ∎
 
@@ -180,9 +168,9 @@ Each alpha leaf is the right endpoint of a terminal pair (beta,alpha). Swapping 
 
 Certificate complexity and lower bounds from disjoint sensitive blocks are classical, as in Nisan's CREW PRAMs and Decision Trees (1991) and Buhrman and de Wolf's Complexity Measures and Decision Tree Complexity: A Survey (2002). The exact cardinality for these actual substitution images with fixed composition is the tree-specific conclusion.
 
-**Theorem 1.15 (Unique optimal certificates and the complete leaf frontier).**
+**Theorem 1.14 (Unique optimal certificates and the complete leaf frontier).**
 
-$$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies ((\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies (((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \land (\operatorname{card}\left(Q\right) = \operatorname{a}\left(V\right))) \Leftrightarrow (Q = \operatorname{A}\left(V\right))))))) \land (\forall h \in Nat, (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \Leftrightarrow (\operatorname{L}\left(V\right) \subseteq Q))))) \land (\forall h \in Nat, ((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, R\right)) \land (\operatorname{U}\left(3 \cdot k, V, R\right)))))) \land (\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies ((\operatorname{W}\left(h, \operatorname{L}\left(V\right)\right)) \land (\operatorname{U}\left(3 \cdot k, V, \operatorname{L}\left(V\right)\right)) \land (\operatorname{card}\left(\operatorname{L}\left(V\right)\right) = \operatorname{n}\left(V\right)) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \implies ((\operatorname{n}\left(V\right) \leq \operatorname{card}\left(Q\right)) \land ((\operatorname{card}\left(Q\right) = \operatorname{n}\left(V\right)) \Leftrightarrow (Q = \operatorname{L}\left(V\right))))))))))))))$$
+$$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies ((\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies (\forall Q \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{W}\left(h, Q\right)) \implies (((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \land (\operatorname{card}\left(Q\right) = \operatorname{a}\left(V\right))) \Leftrightarrow (Q = \operatorname{A}\left(V\right))))))) \land (\forall h \in Nat, (\forall Q \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \Leftrightarrow (\operatorname{L}\left(V\right) \subseteq Q))))) \land (\forall h \in Nat, ((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{W}\left(h, R\right)) \land (\operatorname{U}\left(3 \cdot k, V, R\right)))))) \land (\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies ((\operatorname{W}\left(h, \operatorname{L}\left(V\right)\right)) \land (\operatorname{U}\left(3 \cdot k, V, \operatorname{L}\left(V\right)\right)) \land (\operatorname{card}\left(\operatorname{L}\left(V\right)\right) = \operatorname{n}\left(V\right)) \land (\forall Q \in \operatorname{Finset}\left(FiniteDescription\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \implies ((\operatorname{n}\left(V\right) \leq \operatorname{card}\left(Q\right)) \land ((\operatorname{card}\left(Q\right) = \operatorname{n}\left(V\right)) \Leftrightarrow (Q = \operatorname{L}\left(V\right))))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rigidity` (`✓ std3`). ∎
 
@@ -201,7 +189,6 @@ The shallow-window obstruction follows from the fixed-composition certificate th
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.ActualImage`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Address`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.AlphaCovered`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Output`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound`
@@ -215,4 +202,5 @@ The shallow-window obstruction follows from the fixed-composition certificate th
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rigidity`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.subtree`
+- Dependency: [D5/S0/History/FiniteDescriptionSelfCode](../../../S0/History/FiniteDescriptionSelfCode.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](GenealogicalFiberTransport.md)
