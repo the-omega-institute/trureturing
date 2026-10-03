@@ -1,0 +1,46 @@
+## 2. Absolute-discrepancy application
+
+For a sequence of integer discrepancies $E_j$ put
+$$
+ f(x)=\frac{1}{\sqrt{2+|x|}\log(2+|x|)},\qquad
+ w_j=\frac{1}{(j+1)\log(j+2)}.
+$$
+If the marginal bounds $\Pr(|E_j|>C_\delta(j+1)^2)\le\delta$ hold
+uniformly over $j$, then
+$$
+ f(E_j)\ge
+ \frac{w_j}{\sqrt{C_\delta+2}
+ (2+\log(C_\delta+2)/\log 2)}
+$$
+off a set of measure at most $\delta$. The divergent deterministic
+series $\sum_j w_j$ therefore gives $\sum_j f(E_j)=\infty$ almost
+surely by Theorem 1.1.
+
+In an endpoint exploration of actual separable permutations, let $N$
+count low-value suffix removals and let $\chi=1$ denote a finite-valued
+terminal block. With $t=\sqrt2-1$ and $a=1-1/\sqrt2$, the coupled
+endpoint probabilities are
+$$
+\begin{aligned}
+ u_0&=\Pr(N=0,\chi=1)=a,& v_0&=\Pr(N=0,\chi=0)=a(1+t),\\
+ u_r&=a t(1+t)t^{2r-2},& v_r&=t u_r\quad(r\ge1).
+\end{aligned}
+$$
+For the actual occupied-shape mass $O$, the predictable cycle hazard is
+$$
+ q(e)=\sum_{r\ge0}\frac{u_r}{a}
+       \mathbb E\,O(e+R_1+\cdots+R_r)\ge O(e).
+$$
+Thus an occupied-mass bound $O(e)\ge c_0 f(e)$ and the indicated
+uniform marginal discrepancy bounds supply almost-sure accumulated
+hazard divergence. The probability theorem does not supply those
+occupied-mass or marginal hypotheses. Terminal type and removal count
+are not independent; their joint atom $u_0$, rather than a product of
+marginals, is the term used in the lower bound.
+
+The endpoint decomposition uses the minimum first direct or skew cut
+of an actual permutation in $\operatorname{Av}(2413,3142)$; see
+Ross G. Pinsky, *The Infinite Limit of Separable Permutations*,
+arXiv:1911.05565v2, Section 3. The coupled expressions describe the
+alternating endpoint transitions, not the independent primitive
+specification printed in that article.

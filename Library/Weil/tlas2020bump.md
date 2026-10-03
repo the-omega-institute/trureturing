@@ -321,16 +321,66 @@ $$
 
 Equations (10)–(11) identify published terminology and parameters; they supply no sign estimate. In particular, Mondal's Theorem 2.5, PDF pp.6–7, gives real-argument monotonicity and log-convexity statements. They do not establish a lower bound for the real part of (11) at the complex arguments of the residual.
 
+## Reuse the Bessel expansion through its exact integral
+
+[Paris, *The asymptotic expansion of Krätzel's integral and an integral related to an extension of the Whittaker function*, arXiv:2112.02928v1, §6, PDF pp.9–11](https://arxiv.org/pdf/2112.02928v1), supplies a closer special-function interface. Its equation (6.1) is, writing the second endpoint exponent as $c$ and the damping parameter as $h$ to distinguish them from this note's dilation bound and polynomial,
+
+$$
+I_{\nu,h}(a,c;\zeta)=\sqrt{\frac{2h}{\pi}}
+\int_0^1v^{a-1/2}(1-v)^{c-1/2}e^{\zeta v}
+K_\nu\!\left(\frac{h}{v(1-v)}\right)\,dv,
+\qquad \nu\ge-1/2,\quad h>0.
+$$
+
+Here $K_\nu$ is the modified Bessel function. The exact half-integer identity [DLMF 10.39.2](https://dlmf.nist.gov/10.39.E2) is
+
+$$
+K_{1/2}(y)=\sqrt{\frac{\pi}{2y}}e^{-y},\qquad y>0.
+$$
+
+It cancels the integral's prefactor and half powers, giving the unchanged family exactly:
+
+$$
+\mathcal F_{1/4}(1;2;\zeta)=I_{1/2,1/4}(0,0;\zeta),
+\qquad \Phi(s)=e^{is/2}I_{1/2,1/4}(0,0;-is).
+$$
+
+This uses (6.1), rather than the displayed definition of $J$ immediately before (6.8). The latter literally has $\exp(+h/[v(1-v)])$ with $h>0$ in both the inspected PDF and original TeX. At the target endpoint exponents its ordinary improper integral diverges. Changing that sign silently would give a different definition; the half-integer specialization of $I$ avoids relying on it.
+
+In the coefficients preceding (6.6), $a_0(1/2)=1$ and $a_k(1/2)=0$ for $k\ge1$. Thus (6.6) specializes to
+
+$$
+I_{1/2,1/4}(0,0;-x)
+\sim e^{-1/4}x^{-1/2}
+\sum_{r=0}^\infty
+\frac{(-1)^r c_r(0)}{r!\,2^r x^{r/2}}
+K_{1+r}(\sqrt x),
+\qquad |x|\to\infty,\quad |\arg x|<\pi/2,
+$$
+
+with principal roots and the coefficients defined by
+
+$$
+e^{-1/[4(1-v)]}
+=e^{-1/4}\sum_{r=0}^\infty\frac{(-1)^r c_r(0)}{r!}v^r,
+\qquad |v|<1.
+$$
+
+This is an existing one-endpoint asymptotic expansion, not an exact convergent representation or a new saddle construction. The source records a local $O(e^{-x})$ error when extending an intermediate upper limit, but gives no constant uniform as the argument approaches the sector boundary and no remainder transported through (11). Its Kummer relation (6.2) supplies the opposite-sector representation; it does not alone justify adding both endpoint expansions with one controlled remainder near the Fourier direction. The actual signed aggregate estimate remains unprovided by this interface.
+
 ## Preserve the source hypotheses at the complex interface
 
-Two inspected complex asymptotic sources provide tools for a possible remainder estimate:
+Inspected asymptotic sources provide complementary tools for a possible remainder estimate:
 
 | Source and exact location | Conditions needed by an application to (11) |
 | --- | --- |
 | [Nemes, *An extension of Laplace's method*, arXiv:1802.03962v2](https://arxiv.org/pdf/1802.03962v2), Conditions 1.1 and Theorem 1.1, PDF p.3; remainders (29)–(30), p.8 | Parameter-independent analytic data and path, convergent endpoint power expansions with the source's $\mu>\nu\ge0$ and $\Re\lambda>0$, uniform convergence, and a uniform positive phase gap away from the initial endpoint on a fixed closed sector of width less than $\pi$. The source also requires its tail-growth condition $r(t)=O(|p(t)-p(a)|)$. The original essential endpoint singularities and a transformed parameter-dependent amplitude require an additional application proof. |
 | [Bennett–Howls–Nemes–Olde Daalhuis, *Globally exact asymptotics for integrals with arbitrary order saddles*, arXiv:1710.10073v2](https://arxiv.org/pdf/1710.10073v2), assumptions and sector (7), PDF pp.4–6; exact remainder (9), (12), pp.6–7; bound (42), p.18 | Admissible convergent steepest-descent contours, a finite nonempty adjacent-saddle set, and the corresponding contour deformation. The bound retains angular factors and adjacent-contour integrals; uniform constants for this moving nested integral must be justified. |
+| [Temme, *Uniform asymptotic expansions of a class of integrals in terms of modified Bessel functions, with application to confluent hypergeometric functions*, SIAM J. Math. Anal. 21 (1990), 241–261, DOI 10.1137/0521013, original paper at CWI](https://ir.cwi.nl/pub/2392/2392D.pdf), (1.1), p.241; (2.5)–(2.13), pp.243–244; Theorem 3.2 with (3.12)–(3.13), pp.246–247 | Large positive-real $z$ in the half-line model $\int_0^\infty t^{\lambda-1}e^{-zt-a/t}f(t)\,dt$, with nonnegative real uniformity parameters. The two Bessel blocks of §2 use the saddles $\pm\sqrt{a/z}$ of this model, not the two endpoints of (11). The exact integral remainder requires bounds on the recursively constructed amplitude over the whole positive half-line. Theorem 3.2 also imposes an analytic-domain radius condition and a uniform polynomial growth condition. Its positive-real large-variable theorem does not provide moving near-Fourier uniformity. |
 
-Neither inspected statement directly supplies a uniform remainder for (11) or a signed estimate for the actual multiplicity-weighted residual. A local saddle and Gaussian coefficient alone do not discharge contour deformation, connecting faces, parameter-dependent amplitude bounds, or the full rescaled tails.
+For the original inner integral, the local $v=0$ match to Temme's phase is $\lambda=1$, $a=1/4$, $z=x=is$, with amplitude $f(v)=e^{-1/[4(1-v)]}$. This amplitude has an essential singularity at the other endpoint $v=1$ and does not supply the required whole-half-line amplitude. An endpoint split would need its own cutoff or contour and remainder argument. The exact local phase match therefore does not establish the theorem's application, and its two Bessel blocks cannot be identified with a simultaneous two-endpoint estimate for the original finite interval.
+
+None of these inspected statements directly supplies a uniform remainder for (11) or a signed estimate for the actual multiplicity-weighted residual. A local saddle and Gaussian coefficient alone do not discharge contour deformation, connecting faces, parameter-dependent amplitude bounds, or the full rescaled tails.
 
 For a residual representative with positive displacement, write $s=T-i\alpha$, $T=R\gamma$ and $\alpha=R\delta_\rho$. Equations (8)–(9) give the strict domain
 

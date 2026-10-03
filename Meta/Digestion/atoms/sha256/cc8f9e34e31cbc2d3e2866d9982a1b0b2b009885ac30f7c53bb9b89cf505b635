@@ -1,0 +1,7 @@
+This theorem supplies exact finite-history products and a literal
+finite-alphabet transport, not their limiting products or a probability
+law on infinite histories. Exhaustive capped-history partitioning,
+truncation error bounds, all-length count asymptotics, the coupled law,
+and occupied/hitting instantiations remain separate obligations.
+
+<!-- APPEND -->
