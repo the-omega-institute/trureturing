@@ -17,6 +17,11 @@ with no exponent cutoff. This bounds one part of the labelled second-moment
 majorant. Diagonal terms, cross-column terms, the actual distorted old law,
 and a strict total noncoverage budget remain separate obligations.
 
+[Report 849](849-actual-unions-admit-sharp-common-tree-moment-transport.md)
+gives a direct comparison for the complete actual union under any fixed old
+law independent of the common tree. It avoids a separate cofactor-pair
+majorant, while retaining the original union moments as required inputs.
+
 ## 1. Reuse the conditional moment with its actual common coordinate
 
 The published input is
