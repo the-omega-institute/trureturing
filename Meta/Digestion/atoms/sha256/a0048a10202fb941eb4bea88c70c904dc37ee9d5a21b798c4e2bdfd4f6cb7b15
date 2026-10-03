@@ -1,0 +1,125 @@
+For $\Phi_P\Psi_P=\mathrm{id}$, start instead with an arbitrary
+$((s^\dagger,p),d,b)$ in the codomain. In its reconstruction, the lifted
+low rows are the entries of $\theta$ other than $a$, in their original
+order. Every lifted high row is greater than $A$, since a raw high row
+is at least $A$ and its lift is one larger. The insertion position has
+exactly $j$ low slots before it, so the inserted $a=\theta_{j+1}$ makes
+the original row word's subword on $[A]$ exactly $\theta$.
+Deleting its maximum recovers the supplied $\rho$ and the digit $d$.
+Ordinary deletion recovers $(s,p)$, and the rank of its position $t$
+among rows at most $B$ is still $b+1$. The repaired replacement of its
+low subword by $\rho$ consequently returns the supplied $s^\dagger$,
+with the same $p,d,b$. Both compositions are thus identities.
+
+It remains to prove the weight identity. Let
+$R=(\sigma_1,\ldots,\sigma_{t-1})$ be the row prefix before the deleted
+$a$. On surviving front comparisons both row order and column order are
+preserved by standardization. For $x\ne a$ and $a\leq f_i$,
+
+$$
+\delta_a(x)>f_i-1\quad\Longleftrightarrow\quad x>f_i.
+$$
+
+Indeed, a row below $a$ is at most $f_i-1$, and a row above $a$ is reduced
+by one. Thus every surviving contribution to $H_f$ agrees with its tail
+counterpart. The deleted column has front row $a\leq A$, and its forbidden
+targets are exactly the rows $r>A$ with path positions less than $t$:
+the condition $\pi_j<t$ selects precisely those positions. Therefore
+
+$$
+H_f(\sigma,\pi;P)-H_f(s,p;P')=\#\{r\in R:r>A\}.
+\tag{2.3}
+$$
+
+For the back statistic, all unchanged comparisons are likewise preserved,
+using $a\leq g_i$ and
+$\delta_a(x)>g_i-1\Longleftrightarrow x>g_i$. The one changed back row,
+at a predecessor column or at the endpoint, originally equals $a$ and
+now equals $\delta_a(c)$. The original values $a,c$ are at most $B+1$,
+and every original back threshold is at least $B+1$; the new value is
+at most $B$, and every tail back threshold is at least $B$.
+It can therefore be a forbidden target neither before nor after deletion.
+When it occurs as a source for a forbidden target, the comparison that
+the source is smaller is automatically true on both sides. The column
+comparison and distinguished endpoint status are preserved. This treats
+the changed row in both roles and proves equality of all surviving back
+contributions.
+
+For the deleted first column, $v_1=c\leq B+1$. The ordinary target columns
+with $\pi_j<t$ select path positions $2,\ldots,t$, and the distinguished
+target $j=n$ selects position $1$, since $v_n=\sigma_1$. Position $t$
+has row $a\leq B+1$ and cannot contribute. Hence the remaining forbidden
+targets are exactly the prefix rows above $B+1$:
+
+$$
+H_b(\sigma,\pi;P)-H_b(s,p;P')=\#\{r\in R:r>B+1\}.
+\tag{2.4}
+$$
+
+When $t=1$, the only possible deleted back target is the endpoint, whose
+row is $a$ and contributes zero, agreeing with the empty prefix. When
+$t=k$, the successor is the last row $\sigma_n$ and the same formula
+holds. In particular, the distinguished target must be included in (2.4).
+
+Deleting $\pi_1=t$ removes $t-1$ inversions. Deleting the row $a$ removes
+one inversion for every prefix row greater than $a$ and for every suffix
+row smaller than $a$. There are $a-1$ smaller labels in total. Consequently
+
+$$
+\begin{aligned}
+&\operatorname{inv}(\sigma)+\operatorname{inv}(\pi)
+ -\operatorname{inv}(s)-\operatorname{inv}(p)\\
+&\quad=\#\{r\in R:r>a\}
+       +(a-1-\#\{r\in R:r<a\})+(t-1)\\
+&\quad=a-1+2\#\{r\in R:r>a\},
+\end{aligned}
+$$
+
+because $R$ has $t-1$ entries and contains no $a$. Subtracting (2.3) and
+(2.4), and partitioning rows above $a$ into the ranges ending at $A$ and
+$B+1$, gives the exact ordinary contraction increment
+
+$$
+E_P(\sigma,\pi)-E_{P'}(s,p)
+=a-1+2\#\{r\in R:a<r\leq A\}
+     +\#\{r\in R:A<r\leq B+1\}.
+\tag{2.5}
+$$
+
+Finally put
+
+$$
+j=\#\{r\in R:r\leq A\},\qquad
+m=\#\{r\in R:A<r\leq B+1\},\qquad
+N=\#\{r\in R:a<r\leq A\}.
+$$
+
+Since $a\leq A\leq B+1$ and $a$ is absent from the prefix,
+$\delta_a(r)\leq B$ is equivalent there to $r\leq B+1$. Thus $b=j+m$.
+Deleting $a$ from $\theta$ removes $N$ inversions with preceding larger
+labels and $a-1-(j-N)$ inversions with following smaller labels. Order
+standardization changes none of the surviving comparisons, so
+
+$$
+\operatorname{inv}(\theta)-\operatorname{inv}(\eta)
+=a-1+2N-j.
+\tag{2.6}
+$$
+
+The maximum $A$ contributes exactly $d$ inversions in $\theta$, whence
+$\operatorname{inv}(\theta)=\operatorname{inv}(\rho)+d$. Combining
+(2.5), (2.6), $b=j+m$, and (2.2) yields
+
+$$
+\begin{aligned}
+E_P(\sigma,\pi)
+ &=E_{P'}(s,p)+\operatorname{inv}(\theta)
+                    -\operatorname{inv}(\eta)+b\\
+ &=E_{P'}(s^\dagger,p)+\operatorname{inv}(\theta)
+                    -\operatorname{inv}(\rho)+b\\
+ &=E_{P'}(s^\dagger,p)+d+b.
+\end{aligned}
+$$
+
+All equalities have been taken in $\mathbb Z$. This completes the proof.
+

@@ -1,0 +1,5 @@
+source_id = "koprowski-lewis-coupled-digit-bijection"
+path = "docs/develop/theory/KOPROWSKI_LEWIS_COUPLED_DIGIT_BIJECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
