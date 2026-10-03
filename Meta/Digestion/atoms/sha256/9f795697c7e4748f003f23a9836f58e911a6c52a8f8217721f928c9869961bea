@@ -1,0 +1,62 @@
+**定义55.1。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1,\quad \phi=1+t,\quad
+T_2=t^2=1-t,\quad \lambda=\frac{T_2}{10},\quad c=\frac{2t}{5},
+\quad \rho=g^6,\quad \chi=g^{20}.
+$$
+
+保留五个来源标签 $\{3,0,5,2,25\}$，其中 $0$ 是空窗，$25$ 占一个窗口位置。guard、平移量和字面复合为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,T_2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx,\\
+f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}}.
+\end{gathered}
+$$
+
+支撑为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$；$D_s$ 为从 guard $s$ 出发、最终为空窗的实际地址，$D=D_0$。保留六个观察颜色 $0,\ldots,5$，固定任一合法切点归属 $o_a\in\{a-1,a\}$：
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+$$
+
+实际观察是 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。对 $x\in X$，若 $\operatorname{dist}(x,J_i)<b$，可取 $v\in\operatorname{int}J_i$ 使 $|v-x|<b$，从而取得颜色 $i$，与切点归属无关；反向，裁剪非扩张，任何取得颜色 $i$ 的误差绝对值至少为该闭距离。这里只需49.1的这两个逐点结论。
+
+固定定义33.7、49.2中的原词
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),\\
+d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2).
+\end{aligned}
+$$
+
+令 $P=UC,Q=VC,h=de$，长度均为26。固定同一对字面尾
+
+$$
+\xi_H=UC^3\,5\,0^\infty,\qquad \xi_L=VC^3\,0^\infty.
+$$
+
+对任意有限列表 $\mathbf a=((m_1,r_1),\ldots,(m_k,r_k))$，包括空列表，定义
+
+$$
+\begin{aligned}
+\alpha_{\mathbf a}&=P\prod_{i=1}^kU^{m_i}C^{r_i}\,\xi_H,\\
+\gamma_{\mathbf a}&=Q\prod_{i=1}^kV^{m_i}C^{r_i}\,\xi_L,\\
+H_{\mathbf a}&=h\prod_{i=1}^kd^{m_i}e^{r_i},\qquad m_i,r_i\ge1.
+\end{aligned}
+$$
+
+两条来源使用同一个列表。$U,V$ 的接缝 guard 分别为 $(s,1,0,0,0,0,0)$、$(s,0,0,0,1,0,0)$；$C$ 从零或一合法运行到一。因此 stems 是零到一，每个正参数返回是一到一，两尾属于 $D_1$，而 $\alpha_{\mathbf a},\gamma_{\mathbf a}\in D$。每个历史只读取 departure 位置 $0,\ldots,M-1$；位置 $M$ 的终尾尚未观察，零误差未来 $S_\xi$ 从该终端开始。
+

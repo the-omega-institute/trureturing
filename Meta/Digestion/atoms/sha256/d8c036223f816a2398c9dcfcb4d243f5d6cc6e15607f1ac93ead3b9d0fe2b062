@@ -1,0 +1,44 @@
+**定义 13.1（原始树网格与少数叶参数）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)、[定义 2.1](#2-许可预算阶梯与深层碰撞前沿)和[定义 12.1](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)的非空自由有序完全二叉树、叶标签、组成及替换 $\rho$。固定任意整数 $k\ge1,t\ge1$，本章所有缩写均在这两个参数下使用，置
+
+$$
+\begin{gathered}
+d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad D=F_d=E+A,
+\quad L=F_{d+1}=A+D,\\
+0\le j\le t,\qquad p=t-j,\quad q=j,\\
+a_j=At+Ej,\qquad b_j=Dt+Aj,\qquad n_j=Lt+Dj,\\
+V_j=|\mathcal T_{a_j,b_j}|=C_{n_j-1}\binom{n_j}{a_j},\qquad
+R_j=R_{k,t-j,j}=\frac{C_{t-1}\binom tj}{V_j},
+\qquad C_s=\frac1{s+1}\binom{2s}{s}.
+\end{gathered}
+\tag{13.1}
+$$
+
+这里 $R_j$ 是实际集合 $\rho^d(\mathcal T_{t-j,j})$ 在完整目标树纤维中的密度，复用（12.3）、（12.15），不将括号、叶序或树的来源取商。若另保留有限预算，整个网格使用同一个 $H_t\ge F_{d+2}t$。本章的 $L$ 只缩写一个 Fibonacci 数，不表示观察阶段。规范代码和全部路径仍按[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)描述完整树；它们不成为这里的额外观察输入。计数密度不指定实际来源的概率律、物理时间或几何，组成祖先许可及下列极值也不授权指定树的实际逆执行。
+
+对 $z\in[0,1]$，定义
+
+$$
+\begin{gathered}
+u(z)=A+Ez,\qquad v(z)=D+Az,\qquad \ell(z)=L+Dz,\\
+K(z)=\ell(z)g\bigl(u(z)/\ell(z)\bigr),\qquad
+P(z)=\ell(z)\sqrt{u(z)v(z)},\qquad
+K(z)-g(z)=J_k(1-z),\\
+\kappa=\frac1{LAD},\qquad
+\sigma=\frac DL+\frac E{2A}+\frac A{2D},\qquad
+\delta=E\log\frac{4L}{A}+A\log\frac{4L}{D},\\
+r=1-x_k\in(0,1/2),\qquad \mu=tr,\qquad
+\lambda=t e^{-\delta},\qquad \varepsilon=\kappa+\frac3t.
+\end{gathered}
+\tag{13.2}
+$$
+
+$g$、$J_k$ 和连续最小点 $x_k$ 均取第12章的原定义，包括熵的端点约定；$r$ 是连续少数比例，不预先断言整数极值的位置。对 $s\ge0$ 再记
+
+$$
+M(s)=\max_{h\in\mathbb N_0}\frac{s^h}{h!},\qquad
+\Pi(s)=e^{-s}M(s),\qquad 0^0=1.
+\tag{13.3}
+$$
+
+最大项存在，因为 $s>0$ 时相邻项之比为 $s/(h+1)$，而 $s=0$ 时只有零次项非零。这些只是指数级数的系数，不附带抽样模型。以下称最大化 $R_j$ 的整数 $j$ 为网格极值指标。
+

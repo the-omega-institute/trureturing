@@ -1,0 +1,40 @@
+**命题 43.5（同号时的共同实际 $D/D$ 充分性）。** 假设 $\varepsilon_1=\varepsilon_2=\varepsilon\in\{-1,+1\}$，并且参考点各自沿该方向有一个共同的非空开幅度区间：存在 $\eta>0$，使每个 $0<\kappa<\eta$ 都满足
+
+$$
+ h+\varepsilon\kappa\in J_{s_1}^{\mathrm{fin}},\qquad y+\varepsilon\kappa\in J_{s_2}^{\mathrm{fin}}.
+$$
+
+则对任意 $\eta_0\in(0,\eta)$，存在 $0<\kappa<\eta_0$ 使两个点同时属于 $T_{s_1},T_{s_2}$，当且仅当
+
+$$\boxed{h-y\in R.}$$
+
+选定一次这样的 $\kappa$ 后，两个有限尾字面量可以固定用于所有后续历史。
+
+**证明。** 必要性是命题43.4。设 $h-y=C\in R$。由于 $R=\mathbb Z+\mathbb Zt$ 在实轴稠密，可在 $(0,\eta_0)$ 内取 $\kappa_0$，使
+
+$$
+ u=h+\varepsilon\kappa_0\in R,\qquad v=y+\varepsilon\kappa_0=u-C\in R.
+$$
+
+再取充分大的整数 $m$，置
+
+$$
+ u_m=u+t^{2m},\qquad v_m=v+t^{2m},\qquad
+ \kappa_m=\kappa_0+\varepsilon t^{2m}.
+$$
+
+于是
+
+$$
+ u_m=h+\varepsilon\kappa_m,\qquad v_m=y+\varepsilon\kappa_m,\qquad u_m-v_m=C.
+$$
+
+当 $m$ 足够大时，$\kappa_m\in(0,\eta_0)$ 且两个点仍在各自的开条带内。由已发表的单占位数量式，
+
+$$
+ Q(t^{2m})=\frac{g t^{2m}+g^{-1}\phi^{2m}}{\sqrt5}
+=F_{2m+3}\longrightarrow+\infty.
+$$
+
+所以同一个 $m$ 可使 $Q(u_m)>0$ 和 $Q(v_m)>0$ 同时成立。命题43.2遂给出两个实际有限尾。共同加入的 $t^{2m}$ 保留差值、同号方向和两个 guard，故这是实际 $D/D$ 的充分性。由于每个任意小的 $\eta_0$ 都可这样处理，得到任意小的合法共同幅度。证毕。
+

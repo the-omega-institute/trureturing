@@ -1,0 +1,14 @@
+### 46.3 保留同一实际尾的有限未来集合
+
+对相位 $r$、incoming guard $s$ 及整数 $N\ge0$，定义
+
+$$
+H_{r,s}^{(0)}=I_s,\qquad
+H_{r,s}^{(N+1)}
+=K_r\cap\bigcup_{s\xrightarrow{\ell}s'\ \mathrm{合法}}
+f_\ell\bigl(H_{r+1,s'}^{(N)}\bigr).
+\tag{46.11}
+$$
+
+这里及以后相位下标均模 $p$。这是原实际分支上的集合递推，不是新的图归约。
+

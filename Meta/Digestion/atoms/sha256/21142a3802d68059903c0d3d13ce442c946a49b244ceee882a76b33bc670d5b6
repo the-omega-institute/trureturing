@@ -1,0 +1,62 @@
+**约定 56.1（原仪器、实际列表与时序）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1=t^3,\quad \phi=1+t,\quad
+T_2=t^2,\quad \lambda=\frac{T_2}{10},\quad c=\frac{2t}{5},\quad
+\rho=g^6,\quad\chi=g^{20}.
+$$
+
+窗口标签为 $\{3,0,5,2,25\}$；$0$ 是空窗，$25$ 占一个窗口。定义14.5承接 ATOM §§150—151 的 guard 相对区间编码，支撑为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$。合法边及前接映射保留为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,T_2,1,2-t),
+\qquad f_\ell(x)=\Delta_\ell-gx.
+\end{gathered}
+$$
+
+来源词按外到内排列，最右映射先作用。$D_s$ 是从 guard $s$ 出发且最终为空窗的实际地址，$D=D_0$；$\Omega$ 是起始 guard 零的全部实际合法地址。固定归属 $o_a\in\{a-1,a\}$，切点及六个闭色格为
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\quad
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+$$
+
+实际拥有格 $C_i^o$ 按 $o$ 分配切点；支撑外端点分别归颜色0、5。观察始终是 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。保留原词
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),&d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2),\\
+P&=UC,&Q&=VC,&h&=de,\\
+\xi_H&=UC^3\,5\,0^\infty,&\xi_L&=VC^3\,0^\infty.
+\end{aligned}
+$$
+
+$U,V,d$ 长6，$C,e$ 长20，$P,Q,h$ 长26。对同一个有限列表 $\mathbf a=((m_1,r_1),\ldots,(m_k,r_k))$，$m_i\ge1$、$1\le r_i\le R$，定义原族
+
+$$
+\alpha_{\mathbf a}=P\prod_iU^{m_i}C^{r_i}\xi_H,\qquad
+\gamma_{\mathbf a}=Q\prod_iV^{m_i}C^{r_i}\xi_L,\qquad
+H_{\mathbf a}=h\prod_i d^{m_i}e^{r_i}.
+$$
+
+固定锚族则在原尾之前加入一个 $(1,1)$：
+
+$$
+\widetilde\alpha_{\mathbf a}=P\prod_iU^{m_i}C^{r_i}UC\xi_H,\qquad
+\widetilde\gamma_{\mathbf a}=Q\prod_iV^{m_i}C^{r_i}VC\xi_L,\qquad
+\widetilde H_{\mathbf a}=h\prod_i d^{m_i}e^{r_i}de.
+$$
+
+允许空列表；锚与 $R$、预算、列表长度无关。$U,V$ 从任一 incoming guard 到零，$C$ 从零或一到一，所以每个返回均为一到一，stems 为零到一，两尾属于 $D_1$，两族两分量均在 $D$。两分量始终共享整个列表。
+
+长 $M$ 的历史观察 departure 位置 $0,\ldots,M-1$，走过 $M$ 条来源边后，位置 $M$ 尚未观察。尾 $\xi$ 的零误差完整未来 $S_\xi$ 从此终端开始。恢复严格沿用36.9：解码器确定、因果、固定初态，每次取得后只作有限计算及有限输出批次；输出有序、只追加、不可回读；在全部实际 $\Omega$ 记录上始终安全，在全部实际 $D$ 记录上每个位置最终经有限取得与计算输出，包括空窗补齐。全部可影响未来的可读控制、临时与持久数据、计数器、位置、时序及输出侧状态均计价；没有 End、支持上界、免费重放或免费可读时钟。
+

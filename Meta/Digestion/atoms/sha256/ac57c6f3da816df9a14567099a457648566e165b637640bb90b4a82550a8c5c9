@@ -1,0 +1,160 @@
+**推论 43.22（双内部尾的负斜率有限预算）。** 设 $L$ 为奇数，$a=(-g)^L=-r$，$0<r=g^L<1$。两个分量的返回映射为
+
+$$
+G_{ji}(x)=A_{ji}-rx,\qquad
+A_j^-:=\min_iA_{ji}<\max_iA_{ji}=:A_j^+\quad(j=1,2).
+$$
+
+使用定理39.2.1的两个非退化规范包络
+
+$$
+H_j=[m_j,M_j],\qquad
+m_j=\frac{A_j^- -rA_j^+}{1-r^2},\qquad
+M_j=\frac{A_j^+ -rA_j^-}{1-r^2},
+$$
+
+并假定固定尾标量 $x_j=\kappa_{s_j}(\xi_j)$ 满足 $m_j<x_j<M_j$。
+
+完整槽清单保留每个分量、每个位置和两种返回：stem 条目为 $(f_{P[\rho:]},h_\rho)$、$(f_{Q[\rho:]},h_\rho)$，$0\le\rho<m$；返回条目为 $(f_{U_i[\rho:]},(W_i)_\rho)$、$(f_{V_i[\rho:]},(W_i)_\rho)$，$i=0,1$、$0\le\rho<L$。以 $\alpha$ 索引这 $2m+4L$ 个条目，记它的分量为 $j(\alpha)$、颜色为 $c_\alpha$、非空后缀映射为 $f_\alpha$，其斜率为
+
+$$
+\gamma_\alpha=(-g)^{s_\alpha}\ne0,\qquad s_\alpha\ge1.
+$$
+
+stem 槽置 $d_\alpha=0$，返回槽置 $d_\alpha=1$。假定完整规范闭阈值
+
+$$
+\theta=\max_\alpha\max\{
+\operatorname{dist}(f_\alpha(m_{j(\alpha)}),J_{c_\alpha}),
+\operatorname{dist}(f_\alpha(M_{j(\alpha)}),J_{c_\alpha})\}>0.
+\tag{43.22.1}
+$$
+
+令 $B_n$ 为全部 $|z|\le n$ 的两分量、全部指定出发观察到相应闭格的最大距离；没有观察时定义 $B_n=0$。则 $B_n$ 是该有限族的精确闭成本，
+
+$$
+B_n<\theta\quad(n\ge0),\qquad B_n\uparrow\theta.
+\tag{43.22.2}
+$$
+
+存在 $n_0\ge2$ 及 $\kappa_0,\kappa_1>0$，使
+
+$$
+B_n=\theta-\kappa_{n\bmod2}r^n\quad(n\ge n_0),\qquad
+r\kappa_0\le\kappa_1\le\kappa_0/r.
+\tag{43.22.3}
+$$
+
+因而最终 $B_{n+2}>B_n$；相邻层允许平台。两个系数由下面的完整临界端点公式确定。
+
+**证明。** 先固定一个分量，省略下标。规范端点满足 $m=A^- -rM$、$M=A^+ -rm$。记固定长度 $k$ 的实际最小值、最大值为 $m_k,M_k$，从 $m_0=M_0=x$ 出发。负斜率使
+
+$$
+m_k=A^- -rM_{k-1},\qquad M_k=A^+ -rm_{k-1}.
+\tag{43.22.4}
+$$
+
+两极值都由实际词取得：最小值的外层用最小平移返回，内层用最大值的见证；最大值反之。递归得到交替使用极小、极大平移的长度 $k$ 词。这个构造不要求吸引子填满 $H$。
+
+置 $D^-=x-m>0$、$D^+=M-x>0$。从(43.22.4)减去规范端点等式，左右余量每步交换并同乘 $r$，故
+
+$$
+\begin{array}{c|cc}
+ &m_k-m&M-M_k\\ \hline
+k\text{ 偶}&r^kD^-&r^kD^+\\
+k\text{ 奇}&r^kD^+&r^kD^-
+\end{array}.
+\tag{43.22.5}
+$$
+
+同一奇偶类的余量随长度严格减小。因此深度不超过 $N\ge1$ 时，两端分别比较长度 $N$ 和 $N-1$；两个候选长度的极值均实际取得。定义
+
+$$
+p_j=\min\{D_j^-,D_j^+/r\},\qquad
+q_j=\min\{D_j^+,D_j^-/r\}>0.
+$$
+
+由 $rp_j=\min\{rD_j^-,D_j^+\}\le q_j$ 及 $rq_j=\min\{rD_j^+,D_j^-\}\le p_j$，有 $rp_j\le q_j\le p_j/r$。该分量全部 $|z|\le N$ 的标量凸包恰为
+
+$$
+K_{j,N}=\begin{cases}
+[m_j+r^Np_j, M_j-r^Nq_j],&N\ge1\text{ 偶},\\
+[m_j+r^Nq_j, M_j-r^Np_j],&N\text{ 奇},\\
+\{x_j\},&N=0.
+\end{cases}
+\tag{43.22.6}
+$$
+
+前两行的每个端点由某个长度 $N$ 或 $N-1$ 的交替极值词取得；$N=1$ 时包括空词。$N=0$ 只有固定尾，必须单列，不能把裁掉另一奇偶类余量后的 $p_j,q_j$ 公式代入零层。
+
+对于深度 $n$，stem 槽的全部后续词为 $|w|\le n$；返回槽的全部后续词为 $|w|\le n-1$，它们由词 $iw$ 实现。更早的块不改变当前出发坐标的后缀值。因此置
+
+$$
+N_\alpha(n)=n-d_\alpha,
+$$
+
+其中返回槽只在 $n\ge1$ 存在；$n=0$ 删除全部返回槽。记 $K_{j,N}=[\ell_{j,N},u_{j,N}]$，允许两端相等，得到精确式
+
+$$
+B_n=\max_{\alpha\ \mathrm{现存}}\max\{
+\operatorname{dist}(f_\alpha(\ell_{j(\alpha),N_\alpha(n)}),J_{c_\alpha}),
+\operatorname{dist}(f_\alpha(u_{j(\alpha),N_\alpha(n)}),J_{c_\alpha})\}.
+\tag{43.22.7}
+$$
+
+空最大值按最小非负成本取零，故空 stems 时 $B_0=0$。终端未观察，没有额外末端颜色槽。距离闭区间是凸函数，给出(43.22.7)的上界；两端实际取得，给出必要下界，负后缀斜率也已由同时测两端处理。不同分量或槽的最大值见证可以是不同的词，但每个见证都使用同一 $z$ 指定的两条完整来源。这里没有把边际最优坐标拼成一个联合来源。
+
+每个有限返回复合把内部尾送进 $\operatorname{int}H_j$，由(43.22.5)也可见两端余量严格为正。每个 $f_\alpha(H_j)$ 非退化，且由(43.22.1)包含于未裁剪扩张 $J_{c_\alpha}+[-\theta,\theta]$。内部点的像严格位于该扩张两端之间，$\theta>0$ 因而使距离严格小于 $\theta$。物理裁剪的区间包含同样蕴含这个未裁剪包含，不增加成本。有限族给 $B_n<\theta$。族包含给单调非降；(43.22.6)的两端趋于规范两端，(43.22.7)遂给 $B_n\to\theta$。这也直接核对了(43.22.1)作为该固定尾族的真实全深度闭阈值，与定理39.3.2一致。
+
+为计算尾式，记 $e_j^-=m_j,e_j^+=M_j$，并定义
+
+$$
+\eta_{j,-,0}=p_j,\quad\eta_{j,+,0}=q_j,\qquad
+\eta_{j,-,1}=q_j,\quad\eta_{j,+,1}=p_j.
+$$
+
+完整临界端点集为
+
+$$
+\mathcal A=\{(\alpha,e):e\in\{-,+\},
+\ \operatorname{dist}(f_\alpha(e_{j(\alpha)}^e),J_{c_\alpha})=\theta\}.
+$$
+
+它非空。固定 $\sigma=n\bmod2$，$n\ge2$ 时槽端点的规范余量恰为
+
+$$
+r^n r^{-d_\alpha}\eta_{j(\alpha),e,\,\sigma\oplus d_\alpha},
+$$
+
+其中 $\oplus$ 是模二加法。临界端点的像距闭格为正，且必为像区间在该侧的最外端；否则另一个端点的距离会大于 $\theta$，违背(43.22.1)。因此向像区间内部移动充分小的距离，格外距离恰减少同样大小。故其临界距离线性支的系数为负，绝对值为 $|\gamma_\alpha|r^{-d_\alpha}\eta_{j(\alpha),e,\sigma\oplus d_\alpha}$。于是最终系数的完整公式为
+
+$$
+\boxed{\displaystyle
+\kappa_\sigma=
+\min_{(\alpha,e)\in\mathcal A}
+|\gamma_\alpha|\,r^{-d_\alpha}
+\eta_{j(\alpha),e,\,\sigma\oplus d_\alpha}>0.}
+\tag{43.22.8}
+$$
+
+这里每个候选均正，直接证明两个系数正。还需排除非临界端点在任意晚层重新支配：(43.22.6)—(43.22.7)及
+$\operatorname{dist}(y,[l,u])=\max\{l-y,0,y-u\}$ 把每种奇偶的 $B_n$ 写成固定有限条 $b_h+s_hr^n$ 的最大值。最大截距为 $\theta$；截距等于 $\theta$ 的支恰来自上述临界端点，最大斜率为 $-\kappa_\sigma$。对于 $b_h<\theta$ 且 $s_h> -\kappa_\sigma$ 的支，只需令
+
+$$
+r^n\le\frac{\theta-b_h}{s_h+\kappa_\sigma};
+$$
+
+其他较低截距支自动不超过临界最大支。有限个正右端允许选择共同 $n_0\ge2$，证明(43.22.3)的精确尾式。
+
+把尾式代入 $B_{n+1}\ge B_n$，偶层到奇层给 $\kappa_0\ge r\kappa_1$，奇层到偶层给 $\kappa_1\ge r\kappa_0$，即所列兼容不等式。两层之差始终为
+
+$$
+B_{n+2}-B_n=\kappa_{n\bmod2}r^n(1-r^2)>0\quad(n\ge n_0).
+$$
+
+若 $\kappa_0=r\kappa_1$，最终偶层到奇层为平台；若 $\kappa_1=r\kappa_0$，最终奇层到偶层为平台。两等号不能同时成立；两不等式都严格时才有最终逐相邻层严格增长。例及推论43.23给出实际平台。$\square$
+
+**精确归属与较大预算。** 对任一固定合法归属，预算恰为 $B_n$ 时的充要条件是(43.22.7)中每个现存槽的两端实际坐标都属于 $O_{c_\alpha}^{B_n}$。必要性来自端点见证；充分性来自 $O_{c_\alpha}^{B_n}$ 的区间性。按开头的投影规则检查等号端点即可；$B_n=0$ 时仍保留实际坐标归属，空观察则无约束。闭格最短距离在 $J_i\subset X$ 中取得，裁剪不改变闭成本。
+
+任意 $b>B_n$ 都可把这有限族的全部目标选在指定格内部，并保持每个误差严格小于 $b$，因此适用于每一种固定合法归属，且来源、共同词和两条实际尾不变。例如 $b_n=(\theta+B_n)/2<\theta$ 实现全部 $|z|\le n$，包括空词。由于 $B_n\uparrow\theta$，任何一个固定 $b<\theta$ 都不能覆盖这个同一无界族。在 $\theta$ 的全族内部尾归属结论与定理39.4.1一致。本推论要求两个非退化包络，不转移到单点竞争包络；后者应使用[定理39.5.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13415)的旗标轨道判据。
+

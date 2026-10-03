@@ -1,0 +1,50 @@
+**定义58.1。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1=t^3,\quad g^2+4g=1,
+\quad T_2=t^2=1-t,\quad \phi=1+t,
+$$
+
+$$
+\lambda=\frac{T_2}{10},\qquad c=\frac{2t}{5},
+\qquad \rho=g^6,\qquad \chi=g^{20}.
+\tag{58.1}
+$$
+
+本章的 $\rho$ 是收缩因子；公开第36章的常数段边界另记 $\rho_{\mathrm{const}}$，全局记忆转变半径另记 $\mathfrak r$。
+
+来源窗口标签为 $\{3,0,5,2,25\}$，其中 $0$ 是空窗，$25$ 是一个窗口标签。原合法边和实际仿射分支为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,T_2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx.
+\end{gathered}
+\tag{58.2}
+$$
+
+guard 支撑保持 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$。$\Omega$ 为从 guard 零出发的全部实际合法地址，$D_s$ 为从 guard $s$ 出发、最终为空窗的实际地址，$D=D_0$。对词 $w$，$f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}}$；词按外到内排列，最右映射先作用。
+
+固定一次归属 $o=(o_1,\ldots,o_5)$，$o_a\in\{a-1,a\}$。保留原颜色切点
+
+$$
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad
+q_3=t-5\lambda,\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,
+$$
+
+$$
+\begin{aligned}
+J_0&=[-1,q_1],& J_1&=[q_1,q_2],& J_2&=[q_2,q_3],\\
+J_3&=[q_3,q_4],& J_4&=[q_4,q_5],& J_5&=[q_5,\phi].
+\end{aligned}
+\tag{58.3}
+$$
+
+实际格 $C_i^o$ 的切点归属由 $o$ 决定，支撑外端点分别属于颜色0、5。实际观察为 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。以后定义的预算阈值使用大写 $Q_k$，不改变这里的小写颜色切点 $q_a$。
+
+预算取 $b\ge0$。记录合同记为 $\kappa\in\{\mathrm{cl},\mathrm{st},\mathrm{rm}\}$：闭合同要求每槽 $|e_p|\le b$；逐槽严格合同要求每槽 $|e_p|<b$，只在 $b>0$ 使用；逐记录余量合同要求每条完整记录有自己的 $\varepsilon>0$，使全部槽 $|e_p|\le b-\varepsilon$。另有“全族统一余量”性质：同一个 $\varepsilon>0$ 适用于一个规定族的所有记录。后者不能从逐记录余量推出。
+
+完整恢复采用公开定义36.9：解码器确定、因果，从固定初态出发，每次取得后只作有限计算及有限输出；输出按位置有序、只追加、不可回读；在相应合同的全部实际 $\Omega$ 记录上安全，在全部实际 $D$ 记录上逐位置最终生效，包括空窗补齐。没有 End、支持上界、免费输入重放或免费可读时钟。所有影响未来的可读控制、持久与临时数据、计数器、位置、时序和输出侧存储，都计入完整配置。$B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)$ 表示截至第 $N$ 次取得的最坏完整存储峰值。
+

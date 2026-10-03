@@ -1,0 +1,49 @@
+**推论 43.22（双内部尾的负斜率有限预算）。** 设 $L$ 为奇数，$a=(-g)^L=-r$，$0<r=g^L<1$。两个分量的返回映射为
+
+$$
+G_{ji}(x)=A_{ji}-rx,\qquad
+A_j^-:=\min_iA_{ji}<\max_iA_{ji}=:A_j^+\quad(j=1,2).
+$$
+
+使用定理39.2.1的两个非退化规范包络
+
+$$
+H_j=[m_j,M_j],\qquad
+m_j=\frac{A_j^- -rA_j^+}{1-r^2},\qquad
+M_j=\frac{A_j^+ -rA_j^-}{1-r^2},
+$$
+
+并假定固定尾标量 $x_j=\kappa_{s_j}(\xi_j)$ 满足 $m_j<x_j<M_j$。
+
+完整槽清单保留每个分量、每个位置和两种返回：stem 条目为 $(f_{P[\rho:]},h_\rho)$、$(f_{Q[\rho:]},h_\rho)$，$0\le\rho<m$；返回条目为 $(f_{U_i[\rho:]},(W_i)_\rho)$、$(f_{V_i[\rho:]},(W_i)_\rho)$，$i=0,1$、$0\le\rho<L$。以 $\alpha$ 索引这 $2m+4L$ 个条目，记它的分量为 $j(\alpha)$、颜色为 $c_\alpha$、非空后缀映射为 $f_\alpha$，其斜率为
+
+$$
+\gamma_\alpha=(-g)^{s_\alpha}\ne0,\qquad s_\alpha\ge1.
+$$
+
+stem 槽置 $d_\alpha=0$，返回槽置 $d_\alpha=1$。假定完整规范闭阈值
+
+$$
+\theta=\max_\alpha\max\{
+\operatorname{dist}(f_\alpha(m_{j(\alpha)}),J_{c_\alpha}),
+\operatorname{dist}(f_\alpha(M_{j(\alpha)}),J_{c_\alpha})\}>0.
+\tag{43.22.1}
+$$
+
+令 $B_n$ 为全部 $|z|\le n$ 的两分量、全部指定出发观察到相应闭格的最大距离；没有观察时定义 $B_n=0$。则 $B_n$ 是该有限族的精确闭成本，
+
+$$
+B_n<\theta\quad(n\ge0),\qquad B_n\uparrow\theta.
+\tag{43.22.2}
+$$
+
+存在 $n_0\ge2$ 及 $\kappa_0,\kappa_1>0$，使
+
+$$
+B_n=\theta-\kappa_{n\bmod2}r^n\quad(n\ge n_0),\qquad
+r\kappa_0\le\kappa_1\le\kappa_0/r.
+\tag{43.22.3}
+$$
+
+因而最终 $B_{n+2}>B_n$；相邻层允许平台。两个系数由下面的完整临界端点公式确定。
+

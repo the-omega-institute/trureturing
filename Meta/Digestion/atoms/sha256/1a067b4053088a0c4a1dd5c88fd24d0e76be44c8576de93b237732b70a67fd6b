@@ -1,0 +1,65 @@
+**定理 27.7（紧致完成域的严格余量有限取得）。** 固定上述任意有限格量化器 $Q$，不限定为六格。若一个整个无限记录的固定确定解码器在 $\Omega$ 上对正预算 $\nu$ 正确，预算可为闭或正开，则对每个 $0<\rho<\nu$，存在一个有限 $h\ge0$ 和一个固定解码器
+
+$$
+d_h:\mathcal C^{h+1}\longrightarrow\Lambda
+$$
+
+使同一个 $Q$ 在全部 $\Omega$ 上从前 $h+1$ 次实际取得的记录，对闭预算 $\rho$ 统一恢复首窗。
+
+证明。$\Omega$ 是有限离散位字母表乘积中的闭合法子空间，因而紧致；首窗类
+
+$$
+F_\ell=\{\omega\in\Omega:\sigma_0(\omega)=\ell\},\qquad\ell\in\Lambda,
+$$
+
+是有限窗口决定的开闭柱集，因而也紧致。每个 $x_j$ 连续：$T^j$ 连续，编码级数一致收敛。给有限颜色字母表 $\mathcal C$ 离散拓扑，记 $C_i=Q^{-1}(i)$、$J_i=\overline{C_i}^{\,X}$。在紧致乘积 $\Omega\times\mathcal C^{\mathbb N_0}$ 中定义
+
+$$
+\mathscr R_\rho=
+\{(\omega,r):\operatorname{dist}(x_j(\omega),J_{r_j})\le\rho
+\text{ 对全部 }j\ge0\}.
+$$
+
+每个固定坐标条件是有限个闭距离条件与开闭颜色条件的并，故闭；全部坐标的交仍闭，所以 $\mathscr R_\rho$ 紧致。这个关系的见证是对所有坐标共用的一条完整 $\omega$，不是逐坐标选择来源。按首标签投影为
+
+$$
+\mathscr K_\ell=
+\{r:\exists\omega\in F_\ell,\ (\omega,r)\in\mathscr R_\rho\},
+$$
+
+每个 $\mathscr K_\ell$ 都是紧致集的投影，因而紧致。
+
+闭包关系中的每个见证都能在较大预算内由同一来源实际实现。固定统一正余量
+
+$$
+\delta=\frac{\nu-\rho}{2}>0.
+$$
+
+对 $(\omega,r)\in\mathscr R_\rho$，每个 $j$ 取 $J_{r_j}$ 中到 $x_j(\omega)$ 的最近点 $z_j$，再由 $C_{r_j}$ 在其闭包中的稠密性取 $v_j\in C_{r_j}$ 满足 $|v_j-z_j|<\delta$；单点格直接取其唯一点。于是
+
+$$
+\varepsilon_j=v_j-x_j(\omega),\qquad
+|\varepsilon_j|<\rho+\delta=\frac{\rho+\nu}{2}<\nu.
+$$
+
+甚至 $\sup_j|\varepsilon_j|\le(\rho+\nu)/2<\nu$。全部 $v_j\in X$，裁剪固定，所得实际颜色流恰为 $r$。此选择覆盖单点格和任意端点归属；误差仍相对于同一 $\omega$ 的真实轨迹定义，并使用一个对所有坐标共同的正余量。因无限解码器在原开或闭预算下正确，不同首标签的 $\mathscr K_\ell$ 必须两两不交。
+
+对不同 $\ell,m$，考虑 $\mathscr K_\ell\times\mathscr K_m$ 中的嵌套紧致集
+
+$$
+E_h^{\ell,m}=\{(r,s):r_j=s_j\text{ 对 }0\le j\le h\},\qquad h\ge0.
+$$
+
+若所有 $E_h^{\ell,m}$ 都非空，紧致性给出其交中的一对流；它们每个坐标都相等，违背 $\mathscr K_\ell\cap\mathscr K_m=\varnothing$。因此每对不同首标签都在某个有限前缀长度已分离。首标签有限，取这些长度的最大值得到一个统一有限 $h$。定义 $d_h$ 返回与给定前缀相容的唯一 $\mathscr K_\ell$ 的标签；无相容流的输入任意赋值，得到全定义确定函数。
+
+最后固定任一实际 $\omega$ 及闭预算 $\rho$ 下已取得的前 $h+1$ 个记录。它们的裁剪目标 $v_j\in C_{R_j}$ 满足
+
+$$
+\operatorname{dist}(x_j(\omega),J_{R_j})
+\le|x_j(\omega)-v_j|\le\rho.
+$$
+
+仅为证明见证，在 $j>h$ 处以同一来源的零未来误差延伸为 $r_j=Q(x_j(\omega))$。此完整流属于 $\mathscr K_{\sigma_0(\omega)}$，故其已取得前缀由 $d_h$ 正确解码。这个延伸没有作为观测数据交给 $d_h$，也没有宣称未取得坐标已被取得。$\square$
+
+定理27.7保持量化器 $Q$，可以改变解码器；此证明只给出 $h$ 的存在性，不提供可计算的视界界。严格余量用于将闭包点移到实际颜色格内，故此证明不给出 $\rho=\nu$ 的有限化，也不将非紧致 $D$ 的无限记录合同转到有限记录合同。
+

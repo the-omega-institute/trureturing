@@ -1,0 +1,23 @@
+**定理 39.5.2（精确轨道集合与合法尾的域）。** 一个合法竞争终尾实际实现该分量的所有有限历史，当且仅当其标量位于 $K$。这个集合有完整有限描述
+
+$$
+K=
+\begin{cases}
+T,&a>0\text{ 且 }y\in\overline T,\\
+\varnothing,&a>0\text{ 且 }y\notin\overline T,\\
+T\cap F^{-1}(T),&a<0.
+\end{cases}
+$$
+
+因此
+
+$$
+K\ne\varnothing\Longleftrightarrow
+\begin{cases}
+T\ne\varnothing\text{ 且 }y\in\overline T,&a>0,\\
+y\in T,&a<0.
+\end{cases}
+$$
+
+对允许竞争终尾在整个 $I_{s_2}$ 中选择的族，这就是固定实际竞争尾的充要条件。如果另要求终端标量在指定原图返回片 $P_2$ 内，条件是 $K\cap P_2\ne\varnothing$；特别地，$P_2=\{y\}$ 时，两种符号都要求 $y\in T$。
+

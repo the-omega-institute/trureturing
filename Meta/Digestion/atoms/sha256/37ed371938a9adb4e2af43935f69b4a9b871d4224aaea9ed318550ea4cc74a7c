@@ -1,0 +1,102 @@
+**定理 15.3（本原方向与共同尺度的严格约束）。** 对任意合法精确并列，置
+
+$$
+x=t-j=t-m+1,\qquad y=j+1=m,\qquad
+g=\gcd(x,y)=\gcd(t+1,m),\qquad u=x/g,\quad v=y/g,
+$$
+
+并定义仅依赖固定 $k$ 的正整数
+
+$$
+B_k^*=\frac{(L-1)!}{(A-1)!},\qquad
+C_k^*=2^D\prod_{h=0}^{D-1}(2L+2h+3).
+\tag{15.7}
+$$
+
+则 $u>v\ge1$、$\gcd(u,v)=1$，且
+
+$$
+1<\frac uv<\frac1{c_k}<\frac{C_k^*}{B_k^*},\qquad
+g\mid(C_k^*v-B_k^*u),\qquad
+0<g\le C_k^*v-B_k^*u,
+\tag{15.8}
+$$
+
+其中 $c_k$ 是（14.4）的原常数。尤其
+
+$$
+g^2<(C_k^*-B_k^*)y,\qquad
+y<(C_k^*-B_k^*)v^2.
+\tag{15.9}
+$$
+
+对每个固定 $k$ 和整数 $V\ge1$，约分后分母 $v\le V$ 的全部合法并列点只有有限多个，并且 $j+1<(C_k^*-B_k^*)V^2$；一个固定互素方向 $(u,v)$ 不能在无界共同尺度上并列。在 $k=1$ 时，这些约束具体为
+
+$$
+B_1^*=2,\quad C_1^*=396,\qquad
+g\mid2(198v-u),\qquad g^2<394(j+1).
+\tag{15.10}
+$$
+
+证明。复用定理 14.2 的严格根区间，精确并列满足
+$2j+1<t<j+(j+1)/c_k$，所以 $1<u/v<1/c_k$。将
+$t=g(u+v)-1$、$j=gv-1$ 代入，目标坐标准确为
+
+$$
+a=g(Au+Dv)-D,\qquad
+b=g(Du+Lv)-L,\qquad
+n=g(Lu+(L+D)v)-(L+D).
+$$
+
+（14.32）的两边各含同一个因子 $g>0$。约去后，将剩余式写为整数多项式 $\Phi(z)$ 在 $z=g$ 处等于零，其中
+
+$$
+\begin{aligned}
+\Phi(z)={}&u\prod_{i=1}^{E}\bigl(z(Au+Dv)-D+i\bigr)
+              \prod_{s=1}^{A}\bigl(z(Du+Lv)-L+s\bigr)\\
+&-v2^D\prod_{h=0}^{D-1}
+ \bigl(2z(Lu+(L+D)v)-2(L+D)+2h-1\bigr).
+\end{aligned}
+\tag{15.11}
+$$
+
+在 $z=0$，两个分子块合为
+$(-1)^D(D-1)!/(A-1)!\cdot(L-1)!/(D-1)!=B_k^*$。分母块反向编号后合为 $C_k^*$。因此
+$\Phi(0)=uB_k^*-vC_k^*$，而 $\Phi(g)=0$ 蕴含 $g\mid\Phi(0)$。这里的 $z=0$ 只是整数多项式常数项，不是树来源。
+
+为统一确定常数项的符号，令 $s=ED-A^2\in\{1,-1\}$。Cassini 与递推给
+$AD=EL-s$、$D^2=AL+s$。将带重数的 $D$ 个分数
+
+$$
+\left\{\frac iA:0\le i<E\right\}
+\mathbin{\sqcup}\left\{\frac rD:0\le r<A\right\}
+$$
+
+按非降次序写成 $z_0,\ldots,z_{D-1}$。对 $0\le h\le D-1$，有
+
+$$
+\frac{Ah}{L}\le E-\frac{A+s}{L}<E,\qquad
+\frac{Dh}{L}\le A-\frac{D-s}{L}<A.
+\tag{15.12}
+$$
+
+两处严格性分别用 $A+s>0$、$D-s>0$；$k=1$ 时 $s=1,A=1,D=2$ 也成立。因此计数没有端点截断，小于等于 $h/L$ 的上述分数数目准确为
+$\lfloor Ah/L\rfloor+\lfloor Dh/L\rfloor+2\ge h+1$，因为 $A+D=L$。故 $z_h\le h/L$。相同的两个连续整数块给
+
+$$
+\frac{B_k^*}{A^ED^A}=\prod_{h=0}^{D-1}(1+z_h)
+<\prod_{h=0}^{D-1}\left(1+\frac{h+3/2}{L}\right)
+=\frac{C_k^*}{4^DL^D}.
+\tag{15.13}
+$$
+
+每个匹配因子都严格小于右侧因子，于是 $C_k^*/B_k^*>1/c_k$。特别地 $C_k^*>B_k^*$，因为 $c_k<1$。结合并列方向的 $u/v<1/c_k$，得 $C_k^*v-B_k^*u>0$；正整数被 $g$ 整除便至少为 $g$，证明（15.8）。又 $u>v$，分别将尺度上界乘以 $g$ 和 $v$，得到
+
+$$
+g^2\le g(C_k^*v-B_k^*u)<(C_k^*-B_k^*)gv,
+\qquad
+y=gv\le C_k^*v^2-B_k^*uv<(C_k^*-B_k^*)v^2.
+$$
+
+这就是（15.9）及严格平方根界 $g<\sqrt{(C_k^*-B_k^*)y}$。固定 $k,V$ 后，$y$ 有统一整数上界，且定理 14.2 再给 $t<y-1+y/c_k$，所以两个原整数参数均有界。固定 $(u,v)$ 的尺度上界则直接来自（15.8）。代入首深度的四个 Fibonacci 数即得（15.10）。本定理的共同因子是 $\gcd(t+1,m)$，与定理 15.2 的 $\gcd(t,m)$ 不同。证毕。
+

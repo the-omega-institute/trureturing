@@ -1,0 +1,19 @@
+**证明。** 对 $n\ge39$，完整帽族给 $f_n^{(R)}$ 个同长历史，长度为 $\ell+2n$，其中 $\ell=26$ 或52。由 (58.33) 及配置分离，
+
+$$
+B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(\ell+2n)
+\ge\log_2 f_n^{(R)}-1
+\ge2\alpha_R(n-M_R)-1.
+\tag{58.61}
+$$
+
+完整最坏峰值随视界不减。对任意整数 $N\ge\ell+78$，取 $n=\lfloor(N-\ell)/2\rfloor\ge39$，得
+
+$$
+B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)
+\ge\alpha_RN-(2M_R+\ell+1)\alpha_R-1.
+\tag{58.62}
+$$
+
+较小 $N$ 的右侧为负，由位数非负继续成立。此处真正使用了递推在所有充分大偶数长度上的下界和峰值单调性，故跨越奇数视界得到全视界 liminf。一般 limsup 计数可能只在稀疏长度出现大值，不能自动提供这一步。证毕。
+

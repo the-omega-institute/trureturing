@@ -1,0 +1,14 @@
+**定理 40.8（被同一实际来源强制的逆端点链）。** 对 $n\ge n_0$，设 $\mathcal E_n\subseteq X$ 包含预算 $b_n$ 的观察端点，并具有以下合法逆闭合性质：每当 $s\xrightarrow{\ell}s'$ 为合法边，当前点 $z\in\mathcal E_n\cap f_\ell(I_{s'})$，则
+
+$$
+F_\ell(z)=\frac{\Delta_\ell-z}{g}\in\mathcal E_n.
+$$
+
+则
+
+$$
+\boxed{|\mathcal E_n\cap H_A|\ge n+1.}
+$$
+
+同样，若端点按 guard 分层，$\mathcal E_{n,s}\subseteq I_s$，根下端在零层且上述合法边把零层或一层的点逆送入相应下一层，则 $|\mathcal E_{n,0}\cap H_A|\ge n+1$。引理31.2的全局逆闭合性质足以满足这里的假设。
+

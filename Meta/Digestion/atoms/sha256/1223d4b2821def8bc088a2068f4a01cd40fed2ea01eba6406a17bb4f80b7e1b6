@@ -1,0 +1,18 @@
+**定理 37.3（精确终端核）。**
+
+$$
+\ker Q^{\rm save}_{m,n}=L_n\cap\ker T_{m,n},
+$$
+
+且
+
+$$
+\ker Q^{\rm save}_{m,n}=
+\begin{cases}
+L_n,&m=1, n\ge1,\\
+L_1,&m=2, n\ge1,\\
+\Delta_K,&m\ge3\text{ 或 }n=0.
+\end{cases}
+\tag{37.3}
+$$
+

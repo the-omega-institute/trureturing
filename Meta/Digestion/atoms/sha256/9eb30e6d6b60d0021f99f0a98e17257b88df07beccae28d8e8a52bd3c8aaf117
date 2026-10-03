@@ -1,0 +1,20 @@
+**命题 14.8（根接触阻止全空间删除因子）。** 令
+\[
+a=3L,\qquad b=\mathrm{null}R,\qquad z=t-1.
+\]
+则 $\kappa_0(a)=\kappa_0(b)=z$，而
+\[
+\kappa_0(Ta)=-1,\qquad \kappa_0(Tb)=\phi.
+\]
+因此不存在任何单值映射 $f:I_0\to I_0$，无论是否要求连续，都满足
+\[
+f\circ\kappa_0=\kappa_0\circ T
+\quad\text{在 }A_0\text{ 上成立}.
+\]
+
+证明。由
+\[
+f_3(-1)=-t+t^3=t-1=f_{\mathrm{null}}(\phi)
+\]
+得到同一点的两条地址，而删除首窗后正是 $L$ 与 $R$ 的两个不同极值。若存在 $f$，同一点 $z$ 必须有两个不同像，矛盾。证毕。
+

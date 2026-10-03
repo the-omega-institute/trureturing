@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d592013a0d60f2ff1c0e912bcc45cf129143c80ea9cd11883799b53a05dad234
+  normalized_sha256: sha256:d592013a0d60f2ff1c0e912bcc45cf129143c80ea9cd11883799b53a05dad234
+cas_ref: sha256:d592013a0d60f2ff1c0e912bcc45cf129143c80ea9cd11883799b53a05dad234
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/RedundantLeafMatching.redundant_leaf_maximal_matching_transport
+    target_statement_id: sha256:da3c085762eb680d501573631aff700ae3b9757757bb8958a6240c5141956e4f
+receipts:
+  unresolved_subitems: []

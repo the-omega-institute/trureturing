@@ -1,0 +1,85 @@
+**引理 29.5（固定共轭界八的端点闭合）。** 设 $t'=-\phi$ 为 $t$ 的代数共轭，$x'$ 表示 $\mathbb Q(t)$ 中的共轭。定义
+
+$$
+\mathscr L=\frac15\mathbb Z[t],\qquad
+B=\{x\in\mathscr L\cap X:|x'|\le8\}.
+\tag{29.9}
+$$
+
+则 $B$ 有限，包含 $I_0,I_1$、全部合法 $D_{s,\ell}$ 及全部 $E_i$ 的端点，并满足
+
+$$
+x\in B,\quad F_\ell(x)\in X
+\quad\Longrightarrow\quad F_\ell(x)\in B.
+\tag{29.10}
+$$
+
+证明。代数恒等式为
+
+$$
+g'=-\frac1g,\qquad \frac1g=3+2t\in\mathbb Z[t].
+\tag{29.11}
+$$
+
+每个 $\Delta_\ell$ 在 $\mathbb Z[t]$ 中，故每个删除逆分支 $F_\ell$ 保持格 $\mathscr L$。在共轭嵌入中，
+
+$$
+F_\ell(x)'=gx'-g\Delta_\ell'.
+\tag{29.12}
+$$
+
+由 $t<5/8$ 和 $\phi<2$，有 $0<g<1/4$，且全部标签满足 $|\Delta_\ell'|<4$：五个绝对值依次为 $\phi,0,\phi^2,1,2+\phi$。于是 $x\in B$ 时
+
+$$
+|F_\ell(x)'|
+\le g\bigl(|x'|+|\Delta_\ell'|\bigr)
+<\frac14(8+4)=3<8.
+\tag{29.13}
+$$
+
+若实嵌入的像还在 $X$ 中，格保持和此界共同给出 (29.10)。
+
+核对全部初始端点。状态区间与合法分支域的端点属于
+
+$$
+\{-1,\phi,t,-t^2,g,2t\}\subset\mathbb Z[t]\cap X.
+$$
+
+用 $\lambda=t^2/10$ 改写 (28.2)，其内格端点分别来自
+
+$$
+\begin{aligned}
+E_1&=[-6t^2/5,g-t^2/5],\\
+E_2&=[g-2t^2/5,t-2t^2/5],\\
+E_3&=[t-3t^2/5,2t-3t^2/5],\\
+E_4&=[2t-4t^2/5,2t+t^2/5].
+\end{aligned}
+\tag{29.14}
+$$
+
+因此所有相关端点都在 $\mathscr L\cap X$。其共轭绝对值统一不超过
+
+$$
+\max\left\{
+\frac65\phi^2,\quad
+2\phi+1+\frac25\phi^2,\quad
+2\phi+\frac45\phi^2,\quad
+1+2\phi
+\right\}<8.
+\tag{29.15}
+$$
+
+这个界包括两端格端点、两个状态区间端点和所有合法分支端点；$\phi<2$ 直接验证右侧严格小于八。故全部初始端点均在 $B$。
+
+最后，若 $x=(m+nt)/5\in B$，则
+
+$$
+n=\frac{5(x-x')}{t-t'},\qquad m=5x-nt,
+\qquad t-t'=\sqrt5>0.
+\tag{29.16}
+$$
+
+$|x|\le\phi$ 和 $|x'|\le8$ 同时给两个整数 $m,n$ 有界，只容许有限多个整数对。有限性使用的是两个嵌入的联合界；只说实坐标属于有界区间 $X$ 不足以证明格点有限。$\square$
+
+观察器的端点只需要闭扩张区间、状态区间和分支域的端点；原量化器的切点本身不承担这个格闭合条件。本章统一使用 (29.9) 的共轭界八。
+

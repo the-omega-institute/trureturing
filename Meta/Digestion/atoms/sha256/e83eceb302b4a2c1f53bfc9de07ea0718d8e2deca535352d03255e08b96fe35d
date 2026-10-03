@@ -1,0 +1,6 @@
+**证明。** 给从一个指定初态弱可行的执行词 $v$，从另一个指定初态先执行 $\mathcal R$ 再执行 $v$。由(62.19)，$v$ 的新起点严格大于原初态。沿相同列表的所有仿射映射斜率为正，故每个旧高守卫都被严格改善；重置及自动槽也严格通过。映射 $v\mapsto\mathcal Rv$ 单射，权重增加固定 $C_R$，仍恢复为(62.5)中同列表、原字面尾的实际来源对。删除执行词的固定前缀可恢复 $v$，即使相邻 $\mathsf u$ 被写成同一个极大串也一样。
+
+严格词包含于弱词；上述单射在两个初态之间均成立。取上极限并消去固定开销，就得到所有列出计数的共同率。定理62.5将它们对应到各实际合同。率相等不要求有限语言逐词相同，也不赋予全部重置前置词一个共同正余量。证毕。
+
+完整返回列表到颜色历史和同长第一来源的单射直接引用[定理58.8的列表解析接口](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23950-L24008)及[引理59.4.1的返回解析段](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24644-L24648)：使用相同 $U,C$ 与颜色码，本章 $\mathbf d,\mathbf e$ 对应前篇 $d,e$，极大连续块恢复相同的 $(m,r)$。其中来源码 $\{U,C\}$ 的第二个标签仍为0、5；$\{V,C\}$ 的第一个标签仍为0、5；颜色码 $\{\mathbf d,\mathbf e\}$ 的第二个标签仍为1、3。反序只改变完整返回的列表次序，同长比较去掉相同 stem 和付费 anchor，再接同一原尾，故两种固定偏移不引入计数碰撞。不同执行列表给不同第一来源和不同颜色历史；反序及两种固定偏移不引入计数碰撞。这里使用返回解析，不把引理59.4.1的高宏分界或宏语言供应扩张到任意列表。
+

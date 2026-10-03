@@ -1,0 +1,4 @@
+### 43.24 条件正尾式的预算缺口与配置容量
+
+这里使用[定义36.9](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11179)的完整记忆合同，并复用[定理36.25](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11832)的联合配置计数及[第38.6节](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13043)的共同第一未来论证。不另假定或构造 SCC。
+

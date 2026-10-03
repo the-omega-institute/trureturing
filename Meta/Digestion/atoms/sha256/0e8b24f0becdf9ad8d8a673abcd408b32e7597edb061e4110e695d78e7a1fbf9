@@ -1,0 +1,19 @@
+### 30.5 精确有限图的任意前缀测试与有效准备
+
+继续使用定义29.6的同一固定图 $G$。为避免将图中的后继片与量化器 $Q$ 混淆，节点写为 $(s,A)$，其中 $A\in\mathcal A_s$；$\mathcal A_s$ 含相邻端点间的整个闭区间及所有端点单点集。起始节点为 guard 零的全部节点。合法边和颜色容许关系原样为
+
+$$
+(s,A)\xrightarrow{\ell}(s',A')
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\quad
+A\subseteq D_{s,\ell},\quad A'\subseteq F_\ell(A),
+\tag{30.19}
+$$
+
+$$
+(s,A)\text{ 容许颜色 }i
+\quad\Longleftrightarrow\quad A\subseteq E_i.
+$$
+
+这里 $F_\ell$ 是 (29.7) 的分支映射，与带取得下标的候选集 $F_n(r)$ 不同。两个边条件都是全片包含，不能改成相交；端点单点也保留。定理29.8保证每条有限起始路径从一个合法终端尾联合提升为一条实际 $\Omega$ 地址，也保证每条满足指定闭约束的实际地址有其规范片路径。
+

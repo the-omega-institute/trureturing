@@ -1,0 +1,4 @@
+## 63. 原返回凸包与完整原 SCC
+
+本章固定同一个有限逆闭合端点集 $B$、原 FIB 六格、实际 guard、预算 $0\leq\beta<\lambda$，以及由全部规范原片和全部全包含边构成的完整原配对图 $G_B$。所有边都保留；本章不细分原片，也不删去额外边。使用公开固定版本 [FIB_SOURCE_COMPLETION_DYNAMICS.md](https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的定义14.5、命题14.6、定理14.7、定理17.2、定义31.3、定理31.4、引理36.16、定理36.22、命题39.6.1和引理51.5。
+

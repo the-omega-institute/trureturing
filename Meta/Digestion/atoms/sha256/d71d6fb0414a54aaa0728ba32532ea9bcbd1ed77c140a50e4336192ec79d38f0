@@ -1,0 +1,25 @@
+**定义 9.1（符号 Markov 测度与 Haar 测度）。** 黄金均值图的邻接矩阵、正向量与转移矩阵为
+
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+r=\binom{\phi}{1},\qquad Ar=\phi r,\qquad
+P_{st}=\frac{A_{st}r_t}{\phi r_s},\qquad
+P=\begin{pmatrix}\phi^{-1}&\phi^{-2}\\1&0\end{pmatrix}.
+$$
+
+其平稳分布为
+
+$$
+\pi_0=\frac{\phi^2}{\phi^2+1},\qquad
+\pi_1=\frac1{\phi^2+1}.
+$$
+
+记 $\nu$ 为初始分布 $\pi$、转移 $P$ 的单边平稳 Markov 测度，即合法柱的概率为
+
+$$
+\nu([s_0\cdots s_{k-1}])
+=\pi_{s_0}\prod_{j=0}^{k-2}P_{s_js_{j+1}}.
+$$
+
+这些有限分布一致，因而定义 $\Omega$ 上的 Borel 概率；$\pi P=\pi$ 使它移位不变。记 $\mu$ 为 $G$ 的归一化 Haar 概率，其模 $m$ 推前为 $B_m$ 上的均匀概率 $u_m$。这些兼容均匀分布也直接定义 $\mu$；平移和整数可逆矩阵保持每层均匀分布，故保持 $\mu$。令 $\lambda=\nu\times\mu$。Parry [4] 是这一内禀 Markov 构造的经典出处；以下给出本卷所需的有限图及熵证明。
+

@@ -1,0 +1,131 @@
+### 定义 47.1（固定原图、原单点轨道与碰撞合同）
+
+置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad \lambda=\frac{t^2}{10},
+$$
+$$
+\beta\in\mathbb Q(t)\cap[0,\lambda),\qquad
+\delta=\lambda-\beta>0,\qquad
+I_0=X=[-1,\phi],\quad I_1=[-1,t].
+$$
+
+$A_0=\Omega$、$A_1\subset A_0$ 是原实际地址域，$\kappa_s(A_s)=I_s$；$T$ 删除一个三位窗口。来源标签集为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是空窗，$25$ 是一个标签。合法 guard 边与仿射分支为
+
+$$
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad 1\to1:5,
+$$
+$$
+f_a(x)=\Delta_a-gx,\quad F_a(x)=\frac{\Delta_a-x}{g},\quad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t).
+\tag{47.1}
+$$
+
+记 $o(3)=o(0)=o(2)=0$、$o(5)=o(25)=1$。标签 $a$ 的 outgoing guard 始终是 $o(a)$。根像按空间次序为
+
+$$
+3:[-1,-t^2],\quad 0:[-t^2,g],\quad
+5:[g,t],\quad 2:[t,2t],\quad25:[2t,\phi].
+$$
+
+六色切点是
+
+$$
+q_1=-t^2-\lambda,\quad q_2=g-3\lambda,\quad
+q_3=t-5\lambda,\quad q_4=2t-7\lambda,\quad
+q_5=2t+\lambda.
+$$
+
+令 $q_0=-1,q_6=\phi$，$J_c=[q_c,q_{c+1}]$，并只使用原预算闭扩张
+
+$$
+E_c=E_c^\beta=X\cap(J_c+[-\beta,\beta])=[L_c,U_c],
+\qquad 0\le c\le5.
+\tag{47.2}
+$$
+
+这些集合表示闭成员关系。关于固定切点归属的实际含噪颜色取得，仍须另核对目标和误差；闭成员关系本身不供应严格误差余量。
+
+输入图 $G$ 是定义31.3的**原完整图**。其既有公共有限端点集 $B$ 包含 (47.2) 的有效端点、guard 端点及全部合法分支域端点，并满足
+
+$$
+z\in B,\quad F_a(z)\in X\quad\Longrightarrow\quad F_a(z)\in B.
+\tag{47.3}
+$$
+
+令 $B_s=B\cap I_s$。原节点恰为 $(s,P)$，其中 $P$ 是 $B_s$ 中的一个端点单点，或两个相邻端点间的整个闭片；全部这些片均保留。原边恰为
+
+$$
+(s,P)\xrightarrow{a}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{a}s'\text{ 合法},\quad
+P\subseteq f_a(I_{s'}),\quad Q\subseteq F_a(P).
+\tag{47.4}
+$$
+
+同一标量片在两个 guard 中出现时是两个节点。以下不改变 $B$，不插入碰撞端点或 rival 点，不以区间相交替代 (47.4)。
+
+同时给定一条实际本原周期 rival，窗口词为 $V=v_0\cdots v_{p-1}$，其相位坐标、周期 guards 为 $y_r,u_r$，指标模 $p$。要求
+
+$$
+y_r=f_{v_r}(y_{r+1}),\qquad
+(u_r,\{y_r\})\xrightarrow{v_r}(u_{r+1},\{y_{r+1}\})
+\text{ 已是 }G\text{ 的原边}.
+\tag{47.5}
+$$
+
+任意实际周期地址不自动满足这个原单点成员假设。若输入来自原配对图的一个含环 SCC，且第二来源有单点，则交换分量使用命题39.6.1，第二片在整个 SCC 都是单点且第二来源返回相干。定理36.22给其本原词和边相位；通过各顶点的返回是对应旋转词的整幂，收缩固定点唯一，故同相位单点都等于 $y_r$。内部前驱标签又决定 $u_r=o(v_{r-1})$。沿一条返回取出各相位即得到 (47.5)，保持原节点身份。
+
+记
+
+$$
+\mathcal C_r=\{c:y_r\in E_c\},\qquad
+K_r=\bigcup_{c\in\mathcal C_r}E_c,
+$$
+$$
+H_{r,s}^{(0)}=I_s,\qquad
+H_{r,s}^{(N+1)}=K_r\cap
+\bigcup_{s\xrightarrow{a}s'\,\mathrm{合法}}
+f_a\bigl(H_{r+1,s'}^{(N)}\bigr).
+\tag{47.6}
+$$
+
+对 $a=(r,\ell,m,c,d)$，其中 $\ell\ne m$、$c,d\in\mathcal C_r$，定义
+
+$$
+s_a=\max\{o(\ell),o(m)\},\qquad
+\mathcal I_a=I_{s_a}\cap F_\ell(E_c)\cap F_m(E_d).
+\tag{47.7}
+$$
+
+因为 $A_1\subset A_0$，同一个字面尾可接在两个头后面，当且仅当它从较严格 guard $s_a$ 合法。区间 (47.7) 的两个逆像分别是
+
+$$
+F_\ell(E_c)=\left[\frac{\Delta_\ell-U_c}{g},
+\frac{\Delta_\ell-L_c}{g}\right],\qquad
+F_m(E_d)=\left[\frac{\Delta_m-U_d}{g},
+\frac{\Delta_m-L_d}{g}\right].
+$$
+
+取三者下端最大值和上端最小值；下端大于上端时为空，等号时保留单点。引理36.16的严格宽度排除 $c=d$ 的条目，详见47.4；以下待检条目因此取 $c\ne d$。
+
+定义相位图 $\mathcal P$：其顶点是
+
+$$
+(r,s,P),\quad (s,P)\in V(G),\quad
+P\subseteq E_c\text{ 对某个 }c\in\mathcal C_r;
+\tag{47.8}
+$$
+
+边 $(r,s,P)\xrightarrow{a}(r+1,s',Q)$ 恰取自 (47.4)。这是固定 rival 轨道的原配对图相位展开；颜色条件是整片包含。每个顶点可有多个容许共同色，各次访问可选择其中一个。令
+
+$$
+M=|V(\mathcal P)|\le p|V(G)|,\qquad
+\mathcal J_a=\{(r+1,s_a,P)\in V(\mathcal P):P\subseteq\mathcal I_a\}.
+\tag{47.9}
+$$
+
