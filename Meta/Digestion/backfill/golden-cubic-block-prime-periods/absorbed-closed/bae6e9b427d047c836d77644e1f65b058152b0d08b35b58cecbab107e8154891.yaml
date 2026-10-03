@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bae6e9b427d047c836d77644e1f65b058152b0d08b35b58cecbab107e8154891
+  normalized_sha256: sha256:bae6e9b427d047c836d77644e1f65b058152b0d08b35b58cecbab107e8154891
+cas_ref: sha256:bae6e9b427d047c836d77644e1f65b058152b0d08b35b58cecbab107e8154891
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/CubicOrbitCanonicalHeightGram.mordell_family_canonical_height_gram
+    target_statement_id: sha256:1ce62dbe1393351942f7d0033e775106811fbb27a2cf8f96fa9f1c8f61377a63
+receipts:
+  unresolved_subitems: []

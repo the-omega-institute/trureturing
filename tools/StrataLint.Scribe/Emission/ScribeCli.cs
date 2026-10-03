@@ -20,6 +20,7 @@ public static class ScribeCli
         "resources release",
         "resources verify-release",
         "scripts",
+        "relations",
     ];
 
     public static int Run(
@@ -96,6 +97,19 @@ public static class ScribeCli
             }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
                 or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "relations")
+        {
+            try
+            {
+                return ScribeRelationVerifyCommands.Run(arguments, FindRepositoryRoot(workingDirectory), input, output, error);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or InvalidOperationException)
             {
                 error.WriteLine(exception.Message);
                 return 2;
@@ -309,7 +323,8 @@ public static class ScribeCli
         + "| resources pack --out <file> | resources verify --pack <file> "
         + "| resources release --out <directory> "
         + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "
-        + "| scripts verify [--paths-from <file|->]";
+        + "| scripts verify [--paths-from <file|->] "
+        + "| relations verify [--paths-from <file|->]";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's

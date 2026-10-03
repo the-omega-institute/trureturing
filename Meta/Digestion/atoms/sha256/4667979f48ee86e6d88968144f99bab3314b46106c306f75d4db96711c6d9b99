@@ -1,0 +1,7 @@
+# Local saturation of a pure-cubic order
+
+This volume uses the cubic order of
+`PURE_CUBIC_INTEGRAL_LATTICES.md`, Section 3. It isolates a local
+maximality statement that does not require the whole radicand to be
+squarefree.
+

@@ -1,0 +1,11 @@
+## 65. Quadratic height constructions and arithmetic transport
+
+The height normalization in this section is the absolute logarithmic
+height attached to admissible absolute values. On an affine Weierstrass
+point group, write $x(P)$ for its nonzero homogeneous two-coordinate
+representative, including the point at infinity, and set
+$h(P)=h(x(P))$. The coordinate convention is the one used by the
+homogeneous addition-and-subtraction map in Mathlib. The following
+constructions supply the height pairing used in GIR5; they do not
+identify a basis of the entire Mordell–Weil group.
+

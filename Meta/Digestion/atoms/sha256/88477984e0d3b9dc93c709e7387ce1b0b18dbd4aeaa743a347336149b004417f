@@ -1,0 +1,9 @@
+# Prime periods of the golden cubic blocks
+
+Let $F_0=0$, $F_1=1$, $L_0=2$, and $L_1=1$ be the Fibonacci and Lucas
+sequences. For a natural number $j\geq 1$ set $n=3^{j+1}$ and
+$B_j=L_{3^j}^2+3$, $C_j=L_{3^j}^2+1$. Let $\phi$ be the golden
+quadratic integer satisfying $\phi^2=\phi+1$. Write
+$Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$, and let $\tau_p$ denote the
+multiplicative order of $Q$ over $\mathbb Z/p\mathbb Z$.
+

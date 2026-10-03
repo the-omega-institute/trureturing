@@ -1,0 +1,27 @@
+**Proposition 10.5 (an exact finite procedure).** Both the set
+$\{n\geq1:U(n)\subseteq S\}$ and $\mathcal P(S)$ can be computed by
+examining the divisors of $5R_S$. Complete factorization of those large
+Fibonacci values is unnecessary.
+
+Proof. Compute the finite closure and its ranks, then factor $5R_S$ and
+enumerate its divisors. Every such divisor is supported in $H(S)$.
+For each candidate $n$, compute $F_n$ and remove all powers of primes
+in $H(S)$, giving a positive remaining integer $Z_n$. An integer square
+root decides whether $Z_n$ is square. If it is not, the candidate fails
+the necessary kernel-support condition. If it is, every outside factor
+has even valuation and is prime to $n$, so it has even original depth.
+Hence all members of $U(n)$ and $T(n)$ belong to $H(S)$ and can be
+checked individually using the known ranks and $h_p$ there. Powerfulness
+holds exactly when none of the removed positive exponents equals one;
+the outside exponents are already even. This decides both sets.
+This is a termination statement with explicit cutoff $5R_S$, not a
+polynomial-time bound. Ranks, closure and the cutoff may still be large.
+
+For the specified set $S=\{13\}$, its closure is
+$H(S)=\{2,3,5,7,13\}$ and $R_S=840$. The procedure has 48 candidate
+divisors of 4200. Exact evaluation gives
+$$\{n\geq1:U(n)\subseteq\{13\}\}
+ =\{1,2,3,4,5,6,7,12\}.$$
+The completeness of this finite certificate uses GSE2, rather than a
+freely chosen scan cutoff. Thirteen is not asserted to be WSS.
+

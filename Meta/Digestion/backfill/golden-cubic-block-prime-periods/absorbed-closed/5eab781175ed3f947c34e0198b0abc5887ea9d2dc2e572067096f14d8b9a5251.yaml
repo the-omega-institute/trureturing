@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5eab781175ed3f947c34e0198b0abc5887ea9d2dc2e572067096f14d8b9a5251
+  normalized_sha256: sha256:5eab781175ed3f947c34e0198b0abc5887ea9d2dc2e572067096f14d8b9a5251
+cas_ref: sha256:5eab781175ed3f947c34e0198b0abc5887ea9d2dc2e572067096f14d8b9a5251
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/EisensteinCyclotomicBridge.eisenstein_cyclotomic_equiv_exists
+    target_statement_id: sha256:1db9705ec81cc3d3b30fda1689ed7310647b57352bc4d524f779653a2d79da3b
+receipts:
+  unresolved_subitems: []
