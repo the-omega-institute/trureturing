@@ -1,0 +1,10 @@
+**Proof.** The cycle $C_t=\{0,t,2t\}$ has three distinct points in each
+coordinate. Its difference determinants vanish, so $C_t\in\mathcal T_n$.
+Translation by $t$ fixes $C_t$ and hence every translate of it. Conversely,
+if $t$ fixes a triple $S$, the three-point translation-cycle theorem applied
+at any $p\in S$ gives $S=p+C_t$. Thus the fixed triples form precisely one
+translation orbit. The stabilizer of $C_t$ has order dividing three and
+contains the nonzero element $t$, so its order is three. Orbit-stabilizer
+therefore gives $n^2/3$ fixed triples. For $n=3m$, Theorems 2 and 4 rule out
+all other nonzero fixing vectors. $\square$
+
