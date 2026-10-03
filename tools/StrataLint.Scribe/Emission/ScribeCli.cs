@@ -17,6 +17,7 @@ public static class ScribeCli
         "markdown-check",
         "projections",
         "resources",
+        "resources compare",
         "resources release",
         "resources verify-release",
         "scripts",
@@ -78,6 +79,9 @@ public static class ScribeCli
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (command == "resources")
         {
+            if (arguments.Count > 1 && arguments[1] == "compare")
+                return ScribeResourceCompareCommand.Run(arguments, workingDirectory,
+                    () => FindRepositoryRoot(workingDirectory), output, error);
             return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
                 () => FindRepositoryRoot(workingDirectory), output, error);
         }
@@ -307,7 +311,7 @@ public static class ScribeCli
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
         + "| resources pack --out <file> | resources verify --pack <file> "
-        + "| resources release --out <directory> "
+        + "| resources compare --pack <file> | resources release --out <directory> "
         + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "
         + "| scripts verify [--paths-from <file|->]";
 

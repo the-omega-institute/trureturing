@@ -50,6 +50,8 @@ public sealed class ScribeResourceInputContractTests
         var manifest = Pack(root);
         manifest["version"] = 1;
         foreach (var entry in manifest["entries"]!.AsArray()) entry!.AsObject().Remove("inputs");
+        manifest.Remove("resourceVersion");
+        manifest.Remove("scriptVersion");
         RewriteManifest(root, manifest);
         var exception = Assert.Throws<ScribeResourcePackException>(() => ScribeResourcePack.Open(root.Resolve("resources.zip")));
         Assert.Equal(ScribeResourcePackErrorCode.VersionMismatch, exception.ReasonCode);
@@ -73,12 +75,35 @@ public sealed class ScribeResourceInputContractTests
         TemporaryFileSystem.File.Delete(root.Resolve(Pilot));
         var result = ScribeScriptHost.Execute(root.Path, PathFor("Alpha"));
         Assert.Equal(ScribeScriptFailureCode.CreateFailed, result.Failure?.Code);
-        var property = result.GetType().GetProperty("Inputs");
-        Assert.NotNull(property);
-        var inputs = JsonNode.Parse(System.Text.Json.JsonSerializer.Serialize(property.GetValue(result)))!.AsArray();
-        var input = Assert.Single(inputs, item => item!["Path"]!.GetValue<string>() == Pilot);
-        Assert.Null(input!["Sha256"]);
-        Assert.Contains(inputs, item => item!["Path"]!.GetValue<string>() == PathFor("Alpha"));
+        var input = Assert.Single(result.Inputs, item => item.Path == Pilot);
+        Assert.Null(input.Sha256);
+        Assert.Contains(result.Inputs, item => item.Path == PathFor("Alpha"));
+    }
+
+    [Fact]
+    public void ProjectionLoaderCanReadAfterAMissingFixtureIsCreated()
+    {
+        using var root = Prepare();
+        TemporaryFileSystem.File.Delete(root.Resolve(Pilot));
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Alpha.claim");
+        Assert.Throws<FileNotFoundException>(() => StatementProjectionFixtureLoader.WithRepositoryRoot(root.Path,
+            () => StatementProjectionFixtureLoader.Assess(declaration)));
+        Fixture(root, Pilot, "pilot");
+        var assessment = StatementProjectionFixtureLoader.WithRepositoryRoot(root.Path,
+            () => StatementProjectionFixtureLoader.Assess(declaration));
+        Assert.IsType<ProjectionOutcome.Unprojectable>(assessment.Outcome);
+    }
+
+    [Fact]
+    public void CompareRejectsEntriesWithoutExecutionInputs()
+    {
+        using var root = Prepare();
+        var manifest = Pack(root);
+        Entry(manifest, "Alpha")["inputs"] = new JsonArray();
+        manifest["totalSha256"] = Digest(Encoding.UTF8.GetBytes(manifest["entries"]!.ToJsonString()));
+        RewriteManifest(root, manifest);
+        Assert.Equal(2, Compare(root, out _, out var error));
+        Assert.Contains("Definition input is missing: " + PathFor("Alpha"), error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -151,6 +176,10 @@ public sealed class ScribeResourceInputContractTests
         Assert.Contains(input, error, StringComparison.Ordinal);
         Assert.Contains("recorded=", error, StringComparison.Ordinal);
         Assert.Contains("current=", error, StringComparison.Ordinal);
+        if (change == "delete-definition")
+            Assert.Contains("recorded=" + Input(manifest, "Alpha", input)["sha256"]!.GetValue<string>(), error, StringComparison.Ordinal);
+        if (change == "new-definition")
+            Assert.Contains("current=" + Digest(File.ReadAllBytes(root.Resolve(input))), error, StringComparison.Ordinal);
         Assert.Contains("entries=3", output, StringComparison.Ordinal);
         Assert.Contains("consistent=", output, StringComparison.Ordinal);
         Assert.Contains("inputsChanged=", output, StringComparison.Ordinal);

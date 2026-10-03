@@ -43,6 +43,8 @@ public sealed record ScribeScriptResult(
     DocumentDefinition? Definition,
     ScribeScriptFailure? Failure)
 {
+    public ImmutableArray<ScribeResourceInput> Inputs { get; internal init; } = [];
+
     public bool IsSuccess => Definition is not null && Failure is null;
 }
 
@@ -52,6 +54,7 @@ public sealed record ScribeScriptResult(
 /// </summary>
 public static class ScribeScriptHost
 {
+    public const int SemanticVersion = 1;
     private const string BlueprintPrefix = "Blueprint/";
     private const string SourceSuffix = ".scribe.cs";
 
@@ -82,6 +85,15 @@ public static class ScribeScriptHost
             allowlistPath: null, entryType);
 
     private static ScribeScriptResult ExecutePrepared(string repositoryRoot, string relativePath,
+        ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
+        CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
+    {
+        using var inputs = new ScribeInputRecorder(repositoryRoot);
+        return ExecutePreparedCore(repositoryRoot, relativePath, references, analyzers, parseOptions,
+            allowlistPath, entryTypeOverride) with { Inputs = inputs.Inputs };
+    }
+
+    private static ScribeScriptResult ExecutePreparedCore(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
         CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
     {
@@ -133,7 +145,7 @@ public static class ScribeScriptHost
                 {
                     CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                     CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
-                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, () =>
+                    definition = StatementProjectionFixtureLoader.WithScriptRepositoryRoot(root, () =>
                     {
                         var instance = Activator.CreateInstance(type, nonPublic: true)
                             as IScribeDocumentDefinition
@@ -208,15 +220,15 @@ public static class ScribeScriptHost
                 return;
             }
 
-            var full = Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
-            if (!File.Exists(full))
+            var sourceBytes = ScribeInputRecorder.ReadFile(root, path);
+            if (sourceBytes is null)
             {
                 failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceMissing,
                     "declared shared source does not exist");
                 return;
             }
 
-            var text = File.ReadAllText(full);
+            var text = ScribeInputRecorder.ReadText(root, path);
             var tree = CSharpSyntaxTree.ParseText(text, parseOptions, path: path);
             foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
             {
@@ -296,7 +308,7 @@ public static class ScribeScriptHost
         string? allowlistPath)
     {
         var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
-            File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
+            ScribeInputRecorder.ReadText(root, path),
             parseOptions,
             path: path)).Append(CSharpSyntaxTree.ParseText(
                 "global using System; global using System.Collections.Generic; global using System.IO; "
