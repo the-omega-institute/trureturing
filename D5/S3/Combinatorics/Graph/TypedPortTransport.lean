@@ -2,7 +2,8 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/TypedPortTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum,
+             mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Two partial matching graphs force the typed port defect identity. -/
 
@@ -52,16 +53,19 @@ attribute [instance] RouteEndpoints.instPath RouteEndpoints.instPathDecidableEq
 
 /-- Ports left unmatched by the local pairing but matched by an actual edge. -/
 noncomputable def leftTerminalsOf {P : Type} [Fintype P] [DecidableEq P]
-    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj]
+    [DecidableRel pairing.Adj] : Finset P :=
   univ.filter fun v => actual.degree v = 1 ∧ pairing.degree v = 0
 
 /-- Ports left unmatched by an actual edge but matched by the local pairing. -/
 noncomputable def slackTerminalsOf {P : Type} [Fintype P] [DecidableEq P]
-    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj]
+    [DecidableRel pairing.Adj] : Finset P :=
   univ.filter fun v => actual.degree v = 0 ∧ pairing.degree v = 1
 
 private noncomputable def sharedPorts {P : Type} [Fintype P] [DecidableEq P]
-    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj]
+    [DecidableRel pairing.Adj] : Finset P :=
   univ.filter fun v => actual.degree v = 1 ∧ pairing.degree v = 1
 
 theorem matching_defect_eq_terminal_difference {P : Type} [Fintype P] [DecidableEq P]
@@ -85,12 +89,12 @@ theorem matching_defect_eq_terminal_difference {P : Type} [Fintype P] [Decidable
         · by_cases hl : pairing.degree v = 1
           · simp [ha, hl]
           · have hl0 : pairing.degree v = 0 := by omega
-            simp [ha, hl, hl0]
+            simp [ha, hl0]
         · have ha0 : actual.degree v = 0 := by omega
           by_cases hl : pairing.degree v = 1
-          · simp [ha, ha0, hl]
+          · simp [ha0, hl]
           · have hl0 : pairing.degree v = 0 := by omega
-            simp [ha, ha0, hl, hl0]
+            simp [ha0, hl0]
       _ = (leftTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
         rw [sum_add_distrib]
         simp [leftTerminalsOf, sharedPorts, Finset.sum_boole]
@@ -108,12 +112,12 @@ theorem matching_defect_eq_terminal_difference {P : Type} [Fintype P] [Decidable
         · by_cases hl : pairing.degree v = 1
           · simp [ha, hl]
           · have hl0 : pairing.degree v = 0 := by omega
-            simp [ha, hl, hl0]
+            simp [ha, hl0]
         · have ha0 : actual.degree v = 0 := by omega
           by_cases hl : pairing.degree v = 1
-          · simp [ha, ha0, hl]
+          · simp [ha0, hl]
           · have hl0 : pairing.degree v = 0 := by omega
-            simp [ha, ha0, hl, hl0]
+            simp [ha0, hl0]
       _ = (slackTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
         rw [sum_add_distrib]
         simp [slackTerminalsOf, sharedPorts, Finset.sum_boole]
