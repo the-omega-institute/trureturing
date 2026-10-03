@@ -1,0 +1,7 @@
+**引理 356.3（全部原树的三步关系）。** 对任意 $t\in\mathcal T$ 及整数 $n\ge0$，有
+
+$$
+E\bigl(\rho^{n+3}(t)\bigr)=J\bigl(E(\rho^n(t))\bigr).
+\tag{356.2}
+$$
+

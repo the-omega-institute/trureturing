@@ -1,0 +1,24 @@
+**命题 27.8（覆盖归一化、有限对偶与有理最优面律）。** 对定义 27.7，最小值和最大值均取得，且有最优有理面律。准确的归一化关系是
+
+$$
+t(K)=\frac1{\tau(K)},\qquad
+w_M=\frac{p_M}{t(K)}\ \text{ 对最优极大面律 }p,
+\qquad
+p_M=\frac{w_M}{\tau(K)}\ \text{ 对最优覆盖 }w.
+\tag{27.17}
+$$
+
+其有限覆盖对偶为
+
+$$
+\tau(K)=
+\max\left\{
+\sum_{i=1}^m y_i:
+y_i\ge0,\quad
+\sum_{i\in M}y_i\le1
+\ \ (M\in\mathcal M(K))\right\}.
+\tag{27.18}
+$$
+
+这里的 $y_i$ 是解析上的 packing 见证，不是未知来源的抽样律。
+

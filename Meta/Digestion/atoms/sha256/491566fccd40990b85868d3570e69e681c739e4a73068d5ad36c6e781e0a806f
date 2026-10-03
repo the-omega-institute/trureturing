@@ -1,0 +1,40 @@
+**证明。** 对任意固定 $\Pi\in\mathfrak R_3$，定理 27.6 给同一个面概率律 $p$ 及逐坐标下界。因此即使某个期望无穷，也有
+
+$$
+\max_i\mathbb E_\mu C_\Pi(\cdot,P_i)
+\ge\max_i\bigl(n+1-q_i(p)\bigr)
+=n+1-\min_i q_i(p)
+\ge n+1-t(K).
+\tag{27.20}
+$$
+
+这里是固定来源期望向量的最大坐标，不是对来源积分。命题 27.8 将最后一项化为式（27.19）的右侧。
+
+现取有理最优面律，只列出其正质量面 $F_1,\ldots,F_s\in\mathcal M(K)$ 及概率 $p_1,\ldots,p_s$。它们满足 $s\ge1$、$p_j>0$、$\sum_jp_j=1$。令 $r_0=0$、$r_j=\sum_{k=1}^jp_k$，所以所有端点有理且 $r_s=1$。在预先固定的 $\Omega_{\mathrm u}=[0,1]$ 上定义
+
+$$
+\Pi^{\mathrm{opt}}(\omega,\cdot)=
+\begin{cases}
+\pi_{F_j}(\cdot),&r_{j-1}\le\omega<r_j\quad(1\le j\le s),\\
+\pi_{F_s}(\cdot),&\omega=1.
+\end{cases}
+\tag{27.21}
+$$
+
+这是以一次输入无关种子选择一个定理 27.4 的真实全域策略，选定后按该策略原始初始化和缓存合同执行。每个种子都选择到一个正确且有限终止的确定性策略，包括端点 $1$，所以每个有限 $W$ 的错误和未终止事件均为空。对任意固定有限 $W$，每个 $C_{\pi_{F_j}}(W)$ 是有限整数，且
+
+$$
+\begin{aligned}
+C_{\Pi^{\mathrm{opt}}}(\omega,W)
+&=\sum_{j=1}^s
+\mathbf1_{[r_{j-1},r_j)}(\omega)C_{\pi_{F_j}}(W)
++\mathbf1_{\{1\}}(\omega)C_{\pi_{F_s}}(W),\\
+\mathbb E_{\mu_{\mathrm u}}C_{\Pi^{\mathrm{opt}}}(\cdot,P_i)
+&=\sum_{j=1}^s p_j b_{F_j}(i)
+=n+1-q_i(p).
+\end{aligned}
+\tag{27.22}
+$$
+
+半开区间和单点都是 Lebesgue 可测集；固定来源的费用是有限阶梯函数，执行事件也是这些有限区间的并，满足原有可测合同和同种子重放。端点单点不改变积分，但其明确选择保证逐种子全域正确总性。于是 $\Pi^{\mathrm{opt}}\in\mathfrak R_3^{\mathrm u}$，最大期望费用为 $n+1-t(K)$，达到下界。该子类的元素也属于原 $\mathfrak R_3$，所以同一个已构造策略达到两类各自的下确界。两类种子合同保持不同，只是这个目标的锐值和取得性相同。证毕。
+

@@ -1,0 +1,96 @@
+**定理 26.3（面表、无信息补齐与同组成完整前像）。** 设 $m\ge2$，$K\subseteq2^{[m]}$ 下闭且包含每个单元素集：
+
+$$
+S\in K,\ R\subseteq S\Longrightarrow R\in K,
+\qquad \{i\}\in K\quad(1\le i\le m).
+\tag{26.9}
+$$
+
+令 $\mathcal M(K)$ 为 $K$ 的全部极大面。它们非空且覆盖 $[m]$。对每个 $F\in\mathcal M(K)$ 和 $k\in F$，建立一列 $(F,k)$，在行 $i$ 填入
+
+$$
+X_{i,(F,k)}=
+\begin{cases}
+V,&i=k,\\
+U,&i\in F\setminus\{k\},\\
+A,&i\notin F.
+\end{cases}
+\tag{26.10}
+$$
+
+置
+
+$$
+N=\sum_{F\in\mathcal M(K)}|F|,
+\qquad
+\ell_i=\sum_{\substack{F\in\mathcal M(K)\\i\in F}}|F|,
+\qquad M=\max_{1\le i\le m}\ell_i.
+\tag{26.11}
+$$
+
+对每个行 $i$，再添加 $M-\ell_i$ 个分别属于该行的列；每个这样的列只在行 $i$ 填 $U$，其余行全部填 $A$。最终列数为
+
+$$
+T=N+\sum_{i=1}^m(M-\ell_i)\ge1.
+\tag{26.12}
+$$
+
+固定全部列的一个次序，在同一个 $B_T$ 中填入最终表，得到 $P_i$。同时把表中 $A,U,V$ 分别换成 $\alpha,u_0,v_0$，记所得条目为 $Z_{ij}$，并定义完整树
+
+$$
+Q_i=B_T(Z_{i1},\ldots,Z_{iT}).
+\tag{26.13}
+$$
+
+则 $Q_1,\ldots,Q_m$ 两两不同，$P_1,\ldots,P_m$ 也两两不同，各 $Q_i$ 是 $P_i$ 的唯一完整三步前像，且
+
+$$
+\begin{aligned}
+\rho^3(Q_i)&=P_i\in\mathcal I_3,\\
+c(Q_i)&=(T+M,M)^{\mathsf T},\\
+c(P_i)&=(T+3M,2T+5M)^{\mathsf T},
+\qquad n_{P_i}=3T+8M.
+\end{aligned}
+\tag{26.14}
+$$
+
+对每个 $S\subseteq[m]$、$|S|\ge2$，还同时有
+
+$$
+\boxed{\quad \Delta(P_S)\ne\varnothing\ \Longleftrightarrow\ S\in K.\quad}
+\tag{26.15}
+$$
+
+**证明。** 因 $K$ 有限且含每个 $\{i\}$，每个面包含于一个极大面，每个指标属于一个极大面；空面不可能极大。因此式（26.10）的原始列存在，$N\ge m$，各 $\ell_i\ge1$。固定 $S$ 且 $|S|\ge2$。若 $S\in K$，取极大面 $F\supseteq S$ 和 $k\in S$。列 $(F,k)$ 在行 $k$ 为 $V$，在其余 $S$ 行为 $U$，因此由引理 26.2 提供非空的信息叶贡献。
+
+若 $S\notin K$，没有极大面包含 $S$，否则下闭性会给 $S\in K$。故对每一原始列 $(F,k)$，$S$ 上至少出现一个 $A$：$S\cap F=\varnothing$ 时全部是 $A$，$S\cap F\ne\varnothing$ 时同时出现 $A$ 和非 $A$ 块。两种情况在式（26.7）中均无贡献。原始列遂恰编码所有非单元素面。
+
+再固定一个属于行 $i$ 的补齐列。若 $i\notin S$，该列在 $S$ 上恒为 $A$；若 $i\in S$，因 $|S|\ge2$，它在 $S$ 上同时出现 $U,A$。故每个补齐列在每个非单元素 $S$ 上的信息叶贡献都为空。全部列一次填入最终的 $B_T$ 后，原始列保留其局部块关系，孔地址由这个最终上下文统一确定。引理 26.2 排除了补齐后产生跨列或上下文共同信息叶的可能，原始列所得非空性等价关系因而仍成立。
+
+每行原有 $\ell_i$ 个非 $A$ 块，又在自己的补齐列增加 $M-\ell_i$ 个 $U$，别人的补齐列在该行都是 $A$。于是最终每行恰有 $M$ 个 $U/V$ 和 $T-M$ 个 $A$。由式（26.2）及[母卷定义 3.3、定理 3.4 的组成加性与替换作用](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)，有
+
+$$
+\begin{aligned}
+c(P_i)&=(T-M)(1,2)^{\mathsf T}+M(4,7)^{\mathsf T}
+=(T+3M,2T+5M)^{\mathsf T},\\
+c(Q_i)&=(T-M)(1,0)^{\mathsf T}+M(2,1)^{\mathsf T}
+=(T+M,M)^{\mathsf T}.
+\end{aligned}
+\tag{26.16}
+$$
+
+相加像的两个组成坐标即得 $n_{P_i}=3T+8M$。这些计数是指定完整树的构造读数，不是未知输入的初始化承诺。
+
+$\rho^3$ 保持每个二叉构造；式（26.2）已给三个块的字面前像。因此将式（26.13）的每个孔分别替换，直接得到
+
+$$
+\rho^3(Q_i)
+=B_T\bigl(\rho^3(Z_{i1}),\ldots,\rho^3(Z_{iT})\bigr)
+=B_T(X_{i1},\ldots,X_{iT})=P_i.
+\tag{26.17}
+$$
+
+这是完整实际树的等式。对 $i\ne j$，选一个含 $i$ 的极大面 $F$。原始列 $(F,i)$ 在行 $i$ 是 $V$，在行 $j$ 则为 $U$ 或 $A$；对应前像在同一个孔分别为 $v_0$ 和 $u_0$ 或 $\alpha$。三个前像字面不同，固定上下文的该孔子树不同就使完整树不同，所以 $Q_i\ne Q_j$。添加列保留了此原始列，不能消去这处差别。
+
+直接调用[规范编译卷命题 4.3 的树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)三次，得到 $\rho^3$ 单射、$P_i\ne P_j$，并得到式（26.13）前像的唯一性；该卷原子 $A,B$ 在这里分别对应 $\alpha,\beta$。此调用使用字面树的单射结论，组成逆公式不承担实际前像存在性。最终各行不同，使式（26.7）的指标信息叶就是 $\Delta(P_S)$，故此前的非空性等价给式（26.15）。证毕。
+

@@ -378,3 +378,12 @@ critical orthogonality conditions would leave only the zero test.
 A local FIB support estimate must control the actual projected tails
 before it can be used on the remaining space; projecting a compact test
 and reusing its old support would change the object being estimated.
+
+The [full mixed spectral application](lenz2010compactness.md) supplies
+a paper-level essential bottom of one-half and an unspecified positive
+Poincare constant in this same measure. Its local compactness and
+relative-compact perturbation checks retain every prime power.
+For the even operator, any remaining eigenvalues $0<\lambda<1/2$
+are discrete, with eigenvectors in $\mathcal R$, and may accumulate
+at $1/2$. These source applications do not prove the one-half bound
+in (5), equivalently the remainder lower bound stated after (10).
