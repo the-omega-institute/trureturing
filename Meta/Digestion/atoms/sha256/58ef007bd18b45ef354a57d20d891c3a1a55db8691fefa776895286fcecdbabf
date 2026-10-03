@@ -1,0 +1,56 @@
+**定理 25.5（循环四族的完整前沿与三元可取得、四元不可取得）。** 定义 25.4 的四棵树是两两不同的实际三步像，式（25.14）给各自唯一完整前像；每个前像的组成为 $(7,3)^{\mathsf T}$，且
+
+$$
+P_i\in\mathcal I_3,\qquad
+c(P_i)=(13,23)^{\mathsf T},\qquad n_{P_i}=36,\qquad q(P_i)=95
+\quad(1\le i\le4).
+\tag{25.15}
+$$
+
+三个块的全部带标签叶前沿为
+
+$$
+\begin{aligned}
+\mathcal F(A)=\{& (\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(U)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),\\
+& (\mathtt{LRLL},\beta),(\mathtt{LRLR},\alpha),(\mathtt{LRR},\beta),\\
+& (\mathtt{RLLL},\beta),(\mathtt{RLLR},\alpha),(\mathtt{RLR},\beta),\\
+& (\mathtt{RRL},\beta),(\mathtt{RRR},\alpha)\},\\
+\mathcal F(V)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),\\
+& (\mathtt{LRLLL},\beta),(\mathtt{LRLLR},\alpha),(\mathtt{LRLR},\beta),\\
+& (\mathtt{LRRL},\beta),(\mathtt{LRRR},\alpha),\\
+& (\mathtt{RLL},\beta),(\mathtt{RLR},\alpha),(\mathtt{RR},\beta)\}.
+\end{aligned}
+\tag{25.16}
+$$
+
+对式（25.14）的每一行 $(X_1,X_2,X_3,X_4)$，该目标的全部 $36$ 片带标签叶精确给为
+
+$$
+\mathcal F\bigl(B(X_1,X_2,X_3,X_4)\bigr)
+=\bigsqcup_{h=1}^4\{(p_hu,\ell):(u,\ell)\in\mathcal F(X_h)\}.
+\tag{25.17}
+$$
+
+令 $t=\mathtt{LRLR}$、$q_j=p_jt$，其完整四值响应表为
+
+$$
+\begin{array}{c|cccc}
+\text{地址}&\operatorname{out}_{P_1}&\operatorname{out}_{P_2}&\operatorname{out}_{P_3}&\operatorname{out}_{P_4}\\ \hline
+q_1=\mathtt{LLLRLR}&\mathsf{absent}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha\\
+q_2=\mathtt{LRLRLR}&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha\\
+q_3=\mathtt{RLLRLR}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta\\
+q_4=\mathtt{RRLRLR}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{absent}
+\end{array}
+\tag{25.18}
+$$
+
+每个三元素子族同时取得三个个体最小费用 $36$，而四元族不相容。更确切地，
+
+$$
+q_j\in\Delta(F_4\setminus\{P_j\})\quad(1\le j\le4),
+\qquad \bigcap_{i=1}^4L(P_i)=\varnothing,
+\qquad \Delta(F_4)=\varnothing.
+\tag{25.19}
+$$
+

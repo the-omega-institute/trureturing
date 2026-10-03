@@ -1,0 +1,119 @@
+**定理 29.3（原随机合同的有限可测投影与全部五个锐值）。** 对每个定义 29.1 的原随机策略 $\Pi$，存在 $\mathcal V_F$ 上的概率向量 $p=(p_v)_{v\in\mathcal V_F}$ 及以同一所选控制器共同评价全部原型的有限混合 $\widehat\Pi$，使
+
+$$
+\begin{aligned}
+\mathbb E C_{\widehat\Pi}(\cdot,P_i)
+ &=\sum_{v\in\mathcal V_F}p_vv_i
+ \le\mathbb E C_\Pi(\cdot,P_i)\quad(i\in[m]),\\
+\mathbb E\!\left[\max_i C_{\widehat\Pi}(\cdot,P_i)\right]
+ &=\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ \le\mathbb E\!\left[\max_i C_\Pi(\cdot,P_i)\right].
+\end{aligned}
+\tag{29.7}
+$$
+
+原期望允许无穷。每个概率向量 $p$ 的有限混合都可用固定 $[0,1]$ 种子空间实际取得，在每个声明种子和每个有限树上均正确且有限终止；每个固定树的费用是有限可测阶梯函数。于是
+
+$$
+\begin{aligned}
+D(F)&=\min_{v\in\mathcal V_F}\max_i v_i,\\
+R(F)=R_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\max_i\sum_{v\in\mathcal V_F}p_vv_i,\\
+W(F)=W_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ =D(F),
+\end{aligned}
+\tag{29.8}
+$$
+
+其中 $\Delta(\mathcal V_F)=\{p:p_v\ge0,\ \sum_vp_v=1\}$。这些下确界全部有限取得，$R(F)$ 有理且有有理最优权重；其精确有限 LP 为
+
+$$
+\begin{aligned}
+\text{最小化 }&t,\\
+p_v&\ge0\quad(v\in\mathcal V_F),\qquad \sum_vp_v=1,\\
+\sum_vp_vv_i&\le t\quad(i\in[m]),\qquad
+0\le t\le M_F,\qquad M_F=\max_{v\in\mathcal V_F}\max_i v_i.
+\end{aligned}
+\tag{29.9}
+$$
+
+$m=1$ 时 $\mathcal V_F=\{(n_1)\}$，五个值均为 $n_1$。概率质量的存在不要求在线执行原策略的反事实评价、检验好种子集或计算任意原策略的律。
+
+**证明。** [母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)把全部 $\mathcal T$ 单射编码进有限二字母词，故整个未知输入域可数。全部地址和有限四值请求—响应记录也可数，原合同的完整初始化、合法菜单、来源不变与同种子重放恰满足定理 22.1 的原假设。对这一个 $\Pi$，先用式（22.4）取可测满测度有声返回集，再另用式（22.7）的全部来源未终止事件并，得到一个策略专属集合
+
+$$
+G_\Pi=G_\Pi^{\mathrm{sound}}\setminus
+        \bigcup_{U\in\mathcal T}N_U^\Pi\in\mathcal A,
+\qquad \mu(G_\Pi)=1,\qquad
+\omega\in G_\Pi\Longrightarrow\Pi_\omega\in\mathfrak D_3.
+\tag{29.10}
+$$
+
+第一步供应所有实际来源上的有声有限返回，第二步供应所有实际来源上的有限终止；不能以第一步代替第二步。可数并中的各事件可测且零测正是原随机合同，没有对所有策略取共同交集，也没有只在 $F$ 上取好种子或取得统一全树时间界。
+
+枚举有限核心为互异向量 $v^1,\ldots,v^s$，$s\ge1$，为每个向量固定定理 29.2 的一个实际控制器 $\sigma_j$。令 $c_i(\omega)=C_\Pi(\omega,P_i)$，它们是原合同已经要求的非负扩展可测费用，有限最大值 $\max_i c_i$ 也因此可测，无须新增逐历史可测性合同。定义仅含有限数字比较的集合
+
+$$
+E_j=\bigcap_{i\in[m]}\{\omega:c_i(\omega)\ge v^j_i\}
+\quad(1\le j\le s).
+\tag{29.11}
+$$
+
+这些集合可测，包括费用为无穷的种子。对每个 $\omega\in G_\Pi$，定理 29.2 适用于同一个全域正确总策略 $\Pi_\omega$，所以至少一个 $E_j$ 包含该种子。采用固定顺序的首匹配单元
+
+$$
+\begin{aligned}
+B_1&=(G_\Pi\cap E_1)\cup(\Omega\setminus G_\Pi),\\
+B_j&=G_\Pi\cap\left(E_j\setminus\bigcup_{k<j}E_k\right)
+\quad(2\le j\le s),\\
+p_j&=\mu(B_j),\qquad
+\theta(\omega)=j\quad(\omega\in B_j).
+\end{aligned}
+\tag{29.12}
+$$
+
+$B_j$ 两两不交且并为整个 $\Omega$，都属于原 $\mathcal A$，故 $p_j\ge0$ 且 $\sum_jp_j=1$。在 $G_\Pi$ 上，同一个 $\theta$ 同时满足全部坐标比较，并因而满足最大值比较：
+
+$$
+v^{\theta(\omega)}_i\le c_i(\omega)\quad(i\in[m]),
+\qquad \max_i v^{\theta(\omega)}_i\le\max_i c_i(\omega).
+\tag{29.13}
+$$
+
+这里未选择原型各自的不同控制器或不同种子。单元只由费用数值与一个已知可测的策略专属集合形成；没有使用逐历史事件、可测转录、策略空间测度或来源先验。在非完备空间上也成立：好集合及其整个补集都是已证明可测的集合，没有任取不可测的零测子集。式（29.12）在好集合外固定选 $1$，而不是赋予那些种子未经验证的原策略性质。
+
+在同一 $\Omega$ 上把 $\theta$ 看作有限控制器的耦合选择，仅为比较取期望。非负扩展积分的几乎处处单调性及有限阶梯函数积分给
+
+$$
+\begin{aligned}
+\int v^{\theta(\omega)}_i\,d\mu
+ &=\sum_{j=1}^sp_jv^j_i\le\int c_i\,d\mu,\\
+\int\max_i v^{\theta(\omega)}_i\,d\mu
+ &=\sum_{j=1}^sp_j\max_i v^j_i
+ \le\int\max_i c_i\,d\mu.
+\end{aligned}
+\tag{29.14}
+$$
+
+零测例外上的原费用即使为无穷也不改变这些积分比较；原期望无限时同一不等式仍成立。由此存在有限质量 $p$，而实际新混合只需把 $j$ 本身作为输入无关有限种子，并从 $\sigma_j$ 的完整初态运行。它没有在未知输入上计算 $\theta$、运行全部反事实原型、测试 $G_\Pi$ 或求取原策略律。式（29.12）仅为质量存在及同时支配的数学构造。
+
+对任意给定概率向量 $p$，包括有零权重的情形，置 $q_0=0$、$q_j=\sum_{k=1}^jp_k$，故 $q_s=1$。在已经固定的均匀种子空间定义
+
+$$
+\sigma(\omega)=
+\begin{cases}
+\sigma_j,&0\le\omega<1,\quad q_{j-1}\le\omega<q_j,\\
+\sigma_s,&\omega=1.
+\end{cases}
+\tag{29.15}
+$$
+
+正长度半开区间两两不交并覆盖 $[0,1)$；零权重的区间为空，不造成缺口。端点 $1$ 显式分配给 $\sigma_s$，即使 $p_s=0$，它仍是全域正确总控制器。选择仅依种子和固定菜单，所有输入使用同一规则。每个种子选中的控制器都对每个有限树正确且有限终止；对每个固定 $U$，费用在这些有限可测区间及端点上分别为有限常数 $C_{\sigma_j}(U)$。所以费用是有限可测阶梯函数，错误和未终止事件均为空，这确实属于 $\mathfrak R_3^{\mathrm u}$。在全部原型上同一个 $j$ 给费用向量 $v^j$，其坐标均值及同种子最大值均值正是式（29.7）的有限和。有限菜单取得性连同式（29.14）证明该式。
+
+现在比较目标。对任意 $\pi\in\mathfrak D_3$，定理 29.2 供应某个 $v$ 满足 $\max_i v_i\le\max_i C_\pi(P_i)$；有限核心中最小的 $\max_i v_i$ 又由相应 $\sigma_v$ 取得。这给式（29.8）的 $D$ 等式。对任意原随机 $\Pi$，式（29.7）给某个有限 $p$ 的所有坐标均值同时不大于原值，因此有限概率单纯形上目标的最小值是 $R$ 的下界；反向由式（29.15）实现任意 $p$，特别是其最优 $p$，同时属于两种随机类，给 $R=R_{\mathrm u}$。同理，最大值的同种子比较给 $W$ 的下界，任意 $p$ 的实际混合给上界及 $W=W_{\mathrm u}$。令 $M(v)=\max_i v_i$，每个 $p$ 都满足 $\sum_vp_vM(v)\ge\min_vM(v)$，而把全部质量放在一个极小向量取得等号，故 $W=W_{\mathrm u}=D$。该论证保留了 $\max_i\mathbb E C_i$ 与 $\mathbb E\max_i C_i$ 的次序，不将二者互换。
+
+$\mathcal V_F$ 非空有限，概率单纯形紧，$p\mapsto\max_i\sum_vp_vv_i$ 连续，故其最小值有限取得。式（29.9）只是此目标的有限 epigraph LP；对任意 $p$，取 $t=\max_i\sum_vp_vv_i$ 均有 $0\le t\le M_F$，所以此上界不删去任何概率向量的目标值。其系数及右端均为整数，约束后的多面体非空有界。复用[命题 27.8](#27-实际三步像的面费用核心与分数面覆盖锐值)所引用的标准有限有理 LP 取得事实；[Grohe、Marx，*Constraint Solving via Fractional Edge Covers*，arXiv:1711.04506v1，引理 3.2 的证明](https://arxiv.org/pdf/1711.04506v1#page=6) 在其有限覆盖 LP 中使用的正是有理最优权重事实。在这里，线性目标的非空最优面含有多面体的一个顶点；该顶点由等式及取等号约束中的满秩子系确定，整数系数的满秩线性系统有有理解。因此可以选有理最优 $p,t$，最优 $t=R(F)$ 也有理。这里只在上述实质定理的优化步骤内借用标准 LP 事实，未把式（29.9）称为分数覆盖，也未采用 CSP 输入承诺。有理最优 $p$ 给式（29.15）的有理端点及真实全域取得；$D,W,W_{\mathrm u}$ 则由整数核心的一个点质量取得。
+
+最后 $m=1$ 时式（29.3）从单点零向量开始，完全没有路由，定理 29.2 仍接上完整叶测试与全域后备。故核心只有 $(n_1)$，其点质量和固定区间全部给费用 $n_1$；原随机下界仍由整个可数域的式（29.10）供应，五个值均为 $n_1$。没有额外的正性承诺或端点遗漏。证毕。
+

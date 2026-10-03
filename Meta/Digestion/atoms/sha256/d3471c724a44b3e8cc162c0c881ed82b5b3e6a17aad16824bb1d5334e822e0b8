@@ -1,0 +1,30 @@
+**引理 356.3（全部原树的三步关系）。** 对任意 $t\in\mathcal T$ 及整数 $n\ge0$，有
+
+$$
+E\bigl(\rho^{n+3}(t)\bigr)=J\bigl(E(\rho^n(t))\bigr).
+\tag{356.2}
+$$
+
+**证明。** 记 §355 中的规范叶积为 $X_j=E(T_j)$。由 $AB+BA=1$，
+
+$$
+X_3=BAB=A+B,
+\qquad
+X_4=(A+B)BA=-B.
+$$
+
+这正好分别等于 $J(A)$ 和 $J(B)$。先证 $n=0$ 的情形。对 $t$ 作自由树结构归纳：在 $\alpha$、$\beta$ 两个原子处，上式就是 $X_3=J(A)$、$X_4=J(B)$；若 $t=\langle s,u\rangle$，则 $\rho$ 保持有序构造且 $E$ 保持乘法次序，于是由归纳假设
+
+$$
+\begin{aligned}
+E(\rho^3\langle s,u\rangle)
+ &=E\bigl(\langle\rho^3s,\rho^3u\rangle\bigr)\\
+ &=E(\rho^3s)E(\rho^3u)\\
+ &=J(E(s))J(E(u))\\
+ &=J(E(s)E(u))
+ =J(E(\langle s,u\rangle)).
+\end{aligned}
+$$
+
+对任意 $n$，把同一结论应用于实际原树 $\rho^n(t)$ 即得（356.2）。规范二项递推只用于原子处的 $X_3,X_4$；全原树上的关系由有序构造与 $J$ 的乘法性通过结构归纳得到。$\square$
+

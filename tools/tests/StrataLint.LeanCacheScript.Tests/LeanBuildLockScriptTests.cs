@@ -11,6 +11,8 @@ public sealed class LeanBuildLockScriptTests
     [InlineData("test_cancelled_waiter_leaves_holder_and_next_waiter_intact")]
     [InlineData("test_unrelated_repositories_build_independently")]
     [InlineData("test_missing_git_identity_fails_before_producer")]
+    [InlineData("test_skip_lock_runs_while_another_build_holds_lock_without_releasing_it")]
+    [InlineData("test_skip_lock_does_not_block_other_builds_during_any_package_phase")]
     public void BuildExclusionSpansWorktreesAndPreservesFailureAndCancellation(string test)
     {
         if (OperatingSystem.IsWindows()) return;
