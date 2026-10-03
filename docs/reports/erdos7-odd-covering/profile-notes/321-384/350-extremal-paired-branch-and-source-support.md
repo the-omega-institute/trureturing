@@ -548,3 +548,276 @@ These applications preserve the full original liability and both costs,
 but establish neither a universal improving replacement nor unrestricted
 noncoverage. They are ordinary mathematical deductions and carry no
 new Lean verification or originality claim.
+
+## 12. Parent periods give an explicit sufficient repair budget
+
+Keep the whole-cover hypotheses and the notation of Sections 8--11. For
+one branch write \(E=E_c\), \(Y=Y_c\), and retain \(t=n-b\) for the
+number of available repair slots. In particular \(t\) is not the number
+\(i_c\) of inactive originals: \(t=i_c+|E|\).
+
+The numerical palette can be read from the original \(p\)-chains.
+For a \(p\)-free \(m\in D\), divisor closure makes its original labels
+\(m,pm,\ldots,p^{h_m}m\). Its \(p\)-free residual label \(m\)
+is always occupied, while for \(j\ge1\),
+\[
+ p^jm\in D_c\quad\Longleftrightarrow\quad
+ j+1\le h_m\ \text{ and }\ a_{p^{j+1}m}\equiv c\pmod p.
+\]
+The same positive-\(j\) rule applies to \(m=1\). Hence a
+\(p\)-bearing residual label \(e\) with \(pe\in D\) is occupied
+in exactly one nonzero branch and vacant in the other \(p-2\). An
+occupied residual chain need not be an initial segment. If \(n_p\)
+counts all original \(p\)-bearing labels and \(H_c\) counts those
+with \(p\)-exponent at least two and first digit \(c\), then
+\(b_c=n-n_p+H_c\) and \(t=n_p-H_c\). These are exact inventory
+identities, not permission to alter any inherited phase.
+
+For \(L\mid N\), the image of the complete original parent
+\(P_m=a_m\bmod m\) under reduction modulo \(L\) is
+\[
+ R_m(L)=\{v\bmod L:v\equiv a_m\pmod{\gcd(L,m)}\},\qquad
+ |R_m(L)|=\frac{L}{\gcd(L,m)}.
+ \tag{EB42}
+\]
+CRT proves the equality of the image with this entire residue class.
+Define the actual union of these projected parent classes and its
+phase-independent upper bound by
+\[
+ R_c(L)=\bigcup_{m\in E_c}R_m(L),\qquad
+ q_c(L)=\sum_{m\in E_c}\frac{L}{\gcd(L,m)}.
+ \tag{EB43}
+\]
+Whole coverage is used at precisely the inclusion
+\(Y_c\bmod L\subseteq R_c(L)\), through EB8 and EB23. Consequently
+\(|Y_c\bmod L|\le |R_c(L)|\le q_c(L)\). This inclusion is not a
+consequence of nonempty collision sets alone.
+
+If an affordable palette \(F\) consists of divisors of \(L\) and
+has at least \(|R_c(L)|\) labels, it repairs all of \(Y_c\). Assign
+different labels \(e_v\in F\) to the residues \(v\in R_c(L)\),
+and use the phase \(v\bmod e_v\). Since \(e_v\mid L\), the chosen
+class contains the entire \(L\)-fiber of \(v\). Every liability
+point is therefore covered. Remaining labels may be omitted; heredity
+of the affordable family preserves the budget. This is a direct
+full-liability assignment using the existing replacement interface,
+not a new general matching or rank theorem. The parent labels remain
+occupied throughout.
+The whole-parent digit construction is already available in
+[report 385, Section 200, LP2--LP5](../arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#200-a-vacant-lower-prime-layer-gives-a-whole-cover-descent);
+the partial-height version retains its private-fiber obligation in
+[Section 240, PFV5](../arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#240-private-fibre-vacancy-is-the-exact-partial-height-strict-cut).
+The application here makes the all-child vacancy and both EB1 budgets
+explicit; it does not supply another repair theorem.
+
+For a numerical consequence, put
+\[
+ V_c(L)=\{e>1:e\mid L,\ e\notin D_c\},
+ \qquad V_c(L)=\{e_1<\cdots<e_v\}.
+\]
+Every hypothetical EB1 cover must satisfy
+\[
+ q_c(L)<t\Longrightarrow |V_c(L)|<q_c(L),
+ \tag{EB44}
+\]
+and
+\[
+ q_c(L)=t,\quad |V_c(L)|\ge t
+ \Longrightarrow \sum_{j=1}^{t}e_j\ge W.
+ \tag{EB45}
+\]
+Indeed, a violation supplies \(q_c(L)\) distinct vacant divisors of
+\(L\), affordable by cardinality or by the strict sum bound, and
+\(q_c(L)\ge|R_c(L)|\). The preceding assignment contradicts EB1.
+Using \(|R_c(L)|\) instead of \(q_c(L)\) gives the corresponding
+stronger, phase-dependent test. Projected parent classes from different
+branches need not be disjoint at a coarse \(L\); their counts cannot
+be shared without another complete-liability argument.
+
+The ownership premise is essential even for this numerical consequence.
+The odd divisor-closed noncover
+\[
+ 0\bmod3,\ 1\bmod9,\ 0\bmod5,\ 1\bmod25,\ 6\bmod125,
+ \ 11\bmod15,\ 2\bmod75,\ 127\bmod375
+\]
+has, at \(p=3,c=1\), \(E_c=\{125\}\) and retained family
+\(\{0\bmod3,0\bmod5,1\bmod25,2\bmod125\}\). Its slot
+budget is four. For \(L=N=375\), one has \(q_c(L)=3\) and
+\(V_c(L)=\{15,75,375\}\). But the actual liability has
+\(2(125-25-5-1)=188\) points, only two of them in the parent
+\(6\bmod125\). The three vacant slots can cover that parent;
+they do not cover the full liability by the profile assignment above.
+Thus EB44 is a genuine consequence of whole-cover ownership, not a
+numerical identity forced by chain occupancy alone.
+
+Releasing an occupied label does not automatically improve this coarse
+count. If \(A_e\in\mathcal B_c\) is removed, its additional liability
+is \(J_e=A_e\setminus\bigcup(\mathcal B_c\setminus\{A_e\})\),
+disjoint from \(Y_c\). The exact new liability and budgets are
+\(Y_c\sqcup J_e\) and \((t+1,W+e)\). Bounding \(J_e\) by the
+entire released class replaces \(q_c(L)\) by
+\(q_c(L)+L/\gcd(L,e)\), while the vacant-divisor count increases
+by at most one. Since \(L/\gcd(L,e)\ge1\), neither the slot-minus-
+profile gap nor the vacancy-minus-profile gap improves at fixed \(L\).
+This is a limitation of paying for the whole released cylinder. A gain
+could still come from the actual joint-private set \(J_e\), overlap
+of its projected profiles with existing liability profiles, or the
+strict modulus-sum boundary. Counting freed labels alone omits that
+liability; the full replacement rule remains PH1--PH2.
+
+### The exact cost in the polynomial formulation
+
+For a nonempty affordable palette \(F\), let \(k=|F|\) and
+\(L_F=\operatorname{lcm}(F)\). On a full parent class write
+\(z=a_m+mu\), with \(u\bmod N/m\). The residue function
+\(r_e(a_m+mu)\) has period \(e/\gcd(e,m)\). Thus all squarefree
+\(F\)-features have common period
+\[
+ \operatorname{lcm}_{e\in F}\frac{e}{\gcd(e,m)}
+ =\frac{L_F}{\gcd(L_F,m)}.
+\]
+There are at most this many different evaluation rows on the parent,
+and at most \(2^k\) feature coordinates. Since the full liability
+lies in the union of these parents, EB29--EB30 give
+\[
+ \rho_F(Y_c)\le
+ \sum_{m\in E_c}
+ \min\left\{2^k,\frac{L_F}{\gcd(L_F,m)}\right\}.
+ \tag{EB46}
+\]
+The bound uses all full-parent rows as an outer approximation to the
+actual liability rows. Its being greater than \(k\) does not rule out
+an actual low-rank repair.
+
+There is also a legitimate way to separate different branches in an
+evaluation matrix. Let
+\(h_c(z)=\sum_{m\in E_c}\mathbf1_{P_m}(z)\). On \(Y_d\), EB24
+gives \(h_c=0\) for \(c\ne d\) and \(h_c\ge1\) for \(c=d\).
+Multiplying each branch's feature columns by \(h_c\), then evaluating
+on \(\bigcup_dY_d\), gives a block diagonal matrix whose rank is the
+sum of the branch ranks: within each block every row is multiplied by
+a nonzero rational number. This reuses ordinary block-rank and row-scaling
+facts. Its cost is the expansion
+\[
+ h_c\phi_I=\sum_{m\in E_c}\mathbf1_{P_m}\phi_I.
+\]
+It introduces occupied-parent indicators, not additional legal repair
+slots. Charging each indicator-feature space by EB46 adds its cost
+along with its rank and supplies no cross-branch saving by itself.
+
+Oddness makes the limitation of this full-parent bound explicit. For
+every vacant \(e\) and every \(m\in E_c\), one has \(e\nmid m\):
+otherwise divisor closure makes \(e\) an original \(p\)-free label,
+already occupied in \(D_c\). If \(\ell\) is the smallest prime
+dividing \(N\), then
+\[
+ \frac{e}{\gcd(e,m)}\ge\ell\ge3.
+\]
+For EB46's right side to be at most \(k\), it is necessary that
+\(k\ge\ell|E_c|\). In fact it is at least
+\(|E_c|\min\{2^k,\ell\}\), and the alternative minimum \(2^k\)
+already exceeds \(k\). Affordability would therefore require
+\(t\ge\ell|E_c|\), or \(i_c\ge(\ell-1)|E_c|\). These are
+limitations of this particular upper bound, not necessary conditions
+for every repair. Actual parent overlaps in EB43 or relations specific
+to \(Y_c\) can give a sharper test.
+
+No argument here forces an EB1 branch to violate EB44--EB45 or to make
+EB46 at most \(|F|\). The missing conclusion remains a supplied
+affordable repair on one actual whole-cover branch.
+
+## 13. Odd local structure alone does not fund either ternary repair
+
+Consider the single fixed family
+\[
+ \mathcal C=\{0\bmod3,\ 0\bmod5,\ 0\bmod7,\ 2\bmod9,
+ 0\bmod11,\ 0\bmod13,\ 1\bmod15,\ 8\bmod21\}.
+ \tag{EB47}
+\]
+Its eight moduli have sum \(84\) and lcm \(Q=45045\). They are
+distinct odd nonunits, form a divisor-closed set, and have initial
+odd-prime support. Comparable classes are disjoint. In the displayed
+order, private integers are \(3,5,7,2,22,13,1,8\). Their membership
+and privacy follow by direct reduction in the eight named moduli.
+The reciprocal sum is \(48172/45045>1\), but the integer 4 is
+uncovered. Thus this is explicitly a noncover, not an EB1 representative.
+
+Set \(p=3\), \(N=Q/3=15015\), and use the actual common CRT carrier
+with tail coordinate \(z\bmod3\) and cofactor coordinate
+\(z\bmod5005\). The source inserts \(c+3(z\bmod3)\) modulo 9 and
+preserves every cofactor coordinate. The two all-child retained families
+are
+\[
+ \mathcal B_1=\{1\bmod5,0\bmod7,0\bmod11,0\bmod13\},
+\]
+\[
+ \mathcal B_2=\{0\bmod3,0\bmod5,1\bmod7,0\bmod11,0\bmod13\}.
+ \tag{EB48}
+\]
+Their collision sets are \(E_1=\{5\}\) and \(E_2=\{7\}\).
+Their complete complements \(Y_c=(\mathbb Z/N\mathbb Z)\setminus
+\bigcup\mathcal B_c\) have the following exact data, by CRT counting:
+
+| Branch | Inactive originals \(i_c\) | Retained count \(b_c\) | Slots \(t\) | Sum budget \(W\) | \(|Y_c|\) | Density |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 3 | 4 | 4 | 48 | 8640 | \(576/1001\) |
+| 2 | 2 | 5 | 3 | 45 | 5760 | \(384/1001\) |
+
+Neither retained family can be repaired within its slot budget, even
+allowing arbitrary new prime support and heights. The four smallest
+unused odd nonunit moduli for \(\mathcal B_1\) are \(3,9,15,17\).
+For \(\mathcal B_2\), the three smallest are \(9,15,17\). Any
+legal repair with at most the respective number of distinct moduli
+has union density at most the corresponding reciprocal sum. But
+\[
+ \frac{576}{1001}-
+ \left(\frac13+\frac19+\frac1{15}+\frac1{17}\right)
+ =\frac{4204}{765765}>0,
+\]
+\[
+ \frac{384}{1001}-
+ \left(\frac19+\frac1{15}+\frac1{17}\right)
+ =\frac{112579}{765765}>0.
+ \tag{EB49}
+\]
+For any proposed palette, this density argument is exact counting on
+the common period obtained by adjoining its moduli to \(N\). It does
+not restrict the repair to divisors of \(N\); it already allows the
+new prime 17 and the higher power \(9\nmid N\). The sum budget is
+not needed for the exclusion. The retained family is kept fixed.
+
+Even restricting to parent-owned points does not make every affordable
+palette low rank. For \(F=\{35,55\}\), the four actual points
+\(750,540,1080,870\) lie in \(Y_1\cap P_5\). Their residue pairs
+are \((15,35),(15,45),(30,35),(30,45)\), and their feature matrix is
+\[
+ \begin{pmatrix}
+ 1&15&35&525\\1&15&45&675\\
+ 1&30&35&1050\\1&30&45&1350
+ \end{pmatrix},\qquad \det=-22500.
+ \tag{EB50}
+\]
+Thus this fixed palette has \(\rho_F(Y_1)=4>2\). On these four
+points, rounding restricted to the same palette has
+\[
+ U_T=(2-\alpha)(2-\beta)\ge1,\qquad
+ \alpha=x_{35,15}+x_{35,30}\le1,\quad
+ \beta=x_{55,35}+x_{55,45}\le1.
+ \tag{EB51}
+\]
+These four rows certify the fixed palette; they are not asserted to be
+a basis for every affordable palette. EB49 supplies the separate
+full-liability nonrepair proof.
+
+The whole-cover ownership hypothesis fails explicitly. Only 2160 of
+the 8640 points of \(Y_1\) belong to \(P_5\), and only 960 of the
+5760 points of \(Y_2\) belong to \(P_7\). The two cofactor
+projections each have size 2880 and overlap in 1800 points. In
+particular \(4\in Y_1\cap Y_2\) has no original \(3\)-free parent
+owner. This prevents applying EB24 or EB42--EB46 to the full liabilities
+as if they were parent-covered. The example excludes repair conclusions
+from these weaker local properties alone, including a density sum above
+one and two nonempty collision sets. It does not exclude repairs that
+also change retained classes or establish anything about a hypothetical
+whole-cover EB1 representative. All deductions in Sections 12--13 are
+ordinary finite mathematics; no new Lean verification is claimed.
