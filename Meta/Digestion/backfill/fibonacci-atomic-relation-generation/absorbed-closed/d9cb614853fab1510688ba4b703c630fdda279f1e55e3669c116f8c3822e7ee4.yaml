@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d9cb614853fab1510688ba4b703c630fdda279f1e55e3669c116f8c3822e7ee4
+  normalized_sha256: sha256:d9cb614853fab1510688ba4b703c630fdda279f1e55e3669c116f8c3822e7ee4
+cas_ref: sha256:d9cb614853fab1510688ba4b703c630fdda279f1e55e3669c116f8c3822e7ee4
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiNonnegativeConverse.nonnegative_series_positive_boundary_obstruction
+    target_statement_id: sha256:9a33ee5a16dd0faa27fa323c6aff6a578666e345064587d6fabe79d7ba22cbbb
+receipts:
+  unresolved_subitems: []
