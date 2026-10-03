@@ -63,6 +63,74 @@ $$
 
 Thus the old left-block condition alone does not supply the numerator's positivity. The algebra in Lemma 6.28 is valid under its stated positive-pivot condition; the relation $g=A^{\rm pre}x$ transports the forcing but does not establish that sign. The actual compression/shorting map must identify this pivot as one whose positivity follows from the permitted induction inputs. The review has not completed that identification. This is an unclosed proof input, not a claim that an old-block induction hypothesis is inherently circular.
 
+## A same-vector payment interface
+
+The original square completion (209)–(212) retains two nonnegative arm squares. Write their sum as
+
+$$
+\mathcal S_k[F]=\sum_{\pm}
+\|P_k^{1/2}t_\pm+P_k^{-1/2}b_kx_k\|^2.
+$$
+
+At the displayed coefficients, its exact accounting is
+
+$$
+\Phi_k=\mathfrak B_k|\gamma_k(f)|^2+\mathcal S_k[F]+Q_k-2D_k.
+$$
+
+Lemma 6.61 states the one-debit identity on the identified normalized vector $F_k^\#=H_kf_k^\natural$. Lemma 8.4 asserts the same identity on its general harmonic vector. Write $\mathcal C_k[F]=Q_k[F]-D_k[F]$. The displayed fold remainder is $\mathcal S_k[F]+\mathcal C_k[F]-D_k[F]$. Granting the source identification on the same $F$, it writes $\mathcal C_k=E_k(1-u_k)$ when $E_k>0$. The interface below uses $Q_k-D_k$ directly, so it remains meaningful at $E_k=0$ without dividing by $E_k$. This is a conditional accounting of the displayed form, not a verified transport identity for the actual Weil operator.
+
+There is further coefficient slack in the source's parent-loss estimate. With $w_k=\log(1+1/k)$, put
+
+$$
+\mathcal L_k=\frac{439}{250}\sum_m\chi_m+\frac52W_k,
+\qquad
+\delta_k=-\log(kw_k)+\frac{439}{250}
+\left(\frac{\sum_mV_{k,m}}{\log2}-\sum_m\chi_m\right).
+$$
+
+The coefficients in (203), (204) and MASTER-P3c give
+
+$$
+\mathfrak B_k-\mathcal L_k=\mathfrak g_k^{\rm M+}+\delta_k.
+$$
+
+The source bounds $0<kw_k<1$ and $\chi_m\le V_{k,m}/\log2$ make $\delta_k$ nonnegative. Nonnegative unused terms also arise from the two Young inequalities in Lemma 8.2 and from any excess of the exact inherited pivot over its certified floor. None of these sign statements supplies a comparison with the remaining $D_k$.
+
+Throughout the proposed interface, $k$ is an integer at least seven, $A_{k,-}\succ0$, $f\in\mathcal K_k$, and $F=H_kf$ is the exact full-operator harmonic extension with the pole retained. Retain the order in Lemma 8.4: complete full-form transport, fixed-target gauge, simultaneous common-complement source short, then root-adapted endpoint fold. The one-defect and forcing identifications of Lemma 6.28, its positive multiplication coefficients, $1-\beta_kI_k>0$, $J_k>0$, $\Pi_k^{\rm phys}>0$, and the arm block $P_k\succ0$ must all hold in those coordinates. These correspondence and positive-pivot inputs remain unverified here; none is inferred from positivity of the future block.
+
+A proposed unused remainder $\mathcal U_k$ is admissible only after establishing the common lower-form estimate
+
+$$
+\langle F,A_{k+1,-}F\rangle\ge
+(\mathfrak g_k^{\rm M+}+\delta_k)|\gamma_k(f)|^2
++\mathcal R_k^\perp[f]+\mathcal S_k[F]+\mathcal U_k[F]
++Q_k[F]-2D_k[F].
+$$
+
+This lower bound is itself an unverified actual-family obligation. Conditional on it, a sufficient payment preserving the advertised ground coefficient and transverse reserve is
+
+$$
+D_k[F]\le\mathcal C_k[F]+\delta_k|\gamma_k(f)|^2
++\mathcal S_k[F]+\mathcal U_k[F]
+\qquad\text{for every }f\in\mathcal K_k.
+$$
+
+Here $\mathcal U_k$ may contain only explicitly identified, proved nonnegative Young-residual or pivot-excess terms retained in that lower bound. Each must be disjoint from the expenditures already made in MASTER-P2 and the $3/5+2/5$ parent allocation, and from $\mathcal S_k$, the coefficient slack $\delta_k|\gamma_k(f)|^2$, and the transverse reserve $\mathcal R_k^\perp$ supplied by Theorems 6.53 and 6.55. It is not defined as the unknown difference. Taking $\mathcal U_k=0$ introduces no additional reserve; a nonzero choice needs the displayed lower-form proof. This interface is sufficient for the stated allocation scheme; positivity could also follow from a different allocation that spends part of the claimed ground margin. It is not asserted to be necessary for RH or for operator positivity.
+
+The source reserves have distinct existing uses:
+
+| Source input | Existing allocation | Additional obligation before using it for $D_k$ |
+|---|---|---|
+| Lemma 8.1, MASTER-P2 | Comparator saving and its negative reference charge are one inherited-response contribution. | Retain both terms; the saving is not an independent positive summand. |
+| Lemma 8.2 | The certified inherited surplus is split $3/5+2/5$ to pay mixed and aligned forcing. | Identify the unused remainder and compare it with $D_k$ on the actual harmonic response. |
+| Theorems 6.53 and 6.55 | The transverse budget supplies the reserved transverse term. | Prove any proposed reallocation while preserving the claimed transverse conclusion. |
+| Lemma 8.4, (213) | One target diagonal splits into ground and transverse parts. | Keep the split and both expenditures in the same coordinates. |
+
+The source does not identify an extra factor-of-two normalization in (209)–(213): the symmetric coupling is explicitly $\sqrt2\,b_k$, and the diagonal is retained once. No same-vector payment satisfying the interface above has been verified here. Harmonic restrictions could make the arm squares or parent remainders large enough; their quantitative consequence remains unverified. This narrows the reuse obligation without producing an actual-arithmetic counterexample or deciding the source's claimed RH conclusion. The coefficient calculation and conditional scalar accounting do not constitute new mathematical estimates.
+
+The [v2 supplementary archive](https://doi.org/10.5281/zenodo.22864087), file `The_Three_Gates_Supplementary_V2.zip`, contains a Gate-II audit of full-comb scalarization. That audit explicitly limits its verdict to that particular risk and says it does not independently reprove every theorem. Its reported PASS therefore does not verify this second-arm payment. The archive describes its `master/` programs as finite scalar sweeps and its `Y7_end_to_end/` calculation as a conservative base-endpoint replication; those stated scopes do not supply the missing all-step, same-vector lower bound. These computations have not been rerun here.
+
 ## Full-form transport input
 
 Proposition 5.3 must be read as an obligation about the whole form, including its diagonal. For a change of variables $x=\phi(u)$ with $J=\phi'>0$ and $g(u)=\sqrt{J(u)}f(\phi(u))$, substitution in the singular difference expression produces
