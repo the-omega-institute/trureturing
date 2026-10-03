@@ -25748,3 +25748,41 @@ Then \(x\) avoids \(A\) and \(B\), and it avoids every \(U_r\) because
 \(x\equiv1\pmod{11}\) whereas \(c_r\ne1\) for all \(r\).  It avoids all three \(T_j\)
 since every \(T_j\)-residue is \(1\pmod P\) while \(x\equiv0\pmod P\).  Thus this remains a
 source-compatible hull example, not a covering-system counterexample.
+
+## 222. A ternary top label directly closes the internal FC1128 branch
+
+There is one small strengthening of Section 215 when the occupied top
+prime itself is \(3\).  Assume that the occupied top layer has
+\(3^e\parallel Q\) with \(e\ge2\), write
+
+\[
+ R=3^{e-1}L,
+\]
+
+and retain the occupied original label \(R\in D\).  Let \(h>1\) be a
+\(3\)-free original with \(h\mid R\).  Since \(h\) has no factor \(3\),
+\(h\mid L\).  Therefore every nonunit divisor \(f\mid h\) satisfies
+
+\[
+ 3f\mid 3L\mid R.
+\]
+
+The numerical inventory \(D\) is divisor-closed, so
+
+\[
+\boxed{3f\in D\qquad\text{for every nonunit }f\mid h.}
+\tag{222.1}
+\]
+
+In particular, the two vacancies required by (MV0),
+\(3f\notin D\) and \(3g\notin D\) for distinct nonunit \(f,g\mid h\),
+cannot occur whenever \(h\mid R\).  Thus the internal \(h\)-divisor branch
+of FC1128 is unavailable throughout the \(p=3,\ e\ge2\) occupied-top case;
+the argument uses only the actual top label and divisor closure and does not
+assume \(3\nmid L\).
+
+This is a branch restriction, not a strict exchange.  It leaves the same
+external-coordinate and deleted-point-hull alternatives as Section 218, and
+it does not force an eligible \(h\) outside \(\operatorname{Div}(R)\).
+Consequently (222.1) supplies no unrestricted Erdős--#7 conclusion by
+itself.
