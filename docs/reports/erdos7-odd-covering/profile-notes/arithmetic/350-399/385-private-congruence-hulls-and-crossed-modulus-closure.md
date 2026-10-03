@@ -26689,3 +26689,117 @@ quotients have bounded aggregate phase-pair capacity, while small external
 quotients remain an uncontrolled payment channel.  The bound alone does not
 force a contradiction, because no unrestricted theorem currently bounds that
 small-quotient sum below the left side while retaining all original phases.
+
+## 232. Lifting an interface turns a small-quotient payment into a new hole set
+
+The small term in (229.8) has an exact geometric meaning.  It is the amount
+of the current hole set that can be removed when the corresponding external
+labels become internal after enlarging the interface.  This gives a safe
+lifting inequality, while also showing why the small term cannot simply be
+discarded.
+
+Let \(H\mid H'\mid Q\), put \(L=H'/H\), and retain the notation
+
+\[
+ g_i=\gcd(d_i,H),\qquad \ell_i=d_i/g_i.
+\]
+
+For the labels newly internal at \(H'\), write
+
+\[
+ \mathcal I(H,H')=\{i:d_i\mid H',\ d_i\nmid H\},\qquad
+ \alpha_i(H)=
+ \frac{|U_H\cap(a_i\bmod g_i)|}{H\ell_i}.
+ \tag{232.1}
+\]
+
+For every \(i\in\mathcal I(H,H')\), \(\ell_i\mid L\).  Indeed
+
+\[
+ \operatorname{lcm}(H,d_i)=H\ell_i\mid H',
+\]
+
+and hence the \(H'\)-lifts above one compatible \(r\in U_H\) contain exactly
+\(L/\ell_i\) points of \(a_i+d_i\mathbb Z\).  Existing \(d_j\mid H\)
+classes contain no point above \(U_H\) by definition.  Taking a union over the
+newly internal labels therefore gives the exact identity
+
+\[
+ |U_{H'}|
+ =L|U_H|-\left|\bigcup_{i\in\mathcal I(H,H')}
+       \left((a_i+d_i\mathbb Z)\bmod H'\right)\cap\pi^{-1}(U_H)\right|,
+ \tag{232.2}
+\]
+
+where \(\pi:\mathbb Z/H'\mathbb Z\to\mathbb Z/H\mathbb Z\) is reduction.  The
+individual removal sets have sizes
+
+\[
+ \left|((a_i+d_i\mathbb Z)\bmod H')\cap\pi^{-1}(U_H)\right|
+ =\frac{L}{\ell_i}|U_H\cap(a_i\bmod g_i)|.
+ \tag{232.3}
+\]
+
+Consequently,
+
+\[
+ \boxed{
+ \frac{|U_{H'}|}{H'}\ge
+ \frac{|U_H|}{H}-\sum_{i\in\mathcal I(H,H')}\alpha_i(H).
+ }
+ \tag{232.4}
+\]
+
+The sharper form (232.2) keeps all overlaps between the newly internal
+classes.  Replacing the union by the sum is the only loss in (232.4).  Since
+
+\[
+ \alpha_i(H)\le \frac{H/g_i}{H(d_i/g_i)}=\frac1{d_i},
+ \tag{232.5}
+\]
+
+this recovers the ordinary reciprocal-density lift as a corollary, but the
+left side of (232.4) still carries the actual \(U_H\)-phase geometry.
+
+For a single label \(i\), take \(H'=\operatorname{lcm}(H,d_i)=H\ell_i\).
+If no other label becomes internal at this level, (232.2) is an equality
+with one removal term.  In general, lifting the small quotient set
+
+\[
+ S_M(H)=\{i:\ell_i<M\}
+\]
+
+requires the closed set
+
+\[
+ \operatorname{cl}_H(S_M)=\{j:\ell_j\mid
+   \operatorname{lcm}(\ell_i:i\in S_M(H))\};
+ \tag{232.6}
+\]
+
+labels with \(\ell_j\ge M\) can enter this closure.  Thus the valid statement
+is (232.4) with \(\mathcal I(H,H')\), not a formula charging only the original
+small quotients.  This is the precise obstruction to an informal
+“small-quotient absorption” step.
+
+If \(H'=Q\) and the family were a whole cover, then \(U_Q=\varnothing\), so
+(232.4) forces
+
+\[
+ \frac{|U_H|}{H}\le
+ \sum_{i:d_i\nmid H}\alpha_i(H).
+ \tag{232.7}
+\]
+
+This is the exact source-compatible version of the usual density payment.  If
+the right side is strictly smaller, the lifted interface still has a genuine
+hole and the supposed whole cover is impossible.  For \(H'<Q\), a positive
+right-hand remainder instead proves that a later external interface is still
+required; it does not by itself prove noncoverage.
+
+The lemma supplies the missing transport needed to revisit (231.6): a
+small-quotient term may be moved into a larger \(U_{H'}\), but only together
+with every label in the divisor closure (232.6) and with the actual overlap
+sets in (232.2).  No unrestricted contradiction follows until a hole lower
+bound survives that transport or the resulting closure is consumed by an
+EB1-compatible descent.
