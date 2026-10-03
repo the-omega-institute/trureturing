@@ -40,6 +40,43 @@ compact convergence estimates are separate obligations; the theta transform
 alone does not establish those expansions or Cardon's equivalence involving
 simple zeros and its specific measure and orthogonal polynomials.
 
+## Reusable theta tail and its local scale
+
+Lemma 2.3, printed p.10, equations (2.8)–(2.9), directly supplies
+
+$$
+\Phi(r)=O\!\left(e^{9r/2-\pi e^{2r}}\right),
+$$
+
+$$
+\Phi(r)-2(2\pi^2e^{9r/2}-3\pi e^{5r/2})e^{-\pi e^{2r}}
+=O\!\left(e^{9r/2-4\pi e^{2r}}\right)
+\qquad(r\to+\infty).
+$$
+
+Thus, with $g(r)=e^{9r/2-\pi e^{2r}}$, positivity and continuity on the
+remaining compact interval give $cg(r)\le\Phi(r)\le Cg(r)$ for $r\ge1$.
+For $\delta_R=e^{-2R}$ the identity
+
+$$
+\log\frac{g(R+s)}{g(R)}
+=\frac92s-\pi e^{2R}(e^{2s}-1)
+$$
+
+gives $\Phi(R+s)\asymp\Phi(R)$ uniformly for
+$-\delta_R\le s\le2\delta_R$. This is comparison by constants,
+not a ratio tending to one.
+
+A derivative estimate must use the normally convergent original series
+(1.8), rather than differentiate the displayed remainder. Its differentiated
+summands are bounded by $Ce^{13r/2}n^6e^{-\pi n^2e^{2r}}$ for $r\ge1$.
+The uniformly summable series after removing its first exponential gives
+$|\Phi'(r)|\le Ce^{2r}g(r)$, hence
+$|\Phi'(r)/\Phi(r)|\le Ce^{2r}$.
+These are paper-level applications of the source series and Lemma 2.3,
+used by the [Gamma tail and same-test compensation estimates](../Weil/chenwang2012weighted.md).
+They are not additional tail theorems attributed to Romik or new Lean proofs.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
