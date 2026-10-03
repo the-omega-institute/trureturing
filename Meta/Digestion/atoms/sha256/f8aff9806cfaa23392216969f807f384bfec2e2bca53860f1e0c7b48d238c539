@@ -1,0 +1,24 @@
+**定理 65.3（Quadratic maps from a parallelogram law）。**
+Let $M,N$ be additive commutative groups, with injective doubling on
+$N$. If $f:M\to N$ satisfies
+
+$$
+f(x+y)+f(x-y)=2f(x)+2f(y)\qquad(x,y\in M),
+$$
+
+then there is a quadratic map $Q:M\to N$ over $\mathbb Z$ whose
+underlying function is $f$. Its companion bilinear map is
+$b(x,y)=f(x+y)-f(x)-f(y)$. In particular, the construction supplies
+both integer quadratic scaling and biadditivity of $b$.
+
+Proof. Substitution at zero and cancellation of doubling give
+$f(0)=0$; substitution at $0,x$ gives evenness. The recurrence at
+$nx,x$ gives $f(nx)=n^2f(x)$ by two-step induction, and evenness
+extends it to integers. Applying the parallelogram identity to
+three points and cancelling doubling gives the three-variable
+polarization identity. That identity proves additivity of $b$ in
+each argument, so $f$ and $b$ define the required quadratic map.
+Injective doubling is essential: on $\mathbb Z/2\mathbb Z$ the
+constant function one satisfies the displayed identity but does not
+vanish at zero.
+

@@ -1,0 +1,13 @@
+**Theorem 3.1 (Fibonacci block rank).** For every $j\geq1$ and prime
+$p\mid C_j$,
+$$
+\rho(p)=3^{j+1},\qquad v_p(C_j)=v_p(F_{\rho(p)}).
+$$
+
+Proof. Put $n=3^j$. The cubic Fibonacci identity is
+$F_{3n}=F_n C_j$. The Lucas discriminant identity and the block
+congruence exclude $p\mid F_n$ and $p=3$. Therefore $p\mid F_{3n}$,
+while $p\nmid F_n$. The first-zero rank divides $3n$, so it must be
+$3n=3^{j+1}$. Since $p\nmid F_n$, the product identity gives
+$v_p(C_j)=v_p(F_{3n})$.
+

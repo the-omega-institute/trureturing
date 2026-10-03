@@ -1,0 +1,7 @@
+**Definition 53.101 (MellinConvolution).** Multiplicative convolution of $f,g:\mathbb R\to\mathbb K$, where $\mathbb K$ is an `RCLike` scalar type, integrates $f(y)g(x/y)$ against $dy/y$ over $y>0$.
+
+```lean
+noncomputable def MellinConvolution (f g : ℝ → 𝕂) (x : ℝ) : 𝕂 :=
+  ∫ y in Ioi 0, f y * g (x / y) / y
+```
+

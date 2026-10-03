@@ -1,0 +1,40 @@
+**Theorem 55.4 (GCR4, the conditional two-factor block).** Suppose
+$j\geq1$ and the actual integer $B_j=P^2Q^3$ for distinct rational
+primes $P,Q$. Then $h_P=2$, $h_Q=3$, and
+
+$$
+\left(\frac3{\varpi_{j,P}}\right)_3=\omega^2,\qquad
+\left(\frac{\varpi_p}{\varpi_{j,P}}\right)_3=\kappa_p^2
+\quad(p\in S_j),\qquad
+\left(\frac{\eta_i}{\varpi_{j,P}}\right)_3=\omega
+\quad(1\leq i<j).
+$$
+
+In particular, three is not a cube modulo $P$. The older quadratic
+conditions also give $(p/Q)=1$ for every $p\in S_j$ and
+$Q\equiv19\pmod{40}$. When $j\geq2$, the integer congruence further
+requires
+
+$$
+P^6\equiv11\pmod{19},\qquad
+P\bmod19\in\{4,6,9,10,13,15\}.
+$$
+
+Proof. The depth-three factor contributes one to any cubic character.
+Theorem 8.2 therefore gives
+$(3/\varpi_{j,P})_3^2=\omega$. Squaring is its own inverse on the
+group of cube roots of unity, giving the first value. The same
+operation applied to Theorems 55.2 and 55.1 gives the remaining two.
+The rational noncube assertion is the residue-field interpretation
+of the first value. For $j\geq2$, $B_1=19$ and
+$B_j\equiv3\pmod{B_1^2}$ imply
+$P^2Q^3\equiv3\pmod{19}$; taking sixth powers and using the
+cube-root-of-unity condition yields $P^6\equiv11\pmod{19}$.
+Checking the eighteen nonzero residues gives the listed classes.
+These are necessary conditions; they do not exclude or construct
+such a block.
+
+For each $p\in S_j$, retain the primary generator $\varpi_p$ and
+its conjugate $\overline{\varpi_p}$. Their product is the rational
+prime $p$, both factors are primary, and $p\equiv1\pmod9$.
+

@@ -1,0 +1,22 @@
+**Theorem 71.5 (Mordell families independent modulo base-field points).**
+Let $L/K$ be a compatible extension of fields containing
+$\mathbb Q$, with $L$ of characteristic zero. Let $c,d\in\mathbb Z$,
+$d\ne0$, and suppose $\mathcal E_c:y^2=x^3+c$ is elliptic.
+Fix a primitive cube root $\zeta\in L$, nonzero $\beta_i\in L$,
+and integers $y_i$. Suppose the points $P_i=(d\beta_i,y_i)$ are
+nonsingular and have infinite order. Suppose $K$-automorphisms
+$s_j$ fix $\zeta$, rotate $\beta_j$ to $\zeta\beta_j$ and fix
+the other roots. There is an additive automorphism $T$ of
+$\mathcal E_c(L)$ acting by $T(x,y)=(\zeta x,y)$ such that
+
+$$
+\sum_{i=1}^J(a_iP_i+b_iTP_i)\in
+\operatorname{image}\bigl(\mathcal E_c(K)\to\mathcal E_c(L)\bigr)
+\quad\Longrightarrow\quad a_i=b_i=0\text{ for every }i.
+$$
+
+Proof. The variable change for $\zeta^2$ constructs $T$.
+Field automorphisms fix the base-field image and commute with
+this point rotation. Their coordinate actions and Theorem 71.3
+give the hypotheses of Theorem 71.4 for the same family and $T$.
+

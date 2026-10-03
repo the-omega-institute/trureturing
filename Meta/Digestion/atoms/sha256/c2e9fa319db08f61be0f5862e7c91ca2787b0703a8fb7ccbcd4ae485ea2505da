@@ -1,0 +1,24 @@
+**Theorem 55.1 (GCR2, interlevel phase).** For every $1\leq i<j$,
+
+$$
+\left(\frac{\eta_j}{\eta_i}\right)_3
+=\left(\frac{\eta_i}{\eta_j}\right)_3=\omega^2.
+$$
+
+If
+$(\varpi_{i,p}/\varpi_{j,q})_3=\omega^{e_{p,q}}$, with exponents read
+modulo three, then the actual cross-support depth balance is
+
+$$
+\sum_{p\mid B_i}\sum_{q\mid B_j}h_p h_q e_{p,q}
+\equiv2\pmod3.
+$$
+
+Proof. Since $B_i\mid x_j$ and $\eta_i\mid B_i$,
+$\eta_j\equiv-2-\omega=\omega\lambda\pmod{\eta_i}$.
+The supplementary laws and the Section 8 normalization evaluate the
+first symbol as $\omega^2$. The two primary factors are coprime, so
+cubic reciprocity gives the second. Expanding each denominator and
+numerator by Theorem 8.1, with its original exponents $h_p,h_q$,
+gives the displayed double sum.
+

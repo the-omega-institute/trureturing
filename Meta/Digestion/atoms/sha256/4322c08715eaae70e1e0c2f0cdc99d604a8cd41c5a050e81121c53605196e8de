@@ -1,0 +1,14 @@
+## 8. Oriented cubic factors and the original-depth balance
+
+Retain $x_j=L_{3^j}$, $B_j=x_j^2+3$, and the original depth
+$h_p=v_p(F_{\rho(p)})$ for $j\geq1$ and $p\mid B_j$. In the Eisenstein
+integers $\mathbb Z[\omega]$, let $\omega^2+\omega+1=0$ and
+$\lambda=1+2\omega$. A generator is *primary* when it is congruent to
+$1$ modulo $3$. For a prime ideal away from $3$, write
+$(a/\mathfrak p)_3$ for its cubic residue symbol, and extend the symbol
+multiplicatively to coprime ideal denominators. The classical cubic
+reciprocity and supplementary laws used below are the identities in
+Dunn and Radziwill, *Bias in cubic Gauss sums: Patterson's conjecture*,
+arXiv:2109.07463v3, equations (1.4)-(1.5). No conditional analytic
+result of that paper is used.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a7d69ef23e51084d43653642290df6a26e3a9c3692bb4cfe11eac06c927a6bb9
+  normalized_sha256: sha256:a7d69ef23e51084d43653642290df6a26e3a9c3692bb4cfe11eac06c927a6bb9
+cas_ref: sha256:a7d69ef23e51084d43653642290df6a26e3a9c3692bb4cfe11eac06c927a6bb9
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/GoldenEisensteinCoprime.golden_eisenstein_conjugate_coprime
+    target_statement_id: sha256:136c4c5575b9e1a756b992a26567b4531e3cc885abc115c9931f59387dd7dd58
+receipts:
+  unresolved_subitems: []

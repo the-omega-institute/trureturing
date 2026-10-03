@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2b7455dce65392c3c5e92189353fc74defdf1741342905546c098a47b8f39f47
+  normalized_sha256: sha256:2b7455dce65392c3c5e92189353fc74defdf1741342905546c098a47b8f39f47
+cas_ref: sha256:2b7455dce65392c3c5e92189353fc74defdf1741342905546c098a47b8f39f47
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/SymmetricSquareAddition.sym2x_add_sub_eq_addSubMap_sym2x
+    target_statement_id: sha256:57e92f80a46f9e92f2d700bdd33b46c9b59e6ecdb10f350cf3f0fecdb2fa06de
+receipts:
+  unresolved_subitems: []

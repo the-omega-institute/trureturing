@@ -1,0 +1,5 @@
+source_id = "pure-cubic-integral-lattices"
+path = "docs/develop/theory/PURE_CUBIC_INTEGRAL_LATTICES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

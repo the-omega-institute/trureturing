@@ -1,0 +1,41 @@
+**Theorem 71.6 (canonical-height Gram blocks for a Mordell family).**
+Let $L/K$ be a compatible extension of fields containing
+$\mathbb Q$, with $L$ a number field, and suppose
+$\mathcal E_c:y^2=x^3+c$, $c\in\mathbb Z$, is elliptic.
+Let $T$ act by $(x,y)\mapsto(\zeta x,y)$ for a primitive cube
+root $\zeta\in L$. Suppose the infinite-order points $P_i$
+satisfy $P_i+TP_i+T^2P_i=O$. Suppose $K$-automorphisms $s_j$
+fix $P_i,TP_i$ for $i\ne j$, and send $P_j,TP_j$ to $TP_j,T^2P_j$.
+Use the absolute canonical height and its pairing normalized by
+
+$$
+\widehat h(P)=\lim_{n\to\infty}\frac{h_x([2^n]P)}{2\cdot4^n},
+\qquad
+\langle P,Q\rangle=
+\frac{\widehat h(P+Q)-\widehat h(P)-\widehat h(Q)}2.
+$$
+
+All $H_i=\widehat h(P_i)$ are positive. Different layers are
+orthogonal; the Gram matrix of the $P_i$ is $\operatorname{diag}(H_i)$.
+The Gram matrix of $(P_i,TP_i)$ has diagonal blocks
+$H_i\begin{pmatrix}1&-1/2\\-1/2&1\end{pmatrix}$ and determinant
+
+$$
+\left(\frac34\right)^J\prod_{i=1}^J H_i^2>0.
+$$
+
+Proof. Absolute height is invariant under field automorphisms.
+Root-of-unity scaling preserves logarithmic abscissa height,
+hence canonical height through the doubling limit. Apply $s_j$
+and the cubic trace to the associated pairing to obtain cross-layer
+orthogonality. Within one layer these identities give $-H_i/2$.
+Northcott finiteness and the quadratic height law imply that
+zero-height points are torsion, so infinite order gives $H_i>0$.
+The determinant of each block is $3H_i^2/4$; multiply these
+determinants. The empty product at $J=0$ is one.
+
+This determinant is for the displayed subgroup; no saturation
+or full Mordell--Weil regulator is asserted. These statements
+supply the coordinate, independence and height relations used
+in Theorems 56.2 and 56.3.
+

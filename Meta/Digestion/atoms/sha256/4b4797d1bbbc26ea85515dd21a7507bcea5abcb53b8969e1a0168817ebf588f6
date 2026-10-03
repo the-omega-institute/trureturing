@@ -1,0 +1,32 @@
+**Theorem 57.1 (trace and norm denominator criterion).** For all
+$p,q,d\in F[X]$ with $d\ne0$, if
+
+$$
+d\mid 2p-qA,\qquad d^2\mid p^2-pqA-q^2B,
+$$
+
+then $d\mid p$ and $d\mid q$. This assertion includes fields of
+characteristic two and three.
+
+Proof. Fix a prime polynomial $\pi$ dividing $d$. If
+$\pi\nmid q$, division in $F[X]/(\pi)$ supplies a polynomial $g$
+with $p\equiv gq\pmod\pi$. The trace and norm divisibilities then
+give $\pi\mid2g-A$ and $\pi^2\mid g^2-gA-B$.
+Differentiating the latter relation and using the former gives
+$\pi\mid a_1g+B'$. Over the residue field at $\pi$, the point
+$(X,-g)$ therefore lies on $W$ and both partial derivatives
+vanish. This contradicts smoothness. Thus $\pi\mid q$; the norm
+relation also gives $\pi\mid p$. Divide $p,q$ by $\pi$ and
+cancel $\pi$ and $\pi^2$ from the trace and norm divisibilities.
+Factorization induction on $d$ finishes the argument; units divide
+both coordinates.
+
+The source of this denominator criterion is
+TauCetiProject/TauCeti, commit
+`33c2099c678ea391f7ea3e0ddaf945a76a625e5d`,
+`TauCeti/AlgebraicGeometry/EllipticCurve/Affine/CoordinateRing.lean`;
+the same source appears at commit
+`65482a19dabd31843aab0cf8469c5e7613988eba` under Apache-2.0.
+The criterion alone does not construct the global point map,
+the Galois action on the common fields, or the canonical height.
+

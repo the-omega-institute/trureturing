@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9055a919055b34c56fdf01793bb8e7d6c3bd6f5ef73d8b56c3f1b7e86e873b8d
+  normalized_sha256: sha256:9055a919055b34c56fdf01793bb8e7d6c3bd6f5ef73d8b56c3f1b7e86e873b8d
+cas_ref: sha256:9055a919055b34c56fdf01793bb8e7d6c3bd6f5ef73d8b56c3f1b7e86e873b8d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Bind-only reuse of pinned Mathlib WeierstrassCurve.Affine.Point.add_of_X_ne', WeierstrassCurve.Affine.slope_of_X_ne, IsPrimitiveRoot.pow_eq_one and IsPrimitiveRoot.ne_one: distinct horizontal points give slope zero and third abscissa zeta^2*x by ring normalization, then neg_add_cancel. The general local application is kernel-checked inside cubic_mordell_family_independent_mod_base; no standalone repository GID is added for the trace."
+    previous_atom_id: 559a77c7207365964038d519c18e87d49e1e352b204d3fa5804617b4676ac758
+    next_atom_id: 97ab0d9e442212983d643d2cacfe189cfbbc9fdd6b54acdf9038dd6ed0379c41
