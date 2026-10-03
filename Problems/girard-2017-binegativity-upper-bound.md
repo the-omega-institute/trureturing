@@ -126,8 +126,9 @@ proof uses only the standard axioms `propext`, `Classical.choice` and
 
 Tier 1 preprint conjecture; resolution `Refuted` by
 `D5/S3/Quantum/Entanglement/TwoQubitBinegativityUpperBoundRefutation.result`.
-`proof_shape: content`; `admission_basis: open-problem-resolution` (issue
-#12432). Utility kind `certified-instance`, basis `refutes` the module's
+`proof_shape: bind-only` (the settlement of the named conjecture is the new
+content; no escape witness); `admission_basis: open-problem-resolution`
+(issue #12432). Utility kind `certified-instance`, basis `refutes` the module's
 `claim`.
 
 ### What the settlement shows
@@ -135,11 +136,15 @@ Tier 1 preprint conjecture; resolution `Refuted` by
 - **Proved by `result`:** the upper inequality of Eq. (9) fails for a
   rank-two two-qubit state, with $N_2=1/7$ against a bound of at most
   $9/65$.
-- **Proved inside the proof of `result`:** the negative parts
-  $(\rho^\Gamma)_-=ww^T/91$ and $((\rho^\Gamma)_-^\Gamma)_-=3zz^T/2366$; the
-  identity $\operatorname{Tr}[A_-]=\sum_i\lambda_i(A)_-$ for Hermitian
-  $A$; and the convex-roof bound $C\ge2|\rho_{01,10}|$ for states with
-  $\rho_{11,11}=0$.
+- **Proved inside the proof of `result`, for the state $\rho$ only:** the
+  negative parts $(\rho^\Gamma)_-=ww^T/91$ and
+  $((\rho^\Gamma)_-^\Gamma)_-=3zz^T/2366$; the evaluation
+  $\operatorname{Tr}[(\rho^\Gamma)_-]=\sum_i\lambda_i(\rho^\Gamma)_-$, which
+  gives $N(\rho)=2/13$; and the convex-roof bound
+  $C(\rho)\ge2|\rho_{01,10}|=4/13$ from $\rho_{11,11}=0$.
+- **Follows from the same steps (not stated in Lean):** the trace identity
+  holds for every Hermitian $A$, and $C(\sigma)\ge2|\sigma_{01,10}|$ for every
+  two-qubit state with $\sigma_{11,11}=0$.
 - **Mechanism (computed, not stated in Lean):** by the Sazim–Awasthi
   identity $N_2=\frac N2(1+N(\rho_\psi))$, the upper bound of Eq. (9) is
   equivalent to $N(\rho_\psi)\le2CN/(C^2+N^2)$ for the negative eigenvector

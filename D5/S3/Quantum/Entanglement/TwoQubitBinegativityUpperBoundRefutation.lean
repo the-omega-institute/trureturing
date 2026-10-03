@@ -15,20 +15,23 @@ proof_shape: claim: definition (published conjecture, the upper inequality of Eq
 proof_shape: vec4, witness: definition (basis vectors and the counterexample state)
 proof_shape: rank1, negOne, posOne, negTwo, posTwo: private definition (rank-one matrices and the
   positive and negative parts of the two partial transposes)
-proof_shape: result: content (as local steps: both partial transposes split into orthogonal
-  positive parts, which identifies the negative parts; the trace of the negative part as the sum
-  of the negative eigenvalues, which evaluates the frozen negativity; the convex-roof bound
-  C >= 4/13 from the zero 11-entry and the triangle inequality, with a rational decomposition
-  showing the set is nonempty; and the comparison with the bound)
-escape_witness: result (form (2) of §3.2: the negative parts, the concurrence bound and the strict
-  violation are produced by the explicit decompositions and the convex-roof estimate; no existing
-  statement gives them)
+proof_shape: result: bind-only (as local steps: entrywise rational identities give the two
+  partial transposes as differences of positive parts with zero product, so
+  CFC.posPart_negPart_unique identifies the negative parts; the CFC and Hermitian spectral
+  identities evaluate the frozen negativity; Finset.sum_eq_zero_iff_of_nonneg, norm_sum_le and
+  le_csInf with a rational decomposition give C >= 4/13; the comparison with the bound is
+  arithmetic)
+escape_witness: none (the settlement of the external named conjecture is the new content)
 admission_basis: open-problem-resolution (issue #12432; Refuted)
-Direct frozen dependencies:
+Direct frozen dependencies (GID, statement_id):
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.partialTransposeB
+    sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.IsDensity
+    sha256:0386217fa1109c4358c01b5fe2db195888fa2f776c05e63cec2e880416d1c8ff
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.negativity
+    sha256:c39fc9229619316327860e3431871fa5fc679433b69c59898707a5561567bf8e
   D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.eigenvalues
+    sha256:bcd93ed223a8dbab944cdbf8ffd54d576a686ffbebd131d8a1108af902f98f5b
 -/
 
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
