@@ -1,0 +1,11 @@
+## 163. 首次整除秩切面与未见素数的统一尾界
+
+记 $z(p)$ 为素数 $p$ 第一次整除 Fibonacci 数的正指标。经典秩性质为
+
+$$
+p\mid F_j\iff z(p)\mid j,
+\qquad p\ne2,5\Longrightarrow z(p)\mid p-1\text{ 或 }z(p)\mid p+1.
+$$
+
+这些性质的原文定位是 Lengyel (1995), p.236, §3 开头与 Theorem A；仓内 `FibonacciRank` 的 `fibonacci_entry_point` 和 `fibonacci_rank_dvd_prime_bound` 给相应形式化接口。这里不需要首赋值为一，不假设 WSS 素数不存在。
+

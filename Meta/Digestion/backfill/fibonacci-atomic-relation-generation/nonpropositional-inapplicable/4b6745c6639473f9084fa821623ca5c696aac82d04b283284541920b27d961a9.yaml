@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b6745c6639473f9084fa821623ca5c696aac82d04b283284541920b27d961a9
+  normalized_sha256: sha256:4b6745c6639473f9084fa821623ca5c696aac82d04b283284541920b27d961a9
+cas_ref: sha256:4b6745c6639473f9084fa821623ca5c696aac82d04b283284541920b27d961a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: Matrix.mul_fin_two, Matrix.mulVec_mulVec. With H=[[u,v],[v,u+v]] and U=M=[[0,1],[1,1]], mul_fin_two normalizes both H*M and U*H to [[v,u+v],[u+v,u+2v]]. Apply mulVec_mulVec to z; the coordinate update is (nprime,n+nprime). No frozen repository GID states this arbitrary-weight intertwining.'
+    previous_atom_id: 8c3365f39b567ca3955c5aa34c24279bcf98c6f7cf7e03a352d552d7c2ba7ba6
+    next_atom_id: a99bfdb7aac042d4dd0f180b76f6831d7606e81da385ffb958f44f775182775b

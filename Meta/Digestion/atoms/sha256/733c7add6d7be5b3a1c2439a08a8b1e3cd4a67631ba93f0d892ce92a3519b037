@@ -1,0 +1,29 @@
+**证明。** 在定理338.1同一程序上使用 $a<1$ 的逐路径次可加性：
+
+$$
+(N_H+\lambda N_T)^a\le N_H^a+\lambda^aN_T^a.
+$$
+
+取世界与请求的共同上确界，再对可行策略取下确界，并令 $\epsilon\downarrow0$，得到式（338.39）。有限有效策略属于两类，故两类分别适用。
+
+第326节与第328节的价格比较给固定 $c_1,c_2>0$，使 $0<\lambda\le1$、充分小 $\delta$ 时
+
+$$
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\ge c_1\lambda^aL\exp(-c_2\sqrt{\log L}).
+\tag{338.40}
+$$
+
+对固定 $r\ge0$，$L>1$ 时 $\lambda=L^{-r}\le1$。上下界共同给
+
+$$
+c_1L^{1-ar}\exp(-c_2\sqrt{\log L})
+\le\mathcal V_a^{\mathcal C}(\delta,L^{-r})
+\le K+CL^{1-ar}.
+\tag{338.41}
+$$
+
+若 $r<1/a$，正数 $(1-ar)\log L$ 支配 $c_2\sqrt{\log L}$，所以下界趋于无穷。若 $r\ge1/a$，上界共同有界；严格大于时价格项趋零。证毕。
+
+因此，在固定幂价格族 $\lambda=L^{-r}$、$r\ge0$ 中，有界性的临界指数恰为 $1/a$。这不把式（338.40）加强成固定常数倍的 $\Omega(L)$，也不声称边界路径的极限存在或等于 $K$。
+

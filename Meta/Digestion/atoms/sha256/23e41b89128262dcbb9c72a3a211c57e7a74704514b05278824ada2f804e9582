@@ -1,0 +1,37 @@
+**命题 43.2（两种 incoming guard 的有限尾集合）。** 令
+
+$$
+ t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad g=t^3,\qquad R=\mathbb Z[t],\qquad t'=-\phi,\qquad g'=-g^{-1}.
+$$
+
+置
+
+$$
+ J_0^{\mathrm{fin}}=(-1,\phi),\qquad J_1^{\mathrm{fin}}=(-1,t).
+$$
+
+若 $x=A+Bt\in R$，定义
+
+$$
+ Q(x)=2A-3B=\frac{gx+g^{-1}x'}{\sqrt5}.
+$$
+
+对 guard $s=0,1$，实际最终空窗地址的标量集合恰为
+
+$$\boxed{T_s=\{x\in R\cap J_s^{\mathrm{fin}}:Q(x)\ge0\}.}$$
+
+其中 $Q(x)>0$ 是非零有限来源的严格数量条件；$Q(x)=0$ 在 $J_0^{\mathrm{fin}}$ 中只给 $x=0$，它是零来源例外。guard 一的集合也可写为 $T_1=-tT_0$。同一 guard 下，每个标量 $x\in I_s$ 在全部完成地址域 $A_s$ 中至多有两个编码；若有编码属于 $D_s$，该标量在全部 $A_s$ 中即只有这一条编码。由于 $A_s\subseteq\Omega$ 且有限地址避开 guard 零的全部双编码点，每个实际有限地址的标量在整个 $\Omega$ 中也只有这一条编码。
+
+**证明。** [约定1.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L34)把母卷的正数量条件翻译为 $R$ 中的整数条带；定理34.3及命题35.9把同一条件写成当前 guard、支持和 $Q$ 的坐标形式。于是已发表的有限来源数量条件对 guard 零给出
+
+$$
+ x\in R,\quad -1<x<\phi,\quad Q(x)>0
+ \Longrightarrow x\in T_0,
+$$
+
+而 $Q(x)=0$ 时，写 $A=3m,B=2m$ 得 $x=m/g$。在 $(-1,\phi)$ 内只有 $m=0$，[命题1.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L30)的零来源正好给出 $x=0$。反向方向由任何有限位串的实际展开直接得到 $x\in R\cap J_0^{\mathrm{fin}}$ 和 $Q(x)\ge0$。
+
+guard 一的首位必须为零。删去这个首位得到 guard 零地址，标量乘以 $-t$，所以 $T_1=-tT_0$。若首位为一，则下一位受 no-$11$ 约束为零，标量为 $1+t^2z>1-t^2=t$, $z\in(-1,\phi)$，仍在 guard 零条带，却位于 guard 一条带的另一侧，因而不属于 incoming guard 一。于是两个 guard 都满足所写集合等式。
+
+命题14.6给出每个根分支的实际极值尾，定理14.7给出每个标量 $x\in I_s$ 在固定 guard 的全部 $A_s$ 中至多两个编码，并说明双编码只能在有限前缀后接非零周期极值尾。根极值和这些双编码尾都不是 eventually-null；因此 $D_s$ 避开双编码点，定理14.7之后的限制 $\kappa_s|_{D_s}$ 在每个 guard 上单射。证毕。
+

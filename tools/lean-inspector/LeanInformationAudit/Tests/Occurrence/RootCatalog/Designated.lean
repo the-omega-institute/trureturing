@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Baseline
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Contributor
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog
@@ -9,13 +12,13 @@ run_cmd RootCatalogs.declare designatedContract
 -- Use the same finite causal seal limits as SharedInformationRoot.
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 2000000 in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 -- Real separately compiled contributors supply the positive control. Native
 -- declaration ownership cannot be established by setMainModule simulation.
 run_cmd do
   let env ← getEnv
-  validateRegistrySnapshot env
+  validateRegistrySnapshot env.header.mainModule env
   let actual := SealRecords.occurrencesForRoot env designatedRoot
   unless actual.size == 3 && SealRecords.systemCatalogIrredundant env designatedRoot do
     throwError "fixture designated root lost an occurrence or irredundancy proof"

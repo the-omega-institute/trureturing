@@ -1,0 +1,32 @@
+**命题 226.2（同一乘积窗口的 Mellin 表示）。** 有精确等式
+
+$$
+\boxed{
+B_W=\frac1{2\pi Q}\int_{\mathbb R}\widehat k(\tau)X^{-i\tau}
+\sum_{\chi\in\widehat G}F_D(\chi,\tau)C_H(\chi,\tau)\,d\tau.
+}
+\tag{226.10}
+$$
+
+证明。在 §217.5 的 $d/X=dh/(Xh)$ 关系中保留同一个乘积，有
+
+$$
+\frac dXW(\log(dh/X))=\frac1h k(\log(dh/X)).
+$$
+
+式（226.7）的反演在 $u=\log(dh/X)$ 处给因子
+$X^{-i\tau}d^{i\tau}h^{i\tau}$；再用
+
+$$
+\mathbf1_{\{dh\equiv1\pmod V\}}
+=\frac1Q\sum_{\chi\in\widehat G}\chi(d)\chi(h)
+\quad((dh,V)=1)
+$$
+
+得到式（226.10）。全部算术求和有限，$\widehat k$ 快速下降，所以交换求和与积分合法。
+
+若 $W\ge0$ 且在 $[\log(A/X),0]$ 上 $W\ge1$，则非负性给 $B_D\le B_W$。
+式（226.10）保留的是同一对 $(\chi,\tau)$ 上的两个变换；不能用分别可达的边缘最优值
+替换其相关和。$F_D$ 始终含有 $D<d\le X$，并非 §225 的完整 Euler 变换。
+若再施加依赖同一个 $dh$ 的过滤，其指标仍须留在联合求和中，除非另给精确表示。$\square$
+

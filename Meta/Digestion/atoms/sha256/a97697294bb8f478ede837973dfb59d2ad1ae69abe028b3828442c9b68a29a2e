@@ -1,0 +1,4 @@
+### 335.2 分子受分母控制的正则估计
+
+继续使用第330节的 $n_k=Nb^k$、$d_k=n_k+\lfloor\rho\rfloor$，其中固定非整数 $\rho>\max\{\beta,2\}$。令 $r=\lfloor\beta\rfloor$、$\theta=\beta-r\in(0,1)$。
+

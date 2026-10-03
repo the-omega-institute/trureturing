@@ -1,0 +1,80 @@
+**命题 212.2（饱和核心子族的计数与矩率）。** 固定
+$0<\beta<1/2$，令
+
+$$
+u_r=\lfloor\beta y\rfloor,\quad
+D_r=\operatorname{lcm}(1,\ldots,u_r),\quad
+z_r=r(\log r)^{1/4}.
+$$
+
+定义 $\mathcal S_r(\beta)$ 为恰好满足以下两项的实际 $g\in I_r$：
+$D_r\mid N_g$，且实际余因子 $H_g=N_g/D_r$ 没有不超过 $z_r$ 的素因子。
+则
+
+$$
+\log|\mathcal S_r(\beta)|=(1/2-\beta)y+o(y),
+\tag{212.5}
+$$
+
+并且对该子族一致有
+
+$$
+Z(N_g)=e^\gamma\log(\beta y)+o(1),\qquad
+\Delta(N_g)=-e^\gamma\log\beta+o(1)>0.
+\tag{212.6}
+$$
+
+在指定矩阶下，
+
+$$
+\frac1y\log\!\left(
+\sum_{g\in\mathcal S_r(\beta)}(Z(N_g)/t)^s
+\right)
+\longrightarrow\frac12-\beta+\log\beta<0.
+\tag{212.7}
+$$
+
+证明。引理205.4 给
+$\log D_r=\beta y+o(y)$ 及
+$Z(D_r)=e^\gamma\log(\beta y)+o(1)$。
+因 $\beta y<2r-1$ 最终成立，$D_r$ 与 $V$ 互素。实际同余
+$gV\equiv-1\pmod{D_r}$ 在 $I_r$ 中有
+
+$$
+T/D_r+O(1)=\exp((1/2-\beta)y+o(y))
+$$
+
+个解。以连续整数参数写这些解为 $g=g_0+D_r j$，则同一余因子为
+$H_j=H_0+Vj$。对每个 $p\le z_r$、$p\nmid V$，排除
+$p\mid H_j$ 只禁止一个剩余类；$p\mid V$ 时该整除事件自动不发生。
+§205.4 的有限容斥给计数主项
+
+$$
+(T/D_r+O(1))
+\prod_{\substack{p\le z_r\\p\nmid V}}(1-1/p)
+$$
+
+与绝对误差至多 $2^{\pi(z_r)}=\exp(o(y))$。主项至少为
+前面解数的常数倍除以 $\log z_r$；因为 $1/2-\beta>0$，
+主项压过误差，得到式（212.5）。
+
+$D_r$ 的素因子都小于 $z_r$，所以 $\gcd(D_r,H_g)=1$。
+由实际乘子区间知 $\log H_g=O(r)$，从而一致有
+
+$$
+0\le\log Z(H_g)
+\le\frac{\log H_g}{(z_r-1)\log z_r}
+=O((\log r)^{-5/4}).
+$$
+
+由于 $Z(D_r)=O(\log r)$，其乘法影响是加性 $o(1)$。
+这证明式（212.6）。每个归一矩项的对数因而为
+$(\log\beta+o(1))y$，且误差一致；与式（212.5）合并得式（212.7）。
+函数 $1/2-\beta+\log\beta$ 在 $(0,1/2)$ 上递增，其右端极限为
+$-\log2<0$。$\square$
+
+这些整数全属于 §205.2 已回接的规范单位位一来源，没有用不相容的局部最优值
+代替实际整数。个体阈值归一也具有式（212.7）的相同指数率，因为两种归一矩
+相差至多 $X/A\to2$ 倍。结论只排除了这一指定 CRT 构造作为矩障碍的可能，
+不排除其他乘子与余因子构造。
+

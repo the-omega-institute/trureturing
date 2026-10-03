@@ -1,0 +1,42 @@
+**定理320.9（费用等于有限窗口上确界）。** 对定义318.3的抽象费用、任意实 \(s>0\) 及固定 \(\delta\ge0\)，
+$$
+\boxed{
+\mathcal C_s^{\mathrm{pol}}(\delta)
+=
+\sup_{\substack{\Gamma\subseteq\Theta\text{ 有限非空}\\N\ge1}}
+\ell_\delta(\Gamma,N).}
+\tag{320.20}
+$$
+等式在扩展实数中成立。共同值有限时，一份抽象策略达到该最优值。
+
+**证明第一方向。** 任取误差至多 \(\delta\) 的共同策略，统一费用记为 \(J\)。若 \(J<\infty\)，其有限前缀配 \(t=J\) 在每个窗口可行，故 \(\ell_\delta(\Gamma,N)\le J\)。若 \(J=\infty\)，同一不等式自动成立。对策略取下确界，再对窗口取上确界，得到右侧不超过左侧；若没有可行策略，左侧按约定为无穷。
+
+**证明反向及取得性。** 令右侧为 \(L\)。若 \(L=\infty\)，第一方向已给左侧为无穷。若 \(L<\infty\)，在 \(\mathcal R\) 中考虑全部闭条件 \(m_n\le L\) 与式（320.12）。
+
+任取其中有限多条，选容纳它们的窗口 \((\Gamma,N)\)。其最优值不超过 \(L\)，而有限最小值达到，故有前缀解使被引用的截断矩至多 \(L\)。用引理320.6延拓，得到满足所选有限约束的完整权重点。全部闭条件因而具有有限交性质；紧性给共同解。定理320.3恢复一个几乎必有限、误差至多 \(\delta\)、费用至多 \(L\) 的策略。结合第一方向，得到等式与有限最优取得。证毕。
+
+于是对任意有限 \(K\ge0\)，
+$$
+\begin{aligned}
+&\text{不存在误差}\le\delta\text{、统一总矩}\le K\text{的共同策略}\\
+&\quad\Longleftrightarrow\
+\mathcal C_s^{\mathrm{pol}}(\delta)>K\\
+&\quad\Longleftrightarrow\
+\exists\Gamma,N:\ \ell_\delta(\Gamma,N)>K.
+\end{aligned}
+\tag{320.21}
+$$
+有限最优值已达到，故预算等号端点不会因下确界未达到而漏掉。
+
+费用无穷意味着每个有限 \(K\) 都有有限窗口障碍；它本身不区分“根本没有几乎必有限实现”与“存在实现但统一 \(s\) 阶矩无穷”。
+
+对准确抽象费用，将 \(\delta=0\) 代入，并接定理319.6，得到
+$$
+\lim_{\varepsilon\downarrow0}\mathcal C_s^{\mathrm{alg}}(\varepsilon)
+=\mathcal C_s^{\mathrm{pol}}(0)
+=\sup_{\Gamma,N}\ell_0(\Gamma,N).
+\tag{320.22}
+$$
+第一项是逐精度有效近似费用的极限，不是准确有效费用
+\(\mathcal C_s^{\mathrm{alg}}(0)\)；固定正误差下也没有由本式取得两类最优费用相等。
+

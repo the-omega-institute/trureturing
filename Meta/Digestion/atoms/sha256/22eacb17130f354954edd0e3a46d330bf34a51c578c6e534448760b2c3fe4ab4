@@ -1,0 +1,37 @@
+**引理338.2（均值匹配的平滑误差）。** 设 $g\in C^\beta([0,1])$、$\|g\|_{C^\beta}\le C_1$。若 $V$ 是任意 $[0,1]$ 值随机变量，满足 $\mathbb EV=z$、
+$\operatorname{Var}(V)\le C/m$，则
+
+$$
+|\mathbb Eg(V)-g(z)|\le C_2m^{-a},\qquad a=\beta/2,
+\tag{338.10}
+$$
+
+常数只依正则界、$\beta$ 及方差界中的固定常数。
+
+**证明。** 若 $0<\beta<1$，使用
+$|g(V)-g(z)|\le C_1|V-z|^\beta$。
+若 $1<\beta<2$，用一阶 Taylor 式及 Hölder 余项：
+
+$$
+|g(v)-g(z)-g'(z)(v-z)|\le C|v-z|^\beta.
+$$
+
+均值匹配使线性项期望为零。两种情况均由
+$\mathbb E|V-z|^\beta\le(\operatorname{Var}V)^{\beta/2}$
+得式（338.10）。这里使用了 $\beta<2$。证毕。
+
+该引理同时适用于：
+
+- $V=S/m$，$S\sim\operatorname{Bin}(m,p)$，此时 $z=p$。
+- 给定较长任务批量 $M>m$ 中共有 $s$ 个成功，前 $m$ 枚中的成功数 $U$；此时
+
+  $$
+  V=U/m,\quad z=s/M,\quad
+  \operatorname{Var}(V)
+  =\frac{z(1-z)(M-m)}{m(M-1)}
+  \le\frac1{4m}.
+  \tag{338.11}
+  $$
+
+参考次数提升只是系数的凸组合，所以升阶后的每个任务参数函数仍满足同一 $C^\beta$ 界，可直接使用式（338.10）。
+

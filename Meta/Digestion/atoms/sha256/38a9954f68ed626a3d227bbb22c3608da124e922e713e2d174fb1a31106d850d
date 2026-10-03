@@ -1,0 +1,6 @@
+### 16.己 数学引用
+
+本章的 FIB 分支数据使用母卷 [FIBONACCI_ATOMIC_RELATION_GENERATION.md](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§150–151；合法满像、极值尾和响应线段使用本卷定义14.5、命题14.6及定理14.11。全部具体分离常数、临界环判定、格表与下界见证由本章证明给出。
+
+有限字母的零误差区分与半最小距离解码具有经典背景，可参照 F. J. MacWilliams and N. J. A. Sloane, The Theory of Error-Correcting Codes, North-Holland, 1977；Cauchy 名字与连续可计算性的背景可参照 K. Weihrauch, Computable Analysis: An Introduction, Springer, 2000。这里不将外部编码定理直接转用于实区间分量，也不依赖外部定理替代命题16.5的有限查询反证；这些引用只提供方法背景，不构成原创优先性断言。
+

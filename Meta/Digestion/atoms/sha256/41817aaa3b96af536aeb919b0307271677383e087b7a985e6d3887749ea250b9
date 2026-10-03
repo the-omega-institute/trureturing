@@ -1,0 +1,11 @@
+**Theorem 6.1 (complete horizontal space gives complete hyperbolic space).**
+Let (E) be a complete real inner product space. Then the upper half-space
+(U_E,d_H) of Definition 3.1 is a complete metric space. For all (p,q),
+
+\[
+ |\log h(p)-\log h(q)|\leq d_H(p,q).
+\]
+
+In particular, a hyperbolic Cauchy sequence cannot approach the height-zero
+boundary.
+

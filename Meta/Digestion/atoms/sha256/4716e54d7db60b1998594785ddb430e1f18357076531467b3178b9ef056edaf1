@@ -1,0 +1,19 @@
+**定理335.1（精度依赖的显式联合预算）。** 存在固定 $K_{\mathrm{fin}},C<\infty$ 与 $\delta_0\in(0,e^{-1})$，使对每个 $0<\delta<\delta_0$ 和 $\epsilon>0$，都有一份有限来源深度的有效共同程序，支持两种请求，第一全局调用取得并保留所请求来源的真实 $X$，且
+
+$$
+\sup_{w,S}\operatorname{TV}(P_A,P_{\mathrm{target}})<\delta,
+\tag{335.3}
+$$
+
+$$
+\boxed{
+\sup_{w,S}\mathbb E^A N_H^a\le K_{\mathrm{fin}}+\epsilon,\qquad
+\sup_{w,S}\mathbb E^A N_T^a
+\le C[\log(1/\delta)]^{E_\beta}+\epsilon.}
+\tag{335.4}
+$$
+
+两个计数属于这同一程序的实际执行。$K_{\mathrm{fin}}$ 是下面有限层构造的共同预算常数，不要求等于第330、331节另一准确策略的常数，也不声称为参考费用的最优值。
+
+量词与第328、331节的正误差有效结论相同：每个固定参数实例、每个正精度分别存在有限代码。不要求固定实参数具有可计算名字，也不认领从任意实参数描述统一算出这些有限代码的选择算法。
+

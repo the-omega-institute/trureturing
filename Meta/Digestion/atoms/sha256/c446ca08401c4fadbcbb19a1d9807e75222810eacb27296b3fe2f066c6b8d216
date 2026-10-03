@@ -1,0 +1,36 @@
+**引理 200.1（与种子高度无关的判别式上界）。** 设 $D_F,D_{\mathcal L}$ 为绝对域判别式，则
+
+$$
+D_{\mathcal L}
+\le D_F^k\,k^{km}\,|Q|^{k(k-1)m}.
+\tag{200.3}
+$$
+
+特别地，$\mathcal L/\mathbb Q$ 只可能在整除 $5kQ$ 的有理素数处分歧。
+
+证明。令 $w=|Q|u$，则
+
+$$
+w^k=B,
+\qquad
+B=|Q|^k\rho_r
+=\frac{|Q|^k}{Q}(v')^2\tau^{-r-3}\in R\subseteq\mathcal O_F.
+$$
+
+这里 $|Q|^k/Q$ 是整数，$\tau$ 为整数环单位。$X^k-B$ 因 $[\mathcal L:F]=k$ 为 $w$ 的最小多项式。相对域判别式整除幂基判别式理想，而后者由 $k^kB^{k-1}$ 生成。因此塔式判别式公式给
+
+$$
+D_{\mathcal L}\le D_F^k
+\left|\operatorname N_{F/\mathbb Q}(k^kB^{k-1})\right|.
+$$
+
+$\operatorname N_{K/\mathbb Q}(\rho_r)=1$，所以
+
+$$
+\left|\operatorname N_{F/\mathbb Q}(B)\right|=|Q|^{km}.
+$$
+
+代入即得式（200.3）。$F$ 只在 $5k$ 的素因子处分歧，$B$ 的理想支撑只在 $Q$ 的素因子上方，故得到最后断言。$\square$
+
+该界允许 $a+b$ 很大而 $|Q|$ 很小。它实际利用了双嵌入乘积 $Q=vv'$；不能用单一收缩读数小替代这份联合条件。
+

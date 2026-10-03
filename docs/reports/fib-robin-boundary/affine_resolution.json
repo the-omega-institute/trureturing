@@ -1,0 +1,286 @@
+{
+  "complete_local_phases": {
+    "a_range": [
+      5,
+      40
+    ],
+    "counts": {
+      "difference_only": 323,
+      "nonsplit": 4446,
+      "nonunit_denominator": 210,
+      "split": 3420,
+      "sum_branch": 335
+    },
+    "prime_range_excluding_2_5": [
+      3,
+      99
+    ]
+  },
+  "norm_threshold": {
+    "analytic_scope": "finite hypotheses and constants, not Robin verification",
+    "coefficient_range": [
+      0,
+      40
+    ],
+    "nonzero_seeds": 1680,
+    "primitive_norm_prime_checks": 1955,
+    "unit_seeds": 171
+  },
+  "odd_phases": {
+    "a_range": [
+      5,
+      100
+    ],
+    "actual_prime_phase_checks": 573,
+    "b_minimum": 2,
+    "doubling_carrier_obstruction": {
+      "a": 11,
+      "b": 6,
+      "p": 97,
+      "rank": 49
+    },
+    "factorization_a_at_most": 36,
+    "joint_identities": 2352,
+    "lost_sign_obstruction": {
+      "a": 8,
+      "b": 3,
+      "p": 19,
+      "sum": 23
+    },
+    "odd_gap_minimum": 3
+  },
+  "progressions": {
+    "a_range": [
+      3,
+      30
+    ],
+    "actual_prime_carrier_checks": 4377,
+    "branches": {
+      "even_d": 5040,
+      "odd_d_even_h": 2520,
+      "odd_d_odd_h": 2520
+    },
+    "complete_factorization_R_at_most": 42,
+    "d_range": [
+      1,
+      12
+    ],
+    "h_range": [
+      1,
+      30
+    ],
+    "identities": 10080
+  },
+  "scope": "finite exact diagnostics; not a proof of Robin or RH",
+  "source_sha256": "1d0c7e921639ad2e211c07bf6f20d41c93c08543a635c30be600a2d1ac7a05ab",
+  "two_factor_stops": {
+    "first_rank_data": [
+      {
+        "fib_at_rank": 3,
+        "p": 3,
+        "rank": 4
+      },
+      {
+        "fib_at_rank": 21,
+        "p": 7,
+        "rank": 8
+      },
+      {
+        "fib_at_rank": 55,
+        "p": 11,
+        "rank": 10
+      },
+      {
+        "fib_at_rank": 13,
+        "p": 13,
+        "rank": 7
+      },
+      {
+        "fib_at_rank": 34,
+        "p": 17,
+        "rank": 9
+      },
+      {
+        "fib_at_rank": 2584,
+        "p": 19,
+        "rank": 18
+      },
+      {
+        "fib_at_rank": 46368,
+        "p": 23,
+        "rank": 24
+      }
+    ],
+    "five_direction_obstruction": {
+      "K": 44375007600000,
+      "a": 44375007600002,
+      "d": 2,
+      "eta_five": [
+        31272422420164231040957381471,
+        31272425262685292301000000000
+      ],
+      "factor_indices": [
+        133125022800000,
+        88750015200000
+      ],
+      "h": 44375007600000,
+      "largest_occupied_index": 221875037999998,
+      "log_log_n_upper_bound": 35,
+      "observations": [
+        {
+          "exact_n_valuation": 23,
+          "modulus": 16777216,
+          "p": 2,
+          "residue": 8388608
+        },
+        {
+          "exact_n_valuation": 15,
+          "modulus": 43046721,
+          "p": 3,
+          "residue": 14348907
+        },
+        {
+          "exact_n_valuation": 11,
+          "modulus": 244140625,
+          "p": 5,
+          "residue": 146484375
+        },
+        {
+          "exact_n_valuation": 9,
+          "modulus": 282475249,
+          "p": 7,
+          "residue": 40353607
+        },
+        {
+          "exact_n_valuation": 8,
+          "modulus": 2357947691,
+          "p": 11,
+          "residue": 1071794405
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 2197,
+          "p": 13,
+          "residue": 845
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 4913,
+          "p": 17,
+          "residue": 1445
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 6859,
+          "p": 19,
+          "residue": 361
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 12167,
+          "p": 23,
+          "residue": 1587
+        }
+      ],
+      "passes_new_prime_17_stop": true
+    },
+    "forced_V_valuations": [
+      17,
+      11,
+      8,
+      6,
+      6,
+      5,
+      5,
+      5,
+      4
+    ],
+    "forced_index_product": 86715646730220994462337961600000000,
+    "forced_rs_valuations": [
+      13,
+      9,
+      8,
+      4,
+      4,
+      3,
+      3,
+      3,
+      2
+    ],
+    "integer_comparison_slack": 647144243885032655152163372140890177286293123155849858318890324214848106738874150803159582725881808666095714761321145766859791987103999,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ],
+    "published_stops_are_external_inputs": true,
+    "safe_n_valuation_caps": [
+      20,
+      12,
+      8,
+      6,
+      5,
+      4,
+      4,
+      4,
+      3
+    ],
+    "t_range": [
+      1,
+      2000
+    ],
+    "uniform_F_and_L_valuation_checks": 36000
+  },
+  "window_geometry": {
+    "null_windows_low_end": [
+      0,
+      8
+    ],
+    "rows": [
+      {
+        "maximizing_mask": 5,
+        "maximum_abs_norm": 5,
+        "nonzero_words": 4,
+        "windows": 1
+      },
+      {
+        "maximizing_mask": 37,
+        "maximum_abs_norm": 19,
+        "nonzero_words": 20,
+        "windows": 2
+      },
+      {
+        "maximizing_mask": 341,
+        "maximum_abs_norm": 121,
+        "nonzero_words": 88,
+        "windows": 3
+      },
+      {
+        "maximizing_mask": 2645,
+        "maximum_abs_norm": 475,
+        "nonzero_words": 376,
+        "windows": 4
+      },
+      {
+        "maximizing_mask": 21845,
+        "maximum_abs_norm": 2205,
+        "nonzero_words": 1596,
+        "windows": 5
+      },
+      {
+        "maximizing_mask": 174421,
+        "maximum_abs_norm": 9151,
+        "nonzero_words": 6764,
+        "windows": 6
+      }
+    ],
+    "shift_identities": 79632,
+    "unit_bit": 0
+  }
+}

@@ -1,0 +1,17 @@
+### 343.9 结论边界与来源
+
+本节证明：对任意固定非整数 $\beta>2$，存在满足所列非负性、导数尺度、局部化与概率余量的参考数组输入，使直接 Lorentz 任务替换在
+
+$$
+m\asymp n\eta^{-1/a},\qquad
+\delta\asymp n^{-a}\eta
+$$
+
+下失去逐系数相容性。证明先固定 $n=L^2$，再令任务次数沿允许的整数序列增大，因而直接检验了对小地板所需的一致吸收能力。
+
+这个方法反例不等于项目实际 HNP 增量的反例，也不等于原关系过程不存在高阶有效表示。实际增量能否提供足以绕开它的额外结构，仍须按第343.8节完成对应义务。
+
+本节使用 HNP 的精确算子公式、二次再生和修正系数界；局部函数、精确负系数及两层相容性失败在本文直接证明。结论属于纸面数学，不认领 Lean 核验、数值实验、完整高阶工厂或未经文献核定的原创性。
+
+[^lorentz_tensor_obstruction]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)，[PDF](https://arxiv.org/pdf/0808.1936v3)。§4式（27）—（29）定义并展开 Lorentz 算子，Lemma 14给多项式再生，Corollary 16给修正项的 Bernstein 系数界；§5 Lemma 23及 Steps 4—5、式（47）—（49）说明完整正性构造另需概率余量、迭代残余控制和相容正校正。
+

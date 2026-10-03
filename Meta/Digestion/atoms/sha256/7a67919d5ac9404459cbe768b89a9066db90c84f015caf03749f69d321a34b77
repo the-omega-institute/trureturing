@@ -1,0 +1,18 @@
+**theorem 1.2 (Ordinary dyadic response transducer).** There is a fixed finite
+four-stack machine with alphabet {0,1,/}, eleven labels and twenty-four internal
+states. On a positive canonical numerator word for p and denominator word
+1 followed by e zeros, if 3 divides p and either e=0 or p is odd, it clears the
+input and all work stacks, resets its finite state and emits canonical binary
+digits for
+$$
+\begin{cases}
+2(p/3),&e=0,\\
+\lfloor (p/3)/2^{e-1}\rfloor,&e>0.
+\end{cases}
+$$
+Its real transition count is bounded by a fixed linear polynomial in the whole
+ordinary response length. It reads the separator and denominator; no annotated
+shift, cut or exponent is supplied. The division state is one of 0,1,2, each
+denominator shift is an actual stack mark, and the output zero is one symbol.
+Malformed or unsuitable words emit zero after clearing all work stacks.
+

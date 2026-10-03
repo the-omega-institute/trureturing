@@ -1,0 +1,6 @@
+**定理 14.3（精确自治且四阶近优的信息压缩）。** 令 $\widehat S$ 为上述算法输出，$S^*$ 为 (14.1) 的全局极小子集。则保留 $\widehat S^c$ 的表示精确自治、具有非退化 Poisson 配对，并有
+\[
+ \boxed{0\le\Delta(\widehat S)-\Delta(S^*)
+ \le\frac{m\eta^4}{4(1-\eta^2)}.}                       \tag{14.7}
+\]
+

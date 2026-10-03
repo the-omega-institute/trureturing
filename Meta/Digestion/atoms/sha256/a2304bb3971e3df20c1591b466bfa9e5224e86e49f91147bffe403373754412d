@@ -1,0 +1,11 @@
+**定理 6.2（反向平移的切口障碍）。** 对 $A=A(\mathrm{Fib}\boxtimes\mathrm{Fib},\tau\boxtimes\tau)$ 和任意非零整数 $k$，
+
+$$
+\mathrm{Ind}(\alpha_k)=1,\qquad
+\mathrm{DHR}(\alpha_k)\simeq\mathrm{id},\qquad
+\alpha_k\notin\mathrm{FDQC}(A).
+\tag{QCA.23}
+$$
+
+另外，$\Theta_A(\alpha_k)[M_0]\ne[M_0]$。
+

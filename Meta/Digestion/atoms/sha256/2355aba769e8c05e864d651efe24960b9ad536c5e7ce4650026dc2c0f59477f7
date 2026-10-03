@@ -1,0 +1,10 @@
+### 12.2 同维数、同微分增益、同全局距离界的严格提升
+
+记 $c_k(\varphi)=(\cos k\varphi,\sin k\varphi)$。对成对谐波族 $H=(a_kc_k)_k$，写 $d=\varphi-\psi$。两个延迟差行的 Gram 矩阵为
+\[
+ \begin{pmatrix}A(d)&B(d)\\B(d)&A(d)\end{pmatrix},
+ \quad A(d)=4\sum_k a_k^2\sin^2(kd/2),
+ \quad B(d)=4\sum_k a_k^2\cos(k\theta)\sin^2(kd/2).
+\]
+这是每个平面谐波的旋转保持长度、且相邻旋转的内积为长度平方乘余弦的结果。因此该弦的稳定秩恰为 $2/(1+|B(d)|/A(d))$。
+

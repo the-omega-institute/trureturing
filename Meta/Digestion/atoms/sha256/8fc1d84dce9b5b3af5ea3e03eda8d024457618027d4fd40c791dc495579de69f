@@ -1,0 +1,24 @@
+### 7.2 场能、量子交换子与全局相位
+
+无源真空横向规范、周期或充分衰减边界下，$\Pi=-\epsilon_0E_T$，
+$$
+H_{\rm EM}=\int(|\Pi|^2/(2\epsilon_0)+|\nabla\times A_T|^2/(2\mu_0))dr
+$$
+的变分导数给 Maxwell 演化。一般有源有限域能量律为
+$$
+\frac d{dt}\int_\Omega(\epsilon_0|E|^2/2+|B|^2/(2\mu_0))dr
+=-\int_{\partial\Omega}(E\times B)/\mu_0\cdot n\,dS-\int_\Omega j\cdot E\,dr.
+$$
+它由两条旋度方程点乘并使用散度恒等式得到，边界项不能丢弃。
+
+共同光滑测试域上，$\widehat\pi_i=-i\hbar\partial_i-eA_i$ 满足
+$$
+[\widehat r_i,\widehat\pi_j]=i\hbar\delta_{ij}I,
+\qquad[\widehat\pi_i,\widehat\pi_j]=ie\hbar\varepsilon_{ijk}B_k.
+$$
+微分交换子消去二阶项即得；规范与 $\psi\mapsto e^{ie\chi/\hbar}\psi$ 相容。半径 $R$ 的通量环，局部 $B=0$ 仍可有 holonomy $e^{ie\Phi/\hbar}$，能谱
+$$
+E_n=\frac{\hbar^2}{2mR^2}(n-e\Phi/(2\pi\hbar))^2.
+$$
+对常切向势的 Fourier 模直接求平方即得 [AB59]。局部 Lorentz 场不决定全部全局量子相位。
+

@@ -1,0 +1,12 @@
+**Theorem 1.2 (comparison of the two orbit conventions).** The relation
+(x\sim_\rho y) agrees with the standard group-action relation
+(x\in G\cdot y). The resulting orbit quotients are canonically homeomorphic
+with their quotient topologies.
+
+**Proof.** If (y=\rho(g)(x)), then (x=\rho(g^{-1})(y)). Conversely, invert
+the witness in the same way. The identity on representatives therefore
+respects both equivalence relations and induces mutually inverse maps of the
+quotients. Each map is continuous by the defining quotient topology. The
+group-action quotient construction and its topology are standard; the
+comparison here identifies its convention with the quotient fixed above.
+

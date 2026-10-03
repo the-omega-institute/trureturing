@@ -1,0 +1,12 @@
+### 345.5 张量系数的同级顺序与双向相容
+
+定义 \((D_k+1)\times(d_k+1)\) 数组
+
+\[
+A_{k,i,t}=(1-\delta_k)c_{m_k}(\bar\ell_{k,t})_i,\qquad
+B_{k,i,t}=(1-\delta_k)c_{m_k}(\bar u_{k,t})_i+\delta_k.
+\tag{345.28}
+\]
+
+记任务提升为 \(E^T_k\)，两维提升为 \(E_k=E^T_k\otimes E^H_k\)。
+

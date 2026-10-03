@@ -1,0 +1,46 @@
+**定理 104.7（规范窗口的精确联合未来）。** 对两个实际合法开放前缀，写坐标为 $X=(s,E,r,u,v)$、$\widetilde X=(\widetilde s,\widetilde E,\widetilde r,\widetilde u,\widetilde v)$。定义 104.2 的终端标签任务下有
+
+$$
+X\sim\widetilde X
+\quad\Longleftrightarrow\quad
+(s,E)=(\widetilde s,\widetilde E)
+\ \text{且}\quad
+\exists a\in G_{H,d},\quad
+(\widetilde r,\widetilde u,\widetilde v)=a(r,u,v).
+$$
+
+$d=H$ 时同一结论准确适用于仅返回 $F_H$/错误的原始任务，此时 $G_{H,H}=R^\times$。一个活状态与吸收错误状态的未来永不相等。
+
+证明。若两个 $E$ 不同，立即 End 就在合法输出与 $\mathsf{err}$ 间区分。若 $E$ 相同而接缝不同，$\mathcal T$ 中只能是 $(0,1)$ 与 $(1,1)$：共同读入低位为 1 的 $100$，前者合法且可立即 End，后者进入错误状态。这个 End 的实际总值严格为正；若还要接共同的安全非零后继，$010$ 仍保持前者合法、后者吸收错误。任意活状态也可用 $010$ 后 End 与 $\bot$ 区分。因此结构标签和错误状态确须分离，不能只数接缝。
+
+固定相同结构标签。由引理 104.6 和未来相等，对所有 $A,B\in R$ 有
+
+$$
+\eta_{H,d}(r+Au+Bv)
+=\eta_{H,d}(\widetilde r+A\widetilde u+B\widetilde v).
+$$
+
+在 $d=H$ 的原始任务中，$F_H$ 的相同输出恰等于这条标签等式。记满射 $R$-线性映射
+
+$$
+\lambda(A,B)=Au+Bv,\qquad
+\widetilde\lambda(A,B)=A\widetilde u+B\widetilde v.
+$$
+
+两者满射来自各自幺模行的 Bézout 关系；不把复合模环当作域。标签的零纤维是单点，故仿射零集合相同。取 $z_0\in R^2$ 使 $\lambda(z_0)=-r$，则也有 $\widetilde\lambda(z_0)=-\widetilde r$，并且
+
+$$
+z_0+\ker\lambda=z_0+\ker\widetilde\lambda,
+\qquad \ker\lambda=\ker\widetilde\lambda.
+$$
+
+于是 $\alpha:R\to R$，$\alpha(\lambda(z))=\widetilde\lambda(z)$，是良定义的 $R$-线性双射。良定义用核相等，满射用 $\widetilde\lambda$ 满射，单射再用核相等。令 $a=\alpha(1)$，则 $\alpha(x)=ax$；其逆也为线性映射，故 $a$ 是单位。代入两个标准坐标向量得到 $\widetilde u=au,\widetilde v=av$，代入 $z_0$ 得 $\widetilde r=ar$。由于 $r+\lambda(z)$ 遍历整个 $R$，完整标签等式进一步给出
+
+$$
+\forall x\in R,\qquad \eta_{H,d}(ax)=\eta_{H,d}(x),
+$$
+
+命题 104.5 遂迫使 $a\in G_{H,d}$。这个必要性不是仅证明余数零测试相同：零纤维先确定共同单位，完整 $\eta$ 再限制该单位。
+
+反向若同一 $a\in G_{H,d}$ 同时缩放三个算术坐标，同结构标签给出相同接缝合法域和 End 合法性。合法窗口更新是 $R$-线性的，故每个共同后缀后仍保持同一个 $a$ 的关系；非法输入则同时进入 $\bot$。End 合法时稳定子性质给相同标签，否则两边均报错。由词长归纳得到全部未来相等。充分性与必要性合起来也说明：凡不满足所列条件的两个前缀，必有某个有限共同后缀再接 End 将它们区分。$\square$
+

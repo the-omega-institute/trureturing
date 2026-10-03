@@ -1,0 +1,66 @@
+### 345.7 同一未决事件的两来源矩预算
+
+以下常数可依固定数据、共同比界 \(R_\eta\) 和一个固定 \(s_*>1\)，不依具体地板、截止、世界或 \(s\in[s_*,a]\)。无限核心的精确离散尾和为
+
+\[
+\mathbb ER_H^a
+=d_0^a+\sum_{k\ge0}(d_{k+1}^a-d_k^a)G_k,
+\qquad
+\mathbb ER_T^s
+=D_0^s+\sum_{k\ge0}(D_{k+1}^s-D_k^s)G_k.
+\tag{345.40}
+\]
+
+无限和由单调收敛得到；有限截止把和取到 \(J-1\)。
+
+参考增量与 \(n_k^a\) 可比。由式（345.38）、（345.10）和
+\(\eta_k^a\le\eta_k\)，
+
+\[
+\boxed{
+\sup_w\mathbb ER_H^a
+\le C\left(1+\sum_k\eta_k\right).}
+\tag{345.41}
+\]
+
+具体三项为
+\(\sum n_k^a\delta_k=c_\delta\sum\eta_k\)、
+\(\sum n_k^am_k^{-a}\le M^{-a}\sum\eta_k^a\)，以及同一个世界中的
+\(\sum n_k^a\Gamma_k\le C\)。式（345.38）的下界也给每个实际世界中的
+\(\mathbb ER_H^a\ge c(1+\sum_k\eta_k)\)。这是本构造的尾和读数。
+
+令 \(u=a-s\ge0\)。实际次数界（345.27）给
+\(D_0^s\le C\eta_0^{-s}\) 和
+\(D_{k+1}^s-D_k^s\le Cm_k^s\)。地板费与平滑费分别满足
+
+\[
+m_k^s\delta_k\le Cn_k^{-u}\eta_k^{1-s},
+\qquad
+m_k^{s-a}\le Cn_k^{-u}\eta_k^u.
+\]
+
+局部费保持同一世界的实现：
+
+\[
+\sum_km_k^s\Gamma_k(x,q)
+\le C\left(\sup_kn_k^{-u}\eta_k^{-s}\right)
+\sum_kn_k^a\Gamma_k(x,q)
+\le C\sup_kn_k^{-u}\eta_k^{-s}.
+\]
+
+因此
+
+\[
+\boxed{
+\sup_w\mathbb ER_T^{a-u}
+\le C\left[
+\eta_0^{-(a-u)}
++\sum_kn_k^{-u}\eta_k^{1-a+u}
++\sum_kn_k^{-u}\eta_k^u
++\sup_kn_k^{-u}\eta_k^{-(a-u)}
+\right].}
+\tag{345.42}
+\]
+
+有限截止时两个和取 \(0\le k<J\)，上确界也只需该有限范围。初始真实任务费用已计入第一项，没有将随地板增大的初始批量省略。
+

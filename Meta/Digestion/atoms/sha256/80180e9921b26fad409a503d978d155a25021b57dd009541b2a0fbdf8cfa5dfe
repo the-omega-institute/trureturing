@@ -1,0 +1,98 @@
+### 335.5 在完整轨迹上计算实际截短任务费用
+
+取每行任务限额
+
+$$
+n=\lceil\delta^{-2/a}\rceil.
+\tag{335.26}
+$$
+
+由式（335.12）、（335.25），
+
+$$
+\max_{k\le J}R_k\le C\delta^{-1/a}L^{q_\beta}\le n
+\tag{335.27}
+$$
+
+对充分小的固定 $\delta_0$ 以下全部精度成立。
+
+先在 $A_J$ 尚未限制内行长度的完整轨迹上定义
+
+$$
+Y_k=\mathbf1_{\mathcal E_k}\min\{W_k,n\}.
+\tag{335.28}
+$$
+
+这是用于耦合比较的费用变量；执行程序不取得任何未实际读取的来源历史。条件于完整到达历史，由式（335.13）尾积分，
+
+$$
+\begin{aligned}
+\mathbb E(\min\{W_k,n\}^a\mid\mathcal F_k)
+&\le R_k^a+aH_k\log(n/R_k)\\
+&\le R_k^a+aH_k\log n.
+\end{aligned}
+\tag{335.29}
+$$
+
+其中 $\mathcal F_k$ 包含第 $k$ 行启动前的来源记录、到达标记和本行参考成功数。式（335.23）遂给
+
+$$
+\sum_{k\le J}\mathbb E Y_k^a
+\le C\left(\eta^{-E_\beta}+\eta^{-M_\beta}\log n\right).
+\tag{335.30}
+$$
+
+若 $a\le1$，对有限和使用次可加性即可。若 $a>1$，还须控制条件漂移，而不能使用高阶次可加性。由一阶尾积分及式（335.14），
+
+$$
+\begin{aligned}
+\mu_k:=\mathbb E(Y_k\mid\mathcal F_k)
+&\le\mathbf1_{\mathcal E_k}
+\left(R_k+\frac{H_kR_k^{1-a}}{a-1}\right)\\
+&\le C\mathbf1_{\mathcal E_k}R_k.
+\end{aligned}
+\tag{335.31}
+$$
+
+此前的 $Y$ 部分和在 $\mathcal F_k$ 可测，$Y_k$ 在完整本行结束后可测。嵌套到达事件和 $R_{k-1}/R_k=b^{-1}$ 给逐路径
+
+$$
+\left(\sum_{k\le J}\mu_k\right)^a
+\le C\sum_{k\le J}\mathbf1_{\mathcal E_k}R_k^a.
+\tag{335.32}
+$$
+
+使用第331.2节已证明的非负适应增量估计，得到
+
+$$
+\begin{aligned}
+\mathbb E\left(\sum_{k\le J}Y_k\right)^a
+&\le C_a\left[
+\mathbb E\left(\sum_{k\le J}\mu_k\right)^a
++\sum_{k\le J}\mathbb E Y_k^a\right]\\
+&\le C\left(\eta^{-E_\beta}+\eta^{-M_\beta}\log n\right)
+\le C L^{E_\beta}.
+\end{aligned}
+\tag{335.33}
+$$
+
+最后一步使用 $E_\beta\ge M_\beta+1$、$\eta^{-1}\asymp L$ 与 $\log n\asymp L$。有限层数和 $Y_k\le n$ 保证全部幂矩运算合法。$a\le1$ 的次可加性同样给式（335.33）。
+
+现在规定实际程序：某行的下一次任务调用将使该行总费用超过 $n$ 时，立即停止整个程序，保留真实首枚 $X$，补固定 $Z=0$。在与 $A_J$ 的同一耦合上，第一次中止前两程序的历史一致；中止行花费 $n$，以后实际费用为零。所以实际核心任务费用逐路径不超过式（335.28）的和。
+
+这里计算条件均值的对象始终是完整 $A_J$ 轨迹。实际中止后已经改变到达事件，不能把它的条件历史冒充式（335.31）中的历史；逐路径支配使本证明无需这种替换。
+
+同一耦合下，至少一行超限的概率至多
+
+$$
+\begin{aligned}
+\sum_{k\le J}\mathbb E\left[
+\mathbf1_{\mathcal E_k}\Pr(W_k>n\mid\mathcal F_k)\right]
+&\le n^{-a}\sum_{k\le J}\pi_kH_k\\
+&\le C\delta^2L^{M_\beta}<\delta/8,
+\end{aligned}
+\tag{335.34}
+$$
+
+仍仅须减小固定的 $\delta_0$。同一世界的实际到达质量在临界矩与超限误差两处都被保留。
+

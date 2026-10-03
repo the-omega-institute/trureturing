@@ -1,0 +1,17 @@
+**定理 8.2。** 对任意反对称 $\Omega$，
+$$
+\frac r2\log(1+T/s)\le I_T\le
+\frac n2\log(1+rT/(ns)),
+$$
+$$
+\frac{n}{2(1+rT/(ns))}\le R_T\le
+\tfrac12(n-r+r/(1+T/s)).
+$$
+左信息界或右风险界取等，当且仅当 $M=0$。对固定 $s>0$，
+$$
+\boxed{I_T-I_{\rm fixed}=\frac{T^4}{24s^2}\operatorname{tr}M+O(T^5),}
+$$
+$$
+\boxed{R_{\rm fixed}-R_T=\frac{T^4}{12s^2}\operatorname{tr}M+O(T^5).}
+$$
+

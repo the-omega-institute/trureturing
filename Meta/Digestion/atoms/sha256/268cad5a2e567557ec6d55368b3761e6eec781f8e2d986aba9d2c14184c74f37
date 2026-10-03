@@ -1,0 +1,11 @@
+### 7.1 可复用的稳定性定理
+
+固定有限维实欧氏空间 $W$、非零对称三线性张量 $T$，其正交稳定子 $K$ 为有限群。取张量 Hilbert–Schmidt 范数，定义 $\rho(U)T=T(U^{-1}\cdot,U^{-1}\cdot,U^{-1}\cdot)$。对斜对称 $A$，令 $\mathcal L_T(A)=\left.\frac{d}{dt}\right|_{0}\rho(e^{tA})T$，并设
+
+$$
+\kappa_T=\min_{A^T=-A,\ \|A\|_F=1}\|\mathcal L_T(A)\|_F.
+\tag{MC.19}
+$$
+
+维数至少二时该球非空；以下以此为前件。一维正交群的情况是有限枚举，不使用这个定义。
+

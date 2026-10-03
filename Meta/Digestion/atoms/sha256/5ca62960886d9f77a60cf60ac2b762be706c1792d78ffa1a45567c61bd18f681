@@ -1,0 +1,27 @@
+**定理 189.1（有界规模同余的统一约数权重转移）。** 固定 $C>0$。当 $m\to\infty$ 时，
+
+$$
+\sup_{\substack{1\le a,b\le\exp(Cm\log m)\\a\equiv b\pmod{m!}}}
+\left|\frac{Z(a)}{Z(b)}-1\right|\longrightarrow0.
+\tag{189.1}
+$$
+
+证明。引理 188.1 处理全部 $p\le m$。对任一实际 $n\le\exp(Cm\log m)$，取 $X=m(\log m)^2$，并记
+
+$$
+P(t)=\prod_{p\le t}(1-p^{-1})^{-1}.
+$$
+
+将高素数分为 $m<p\le X$ 和 $p>X$：前者扩大到完整区间，后者的不同素数个数至多 $\log n/\log X$，每项 $\log(p/(p-1))\le1/(p-1)\le1/(X-1)$。于是
+
+$$
+1\le Z_{>m}(n)
+\le\frac{P(X)}{P(m)}
+\exp\!\left(\frac{\log n}{(X-1)\log X}\right)=1+o(1),
+\tag{189.2}
+$$
+
+且误差只依赖 $m,C$。最后等式使用经典 Mertens 乘积公式以及 $\log X/\log m\to1$；指数为 $O_C((\log m)^{-2})$。将同一上界用于 $a,b$，再结合式（188.1），即得统一结论。$\square$
+
+仅给模边界与这样的规模控制，其误差不能任意加速。下面还求出一个精确主项。
+

@@ -1,0 +1,10 @@
+### 323.2 共同低钟尾足以保持准确策略
+
+对允许返回的策略定义真实累计取得钟 $T$，并置
+
+$$
+\mathcal J_s(\pi)=\sup_{\theta,S}\mathbb E_{\theta,S}^{\pi}T^s,
+\qquad s>0.
+\tag{323.5}
+$$
+

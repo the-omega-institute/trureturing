@@ -1,0 +1,14 @@
+## 181. 本原 ATOM 组成的字符预算与可变公因子
+
+本节把字符条件接回组成层的原始数量观察，不要求来源先写成两项 Fibonacci 和。令有向整数组成 $(A,B)\in\mathbb Z^2$ 满足 $n_0=2A+3B>0$，并定义
+
+$$
+g=\gcd(|A|,|B|)>0,\qquad (a,b)=(A/g,B/g),
+\qquad u=2a+3b=n_0/g>0,
+$$
+
+$$
+w=4a+7b,\qquad \mathcal Q(a,b)=a^2+ab-b^2,
+\qquad D_{\mathrm{at}}=-\mathcal Q(a,b).
+$$
+

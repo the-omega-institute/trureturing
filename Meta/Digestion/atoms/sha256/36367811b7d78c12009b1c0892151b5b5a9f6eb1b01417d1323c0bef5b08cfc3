@@ -1,0 +1,2 @@
+**来源与证据界限。** Lagarias, *An Elementary Problem Equivalent to the Riemann Hypothesis*, [arXiv:math/0008177v2](https://arxiv.org/abs/math/0008177v2)，Problem E、Theorem 1.1 及式 (1.2)；Báez-Duarte, *A Strengthening of the Nyman–Beurling Criterion for the Riemann Hypothesis*, [arXiv:math/0202141v2](https://arxiv.org/abs/math/0202141v2)，Theorem 1.1 与 §1，均按原文载体和量词引用。其它对应为本卷既有结果、仓内 Lean 组件及本批纸面综合；不主张文献穷尽或原创性。一般时间/投影/预算桥与外部判据的全文证明没有在本批形式化；有限结果和局部编译不构成 RH 证明。
+

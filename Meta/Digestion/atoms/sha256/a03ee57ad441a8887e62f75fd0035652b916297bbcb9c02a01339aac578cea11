@@ -1,0 +1,11 @@
+**推论326.5（任意严格小于一的对数幂下界）。** 对每个 $\gamma\in(0,1)$，存在 $c_\gamma>0$ 及 $\delta_\gamma>0$，使
+
+$$
+\mathcal C_a^{\mathrm{pol}}(\delta)
+\ge c_\gamma[\log(1/\delta)]^\gamma,
+\qquad 0<\delta<\delta_\gamma.
+\tag{326.33}
+$$
+
+同一下界适用于 $\mathcal C_a^{\mathrm{alg}}$。
+

@@ -1,0 +1,6 @@
+**命题321.3（预算内误差连续与最优值达到）。** 对有限 $K$，误差函数在
+$$
+\mathfrak P_K=\{\pi:\mathcal K_s(\pi)\le K\}
+$$
+上关于逐节点逐坐标拓扑连续。因而对任意 $\delta\ge0$，若 $\mathcal C_s^{\mathrm{pol}}(\delta)<\infty$，存在抽象策略达到该最优费用。
+

@@ -1,0 +1,475 @@
+{
+  "carrier": [
+    0,
+    105
+  ],
+  "divisor_labels": [
+    3,
+    5,
+    7,
+    9,
+    15,
+    21,
+    35,
+    45,
+    63,
+    105,
+    315
+  ],
+  "retained_old_labels": [
+    3,
+    5,
+    7,
+    15,
+    21,
+    35,
+    105
+  ],
+  "pure_classes": [
+    [
+      11,
+      0
+    ],
+    [
+      13,
+      0
+    ]
+  ],
+  "state_A_prime11_dictionary": [
+    {
+      "old_modulus": 3,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 1,
+      "actual_modulus": 33,
+      "actual_phase": 12
+    },
+    {
+      "old_modulus": 5,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 2,
+      "actual_modulus": 55,
+      "actual_phase": 35
+    },
+    {
+      "old_modulus": 7,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 3,
+      "actual_modulus": 77,
+      "actual_phase": 14
+    },
+    {
+      "old_modulus": 9,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 8,
+      "actual_modulus": 99,
+      "actual_phase": 63
+    },
+    {
+      "old_modulus": 15,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 4,
+      "actual_modulus": 165,
+      "actual_phase": 15
+    },
+    {
+      "old_modulus": 21,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 5,
+      "actual_modulus": 231,
+      "actual_phase": 126
+    },
+    {
+      "old_modulus": 35,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 6,
+      "actual_modulus": 385,
+      "actual_phase": 105
+    },
+    {
+      "old_modulus": 45,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 8,
+      "actual_modulus": 495,
+      "actual_phase": 316
+    },
+    {
+      "old_modulus": 63,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 9,
+      "actual_modulus": 693,
+      "actual_phase": 64
+    },
+    {
+      "old_modulus": 105,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 7,
+      "actual_modulus": 1155,
+      "actual_phase": 315
+    },
+    {
+      "old_modulus": 315,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 10,
+      "actual_modulus": 3465,
+      "actual_phase": 1891
+    }
+  ],
+  "state_B_prime11_dictionary": [
+    {
+      "old_modulus": 3,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 1,
+      "actual_modulus": 33,
+      "actual_phase": 12
+    },
+    {
+      "old_modulus": 5,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 2,
+      "actual_modulus": 55,
+      "actual_phase": 35
+    },
+    {
+      "old_modulus": 7,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 3,
+      "actual_modulus": 77,
+      "actual_phase": 14
+    },
+    {
+      "old_modulus": 9,
+      "old_phase": 6,
+      "outside_prime": 11,
+      "outside_root": 8,
+      "actual_modulus": 99,
+      "actual_phase": 96
+    },
+    {
+      "old_modulus": 15,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 4,
+      "actual_modulus": 165,
+      "actual_phase": 15
+    },
+    {
+      "old_modulus": 21,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 5,
+      "actual_modulus": 231,
+      "actual_phase": 126
+    },
+    {
+      "old_modulus": 35,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 6,
+      "actual_modulus": 385,
+      "actual_phase": 105
+    },
+    {
+      "old_modulus": 45,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 8,
+      "actual_modulus": 495,
+      "actual_phase": 316
+    },
+    {
+      "old_modulus": 63,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 9,
+      "actual_modulus": 693,
+      "actual_phase": 64
+    },
+    {
+      "old_modulus": 105,
+      "old_phase": 0,
+      "outside_prime": 11,
+      "outside_root": 7,
+      "actual_modulus": 1155,
+      "actual_phase": 315
+    },
+    {
+      "old_modulus": 315,
+      "old_phase": 1,
+      "outside_prime": 11,
+      "outside_root": 10,
+      "actual_modulus": 3465,
+      "actual_phase": 1891
+    }
+  ],
+  "common_prime13_dictionary": [
+    {
+      "old_modulus": 3,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 1,
+      "actual_modulus": 39,
+      "actual_phase": 27
+    },
+    {
+      "old_modulus": 5,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 2,
+      "actual_modulus": 65,
+      "actual_phase": 15
+    },
+    {
+      "old_modulus": 7,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 3,
+      "actual_modulus": 91,
+      "actual_phase": 42
+    },
+    {
+      "old_modulus": 9,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 8,
+      "actual_modulus": 117,
+      "actual_phase": 99
+    },
+    {
+      "old_modulus": 15,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 4,
+      "actual_modulus": 195,
+      "actual_phase": 30
+    },
+    {
+      "old_modulus": 21,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 5,
+      "actual_modulus": 273,
+      "actual_phase": 252
+    },
+    {
+      "old_modulus": 35,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 6,
+      "actual_modulus": 455,
+      "actual_phase": 175
+    },
+    {
+      "old_modulus": 45,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 9,
+      "actual_modulus": 585,
+      "actual_phase": 360
+    },
+    {
+      "old_modulus": 63,
+      "old_phase": 42,
+      "outside_prime": 13,
+      "outside_root": 8,
+      "actual_modulus": 819,
+      "actual_phase": 294
+    },
+    {
+      "old_modulus": 105,
+      "old_phase": 0,
+      "outside_prime": 13,
+      "outside_root": 7,
+      "actual_modulus": 1365,
+      "actual_phase": 735
+    },
+    {
+      "old_modulus": 315,
+      "old_phase": 105,
+      "outside_prime": 13,
+      "outside_root": 9,
+      "actual_modulus": 4095,
+      "actual_phase": 2310
+    }
+  ],
+  "state_A_hits": [
+    8,
+    7
+  ],
+  "state_B_hits": [
+    7,
+    8
+  ],
+  "common_prime13_hits": [
+    9,
+    9
+  ],
+  "state_A_live_roots": [
+    [
+      9,
+      10
+    ],
+    [
+      8,
+      9,
+      10
+    ]
+  ],
+  "state_B_live_roots": [
+    [
+      8,
+      9,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "common_prime13_live_roots": [
+    [
+      10,
+      11,
+      12
+    ],
+    [
+      10,
+      11,
+      12
+    ]
+  ],
+  "actual_root_deletion_equals_hit_count_on_selected_rows": true,
+  "seven_coefficients": [
+    "1",
+    "5/4",
+    "7/6",
+    "5/4",
+    "7/6",
+    "35/24",
+    "35/24"
+  ],
+  "coefficient_sum": "35/4",
+  "state_A_cost_coefficients": [
+    "35/24",
+    "35/36"
+  ],
+  "state_B_cost_coefficients": [
+    "35/36",
+    "35/24"
+  ],
+  "maximum_actual_state_optimum": "35/36",
+  "maximum_convex_hull_optimum": "7/6",
+  "best_common_row_law_cost": "175/144",
+  "full_envelope_endpoint_cost_lower": "11/9",
+  "supporting_core_phases": [
+    [
+      3,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      1
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      63,
+      1
+    ],
+    [
+      105,
+      1
+    ],
+    [
+      315,
+      1
+    ]
+  ],
+  "supporting_core_survivor_count": 144,
+  "selected_rows_are_the_full_core_survivor_set": false,
+  "comparison_75_source_core": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      63,
+      1
+    ],
+    [
+      105,
+      59
+    ],
+    [
+      315,
+      179
+    ]
+  ],
+  "comparison_75_source_survivor_count": 75,
+  "selected_rows_belong_to_current_75_source": false,
+  "counterexample_scope": "Seven-term subfunctional on a two-row supported carrier. Refutes a general vertexwise-to-hull positivity implication, not the current 75-row/full372 universal feasibility question.",
+  "lean_verification": false
+}

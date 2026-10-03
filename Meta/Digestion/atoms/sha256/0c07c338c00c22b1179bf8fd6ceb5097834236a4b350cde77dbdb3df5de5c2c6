@@ -1,0 +1,11 @@
+**可复用支撑结果 25.4A（全模行散度热核的 Bochner 路径）。** 固定 $\nu>0$ 与 $\tau>0$。令 $K=\mathbb Z^2$，输出纤维为 $\mathbb C^2$，张量纤维为 $2\times2$ 复矩阵，并令 $H=\ell^2(K;\mathbb C^2)$、$G=\ell^2(K;\mathbb C^{2\times2})$。对 $k=(k_1,k_2)$ 置 $\rho(k)=k_1^2+k_2^2$、$\kappa(k)=(k_1,k_2)$，令 $P_k$ 为去除 $\mathbb C\kappa(k)$ 的正交投影（$k=0$ 时为恒等投影）。若 $q:\mathbb R\to G$ 在全实时间上连续，且存在 $C\ge0$ 使 $\|q(s)\|\le C$ 对全部 $s$ 成立，则存在连续 $D:\mathbb R\to H$，满足
+$$
+D(0)=0,\qquad \|D(t)\|\le 2C\sqrt{t/\nu}\quad(0\le t\le\tau),
+$$
+并且对全部 $k\in K$ 与 $t\in[0,\tau]$，
+$$
+D(t,k)=\int_0^t e^{-\nu(t-s)\rho(k)}\,iP_k
+\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\,ds.
+$$
+这里的行指标是输出分量，求和指标 $j$ 是导数频率指标；$k=0$ 时行散度本身为零。该支撑结果只构造任意给定全模张量路径的连续 Bochner 路径及其定量界；它不构造非线性张量积路径，也不单独给出不动点、唯一性、压力、光滑性或最大延拓。
+

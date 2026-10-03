@@ -1,0 +1,75 @@
+**定理 34.9（可恢复闭临界的接触点分类）。** 固定
+
+$$
+\varepsilon_0>0,\qquad H=\delta/2,\qquad
+h=2\varepsilon_n\notin R.
+$$
+
+这时 $0<h<\phi$。对每个合法长度 $N-1$ 且末位零的 $p$，置
+
+$$
+\Gamma_p(y)=\bigl(A(p0)+cy-\sigma\varepsilon_0, y+\varepsilon_n\bigr).
+$$
+
+有效 $D$ 记录上的全部不连续点恰为
+
+$$
+\boxed{\mathcal B=
+\bigcup_p\left\{\Gamma_p(y):
+-1<y<t-h,\quad y\in T_0\ \text{或}\ y+h\in T_1\right\}.}
+$$
+
+两处有限尾条件不能同时成立。$\mathcal B$ 可数、非空，且在每一条完整闭接触线段 $\Gamma_p([-1,t-h])$ 上稠密；线段的两个端点本身不是有效 $D$ 接触记录。其余有效记录处的连续性按命题34.8判断；特别地，$V^D\setminus\mathcal B$ 的每一点连续。
+
+证明。由于零属于 $R$，可恢复预算的 $h$ 不能为零；$\varepsilon_0>0$ 又给出 $h<\phi$。若两个不同前缀的完成记录集相交，临界码距链必须全取等号。命题34.2使它们成为 $p0,p1$；定理34.4的等号分析强制
+
+$$
+y_1-y_0=h,\qquad x_0^1-x_0^0=-2\sigma\varepsilon_0.
+$$
+
+两个误差矩形的交集因此由相反的饱和角给出，所有共同完成记录恰为 $\Gamma_p(y)$，其中
+
+$$
+y\in I_0,\qquad y+h\in I_1
+\quad\Longleftrightarrow\quad -1\le y\le t-h.
+$$
+
+这样的记录来自实际有限来源恰在 $y\in T_0$ 或 $y+h\in T_1$ 时；它们不可能同时成立，因为 $h\notin R$。也没有第三码值：此记录的残差是这两个间距 $\delta$ 的码的中点，半径 $\delta/2$ 的残差区间容不下第三个码。饱和角还使同一候选下的可能尾值唯一，所以没有遗漏其他有限表示。
+
+端点 $y=-1$ 不是 $T_0$ 成员，而 $y+h=-1+h\notin R$，也不是 $T_1$ 成员。端点 $y=t-h\notin R$ 不是 $T_0$ 成员，其 rival 值 $y+h=t$ 又是非有限极值。所以有效参数严格在开区间内。命题34.8于是给出所列集合的充分性和必要性。
+
+可数性来自有限个 $p$ 及两种可数尾集。$T_0$ 在 $I_0$ 中稠密，因此 $T_0\cap(-1,t-h)$ 在接触参数开区间内稠密，也逼近两个端点；$\Gamma_p$ 连续且由第二坐标单射，得到每条接触上的稠密性。
+
+为逐预算给出一个实际有效不连续锚，选择整数 $K_0\ge1$ 满足
+
+$$
+g^{2K_0}<\phi-h.
+$$
+
+命题14.9的实际 guard 零有限尾
+
+$$
+\eta^0=(3,25)^{K_0}0^\infty,\qquad
+y=\kappa_0(\eta^0)=-1+g^{2K_0}
+$$
+
+满足 $-1<y<t-h$。令 $z=y+h\in(-1,t)$。因 $y\in R,h\notin R$，$z\notin R$，不能是有限尾值；定理17.2仍提供一条固定的实际 guard 一完成尾 $\eta^1$ 实现 $z$。任取上述 $p$，前接 $p0$ 到 $\eta^0$ 得实际有限来源，其饱和误差记录为
+
+$$
+r^*=\Gamma_p(y).
+$$
+
+把这一条固定 rival 尾 $\eta^1$ 截断并补零，得实际有限 guard 一尾值 $z_k\to z$。前接 $p1$ 并使用同一相反误差角，给出
+
+$$
+r^k=\bigl(A(p1)+cz_k+\sigma\varepsilon_0, z_k-\varepsilon_n\bigr).
+$$
+
+临界等式 $\delta=2\varepsilon_0+ah$ 给出共同差公式
+
+$$
+r^k-r^*=(c(z_k-z),z_k-z)\longrightarrow(0,0).
+$$
+
+每个 $r^k$ 都是实际有限来源的有效记录，却要求 $p1$；有效极限 $r^*$ 要求 $p0$。集合论恢复排除它们相等，但不排除趋近。这既证明非空，也直接证明每个预算都有有效输入上的不连续性。$\square$
+

@@ -1,0 +1,26 @@
+**定理328.1（正价格的费用比较）。** 对每个 $\lambda>0$、$\delta\ge0$，在各自实现类内都有
+
+$$
+\boxed{
+\min\{1,\lambda\}^{a}\mathcal C_a^{\mathcal C}(\delta)
+\le\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le\max\{1,\lambda\}^{a}\mathcal C_a^{\mathcal C}(\delta).}
+\tag{328.3}
+$$
+
+特别地，准确任务满足
+
+$$
+\mathcal V_a^{\mathrm{pol}}(0,\lambda)
+=\mathcal V_a^{\mathrm{alg}}(0,\lambda)=\infty
+\qquad(\lambda>0),
+\tag{328.4}
+$$
+
+而第327节给出有限常数 $K_*$，使
+
+$$
+\mathcal V_a^{\mathrm{pol}}(0,0)\le K_*<\infty.
+\tag{328.5}
+$$
+

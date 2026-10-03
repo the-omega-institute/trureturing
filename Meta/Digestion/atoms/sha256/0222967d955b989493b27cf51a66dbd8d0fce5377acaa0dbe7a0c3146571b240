@@ -1,0 +1,16 @@
+## 34. 模块扩展的文献前提
+
+第 29–32 节使用第 20–27 节的 $\mathbb F_2^3$ 字符、行列式进位、六维二次空间和短子集正规形。命题 32.1 的全体实向量结论依赖矩阵恒等式，不能从有限有理样本外推。
+
+实际扩展须具备定义 28.1 的 $U$ 和全部不同不可约模，并满足 Verlinde、简单流扩展和诱导扭曲模定理的前提；有限字符不替代这些前提。
+
+所用文献及其数学范围如下：
+
+[AM99] H. Albuquerque and S. Majid, *Quasialgebra structure of the octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116，DOI 10.1006/jabr.1998.7850。https://arxiv.org/pdf/math/9802116 。§§3–4、Proposition 4.4 给出已知的八元数扭曲结构。
+
+[B02] J. C. Baez, *The Octonions*, Bulletin of the AMS 39 (2002), 145–205; arXiv:math/0105155。作者全文 https://math.ucr.edu/home/baez/octonions/ ，尤其 node2.html 的交替性、Artin 定理和 Hurwitz 分类。使用的是成熟数学输入。
+
+[EMS17] J. van Ekeren, S. Möller and N. R. Scheithauer, *Construction and Classification of Holomorphic Vertex Operator Algebras*, arXiv:1507.08142v3，J. reine angew. Math. 759 (2020), 61–99，DOI 10.1515/crelle-2017-0046。https://arxiv.org/pdf/1507.08142 。Theorem 2.2 与 Theorem 4.2 所需的正性、强有理、自对偶和 group-like fusion 前提保留在定义 28.1。
+
+[Y04] H. Yamauchi, *Module categories of simple current extensions of vertex operator algebras*, J. Pure Appl. Algebra 189 (2004), 315–328; arXiv:math/0211255v3，DOI 10.1016/j.jpaa.2003.10.006。https://arxiv.org/pdf/math/0211255 。Theorems 3.2–3.3 的诱导及无稳定子情形用于同一 $L$ 陪集的重数一扭曲模块，不以抽象标签自同构替代诱导。
+

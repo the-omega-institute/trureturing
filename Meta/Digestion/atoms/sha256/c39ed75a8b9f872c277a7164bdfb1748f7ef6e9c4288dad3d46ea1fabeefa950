@@ -1,0 +1,25 @@
+### 15.5 三个正交磁方向的匹配高温最优系数
+
+令三个可见标签控制隐藏自旋 Hamiltonian
+\[
+ H_1=-\Delta X,\qquad H_2=-\Delta Y,\qquad H_3=-\Delta Z,\quad\Delta>0,
+\]
+其中 $X,Y,Z$ 是 Pauli 矩阵。它可解释为同幅值、不同方向的条件自旋场；本章不求解该控制装置的 Maxwell 边界值或能量成本。令
+\[
+ r=\tanh(\beta\Delta)\in(0,1),\qquad
+ \tau_i=(I+r\sigma_i)/2,\quad p_i=1/3.
+\]
+每对的根保真度与最小奇异值相同：
+\[
+ f=\sqrt{1-r^2/2},\qquad \mu=\tfrac12(f-r/\sqrt2).
+\]
+设
+\[
+ \theta=\arctan\frac{1-\sqrt{1-r^2}}{1+\sqrt{1-r^2}}.
+\]
+则 $T_{12}=e^{i\theta Z}$、$T_{23}=e^{i\theta X}$、$T_{31}=e^{i\theta Y}$，直接乘 Pauli 矩阵得到
+\[
+ \operatorname{Tr}U_{\mathcal C}=2(\cos^3\theta+\sin^3\theta),
+ \quad h_{\mathcal C}^2=4(1-\cos^3\theta-\sin^3\theta)>0.
+\]
+

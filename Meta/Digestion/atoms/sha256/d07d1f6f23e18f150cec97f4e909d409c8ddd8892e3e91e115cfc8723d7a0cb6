@@ -1,0 +1,26 @@
+**命题 117.2（有向组成更新的守卫与不变域）。** 在 $q(\mathbf v)\ge0$ 的有向组成域上，记录坐标的一步更新是带守卫的部分映射：只有
+
+$$
+n'=s(n)-\kappa\ge0
+$$
+
+时，才可写
+
+$$
+(n,\kappa)\longmapsto\bigl(n',\ s(n')-n-n'\bigr).
+$$
+
+它在下列锥上是总映射，该锥同时在组成相加下封闭：
+
+$$
+\mathcal V_+=\{\mathbf v\in\mathbb Z^2:q(\mathbf v)\ge0,\ q(M\mathbf v)\ge0\}
+\longleftrightarrow
+\{(n,\kappa):n\in\mathbb N,\ \kappa\le s(n)\}.
+$$
+
+原始非负组成域 $\mathbb N^2$ 也在 $M$ 下不变。
+
+证明。下一次的当前读数是 $n'$，再下一次是 $q(M^2\mathbf v)=n+n'$；按记录定义便得更新式。若 $n,n'\ge0$，更新后的两个读数 $n',n+n'$ 仍非负，故 $M$ 保持 $\mathcal V_+$。$q$ 和 $qM$ 都线性，组成相加也保持两项不等式。由 $n'=s(n)-\kappa$ 得记录中的准确域。$M(a,b)=(b,a+b)$ 直接保持 $\mathbb N^2$。
+
+仅有 $q(\mathbf v)\ge0$ 不够：$\mathbf v=\mathbf r=(3,-2)$ 满足 $q\mathbf v=0$，却有 $qM\mathbf v=-1$。因此不能省去一步守卫，或把这个半平面说成不变域。$\square$
+

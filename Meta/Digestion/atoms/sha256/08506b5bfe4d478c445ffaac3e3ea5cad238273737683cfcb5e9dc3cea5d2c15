@@ -1,0 +1,6 @@
+## 21. Primary associates in the Eisenstein order
+
+Let $E=\mathbb Z[\omega]$, where $\omega^2+\omega+1=0$, and write
+$N(a+b\omega)=a^2-ab+b^2$. An element is *primary* when it is congruent
+to $1$ modulo $3E$.
+

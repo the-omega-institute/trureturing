@@ -1,0 +1,63 @@
+**定理 314.1（实际整数子族保留单边 RH 强度）。** 在上述输入下，以下四个命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J\ge2\ \forall j\ge J:\quad\mathfrak q_j\ge-K;\\
+&\exists J\ge2\ \forall j\ge J:\quad\Delta(N_j)\ge0;\\
+&\exists J\ge2\ \forall j\ge J:\quad\Delta(N_j)>0.
+\end{aligned}
+\tag{314.2}
+\]
+这里 $J,j$ 为整数；第二项使用同一个最终有限预算，而非依赖 $j$ 的预算。没有有限四分之一漂移前提，也不要求末端删去族的 PPS 校准。
+
+**证明。** 从第二项推出 RH。把（313.4）限制到 $L=j^4$，得
+\[
+\mathfrak q_j-\sqrt{\mu_j}D(\mu_j)\longrightarrow2\sqrt2.
+\tag{314.3}
+\]
+定理313.1的（313.5）–（313.7）只在单个充分大格点使用实际余量下界、$P/E\sim\log x$ 与无条件 Nicolas 上界。因此同一推导在这些子序列端点给某个固定有限 $K_1\ge0$，使
+\[
+w(\mu_j)I_\psi(\mu_j)\ge-K_1
+\quad\text{对全部充分大的整数 }j\text{成立}.
+\tag{314.4}
+\]
+可增大共同阈值至 $J\ge3$，从而所有端点均满足 Nicolas 所需的 $x\ge121$。尚未控制端点之间的尾项，不能直接调用 §313 的长度三运输。
+
+现取相邻实际端点 $a=\mu_j,b=\mu_{j+1}$。由经典 Chebyshev 界，固定 §243.3 的 $C\ge1$ 使 $0\le\psi(t)\le Ct$。定理256.3给每个 $a\le y\le b$ 的同源下界
+\[
+I_\psi(y)\ge
+\frac{b-y}{b-a}I_\psi(a)+\frac{y-a}{b-a}I_\psi(b)
+-\frac{7C}{2a^2\log a}(y-a)(b-y).
+\tag{314.5}
+\]
+该结果保留实际素数幂事件处向下的导数跳跃，不需要把 $I_\psi$ 当成全域二次可微函数。这里复用的是原价格坐标的双端曲率预算，其经典半凹函数背景与引用见 §256；不由 RH 假设取得这个插值界。
+
+对 $j\ge2$，有
+\[
+a\ge50,\qquad b\le16a,\qquad b-a\le27j^3,
+\qquad a\sqrt a\ge3j^6.
+\tag{314.6}
+\]
+其中第三式由 $(j+1)^4-j^4\le9j^3$ 得到，第四式用 $a\ge3j^4$ 与 $\sqrt a\ge j^2$。因 $a\ge16$ 且 $y\le16a$，有 $\sqrt y\le4\sqrt a$、$\log y\le2\log a$，故
+\[
+0<w(a)\le w(b),\qquad w(y)\le8w(a),\qquad
+\frac{(b-a)^2}{a\sqrt a}\le243.
+\tag{314.7}
+\]
+两端的（314.4）使（314.5）的弦部分不小于 $-K_1/w(a)$。再用 $(y-a)(b-y)\le(b-a)^2/4$，乘以 $w(y)>0$ 得
+\[
+\begin{aligned}
+w(y)I_\psi(y)
+&\ge-8K_1-7C\frac{(b-a)^2}{a\sqrt a}\\
+&\ge-8K_1-1701C.
+\end{aligned}
+\tag{314.8}
+\]
+$1701C$ 是仿射四次网格的充分成本；不能直接照搬定理256.4在未平移 $j^4$ 网格上的 $567C$，这里也不主张成本最优。
+
+由于 $\mu_j$ 严格递增且趋于无穷，相邻闭区间的并为 $[\mu_J,\infty)$。式（314.8）于是供应全部充分大实数上的同一个有限尾项下界。§92.3 的正逆变换与 Landau 论证遂给 RH。
+
+反向，RH 由定理313.1给整个实际族最终严格正 Robin 余量，限制到 $L=j^4\to\infty$ 即得第四项。第四项蕴含第三项，第三项以 $K=0$ 蕴含第二项，完成等价链。
+
+定理256.5检验的是连续价格尾项 $\Phi(j^4)$；（314.2）检验的是实际整数 $N_j=T_{j^4}$ 的 Robin 余量。新增关系把这些实际余量经同截断 Nicolas 桥送到两个端点，再由已有连续插值覆盖中间区间，没有将价格值 $j^4$ 认作待检验整数。它加强的是指定实际检验集合，不提供其最终预算的存在证明，也不证明 RH。$\square$
+

@@ -1,0 +1,69 @@
+**定理 35.2（二维物理振幅周期梯度四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，并令
+
+$$
+\mu=\operatorname{volume}.\operatorname{restrict}(\operatorname{Ioc}(a,b)).
+$$
+
+令 $u,u_x,u_y,u_{xx},u_{yy}:\operatorname{Fin}2\to\mathbb R\to\mathbb R\to\mathbb R$，所有坐标及横向变量均遍历全体 $\mathbb R$。假设对每个 $i\in\operatorname{Fin}2$ 及所有 $x,y\in\mathbb R$，
+
+$$
+\begin{aligned}
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ z\ y)\,(u_x\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u_x\ i\ z\ y)\,(u_{xx}\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ x\ z)\,(u_y\ i\ x\ y)\ y,\\
+&\operatorname{HasDerivAt}(z\mapsto u_y\ i\ x\ z)\,(u_{yy}\ i\ x\ y)\ y.
+\end{aligned}
+$$
+
+再假设对每个 $i$ 及每个实横向坐标，$x\mapsto u_{xx}\ i\ x\ y$ 与 $y\mapsto u_{yy}\ i\ x\ y$ 分别连续；对每个实横向坐标有所有端点匹配
+
+$$
+u\ i\ b\ y=u\ i\ a\ y,\quad u_x\ i\ b\ y=u_x\ i\ a\ y,\qquad
+u\ i\ x\ b=u\ i\ x\ a,\quad u_y\ i\ x\ b=u_y\ i\ x\ a.
+$$
+
+并且对所有 $x,y\in\operatorname{Icc}(a,b)$ 有物理振幅条件
+
+$$
+(u\ 0\ x\ y)^2+(u\ 1\ x\ y)^2\le M^2.
+$$
+
+假设对每个 $i$，函数 $(x,y)\mapsto(u_x\ i\ x\ y)^4$、$(x,y)\mapsto(u_y\ i\ x\ y)^4$、$(x,y)\mapsto(u_{xx}\ i\ x\ y)^2$、$(x,y)\mapsto(u_{yy}\ i\ x\ y)^2$ 都在 $\mu\times\mu$ 下可积，并且
+
+$$
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2
+$$
+
+也在 $\mu\times\mu$ 下可积（变量依次为 $(x,y)$）。则
+
+$$
+\begin{aligned}
+&\int_{\mathbb R^2}
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2\,d(\mu\times\mu)\\
+&\quad\le36M^2\int_{\mathbb R^2}
+\bigl((u_{xx}\ 0\ x\ y)^2+(u_{xx}\ 1\ x\ y)^2+(u_{yy}\ 0\ x\ y)^2+(u_{yy}\ 1\ x\ y)^2\bigr)\,d(\mu\times\mu).
+\end{aligned}
+$$
+
+结论的常数是 $36$，测度严格是每个坐标的 $(a,b]$ 限制测度；它没有额外的归一化因子或 normalizedFourierH2 边界。
+
+**证明。** 固定 $i$ 和 $y\in\operatorname{Icc}(a,b)$，把定理 35.1 应用于 $x\mapsto u\ i\ x\ y$。振幅条件给出该切片的 $|u\ i\ x\ y|\le M$：由 $u0^2+u1^2\le M^2$、$M\ge0$ 和平方非负性逐分量推出。端点和连续性假设正好给出切片所需条件，因此
+
+$$
+\int u_xi^4\,d\mu\le9M^2\int u_{xx}i^2\,d\mu.
+$$
+
+对 $y$ 积分并用乘积测度的 Fubini 等式，得到每个 $i$ 的 $x$ 方向乘积积分界。固定 $i$ 和 $x\in\operatorname{Icc}(a,b)$，沿 $y$ 方向同理得到
+
+$$
+\int u_yi^4\,d(\mu\times\mu)\le9M^2\int u_{yy}i^2\,d(\mu\times\mu).
+$$
+
+对每个点 $(x,y)$ 令 $A=(u_x\ 0\ x\ y)^2$、$B=(u_x\ 1\ x\ y)^2$、$C=(u_y\ 0\ x\ y)^2$、$D=(u_y\ 1\ x\ y)^2$。平方差恒等式给出
+
+$$
+(A+B+C+D)^2\le4(A^2+B^2+C^2+D^2).
+$$
+
+积分后使用上述四个 $9M^2$ 界，并用可积性假设合法地拆分和重组积分，得到 $4\cdot9M^2=36M^2$ 的结论。证毕。
+

@@ -1,0 +1,8 @@
+**命题 15.3（First contact, missing primes and the composite hypothesis）。** Meeting a prime divisor at one layer does not require that same layer to certify compositeness; unbounded divisibility need not meet every prime; and the composite-source hypothesis cannot be removed from theorem 15.1.
+
+证明。For the first assertion take $x=(3,0)$, $n=6$ and $L=2$. Although $\gcd(n,L)=2$, the actual point $y=(1,0)$ has prime quantity 2 and the same coordinate residues. The persistent divisor and a later modulus greater than $n$ are what the sufficient proof uses.
+
+For the second assertion take distinct primes $p,\ell$ and $L_r=\ell^{r+1}$. The tower is positive, divisibility-ordered and unbounded, but no modulus is divisible by $p$: any prime divisor of a product of copies of $\ell$ is $\ell$. Choose the actual composition of $p^2$ in corollary 15.2. Every layer is coprime to its quantity, so it has no finite universal composite certificate despite singleton identification in the limit.
+
+Finally if $n=p$ is prime and $p\mid L_r$, then $\gcd(n,L_r)>1$ while the fiber still contains the prime source $x$. It cannot be universally composite. More generally a fiber containing its distinguished source cannot certify the opposite status. $\square$
+

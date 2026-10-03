@@ -1,0 +1,24 @@
+### 335.1 同一有限有效程序的两个临界预算
+
+沿用原未知双来源合同、第330节的固定参数和非整数 $\beta>0$，令 $a=\beta/2$。定义
+
+$$
+M_\beta=\max\{1,\beta\},\qquad
+q_\beta=\max\{3,2(M_\beta+1)/\beta\},\qquad
+E_\beta=aq_\beta.
+\tag{335.1}
+$$
+
+即
+
+$$
+\boxed{
+E_\beta=
+\begin{cases}
+2,&0<\beta<1,\\
+\beta+1,&1<\beta<2,\\
+3\beta/2,&\beta>2.
+\end{cases}}
+\tag{335.2}
+$$
+

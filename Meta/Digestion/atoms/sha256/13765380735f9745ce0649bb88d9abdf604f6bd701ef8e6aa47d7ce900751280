@@ -1,0 +1,25 @@
+### definition 263.1 本原组成的逆递推核心
+
+沿用
+
+$$
+M(a,b)=(b,a+b),\qquad q(a,b)=2a+3b,\qquad
+Q(a,b)=a^2+ab-b^2,\qquad \varphi=(1+\sqrt5)/2.
+$$
+
+设单位位为零的实际规范五窗来源具有非零非负组成 $(A,B)$，令
+
+$$
+g=\gcd(A,B),\qquad x=(A/g,B/g),\qquad
+U=q(x),\qquad N=gU,\qquad D=|Q(x)|.
+\tag{263.1}
+$$
+
+在本原非负组成上，只要 $b\ge a$ 就执行
+$R(a,b)=(b-a,a)$；到达 $r>s\ge0$ 时停止。
+所得 $(r,s)$ 称为约化核心，执行次数记为 $j$。
+它是组成坐标的归约；$j$ 不按五窗地址的字面 null 数定义。
+广义 Pell 方程的单位轨道与基本代表是经典背景，参见
+[Robertson 的单位等价类与代表说明](../../../Library/notes/robertson2004generalizedpell.md)；
+这里采用非负组成锥的退出截面，并将其与实际来源及 §201 的预算连接。
+

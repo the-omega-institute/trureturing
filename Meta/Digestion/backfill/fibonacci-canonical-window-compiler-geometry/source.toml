@@ -1,0 +1,5 @@
+source_id = "fibonacci-canonical-window-compiler-geometry"
+path = "docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

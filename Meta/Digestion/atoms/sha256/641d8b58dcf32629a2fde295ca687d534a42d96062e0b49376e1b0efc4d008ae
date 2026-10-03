@@ -1,0 +1,34 @@
+**定理 7.2（Original discrete case and both quotient representatives）。** The discrepancy $\delta_{01}$ is already an ultrametric. Its pullback distance is an ultrapseudometric on $Y$, and
+
+$$
+d_\infty(x,y)=\begin{cases}\eta^{\tau(x,y)},&\tau(x,y)<\infty,\\0,&\tau(x,y)=\infty,\end{cases}
+\qquad
+d_h(x,y)=\begin{cases}\eta^{\tau(x,y)},&\tau(x,y)\le h,\\0,&\tau(x,y)>h\text{ or }\tau(x,y)=\infty.\end{cases}
+$$
+
+Its zero relation is $R_\infty$. Consequently $\bar d([x],[y])=d_\infty(x,y)$ is a well-defined genuine ultrametric on $Y/R_\infty$, whether or not observations separate actual states.
+
+证明。The discrete discrepancy is symmetric, nonnegative and zero exactly on equality. If $u\ne w$, at least one of $u\ne v$ and $v\ne w$ holds, so
+
+$$
+\delta_{01}(u,w)\le\max\{\delta_{01}(u,v),\delta_{01}(v,w)\}.
+$$
+
+The equal-endpoint case follows from nonnegativity. Each discounted pullback has this strong triangle inequality. At each time $k$, its $x,z$ term is at most $\max\{d_\infty(x,y),d_\infty(y,z)\}$; taking the supremum proves the same inequality for $d_\infty$. Nonnegativity, symmetry and zero diagonal follow termwise. The finite maximum gives the same laws for $d_h$.
+
+If $\tau$ is finite, all earlier terms vanish, its own term is $\eta^\tau$, and every later term is at most $\eta^k\le\eta^\tau$. This proves the supremum formula. If there is no distinction every term is zero. Restricting to $0\le k\le h$ proves the finite-prefix formula. Since every finite $\eta^\tau$ is positive, zero distance is exactly equality of every future observation, namely $R_\infty$.
+
+Write $d=d_\infty$. If $xR_\infty x'$, then $d(x,x')=0$, and the ultratriangle gives
+
+$$
+d(x,y)\le\max\{d(x,x'),d(x',y)\}=d(x',y).
+$$
+
+Interchanging $x,x'$ gives the reverse inequality. If also $yR_\infty y'$, the second argument can be changed independently:
+
+$$
+d(x',y)\le\max\{d(x',y'),d(y',y)\}=d(x',y'),
+$$
+
+and interchanging $y,y'$ gives the reverse inequality. Thus both choices of representatives preserve distance. Nonnegativity, symmetry and diagonal zero descend. For any representatives $x,y,z$, their ultratriangle descends to the classes. Finally $\bar d([x],[y])=0$ holds exactly when $xR_\infty y$, exactly when $[x]=[y]$. The empty quotient satisfies the laws vacuously. $\square$
+

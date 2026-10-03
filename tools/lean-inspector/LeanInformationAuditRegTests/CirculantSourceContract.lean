@@ -1,4 +1,7 @@
 import Reg.D5.S3.Quantum.Dynamics.OrientedCirculantZeroTransfer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open Reg.D5.S3.Quantum.Dynamics.OrientedCirculantZeroTransfer

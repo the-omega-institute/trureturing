@@ -1,0 +1,59 @@
+## 一　定义：三种观察对象与实际变换
+
+沿用《Fibonacci 原子关系生成》定义 87.1 与定理 104.1，令
+
+$$
+S_a(z)=\sum_{k=0}^a z^k,\qquad Q_a(z)=\sum_{k=1}^a\frac{z^k}{k},
+\qquad D_a(z)=Q_a(z)-\log S_a(z).
+$$
+
+对 $n=\prod_p p^{a_p}$，Robin 的有限算术观察是
+$\sigma(n)/n=\prod_{p\mid n}S_{a_p}(1/p)$，所以其对数是有限的逐轴和。
+Robin 判据的经典量词是所有整数 $n>5040$ 上
+$\sigma(n)<e^\gamma n\log\log n$，不是单个轴的正性
+（G. Robin, *Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann*, J. Math. Pures Appl. 63 (1984), 187--213）。
+
+令 $\xi$ 为完成的 zeta 函数，$w$ 为 Li 圆盘坐标，
+$s=(1-w)^{-1}$，逆变换为 $w=1-s^{-1}$。实际 Li 生成函数与系数为
+
+$$
+G(w)=(1-w)^{-2}\frac{\xi'(s)}{\xi(s)},\qquad
+\lambda_n=\frac1{(n-1)!}
+\left.\frac{d^n}{ds^n}\bigl[s^{n-1}\log\xi(s)\bigr]\right|_{s=1}
+\quad(n\ge1).
+$$
+
+在 $w=0$ 邻域有 $G(w)=\sum_{n\ge0}\lambda_{n+1}w^n$。
+这里有具体的对象对应：$|w|<1$ 当且仅当 $\Re s>1/2$；
+因此整圆盘的 $\xi((1-w)^{-1})$ 非零条件与整个右半平面的非零条件可互相拉回。
+来源为 `CanonicalLiLocalExpansion.canonicalLiCoefficient`、`liGenerator`、
+`canonical_li_local_expansion` 与 `CanonicalLiDiskEquivalence.xi_disk_zero_free_iff_right_half_plane`。
+`CanonicalLiDiskEquivalence.rh_iff_canonical_li_global_expansion` 使用整圆盘每一点，
+`CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh` 使用每个正整数阶的系数非负。
+Li 的经典判据见 X.-J. Li, *The Positivity of a Sequence of Numbers and the Riemann Hypothesis*, JNT 65 (1997), 325--333。
+这些是本节推导的既有前提，不把局部 Taylor 展开当成全圆盘非零或全阶正性的证明。
+
+Weil 的对象是光滑紧支撑测试函数 $g$ 及其卷积平方 $h=g*g^*$。
+本卷采用角频率变换
+
+$$
+\widehat h(u)=\int_{\mathbb R}e^{-iux}h(x)\,dx,\qquad
+u_\rho=-i(\rho-1/2).
+$$
+
+给定含真实重数的穷尽零点数据及所需收敛性，显式公式是
+
+$$
+\sum_\rho m_\rho\widehat h(u_\rho)
+=\widehat h(-i/2)+\widehat h(i/2)
+-\sum_{p,k\ge1}\frac{\log p}{p^{k/2}}
+ \bigl[h(k\log p)+h(-k\log p)\bigr]+A(h),
+$$
+
+其中 $A$ 是对应的 digamma 阿基米德积分。来源是
+`FourierLaplace.fourierLaplace`、`PrimePoleTerms.primeTerm` 与
+`ZetaBridge.ClassicExplicitFormula.weil_explicit_formula`。
+`Separator.WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity` 在给定 `ZeroData`、
+每个测试函数及相应 `SymmetricConvergent` 条件下等价于所有卷积平方零点和的实部非负。
+经典先例是 A. Weil, *Sur les « formules explicites » de la théorie des nombres premiers*, 1952。
+

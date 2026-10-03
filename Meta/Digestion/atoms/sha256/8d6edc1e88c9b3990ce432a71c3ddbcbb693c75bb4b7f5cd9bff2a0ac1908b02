@@ -1,0 +1,12 @@
+## 2. Covering projection
+
+**Definition 2.1.** The representation is *free* if
+(\rho(g)(x)=x\Rightarrow g=1) for every (g,x). It is *properly
+discontinuous* if, for all compact (K,L\subseteq X), the set
+
+\[
+\{g\in G:(\rho(g)(K)\cap L)\ne\varnothing\}
+\]
+
+is finite.
+

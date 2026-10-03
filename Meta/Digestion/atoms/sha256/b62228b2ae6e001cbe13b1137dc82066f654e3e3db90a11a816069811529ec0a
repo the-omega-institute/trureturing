@@ -1,0 +1,33 @@
+**定义 23.1（全来源的两正例费用合同）。** 取非空有限自由有序满二叉树集合
+
+$$
+\mathcal T=\{\alpha,\beta\}\cup\{\langle S,T\rangle:S,T\in\mathcal T\},
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho(\langle S,T\rangle)=\langle\rho(S),\rho(T)\rangle.
+\tag{23.1}
+$$
+
+树相等保留字面的次序、括号形状和叶标记，不取结合或交换商。固定 $d=3k$、整数 $k\ge1$，目标为 $\iota_d(U)=\mathbf 1_{\{U\in\mathcal I_d\}}$，其中 $\mathcal I_d=\rho^d(\mathcal T)$。固定两个完整描述已知的正例 $P,Q\in\mathcal I_d$，仅把它们指定为费用评价的对象。全部未知输入 $U\in\mathcal T$ 有同一个与输入无关的完整初始化；其中可含固定的 $d,P,Q$ 和策略，但不含输入的组成、数量、大小、高度、叶数、正性、所属子类或身份承诺。尤其不承诺 $U\in\{P,Q\}$。
+
+每个有限地址 $u\in\{\mathtt L,\mathtt R\}^{<\mathbb N}$，包括空地址 $\varepsilon$，始终合法。查询只读同一棵不变的 $U$，报告为[定义 16.1](#16-实际树像与尖锐有限路径观察前沿)的四值 $\operatorname{out}_U(u)\in\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}\}$；没有其他携带来源信息的报告或访问途径。策略的有限返回值属于 $\{0,1\}$。费用只数所问的不同地址，重复地址复用缓存；地址定位、地址长度、控制器计算和取得种子不收费。未有限终止的费用为 $+\infty$。
+
+记 $\mathfrak D_d$ 为对每个 $U\in\mathcal T$ 都正确返回 $\iota_d(U)$ 且有限终止的确定性策略集合，$C_\pi(U)$ 为其不同地址费用。记 $\mathfrak R_d$ 为以下随机策略集合：使用一个与输入无关的概率空间 $(\Omega,\mathcal A,\mu)$，所有随机选择均包含在种子 $\omega$ 中，固定种子后控制、查询、缓存、停止和输出都由共同初始化及此前完整地址—响应记录决定，并满足同种子重放。对每个 $U\in\mathcal T$ 分别要求错误返回事件、未有限终止事件和非负扩展费用 $C_\Pi(\cdot,U)$ 可测，前两个事件的测度均为零。此处允许零测种子例外，不要求每个声明种子都全域正确；也不为来源指定概率律。记
+
+$$
+\begin{aligned}
+L_P&=L(P),& L_Q&=L(Q),& n_P&=|L_P|,&n_Q&=|L_Q|,\\
+H(P,Q)&\ \Longleftrightarrow\quad
+\exists u\in L_P\cap L_Q:\quad
+\operatorname{out}_P(u)\ne\operatorname{out}_Q(u),\\
+D_d^+(P,Q)&=\inf_{\pi\in\mathfrak D_d}
+\max\{C_\pi(P),C_\pi(Q)\},\\
+R_d^+(P,Q)&=\inf_{\Pi\in\mathfrak R_d}
+\max\{\mathbb E_\mu C_\Pi(\cdot,P),\mathbb E_\mu C_\Pi(\cdot,Q)\}.
+\end{aligned}
+\tag{23.2}
+$$
+
+$L$ 沿用定义 18.1，故 $H(P,Q)$ 恰指某个共享叶地址有相反的 $\alpha/\beta$ 标签。期望是两个固定来源各自对同一输入无关种子律的期望，可以为 $+\infty$；式（23.2）既不是输入先验的平均，也不是在整个 $\mathcal T$ 上优化最坏费用。完整来源、组成 $c$、规范数量地址、原始地址报告、组成祖先许可与实际逆执行分别保留其对象和操作意义；本合同只判完整树的实际像成员身份，不授权逆操作，也不把环境代数中的守恒或可逆性解释成物理对应。
+

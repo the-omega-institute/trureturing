@@ -5,6 +5,9 @@ import Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCrit
 import Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
 import D5.S3.ConceptDynamics.DagSemantics.KnowledgeAlongDependency
 import D5.S3.ConceptDynamics.Restoration.TargetRecoveryCriterion
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

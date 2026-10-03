@@ -1,0 +1,22 @@
+**引理330.3（小量的统一尺度）。** 若 $g$ 是式（330.14）中任一固定系数函数，则
+
+$$
+\|g^{(m)}\|_\infty
+\le C_mn_k^{(m-\beta)/2}
+\quad(0\le m\le r_\beta),
+\qquad
+[g^{(r_\beta)}]_{C^\theta}\le C.
+\tag{330.15}
+$$
+
+对 $E_k\Gamma_{k-1}$ 同样成立，常数吸收固定倍率 $b$。单个系数还满足
+
+$$
+\sup_{k,t}
+\left(
+\|\ell_{k,t}\|_{C^\beta}
++\|u_{k,t}\|_{C^\beta}
+\right)<\infty.
+\tag{330.16}
+$$
+

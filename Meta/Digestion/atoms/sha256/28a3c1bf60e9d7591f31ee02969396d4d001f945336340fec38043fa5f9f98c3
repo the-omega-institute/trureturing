@@ -1,0 +1,28 @@
+**定理333.3（准确总矩的近临界增长指数）。** 对全部固定合法参数，抽象类满足
+
+$$
+\boxed{
+c\,u^{-1}e^{-C\sqrt{\log(1/u)}}
+\le\mathcal Q_{a-u}^{\mathrm{pol}}\le C/u
+\qquad(0<u<u_*).}
+\tag{333.10}
+$$
+
+如果固定实参数具有第332节的可计算名字，有效类也满足同型两侧界。于是分别有
+
+$$
+\boxed{
+\lim_{u\downarrow0}
+\frac{\log\mathcal Q_{a-u}^{\mathrm{pol}}}{\log(1/u)}=1,}
+\tag{333.11}
+$$
+
+以及在所述有效性条件下
+
+$$
+\boxed{
+\lim_{u\downarrow0}
+\frac{\log\mathcal Q_{a-u}^{\mathrm{alg}}}{\log(1/u)}=1.}
+\tag{333.12}
+$$
+

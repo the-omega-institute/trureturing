@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8321af107ba6f39ac4b39e497cee2f0cc6eef3557b257e1c2e365978f8d462a3
+  normalized_sha256: sha256:8321af107ba6f39ac4b39e497cee2f0cc6eef3557b257e1c2e365978f8d462a3
+cas_ref: sha256:8321af107ba6f39ac4b39e497cee2f0cc6eef3557b257e1c2e365978f8d462a3
+coverage_gids:
+  - gid: D5/S3/Arith/Erdos699DefectiveAdjacentCores.erdos699_defective_adjacent_gcds
+    target_statement_id: sha256:5f39e7682fcb4bdd38ad0b71d059458b4ddbc2d8c5603715fe7f58eeb406020e
+receipts:
+  unresolved_subitems: []

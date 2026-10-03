@@ -1,0 +1,40 @@
+**定理 41.2（二叉树的精确峰值—高度前沿）。** 令 $T$ 是叶集为 $[n]$ 的满二叉树，$A_v$ 是节点 $v$ 的叶坐标集，根计入消息。沿用独立的 [观察边界代数卷](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定义16、定理20的完整原子消息合同：消息是离散完整值，不允许由时序、控制或跨子树旁路携带输入。则
+
+$$
+P_*^{T_n}(T)=\min_m\max_v|m_v|=\max_v\kappa_{A_v}(T_n),
+\qquad h(T)=\max_{\text{叶 }v}\operatorname{dist}(\text{根},v),
+\tag{41.4}
+$$
+
+并有
+
+$$
+\boxed{\min_TP_*^{T_n}(T)=n+1,\qquad
+\min_Th(T)=\lceil\log_2n\rceil.}
+\tag{41.5}
+$$
+
+写 $H=\lceil\log_2n\rceil$。在所有达到最小峰值的树中，最小高度为
+
+$$
+\boxed{
+\min_{T:P_*^{T_n}(T)=n+1}h(T)=
+\begin{cases}
+H+1,&n=2^h\ge4,\\
+H,&\text{otherwise},
+\end{cases}}
+\tag{41.6}
+$$
+
+而在所有达到最小高度的树中，最小峰值为
+
+$$
+\boxed{
+\min_{T:h(T)=H}P_*^{T_n}(T)=
+\begin{cases}
+n+2,&n=2^h\ge4,\\
+n+1,&\text{otherwise}.
+\end{cases}}
+\tag{41.7}
+$$
+

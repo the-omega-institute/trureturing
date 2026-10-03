@@ -1,0 +1,17 @@
+**(c) 外部路径不返回。** 定义
+
+   $$
+   X_0=\operatorname{Succ}(C)\setminus C,\qquad
+   X_{n+1}=X_n\cup\bigl(\operatorname{Succ}(X_n)\setminus C\bigr).
+   \tag{63.14}
+   $$
+
+   对所有 $n\ge0$ 都有
+
+   $$
+   \operatorname{Succ}(X_n)\cap C=\varnothing.
+   \tag{63.15}
+   $$
+
+这里不要求 $\operatorname{Succ}(C)\subseteq C$；单向离开可以存在，只要离开后没有路径返回。
+

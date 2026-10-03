@@ -1,0 +1,4 @@
+**证明。** 展开张量对数与熵即得等式。若 $\rho_A$ 奇异，正性保证 $\operatorname{supp}\rho\subseteq\operatorname{supp}\rho_A\otimes\mathcal H_B$：对应核方向的非负对角项总和为零，故该子空间被联合正算子消去。可在支持上合法展开。非负性给恢复刻画；局部酉保持边缘、联合熵与参考，给守恒。用定理 6.2 比较 $G_H$，再用自然对数下量子 Pinsker $\|\rho-\sigma\|_1^2\le2D(\rho\Vert\sigma)$，得两界并保证根号内非负。证毕。[MR17]
+
+$V\ne0$ 时 $\Delta_H$ 本身不被断言为非负数据处理缺陷。
+

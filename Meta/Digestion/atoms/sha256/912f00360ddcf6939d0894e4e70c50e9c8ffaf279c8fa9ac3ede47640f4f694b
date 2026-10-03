@@ -1,0 +1,33 @@
+### 211.2 同一个有限整数中的实际素数幂
+
+取
+
+$$
+\delta=\frac y{\ell^3},\qquad z=y-\delta,
+\qquad B=\sqrt s.
+$$
+
+充分大时 $2<B<z$。对每个 $p\le z$ 定义整数指数
+
+$$
+e_p=
+\begin{cases}
+\lceil\log s/\log p\rceil-1,&p\le B,\\
+1,&B<p\le z.
+\end{cases}
+$$
+
+当 $p\le B$ 时，$e_p\ge1$ 且
+
+$$
+p^{e_p}<s\le p^{e_p+1}.
+\tag{211.5}
+$$
+
+定义单一有限整数
+
+$$
+m=m(y)=\prod_{p\le z}p^{e_p}.
+\tag{211.6}
+$$
+

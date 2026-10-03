@@ -1,0 +1,34 @@
+## 220. 累计深赋值过滤与实际 FIB 子族的完整矩
+
+沿用 §210、§216—219 的实际整数族与非负约数增量：
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,\quad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad t=e^\gamma\ell,
+$$
+
+$$
+R=y/\ell^2,\quad\delta=y/\ell^3,\quad b_2=\pi^2/6,\quad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\quad\Lambda=\frac{XU(s)}{t^s}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$，并记
+
+$$
+\mathcal H_D=\{d>D:\exists g\in I,\ d\mid N_g\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$。充分大时，每个 $d\in\mathcal H_D$
+只命中一个实际整数 $n(d)=dh$，其中 $1\le h<H$ 且 $d/X\le1/h$。
+继续使用已有展开
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.1}
+$$
+

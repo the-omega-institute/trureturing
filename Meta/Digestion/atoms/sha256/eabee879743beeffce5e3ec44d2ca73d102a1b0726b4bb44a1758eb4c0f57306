@@ -1,0 +1,14 @@
+### 15.4 环路阻碍逐对最优值由同一个通道实现
+
+对一条长为 $\ell\ge3$ 的简单环，按环方向定义唯一极分解
+\[
+ \sqrt{\tau_i}\sqrt{\tau_j}=T_{ij}|\sqrt{\tau_i}\sqrt{\tau_j}|,
+ \quad \mu_{ij}=\sigma_{\min}(\sqrt{\tau_i}\sqrt{\tau_j})>0,
+\]
+\[
+ U_{\mathcal C}=T_{12}T_{23}\cdots T_{\ell1},\qquad
+ h_{\mathcal C}^2:=\min_{|z|=1}\|I-zU_{\mathcal C}\|_F^2
+ =2d-2|\operatorname{Tr}U_{\mathcal C}|.
+\]
+$U_{\mathcal C}$ 是已知 Uhlmann 离散输运的环路对象 [AKSO07]；模掉标量相位是因为现在比较每对相干的模长。令 $\delta_{ij}=f_{ij}-|c_{ij}|$。
+

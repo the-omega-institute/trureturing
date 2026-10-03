@@ -1,0 +1,78 @@
+**定理346.1（地板和与有限层成本）。** 存在共同 \(c,C>0\)，使每份 \(A^{[J]}\in\mathfrak G_J\) 满足
+
+\[
+\boxed{
+c\left(1+\sum_{k<J}\eta_k\right)
+\le H_a(A^{[J]})
+\le C\left(1+\sum_{k<J}\eta_k\right).}
+\tag{346.15}
+\]
+
+同型上下界对每一个世界、每一种请求的参考矩都成立。无限类满足
+
+\[
+\boxed{
+H_a(A)<\infty
+\quad\Longleftrightarrow\quad
+\sum_{k\ge0}\eta_k<\infty.}
+\tag{346.16}
+\]
+
+若地板和发散，则参考临界矩在每个世界、每种请求中都为无穷。
+
+有限程序的任务矩逐世界满足
+
+\[
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\left(\eta_0^{-a}+\sum_{k<J}\eta_k^{1-a}\right).}
+\tag{346.17}
+\]
+
+特别地，若 \(H_a(A^{[J]})\le K\)，则
+
+\[
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge cJ,\qquad
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\,J^a/K^{a-1}.}
+\tag{346.18}
+\]
+
+**证明。** 参考增量与 \(n_k^a\) 由共同正常数双向控制。式（346.9）的下界和参考尾和给
+\(c(1+\sum_{k<J}\eta_k)\)。上界的三个部分分别由
+
+\[
+\sum_{k<J}n_k^a\delta_k=c_\delta\sum_{k<J}\eta_k,\qquad
+\sum_{k<J}n_k^am_k^{-a}
+\le M^{-a}\sum_{k<J}\eta_k^a
+\le M^{-a}\sum_{k<J}\eta_k,
+\]
+
+以及同一世界的局部和控制。用式（346.13）、（346.14）加入固定包装，得到式（346.15）。无限和同理。有限截止后不再取来源币，所以参考费用的地板和只到 \(J-1\)，不额外计入 \(\eta_J\)。
+
+由式（346.10），
+
+\[
+D_{k+1}^a-D_k^a
+\ge(\lambda_T^a-1)D_k^a.
+\]
+
+将 \(D_k\ge Mn_k/\eta_k\) 和 \(G_k\ge\delta_k/2\) 代入任务尾和，再用式（346.13），每一项至少为 \(c\eta_k^{1-a}\)，初始项至少为 \(c\eta_0^{-a}\)。这证明式（346.17）。由于 \(\eta_k\le1\)，也得到 \(cJ\) 下界。
+
+参考预算给 \(\sum_{k<J}\eta_k\le CK\)。对 \(J\ge1\)，Hölder 不等式给
+
+\[
+\begin{aligned}
+J
+&=\sum_{k<J}\eta_k^{(a-1)/a}\eta_k^{-(a-1)/a}\\
+&\le
+\left(\sum_{k<J}\eta_k\right)^{(a-1)/a}
+\left(\sum_{k<J}\eta_k^{1-a}\right)^{1/a}.
+\end{aligned}
+\]
+
+因此 \(\sum_{k<J}\eta_k^{1-a}\ge J^a/(CK)^{a-1}\)，结合式（346.17）得结论。证毕。
+
+如果 \(K\) 小于固定包装及初始参考调用所需预算，可行类可以为空。式（346.18）是有可行程序时的必要界，不承诺每个正 \(K\) 都可达到。
+

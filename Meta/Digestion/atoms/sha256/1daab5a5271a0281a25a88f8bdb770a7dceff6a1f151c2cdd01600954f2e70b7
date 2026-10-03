@@ -1,0 +1,12 @@
+**定理 143.2（原始时间秩壳）。** 有
+
+$$
+\begin{aligned}
+L_H(d)&=\sum_{p^k\mid H\,;\,R(p^k)\mid d}\ell_{p,k},\\
+A_H(r)&=\sum_{p^k\mid H\,;\,R(p^k)=r}\ell_{p,k}\ge0,\\
+L_H(d)&=\sum_{r\mid d}A_H(r). \tag{143.3}
+\end{aligned}
+$$
+
+此处 $p$ 只遍历素数，$1\le k\le a_p$。非零壳的秩均整除 $R(H)$。
+

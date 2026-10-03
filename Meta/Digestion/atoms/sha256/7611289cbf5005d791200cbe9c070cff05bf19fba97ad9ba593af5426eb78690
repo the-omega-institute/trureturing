@@ -1,0 +1,11 @@
+## 16. 三个尖点迫使两个 A 型缺陷的互易符号为负
+
+假定定义 14.1，且一个二维子群的三个非零元素 $g,h,g+h$ 全为 A 型。$g$-扭曲模的权重 $1/2$ 基态是一条直线；$E$ 在其上是符号字符，记为
+
+$$
+\varepsilon(g,h)\in\{\pm1\},\quad
+\varepsilon(g,h+k)=\varepsilon(g,h)\varepsilon(g,k),\quad
+\varepsilon(g,g)=-1.
+\tag{MD.12}
+$$
+

@@ -1,0 +1,13 @@
+### 346.10 实际精度约束下的价格匹配
+
+定义
+
+\[
+\Pi_{\mathfrak G}(\lambda,\epsilon)
+=\inf\left\{
+\mathcal C_\lambda(A^{[J]}):
+J\ge1,\ A^{[J]}\in\mathfrak G_J,\ e(A^{[J]})\le\epsilon
+\right\}.
+\tag{346.52}
+\]
+

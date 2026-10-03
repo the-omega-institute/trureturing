@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Query.Source
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.Census.Query
 
@@ -10,7 +13,7 @@ local instance : DecidableEq t001Arena.State := t001Arena.toArena.stateDecidable
 theorem legacy : LegacyPrimitiveRealization t001Arena
     (t001Arena.Law idRealization) idRealization := ⟨Iff.rfl⟩
 
-register_information_theorem target in t001Arena
+test_assess in register_information_theorem target in t001Arena
   primitives idRealization.toPrimitiveBundle realization legacy
 
 end LeanInformationAudit.Tests.Census.Query

@@ -1,0 +1,18 @@
+**Definition 1.1 (Finite visible protocol).** Let $A$ and $B$ be finite-dimensional complex Hilbert spaces, with $\dim B=e\ge2$, let $\beta>0$, let $H_A$ be Hermitian, and fix a positive trace-one matrix $\rho_A$. The initial joint state is $\rho_A\otimes\sigma_B$, where $\sigma_B$ ranges over every positive trace-one matrix on $B$, including singular matrices. The joint Hamiltonian is $H_A\otimes I_B$. A protocol has an arbitrary finite horizon $N$, measurable history spaces $F_0,\ldots,F_N$, an initial history $h_0\in F_0$, and the same visible controls for every $\sigma_B$.
+
+For each executed stage $n<N$ and preceding history $h\in F_n$, its outcome carrier $O_{n,h}$ has its own measurable space and a countably additive completely positive instrument $\Phi_{n,h}$ on visible matrices. Empty events have zero operation. The total operation is trace preserving on executed active histories. Classical outcomes and histories need not be finite, countable or standard Borel.
+
+The next history has a declared measurable total space $F_{n+1}$, a measurable preceding projection $p_n:F_{n+1}\to F_n$, and fibre embeddings $\iota_{n,h}:O_{n,h}\to F_{n+1}$ satisfying $p_n(\iota_{n,h}(o))=h$. Every measurable retained event $E\subseteq F_{n+1}$ pulls back to a legal measurable instrument event $\iota_{n,h}^{-1}E$. For every fixed $E$, every matrix entry of the operation $\Phi_{n,h}(\iota_{n,h}^{-1}E)$ on every visible matrix unit is measurable in $h$. These requirements concern the original retained measurable events; specifying measurable spaces on the fibres alone does not ensure measurable history transport.
+
+The waiting time $t_n:F_n\to\mathbb R$ is measurable. Put $U_n(h)=\exp(-it_n(h)H_A)$ and $V_n(h)=\exp(-it_n(h)(H_A\otimes I_B))$. The local physical event action on an arbitrary joint matrix $X$ is
+
+$$
+\mathcal T_{n,h}(E)(X)
+ =\bigl(\Phi_{n,h}(\iota_{n,h}^{-1}E)\otimes\operatorname{id}_B\bigr)
+       \bigl(V_n(h)X V_n(h)^*\bigr).
+$$
+
+Here tensor amplification is the tensor product of the actual underlying matrix linear map with the identity. For any finite Kraus family representing the same event map, it equals the sum of conjugations by the corresponding $M_r\otimes I_B$ on every joint matrix. This correspondence does not require a measurable choice of Kraus representations, nor does a finite representing family constrain the classical outcome carrier.
+
+A measurable stop set $S_n\subseteq F_n$ has measurable cemetery continuation $c_n:F_n\to F_{n+1}$ with $p_n(c_n(h))=h$. Stopping persists. The returned measurable record $r_n:F_n\to\mathbb N\times D$ has the same value after stopped continuation, and its first coordinate increases by one on active outcome transport. The stopped transition on event $E$ is $X\mapsto\mathbf1_E(c_n(h))X$. No stopped or failure mass is discarded, conditioned away or renormalized.
+

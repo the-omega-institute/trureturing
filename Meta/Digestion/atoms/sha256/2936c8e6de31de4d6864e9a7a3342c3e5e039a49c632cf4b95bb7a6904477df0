@@ -1,0 +1,12 @@
+**命题 1.1（端点传输）。** 若 $m\in\operatorname{Min}(I)$、
+$c\in\operatorname{Min}(\uparrow I\setminus I)$、且 $m<c$, 则
+
+$$
+c\in\operatorname{Max}(J)
+\qquad\text{and}\qquad
+m\in\operatorname{Max}(\downarrow J\setminus J).
+$$
+
+The statement uses the literal toggle trace above.  In particular, the endpoint conclusion is not a definition of a transition and does not assume a global rowmotion formula.  The proof must account for the processed/unprocessed membership at the exact step at which each point is toggled; the local alternatives are the interval-closed toggle conditions for an absent point and for a present point.
+
+## 追加锚（本行以下为增补区）

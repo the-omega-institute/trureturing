@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d243620eab770bd3941fe2322df380077365f9e97b80c92a93d954369258c65d
+  normalized_sha256: sha256:d243620eab770bd3941fe2322df380077365f9e97b80c92a93d954369258c65d
+cas_ref: sha256:d243620eab770bd3941fe2322df380077365f9e97b80c92a93d954369258c65d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: Matrix.det_fin_two, Matrix.isUnit_iff_isUnit_det, Int.isUnit_iff_abs_eq, ZMod.isUnit_iff_coprime. Normalize det([[u,v],[v,u+v]])=u^2+u*v-v^2. Over Z use Int.isUnit_iff_abs_eq. Over ZMod m apply the same determinant criterion and ZMod.isUnit_iff_coprime to the absolute value of the integer determinant; integer sign changes preserve being a unit and the gcd. No frozen repository GID for this full arbitrary-weight criterion was found.'
+    previous_atom_id: 7698a51925c3e5bfe7edf8d33d7b4d7d00194fc7b3276c54cc0ee027344c4a8b
+    next_atom_id: 91bf1d9d08e9a8e42bdce614597b7fc475010662b2fce4ced0b63ada70d72d3f

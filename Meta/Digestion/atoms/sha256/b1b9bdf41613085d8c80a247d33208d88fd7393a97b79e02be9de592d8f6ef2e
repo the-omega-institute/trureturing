@@ -1,0 +1,1 @@
+| Weil 的素数—Archimedean 能量 | 对每个仓内偶、光滑、紧支撑复测试函数 $f$ 和每个包含其支撑的半径 $L$，满足式 (146.1) | 实际 zeta 零点载体已由 `UnconditionalCanonicalZeroData.zetaZeroData` 提供；缺口是所有测试函数的能量估计，不是载体存在性。 

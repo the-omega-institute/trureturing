@@ -1,0 +1,4 @@
+### 2.3 同一分解的 Gibbs、条件恢复与正则量子版本
+
+取 $R$ 为 $\ker O$ 的欧氏正交基矩阵，$C_h=R^TSR$，$u=R^TNz$。坐标 $z=Ly+Ru$ 可逆。由第 2.2 节，$\dot y=Ky$、$\dot u=A_hu$，其中 $AR=RA_h$。
+

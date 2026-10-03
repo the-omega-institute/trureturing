@@ -1,0 +1,13 @@
+### 10.1 两种投影下的相关缺陷
+
+设完整流 $\Phi_t$ 保持概率 $\mu$，在实 $L^2(\mu)$ 上诱导强连续酉群 $\mathsf U_t f=f\circ\Phi_t$，生成元记 $\mathscr L$。向量观测 $u$ 的各分量属于 $\operatorname{Dom}\mathscr L^2$，并且 $\mathbb E u=0$、$\mathbb E uu^T=I_r$。所有范数和期望均使用这个固定参考；一般非退化协方差可以先作固定白化。定义
+\[
+F(t)=\mathbb E[(\mathsf U_tu)u^T],\quad D=F'(0),\quad v=\mathscr Lu,
+\quad b(u)=\mathbb E[v\mid u],\quad r_u=v-b(u),
+\]
+\[
+N=\mathbb E[r_ur_u^T],\qquad
+E_{\rm expr}=\mathbb E[(b(u)-Du)(b(u)-Du)^T].
+\]
+$\mathsf P f=\mathbb E[f\mid u]$ 是到全部当前观测可测函数的正交投影。到 $u$ 各分量线性跨度的投影通常更小。
+

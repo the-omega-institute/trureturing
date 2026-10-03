@@ -1,0 +1,4 @@
+### 331.5 同时降价与提高精度的上界
+
+使用第328节的 $\mathcal V_a^{\mathcal C}(\delta,\lambda)$，其中 $\mathcal C\in\{\mathrm{pol},\mathrm{alg}\}$，计费为 $(N_H+\lambda N_T)^a$。以下同时适用于无额外身份输出合同和第一全局调用保留真实 $X$ 的子类，各自只在自身合同内取下确界。
+

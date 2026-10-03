@@ -1,0 +1,10 @@
+**引理 6.1（乘积相对交换子）。** 对空间张量积中的包含 $P_i\subset Q_i$，
+
+$$
+(P_1\overline\otimes P_2)'\cap(Q_1\overline\otimes Q_2)
+=(P_1'\cap Q_1)\overline\otimes(P_2'\cap Q_2).
+\tag{QCA.22}
+$$
+
+**证明。** 与 $P_1\otimes1$ 对易的元素，其全部第二因子正常切片都属于 $P_1'\cap Q_1$，因此落在 $(P_1'\cap Q_1)\overline\otimes Q_2$。再对 $1\otimes P_2$ 使用同一切片判据得到右式。反包含逐纯张量直接验证并取弱闭包。证毕。
+

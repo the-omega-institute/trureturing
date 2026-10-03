@@ -1,0 +1,19 @@
+**定理328.5（两个极限不可交换）。** 在本节同一输出、来源与身份合同中，对 $\mathcal C=\mathrm{pol},\mathrm{alg}$ 分别有
+
+$$
+\boxed{
+\lim_{\lambda\downarrow0}\lim_{\delta\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda)=\infty,}
+\tag{328.14}
+$$
+
+而
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\lim_{\lambda\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_*<\infty.}
+\tag{328.15}
+$$
+

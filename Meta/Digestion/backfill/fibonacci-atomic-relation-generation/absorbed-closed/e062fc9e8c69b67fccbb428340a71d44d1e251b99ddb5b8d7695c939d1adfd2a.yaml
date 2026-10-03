@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:e062fc9e8c69b67fccbb428340a71d44d1e251b99ddb5b8d7695c939d1adfd2a
+  normalized_sha256: sha256:e062fc9e8c69b67fccbb428340a71d44d1e251b99ddb5b8d7695c939d1adfd2a
+cas_ref: sha256:e062fc9e8c69b67fccbb428340a71d44d1e251b99ddb5b8d7695c939d1adfd2a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/FiniteIdentificationCapacityBound.finite_identification_capacity_bound
+    target_statement_id: sha256:ad0a8f2796b88e225ea9fd63645a037514dbffbcbb0310e582620742b420957a
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 523ef8ebd705354b3362b85a8b0959394c1547af7ad9456b3243839a025c01a9
+    - d9ab3897cd53734483de2efd80105e97cb933e61c49255bf4e6d836a7403c51a

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2b1b9fe645b0bd4c2a0718263c529734d0c785c2beea3f4d0dbc1c4953bdac96
+  normalized_sha256: sha256:2b1b9fe645b0bd4c2a0718263c529734d0c785c2beea3f4d0dbc1c4953bdac96
+cas_ref: sha256:2b1b9fe645b0bd4c2a0718263c529734d0c785c2beea3f4d0dbc1c4953bdac96
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/MonsterFusionSpan.fusion_span_and_capacity
+    target_statement_id: sha256:03945e5e8c7304a7714cf6db99d3ac83437d13f237bb0043f3c9abee9a2ff3fa
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+**命题 33.2（全矩阵障碍仅限含幺星嵌入）。** 全前缀矩阵的第一非零层是 $M_5$，下一层为 $M_{21}$；不存在含幺星嵌入 $M_5\to M_{21}$。但可恢复 isometric CPTP 编码、固定 Hilbert 空间的 cylinder refinement、nonunital corner embedding 均可存在。
+
+证明。含幺星同态 $M_n\to M_m$ 把 $n$ 个最小对角矩阵单位送到等秩、互相正交投影：等秩由两方向矩阵单位部分等距性得到；投影和为 $I_m$，故 $m=nr$。反向 $a\mapsto a\otimes I_r$ 给充分性。$5\nmid21$，所以该含幺嵌入不存在。直接共同延伸不同终态也失败：$[2]$ 的五后继与 $[5]$ 的三后继只共有 null、$[3]$、$[5]$；交叉矩阵单位沿这三标签延伸再乘回伴随，只恢复零态那边三个子投影，而不是全部五个。
+
+任意等距 $V:\mathbb C^n\to\mathbb C^m$，$m\ge n$，仍给 CPTP 编码 $\rho\mapsto V\rho V^*$；固定 density $\tau$ 后，解码
+
+$$
+\sigma\mapsto V^*\sigma V+
+\operatorname{Tr}[(I-VV^*)\sigma]\tau
+$$
+
+是 CP、TP，并在编码像上精确恢复。正交 complement 的 trace-and-prepare 与 compression 各为 CP，其迹和为原迹，证明不需 $n\mid m$。
+
+在一个事先选择的来源 Hilbert 表示上，cylinder multiplication projections 直接满足 $P_u=\sum_eP_{ue}$。这是同一空间的正交分割，给 diagonal function algebra 的含幺细化，不是 $\mathbb C^{W_L}$ 与 $\mathbb C^{W_{L+1}}$ 的全矩阵含幺嵌入。$\square$
+
+还可每次只选 null 后继，$V_L|u\rangle=|u[\mathrm{null}]\rangle$，得到全矩阵的忠实 corner maps $a\mapsto V_LaV_L^*$。旧单位只映到选定 null 子空间的投影，因此 nonunital。Hilbert 直极限有最终全 null 的合法无限地址为基，是可数的 separable 来源空间 $\mathcal H_{\mathrm{ev}}$。任意有限组这样的地址在某共同层出现，故角矩阵并包含所有有限支撑矩阵；它们的范数完成恰为 $\mathcal K(\mathcal H_{\mathrm{ev}})$。无限维 identity 不在其中。只加 $\mathbb CI$ 仍不能容纳一般无限秩且无限余秩的 cylinder projections：若投影 $P=K+cI$，其 Calkin 像是 scalar projection，$c$ 必为零或一，分别要求 $P$ 或 $I-P$ compact，从而有限秩。一般 cylinder projections 应放在 multiplier $B(\mathcal H_{\mathrm{ev}})$。这个 corner 完成与含幺同终态 AF 完成不同。
+

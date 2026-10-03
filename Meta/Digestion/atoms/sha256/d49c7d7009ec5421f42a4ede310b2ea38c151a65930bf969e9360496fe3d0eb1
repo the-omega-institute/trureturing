@@ -1,0 +1,13 @@
+**定理 1.1（稠密吸引极点的平凡中心化子）。** Let $G$ be a group and $X$ a Hausdorff
+topological space in which, for any $b,c\in X$, there is a point distinct from
+both. Let $\rho:G\to\operatorname{Homeo}(X)$ be a group homomorphism. Suppose the
+set of points $a$ for which there are $g\in G$ and $b\in X$ with $a\ne b$ and
+
+$$
+\forall x\in X\setminus\{b\},\qquad \rho(g)^n(x)\longrightarrow a
+\quad\text{as }n\longrightarrow\infty
+$$
+
+is dense in $X$. Then every homeomorphism commuting with every $\rho(g)$ is
+the identity.
+

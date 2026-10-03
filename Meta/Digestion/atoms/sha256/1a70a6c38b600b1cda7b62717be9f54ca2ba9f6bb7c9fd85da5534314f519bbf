@@ -1,0 +1,27 @@
+**定理 339.2（逐频率等幅变换与相位陪集）。** 定义
+
+$$
+u_\gamma=1-\frac1{1/2-i\gamma}
+=\frac{-1/2-i\gamma}{1/2-i\gamma}
+=\frac{2\gamma-i}{2\gamma+i},\qquad |u_\gamma|=1.
+\tag{339.7}
+$$
+
+对 $z\in\mathbb T^\Gamma$，置
+
+$$
+F_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}(u_\gamma z_\gamma),\qquad
+(QS)_H(z)=-2\sum_\gamma a_\gamma\operatorname{Im}\frac{z_\gamma}{1/2-i\gamma}.
+\tag{339.8}
+$$
+
+把 §338 的同一可和公式 $s_H$ 延拓到整个 $\mathbb T^\Gamma$，记为 $s$，使 $s|_H=s_H$。两级数一致绝对收敛，并满足 $F(T)=F_H(\phi(T))$、$F_H|_H=s_H-(QS)_H|_H$。$F$ 的尾部聚点值集合为 $s(uH)$；其逐频率振幅与 $S$ 相同，但整体极值及反演对称性不必相同。特别地，不能在未证明 $u\in H$ 时把 $uH$ 换回 $H$。
+
+**证明。** 指数频率的经典 Laplace 积分给
+
+$$
+\int_0^\infty e^{-v/2}e^{i\gamma v}\,dv=\frac1{1/2-i\gamma}.
+$$
+
+可和权重与可积指数核允许逐项交换求和和积分；（339.7）随即给（339.8）。分子和分母为共轭复数的适当倍数，故模长为 $1$。§338 的每个尾轨道稠密于 $H$，逐坐标乘以 $u$ 将其闭包送到陪集 $uH$；连续性保证尾部聚点值集合正是该陪集上的值域；这不保证极值在某个实际轨道时刻取得。逐频率模长不变不决定整个谱的可达相位集合。$\square$
+

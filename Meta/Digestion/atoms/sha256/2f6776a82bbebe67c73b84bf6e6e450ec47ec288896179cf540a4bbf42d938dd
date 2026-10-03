@@ -1,0 +1,5 @@
+**Proof.** Translation preserves height and Euclidean product distance,
+hence the formula in Definition 3.1. Direct substitution gives
+(T_0=\operatorname{id}) and (T_{u+v}=T_u\circ T_v). If (T_u(x,t)=(x,t)),
+then (x+u=x), so (u=0); the converse follows from (T_0=\operatorname{id}).
+

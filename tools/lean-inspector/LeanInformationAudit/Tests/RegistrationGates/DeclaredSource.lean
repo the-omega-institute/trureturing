@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredSource
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
@@ -11,7 +14,7 @@ def arena : PrimitiveLawArena where
 
 instance : DecidableEq arena.State := instDecidableEqBool
 
-register_information_template cutRealization
+test_assess in register_information_template cutRealization
 
 -- Mathematics is compiled independently of its downstream declaration.
 theorem original : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm

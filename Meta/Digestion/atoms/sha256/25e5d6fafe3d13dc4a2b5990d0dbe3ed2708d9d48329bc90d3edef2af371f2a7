@@ -1,0 +1,34 @@
+**命题 48.3（guard、固定点和相位差）。** 两个词 $U,V$ 都从 guard 零返回 guard 零，七个相位的 guard 为
+
+$$
+(s_0,\ldots,s_6)=(0,0,0,1,1,0,0).
+\tag{48.8}
+$$
+
+它们是原 $A_0=\Omega$ 中的合法地址，且均为本原窗口周期七。记
+
+$$
+x_j=\kappa_0(T^jU^\infty),\qquad
+y_j=\kappa_0(T^jV^\infty),\qquad j\pmod7.
+$$
+
+则
+
+$$
+\begin{aligned}
+x_0&=L+m_-,&
+x_1&=s-\frac{he_-}{D},\\
+y_0&=B_*-m_+,&
+y_1&=s+\frac{he_+}{D},
+\end{aligned}
+\tag{48.9}
+$$
+
+并且对 $1\le j\le6$
+
+$$
+x_j-y_j=(-g)^{7-j}(x_0-y_0),\qquad
+x_0-y_0=-\frac{t}{D}\ne0.
+\tag{48.10}
+$$
+

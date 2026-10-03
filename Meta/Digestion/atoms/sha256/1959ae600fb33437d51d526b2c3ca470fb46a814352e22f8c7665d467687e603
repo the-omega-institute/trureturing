@@ -1,0 +1,49 @@
+**命题 111.2（已有尺度与 Littlewood 振荡给出无界双侧符号）。** 规范规模满足
+
+$$
+\limsup_{x\to\infty}\frac{A^-(x)-x}{\sqrt x}=+\infty,\qquad
+\liminf_{x\to\infty}\frac{A^-(x)-x}{\sqrt x}=-\infty.
+$$
+
+尤其，对任意实数 $H$，都有稳定点 $u>H$ 满足 $A(u)>u$，也有稳定点 $v>H$ 满足 $A(v)<v$。
+
+证明。先明确所复用的尺度公式的适用域。[ZECKENDORF_EULER_5040.md](ZECKENDORF_EULER_5040.md) 的定义 7.1、定理 8.1 及式（19）—（24）已经给出最小端点最优者的尺度分解。该处较早的压力排除了 $n\le5040$，只有在
+
+$$
+0<\lambda<\lambda_c:=\frac{\log(12/11)}{\log11}
+$$
+
+时，式（19）才把受限压力与无约束压力识别起来。因为 $\lambda(x)\to0$，本节的 $x$ 最终满足这个条件；此时最小端点最优者就是定义 111.1 的 $N^-(x)$。因此可直接使用那里已证的
+
+$$
+A^-(x)=\psi(x)+(\sqrt2-1)\sqrt x+o(\sqrt x),\qquad
+\psi(x)=\sum_{p^j\le x}\log p.
+$$
+
+旧定理同时控制了所有 $k\ge3$ 层的总量为 $O(x^{1/3}(\log x)^{7/3})=o(\sqrt x)$；这里不把固定层的渐近擅自求无限和，也不重新建立该尺度定理。其严格端点约定已包括事件点，本证明不需要另设 $A^+$ 的渐近公式。
+
+外部解析输入是 Littlewood 的无条件结论
+
+$$
+\psi(x)-x=\Omega_\pm\bigl(\sqrt x\,\log\log\log x\bigr).
+$$
+
+本处引用的具体文本是 D. J. Platt 与 Tim Trudgian，*On the first sign change of $\theta(x)-x$*，*Mathematics of Computation* **85**(299) (2016), 1539–1547，[DOI: 10.1090/mcom/3021](https://doi.org/10.1090/mcom/3021) 的[作者手稿 arXiv:1407.1914v1](https://arxiv.org/pdf/1407.1914v1)，引言第 1 页式（2）的第二行。该行直接陈述的是 $\psi$ 的上述双侧振荡，没有 RH 假设。它是这里实际采用的二手定理来源；Littlewood 原文以及该手稿所引 Ingham 定理 34、35 的原始定理页未在此核读，不把手稿转述冒充对原始证明的核验。该论文后文的数值符号范围不是本证明的前提。
+
+写 $L(x)=\log\log\log x$；在充分大的实数上 $L(x)\to\infty$。上述 $\Omega_\pm$ 的含义是：存在常数 $c_+,c_->0$ 及趋于无穷的两列样本，使得分别有
+
+$$
+\psi(x)-x\ge c_+\sqrt x\,L(x),\qquad
+\psi(x)-x\le-c_-\sqrt x\,L(x).
+$$
+
+将已有尺度式写成 $A^-(x)-x=\psi(x)-x+\sqrt x(\sqrt2-1+\varepsilon(x))$，其中 $\varepsilon(x)\to0$。在正样本列上，除以 $\sqrt x$ 后的下界为 $c_+L(x)+\sqrt2-1+\varepsilon(x)\to+\infty$；在负样本列上的上界为 $-c_-L(x)+\sqrt2-1+\varepsilon(x)\to-\infty$。这证明两个极限断言。
+
+还须把严格符号样本移到稳定点。若样本 $t$ 本来稳定，无需移动。若 $t\in\mathcal E$，局部有限性给出一个无其他事件的左邻区间，且其常值为 $A^-(t)$。记 $d=A^-(t)-t\ne0$，在该区间取 $t-h$，其中 $0<h<|d|/2$，则
+
+$$
+A(t-h)-(t-h)=d+h
+$$
+
+与 $d$ 同号。可再令 $h<1$，并小到保留所需的 $t-h>H$。因原样本任意高，稳定的两种符号样本仍各自无界。这一步只转移严格符号，不需要排除事件相等或控制所有事件的跳幅。$\square$
+

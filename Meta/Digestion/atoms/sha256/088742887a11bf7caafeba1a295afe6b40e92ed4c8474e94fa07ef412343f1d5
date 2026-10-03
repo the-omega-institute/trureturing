@@ -1,0 +1,13 @@
+**定理 312.2（完整末端族的同一积分表示）。** 在假设312.1及定理309.1的实际完整半区间校准下，定义
+\[
+\mathcal M_L=\min_{z\in[m_L/2,m_L]}\Delta(H_L(z)).
+\tag{312.11}
+\]
+则对每个实际最小截止序列 $z_L^*$，有
+\[
+\frac{m_L-z_L^*}{m_L^{3/4}}\longrightarrow0,
+\qquad
+\sqrt{m_L}\left[\frac{\mathcal M_L}E-\mathcal H(m_L)\right]\longrightarrow0.
+\tag{312.12}
+\]
+

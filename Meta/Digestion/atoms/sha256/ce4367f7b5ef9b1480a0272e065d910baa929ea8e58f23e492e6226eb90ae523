@@ -1,0 +1,10 @@
+**定理322.5（钟预算的有限实现逼近）。** 在定理322.1条件下，若 $\mathcal J_s(\pi)\le K<\infty$，则对任意 $\eta,\xi>0$，存在有限有理策略 $\rho$，使
+
+$$
+\sup_{\theta,S}
+\|Q^\rho_{\theta,S}-Q^\pi_{\theta,S}\|_{\mathrm{TV}}
+\le\eta,
+\qquad \mathcal J_s(\rho)\le K+\xi.
+\tag{322.9}
+$$
+

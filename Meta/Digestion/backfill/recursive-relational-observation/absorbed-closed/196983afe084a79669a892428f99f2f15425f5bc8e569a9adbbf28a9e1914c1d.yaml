@@ -5,6 +5,18 @@ cas_ref: sha256:196983afe084a79669a892428f99f2f15425f5bc8e569a9adbbf28a9e1914c1d
 coverage_gids:
   - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterCodeDuality.character_code_eq_relation_space_orthogonal
     target_statement_id: sha256:5b1d6840a5f087035f8b4dc1a6eafcbb0e691a5859ad6635d533fe2728f88276
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.flat_exact_iff
+    target_statement_id: sha256:100faf44de83493e40cc5e3eea6ccfb932a536de08128e929133fb6ed8ebba50
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.flat_holonomy_constant
+    target_statement_id: sha256:6b7c2af77147b5f6c315d3a742af2149417711ee233b07fb08ee7e2da43a535c
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.holonomy_sector_card
+    target_statement_id: sha256:7323b763ed00d0524f86fe3125cde2d4a0c38d991c4e5d0ac1bef32fdd9c2f25
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.holonomy_surjective
+    target_statement_id: sha256:79f3542a998bcc4a8a93dd3241e8a8578020b589423976d2b5b9007a9b3addde
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.periodic_grid_linear_statistics
+    target_statement_id: sha256:d01e5a0e72cfe538cd03c01b20406598531e97c5653ac1425083cbf4682ea743
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.plaquette_relation_rank_one
+    target_statement_id: sha256:4cc6e9a756b12721553905a5b4ca96e59dd4133152aafde1c36dde0cdda69ace
   - gid: D5/S3/Zeros/EdgeTranspositionGeneration.connected_edge_transpositions_generate
     target_statement_id: sha256:175e46900fab7b51ab07e6b6bd2394aa3b6ba451b295f34d8cfe3820d485b316
 receipts:

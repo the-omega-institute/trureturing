@@ -1,0 +1,9 @@
+## 2. Source boundary
+
+Section 2 of the paper defines arcs as a set of ordered pairs, constructs
+$CD(N,a,b)$ from the generating set $\{a,b\}$, and repeats degree two as
+property P1. Its three-sector distance is a separate rule for path lengths.
+The paper's distinct $k=1$ example $TQ(5,1,2)$ is not the $N=3$ instance
+specified in Conjecture 2.4. The finite generator assertion above starts at
+$k=2$; the first three theorem statements retain $k=1$.
+

@@ -1,0 +1,30 @@
+**定理 65.5（Group transport under an admissible variable change）。**
+Let $F$ be a field, $W/F$ an elliptic Weierstrass curve and $C$ an
+admissible change of Weierstrass variables, with nonzero scale.
+The coordinate change induces an additive equivalence
+
+$$
+(C\mathbin{\cdot}W)(F)\simeq W(F)
+$$
+
+between their nonsingular point groups, including infinity.
+
+Proof. Substitute the coordinate change in the curve equation and
+its partial derivatives to preserve nonsingularity. The inverse
+variable change gives the inverse point map. Substitution in the
+negation, distinct-point addition and doubling formulas shows that
+the point map preserves the group law. Thus the coordinate
+bijection is an additive equivalence.
+
+Theorem 65.1 and the naïve-height definition are adapted from Mathlib
+revision `516d31250e96c4e8e76888c3d8e2e43a9642b9ee`. The canonical-height
+construction, quadratic-map construction and point variable-change
+construction are adapted from TauCeti revision
+`934db6ae0034643ffe7b5180242f9ec4c00a56ae`. The scalar-height transport
+proof combines the ideal-norm and infinite-place results of the
+repository's pinned Mathlib. These are applications and compatibility
+adaptations of existing height theory; they are not an originality
+claim. Immutable source paths, copyright statements, full license
+text and the condition for replacing a port by a pinned upstream
+declaration are recorded in `Library/ArithUnits/tauceti2026canonicalheight.md`.
+

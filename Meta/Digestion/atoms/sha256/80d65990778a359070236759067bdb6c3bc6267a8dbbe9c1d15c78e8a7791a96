@@ -1,0 +1,12 @@
+**定理 3.2（切口作用不变量）。** 下式定义群同态
+
+$$
+\Theta_A:\mathrm{QCA}(A)\longrightarrow
+\operatorname{Sym}(\mathscr H_A/\!\sim_{\mathrm{loc}}),
+\qquad
+\Theta_A(\alpha)[P]=[\alpha(P)],
+\tag{QCA.11}
+$$
+
+并且 $\mathrm{FDQC}(A)\subset\ker\Theta_A$。
+

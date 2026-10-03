@@ -1,0 +1,13 @@
+**定理346.4（逐阶族的类内匹配）。** 可以共同选取充分 \(K_0\ge1\)、\(u_0>0\) 和固定 \(c,C>0\)，使每个固定 \(K\ge K_0\) 满足
+
+\[
+\boxed{
+cK^{1-a}u^{-a}\le
+\mathcal T_{\mathfrak G}(u,K)
+\le Cu^{-a}\qquad(0<u<u_0).}
+\tag{346.39}
+\]
+
+特别地，对每个固定充分预算，
+\(\mathcal T_{\mathfrak G}(u,K)\asymp_Ku^{-a}\)。
+

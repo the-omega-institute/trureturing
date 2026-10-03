@@ -1,0 +1,15 @@
+**Proof.** Since (t>0), the ambient point (p) is nonzero, so (r(p)>0) and
+(h(J(p))=h(p)/r(p)^2>0). Euclidean sphere inversion about the origin of
+radius one is involutive and gives
+
+\[
+ d_2(J(p),J(q))=\frac{d_2(p,q)}{r(p)r(q)}.
+\]
+
+The positive square root of the product of the new heights is
+(\sqrt{h(J(p))h(J(q))}=\sqrt{h(p)h(q)}/(r(p)r(q))). Substituting both
+identities into Definition 3.1 cancels the same factor in the numerator
+and denominator. The involution and distance identity give the stated
+isometric equivalence. The cancellation for arbitrary (E) is the new
+geometric content; Mathlib supplies the Euclidean inversion identities.
+

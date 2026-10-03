@@ -1,0 +1,40 @@
+**证明。** 由 $q_1-\lambda=L$、$q_2+\lambda=B_*$ 和
+$\beta=\lambda-\delta$，有
+
+$$
+q_1-\beta=L+\delta,\qquad q_2+\beta=B_*-\delta,
+$$
+
+两端均在 $I_0$ 内，故得 (48.11)。由 (48.1)—(48.2)，
+$m_-=(61+15g)\delta>4\delta=m_+$，所以
+
+$$
+x_0=L+m_->L+\delta,\qquad
+y_0=B_*-4\delta<B_*-\delta.
+$$
+
+另一端的严格性由
+
+$$
+m_-+\delta<\frac1{256}+\frac1{20480}<\frac12<t,
+\qquad
+m_++\delta=5\delta<\frac12<t
+$$
+
+得到。于是两点严格位于 $E_1^\beta$ 内。
+
+又
+
+$$
+B_*-q_2=\lambda,\qquad q_3-B_*=7\lambda.
+$$
+
+因为 $m_+<1/5120<\lambda$，有
+$q_2<y_0=B_*-m_+<q_3$。因为
+$m_-<1/256<21/80<7\lambda$，有
+$q_2<z_0=B_*+m_-<q_3$。
+两点都在 $J_2$ 的内部，其零误差颜色不依赖端点归属。
+对颜色一的实际取得，取各自到 $J_1$ 的最近点，再向
+$\operatorname{int}J_1$ 作足够小的移动；严格扩张成员关系保证误差仍小于
+$\beta$。$\square$
+

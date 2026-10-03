@@ -1,0 +1,15 @@
+**引理344.3（升阶中心系数界）。** 对 \(0\le\ell\le D\)，
+\[
+C_{D,J}((x-p)^\ell)=\mu_{D,J,\ell}.
+\tag{344.13}
+\]
+存在绝对常数 \(C_\mu\)，使 \(1\le\ell\le D\) 时
+\[
+\boxed{
+|\mu_{D,J,\ell}|
+\le\left[
+C_\mu\max\left\{\sqrt{\frac{\ell p(1-p)}D},\,\frac{\ell}{D}\right\}
+\right]^\ell.}
+\tag{344.14}
+\]
+

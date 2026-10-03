@@ -1,0 +1,10 @@
+**定理 2146.1（$L_0$ 的非负整数本征空间与有限维能级）。** 沿用问题 2145.1 的同一个复多项式空间 $F_{\mathbb C}=\mathbb C[X_0,X_1,\ldots]$、模式 $a_r$ 与逐态有限的正规序算子 $L_0$。对有限支撑指数向量 $d=(d_i)_{i\geq0}$ 定义 $E(d)=\sum_{i\geq0}(i+1)d_i$，并令 $P_N=\{d:E(d)=N\}$、$F_N=\ker(L_0-N\,\mathrm{id})$。则每个 $P_N$ 都是有限集，且对所有 $N\geq0$ 有
+
+$$
+F_N=\operatorname{span}_{\mathbb C}\{X^d:d\in P_N\},\qquad
+\dim_{\mathbb C}F_N=|P_N|.
+\tag{2146.1}
+$$
+
+**证明。** 若 $d_i\ne0$ 且 $E(d)=N$，则 $i+1\leq N$，并且每个 $d_i\leq N$；因此 $d$ 由指标 $i<N$ 上的有限个有界指数确定，$P_N$ 有限，$N=0$ 时只有零向量。正模式湮灭真空，故 $L_0\mathbf1=0$。将式 (2145.4) 的第二个对易式取 $m=0$、$r=-(i+1)$，得到 $L_0(X_i v)=X_iL_0v+(i+1)X_iv$；归纳得 $L_0X^d=E(d)X^d$。多项式的单项式坐标唯一，将 $L_0-N$ 逐系数作用后，特征零保证 $E(d)\ne N$ 的坐标必须为零，于是得到核的反向包含。不同 $d$ 的单项式线性无关，故维数恰为 $|P_N|$。复 Heisenberg 真空表示及其分次背景见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；正规序约定见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+

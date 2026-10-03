@@ -1,0 +1,71 @@
+**定理 39.8.1（所有 $\theta<\nu<\lambda$ 的固定有限尾见证）。** 假设定义39.1.2的 stems 不同、$k<a_0$，且 $\theta<\lambda$。对每个固定实预算 $\theta<\nu<\lambda$，这个闭族供应一对固定合法 $D$ 终尾及其实际共同过去，迫使每个合法解码器满足
+
+$$
+B^{\mathrm{worst}}_{\nu,\mathcal A}(N)
+\ge\left\lfloor\frac{N-a_0}{L}\right\rfloor-O(1).
+$$
+
+最优阶数为 $\Theta(N+1)$。该结论不要求 $\theta$ 的单点竞争判据成功；几何替换部分也适用于空 stems，但空 stems 没有本下界的首次不同位置。
+
+**证明。** 设 $\Delta=\nu-\theta>0$。从 $H_j$ 各选一个标量 $x_j$，并由满像各选一条合法完成尾 $\xi_j\in A_{s_j}$。定理39.3.2从 $\theta$ 本身供应这对固定尾的整个闭族。由合法空尾截断密度，各固定一次
+
+$$
+\widehat\xi_j\in D_{s_j},\qquad
+|\widehat x_j-x_j|<\Delta/4,\qquad j=1,2.
+$$
+
+这些近似不随 $n,z$ 改变，也不必位于 $H_j$ 或原图返回片内；它们保持正确终端 guard，所有前接来源仍合法。
+
+对长 $M_n=a_0+nL$ 的任一个历史，记原坐标与替换后坐标为 $x_{j,z,r},\widehat x_{j,z,r}$。前缀完全相同，仿射后缀给每个被观察位置 $0\le r<M_n$ 的精确等式
+
+$$
+\widehat x_{j,z,r}-x_{j,z,r}
+=(-g)^{M_n-r}(\widehat x_j-x_j),\qquad
+|\widehat x_{j,z,r}-x_{j,z,r}|<\Delta/4.
+$$
+
+若该位置规定颜色 $i$，闭证书给 $x_{j,z,r}\in E_i^\theta$。距离是1-Lipschitz，所以
+
+$$
+\operatorname{dist}(\widehat x_{j,z,r},J_i)
+<\theta+\Delta/4.
+$$
+
+令 $D_X=\operatorname{diam}X=\phi^2$，$p_i$ 为到 $J_i$ 的投影，$c_i$ 为其中点，置
+
+$$
+\varepsilon=\frac{\Delta}{4D_X},\qquad
+y_{j,z,r}=(1-\varepsilon)p_i(\widehat x_{j,z,r})+\varepsilon c_i.
+$$
+
+由 $0<\Delta<\lambda<D_X$，有 $0<\varepsilon<1$。每个格正长度，故 $y_{j,z,r}$ 是实际格的严格内部点，归属无关，并在 $X$ 内。其对投影的位移满足
+
+$$
+|y_{j,z,r}-p_i(\widehat x_{j,z,r})|
+\le\varepsilon\frac{\operatorname{diam}J_i}{2}
+\le\Delta/8<\Delta/4.
+$$
+
+从而取实际误差 $e_{j,z,r}=y_{j,z,r}-\widehat x_{j,z,r}$，有
+
+$$
+|e_{j,z,r}|
+\le\operatorname{dist}(\widehat x_{j,z,r},J_i)
++|y_{j,z,r}-p_i(\widehat x_{j,z,r})|
+<\theta+\Delta/2<\nu.
+$$
+
+裁剪固定内部目标，因此替换后的两条合法 $D$ 来源实际取得同一规定历史 $h_z$。每个分量的所有坐标仍来自前接该固定近似尾的一条地址；目标可逐坐标选择，但不能更换来源。误差没有按历史长度累加，它始终是一个终尾差乘收缩幂，再加一次内部目标位移。
+
+经过恰好 $M_n$ 次出发取得，分别接 $S_{\widehat\xi_1},S_{\widehat\xi_2}$ 的零误差未来。第一未来对所有 $n,z$ 相同，竞争方接自己的未来即可。完整记录的误差均有一个共同严格预算上界
+
+$$
+r_*:=\theta+\Delta/2<\nu,
+$$
+
+其后全为零。定理28.1再次使不同第一来源的 $h_z$ 不同，定理39.7.1证明中的 $(c_z,o_z)$ 计数逐句适用，仍有 $2^n/(k+1)$ 个完整配置，得到相同线性下界。定理33.13给上界。
+
+整个构造初始化于 $\theta$，裕量是 $\nu-\theta$。若该族曾在预算 $b$ 从闭图抽出，仍允许 $\theta<\nu<b$；没有改用 $\nu-b$，也没有要求在 $\theta$ 或 $\nu$ 构造新图。替换后的轨迹离开旧片不会影响合法前接和实际目标证明。$\square$
+
+引理36.24给同一量化转移机制，本节将它明确用于有限族的最小闭预算，并给足其初始化前提。终端坐标始终未观察，附加未来从 $S_{\widehat\xi_1}$ 首坐标开始。若另采用残余解码器的已观察终端约定，须先把那一次额外取得单独计入，并把后续未来改为 $S_{T\widehat\xi_1}$；同一终端坐标不能取得两次。
+

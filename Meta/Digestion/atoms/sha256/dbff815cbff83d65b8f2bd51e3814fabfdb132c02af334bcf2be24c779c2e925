@@ -1,0 +1,6 @@
+At $k=1$, $N=3$ and $b=-5=1=a$ modulo $3$, so the set of outgoing
+neighbors has cardinality one. This does not affect the preceding sector
+coverage, exact-radius witness, or lattice equality. It does contradict the
+paper's degree-two graph convention when that convention is imposed on the
+literal $k\ge1$ quantifier.
+

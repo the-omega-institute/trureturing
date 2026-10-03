@@ -1,0 +1,17 @@
+### 312.2 有限停止记录的信息和二阶响应
+
+令 $e_j$ 为标准基向量，定义
+
+$$
+\begin{aligned}
+\xi_i&=\frac{X_i}{p_{A_i}}-\frac{1-X_i}{1-p_{A_i}},\\
+S_n&=\sum_{i=1}^nR_i e_{A_i}\xi_i,\\
+J_n&=\sum_{i=1}^nR_i e_{A_i}e_{A_i}^{\mathsf T}
+\left(\frac{X_i}{p_{A_i}^2}+
+\frac{1-X_i}{(1-p_{A_i})^2}\right).
+\end{aligned}
+\tag{312.3}
+$$
+
+在有限停止词上，它们分别是对数似然的梯度和负Hessian。单个请求只涉及一个来源参数，所以 $J_n$ 为对角正半定矩阵。
+

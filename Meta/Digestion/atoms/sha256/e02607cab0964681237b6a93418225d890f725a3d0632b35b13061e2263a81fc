@@ -1,0 +1,15 @@
+### 10.9 本章来源和归属
+
+[KHKP15] E. Kalligiannaki, V. Harmandaris, M. A. Katsoulakis, P. Plechac. *The geometry of generalized force matching in coarse-graining and related information metrics*. arXiv:1504.02152. 条件期望投影、力匹配与热力学积分的既有基础；本章 Cartesian 平均力导数直接从条件配分积分推导。
+
+[LTPL23] Y. T. Lin, Y. Tian, D. Perez, D. Livescu. *Regression-Based Projection for Learning Mori–Zwanzig Operators*. SIAM Journal on Applied Dynamical Systems (2023), DOI 10.1137/22M1506146; arXiv:2205.05135. 线性和非线性回归投影连接 Mori 与 Zwanzig 的已有方法。本章不将投影选择或误差正交分解本身认领为新算法。
+
+[ASDN22] C. Ayaz, L. Scalfi, B. A. Dalton, R. R. Netz. *Generalized Langevin equation with a nonlinear potential of mean force and nonlinear memory friction from a hybrid projection scheme*. Physical Review E 105, 054138 (2022), DOI 10.1103/PhysRevE.105.054138. 平均力势与非线性记忆的已有组合。
+
+[GS21] F. Glatzel, T. Schilling. *The Interplay between Memory and Potentials of Mean Force: A Discussion on the Structure of Equations of Motion for Coarse Grained Observables*. Europhysics Letters 136, 36001 (2021); arXiv:2107.01111. 其对非线性平均力、简单记忆和涨落耗散组合的限制，是本章只给局部条件响应而不擅自闭合全时记忆的文献边界。
+
+[PCR26] A. Park, S. Chennakesavalu, G. M. Rotskoff. *Scaling transferable coarse-graining with mean force matching*. Journal of Chemical Physics 164, 244117 (2026), DOI 10.1063/5.0329526; arXiv:2602.14531. 使用其条件均值力与瞬时投影力噪声的区分，不据其非线性坐标形式推导本章结果，也不将该文实验性能认领为本项目读数。
+
+本章补齐第 9.4 节中“非线性观察下哪些误差真正来自隐藏状态”的一部分义务。全局最小非线性预测状态的构造、有限历史所需长度、实际 noisy sensor 的联合置信保证，以及量子非对易条件恢复的对应仍需分别证明。
+
+<a id="sec-memory-consistency"></a>

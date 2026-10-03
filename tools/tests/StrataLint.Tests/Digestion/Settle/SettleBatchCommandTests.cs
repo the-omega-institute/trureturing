@@ -14,7 +14,7 @@ public sealed partial class SettleBatchCommandTests
     [InlineData("QUARANTINE_PRESENT")]
     [InlineData("COVER_DISPOSITION_PRESENT")]
     [InlineData("UNRESOLVED_SUBITEMS_PRESENT")]
-    [InlineData("CHAIN_PARENT")]
+    [InlineData("BROKEN_CHAIN")]
     [InlineData("ATOMIZER_NONE")]
     [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
@@ -34,7 +34,7 @@ public sealed partial class SettleBatchCommandTests
             "QUARANTINE_PRESENT" => target with { Receipts = target.Receipts with { Quarantine = new("blocked", "supply witness", "missing-prerequisite") } },
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
-            "CHAIN_PARENT" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
+            "BROKEN_CHAIN" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
             "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
             "RECEIPT_PRESENT" => Settled(target) with { ProjectedStatus = target.ProjectedStatus },
             _ => target,
@@ -56,7 +56,7 @@ public sealed partial class SettleBatchCommandTests
         var before = Image(temporary);
         var result = Batch(temporary, raw, "[[requests]]\n" + request);
         Assert.False(result.Success);
-        Assert.Contains("SETTLE_INVALID " + (code == "RECEIPT_PRESENT" ? "NOT_RESIDUAL_OPEN" : code), result.Error, StringComparison.Ordinal);
+        Assert.Contains("SETTLE_INVALID " + (code == "RECEIPT_PRESENT" ? "NOT_RESIDUAL_OPEN" : code == "BROKEN_CHAIN" ? "OCCURRENCE_MISSING" : code), result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(temporary));
     }
 

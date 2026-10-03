@@ -1,0 +1,14 @@
+### 10.5 静态热分布完全相同的一族非线性反例
+
+取平面磁系统
+\[
+H=\tfrac12(p_x^2+p_y^2)+\tfrac14x^4+\tfrac\kappa2(y-a x^2)^2,
+\quad\kappa>0,\quad c\in\mathbb R,
+\]
+\[
+\dot x=p_x,\quad\dot y=p_y,\quad
+\dot p_x=-x^3+2\kappa ax(y-a x^2)+cp_y,
+\quad\dot p_y=-\kappa(y-a x^2)-cp_x.
+\]
+势能子水平集紧，能量守恒给完整光滑流；Gibbs 分布有全部所需多项式矩。记 $z=y-a x^2$，则 $x,p_x,z,p_y$ 在 Gibbs 参考下相互独立，$z\sim N(0,(\beta\kappa)^{-1})$。
+

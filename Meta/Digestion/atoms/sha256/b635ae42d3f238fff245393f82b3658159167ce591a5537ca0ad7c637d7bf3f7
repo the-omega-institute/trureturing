@@ -1,0 +1,10 @@
+## 1. Carrier and conditioning
+
+Let $U_n$ be the actual permutations of $\operatorname{Fin}(n)$ avoiding
+the literal patterns $2413$ and $3142$. The empty permutation belongs to
+$U_0$. Write $s_n=|U_n|$. A cut of sign $\varepsilon$ is direct when
+$\varepsilon=0$ and skew when $\varepsilon=1$. Let $J_m^\varepsilon$
+be the actual avoiders with no proper cut of that sign. For positive
+$m,k$, let $V_{m,k}^\varepsilon$ be the subset of $U_{m+k}$ whose
+minimum proper cut of that sign is $m$.
+

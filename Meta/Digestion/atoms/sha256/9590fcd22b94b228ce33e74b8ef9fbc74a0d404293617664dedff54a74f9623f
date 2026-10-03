@@ -1,0 +1,9 @@
+## 参考文献与定位
+
+* [Kytölä, *VirasoroProject*](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean)：固定修订的秩一玻色 Sugawara 原始 Lean 证明；本库移植中心关系并保留 Apache 2.0 许可，来源与版本适配见 `Library/VertexAlgebra/kytola2025virasoro.md`。
+* [PR #10310](https://github.com/the-omega-institute/trureturing/pull/10310)：Monster-defect 与 fusion-chain 理论卷；本页区分有限标签结果、实际秩一 Fock 算子关系与仍缺的 VOA 机制。
+* [Basak 2017, *The octonions as a twisted group algebra*](https://arxiv.org/abs/1702.05705)：符号表/扭群代数背景；不提供本页的 VOA 实现。
+* [van Ekeren–Möller–Scheithauer 2020, *Construction and Classification of Holomorphic Vertex Operator Algebras*](https://doi.org/10.1515/crelle-2017-0046)：简单流扩展接口及其假设；这里只作后续构造的文献定位。
+* [Kirillov 2002, *Modular categories and orbifold models*](https://arxiv.org/abs/math/0104242)：实际模块范畴存在后才适用的范畴背景。
+
+仓内对应的来源定位文件为 [`Library/VertexAlgebra/basak2017monstercharactercarry.md`](../../../Library/VertexAlgebra/basak2017monstercharactercarry.md)、[`Library/VertexAlgebra/vanekeren2020atomicmonstercompletion.md`](../../../Library/VertexAlgebra/vanekeren2020atomicmonstercompletion.md) 和 [`Library/VertexAlgebra/carnahan2016mixeddefectselection.md`](../../../Library/VertexAlgebra/carnahan2016mixeddefectselection.md)。

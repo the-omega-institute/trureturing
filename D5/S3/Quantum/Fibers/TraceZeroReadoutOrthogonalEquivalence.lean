@@ -76,7 +76,7 @@ private lemma matrix_inner_eq_trace_conjTranspose_mul (A B : Matrix d d ℂ) :
   change Matrix.trace (B * 1 * Aᴴ) = Matrix.trace (Aᴴ * B)
   rw [mul_one, Matrix.trace_mul_comm]
 
-private lemma matrix_inner_eq_trace_mul_of_hermitian (A B : Matrix d d ℂ)
+lemma matrix_inner_eq_trace_mul_of_hermitian (A B : Matrix d d ℂ)
     (hA : A.IsHermitian) :
     ⟪A, B⟫_ℂ = Matrix.trace (A * B) := by
   rw [matrix_inner_eq_trace_conjTranspose_mul, hA.eq]

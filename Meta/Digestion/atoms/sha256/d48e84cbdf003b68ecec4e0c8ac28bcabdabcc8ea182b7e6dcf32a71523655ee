@@ -1,0 +1,16 @@
+**定义 5.1（隐藏与显露阶段的共同原始间距）。** 完全沿用定义 4.1 的联合初始树域 $\mathcal T_H\times\{\ell,\ell+d\}$、同一个组成域 $D_H$、初始组成许可 $\chi_k$ 和原始数量报告 $r$，其中 $\ell\in\mathbb N_0$、$k,d,H\in\mathbb N_{\ge1}$。记
+
+$$
+\begin{aligned}
+\delta_{\mathrm{hid}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s,s'\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}|n_s(x)-n_{s'}(y)|,\\
+\delta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}|n_s(x)-n_s(y)|.
+\end{aligned}
+\tag{5.1}
+$$
+
+空的反标签点对集合取最小值 $+\infty$。每个组成由定义 1.1 的实际初始树实现，所以两个最小值也就是相应树来源上的反标签间距。下标 $\mathrm{cal}$ 表示额外显露实际阶段 $s$，此时观察为 $(s,r)$；对每个已知 $E\in\mathbb Q_{\ge0}$，允许响应仍满足同一个 $|r-n_s(c(T))|\le E$。显露阶段只容许按 $s$ 选择恢复器，不改变原始读数或 $E$ 的单位。隐藏阶段仍只观察 $r$，没有依赖实际 $s$ 的归一化、历史、地址、标签或第二通道。$H$ 只约束两个分支各自的初始树，后续替换树可超过 $H$。
+

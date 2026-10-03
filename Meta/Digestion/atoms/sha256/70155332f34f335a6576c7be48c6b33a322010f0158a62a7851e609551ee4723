@@ -1,0 +1,13 @@
+**定理 52.3（未知教师的统一训练—测试保证）。** 对每个 $n\ge3$、$\theta\in\Theta_n$、$\alpha\in[0,1]$、固定准入树、$\varepsilon>0$ 和 $0<\delta<1$，若（52.26）成立，则上述单次训练选择器满足
+
+$$
+P_{\theta,\alpha}^{m}\left\{
+\Delta_{\log}(\theta,\alpha;p_{D_m})\le\varepsilon,
+\quad
+\Delta_B(\theta,\alpha;p_{D_m})\le\varepsilon
+\right\}\ge1-\delta.
+\tag{52.30}
+$$
+
+这里的测试期望对独立同律 $X$ 取，$p_{D_m}$ 在训练后固定；没有把训练样本重新当测试样本。
+

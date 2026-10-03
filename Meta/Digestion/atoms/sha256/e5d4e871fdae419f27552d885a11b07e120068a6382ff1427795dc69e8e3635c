@@ -1,0 +1,51 @@
+**引理 232.1（公共核心的有限单点判据）。** 假设对每个 $J(d)\le J_0$ 的正整数，将 $d/n_\circ=u_d/v_d$ 约分以后，都有 $\log v_d\le L_0$。若
+
+$$
+\boxed{n_\circ e^{-2L_0}>\operatorname{diam}(I),}
+\tag{232.2}
+$$
+
+则 $|E^*|\le1$。这里不要求 $(n_\circ,m)=1$，也不要求 $d$ 有指定的下界。
+
+证明。任取 $g_1,g_2\in E^*$，各选一个实际除数 $d_i\mid N_{g_i}$，满足 $J(d_i)\le J_0$。写成既约分数 $d_i/n_\circ=u_i/v_i$。约分的定义给
+
+$$
+v_i\mid n_\circ,\qquad
+\gcd(d_i,n_\circ)=n_\circ/v_i.
+$$
+
+于是正整数
+
+$$
+\begin{aligned}
+q_0
+&=\gcd(n_\circ/v_1,n_\circ/v_2)\\
+&=\frac{n_\circ}{\operatorname{lcm}(v_1,v_2)}
+\ge\frac{n_\circ}{v_1v_2}
+\ge n_\circ e^{-2L_0}
+\end{aligned}
+\tag{232.3}
+$$
+
+同时整除 $d_1,d_2$，从而同时整除 $N_{g_1},N_{g_2}$。因 $N_{g_1}\equiv c\pmod m$ 且 $(c,m)=1$，必有 $(q_0,m)=1$。由
+$q_0\mid N_{g_1}-N_{g_2}=m(g_1-g_2)$ 得到
+
+$$
+q_0\mid g_1-g_2.
+$$
+
+式（232.2）—（232.3）又给
+$|g_1-g_2|\le\operatorname{diam}(I)<q_0$，故 $g_1=g_2$。$\square$
+
+若已有统一编辑界
+
+$$
+\mathcal L(d,n_\circ):=\sum_p|v_p(d)-v_p(n_\circ)|\log p
+=\log u_d+\log v_d\le L_0,
+\tag{232.4}
+$$
+
+它当然提供引理所需的分母界。但公共核心只消耗分母高度：移除参考素因子会缩小核心，新增分子素因子不会缩小它。因此可独立求更紧的分母界，而不必让式（232.2）承受全部编辑成本。
+
+条件（232.2）是一份有限充分条件，不由 §231 的正分数交叉乘积条件自动推出。某个有限实例通过短余因子高度过滤，并不表示它已经通过本节的全部除数公共核心过滤。
+

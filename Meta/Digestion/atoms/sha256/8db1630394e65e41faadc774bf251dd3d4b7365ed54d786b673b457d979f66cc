@@ -1,0 +1,81 @@
+**定理 50.3（只有两个端点退化的 log-odds 因式分解）。** 对 $\alpha\in[0,1]$ 定义
+
+$$
+\lambda=\log\frac RV,\qquad \eta=\log\frac UR,\qquad
+\xi=\log\frac RE,\qquad
+\delta=2(\xi-\eta)-\lambda
+=\log\frac{R^3V}{U^2E^2}.
+\tag{50.9}
+$$
+
+三个目标点在同一 $H$ 图中为
+
+$$
+v_0=(\eta,-\lambda),\qquad v_1=(\xi,0),\qquad
+v_2=(\eta+\lambda,\lambda),\qquad
+\det(v_1-v_0,v_2-v_0)=\lambda\delta.
+\tag{50.10}
+$$
+
+置 $F=R^3V-U^2E^2$，则准确恒等式为
+
+$$
+\begin{aligned}
+F&=\frac\chi{144}\alpha(1-\alpha)
+\bigl[\alpha^2+(6s-3)\alpha+8\bigr],\\
+RV-EU&=-\frac A{12}\alpha(\alpha+5-3s).
+\end{aligned}
+\tag{50.11}
+$$
+
+因此内部 $0<\alpha<1$ 有 $0<\delta<\lambda\le2t<2$，不存在内部共线例外。三点的仿射维数在 $\alpha=0$、$0<\alpha<1$、$\alpha=1$ 分别为 $0,2,1$。整个闭区间上另有
+
+$$
+\frac{4\chi}{3}\alpha(1-\alpha)
+\le\delta(\alpha)\le6A\alpha(1-\alpha).
+\tag{50.12}
+$$
+
+证明。对三行分别取式（50.3）就得到式（50.10）。特别地
+$v_1-(v_0+v_2)/2=(\delta/2,0)$，行列式为 $\lambda\delta$。
+
+将式（50.2）代入 $F$ 并清除分母，利用 $s^2=2$ 逐次幂相减得到
+
+$$
+\begin{aligned}
+1296F
+&=(2+\alpha)^3[2+(7-6s)\alpha]
+-[1+(3s-4)\alpha]^2(4-\alpha)^2\\
+&=9\chi\bigl[8\alpha+(6s-11)\alpha^2
++(4-6s)\alpha^3-\alpha^4\bigr]\\
+&=9\chi\alpha(1-\alpha)
+[\alpha^2+(6s-3)\alpha+8].
+\end{aligned}
+\tag{50.13}
+$$
+
+同样，相减 $RV$ 与 $EU$ 给式（50.11）的第二式。因为 $\chi>0$、$6s-3>0$，方括号在闭区间上至少为8；$5-3s>0$。由正分母知 $F>0$ 恰在内部，$F=0$ 恰在两个端点。因此 $\delta>0$ 恰在内部，并且
+
+$$
+\delta-\lambda=2\log\frac{RV}{EU}<0\qquad(\alpha>0).
+$$
+
+又 $R-V=\alpha A>0$，且 $R'V-RV'=A/3>0$，故 $R/V$ 随 $\alpha$ 严格增加，$\lambda(1)=\log(1/\chi)=2t$。$1+s<5/2<\exp1$ 给 $2t<2$。在 $\alpha=0$，$R=E=U=V=1/3$，三点全为零；在 $\alpha=1$，$\delta=0$ 而 $\lambda=2t>0$，端点三行仍互异且共线。这证明全部例外和仿射维数。
+
+对于 $x\ge0$，对 $1/(1+u)$ 积分给
+$x/(1+x)\le\log(1+x)\le x$。应用于 $x=F/(U^2E^2)$，得到
+
+$$
+\frac F{R^3V}\le\delta\le\frac F{U^2E^2}.
+\tag{50.14}
+$$
+
+全区间有 $R\le1/2,V\le1/3,U\ge1/3,E\ge1/4$，以及
+
+$$
+8\le\alpha^2+(6s-3)\alpha+8\le6(1+s).
+$$
+
+于是左端至少为 $(4\chi/3)\alpha(1-\alpha)$，右端至多为
+$6\chi(1+s)\alpha(1-\alpha)=6A\alpha(1-\alpha)$，给式（50.12），包括两个零端点。特别地 $\alpha=1/2$ 代回得到式（49.15）的 $\delta=\log(125/98)$；全区间判定使用的是式（50.13），而不是从该单点外推。$\square$
+

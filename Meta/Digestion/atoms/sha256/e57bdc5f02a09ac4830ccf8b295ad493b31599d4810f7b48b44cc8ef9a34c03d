@@ -1,0 +1,27 @@
+**定理 17.2（三设置精确恢复与尖锐噪声界）。** 对式（FT.19）的任意状态，取 $V=U_P(i)=\operatorname{diag}(i,1)$，定义独立制备实验的三个期望
+
+$$
+m_0=\operatorname{Tr}(P\rho),\quad
+m_1=\operatorname{Tr}(Q\rho),\quad
+m_2=\operatorname{Tr}(QV\rho V^\dagger).
+$$
+
+写 $h=r^2-r$，则
+
+$$
+p=m_0,\quad
+x=\frac{m_1-r-hm_0}{2b},\quad
+y=\frac{r+hm_0-m_2}{2b}.
+\tag{FT.25}
+$$
+
+若三个实测期望各自误差绝对值不超过 $\epsilon$，按这个线性公式重建 $\widehat\rho$，则
+
+$$
+\frac12\|\widehat\rho-\rho\|_1
+\le\sqrt{1+2\varphi}\,\epsilon.
+\tag{FT.26}
+$$
+
+对原始线性重建，该常数不能减小。
+

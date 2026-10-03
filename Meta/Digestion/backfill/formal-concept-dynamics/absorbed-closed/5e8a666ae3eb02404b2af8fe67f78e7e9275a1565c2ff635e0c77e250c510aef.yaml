@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5e8a666ae3eb02404b2af8fe67f78e7e9275a1565c2ff635e0c77e250c510aef
+  normalized_sha256: sha256:5e8a666ae3eb02404b2af8fe67f78e7e9275a1565c2ff635e0c77e250c510aef
+cas_ref: sha256:5e8a666ae3eb02404b2af8fe67f78e7e9275a1565c2ff635e0c77e250c510aef
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/SingletonQueryCapacity.singleton_or_constant_query_capacity
+    target_statement_id: sha256:c25bc92cfbd7fc582267973f5b2eb3ef7d5107dd8b00fac0eb3bf02d824f60c1
+receipts:
+  unresolved_subitems: []

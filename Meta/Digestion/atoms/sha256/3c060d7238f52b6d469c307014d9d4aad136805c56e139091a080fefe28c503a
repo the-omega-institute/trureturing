@@ -1,0 +1,41 @@
+### 344.1 系数范数与主引理
+
+固定非整数
+\[
+\beta>2,\qquad a=\beta/2,\qquad
+r=\lfloor\beta\rfloor\ge2,\qquad
+\theta=\beta-r\in(0,1).
+\tag{344.1}
+\]
+采用完整范数
+\[
+\|f\|_{C^\beta([0,1])}
+=\sum_{j=0}^r\|f^{(j)}\|_\infty
+ +[f^{(r)}]_{C^\theta([0,1])}.
+\tag{344.2}
+\]
+
+记归一化 Bernstein 基与系数范数为
+\[
+b_{d,i}(x)=\binom di x^i(1-x)^{d-i},\qquad
+P(x)=\sum_{i=0}^d c_i b_{d,i}(x),\qquad
+\|P\|_{\mathrm{coef},d}=\max_i|c_i|.
+\tag{344.3}
+\]
+多项式次数可以小于其表示次数 \(d\)。令 \(C_{D,J}(P)\) 表示次数 \(D\) 的第 \(J\) 个系数，\(E_d^D\) 表示次数提升；后者对最大绝对系数范数为压缩。
+
+HNP 的 Lorentz 算子为
+\[
+Q_{m,r}f(x)
+=\sum_{i=0}^m\sum_{\nu=0}^r
+ f^{(\nu)}(i/m)m^{-\nu}\tau_\nu(x,m)b_{m,i}(x),
+\tag{344.4}
+\]
+输出统一写成次数 \(m+r\) 的 Bernstein 多项式。其中
+\(\tau_0=1,\tau_1=0\)，\(\deg\tau_\nu\le\nu\)，并且
+\[
+Q_{m,r}P=P\qquad(\deg P\le r).
+\tag{344.5}
+\]
+这些分别是 HNP 式（28）—（29）和 Lemma 14 的接口。[^low_degree_coefficient_bridge]
+

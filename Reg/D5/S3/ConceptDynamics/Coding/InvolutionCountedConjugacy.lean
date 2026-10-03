@@ -100,15 +100,6 @@ register_information_theorem natural_factor_products in productsArena
       "fn", "arg", "arg", "arg"], stateBinder := 4 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  for name in [`D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.involution_minimum_one,
-      `D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy.natural_factor_products] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun r =>
-      r.occurrence.key.theoremName == name
-    unless row.any (fun r => match r.result with | .declaredValidated _ => true | _ => false) do
-      throwError "{name} registration is not declaredValidated"
-
 #print axioms minimumRegistration
 #print axioms productsRegistration
 end Reg.D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy

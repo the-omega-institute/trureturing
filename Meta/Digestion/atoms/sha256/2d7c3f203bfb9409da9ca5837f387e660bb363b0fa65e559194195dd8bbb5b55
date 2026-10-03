@@ -1,0 +1,35 @@
+### 351.5 从一个随机特征值构造合法概率接口
+
+给定任意 \(d\) 阶行随机矩阵 \(P\)，若 \(\lambda\) 是其特征值，则本目标具有 \(d\) 态精确实现。
+
+取非零复右特征向量 \(v\)，满足 \(Pv=\lambda v\)。选择模最大的分量 \(v_i\ne0\)，将整个向量除以 \(v_i\)，得到
+
+\[
+v_i=1,\qquad |v_j|\le1\quad(1\le j\le d).
+\tag{351.20}
+\]
+
+令初态为第 \(i\) 个纯经典状态，终端成功概率为
+
+\[
+\alpha=e_i^\top,\qquad
+b=\frac{\mathbf1-\operatorname{Re}v}{2}.
+\tag{351.21}
+\]
+
+由 \(|v_j|\le1\) 可知 \(0\le b_j\le1\)，所以 \(b\) 是合法效果。又因 \(P\) 为实矩阵，\(P^k\mathbf1=\mathbf1\)，且 \(P^kv=\lambda^kv\)，故
+
+\[
+\begin{aligned}
+\alpha P^kb
+&=\frac12-\frac12\operatorname{Re}(\alpha P^kv)\\
+&=\frac12-\frac12\operatorname{Re}(\lambda^kv_i)
+=\frac{1-\operatorname{Re}\lambda^k}{2}.
+\end{aligned}
+\tag{351.22}
+\]
+
+特别地 \(b_i=0\)，所以初始时刻 \(k=0\) 也满足目标。该证明不要求 \(P\) 不可约，也不要求特征向量各分量非负；非负要求施加在真实概率效果 \(b\) 上。
+
+对一般给定响应，只知道某个特征值能出现，并不自动提供指定振幅、常数项、初态和合法输出。本节之所以可以从谱值推出完整实现，正因为式（351.20）—（351.22）逐项履行了这些条件。
+

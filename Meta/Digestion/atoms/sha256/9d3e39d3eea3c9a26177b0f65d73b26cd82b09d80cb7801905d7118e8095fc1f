@@ -1,0 +1,42 @@
+**命题 217.2（实际大除数的无权个数）。** 有
+
+$$
+\boxed{
+\#\mathcal H_D=aTR+O(TR/\ell+T+H)=(a+o(1))TR.
+}
+\tag{217.5}
+$$
+
+证明。对实数 $B\ge2$，记
+
+$$
+S(B)=\sum_{\substack{h\le B\\(h,V)=1}}A_I(h).
+$$
+
+互素余数类的一致计数给 $A_I(h)=T/h+O(1)$。又
+
+$$
+\sum_{\substack{h\le B\\(h,V)=1}}\frac1h
+=\log B+O\bigl(1+(\log B)/\ell\bigr).
+\tag{217.6}
+$$
+
+确实，普通调和和为 $\log B+O(1)$；被删去的非互素项用联合上界控制为
+
+$$
+\sum_{p\mid V}\frac1p(1+\log B),
+$$
+
+再用式（217.1）。因此
+$S(B)=T\log B+O(T+T\log B/\ell+B)$。
+
+取 $B_-=A/(2D)$。每个被 $S(B_-)$ 计入的实际对都有
+$N_g/h\ge2D>D$，而每个实际大除数的互补因子均小于 $H$。
+命题 217.1 的唯一性于是给
+
+$$
+S(B_-)\le\#\mathcal H_D\le S(H).
+$$
+
+由 $\log B_-=aR+O(1)$、$\log H=aR$ 和 $H=o(T)$ 得到式（217.5）。$\square$
+

@@ -1,0 +1,19 @@
+**推论 45.8（组合输出合同的尖锐分离）。** 在定义45.1的同一个粗化任务、原始律和双线性传输限制下，两个准确度要求的最小资源为
+
+| 输出合同与目标 | 最小实际根维数 | 最小全部消息峰值 | 额外输出资源 |
+| --- | --- | --- | --- |
+| 齐次线性概率，准确 one-hot | $3$ | $4$ | 固定线性读出，可有限达到零 proper loss |
+| 仿射-logit softmax，任意小 proper loss | $1$ | $2$ | 固定偏置模板、非线性归一化及无界置信尺度 |
+
+第二行在有限尺度已能准确分类，但只在尺度趋于无界时趋近零 proper loss。宽度一的 softmax 与宽度至多三的齐次概率分别仍有式（45.15）、（45.9）的统一正损失底；这些证书不比较不同合同的精确最优风险。
+
+机制在同一中窗上可见。准确齐次概率必须同时线性恢复1、$b,c,bc$ 四个方向，尤其需在先发生第一接缝时取消第二指示的触发。两通道分数不准确恢复 $G_2$：$ab=1$ 时仍可保留 $(1-a/2)cd$ 的正值，但首接缝的分数已在 $3$ 或 $7/2$，由头判作类1；第二接缝独占时分数在 $1/2$ 或1，判作类2；其余为零，判作类0。声明的相对偏置把类2放在两个阈值之间，softmax 再把这些仿射差归一化为概率。收益属于固定仿射偏置与非线性激活的组合合同，不能单归于激活。
+
+定理45.3要求最终概率对中窗叶消息保持齐次线性，其式（45.12）才给概率张量的线性因子限制。softmax 之后的概率已不满足这个前提，所以其目标秩不再下界传输宽度；新的必要性必须由定理45.5的实际标量乘积／决策区间论证提供。旧齐次结论没有被改判。两通道中的 $b,c$ 和从同一个已观察窗口计算的 $bc$ 都不是新增原始数据；改变头也没有取得新数据。如果表示已把不同真类合并成同一根消息，任何确定性头仍无法恢复被合并的区别。本节消除的是受限输出运算的线性障碍，而非信息丢失。
+
+供应与新内容的范围明确如下。§3 给合法五窗的交互代数，§§14–16 区分信息、受限读出与样本识别，§§20–21 说明常数方向和输出编码的计费；§§35、38、42–44 提供真实补全、共同树空间、齐次因子路径以及式（45.2）、（45.13）的两通道供应。原卷 §104 固定低到高窗序与单位零结构部分；[观察边界代数卷](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定理19解释显式任务粗化，[计算行为表示卷](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md) §§4–5及[FIB 延拓几何卷](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §§5–6提供共同响应和相容传输的接口。本节在这些供应上连接实际三类的尖锐宽度、非线性头机制、有符号必要性及完整损失／头资源后果，属于具体任务的普通综合推导（repo-derived）。
+
+成熟工具各按原适用范围引用：Nouy，[*Higher-order principal component analysis for the approximation of tensors in tree-based low rank formats*](https://arxiv.org/pdf/1705.00880v2)，§3、§5.1的最小系数空间与单展平 SVD 尾用于独立整窗的有限乘积 Hilbert 空间，标签因子为未平均的欧氏三维空间，不借其层级准最优界声称独立切面同时最优；Boyd、Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§2.2.1的仿射半空间与 §3.1.5 的 log-sum-exp 提供区间及归一化工具，退化并列情形由本节逐项处理；Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3提供完整 quadratic/Brier 与 logarithmic score，式（45.5）采用相应的损失约定；Soudry 等，[*The Implicit Bias of Gradient Descent on Separable Data*](https://jmlr.org/papers/volume19/18-188/18-188.pdf)，引言及 §4.1区分可分分类与交叉熵在发散参数下的零下确界，本节不调用其梯度下降或最大间隔训练结论。
+
+这里给普通理论证明，不具有新增 Lean kernel 核验身份，也不主张一般工具的新原创性或全局文献优先权。全部界限只针对声明的三类输出、精确实数及两种头合同；没有得到完整首次诊断、训练或泛化保证、唯一隐藏机制、物理神经元／有限位数下界、因果结论或无条件运行时间结论。
+

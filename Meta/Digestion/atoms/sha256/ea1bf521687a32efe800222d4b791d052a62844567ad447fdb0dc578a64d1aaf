@@ -1,0 +1,32 @@
+## 215. 增长矩的固定函数类与实际核心适用范围
+
+沿用 §210–213 的实际整数族。令 $r\ge7$ 为素数，
+
+$$
+V=F_r,\qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+并记
+
+$$
+A=\min_{g\in I_r}N_g,\quad X=\max_{g\in I_r}N_g,
+\quad T=|I_r|,\quad y=\log A,\quad \ell=\log y,
+\quad s=y\ell,\quad t=e^\gamma\ell.
+$$
+
+于是 $X\asymp V^2$、$T\asymp V$、$y=2\log V+O(1)$。本节讨论的
+归一矩仍为
+
+$$
+\mathcal Q_r=\sum_{g\in I_r}\left(\frac{Z(N_g)}t\right)^s,
+\qquad Z(n)=\frac{\sigma(n)}n.
+$$
+
+本节得到对小核心类的一致估计，但其范围不包含 §212.3 中
+$\mathcal Q_r\ge1$ 所要求的实际大核心。所用 Shiu、Nair–Tenenbaum、
+Henriot 定理的版本、完整条件与勘误见
+[增长矩的文献接口](../../../Library/ArithSums/shiuhenriot2026growingmoments.md)。
+以下明确列出推导所需的函数类常数、参数代入和根密度。
+

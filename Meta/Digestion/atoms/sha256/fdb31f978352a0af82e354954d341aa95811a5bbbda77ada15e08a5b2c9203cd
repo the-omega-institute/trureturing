@@ -1,0 +1,8 @@
+任意有标记有限二叉树，叶标签为 $g_1,\ldots,g_n$ 且叶记录为零时，其最终粗标签及记录为
+
+$$
+g_{\rm out}=\sum_i g_i,\qquad
+c_{\rm out}=\sum_i\ell_{g_i}+\ell_{\sum_i g_i}.
+\tag{FC.9}
+$$
+

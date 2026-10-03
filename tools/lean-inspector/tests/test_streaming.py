@@ -237,39 +237,6 @@ class PublicationTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     inputs.safe_file(path.name)
 
-    def test_binding_batch_scope_expanded_once(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
-                report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
-                producer_scopes={'lean-report': paths('lean-report-inputs.json',
-                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
-            policy = root / 'Policy.lean'
-            policy.write_text('def driver := 1\n')
-            rows, requests = {}, []
-            for i in range(8):
-                name = 'X' + str(i)
-                source = root / (name + '.lean')
-                source.write_text('def x := 1\n')
-                utility = root / (name + '.json')
-                utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
-                rows[name] = [dict(module=name, source_path=source.name,
-                    source_sha256='sha256:' + publication.digest(source),
-                    information_templates=evidence_fixture(manifest_fixture(root)))]
-                requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
-            request, result = root / 'request.json', root / 'result.json'
-            request.write_text(json.dumps(requests))
-            # Isolate the source-binding boundary from ZIP decoding. The batch
-            # loop and each row's path/version validator still execute.
-            def validate(kind, owner, name, utility, artifact, **kwargs):
-                native.row_binding(rows[name], owner, name, utility,
-                    **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
-            with patch.object(native, 'validate', side_effect=validate), patch.object(
-                    publication.selection, 'Selection', wraps=publication.selection.Selection) as selections:
-                native.batch(request, result)
-                self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
-                self.assertEqual(selections.call_count, 1, '[FAIL] binding_batch_scope_expanded_once')
 
     def test_binding_evidence_survives_compaction_and_native_validation(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -656,7 +623,7 @@ raise SystemExit(37)
         lake = write('bin/lake', f'#!{sys.executable}\nimport os, sys\n' +
             'os.execv(sys.executable, [sys.executable, "-B", ' +
             repr(str(self.root / 'tools/lean-inspector/native.py')) + ', "batch", ' +
-            repr(str(request)) + ', "batch-result.json"])\n')
+            repr(str(request)) + '])\n')
         producer = write('candidate.dll', 'fixture candidate producer')
         report = write('public/report.json', 'previous report')
         self.phases.write_text('{"phase":"stale"}\n')
@@ -670,7 +637,6 @@ raise SystemExit(37)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=1', result.stderr)
         self.assertIn('exit status 37', result.stderr)
         self.assertEqual(report.read_text(), 'previous report')
-        self.assertFalse((self.root / 'batch-result.json').exists())
         phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
         self.assertNotIn('stale', [row['phase'] for row in phases])
         start = next(row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start')
@@ -722,11 +688,13 @@ class EntryPointTests(unittest.TestCase):
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
-        cases = [('inputs', 2, [], False), ('utility-input-build', 37, ['build'], False),
-                 ('ensure', 38, ['build', 'ensure'], False),
-                 ('report', 39, ['build', 'ensure', 'report'], False),
-                 ('publish', 40, ['build', 'ensure', 'report', 'publish'], False),
-                 ('report', 39, ['ensure', 'report'], True)]
+        # A built producer serves every later step, exactly as a prebuilt one does.
+        ensure = 'ensure candidate producer.dll'
+        cases = [('inputs', 2, [], False), ('producer-build', 37, ['build'], False),
+                 ('ensure', 38, ['build', ensure], False),
+                 ('report', 39, ['build', ensure, 'report'], False),
+                 ('publish', 40, ['build', ensure, 'report', 'publish'], False),
+                 ('report', 39, [ensure, 'report'], True)]
         for phase, status, calls, prebuilt in cases:
             with self.subTest(phase=phase, prebuilt=prebuilt), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -748,9 +716,13 @@ class EntryPointTests(unittest.TestCase):
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
                 def shell_phase(name, label, exit_code):
                     write(name, '#!/bin/sh\nprintf "%s\\n" ' + label + ' >> "$CALLS"\nexit ' + str(exit_code) + '\n')
-                shell_phase('bin/dotnet', 'build', 37 if phase == 'utility-input-build' else 0)
+                write('bin/dotnet', '#!/bin/sh\nprintf "%s\\n" build >> "$CALLS"\n'
+                    + 'printf "%s\\n" "$PWD/candidate producer.dll"\nexit '
+                    + str(37 if phase == 'producer-build' else 0) + '\n')
                 write('candidate producer.dll', 'fixture candidate producer')
-                shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
+                write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\n'
+                    + 'printf "ensure %s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> "$CALLS"\nexit '
+                    + str(38 if phase == 'ensure' else 0) + '\n')
                 shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')

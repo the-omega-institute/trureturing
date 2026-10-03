@@ -1,0 +1,7 @@
+## 52. Lucas square classifications for the square-class argument
+
+Let $L_0=2$, $L_1=1$, and $L_{n+2}=L_{n+1}+L_n$. Thus $L_n$ is the
+trace of $\varphi^n$ in the golden integer ring. The two classifications
+below are the classical input needed in the Fibonacci square-class
+argument of Section 10.
+

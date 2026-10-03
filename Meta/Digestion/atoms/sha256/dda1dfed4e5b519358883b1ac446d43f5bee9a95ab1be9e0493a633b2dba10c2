@@ -1,0 +1,28 @@
+**命题 149.2（四相与递归的共轭关系）。** 在上述组成坐标中，
+
+$$
+M^2=M+I,\qquad J^2=I,\qquad JM=(I-M)J,\qquad C^2=-I,\quad C^4=I.
+$$
+
+若 $S=M^3$、$L=M^6$，则
+
+$$
+CMC^{-1}=I-M=-M^{-1},\qquad
+CSC^{-1}=-S^{-1},\qquad CLC^{-1}=L^{-1}. \tag{149.1}
+$$
+
+证明。直接乘法给 $M^2=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)=M+I$、$J^2=I$，以及
+$JM=\left(\begin{smallmatrix}1&2\\-1&-1\end{smallmatrix}\right)=(I-M)J$；所列 $C$ 的平方为 $-I$。
+由 $M(M-I)=I$ 得 $M^{-1}=M-I$，且 $C^{-1}=JM^{-1}$，所以
+
+$$
+CMC^{-1}=M(JMJ)M^{-1}=M(I-M)M^{-1}=I-M=-M^{-1}.
+$$
+
+共轭保持矩阵乘法，取三次、六次幂即得式 (149.1)。$\square$
+这些恒等式属于组成层；有限矩阵的共轭关系本身没有构造 zeta 的零点载体或谱。
+
+在此基下，$M$ 的轨道为 $\alpha\mapsto\beta\mapsto\alpha+\beta\mapsto\alpha+2\beta\mapsto\cdots$，而
+$C$ 的轨道为 $\alpha\mapsto\beta\mapsto-\alpha\mapsto-\beta\mapsto\alpha$，对应 $1\mapsto i\mapsto-1\mapsto-i\mapsto1$。
+负向量属于非负组成幺半群 $\mathbb N^2$ 的有向 $\mathbb Z^2$ 完备化，不是原非负词语法中的合法负字母；旋转也不自动保持接缝与 End 的合法性。
+

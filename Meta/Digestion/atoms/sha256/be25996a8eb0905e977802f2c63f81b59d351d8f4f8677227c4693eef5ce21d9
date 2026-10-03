@@ -1,0 +1,15 @@
+**Ising 实例及三个任务。** 取 $H_0=gZ,H_1=-gZ$、$g\ne0$。仅热校准时最优为 $f=\operatorname{sech}(\beta g)$；允许任意对角逻辑生成元时，两个能隙 $2g,-2g$ 分开，所以精确自治上限为 $f/2$。
+
+若再要求逻辑 Hamiltonian 的 $\beta$-Gibbs 态等于已指定的边缘 $\gamma_A$，则 $K$ 被固定为平均力 Hamiltonian $-\beta^{-1}\operatorname{diag}(\log Z_0,\log Z_1)$ 加常数。本例 $Z_0=Z_1$，故 $K$ 为标量、$\omega=0$，而 (15.7) 的和为空，最优可见相干为零。这不排除联合输出在相关中携带信息。$g=0$ 时全部能隙合并，相干可以完整保留；精确相容条件存在不连续性。
+
+有限时间近似不同：热最优通道可取 $X=fI/2$，逻辑 $K=0$。对全部单比特输入取上确界，直接计算
+\[
+ \sup_\rho\|e^{-itH}\mathcal R(\rho)e^{itH}-\mathcal R(\rho)\|_1
+ =2f|\sin(gt)|,
+\]
+\[
+ \sup_\rho\|\operatorname{Tr}_B(e^{-itH}\mathcal R(\rho)e^{itH})-
+ \operatorname{Tr}_B\mathcal R(\rho)\|_1=2f\sin^2(gt).
+\]
+最大值由均衡相干输入达到。小 $|gt|$ 时可以近似保持，并没有违反严格全部时间的零相干结果。这个例子把热参考、量子相干和未来更新放在同一个 Hamilton 实现中，而非用形式相似性代替相容性。
+

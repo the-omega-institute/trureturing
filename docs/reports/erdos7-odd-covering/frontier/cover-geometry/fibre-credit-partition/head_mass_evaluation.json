@@ -1,0 +1,228 @@
+{
+  "checks": 110785,
+  "contract": "Fixed gamma=1/2 evaluation of the documented first-layer baseline and bounded-result schemas. Exact HM7/HM10 head-depth sums; no array or weight search and no uniform positivity claim.",
+  "limits": [
+    "Arrays are validated against their stored abstract common-source free and selected masses; arithmetic realization is not asserted.",
+    "Every support sums per-depth address/root maxima; it does not exchange an infinite sum and a maximum.",
+    "The baseline and bounded-result old-joint scores are checked against the two predeclared exact values.",
+    "All three comparisons use the same actual stored head weights, grouped arrays, source factors and numerical inventory.",
+    "No array or root-weight search, imported experiment code or Lean verification."
+  ],
+  "results": [
+    {
+      "by_supported_heads": {
+        "5": {
+          "head_min": {
+            "free": "8664418581919/198315713846250",
+            "selected": "8465783033402/297473570769375"
+          },
+          "old_joint": {
+            "free": "30475395040379/594947141538750",
+            "selected": "763418103421/22035079316250"
+          },
+          "support_count": 511,
+          "zero_row": {
+            "free": "417205221638/9014350629375",
+            "selected": "824302826624/27043051888125"
+          }
+        },
+        "5,7": {
+          "head_min": {
+            "free": "466852387207/7726586253750",
+            "selected": "11078757048244/297473570769375"
+          },
+          "old_joint": {
+            "free": "1059127/12113010",
+            "selected": "65536/1211301"
+          },
+          "support_count": 512,
+          "zero_row": {
+            "free": "416570715263/5666163252750",
+            "selected": "58897442621/1307576135250"
+          }
+        },
+        "7": {
+          "head_min": {
+            "free": "12385391405039/594947141538750",
+            "selected": "467475976691/42496224395625"
+          },
+          "old_joint": {
+            "free": "6398444999602/297473570769375",
+            "selected": "3405173691016/297473570769375"
+          },
+          "support_count": 511,
+          "zero_row": {
+            "free": "12528692438419/594947141538750",
+            "selected": "10316767193/932519030625"
+          }
+        },
+        "none": {
+          "head_min": {
+            "free": "2439229761086/42496224395625",
+            "selected": "343412031847/11017539658125"
+          },
+          "old_joint": {
+            "free": "2439229761086/42496224395625",
+            "selected": "343412031847/11017539658125"
+          },
+          "support_count": 502,
+          "zero_row": {
+            "free": "2439229761086/42496224395625",
+            "selected": "343412031847/11017539658125"
+          }
+        }
+      },
+      "checks": 55393,
+      "gain_min_over_zero": "2559872235643/99157856923125",
+      "gain_zero_over_old": "890229519184/27043051888125",
+      "gamma": "1/2",
+      "head_tail_start_at_lower_one": {
+        "5": 2,
+        "7": 2
+      },
+      "modes": {
+        "head_min": {
+          "free": "108475497620939/594947141538750",
+          "score": "17062109570167/198315713846250",
+          "score_decimal": 0.08603508637442062,
+          "selected": "1106517130288/10257709336875"
+        },
+        "old_joint": {
+          "free": "4978537715362/22882582366875",
+          "score": "3248409174919/118989428307750",
+          "score_decimal": 0.027299981360675428,
+          "selected": "78155793414137/594947141538750"
+        },
+        "zero_row": {
+          "free": "4536668416321/22882582366875",
+          "score": "1706052156983/28330816263750",
+          "score_decimal": 0.06021895525706886,
+          "selected": "14011869153431/118989428307750"
+        }
+      },
+      "recognized_schema": "first_layer_witness",
+      "root_group_residuals": {
+        "1": "693613711312/1573934236875",
+        "2": "30915609483392/99157856923125"
+      },
+      "strict_support_improvements": {
+        "min_free": 999,
+        "min_selected": 983,
+        "zero_free": 998,
+        "zero_selected": 990
+      },
+      "support_count": 2036,
+      "weighted_group_residual": "37306636648024/99157856923125",
+      "witness_path": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "witness_sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70"
+    },
+    {
+      "by_supported_heads": {
+        "5": {
+          "head_min": {
+            "free": "5193142376701/118989428307750",
+            "selected": "16876969063249/594947141538750"
+          },
+          "old_joint": {
+            "free": "30481935863527/594947141538750",
+            "selected": "2290355151263/66105237948750"
+          },
+          "support_count": 511,
+          "zero_row": {
+            "free": "13669050378314/297473570769375",
+            "selected": "8955816209794/297473570769375"
+          }
+        },
+        "5,7": {
+          "head_min": {
+            "free": "7237120002781/118989428307750",
+            "selected": "3730425856436/99157856923125"
+          },
+          "old_joint": {
+            "free": "1059127/12113010",
+            "selected": "65536/1211301"
+          },
+          "support_count": 512,
+          "zero_row": {
+            "free": "1222063365689/16998489758250",
+            "selected": "374073589264/8499244879125"
+          }
+        },
+        "7": {
+          "head_min": {
+            "free": "1771465819447/84992448791250",
+            "selected": "3284516550059/297473570769375"
+          },
+          "old_joint": {
+            "free": "6401612817748/297473570769375",
+            "selected": "3405173691016/297473570769375"
+          },
+          "support_count": 511,
+          "zero_row": {
+            "free": "12516489356093/594947141538750",
+            "selected": "3292487334902/297473570769375"
+          }
+        },
+        "none": {
+          "head_min": {
+            "free": "17112350882269/297473570769375",
+            "selected": "1856428674176/59494714153875"
+          },
+          "old_joint": {
+            "free": "17112350882269/297473570769375",
+            "selected": "1856428674176/59494714153875"
+          },
+          "support_count": 502,
+          "zero_row": {
+            "free": "17112350882269/297473570769375",
+            "selected": "1856428674176/59494714153875"
+          }
+        }
+      },
+      "checks": 55392,
+      "gain_min_over_zero": "6464218157093/297473570769375",
+      "gain_zero_over_old": "7203175139113/198315713846250",
+      "gamma": "1/2",
+      "head_tail_start_at_lower_one": {
+        "5": 2,
+        "7": 2
+      },
+      "modes": {
+        "head_min": {
+          "free": "760673247539/4160469521250",
+          "score": "25372782312134/297473570769375",
+          "score_decimal": 0.08529424058248518,
+          "selected": "64392844043743/594947141538750"
+        },
+        "old_joint": {
+          "free": "64765171084093/297473570769375",
+          "score": "5402534297581/198315713846250",
+          "score_decimal": 0.027242088853178175,
+          "selected": "78176738005159/594947141538750"
+        },
+        "zero_row": {
+          "free": "1770477419339/9014350629375",
+          "score": "572986792577/9014350629375",
+          "score_decimal": 0.06356384570950813,
+          "selected": "3847002504424/33052618974375"
+        }
+      },
+      "recognized_schema": "bounded_joint_result",
+      "root_group_residuals": {
+        "1": "4856557471672/11017539658125",
+        "2": "2811746403968/9014350629375"
+      },
+      "strict_support_improvements": {
+        "min_free": 953,
+        "min_selected": 938,
+        "zero_free": 1041,
+        "zero_selected": 1037
+      },
+      "support_count": 2036,
+      "weighted_group_residual": "44800856956/119037043125",
+      "witness_path": "docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "witness_sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6"
+    }
+  ],
+  "schema_version": 1
+}

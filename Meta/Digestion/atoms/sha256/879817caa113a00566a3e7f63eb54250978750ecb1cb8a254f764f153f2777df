@@ -1,0 +1,28 @@
+**定理 36.2（incoming-copy 下降的精确条件）。** 对固定相邻层的 finite instruments $J_{a,z}:A_{L+1}\to A_{L+1}$，所有声明细态都在动作合法域内、结果 $z$ 可读，target coarse instruments 满足
+
+$$
+E_LJ_{a,z}=J'_{a,z}E_L
+$$
+
+当且仅当每支有
+
+$$
+J_{a,z}^\dagger(i_L(A_L))\subseteq i_L(A_L).
+\tag{36.5}
+$$
+
+满足时唯一 $J'_{a,z}=E_LJ_{a,z}R_L$，且不依赖 section 权重。固定动作 $a_0$ 与结果 $z$ 后，对每个 coarse observable $a$，写 $F=J_{a_0,z}^\dagger(i_L(a))$，(36.5) 恰等价于：同一细终态内不同 actual incoming copies 的交叉块为零，同一旧源块的全部对角 copies 相等。具体为
+
+$$
+V_e^*F_tV_f=0\quad(e\ne f,\ \operatorname{tgt}(e)=\operatorname{tgt}(f)=t),
+$$
+
+$$
+V_e^*F_tV_e=b_s\quad(e:s\to t),
+\tag{36.6}
+$$
+
+其中 $b_s$ 独立于该源的边及其细靶块。
+
+证明。定理 36.1 给 $E_L^\dagger=i_L$ 与 CP section，故定理 35.1 直接给 (36.5)。由正交铺满分解 (36.1)，一个细 observable 在 $i_L(A_L)$ 内，恰是交叉角全零且各旧 $a_s$ 的副本相同，证明 (36.6) 必要且充分；尤其不能漏掉不同细终态中同源副本的相等。只需在 coarse matrix-unit basis 上检查。若已经下降，对任一 section $R$，$E_LJ_{a,z}R=J'_{a,z}E_LR=J'_{a,z}$，所以权重无关；未下降时这个 CP 复合虽可定义，却一般依赖 $R$，不能重现所有细输入。$\square$
+

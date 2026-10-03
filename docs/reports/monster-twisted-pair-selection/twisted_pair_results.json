@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "arithmetic": "integers and Fraction; no floating point",
+  "series_degree": 40,
+  "counts": {
+    "blocking_subspaces": 32,
+    "character_coefficients": 41,
+    "cocycle_equations": 28672,
+    "graded_representation_cases": 492,
+    "mixed_trace_coefficients": 40,
+    "negative_controls": 2,
+    "nine_pair_equations": 9,
+    "rational_function_values": 91,
+    "restriction_ranks": 6
+  },
+  "rank_sign_systems": {
+    "1": {
+      "consistent": true,
+      "rank": 1,
+      "free_bits": 0,
+      "dual_labels": [
+        1
+      ]
+    },
+    "2": {
+      "consistent": true,
+      "rank": 5,
+      "free_bits": 1,
+      "dual_labels": [
+        1,
+        3,
+        2
+      ]
+    },
+    "3": {
+      "consistent": true,
+      "rank": 18,
+      "free_bits": 3,
+      "dual_labels": [
+        1,
+        3,
+        6,
+        7,
+        4,
+        5,
+        2
+      ]
+    },
+    "4": {
+      "consistent": false,
+      "partial_rank": 43
+    }
+  },
+  "mixed_coefficients_x_minus1_to_7": [
+    "1",
+    "0",
+    "-492",
+    "0",
+    "-22590",
+    "0",
+    "-367400",
+    "0",
+    "-3764865"
+  ],
+  "cusp_minor_determinant": "3/4",
+  "rank12_B_lower_bound": 511,
+  "rank13_B_lower_bound": 1023,
+  "scope": "Finite diagnostics only. The rank-four VOA implication requires the manuscript’s common orbifold trace realization; no VOA/net/Monster construction, Lean or independent review."
+}

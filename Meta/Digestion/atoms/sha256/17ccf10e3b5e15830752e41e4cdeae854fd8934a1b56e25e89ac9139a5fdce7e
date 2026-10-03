@@ -1,0 +1,22 @@
+### 定理 286.5 子整包幂次旋转根相位却不能恢复子入口
+
+取实际链的前两位 $s_0=19,s_1=797$。对 $a,b\ge1$，令
+\[
+m=1260m_{19}^{a}m_{797}^{b},\qquad
+u_b=\bigl(8\cdot4^b\bigr)^{-1}\bmod19\in\{1,\ldots,18\}.
+\]
+则
+\[
+\boxed{\quad
+\mathcal E(m)=\{n\ge1:n\equiv0\pmod{363432}\}
+\ \cup\
+\begin{cases}
+\{n\ge1:n\equiv19128u_b\pmod{363432}\},&a=1,\\
+\varnothing,&a\ge2.
+\end{cases}
+\quad}
+\tag{286.16}
+\]
+其中 $u_1=3$，所以一次子整包的额外类为 $57384\pmod{363432}$。
+$u_b$ 关于 $b$ 的最小正周期恰为九；子指标 $797$ 的 Lucas 入口对全部 $a,b$ 都不存在。
+

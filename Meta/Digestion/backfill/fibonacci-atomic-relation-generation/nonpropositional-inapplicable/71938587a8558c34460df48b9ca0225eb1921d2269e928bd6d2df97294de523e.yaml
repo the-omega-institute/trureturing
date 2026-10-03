@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:71938587a8558c34460df48b9ca0225eb1921d2269e928bd6d2df97294de523e
+  normalized_sha256: sha256:71938587a8558c34460df48b9ca0225eb1921d2269e928bd6d2df97294de523e
+cas_ref: sha256:71938587a8558c34460df48b9ca0225eb1921d2269e928bd6d2df97294de523e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All clauses follow by direct application of pinned Mathlib FreeAddMagma.lift_of, FreeAddMagma.hom_ext, AddHom.map_add, Function.Semiconj.iterate_right, Function.Semiconj₂.iterate, Function.iterate_add_apply and Nat.fib/Nat.fib_add_two. Use FreeAddMagma Bool with alpha=false and beta=true; rho lifts false to beta and true to beta+alpha, and c lifts false to (1,0) and true to (0,1). Hom extensionality gives c(rho t)=(c(t).2,c(t).1+c(t).2). Iterate transport gives the exact source orbit. The linear read pair (2a+3b,3a+5b) commutes with this step and starts at (2,3), the third Fibonacci pair, proving q(c(T_j))=F_(j+3) for every natural j. Iteration of rho.map_add gives T_(j+2)=T_(j+1)+T_j; the initial readouts are 2 and 3 and q and c preserve addition. All quantifiers and proof-paragraph facts are retained. No frozen project GID carries this tree statement; no new Lean declaration is admitted.
+    previous_atom_id: d8d54bd6911e6235828d56e26ea85e9b8cfb2023727a9c8b00fc4f0852103985
+    next_atom_id: 9fb1b5d638a5a8036e7bfedde60a407eae667719e6ca934be1c3de847281e71d
+  chain_atoms:
+    - 51c359f23fe2849c11e6271766a892138b376d7d70899c0e7aa29b12a5a3224f
+    - 56f8e2bb88598331c12a31ae64f12df4c5e643def198fc8dbe8c84c0d03b0696

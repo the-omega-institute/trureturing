@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:71aa1fc661aa5a3038564934f9d0eea2fc96c06fc463655bc035a9cc5e12d335
+  normalized_sha256: sha256:71aa1fc661aa5a3038564934f9d0eea2fc96c06fc463655bc035a9cc5e12d335
+cas_ref: sha256:71aa1fc661aa5a3038564934f9d0eea2fc96c06fc463655bc035a9cc5e12d335
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenFibonacciModulusPeriod.golden_fibonacci_modulus_period
+    target_statement_id: sha256:ec85241f069809d18ca89ebf33ce8c42f79d0fefacc243177bdfebf2939a3936
+receipts:
+  unresolved_subitems: []

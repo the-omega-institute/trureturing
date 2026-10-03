@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:259d568f7a72bd4858e6d4de5a3ca78e996820cc5d3b0dc02d617473711b8af3
+  normalized_sha256: sha256:259d568f7a72bd4858e6d4de5a3ca78e996820cc5d3b0dc02d617473711b8af3
+cas_ref: sha256:259d568f7a72bd4858e6d4de5a3ca78e996820cc5d3b0dc02d617473711b8af3
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/FiniteGraphProbabilityLift.phi_bijective
+    target_statement_id: sha256:673dfc9b523d499703e138910a5bd4ea2ed13872136301438726f4f475d74ec6
+receipts:
+  unresolved_subitems: []

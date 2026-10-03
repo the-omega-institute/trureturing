@@ -1,0 +1,32 @@
+**证明。** [推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)的实际初态与本章相同；其外到内第 $k+1-i$ 项的右侧完整后缀对应执行第 $i$ 项的 $D_{i-1}$。取其 $s=(\lambda-b)/g^2$、$d=s/\chi^K$。低返回直接应用[式(59.24)](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24687-L24690)，其中 $D_H=D$、$A_H=A$、$h_H=h$，得
+
+$$
+\chi^rD>\chi^{K-1}A>\chi^Kh>s.
+\tag{62.15}
+$$
+
+超出实际帽的返回由[定理58.10.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24063-L24107)排除；本章同一完整后缀的比较仍为：对 $r>K$，
+
+$$
+\chi^rD<\chi^{K+1}h<\chi^KA<\chi^KZ_K<s,
+$$
+
+所以控制槽严格超预算。stem 的活跃输入是 $\chi D>\chi A\ge\chi^{K-1}A$；固定 anchor 的最大成本是第49.8节的 $\Theta_1=\lambda-g^2\chi X_H$。可固定自动槽上界
+
+$$
+C_{\rm auto}=\max\{\Theta_1,\ \lambda-g^2\chi^{K-1}A,\ \lambda-g^6\}<q_K<b.
+\tag{62.16}
+$$
+
+[式(59.22)](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24669-L24676)在 $Q_K=q_K$、$A_H=A$ 下恰给 (62.16) 的三项严格界；stem 输入仍是 $\chi D$，固定 anchor 自身输入是 $\chi X_H$，不能以输出 $Y_H$ 替代。低返回、stem、anchor 和全部非活跃槽因此都由本地 $C_{\rm auto}<b$ 自动严格通过。
+
+$r=K$ 时，(62.13)不超过 $b$ 恰为 $D\ge d$。在 $D=d$ 时，高侧位置4的实际坐标是
+
+$$
+q_1-\lambda+g^2\chi^Kd=q_1-b.
+$$
+
+[推论58.4.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23793-L23828)的等号接口指定唯一最近颜色1目标 $q_1$，所以实际闭取得恰须 $o_1=1$；严格及逐记录余量合同必须 $D>d$。低侧、同幂更外槽和自动槽严格通过，其他归属旗标不改变结论。所引充分性在 $D>d$ 时选择格内部目标，必要性使用裁剪非扩张；未拥有的最近点或严格超预算的闭距离均不能被裁剪补救。
+
+[定义58.3](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L23620-L23677)在 $b>0$、有限历史接各自原字面尾零误差未来的合同下，直接给逐槽严格与逐记录正余量的等价；这里仍只断言每条记录有自己的余量。所引全槽充分性作用于已经固定的同列表实际来源对，不另选后缀。证毕。
+

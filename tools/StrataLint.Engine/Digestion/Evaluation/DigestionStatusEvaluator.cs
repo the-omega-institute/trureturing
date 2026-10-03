@@ -365,12 +365,12 @@ internal static partial class DigestionStatusEvaluator
             && !authorityChanged;
         var localComplete = !baselineKeepsLocalIncomplete
             && structured
-            && edgeValidations.Values.Count(static edge => edge.IsResolved)
+            && (nonpropositional || (edgeValidations.Values.Count(static edge => edge.IsResolved)
                 == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
-            && entry.CoverageGids.Length > 0
-            && coverage
+                && entry.CoverageGids.Length > 0
+                && coverage))
             && entry.Receipts.UnresolvedSubitems.Length == 0;
-        var hasProgress = edgeValidations.Values.Any(static edge => edge.IsResolved)
+        var hasProgress = nonpropositional || edgeValidations.Values.Any(static edge => edge.IsResolved)
             || entry.Coverage.Length > 0;
         var hasUnresolvedCoverageTarget = edgeValidations.Values.Any(static edge => !edge.IsResolved)
             || entry.Coverage.Any(static edge => edge.TargetStatementId is null);
@@ -465,6 +465,7 @@ internal static partial class DigestionStatusEvaluator
         foreach (var item in work)
         {
             item.Migration = HasNonpropositionalReceipt(item.Entry)
+                    && item.Entry.Receipts.ChainAtoms.Length == 0
                 ? DigestionMigrationState.Nonpropositional
                 : item.LocalComplete && item.Entry.Receipts.ChainAtoms.Length == 0
                 ? DigestionMigrationState.Absorbed
@@ -485,7 +486,8 @@ internal static partial class DigestionStatusEvaluator
                         byId.TryGetValue(atomId, out var dependency)
                         && IsChainClosed(dependency.Migration)))
                 {
-                    item.Migration = DigestionMigrationState.Absorbed;
+                    item.Migration = HasNonpropositionalReceipt(item.Entry)
+                        ? DigestionMigrationState.Nonpropositional : DigestionMigrationState.Absorbed;
                     changed = true;
                 }
             }
@@ -514,7 +516,7 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         RawChangeSet? changes)
     {
-        if (HasNonpropositionalReceipt(item.Entry)) return DigestionTruthState.Inapplicable;
+        if (item.Migration == DigestionMigrationState.Nonpropositional) return DigestionTruthState.Inapplicable;
         if (item.HasUnresolvedCoverageTarget
             || item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))

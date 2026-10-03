@@ -1,0 +1,95 @@
+{
+  "scope": "Finite pairwise-distinct odd numerical moduli>1; at most eight prime divisors <=1400; at least one of 3,5,7,11 absent from LCM. Arbitrary original finite heights, residues and supports; any finite number of prime divisors>1400. General head version uses padded eight ordered primes r_i>=P_i and all nonhead primes>1400.",
+  "source_primes": [
+    3,
+    5,
+    7,
+    13,
+    17,
+    19,
+    23,
+    29
+  ],
+  "source_thresholds": [
+    2,
+    4,
+    4,
+    8,
+    8,
+    12
+  ],
+  "source_mass_lower": "10237584019/168750000000",
+  "simple_source_mass_strict_lower": "91/1500",
+  "source_worst_vertex": [
+    2,
+    4,
+    1,
+    -1,
+    1,
+    0,
+    0,
+    0,
+    -1
+  ],
+  "source_conditional_caps": [
+    "3/2",
+    "3/2",
+    "4/3",
+    "9/5",
+    "11/7",
+    "7/4"
+  ],
+  "source_joint_density_cap": "297/20",
+  "pure_anchor_survivor_factors": [
+    "1/2",
+    "3/4"
+  ],
+  "positive_pair_depth_sums": [
+    "2",
+    "7/8",
+    "5/9",
+    "19/72",
+    "25/128",
+    "14/81",
+    "17/121",
+    "43/392"
+  ],
+  "pair_query_factors": [
+    "5/2",
+    "13/8",
+    "11/6",
+    "67/48",
+    "121/96",
+    "59/45",
+    "94/77",
+    "267/224"
+  ],
+  "joint_query_seed_upper": "26010182627/1040449536",
+  "tail_cutoff": 1400,
+  "ell": 6,
+  "tail_degree": 4,
+  "tail_clipping_threshold": "1/4",
+  "tail_kernel_cap": "4/3",
+  "tail_charge_factor": "4/3",
+  "prime_product_constant": "73/71",
+  "integral_polynomial": "115/54",
+  "tau4": "2286058400500/1342865721551787",
+  "tail_loss_upper": "2123599874749732432625/37424571881219517431808",
+  "distorted_survivor_mass_lower": "7170057912347323462181930867/1827371673887671749600000000000",
+  "simple_distorted_survivor_strict_lower": "1/256",
+  "dependencies": {
+    "missing11-core-certificate/missing11_core_certificate.py": "42ea72e661e643f88df57d29c280f43f74b433282d9468b9604fb7ce4f2f1484",
+    "finite-prefix-sources/six_prime_prefix_certificate.py": "3077f18fd91bf8f3a45483690b5f2d1386f1f692dccd9a453c43c99a8746daf4",
+    "finite-prefix-sources/six_prime_prefix_geometry.json": "0f65a963f617867e87021c695a5ded8ad18cb1217857c0bbc7d49652b0f5fdd1"
+  },
+  "ordinary_source_archive_sha256": "9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c",
+  "inherited_basic_vertices": 32,
+  "inherited_geometry_batches": 72,
+  "inherited_integer_queries": 51840,
+  "geometry_search_reexecuted": false,
+  "ordinary_source_reduction_formalized_here": false,
+  "analytic_prime_product_verified_here": false,
+  "joint_query_transport_proved_by_code": false,
+  "lean_verification": false,
+  "final_Haar_density_claim": "The >1/256 bound is distorted mass, not a claimed uniform final Haar density."
+}

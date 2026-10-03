@@ -1,0 +1,21 @@
+**定义 44.5（全部带索引槽及规范预算）。** 保留定义39.3.1的每一个槽，即
+
+$$
+\begin{array}{ll}
+(f_{P[r:]}(H_1),h_r),\ (f_{Q[r:]}(H_2),h_r),&0\le r<26,\\
+(f_{A_i[r:]}(H_1),(W_i)_r),\ (f_{B_i[r:]}(H_2),(W_i)_r),
+&i=0,1,\ 0\le r<100.
+\end{array}
+$$
+
+以 $\alpha\in\mathscr L$ 索引，记来源分量 $j(\alpha)$、指定颜色 $c_\alpha$，以及 $f_\alpha(u)=v_\alpha+\gamma_\alpha u$，其中 $\gamma_\alpha=(-g)^{|\text{后缀}|}\ne0$。相同数值的槽仍保留各自索引，$|\mathscr L|=2\cdot26+4\cdot100=452$。定义完整的904端点最大值
+
+$$
+\boxed{\displaystyle
+\beta=\max_{\alpha\in\mathscr L}\max_{e\in\{m_{j(\alpha)},M_{j(\alpha)}\}}
+\operatorname{dist}(f_\alpha(e),J_{c_\alpha}).}
+\tag{44.12}
+$$
+
+令 $B_n$ 是 (44.5) 中全部 $|z|\le n$、两分量、全部指定出发坐标到相应闭格的最大距离。该有限族包括空词，且不增加未观察终端的颜色槽。
+

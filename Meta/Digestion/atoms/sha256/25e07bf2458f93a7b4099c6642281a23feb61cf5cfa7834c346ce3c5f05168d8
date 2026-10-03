@@ -1,0 +1,17 @@
+**定理 26.1（有限深度修饰的平移与层置换分类）。** 设 $\chi_X>0$，令 $\Gamma_m$ 是由 $\mathrm{FDQC}(A_m)$、独立平移 $T_i$ 和全部层置换 $\Sigma_\sigma$ 生成的 QCA 子群。则
+
+$$
+\Gamma_m/\mathrm{FDQC}(A_m)\cong\mathbb Z^m\rtimes S_m,
+\tag{SC.21}
+$$
+
+其中乘法为
+
+$$
+(\mathbf k,\sigma)(\boldsymbol\ell,\tau)
+=(\mathbf k+\sigma\boldsymbol\ell,\sigma\tau).
+\tag{SC.22}
+$$
+
+定理 25.2 的带标记尾部表给出该群值不变量的参数恢复。
+

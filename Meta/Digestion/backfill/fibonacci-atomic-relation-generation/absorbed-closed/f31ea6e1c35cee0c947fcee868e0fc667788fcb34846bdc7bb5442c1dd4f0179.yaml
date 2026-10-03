@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f31ea6e1c35cee0c947fcee868e0fc667788fcb34846bdc7bb5442c1dd4f0179
+  normalized_sha256: sha256:f31ea6e1c35cee0c947fcee868e0fc667788fcb34846bdc7bb5442c1dd4f0179
+cas_ref: sha256:f31ea6e1c35cee0c947fcee868e0fc667788fcb34846bdc7bb5442c1dd4f0179
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/ReferencePrefixDominance.log_geom_prefix_lt_harmonic_prefix
+    target_statement_id: sha256:c159a55b1b641f2437a0765c3dcaa605e7a1a44746c6c5949d8d50a6148d1306
+receipts:
+  unresolved_subitems: []

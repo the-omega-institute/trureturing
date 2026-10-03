@@ -1,0 +1,70 @@
+### 318.2 有限叶连续与总预算的闭性
+
+设历史 $h$ 的前缀为 $h_i$。到达 $h$ 后立即返回 $z$ 的概率为
+
+$$
+L_\theta(h)W_\pi(h,z),
+\quad
+L_\theta(h)=\prod_{i=0}^{k-1}
+\kappa_\theta(y_{i+1}\mid h_i,a_{i+1}),
+\quad
+W_\pi(h,z)=
+\left(\prod_{i=0}^{k-1}\pi_{h_i}(a_{i+1})\right)\pi_h(z).
+\tag{318.4}
+$$
+
+来源因子 $L_\theta(h)\in[0,1]$ 与被比较的策略无关。令
+
+$$
+F_n^\pi(\theta,S,z)=
+\sum_{\substack{h\text{ 起于 }S\\|h|\le n}}
+L_\theta(h)W_\pi(h,z).
+\tag{318.5}
+$$
+
+这是至多 $n$ 次实际调用后已返回 $z$ 的子概率；只涉及有限多个节点。策略可能不终止，仍有
+
+$$
+\Pr_\theta^\pi(M>n)=1-\sum_z F_n^\pi(\theta,S,z).
+\tag{318.6}
+$$
+
+若 $\pi_j\to\pi$ 逐节点逐坐标收敛，则对固定 $n$，全部有限叶乘积收敛。利用 $0\le L_\theta(h)\le1$ 及
+
+$$
+\left|\prod_i u_i-\prod_i v_i\right|
+\le\sum_i|u_i-v_i|\qquad(u_i,v_i\in[0,1]),
+$$
+
+得到
+
+$$
+\sup_{\theta,S,A\subseteq\mathcal Z}
+\left|F_n^{\pi_j}(\theta,S,A)-F_n^\pi(\theta,S,A)\right|
+\longrightarrow0.
+\tag{318.7}
+$$
+
+此处 $F_n(A)=\sum_{z\in A}F_n(z)$。参数集不必紧致，因为有限叶连续性的估计只使用来源因子至多一。
+
+每个节点的单纯形紧，节点可数。枚举节点、逐个抽取收敛子列，再取对角子列，故任意策略序列都有逐坐标收敛子列。该子列依据策略表选择，一次用于全部实际世界，不随 $\theta$ 改变。
+
+对任意正实数 $s$，截断矩是有限坐标连续函数：
+
+$$
+\mathbb E_\theta^\pi(M\wedge n)^s
+=\sum_{k=0}^{n-1}
+\big((k+1)^s-k^s\big)\Pr_\theta^\pi(M>k).
+\tag{318.8}
+$$
+
+单调收敛进一步给
+
+$$
+\mathcal K_s(\pi)=
+\sup_{\theta,S,n}\mathbb E_\theta^\pi(M\wedge n)^s.
+\tag{318.9}
+$$
+
+因此 $\mathcal K_s$ 是连续函数族的上确界，具有下半连续性，预算子水平集 $\{\mathcal K_s\le K\}$ 在策略乘积空间中闭且紧。这里只用成熟的可数乘积紧致性、有限乘积连续性及单调收敛，所需具体函数由式（318.4）—（318.9）明确给出。
+

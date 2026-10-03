@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c3864f7fc29d7dfb0650116d9795a0d194e9f28867f7cb80cfdfd457bcfabd8e
+  normalized_sha256: sha256:c3864f7fc29d7dfb0650116d9795a0d194e9f28867f7cb80cfdfd457bcfabd8e
+cas_ref: sha256:c3864f7fc29d7dfb0650116d9795a0d194e9f28867f7cb80cfdfd457bcfabd8e
+coverage_gids:
+  - gid: D5/S3/Geometry/HyperbolicUpperHalfSpace.hyperbolicMetricSpace
+    target_statement_id: sha256:fed235a64ef4b1c1dbefa8cb22b24b13c12fbb391668686aed4b7c883cc3a48f
+receipts:
+  unresolved_subitems: []

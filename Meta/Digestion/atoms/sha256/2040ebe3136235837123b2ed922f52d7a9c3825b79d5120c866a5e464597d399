@@ -1,0 +1,21 @@
+**命题 43.10（稳定的分量权重与任意归属的严格放松）。** 只对 $\mathcal A_n\ne\varnothing$ 的深度定义 $\gamma_n$；若某个最早 active 时间尚未进入前缀，则该较早历史保留其实际成本和端点旗标，不用未出现的槽补入最小值。令 $I_n$ 为当前前缀中已经出现 active 槽的分量集合，令 $I_\infty=\bigcup_n I_n$；对每个 $i\in I_\infty$，令 $j_i$ 为其在完整历史中的第一次 active 时间。存在 $n_0$ 使得
+
+$$
+ \gamma_n=\gamma_*:=\min_{i\in I_n}\eta_i g^{-j_i}
+ =\min_{i\in I_\infty}\eta_i g^{-j_i}\qquad(n\ge n_0),
+$$
+
+并且
+
+$$
+ \widehat b_n=\beta-\gamma_*g^{d+nL}\quad(n\ge n_0).
+$$
+
+在相邻两层均有定义时，$\gamma_{n+1}\le\gamma_n$，故 $\widehat b_n$ 严格递增。若 $0<\theta<1$，则
+
+$$\boxed{\widetilde b_n=\beta-\theta g^{M_n}\gamma_n}$$
+
+满足 $\widehat b_n<\widetilde b_n<\beta$，并对每个当前历史、每个所有权归属都可由同一对固定实际尾实现。
+
+若要求同一个分量在所有深度（包括 $n=0$）控制等号，必须有 $j_i<d$，即它的第一次 active 槽已经在 stem 前缀中；若 $j_i\ge d$，由此分量得到的断言只从其首次出现的深度起成立。
+

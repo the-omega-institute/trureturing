@@ -1,0 +1,42 @@
+### definition 261.1 相位、光滑原函数与取整源
+
+令 $\varphi=(1+\sqrt5)/2$、$\omega=\pi/\log\varphi>0$，对 $x>1$ 置
+
+$$
+L=\log x,\qquad
+\theta(x)=\omega\left(\log x+\frac{\log5}{2}\right),\qquad
+f(x)=\frac{x^{-1/4}}{\log x}\sin\theta(x),
+$$
+
+$$
+q(x)=\frac1{x\log x},\qquad
+k(x)=-q'(x)=\frac{\log x+1}{x^2\log^2x}.
+\tag{261.1}
+$$
+
+记 $c=\omega\log5/2$，并定义对数变量上的函数
+
+$$
+A(L)=\frac{(L/4+1)\sin(\omega L+c)-\omega L\cos(\omega L+c)}{L+1},
+\qquad B(x)=x+x^{3/4}A(\log x).
+\tag{261.2}
+$$
+
+取
+
+$$
+D=\omega^2+2\omega+2,\qquad
+X=\max\{e,4,(2D)^4\}.
+$$
+
+在 $x\ge X$ 上定义人工源及其尾项
+
+$$
+\Psi^*(x)=\lfloor B(x)\rfloor,
+\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{261.3}
+$$
+
+星号表示模型量。以下所有源与局部增量结论限定在这个定义域。
+

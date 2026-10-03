@@ -1,0 +1,18 @@
+**定理 3.2。** $M_*\succ0$，且
+$$
+D_T^{-1}G_TD_T^{-1}=M_*+O(T),
+\qquad\det G_T=T^{\sum_j(2j+1)d_j}(\det M_*+O(T)).
+$$
+每层有 $d_j$ 个排序特征值为 $\Theta(T^{2j+1})$。有限正交积分矩的 Gram 矩阵具有相同缩放极限和行列式首项。
+
+**证明。** 对 $x_j\in E_j$，低于 $j$ 阶的导数为零，故 $\sqrt TCe^{TsB}D_T^{-1}x=\mathcal P(s)x+O(T)\|x\|$，在 $[0,1]$ 一致。若多项式的平方积分为零，每个系数 $CB^jx_j=0$；结合 $x_j\in V_j\cap V_{j+1}^\perp$ 得 $x_j=0$。于是极限正定，上下 Loewner 界及 Courant–Fischer 给整个谱幂次，行列式给首项。多项式投影保留极限，故积分矩亦然。证毕。
+
+全谱幂次已有可控 Gramian 的对偶理论 [SJP15]；这里保留显式极限矩阵供热信息计算。
+
+标量输出且 $m=d-1$、$V=\operatorname{rows}(C,CB,\ldots,CB^m/m!)$ 可逆时，
+$$
+\lim_{T\downarrow0}\frac{a(T)}{T^{2m+1}}
+=\frac1{(H_m^{-1})_{mm}\|V^{-1}e_m\|^2}.
+$$
+证明：令 $D'_T=\operatorname{diag}(1,T,\ldots,T^m)$，$Ce^{TsB}V^{-1}(D'_T)^{-1}\to(1,s,\ldots,s^m)$，于是 $G_T=TV^TD'_TH(T)D'_TV,H(T)\to H_m$。缩放逆矩阵趋于 $(H_m^{-1})_{mm}(V^{-1}e_m)(V^{-1}e_m)^T$，取最大特征值。
+

@@ -1,0 +1,29 @@
+### 定义 298.1 标准 Fibonacci 来源的完整时间探针
+
+对正整数 $m$，以 $z(m)$ 表示使 $m\mid F_k$ 成立的最小正指标，约定 $z(1)=1$。对正整数 $H$，定义
+\[
+U_H=\frac{\sigma(H)}H,
+\qquad A(H)=\sum_{m\mid H}\frac1{z(m)}.
+\tag{298.1}
+\]
+这里 $F_0=0,F_1=1$。Fibonacci 模周期保证 $z(m)$ 存在；强整除恒等式给出 $m\mid F_k\Longleftrightarrow z(m)\mid k$，以及互素模数的秩组合公式
+\[
+z(rs)=\operatorname{lcm}(z(r),z(s)),\qquad \gcd(r,s)=1.
+\]
+这些是经典中间步骤，模周期背景见 Wall（1960），doi:10.1080/00029890.1960.11989541。若 $L>0$ 是全部 $z(m)$（$m\mid H$）的正公倍数，则经典约数指示展开给出
+\[
+\frac1L\sum_{k=1}^{L}\tau(\gcd(H,F_k))
+=\sum_{m\mid H}\frac1L\#\{1\le k\le L:z(m)\mid k\}
+=A(H).
+\tag{298.2}
+\]
+因此 $A(H)$ 是完整时间平均，而不是均匀翻译相位的平均 $U_H$。
+
+对 $H\ge3$，§296 的自然来源可取 $(a,b)=(H-3,2)$。递推恒等式 $2F_{k+4}=3F_{k+3}+F_k$ 给出
+\[
+N_k(H-3,2)=HF_{k+3}+F_k,
+\qquad \gcd(H,N_k(H-3,2))=\gcd(H,F_k).
+\tag{298.3}
+\]
+此选择不使用 $\sigma(H)$。以下只使用这一明确的自然来源及其完整时间平均，不增加对其它五窗来源的准入假设。
+

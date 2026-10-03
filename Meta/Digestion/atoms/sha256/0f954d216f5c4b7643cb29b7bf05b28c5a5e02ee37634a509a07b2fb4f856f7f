@@ -1,0 +1,24 @@
+**定理 14.1（路径投影子的 Temperley–Lieb 关系）。** 设有限标签集 $L$ 有对称的零一邻接关系 $a\sim b$，允许自环；给定 $\delta>0$ 和严格正权重 $d_a$，满足
+
+$$
+\sum_{b:\ a\sim b}d_b=\delta d_a.
+\tag{FT.11}
+$$
+
+固定长度 $n$ 与两个端点，在合法路径 $x_0\sim x_1\sim\cdots\sim x_n$ 的正交基上，对 $1\le i<n$ 定义 $P_i$：除 $x_i$ 外的坐标必须相同；若 $x_{i-1}\ne x_{i+1}$，系数为零；若共同值为 $a$，则
+
+$$
+\langle\ldots,b',\ldots|P_i|\ldots,b,\ldots\rangle
+=\frac{\sqrt{d_{b'}d_b}}{\delta d_a}.
+\tag{FT.12}
+$$
+
+则
+
+$$
+P_i^\dagger=P_i,\quad P_i^2=P_i,\quad
+P_iP_{i+1}P_i=\delta^{-2}P_i,\quad
+[P_i,P_j]=0\quad(|i-j|\ge2).
+\tag{FT.13}
+$$
+

@@ -1,0 +1,10 @@
+### 319.8 调用方向与来源归属
+
+本节的有限树近似从总矩界推出统一总调用尾。若只给参考矩界，任务调用仍可延伸到任意深度；截断参考数不产生有限总节点表，不能直接复用定理319.3。第318.6节的任务尾条件可以为相应完成问题补足总调用紧性，而第318.7节已给出缺少该条件时的独立失闭反例。本节不把式（319.12）无条件改成参考费用等式。
+
+有限有理采样、几乎必有效输出的概率可计算性，均已有成熟来源及仓内所有者。本节将它们接到实际总调用的实矩费用上：有限表逼近同时控制误差与费用，抽象完成给有效近似的费用极限，准确有效代码则保留独立条件。不可计算目标反例只刻画这项一般条件，不裁决原 \(h^\beta\) 族尚未解决的临界矩值。
+
+[^effective_policy_sampling]: [Effective Resolution 卷](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md)第4.2.4节“公平源的精确区间采样”给从可计算概率律到公平采样的统一箭头，包括同一 oracle 下的版本。本节引理319.2只使用无额外 oracle 的有限有理类别特例；这里的几乎必有限采样不附带一般期望内部运行时间或确定私位数保证。
+
+[^effective_policy_output]: [Effective Resolution 卷](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md)第2.10.8节“几乎必然持续输出的可计算随机机器”及第4.2.5节“持续输出计算其概率律”。前者将成熟来源定位为 Laurent Bienvenu and Christopher Porter, *Deep \(\Pi^0_1\) Classes*, [arXiv:1403.0450v3](https://arxiv.org/abs/1403.0450v3)，第5—6页 Remark 2.2，almost-total Turing functional 在公平输入下诱导可计算律。有限输出分割的上下近似证明由原卷明确给出；本节将同一证明用于一次二元停止输出，没有另立一般可计算采样定理。
+

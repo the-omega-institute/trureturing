@@ -12,7 +12,7 @@ internal static class ProducerInputFixture
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string ProjectRegistrationPath = "Meta/engineering-projects.json";
-    private const string LeanRegistrationPath = "Meta/ReportProducers/lean-report.json";
+    private const string InputManifestPath = "lean-report-inputs.json";
     private const string ScribeRegistrationPath = "Meta/ReportProducers/scribe-content.json";
     private const string CliProjectPath = "tools/StrataLint.Cli/StrataLint.Cli.csproj";
     private static readonly Lazy<IReadOnlyDictionary<string, byte[]>> BatchProducerInputs = new(ReadBatchProducerInputs);
@@ -22,16 +22,12 @@ internal static class ProducerInputFixture
         var source = TestRepositoryLayout.FindRoot();
         var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(source, ProjectRegistrationPath)))!.AsObject();
         var rows = manifest["projects"]!.AsArray();
-        var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
+        var scopes = new[] { ScribeRegistrationPath }.ToDictionary(path => path,
             path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
-        var selections = scopes.Values.SelectMany(scope =>
-        {
-            var path = scope["registration"]!.GetValue<string>();
-            var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!;
-            var producer = inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!;
-            return new[] { producer, inputs["inspector_sources"], inputs["dependency_sources"], inputs["config_inputs"] }
-                .OfType<JsonNode>().Select(selection => (Path: path, Value: selection));
-        }).ToArray();
+        var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, InputManifestPath)))!;
+        var selections = new[] { inputs["producer_scopes"]!["lean-report"], inputs["producer_scopes"]!["scribe-content"],
+                inputs["inspector_sources"], inputs["dependency_sources"], inputs["config_inputs"] }
+            .OfType<JsonNode>().Select(selection => (Path: InputManifestPath, Value: selection)).ToArray();
         // Restrict Git's output to declared inputs before the bounded reader sees it.
         var inventoryPatterns = rows.Select(row => row!["path"]!.GetValue<string>())
             .Concat(rows.SelectMany(row => row!["include"]!.AsArray().Concat(row["exclude"]!.AsArray()))

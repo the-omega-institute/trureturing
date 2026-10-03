@@ -1,0 +1,48 @@
+**定理 334.1（有限同截止残差证书与核心消去）。** 在假设334.1及原有解析输入下，对每个实际 $L\ge16$，将（315.2）的误差按精确恒等式选择为
+\[
+\varepsilon_L=R_L-\kappa+w(m)\tau(m)-w(m)J_m.
+\tag{334.3}
+\]
+则 $\mathfrak m_L=Z(m)+\kappa-\mathfrak h_L+\varepsilon_L$，并有
+\[
+0\le e_L^{\rm cut}-\varepsilon_L
+\le9\frac{\log m}{\sqrt m},\qquad
+ e_L^{\rm cut}\longrightarrow0.
+\tag{334.4}
+\]
+尤其有限下标签精确消去实际核心修正：
+\[
+\ell_L^{\rm cut}:=\mathfrak m_L-\kappa-e_L^{\rm cut}
+=\sqrt mD(m)+K_m-d_m\le Z(m),
+\]
+\[
+Z(m)-\ell_L^{\rm cut}
+=\mathfrak h_L+(e_L^{\rm cut}-\varepsilon_L).
+\tag{334.5}
+\]
+因此下标签本身只需素数截止 $m$，无需分别计算巨大整数 $T_L$ 的绝对余量与核心修正再相减。$\kappa$ 的平方层储备没有被设为零；它在同一个实际标签的消去式中准确抵消。
+
+**证明。** 同一个实际整数满足 $\mathfrak m_L=\sqrt mD(m)+R_L$，由 $X_L,\vartheta(m)>0$ 和经典 $\log(X_L/\vartheta)=\log X_L-\log\vartheta$ 得到。将同截断 Abel 恒等式（313.10）代入，并保留 $\mathfrak h_L$，给
+\[
+\sqrt mD(m)=Z(m)-\mathfrak h_L+w(m)\tau(m)-w(m)J_m.
+\tag{334.6}
+\]
+与上一式相加得到（334.3）的精确分解，不对端点缺损作无条件消失断言。
+
+先核对有限修正，避免把尾积分当作有限观测。$-V'(t)=k(t)$；在 $[m,m^2]$ 上，经典素幂分解给
+$R(t)=\sum_{p^r\le t,\ r\ge2}\log p$。有限和逐项积分得到
+\[
+K_m=w(m)\int_m^{m^2}R(t)k(t)dt.
+\tag{334.7}
+\]
+端点 $p^r=m$、$p^r=m^2$ 的单点不影响积分；末端对应项为零。因为 $r\ge2$，$p^r\le m^2$ 蕴含 $p\le m$，所以该修正不要求枚举 $(m,m^2]$ 中的新素数。
+
+由 $\log t\ge1$，$k(t)\le2/(t^2\log t)$。用假设334.1的经典上界，得到 $0\le R(t)k(t)\le4t^{-3/2}$。经典幂积分与正性给尾积分绝对收敛，并有
+\[
+0\le w(m)J_m-K_m
+\le w(m)\int_{m^2}^\infty4t^{-3/2}dt
+=8\frac{\log m}{\sqrt m}.
+\tag{334.8}
+\]
+同时，$m\ge2$ 给 $0\le d_m-w(m)\tau(m)\le d_m\le\log m/\sqrt m$。二式相加就是（334.4）的有限误差界。原来的（315.2）给精确选择的 $\varepsilon_L\to0$，再用 $\log m/\sqrt m\to0$，得 $e_L^{\rm cut}\to0$，不需要 RH。代入（334.2）及 $\mathfrak m_L=\sqrt mD+R_L$ 得（334.5）；其中右端非负来自端点缺损与正尾。$\square$
+

@@ -1,0 +1,20 @@
+**约定 116.3（实际像上的任务解码与正值算术域）。** 复用 §73.1 的实际像原则。给集合及映射 $O:X\to B$、$\tau:X\to Y$，令 $I=O(X)$，$\bar O:X\to I$。存在唯一 $D_I:I\to Y$ 使 $\tau=D_I\bar O$，当且仅当
+
+$$
+O(x)=O(x')\ \Longrightarrow\ \tau(x)=\tau(x').
+$$
+
+为说明空域边界，必要性直接由复合式成立。反向，对每个 $b\in I$，关系“存在 $x$ 满足 $O(x)=b$ 且 $\tau(x)=y$”给出恰一个 $y$：存在性来自实际像，唯一性来自纤维恒值。用这个唯一值定义 $D_I$，便得到因子化；每个 $b$ 都被达到，故解码器唯一。$X=\varnothing$ 时 $I=\varnothing$，空函数仍成立。若要求把解码器定义在整个 $B$，准确的附加条件是 $B=\varnothing$ 或 $Y\ne\varnothing$：有 $y_0\in Y$ 时在 $B\setminus I$ 取常值 $y_0$；$B=\varnothing$ 时使用空函数；反向若 $B$ 非空且有总解码器，取其任一输出就得到 $Y$ 的元素。特别地 $X=Y=\varnothing$、$B$ 为单点时，纤维恒值却没有这样的总解码器。
+
+这个原则只判某任务是否由观察决定。若还需在观察商上执行动作 $A:X\to X$，须另证 $O(x)=O(x')$ 蕴含 $O(Ax)=O(Ax')$；实际像原则才给出商上的更新。§5.1 的两组成 $(3,0)$、$(0,2)$ 同读 6，而下一读数分别为 9、10，已经阻止把任意来源的 $\rho$ 更新交给单个数值或其裸前缀。
+
+将规范码用于约数或对数目标时，固定正值子域
+
+$$
+\mathscr C_+=\{C\in\mathscr C:\nu(C)\ge1\},\qquad
+\mathcal Z(C)=\sum_{\substack{D\in\mathscr C_+\\\nu(D)\mid\nu(C)}}\frac1{\nu(D)},\qquad
+\mathcal E(C)=\log\nu(C)\quad(C\in\mathscr C_+).
+$$
+
+若 $n=\nu(C)\ge1$，正约数有限，$d\mapsto n/d$ 是其自身的双射，故 $\mathcal Z(C)=\sum_{d\mid n,d>0}1/d=\sigma(n)/n$。既有[正整数资源目标的最优性](../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean)因而只在 $\mathscr C_+$ 上运输。零码不在这个目标的定义域：每个正整数都整除 0，所得倒数和发散，而且实对数 $\log0$ 没有这里要求的含义。此处没有增加约数估计或全局 Robin 不等式。
+

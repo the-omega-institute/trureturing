@@ -1,0 +1,98 @@
+### 340.2 未启动环的逐系数恒等式
+
+采用第336.3、339.2节的公共有理扩域
+
+$$
+\underline c=3/5,\qquad x^\dagger=11/40,\qquad
+w(x)=\Omega x^\beta,\qquad
+\Omega=\frac{15}{16}\left(\frac2{\underline c}\right)^\beta.
+\tag{340.10}
+$$
+
+第330.2节的光滑分割满足
+
+$$
+z(x)=2\log_b(x^\dagger/x),\qquad
+v_j(x)>0\ \Longrightarrow\ |z(x)-j|<1,\qquad
+\sum_{j\ge0}v_j(x)=1.
+\tag{340.11}
+$$
+
+在第 $k$ 层，第327节规定所有 $j>k$ 的环仍未启动，下系数为零、上系数为一。第332.8式因此给出公共参考系数的有限表达
+
+$$
+\begin{aligned}
+\ell_{k,t}(x)
+&=\frac{1-w(x)}2+
+  w(x)\sum_{j=0}^{k}v_j(x)a^j_{k,t}(x),\\
+u_{k,t}(x)
+&=\frac{1-w(x)}2+
+  w(x)\left[
+  1+\sum_{j=0}^{k}v_j(x)(b^j_{k,t}(x)-1)\right].
+\end{aligned}
+\tag{340.12}
+$$
+
+令
+
+$$
+r_k=x^\dagger b^{-(k+1)/2}.
+\tag{340.13}
+$$
+
+当 $0<x'\le r_k$ 时，$z(x')\ge k+1$，所以所有 $j\le k$ 的权重为零。对每一个参考成功数 $0\le t\le d_k$，精确得到
+
+$$
+\boxed{
+\ell_{k,t}(x')=\frac{1-w(x')}2,\qquad
+u_{k,t}(x')=\frac{1+w(x')}2,\qquad
+u_{k,t}(x')-\ell_{k,t}(x')=\Omega(x')^\beta.}
+\tag{340.14}
+$$
+
+在 $x'=0$ 处按既定连续延拓仍有同一式。这是整段系数的相等关系，不由已有尾上界反推。
+
+第338.3节的全任务区间延拓使用 $\zeta(x)=x$ 于 $[0,1/4]$；负 $x$ 区间上下系数同为 $1/2$。在全部任务格点上，差均非负。记
+
+$$
+\bar\Gamma_k(p,q)=
+\sum_{t=0}^{d_k}
+ [\bar u_{k,t}(p)-\bar\ell_{k,t}(p)]\,b_{d_k,t}(q),
+\tag{340.15}
+$$
+
+其中 $b_{d,t}(q)=\binom{d}{t}q^t(1-q)^{d-t}$。第338.23式在当前数组上逐层给出
+
+$$
+\boxed{
+G_k(p,q)=\delta_k+(1-\delta_k)
+   \mathsf B_{m_k}[\bar\Gamma_k(\,\cdot\,,q)](p).}
+\tag{340.16}
+$$
+
+这里 $\mathsf B_m$ 是任务变量上的普通 Bernstein 算子。与之对应的实际核心计数满足
+
+$$
+\boxed{
+\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q).}
+\tag{340.17}
+$$
+
+两个尾事件来自同一份执行的“第 $k$ 层后继续”。任务维的二项平均已经包含在式（340.16）中。
+
+第339节还给出共同上界
+
+$$
+G_k(p,q)\le\delta_k+C_1m_k^{-a}+\Gamma_k(x,q),
+\tag{340.18}
+$$
+
+$$
+\Gamma_k(x,q)\le C_2x^\beta
+  \min\{1,(n_kx^2)^{-\rho/2}\},\qquad
+\sup_{w}\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C_3.
+\tag{340.19}
+$$
+
+式（340.19）先在同一实际世界求和。由 $\eta_k\le1$、式（340.3）及尺度上界还得 $G_k\le Cn_k^{-a}\to0$；因此即使地板和发散，核心也仍逐世界几乎必访问有限层并准确返回。参考矩是否有限是另外的问题。
+

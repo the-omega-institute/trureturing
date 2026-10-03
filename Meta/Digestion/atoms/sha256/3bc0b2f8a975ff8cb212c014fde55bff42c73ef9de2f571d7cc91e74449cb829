@@ -1,0 +1,19 @@
+### 16.3 不限环境的固定相位目标是显式半正定规划
+
+对共同正块 $X=[X_{ij}]\succeq0$、$X_{ii}=\tau_i$，任何固定实权重的 $\sum_{ij}w_{ij}\operatorname{Re}\operatorname{Tr}X_{ij}$ 都是线性目标。每个可行块矩阵可作有限 Gram 分解并构造 §15.2 通道，所需环境维数至多 $qd$。因此不限环境并不需要对无穷维对象搜索。
+
+对于全部无序对等权的原 [NMLW25] 固定相位目标，记 $J_q$ 为全一矩阵。原始与对偶问题为
+\[
+ P_* =\max\{\operatorname{Tr}[(J_q\otimes I_d)X]:X\succeq0,\ X_{ii}=\tau_i\},
+\]
+\[
+ D_* =\min\left\{\sum_i\operatorname{Tr}(\tau_iY_i):
+ \operatorname{diag}(Y_i)\succeq J_q\otimes I_d\right\}.
+ \tag{16.1}
+\]
+平均相干 $F_{\mathrm{SDP}}=(P_*-q)/(q(q-1))$。弱对偶由两个半正定矩阵的迹内积非负得到；对角 $X=\operatorname{diag}\tau_i\succ0$ 是相应仿射空间的严格可行点，充分大的标量 $Y_i$ 给严格对偶可行性。因此本设定具有通常的强对偶。若再给定 Hamiltonian 协变条件，它对每个块是线性式 $H_iX_{ij}-X_{ij}H_j=(\kappa_i-\kappa_j)X_{ij}$；可用能隙块先消去这些线性约束。
+
+对显式有理输入、严格正谱裕量与指定加性精度，标准弱 SDP 优化具有相应多项式复杂度；迹固定为 $q$ 给有界可行集合。这个说明保留位复杂度、内点裕量与精度依赖，不把精确代数比较、指数维的简洁量子比特输入、额外秩限制、未知生成元或 $\sum|c_{ij}|$ 的非线性目标包含在同一结论中 [GW95, NMLW25]。
+
+因此 §15 的正相干缺口本身不是 NP-hard 性证据。下面甚至可以在全部有限温度给出精确最优值及同一对原始、对偶见证。
+

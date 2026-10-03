@@ -1,0 +1,94 @@
+### 327.2 用任务偏差定义全域参考函数
+
+置
+
+$$
+c_*:=k_0l,\qquad
+x=C(1-Bp)=hc,\qquad
+y=C(1-Bq)=h,\qquad x_*:=1/4.
+\tag{327.5}
+$$
+
+原实际域满足
+
+$$
+0<x\le x_*,
+\qquad
+1\le y/x=1/c\le1/c_*.
+\tag{327.6}
+$$
+
+由 $k_0\ge\sqrt{3/4}$、$l>k_0^2$，得到
+
+$$
+c_*>(3/4)^{3/2}>1/2.
+\tag{327.7}
+$$
+
+选择固定 $\chi\in C_c^\infty((1/2,2/c_*))$，使 $0\le\chi\le1$，且 $\chi=1$ 于 $[1,1/c_*]$。定义
+
+$$
+\phi(t)=
+\begin{cases}
+\chi(t)t^\beta,&t>0,\\
+0,&t\le0,
+\end{cases}
+\qquad
+A=(2/c_*)^\beta.
+\tag{327.8}
+$$
+
+支集避开零，所以 $\phi\in C_c^\infty(\mathbb R)$，$0\le\phi\le A$。令 $\kappa=6\varepsilon=3/8$，对 $x>0$、全部 $q\in[0,1]$ 定义
+
+$$
+F_x(q)=\frac12+
+\kappa x^\beta\phi\!\left(\frac{C(1-Bq)}x\right),
+\qquad F_0(q)=1/2.
+\tag{327.9}
+$$
+
+在原合法楔域，式（327.6）给
+
+$$
+F_x(q)=\frac12+6\varepsilon h^\beta.
+\tag{327.10}
+$$
+
+全域延伸满足
+
+$$
+\frac12\le F_x(q)
+\le\frac12+\frac38(1/(2c_*))^\beta<7/8.
+\tag{327.11}
+$$
+
+它关于 $(x,q)\in[0,x_*]\times[0,1]$ 连续，每个 $x>0$ 时关于 $q$ 光滑。
+
+为构造包络，将其写成
+
+$$
+F_x(q)=\frac{1-w(x)}2+w(x)G_x(q),
+\tag{327.12}
+$$
+
+其中
+
+$$
+G_x(q)=\frac12+\frac{2}{5A}
+\phi\!\left(\frac{C(1-Bq)}x\right),
+\qquad
+w(x)=\frac{5\kappa A}{2}x^\beta.
+\tag{327.13}
+$$
+
+于是
+
+$$
+1/2\le G_x\le9/10,\qquad
+0<w(x)\le
+\frac{15}{16}(1/(2c_*))^\beta<15/16.
+\tag{327.14}
+$$
+
+式（327.12）只是一条函数与包络恒等式，执行中不直接模拟概率 $w(x)$ 的任务门控。因为 $w(x)\to0$ 而任务端点 $p_0=1/B$ 非退化，直接使用这种门控会面临有限正停止叶的障碍。实际控制概率将在第327.5节加入严格余量后构造。
+

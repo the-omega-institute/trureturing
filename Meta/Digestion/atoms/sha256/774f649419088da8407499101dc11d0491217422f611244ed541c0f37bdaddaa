@@ -1,0 +1,75 @@
+**定理 189.2（幂次高度内的尖锐模分辨率）。** 固定 $C>1$，定义
+
+$$
+E_m(C)=\max_{\substack{1\le a,b\le(m!)^C\\a\equiv b\pmod{m!}}}\frac{Z(a)}{Z(b)}.
+$$
+
+则
+
+$$
+\lim_{m\to\infty}(E_m(C)-1)\frac{\log m}{\log\log m}=1.
+\tag{189.3}
+$$
+
+证明。这里使用经典 Mertens 倒数素数公式的标准误差形式
+
+$$
+\sum_{p\le x}\frac1p=\log\log x+B_1+O(1/\log x).
+\tag{189.4}
+$$
+
+它与本卷已有 Mertens 文献输入同源；可见 Lichtman 文献 Theorem 1.1 所列公式 (1.1)。所有以下小量均在固定 $C$ 下取极限。
+
+上界取 $X=m\log m\log\log m$。对 $n\le(m!)^C$，其高素数 Euler 对数至多
+
+$$
+\sum_{m<p\le X}\frac1p+O(1/m)
++\frac{C\log(m!)}{(X-1)\log X}.
+$$
+
+式（189.4）的首项为
+
+$$
+\log\log X-\log\log m+O(1/\log m)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+最后的尾项是 $O_C(1/(\log m\log\log m))$。低素数乘积误差由引理 188.1 给出 $\log\delta_m^{-1}=O(m^{-1/2})$，而分母的高素数因子至少为一。因此
+
+$$
+\log E_m(C)\le(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+为了同时实现下界，取
+
+$$
+X_0=\frac{C-1}{8}m\log m,\qquad
+P_m=\prod_{m<p\le X_0}p,
+\qquad b_m=m!,\quad a_m=m!P_m.
+$$
+
+充分大 $m$ 时 $X_0>m$。两者确在同一模 $m!$ 的零纤维中，且 $\gcd(m!,P_m)=1$。§178 的初等 Chebyshev 界给
+
+$$
+\log a_m\le\log(m!)+4X_0
+=\log(m!)+\frac{C-1}{2}m\log m<C\log(m!)
+$$
+
+对充分大 $m$ 成立，最后使用 $\log(m!)\sim m\log m$。故是同一高度域中的实际见证，并且
+
+$$
+\frac{Z(a_m)}{Z(b_m)}=Z(P_m),\qquad
+\log Z(P_m)=\sum_{m<p\le X_0}\log(1+1/p)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+这给匹配下界。因为所得对数趋于零，$E_m-1\sim\log E_m$，得到式（189.3）。$\square$
+
+同一见证还给
+
+$$
+Z(a_m)-Z(b_m)\sim e^\gamma\log\log m\longrightarrow\infty,
+$$
+
+因为 §186 的阶乘公式给 $Z(m!)\sim e^\gamma\log m$。因此，“相对响应趋于相同”不能直接升级为“加性差额趋于零”。这个结论精确限制模观察所给估计的强度，并不是 Robin 反例。
+

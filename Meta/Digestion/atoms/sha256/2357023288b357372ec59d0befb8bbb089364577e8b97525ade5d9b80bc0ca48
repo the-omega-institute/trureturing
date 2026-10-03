@@ -1,0 +1,11 @@
+**推论326.7（可比较取得钟保持同一对数指数）。** 若第324.7节的取得钟满足共同有界增量及共同正条件漂移，则对相同临界指数 $a$，其抽象与有效最优费用分别满足
+
+$$
+\lim_{\delta\downarrow0}
+\frac{\log\mathcal D_a^{\mathrm{pol}}(\delta)}{\log\log(1/\delta)}
+=
+\lim_{\delta\downarrow0}
+\frac{\log\mathcal D_a^{\mathrm{alg}}(\delta)}{\log\log(1/\delta)}=1.
+\tag{326.40}
+$$
+

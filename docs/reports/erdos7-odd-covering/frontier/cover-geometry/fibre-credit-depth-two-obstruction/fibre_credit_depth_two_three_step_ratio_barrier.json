@@ -1,0 +1,157 @@
+{
+  "scope": "Exact enclosures and witnesses for the31/37/41 scalar kernel budget.\n\nThe recurrence and continuous capacity are reused from Chapter08 and304;\nthe accompanying note applies them to the current paired seed. This checker\nuses rational arithmetic and the existing integer-square-root routines;\nit imports no solver and performs no threshold grid.\nIt does not claim impossibility of the actual measure or covering problem.\n",
+  "inherited_seed_sha256": "7d36e5003e12630787184af423db7a29972fa446195aa70c9b4765fc0d6d86eb",
+  "existing304_capacity_sha256": "497732070e50ee817f3c31364ec0c22e59dca962e18007c2800707c8d2b23c21",
+  "generic_scalar_optimization_reused": true,
+  "seed_mass": "10237584019/168750000000",
+  "seed_gamma": "26010182627/1040449536",
+  "seed_ratio": "237083545724928/97694496044921875",
+  "seed_ratio_decimal": 0.002426785083326621,
+  "reference_extra_primes": [
+    31,
+    37,
+    41
+  ],
+  "backward_thresholds": [
+    {
+      "prime": 41,
+      "required_prior_ratio": {
+        "lower": "1/1600",
+        "upper": "1/1600",
+        "decimal_low": 0.000625,
+        "decimal_high": 0.000625
+      }
+    },
+    {
+      "prime": 37,
+      "required_prior_ratio": {
+        "lower": "749741315405791/500000000000000000",
+        "upper": "1499482630811583/1000000000000000000",
+        "decimal_low": 0.001499482630811582,
+        "decimal_high": 0.001499482630811583
+      }
+    },
+    {
+      "prime": 31,
+      "required_prior_ratio": {
+        "lower": "9063697992101/3125000000000000",
+        "upper": "1450191678736161/500000000000000000",
+        "decimal_low": 0.00290038335747232,
+        "decimal_high": 0.002900383357472322
+      }
+    }
+  ],
+  "critical_initial_ratio": {
+    "lower": "9063697992101/3125000000000000",
+    "upper": "1450191678736161/500000000000000000",
+    "decimal_low": 0.00290038335747232,
+    "decimal_high": 0.002900383357472322
+  },
+  "required_mass_with_old_gamma": {
+    "lower": "72506640837375959/1000000000000000000",
+    "upper": "7250664083737601/100000000000000000",
+    "decimal_low": 0.07250664083737596,
+    "decimal_high": 0.07250664083737601
+  },
+  "maximum_gamma_with_old_mass": {
+    "lower": "2614618357291410929/125000000000000000",
+    "upper": "20916946858331301857/1000000000000000000",
+    "decimal_low": 20.916946858331286,
+    "decimal_high": 20.9169468583313
+  },
+  "continuous_optimal_forward": [
+    {
+      "prime": 31,
+      "optimal_delta": {
+        "lower": "45760642649865967/100000000000000000",
+        "upper": "457606426498659671/1000000000000000000",
+        "decimal_low": 0.4576064264986597,
+        "decimal_high": 0.4576064264986597
+      },
+      "best_next_ratio": {
+        "lower": "1719166735943/1562500000000000",
+        "upper": "1100266711003521/1000000000000000000",
+        "decimal_low": 0.00110026671100352,
+        "decimal_high": 0.001100266711003521
+      }
+    },
+    {
+      "prime": 37,
+      "optimal_delta": {
+        "lower": "60675613561590201/125000000000000000",
+        "upper": "485404908492721651/1000000000000000000",
+        "decimal_low": 0.4854049084927216,
+        "decimal_high": 0.48540490849272167
+      },
+      "best_next_ratio": {
+        "lower": "281563149237973/1000000000000000000",
+        "upper": "140781574618987/500000000000000000",
+        "decimal_low": 0.000281563149237973,
+        "decimal_high": 0.000281563149237974
+      }
+    }
+  ],
+  "third_step_positive_ratio_gate": "1/1600",
+  "elementary_total_budget_loss_lower": "228291372917179/3371056496640000",
+  "elementary_final_budget_upper": "-1857729195660261599/263363788800000000000",
+  "improved_gamma_seed": {
+    "mass": "10237584019/168750000000",
+    "gamma": "209/10",
+    "steps": [
+      {
+        "prime": 31,
+        "delta": "9/20",
+        "mass_lower": "18837752057/506250000000",
+        "gamma_upper": "11153/450",
+        "ratio": "18837752057/12547125000000"
+      },
+      {
+        "prime": 37,
+        "delta": "47/100",
+        "mass_lower": "204491532115883/11349618750000000",
+        "gamma_upper": "111095033/3863700",
+        "ratio": "204491532115883/326341659437500000"
+      },
+      {
+        "prime": 41,
+        "delta": "1/2",
+        "mass_lower": "1055989934891/22699237500000000",
+        "gamma_upper": "51214810213/1545480000",
+        "ratio": "1055989934891/752217525003437500"
+      }
+    ]
+  },
+  "improved_mass_seed": {
+    "mass": "73/1000",
+    "gamma": "26010182627/1040449536",
+    "steps": [
+      {
+        "prime": 31,
+        "delta": "9/20",
+        "mass_lower": "473452006171/10534551552000",
+        "gamma_upper": "1387997927459/46820229120",
+        "ratio": "473452006171/312299533678275"
+      },
+      {
+        "prime": 37,
+        "delta": "47/100",
+        "mass_lower": "63130135224449/2871417765888000",
+        "gamma_upper": "1975121050774157/57428355317760",
+        "ratio": "63130135224449/98756052538707850"
+      },
+      {
+        "prime": 41,
+        "delta": "1/2",
+        "mass_lower": "45043276408211/91885368508416000",
+        "gamma_upper": "910530804406886377/22971342127104000",
+        "ratio": "45043276408211/3642123217627545508"
+      }
+    ]
+  },
+  "actual_improved_seeds_constructed": false,
+  "improved_source_bounds_are_open_obligations": true,
+  "all_constant_delta_choices_covered_by_proof": true,
+  "no_finite_grid_or_solver": true,
+  "actual_measure_or_covering_obstruction": false,
+  "lean_verification": false
+}

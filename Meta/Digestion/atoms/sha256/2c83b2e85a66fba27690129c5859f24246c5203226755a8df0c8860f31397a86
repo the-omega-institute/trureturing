@@ -1,0 +1,23 @@
+### proposition 119.2 命题 13.8 的非退化字母表假设
+
+命题 13.8 中“至少两个 $m$ 元寄存器”的结论须限定为整数 $m\ge2$。具体地，令 $r\in\mathbb N$，令 $E$ 为恰有 $m$ 个元素的集合。若编码
+
+$$
+C:(\mathbb Z/m\mathbb Z)^2\longrightarrow E^r
+$$
+
+有解码器 $D:E^r\to(\mathbb Z/m\mathbb Z)^2$ 满足 $D\circ C=\operatorname{id}$，则 $m^r\ge m^2$ 且 $r\ge2$。取 $E=\mathbb Z/m\mathbb Z$ 和 $r=2$，当前与下一次数量读数达到该下界。
+
+**证明。** 若 $C(z)=C(w)$，施加 $D$ 得 $z=w$，所以 $C$ 单射。源集有 $m^2$ 个元素，目标集有 $m^r$ 个元素，故 $m^2\le m^r$。当 $m\ge2$ 时，$r=0$ 给出 $m^r=1<m^2$，$r=1$ 给出 $m^r=m<m^2$，所以 $r\ge2$。
+
+两寄存器编码与解码分别为
+
+$$
+C(a,b)=(2a+3b,3a+5b),\qquad
+D(n,n')=(5n-3n',2n'-3n),
+$$
+
+全部运算在 $\mathbb Z/m\mathbb Z$ 中进行。展开得到 $D(C(a,b))=(a,b)$ 和 $C(D(n,n'))=(n,n')$，因此编码为双射，使用恰好 $m^2$ 个联合状态。
+
+当 $m=1$ 时，$(\mathbb Z/m\mathbb Z)^2$ 是单点集，零个寄存器的状态集 $E^0$ 也是单点集，已足以无损编码。此时联合状态数下界 $m^2=1$ 仍成立，却不能推出寄存器数至少为二；本命题据此限定命题 13.8 的寄存器数结论。$\square$
+

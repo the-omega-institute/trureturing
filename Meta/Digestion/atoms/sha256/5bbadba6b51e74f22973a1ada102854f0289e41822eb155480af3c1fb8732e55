@@ -1,0 +1,14 @@
+**定义318.3（概率策略类内的费用）。** 在定义318.1的策略类中置
+
+$$
+\mathcal C_s^{\mathrm{pol}}(\delta)=
+\inf\left\{\mathcal K_s(\pi):
+\begin{array}{l}
+\pi\text{ 在每个实际世界几乎必有限回答},\\
+\sup_{\theta,S}\|Q^\pi_{\theta,S}-P_{\theta,S}\|_{\mathrm{TV}}\le\delta
+\end{array}\right\},
+\tag{318.14}
+$$
+
+空集下确界取 $+\infty$。
+

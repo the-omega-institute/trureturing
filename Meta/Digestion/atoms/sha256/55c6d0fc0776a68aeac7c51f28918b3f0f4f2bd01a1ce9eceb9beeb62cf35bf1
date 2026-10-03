@@ -1,0 +1,4 @@
+### 12.2 矩阵单位上的右扩展
+
+令 $E^c_{pq}=|p\rangle\langle q|$。对 $d\in\mathsf N(c,\tau)$，以 $p d$ 表示在路径末尾补 $d$。
+

@@ -1,0 +1,42 @@
+**定理 226.4（算术空隙中的精确光滑窗口）。** 对充分大的实际参数，
+$W_\eta\in C_c^\infty(\mathbb R)$、$0\le W_\eta\le1$，在 $[u_-,0]$ 上恒为一，
+且支撑包含于 $[u_--2\eta,2\eta]$。对每个正整数 $n\equiv1\pmod V$，
+
+$$
+\boxed{
+W_\eta(\log(n/X))=\mathbf1_{[A,X]}(n).
+}
+\tag{226.17}
+$$
+
+因此式（226.10）取 $W=W_\eta$ 时精确给出 $B_D$，没有额外的实际边缘命中。
+
+证明。卷积的非负性、单位积分与支撑给出前三个性质；在 $u\in[u_-,0]$ 上，
+对每个 $v\in\operatorname{supp}\rho_\eta\subset(-\eta,\eta)$，
+都有 $u-v\in[u_--\eta,\eta]$，所以卷积值为一，包括两个端点。
+
+充分大时 $0<\eta<1/4$。由 $e^{-t}\ge1-t$ 及 $2\eta A\le V/4$，
+
+$$
+Ae^{-2\eta}\ge A-2\eta A\ge A-V/4>A-V.
+$$
+
+由 $e^t\le1+2t$ 在 $0\le t\le1/2$ 上成立，
+
+$$
+Xe^{2\eta}\le X+4\eta X=X+V/2<X+V.
+\tag{226.18}
+$$
+
+实际端点 $A,X$ 都模 $V$ 等于一；区间 $(A-V,A)$ 和 $(X,X+V)$ 中没有同类整数。
+因此在所有正同余点上，光滑窗口的两段过渡区域没有新增点，式（226.17）成立。
+再对式（226.9）中的同一有限算术对逐项应用该式，得到 $B_{W_\eta}=B_D$。$\square$
+
+光滑表示的主字符项定义为
+
+$$
+M_\eta=\frac1Q\sum_{\substack{D<d\le X\\(d,V)=1}}
+\sum_{h\in\mathcal H}\frac dX\mu_s(d)W_\eta(\log(dh/X)).
+\tag{226.19}
+$$
+

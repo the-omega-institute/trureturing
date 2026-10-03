@@ -1,0 +1,23 @@
+**定义 19.1（总化终端响应）。** 固定 $\Sigma=\{000,100,010,101,001\}$，$\varepsilon$ 表示空词。对每个 $w\in\Sigma^*$，先从第6节初态 $A$ 读完 $w$，再执行一次 End 查询，定义
+
+$$
+F(w)=\begin{cases}1,&\text{终态为 }B\text{ 或 }C,\\0,&\text{终态为 }A\text{ 或吸收失败态 }D.\end{cases}
+\tag{19.1}
+$$
+
+因此 $F(\varepsilon)=0$。End 不属于 $\Sigma$，也不消耗一个窗；$F(w)$ 本身就是完成该查询后的值。尚未执行 End 的运行记录不是另一个 $F(w)$ 值。非法接缝总化为拒绝后，$F$ 在所有窗词上有定义；这不把失败词改称合法词。
+
+固定域 $K=\mathbb Q$，把布尔结果编码为域中的 $0,1$。一个 $d$ 维齐次线性模型由固定初始行 $\alpha$、每字母一个固定矩阵 $T_a$ 和线性终端列 $\beta$ 构成：
+
+$$
+z_{wa}=z_wT_a,\qquad z_\varepsilon=\alpha,\qquad
+\widehat F(w)=\alpha T_{a_1}\cdots T_{a_n}\beta\quad(w=a_1\cdots a_n).
+\tag{19.2}
+$$
+
+空乘积是单位阵；零维模型只给零响应。合同没有免费时钟、词长参数、历史访问或另加的非线性读出。系数的可表示精度与运算成本须独立记账。
+
+记 $F_u(v)=F(uv)$、$H_F(u,v)=F(uv)$、$V_F=\operatorname{span}_K\{F_u\}$。复用上述两卷的结论：$\dim V_F$ 等于最小齐次线性维数。所需证明桥是：任意 $d$ 维实现将残余写为 $v\mapsto z_uT_v\beta$，故秩至多 $d$；反向，$g(v)\mapsto g(av)$ 保持 $V_F$，因为它把 $F_u$ 送到 $F_{ua}$，而线性关系可在后缀 $av$ 处逐项检验。以 $F_\varepsilon$ 初始化、在空后缀评价读出，即实现每个词。
+
+这使用词拼接而非单一时间移位。仓内 [SequenceHankelRealization.lean](../../../D5/S3/Observer/Hankel/SequenceHankelRealization.lean) 的尾序列是 $m(i+j)$，对应单矩阵的 $CA^nB$；这里不同字母的矩阵一般不交换。例如 $F(001\cdot100)=0$，$F(100\cdot001)=1$，不能用词长替代字母次序。源码引用不表示本批词版本已编译或经 Lean 验证。
+

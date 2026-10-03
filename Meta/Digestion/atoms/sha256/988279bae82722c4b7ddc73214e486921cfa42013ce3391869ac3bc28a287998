@@ -1,0 +1,47 @@
+**定理 230.7（实际截断源的统一 Fourier 端点增益）。** 对每个预先固定的 $a>0$，沿本节指定家族令 $y\to\infty$。置 $\kappa=1/10$，
+
+$$
+g_\kappa=\frac12+\frac23e^{-\kappa}>1,\qquad
+c_\kappa=2\kappa\log g_\kappa>0.
+$$
+
+则对于这个实际截断源，
+
+$$
+\boxed{
+\liminf_{y\to\infty}\ \inf_{\tau\in\mathbb R}
+\frac1R\log\frac{\|F_D(\cdot,\tau)\|_{1,*}}{m_s}
+\ge c_\kappa.
+}
+\tag{230.31}
+$$
+
+因而任取固定 $0<c<c_\kappa$，最终对所有实数 $\tau$ 都有
+$\|F_D(\cdot,\tau)\|_{1,*}\ge m_s e^{cR}$。这个起效阈值可依赖固定的 $a$ 和 $c$，不依赖 $\tau$。特别地，结论涵盖任意固定 $c'>0$ 的共享小频率 $|\tau|\le c'/R$。
+
+证明。由 $|\mathcal G_\tau|\le1$，
+
+$$
+\|F_D(\cdot,\tau)\|_{1,\mathrm{av}}
+\ge\operatorname{Re}\frac1Q\sum_\chi F_D(\chi,\tau)
+\overline{\mathcal G_\tau(\chi)}.
+$$
+
+高价格部分在完整测试函数下的误差不超过式（230.3）。结合式（230.20）、（230.27）–（230.30），一致地
+
+$$
+\|F_D(\cdot,\tau)\|_{1,\mathrm{av}}
+\ge m_s\exp[(c_\kappa+o(1))R]
+-\exp[-(5b_2/3)R+o(R)].
+\tag{230.32}
+$$
+
+因为 $\log m_s=-b_2R+o(R)$，第二项相对第一项指数趋零。再删除主字符，最多损失
+
+$$
+Q^{-1}|F_D(1,\tau)|\le Q^{-1}=\exp[-y/2+O(1)],
+\tag{230.33}
+$$
+
+这也相对第一项趋零。所有误差和起效阈值均与 $\tau$ 无关，式（230.31）随之成立。$\square$
+

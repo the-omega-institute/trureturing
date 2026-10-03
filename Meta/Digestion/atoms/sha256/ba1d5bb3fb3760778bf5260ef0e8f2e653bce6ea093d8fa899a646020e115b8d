@@ -1,0 +1,28 @@
+**定理 7.2（多条 Fibonacci 链的平移格）。** 在 $A_m=B^{\otimes m}$，$m\ge2$，定义
+
+$$
+\alpha_{\mathbf k}=\bigotimes_{i=1}^mT^{k_i},
+\qquad\mathbf k\in\mathbb Z^m.
+$$
+
+则 $\mathbf k\mapsto[\alpha_{\mathbf k}]$ 将 $\mathbb Z^m$ 单射到 $\mathrm{QCA}(A_m)/\mathrm{FDQC}(A_m)$。在这个显式平移子群上，指数为 $\varphi^{\sum_i k_i}$，DHR 作用平凡，故联合核包含 $\mathbb Z^{m-1}$。
+
+**证明。** 产品指数与第 5 节的归纳应用给前述两项不变量。若 $\sum_i k_i\ne0$，指数排除 FDQC。若和为零但 $\mathbf k\ne0$，选 $n>\max_i|k_i|$，切口代数维数分别为 $\prod_iD(n+k_i)$ 与 $D(n)^m$。
+
+令 $c=\log\varphi$，将整数上的 $D$ 延拓为正函数
+
+$$
+D(t)=\frac{2}{\sqrt5}\cosh((2t-1)c),\qquad t>0.
+$$
+
+其对数严格凸，因为
+
+$$
+\frac{d^2}{dt^2}\log D(t)
+=4c^2\operatorname{sech}^2((2t-1)c)>0.
+$$
+
+各 $n+k_i$ 的平均为 $n$，且不全相同，故严格 Jensen 不等式给 $\prod_iD(n+k_i)>D(n)^m$。这个差异对任意足够大的 $n$ 成立，推论 2.3 排除 FDQC。对两个向量的差再用同一论证，得到单射；零和整格同构于 $\mathbb Z^{m-1}$。证毕。
+
+这里分类的是指定平移子群，不声称整个多 Fib QCA 群就是 $\mathbb Z^m$，也没有把不同层的置换或其他范畴自等价遗漏后宣布完整分类。
+

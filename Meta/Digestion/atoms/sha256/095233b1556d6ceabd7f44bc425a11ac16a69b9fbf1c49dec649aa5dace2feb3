@@ -1,0 +1,16 @@
+**定理 326.1（负部增长率读回零点区域）。** 在定义326.0的输入下，$R_d$ 是有限实数，且对每个固定 $d\ge1$ 有
+\[
+R_d=S-1/2.
+\tag{326.2}
+\]
+因此同一个增长指数由全部固定多项式次数读到。对任意固定 $0\le\nu\le1/2$，还有
+\[
+S\le1/2+\nu
+\quad\Longleftrightarrow\quad
+\forall\epsilon>0\ \exists K_\epsilon\ge0\ \exists J_\epsilon\ge17\
+\forall J\ge J_\epsilon:\quad
+A_J^{(d)}\ge-K_\epsilon a_J^{\nu+\epsilon}.
+\tag{326.3}
+\]
+预算和阈值可依赖固定的 $d,\nu,\epsilon$，不要求一致常数。这是同一实际平均的单边增长判据，不预先假设任一具体预算存在。
+

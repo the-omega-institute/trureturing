@@ -1,0 +1,23 @@
+**Proof.** The Euclidean separation is at least the separation of the two
+heights. Compare the distance formula with the vertical-line formula in
+the ordinary upper half-plane, where the distance is the absolute
+difference of the logarithms of the heights. Thus log-height is
+1-Lipschitz. Exponentiating gives
+(h(p)\leq h(q)\exp d_H(p,q)). For a hyperbolic Cauchy sequence (p_n), its
+hyperbolic distances are bounded, so its heights admit a common positive
+upper bound (B). The defining distance identity then gives
+
+\[
+ d_2(p_n,p_m)
+ =2\sqrt{h(p_n)h(p_m)}\sinh\frac{d_H(p_n,p_m)}2
+ \leq 2B\sinh\frac{d_H(p_n,p_m)}2.
+\]
+
+Consequently the Euclidean coordinates form a Cauchy sequence, and
+completeness of (E\times\mathbb R) supplies a limit. The logarithms of the
+heights also converge, say to (a), so the limit height is (\exp a>0).
+Finally the distance formula, continuity of square root and inverse
+hyperbolic sine, and positivity of the limiting height show convergence
+in (d_H). This establishes metric completeness of the model; it does not
+establish manifold curvature, quotient completeness, finite volume or
+Mostow--Prasad rigidity.

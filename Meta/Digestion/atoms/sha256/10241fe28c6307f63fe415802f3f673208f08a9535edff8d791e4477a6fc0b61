@@ -1,0 +1,76 @@
+**引理327.4（每行的严格三分类余量）。** 对每个 $k\ge1$ 和 $0\le t\le d_k$，
+
+$$
+\begin{aligned}
+\widehat\ell_{k,t}
+-(E_k\widehat\ell_{k-1})_t
+&\ge c_0(\delta_{k-1}-\delta_k)>0,\\
+(E_k\widehat u_{k-1})_t-\widehat u_{k,t}
+&\ge c_0(\delta_{k-1}-\delta_k)>0,\\
+\widehat u_{k,t}-\widehat\ell_{k,t}
+&\ge\delta_k>0.
+\end{aligned}
+\tag{327.34}
+$$
+
+**证明。** 第一差为
+
+$$
+(1-\delta_k)
+\bigl(\ell_{k,t}-(E_k\ell_{k-1})_t\bigr)
++(\delta_{k-1}-\delta_k)(E_k\ell_{k-1})_t.
+$$
+
+相容性使第一项非负，式（327.28）使第二项不小于所需下界。第二差同理，剩余项为
+$(\delta_{k-1}-\delta_k)(1-(E_ku_{k-1})_t)$。
+第三差由式（327.31）直接得到。证毕。
+
+置
+
+$$
+D_{k,t}(x)=
+(E_k(\widehat u_{k-1}-\widehat\ell_{k-1}))_t,
+\qquad
+\delta_{k-1}\le D_{k,t}(x)\le1.
+\tag{327.35}
+$$
+
+已取得 $d_k$ 枚参考币、其中成功 $t$ 枚且此前继续时，定义
+
+$$
+\begin{aligned}
+r_1(x)&=
+\frac{\widehat\ell_{k,t}
+-(E_k\widehat\ell_{k-1})_t}{D_{k,t}(x)},\\
+r_0(x)&=
+\frac{(E_k\widehat u_{k-1})_t
+-\widehat u_{k,t}}{D_{k,t}(x)},\\
+r_{\mathrm c}(x)&=
+\frac{\widehat u_{k,t}-\widehat\ell_{k,t}}{D_{k,t}(x)}.
+\end{aligned}
+\tag{327.36}
+$$
+
+三者之和为一，分别表示输出一、输出零、继续至下一参考批。初始阶段 $k=0$ 使用
+
+$$
+r_1=\widehat\ell_{0,t},\qquad
+r_0=1-\widehat u_{0,t},\qquad
+r_{\mathrm c}=\widehat u_{0,t}-\widehat\ell_{0,t}.
+\tag{327.37}
+$$
+
+每个固定有限行 $k,t$ 的三个概率在整个闭区间 $x\in[0,x_*]$ 上连续，且由式（327.34）、（327.35）一致离开零；另外两项的正下界也使每项一致离开一。这里的界可以依赖有限行，不要求跨全部阶段仍有共同正常数。
+
+端点不是仅由半开区间上的连续性处理。$x=0$ 时两系数恰为 $(1-\delta_k)/2$、$(1+\delta_k)/2$，故对 $k\ge1$，
+
+$$
+r_1(0)=r_0(0)=
+\frac{\delta_{k-1}-\delta_k}{2\delta_{k-1}}>0,
+\qquad
+r_{\mathrm c}(0)=\frac{\delta_k}{\delta_{k-1}}\in(0,1).
+\tag{327.38}
+$$
+
+初始阶段则为 $r_1(0)=r_0(0)=3/8$、$r_{\mathrm c}(0)=1/4$。因此实际待模拟的行没有趋向零或一的非退化端点缺口。
+

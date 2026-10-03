@@ -1,0 +1,61 @@
+**定理 222.1（完整增量概率的大量缓衰减字符）。** 存在绝对常数 $C>0$，
+使所有充分大的素数指标 $r$ 及全部 $\chi\in\mathcal C_r$ 满足
+
+$$
+\boxed{
+|\widehat\nu_s(\chi)|\ge e^{-Cy^{3/4}\ell},\qquad
+|\widehat\mu_s(\chi)|\ge e^{-Cy^{3/4}\ell}.
+}
+\tag{222.8}
+$$
+
+其中至少 $\exp(y/4+o(y))-1$ 个字符是非主字符。
+因为 $y^{3/4}\ell=o(R)$，不存在固定 $c>0$，使任一变换在所有
+非主字符上最终一致满足模长上界 $e^{-cR}$。
+
+证明。乘法性与绝对收敛给
+
+$$
+\widehat\nu_s(\chi)=\prod_{p\nmid V}F_p(\chi),\qquad
+F_p(\chi)=\sum_{a\ge0}\pi_p(a)\chi(p)^a.
+\tag{222.9}
+$$
+
+对 $p\le2y$ 和 $\chi\in\mathcal C_r$，由 $\cos u\ge1-u^2/2$ 得
+
+$$
+\operatorname{Re}F_p(\chi)
+\ge1-\frac{\theta_{\chi,p}^2}{2}\mathbb E_{\pi_p}a^2
+\ge1-O(L^{-2}\log^2s).
+$$
+
+该损失一致趋零，最终至多为 $1/2$。用
+$-\log(1-u)\le2u$，可得
+
+$$
+-\log\prod_{p\le2y}|F_p(\chi)|
+\ll mL^{-2}\log^2s
+\ll y^{3/4}\ell.
+\tag{222.10}
+$$
+
+对 $p>2y$ 的单位素数，无论字符相位如何，将指数零项分离便有
+$|F_p(\chi)|\ge1-2q_p$。
+式（222.3）保证 $q_p\le1/4$ 最终一致成立，故
+$-\log|F_p(\chi)|\le4q_p$。
+由式（222.4），这些大素数的全部损失至多为 $O(\sqrt y\,\ell)$。
+结合式（222.10），得到 $\widehat\nu_s$ 的下界。
+
+最后所有 $p\mid V$ 均大于 $2y$，所以
+
+$$
+0\le-\log c_V=\sum_{p\mid V}\log U_p(s)
+\le\sum_{p>2y}(U_p(s)-1)=O(\sqrt y\,\ell).
+\tag{222.11}
+$$
+
+代入式（222.1）即可得到 $\widehat\mu_s$ 的下界，常数 $C$ 适当增大。
+非主字符个数由式（222.7）减去主字符得到。
+对每个固定 $c>0$，$y^{-1/4}\ell^3\to0$ 保证
+$Cy^{3/4}\ell<cR$ 最终成立，因而这些字符均违反所拟的统一上界。$\square$
+

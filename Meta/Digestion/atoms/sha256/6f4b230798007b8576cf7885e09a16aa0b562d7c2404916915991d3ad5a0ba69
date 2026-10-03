@@ -1,0 +1,49 @@
+### 36.1 同一来源、观察合同与已发布前提
+
+本章固定临界六格仪器及实际 FIB 地址，不改变折叠、删除或 guard。置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad g^2+4g=1,
+$$
+
+$$
+\lambda=\frac{t^2}{10}=\frac{1-g}{20},\qquad
+\rho=\frac{239g-44}{380},\qquad
+X=I_0=[-1,\phi],\quad I_1=[-1,t].
+$$
+
+窗口字母表为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是空窗，$25$ 是一个三位窗口标签；颜色字母表为 $\mathcal C=\{0,1,2,3,4,5\}$。实际合法边、平移量及分支为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,t^2,1,2-t),\\
+f_\ell(y)=\Delta_\ell-gy,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g}.
+\end{gathered}
+$$
+
+$\Omega=A_0$ 是起始 guard 零的完整合法地址空间；$A_1$ 是 incoming guard 一允许的地址，$D_s\subset A_s$ 是最终空尾地址，$D=D_0$。两个状态使用同一个窗口级数，$\kappa_s(A_s)=I_s$。每条合法边 $s\xrightarrow{\ell}s'$ 的完整闭分支域为 $f_\ell(I_{s'})$；按空间排列的五个根像依次是
+
+$$
+[-1,-t^2],\quad[-t^2,g],\quad[g,t],\quad[t,2t],\quad[2t,\phi].
+$$
+
+固定切点
+
+$$
+(a,b,c,d,e)=(-t^2-\lambda,\ g-3\lambda,\ t-5\lambda,\ 2t-7\lambda,\ 2t+\lambda).
+$$
+
+每个切点只有一个固定合法归属，整条记录始终使用同一个 $Q$。记实际格为 $C_i=Q^{-1}(i)$，其闭包为 $J_i=[l_i,r_i]$；六格均有正长度。任一记录的所有坐标由一个实际地址承担：
+
+$$
+x_j(\omega)=\kappa_{s_j}(T^j\omega)=\kappa_0(T^j\omega),\qquad
+x_j=\Delta_{\sigma_j(\omega)}-gx_{j+1},\qquad
+r_j=Q\!\left(\operatorname{clip}_X(x_j+e_j)\right).
+$$
+
+误差在裁剪前独立选取，不能为不同位置另换来源。闭预算为 $|e_j|\le\nu$；正开预算只在 $\nu>0$ 使用，要求每个 $|e_j|<\nu$；逐记录严格余量合同要求每条记录存在自己的 $\varepsilon_r>0$，使 $\sup_j|e_j|\le\nu-\varepsilon_r$，不要求整个记录类共用一个正余量。
+

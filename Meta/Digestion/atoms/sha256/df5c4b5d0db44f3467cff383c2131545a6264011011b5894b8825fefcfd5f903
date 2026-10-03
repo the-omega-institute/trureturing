@@ -1,0 +1,42 @@
+### 329.3 普通 Bernstein 系数的二倍提升误差
+
+固定四个函数之一，简记为 $F$。令
+$$
+a=\beta/2\in(0,1),\qquad n_j=n_0 2^j,
+$$
+其中整数 $n_0$ 稍后统一选择。使用原始系数
+$$
+f_{j,k}(p)=F(p,k/n_j),\qquad0\le k\le n_j.
+$$
+记 $\mathcal E_j$ 为从 $n_j$ 次到 $2n_j$ 次的 Bernstein 系数提升。给定后者成功数 $k$，前半段成功数 $K$ 为超几何变量，故
+$$
+(\mathcal E_jf_j)_k=\mathbb E F(p,K/n_j),
+$$
+$$
+\mathbb E(K/n_j)=k/(2n_j),\qquad
+\operatorname{Var}(K/n_j)\le1/(4n_j).
+$$
+Taylor 展开的一阶项平均为零，式（329.13）给
+$$
+\left|(\mathcal E_jf_j)_k-f_{j+1,k}\right|
+\le\frac{Dt^{\beta-2}}{8n_j}.
+$$
+幅度界另给 $2At^\beta$。因此令
+$$
+e_j(p)=\min\left\{2At^\beta,
+\frac{Dt^{\beta-2}}{8n_j}\right\}\quad(t>0),
+\qquad e_j(p_0)=0,
+\tag{329.14}
+$$
+就能对所有系数控制提升误差。
+
+每个 $e_j$ 在闭区间 $I$ 连续，并满足
+$$
+e_j(p)\le K_e n_j^{-a},\qquad
+K_e=(2A)^{1-a}(D/8)^a.
+\tag{329.15}
+$$
+证明是将 $\min\{v,w\}\le v^{1-a}w^a$ 用于式（329.14）；因为 $\beta=2a$，$t$ 的幂完全相消。这一步要求 $0<a<1$。
+
+这里使用的是原始 Bernstein 逼近与二阶差值，不调用高阶修正系数。
+

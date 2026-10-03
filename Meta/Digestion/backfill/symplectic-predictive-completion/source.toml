@@ -1,0 +1,5 @@
+source_id = "symplectic-predictive-completion"
+path = "docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

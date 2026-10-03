@@ -1,0 +1,17 @@
+**定理 10.4（同一观测的平均力与隐藏协方差）。**
+\[
+b(x,p_x)=(p_x,-\nabla A_\beta(x)+\mathcal B_{xx}p_x),
+\]
+\[
+\boxed{\mathcal C_{p_xp_x}(x,p_x)
+=\operatorname{Cov}(\nabla_xU\mid x)
++\beta^{-1}\mathcal B_{xy}\mathcal B_{xy}^T,}
+\]
+其余位置及交叉块为零。并有
+\[
+\boxed{\nabla^2A_\beta(x)
+=\mathbb E[\nabla_x^2U\mid x]
+-\beta\operatorname{Cov}(\nabla_xU\mid x).}
+\]
+在连通乘积位置域与以上光滑满支撑条件下，$N=0$ 当且仅当 $\mathcal B_{xy}=0$ 且 $U(x,y)=U_1(x)+U_2(y)$。此时当前观察精确自治。
+

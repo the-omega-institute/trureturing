@@ -1,0 +1,14 @@
+### 3.3 全部分层、行列式与积分矩首项
+
+有限维可观测 $(C,B)$ 中，令
+$$
+V_j=\bigcap_{k<j}\ker(CB^k),\quad
+E_j=V_j\cap V_{j+1}^\perp,\quad d_j=\dim E_j,
+\quad V_0=\mathbb R^d.
+$$
+令 $m$ 为 $V_{m+1}=0$ 的最小值，$D_T|_{E_j}=T^{j+1/2}I$。定义
+$$
+G_T=\int_0^Te^{tB^T}C^TCe^{tB}dt,
+\quad \mathcal P(s)x=\sum_{j=0}^m\frac{s^j}{j!}CB^jx_j,
+\quad M_*=\int_0^1\mathcal P(s)^T\mathcal P(s)ds.
+$$

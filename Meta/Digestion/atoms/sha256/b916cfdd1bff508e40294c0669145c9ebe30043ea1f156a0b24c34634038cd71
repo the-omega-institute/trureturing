@@ -1,0 +1,35 @@
+### 52.1. 总体联合辨识与信号为零的碰撞
+
+先使用与 $\theta$ 无关的标签边际。令
+$Z=\mathbf1_{\{Y=0\}}-\mathbf1_{\{Y=2\}}$。由 $Q$ 的三行和式（52.2），
+
+$$
+\mathbb E_{\theta,\alpha}[Z]
+=\kappa\alpha,qquad
+\kappa=\frac{73(\sqrt2-1)}{125}>0.
+\tag{52.3}
+$$
+
+同样，
+
+$$
+P_{\theta,\alpha}(Y=2)=\frac13-\rho\alpha,qquad
+\rho=\frac{534\sqrt2-629}{750}>0,
+\tag{52.4}
+$$
+
+因为 $P_{\theta,1}(Y=2)=(293-178\sqrt2)/250$。故总体边际先唯一确定 $\alpha$；这个结论使用固定输入边缘和固定类模板，不能推广成任意未知教师、任意未知输入律下的未知噪声辨识。
+
+对 $\alpha>0$，$u+\alpha w_0,u+\alpha w_1,u+\alpha w_2$ 三行两两不同，并且其最大坐标分别仍为 $0,1,2$。因此若
+$P_{\theta,\alpha}=P_{\eta,\beta}$，式（52.4）先给 $\alpha=\beta$，再由全支撑的 $X$ 边缘得到
+$C_\theta(x)=C_\eta(x)$ 对所有 $x\in\Sigma^n$ 成立。下面的协方差指纹使三个位点及其有序角色唯一确定，所以 $\theta=\eta$。反之，$\alpha=0$ 时所有三元组都给同一个均匀标签联合律；当 $n=3$ 时参数空间本来只有一个三元组。于是对 $n\ge4$ 有精确的总体碰撞结论
+
+$$
+P_{\theta,\alpha}=P_{\eta,\beta}\iff
+\alpha=\beta\ \text{且}\ (\alpha=0\ \text{或}\ \theta=\eta).
+\tag{52.5}
+$$
+
+由后验向量做
+$[q_\alpha-(1-\alpha)u]/\alpha$ 只是正概率向量的代数逆变换；它不恢复某一次随机的退化前标签。形式上的反向矩阵在 $0<\alpha<1$ 时有负的非对角元，故不能作为隐藏标签的随机反演器；$\alpha=0$ 完全抹去教师信号。
+

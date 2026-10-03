@@ -1,0 +1,35 @@
+**定理 16.1（三尖点刚性）。** 对独立的 $g,h$，
+
+$$
+Z(g,h;\tau)=16\varepsilon(g,h)R(\lambda(\tau)),\qquad
+R(z)=z^{-1}-(1-z)^{-1}-z+\tfrac12,
+\tag{MD.13}
+$$
+
+其中 $\lambda=\vartheta_2^4/\vartheta_3^4$ 为二级模 lambda。特别地
+
+$$
+\varepsilon(g,h)\varepsilon(h,g)=-1.
+\tag{MD.14}
+$$
+
+证明。共同模变换使该迹是 $\Gamma(2)$ 上的模函数。其三个尖点分别由 $g,h,g+h$ 的扭曲模控制，每个至多有一个关于 $x=q^{1/2}$ 的单极点，且常数项全为零，因为三个扭曲模都没有权重一态。经典 $X(2)\cong\mathbb P^1$ 以 $\lambda$ 为坐标，三个尖点对应 $0,1,\infty$，且
+
+$$
+\lambda=16x-128x^2+O(x^3),\quad
+\lambda(S\tau)=1-\lambda,\quad
+\lambda(T\tau)=\lambda/(\lambda-1).
+\tag{MD.15}
+$$
+
+这些是二级模曲线的标准输入 [Mi17, §2] 与 theta 变换。上述极点限制使 $Z=A/\lambda+B/(1-\lambda)+C\lambda+D$。分别在 $\tau,S\tau,TS\tau$ 展开，其常数为
+
+$$
+A/2+B+D,\qquad A+B/2+C+D,\qquad C/2+D.
+\tag{MD.16}
+$$
+
+例如 $\lambda(TS\tau)=1-1/\lambda(\tau)=-1/(16x)+1/2+O(x)$，给第三项。令三项均为零，唯一得到 $B=-A,C=-A,D=A/2$。无穷尖点首项为 $A/(16x)$，实际基态迹为 $\varepsilon(g,h)/x$，故 $A=16\varepsilon(g,h)$。直接通分给 $R(1-z)=-R(z)$，再用共同 $S$ 变换，得 $Z(h,g)=-Z(g,h)$；比较非零基态系数给式（MD.14）。证毕。
+
+同一经典函数也可写为 $16R(\lambda)=E_6/\eta^{12}=q^{-1/2}-492q^{1/2}-22590q^{3/2}+\cdots$。可由 theta 公式通分或同样的三尖点首项唯一性核对。此函数本身不作为新发现；本批使用的是其在未知理论的三条缺陷谱同时受限时产生的符号约束。负系数是插入自同构的迹，允许为负，不是负的态空间维数。
+

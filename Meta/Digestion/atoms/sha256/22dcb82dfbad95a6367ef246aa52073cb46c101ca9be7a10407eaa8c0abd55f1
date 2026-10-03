@@ -1,0 +1,25 @@
+### 定理 285.3 整包任意幂次的统一 Euler 成本
+
+对式（285.4）的全部素数 $s\ge5$ 与全部 $a\ge1$，有
+\[
+1<Z(m_s^a)\le\frac{m_s}{\varphi(m_s)}<\frac{16}{15}.
+\tag{285.8}
+\]
+更准确地，令
+\[
+\Theta_s=\min\left\{
+\frac{2s\log\phi}{(6s-2)\log(6s-1)},\quad
+\frac{2(1+\log(3s))}{s}\right\}.
+\tag{285.9}
+\]
+则
+\[
+\log\frac{m_s}{\varphi(m_s)}\le\Theta_s,
+\qquad
+\sup_{a\ge1}\bigl(Z(m_s^a)-1\bigr)
+\le e^{\Theta_s}-1
+=O\!\left(\frac{\log s}{s}\right).
+\tag{285.10}
+\]
+最后的极限沿素数 $s\to\infty$，且对幂次 $a$ 一致。
+

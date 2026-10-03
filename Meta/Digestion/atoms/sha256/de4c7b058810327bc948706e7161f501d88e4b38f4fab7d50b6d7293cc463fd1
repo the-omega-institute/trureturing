@@ -1,0 +1,12 @@
+**定义 312.5（来源坐标诱导的仿射Hessian）。** 对一个 $C^2$ 局部坐标变换 $p=p(\theta)$，令其可逆Jacobian为 $J_{ja}=\partial_ap_j$，并令 $G(\theta)=g(p(\theta))$。定义
+
+$$
+\Gamma^c_{ab}=\sum_j(J^{-1})^c_j\partial_a\partial_bp_j,
+\qquad
+(H^{\nabla}G)_{ab}
+=\partial_a\partial_bG-\sum_c\Gamma^c_{ab}\partial_cG.
+\tag{312.25}
+$$
+
+这里选定的是来源成功概率坐标中系数为零的平直仿射联络。该来源结构属于接口的一部分；没有声称它由某个信息度量唯一决定。
+

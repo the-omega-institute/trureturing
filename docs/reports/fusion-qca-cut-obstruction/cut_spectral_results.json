@@ -1,0 +1,90 @@
+{
+  "status": "passed",
+  "arithmetic": "exact integers and Fraction",
+  "counts": {
+    "S3_moments": 24,
+    "S3_offset_formula": 117,
+    "blocking_tests": 207,
+    "diagnostic_negative_controls": 2,
+    "hypothesis_negative_controls": 2,
+    "offset_signs": 3726,
+    "polarized_reconstructions": 3200,
+    "regular_representation_products": 17,
+    "spectral_measure_identities": 152,
+    "three_moment_rank_and_regular_tests": 69
+  },
+  "accepted_fusion_objects": {
+    "Fib": 12,
+    "RepZ2": 9,
+    "RepS3": 48
+  },
+  "polarized_by_model": {
+    "Fib": 1600,
+    "RepS3": 1600
+  },
+  "sample": {
+    "model": "Fib",
+    "n": 4,
+    "k": [
+      1,
+      -1
+    ],
+    "sigma": [
+      1,
+      0
+    ],
+    "table": [
+      [
+        170,
+        442,
+        445
+      ],
+      [
+        65,
+        169,
+        170
+      ],
+      [
+        68,
+        170,
+        178
+      ]
+    ],
+    "recovered": [
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "negative_primitive_matrix": {
+    "matrix": [
+      [
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        3,
+        1
+      ],
+      [
+        2,
+        1,
+        3
+      ]
+    ],
+    "moments_1_3": [
+      12,
+      432,
+      15552
+    ],
+    "rank": 2
+  },
+  "scope": "Finite diagnostics only. No category construction, DHR/FDQC proof, Lean compilation, CI or independent review."
+}

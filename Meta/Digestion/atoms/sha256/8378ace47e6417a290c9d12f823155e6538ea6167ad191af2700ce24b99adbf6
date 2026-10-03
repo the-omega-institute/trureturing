@@ -1,0 +1,15 @@
+### definition 262.1 临界宽度与两侧网格
+
+对 $a>1$ 记 $L_a=\log a$、$u_a=L_a^{1/4}$，令
+
+$$
+W(a)=a^{3/4}\frac{e^{u_a/2}}{\sqrt{L_a}},\qquad
+H_\delta^-(a)=W(a)L_a^{-\delta},\qquad
+H_\delta^+(a)=W(a)L_a^\delta.
+\tag{262.1}
+$$
+
+其中 $\delta$ 是固定参数。
+$\Phi,q,k,w,\mathcal R_{a,b}$ 使用 §260 的定义；特别地，
+$w(x)=\sqrt x\log x$，$\mathcal R$ 是同一 $q$ 坐标下的双端弦余量。
+

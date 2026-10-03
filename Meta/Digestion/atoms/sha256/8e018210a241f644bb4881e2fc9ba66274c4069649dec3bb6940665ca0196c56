@@ -1,0 +1,15 @@
+**Theorem 2.2 (covering bridge).** Suppose (X) is Hausdorff and locally
+compact. If the isometric representation is free and properly discontinuous,
+then the canonical projection (X\to X/\rho) is a covering map.
+
+**Proof.** Under the action in Definition 1.1, freeness is the cancellation
+condition for scalar multiplication, proper discontinuity is the compact-set
+condition for the action, and each action map is continuous because it is an
+isometry. The standard covering theorem for free, properly discontinuous
+group actions applies to the standard orbit quotient. Transport its covering
+projection across the homeomorphism of Theorem 1.2.
+
+The theorem supplies a topological covering map. It does not establish a
+hyperbolic metric or smooth quotient structure, finite volume, or rigidity of
+the acting lattice.
+

@@ -1,0 +1,21 @@
+**命题 317.1（任意正乘子的同源有限比较）。** 对每个正整数 $t$，记 $\ell=\log t$，则
+
+$$
+\begin{aligned}
+e^\gamma\log(1+\ell/X)-Z(C)(e^{\epsilon\ell}-1)
+&\le\Delta(tC)-\Delta(C)\\
+&\le e^\gamma\log(1+\ell/X).
+\end{aligned}
+\tag{317.3}
+$$
+
+证明。整除关系 $C\mid tC$ 使每个有限Euler因子不减，故 $Z(tC)\ge Z(C)$；同一价格的全局最优性给 $Z(tC)\le Z(C)e^{\epsilon\ell}$。将两端分别代入精确等式
+
+$$
+\Delta(tC)-\Delta(C)
+=e^\gamma\log(1+\ell/X)-[Z(tC)-Z(C)]
+\tag{317.4}
+$$
+
+即可。这不要求 $tC$ 仍为 CA、素指数有序或保持旧素支撑；允许 $t=1$。$\square$
+

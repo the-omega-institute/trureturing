@@ -1,0 +1,37 @@
+**推论 196.4（两个因子的分裂域确实共享）。** 式（196.2）的两个 $n$ 次因子均在 $\mathbb Q$ 上不可约。令 $E_0,E_1$ 分别为 $\mathcal D_n-t_r$ 与 $\mathcal D_n+t_r$ 的分裂域，则
+
+$$
+\begin{aligned}
+[E_0:\mathbb Q]=[E_1:\mathbb Q]&=n^2/2,\\
+E_0E_1&=E,\\
+[E_0\cap E_1:\mathbb Q]&=n^2/4.
+\end{aligned}
+\tag{196.9}
+$$
+
+证明。由式（196.6）直接有 $\mathcal D_n(x_h)=(-1)^h t_r$。所以两因子分别对应 $h$ 的偶轨道与奇轨道，偶平移已在各轨道上传递，证明各自不可约。
+
+写 $h=2x+s$、$s\in\{0,1\}$，则 $h\mapsto ch+d$ 在该轨道上成为
+
+$$
+x\longmapsto cx+d/2+s(c-1)/2\pmod n.
+$$
+
+其像是所有 $x\mapsto ax+b$，其中 $a\in(\mathbb Z/n\mathbb Z)^\times$、$b\in\mathbb Z/n\mathbb Z$，阶为 $n\varphi(n)=n^2/2$。两个轨道的点态核分别是
+
+$$
+H_0=\{1,(1+n,0)\},\qquad
+H_1=\{1,(1+n,n)\},
+$$
+
+其中括号记仿射参数 $(c,d)$。它们各有两个元素，交只有单位元，故两域联合为 $E$。两个 Galois 子域的次数公式给交域次数 $(n^2/2)^2/n^2=n^2/4$。$\square$
+
+例如 $k=8,r=0$ 时，两个因子清除分母后为
+
+$$
+11X^4-44X^2-245,\qquad
+11X^4-44X^2+289.
+$$
+
+各自分裂域次数为八，共同分裂域次数为十六，交域次数为四。具体交域为 $\mathbb Q(\sqrt{11},\sqrt{-55})$：两多项式的 $c$ 与 $4-c$ 平方类分别为 $-55,11$ 及 $11,-55$，这些平方根均属于对应分裂域，形成共同四次子域。若第一多项式两组根为 $\pm\alpha,\pm\beta$，则 $\alpha^2+\beta^2=4$，另一多项式的根为 $\pm(\alpha+\beta)/\sqrt2$ 与 $\pm(\alpha-\beta)/\sqrt2$。第一分裂域的三个二次子域为 $\mathbb Q(\sqrt{11})$、$\mathbb Q(\sqrt{-55})$、$\mathbb Q(\sqrt{-5})$，没有 $\mathbb Q(\sqrt2)$；因此联合域也可表示为第一分裂域加 $\sqrt2$。这与次数十六相符。$k=16$ 时，两个八次因子的分裂域各有次数三十二，共同根域次数六十四，交域次数十六。
+

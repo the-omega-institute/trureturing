@@ -35,7 +35,7 @@ open D5.S3.Arith.RobinExponentSwap
 
 noncomputable section
 
-private theorem normalized_sigma_prime_pow {p : ℕ} (hp : p.Prime) (a : ℕ) :
+theorem normalized_sigma_prime_pow {p : ℕ} (hp : p.Prime) (a : ℕ) :
     (ArithmeticFunction.sigma 1 (p ^ a) : ℝ) / (p ^ a : ℕ) =
       reciprocalGeomSum p a := by
   have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp.ne_zero
@@ -47,7 +47,7 @@ private theorem normalized_sigma_prime_pow {p : ℕ} (hp : p.Prime) (a : ℕ) :
   simp only [inv_pow, pow_succ]
   field_simp
 
-private theorem normalized_sigma_mul {u v : ℕ} (h : u.Coprime v) :
+theorem normalized_sigma_mul {u v : ℕ} (h : u.Coprime v) :
     (ArithmeticFunction.sigma 1 (u * v) : ℝ) / (u * v : ℕ) =
       ((ArithmeticFunction.sigma 1 u : ℝ) / u) *
         ((ArithmeticFunction.sigma 1 v : ℝ) / v) := by

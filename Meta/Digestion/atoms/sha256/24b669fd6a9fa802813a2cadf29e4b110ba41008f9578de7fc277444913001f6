@@ -1,0 +1,4 @@
+### 13.1 把此前未写回的字符约束补齐
+
+令 $\mathcal B=\{g\ne0:a_g=0\}$，$b=|\mathcal B|$，对实字符 $\xi:E\to\{\pm1\}$ 写 $S_\xi=\sum_{g\in\mathcal B}\xi(g)$。
+

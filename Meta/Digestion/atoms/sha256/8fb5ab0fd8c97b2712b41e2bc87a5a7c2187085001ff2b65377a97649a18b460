@@ -1,0 +1,14 @@
+**定理 307.2（保留相关失衡后的交叉尺度极限）。** 在假设307.1下，$h_L$、$s_L$、$M_L$ 按 $z=z_L$ 取值，则
+\[
+\sqrt m\left[
+\frac{\Delta(H_L(z_L))-\Delta(T_L)}E
+-\frac{h_L}m b_L\right]\longrightarrow\frac{d^2}{8}.
+\tag{307.10}
+\]
+结合（305.8），亦有
+\[
+\sqrt m\left[\Delta(H_L(z_L))-S(m)-E\frac{h_L}m b_L\right]
+\longrightarrow E\left(2\sqrt2+\frac{d^2}{8}\right).
+\tag{307.11}
+\]
+

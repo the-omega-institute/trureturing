@@ -1,0 +1,10 @@
+### proposition 119.2 命题 13.8 的非退化字母表假设
+
+命题 13.8 中“至少两个 $m$ 元寄存器”的结论须限定为整数 $m\ge2$。具体地，令 $r\in\mathbb N$，令 $E$ 为恰有 $m$ 个元素的集合。若编码
+
+$$
+C:(\mathbb Z/m\mathbb Z)^2\longrightarrow E^r
+$$
+
+有解码器 $D:E^r\to(\mathbb Z/m\mathbb Z)^2$ 满足 $D\circ C=\operatorname{id}$，则 $m^r\ge m^2$ 且 $r\ge2$。取 $E=\mathbb Z/m\mathbb Z$ 和 $r=2$，当前与下一次数量读数达到该下界。
+

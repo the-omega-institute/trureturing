@@ -1,0 +1,35 @@
+### 146.2. 实际 Weil 能量与 Li 的索引范围
+
+为固定表中 Weil 量的归一化，令
+
+$$
+\begin{aligned}
+T_x(f)&=\int_{\mathbb R}|f(y)-f(y-x)|^2\,dy,\\
+W_L&=\sum_{2\le n\le e^{2L}}\frac{\Lambda(n)}{\sqrt n},\qquad
+J_L(f)=\sum_{2\le n\le e^{2L}}\frac{\Lambda(n)}{\sqrt n}T_{\log n}(f),\\
+J_\infty(f)&=\int_0^\infty\frac{e^{-x/2}}{1-e^{-2x}}T_x(f)\,dx,\qquad
+c_\infty=\Re\psi(1/4)-\log\pi,
+\end{aligned}
+$$
+
+其中 $\psi$ 为 digamma，和按整数截断，$\Lambda$ 自动去掉非素数幂。对于 $\operatorname{supp}f\subseteq[-L,L]$，准确目标是
+
+$$
+(2W_L-c_\infty)\|f\|_2^2
+\le2\left|\int_{\mathbb R}e^{x/2}f(x)\,dx\right|^2
++J_\infty(f)+J_L(f). \tag{146.1}
+$$
+
+`PrimeArchimedeanPoincareCriterion.rh_iff_primeArchimedeanPoincare` 取实际 `zetaZeroData`，得到此全称不等式与 RH 的既有接口。该旧模块注释所述 M1-b 存在性缺口已由后续载体构造填补；本批以当前声明的组合为准，不把旧注释继续当作现状，也不改写冻结模块。
+
+`PrimeOnlyNoGap.prime_only_no_gap` 另给：圆上非负、可求和跳跃权重的能量，在非零 Fourier 模上之下确界为零。故不能用这种模型的素数项独自提供统一正谱隙；其可求和假设不能被丢弃后用于否定式 (146.1) 的实际临界素数权重和 Archimedean 项。有限矩阵正半定也不直接推出式 (146.1) 对全部 $f,L$ 成立。
+
+Li 路线可复用 `CanonicalLiNonnegativeConverse.canonical_li_nonnegative_implies_rh`：实际完成 zeta 的规范系数
+
+$$
+\lambda_n=\frac1{(n-1)!}
+\Re\left.\frac{d^n}{ds^n}\bigl[s^{n-1}\log\xi(s)\bigr]\right|_{s=1},\qquad n\ge1,
+$$
+
+若对 **每个** 正指标非负，便给 RH。这里引用的是这一既有充分方向；本批没有计算或证明全部系数非负。有限正壳 $A_H(r)$ 与 $\lambda_n$ 不是同一列，也未建立保号变换。既有 Li 曲率/圆测度结果同样须保持实际系数、共同测度和全部阶数条件，不能把任意有限 Gram 矩阵的正性代入。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:caf6404da6cd8baa7c39bde3eb5ec4599831a6c63e244341e91b9cf288618bbc
+  normalized_sha256: sha256:caf6404da6cd8baa7c39bde3eb5ec4599831a6c63e244341e91b9cf288618bbc
+cas_ref: sha256:caf6404da6cd8baa7c39bde3eb5ec4599831a6c63e244341e91b9cf288618bbc
+coverage_gids:
+  - gid: D5/S0/History/WellFoundedLeafMassConservation.result
+    target_statement_id: sha256:4d1438157de9a8f586219142160ece9d5986e1623c785577b327297d18893f4d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,47 @@
+**定理 19.2（周期跨度、长度及实际进位振幅）。** 对定义 19.1 的每条周期，不要求假设 18.1，均有
+
+$$
+s<\varphi^2(\Delta_O+1),\qquad
+\ell\leq\left\lceil\varphi^2(\Delta_O+1)\right\rceil,
+\qquad
+\Delta_O\geq\left\lfloor\alpha^2(\ell-1)\right\rfloor.
+\tag{19.1}
+$$
+
+若 $\Delta_O=0$，则更强地有 $\ell\leq2$。由定理 15.3，$\Delta_O$ 也等于这一周期中各个索引的实际拆分树总标量进位的振幅。因此，若一族实际内周期的长度无界，其实际进位总量在各自周期内的振幅必无界；这不预设这样的周期族存在。
+
+证明。对有限非空集合上的实函数写 $\operatorname{osc}_O f=\max_O f-\min_O f$。周期映射 $T_{n,C}$ 置换 $O$，故
+
+$$
+s=\operatorname{osc}_O T_{n,C}
+=\operatorname{osc}_O C
+\leq\operatorname{osc}_O G+\Delta_O.
+$$
+
+$G$ 单调，且 $R(x)=G(x)-\alpha x$ 满足 $-\alpha^2<R(x)<\alpha$。设 $u=\min O$、$v=\max O$，则
+
+$$
+\operatorname{osc}_O G=G(v)-G(u)
+=\alpha s+R(v)-R(u)<\alpha s+1.
+$$
+
+所以 $(1-\alpha)s<\Delta_O+1$。用 $1-\alpha=\alpha^2=\varphi^{-2}$ 得到跨度界。$O$ 含 $\ell$ 个不同整数，故 $\ell\leq s+1$；因 $s$ 是整数，严格跨度界给 $\ell\leq\lceil\varphi^2(\Delta_O+1)\rceil$。同理
+
+$$
+\alpha^2(\ell-1)\leq\alpha^2s<\Delta_O+1,
+$$
+
+且 $\Delta_O$ 是非负整数，得到式 (19.1) 的最后一个界。
+
+若 $\Delta_O=0$，则 $E_C$ 在 $O$ 上为同一个常数，故 $C=G+E_C$ 在 $O$ 上单调不减，$T_{n,C}$ 单调不增。它在 $O$ 上又是双射，因此严格反转 $O$ 的次序。将 $O$ 排列为 $z_1<\cdots<z_\ell$，必有 $T_{n,C}(z_i)=z_{\ell+1-i}$，从而 $T_{n,C}^2$ 在 $O$ 上恒等，一条周期只能有一或两个点。此处使用有限有序集上反序双射的经典性质；局部轮廓零缺陷的反射先例见定义 19.1 所引 §7，两个缺陷坐标不能互换。
+
+最后，对每个 $x\in O$ 单独使用其自己的实际拆分树，定理 15.3 给
+
+$$
+\Delta_O=\operatorname{osc}_{x\in O}
+\left(\sum_{u\in I_x}\delta(g_{m_u},m_u-g_{m_u})\right).
+\tag{19.2}
+$$
+
+因此周期长度无界与式 (19.1) 一起迫使式 (19.2) 的振幅无界。单个缺陷值很大而在整个周期上保持常数，仍只能给长度至多二；控制缺陷的量级和控制其周期内变化是不同条件。这里的振幅界也没有控制进入周期之前的前周期长度。
+

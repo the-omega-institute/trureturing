@@ -1,0 +1,15 @@
+**定理 2.2。** 配对 $a^TJb$ 在 $W$ 上非退化。因此 $r=\dim W$ 为偶数，$J_r=OJO^T$ 可逆。令
+$$
+P=OS^{-1}O^T,\quad L=S^{-1}O^TP^{-1},\quad N=I-LO.
+$$
+则
+$$
+K=J_rP^{-1},\quad OL=I,\quad AL=LK,\quad AN=NA,
+\quad NJO^T=0,\quad L^TJL=-J_r^{-1},
+$$
+$$
+H_r(y)=\tfrac12y^TP^{-1}y=\min_{Oz=y}H(z),\qquad
+H(z)=H_r(Oz)+\tfrac12(Nz)^TS(Nz).
+$$
+极小提升唯一，为 $Ly$。
+

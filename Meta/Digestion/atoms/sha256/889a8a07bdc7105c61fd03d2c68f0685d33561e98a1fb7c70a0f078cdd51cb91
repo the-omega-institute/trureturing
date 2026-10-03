@@ -1,0 +1,18 @@
+**命题 170.1（奇间距的本原黄金范数）。** 设
+
+$$
+A=F_{k-1}+1,\qquad B=F_k,\qquad g=\gcd(A,B).
+$$
+
+则
+
+$$
+V=AF_b+BF_{b+1},\qquad A^2+AB-B^2=L_k,
+\qquad
+ g=\begin{cases}2,&3\mid k,\\1,&3\nmid k.\end{cases}
+$$
+
+因此本原范数为 $\Delta=L_k/g^2$，其每个素因子均不整除 $V/g$。
+
+证明。第一式是 Fibonacci 加法公式。奇数 $k$ 的 Cassini 恒等式给 $F_{k-1}^2+F_{k-1}F_k-F_k^2=-1$；展开范数即得 $2F_{k-1}+F_k=L_k$。模 $g$ 有 $F_{k-1}\equiv-1,F_k\equiv0$，同一 Cassini 恒等式给 $1\equiv-1$，故 $g\mid2$。Fibonacci 奇偶周期给 $g=2$ 当且仅当 $3\mid k$。最后应用命题 165.1，保留同一实际种子的公因子。$\square$
+

@@ -1,0 +1,11 @@
+### 10.4 非线性平均力势、磁耦合与精确闭合的条件
+
+取单位质量、Cartesian 分块位置 $q=(x,y)$ 和机械动量 $p=(p_x,p_y)$，光滑势 $U(x,y)$。常数带电磁耦合矩阵 $\mathcal B$ 反对称，电荷已吸收入系数；其分块记为 $\mathcal B_{xx},\mathcal B_{xy}$。Hamilton–Lorentz 方程为
+\[
+\dot q=p,\qquad\dot p=-\nabla U(q)+\mathcal Bp.
+\]
+假定完整 Gibbs 分布可归一、满支撑，势与其相关导数允许积分下微分。观察 $u=(x,p_x)$，定义平均力势
+\[
+A_\beta(x)=-\beta^{-1}\log\int e^{-\beta U(x,y)}dy.
+\]
+

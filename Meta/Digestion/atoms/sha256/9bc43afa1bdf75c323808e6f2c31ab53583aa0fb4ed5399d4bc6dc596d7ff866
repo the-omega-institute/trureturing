@@ -1,0 +1,123 @@
+### 定理 187.1（任意合法公因子与偶尺度的统一严格尾界）
+
+在 §163 的 Fibonacci 秩性质与 §160.1 的 Axler 解析输入下，
+
+$$
+\liminf_{\substack{j\to\infty\\2\mid j}}
+\ \inf_{\substack{g\in\mathbb N\\1\le g<\phi^j}}
+\left(e^\gamma\log\log N_{g,j}-Z(N_{g,j})\right)
+\ge e^\gamma\log2.
+\tag{187.1}
+$$
+
+即对任意 $\varepsilon>0$，存在共同偶指标阈值 $J_0$，使所有偶数 $j\ge J_0$ 及全部 $1\le g<\phi^j$ 的实际来源都满足加性余量大于 $e^\gamma\log2-\varepsilon$。特别地，这整个二维参数族最终严格满足 Robin。一个保守显式充分条件为
+
+$$
+\log(j+3)\ge200,
+$$
+
+此时对所有允许的 $g$，严格有
+
+$$
+e^\gamma\log\log N_{g,j}-Z(N_{g,j})>
+\frac{21}{100}e^\gamma>0.
+\tag{187.2}
+$$
+
+证明。设 $h=\log g$，于是 $0\le h<(r-3)\log\phi<r/2$。仍取 §185 的同一切面
+
+$$
+y=\lceil r^{5/6}\rceil,\qquad
+A=\prod_{\substack{p\mid F_r\\p\le y}}p,\qquad B=gA.
+$$
+
+§184–185 的共同素支撑估计在这里仍逐态成立：$B\mid N_{g,j}$，且
+
+$$
+Z(N_{g,j})<\frac B{\varphi(B)}e^{T(r,y)},\qquad
+\log A\le4(\log2)y<8r^{5/6},\qquad
+T(r,y)<16r^{-1/12}
+\tag{187.3}
+$$
+
+对充分大的 $r$ 成立，其中常数完全不依赖 $g$。
+
+先证明统一极限。分为下面两个互补范围。
+
+若 $h\ge r^{11/12}$，则
+
+$$
+\log\log B=\log h+O(r^{-1/12}),
+\qquad B\ge g\ge\exp(r^{11/12})\to\infty.
+$$
+
+因此 §160.1 的精确 Axler 界可以一致使用，且其误差 $a_0/(\log\log B)^2$ 一致趋于零。结合式（187.3）与 $(\log r)r^{-1/12}\to0$，得到
+
+$$
+Z(N_{g,j})<e^\gamma(\log h+o(1)),
+$$
+
+这里 $o(1)$ 的上界只依赖 $r$。由于 $F_r\ge\phi^{r-2}>\phi^{r-3}>g$，实际数量满足 $N_{g,j}>g^2$，故
+
+$$
+\log\log N_{g,j}>\log h+\log2.
+$$
+
+这给该范围的统一加性余量下界 $e^\gamma\log2-o(1)$。
+
+若 $0\le h<r^{11/12}$，则 $\log B\le r^{11/12}+8r^{5/6}$。当 $B\ge2$ 时，§164.1 的通用包络给
+
+$$
+\frac B{\varphi(B)}
+<e^\gamma\max\{32,\log\log B+a_0\}
+\le e^\gamma\left(\frac{11}{12}\log r+O(1)\right).
+$$
+
+$B=1$ 时左边等于一，也满足最后一个充分大 $r$ 的上界。式（187.3）因而给
+
+$$
+Z(N_{g,j})<e^\gamma\left(\frac{11}{12}\log r+O(1)\right).
+$$
+
+实际预算满足 $\log\log N_{g,j}\ge\log\log F_r\ge\log r+O(1)$，其中常数仍与 $g$ 无关。因此这一范围的加性余量一致趋于正无穷。合并两个范围即得式（187.1）。
+
+再核对显式阈值。令 $v=\log r\ge200$、$s=h/r\in[0,1/2)$、$a=8r^{-1/6}<1/100$。由通用包络和式（187.3），包括 $B=1$ 的单独情形，
+
+$$
+Z(N_{g,j})<e^\gamma H e^t,
+\quad H=\max\{32,v+\log(s+a)+a_0\},
+\quad t=16e^{-v/12}.
+$$
+
+因为 $s+a<51/100$、$a_0<1/100$，有 $H\le v+1/100$。§185 的同一有理常数链给 $t<1/2$ 以及
+
+$$
+He^t\le H+2Ht<H+1/10.
+$$
+
+另一方面，$\log\phi>2/5$ 及 $r\ge6$ 给 $\log F_r\ge(r-2)\log\phi>r/4$，所以
+
+$$
+\log\log N_{g,j}>v+\log(s+1/4).
+$$
+
+若 $H=32$，右端大于 $v-2$，减去 $H+1/10$ 后大于 $21/100$。若最大值由另一分支达到，则
+
+$$
+\frac{s+1/4}{s+a}\ge\frac{3/4}{1/2+a}>\frac{25}{17}.
+$$
+
+这里比值对 $s$ 递减，因为 $a<1/4$。又 $\log t\ge(t-1)/t$ 对 $t>1$ 成立，故
+
+$$
+\log\frac{25}{17}\ge\frac8{25}.
+$$
+
+于是实际预算减去 $H+1/10$ 严格大于
+
+$$
+\frac8{25}-\frac1{100}-\frac1{10}=\frac{21}{100}.
+$$
+
+这给式（187.2）。$\square$
+

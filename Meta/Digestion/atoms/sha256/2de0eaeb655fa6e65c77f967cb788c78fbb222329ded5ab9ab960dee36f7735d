@@ -1,0 +1,2 @@
+**证明。** 若 $g$ 在 $d$ 实现，则 $R(g)\mid d$，故 $F_{R(g)}\mid F_d$，从而 $C_H(g)\mid\gcd(H,F_d)=g$；反向 $g\mid C_H(g)$ 直接成立。固定点在时刻 $R(g)$ 实现。若 $g\mid h$，则 $R(g)\mid R(h)$，所以 $C_H(g)\mid C_H(h)$。又 $g\mid C_H(g)$ 给 $R(g)\mid R(C_H(g))$，而 $C_H(g)\mid F_{R(g)}$ 给反向整除，故秩相等并得到幂等。若可达 $h$ 包含 $g$，单调性给 $C_H(g)\mid C_H(h)=h$。$\square$
+

@@ -1,0 +1,10 @@
+**命题 62.6（全族共同余量的精确条件）。** 对任一由 $r_i\le K$ 列表组成的族，定义
+
+$$
+\Delta_{\mathcal F}=\inf\{D_{i-1}-d:\text{族内全部 }r_i=K\text{ 的实际位置}\},
+\qquad\inf\varnothing=+\infty.
+\tag{62.17}
+$$
+
+该族及其各自原尾零误差未来能够共用一个正误差余量，当且仅当 $\Delta_{\mathcal F}>0$。
+

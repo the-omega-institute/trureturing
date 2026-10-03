@@ -1,0 +1,41 @@
+**定义320.8（有限线性窗口）。** 对有限非空 \(\Gamma\subseteq\Theta\)、\(N\ge1\)，令 \(\ell_\delta(\Gamma,N)\) 为下列 LP 的最小值：
+$$
+\begin{aligned}
+\text{最小化 }&t,\\
+\text{条件 }&
+t\ge0,\quad(r,f)\in\mathcal R_N,\\
+&m_n(\theta,S)\le t
+&&(\theta\in\Gamma,\ S,\ 1\le n\le N),\\
+&F_n(\theta,S,D)\le P_{\theta,S}(D)+\delta
+&&(\theta\in\Gamma,\ S,\ D\subseteq\mathcal Z,\ 0\le n\le N).
+\end{aligned}
+\tag{320.17}
+$$
+每个世界使用相同的控制变量，仅来源似然与目标系数不同。有限输出集保证全事件族仍有限。准确版可以只保留单输出约束。
+
+一直查询、深度 \(0,\ldots,N\) 都不输出的前缀满足 \(F_n=0\)、\(m_n=n^s\)，所以配 \(t=N^s\) 可行，因而
+$$
+0\le\ell_\delta(\Gamma,N)\le N^s.
+\tag{320.18}
+$$
+为证明最小值存在，可把搜索限制到目标子水平集 \(0\le t\le N^s\)。它与有限闭约束构成非空紧多面体，故线性目标达到最小值。这个上界只用于取得性，不作为窗口限制时额外必须保留的条件。
+
+若 \(\Gamma\subseteq\Gamma'\)、\(N\le N'\)，大窗口可行点限制到小窗口并保留原 \(t\)，仍满足式（320.17），因此
+$$
+\ell_\delta(\Gamma,N)\le\ell_\delta(\Gamma',N').
+\tag{320.19}
+$$
+放宽 \(\delta\) 则使最优值不增。
+
+为明确全域比较对象，沿用定义318.3的费用：
+$$
+\mathcal C_s^{\mathrm{pol}}(\delta)=
+\inf\left\{
+\sup_{\theta,S}\mathbb E_\theta^\pi M^s:
+\begin{array}{l}
+\pi\text{ 在每个实际世界几乎必有限回答},\\
+\sup_{\theta,S}\|Q^\pi_{\theta,S}-P_{\theta,S}\|_{\mathrm{TV}}\le\delta
+\end{array}\right\},
+$$
+空集下确界取 \(+\infty\)，费用只计实际总旧调用。
+

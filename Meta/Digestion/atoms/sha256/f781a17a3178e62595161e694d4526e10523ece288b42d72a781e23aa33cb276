@@ -1,0 +1,12 @@
+**证明。** $A^TS+SA=0$ 与 $K^TP^{-1}+P^{-1}K=0$ 给出两边能量范数等距。误差满足 $\dot e=Ke+(OA-KO)e^{At}z_0,e(0)=0$，Duhamel 积分给第一式。$QQ^T=I$，$\Pi=Q^TQ$，且
+$$
+\epsilon=\|(I-\Pi)\Omega Q^T\|.
+$$
+对单位 $v$ 正交分解
+$$
+\|\Omega Q^Tv\|^2=\|Dv\|^2+\|(I-\Pi)\Omega Q^Tv\|^2
+$$
+即得第二式；奇数阶反对称 $D$ 有核。证毕。
+
+四维 $S=I$、$Q=\left(\begin{smallmatrix}1&0&0&0\\0&4/5&3/5&0\end{smallmatrix}\right)$ 给 $\epsilon=4/5,\sigma_{\min}(D)=3/5,\omega_*=1$，精确取等。单行 $Q=(1,0,0,0)$ 给奇数维等号。给定矩阵的界不包括辨识误差。
+

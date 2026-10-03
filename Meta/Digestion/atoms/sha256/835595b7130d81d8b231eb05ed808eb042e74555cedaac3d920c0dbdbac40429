@@ -1,0 +1,91 @@
+### 345.4 地板、一次固定的放大量与有效共同网格
+
+设地板满足
+
+\[
+0<\eta_k\le1,\qquad
+\eta_{k+1}\le\eta_k,\qquad
+\eta_k/\eta_{k+1}\le R_\eta<\infty,
+\tag{345.19}
+\]
+
+其中 \(R_\eta\) 对所考虑的策略族共同。定义
+
+\[
+\kappa=1/4,\qquad
+c_\delta=\kappa N^a=N^a/4,\qquad
+\delta_k=\kappa b^{-ak}\eta_k
+        =c_\delta n_k^{-a}\eta_k.
+\tag{345.20}
+\]
+
+因此
+
+\[
+\delta_{k-1}-\delta_k
+\ge(1-b^{-a})\delta_{k-1}.
+\tag{345.21}
+\]
+
+固定一个充分大的整数 \(M\)，同时满足
+
+\[
+\begin{gathered}
+MN\ge\max(\tau,4),\qquad M\ge1,\\
+C_-(M^{-1}+M^{-a})\le c_\delta/2,\\
+C_-(M^{-1}+M^{-a})+C_\times M^{-a}
+\le\tfrac12\varepsilon c_\delta(1-b^{-a}),\\
+\boxed{\quad C_LM^{-a}\le c_\delta/4,\qquad
+C_{\mathrm{gap}}M^{-a}\le c_\delta/2.\quad}
+\end{gathered}
+\tag{345.22}
+\]
+
+由于所有常数已经固定，这些条件可以同时成立。最后两项在所有地板上给
+
+\[
+C_Lm_k^{-a}\le\delta_k/4,\qquad
+C_{\mathrm{gap}}m_k^{-a}\le\delta_k/2
+\quad\text{若 }m_k\ge Mn_k/\eta_k,
+\tag{345.23}
+\]
+
+因为 \(a>1\) 且 \(\eta_k^a\le\eta_k\)。这里的 \(c_\delta\) 精确对应地板系数，完整中心余量 \(\varepsilon\) 另行出现在相容吸收中。
+
+令目标阈值 \(R_k=Mn_k/\eta_k\)。在共同网格 \(\Lambda\) 中选择基本次数，使
+
+\[
+R_k\le m_k\le L_bR_k,\qquad
+m_{k+1}\ge bm_k,\qquad L_b=5b/4.
+\tag{345.24}
+\]
+
+抽象情形可选首个不小于 \(R_k\) 的格点。有效情形不调用一般可计算实数的精确 ceiling：计算有理上界
+\(R_k\le U_k\le R_k+1\)，令 \(h_k\) 为首个满足
+\(\tau b^j\ge U_k\) 的格点，再取
+
+\[
+m_0=h_0,\qquad m_k=\max\{bm_{k-1},h_k\}\quad(k\ge1).
+\tag{345.25}
+\]
+
+整数与有理数的比较可以决定，不需要判断任意实数相等。因 \(R_k\ge4\)，有 \(h_k\le L_bR_k\)；又因 \(R_k\ge bR_{k-1}\)，归纳得式（345.24）。两种选择各自生成合法策略，全部后续估计只用这些共同界。
+
+实际任务层长为
+
+\[
+D_k=m_k+r.
+\tag{345.26}
+\]
+
+由 \(m_k\ge\tau\ge r\)，
+
+\[
+m_k\le D_k\le2m_k,\qquad
+\frac{b+1}{2}\le\frac{D_{k+1}}{D_k}
+\le L_bbR_\eta.
+\tag{345.27}
+\]
+
+选取顺序是先固定 \(b,N,\tau\)、完整余量和全部误差常数，再固定 \(M\)，最后选择地板及层长。改变矩阶或截止时，不反向改选共同中心。
+

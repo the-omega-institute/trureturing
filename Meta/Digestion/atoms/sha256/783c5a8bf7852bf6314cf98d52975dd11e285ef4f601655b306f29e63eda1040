@@ -1,0 +1,10 @@
+**定理 16.3（非对易条件场的精确协变最优）。** 在相同热校准、标签保持和固定相位任务上，
+\[
+ \boxed{F_{\mathrm{cov}}(r)=\frac{1+\sqrt3}{4},\quad 0<r<1,\ \Delta>0.} \tag{16.4}
+\]
+这个值与温度无关，且可以由二维环境实现。它与不要求协变的最优值之差为
+\[
+ \boxed{F_{\mathrm{SDP}}-F_{\mathrm{cov}}
+ =\frac34\left(\sqrt{1-2r^2/3}-\frac1{\sqrt3}\right).}  \tag{16.5}
+\]
+

@@ -1,0 +1,12 @@
+**定理 1.1。** 对 $C^2$ 向量场 $f_\theta:\mathbb R^d\to\mathbb R^d$，在局部流 $\Phi_t$ 存在且对变量、参数可微的区间，函数
+$$
+\mathcal H_\theta(x,p)=p^Tf_\theta(x)
+$$
+生成
+$$
+\dot x=f_\theta(x),\qquad \dot p=-Df_\theta(x)^Tp,
+\qquad
+\widetilde\Phi_t(x,p)=(\Phi_t(x),D\Phi_t(x)^{-T}p).
+$$
+这个提升保持典范一形式 $p^Tdx$，因而保持辛形式。若 $\dot{\delta x}=Df_\theta(x)\delta x$，则 $p^T\delta x$ 守恒。
+

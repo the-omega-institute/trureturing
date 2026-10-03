@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:062e164c9a5729660cc57ce0112767bd8510238ec9516476e1c4ca4adf560e56
+  normalized_sha256: sha256:062e164c9a5729660cc57ce0112767bd8510238ec9516476e1c4ca4adf560e56
+cas_ref: sha256:062e164c9a5729660cc57ce0112767bd8510238ec9516476e1c4ca4adf560e56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: FreeMagma.lift_of, iterate_map_mul, Function.iterate_add_apply, Function.iterate_succ_apply. The substitution is the FreeMagma lift alpha -> beta, beta -> beta*alpha. Normalize rho^(j+2)(alpha) to rho^j(beta*alpha), apply iterate_map_mul, and normalize rho^j(beta)=rho^(j+1)(alpha). No new induction or repository GID is required.'
+    previous_atom_id: ea0f9886d701ccb96eb7a44f29b9b1ab3a93aa24089f32203ad7830d1966e0ac
+    next_atom_id: 50047f0923940392c559899626d07249618394680715706ad72ff94807bc7a22

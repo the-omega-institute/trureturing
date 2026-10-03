@@ -1,0 +1,12 @@
+**命题 149.3（守恒须指定操作与量）。** 定义欧氏平方范数 $E(a,b)=a^2+b^2$，并沿用 §22 的黄金不定二次型 $Q(a,b)=a^2+ab-b^2$。则
+
+$$
+E(Cx)=E(x),\qquad E(Mx)-E(x)=2ab+b^2,\qquad
+Q(Mx)=Q(Cx)=-Q(x). \tag{149.2}
+$$
+
+证明。$E(-b,a)=b^2+a^2$，而 $E(b,a+b)=a^2+2ab+2b^2$；后二式分别展开为
+$Q(b,a+b)=-a^2-ab+b^2$ 与 $Q(-b,a)=b^2-ab-a^2$。因此 $M$ 一般改变 $E$，例如 $E(M\beta)=2\ne1=E(\beta)$；$M^2$ 和 $C^2$ 各自保持 $Q$，任意连续两次从 $M,C$ 中选取的操作也保持 $Q$。$\square$
+这里 $Q$ 不是正定能量，$E$ 也不是 §143 的投影残差 $E_M(H)$；“守恒”不能省略操作、载体和所守的量。
+相关仓内锚点 `GoldenAntiIsometry.golden_anti_isometry` 给黄金二次型的反等距关系，`SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm` 给 Eisenstein 范数门；二者均不作为本节完整 $M/J$ 矩阵桥的现成证明。
+

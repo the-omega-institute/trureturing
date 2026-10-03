@@ -1,0 +1,16 @@
+### 64.5 对应范围与实现义务
+
+63.1的状态赋值及63.3使用的实际类型按64.2；63.5的循环类不交与 (63.20)、(63.21)，以及63.6、63.8使用这些式子的周期或容量障碍按64.1；63.7的种子及 (63.25)、(63.26) 按64.3；第63章开头的实预算范围与63.5的51.5引用、(63.18) 按64.4。这些对应不扩大 (63.19)、(63.22) 的代数范围，不添加实际实现。
+
+对一个正实现，仍须在同一个给定完整图中逐项供应 (63.11)、$h+2$ 个不同完整配对顶点、每条原内部边的 (63.13) 和所有 $n\ge0$ 的 (63.15)。内部测试仍使用整个 $P_v,P_w$ 及实际合法根、rival 边，不能换成较小凸包；单向外出仍允许。端点非命中、容量通过或 (63.24) 的负斜率均不供应这些数据。闭色成员也不供应指定端点归属下的噪声取得。范围始终限于给定 $U,W,R$ 的命名几何，不含具体候选存在、初始可达性、所有 SCC 分类、普遍排除或物理结论；第54章不参与数学依赖。
+
+[64源63]: https://github.com/the-omega-institute/trureturing/blob/2c9fec822e934ea32e630cc82611e160c48a49a7/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[64源编码]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1854
+[64源实际]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L3263
+[64源原图]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[64源零宽]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11464
+[64源相干]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11760
+[64源单点]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13460
+[64源实宽]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L16893
+[64源奇]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L20447
+

@@ -1,0 +1,21 @@
+**定理334.3（准确联合边界的私位指数尾）。** 对每个固定合法可计算参数实例，可以选择第332节的一份准确有效共同程序，使其保持真实首枚 $X$，同时满足
+
+$$
+\sup_{w,S}\mathbb EN_H^a<\infty,
+\qquad
+\forall s<a, s>0:\quad
+\sup_{w,S}\mathbb EN_T^s<\infty,
+\tag{334.12}
+$$
+
+并且其全部私公平位数 $B_{\mathrm{priv}}$ 满足共同指数尾
+
+$$
+\boxed{
+\sup_{w,S}\Pr(B_{\mathrm{priv}}>t)
+\le Ae^{-\eta t}\qquad(t\ge0).}
+\tag{334.13}
+$$
+
+因此 $B_{\mathrm{priv}}$ 的每个固定正阶矩都有共同有限上界。
+

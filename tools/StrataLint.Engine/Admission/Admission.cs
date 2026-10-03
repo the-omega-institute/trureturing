@@ -209,13 +209,15 @@ internal static class AdmissionEngine
 
 public static class AdmissionPipeline
 {
-    public static RuleExecutionOutcome CheckCurrent(CurrentRuleContext context) =>
-        RuleCatalog.Default.ExecuteCurrent(context);
+    public static RuleExecutionOutcome CheckCurrent(CurrentRuleContext context) => CheckCurrent(context, null);
 
-    public static RuleExecutionOutcome CheckDelta(DeltaRuleContext context) =>
-        context.CommonResults is null
-            ? new RuleExecutionOutcome.InfrastructureFailure("delta requires validated current/engineering evidence")
-            : RuleCatalog.Default.ExecuteDelta(context);
+    public static RuleExecutionOutcome CheckDelta(DeltaRuleContext context) => CheckDelta(context, null);
+
+    internal static RuleExecutionOutcome CheckCurrent(CurrentRuleContext context, RuleEvaluationMeasure? measureRule) =>
+        RuleCatalog.Default.ExecuteCurrent(context, measureRule);
+
+    internal static RuleExecutionOutcome CheckDelta(DeltaRuleContext context, RuleEvaluationMeasure? measureRule) =>
+        RuleCatalog.Default.ExecuteDelta(context, measureRule);
 
     public static AdmissionOutcome Evaluate(
         RepositorySnapshot current,

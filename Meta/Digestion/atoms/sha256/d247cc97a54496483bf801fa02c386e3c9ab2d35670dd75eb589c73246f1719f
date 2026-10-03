@@ -1,0 +1,72 @@
+**定理 109.3（端点的统一对数阶）。** 对每个 $H\ge2$，有
+
+$$
+\left|h(H)-\frac23\log_\phi Q(H)\right|<3.
+$$
+
+更具体地，置 $Q=Q(H)$，则
+
+$$
+\frac23\log_\phi Q-\frac23\log_\phi8
+<h(H)
+\le\left\lceil\frac{2+\log_\phi(4Q^2+Q)}3\right\rceil
+<\frac23\log_\phi Q+\frac{5+\log_\phi(9/2)}3.
+$$
+
+证明。先给所有 $H$ 共同的 $h(H)\ge1$。实际前缀 $(0,\text{空词})$ 是活态且 $E=0$；$(1,[100])$ 已进入吸收错误态。两者立即 End 都报错，但共同后缀 $010$ 只在前者成功，实际值为 $3$。所以零窗观察不足。
+
+由递推和 $F_1=1,F_2=1$ 得 $F_n\le\phi^{n-1}$（$n\ge1$）。若 $L=2r\ge2$，则
+
+$$
+B_L+2=F_{3r+3}\le\phi^{3r+2}
+=\phi^2\phi^{3L/2}<4\phi^{3L/2}.
+$$
+
+若 $L=2r+1\ge1$，则
+
+$$
+\begin{aligned}
+B_L+2&=F_{3r+2}+F_{3r+4}\\
+&\le\phi^{3r+1}(1+\phi^2)
+=\phi^{3L/2}\frac{\phi+2}{\sqrt\phi}
+<4\phi^{3L/2}.
+\end{aligned}
+$$
+
+最后一步用 $1<\phi<2$。因此包括 $L=1$ 在内，有 $B_L+2\le4\phi^{3L/2}$。若 $q\ge8\phi^{3L/2}$，便有
+
+$$
+B_L+1\le q/2-1<q/2\le q-q/p,
+$$
+
+即使 $p=2$，命题 109.2 要求的严格不等式也成立。
+
+记 $t=\frac23\log_\phi Q$、$a_0=\frac23\log_\phi8$。若 $t-a_0\ge1$，取 $L=\lfloor t-a_0\rfloor\ge1$，则 $Q\ge8\phi^{3L/2}$，从而 $h(H)\ge L+1>t-a_0$。若 $t-a_0<1$，直接用 $h(H)\ge1>t-a_0$。这给出端点下界，取整没有再损失一个窗口。
+
+上界只复用定理 106.3 的 first-$00$ 构造。为避免和当前窗口预算 $L$ 混淆，把该定理在模数 $n\ge2$ 的长度界记为 $\ell(n)$：令 $J$ 是 $F_J>2n$ 的最小指标，$T_n=F_J$，$M$ 是 $F_M\ge n(T_n+1)$ 的最小指标，则 $\ell(n)=\lceil M/3\rceil$ 且 $2n<T_n<4n$。递推从 $m=2,3$ 给出 $F_m\ge\phi^{m-2}$，所以
+
+$$
+\begin{aligned}
+M&\le\lceil2+\log_\phi(4n^2+n)\rceil,\\
+\ell(n)&\le
+\left\lceil\frac{\lceil2+\log_\phi(4n^2+n)\rceil}{3}\right\rceil
+=\left\lceil\frac{2+\log_\phi(4n^2+n)}3\right\rceil=:U(n).
+\end{aligned}
+$$
+
+中间的取整恒等式用分母 $3$ 为正整数。定理 106.7 直接把共同系数探针转为固定读出的 horizon 上界，故每个完整素幂因子 $q\parallel H$ 都有 $h(q)\le\ell(q)\le U(q)$。定理 107.2 投影的是同一实际前缀与同一字面后缀，给出
+
+$$
+h(H)\le\max_{q\parallel H}h(q)\le U(Q),
+$$
+
+此处最大值中的 $q$ 只取完整素幂；$U$ 随参数不减。其同源 CRT 依据是成功时 $F_H=\prod_qF_q$ 且 $F_q=\gcd(F_H,q)$，错误则单独同步处理，并非独立局部相位的可达性假定。
+
+因为 $Q\ge2$，$4+1/Q\le9/2$，且对每个实数 $y$ 都有 $\lceil y\rceil<y+1$，所以
+
+$$
+U(Q)<t+\frac{5+\log_\phi(9/2)}3.
+$$
+
+最后 $\phi^3=2\phi+1>4$ 蕴含 $\phi^{9/2}>8$，故 $a_0<3$；$\phi^4=3\phi+2>9/2$ 蕴含 $(5+\log_\phi(9/2))/3<3$。两侧都是严格界，小 $Q$ 已由 $h(H)\ge1$ 处理，定理成立。$\square$
+

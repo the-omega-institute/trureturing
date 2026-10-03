@@ -1,0 +1,23 @@
+**定理 312.2（有限叶的两种微分预算）。** 令
+
+$$
+C_n(p)=\operatorname{diag}\left(
+\frac{\mathbb E_pN_{j,n}}{p_j(1-p_j)}\right).
+\tag{312.4}
+$$
+
+则
+
+$$
+\boxed{-C_n(p)\preceq\operatorname{Hess}g_n(p)\preceq C_n(p),}
+\tag{312.5}
+$$
+
+且对每个方向 $v\in\mathbb R^d$，
+
+$$
+\boxed{(v^{\mathsf T}\nabla g_n(p))^2
+\le g_n(p)(1-g_n(p))\,v^{\mathsf T}C_n(p)v.}
+\tag{312.6}
+$$
+

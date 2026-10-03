@@ -1,0 +1,28 @@
+### 343.2 Lorentz 算子的再生与局部系数
+
+HNP 式（27）—（29）定义线性算子 $Q_{m,r}$，并将其输出统一写成次数 $m+r$ 的 Bernstein 多项式。其式（28）为
+
+$$
+Q_{m,r}f(p)
+=\sum_{i=0}^{m}\sum_{j=0}^{r}
+f^{(j)}(i/m)m^{-j}\tau_j(p,m)b_{m,i}(p),
+\tag{343.4}
+$$
+
+其中
+
+$$
+b_{m,i}(p)=\binom mi p^i(1-p)^{m-i},\qquad
+\tau_0=1,\qquad\tau_1=0,
+$$
+
+且 $\tau_j$ 的次数不超过 $j$。HNP Lemma 14 给出
+
+$$
+Q_{m,r}P=P
+\quad\text{当 }\deg P\le r.
+\tag{343.5}
+$$
+
+这些是 Lorentz 高阶逼近的原始接口。[^lorentz_tensor_obstruction]
+

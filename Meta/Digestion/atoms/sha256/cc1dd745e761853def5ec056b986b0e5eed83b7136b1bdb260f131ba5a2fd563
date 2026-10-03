@@ -1,0 +1,63 @@
+**命题 27.6（每个固定有限视界的严格临界碰撞）。** 对引理27.3的临界切点布局，任意固定有限 $h\ge0$ 都存在两条首标签不同的实际 $D$ 来源，在每个坐标使用严格小于 $\lambda$ 的误差，产生完全相同的长度 $h+1$ 颜色记录。结论与切点归属无关。
+
+证明。第一临界间隙满足
+
+$$
+f_3(y_*)=a-\lambda,\qquad f_0(y_*)=b+\lambda,
+\qquad b-a=t-2\lambda>0.
+$$
+
+选择整数 $N\ge h$ 使
+
+$$
+\operatorname{diam}(X)g^{N-h}<2\lambda,
+$$
+
+再用引理27.5在同一个 $w_N$ 柱内分别选取 $\eta_-,\eta_+$，使
+
+$$
+0<\delta_-,\delta_+<\epsilon,\qquad
+0<\epsilon<\min\left\{\frac{\lambda}{g},\frac{2(b-a)}{g}\right\}.
+$$
+
+取两条完整实际来源 $\omega_-=3\eta_-$、$\omega_+=0\eta_+$。两个前接都可接 guard 一尾；两条来源最终为 null，首标签分别为 $3,0$。令 $x_j^\pm=\kappa_0(T^j\omega_\pm)$，则
+
+$$
+x_0^-=a-\lambda+g\delta_-,\qquad
+x_0^+=b+\lambda-g\delta_+.
+$$
+
+当前目标分别选择
+
+$$
+z_0^-=a+\frac{g\delta_-}{2},\qquad
+z_0^+=b-\frac{g\delta_+}{2}.
+$$
+
+两目标都严格在 $(a,b)$ 内，故同色而不依赖任何端点归属。相应误差为
+
+$$
+\varepsilon_0^-=\lambda-\frac{g\delta_-}{2},\qquad
+\varepsilon_0^+=-\lambda+\frac{g\delta_+}{2},
+$$
+
+其绝对值严格小于 $\lambda$。
+
+对 $1\le j\le h$，两条实际尾 $T^{j-1}\eta_-,T^{j-1}\eta_+$ 仍共享至少 $N-j+1$ 个窗口。对这个共同前缀使用实际级数，得到
+
+$$
+|x_j^--x_j^+|
+\le\operatorname{diam}(X)g^{N-j+1}
+\le\operatorname{diam}(X)g^{N-h}<2\lambda.
+$$
+
+为两个来源选择同一个以后目标
+
+$$
+z_j=\frac{x_j^-+x_j^+}{2}\in X,\qquad 1\le j\le h.
+$$
+
+它是两个来源在该时刻的真实坐标中点，每个所需误差严格小于 $\lambda$。全部当前目标和以后目标在 $X$ 内，裁剪固定。于是当前目标同色，以后目标逐坐标相等，整个有限记录相同而首标签不同。当 $h=0$ 时只使用当前目标，后面的列表为空。
+
+这里两条有限尾来自同一柱的两侧，彼此不要求有相同的完整未来；各自全部坐标都由其自身完整来源承担。来源对依赖所选 $h$，此有限前缀估计不延伸为全部未来的统一估计。$\square$
+

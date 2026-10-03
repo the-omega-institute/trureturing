@@ -1,0 +1,5 @@
+source_id = "translation-moment-vanishing"
+path = "docs/develop/theory/TRANSLATION_MOMENT_VANISHING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

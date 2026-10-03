@@ -1,0 +1,5 @@
+source_id = "fusion-spin-chain-qca-cut-obstructions"
+path = "docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

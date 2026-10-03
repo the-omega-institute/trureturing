@@ -1,0 +1,10 @@
+**引理 311.6（单次两来源包装的矩预算）。** 对整数 $m\ge1$，上述构造满足
+
+$$
+\boxed{
+\mathbb EM^m\le3^{m-1}\left[
+1+\sum_xu_x\mathbb E_uN_{b,x}^m
++\frac13\mathbb E_qN_A^m\right].}
+\tag{311.39}
+$$
+

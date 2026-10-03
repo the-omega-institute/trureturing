@@ -1,0 +1,65 @@
+**引理313.3（参考得分矩预算）。** 对固定正整数 \(m\)，有只依 \(I,m\) 的 \(C_{I,m}<\infty\)，使
+$$
+\boxed{\mathbb E_{p,q}|S_n|^{2m}
+\le C_{I,m}\mathbb E_{p,q}R_n^m.}
+\tag{313.15}
+$$
+
+证明。对 \(m=1\)，可预测性使不同得分增量交叉项期望为零，故
+$$
+\mathbb E_{p,q}S_n^2
+=\frac{\mathbb E_{p,q}R_n}{q(1-q)}.
+\tag{313.16}
+$$
+设 \(m>1\)，令 \(S_n^*=\max_{0\le j\le n}|S_j|\)。有限二项式展开为
+$$
+S_i^{2m}-S_{i-1}^{2m}
+=\sum_{r=1}^{2m}\binom{2m}{r}S_{i-1}^{2m-r}d_i^r.
+$$
+一阶项期望为零；其余项由
+\(|d_i|^r\le b_I^rJ_i\) 和
+\(|S_{i-1}|^{2m-r}\le1+(S_n^*)^{2m-2}\) 控制。求和得
+$$
+\mathcal A_n:=\mathbb E|S_n|^{2m}
+\le C\,\mathbb E\!\left[
+R_n\{1+(S_n^*)^{2m-2}\}\right].
+\tag{313.17}
+$$
+右端收费指标是 \(\sum J_i=R_n\)，不是总调用数。
+
+所需有限时域最大不等式可以直接得到。对次鞅 \(Y_j=|S_j|\)，按首次越过 \(\lambda\) 的有限时刻分层，
+$$
+\lambda\Pr(Y_n^*>\lambda)
+\le\mathbb E[Y_n\mathbf1_{\{Y_n^*>\lambda\}}].
+$$
+对 \(r>1\) 乘 \(r\lambda^{r-2}\) 后积分，再用 Hölder，得到
+$$
+\begin{aligned}
+\mathbb E(Y_n^*)^r
+&\le\frac r{r-1}\mathbb E[Y_n(Y_n^*)^{r-1}]\\
+&\le\frac r{r-1}
+(\mathbb EY_n^r)^{1/r}
+(\mathbb E(Y_n^*)^r)^{(r-1)/r},
+\end{aligned}
+$$
+从而
+$$
+\mathbb E(S_n^*)^r
+\le\left(\frac r{r-1}\right)^r\mathbb E|S_n|^r.
+\tag{313.18}
+$$
+全部变量在有限时域有界，不需要无界停止时的矩先验。
+
+记 \(\mathcal B_n=\mathbb ER_n^m\)。因为 \(R_n\) 是非负整数，\(\mathbb ER_n\le\mathcal B_n\)。Hölder 与式（313.18）给
+$$
+\begin{aligned}
+\mathbb E[R_n(S_n^*)^{2m-2}]
+&\le\mathcal B_n^{1/m}
+(\mathbb E(S_n^*)^{2m})^{(m-1)/m}\\
+&\le C'\mathcal B_n^{1/m}\mathcal A_n^{(m-1)/m}.
+\end{aligned}
+$$
+代回式（313.17），Young 不等式将最后一项吸收到
+\(\mathcal A_n/2+C''\mathcal B_n\)，即得式（313.15）。
+\(\mathcal B_n=0\) 时 \(R_n=S_n=0\)，直接成立；\(0<\mathcal B_n<1\) 时证明不变。全程没有使用任务调用的任何矩。证毕。
+

@@ -1,0 +1,11 @@
+**定义 316.0。** 沿用 §§313、315 的完整实际整数族 $T_L$、$m_L=3L+2$、$\mathfrak m_L$、$\kappa=2\sqrt2-2$，并采用假设302.1及这两节列明的经典解析输入。对整数 $L\ge16$、$N\ge17$ 定义
+\[
+\omega_L=\log m_{L+1}-\log m_L>0,\qquad
+D_N=\sum_{L=16}^{N-1}\omega_L=\log(m_N/50),
+\]
+\[
+\mathfrak a_N=\frac1{D_N}\sum_{L=16}^{N-1}\omega_L\mathfrak m_L.
+\tag{316.1}
+\]
+这里平均的是实际整数 $T_L$ 的归一化 Robin 余量，权重按解析尺度的对数长度给出；不是 $T_L$ 上的均匀概率或全部整数的均匀平均。
+

@@ -30,8 +30,8 @@ internal static class FileMapDocuments
         var root = Decode(bytes, location);
         var documents = ImmutableArray.CreateBuilder<FileMapDocument>();
         documents.Add(root);
-        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L or 5L))
-            throw new FileMapParseException(location, "root schema_version must be 2, 3, 4 or 5");
+        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L or 5L or 6L))
+            throw new FileMapParseException(location, "root schema_version must be 2, 3, 4, 5 or 6");
         if (!root.Table.TryGetValue("include", out var rawInclude)) return documents.ToImmutable();
         if (rawInclude is not TomlArray includes || includes.Count == 0
             || includes.Any(item => item is not string name || !FragmentName.IsMatch(name)))

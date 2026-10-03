@@ -1,0 +1,149 @@
+{
+  "scope": "One fixed actual315 source; sharp weighted hinge continuation with arbitrary finite29 height, arbitrary finite core heights, and13/17/19/23 shallow; all multioutside supports allowed.",
+  "actual_core_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      63,
+      59
+    ],
+    [
+      105,
+      74
+    ],
+    [
+      315,
+      269
+    ]
+  ],
+  "old45_points": [
+    2,
+    7,
+    8,
+    14,
+    16,
+    17,
+    19,
+    23,
+    28,
+    29,
+    32,
+    34,
+    37,
+    38,
+    43,
+    44
+  ],
+  "remaining": [
+    5,
+    6,
+    5,
+    2,
+    6,
+    5,
+    5,
+    4,
+    6,
+    3,
+    4,
+    5,
+    6,
+    5,
+    6,
+    2
+  ],
+  "weights": [
+    8,
+    5,
+    4,
+    12,
+    10,
+    12,
+    12,
+    12,
+    10,
+    12,
+    7,
+    12,
+    10,
+    12,
+    5,
+    4
+  ],
+  "outside_primes": [
+    13,
+    17,
+    19,
+    23,
+    29
+  ],
+  "full_height_flags": [
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "thresholds": [
+    4,
+    4,
+    4,
+    6,
+    6
+  ],
+  "expected": {
+    "D": 684,
+    "M": 1300,
+    "K": 16428,
+    "t": 12,
+    "caps": [
+      360,
+      218,
+      180,
+      128,
+      60,
+      147,
+      83,
+      52,
+      32,
+      28,
+      12
+    ],
+    "J4": 296,
+    "J6": 104,
+    "cost": "18506669/18706545",
+    "conservative_cost": "18914518/18706545",
+    "haar_cap": "2254/99",
+    "haar_survivor": "99938/212952285"
+  }
+}

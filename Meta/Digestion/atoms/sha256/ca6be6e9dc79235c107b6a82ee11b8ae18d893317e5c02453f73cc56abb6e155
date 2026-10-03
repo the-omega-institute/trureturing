@@ -1,0 +1,9 @@
+**命题319.7（准确有效费用可与极限分离）。** 固定一个不可计算实数 \(\alpha\in(0,1)\)。实际世界只有一个；全部旧来源都是独立公平币，私随机性也只许公平位，目标输出为 \(\mathrm{Bernoulli}(\alpha)\)。对每个实 \(s>0\)，
+$$
+\boxed{
+\mathcal C_s^{\mathrm{alg}}(\delta)=0\quad(\delta>0),\qquad
+\mathcal C_s^{\mathrm{pol}}(0)=0,\qquad
+\mathcal C_s^{\mathrm{alg}}(0)=+\infty.}
+\tag{319.17}
+$$
+

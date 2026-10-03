@@ -1,0 +1,20 @@
+**证明下半连续。** 设 $\delta_j\to\delta$。若
+$$
+L=\liminf_j f(\delta_j)<\infty,
+$$
+取费用趋于 $L$ 的子列及相应近最优策略。它们最终处于某个共同有限预算子水平集。紧致性给坐标极限，式（321.12）与误差上界 $\delta_j$ 给极限误差至多 $\delta$，费用下半连续性给其费用至多 $L$。故
+$$
+f(\delta)\le\liminf_j f(\delta_j).
+\tag{321.16}
+$$
+右侧无穷的情形自动成立。
+
+由于 $f$ 非增，右极限不超过 $f(\delta)$；式（321.16）给相反方向，所以
+$$
+\boxed{\lim_{\eta\downarrow0}
+\mathcal C_s^{\mathrm{pol}}(\delta+\eta)
+=\mathcal C_s^{\mathrm{pol}}(\delta)}
+\tag{321.17}
+$$
+对每个 $\delta\ge0$ 成立，允许取值为无穷。$\delta=0$ 恢复第318节的抽象费用完成。
+

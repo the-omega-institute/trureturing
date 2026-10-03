@@ -1,0 +1,35 @@
+### 314.1 共同来源与近似合同
+
+沿用第313节固定已知参数 $B,C,\kappa,g,\beta$，其中 $B\in\{2,4\}$、$1\le C\le1024/225$、$\varepsilon=1/16$、$\beta>0$，并令 $k_0=e^{-\kappa}\in(0,1)$、$l=k_0^2+g\le k_0<1$。未知实际参数为
+
+$$
+c=k_0^jr,\qquad j\in\{0,1\},\quad r\in[l,1],
+\qquad0<h\le1/4.
+\tag{314.1}
+$$
+
+旧任务与旧参考是独立新鲜Bernoulli流，成功率分别为
+
+$$
+p=\frac{1-hc/C}{B},\qquad q=\frac{1-h/C}{B}.
+\tag{314.2}
+$$
+
+共同程序只通过这些旧币及参数无关私随机性取得信息。没有额外含参时长、等待或控制线索。两种目标请求标签记为 $S\in\{T,H\}$，相应旧成功率 $u$ 为 $p$ 或 $q$；目标四格联合律为
+
+$$
+P^\beta_{S,c,h}(x,z)
+=\frac{u_x}{2}+\varepsilon h^\beta(-1)^{x+z},
+\qquad u_1=u,\quad u_0=1-u.
+\tag{314.3}
+$$
+
+四格均至少为 $1/32$。采用总变差约定
+
+$$
+\|P-Q\|_{\mathrm{TV}}
+=\sup_A|P(A)-Q(A)|
+=\frac12\sum_{x,z}|P(x,z)-Q(x,z)|.
+\tag{314.4}
+$$
+

@@ -1,0 +1,33 @@
+**证明。** 若 $z\in K_A\cap K_B$，则 $f(z)=f(0)$，联合单射给出 $z=0$。加法映射 $K_A\times K_B\to H$ 满射；若 $s+t=s'+t'$，则 $s-s'=t'-t$ 属于交核，故 $s=s'$、$t=t'$。所以该映射双射，$|H|=k_Ak_B$。每个 $H$ 陪集的大小为 $|H|$，陪集划分 $G$，得 $N=Rk_Ak_B$。此外 $f$ 单射使实际振幅和中的每个位置至多有一个来源，恰有 $N$ 个非零位置，每个为 $1/\sqrt N$，故向量范数平方为 1。外积 $J$ 于是正半定、Hermitian、迹为 1；$J^2=\langle\Psi,\Psi\rangle J=J$，其像为非零向量 $\Psi$ 张成的一维空间。
+
+交核为零还说明 $\alpha$ 在 $K_B$ 上、$\beta$ 在 $K_A$ 上分别单射，故标签集大小分别是 $k_B,k_A$。若更换代表 $x$ 为 $x+s+t$，其中 $s\in K_A,t\in K_B$，则 $\alpha(x)$ 只平移一个 $\alpha(K_B)$ 元素，$\beta(x)$ 只平移一个 $\beta(K_A)$ 元素，两标签集不变。若 $A_q,A_{q'}$ 相交，取代表 $x,y$ 及 $t,t'\in K_B$ 使 $\alpha(x+t)=\alpha(y+t')$，则 $x-y+t-t'\in K_A$，故 $x-y\in H$，即 $q=q'$。$B_q$ 的不交性同理；任一实际读出标签属于其来源所在陪集的标签集，反向包含由定义给出，故两侧确为读出像的划分。
+
+每个 $q=x+H$ 的来源唯一写成 $x+s+t$，$s\in K_A,t\in K_B$，且
+
+$$
+f(x+s+t)=\bigl(\alpha(x)+\alpha(t),\ \beta(x)+\beta(s)\bigr).
+$$
+
+两个核参数独立遍历；由各自受限读出的单射性，该式给出 $q\to A_q\times B_q$ 的双射。因此由原始来源和直接得到上述 $C$ 的块公式。把它代入已经定义的实际偏迹，利用各块指标为实数，得到
+
+$$
+\begin{aligned}
+\rho_A(a,a')
+&=\frac1N\sum_{q,r\in Q}
+ \mathbf1_{A_q}(a)\mathbf1_{A_r}(a')
+ \sum_{b\in B}\mathbf1_{B_q}(b)\mathbf1_{B_r}(b),\\
+\sum_{b\in B}\mathbf1_{B_q}(b)\mathbf1_{B_r}(b)
+&=\begin{cases}k_A,&q=r,\\0,&q\ne r.\end{cases}
+\end{aligned}
+$$
+
+这给出 $\rho_A$ 的条目公式；交换两侧，内层计数为 $k_B$，给出 $\rho_B$ 的条目公式。此处使用的是实际共同来源的支撑，未把候选约化矩阵或候选谱当作假设。
+
+支撑不交及标签集大小给出 $\langle u_q,u_r\rangle=\langle v_q,v_r\rangle=\mathbf1_{[q=r]}$。由于 $\sqrt\lambda/\sqrt{k_Ak_B}=1/\sqrt N$，系数块公式恰为所列 Schmidt 分解；由于 $\lambda/k_B=k_A/N$、$\lambda/k_A=k_B/N$，偏迹块公式恰为两投影公式。正交归一性使 $P_A,P_B$ 均自伴且平方等于自身，因此约化矩阵的平方关系、正半定性与 $\operatorname{Tr}\rho_A=\operatorname{Tr}\rho_B=R\lambda=1$ 随之成立。
+
+在 $u_q$ 张成空间上 $\rho_A$ 作用为乘 $\lambda$，在其正交补上作用为零。前者维数为 $R$，后者为 $|A|-R$；两个特征空间给出整个 $\mathbb C^A$ 的直和分解，故完整代数与几何重数如述。$B$ 侧同理。作为从 $\mathbb C^B$ 到 $\mathbb C^A$ 的线性映射，实系数矩阵 $C$ 把每个 $v_q$ 送到 $\sqrt\lambda u_q$，把它们的正交补送到零，故其秩为 $R$、非零奇异值为 $\sqrt\lambda$。最后把两侧的完整谱代入熵定义，用 $\lambda=1/R$ 及所有基数为正，得到熵的各个等式。$\square$
+
+平凡群和非满射读出都在定理范围内：当 $G=\{0\}$ 时 $N=k_A=k_B=R=1$，实际态为 $|0_A\rangle\otimes|0_B\rangle$，两侧各有特征值 1 一次，其余全为零；一般 $R=1$ 时仍是一个归一化乘积块、熵为零。上述证明未删除这些端点。
+
+第 46.1 节的直接消费者取 $G=(\mathbb Z/n\mathbb Z)^2$，$n\ge1$，$A,B$ 各为两个端口标签的乘积群，$\alpha,\beta$ 为同一来源的四个互异自然时刻读数按任意两对切分。此时 $N=n^2$，实际振幅因子 $1/\sqrt N=1/n$。把两侧核基数与对应时刻间隔的 $\gcd(n,F_{d_A})$、$\gcd(n,F_{d_B})$ 接合，才得到第 46.1 节的秩与对数表达式。该精确应用仍须核对原始 ket 到系数矩阵的逐项相等、端口重排或时刻排序的基置换、原有联合单射假设、两侧算术接口，以及 $n=1$ 和对数与基数的运输；完整全切分应用的 Lean 编译尚未完成。本节只提供未编译的通用理论正文，不代表形式化、冻结或覆盖结论。
+

@@ -1,0 +1,4 @@
+对应公式为：对 $y\in S_\nu$ 与 $a\in\mathbb F_2^{c(G)}$，
+$$
+\mu\{x:\delta x=y,\ (x_{o_K})_K=a\}=\nu(y)q_y(a),
+$$

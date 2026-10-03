@@ -1,0 +1,46 @@
+**定理 11.2（离散与连续 FIB 的实际统计边界）。** 对所有 $d,e\ge2$，有
+
+$$
+S_{\mathrm{dis}}=\mathcal A_{\mathrm{dis}},\qquad
+S_{\mathrm{orb}}=\mathcal A_{\mathrm{orb}}.
+$$
+
+因而两个任意联合输入在 $\Sigma_{\mathrm{dis}}$ 的全部有限协议中具有相同事件概率，当且仅当定义 7.2 的每个 $\sigma_p$ 相同；在 $\Sigma_{\mathrm{orb}}$ 中具有相同的全部事件概率，当且仅当定义 8.4 的每个完整块 $\tau_O$ 相同。
+
+证明。对本定理任一字母表，先由实际仪器构造一个可应用既有最小性结果的代数。暂记 $S=S_\Sigma$；全部效果自伴且全事件效果为 $I$，故 $S^\dagger=S$ 且 $I\in S$。给定任意低层矩阵 $K$，取 $\epsilon>0$ 使 $\epsilon\|K\|\le1$。前置 Kraus 算子为
+
+$$
+\epsilon K,\qquad (I_A-\epsilon^2K^\dagger K)^{1/2}
+$$
+
+的低层二结果仪器，记录第一结果后继续产生效果 $E$ 的协议。这个联合事件的效果是 $\epsilon^2(K^\dagger\otimes I_H)E(K\otimes I_H)$。除去非零标量，再线性延拓，得到该夹乘对每个 $E\in S$ 都属于 $S$。省略高层恒等因子，极化给出
+
+$$
+A^\dagger EB=\frac14\sum_{r=0}^3i^{-r}
+(A+i^rB)^\dagger E(A+i^rB)\in S.
+$$
+
+取其中一个低层矩阵为恒等，即知 $S$ 是低层全矩阵代数的左右双模。所有低层终端效果也已张成 $\mathcal B(\mathcal H_A)\otimes I_H$。
+
+在此实际效果空间上定义乘子代数
+
+$$
+\mathfrak D(S)=\{X\in\mathcal B(\mathcal H):XS\subseteq S,
+\ SX\subseteq S\}.
+$$
+
+它对线性组合及乘积封闭，含 $I$。若 $X\in\mathfrak D(S)$，利用 $S^\dagger=S$，有 $X^\dagger E=(E^\dagger X)^\dagger\in S$ 及 $EX^\dagger=(XE^\dagger)^\dagger\in S$，故也对伴随封闭。它是有限维含幺 $C^*$ 代数；由 $I\in S$ 及低层双模性质，
+
+$$
+\mathcal B(\mathcal H_A)\otimes I_H
+\subseteq\mathfrak D(S)\subseteq S.
+$$
+
+若 $V$ 是任一允许酉，前置 $V$ 给出 $\alpha_V(S)\subseteq S$，其中 $\alpha_V(X)=V^\dagger XV$。有限维单射性使该包含成为相等。于是 $\alpha_V$ 也将 $\mathfrak D(S)$ 映到自身，且是满射：例如 $\alpha_V(X)E=\alpha_V(X\alpha_V^{-1}(E))\in S$，右乘情形相同，逆向包含同理。这只是在有限维空间中使用逆映射，没有增加物理逆门许可。
+
+对离散合同，定理 7.1 因而给出 $\mathcal A_{\mathrm{dis}}\subseteq\mathfrak D(S_{\mathrm{dis}})\subseteq S_{\mathrm{dis}}$。对原连续合同，定理 8.5 同样给出 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D(S_{\mathrm{orb}})\subseteq S_{\mathrm{orb}}$。反过来，这两个既有代数分别在其允许酉拉回及每个低层完全正分支的伴随作用下不变，并包含低层终端效果。从终端沿每条有限历史反向归纳，再对事件求和，得到 $S_{\mathrm{dis}}\subseteq\mathcal A_{\mathrm{dis}}$ 和 $S_{\mathrm{orb}}\subseteq\mathcal A_{\mathrm{orb}}$，完成两项等式。
+
+实际效果的线性张成相等后，有限维迹配对表明：所有事件概率相同，恰好等价于两态在相应代数上的全部线性泛函相同。Fourier 单点块或轨道完整块正是这些泛函的密度矩阵表示。若某个保留块不同，存在代数中的自伴算子区分它们；将该算子展开成有限个实际效果的线性组合，至少一个实际事件就有不同概率。
+
+以观测线性空间刻画不可区分性的标准方法见 D’Alessandro, [*On Quantum State Observability and Measurement*，定理 5 及 §3 的式 (53)–(56)](https://arxiv.org/pdf/quant-ph/0307127v1)。本处从有限低层过滤、极化到 $\mathfrak D(S)$ 的推导承担具体 FIB 效果张成等于上述代数的桥梁。效果的线性组合不必本身是一个可执行效果；结论不授予高层投影仪器，不断言每个代数正元素均可由单一事件实现，也不提供单次未知态恢复或高效层析。统计等价的输入域是 $AH$；不能据此推出只读低层时对额外不可读参考关联的必要性结论。定理 7.4、8.5 的旁观参考逐分支充分性仍按各自的条件成立。$\square$
+

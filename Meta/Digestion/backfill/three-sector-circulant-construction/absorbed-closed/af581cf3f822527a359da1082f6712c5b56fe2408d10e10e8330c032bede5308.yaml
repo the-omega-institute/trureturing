@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:af581cf3f822527a359da1082f6712c5b56fe2408d10e10e8330c032bede5308
+  normalized_sha256: sha256:af581cf3f822527a359da1082f6712c5b56fe2408d10e10e8330c032bede5308
+cas_ref: sha256:af581cf3f822527a359da1082f6712c5b56fe2408d10e10e8330c032bede5308
+coverage_gids:
+  - gid: D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture.kernel_eq_generated
+    target_statement_id: sha256:9f19a6f0cefb9e090b3d9ac9beb80f78247a2b0232b034b3bb341ce3ce55dde3
+receipts:
+  unresolved_subitems: []

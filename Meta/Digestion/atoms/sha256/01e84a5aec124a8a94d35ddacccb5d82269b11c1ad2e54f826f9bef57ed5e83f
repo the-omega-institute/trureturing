@@ -1,0 +1,21 @@
+**定理 312.3（光滑目标的统一源别必要界）。** 假设目标 $g\in C^2(\mathcal U)$，并存在同一个有限非负向量 $a$，使
+
+$$
+\mathbb E_pN_j\le a_j
+\quad\text{对全部 }p\in\mathcal U、j.
+\tag{312.9}
+$$
+
+令 $D_a(p)=\operatorname{diag}(a_j/[p_j(1-p_j)])$，则
+
+$$
+-D_a(p)\preceq\operatorname{Hess}g(p)\preceq D_a(p),
+\tag{312.10}
+$$
+
+$$
+(v^{\mathsf T}\nabla g(p))^2
+\le g(p)(1-g(p))\,v^{\mathsf T}D_a(p)v.
+\tag{312.11}
+$$
+

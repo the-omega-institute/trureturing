@@ -1,0 +1,40 @@
+### 14.3 从独立收益到成对目标：归一化和统一余项
+
+按二阶模态块定义
+\[
+ \mathsf D=\operatorname{blockdiag}(G_{11},\ldots,G_{nn}),\qquad
+ E=\mathsf D^{-1/2}G\mathsf D^{-1/2}-I,
+ \quad E_{ii}=0,\quad \eta=\|E\|_2<1.
+\]
+弱关联预算 $\eta<1$ 是本章近似证书的额外前件，不能从 $G\succeq I$ 自动推出。令
+\[
+ d_i=\tfrac12\log\det G_{ii},\quad
+ w_{ij}=\tfrac12\|E_{ij}\|_F^2,\quad
+ \Delta_0(S)=\sum_{i\in S}d_i,
+\]
+\[
+ \boxed{\Delta_2(S)=\sum_{i\in S}d_i-
+                   \sum_{\{i,j\}\subseteq S}w_{ij}.}           \tag{14.2}
+\]
+两个方向的块都被 Frobenius 范数计入，故
+$\Delta_2=\Delta_0-\|E_{SS}\|_F^2/4$。
+
+令 $e_S=\|E_{SS}\|_F^2\le2m\eta^2$。基础谱估计为
+\[
+ 0\le\Delta_0(S)-\Delta(S)\le\frac{e_S}{4(1-\eta)},
+\quad
+ |\Delta(S)-\Delta_2(S)|\le\frac{\eta e_S}{6(1-\eta)}.       \tag{14.3}
+\]
+证明：$\Delta=\Delta_0+\operatorname{tr}\log(I+E_{SS})/2$，且迹的一次项为零。对实特征值 $|\lambda|\le\eta$，
+$0\le\lambda-\log(1+\lambda)\le\lambda^2/[2(1-\eta)]$；三阶以上项用
+$\sum_{k\ge3}|\lambda|^k/k\le\eta\lambda^2/[3(1-\eta)]$。求和即得。
+
+独立排序选择最小的 $m$ 个 $d_i$，其真实信息遗憾因而至多
+\[
+ \Delta(S_0)-\min_{|S|=m}\Delta(S)
+ \le\frac{m\eta^2}{2(1-\eta)}.                            \tag{14.4}
+\]
+这里“遗憾”是选中子集与同维全局最优子集的差，和 $\Delta$ 总值分开。该式由 $\Delta_0$ 的最优性及 (14.3) 的单侧性得到。
+
+$w_{ij}$ 的含义是同一实验中两个模态的联合信息冗余。它来自精度矩阵的块，不是物理相互作用强度，也不是状态协方差的普通相关系数。本节统计图的边可以由混合传感器或相关噪声产生；当前物理生成元仍按正常模态解耦。
+

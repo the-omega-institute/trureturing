@@ -1,0 +1,46 @@
+### 343.3 满足局部尺度与局部化的非负函数
+
+选定
+
+$$
+\chi\in C_c^\infty((-2,2)),\qquad
+0\le\chi\le1,\qquad
+\chi=1\text{ 于 }[-1,1].
+\tag{343.7}
+$$
+
+取整数 $L\ge40$，置
+
+$$
+n=L^2,\qquad q_n=\frac12-\frac3L,\qquad
+y=L(p-q_n),
+\tag{343.8}
+$$
+
+并固定 $0<\varepsilon_0\le1/16$。定义
+
+$$
+g_n(p)=\varepsilon_0 n^{-a}y^2\chi(y),
+\qquad
+h_n(p)=4\varepsilon_0 n^{-a}\chi(y).
+\tag{343.9}
+$$
+
+
+两者光滑且
+
+$$
+0\le g_n\le h_n.
+\tag{343.10}
+$$
+
+在 $|p-q_n|\le1/L$ 上，
+
+$$
+g_n(p)=P_n(p)
+:=
+\varepsilon_0n^{1-a}(p-q_n)^2.
+\tag{343.11}
+$$
+
+

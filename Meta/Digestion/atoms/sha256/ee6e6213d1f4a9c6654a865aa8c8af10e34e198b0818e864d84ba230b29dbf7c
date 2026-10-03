@@ -1,0 +1,6 @@
+**定理 2.2（Future occurrence of every actual bin）。** For every initialized unbounded rest trace $T$ and every $e\in\mathbb N$, there exists $f\in\mathbb N$ with $e<f$ and $k_f=k_e$.
+
+证明。Initialization and the transition laws give $0<k_t\le\ell(s_t)$ for every $t$. Heights are nondecreasing because each transition replaces the old height by its maximum with the new label. Fix $e$, put $i=k_e$, and let $c=c_i(s_e)$, which exists. Suppose that no later event has label $i$.
+
+Choose $n$ with $\ell(s_n)\ge\ell(s_e)+c+1$, using unboundedness. Height monotonicity forces $n\ge e$. Apply Theorem 2.1 with $d=n-e$. Its budget equality implies $|Q_T(i,e,d)|\le c$, whereas its height bound gives $\ell(s_n)\le\ell(s_e)+c$. This contradicts the choice of $n$. The argument applies to event zero and to births as well as renewals. $\square$
+

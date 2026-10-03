@@ -1,0 +1,28 @@
+**定理 330.3（递归深度与实际解析改善的接口）。** 对各 Fibonacci 块使用合法深度 $r_k$，记最大整数叶长 $H_k$。则
+\[
+H_k=\left\lceil\frac{F_{k-1}}{5^{r_k}}\right\rceil,
+\qquad
+\log H_k=\log F_{k-1}-r_k\log5+O(1).
+\tag{330.13}
+\]
+从而若 $\eta_*:=\liminf_{k\to\infty}r_k\log5/\log F_k$，有
+\[
+\limsup_{k\to\infty}\frac{\log H_k}{\log F_k}=1-\eta_*.
+\tag{330.14}
+\]
+对每个固定 $0<\eta\le1$，固定幂格宽 $H_k=O(F_k^{1-\eta})$ 等价于
+\[
+r_k\ge\eta\log F_k/\log5-O(1).
+\tag{330.15}
+\]
+$\eta_*>0$ 保证每个严格小于 $\eta_*$ 的正改善指数，不自动保证端点 $\eta=\eta_*$ 的固定常数界。
+
+在 §325 的实际经典解析输入下，初轮共同导数界可取 $M_k=O(\log F_k/\sqrt{F_k})$；取得 $S<1$ 后，每个固定 $S<\theta<1$ 可取 $M_k=O_\theta(F_k^{\theta-3/2})$。因此（330.11）分别生产块误差
+\[
+O\left(\frac{\sqrt{F_k}\log F_k}{5^{r_k}}\right),
+\qquad
+O_\theta\left(\frac{F_k^{\theta-1/2}}{5^{r_k}}\right).
+\tag{330.16}
+\]
+这给 §§325–326 整格误差所用的正幂改善在 Fibonacci 递归采样上的明确来源；末尾部分格子仍由（330.4）独立控制。
+

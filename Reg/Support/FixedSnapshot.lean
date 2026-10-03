@@ -3,8 +3,7 @@ import LeanInformationAuditInterface.RootContract
 namespace Reg.Support
 open LeanInformationAudit
 
--- Full-source metadata is produced by SnapshotEnumerator. The thirteen
--- independent production rows are retained from the prior source snapshot,
+-- The thirteen independent production rows are retained from the prior source snapshot,
 -- with contributor addresses translated to their genuine Reg leaves.
 def fixedInformationSourceSnapshot : InformationSourceSnapshot :=
 { sourceIdentity := "sha256:2c32c9b03da35d58b6ce78e246177436837edf8c37f9380b20917949b71e4d37",

@@ -1,0 +1,83 @@
+**引理345.4（高阶共同张量相容）。** 全部层满足
+
+\[
+\boxed{
+0\le A_k\le B_k\le1,\qquad
+B_k-A_k\ge\delta_k/2,\qquad
+E_kA_{k-1}\le A_k,\qquad
+B_k\le E_kB_{k-1}.}
+\tag{345.29}
+\]
+
+**证明。** 完整中心余量式（345.12）直接保证 \(A_k,B_k\) 均在 \([0,1]\) 内。同级差为
+
+\[
+B_k-A_k
+=\delta_k+(1-\delta_k)c_{m_k}(\bar u_k-\bar\ell_k).
+\]
+
+非负小量的式（345.16）给
+
+\[
+\min(B_k-A_k)
+\ge\delta_k-C_-(M^{-1}+M^{-a})n_k^{-a}\eta_k
+\ge\delta_k/2.
+\tag{345.30}
+\]
+
+这一步用的是负部界及地板吸收，不是 \(S_m\) 对非负函数保正。
+
+证明下相容时，将参考次数提升到第 \(k\) 层，置
+
+\[
+f=E^H_k\bar\ell_{k-1},\qquad
+g=\bar\ell_k-f\ge0,\qquad
+X=E^T_kc_{m_{k-1}}(f).
+\]
+
+共同线性中心与参考提升交换，所以 \(X\) 正是旧完整下中心的两维提升。式（345.12）给 \(X\ge\varepsilon\)。有精确分解
+
+\[
+\begin{aligned}
+A_k-E_kA_{k-1}
+={}&(1-\delta_k)c_{m_k}(g)\\
+&+(1-\delta_k)\bigl(c_{m_k}(f)-X\bigr)\\
+&+(\delta_{k-1}-\delta_k)X.
+\end{aligned}
+\tag{345.31}
+\]
+
+第一项按旧尺度 \(n_{k-1}\) 使用式（345.16），其负部至多
+
+\[
+C_-(M^{-1}+M^{-a})
+n_{k-1}^{-a}\eta_{k-1}.
+\]
+
+第二项由式（345.13）控制，负部至多
+
+\[
+C_\times m_{k-1}^{-a}
+\le C_\times M^{-a}n_{k-1}^{-a}\eta_{k-1}.
+\]
+
+第三项至少为
+
+\[
+\varepsilon c_\delta(1-b^{-a})
+n_{k-1}^{-a}\eta_{k-1}.
+\tag{345.32}
+\]
+
+式（345.22）的相容预算吸收前两项，得到下相容。
+
+对完整补函数 \(1-\bar u\) 用同一证明。它有相同的完整余量，其参考增量为
+\(E^H_k\bar u_{k-1}-\bar u_k\ge0\)，而
+
+\[
+1-B_k=(1-\delta_k)c_{m_k}(1-\bar u_k).
+\]
+
+由下相容得到 \(1-B_k\ge E_k(1-B_{k-1})\)，即所需上相容。直接展开时，正吸收项为
+\((\delta_{k-1}-\delta_k)(1-X_u)\)，其中 \(X_u\) 是旧完整上中心的两维提升，且 \(1-X_u\ge\varepsilon\)。证毕。
+

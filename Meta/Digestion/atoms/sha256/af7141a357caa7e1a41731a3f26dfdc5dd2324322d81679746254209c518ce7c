@@ -1,0 +1,41 @@
+**定理 5.2（显式有限脉冲与测量误差界）。** 若每个归一化复迹满足 $|\widehat z_S-z_S|\le\epsilon$，则
+
+$$
+\boxed{
+|\widehat T_t-T^\natural(u,v,w)|
+\le29645\sqrt{4620}\,t^2+\frac{43752}{25}\frac{\epsilon}{t^3}.
+}
+\tag{MC.14}
+$$
+
+因此，误差上界自身的最优正步长为
+
+$$
+t_*^5=\frac{65628}{741125\sqrt{4620}}\epsilon\quad(\epsilon>0),
+\tag{MC.15}
+$$
+
+所给上界具有 $\epsilon^{2/5}$ 的阶。这里用到了实际实形式的奇偶结构；不增加脉冲设置数。未宣称这个实验估计器在全部可能协议中 minimax 最优。
+
+证明。置 $D_u(t)=(e^{itR_u}-I)/(it)=\int_0^1e^{istR_u}R_u\,ds$，$L=\sqrt{4620}$。式（MC.12）给单位标签的 $\|R_u\|_{\mathrm{HS}}=L$。对 $p=0,1,2$，酉性、谱分解和积分给
+
+$$
+\|D_u^{(p)}(t)\|_{\mathrm{HS}},\ \|D_u^{(p)}(t)\|_{\mathrm{op}}
+\le \frac{L^{p+1}}{p+1}.
+$$
+
+不交换乘法的分配律仍给 $\prod(e^{itR}-I)=\sum_S(-1)^{3-|S|}U_S$，次序固定。因此无噪估计为 $\operatorname{Re}F(t)/900$，其中 $F(t)=\operatorname{Tr}(D_u(t)D_v(t)D_w(t))$。
+
+实际 $R_u,R_v,R_w$ 是实对称矩阵，故 $F(-t)=\overline{F(t)}$，特别地 $\operatorname{Re}F'(0)=0$。这里无需假定三个矩阵交换。对二阶导数的三个单因子二阶项和六个双因子一阶项，使用 $|\operatorname{Tr}ABC|\le\|A\|_{\mathrm{HS}}\|B\|_{\mathrm{op}}\|C\|_{\mathrm{HS}}$ 及循环移位，得到
+
+$$
+|F''(t)|\le3\frac{L^3}{3}L^2+6\frac{L^2}{2}\frac{L^2}{2}L
+=\frac52L^5.
+$$
+
+二阶积分余项于是给 $|\operatorname{Re}F(t)-F(0)|\le5L^5t^2/4$。由 $F(0)=900T^\natural(u,v,w)$，除以 900 后偏差常数为 $L^5/720=29645\sqrt{4620}$。保留实形式消去了一阶偏差；直接对复余项取绝对值只会得到更弱的 $35574t$。上述估计没有额外乘矩阵维数。
+
+八个归一化迹误差的和不超过 $8\epsilon$；式（MC.13）的归一化还原确实引入 $N$，给 $8N\epsilon/(900t^3)=43752\epsilon/(25t^3)$。取实部不扩大绝对误差。微分右式得式（MC.15）。证毕。
+
+受控 $U_S$ 作用于 $|+\rangle\langle+|\otimes I/N$ 后，参考比特的 $X,Y$ 期望分别为 $\operatorname{Re}z_S,\operatorname{Im}z_S$，由二阶块密度矩阵直接取偏迹可验证。统计取得 $\epsilon$、最大混合态制备、零模控制和参考相位校准都有成本。逐个三元组的误差界不能冒充整个高维张量的低成本层析。
+

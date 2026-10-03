@@ -1,0 +1,12 @@
+**定理58.10.1（必要性、有限实际出现性及严格端点）。** 对两模板、任意归属及三种合同，每个联合可供应列表均满足 $r_i\le K(b)$。每个 $1\le r\le K(b)$ 均能出现在这两个模板各自的一条完整严格联合可供应列表中，故 $K(b)$ 是实际出现的最大 padding 指数，而非仅一个充分帽。它有精确表达式
+
+$$
+K(b)=
+\left\lceil\frac{\log(\delta_b/(g^2h_H))}{\log\chi}\right\rceil-1,
+\qquad
+K(b)=k\ \Longleftrightarrow\ Q_k<b\le Q_{k+1}.
+\tag{58.38}
+$$
+
+第二个等价式在 $\Theta_1<b<\lambda$ 的定义域内使用。$Q_k$ 严格增加至 $\lambda$，且 $Q_1<\Theta_1<Q_2$。
+

@@ -1,0 +1,11 @@
+### 13.5 近自治的信息收益上界及几何提升偏差
+
+令 $K$ 为实对称矩阵，满足
+\[
+[\Omega,K]=B-\overline B.
+\]
+可由谱间 Sylvester 方程显式构造：在 $i\Omega$ 的特征基中，非等频元素取 $iB_{ab}/(\lambda_a-\lambda_b)$，等频元素取零。设 $g$ 为不同特征值的最小间隔，则
+\[
+\|K\|_F\le\|B-\overline B\|_F/g.
+\]
+

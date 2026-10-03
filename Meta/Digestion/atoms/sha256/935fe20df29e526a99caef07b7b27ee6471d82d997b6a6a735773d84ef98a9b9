@@ -1,0 +1,41 @@
+**定理49.4（固定 $m$ 的全二类型族）。** 对整数 $m\ge1$，令
+
+$$
+\begin{array}{c|c|c|c}
+i&A_i^{(m)}&B_i^{(m)}&W_i^{(m)}\\\hline
+0&U^mC^2&V^mC^2&d^me^2\\
+1&CU^mC&CV^mC&ed^me
+\end{array},\qquad L_m=6m+40.
+$$
+
+这些都是 guard 一到一的合法等长返回。对同一个有限二进制词 $z=z_1\cdots z_N$，取
+
+$$
+\alpha_z^{(m)}=PA_{z_1}^{(m)}\cdots A_{z_N}^{(m)}\xi_H,\qquad
+\gamma_z^{(m)}=QB_{z_1}^{(m)}\cdots B_{z_N}^{(m)}\xi_L,
+\qquad H_z^{(m)}=hW_{z_1}^{(m)}\cdots W_{z_N}^{(m)}.
+$$
+
+每个历史有 $26+L_mN$ 个 departure 观察，终端尚未观察，两来源分别接其固定尾的零误差未来。其全部有限历史的精确闭成本上确界、实际可行预算下确界及最小可行预算均为
+
+$$
+\boxed{\beta_m=\lambda-g^{62}h_H
+\frac{1-g^{6m}}{1-g^{6m+40}}.}
+\tag{49.6}
+$$
+
+任一固定合法归属下，每个有限历史都可逐槽以严格小于 $\beta_m$ 的误差实现；这里 $\beta_m$ 是全族上确界，并非某个有限槽的最大值。
+
+特别地，$m=10$ 恢复原100窗返回词，并有
+
+$$
+\beta_{10}=\lambda-g^{62}h_H\frac{1-g^{60}}{1-g^{100}}.
+$$
+
+每个固定 $m$ 在预算 $\beta_m$ 都保留原完整二叉历史的配置下界
+
+$$
+\mathcal C_{\beta_m,\mathcal A}(26+(6m+40)N)\ge2^N.
+\tag{49.6a}
+$$
+

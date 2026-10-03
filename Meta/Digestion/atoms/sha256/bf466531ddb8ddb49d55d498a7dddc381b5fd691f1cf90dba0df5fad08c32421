@@ -1,0 +1,10 @@
+**命题（同源储备的三项展开）。** 使用 §247 的有效 PNT 输入时，
+
+$$
+\boxed{R(x)=b(x)\left(c_R+\frac{c_2}{t}+\frac{c_3}{t^2}\right)
++O\!\left(\frac{b(x)}{t^3}\right),
+\qquad
+c_3=8c+4\rho\ell+\frac{3\rho}{4}\ell^2>0.}
+\tag{248.8}
+$$
+

@@ -1,0 +1,49 @@
+**定理 9.8（所有不变测度的精确熵桥梁）。** 设 $\rho$ 是任意 $\delta$ 不变 Borel 概率，$\eta$ 为其符号边缘。则
+
+$$
+h_\rho(\delta)=h_\eta(\sigma).
+$$
+
+同样，任意 $\delta_m$ 不变概率的熵等于其符号边缘的熵。
+
+证明。符号边缘不变，因为符号投影与 $\delta,\sigma$ 交换。记首位分割为 $\mathcal S$，联合首位—模数分割为 $\mathcal P_m=\mathcal P_{1,m}$。在 $\Omega$ 上，$\bigvee_{j<r}\sigma^{-j}\mathcal S$ 递增生成 Borel 集；引理 9.7 的逼近与有限联合不变性证明
+
+$$
+h_\eta(\sigma)=h_\eta(\sigma,\mathcal S)
+=\lim_{n\to\infty}\frac1nH_\eta(\omega_0,\ldots,\omega_{n-1}).
+$$
+
+这里也没有调用可逆生成元定理。
+
+命题 8.2 的名字对应不仅适用于计数，还给出对任意 $\rho$ 的信息恒等：$\mathcal P_m^{(n)}$ 的标签等价于
+$(\omega_0,\ldots,\omega_{n-1},z\bmod m)$。条件熵至多 $2\log m$，所以
+
+$$
+H_\eta(\omega_0,\ldots,\omega_{n-1})
+\le H_\rho(\mathcal P_m^{(n)})
+\le H_\eta(\omega_0,\ldots,\omega_{n-1})+2\log m.
+$$
+
+固定 $m$，除以 $n$ 得 $h_\rho(\delta,\mathcal P_m)=h_\eta(\sigma)$。
+
+现在取
+
+$$
+\mathcal R_r=\bigvee_{j=0}^{r-1}\delta^{-j}\mathcal P_{r!}.
+$$
+
+它们递增，标签准确包含前 $r$ 位和模 $r!$ 的初始余数，故生成 $K$ 的全部 Borel 集。对任意有限可测分割 $\mathcal Q$，引理 9.7 给
+
+$$
+\begin{aligned}
+h_\rho(\delta,\mathcal Q)
+&\le h_\rho(\delta,\mathcal R_r)+H_\rho(\mathcal Q\mid\mathcal R_r)\\
+&=h_\rho(\delta,\mathcal P_{r!})+H_\rho(\mathcal Q\mid\mathcal R_r)\\
+&=h_\eta(\sigma)+H_\rho(\mathcal Q\mid\mathcal R_r).
+\end{aligned}
+$$
+
+令 $r\to\infty$，再对 $\mathcal Q$ 取上确界，得到 $h_\rho(\delta)\le h_\eta(\sigma)$。反向不等式由任意固定 $\mathcal P_m$ 的熵率已经给出。
+
+在 $K_m$ 上，用固定 $\mathcal P_m$ 的越来越长时间联合代替阶乘塔，同样递增生成全部 Borel 集，证明同一等式。无限 profinite 纤维没有被视为有限集合；只有每个固定模数的额外块熵有界。$\square$
+

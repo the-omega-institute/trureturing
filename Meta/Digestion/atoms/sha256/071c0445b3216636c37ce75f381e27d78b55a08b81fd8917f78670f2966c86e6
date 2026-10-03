@@ -1,0 +1,16 @@
+**引理 5.1（融合链的 DHR 外张量相容性）。** 对两条满足上述自对偶强生成条件的融合链 $A_1,A_2$，存在由双模外张量积给出的编织酉等价
+
+$$
+E:\mathrm{DHR}(A_1)\boxtimes\mathrm{DHR}(A_2)
+\simeq\mathrm{DHR}(A_1\otimes A_2).
+\tag{QCA.18}
+$$
+
+对 QCA $\beta_i$，在包含张量子和编织的意义下，
+
+$$
+(\beta_1\otimes\beta_2)_* E
+\simeq E(\beta_{1*}\boxtimes\beta_{2*}).
+\tag{QCA.19}
+$$
+

@@ -1,0 +1,12 @@
+**定理 23.2（联合核至少包含 $m-1$ 个独立无穷阶方向）。** 仍设 $\chi_X>0$。存在正整数 $q$ 使
+
+$$
+q\{\mathbf k\in\mathbb Z^m:\textstyle\sum_i k_i=0\}
+\longhookrightarrow
+\frac{\ker\operatorname{Ind}\cap\ker\operatorname{DHR}}
+{\mathrm{FDQC}(A_m)}.
+\tag{SC.11}
+$$
+
+左边同构于 $\mathbb Z^{m-1}$。因而这类产品融合链上，原来的两个不变量不充分。
+

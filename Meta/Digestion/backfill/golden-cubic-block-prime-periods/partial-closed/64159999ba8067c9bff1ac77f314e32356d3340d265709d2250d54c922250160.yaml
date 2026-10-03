@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:64159999ba8067c9bff1ac77f314e32356d3340d265709d2250d54c922250160
+  normalized_sha256: sha256:64159999ba8067c9bff1ac77f314e32356d3340d265709d2250d54c922250160
+cas_ref: sha256:64159999ba8067c9bff1ac77f314e32356d3340d265709d2250d54c922250160
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciRecurrencePolynomialRoots.odd_recurrence_polynomial_root_multiset
+    target_statement_id: sha256:ddd1a6d5f7a2ef333803f5eb6185b6ab5e9e43f27a613edd6bae0dd76c82d4dc
+receipts:
+  unresolved_subitems: []

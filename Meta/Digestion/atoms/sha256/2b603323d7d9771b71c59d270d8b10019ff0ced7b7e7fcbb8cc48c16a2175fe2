@@ -1,0 +1,39 @@
+## 193. 固定 Fibonacci 种子的四次素切面
+
+本节保留 §§191–192 的固定种子与共同公因子合同，增加按递归指标模四选择的素数约束。§194 证明共同素支撑预算的解析界，§195 将两者接回实际规范五窗口来源。这些内容是明确文献输入上的纸面推导，未作新的 Lean 核验；§192 的密度一结论仍保留其原有范围。
+
+固定非零本原种子 $v=(a,b)\in\mathbb Z_{\ge0}^2$，其中 $\gcd(a,b)=1$。沿用
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2},\qquad
+M(a,b)=(b,a+b),\qquad q(a,b)=2a+3b.
+$$
+
+将组成写作 $v=a+b\phi\in R=\mathbb Z[\phi]$，黄金共轭记为 $x\mapsto x'$，迹与范数分别为 $\operatorname{Tr}(x)=x+x'$、$\operatorname{N}(x)=xx'$。记
+
+$$
+Q=\operatorname N(v)=a^2+ab-b^2\ne0,\qquad
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4}\quad(j\ge0),
+$$
+
+其中 $F_0=0,F_1=1$。范数非零来自 $\sqrt5$ 的无理性与 $v\ne0$。本节所有数域、多项式及渐近阈值均随这个固定种子确定，不要求对变化种子一致。
+
+令
+
+$$
+\tau=\frac\phi\psi=-\phi^2,
+\qquad \operatorname N(\tau)=1.
+$$
+
+对每个 $r\in\{0,1,2,3\}$ 定义
+
+$$
+A_r=\operatorname{Tr}(v^2\tau^{r+3}),\qquad
+P_r(X)=Q(X^4-4X^2+2)-A_r\in\mathbb Z[X],
+\qquad D_r=(-1)^{r+1}Q.
+\tag{193.1}
+$$
+
+这里指标余类是递归深度的算术分类，不替换 `[null,2,3,2 5,5]` 的包含模式。
+

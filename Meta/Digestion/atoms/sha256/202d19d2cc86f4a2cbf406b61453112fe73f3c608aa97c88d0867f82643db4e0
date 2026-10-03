@@ -1,0 +1,37 @@
+**定理 174.2（加项个数无上限的统一消失比值）。** 固定正整数 $c$。对命题 174.1 的全部 $a,d,h$，当最大实际占位 $R\to\infty$ 时，
+
+$$
+\frac{\sigma(cV)}{e^\gamma cV\log\log(cV)}\longrightarrow0
+$$
+
+一致成立。换言之，对每个 $\varepsilon>0$，存在只依赖 $c,\varepsilon$ 的 $R_0$，使全部 $R\ge R_0$ 的这些来源同时满足比值小于 $\varepsilon$。
+
+证明。若 $h=1$，直接取来源 $V=F_a$ 及载体 $\operatorname{Div}(a)$；不能以这时任意大的 $d$ 充当真实规模。若 $h\ge2$，有 $m\le R$、$hd\le R$。记命题 174.1 中的两个分子因子为 $A_1,A_2$，其指标都至多为 $R$。因为分母取消不增加素因子，每个 $p\mid V$ 都整除 $A_1A_2$。对 Fibonacci 因子取其指标的正约数集，对正指标 Lucas 因子取其双倍指标的正约数集；再加 $\{z(p):p\mid c\}$ 与 $\{3\}$，得到覆盖同一个 $cV$ 的全部素数秩的载体 $\mathcal S$。
+
+对任意 $\delta>0$，使用 §172 的 $\tau(r)\le C_\delta r^\delta$，并记
+
+$$
+K_\delta=\max\{32768,\ \omega(c)+1+2C_\delta2^\delta\},
+\qquad D_\delta=\max\{32,\ 7+a_0+\tfrac94\log K_\delta\}.
+$$
+
+则 $\max\{|\mathcal S|,32768\}\le K_\delta R^\delta$，由 §167 得
+
+$$
+\frac{\sigma(cV)}{e^\gamma cV}
+<\frac{40}{39}\left(D_\delta+\frac94\delta\log R\right).
+$$
+
+另一方面，实际加法来源含有最大项，故 $cV\ge V\ge F_R$；$R\ge64$ 时 $cV>5040$ 且 $\log\log(cV)>\frac12\log R$。因此
+
+$$
+0<\frac{\sigma(cV)}{e^\gamma cV\log\log(cV)}
+<\frac{80D_\delta}{39\log R}+\frac{60}{13}\delta.
+$$
+
+给定 $\varepsilon>0$，取 $\delta=13\varepsilon/120$ 及 $R_0\ge64$、$\log R_0>160D_\delta/(39\varepsilon)$，即可统一控制。$\square$
+
+例如固定 $a=3,d=1$ 时 $R=2h+1$，非零加项个数 $h$ 可随规模线性增长。有限分解的复杂度仍由两个分子指标控制，因此这超出了“只许固定数目加项”的来源限制。证明没有使用 $\sigma(x+y)$ 的错误乘法性，也没有用分子整数的 Robin 比值代替商 $cV$ 的比值：素支撑上界和规模下界分别从同一个实际和取得。
+
+这两节保留已有论文输入与仓内综合推导的区别，不主张等差和恒等式或秩方法原创。一般不规则占位、多个等差段的和、自由变化的乘子仍没有由本节得到统一界；RH 继续未决。
+

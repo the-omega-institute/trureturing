@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:caf20906c5f9a89e5fb7ce53b645e0b3d29efec7d2ee7d74384a4787591b7ff9
+  normalized_sha256: sha256:caf20906c5f9a89e5fb7ce53b645e0b3d29efec7d2ee7d74384a4787591b7ff9
+cas_ref: sha256:caf20906c5f9a89e5fb7ce53b645e0b3d29efec7d2ee7d74384a4787591b7ff9
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.arbitrary_prefix_delay_table
+    target_statement_id: sha256:42f7992a37a70267b3397b9d4cc572a49e50232369502b7459fd15e55f91a74c
+  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.arbitrary_protocol_prefix_time
+    target_statement_id: sha256:5a6b6ba44d48790a9d38599fd8b9534229d8a6c9df1d3501d2c1ef20805d9613
+  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.deadline_family_operational_capacity
+    target_statement_id: sha256:01b97a881485572a5a4642e6421431f73ff64ab496b91ecb38eb00039cc0211a
+  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.deadline_prefix_time_range_and_collision
+    target_statement_id: sha256:1caf70592720a22cf328a110e20f1cc0e5fa598e83053dc68fc39b77102ff810
+  - gid: D5/S3/Observer/Budget/DyadicPrefixDelayRange.delayed_midpoint_execute
+    target_statement_id: sha256:dffec23c353a4a313c9c524fd8d9ff454c6c52a9d07a137141e43d3355b11d46
+receipts:
+  unresolved_subitems: []

@@ -467,6 +467,8 @@ internal static class StatementProjectionFixtureLoader
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
+    private static readonly AsyncLocal<(string Root, Lazy<StatementSnapshot> Statements)?>
+        FreshStatements = new();
     private static readonly Dictionary<string, ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> StatementsByRoot =
         new(StringComparer.Ordinal);
     private static readonly ConditionalWeakTable<Formula, LeanDeclarationRef> Derived = new();
@@ -481,8 +483,15 @@ internal static class StatementProjectionFixtureLoader
                 $"Pinned statement-v1 fixture is unprojectable for {declaration.Value}: {failed.Reason}"),
             _ => throw new InvalidOperationException("Unknown statement projection outcome.")
         };
-        Derived.Add(formula, declaration);
+        RestoreDerived(formula, declaration);
         return formula;
+    }
+
+    internal static void RestoreDerived(Formula formula, LeanDeclarationRef declaration)
+    {
+        ArgumentNullException.ThrowIfNull(formula);
+        ArgumentNullException.ThrowIfNull(declaration);
+        Derived.Add(formula, declaration);
     }
 
     internal static bool IsDerivedFrom(Formula formula, LeanDeclarationRef declaration) =>
@@ -559,9 +568,26 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
+    internal static T WithScriptRepositoryRoot<T>(string repositoryRoot, Func<T> action) =>
+        FreshStatements.Value is { } fresh && fresh.Root == Path.GetFullPath(repositoryRoot)
+            ? WithRepositoryRoot(repositoryRoot, action)
+            : WithFreshRepositoryRoot(repositoryRoot, action);
+
+    internal static T WithFreshRepositoryRoot<T>(string repositoryRoot, Func<T> action)
+    {
+        var root = Path.GetFullPath(repositoryRoot);
+        var previous = FreshStatements.Value;
+        FreshStatements.Value = (root, new Lazy<StatementSnapshot>(
+            () => CaptureStatements(root)));
+        try { return WithRepositoryRoot(root, action); }
+        finally { FreshStatements.Value = previous; }
+    }
+
     private static ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> StatementsForCurrentRepository()
     {
         var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
+        if (FreshStatements.Value is { } fresh && fresh.Root == repositoryRoot)
+            return fresh.Statements.Value.Read();
         lock (StatementsByRoot)
         {
             if (!StatementsByRoot.TryGetValue(repositoryRoot, out var statements))
@@ -571,6 +597,29 @@ internal static class StatementProjectionFixtureLoader
             }
 
             return statements;
+        }
+    }
+
+    private sealed record StatementSnapshot(
+        ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>? Statements,
+        ImmutableArray<ScribeResourceInput> Inputs, System.Runtime.ExceptionServices.ExceptionDispatchInfo? Failure)
+    {
+        internal ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> Read()
+        {
+            ScribeInputRecorder.Replay(Inputs);
+            Failure?.Throw();
+            return Statements!;
+        }
+    }
+
+    private static StatementSnapshot CaptureStatements(string repositoryRoot)
+    {
+        using var inputs = new ScribeInputRecorder(repositoryRoot);
+        try { return new StatementSnapshot(LoadStatements(repositoryRoot), inputs.Inputs, null); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return new StatementSnapshot(null, inputs.Inputs,
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(exception));
         }
     }
 
@@ -586,13 +635,14 @@ internal static class StatementProjectionFixtureLoader
         foreach (var fixtureSpec in fixtures)
         {
             var path = Path.Combine(fixtureDirectory, fixtureSpec.Name);
-            if (!File.Exists(path))
+            var bytes = ScribeInputRecorder.ReadFile(repositoryRoot, "Golden/Projection/" + fixtureSpec.Name);
+            if (bytes is null)
             {
                 throw new FileNotFoundException(
                     $"Projection fixture is missing from repository {repositoryRoot}: {path}",
                     path);
             }
-            using var fixture = JsonDocument.Parse(File.ReadAllBytes(path));
+            using var fixture = JsonDocument.Parse(bytes);
             var schema = fixture.RootElement.GetProperty("schema").GetString();
             if (!string.Equals(schema, fixtureSpec.Schema, StringComparison.Ordinal))
                 throw new FormatException($"Projection fixture schema mismatch: {path}");

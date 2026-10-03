@@ -1,0 +1,12 @@
+**Proof.** The Fibonacci two-root formula gives
+$$
+\frac{N(T_j)}{L_j}\to\varphi^2,\qquad
+R_j=\overline rL_j+O(\varphi^{-j}),\qquad
+F_{j-2}=\varphi^{-3}L_j+O(\varphi^{-j}).
+$$
+Insert these estimates in Theorem 5.2. Because $L_j=O(\varphi^j)$, the product of the resistance error with $L_j+1$ is bounded. The coefficient of the linear term is
+$$
+\overline r-(r_\beta-r_\alpha)\varphi^{-3}=\widetilde r.
+$$
+This proves the bounded-remainder expansion and the two limits. $\square$
+

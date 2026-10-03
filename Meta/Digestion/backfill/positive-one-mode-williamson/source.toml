@@ -1,0 +1,5 @@
+source_id = "positive-one-mode-williamson"
+path = "docs/develop/theory/POSITIVE_ONE_MODE_WILLIAMSON.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

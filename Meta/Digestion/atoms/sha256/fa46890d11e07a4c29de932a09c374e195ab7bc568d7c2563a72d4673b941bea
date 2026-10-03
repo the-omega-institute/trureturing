@@ -1,0 +1,6 @@
+## 20. Fibonacci 原子关系与秩三缺陷：必须保留的来源类型
+
+本批日期为 2026-09-29，接续 PR #10310 的 `b63c3943185863b42ad5adb7d0b861a0dcb644b7`。本卷仍是魔群研究的唯一理论属主。读取 [Fibonacci 原子关系生成卷](https://github.com/the-omega-institute/trureturing/blob/409ac8ac7e6ea43a5afc318381b0af261543ca73/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的相关正文至 §36，源 blob 为 `734088bcd52f4f752593942f5ecda392bbc67ea8`。本批使用其自由树、组成商、可展开封装、双读数与进位接口；没有宣称已审阅该源之后的全部章节，也不改写其原文。
+
+该源的 §§2–5 区分原始树、组成及数量观察；§8 要求封装保存展开后的行为；§§25–27 把进位解释为截面不保运算时必须记录的资料。本批得到一个具体的缺陷版本：基态标签组成的截面不保持实际融合，丢掉它的字符进位会把允许的输出通道误认成另一条基态。
+

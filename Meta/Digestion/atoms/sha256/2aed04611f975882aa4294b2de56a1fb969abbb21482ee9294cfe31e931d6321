@@ -1,0 +1,63 @@
+**定理 199.3（非零赋值强制完整仿射根群）。** 固定式（199.3）的 $k$ 与任一 $r$。令
+
+$$
+F=K(\zeta_k),\qquad u^k=\rho_r,\qquad L=F(u).
+$$
+
+则
+
+$$
+[F:\mathbb Q]=2\varphi(k),\qquad
+[L:F]=k,
+\qquad [L:\mathbb Q]=2k\varphi(k).
+\tag{199.7}
+$$
+
+$P_{r,k}$ 的实际分裂域 $E$ 满足
+
+$$
+\operatorname{Gal}(E/\mathbb Q)
+\cong\operatorname{AGL}_1(\mathbb Z/k\mathbb Z),
+\qquad [E:\mathbb Q]=k\varphi(k),
+\tag{199.8}
+$$
+
+其根作用就是 $h\mapsto ch+d$，其中 $c$ 遍历模 $k$ 的单位、$d$ 遍历全部模 $k$ 剩余类。
+
+证明。$5\nmid k$，而 $K$ 在五处分歧，$\mathbb Q(\zeta_k)$ 在五处不分歧；所以两个域交为 $\mathbb Q$，得到 $F$ 的次数。又 $p_0\nmid k$，故 $F/K$ 在 $\mathfrak p$ 处不分歧。将该赋值延伸到 $F$，$\rho_r$ 的归一化赋值仍是整数 $e$。
+
+再任取它到 $L$ 的延伸，设相对分歧指数为 $e_L$。由 $u^k=\rho_r$，
+
+$$
+k\,v_L(u)=e_Le.
+$$
+
+$\gcd(k,e)=1$，因而 $k\mid e_L$。于是 $k\le e_L\le[L:F]\le k$，证明满次数。该论证同时允许 $e$ 为正或负，不要求它等于一。
+
+$F$ 包含全部 $k$ 次单位根。$F/\mathbb Q$ 的自同构可独立选择 $K$ 上的符号 $\varepsilon\in\{1,-1\}$ 与 $A\in(\mathbb Z/k\mathbb Z)^\times$，将 $\rho_r$ 送到 $\rho_r^\varepsilon$。它的全部 $k$ 个延伸为
+
+$$
+\zeta_k\longmapsto\zeta_k^A,\qquad
+u\longmapsto\zeta_k^b u^\varepsilon,
+\qquad b\in\mathbb Z/k\mathbb Z.
+$$
+
+这些像都在 $L$ 中，故 $L/\mathbb Q$ 正规且可分。
+
+多项式的根为
+
+$$
+x_h=u\zeta_k^h+u^{-1}\zeta_k^{-h},
+\qquad h\in\mathbb Z/k\mathbb Z.
+$$
+
+若两个根相同，则对应的 $u\zeta_k^h$ 要么相同，要么互为逆。后一情况会使 $u^2$，继而 $\rho_r$ 成为单位根，与其非零赋值矛盾。因此 $k$ 个根彼此不同。
+
+上述自同构给根置换
+
+$$
+h\longmapsto\varepsilon Ah+\varepsilon b\pmod k.
+$$
+
+其像恰为全部仿射群，作用忠实。核只有 $(\varepsilon,A,b)=(1,1,0)$ 与 $(-1,-1,0)$ 两个元素，因此实际根域的次数是 $2k\varphi(k)/2=k\varphi(k)$，并得到式（199.8）。这里没有把扩张域 $L$ 错认成实际根域，也没有假设自同构参数形成直积。$\square$
+

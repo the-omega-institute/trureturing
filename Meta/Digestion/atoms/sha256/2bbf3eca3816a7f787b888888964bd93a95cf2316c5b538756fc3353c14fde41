@@ -1,0 +1,177 @@
+**定理 14.2（全实域严格增加与唯一穿越）。** 定义 14.1 中 $q_{k,j}$ 在 $[j+1,\infty)$ 上严格增加，并且
+
+$$
+ \frac{q_{k,j}(t)}t\longrightarrow\frac{c_k}{j+1},\qquad
+ c_k=\frac{A^E D^A}{4^D L^D}>0.
+ \tag{14.4}
+$$
+
+存在唯一实数 $\tau_{k,j}$ 使 $q_{k,j}(\tau_{k,j})=1$，且
+
+$$
+ 2j+1<\tau_{k,j}<U_{k,j}:=j+\frac{j+1}{c_k}.
+ \tag{14.5}
+$$
+
+对所有合法整数 $t\ge j+1$，$Q_{k,t,j}<1$、$=1$ 或 $>1$ 分别当且仅当 $t<\tau_{k,j}$、$t=\tau_{k,j}$ 或 $t>\tau_{k,j}$。因此每个 $(k,j)$ 至多有一个整数并列。
+
+证明。先记 $g(t)=(\log q_{k,j})'(t)$。对 $x>0$ 和整数 $m\ge1$，凸性和梯形求积给出
+
+$$
+ \sum_{i=1}^{m}\frac1{x+i}\ge
+ \int_0^m\frac{ds}{x+s}-\frac{m}{2x(x+m)}.
+ \tag{14.6}
+$$
+
+对 $n\ge3$，中点求积先给出
+$\sum_{h=0}^{D-1}(n+h+\tfrac12)^{-1}\le\int_0^D(n+s)^{-1}ds$。把采样点向左移一格后，各差分在求和时望远镜相消，且
+
+$$
+ \sum_{h=0}^{D-1}\left((n+h-\tfrac12)^{-1}-(n+h+\tfrac12)^{-1}\right)
+ =\frac{D}{(n-\tfrac12)(n+D-\tfrac12)},
+$$
+
+得到
+
+$$
+ \sum_{h=0}^{D-1}\frac1{n+h-\tfrac12}\le
+ \int_0^D\frac{ds}{n+s}+\frac{D}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.7}
+$$
+
+对 $0\le s\le1$ 置
+
+$$
+ a_s=At+E(j+s),\quad b_s=Dt+A(j+s),\quad n_s=Lt+D(j+s).
+$$
+
+Cassini 等式 $(A^2-DE)^2=1$ 的直接展开给出
+
+$$
+ \frac{AE}{a_s}+\frac{AD}{b_s}-\frac{LD}{n_s}
+ =-\frac{t(j+s)}{a_sb_sn_s}.
+ \tag{14.8}
+$$
+
+由于 $a_s\ge At$、$b_s\ge Dt$、$n_s\ge Lt$，三项未移位积分的总和至少为
+
+$$
+ -\frac{\kappa_k(j+\tfrac12)}{t^2},\qquad \kappa_k=\frac1{LAD}.
+ \tag{14.9}
+$$
+
+由（14.6）–（14.9），对全部 $t\ge j+1$ 有
+
+$$
+\begin{aligned}
+ g(t)\ge{}&\frac1{t-j}-\frac{\kappa_k(j+\tfrac12)}{t^2}
+ -\frac{AE}{2a(a+E)}-\frac{AD}{2b(b+A)}\\
+ &-\frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.10}
+\end{aligned}
+$$
+
+当 $t\ge2$ 时，Fibonacci 比值给
+$E/A\le1$、$A/D\le2/3$、$D/L\le2/3$、$L\ge3$、$\kappa_k\le1/6$。因而
+
+$$
+ \frac{AE}{2a(a+E)}\le\frac1{2t^2},\qquad
+ \frac{AD}{2b(b+A)}\le\frac1{3t^2},\qquad
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le
+ \frac8{11t^2}.
+ \tag{14.11}
+$$
+
+最后一个界使用 $n-\tfrac12\ge L(t-\tfrac16)$、$n+D-\tfrac12\ge Lt$ 以及 $t\ge2$。在 $j\le t-1$ 下，故
+
+$$
+ g(t)\ge\frac1t-\frac{t-\tfrac12}{6t^2}-\frac{103}{66t^2}
+ =\frac{5}{6t}-\frac{65}{44t^2}>0.
+ \tag{14.12}
+$$
+
+还剩 $j=0$、$1\le t<2$。当 $k\ge2$ 时，递推给
+
+$$
+ \frac35\le\frac EA,\frac AD,\frac DL\le\frac58,\qquad L\ge13,\qquad \kappa_k\le\frac1{520}.
+ \tag{14.13}
+$$
+
+于是（14.10）的两个分子修正各不超过 $25/(128t)$。置 $u=(2L)^{-1}$、$r=D/L$；函数 $t\mapsto t/[(t-u)(t+r-u)]$ 在 $t\ge1$ 上下降，且（14.13）给出
+
+$$
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le\frac{13}{30t},\qquad
+ \frac{\kappa_k}{2t^2}\le\frac1{1040t}.
+ \tag{14.14}
+$$
+
+所以
+
+$$
+ g(t)\ge\frac1t-\frac{25}{64t}-\frac{13}{30t}-\frac1{1040t}
+ =\frac{437}{2496t}>0.
+ \tag{14.15}
+$$
+
+当 $k=1$、$j=0$ 时，$E=A=1,D=2,L=3$，故
+
+$$
+ q_{1,0}(t)=\frac{t(t+1)(2t+1)}{4(36t^2-1)},
+$$
+
+其导数的正分母之外的符号为
+$72t^4-42t^2-6t-1$。对 $t\ge1$，
+
+$$
+ 72t^4-42t^2-6t-1
+ =23t^2+(t-1)(72t^3+72t^2+7t+1)>0.
+ \tag{14.16}
+$$
+
+这覆盖了端点 $t=1$，从而 $g>0$ 的全域证明完成。
+
+在 $t=2j+1$ 时，$q$ 是完整目标纤维的相邻密度比。令
+$V(a,b)=C_{a+b-1}\binom{a+b}{a}$；已有完整树计数给出[（12.15）](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)，而
+
+$$
+ \frac{V(a+1,b)}{V(a,b)}=\frac{2(2(a+b)-1)}{a+1}>1,\qquad
+ \frac{V(a,b+1)}{V(a,b)}=\frac{2(2(a+b)-1)}{b+1}>1.
+ \tag{14.17}
+$$
+
+从而 $q_{k,j}(2j+1)<(2j+1-j)/(j+1)=1$。另一方面（14.1）的最高次项给（14.4），故连续性和严格增加性产生唯一根，并给出根的下界。
+
+为证更强的上界，令
+
+$$
+ H(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},\qquad
+ H_0(t)=\frac{a^Eb^A}{4^Dn^D}.
+$$
+
+右端点求积和左移半步的单调性给
+
+$$
+ \log\frac{H(t)}{H_0(t)}\ge
+ \int_0^1\!\left[E\log\left(1+\frac{Es}{a}\right)+A\log\left(1+\frac{As}{b}\right)-D\log\left(1+\frac{Ds}{n}\right)\right]ds.
+ \tag{14.18}
+$$
+
+括号内函数在 $s=0$ 为零，且其导数为
+
+$$
+ \frac{E^2}{a+Es}+\frac{A^2}{b+As}-\frac{D^2}{n+Ds}
+ =\frac{(Eb-Aa)^2}{(a+Es)(b+As)(n+Ds)}>0,
+ \tag{14.19}
+$$
+
+因为 $Eb-Aa=t(ED-A^2)$ 且 $|ED-A^2|=1$。故 $H(t)>H_0(t)$。令 $z=j/t$；同一 Cassini 展开给
+
+$$
+ \frac{d}{dz}\log\frac{(A+Ez)^E(D+Az)^A}{(L+Dz)^D}
+ =\frac1{(L+Dz)(A+Ez)(D+Az)}>0.
+ \tag{14.20}
+$$
+
+于是 $H_0(t)\ge c_k$，且严格不等式 $H(t)>c_k$ 在整个合法域成立。由（14.1），在 $U_{k,j}$ 处
+$q_{k,j}(U_{k,j})>c_k(U_{k,j}-j)/(j+1)=1$，这证明（14.5）及全部整数比较。证毕。
+
