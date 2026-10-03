@@ -4146,3 +4146,58 @@ h_{\rho}(x,s)=
 $$
 
 当前的 $\cosh(kx)/\cosh(k)$ 只是 $\rho=0$ 的 Neumann 特例。未知边界类型时，FIB 递归不能选择 Neumann、Robin 或 Dirichlet 的谱；对应的零点、谱隙和 Green 核均需随边界假设重新推导。物理温度、热流、容量和热浴解释还需额外的源项、通量和观测映射，不能由递归本身推出。
+
+## 38. 非线性位置映射的坐标约定
+
+第37节中，若先使用无量纲位置 $\bar y=F(u)$，则 $\bar v(\bar y,t)=p(F^{-1}(\bar y),t)$ 满足
+
+$$
+\partial_t\bar v
+=D\left(F'(G(\bar y))^2\partial_{\bar y}^2\bar v
++F''(G(\bar y))\partial_{\bar y}\bar v\right),
+\qquad G=F^{-1}.
+$$
+
+若物理位置为 $y=\ell\bar y$、物理时间为 $T=\eta t$，则同一式在物理坐标中应写成
+
+$$
+\partial_Tv
+=\frac D\eta\left(
+\ell^2F'(G(y/\ell))^2\partial_y^2v
++\ell F''(G(y/\ell))\partial_yv
+\right).
+$$
+
+因此第37节的常系数解释只在 $F$ 已知且为恒等映射时成立；未知 $F$ 时，最多得到推前后的抽象 Green 核。这个坐标修正不改变无量纲谱的结论，却禁止把无量纲导数直接当作物理长度导数。
+
+## 39. 逆问题病态性的显式总变差界
+
+沿用第36节的记号，令 $A=\sqrt{S/D}$。取 $q+2$ 个不同点 $x_j$ 和系数 $c_j$，满足
+
+$$
+\sum_jc_jx_j^{2r}=0\quad(0\le r\le q),
+\qquad \sum_j|c_j|=1,
+$$
+
+并定义
+
+$$
+\nu_\pm=\sum_j(|c_j|\pm c_j)\delta_{x_j}.
+$$
+
+则 $\nu_\pm$ 是概率律且 $\|\nu_+-\nu_-\|_{\mathrm{TV}}=1$。对 $0\le s\le S$，令 $a=\sqrt{s/D}$，Taylor 展开与前 $q$ 阶矩抵消给出
+
+$$
+\left|\sum_jc_j\cosh(ax_j)\right|
+\le \cosh(A)\frac{A^{2q+2}}{(2q+2)!},
+$$
+
+从而
+
+$$
+\|\mathcal A_S\nu_+-\mathcal A_S\nu_-\|_\infty
+\le 2\cosh(A)\frac{A^{2q+2}}{(2q+2)!}
+\longrightarrow0.
+$$
+
+所以即使输入律在总变差意义下保持固定距离，有限频段读出也可趋于相同；任何由有限频段一致误差控制总变差的统一连续模都不存在。这一结论仍不否定第36节在弱拓扑中的精确连续逆，只说明实验噪声下不能把拓扑注入性宣传成强范数稳定性。
