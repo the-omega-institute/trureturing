@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.NumberFieldZeta;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Zeta.NumberField;
 
 internal sealed class DensityDocument : IScribeDocumentDefinition
 {

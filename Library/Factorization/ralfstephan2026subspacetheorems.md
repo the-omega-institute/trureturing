@@ -26,6 +26,7 @@ their exact hypotheses govern each formal claim.
 ## Verified locator
 
 - Repository: https://github.com/rwst/Subspace-Theorems
+- Pinned source: https://github.com/rwst/Subspace-Theorems/tree/bfd830f481b296989fa5f0c1e48d9316f72270d8
 - Immutable revision: `bfd830f481b296989fa5f0c1e48d9316f72270d8`
 - Author at the pinned commit: Ralf Stephan.
 - License at the pinned revision: Apache-2.0. The upstream `LICENSE` and the

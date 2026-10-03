@@ -16,6 +16,8 @@ triage: anchor
 
 # Chebotarev density in Lean
 
+## Verified locator
+
 The immutable upstream source is
 <https://github.com/CBirkbeck/chebotarev-density/tree/a00054a0e6bbc394b0e81de750db0cd2efc8bd88>.
 Its `CebotarevDensity` sources supply the prime-ideal Dirichlet-density
