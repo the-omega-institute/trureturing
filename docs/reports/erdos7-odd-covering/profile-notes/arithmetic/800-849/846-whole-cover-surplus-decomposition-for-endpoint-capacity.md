@@ -118,7 +118,7 @@ On the event \(F\) of report 845, every collision column has modulus at least
 \(9\), and report 845 gives
 \[
  \mu(F)>\frac27,\qquad
- W_{\mathrm c}<\frac{2C}{9}N.
+ W_{\mathrm c}<\frac{2}{9}N.
 \]
 Consequently \(F\subseteq A\), so
 \[
