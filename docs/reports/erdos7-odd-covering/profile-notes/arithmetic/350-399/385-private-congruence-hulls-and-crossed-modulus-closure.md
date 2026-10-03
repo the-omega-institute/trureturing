@@ -26599,3 +26599,93 @@ closure) to $\omega(L_{\mathrm{top}})\ge2$.  Any such conclusion must use
 the actual whole-cover phases, complete liability, or another source-
 compatible hypothesis.  In particular, the external-coordinate payment in
 Section 229 cannot be replaced by a support-count assertion alone.
+
+## 231. A uniform coefficient bounds same-quotient phase payment
+
+The pair term in (229.9) has a finite coefficient in the $p=3$, $L=35$
+interface.  Put
+
+\[
+ B_H=\sum_{\substack{g<h\\g,h\mid H}}
+       \frac1{\operatorname{lcm}(g,h)},
+ \qquad H=3^e\cdot5\cdot7.
+ \tag{231.1}
+\]
+
+For one fixed quotient modulus $\ell$, the associated $g_i$ are distinct
+divisors of $H$ because $d_i=\ell g_i$ and the original numerical labels are
+distinct.  Therefore all its incompatible-pair contributions are at most
+$B_H/\ell$.  Summing over the large quotient moduli and using
+$\mu(\ell)\ge1$ gives
+
+\[
+ \sum_{\substack{\{i,j\}\in\mathcal P_H\\\ell_i\ge M}}
+ \frac1{\operatorname{lcm}(d_i,d_j)}
+ \le B_H C_H.
+ \tag{231.2}
+\]
+
+The coefficient is uniformly bounded by $12/5$.  To see this without an
+incorrect independent bounding of two opposite terms, define
+
+\[
+ A_{p,t}=\sum_{a=0}^t p^{-a},
+ \qquad
+ S_{p,t}=\sum_{a,b=0}^t p^{-\max(a,b)}.
+\]
+
+Chinese remaindering gives
+
+\[
+ 2B_H+\sigma_{-1}(H)
+ =S_{3,e}S_{5,1}S_{7,1},
+ \qquad
+ \sigma_{-1}(H)=A_{3,e}A_{5,1}A_{7,1}.
+ \tag{231.3}
+\]
+
+Here $S_{5,1}=8/5$, $S_{7,1}=10/7$, $A_{5,1}=6/5$, and
+$A_{7,1}=8/7$.  If $B_e$ denotes the value in (231.1), then
+
+\[
+ B_{e+1}-B_e
+ =\frac{(16/7)(2e+3)-(48/35)}{2\,3^{e+1}}>0.
+ \tag{231.4}
+\]
+
+Thus $B_e$ increases to
+
+\[
+ \lim_{e\to\infty}B_e
+ =\frac{3(16/7)-(3/2)(48/35)}2
+ =\frac{12}{5},
+\]
+
+and consequently $B_H\le12/5$ for every finite $e$.  Combining (229.9)
+and (231.2) gives the scalar necessary condition
+
+\[
+ \boxed{
+ \frac{|U_H|}{2H}e^{-4C_H}
+ \le
+ \sum_{i:\,1<\ell_i<M}\frac1{d_i}
+ +\frac{12}{5}C_H.}
+ \tag{231.5}
+\]
+
+Using the all-phase bound from Section 228 further yields
+
+\[
+ \boxed{
+ \frac{6\cdot3^e+17}{70\cdot3^e}e^{-4C_H}
+ \le
+ \sum_{i:\,1<\ell_i<M}\frac1{d_i}
+ +\frac{12}{5}C_H.}
+ \tag{231.6}
+\]
+
+This isolates the remaining obstruction quantitatively: the large external
+quotients have bounded aggregate phase-pair capacity, while small external
+quotients remain an uncontrolled payment channel.  The bound alone does not
+force a contradiction, because no unrestricted theorem currently bounds that
+small-quotient sum below the left side while retaining all original phases.
