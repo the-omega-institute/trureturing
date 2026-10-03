@@ -26059,3 +26059,102 @@ The missing implication is a source condition of the form
 where \(X_Q\) is the full \(Q\)-periodic carrier and \(B\) is the permitted external bridge.  Without (225.5), a finite numerical Type-I model cannot be promoted to an EB1 whole-cover replacement.  This is a counterexample to numerical forcing criteria, not a covering-system counterexample and not a counterexample to Erdős #7.
 
 The exact remaining task is therefore to prove a whole-cover/source bridge that rules out (225.5)-type residual points, or to construct a pair of actual same-numerical-boundary sources with different future repair responses.  Either result would settle the present Type-I forcing proposal; neither follows from (225.1)--(225.4).
+
+## 226. Same arithmetic boundary, different Type-I repair response
+
+The source condition cannot be removed even after retaining the complete
+gcd-hull and its divisor count.  The following finite pair gives a direct
+counterexample to that proposed boundary, while remaining a selected-liability
+example rather than a whole-cover construction.
+
+Take, in the same height range as Section 225,
+
+\[
+ Q=35\cdot3^e=3^e\cdot5\cdot7,\qquad e\ge5,\qquad N=Q/3,
+\]
+
+and use the same Type-I interface in both cases: fresh labels are divisors of
+\(Q\), with the existing numerical labels \(3,5,7\) unavailable.  Let
+
+\[
+ \begin{aligned}
+ B_A&=\{47,53,68\},\\
+ B_B&=\{22,55,61\},\\
+ F_i&=\bigcup_{b\in B_i}(b+N\mathbb Z)\qquad(i=A,B).
+ \end{aligned}
+\]
+
+Each liability consists of three complete \(N\)-fibres and therefore has the
+same density \(3/N\).  For either choice,
+
+\[
+ \Gamma_N(F_i)
+ =\gcd\bigl(N,\{x-w:x\in F_i\}\bigr)=3,
+ \qquad
+ \tau(\Gamma_N(F_i))=\tau(3)=2.
+ \tag{226.1}
+\]
+
+For \(F_A\), two fresh Type-I classes cover the whole liability:
+
+\[
+ [2]_{9}\ \cup\ [8]_{15}\supseteq F_A.
+ \tag{226.2}
+\]
+
+Indeed, \(47\equiv2\pmod 9\), while \(53\equiv68\equiv8\pmod {15}\),
+so the two classes cover all three fibres.  Their labels are distinct and
+fresh, and their modulus sum is \(9+15=24\).  Since 9 and 15 are the
+two smallest available divisor labels, this is also the least two-class
+modulus sum.  One class cannot cover all three fibres: a low class would require its modulus to divide
+\(\gcd(N,53-47,68-47)=3\), hence would be the forbidden label 3, while a
+high class covers at most one of the three ternary tails on each \(N\)-fibre.
+Thus the minimum repair cardinality for \(F_A\) is exactly two.
+
+For \(F_B\), no two-class Type-I repair exists.  A pair of high classes covers
+at most two of the three ternary tails on every \(N\)-fibre.  If one class is
+low and one is high, every fibre not wholly covered by the low class still has
+at least two uncovered tails; hence the low class would have to cover all
+three fibres.  That would require its modulus \(d\mid N\) to divide
+
+\[
+ \gcd(N,55-22,61-22)=\gcd(N,33,39)=3,
+\]
+
+so again \(d=3\), which is unavailable.  Therefore the minimum cardinality
+is at least three.  The remaining two-low case is also impossible: a low
+class can cover two of the three bases only if its modulus divides one of
+\(33,39,6\) and \(N\); each such gcd is 3, so every available low class
+covers at most one base and two low classes cover at most two fibres.  The
+minimum is exactly three, since
+
+\[
+ [1]_{9}\ \cup\ [1]_{15}\ \cup\ [1]_{21}\supseteq F_B,
+ \tag{226.3}
+\]
+
+with one class covering each of the fibres based at 55, 61 and 22.  The
+modulus sum of this repair is \(9+15+21=45\).  These are the three
+smallest available divisor labels, so the three-class minimum modulus sum is
+also 45.
+
+Consequently the two source families have the same numerical state
+\((Q,N,\Gamma_N,\tau(\Gamma_N),3/N)\), but the same declared future Type-I
+interface returns different repair cardinalities (and different minimum
+prices):
+
+\[
+ \boxed{\operatorname{card}_{\min}(F_A)=2,
+ \qquad \operatorname{card}_{\min}(F_B)=3.}
+ \tag{226.4}
+\]
+
+This is the required pair of source-conditioned responses.  It proves that
+the arithmetic projection \((\Gamma_N,\tau(\Gamma_N))\), even augmented by
+the period and fibre count, is not a dynamically sufficient Type-I boundary.
+The construction is deliberately not promoted to an Erdős #7 counterexample:
+neither \(F_A\) nor \(F_B\) has been realized here as the complement of a
+distinct odd whole-cover family satisfying EB1.  Its role is narrower and
+exact: any whole-cover bridge must retain source fibres and phases (or an
+equivalent future-behaviour quotient), rather than infer repair attainability
+from the numerical hull alone.
