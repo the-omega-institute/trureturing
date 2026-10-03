@@ -12731,3 +12731,325 @@ $$
 本章复用完整显式公式、Landau–Widder 和 Cauchy 边界跳跃等经典工具；一般的一形状最终非负判据复用 Suzuki 的上述三角形族。第 28—29 节提供的是原固定光滑族的接口推导，未认证世界原创性。所核对的 Suzuki 式 (5.15)、§3.4、Theorem 11.1 及 arXiv:2209.12832v1 的 §3，分别供应完整显式公式、既有三角形检测族与正性—收敛横坐标工具，没有在这些段落直接供应本卷的多项式加权光滑族命题。未找到该精确供应者只说明限定的检索范围，不能推出文献不存在，也不把变换形状本身计为新方法。
 
 ## 追加锚（本行以下为增补区）
+
+## 30. 原测试族的正尺度平均与低零点贡献
+
+本章保留第 19.3 节的同一个 $\phi$、$f_R$，以及第 28 节的完整显式公式，不另换一个更容易取正的测试形状。所增加的是这一实际测试族的正权混合；Hardy 空间的 Poisson–Jensen 对数主控、凸 Jensen 不等式及有限高度零点资料均作为既有输入复用。下面的估计是纸面接口推导，未作 Lean 核验。
+
+**定义 30.1（黄金尺度带上的同测试平均）。** 令
+
+$$
+b=\varphi^3=2+\sqrt5,\qquad M=\int_{\mathbb R}\phi(x)\,dx>0,
+$$
+
+$$
+w(u)=\frac{\phi\bigl((u-(1+b)/2)/(b-1)\bigr)}{(b-1)M}.
+$$
+
+这个权重的支撑为 $[1,b]$，在内部严格为正，且 $\int_1^bw(u)\,du=1$。沿用 $q(R)=R^{-3}\mathcal W(R)$，定义
+
+$$
+\bar q(R)=\int_1^b w(u)q(uR)\,du,\qquad
+\bar{\mathcal W}(R)=R^3\bar q(R)
+=\int_1^bw(u)u^{-3}\mathcal W(uR)\,du.
+$$
+
+这里是同一来源族的正混合，不断言它等于某个单独 $f_R$ 的 Weil 值。因 $u^{-3}>0$，若每个被混合的完整形式非负，则平均非负；反向不能从平均非负推出每个尺度都非负。
+
+设 $K=\phi*\phi$，则
+
+$$
+\bar K(v)=\int_1^b\frac{w(u)}uK(v/u)\,du,
+\qquad
+\widehat{\bar K}(z)=\int_1^bw(u)\Phi(uz)^2\,du.
+$$
+
+$\bar K$ 为实偶光滑函数，支撑恰为 $[-b,b]$，且在 $(-b,b)$ 严格为正。该身份仍保留多项式因子 $p(z)=z^2(1+4z^2)^2$；复零点处依旧是解析平方。选择 $b=\varphi^3$ 只规定了尺度带宽，没有建立 FIB 来源递归与实际素数伸缩的交织。
+
+**候签引理 30.1（正尺度平均的实频率下界）。** 对原实偶非负 bump，设 $0<a_1<b_1$，$\Delta=b_1-a_1$。若可积权重 $w$ 在整个积分域非负，并在 $[a_1,b_1]$ 上几乎处处满足 $w\ge w_0>0$，则对每个实数 $r>0$，
+
+$$
+\int w(u)\Phi(ur)^2\,du
+\ge w_0M^2\Delta
+\exp\!\left(-\frac{\pi b_1^2r}{2\Delta}\right).
+$$
+
+证明。直接应用经典有界解析函数的 Poisson–Jensen 对数主控。置
+
+$$
+B(z)=e^{iz/2}\Phi(z)/M,
+\qquad \ell(t)=-\log|\Phi(t)/M|\ge0.
+$$
+
+在上半平面，$B$ 是非零的有界全纯函数且 $|B|\le1$：将它写成 $M^{-1}\int\phi(x)e^{iz(1/2-x)}dx$，指数中的 $1/2-x$ 属于 $[0,1]$。偶性与非负性又给出 $B(iy)\ge e^{-y/2}$，$y>0$。经典对数主控的准确方向是
+
+$$
+\frac y\pi\int_{\mathbb R}\frac{\ell(t)}{t^2+y^2}\,dt
+\le-\log|B(iy)|\le\frac y2.
+$$
+
+不需要 $B$ 无零点或为外函数。内零点及奇异内因子的损耗非负，不能把这个不等式错误地替换为无损耗等式。令 $y\downarrow0$ 并用非负函数单调收敛，再用偶性，得到
+
+$$
+\int_0^\infty\frac{\ell(t)}{t^2}\,dt\le\frac\pi4.
+$$
+
+$\Phi(0)=M$，且偶解析性给出 $\ell(t)=O(t^2)$；实零点处的对数按局部可积函数解释。故
+
+$$
+\int_{a_1}^{b_1}\ell(ur)\,du
+=\frac1r\int_{a_1r}^{b_1r}\ell(t)\,dt
+\le\frac{\pi b_1^2r}{4}.
+$$
+
+原 $\Phi$ 在实轴为实数。对 $e^{-2\ell}$ 用凸 Jensen 不等式，并保留整个积分域上的 $w\ge0$，即得陈述。$\square$
+
+该对数主控是经典 Jensen 公式／Hardy 内外因子分解的直接应用，可直接核对 [Khabibullin, arXiv:2005.00408v1](https://arxiv.org/html/2005.00408v1), §1.1、式 (1.1) 所重述的经典 Poisson–Jensen 公式。对本章有界解析函数作圆盘映射，再用 Jensen 与 Fatou 取得所需方向；不是建立新的 Hardy 理论。Ahlfors, *Complex Analysis*, §5.3.1 与 Rudin, *Real and Complex Analysis*, Theorem 17.17 是标准书籍来源，其原书原页未独立复核。
+
+**候签推论 30.2（已验证低零点部分的正指数下界）。** 令 $T\ge15$，假设所有 $0<\gamma\le T$ 的实际非平凡零点都在临界线上，且其中有一个实际零点的纵坐标 $\gamma_0\in[14,15]$。重数保持为实际 $m_\rho$。定义
+
+$$
+P_T(R)=2\sum_{0<\gamma\le T}m_\rho p(\gamma)
+\int_1^bw(u)\Phi(uR\gamma)^2\,du.
+$$
+
+则所有实数 $R\ge1$ 满足
+
+$$
+P_T(R)\ge e^{-120R}>0.
+$$
+
+证明。只保留所指定的一个实际临界零点，其余低零点项非负。对原 $\phi$，
+
+$$
+M\ge\frac12e^{-4/3},\qquad M\le1.
+$$
+
+第一式只在 $[-1/4,1/4]$ 积分。取 $[a_1,b_1]=[5/4,5/2]$，$\Delta=5/4$。由 $b=2+\sqrt5$ 得整个核心区间上
+
+$$
+\left|\frac{u-(1+b)/2}{b-1}\right|\le\frac37,
+\qquad
+w(u)\ge\frac{e^{-49/13}}{(b-1)M}\ge\frac{e^{-4}}{4M}.
+$$
+
+因此 $w_0M^2\Delta\ge(5/32)e^{-16/3}$。候签引理 30.1 取 $r=R\gamma_0$，并用 $m_{\rho_0}\ge1$、$\gamma_0\in[14,15]$，得到
+
+$$
+P_T(R)\ge\frac{5p(14)}{16}e^{-16/3}
+\exp\!\left(-\frac{75\pi}{2}R\right).
+$$
+
+其中 $p(14)=196\cdot785^2=120780100$，所以前因子大于一；$75\pi/2<120$。这些粗化可分别用 $e<3$ 与 $\pi<22/7$ 支付，给出陈述。$\square$
+
+这份下界使用实际低零点，不把非临界复谱项换成模平方；它也不依赖逐一计算 $T$ 以下所有变换值。正平均的作用是跨过 $\Phi$ 实轴上的孤立零点，以同一个固定低零点取得所有实尺度上的正贡献。指数下界与第 28 节排除的最终正多项式下界不同；完整高零点余项仍须另行支付。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 完整高零点尾界与有限实尺度正性
+
+本章把第 30 节的正贡献下界与同一平均的全部未知高零点尾部比较。使用已发表的有限高度验证，不重算零点，不把它升级为无界高度验证；零点计数亦直接复用现成显式界。新增纸面内容是这些输入对原 constrained 测试族的共同参数应用，未作 Lean 核验，也不认证文献原创性。
+
+**候签引理 31.1（原 bump 的全复方向衰减常数）。** 对第 19.3 节的原 $\phi$ 及 Fourier 约定 $\Phi(z)=\int\phi(x)e^{-izx}dx$，所有整数 $n\ge0$ 与所有 $z\in\mathbb C$ 满足
+
+$$
+\|\phi^{(n)}\|_1\le12^n(n!)^2,
+\qquad
+|\Phi(z)|\le4\exp\!\left(\frac{|\Im z|}{2}-\frac{\sqrt{|z|}}6\right).
+$$
+
+证明。在 $|x|<1/2$ 置 $d_x=1/2-|x|$。考虑以 $x$ 为心、半径 $d_x/2$ 的复圆盘。由
+
+$$
+\frac1{1-4\zeta^2}
+=\frac14\left(\frac1{1/2-\zeta}+\frac1{1/2+\zeta}\right),
+$$
+
+以及 $a>r$、$|h|\le r$ 时 $\Re(1/(a+h))\ge1/(a+r)$，离 $x$ 最近的端点贡献至少 $1/(6d_x)$，另一端点项的实部为正。因此
+
+$$
+\Re\frac1{1-4\zeta^2}\ge\frac1{6d_x}.
+$$
+
+圆盘不遇到分母的零点。Cauchy 导数估计给出
+
+$$
+|\phi^{(n)}(x)|\le n!\left(\frac2{d_x}\right)^n e^{-1/(6d_x)}
+\le12^n(n!)^2,
+$$
+
+其中第二步取 $t=1/(6d_x)$ 并用 $t^ne^{-t}\le n!$。第一份界在两个端点趋于零，零延拓平坦；支撑长度为一，所以同样的常数支付 $L^1$ 范数。对 $z\ne0$ 作 $n$ 次 Fourier 分部积分，端点项消失，得到
+
+$$
+|\Phi(z)|\le e^{|\Im z|/2}\frac{12^n(n!)^2}{|z|^n}.
+$$
+
+取 $n=\lfloor\sqrt{|z|/48}\rfloor$。由 $n!\le n^n$，右侧不超过 $e^{|\Im z|/2}4^{-n}$，而
+
+$$
+4^{-n}\le4\exp\!\left(-\frac{\log4}{\sqrt{48}}\sqrt{|z|}\right)
+\le4e^{-\sqrt{|z|}/6}.
+$$
+
+$n=0$ 及 $z=0$ 直接用 $|\Phi(z)|\le Me^{|\Im z|/2}$。$\square$
+
+标准 bump 的实频率鞍点渐近已有 [Johnson, arXiv:1508.04376v1](https://arxiv.org/html/1508.04376v1), §2 的直接分析；[Tlas, arXiv:2003.12364v2](https://arxiv.org/html/2003.12364v2) 的引理与定理还提供相关渐近及另一种具有正、单调 Fourier 变换的紧支撑构造。它们不在所述陈述中直接给出本章原固定 $\Phi$ 的全复方向显式常数；换成 Tlas 的函数会改变指定测试。本章使用标准 Cauchy/Gevrey 方法支付当前需要的常数，不把这些成熟方法当成新理论。在非实方向必须保留 $e^{|\Im z|/2}$；只有实轴衰减不足以支付未验证零点。
+
+**定义 31.1（按实际高度切开的完整余项）。** 假设 $T\ge5$ 以下的全部实际非平凡零点均在临界线上。对第 30 节的同一 $w$，按实际解析重数置
+
+$$
+\bar q(R)=P_T(R)+\mathcal R_T(R),
+$$
+
+$$
+\mathcal R_T(R)=2\sum_{\gamma>T}m_\rho p(z_\rho)
+\int_1^bw(u)\Phi(uRz_\rho)^2\,du,
+\qquad z_\rho=\gamma-i(\beta-1/2).
+$$
+
+$P_T$ 包含所有 $0<\gamma\le T$ 的零点；尾部包含所有更高零点，不把实际 $\beta$ 设成 $1/2$。实尺度上的完整和及余项均为实数，估计其绝对值时仍先保留解析平方再用三角不等式。
+
+令 $N_+(Y)$ 按重数计数 $0<\gamma\le Y$ 的全部零点。直接供应者是 [Trudgian, arXiv:1208.5846v2](https://arxiv.org/pdf/1208.5846v2), Corollary 1，PDF p.2：对 $Y\ge Y_0\ge e$，
+
+$$
+\left|N(Y)-\frac Y{2\pi}\log\frac Y{2\pi e}-\frac78\right|
+\le0.111\log Y+0.275\log\log Y+2.450+\frac{0.2}{Y_0}.
+$$
+
+取 $Y_0=e$，用 $\log\log Y\le\log Y$ 与 $\pi>3$，在 $Y\ge5$ 上粗化为
+
+$$
+N_+(Y)\le\left(\frac Y6+4\right)\log Y
+\le Y\log Y.
+$$
+
+原文对 $0<\gamma<Y$ 计数；从非零点高度取右极限即可保留含端点的约定。该作者稿的定理与量词已核读，不重新证明计数界，也不宣称它与出版版逐字一致。更尖锐的计数常数不是这份宽包络所需的新输入。
+
+**候签命题 31.2（同平均的完整未知尾部）。** 在上述计数界下，若 $R\ge1$ 且 $X=\sqrt{RT}/3\ge28$，则
+
+$$
+|\mathcal R_T(R)|\le6000\,T^7\log T
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RT}}3\right).
+$$
+
+证明。对 $\gamma\ge1$，$|\Im z_\rho|<1/2$ 给出
+
+$$
+|p(z_\rho)|\le45\gamma^6.
+$$
+
+候签引理 31.1 对所有 $1\le u\le b$ 给出
+
+$$
+|\Phi(uRz_\rho)|^2
+\le16\exp\!\left(\frac{bR}{2}-\frac{\sqrt{R\gamma}}3\right).
+$$
+
+由于 $w\ge0$、$\int w=1$，先得到完整尾部绝对界
+
+$$
+|\mathcal R_T(R)|
+\le1440e^{bR/2}
+\sum_{\gamma>T}m_\rho\gamma^6e^{-\sqrt{R\gamma}/3}.
+$$
+
+置 $\alpha=\sqrt R/3$、$F(t)=t^6e^{-\alpha\sqrt t}$，则 $F$ 在 $[T,\infty)$ 上递减。对实际含重数计数作 Stieltjes 分部积分，保留高度 $T$ 的头尾约定：
+
+$$
+\begin{aligned}
+\sum_{\gamma>T}m_\rho F(\gamma)
+&=-N_+(T)F(T)+\int_T^\infty N_+(t)(-F'(t))\,dt\\
+&\le\frac\alpha2\int_T^\infty t^{13/2}\log t\,e^{-\alpha\sqrt t}\,dt.
+\end{aligned}
+$$
+
+$T$ 处全部零点重数在 $P_T$ 中，不在余项中；末端 $N_+(t)F(t)$ 趋于零。取 $y=\alpha\sqrt t$，上述积分等于
+
+$$
+T^7\int_X^\infty
+\left(\frac yX\right)^{14}
+\left(\log T+2\log\frac yX\right)e^{-y}\,dy.
+$$
+
+再写 $y=X+s$。因为 $X\ge28$，
+
+$$
+(1+s/X)^{14}\le e^{s/2},\qquad
+\log(1+s/X)\le s/X,
+$$
+
+所以该值不超过
+
+$$
+T^7e^{-X}\left(2\log T+\frac8X\right)
+\le4T^7\log T\,e^{-X}.
+$$
+
+$1440\cdot4=5760\le6000$，给出陈述。这份可和界也支付有限尺度区间上的求和、平均交换；没有以有限零点截断代替完整显式公式。$\square$
+
+**候签定理 31.3（原族平均在有限实尺度带上的正性）。** 采用已发表的实际零点资料：所有 $0<\gamma\le H$ 的零点在临界线上，其中
+
+$$
+H=3\,000\,175\,332\,800,
+$$
+
+且有一个实际临界零点 $\gamma_0\in[14,15]$。则第 30 节的同一平均对所有实数 $1\le R\le H/250000$ 满足纸面估计
+
+$$
+\boxed{\bar q(R)\ge\frac12e^{-120R}>0,}
+\qquad
+\bar{\mathcal W}(R)\ge\frac{R^3}{2}e^{-120R}.
+$$
+
+上端点是 $12\,000\,701.3312$；不只是在这个区间中抽取整数或样本尺度。
+
+所用验证高度直接来自 [Platt–Trudgian, arXiv:2004.09765v1](https://arxiv.org/html/2004.09765v1), Theorem 1。这是该文以区间算术和零点总数核对取得的有限验证；本章复用其结论，没有重跑计算。[Odlyzko 的公开零点表](https://www-users.cse.umn.edu/~odlyzko/zeta_tables/) 的 `zeros1` 首项为 $14.134725142$，表索引说明误差不超过 $3\cdot10^{-9}$，因此供应所需宽区间 $[14,15]$；其 [MathWorld 表项](https://mathworld.wolfram.com/RiemannZetaFunctionZeros.html) 给出相同首项。这里只复用既有资料，不新增首零点认证。
+
+证明。候签推论 30.2 及候签命题 31.2 对同一谱分解给出
+
+$$
+\bar q(R)\ge e^{-120R}-A_H
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RH}}3\right),
+\qquad A_H=6000H^7\log H.
+$$
+
+无需扫描尺度即可支付剩余常数：$H<e^{30}$、$\log6000<9$、$\log\log H<4$ 给出 $\log A_H<230$，同时 $\sqrt H/12>100000$、$b<5$。若 $1\le R\le H/250000$，则 $\sqrt{RH}\ge500R$，且 $X\ge28$。拆开 $1/3=1/4+1/12$，尾界与正下界之比的对数满足
+
+$$
+\begin{aligned}
+\log\frac{A_He^{bR/2-\sqrt{RH}/3}}{e^{-120R}}
+&=\log A_H+\left(120+\frac b2\right)R
+-\frac{\sqrt{RH}}4-\frac{\sqrt{RH}}{12}\\
+&<230+\frac{245}{2}R-125R-100000\\
+&<-\log2.
+\end{aligned}
+$$
+
+所以完整未知余项的绝对值小于正下界的一半，得到陈述。$\square$
+
+**定义 31.2（同一支撑完整切面上的物理消费者）。** 回接第 18—21 节的普通 Sonin 迹合同时，对固定 $R$，选一份包含所有实际素数 $p\le e^{bR}$ 的共同支撑完整集合 $S_R$，使整个 $1\le u\le b$ 上的 $f_{uR}$ 均使用这同一集合。定义
+
+$$
+\bar\sigma_R=\int_1^bw(u)u^{-3}\sigma_{S_R}(f_{uR})\,du,
+$$
+
+并以相同权重定义 $\bar D_{{\rm lin},R}$、$\bar N_R$。在原普通迹合同及这些积分的存在条件下，精确身份是
+
+$$
+\bar{\mathcal W}(R)=\bar\sigma_R-\bar D_{{\rm lin},R}-\bar N_R,
+\qquad \bar N_R=\overline{E^+}_R-\overline{E^-}_R.
+$$
+
+因此候签定理 31.3 对这同一实际正混合供应的是有限尺度内的共同有符号余量。仍使用 $P_{S_R}=TPK_{S_R}^{-1}PT^*$ 的普通逆；不假设 $C_{S_R}^2$ 为迹类，也不假设 $A_f$ 与 $C_{S_R}$ 交换。不能为正迹、线性迹和角能量分别优化不同 $S$ 后把所得最佳值合在一起；也没有把这些条件性的普通迹接口当成已取得全域解析证明。
+
+固定 $H$ 的以上绝对尾界含 $e^{bR/2}$，其与正下界之比的对数为
+
+$$
+\log A_H+(120+b/2)R-\sqrt{RH}/3.
+$$
+
+该表达在 $R\to\infty$ 时趋于正无穷。这说明当前比较不能支付全部充分大尺度，不说明实际余项变成负值。要延伸至无界 $R$，仍须取得实际未知零点尾部的更强共同有符号估计，或另一份能支付全部尺度的独立信息；不能把 $H\to\infty$ 当成合法已验证输入。
+
+这份有限正平均不推出每个 $q(uR)$ 非负，不推出第 29 节所需的全部充分大实尺度正性，也不证明 RH、Robin 或 FIB 到实际素数作用的交织。Suzuki 的已有一形状最终符号判据、经典 Poisson–Jensen/Gevrey 方法、Trudgian 的计数界与 Platt–Trudgian 的零点验证均归各自来源；本章只填原测试族此前缺少的一个有限尺度共同估计接口，不把改换平均或重述文献结果当成新判据。
+
+## 追加锚（本行以下为增补区）
