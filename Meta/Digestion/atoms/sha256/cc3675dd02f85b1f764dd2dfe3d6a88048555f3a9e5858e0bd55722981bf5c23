@@ -1,0 +1,22 @@
+**定义 350.1（任意指标的非负可和谱）。** 设 $I$ 是任意指标集，$a_i\ge0$、$\gamma_i>0$，且实数族 $a$ 可和。置
+
+$$
+A=\sum_{i\in I}a_i,\qquad
+\delta(t)=\sum_{i\in I}2a_i(1-\cos(\gamma_i t)),\qquad t\in\mathbb R.
+$$
+
+这里及以下任意指标的和均指有限子和的可和极限；非负族的和亦等于有限子和的上确界。相位项由 $4a_i$ 控制，因此 $\delta$ 对所有实数有定义、非负且为偶函数。对 $Y\ge1$、$k\in\{2,4\}$，定义
+
+$$
+\begin{aligned}
+M_k^{\le}(Y)&=\sum_i\mathbf1_{\{\gamma_i\le Y\}}a_i\gamma_i^k,&
+M_k^{<}(Y)&=\sum_i\mathbf1_{\{\gamma_i<Y\}}a_i\gamma_i^k,\\
+\mathcal T^{\ge}(Y)&=\sum_i\mathbf1_{\{Y\le\gamma_i\}}a_i,&
+\mathcal T^{>}(Y)&=\sum_i\mathbf1_{\{Y<\gamma_i\}}a_i,\\
+\delta_{\le Y}(t)&=\sum_i\mathbf1_{\{\gamma_i\le Y\}}2a_i(1-\cos(\gamma_i t)),&
+\delta_{<Y}(t)&=\sum_i\mathbf1_{\{\gamma_i<Y\}}2a_i(1-\cos(\gamma_i t)).
+\end{aligned}
+$$
+
+这些都是掩码后的可和族：矩的主控为 $Y^ka_i$，尾质量和相位的主控分别为 $a_i$ 和 $4a_i$。定义不要求截断指标集有限；零权重、重复频率以及 $0<\gamma_i\le1$ 的全部早段均予保留。
+
