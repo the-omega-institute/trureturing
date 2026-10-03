@@ -1,0 +1,7 @@
+## 228. 实际截断源的短频质量与远离一阶端点的分离障碍
+
+沿用 §§226–227 的实际素数指标族、$y,\ell,s,R,\delta,T,\Lambda$，
+固定 $a>b_2=\pi^2/6$，并取 $H=e^{aR}$、$D=X/H$。
+使用 §226 的精确算术窗口 $W_\eta$、$k_\eta(u)=e^uW_\eta(u)$，
+其中 $\eta=V/(8X)$。记 $G=(\mathbb Z/V\mathbb Z)^\times$、$Q=|G|$。
+

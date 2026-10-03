@@ -1,0 +1,11 @@
+**推论 97.3（价格、预算与所有素数未来）。** 对任意固定实数 $\lambda$，定义 $J_\lambda(n)=W(n)-\lambda\log n$，则
+
+$$
+\left[\forall c\in\mathcal M(S),\ J_\lambda(nc)\ge J_\lambda(mc)\right]
+\Longleftrightarrow
+J_\lambda(n)-J_\lambda(m)\ge
+\sum_{p\in T}\log\frac{G_p(a_p)}{G_p(b_p)}.
+$$
+
+若 $S$ 是所有素数，则全部未来的 $Z$ 支配当且仅当 $m\mid n$；再附加预算方向 $n\le m$，只剩 $n=m$。
+

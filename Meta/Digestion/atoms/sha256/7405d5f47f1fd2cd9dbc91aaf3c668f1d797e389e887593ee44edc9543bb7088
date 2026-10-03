@@ -1,0 +1,37 @@
+**定义 178.0（二次字符观察）。** 以下假设 $D$ 不是整数平方。写
+
+$$
+D=d u^2,
+$$
+
+其中 $d$ 为带符号的平方自由整数，$u\ge1$。于是 $d\ne1$。令
+
+$$
+\Delta=\begin{cases}d,&d\equiv1\pmod4,\\4d,&d\not\equiv1\pmod4,\end{cases}
+\qquad Q=4|D|.
+$$
+
+由二次互反律的标准字符构造，基本判别式 $\Delta\ne1$ 给出模 $|\Delta|$ 的非主实二次字符 $\chi_\Delta$，且 $|\Delta|\mid Q$。把它诱导到模 $Q$：
+
+$$
+\chi(n)=
+\begin{cases}
+\chi_\Delta(n),&\gcd(n,Q)=1,\\
+0,&\gcd(n,Q)>1.
+\end{cases}
+$$
+
+这是非主实 Dirichlet 字符。非主性不会在诱导时丢失：单位群约化
+$(\mathbb Z/Q\mathbb Z)^\times\to(\mathbb Z/|\Delta|\mathbb Z)^\times$
+是满射，因此原字符取 $-1$ 的单位仍有提升。
+
+对任意奇素数 $p\nmid D$，有
+
+$$
+\chi(p)=\left(\frac Dp\right).
+$$
+
+因为 $\Delta/d$ 为一或四，而 $D/d=u^2$，两者在这些素数处只相差非零平方。于是命题 177.1 保证同一个 $V$ 的每个奇素因子都满足 $\chi(p)=1$。没有把分歧素数或诱导模数新增的零字符素数藏进这个断言：奇 $p\mid Q$ 等价于 $p\mid D$，已经由 $\gcd(V,L_k)\mid4$ 排除；素数二另行给出一个最多为二的 Euler 因子。
+
+若 $D$ 为正平方，此构造会变成主字符，下面的零周期均值和 $L$ 函数一致上界便不能套用。若 $b$ 奇，则 $D<0$，非平方条件自动成立；若 $b$ 偶，则必须保留 $L_k$ 非平方的条件。例子 $k=3$、$b$ 偶给 $D=4$，这时可另用 $V=2F_{b+2}$，不能将它塞入本字符证明。
+

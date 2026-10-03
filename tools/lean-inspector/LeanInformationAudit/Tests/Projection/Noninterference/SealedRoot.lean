@@ -1,10 +1,13 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit.Tests.ImportClosureProducer
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
-#seal_information_theory
+test_assess in #seal_information_theory

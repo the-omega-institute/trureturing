@@ -1,0 +1,38 @@
+**引理 215.1（粗整数矩的统一函数类）。** 对每个固定
+$\varepsilon>0$，以上两个函数都属于一元函数类
+$\mathcal M_1(A_0,B_0,\varepsilon)$，其中可以同时取
+
+$$
+A_0=e,\qquad B_0=\exp\bigl(\pi(e^{1/\varepsilon})\bigr),
+\tag{215.4}
+$$
+
+与 $s,w$ 无关。这里一元函数类的条件为非负性，以及在 $(m,n)=1$ 时
+
+$$
+F(mn)\le\min\{A_0^{\Omega(m)},B_0m^\varepsilon\}F(n).
+\tag{215.5}
+$$
+
+证明。两个函数均为非负乘法函数，且在 $1$ 处取值为 $1$。
+若 $p>w,a\ge1$，则
+
+$$
+1\le Z(p^a)^s\le(1-1/p)^{-s}
+\le\exp\!\left(\frac{s}{p-1}\right)\le e.
+\tag{215.6}
+$$
+
+在 $p\le w$ 处，$R_{s,w}(p^a)=1$，$J_{s,w}(p^a)=0$。
+所以两者均满足 $F(m)\le e^{\omega(m)}\le e^{\Omega(m)}$。
+把素数分成 $p\le e^{1/\varepsilon}$ 与 $p>e^{1/\varepsilon}$，后者各有
+$e\le p^\varepsilon$，从而
+
+$$
+e^{\omega(m)}\le
+\exp\bigl(\pi(e^{1/\varepsilon})\bigr)m^\varepsilon.
+$$
+
+与 $F(mn)=F(m)F(n)$ 合并即得式（215.5）。当 $J_{s,w}(n)=0$ 时，
+乘法性同时给 $J_{s,w}(mn)=0$，没有除以零或正下界的额外要求。$\square$
+

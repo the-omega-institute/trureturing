@@ -1,0 +1,20 @@
+**证明。** 在旧区间令 $C=\Psi(a)$、$P_0=P(a)$ 不变，有限公式给出
+
+$$
+\Phi(b)-\Phi(a)=\log\frac{\log b}{\log a}
++C\left(\frac1{b\log b}-\frac1{a\log a}\right)
+-\left(\frac1{\log b}-\frac1{\log a}\right).
+$$
+
+事件处 $\Delta P=1/(kb)$ 与 $\Delta\Psi/(b\log b)=\log p/(b\log b)$ 相等，所以 $\Phi$ 连续；上述旧区间式可以延伸至右端点。代入 $C=a+\sqrt a\,e(a)$，再乘以 $\sqrt b\log b$，即得第二式；第一式保留 $\Psi$ 的脉冲。 $\square$
+
+若 $H=\mathcal Z+1/2$，则 $H(b)=\rho H(a)+(\sigma-\rho)e(a)+K_0+(1-\rho)/2$。因为 $\sigma-\rho<0$，单个标量条件 $H(a)\ge0$ 不是归纳合同。两次极值若来自不同素数历史，也不能当作同一个 $(H,e)$ 状态。事件间令 $t=\log x$，直接求导得
+
+$$
+\frac{d\mathcal Z}{dt}=\left(\frac12+\frac1t\right)\mathcal Z-
+\left(1+\frac1t\right)e,\qquad
+\frac{de}{dt}=-\sqrt x-\frac e2.
+$$
+
+在障碍 $\mathcal Z=-1/2$ 上，导数指向可行侧需要 $e\le-(t+2)/(4(t+1))$；这是局部切向条件，尚不是每条实际素数历史满足它的定理。
+

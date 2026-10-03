@@ -1,0 +1,52 @@
+### 定义 50：承诺延拓集、切面代价与树形峰值
+
+令 \(D\subseteq X_I\) 非空，且 \(f:D\to O\)。定义所有全域延拓的集合
+
+$$
+\operatorname{Ext}(D,f)
+=
+\{H:X_I\to O:\forall x\in D,\ H(x)=f(x)\}.
+$$
+
+对 \(A\subseteq I\)，令 \(D_A\) 为 \(D\) 在 \(A\) 上的投影。定义承诺内的单向切面代价
+
+$$
+c_A^D(f)
+=
+\min
+\left\{
+|m(D_A)|:
+\begin{array}{l}
+m:D_A\to M,\quad d:M\times X_{I\setminus A}\to O,\\
+d(m(a),b)=f(a\sqcup b)
+\quad\text{对所有 }a\sqcup b\in D
+\end{array}
+\right\}.
+$$
+
+这里的解码器仍可读取未观察部分的原始赋值；只有输入落在 \(D\) 内时才要求正确。它是承诺域版本的直接切面代价。
+
+固定一棵树 \(T\)，节点 \(v\) 的坐标集为 \(A_v\)。对一个在 \(D\) 上正确的协议 \(\Pi\)，记节点消息的可达数为
+
+$$
+r_v(\Pi)=|\operatorname{Reach}_{\Pi}(v)|,
+\qquad
+\mathbf r_T(\Pi)=(r_v(\Pi))_{v\in T}.
+$$
+
+定义其最小峰值
+
+$$
+P_T(D,f)
+=
+\min_{\Pi\text{ 在 }D\text{ 上正确}}
+\max_{v\in T}r_v(\Pi).
+$$
+
+对全域任务 \(H\)，定义同一棵树的边界容量向量
+
+$$
+\mathbf k_T(H)=
+\bigl(\kappa_{A_v}(H)\bigr)_{v\in T}.
+$$
+

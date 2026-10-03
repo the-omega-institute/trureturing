@@ -1,0 +1,16 @@
+**Proof.** Put $I=W^c$, $J=U^c$ and $m=n-k$. The column-sum condition writes column $j\in J$ as $\sum_{i\ne j}M_{ij}(e_i-e_j)$. Determinant multilinearity expands the minor over choices of a parent $p(j)\ne j$ for every $j\in J$. The coefficient of $\prod_{j\in J}M_{p(j),j}$ is the integer determinant of the matrix $B_p$ with entries $\mathbf1_{i=p(j)}-\mathbf1_{i=j}$ for $i\in I$, $j\in J$.
+
+Following parents either reaches $U$ or enters a directed cycle outside $U$. In the latter case the columns on the cycle sum to zero, giving a nonzero integer column relation and determinant zero. In the former case stopping depths partition the vertices into rooted trees, with literal edges $(p(j),j)$ pointing away from the terminal root. Each component contains exactly one $U$ vertex. Conversely, the unique incoming edge at each nonroot of a literal away-oriented tree recovers precisely this parent map, preserving every edge and its weight.
+
+If $W$ does not meet every rooted component once, equal cardinalities imply that some component contains no $W$ vertex. Its indicator vector is supported on $I$, is nonzero over the integers, and annihilates $B_p$ on the left. Hence its determinant is zero. This dependence argument is performed over the integers before any ring homomorphism is applied.
+
+For a surviving forest, form the full matrix $C$ whose root column at $u\in U$ is $e_u$ and whose nonroot column at $j$ is $e_j-e_{p(j)}$. Ordering vertices by increasing stopping depth makes this matrix triangular with all diagonal entries $1$, so $\det C=1$. For each root $u$, the unique path to $\pi_F(u)$ telescopes: $e_{\pi_F(u)}-e_u$ is the sum of the nonroot columns along that path. Adding those columns to the root column preserves the determinant and changes it to $e_{\pi_F(u)}$; all nonroot columns remain unchanged. This includes the empty path when $u\in W$.
+
+Move the ascending $W$ rows and ascending $U$ columns to the front. The lower-left block vanishes; the upper-left block is the permutation matrix of $\sigma_F$ and the lower-right block is $-B_p$. The two shuffle signs have exponents $\sum U-k(k-1)/2$ and $\sum W-k(k-1)/2$. Since $k(k-1)$ is even, the determinant equation gives
+
+$$
+\det B_p=(-1)^{m+\sum U+\sum W}\operatorname{sgn}(\sigma_F).
+$$
+
+The exponents $m$ and $n+k$ differ by $2k$. Mapping these fixed integer coefficients into $R$, removing exactly the zero terms, and reindexing by the edge-preserving parent-map correspondence proves the identity. The arbitrary entries of $M$ need not lift to integers. No division, domain assumption or analytic continuation is used. If $k=n$, $U=W=V$, there are no parent columns, the only forest is empty, and its matching is the identity. If $n=0$, the root-cardinality hypotheses are impossible.
+

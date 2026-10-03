@@ -1,0 +1,18 @@
+### 5.6 Kubo 相关与同一矩阵几何
+
+有限正则量子模式、正定 Weyl 二次 $\widehat H=\widehat z^TS\widehat z/2$ 的 Gibbs 态下，定义
+$$
+C^K_{ij}(t)=\beta^{-1}\int_0^\beta
+\operatorname{Tr}[\rho_\beta e^{s\widehat H}\widehat y_i(t)e^{-s\widehat H}\widehat y_j]ds.
+$$
+则
+$$
+C^K(t)=\beta^{-1}Oe^{At}S^{-1}O^T.
+$$
+**证明。** 线性源 $\widehat H_f=\widehat H-f^T\widehat z$ 经 Weyl 位移完成平方，$Z(f)=Z(0)\exp(\beta f^TS^{-1}f/2)$。Duhamel 二阶导数为 $\beta^2C_z^K(0)$，与 Hessian $\beta S^{-1}$ 比较，再用 Heisenberg 线性演化。正定二次热迹与线性源导数有限；可先在共同 Schwartz 域计算再热迹延拓。证毕。[H14]
+
+Kubo 相关与经典 Gibbs 相关同形，但普通单模对称位置方差为 $\hbar\coth(\beta\hbar\omega/2)/(2\omega)$，Kubo 方差为 $1/(\beta\omega^2)$。经典条件概率风险和独立 Gaussian 样本保证不自动成为量子测量结论。
+
+保留两模相关算例：$\Omega=\operatorname{diag}(J_2,2J_2)$、$Q=\left(\begin{smallmatrix}1&0&0&0\\0&3/5&4/5&0\end{smallmatrix}\right)$ 给 $D=3J_2/5,M=\operatorname{diag}(16/25,64/25)$，首轮闭包四维。$t=.1,.25,.5$ 的当前读数最小均方风险分别为 $0.0316905865,0.1881986417,0.6264800864$。$b=2,\delta=.001$ 时，延迟 $.01,.05,.1,.2,.5$ 的证书半径分别为 $20.0110667,.8270667,.3067667,.4766917,2.6746707$；中间延迟能认证方向而两端可能不能。零认证数不表示零真实缺陷。
+
+<a id="sec-thermal"></a>

@@ -1,0 +1,16 @@
+## 322. 齐次相位窗与响应坏集的共同选择
+
+固定参数
+
+$$
+\kappa>0,\quad 0<\chi<\tfrac12,\quad
+0<\eta<\frac{\chi\kappa}{1+\chi},\quad
+\frac\eta\chi<u<\kappa-\eta,
+\qquad
+Q_C=\lfloor e^{\kappa\sqrt P}\rfloor,\quad
+K_C=\lceil e^{\eta\sqrt P}\rceil.
+\tag{322.1}
+$$
+
+参数 $\eta$ 表示相位窗精度，区别于单位位 $h(N)$。所有参数固定，不断言端点或随 $C$ 变化的参数统一性。
+

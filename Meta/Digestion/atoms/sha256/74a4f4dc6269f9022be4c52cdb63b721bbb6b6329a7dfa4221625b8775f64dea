@@ -1,0 +1,12 @@
+**推论 7.1（联合核中的无穷循环子群）。** $k\mapsto[\alpha_k]$ 给出
+
+$$
+\mathbb Z\hookrightarrow
+\frac{\ker\mathrm{Ind}\cap\ker\mathrm{DHR}}{\mathrm{FDQC}(A)}.
+\tag{QCA.26}
+$$
+
+$\Theta_A(\alpha_1)$ 也有无穷阶。
+
+**证明。** $\alpha_k\alpha_l=\alpha_{k+l}$。任意非零 $k$ 由定理 6.2 非平凡，故该群同态单射。若 $\Theta_A(\alpha_1)$ 有有限阶，某个非零幂必须固定全部切口类，特别固定 $[M_0]$，再次与定理 6.2 矛盾。证毕。
+

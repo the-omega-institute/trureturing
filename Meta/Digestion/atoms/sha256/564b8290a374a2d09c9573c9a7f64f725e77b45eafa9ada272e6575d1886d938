@@ -1,0 +1,11 @@
+**定义 29.1（单位亏量坐标）。** 对 $m\ge12$ 与 $0\le t\le F_{m-2}$，沿用
+
+$$
+\lambda_m(t)=F_{m-1}-C(F_m-t),\qquad
+p_m=\left\lfloor\frac{2m-9}{3}\right\rfloor,
+\qquad
+q_m=\left\lfloor\frac{4m-19}{3}\right\rfloor .
+$$
+
+来源的单位子水平定理采用 $R_m=m+\lfloor(m-1)/3\rfloor-6$、$Q_m$ 和 $L_m$ 的字母；在这里它们逐项对应于 $q_m$、$\lambda_m$ 和 $p_m$。该对应只改变记号，不改变来源各结论的自然域和有限前提。来源在 $m\ge19$ 的高阶单位子水平、$m\ge20$ 的实际选择器和无相位二次盆界，分别作为直接复用输入（见 [unit sublevel and selector statements](https://github.com/the-omega-institute/nested-recurrences/blob/fb505464ce1e9c88b962860aa9b14829db3d577d/cloitre-conway/exact-collars.md)）。其中来源的 $U.4$ 是自然标签 $j=m-1$ 的既有盆界，不能解释成全局实际 $V_4$ 下界。
+

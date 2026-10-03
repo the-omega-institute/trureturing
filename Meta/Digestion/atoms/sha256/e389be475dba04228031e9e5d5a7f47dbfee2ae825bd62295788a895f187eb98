@@ -1,0 +1,23 @@
+**定理 94.1（带质量和位置的精确传输）。** 对 $1<a\le b$ 定义有限二端点量
+
+$$
+J_{a,b}=\sum_{a<m\le b}\Lambda(m)(\lambda_m-\lambda_b),\qquad
+M_{a,b}=\sum_{a<m\le b}\Lambda(m).
+$$
+
+它不同于第 92 节的一变量尾积分 $J(x)$。有
+
+$$
+\Phi(b)=\Phi(a)+\log\frac{\log b}{\log a}
++(\Psi(a)-b)\lambda_b-(\Psi(a)-a)\lambda_a-J_{a,b},
+$$
+
+且对 $a\le b\le c$，
+
+$$
+M_{a,c}=M_{a,b}+M_{b,c},\qquad
+J_{a,c}=J_{a,b}+J_{b,c}+(\lambda_b-\lambda_c)M_{a,b}.
+$$
+
+**证明。** 用 $P(b)-P(a)=\sum_{a<m\le b}\Lambda(m)\lambda_m$ 和 $\Psi(b)=\Psi(a)+M_{a,b}$ 代入有限公式，合并质量项即得负号为 $-J_{a,b}$ 的传输式。把 $(a,c]$ 切为 $(a,b]$ 与 $(b,c]$，在第一段每项添加 $\lambda_b-\lambda_c$，即得 cocycle。事件 $m=b$ 的旧零权重也在该修正中被恢复。因此组合必须携带 $J,M$ 及绝对端点位置，不能只携带一个平移无关的标量 $J$。 $\square$
+

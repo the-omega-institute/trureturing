@@ -1,0 +1,21 @@
+**定理 6.2（精确消去本轮进位耦合）。** 对所有 $d,e\ge2$，有
+
+$$
+\boxed{D_{\mathrm{car}}U=U_d\otimes U_e.}
+$$
+
+因此对任意有限维旁观参考系统 $\mathcal H_{\mathrm{ref}}$ 和任意密度算子 $\rho_{AH\mathrm{ref}}$，包括层间及参考关联，均有
+
+$$
+\operatorname{Tr}_H\left[
+(D_{\mathrm{car}}U\otimes I_{\mathrm{ref}})\rho
+(D_{\mathrm{car}}U\otimes I_{\mathrm{ref}})^\dagger\right]
+=(U_d\otimes I_{\mathrm{ref}})
+\operatorname{Tr}_H\rho
+(U_d^\dagger\otimes I_{\mathrm{ref}}).
+$$
+
+证明。在 $|a,h\rangle$ 上先施加 $U$ 得 $|f(a),Mh+c(a)\rangle$，再施加 $D_{\mathrm{car}}$，减去的正是 $c(a)$，得到 $|f(a),Mh\rangle$。由基向量上的相等得到算子恒等式。旁观参考上张量恒等，利用高层酉共轭不改变偏迹，得到第二式。此等式不要求输入为乘积态，也不消除原有纠缠：$U_d\otimes U_e$ 及其逆都是局部酉，保持两层之间原有的可分性或纠缠性。它不是只改符号的被动粗化。
+
+[FIB 第 28 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L1944)讨论均匀相容态的受控纤维分解；这里的恒等式针对动态 $U$ 的全部输入。[FIB 第 31 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L2128)所要求的粗化交换式，在本条由加入实际修正后的乘积酉实现。$\square$
+

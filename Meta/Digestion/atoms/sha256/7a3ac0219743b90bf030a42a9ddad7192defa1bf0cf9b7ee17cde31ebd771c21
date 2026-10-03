@@ -1,0 +1,6 @@
+**定理 2.2（对称差补集闭包）。** 对每个满足定义 2.1 的 $\mathcal B$，以及任意不同的 $A,B\in\mathcal B$，都有
+
+$$
+X\setminus(A\mathbin\triangle B)\in\mathcal B.
+$$
+

@@ -1,0 +1,10 @@
+**命题 94.3（单调细分的松弛量与有效加强）。** 令 $z=\max(a,\min(C,b))$，则
+
+$$
+\Gamma_{\mathrm{clip}}(a,b)=
+\gamma+\log\log z-P(b^-)+(C-z)\lambda_z
++\sum_{\sqrt b<p\le a-1}\min\{d_1(p),d_2(p,b)\}
+$$
+
+也是统一下界，且不小于 $\Gamma$，随子区间细分不减。无论使用哪一式，单调性本身不保证递归最终得到正叶片。
+

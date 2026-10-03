@@ -1,0 +1,56 @@
+**引理 1.1（Orders nine, three and two）。** Let $H$ be any finite group, and let $r,s\in H$. Write $\operatorname{ord}(x)$ for the exact order of an element and $\langle r,s\rangle$ for the subgroup they generate. Then
+
+$$
+\forall H\ \text{finite group},\quad \forall r,s\in H,\qquad
+\left(
+\langle r,s\rangle=H\ \land\ |H|\mid72\ \land\
+\operatorname{ord}(r)=9\ \land\ \operatorname{ord}(s)=3\ \land\
+\operatorname{ord}(rs)=2
+\right)\Longrightarrow\bot.
+$$
+
+Proof. Suppose all five hypotheses hold. Lagrange's theorem gives $9\mid|H|$ and $2\mid|H|$. Together with $|H|\mid72$, these imply $|H|\in\{18,36,72\}$. The subgroup $P=\langle r\rangle$ has order nine and index two, four or eight, so it is a Sylow $3$-subgroup. Sylow's divisibility and congruence theorems give
+
+$$
+n_3\mid[H:P],\qquad n_3\equiv1\pmod3,
+\qquad n_3\in\{1,4\}.
+$$
+
+If $n_3=1$, every $3$-subgroup is contained in $P$, so $s\in P$. Then $rs\in P$, contradicting its exact order two because $|P|=9$.
+
+Thus $n_3=4$. Let $X$ be the four Sylow $3$-subgroups, let $\alpha:H\to\operatorname{Sym}(X)$ be the conjugation action, and put $I=\alpha(H)$. Sylow conjugacy makes this action transitive, so orbit-stabilizer gives $4\mid|I|$. Since $|\operatorname{Sym}(X)|=24$, the order of $\alpha(r)$ divides both nine and twenty-four and hence divides three. The order of $\alpha(s)$ also divides three. These two images cannot both be the identity: generation by $r,s$ would make $I$ trivial, contradicting $4\mid|I|$. A nonidentity one therefore has exact order three, giving $3\mid|I|$. Consequently $|I|\in\{12,24\}$.
+
+Set $K=\ker\alpha$ and $z=r^3$. The subgroup $K$ is normal as a homomorphism kernel. The relation $\alpha(r)^3=1$ puts $z$ in $K$, and $\operatorname{ord}(z)=3$. The identity $|K|\,|I|=|H|$ and the possible orders above give $|K|\in\{3,6\}$. Inside $K$, the subgroup $Z=\langle z\rangle$ has order three and index one or two. Its Sylow number divides that index and is congruent to one modulo three, so $Z$ is the unique Sylow $3$-subgroup of $K$. It is characteristic in $K$ and therefore normal in $H$. In particular, normality of $Z$ is a consequence of the hypotheses.
+
+Conjugation on $Z$ gives a homomorphism $H\to\operatorname{Aut}(Z)$. Since $Z$ is cyclic of order three, its automorphism group has order two. The automorphism induced by $s$ has order dividing both two and three, because $s^3=1$, so it is the identity. Thus $sz=zs$. Also $r$ commutes with $z=r^3$; as $r,s$ generate $H$, the element $z$ is central.
+
+The remaining word argument uses only $r^9=s^3=(rs)^2=1$ and commutation of $z=r^3$ with $s$. Put
+
+$$
+u=rs,\qquad v=rur^{-1},\qquad w=r^2ur^{-2}.
+$$
+
+All three are involutions, and direct multiplication in the given order yields
+
+$$
+wvu=r^3s^3=z.
+$$
+
+The element $z$ commutes with $u$ and $w$. Multiplying the displayed identity by $w$ on the left gives $vu=wz$, whence
+
+$$
+(vu)^2=(wz)^2=z^2.
+$$
+
+Conjugating by $u=u^{-1}$ gives $(uv)^2=z^2$, since $uzu^{-1}=z$. On the other hand, $uv=(vu)^{-1}$, so
+
+$$
+z^4=(vu)^2(uv)^2=(vu)^2\bigl((vu)^2\bigr)^{-1}=1.
+$$
+
+We also have $z^3=r^9=1$. Hence $z=z^4=1$, contradicting $\operatorname{ord}(r)=9$. This proves the lemma.
+
+The ordinary finite-group argument in the preceding proof supplies the provenance of this obstruction. Its Sylow, orbit-stabilizer, characteristic-subgroup and cyclic-automorphism inputs are the classical group-theoretic statements also presented in the Mathlib contributors' [Sylow theory](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/Sylow.lean) and [cyclic groups](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/SpecificGroups/Cyclic.lean). The conjugate-involution argument proves the contradiction directly, without classifying the image as an alternating group.
+
+For the Coxeter application, one must separately construct the finite image of $\langle bc,cd\rangle$, establish generation by the two specified images, show its cardinality divides seventy-two, and justify their exact orders nine, three and two for the product. The lemma assumes these group-theoretic hypotheses; it does not establish finite-parabolic faithfulness or the passage from a Coxeter quotient to them. Its conclusion therefore retains the preceding normal-cover restriction and supplies no obstruction to arbitrary pairings of twenty-four tetrahedra.
+

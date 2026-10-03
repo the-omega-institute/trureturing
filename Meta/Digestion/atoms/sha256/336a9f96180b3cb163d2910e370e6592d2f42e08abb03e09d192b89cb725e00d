@@ -1,0 +1,14 @@
+### 340.11 适用范围与来源
+
+本节的下界依次使用未启动环的逐参考系数恒等式、任务二项集中、合法 $c=1,h=x_k>0$ 世界、实际尾事件以及准确首币门控的 $1/3$ 触发概率。上界使用同一世界的包络求和；两条链没有拼接不同世界中的费用。
+
+参考充要条件与任务剖面只对第340.1节的固定累积张量网格成立。任意自适应原目标策略能否以一份固定程序达到 $C/u$，本节没有裁决。非整数 $\beta>2$ 的普通正 Bernstein 平滑缺口也未在此解决。
+
+结论首先属于完整实概率策略类；若 $C,\beta$ 以及所选地板和批量具有所需有效名字，可沿用第332、336、339节的实现，全部来源计数下界保持。第339.5节的具体地板只用整数层号，所以在 $C,\beta$ 可计算时，式（340.9）也适用于该份准确有效程序。这里不产生确定性系数求值的时间矩上界，第337节的执行时间障碍仍适用。
+
+相容 Bernstein 包络及超几何次数提升的原始接口来自 Nacu–Peres；第330节参考包络采用 Holtz–Nazarov–Peres。[^fixed_grid_endpoint_sources] 本节直接使用第327、330、332节的未启动系数、第338节的实际张量尾恒等式与第339节的一般地板预算；新增推导是原合法世界中的平滑后正尾、固定地板剖面下界及与已有上界的匹配。
+
+这些是纸面数学结论，不认领 Lean 核验或完整内部执行时间预算。
+
+[^fixed_grid_endpoint_sources]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)，Proposition 3、式（7）—（11）及 Lemma 4；两来源乘积尾恒等式由第338.6节给出。Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，其光滑相容包络经第330节固定尺度构造使用；本节下界取自该构造的未启动系数，不反向使用其尾上界。
+

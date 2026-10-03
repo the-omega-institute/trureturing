@@ -1,0 +1,37 @@
+**证明。** 定义
+\[
+ s=\sqrt{1-2r^2/3},\quad t=\frac{r}{\sqrt3s},\quad
+ N=\frac{X+Y+Z}{\sqrt3},\quad
+ \rho_*=(I+tN)/2,
+\]
+\[
+ a=\sqrt{(1+s)/2},\quad M=3a,\quad
+ Z_i=(\sqrt{\rho_*}\tau_i\sqrt{\rho_*})^{1/2}.
+\]
+$r<1$ 保证 $t<1$ 及所有逆矩阵合法。正二阶矩阵的平方根身份
+\[
+ \sqrt B=\frac{B+\sqrt{\det B}\,I}{\sqrt{\operatorname{Tr}B+2\sqrt{\det B}}}
+\]
+由 Cayley–Hamilton 直接平方验证。此处 $\operatorname{Tr}(\rho_*\tau_i)=(1+tr/\sqrt3)/2$，
+$\sqrt{\det(\sqrt{\rho_*}\tau_i\sqrt{\rho_*})}=(1-r^2)/(4s)$。代入得到
+\[
+ \operatorname{Tr}Z_i=a,\qquad \sum_i Z_i=M\rho_*.       \tag{16.3}
+\]
+第二式的标量与 $N$ 系数分别使用 $3s^2=3-2r^2$；这在同一个 $\rho_*$ 上成立。
+
+取振幅 $A_i=\rho_*^{-1/2}Z_i$。有 $A_iA_i^\dagger=\tau_i$，且
+$\sum_iA_i=M\sqrt{\rho_*}$。故 $X_{ij}=A_iA_j^\dagger$ 可行，目标值为
+$\|\sum_iA_i\|_F^2=M^2$。
+
+再取对偶
+\[
+ Y_i=M\sqrt{\rho_*}Z_i^{-1}\sqrt{\rho_*}.
+\]
+由 (16.3)，$\sum_iY_i^{-1}=I$。对 $D=\operatorname{diag}Y_i$ 和块列 $B=(I,I,I)^T$，有 $B^\dagger D^{-1}B=I$；因此 $D-BB^\dagger\succeq0$，证明对偶可行。直接循环迹给
+\[
+ \sum_i\operatorname{Tr}(\tau_iY_i)=M\sum_i\operatorname{Tr}Z_i=M^2.
+\]
+原始、对偶同值证明全局最优，不需要假设未证的多元保真度变分等价。$M^2=9(1+s)/2$，代入 $(M^2-3)/6$ 得 (16.2)。两个平方根的标量 Taylor 展开给最后公式。证毕。
+
+该结论针对固定相位任务。两态根保真度、SDP 及原始对偶理论均为已有工具；本章的候选推进是这一热态族的全参数闭式解与明确通道。尚未作独立优先权审查，不能把此实例登记成一般多元保真度问题解决。
+

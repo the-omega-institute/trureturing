@@ -1,0 +1,19 @@
+**命题 175.1（倍增和差地址只抓到共同的奇素支撑）。** 有
+
+$$
+F_tF_k=F_a^2+F_b^2,\qquad
+L_tL_k=5V(F_a-F_b)+4(-1)^a,
+\qquad\gcd(V,L_tL_k)\mid4.
+$$
+
+对任意奇素数 $p\mid V$，其首次 Fibonacci 整除秩满足
+
+$$
+\bigl(z(p)\mid2t\ \text{或}\ z(p)\mid2k\bigr)
+\quad\Longleftrightarrow\quad z(p)\mid g.
+$$
+
+证明。前两个恒等式由 Binet 或标准乘积公式得到，其中异奇偶条件给 $(-1)^b=-(-1)^a$；第二式立即给 gcd 结论。若 $z(p)\mid2t$，则 $p\mid F_{2t}=F_tL_t$，而 gcd 结论排除 $p\mid L_t$，故 $p\mid F_t$。第一式模 $p$ 化为 $0=2F_b^2$，所以 $p\mid F_b$ 及 $p\mid F_a$。若 $z(p)\mid2k$，同样先排除 $L_k$ 再使用第一式。Fibonacci 的强整除性或零秩性质给 $z(p)\mid g$。反向由 $g\mid t,k$ 直接得到。$\square$
+
+因此，$\operatorname{Div}(2t)\cup\operatorname{Div}(2k)$ 不能覆盖该和产生的全部新素数。例子 $F_{11}+F_6=97$ 的首次秩为 $49$；$49$ 不整除任意 $2^j$ 倍的 $11,6,17,5$。所以即使把原指标、和、差再作任意二倍细化，这个具体新方向仍被遗漏。这是所选载体的反例，不是 Robin 反例。
+

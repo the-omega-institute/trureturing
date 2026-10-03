@@ -1,0 +1,9 @@
+**定理 7.2（多条 Fibonacci 链的平移格）。** 在 $A_m=B^{\otimes m}$，$m\ge2$，定义
+
+$$
+\alpha_{\mathbf k}=\bigotimes_{i=1}^mT^{k_i},
+\qquad\mathbf k\in\mathbb Z^m.
+$$
+
+则 $\mathbf k\mapsto[\alpha_{\mathbf k}]$ 将 $\mathbb Z^m$ 单射到 $\mathrm{QCA}(A_m)/\mathrm{FDQC}(A_m)$。在这个显式平移子群上，指数为 $\varphi^{\sum_i k_i}$，DHR 作用平凡，故联合核包含 $\mathbb Z^{m-1}$。
+

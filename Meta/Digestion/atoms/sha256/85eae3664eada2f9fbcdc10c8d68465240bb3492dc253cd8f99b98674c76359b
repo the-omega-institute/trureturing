@@ -1,0 +1,62 @@
+### 346.8 有限平地板的同世界价格上界
+
+取价格 \(0<\lambda\le1\)，定义同一次实际执行的费用
+
+\[
+\mathcal C_\lambda(A)
+=\sup_{w,S}\mathbb E^{A,w,S}(N_H+\lambda N_T)^a.
+\tag{346.43}
+\]
+
+此处没有额外约束参考预算；允许为当前价格选择地板。
+
+先令 \(\eta_k=t\in(0,1]\) 于 \(0\le k\le J\)。在每个世界中的精确尾和里，参考增量至多 \(Cn_k^a\)，任务增量至多
+\(Cn_k^at^{-a}\)，初始任务项至多 \(Ct^{-a}\)。由式（346.9），参考地板、平滑和局部项分别至多
+
+\[
+CJt,\qquad CJt^a,\qquad C.
+\]
+
+任务的三个相应项分别至多
+
+\[
+CJt^{1-a},\qquad CJ,\qquad
+Ct^{-a}\sum_{k<J}n_k^a\Gamma_k(x,q).
+\]
+
+因 \(t^a\le t\)、\(t^{1-a}\ge1\)，加入固定包装后得到同一世界、同一请求的共同界
+
+\[
+\mathbb EN_H^a\le C(1+Jt),\qquad
+\mathbb EN_T^a\le C(t^{-a}+Jt^{1-a}).
+\tag{346.44}
+\]
+
+局部项始终先在当前世界求和，再取共同上界。
+
+在这个同一执行中使用高阶凸性，
+
+\[
+\begin{aligned}
+\mathbb E(N_H+\lambda N_T)^a
+&\le2^{a-1}
+ \left(\mathbb EN_H^a+\lambda^a\mathbb EN_T^a\right)\\
+&\le C\left[
+1+Jt+\lambda^at^{-a}
++J\lambda^at^{1-a}\right].
+\end{aligned}
+\tag{346.45}
+\]
+
+取 \(t=\lambda\)，得到
+
+\[
+\boxed{
+\mathcal C_\lambda(A_{\mathrm{flat},\lambda}^{[J]})
+\le C(1+\lambda J).}
+\tag{346.46}
+\]
+
+其中初始任务批量的加权费用
+\(\lambda^at^{-a}=1\) 已计入，不能省去右侧的常数项。常数对全部 \(\lambda,J\) 共同。
+

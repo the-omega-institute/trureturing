@@ -1,0 +1,51 @@
+### 340.1 固定网格类与结论
+
+沿用原未知双来源合同，固定非整数 $0<\beta<2$，记 $a=\beta/2\in(0,1)$。合法世界满足
+
+$$
+p=\frac{1-hc/C}{B},\qquad
+q=\frac{1-h/C}{B},\qquad
+c=k_0^jr,\quad j\in\{0,1\},\quad r\in[l,1],\quad
+0<h\le1/4.
+\tag{340.1}
+$$
+
+其中 $B\in\{2,4\}$、$1\le C\le1024/225$。实际任务偏差为 $x=C(1-Bp)=hc$。取 $j=0,r=1$ 给出合法的 $c=1$，后面的下界世界均采用这一选择。
+
+固定第339节的参考批量 $n_k=Nb^k$、$d_k=n_k+\lfloor\rho\rfloor$，其中 $\rho>\max(\beta,2)$、$b\ge2$、$N\ge1$ 都不随所检验的矩阶改变。地板和确定性任务批量满足
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\frac{\eta_k}{\eta_{k+1}}\le R_\eta,
+\tag{340.2}
+$$
+
+$$
+c_m n_k^a\eta_k^{-1}\le m_k^a
+ \le C_m n_k^a\eta_k^{-1},\qquad
+1<\frac{m_{k+1}}{m_k}\le R_m.
+\tag{340.3}
+$$
+
+这里 $c_m,C_m,R_\eta,R_m$ 为固定正数，$m_k$ 为整数。采用第338节全任务区间系数 $\bar\ell_{k,t},\bar u_{k,t}$，并定义
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k.
+\tag{340.4}
+$$
+
+本节研究的类要求这些数组满足第339.3节的乘积次数提升相容性，并按该节逐层累积执行；足够大的固定 $M$ 所给的
+$m_k=\lceil Mn_k\eta_k^{-1/a}\rceil$ 及其有效安全取整属于此类。不把只有批量数量级、却没有相容数组的任意程序包括在内。
+
+完整策略保留请求来源的第一实际 $X$，采用第339节同一份准确首币门控包装。记
+
+$$
+T_s(A)=\sup_{w,S}\mathbb E^{A,w,S}N_T^s,\qquad
+H_a(A)=\sup_{w,S}\mathbb E^{A,w,S}N_H^a,
+\tag{340.5}
+$$
+
+其中上确界遍历原合法世界与两种请求，$N_T,N_H$ 均为完整程序的实际来源计数。
+

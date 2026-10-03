@@ -1,0 +1,34 @@
+**引理 215.2（粗素数 Euler 乘积的统一余量）。** 对 $p>w$ 记
+
+$$
+U_p(s)=(1-1/p)\sum_{a\ge0}\frac{Z(p^a)^s}{p^a}.
+$$
+
+则
+
+$$
+1\le U_p(s)\le1+\frac{(e-1)s}{p(p-1)},
+\qquad
+\prod_{p>w}U_p(s)
+\le\exp\!\left(O\!\left(\frac{s}{w\log w}\right)\right),
+\tag{215.7}
+$$
+
+其中常数绝对，与 $s,w$ 无关。
+
+证明。式（215.6）和几何级数给
+
+$$
+U_p(s)\le1+\frac{e^{s/(p-1)}-1}{p}.
+$$
+
+由 $0\le s/(p-1)\le1$ 和 $e^u-1\le(e-1)u$ 得到逐素数上界。
+下界来自 $Z(p^a)^s\ge1$。再用素数计数上界和分部求和，
+
+$$
+\sum_{p>w}\frac1{p(p-1)}\ll\frac1{w\log w}.
+$$
+
+对有限乘积取对数并用 $\log(1+u)\le u$，最后取极限即得结论。
+特别地，$w=s+1$ 时指数余量为 $O(1/\log s)$。$\square$
+

@@ -1,0 +1,1 @@
+| 七—十 Mertens 边界 | 对每个 $\varepsilon>0$，$B(X)=O_\varepsilon(X^{1/2+\varepsilon})$，$X\to\infty$ 经过全部实截断 | $B(X)=\sum_{X/10<r\le X/7,(r,70)=1}\mu(r)$。既有 `MertensBoundary.power_bounds_iff` 把任意正幂界与普通 $M(X)$ 连接；再用经典 Mertens–RH 判据。缺少带符号抵消，§143 的非负时间壳并不给该界。 

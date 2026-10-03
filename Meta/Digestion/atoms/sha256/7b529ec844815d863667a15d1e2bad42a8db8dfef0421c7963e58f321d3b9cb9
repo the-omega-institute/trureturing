@@ -1,0 +1,20 @@
+**引理335.2（有界概率商）。** 设某区间上的 $A,D$ 满足
+
+$$
+0\le A\le D,\qquad D\ge c\eta,\qquad
+\|A\|_{C^\beta}+\|D\|_{C^\beta}\le C,\qquad0<\eta\le1.
+\tag{335.5}
+$$
+
+则 $f=A/D$ 满足
+
+$$
+\|f\|_\infty\le1,\qquad
+\|f^{(m)}\|_\infty\le C_m\eta^{-m}\quad(1\le m\le r),
+\qquad
+[f^{(r)}]_\theta\le C\eta^{-M_\beta}.
+\tag{335.6}
+$$
+
+常数与区间长度无关。
+

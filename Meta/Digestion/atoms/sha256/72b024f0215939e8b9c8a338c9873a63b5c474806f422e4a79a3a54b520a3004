@@ -1,0 +1,8 @@
+**定理 5.2。** 对任意可测平方可积 $f(u_0)$，
+$$
+\mathbb E\|u_t-f(u_0)\|^2=\operatorname{tr}G_t+
+\mathbb E\|F(t)u_0-f(u_0)\|^2,
+\quad G_t=I-F(t)F(t)^T.
+$$
+故最小风险为 $\operatorname{tr}G_t=t^2\operatorname{tr}M+O(t^4)$。
+

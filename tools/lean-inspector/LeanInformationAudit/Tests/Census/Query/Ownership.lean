@@ -1,6 +1,9 @@
 import LeanInformationAudit.Census.Command
 import LeanInformationAudit.Tests.Census.Query.OwnerFirst
 import LeanInformationAudit.Tests.Census.Query.OwnerSecond
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 

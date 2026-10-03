@@ -1,0 +1,8 @@
+**定理 2145.3（Sugawara 有限截断的一致性）。** 沿用定理 2145.2 的记号，若整数 $a\leq n-N(v)$ 且 $b\geq N(v)$，则问题 2145.1 的逐态和满足
+
+$$
+L_nv=\frac12\sum_{r=a}^{b}:a_{n-r}a_r:v.
+\tag{2145.3}
+$$
+
+这个结论只核验问题 2145.1 的有限和与截断一致性；$[L_m,a_r]$、完整中心项、全态态场和局域性仍是独立义务。正规序约定和一般 Sugawara 背景仍见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md) 与 [Kytölä, `Sugawara.lean`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。

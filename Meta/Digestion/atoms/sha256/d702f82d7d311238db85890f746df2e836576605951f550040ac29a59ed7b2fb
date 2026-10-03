@@ -1,0 +1,12 @@
+## 286. 素指标整包的祖先森林、有限相位与无界递归预算
+
+沿用 §285 的实际整包
+\[
+m_s=\frac{L_s^2+1}{2}=\frac{F_{3s}}{2F_s}
+\quad(s\ge5\text{ 为素数}),
+\]
+以及 §282 的同一来源 $A_{m,n}=d_{mn-1}F_{2mn}$、$B_{m,n}=4mF_n$ 和 §285 的互素扩张域 $\mathcal E(m)$。
+首次秩 $z(p)$ 与首次深度 $h_p=v_p(F_{z(p)})$ 均为原 Fibonacci 序列的实际值。
+经典秩界、素支撑与赋值输入仍依 Lengyel (1995), §3，见
+[既有文献条目](../../../Library/Scale/lengyel1995fibonacciorder.md)。
+

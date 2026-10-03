@@ -1,0 +1,13 @@
+## 156. 固定共同核心上的指数交换与 Robin 联合前沿
+
+前面的有限支撑预算把新增素数的 Euler 因子一起估计；本节处理另一种互补的压缩：在一个固定的高于阈值的共同核心上，把可能降低 Robin 余量的指数排列规范化。它使用已有的
+`D5.S3.Arith.ExponentExchange.IntegerSwap.prime_exponent_swap`，不把该局部交换误报成全局 Robin 证明。
+
+仍记
+
+$$
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+\Delta(n)=e^\gamma\log\log n-Z(n).
+$$
+

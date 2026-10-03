@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
 import LeanInformationAudit.Tests.RegistrationGates.InventoryAssertions
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredEvidence
 open Lean Meta Elab Command TemplateAudit TemplateBinding
@@ -24,22 +27,22 @@ elab "observe_declared_evidence" : command => do
   let name := initial.env.header.mainModule.str "probe"
   let target := mkIdent (`_root_ ++ name)
   let forms ← pure #[
-    ("validated_record_has_certificate", 0, ← `(command| information_theorem $target in arena
+    ("validated_record_has_certificate", 0, ← `(command| test_assess in information_theorem $target in arena
       readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm)),
-    ("unresolved_record_without_module_failure", 1, ← `(command| information_theorem $target in arena
+    ("unresolved_record_without_module_failure", 1, ← `(command| test_assess in information_theorem $target in arena
       readout via (missingTemplate (fun x : Bool => x))
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm)),
-    ("uncertified_states_have_no_certificate", 2, ← `(command| information_theorem $target in arena
+    ("uncertified_states_have_no_certificate", 2, ← `(command| test_assess in information_theorem $target in arena
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm))]
   let mut observations : Array (String × Bool) := #[]
   for (label, kind, form) in forms do
     set initial
     modify fun state => { state with messages := {} }
-    let .ok () ← enroll ``cutRealization | throwError "setup: independent template enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: independent template enrollment failed"
     let caught ← commandException (elabCommand form)
     let env ← getEnv
     let inventoryOk ← if kind == 2 then
@@ -66,7 +69,7 @@ elab "observe_declared_evidence" : command => do
   let before ← get
   let staged ← IO.mkRef false
   let caught ← commandException <| registrationTransaction do
-    let .ok () ← enroll ``cutRealization | throwError "setup: rollback enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization | throwError "setup: rollback enrollment failed"
     elabCommand forms[0]!.2.2
     staged.set <| InformationRegistry.hasTheorem (← getEnv) name &&
       (inventory (← getEnv)).any (·.key.theoremName == name) &&

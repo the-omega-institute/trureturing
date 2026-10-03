@@ -1,0 +1,16 @@
+**推论 99.6（第 97 节全部未来定理的 gcd 形式）。** 对正整数 $A,B$，令 $g=\gcd(A,B)$。定理 97.2 对全部素数的特例及其对称形式为
+
+$$
+\inf_{C\ge1}\frac{Z(AC)}{Z(BC)}=\frac{Z(g)}{Z(B)},\qquad
+\sup_{C\ge1}\frac{Z(AC)}{Z(BC)}=\frac{Z(A)}{Z(g)}.
+$$
+
+下确界当且仅当 $A\mid B$ 时能由有限 $C$ 达到，上确界当且仅当 $B\mid A$ 时能由有限 $C$ 达到；可达到时 $C=1$ 即可。对任意实数 $\lambda$，精确的全部共同乘法未来价格支配判据是
+
+$$
+\left[\forall C\ge1,\ J_\lambda(AC)\ge J_\lambda(BC)\right]
+\iff \log\frac{Z(g)}{Z(B)}\ge\lambda\log\frac AB.
+$$
+
+当 $\lambda=1/25$ 时，右侧等价于有理不等式 $[Z(g)/Z(B)]^{25}\ge A/B$。
+

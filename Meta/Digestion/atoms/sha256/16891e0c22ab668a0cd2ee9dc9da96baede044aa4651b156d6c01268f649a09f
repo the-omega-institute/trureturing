@@ -1,0 +1,14 @@
+## 21. 三阶极化唯一决定字符进位
+
+写 $g=(g_1,g_2,g_3)$，定义
+
+$$
+\begin{aligned}
+f_0(g,h)={}&\sum_i g_i h_i+\sum_{i<j}g_i h_j\\
+&+g_1g_2h_3+g_1g_3h_2+g_2g_3h_1.
+\end{aligned}
+\tag{FC.4}
+$$
+
+全部加法在 $\mathbb F_2$。令 $P(g)=\sum_i g_i+\sum_{i<j}g_ig_j+g_1g_2g_3$，则 $P(g)=1$ 当且仅当 $g\ne0$。
+

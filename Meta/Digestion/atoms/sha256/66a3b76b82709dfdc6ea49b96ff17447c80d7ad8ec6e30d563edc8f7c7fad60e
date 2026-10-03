@@ -1,0 +1,10 @@
+**定理 87.2（前缀支配与逐项非负）。** 对所有素数 $p$、整数 $a\ge0$，$Q_p(a)\ge\log G_p(a)$，且 $a\ge1$ 时严格。参考目标 $Q_p(a)-\lambda_xa\log p$ 在 $a=v_p(x)$ 取得最大值。因此
+
+$$
+\begin{aligned}
+R_p(x)={}&\bigl[Q_p(v_p(x))-\lambda_xv_p(x)\log p
+-Q_p(a_p)+\lambda_xa_p\log p\bigr]\\
+&+\bigl[Q_p(a_p)-\log G_p(a_p)\bigr]\ge0.
+\end{aligned}
+$$
+

@@ -1,0 +1,8 @@
+**Definition 2.1 (Composition fibers).** For $a,b\ge0$ with $L=a+b\ge1$, put
+$$
+\mathcal F(a,b)=\{t\in\mathcal T:c(t)=(a,b)\},
+\qquad
+C_j=\frac1{j+1}\binom{2j}{j},
+$$
+and let $U(a,b)$ be the uniform law on this finite fiber. For a probability $\mu$ on a fiber, its quantity observation at generation $n$ is the random variable $q(M^n c(t))$.
+

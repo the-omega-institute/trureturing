@@ -1,0 +1,30 @@
+**定义 20.1（本批的三层前提）。** 有限代数部分只取 $E=\mathbb F_2^3$ 及函数 $f:E\times E\to\mathbb F_2$，满足
+
+$$
+f(0,h)=f(g,0)=0,\quad f(g,h+k)=f(g,h)+f(g,k),\quad
+f(g,g)=1\ (g\ne0),\quad f(g,h)+f(h,g)=1\ (g,h\ne0,\ g\ne h).
+\tag{FC.1}
+$$
+
+物理谱部分另外采用本卷定义 12.1、14.1 的实际 VOA、循环 type 零、正性和共同扭曲迹条件，并限定于所有七个非零缺陷均为 A 型的秩三分支。令 $L_g=V(g)_{1/2}$，在其一维基态线上 $h$ 作用为 $(-1)^{f(g,h)}$；$L_0$ 仅用作真空线记号。第 16 节给式（FC.1）。这不构造该分支的实际 VOA，也不证明它不存在。
+
+谈论实际简单模的融合闭包时，再要求 §14.2 的 $M_{g,\xi}$ 是真实固定点模，并具有无扭曲 double 的实际融合规则
+
+$$
+M_{g,\xi}\boxtimes M_{h,\eta}\cong M_{g+h,\xi+\eta},\qquad
+\mathrm{wt}(M_{g,\xi})\equiv\xi(g)/2\pmod1.
+\tag{FC.2}
+$$
+
+$\xi,\eta\in E^*$ 在本批用加法线性形式表示；对应复字符为 $(-1)^\xi$。式（FC.2）是一个需要实现的范畴接口，不由两份相同的标量字符自动推出。对于真正的 untwisted-double $S$ 矩阵，Verlinde 求和给
+
+$$
+N_{(g,\xi),(h,\eta)}^{(k,\zeta)}
+=\frac1{64}\sum_{t\in E,\,\alpha\in E^*}
+(-1)^{(\xi+\eta+\zeta)(t)+\alpha(g+h+k)}
+=\mathbf1_{k=g+h,\,\zeta=\xi+\eta}.
+\tag{FC.3}
+$$
+
+这里是实际范畴的 $S$ 和 Verlinde 定理的应用；只有字符变换矩阵而没有范畴实现时，仍须保留该义务。[K02, §5] 的 double 理论是已有来源。
+

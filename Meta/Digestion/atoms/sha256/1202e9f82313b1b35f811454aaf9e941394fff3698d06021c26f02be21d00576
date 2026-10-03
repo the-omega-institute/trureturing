@@ -1,0 +1,38 @@
+### 5.5 白化、有限样本和误差传播
+
+设 $C_0\succ0$，相对估计误差为
+$$
+\|C_0^{-1/2}(\widehat C_0-C_0)C_0^{-1/2}\|\le\rho<1,
+\quad\|C_0^{-1/2}(\widehat C_h-C_h)C_0^{-1/2}\|\le\nu.
+$$
+则存在正交 $U$，使
+$$
+\|U^T\widehat C_0^{-1/2}\widehat C_h\widehat C_0^{-1/2}U-F(h)\|
+\le(\rho+\nu)/(1-\rho).
+$$
+证明：对 $L=\widehat C_0^{-1/2}C_0^{1/2}$ 作右极分解 $L=UR$，$R=(I+E_0)^{-1/2}$。对齐估计为 $R(F+E_h)R$；用谱界 $\|R\|\le(1-\rho)^{-1/2}$ 展开误差。范数和特征值证书不需要另行恢复 $U$。
+
+$N$ 次独立零均值 Gibbs 配对样本、未中心化协方差估计下，取 $0<\alpha<1$、$\kappa=2\sqrt{r(r+1)/(N\alpha)}<1$。以至少 $1-\alpha$ 的概率可用 $\rho=\nu=\kappa$，从而相关误差预算 $\delta_N=2\kappa/(1-\kappa)$。证明：真白化联合协方差 $\Gamma=\left(\begin{smallmatrix}I&F^T\\F&I\end{smallmatrix}\right)$ 满足 $\|\Gamma\|\le2,\operatorname{tr}\Gamma=2r$，Gaussian 四阶矩给
+$$
+\mathbb E\|\widehat\Gamma-\Gamma\|_F^2
+=((\operatorname{tr}\Gamma)^2+\operatorname{tr}\Gamma^2)/N
+\le4r(r+1)/N.
+$$
+Markov 不等式和块范数得到预算。这是保守充分界；固定 $r,\alpha$ 时组合给 $h\asymp N^{-1/8}$、曲率半径 $O(N^{-1/4})$，不是最优样本复杂度认领。相邻时间样本不自动独立，未知均值、测量噪声和相关采样另定。
+
+令
+$$
+\widehat D_h=(\widehat F_h-\widehat F_h^T)/(2h),
+\quad\gamma=b^3h^2/6+\delta/h,
+\quad M_+=\max(0,\lambda_{\max}\widehat W_h+\eta).
+$$
+中心差分给 $\|\widehat D_h-D\|\le\gamma$，两反对称生成元的 Duhamel 比较给
+$$
+\|F(t)-e^{t\widehat D_h}\|\le\tfrac12M_+t^2+\gamma t,
+$$
+$$
+\mathbb E\|u_t-e^{t\widehat D_h}u_0\|^2
+\le\operatorname{tr}G_t+r(\tfrac12M_+t^2+\gamma t)^2.
+$$
+若 $\sigma_{\min}(\widehat D_h)>\gamma$，则真实配对非退化；若另知 $M_+<\omega_*^2$，定理 2.5 给更具体的辛余量。有限精度近零值不证明精确闭合。
+

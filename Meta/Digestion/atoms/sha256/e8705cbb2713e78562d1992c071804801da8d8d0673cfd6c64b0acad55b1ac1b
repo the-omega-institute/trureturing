@@ -1,0 +1,38 @@
+### 42.9 周期一与奇周期范围
+
+周期一的实际固定点及其合法常数来源包括
+$$
+3^\infty\mapsto-\frac12,\qquad
+0^\infty\mapsto0,\qquad
+5^\infty\mapsto\frac t2,\qquad
+2^\infty\mapsto\frac\phi2.
+\tag{42.56}
+$$
+它们的实际 guard 自环分别为 $0\to0$ 的 $3,0,2$ 和 $1\to1$ 的 $5$；$3,0$ 也可从初始 guard 一开始，再进入零。标签 $25$ 的重复不是合法 guard：$25$ 把 $0$ 送入 $1$，而 $1\to1$ 不允许 $25$。
+
+四个坐标在每个 $0<\beta<\lambda$ 下分别只有共同闭颜色 $0,1,2,3$。直接检查其相邻临界扩张端点即可：
+$$
+\begin{array}{c|c|c}
+\text{实际来源}&\text{唯一颜色}&\text{严格隔离不等式}\\ \hline
+3^\infty&0&-1<-\tfrac12<a,\\
+0^\infty&1&-t^2<0<c,\\
+5^\infty&2&b<\tfrac t2<e,\\
+2^\infty&3&d<\tfrac\phi2<h.
+\end{array}
+$$
+这里 $a=q_1-\lambda$、$-t^2=q_1+\lambda$、$c=q_2-\lambda$、$b=q_2+\lambda$、$e=q_3-\lambda$、$d=q_3+\lambda$、$h=q_4-\lambda$。所需正余量依次为
+$$
+\begin{gathered}
+a+\tfrac12=(6g-1)/10>0,\qquad c=(6g-1)/5>0,\\
+\tfrac t2-b=(7-17g)/20>0,\qquad
+e-\tfrac t2=(11g-1)/20>0,\\
+\tfrac\phi2-d=9(1-g)/20>0,\qquad
+h-\tfrac\phi2=(23g-3)/20>0,
+\end{gathered}
+$$
+均由 (42.47) 得出。这些坐标也在相应实际格内部，所以其唯一颜色不依赖 ownership。
+
+若周期一 singleton rival 的 SCC 有第一不相干返回，将两个返回重复到相同长度；rival 的唯一色使两条路径的共同颜色词逐位相同。在第一终端片内选同一个合法尾，通过 (42.4) 完整提升两条路径。它们前缀不同、尾相同，最后一个不同来源标签的平移差却严格大于所选共同闭格的宽度，违背引理 36.16。因此两个第一来源词必相同，周期一也不能承载第一不相干 SCC。
+
+42.8 节给出了本原三周期的完整排除。由此得到的奇周期结论仅是：若一个奇数本原周期 singleton rival 承载第一来源不相干 SCC，则其周期至少为 $5$。这只是下界；没有构造周期五对象，也没有排除所有奇数周期。
+

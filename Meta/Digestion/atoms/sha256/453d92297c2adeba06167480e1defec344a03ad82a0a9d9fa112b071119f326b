@@ -1,0 +1,17 @@
+**定理 17.1（受控观察的最小线性完成）。** 在 $\mathbb C^m$ 上固定有限族 Hermitian 控制 Hamiltonian $H_a$ 和读数 $E_b$。允许任意有限控制词，每段时长非负，在末尾读出期望；不同词以同一初态的独立制备比较。定义实线性映射 $\mathcal D_a(O)=i[H_a,O]$，以及
+
+$$
+W_0=\operatorname{span}_{\mathbb R}\{I,E_b\},\qquad
+W_{k+1}=W_k+\sum_a\mathcal D_a(W_k).
+\tag{FT.22}
+$$
+
+则某个 $k\le m^2-\dim W_0$ 使 $W_k=W_{k+1}=:W$；此后稳定。两个密度矩阵对全部上述实验不可区分，当且仅当
+
+$$
+\operatorname{Tr}((\rho-\sigma)O)=0\quad\text{对全部 }O\in W.
+\tag{FT.23}
+$$
+
+在任意实线性期望坐标摘要中，若其相等保证全部实验预测相等，则在迹一状态的仿射空间上至少需要 $\dim W-1$ 个独立实坐标；$W$ 的一组去常数基坐标达到这个下界。
+

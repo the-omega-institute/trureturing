@@ -1,0 +1,56 @@
+### 定理 285.3 整包任意幂次的统一 Euler 成本
+
+对式（285.4）的全部素数 $s\ge5$ 与全部 $a\ge1$，有
+\[
+1<Z(m_s^a)\le\frac{m_s}{\varphi(m_s)}<\frac{16}{15}.
+\tag{285.8}
+\]
+更准确地，令
+\[
+\Theta_s=\min\left\{
+\frac{2s\log\phi}{(6s-2)\log(6s-1)},\quad
+\frac{2(1+\log(3s))}{s}\right\}.
+\tag{285.9}
+\]
+则
+\[
+\log\frac{m_s}{\varphi(m_s)}\le\Theta_s,
+\qquad
+\sup_{a\ge1}\bigl(Z(m_s^a)-1\bigr)
+\le e^{\Theta_s}-1
+=O\!\left(\frac{\log s}{s}\right).
+\tag{285.10}
+\]
+最后的极限沿素数 $s\to\infty$，且对幂次 $a$ 一致。
+
+**证明。** 每个素因子 $p$ 的秩为奇数 $3s$。经典秩界给 $3s\mid p-1$ 或 $3s\mid p+1$。
+因为 $p$ 为奇数，相应正倍数必须为偶数，故
+\[
+p\ge6s-1.
+\tag{285.11}
+\]
+若 $q_s$ 为不同素因子数，则它们的乘积整除 $m_s$，所以
+$q_s\log(6s-1)\le\log m_s$。
+由 $\log(p/(p-1))\le1/(p-1)$，得到
+\[
+\log\frac{m_s}{\varphi(m_s)}
+\le\frac{q_s}{6s-2}
+\le\frac{\log m_s}{(6s-2)\log(6s-1)}.
+\tag{285.12}
+\]
+Binet 给 $L_s=\phi^s-\phi^{-s}$，故
+\[
+m_s=\frac{\phi^{2s}+\phi^{-2s}-1}{2}<\phi^{2s}.
+\]
+这给式（285.9）的第一条上界。第二条直接来自 §163.1 在同一个完整秩桶 $d=3s$ 上的 Euler 对数估计，
+而不是将不同来源的素数极值相乘。
+
+为得到全域常数，使用 $\log\phi<1/2$、$\log29>3$，以及
+$2s/(6s-2)\le5/14$。前两条可由 $e>8/3>\phi^2$ 与 $e<3$ 得到。
+所以第一条上界严格小于
+\[
+\frac5{84}<\frac1{16}<\log\frac{16}{15}.
+\]
+最后一个不等式是 $-\log(1-x)>x$ 在 $x=1/16$ 的情形。
+每个幂次的有限 Euler 因子不超过其饱和因子，得到式（285.8）与式（285.10）。$\square$
+

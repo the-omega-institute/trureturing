@@ -1,0 +1,29 @@
+**定理 101.1（有限列的整数最大公因子归一化）。** 令 $\iota$ 是带可判定相等的任意类型，$s\subseteq\iota$ 是有限集，$p\in\iota$ 且 $p\notin s$。给定整数 $a$ 与列 $v:\iota\to\mathbb Z$，存在 $\mathbb Z$-线性等价
+
+$$
+e:(\iota\to\mathbb Z)\simeq_{\mathbb Z}(\iota\to\mathbb Z)
+$$
+
+使得对每个满足 $x(p)=a$ 且 $x(i)=v(i)$（$i\in s$）的 $x$，有
+
+$$
+e(x)(i)=
+\begin{cases}
+\gcd\bigl(|a|,\gcd_{j\in s}|v(j)|\bigr),&i=p,\\
+0,&i\in s,\\
+x(i),&i\ne p\ \text{且}\ i\notin s.
+\end{cases}
+$$
+
+这里右侧的最大公因子先在 $\mathbb N$ 中取值，再嵌入 $\mathbb Z$；有限集为空、$a$ 或某些 $v(j)$ 为零、以及所有输入同时为零的情形都包含在断言中。等价只对满足所列前提的输入作上述值承诺，外部坐标的承诺正是最后一行所写的原值保持。
+
+证明使用有限集归纳。先处理一个枢轴坐标 $p$ 与一个新坐标 $q$。若 $\gcd(a,b)=0$，则 $a=b=0$，取恒等等价即可；这也覆盖两项同时为零的分支。否则令 $g=\gcd(a,b)$，$c=\operatorname{gcdA}(a,b)$，$d=\operatorname{gcdB}(a,b)$，并置 $u=a/g$、$w=b/g$。Bezout 恒等式 $ac+bd=g$ 给出 $cu+dw=1$，所以
+
+$$
+\begin{pmatrix}c&d\\-w&u\end{pmatrix}
+$$
+
+是行列式为 $1$ 的整数单位。它把 $(a,b)$ 变为 $(g,0)$，并在所有其它坐标上取恒等作用。空有限集时只需对负的 $a$ 乘以 $-1$，非负时取恒等；这一步把枢轴值规范化为 $|a|$，并保留零情形。
+
+归纳步把已经归一化的枢轴和新坐标 $q$ 再交给上述二坐标单位。二坐标单位在此前清零的坐标上保持零，在未选坐标上保持输入值，因此复合等价仍满足同一个外部坐标条件。有限集归纳结束时，枢轴值是 $\gcd(|a|,\gcd_{j\in s}|v(j)|)$，所有选中坐标为零，结论成立。 $\square$
+

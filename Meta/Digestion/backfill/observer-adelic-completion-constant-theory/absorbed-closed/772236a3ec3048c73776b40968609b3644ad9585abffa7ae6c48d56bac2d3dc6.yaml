@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:772236a3ec3048c73776b40968609b3644ad9585abffa7ae6c48d56bac2d3dc6
+  normalized_sha256: sha256:772236a3ec3048c73776b40968609b3644ad9585abffa7ae6c48d56bac2d3dc6
+cas_ref: sha256:772236a3ec3048c73776b40968609b3644ad9585abffa7ae6c48d56bac2d3dc6
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockLZeroSpectrum.energyFiber_finite
+    target_statement_id: sha256:3fc4c85684c5833460a2c88a15f69de90db99531c964824fd97e6653963a85ab
+  - gid: D5/S3/VertexAlgebra/PolynomialFockLZeroSpectrum.lZero_spectrum
+    target_statement_id: sha256:04de8b468b293398459e82805ed697456595c09daae6e73964413a19bcb0a63e
+receipts:
+  unresolved_subitems: []

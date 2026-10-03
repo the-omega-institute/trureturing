@@ -1,0 +1,2 @@
+**命题 18.1（整窗口层交换通常为外自同构）。** 对 $n\ge2$，$\mathfrak A_n$ 有两个非零总类型块。记它们的中心单位为 $z_{\mathbf1},z_\tau$。在 $\mathfrak A_n\otimes\mathfrak A_n$ 上，因子交换 $\mathsf{Flip}(a\otimes b)=b\otimes a$ 不能由这个同一窗口代数内的酉元共轭实现。
+

@@ -1,0 +1,36 @@
+**定理319.6（零误差费用极限）。** 对每个固定实 \(s>0\)，
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_s^{\mathrm{alg}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal C_s^{\mathrm{pol}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(0).}
+\tag{319.12}
+$$
+等式在扩展实数中成立。共同值有限时，抽象准确最优策略存在；不据此断言有效准确程序存在。
+
+**证明。** 两类费用都随 \(\delta\downarrow0\) 单调不减，因此零误差极限存在。引理319.2保留返回律与费用，给出
+$$
+\mathcal C_s^{\mathrm{pol}}(\delta)
+\le\mathcal C_s^{\mathrm{alg}}(\delta).
+\tag{319.13}
+$$
+令
+$$
+L=\mathcal C_s^{\mathrm{pol}}(0).
+$$
+定理318.4已经证明抽象近似费用的极限为 \(L\)。若 \(L=\infty\)，式（319.13）即迫使有效近似费用的极限也是无穷。
+
+若 \(L<\infty\)，由定理318.4取一份达到 \(L\) 的抽象准确共同策略 \(\pi_*\)。给定任意 \(\delta>0,\xi>0\)，用定理319.3；首步身份类则用命题319.4。取输出容差 \(\eta=\delta\)，得到有限有理有效策略 \(\rho\)，使
+$$
+\operatorname{err}(\rho)\le\delta,\qquad
+\mathcal K_s(\rho)\le L+\xi.
+$$
+于是对固定 \(\delta>0\)，让 \(\xi\downarrow0\)，有
+$$
+\mathcal C_s^{\mathrm{alg}}(\delta)\le L.
+\tag{319.14}
+$$
+这只是下确界的界，不要求某个有效程序达到 \(L\)。结合式（319.13）和抽象费用的零误差极限，得到式（319.12）。证毕。
+
+定理连接的是“每个精度各存在一个有效程序”与“一份抽象准确策略”。它没有交换这两个量词，也没有将概率表的紧致子列变成一个可计算收敛序列。
+

@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation
 open D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
@@ -7,13 +10,13 @@ open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
 instance : DecidableEq IC.Model :=
   D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.modelDecidableEq
 
-register_information_theorem observation_strictly_weaker_than_intervention
+test_assess in register_information_theorem observation_strictly_weaker_than_intervention
   in observationInterventionLawArena
   object_arena unifiedArena catalog fixtureCausal
   primitives observationInterventionUnifiedRealization.toPrimitiveBundle
   realization observation_intervention_unified_realization
 
-register_information_theorem intervention_strictly_weaker_than_counterfactual
+test_assess in register_information_theorem intervention_strictly_weaker_than_counterfactual
   in interventionCounterfactualLawArena
   object_arena unifiedArena catalog fixtureCausal
   primitives interventionCounterfactualUnifiedRealization.toPrimitiveBundle

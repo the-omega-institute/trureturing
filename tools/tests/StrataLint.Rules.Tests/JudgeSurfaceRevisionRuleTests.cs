@@ -400,6 +400,33 @@ public sealed class JudgeSurfaceRevisionRuleTests
         Assert.Equal(WorkflowPath, finding.Path);
     }
 
+    [Fact]
+    public void ReusableJobWithCommandScalarIsShell()
+    {
+        const string workflow = "jobs:\n  unit:\n    uses: ./.github/workflows/ci-unit.yml\n    with:\n      command: git show HEAD^1:tools/scripts/workflow/x.sh > out\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("command: git show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("command: make gate BASE=0000000000000000000000000000000000000001")]
+    public void ReusableJobWithCommandSafeScalarIsAllowed(string command)
+    {
+        const string prefix = "jobs:\n  unit:\n    uses: ./.github/workflows/ci-unit.yml\n    with:\n      ";
+        Assert.Empty(Evaluate(WorkflowPath, prefix + command + "\n"));
+    }
+
+    [Theory]
+    [InlineData("command: [git, show, HEAD^1:tools/scripts/workflow/x.sh]")]
+    [InlineData("command:\n        nested: git show HEAD^1:tools/scripts/workflow/x.sh")]
+    public void ReusableJobWithCommandNonScalarIsFailClosed(string command)
+    {
+        const string prefix = "jobs:\n  unit:\n    uses: ./.github/workflows/ci-unit.yml\n    with:\n      ";
+        var finding = Assert.Single(Evaluate(WorkflowPath, prefix + command + "\n"));
+        Assert.Contains("not a scalar", finding.Message, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("      - run: |")]
     [InlineData("        run: git rev-parse HEAD^1")]

@@ -1,0 +1,15 @@
+**定理 1.3。** 取 $\hbar=1$，令 $\widehat H=A_0+iB_0$ Hermitian，$A_0^T=A_0$、$B_0^T=-B_0$，$\psi=(q+ip)/\sqrt2$。Schrödinger 方程等价于
+$$
+\dot z=JS_{\widehat H}z,
+\quad S_{\widehat H}=\begin{pmatrix}A_0&-B_0\\B_0&A_0\end{pmatrix},
+\quad JS_{\widehat H}=\begin{pmatrix}B_0&A_0\\-A_0&B_0\end{pmatrix}.
+$$
+该流同时保持欧氏内积与辛形式。对归一化态的能量 $E=\langle\widehat H\rangle$，虚时间方程 $\partial_\tau\psi=-(\widehat H-E)\psi$ 保持范数，且
+$$
+\partial_\tau E=-2\operatorname{Var}_\psi(\widehat H)\le0.
+$$
+
+**证明。** 分离实虚部得到矩阵，其生成元反对称且 Hamilton；求内积与辛配对导数即得保持律。虚时间范数导数为零，能量导数为 $-2(\langle\widehat H^2\rangle-E^2)$。证毕。
+
+射影实时间方向是 $-i(\widehat H-E)\psi$，与下降方向由复结构连接；归一化并模去整体相位给出 Kähler 纯态空间 [AS97, McA19]。本节 $S_{\widehat H}$ 不必正定，第 2 节的正定假设另行承担。
+

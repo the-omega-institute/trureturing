@@ -1,0 +1,2 @@
+**定义 106.6（固定读出的终端观察）。** 保留定义 104.2 的单位初始化、字母表 $\mathcal B$、接缝规则、正值规范 End 和吸收错误态。给定任意集合 $Y$、函数 $f:R\to Y$ 及 $\mathsf{err}\notin Y$，在成功 End 时输出 $f(N\bmod H)$，其余情形输出 $\mathsf{err}$。实际已初始化前缀为 $p=(\varepsilon,x)$，其中 $\varepsilon\in\{0,1\}$、$x\in\mathcal B^*$；这里也包括已进入错误态的前缀。以 $O_f(p,w)$ 表示在该前缀后接字面窗口词 $w\in\mathcal B^*$，随后查询 End 的输出。空后缀、非法接缝和末窗为零的词都在比较范围内，End 本身不计窗口。
+

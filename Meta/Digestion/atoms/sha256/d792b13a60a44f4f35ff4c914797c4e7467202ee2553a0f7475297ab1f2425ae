@@ -1,0 +1,42 @@
+### 310.1 完整两源模型与量词
+
+保持第307节的合法参数：
+$$
+B\in\{2,4\},\qquad1\le C\le1024/225,\qquad
+0<\kappa\le-\log\sqrt{3/4},\qquad k=e^{-\kappa},
+$$
+$$
+0<g\le k-k^2,\qquad l=k^2+g,\qquad
+r\in[l,1],\qquad c=k^jr,\quad j\in\{0,1\},
+$$
+$$
+0<h\le1/4,\qquad \beta>0,\qquad\varepsilon=1/16.
+$$
+\(B,C,\beta\) 已知且固定，\(\kappa,g\) 是原任务已知参数；\(h,r,j\) 不得作为模拟器输入。由 \(0<l\le k<1\)、\(r\le1\) 得 \(0<c\le1\)，且 \((j,r)=(0,1)\) 给合法 \(c=1\) 子模型。
+
+旧任务来源与旧参考来源分别是新鲜独立的
+$$
+T\sim\operatorname{Bernoulli}(p),\qquad
+H\sim\operatorname{Bernoulli}(q),\qquad
+p=\frac{1-hc/C}{B},\quad q=\frac{1-h/C}{B}.
+\tag{310.1}
+$$
+允许依已见记录自适应请求任一来源，每枚旧币都计费，私随机性免费。两种参数位于
+$$
+I=\left[\frac{1-1/(4C)}B,\frac1B\right]\Subset(0,1),
+\qquad q\le p,\qquad
+\frac3{16}\le p,q\le\frac12.
+\tag{310.2}
+$$
+
+对本次所请求来源，记旧成功率为 \(s\)：任务请求取 \(s=p\)，参考请求取 \(s=q\)。令 \(s_1=s,s_0=1-s\)，目标核统一写为
+$$
+P^\beta_{s,h}(x,z)
+=\frac{s_x}{2}+\delta(-1)^{x+z},
+\qquad \delta=\varepsilon h^\beta.
+\tag{310.3}
+$$
+参考请求的目标即原模型 \(c=1\) 的目标。每格至少为 \(1/32\)，\(X\) 边缘为 \(\operatorname{Bernoulli}(s)\)，\(Z\) 公平。
+
+本节的统一界指：每组固定 \(B,C,\beta\) 有一个不依赖未知 \(h,c\) 的程序及常数，覆盖全部合法 \((j,r,h)\)。构造不需要 \(\kappa,g\)，所以固定 \(B,C,\beta\) 后也覆盖它们的合法变化；没有主张常数对变化的 \(C,\beta\) 一致。一次目标请求的费用 \(M\) 是其中使用两种旧来源的总调用数。
+

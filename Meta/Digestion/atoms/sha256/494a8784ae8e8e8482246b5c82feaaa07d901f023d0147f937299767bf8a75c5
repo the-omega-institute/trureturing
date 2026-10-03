@@ -1,0 +1,4 @@
+**Theorem 2.2 (covering bridge).** Suppose (X) is Hausdorff and locally
+compact. If the isometric representation is free and properly discontinuous,
+then the canonical projection (X\to X/\rho) is a covering map.
+

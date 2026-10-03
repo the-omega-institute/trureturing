@@ -1,0 +1,41 @@
+### 338.5 平地板与共享任务网格
+
+先固定有限参考截止层 $J\ge1$，置
+
+$$
+\eta=(J+1)^{-1},\qquad
+\delta_k=\frac{\eta}{4}b^{-ak}.
+\tag{338.12}
+$$
+
+选择固定常数 $A_0$ 充分大，并取整数
+
+$$
+m_0=\max\{N,\lceil A_0\eta^{-1/a}\rceil\},\qquad
+m_k=m_0b^k.
+\tag{338.13}
+$$
+
+特别地
+
+$$
+m_0^a\asymp\eta^{-1},\qquad
+(m_k/n_k)^a=(m_0/N)^a\asymp\eta^{-1}.
+\tag{338.14}
+$$
+
+首批任务费用已经是临界矩 $O(J+1)$，并未被省略；首批参考量 $d_0$ 则为固定常数。
+
+对 $0\le s\le m_k$、$0\le t\le d_k$，定义联合下、上数组
+
+$$
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),
+\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k.
+\tag{338.15}
+$$
+
+所有项都属于 $[0,1]$，$A\le B$，且 $B-A\ge\delta_k>0$。$s/m_k$ 是预定系数表的网格点，不是程序查得的未知实际 $p$。
+
+令 $\mathsf E_k=\mathsf E^T_k\otimes\mathsf E^H_k$ 为两个维度的 Bernstein 次数提升。给定当前任务、参考总成功数 $(s,t)$，前段成功数分别服从两项独立超几何分布；该乘积平均就是 $\mathsf E_k$ 的系数公式。
+

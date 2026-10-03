@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9b6e0b5bb347ba78eba1cfb9f54369e970af36439cf9f8a3f239e8879e042e72
+  normalized_sha256: sha256:9b6e0b5bb347ba78eba1cfb9f54369e970af36439cf9f8a3f239e8879e042e72
+cas_ref: sha256:9b6e0b5bb347ba78eba1cfb9f54369e970af36439cf9f8a3f239e8879e042e72
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/CanonicalPointHeight.canonicalHeight_properties
+    target_statement_id: sha256:4a8509f8b6b2d59d121ef9cbe8fdc74ed7a4e8b57bb6a1edde0ed2cbe6888288
+receipts:
+  unresolved_subitems: []

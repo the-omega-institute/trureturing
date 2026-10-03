@@ -1,0 +1,8 @@
+### 25.2 混合差分定位层，严格谱凸性恢复有符号位移
+
+对 $\sigma\in S_m$，令层置换 QCA $\Sigma_\sigma$ 把源层 $i$ 送到靶层 $\sigma(i)$，并定义 $(\sigma\mathbf t)_j=t_{\sigma^{-1}(j)}$。取
+
+$$
+\Phi_{\mathbf k,\sigma}=\alpha_{\mathbf k}\Sigma_\sigma.
+$$
+

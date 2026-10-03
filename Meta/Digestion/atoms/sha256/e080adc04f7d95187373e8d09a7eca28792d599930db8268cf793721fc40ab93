@@ -1,0 +1,25 @@
+## 199. 非单位共轭比的任意稀薄素切面与固定种子全指标余量
+
+混合窗口的作用可直接用于一般固定种子，无需先把平方范数种子开平方。本节先使用非零素理想赋值构造任意稀薄的固定有根素数集，再独立处理共轭比为单位的 Fibonacci 与 Lucas 情形。全部结论仍为纸面推导；所引用的既有 Lean 声明仅承担其原有单位分类与序列恒等式，不表示本节域论及解析估计已作 Lean 核验。
+
+固定非零本原非负种子
+
+$$
+v=a+b\phi,\qquad a,b\in\mathbb Z_{\ge0},\qquad\gcd(a,b)=1,
+\qquad Q=\operatorname N(v)=a^2+ab-b^2\ne0.
+$$
+
+沿用 $K=\mathbb Q(\sqrt5)$、$R=\mathbb Z[\phi]$、$\tau=-\phi^2$，并记
+
+$$
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4},\qquad
+\rho=\frac{v'}v.
+$$
+
+其中 $R$ 是 $K$ 的整数环。$\operatorname N(\rho)=1$，但 $\rho$ 不必是黄金整数单位。Binet 公式给
+
+$$
+V_j=c_v\phi^j+O_v(|\psi|^j),\qquad c_v>0.
+\tag{199.1}
+$$
+

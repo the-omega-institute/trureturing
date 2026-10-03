@@ -1,0 +1,35 @@
+**命题 98.2（紧区间局部有限与精确导数）。** 每个 $[a,b]\subset(1,\infty)$ 上仅有有限个可能活跃的层及激活事件。$\mathfrak D$ 连续，稳定胞腔内光滑；令
+
+$$
+w(x)=-\lambda'(x)=\frac{\log x+1}{x^2(\log x)^2}>0,
+$$
+
+则稳定胞腔内有
+
+$$
+\mathfrak D(x)=\gamma+\log\log x-\mathcal F+
+\frac{\mathcal A-x}{x\log x},\qquad
+\mathfrak D'(x)=(x-\mathcal A)w(x).
+$$
+
+**证明。** 因为 $G_p(k)/G_p(k-1)=1+1/(p+\cdots+p^k)$，有
+
+$$
+0<r_{p,k}<\frac1{p^k\log p}.
+$$
+
+在紧区间内 $\lambda(x)\ge\lambda(b)>0$。当 $p\ge b$ 时没有活跃层或事件；其余有限个素数各只有有限个 $k$ 能满足 $p^k\log p<1/\lambda(b)$。不同素数可以同时激活，同一素数的阈值严格递减，不能同时激活两层。由有限正部公式
+
+$$
+S(\lambda(x))=\sum_{p,k}\log p\,(r_{p,k}-\lambda(x))_+
+$$
+
+及局部有限性，得到连续性及稳定区间表达。微分时 $d(\log\log x)/dx=\lambda(x)$，它与 $-\lambda(x)x$ 的一项恰好相消，余下为 $(x-\mathcal A)w$。同样，在参考素数幂与实际激活事件均未发生处，
+
+$$
+\Phi'(x)=(x-\Psi(x))w(x),\qquad
+R'(x)=(\Psi(x)-\mathcal A(x))w(x).
+$$
+
+所以 $\Psi$ 精确消去。仅有参考素数幂事件而没有实际激活时，完整裕度的导数不跳跃；不能把两个分量的事件效应再次当作独立负载相加。 $\square$
+

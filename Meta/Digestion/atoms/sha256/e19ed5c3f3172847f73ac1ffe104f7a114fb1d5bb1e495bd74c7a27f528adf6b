@@ -1,0 +1,4 @@
+**证明。** 常数 $4/5>C_\gamma$，第一条由定理 92.3 的一般形式给出。在 RH 下，$\limsup|\sqrt x\log x\Phi(x)|\le C_\gamma$，而定理 93.2 无条件给 $\sqrt x\log xR(x)\to c_R$，故所示带成立；$c_R-C_\gamma>0$ 推出最终严格正性。严格正性蕴含非负性。反之若最终 $\Delta\ge0$，则 $\Phi\ge-R$；任取固定 $K>c_R$，渐近式给最终 $R\le K/(\sqrt x\log x)$，再由正逆变换和 Landau 论证得到 RH。 $\square$
+
+这些等价关系明确标出尚缺的无限尺度前提；有限森林与局部 $R_p\ge0$ 没有证明此前提，也没有证明 RH。
+

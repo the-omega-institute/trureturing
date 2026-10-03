@@ -4,6 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.TestFunctions;
 
+[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
 internal sealed class LiCurvatureFiniteReconstructionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.";

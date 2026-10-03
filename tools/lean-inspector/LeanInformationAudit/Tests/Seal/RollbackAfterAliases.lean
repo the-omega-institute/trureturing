@@ -1,7 +1,10 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Lean.Elab.Command LeanInformationAudit LeanInformationAudit.Tests.ImportClosureProducer
-expect_information_occurrence importedTheorem in objectArena
+test_assess in expect_information_occurrence importedTheorem in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 run_cmd do
   let env ← getEnv
@@ -12,7 +15,8 @@ run_cmd do
   elabCommand (← `(command| theorem $(mkIdent (`_root_ ++ collision)) : True := True.intro))
   let before ← getEnv
   let mut rejected := false
-  try prepareSealPublication
+  try liftCoreM do
+    assessAndSealRegistration (← RegistrationAssessmentInput.capture root)
   catch error => rejected := (← error.toMessageData.toString).startsWith "IE-C025"
   let mut exportRejected := false
   try discard <| prepareInformationAnalysisExport root [.seal, .analysis, .ascii]

@@ -1,0 +1,2 @@
+**证明。** 有限维矩阵的恒等式 $-\log\det(1-xA)=\sum_{k\geq1}\operatorname{tr}(A^k)x^k/k$ 对每个因子成立。有限乘积的形式对数可逐因子相加。第 $(m,n)$ 个因子的第 $k$ 项次数为 $(km,kn)$；它贡献 $(a,b)$ 系数当且仅当 $km=a$ 且 $kn=b$。这样的项与 $k\mid\gcd(a,b)$ 一一对应，此时 $(m,n)=(a/k,b/k)$，并自动落在 $[1,N]^2$ 内。相加得到式 (2144.1)，其右端与 $N$ 无关。行列式和等变迹展开的文献先例见 [Borcherds 1992, §8, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)；此处只是该已知代数计算的有限盒表述。
+

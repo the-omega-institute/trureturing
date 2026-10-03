@@ -1,0 +1,4 @@
+### 338.10 原加权价格的临界幂指数
+
+继续使用第328节的 $\mathcal V_a^{\mathcal C}(\delta,\lambda)$，其中 $\mathcal C\in\{\mathrm{pol},\mathrm{alg}\}$，费用为 $(N_H+\lambda N_T)^a$。无额外身份限制的输出律合同和第一全局调用保留真实 $X$ 的子类，各自在自身合同内取下确界。
+

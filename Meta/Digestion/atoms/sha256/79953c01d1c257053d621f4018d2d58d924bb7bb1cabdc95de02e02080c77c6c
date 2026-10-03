@@ -1,0 +1,16 @@
+**定理 96.1（任意两块的规范接缝）。** 对正整数 $A,B$，定义
+
+$$
+\Gamma_{A,B}=\{(u,v):u\mid A,\ v\mid B,\ \gcd(v,A/u)=1\}.
+$$
+
+乘法映射 $(u,v)\mapsto uv$ 给出 $\Gamma_{A,B}$ 与 $AB$ 的全部正约数之间的双射，其逆为
+
+$$
+d\longmapsto\bigl(\gcd(d,A),\ d/\gcd(d,A)\bigr).
+$$
+
+特别地，$Z(AB)=\sum_{(u,v)\in\Gamma_{A,B}}1/(uv)$。
+
+**证明。** 对任意素数 $p$，令 $a=v_p(A),b=v_p(B),k=v_p(d)\le a+b$。逆映射的两个指数分别为 $\min(k,a)$ 和 $\max(k-a,0)$，都在各自上限内，并满足接缝条件。反向若 $s=v_p(u),t=v_p(v)$，则 $\min(t,a-s)=0$：或 $t=0$，或 $s=a$。给定和 $k=s+t$，这恰迫使 $s=\min(k,a),t=\max(k-a,0)$，所以逐素数唯一。乘法双射使加权和每个算术约数恰计一次。 $\square$
+

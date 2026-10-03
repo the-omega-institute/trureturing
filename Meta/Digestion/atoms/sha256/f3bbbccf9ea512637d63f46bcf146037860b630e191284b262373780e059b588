@@ -1,0 +1,44 @@
+### 350.2 实线性响应维数恰为 3
+
+定义无限 Hankel 矩阵
+
+\[
+H_{ij}=h_{i+j},\qquad i,j\ge0.
+\tag{350.5}
+\]
+
+式（350.1）把 \(H\) 写为三个秩一矩阵之和，所以 \(\operatorname{rank}H\le3\)。取 \(z_0=1,z_1=\lambda,z_2=\overline\lambda\)，令 \(V_{it}=z_t^i\)，其中 \(i,t\in\{0,1,2\}\)。左上三阶子块满足
+
+\[
+(H_{ij})_{0\le i,j\le2}
+=V\operatorname{diag}(1/2,-1/4,-1/4)V^\top.
+\tag{350.6}
+\]
+
+因为 \(n\ge3\)，三个 \(z_t\) 两两不同，Vandermonde 行列式非零；中间对角阵也可逆。因此该子块可逆，\(H\) 的复秩为 3。原矩阵为实矩阵，实秩与复化后的秩相等，故
+
+\[
+\operatorname{rank}_{\mathbb R}H=3.
+\tag{350.7}
+\]
+
+这个秩确实对应不要求正性的最小实线性实现维数。任何 \(r\) 维表示 \(h_k=uA^kv\) 都使 \(H_{ij}=(uA^i)(A^jv)\)，所以其秩至多 \(r\)。反过来，取
+
+\[
+x_k=\begin{pmatrix}1\\\cos(k\theta)\\\sin(k\theta)\end{pmatrix},
+\qquad
+x_{k+1}=
+\begin{pmatrix}
+1&0&0\\
+0&\cos\theta&-\sin\theta\\
+0&\sin\theta&\cos\theta
+\end{pmatrix}x_k,
+\qquad
+h_k=(1/2,-1/2,0)x_k,
+\tag{350.8}
+\]
+
+便得到三维实线性实现。
+
+式（350.8）的坐标与更新允许负数；它没有把 \(x_k\) 解释为三个互斥内部状态的概率分布。低维线性表示的存在，不自动提供同维随机转移和合法输出效果。固定线性次数与任意大的正实现阶数之间的分离，是正实现理论中的成熟现象。[^periodic_positive_realization]
+

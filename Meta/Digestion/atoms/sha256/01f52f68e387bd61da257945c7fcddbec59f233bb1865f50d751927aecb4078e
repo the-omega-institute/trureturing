@@ -1,0 +1,10 @@
+**命题 11.6（完整导数历史的分层风险）。** 令
+$J_k=(u,\mathscr Lu,\ldots,\mathscr L^ku)$，$\mathsf P_k=\mathbb E[\cdot\mid J_k]$，并假设 $u\in\operatorname{Dom}\mathscr L^{k+2}$。置
+$n_k=\|(I-\mathsf P_k)\mathscr L^{k+1}u\|_2^2$。则
+\[
+ \left|\sqrt{\inf_f\mathbb E\|u_t-f(J_k)\|^2}
+ -\frac{t^{k+1}}{(k+1)!}\sqrt{n_k}\right|
+ \le\frac{t^{k+2}}{(k+2)!}\|\mathscr L^{k+2}u\|_2.
+\]
+证明：积分 Taylor 展开中前 $k$ 阶全部是 $J_k$ 可测函数，作 $I-\mathsf P_k$ 投影即得。导数历史是理想信息，带噪延迟需单独预算，不能只据此宣称 Takens 式稳定嵌入。
+

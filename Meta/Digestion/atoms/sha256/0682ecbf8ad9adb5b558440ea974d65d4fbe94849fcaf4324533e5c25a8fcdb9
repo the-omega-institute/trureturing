@@ -1,0 +1,15 @@
+**定理 181.2（完整来源的字符上界）。** 假设 $D_{\mathrm{at}}$ 非平方，令 $q$ 为二次域 $\mathbb Q(\sqrt{D_{\mathrm{at}}})$ 的基本判别式绝对值。对任意正整数 $c$，记
+
+$$
+C=cg,\qquad N=cn_0=Cu\ge8,\qquad \Lambda=\log\log N.
+$$
+
+则
+
+$$
+Z(N)<\frac{2C}{\varphi(C)}e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log q)}.
+$$
+
+证明。命题 181.1 保证每个实际奇素因子 $p\mid u$ 都不分歧，且在模 $q$ 的本原非主实二次字符下取值一。把 §178.1 的乘积证明中的来源 $V$ 换成 $u$、乘子换成 $C$ 即可：在 $x=\log N$ 处分割，低素数由字符乘积界控制，高素数用 $\sum_{p\mid u}\log p\le\log u\le\log N$ 控制；素数二与完整乘子分别支付至多二和 $C/\varphi(C)$。$\square$
+

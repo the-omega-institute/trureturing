@@ -1,0 +1,42 @@
+**定理 35.1（标量周期导数四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，且 $f, f_p, f_{pp}:\mathbb R\to\mathbb R$。假设对每个 $x\in\mathbb R$，
+
+$$
+\operatorname{HasDerivAt} f (f_p x) x,
+\qquad
+\operatorname{HasDerivAt} f_p (f_{pp} x) x,
+$$
+
+$f_{pp}$ 在全体 $\mathbb R$ 上连续，端点满足 $f(b)=f(a)$、$f_p(b)=f_p(a)$，并且对每个 $x\in\operatorname{Icc}(a,b)$ 有幅度条件 $|f(x)|\le M$。则
+
+$$
+\int_a^b f_p(x)^4\,dx
+\le
+9M^2\int_a^b f_{pp}(x)^2\,dx,
+$$
+
+其中积分按定向区间积分理解，等价于在 $\operatorname{Ioc}(a,b)$ 上使用 Lebesgue 限制测度。结论的常数是 $9$。
+
+**证明。** 连续性和导数假设使分部积分合法。对 $f f_p^3$ 分部积分，并用两个端点等式消去边界项，得到
+
+$$
+\int_a^b f_p^4\,dx
+=-\int_a^b3f f_p^2f_{pp}\,dx.
+$$
+
+对每个 $x\in[a,b]$，由 $|f(x)|\le M$ 以及两个平方非负式
+
+$$
+(f_p^2+3ff_{pp})^2\ge0,
+\qquad
+9(M^2-f^2)f_{pp}^2\ge0
+$$
+
+相加并整理，得到
+
+$$
+-3f f_p^2f_{pp}
+\le\frac{f_p^4+9M^2f_{pp}^2}{2}.
+$$
+
+两边积分并移项即得所述 $9M^2$ 界。
+

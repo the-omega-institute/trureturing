@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:519f5ac57e443c229073285f4b56d6deff889cc5917c99f033f1fef68d8021ab
+  normalized_sha256: sha256:519f5ac57e443c229073285f4b56d6deff889cc5917c99f033f1fef68d8021ab
+cas_ref: sha256:519f5ac57e443c229073285f4b56d6deff889cc5917c99f033f1fef68d8021ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: AddCommGroup.is_simple_iff_prime_card, AddSubgroup.comap, AddMonoidHom.inl, AddSubgroup.prod, AddSubgroup.sub_mem, AddSubgroup.add_mem, AddSubgroup.zero_mem, eq_bot_or_eq_top, AddSubgroup.prod_eq_bot_iff, Nat.fib_mono, Nat.card_eq_fintype_card, ZMod.card, ZMod.nontrivial. For any W stable under M(a,b)=(b,a+b) and D(a,b)=(b,0), set H={a | (a,0) in W}. Applying D and then M and subtracting gives W=H.prod H. Conversely every H.prod H is stable by subgroup closure. Thus the stated simplicity property is precisely IsSimpleAddGroup(ZMod(fib j)); the cited simplicity/cardinality equivalence gives Prime(fib j). Derive fib j>=fib 3=2 from j>=3, with no added hypotheses. A temporary exact Lean example with this full telescope compiled successfully through make lean. This is classical matrix-module/cyclic-group simplicity, not a new mathematical declaration; no repository GID or coverage edge is asserted. The example clauses are also checked: fib 7=13, fib 8=21, Prime 13; for d=3 and d=7, the product of the ranges of AddMonoidHom.mulLeft d on ZMod 21 is invariant under both operations, contains a nonzero element, and omits (1,0). AddSubgroup.prod_eq_bot_iff supplies the bottom test; finite kernel reduction via decide verifies that d*a cannot equal 1. All are explicit witness/closure applications and normalization.'
+    previous_atom_id: 2c12f410a2b52835484d9a1e94d392987d7b623069c5d33cbdd672a50750387d
+    next_atom_id: e65225b2ca58f59350476905049867a26cbda5a61876b881e969e02a2302212e

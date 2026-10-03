@@ -1,0 +1,25 @@
+**定义 110.1（一般终端分辨率的 horizon）。** 固定 $H\ge2$ 和正因子 $d\mid H$，沿用定义 109.1 的全部实际源、字面后缀及 End/错误合同，只把成功输出换为定理 100.3、定义 104.4 的 $\eta_{H,d}$。对 $p^h\parallel H$，置 $e=v_p(d)$、$k=h-e$，令 $t=\min(v_p(x),h)$，其中模 $p^h$ 的零余数取 $t=h$。局部与全局标签为
+
+$$
+\eta_{p,h,e}(x)=
+\begin{cases}
+S(t,x/p^t\bmod p^k),&t<e,\\
+D(x/p^e\bmod p^k),&t\ge e,
+\end{cases}
+\qquad
+\eta_{H,d}(x)=\bigl(\eta_{p,h,e}(x)\bigr)_{p\mid H}.
+$$
+
+$S,D$ 是不同类型，$S$ 还记录深度；模 $1$ 的坐标是单点。各除法在可整除的整数代表上完成，再约化。用 $O_{H,d}(p,w)$ 记响应，定义
+
+$$
+h_\eta(H,d)=\min\left\{L\ge0:
+\ \forall p,p',\quad
+\bigl[\forall |w|\le L,\ O_{H,d}(p,w)=O_{H,d}(p',w)\bigr]
+\Rightarrow
+\bigl[\forall w\in\mathcal B^*,\ O_{H,d}(p,w)=O_{H,d}(p',w)\bigr]
+\right\}.
+$$
+
+这里 $L$ 为整数，$p,p'$ 遍历两种初始化的全部实际前缀，所有 $w$ 都是共同字面窗口词。定理 106.7 保证最小值存在。$d=H$ 时标签与 gcd 输出单射互编码，故 $h_\eta(H,H)=h(H)$；$d=1$ 时为完整余数输出。若用 End 之后允许的算术操作解释标签，它代表的是**整个**算术响应族，而不是一次 $F_H$ 查询。此处只计 End 以前的窗口，不计查询次数、算术延续长度、运行时间或状态数，也不允许算术操作与窗口交错。
+

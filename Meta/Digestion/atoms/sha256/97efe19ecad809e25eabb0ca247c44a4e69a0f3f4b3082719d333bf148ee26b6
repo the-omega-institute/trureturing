@@ -1,0 +1,68 @@
+**证明。** 使用 Guth–Maynard,
+*New large value estimates for Dirichlet polynomials*,
+[arXiv:2405.20552v2, Corollary 1.3](https://arxiv.org/html/2405.20552v2)：
+固定 $\epsilon=1/20$ 后，对
+$a^{37/60}\le t\le a^{0.99}$ 一致有
+
+$$
+\pi(a+t)-\pi(a)=\frac tL+O(te^{-u}).
+\tag{260.8}
+$$
+
+这是逐区间一致输入。以下不使用该文 Corollary 1.4 的几乎处处版本。
+对 $a^{2/3}\le t\le a^{0.99}$，记 $N=\pi(a+t)-\pi(a)$。
+区间内素数权重满足
+
+$$
+LN\le\vartheta(a+t)-\vartheta(a)
+\le\log(a+t)N\le(L+t/a)N.
+$$
+
+将式（260.8）代入并吸收 $O((t/a)te^{-u})$，得到
+
+$$
+|\vartheta(a+t)-\vartheta(a)-t|
+\ll tLe^{-u}+\frac{t^2}{aL}.
+\tag{260.9}
+$$
+
+若 $0\le t<a^{2/3}$，由 $\vartheta$ 的单调性及式（260.9）在
+$t=a^{2/3}$ 的值，上述绝对误差为 $O(a^{2/3})$。
+经典初等高次素数幂估计给
+$0\le\Psi(x)-\vartheta(x)\ll\sqrt x\log^2x$：
+每个指数 $m\ge2$ 至多含 $x^{1/m}$ 个底数，每项权重至多 $\log x$，
+而指数个数至多 $\log_2x$；将 $m=2$ 与 $m\ge3$ 分开求和即可。
+因此对全部 $a^{2/3}\le T\le a^{0.99}$，有一致界
+
+$$
+\sup_{0\le t\le T}|E_a(a+t)|
+\ll a^{2/3}+TLe^{-u}+\frac{T^2}{aL}+\sqrt a\,L^2.
+\tag{260.10}
+$$
+
+这里没有假定 $\Psi(a)-a$ 的 RH 尺度界。
+因 $u=o(L)$ 且 $\log L=o(u)$，式（260.5）的两个比值满足所述极限，
+且最终 $a^{2/3}\le H(a)\le a^{0.99}$、$a+H(a)\le2a$。
+对任意较短区间也可使用式（260.10）在共同截止 $T=H(a)$ 的界。
+式（260.4）于是给
+
+$$
+w(y)|\mathcal R_{a,b}(y)|
+\ll\frac{H(a)}{a^{3/2}}
+\left(a^{2/3}+H(a)Le^{-u}
++\frac{H(a)^2}{aL}+\sqrt a\,L^2\right).
+$$
+
+逐项代入 $H(a)$ 即得式（260.7）。其中短区间计数误差准确给出
+
+$$
+\frac{H(a)^2Le^{-u}}{a^{3/2}}=\frac1L.
+\tag{260.11}
+$$
+
+其余三项的负幂指数压过 $e^{cu}$ 与 $L$ 的有限幂，故全都趋零。
+例如改用 $L=u^4$ 后，其指数部分依次为
+$-u^4/12+u/2$、$-u^4/4+3u/2$、$-u^4/4+u/2$，
+充分大时均不超过 $-u$；多项式乘 $e^{-u}$ 趋零。
+界对全部较短区间与全部内部点一致，故式（260.6）成立。$\square$
+

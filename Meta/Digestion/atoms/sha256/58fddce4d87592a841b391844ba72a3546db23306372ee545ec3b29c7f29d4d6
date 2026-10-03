@@ -1,0 +1,5 @@
+### 11.3 独立检验数据上的残差相关证书
+
+令 $g_\pm(u)=\mathbb E[\varphi(u_{\pm h})\mid u_0=u]$，以独立训练数据得到固定函数 $\widehat g_\pm$，满足可核验或另行假设的 $L^2$ 预算
+$\|\widehat g_\pm-g_\pm\|_2\le\varepsilon_\pm$。
+

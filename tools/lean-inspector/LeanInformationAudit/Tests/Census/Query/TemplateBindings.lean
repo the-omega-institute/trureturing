@@ -1,11 +1,14 @@
 import LeanInformationAudit.Census.Command
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.Census.Query.TemplateBindings
 open Lean Meta CensusQuery DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates DeclaredSource
 
-information_theorem unresolved in arena
+test_assess in information_theorem unresolved in arena
   readout via (missingTemplate (fun x : Bool => x))
   primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm

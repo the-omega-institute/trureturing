@@ -1,0 +1,73 @@
+### 332.7 内层正间距排除零分母
+
+对固定外行，内层 HNP 使用 $\alpha=\beta$ 的原始校正
+
+$$
+\varphi_q(z)=\Theta_\beta q^{-\beta}
++\left(\frac{z(1-z)}q\right)^{\beta/2},
+\qquad \Theta_\beta>0,
+\tag{332.16}
+$$
+
+以及上下多项式
+
+$$
+\begin{aligned}
+g_\ell
+&=P_\ell-[z+(1-z)]^{r_\beta}
+ \mathcal D_k B_{q_{\ell,k}}\varphi_{q_{\ell,k}},\\
+h_\ell
+&=P_\ell+[z+(1-z)]^{r_\beta}
+ \mathcal D_k B_{q_{\ell,k}}\varphi_{q_{\ell,k}}.
+\end{aligned}
+\tag{332.17}
+$$
+
+其实际 Bernstein 次数为 $m_{\ell,k}=q_{\ell,k}+r_\beta$。记上下系数为 $\underline a_{\ell,v},\overline a_{\ell,v}$。每个基本校正系数至少为 $\Theta_\beta q_{\ell,k}^{-\beta}$，次数提升是非负凸组合，因此
+
+$$
+\overline a_{\ell,v}-\underline a_{\ell,v}
+\ge2\mathcal D_k\Theta_\beta q_{\ell,k}^{-\beta}>0
+\quad\text{对全部 }\ell,v.
+\tag{332.18}
+$$
+
+从上一内级提升后，旧存活分母满足
+
+$$
+D^{\mathrm{in}}_{\ell,v}
+=
+\bigl[E_\ell(\overline a_{\ell-1}-\underline a_{\ell-1})\bigr]_v
+\ge2\mathcal D_k\Theta_\beta q_{\ell-1,k}^{-\beta}>0.
+\tag{332.19}
+$$
+
+这是统一可计算的严格正下界，对所有形式上的计数历史都成立，包括实际概率为零的历史。逆数可直接按该下界求精度；也可搜索名字给出正有理下界的时刻，这个搜索必然结束。
+
+内层三个分子为
+
+$$
+\begin{aligned}
+U_{1,\ell,v}
+&=\underline a_{\ell,v}-(E_\ell\underline a_{\ell-1})_v,\\
+U_{0,\ell,v}
+&=(E_\ell\overline a_{\ell-1})_v-\overline a_{\ell,v},\\
+U_{c,\ell,v}
+&=\overline a_{\ell,v}-\underline a_{\ell,v}.
+\end{aligned}
+\tag{332.20}
+$$
+
+它们非负，和为式（332.19）。停止分子可能恰好为零；除以正公共分母后，仍得到统一可计算的概率向量。用引理332.2直接三分类采样，不判零，也不先寻找某个严格正的停止分支。
+
+初始级使用
+
+$$
+\underline a_{0,v},\qquad
+1-\overline a_{0,v},\qquad
+\overline a_{0,v}-\underline a_{0,v}.
+\tag{332.21}
+$$
+
+启动度和 HNP 估计保证系数合法，故引理同样适用。原校正已经提供正间距，无需新增内层地板、系数取整或尾修正。如果换成可能存在零间距的其他包络，则必须另行处理；本节明确使用式（332.16）—（332.17）。
+

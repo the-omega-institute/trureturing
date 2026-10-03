@@ -1,0 +1,18 @@
+### 336.5 联合矩区域在可计算性门槛两侧
+
+令 $\mathcal R_\beta^{\mathrm{alg}}$ 仍表示准确有效程序可达的正阶对。由定理336.2和第332节，得到
+
+$$
+\boxed{
+\mathcal R_\beta^{\mathrm{alg}}
+=
+\begin{cases}
+\{0<s_H<a,\ s_T>0\}\ \cup\
+\{s_H=a,\ 0<s_T<a\},
+& C,\beta\text{ 均可计算},\\
+\varnothing,
+& C,\beta\text{ 至少一个不可计算}.
+\end{cases}}
+\tag{336.16}
+$$
+

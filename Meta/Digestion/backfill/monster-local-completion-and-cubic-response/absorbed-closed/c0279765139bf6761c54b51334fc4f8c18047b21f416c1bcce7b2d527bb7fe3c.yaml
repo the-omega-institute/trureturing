@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c0279765139bf6761c54b51334fc4f8c18047b21f416c1bcce7b2d527bb7fe3c
+  normalized_sha256: sha256:c0279765139bf6761c54b51334fc4f8c18047b21f416c1bcce7b2d527bb7fe3c
+cas_ref: sha256:c0279765139bf6761c54b51334fc4f8c18047b21f416c1bcce7b2d527bb7fe3c
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockVirasoroCentral.L_commutator
+    target_statement_id: sha256:ef66005a249bbf6c435a839119acacfa743f2989ef4bee3f01093cfe64144903
+receipts:
+  unresolved_subitems: []

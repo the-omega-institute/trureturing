@@ -1,0 +1,2 @@
+**证明。** $F''(0)=Q\Omega^2Q^T$，用 $\Omega^T=-\Omega$ 展开右侧 Gram 得 $D^2-Q\Omega^2Q^T$。零 Gram 等价于不变子空间，转回坐标即 $OA=KO$。证毕。
+

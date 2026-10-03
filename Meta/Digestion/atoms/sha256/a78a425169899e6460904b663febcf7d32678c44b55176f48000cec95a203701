@@ -1,0 +1,4 @@
+### 10.6 条件配对实验和有限延迟认证
+
+给定同一 $u$，独立抽取完整初态 $Z,Z'$ 的条件参考分布，并分别演化。定义 $d_h(Z)=[u(\Phi_h Z)-u(Z)]/h$，$N_h=\mathbb E\operatorname{Cov}(d_h\mid u)$。
+

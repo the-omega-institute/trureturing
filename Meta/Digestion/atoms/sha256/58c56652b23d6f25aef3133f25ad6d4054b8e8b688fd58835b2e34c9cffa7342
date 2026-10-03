@@ -1,0 +1,21 @@
+**证明。** §205.2 给出 $p\ge2r-1$。因此
+
+$$
+ p\log p\ge(2r-1)\log(2r-1)=(2+o(1))r\log r.
+$$
+
+式（259.1）及 $\rho=\log\phi<1$ 给
+
+$$
+ y\log y=(2\rho+o(1))r\log r,
+$$
+
+故前一个严格不等式最终成立。再用 $\log(1+u)<u$（$u>0$），得到
+
+$$
+\frac{\log(1+1/p)}{\log p}
+<\frac1{p\log p}
+<\frac1{y\log y}=\lambda.
+$$
+证毕。 $\square$
+

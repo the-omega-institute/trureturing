@@ -1,0 +1,10 @@
+**证明。** 分别对 $p,x$ 求偏导得到两条方程。$D\Phi_t$ 满足变分方程，逆转置的导数给出伴随方程。拉回一形式得到 $(D\Phi_t^{-T}p)^TD\Phi_tdx=p^Tdx$；对 $p^T\delta x$ 求导时两项相消。证毕。
+
+终端损失 $\ell(x(T))$ 对应 $p(T)=\nabla\ell(x(T))$。初态与损失无显式参数依赖时，参数变分 $s$ 满足 $\dot s=Df_\theta s+\partial_\theta f_\theta\,\delta\theta$，因此
+$$
+\nabla_\theta\ell=\int_0^T(\partial_\theta f_\theta)^Tp(t)dt.
+$$
+其他情形加入初态拉回或显式偏导。对微分同胚离散层 $F$，$(x,p)\mapsto(F(x),DF(x)^{-T}p)$ 同样保持一形式；反向读为 $p_k=DF(x_k)^Tp_{k+1}$。非可逆层仍可拉回协向量，但不再自动定义同维辛微分同胚。这些构件属于余切提升、伴随法和 Neural ODE 的既有理论 [SS16, CRBD18]。
+
+例：$\dot x=-ax$ 提升为 $\mathcal H=-axp$、$\dot p=ap$。压缩与对偶伸长保持完整面积；该构造本身没有改善数值条件数的保证。当前位置和一个点上的切线也不决定完整规律，例如 $\dot x=1$ 与 $\dot x=1+x$ 在 $x=0$ 有相同初始速度。
+

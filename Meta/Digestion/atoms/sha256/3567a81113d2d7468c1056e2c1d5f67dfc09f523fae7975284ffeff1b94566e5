@@ -1,0 +1,39 @@
+**引理 208.1（有限正项矩上界）。** 对每个实数 $X\ge1$、$s>0$，
+
+$$
+\sum_{1\le n\le X}\left(\frac n{\varphi(n)}\right)^s
+\le XW(s).
+\tag{208.4}
+$$
+
+证明。先只交换有限和，再利用 $a_s(d)\ge0$：
+
+$$
+\begin{aligned}
+\sum_{n\le X}\left(\frac n{\varphi(n)}\right)^s
+&=\sum_{d\le X}a_s(d)\left\lfloor\frac Xd\right\rfloor\\
+&\le X\sum_{d\le X}\frac{a_s(d)}d
+\le XW(s).
+\end{aligned}
+$$
+
+整个不等式对各个 $X,s$ 分别成立；因此之后可以选择 $s=s(X)$，无需对固定矩的平均极限提出额外一致性假设。$\square$
+
+由于
+
+$$
+Z(n)=\prod_{p^a\parallel n}
+\frac{1-p^{-(a+1)}}{1-p^{-1}}
+\le\frac n{\varphi(n)},
+$$
+
+式（208.4）立即给出有限 Markov 上界：对每个 $t>0$，
+
+$$
+\#\{1\le n\le X:Z(n)\ge t\}
+\le XW(s)t^{-s}\qquad(s>0).
+\tag{208.5}
+$$
+
+取等号的整数也贡献至少 $t^s$，因此式（208.5）没有丢失 Robin 的临界等号情形。
+

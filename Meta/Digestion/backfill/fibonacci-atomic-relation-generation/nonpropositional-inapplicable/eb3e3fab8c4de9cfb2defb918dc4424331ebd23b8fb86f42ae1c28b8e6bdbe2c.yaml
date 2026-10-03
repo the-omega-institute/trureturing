@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb3e3fab8c4de9cfb2defb918dc4424331ebd23b8fb86f42ae1c28b8e6bdbe2c
+  normalized_sha256: sha256:eb3e3fab8c4de9cfb2defb918dc4424331ebd23b8fb86f42ae1c28b8e6bdbe2c
+cas_ref: sha256:eb3e3fab8c4de9cfb2defb918dc4424331ebd23b8fb86f42ae1c28b8e6bdbe2c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. A temporary exact Lean application proves noninjectivity for every integer weight pair on both Z squared and N squared, including zero and opposite signs. The nonnegative witnesses are (v.toNat,(-u).toNat) and ((-v).toNat,u.toNat) when u is nonzero; when u=0 use (0,0) and (1,0). Integer positive/negative decomposition, Prod.ext, and arithmetic normalization give equal readings and distinct inputs; Int.toNat_of_nonneg and Int.toNat_eq_zero are pinned APIs. A second exact application proves that any pair of integer linear readings with zero determinant fails on N squared by splitting an integer kernel vector into its nonnegative parts. The H23 inverse (n,nprime)->(5*n-3*nprime,2*nprime-3*n) and H23/M update compatibility are checked by normalization, proving attainment by the two stated independent readings. Settle this statement child only; the parent and proof child retain the unconditional nonzero-vector assertion at u=v=0. No new mathematical declaration, repository GID or coverage edge is asserted.
+    previous_atom_id: fcf64605254980344bf4188195b16a74ac6132e800134e83d00b747c90d3c15a
+    next_atom_id: ba0528d72d7664f73a51877fedce3d72638e8be31ca2676e45a172b5fe88f528

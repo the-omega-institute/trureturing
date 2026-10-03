@@ -1,0 +1,12 @@
+**Theorem 5.1 (boundary-centered inversion isometry).** Let (E) be a real
+inner product space and (U_E) the upper half-space of Definition 3.1. For
+(p=(x,t)\in U_E), put (r(p)=d_2(p,0)>0) and
+
+\[
+ J(p)=r(p)^{-2}p.
+\]
+
+Then (J(p)\in U_E), (J(J(p))=p), and
+(d_H(J(p),J(q))=d_H(p,q)) for every (p,q\in U_E). Thus (J) is an
+involutive isometric equivalence.
+

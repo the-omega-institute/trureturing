@@ -1,0 +1,18 @@
+**定理 304.1（同一个整数的高度费用与分位证书）。** 对 $L\ge3$、$H\ge1$ 且 $\mathcal O_L(H)=\mathcal O_L(A_L)$，记 $K=K_L(H)$。对每个实数 $y>1$，有
+\[
+A_L\prod_{p\in\mathcal N_L(H)}p\mid H,
+\qquad
+\log H\ge\log A_L+K\log(m/2),
+\qquad
+J_L(H)\le\mathcal Q_L(y,K).
+\tag{304.5}
+\]
+从而有不使用假设302.1的有限证书
+\[
+\Delta(H)\ge
+E\log\bigl(\log A_L+K\log(m/2)\bigr)
+-\mathscr F_L\exp\bigl(\mathcal Q_L(y,K)\bigr).
+\tag{304.6}
+\]
+这里对数的内层参数为正。
+

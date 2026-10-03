@@ -1,0 +1,6 @@
+### 4.1 量子维数和算符代数维数不是同一个数
+
+在 Fib 中，$\tau\otimes\tau\cong\mathbf1\oplus\tau$，正量子维数满足 $d_\tau^2=1+d_\tau$，故 $d_\tau=\varphi=(1+\sqrt5)/2$。另一方面，窗口可观测代数的复向量空间维数是一个整数。
+
+取 $F_0=0,F_1=1$。
+

@@ -1,0 +1,11 @@
+## 3. Retained-leaf and pendant boundaries
+
+For the triangle $abc$ with pendant edges $au,bv,cw$, the original degrees
+are $3,3,3,1,1,1$. Deleting $a,b$ leaves $cw$ and the isolates $u,v$.
+Thus $H(G)=5/2$, $H(Q)=1$, and the decrease is $3/2$.
+The retained original leaf edge $cw$ has defect decrease
+$\phi(3,1)-\phi(1,1)=1/6>1/15$. A bound that omits its leaf charge is false.
+For $K_4$, deletion of two adjacent vertices has harmonic decrease exactly
+one; $K_4$ has no original pendant neighbors, so removing the pendant
+hypotheses invalidates the conclusion.
+

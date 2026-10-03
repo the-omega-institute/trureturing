@@ -1,0 +1,33 @@
+**证明。** 请求前 $A_i,R_i$ 已知，新币的得分条件均值为零，条件二阶矩为 $1/[p_{A_i}(1-p_{A_i})]$。有限时域的鞅增量在不同时间二阶正交，同一次增量仅有一个非零坐标。因此
+
+$$
+\mathbb E_pS_n=0,\qquad
+\mathbb E_pS_nS_n^{\mathsf T}=\mathbb E_pJ_n=C_n(p).
+\tag{312.7}
+$$
+
+逐词微分式（312.2），得到
+
+$$
+\begin{aligned}
+\nabla g_n&=\mathbb E_p[\mathbf1_{\{M\le n,E\}}S_n],\\
+\operatorname{Hess}g_n
+&=\mathbb E_p[\mathbf1_{\{M\le n,E\}}
+(S_nS_n^{\mathsf T}-J_n)].
+\end{aligned}
+\tag{312.8}
+$$
+
+两个被相减的期望矩阵都正半定，且各自至多为 $C_n$，其差就在 $-C_n$ 和 $C_n$ 之间。这证明式（312.5），常数为一。
+
+再令 $Z_n=\mathbf1_{\{M\le n,E\}}$。由于 $\mathbb E S_n=0$，有
+
+$$
+v^{\mathsf T}\nabla g_n
+=\mathbb E[(Z_n-g_n)v^{\mathsf T}S_n].
+$$
+
+Cauchy–Schwarz和式（312.7）即给式（312.6）。整个证明没有假定请求次数、来源顺序或最终输出相互独立。证毕。
+
+当 $0<g_n<1$ 时，式（312.6）等价于输出二元Fisher信息矩阵 $\nabla g_n\nabla g_n^{\mathsf T}/[g_n(1-g_n)]$ 不超过 $C_n$。当 $g_n=0$ 或一时，用原方向不等式解释，它迫使梯度为零，不引入除零量。Fisher预算和Hessian预算是不同条件；控制一阶可区分性本身不保证控制二阶响应。
+

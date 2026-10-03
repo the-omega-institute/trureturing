@@ -1,0 +1,18 @@
+**证明。** 交叉功率 $-e^TCh+h^TC^Te$ 抵消。变参数公式给出消元；由 $A_h+A_h^T=-2R_h$ 计算 resolvent 二次型实部得到最后一式。证毕。
+
+例：$A_h=\left(\begin{smallmatrix}-\gamma&\omega\\-\omega&-\gamma\end{smallmatrix}\right)$、$C=(g,0)$ 给出 $K(t)=g^2e^{-\gamma t}\cos\omega t$；正实性允许时域核变号。隐藏热浴加噪声 $\sqrt{2\beta^{-1}R_h}dW$，平稳协方差 $\beta^{-1}I$ 解 Lyapunov 方程，消元随机力协方差为 $\beta^{-1}K(t-s)$，$t\ge s$。可见耗散也需配套热噪声 [L16]。
+
+若 $R_h\succeq\alpha I>0$、$U^TU=I$、$P_U=UU^T$，压缩 $A_r=U^TA_hU,C_r=CU$ 保持被动性。令 $\epsilon_0=\|(I-P_U)C^T\|$、$\epsilon_1=\|(I-P_U)A_hU\|$。对两半群的差使用 Duhamel，得到
+$$
+\|K(t)-K_r(t)\|\le\|C\|e^{-\alpha t}
+(\epsilon_0+t\epsilon_1\|U^TC^T\|),
+$$
+$$
+\int_0^\infty\|K-K_r\|dt\le
+\|C\|(\epsilon_0/\alpha+\epsilon_1\|U^TC^T\|/\alpha^2)=:\epsilon_K.
+$$
+可见线性耗散 $R_x\succeq\zeta I>0$、直接输入、零初态时，两个 resolvent 的范数至多 $1/\zeta$，逆算子恒等式给出 $\|G-G_r\|_{H^\infty}\le\epsilon_K/\zeta^2$ 及对应 $L^2$ 输出误差。这些界不含未知模型的辨识误差。
+
+量子有限维 Markov 生成元可使用 GKSL 形式；完全正性是额外结构 [L76]。例如 Bloch 收缩率 $(1,1,3)$ 虽保持 Bloch 球，其归一 Choi 特征值 $(1-2e^{-t}+e^{-3t})/4$ 在小正时间为负。Gibbs 不变的 CPTP 演化使相对熵收缩，而 $F(\rho)-F(\gamma_\beta)=\beta^{-1}D(\rho\Vert\gamma_\beta)$。满足相应详细平衡的类还有非交换梯度流表述 [CM17]。电路的双边对称化涨落耗散关系 $S_{VV}^{\rm sym}(\omega)=\hbar\omega\coth(\beta\hbar\omega/2)\operatorname{Re}Z(\omega)$ 给出一个实验接口 [C10]，不能与单边谱系数混用。
+
+<a id="sec-predictive"></a>

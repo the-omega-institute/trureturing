@@ -1,0 +1,28 @@
+**命题 11.4（回归误差以乘积进入记忆证书）。** 定义总体残差乘积
+\[
+ \widetilde d_h=\mathbb E[
+ (\varphi(u_{-h})-\widehat g_-(u_0))
+ (\varphi(u_h)-\widehat g_+(u_0))].
+\]
+则
+\[
+ \boxed{\widetilde d_h-d_f(h)
+ =\mathbb E[(g_--\widehat g_-)(g_+-\widehat g_+)],
+ \quad |\widetilde d_h-d_f(h)|\le\varepsilon_-\varepsilon_+.}
+\]
+若 $|\varphi|\le B$、两拟合器裁剪到 $[-B,B]$，并使用 $m$ 组与训练独立且彼此独立的平稳三时刻样本，样本平均 $\widehat d_h$ 以至少 $1-\alpha$ 的概率满足
+\[
+ |\widehat d_h-d_f(h)|\le
+ \varepsilon_-\varepsilon_+
+ +4B^2\sqrt{2\log(2/\alpha)/m}=:a_m.
+\]
+因此 $\widehat d_h+a_m<0$ 认证一个非零组合缺陷，且
+\[
+ \left|-\widehat d_h/h^2-n_f\right|
+ \le h\sqrt{n_f}c_f+h^2c_f^2/4+a_m/h^2.
+\]
+
+**证明。** 每个真实条件残差与任何当前可测函数正交，展开乘积后两个一阶回归误差项为零；剩下误差乘积，Cauchy–Schwarz 得界。每个样本乘积在 $[-4B^2,4B^2]$，Hoeffding 给采样预算，再合并定理 11.1。证毕。
+
+这是 [SP20] 的广义残差协方差结构在本动力学目标上的定量应用。回归预算并非由训练损失自动提供；一条轨迹中重叠三元组也不满足这里的独立检验样本条件。负值是充分的记忆证据，未显著偏离零不能证明 Markov 性。不能据这个有前件证书宣称存在无假设、普遍有效的条件独立检验 [SP20, HPLDGS25]。
+

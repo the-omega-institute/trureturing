@@ -1,0 +1,44 @@
+**证明。** 由引理349.1的有限和，
+
+\[
+\operatorname{tr}T_0^n(R)
+=\sum_{k=0}^{L}\operatorname{tr}T_0^{n+k}(\rho)
+\longrightarrow0.
+\tag{349.17}
+\]
+
+完全正性给序保持，式（349.10）遂给
+
+\[
+0\le\operatorname{tr}T_0^n(I_S)
+\le\mu^{-1}\operatorname{tr}T_0^n(R)
+\longrightarrow0.
+\tag{349.18}
+\]
+
+每个单位迹正态都满足 \(0\preceq\sigma\preceq I_S\)。选择 \(N\) 使式（349.18）的右侧不超过 \(1/2\)，便同时得到
+
+\[
+\operatorname{tr}T_0^N(\sigma)\le\frac12
+\qquad
+(\sigma\succeq0,\ \operatorname{tr}\sigma=1).
+\tag{349.19}
+\]
+
+对全部纯态测试这项不等式，等价于
+\((T_0^*)^N(I_S)\preceq I_S/2\)，即式（349.16）。证毕。
+
+这里没有预先假设每个初态都终止。严格正算子 \(R\) 把一份实际初态的全部可达方向一起覆盖，才使其质量耗尽足以约束 \(S\) 上的任意态。
+
+对任意 Hermitian 算子 \(X=X_+-X_-\)，将式（349.19）按迹齐次化并分别作用于 \(X_+,X_-\)，还得到
+
+\[
+\|T_0^N(X)\|_1
+\le\operatorname{tr}T_0^N(X_+)
+ +\operatorname{tr}T_0^N(X_-)
+\le\frac12\|X\|_1.
+\tag{349.20}
+\]
+
+于是 \(T_0\) 在实空间 \(\operatorname{Herm}(S)\) 上的谱半径小于一。有限量子循环中，全态几乎必终止与统一剩余质量控制之间的关系已有成熟谱论处理；[^quantum_affine_loops] 本节通过式（349.9）—（349.19）明确补足了从一份固定初态到其可达空间的连接。
+

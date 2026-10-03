@@ -1,0 +1,29 @@
+**定理 223.1（完整增量源的两项 Rényi 展开）。** 对每个固定实数
+$q\in(1/2,1)\cup(1,\infty)$，当 $y$ 充分大时，完整幂和 $S_q(\mu_s)$ 有限且严格为正，并且
+
+$$
+\boxed{
+\log S_q(\mu_s)
+=-b_2\left(q-\frac1q\right)(R-\delta)
++O_q\left(\frac y{\ell^4}\right).
+}
+\tag{223.1}
+$$
+
+因而
+
+$$
+\boxed{
+H_q(\mu_s)
+=b_2\left(1+\frac1q\right)(R-\delta)
++O_q\left(\frac y{\ell^4}\right).
+}
+\tag{223.2}
+$$
+
+误差常数与充分大阈值可依赖预先固定的 $q$。上述公式不包含对
+$q\to1$、$q\downarrow1/2$、$q\to\infty$ 或 $q=q(y)$ 的一致性。
+
+证明分为 §223.2—§223.6。两段 $q$ 的共同部分使用同一个实际局部分布；
+$q<1$ 时另行估计真实幂尾，不能只用尾部的概率质量代替它。
+

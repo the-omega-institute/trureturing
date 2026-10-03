@@ -1,0 +1,23 @@
+### 定理 286.3 任意长实际素因子链的饱和 Euler 成本仍小于 16/15
+
+对定理286.2的全部链选择、全部长度与全部正指数，有
+\[
+1<Z(M_k)\le\frac{M_k}{\varphi(M_k)}<\frac{16}{15}.
+\tag{286.11}
+\]
+更具体地，统一对数预算可取
+\[
+\log\frac{M_k}{\varphi(M_k)}
+\le H_*:=\frac1{398}+\frac{95}{3188}<\frac1{16}.
+\tag{286.12}
+\]
+从第 $J\ge1$ 个整包开始的任意有限后段还有与指数无关的趋零预算
+\[
+\log\prod_{j=J}^{k-1}\frac{m_{s_j}}{\varphi(m_{s_j})}
+\le\frac{2}{X_J}
+\left[\frac54(1+\log(3X_J))+\frac5{16}\log5\right],
+\qquad X_J=797\cdot5^{J-1}.
+\tag{286.13}
+\]
+右端随 $J\to\infty$ 趋零。
+

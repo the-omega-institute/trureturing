@@ -12,7 +12,7 @@ if [ -f "$A/result.json" ]; then echo "=== envelope"; python3 -X utf8 - "$A/resu
 import json,sys
 c=json.load(open(sys.argv[1],encoding='utf-8'))['conclusion']
 print('lane',c.get('lane'),'branch',c.get('branch'),'base',c.get('base'),'pr',json.dumps(c.get('pr'))[:200])
-print('lean',c.get('full_lean_build_exit'),'scribe',c.get('scribe_selftest_exit'),'mt',c.get('merge_tree_conflict_count'),'preflight',c.get('preflight_exits'),'door_closed',c.get('door_closed'))
+print('lean',c.get('full_lean_build_exit'),'scribe',c.get('scribe_selftest_exit'),'mt',c.get('merge_tree_conflict_count'),'gate',c.get('gate_exits'),'door_closed',c.get('door_closed'))
 for a in c.get('atoms',[]):
     print(' ',a.get('atom_id','')[:28], a.get('outcome'), a.get('ejection_class') or '', (a.get('gid') or '')[:110], 'bind' if a.get('bind_only') else '')
     if a.get('outcome')!='deposited': print('    ',(a.get('mathlib_trail') or a.get('notes') or '')[:240])

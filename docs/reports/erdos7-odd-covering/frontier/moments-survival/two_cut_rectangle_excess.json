@@ -1,0 +1,499 @@
+{
+  "status": "pass",
+  "checks": 3723,
+  "fixtures": [
+    {
+      "m": 1,
+      "p": 3,
+      "q": 5,
+      "ell": 7,
+      "tag_height": 6,
+      "original_count": 7,
+      "originals": [
+        {
+          "id": "target:1",
+          "kind": "target",
+          "t": 1,
+          "modulus": 15,
+          "residue": 1
+        },
+        {
+          "id": "supplier:0:zero",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 1,
+          "modulus": 35,
+          "residue": 0
+        },
+        {
+          "id": "supplier:0:q:2",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 2,
+          "modulus": 245,
+          "residue": 147
+        },
+        {
+          "id": "supplier:0:q:3",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 3,
+          "modulus": 1715,
+          "residue": 343
+        },
+        {
+          "id": "supplier:0:q:4",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 4,
+          "modulus": 12005,
+          "residue": 9604
+        },
+        {
+          "id": "supplier:1:zero",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 5,
+          "modulus": 50421,
+          "residue": 0
+        },
+        {
+          "id": "supplier:1:p:2",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 6,
+          "modulus": 352947,
+          "residue": 235298
+        }
+      ],
+      "conditional_grid_cells": 15,
+      "private_target_witnesses": [
+        {
+          "target": 1,
+          "integer": 470596
+        }
+      ],
+      "global_hole": 588246,
+      "origin": {
+        "rectangle_multiplicity": 1,
+        "covering_multiplicity": 2,
+        "covering_labels": [
+          "supplier:0:zero",
+          "supplier:1:zero"
+        ]
+      },
+      "covered_private_fibre_counts": [
+        1
+      ],
+      "rectangle_masses": [
+        "8/15"
+      ],
+      "sum_rectangle_mass": "8/15",
+      "excess_mass": "8/15",
+      "joint_multiplicity_histogram": [
+        {
+          "L": 1,
+          "rectangles": 0,
+          "cells": 7
+        },
+        {
+          "L": 2,
+          "rectangles": 1,
+          "cells": 8
+        }
+      ]
+    },
+    {
+      "m": 2,
+      "p": 3,
+      "q": 5,
+      "ell": 7,
+      "tag_height": 11,
+      "original_count": 13,
+      "originals": [
+        {
+          "id": "target:1",
+          "kind": "target",
+          "t": 1,
+          "modulus": 75,
+          "residue": 55
+        },
+        {
+          "id": "target:2",
+          "kind": "target",
+          "t": 2,
+          "modulus": 45,
+          "residue": 21
+        },
+        {
+          "id": "supplier:0:zero",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 1,
+          "modulus": 175,
+          "residue": 0
+        },
+        {
+          "id": "supplier:0:q:2",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 2,
+          "modulus": 1225,
+          "residue": 735
+        },
+        {
+          "id": "supplier:0:q:3",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 3,
+          "modulus": 8575,
+          "residue": 1715
+        },
+        {
+          "id": "supplier:0:q:4",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 4,
+          "modulus": 60025,
+          "residue": 48020
+        },
+        {
+          "id": "supplier:1:zero",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 5,
+          "modulus": 252105,
+          "residue": 0
+        },
+        {
+          "id": "supplier:1:p:2",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 6,
+          "modulus": 1764735,
+          "residue": 588245
+        },
+        {
+          "id": "supplier:1:q:2",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 7,
+          "modulus": 12353145,
+          "residue": 7411887
+        },
+        {
+          "id": "supplier:1:q:3",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 8,
+          "modulus": 86472015,
+          "residue": 17294403
+        },
+        {
+          "id": "supplier:1:q:4",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 9,
+          "modulus": 605304105,
+          "residue": 484243284
+        },
+        {
+          "id": "supplier:2:zero",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 10,
+          "modulus": 2542277241,
+          "residue": 0
+        },
+        {
+          "id": "supplier:2:p:2",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 11,
+          "modulus": 17795940687,
+          "residue": 11863960458
+        }
+      ],
+      "conditional_grid_cells": 225,
+      "private_target_witnesses": [
+        {
+          "target": 1,
+          "integer": 316372278880
+        },
+        {
+          "target": 2,
+          "integer": 112707624351
+        }
+      ],
+      "global_hole": 395465348601,
+      "origin": {
+        "rectangle_multiplicity": 2,
+        "covering_multiplicity": 3,
+        "covering_labels": [
+          "supplier:0:zero",
+          "supplier:1:zero",
+          "supplier:2:zero"
+        ]
+      },
+      "covered_private_fibre_counts": [
+        1,
+        1
+      ],
+      "rectangle_masses": [
+        "8/75",
+        "8/45"
+      ],
+      "sum_rectangle_mass": "64/225",
+      "excess_mass": "64/225",
+      "joint_multiplicity_histogram": [
+        {
+          "L": 0,
+          "rectangles": 0,
+          "cells": 120
+        },
+        {
+          "L": 1,
+          "rectangles": 0,
+          "cells": 49
+        },
+        {
+          "L": 2,
+          "rectangles": 1,
+          "cells": 48
+        },
+        {
+          "L": 3,
+          "rectangles": 2,
+          "cells": 8
+        }
+      ]
+    },
+    {
+      "m": 3,
+      "p": 3,
+      "q": 5,
+      "ell": 7,
+      "tag_height": 16,
+      "original_count": 19,
+      "originals": [
+        {
+          "id": "target:1",
+          "kind": "target",
+          "t": 1,
+          "modulus": 375,
+          "residue": 25
+        },
+        {
+          "id": "target:2",
+          "kind": "target",
+          "t": 2,
+          "modulus": 225,
+          "residue": 30
+        },
+        {
+          "id": "target:3",
+          "kind": "target",
+          "t": 3,
+          "modulus": 135,
+          "residue": 36
+        },
+        {
+          "id": "supplier:0:zero",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 1,
+          "modulus": 875,
+          "residue": 0
+        },
+        {
+          "id": "supplier:0:q:2",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 2,
+          "modulus": 6125,
+          "residue": 3675
+        },
+        {
+          "id": "supplier:0:q:3",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 3,
+          "modulus": 42875,
+          "residue": 8575
+        },
+        {
+          "id": "supplier:0:q:4",
+          "kind": "supplier",
+          "j": 0,
+          "tag": 4,
+          "modulus": 300125,
+          "residue": 240100
+        },
+        {
+          "id": "supplier:1:zero",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 5,
+          "modulus": 1260525,
+          "residue": 0
+        },
+        {
+          "id": "supplier:1:p:2",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 6,
+          "modulus": 8823675,
+          "residue": 5882450
+        },
+        {
+          "id": "supplier:1:q:2",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 7,
+          "modulus": 61765725,
+          "residue": 37059435
+        },
+        {
+          "id": "supplier:1:q:3",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 8,
+          "modulus": 432360075,
+          "residue": 86472015
+        },
+        {
+          "id": "supplier:1:q:4",
+          "kind": "supplier",
+          "j": 1,
+          "tag": 9,
+          "modulus": 3026520525,
+          "residue": 2421216420
+        },
+        {
+          "id": "supplier:2:zero",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 10,
+          "modulus": 12711386205,
+          "residue": 0
+        },
+        {
+          "id": "supplier:2:p:2",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 11,
+          "modulus": 88979703435,
+          "residue": 29659901145
+        },
+        {
+          "id": "supplier:2:q:2",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 12,
+          "modulus": 622857924045,
+          "residue": 373714754427
+        },
+        {
+          "id": "supplier:2:q:3",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 13,
+          "modulus": 4360005468315,
+          "residue": 872001093663
+        },
+        {
+          "id": "supplier:2:q:4",
+          "kind": "supplier",
+          "j": 2,
+          "tag": 14,
+          "modulus": 30520038278205,
+          "residue": 24416030622564
+        },
+        {
+          "id": "supplier:3:zero",
+          "kind": "supplier",
+          "j": 3,
+          "tag": 15,
+          "modulus": 128184160768461,
+          "residue": 0
+        },
+        {
+          "id": "supplier:3:p:2",
+          "kind": "supplier",
+          "j": 3,
+          "tag": 16,
+          "modulus": 897289125379227,
+          "residue": 598192750252818
+        }
+      ],
+      "conditional_grid_cells": 3375,
+      "private_target_witnesses": [
+        {
+          "target": 1,
+          "integer": 13293172227840400
+        },
+        {
+          "target": 2,
+          "integer": 8474397295248255
+        },
+        {
+          "target": 3,
+          "integer": 108871080546012876
+        }
+      ],
+      "global_hole": 54003512175601626,
+      "origin": {
+        "rectangle_multiplicity": 3,
+        "covering_multiplicity": 4,
+        "covering_labels": [
+          "supplier:0:zero",
+          "supplier:1:zero",
+          "supplier:2:zero",
+          "supplier:3:zero"
+        ]
+      },
+      "covered_private_fibre_counts": [
+        1,
+        1,
+        1
+      ],
+      "rectangle_masses": [
+        "8/375",
+        "8/225",
+        "8/135"
+      ],
+      "sum_rectangle_mass": "392/3375",
+      "excess_mass": "392/3375",
+      "joint_multiplicity_histogram": [
+        {
+          "L": 0,
+          "rectangles": 0,
+          "cells": 2760
+        },
+        {
+          "L": 1,
+          "rectangles": 0,
+          "cells": 287
+        },
+        {
+          "L": 2,
+          "rectangles": 1,
+          "cells": 272
+        },
+        {
+          "L": 3,
+          "rectangles": 2,
+          "cells": 48
+        },
+        {
+          "L": 4,
+          "rectangles": 3,
+          "cells": 8
+        }
+      ]
+    }
+  ],
+  "total_conditional_grid_cells": 3615,
+  "scope": "Only m=1,2,3 at primes3,5,7; actual CRT memberships on zero-tag grids15,225,3375; no full-period scan, solver, extra parameters, or all-family computational claim.",
+  "arithmetic": "Exact integer CRT and rational probabilities"
+}

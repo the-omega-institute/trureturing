@@ -1,0 +1,7 @@
+**定理320.2（共同实现的双向表示）。** 每个完整历史策略诱导唯一的 \((r,f)\in\mathcal R\)，每个 \((r,f)\in\mathcal R\) 都能由一个参数无关策略实现。在反向恢复中，只有 \(r_h=0\) 的节点可任取行为行。对每个实际世界，
+$$
+\Pr_\theta(\text{到达 }h)=L_\theta(h)r_h,\qquad
+\Pr_\theta(\text{到达 }h\text{ 后立即返回 }z)=L_\theta(h)f_h(z).
+\tag{320.4}
+$$
+

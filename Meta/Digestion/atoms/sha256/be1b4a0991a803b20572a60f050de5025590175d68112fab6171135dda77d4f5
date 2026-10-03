@@ -1,0 +1,60 @@
+### 314.5 总费用的匹配发散下界
+
+任取可行近似程序，令其全域、两请求统一总 $m$ 阶矩为 $K$。$K=\infty$ 时下界平凡。否则，只考虑目标任务请求与 $c=1$，取 $A=\{(X,Z)=(1,0)\}$。其近似概率为 $F(h)$，目标为
+
+$$
+G(h)=\frac{1-h/C}{2B}-\varepsilon h^\beta,
+\qquad |F(h)-G(h)|\le\delta.
+\tag{314.18}
+$$
+
+仿射换元 $u(h)=(1-h/C)/B$ 和式（314.15）给引理314.3的前提。又因差分系数绝对值之和为 $2^R$，
+
+$$
+|\Delta_t^R(F-G)(h)|\le2^R\delta.
+\tag{314.19}
+$$
+
+现设 $0<\beta<R$ 非整数。取 $t=h$，令 $h\le1/[4(R+1)]$，则所有差分点 $h,2h,\ldots,(R+1)h$ 合法。线性项在 $R\ge2$ 阶差分中消失，且
+
+$$
+|\Delta_h^R G(h)|=\varepsilon d_{\beta,R}h^\beta,
+\tag{314.20}
+$$
+
+$$
+d_{\beta,R}=|(\beta)_R|
+\int_{[0,1]^R}(1+s_1+\cdots+s_R)^{\beta-R}\,ds>0,
+\quad(\beta)_R=\prod_{j=0}^{R-1}(\beta-j).
+\tag{314.21}
+$$
+
+这是正半轴幂函数的差分积分公式；下降阶乘非零，被积函数为正，故 $d_{\beta,R}$ 严格为正。
+
+选择
+
+$$
+h^\beta=\frac{2^{R+1}\delta}{\varepsilon d_{\beta,R}}.
+\tag{314.22}
+$$
+
+当 $\delta$ 足够小时，选择保持合法。结合式（314.17）、（314.19）与（314.20），
+
+$$
+D_{I,m}(BC)^{-R}K h^R
+\ge\varepsilon d_{\beta,R}h^\beta-2^R\delta
+=2^R\delta.
+$$
+
+因此
+
+$$
+\boxed{
+K\ge\frac{(BC)^R2^R}{D_{I,m}}
+\left(\frac{\varepsilon d_{\beta,R}}{2^{R+1}}\right)^{R/\beta}
+\delta^{\,1-R/\beta}.}
+\tag{314.23}
+$$
+
+常数不依赖程序和 $\delta$。对全部可行程序取下确界仍成立，允许程序随误差预算变化没有改变下界。
+

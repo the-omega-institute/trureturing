@@ -1,0 +1,50 @@
+**命题 35.2（实际尾差的精确最小化）。** 有
+
+$$
+\boxed{d_{n,K}=\min_{h\in H_K}F(h),\qquad
+F(h)=\max\{\lvert\delta-qh\rvert,\lvert h\rvert\}.}
+$$
+
+最小化只需非负差值；对 $h\ge0$，
+
+$$
+F(h)-d=
+\begin{cases}
+q(d-h),&0\le h\le d,\\
+h-d,&h\ge d.
+\end{cases}
+$$
+
+对全部实数 $h$ 还成立 $F(h)-d\ge q|h-d|$。
+
+证明。合法前缀 $u$ 与其相容实际尾 $y$ 给出的两个端点始终为
+
+$$
+(x_0,x_n)=(A(u)+sqy,y),\qquad
+A(u)=\sum_{j<3n}u_j(-t)^j.
+$$
+
+复用定理23.2的码本间距及首位块间隙，或等价地使用命题34.2的分类：兄弟前缀只在最后一位不同，其截距差为 $-s\delta$；非兄弟前缀的截距差至少为 $t^{3n-2}=\delta/t$。若两个共同端点的距离为 $D_{\rm pair}$，则
+
+$$
+|A(u)-A(v)|\le(1+q)D_{\rm pair}.
+$$
+
+非兄弟因而有
+
+$$
+D_{\rm pair}\ge\frac{\delta}{t(1+q)}>\delta,
+$$
+
+因为 $t(1+q)\le t(1+g)=2t^2<1$。两个零尾的兄弟对已达到 $\delta$，故非兄弟不能最小化。
+
+兄弟 $p0,p1$ 的尾分别为 $y_0\in T_{0,K},y_1\in T_{1,K}$；其尾差 $h=y_1-y_0$ 与当前差分别为 $h$ 和 $s(qh-\delta)$，给出 $F(h)$。反向，对 $H_K$ 的每一个差值，分别将其两个实际尾接到窗口前缀 $0^n$ 与 $0^{n-1}5$，两条接缝合法，支持均低于 $3(n+K)$。故每一个差值都由一对实际来源共同端点实现，而不是独立选择标量坐标。
+
+零属于 $H_K$，$F(0)=\delta$；若 $h<0$，则 $F(h)\ge\delta-qh>\delta$。对 $0\le h\le d$，有 $\delta-qh\ge h$，所以 $F(h)=\delta-qh$；对 $h\ge d$，两式 $\delta-qh\le h$ 与 $qh-\delta<h$ 给出 $F(h)=h$。这证明分段式。负轴上
+
+$$
+F(h)-d\ge q(d-h)=q|h-d|,
+$$
+
+非负轴上的分段式同样给出所述全轴下界。$\square$
+

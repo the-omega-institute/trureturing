@@ -1,0 +1,62 @@
+## 152. 新素数尾部与 $10080p^a$ 的 Robin 安全族
+
+本节沿用 §144.1 的记号
+
+$$
+Z(H)=\frac{\sigma(H)}H,
+\qquad
+\Delta(H)=e^\gamma\log\log H-Z(H).
+$$
+
+只研究一个固定的新素数方向；本节不处理同时加入两个或更多新素数的路径。
+令 $H_0=10080$，并取素数 $p\ge11$。由于
+
+$$
+10080=2^5\cdot3^2\cdot5\cdot7,
+$$
+
+所以 $p\nmid H_0$。若 $p\nmid H$，直接从约数和的乘法性得到
+
+$$
+Z(pH)-Z(H)=\frac{Z(H)}p.
+$$
+
+记 $L=\log H$、$x=\log p$，则 Robin 余量的单步变化为
+
+$$
+\Delta(pH)-\Delta(H)
+ =e^\gamma\log\left(1+\frac{x}{L}\right)-\frac{Z(H)}p.
+\tag{152.1}
+$$
+
+对 $u>0$ 使用
+
+$$
+\log(1+u)\ge\frac{u}{1+u},
+$$
+
+可见下面的条件足以保证单步余量不减：
+
+$$
+\frac{Z(H)}p
+\le e^\gamma\frac{\log p}{\log H+\log p}.
+\tag{152.2}
+$$
+
+为控制素数方向，固定 $L>0$ 并置
+
+$$
+R_L(x)=e^\gamma\frac{e^x x}{L+x}.
+$$
+
+它在 $x>0$ 上严格递增，因为
+
+$$
+\frac{d}{dx}\log R_L(x)
+ =1+\frac1x-\frac1{L+x}
+ =1+\frac{L}{x(L+x)}>0.
+\tag{152.3}
+$$
+
+因此，只要式 (152.2) 在某个 $p_0$ 处成立，它就对所有 $p\ge p_0$ 成立。
+

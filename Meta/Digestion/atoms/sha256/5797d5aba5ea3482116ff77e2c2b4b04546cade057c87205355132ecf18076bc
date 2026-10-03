@@ -1,0 +1,19 @@
+**命题 4.1（有限融合空间）。** 对 $n\ge1$，
+
+$$
+\tau^{\otimes n}\cong F_{n-1}\mathbf1\oplus F_n\tau,
+\qquad
+\operatorname{End}(\tau^{\otimes n})
+\cong M_{F_{n-1}}(\mathbb C)\oplus M_{F_n}(\mathbb C),
+$$
+
+其中零大小的块省略。因此
+
+$$
+D(n):=\dim_{\mathbb C}\operatorname{End}(\tau^{\otimes n})
+=F_{n-1}^2+F_n^2=F_{2n-1}.
+\tag{QCA.12}
+$$
+
+**证明。** 张量乘以 $\tau$ 将重数向量 $(a,b)$ 变成 $(b,a+b)$；从 $(0,1)$ 归纳得到分解。半单性和简单对象间 Hom 为零给矩阵块。Fibonacci 加法式 $F_{r+s}=F_{r-1}F_s+F_rF_{s+1}$ 可由递推归纳；取 $r=n,s=n-1$ 得最后等式，$n=1$ 直接检查。证毕。
+

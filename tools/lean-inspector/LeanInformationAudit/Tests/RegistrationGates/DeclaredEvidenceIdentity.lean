@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredEvidenceIdentity
 open Lean Meta Elab Command
@@ -7,7 +10,7 @@ open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
 def proofTemplate (f : Bool → Bool) (_h : True) :
     PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
 
-register_information_template proofTemplate
+test_assess in register_information_template proofTemplate
 
 private def observe (label : String) (ok : Bool) : MetaM Unit :=
   (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"

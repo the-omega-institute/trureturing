@@ -1,0 +1,41 @@
+### 327.5 严格余量与闭端点三分支
+
+选择严格递减的共同数列
+
+$$
+\delta_k=\frac14b^{-(a+1)k}.
+\tag{327.30}
+$$
+
+令
+
+$$
+\widehat\ell_{k,t}
+=(1-\delta_k)\ell_{k,t},\qquad
+\widehat u_{k,t}
+=(1-\delta_k)u_{k,t}+\delta_k.
+\tag{327.31}
+$$
+
+膨胀后的包络仍包围 $F_x$，仍趋于 $F_x$，且
+
+$$
+\widehat U_k-\widehat L_k
+\le\delta_k+
+C_1x^\beta\min\{1,(n_kx^2)^{-\rho/2}\}.
+\tag{327.32}
+$$
+
+记 $E_k$ 为从次数 $d_{k-1}$ 到 $d_k$ 的 Bernstein 提升；在当前成功数 $t$ 处，
+
+$$
+(E_kv)_t=
+\sum_i
+\frac{\binom{d_{k-1}}i
+\binom{d_k-d_{k-1}}{t-i}}
+{\binom{d_k}t}\,v_i,
+\tag{327.33}
+$$
+
+不合法的二项式项取零。权重非负且和为一。这也等于给定当前参考总成功数时，前一批成功数的超几何条件平均，与未知参考率无关。
+

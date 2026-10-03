@@ -1,0 +1,101 @@
+**定理 92.3（最终障碍等价于 RH）。** 在经典有效素数定理、积分显式公式、零点计数与对称性、Landau 非负 Laplace 变换定理下，
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\exists X_0>1\ \forall x\ge X_0,
+\quad\Phi(x)\ge-\frac1{2\sqrt x\log x}.
+$$
+
+更一般地，任意有限 $K\ge0$ 的这种最终下界都推出 RH；RH 反向给出每个 $K>C_\gamma$ 的最终下界，其中 $C_\gamma=2+\gamma-\log(4\pi)<1/2$。不声称反向对所有 $K\ge0$ 成立。
+
+**证明。** 使用同一理论卷“二、一个更强的定理：只证明下界就足够”及“定理 2.1：单边界判据”的零点响应结构，但把所需正逆变换与收敛条件写全。置
+
+$$
+J(x)=\int_x^\infty\frac{\Psi(v)-v}{v^2}\,dv,\qquad
+q(x)=\frac{\log x+1}{\log^2x},\qquad r(x)=q(x)^{-1}.
+$$
+
+有效 PNT 的无条件估计 $\Psi(v)-v=O(v e^{-c\sqrt{\log v}})$ 给出，令 $s=\sqrt{\log x}$，
+
+$$
+J(x)=O((s+1)e^{-cs}),\qquad \Phi(x)=O(e^{-cs}/s).
+$$
+
+这些估计保证 $q(x)J(x)\to0,r(x)\Phi(x)\to0$，且下列分部积分的尾项绝对收敛：
+
+$$
+\begin{aligned}
+\Phi(x)&=q(x)J(x)+\int_x^\infty q'(v)J(v)\,dv,\\
+J(x)&=r(x)\Phi(x)+\int_x^\infty r'(v)\Phi(v)\,dv,\\
+q'(v)&=-\frac{\log v+2}{v\log^3v},\qquad
+r'(v)=\frac{\log v(\log v+2)}{v(\log v+1)^2}>0.
+\end{aligned}
+$$
+
+第二式是正逆变换。若 $x\ge X_0$ 时 $\Phi(x)\ge-K/(\sqrt x\log x)$，则令 $L=\log x$，利用 $(u+2)/(u+1)^2$ 递减及 $\int_x^\infty v^{-3/2}dv=2/\sqrt x$ 得
+
+$$
+J(x)\ge-\frac K{\sqrt x}
+\left[\frac L{L+1}+\frac{2(L+2)}{(L+1)^2}\right].
+$$
+
+于是 $\sqrt xJ(x)$ 最终有有限下界。经典积分显式公式为
+
+$$
+J(x)=-\sum_\rho\frac{x^{\rho-1}}{\rho(1-\rho)}-\frac{\log(2\pi)}x+R_0(x),
+\qquad R_0(x)=\sum_{k\ge1}\frac{x^{-2k-1}}{2k(2k+1)}.
+$$
+
+零点计重数；标准零点计数保证 $\sum_\rho|\rho(1-\rho)|^{-1}<\infty$。因此
+
+$$
+F(t)=\sum_\rho\frac{e^{(\rho-1/2)t}}{\rho(1-\rho)}
+=-e^{t/2}J(e^t)-\log(2\pi)e^{-t/2}+e^{t/2}R_0(e^t)
+$$
+
+在紧区间上一致绝对收敛，为实连续函数；$|F(t)|\le Ae^{t/2}$。所得 $J$ 下界使 $F$ 最终有上界。结合剩余紧区间的连续性，可选有限常数 $M$ 使 $h(t)=M-F(t)\ge1$ 对所有 $t\ge0$ 成立。其 Laplace 积分收敛横坐标满足 $0\le\sigma_c\le1/2$；下界 $h\ge1$ 排除了负横坐标与负无穷的歧义。
+
+在 $\Re z>1/2$ 可逐项变换：
+
+$$
+\mathcal Lh(z)=\frac Mz-
+\sum_\rho\frac1{\rho(1-\rho)[z-(\rho-1/2)]}.
+$$
+
+避开所列极点的紧集上，高零点项为 $O(|\Im\rho|^{-3})$，故级数正常收敛并给出亚纯延拓。它没有正实极点：实数 $0<s<1$ 上，交错 eta 级数为正而 $1-2^{1-s}<0$，所以 $\zeta(s)<0$，不存在相应实零点。
+
+若 $\sigma_c>0$，Landau 定理要求实点 $\sigma_c$ 为奇点，与上式矛盾。其非负性原理也可直接看出：若能跨过横坐标全纯延拓，取其右侧足够近的实中心 $a$，使 Taylor 圆盘伸到 $a-r<\sigma_c$；导数积分中的 $(-1)^j\mathcal Lh^{(j)}(a)$ 为非负矩，由非负项交换求和与积分，Taylor 和等于 $\int_0^\infty h(t)e^{-(a-r)t}dt<\infty$，违反收敛横坐标的定义。因此 $\sigma_c=0$，Laplace 积分在整个 $\Re z>0$ 全纯。
+
+若有 $\Re\rho_0>1/2$，亚纯表达式在 $z_0=\rho_0-1/2$ 的留数为
+
+$$
+-\frac{m_{\rho_0}}{\rho_0(1-\rho_0)}\ne0.
+$$
+
+不同位置的零点产生不同极点，同一位置的重数同号相加；其余正常收敛项及 $M/z$ 在此全纯，故该极点不可消去。这与右半平面全纯矛盾，零点反射对称性遂给 RH。此方向未假设 RH，也未以单个振荡项的大小替代无消去论证。
+
+反向明确假设 RH。此时 $\rho(1-\rho)=|\rho|^2>0$，经典零点和为
+
+$$
+\sum_\rho\frac1{|\rho|^2}=C_\gamma
+=2+\gamma-\log(4\pi)=0.0461914179\ldots.
+$$
+
+显式公式给 $|J(x)|\le C_\gamma/\sqrt x+O(1/x)$。由正向变换、$|q'|$ 以及
+
+$$
+\int_x^\infty\frac{\log v+2}{v^{3/2}\log^3v}\,dv
+\le\frac2{\sqrt x}\frac{\log x+2}{\log^3x}
+$$
+
+得
+
+$$
+|\sqrt x\log x\,\Phi(x)|
+\le C_\gamma\left(1+\frac3{\log x}+\frac4{\log^2x}\right)+O(x^{-1/2}).
+$$
+
+因为 $C_\gamma<1/2$，所需最终下界成立。 $\square$
+
+上述经典输入的显式公式与零点对称性见同卷“平滑显式公式”“单边界判据”及 [DLMF §25.10](https://dlmf.nist.gov/25.10)；Landau 的具体非负变换版本与证明已在本证明中列出。有限 Euler 和的 Mertens 背景可参照 J. D. Lichtman, *Mertens' prime product formula, dissected*, [Theorem 1.1](https://arxiv.org/html/2002.03361v3)，但有限素数乘积与 $P(x)$ 的素数幂截断必须区别。这是既有经典工具的纸面综合，不作新原创判据或已编译 Lean 真值声明。它补足第 88 节未作的强度判断；等价式没有证明任何一侧成立。
+

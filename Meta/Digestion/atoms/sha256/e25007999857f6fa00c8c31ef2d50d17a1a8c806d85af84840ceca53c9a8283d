@@ -1,0 +1,12 @@
+**推论346.3（共同充分预算下的类内精度阶）。** 存在固定充分 \(K_0,c,C,\epsilon_0>0\)，使每个固定 \(K\ge K_0\)、\(0<\epsilon<\epsilon_0\) 都有
+
+\[
+\frac{c}{K^{a-1}}[\log(1/\epsilon)]^a
+\le\mathcal F_{\mathfrak G}(\epsilon,K)
+\le C[\log(1/\epsilon)]^a.
+\tag{346.32}
+\]
+
+因此对每个固定 \(K\ge K_0\)，
+\(\mathcal F_{\mathfrak G}(\epsilon,K)\asymp_K[\log(1/\epsilon)]^a\)。
+

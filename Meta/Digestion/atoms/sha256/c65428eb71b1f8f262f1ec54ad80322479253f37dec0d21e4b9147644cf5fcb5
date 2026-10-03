@@ -1,0 +1,27 @@
+**定理 11.1（有限延迟的精确组合身份）。** 对任意实 $t,s$，
+\[
+ \mathsf T_{t+s}-\mathsf T_t\mathsf T_s
+ =\mathsf P\mathsf U_t\mathsf Q\mathsf U_s\mathsf P.
+\]
+取实 $f=\varphi(u)\in\operatorname{Dom}\mathscr L^2$，令
+\[
+ r_f=\mathsf Q\mathscr Lf,\quad n_f=\|r_f\|_2^2,
+ \quad c_f=\|\mathscr L^2f\|_2,
+ \quad d_f(h)=\langle f,(\mathsf T_{2h}-\mathsf T_h^2)f\rangle.
+\]
+则
+\[
+ \boxed{d_f(h)=\mathbb E\operatorname{Cov}
+       (\varphi(u_{-h}),\varphi(u_h)\mid u_0),}
+\]
+\[
+ \boxed{|d_f(h)+h^2n_f|
+       \le h^3\sqrt{n_f}\,c_f+h^4c_f^2/4,\qquad h\ge0.}
+\]
+另外有精确正算子身份
+\[
+ I-\mathsf T_{-h}\mathsf T_h
+ =(\mathsf Q\mathsf U_h\mathsf P)^*
+   (\mathsf Q\mathsf U_h\mathsf P)\succeq0.
+\]
+

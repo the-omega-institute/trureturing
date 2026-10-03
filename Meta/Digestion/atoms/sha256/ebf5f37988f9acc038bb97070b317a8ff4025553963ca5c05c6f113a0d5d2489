@@ -1,0 +1,26 @@
+**定理 35.3（连续加权全频张量路径与实际 Duhamel 积分）。** 固定 $\nu,\tau>0$。令 $K=\mathbb Z^2$、$V=\mathbb C^2$、$TV=\mathbb C^{2\times2}$、$H=\ell^2(K;V)$、$G=\ell^2(K;TV)$，$W(k)=1+|k|^2$。给定 $x,y:\mathbb R\to H$，它们在 $[0,\tau]$ 上连续，且在该区间上分别满足 $\|x(t)\|\le M_x$、$\|y(t)\|\le M_y$，其中 $M_x,M_y\ge0$。置
+
+$$
+a_x(t,k)=W(k)^{-1}x(t,k),\qquad
+a_y(t,k)=W(k)^{-1}y(t,k),
+$$
+$$
+q(t,k)_{ij}=W(k)\sum_{p\in\mathbb Z^2}a_x(t,p)_i a_y(t,k-p)_j.
+$$
+
+则上式对每个系数绝对收敛，定义 $[0,\tau]$ 上连续的 $G$ 值路径，且 $\|q(t)\|_G\le16M_xM_y$。对任意 $z,w\in H$，将同一张量公式作用于 $z,w$ 得 $r\in G$，并有
+$$
+\|q(t)-r\|_G\le16\|x(t)-z\|_H\|y(t)\|_H+16\|z\|_H\|y(t)-w\|_H.
+$$
+令 $\rho(k)=|k|^2$、$\kappa(k)=(k_1,k_2)$，$P_k$ 是 $\mathbb C\kappa(k)$ 正交补上的投影。存在同一连续 $D:\mathbb R\to H$，在闭区间上满足
+
+$$
+D(0)=0,\qquad \|D(t)\|_H\le32M_xM_y\sqrt{t/\nu},\qquad P_kD(t,k)=D(t,k),\qquad D(t,0)=0,
+$$
+$$
+D(t,k)_i=\int_0^t e^{-\nu(t-s)\rho(k)}
+\left[iP_k\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\right]_i\,ds.
+$$
+
+这里 $i$ 是张量行即速度输出分量，$j$ 是散度的导数指标；积分是全频 $H$ 中同一 Bochner 路径的逐模值，不是假定的形式级数。输出逐模固定于横向投影且空间零模为零；该结论不预设输入的实对称、零均值或横向条件，也未断言输出的实对称；实际准备解、不动点、唯一性、压力与光滑延拓仍须另证。
+

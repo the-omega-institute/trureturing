@@ -1,0 +1,16 @@
+### 345.3 共同中心、完整系数余量与标量误差常数
+
+用 \(\tau\) 表示固定任务起点，区别于后来第0层选中的基本次数 \(m_0\)。全部参考系数函数共用第344节的线性中心
+
+\[
+\begin{gathered}
+\Lambda=\{\tau b^j:j\ge0\},\qquad \tau\ge r,\\
+S_\tau f=Q_{\tau,r}f,\qquad
+S_mf=S_{m/b}f+Q_{m,r}(f-S_{m/b}f)
+\quad(m>\tau).
+\end{gathered}
+\tag{345.11}
+\]
+
+输出用次数 \(m+r\) 的 Bernstein 系数表示，记为 \(c_m(f)\)。所有函数共用相同的 \(\tau,b,r\)，所以 \(S_m\) 与参考系数的线性提升交换，并有 \(S_m1=1\)。
+

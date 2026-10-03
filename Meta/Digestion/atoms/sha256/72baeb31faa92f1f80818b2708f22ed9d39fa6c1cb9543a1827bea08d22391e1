@@ -1,0 +1,19 @@
+### 5.1 响应算符与外部输入
+
+对 $u\in W$，取实际零模在 $B_{\mathbb C}$ 上的限制
+
+$$
+R_u(a)=u\cdot a.
+$$
+
+它是有限维自伴算符。[M01, Corollary 4.1] 的 Norton 迹公式给
+
+$$
+\operatorname{Tr}_B(R_uR_v)=4620\langle u,v\rangle,
+\qquad
+\operatorname{Tr}_B(R_uR_vR_w)=900T^\natural(u,v,w).
+\tag{MC.12}
+$$
+
+原文一般公式含 $\omega$ 分量；这里只因 $u,v,w\perp\omega$ 才化为式（MC.12）。数字 4620、900 是明确的文献输入，本批未从完整 VOA 再证明 Norton 公式。
+

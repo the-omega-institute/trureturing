@@ -43,4 +43,5 @@ Cassini's integer determinant gives one-sided orbit records: before fib(m+2), th
 - Truth anchor: `D5/S1/Words/FibonacciMapFirstStart.goldenMAPFirstStart`
 - Truth anchor: `D5/S1/Words/FibonacciMapFirstStart.result`
 - Dependency: [D5/S1/Deficit/Displacement/GoldenSubstStartSharpness](../Deficit/Displacement/GoldenSubstStartSharpness.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../Scale/Fibonacci.md)
 - Dependency: [D5/S1/Words/FibonacciMapBound](FibonacciMapBound.md)

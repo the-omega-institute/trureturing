@@ -1,0 +1,53 @@
+### 329.4 正保留量及严格相容性
+
+固定
+$$
+\alpha_0=d/8,\qquad\alpha_j=\alpha_0 2^{-2j},
+\qquad
+r_j(p)=2\sum_{i\ge j}e_i(p)+\alpha_j.
+\tag{329.16}
+$$
+由式（329.15），级数在 $I$ 上一致收敛，因而 $r_j$ 连续；同时 $r_j\ge\alpha_j>0$，且 $r_j\to0$ 一致成立。
+
+选择一个固定整数 $n_0$，使
+$$
+\frac{2K_e n_0^{-a}}{1-2^{-a}}\le d/8.
+$$
+于是 $r_j\le r_0\le d/4$，并有
+$$
+r_j-r_{j+1}=2e_j+\alpha_j-\alpha_{j+1}>e_j.
+\tag{329.17}
+$$
+
+定义上下系数
+$$
+a_{j,k}(p)=F(p,k/n_j)-r_j(p),\qquad
+b_{j,k}(p)=F(p,k/n_j)+r_j(p).
+\tag{329.18}
+$$
+它们严格位于 $(0,1)$。由误差界及式（329.17），
+$$
+(\mathcal E_ja_j)_k<a_{j+1,k},\qquad
+b_{j+1,k}<(\mathcal E_jb_j)_k.
+\tag{329.19}
+$$
+每层系数间距
+$$
+b_{j,k}-a_{j,k}=2r_j(p)
+\tag{329.20}
+$$
+与参考计数 $k$ 无关。
+
+令 $L_j,U_j$ 为这些系数对应的次数 $n_j$ Bernstein 多项式。例如
+$$
+L_j(p,q)=\sum_{k=0}^{n_j}\binom{n_j}{k}
+a_{j,k}(p)q^k(1-q)^{n_j-k}.
+$$
+普通 Bernstein 逼近与 $r_j\to0$ 给
+$$
+L_j(p,q)\longrightarrow F(p,q),\qquad
+U_j(p,q)\longrightarrow F(p,q).
+\tag{329.21}
+$$
+提升相容性又使下多项式递增、上多项式递减；故它们确实始终包围 $F$。这些性质同时对全部 $q\in[0,1]$ 成立。
+

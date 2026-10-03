@@ -1,0 +1,40 @@
+**定理 4.2（每个移动时刻的共同相干块）。** 固定 $N\ge1$。对 $B\in\mathcal B(\mathcal H_A)$，以下条件等价：对每个 $t=1,\ldots,N$，均有
+
+$$
+(U^t)^\dagger(B_t\otimes I_H)U^t
+\in\mathcal B(\mathcal H_A)\otimes I_H;
+$$
+
+以及 $B_{aa'}=0$ 对一切 $s_N(a)\ne s_N(a')$ 成立。因此全部满足条件的 $B$ 构成
+
+$$
+\mathcal S_N=
+\bigoplus_{s\in\operatorname{im}s_N}
+\mathcal B\bigl(\operatorname{span}\{|a\rangle:s_N(a)=s\}\bigr).
+$$
+
+若 $n_s=|s_N^{-1}(s)|$，则 $\dim_{\mathbb C}\mathcal S_N=\sum_s n_s^2$。在这些条件下，每个上述拉回实际上等于 $B\otimes I_H$。这里同时要求所有 $1\le t\le N$，且观测量随时刻移动。
+
+证明。累计进位满足
+
+$$
+c_{t+1}(a)=M c_t(a)+c(f^t(a)),\qquad
+U^t=\sum_a|f^t(a)\rangle\langle a|\otimes T_{c_t(a)}U_e^t.
+$$
+
+前式由整数恒等式或 FIB 第 26.2 节得到，后式对 $t$ 归纳。故
+
+$$
+(U^t)^\dagger(B_t\otimes I_H)U^t
+=\sum_{a,a'}B_{aa'}E_{aa'}\otimes
+T_{M^{-t}(c_t(a')-c_t(a))}.
+$$
+
+在正则平移表示中，$T_v$ 为标量恒等算子当且仅当 $v=0$：作用到 $|0\rangle$ 即可判定。又 $M$ 在模 $e$ 上可逆，所以第 $t$ 个条件等价于非零 $B_{aa'}$ 只连接 $c_t(a)=c_t(a')$ 的标签。对所有 $t=1,\ldots,N$ 同时相等，结合 $c_0=0$ 和递推式，等价于
+
+$$
+c(f^j(a))=c(f^j(a'))\pmod e\quad(0\le j<N).
+$$
+
+因 $k$ 只有 $0,1$ 两值且 $e\ge2$，模 $e$ 相等就是进位相等。反方向由同一递推逐步成立，给出等价性和全部拉回公式。$\square$
+

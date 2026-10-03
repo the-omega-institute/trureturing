@@ -1,0 +1,15 @@
+**定义 87.1（参考层与实际层）。** 对实数 $x>1$，令 $\lambda_x=1/(x\log x)$。对素数 $p$ 与整数 $a\ge0$，定义
+
+$$
+Q_p(a)=\sum_{k=1}^a\frac1{kp^k},\qquad
+G_p(a)=\sum_{k=0}^a p^{-k},\qquad
+v_p(x)=\max\bigl(\{0\}\cup\{k\ge1:p^k\le x\}\bigr).
+$$
+
+这里 $v_p(x)$ 是参考层数，不是实数 $x$ 的算术赋值。令 $a_p$ 是 $\log G_p(a)-\lambda_x a\log p$ 的任一最优整数指数，定义
+
+$$
+R_p(x)=Q_p(v_p(x))-\lambda_xv_p(x)\log p
+-\bigl(\log G_p(a_p)-\lambda_xa_p\log p\bigr).
+$$
+

@@ -1,0 +1,20 @@
+**定理331.4（共同极限的对数幂上界）。** 对 $0<\delta<\delta_0$、$\lambda\ge0$，令 $L=\log(1/\delta)$，则有固定 $C_3$ 使
+
+$$
+\boxed{
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_H+C_3\lambda^aL^D
+\quad(0<a\le1),}
+\tag{331.19}
+$$
+
+而
+
+$$
+\boxed{
+[\mathcal V_a^{\mathcal C}(\delta,\lambda)]^{1/a}
+\le K_H^{1/a}+C_3\lambda L^{D/a}
+\quad(a>1).}
+\tag{331.20}
+$$
+

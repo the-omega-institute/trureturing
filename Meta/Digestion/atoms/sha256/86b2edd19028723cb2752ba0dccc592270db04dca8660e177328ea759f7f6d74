@@ -1,0 +1,51 @@
+### 310.8 外层调用的期望费用矩阵
+
+在单次包装均值有限的参数下，设外层目标任务、参考请求数分别为 \(N_T,N_H\)，实际旧来源计数为 \(M_{\mathrm{old}\,T},M_{\mathrm{old}\,H}\)。若 \(\mathbb E(N_T+N_H)<\infty\)，则
+$$
+\boxed{
+\begin{aligned}
+\mathbb E M_{\mathrm{old}\,T}
+&=D(p)\,\mathbb E N_T,\\
+\mathbb E M_{\mathrm{old}\,H}
+&=\frac13m_A(q)\,\mathbb E N_T
++\left(D(q)+\frac13m_A(q)\right)\mathbb E N_H.
+\end{aligned}}
+\tag{310.23}
+$$
+同一内容可按列分别记目标任务和目标参考请求：
+$$
+\begin{pmatrix}
+\mathbb E M_{\mathrm{old}\,T}\\
+\mathbb E M_{\mathrm{old}\,H}
+\end{pmatrix}
+=
+\begin{pmatrix}
+D(p)&0\\
+\frac13m_A(q)&D(q)+\frac13m_A(q)
+\end{pmatrix}
+\begin{pmatrix}
+\mathbb E N_T\\
+\mathbb E N_H
+\end{pmatrix}.
+\tag{310.24}
+$$
+这里 \(p,q\) 是固定实际参数，函数 \(D,m_A\) 来自所选工厂，不是程序预先知道的数值。
+
+证明时令 \(I_{i,T},I_{i,H}\) 分别标记第 \(i\) 次虚拟请求是否发生且来源为何。它们在启动第 \(i\) 个包装前可测。条件于启动前的完整历史，式（310.11）—（310.12）仍给当前包装的旧源别期望，所以前 \(n\) 次虚拟请求的费用期望就是对 \(i\le n\) 的对应指标期望之和。令 \(n\to\infty\)，Tonelli/单调收敛给式（310.23）。外层未来是否停止可以依赖本次返回值，不影响这个启动前条件期望；不要求外层停止次数与各包装费用独立。
+
+若外层期望无穷，逐项非负级数的表述仍然成立，零贡献项按零项处理，不用未定义的 \(0\cdot\infty\)。对于定理310.1 提供的统一有限均值构造，取
+$$
+L_{B,C,\beta}
+=\sup_{s\in I}D(s)+\frac13\sup_{q\in I}m_A(q)<\infty,
+$$
+得到扩展非负意义下的预算运输
+$$
+\boxed{
+\mathbb E M_{\mathrm{old}\,T}
++\mathbb E M_{\mathrm{old}\,H}
+\le L_{B,C,\beta}\,\mathbb E(N_T+N_H),
+\qquad \beta=1\ \text{或}\ \beta\ge2.}
+\tag{310.25}
+$$
+这是期望旧调用预算的传递。单次包装的指数尾或幂尾不自动成为任意外层程序整体的尾，因为外层请求次数本身也可能重尾。式（310.25）更不等于实际完成钟的保持。
+

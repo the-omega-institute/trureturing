@@ -1,0 +1,27 @@
+**定理 312.4（共同加权费用的必要下界）。** 固定 $w_j>0$，设目标 $g\in C^2(\mathcal U)$，并定义同一程序的共同最坏费用
+
+$$
+W=\sup_{p\in\mathcal U}\mathbb E_p\sum_jw_jN_j<\infty.
+\tag{312.19}
+$$
+
+令
+
+$$
+K_w(p,v)=\max_j\frac{v_j^2}{w_jp_j(1-p_j)}.
+\tag{312.20}
+$$
+
+则
+
+$$
+|v^{\mathsf T}\operatorname{Hess}g(p)v|\le WK_w(p,v),
+\tag{312.21}
+$$
+
+$$
+(v^{\mathsf T}\nabla g(p))^2
+\le g(p)(1-g(p))WK_w(p,v).
+\tag{312.22}
+$$
+

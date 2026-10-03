@@ -171,11 +171,16 @@ __inflight() {
 
 # ---- 池遍历:三个纯函数 + 一个取数函数 -------------------------------------------------
 __pools_active_parse() {  # 纯函数:从 stdin 读 `nyxid oracle pool list` 的表,打印 Active=yes 的 slug
+  # The Active column is located by its header name: the CLI inserted Online/Max tasks columns
+  # (2026-09-30 listing: Slug|Name|Visibility|Online|Max tasks|Active|Manage|Join), and a fixed
+  # position then read "Max tasks" and discovered no pool at all. No header, no pool (fail closed).
   awk -F'┆' '
+    function trim(v) { gsub(/[│┆]/, "", v); gsub(/^[ \t]+|[ \t]+$/, "", v); return v }
     /┆/ {
-      s = $1; gsub(/[│┆]/, "", s); gsub(/^[ \t]+|[ \t]+$/, "", s)
-      a = $5; gsub(/[│┆]/, "", a); gsub(/^[ \t]+|[ \t]+$/, "", a)
-      if (s != "" && s != "Slug" && a == "yes") print s
+      s = trim($1)
+      if (s == "Slug") { col = 0; for (i = 1; i <= NF; i++) if (trim($i) == "Active") col = i; next }
+      if (col == 0) next
+      if (s != "" && trim($col) == "yes") print s
     }'
 }
 __pool_stats_parse() {  # 纯函数:<slug> + stdin(该池的 status 文本)→ 一行 `slug|script|online|dispatched|capacity|queued|expired`
@@ -186,9 +191,14 @@ __pool_stats_parse() {  # 纯函数:<slug> + stdin(该池的 status 文本)→ �
     /session has expired/ { expired = 1 }
     /Queued:/     { if (match($0, /Queued: *[0-9]+/)) { q = substr($0, RSTART, RLENGTH); sub(/Queued: */, "", q); queued = q } }
     /^[ \t]*Dispatched:[ \t]*[0-9]+[ \t]*\/[ \t]*[0-9]+[ \t]*$/ { d = $0; sub(/^[ \t]*Dispatched:[ \t]*/, "", d); split(d, p, /\//); gsub(/[ \t]/, "", p[1]); gsub(/[ \t]/, "", p[2]); dispatched = p[1]; capacity = p[2] }
+    # Worker rows are read through the header: the Script column is found by name (the CLI appended
+    # "Last error" and "Cooldown until" after it, so the last column is no longer the script).
+    function cell(v) { gsub(/[│┆]/, "", v); gsub(/^[ \t]+|[ \t]+$/, "", v); return v }
     /┆/ {
-      v = $NF; gsub(/[│┆]/, "", v); gsub(/^[ \t]+|[ \t]+$/, "", v)
-      if (v != "" && v != "Script") { online++; if (script == "") script = v }
+      if (cell($1) == "Worker") { sc = 0; for (i = 1; i <= NF; i++) if (cell($i) == "Script") sc = i; next }
+      if (sc == 0) next
+      v = cell($sc)
+      if (v != "") { online++; if (script == "") script = v }
     }
     END { printf "%s|%s|%d|%s|%s|%d|%d\n", slug, script, online+0, dispatched, capacity, queued+0, expired+0 }'
 }

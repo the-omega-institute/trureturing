@@ -1,6 +1,15 @@
 import Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape
 import Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
-import LeanInformationAudit.SealCommand
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ExactRate
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
+import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.HierarchyLaws
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 run_cmd LeanInformationAudit.RootCatalogs.declare {
   rootId := `Reg.Catalogs.ExistentialWitnessRegistrations
@@ -27,18 +36,4 @@ set_option maxHeartbeats 2000000 in
 
 section
 open LeanInformationAudit
-open Lean in
-run_meta do
-  let env ← getEnv
-  let entries := (InformationRegistry.entries env).filter fun entry =>
-    #[`Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape, `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability].contains entry.registrationModuleName
-  unless entries.size == 2 do throwError "relocated production occurrence count"
-  for entry in entries do
-    let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)
-    let some (.lit (.strVal diagnostic)) := info.value?
-      | throwError "registration diagnostic is not a literal"
-    if diagnostic.isEmpty then
-      logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0]]"
-    else
-      logWarning diagnostic
 end

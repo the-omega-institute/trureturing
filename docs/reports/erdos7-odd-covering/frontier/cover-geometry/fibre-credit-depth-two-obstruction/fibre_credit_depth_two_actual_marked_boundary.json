@@ -1,0 +1,6021 @@
+{
+  "actual_source": {
+    "Haar_survivor_density": "540604/3936933",
+    "actual_retention": "135151/228096",
+    "actual_retention_decimal": 0.5925180625701459,
+    "actual_survivor_count": 45951340,
+    "coarse_survivor_count": 102,
+    "critical_mass_for_fixed_partial_profiles": [
+      {
+        "critical_retention": "46049941717/63611412480",
+        "critical_retention_decimal": 0.7239257850386284,
+        "full_outside_axes": []
+      },
+      {
+        "critical_retention": "22023885169/30359992320",
+        "critical_retention_decimal": 0.7254245961877767,
+        "full_outside_axes": [
+          23
+        ]
+      },
+      {
+        "critical_retention": "68185403/93703680",
+        "critical_retention_decimal": 0.7276704927704013,
+        "full_outside_axes": [
+          19,
+          23
+        ]
+      }
+    ],
+    "marked_old_query_readings": [
+      {
+        "S": [
+          3
+        ],
+        "all_phase_old315_conditional_mean_max": "54972/135151",
+        "old315_query_slots": [
+          9,
+          45,
+          63,
+          315
+        ],
+        "phase2_conditional_mean": "336868/2297567",
+        "phase2_raw_mean": "35/102"
+      },
+      {
+        "S": [
+          5
+        ],
+        "all_phase_old315_conditional_mean_max": "1726219/2297567",
+        "old315_query_slots": [
+          5,
+          15,
+          35,
+          45,
+          105,
+          315
+        ],
+        "phase2_conditional_mean": "924033/4595134",
+        "phase2_raw_mean": "28/51"
+      },
+      {
+        "S": [
+          7
+        ],
+        "all_phase_old315_conditional_mean_max": "2045847/4595134",
+        "old315_query_slots": [
+          7,
+          21,
+          35,
+          63,
+          105,
+          315
+        ],
+        "phase2_conditional_mean": "1266471/9190268",
+        "phase2_raw_mean": "41/102"
+      },
+      {
+        "S": [
+          3,
+          5
+        ],
+        "all_phase_old315_conditional_mean_max": "1018413/9190268",
+        "old315_query_slots": [
+          45,
+          315
+        ],
+        "phase2_conditional_mean": "5005/540604",
+        "phase2_raw_mean": "7/102"
+      },
+      {
+        "S": [
+          3,
+          7
+        ],
+        "all_phase_old315_conditional_mean_max": "562221/9190268",
+        "old315_query_slots": [
+          63,
+          315
+        ],
+        "phase2_conditional_mean": "3003/540604",
+        "phase2_raw_mean": "5/102"
+      },
+      {
+        "S": [
+          5,
+          7
+        ],
+        "all_phase_old315_conditional_mean_max": "522029/4595134",
+        "old315_query_slots": [
+          35,
+          105,
+          315
+        ],
+        "phase2_conditional_mean": "64503/9190268",
+        "phase2_raw_mean": "4/51"
+      },
+      {
+        "S": [
+          3,
+          5,
+          7
+        ],
+        "all_phase_old315_conditional_mean_max": "38016/2297567",
+        "old315_query_slots": [
+          315
+        ],
+        "phase2_conditional_mean": "0",
+        "phase2_raw_mean": "1/102"
+      }
+    ],
+    "max_partial_nonzero_probability": "10/27",
+    "originals": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 9,
+        "residue": 4
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 15,
+        "residue": 1
+      },
+      {
+        "modulus": 45,
+        "residue": 37
+      },
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 21,
+        "residue": 0
+      },
+      {
+        "modulus": 35,
+        "residue": 0
+      },
+      {
+        "modulus": 63,
+        "residue": 0
+      },
+      {
+        "modulus": 105,
+        "residue": 0
+      },
+      {
+        "modulus": 315,
+        "residue": 0
+      },
+      {
+        "modulus": 11,
+        "residue": 0
+      },
+      {
+        "modulus": 13,
+        "residue": 0
+      },
+      {
+        "modulus": 17,
+        "residue": 0
+      },
+      {
+        "modulus": 19,
+        "residue": 0
+      },
+      {
+        "modulus": 23,
+        "residue": 0
+      },
+      {
+        "modulus": 33,
+        "residue": 23
+      },
+      {
+        "modulus": 55,
+        "residue": 2
+      },
+      {
+        "modulus": 77,
+        "residue": 58
+      },
+      {
+        "modulus": 99,
+        "residue": 92
+      },
+      {
+        "modulus": 165,
+        "residue": 137
+      },
+      {
+        "modulus": 231,
+        "residue": 149
+      },
+      {
+        "modulus": 385,
+        "residue": 282
+      },
+      {
+        "modulus": 495,
+        "residue": 272
+      },
+      {
+        "modulus": 693,
+        "residue": 317
+      },
+      {
+        "modulus": 1155,
+        "residue": 527
+      },
+      {
+        "modulus": 3465,
+        "residue": 947
+      },
+      {
+        "modulus": 39,
+        "residue": 14
+      },
+      {
+        "modulus": 65,
+        "residue": 2
+      },
+      {
+        "modulus": 91,
+        "residue": 16
+      },
+      {
+        "modulus": 117,
+        "residue": 56
+      },
+      {
+        "modulus": 195,
+        "residue": 122
+      },
+      {
+        "modulus": 273,
+        "residue": 149
+      },
+      {
+        "modulus": 455,
+        "residue": 72
+      },
+      {
+        "modulus": 585,
+        "residue": 47
+      },
+      {
+        "modulus": 819,
+        "residue": 191
+      },
+      {
+        "modulus": 1365,
+        "residue": 842
+      },
+      {
+        "modulus": 4095,
+        "residue": 947
+      },
+      {
+        "modulus": 51,
+        "residue": 35
+      },
+      {
+        "modulus": 85,
+        "residue": 2
+      },
+      {
+        "modulus": 119,
+        "residue": 37
+      },
+      {
+        "modulus": 153,
+        "residue": 38
+      },
+      {
+        "modulus": 255,
+        "residue": 107
+      },
+      {
+        "modulus": 357,
+        "residue": 23
+      },
+      {
+        "modulus": 595,
+        "residue": 177
+      },
+      {
+        "modulus": 765,
+        "residue": 722
+      },
+      {
+        "modulus": 1071,
+        "residue": 128
+      },
+      {
+        "modulus": 1785,
+        "residue": 1472
+      },
+      {
+        "modulus": 5355,
+        "residue": 317
+      },
+      {
+        "modulus": 57,
+        "residue": 20
+      },
+      {
+        "modulus": 95,
+        "residue": 2
+      },
+      {
+        "modulus": 133,
+        "residue": 79
+      },
+      {
+        "modulus": 171,
+        "residue": 137
+      },
+      {
+        "modulus": 285,
+        "residue": 62
+      },
+      {
+        "modulus": 399,
+        "residue": 44
+      },
+      {
+        "modulus": 665,
+        "residue": 387
+      },
+      {
+        "modulus": 855,
+        "residue": 407
+      },
+      {
+        "modulus": 1197,
+        "residue": 1073
+      },
+      {
+        "modulus": 1995,
+        "residue": 1682
+      },
+      {
+        "modulus": 5985,
+        "residue": 1892
+      },
+      {
+        "modulus": 69,
+        "residue": 47
+      },
+      {
+        "modulus": 115,
+        "residue": 2
+      },
+      {
+        "modulus": 161,
+        "residue": 72
+      },
+      {
+        "modulus": 207,
+        "residue": 119
+      },
+      {
+        "modulus": 345,
+        "residue": 212
+      },
+      {
+        "modulus": 483,
+        "residue": 443
+      },
+      {
+        "modulus": 805,
+        "residue": 352
+      },
+      {
+        "modulus": 1035,
+        "residue": 767
+      },
+      {
+        "modulus": 1449,
+        "residue": 1136
+      },
+      {
+        "modulus": 2415,
+        "residue": 1367
+      },
+      {
+        "modulus": 7245,
+        "residue": 632
+      }
+    ],
+    "raw_source_atom_count": 77552640,
+    "rows": [
+      {
+        "outside_live_counts": [
+          0,
+          1,
+          5,
+          7,
+          11
+        ],
+        "outside_survivor_count": 0,
+        "x": 2
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 8
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 11
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 17
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 19
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 23
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 26
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 29
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 32
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 34
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 38
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 41
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 43
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 44
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 47
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 52
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 53
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 59
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 62
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 64
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 68
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 71
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 73
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 74
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 79
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 83
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 86
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 88
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 89
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 92
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 97
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 101
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 104
+      },
+      {
+        "outside_live_counts": [
+          3,
+          5,
+          9,
+          11,
+          15
+        ],
+        "outside_survivor_count": 22275,
+        "x": 107
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 109
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 113
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 116
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 118
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 122
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 124
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 128
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 131
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 134
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 137
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 142
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 143
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 146
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 149
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 152
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 158
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 163
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 164
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 167
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 169
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 173
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 176
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 178
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 179
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 187
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 188
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 191
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 194
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 197
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 199
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 206
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 208
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 209
+      },
+      {
+        "outside_live_counts": [
+          3,
+          5,
+          9,
+          11,
+          15
+        ],
+        "outside_survivor_count": 22275,
+        "x": 212
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 214
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 218
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 221
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 223
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 227
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 232
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 233
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 236
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 239
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 242
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 244
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 248
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 251
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 253
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 254
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 257
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 263
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 268
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 269
+      },
+      {
+        "outside_live_counts": [
+          5,
+          7,
+          11,
+          13,
+          17
+        ],
+        "outside_survivor_count": 85085,
+        "x": 272
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 277
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 278
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 281
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 284
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 289
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 293
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 296
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 298
+      },
+      {
+        "outside_live_counts": [
+          8,
+          10,
+          14,
+          16,
+          20
+        ],
+        "outside_survivor_count": 358400,
+        "x": 299
+      },
+      {
+        "outside_live_counts": [
+          7,
+          9,
+          13,
+          15,
+          19
+        ],
+        "outside_survivor_count": 233415,
+        "x": 302
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 304
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 311
+      },
+      {
+        "outside_live_counts": [
+          10,
+          12,
+          16,
+          18,
+          22
+        ],
+        "outside_survivor_count": 760320,
+        "x": 313
+      },
+      {
+        "outside_live_counts": [
+          9,
+          11,
+          15,
+          17,
+          21
+        ],
+        "outside_survivor_count": 530145,
+        "x": 314
+      }
+    ],
+    "scope": "Actual71-class family, first canonical old45 shape, no repeated numerical moduli, global fixed CRT phases. Tests fixed-profile retention-only repair; not an odd covering or a bound on all possible sources."
+  },
+  "dependency_hashes": {
+    "fibre_credit_depth_two_core_height_joint_bridge.json": "385db85e5f01bb21534c4e31ed9f089d0871360193236dab1f1fbc42bb08a491",
+    "fibre_credit_depth_two_saturated_partial_obstruction.json": "4fa1ac005550335dd929d984d191ec0c85cf701dd6837ed985d0f65876e8a4de"
+  },
+  "marked_queries": {
+    "checked_query_slots": 384,
+    "complete_mean": "191082391/45951340",
+    "cylinder_maxima": [
+      {
+        "core_divisor": 1,
+        "max_numerator": 45951340,
+        "old_phase": 0,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 5192936,
+        "old_phase": 0,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 4231450,
+        "old_phase": 0,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 485198,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 3084842,
+        "old_phase": 0,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 352174,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 286652,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 33256,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 2717962,
+        "old_phase": 0,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 309878,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 252248,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 29220,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 183440,
+        "old_phase": 0,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 21148,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 17202,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 2018,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 2196410,
+        "old_phase": 0,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 249958,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 203504,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 23524,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 148072,
+        "old_phase": 0,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 17036,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 13858,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 1622,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 130388,
+        "old_phase": 0,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 14980,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 12186,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 1424,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 8842,
+        "old_phase": 0,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 1028,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 836,
+        "old_phase": 0,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 1,
+        "max_numerator": 99,
+        "old_phase": 0,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 25740220,
+        "old_phase": 2,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 3108806,
+        "old_phase": 2,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 2504560,
+        "old_phase": 2,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 306578,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 1798400,
+        "old_phase": 2,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 219226,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 176540,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 21838,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 1576936,
+        "old_phase": 2,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 191990,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 154604,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 19098,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 110732,
+        "old_phase": 2,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 13618,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 10968,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 1370,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 1265720,
+        "old_phase": 2,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 153838,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 123884,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 15274,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 88780,
+        "old_phase": 2,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 10898,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 8776,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 1094,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 77804,
+        "old_phase": 2,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 9538,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 7680,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 956,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 5488,
+        "old_phase": 2,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 680,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 548,
+        "old_phase": 2,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 3,
+        "max_numerator": 69,
+        "old_phase": 2,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 16308855,
+        "old_phase": 4,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 1774887,
+        "old_phase": 4,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 1455165,
+        "old_phase": 4,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 159861,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 1070961,
+        "old_phase": 4,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 117321,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 96051,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 10635,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 946287,
+        "old_phase": 4,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 103575,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 84813,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 9381,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 62337,
+        "old_phase": 4,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 6873,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 5619,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 627,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 767715,
+        "old_phase": 4,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 83931,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 68745,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 7593,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 50541,
+        "old_phase": 4,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 5565,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 4551,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 507,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 44643,
+        "old_phase": 4,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 4911,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 4017,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 447,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 2949,
+        "old_phase": 4,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 327,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 267,
+        "old_phase": 4,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 5,
+        "max_numerator": 30,
+        "old_phase": 4,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 8379410,
+        "old_phase": 6,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 934570,
+        "old_phase": 6,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 762350,
+        "old_phase": 6,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 86110,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 557926,
+        "old_phase": 6,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 62774,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 51106,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 5834,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 492122,
+        "old_phase": 6,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 55306,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 45038,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 5134,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 32902,
+        "old_phase": 6,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 3734,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 3034,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 350,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 398290,
+        "old_phase": 6,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 44690,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 36406,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 4142,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 26606,
+        "old_phase": 6,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 3014,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 2450,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 282,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 23458,
+        "old_phase": 6,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 2654,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 2158,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 248,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 1574,
+        "old_phase": 6,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 180,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 146,
+        "old_phase": 6,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 7,
+        "max_numerator": 17,
+        "old_phase": 6,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 11547630,
+        "old_phase": 7,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 1206000,
+        "old_phase": 7,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 996900,
+        "old_phase": 7,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 111450,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 9,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 740556,
+        "old_phase": 7,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 80250,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 9,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 64650,
+        "old_phase": 8,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 7800,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 656256,
+        "old_phase": 7,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 70434,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 9,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 56774,
+        "old_phase": 7,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 6836,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 42150,
+        "old_phase": 7,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 4908,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 3944,
+        "old_phase": 8,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 482,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 9,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 534600,
+        "old_phase": 7,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 56610,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 46230,
+        "old_phase": 7,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 5484,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 34326,
+        "old_phase": 7,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 3940,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 3168,
+        "old_phase": 8,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 386,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 30414,
+        "old_phase": 7,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 3456,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 2780,
+        "old_phase": 8,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 338,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 2004,
+        "old_phase": 8,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 242,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 194,
+        "old_phase": 8,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 9,
+        "max_numerator": 24,
+        "old_phase": 8,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 9,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 8663490,
+        "old_phase": 13,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 896757,
+        "old_phase": 14,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 729990,
+        "old_phase": 13,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 85791,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 545886,
+        "old_phase": 13,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 61947,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 50025,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 5961,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 484770,
+        "old_phase": 13,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 54405,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 43943,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 5231,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 31779,
+        "old_phase": 14,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 3771,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 3041,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 365,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 396090,
+        "old_phase": 13,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 43761,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 35355,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 4203,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 25575,
+        "old_phase": 14,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 3031,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 2445,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 293,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 22473,
+        "old_phase": 14,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 2661,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 2147,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 257,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 1551,
+        "old_phase": 14,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 185,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 149,
+        "old_phase": 14,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 15,
+        "max_numerator": 18,
+        "old_phase": 14,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 4807985,
+        "old_phase": 20,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 571537,
+        "old_phase": 20,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 460715,
+        "old_phase": 20,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 55411,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 332503,
+        "old_phase": 20,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 39839,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 32053,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 3893,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 291977,
+        "old_phase": 20,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 34945,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 28123,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 3411,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 20263,
+        "old_phase": 20,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 2447,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 1965,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 241,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 234805,
+        "old_phase": 20,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 28061,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 22591,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 2735,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 16283,
+        "old_phase": 20,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 1963,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 1577,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 193,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 14293,
+        "old_phase": 20,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 1721,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 1383,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 169,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 995,
+        "old_phase": 20,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 121,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 97,
+        "old_phase": 20,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 21,
+        "max_numerator": 12,
+        "old_phase": 20,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 2939330,
+        "old_phase": 34,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 314674,
+        "old_phase": 34,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 258950,
+        "old_phase": 34,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 27862,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 191326,
+        "old_phase": 34,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 20558,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 16906,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 1826,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 169250,
+        "old_phase": 34,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 18178,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 14950,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 1614,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 11038,
+        "old_phase": 34,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 1190,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 978,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 106,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 137530,
+        "old_phase": 34,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 14762,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 12142,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 1310,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 8966,
+        "old_phase": 34,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 966,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 794,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 86,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 7930,
+        "old_phase": 34,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 854,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 702,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 76,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 518,
+        "old_phase": 34,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 56,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 46,
+        "old_phase": 34,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 35,
+        "max_numerator": 5,
+        "old_phase": 34,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 4331745,
+        "old_phase": 43,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 439065,
+        "old_phase": 43,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 364995,
+        "old_phase": 43,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 37035,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 272943,
+        "old_phase": 43,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 27687,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 23013,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 2337,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 242385,
+        "old_phase": 43,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 24585,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 20435,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 2075,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 15279,
+        "old_phase": 43,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1551,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1289,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 131,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 198045,
+        "old_phase": 43,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 20085,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 16695,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1695,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 12483,
+        "old_phase": 43,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1267,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1053,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 107,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 11085,
+        "old_phase": 43,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 1125,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 935,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 95,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 699,
+        "old_phase": 43,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 71,
+        "old_phase": 43,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 59,
+        "old_phase": 43,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 45,
+        "max_numerator": 6,
+        "old_phase": 44,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 2050785,
+        "old_phase": 61,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 210969,
+        "old_phase": 61,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 174915,
+        "old_phase": 61,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 19770,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 130383,
+        "old_phase": 61,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 14346,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 11634,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 1356,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 115665,
+        "old_phase": 61,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 12618,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 10234,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 1192,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 7434,
+        "old_phase": 62,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 864,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 700,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 82,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 94365,
+        "old_phase": 61,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 10170,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 8250,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 960,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 6003,
+        "old_phase": 61,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 696,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 564,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 66,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 5325,
+        "old_phase": 61,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 612,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 496,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 58,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 360,
+        "old_phase": 62,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 42,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 34,
+        "old_phase": 62,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 63,
+        "max_numerator": 4,
+        "old_phase": 62,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 1520640,
+        "old_phase": 103,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 162610,
+        "old_phase": 104,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 132230,
+        "old_phase": 104,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 15190,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 96286,
+        "old_phase": 104,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 11054,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 8986,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 1034,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 84770,
+        "old_phase": 104,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 9730,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 7910,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 910,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 5758,
+        "old_phase": 104,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 662,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 538,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 62,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 69120,
+        "old_phase": 103,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 7850,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 6382,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 734,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 4646,
+        "old_phase": 104,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 534,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 434,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 50,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 4090,
+        "old_phase": 104,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 470,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 382,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 44,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 278,
+        "old_phase": 104,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 32,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 26,
+        "old_phase": 104,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 105,
+        "max_numerator": 3,
+        "old_phase": 104,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 760320,
+        "old_phase": 313,
+        "outside_primes": [],
+        "root11": 0,
+        "root_intersection_count": 1
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 76032,
+        "old_phase": 313,
+        "outside_primes": [
+          11
+        ],
+        "root11": 10,
+        "root_intersection_count": 10
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 63360,
+        "old_phase": 313,
+        "outside_primes": [
+          13
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 6336,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 47520,
+        "old_phase": 313,
+        "outside_primes": [
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 4752,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 3960,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          17
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 396,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          17
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 42240,
+        "old_phase": 313,
+        "outside_primes": [
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 4224,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 3520,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 352,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 2640,
+        "old_phase": 313,
+        "outside_primes": [
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 264,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 220,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          17,
+          19
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 22,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 34560,
+        "old_phase": 313,
+        "outside_primes": [
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 12
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 3456,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 34
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 2880,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 288,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 2160,
+        "old_phase": 313,
+        "outside_primes": [
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 216,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 180,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          17,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 18,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 1920,
+        "old_phase": 313,
+        "outside_primes": [
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 36
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 192,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 46
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 160,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 16,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          13,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 120,
+        "old_phase": 313,
+        "outside_primes": [
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 48
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 12,
+        "old_phase": 313,
+        "outside_primes": [
+          11,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 10,
+        "old_phase": 313,
+        "outside_primes": [
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 0,
+        "root_intersection_count": 49
+      },
+      {
+        "core_divisor": 315,
+        "max_numerator": 1,
+        "old_phase": 314,
+        "outside_primes": [
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "root11": 10,
+        "root_intersection_count": 47
+      }
+    ],
+    "higher_core_extension_Haar_lower": "5015925/118982864",
+    "partials": [
+      {
+        "S": [
+          3
+        ],
+        "decimal": 0.573358034825535,
+        "full_outside_partial_mean": "2634657/4595134"
+      },
+      {
+        "S": [
+          5
+        ],
+        "decimal": 1.064836389972523,
+        "full_outside_partial_mean": "48930659/45951340"
+      },
+      {
+        "S": [
+          7
+        ],
+        "decimal": 0.638078127863083,
+        "full_outside_partial_mean": "5864109/9190268"
+      },
+      {
+        "S": [
+          3,
+          5
+        ],
+        "decimal": 0.15525993366025886,
+        "full_outside_partial_mean": "3567201/22975670"
+      },
+      {
+        "S": [
+          3,
+          7
+        ],
+        "decimal": 0.0860322898091764,
+        "full_outside_partial_mean": "232547/2703020"
+      },
+      {
+        "S": [
+          5,
+          7
+        ],
+        "decimal": 0.1608499556269741,
+        "full_outside_partial_mean": "7391271/45951340"
+      },
+      {
+        "S": [
+          3,
+          5,
+          7
+        ],
+        "decimal": 0.02311895583458502,
+        "full_outside_partial_mean": "62491/2703020"
+      }
+    ],
+    "scope": "Exact full saturated means on one fixed71-original actual source, all32 outside cofactors. Every root intersection checked. Not a uniform arbitrary-family bound.",
+    "source_survivor_count": 45951340,
+    "weighted_debit": "101900963/147044288",
+    "weighted_debit_decimal": 0.6929950451390536
+  },
+  "scope": "One fixed71-class actual family has a successful marked all-core-height continuation. New high-core moduli may bear every outside subset. Not arbitrary shallow families or Lean."
+}

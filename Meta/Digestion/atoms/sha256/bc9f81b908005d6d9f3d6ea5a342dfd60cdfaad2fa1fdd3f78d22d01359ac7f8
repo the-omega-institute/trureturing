@@ -1,0 +1,11 @@
+**引理345.4（高阶共同张量相容）。** 全部层满足
+
+\[
+\boxed{
+0\le A_k\le B_k\le1,\qquad
+B_k-A_k\ge\delta_k/2,\qquad
+E_kA_{k-1}\le A_k,\qquad
+B_k\le E_kB_{k-1}.}
+\tag{345.29}
+\]
+

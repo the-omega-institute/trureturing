@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:494a8784ae8e8e8482246b5c82feaaa07d901f023d0147f937299767bf8a75c5
+  normalized_sha256: sha256:494a8784ae8e8e8482246b5c82feaaa07d901f023d0147f937299767bf8a75c5
+cas_ref: sha256:494a8784ae8e8e8482246b5c82feaaa07d901f023d0147f937299767bf8a75c5
+coverage_gids:
+  - gid: D5/S3/Geometry/MostowPrasadCovering.orbitQuotientMk_isCoveringMap
+    target_statement_id: sha256:1f26e412141d1cc305d189351c4f3f12bd652552a5dbdc2105f696c97e7b45a8
+receipts:
+  unresolved_subitems: []

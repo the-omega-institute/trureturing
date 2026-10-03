@@ -1,0 +1,64 @@
+**Theorem 56.2 (GIR4, independent points on both fixed curves).**
+For every $J\geq1$ and $1\leq j\leq J$, the actual points
+
+$$
+P_j^-=(\theta_j,x_j),\qquad
+P_j^+=(5\theta_j,25f_j)
+$$
+
+belong to $\mathcal E^-(F_J)$ and $\mathcal E^+(F_J)$,
+respectively. For each sign, these $J$ points are
+$\mathbb Z$-linearly independent even modulo the
+$\mathbb Q$-rational points. Over $N_J$, let
+$\iota(x,y)=(\omega x,y)$. Then the $2J$ points
+$P_j^\pm,\iota(P_j^\pm)$ are
+$\mathbb Z$-linearly independent even modulo the
+$E$-rational points. Consequently
+
+$$
+\operatorname{rank}\mathcal E^\pm(F_J)
+\geq\operatorname{rank}\mathcal E^\pm(\mathbb Q)+J,\qquad
+\operatorname{rank}\mathcal E^\pm(N_J)
+\geq\operatorname{rank}\mathcal E^\pm(E)+2J.
+$$
+
+Both fixed curves therefore have infinite rank over the
+explicit union of the $F_J$. The field degree is $3^J$;
+this is not a fixed-number-field or uniformly bounded-degree
+construction.
+
+Proof. The curve equations are
+$x_j^2=B_j-3$ and $625f_j^2=125(B_j+1)$.
+Over $k_j$, dividing the raw $B_j$-twist point coordinates
+of Theorem 12.1 by $\theta_j^2$ and
+$\theta_j^3=B_j$ identifies them with the displayed fixed-curve
+points. Their infinite order follows from that theorem.
+For each $j$, the automorphism
+$\sigma_j\in\operatorname{Gal}(N_J/E)$ multiplies
+$\theta_j$ by $\omega$ and fixes the other roots. It sends
+$P_j$ to $\iota P_j$ and fixes $P_i$ for $i\ne j$.
+The three CM rotations lie on one horizontal line, giving
+$1+\iota+\iota^2=0$, and
+
+$$
+(\iota-1)(\iota^2-1)=[3],\qquad
+(a+b\iota)(a+b\iota^2)=[a^2-ab+b^2].
+$$
+
+Apply $\sigma_j-1$ and then $\iota^2-1$ to a relation
+$\sum_i a_iP_i$ equal to a $\mathbb Q$-rational point.
+It follows that $[3a_j]P_j=O$, hence $a_j=0$.
+For a relation
+$\sum_i(a_i+b_i\iota)P_i$ equal to an $E$-rational
+point, apply $\sigma_j-1$, then $\iota^2-1$, then
+$a_j+b_j\iota^2$. This yields
+$[3(a_j^2-a_jb_j+b_j^2)]P_j=O$.
+The positive quadratic norm and infinite order force
+$a_j=b_j=0$. The same reasoning after multiplying a
+torsion relation by its order gives independence modulo the
+indicated base-field point groups.
+
+Choose one fixed absolute normalization of canonical height
+$\widehat h$ and write
+$H_j^\pm=\widehat h(P_j^\pm)>0$.
+

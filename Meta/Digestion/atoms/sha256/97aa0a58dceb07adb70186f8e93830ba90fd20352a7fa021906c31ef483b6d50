@@ -1,0 +1,10 @@
+**定理 25.2（$(m+1)^2$ 个整数的精确恢复）。** 设 $\chi_X>0$。令 $\mathcal E=\{\mathbf0,e_1,\ldots,e_m\}$。对 $n+\min_i k_i\ge2$，表
+
+$$
+\{K_{\Phi_{\mathbf k,\sigma}}(n;\mathbf s,\mathbf t):
+\mathbf s,\mathbf t\in\mathcal E\}
+\tag{SC.15}
+$$
+
+唯一确定 $(\mathbf k,\sigma)$。这也唯一确定任意左右 FDQC 修饰后的尾部所对应的参数。
+

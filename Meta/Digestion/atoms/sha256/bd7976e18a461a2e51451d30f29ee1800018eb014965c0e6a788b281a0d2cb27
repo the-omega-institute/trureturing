@@ -1,0 +1,18 @@
+**定理 11.7（四维记忆图的精确闭合与几何保持）。** 在 $\Delta\ne0$ 的开集上，$(x,p,r,s)$ 与完整状态光滑等价。将 $(z,w)^T=A^{-1}(r,s)^T$ 代入
+\[
+ \dot x=p,\quad \dot p=-x^3+r,\quad \dot r=s-\chi p,
+\]
+\[
+ \dot s=2\kappa a(-x^3+r-\kappa x)z
+       +\kappa(4ap-c)w-4\kappa a^2xp^2
+\]
+得到精确自治记忆模型。其推前 Poisson 矩阵 $J_{\rm mem}=D\Psi J_{\rm old}D\Psi^T$ 满足 Jacobi，且
+\[
+ \boxed{\det J_{\rm mem}=\Delta^2>0.}
+\]
+推前 Gibbs 密度为
+\[
+ \rho_{\rm mem}(x,p,r,s)\propto
+ \frac{\exp[-\beta H(x,p,z(x,p,r,s),w(x,p,r,s))]}{|\Delta(x,p)|}.
+\]
+

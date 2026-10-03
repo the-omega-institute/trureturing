@@ -1,0 +1,9 @@
+### theorem 66.1 关联边界与 Mertens 判据
+
+对任意 $\alpha>0$，
+
+$$
+\boxed{\Delta_{7,10}(X)=O(X^\alpha)
+\iff M_{70}(X)=O(X^\alpha).}
+$$
+

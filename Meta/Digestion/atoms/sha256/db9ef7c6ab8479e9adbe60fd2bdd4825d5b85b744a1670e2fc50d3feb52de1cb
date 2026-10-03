@@ -1,0 +1,6 @@
+**定理 316.2（实际累积预算的任意晚深负值）。** 在定理316.1的输入下，若 RH 不成立，则
+\[
+\forall K\ge0\ \forall N_0\ge17\ \exists N\ge N_0:\quad\mathfrak a_N<-K.
+\tag{316.10}
+\]
+

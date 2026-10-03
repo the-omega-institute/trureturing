@@ -1,0 +1,30 @@
+### 13.6 近共振两模态：权衡界的一阶达到与精确约束的不连续性
+
+取
+\[
+\Omega=\operatorname{diag}(\omega_1J_2,\omega_2J_2),\quad
+B=\begin{pmatrix}b_1I_2&\rho I_2\\\rho I_2&b_2I_2\end{pmatrix},
+\quad 0\prec B\prec I,\quad b_1>b_2,\quad\rho>0,
+\]
+\[
+Q_\theta=(\cos\theta I_2,\sin\theta I_2),\quad P_\theta=Q_\theta^TQ_\theta.
+\]
+这是可实现的统计实验：令 $R=I$、$L=[B(I-B)^{-1}]^{1/2}$ 即可得到指定 $B$。$\omega_j>0$ 时，所有 $D_\theta=(\omega_1\cos^2\theta+\omega_2\sin^2\theta)J_2$ 都非退化，可以构造上一节的辛提升，但精确自治在异频时只允许模态端点。
+
+直接计算得
+\[
+\delta_\theta=|\omega_2-\omega_1||\sin\theta\cos\theta|,
+\]
+\[
+\mathcal R(P_\theta)=2-b_1\cos^2\theta-b_2\sin^2\theta-2\rho\sin\theta\cos\theta.
+\]
+异频时精确最优风险是 $2-b_1$，混合收益为
+\[
+2\rho\sin\theta\cos\theta-(b_1-b_2)\sin^2\theta.
+\]
+此例 $\|K\|_F=2\rho/|\omega_2-\omega_1|$、$\|[P_\theta,\Omega]\|_F=2|\omega_2-\omega_1||\sin\theta\cos\theta|$。当 $\theta\downarrow0$，定理 13.2 上界与真实收益之比趋于 1；两者差恰为 $(b_1-b_2)\sin^2\theta$。因此线性的残差代价在允许模型中有一阶达到实例。
+
+取 $b_1=.7,b_2=.3,\rho=.2$，不受自治约束的最优混合角为 $\pi/8$、风险为 $1.217157287525381$，异频精确最优为 $1.3$。频差从 2 降至 .05、.001 时，混合的闭包残差分别为 .7071067812、.01767766953、.000353553391，风险不变。频差严格为零时，这一混合本身精确自治，最优风险降到 $1.217157287525381$。
+
+因此，精确自治约束下的最优值可以在共振处不连续；有限时间、允许残差的设计可以连续接近共振收益。算法不应把浮点数近等频默认为数学上的严格等频。该例在已知生成元和所列 Gaussian 实验中成立，不表示通过任意噪声数据可无限准确分辨频率。
+

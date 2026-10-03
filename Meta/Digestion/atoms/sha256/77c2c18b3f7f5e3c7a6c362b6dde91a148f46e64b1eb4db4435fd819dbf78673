@@ -1,0 +1,21 @@
+**证明。** 误差减少使可行集缩小，因此左侧单调极限 $L$ 存在，而且 $L\le\mathcal C_s^{\mathrm{pol}}(0)$。若 $L=\infty$，等式已成立。
+
+若 $L<\infty$，取 $\delta_j\downarrow0$，选近似下确界的策略使
+
+$$
+\mathcal K_s(\pi_j)
+\le\mathcal C_s^{\mathrm{pol}}(\delta_j)+1/j
+\le L+1/j.
+\tag{318.16}
+$$
+
+共同预算 $L+1$ 允许使用定理318.2，得到准确极限策略。对每个固定截断深度，还可保留式（318.16）的更强界：
+
+$$
+\mathbb E_\theta^\pi(M\wedge n)^s
+=\lim_j\mathbb E_\theta^{\pi_j}(M\wedge n)^s\le L.
+$$
+
+单调收敛给 $\mathcal K_s(\pi)\le L$，故
+$\mathcal C_s^{\mathrm{pol}}(0)\le\mathcal K_s(\pi)\le L$。与反向界合并，既得等式，也得有限最优值达到。证毕。
+

@@ -1,0 +1,73 @@
+### 346.6 加权 Hölder 与近临界逐阶族匹配
+
+现在取 \(A\in\mathfrak G_\infty\)，令
+
+\[
+0<u<u_0,\qquad s=a-u,\qquad
+0<u_0\le\min\{(a-1)/2,1/2\}.
+\tag{346.33}
+\]
+
+于是 \(s\) 位于下端严格大于1的固定区间。共同任务增长使
+\(\lambda_T^s-1\) 有共同正下界。由式（346.3）、（346.9）、（346.11）、（346.13），对每个实际世界和请求，
+
+\[
+\mathbb EN_T^s
+\ge c\sum_{k\ge0}n_k^{-u}\eta_k^{1-s},
+\tag{346.34}
+\]
+
+其中 \(c>0\) 对这个矩阶区间共同。
+
+对任意有限索引集 \(I\)，Hölder 给
+
+\[
+\begin{aligned}
+\sum_{k\in I}n_k^{-u/s}
+&=\sum_{k\in I}
+(n_k^{-u}\eta_k^{1-s})^{1/s}\eta_k^{(s-1)/s}\\
+&\le
+\left(\sum_{k\in I}n_k^{-u}\eta_k^{1-s}\right)^{1/s}
+\left(\sum_{k\in I}\eta_k\right)^{(s-1)/s}.
+\end{aligned}
+\]
+
+因此
+
+\[
+\boxed{
+\sum_{k\in I}n_k^{-u}\eta_k^{1-s}
+\ge
+\frac{\left(\sum_{k\in I}n_k^{-u/s}\right)^s}
+{\left(\sum_{k\in I}\eta_k\right)^{s-1}}.}
+\tag{346.35}
+\]
+
+无限集用有限截段的单调极限处理。
+
+若 \(H_a(A)\le K\)，则参考下界给 \(\sum_k\eta_k\le CK\)。同时
+
+\[
+\sum_{k\ge0}n_k^{-u/s}
+=\frac{N^{-u/s}}{1-b^{-u/s}}\asymp u^{-1}
+\tag{346.36}
+\]
+
+于式（346.33）的范围共同成立。故
+
+\[
+T_{a-u}(A)\ge cK^{1-s}u^{-s}.
+\tag{346.37}
+\]
+
+对固定 \(K\)，由于 \(u^{-s}=u^{-a}u^u\) 且 \(u^u\to1\)，这给
+\(T_{a-u}(A)\ge c_Ku^{-a}\)。下界甚至在每一个固定世界和请求中成立，没有拼接不同世界的尾。
+
+定义
+
+\[
+\mathcal T_{\mathfrak G}(u,K)
+=\inf\{T_{a-u}(A):A\in\mathfrak G_\infty,\ H_a(A)\le K\}.
+\tag{346.38}
+\]
+

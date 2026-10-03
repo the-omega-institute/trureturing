@@ -1,0 +1,6568 @@
+{
+  "complete_weighted_query_enumeration_replayed": true,
+  "dependency_hashes": {
+    "fibre_credit_depth_two_actual_source_catalogue.json": "acfb87e349621565e594b52913b9663ab81f0fc8f82dd1c8600a4df80b7edd8e",
+    "fibre_credit_depth_two_old19_old23_five_fresh.json": "a3253b132077d7c95e7a39a80b583f39cbc49f4444ab03a14fb96250247bfc5b",
+    "fibre_credit_depth_two_old23_full_height.json": "ca998ef3ce5e1043cbd1a78a4f9cd4306b12cfb781b219729aa916f0ba016ede",
+    "fibre_credit_depth_two_old23_gate.json": "8263571884835d712c0b70edce8c63d6643d24c6900a43865413352389c68871",
+    "fibre_credit_depth_two_old_height_hinge_bridge.json": "699dbd9dd90bba1011052121b159938fdfcfe834892077085c6494ab3a411c49",
+    "fibre_credit_depth_two_reweighted_source_hinges.cpp": "dd7f6b752410efd2f70b471327b6fc7b1150ed129b33b6785ed6e62445f116de",
+    "fibre_credit_depth_two_reweighted_source_weights.json": "820c0aa78fe37e7343936d3108da9c94e35edf00cc63458948b2670bcf0e6ac1"
+  },
+  "old_core_caps": {
+    "3": 2,
+    "5": 1,
+    "7": 1
+  },
+  "results": [
+    {
+      "Haar_survivor_lower": "144433/49258905696",
+      "case_count": 223,
+      "conservative_margin": 126,
+      "deep": [
+        19,
+        23
+      ],
+      "fresh_count": 6,
+      "global_cost_strict_upper": 18974,
+      "kappa": "1/5000",
+      "minimum_normalized_Haar_factor": "288866/26558675",
+      "paired_Haar_lower_display": 4.0901336904277364e-06,
+      "reference_capacities": [
+        28,
+        30,
+        36,
+        40,
+        42,
+        46
+      ],
+      "rows": [
+        {
+          "case": "77/151",
+          "cost_display": 11716.169900078608,
+          "cost_strict_upper": 11717,
+          "delta": "68015/439824",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "544120/22309287",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "77/152",
+          "cost_display": 12072.982595973557,
+          "cost_strict_upper": 12073,
+          "delta": "657047/4398240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2628188/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "77/153",
+          "cost_display": 12455.802143304156,
+          "cost_strict_upper": 12456,
+          "delta": "79243/549780",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2535776/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "77/154",
+          "cost_display": 12843.567725040923,
+          "cost_strict_upper": 12844,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "31732/1448655",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "77/155",
+          "cost_display": 13323.153487866792,
+          "cost_strict_upper": 13324,
+          "delta": "293869/2199120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2350952/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "77/156",
+          "cost_display": 13775.263861363526,
+          "cost_strict_upper": 13776,
+          "delta": "112927/879648",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "451708/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/896"
+        },
+        {
+          "case": "78/152",
+          "cost_display": 11292.254814476402,
+          "cost_strict_upper": 11293,
+          "delta": "16933/106080",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "135464/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/153",
+          "cost_display": 11618.740138451883,
+          "cost_strict_upper": 11619,
+          "delta": "229361/1485120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "83404/3380195",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/154",
+          "cost_display": 11967.91122873554,
+          "cost_strict_upper": 11968,
+          "delta": "11083/74256",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "177328/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/155",
+          "cost_display": 12406.825829051988,
+          "cost_strict_upper": 12407,
+          "delta": "213959/1485120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "45044/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/156",
+          "cost_display": 12785.166584865468,
+          "cost_strict_upper": 12786,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "63464/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/157",
+          "cost_display": 13192.855106413921,
+          "cost_strict_upper": 13193,
+          "delta": "198557/1485120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "794228/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/158",
+          "cost_display": 13633.443922471793,
+          "cost_strict_upper": 13634,
+          "delta": "23857/185640",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "763424/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/159",
+          "cost_display": 14179.646659426824,
+          "cost_strict_upper": 14180,
+          "delta": "5233/42432",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "20932/1062347",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/160",
+          "cost_display": 14733.315142389618,
+          "cost_strict_upper": 14734,
+          "delta": "87727/742560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "701816/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "78/161",
+          "cost_display": 15305.299558850664,
+          "cost_strict_upper": 15306,
+          "delta": "167753/1485120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "671012/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "79/154",
+          "cost_display": 11203.706404136363,
+          "cost_strict_upper": 11204,
+          "delta": "719119/4512480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2876476/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/155",
+          "cost_display": 11589.248649271012,
+          "cost_strict_upper": 11590,
+          "delta": "43501/282030",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2784064/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/156",
+          "cost_display": 11955.706345679135,
+          "cost_strict_upper": 11956,
+          "delta": "672913/4512480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2691652/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/157",
+          "cost_display": 12323.754481560178,
+          "cost_strict_upper": 12324,
+          "delta": "9283/64464",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "74264/3187041",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/158",
+          "cost_display": 12694.243762031956,
+          "cost_strict_upper": 12695,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2506828/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/159",
+          "cost_display": 13128.39561988408,
+          "cost_strict_upper": 13129,
+          "delta": "150901/1128120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2414416/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/160",
+          "cost_display": 13588.589482190442,
+          "cost_strict_upper": 13589,
+          "delta": "580501/4512480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2322004/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/161",
+          "cost_display": 14057.571625140701,
+          "cost_strict_upper": 14058,
+          "delta": "278699/2256240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2229592/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/162",
+          "cost_display": 14567.111491627882,
+          "cost_strict_upper": 14568,
+          "delta": "106859/902496",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "427436/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/163",
+          "cost_display": 15122.70802385104,
+          "cost_strict_upper": 15123,
+          "delta": "63899/564060",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "185888/10140585",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/164",
+          "cost_display": 15764.430325995843,
+          "cost_strict_upper": 15765,
+          "delta": "69727/644640",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "278908/15935205",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "79/165",
+          "cost_display": 16434.72611883826,
+          "cost_strict_upper": 16435,
+          "delta": "232493/2256240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1859944/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10112"
+        },
+        {
+          "case": "80/155",
+          "cost_display": 10823.014871041167,
+          "cost_strict_upper": 10824,
+          "delta": "21433/130560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "85732/3187041",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/156",
+          "cost_display": 11200.748723532239,
+          "cost_strict_upper": 11201,
+          "delta": "181763/1142400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2908208/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/157",
+          "cost_display": 11516.872385840074,
+          "cost_strict_upper": 11517,
+          "delta": "703949/4569600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2815796/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/158",
+          "cost_display": 11854.449959811625,
+          "cost_strict_upper": 11855,
+          "delta": "340423/2284800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "6232/255255",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/159",
+          "cost_display": 12215.742129579605,
+          "cost_strict_upper": 12216,
+          "delta": "657743/4569600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2630972/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/160",
+          "cost_display": 12639.1691998985,
+          "cost_strict_upper": 12640,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "507712/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/161",
+          "cost_display": 13030.764887051359,
+          "cost_strict_upper": 13031,
+          "delta": "611537/4569600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2446148/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/162",
+          "cost_display": 13453.110106557182,
+          "cost_strict_upper": 13454,
+          "delta": "42031/326400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "30568/1448655",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/163",
+          "cost_display": 13909.974719502401,
+          "cost_strict_upper": 13910,
+          "delta": "565331/4569600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "173948/8580495",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/164",
+          "cost_display": 14435.952387939273,
+          "cost_strict_upper": 14436,
+          "delta": "135557/1142400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2168912/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "80/165",
+          "cost_display": 14977.221511421483,
+          "cost_strict_upper": 14978,
+          "delta": "20765/182784",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "415300/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10240"
+        },
+        {
+          "case": "81/156",
+          "cost_display": 10472.572386952275,
+          "cost_strict_upper": 10473,
+          "delta": "28933/171360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1041588/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/157",
+          "cost_display": 10824.16201798645,
+          "cost_strict_upper": 10825,
+          "delta": "10529/64260",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1010784/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/158",
+          "cost_display": 11115.09945657324,
+          "cost_strict_upper": 11116,
+          "delta": "16333/102816",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "195996/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/159",
+          "cost_display": 11424.920720411044,
+          "cost_strict_upper": 11425,
+          "delta": "13183/85680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "949176/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/160",
+          "cost_display": 11821.933819879136,
+          "cost_strict_upper": 11822,
+          "delta": "10933/73440",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "10092/408595",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/161",
+          "cost_display": 12170.977209265884,
+          "cost_strict_upper": 12171,
+          "delta": "18491/128520",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "80688/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/162",
+          "cost_display": 12526.825668779142,
+          "cost_strict_upper": 12527,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "856764/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/163",
+          "cost_display": 12909.216711339632,
+          "cost_strict_upper": 12910,
+          "delta": "6883/51408",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "165192/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/164",
+          "cost_display": 13348.676485167834,
+          "cost_strict_upper": 13349,
+          "delta": "66263/514080",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "34572/1616615",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "81/165",
+          "cost_display": 13795.010109023466,
+          "cost_strict_upper": 13796,
+          "delta": "1327/10710",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "764352/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10368"
+        },
+        {
+          "case": "82/158",
+          "cost_display": 10458.08290296615,
+          "cost_strict_upper": 10459,
+          "delta": "28183/167280",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "450928/15935205",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/159",
+          "cost_display": 10745.882879241213,
+          "cost_strict_upper": 10746,
+          "delta": "766021/4683840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3064084/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/160",
+          "cost_display": 11031.27934339645,
+          "cost_strict_upper": 11032,
+          "delta": "371459/2341920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "270152/10140585",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/161",
+          "cost_display": 11398.540360331865,
+          "cost_strict_upper": 11399,
+          "delta": "143963/936768",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "30308/1174173",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/162",
+          "cost_display": 11724.506492884366,
+          "cost_strict_upper": 11725,
+          "delta": "87089/585480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2786848/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/163",
+          "cost_display": 12069.323649470407,
+          "cost_strict_upper": 12070,
+          "delta": "673609/4683840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2694436/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/164",
+          "cost_display": 12442.379789660105,
+          "cost_strict_upper": 12443,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2602024/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/165",
+          "cost_display": 12816.826239533088,
+          "cost_strict_upper": 12817,
+          "delta": "89629/669120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "358516/15935205",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/166",
+          "cost_display": 13219.903622159392,
+          "cost_strict_upper": 13220,
+          "delta": "30215/234192",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "483440/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/167",
+          "cost_display": 13655.026238229142,
+          "cost_strict_upper": 13656,
+          "delta": "581197/4683840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2324788/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/168",
+          "cost_display": 14155.49702708968,
+          "cost_strict_upper": 14156,
+          "delta": "279047/2341920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2232376/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "82/169",
+          "cost_display": 14668.602805553232,
+          "cost_strict_upper": 14669,
+          "delta": "534991/4683840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2139964/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10496"
+        },
+        {
+          "case": "83/159",
+          "cost_display": 10100.722031986572,
+          "cost_strict_upper": 10101,
+          "delta": "5126/29631",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "59648/2028117",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/160",
+          "cost_display": 10405.419592311444,
+          "cost_strict_upper": 10406,
+          "delta": "797057/4740960",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3188228/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/161",
+          "cost_display": 10728.307969496713,
+          "cost_strict_upper": 10729,
+          "delta": "386977/2370480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3095816/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/162",
+          "cost_display": 11010.148357559663,
+          "cost_strict_upper": 11011,
+          "delta": "750851/4740960",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3003404/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/163",
+          "cost_display": 11309.88328737448,
+          "cost_strict_upper": 11310,
+          "delta": "25991/169320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "415856/15935205",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/164",
+          "cost_display": 11650.678964498682,
+          "cost_strict_upper": 11651,
+          "delta": "140929/948192",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "563716/22309287",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/165",
+          "cost_display": 11992.447592572938,
+          "cost_strict_upper": 11993,
+          "delta": "340771/2370480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2726168/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/166",
+          "cost_display": 12335.114288329625,
+          "cost_strict_upper": 12336,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2633756/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/167",
+          "cost_display": 12700.984742880322,
+          "cost_strict_upper": 12701,
+          "delta": "79417/592620",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "195488/8580495",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/168",
+          "cost_display": 13121.198164520922,
+          "cost_strict_upper": 13122,
+          "delta": "612233/4740960",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2448932/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "83/169",
+          "cost_display": 13546.590806050073,
+          "cost_strict_upper": 13547,
+          "delta": "58913/474096",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "471304/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10624"
+        },
+        {
+          "case": "84/161",
+          "cost_display": 10090.476672232142,
+          "cost_strict_upper": 10091,
+          "delta": "39433/228480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "157732/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/162",
+          "cost_display": 10391.877465774243,
+          "cost_strict_upper": 10392,
+          "delta": "26833/159936",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "214664/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/163",
+          "cost_display": 10652.589797978198,
+          "cost_strict_upper": 10653,
+          "delta": "260629/1599360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1042516/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/164",
+          "cost_display": 10949.056932790822,
+          "cost_strict_upper": 10950,
+          "delta": "1976/12495",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "4096/150535",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/165",
+          "cost_display": 11243.641270997787,
+          "cost_strict_upper": 11244,
+          "delta": "245227/1599360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "980908/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/166",
+          "cost_display": 11557.327467431067,
+          "cost_strict_upper": 11558,
+          "delta": "118763/799680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "950104/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/167",
+          "cost_display": 11892.035723246336,
+          "cost_strict_upper": 11893,
+          "delta": "45965/319872",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "183860/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/168",
+          "cost_display": 12254.961303718774,
+          "cost_strict_upper": 12255,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "126928/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/169",
+          "cost_display": 12613.441032586414,
+          "cost_strict_upper": 12614,
+          "delta": "214423/1599360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "77972/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/171",
+          "cost_display": 13855.163031437636,
+          "cost_strict_upper": 13856,
+          "delta": "199021/1599360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "796084/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/172",
+          "cost_display": 14321.342481616126,
+          "cost_strict_upper": 14322,
+          "delta": "4783/39984",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "153056/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/173",
+          "cost_display": 14826.625161262422,
+          "cost_strict_upper": 14827,
+          "delta": "183619/1599360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "734476/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/174",
+          "cost_display": 15376.146428386477,
+          "cost_strict_upper": 15377,
+          "delta": "87959/799680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "703672/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/175",
+          "cost_display": 16050.634228579369,
+          "cost_strict_upper": 16051,
+          "delta": "3433/32640",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "96124/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "84/176",
+          "cost_display": 16711.607440579028,
+          "cost_strict_upper": 16712,
+          "delta": "40129/399840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "642064/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10752"
+        },
+        {
+          "case": "85/163",
+          "cost_display": 10043.756306870184,
+          "cost_strict_upper": 10044,
+          "delta": "24589/142800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "196712/6561555",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/164",
+          "cost_display": 10322.333178322582,
+          "cost_strict_upper": 10323,
+          "delta": "47819/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "191276/6561555",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/165",
+          "cost_display": 10597.490302398648,
+          "cost_strict_upper": 10598,
+          "delta": "2323/14280",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1616/57057",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/166",
+          "cost_display": 10869.556601508344,
+          "cost_strict_upper": 10870,
+          "delta": "379/2400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "25772/937365",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/167",
+          "cost_display": 11158.528305057254,
+          "cost_strict_upper": 11159,
+          "delta": "21871/142800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "174968/6561555",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/168",
+          "cost_display": 11486.966338273553,
+          "cost_strict_upper": 11487,
+          "delta": "42383/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "15412/596505",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/169",
+          "cost_display": 11815.536445744798,
+          "cost_strict_upper": 11816,
+          "delta": "1282/8925",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "164096/6561555",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/170",
+          "cost_display": 12152.424619901265,
+          "cost_strict_upper": 12153,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "31732/1312311",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/172",
+          "cost_display": 13298.875318653496,
+          "cost_strict_upper": 13299,
+          "delta": "36947/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "147788/6561555",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/173",
+          "cost_display": 13719.897014988668,
+          "cost_strict_upper": 13720,
+          "delta": "1271/10200",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "20336/937365",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/174",
+          "cost_display": 14174.350508064586,
+          "cost_strict_upper": 14175,
+          "delta": "34229/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "10532/504735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/175",
+          "cost_display": 14733.801915047436,
+          "cost_strict_upper": 14734,
+          "delta": "3287/28560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1384/69069",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/176",
+          "cost_display": 15301.731879560044,
+          "cost_strict_upper": 15302,
+          "delta": "31511/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "126044/6561555",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/177",
+          "cost_display": 15888.930148180636,
+          "cost_strict_upper": 15889,
+          "delta": "3769/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "120608/6561555",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/178",
+          "cost_display": 16531.558726046907,
+          "cost_strict_upper": 16532,
+          "delta": "28793/285600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "115172/6561555",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/179",
+          "cost_display": 17237.855178617578,
+          "cost_strict_upper": 17238,
+          "delta": "13717/142800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9976/596505",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/180",
+          "cost_display": 18102.76296748844,
+          "cost_strict_upper": 18103,
+          "delta": "149/1632",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2980/187473",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "85/181",
+          "cost_display": 18973.122388266187,
+          "cost_strict_upper": 18974,
+          "delta": "6179/71400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "98864/6561555",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10880"
+        },
+        {
+          "case": "86/164",
+          "cost_display": 9755.913631501788,
+          "cost_strict_upper": 9756,
+          "delta": "61933/350880",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "495464/15935205",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/165",
+          "cost_display": 10034.239017999782,
+          "cost_strict_upper": 10035,
+          "delta": "843959/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3375836/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/166",
+          "cost_display": 10272.508656317612,
+          "cost_strict_upper": 10273,
+          "delta": "102607/614040",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3283424/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/167",
+          "cost_display": 10524.578915765183,
+          "cost_strict_upper": 10525,
+          "delta": "797753/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "15268/533715",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/168",
+          "cost_display": 10811.15618680358,
+          "cost_strict_upper": 10812,
+          "delta": "77465/491232",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "619720/22309287",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/169",
+          "cost_display": 11095.282368641703,
+          "cost_strict_upper": 11096,
+          "delta": "751547/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3006188/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/170",
+          "cost_display": 11397.43098509115,
+          "cost_strict_upper": 11398,
+          "delta": "182111/1228080",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2913776/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/172",
+          "cost_display": 12438.683929645507,
+          "cost_strict_upper": 12439,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2728952/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/173",
+          "cost_display": 12794.974280690047,
+          "cost_strict_upper": 12795,
+          "delta": "131827/982464",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "527308/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/174",
+          "cost_display": 13177.14815954508,
+          "cost_strict_upper": 13178,
+          "delta": "9938/76755",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2544128/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/175",
+          "cost_display": 13649.596821380464,
+          "cost_strict_upper": 13650,
+          "delta": "612929/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2451716/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/176",
+          "cost_display": 14122.930158026997,
+          "cost_strict_upper": 14123,
+          "delta": "294913/2456160",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2359304/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/177",
+          "cost_display": 14605.978457019697,
+          "cost_strict_upper": 14606,
+          "delta": "566723/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2266892/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/178",
+          "cost_display": 15130.084350845656,
+          "cost_strict_upper": 15131,
+          "delta": "3883/35088",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "5648/289731",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/179",
+          "cost_display": 15700.714828748836,
+          "cost_strict_upper": 15701,
+          "delta": "520517/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2082068/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/180",
+          "cost_display": 16400.090894980818,
+          "cost_strict_upper": 16401,
+          "delta": "248707/2456160",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1989656/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/181",
+          "cost_display": 17088.170711084353,
+          "cost_strict_upper": 17089,
+          "delta": "474311/4912320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1897244/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/182",
+          "cost_display": 17882.983039754738,
+          "cost_strict_upper": 17883,
+          "delta": "56401/614040",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1804832/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "86/183",
+          "cost_display": 18725.35367984676,
+          "cost_strict_upper": 18726,
+          "delta": "85621/982464",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "342484/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11008"
+        },
+        {
+          "case": "87/166",
+          "cost_display": 9749.343598925512,
+          "cost_strict_upper": 9750,
+          "delta": "58333/331296",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "21212/676039",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/168",
+          "cost_display": 10223.637954725475,
+          "cost_strict_upper": 10224,
+          "delta": "276263/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "85004/2860165",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/169",
+          "cost_display": 10471.82489835636,
+          "cost_strict_upper": 10472,
+          "delta": "19183/118320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "153464/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/170",
+          "cost_display": 10734.66552845553,
+          "cost_strict_upper": 10735,
+          "delta": "260861/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1043444/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/173",
+          "cost_display": 11998.697422058925,
+          "cost_strict_upper": 11999,
+          "delta": "118879/828240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "951032/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/174",
+          "cost_display": 12336.392656652231,
+          "cost_strict_upper": 12337,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "920228/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/175",
+          "cost_display": 12684.903161212154,
+          "cost_strict_upper": 12685,
+          "delta": "55589/414120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "889424/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/176",
+          "cost_display": 13142.335315445687,
+          "cost_strict_upper": 13143,
+          "delta": "6133/47328",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "24532/1062347",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/177",
+          "cost_display": 13546.77285309799,
+          "cost_strict_upper": 13547,
+          "delta": "103477/828240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3272/146965",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/178",
+          "cost_display": 13982.47289096319,
+          "cost_strict_upper": 13983,
+          "delta": "199253/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "41948/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/179",
+          "cost_display": 14453.205985038716,
+          "cost_strict_upper": 14454,
+          "delta": "5986/51765",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "766208/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/180",
+          "cost_display": 15031.678497730116,
+          "cost_strict_upper": 15032,
+          "delta": "183851/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "735404/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/181",
+          "cost_display": 15589.440621000438,
+          "cost_strict_upper": 15590,
+          "delta": "17615/165648",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "10840/572033",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/182",
+          "cost_display": 16230.585260077147,
+          "cost_strict_upper": 16231,
+          "delta": "168449/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "673796/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/183",
+          "cost_display": 16899.225485715422,
+          "cost_strict_upper": 16900,
+          "delta": "5741/59160",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "91856/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/184",
+          "cost_display": 17635.15482355636,
+          "cost_strict_upper": 17636,
+          "delta": "153047/1656480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "612188/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "87/185",
+          "cost_display": 18449.068995251866,
+          "cost_strict_upper": 18450,
+          "delta": "72673/828240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "581384/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11136"
+        },
+        {
+          "case": "88/169",
+          "cost_display": 9926.879599696125,
+          "cost_strict_upper": 9927,
+          "delta": "171965/1005312",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "687860/22309287",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/170",
+          "cost_display": 10157.666811685234,
+          "cost_strict_upper": 10158,
+          "delta": "418361/2513280",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "176152/5870865",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/175",
+          "cost_display": 11902.634774994669,
+          "cost_strict_upper": 11903,
+          "delta": "721207/5026560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2884828/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/176",
+          "cost_display": 12236.426185317892,
+          "cost_strict_upper": 12237,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "253856/10140585",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/177",
+          "cost_display": 12657.47612987636,
+          "cost_strict_upper": 12658,
+          "delta": "675001/5026560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2700004/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/178",
+          "cost_display": 13025.475719900684,
+          "cost_strict_upper": 13026,
+          "delta": "325949/2513280",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "200584/8580495",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/179",
+          "cost_display": 13420.517174215696,
+          "cost_strict_upper": 13421,
+          "delta": "125759/1005312",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "503036/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/180",
+          "cost_display": 13907.893662919585,
+          "cost_strict_upper": 13908,
+          "delta": "151423/1256640",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2422768/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/181",
+          "cost_display": 14369.259382154883,
+          "cost_strict_upper": 14370,
+          "delta": "83227/718080",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "332908/15935205",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/182",
+          "cost_display": 14897.978014546845,
+          "cost_strict_upper": 14898,
+          "delta": "279743/2513280",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2237944/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/183",
+          "cost_display": 15441.732219619,
+          "cost_strict_upper": 15442,
+          "delta": "536383/5026560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "93284/4849845",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/184",
+          "cost_display": 16034.435744359882,
+          "cost_strict_upper": 16035,
+          "delta": "401/3927",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "410624/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "88/185",
+          "cost_display": 16683.00982007353,
+          "cost_strict_upper": 16684,
+          "delta": "490177/5026560",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1960708/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/1024"
+        },
+        {
+          "case": "89/169",
+          "cost_display": 9446.494378947418,
+          "cost_strict_upper": 9447,
+          "delta": "228491/1270920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3655856/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/170",
+          "cost_display": 9650.79830271891,
+          "cost_strict_upper": 9651,
+          "delta": "890861/5083680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3563444/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/176",
+          "cost_display": 11494.163578948996,
+          "cost_strict_upper": 11495,
+          "delta": "752243/5083680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3008972/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/178",
+          "cost_display": 12215.24385956312,
+          "cost_strict_upper": 12216,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2824148/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/179",
+          "cost_display": 12551.55938140949,
+          "cost_strict_upper": 12552,
+          "delta": "48781/363120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "390248/15935205",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/180",
+          "cost_display": 12911.42607772695,
+          "cost_strict_upper": 12912,
+          "delta": "659831/5083680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2639324/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/181",
+          "cost_display": 13356.574569066825,
+          "cost_strict_upper": 13357,
+          "delta": "79591/635460",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "134048/5870865",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/182",
+          "cost_display": 13800.517719241077,
+          "cost_strict_upper": 13801,
+          "delta": "122725/1016736",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "490900/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/183",
+          "cost_display": 14251.484637623065,
+          "cost_strict_upper": 14252,
+          "delta": "295261/2541840",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2362088/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/184",
+          "cost_display": 14739.174643231176,
+          "cost_strict_upper": 14740,
+          "delta": "567419/5083680",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2269676/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/185",
+          "cost_display": 15268.263770671325,
+          "cost_strict_upper": 15269,
+          "delta": "136079/1270920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2177264/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "89/186",
+          "cost_display": 15844.25712387426,
+          "cost_strict_upper": 15845,
+          "delta": "74459/726240",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "27076/1448655",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11392"
+        },
+        {
+          "case": "90/170",
+          "cost_display": 9202.006733873066,
+          "cost_strict_upper": 9203,
+          "delta": "25/136",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "36000/1062347",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/178",
+          "cost_display": 11488.303640768394,
+          "cost_strict_upper": 11489,
+          "delta": "5279/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1013568/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/179",
+          "cost_display": 11799.233924757693,
+          "cost_strict_upper": 11800,
+          "delta": "27299/190400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "982764/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/180",
+          "cost_display": 12118.844963114978,
+          "cost_strict_upper": 12119,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "190392/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/181",
+          "cost_display": 12502.605523545533,
+          "cost_strict_upper": 12503,
+          "delta": "76763/571200",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "921156/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/182",
+          "cost_display": 12856.503339420025,
+          "cost_strict_upper": 12857,
+          "delta": "6183/47600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "890352/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/183",
+          "cost_display": 13261.15240289237,
+          "cost_strict_upper": 13262,
+          "delta": "71629/571200",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "859548/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/184",
+          "cost_display": 13669.553436541948,
+          "cost_strict_upper": 13670,
+          "delta": "4933/40800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "118392/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/185",
+          "cost_display": 14109.486629102075,
+          "cost_strict_upper": 14110,
+          "delta": "4433/38080",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1116/52003",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "90/186",
+          "cost_display": 14584.750459420364,
+          "cost_strict_upper": 14585,
+          "delta": "7991/71400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "767136/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11520"
+        },
+        {
+          "case": "91/179",
+          "cost_display": 11116.203095219113,
+          "cost_strict_upper": 11117,
+          "delta": "197803/1299480",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3164848/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/181",
+          "cost_display": 11708.363905486463,
+          "cost_strict_upper": 11709,
+          "delta": "372503/2598960",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2980024/111546435",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/182",
+          "cost_display": 12076.75082935938,
+          "cost_strict_upper": 12077,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "31732/1225785",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/183",
+          "cost_display": 12424.270645712004,
+          "cost_strict_upper": 12425,
+          "delta": "8735/64974",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "559040/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/184",
+          "cost_display": 12771.335159002763,
+          "cost_strict_upper": 12772,
+          "delta": "675697/5197920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "12932/533715",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/185",
+          "cost_display": 13142.973086853131,
+          "cost_strict_upper": 13143,
+          "delta": "326297/2598960",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2610376/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "91/186",
+          "cost_display": 13541.890041876652,
+          "cost_strict_upper": 13542,
+          "delta": "629491/5197920",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2517964/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/896"
+        },
+        {
+          "case": "92/184",
+          "cost_display": 12006.375967964366,
+          "cost_strict_upper": 12007,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "126928/4849845",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/512"
+        },
+        {
+          "case": "92/185",
+          "cost_display": 12324.538314560637,
+          "cost_strict_upper": 12325,
+          "delta": "706733/5255040",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2826932/111546435",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/512"
+        },
+        {
+          "case": "92/186",
+          "cost_display": 12664.20499740141,
+          "cost_strict_upper": 12665,
+          "delta": "68363/525504",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "546904/22309287",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/512"
+        },
+        {
+          "case": "93/184",
+          "cost_display": 11257.923079166196,
+          "cost_strict_upper": 11258,
+          "delta": "52265/354144",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "209060/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11904"
+        },
+        {
+          "case": "93/185",
+          "cost_display": 11612.248299614383,
+          "cost_strict_upper": 11613,
+          "delta": "4529/31620",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "144928/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/11904"
+        },
+        {
+          "case": "93/186",
+          "cost_display": 11915.332604644645,
+          "cost_strict_upper": 11916,
+          "delta": "7933/57120",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "983692/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11904"
+        },
+        {
+          "case": "94/186",
+          "cost_display": 11235.617222169676,
+          "cost_strict_upper": 11236,
+          "delta": "197977/1342320",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "243664/8580495",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/12032"
+        },
+        {
+          "case": "0",
+          "cost_display": 11995.357829954128,
+          "cost_strict_upper": 11996,
+          "delta": "2143639/11424000",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "2143639/185910725",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "1",
+          "cost_display": 13383.742189028835,
+          "cost_strict_upper": 13384,
+          "delta": "8942849/53578560",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "35771396/3160482325",
+          "quantile": 6,
+          "raw_Haar_cap": "5311735/360192"
+        },
+        {
+          "case": "2",
+          "cost_display": 11995.357829954128,
+          "cost_strict_upper": 11996,
+          "delta": "2143639/11424000",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "2143639/185910725",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "3",
+          "cost_display": 13383.742189028835,
+          "cost_strict_upper": 13384,
+          "delta": "8942849/53578560",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "35771396/3160482325",
+          "quantile": 6,
+          "raw_Haar_cap": "5311735/360192"
+        },
+        {
+          "case": "4",
+          "cost_display": 12350.103700112693,
+          "cost_strict_upper": 12351,
+          "delta": "144433/799680",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "288866/26558675",
+          "quantile": 6,
+          "raw_Haar_cap": "312455/18816"
+        },
+        {
+          "case": "5",
+          "cost_display": 12350.103700112693,
+          "cost_strict_upper": 12351,
+          "delta": "144433/799680",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "288866/26558675",
+          "quantile": 6,
+          "raw_Haar_cap": "312455/18816"
+        },
+        {
+          "case": "0",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "1",
+          "cost_display": 12253.404759882298,
+          "cost_strict_upper": 12254,
+          "delta": "12470011/68772480",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "24940022/2119382265",
+          "quantile": 6,
+          "raw_Haar_cap": "1187329/77056"
+        },
+        {
+          "case": "2",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "3",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "4",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "5",
+          "cost_display": 12240.549739578437,
+          "cost_strict_upper": 12241,
+          "delta": "9507619/52321920",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "45491/4091815",
+          "quantile": 6,
+          "raw_Haar_cap": "1437293/87936"
+        },
+        {
+          "case": "6",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "7",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "8",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "9",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "10",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "11",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "12",
+          "cost_display": 12253.404759882298,
+          "cost_strict_upper": 12254,
+          "delta": "12470011/68772480",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "24940022/2119382265",
+          "quantile": 6,
+          "raw_Haar_cap": "1187329/77056"
+        },
+        {
+          "case": "13",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "14",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "15",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "16",
+          "cost_display": 12240.549739578437,
+          "cost_strict_upper": 12241,
+          "delta": "9507619/52321920",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "45491/4091815",
+          "quantile": 6,
+          "raw_Haar_cap": "1437293/87936"
+        },
+        {
+          "case": "17",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "18",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "19",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "20",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "21",
+          "cost_display": 11899.927671418722,
+          "cost_strict_upper": 11900,
+          "delta": "32375347/171360000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "32375347/2788660875",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3840"
+        },
+        {
+          "case": "root1_other_same_column",
+          "cost_display": 17159.68572193679,
+          "cost_strict_upper": 17160,
+          "delta": "28793/285600",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "230344/14300825",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "root1_other_other_column",
+          "cost_display": 17159.68572193679,
+          "cost_strict_upper": 17160,
+          "delta": "28793/285600",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "230344/14300825",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/768"
+        },
+        {
+          "case": "root2_same_other_column",
+          "cost_display": 13099.988310376531,
+          "cost_strict_upper": 13100,
+          "delta": "7933/57120",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "158660/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "root2_other_same_column",
+          "cost_display": 14550.909036144665,
+          "cost_strict_upper": 14551,
+          "delta": "135383/1099560",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "160293472/8589075495",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9472"
+        },
+        {
+          "case": "root2_other_other_column",
+          "cost_display": 14550.909036144665,
+          "cost_strict_upper": 14551,
+          "delta": "135383/1099560",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "160293472/8589075495",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9472"
+        }
+      ],
+      "simple_strict_Haar_lower": "1/350000",
+      "target": 19100,
+      "worst_case": "uniform-first:85/181",
+      "worst_cost_display": 18973.122388266187
+    },
+    {
+      "Haar_survivor_lower": "11011445/809559406656",
+      "case_count": 223,
+      "conservative_margin": 580,
+      "deep": [
+        17,
+        19,
+        23
+      ],
+      "fresh_count": 5,
+      "global_cost_strict_upper": 17420,
+      "kappa": "1/125",
+      "minimum_normalized_Haar_factor": "151882/15935205",
+      "paired_Haar_lower_display": 1.7139740749009325e-05,
+      "reference_capacities": [
+        28,
+        30,
+        36,
+        40,
+        42
+      ],
+      "rows": [
+        {
+          "case": "77/151",
+          "cost_display": 9878.910572432078,
+          "cost_strict_upper": 9879,
+          "delta": "391717/2748900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "783434/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "77/152",
+          "cost_display": 10200.904806624258,
+          "cost_strict_upper": 10201,
+          "delta": "377081/2748900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "754162/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "77/153",
+          "cost_display": 10548.904131859972,
+          "cost_strict_upper": 10549,
+          "delta": "24163/183260",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "144978/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "77/154",
+          "cost_display": 10926.191475083431,
+          "cost_strict_upper": 10927,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9034/482885",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "77/155",
+          "cost_display": 11393.654444933138,
+          "cost_strict_upper": 11394,
+          "delta": "333173/2748900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "666346/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "77/156",
+          "cost_display": 11844.42687997631,
+          "cost_strict_upper": 11845,
+          "delta": "106179/916300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "637074/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/840"
+        },
+        {
+          "case": "78/152",
+          "cost_display": 9486.74589947281,
+          "cost_strict_upper": 9487,
+          "delta": "41087/278460",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "164348/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/153",
+          "cost_display": 9797.518710115819,
+          "cost_strict_upper": 9798,
+          "delta": "22013/154700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "792468/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/154",
+          "cost_display": 10112.629635732872,
+          "cost_strict_upper": 10113,
+          "delta": "27257/198900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "109028/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/155",
+          "cost_display": 10504.601417478669,
+          "cost_strict_upper": 10505,
+          "delta": "10793/81900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "43172/2187185",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/156",
+          "cost_display": 10875.211361199892,
+          "cost_strict_upper": 10876,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "54204/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/157",
+          "cost_display": 11277.946906131123,
+          "cost_strict_upper": 11278,
+          "delta": "33769/278460",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "135076/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/158",
+          "cost_display": 11717.174414855488,
+          "cost_strict_upper": 11718,
+          "delta": "161527/1392300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "646108/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/159",
+          "cost_display": 12259.69419761862,
+          "cost_strict_upper": 12260,
+          "delta": "51403/464100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "56076/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/160",
+          "cost_display": 12819.023491196089,
+          "cost_strict_upper": 12820,
+          "delta": "146891/1392300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "587564/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "78/161",
+          "cost_display": 13408.139582784188,
+          "cost_strict_upper": 13409,
+          "delta": "19939/198900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "79756/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "79/154",
+          "cost_display": 9411.55744609303,
+          "cost_strict_upper": 9412,
+          "delta": "59341/402900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "118682/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/155",
+          "cost_display": 9765.467979717847,
+          "cost_strict_upper": 9766,
+          "delta": "400751/2820300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "61654/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/156",
+          "cost_display": 10096.497293783812,
+          "cost_strict_upper": 10097,
+          "delta": "25741/188020",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "154446/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/157",
+          "cost_display": 10431.920041979874,
+          "cost_strict_upper": 10432,
+          "delta": "371479/2820300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "742958/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/158",
+          "cost_display": 10794.85767679329,
+          "cost_strict_upper": 10795,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "713686/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/159",
+          "cost_display": 11220.816283770462,
+          "cost_strict_upper": 11221,
+          "delta": "114069/940100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "684414/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/160",
+          "cost_display": 11676.033202785558,
+          "cost_strict_upper": 11677,
+          "delta": "327571/2820300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "655142/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/161",
+          "cost_display": 12148.082013692856,
+          "cost_strict_upper": 12149,
+          "delta": "8941/80580",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "17882/1062347",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/162",
+          "cost_display": 12666.452846440248,
+          "cost_strict_upper": 12667,
+          "delta": "5849/55300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "35094/2187185",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/163",
+          "cost_display": 13238.315854819224,
+          "cost_strict_upper": 13239,
+          "delta": "283663/2820300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "567326/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/164",
+          "cost_display": 13902.353238057947,
+          "cost_strict_upper": 13903,
+          "delta": "269027/2820300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "48914/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "79/165",
+          "cost_display": 14611.124439387875,
+          "cost_strict_upper": 14612,
+          "delta": "84797/940100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "26778/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9480"
+        },
+        {
+          "case": "80/155",
+          "cost_display": 9059.619821274127,
+          "cost_strict_upper": 9060,
+          "delta": "21727/142800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "173816/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/156",
+          "cost_display": 9409.717618115868,
+          "cost_strict_upper": 9410,
+          "delta": "2187/14875",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "839808/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/157",
+          "cost_display": 9707.084542213403,
+          "cost_strict_upper": 9708,
+          "delta": "101317/714000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "810536/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/158",
+          "cost_display": 10011.470926444958,
+          "cost_strict_upper": 10012,
+          "delta": "48829/357000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3088/146965",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/159",
+          "cost_display": 10339.554366600583,
+          "cost_strict_upper": 10340,
+          "delta": "31333/238000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "751992/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/160",
+          "cost_display": 10746.793738235465,
+          "cost_strict_upper": 10747,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "144544/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/161",
+          "cost_display": 11133.615088468272,
+          "cost_strict_upper": 11134,
+          "delta": "12383/102000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "99064/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/162",
+          "cost_display": 11554.532926872935,
+          "cost_strict_upper": 11555,
+          "delta": "13837/119000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "664176/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/163",
+          "cost_display": 12014.263269107409,
+          "cost_strict_upper": 12015,
+          "delta": "79363/714000",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "33416/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/164",
+          "cost_display": 12545.04351670359,
+          "cost_strict_upper": 12546,
+          "delta": "9463/89250",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "605632/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "80/165",
+          "cost_display": 13101.77691109522,
+          "cost_strict_upper": 13102,
+          "delta": "4803/47600",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "115272/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9600"
+        },
+        {
+          "case": "81/156",
+          "cost_display": 8737.39683312873,
+          "cost_strict_upper": 8738,
+          "delta": "151231/963900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "907386/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/157",
+          "cost_display": 9061.480971704219,
+          "cost_strict_upper": 9062,
+          "delta": "439057/2891700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "878114/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/158",
+          "cost_display": 9336.949377766834,
+          "cost_strict_upper": 9337,
+          "delta": "424421/2891700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "848842/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/159",
+          "cost_display": 9630.324674166824,
+          "cost_strict_upper": 9631,
+          "delta": "1607/11340",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9642/437437",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/160",
+          "cost_display": 9976.471908641719,
+          "cost_strict_upper": 9977,
+          "delta": "395149/2891700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "790298/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/161",
+          "cost_display": 10299.31453304663,
+          "cost_strict_upper": 10300,
+          "delta": "54359/413100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "5722/279565",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/162",
+          "cost_display": 10647.986190983524,
+          "cost_strict_upper": 10648,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "731754/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/163",
+          "cost_display": 11025.715723061328,
+          "cost_strict_upper": 11026,
+          "delta": "351241/2891700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "63862/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/164",
+          "cost_display": 11460.232053989732,
+          "cost_strict_upper": 11461,
+          "delta": "67321/578340",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "5854/323323",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "81/165",
+          "cost_display": 11909.225991379664,
+          "cost_strict_upper": 11910,
+          "delta": "107323/963900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "643938/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9720"
+        },
+        {
+          "case": "82/158",
+          "cost_display": 8725.940021956661,
+          "cost_strict_upper": 8726,
+          "delta": "45821/292740",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "183284/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/159",
+          "cost_display": 8995.400939048257,
+          "cost_strict_upper": 8996,
+          "delta": "73929/487900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "46692/1956955",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/160",
+          "cost_display": 9265.713732532511,
+          "cost_strict_upper": 9266,
+          "delta": "214469/1463700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "857876/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/161",
+          "cost_display": 9601.099159290257,
+          "cost_strict_upper": 9602,
+          "delta": "29593/209100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "118372/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/162",
+          "cost_display": 9894.72398597223,
+          "cost_strict_upper": 9895,
+          "delta": "66611/487900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "799332/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/163",
+          "cost_display": 10210.671711977984,
+          "cost_strict_upper": 10211,
+          "delta": "38503/292740",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "154012/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/164",
+          "cost_display": 10573.3433141798,
+          "cost_strict_upper": 10574,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "740788/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/165",
+          "cost_display": 10943.206045113866,
+          "cost_strict_upper": 10944,
+          "delta": "59293/487900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "54732/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/166",
+          "cost_display": 11344.80704522993,
+          "cost_strict_upper": 11345,
+          "delta": "10033/86100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "40132/2187185",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/167",
+          "cost_display": 11782.414687209344,
+          "cost_strict_upper": 11783,
+          "delta": "163243/1463700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "652972/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/168",
+          "cost_display": 12286.937424459386,
+          "cost_strict_upper": 12287,
+          "delta": "297/2788",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1620/96577",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "82/169",
+          "cost_display": 12814.03839826847,
+          "cost_strict_upper": 12815,
+          "delta": "148607/1463700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "594428/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9840"
+        },
+        {
+          "case": "83/159",
+          "cost_display": 8401.501475065581,
+          "cost_strict_upper": 8402,
+          "delta": "159121/987700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "954726/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/160",
+          "cost_display": 8682.126956960812,
+          "cost_strict_upper": 8683,
+          "delta": "462727/2963100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "925454/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/161",
+          "cost_display": 8981.084583679387,
+          "cost_strict_upper": 8982,
+          "delta": "64013/423300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "128026/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/162",
+          "cost_display": 9248.097064408345,
+          "cost_strict_upper": 9249,
+          "delta": "28897/197540",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "15762/676039",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/163",
+          "cost_display": 9527.138076930565,
+          "cost_strict_upper": 9528,
+          "delta": "418819/2963100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "837638/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/164",
+          "cost_display": 9834.739304947047,
+          "cost_strict_upper": 9835,
+          "delta": "404183/2963100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "62182/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/165",
+          "cost_display": 10144.769717586627,
+          "cost_strict_upper": 10145,
+          "delta": "129849/987700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "779094/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/166",
+          "cost_display": 10479.006435826166,
+          "cost_strict_upper": 10480,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "749822/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/167",
+          "cost_display": 10840.399568516632,
+          "cost_strict_upper": 10841,
+          "delta": "14411/118524",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "144110/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/168",
+          "cost_display": 11255.711736224092,
+          "cost_strict_upper": 11256,
+          "delta": "16459/141100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "98754/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "83/169",
+          "cost_display": 11683.40807026542,
+          "cost_strict_upper": 11684,
+          "delta": "331003/2963100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "662006/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9960"
+        },
+        {
+          "case": "84/161",
+          "cost_display": 8393.756007076077,
+          "cost_strict_upper": 8394,
+          "delta": "1721/10710",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "27536/1062347",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/162",
+          "cost_display": 8671.425971145043,
+          "cost_strict_upper": 8672,
+          "delta": "12979/83300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "934488/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/163",
+          "cost_display": 8917.125851353341,
+          "cost_strict_upper": 8918,
+          "delta": "1664/11025",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "4096/168245",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/164",
+          "cost_display": 9196.422364913653,
+          "cost_strict_upper": 9197,
+          "delta": "109493/749700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "875944/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/165",
+          "cost_display": 9473.789430040953,
+          "cost_strict_upper": 9474,
+          "delta": "17639/124950",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "846672/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/166",
+          "cost_display": 9756.364802645272,
+          "cost_strict_upper": 9757,
+          "delta": "4087/29988",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "163480/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/167",
+          "cost_display": 10059.930537999991,
+          "cost_strict_upper": 10060,
+          "delta": "24629/187425",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "71648/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/168",
+          "cost_display": 10408.152434126787,
+          "cost_strict_upper": 10409,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "108408/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/169",
+          "cost_display": 10762.227884551097,
+          "cost_strict_upper": 10763,
+          "delta": "45599/374850",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "729584/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/171",
+          "cost_display": 11953.04221144129,
+          "cost_strict_upper": 11954,
+          "delta": "466/4165",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "134208/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/172",
+          "cost_display": 12426.032134566034,
+          "cost_strict_upper": 12427,
+          "delta": "80221/749700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "641768/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/173",
+          "cost_display": 12944.23169507521,
+          "cost_strict_upper": 12945,
+          "delta": "38281/374850",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "612496/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/174",
+          "cost_display": 13514.44810514896,
+          "cost_strict_upper": 13515,
+          "delta": "24301/249900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "30696/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/175",
+          "cost_display": 14213.525873949779,
+          "cost_strict_upper": 14214,
+          "delta": "2473/26775",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "79136/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "84/176",
+          "cost_display": 14918.181425434244,
+          "cost_strict_upper": 14919,
+          "delta": "13117/149940",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "8072/572033",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10080"
+        },
+        {
+          "case": "85/163",
+          "cost_display": 8355.159936518243,
+          "cost_strict_upper": 8356,
+          "delta": "486397/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "972794/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/164",
+          "cost_display": 8613.02880400361,
+          "cost_strict_upper": 8614,
+          "delta": "471761/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "943522/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/165",
+          "cost_display": 8870.88669462877,
+          "cost_strict_upper": 8871,
+          "delta": "1219/8092",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "7950/323323",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/166",
+          "cost_display": 9128.802797696248,
+          "cost_strict_upper": 9129,
+          "delta": "442489/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "884978/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/167",
+          "cost_display": 9402.734071060686,
+          "cost_strict_upper": 9403,
+          "delta": "427853/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "855706/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/168",
+          "cost_display": 9699.203989078274,
+          "cost_strict_upper": 9700,
+          "delta": "19677/144500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "118062/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/169",
+          "cost_display": 9997.23054395534,
+          "cost_strict_upper": 9998,
+          "delta": "398581/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "797162/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/170",
+          "cost_display": 10317.978669146802,
+          "cost_strict_upper": 10318,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9034/437437",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/172",
+          "cost_display": 11407.82187662209,
+          "cost_strict_upper": 11408,
+          "delta": "354673/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3394/177905",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/173",
+          "cost_display": 11830.702485707416,
+          "cost_strict_upper": 11831,
+          "delta": "340037/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "680074/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/174",
+          "cost_display": 12291.624038702395,
+          "cost_strict_upper": 12292,
+          "delta": "108467/1011500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "650802/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/175",
+          "cost_display": 12857.10120329578,
+          "cost_strict_upper": 12858,
+          "delta": "8879/86700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1366/81719",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/176",
+          "cost_display": 13441.523963177002,
+          "cost_strict_upper": 13442,
+          "delta": "296129/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "592258/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/177",
+          "cost_display": 14058.094596941837,
+          "cost_strict_upper": 14059,
+          "delta": "93831/1011500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "562986/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/178",
+          "cost_display": 14742.29791634566,
+          "cost_strict_upper": 14743,
+          "delta": "266857/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "533714/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/179",
+          "cost_display": 15505.907786217484,
+          "cost_strict_upper": 15506,
+          "delta": "252221/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "504442/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/180",
+          "cost_display": 16443.57122449639,
+          "cost_strict_upper": 16444,
+          "delta": "15839/202300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "95034/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "85/181",
+          "cost_display": 17419.122947657448,
+          "cost_strict_upper": 17420,
+          "delta": "222949/3034500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "445898/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10200"
+        },
+        {
+          "case": "86/164",
+          "cost_display": 8092.677899157112,
+          "cost_strict_upper": 8093,
+          "delta": "10111/61404",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "202220/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/165",
+          "cost_display": 8347.983401758256,
+          "cost_strict_upper": 8348,
+          "delta": "81819/511700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "981828/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/166",
+          "cost_display": 8571.53314778006,
+          "cost_strict_upper": 8572,
+          "delta": "238139/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "86596/3380195",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/167",
+          "cost_display": 8809.25783491543,
+          "cost_strict_upper": 8810,
+          "delta": "230821/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "923284/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/168",
+          "cost_display": 9079.37791462007,
+          "cost_strict_upper": 9080,
+          "delta": "10643/73100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "127716/5311735",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/169",
+          "cost_display": 9350.387734973048,
+          "cost_strict_upper": 9351,
+          "delta": "43237/307020",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "172948/7436429",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/170",
+          "cost_display": 9623.98998670127,
+          "cost_strict_upper": 9624,
+          "delta": "208867/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "43972/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/172",
+          "cost_display": 10566.742490710252,
+          "cost_strict_upper": 10567,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "776924/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/173",
+          "cost_display": 10918.470342115294,
+          "cost_strict_upper": 10919,
+          "delta": "186913/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "747652/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/174",
+          "cost_display": 11298.86206964809,
+          "cost_strict_upper": 11299,
+          "delta": "11973/102340",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "11052/572033",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/175",
+          "cost_display": 11766.714559753515,
+          "cost_strict_upper": 11767,
+          "delta": "24611/219300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "98444/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/176",
+          "cost_display": 12242.910549502427,
+          "cost_strict_upper": 12243,
+          "delta": "164959/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "659836/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/177",
+          "cost_display": 12737.760910410514,
+          "cost_strict_upper": 12738,
+          "delta": "3091/30100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "3372/198835",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/178",
+          "cost_display": 13280.791721963216,
+          "cost_strict_upper": 13281,
+          "delta": "150323/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "601292/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/179",
+          "cost_display": 13879.399603953216,
+          "cost_strict_upper": 13880,
+          "delta": "28601/307020",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "114404/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/180",
+          "cost_display": 14612.59141388296,
+          "cost_strict_upper": 14613,
+          "delta": "45229/511700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "542748/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/181",
+          "cost_display": 15355.37222786023,
+          "cost_strict_upper": 15356,
+          "delta": "128369/1535100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "513476/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/182",
+          "cost_display": 16221.243729030777,
+          "cost_strict_upper": 16222,
+          "delta": "17293/219300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "69172/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "86/183",
+          "cost_display": 17163.117661413642,
+          "cost_strict_upper": 17164,
+          "delta": "37911/511700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "454932/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10320"
+        },
+        {
+          "case": "87/166",
+          "cost_display": 8088.095305061818,
+          "cost_strict_upper": 8089,
+          "delta": "510067/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1020134/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/168",
+          "cost_display": 8530.817183022358,
+          "cost_strict_upper": 8531,
+          "delta": "4579/29580",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1446/55913",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/169",
+          "cost_display": 8764.959999439832,
+          "cost_strict_upper": 8765,
+          "delta": "466159/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "932318/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/170",
+          "cost_display": 9014.282172218273,
+          "cost_strict_upper": 9015,
+          "delta": "451523/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "903046/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/173",
+          "cost_display": 10157.476067099324,
+          "cost_strict_upper": 10158,
+          "delta": "81523/621180",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "12542/572033",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/174",
+          "cost_display": 10476.818811631147,
+          "cost_strict_upper": 10477,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "785958/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/175",
+          "cost_display": 10820.868768449005,
+          "cost_strict_upper": 10821,
+          "delta": "54049/443700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "108098/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/176",
+          "cost_display": 11267.003592589203,
+          "cost_strict_upper": 11268,
+          "delta": "363707/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "727414/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/177",
+          "cost_display": 11673.035710027894,
+          "cost_strict_upper": 11674,
+          "delta": "116357/1035300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "30354/1616615",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/178",
+          "cost_display": 12114.60648861648,
+          "cost_strict_upper": 12115,
+          "delta": "66887/621180",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "133774/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/179",
+          "cost_display": 12596.59534177955,
+          "cost_strict_upper": 12597,
+          "delta": "319799/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "639598/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/180",
+          "cost_display": 13187.080004227817,
+          "cost_strict_upper": 13188,
+          "delta": "33907/345100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "610326/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/181",
+          "cost_display": 13771.660010998905,
+          "cost_strict_upper": 13772,
+          "delta": "290527/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "581054/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/182",
+          "cost_display": 14447.47042224976,
+          "cost_strict_upper": 14448,
+          "delta": "39413/443700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "7166/482885",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/183",
+          "cost_display": 15168.15844653773,
+          "cost_strict_upper": 15169,
+          "delta": "17417/207060",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "104502/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/184",
+          "cost_display": 15974.387243624862,
+          "cost_strict_upper": 15975,
+          "delta": "14507/182700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "29014/2187185",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "87/185",
+          "cost_display": 16882.347328557807,
+          "cost_strict_upper": 16883,
+          "delta": "231983/3105900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "463966/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10440"
+        },
+        {
+          "case": "88/169",
+          "cost_display": 8258.664564689625,
+          "cost_strict_upper": 8259,
+          "delta": "124987/785400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "999896/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/170",
+          "cost_display": 8475.35930011021,
+          "cost_strict_upper": 8476,
+          "delta": "15166/98175",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "970624/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/175",
+          "cost_display": 10076.217001932395,
+          "cost_strict_upper": 10077,
+          "delta": "14719/112200",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "117752/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/176",
+          "cost_display": 10388.938852531113,
+          "cost_strict_upper": 10389,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "72272/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/177",
+          "cost_display": 10796.243434451879,
+          "cost_strict_upper": 10797,
+          "delta": "6381/52360",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "153144/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/178",
+          "cost_display": 11162.444419699834,
+          "cost_strict_upper": 11163,
+          "delta": "11507/98175",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "736448/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/179",
+          "cost_display": 11558.961578687222,
+          "cost_strict_upper": 11559,
+          "delta": "88397/785400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "707176/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/180",
+          "cost_display": 12045.777597740307,
+          "cost_strict_upper": 12046,
+          "delta": "14123/130900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "677904/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/181",
+          "cost_display": 12517.947252046086,
+          "cost_strict_upper": 12518,
+          "delta": "81079/785400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "648632/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/182",
+          "cost_display": 13060.767809493696,
+          "cost_strict_upper": 13061,
+          "delta": "553/5610",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "17696/1062347",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/183",
+          "cost_display": 13630.13227833582,
+          "cost_strict_upper": 13631,
+          "delta": "24587/261800",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "25656/1616615",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/184",
+          "cost_display": 14258.933128208251,
+          "cost_strict_upper": 14259,
+          "delta": "35051/392700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "560816/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "88/185",
+          "cost_display": 14956.98980065592,
+          "cost_strict_upper": 14957,
+          "delta": "66443/785400",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "2152/150535",
+          "quantile": 8,
+          "raw_Haar_cap": "5681/960"
+        },
+        {
+          "case": "89/169",
+          "cost_display": 7816.472673237989,
+          "cost_strict_upper": 7817,
+          "delta": "533737/3177300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "1067474/37182145",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/170",
+          "cost_display": 8006.594893987225,
+          "cost_strict_upper": 8007,
+          "delta": "519101/3177300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "94382/3380195",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/176",
+          "cost_display": 9711.195963469183,
+          "cost_strict_upper": 9712,
+          "delta": "86257/635460",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "172514/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/178",
+          "cost_display": 10370.33988199051,
+          "cost_strict_upper": 10371,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "804026/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/179",
+          "cost_display": 10702.34324615028,
+          "cost_strict_upper": 10703,
+          "delta": "387377/3177300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "774754/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/180",
+          "cost_display": 11060.419412807452,
+          "cost_strict_upper": 11061,
+          "delta": "124247/1059100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "745482/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/181",
+          "cost_display": 11500.822646915507,
+          "cost_strict_upper": 11501,
+          "delta": "4213/37380",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "766/39767",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/182",
+          "cost_display": 11946.900850507927,
+          "cost_strict_upper": 11947,
+          "delta": "49067/453900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "98134/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/183",
+          "cost_display": 12408.183670460121,
+          "cost_strict_upper": 12409,
+          "delta": "109611/1059100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "34614/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/184",
+          "cost_display": 12912.44166428616,
+          "cost_strict_upper": 12913,
+          "delta": "314197/3177300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "48338/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/185",
+          "cost_display": 13465.973896064655,
+          "cost_strict_upper": 13466,
+          "delta": "299561/3177300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "599122/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "89/186",
+          "cost_display": 14076.373708745565,
+          "cost_strict_upper": 14077,
+          "delta": "3799/42364",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "113970/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10680"
+        },
+        {
+          "case": "90/170",
+          "cost_display": 7595.126081991423,
+          "cost_strict_upper": 7596,
+          "delta": "55289/321300",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "17012/572033",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/178",
+          "cost_display": 9701.063693965953,
+          "cost_strict_upper": 9702,
+          "delta": "217901/1606500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "871604/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/179",
+          "cost_display": 9983.173220637602,
+          "cost_strict_upper": 9984,
+          "delta": "210583/1606500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "842332/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/180",
+          "cost_display": 10285.595910088707,
+          "cost_strict_upper": 10286,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "162612/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/181",
+          "cost_display": 10659.090486082401,
+          "cost_strict_upper": 10660,
+          "delta": "195947/1606500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "41252/1956955",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/182",
+          "cost_display": 11011.201298946828,
+          "cost_strict_upper": 11012,
+          "delta": "26947/229500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "107788/5311735",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/183",
+          "cost_display": 11413.956610154684,
+          "cost_strict_upper": 11414,
+          "delta": "60437/535500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "55788/2860165",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/184",
+          "cost_display": 11827.43543295655,
+          "cost_strict_upper": 11828,
+          "delta": "173993/1606500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "695972/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/185",
+          "cost_display": 12277.222496649538,
+          "cost_strict_upper": 12278,
+          "delta": "6667/64260",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "133340/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "90/186",
+          "cost_display": 12768.319847711206,
+          "cost_strict_upper": 12769,
+          "delta": "53119/535500",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "57948/3380195",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/10800"
+        },
+        {
+          "case": "91/179",
+          "cost_display": 9370.460040601794,
+          "cost_strict_upper": 9371,
+          "delta": "90991/649740",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9578/391391",
+          "quantile": 6,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/181",
+          "cost_display": 9906.3504790954,
+          "cost_strict_upper": 9907,
+          "delta": "425683/3248700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "851366/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/182",
+          "cost_display": 10248.93818132034,
+          "cost_strict_upper": 10249,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "9034/408595",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/183",
+          "cost_display": 10589.219993558734,
+          "cost_strict_upper": 10590,
+          "delta": "132137/1082900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "792822/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/184",
+          "cost_display": 10934.486175239126,
+          "cost_strict_upper": 10935,
+          "delta": "15271/129948",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "152710/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/185",
+          "cost_display": 11307.280436666284,
+          "cost_strict_upper": 11308,
+          "delta": "367139/3248700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "734278/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "91/186",
+          "cost_display": 11711.031693127516,
+          "cost_strict_upper": 11712,
+          "delta": "117501/1082900",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "705006/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/840"
+        },
+        {
+          "case": "92/184",
+          "cost_display": 10186.746139056839,
+          "cost_strict_upper": 10187,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "36136/1616615",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/480"
+        },
+        {
+          "case": "92/185",
+          "cost_display": 10500.825946844127,
+          "cost_strict_upper": 10501,
+          "delta": "1474/12075",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "4288/198835",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/480"
+        },
+        {
+          "case": "92/186",
+          "cost_display": 10838.70574048033,
+          "cost_strict_upper": 10839,
+          "delta": "32191/273700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "772584/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "2717/480"
+        },
+        {
+          "case": "93/184",
+          "cost_display": 9509.175095239169,
+          "cost_strict_upper": 9510,
+          "delta": "449353/3320100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "898706/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11160"
+        },
+        {
+          "case": "93/185",
+          "cost_display": 9819.737112179697,
+          "cost_strict_upper": 9820,
+          "delta": "434717/3320100",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "869434/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11160"
+        },
+        {
+          "case": "93/186",
+          "cost_display": 10106.7099699361,
+          "cost_strict_upper": 10107,
+          "delta": "4517/35700",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "840162/37182145",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11160"
+        },
+        {
+          "case": "94/186",
+          "cost_display": 9483.703139356701,
+          "cost_strict_upper": 9484,
+          "delta": "15129/111860",
+          "kind": "uniform-first",
+          "normalized_Haar_factor": "181548/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/11280"
+        },
+        {
+          "case": "0",
+          "cost_display": 10010.52371945238,
+          "cost_strict_upper": 10011,
+          "delta": "2826653/16065000",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "5653306/557732175",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "1",
+          "cost_display": 11287.99515046122,
+          "cost_strict_upper": 11288,
+          "delta": "2594143/16743300",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "31129716/3160482325",
+          "quantile": 6,
+          "raw_Haar_cap": "1062347/67536"
+        },
+        {
+          "case": "2",
+          "cost_display": 10010.52371945238,
+          "cost_strict_upper": 10011,
+          "delta": "2826653/16065000",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "5653306/557732175",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "3",
+          "cost_display": 11287.99515046122,
+          "cost_strict_upper": 11288,
+          "delta": "2594143/16743300",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "31129716/3160482325",
+          "quantile": 6,
+          "raw_Haar_cap": "1062347/67536"
+        },
+        {
+          "case": "4",
+          "cost_display": 10354.00390223183,
+          "cost_strict_upper": 10355,
+          "delta": "75941/449820",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "151882/15935205",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3528"
+        },
+        {
+          "case": "5",
+          "cost_display": 10354.00390223183,
+          "cost_strict_upper": 10355,
+          "delta": "75941/449820",
+          "kind": "weighted185",
+          "normalized_Haar_factor": "151882/15935205",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3528"
+        },
+        {
+          "case": "0",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "1",
+          "cost_display": 10262.622914231944,
+          "cost_strict_upper": 10263,
+          "delta": "1366403/8059275",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "21862448/2119382265",
+          "quantile": 6,
+          "raw_Haar_cap": "1187329/72240"
+        },
+        {
+          "case": "2",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "3",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "4",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "5",
+          "cost_display": 10246.520510683116,
+          "cost_strict_upper": 10247,
+          "delta": "347329/2043825",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "8335896/855189335",
+          "quantile": 6,
+          "raw_Haar_cap": "1437293/82440"
+        },
+        {
+          "case": "6",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "7",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "8",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "9",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "10",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "11",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "12",
+          "cost_display": 10262.622914231944,
+          "cost_strict_upper": 10263,
+          "delta": "1366403/8059275",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "21862448/2119382265",
+          "quantile": 6,
+          "raw_Haar_cap": "1187329/72240"
+        },
+        {
+          "case": "13",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "14",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "15",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "16",
+          "cost_display": 10246.520510683116,
+          "cost_strict_upper": 10247,
+          "delta": "347329/2043825",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "8335896/855189335",
+          "quantile": 6,
+          "raw_Haar_cap": "1437293/82440"
+        },
+        {
+          "case": "17",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "18",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "19",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "20",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "21",
+          "cost_display": 9928.326231392064,
+          "cost_strict_upper": 9929,
+          "delta": "6102067/34425000",
+          "kind": "weighted184",
+          "normalized_Haar_factor": "12204134/1195140375",
+          "quantile": 6,
+          "raw_Haar_cap": "62491/3600"
+        },
+        {
+          "case": "root1_other_same_column",
+          "cost_display": 15323.557823477682,
+          "cost_strict_upper": 15324,
+          "delta": "266857/3034500",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "3202284/243114025",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "root1_other_other_column",
+          "cost_display": 15323.557823477682,
+          "cost_strict_upper": 15324,
+          "delta": "266857/3034500",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "3202284/243114025",
+          "quantile": 8,
+          "raw_Haar_cap": "4807/720"
+        },
+        {
+          "case": "root2_same_other_column",
+          "cost_display": 11152.914175688093,
+          "cost_strict_upper": 11153,
+          "delta": "4517/35700",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "135510/7436429",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/9000"
+        },
+        {
+          "case": "root2_other_same_column",
+          "cost_display": 12596.536402935859,
+          "cost_strict_upper": 12597,
+          "delta": "303901/2748900",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "3459796/220232705",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/8880"
+        },
+        {
+          "case": "root2_other_other_column",
+          "cost_display": 12596.536402935859,
+          "cost_strict_upper": 12597,
+          "delta": "303901/2748900",
+          "kind": "other-shape",
+          "normalized_Haar_factor": "3459796/220232705",
+          "quantile": 8,
+          "raw_Haar_cap": "62491/8880"
+        }
+      ],
+      "simple_strict_Haar_lower": "1/75000",
+      "target": 18000,
+      "worst_case": "uniform-first:85/181",
+      "worst_cost_display": 17419.122947657448
+    }
+  ],
+  "scalar_gate_enclosures_replayed": false,
+  "scope": "Two restricted noncoverage results from one selected actual source per original family. Full weighted queries and tails replayed; fixed rational weights, no LP optimality claim or Lean.",
+  "source_catalogue_replayed": false,
+  "weighted_source_laws": [
+    {
+      "M": 185,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        5,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "43/180",
+          "value": 1
+        },
+        {
+          "probability": "371/900",
+          "value": 2
+        },
+        {
+          "probability": "143/1800",
+          "value": 3
+        },
+        {
+          "probability": "1/9",
+          "value": 4
+        },
+        {
+          "probability": "1/60",
+          "value": 5
+        },
+        {
+          "probability": "13/120",
+          "value": 6
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "5183/1800",
+        "3383/1800",
+        "671/600",
+        "277/360",
+        "1/2",
+        "41/120",
+        "1/5",
+        "1/6",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 0,
+      "nonunit_mean": "3383/1800"
+    },
+    {
+      "M": 185,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        4,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "659/2814",
+          "value": 1
+        },
+        {
+          "probability": "1676/4221",
+          "value": 2
+        },
+        {
+          "probability": "817/8442",
+          "value": 3
+        },
+        {
+          "probability": "13/126",
+          "value": 4
+        },
+        {
+          "probability": "1/134",
+          "value": 5
+        },
+        {
+          "probability": "117/938",
+          "value": 6
+        },
+        {
+          "probability": "3/469",
+          "value": 8
+        },
+        {
+          "probability": "85/2814",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "1275/134",
+      "hinge_bounds": [
+        "2749/938",
+        "1811/938",
+        "1639/1407",
+        "6721/8442",
+        "1475/2814",
+        "500/1407",
+        "13/67",
+        "443/2814",
+        "170/1407",
+        "85/938",
+        "85/1407",
+        "85/2814"
+      ],
+      "id": 1,
+      "nonunit_mean": "1811/938"
+    },
+    {
+      "M": 185,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        5,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "43/180",
+          "value": 1
+        },
+        {
+          "probability": "371/900",
+          "value": 2
+        },
+        {
+          "probability": "143/1800",
+          "value": 3
+        },
+        {
+          "probability": "1/9",
+          "value": 4
+        },
+        {
+          "probability": "1/60",
+          "value": 5
+        },
+        {
+          "probability": "13/120",
+          "value": 6
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "5183/1800",
+        "3383/1800",
+        "671/600",
+        "277/360",
+        "1/2",
+        "41/120",
+        "1/5",
+        "1/6",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 2,
+      "nonunit_mean": "3383/1800"
+    },
+    {
+      "M": 185,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "659/2814",
+          "value": 1
+        },
+        {
+          "probability": "1676/4221",
+          "value": 2
+        },
+        {
+          "probability": "817/8442",
+          "value": 3
+        },
+        {
+          "probability": "13/126",
+          "value": 4
+        },
+        {
+          "probability": "1/134",
+          "value": 5
+        },
+        {
+          "probability": "117/938",
+          "value": 6
+        },
+        {
+          "probability": "3/469",
+          "value": 8
+        },
+        {
+          "probability": "85/2814",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "1275/134",
+      "hinge_bounds": [
+        "2749/938",
+        "1811/938",
+        "1639/1407",
+        "6721/8442",
+        "1475/2814",
+        "500/1407",
+        "13/67",
+        "443/2814",
+        "170/1407",
+        "85/938",
+        "85/1407",
+        "85/2814"
+      ],
+      "id": 3,
+      "nonunit_mean": "1811/938"
+    },
+    {
+      "M": 185,
+      "b": [
+        0,
+        3,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "31/147",
+          "value": 1
+        },
+        {
+          "probability": "193/441",
+          "value": 2
+        },
+        {
+          "probability": "25/294",
+          "value": 3
+        },
+        {
+          "probability": "97/882",
+          "value": 4
+        },
+        {
+          "probability": "4/147",
+          "value": 5
+        },
+        {
+          "probability": "2/21",
+          "value": 6
+        },
+        {
+          "probability": "5/147",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "75/7",
+      "hinge_bounds": [
+        "365/126",
+        "239/126",
+        "977/882",
+        "667/882",
+        "24/49",
+        "1/3",
+        "10/49",
+        "25/147",
+        "20/147",
+        "5/49",
+        "10/147",
+        "5/147"
+      ],
+      "id": 4,
+      "nonunit_mean": "239/126"
+    },
+    {
+      "M": 185,
+      "b": [
+        0,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "31/147",
+          "value": 1
+        },
+        {
+          "probability": "193/441",
+          "value": 2
+        },
+        {
+          "probability": "25/294",
+          "value": 3
+        },
+        {
+          "probability": "97/882",
+          "value": 4
+        },
+        {
+          "probability": "4/147",
+          "value": 5
+        },
+        {
+          "probability": "2/21",
+          "value": 6
+        },
+        {
+          "probability": "5/147",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "75/7",
+      "hinge_bounds": [
+        "365/126",
+        "239/126",
+        "977/882",
+        "667/882",
+        "24/49",
+        "1/3",
+        "10/49",
+        "25/147",
+        "20/147",
+        "5/49",
+        "10/147",
+        "5/147"
+      ],
+      "id": 5,
+      "nonunit_mean": "239/126"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        2
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 0,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        3,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3769/18060",
+          "value": 1
+        },
+        {
+          "probability": "7981/18060",
+          "value": 2
+        },
+        {
+          "probability": "25/258",
+          "value": 3
+        },
+        {
+          "probability": "823/9030",
+          "value": 4
+        },
+        {
+          "probability": "227/9030",
+          "value": 5
+        },
+        {
+          "probability": "117/1204",
+          "value": 6
+        },
+        {
+          "probability": "9/1204",
+          "value": 8
+        },
+        {
+          "probability": "19/602",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "855/86",
+      "hinge_bounds": [
+        "10457/3612",
+        "6845/3612",
+        "9967/9030",
+        "3406/4515",
+        "2266/4515",
+        "205/602",
+        "123/602",
+        "199/1204",
+        "38/301",
+        "57/602",
+        "19/301",
+        "19/602"
+      ],
+      "id": 1,
+      "nonunit_mean": "6845/3612"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 2,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        1,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 3,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        2,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 4,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "189/916",
+          "value": 1
+        },
+        {
+          "probability": "1195/2748",
+          "value": 2
+        },
+        {
+          "probability": "22/229",
+          "value": 3
+        },
+        {
+          "probability": "335/2748",
+          "value": 4
+        },
+        {
+          "probability": "10/687",
+          "value": 5
+        },
+        {
+          "probability": "20/229",
+          "value": 6
+        },
+        {
+          "probability": "5/916",
+          "value": 8
+        },
+        {
+          "probability": "23/687",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "2415/229",
+      "hinge_bounds": [
+        "2651/916",
+        "1735/916",
+        "252/229",
+        "1019/1374",
+        "329/687",
+        "929/2748",
+        "97/458",
+        "475/2748",
+        "92/687",
+        "23/229",
+        "46/687",
+        "23/687"
+      ],
+      "id": 5,
+      "nonunit_mean": "1735/916"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        1,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 6,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        1,
+        1,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 7,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 8,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 9,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        1,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 10,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        2,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 11,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        3,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3769/18060",
+          "value": 1
+        },
+        {
+          "probability": "7981/18060",
+          "value": 2
+        },
+        {
+          "probability": "25/258",
+          "value": 3
+        },
+        {
+          "probability": "823/9030",
+          "value": 4
+        },
+        {
+          "probability": "227/9030",
+          "value": 5
+        },
+        {
+          "probability": "117/1204",
+          "value": 6
+        },
+        {
+          "probability": "9/1204",
+          "value": 8
+        },
+        {
+          "probability": "19/602",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "855/86",
+      "hinge_bounds": [
+        "10457/3612",
+        "6845/3612",
+        "9967/9030",
+        "3406/4515",
+        "2266/4515",
+        "205/602",
+        "123/602",
+        "199/1204",
+        "38/301",
+        "57/602",
+        "19/301",
+        "19/602"
+      ],
+      "id": 12,
+      "nonunit_mean": "6845/3612"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        1,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 13,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 14,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 15,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        2,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "189/916",
+          "value": 1
+        },
+        {
+          "probability": "1195/2748",
+          "value": 2
+        },
+        {
+          "probability": "22/229",
+          "value": 3
+        },
+        {
+          "probability": "335/2748",
+          "value": 4
+        },
+        {
+          "probability": "10/687",
+          "value": 5
+        },
+        {
+          "probability": "20/229",
+          "value": 6
+        },
+        {
+          "probability": "5/916",
+          "value": 8
+        },
+        {
+          "probability": "23/687",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "2415/229",
+      "hinge_bounds": [
+        "2651/916",
+        "1735/916",
+        "252/229",
+        "1019/1374",
+        "329/687",
+        "929/2748",
+        "97/458",
+        "475/2748",
+        "92/687",
+        "23/229",
+        "46/687",
+        "23/687"
+      ],
+      "id": 16,
+      "nonunit_mean": "1735/916"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 17,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 18,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 19,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        1,
+        2,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 20,
+      "nonunit_mean": "50659/27000"
+    },
+    {
+      "M": 184,
+      "b": [
+        1,
+        2,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ],
+      "comparison_law": [
+        {
+          "probability": "3029/13500",
+          "value": 1
+        },
+        {
+          "probability": "577/1350",
+          "value": 2
+        },
+        {
+          "probability": "2227/27000",
+          "value": 3
+        },
+        {
+          "probability": "643/5400",
+          "value": 4
+        },
+        {
+          "probability": "1/50",
+          "value": 5
+        },
+        {
+          "probability": "13/150",
+          "value": 6
+        },
+        {
+          "probability": "1/150",
+          "value": 8
+        },
+        {
+          "probability": "1/30",
+          "value": 12
+        }
+      ],
+      "head315_density_cap": "21/2",
+      "hinge_bounds": [
+        "77659/27000",
+        "50659/27000",
+        "29717/27000",
+        "4063/5400",
+        "73/150",
+        "17/50",
+        "16/75",
+        "13/75",
+        "2/15",
+        "1/10",
+        "1/15",
+        "1/30"
+      ],
+      "id": 21,
+      "nonunit_mean": "50659/27000"
+    }
+  ]
+}

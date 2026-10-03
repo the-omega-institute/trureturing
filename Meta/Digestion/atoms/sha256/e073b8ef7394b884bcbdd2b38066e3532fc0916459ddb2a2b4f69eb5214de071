@@ -1,0 +1,60 @@
+### 341.3 地板残差在合法端点极限中保留
+
+第327.9式的参考目标延拓为
+
+$$
+F_y(q)=\frac12+
+ \kappa y^\beta\phi\!\left(\frac{C(1-Bq)}y\right)
+ \quad(y>0),\qquad F_0(q)=1/2.
+\tag{341.16}
+$$
+
+公共有理扩域中的光滑函数 $\phi$ 支于正区间，特别有 $\phi(0)=0$。令
+
+$$
+p_0=q_0=1/B.
+$$
+
+则对所有构造域中的 $y\ge0$，
+
+$$
+F_y(q_0)=1/2.
+\tag{341.17}
+$$
+
+原参考下包络不超过 $F_y$。对任意任务格点参数 $p'\in[0,1]$，若 $C(1-Bp')\ge0$，任务延拓使用
+$y=\zeta(C(1-Bp'))$，仍有
+$\bar L_J(p',q_0)\le1/2$；负偏差侧上下系数都恒为 $1/2$。因此
+
+$$
+\bar L_J(p',q_0)\le1/2\quad(0\le p'\le1),\qquad
+\mathcal L_J(p_0,q_0)\le\frac{1-\delta_J}{2}.
+\tag{341.18}
+$$
+
+后一式使用 Bernstein 平均保序。
+
+现在只沿原合法世界取 $c=1$、$h\downarrow0$。相应
+$p(h)=q(h)=(1-h/C)/B$ 趋于 $p_0=q_0$。对固定的有限 $J,m_J,d_J$，$\mathcal L_J(p,q)$ 是有限多项式，故连续；实际核心目标
+$1/2+\kappa h^\beta$ 趋于 $1/2$。因此
+
+$$
+\lim_{h\downarrow0}
+ \Delta_J(c=1,h)
+ =\frac12-\mathcal L_J(p_0,q_0)
+ \ge\frac{\delta_J}{2}.
+\tag{341.19}
+$$
+
+从而
+
+$$
+\boxed{
+\sup_{w}|\Delta_J(w)|
+ \ge\frac{\delta_J}{2}
+ =\frac{N^a}{8}\eta_J n_J^{-a}.}
+\tag{341.20}
+$$
+
+这里的上确界只遍历严格正的合法增益。式（341.18）在端点处评价有限多项式，式（341.19）取正世界极限；没有要求程序在 $h=0$ 的附加世界执行。
+

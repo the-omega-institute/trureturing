@@ -1,0 +1,24 @@
+### 15.3 两态的既有最优值与多态的操作性任务
+
+Uhlmann／[OA06] 的两态结果给
+\[
+ |c_{ab}|\le f_{ab}:=\|\sqrt{\tau_a}\sqrt{\tau_b}\|_1,
+\]
+且任一单独指定的状态对可以达到等号。对于输入 $|\pm_{ab}\rangle=(|a\rangle\pm|b\rangle)/\sqrt2$ 的等先验二择一实验，恢复后只读取 $A$，最优判别错误率为 $(1-|c_{ab}|)/2$。若固定按原 $X$ 相位测量，错误率为 $(1-\operatorname{Re}c_{ab})/2$。二者分别对应相位可校准与固定相位任务。
+
+对全部无序对均匀平均，在**同一个**恢复通道上优化固定相位任务，则
+\[
+ \boxed{p_{\mathrm{fixed}}^{\mathrm{opt}}
+ =\tfrac12\bigl(1-F_{\mathrm{SDP}}(\tau_1,\ldots,\tau_q)\bigr).} \tag{15.2}
+\]
+证明是直接识别 [NMLW25, (5.27)] 的正块矩阵：令 $X_{ab}=A_aA_b^\dagger$，对角块为 $\tau_a$；反向任何具有这些对角块的正矩阵都可作 Gram 分解，构造上述通道。目标正是 $2\sum_{a<b}\operatorname{Re}\operatorname{Tr}X_{ab}/[q(q-1)]$。这是对既有 SDP 的标准实现，不把它单独包装为新增定理。
+
+用模长替代实部通常得到另一目标，不能称为同一个 SDP。下节的缺口界同时约束它们，因为 $\operatorname{Re}c_{ab}\le|c_{ab}|$。原文定理 5.33 已有 $F_{\mathrm{SDP}}\le F_U$ 的一般比较；下文追踪这个差何时严格为正及在指定热模型中有多大。
+
+对共同本征基的 $H_\pm=H_B\pm gV$，两态保真度还等于
+\[
+ f_{+-}=\frac{Z(0)}{\sqrt{Z(g)Z(-g)}},\qquad
+ -\log f_{+-}=\frac{\beta^2g^2}{2}\operatorname{Var}_{\gamma_{H_B}}V+O(g^4).
+\]
+这里 $Z(g)=\operatorname{Tr}e^{-\beta(H_B+gV)}$。直接对配分函数求导得到热响应系数，未把这个已知 Gibbs 身份认领为新构造。
+

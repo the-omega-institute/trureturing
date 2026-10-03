@@ -1,0 +1,29 @@
+### 14.7 稠密实验及校准误差
+
+一般图上选择一棵最大权重生成森林 $\mathcal T$，权重为 $w_{ij}$。在该森林上求解 (14.6)，记遗漏权重总和
+\[
+ W_{\rm tail}=\sum_{\{i,j\}\notin\mathcal T}w_{ij}.
+\]
+支持图中无边的项为零。森林目标等于全成对目标加上所选集合内部的遗漏权重；因此其输出对全成对目标的遗憾至多 $W_{\rm tail}$。合并 (14.3) 的两侧余项得到
+\[
+ \boxed{\Delta(\widehat S)-\Delta(S^*)
+ \le W_{\rm tail}+\frac{2m\eta^3}{3(1-\eta)}.}            \tag{14.10}
+\]
+最大权重森林只优化这个遗漏总量上界，没有保证优化真实信息目标。忽略任意小边以强行制造森林时，必须保留遗漏权重或矩阵扰动预算。
+
+再假定已校准模型 $G$ 与估计 $\widehat G$ 满足
+\[
+ (1-\tau)G\preceq\widehat G\preceq(1+\tau)G,
+ \qquad0\le\tau<1.
+\]
+主子矩阵继承同一 Loewner 界，$2m$ 个特征值逐项求对数给
+\[
+ |\widehat\Delta(S)-\Delta(S)|\le m[-\log(1-\tau)].
+\]
+若算法在估计矩阵上有已证明的遗憾预算 $\varepsilon_{\rm alg}$，则
+\[
+ \boxed{\Delta(\widehat S)-\min\Delta
+ \le\varepsilon_{\rm alg}+2m[-\log(1-\tau)].}            \tag{14.11}
+\]
+该组合不要求真实统计图也是森林，但算法所用图的假设必须对 $\widehat G$ 成立。有限样本不能从小数值估计认证某条边精确为零。未知生成元、频率配对错误和浮点计算误差各需独立预算，不在 $\tau$ 中默认为已处理。
+

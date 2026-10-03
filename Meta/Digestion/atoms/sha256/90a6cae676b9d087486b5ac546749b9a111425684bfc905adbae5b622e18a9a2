@@ -1,0 +1,21 @@
+### 13.8 文献入库、验证与尚未解决的目标
+
+本章新增原始引用分别登记于 `Library/PredictiveReduction/`，并由已有 `HamiltonianEffectCompletionGenerator.scribe.cs` 的文献说明关联。Scribe 说明只关联已存在的交换子闭包声明与相关文献，不创建虚构 Lean 真源，不将本章纸面优化定理升级成 kernel 结论。主卷继续是研究结果的唯一正文。
+
+本轮程序通过 72 个分组有限检查，包括重复频率的成对谱构造、自治投影、Sylvester 身份、随机投影的权衡界、条件 KL 上下界、后验扰动遗憾界和量子通道恢复。两态例中编码前后相对熵分别为 .3094844837282447 与 .30948448372824505，迹距离为 .75。这些数值用于检错；一般结果由上述证明承担。没有运行 Lean kernel、Scribe 编译或发射、仓库 CI，也没有硬件实验或神经网络 benchmark。
+
+[SCWTM17] A. Spantini, T. Cui, K. Willcox, L. Tenorio, Y. Marzouk. *Goal-Oriented Optimal Approximations of Bayesian Linear Inverse Problems*. SIAM Journal on Scientific Computing 39(5), S167–S196 (2017), DOI 10.1137/16M1082123; arXiv:1607.01881。核对解析全文 §2.3、式 (2.22)–(2.26) 的目标与后验精度损失。本章另加自治约束，并使用热归一能量损失。
+
+[BGH22] P. Buchfink, S. Glas, B. Haasdonk. *Optimal Bases for Symplectic Model Order Reduction of Canonizable Linear Hamiltonian Systems*. IFAC-PapersOnLine 55(20), 463–468 (2022), DOI 10.1016/j.ifacol.2022.09.138。作者机构页摘要与书目信息已核对，公开全文下载失败，未核定其内部定理编号。该文已有周期线性系统中能量坐标/POD 的最优辛基结果，不能因未取得全文就声称本章谱构造此前不存在。
+
+[FTXZZ26] L. Feng, Y. Tang, Y. Xie, R. Zhang, A. Zhu. *Learning symplectic model reduction based on a approximation theorem of symplectic embeddings*. arXiv:2606.04623 (2026)。核对解析文本 Theorems 2.2、3.1 的紧可缩域和结构保持编码/解码目标，作为当前预印本文献，未独立审定其全部证明。
+
+[KI02] M. Koashi, N. Imoto. *Operations that do not disturb partially known quantum states*. Physical Review A 66, 022318 (2002), DOI 10.1103/PhysRevA.66.022318；预印本 quant-ph/0101144 的标题为 *What is Possible Without Disturbing Partially Known Quantum States?*。使用指定态族的可保留部分和冗余部分，不套用到任意未知态。
+
+[LW26] L. van Luijk, H. Wilming. *Sufficiency and Petz recovery for positive maps*. arXiv:2604.08380v1 (2026), §1.1–1.2。全文 HTML 已核对；CPTP 最小充分代数与正映射/Jordan 结构的区别保留。
+
+PDF 文献的解析正文已按上述范围读取，页面截图工具返回错误，未进行图表或页面视觉核验。新候选结论没有获得独立同行或异模型证明审查，也未确立全球优先权。
+
+本章已经解出的是指定 Gaussian 实验下的精确自治子空间最优能量恢复，以及其近自治收益界；量子部分只给限定态族的精确实例。尚未解决的核心扩展是：同一约束下直接最小化条件 KL 或最坏任务风险的全局解；未知近共振生成元与传感器的联合有限数据保证；非线性流形的全局、稳定、低维充分表示；以及一般有限温量子态族的统计充分代数与动力学生成代数的联合最小化。后续在本主卷增补，不另开重复理论。
+
+<a id="sec-information-optimal-autonomy"></a>

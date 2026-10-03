@@ -1,0 +1,14 @@
+## 171. 首次整除秩估计的文献对照与迁移边界
+
+[Luca、Mejía Huguet、Nicolae（2009）](../../../Library/Scale/luca2009eulerfibonacci.md) 在 *On the Euler Function of Fibonacci Numbers* 的 Lemma 3、式 (5)、第 4–5 页给出
+
+$$
+\sum_{z(p)=m}\frac1p\ll\frac{\log m}{m}.
+$$
+
+原证明也按 $p<m^2$ 和 $p>m^2$ 分开，并用 $p\equiv\pm1\pmod m$ 估计较小素数。故 §163 的按首次秩分桶与平方截断属于已有方法；本卷保留的是明确常数的对数 Euler 版本及其与同一来源的低秩乘积、除数个数和 Robin 预算的组合，不主张这种分桶思路原创。该文没有给出本卷的显式常数六，或 §169 的双项和 Robin 结论。
+
+同文 Lemma 4 给 $\sum_{d\mid m}(\log d)/d\ll(\log\log m)^2$。直接对所有 $d\mid j$ 累加 Lemma 3 再取指数，只能得到 $F_j/\varphi(F_j)\le\exp(O((\log\log j)^2))$，这一路上界不足以比较 Robin 的 $\log j$ 规模。§§163–169 则在一次共同截断后，用低秩载体的 totient 包络与高秩小尾界相乘；二者不是相同的估计顺序。
+
+论文第 2 页 Theorem 1 后及第 13 页 §6 的 $\sigma$ 推广涉及相邻 Fibonacci 项的 $\sigma$ 比值向量稠密，不能迁移为任意双项和的约数权重上界。这里已核对该原文，未穷尽全部文献，不作优先权判断。RH 与全部合法五模式历史的统一 Robin 估计继续未决。
+

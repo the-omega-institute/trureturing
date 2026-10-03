@@ -1,0 +1,16 @@
+### 13.3 自治约束下的精确最优压缩
+
+定义 $B$ 的动力学平均
+\[
+\overline B=\lim_{T\to\infty}\frac1T\int_0^T e^{-t\Omega}Be^{t\Omega}dt.
+\]
+这个极限只是有限维矩阵的解析定义，无需以无限观测时间实际估计。若 $i\Omega=\sum_\lambda\lambda E_\lambda$ 是复 Hermitian 谱分解，则
+\[
+\overline B=\sum_\lambda E_\lambda B E_\lambda.
+\]
+它为实对称矩阵，满足 $0\preceq\overline B\prec I$、$[\overline B,\Omega]=0$。在每个正频率块对相应复 Hermitian 矩阵对角化，并把每个复方向与其共轭配对，可列出 $n$ 个实二维模态收益
+\[
+\nu_1\ge\cdots\ge\nu_n\ge0,
+\qquad\operatorname{spec}(\overline B)=(\nu_1,\nu_1,\ldots,\nu_n,\nu_n).
+\]
+

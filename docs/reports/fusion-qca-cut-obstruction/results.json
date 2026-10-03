@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "arithmetic": "exact Python integers",
+  "case_counts": {
+    "fusion_dimensions": 150,
+    "offset_identity": 5730,
+    "balanced_multilayer": 972,
+    "ordinary_ancilla": 450
+  },
+  "total_cases": 7302,
+  "balanced_vector_counts": {
+    "2": 4,
+    "3": 18,
+    "4": 84,
+    "5": 380
+  },
+  "examples": [
+    {
+      "n": 2,
+      "identity": 4,
+      "countershift": 5,
+      "difference": 1
+    },
+    {
+      "n": 3,
+      "identity": 25,
+      "countershift": 26,
+      "difference": 1
+    },
+    {
+      "n": 4,
+      "identity": 169,
+      "countershift": 170,
+      "difference": 1
+    },
+    {
+      "n": 5,
+      "identity": 1156,
+      "countershift": 1157,
+      "difference": 1
+    },
+    {
+      "n": 6,
+      "identity": 7921,
+      "countershift": 7922,
+      "difference": 1
+    }
+  ],
+  "scope": "Finite arithmetic diagnostics only. No Lean, DHR, von Neumann algebra or FDQC verification."
+}

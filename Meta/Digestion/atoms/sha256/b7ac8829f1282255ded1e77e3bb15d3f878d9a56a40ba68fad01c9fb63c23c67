@@ -1,0 +1,6 @@
+**定理 8.4（二特征的精确四秩）。** 若 $\operatorname{char}K=2$，则 $\operatorname{rank}H_{f_K}=4$，最小线性实现维数为四。
+
+证明。此时 $S=I$、$q=(0,1)$；未来 $b$ 的更新与读出都不依赖 $a$。每个接缝只保留 $(b,c)$，合法边作 $(b,c)\mapsto(b+d_bc,c)$，非法源块映到零，按同一接缝图汇入目标块。两个块给四维实现。
+
+$\varepsilon,[3]$ 到达接缝零的 $(0,1),(1,1)$，追加 $[2]$ 把它们原样送到接缝一，四列构成可达基。后缀 $[5]$ 的合法性与数量在接缝零上的两行为 $(0,1),(1,1)$，行列式为 $-1$。前置 $\mathrm{null}$ 将两接缝的 $(b,c)$ 汇入接缝零，故再用 $\mathrm{null}[5]$ 的两输出就能恢复另一块。相应四测试观察矩阵为 $\left(\begin{smallmatrix}B&0\\B&B\end{smallmatrix}\right)$，$B=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，行列式为一。与可达基相乘给秩四的有限 Hankel 子矩阵，达到上界。此证明适用于所有二特征域。
+

@@ -1,0 +1,15 @@
+**引理 311.2（有限时域得分矩预算）。** 对固定整数 $m\ge1$ 和紧区间 $I\Subset(0,1)$，定义
+
+$$
+\xi_i=\frac{X_i}{u}-\frac{1-X_i}{1-u},\qquad
+S_j=\sum_{i=1}^jR_i\xi_i.
+\tag{311.9}
+$$
+
+存在仅依赖 $I,m$ 的常数 $C_{I,m}<\infty$，使对任意 $n$、任意 $u\in I$ 和上述停止规则，
+
+$$
+\boxed{\mathbb E_u|S_n|^{2m}\le C_{I,m}\mathbb E_uM_n^m.}
+\tag{311.10}
+$$
+

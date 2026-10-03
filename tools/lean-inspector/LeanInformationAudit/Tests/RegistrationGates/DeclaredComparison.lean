@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredComparison
 open Lean Meta Elab Command
@@ -33,7 +36,7 @@ def universeTemplate.{u} (f : Bool → Bool) : PrimitiveRealization (cutSignatur
   let Carrier : Type u := PUnit.{u + 1}
   cutRealization f
 
-register_information_template universeTemplate
+test_assess in register_information_template universeTemplate
 
 def universeLow : PrimitiveRealization (cutSignature Bool Bool) :=
   universeTemplate.{0} (fun x : Bool => x)
@@ -71,7 +74,7 @@ def aliasDescriptor : PrimitiveRealization (cutSignature Bool Bool) :=
 
 def unusedCarrier (ignored : Type) (f : Bool → Bool) :
     PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
-register_information_template unusedCarrier
+test_assess in register_information_template unusedCarrier
 
 def discardProof (_ : ∀ x : Bool, x = x.not.not) : Arena := Arena.ofFintype Bool
 def discardIndependent (_ : True) : Arena := Arena.ofFintype Bool
@@ -111,7 +114,7 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
 
 elab "check_body_argument_grammar" : command => do
   let saved ← get
-  let result ← TemplateAudit.enroll ``decisionBody
+  let result ← TemplateAudit.enroll (← getEnv).header.mainModule (← getOptions) ``decisionBody
   let ok := result matches .error "unclassified_form:E3.closed_decision"
   set saved
   (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] body_argument_closed_decision_same_rule"

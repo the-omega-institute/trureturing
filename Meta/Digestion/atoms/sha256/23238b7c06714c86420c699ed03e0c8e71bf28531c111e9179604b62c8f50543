@@ -1,0 +1,10 @@
+**引理338.2（均值匹配的平滑误差）。** 设 $g\in C^\beta([0,1])$、$\|g\|_{C^\beta}\le C_1$。若 $V$ 是任意 $[0,1]$ 值随机变量，满足 $\mathbb EV=z$、
+$\operatorname{Var}(V)\le C/m$，则
+
+$$
+|\mathbb Eg(V)-g(z)|\le C_2m^{-a},\qquad a=\beta/2,
+\tag{338.10}
+$$
+
+常数只依正则界、$\beta$ 及方差界中的固定常数。
+

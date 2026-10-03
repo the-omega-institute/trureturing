@@ -1,0 +1,38 @@
+**引理 230.4（真实临界素数块的正系数增益）。** 取固定 $\kappa=1/10$，定义临界素数块
+
+$$
+\mathcal P_- =\{p:-\kappa\le z(p)<0\},\qquad
+\mathcal P_+ =\{p:0<z(p)\le\kappa\},\qquad
+k=|\mathcal P_-|+|\mathcal P_+|.
+\tag{230.12}
+$$
+
+$z(p)=0$ 的素数至多一个，省略它没有 $R$ 阶影响。以下成立：
+
+$$
+k=(2\kappa+o(1))R,\qquad
+\sum_{p\in\mathcal P_-\cup\mathcal P_+}\log p=O_\kappa(y/\ell).
+\tag{230.13}
+$$
+
+对下块定义移除比 $r_p=w_{p,1}^{-1}$，对上块定义加入比 $r_p=w_{p,1}$。由式（230.8）在临界块的更精细误差 $\varepsilon_p=O(\ell/y)$，
+
+$$
+r_p=e^{-|z(p)|}(1+O_\kappa(\ell/y)),\qquad
+ g_p=c_0+c_1r_p\ge g_\kappa-o(1),\qquad
+ g_\kappa=\frac12+\frac23e^{-\kappa}>1.
+\tag{230.14}
+$$
+
+所以
+
+$$
+G_y:=\prod_{p\in\mathcal P_-\cup\mathcal P_+}g_p,
+\qquad
+\log G_y\ge(c_\kappa+o(1))R,
+\quad c_\kappa=2\kappa\log g_\kappa>0.
+\tag{230.15}
+$$
+
+证明。这些临界素数最终都在 $(\sqrt{2s},2y)$，且与 $V$ 互素。对 $z=\log x-s/x$ 换元，强 PNT 使用密度 $dx/\log x$ 给式（230.13）。式（230.8）在固定临界块上有 $\varepsilon_p=O_\kappa(\ell/y)$，所以移除比与加入比分别是 $e^{z(p)+\varepsilon_p}$、$e^{-z(p)-\varepsilon_p}$，得到式（230.14）。再对 $k$ 个 $g_p$ 取对数求和，即得式（230.15）。$\square$
+

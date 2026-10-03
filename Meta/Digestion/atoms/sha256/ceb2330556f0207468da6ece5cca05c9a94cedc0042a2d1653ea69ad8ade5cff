@@ -1,0 +1,30 @@
+**命题 162.3（真实缺素数的补位证书）。** 仍设 $D\mid j$、$n=5040F_j$。令 $P$ 为实际整除 $n$ 的素数集，$Q$ 为互不相同且均不整除 $n$ 的素数之积，允许 $Q=1$。若 $0<h\le\log(j/4)$、$b\ge\log Q$，则
+
+$$
+\eta_P(n)\prod_{q\mid Q}\left(1-\frac1q\right)
+\left(1+\frac{4b}{jh}\right)
+\left(1+\frac{a_0}{h^3}\right)\le1
+$$
+
+足以认证 Robin。
+
+证明。由于缺素数与 $n$ 互素，totient 恒等式为
+
+$$
+\frac n{\varphi(n)}
+=\prod_{q\mid Q}\left(1-\frac1q\right)
+\frac{nQ}{\varphi(nQ)}.
+$$
+
+在 $nQ>N_K$ 应用 Axler。写 $L_Q=\log\log(nQ)$，则 $L_Q\ge L>h$，而
+
+$$
+\frac{L_Q}L
+=1+\frac{\log(1+\log Q/\log n)}L
+\le1+\frac{4b}{jh}.
+$$
+
+乘以同一 $n$ 的真实局部因子即得结论。这没有把缺素数插入 $\eta_P$；收益来自补位前后的 totient 比值，并明确扣除了规模增加的成本。$\square$
+
+`source_scale.py` 在指定素数与赋值深度预算内读取同一 $j$ 的模响应。非零模余数给精确赋值；超过预算时只保留已知下界，并把未知局部因子上界置为 $1$。预算耗尽返回未定。在命题 162.2 的来源上，前九方向返回未定，观察 $29$ 给安全证书；如果所有正赋值只读到一层，继续观察到缺素数 $59$ 也能通过命题 162.3 给证书。这些是有限计算接口，不代替下一节对所有未见素数的统一估计。
+

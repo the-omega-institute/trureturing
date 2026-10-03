@@ -1,0 +1,35 @@
+**证明。** 第一谐波具有正权重，所以单射。导数平方是
+$[\varepsilon+4\sqrt3\varepsilon+9+16\sqrt3\varepsilon+25\varepsilon]/Z_\varepsilon=1$。
+每个谐波差满足 $|\sin(kd/2)|\le k|\sin(d/2)|$，故上弦增益至多为 1，短弦极限给恰为 1。
+
+令 $x=\cos^2(d/2)$，测量弦比平方为 $P_\varepsilon(x)/Z_\varepsilon$，其中
+\[
+ P_\varepsilon(x)=(4x-1)^2+\varepsilon B(x),
+\]
+\[
+ B(x)=1+(16x^2-12x+1)^2
+ +\sqrt3\,[4x+16x(2x-1)^2].
+\]
+$B(x)\ge1$ 给下界；$x=1/4$ 给上界。极小点在 $\varepsilon\to0$ 时必趋向 $1/4$，因为第一项在紧区间有唯一零点。以 $x=1/4$ 作比较并用 $B$ 连续，得到
+$\min P_\varepsilon/\varepsilon\to B(1/4)=2(1+\sqrt3)$。正下弦界、非零导数和紧性给 A1–A3。
+
+对两延迟差行，省去共同的 $4/Z_\varepsilon$ 因子。平方范数为
+\[
+ d_\varepsilon(d)=\sin^2(3d/2)
+ +\varepsilon[\sin^2(d/2)+\sin^2(5d/2)]
+ +\sqrt3\varepsilon[\sin^2d+\sin^2(2d)].
+\]
+内积因子通过三角恒等式精确化为
+\[
+ c_\varepsilon(d)=-\sqrt3\varepsilon\sin^2(3d/2)
+ (1+\cos d)(2\cos d-1).
+\]
+$|(1+y)(2y-1)|\le2$ 对 $-1\le y\le1$ 成立，且 $d_\varepsilon\ge\sin^2(3d/2)$，因此 $|c_\varepsilon|/d_\varepsilon\le2\sqrt3\varepsilon$，得到稳定秩下界。短弦极限则给
+\[
+ \lim_{d\to0}\frac{|c_\varepsilon(d)|}{d_\varepsilon(d)}
+ =\frac{18\sqrt3\varepsilon}{Z_\varepsilon},
+\]
+得到上界。两边夹逼给精确一阶稳定秩缺口。结合 $l_\varepsilon^2$ 的等价式和定理 12.2，得到上确界不达到及平方阶的最优性。证毕。
+
+构造机制是三次谐波在该采样间隔下旋转四分之一周，使两个差行趋向等长正交；微弱的其他谐波负责区分三次绕行所合并的相位。平衡第二、第四和第一、第五谐波的权重，使相关内积在潜在重合弦处具有二阶零点。这个抵消是上界阶为 $O(\varepsilon)$ 的承重步骤，不能仅由缩放不变性或原文定义推出。
+

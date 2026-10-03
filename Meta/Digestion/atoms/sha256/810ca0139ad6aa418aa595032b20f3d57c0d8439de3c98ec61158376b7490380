@@ -1,0 +1,5 @@
+**Theorem 1.2 (comparison of the two orbit conventions).** The relation
+(x\sim_\rho y) agrees with the standard group-action relation
+(x\in G\cdot y). The resulting orbit quotients are canonically homeomorphic
+with their quotient topologies.
+

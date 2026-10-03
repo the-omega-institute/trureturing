@@ -1,0 +1,11 @@
+**推论322.4（钟费用的零误差极限）。** 在同一抽象概率策略类中，以 $\mathcal J_s$ 为费用定义 $\mathcal D_s^{\mathrm{pol}}(\delta)$，空类费用取无穷。则
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal D_s^{\mathrm{pol}}(\delta)
+=\mathcal D_s^{\mathrm{pol}}(0).}
+\tag{322.8}
+$$
+
+共同值有限时，存在准确策略达到它。
+

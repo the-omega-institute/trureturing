@@ -1,0 +1,76 @@
+### 347.7 满足预指定相邻比的指数平滑
+
+固定一个有理数
+
+\[
+R_*^{-1}\le q<1.
+\tag{347.32}
+\]
+
+它只依预指定的 \(R_*>1\)，不依 \(g\)。定义
+
+\[
+\bar\omega_0=\omega_0,\qquad
+\bar\omega_{k+1}
+=q\bar\omega_k+(1-q)\omega_{k+1}.
+\tag{347.33}
+\]
+
+因 \(\omega\) 非增，归纳得到
+
+\[
+\bar\omega_k\ge\omega_k,\qquad
+\bar\omega_{k+1}\le\bar\omega_k,\qquad
+\bar\omega_{k+1}\ge q\bar\omega_k.
+\tag{347.34}
+\]
+
+故其相邻比至多 \(q^{-1}\le R_*\)。显式表达为
+
+\[
+\bar\omega_k
+=q^k\omega_0
++(1-q)\sum_{j=1}^kq^{k-j}\omega_j,
+\]
+
+\[
+\sum_{k\ge0}\bar\omega_k
+=\frac{\omega_0}{1-q}+\sum_{j\ge1}\omega_j
+\le\frac1{1-q}\sum_{j\ge0}\omega_j<\infty.
+\tag{347.35}
+\]
+
+还需验证该平滑没有改变剖面。若 \(j\ge k/2\)，则
+\((k+2)/(j+2)\le2\)，倍增界给
+
+\[
+\omega_j\le 2D^{1/a}\omega_k.
+\]
+
+这些项的权重和至多一。其余 \(j<k/2\) 的项连同初始项，总贡献至多固定常数乘 \(q^{k/2}\omega_0\)。另一方面，式（347.21）给
+
+\[
+\omega_k\ge c_g(k+2)^{-1-d/a}.
+\]
+
+固定指数衰减由这一幂下界控制；把有限前缀一并吸入常数，得到
+
+\[
+\boxed{\omega_k\le\bar\omega_k\le C_{g,q}\omega_k.}
+\tag{347.36}
+\]
+
+现在选固定充分小的 \(c>0\)，令
+
+\[
+\eta_k=c\bar\omega_k,\qquad
+c\le1,\qquad
+c\sum_k\bar\omega_k\le K_\Sigma.
+\tag{347.37}
+\]
+
+可以取足够小的正有理 \(c\)。由于 \(\bar\omega_k\le\bar\omega_0=\omega_0\le1/2\)，有 \(\eta_k\le1\)。式（347.34）保持原相邻比 \(R_*\)，式（347.35）给总和预算。
+
+在 \(s\in[s_-,a]\) 上，式（347.36）的固定正倍数比较给
+\(W_\eta\asymp W_{c\omega}\)。结合式（347.31）和定理347.1，即得式（347.20）。这完成定理347.2的充分性及匹配阶证明。整个构造固定以后不随 \(u\) 改变，原共同网格类及其相邻比没有被扩大。
+

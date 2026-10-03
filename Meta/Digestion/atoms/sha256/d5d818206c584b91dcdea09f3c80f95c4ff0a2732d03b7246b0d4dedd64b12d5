@@ -1,0 +1,18 @@
+### 349.12 成熟接口、综合内容与未解边界
+
+正平均的可达支撑、有限维量子循环的统一终止以及 CP 响应的矩阵求和分别有既有文献承担。当前连接保留同一固定初态、原始分支和未知来源族：式（349.9）的忠实正算子把初态终止提升到可达支撑；式（349.21）—（349.27）用正权比较给全内点与紧集共同吸收；固定实算子词空间再给有理次数 \(D\le d^2\)。
+
+完整目标的全正指数排除与固定维数正误差，使用第348节已经展开的实解析和归一化系数论证。非整数精度界则通过真实联合事件 \(X=Z\) 接到 Stahl 的外部定理。块对角推论进一步保留实际经典—量子联合实现，使用 \(\sum_i d_i^2\) 而不是分别选择不相容的最优存储。
+
+尚未构造达到式（349.47）或式（349.54）容量的合法量子控制器。全部有理函数中的最佳逼近不自动具有同维 CP 实现，也未验证原首币身份、来源权限和终止条件。因此经典与量子必要界的形式差异不构成可达量子优势、状态最优阶或存储位交换率。
+
+正整数的定量容量速率、合法 CP 近似器的匹配上界、总持续内存与来源费用的联合可达域，以及其他未知参数输入模型，均未由本节解决。这些是纸面数学结论及其范围，没有新增 Lean 核验或机器状态声明。
+
+[^quantum_affine_reachability]: Yangjia Li, Nengkun Yu and Mingsheng Ying, *Termination of Nondeterministic Quantum Programs*, [arXiv:1201.0891v1](https://arxiv.org/pdf/1201.0891v1)，后刊于 Acta Informatica 51(1), 1–24，[DOI](https://doi.org/10.1007/s00236-013-0185-3)。预印本 PDF 第9—11页 Definition 3、Lemma 1、Lemma 2及 Theorem 1定义原始 CP 词的可达支撑，证明正平均程序具有相同可达空间，并给有限稳定条件；第16—17页 Lemma 7讨论终止态与可达空间终止的关系。本节使用这些可达结构作为成熟背景，并给固定正权来源族的直接证明；不把一份正混合程序的终止性改称任意非确定调度下终止。
+
+[^quantum_affine_loops]: Mingsheng Ying and Yuan Feng, *Quantum Loop Programs*, Acta Informatica 47(4) (2010), 221–250，[DOI](https://doi.org/10.1007/s00236-010-0117-4)，[arXiv:quant-ph/0605218v2](https://arxiv.org/pdf/quant-ph/0605218v2)。PDF 第8页 Definition 3.2、第15—16页 Theorem 5.2给该文有限维量子循环模型中全输入 almost termination 与 uniform almost termination 的等价性。其 almost termination 对应这里的几乎必返回；该文另外的 termination 指有限步概率已归零。本节更一般的 CP 正权模型及跨参数紧集余量由正文另证，不直接扩大该原定理的操作范围。
+
+[^quantum_affine_resolvent]: Yuan Feng, Nengkun Yu and Mingsheng Ying, *Model Checking Quantum Markov Chains*, Journal of Computer and System Sciences 79(7) (2013), 1181–1198，[DOI](https://doi.org/10.1016/j.jcss.2013.04.002)，[arXiv:1205.2187v2](https://arxiv.org/pdf/1205.2187v2)。PDF 第4页 Theorem 2.5给 CP 矩阵方程的最小不动点；第20页 Corollary 7.2及 Definition 7.3、第21页 Appendix 7.3.1把收敛响应级数写成超算子矩阵的逆表示。该文为有限记忆响应提供成熟接口；本节先证明同一可达空间上的稳定性，再保留原仿射矩阵以核算参数次数。
+
+[^quantum_affine_stahl]: Herbert Stahl, *Best Uniform Rational Approximation of \(x^\alpha\) on \([0,1]\)*, Bulletin of the American Mathematical Society (N.S.) 28(1) (1993), 116–122，[DOI](https://doi.org/10.1090/S0273-0979-1993-00351-3)，[arXiv:math/9301217v1](https://arxiv.org/pdf/math/9301217v1)。PDF 第1页定义实系数有理最佳误差，第3页 Theorem 1及式（2.1）—（2.2）给式（349.44）的极限与渐近；原文含定理及证明纲要。本节只使用固定非整数指数的严格正前置常数。
+

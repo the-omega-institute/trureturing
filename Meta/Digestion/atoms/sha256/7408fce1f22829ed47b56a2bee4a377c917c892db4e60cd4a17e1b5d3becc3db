@@ -1,0 +1,24 @@
+\[
+\gamma_K
+=
+\min\left\{
+1,\
+\inf_{\theta\in K}\min_{1\le j\le J}
+\frac{w_j(\theta)}{w_j(\theta_0)}
+\right\}>0.
+\tag{349.21}
+\]
+
+各权连续且在紧内集严格为正，有限项取最小仍为正。式（349.4）于是给
+
+\[
+T_\theta-\gamma_K T_0
+\text{ 为完全正映射},
+\qquad
+F_\theta\succeq\gamma_K F_0,
+\qquad \theta\in K.
+\tag{349.22}
+\]
+
+这里比较的是 CP 映射与正效果的序，不是某个任意 Hermitian 基下矩阵条目的符号。
+

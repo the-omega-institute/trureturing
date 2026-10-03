@@ -1,0 +1,37 @@
+### 命题 156.4（Bellman 最大值必须升级为联合前沿）
+
+令 $\mathcal P(i,b,h)$ 为从 $q_i$ 开始、预算至多 $b$、首指数上限 $h$ 的规范后缀的 Pareto 前沿；一对 $(u,w)$ 被另一对 $(u',w')$ 支配，当
+
+$$
+u'\le u,\qquad w'\ge w,
+$$
+
+且至少一项严格。则
+
+$$
+\begin{aligned}
+\mathcal P(i,b,h)=\operatorname{Pareto}\Bigl(&\{(1,1)\}\\
+&\cup\bigcup_{\substack{1\le a\le h\\q_i^a\le b}}
+\{(q_i^a u,\,G_{q_i}(a)w):(u,w)\in
+\mathcal P(i+1,\lfloor b/q_i^a\rfloor,a)\}\Bigr),
+\end{aligned}
+\tag{156.5}
+$$
+
+其中 $G_p(a)=\sum_{j=0}^a p^{-j}$. 这是一个有限递推；终止分支 $(1,1)$ 表示当前 rough 后缀停止。
+
+若 $C\ge5040$ 且 $C$ 与所有 $q_i$ 互素，任何被另一点支配的 $(u,w)$ 都不能成为 $\Delta(Cu)$ 的唯一最小点，因为
+
+$$
+u'\le u,\quad w'\ge w
+\Longrightarrow
+\Delta(Cu')\le\Delta(Cu).
+\tag{156.6}
+$$
+
+所以 `RoughPrimeSuffixBellman` 的 $V$ 只给出前沿的最大 $w$ 投影；要检验 Robin 余量，必须保留式 (156.5) 的联合 $(u,w)$ 前沿，最后再对同一整数 $Cu$ 的对数预算作有理区间比较。把不同整数的最大 $Z$ 放进同一个分母，是不合法的替换。
+
+本节的规范化与前沿递推只给出固定共同核心上的有限搜索压缩。它没有估计前沿随 $y$ 或核心变化的统一尾部，也没有证明 Robin 全称不等式或黎曼猜想。
+
+独立脚本 `docs/reports/fib-robin-boundary/robin_frontier.py` 生成式 (156.5) 的精确有理前沿；`robin_frontier_check.py` 不调用生成器而重算所有状态、分支、支配删除与根前沿。它们只核验有限规范递推，不把有限结果提升为无限尺度结论。
+

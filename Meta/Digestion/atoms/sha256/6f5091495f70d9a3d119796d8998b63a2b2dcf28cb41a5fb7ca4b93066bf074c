@@ -1,0 +1,14 @@
+### 142.1. 可达损失与最小连带损失
+
+对正整数 $m$，记 $R(m)$ 为最小正指标满足 $m\mid F_{R(m)}$，并取 $R(1)=1$。它存在：模 $m$ 的相邻 Fibonacci 对由可逆有限状态递推作用，初态 $(0,1)$ 必在正时间返回。已有 `FibonacciRank.fibonacci_entry_point` 给
+
+$$
+m\mid F_d\quad\Longleftrightarrow\quad R(m)\mid d.
+$$
+
+这里允许合数 $m$；素数上界不是这一整除等价的必要条件。对正除数 $g\mid H$ 定义
+
+$$
+C_H(g)=\gcd(H,F_{R(g)}). \tag{142.1}
+$$
+

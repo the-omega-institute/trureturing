@@ -1,0 +1,9 @@
+**命题 83.3（CRT 联合像与乘法纤维）。** 给定有限非空模数族 $m_i\ge2$，令 $L=\operatorname{lcm}_i m_i$，固定整数 $N$。余数组 $(y_i)_i$ 属于 $x\mapsto(Nx\bmod m_i)_i$ 的像，当且仅当
+
+$$
+y_i\equiv y_j\pmod{\gcd(m_i,m_j)},\qquad
+\gcd(N,m_i)\mid y_i\quad\text{对所有 }i,j.
+$$
+
+在 $x\bmod L$ 上，每个非空纤维的大小都是 $d=\gcd(N,L)$，联合像大小为 $L/d$。若去掉乘子 $N$，第一组条件本身就是广义 CRT 的存在条件，解唯一到模 $L$。
+

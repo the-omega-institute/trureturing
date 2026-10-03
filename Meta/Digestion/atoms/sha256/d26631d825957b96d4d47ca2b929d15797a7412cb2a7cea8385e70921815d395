@@ -1,0 +1,96 @@
+### 309.7 显式截断、全域正余量与 Hölder 正则性
+
+设
+$$
+p_*=\frac1B,\qquad
+d_*=\frac{1-1/(4C)}B,\qquad I=[d_*,p_*].
+$$
+保留首枚实际旧 \(X=x\) 后，所需的 \(Z=0\) 条件概率为
+$$
+f_0(p)=\frac12+\frac{\varepsilon[C(1-Bp)]^\beta}{1-p},
+\qquad
+f_1(p)=\frac12-\frac{\varepsilon[C(1-Bp)]^\beta}{p},
+\quad p\in I.
+\tag{309.25}
+$$
+它们是已知函数；输入仍是未知参数旧币，不要求先知道 \(p\)。在 \(I\) 上，
+$$
+\frac12\le f_0\le\frac58,\qquad
+\frac16\le f_1\le\frac12.
+\tag{309.26}
+$$
+
+现设 \(\beta>2\)。取稍大的已知开区间
+$$
+J=(a_*,b_*),\qquad
+a_*=\frac{1-1/(2C)}B,\qquad b_*=\frac{1+p_*}{2}.
+\tag{309.27}
+$$
+有 \(0<a_*<d_*\le p_*<b_*<1\)。为明确截断，可令
+$$
+a_1=\frac{a_*+d_*}{2},\qquad
+b_1=\frac{p_*+b_*}{2},
+$$
+$$
+\eta(t)=
+\begin{cases}e^{-1/t},&t>0,\\0,&t\le0,\end{cases}
+\qquad
+\chi(t)=\frac{\eta(t)}{\eta(t)+\eta(1-t)},
+$$
+$$
+\psi(p)=
+\chi\left(\frac{p-a_1}{d_*-a_1}\right)
+\chi\left(\frac{b_1-p}{b_1-p_*}\right).
+\tag{309.28}
+$$
+\(\chi\) 在 \(t\le0\) 为零，在 \(t\ge1\) 为一，处处光滑。因此
+\(\psi\in C_c^\infty(J)\)，\(0\le\psi\le1\)，且 \(\psi=1\) 于 \(I\)；其支集位于 \([a_1,b_1]\Subset J\)。这一选择只依赖已知 \(B,C\)。
+
+写
+$$
+h_+(p)=\max\{C(1-Bp),0\}.
+$$
+在 \(J\) 内定义
+$$
+\widetilde f_0(p)
+=\frac12+\frac{\varepsilon\psi(p)h_+(p)^\beta}{1-p},
+\qquad
+\widetilde f_1(p)
+=\frac12-\frac{\varepsilon\psi(p)h_+(p)^\beta}{p};
+\tag{309.29}
+$$
+在 \(J\) 外令二者为 \(1/2\)。由于 \(\psi\) 在 \(J\) 的边界附近已经为零，没有端点除零或拼接角点。在 \(I\) 上它们准确等于式（309.25）。
+
+全域概率余量可以直接估算。在 \(\psi\) 支集上，
+$$
+0\le h_+(p)\le\frac12,\qquad
+p\ge\frac1{2B}\ge\frac18,\qquad
+1-p\ge\frac{1-1/B}{2}\ge\frac14.
+$$
+因为 \(\beta>2\)，\(\varepsilon h_+(p)^\beta\le1/64\)，故
+$$
+\frac12\le\widetilde f_0\le\frac9{16},\qquad
+\frac38\le\widetilde f_1\le\frac12.
+$$
+包括 \(J\) 外常数值后，
+$$
+\boxed{\widetilde f_0,\widetilde f_1:
+[0,1]\longrightarrow[3/8,5/8]\Subset(0,1).}
+\tag{309.30}
+$$
+这里不靠未量化的邻域缩小保证正性。
+
+任选
+$$
+0<\gamma<\min\{\beta-2,1\},\qquad \alpha=2+\gamma.
+\tag{309.31}
+$$
+在 \(p<p_*\) 上，\(h_+^\beta\) 的二阶导数为
+\((BC)^2\beta(\beta-1)h_+^{\beta-2}\)；在 \(p\ge p_*\) 上按零连续延拓。若 \(0<\beta-2<1\)，正部分幂在紧区间为 Hölder \(\beta-2\)，因此也为 Hölder \(\gamma\)；若 \(\beta-2\ge1\)，它在紧区间 Lipschitz，因此为 Hölder \(\gamma<1\)。与 \(\psi\) 以及支集邻域的光滑倒数 \(1/p,1/(1-p)\) 相乘，仍有 Hölder \(\gamma\) 的二阶导数。支集外的常数延拓也保持此性质。于是
+$$
+\boxed{\widetilde f_0,\widetilde f_1\in
+C^{2+\gamma}[0,1].}
+\tag{309.32}
+$$
+直接把 \(p\) 截断到 \(I\) 一般会在左端制造角点；式（309.28）—（309.29）在更大区间内光滑过渡，避免了这个问题。
+

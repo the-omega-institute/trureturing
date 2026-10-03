@@ -1,0 +1,40 @@
+**定理 95.1（五种停止测试的精确失败模数）。** 对每个整数 $j\ge3$，下列五个充分条件在 $n=5040F_j$ 上全部失败，当且仅当 $D\mid j$：
+
+$$
+v_2(n)\le20,\quad v_3(n)\le12,\quad v_5(n)\le8,\quad
+v_7(n)\le6,\quad v_{11}(n)\le5,
+$$
+
+其中
+
+$$
+D=2^{15}3^{10}5^87^511^5
+=2045861090389670400000000.
+$$
+
+因此 $D\nmid j$ 就足以在构造 $F_j$ 之前认证 $\sigma(5040F_j)<e^\gamma(5040F_j)\log\log(5040F_j)$。
+
+**证明。** 使用 T. Lengyel, *The Order of the Fibonacci and Lucas Numbers*, Fibonacci Quarterly 33(3) (1995), 234–239，[原文 Lemmas 1、2（页 235）及 §3 的 rank/lifting 定理](https://www.fq.math.ca/Scanned/33-3/lengyel.pdf)。其标准公式为
+
+$$
+v_2(F_j)=\begin{cases}
+0&3\nmid j,\\1&j\equiv3\pmod6,\\v_2(j)+2&6\mid j,
+\end{cases}\qquad v_5(F_j)=v_5(j).
+$$
+
+对 $p\ne2,5$，若 $\alpha(p)$ 是首次正整除指标，则 $\alpha(p)\mid j$ 时 $v_p(F_j)=v_p(j)+v_p(F_{\alpha(p)})$，否则为零。此处 $\alpha(3)=4,\alpha(7)=8,\alpha(11)=10$，且 $F_4=3,F_8=21,F_{10}=55$ 给三个初始指数都为 1；此前较小正指标直接检验无相应整除。只使用这三个具体事实，不假设所有素数初始指数都是 1。公式也见 Medina–Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, FQ 53(3) (2015), 265–271，[Theorem 1.4](https://arxiv.org/pdf/0910.2907)。
+
+由 $5040=2^4\cdot3^2\cdot5\cdot7$，五个失败条件逐一化为：
+
+| 停止方向 | $F_j$ 的失败指数下界 | 等价指标条件 |
+|---|---:|---|
+| 素数 2 方向 | $v_2(F_j)\ge17$ | $3\cdot2^{15}\mid j$ |
+| 素数 3 方向 | $v_3(F_j)\ge11$ | $4\cdot3^{10}\mid j$ |
+| 素数 5 方向 | $v_5(F_j)\ge8$ | $5^8\mid j$ |
+| 素数 7 方向 | $v_7(F_j)\ge6$ | $8\cdot7^5\mid j$ |
+| 素数 11 方向 | $v_{11}(F_j)\ge6$ | $10\cdot11^5\mid j$ |
+
+例如二进下界 17 排除了前两个分支，剩下 $6\mid j$ 且 $v_2(j)\ge15$，恰为首行。其余行由各 rank 条件与指数下界直接得到。五个模数的最小公倍数恰为 $D$，证明双向等价。
+
+因为 $j\ge3$ 保证 $n\ge10080>5040$，可以应用 Christian Axler, *On Robin's inequality*, Ramanujan Journal 61 (2023), 909–919，[Theorem 3](https://link.springer.com/article/10.1007/s11139-022-00683-0) 的 2、5 方向，以及 Alexander Hertlein, *Robin's inequality for new families of integers*, Integers 18 (2018), A71，[原文 Theorem 2、页 2](https://math.colgate.edu/~integers/s71/s71.pdf) 的 3、7、11 方向。这些文献结论不要求 $n$ 极大丰。只要 $D\nmid j$，至少一个条件成功，得到严格 Robin。 $\square$
+

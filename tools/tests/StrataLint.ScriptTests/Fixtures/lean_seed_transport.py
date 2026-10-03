@@ -58,7 +58,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         # Exercise the optional-fetch caller protocol under errexit. Workflow
         # execution itself is verified by a real integration run, not YAML tests.
         return subprocess.run(["bash", "-euo", "pipefail", "-c", '''
-if ! "$1" fetch --allow-seed --repository "$2"; then
+if ! "$1" fetch --repository "$2"; then
     printf '%s\\n' 'Release seed unavailable; continuing with the normal Lean build.'
 fi
 make -C "$2" lean
@@ -402,7 +402,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
     def test_invalid_release_budget_is_optional_but_real_build_failure_is_not(self):
-        for value in ("0", "-1", "nan", "601"):
+        for value in ("0", "-1", "nan", "1801"):
             with self.subTest(budget=value):
                 environment = {"STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": value}
                 fetched = self.fetch_then_build(**environment)
@@ -413,6 +413,13 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertIn('"status":"failed"', published.stdout)
                 self.assertEqual(19, self.transport("publish", **environment, FAKE_BUILD_EXIT="19").returncode)
                 self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_release_budget_accepts_values_up_to_the_ceiling(self):
+        for value in ("1", "600", "1800"):
+            with self.subTest(budget=value):
+                fetched = self.fetch_then_build(STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=value)
+                self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)
+                self.assertNotIn("STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS must be", fetched.stdout)
 
     def test_optional_fetch_miss_reaches_build_and_preserves_build_failure(self):
         for build_exit in (0, 19):
@@ -469,16 +476,16 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual([], list(self.remote.iterdir()))
         self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
-    def test_legacy_fetch_flag_cannot_enable_cross_partition_selection(self):
+    def test_fetch_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)
         shutil.rmtree(self.root / ".lake/build")
-        restored = self.transport("fetch", arguments=("--allow-seed",))
+        restored = self.transport("fetch")
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertTrue((self.root / ".lake/build/lib/lean/D5/A.olean").is_file())
         shutil.rmtree(self.root / ".lake/build")
         self.manifest["packages"][0]["rev"] = OTHER
         self.save_manifest()
-        self.assertNotEqual(0, self.transport("fetch", arguments=("--allow-seed",)).returncode)
+        self.assertNotEqual(0, self.transport("fetch").returncode)
         self.assertFalse((self.root / ".lake/build").exists())
 
     def test_roundtrip_is_partitioned_and_source_sha_is_provenance_only(self):

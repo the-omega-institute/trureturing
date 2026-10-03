@@ -1,0 +1,16 @@
+## 5. Deterministic capped exploration of the actual carrier
+
+Fix natural numbers $m,B,H,K$. The active object is an actual member of
+$U_n$ or $J_n^t$, not a randomly generated replacement. First stop when
+at least $m$ positions have been emitted. Label this stop good exactly
+when the remaining length exceeds $B$, and short otherwise. If the
+target is not reached, stop small when the active length is below two,
+and stop exhausted when no transitions remain. Otherwise recover the
+unique proper-cut sign, its minimum positive cut, and its unique actual
+left and right factors. Emit the left factor if its length is at most
+$K$. If that test fails, remove the right factor when its length is at
+most $K$, recording it as a pending suffix. If both tests fail, stop
+with cap failure. A left emission resets the child to $U$; a right
+removal leaves the child in $J^\varepsilon$. The parent belongs to $U$
+or $J^{1-\varepsilon}$, never $J^\varepsilon$.
+

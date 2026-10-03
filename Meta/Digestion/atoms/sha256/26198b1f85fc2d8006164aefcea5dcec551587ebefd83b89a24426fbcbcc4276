@@ -1,0 +1,54 @@
+**引理344.3（升阶中心系数界）。** 对 \(0\le\ell\le D\)，
+\[
+C_{D,J}((x-p)^\ell)=\mu_{D,J,\ell}.
+\tag{344.13}
+\]
+存在绝对常数 \(C_\mu\)，使 \(1\le\ell\le D\) 时
+\[
+\boxed{
+|\mu_{D,J,\ell}|
+\le\left[
+C_\mu\max\left\{\sqrt{\frac{\ell p(1-p)}D},\,\frac{\ell}{D}\right\}
+\right]^\ell.}
+\tag{344.14}
+\]
+
+**证明。** 用下降阶乘记号 \((q)_k=q(q-1)\cdots(q-k+1)\)。单项式升阶系数为
+\[
+C_{D,J}(x^k)=\frac{(J)_k}{(D)_k}.
+\]
+分别展开 \((x-p)^\ell\) 和中心乘积，得到同一有限和，证明式（344.13）。
+
+把总体值中心化为 \(y_1,\ldots,y_D\)，则
+\[
+\sum_i y_i=0,\qquad \sum_i y_i^2=Dp(1-p),\qquad |y_i|\le1.
+\]
+其生成多项式为
+\[
+F(t)=\prod_{i=1}^D(1+t y_i)
+=\sum_{\ell=0}^D\binom D\ell\mu_{D,J,\ell}t^\ell.
+\tag{344.15}
+\]
+当 \(|t|\le1/2\)，由对数展开，
+\[
+\log|1+t y_i|\le\Re(t y_i)+|t y_i|^2.
+\]
+线性项求和为零，故
+\[
+|F(t)|\le \exp(Dv|t|^2),\qquad v=p(1-p).
+\]
+
+取 Cauchy 半径
+\[
+q=\min\{1/2,\sqrt{\ell/(2Dv)}\},
+\]
+其中 \(v=0\) 时取 \(q=1/2\)。若平方根项较小，
+\[
+|[t^\ell]F|\le (C\sqrt{Dv/\ell})^\ell.
+\]
+否则 \(Dv\le2\ell\)，从而 \(|[t^\ell]F|\le C^\ell\)。再用
+\[
+\binom D\ell\ge(D/\ell)^\ell,
+\]
+即得式（344.14）。在 \(J=0,D\) 时全部正阶中心乘积矩实际为零；上界仍成立。证毕。
+

@@ -1,0 +1,48 @@
+**命题 32.1（同一 FIB 行走的四维效果、五维代数）。** 限制输入到命题 8.2 的三循环空间 $\mathcal V=\operatorname{span}\{u,v,w\}$，其中
+
+$$
+u=|10,p_{10}\rangle,\quad v=|01,p_{11}\rangle,\quad w=|11,p_{01}\rangle,
+\qquad L|_{\mathcal V}=3I-J_3.
+$$
+
+合同仅允许一个不中断的任意非负等待区间，再做一次二结果低读出：选定结果为 $01$，另一结果为其补。没有中间仪器、额外低过滤或任意终端投影。定义正交基
+
+$$
+s=\frac{u+v+w}{\sqrt3},\qquad
+r=\frac{-u+2v-w}{\sqrt6},\qquad d=\frac{u-w}{\sqrt2},
+$$
+
+以及
+
+$$
+A_0=\tfrac13|s\rangle\langle s|+\tfrac23|r\rangle\langle r|,
+\quad X=|s\rangle\langle r|+|r\rangle\langle s|,
+\quad Y=-i|s\rangle\langle r|+i|r\rangle\langle s|.
+$$
+
+实际响应空间为 $\mathcal O=\operatorname{span}_{\mathbb R}\{I,A_0,X,Y\}$，实维四，但
+
+$$
+C^*(\mathcal O)=B(\operatorname{span}\{s,r\})\oplus\mathbb C|d\rangle\langle d|
+\tag{32.1}
+$$
+
+的 Hermitian 维数为五。
+
+证明。$Ls=0,Lr=3r,Ld=3d$，且 $v=s/\sqrt3+\sqrt{2/3}\,r$。终端低结果压缩为 $|v\rangle\langle v|$，其 Heisenberg 效果为
+
+$$
+E_t=A_0+\frac{\sqrt2}{3}\bigl(\cos3t\,X+\sin3t\,Y\bigr).
+$$
+
+非负时间取到两个三角方向，补结果提供 $I$；四算子独立，所以恰维四。$X^2=P_s+P_r$ 不在其中：若为 $aI+bA_0$，在 $d$ 上给 $a=0$，在 $s,r$ 上又要求 $b/3=2b/3=1$，矛盾；$X,Y$ 的非对角项不能修复该对角等式。另一方面 $X^2$ 给两维支撑投影，$XY=i(P_s-P_r)$ 给其对角差，$X,Y$ 给两个角，$I-X^2=P_d$ 给余块，故恰生成 (32.1)。$\square$
+
+实际不可区分态可以明确选为
+
+$$
+\rho_+=\tfrac12P_r+\tfrac12P_d,\qquad
+\rho_-=\tfrac23P_s+\tfrac16P_r+\tfrac16P_d.
+$$
+
+它们对每个 $E_t$ 均给 $1/3$，却对 $X^2$ 分别给 $1/2,5/6$。将生成代数误作可读效果就在这个合同下虚增了可辨信息。一般实际效果的复化含 $I$、伴随封闭、带继承的矩阵正锥，因此首先是 operator system。普通商 $\mathcal O_\infty/\mathcal O_0$ 中 $\mathcal O_0$ 含单位，不能作为非零 CP map 的 operator-system kernel：正 map 若把单位送零，就把所有 $0\le A\le cI$ 送零，线性性使整 map 为零。标准 quotient operator system 还需要合法 kernel 与 Archimedean matrix cones，见 §38 的精确来源。
+

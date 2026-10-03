@@ -1,0 +1,8 @@
+## 254. 截止复圆盘给出显式的全阶修正预算
+
+本节将 §253 中尚未指定数值的 $C,q,\varepsilon$ 固定下来。
+经典 Rouché 定理、解析隐函数定理与 Cauchy 系数估计作为中间工具；
+Rouché 的陈述见 [DLMF §1.10(iv)](https://dlmf.nist.gov/1.10#Px6)，
+复解析背景见 [DLMF §1.10](https://dlmf.nist.gov/1.10)。
+所估计的函数仍是同一移动截止的 $\mathcal H$，不是实际素数误差。
+

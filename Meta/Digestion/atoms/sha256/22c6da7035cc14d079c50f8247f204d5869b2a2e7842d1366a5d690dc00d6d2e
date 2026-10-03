@@ -1,0 +1,39 @@
+**命题 224.7（源碰撞给出的谱平方下界与字符计数）。** 令
+$\alpha_r=S_2(\widetilde\mu_s)=\exp(-\frac32b_2R+o(R))$。则
+
+$$
+\sum_{a\in G}\nu_s(a)^2\ge\alpha_r,
+\qquad
+\sum_{\chi\ne1}|\widehat\nu_s(\chi)|^2\ge N\alpha_r-1.
+\tag{224.22}
+$$
+
+至少 $N\alpha_r/2-1$ 个非主字符满足
+
+$$
+|\widehat\nu_s(\chi)|\ge\sqrt{\alpha_r/2}.
+\tag{224.23}
+$$
+
+证明。每个余数纤维中 $(\sum_i x_i)^2\ge\sum_i x_i^2$，所以合并源原子只增加平方和；命题 224.1 在 $q=2$ 给出 $\alpha_r$ 的主阶。Parseval 在当前归一化下是
+
+$$
+\sum_{\chi\in\widehat G}|\widehat\nu_s(\chi)|^2
+=N\sum_{a\in G}\nu_s(a)^2.
+$$
+
+主字符的平方模为 $1$，删除后得到式（224.22）。若 $M$ 个字符的平方模至少为 $\alpha_r/2$，则 $|\widehat\nu_s|\le1$ 给
+
+$$
+N\alpha_r
+\le\sum_\chi|\widehat\nu_s(\chi)|^2
+\le M+(N-M)\alpha_r/2.
+$$
+
+因此 $M\ge N\alpha_r/(2-\alpha_r)\ge N\alpha_r/2$；删去主字符至多再减一。$\square$
+
+式（224.22）的非主平方总量下界为
+$\exp(y/2-\frac32b_2R+o(R))$；这是未归一总量，不能删去因子 $N$ 后据此宣称平均平方量不趋零。式（224.23）给出至少
+$\exp(y/2-\frac32b_2R+o(R))$ 个非主字符，模长至少
+$\exp(-\frac34b_2R+o(R))$。与 §222 的构造相比，这里字符数量的主指数更大，但该模长阈值不能写成 $e^{-o(R)}$。
+

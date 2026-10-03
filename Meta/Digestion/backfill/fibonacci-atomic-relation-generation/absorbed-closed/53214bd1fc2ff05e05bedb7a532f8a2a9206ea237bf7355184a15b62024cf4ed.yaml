@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53214bd1fc2ff05e05bedb7a532f8a2a9206ea237bf7355184a15b62024cf4ed
+  normalized_sha256: sha256:53214bd1fc2ff05e05bedb7a532f8a2a9206ea237bf7355184a15b62024cf4ed
+cas_ref: sha256:53214bd1fc2ff05e05bedb7a532f8a2a9206ea237bf7355184a15b62024cf4ed
+coverage_gids:
+  - gid: D5/S1/Recurrence/FiniteColumnGcdNormalization.finite_column_gcd_normalization
+    target_statement_id: sha256:0c8ee3dab44f8b2e9d010f02a9d68b4fbd5e13dc2d2f41e28cef3b0d189d76bd
+receipts:
+  unresolved_subitems: []

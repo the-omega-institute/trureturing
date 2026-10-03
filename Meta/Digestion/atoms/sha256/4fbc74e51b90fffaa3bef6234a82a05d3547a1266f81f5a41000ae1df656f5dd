@@ -1,0 +1,57 @@
+**命题 217.3（保留 $d/X$ 核的实际计数）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\sum_{d\in\mathcal H_D}\frac dX
+&=\frac{T(A+X)}{2X}\,\zeta(2)
+\prod_{p\mid V}(1-p^{-2})+O(T/H+\log H)\\
+&=\left(\frac{\pi^2}{8}+o(1)\right)T.
+\end{aligned}
+}
+\tag{217.7}
+$$
+
+证明。令 $q_g=N_g/X$，则 $q_g$ 是位于 $[A/X,1]$ 的递增仿射序列，且
+
+$$
+Q=\sum_{g\in I}q_g=\frac{T(A+X)}{2X}.
+$$
+
+模 $h$ 的单个余数类在每个初始子区间中的计数偏差至多为一。
+对 $q_g$ 分部求和，其端点大小与总变差均有绝对上界，故当 $(h,V)=1$ 时，
+一致有
+
+$$
+\sum_{\substack{g\in I\\h\mid N_g}}q_g=Q/h+O(1).
+\tag{217.8}
+$$
+
+先不施加 $N_g/h>D$ 的截断，切换后的核和为
+
+$$
+\sum_{\substack{h<H\\(h,V)=1}}\frac1h
+\sum_{\substack{g\in I\\h\mid N_g}}q_g
+=Q\sum_{\substack{h<H\\(h,V)=1}}h^{-2}+O(\log H).
+$$
+
+被截断删去的项必有 $h\ge A/D=(A/X)H$；它们的总量至多为
+
+$$
+\sum_{(A/X)H\le h<H}\frac1h(T/h+1)=O(T/H+1).
+$$
+
+把平方倒数和延伸到无穷只损失 $O(T/H)$，而
+
+$$
+\sum_{\substack{h\ge1\\(h,V)=1}}h^{-2}
+=\zeta(2)\prod_{p\mid V}(1-p^{-2}).
+$$
+
+这得到式（217.7）的第一行。再由 $(A+X)/(2X)\to3/4$、式（217.1）与
+$\zeta(2)=\pi^2/6$，得到常数 $(3/4)(\pi^2/6)=\pi^2/8$。$\square$
+
+这两份计数来自同一实际整数族，没有随机均匀模型的假设。它们不控制
+$b_s(d)$：保留 $d/X$ 虽去掉了无权个数中的 $\log H$ 因子，仍留下
+$T$ 量级的核总和。用全局最大原子乘这个核总和，依然要支付 $T$ 量级的因子。
+

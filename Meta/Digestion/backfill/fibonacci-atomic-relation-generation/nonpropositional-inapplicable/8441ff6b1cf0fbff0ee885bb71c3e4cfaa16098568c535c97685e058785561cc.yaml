@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8441ff6b1cf0fbff0ee885bb71c3e4cfaa16098568c535c97685e058785561cc
+  normalized_sha256: sha256:8441ff6b1cf0fbff0ee885bb71c3e4cfaa16098568c535c97685e058785561cc
+cas_ref: sha256:8441ff6b1cf0fbff0ee885bb71c3e4cfaa16098568c535c97685e058785561cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: LinearMap.quotKerEquivOfSurjective, LinearMap.quotKerEquivOfSurjective_apply_mk. Take q(a,b)=2a+3b on Z^2. A right inverse is n -> (-n,n). The kernel is Z(3,-2): with 2a+3b=0 take t=a+b and normalize a=3t,b=-2t; the reverse inclusion normalizes to zero. Apply the first isomorphism theorem. e=(-1,1) maps to 1 and the displayed decomposition and 2e,3e follow by linear normalization. No frozen repository GID for this quotient was found.'
+    previous_atom_id: f881071e7cf29a06be756c82b0b02e440c0f7e352e574da7bf7f81d82ecd7a09
+    next_atom_id: a863168ee0dd83607716936fe73e3e195cb7e31c197bd5fef41dd4a2e6a204e2

@@ -1,0 +1,21 @@
+**定理 94.5（最终储备目标与价格间隙仍有 RH 强度）。** 有
+
+$$
+\begin{aligned}
+\mathrm{RH}
+&\Longleftrightarrow
+\exists X>1\ \forall x\ge X,
+\quad\Phi(x)\ge-\frac{4}{5\sqrt x\log x}\\
+&\Longleftrightarrow\Delta(\lambda_x)>0\text{ 最终处处成立}\\
+&\Longleftrightarrow\Delta(\lambda_x)\ge0\text{ 最终处处成立}.
+\end{aligned}
+$$
+
+这里每个“最终”都量化某一阈值之后的所有实数 $x$，且 $\Delta$ 是本节指定的无约束压力间隙。在明确假设 RH 时，还有
+
+$$
+c_R-C_\gamma\le\liminf_{x\to\infty}\sqrt x\log x\,\Delta(\lambda_x)
+\le\limsup_{x\to\infty}\sqrt x\log x\,\Delta(\lambda_x)
+\le c_R+C_\gamma.
+$$
+

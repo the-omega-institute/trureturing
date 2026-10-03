@@ -1,0 +1,28 @@
+**定理 53.1（全部混合实际槽与取得的无约束阈值）。** 对任意有限列表 $\mathbf a=((m_1,r_1),\ldots,(m_k,r_k))$，其中 $k\ge0$、$m_i\ge1$、$r_i\in\{1,2\}$，定义
+
+$$
+\begin{aligned}
+\alpha_{\mathbf a}&=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\xi_H,\\
+\gamma_{\mathbf a}&=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\xi_L,\\
+H_{\mathbf a}&=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}.
+\end{aligned}
+$$
+
+它们是同一个列表供应的实际 $D/D$ 来源对与共同历史，两条尾对全部列表固定。每个返回映射满足
+
+$$
+G_{j,m,r}(D)=(1-\rho^m)h_j+\rho^m\chi^rD,\qquad
+G_{j,m,r}([X_j,h_j))\subset(X_j,h_j).
+$$
+
+令
+
+$$
+\Theta_r=\lambda-g^2\chi^rX_H\quad(r=1,2),\qquad
+0<\Theta_1<\Theta_2<\lambda.
+$$
+
+全族精确闭成本上确界为 $\Theta_2$，并由有限历史取得。非空列表最后一项 $r_k=2$ 时，唯一 $\Theta_2$ 等号槽是最后返回中最内侧高侧 $U$ 的位置4；最后一项 $r_k=1$ 时全部槽严格低于 $\Theta_2$，但早先返回的成本可以高于 $\Theta_1$。空列表的精确最大成本恰为 $\Theta_1$。
+
+对固定归属 $o$，全族在 $b=\Theta_2$ 的闭合同可实际取得，当且仅当 $o_1=1$；逐槽严格合同在上述等号历史失败。任意 $b>\Theta_2$、任意归属均可统一取得 $|\eta|<(b+\Theta_2)/2<b$ 的历史，再接各自的零误差未来。
+

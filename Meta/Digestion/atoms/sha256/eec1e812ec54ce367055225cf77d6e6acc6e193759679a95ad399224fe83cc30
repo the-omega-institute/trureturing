@@ -1,0 +1,4 @@
+## 1. Scope
+
+The full coverage-depth optimizer concerns all finite fields, all dimensions at least two, and every full-rank generator of simplex length. Physical zero, repeated, and scalar-parallel columns are retained, and sampling is iid uniform with replacement. The matrix implication below is a necessary dependency of the contracted spanning-polynomial concavity route, not a separate open problem or a settlement of the optimizer.
+

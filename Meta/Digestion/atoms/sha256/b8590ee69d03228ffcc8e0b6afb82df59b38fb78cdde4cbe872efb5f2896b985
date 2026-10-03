@@ -1,0 +1,12 @@
+**定理 8.1。** 令 $\mu_Y$ 为完整后验，$\nu_Y$ 为其当前可见变量 $u$ 的边缘，$\gamma_v=N(0,I_{n-r})$。用恢复 $\mathcal R\nu_Y=\nu_Y\otimes\gamma_v$，则平均热恢复缺陷
+$$
+\boxed{\Delta_T:=\mathbb E_YD(\mu_Y\Vert\nu_Y\otimes\gamma_v)
+=I(v;Y\mid u)
+=\tfrac12\log\det(I_{n-r}+L_v^TL_v/s).}
+$$
+它也等于 $I(\xi_0;Y)-I(u;Y)$。固定 $s$ 时，令 $M$ 为第 5.1 节同一相关曲率，
+$$
+\boxed{\Delta_T=\frac{T^3}{6s}\operatorname{tr}M+O(T^5).}
+$$
+对任意 $T>0$，$\Delta_T=0$ 当且仅当当前子空间精确闭合。
+

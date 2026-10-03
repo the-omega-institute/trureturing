@@ -97,6 +97,125 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
+    [Fact]
+    public void CheckCurrentWritesOneTimingEventForEveryPhaseAndExecutedRule()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = TrustedFrozenFixture();
+        fixture.Files["Meta/ci-checks.json"] =
+            CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        var currentRaw = Snapshot(fixture.Files);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), currentRaw, Snapshot(fixture.Baseline));
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        RawLeanReportArtifact.WriteFile(candidateReport, Decode(currentRaw), LeanAxiomReport.Create(fixture.Reports));
+        using var timingOutput = new StringWriter(CultureInfo.InvariantCulture);
+        var originalError = Console.Error;
+        ExplicitCommandResult result;
+        try
+        {
+            Console.SetError(timingOutput);
+            var environment = new ProductionCliEnvironment(
+                "/repo",
+                gateway,
+                new FakeLeanReportSource(null),
+                scribeEmissionVerifier: null,
+                new DeterministicTimeProvider());
+            result = environment.CheckCurrent(["--candidate-lean-report", candidateReport]);
+        }
+        finally
+        {
+            Console.SetError(originalError);
+        }
+
+        Assert.True(result.ExitCode == 0, result.Output + result.Error);
+        using var verdict = JsonDocument.Parse(result.Output);
+        var executed = verdict.RootElement.GetProperty("executed").EnumerateArray()
+            .Select(static value => RuleId.CreateKnown(int.Parse(value.GetString()!["SL-".Length..], CultureInfo.InvariantCulture)))
+            .ToImmutableArray();
+        Assert.NotEmpty(executed);
+        var events = timingOutput.ToString()
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line => JsonDocument.Parse(line))
+            .ToArray();
+        try
+        {
+            AssertRuleTimingEvents(events, executed);
+            Assert.Equal(
+                [
+                    "repository-read",
+                    "snapshot-load",
+                    "lean-report-load",
+                    "policy-load",
+                    "lean-closure",
+                    "scribe-verify",
+                    "rule-passes",
+                    "canonicalization",
+                ],
+                NonRuleStages(events));
+            Assert.All(events, document => Assert.Equal("passed", document.RootElement.GetProperty("status").GetString()));
+        }
+        finally
+        {
+            foreach (var document in events)
+            {
+                document.Dispose();
+            }
+        }
+    }
+
+    [Fact]
+    public void TimingWritesOnlyStagesAtLeastTheReportingThreshold()
+    {
+        var clock = new SteppedTimeProvider();
+        var timing = new AdmissionCheckTiming(clock);
+        using var timingOutput = new StringWriter(CultureInfo.InvariantCulture);
+        var originalError = Console.Error;
+        try
+        {
+            Console.SetError(timingOutput);
+            clock.Step = TimeSpan.FromMilliseconds(400);
+            _ = timing.Measure("fast-phase", static () => 0);
+            clock.Step = AdmissionCheckTiming.ReportingThreshold;
+            _ = timing.Measure("slow-phase", static () => 0);
+            clock.Step = TimeSpan.FromMilliseconds(400);
+            Assert.Throws<InvalidOperationException>(() =>
+                timing.Measure<int>("fast-failure", static () => throw new InvalidOperationException()));
+            var accumulator = timing.CreateAccumulator("fast-accumulated");
+            _ = accumulator.Measure(static () => 0);
+            accumulator.CompletePassed();
+        }
+        finally
+        {
+            Console.SetError(originalError);
+        }
+
+        var stages = timingOutput.ToString()
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line =>
+            {
+                using var document = JsonDocument.Parse(line);
+                return document.RootElement.GetProperty("stage").GetString()!;
+            })
+            .ToArray();
+        Assert.Equal(["slow-phase"], stages);
+    }
+
+    private sealed class SteppedTimeProvider : TimeProvider
+    {
+        private long timestamp;
+
+        internal TimeSpan Step { get; set; }
+
+        public override long TimestampFrequency => TimeSpan.TicksPerSecond;
+
+        public override long GetTimestamp()
+        {
+            var current = timestamp;
+            timestamp += Step.Ticks;
+            return current;
+        }
+    }
+
     private static string[] NonRuleStages(IEnumerable<JsonDocument> events) =>
         events
             .Select(static document => document.RootElement.GetProperty("stage").GetString()!)

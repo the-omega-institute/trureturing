@@ -1,0 +1,20 @@
+**定理318.2（总调用预算下的准确完成）。** 固定目标输出律族 $P_{\theta,S}$、实数 $s>0$ 与 $K<\infty$。若有策略 $\pi_j$ 和 $\delta_j\to0$，每个策略在每个实际世界几乎必有限回答，且
+
+$$
+\sup_{\theta,S}
+\|Q^{\pi_j}_{\theta,S}-P_{\theta,S}\|_{\mathrm{TV}}
+\le\delta_j,
+\qquad
+\mathcal K_s(\pi_j)\le K,
+\tag{318.10}
+$$
+
+则存在同一个策略 $\pi$，在全部实际世界几乎必有限回答，满足
+
+$$
+\boxed{
+Q^\pi_{\theta,S}=P_{\theta,S}\quad\forall\theta,S,
+\qquad \mathcal K_s(\pi)\le K.}
+\tag{318.11}
+$$
+

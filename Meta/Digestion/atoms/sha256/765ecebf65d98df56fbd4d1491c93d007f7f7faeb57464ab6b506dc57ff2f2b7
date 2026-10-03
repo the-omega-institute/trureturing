@@ -1,0 +1,41 @@
+**定理 15.2（全部 CPTP 恢复的最优额外相干代价）。** 定义
+\[
+ D_*(r)=\inf_{\mathcal R}\left[3f-
+ (|c_{12}|+|c_{23}|+|c_{31}|)\right],
+\]
+其中通道类为 §15.2，环境维数不受固定小维限制。则
+\[
+ D_*(r)\ge\mu h_{\mathcal C}^2/6>0,\qquad
+ \boxed{\lim_{r\downarrow0}D_*(r)/r^4=1/32.} \tag{15.5}
+\]
+使用 [NMLW25] 的归一多元定义，还有
+\[
+ \boxed{F_U(\tau_1,\tau_2,\tau_3)-F_{\mathrm{SDP}}(\tau_1,\tau_2,\tau_3)
+ =r^4/96+o(r^4).} \tag{15.6}
+\]
+这是额外联合代价，不包括每对已经具有的 $1-f$。
+
+**证明。** 由 $\sqrt{\tau_i}=aI+b\sigma_i$，其中
+$a^2=(1+\sqrt{1-r^2})/4$、$b^2=(1-\sqrt{1-r^2})/4$，计算二阶极分解得到上述 $f,\mu,T$。$\theta=r^2/4+O(r^4)$，所以 $h_{\mathcal C}^2=3r^4/8+O(r^6)$、$\mu=1/2+O(r)$。定理 15.1 给 $\liminf D_*/r^4\ge1/32$。
+
+为达到此阶，固定二维环境并构造
+\[
+ W_1=e^{i\theta(Z-Y)/3},\quad
+ W_2=e^{i\theta(X-Z)/3},\quad
+ W_3=e^{i\theta(Y-X)/3},\qquad A_i=\sqrt{\tau_i}W_i.
+\]
+这些酉矩阵给一个真正的共同恢复通道。每条有向环边均有
+\[
+ W_i-T_{ij}W_j=-\frac{ir^2}{12}(X+Y+Z)+O(r^4),
+ \quad\|W_i-T_{ij}W_j\|_F^2=r^4/24+O(r^6).
+\]
+又 $|\sqrt{\tau_i}\sqrt{\tau_j}|=I/2+O(r)$。在 (15.4) 的等式部分取相位一，使用二阶矩阵恒等式
+$I-\operatorname{Re}V=(I-V)(I-V)^\dagger/2$（$V$ 酉），得
+\[
+ f-\operatorname{Re}c_{ij}=r^4/96+O(r^5).
+\]
+于是 $\sum(f-|c_{ij}|)\le\sum(f-\operatorname{Re}c_{ij})=r^4/32+O(r^5)$，与下界夹逼得到 (15.5)。固定相位的最优总缺口介于模长最优缺口与这个共同构造的实部缺口之间，所以同样具有系数 $1/32$；除以三即得 (15.6)。证毕。
+
+规范平方根选择 $W_i=I$ 的总额外缺口为
+$3[f-(1+\sqrt{1-r^2})/2]=3r^4/32+O(r^6)$。上述构造把其首项缩小为三分之一，且由全通道下界认证高温一阶最优。这里优化的是控制恢复通道，不能把该比较写成神经网络 benchmark。由于 $r=\beta\Delta+O((\beta\Delta)^3)$，热能尺度下最优额外缺口为 $(\beta\Delta)^4/32+o((\beta\Delta)^4)$。
+

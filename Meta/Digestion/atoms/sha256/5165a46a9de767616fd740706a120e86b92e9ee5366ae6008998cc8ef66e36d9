@@ -1,0 +1,39 @@
+**推论 190.2（去掉中心后的窗口极值）。** 对每个固定 $A>0$，
+
+$$
+\max_{0<|h|\le m^A}\mathcal R(C_m+h)
+\sim\frac{\log\log m}{\log m}.
+\tag{190.2}
+$$
+
+对每个固定 $0<\eta\le1$，
+
+$$
+\max_{0<|h|\le\exp(m^\eta)}\mathcal R(C_m+h)\longrightarrow\eta.
+\tag{190.3}
+$$
+
+证明。统一有 $\log\log(C_m+h)\sim\log m$，而定理 190.1 将分子转移至 $Z(|h|)$。§164.1 的通用 Axler 包络给多项式窗口内
+
+$$
+Z(|h|)\le e^\gamma(\log\log m+O_A(1)),
+$$
+
+并给指数窗口内 $Z(|h|)\le e^\gamma(\eta\log m+O(1))$，有限小值可统一吸收入常数。
+
+多项式窗口的下界取 $h=k_m!$，其中
+
+$$
+k_m=\left\lfloor\frac{A\log m}{2\log\log m}\right\rfloor.
+$$
+
+最终 $k_m\le m$、$k_m!\le m^A$、$\log k_m\sim\log\log m$。§186 的阶乘渐近给 $Z(k_m!)\sim e^\gamma\log\log m$。指数窗口改取
+
+$$
+k_m=\left\lfloor\frac{m^\eta}{2\eta\log m}\right\rfloor,
+$$
+
+最终仍有 $k_m\le m$、$k_m!\le e^{m^\eta}$，且 $\log k_m\sim\eta\log m$。同一阶乘渐近给匹配下界，故两个窗口主项均被真实偏移取得。$\square$
+
+对于 $\eta<1$，式（190.3）给整个去心窗口最终一致严格 Robin，再加上 §187 已证的中心安全性，整个窗口均被覆盖。$\eta=1$ 只确定最大比值趋于一，不决定该窗口每个整数处于边界哪一侧。
+

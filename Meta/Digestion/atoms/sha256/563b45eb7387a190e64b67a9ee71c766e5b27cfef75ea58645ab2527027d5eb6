@@ -1,0 +1,33 @@
+**定义 6.1（原始相对响应与反标签比值）。** 沿用定义 1.1、4.1 的非空有限有序完全二叉树、全局替换 $\rho$、联合初始来源 $\mathcal T_H\times\{\ell,\ell+d\}$、初始组成域 $D_H$ 与初始组成许可 $\chi_k$，其中 $\ell\in\mathbb N_0$、$k,d,H\in\mathbb N_{\ge1}$。各阶段的原始真值仍是式 (4.2) 的正整数 $n_s(x)=A_sx_1+B_sx_2$。对共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，定义单个原始有理报告的允许响应关系
+
+$$
+\mathcal R^{\mathrm{hid}}_{H,k,\ell,d,\epsilon}
+=\left\{((T,s),r):
+T\in\mathcal T_H,\ s\in\{\ell,\ell+d\},\ r\in\mathbb Q,
+\ |r-n_s(c(T))|\le\epsilon n_s(c(T))\right\}.
+\tag{6.1}
+$$
+
+参数 $H,k,\ell,d,\epsilon$ 已知，实际阶段 $s$ 隐藏，观察恰为 $r$，不作依赖实际 $s$ 的归一化。预算仍只限制两个分支各自的初始树，后续替换树可超过 $H$。显露阶段的合同额外给出 $s$，允许响应仍是式 (6.1)，观察为 $(s,r)$。隐藏阶段统一恢复指存在总函数 $P:\mathbb Q\to\{0,1\}$，对每个允许响应输出 $\chi_k(c(T))$；显露阶段的恢复器是 $P_{\mathrm{cal}}:\{\ell,\ell+d\}\times\mathbb Q\to\{0,1\}$。目标仅取初始组成祖先的存在，不恢复完整树、规范地址、指定树的语法祖先或实际逆执行。相对响应是数学关系假设，不给设备或物理对应。
+
+对正数 $u,v$ 记 $\mathfrak r(u,v)=|u-v|/(u+v)$，并定义
+
+$$
+\begin{aligned}
+\theta_k(H,s)
+&=\min_{\substack{x,y\in D_H\\\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_s(y)),\qquad s\in\mathbb N_0,\\
+\theta_{\mathrm{cal}}(H;k,\ell,d)
+&=\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\},\\
+\theta_{\mathrm{hid}}(H;k,\ell,d)
+&=\min_{\substack{x,y\in D_H,\ s,s'\in\{\ell,\ell+d\}\\
+\chi_k(x)\ne\chi_k(y)}}
+\mathfrak r(n_s(x),n_{s'}(y)).
+\end{aligned}
+\tag{6.2}
+$$
+
+每个空的反标签集合取最小值 $+\infty$。两个同阶段比值都保留在 $\theta_{\mathrm{cal}}$ 中，使用同一个 $D_H$ 与同一个 $\epsilon$。
+
+有限未知线性映射的背景可参见 [Tsakiris–Peng，Homomorphic Sensing](https://proceedings.mlr.press/v97/tsakiris19a.html)。[Peng–Tsakiris，Homomorphic Sensing of Subspace Arrangements，§2.1，Theorem 1](https://arxiv.org/html/2006.05158v3#Thmtheorem1) 的结论针对泛型 $p$ 维子空间，要求每个映射的秩至少为 $2p$，并满足所列余维条件；这里 $\operatorname{span}_{\mathbb R}D_H=\mathbb R^2$，但每个 $n_s$ 的秩只有一，不满足该秩条件。该文 [§2.3，Theorem 3](https://arxiv.org/html/2006.05158v3#Thmtheorem3) 在完整向量的 homomorphic sensing 性质下，按其式 (4) 的条件控制加性 Euclidean 噪声，并用伪逆表示向量误差；该前提在此完整二维张成空间上已经失败，因为 $0$ 与非零向量 $(B_s,-A_s)$ 具有相同的 $n_s$ 读数。本节的有限整数来源、二值初始目标与相对响应须在式 (6.1) 的合同内处理，下面的比值结论由本卷的整数与许可锥关系证明。
+

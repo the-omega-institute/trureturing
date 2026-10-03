@@ -1,0 +1,22 @@
+**证明。** 记 $|n_i,\varepsilon\rangle$ 为 $\sigma_i$ 的 $\varepsilon\in\{+1,-1\}$ 本征态，$p_\varepsilon=(1+\varepsilon r)/2$。协变等价于 $H_iX_{ij}=X_{ij}H_j$，所以完整正块只能在两个共同能量扇区内取值：
+\[
+ X_{ij}=\sum_{\varepsilon=\pm1}C^\varepsilon_{ij}
+ |n_i,\varepsilon\rangle\langle n_j,\varepsilon|,
+ \quad C^\varepsilon\succeq0,\quad C^\varepsilon_{ii}=p_\varepsilon.
+\]
+反向每个这样的两扇区正块给合法协变通道。令 $G_\varepsilon$ 是三个相应自旋向量的 Gram 矩阵；其非零谱等于
+\[
+ \sum_i|n_i,\varepsilon\rangle\langle n_i,\varepsilon|
+ =(3I+\varepsilon(X+Y+Z))/2
+\]
+的谱，即 $\lambda_\pm=(3\pm\sqrt3)/2$。顶特征向量的三个坐标具有相同模长 $1/\sqrt3$，因为三个方向与 $(1,1,1)/\sqrt3$ 的夹角相同。故
+\[
+ \operatorname{Tr}(G_\varepsilon C^\varepsilon)
+ \le3p_\varepsilon\lambda_+,
+\]
+并由 $C^\varepsilon=3p_\varepsilon v_\varepsilon v_\varepsilon^\dagger$ 达到。两扇区相加，原始目标最大值为 $3\lambda_+$；转换到平均非对角实部得 (16.4)。每个 $C^\varepsilon$ 秩一，故两列振幅足够。等价地，将各 $|n_i,\varepsilon\rangle$ 的相位选成与 $N$ 的同号本征态重叠为非负实数，再取两列 $\sqrt{p_+}|n_i,+\rangle,\sqrt{p_-}|n_i,-\rangle$ 就给达到通道。证毕。
+
+此处不用“非对易”推断无共同表示，而是精确计算允许的共同通道。固定 $\beta$ 令 $\Delta\to0$ 时，精确全时间协变最优仍趋于 $(1+\sqrt3)/4$，但严格 $\Delta=0$ 时 $H=0$、所有条件态相同，可保留相干一。精确约束因此不连续；任意通道在有限时间 $T$ 的联合态不变性误差却可由 $2\Delta T$ 控制，来自 $\|e^{-itH}-I\|\le|t|\Delta$。近似协变与严格协变的量词不同。
+
+全部这些通道仅保证指定 CPTP、Gibbs 校准和协变条件。它们不自动有零功 thermal-operation 实现，不从上述差额推断实际耗热；也没有把量子自旋 Hamiltonian 代替完整电磁设备模型。
+

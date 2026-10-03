@@ -1,0 +1,37 @@
+**证明。** 令 $v_p=v_p(x)$ 为定义 87.1 的参考层数，并令
+
+$$
+M_{\mathrm{prod}}(x)=\sum_{p\le x}-\log(1-p^{-1}).
+$$
+
+将它与 $P(x)=\sum_{p^k\le x}1/(kp^k)$ 比较。对 $p\le\sqrt x$，遗漏的几何尾给
+
+$$
+\sum_{k>v_p}\frac1{kp^k}\le\sum_{k>v_p}p^{-k}
+\le2p^{-v_p-1}<\frac2x.
+$$
+
+对 $\sqrt x<p\le x$，$v_p=1$，遗漏尾至多 $2/p^2$。于是
+
+$$
+0\le M_{\mathrm{prod}}(x)-P(x)
+\le\frac{2\pi(\sqrt x)}x+2\sum_{\sqrt x<p\le x}p^{-2}
+=O(x^{-1/2}).
+$$
+
+最后一步只需 $\pi(t)\le t$ 和整数尾和 $\sum_{n>t}n^{-2}=O(1/t)$。经典 Mertens 乘积渐近给
+$M_{\mathrm{prod}}(x)=\gamma+\log\log x+o(1)$，普通素数定理给 $\Psi(x)=x+o(x)$，故
+
+$$
+\Phi(x)=\gamma+\log\log x-P(x)+\frac{\Psi(x)-x}{x\log x}\longrightarrow0.
+$$
+
+这两项经典输入沿用第 87、92 节的文献范围；Mertens 乘积公式可见 [Lichtman, Theorem 1.1](https://arxiv.org/html/2002.03361v3)。储备则由定理 93.1 的 $0\le R_p\le D_p(v_p)<2p^{-v_p-1}$ 及 $p\ge x$ 时 $R_p=0$，以同一分组得到
+
+$$
+0\le R(x)\le\frac{2\pi(\sqrt x)}x+
+2\sum_{\sqrt x<p\le x}p^{-2}=O(x^{-1/2}).
+$$
+
+因此 $\mathfrak D=\Phi+R\to0$。这里没有使用平方根级的素数定理误差，更没有确定趋近零的方向。 $\square$
+

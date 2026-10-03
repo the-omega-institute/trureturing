@@ -1,0 +1,22 @@
+## 222. 增长 FIB 模数上的大量缓衰减字符
+
+沿用实际整数族 $V=F_r$、$N_g=1+Vg$、
+$I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z$。
+以下令 $r\to\infty$ 经过素数，并记
+
+$$
+A=\min_{g\in I_r}N_g,\qquad y=\log A,\qquad\ell=\log y,
+\qquad s=y\ell,\qquad R=y/\ell^2.
+$$
+
+继续使用 §210、§216 的实际增量概率
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),\quad b_s(1)=1.
+$$
+
+本节检验的是一项具体的谱估计：能否使这份完整权重在每个非主字符上的
+傅里叶系数都不超过 $e^{-cR}$，其中 $c>0$ 固定。
+以下结果排除这个统一估计，但不判定指定余数类的实际命中质量。
+

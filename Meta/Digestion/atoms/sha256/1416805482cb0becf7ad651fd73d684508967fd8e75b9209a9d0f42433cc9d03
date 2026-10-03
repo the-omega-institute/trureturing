@@ -1,0 +1,9 @@
+### 10.3 热分布与隐藏方差共同确定二阶记忆响应
+
+本节不要求观测白化。设观测的边缘具有正 $C^1$ 密度 $\rho(u)$，$b$ 为 $C^1$，并有足够可积性使下列弱分部积分成立。令
+\[
+\mathcal C(u)=\mathbb E[r_ur_u^T\mid u],\qquad
+k_i(u)=\rho(u)^{-1}\sum_j\partial_{u_j}[\rho(u)\mathcal C_{ij}(u)].
+\]
+假定 $r_u\in\operatorname{Dom}\mathscr L$，相关条件期望与 $k$ 属于 $L^2$。
+

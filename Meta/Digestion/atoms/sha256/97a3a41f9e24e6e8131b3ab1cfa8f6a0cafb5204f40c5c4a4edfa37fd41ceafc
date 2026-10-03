@@ -1,0 +1,22 @@
+## 19. 循环轨形与模函数的文献输入
+
+定义 14.1 的共同迹条件须由实际模块及模变换方块满足；它不由“存在 B 型”或“同构于月光”推出。完整 VOA、Zhu 模性、循环轨形及 Leech/FLM 识别仍是外部前提。
+
+[DM02] C. Dong and G. Mason, *Holomorphic Vertex Operator Algebras of Small Central Charges*, arXiv:math/0203005. https://arxiv.org/pdf/math/0203005 。Lemma 2.1 和 Theorem 3(b) 用于字符和二十四维阿贝尔流刚性。
+
+[EMS20] J. van Ekeren, S. Möller and N. R. Scheithauer, *Dimension Formulae in Genus Zero and Uniqueness of Vertex Operator Algebras*, IMRN 2020, 2145–2204; arXiv:1704.00478v3. https://arxiv.org/pdf/1704.00478 。使用 §3 的循环规范化及逆轨形、§4.1 的 eta 主模；其二阶维数机制已有 Montague 来源。
+
+[T93] M. P. Tuite, *On the Relationship between Monstrous Moonshine and the Uniqueness of the Moonshine Module*, arXiv:hep-th/9305057. https://arxiv.org/pdf/hep-th/9305057 。§3.6 的逆轨形识别是定理 12.3 的历史归属。FLM 完整群识别与本卷原 §2 保持相同外部来源。
+
+[GPRV14] M. R. Gaberdiel, D. Persson, H. Ronellenfitsch and R. Volpato, *Generalised Mathieu Moonshine*, arXiv:1211.7074v3. https://arxiv.org/pdf/1211.7074 。采用 §3.1 对一般 holomorphic orbifold 的项目作用、余循环和模变换的说明，不采用后续 Mathieu 猜测作为证明；式（40）下脚注的一般推导边界保留在 §14.2。
+
+[K02] A. Kirillov Jr., *Modular categories and orbifold models*, Commun. Math. Phys. 229 (2002), 309–335; arXiv:math/0104242. https://arxiv.org/pdf/math/0104242 。§5、Lemma 5.3 和 Theorem 5.12 给出零余循环下的双重范畴构造，不能删去实际字符实现义务。
+
+[CM18] S. Carnahan and M. Miyamoto, *Regularity of fixed-point vertex operator subalgebras*, arXiv:1603.05645v4. https://arxiv.org/pdf/1603.05645 。Corollaries 5.25–5.26、Theorem 6.2 的正则性及协变结论不自动固定全部相位。
+
+[Mi17] J. S. Milne, *Modular Functions and Modular Forms*, v1.31 (2017). https://www.jmilne.org/math/CourseNotes/MF.pdf 。使用 §2 的紧模曲线与尖点基础；式（MD.15）的 lambda 规范与 theta 变换另列为标准二级模函数输入。式（MD.13）的常数消元与符号结论由正文直接证明。
+
+[CC26] S. Carpi and G. Codogni, *Vertex operator algebras, partition functions and Teichmüller modular forms*, arXiv:2605.26972v1. https://arxiv.org/html/2605.26972v1 。一般 FLM 唯一性仍不由本卷的条件识别定理解决；缺陷反常另用 [JF19, §2.2]。
+
+三余循环、模函数、逆轨形和有限几何工具分别保留上述文献归属。它们与定义 14.1 的共同场论选择条件联用；有限代数恒等式本身不产生真实 VOA、Leech 格或 Monster。
+

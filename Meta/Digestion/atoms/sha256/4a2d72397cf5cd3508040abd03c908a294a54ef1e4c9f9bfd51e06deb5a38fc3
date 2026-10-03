@@ -1,0 +1,41 @@
+**定理 85.3（有限价格证书的全整数转移）。** 取 $\delta=123/500000$。有限层数据在 $10^{-6}\le\lambda\le1/25$ 上给出
+
+$$
+K(\lambda):=\max_{x>1}
+\{\gamma+\log\log x-M(\lambda)-\lambda x\}>\delta.
+$$
+
+结合下面的起始区间比较，得到每个整数 $5040<n\le10^{30000}$ 都满足 $Z(n)<e^\gamma\log\log n$。这是有限数值证书及纸面转移；不是新增的 Lean 定理，也不主张超越已发表的有限验证范围。
+
+**证明。** $p\ge100000$ 时 $\theta_{p,k}<1/(p\log p)<10^{-6}$。较小素数各方向只须检查到第一个不活跃层；严格递减排除了余下尾部。有限数据包含 $9592$ 个素数、低价格处 $8665$ 个活跃层、$8657$ 个切换点与 $8658$ 个闭端价格胞腔。每个非初始胞腔的最优配置令 $A=\log n_*$、$B_* =\log Z(n_*)$，以 $x=A$ 作见证：
+
+$$
+\gamma+\log\log A-M(\lambda)-\lambda A
+=\gamma+\log\log A-B_*>\delta.
+$$
+
+初始胞腔的最优整数为 $5040$，这与既有 `GoldenResourceOptimalInteger.golden_resource_unique_optimum` 在价格 $1/25$ 的结论一致。改取 $x=\log8000>\log5040$，其见证值随价格递减，故价格 $1/25$ 的下界覆盖整个初始胞腔。切换时两个配置的目标相等，胞腔间没有遗漏端点。
+
+对固定 $\lambda$，见证函数导数为 $1/(x\log x)-\lambda$，在 $x\log x=1/\lambda$ 处唯一最大。对 $40000\le n\le10^{30000}$，取 $x=\log n$ 和 $\lambda=1/(x\log x)$。有限端点比较
+
+$$
+(\log40000)\log\log40000>25,\qquad
+(30000\log10)\log(30000\log10)<10^6
+$$
+
+使此价格落在认证区间，故
+
+$$
+\gamma+\log\log\log n-\log Z(n)\ge K(\lambda)>\delta.
+$$
+
+对 $8000\le n\le40000$，价格 $1/25$ 的支持线给出以下差的下界（$x=\log n$）：
+
+$$
+\gamma+\log\log x-\log(403/105)-\frac{x-\log5040}{25}.
+$$
+
+此函数在 $[\log8000,\log40000]$ 凹，两个端点都为正，故全区间为正。最后 $5041\le n\le7999$ 的 $2959$ 个整数以精确约数和及向外对数界逐个覆盖。指数函数严格递增，以上对数差为正即给出 Robin 不等式。 $\square$
+
+该证书使用分母 $2^{128}$ 的整数区间和 $100$ 项 atanh 对数展开；$z=(a-b)/(a+b)\in[0,1/3]$ 时，截断尾不超过 $2z^{201}/(201(1-z^2))$，一般正有理数先按二次幂缩放。Euler 常数以 $H_m-\log m-1/m<\gamma<H_m-\log m$、$m=10^6$ 夹住。非初始胞腔最小下端约为 $0.0002461836616312356422357908016$，显示小数仅作读数，符号判断取整数区间端点。对应的完整数据可由 [price_band.py](../../reports/fib-robin-boundary/price_band.py) 重建；小结果在 [price_band.json](../../reports/fib-robin-boundary/price_band.json)。价格低于 $10^{-6}$ 的范围没有被这张证书覆盖。
+

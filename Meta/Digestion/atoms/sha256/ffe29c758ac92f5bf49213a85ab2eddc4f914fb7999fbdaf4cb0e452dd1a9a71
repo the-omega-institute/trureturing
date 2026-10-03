@@ -1,0 +1,11 @@
+**定理 10.3（条件涨落的局部响应恒等式）。**
+\[
+\boxed{\mathbb E[\mathscr Lr_u\mid u]=k(u),\qquad
+\mathbb E[\mathscr L^2u\mid u]=Db(u)b(u)+k(u).}
+\]
+同时 $\nabla_u\cdot(\rho b)=0$。当 $\rho\propto e^{-\beta\mathcal A(u)}$ 时，
+\[
+k_i=\sum_j\partial_{u_j}\mathcal C_{ij}
+-\beta\sum_j\mathcal C_{ij}\partial_{u_j}\mathcal A.
+\]
+

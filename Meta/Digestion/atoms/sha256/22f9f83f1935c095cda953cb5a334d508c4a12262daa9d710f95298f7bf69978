@@ -1,0 +1,10 @@
+**Theorem 4.1 (actual history count and literal cylinder transport).**
+Every such finite history reconstructs an injective family of actual
+avoiders indexed by its terminal actual source class. Its specified
+cuts are the actual minimum cuts and every reconstructed parent belongs
+to its indicated source class. Its event cardinality is exactly the
+terminal actual-class cardinality. Its probability conditional on its
+initial source class is the product, along the history, of the ratios
+of child-class to parent-class cardinalities. A left step resets the
+child to $U$; a right step conditions it to $J^\varepsilon$.
+

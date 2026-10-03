@@ -1,0 +1,16 @@
+**定理 2144.1（有限盒的公共除数迹公式）。** 设 $G$ 为有限群，$W_{m,n}$ 为正双分次的有限维有理 $G$-表示，$g\in G$，且
+
+$$
+D_{g,N}(p,q)=\prod_{1\leq m,n\leq N}\det(1-p^mq^n g\mid W_{m,n})\in\mathbb Q[[p,q]].
+$$
+
+若 $a,b\geq1$ 且 $N\geq\max(a,b)$，则
+
+$$
+[p^aq^b](-\log D_{g,N})
+=\sum_{k\mid\gcd(a,b)}\frac{\operatorname{tr}(g^k\mid W_{a/k,b/k})}{k}.
+\tag{2144.1}
+$$
+
+因此该系数对所有 $N\geq\max(a,b)$ 相同。这里的每个行列式均取自所给表示中的实际作用；这是有限维代数恒等式，不要求 $W_{m,n}$ 是 Monster 根空间。
+

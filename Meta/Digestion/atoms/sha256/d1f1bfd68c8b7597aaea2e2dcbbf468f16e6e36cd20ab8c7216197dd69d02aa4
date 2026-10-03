@@ -1,0 +1,1 @@
+| 实际多项式 Fock 算子的全整数 Virasoro 关系是否成立？ | **已形式化** | `PolynomialFockVirasoroCentral.L_commutator`；对既有 `L` 移植 Kytölä 的原始 Sugawara 证明，中心荷为 1。 

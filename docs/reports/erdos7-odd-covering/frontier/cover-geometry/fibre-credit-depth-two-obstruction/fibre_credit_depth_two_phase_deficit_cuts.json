@@ -1,0 +1,2013 @@
+{
+  "scope": "Actual phase-deficit cuts and exact one-row witnesses which fail a joint cut; no row-envelope obstruction is claimed for this load",
+  "core_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      15,
+      11
+    ],
+    [
+      21,
+      8
+    ],
+    [
+      35,
+      9
+    ],
+    [
+      45,
+      1
+    ],
+    [
+      63,
+      1
+    ],
+    [
+      105,
+      59
+    ],
+    [
+      315,
+      179
+    ]
+  ],
+  "original_labels": [
+    3,
+    5,
+    7,
+    9,
+    15,
+    21,
+    35,
+    45,
+    63,
+    105,
+    315
+  ],
+  "core_rows": [
+    2,
+    16,
+    17,
+    19,
+    23,
+    32,
+    34,
+    37,
+    38,
+    43,
+    47,
+    52,
+    53,
+    61,
+    62,
+    68,
+    73,
+    74,
+    82,
+    83,
+    88,
+    89,
+    97,
+    104,
+    106,
+    107,
+    109,
+    118,
+    122,
+    124,
+    128,
+    137,
+    142,
+    143,
+    151,
+    152,
+    158,
+    163,
+    167,
+    169,
+    172,
+    173,
+    178,
+    187,
+    188,
+    194,
+    199,
+    208,
+    209,
+    212,
+    214,
+    223,
+    227,
+    232,
+    233,
+    241,
+    242,
+    244,
+    248,
+    257,
+    262,
+    263,
+    268,
+    272,
+    277,
+    278,
+    284,
+    286,
+    293,
+    298,
+    299,
+    304,
+    307,
+    313,
+    314
+  ],
+  "maximum_total": 146,
+  "single_row_cut": {
+    "weights": [
+      [
+        16,
+        -1
+      ]
+    ],
+    "theta": "1/9",
+    "face_bound": -1,
+    "integer_total_coefficient": 1,
+    "integer_row_coefficients": [
+      [
+        16,
+        -9
+      ]
+    ],
+    "integer_rhs": 137,
+    "label_evidence": [
+      {
+        "d": 3,
+        "maximum_size": 38,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            38,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 5,
+        "maximum_size": 26,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            20,
+            -1
+          ],
+          [
+            26,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 7,
+        "maximum_size": 16,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            5,
+            -1
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            16,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 9,
+        "maximum_size": 23,
+        "face_reward": -1,
+        "minimal_multiplier": "1/9",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            11,
+            0
+          ],
+          [
+            23,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 15,
+        "maximum_size": 15,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            9,
+            -1
+          ],
+          [
+            15,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 21,
+        "maximum_size": 9,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            -1
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            9,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 35,
+        "maximum_size": 5,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            -1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 45,
+        "maximum_size": 6,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 63,
+        "maximum_size": 4,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 105,
+        "maximum_size": 3,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            -1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 315,
+        "maximum_size": 1,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "pair_cut": {
+    "weights": [
+      [
+        16,
+        1
+      ],
+      [
+        61,
+        -1
+      ]
+    ],
+    "theta": "1",
+    "face_bound": 1,
+    "integer_total_coefficient": 1,
+    "integer_row_coefficients": [
+      [
+        16,
+        1
+      ],
+      [
+        61,
+        -1
+      ]
+    ],
+    "integer_rhs": 147,
+    "label_evidence": [
+      {
+        "d": 3,
+        "maximum_size": 38,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            38,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 5,
+        "maximum_size": 26,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            20,
+            0
+          ],
+          [
+            26,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 7,
+        "maximum_size": 16,
+        "face_reward": 0,
+        "minimal_multiplier": "1/5",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            16,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 9,
+        "maximum_size": 23,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            11,
+            0
+          ],
+          [
+            23,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 15,
+        "maximum_size": 15,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            15,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 21,
+        "maximum_size": 9,
+        "face_reward": 0,
+        "minimal_multiplier": "1/4",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            -1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            9,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 35,
+        "maximum_size": 5,
+        "face_reward": 0,
+        "minimal_multiplier": "1/4",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            -1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 45,
+        "maximum_size": 6,
+        "face_reward": 0,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 63,
+        "maximum_size": 4,
+        "face_reward": 0,
+        "minimal_multiplier": "1",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 105,
+        "maximum_size": 3,
+        "face_reward": 0,
+        "minimal_multiplier": "1/2",
+        "options": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            -1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      {
+        "d": 315,
+        "maximum_size": 1,
+        "face_reward": 1,
+        "minimal_multiplier": "0",
+        "options": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "actual_dictionaries": {
+    "baseline": [
+      2,
+      2,
+      6,
+      7,
+      2,
+      5,
+      2,
+      16,
+      25,
+      2,
+      2
+    ],
+    "row16": [
+      2,
+      2,
+      6,
+      7,
+      2,
+      5,
+      2,
+      16,
+      25,
+      2,
+      16
+    ],
+    "row61": [
+      2,
+      2,
+      6,
+      7,
+      2,
+      5,
+      2,
+      7,
+      25,
+      2,
+      2
+    ]
+  },
+  "relaxed_load_pairs": [
+    [
+      2,
+      6
+    ],
+    [
+      16,
+      3
+    ],
+    [
+      17,
+      3
+    ],
+    [
+      19,
+      0
+    ],
+    [
+      23,
+      1
+    ],
+    [
+      32,
+      3
+    ],
+    [
+      34,
+      2
+    ],
+    [
+      37,
+      2
+    ],
+    [
+      38,
+      1
+    ],
+    [
+      43,
+      1
+    ],
+    [
+      47,
+      4
+    ],
+    [
+      52,
+      2
+    ],
+    [
+      53,
+      1
+    ],
+    [
+      61,
+      1
+    ],
+    [
+      62,
+      4
+    ],
+    [
+      68,
+      2
+    ],
+    [
+      73,
+      0
+    ],
+    [
+      74,
+      1
+    ],
+    [
+      82,
+      1
+    ],
+    [
+      83,
+      2
+    ],
+    [
+      88,
+      2
+    ],
+    [
+      89,
+      2
+    ],
+    [
+      97,
+      3
+    ],
+    [
+      104,
+      2
+    ],
+    [
+      106,
+      2
+    ],
+    [
+      107,
+      5
+    ],
+    [
+      109,
+      0
+    ],
+    [
+      118,
+      1
+    ],
+    [
+      122,
+      3
+    ],
+    [
+      124,
+      1
+    ],
+    [
+      128,
+      1
+    ],
+    [
+      137,
+      3
+    ],
+    [
+      142,
+      3
+    ],
+    [
+      143,
+      1
+    ],
+    [
+      151,
+      3
+    ],
+    [
+      152,
+      4
+    ],
+    [
+      158,
+      1
+    ],
+    [
+      163,
+      0
+    ],
+    [
+      167,
+      4
+    ],
+    [
+      169,
+      1
+    ],
+    [
+      172,
+      1
+    ],
+    [
+      173,
+      2
+    ],
+    [
+      178,
+      1
+    ],
+    [
+      187,
+      2
+    ],
+    [
+      188,
+      2
+    ],
+    [
+      194,
+      2
+    ],
+    [
+      199,
+      0
+    ],
+    [
+      208,
+      0
+    ],
+    [
+      209,
+      2
+    ],
+    [
+      212,
+      5
+    ],
+    [
+      214,
+      2
+    ],
+    [
+      223,
+      2
+    ],
+    [
+      227,
+      3
+    ],
+    [
+      232,
+      2
+    ],
+    [
+      233,
+      1
+    ],
+    [
+      241,
+      2
+    ],
+    [
+      242,
+      3
+    ],
+    [
+      244,
+      1
+    ],
+    [
+      248,
+      1
+    ],
+    [
+      257,
+      4
+    ],
+    [
+      262,
+      1
+    ],
+    [
+      263,
+      1
+    ],
+    [
+      268,
+      1
+    ],
+    [
+      272,
+      4
+    ],
+    [
+      277,
+      3
+    ],
+    [
+      278,
+      2
+    ],
+    [
+      284,
+      1
+    ],
+    [
+      286,
+      3
+    ],
+    [
+      293,
+      2
+    ],
+    [
+      298,
+      0
+    ],
+    [
+      299,
+      2
+    ],
+    [
+      304,
+      1
+    ],
+    [
+      307,
+      2
+    ],
+    [
+      313,
+      1
+    ],
+    [
+      314,
+      2
+    ]
+  ],
+  "projection_witnesses": [
+    {
+      "row": 2,
+      "claimed_total": 146,
+      "claimed_load": 6,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 16,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "row16"
+    },
+    {
+      "row": 17,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 19,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 23,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 32,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 34,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 37,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 38,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 43,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 47,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 52,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 53,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 61,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "row61"
+    },
+    {
+      "row": 62,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 68,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 73,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 74,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 82,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 83,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 88,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 89,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 97,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 104,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 106,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 107,
+      "claimed_total": 146,
+      "claimed_load": 5,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 109,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 118,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 122,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 124,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 128,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 137,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 142,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 143,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 151,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 152,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 158,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 163,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 167,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 169,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 172,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 173,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 178,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 187,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 188,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 194,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 199,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 208,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 209,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 212,
+      "claimed_total": 146,
+      "claimed_load": 5,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 214,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 223,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 227,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 232,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 233,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 241,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 242,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 244,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 248,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 257,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 262,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 263,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 268,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 272,
+      "claimed_total": 146,
+      "claimed_load": 4,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 277,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 278,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 284,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 286,
+      "claimed_total": 146,
+      "claimed_load": 3,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 293,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 298,
+      "claimed_total": 146,
+      "claimed_load": 0,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 299,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 304,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 307,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 313,
+      "claimed_total": 146,
+      "claimed_load": 1,
+      "dictionary": "baseline"
+    },
+    {
+      "row": 314,
+      "claimed_total": 146,
+      "claimed_load": 2,
+      "dictionary": "baseline"
+    }
+  ],
+  "relaxed_pair_lhs": 148,
+  "exact_deficit_support": [
+    {
+      "deficit": 0,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 1
+    },
+    {
+      "deficit": 1,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 2
+    },
+    {
+      "deficit": 2,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 2
+    },
+    {
+      "deficit": 3,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 3
+    },
+    {
+      "deficit": 4,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 3
+    },
+    {
+      "deficit": 5,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 3
+    },
+    {
+      "deficit": 6,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 3
+    },
+    {
+      "deficit": 7,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 4
+    },
+    {
+      "deficit": 8,
+      "row16_negative_max": -1,
+      "row16_minus_row61_max": 4
+    },
+    {
+      "deficit": 9,
+      "row16_negative_max": 0,
+      "row16_minus_row61_max": 4
+    },
+    {
+      "deficit": 10,
+      "row16_negative_max": 0,
+      "row16_minus_row61_max": 4
+    },
+    {
+      "deficit": 11,
+      "row16_negative_max": 0,
+      "row16_minus_row61_max": 5
+    },
+    {
+      "deficit": 12,
+      "row16_negative_max": 0,
+      "row16_minus_row61_max": 5
+    }
+  ],
+  "max_total_forced_rows": [
+    [
+      2,
+      "1",
+      -1
+    ],
+    [
+      16,
+      "1/9",
+      -1
+    ],
+    [
+      17,
+      "1",
+      -1
+    ],
+    [
+      23,
+      "1",
+      -1
+    ],
+    [
+      32,
+      "1",
+      -1
+    ],
+    [
+      34,
+      "1/9",
+      -1
+    ],
+    [
+      38,
+      "1",
+      -1
+    ],
+    [
+      43,
+      "1/9",
+      -1
+    ],
+    [
+      47,
+      "1",
+      -1
+    ],
+    [
+      52,
+      "1/9",
+      -1
+    ],
+    [
+      53,
+      "1",
+      -1
+    ],
+    [
+      61,
+      "1/9",
+      -1
+    ],
+    [
+      62,
+      "1",
+      -1
+    ],
+    [
+      68,
+      "1",
+      -1
+    ],
+    [
+      74,
+      "1",
+      -1
+    ],
+    [
+      83,
+      "1",
+      -1
+    ],
+    [
+      88,
+      "1/9",
+      -1
+    ],
+    [
+      89,
+      "1",
+      -1
+    ],
+    [
+      97,
+      "1/9",
+      -1
+    ],
+    [
+      104,
+      "1",
+      -1
+    ],
+    [
+      106,
+      "1/9",
+      -1
+    ],
+    [
+      107,
+      "1",
+      -1
+    ],
+    [
+      122,
+      "1",
+      -1
+    ],
+    [
+      124,
+      "1/9",
+      -1
+    ],
+    [
+      128,
+      "1",
+      -1
+    ],
+    [
+      137,
+      "1",
+      -1
+    ],
+    [
+      142,
+      "1/9",
+      -1
+    ],
+    [
+      143,
+      "1",
+      -1
+    ],
+    [
+      151,
+      "1/9",
+      -1
+    ],
+    [
+      152,
+      "1",
+      -1
+    ],
+    [
+      158,
+      "1",
+      -1
+    ],
+    [
+      167,
+      "1",
+      -1
+    ],
+    [
+      169,
+      "1/9",
+      -1
+    ],
+    [
+      173,
+      "1",
+      -1
+    ],
+    [
+      178,
+      "1/9",
+      -1
+    ],
+    [
+      187,
+      "1/9",
+      -1
+    ],
+    [
+      188,
+      "1",
+      -1
+    ],
+    [
+      194,
+      "1",
+      -1
+    ],
+    [
+      209,
+      "1",
+      -1
+    ],
+    [
+      212,
+      "1",
+      -1
+    ],
+    [
+      214,
+      "1/9",
+      -1
+    ],
+    [
+      223,
+      "1/9",
+      -1
+    ],
+    [
+      227,
+      "1",
+      -1
+    ],
+    [
+      232,
+      "1/9",
+      -1
+    ],
+    [
+      233,
+      "1",
+      -1
+    ],
+    [
+      241,
+      "1/9",
+      -1
+    ],
+    [
+      242,
+      "1",
+      -1
+    ],
+    [
+      248,
+      "1",
+      -1
+    ],
+    [
+      257,
+      "1",
+      -1
+    ],
+    [
+      263,
+      "1",
+      -1
+    ],
+    [
+      268,
+      "1/9",
+      -1
+    ],
+    [
+      272,
+      "1",
+      -1
+    ],
+    [
+      277,
+      "1/9",
+      -1
+    ],
+    [
+      278,
+      "1",
+      -1
+    ],
+    [
+      284,
+      "1",
+      -1
+    ],
+    [
+      286,
+      "1/9",
+      -1
+    ],
+    [
+      293,
+      "1",
+      -1
+    ],
+    [
+      299,
+      "1",
+      -1
+    ],
+    [
+      304,
+      "1/9",
+      -1
+    ],
+    [
+      313,
+      "1/9",
+      -1
+    ],
+    [
+      314,
+      "1",
+      -1
+    ]
+  ],
+  "all_single_row_linear_cuts_satisfied": true,
+  "actual_joint_realization": false,
+  "lean_verification": false
+}

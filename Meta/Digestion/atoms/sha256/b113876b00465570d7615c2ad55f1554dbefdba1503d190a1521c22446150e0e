@@ -1,0 +1,8 @@
+**证明。** 在事件 $t=p^k$，$\Delta P=1/(kt)$，$\Delta\Psi=\log p$，故 $\Delta\Phi=-1/(kt)+\log p/(t\log t)=0$。在无事件处，对所展示的函数求导得
+
+$$
+\Phi'(x)=\frac{(x-C)(\log x+1)}{x^2\log^2x}.
+$$
+
+当 $C>1$ 时，全定义域上的唯一最小点为 $C$，限制区间时按导数符号截断。 $\square$
+

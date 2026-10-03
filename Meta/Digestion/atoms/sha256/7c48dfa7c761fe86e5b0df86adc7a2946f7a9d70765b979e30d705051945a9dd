@@ -1,0 +1,29 @@
+### theorem 260.3 扩宽区间上的实际归一弦误差一致趋零
+
+令 $L=\log a$、$u=L^{1/4}$，定义
+
+$$
+H(a)=a^{3/4}\frac{\exp(u/2)}L.
+\tag{260.5}
+$$
+
+则 $H(a)/a^{3/4}\to\infty$、$H(a)/a\to0$，并且
+
+$$
+\sup_{\substack{a<b\le a+H(a)\\a\le y\le b}}
+w(y)|\mathcal R_{a,b}(y)|\longrightarrow0
+\qquad(a\to\infty).
+\tag{260.6}
+$$
+
+更具体地，存在固定常数，使全部充分大的 $a$ 及上述全部 $b,y$ 满足
+
+$$
+w(y)|\mathcal R_{a,b}(y)|\ll
+\frac1L
++a^{-1/12}\frac{e^{u/2}}L
++a^{-1/4}\frac{e^{3u/2}}{L^4}
++a^{-1/4}Le^{u/2}.
+\tag{260.7}
+$$
+

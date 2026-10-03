@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5ee3cbffaf0797dfbb1baf0382994b13c5f005db2be0d43417cf707b0634b88
+  normalized_sha256: sha256:f5ee3cbffaf0797dfbb1baf0382994b13c5f005db2be0d43417cf707b0634b88
+cas_ref: sha256:f5ee3cbffaf0797dfbb1baf0382994b13c5f005db2be0d43417cf707b0634b88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: Matrix.mul_fin_two, Matrix.det_fin_two, Matrix.isUnit_iff_isUnit_det, Matrix.toLinearEquiv, Function.Semiconj.iterate_right. Normalize H=[[2,3],[3,5]], inverse [[5,-3],[-3,2]] and H*M=M*H. Matrix.toLinearEquiv gives the integer lattice isomorphism. Infinite response equality projects to times 0 and 1, so the explicit inverse gives equality of inputs; the converse is substitution. Iterate transport preserves future response. No frozen repository GID for this precise lattice observation map was found.'
+    previous_atom_id: bfb7c35405e3b376859541ecf68c95b243a016612adc4e63150d5c82e9a1962b
+    next_atom_id: 71eaac31a07eb2e59738e2200b8942df1a5f21f13c8a505f70bc5d14b7860eb9

@@ -1,0 +1,4 @@
+**核验与完备性。** 每个素数幂的秩可由有限模递推直接检验；$p^k\mid F_d$ 恰由表中的秩整除 $d$ 决定，所有秩都整除 120，所以一段 $1,\ldots,120$ 穷尽损失。这不把 120 称作完整 Fibonacci 剩余对的周期。可复用的精确枚举见 [temporal_projection.py](../../reports/fib-robin-boundary/temporal_projection.py) 与其 [结果](../../reports/fib-robin-boundary/temporal_projection.json)，包括 $H=1,2,3,6,8,12$ 的边界诊断。
+
+特别地 $C_{5040}(7)=\gcd(5040,F_8)=21$；要求原始时刻只丢失一层 7、完整保留其它轴，即要求 $M_d=720$，不可达。实际 $d=8$ 给 $M_8=240$，而 $d=4$ 给 $M_4=1680$。2 轴也有 $R(4)=R(8)=6$，不能逐层由原始时间切开。
+

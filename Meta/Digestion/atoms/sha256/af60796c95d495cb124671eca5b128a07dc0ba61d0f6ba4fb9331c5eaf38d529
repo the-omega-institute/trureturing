@@ -1,0 +1,45 @@
+**证明。** 核心仅在最终层被强制结束，所以对全部 $k<J$ 仍有精确的共同尾等式
+
+$$
+\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q).
+$$
+
+门控保持准确，式（340.29）的触发概率仍恰为 $1/3$。由有限参考尾和、式（340.33）、（340.35）及完整参考预算，
+
+$$
+K\ge\frac13\mathbb E R_H^a
+ \ge\frac{c_dN^a}{12}\sum_{k=0}^{J-1}\eta_k.
+\tag{340.61}
+$$
+
+令 $D_0=12/(c_dN^a)$，则 $\sum_{k<J}\eta_k\le D_0K$。记
+$L=J-k_{\rm geom}>0$。由平均值原理，存在
+$k_{\rm geom}\le k<J$，使
+
+$$
+\eta_k\le D_0K/L.
+\tag{340.62}
+$$
+
+取 $C_{\rm len}=D_0/\eta_{\rm conc}$，其中 $\eta_{\rm conc}$ 是引理340.2的共同集中阈值。式（340.59）保证所选层满足 $\eta_k\le\eta_{\rm conc}$，所以在同一合法世界 $w_k$ 中有
+$G_k(p_k,q_k)\ge c_{\rm tail}n_k^{-a}$。
+
+在该世界使用完整计数下界及式（340.3）：
+
+$$
+\begin{aligned}
+\mathbb E N_T^a
+&\ge\frac13\mathbb E R_T^a\\
+&\ge\frac13m_k^aG_k(p_k,q_k)\\
+&\ge\frac{c_{\rm tail}c_m}{3}\eta_k^{-1}\\
+&\ge\frac{c_{\rm tail}c_m}{3D_0}\frac LK.
+\end{aligned}
+\tag{340.63}
+$$
+
+因此可取 $c_{\rm fin}=c_{\rm tail}c_m/(3D_0)$，证毕。
+
+在固定参考预算且 $J$ 足够大时，这给出该类核心截断程序的线性层数下界。它没有证明为了达到精度 $\delta$ 必须有 $J\gtrsim\log(1/\delta)$：终止误差上界只能提供足够层数，不能反向作为必要层数。因此式（340.60）不被改写为原目标的 $\Omega(\log(1/\delta))$ 精度下界。
+
+若进一步截断门控或作整棵有限树有理化，触发概率与尾等式可能改变，必须重新证明适用的下界；本推论未对这种修改后的程序作结论。
+

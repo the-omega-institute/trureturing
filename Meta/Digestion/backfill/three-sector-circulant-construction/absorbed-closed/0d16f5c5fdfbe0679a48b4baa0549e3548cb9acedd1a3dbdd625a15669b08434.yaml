@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0d16f5c5fdfbe0679a48b4baa0549e3548cb9acedd1a3dbdd625a15669b08434
+  normalized_sha256: sha256:0d16f5c5fdfbe0679a48b4baa0549e3548cb9acedd1a3dbdd625a15669b08434
+cas_ref: sha256:0d16f5c5fdfbe0679a48b4baa0549e3548cb9acedd1a3dbdd625a15669b08434
+coverage_gids:
+  - gid: D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture.generator_regular_for_k_ge_two
+    target_statement_id: sha256:268db38bb4725d762569532c7107da27b077c6e06cd4e76162eb69f1910436d8
+  - gid: D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture24Refutation.boundary_facts
+    target_statement_id: sha256:bdc7612291faa8650c967a8bf21e4f765625b9dc8fb02d291abce217bc3f8d8e
+  - gid: D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture24Refutation.result
+    target_statement_id: sha256:cead91b43c18e114413daeccd6d30bd11c259199702e0f5c7ff38036c3970582
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 83a4140d7ba989d741683868008ce81f429d10e5485b30fda65169a042bfffb0
+    - dbff815cbff83d65b8f2bd51e3814fabfdb132c02af334bcf2be24c779c2e925

@@ -1,0 +1,15 @@
+### 3.2 任意正窗、匹配幂次和最坏噪声
+
+令 $H_N=(1/(i+j+1))_{0\le i,j\le N}$、$\lambda_N=\lambda_{\min}(H_N)>0$。若 $\mu_N\ge\mu>0$，设
+$$
+d_N=\sqrt{\lambda_N\mu}/N!,\quad
+r_N=ce^bb^{N+1}/((N+1)!\sqrt{2N+3}),
+$$
+$$
+\tau_N=\min(1,d_N/(2r_N)),\quad
+\alpha_N=\lambda_N\mu/(4(N!)^2).
+$$
+则
+$$
+a(T)\ge\alpha_N\min(T,\tau_N)^{2N+1}>0.
+$$

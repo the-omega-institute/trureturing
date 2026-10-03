@@ -1,0 +1,5 @@
+source_id = "golden-prime-frobenius-bounds"
+path = "docs/develop/theory/GOLDEN_PRIME_FROBENIUS_BOUNDS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

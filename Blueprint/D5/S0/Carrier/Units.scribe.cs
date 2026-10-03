@@ -11,6 +11,19 @@ internal sealed class UnitsDocument : IScribeDocumentDefinition
         H("Golden Units"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-unit-norm-criterion"),
+                DeclarationHandle.Create("D5/S0/Carrier/Units.isUnit_iff_norm_eq_one_or_neg_one"),
+                H("Unit criterion"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("x"), InMacro, Operatorname, Grp(F.Id("GoldenInt")), Comma,
+                    Operatorname, Grp(F.Id("IsUnit")), Open, F.Id("x"), Close, Iff, Sp,
+                    F.Id("N"), Open, F.Id("x"), Close, Eq, D(1), Lor, Sp,
+                    F.Id("N"), Open, F.Id("x"), Close, Eq, Minus, D(1)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "An element of the golden integer ring is invertible precisely when its integer norm is one or minus one. Conjugation supplies its inverse, with a sign change in the second case."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("norm-of-golden-ratio-powers"),
                 DeclarationHandle.Create("D5/S0/Carrier/Units.norm_phi_pow"),
                 H("Norm of golden-ratio powers"),

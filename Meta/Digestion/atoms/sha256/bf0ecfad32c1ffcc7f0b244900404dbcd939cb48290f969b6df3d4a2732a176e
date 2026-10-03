@@ -1,0 +1,20 @@
+**命题 83.4（均匀同源下的信息读出）。** 在命题 83.3 中，若 $X$ 在 $\mathbb Z/L\mathbb Z$ 上均匀，令
+
+$$
+Y_i=NX\bmod m_i,\qquad a_i=\frac{m_i}{\gcd(N,m_i)},\qquad A=\operatorname{lcm}_i a_i.
+$$
+
+则
+
+$$
+\begin{aligned}
+A&=\frac{L}{\gcd(N,L)},\\
+H((Y_i)_i)&=\log A,\qquad H(Y_i)=\log a_i,\\
+I(Y_i;Y_j)&=\log\gcd(a_i,a_j)
+=\log\frac{\gcd(m_i,m_j)}{\gcd(N,\gcd(m_i,m_j))},\\
+\sum_iH(Y_i)-H((Y_i)_i)&=\log\frac{\prod_i a_i}{A}.
+\end{aligned}
+$$
+
+全族相互独立当且仅当 $a_i$ 两两互素。若再观测模 $m\ge2$，则新增条件熵公式另须假设同一个源 $X$ 在 $\mathbb Z/L_{\mathrm{new}}\mathbb Z$ 上均匀，其中 $L_{\mathrm{new}}=\operatorname{lcm}(L,m)$，且旧观测 $Y_i=NX\bmod m_i$ 与新观测 $NX\bmod m$ 全部由这个共同源给出。在此假设下，令 $a=m/\gcd(N,m)$，有 $H(NX\bmod m\mid(Y_i)_i)=\log(a/\gcd(a,A))$；前述固定族公式仍只需原来的模 $L$ 均匀性。
+

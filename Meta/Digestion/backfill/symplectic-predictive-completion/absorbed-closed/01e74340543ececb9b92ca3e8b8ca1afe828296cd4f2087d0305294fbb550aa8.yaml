@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:01e74340543ececb9b92ca3e8b8ca1afe828296cd4f2087d0305294fbb550aa8
+  normalized_sha256: sha256:01e74340543ececb9b92ca3e8b8ca1afe828296cd4f2087d0305294fbb550aa8
+cas_ref: sha256:01e74340543ececb9b92ca3e8b8ca1afe828296cd4f2087d0305294fbb550aa8
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/MeasurableInstrumentHistory.positive_history_density_from_coordinates
+    target_statement_id: sha256:94d16e8250869a37b9bf31b0a6a885076d8553015462e03831c3bde70a055d37
+receipts:
+  unresolved_subitems: []

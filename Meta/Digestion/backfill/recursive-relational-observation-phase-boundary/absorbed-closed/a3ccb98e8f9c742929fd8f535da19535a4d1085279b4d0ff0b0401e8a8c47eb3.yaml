@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a3ccb98e8f9c742929fd8f535da19535a4d1085279b4d0ff0b0401e8a8c47eb3
+  normalized_sha256: sha256:a3ccb98e8f9c742929fd8f535da19535a4d1085279b4d0ff0b0401e8a8c47eb3
+cas_ref: sha256:a3ccb98e8f9c742929fd8f535da19535a4d1085279b4d0ff0b0401e8a8c47eb3
+coverage_gids:
+  - gid: D5/S0/History/FinitePrefixAntichainBudget.result
+    target_statement_id: sha256:44986704b9c318be4d45966ce908456e97406336130a69c6ad79f77164d8200d
+receipts:
+  unresolved_subitems: []

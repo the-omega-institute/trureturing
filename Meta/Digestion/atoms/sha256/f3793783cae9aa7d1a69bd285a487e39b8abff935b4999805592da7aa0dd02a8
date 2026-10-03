@@ -1,0 +1,76 @@
+### 348.6 从完整输出误差到最佳有理逼近
+
+现在固定非整数 \(\beta>0\)。设一份控制器对全部原合法世界和请求满足
+
+\[
+\sup_{w,S}
+\operatorname{TV}\!\left(
+\widetilde P^A_{w,S},P^\beta_{w,S}
+\right)\le\epsilon.
+\tag{348.26}
+\]
+
+在有限输出集上采用
+
+\[
+\operatorname{TV}(P,Q)
+=\frac12\sum_y|P(y)-Q(y)|
+=\max_E|P(E)-Q(E)|.
+\tag{348.27}
+\]
+
+固定一种请求，再限制到 \(c=1\)。由式（348.17），控制器的事件响应
+
+\[
+r(h):=F_{E_=}(t(h),t(h))
+\tag{348.28}
+\]
+
+满足
+
+\[
+\sup_{0<h\le H}
+\left|r(h)-\left(\frac12+\lambda_{\rm rel} h^\beta\right)\right|
+\le\epsilon,
+\qquad \lambda_{\rm rel}:=\frac18.
+\tag{348.29}
+\]
+
+这里 \(\lambda_{\rm rel}\) 是实际四格关系事件的系数，不是内部偏置核心的系数。总变差到事件误差的常数是一。
+
+闭区间端点也须核对。\(t(0)=1/B\in(0,1)\)，且对应的 \((p,q)\) 仍为来源内部点。引理348.1使同一固定程序在该点吸收，引理348.2使 \(r\) 在 \(h=0\) 附近实解析。对式（348.29）取正侧极限，得到
+
+\[
+\sup_{0\le h\le H}
+\left|r(h)-\left(\frac12+\lambda_{\rm rel} h^\beta\right)\right|
+\le\epsilon.
+\tag{348.30}
+\]
+
+没有向原任务添加零世界回答要求；这是有限状态固定支持结构自身给出的连续端点。
+
+定义实系数有理最佳误差
+
+\[
+E_{d,d}(x^\beta,[0,1])
+:=
+\inf_{R\in\mathcal R_{d,d}}
+\|x^\beta-R(x)\|_{[0,1]},
+\tag{348.31}
+\]
+
+未消去的区间内极点对应无穷误差。令
+
+\[
+R(x)=\frac{r(Hx)-1/2}{\lambda_{\rm rel} H^\beta}.
+\tag{348.32}
+\]
+
+固定仿射变量替换、减去常数以及常数缩放都不增加分子分母次数。引理348.2遂给 \(R\in\mathcal R_{d,d}\)，而式（348.30）给
+
+\[
+\|R-x^\beta\|_{[0,1]}
+\le\frac{\epsilon}{\lambda_{\rm rel} H^\beta}.
+\tag{348.33}
+\]
+

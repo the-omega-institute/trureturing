@@ -1,0 +1,10 @@
+**定理 35.3（全部切面的精确响应数与实秩）。** 对每个 $n\ge1$ 和每个 $A\subseteq[n]$，同时有
+
+$$
+\boxed{\kappa_A(F_n)=2^{d_A}+\epsilon_A,\qquad
+\operatorname{rank}_{\mathbb R}H_A(F_n)=2^{d_A}.}
+\tag{35.6}
+$$
+
+尤其空切面给 $(\kappa,\operatorname{rank})=(1,1)$，全切面给 $(2,1)$；$n=1$ 只有这两个切面。另行定义空词边界 $F_0=0$ 时，唯一切面给 $(1,0)$，不属于式（35.6）的正长度量词。
+

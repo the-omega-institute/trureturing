@@ -1,0 +1,17 @@
+**命题321.7（不可观察双世界与不可计算中心）。** 存在一个正有理容差 $d$，使同一来源合同下
+$$
+\mathcal C_s^{\mathrm{pol}}(\delta)=
+\begin{cases}
++\infty,&0\le\delta<d,\\
+0,&\delta\ge d,
+\end{cases}
+\qquad
+\mathcal C_s^{\mathrm{alg}}(\delta)=
+\begin{cases}
++\infty,&0\le\delta\le d,\\
+0,&\delta>d,
+\end{cases}
+\tag{321.22}
+$$
+对每个 $s>0$ 成立。特别地，$\delta_*=d>0$，两类在所有内部容差同值，却在边界分离。
+

@@ -1,0 +1,39 @@
+**推论 227.5（真实源及加权大小边缘的截断率）。**
+
+取 $q=1$、$\beta=0$ 或 $1$，式（227.23）分别给
+
+$$
+\log\mu_s(D<d\le X,\ (d,V)=1)
+=-2b_2^2T+O_a(y/\ell^5),
+\tag{227.29}
+$$
+
+$$
+\boxed{
+\log\sum_{\substack{D<d\le X\\(d,V)=1}}
+\frac dX\mu_s(d)
+=-2b_2^2T+O_a(y/\ell^5).
+}
+\tag{227.30}
+$$
+
+无单位条件的 $d\le X$ 概率也有同一对数渐近：下界保留 $E_y$，上界仍为式（227.24）。因此 §211 的精细截断损失满足
+
+$$
+-\log\mu_s(d\le X)=2b_2^2\frac y{\ell^4}+O_a(y/\ell^5)=o(R).
+\tag{227.31}
+$$
+
+证明。前两式是定理 227.4 的直接应用。对 $d\le X$，保留同一个 $E_y$ 给下界，负倾斜给上界，从而得到式（227.31）。
+
+对于 Robin 预算，令 $t=e^\gamma\ell$、$\Lambda=XU(s)/t^s$。§210.2 的 $\log\Lambda=b_2R+o(R)$ 与式（227.30）给
+
+$$
+\log\left(
+\Lambda\sum_{\substack{D<d\le X\\(d,V)=1}}
+\frac dX\mu_s(d)\right)=b_2R+o(R)\longrightarrow+\infty.
+\tag{227.32}
+$$
+
+式（227.32）表明，丢掉指定逆余数命中关系后的纯大小边缘上包络不能压入临界预算；这个推导不提供实际命中核的下界。$\square$
+

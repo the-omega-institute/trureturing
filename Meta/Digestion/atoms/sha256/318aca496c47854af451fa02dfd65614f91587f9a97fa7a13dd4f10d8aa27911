@@ -1,0 +1,42 @@
+### 313.5 Bell 求导只消耗参考矩
+
+固定 \(p\)，单枚参考币的第 \(j\) 阶对数似然导数为
+$$
+\lambda_j(Y_i;q)
+=(j-1)!\left[
+\frac{(-1)^{j-1}Y_i}{q^j}
+-\frac{1-Y_i}{(1-q)^j}\right].
+\tag{313.19}
+$$
+令
+$$
+L_{1,n}=S_n,\qquad
+L_{j,n}=\sum_{i=1}^nJ_i\lambda_j(Y_i;q),\quad j\ge2.
+$$
+因为 \(q\in I\)，有
+$$
+|L_{j,n}|\le c_{I,j}R_n.
+\tag{313.20}
+$$
+无论任务请求多少，都不进入这些参考方向的对数似然导数。
+
+对有限叶似然 \(e^\ell\)，重复求导给有限 Bell 恒等式
+$$
+\frac{\partial_q^r e^\ell}{e^\ell}
+=B_r(L_1,\ldots,L_r),
+$$
+$$
+B_r=
+\sum_{\substack{a_1,\ldots,a_r\ge0\\
+\sum_{j=1}^rja_j=r}}
+\frac{r!}{\prod_{j=1}^ra_j!(j!)^{a_j}}
+\prod_{j=1}^rL_j^{a_j}.
+\tag{313.21}
+$$
+也可由 \(B_0=1\) 及
+$$
+B_{r+1}=L_1B_r+
+\sum_{j=1}^rL_{j+1}\frac{\partial B_r}{\partial L_j}
+$$
+归纳得到；没有无限级数或无界停止时间微分。
+

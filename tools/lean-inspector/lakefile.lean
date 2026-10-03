@@ -1,7 +1,6 @@
 import Lake
 import Lake.CLI.Build
 import Lake.Util.StoreInsts
-import Std.Sync.Mutex
 open Lake DSL System
 open Lean (Json)
 
@@ -59,13 +58,23 @@ private def observePhase (phase boundary : String) : IO Unit := do
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
-  validation : Std.Mutex Unit
+  sourcePaths : IO.Ref (Std.HashMap String (Option String))
 
 package_facet reportBatch (_pkg : Package) : ReportState := do
-  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← Std.Mutex.new ()⟩
+  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}⟩
 
-private def validateArtifact (pkg : Package) (args : Array String) : JobM UInt32 := do
-  return (← IO.Process.output (← nativeCommand pkg (#["validate"] ++ args))).exitCode
+-- A compiler import is shared by many report targets. Resolve its source path
+-- once in this Lake invocation, including paths excluded from the whitelist.
+-- This memo is never persisted or mixed into an artifact trace.
+private def reportSourcePath (root : FilePath)
+    (memo : IO.Ref (Std.HashMap String (Option String)))
+    (source : FilePath) : IO (Option String) := do
+  let key := source.toString
+  if let some path := (← memo.get)[key]? then return path
+  let path := (relPathFrom root (← IO.FS.realPath source)).toString
+  let result := if path.startsWith ".lake/" || path.startsWith "../" then none else some path
+  memo.modify (·.insert key result)
+  return result
 
 /-- Utility input is generated once per invocation by its existing .NET owner.
 This job deliberately has no content trace: each module traces its own record. -/
@@ -100,61 +109,22 @@ package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "compatibility"))
 
-/-- A completed native build, not yet accepted by the canonical validator.
-Only private jobs carry this value; it is never a public report facet. -/
-private structure UnvalidatedArtifact where
-  file : FilePath
+/-- A native report artifact. Production validates it completely before it is
+written; like an olean, a traced artifact is afterwards reused as is. -/
+private structure ReportArtifact where
   path : FilePath
-  inputTrace : BuildTrace
-  outputTrace : IO.Ref BuildTrace
-  build : JobM PUnit
-  check : Array String
-  productionArgs? : Option (Array String) := none
-  prepareProduction : JobM Unit := pure ()
+  outputTrace : BuildTrace
 
-private def uncheckedArtifact (file : FilePath) (build : JobM PUnit)
-    (check : Array String) : JobM UnvalidatedArtifact := do
-  let inputTrace ← getTrace
+private def buildArtifact (file : FilePath) (build : JobM PUnit) : JobM ReportArtifact := do
   let art ← buildArtifactUnlessUpToDate file build (ext := "zip") (restore := true)
-  return ⟨file, art.path, inputTrace, ← IO.mkRef (← getTrace), build, check, none, pure ()⟩
-
-/-- Validator rejection also requires a rebuild. Preserve Lake's native job
-decision before scheduling repair production or removing rejected outputs. -/
-private def requireRebuildAllowed : JobM Unit := do
-  if (← getNoBuild) then
-    modify ({· with wantsRebuild := true})
-    error "target is out-of-date and needs to be rebuilt"
-
-/-- Rejected optional artifacts are rebuilt exactly once through Lake, with
-cache reads disabled for that reconstruction. Never write through a restored
-hard link or evict a blob. Required build and validation failures propagate. -/
-private def rebuildRejectedArtifact (pkg : Package) (row : UnvalidatedArtifact)
-    (build? : Option (JobM PUnit) := none) : JobM FilePath := do
-  requireRebuildAllowed
-  logWarning s!"inspector artifact rejected; rebuilding privately: {row.file}"
-  removeFileIfExists row.file
-  removeFileIfExists (row.file.addExtension "trace")
-  clearFileHash row.file
-  setTrace row.inputTrace
-  let recovered ← withCurrPackage? none <|
-    buildArtifactUnlessUpToDate row.file (build?.getD row.build) (ext := "zip") (restore := true)
-  unless (← validateArtifact pkg (row.check ++ #[recovered.path.toString])) == 0 do
-    error s!"reconstructed Inspector artifact is invalid: {row.file}"
-  row.outputTrace.set (← getTrace)
-  return recovered.path
-
-private def acceptArtifact (pkg : Package) (row : UnvalidatedArtifact) : JobM FilePath := do
-  if (← validateArtifact pkg (row.check ++ #[row.path.toString])) != 0 then
-    return ← rebuildRejectedArtifact pkg row
-  setTrace (← row.outputTrace.get)
-  return row.path
+  return ⟨art.path, ← getTrace⟩
 
 /-- Ask Lake itself whether a native artifact can be reused/restored. A native
 `noBuild` miss is data for a subsequent dependency job, not a blocked worker.
 All other failures (and a caller's actual `--no-build`) propagate unchanged. -/
-private def probeArtifact (file : FilePath) (build : JobM PUnit)
-    (check : Array String) : JobM (Option UnvalidatedArtifact) := .ofFn fun fetch pkg? stack store ctx state => do
-  let result ← (uncheckedArtifact file build check).toFn fetch pkg? stack store
+private def probeArtifact (file : FilePath) (build : JobM PUnit) :
+    JobM (Option ReportArtifact) := .ofFn fun fetch pkg? stack store ctx state => do
+  let result ← (buildArtifact file build).toFn fetch pkg? stack store
     {ctx with noBuild := true} state
   match result with
   | .ok row next => return .ok (some row) next
@@ -169,18 +139,18 @@ private structure PreparedArtifact where
   args : Array String
   env : Array (String × Option String)
   inputTrace : BuildTrace
-  artifact? : Option UnvalidatedArtifact
+  artifact? : Option ReportArtifact
   prepareProduction : JobM Unit
 
--- These private jobs are interned in Lake's invocation store. Neither data
--- key is a public facet capable of returning an unchecked artifact.
+-- These private jobs are interned in Lake's invocation store.
 module_data inspectorPreparedReport : PreparedArtifact
-module_data inspectorUnvalidatedReport : UnvalidatedArtifact
+module_data inspectorModuleReport : ReportArtifact
 
 private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  let utility := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
+  let root ← repositoryDir pkg
+  let utility := root / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
   let record ← readJson utility
   let claims ← strings record "claims"
   let mut deps ← fetch <| pkg.facet `reportProducer
@@ -190,7 +160,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourceModules := #[mod]
   -- Inspector loads this fixed judge even for an empty registration inventory.
   -- Demand its build without making this program a report data dependency.
-  let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
+  let some driver := (← getWorkspace).findModule? `LeanInformationAudit.SealCommand
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
   let driverBuild ← driver.exportInfo.fetch
   for name in claims do
@@ -199,11 +169,12 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     exports := exports.push (← claim.exportInfo.fetch)
     sourceModules := sourceModules.push claim
   -- Only production consumes this source whitelist. Warm artifacts still trace
-  -- the complete compiler exports below and cross the canonical validator.
-  -- Missing and rejected artifacts prepare the same Lake-owned closure before
-  -- extraction; no dependency parser or additional cache chooses its members.
+  -- the complete compiler exports below. Missing artifacts prepare the same
+  -- Lake-owned closure before extraction; no dependency parser or additional
+  -- cache chooses its members.
   let prepareProduction : JobM Unit := do
     let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
+    let reportState ← (← JobM.runFetchM <| fetch <| pkg.facet `reportBatch).await
     let mut dependencies := #[]
     for source in sourceModules do
       dependencies := dependencies.push source ++
@@ -211,8 +182,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let mut sourcePaths : Array String := #[]
     for dependency in dependencies do
       if dependency.name != mod.name && reported.contains dependency.name then continue
-      let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
-      unless path.startsWith ".lake/" || path.startsWith "../" do
+      if let some path ← reportSourcePath root reportState.sourcePaths dependency.leanFile then
         sourcePaths := sourcePaths.push path
     writeBinFileIfChanged (utility.addExtension "sources.json")
       (String.toUTF8 (Lean.toJson sourcePaths).compress)
@@ -221,7 +191,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let inspector ← reportInspector.fetch
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
-  let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
+  let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
@@ -231,7 +201,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       let info ← exportJob.await
       addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let executable ← inspector.await
-    let args := #[(← repositoryDir pkg).toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
+    let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]
     let build := do
       prepareProduction
@@ -239,9 +209,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       pure PUnit.unit
     let inputTrace ← getTrace
     let artifact? ← probeArtifact file build
-      #["module", (← repositoryDir pkg).toString, mod.name.toString, utility.toString]
-    return ⟨file, args, env, inputTrace,
-      artifact?.map fun row => {row with productionArgs? := some args, prepareProduction}, prepareProduction⟩
+    return ⟨file, args, env, inputTrace, artifact?, prepareProduction⟩
 
 private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := do
   let key := (mod.facet `inspectorPreparedReport).key
@@ -250,7 +218,7 @@ private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) 
     return cast (by simp [key]) job
   return cast (by simp [key]) job
 
-private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArtifact) := withCurrPackage mod.pkg do
+private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
   reportState.started.modify (·.insert mod.name)
@@ -261,58 +229,66 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArti
   ready.mapM fun request => do
     setTrace request.inputTrace
     if let some row := request.artifact? then
-      setTrace (← row.outputTrace.get)
+      setTrace row.outputTrace
       return row
-    let direct := do
-      request.prepareProduction
-      proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
-      pure PUnit.unit
     let pending := request.file.addExtension "pending"
     let build := if batch?.isSome then do
         IO.FS.rename pending request.file
         pure PUnit.unit
-      else direct
+      else do
+        request.prepareProduction
+        proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
+        pure PUnit.unit
     try
-      let row ← uncheckedArtifact request.file build
-        #["module", (← repositoryDir pkg).toString, mod.name.toString, request.args[3]!]
-      -- A rejected optional output reconstructs through the same native owner,
-      -- outside the initial shared production job, with cache reads disabled.
-      return {row with
-        build := direct, productionArgs? := some request.args,
-        prepareProduction := request.prepareProduction}
+      buildArtifact request.file build
     finally
       if batch?.isSome then removeFileIfExists pending
 
-private def nativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArtifact) := do
-  let key := (mod.facet `inspectorUnvalidatedReport).key
+private def nativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := do
+  let key := (mod.facet `inspectorModuleReport).key
   let job : Job (BuildData key) ← fetchOrCreate key do
     let job ← withRegisterJob s!"{mod.name}:report (internal native artifact)" <| buildNativeModuleReport mod
     return cast (by simp [key]) job
   return cast (by simp [key]) job
 
 module_facet report (mod : Module) : FilePath := withCurrPackage mod.pkg do
-  let pkg := (← getWorkspace).root
-  let reportState ← (← fetch <| pkg.facet `reportBatch).await
-  (← nativeModuleReport mod).mapM fun row =>
-    reportState.validation.atomically do acceptArtifact pkg row
+  (← nativeModuleReport mod).mapM fun row => do
+    setTrace row.outputTrace
+    return row.path
 
-private def runBatch (pkg : Package) (requests : Array (String × Array String)) : JobM (Array Nat) := do
+private def runBatch (pkg : Package) (requests : Array (String × Array String)) : JobM Unit := do
   let requestFile := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "batch.json"
-  let resultFile := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "batch-results.json"
   IO.FS.writeFile requestFile (Lean.toJson requests).compress
   let env := (← getWorkspace).augmentedEnvVars
   try
-    let result ← IO.Process.output { (← nativeCommand pkg #["batch", requestFile.toString, resultFile.toString]) with env }
+    let result ← IO.Process.output { (← nativeCommand pkg #["batch", requestFile.toString]) with env }
     unless result.stdout.isEmpty do logInfo result.stdout
     unless result.stderr.isEmpty do logInfo result.stderr
     unless result.exitCode == 0 do error s!"Inspector batch exited with code {result.exitCode}"
-    let statuses : Array Nat ← IO.ofExcept (Lean.fromJson? (← readJson resultFile))
-    unless statuses.size == requests.size && statuses.all (· ≤ 1) do
-      error "Inspector batch result mismatch"
-    return statuses
   finally
     removeFileIfExists requestFile
-    removeFileIfExists resultFile
+
+-- Bound the continuation depth when collecting thousands of module jobs.
+private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array α) := Id.run do
+  let mut level : Array (Job (Array α)) := #[]
+  let mut start := 0
+  while start < jobs.size do
+    level := level.push (Job.collectArray (jobs.extract start (min (start + 64) jobs.size)))
+    start := start + 64
+  if level.isEmpty then
+    return Job.collectArray #[]
+  while level.size > 1 do
+    let mut next : Array (Job (Array α)) := #[]
+    let mut i := 0
+    while i < level.size do
+      if i + 1 < level.size then
+        next := next.push ((level[i]!).zipWith (sync := true) (· ++ ·) (level[i + 1]!))
+        i := i + 2
+      else
+        next := next.push level[i]!
+        i := i + 1
+    level := next
+  return level[0]?.getD (Job.collectArray #[])
 
 package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let pkg := (← getWorkspace).root
@@ -338,14 +314,16 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
-  let batch ← (Job.collectArray prepared).mapM fun artifacts => do
+  let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
+    try observePhase "lake-source-whitelists" "start" catch _ => pure ()
     let requests ← artifacts.filterMapM fun request => do
       if request.artifact?.isSome then return none
       request.prepareProduction
       return some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
+    try observePhase "lake-source-whitelists" "finish" catch _ => pure ()
     unless requests.isEmpty do
-      discard <| runBatch pkg requests
+      runBatch pkg requests
   let batch ← registerJob "Inspector native production batch" batch
   reportState.batch.set (some (members, batch))
   let mut rows := #[]
@@ -354,72 +332,15 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
       | error s!"registered report module is not in the Lake workspace: {name}"
     rows := rows.push (← nativeModuleReport mod)
   let membership ← inputBinFile inputs
-  ((Job.collectArray rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts =>
-    reportState.validation.atomically do
+  ((collectModuleJobs rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
     let root ← repositoryDir pkg
-    let paths := artifacts.map (·.path.toString)
-    let file := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "report.zip"
-    let pending := file.addExtension "pending"
-    let direct := do
-      proc (← nativeCommand pkg (#["aggregate", (← repositoryDir pkg).toString, file.toString] ++ paths))
-      pure PUnit.unit
-    let check := #["report", (← repositoryDir pkg).toString]
-    let mut initialTrace := BuildTrace.nil "<collection>"
+    let file := root / ".lake/build/lean-inspector" / "report.zip"
+    let mut trace := BuildTrace.nil "<collection>"
     for row in artifacts do
-      initialTrace := initialTrace.mix (← row.outputTrace.get).withoutInputs
-    setTrace (mixTrace initialTrace membership.getTrace)
-    let inputTrace ← getTrace
-    let aggregate? ← probeArtifact file direct check
-    setTrace inputTrace
-    -- Validate every row and aggregate, including material integrity, once per batch.
-    let requests := artifacts.map fun row =>
-      ("validate", #[root.toString] ++ row.check ++ #[row.path.toString])
-    let aggregateRequest := match aggregate? with
-      | some row => ("validate", #[root.toString] ++ check ++ #[row.path.toString])
-      | none => ("aggregate", #[root.toString, pending.toString] ++ paths)
-    let repairFiles ← IO.mkRef (#[] : Array FilePath)
-    try
-      let statuses ← runBatch pkg (requests.push aggregateRequest)
-      let mut repairs := #[]
-      for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
-        if status != 0 then
-          let some args := row.productionArgs?
-            | error "rejected module artifact has no native production request"
-          let repair := row.file.addExtension "repair"
-          repairFiles.modify (·.push repair)
-          repairs := repairs.push ("produce", args.set! 5 repair.toString)
-      -- Missing legacy bindings and corrupt rows are exact validator rejections.
-      -- Share extraction/import work, then let each original module job own its
-      -- bounded private reconstruction through Lake, with cache reads disabled.
-      unless repairs.isEmpty do
-        requireRebuildAllowed
-        for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
-          if status != 0 then row.prepareProduction
-        discard <| runBatch pkg repairs
-      let mut repaired := false
-      let mut trace := BuildTrace.nil "<collection>"
-      for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
-        if status != 0 then
-          discard <| rebuildRejectedArtifact pkg row (some do
-            IO.FS.rename (row.file.addExtension "repair") row.file
-            pure PUnit.unit)
-          repaired := true
-        trace := trace.mix (← row.outputTrace.get).withoutInputs
-      setTrace (mixTrace trace membership.getTrace)
-      if !repaired then
-        if let some row := aggregate? then
-          if statuses[artifacts.size]! == 0 then
-            setTrace (← row.outputTrace.get)
-            return row.path
-          else
-            return ← rebuildRejectedArtifact pkg row
-      let build := if aggregate?.isNone && !repaired then do
-          IO.FS.rename pending file
-          pure PUnit.unit
-        else direct
-      let row ← uncheckedArtifact file build check
-      -- The completed new bundle still crosses the full canonical validator.
-      acceptArtifact pkg {row with build := direct}
-    finally
-      removeFileIfExists pending
-      for repair in (← repairFiles.get) do removeFileIfExists repair
+      trace := trace.mix row.outputTrace.withoutInputs
+    setTrace (mixTrace trace membership.getTrace)
+    -- Concatenating traced, production-validated rows needs no further check.
+    let build := do
+      runBatch pkg #[("aggregate", #[root.toString, file.toString] ++ artifacts.map (·.path.toString))]
+      pure PUnit.unit
+    return (← buildArtifact file build).path

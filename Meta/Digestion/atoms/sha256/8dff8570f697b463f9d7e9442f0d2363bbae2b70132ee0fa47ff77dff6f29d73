@@ -1,0 +1,54 @@
+**定理 11.1（有限延迟的精确组合身份）。** 对任意实 $t,s$，
+\[
+ \mathsf T_{t+s}-\mathsf T_t\mathsf T_s
+ =\mathsf P\mathsf U_t\mathsf Q\mathsf U_s\mathsf P.
+\]
+取实 $f=\varphi(u)\in\operatorname{Dom}\mathscr L^2$，令
+\[
+ r_f=\mathsf Q\mathscr Lf,\quad n_f=\|r_f\|_2^2,
+ \quad c_f=\|\mathscr L^2f\|_2,
+ \quad d_f(h)=\langle f,(\mathsf T_{2h}-\mathsf T_h^2)f\rangle.
+\]
+则
+\[
+ \boxed{d_f(h)=\mathbb E\operatorname{Cov}
+       (\varphi(u_{-h}),\varphi(u_h)\mid u_0),}
+\]
+\[
+ \boxed{|d_f(h)+h^2n_f|
+       \le h^3\sqrt{n_f}\,c_f+h^4c_f^2/4,\qquad h\ge0.}
+\]
+另外有精确正算子身份
+\[
+ I-\mathsf T_{-h}\mathsf T_h
+ =(\mathsf Q\mathsf U_h\mathsf P)^*
+   (\mathsf Q\mathsf U_h\mathsf P)\succeq0.
+\]
+
+**证明。** 在 $\mathsf U_t\mathsf U_s$ 中插入 $I=\mathsf P+\mathsf Q$ 得第一式。由酉性，
+\[
+ d_f(h)=\langle\mathsf Q\mathsf U_{-h}f,
+                    \mathsf Q\mathsf U_h f\rangle.
+\]
+两项正是过去、未来读数相对当前观察的条件中心化残差，给出协方差身份。积分 Taylor 公式给
+\[
+ \mathsf Q\mathsf U_{\pm h}f=\pm h r_f+e_\pm,
+ \quad\|e_\pm\|_2\le h^2c_f/2.
+\]
+展开内积并应用 Cauchy–Schwarz 得余项。最后在
+$\mathsf P\mathsf U_{-h}\mathsf U_h\mathsf P=I_{\mathcal H_u}$
+中插入两投影即得正算子身份。证毕。
+
+若 $\varphi$ 光滑且满足所需域条件，第 10 节的条件协方差给
+\[
+ n_f=\int \nabla\varphi(u)^T\mathcal C(u)\nabla\varphi(u)\rho(u)\,du.
+\]
+因此不同观测函数的双线性短时组合缺陷是
+$-\int\nabla\psi^T\mathcal C\nabla\varphi\,\rho$。在第 10.3 节的分部积分条件下，其弱算子为
+\[
+ \mathcal D_{\mathcal C}\varphi
+ =\rho^{-1}\nabla\cdot(\rho\mathcal C\nabla\varphi),
+ \qquad \langle\varphi,\mathcal D_{\mathcal C}\varphi\rangle_\rho=-n_f.
+\]
+这同时连接热条件响应和非 Markov 组合缺陷。上述展开是固定测试函数上的强/弱陈述，不是无界生成元的统一算子范数 Taylor 展开。
+

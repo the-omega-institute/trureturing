@@ -1,0 +1,50 @@
+**命题 216.3（命中权重是截断一阶矩）。** 有精确等式
+
+$$
+\boxed{
+\mu_s(\mathcal H_D)
+=\frac1{U(s)}\sum_{g\in I_r}\frac{Z(N_g)^s}{N_g}
+G_{N_g}^{<}(N_g/D).
+}
+\tag{216.14}
+$$
+
+证明。每个被命中的除数只计一次。对固定 $n=N_g$，用 $h=n/d$ 换元，
+
+$$
+\sum_{\substack{d\mid n\\d>D}}\frac{b_s(d)}{dU(s)}
+=\frac{Z(n)^s}{nU(s)}
+\sum_{\substack{h\mid n\\h<n/D}}h\,\mathbb P_n(H_n=h).
+$$
+
+对 $g$ 求和即得。$\square$
+
+因而只知道 $\mathbb P_n(H_n\le H)$ 还不等于知道所需权重；必须保留式（216.14）中的 $h$ 因子。例如 $n=12,s=2$ 时，
+
+$$
+\mathbb P_{12}(H_n=1)=\frac{13}{112},\qquad
+\mathbb P_{12}(H_n=2)=\frac{20}{112},
+$$
+
+所以 $\mathbb P_{12}(H_n\le2)=33/112$，而 $G_{12}(2)=53/112$。
+
+对 $B\ge1$，定义同整数的大幂命中子集
+
+$$
+\mathcal H_D^{\mathrm{pow}}(B)
+=\{d\in\mathcal H_D:B(n(d))>B\}.
+$$
+
+由式（216.13）、式（216.14）和 §210 的有限上界
+$\sum_{n\le X}Z(n)^s\le XU(s)$，得到
+
+$$
+\mu_s(\mathcal H_D^{\mathrm{pow}}(B))
+\le\frac{2sH^2}{BU(s)}
+\sum_{g\in I_r}\frac{Z(N_g)^s}{N_g}
+\le 2\frac XA\frac{sH^2}{B}.
+\tag{216.15}
+$$
+
+这是条件分布带来的有效过滤。下节从同一个 Euler 增量分布直接得到更强的式（216.1）。
+

@@ -1,0 +1,105 @@
+{
+  "active_primes": [
+    3,
+    5
+  ],
+  "actual_survivor_residues": "7439648277300443716758673026778",
+  "certificate_B": "3464699875106138123/829440000000000000",
+  "certificate_R": "2635259875106138123/829440000000000000",
+  "checks": 45182,
+  "complete_period": "17168419101462562423289245446405",
+  "complete_tail": "q_d=(gcd(d,L)/d)q_gcd(d,L); sum_g w_g q_g, including g=1",
+  "dense_controls": [
+    {
+      "B_after": "10009/3968",
+      "B_before": "10999/3968",
+      "joint_orbits": 3,
+      "n": 1,
+      "period": 15,
+      "phase_rows": 12,
+      "survivors": 9
+    },
+    {
+      "B_after": "92821/37888",
+      "B_before": "26119/9472",
+      "joint_orbits": 4,
+      "n": 2,
+      "period": 45,
+      "phase_rows": 27,
+      "survivors": 22
+    },
+    {
+      "B_after": "131123/47680",
+      "B_before": "69499/23840",
+      "joint_orbits": 8,
+      "n": 3,
+      "period": 135,
+      "phase_rows": 60,
+      "survivors": 61
+    },
+    {
+      "B_after": "353407/130144",
+      "B_before": "25759/9296",
+      "joint_orbits": 12,
+      "n": 4,
+      "period": 405,
+      "phase_rows": 105,
+      "survivors": 178
+    },
+    {
+      "B_after": "522791/195456",
+      "B_before": "532951/195456",
+      "joint_orbits": 16,
+      "n": 5,
+      "period": 1215,
+      "phase_rows": 162,
+      "survivors": 529
+    }
+  ],
+  "free_primes": [
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "full_deep_carrier_enumerated": false,
+  "haar_survivor_density": "7439648277300443716758673026778/17168419101462562423289245446405",
+  "joint_source_orbits": 252,
+  "literal_coefficient_rows": 24765,
+  "local_orbit_counts": [
+    253,
+    2
+  ],
+  "local_trie_nodes": [
+    254,
+    2
+  ],
+  "lp_optimality_claimed": false,
+  "maximal_original_exponents": [
+    64,
+    1
+  ],
+  "numerical_query_slots": 130,
+  "original_count": 128,
+  "positive_source_orbits": 72,
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "schema": "actual-prefix-orbit-query-v1",
+  "scipy_used": false,
+  "scope": "Exact fixed-family source representation and witness; no uniform B<28 theorem or unrestricted covering result; no Lean verification",
+  "source_haar_density_cap": "3",
+  "source_sha256": "28c9c4fe0b1be089b7de1ccef6ad1c873ecd8e177b95ae71209d0ad5d5884537",
+  "status": "PASS",
+  "strict_improvement": "153141594825158376791387570197403393244509057051/1028456977854013339404718959221790720000000000000",
+  "uniform_source_B": "21355998420917914598063590292313550249/4936593493699264029142651004264595456"
+}

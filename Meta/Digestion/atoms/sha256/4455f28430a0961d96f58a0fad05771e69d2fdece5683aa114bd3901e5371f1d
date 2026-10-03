@@ -1,0 +1,9 @@
+**定理 97.1（未来相对响应恰识别允许 valuation）。** 两个正整数 $n,m$ 满足
+
+$$
+\frac{Z(nc)}{Z(n)}=\frac{Z(mc)}{Z(m)}
+\quad\text{对所有 }c\in\mathcal M(S)
+$$
+
+当且仅当 $v_p(n)=v_p(m)$ 对所有 $p\in S$ 成立。
+

@@ -1,0 +1,26 @@
+**定义 32.1（接缝积、末窗读出与风险）。** 在同一个总域 $\Sigma^\ast$ 上定义
+
+$$
+\begin{aligned}
+L(\varepsilon)&=1,&
+L(a_1\cdots a_n)&=\prod_{k=2}^n
+\bigl(1-b_3(a_{k-1})b_1(a_k)\bigr)\quad(n\ge1),\\
+E(\varepsilon)&=0,&
+E(a_1\cdots a_n)&=\mathbf1_{\{a_n\ne000\}}\quad(n\ge1),\\
+g_B(\varepsilon)&=0,&
+g_B(a_1\cdots a_n)&=\mathbf1_{\{a_n\in\{100,010\}\}}\quad(n\ge1),\\
+h(u)&=E(u).
+\end{aligned}
+\tag{32.1}
+$$
+
+空积取一。$L=1$ 恰为定义31.1的源承诺；$g_B$ 是仅接受 $B$ 末窗的读出，$h$ 接受全部非零末窗。对任意 $\Sigma^\ast$ 上的概率律 $P$ 及布尔预测器 $f$，以总任务 $F$ 为确定标签，定义
+
+$$
+R_P(f)=\sum_{u\in\Sigma^\ast}P(u)\,
+\mathbf1_{\{f(u)\ne F(u)\}}.
+\tag{32.2}
+$$
+
+不要求 $P$ 有限支撑。
+

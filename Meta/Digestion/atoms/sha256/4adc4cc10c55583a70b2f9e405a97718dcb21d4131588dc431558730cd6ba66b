@@ -1,0 +1,30 @@
+### 2.5 非线性条件与可重建算例
+
+对满射次浸没 $\Phi$，两个独立条件
+$$
+D\Phi J\nabla H=J_r\nabla h\circ\Phi,
+\qquad D\Phi J D\Phi^T=J_r
+$$
+分别保证自治预测与 Poisson 配对保持。第一式由链式法则，第二式代入 $\nabla(a\circ\Phi)^TJ\nabla(b\circ\Phi)$ 得括号相容。它们没有从重建精度自动成立 [BGH23]。
+
+非线性反例：在去掉原点的谐振平面，$\Phi(q,p)=(q+ip)/\sqrt{q^2+p^2}\in S^1$ 满足 $\Phi(z_t)=e^{-it}\Phi(z_0)$。相位是自治的一维预测状态，一维流形没有非退化二形式。
+
+保留原六维有理算例：
+$$
+B_s=\begin{pmatrix}1&2&0\\2&-1&1\\0&1&2\end{pmatrix},
+\quad T_s=\begin{pmatrix}I&B_s\\0&I\end{pmatrix},
+\quad S_0=\operatorname{diag}(1,4,9,1,1,1),
+$$
+$$
+S=T_s^{-T}S_0T_s^{-1},\quad
+C=(1,1,0,0,0,0)T_s^{-1},\quad
+O=\operatorname{rows}(C,CA,CA^2,CA^3).
+$$
+有 $T_s^TJT_s=J$、$CA^4=-4C-5CA^2$，且
+$$
+OJO^T=\begin{pmatrix}0&2&0&-5\\-2&0&5&0\\0&-5&0&17\\5&0&-17&0\end{pmatrix},
+\qquad\det(OJO^T)=81.
+$$
+因此闭包维数为四；第 2.2 节的全部矩阵可在有理数域重建。
+
+<a id="sec-windows"></a>

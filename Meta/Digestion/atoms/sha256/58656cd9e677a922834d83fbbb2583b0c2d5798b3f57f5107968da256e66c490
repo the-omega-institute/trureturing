@@ -1,0 +1,21 @@
+### 15.8 验证、来源和下一层问题
+
+参考程序 `thermal_recovery.py` 构造实际恢复映射、条件热态、极分解和环路界；`verify.py` 采用固定种子与 90 位精度进行有限检错。检查涵盖不同共同环境维数、随机忠实态、树饱和、标量环相位、Choi 正性、Gibbs 校准、经典 KL、三态 Pauli 公式、高温夹逼、共同能隙通道以及 Ising 有限时间误差。有限计算不证明全称量词或全球优先权；一般结论由上述纸面证明承担。
+
+新增候选内容是任意共同环境下的定量射影环路缺口，以及与明确全通道最优化匹配的三热态四阶系数。标准净化表示、两态保真度、SDP 正块对应、Gibbs 恒等式和 Bohr 能隙选择作为已有数学工具使用。未新增 Lean、冻结或外部问题机器结算；没有独立同行审查、Scribe 编译、CI、硬件实验或神经网络性能验证。
+
+[OA06] D. K. L. Oi, J. Aberg. *Fidelity and Coherence Measures from Interference*. Physical Review Letters 97, 220404 (2006). DOI 10.1103/PhysRevLett.97.220404; arXiv:quant-ph/0603157，式 (6) 的全 subspace-preserving 根保真度上限与局部类的区别。
+
+[AKSO07] J. Aberg, D. Kult, E. Sjoqvist, D. K. L. Oi. *Operational approach to the Uhlmann holonomy*. Physical Review A 75, 032106 (2007). DOI 10.1103/PhysRevA.75.032106; arXiv:quant-ph/0608185v2，§II 的振幅、平行输运和离散环路。
+
+[NMLW25] T. Nuradha, H. K. Mishra, F. Leditzky, M. M. Wilde. *Multivariate Fidelities*. Journal of Physics A 58(16), 165304 (2025). DOI 10.1088/1751-8121/adc645; arXiv:2404.16101v3。核对式 (5.27)、定理 5.33／式 (5.80)、§6 第二条开放问题；后两处已作 PDF 页面视觉核对，式 (5.27) 页面截图失败但解析公式可读。本文的模长目标与原实部 SDP 分开；(15.6) 是在同一三态族上的定量比较。
+
+[FOR15] P. Faist, J. Oppenheim, R. Renner. *Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime*. New Journal of Physics 17, 043003 (2015). DOI 10.1088/1367-2630/17/4/043003; arXiv:1406.3618。全文的例 (1)–(3) 和时间参考讨论限制本章的物理解释，第一页已视觉核对。
+
+[LJR15] M. Lostaglio, D. Jennings, T. Rudolph. *Description of quantum coherence in thermodynamic processes requires constraints beyond free energy*. Nature Communications 6, 6383 (2015). DOI 10.1038/ncomms7383; arXiv:1405.2188，定理 1 及 Methods 式 (15) 的时间平移协变。
+
+各条已登记于 `Library/PredictiveReduction/` 并与现有 Scribe 真实交换子闭包声明关联；该声明不承担本章通道最优值的证明。原有 `WormholeHolonomy` 等仓库回路声明只提供一般观察接口，不被冒用为 Uhlmann 环路定理。
+
+下一层仍需解决：非对易条件 Hamiltonian 下同时施加热校准、全时间协变和多态相干最优的精确结构；一般图上定量环路下界是否达到；有限温度三态问题的全参数精确最优值；实际能量守恒实现的资源代价。它们是明确的数学优化和实验合法性义务，不能由一个统一术语或单个数值结果替代。后续继续在本主卷追加。
+
+<a id="sec-compatibility-complexity"></a>

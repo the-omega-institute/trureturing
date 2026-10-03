@@ -1,0 +1,18 @@
+**Theorem 69.9 (rational degrees and signature of the positive-root field).**
+For every $J\geq0$,
+
+$$
+[N_J:\mathbb Q]=2\cdot3^J,\qquad [F_J:\mathbb Q]=3^J.
+$$
+
+The field $F_J$ is a number field with exactly one real place
+and $(3^J-1)/2$ complex places. The assertion includes
+$F_0=\mathbb Q$ with signature $(1,0)$.
+
+Proof. The cubic tower degree over $E$ gives the first degree.
+The positive-root field lies in the real numbers and has trivial
+intersection with $E$ over $\mathbb Q$, giving the second.
+A real embedding must select the unique real conjugate of each
+radical. Thus precisely one embedding is real; the others pair
+under conjugation.
+

@@ -68,7 +68,7 @@ public sealed class LegacyRelationsNativeTests
             Assert.Equal("declared_validated", row.GetProperty("state").GetString());
             Assert.Equal("source-equivalence", row.GetProperty("bridge_kind").GetString());
             var certificate = row.GetProperty("certificate");
-            Assert.Equal(15, wire.GetProperty("compatibility_version").GetInt32());
+            Assert.Equal(17, wire.GetProperty("compatibility_version").GetInt32());
             Assert.True(certificate.GetProperty("source_binding").TryGetProperty("finite_projection", out _));
             foreach (var mutation in new[] { "certificate", "source-owner", "source-name", "projection",
                 "bridge", "arena-dependency", "path", "occurrence", "law-identity", "realization" })

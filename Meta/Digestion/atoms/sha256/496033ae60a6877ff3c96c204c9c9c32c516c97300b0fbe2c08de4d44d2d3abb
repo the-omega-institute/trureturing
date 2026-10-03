@@ -1,0 +1,16 @@
+**定义 5.1（前缀映射的合法域）。** 对合法词 $u$，长度记为 $k$，令
+
+$$
+F_u=\begin{cases}
+\Omega,&k=0\text{ 或 }u_{k-1}=0,\\
+\Omega_0,&u_{k-1}=1,
+\end{cases}\qquad
+h_u:F_u\times G\longrightarrow [u]\times G,
+$$
+
+$$
+h_u(\nu,w)=(u\nu,t_u+M^kw).
+$$
+
+$[u]$ 表示地址以 $u$ 开头。前缀字母按低位到高位排列；若以一步添位实现 $h_u$，实际动作依次添加 $u_{k-1},\ldots,u_0$，即 $h_u=h_{u_0}\circ\cdots\circ h_{u_{k-1}}$，每步保留其守卫。
+

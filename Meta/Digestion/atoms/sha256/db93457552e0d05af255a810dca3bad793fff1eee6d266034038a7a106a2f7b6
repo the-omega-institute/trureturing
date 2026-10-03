@@ -1,0 +1,96 @@
+### 341.2 有限输出概率与误差上界
+
+令原参考下多项式与其任务延拓为
+
+$$
+L_J(x,q)=\sum_{t=0}^{d_J}\ell_{J,t}(x)b_{d_J,t}(q),\qquad
+\bar L_J(p,q)=
+ \sum_{t=0}^{d_J}\bar\ell_{J,t}(p)b_{d_J,t}(q).
+\tag{341.8}
+$$
+
+第338节的有限乘积相容归纳表明：把末层未决核心置零之后，实际核心成功概率恰为
+
+$$
+\mathcal L_J(p,q)
+ =(1-\delta_J)
+   \mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p).
+\tag{341.9}
+$$
+
+具体地，对 $k\le J$ 记
+
+$$
+\mathcal L_k(p,q)=\sum_{s,t}A_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+\mathcal U_k(p,q)=\sum_{s,t}B_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+G_k=\mathcal U_k-\mathcal L_k,
+$$
+
+其中 $b_{d,t}(q)=\binom{d}{t}q^t(1-q)^{d-t}$。对 $k<J$，有限乘积相容归纳还给同一实际执行中的尾等式
+$\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q)$。
+
+理由是截至第 $J$ 层的核心输出一概率为 $\mathcal L_J$，输出零概率为 $1-\mathcal U_J$，未决概率为 $\mathcal U_J-\mathcal L_J$；最后一项全部归零后，一概率不变。这个结论只使用有限层相容性。
+
+在实际世界中，$x=hc=C(1-Bp)$，核心目标为
+
+$$
+F_x(q)=\frac12+\kappa h^\beta,\qquad
+\kappa=6\varepsilon=3/8.
+\tag{341.10}
+$$
+
+记有符号偏差
+
+$$
+\Delta_J(w)=F_x(q)-\mathcal L_J(p,q).
+\tag{341.11}
+$$
+
+对一般有限网格，以下论证不预设 $\Delta_J(w)$ 在所有世界非负。误差由 $|\Delta_J(w)|$ 控制；下界将在明确世界或合法世界极限中取得正偏差。
+
+原参考包络逐点满足
+
+$$
+0\le F_x(q)-L_J(x,q)\le\Gamma_J(x,q),\qquad
+\Gamma_J(x,q)\le C_\Gamma x^\beta
+ \min\{1,(n_Jx^2)^{-\rho/2}\}.
+\tag{341.12}
+$$
+
+第338节共同任务 $C^\beta$ 界及二项均值匹配给
+
+$$
+\left|
+\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p)
+ -L_J(x,q)\right|
+ \le C_{\rm sm}m_J^{-a}
+\tag{341.13}
+$$
+
+于每个实际世界成立。参考权重非负且和为一，故 $C_{\rm sm}$ 对 $J,q$ 共同；所有 $\bar L_J$ 的值均在 $[0,1]$。
+
+令 $t=n_Jx^2$，则
+
+$$
+x^\beta\min\{1,(n_Jx^2)^{-\rho/2}\}
+ =n_J^{-a}t^a\min\{1,t^{-\rho/2}\}
+ \le n_J^{-a},
+\tag{341.14}
+$$
+
+因为 $\rho>\beta=2a$。由式（341.9）、（341.12）、（341.13），
+
+$$
+\begin{aligned}
+|\Delta_J(w)|
+&\le\Gamma_J(x,q)+C_{\rm sm}m_J^{-a}+\delta_J\\
+&\le\left(C_\Gamma+\frac{C_{\rm sm}}{c_m}
+                 +\frac{N^a}{4}\right)n_J^{-a}.
+\end{aligned}
+\tag{341.15}
+$$
+
+最后一步只用 $\eta_J\le1$ 和式（341.3）。因此不需要通过无限层极限证明有限张量下多项式处处位于目标之下，也已取得所需的绝对误差上界。
+

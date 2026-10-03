@@ -1,0 +1,16 @@
+**引理 163.1（一个秩桶的 Euler 对数贡献）。** 对整数 $d>5$，令 $\mathcal P_d=\{p\text{ 素数}:z(p)=d\}$。则
+
+$$
+\sum_{p\in\mathcal P_d}\log\frac p{p-1}
+\le\frac{6H_d}{d}\le\frac{6(1+\log d)}d,
+\qquad H_d=\sum_{k=1}^d\frac1k.
+$$
+
+证明。桶内不同素数的乘积整除 $F_d<2^d$，所以个数小于 $d$。因 $z(2)=3,z(5)=5$，此桶不含例外素数。每个素数写作 $p=kd\pm1$，$k\ge1$，且每个 $k$ 至多对应两个素数。由 $kd\ge3$，
+
+$$
+\log\frac p{p-1}\le\frac1{p-1}\le\frac3{kd}.
+$$
+
+按 $k$ 递增排列，固定至多个数时倒数和由最小允许的 $k$ 给上界；粗放地保留每个 $k=1,\ldots,d$ 的两个位置已足够。因此总和至多 $6H_d/d$。最后使用调和数的积分上界。这里估计的是 $\log(p/(p-1))$，不是 $(\log p)/(p-1)$。$\square$
+

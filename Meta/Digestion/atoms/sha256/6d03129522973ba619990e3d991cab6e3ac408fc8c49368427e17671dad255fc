@@ -1,0 +1,16 @@
+### 1.2 实际窗口代数，不只保留维数
+
+取一个已存在的酉融合范畴 $\mathcal C$，包括其结合结构，及自对偶、强张量生成对象 $X$。按 [JL24, Example 2.3] 在固定严格化中定义
+
+$$
+A_{[a,b]}=\operatorname{End}_{\mathcal C}(X^{\otimes(b-a+1)}).
+$$
+
+对于 $I=[a,b]\subset J=[c,d]$，实际嵌入是
+
+$$
+\iota_{I,J}(f)=1_X^{\otimes(a-c)}\otimes f\otimes
+1_X^{\otimes(d-b)}.
+\tag{QCA.3}
+$$
+

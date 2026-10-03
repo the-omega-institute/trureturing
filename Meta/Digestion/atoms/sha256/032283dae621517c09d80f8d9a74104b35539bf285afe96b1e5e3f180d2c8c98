@@ -1,0 +1,21 @@
+**定义 29.1（闭关系候选与首标签证书）。** 对任意已经取得的有限色词 $r_0,\ldots,r_h$，定义
+
+$$
+\begin{aligned}
+\mathcal K_h(r)
+&=\{\eta\in\Omega:x_j(\eta)\in E_{r_j}\text{ 对 }0\le j\le h\},\\
+\mathcal L_h(r)
+&=\{\sigma_0(\eta):\eta\in\mathcal K_h(r)\}.
+\end{aligned}
+\tag{29.2}
+$$
+
+对完整色流再定义
+
+$$
+\mathcal K_\infty(r)=\bigcap_{h\ge0}\mathcal K_h(r).
+\tag{29.3}
+$$
+
+这里 $E_i$ 正是 (28.2) 的六个闭区间。实际闭预算记录的真实来源属于所有相应候选集，由第28.1节的裁剪距离包含得到。候选集描述的是闭扩张关系；它没有把每个扩张端点都宣称为任意切点归属下可实际取得的同色目标。
+

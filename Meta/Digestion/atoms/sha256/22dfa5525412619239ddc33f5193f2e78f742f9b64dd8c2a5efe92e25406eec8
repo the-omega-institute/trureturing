@@ -1,0 +1,16 @@
+### 327.10 原始来源与结论范围
+
+本节使用 HNP 的显式相容逼近、反向鞅的随机阈值实现及连续 Bernoulli 工厂作为成熟工具。新增连接是：任务率确定一个只用于描述的尺度函数；公共参考网格上的连续混合保留相容性；严格余量使每个有限控制行能在闭任务区间上实际模拟；最后在同一世界的几何尺度上求出参考临界矩。这里将其称为综合推导，不由检索结果宣称文献原创性。
+
+第324节的总调用证明不能把 $M$ 直接换成 $N_H$。固定任务率 $p$ 后，参考预算尾可以具有参考率 $q$ 的有限正系数表示；但这些系数随 $p$ 改变，而原合法固定 $p$ 曲线只覆盖 $y\asymp x$ 的比例区间，不能沿该曲线到达 $q=1/B$。本构造利用任务调用实现这些随 $p$ 改变的控制概率，因此没有违反总调用的同端点插值障碍。
+
+临界参考矩一致有界不意味着一致可积，也不说明每种来源费用都有限。第315节的参考尾正 $\limsup$ 与非一致可积性仍然成立。有限置信区间没有被当作硬参数权限，半开域连续性没有被用来代替闭端点余量，实际任务调用没有从执行记录中删除。
+
+本节结算原非整数幂目标的参考临界可达性；不提供最优参考矩常数、最优任务—参考联合费用曲线、一般多来源矩刻画或完整物理时间估计。全部结果仍为纸面数学论证，不代表 Lean kernel 核验。
+
+[^reference_critical_hnp]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)。使用 Corollary 16 的逐阶 Bernstein 系数界、Lemma 23及§5的显式 $Q_{n,r}$ 递推、Steps 1–5和式（47）—（49）的相容校正。引理327.2保留这些公式的尺度依赖和系数连续性。该文同时供应公平币；本节实际参考费用只计来源请求，私随机仍按原合同免费。其§7关于一般有限分数矩与Besov空间的问题不承担这里的可达性证明。
+
+[^reference_critical_reverse]: Krzysztof Łatuszyński, Ioannis Kosmidis, Omiros Papaspiliopoulos and Gareth O. Roberts, *Simulating Events of Unknown Probabilities via Reverse Time Martingales*, Random Structures & Algorithms 38 (2011), 441–452, [DOI](https://doi.org/10.1002/rsa.20333), [arXiv:0907.4018v2](https://arxiv.org/pdf/0907.4018v2)。使用 Algorithm 4、式（8）—（9）的存活区间更新及 Theorem 2.5 的输出正确性和包络差尾概率。第327.6节将该区间更新写成条件三分类，再用真实任务币实现相同的条件转移。
+
+[^reference_critical_np]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)。第327.6节使用§7 Theorem 26的连续且一致离开零一函数的几乎必终止工厂；先把闭内区间上的行函数连续常值延伸，再应用定理。第327.9节的有效化仅对严格正于闭 $[0,1]$ 的有理多项式使用Pólya次数提升，保持已知的端点正余量。原四格倒数门控的统一指数尾沿用第313.9节已核对的解析工厂接口。
+

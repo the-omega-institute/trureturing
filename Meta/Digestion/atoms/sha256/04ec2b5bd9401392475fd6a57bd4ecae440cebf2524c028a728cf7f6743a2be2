@@ -1,0 +1,8 @@
+**Definition 1.3 (Three indices and empty windows).** Encode $\alpha=1$ and $\beta=0$. For a binary path $C=(C_j)_{j\in\mathbb Z}$ and integers $s\in\mathbb Z$, $n,k\ge0$, put
+$$
+A_{s,n}=\sum_{j=s}^{s+n-1}C_j,
+\qquad
+Q_{s,n}^{(k)}=qM^k\binom{A_{s,n}}{n-A_{s,n}} .
+$$
+The generation $k$, spatial window length $n$, and spatial position $s$ are distinct indices. When $n=0$, the sum and composition are zero; this convention introduces no empty member of $\mathcal T$.
+

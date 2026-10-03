@@ -1,0 +1,5 @@
+## 33. Nonsquare Fibonacci quotients beyond the modular classes
+
+For $m\geq0$ let $U_0(X)=0$, $U_1(X)=1$, and
+$U_{m+2}(X)=XU_{m+1}(X)+U_m(X)$. Write $L_n$ for the Lucas number.
+

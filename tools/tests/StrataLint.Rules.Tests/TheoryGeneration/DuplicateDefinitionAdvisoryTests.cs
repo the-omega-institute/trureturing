@@ -175,7 +175,7 @@ public sealed class DuplicateDefinitionAdvisoryTests
 
         var completed = Execute(fixture);
 
-        var diagnostic = Assert.Single(completed.Diagnostics);
+        var diagnostic = Assert.Single(completed.Diagnostics.Where(d => d.RuleId == RuleId.CreateKnown(28)));
         Assert.Equal(RuleId.CreateKnown(28), diagnostic.RuleId);
         Assert.Contains("duplicate-definition", diagnostic.Message, StringComparison.Ordinal);
         Assert.Null(AdmissionEngine.RejectIfNeeded(

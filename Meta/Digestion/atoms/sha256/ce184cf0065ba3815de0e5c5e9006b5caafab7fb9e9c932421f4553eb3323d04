@@ -1,0 +1,20 @@
+**定理 10.2（条件隐藏方差的有限时间保证）。** 设
+\[
+\mathcal R_*(t)=\inf_f\mathbb E\|\mathsf U_tu-f(u)\|^2.
+\]
+则对 $t\ge0$，
+\[
+\boxed{\left|\sqrt{\mathcal R_*(t)}-t\sqrt{n_u}\right|\le\tfrac12t^2c_2,}
+\quad
+\mathcal R_*(t)=t^2n_u+O(t^3).
+\]
+最佳线性风险的首项为 $t^2\operatorname{tr}M$，线性与非线性最佳风险之差为 $t^2\operatorname{tr}E_{\rm expr}+O(t^3)$。
+
+**证明。** 酉群的两次积分 Taylor 公式在 $L^2$ 中给
+\[
+\mathsf U_tu=u+tv+R_t,\qquad\|R_t\|_{L^2}\le t^2c_2/2.
+\]
+对两边作用 $I-\mathsf P$，得到最优残差 $tr_u+(I-\mathsf P)R_t$；投影收缩和范数反三角不等式给有限时间界。换成线性投影得对应线性风险；或者对两个最优预测之差作同一 Taylor 展开。证毕。
+
+若再假设状态空间为光滑流形、$\mu$ 对每个非空开集赋正质量、$u$ 为光滑观察映射，且 $b$ 存在局部 Lipschitz 版本、$\mathscr Lu-b(u)$ 连续，则 $N=0$ 当且仅当观察沿整个流按 $\dot u=b(u)$ 精确自治（限制在相应解存在区间）。证明：$N=0$ 先给几乎处处零残差，连续性和满支撑将其升级为处处；链式法则及 ODE 唯一性给全部未来。反向由自治方程求零时导数。不满足这些正则性时，仅将 $N=0$ 报作参考概率下的瞬时闭合。
+

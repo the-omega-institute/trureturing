@@ -1,0 +1,69 @@
+**引理326.2（同一策略的可调局部插值）。** 若式（326.12）成立，则
+
+$$
+\sup_{0\le h\le H/\sqrt n}
+ n^a\Pr_h(M>n)
+\le e^{c_*r}K^{1/r}\xi_n^{1-1/r},
+\tag{326.14}
+$$
+
+$$
+\sup_{0\le h\le H/\sqrt n}
+ n^{a-m}\mathbb E_h(M\wedge n)^m
+\le e^{c_*r}K^{1/r}\zeta_n^{1-1/r}.
+\tag{326.15}
+$$
+
+**证明。** 两个被取期望的统计量都由前至多 $n$ 枚实际来源位及参数无关私随机决定。补足潜在位并积分私随机后，尾概率及截断 $m$ 矩均为次数至多 $n$、系数非负的 Bernstein 多项式。次数不足 $n$ 时乘入 $(p+(1-p))$ 的适当幂即可升阶，正性保持；补足不计为实际调用。
+
+对任一这样的多项式 $P_n$，写成
+
+$$
+P_n(\vartheta)=e^{-n\Lambda(\vartheta)}
+\sum_{k=0}^n b_ke^{k\vartheta},\qquad
+b_k\ge0,\quad \Lambda(\vartheta)=\log(1+e^\vartheta).
+\tag{326.16}
+$$
+
+沿用式（324.13）的有限正项 Hölder 插值。对窗口内的 $h$，令
+
+$$
+\lambda=\frac{\vartheta_0-\vartheta(h)}{L_r/\sqrt n}
+\in[0,1/r].
+\tag{326.17}
+$$
+
+保留 Jensen 余项中的 $\lambda$，由 $\Lambda''\le1/4$ 得
+
+$$
+\begin{aligned}
+n\big[(1-\lambda)\Lambda(\vartheta_0)
++\lambda\Lambda(\vartheta_1)
+-\Lambda(\vartheta(h))\big]
+&\le\tfrac18\lambda(1-\lambda)L_r^2\\
+&\le (DH)^2r/8=c_*r.
+\end{aligned}
+\tag{326.18}
+$$
+
+全部外点都在原合法正域，所以式（326.2）在外点给
+
+$$
+n^a\Pr_{h_1}(M>n)\le K,
+\qquad
+n^{a-m}\mathbb E_{h_1}(M\wedge n)^m\le K.
+\tag{326.19}
+$$
+
+第二式使用 $(M\wedge n)^m\le n^{m-a}M^a$。端点的两个归一化值分别为 $\xi_n,\zeta_n$。若记其中任一个为 $x\in[0,K]$，插值上界为
+
+$$
+e^{c_*r}x^{1-\lambda}K^\lambda
+\le e^{c_*r}x^{1-1/r}K^{1/r}.
+\tag{326.20}
+$$
+
+$x=0$ 时，非负系数及内点 $p_0$ 保证对应多项式恒零；无需使用零的负幂。端点 $\lambda=0$ 直接取恒等式。由此分别得到两项结论。证毕。
+
+式（326.18）对 $r$ 的线性控制是后续量化所需的部分；若先丢掉 $\lambda$，仅留下 $L_r^2$，仍能证明固定 $r$ 的结论，却会损失可调比例的下界。
+

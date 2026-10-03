@@ -1,0 +1,76 @@
+**定理 41.2（二叉树的精确峰值—高度前沿）。** 令 $T$ 是叶集为 $[n]$ 的满二叉树，$A_v$ 是节点 $v$ 的叶坐标集，根计入消息。沿用独立的 [观察边界代数卷](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定义16、定理20的完整原子消息合同：消息是离散完整值，不允许由时序、控制或跨子树旁路携带输入。则
+
+$$
+P_*^{T_n}(T)=\min_m\max_v|m_v|=\max_v\kappa_{A_v}(T_n),
+\qquad h(T)=\max_{\text{叶 }v}\operatorname{dist}(\text{根},v),
+\tag{41.4}
+$$
+
+并有
+
+$$
+\boxed{\min_TP_*^{T_n}(T)=n+1,\qquad
+\min_Th(T)=\lceil\log_2n\rceil.}
+\tag{41.5}
+$$
+
+写 $H=\lceil\log_2n\rceil$。在所有达到最小峰值的树中，最小高度为
+
+$$
+\boxed{
+\min_{T:P_*^{T_n}(T)=n+1}h(T)=
+\begin{cases}
+H+1,&n=2^h\ge4,\\
+H,&\text{otherwise},
+\end{cases}}
+\tag{41.6}
+$$
+
+而在所有达到最小高度的树中，最小峰值为
+
+$$
+\boxed{
+\min_{T:h(T)=H}P_*^{T_n}(T)=
+\begin{cases}
+n+2,&n=2^h\ge4,\\
+n+1,&\text{otherwise}.
+\end{cases}}
+\tag{41.7}
+$$
+
+**证明。** 根的全切面容量恒为 $n+1$。对 $n\ge3$ 取
+
+$$
+a=\left\lceil\frac{n+1}{2}\right\rceil,\qquad
+b=\left\lfloor\frac{n-1}{2}\right\rfloor,\qquad
+[n]=[1,a]\sqcup[a+1,n],
+\tag{41.8}
+$$
+
+并在两个相邻区间内递归作长度相差至多一的二分，较大的半边置于左侧。右根块长度为 $b$；所有非前缀块长度至多 $b$，而前缀块根以下的非前缀子块长度至多 $\lfloor a/2\rfloor\le b$。由式（39.8），这些块容量至多 $2b+2\le n+1$，前缀块容量至多其长度加一，故整棵树峰值恰为根的 $n+1$。$n=1,2$ 直接用单叶和两叶树。
+
+每个高度 $h$ 的二叉树至多有 $2^h$ 片叶，故高度下界为 $H$。构造（41.8）的高度为 $1+\lceil\log_2a\rceil$。若 $n$ 不是二的幂，$a\le2^{H-1}$ 且 $a>2^{H-2}$，所以该高度为 $H$；若 $n=2^h\ge4$，$a=2^{h-1}+1$，高度为 $h+1$。
+
+设 $n=2^h\ge4$ 且 $h(T)=h$。根的两个子树必须各有 $n/2\ge2$ 片叶；其中一个子集 $S$ 不含坐标 $1$。命题41.1给出该子树容量至少 $2(n/2)+2=n+2$。把根分为两个等长相邻区间并在各自递归平衡，式（39.8）给出峰值 $n+2$，达到下界。若 $n$ 非二的幂，构造（41.8）已有高度 $H$ 和峰值 $n+1$，而根下界已给最优性。$n=1,2,3,4$ 的端点值为
+
+$$
+\begin{array}{c|cccc}
+n&\min P_*&\min h\text{ at }\min P_*&\min h&\min P_*\text{ at }\min h\\ \hline
+1&2&0&0&2\\
+2&3&1&1&3\\
+3&4&2&2&4\\
+4&5&3&2&6
+\end{array}
+\tag{41.9}
+$$
+
+满二叉树有 $n-1$ 次合并；这里的高度只计父子依赖边，不是无条件运行时间；峰值仍是一个节点的一次消息字母表大小，而非同时存储量。对 $n=2^h\ge4$，$n+1$ 与 $n+2$ 都需要 $h+1$ 个固定二进制位；这不产生神经元数、秩或实际学习器的结论。输入取得、控制、精度、全部消息存储、总工作量和提供的并行资源均另行计费。$\square$
+
+固定顺序的首次匹配与有序决策列表提供首个满足局部条件即停止的成熟背景；树形全乘积和同时自底向上编码的条件见相应的树通信结果；平衡有序归约的算法背景也区分依赖高度、总工作和处理器资源。它们只支持模型对应和资源区分，不把 Boolean PAC 可学习性、交互扩展或神经网络表示界转移到 $T_n$。[^fib-wb-first-hit] [^fib-wb-tree] [^fib-wb-prefix]
+
+[^fib-wb-first-hit]: R. L. Rivest, *Learning Decision Lists*, [PDF](https://people.csail.mit.edu/rivest/pubs/Riv87b.pdf), §2.6, p.234, DOI [10.1007/BF00058680](https://doi.org/10.1007/BF00058680). 该文提供有序首个匹配规则的成熟背景；这里的 $T_n$ 是五窗上的多类精确诊断，未转移其 Boolean 学习结论。
+
+[^fib-wb-tree]: H. Kowshik and P. R. Kumar, *Optimal Function Computation in Directed and Undirected Graphs*, [arXiv:1105.0240v2](https://arxiv.org/pdf/1105.0240v2), Theorems 1--2 and §III.B. 其中的树形全乘积与自底向上编码条件只作通信模型背景；式（41.4）仍直接沿用独立的 [观察边界代数卷](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定理20的合同。
+
+[^fib-wb-prefix]: G. E. Blelloch, *Prefix Sums and Their Applications*, [PDF](https://www.cs.cmu.edu/~guyb/papers/Ble93.pdf), §1.2, p.39. 该来源支持平衡有序归约以及处理器、运行时间和依赖高度的分开计费，不给出本卷的消息字母表前沿。
+

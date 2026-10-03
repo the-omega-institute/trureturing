@@ -1,0 +1,11 @@
+**证明。** 展开同一个 $Z(gV+1)^k$，再交换有限求和，得到
+
+$$
+\frac1T\sum_{g\in I}Z(gV+1)^k
+=\sum_{1\le d_1,\ldots,d_k\le X}
+\frac{\#\{g\in I:\operatorname{lcm}(d_1,\ldots,d_k)\mid gV+1\}}
+{T d_1\cdots d_k}.
+$$
+
+记 $\ell=\operatorname{lcm}(d_1,\ldots,d_k)$。若 $\gcd(\ell,V)>1$，计数为零；否则 $gV\equiv-1\pmod\ell$ 恰有一个剩余类，该类在连续整数区间中的计数与 $T/\ell$ 相差至多一。对误差取绝对值后求和，至多为 $H_X^k/T$。这里没有将边缘整除概率当作独立概率相乘；全部事件通过同一个最小公倍数联立。$\square$
+

@@ -1,0 +1,10 @@
+**假设 306.1。** 本节解析结论采用假设302.1，并增加明确的全局加性精度
+\[
+P(y)=E\log y+o\!\left((\log y)^{-2}\right),
+\qquad y\longrightarrow\infty.
+\tag{306.4}
+\]
+原有 $P(y)=E\log y+o(1)$ 不足以代替（306.4）。这一精度属于经典无 RH 的素数定理与 Mertens 乘积背景，不是本节新增的素数分布估计。Qian–Hong，arXiv:1204.5415v2，印刷页2式（1.2）的固定模指数误差，求和两个模三剩余类后蕴含任意固定幂次的 $\vartheta(y)=y+O(y/\log^j y)$。
+
+具体地，令 $w(t)=\log(1-t^{-1})^{-1}/\log t$，$r(t)=\vartheta(t)-t$。经典 Stieltjes 分部求和给 $\log P(Y)-\log P(y)=\int_y^Yw(t)\,d\vartheta(t)$。取 $j=4$，$r(t)w(t)=O((\log t)^{-5})$，$r(t)w'(t)=O(1/(t(\log t)^5))$，而 $w(t)-1/(t\log t)=O(1/(t^2\log t))$。利用原有 Mertens 常数 $\log P(Y)-\log\log Y\to\gamma$，令 $Y\to\infty$，便有 $\log P(y)-\gamma-\log\log y=O((\log y)^{-4})$，从而 $P(y)-E\log y=O((\log y)^{-3})$，满足（306.4）。这是经典解析输入的组合说明；本节仍显式列出所用精度，不把剩余类乘积仅有的相对 $O(1/\log y)$ 误差当成它。
+

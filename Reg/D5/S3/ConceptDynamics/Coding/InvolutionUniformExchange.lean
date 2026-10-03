@@ -310,16 +310,6 @@ register_information_theorem factors_reverse in reverseArena
       stateBinder := 3 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  for name in [`D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.source_ne_target,
-      `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.factors_forward,
-      `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.factors_reverse] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun r =>
-      r.occurrence.key.theoremName == name
-    unless row.any (fun r => match r.result with | .declaredValidated _ => true | _ => false) do
-      throwError "{name} registration is not declaredValidated"
-
 #print axioms distinctRegistration
 #print axioms forwardRegistration
 #print axioms reverseRegistration

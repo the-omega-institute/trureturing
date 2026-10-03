@@ -1,0 +1,20 @@
+**定理 94.2（非退化区间的统一下界）。** 对实数 $4\le a<b$，置 $C=\Psi(a)>1$，并定义
+
+$$
+\Gamma(a,b)=\gamma+\log\log C-P(b^-)
++\sum_{\sqrt b<p\le a-1}\min\{d_1(p),d_2(p,b)\}.
+$$
+
+则对每个 $x\in[a,b]$ 有 $\Delta(\lambda_x)\ge\Gamma(a,b)$；对 $a\le a'<b'\le b$ 有 $\Gamma(a',b')\ge\Gamma(a,b)$。
+
+**证明。** 当 $a\le x<b$，$P(x)\le P(b^-)$、$\Psi(x)\ge C$，故
+
+$$
+\Phi(x)\ge f_{C,P(b^-)}(x),\qquad
+f_{C,P_0}(x)=\gamma+\log\log x-P_0+(C-x)\lambda_x.
+$$
+
+其导数为 $(\log x+1)(x-C)/(x^2\log^2x)$，且 $C>1$，所以全域下界为 $\gamma+\log\log C-P_0$。右端点由 $\Phi$ 的事件连续性取极限；等价地，左极限 $\Psi(b^-)\ge\Psi(a)$ 因 $a<b$ 而成立。保留掩码在整个闭区间都是 $B_2(x)$ 掩码的子集，而 $\lambda_x\ge\lambda_b$ 使 $d_2(p,x)\ge d_2(p,b)$，故同一储备和也统一有效。
+
+缩小区间时 $\Psi(a')$ 不减、$P(b'^-)$ 不增、共同素数掩码扩大且各 $d_2$ 不减，新增项非负，给出单调性。非退化条件不可删：若 $a=b$ 为素数幂，$\Psi(a)$ 已含事件而 $P(b^-)$ 尚未含它，前述跨端点不等式的条件失效。单独在 $a=b=x$ 计算储备和则没有这一问题。 $\square$
+

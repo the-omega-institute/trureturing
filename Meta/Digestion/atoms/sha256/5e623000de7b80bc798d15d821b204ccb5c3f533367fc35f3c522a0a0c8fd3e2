@@ -1,0 +1,31 @@
+**证明。** 掩码内 $v_p=1$，首层满足 $\log(1+1/p)>1/(p+1)\ge1/x>\lambda_x\log p$。第三层则因 $x<p^2,p\ge2$ 而有
+
+$$
+\frac{h_p(3)}{\log p}<\frac1{p^3\log p}
+\le\frac1{2p^2\log p}<\frac1{x\log x}.
+$$
+
+故实际最优只能是 1 或 2，平局不改储备；分别相减正好得到 $d_1,d_2$。$d_1>0$；由 $\log G_p(2)\le Q_p(2)$ 和 $\lambda_x\log p>1/(2p^2)$ 得 $d_2>0$。掩码为空时和为零。$R_2-B_2$ 只含 $(x-1,x]$ 中至多一个素数，使用定理 93.1 的 $K=2$ 和 $R_p<2/x$ 得误差界。
+
+为计算主项，均匀展开 $p>\sqrt x$ 上的两候选：
+
+$$
+d_1(p)=\frac1{2p^2}+O(p^{-3}),\qquad
+d_2(p,x)=-\frac1{2p^2}+\lambda_x\log p+O(p^{-3}).
+$$
+
+取最小值的误差至多为两误差的最大值，求和为 $O(x^{-1})$。置 $p=u\sqrt x$，在固定有界 $u\ge1$ 区间上，
+
+$$
+x\min(d_1,d_2)\longrightarrow\frac12\min(u^{-2},1-u^{-2}).
+$$
+
+PNT 给该尺度素数的渐近密度 $2\sqrt x/\log x$。对未截断尾部用 $0\le\min(d_1,d_2)\le d_1\le1/(2p^2)$ 及 PNT 分部求和，将 $p>A\sqrt x$ 的归一化贡献界为 $O(1/A)$。先取 $x\to\infty$ 再取 $A\to\infty$，得到
+
+$$
+\int_1^{\sqrt2}(1-u^{-2})\,du+
+\int_{\sqrt2}^{\infty}u^{-2}\,du=2(\sqrt2-1).
+$$
+
+显式误差 $O(x^{-2/3})=o(1/(\sqrt x\log x))$ 把同一主项传给 $R$。这不是某个已指定起点后的显式渐近阈值。 $\square$
+

@@ -1,0 +1,23 @@
+**引理321.1（一次分支混合及其行为表）。** 设 $\pi^0,\pi^1$ 是同一合同下的两份共同策略。对任意 $\lambda\in[0,1]$，存在同一合同的抽象策略 $\pi^\lambda$，其每个实际世界、每种请求下的完整有限返回记录律满足
+$$
+\mathcal L_\theta^{\pi^\lambda}
+=(1-\lambda)\mathcal L_\theta^{\pi^0}
++\lambda\mathcal L_\theta^{\pi^1}.
+\tag{321.2}
+$$
+特别地，
+$$
+\operatorname{err}(\pi^\lambda)
+\le(1-\lambda)\operatorname{err}(\pi^0)
++\lambda\operatorname{err}(\pi^1),
+\tag{321.3}
+$$
+且对 $0<\lambda<1$，
+$$
+\mathcal K_s(\pi^\lambda)
+\le(1-\lambda)\mathcal K_s(\pi^0)
++\lambda\mathcal K_s(\pi^1).
+\tag{321.4}
+$$
+端点直接取对应原策略。
+

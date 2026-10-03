@@ -1,0 +1,30 @@
+**定义 304.0。** 沿用 §§302–303 的 $m=m_L=3L+2$、$A_L$、$E$、$\mathscr F_L$、$\mathcal N_L(H)$、$K_L(H)$ 与 $J_L(H)$。对 $L\ge3$、整数 $K\ge0$，置
+\[
+x_L(K)=\frac{K\log m}{m},\qquad
+Y_L(K)=\frac m2+2K\log m.
+\tag{304.1}
+\]
+对 $y>1$，定义只依赖来源核心与截断的有限集合及费用
+\[
+\mathcal M_L(y)=\{p:p\text{ 为素数},\ p\nmid A_L,\ p\le y\},
+\qquad
+\mathcal Q_L(y,K)=\frac K{y-1}
++\sum_{p\in\mathcal M_L(y)}
+\left(\frac1{p-1}-\frac1{y-1}\right).
+\tag{304.2}
+\]
+定义实曲线
+\[
+\delta(x)=\log(3/4+x)-\tfrac12\log(1/2+2x),\qquad x\ge0.
+\tag{304.3}
+\]
+对 $0\le\eta\le1/4$，定义完整预算纤维及其下确界
+\[
+\mathcal B_L(\eta)=\{H\ge1:\mathcal O_L(H)=\mathcal O_L(A_L),\
+K_L(H)\log m/m\le\eta\},
+\qquad
+\mathfrak D_L(\eta)=\inf_{H\in\mathcal B_L(\eta)}\Delta(H).
+\tag{304.4}
+\]
+$A_L\in\mathcal B_L(\eta)$。集合不设整数高度上限或非三素数指数上限；同签名仍固定 $v_3(H)=e_L$。有限下界来自（303.4）、$H\ge A_L$ 及所列计数预算，因此（304.4）的实下确界存在。
+

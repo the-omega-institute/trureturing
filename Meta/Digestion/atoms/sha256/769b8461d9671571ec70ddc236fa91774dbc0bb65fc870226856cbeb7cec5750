@@ -1,0 +1,22 @@
+**定义 13.1（带类型的有序二叉树）。** 树由有类型的叶和有序连接 $T=(T_L,T_R)$ 递归生成。给定叶类型序列和根类型 $c$，内部节点标记必须满足“父类型属于两子类型的 $\mathsf N$”。标签集合递归为
+
+$$
+\mathsf{Lab}((T_L,T_R),c)
+=\coprod_{a,b:\ c\in\mathsf N(a,b)}
+\mathsf{Lab}(T_L,a)\times\mathsf{Lab}(T_R,b).
+\tag{FT.7}
+$$
+
+叶的标签集合在叶类型等于根类型时为单点，否则为空。取 $\mathbb C^{\mathsf{Lab}(T,c)}$ 得树基空间。式（FT.7）明确了节点胶合的直和、张量与边界类型。
+
+令 $r=\varphi^{-1}$、$s=\sqrt r>0$，则 $r^2+r=1$、$s^2=r$。$F^{abc}_z(e,h)$ 表示把左括号 $((ab)_e c)_z$ 变为右括号 $(a(bc)_h)_z$ 的系数。若任一所列融合不合法，系数定义为零。其余所有一维块为 $1$，唯一二维块为
+
+$$
+F^{\tau\tau\tau}_{\tau}=
+\begin{pmatrix}r&s\\s&-r\end{pmatrix},
+\qquad e,h\text{ 按 }(\mathbf1,\tau)\text{ 排序}.
+\tag{FT.8}
+$$
+
+这是 [TTWL09, PDF Eq. (2.4)] 的固定规范数据，不作为新发现。每个非空块都是酉矩阵：唯一二维检查化为 $r^2+s^2=1$ 和交叉项 $rs-rs=0$。
+

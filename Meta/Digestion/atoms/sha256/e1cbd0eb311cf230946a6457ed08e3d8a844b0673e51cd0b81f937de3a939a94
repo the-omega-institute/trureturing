@@ -1,0 +1,11 @@
+**定理 6.2。** 对包括相关初态在内的任意联合态，
+$$
+\|\operatorname{Tr}_B(U_t\rho U_t^\dagger)-e^{-itH_A}\rho_Ae^{itH_A}\|_1
+\le\min(2,2|t|\delta(H)),
+$$
+$$
+|f_\beta(H)-f_\beta(H_0)|\le\delta(H),
+\qquad |G_H(\rho)-G_{H_0}(\rho)|\le2\delta(H).
+$$
+**证明。** Duhamel 给 $\|U_t-U_t^0\|\le|t|\|V\|$，插入中间项给态迹距离至多两倍，偏迹收缩。特征值扰动 $|\lambda_j(H)-\lambda_j(H_0)|\le\|V\|$ 给配分函数比在 $e^{\pm\beta\|V\|}$ 内。最后用 $G_H=\operatorname{Tr}\rho H-\beta^{-1}S(\rho)-f_\beta(H)$。没有假设一般矩阵指数算子单调。证毕。
+

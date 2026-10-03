@@ -1,0 +1,43 @@
+**定义318.1（概率策略表）。** 请求标签集合 $\mathcal S$、来源动作集合 $\mathcal A$、输出集合 $\mathcal Z$ 均有限非空。每个来源 $a$ 有有限非空回答集合 $\mathcal Y_a$。实际参数集合 $\Theta$ 任意；不要求它紧致或带拓扑。完整历史为
+
+$$
+h=(S;(a_1,y_1),\ldots,(a_k,y_k)).
+$$
+
+所有这样的节点组成可数集 $\mathcal H$。固定来源条件核
+
+$$
+\kappa_\theta(y\mid h,a),\qquad
+\sum_{y\in\mathcal Y_a}\kappa_\theta(y\mid h,a)=1.
+\tag{318.1}
+$$
+
+条件核可以依赖完整公开历史，但不读取策略未公开的私随机性。一个策略是与未知 $\theta$ 无关的表
+
+$$
+\pi=(\pi_h)_{h\in\mathcal H},\qquad
+\pi_h\in\Delta(\mathcal A\sqcup\mathcal Z).
+\tag{318.2}
+$$
+
+在节点 $h$，抽到 $z\in\mathcal Z$ 就返回；抽到 $a\in\mathcal A$ 就实际请求该来源，按式（318.1）取得回答并延长历史。每个树事件是一次输出或一次真实调用，不另设不计数的永久内部停滞。可用独立均匀私随机变量与各行的累积概率区间定义这个可测过程。允许表中含任意实数概率，因此本节的策略类是数学上的可数概率表，不预设有限代码或可计算转移概率。
+
+记总调用数为 $M\in\mathbb N\cup\{\infty\}$，来源 $a$ 的调用数为 $N_a$。无限路径允许存在；几乎必有限回答将由所声明的预算保证。对于固定 $s>0$，定义扩展实值预算
+
+$$
+\mathcal K_s(\pi)=
+\sup_{\theta\in\Theta,\,S\in\mathcal S}
+\mathbb E_\theta^\pi M^s.
+\tag{318.3}
+$$
+
+原双来源模型取 $\mathcal A=\{T,H\}$、两种二元回答与四格输出，来源概率仍为
+
+$$
+p=(1-hc/C)/B,\qquad q=(1-h/C)/B.
+$$
+
+这里没有将这两个实际来源率扩大为可任意指定的独立世界；$\Theta$ 可以直接取原合法 $(j,r,h)$ 集合。
+
+完整历史行为策略及其条件核属于战略测度的成熟框架。以下有限叶论证另行控制无界停止，不能由有限视界的策略存在定理直接省略。[^policy_completion_strategic]
+

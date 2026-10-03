@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c42cb03d202dbce54dfe4f0ba8cca636c7ebf7884bd9a2c9b6bda08174c76ea8
+  normalized_sha256: sha256:c42cb03d202dbce54dfe4f0ba8cca636c7ebf7884bd9a2c9b6bda08174c76ea8
+cas_ref: sha256:c42cb03d202dbce54dfe4f0ba8cca636c7ebf7884bd9a2c9b6bda08174c76ea8
+coverage_gids:
+  - gid: D5/S3/Geometry/HyperbolicInversion.hyperbolicDist_invertedPoint
+    target_statement_id: sha256:bd27b849a6097ef7dd8f3f9ee4fdfd8b673dcd848d7a4b9fd88ebdf5830021c1
+  - gid: D5/S3/Geometry/HyperbolicInversion.inversion
+    target_statement_id: sha256:b1828c3d689d711229e59c459f1b220bd588b2869e0f4da385834ec4b1b8fabd
+receipts:
+  unresolved_subitems: []

@@ -1271,3 +1271,114 @@ proof with exact computational evidence, without Lean verification.
 [Report544](../arithmetic/500-549/544-missing-original-slots-restore-a-common-law-debit.md) refines the same PA law by retaining the actual mixed-source debit and choosing legal phases in missing comparison slots. Every two-copy Q-family with at least two of the full labels55,77,385 occurring at most once has complete query norm below5.037421<257/51. More generally, for each actual35 class a strict all-laws lower witness needs both copies at at least two of these full labels to miss that class in their old phases. A weighted missing-label criterion retains the entire exponent tail. The actual law, original phases and single normalization are unchanged; the arbitrary two-copy and unrestricted targets remain unresolved.
 
 [Report560](../arithmetic/550-599/560-reordered-pa-pure-union-savings.md) extends CT to all24 fixed orders of the four later primes. The unrefined constant-cap optimum becomes5.145721167033602, still above257/51. Retaining actual pure unions under a reordered law separately certifies at most one modulus17 occurrence. The increasing-order optimum CT3 is unchanged within its original scope.
+
+## Two multiplicity-two covers share a small prime
+
+Let B_1 and B_2 be finite covering systems, each with numerical moduli
+greater than one and coprime to6, and with each numerical modulus used
+at most twice. Write Q_1,Q_2 for their periods. Then
+
+    some p in {5,7,11,13} divides both Q_1 and Q_2.     (SO1)
+
+All other prime support and all prime-power heights are unrestricted.
+This is a joint consequence of published distortion tools. It is not a
+claim that either system alone is impossible, that bounded multiplicity
+is numerical distinctness, or that the conclusion has been Lean verified.
+
+### Published moments and checkpoint continuation
+
+The labelled second-moment bound in section3 is also supplied by
+[Klein--Koukoulopoulos--Lemieux](../../../../../Library/Arith/klein2023boundedmultiplicity.md),
+arXiv:2212.01299v2, Definition2.2 and the proof of Lemma3.3 after (3.2).
+Use the actual distorted measures for one fixed system B, with period Q,
+and number ALL ordinary primes p_1=2,p_2=3,p_3=5,..., including absent ones.
+Put
+
+    a_p=(3p-1)/(p-1)^2,   b_p=1/[4(p-1)^2],
+    mu_i=1-sum_(j<=i) P_j(B_j),
+    K_i=4 product_(q<=p_i, q|Q) [1+a_q/(1-delta_q)],
+    F_i=K_i/mu_i   whenever mu_i>0.
+
+The factor4 pays the numerical multiplicity in the second moment once.
+At a present prime p=p_i, the existing mass-loss inequality and that
+moment bound give
+
+    F_i <= T_(p,delta_i)(F_(i-1)),
+
+    T_(p,delta)(u)
+      =u[1+a_p/(1-delta)]/[1-b_p*u/(delta(1-delta))]. (SO2)
+
+This step requires a positive denominator and then preserves mu_i>0.
+T is increasing in u on that domain. At an absent prime the actual bad
+set is empty, so mu_i,K_i,F_i remain unchanged; no positive distortion
+step is charged there. Since Q is coprime to6, mu_2=1 and F_2=4.
+
+To use a published continuation threshold at an index k, keep the
+already constructed measures and their ORIGINAL mu_k. Set i_0=k and
+kappa=K_k in [BBMST](../../../../../Library/Arith/balister2018covering.md),
+arXiv:1811.03547v1, section6, equations (19)--(20), p.17. For every later
+prime the moment bound is at most
+
+    K_k/(p_i-1)^2
+      product_(k<j<i, p_j|Q) [1+a_(p_j)/(1-delta_j)],
+
+which is at most the all-prime product required in (20). This holds for
+all later allowed distortion choices. The initial state in (19) is
+therefore f_k=K_k/mu_k=F_k. This is a change of checkpoint, not a new law
+or a reset of surviving mass to one. Lemma6.2 and its proof, p.18, use
+precisely this moment hypothesis, positive mass and positive denominators.
+
+Table1, p.19, gives downward-rounded lower bounds
+
+    g_4>=5.860938,  g_5>=9.032082,  g_6>=13.30344.
+
+By Corollary6.3, p.20, f_k<=g_k implies noncoverage. It suffices here to
+use the smaller rational thresholds5,9,133/10 respectively. These are
+reused published bounds; their numerical calculation is not repeated.
+The original multiplicity-one theorem is not applied directly to B:
+KKL supplies the repeated-label moments, and the transfer above supplies
+the exact input to the continuation criterion.
+
+### Three rational steps force overlapping support
+
+The needed substitutions in SO2 are
+
+| p | delta | input u | positive denominator | output T |
+|---|---|---|---|---|
+| 7 | 7/30 | 4 | 136/161 | 49/6 |
+| 11 | 7/30 | 49/6 | 163/184 | 196/15 |
+| 5 | 3/10 | 4 | 59/84 | 756/59 |
+
+All parameters lie in (0,1/2). The exact margins are
+
+    5-4=1,      9-49/6=5/6,
+    133/10-196/15=7/30,
+    133/10-756/59=287/590.
+
+Suppose B covers and omits5. If it also omits7, then F_4=4<5,
+contradicting the checkpoint4 criterion. Thus7 occurs. The first row
+gives F_4<=49/6. If11 is absent, F_5 stays below9, another contradiction.
+Thus11 occurs; the second row gives F_5<=196/15. If13 is absent,
+F_6 stays below133/10. Consequently
+
+    B covers and 5 does not divide Q ==> 7*11*13 divides Q. (SO3)
+
+Conversely, suppose7,11,13 are all absent. If5 occurs, the third row
+gives F_3<=756/59, and the three absent stages leave this bound unchanged
+through index6. It is below133/10. If5 is absent as well, the state is
+only4. In either case B cannot cover. Therefore
+
+    B covers ==> at least one of7,11,13 divides Q.          (SO4)
+
+For B_1,B_2, if both periods contain5 then SO1 follows immediately.
+Otherwise one omits5 and contains all of7,11,13 by SO3. The other
+contains at least one of those three by SO4, proving SO1. The two
+systems need no common probability law: each independently satisfies
+a universal necessary condition on its own fixed period. No separately
+optimized phase choices or marginals are combined.
+
+The primary moment and continuation interfaces and the three rational
+steps have been checked. This argument reuses the published Table1;
+neither a fresh full sieve computation nor new Lean verification is
+asserted. [Report385, section72](../arithmetic/350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#72-small-prime-overlap-excludes-the-height-one-all-concentrated-branch)
+applies SO1 to the two literal quotients of one actual extremal cover.

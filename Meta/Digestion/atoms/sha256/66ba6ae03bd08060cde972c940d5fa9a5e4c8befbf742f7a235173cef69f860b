@@ -1,0 +1,61 @@
+### 63.1 固定的实际合同与命名菱形
+
+置
+
+$$
+g=\sqrt5-2,\qquad t=\frac{1+g}{2},\qquad X=I_0=[-1,1+t],\qquad I_1=[-1,t],
+$$
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad F_\ell=f_\ell^{-1},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,t^2,1,2-t).
+$$
+
+合法根分支和 guard 是
+
+$$
+0\to0:3,0,2,\qquad 0\to1:5,25,\qquad 1\to0:3,0,\qquad 1\to1:5.
+$$
+
+原图的原片是 $B_s=B\cap I_s$ 中相邻端点之间的整个闭区间，以及每个端点的单点片。对合法的 $s\xrightarrow{\ell}s'$，原来源边的方向是
+
+$$
+(s,P)\xrightarrow{\ell}(s',Q)
+\quad\Longleftrightarrow\quad
+P\subseteq f_\ell(I_{s'}),\qquad Q\subseteq F_\ell(P).
+\tag{63.1}
+$$
+
+这是定理31.4所用的全包含方向。原配对图 $G_B$ 由两份这样的原来源图按共同闭色配对得到；配对顶点保留两个完整身份、两个 guard、两个原片和其共同闭色资格。
+
+给定一个实际本原 singleton rival $R$，其本原周期为奇数 $p>1$。记其相位坐标、incoming guard 和 singleton 原节点为
+
+$$
+(y_r,u_r,\{y_r\}),\qquad r\in\mathbb Z/p\mathbb Z.
+$$
+
+这些 singleton 及其周期边已经属于同一个固定完整图 $G_B$，并满足相位每条边加一。第二投影的相干性和这个相位描述由定理36.22及命题39.6.1给出；本章不另造一个 rival 图。
+
+现在固定共同链词 $T=T_0\cdots T_{h-3}$，以及
+
+$$
+U=T a3,\qquad W=T b0,\qquad |T|=h-2,\qquad h=mp,
+$$
+
+其中 $m\ge2$ 为偶数，且
+
+$$
+(a,b)\in\{(3,0),(0,5),(5,2),(2,25)\}.
+$$
+
+假设 $U,W$ 的每一步都满足实际 guard，且均从 guard 零返回零。我们只讨论这一个给定的命名几何实现：共同链位置是 $i=0,\ldots,h-3$，分叉后的两类位置分别记为 $D_-,D_+$ 和 $E_-,E_+$。位置相位按
+
+$$
+\operatorname{ph}(i)=i\pmod h,\qquad
+\operatorname{ph}(D_\pm)=h-2,\qquad
+\operatorname{ph}(E_\pm)=h-1.
+\tag{63.2}
+$$
+
+在 $D_-$、$D_+$ 上使用 $a,b$，在 $E_-$、$E_+$ 上使用 $3,0$；共同链的最后一个 $T$ 边分别进入两个 $D$ 位置，之后有 $D_\pm\to E_\pm$ 和 $E_\pm\to$ 共同链起点的对应原边。每个位置还带有由实际首标签决定的 incoming guard 及 rival 相位 $r(v)$。
+

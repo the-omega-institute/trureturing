@@ -1,0 +1,11 @@
+**定理 96.4（不完整 valuation 给出安全接缝下界）。** 对 $k$ 个正整数块 $A_i$，在任一有限集 $\mathcal P$ 的互异、已认证素数上，若已知 $0\le\ell_{p,i}\le v_p(A_i)$，则
+
+$$
+L_{\mathrm{join}}=
+\sum_{p\in\mathcal P}\left[\sum_i\log G_p(\ell_{p,i})-
+\log G_p\left(\sum_i\ell_{p,i}\right)\right]
+\le\sum_iW(A_i)-W\left(\prod_iA_i\right).
+$$
+
+若另有 $W(A_i)\le U_i$，就有 $W(\prod_iA_i)\le\sum_iU_i-L_{\mathrm{join}}$。增加已知素数或提高已认证指数下界只能加强这个保证。
+

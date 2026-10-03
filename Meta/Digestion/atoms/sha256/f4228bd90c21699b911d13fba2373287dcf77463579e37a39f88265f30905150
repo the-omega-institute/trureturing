@@ -1,0 +1,10 @@
+### 148.2. 已发表数字正交仍不控制常数模式
+
+Drmota、Müllner、Spiegelhofer 的 *Möbius orthogonality for the Zeckendorf sum-of-digits function*，原始 [arXiv:1706.09680v1](https://arxiv.org/abs/1706.09680v1) Theorem 1（Proc. AMS，2018，[DOI:10.1090/proc/14015](https://doi.org/10.1090/proc/14015)）证明：令 $s_\varphi(n)$ 为规范 Zeckendorf 展开的数位和，则对**每个有界乘法函数** $m$，
+
+$$
+\sum_{1\le n\le X}(-1)^{s_\varphi(n)}m(n)=o(X). \tag{148.4}
+$$
+
+端点与原文 $n<N$ 的差为有界项。因命题 148.1 已核对乘法性和有界性，式 (148.4) 同时适用于 $m=\mu$ 和 $m=f_P$；取 $m=1$ 也表明这个数字奇偶观察的 Cesàro 均值为零。于是对这个中心化数字观察的渐近正交，可以与 $f_P$ 沿常数函数 $1$ 的正均值 $c_P$ 同时成立。它不控制未加数字权重的根节点总和，也没有在陈述中给出 RH 所需的平方根尺度。原文 Lemma 1 把固定低位条件写成 $(-1)^kn\varphi$ 模一的区间条件；这是数字柱集的表示，不是整数乘法符号的全尺度估计。
+

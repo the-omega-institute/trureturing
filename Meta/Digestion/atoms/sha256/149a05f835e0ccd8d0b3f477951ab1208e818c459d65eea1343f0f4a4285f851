@@ -1,0 +1,27 @@
+**证明。** 在 $\mathsf U_t\mathsf U_s$ 中插入 $I=\mathsf P+\mathsf Q$ 得第一式。由酉性，
+\[
+ d_f(h)=\langle\mathsf Q\mathsf U_{-h}f,
+                    \mathsf Q\mathsf U_h f\rangle.
+\]
+两项正是过去、未来读数相对当前观察的条件中心化残差，给出协方差身份。积分 Taylor 公式给
+\[
+ \mathsf Q\mathsf U_{\pm h}f=\pm h r_f+e_\pm,
+ \quad\|e_\pm\|_2\le h^2c_f/2.
+\]
+展开内积并应用 Cauchy–Schwarz 得余项。最后在
+$\mathsf P\mathsf U_{-h}\mathsf U_h\mathsf P=I_{\mathcal H_u}$
+中插入两投影即得正算子身份。证毕。
+
+若 $\varphi$ 光滑且满足所需域条件，第 10 节的条件协方差给
+\[
+ n_f=\int \nabla\varphi(u)^T\mathcal C(u)\nabla\varphi(u)\rho(u)\,du.
+\]
+因此不同观测函数的双线性短时组合缺陷是
+$-\int\nabla\psi^T\mathcal C\nabla\varphi\,\rho$。在第 10.3 节的分部积分条件下，其弱算子为
+\[
+ \mathcal D_{\mathcal C}\varphi
+ =\rho^{-1}\nabla\cdot(\rho\mathcal C\nabla\varphi),
+ \qquad \langle\varphi,\mathcal D_{\mathcal C}\varphi\rangle_\rho=-n_f.
+\]
+这同时连接热条件响应和非 Markov 组合缺陷。上述展开是固定测试函数上的强/弱陈述，不是无界生成元的统一算子范数 Taylor 展开。
+

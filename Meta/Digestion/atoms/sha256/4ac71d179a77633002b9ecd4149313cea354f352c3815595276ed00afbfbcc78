@@ -1,0 +1,7 @@
+**定理346.6（固定截止的类内价格）。** 对全部 \(J\ge1\)、\(0<\lambda\le1\)，存在共同 \(c,C>0\)，使
+
+\[
+\boxed{c(1+\lambda J)\le\Pi_J(\lambda)\le C(1+\lambda J).}
+\tag{346.51}
+\]
+

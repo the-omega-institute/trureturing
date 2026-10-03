@@ -5,9 +5,11 @@ year: 2024
 title: Stack-sorting with Stacks Avoiding Vincular Patterns
 doi: 10.1016/j.disc.2025.114834
 url: https://arxiv.org/abs/2410.17057v1
-claim: "Conjectures 4.14 and 5.2 on the maximum and second-largest preimage counts of vincular-pattern-avoiding stack-sorting maps."
+claim: "Conjectures 4.14 and 5.2 on preimage counts of vincular-pattern-avoiding stack-sorting maps, Conjecture 3.30 on the Schröder enumeration of a sorting class, and Conjecture 5.1 on three stacks with equal sorting classes."
 strata_touched:
   - D5/S1/Words/Patterns/ZhaoVincularPreimageRefutations
+  - D5/S3/Combinatorics/VincularStack/VincularStackSort
+  - D5/S3/Combinatorics/VincularStack/VincularStackThree
 license: citation-only
 triage: anchor
 ---
@@ -23,6 +25,24 @@ Conjecture 4.14, Section 4.1.4, printed page 17:
 
 > For $n\ge 2$, it holds that
 > $$\max_{\pi\in\mathfrak{S}_n}|SC_{1\underline{23}}^{-1}(\pi)|=\max_{\pi\in\mathfrak{S}_n}|SC_{3\underline{21}}^{-1}(\pi)|=2^{n-2}.$$
+
+Conjecture 3.30, Section 3.2, printed page 11:
+
+> The sorting class of $SC_{\underline{23}1}$ is enumerated by $|\mathrm{Sort}_n(SC_{\underline{23}1})| = S_{n-1}$.
+
+Here $S_m$ is the large Schröder number (OEIS A006318) and $\mathrm{Sort}_n(SC_\sigma)$ is the set of
+permutations of length $n$ that $s\circ SC_\sigma$ maps to the identity, i.e. whose image under $SC_\sigma$
+avoids 231. Proposition 3.29 on the same page gives $SC_{\underline{23}1}(25314)=54132$ and
+$SC_{\underline{23}1}(2413)=3142$; the right-greedy rule below reproduces both values.
+
+Conjecture 5.1, Section 5, printed page 20:
+
+> The sorting classes of $SC_{312}$ and $SC_{\underline{31}2}$ are identical. That is, $\mathrm{Sort}_n(SC_{312}) = \mathrm{Sort}_n(SC_{\underline{31}2}) = \mathrm{Sort}_n(SC_{3\underline{12}})$. Furthermore, for $\tau \in \mathrm{Sort}_n(SC_{312})$, we have $SC_{312}(\tau) = SC_{\underline{31}2}(\tau) = SC_{3\underline{12}}(\tau)$.
+
+The three classes have sizes 1, 2, 5, 15, 52, 201, 843, 3764, 17659 for n ≤ 9, as in Table 2 of the source.
+In the formal statement `Contains312 adj31 adj12` is classical 312 containment, with the entries
+playing 3 and 1 required to be adjacent when `adj31` holds and those playing 1 and 2 when `adj12`
+holds; all three machines use the same right-greedy rule.
 
 Conjecture 5.2, Section 5, printed page 20:
 
@@ -56,6 +76,8 @@ is ASSUMED-UNVERIFIED. The named statements here are fixed to arXiv v1.
 - URL: https://arxiv.org/abs/2410.17057v1
 - PDF: https://arxiv.org/pdf/2410.17057v1
 - DOI of the published version: https://doi.org/10.1016/j.disc.2025.114834
+- Conjecture 3.30: Section 3.2, printed page 11.
 - Conjecture 4.14: Section 4.1.4, printed page 17.
+- Conjecture 5.1: Section 5, printed page 20.
 - Conjecture 5.2: Section 5, printed page 20.
 - Vincular containment: Introduction, printed page 1.

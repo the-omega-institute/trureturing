@@ -1,0 +1,7 @@
+**定理321.4（抽象费用函数的形状）。** 函数
+$$
+f(\delta)=\mathcal C_s^{\mathrm{pol}}(\delta),
+\qquad \delta\in[0,\infty)
+$$
+非负、非增、凸，并且作为扩展实值函数下半连续。它在每个容差点从右连续，在有限值开区间的内部局部 Lipschitz。
+

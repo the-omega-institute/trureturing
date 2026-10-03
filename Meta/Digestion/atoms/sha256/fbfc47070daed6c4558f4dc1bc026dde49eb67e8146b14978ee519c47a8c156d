@@ -1,0 +1,11 @@
+### 327.3 HNP 包络的共同尺度与连续系数
+
+选择固定非整数 $\rho>\max\{\beta,2\}$，令 $r=\lfloor\rho\rfloor$。HNP 的显式相容包络构造允许取只依 $\rho$ 的整数 $b=2^s>1$。[^reference_critical_hnp] 令
+
+$$
+s_j=x_*b^{-j/2},\qquad
+I_j=[b^{-1/2}s_j,b^{1/2}s_j]\cap(0,x_*],
+\qquad j\ge0.
+\tag{327.15}
+$$
+

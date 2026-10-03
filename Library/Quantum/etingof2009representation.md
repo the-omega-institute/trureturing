@@ -5,7 +5,7 @@ year: 2009
 title: Introduction to representation theory
 doi: null
 url: https://arxiv.org/abs/0901.0827
-claim: Over an algebraically closed field, every self-intertwining operator of a finite-dimensional irreducible representation is a scalar.
+claim: Schur's lemma for irreducible representations; finite-group regular representations and Frobenius determinants.
 strata_touched:
   - D5/S3/Quantum/Matrix/RecordSymmetryNoGo
 license: citation-only
@@ -46,3 +46,9 @@ self-adjointness. Under algebraic irreducibility the zero-or-one conclusion does
 not require unitarity, self-adjointness, the complex field, or finite
 dimensionality; those hypotheses are therefore stronger than necessary and their
 removal would not make the statement new.
+
+Section 4.2 also uses the regular representation of a finite group in its
+Frobenius determinant discussion. The elementary cycle computation in
+[theory section 2143.6](../../docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md)
+specializes that background to one finite-order element; it is derived there
+and is not attributed to a new representation-theoretic discovery.

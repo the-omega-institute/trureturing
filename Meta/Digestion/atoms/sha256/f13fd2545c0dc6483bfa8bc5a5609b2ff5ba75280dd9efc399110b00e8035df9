@@ -1,0 +1,14 @@
+**定理 96.1（任意两块的规范接缝）。** 对正整数 $A,B$，定义
+
+$$
+\Gamma_{A,B}=\{(u,v):u\mid A,\ v\mid B,\ \gcd(v,A/u)=1\}.
+$$
+
+乘法映射 $(u,v)\mapsto uv$ 给出 $\Gamma_{A,B}$ 与 $AB$ 的全部正约数之间的双射，其逆为
+
+$$
+d\longmapsto\bigl(\gcd(d,A),\ d/\gcd(d,A)\bigr).
+$$
+
+特别地，$Z(AB)=\sum_{(u,v)\in\Gamma_{A,B}}1/(uv)$。
+

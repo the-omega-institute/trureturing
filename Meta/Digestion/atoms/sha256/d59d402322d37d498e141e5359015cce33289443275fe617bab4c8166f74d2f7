@@ -1,0 +1,9 @@
+**定理 15.1（任意共同环境下的定量环路缺口）。** 对 §15.2 中全部通道和全部环境维数，
+\[
+ \boxed{\sum_{(i,j)\in\mathcal C}\sqrt{2\delta_{ij}/\mu_{ij}}
+ \ge h_{\mathcal C},\qquad
+ \sum_{(i,j)\in\mathcal C}\delta_{ij}
+ \ge\frac{h_{\mathcal C}^2}{2\sum_{(i,j)\in\mathcal C}\mu_{ij}^{-1}}.} \tag{15.3}
+\]
+环上的每对模长同时达到根保真度，当且仅当 $U_{\mathcal C}$ 是标量相位。树上的全部边总能同时达到各自最优模长。
+

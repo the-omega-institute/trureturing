@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>StrataLint.TestEvidence</RootNamespace>
+    <AssemblyName>StrataLint.TestEvidence</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+</Project>

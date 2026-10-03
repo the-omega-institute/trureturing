@@ -1,0 +1,36 @@
+### 350.5 精确经典状态数恰为 \(n\)
+
+设存在精确实现 \(g_k=h_k\)。令 \(\chi(t)=\sum_{j=0}^d\chi_jt^j\) 为 \(P\) 的特征多项式。Cayley–Hamilton 定理给出
+
+\[
+0=\alpha P^k\chi(P)b
+=\sum_{j=0}^d\chi_jh_{k+j}
+=\frac12\chi(1)
+-\frac14\lambda^k\chi(\lambda)
+-\frac14\overline\lambda^k\chi(\overline\lambda)
+\quad(k\ge0).
+\tag{350.13}
+\]
+
+取 \(k=0,1,2\)，第350.2节的 Vandermonde 系统可逆，故 \(\chi(\lambda)=0\)。所以 \(\lambda\) 必为 \(P\) 的特征值；不是线性表示中一个可以在输出中被消掉的候选频率。
+
+\(\lambda=e^{2\pi i/n}\) 是本原 \(n\) 次单位根。第350.4节给某个 \(1\le\ell\le d\) 满足 \(\lambda^\ell=1\)，于是 \(n\mid\ell\)，从而
+
+\[
+d\ge n.
+\tag{350.14}
+\]
+
+反过来，用状态 \(0,\ldots,n-1\) 构成确定性 \(n\) 周期，初态为 0，状态 \(j\) 的终端成功率为 \(b_j=h_j\)，即可精确实现。故
+
+\[
+\text{最小实线性维数}=3,\qquad
+\text{最小经典状态数}=n,\qquad
+\text{最小持续 Hilbert 维数}=2.
+\tag{350.15}
+\]
+
+对任意合数或素数 \(n\ge3\)，这三项都是可达的精确结论。
+
+该下界只使用一份固定初态的全部续接响应。《上下文几何》定理15.6的预测多面体顶点下界，要求竞争者的整个制备单纯形恰映到同一预测域，并明确排除仅给一个初始制备的直接应用。[^periodic_context_geometry] 因而本节不能只数正 \(n\) 边形的顶点就宣称式（350.14）；Cayley–Hamilton 与单位圆引理承担了当前不同量词下的证明。
+

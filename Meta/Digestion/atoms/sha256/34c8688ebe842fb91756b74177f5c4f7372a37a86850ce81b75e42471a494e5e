@@ -1,0 +1,87 @@
+### 223.5 精确对数赔率、偶核与主素数窗口
+
+定义
+
+$$
+f_q(t)=\log(1+e^{-qt})-q\log(1+e^{-t}),\qquad
+t_s(x)=\log x-s/x,\qquad
+\kappa=\min(q,1)>1/2.
+\tag{223.19}
+$$
+
+条件两态的对数幂和精确等于 $f_q(-\log w_p)$。
+该函数满足
+
+$$
+f_q(-t)=f_q(t),\qquad
+|f_q(t)|\le\max(1,q)e^{-\kappa|t|},\qquad
+|f_q'(t)|\le q,
+$$
+
+$$
+\operatorname{Var}_{\mathbb R}(f_q)=2|1-q|\log2.
+\tag{223.20}
+$$
+
+确实，$t>0$ 时
+
+$$
+f_q'(t)=\frac q{1+e^t}-\frac q{1+e^{qt}}.
+$$
+
+$q>1$ 时 $f_q\le0$ 且在正半轴上递增趋零；
+$q<1$ 时 $f_q\ge0$ 且在正半轴上递减趋零。
+由偶性和 $f_q(0)=(1-q)\log2$ 得到总变差；
+指数尾直接来自 $\log(1+u)\le u$。
+
+中间范围内 $z_p\ge2$ 最终一致成立，故
+
+$$
+\begin{aligned}
+0\le-\log w_p-t_s(p)
+&=s\bigl(1/p-\log(1+1/p)\bigr)-\log(1-z_p^{-1})\\
+&\le\frac{s}{2p^2}+2z_p^{-1}.
+\end{aligned}
+\tag{223.21}
+$$
+
+第一项在 $p>\sqrt{2s}$ 上求和为 $O(\sqrt s)$。
+第二项使用
+$z_p^{-1}\le\exp(-s/(2y+1))=O(y^{-1/2})$，
+在 $p\le2y$ 上求和为 $O(\sqrt y)$。
+因此式（223.20）的 Lipschitz 界给
+
+$$
+\sum_{\sqrt{2s}<p\le2y}
+\left|f_q(-\log w_p)-f_q(t_s(p))\right|
+=O_q(\sqrt s+\sqrt y).
+\tag{223.22}
+$$
+
+充分大时 $\sqrt{2s}<y/2$，且 $t_s$ 严格递增。
+对 $p\le y/2$，
+
+$$
+t_s(p)\le-\ell-\log2,\qquad
+|f_q(t_s(p))|\ll_q y^{-\kappa}.
+$$
+
+所以理想两态核在 $(\sqrt{2s},y/2]$ 上的总贡献为
+$O_q(y^{1-\kappa})$。合并式（223.7）、（223.9）、（223.12）、
+（223.14）—（223.18）及式（223.22），得到
+
+$$
+\boxed{
+\log S_q(\mu_s)
+=\sum_{y/2<p\le2y}f_q(t_s(p))
++O_q\bigl(y^{1-\kappa/2}\ell^\kappa\bigr).
+}
+\tag{223.23}
+$$
+
+当 $q>1$ 时，显示的误差为 $O_q(\sqrt y\,\ell)$；
+当 $1/2<q<1$ 时，它为 $O_q(y^{1-q/2}\ell^q)$。
+后者对每个固定 $q$ 都支配
+$\sqrt s(1+\log\log s)$、$s^{(1-q)/2}$ 与 $y^{1-q}$。
+这些误差对每个固定 $K>0$ 均为 $o_q(y/\ell^K)$。
+

@@ -1,0 +1,110 @@
+**定理349.3（全内部域吸收与紧集几何尾）。** 在引理349.2的前提下，控制器从 \(S\) 上每个初态在全部 \(\theta\in U\) 几乎必返回。对式（349.21）的任意紧集 \(K\)，置
+
+\[
+\eta_K:=\frac{\gamma_K^N}{2}>0.
+\tag{349.23}
+\]
+
+则对任意单位迹正态 \(\sigma\) 和任意整数 \(n\ge0\)，
+
+\[
+\sup_{\theta\in K}\operatorname{tr}T_\theta^n(\sigma)
+\le(1-\eta_K)^{\lfloor n/N\rfloor}.
+\tag{349.24}
+\]
+
+**证明。** 仪器完备性给 \(N\) 轮内总返回效果的望远镜恒等式
+
+\[
+A_{\theta,N}
+:=I_S-(T_\theta^*)^N(I_S)
+=\sum_{k=0}^{N-1}(T_\theta^*)^k(F_\theta).
+\tag{349.25}
+\]
+
+由式（349.22）及正映射的序保持，归纳得到
+
+\[
+(T_\theta^*)^k(F_\theta)
+\succeq
+\gamma_K^{k+1}(T_0^*)^k(F_0).
+\tag{349.26}
+\]
+
+初步 \(k=0\) 正是效果比较。若第 \(k\) 步成立，先应用正映射 \(T_\theta^*\)，再对正算子 \((T_0^*)^k(F_0)\) 使用
+\(T_\theta^*\succeq\gamma_KT_0^*\)，就得到下一步。
+
+因 \(0<\gamma_K\le1\)、\(k+1\le N\)，结合式（349.16），
+
+\[
+\begin{aligned}
+A_{\theta,N}
+&\succeq
+\gamma_K^N\sum_{k=0}^{N-1}(T_0^*)^k(F_0)\\
+&=\gamma_K^N\bigl[I_S-(T_0^*)^N(I_S)\bigr]\\
+&\succeq\eta_K I_S .
+\end{aligned}
+\tag{349.27}
+\]
+
+所以任意未归一化正态经过 \(N\) 轮后，剩余迹至多为原迹的 \(1-\eta_K\) 倍。迭代到 \(\lfloor n/N\rfloor\) 个整块，再利用余下轮数的迹不增，得到式（349.24）。每个 \(\theta\in U\) 可单独取为紧集，故全内部域几乎必返回。证毕。
+
+同样的 Jordan 正负分解给，对全部 \(X\in\operatorname{Herm}(S)\)，
+
+\[
+\sup_{\theta\in K}\|T_\theta^n(X)\|_1
+\le(1-\eta_K)^{\lfloor n/N\rfloor}\|X\|_1.
+\tag{349.28}
+\]
+
+因此在整个 \(U\) 上，\(I-T_\theta\) 在 \(\operatorname{Herm}(S)\) 可逆，其逆由收敛的 Neumann 级数给出。
+
+原合法来源率及 \(h=0\) 的极限点都位于
+
+\[
+(p,q)\in[3/16,1/2]^2\subset U.
+\tag{349.29}
+\]
+
+故每份满足上述初态终止前提的固定控制器，在全部原合法世界有共同几何轮数尾。这些常数依具体控制器；对随精度改变的程序族，不主张共同的 \(N,\gamma_K,\eta_K\)。真正来源端点 \(p=0,1\) 或 \(q=0,1\) 不在结论中，那里原始分支权可以消失。
+
+### 349.5 可达实算子词空间与有理次数
+
+Hilbert 支撑 \(S\) 用于保证正性与终止；实际响应还可以通过一个更小的实线性空间运输。定义
+
+\[
+V=
+\operatorname{span}_{\mathbb R}
+\left\{
+\Phi_{j_n}\cdots\Phi_{j_1}(\rho):
+n\ge0
+\right\}
+\subseteq\operatorname{Herm}(S),
+\qquad
+D:=\dim_{\mathbb R}V.
+\tag{349.30}
+\]
+
+\(V\) 包含初态，并对每个原始 \(\Phi_j\) 不变，故对每个 \(T_\theta\) 不变。其定义及一份固定实基均不依未知世界。因为 \(r\) 维复空间的 Hermitian 算子实维数为 \(r^2\)，
+
+\[
+D\le r^2\le d^2.
+\tag{349.31}
+\]
+
+对角元素贡献 \(r\) 个实自由度，每对非对角共轭元素贡献两个，合计 \(r+2\binom r2=r^2\)；不需要再把这个维数乘二。
+
+在固定实基中，记 \(M_\theta\) 为 \(T_\theta|_V\) 的矩阵，\(\rho_V\) 为初态坐标。对终端事件 \(E\subseteq\Omega\)，记返回行泛函为
+
+\[
+\ell_{E,\theta}(X)
+=\operatorname{tr}(F_{E,\theta}X),
+\qquad
+F_{E,\theta}:=\sum_{o\in E}F_{o,\theta}.
+\tag{349.32}
+\]
+
+\(M_\theta\) 和 \(\ell_{E,\theta}\) 的条目都是 \(p,q\) 的实仿射函数。其系数为实数，是因为所有基向量、映射像和返回效果在 Hermitian 空间上解释。它们未必逐项非负，前节正序证明不依赖这种逐项性质。
+
+式（349.28）保证 \(I-M_\theta\) 在 \(U\) 可逆。也可直接看 Neumann 级数：每个部分和保持 \(V\)，而有限维 \(V\) 闭，因此受限逆仍落在 \(V\)。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:00ae9763ceba95861744eab2331d0bee027efa1c296d08bfe8d9123d7e01c5be
+  normalized_sha256: sha256:00ae9763ceba95861744eab2331d0bee027efa1c296d08bfe8d9123d7e01c5be
+cas_ref: sha256:00ae9763ceba95861744eab2331d0bee027efa1c296d08bfe8d9123d7e01c5be
+coverage_gids:
+  - gid: D5/S0/Computability/RationalMalformedCleanup.post_error_cleanup
+    target_statement_id: sha256:a757e2546eff89d3e06eabd36847d0bc708dfbb69ba5fee98406bbf3f8799f62
+receipts:
+  unresolved_subitems: []

@@ -516,7 +516,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     if escape.bridgeKind == "witness" then
       let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
       unless ← RegistrationGates.bounded (do
-          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          let computed ← mkAppM (RegistrationElaboration.witnessArenaName.str "realization") #[event.arena]
           if ← isDefEq rawActual computed then return true
           let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
           isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do
@@ -628,7 +628,9 @@ private def sameCacheClaim (a b : TemplateBindingClaim) : MetaM Bool := do
 private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrenceEvent)
     (claim : TemplateBindingClaim) : MetaM Bool := do
   unless sameCacheEvent cached.record.occurrence event do return false
-  unless ← sameCacheClaim cached.claim claim do return false
+  -- An ill-formed claim cannot reuse a retained result; the uncached assessment
+  -- reports its own diagnostic.
+  unless ← (try sameCacheClaim cached.claim claim catch _ => pure false) do return false
   let env ← getEnv
   unless sameCacheObject cached.options (← getOptions) &&
       sameCacheObject cached.registry (InformationRegistry.entries env) do return false

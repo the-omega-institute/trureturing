@@ -1,0 +1,20 @@
+**引理330.2（环内中心的参数导数）。** 对每个固定 $m\ge0$，
+
+$$
+\left\|
+\partial_x^m(P_k^j-E_kP_{k-1}^j)
+\right\|_{\mathrm{coef}}
+\le C_mn_k^{-\rho/2}x^{-\rho-m}
+\quad(k>j),
+\tag{330.9}
+$$
+
+并且
+
+$$
+\|\partial_x^mP_k^j\|_{\mathrm{coef}}
+\le C_mx^{-m}
+\quad(k\ge j).
+\tag{330.10}
+$$
+

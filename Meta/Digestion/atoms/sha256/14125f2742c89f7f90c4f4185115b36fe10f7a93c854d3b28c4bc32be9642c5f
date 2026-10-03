@@ -1,0 +1,35 @@
+**引理 201.2（增长窗口仍处于有效 Chebotarev 范围）。** 对充分大的 $U$，一致有
+
+$$
+k\le s^{1/10},\qquad
+n=[\mathcal L:\mathbb Q]\le2s^{1/5},
+\qquad
+\log(D_{\mathcal L}n^n)\ll s^{2/5}.
+\tag{201.6}
+$$
+
+证明。通常有效素数定理给 $\vartheta(Y)\le2Y$，故
+
+$$
+\log k\le\vartheta(Y)\le t/10,
+\qquad k\le s^{1/10}.
+$$
+
+由 $[F:\mathbb Q]\le2k$，得到次数上界。式（201.1）还给
+
+$$
+\log(2+|Q|)\le\exp(t^\omega)\le s^{1/10}
+$$
+
+对所有充分大的 $t$ 成立，因为 $\omega<1$。
+
+$F$ 是 $\mathbb Q(\zeta_{5k})$ 的子域。利用域塔判别式公式及圆分域判别式公式，根判别式满足 $D_F^{1/[F:\mathbb Q]}\le5k$。将此界代入式（200.3），得到
+
+$$
+\log(D_{\mathcal L}n^n)
+\ll k^2\log(5k)+k^3\log(2+|Q|)
+\ll s^{2/5}.
+$$
+
+这里常数和充分大门槛均可有效选取，门槛只依赖固定的 $\omega$。$\square$
+

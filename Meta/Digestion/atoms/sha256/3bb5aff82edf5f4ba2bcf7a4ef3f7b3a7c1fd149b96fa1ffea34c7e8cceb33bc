@@ -1,0 +1,7 @@
+**推论 100.4（精确状态乘积）。** 定义 100.1 的合同下，最小确定性状态数为
+
+$$
+\kappa_H(d)=\prod_{p\mid H}\kappa_{p,h_p}(e_p),\qquad
+\kappa_{p,h}(e)=p^{h-e}+e\varphi_E(p^{h-e}).
+$$
+

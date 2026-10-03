@@ -1,0 +1,96 @@
+### 347.2 未启动世界给实际剖面下界
+
+第345节已在同一次固定 \(M\) 的选择中保证
+
+\[
+e_k(w):=
+S_{m_k}\bar\Gamma_k^q(p)-\Gamma_k(x,q),
+\qquad |e_k(w)|\le\delta_k/2,
+\]
+
+\[
+\delta_k=c_\delta n_k^{-a}\eta_k,\qquad
+0<\delta_k\le1/4.
+\tag{347.6}
+\]
+
+实际共同未决概率满足
+
+\[
+G_k=\delta_k+(1-\delta_k)(\Gamma_k+e_k).
+\]
+
+因此在每个实际世界中，
+
+\[
+\begin{aligned}
+G_k
+&\ge(1-\delta_k)\Gamma_k
++\delta_k-\tfrac12(1-\delta_k)\delta_k\\
+&=(1-\delta_k)\Gamma_k+\tfrac12\delta_k(1+\delta_k)\\
+&\ge(1-\delta_k)\Gamma_k.
+\end{aligned}
+\tag{347.7}
+\]
+
+误差由地板吸收；这里不需要 \(S_m\) 保正，也不要求逼近误差小于原间隙的某个固定比例。
+
+采用第346.4节的合法未启动世界
+
+\[
+x_k=\frac{x^\dagger}{2}b^{-(k+1)/2},\qquad
+c=1,\quad h=x_k,\quad
+p_k=q_k=(1-x_k/C)/B,
+\tag{347.8}
+\]
+
+其中 \(x^\dagger=11/40\)。这些世界对全部 \(k\ge0\) 都有
+\(0<x_k<1/4\)。原参考系数的未启动环恒等式给
+
+\[
+\Gamma_k(x_k,q_k)=\Omega x_k^\beta=C_*n_k^{-a},
+\]
+
+\[
+C_*=\Omega\left(\frac{N(x^\dagger)^2}{4b}\right)^a>0,
+\qquad
+\Omega=\frac{15}{16}(2/\underline c)^\beta,\quad
+\underline c=3/5.
+\tag{347.9}
+\]
+
+由式（347.7）及 \(\delta_k\le1/4\)，
+
+\[
+G_k(w_k)\ge\tfrac34C_*n_k^{-a}.
+\tag{347.10}
+\]
+
+这个固定正常数可以很小；不需要为它重新放大 \(M\)，因为式（347.6）的误差由地板吸收。
+
+对同一次核心执行，仅用一个真实尾事件就有
+
+\[
+\mathbb E^{w_k}R_T^s
+\ge D_k^s\Pr^{w_k}(R_T>D_k)
+=D_k^sG_k(w_k).
+\]
+
+准确首币包装以概率 \(1/3\) 触发新鲜核心，故对每种请求，
+
+\[
+T_s(A_\eta)\ge
+\tfrac13\mathbb E^{w_k}R_T^s
+\ge c\,n_k^{-u}\eta_k^{-s},
+\tag{347.11}
+\]
+
+其中常数对 \(s\in[s_-,a]\) 共同。取层号上确界得到
+
+\[
+\boxed{T_{a-u}(A_\eta)\ge cW_\eta(u).}
+\tag{347.12}
+\]
+
+不同 \(k\) 的世界在定义允许的最坏世界上确界中择取，并未相加。这证明的是实际最坏任务矩的剖面下界，不是每个固定世界都与 \(W_\eta\) 双向可比。若 \(W_\eta(u)=\infty\)，则实际最坏任务矩也为无穷。
+

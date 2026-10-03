@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0c07c338c00c22b1179bf8fd6ceb5097834236a4b350cde77dbdb3df5de5c2c6
+  normalized_sha256: sha256:0c07c338c00c22b1179bf8fd6ceb5097834236a4b350cde77dbdb3df5de5c2c6
+cas_ref: sha256:0c07c338c00c22b1179bf8fd6ceb5097834236a4b350cde77dbdb3df5de5c2c6
+coverage_gids:
+  - gid: D5/S3/FluidDynamics/Fourier/BochnerRowHeatPath.bochner_row_heat_path
+    target_statement_id: sha256:43ef62f376458fa9d6adaebc5319f7447252256dd0f73160177f3c541d423c61
+receipts:
+  unresolved_subitems: []

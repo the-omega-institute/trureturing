@@ -1,0 +1,15 @@
+**定理319.3（输出与费用的同时逼近）。** 设抽象共同策略 \(\pi\) 在每个实际世界几乎必有限回答，且
+$$
+\mathcal K_s(\pi)\le K<\infty,\qquad s>0.
+$$
+则对任意 \(\eta>0,\xi>0\)，存在有限有理共同策略 \(\rho\)，满足
+$$
+\boxed{
+\sup_{\theta,S}
+\|Q^\rho_{\theta,S}-Q^\pi_{\theta,S}\|_{\mathrm{TV}}\le\eta,
+\qquad
+\mathcal K_s(\rho)\le K+\xi.}
+\tag{319.3}
+$$
+这里先不附加首枚旧来源身份要求。
+

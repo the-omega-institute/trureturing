@@ -1,0 +1,15 @@
+### 1.1 扇区范畴和全体局部场的不同信息
+
+采用已经构造的月光 VOA $V^\natural$ 及其局部共形网 $\mathcal A^\natural$。已发表输入 [KL05, Theorem 3.6、Example 3.8、Theorem 5.4] 给出：网是 holomorphic，只有真空不可约 DHR 扇区，且
+
+$$
+\operatorname{DHR}(\mathcal A^\natural)\simeq\mathrm{Vec},
+\qquad
+\operatorname{Aut}(\mathcal A^\natural)\cong\operatorname{Aut}(V^\natural)\cong\mathbb M.
+\tag{MC.1}
+$$
+
+因此，只保留 DHR 简单扇区、融合或其编织自等价作用，会把这个实际魔群作用送到平凡群。这里没有把共形网当作原 QCA 定义中的有限迹融合自旋链；两者的对象衔接仍需新的定理。式（MC.1）只直接证明该类粗观察会遗漏局部场对称。
+
+仓内 [MonsterPrimitiveMobiusRecovery](https://github.com/the-omega-institute/trureturing/blob/930316bfabefbed08c26ee7611e173380ca82c43/D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.lean) 的实际声明输入任意整数系数 $c$ 与一个已给对数展开，结论为 Möbius 恢复。它可以复用来恢复字符系数；它没有构造 $V^\natural$、局部乘法或魔群作用。本轮读取该源，没有重新编译。
+

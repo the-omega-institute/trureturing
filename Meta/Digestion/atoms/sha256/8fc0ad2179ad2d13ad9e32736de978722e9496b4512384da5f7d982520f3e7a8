@@ -1,0 +1,4 @@
+最后使用经典等价性 $\mathrm{RH}\iff\forall\varepsilon>0, M(X)=O_\varepsilon(X^{1/2+\varepsilon})$。证毕。 $\square$
+
+这里的等价性使用所有实数截断 $X\ge1$；只检查某个离散端点序列并不足以推出它。
+

@@ -1,0 +1,22 @@
+### 330.4 公共系数差与增量的 Hölder 尺度
+
+用式（330.6）的光滑权重代替第327节的三角权重，得到未膨胀公共系数 $\ell_{k,t}(x),u_{k,t}(x)$。非负混合保持相容性和固定余量
+
+$$
+c_0\le\ell_{k,t}\le u_{k,t}\le1-c_0.
+\tag{330.13}
+$$
+
+记系数向量
+
+$$
+\Gamma_k=u_k-\ell_k,\qquad
+\Lambda_k=\ell_k-E_k\ell_{k-1},\qquad
+\Upsilon_k=E_ku_{k-1}-u_k.
+\tag{330.14}
+$$
+
+三者逐系数非负。$\Gamma_k$ 是同级差，$\Lambda_k,\Upsilon_k$ 是相邻级增量；它们不等同于单个中心系数。
+
+令 $r_\beta=\lfloor\beta\rfloor$、$\theta=\beta-r_\beta\in(0,1)$，并以最高阶导数的 $\theta$-Hölder 半范数定义 $C^\beta$ 范数。
+

@@ -1,0 +1,16 @@
+## theorem 1.1: Exact integer lattice
+
+For every integer $k\ge1$, let $u=(k+2,1-k)$ and $v=(2,k)$ in $\mathbb Z^2$.
+Their determinant is $N$, and the kernel of
+$(x,y)\mapsto x-cy\pmod N$ is exactly $\mathbb Zu+\mathbb Zv$.
+
+The integer values of $x-cy$ on $u$ and $v$ are $N$ and $-N$.
+Conversely, if $x-cy=Nt$ for an integer $t$, then
+
+$$
+(x,y)=(y+kt)u+(y+(k-1)t)v.
+$$
+
+Expansion gives both coordinates, so the two inclusions and determinant
+follow without an index theorem.
+

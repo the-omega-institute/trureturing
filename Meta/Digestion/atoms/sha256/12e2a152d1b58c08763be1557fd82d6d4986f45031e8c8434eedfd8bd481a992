@@ -1,0 +1,80 @@
+**命题 215.5（一般 AP 几何不能提供统一的全域矩密度界）。** 存在趋于无穷的
+$x$、素数模数 $q\asymp\sqrt x$ 和 $(a,q)=1$，使区间 $(x/2,x]$ 在该余数类
+中的点数 $T_q\asymp\sqrt x$，但在
+
+$$
+Y=\log x,\qquad L=\log Y,\qquad s=YL,\qquad t=e^\gamma L
+$$
+
+处，
+
+$$
+\frac{\displaystyle\sum_{\substack{x/2<n\le x\\n\equiv a\pmod q}}Z(n)^s}
+{T_qU(s)}\ge\exp\bigl((1/2+o(1))Y\bigr)\longrightarrow\infty,
+\tag{215.17}
+$$
+
+其中 $U(s)=\prod_p U_p(s)$ 是 §210 的完整赋值矩。
+
+证明。取 $n_j=\operatorname{lcm}(1,\ldots,j)$、$x=n_j$。强素数定理和
+Mertens 估计给
+
+$$
+\log n_j=\psi(j)=j+o(j),\qquad
+Z(n_j)=e^\gamma\log j+o(1)=t+o(1).
+\tag{215.18}
+$$
+
+为核对第二式的实际赋值，写成
+
+$$
+Z(n_j)=\prod_{p\le j}(1-p^{-1})^{-1}
+\prod_{p\le j}\left(1-p^{-\lfloor\log j/\log p\rfloor-1}\right).
+$$
+
+当 $p\le\sqrt j$ 时，被减项小于 $1/j$；当 $p>\sqrt j$ 时，被减项为
+$p^{-2}$。两段总和均为 $O(j^{-1/2})$，故第二乘积的对数为
+$O(j^{-1/2})$，对 $Z(n_j)$ 的加性影响为 $o(1)$。
+强 Mertens 估计给第一乘积为 $e^\gamma\log j+o(1)$，而
+$\log\log n_j-\log j=o(1)$，得到式（215.18）。
+
+由 Bertrand 定理选素数 $q_j\in(\sqrt x,2\sqrt x)$。充分大时 $q_j>j$，
+故 $(q_j,n_j)=1$。取 $a_j$ 为 $n_j$ 模 $q_j$ 的最小正余数，则
+$(x/2,x]$ 中这个互素余数类包含 $n_j$，并有
+
+$$
+T_{q_j}=\frac{x}{2q_j}+O(1)\asymp\sqrt x.
+$$
+
+这些区间与模数满足 Shiu 对任意固定 $0<\alpha<1/2$ 的模数幂次条件；
+这里失败的是增长函数的一致矩估计，而非区间几何条件。
+式（215.18）给这个实际点的归一贡献
+
+$$
+\log\left(\frac{Z(n_j)}t\right)^s=o(Y).
+\tag{215.19}
+$$
+
+另一方面，§210.2 的 Euler 矩比较与 Weingartner 展开给
+
+$$
+\log\frac{U(s)}{t^s}=-Y+o(Y).
+\tag{215.20}
+$$
+
+由于 $\log T_{q_j}=Y/2+O(1)$，单点 $n_j$ 已给
+
+$$
+\frac{Z(n_j)^s}{T_{q_j}U(s)}
+=\exp\bigl((1/2+o(1))Y\bigr),
+$$
+
+证明式（215.17）。$\square$
+
+因此一般互素剩余类中不能一致断言
+$\sum Z(n)^s\ll T_qU(s)$；即使允许右边再乘 $\exp(o(Y))$ 也不成立。
+从 $U(s)$ 删除模数素因子 $q_j$ 对应的 Euler 因子只会使右边更小。
+这不反驳利用 Fibonacci 模数与指定余数 $1$ 的额外关系得到更强估计，
+也没有构造 Robin 反例。§211–213 关于全区间矩和已知安全项的结论，同样不能
+代替这里尚未得到的实际 FIB 剩余类估计。
+

@@ -1,0 +1,30 @@
+**命题 175.2（黄金代数中的共同分式条件）。** 在 $R=\mathbb Z[\theta]$、$\theta^2=\theta+1$ 中，
+
+$$
+\theta^t(\theta^k+1)-(-1)^b(\theta^k-1)
+=(2\theta-1)\theta^aV.
+$$
+
+对素数 $p\ne2,5$，在 $R_p=R/pR$ 中，$p\mid V$ 当且仅当 $\theta^k+1$ 可逆且
+
+$$
+\theta^t=(-1)^b\frac{\theta^k-1}{\theta^k+1}.
+$$
+
+证明。$\theta$ 可逆，且 $\psi=1-\theta=-\theta^{-1}$。把 $(2\theta-1)F_n=\theta^n-\psi^n$ 用于 $n=a,b$，乘以 $\theta^a$ 后合并，便得到第一式。若 $p\mid V$，命题 175.1 排除 $p\mid L_k$；又
+
+$$
+\operatorname{Norm}(\theta^k+1)=L_k
+$$
+
+（因 $k$ 奇数），所以分母在 $R_p$ 中可逆，可作除法。反向将分式等式乘回分母，第一式给 $(2\theta-1)\theta^aV=0$；$\theta$ 是单位，且 $(2\theta-1)^2=5$，故在 $p\ne5$ 时 $V=0$，即 $p\mid V$。这里的计算在完整的二次商代数中进行，没有把黄金分裂与不分裂的素数混成同一个域。$\square$
+
+该分式与组成四相矩阵有精确的线性联系。令
+
+$$
+C=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+H=I+C=\begin{pmatrix}1&-1\\1&1\end{pmatrix}.
+$$
+
+则 $H^2=2C$、$H^4=-4I$。在域上的射影直线上，$H$ 诱导的变换 $f(x)=(x-1)/(x+1)$ 满足 $f^2(x)=-1/x$、$f^4(x)=x$，零点与极点用射影坐标解释；特征二须排除。对 $p\ne2,5$，$R_p$ 是一个二次域或两个域的积，因此也可逐域分量使用这个描述。这里 $C$ 的矩阵来源与前文一致，但 $H$ 在比值坐标上的分式作用不等于 $C$ 在组成向量上的主动旋转，也不是把收缩区间的点直接乘以 $i$。
+

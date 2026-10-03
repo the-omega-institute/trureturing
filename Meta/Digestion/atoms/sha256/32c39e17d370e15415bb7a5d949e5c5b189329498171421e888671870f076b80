@@ -1,0 +1,49 @@
+**定理 186.1（严格低于边界且相对比值趋于一）。** 在定理 185.1 的无条件文献输入及经典 Mertens 乘积公式下，存在 $m_0$，使全部 $m\ge m_0$ 满足
+
+$$
+0<\frac{Z(N_m)}{e^\gamma\log\log N_m}<1,
+\qquad
+\lim_{m\to\infty}\frac{Z(N_m)}{e^\gamma\log\log N_m}=1.
+$$
+
+每个 $N_m$ 都采用命题 183.1 的真实单位位为零的规范组成，本原范数与导子恒为一和四。
+
+证明。最终严格上界由定理 185.1 给出。由阶乘的积分估计
+
+$$
+\log(m!)=m\log m-m+O(\log m)
+$$
+
+及命题 183.1，得到
+
+$$
+\Lambda_m:=\log\log N_m
+=\log m+\log\log m+\log2+o(1)
+\sim\log m.
+$$
+
+同一个整数满足 $m!\mid N_m$，而约数权重随每个素数指数单调，故
+
+$$
+Z(N_m)\ge Z(m!)
+=P(m)\prod_{p\le m}(1-p^{-v_p(m!)-1}),
+\qquad
+P(m)=\prod_{p\le m}(1-p^{-1})^{-1}.
+$$
+
+最后的截断乘积趋于一。固定 $K$ 时，$p\le K$ 的有限多个因子因 $v_p(m!)\to\infty$ 而趋于一；对 $K<p\le m$，有
+
+$$
+0\le-\log(1-p^{-v_p(m!)-1})\le2p^{-2},
+$$
+
+其和由 $2\sum_{n>K}n^{-2}$ 控制，随 $K\to\infty$ 趋于零。经典 Mertens 公式 $P(m)\sim e^\gamma\log m$ 因而给
+
+$$
+Z(m!)\sim e^\gamma\log m.
+$$
+
+再由 $\Lambda_m\sim\log m$ 得该 Robin 比值的下极限至少为一；已经证明的最终严格上界给上极限至多为一，故极限恰为一。这个步骤不需要 Grönwall 定理。$\square$
+
+Mertens 输入沿用 §§87、92、97 的文献范围，可参见 J. D. Lichtman, *Mertens' prime product formula, dissected*, [Theorem 1.1](https://arxiv.org/html/2002.03361v3)。本节为现有文献输入与实际 FIB 来源的综合，不宣称新的原创最大阶定理，也没有 Lean 核验身份。
+

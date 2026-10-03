@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1451c7ccc1735e6208997264eaff40b0548eebf6caa31904697d6e4192a92420
+  normalized_sha256: sha256:1451c7ccc1735e6208997264eaff40b0548eebf6caa31904697d6e4192a92420
+cas_ref: sha256:1451c7ccc1735e6208997264eaff40b0548eebf6caa31904697d6e4192a92420
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraCommutators.L_mode_commutator
+    target_statement_id: sha256:1c0b26a8c886a8617a9f5e940f55c0130aa9d3242d7e34ebc8a9d482b963fc9d
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraCommutators.mode_heisenberg
+    target_statement_id: sha256:aff8412654c887c07a0e0e0e9bc2c109d1bc7e448b76bd305a84bee92191ba0b
+receipts:
+  unresolved_subitems: []

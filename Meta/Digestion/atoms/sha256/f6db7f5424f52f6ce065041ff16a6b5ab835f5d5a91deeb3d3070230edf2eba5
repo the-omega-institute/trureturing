@@ -1,0 +1,4 @@
+## 160. 文献联合估计与任务所需的素数分辨率
+
+本节沿用 §86 的五方向必要核与 §95 的真实 Fibonacci 来源。Hertlein 的局部因子保留法和 Axler 证明内部的 totient 上界可以联合使用；详细出处、参数及有理证书见 [Hertlein 文献笔记](../../../Library/notes/hertlein2018robin.md) 与 [Axler 文献笔记](../../../Library/notes/axler2023robin.md)。这是既有文献的应用，不新增解析定理或已验证的 Robin 全局范围。
+

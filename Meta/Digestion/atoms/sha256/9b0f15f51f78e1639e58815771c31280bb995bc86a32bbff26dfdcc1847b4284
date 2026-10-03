@@ -1,0 +1,98 @@
+**定理 50.6（全区间风险夹界与准确根相图）。** 对每个固定 $n\ge3$ 和树，定义50.1的两种根至多一维风险下确界满足
+
+$$
+\frac{D^2\delta(\alpha)^2}{1875}
+\le E_2(\alpha)\le E_{\log}(\alpha)
+\le\frac{\delta(\alpha)^2}{200},
+\qquad E_2(\alpha)\le\frac{3\delta(\alpha)^2}{800}.
+\tag{50.23}
+$$
+
+因而整个闭区间上有显式、长度和树统一的夹界
+
+$$
+\begin{aligned}
+\frac{4\chi^4}{16875}\alpha^2(1-\alpha)^2
+&\le E_2(\alpha)\le E_{\log}(\alpha)
+\le\frac{9\chi}{50}\alpha^2(1-\alpha)^2,\\
+E_2(\alpha)&\le\frac{27\chi}{200}\alpha^2(1-\alpha)^2.
+\end{aligned}
+\tag{50.24}
+$$
+
+对两种损失分别都成立以下双端点同阶界，常数严格为正：
+
+$$
+\begin{aligned}
+0\le\alpha\le\frac12:
+&\quad \frac{\chi^4}{16875}\alpha^2
+\le E_\ell(\alpha)\le\frac{9\chi}{50}\alpha^2,\\
+\frac12\le\alpha\le1:
+&\quad \frac{\chi^4}{16875}(1-\alpha)^2
+\le E_\ell(\alpha)\le\frac{9\chi}{50}(1-\alpha)^2,
+\qquad \ell\in\{\log,2\}.
+\end{aligned}
+\tag{50.25}
+$$
+
+不另设峰值上限时，以下四种要求所需的最小实际根维数相同：准确后验；零对数超额下确界；零 Brier 超额下确界；一列共同预测器使两种超额同时趋零。它们的完整相图是
+
+$$
+q_{\min}(\alpha)=
+\begin{cases}
+0,&\alpha=0,\\
+2,&0<\alpha<1,\\
+1,&\alpha=1.
+\end{cases}
+\tag{50.26}
+$$
+
+每个充分根维数都由每棵树上的一个有限参数预测器同时准确达到该律的两个 Bayes 值。常数和 secant 头不被断言最优。
+
+证明。内部由定理50.4、50.5取下确界得到式（50.23）；同一预测器上 $\Delta_2^\alpha\le\Delta_{\log}^\alpha$ 也给两个下确界的顺序。两个端点由定理50.5准确达到，故同一夹界在那里亦成立。把 $D=\chi/2$ 及式（50.12）两边平方代入，分别得到下界常数
+$4\chi^4/16875$、对数上界常数 $9\chi/50$ 和 Brier 上界常数 $27\chi/200$，即式（50.24）。在左半区间，$1/4\le(1-\alpha)^2\le1$；在右半区间，$1/4\le\alpha^2\le1$，遂得式（50.25）。右端变量因子始终是 $(1-\alpha)^2$，不是正的常数底。
+
+端点的几何尺度还能直接由式（50.11）确定。$x=F/(U^2E^2)$ 在两个端点趋零，且 $\log(1+x)/x\to1$。代入各端点的正分母给准确极限
+
+$$
+\lim_{\alpha\downarrow0}\frac{\delta(\alpha)}\alpha=\frac{9\chi}{2},
+\qquad
+\lim_{\alpha\uparrow1}\frac{\delta(\alpha)}{1-\alpha}
+=\frac{2(1+\sqrt2)}3,
+\qquad
+\lim_{\alpha\downarrow0}\frac{\lambda(\alpha)}\alpha=3A.
+\tag{50.27}
+$$
+
+最后一个极限也由 $R'V-RV'=A/3$ 和 $R(0)=V(0)=1/3$ 得到。这些极限不代替式（50.25）的指定半区间统一界。尤其在 $\alpha\downarrow0$，行列式 $\lambda\delta$ 含两个一次消失因素，但最长边 $\sqrt5\lambda$ 也含一个；用于概率下界的条带宽度是 $\delta/\sqrt5$。只平方行列式而不除以收缩的边长，不能得到正确风险阶。
+
+接着证明式（50.26）的必要性。内部式（50.15）是严格正底，已经排除根零、一的准确后验、各自零下确界及共同消失序列。在任意 $\alpha>0$，根零维的仿射头是一个常概率 $p$。令 $\bar\rho=\mathbb E\rho_\alpha$，方差恒等式和式（50.6）给
+
+$$
+\begin{aligned}
+\Delta_2^\alpha(p)
+&=\|p-\bar\rho\|_2^2+
+\sum_{i<j}\pi_i\pi_j\|(Q_\alpha)_i-(Q_\alpha)_j\|_2^2\\
+&\ge\pi_0\pi_2\|(R,U,V)-(V,U,R)\|_2^2
+=\frac{2848\chi}{15625}\alpha^2>0.
+\end{aligned}
+\tag{50.28}
+$$
+
+对数超额至少同大，所以特别在 $\alpha=1$ 排除根零的三个逼近要求。这个证书针对该律的常预测最小风险，不把别的联合律的完整风险拿来比较。
+
+充分性仍在原头族内完成。对任何 $\alpha$，按定理50.5的同一非根传输，在根直接输出 $g=(G_1,G_2)$，其两个坐标是式（44.22）最后合并的两个环境双线性表达式；活动加空活动情形直接为 $(s_0g_1,s_0g_2)$，逆序交换实参。使用
+
+$$
+(L_0,L_1,L_2)=
+\left(0,\ \eta+(\xi-\eta)g_1+\lambda g_2,
+\ -\lambda+\lambda g_1+2\lambda g_2\right).
+\tag{50.29}
+$$
+
+$g=(0,0),(1,0),(0,1)$ 时逐一给 $v_0,v_1,v_2$；两个 log-odds 唯一确定正概率向量，故逐词准确为 $\rho_\alpha$。树归纳与式（50.20）的全部分拆相同，实际根二、非根至多三、头九个仿射参数槽，全部常数与忽略消息仍计费。在 $\alpha=1$，定理50.5的标量头已准确，等价于式（49.21）把根缩放为 $C$ 后的原曲线头；无需二维根。在 $\alpha=0$，另取每片叶和每个非根的已计费标量1，合并为标量乘法，根直接采用到 $\mathbb R^0$ 的唯一双线性映射，三个头偏置为零；其实际根零，softmax 恒为均匀后验。每种准确构造由式（50.6）同时给两种零超额，常序列也满足共同趋零要求。与必要底合并得到四种要求的同一最小维数。
+
+这里的 log-odds 仿射维数机制沿用 Yang、Dai、Salakhutdinov、Cohen，[*Breaking the Softmax Bottleneck: A High-Rank RNN Language Model*](https://arxiv.org/pdf/1711.03953)，ICLR 2018，§2.1、§2.4 的 log-probability 因子化视角；其概率混合并不属于本节原头。Ganea、Gelly、Bécigneul、Severyn，[*Breaking the Softmax Bottleneck via Learnable Monotonic Pointwise Non-linearities*](https://proceedings.mlr.press/v97/ganea19a.html)，ICML 2019，PMLR 97:2073–2082，§3 区分 log-probability 与交叉熵逼近，Theorem 2 的固定嵌入矩阵条件不提供本节对全部头的统一底。
+
+式（50.11）、（50.24）–（50.27）把 §49 的单个退化参数延伸为全族例外判定和匹配的双端点风险阶；它们是本族的普通综合推导（repo-derived），传输、proper-score 和随机通道工具仍按所引来源复用。指定原头的准确维数在端点跳变，而其根一维最佳超额有上述二次消失界；这两个结论兼容。对 $\alpha>0$，语义教师响应商并未改变，发生变化的是指定概率接口的实现要求。式（49.23）的已知概率适配器若准入，可给不同解码合同的根一维准确实现，并需其独立费用；它不属于式（50.4）的预测类。以上不推出峰值最优性、全局资源单调性、物理比特／神经元、总存储、有限精度、运行时间、训练、泛化、因果学习或全局文献优先权。$\square$
+

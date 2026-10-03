@@ -1,0 +1,16 @@
+**推论334.4（私位价格与任务来源价格不同）。** 对定理334.3的同一程序，每个固定 $\lambda\ge0$ 都有
+
+$$
+\boxed{
+\sup_{w,S}\mathbb E(N_H+\lambda B_{\mathrm{priv}})^a<\infty.}
+\tag{334.15}
+$$
+
+但对任何固定 $\mu>0$，任何准确共同策略都满足
+
+$$
+\boxed{
+\sup_{w,S}\mathbb E(N_H+\mu N_T)^a=\infty.}
+\tag{334.16}
+$$
+

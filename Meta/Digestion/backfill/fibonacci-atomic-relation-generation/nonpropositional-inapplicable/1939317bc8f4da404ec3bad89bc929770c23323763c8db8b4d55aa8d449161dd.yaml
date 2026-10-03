@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1939317bc8f4da404ec3bad89bc929770c23323763c8db8b4d55aa8d449161dd
+  normalized_sha256: sha256:1939317bc8f4da404ec3bad89bc929770c23323763c8db8b4d55aa8d449161dd
+cas_ref: sha256:1939317bc8f4da404ec3bad89bc929770c23323763c8db8b4d55aa8d449161dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: Matrix.mul_fin_two, Matrix.transpose_mul, Matrix.det_fin_two. For the first clause child only: writing x=(a,b) normalizes Q(Mx)=-Q(x) and its second iterate. A symmetric real matrix [[r,s],[s,t]] satisfies (M^2)^T H M^2=H precisely when r=2s and t=-2s, by expanding four entries and linear normalization. Thus the quadratic form is 2s times Q. No frozen repository GID proves this real-form uniqueness assertion. The title signature (1,1) for Q is also covered: complete the square Q=(a+b/2)^2-(5/4)*b^2. The triangular coordinate map has determinant one and inverse (s,b)->(s-b/2,b), supplied by Matrix.toLinearEquiv. QuadraticForm.sigPos_of_equiv_weightedSumSquares and QuadraticForm.sigNeg_of_equiv_weightedSumSquares with weights (1,-5/4) give one positive and one negative direction; the coordinate equality is polynomial normalization.'
+    previous_atom_id: 6b46870442fdb366b4f8ce6ed24887fe56e376d3219bc2b96cc07b089bdcc6c9
+    next_atom_id: f5b6513225b767ded62077a60024805c8252386692f264e2504386b30854754a

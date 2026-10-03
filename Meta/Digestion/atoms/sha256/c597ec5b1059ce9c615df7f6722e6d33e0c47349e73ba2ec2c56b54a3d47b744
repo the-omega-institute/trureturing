@@ -1,0 +1,33 @@
+### theorem 263.3 依赖慢范数预算的 Robin 候选定位
+
+固定 $0<\omega<1/2$，假设 §201.6 的统一慢范数余量结论成立。
+则存在只依赖 $\omega$ 的 $T_\omega>\exp(e)$，使定义 263.1 中的来源若满足
+
+$$
+U\ge T_\omega,\qquad N>5040,\qquad
+\Delta(N):=e^\gamma\log\log N-\frac{\sigma(N)}N\le0,
+$$
+
+其同一约化核心必满足，记 $t=\log\log\log U$，
+
+$$
+\boxed{\quad
+D>\exp\!\bigl(\exp(t^\omega)\bigr)-2,
+\qquad
+r^2>\frac45\left(\exp\!\bigl(\exp(t^\omega)\bigr)-2\right).
+\quad}
+\tag{263.7}
+$$
+
+并且存在绝对常数 $C_0$，使这些来源满足
+
+$$
+\boxed{\quad
+\mathcal L(x)>\frac{\exp(t^\omega)}{2\log\varphi}-C_0.
+\quad}
+\tag{263.8}
+$$
+
+若只通过实际整数 $N$ 指定规模，充分条件可取
+$N\ge\max\{5041,T_\omega^2\}$。
+

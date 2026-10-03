@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b3b5d7e78fd6c2c66c64cae963ef01a399b79457c83056ba95c36987df17756c
+  normalized_sha256: sha256:b3b5d7e78fd6c2c66c64cae963ef01a399b79457c83056ba95c36987df17756c
+cas_ref: sha256:b3b5d7e78fd6c2c66c64cae963ef01a399b79457c83056ba95c36987df17756c
+coverage_gids:
+  - gid: D5/S3/Geometry/HyperbolicDilation.dilation
+    target_statement_id: sha256:25e9a9f2d1339c6c1b39ab5b5dab2f6806b3d18fbdd38adac7f9cd02f992a4d2
+receipts:
+  unresolved_subitems: []

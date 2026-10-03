@@ -1,0 +1,253 @@
+{
+  "behavior_summary": {
+    "extra_models": 205,
+    "maximum_H": 48,
+    "maximum_proper_refinement_rounds": 3,
+    "minimum_H": 2,
+    "no_extra_models": 219
+  },
+  "boundary_H2_models": [
+    {
+      "H": 2,
+      "additions": [],
+      "d": 2,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        2
+      ],
+      "d": 2,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        1
+      ],
+      "d": 1,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        2
+      ],
+      "d": 2,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        2,
+        5
+      ],
+      "d": 1,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        4,
+        6
+      ],
+      "d": 2,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        2,
+        4
+      ],
+      "d": 2,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        1
+      ],
+      "d": 1,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        1,
+        3
+      ],
+      "d": 1,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    },
+    {
+      "H": 2,
+      "additions": [
+        2,
+        1
+      ],
+      "d": 1,
+      "divisor_count": 2,
+      "proper_refinement_rounds": 0,
+      "states": 2
+    }
+  ],
+  "counterexample_digest": "54e41211500f674ea30dcabdbd4f060910f30f4e669b3263c100902f594c7f7c",
+  "counts": {
+    "closed_update_checks": 49407,
+    "complete_translation_windows": 255,
+    "direct_source_translation_checks": 857558,
+    "independent_complete_behavior_models": 424,
+    "individual_addition_models": 32895,
+    "moore_transition_scans": 738785,
+    "one_addition_counterexamples": 32512,
+    "positive_lift_update_checks": 3447,
+    "template_5040_closed_update_checks": 20160
+  },
+  "methods": [
+    "All positive translation representatives c=1,...,H, H=2,...,256: directly check whether gcd fibers have well-defined successor outputs.",
+    "Moore refinement for selected addition libraries, H=2,...,48, using every positive scalar representative m=1,...,H; no classification formula in minimization.",
+    "Verify the closed-form quotient update for all successful translation windows and explicit positive lifts."
+  ],
+  "sample_counterexamples_H_c_x_y": [
+    [
+      3,
+      1,
+      1,
+      2
+    ],
+    [
+      3,
+      2,
+      1,
+      2
+    ],
+    [
+      4,
+      1,
+      1,
+      3
+    ],
+    [
+      4,
+      3,
+      1,
+      3
+    ],
+    [
+      5,
+      1,
+      3,
+      4
+    ],
+    [
+      5,
+      2,
+      2,
+      3
+    ],
+    [
+      5,
+      3,
+      1,
+      2
+    ],
+    [
+      5,
+      4,
+      1,
+      2
+    ],
+    [
+      6,
+      1,
+      2,
+      4
+    ],
+    [
+      6,
+      2,
+      2,
+      4
+    ],
+    [
+      6,
+      4,
+      2,
+      4
+    ],
+    [
+      6,
+      5,
+      2,
+      4
+    ]
+  ],
+  "schema": "fib-gcd-no-extra-states-corollary-v1",
+  "scope": "Independent finite checks of a corollary of the existing classification formula; no new Lean or content claim.",
+  "template_5040_examples": [
+    {
+      "addition": 7,
+      "preserves_60_states": false,
+      "same_gcd_distinguished_pair": [
+        1,
+        11
+      ]
+    },
+    {
+      "addition": 10,
+      "preserves_60_states": false,
+      "same_gcd_distinguished_pair": [
+        1,
+        11
+      ]
+    },
+    {
+      "addition": 13,
+      "preserves_60_states": false,
+      "same_gcd_distinguished_pair": [
+        1,
+        11
+      ]
+    },
+    {
+      "addition": 2520,
+      "preserves_60_states": true,
+      "same_gcd_distinguished_pair": null
+    },
+    {
+      "addition": 5040,
+      "preserves_60_states": true,
+      "same_gcd_distinguished_pair": null
+    },
+    {
+      "addition": 7560,
+      "preserves_60_states": true,
+      "same_gcd_distinguished_pair": null
+    },
+    {
+      "addition": 10080,
+      "preserves_60_states": true,
+      "same_gcd_distinguished_pair": null
+    }
+  ]
+}

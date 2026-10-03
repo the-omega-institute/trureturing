@@ -1,0 +1,6 @@
+**Theorem 5.3 (homogeneity and Euler).** The actual polynomial $F_{U,m}$ is homogeneous of degree $m$, including when it is zero, and satisfies $\sum_{i\in I}X_i\partial_iF_{U,m}=mF_{U,m}$.
+
+**Proof.** Every supported exponent has total $m$ by the exact coefficient formula. The weighted homogeneous Euler identity with all weights one applies to this polynomial.
+
+**Boundary 5.4.** These algebraic identities do not establish the degree-two reverse quadratic inequality, active-coordinate connectedness, normalized-Hessian induction, root concavity, or the physical probability and expectation comparison. The full finite-field optimizer remains a separate obligation.
+

@@ -1,0 +1,46 @@
+\[
+E_{n,n}(x^\beta,[0,1])
+=
+4^{1+\beta}|\sin(\pi\beta)|
+e^{-2\pi\sqrt{\beta n}}(1+o(1)),
+\qquad n\to\infty,
+\tag{349.44}
+\]
+
+其中固定非整数 \(\beta>0\)。[^quantum_affine_stahl]
+
+定理349.5保证误差趋零族的 \(D\) 和 \(d\) 都趋于无穷。由式（349.43）—（349.44），对充分小的误差有
+
+\[
+D(\epsilon)\ge
+\frac1{4\pi^2\beta}
+\left[
+\log\frac{|\sin(\pi\beta)|}{4\epsilon}
+\right]^2.
+\tag{349.45}
+\]
+
+这里已经将误差阈值缩小到对数为正，常数 \(1/4\) 来自渐近前置常数的一半。式（349.45）也可直接重复第348.7节的取对数证明；它约束可达实线性维数，不要求先将其放大到 \(d^2\)。
+
+由 \(D\le d^2\)，得到
+
+\[
+\boxed{\displaystyle
+d(\epsilon)\ge
+\frac1{2\pi\sqrt\beta}
+\log\frac{|\sin(\pi\beta)|}{4\epsilon}}
+\tag{349.46}
+\]
+
+及
+
+\[
+\boxed{\displaystyle
+\liminf_{\epsilon\downarrow0}
+\frac{d(\epsilon)}{\log(1/\epsilon)}
+\ge\frac1{2\pi\sqrt\beta}.}
+\tag{349.47}
+\]
+
+等价地，式（349.43）中仅用 \(d\) 的必要下界右侧具有渐近
+

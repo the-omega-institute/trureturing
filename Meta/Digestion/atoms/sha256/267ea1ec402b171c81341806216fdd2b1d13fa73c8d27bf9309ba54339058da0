@@ -1,0 +1,17 @@
+# Three-Sector Circulant Construction
+
+This is mathematical reference input, authored by Codex (AI) on 2026-09-29
+from Dalfó, Fiol, and Reyes, *A note on three-quarters circulant digraphs*,
+*Utilitas Mathematica* 128 (2026), section 2, Conjecture 2.4,
+[arXiv:2609.33718v1](https://arxiv.org/html/2609.33718v1), and the supplied
+generic construction note. The source conjecture supplies the parameters and
+three-sector distance; the arguments below supply the claimed deductions.
+Only Lean declarations and their axiom closure carry formal truth in this
+repository. The numbered statements below are formalization targets, not
+independent certificates.
+
+For an integer $k\ge 1$, put $c=k+4$, $q=k-1$, $d=k+2$, and
+$N=qc+d=k^2+4k-2$. In $\mathbb Z/N\mathbb Z$ put $a=1$ and $b=-c$.
+The three source sectors consist of $ma+nb$, $-ma+nb$, and $ma-nb$ for
+nonnegative integers $m,n$ with $m+n\le r$; repetitions are permitted.
+

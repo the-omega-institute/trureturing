@@ -1,0 +1,42 @@
+**定理340.1（固定网格的参考判据和任务剖面）。** 对上述任一固定准确策略 $A$：
+
+$$
+\boxed{H_a(A)<\infty
+ \quad\Longleftrightarrow\quad
+ \sum_{k\ge0}\eta_k<\infty.}
+\tag{340.6}
+$$
+
+若地板和发散，则每一个合法世界、每一种请求的参考 $a$ 矩都无限。
+
+若地板和收敛，定义
+
+$$
+W_\eta(u)=\sup_{k\ge0}n_k^{-u}\eta_k^{-1+u/a},
+\qquad 0<u<a.
+\tag{340.7}
+$$
+
+存在固定 $c_W,C_W,u_*>0$，其中 $u_*\le a/2$，使
+
+$$
+\boxed{
+c_WW_\eta(u)\le T_{a-u}(A)\le C_WW_\eta(u)
+\quad(0<u<u_*),\qquad
+\lim_{u\downarrow0}uT_{a-u}(A)=+\infty.}
+\tag{340.8}
+$$
+
+无限矩按扩展实数理解；若 $W_\eta(u)=+\infty$，相应 $T_{a-u}$ 也无限。常数和起效阈值允许依赖这份固定策略，均不随 $u$ 改变。因此本类中不存在参考临界矩有限、同时对所有充分小 $u$ 满足固定 $C/u$ 界的单一策略。
+
+特别地，第339.5节的一份固定策略 $A_*$ 满足
+
+$$
+\boxed{
+T_{a-u}(A_*)\asymp u^{-1}\log^2(e/u)
+\qquad(u\downarrow0).}
+\tag{340.9}
+$$
+
+这一式只刻画该份策略，不将它改写成原目标所有准确策略的最优费用下界。
+

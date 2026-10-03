@@ -1,0 +1,59 @@
+**引理 194.3（中间乘子范围的联合 Euler 界）。** 在引理 194.1 的共同实现中，固定 $0<\varepsilon<1$，令 $t=h/L\in[\varepsilon,1]$。在式（194.1）—（194.2）下，一致于该范围内的全部实际 $U,g$ 有
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log t+o(1).
+\tag{194.7}
+$$
+
+证明。取
+
+$$
+x_S=\frac{L}{\delta},\qquad
+x_T=\frac{h}{1-\delta}.
+$$
+
+因 $\delta\le1/2$、$h\le L$，有 $x_S\ge x_T$，从而 $\kappa(x_S)\le\kappa(x_T)$。由两个预算同时得到
+
+$$
+\begin{aligned}
+\kappa(x_S)A+\kappa(x_T)B
+&=\kappa(x_S)(A+B)
+ +(\kappa(x_T)-\kappa(x_S))B\\
+&\le\kappa(x_S)L+\kappa(x_T)h.
+\end{aligned}
+$$
+
+将引理 194.1 分别用于两个素数类，得
+
+$$
+\begin{aligned}
+\log\frac N{\varphi(N)}
+\le{}&\log P_S(x_S)+\log P_T(x_T)\\
+&+\kappa(x_S)(L-\vartheta_S(x_S))
+ +\kappa(x_T)(h-\vartheta_T(x_T)).
+\end{aligned}
+\tag{194.8}
+$$
+
+式（194.1）给最后两项一致为 $o(1/\log L)$，因为 $x_S,x_T$ 均与 $L$ 相差固定倍数，且 $\kappa(x)=O(1/(x\log x))$。
+
+完整乘积有精确重写
+
+$$
+P_S(x_S)P_T(x_T)
+=P(L)\,
+\frac{P_S(L/\delta)}{P_S(L)}\,
+\frac{P_T(tL/(1-\delta))}{P_T(L)}.
+\tag{194.9}
+$$
+
+引理 194.2 使后两个比值的对数之和等于
+
+$$
+\frac{H(\delta)+(1-\delta)\log t}{\log L}
++o\!\left(\frac1{\log L}\right).
+$$
+
+对式（194.8）取指数，再用 $P(L)/e^\gamma\le\log L+o(1)$，其乘积展开给加性主项 $H(\delta)+(1-\delta)\log t$，误差仍为 $o(1)$。最后由 $N>1$ 时 $Z(N)<N/\varphi(N)$ 得到结论。$\square$
+

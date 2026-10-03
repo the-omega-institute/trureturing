@@ -1,0 +1,14 @@
+**定理 314.2（单次联合近似的最优整数矩阶）。** 固定上述已知参数及正整数 $m$。当 $\delta\downarrow0$，总费用与参考费用均满足
+
+$$
+\boxed{
+\mathcal C_m(\delta)\asymp\mathcal C_m^H(\delta)\asymp
+\begin{cases}
+1+\delta^{\,1-2m/\beta},&\beta\notin\mathbb N,\\
+1,&\beta\in\mathbb N_{>0}.
+\end{cases}}
+\tag{314.7}
+$$
+
+符号 $\asymp$ 表示存在只依固定参数与 $m$ 的正上下常数及 $\delta_0>0$，使对应两侧在 $0<\delta<\delta_0$ 内相互控制。参考下界常数允许依赖合法系数内域的宽度 $l<1$。同样的渐近阶也适用于另外要求保留所请求旧来源首枚实际 $X$ 的程序类：下界将在较大的纯核恢复类中证明，上界将满足首币身份。
+

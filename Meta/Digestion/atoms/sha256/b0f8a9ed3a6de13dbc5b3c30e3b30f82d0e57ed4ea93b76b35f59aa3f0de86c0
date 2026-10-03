@@ -1,0 +1,14 @@
+**命题 36.3（正面提升仪器与 edge-conditioned 失败）。** 对 coarse Kraus $K_{a,z,\mu}\in A_L$，并对每个固定动作 $a$ 有 $\sum_{z,\mu}K_{a,z,\mu}^*K_{a,z,\mu}=I_L$，提升 Kraus 为 $i_L(K_{a,z,\mu})$ 得一族下降的 fine instruments，coarse successor 就是原 Kraus instrument。
+
+证明。固定动作 $a_0$ 与结果 $z$。含幺星同态保持每个动作的 Kraus 总归一化，且对任意 coarse observable $b\in A_L$ 有
+
+$$
+J_{a_0,z}^\dagger(i_L(b))
+=\sum_\mu i_L(K_{a_0,z,\mu})^*i_L(b)i_L(K_{a_0,z,\mu})
+=i_L\!\left(\sum_\mu K_{a_0,z,\mu}^*bK_{a_0,z,\mu}\right).
+$$
+
+故 $J_{a_0,z}^\dagger(i_L(A_L))\subseteq i_L(A_L)$，满足 (36.5)，唯一性给原 coarse successor。这个子类可在同终态块内部执行真正 coherent matrices；它不是所有直和代数 CP instruments 的穷尽分类，特别没有穷尽跨 coarse central blocks 的经典转移。$\square$
+
+Fine 合法不自动下降。取 $L=1$、旧前缀 $u=[\mathrm{null}],v=[2]$，两条 $0\to0$ 边 $e_1=\mathrm{null},e_2=2$。fine block unitary 只交换 $|ue_2\rangle,|ve_2\rangle$，其它基向量不动。$|ue_1\rangle\langle ue_1|$ 与 $|ue_2\rangle\langle ue_2|$ 原来都粗化为 $|u\rangle\langle u|$，作用后却分别粗化为 $|u\rangle\langle u|$ 和 $|v\rangle\langle v|$，所以这个 edge-conditioned swap 不满足 (36.5)。这是有限矩阵合同中的反例，不新增设备权限。
+

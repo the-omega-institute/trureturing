@@ -1,0 +1,38 @@
+### 定理 281.1 全指标整数嵌入及恰为 24 的互素入口
+
+对每个 $n\ge1$，式（281.1）的 $Q_n,M_n$ 都是正整数，并且
+\[
+\boxed{\quad A_n=B_nM_n.\quad}
+\tag{281.2}
+\]
+令
+\[
+\alpha_n=
+\begin{cases}
+0,&6\mid n,\\
+1,&n\equiv3\pmod6,\\
+v_2(n)+2,&3\nmid n,
+\end{cases}
+\quad
+\beta_n=
+\begin{cases}0,&4\mid n,\\v_3(n)+1,&4\nmid n,\end{cases}
+\quad
+\chi_n=\begin{cases}0,&8\mid n,\\v_7(n)+1,&8\nmid n.\end{cases}
+\]
+则有精确式
+\[
+(v_2(M_n),v_3(M_n),v_5(M_n),v_7(M_n))
+=(\alpha_n,\beta_n,0,\chi_n),
+\tag{281.3}
+\]
+\[
+\gcd(M_n,B_n)
+=2^{\min(4,\alpha_n)}3^{\min(2,\beta_n)}7^{\min(1,\chi_n)}.
+\tag{281.4}
+\]
+特别地，
+\[
+\boxed{\quad \gcd(M_n,B_n)=1\quad\Longleftrightarrow\quad24\mid n.\quad}
+\tag{281.5}
+\]
+

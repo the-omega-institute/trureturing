@@ -1,0 +1,19 @@
+**定理 21.3（完整平方差恒等式与有限判据）。** 令 $\mu_1,\ldots,\mu_r$ 为 $N^2$ 的互异正特征值，$E_i$ 为其谱投影，$c_i=\|E_i e_0\|^2>0$。则对 $n\ge1$，
+
+$$
+D(n)=e_0^T N^{2n}e_0=\sum_{i=1}^r c_i\mu_i^n.
+\tag{SC.4}
+$$
+
+对任意整数 $n>k\ge1$，有精确公式
+
+$$
+\begin{aligned}
+\Delta_X(n,k)&:=D(n+k)D(n-k)-D(n)^2\\
+&=\sum_{i<j}c_ic_j(\mu_i\mu_j)^{n-k}(\mu_i^k-\mu_j^k)^2.
+\end{aligned}
+\tag{SC.5}
+$$
+
+因此以下三项等价：$\chi_X>0$；$\operatorname{rank}N\ge2$；对全部 $n>k\ge1$ 都有 $\Delta_X(n,k)>0$。若它们不成立，则 $\chi_X=0$ 且全部这些差值为零。
+

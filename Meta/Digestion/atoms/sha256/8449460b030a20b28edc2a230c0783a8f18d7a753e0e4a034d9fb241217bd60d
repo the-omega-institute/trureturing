@@ -1,0 +1,73 @@
+**命题 228.3（截断源的统一短频下界）。** 对每个固定 $q\ge2$，
+令 $p_0=q/(q-1)$。充分大时，在整个区间
+
+$$
+|\tau|\le\frac1{2aR}
+\tag{228.6}
+$$
+
+上一致成立
+
+$$
+\|F_D(\cdot,\tau)\|_{p_0,*}
+\ge\frac14 S_{q,D,V}^{1/q}.
+\tag{228.7}
+$$
+
+证明。对 $u\in G$ 定义实际余类质量
+
+$$
+r_\tau(u)=\sum_{\substack{D<d\le X\\d\equiv u\pmod V}}
+\mu_s(d)(d/X)^{i\tau},\qquad
+c_\tau=\sum_{u\in G}r_\tau(u).
+$$
+
+因为 $-aR<\log(d/X)\le0$，式（228.6）使每个求和项的相位
+距正实轴至多 $1/2$ 弧度。因此
+
+$$
+\operatorname{Re}r_\tau(u)\ge\frac12 r_0(u),\qquad
+\left(\sum_u|r_\tau(u)|^q\right)^{1/q}
+\ge\frac12\left(\sum_u r_0(u)^q\right)^{1/q}
+\ge\frac12 S_{q,D,V}^{1/q}.
+\tag{228.8}
+$$
+
+最后一步用 $q\ge1$ 时非负质量合并只会增加 $q$ 次幂和，
+不要求不同整数模 $V$ 后仍不同。
+
+标准有限逆 Hausdorff–Young 不等式在字符侧采用平均测度、群侧采用计数测度：
+若 $f$ 是字符侧函数、$g$ 是其逆变换，则
+
+$$
+\left(\sum_{u\in G}|g(u)|^q\right)^{1/q}
+\le\left(\frac1Q\sum_\chi|f(\chi)|^{p_0}\right)^{1/p_0}.
+\tag{228.9}
+$$
+
+这是逆变换的 $L^1\to\ell^\infty$ 界与 Parseval 等距的标准插值；
+条件 $1\le p_0\le2$ 正由 $q\ge2$ 保证。
+可参见 Tao, *The Fourier transform*（2009 年 4 月 6 日）
+[式（6）](https://terrytao.wordpress.com/2009/04/06/the-fourier-transform/)，
+把其中的紧交换群取为当前有限字符群；该文的概率 Haar 测度和对偶群计数测度
+正是式（228.9）的两端归一化。
+将主字符置零，对应在群侧把 $r_\tau(u)$ 换为
+$r_\tau(u)-c_\tau/Q$。由于 $|c_\tau|\le1$，这次修改的
+$\ell^q$ 范数至多为 $Q^{1/q-1}$。对置零后的变换使用式（228.9）和反三角不等式，得
+
+$$
+\|F_D(\cdot,\tau)\|_{p_0,*}
+\ge\frac12 S_{q,D,V}^{1/q}-Q^{1/q-1}.
+\tag{228.10}
+$$
+
+式（228.5）和 $\log Q=y/2+O(1)$ 给
+
+$$
+\log\frac{Q^{1/q-1}}{S_{q,D,V}^{1/q}}
+=-\left(1-\frac1q\right)\frac y2+O_q(R)\longrightarrow-\infty.
+$$
+
+故误差最终至多为 $S_{q,D,V}^{1/q}/4$，证明式（228.7）。
+所有阈值只依赖固定的 $q,a$ 及原参数族，与区间内的 $\tau$ 无关。$\square$
+

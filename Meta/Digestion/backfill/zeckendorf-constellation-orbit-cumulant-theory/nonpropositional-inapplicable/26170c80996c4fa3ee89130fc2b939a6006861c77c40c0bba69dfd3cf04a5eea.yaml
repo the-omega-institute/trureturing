@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26170c80996c4fa3ee89130fc2b939a6006861c77c40c0bba69dfd3cf04a5eea
+  normalized_sha256: sha256:26170c80996c4fa3ee89130fc2b939a6006861c77c40c0bba69dfd3cf04a5eea
+cas_ref: sha256:26170c80996c4fa3ee89130fc2b939a6006861c77c40c0bba69dfd3cf04a5eea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 590 interpreted with source clarification 635 is discharged by pinned Mathlib composition, with no reusable project GID. Compact concentration gives monomial integrability by ContinuousOn.integrableOn_compact and Measure.restrict_eq_self_of_ae_mem; the real-line variant explicitly assumes every monomial Integrable. Polynomial.eval_eq_sum, finite integral linearity, integral_eq_zero_iff_of_nonneg, Measure.support_subset_of_isClosed and Polynomial.finite_setOfPred_isRoot exclude every fixed recurrence, including order zero, by the monic annihilating polynomial square argument. Both exact full targets compiled with only propext, Classical.choice and Quot.sound; independent execution and source reviews passed. This is bind-only upstream reuse under CLAUDE 3.2, not a new project theorem, Hankel result or orthogonal-polynomial claim.
+    previous_atom_id: 3e726f77ce7a4e0a65ece7869b5425a7b6c8823c22716d6ac8b91a62787d3f3b
+    next_atom_id: 8c09e2d77e170571df999c2d00f2f0e3e09c417ac348f295f219e4d06413c564

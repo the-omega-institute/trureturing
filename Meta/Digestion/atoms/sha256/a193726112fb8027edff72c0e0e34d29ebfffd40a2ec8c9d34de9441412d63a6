@@ -1,0 +1,49 @@
+**命题 150.1（图有向 Hutchinson 算子的唯一紧集对）。**
+令 $\mathscr K(\mathbb R)$ 为非空紧子集空间，$H$ 为最大 Hausdorff 距离，
+并在 $\mathscr K(\mathbb R)^2$ 上置
+
+$$
+d_\infty((A_0,A_1),(B_0,B_1))=\max\{H(A_0,B_0),H(A_1,B_1)\}.
+$$
+
+右端两式定义算子 $\mathcal T(A_0,A_1)=(\mathcal T_0,\mathcal T_1)$。
+每个 $f_\sigma$ 都是比率 $|\lambda|$ 的仿射压缩，故
+
+$$
+H(f_\sigma(A),f_\sigma(B))=|\lambda|H(A,B).
+$$
+
+对相同标签的有限并，有
+
+$$
+H\!\left(\bigcup_j A_j,\bigcup_j B_j\right)
+\le\max_j H(A_j,B_j).
+$$
+
+逐行应用这个不等式，得到
+
+$$
+d_\infty(\mathcal T A,\mathcal T B)
+\le |\lambda|d_\infty(A,B).
+$$
+
+非空紧子集的 Hausdorff 空间在 $\mathbb R$ 完备时完备，最大度量的有限乘积仍完备。
+由于 $|\lambda|<1$，Banach 不动点定理给出唯一的非空紧集对 $(K_0,K_1)$。
+这是合法无限路径的完成，而非一个额外的整数对象。
+
+令 $\Omega_s$ 为从状态 $s$ 出发的所有合法无限标记路径，取有限字母积的乘积拓扑。
+若路径为 $(\sigma_0,\sigma_1,\ldots)$，则其编码为
+
+$$
+\kappa_s(\sigma_0,\sigma_1,\ldots)
+=\lim_{N\to\infty}f_{\sigma_0}\circ\cdots\circ f_{\sigma_{N-1}}(0)
+=\sum_{n\ge0}\lambda^n\delta_{\sigma_n}.
+$$
+
+收缩性使该级数一致收敛，故 $\kappa_s$ 连续；标准的逐层逼近给出
+$K_s=\kappa_s(\Omega_s)$。
+每个有限 Zeckendorf 地址都可在末尾接上无限个 $\mathrm{null}$，成为 eventually-null path。
+因为两个状态都存在通向状态 $0$ 的 $\mathrm{null}$ 边，eventually-null paths 在 $\Omega_s$ 中稠密。
+连续编码遂使这些路径的像在各 $K_s$（亦即 $K=K_0\cup K_1$）中稠密。
+这里不把所有无限路径等同于普通自然数；自然数地址只是其中的 eventually-null 子族。
+

@@ -1,0 +1,71 @@
+### 205.4 同一个实际整数上的 CRT 与有限容斥
+
+以下所有极限都沿素数 $r\to\infty$。置
+
+$$
+V=F_r,\qquad h_r=\frac r{\sqrt{\log r}},
+\qquad z_r=r(\log r)^{1/4}.
+$$
+
+取最大的正整数 $y_r$ 满足
+
+$$
+D_{y_r}\le V e^{-h_r},
+\qquad D=D_{y_r}.
+$$
+
+充分大时这一定义有非空有限可行集。由 $\log V\sim r\log\phi$、$h_r=o(r)$ 及引理205.4 的 $\log D_y\sim y$，对每个固定 $0<\varepsilon<1$，$\lfloor(1-\varepsilon)\log V\rfloor$ 最终可行，而 $\lceil(1+\varepsilon)\log V\rceil$ 最终不可行。因此
+
+$$
+y_r\sim\log V,\qquad
+D/V\le e^{-h_r}\longrightarrow0.
+\tag{205.4}
+$$
+
+这一论证不假设最小公倍数每次递增，也不要求其单次跳跃有额外估计。特别地，最终 $y_r<2r-1$，故引理205.2 保证 $\gcd(D,V)=1$；另有 $y_r<z_r$。
+
+选择 $g_0\in\{1,\ldots,D\}$ 满足
+
+$$
+g_0V\equiv-1\pmod D.
+$$
+
+全部同余解为 $g=g_0+Dt$。限制 $g\in I_r$ 后，允许的 $t$ 组成连续整数区间，其大小 $T$ 满足
+
+$$
+T\ge\frac{V}{10D}-O(1)\ge\frac1{20}e^{h_r}
+$$
+
+对充分大 $r$ 成立。在这同一族实际整数上，
+
+$$
+H_t=\frac{gV+1}{D}=H_0+Vt,\qquad
+H_0=(g_0V+1)/D\in\mathbb Z.
+$$
+
+若 $p\mid V$，因为 $DH_t=gV+1\equiv1\pmod p$，自动有 $p\nmid H_t$。若 $p\nmid V$，则 $p\mid H_t$ 禁止唯一的模 $p$ 余类。
+
+令 $\mathcal P=\{p\le z_r:p\text{ 素},p\nmid V\}$。对这有限集合逐项容斥；任意子集的同时禁余类由 CRT 给唯一余类，区间计数误差绝对值至多一。于是
+
+$$
+\#\{t:p\nmid H_t\ \forall p\in\mathcal P\}
+=T\prod_{p\in\mathcal P}(1-1/p)+E,
+\qquad |E|\le2^{|\mathcal P|}.
+\tag{205.5}
+$$
+
+删去 $p\mid V$ 的因子只会增大乘积。Mertens 公式给其下界 $\gg1/\log z_r$；另一方面，素数定理或通常 Chebyshev 素数计数上界给
+
+$$
+|\mathcal P|\le\pi(z_r)
+=O\!\left(\frac r{(\log r)^{3/4}}\right)=o(h_r).
+$$
+
+因此计数主项至少为 $c e^{h_r}/\log z_r$，误差至多 $e^{o(h_r)}$，主项最终严格大于误差。存在至少一个合法 $g\in I_r$，使同一个整数
+
+$$
+N_r=gV+1=DH
+$$
+
+的余因子 $H$ 没有任何 $p\le z_r$ 的素因子。可选最小这样的 $g$，使构造完全确定；本证明只提供存在性与渐近范围，不宣称这个直接容斥搜索具有实用计算成本。
+

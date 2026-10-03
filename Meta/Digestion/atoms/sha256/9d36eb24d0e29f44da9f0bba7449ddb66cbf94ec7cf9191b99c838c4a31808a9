@@ -1,0 +1,81 @@
+**定理 172.1（固定乘子与有界乘积长度的一致极限）。** 固定正整数 $c,q$。考虑
+
+$$
+n=c\prod_{i=1}^{u}F_{r_i}\prod_{j=1}^{v}L_{s_j},
+\qquad 1\le u+v\le q,\quad r_i\ge1,\quad s_j\ge0,
+$$
+
+并令 $R$ 为这些指标的最大值。对每个 $\varepsilon>0$，存在仅依赖 $c,q,\varepsilon$ 的 $R_0$，使所有上述来源在 $R\ge R_0$ 时满足
+
+$$
+0<\frac{\sigma(n)}{e^\gamma n\log\log n}<\varepsilon.
+$$
+
+因此这些来源的 Robin 比值随最大指标趋于无穷而一致趋于零。
+
+证明。只需研究 $R\ge64$，此时 $n\ge F_R\ge2^{31}>5040$。对任意 $\delta>0$，存在常数 $C_\delta\ge1$ 使
+
+$$
+\tau(m)\le C_\delta m^\delta\qquad(m\ge1).
+$$
+
+可直接证明这一标准约数界：对 $p\ge2^{1/\delta}$，有 $e+1\le2^e\le p^{\delta e}$；其余只有有限个素数，每个 $(e+1)/p^{\delta e}$ 在 $e\ge0$ 上有有限最大值。把这些最大值相乘即得 $C_\delta$，再使用 $\tau$ 的乘法性。
+
+取共同秩载体
+
+$$
+\mathcal S=
+\bigcup_i\operatorname{Div}(r_i)
+\ \cup\!\bigcup_{j:s_j>0}\operatorname{Div}(2s_j)
+\ \cup\{z(p):p\mid c\}
+\ \cup\{3\}.
+$$
+
+若 $p\mid F_{r_i}$，则 $z(p)\mid r_i$；若 $p\mid L_{s_j}$ 且 $s_j>0$，由 $F_{2s_j}=F_{s_j}L_{s_j}$ 得 $z(p)\mid2s_j$。这些整除关系包含素数二和五，无须以奇素数公式替代。$s_j=0$ 时 $L_0=2$，由额外秩三覆盖，不能写成 $\operatorname{Div}(0)$。乘子 $c$ 的所有素因子也已包含，所以该载体覆盖同一个 $n$ 的全部素数秩。
+
+令 $\omega(c)$ 为 $c$ 的不同素因子个数。对 $R\ge1$，有
+
+$$
+T:=\max\{|\mathcal S|,32768\}\le K_\delta R^\delta,
+\qquad
+K_\delta:=\max\{32768,\omega(c)+1+qC_\delta2^\delta\}.
+$$
+
+记 $a_0=0.0094243$ 和
+
+$$
+D_\delta:=\max\{32,7+a_0+\tfrac94\log K_\delta\}.
+$$
+
+于是 §167 给
+
+$$
+\frac{\sigma(n)}{e^\gamma n}
+<\frac{40}{39}\left(D_\delta+\frac94\delta\log R\right).
+$$
+
+另一方面，所有因子至少一，且 $L_R\ge F_R$，故 $n\ge F_R$。当 $R\ge4$ 时，递推增长给
+
+$$
+\log n\ge\frac{R-2}{2}\log2>\frac R8.
+$$
+
+当 $R\ge64$ 时，因而 $\log\log n>\tfrac12\log R>0$。合并可得
+
+$$
+\frac{\sigma(n)}{e^\gamma n\log\log n}
+<\frac{80D_\delta}{39\log R}+\frac{60}{13}\delta.
+$$
+
+给定 $\varepsilon>0$，选 $\delta=13\varepsilon/120$，再取 $R_0\ge64$ 且
+
+$$
+\log R_0>\frac{160D_\delta}{39\varepsilon}.
+$$
+
+右端两个加项分别小于 $\varepsilon/2$ 和等于 $\varepsilon/2$，得到统一结论。$\square$
+
+$F_1=F_2=1$ 只发生在固定小指标，不能使 $R$ 虚增；$F_0=0$ 已由指标条件排除。定理允许各指标以任意不同速度增长，但不允许 $c$ 或因子数上限 $q$ 随 $R$ 自由增大。
+
+对 §168 的同奇偶双项，因 $F_a+F_b=F_rL_s$ 且 $r+s=a$，有 $\max(r,s)\ge a/2$。因此对每个固定正整数 $c$，$c(F_a+F_b)$ 的 Robin 比值随 $a\to\infty$ 一致趋于零；这里的 $c$ 不再限于 $5040$ 的约数，但没有给一般 $c$ 的全指标阈值。定理 169.4 的 $c\mid5040$ 全指标结论仍承担其有限区间。这个乘法来源界不能经未证因子分解迁移到所有异奇偶双项或一般五模式加法历史，也不与所有整数上的 Grönwall 上极限一相矛盾。
+

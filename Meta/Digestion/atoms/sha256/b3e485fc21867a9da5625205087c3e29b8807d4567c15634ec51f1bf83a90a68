@@ -1,0 +1,19 @@
+**定义 320.0。** 沿用 §§314–316 的实际整数 $N_j=T_{j^4}$、解析截止 $\mu_j=3j^4+2$、归一化 Robin 余量 $\mathfrak q_j$、$\kappa=2\sqrt2-2$ 与 $w(x)=\sqrt x\log x$。采用假设302.1及这些章节明确列出的经典解析输入。对整数 $j\ge2$，记 $a=\mu_j,b=\mu_{j+1}$，定义
+\[
+\begin{aligned}
+\alpha_j&=\int_a^b\frac{w(y)}y\frac{b-y}{b-a}\frac{dy}{w(a)},\\
+\beta_j&=\int_a^b\frac{w(y)}y\frac{y-a}{b-a}\frac{dy}{w(b)},\\
+\rho_j&=\alpha_j+\beta_j,\qquad d_j=\log(b/a).
+\end{aligned}
+\tag{320.1}
+\]
+对整数 $J\ge3$ 置
+\[
+R_J=\sum_{j=2}^{J-1}\rho_j,\qquad
+D_J=\sum_{j=2}^{J-1}d_j=\log(\mu_J/50),\qquad
+\mathfrak b_J=\frac1{R_J}\sum_{j=2}^{J-1}
+ (\alpha_j\mathfrak q_j+\beta_j\mathfrak q_{j+1}).
+\tag{320.2}
+\]
+这些权重只依赖解析截止；一个内部端点在相邻两格中的贡献均保留。它们由同一个 $\Phi=I_\psi$ 的弦插值与对数积分诱导，不把实际整数 $N_j$ 当成价格 $\mu_j$。
+

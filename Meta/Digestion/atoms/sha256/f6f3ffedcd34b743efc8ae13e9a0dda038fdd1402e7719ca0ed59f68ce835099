@@ -1,0 +1,81 @@
+**引理 230.6（有界测试的模提升与统一配对）。** 固定 $K=8b_2$，使用引理 230.5 的同一个 $n_0$。下述测试函数对所有单位字符 $\chi$ 和实数 $\tau$ 同时满足模长不超过一；其与实际低亏损截断源的配对由式（230.27）给出，而全部高次带符号项的绝对总量满足式（230.30）。
+
+证明。对每个实数 $\tau$ 与单位字符 $\chi$，定义
+
+$$
+\mathcal G_\tau(\chi)=
+\chi(n_0)n_0^{i\tau}
+\prod_{p\in\mathcal P_-}\psi\bigl(\chi(p)^{-1}p^{-i\tau}\bigr)
+\prod_{p\in\mathcal P_+}\psi\bigl(\chi(p)p^{i\tau}\bigr).
+\tag{230.24}
+$$
+
+由式（230.11），$|\mathcal G_\tau(\chi)|\le1$ 对全部 $\chi,\tau$ 成立。把每个多项式展开，频率都是
+
+$$
+r_{\mathbf j}=
+\prod_{p\in\mathcal P_-}p^{-j_p}
+\prod_{p\in\mathcal P_+}p^{j_p},
+\qquad0\le j_p\le8,
+\quad C_{\mathbf j}=\prod_p c_{j_p}.
+\tag{230.25}
+$$
+
+每个 $r_{\mathbf j}$ 约分后的分子、分母对数之和为 $O_\kappa(y/\ell)$。对任意 $J_s(d)\le KR$，式（230.7）与式（230.19）给 $d/n_0=u/v$ 的约分分子、分母均为 $e^{o(y)}$，并且这个误差对整个低价格集合和所有测试单项式一致。
+
+这里 $v\mid n_0$，故 $v$ 与 $V$ 互素；$r_{\mathbf j}=b/c$ 的分母 $c$ 只含临界素数，也与 $V$ 互素。因而有理数同余可以合法清除分母：若 $d\equiv n_0r_{\mathbf j}\pmod V$，则 $uc\equiv vb\pmod V$。两边正整数均小于 $e^{o(y)}<V$，因此
+
+$$
+d\equiv n_0r_{\mathbf j}\pmod V, J_s(d)\le KR
+\quad\Longrightarrow\quad d=n_0r_{\mathbf j}\quad\text{作为有理数相等}.
+\tag{230.26}
+$$
+
+这一步处理实际模相位依赖；没有采用相位独立假设或无界阶数的无碰撞假设。次数八固定，但素数块大小随 $y$ 增长；其全部单项式的分子、分母规模已由式（230.13）一致控制。
+
+令 $F_D^{\le K}$ 是式（230.2）中另加 $J_s(d)\le KR$ 的部分。字符正交性与式（230.26）给精确配对
+
+$$
+\frac1Q\sum_\chi F_D^{\le K}(\chi,\tau)
+\overline{\mathcal G_\tau(\chi)}
+=
+\sum_{\substack{\mathbf j:\ d=n_0r_{\mathbf j}\in\mathbb N\\
+D<d\le X,\ J_s(d)\le KR}}
+C_{\mathbf j}\mu_s(d).
+\tag{230.27}
+$$
+
+当频率实际相等时，$d^{i\tau}(n_0r_{\mathbf j})^{-i\tau}=1$；所以式（230.27）右侧与 $\tau$ 无关。所有有效整数都自动与 $V$ 互素。
+
+如果下临界块有 $j_p\ge2$，则 $n_0r_{\mathbf j}$ 不是整数，无法贡献。余下正立方体 $j_p\in\{0,1\}$ 的总贡献，按式（230.16）、（230.22）、（230.23）恰为
+
+$$
+\mu_s(n_0)G_y\,[1-o(1)].
+\tag{230.28}
+$$
+
+现在保留并估计上临界块 $j_p\ge2$ 的全部高次项。因为 $p\asymp y$、$P_p=O_\kappa(y)$，真实均值定理给
+
+$$
+t_p:=\sum_{j=2}^{8}|c_j|w_{p,j}
+\ll_\kappa sP_pp^{-4}\ll_\kappa\ell/y^2.
+\tag{230.29}
+$$
+
+乘法性表明，不论窗口与低价格限制怎样选取这些带符号项，其绝对值总和至多
+
+$$
+\begin{aligned}
+&\mu_s(n_0)G_y
+\left[\prod_{p\in\mathcal P_+}\left(1+\frac{t_p}{g_p}\right)-1\right]\\
+&\hspace{15mm}\ll_\kappa
+\mu_s(n_0)G_y\,\frac1{y\ell}
+=o\bigl(\mu_s(n_0)G_y\bigr).
+\end{aligned}
+\tag{230.30}
+$$
+
+因此负系数没有被丢弃；式（230.27）的实部至少是式（230.28）减去式（230.30）。
+
+$\square$
+

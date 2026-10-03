@@ -1,0 +1,39 @@
+**定理331.4（共同极限的对数幂上界）。** 对 $0<\delta<\delta_0$、$\lambda\ge0$，令 $L=\log(1/\delta)$，则有固定 $C_3$ 使
+
+$$
+\boxed{
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_H+C_3\lambda^aL^D
+\quad(0<a\le1),}
+\tag{331.19}
+$$
+
+而
+
+$$
+\boxed{
+[\mathcal V_a^{\mathcal C}(\delta,\lambda)]^{1/a}
+\le K_H^{1/a}+C_3\lambda L^{D/a}
+\quad(a>1).}
+\tag{331.20}
+$$
+
+**证明。** 对定理331.3中的同一有效策略，$a\le1$ 时使用逐路径次可加性；$a>1$ 时在每个世界使用 $L^a$ Minkowski，再取世界和请求的共同上确界。随后对策略取下确界并令 $\epsilon\downarrow0$，得到两式。有效策略同时属于实概率类，故两类分别适用。证毕。
+
+因此，只要
+
+$$
+\lambda(\delta)[\log(1/\delta)]^{D/a}\longrightarrow0,
+\tag{331.21}
+$$
+
+便有
+
+$$
+\limsup_{\delta\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda(\delta))\le K_H.
+\tag{331.22}
+$$
+
+若式（331.21）的乘积仅有界，费用仍有一个共同有限上界。这些都是最优费用的上界，未声称其极限等于 $K_H$。
+

@@ -1,0 +1,81 @@
+**定理 14.4（固定 $j$ 的横向位移）。** 对每个固定 $j\ge0$，令
+
+$$
+ \kappa_k=\frac1{LAD},\qquad
+ \sigma_k=\frac DL+\frac E{2A}+\frac A{2D},\qquad
+ B_{k,j}=\sigma_k+\kappa_k\left(j+\tfrac12\right).
+$$
+
+则 $k\to\infty$ 时
+
+$$
+ \tau_{k,j}=\frac{j+1}{c_k}+j-\sigma_k-\kappa_k\left(j+\tfrac12\right)+O_j(Dc_k).
+ \tag{14.24}
+$$
+
+这里的余项对固定 $j$ 给出完整有限乘积控制：若 $t\ge2(j+1)$，则
+
+$$
+ \log\frac{H(t)}{c_k}=\frac{B_{k,j}}t+\mathcal R_{k,j}(t),\qquad
+ |\mathcal R_{k,j}(t)|\le\frac{2D(j+1)^2}{t^2}.
+ \tag{14.25}
+$$
+
+证明。把每个有限因子按 $t$ 归一化，置
+
+$$
+ \alpha_i=\frac{Ej+i}{A}\ (1\le i\le E),\quad
+ \beta_s=\frac{Aj+s}{D}\ (1\le s\le A),\quad
+ \gamma_h=\frac{Dj+h-\tfrac12}{L}\ (0\le h<D).
+$$
+
+则
+
+$$
+ \frac{H(t)}{c_k}=\frac{\prod_i(1+\alpha_i/t)\prod_s(1+\beta_s/t)}{\prod_h(1+\gamma_h/t)},
+$$
+
+且直接求和得到
+
+$$
+ \sum_i\alpha_i+\sum_s\beta_s-\sum_h\gamma_h
+ =\sigma_k+\kappa_k\left(j+\tfrac12\right)=B_{k,j}.
+ \tag{14.26}
+$$
+
+这里 $E^2/A+A^2/D-D^2/L=\kappa_k$，仍是 Cassini 恒等式。所有这些偏移的绝对值不超过 $j+1$。当 $t\ge2(j+1)$ 时，$|x|\le1/2$ 且
+$|\log(1+x)-x|\le x^2$；分子、分母合计 $2D$ 个因子，故得（14.25）。
+
+令 $M=(j+1)/c_k$。有 $c_k\le4^{-D}$，所以 $Dc_k\to0$。由（14.25），$q_{k,j}(M/2)<1$ 对充分大的 $k$ 成立，而定理 14.2 给 $\tau_{k,j}<M+j$；故 $\tau_{k,j}\asymp M$，并可在根处使用（14.25）。精确根方程为
+
+$$
+ \left|\log\frac{\tau_{k,j}-j}{M}+\frac{B_{k,j}}{\tau_{k,j}}\right|\le
+ \frac{2D(j+1)^2}{\tau_{k,j}^2}.
+ \tag{14.27}
+$$
+
+在 $\log(1+u)=u+O(u^2)$ 中令
+$u=(\tau_{k,j}-M-j)/M$，并用 $\tau_{k,j}\asymp M$，即得
+$\tau_{k,j}=M+j-B_{k,j}+O_j(D/M)$，这就是（14.24）。证明中的 $O_j(D/M)$ 完全由（14.27）及（14.25）给出，而 $1/M=c_k/(j+1)$。证毕。
+
+为比较（14.24）与连续少数坐标，以下在本章另记
+$r_k:=1-x_k$；它只表示定义 12.1 的连续最小点少数比例，不表示定义 2.1 的许可斜率。由（13.12）及其驻点方程，若
+$\Delta_k=\delta-K'(r_k)$，则
+
+$$
+ \frac{c_k}{r_k}=(1-r_k)^{-1}e^{-\Delta_k},\qquad
+ 0\le\Delta_k\le\kappa_k r_k.
+ \tag{14.28}
+$$
+
+因此 $r_k\to0$、$\kappa_k\to0$、$\sigma_k\to2/\phi$，并且
+
+$$
+ \frac1{c_k}-\frac1{r_k}\longrightarrow-1,\qquad
+ \tau_{k,j}-\frac{j+1}{r_k}\longrightarrow
+ -1-\frac2\phi=-\sqrt5.
+ \tag{14.29}
+$$
+
+这个极限固定 $j$；它是加性穿越位移，不是把 $j$ 或 $t$ 一起增长的均匀估计。
+

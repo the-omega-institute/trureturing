@@ -1,0 +1,3 @@
+* `labelQuadratic_groundSection` 证明
+  \(Q(s_f(g))=f(g,g)\)。因此 `labelQuadratic_groundSection_nonzero` 使用
+  `IsSignTable.diagonal` 得到所有非零地面截面的奇偶值为 1。

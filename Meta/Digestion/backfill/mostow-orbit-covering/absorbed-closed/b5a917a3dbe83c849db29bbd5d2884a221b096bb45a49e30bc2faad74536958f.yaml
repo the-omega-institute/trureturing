@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:b5a917a3dbe83c849db29bbd5d2884a221b096bb45a49e30bc2faad74536958f
+  normalized_sha256: sha256:b5a917a3dbe83c849db29bbd5d2884a221b096bb45a49e30bc2faad74536958f
+cas_ref: sha256:b5a917a3dbe83c849db29bbd5d2884a221b096bb45a49e30bc2faad74536958f
+coverage_gids:
+  - gid: D5/S3/Geometry/HyperbolicDilation.dilation
+    target_statement_id: sha256:25e9a9f2d1339c6c1b39ab5b5dab2f6806b3d18fbdd38adac7f9cd02f992a4d2
+  - gid: D5/S3/Geometry/HyperbolicDilation.hyperbolicDist_positiveDilation
+    target_statement_id: sha256:a298765f7f902c0b51910429053132da087d638838aad53645c46e926c921d70
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b3b5d7e78fd6c2c66c64cae963ef01a399b79457c83056ba95c36987df17756c
+    - 7d401efe40b797da5e597913f53fabf9e1b6fcb901de53067afa7dc68db7992c

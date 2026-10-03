@@ -1,0 +1,1035 @@
+{
+  "induced_characters": {
+    "additional_generic_D_values": [
+      -75,
+      -45,
+      -20,
+      -12,
+      -4,
+      8,
+      12,
+      20,
+      45,
+      75
+    ],
+    "finite_euler_exponent": 2,
+    "finite_euler_prime_limit": 97,
+    "jacobi_euler_odd_prime_limit": 500,
+    "multiplicativity_multipliers": [
+      -8,
+      -7,
+      -6,
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "rejected_zero_or_square_D": [
+      0,
+      1,
+      4,
+      9,
+      36
+    ],
+    "rows": [
+      {
+        "D": -1364,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 3,
+          "1": 11
+        },
+        "fundamental_discriminant": -1364,
+        "induced_modulus": 5456,
+        "multiplicativity_comparisons": 92752,
+        "negative_unit_witness": 37,
+        "period_comparisons": 10912,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 1200,
+          "0": 3056,
+          "1": 1200
+        },
+        "primitive_modulus": 1364,
+        "signed_squarefree_part": -341,
+        "source_labels": [
+          {
+            "odd_gap": 15,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -521,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 1,
+          "1": 13
+        },
+        "fundamental_discriminant": -2084,
+        "induced_modulus": 2084,
+        "multiplicativity_comparisons": 35428,
+        "negative_unit_witness": 11,
+        "period_comparisons": 4168,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 520,
+          "0": 1044,
+          "1": 520
+        },
+        "primitive_modulus": 2084,
+        "signed_squarefree_part": -521,
+        "source_labels": [
+          {
+            "odd_gap": 13,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -199,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 1,
+          "1": 12
+        },
+        "fundamental_discriminant": -199,
+        "induced_modulus": 796,
+        "multiplicativity_comparisons": 13532,
+        "negative_unit_witness": 3,
+        "period_comparisons": 1592,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 198,
+          "0": 400,
+          "1": 198
+        },
+        "primitive_modulus": 199,
+        "signed_squarefree_part": -199,
+        "source_labels": [
+          {
+            "odd_gap": 11,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -76,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 2,
+          "1": 10
+        },
+        "fundamental_discriminant": -19,
+        "induced_modulus": 304,
+        "multiplicativity_comparisons": 5168,
+        "negative_unit_witness": 3,
+        "period_comparisons": 608,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 72,
+          "0": 160,
+          "1": 72
+        },
+        "primitive_modulus": 19,
+        "signed_squarefree_part": -19,
+        "source_labels": [
+          {
+            "odd_gap": 9,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -75,
+        "extra_zero_primes_from_induction": [
+          2,
+          5
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 3,
+          "1": 11
+        },
+        "fundamental_discriminant": -3,
+        "induced_modulus": 300,
+        "multiplicativity_comparisons": 5100,
+        "negative_unit_witness": 11,
+        "period_comparisons": 600,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 40,
+          "0": 220,
+          "1": 40
+        },
+        "primitive_modulus": 3,
+        "signed_squarefree_part": -3,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 5,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -45,
+        "extra_zero_primes_from_induction": [
+          3
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 3,
+          "1": 10
+        },
+        "fundamental_discriminant": -20,
+        "induced_modulus": 180,
+        "multiplicativity_comparisons": 3060,
+        "negative_unit_witness": 11,
+        "period_comparisons": 360,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 24,
+          "0": 132,
+          "1": 24
+        },
+        "primitive_modulus": 20,
+        "signed_squarefree_part": -5,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 3,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -29,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 2,
+          "1": 10
+        },
+        "fundamental_discriminant": -116,
+        "induced_modulus": 116,
+        "multiplicativity_comparisons": 1972,
+        "negative_unit_witness": 7,
+        "period_comparisons": 232,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 28,
+          "0": 60,
+          "1": 28
+        },
+        "primitive_modulus": 116,
+        "signed_squarefree_part": -29,
+        "source_labels": [
+          {
+            "odd_gap": 7,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -20,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 2,
+          "1": 11
+        },
+        "fundamental_discriminant": -20,
+        "induced_modulus": 80,
+        "multiplicativity_comparisons": 1360,
+        "negative_unit_witness": 11,
+        "period_comparisons": 160,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 16,
+          "0": 48,
+          "1": 16
+        },
+        "primitive_modulus": 20,
+        "signed_squarefree_part": -5,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -12,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 2,
+          "1": 11
+        },
+        "fundamental_discriminant": -3,
+        "induced_modulus": 48,
+        "multiplicativity_comparisons": 816,
+        "negative_unit_witness": 5,
+        "period_comparisons": 96,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 8,
+          "0": 32,
+          "1": 8
+        },
+        "primitive_modulus": 3,
+        "signed_squarefree_part": -3,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -11,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 2,
+          "1": 12
+        },
+        "fundamental_discriminant": -11,
+        "induced_modulus": 44,
+        "multiplicativity_comparisons": 748,
+        "negative_unit_witness": 7,
+        "period_comparisons": 88,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 10,
+          "0": 24,
+          "1": 10
+        },
+        "primitive_modulus": 11,
+        "signed_squarefree_part": -11,
+        "source_labels": [
+          {
+            "odd_gap": 5,
+            "sign": -1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": -4,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 1,
+          "1": 11
+        },
+        "fundamental_discriminant": -4,
+        "induced_modulus": 16,
+        "multiplicativity_comparisons": 272,
+        "negative_unit_witness": 3,
+        "period_comparisons": 32,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 4,
+          "0": 8,
+          "1": 4
+        },
+        "primitive_modulus": 4,
+        "signed_squarefree_part": -1,
+        "source_labels": [
+          {
+            "odd_gap": 3,
+            "sign": -1
+          },
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 8,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 1,
+          "1": 11
+        },
+        "fundamental_discriminant": 8,
+        "induced_modulus": 32,
+        "multiplicativity_comparisons": 544,
+        "negative_unit_witness": 3,
+        "period_comparisons": 64,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 8,
+          "0": 16,
+          "1": 8
+        },
+        "primitive_modulus": 8,
+        "signed_squarefree_part": 2,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 11,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 2,
+          "1": 10
+        },
+        "fundamental_discriminant": 44,
+        "induced_modulus": 44,
+        "multiplicativity_comparisons": 748,
+        "negative_unit_witness": 3,
+        "period_comparisons": 88,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 10,
+          "0": 24,
+          "1": 10
+        },
+        "primitive_modulus": 44,
+        "signed_squarefree_part": 11,
+        "source_labels": [
+          {
+            "odd_gap": 5,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 12,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 2,
+          "1": 11
+        },
+        "fundamental_discriminant": 12,
+        "induced_modulus": 48,
+        "multiplicativity_comparisons": 816,
+        "negative_unit_witness": 5,
+        "period_comparisons": 96,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 8,
+          "0": 32,
+          "1": 8
+        },
+        "primitive_modulus": 12,
+        "signed_squarefree_part": 3,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 20,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 2,
+          "1": 10
+        },
+        "fundamental_discriminant": 5,
+        "induced_modulus": 80,
+        "multiplicativity_comparisons": 1360,
+        "negative_unit_witness": 3,
+        "period_comparisons": 160,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 16,
+          "0": 48,
+          "1": 16
+        },
+        "primitive_modulus": 5,
+        "signed_squarefree_part": 5,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 29,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 14,
+          "0": 2,
+          "1": 9
+        },
+        "fundamental_discriminant": 29,
+        "induced_modulus": 116,
+        "multiplicativity_comparisons": 1972,
+        "negative_unit_witness": 3,
+        "period_comparisons": 232,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 28,
+          "0": 60,
+          "1": 28
+        },
+        "primitive_modulus": 29,
+        "signed_squarefree_part": 29,
+        "source_labels": [
+          {
+            "odd_gap": 7,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 45,
+        "extra_zero_primes_from_induction": [
+          2,
+          3
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 3,
+          "1": 10
+        },
+        "fundamental_discriminant": 5,
+        "induced_modulus": 180,
+        "multiplicativity_comparisons": 3060,
+        "negative_unit_witness": 7,
+        "period_comparisons": 360,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 24,
+          "0": 132,
+          "1": 24
+        },
+        "primitive_modulus": 5,
+        "signed_squarefree_part": 5,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 3,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 75,
+        "extra_zero_primes_from_induction": [
+          5
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 3,
+          "1": 11
+        },
+        "fundamental_discriminant": 12,
+        "induced_modulus": 300,
+        "multiplicativity_comparisons": 5100,
+        "negative_unit_witness": 7,
+        "period_comparisons": 600,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 40,
+          "0": 220,
+          "1": 40
+        },
+        "primitive_modulus": 12,
+        "signed_squarefree_part": 3,
+        "source_labels": [
+          {
+            "generic_induction_example": true
+          }
+        ],
+        "square_multiplier": 5,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 76,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 13,
+          "0": 2,
+          "1": 10
+        },
+        "fundamental_discriminant": 76,
+        "induced_modulus": 304,
+        "multiplicativity_comparisons": 5168,
+        "negative_unit_witness": 7,
+        "period_comparisons": 608,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 72,
+          "0": 160,
+          "1": 72
+        },
+        "primitive_modulus": 76,
+        "signed_squarefree_part": 19,
+        "source_labels": [
+          {
+            "odd_gap": 9,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 199,
+        "extra_zero_primes_from_induction": [],
+        "finite_euler_prime_classes": {
+          "-1": 11,
+          "0": 1,
+          "1": 13
+        },
+        "fundamental_discriminant": 796,
+        "induced_modulus": 796,
+        "multiplicativity_comparisons": 13532,
+        "negative_unit_witness": 7,
+        "period_comparisons": 1592,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 198,
+          "0": 400,
+          "1": 198
+        },
+        "primitive_modulus": 796,
+        "signed_squarefree_part": 199,
+        "source_labels": [
+          {
+            "odd_gap": 11,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 521,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 12,
+          "0": 1,
+          "1": 12
+        },
+        "fundamental_discriminant": 521,
+        "induced_modulus": 2084,
+        "multiplicativity_comparisons": 35428,
+        "negative_unit_witness": 3,
+        "period_comparisons": 4168,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 520,
+          "0": 1044,
+          "1": 520
+        },
+        "primitive_modulus": 521,
+        "signed_squarefree_part": 521,
+        "source_labels": [
+          {
+            "odd_gap": 13,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 1,
+        "unit_reduction_is_surjective": true
+      },
+      {
+        "D": 1364,
+        "extra_zero_primes_from_induction": [
+          2
+        ],
+        "finite_euler_prime_classes": {
+          "-1": 8,
+          "0": 3,
+          "1": 14
+        },
+        "fundamental_discriminant": 341,
+        "induced_modulus": 5456,
+        "multiplicativity_comparisons": 92752,
+        "negative_unit_witness": 3,
+        "period_comparisons": 10912,
+        "period_sum": 0,
+        "period_value_counts": {
+          "-1": 1200,
+          "0": 3056,
+          "1": 1200
+        },
+        "primitive_modulus": 341,
+        "signed_squarefree_part": 341,
+        "source_labels": [
+          {
+            "odd_gap": 15,
+            "sign": 1
+          }
+        ],
+        "square_multiplier": 2,
+        "unit_reduction_is_surjective": true
+      }
+    ],
+    "scope": "Full periods at the displayed finite moduli, sampled multiplicativity, and finite Euler-factor identities only.",
+    "source_odd_gap_range": [
+      3,
+      15
+    ]
+  },
+  "parameters": {
+    "algebra_prime_limit": 97,
+    "character_gap_max": 15,
+    "factor_max_a": 44,
+    "max_a": 160,
+    "prime_limit": 500,
+    "seed_max": 40
+  },
+  "primitive_atom": {
+    "all_primitive_u_odd_prime_checks": 2048,
+    "coefficient_range": [
+      0,
+      40
+    ],
+    "distinct_primitive_pairs": 981,
+    "nonzero_seed_samples": 1680,
+    "positive_square_D_samples": 82,
+    "primitive_u_prime_five_checks": 270,
+    "principal_character_boundary": {
+      "D": 121,
+      "complete_u_factorization": [
+        [
+          7,
+          1
+        ],
+        [
+          17,
+          1
+        ]
+      ],
+      "content": 1,
+      "input_coefficients": [
+        16,
+        29
+      ],
+      "primitive_coefficients": [
+        16,
+        29
+      ],
+      "u": 119,
+      "w": 267
+    },
+    "scope": "The primes checked divide normalized u=(2A+3B)/g. No character condition is asserted for extra primes from g, and nonsquareness is not assumed."
+  },
+  "quadratic_algebras": {
+    "excluded_primes": [
+      2,
+      5
+    ],
+    "rows": [
+      {
+        "all_norm_minus_one_points": 4,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 4,
+        "p": 3,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 8,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 8,
+        "p": 7,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 10,
+        "kind": "split",
+        "mobius_iterate_checks": 8,
+        "p": 11,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 14,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 14,
+        "p": 13,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 18,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 18,
+        "p": 17,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 18,
+        "kind": "split",
+        "mobius_iterate_checks": 16,
+        "p": 19,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 24,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 24,
+        "p": 23,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 28,
+        "kind": "split",
+        "mobius_iterate_checks": 26,
+        "p": 29,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 30,
+        "kind": "split",
+        "mobius_iterate_checks": 28,
+        "p": 31,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 38,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 38,
+        "p": 37,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 40,
+        "kind": "split",
+        "mobius_iterate_checks": 38,
+        "p": 41,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 44,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 44,
+        "p": 43,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 48,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 48,
+        "p": 47,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 54,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 54,
+        "p": 53,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 58,
+        "kind": "split",
+        "mobius_iterate_checks": 56,
+        "p": 59,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 60,
+        "kind": "split",
+        "mobius_iterate_checks": 58,
+        "p": 61,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 68,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 68,
+        "p": 67,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 70,
+        "kind": "split",
+        "mobius_iterate_checks": 68,
+        "p": 71,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 74,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 74,
+        "p": 73,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 78,
+        "kind": "split",
+        "mobius_iterate_checks": 76,
+        "p": 79,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 84,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 84,
+        "p": 83,
+        "rejected_nonunit_denominators": 0
+      },
+      {
+        "all_norm_minus_one_points": 88,
+        "kind": "split",
+        "mobius_iterate_checks": 86,
+        "p": 89,
+        "rejected_nonunit_denominators": 2
+      },
+      {
+        "all_norm_minus_one_points": 98,
+        "kind": "nonsplit",
+        "mobius_iterate_checks": 98,
+        "p": 97,
+        "rejected_nonunit_denominators": 0
+      }
+    ],
+    "scope": "All norm-minus-one points in the displayed finite quadratic algebras. No extra Fibonacci rank constraint is asserted."
+  },
+  "schema": "fib-character-slice-v1",
+  "scope": "Finite exact diagnostics only. No infinite Euler-product bound, uniform Robin theorem, RH result, Lean verification, or novelty claim.",
+  "source_sha256": "4b074d45d9a1108a2c5690e203d525c631a881f1b13496d62194409cc6ea3c4c",
+  "source_slices": {
+    "a_range": [
+      5,
+      160
+    ],
+    "b_minimum": 2,
+    "bounded_prime_screen": {
+      "actual_prime_divisor_checks": 9678,
+      "common_fibonacci_support_checks": 629,
+      "induced_character_actual_prime_checks": 1329,
+      "induced_character_checks_for_gap_at_most": 15,
+      "odd_prime_upper_bound": 500,
+      "prime_five_checks": 1232,
+      "ramified_prime_nondivisibility_checks": 6508
+    },
+    "companion_sum_discriminant": {
+      "bounded_actual_odd_prime_checks": 9678,
+      "bounded_actual_prime_five_checks": 1232,
+      "bounded_ramified_prime_exclusion_checks": 6971,
+      "complete_window_actual_odd_prime_checks": 970,
+      "definition": "E = -L_(a+b)",
+      "gcd_V_E_counts": {
+        "1": 4108,
+        "2": 1378,
+        "4": 676
+      },
+      "scope": "The same source pairs and actual-prime windows as above; no complete factorization of E or new analytic bound.",
+      "square_identities": 6162
+    },
+    "complete_factorization_window": {
+      "a_range": [
+        5,
+        44
+      ],
+      "actual_prime_checks_beyond_bounded_screen": 348,
+      "all_actual_odd_prime_divisor_checks": 970,
+      "all_odd_ramified_prime_exclusion_checks": 558,
+      "distinct_V_values": 420,
+      "largest_actual_prime_witness": {
+        "D": -20633239,
+        "V": 701408767,
+        "a": 44,
+        "b": 9,
+        "complete_V_factorization": [
+          [
+            701408767,
+            1
+          ]
+        ],
+        "p": 701408767
+      },
+      "pairs": 420
+    },
+    "gcd_V_D_counts": {
+      "1": 4056,
+      "2": 1404,
+      "4": 702
+    },
+    "joint_integer_identities": 6162,
+    "odd_gap_minimum": 3,
+    "positive_square_D_gaps_observed": [
+      3
+    ],
+    "positive_square_D_pairs": 78,
+    "scope": "Finite source pairs only. Complete factorization is asserted only in its separate window; the larger prime screen has a cutoff.",
+    "witnesses": {
+      "common_fibonacci_support": {
+        "D": -11,
+        "a": 10,
+        "b": 5,
+        "p": 5
+      },
+      "positive_square_exception": {
+        "D": 4,
+        "V": 6,
+        "a": 5,
+        "b": 2
+      },
+      "prime_five": {
+        "D": -4,
+        "V": 10,
+        "a": 6,
+        "b": 3
+      }
+    }
+  }
+}

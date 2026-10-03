@@ -1,0 +1,21 @@
+### 16.2 三任意子的尖锐预测损失
+
+固定 $H_3^\tau\cong\mathbb C^2$，并设
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+Q=FPF^\dagger=\begin{pmatrix}r^2&b\\b&r\end{pmatrix},\quad
+b=rs=\varphi^{-3/2}>0.
+\tag{FT.18}
+$$
+
+$P,Q$ 分别测量第一对和第二对任意子的真空融合通道。取
+
+$$
+\rho=\begin{pmatrix}p&x+iy\\x-iy&1-p\end{pmatrix},\qquad
+0\le p\le1,\quad x^2+y^2\le p(1-p).
+\tag{FT.19}
+$$
+
+后一个不等式与两阶 Hermitian 矩阵的半正定性等价。
+

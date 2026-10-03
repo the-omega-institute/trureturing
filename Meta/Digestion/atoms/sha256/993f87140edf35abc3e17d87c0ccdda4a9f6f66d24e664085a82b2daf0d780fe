@@ -1,0 +1,42 @@
+**定理 12.2（十二周期轨道的定量障碍）。** 仍固定 $\theta=\pi/6,M=2$，则
+\[
+ \boxed{R_H\le\frac{2}{1+(l/U)^2/[2C_0]}<2,
+ \qquad C_0=9+8/\sqrt3.}
+\]
+
+**证明。** 记 $\eta=2/R_H-1\in[0,1]$。对任一差矩阵的两行 $a,b$，两行 Gram 特征值公式给
+\[
+ \sqrt{(\|a\|^2-\|b\|^2)^2+4\langle a,b\rangle^2}
+ \le\eta(\|a\|^2+\|b\|^2),
+\]
+故 $|\langle a,b\rangle|\le\eta(\|a\|^2+\|b\|^2)/2$。
+
+固定任一相位，取完整十二点轨道 $h_j=H(\varphi+j\theta)$，减去其算术均值。令离散 Fourier 系数 $v_k=12^{-1}\sum_jh_je^{-ikj\theta}$、$w_k=\|v_k\|^2$、$W=\sum_kw_k=12^{-1}\sum_j\|h_j\|^2$。有 $w_0=0,w_k=w_{12-k}$。两两距离的方差恒等式与上弦界给 $W\le U^2$。
+
+对偏移 $m$ 定义平均平方差及相邻内积
+\[
+ A_m=12^{-1}\sum_j\|h_j-h_{j+m}\|^2,
+ \quad B_m=12^{-1}\sum_j\langle h_j-h_{j+m},h_{j+1}-h_{j+1+m}\rangle.
+\]
+逐行使用上述内积界并移位平均，得 $|B_m|\le\eta A_m\le4\eta W$。Parseval 和移位公式给
+\[
+ A_m=2\sum_kw_k(1-\cos km\theta),\quad
+ B_m=2\sum_kw_k\cos(k\theta)(1-\cos km\theta).
+\]
+对 $m$ 再作十二点 Fourier 变换，$k\ne0$ 的系数为 $-2w_k\cos(k\theta)$。所以 $w_k|\cos(k\theta)|\le2\eta W$。除 $k=3,9$ 外，这个余弦绝对值至少为 $1/2$；更精确地，对
+$\mathcal B=\{1,2,4,5,6,7,8,10,11\}$，有
+\[
+ \sum_{k\in\mathcal B}\frac1{|\cos(k\theta)|}=C_0,
+ \qquad\sum_{k\in\mathcal B}w_k\le2C_0\eta W.
+\]
+另一方面，四步偏移的原圆周弦长平方为 3，故
+\[
+ 3l^2\le A_4
+ =3\sum_{k\not\equiv0\pmod3}w_k
+ \le3\sum_{k\in\mathcal B}w_k
+ \le6C_0\eta U^2.
+\]
+整理得到 $\eta\ge(l/U)^2/(2C_0)$ 和所述上界。证毕。
+
+这是一条对所有满足该全局几何前件的有限维测量族都成立的障碍，不是仅对一组 Fourier 权重的计算。它表明固定非零全局分离裕量时，二延迟稳定秩不能任意逼近 2。常数未证明最优；下面证明关于 $(l/U)^2$ 的阶不能统一加强。
+

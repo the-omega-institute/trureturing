@@ -5,6 +5,10 @@ cas_ref: sha256:5fface7c4b3b404d20194a86fb79dad155e041eddc58ec26c51d90bd9a334602
 coverage_gids:
   - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterCodeDuality.character_code_eq_relation_space_orthogonal
     target_statement_id: sha256:5b1d6840a5f087035f8b4dc1a6eafcbb0e691a5859ad6635d533fe2728f88276
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.periodic_grid_linear_statistics
+    target_statement_id: sha256:d01e5a0e72cfe538cd03c01b20406598531e97c5653ac1425083cbf4682ea743
+  - gid: D5/S3/Fourier/CharacterSelection/PeriodicGridHolonomy.plaquette_relation_rank_one
+    target_statement_id: sha256:4cc6e9a756b12721553905a5b4ca96e59dd4133152aafde1c36dde0cdda69ace
   - gid: D5/S3/Zeros/EdgeTranspositionGeneration.connected_edge_transpositions_generate
     target_statement_id: sha256:175e46900fab7b51ab07e6b6bd2394aa3b6ba451b295f34d8cfe3820d485b316
 receipts:

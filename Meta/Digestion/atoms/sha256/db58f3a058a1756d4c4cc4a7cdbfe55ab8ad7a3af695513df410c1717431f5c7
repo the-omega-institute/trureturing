@@ -1,0 +1,34 @@
+**定义 130.1（固定接枝的受控行为）。** 本节及 §131 的自然数包含零。固定整数 $H\ge1$ 和一个实际接枝组成 $w=(w_1,w_2)\in\mathbb N^2$，每个初始来源都是完整实际组成 $v=(a,b)\in\mathbb N^2$。沿用定理 3.4、4.2、5.4 的
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+q=(2,3),\qquad R(v)=Mv,\qquad G_w(v)=v+w.
+$$
+
+允许任意有限操作词，包括空词；书写 $R^k,G_w^A,R^j$ 时按从左到右的时间顺序执行。当前读出为 $o_H(v)=\gcd(qv,H)$，其中 $\gcd(0,H)=H$。定义
+
+$$
+v\sim_{H,w}v'
+\quad\Longleftrightarrow\quad
+ o_H(W(v))=o_H(W(v'))\quad\text{对每个相同的有限词 }W.
+$$
+
+每个前缀本身也是合法词，所以该等价覆盖每个可能前缀的当前读出；它没有赋予一次取得查询免费的中间观察。这里没有固定窗口相位、字面 End 或 Zeckendorf 前缀条件。
+
+自主表示是映射 $E:\mathbb N^2\to S$，配备确定更新 $\delta_R,\delta_G$ 及当前解码器 $o$，满足
+
+$$
+E(Rv)=\delta_R(Ev),\qquad E(G_wv)=\delta_G(Ev),\qquad
+o(Ev)=\gcd(qv,H).
+$$
+
+最小化的是允许任意实际来源初始化时的 $|\operatorname{im}E|$，而不是从一个指定来源可达的状态数。令
+
+$$
+C=\begin{pmatrix}2&3\\3&5\end{pmatrix}=M^4,\qquad
+x=Cv=(n,z),\qquad
+C^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix}.
+$$
+
+这里 $\det C=1$，$\det M=-1$。观察坐标上的两个命名操作分别为 $x\mapsto Mx=(z,n+z)$ 和 $x\mapsto x+Cw$，并记 $n_k=(M^kx)_1=qM^kv$，$k\ge0$。所有模 $H$ 组成对都有实际非负代表；所有模 $H$ 观察对也都有实际代表：先在剩余环中应用 $C^{-1}$，再取两组成坐标的非负代表。这个选取不在实际来源上执行减法。
+

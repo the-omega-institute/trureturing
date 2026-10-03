@@ -1,0 +1,18 @@
+### 命题 159.4（余量下界还需要正因子的条件）
+
+设 $n=Cu$ 满足上述核心条件，$w=Z(u)$，且实数下界满足
+
+$$
+0<c_\gamma\le e^\gamma,
+\qquad 1<\ell\le\log n,
+\qquad 0\le h\le\log\ell.
+$$
+
+则
+
+$$
+c_\gamma h-Z(C)w\le\Delta(n).
+$$
+
+证明。由对数单调性有 $h\le\log\ell\le\log\log n$；非负性给出 $c_\gamma h\le e^\gamma h$，再减去精确的 $Z(Cu)=Z(C)w$ 即得结论。这个正因子条件不能仅从 $n>1$ 推出：在 $1<n<e$ 上，$\log\log n<0$，用 $e^\gamma$ 的下界替换系数会逆转相应乘积比较。函数定义域与特定下界算法的适用域是两件不同的事。$\square$
+

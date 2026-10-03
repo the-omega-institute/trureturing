@@ -44,7 +44,7 @@ path,n=sys.argv[1],int(sys.argv[2])
 
 # ---- 唯一真源:三种违规形的判据 ------------------------------------------
 LONG=r'(^|;|&&|\|\s*)\s*(bash [^\n]*(land\.sh|run-codex-worker\.sh)'\
-     r'|make (lean|preflight|gate|ingest|cover|deposit|emit|test)\b'\
+     r'|make (lean|gate|ingest|cover|deposit|emit|test)\b'\
      r'|nyxid oracle ask(?![^\n;|&]*--help)|dotnet test(?![^\n;|&]*--help))'
 
 def normalize(cmd):

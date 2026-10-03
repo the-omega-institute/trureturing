@@ -1,0 +1,15 @@
+{
+  "CRT_points": 4725,
+  "actual_survivors": 1081,
+  "certificate_sha256": "5527489f6a125cd5f7a7e4bada1aa10b773a193634656f9ec3f2ec4a9a0b9824",
+  "critical_mean": "55427/25575",
+  "dual_coefficients": 89,
+  "filled_query_min_score": 21840,
+  "filled_relaxed_deletion_min": "296669/294525",
+  "lower": "273/125",
+  "original_labels": 15,
+  "probability_cap_conclusion": "R_cap(v)=||v||_1 for every nonnegative measure v on this support, for the stated RC1 scalar support-function relaxation.",
+  "scope": "All source laws on this actual finite survivor set; full-height coarse marginals inherit the bound. No LP optimality, covering, or Lean claim.",
+  "strict_gap": "2144/127875",
+  "union_debit_at_lower": "296669/294525"
+}

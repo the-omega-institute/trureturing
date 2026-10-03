@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredObligations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredDiscardedObligations
 open Lean Meta Elab Command
@@ -16,14 +19,14 @@ def betaTemplate (n : Nat) : PrimitiveRealization (cutSignature Bool Bool) :=
   (fun (_h : Nat.lt n (Nat.succ n)) =>
     cutRealization (fun x : Bool => x)) (boundProof n)
 
-register_information_template expandedTemplate
-register_information_template betaTemplate
+test_assess in register_information_template expandedTemplate
+test_assess in register_information_template betaTemplate
 
 def betaHeadTemplate (n : Nat) : PrimitiveRealization (cutSignature Bool Bool) :=
   (fun (_h : Nat.lt n (Nat.succ n)) => fun b : Bool =>
     cutRealization (fun _x : Bool => b)) (boundProof n) true
 
-register_information_template betaHeadTemplate
+test_assess in register_information_template betaHeadTemplate
 
 def targetArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -38,17 +41,17 @@ def independentArena : PrimitiveLawArena where
 instance : DecidableEq targetArena.State := instDecidableEqBool
 instance : DecidableEq independentArena.State := instDecidableEqBool
 
-information_theorem expandedTarget in targetArena primitives (expandedTemplate 0)
+test_assess in information_theorem expandedTarget in targetArena primitives (expandedTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem expandedIndependent in independentArena primitives (expandedTemplate 0)
+test_assess in information_theorem expandedIndependent in independentArena primitives (expandedTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
-information_theorem betaTarget in targetArena primitives (betaTemplate 0)
+test_assess in information_theorem betaTarget in targetArena primitives (betaTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem betaIndependent in independentArena primitives (betaTemplate 0)
+test_assess in information_theorem betaIndependent in independentArena primitives (betaTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
-information_theorem betaHeadTarget in targetArena primitives (betaHeadTemplate 0)
+test_assess in information_theorem betaHeadTarget in targetArena primitives (betaHeadTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem betaHeadIndependent in independentArena primitives (betaHeadTemplate 0)
+test_assess in information_theorem betaHeadIndependent in independentArena primitives (betaHeadTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
 
 run_meta do
