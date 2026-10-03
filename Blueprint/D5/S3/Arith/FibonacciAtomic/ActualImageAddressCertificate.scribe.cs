@@ -15,20 +15,6 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                 + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
                 + "Composition c counts alpha and beta leaves. Paths reuse the existing FiniteDescription type of finite Boolean lists, including the empty root address. "
                 + "Leaf labels use true for alpha and false for beta.")),
-            Def("Output", "Four endpoint results", "The endpoint result is leafAlpha, leafBeta, branch or absent."),
-            Def("out", "Raw endpoint observation", "Paths are root-first: false is left and true is right. A valid path reads its original endpoint. Continuing beyond a leaf reads absent."),
-            Def("height", "Maximum leaf depth", "Height is the height of the existing ordered shape decomposition. A leaf has height zero."),
-            Def("ActualImage", "Actual substitution image", "ActualImage(d) is the range of the d-fold native substitution on complete source trees."),
-            Def("Within", "Finite depth window", "Within(h,Q) means that each address in the finite set Q has length at most h."),
-            Def("Sound", "Positive address certificate", "Sound(d,V,h,Q) means Within(h,Q) and: every complete tree U with c(U)=c(V) "
-                + "and out(U,u)=out(V,u) for every u in Q belongs to ActualImage(d). Exact composition is the only competitor promise, "
-                + "no prefix-closure condition on Q, and no adaptive or random query order."),
-            Def("alphaAddresses", "Alpha leaf addresses", "The finite set contains exactly the root-first addresses of alpha leaves."),
-            Def("leafAddresses", "Complete leaf frontier", "The finite set contains exactly all alpha and beta leaf addresses."),
-            Def("UnSound", "Certificates without a composition promise", "Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately."),
-            Def("subtree", "Complete addressed subtree", "The addressed subtree is present exactly when the path reaches a node; otherwise it is absent."),
-            Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
-            Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -67,10 +53,6 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                         + "The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general "
                         + "decision-tree certificate complexity supplies neighboring background."))), DescribeRole.Theorem))));
 
-    private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula V(string s) => F.Id(s);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] xs) =>
