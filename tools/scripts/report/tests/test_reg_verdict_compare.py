@@ -71,7 +71,8 @@ def seal():
 def sealed_report():
     r = report()
     r["modules"][0]["declarations"] += [declaration("D5.Example.result.__lowers_escape"),
-                                          declaration("Arena.first.__information_catalog")]
+                                          declaration("Arena.first.__information_catalog"),
+                                          declaration("D5.Example.result.__information_unit")]
     return r
 
 
@@ -122,6 +123,14 @@ class CompareTests(unittest.TestCase):
 
     def test_multiple_arenas_preserve_occurrences(self):
         r = report([record(), record("Arena.second")])
+        code, result = self.run_compare(r, r)
+        self.assertEqual(code, 0)
+        self.assertEqual(result["matched_records"], 2)
+
+    def test_same_theorem_arena_with_distinct_catalogs(self):
+        other = record()
+        other["key"]["catalog"] = other["certificate"]["key"]["catalog"] = "Catalog.other"
+        r = report([record(), other])
         code, result = self.run_compare(r, r)
         self.assertEqual(code, 0)
         self.assertEqual(result["matched_records"], 2)
@@ -179,6 +188,13 @@ class CompareTests(unittest.TestCase):
             target.append(copy.deepcopy(target[0]))
             self.assertEqual(self.run_compare(report(), changed)[0], 2)
 
+    def test_malformed_nested_field_types_are_input_errors(self):
+        for field, value in (("state", []), ("bridge_kind", {}), ("certificate", []),
+                             ("escape_from", "source"), ("key", None)):
+            changed = report()
+            changed["modules"][0]["information_templates"]["records"][0][field] = value
+            self.assertEqual(self.run_compare(report(), changed)[0], 2)
+
     def test_noninjective_and_unused_mapping(self):
         r = report([record(), record("Arena.second")])
         for mapping in ([relocation("object_arena", "Arena.first", "Arena.second")],
@@ -191,6 +207,21 @@ class CompareTests(unittest.TestCase):
                         relocation("statement_identity", H, J),
                         dict(relocation("root", ROOT, "Reg.New"), schema="unknown")):
             self.assertEqual(self.run_compare(report(), report(), [mapping])[0], 2)
+
+    def test_duplicate_mapping_source_is_an_error(self):
+        mapping = relocation("root", ROOT, ROOT)
+        self.assertEqual(self.run_compare(report(), report(), [mapping, mapping])[0], 2)
+
+    def test_compatibility_versions_are_independent(self):
+        changed = report()
+        changed["modules"][0]["information_templates"]["compatibility_version"] = 18
+        self.assertEqual(self.run_compare(report(), changed)[0], 0)
+
+    def test_arena_and_catalog_relocations_are_exact(self):
+        before, after = report(), report([record("Arena.second")])
+        mapping = [relocation(f, "Arena.first", "Arena.second") for f in ("object_arena", "catalog")]
+        self.assertEqual(self.run_compare(before, after, mapping)[0], 0)
+        self.assertEqual(self.run_compare(before, after, mapping[:1])[0], 2)
 
     def test_legal_relocation_and_certificate_identity_changes(self):
         before, after = report(), report()
@@ -246,6 +277,14 @@ class CompareTests(unittest.TestCase):
         after["modules"][0]["information_templates"]["records"][0]["certificate"]["source_binding"]["readouts"].reverse()
         self.assertEqual(self.run_compare(before, after)[0], 1)
 
+    def test_function_operand_with_empty_scope(self):
+        row = source_record()
+        row["certificate"]["source_binding"]["readouts"] = [dict(
+            path=["arg"], state_binder=0, scope_size=0, scope_paths=[],
+            occurrence_identity=H, function_operand=True)]
+        r = report([row])
+        self.assertEqual(self.run_compare(r, r)[0], 0)
+
     def test_source_identities_and_dependency_inputs_are_not_equality_gates(self):
         before = report([source_record()])
         after = copy.deepcopy(before)
@@ -279,6 +318,48 @@ class CompareTests(unittest.TestCase):
 
     def test_seal_missing_certificate_declaration_is_input_error(self):
         self.assertEqual(self.run_compare(report(), report(), seals=(seal(), seal()))[0], 2)
+
+    def test_empty_seal_artifact_cannot_cover_a_root(self):
+        empty = dict(seal(), arenas=[])
+        r = sealed_report()
+        self.assertEqual(self.run_compare(r, r, seals=(empty, empty))[0], 2)
+
+    def test_seal_artifact_cannot_omit_a_member(self):
+        changed = seal()
+        changed["arenas"][0]["theorems"] = []
+        r = sealed_report()
+        self.assertEqual(self.run_compare(r, r, seals=(changed, changed))[0], 2)
+
+    def test_seal_generated_owner_and_kind_are_preserved(self):
+        changed = report()
+        changed["modules"][0]["declarations"][0]["kind"] = "def"
+        self.assertEqual(self.run_compare(report(), changed)[0], 1)
+
+    def test_seal_member_order_is_semantic(self):
+        r = sealed_report()
+        r["modules"][0]["declarations"] += [declaration("D5.Other.result.__information_unit"),
+                                              declaration("D5.Other.result.__lowers_escape")]
+        before = seal()
+        other = copy.deepcopy(before["arenas"][0]["theorems"][0])
+        other.update(theorem="D5.Other.result", unit="D5.Other.result.__information_unit",
+                     certificate="D5.Other.result.__lowers_escape", index=1)
+        before["arenas"][0]["theorems"].append(other)
+        after = copy.deepcopy(before)
+        after["arenas"][0]["theorems"].reverse()
+        for i, row in enumerate(after["arenas"][0]["theorems"]):
+            row["index"] = i
+        self.assertEqual(self.run_compare(r, r, seals=(before, after))[0], 1)
+
+    def test_seal_declaration_relocation(self):
+        before, after = report(), report()
+        after["modules"][0]["declarations"][0]["name"] = "Arena.second.__catalog_irredundant"
+        mapping = [relocation("declaration_name", "Arena.first.__catalog_irredundant",
+                              "Arena.second.__catalog_irredundant")]
+        self.assertEqual(self.run_compare(before, after, mapping)[0], 0)
+
+    def test_stdout_is_deterministic_across_working_directories(self):
+        r = report([record(), record("Arena.second")])
+        self.assertEqual(self.run_compare(r, r), self.run_compare(r, r))
 
     def test_registration_errors_have_separate_differences(self):
         changed = report()
