@@ -5,7 +5,7 @@ year: 2014
 title: Updating the error term in the prime number theorem
 doi: null
 url: https://arxiv.org/abs/1401.2689v2
-claim: The unconditional all-prime-power Chebyshev error bound gives an explicit exterior deficit modulus for the original theta prime diagonal, in terms of two unevaluated theta constants. It supplies no signed discrepancy or spectral exclusion.
+claim: The unconditional all-prime-power Chebyshev error bound gives an explicit exterior deficit modulus for the original theta prime diagonal. Original-series majorants evaluate its scalar inputs; no signed discrepancy or spectral exclusion follows.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -99,8 +99,8 @@ H(u)=\tfrac12\Phi(u)+|\Phi'(u)|,\qquad
 H_\infty=\sup H,\qquad M_H=\int H(u)e^{u/2}\,du.
 $$
 
-The original theta and derivative tails make both constants finite;
-$H$ is even. No certified numerical values are supplied here.
+The [original-series majorants](../Analytic/romik2021orthogonal.md)
+give $H_\infty<60$ and $M_H\le254/3$; $H$ is even.
 Let $B_0=1+\log23$. Below $23$, $\Lambda(n)\le\log n$ gives
 $|E(y)|/y\le B_0$ for $1\le y<23$. Above $23$, $b(\log y)\le1<B_0$.
 Indeed, writing $X=\sqrt{t/6.455}$ gives
@@ -141,9 +141,46 @@ $$
 
 This supplies the exterior-deficit input to the existing
 [fixed-gap eigenfunction tail estimates](lenz2010compactness.md).
-Certified upper values of $H_\infty,M_H$ remain necessary for a numerical
-radius satisfying $\delta_R\le\varepsilon/2$. The full $B_p$ tail input,
-interior discretization and complete spectral exclusion remain separate.
+With the original-series constants it becomes
+
+$$
+\delta_R\le e^{-R}+240B_0e^{-R/4}+\frac{254}{3}b(R/2).
+\tag{EC}
+$$
+
+The same Abel bound, now retaining the positive endpoint, gives the
+global upper input
+
+$$
+\|a_p\|_\infty
+\le\frac12+\frac{18}{5}+B_0\frac{254}{3}<432. \tag{AC}
+$$
+
+Here $2\Phi(x)/d(x)\le\Phi(x)$, the absolute integral in (AB) divided
+by $d(x)$ is at most $B_0M_H$, and $B_0<5$ follows from $e^4>23$.
+No favorable error sign is imposed.
+
+For $0<\varepsilon\le1/2$, define the completely specified radius
+
+$$
+R_{\rm PNT}(\varepsilon)=\max\left\{
+4,\ 2\log23,\ \log\frac6\varepsilon,
+4\log\frac{1440B_0}{\varepsilon},
+\frac{1291}{25}\log^2\frac{1016}{5\varepsilon}
+\right\}. \tag{PR}
+$$
+
+Then $R\ge R_{\rm PNT}(\varepsilon)$ ensures
+$\delta_R\le\varepsilon/2$. To check the last term, write
+$X=\sqrt{t/6.455}$. The elementary maximum
+$\sqrt X e^{-X/2}\le1$ and $\sqrt{8/(17\pi)}<2/5$ give
+$b(t)\le(2/5)e^{-X/2}$. At $t=R/2$ one has
+$X=\sqrt{100R/1291}$. Each of the three terms in (EC) is therefore
+at most $\varepsilon/6$ at the stated radius.
+
+The [effective cutoff estimates](lenz2010compactness.md) supply the
+full $B_p$ and Gamma inputs for the same fixed-gap eigenfunction task.
+Interior discretization and complete spectral exclusion remain separate.
 The bound supplies no favorable signed discrepancy, uniform
 $\varepsilon\to0$ exclusion, numerical Poincare constant or RH/Robin proof.
 
