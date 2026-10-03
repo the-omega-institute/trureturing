@@ -27363,16 +27363,16 @@ where \(\Gamma_r(z)\) is the \(r\)-summand in (237.3). Then
 \]
 
 Fibres with no selected flow bucket contribute \(\Gamma_r(z)=0\) and a
-nonnegative term to (237.4). Thus (237.5) is a bookkeeping refinement of a
-hypothetical whole-cover flow, not a lower-bound mechanism: the same hypotheses
-that produce the flow also produce this upper bound. In particular, searching
-for a lower bound on the current \(\Gamma_H\) that exceeds \(\mathcal B_H\)
-cannot close the problem; it would contradict (237.5). The remaining useful
-directions are a different cost that charges uncovered extension labels or
-capacities, an independent global lower bound on that new cost, or a
-phase-sensitive refinement of (237.1) that is not already absorbed by the
-minimal quotient core. The unrestricted whole-cover bridge therefore remains
-open.
+nonnegative term to (237.4). Thus (237.5) is a tautological budget consequence
+once a saturated flow and the whole-cover cores exist; it does not select or
+filter one saturated flow over another. The same hypotheses that produce the
+flow also produce this upper bound. In particular, searching for a lower bound
+on the current \(\Gamma_H\) that exceeds \(\mathcal B_H\) cannot close the
+problem; it would contradict (237.5). The remaining useful directions are a
+different cost that charges uncovered extension labels or capacities, an
+independent global lower bound on that new cost, or a phase-sensitive refinement
+of (237.1) that is not already absorbed by the minimal quotient core. The
+unrestricted whole-cover bridge therefore remains open.
 
 ## 238. Coordinate-wise capacity gives a flow-independent lower bound
 
@@ -27462,3 +27462,109 @@ passing it does not construct a cover or settle Erdős #7. The unrestricted
 bridge remains the task of proving that every putative whole cover violates a
 condition of this kind, or of finding a different global descent that uses the
 same source-compatible private witnesses.
+
+### 238.1. Phase-sensitive hitting lower bound
+
+The capacity aggregation in (238.3) can be supplemented by a bound that keeps the
+actual phases. For \(i\in I_H\), let
+
+\[
+\mathsf E_i(H)=
+\{r\in U_H:\text{the private-point network has at least one bucket edge
+from \(i\) over \(r\)}\}.
+\tag{238.7}
+\]
+
+This is determined by the original label, its phase, the residual components, and
+the bucket capacities; it is not an independently chosen quotient phase. For a
+coordinate \(v\), define
+
+\[
+\tau_{H,v}=
+\min\left\{|Z|:Z\subseteq U_H,
+ Z\cap\mathsf E_i(H)\ne\varnothing
+ \text{ for every }i\in I_v\right\},
+\tag{238.8}
+\]
+
+with \(\tau_{H,v}=0\) when \(I_v=\varnothing\). If the minimum is undefined,
+the private-point flow is impossible. For any saturated flow \(z\), the set
+\(R_v(z)\) from (238.2) meets \(\mathsf E_i(H)\) for every \(i\in I_v\):
+the unique unit sent from \(i\) must use one of its actual bucket edges.
+Therefore \(R_v(z)\) is a hitting set and
+
+\[
+n_v(z)\ge\tau_{H,v}.
+\]
+
+Together with (238.2a), this gives the phase-sensitive necessary chain
+
+\[
+\boxed{
+\sum_v(p(v)-1)\tau_{H,v}
+\ \le\ \Gamma_H(z)
+\ \le\ \mathcal B_H
+\qquad(z\in\mathcal Z_H).
+}
+\tag{238.9}
+\]
+
+The \(\tau\)-bound can be stronger than the coarse \(f(Q/H)\) bound and is
+independent of the capacity relaxation in (238.3). It is still only a lower
+bound: hitting sets chosen separately for different coordinates need not arise
+from one common flow, and they do not enforce the shared bucket capacities.
+Thus failure of the left inequality in (238.9) rules out a hypothetical
+whole-cover flow, while passing it does not construct one.
+
+## 239. The coarse lower bound is the Simpson budget; support leakage is the gap
+
+The coordinate-wise lower bound has a familiar coarse value. For a positive
+integer \(M\), write
+
+\[
+f(M)=\sum_{p}v_p(M)(p-1).
+\tag{239.1}
+\]
+
+Because each \(D_i\) is an initial CRT coordinate segment, the union of all
+external supports is the full quotient coordinate set. Therefore
+
+\[
+\sum_{v:I_v\ne\varnothing}(p(v)-1)=f(Q/H),
+\tag{239.2}
+\]
+
+and (238.5) always implies \(\Gamma_H(z)\ge f(Q/H)\).
+
+One must not, however, reverse this inequality into an unconditional lower
+bound on \(\mathcal B_H\). At a particular fibre \(r\), the active family
+\(J_B(r)\) can have a minimal subcover whose clauses use only a proper subset
+of the coordinates occurring in \(L_B\) at other fibres. Tarsi's surplus then
+charges the lcm of that local core, not automatically \(L_B\). A coordinate
+can be paid by the flow at one fibre while disappearing from the local core
+that supplies the corresponding term in \(\mathcal B_H\).
+
+There is a useful conditional diagnostic. Suppose that for every component
+\(B\) one can choose \(r_B\in E_B\) and an ordinary inclusion-minimal subcover
+\(C_{B,r_B}\subseteq J_B(r_B)\) such that the union of its coordinate supports
+contains every coordinate of \(G_B\). Then the full-coordinate Tarsi surplus
+gives
+
+\[
+|J_B(r_B)|-1\ge |C_{B,r_B}|-1\ge f(L_B).
+\tag{239.3}
+\]
+
+Disjointness of the \(E_B\) and coprimality of the \(L_B\) would then yield
+
+\[
+\mathcal B_H\ge\sum_B f(L_B)=f(Q/H),
+\tag{239.4}
+\]
+
+so the coarse comparison would collapse to
+\(f(Q/H)\le\Gamma_H(z)\le\mathcal B_H\). The added support condition is not
+available from whole coverage and EB1 alone; proving it, or charging the
+missing coordinates through the capacity-refined \(\kappa_v\) terms, is exactly
+a remaining whole-cover/source bridge. Thus (239.3)--(239.4) are a conditional
+diagnostic, not an unrestricted exclusion.\n
