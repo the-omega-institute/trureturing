@@ -1,0 +1,10 @@
+**定义60.4（可兼容位置数）。** 对 $\varepsilon\ge0$ 置
+
+$$
+K_M(s,\varepsilon)=\max\{k\in\{1,\ldots,M\}:r_k(s)\le\varepsilon\}.
+\tag{60.8}
+$$
+
+集合非空，因为 $r_1=0$。若 $\varepsilon<\tau^2$，还可写
+$K_M=\min\{M,K_\infty(s,\varepsilon)\}$，其中 $K_\infty$ 是同一不等式在所有正整数中的最大解；若 $\varepsilon\ge\tau^2$，则 $K_M=M$。
+

@@ -1,0 +1,46 @@
+**定理60.3（奇偶阶梯与有限暴露极限）。** 有
+
+$$
+r_1=0,\qquad r_{2j}=r_{2j+1}
+=\tau\sum_{\ell=1}^{j}\operatorname{Cat}_{\ell-1}
+[\tau(1-\tau)]^{\ell}\quad(j\ge1),
+\tag{60.6}
+$$
+
+其中 $\operatorname{Cat}_v={2v\choose v}/(v+1)$。并且
+
+$$
+r_{2j}>r_{2j-1},\qquad r_k<\tau^2,\qquad
+\lim_{k\to\infty}r_k=\tau^2=4s^2.
+\tag{60.7}
+$$
+
+**证明。** 记
+
+$$
+e_k=\frac1k\mathbb E\min\{B_k,k-B_k\},\qquad r_k=\tau e_k .
+$$
+
+先处理奇数步。对 $2j+1$ 个可交换的独立 Bernoulli 位均匀删去一个坐标，删后计数 $T$ 服从 $\operatorname{Bin}(2j,\tau)$。条件于删前总数为 $b$，把被删位分别为 $1$ 和 $0$ 的两种情形按概率 $b/(2j+1)$ 与 $(2j+1-b)/(2j+1)$ 相加，逐个检查 $b\le j$、$b=j+1$ 和 $b\ge j+2$，得到
+
+$$
+\mathbb E\!\left[\min\{T,2j-T\}\mid B_{2j+1}=b\right]
+=\frac{2j}{2j+1}\min\{b,2j+1-b\}.
+$$
+
+取期望并除以 $2j$，即 $e_{2j}=e_{2j+1}$。同一均匀删位计算用于偶数步时，归一化后的非平局构型两种删法相消，只有删前恰有 $j$ 个1的平局构型留下增量；因此
+
+$$
+e_{2j}-e_{2j-1}
+=\frac{\mathbb P\{B_{2j}=j\}}{2(2j-1)}.
+$$
+
+于是
+
+$$
+\frac{\tau}{2(2j-1)}{2j\choose j}[\tau(1-\tau)]^j
+=\tau\operatorname{Cat}_{j-1}[\tau(1-\tau)]^j>0.
+$$
+
+累加即得（60.6）。由于 $\tau\le2/5<1/2$，有 $\min(B_k,k-B_k)\le B_k$，且事件 $B_k=k$ 具有正概率并使不等式严格，故 $r_k<\tau^2$。大数定律及有界收敛给 $k^{-1}\min(B_k,k-B_k)\to\tau$，再乘外层 $\tau$ 得极限 $\tau^2$。$\square$
+
