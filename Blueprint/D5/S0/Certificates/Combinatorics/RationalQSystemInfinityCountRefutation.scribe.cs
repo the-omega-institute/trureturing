@@ -69,7 +69,10 @@ internal sealed class RationalQSystemInfinityCountRefutationDocument : IScribeDo
                         + "the sum through x = 9 is 5,658,537. A natural-number cast to ℤ "
                         + "is nonnegative, so the displayed negative value contradicts the "
                         + "claim. This refutes (C.2) without modelling Bethe states."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hou-jiang-miao-2023-root-of-unity-infinity-count-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static Formula FormulaDefinition()

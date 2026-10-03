@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Combinatorics/RationalQSystemInfinityCountRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hou-jiang-miao-2023-root-of-unity-infinity-count-refutation` (refuted) by `D5/S0/Certificates/Combinatorics/RationalQSystemInfinityCountRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hou-jiang-miao-2023-root-of-unity-infinity-count-refutation","declaration_gid":"D5/S0/Certificates/Combinatorics/RationalQSystemInfinityCountRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
