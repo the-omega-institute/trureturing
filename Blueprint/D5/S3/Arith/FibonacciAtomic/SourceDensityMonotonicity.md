@@ -1,8 +1,8 @@
-# Real Extension of Fibonacci Source Density Ratios
+# Definitions of Fibonacci Source Density Ratios
 
 ## Abstract
 
-Each real finite-product ratio increases strictly and crosses one at a unique bounded point.
+Shared definitions for the real finite-product extension of Fibonacci source density ratios.
 
 F denotes the natural Fibonacci sequence with F(0)=0 and F(1)=1. Fix natural k>=1 and j. Put d=3k. Nonintegral t is an auxiliary real parameter of finite products; it does not represent a nonintegral number of tree leaves.
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.D`
 
 *Commentary.*
 
-D(k)=F(3k)=E(k)+A(k) for k>=1.
+D(k)=F(3k).
 
 **Definition 1.4 (Total composition coefficient).**
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.L`
 
 *Commentary.*
 
-L(k)=F(3k+1)=A(k)+D(k) for k>=1.
+L(k)=F(3k+1).
 
 **Definition 1.5 (First affine target coordinate).**
 
@@ -162,22 +162,6 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.lowerEnve
 
 The lower envelope is 1/(t-j)-(j+1/2)/(LADt^2)-AE/(2a(a+E))-DA/(2b(b+A)) -LD/((n-1/2)(n+D-1/2)). Its coordinates share the same k,j,t.
 
-In the displayed statement, logQ(k,j) denotes the function t maps to log(q(k,j,t)), and qOverT(k,j) denotes t maps to q(k,j,t)/t. R and N denote the real numbers and natural numbers.
-
-**Theorem 1.14 (Strict increase and unique crossing).**
-
-$$\forall k,j \in N, (1 \leq k) \implies (0 < \operatorname{c}\left(k\right)) \land (\forall t \in R, (j + 1 \leq t) \implies (0 < \operatorname{q}\left(k, j, t\right)) \land (\operatorname{HasDerivAt}\left(\operatorname{logQ}\left(k, j\right), \operatorname{g}\left(k, j, t\right), t\right)) \land (\operatorname{lowerEnvelope}\left(k, j, t\right) \leq \operatorname{g}\left(k, j, t\right))) \land (\operatorname{StrictMonoOn}\left(\operatorname{q}\left(k, j\right), \operatorname{Ici}\left(j + 1\right)\right)) \land (\operatorname{Tendsto}\left(\operatorname{qOverT}\left(k, j\right), \operatorname{atTop}\left(\right), \operatorname{nhds}\left(\frac{\operatorname{c}\left(k\right)}{j + 1}\right)\right)) \land (\exists \tau \in R, ((j + 1 \leq \tau) \land (\operatorname{q}\left(k, j, \tau\right) = 1)) \land (\forall z \in R, ((j + 1 \leq z) \land (\operatorname{q}\left(k, j, z\right) = 1)) \implies z = \tau)) \land (\exists \tau \in R, ((j + 1 \leq \tau) \land (\operatorname{q}\left(k, j, \tau\right) = 1)) \land (2j + 1 < \tau) \land (\tau < j + \frac{j + 1}{\operatorname{c}\left(k\right)}) \land (\forall t \in N, (j + 1 \leq t) \implies ((\operatorname{q}\left(k, j, t\right) < 1) \iff (t < \tau)) \land ((\operatorname{q}\left(k, j, t\right) = 1) \iff (t = \tau)) \land ((1 < \operatorname{q}\left(k, j, t\right)) \iff (\tau < t))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.result` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The derivative is taken on the whole real line at each legal t, including the endpoint j+1. The reciprocal endpoint bounds follow from the logarithmic-mean kernel sandwich. Cassini's squared determinant identity links the three affine coordinates, so their logarithmic errors are estimated together.
-
-The finite-product factor H decreases strictly to c and lies strictly between c and one on the legal half-line. Hence q(2j+1)<1 and q(j+(j+1)/c)>1. Continuity gives the crossing between these two points, and strict increase gives uniqueness and the three integer comparison equivalences for the real finite-product ratio.
-
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.A`
@@ -192,8 +176,4 @@ The finite-product factor H decreases strictly to c and lies strictly between c 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.lowerEnvelope`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.n`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.q`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.rising`
-- Dependency: [D5/S1/Scale/Fibonacci](../../../S1/Scale/Fibonacci.md)
-- Dependency: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](GenealogicalFiberTransport.md)
-- Dependency: [D5/S3/Divergence/MeanKernels/LogarithmicMeanSandwich](../../Divergence/MeanKernels/LogarithmicMeanSandwich.md)

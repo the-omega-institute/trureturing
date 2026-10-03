@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SourceDensityCrossing.sourceDensity
 
 *Commentary.*
 
-sourceDensity(k,t,i) is the ratio of fiberCount(t-i,i) to fiberCount(step iterated 3k times on (t-i,i)). The subtraction is natural subtraction.
+sourceDensity(k,t,i) is the ratio of fiberCount(t-i,i) to fiberCount(step iterated 3k times on (t-i,i)). The subtraction is natural subtraction. Its interpretation as a density on the t-leaf source grid requires t>=1 and i<=t. The definition still has values outside this domain, for example fiberCount(0,0)=1. The theorem uses only t>=j+1 with i=j or i=j+1.
 
 In the displayed statement, logQ(k,j) denotes the function t maps to log(q(k,j,t)), and qOverT(k,j) denotes t maps to q(k,j,t)/t. R and N denote the real numbers and natural numbers.
 
@@ -30,12 +30,15 @@ $$\forall k,j \in N, (1 \leq k) \implies (0 < \operatorname{c}\left(k\right)) \l
 
 *Commentary.*
 
-The derivative is taken on the whole real line at each legal t, including the endpoint j+1. The reciprocal endpoint bounds follow from the logarithmic-mean kernel sandwich. Cassini's squared determinant identity links the three affine coordinates, so their logarithmic errors are estimated together.
+The proved statement consists of the analytic clauses, the integer bridge, and the actual density comparisons of Theorem 14.2. It does not certify the complete source proof text, the common budget (14.3), or the source-permission prose. The derivative is taken on the whole real line at each legal t, including the endpoint j+1. The reciprocal endpoint bounds follow from the logarithmic-mean kernel sandwich. Cassini's squared determinant identity links the three affine coordinates, so their logarithmic errors are estimated together.
 
-The finite-product factor H decreases strictly to c and lies strictly between c and one on the legal half-line. Hence q(2j+1)<1 and q(j+(j+1)/c)>1. Continuity gives the crossing between these two points, and strict increase gives uniqueness and the three integer comparison equivalences for the real finite-product ratio and actual density ratio. For i=j or j+1 at a legal integer t, the iterated Fibonacci step has coordinates (At+Ei,Dt+Ai). The Catalan and binomial factorial identities give the adjacent fiber-count ratio. Pairing consecutive factors in rising(2n-1,2D)=4^D rising(n-1/2,D) rising(n,D) then gives the integer bridge.
+The finite-product factor H decreases strictly to c and lies strictly between c and one on the legal half-line. Hence q(2j+1)<1 and q(j+(j+1)/c)>1. Continuity gives the crossing between these two points. This implementation follows the route in which H decreases strictly to c; its small-parameter interval constants differ from those in (14.18)-(14.20). Strict increase gives uniqueness and the three integer comparison equivalences for the real finite-product ratio and actual density ratio. For i=j or j+1 at a legal integer t, the iterated Fibonacci step has coordinates (At+Ei,Dt+Ai). The Catalan and binomial factorial identities give the adjacent fiber-count ratio. Pairing consecutive factors in rising(2n-1,2D)=4^D rising(n-1/2,D) rising(n,D) then gives the integer bridge.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityCrossing.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityCrossing.sourceDensity`
+- Dependency: [D5/S1/Scale/Fibonacci](../../../S1/Scale/Fibonacci.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport](GenealogicalFiberTransport.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity](SourceDensityMonotonicity.md)
+- Dependency: [D5/S3/Divergence/MeanKernels/LogarithmicMeanSandwich](../../Divergence/MeanKernels/LogarithmicMeanSandwich.md)
