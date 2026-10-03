@@ -1,0 +1,53 @@
+**命题 357.4（组成恰差四的实际历史碰撞及共同后缀）。** 令
+
+$$
+U=\rho^6(\alpha),\qquad V=\rho^6(\beta)=\rho^7(\alpha).
+$$
+
+只对非空树列表定义固定右结合拼接：$\operatorname{Conc}(s_1)=s_1$，且
+
+$$
+\operatorname{Conc}(s_1,\ldots,s_k)
+=\langle s_1,\operatorname{Conc}(s_2,\ldots,s_k)\rangle
+\qquad(k\ge2).
+$$
+
+取实际来源
+
+$$
+P=\operatorname{Conc}(U,U,U,\beta,\beta),
+\qquad
+Q=\operatorname{Conc}(\alpha,\alpha,\alpha,V,V).
+\tag{357.9}
+$$
+
+则 $c(P)=(15,26)$、$c(Q)=(19,26)$，而 $\mathscr H(P)=\mathscr H(Q)$。定义实际叶追加操作
+
+$$
+\operatorname{App}_{\alpha}(s)=\langle s,\alpha\rangle,
+\qquad
+\operatorname{App}_{\beta}(s)=\langle s,\beta\rangle.
+$$
+
+对任意整数 $p,q\ge0$，令
+
+$$
+P_{p,q}=\operatorname{App}_{\beta}^{q}
+          \bigl(\operatorname{App}_{\alpha}^{p}(P)\bigr),
+\qquad
+Q_{p,q}=\operatorname{App}_{\beta}^{q}
+          \bigl(\operatorname{App}_{\alpha}^{p}(Q)\bigr).
+\tag{357.10}
+$$
+
+次数零表示恒等操作，不表示空树。两棵树始终非空，且
+
+$$
+\begin{aligned}
+c(P_{p,q})&=(15+p,26+q),\\
+c(Q_{p,q})&=(19+p,26+q),\\
+\mathscr H(P_{p,q})&=\mathscr H(Q_{p,q}).
+\end{aligned}
+\tag{357.11}
+$$
+

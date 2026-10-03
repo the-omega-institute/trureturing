@@ -1,0 +1,28 @@
+For $\Phi_P\Psi_P=\mathrm{id}$, start instead with an arbitrary
+$((s^\dagger,p),d,b)$ in the codomain. In its reconstruction, the lifted
+low rows are the entries of $\theta$ other than $a$, in their original
+order. Every lifted high row is greater than $A$, since a raw high row
+is at least $A$ and its lift is one larger. The insertion position has
+exactly $j$ low slots before it, so the inserted $a=\theta_{j+1}$ makes
+the original row word's subword on $[A]$ exactly $\theta$.
+Deleting its maximum recovers the supplied $\rho$ and the digit $d$.
+Ordinary deletion recovers $(s,p)$, and the rank of its position $t$
+among rows at most $B$ is still $b+1$. The repaired replacement of its
+low subword by $\rho$ consequently returns the supplied $s^\dagger$,
+with the same $p,d,b$. Both compositions are thus identities.
+
+It remains to prove the weight identity. Let
+$R=(\sigma_1,\ldots,\sigma_{t-1})$ be the row prefix before the deleted
+$a$. On surviving front comparisons both row order and column order are
+preserved by standardization. For $x\ne a$ and $a\leq f_i$,
+
+$$
+\delta_a(x)>f_i-1\quad\Longleftrightarrow\quad x>f_i.
+$$
+
+Indeed, a row below $a$ is at most $f_i-1$, and a row above $a$ is reduced
+by one. Thus every surviving contribution to $H_f$ agrees with its tail
+counterpart. The deleted column has front row $a\leq A$, and its forbidden
+targets are exactly the rows $r>A$ with path positions less than $t$:
+the condition $\pi_j<t$ selects precisely those positions. Therefore
+

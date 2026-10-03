@@ -1,0 +1,13 @@
+**定理 27.9（原随机类与固定均匀种子类的共同锐值）。** 对定义 27.1 的最终族，原随机类与式（26.21）的固定均匀种子子类分别有达到的下确界，且
+
+$$
+\inf_{\Pi\in\mathfrak R_3}\max_{i\in[m]}
+\mathbb E_\mu C_\Pi(\cdot,P_i)
+=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\max_{i\in[m]}
+\mathbb E_{\mu_{\mathrm u}}C_\Pi(\cdot,P_i)
+=n+1-\frac1{\tau(K)}.
+\tag{27.19}
+$$
+
+取得策略可用有理有限混合构造，在每个种子及每个有限来源上均正确且有限终止。
+

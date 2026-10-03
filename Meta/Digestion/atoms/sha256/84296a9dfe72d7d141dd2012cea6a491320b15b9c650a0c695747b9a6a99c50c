@@ -1,0 +1,62 @@
+**定义 29.1（实际联合响应数据、分裂核心与费用目标）。** 沿用定义 23.1、28.1 的原始只读合同，固定 $d=3$。未知输入仍遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $U\in\mathcal T$，任务仍为 $\iota_3(U)=\mathbf1_{\{U\in\rho^3(\mathcal T)\}}$。共同初始化与输入无关；没有组成、叶数、大小、高度、正性或有限候选承诺。每个有限左右地址，包括 $\varepsilon$，始终可以直接查询，报告为同一不变输入的四值；费用只计不同实际地址，重复请求由真实缓存供应，未有限终止费用为 $+\infty$。计算、定位、地址长度与种子取得不收费。$\mathfrak D_3$、$\mathfrak R_3$、$\mathfrak R_3^{\mathrm u}$ 分别保留全域确定性正确总性、原逐来源随机合同及固定 $([0,1],\mathcal L,\operatorname{Leb})$ 种子合同；原随机空间不要求完备。
+
+取整数 $m\ge1$ 及两两不同、完整描述已知的实际树 $F=(P_i)_{i\in[m]}$，其中 $P_i\in\rho^3(\mathcal T)$。它们仅是费用评价对象。定义
+
+$$
+\begin{gathered}
+\mathcal B=\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,
+                 \mathsf{branch},\mathsf{absent}\},\qquad
+\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N},\\
+L_i=L(P_i),\qquad n_i=|L_i|,\qquad \boldsymbol n=(n_i)_{i\in[m]},\\
+a(u)=(\operatorname{out}_{P_i}(u))_{i\in[m]}\in\mathcal B^{[m]},
+\qquad \mathcal A_F=\{a(u):u\in\Sigma\},\\
+\chi(\mathsf{leaf}_\alpha)=\chi(\mathsf{leaf}_\beta)=0,
+\qquad \chi(\mathsf{branch})=\chi(\mathsf{absent})=1.
+\end{gathered}
+\tag{29.1}
+$$
+
+$\mathcal A_F$ 是实际联合响应向量的集合，不计相同向量出现于多少地址，不是任意填写的响应表。固定地址的短词优先次序，等长时取 $\mathtt L<\mathtt R$；对每个 $a\in\mathcal A_F$，以 $r_F(a)$ 记满足 $a(u)=a$ 的首个实际地址。令 $N_i$ 为 $P_i$ 的全部实际节点地址；确定这些代表可以使用有限集合 $\bigcup_iN_i$ 及其外首个地址。代表替换始终使用完整 $m$ 坐标向量。
+
+对非空 $S\subseteq[m]$、$a\in\mathcal A_F$，定义
+
+$$
+S_{a,y}=\{i\in S:a_i=y\},\qquad
+Y_a(S)=\{a_i:i\in S\},\qquad
+\mathcal A_+(S)=\{a\in\mathcal A_F:|Y_a(S)|\ge2\}.
+\tag{29.2}
+$$
+
+只在非空幸存指标集上递归定义非负整数向量集合 $\Gamma_F(S)\subseteq\mathbb N_0^S$：
+
+$$
+\begin{aligned}
+\Gamma_F(\{i\})&=\{(0)\},\\
+\Gamma_F(S)&=
+\bigcup_{a\in\mathcal A_+(S)}
+\left\{
+ \bigl(\chi(a_i)+g^{a_i}_i\bigr)_{i\in S}:
+ g^y\in\Gamma_F(S_{a,y})\ \text{对每个 }y\in Y_a(S)
+\right\}\quad(|S|\ge2),\\
+\mathcal V_F&=\{\boldsymbol n+g:g\in\Gamma_F([m])\}.
+\end{aligned}
+\tag{29.3}
+$$
+
+递归所选 $a\in\mathcal A_+(S)$ 的每个非空 $S_{a,y}$ 都是真子集，故这是按 $|S|$ 的有限递归；空孩子不进入递归。递归中的一个选择树在非单元素节点 $S$ 选择 $a\in\mathcal A_+(S)$，按实际报告进入相应非空孩子，到单点结束路由；单点本身不是未知输入的接受证书。这里不把已付费地址集 $Q$ 放入 $\Gamma_F$ 的自变量，实际执行仍保留完整地址缓存。
+
+把定义 28.1 的目标推广到这 $m$ 个评价对象：
+
+$$
+\begin{aligned}
+D(F)&=\inf_{\pi\in\mathfrak D_3}\max_{i\in[m]}C_\pi(P_i),\\
+R(F)&=\inf_{\Pi\in\mathfrak R_3}\max_{i\in[m]}\mathbb E C_\Pi(\cdot,P_i),&
+R_{\mathrm u}(F)&=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\max_{i\in[m]}\mathbb E C_\Pi(\cdot,P_i),\\
+W(F)&=\inf_{\Pi\in\mathfrak R_3}\mathbb E\!\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right],&
+W_{\mathrm u}(F)&=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\mathbb E\!\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right].
+\end{aligned}
+\tag{29.4}
+$$
+
+每个最大值中的各次评价使用同一控制器和同一种子；期望仅在该策略自己的输入无关种子律上取，不给 $F$ 或 $\mathcal T$ 设置来源先验。
+
