@@ -4423,7 +4423,7 @@ h_{v,s}'(0)=0,\quad h_{v,s}(1)=1.
 h_{j,v,s}+\gamma_j(s)T_{j,v}h_{j,v,s}=1,\qquad
 \gamma_j(s)=\frac{e^{s\epsilon_j}-1}{\epsilon_j}.
 \]
-离散核的一致收敛和 \(v\) 的一致连续性给出 \(T_{j,v}\to \mathsf T_v\)，从而得到积分方程和其等价的边值问题。初值与边界条件唯一确定 \(c_v\)，故整列收敛到 \(h_{v,s}\)。恒等速度时直接解常系数方程即得余弦谱和双曲余弦核。 \(\square\)
+离散核的一致收敛和 \(v\) 的一致连续性给出 \(T_{j,v}\to \mathsf T_v\)，从而得到积分方程和其等价的边值问题。初值与边界条件唯一确定 \(c_v\)，故整列收敛到 \(h_{v,s}\)。恒等速度时直接解常系数方程即得余弦谱和双曲余弦核。$\square$
 
 **推论 42.3（矩递推、Fredholm 总质量与速度识别）。** 令 \(M_{p,v}(x)\) 为从 \(x\) 出发的 \(p\) 阶通过时间矩，且 \(M_{0,v}=1\)。则
 \[
@@ -4476,7 +4476,7 @@ v(x)=-D\,m_v''(x)
 \[
 \sup_x\int_0^1\frac{1-\max(x,y)}D\,dy\le\frac1{2D},
 \]
-故第一式成立。积分方程的 resolvent 恒等式和正下界给出 \(h\) 的一致估计；基本解方程的 Gronwall 估计给出 \(c_v\) 的第二项。谱连续性由同一闭二次型和权函数的有界正扰动得到。 \(\square\)
+故第一式成立。积分方程的 resolvent 恒等式和正下界给出 \(h\) 的一致估计；基本解方程的 Gronwall 估计给出 \(c_v\) 的第二项。谱连续性由同一闭二次型和权函数的有界正扰动得到。$\square$
 
 \(v\) 在这里是数学上的局部停留权或 speed measure。它只有在额外规定物理状态空间、能量泛函和观测映射后才可作介质参数；广义 Sturm–Liouville 谱和 Fredholm 形式本身不推出温度、热流、量子输运或经验普适性。离散 FIB 词只提供长度、数量及嵌入序列，插值函数 \(v\)、边界和时钟仍是外加模型输入。
 
@@ -4523,7 +4523,7 @@ C_j=h_jQ_j,\quad
 \left(Z+Q_j(I_m-Z)\right)Z^{-1}
 =I_m+Q_j(Z^{-1}-I_m)
 \]
-得到等价的第二式。取 \(z_k=e^{-h_js_k}\) 后 \(d_k=e^{h_js_k}-1\)，再用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。\(\square\)
+得到等价的第二式。取 \(z_k=e^{-h_js_k}\) 后 \(d_k=e^{h_js_k}-1\)，再用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。$\square$
 
 **推论 43.3（混合累积量与非高斯性）。** 令 \(\Lambda_k=\Lambda(u_k)\)，在 \(T=\operatorname{diag}(t_k)\) 足够小时，
 \[
@@ -4552,7 +4552,7 @@ C_j=h_jQ_j,\quad
 \]
 因此有限维占用场不是非退化高斯场，单点指数边缘也不意味着多点独立。
 
-**证明。** 离散 Feynman–Kac 方程在探针行的消元给出第一式；\(G(0,a)=G(a,a)=q_a\)、\(G(a,b)=q_{\max(a,b)}\) 使矩阵为 \(Q_j\)。取 \(z_k=e^{-h_js_k}\) 并用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。\(\square\)
+**证明。** 离散 Feynman–Kac 方程在探针行的消元给出第一式；\(G(0,a)=G(a,a)=q_a\)、\(G(a,b)=q_{\max(a,b)}\) 使矩阵为 \(Q_j\)。取 \(z_k=e^{-h_js_k}\) 并用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。$\square$
 
 **定理 43.4（同轨连续占用泛函）。** 对 \(s_r\ge0\) 及 \(f_r\in C([0,1],[0,\infty))\)（\(1\le r\le p\)），令
 \[
@@ -4870,7 +4870,7 @@ D\partial_u^2(f\circ F)(u)
 =D\left(F'(u)^2 f''(F(u))+F''(u)f'(F(u))\right),
 $$
 
-再令 \(u=G(y)\)。反射条件由 \(\partial_u(f\circ F)(0)=F'(0)f'(0)\) 得到；\(F'(0)>0\)，故等价于 \(f'(0)=0\)。\(\square\)
+再令 \(u=G(y)\)。反射条件由 \(\partial_u(f\circ F)(0)=F'(0)f'(0)\) 得到；\(F'(0)>0\)，故等价于 \(f'(0)=0\)。$\square$
 
 **推论 45.3（可识别对象是坐标等价类）。** 只给出单一起点的完整标量曲线 \(H(s)\)，即使 \(s\ge0\) 的连续曲线无噪声可得，也不能在允许上述 \(C^2\) 坐标推前的模型类中唯一恢复空间依赖的扩散系数和漂移系数。至少所有
 
@@ -4881,3 +4881,386 @@ $$
 都属于同一读出等价类。要打破此等价性，必须额外固定物理坐标、限制算子为已知无漂移的子类，或加入内部位置探针与其观测映射；增加频率范围本身不能打破路径级等价。
 
 这里的“规范”是数学上的坐标选择，不是递归内生的物理对称性。若实验另行规定物理位置、局部通量或速度密度，必须先证明这些读出在 \(F\) 下如何变换；否则不能把同一 \(H(s)\) 宣称为同一物理扩散介质。
+
+## 46. 分段占用势的有序半群与有限维路径律
+
+第43节处理同一时刻的多探针联合占用；若势随时间分段改变，联合变换还保留时间顺序，不能只由各段的单段变换相乘得到。
+
+**定义 46.1（分段势与杀死半群）。** 沿用固定单位速度、左反射右吸收的 FIB 切链，取
+\[
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+Z_j(t)=\frac{X_{\lfloor t/\epsilon_j\rfloor}}{L_j}.
+\]
+令 \(0=t_0<t_1<\cdots<t_m=T\)，\(\Delta t_r=t_r-t_{r-1}\)，并取连续非负势 \(f_r\) 与终端测试函数 \(g\)，满足 \(f_r(1)=g(1)=0\)。连续极限中的 Dirichlet—Neumann 算子记为
+\[
+H=-D\partial_x^2,\qquad
+u'(0)=0,\quad u(1)=0,
+\]
+并写
+\[
+S_f(t)=e^{-t(H+M_f)}.
+\]
+
+**定理 46.2（离散 Feynman–Kac 组合的连续极限）。** 在定义12.1的单位速度、时钟和初态收敛假设下，令
+\[
+n_{j,r}=\left\lfloor\frac{t_r}{\epsilon_j}\right\rfloor
+-\left\lfloor\frac{t_{r-1}}{\epsilon_j}\right\rfloor,\qquad
+D_{j,r}=\operatorname{diag}\!\left(
+e^{-\epsilon_jf_r(i/L_j)}\right),
+\]
+以及 \(Q_{j,r}=D_{j,r}K_j\)，其中吸收后的转移仍由杀死核 \(K_j\) 给出。若 \(i_j/L_j\to x\)，且 \(g_j\) 是 \(g\) 的格点嵌入，则
+\[
+\begin{aligned}
+&\mathbb E_{i_j}\!\left[
+\exp\!\left\{-\sum_{r=1}^m\epsilon_j
+\sum_{n=n_{j,1}+\cdots+n_{j,r-1}}^{n_{j,1}+\cdots+n_{j,r}-1}
+f_r(X_n/L_j)\right\}
+g_j(X_{\lfloor T/\epsilon_j\rfloor})
+\right]\\
+&\hspace{2cm}=
+\bigl[Q_{j,1}^{\,n_{j,1}}\cdots
+Q_{j,m}^{\,n_{j,m}}g_j\bigr](i_j)\\
+&\hspace{2cm}\longrightarrow
+\bigl[S_{f_1}(\Delta t_1)\cdots
+S_{f_m}(\Delta t_m)g\bigr](x).
+\end{aligned}
+\tag{46.1}
+\]
+算子乘积按时间从左到右排列；一般 \(S_{f_r}\) 不交换，因此分段势不能被替换成只依赖各段无序集合的表达式。
+
+**证明。** 每个 \(Q_{j,r}\) 在一步转移前乘上当前格点的势因子，逐步条件期望给出离散 Feynman–Kac 等式。将杀死核 \(K_j\) 扩充为命中 \(1\) 后保持在 \(1\) 的完整核 \(\widehat K_j\)；由于 \(f_r(1)=g(1)=0\)，完整路径与杀死路径在该表达式上的取值一致。定理12.3和定理12.4给出
+\[
+Z_j\Longrightarrow Z
+\]
+于连续路径拓扑，并且阶梯路径的分段求和与对应时间积分之差由连续性模和 \(\epsilon_j\) 的端点误差控制而趋于零。于是
+\[
+\omega\longmapsto
+\exp\!\left(-\sum_{r=1}^m\int_{t_{r-1}}^{t_r}f_r(\omega(s))\,ds\right)g(\omega(T))
+\]
+是有界连续路径泛函，连续映射定理给出 (46.1) 的极限。极限的 Markov 性把该泛函写成有序半群乘积。这里段数 \(m\) 固定；不允许 \(m=m(j)\) 随链长增长。$\square$
+
+**推论 46.3（有限维路径律的有序插入公式）。** 取 \(0<t_1<\cdots<t_q\le T\) 和有界连续状态测试函数 \(\phi_\ell\)，并令 \(M_{\phi_\ell}\) 为乘法算子。对存活至 \(T\) 的路径，有
+\[
+\mathbb E_x\!\left[
+\prod_{\ell=1}^{q}\phi_\ell(Z(t_\ell));\tau>T
+\right]
+=
+\left[
+S(t_1)M_{\phi_1}S(t_2-t_1)M_{\phi_2}\cdots
+S(t_q-t_{q-1})M_{\phi_q}S(T-t_q)1
+\right](x).
+\tag{46.2}
+\]
+离散链有完全相同的 \(K_j^{n}D_{j,\phi}\) 插入式。分离类测试函数的这些变换收敛给出有限维分布收敛；它不等于 \(Z_j\) 在路径空间中的弱收敛，后者仍需另行证明紧性。若测试函数在吸收端不为零，必须把吸收状态保留在状态空间并使用含边界状态的半群，不能直接套用 Dirichlet 杀死半群。
+
+若采用第42节的速度权重，则把 \(H\) 换为
+\[
+A_v=-D\,v^{-1}\partial_x^2
+\quad\text{于 }L^2(v\,dx),
+\qquad
+S_{f,v}(t)=e^{-t(A_v+M_f)}.
+\]
+时间有序性和有限维公式仍成立，但离散行缩放与速度权重的路径收敛必须另行建立，不能把单位速度结论直接冒充为速度扩展。
+
+这里的 \(f_r\) 是数学占用势或 Feynman–Kac 权；它不自动表示温度、能量或外场。\(H\) 是声明模型的杀死扩散算子，不是已识别的物理 Hamiltonian。有限维变换收敛不提供跨 \(j\) 的共同样本耦合、逐样本收敛、命中时刻联合收敛或物理热流结论。
+
+## 47. 吸收链的路径比值、反向协议与有限时域涨落恒等式
+
+**定义 47.1（有限时域正向与反向路径）。** 固定 FIB 词 \(W_j=s_0\cdots s_{L-1}\)，令
+\[
+c_i=\frac{\theta}{r_{s_i}}\in(0,1/2],
+\]
+并取定义5.1的有限状态核 \(K\) 与正向初态 \(\rho_F\)。在时域 \(n\) 内，正向路径 \(\omega=(x_0,\ldots,x_n)\) 的概率为
+\[
+P_F^n(\omega)=\rho_F(x_0)\prod_{k=0}^{n-1}K(x_k,x_{k+1}).
+\]
+取反向初态 \(\rho_R\) 和核 \(R\)。令 \(\Omega_n\) 为正向路径的正质量集合，并要求反向过程在 \(\Omega_n^\leftarrow\) 上有正质量。对 \(\omega^\leftarrow=(x_n,\ldots,x_0)\) 定义
+\[
+P_R^n(\omega^\leftarrow)
+=\rho_R(x_n)\prod_{k=0}^{n-1}R(x_{k+1},x_k),
+\]
+以及路径对数比
+\[
+\Sigma_F(\omega)=
+\log\frac{P_F^n(\omega)}{P_R^n(\omega^\leftarrow)}.
+\tag{47.1}
+\]
+若反向过程在全部路径上还有 \(\Omega_n^\leftarrow\) 之外的质量，则记
+\[
+\chi_n(\omega^\leftarrow)
+={\bf1}_{\Omega_n^\leftarrow}(\omega^\leftarrow).
+\]
+只有在反向过程被限制或条件化到 \(\Omega_n^\leftarrow\) 时，\(\chi_n\) 才恒等于一。
+
+**定理 47.2（路径反演恒等式）。** 在有限时域且每条正向支撑路径在反向测度下有正质量的条件下，对任意路径函数 \(F\)，有
+\[
+\mathbb E_F[F(\Sigma_F)]
+=
+\mathbb E_R\!\left[
+e^{-\Sigma_R}\,
+F(-\Sigma_R)\,
+\chi_n
+\right],
+\tag{47.2}
+\]
+其中 \(\Sigma_R(\omega^\leftarrow)=-\Sigma_F(\omega)\) 是同一对路径的反向对数比。若将反向路径测度条件化到 \(\Omega_n^\leftarrow\)，则在 (47.1) 中同步把 \(P_R^n\) 换成
+\[
+P_{R,\mathrm{cond}}^n(\cdot)=P_R^n(\cdot\mid\Omega_n^\leftarrow)
+\]
+并用这个条件测度重新定义 \(\Sigma_F\)；对该重新定义的对数比才有
+\[
+\mathbb E_F e^{-\Sigma_F}=1,
+\qquad
+\mathbb E_F[\Sigma_F]
+ =D_{\mathrm{KL}}\!\left(P_F^n\,\middle\|\,P_{R,\mathrm{cond}}^n\circ\mathrm{rev}\right)\ge0.
+\tag{47.3}
+\]
+未条件化时，正确的积分式为
+\[
+\mathbb E_F e^{-\Sigma_F}
+=P_R^n(\Omega_n^\leftarrow),
+\]
+而不是自动等于一。
+
+**证明。** 对每一条 \(\omega\in\Omega_n\)，(47.1) 给出
+\[
+P_F^n(\omega)
+=e^{\Sigma_F(\omega)}P_R^n(\omega^\leftarrow).
+\]
+将其乘以 \(F(\Sigma_F)e^{-\Sigma_F}\)，对可数路径求和并作双射 \(\omega\leftrightarrow\omega^\leftarrow\)，得到 (47.2)。若反向支撑恰为 \(\Omega_n^\leftarrow\)，指标为一，取 \(F\equiv1\) 得积分式；取对数比的期望即为相对熵，故非负。$\square$
+
+**推论 47.3（对称内部边的抵消）。** 若在暂态内部每条无向边满足
+\[
+K(i,i+1)=K(i+1,i)
+\]
+且反向核在这些边及自环上逐项取相同概率，则路径比 (47.1) 的内部跳跃项和内部自环项全部抵消。剩余项只来自初态/终点律以及反射端、吸收端的边界协议。若初态律 \(\rho_F,\rho_R\) 与反向边界协议均不依赖整词（除通过最后一条标记为 \(s_{L-1}\) 的边界参数 \(c_{L-1}=\theta/r_{s_{L-1}}\) 外），FIB 词的奇偶性才只会通过该参数进入这些边界项；若边界反向协议改变，必须按该协议重新计算，不能把内部抵消外推成全路径熵产生为零。
+
+**长度混合边界。** 本节先固定时域 \(n\)；若改用随机首达长度，必须另给正向长度律、反向桥的长度律及每个长度的条件路径协议。未声明这些数据时，不能把固定 \(n\) 的积分恒等式提升为首达时间的全局涨落式。
+
+**物理类比边界。** \(\Sigma_F\) 是两个已声明有限路径测度的 log-likelihood ratio，(47.2)–(47.3) 是概率测度的路径反演与相对熵恒等式。它们不自动构成热力学第二定律、熵产生或物理 fluctuation theorem。FIB 递归只决定词、阻抗标签和边界位置；Markov 核、正向/反向协议、时域、初态、终点条件和桥接方式均是外加。若未指定反向核或支撑不互逆，\(\Sigma_F\) 不可定义；速度权重或非对称核下，内部项必须保留为 \(\log[K(i,j)/R(j,i)]\) 的逐边和。
+
+## 48. Robin 边界、速度权重与内部探针的联合识别
+
+**定义 48.1（反射—Robin Green 核与内部占用探针）。** 设 \(D>0\)、\(\rho>0\)。在区间 \([0,1]\) 上取算子
+\[
+\mathcal L=-D\frac{d^2}{dx^2},
+\]
+左端满足反射条件 \(y'(0)=0\)，右端满足 Robin 条件
+\[
+D y'(1)+\rho y(1)=0.
+\]
+其 Green 核为
+\[
+G_{D,\rho}(x,y)
+ =\frac{1-\max(x,y)}{D}+\frac1{\rho}.
+\]
+记起点为 \(0\) 时的内部响应 profile
+\[
+g_{D,\rho}(u)=G_{D,\rho}(0,u)
+=\frac{1-u}{D}+\frac1{\rho}
+=\frac{r+1-u}{D},
+\qquad r=\frac D\rho .
+\]
+
+取内部探针
+\[
+0\le u_1<\cdots<u_m<1
+\]
+并给每个探针一个未知正速度权重 \(w_i>0\)。假设同一条随机历史上的缩放占用量具有极限均值和二点协方差
+\[
+M_i=w_i g_{D,\rho}(u_i),
+\]
+以及对 \(i<j\)
+\[
+C_{ij}
+ =w_iw_j\,g_{D,\rho}(u_j)^2,
+\qquad
+C_{ii}=M_i^2.
+\]
+有限格点模型中允许离散对角修正
+\[
+C_{ii}=M_i^2+o(1),
+\]
+但异点式保持不变。这里的联合量必须来自同一共同随机历史。
+
+**定理 48.2（两点联合协方差识别 Robin 形状参数）。** 对任意 \(u_i<u_j\)，若 \(M_i,M_j,C_{ij}>0\)，则
+\[
+R_{ij}:=\frac{C_{ij}}{M_iM_j}
+=\frac{g_{D,\rho}(u_j)}{g_{D,\rho}(u_i)}
+=\frac{r+1-u_j}{r+1-u_i}.
+\]
+因此无量纲 Robin 形状参数 \(r=D/\rho\) 可由一对内部探针对唯一确定：
+\[
+r=
+\frac{(1-u_j)-R_{ij}(1-u_i)}{R_{ij}-1}.
+\]
+可实现的观测值必须满足
+\[
+\frac{1-u_j}{1-u_i}<R_{ij}<1.
+\]
+下端点对应 \(r\downarrow0\)，上端点对应 \(r\uparrow\infty\) 的退化极限；在有限正参数模型中两端点均不取到。
+
+**证明。** 对 \(i<j\)，共同历史的二点占用公式给出
+\[
+C_{ij}=w_iw_jg_{D,\rho}(u_j)^2,
+\]
+而
+\[
+M_iM_j=w_iw_jg_{D,\rho}(u_i)g_{D,\rho}(u_j).
+\]
+相除后未知速度权重完全消去，代入
+\(g_{D,\rho}(u)=(r+1-u)/D\) 得所列比值。由于 \(u_i<u_j\)，函数
+\[
+r\longmapsto\frac{r+1-u_j}{r+1-u_i}
+\]
+在 \(r>0\) 上严格递增，值域正是所列开区间，故识别唯一。$\square$
+
+**定理 48.3（绝对扩散尺度与 Robin 参数的联合不可识别性）。** 在未知 \(w_i\) 的模型类中，内部探针的全部均值与二点协方差不区分尺度变换
+\[
+(D,\rho,w_1,\ldots,w_m)
+\longmapsto
+(cD,c\rho,cw_1,\ldots,cw_m),
+\qquad c>0.
+\]
+因此 \(D\) 与 \(\rho\) 不能分别从这些联合观测中识别；可识别的边界形状量是 \(D/\rho=r\)。
+
+**证明。** 在该变换下
+\[
+g_{cD,c\rho}(u)=\frac1c\,g_{D,\rho}(u).
+\]
+所以均值和异点协方差分别保持为
+\[
+(cw_i)g_{cD,c\rho}(u_i)=M_i,\qquad
+(cw_i)(cw_j)g_{cD,c\rho}(u_j)^2=C_{ij}.
+\]
+但 \(D,\rho\) 各自随 \(c\) 改变，故不能分别识别。$\square$
+
+**推论 48.4（一个速度校准点恢复全部参数）。** 若某个探针 \(u_k\) 的速度权重 \(w_k\) 已知，则
+\[
+g_k=\frac{M_k}{w_k}
+\]
+可直接恢复。结合定理48.2得到 \(r=D/\rho\)，于是
+\[
+D=\frac{r+1-u_k}{g_k},
+\qquad
+\rho=\frac{D}{r}.
+\]
+其余速度权重随后由
+\[
+w_i=\frac{M_i}{g_{D,\rho}(u_i)}
+\]
+唯一确定。
+
+若没有任何速度校准，联合协方差仍可确定 \(r\)，但只能确定每个 \(w_i/D\) 的组合，不能拆出绝对时间尺度。
+
+**命题 48.5（共同历史是识别条件）。** 若两个内部探针分别由独立副本读取，则
+\[
+C_{ij}=0
+\]
+即使两个副本具有相同的边缘均值和边缘占用律。此时 \(C_{ij}/(M_iM_j)\) 不再提供 Green profile 比值，\(r=D/\rho\) 一般不可识别。
+
+**范围与物理类比限制。** 这里的 \(D\) 是连续 Green 边值问题中的数学系数，\(\rho\) 是 Robin 边界系数，\(w_i\) 是内部探针的局部速度权重。它们只有在给出额外物理实现、时钟和边界耦合合同后，才可解释为扩散常数、边界泄漏率或物理速度。FIB 递归本身不选择 \(D\)、\(\rho\)、\(w_i\) 或共同随机历史。
+
+\(\rho=0\) 时右端变为纯 Neumann 边界，常数零模使 Green 逆不再有限；\(u_i=1\) 的端点探针也不属于上述内部识别公式，必须另行处理。联合识别只说明声明模型中的参数组合可由共同探针律恢复，不推出热流、温度、耗散或物理普适性。
+
+## 49. Composition 因子化与纤维隐藏性质的 minimax 界
+
+**定义 49.1（完整数量轨迹与 composition 因子）。** 令
+\[
+\Gamma(a,b)=\bigl(q(M^n(a,b))\bigr)_{n\ge0},
+\qquad
+(a,b)\in\mathbb N_0^2\setminus\{(0,0)\},
+\]
+并定义完整数量观测
+\[
+\mathsf O(t)=\bigl(q(M^n c(t))\bigr)_{n\ge0}
+=\Gamma(c(t)).
+\]
+对源律 \(\pi\) 写 \(\mu_\pi=c_\#\pi\)，并把
+\(\mathsf O_\#\pi\) 视为在 \(\mathbb R^{\mathbb N_0}\) 上的观测律。
+
+**定理 49.2（完整数量轨迹的 composition 因子化）。** 对任意源律 \(\pi\)，
+\[
+\mathsf O_\#\pi=\Gamma_\#\mu_\pi.
+\]
+因此对任意两律 \(\pi,\widetilde\pi\)，
+\[
+\operatorname{TV}(\mathsf O_\#\pi,\mathsf O_\#\widetilde\pi)
+\le \operatorname{TV}(c_\#\pi,c_\#\widetilde\pi)
+\le \operatorname{TV}(\pi,\widetilde\pi).
+\]
+特别地，若 \(c_\#\pi=c_\#\widetilde\pi\)，即使两条源律位于同一 composition 纤维上的不同概率律，完整数量轨迹的观测律也完全相同。这个结论已经包含全部代数代际 \(n\ge0\)；继续记录数量轨迹不能恢复被 composition 合并的纤维信息。
+
+**证明。** 定义直接给出 \(\mathsf O=\Gamma\circ c\)，故推前满足 \(\mathsf O_\#\pi=\Gamma_\#(c_\#\pi)\)。确定性映射的推前收缩总变差距离，分别应用于 \(\Gamma\) 和 \(c\) 即得两项不等式。$\square$
+
+**命题 49.3（composition 对隐藏性质的充分性判据）。** 设 \(h:\mathcal T\to\mathbb R\) 有界。下列条件等价：
+
+1. \(h\) 在每个 composition 纤维 \(\mathcal F(a,b)=\{t:c(t)=(a,b)\}\) 上为常数；
+2. 存在 \(\bar h\) 使 \(h=\bar h\circ c\)；
+3. 对任意两条满足 \(c_\#\pi=c_\#\widetilde\pi\) 的源律，都有
+\[
+\int h\,d\pi=\int h\,d\widetilde\pi.
+\]
+当这些条件成立时，\(c_\#\pi\) 足以确定 \(h\) 的期望。若条件不成立，则存在同一纤维上的两条 Dirac 源律使 composition 推前相同而 \(h\) 期望不同。注意：这只说明 composition 是数量观测律的充分输入；完整数量观测 \(\mathsf O\) 还可能进一步合并不同 composition，因为 \(\Gamma\) 未假设单射。要由 \(\mathsf O\) 本身精确估计 \(h\)，必须另加 \(h=\widetilde h\circ\mathsf O\) 的因子化条件。
+
+**证明。** 1 与 2 是按纤维定义的等价性；2 代入积分并使用 \(c_\#\pi=c_\#\widetilde\pi\) 得 3。若 1 失败，取同一纤维中 \(t_0,t_1\) 使 \(h(t_0)\ne h(t_1)\)，令 \(\pi_i=\delta_{t_i}\)，即得反例。$\square$
+
+**定理 49.4（观测总变差下的两点 minimax 界）。** 令 \(h\) 有界，\(\theta_i=\int h\,d\pi_i\)，\(P_i=\mathsf O_\#\pi_i\)，并设 \(\Delta=|\theta_1-\theta_0|\)。对任意仅依赖完整数量观测的估计量 \(\widehat\theta\)（允许加入在两模型下相同的独立随机化），以
+\[
+R_i=\mathbb E_{\pi_i}|\widehat\theta-\theta_i|
+\]
+记绝对误差风险，则
+\[
+\max\{R_0,R_1\}
+\ge \frac{\Delta}{2}\bigl(1-\operatorname{TV}(P_0,P_1)\bigr).
+\]
+对测试 \(\phi\in[0,1]\)（\(\phi=1\) 选择模型1），有
+\[
+\max\{\mathbb E_{P_0}\phi,\mathbb E_{P_1}(1-\phi)\}
+\ge \frac{1-\operatorname{TV}(P_0,P_1)}2.
+\]
+
+**证明。** 把估计量的共同随机化并入观测空间；这不改变两观测律的总变差距离。对任一观测值，三角不等式给出
+\[
+|\widehat\theta-\theta_0|+|\widehat\theta-\theta_1|\ge\Delta.
+\]
+令 \(\lambda=P_0+P_1\)，\(p_i=dP_i/d\lambda\)。逐点有
+\[
+|\widehat\theta-\theta_0|p_0+|\widehat\theta-\theta_1|p_1
+\ge \Delta\min(p_0,p_1).
+\]
+积分后
+\[
+R_0+R_1\ge \Delta\int\min(p_0,p_1)d\lambda
+=\Delta(1-\operatorname{TV}(P_0,P_1)),
+\]
+从而得到第一式。第二式是二点测试的总变差恒等式：任意 \(\phi\) 的两类错误概率之和至少为 \(1-\operatorname{TV}(P_0,P_1)\)，再取最大值。$\square$
+
+**推论 49.5（同 composition 纤维的不可识别下界）。** 固定任意满足 \(a,b\ge0\) 且 \(a+b\ge1\) 的 composition \((a,b)\)，令 \(\pi_0,\pi_1\) 是 \(\mathcal F(a,b)\) 上的两条概率律。则
+\[
+c_\#\pi_0=c_\#\pi_1=\delta_{(a,b)},\qquad
+\mathsf O_\#\pi_0=\mathsf O_\#\pi_1,
+\]
+即观测总变差为零。若 \(\theta_i=\int h\,d\pi_i\) 不同，则任意数量轨迹估计量均满足
+\[
+\max_i\mathbb E_{\pi_i}|\widehat\theta-\theta_i|
+\ge \frac{|\theta_1-\theta_0|}{2},
+\]
+且任意二点测试的最坏错误概率至少为 \(1/2\)。特别地，若纤维上有界隐藏性质 \(h\) 的振幅
+\[
+\operatorname{osc}_{\mathcal F(a,b)}h
+=\max_{t\in\mathcal F(a,b)}h(t)-\min_{t\in\mathcal F(a,b)}h(t)
+\]
+为正，则
+\[
+\inf_{\widehat\theta(\mathsf O)}\sup_{\pi\in\mathcal P(\mathcal F(a,b))}
+\mathbb E_\pi\left|\widehat\theta-\int h\,d\pi\right|
+\ge \frac12\operatorname{osc}_{\mathcal F(a,b)}h.
+\]
+若 \(h\) 为二值且在该纤维上同时取 \(0,1\)，则绝对误差 minimax 半径至少为 \(1/2\)。若选择纤维上互不相交支持的两律，则可同时有
+\[
+\operatorname{TV}(\pi_0,\pi_1)=1,\qquad
+\operatorname{TV}(\mathsf O_\#\pi_0,\mathsf O_\#\pi_1)=0.
+\]
+
+**范围边界。** 这些结论只针对静态源律和完整 quantity trajectory 这一观测映射；若加入叶序窗口、路径、输运时间、受控操作或跨探针 joint coupling，须重新计算观测推前，以上零总变差结论不自动延伸。结果也不声称 composition 推前可由数量轨迹反演，不把隐藏性质下界解释成物理噪声、热流或普适统计定律；它只说明在未增加能切开纤维的观测前，composition 因子化带来的信息缺口具有上述 minimax 代价。
