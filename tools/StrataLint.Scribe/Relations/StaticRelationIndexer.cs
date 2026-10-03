@@ -214,19 +214,20 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     {
         foreach (var child in node.DescendantNodes())
         {
+            var childIgnored = ignored || child.Ancestors().Any(IsIgnoredPresentationCall);
             if (child is AssignmentExpressionSyntax assignment)
             {
-                if (IsRelationWrite(assignment.Left, ignored))
+                if (IsRelationWrite(assignment.Left, childIgnored))
                     throw Reject(assignment, "IgnoredWrite", "Ignored source code may not write observable state.");
             }
             if (child is PrefixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } prefix)
             {
-                if (IsRelationWrite(prefix.Operand, ignored))
+                if (IsRelationWrite(prefix.Operand, childIgnored))
                     throw Reject(prefix, "IgnoredWrite", "Ignored source code may not write observable state.");
             }
             if (child is PostfixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } postfix)
             {
-                if (IsRelationWrite(postfix.Operand, ignored))
+                if (IsRelationWrite(postfix.Operand, childIgnored))
                     throw Reject(postfix, "IgnoredWrite", "Ignored source code may not write observable state.");
             }
             if (child is ArgumentSyntax argument && argument.RefKindKeyword.RawKind != 0)
@@ -234,7 +235,6 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             if (child is InvocationExpressionSyntax invocation
                 && Model(invocation).GetSymbolInfo(invocation).Symbol is IMethodSymbol method)
             {
-                var childIgnored = ignored || invocation.Ancestors().Any(IsIgnoredPresentationCall);
                 if (childIgnored && !IsRecognizedInvocation(method))
                     throw Reject(invocation, "IgnoredWrite", "Ignored source code may call only recognized pure operations.");
                 if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
@@ -254,7 +254,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         var type = Model(target).GetTypeInfo(target).Type;
         if (type is null) return false;
         var symbol = Model(target).GetSymbolInfo(target).Symbol;
-        if (ignored && symbol is not ILocalSymbol and not IParameterSymbol) return true;
+        if (ignored) return true;
         if (symbol is ILocalSymbol or IParameterSymbol)
             return relationCarriers.Contains(symbol) || IsRelationType(type) && type.SpecialType != SpecialType.System_String;
         return IsRelationType(type);

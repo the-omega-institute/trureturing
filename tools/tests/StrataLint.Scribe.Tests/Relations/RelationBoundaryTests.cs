@@ -76,6 +76,15 @@ public sealed class RelationBoundaryTests
         Assert.Equal("IgnoredWrite", read.Failure?.Shape);
     }
 
+    [Fact]
+    public void IgnoredPresentationLocalWriteIsRejected()
+    {
+        using var root = MutationFixture("string target = \"First\"; string ignored = \"First\"; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(ignored = \"Second\"), Ref(\"D5/S0/Test/\" + target)))));");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
     [Theory]
     [InlineData("target += \"Second\";")]
     [InlineData("target++;")]

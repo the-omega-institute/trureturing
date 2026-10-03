@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Documents.Tests;
 
 public sealed class RelationCorpusTests(ITestOutputHelper output)
 {
-    private const int MaximumUnreadableDefinitions = 57;
+    private const int MaximumUnreadableDefinitions = 62;
 
     [Fact]
     public void EveryStaticRelationProjectionMatchesExecution()
