@@ -1,0 +1,34 @@
+**定义 355.2（同一规范来源的余数、下一次进位与高位）。** 沿用定义3.3及定理3.4，记
+
+$$
+z_j=c(T_j)=M^j\binom10,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad j\ge0.
+\tag{355.2}
+$$
+
+对正整数 $m$，$[w]_m$ 表示整数向量 $w$ 的逐坐标标准代表，坐标取值于 $\{0,\ldots,m-1\}$；$w\bmod m$ 表示其剩余类。对任意正整数 $d,e$，定义
+
+$$
+r_j=[z_j]_d,\qquad
+\kappa_j=\left\lfloor\frac{r_{j,0}+r_{j,1}}d\right\rfloor,
+\qquad
+K_{d,e}(j)=(0,\kappa_j)\bmod e,
+\tag{355.3}
+$$
+
+$$
+H_{d,e}(j)=\frac{z_j-r_j}{d}\bmod e,\qquad
+L_{d,e}(j)=\bigl(r_j,H_{d,e}(j)\bigr).
+\tag{355.4}
+$$
+
+$K_{d,e}(j)$ 是定义26.1中作用于该来源低位的 $c_M(r_j)$，即更新 $z_j\mapsto Mz_j$ 所需的下一次进位；$H_{d,e}(j)$ 是当前来源本身的高位，二者不是同一个目标。这里的分解使用定义25.1的标准数字截面，并逐坐标应用定义26.1的运输式：
+
+$$
+L_{d,e}(j+1)
+=\bigl([Mr_j]_d,\,MH_{d,e}(j)+K_{d,e}(j)\bigr).
+\tag{355.5}
+$$
+
+令 $\mathcal X=\{X_j:j\ge0\}\subset C$。对任意集合 $Y$ 及目标 $g:\mathbb N\to Y$，称 $g$ 通过规范叶积因子化，是指存在函数 $\bar g:\mathcal X\to Y$，使所有 $j\ge0$ 同时满足 $g(j)=\bar g(X_j)$；该函数不能另读 $j$、$T_j$ 或 $z_j$。余数环模 $1$ 按单元素集合处理。
+

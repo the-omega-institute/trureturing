@@ -1,0 +1,10 @@
+**假设 350.1（穿孔邻域上的平方对数相位律）。** 固定 $\alpha>0$、$B\ge0$、$0<T_0\le e^{-1}$，并假设
+
+$$
+0<t\le T_0\quad\Longrightarrow\quad
+\left|\delta(t)-\alpha t^2\log^2(1/t)\right|
+\le Bt^2\bigl(\log(1/t)+1\bigr). \tag{350.1}
+$$
+
+此处没有未加权计数、局部有限性、频率单射性、典范权重、$\gamma_i>1$ 或完整二阶矩有限性的假设，也没有 RH 假设。
+
