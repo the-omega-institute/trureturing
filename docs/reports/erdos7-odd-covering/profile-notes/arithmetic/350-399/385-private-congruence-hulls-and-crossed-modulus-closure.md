@@ -27597,6 +27597,88 @@ choose independent phases for different coordinates or prove that a passing
 family admits a common flow.  Its intended use is to screen a hypothetical
 whole cover before attempting the still-open source-global EB1 bridge.
 
+### 238.3. Shared-route activation cuts
+
+The coordinates are coupled further by a single label's route.  A label
+\(i\) with support \(D_i\) is assigned to one fibre, and that same fibre
+must be counted in \(R_v(z)\) for every \(v\in D_i\).  This gives a finite
+multi-coordinate relaxation that is stronger than adding the separate
+\(\lambda\)-cuts.
+
+Let \(\mathcal V_H=\{v:I_v\ne\varnothing\}\), and let
+\(\mathscr Z_H\) be the set of tuples \((Z_v)_{v\in\mathcal V_H}\) with
+\(Z_v\subseteq U_H\) satisfying
+
+\[
+\begin{aligned}
+ Z_v\cap\mathsf E_i(H)&\ne\varnothing
+       &&(v\in\mathcal V_H,\ i\in I_v),\\
+ \sum_{r\in Z_v}M_{v,r}&\ge |I_v|
+       &&(v\in\mathcal V_H),\\
+ \mathsf E_i(H)\cap\bigcap_{v\in D_i}Z_v&\ne\varnothing
+       &&(i\in I_H).
+\end{aligned}
+\tag{238.13}
+\]
+
+Define
+
+\[
+\Lambda_H=\min_{(Z_v)\in\mathscr Z_H}
+       \sum_{v\in\mathcal V_H}(p(v)-1)|Z_v|,
+\tag{238.14}
+\]
+
+with \(+\infty\) if \(\mathscr Z_H\) is empty.  For a saturated flow \(z\),
+the tuple \(Z_v=R_v(z)\) satisfies the first line by the phase witness
+condition, the second by the capacity argument of (238.10), and the third
+because one routed fibre for \(i\) belongs to every \(R_v(z)\) with
+\(v\in D_i\).  Therefore
+
+\[
+\boxed{
+\Lambda_H\le\Gamma_H(z)\le\mathcal B_H
+\qquad(z\in\mathcal Z_H).
+}
+\tag{238.15}
+\]
+
+Every admissible tuple in (238.13) is individually admissible for
+(238.10), so
+
+\[
+\Lambda_H\ge
+\sum_{v\in\mathcal V_H}(p(v)-1)\lambda_{H,v}.
+\tag{238.16}
+\]
+
+The inequality can be strict.  In a two-coordinate abstract network, let
+\(U_H=\{1,2\}\), with unit weights, and use labels
+\[
+i_1:\ D_{i_1}=\{v\},\ \mathsf E_{i_1}=\{1\};\qquad
+i_2:\ D_{i_2}=\{w\},\ \mathsf E_{i_2}=\{2\};\qquad
+i_3:\ D_{i_3}=\{v,w\},\ \mathsf E_{i_3}=\{1,2\}.
+\]
+Take capacities
+\[
+M_v=(2,1),\qquad M_w=(1,2).
+\]
+For each coordinate, the singleton \(Z_v=\{1\}\), respectively
+\(Z_w=\{2\}\), hits its labels and has capacity two, so
+\(\lambda_v=\lambda_w=1\).  These two singleton choices violate the
+shared-route condition for \(i_3\), however.  Any admissible tuple must
+add fibre \(1\) to \(Z_w\) or fibre \(2\) to \(Z_v\), giving
+\(\Lambda_H=3>2=\lambda_v+\lambda_w\).  A common flow exists: route
+\(i_1\) and \(i_3\) through fibre \(1\), and \(i_2\) through fibre \(2\).
+Thus the cut detects a real incompatibility of separately optimal
+coordinate summaries while remaining a necessary condition for one common
+flow.  This is an abstract finite control, not an odd-covering example.
+
+Computing (238.14) is a finite \(0\)-\(1\) optimization over the actual
+phase sets and bucket capacities.  It retains the common source and route
+of each original label; passing it does not provide a flow or a whole
+cover, while failure rules out the hypothetical whole-cover flow.
+
 ## 239. The coarse lower bound is the Simpson budget; support leakage is the gap
 
 The coordinate-wise lower bound has a familiar coarse value. For a positive

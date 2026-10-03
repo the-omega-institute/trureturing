@@ -1,0 +1,130 @@
+{
+  "H": 49,
+  "Q": 735,
+  "Q_over_H": 15,
+  "empty_component_fibres": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48
+  ],
+  "full_coordinate_records": [
+    {
+      "coordinate": [
+        3,
+        1
+      ],
+      "kappa": 1,
+      "labels": [
+        0,
+        3,
+        4,
+        7,
+        8,
+        10
+      ],
+      "lambda": null,
+      "tau": null
+    },
+    {
+      "coordinate": [
+        5,
+        1
+      ],
+      "kappa": null,
+      "labels": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "lambda": null,
+      "tau": null
+    }
+  ],
+  "local_r0_active_labels": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    7,
+    10
+  ],
+  "local_r0_budget": 6,
+  "local_r0_records": [
+    {
+      "coordinate": [
+        3,
+        1
+      ],
+      "labels": [
+        0,
+        3,
+        4,
+        7,
+        10
+      ],
+      "lambda": 1
+    },
+    {
+      "coordinate": [
+        5,
+        1
+      ],
+      "labels": [
+        1,
+        3,
+        5,
+        7,
+        10
+      ],
+      "lambda": 1
+    }
+  ],
+  "local_r0_weighted_lambda": 6,
+  "schema": "section235-joint-hitting-capacity-v1",
+  "scope": "The full I_H flow is impossible: two coordinates have lambda=+infinity and forty usable fibres have no empty component. The finite r=0 values are a local diagnostic only; they do not assert whole coverage.",
+  "singleton_empty_component_fibres": [
+    0
+  ],
+  "usable_fibres": 41
+}
