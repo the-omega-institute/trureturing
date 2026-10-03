@@ -31,12 +31,21 @@ Bottomley's first two expressions, `floor(n*phi)+n-1` and
 by the same Fibonacci recurrence. The all-column closed formula is
 not a separate theorem in this module.
 
-The OEIS entry links Kimberling, *Complementary equations and Wythoff
-Sequences*, Journal of Integer Sequences 11 (2008), Article 08.3.3,
-and identifies its Theorem 10 as an explicit formula for compound
-Wythoff sequences. This bibliographic locator is checked in the OEIS
-entry; this note does not assert a checked proof of the residue conjecture
-in that paper.
+Kimberling, *Complementary Equations and Wythoff Sequences*, Journal of
+Integer Sequences 11 (2008), Article 08.3.3, defines the Wythoff array in
+Section 5 by `W(n,h)=(n-1)*F(h)+floor(n*phi)*F(h+1)`.
+Its Theorem 10 identifies these columns with compound Wythoff sequences.
+The journal landing page and full PDF were retrieved on 2026-10-03;
+the displayed definition and Theorem 10 were checked in the extracted
+PDF text. They identify the array, rather than settle the residue
+conjecture proposed in 2025.
+
+David R. Morrison's *A Stolarsky Array of Wythoff Pairs*, page 134,
+defines the first two entries of row `m` as
+`W(m,1)=floor(floor(m*phi)*phi)` and
+`W(m,2)=floor(floor(m*phi)*phi^2)`, with Fibonacci rows. The scanned
+primary PDF was retrieved on 2026-10-03 and its first page was visually
+checked. These are the nested-floor definitions used by the Lean array.
 
 ## Verified locator
 
@@ -45,7 +54,11 @@ in that paper.
 - https://oeis.org/history?seq=A035513 : history page retrieved with HTTP 200
   on 2026-10-03; no claim of an exhaustive historical search.
 - https://cs.uwaterloo.ca/journals/JIS/VOL11/Kimberling/kimberling719a.html :
-  bibliographic link supplied by the OEIS entry.
+  journal title, author and article number; retrieved 2026-10-03.
+- https://cs.uwaterloo.ca/journals/JIS/VOL11/Kimberling/kimberling719a.pdf :
+  Section 5 definition and Theorem 10; retrieved 2026-10-03.
+- https://web.math.ucsb.edu/~drm/papers/stolarsky.pdf : Morrison's
+  first-page array definition, printed page 134; retrieved 2026-10-03.
 
 The bounded prior-work check is recorded in issue #12448. No claim of
 publication priority or global novelty is made.
