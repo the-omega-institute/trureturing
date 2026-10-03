@@ -6666,3 +6666,226 @@ $$
 这两个对照也显示后备判定的必要性：$A=\rho^3\alpha\in\mathcal I_3$ 在 $\mathtt L\mathtt L\mathtt L$ 上报告 $\mathsf{absent}$，而 $P_{\mathrm{dis}}$、$Q_{\mathrm{dis}}$ 分别报告 $\mathsf{leaf}_\beta$、$\mathsf{branch}$；在 $\mathtt L\mathtt R\mathtt L\mathtt R$ 上 $A$ 同样报告 $\mathsf{absent}$，与冲突对的两叶报告都不同。故无论从这里的无共享叶测试地址还是共享冲突测试地址开始，原型之外都存在合法实际正来源；把这种首响应直接判负会违反全来源正确性。定理 23.2 的构造将它们送入有限后备判定。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 两两叶最优与三个实际来源的共同费用障碍
+
+**定义 24.1（三个固定正例的全来源费用合同）。** 将[定义 23.1](#23-全有限来源上两个指定正例的共同最优地址费用)的深度固定为 $d=3$，费用评价对象增为三棵完整描述已知的正例 $P_1,P_2,P_3\in\mathcal I_3$。策略仍在全部非空有限自由有序满二叉树 $\mathcal T$ 上判定 $\iota_3$；共同初始化可含这三个固定描述，却不含未知输入的组成、数量、大小、高度、正性或身份承诺。尤其不承诺未知输入属于 $\{P_1,P_2,P_3\}$。查询仍是任意有限左右地址的原始四值只读报告，费用仍计不同地址并复用缓存，未有限终止时为 $+\infty$，没有其他来源信息渠道。
+
+沿用定义 23.1 的确定性全域正确有限终止策略合同 $\mathfrak D_3$，以及输入无关同种子重放、逐来源几乎处处正确且有限终止、相关事件及非负扩展费用可测的随机策略合同 $\mathfrak R_3$，定义
+
+$$
+\begin{aligned}
+D_3^+(P_1,P_2,P_3)
+&=\inf_{\pi\in\mathfrak D_3}\max_{1\le i\le3}C_\pi(P_i),\\
+R_3^+(P_1,P_2,P_3)
+&=\inf_{\Pi\in\mathfrak R_3}\max_{1\le i\le3}
+\mathbb E_\mu C_\Pi(\cdot,P_i).
+\end{aligned}
+\tag{24.3}
+$$
+
+三项期望使用同一个与输入无关的种子律；没有未知输入先验。随机目标是三个期望的最大值，另一个量 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)$ 不作为式（24.3）的目标。正确性与终止仍遍及全部 $\mathcal T$，最优化只评价三个固定来源。实际像成员身份、组成读数与实际逆执行保留定义 23.1 的不同任务含义。
+
+**定理 24.2（同组成实际三正例的两两叶最优与确定性、随机锐值）。** 复用[命题 23.3](#23-全有限来源上两个指定正例的共同最优地址费用)在 $d=3$ 的字面树，置
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+U=\langle\langle A,A\rangle,C\rangle=P_{\mathrm{con}},\qquad
+V=\langle\langle A,C\rangle,A\rangle=Q_{\mathrm{con}},\qquad W=A,
+\end{gathered}
+\tag{24.4}
+$$
+
+并定义三个固定评价来源
+
+$$
+\begin{aligned}
+P_1&=\langle\langle U,U\rangle,A\rangle,\\
+P_2&=\langle\langle V,A\rangle,U\rangle,\\
+P_3&=\langle\langle A,V\rangle,V\rangle.
+\end{aligned}
+\tag{24.5}
+$$
+
+令 $u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle$、$v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle$。这些来源的完整前像为
+
+$$
+\begin{aligned}
+U&=\rho^3(u_0),& V&=\rho^3(v_0),\\
+P_1&=\rho^3\bigl(\langle\langle u_0,u_0\rangle,\alpha\rangle\bigr),\\
+P_2&=\rho^3\bigl(\langle\langle v_0,\alpha\rangle,u_0\rangle\bigr),\\
+P_3&=\rho^3\bigl(\langle\langle\alpha,v_0\rangle,v_0\rangle\bigr).
+\end{aligned}
+\tag{24.6}
+$$
+
+三者两两不同，且
+
+$$
+P_i\in\mathcal I_3,\qquad
+c(P_i)=(9,16)^{\mathsf T},\qquad
+|L(P_i)|=25,\qquad q(P_i)=66
+\quad(1\le i\le3).
+\tag{24.7}
+$$
+
+在定义 24.1 的全来源合同下，每个两元素评价对可由一个共同策略同时取得两个个体最小费用 $25$，即
+
+$$
+D_3^+(P_i,P_j)=R_3^+(P_i,P_j)=25
+\quad(1\le i<j\le3).
+\tag{24.8}
+$$
+
+三个对允许选择不同策略。对三元素评价集合，存在三个全域正确且有限终止的确定性策略，其费用向量依次为
+
+$$
+(25,25,26),\qquad(25,26,25),\qquad(26,25,25).
+\tag{24.9}
+$$
+
+每个 $\pi\in\mathfrak D_3$ 及每个 $\Pi\in\mathfrak R_3$ 均满足
+
+$$
+\begin{gathered}
+\sum_{i=1}^3 C_\pi(P_i)\ge76,\qquad
+\sum_{i=1}^3\mathbb E_\mu C_\Pi(\cdot,P_i)\ge76,\\
+\boxed{\quad D_3^+(P_1,P_2,P_3)=26,\qquad
+R_3^+(P_1,P_2,P_3)=\frac{76}{3}.\quad}
+\end{gathered}
+\tag{24.10}
+$$
+
+两个下确界均达到。随机锐值由一次共同、输入无关的均匀三元种子选择式（24.9）的三个策略取得；在这一混合上，三个固定来源的期望各为 $76/3$，而 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=26$。因此两两共同取得叶数个体最小值，不足以使同一个策略对这三个指定实际正来源共同取得。
+
+**证明。** 命题 23.3 的式（23.9）、（23.10）、（23.15）已给出 $A,C,U,V$ 的字面展开与实际完整前像。将这些前像代入定义 23.1 的二叉替换同态规则，直接得到式（24.6），所以三个 $P_i$ 都是实际三步像。式（24.6）的三个前像两两字面不同；[规范编译卷命题 4.3 的树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)在三次迭代后仍单射，因而三棵像树两两不同，且这些完整前像各自唯一。这里的前像由实际树替换给出，不从组成上的逆矩阵推断。
+
+命题 23.3 已供应 $c(A)=(1,2)^{\mathsf T}$ 和 $c(U)=c(V)=(4,7)^{\mathsf T}$。组成在二叉拼接下相加，故
+
+$$
+\begin{aligned}
+c(P_1)&=2c(U)+c(A),\\
+c(P_2)&=c(V)+c(A)+c(U),\\
+c(P_3)&=c(A)+2c(V),\\
+2(4,7)^{\mathsf T}+(1,2)^{\mathsf T}&=(9,16)^{\mathsf T},\\
+9+16&=25,\qquad 2\cdot9+3\cdot16=66.
+\end{aligned}
+\tag{24.11}
+$$
+
+最后一个读数使用定义 1.1 的 $q=(2,3)$，得到式（24.7）。这些相等是对三个固定完整来源的读数计算，不加入未知输入承诺。
+
+取三个地址
+
+$$
+s_{12}=\mathtt L\mathtt L\mathtt L\mathtt R\mathtt L\mathtt R,
+\qquad
+s_{13}=\mathtt L\mathtt R\mathtt L\mathtt R\mathtt L\mathtt R,
+\qquad
+s_{23}=\mathtt R\mathtt L\mathtt R\mathtt L\mathtt R.
+$$
+
+其完整响应表为
+
+$$
+\begin{array}{c|ccc}
+\text{地址}&\operatorname{out}_{P_1}&\operatorname{out}_{P_2}&\operatorname{out}_{P_3}\\ \hline
+s_{12}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta&\mathsf{absent}\\
+s_{13}&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta\\
+s_{23}&\mathsf{absent}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta
+\end{array}
+\tag{24.12}
+$$
+
+逐行从式（24.4）、（24.5）核对。第一行在 $P_1$ 上先沿 $\mathtt L\mathtt L$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_2$ 上先沿 $\mathtt L\mathtt L$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $C$ 左子树 $A$ 的右叶 $\beta$；在 $P_3$ 上先沿 $\mathtt L\mathtt L$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶，故报告不存在。
+
+第二行在 $P_1$ 上先沿 $\mathtt L\mathtt R$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_2$ 上先沿 $\mathtt L\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶；在 $P_3$ 上先沿 $\mathtt L\mathtt R$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $\beta$。这分别给出第二行的 $\mathsf{leaf}_\alpha$、$\mathsf{absent}$、$\mathsf{leaf}_\beta$。
+
+第三行在 $P_1$ 上先沿 $\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶；在 $P_2$ 上先沿 $\mathtt R$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_3$ 上先沿 $\mathtt R$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $\beta$。这给出第三行。三行中的 $U,V$ 局部标签冲突正是命题 23.3 式（23.11）的 $t=\mathtt L\mathtt R\mathtt L\mathtt R$ 冲突在不同外层位置的应用；上述逐行核对还保留了第三个来源的不存在响应。
+
+于是 $s_{ij}$ 是 $P_i,P_j$ 标签相反的共享叶地址，三个对分别满足定理 23.2 的 $H$ 判据。直接应用该定理，得到每对存在共同策略取得 $(25,25)$，以及式（24.8）。个体下界由[定理 18.2 的完整叶条件](#18-精确组成最优证书的唯一性与无承诺叶前沿)供应，其深度条件在这里为 $d=3=3\cdot1$。并未把三个分别优化的费用对视作同一个策略。
+
+接着核对三重叶交集。由 $A=\langle\langle\beta,\alpha\rangle,\beta\rangle$，以及 $U,V$ 的字面定义，有
+
+$$
+\begin{gathered}
+L(A)=\{\mathtt L\mathtt L,\mathtt L\mathtt R,\mathtt R\},\\
+U|_{\mathtt L\mathtt L}=A,\quad
+U|_{\mathtt L\mathtt R}=A,\quad U|_{\mathtt R}=C,\\
+V|_{\mathtt L\mathtt L}=A,\quad
+V|_{\mathtt L\mathtt R}=C,\quad V|_{\mathtt R}=A,\\
+L(A)\cap L(U)=L(A)\cap L(V)=\varnothing.
+\end{gathered}
+\tag{24.13}
+$$
+
+因为 $A,C$ 都为分支，$U,V$ 在 $A$ 的全部三个叶地址上均报告 $\mathsf{branch}$，故最后一行成立。三个互不为前缀的外层位置 $\mathtt L\mathtt L$、$\mathtt L\mathtt R$、$\mathtt R$ 覆盖每棵 $P_i$ 的全部叶，其子树分别为
+
+$$
+\begin{array}{c|ccc}
+\text{外层位置}&P_1&P_2&P_3\\ \hline
+\mathtt L\mathtt L&U&V&A\\
+\mathtt L\mathtt R&U&A&V\\
+\mathtt R&A&U&V
+\end{array}
+\qquad
+\boxed{\ L(P_1)\cap L(P_2)\cap L(P_3)=\varnothing.\ }
+\tag{24.14}
+$$
+
+确切地说，每个共同叶地址必落在这三个位置中的同一个位置内；该位置上的三个叶集合交集是该前缀与 $L(U)\cap L(V)\cap L(A)$ 的拼接，而式（24.13）使它为空。三个位置的祖先在各树中都是分支，所以祖先自身也不是共同叶。由此得到式（24.14）。
+
+固定任意 $\pi\in\mathfrak D_3$。在第一次查询前，控制、内部计算、停止及输出只依共同初始化，不依输入。它不能不作查询而有限返回：$A\in\mathcal I_3$，而规范编译卷命题 4.3 给 $\alpha\notin\rho(\mathcal T)$，从而 $\alpha\notin\mathcal I_3$，同一个无查询返回值不能同时正确处理这两个输入。它也不能在无查询状态永久内部计算，因为这违反全域有限终止。因此必在有限内部计算后作一个首查询，其地址 $s$ 在所有输入上相同，且因尚无查询而是首次计费地址。
+
+令 $J_i$ 为该策略在 $P_i$ 上有限接受前所问的不同地址集合。直接应用定理 23.2 证明中的终端记录结论（23.6），有 $L(P_i)\subseteq J_i$。该结论使用每条实际终端记录自己的有限最大地址长度，并由定理 18.2 供应完整叶必要性，不需要预置高度。式（24.14）使这个共同首地址 $s$ 至少不属于一个 $L(P_i)$，但 $s\in J_i$ 对三个 $i$ 都成立。故至少一项费用在其 $25$ 个必查叶之外多计一个地址，其余两项仍至少为 $25$，从而
+
+$$
+\sum_{i=1}^3 C_\pi(P_i)\ge25+25+26=76,
+\qquad
+\max_i C_\pi(P_i)\ge
+\left\lceil\frac{76}{3}\right\rceil=26.
+\tag{24.15}
+$$
+
+这一论证允许任意自适应后续查询、任意地址长度及重复查询；首次地址即已造成联合费用障碍。
+
+为取得式（24.9），分别从式（24.12）的三行地址开始构造策略。对某一行，首先查询其地址。该行的三个不同响应各自选择对应的 $P_i$ 作暂定原型，包括 $\mathsf{absent}$ 所对应的原型；尚未使用的第四个响应 $\mathsf{branch}$ 直接进入定理 23.2 证明中已有的全有限来源后备判定。选中某一原型后，依固定次序核对它的全部 $25$ 个带标签叶地址，复用此前缓存。任一后续叶响应不匹配即进入同一个后备判定；只有全部带标签叶响应匹配时才接受。
+
+定理 18.2 的充分性及其引用的[母卷定理 9.3 的字面恢复](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)保证，完整叶匹配的未知树只能等于所选原型，故该处接受正确。首响应只选择暂定测试，尤其不存在响应既不证明树身份，也不证明正性。其余输入由定理 23.2 已证明全域正确且有限终止的后备处理；缓存只复用已取得的确定性响应。原型测试至多核对有限的 $25$ 个叶，因而整个策略在每个实际有限树上都有限终止。原型之外的正来源与全部负来源都保留在这个合同内：它们不能完整匹配一个原型的带标签叶证书，故由首分支或后续不匹配送入后备，而不因测试失败直接判负。
+
+在被评价的 $P_i$ 上，首响应恰选中自己，后续全部匹配。首地址若为其叶，则已查询的那个叶由缓存计入 $25$ 个完整叶，总费用为 $25$；若为不存在地址，则不在叶集合内，完整叶仍需全部查询，总费用为 $26$。式（24.12）的三个不存在位置依次是 $P_3,P_2,P_1$，遂逐一得到式（24.9）。结合式（24.15），确定性锐值为 $26$。
+
+现在固定任意 $\Pi\in\mathfrak R_3$。由[母卷定理 9.2 的单射有限词编码](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，整个 $\mathcal T$ 可数；全部有限地址可数，四值响应有限，因此完整有限地址—响应记录也可数。定义 24.1 继承的输入无关初始化、任意地址合法菜单、固定只读来源、无额外来源报告及同种子重放，满足[定理 22.1](#22-可数只读记录的有声返回与终止精确探针许可的分界)的合同。其式（22.4）给该策略自己的共同满测度有声有限返回集合 $G_\Pi$。
+
+还必须另行应用该定理的总性子句（22.7）：$\mathcal T$ 可数，且对每个实际来源分别要求未有限终止事件可测并为零测，所以存在 $G_\Pi^{\mathrm{tot}}\subseteq G_\Pi$，测度为 $1$，其中每个固定种子策略都在整个 $\mathcal T$ 上正确且有限终止。仅有（22.4）的有声返回不能替代这个全域总性条件。共同满测度集合可依赖 $\Pi$；这里没有对所有随机策略取共同种子交集，也没有使用统一全来源运行时间上界。
+
+对每个 $\omega\in G_\Pi^{\mathrm{tot}}$，该固定种子策略属于 $\mathfrak D_3$，故式（24.15）的同一策略费用和下界逐种子成立。对三个可测非负扩展费用积分，有限和的非负积分可相加，包括无穷值，得到
+
+$$
+\begin{aligned}
+\sum_{i=1}^3\mathbb E_\mu C_\Pi(\cdot,P_i)
+&=\int_\Omega\sum_{i=1}^3 C_\Pi(\omega,P_i)\,d\mu(\omega)
+\ge76,\\
+\max_i\mathbb E_\mu C_\Pi(\cdot,P_i)&\ge\frac{76}{3}.
+\end{aligned}
+\tag{24.16}
+$$
+
+零测种子例外不改变这些非负积分不等式。这不是把三对分别优化的结果相加，而是先在每个共同正确且全域终止的种子上比较三个实际运行，再对同一策略积分。
+
+最后，在共同初始化下取输入无关的均匀种子 $\omega\in\{1,2,3\}$，分别选择式（24.9）的三个确定性策略；只取这一次种子，不按未知输入再选择策略。每个声明种子在全部 $\mathcal T$ 上都正确且有限终止，有限种子空间上的相关事件和费用均可测，所以该混合属于 $\mathfrak R_3$。每个固定来源恰在两个种子上费用为 $25$、一个种子上费用为 $26$，从而
+
+$$
+\mathbb E_\mu C_\Pi(\cdot,P_i)=\frac{25+25+26}{3}
+=\frac{76}{3}\quad(1\le i\le3),
+\qquad
+\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=26.
+\tag{24.17}
+$$
+
+式（24.16）与（24.17）给随机锐值和取得性，完成式（24.10）的全部结论。证明只针对式（24.5）的三个实际三步像及声明的全有限来源四值接口；不要求未知输入承诺，也不推出任意三来源分类或这一见证的全局最小规模。证毕。
+
+## 追加锚（本行以下为增补区）
