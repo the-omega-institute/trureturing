@@ -1,0 +1,16 @@
+**引理 30.3（唯一前像上的有限分歧前沿与加法分解）。** 设 $P,Q\in\mathcal I_3$、$P\ne Q$ 且 $\operatorname{NC}(P,Q)$。存在有限非空前缀自由地址集 $H$，使得对每个 $w\in H$，两棵子树 $P_w=P|_w,Q_w=Q|_w$ 恰是一侧原子像、另一侧复合像的非冲突比较；在全部集合 $w\Sigma$（$w\in H$）之外，两树的四值报告相同。存在非负整数 $h_0$，为这些孔以外相同部分的叶数，满足
+
+$$
+\begin{aligned}
+n(P)&=h_0+\sum_{w\in H}n(P_w),&
+n(Q)&=h_0+\sum_{w\in H}n(Q_w),\\
+s(P,Q)&=h_0+\sum_{w\in H}s(P_w,Q_w),\\
+\nu(P,Q)&=\sum_{w\in H}\nu(P_w,Q_w),&
+\nu(Q,P)&=\sum_{w\in H}\nu(Q_w,P_w),\\
+n(P)-n(Q)&=\sum_{w\in H}\bigl(n(P_w)-n(Q_w)\bigr).
+\end{aligned}
+\tag{30.4}
+$$
+
+这里 $\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N}$，$w\Sigma$ 包含孔根 $w$。每项大小差非零；其符号由原子／复合的朝向决定。
+
