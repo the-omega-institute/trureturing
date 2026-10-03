@@ -44,7 +44,9 @@ public static class DocumentGraphAssembler
 {
     public static DocumentGraph Assemble(
         IEnumerable<ScribeDocument> documents,
-        DeclarationCatalog? catalog)
+        DeclarationCatalog? catalog,
+        string? repositoryRoot = null,
+        bool validateTargets = true)
     {
         ArgumentNullException.ThrowIfNull(documents);
         var material = documents.ToImmutableArray();
@@ -64,7 +66,7 @@ public static class DocumentGraphAssembler
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
             var assembled = Extract(document)
-                .Concat(ProjectLeanImports(document, catalog, byLeanModule))
+                .Concat(ProjectLeanImports(document, catalog, byLeanModule, repositoryRoot))
                 .DistinctBy(CanonicalKey, StringComparer.Ordinal)
                 .OrderBy(RoleOrder)
                 .ThenBy(CanonicalKey, StringComparer.Ordinal)
@@ -75,17 +77,21 @@ public static class DocumentGraphAssembler
             {
                 var isExplicit = document.Edges.Any(candidate => string.Equals(
                     CanonicalKey(candidate), CanonicalKey(edge), StringComparison.Ordinal));
-                ValidateTarget(
-                    document.Header.Gid.Value,
-                    edge,
-                    isExplicit,
-                    byGid,
-                    catalog,
-                    findings);
+                if (validateTargets)
+                {
+                    ValidateTarget(
+                        document.Header.Gid.Value,
+                        edge,
+                        isExplicit,
+                        byGid,
+                        catalog,
+                        findings);
+                }
             }
         }
 
-        FindDependencyCycles(edges, findings);
+        if (validateTargets)
+            FindDependencyCycles(edges, findings);
         return new DocumentGraph(
             edges.ToImmutable(),
             explicitEdges.ToImmutable(),
@@ -138,7 +144,8 @@ public static class DocumentGraphAssembler
     private static IEnumerable<DocumentEdge> ProjectLeanImports(
         ScribeDocument document,
         DeclarationCatalog? catalog,
-        IReadOnlyDictionary<string, string> documentsByLeanModule)
+        IReadOnlyDictionary<string, string> documentsByLeanModule,
+        string? repositoryRoot)
     {
         if (!RepoPath.TryCreate(document.Header.Gid.Value + ".lean", out var sourcePath))
         {
@@ -154,12 +161,22 @@ public static class DocumentGraphAssembler
                      .Distinct(StringComparer.Ordinal)
                      .Order(StringComparer.Ordinal))
         {
-            if (documentsByLeanModule.TryGetValue(importedModule, out var targetGid)
+            var targetGid = repositoryRoot is null
+                ? documentsByLeanModule.GetValueOrDefault(importedModule)
+                : SourceGidForExistingDefinition(repositoryRoot, importedModule);
+            if (targetGid is not null
                 && !string.Equals(targetGid, document.Header.Gid.Value, StringComparison.Ordinal))
             {
                 yield return DocumentEdge.Dependency.Create(GidRef.Create(targetGid));
             }
         }
+    }
+
+    private static string? SourceGidForExistingDefinition(string repositoryRoot, string leanModule)
+    {
+        var relative = leanModule.Replace('.', '/') + ".scribe.cs";
+        var path = Path.Combine(repositoryRoot, "Blueprint", relative);
+        return File.Exists(path) ? leanModule.Replace('.', '/') : null;
     }
 
     private static string LeanModuleName(string documentGid) =>

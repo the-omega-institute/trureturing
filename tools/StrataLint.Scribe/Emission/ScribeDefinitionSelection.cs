@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace StrataLint.Scribe;
 
@@ -63,13 +62,10 @@ internal static class ScribeDefinitionSelector
         {
             foreach (var source in allSources)
             {
-                var text = File.ReadAllText(Path.Combine(root, source.Replace('/', Path.DirectorySeparatorChar)));
+                var declaredSources = ScribeScriptHost.ReadSharedSourcePaths(root, source);
                 foreach (var shared in sharedChanges)
                 {
-                    if (Regex.IsMatch(
-                        text,
-                        $@"\bScribeSharedSource(?:Attribute)?\s*\(\s*""{Regex.Escape(shared)}""\s*\)",
-                        RegexOptions.CultureInvariant))
+                    if (declaredSources.Contains(shared, StringComparer.Ordinal))
                     {
                         selected.Add(source);
                         break;

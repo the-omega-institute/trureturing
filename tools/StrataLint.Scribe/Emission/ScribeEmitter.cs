@@ -64,7 +64,9 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments: false,
                 suppliedDefinitions: definitions,
                 writeAttestation: false,
-                checkFreshness: check).ExitCode;
+                checkFreshness: check,
+                graphRepositoryRoot: repositoryRoot,
+                validateDocumentGraph: false).ExitCode;
         });
     }
 
@@ -234,7 +236,9 @@ public static class ScribeEmitter
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null,
         bool writeAttestation = true,
-        bool checkFreshness = false)
+        bool checkFreshness = false,
+        string? graphRepositoryRoot = null,
+        bool validateDocumentGraph = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -334,7 +338,9 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                declarationCatalog);
+                declarationCatalog,
+                graphRepositoryRoot,
+                validateDocumentGraph);
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(

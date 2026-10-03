@@ -156,6 +156,42 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
+    public void ScopedLeanImportsUseDefinitionSourcePresence()
+    {
+        using var root = new TemporaryRoot();
+        var source = Document("D5/S0/Test/Source");
+        var target = Document("D5/S0/Test/Target");
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Test/Source.lean"] = new(["D5.S0.Test.Target"], []),
+            ["D5/S0/Test/Target.lean"] = new([], []),
+        });
+        AddDefinitionSource(root, "D5/S0/Test/Target");
+
+        var scoped = DocumentGraphAssembler.Assemble(
+            [source], DeclarationCatalog.Create(report), root.Path, validateTargets: false);
+        var full = DocumentGraphAssembler.Assemble(
+            [source, target], DeclarationCatalog.Create(report));
+
+        Assert.Equal(
+            full.For(source).OfType<DocumentEdge.Dependency>().Select(edge => edge.Target.Value),
+            scoped.For(source).OfType<DocumentEdge.Dependency>().Select(edge => edge.Target.Value));
+        Assert.Contains(
+            "- Dependency: [D5/S0/Test/Target](Target.md)",
+            Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+                source, DeclarationCatalog.Create(report), graph: scoped).AsSpan()),
+            StringComparison.Ordinal);
+
+        using var missingRoot = new TemporaryRoot();
+        var missing = DocumentGraphAssembler.Assemble(
+            [source], DeclarationCatalog.Create(report), missingRoot.Path, validateTargets: false);
+        Assert.Empty(missing.For(source).OfType<DocumentEdge.Dependency>());
+    }
+
+    private static void AddDefinitionSource(TemporaryRoot root, string gid) =>
+        File.WriteAllText(root.Resolve("Blueprint/" + gid + ".scribe.cs"), "class Definition {}");
+
+    [Fact]
     public void DocumentsCarryImplicitDescribeTruthAnchors()
     {
         var source = DocumentWithLeanAnchor(

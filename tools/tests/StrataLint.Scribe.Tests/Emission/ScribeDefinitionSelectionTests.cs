@@ -132,13 +132,41 @@ public sealed class ScribeDefinitionSelectionTests
     public void SharedSourceSelectsItsUsers()
     {
         using var root = new TemporaryRoot();
-        Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "[ScribeSharedSource(\"Blueprint/Shared.cs\")] class First {}");
+        Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "[ScribeSharedSource(\"Blueprint/Shared.scribe.cs\")] class First {}");
         Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
-        Add(root, "Blueprint/Shared.cs", "class Shared {}");
+        Add(root, "Blueprint/Shared.scribe.cs", "class Shared {}");
 
-        var selected = ScribeDefinitionSelector.Select(root.Path, ["Blueprint/Shared.cs"]);
-        Assert.Single(selected.Paths);
-        Assert.Equal("Blueprint/D5/S0/Test/First.scribe.cs", selected.Paths[0]);
+        var selected = ScribeDefinitionSelector.Select(root.Path, ["Blueprint/Shared.scribe.cs"]);
+        Assert.True(selected.Paths.SequenceEqual(
+            ["Blueprint/D5/S0/Test/First.scribe.cs", "Blueprint/Shared.scribe.cs"]));
+    }
+
+    [Fact]
+    public void SharedSourceSelectionUsesTheHostSyntaxContract()
+    {
+        using var root = new TemporaryRoot();
+        const string shared = "Blueprint/Shared.scribe.cs";
+        Add(root, shared, "class Shared {}");
+        Add(root, "Blueprint/D5/S0/Test/Simple.scribe.cs",
+            $"[ScribeSharedSource(\"{shared}\")] class Simple {{}}");
+        Add(root, "Blueprint/D5/S0/Test/Suffix.scribe.cs",
+            $"[ScribeSharedSourceAttribute(\"{shared}\")] class Suffix {{}}");
+        Add(root, "Blueprint/D5/S0/Test/Qualified.scribe.cs",
+            $"[StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] class Qualified {{}}");
+        Add(root, "Blueprint/D5/S0/Test/Aliased.scribe.cs",
+            $"[global::StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] record Aliased {{}}");
+        Add(root, "Blueprint/D5/S0/Test/Unrelated.scribe.cs", "class Unrelated {}");
+
+        var selected = ScribeDefinitionSelector.Select(root.Path, [shared]);
+
+        Assert.True(selected.Paths.SequenceEqual(
+            [
+                "Blueprint/D5/S0/Test/Aliased.scribe.cs",
+                "Blueprint/D5/S0/Test/Qualified.scribe.cs",
+                "Blueprint/D5/S0/Test/Simple.scribe.cs",
+                "Blueprint/D5/S0/Test/Suffix.scribe.cs",
+                "Blueprint/Shared.scribe.cs",
+            ]));
     }
 
     [Fact]
