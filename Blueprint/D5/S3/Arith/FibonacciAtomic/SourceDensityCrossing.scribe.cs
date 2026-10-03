@@ -53,7 +53,7 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
                         + "and q(j+(j+1)/c)>1. Continuity gives the crossing between these two "
                         + "points, and strict increase gives uniqueness and the three integer "
                         + "comparison equivalences for the real finite-product ratio and actual density ratio. "
-                        + "At an integer t, the iterated Fibonacci step has coordinates "
+                        + "For i=j or j+1 at a legal integer t, the iterated Fibonacci step has coordinates "
                         + "(At+Ei,Dt+Ai). The Catalan and binomial factorial identities give "
                         + "the adjacent fiber-count ratio. Pairing consecutive factors in "
                         + "rising(2n-1,2D)=4^D rising(n-1/2,D) rising(n,D) then gives the integer bridge."))), DescribeRole.Theorem))));
