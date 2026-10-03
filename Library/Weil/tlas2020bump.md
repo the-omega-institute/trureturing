@@ -405,3 +405,148 @@ E_{\mathrm{rem}}(R)\ge-P_H(R)+B_H(R)
 $$
 
 for all sufficiently large real $R$. A relative version $E_{\mathrm{rem}}\ge-(1-\varepsilon(R))P_H$ pays the known safe-error bound when $\varepsilon(R)P_H(R)\ge B_H(R)$; an unspecified $o(1)$ reserve does not ensure this. This is a sufficient use of the absolute-error certificate, not a necessary condition for the unknown complete scalar. Pointwise complex asymptotics alone do not bound the summed error relative to $P_H$. The source mapping and these transfer obligations are paper-level applications, with the signed comparison and RH/Robin unresolved.
+
+## Admissibility of the five outer phase models
+
+The [full outer interface](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md), §35, supplies five leading complex contributions $L_\pm,U_\pm,X$ and additive errors against their individual positive envelopes. It covers every sufficiently large $T=R\gamma$ with $|\tau|\le1/(2H)$, without restricting $\eta=\tau\sqrt T$. Reuse this interface and the [uniform local source mapping](neuschel2012uniformlaplace.md); neither identifies the leading contributions as exact compact-test transforms.
+
+The unchanged exact test is
+
+$$
+J_R(t)=R^{-1}J(t/R),\qquad
+h_R=-D_t^2(1-4D_t^2)^2J_R,\qquad
+\widehat h_R(z)=p(z)A_R(z).
+$$
+
+It is smooth and compactly supported on $[-bR,bR]$, so its Fourier transform is entire. This elementary compact-support consequence and the identity theorem are existing analytic tools. Their application distinguishes the exact test from its five-term asymptotic model.
+
+Fix $R>0$ and put $a=(b-1)/4$. On the principal positive-frequency cone, the cross model of §35 has the form
+
+$$
+X_R(z)=D_*(Rz)^{-15/8}
+\exp[-\sqrt{2Rz}-2^{3/4}\sqrt a\,(Rz)^{1/4}],
+\qquad D_*>0.
+$$
+
+Under $z=v^8/R$, its polynomial-weighted lift is
+
+$$
+p(v^8/R)X_R(v^8/R)
+=\frac{D_*}{R^2}v(1+4v^{16}/R^2)^2
+\exp[-\sqrt2v^4-2^{3/4}\sqrt a\,v^2].
+$$
+
+This is an odd analytic germ with nonzero linear coefficient $D_*/R^2$. Each weighted endpoint model instead has the form $v^{-2}$ times an analytic function of $v^4$, and is therefore even and meromorphic at zero. Cancellation among the four endpoints cannot remove the cross model's odd part.
+
+For an entire function $F(z)$, the lift $F(v^8/R)$ is even. Exact complex agreement with the five-term model on any continuous positive real frequency tail would, by the identity theorem on the common cone and its lifted continuation, force agreement on the punctured $v$-plane. The parity difference contradicts this. Thus neither the cross model nor the full five-term model is the exact entire transform of a compact test on that tail.
+
+This application does not invalidate the large-frequency asymptotics, rule out interpolation at isolated actual zeros, including an infinite set without finite accumulation, or address equality only of real parts. A high-height contour formula avoiding the origin is a candidate route requiring a separately justified exact identity, including analyticity, convergence, horizontal faces, other boundary integrals and remainders. Such an identity is a separate interface from direct substitution into the complete compact-test explicit formula.
+
+## The positive remainder allowance is not a small head reserve
+
+Keep the actual representative set $\mathcal U_H^+(R)$ of §35, with $\delta_\rho>0$, and its multiplicity-weighted positive cost, omitting only the uniform constant $4K$:
+
+$$
+G_R=\sum_{\rho\in\mathcal U_H^+(R)}m_\rho|p(z_\rho)|
+\left[T_\rho^{-1/4}|X_\rho|
++T_\rho^{-1/2}\sum_{\varepsilon=\pm1}
+(|L_{\varepsilon,\rho}|+|U_{\varepsilon,\rho}|)\right].
+$$
+
+Since $|\Phi(t)|\le M$ on the real line and $\int_1^bw(u)\,du=1$, the same verified head satisfies
+
+$$
+0<P_H(R)\le C_H:=2M^2\sum_{0<\gamma\le H}m_\rho p(\gamma)<\infty
+$$
+
+for sufficiently large $R$; positivity also follows from (3). Suppose an actual off-line zero exists. Its reflected positive-displacement representative has fixed $\delta>0$ and $\gamma>H$. It belongs to $\mathcal U_H^+(R)$ whenever $R>9\gamma/(25\delta^2)$, with the sufficiently-large-$T$ threshold also imposed. Its right-endpoint contribution to this cost is
+
+$$
+m_\rho|p(z_\rho)|T_\rho^{-1/2}|U_{+,\rho}|
+=c_\rho R^{-11/4}\exp[b\delta R-C_\rho\sqrt R],
+$$
+
+where $c_\rho>0$ and
+
+$$
+C_\rho=2(\sqrt b+\sqrt a)\operatorname{Re}\sqrt{\delta+i\gamma}>0.
+$$
+
+Consequently $G_R\to\infty$ and $G_R/P_H(R)\to\infty$ under this hypothesis. Only one persistent actual representative is used; no exchange of an infinite sum and a limit is needed. Multiplying this same positive endpoint allowance by any fixed inverse power of $R$ preserves its divergence; this statement does not address every possible sharper remainder estimate.
+
+This is a limitation of the displayed positive allowance, not a lower bound for the realized signed error. It does not rule out cancellation, a sharper signed remainder estimate, or a joint main-minus-cost comparison. In particular, the fact that this cost exceeds the head does not determine the sign of the leading sum.
+
+The target remains the actual signed comparison of §35 at every sufficiently large real scale. An admissible exact channel reconstruction or a complete high-height contour identity would supply a lawful arithmetic representation; either still needs a signed estimate for the same jointly realized prime, zero and remainder data. These method boundaries are paper-level applications of known analytic conditions to the prescribed models, without a new general theorem, Lean verification or RH/Robin conclusion.
+## Canonical real inversion and the prime pairing
+
+The preceding entire-transform obstruction leaves another admissibility question: whether a real inverse transform of the complete five-term model can be inserted into the same unregularized prime-power functional. Consider the explicit leading functions themselves, independently of their approximation to the exact test at large frequency. Write
+
+$$
+F_R(z)=X_R(z)+\sum_{\varepsilon=\pm1}
+\bigl(L_{\varepsilon,R}(z)+U_{\varepsilon,R}(z)\bigr),
+$$
+
+where the endpoint models are (35.1) with $y_\varepsilon=i\varepsilon Rz$, on the same principal cone. Fix $R>0$. For $z>0$, the two endpoint pairs are conjugate and $X_R(z)$ is real, so $F_R(z)$ is real. Its explicit Puiseux expansion at zero gives
+
+$$
+p(z)F_R(z)=K_0R^{-9/4}z^{-1/4}+O_R(z^{1/8}),
+$$
+
+with
+
+$$
+K_0=2Be^{-1/4}\left[
+\cos(3\pi/8+\sqrt a)
++b^{-3/2}e^{\sqrt{a/b}}\cos(9\pi/8)
+\right]<0.
+$$
+
+Both cosine terms are negative: $1/4<a<1$ implies $\pi/2<3\pi/8+\sqrt a<\pi$. More explicitly,
+
+$$
+p(z)F_R(z)=z^{-1/4}E_R(\sqrt z)+z^{1/8}C_R(z^{1/4}),
+\qquad E_R(0)=K_0R^{-9/4},
+$$
+
+with $E_R,C_R$ analytic near zero. Differentiating these analytic factors gives the remainder derivative $O_R(z^{-7/8})$; this does not follow from an undifferentiated big-$O$ alone. These are convergent local expansions of the defined models; they do not extend the large-frequency approximation for $A_R$ to zero.
+
+Define the canonical even extension
+
+$$
+\mathcal F_R(\xi)=p(\xi)F_R(|\xi|),\qquad \xi\ne0.
+$$
+
+Its singularity at zero is integrable. The exact model formulas and their derivatives decay at infinity as a polynomial times $e^{-c\sqrt{|\xi|}}$, for fixed $R$ and some $c>0$. Thus $\mathcal F_R\in L^1(\mathbb R)$ and its inverse is
+
+$$
+g_R(t)=\frac1{2\pi}\int_{\mathbb R}\mathcal F_R(\xi)e^{it\xi}\,d\xi.
+$$
+
+On the positive axis subtract $K_0R^{-9/4}\xi^{-1/4}e^{-\xi}$. The remainder vanishes at zero and infinity, is absolutely continuous, and has integrable derivative. Integration by parts therefore bounds its cosine transform by $O_R(|t|^{-1})$.
+
+The existing [Gamma Laplace integral, DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1), with $\mu=1$, $\nu=3/4$ and $z=1-it$, gives
+
+$$
+\int_0^\infty \xi^{-1/4}e^{-\xi}\cos(t\xi)\,d\xi
+=\Gamma(3/4)\operatorname{Re}(1-it)^{-3/4}.
+$$
+
+Consequently
+
+$$
+g_R(t)=\frac{K_0R^{-9/4}}\pi\Gamma(3/4)\cos(3\pi/8)
+|t|^{-3/4}+O_R(|t|^{-1}).
+$$
+
+The leading coefficient is negative. For fixed $R$, $g_R$ is eventually negative and its primary-prime absolute terms satisfy
+
+$$
+\frac{\log p}{\sqrt p}|g_R(\log p)|
+\asymp_R\frac{(\log p)^{1/4}}{\sqrt p}.
+$$
+
+The sum of these terms diverges by comparison with the classical divergent prime harmonic sum $\sum_p1/p$. No prime number theorem or RH assumption is needed. Since the raw prime terms are eventually of one sign, conditional summation in the ordinary prime order does not repair their convergence. The full form's outer minus reverses this raw sign, without changing the divergence. This canonical inversion therefore does not supply an admissible test for the same unregularized prime-power formula.
+
+The exact compensating inverse is $h_R-g_R$. Outside $[-bR,bR]$ it equals $-g_R$, because $h_R$ has compact support. The two separate prime pairings diverge with opposite tails, whereas their pointwise sum has no prime-power contribution for $\log n>bR$. Recombination must precede use of the original arithmetic functional; these divergent individual terms cannot be separately estimated and then subtracted as finite quantities.
+
+This is a model-specific application of the Gamma integral, integration by parts and prime-harmonic divergence, not a new general Fourier theorem. It excludes this canonical unregularized inversion only. Alternative high-frequency completions, regularized pairings, compact truncations with their exact correction, isolated-zero interpolation and separately justified cone-contour identities remain distinct possibilities. The compensation identity supplies no sign for the surviving actual prime terms or the original compact test, no all-scale signed budget, and no RH/Robin conclusion; the application has not been Lean-verified.
