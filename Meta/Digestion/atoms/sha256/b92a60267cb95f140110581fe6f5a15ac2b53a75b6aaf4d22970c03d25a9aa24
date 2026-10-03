@@ -1,0 +1,14 @@
+**定理 28.7（原随机合同与固定均匀子类的三个锐值）。** 两族的全部下确界均达到，且
+
+$$
+\boxed{\begin{aligned}
+(D,R,W)(\boldsymbol P^{\mathrm b})&=(44,43,44),\\
+(D,R,W)(\boldsymbol P^{\mathrm p})&=\left(43,\frac{171}{4},43\right),\\
+(R_{\mathrm u},W_{\mathrm u})(\boldsymbol P^{\mathrm b})&=(43,44),\\
+(R_{\mathrm u},W_{\mathrm u})(\boldsymbol P^{\mathrm p})&=\left(\frac{171}{4},43\right).
+\end{aligned}}
+\tag{28.24}
+$$
+
+每个定理 28.6 的确定性目标策略都取得相应 $D$；各族均匀混合四个目标策略同时取得相应 $R,W$，并能在固定的 $[0,1]$ 种子空间中逐种子全域正确且有限终止地实现。
+
