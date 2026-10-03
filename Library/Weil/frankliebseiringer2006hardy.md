@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor.
+claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor. The classical Stechkin reserve alone also fails the universal reduced certificate on an actual smooth even test.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -370,7 +370,109 @@ $$
 C_L(f)\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2)\|f\|_2^2.
 $$
 
-This condition cannot hold for every compact smooth test. For a normalized test supported in an interval of width $d<\log2$, all primary-prime correlations vanish and the continuum estimate (9) gives $|C_L(f)|\le2(e^{d/2}-1)$. This tends to zero as $d\downarrow0$, while the required scalar is at least $\log2>0$. Such tests refute the universal sufficient condition, not positivity of their full Weil form. A useful all-test comparison must retain the actual positive contributions or a sharper joint estimate. The logarithmic budget has already consumed $E_*$, which cannot be counted again as an independent reserve. Equation (15) and this domain boundary remain paper-level deductions without a new Lean declaration, Robin estimate or RH conclusion.
+This condition cannot hold for every compact smooth test. For a normalized test supported in an interval of width $d<\log2$, all primary-prime correlations vanish and the continuum estimate (9) gives $|C_L(f)|\le2(e^{d/2}-1)$. This tends to zero as $d\downarrow0$, while the required scalar is at least $\log2>0$. Such tests refute the universal sufficient condition, not positivity of their full Weil form. A useful all-test comparison must retain the actual positive contributions or a sharper joint estimate. In the basic budget (8), $E_*$ has been spent; it cannot also be added to (15) as an independent reserve. Equation (15) and this domain boundary remain paper-level deductions without a new Lean declaration, Robin estimate or RH conclusion.
+
+The [classical Stechkin application](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison) supplies a stronger paper-level bound for the actual $\mathcal Z$ on this same test:
+
+$$
+\mathcal Z(f)\ge\kappa_S E_*(f)-2\|f\|_2^2,
+\qquad \kappa_S=1/\sqrt5.
+$$
+
+Thus the independently justified remainder
+
+$$
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2\|f\|_2^2\ge0
+$$
+
+gives the exact account
+
+$$
+\begin{aligned}
+Q_{\rm full}(f)={}&C_L(f)-\tfrac12|\int f|^2
+-(2C_{\rm odd}+\log2+2)\|f\|_2^2\\
+&+\kappa_S E_*(f)+\mathcal R_S(f)
++\mathcal D_{\rm odd}(f)+\mathcal J(f). \tag{16}
+\end{aligned}
+$$
+
+The retained fraction is paid for by a lower bound on $\mathcal Z$, including the scalar cost $2\|f\|_2^2$. It is not a second use of the full $E_*$ and is not obtained by defining an unknown Robin or Weil margin to be positive. A sufficient joint comparison is now
+
+$$
+C_L(f)+\kappa_S E_*(f)
+\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2+2)\|f\|_2^2
+\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0. \tag{17}
+$$
+
+Equation (17) is sufficient rather than necessary: retaining the actual $\mathcal R_S$, $\mathcal D_{\rm odd}$ and $\mathcal J$ can reduce the required margin. The construction below shows that its antecedent cannot hold for every admitted test, even with the retained Gamma fraction. Every term belongs to the same actual $f$; separate extrema for $C_L$ and $E_*$ do not prove their joint comparison. The source reuse preserves a positive Gamma fraction without an RH hypothesis, but does not solve the remaining signed primary-prime/pole estimate or identify its tests with the Robin configurations.
+
+### A smooth obstruction to the retained-fraction scalarization
+
+The earlier scalarization obstruction discarded every positive contribution. Here the question is different: does keeping $\kappa_S E_*$ suffice after charging the scalar cost $2\|f\|_2^2$? A fixed smooth test refutes that stronger universal requirement. The construction uses standard convolution and translation estimates, not a new approximation or prime-distribution theorem.
+
+The classical suppliers are [Brezis, *Functional Analysis, Sobolev Spaces and Partial Differential Equations* (Springer, 2011)](https://doi.org/10.1007/978-0-387-70914-7), §4.4, Theorem 4.15, printed p.104 (convolution contraction), Propositions 4.18 and 4.20, pp.106–107 (support and smoothness), and §9.1, Lemma 9.1 and Proposition 9.3, pp.266–267 (weak-derivative commutation and translation). The parameter map is dimension one, $p=2$, the whole space $\mathbb R$, and the zero-extended seed below. Positive compact convolution and explicit norm control are used directly; no unspecified approximation sequence or extension of the Weil form to nonsmooth tests is needed.
+
+Start with the compact absolutely continuous function
+
+$$
+f_0(x)=\begin{cases}2\cos(2\pi x),&|x|\le1/4,\\0,&|x|>1/4.\end{cases}
+\qquad \|f_0\|_2^2=1,\qquad \|f_0'\|_2^2=4\pi^2<40.
+$$
+
+Choose any nonnegative even $\eta\in C_c^\infty(-1,1)$ of integral one. Put $\varepsilon=1/1000$, $\eta_\varepsilon(x)=\varepsilon^{-1}\eta(x/\varepsilon)$, $g=\eta_\varepsilon*f_0$, and $f=g/\|g\|_2$. Young's convolution inequality gives $\|g'\|_2\le\|f_0'\|_2$. Reuse the segment-integral translation estimate above, valid also for this absolutely continuous $f_0$, to obtain
+
+$$
+\|g-f_0\|_2\le\varepsilon\|f_0'\|_2<1/100,
+\qquad \|g\|_2>99/100,
+\qquad \|f'\|_2^2<\frac{40}{(99/100)^2}<42.
+$$
+
+This is an actual nonnegative even real compact smooth test with $\|f\|_2=1$, supported in $[-251/1000,251/1000]$. Its support width is less than $11/20<\log2$, so every primary-prime correlation vanishes. The existing continuum bound therefore gives
+
+$$
+0\le C_L(f)\le2(e^{11/40}-1)<1.
+$$
+
+For its shifted energy, nonnegativity makes $R_f(t)\ge0$, so the same translation estimate and norm identity give
+
+$$
+\|f-\tau_t f\|_2^2\le\min(42t^2,2).
+$$
+
+Since $1-e^{-2t}=2e^{-t}\sinh t\ge2te^{-t}$ for $t>0$, its actual kernel satisfies
+
+$$
+\frac{e^{-5t/2}}{1-e^{-2t}}\le\frac{e^{-3t/2}}{2t}.
+$$
+
+Split the energy integral at $t=1/4$ and $t=1$. On the first interval use the derivative bound, on the second use the bound two, and on the last also use $1/t\le1$. This yields
+
+$$
+E_*(f)\le\frac{42}{64}+\log4+\frac23e^{-3/2}
+<\frac{21}{32}+\frac75+\frac16
+=\frac{1067}{480}<\frac94.
+$$
+
+The scalar comparisons use only $\pi^2<10$, $\log4<7/5$, $e^{3/2}>4$, $\log2>11/20$, and $\log(3/2)>11/40$. Since $\kappa_S<1/2$ and $C_{\rm odd}\ge0$,
+
+$$
+\begin{aligned}
+C_L(f)+\kappa_S E_*(f)&<1+\frac98=\frac{17}{8},\\
+\tfrac12|\int f|^2+(2C_{\rm odd}+\log2+2)\|f\|_2^2&>\frac52.
+\end{aligned}
+$$
+
+Thus the antecedent in (17) fails by more than $3/8$ on an admitted smooth even test. Enlarging the ambient support does not repair it for this same $f$: the added continuum integrand is zero, and all newly admitted prime correlations still vanish.
+
+The discarded positive terms have concrete contributions on this very test. Every odd-power shift $k\log p$, $k\ge3$, exceeds its support width, so the existing energy definition gives
+
+$$
+\mathcal D_{\rm odd}(f)=2C_{\rm odd},\qquad
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2
+\ge2-\kappa_S E_*(f)>\frac78.
+$$
+
+These compensations do not by themselves determine the sign of the full form: the displayed estimates supply only a lower bound for the reduced deficit. They show why discarding independently positive terms is a substantive loss. This is a paper-level obstruction to that sufficient scalarization, not a negative-full-Weil example or a counterexample to RH or Robin. The actual values in (16) must be retained or bounded jointly if this account is used for an all-test proof. The construction and bounds have not been compiled in Lean.
 
 ## A prime edge crossing an intermediate FIB window
 

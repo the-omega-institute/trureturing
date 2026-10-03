@@ -1,0 +1,41 @@
+### 38.1 实际联合像与部分取得核
+
+固定分辨率 \(n\) 和绝对纪元 \(\nu\)。设实际共同来源的联合像为
+\(J_{n,\nu}\)，其元素写成
+
+$$
+ b=(\xi,\nu,x,r,\pi,A,W),
+ \tag{PG.3801}
+$$
+
+其中 \(\xi\) 是来源身份，\(x\) 是当前游标，\(r\) 是参考与校准状态，\(\pi\)
+是权限／句柄状态，\(A\) 是已取得的分辨率档案，\(W\) 是有序事件和 writer 记录。
+若 \(W\) 能由 \(A\) 在声明任务中确定重算，应把它视为派生字段而不重复计数；否则二者
+均属于联合边界。对 \(m\preceq n\) 给出只在实际像上的限制
+
+$$
+ r_{mn,\nu}:J_{n,\nu}\longrightarrow J_{m,\nu}.
+ \tag{PG.3802}
+$$
+
+事件字母表为 \(L_{\rho,n}\)，并有事件限制
+\(\lambda_{mn}:L_{\rho,n}\to L_{\rho,m}\)。一次 `ApplyRho` 取得不是一个
+无条件总函数，而是部分核
+
+$$
+ Q_{n,\nu}:J_{n,\nu}\longrightarrow
+\operatorname{Option}(L_{\rho,n}\times J_{n,\nu+1}).
+ \tag{PG.3803}
+$$
+
+`None` 表示当前未执行或不合法；`Some(\ell,b')` 才表示已经取得事件 \(\ell\)
+以及同一来源上的新联合状态。若取得需要更细的输入，则另记前视核为
+\[
+ Q^+_{n,\nu}:J_{j_\rho(n),\nu}\longrightarrow
+ \operatorname{Option}(L_{\rho,n}\times J_{n,\nu+1}),
+\]
+并要求 \(m\preceq n\Rightarrow j_\rho(m)\preceq j_\rho(n)\)。本节显示的
+(PG.3804)、(PG.3807)–(PG.3810) 先采用闭合情形 \(j_\rho(n)=n\)；真正前视时，
+所有 \(Q_{n,\nu}\) 按下面的 typed 公式统一替换为 \(Q^+_{n,\nu}\)，输入限制统一替换为
+\(r_{j_\rho(m),j_\rho(n),\nu}\)，不能把前视依赖偷偷当作同层闭合。
+

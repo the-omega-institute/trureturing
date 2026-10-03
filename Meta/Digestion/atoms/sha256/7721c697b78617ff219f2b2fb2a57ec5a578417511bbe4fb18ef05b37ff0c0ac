@@ -1,0 +1,35 @@
+**定理 32.1（有类型行为核的动态充分性与最小性）。** 在可达闭包上，\(\approx_i\) 是等价关系，并满足：
+
+1. \(s\approx_i t\) 时，当前读出相同：\(q_i(s)=q_i(t)\)；
+2. 对每条 \(e:i\to j\)，若 \(\operatorname{step}_e(s)=\operatorname{none}\)，则 \(\operatorname{step}_e(t)=\operatorname{none}\)；若
+   \[
+   \operatorname{step}_e(s)=\operatorname{some}(\ell,s'),
+   \]
+   则存在 \(t'\) 使
+   \[
+   \operatorname{step}_e(t)=\operatorname{some}(\ell,t')
+   \quad\text{且}\quad s'\approx_j t' ;
+   \tag{TG.3208}
+   \]
+3. 因而 \(q_i\)、每条 \(\operatorname{step}_e\) 以及所有有限路径响应都下降到商
+   \[
+   \mathsf S_{\mathrm{beh}}=\operatorname{Reach}(R)/{\approx};
+   \tag{TG.3209}
+   \]
+4. 若 \(r\) 是另一个实际可达摘要，并且
+   \[
+   r(s)=r(t)
+   \Longrightarrow
+   \bigl(q_i(s)=q_i(t)\ \land\
+   \text{每条 }e\text{ 的合法性、标签与 }r\text{-后继相同}\bigr),
+   \tag{TG.3210}
+   \]
+   则在 \(\operatorname{im}r\) 上存在唯一映射
+   \[
+   \overline\beta(r(s))=[s]_{\approx}
+   \quad\text{且}\quad
+   \overline\beta\circ r=q_{\mathrm{beh}} .
+   \tag{TG.3211}
+   \]
+   所以任何这样的精确摘要的实际状态数都不小于行为商的类数。
+

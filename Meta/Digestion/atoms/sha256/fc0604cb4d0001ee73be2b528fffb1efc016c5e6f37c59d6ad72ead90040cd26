@@ -1,0 +1,11 @@
+### 32.3 最小可执行行为商
+
+在同一类型纤维上定义
+
+$$
+s\mathrel{\approx_i}t
+\iff
+\beta_i(s)=\beta_i(t).
+\tag{TG.3207}
+$$
+
