@@ -10757,3 +10757,262 @@ Z_{t+1}\mid\widehat x_t
 其中 \(S_t\) 是特征指数 \(D_\eta|\xi|^\eta\) 的对称 \(\eta\)-稳定 Lévy 过程，\(D_\eta\) 由跳跃强度、尾常数和长度单位决定。对阶数 \(r<\eta\) 的绝对矩，典型距离按 \(t^{r/\eta}\) 标度；\(r\ge\eta\) 时相应绝对矩发散，不能把稳定过程报告成有限均方扩散。
 
 首达目标还取决于边界合同：先截断局部过程再取分数次幂、先在完整空间构造稳定过程再杀死、删去外跳或把外跳回送，都是不同生成元。长跳可以越过边界而不命中边界点，因此越界、进入集合和精确命中不能混为一个事件。固定跳长或有限位置窗口最终会出现截止；稳定律只能是经明确缩放得到的极限或中间尺度律。该模型区别于第94节的重尾更新奖励和第69节的分数高斯记忆：这里的重尾来自空间跳长与非局部生成元。FIB 递归本身不选择 Lévy 指数、分数阶数、首达尾或物理长度。
+
+## 118. FIB 上下文图上的外加不可压流、能量与湍流统计
+
+固定有限连通定向图 \(G=(V,E)\)，令 \(d_0:\mathbb R^V\to\mathbb R^E\) 为顶点—边差分，并给顶点、边外加正定质量矩阵 \(H_0,H_1\)。定义
+\[
+G_0=d_0,\qquad
+\delta_0=H_0^{-1}d_0^{\mathsf T}H_1,\qquad
+D=-\delta_0,\qquad
+K=\ker D.
+\tag{118.1}
+\]
+边变量 \(u\) 只有在另加空间嵌入后才可解释为速度。FIB 只提供顶点、标签、词序和候选边；质量、密度、边长、体积、边界和物理时钟均为外加。令 \(P\) 为边内积下到 \(K\) 的正交投影。
+
+另给自伴非负耗散算子 \(A\)、外力 \(f\) 和二次对流项 \(N(u)\)，要求
+\(\langle u,N(u)\rangle_{H_1}=0\)。外加离散欧拉—Navier–Stokes 模型为
+\[
+\dot u+N(u)=-G_0\pi-\nu Au+f,\qquad
+Du=0,
+\qquad \nu\ge0,
+\tag{118.2}
+\]
+或投影后
+\[
+\dot u=-PN(u)-\nu PAu+Pf.
+\]
+在封闭边界、压力正交且对流抵消时，动能
+\[
+E(t)=\frac{\rho}{2}\langle u,u\rangle_{H_1}
+\]
+满足
+\[
+\frac{\mathrm dE}{\mathrm dt}
++\rho\nu\langle u,Au\rangle_{H_1}
+=\rho\langle u,f\rangle_{H_1}.
+\tag{118.3}
+\]
+因此无外力无黏模型守恒动能，黏性模型动能不增；严格衰减还需要 \(A\) 在状态空间上有谱隙。固定有限图上的有限维能量估计不能直接推出无限细化三维流体的全局正则性。
+
+顶点—边数据没有唯一的局部涡量。若另给面集合 \(F\)、边—面差分 \(C:\mathbb R^E\to\mathbb R^F\)，满足 \(Cd_0=0\)，则可定义
+\[
+\omega=Cu,\qquad
+\dot\omega+CN(u)=-\nu C\delta_1\omega+Cf,
+\tag{118.4}
+\]
+其中 \(\delta_1\) 由外加面质量定义。树图或纯一维图上可能没有非平凡不可压耗散；环流、Kelvin 定律和涡量平方守恒都需额外的物质环路与离散复形相容性。
+
+只有在外加特征长度 \(L\)、速度 \(U\) 和黏度 \(\nu\) 后，Reynolds 数才定义为
+\[
+\operatorname{Re}=\frac{UL}{\nu}.
+\tag{118.5}
+\]
+FIB 迭代序号不是物理时间，词长也不是物理长度。若另加平稳初态与驱动概率律，才可研究平均注能、耗散、能谱或湍流级联；大 Reynolds 数本身不保证湍流。故 FIB 递归只提供组合流体载体，能量律和湍流标度属于外加流体实现。
+
+## 119. FIB 有限逼近图上的外加复跃迁、拓扑能带与边缘输运
+
+取第 \(L\) 层有限 FIB 逼近图 \(G_L=(V_L,E_L)\)，在其上另加参数环面
+\[
+\Theta=\mathbb T^2,\qquad \theta=(k,\phi),
+\]
+其中 \(k\) 是周期扭转角，\(\phi\) 是外加相位或 phason。若 FIB 只给出离散替换，连续 \(\phi\) 插值仍需单独指定。定义自伴复跃迁 Hamiltonian
+\[
+H_L(k,\phi)
+=\sum_xv_x(\phi)|x\rangle\langle x|
++\sum_{(x,y)\in E_L}
+\left[t_{xy}e^{\,\mathrm i(A_{xy}(\phi)+\nu_{xy}k)}
+|x\rangle\langle y|+\mathrm{h.c.}\right].
+\tag{119.1}
+\]
+顶点规范只改变边相位表示；回路磁通是规范不变量。树图上的相位在适当条件下可全部消去，存在回路也只是产生非平凡拓扑的必要结构，不是充分条件。
+
+选定带群 \(I\)，若统一能隙
+\[
+g_{L,I}
+=\inf_{(k,\phi)\in\Theta}
+\min_{\substack{a\in I\\b\notin I}}
+|E_{L,a}(k,\phi)-E_{L,b}(k,\phi)|>0,
+\tag{119.2}
+\]
+则谱投影 \(P_{L,I}(k,\phi)\) 在参数环面上连续。其投影 Berry 曲率与 Chern 数为
+\[
+\mathcal F^{(L)}_{k\phi}
+=\mathrm i\,\operatorname{Tr}
+\bigl(P_{L,I}[\partial_kP_{L,I},\partial_\phi P_{L,I}]\bigr),
+\qquad
+C_{L,I}=\frac1{2\pi}\int_{\Theta}\mathcal F^{(L)}_{k\phi}\,\mathrm dk\,\mathrm d\phi.
+\tag{119.3}
+\]
+在光滑投影、固定环面取向和能隙不闭合的连续变形下，\(C_{L,I}\in\mathbb Z\) 且保持不变；带内简并时只有整个投影的总 Chern 数可识别。
+
+若 \(\phi\) 绝热绕行一周且带群保持占据，外加绝热泵浦合同给出
+\[
+Q_L/e=C_{L,I}.
+\tag{119.4}
+\]
+开边界还需另定义端点势与切口删除。共同体能隙、局部边界和热力学极限成立时，边缘谱流可与 \(C_{L,I}\) 相等；有限层左右边缘杂化或局域 Tamm 态会使单个边缘峰不具有拓扑判别力。实际电导仍依赖引线、占据、散射和退相干。FIB 只提供图和层间关系，复跃迁、参数环面、能隙、边界和输运端口均为外加。
+
+## 120. FIB 合法路径上的外加随机定向聚合物、自由能与候选标度
+
+固定 FIB 合法有向图及其长度 \(n\) 的合法路径集合 \(\Omega_n(x,y)\)。随机环境只给合法边加权，不改变路径集合。对路径
+\(\pi=(v_0,e_1,v_1,\ldots,e_n,v_n)\)，定义
+\[
+H_n^\xi(\pi)=\sum_{i=1}^n\xi_i(e_i),
+\qquad
+Z_n^\xi(x,y;\beta)
+=\sum_{\pi\in\Omega_n(x,y)}
+\mu_0(\pi)e^{\beta H_n^\xi(\pi)},
+\qquad
+Z_n^\xi(x;\beta)=\sum_yZ_n^\xi(x,y;\beta).
+\tag{120.1}
+\]
+参考路径权 \(\mu_0\)、逆温 \(\beta\)、随机势的时间相关性和端点坐标均为外加。静态边势与分层独立环境不是同一模型。
+
+在平稳遍历环境和相应指数矩条件下，quenched 与 annealed 自由能分别取为
+\[
+f_{\mathrm q}(\beta)=\lim_{n\to\infty}\frac1n
+\mathbb E_\xi\log Z_n^\xi,
+\qquad
+f_{\mathrm a}(\beta)=\lim_{n\to\infty}\frac1n
+\log\mathbb E_\xi Z_n^\xi,
+\qquad
+f_{\mathrm q}\le f_{\mathrm a}.
+\tag{120.2}
+\]
+若每层环境独立同分布，\(\Lambda(\beta)=\log\mathbb E e^{\beta\xi}\)，并且 \(\mu_0\) 是行随机核，则
+\[
+M_n=e^{-n\Lambda(\beta)}Z_n^\xi
+\]
+是可用于弱无序分析的非负鞅；若路径按计数而非概率核加权，还必须除以合法骨架的 Perron 增长因子。FIB 路径熵与参考核归一化不可混用。
+
+若合法路径具有真实横向坐标、非退化分叉和短程混合随机势，可提出 \(1+1\) 维 KPZ 候选标度
+\[
+\operatorname{Var}(\log Z_n)\asymp n^{2/3},
+\qquad
+\log Z_n-nf_{\mathrm q}=O_{\mathrm{fluc}}(n^{1/3}),
+\qquad
+|X_n-nv|=O_{\mathrm{fluc}}(n^{2/3}).
+\tag{120.3}
+\]
+这些是外加几何和无序满足条件时的候选普适律；有限宽 FIB 自动机的横向尺度有界时，通常应排除 KPZ 横向指数，转而分析随机矩阵乘积的中心涨落和速度型大偏差。第101节讨论的是随机界面生长，不能自动替代本节的路径配分函数。
+
+因此，FIB 只规定可走路径和合法性；随机势、温度、参考权、端点坐标和长度极限决定自由能、无序相及其标度。相同路径骨架可在弱无序、冻结或有限宽度模型中产生不同统计律。
+
+## 121. FIB 上下文图上的外加 Gaussian 自由场、Green 协方差与对数相关
+
+取有限连通上下文图 \(G_n=(V_n,E_n)\)，指定接地边界 \(B_n\subset V_n\)、内部 \(I_n\) 和正导通率 \(c_n(x,y)=c_n(y,x)\)。内部 Dirichlet 拉普拉斯记为 \(L_{n,D}\)，刚度 \(\kappa_n>0\)。零边界 Gaussian 自由场的密度为
+\[
+\mathrm d\mathbb P_n(h)
+\propto
+\exp\!\left[
+-\frac{\kappa_n}{2}
+\sum_{\{x,y\}\in E_n}c_n(x,y)(h_x-h_y)^2
+\right]\prod_{x\in I_n}\mathrm dh_x,
+\qquad h|_{B_n}=0.
+\tag{121.1}
+\]
+于是
+\[
+\operatorname{Cov}(H_n(x),H_n(y))
+=\kappa_n^{-1}G_n(x,y),
+\qquad
+G_n=L_{n,D}^{-1}.
+\tag{121.2}
+\]
+若另给速度质量 \(m_n\)，热核积分必须按终点质量归一化；速度质量、能量导通率和 FIB 出现频率是不同数据。
+
+有效电阻给出增量方差：
+\[
+\operatorname{Var}(H_n(x)-H_n(y))
+=\kappa_n^{-1}
+\bigl(G_n(x,x)+G_n(y,y)-2G_n(x,y)\bigr)
+=\kappa_n^{-1}R_{\mathrm{eff},n}^{B_n}(x,y).
+\tag{121.3}
+\]
+多个接地顶点的接线会改变有效电阻；不接地有限图的常数零模必须通过零均值约束或伪逆另行处理。
+
+若图列嵌入到共同空间并满足归一化协方差的对数相关条件
+\[
+\widehat C_n(x,y)
+=a\log\frac{\ell_0}
+{d(\iota_nx,\iota_ny)\vee\varepsilon_n}
++r_n(x,y),
+\tag{121.4}
+\]
+其中余项一致有界且微观截止 \(\varepsilon_n\to0\)，则可提出 Gaussian multiplicative chaos 候选测度
+\[
+\mathrm d\mathcal M_\gamma
+=\lim_{n\to\infty}
+\exp\!\left(
+\gamma\widehat H_n
+-\frac{\gamma^2}{2}
+\operatorname{Var}\widehat H_n
+\right)\mathrm d\mu,
+\tag{121.5}
+\]
+但其非退化范围、紧性和边界行为需要额外证明（通常要求 \(\gamma^2a\) 低于相应临界值）。有限图 Gaussian 恒等式不自动给出无限体积场、连续版本或混沌极限。FIB 只提供组合图和标签；导通率、刚度、嵌入、接地边界及随机场归一化均为外加。
+
+## 122. FIB 类型骨架上的外加分枝随机游走、极值前沿与 KPP 接口
+
+FIB 替换给出两类祖先—后裔骨架：\(\alpha\) 产生一个 \(\beta\)，\(\beta\) 产生一个 \(\beta\) 和一个 \(\alpha\)，其计数矩阵为
+\[
+A=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{122.1}
+\]
+这里的世代是替换次数，不等同于叶词位置或物理时间。另给类型边 \(i\to j\) 的独立位移律 \(K_{ij}\)，根位置为零，粒子 \(u\) 的位置为路径位移和 \(S(u)\)，第 \(n\) 代最大值为 \(R_n=\max_{|u|=n}S(u)\)。位移概率与祖先树独立性均为外加合同。
+
+令 \(H_{n,i}(x)=\Pr_i(R_n\le x)\)。在分开子树独立时，
+\[
+\begin{aligned}
+H_{n+1,\alpha}(x)
+&=\int H_{n,\beta}(x-y)K_{\alpha\beta}(\mathrm dy),\\
+H_{n+1,\beta}(x)
+&=\left[\int H_{n,\beta}(x-y)K_{\beta\beta}(\mathrm dy)\right]
+\left[\int H_{n,\alpha}(x-y)K_{\beta\alpha}(\mathrm dy)\right].
+\end{aligned}
+\tag{122.2}
+\]
+同胞位移相关时必须改用联合律，不能用两个边缘卷积相乘。若边指数矩
+\[
+m_{ij}(\theta)=\int e^{\theta y}K_{ij}(\mathrm dy),
+\qquad
+B(\theta)=
+\begin{pmatrix}
+0&m_{\alpha\beta}(\theta)\\
+m_{\beta\alpha}(\theta)&m_{\beta\beta}(\theta)
+\end{pmatrix},
+\qquad
+\kappa(\theta)=\log\rho(B(\theta)),
+\tag{122.3}
+\]
+则指数矩估计给出
+\[
+\Pr_i(R_n\ge cn)
+\le e^{-\theta cn}[B(\theta)^n\mathbf1]_i,
+\qquad
+\limsup_{n\to\infty}\frac{R_n}{n}
+\le \inf_{\theta>0}\frac{\kappa(\theta)}{\theta}.
+\tag{122.4}
+\]
+把上界提升为精确速度需要多类型分枝随机游走定理、不可约性、非格点性和可积条件。若全部位移独立且服从 \(N(\mu,\sigma^2)\)，则候选线性速度为
+\[
+c_*=\mu+\sigma\sqrt{2\log\varphi},
+\qquad
+\varphi=\frac{1+\sqrt5}{2},
+\tag{122.5}
+\]
+但这仍需相应极值定理核验。
+
+在适用的轻尾、非格点临界条件下，最大值中心可具有
+\[
+a_n=c_*n-\frac{3}{2\theta_*}\log n,
+\qquad
+\Pr_i(R_n-a_n\le x)
+\to
+\mathbb E_i\!\left[
+e^{-C_iD_{\infty,i}e^{-\theta_*x}}
+\right],
+\tag{122.6}
+\]
+其中 \(D_{\infty,i}\) 是需单独证明收敛的临界导数鞅极限。有限容量的分枝—选择会删除领先以外的后裔，速度一般低于无选择过程；连续 Brownian 位移和指数分枝时，还可在额外合作型条件下得到两类型 Fisher–KPP 前沿。所有位移、时钟、容量、选择和连续极限均为外加，FIB 递归本身只给出类型骨架与计数关系。
