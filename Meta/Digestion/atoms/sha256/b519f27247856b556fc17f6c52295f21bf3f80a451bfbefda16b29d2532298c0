@@ -1,0 +1,12 @@
+**定理 30.5（最小十一叶规模的完整分类）。** 对任意不同的 $P,Q\in\mathcal I_3$，若 $n(P)=n(Q)=11$ 且 $\operatorname{NC}(P,Q)$，则其无序对必为
+
+$$
+\boxed{\quad
+\{P,Q\}=\{\langle A,B\rangle,\langle B,A\rangle\},
+\qquad B=\langle C,A\rangle.
+\quad}
+\tag{30.8}
+$$
+
+反之，该对满足这些条件。它字面上就是命题 23.3 在 $d=3$ 时的 $P_{\mathrm{dis}},Q_{\mathrm{dis}}$；特别地，任意两两不同、两两 $\operatorname{NC}$ 的十一叶实际像族至多有两个元素。
+
