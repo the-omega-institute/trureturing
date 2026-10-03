@@ -16,6 +16,15 @@ triage: anchor
 
 # Expected query cost at a fixed input
 
+## Verified locator
+
+Versioned author manuscript: https://arxiv.org/abs/1309.7565v1
+
+The corresponding PDF is https://arxiv.org/pdf/1309.7565v1. Page 2 supplies
+the fixed-input expected-query-cost convention described below.
+
+## Verified scope
+
 On page 2, a randomized decision tree is a distribution over deterministic
 query trees on finite Boolean words. Its cost at an input is the expected
 number of queried input bits. The optimization then takes the worst input
