@@ -1,0 +1,5 @@
+source_id = "finite-chain-persistence"
+path = "Library/HomologicalAlgebra/bauer2015persistence.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

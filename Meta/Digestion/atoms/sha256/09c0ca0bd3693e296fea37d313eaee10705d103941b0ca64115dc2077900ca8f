@@ -1,0 +1,2 @@
+**Theorem 7.1 (image rank and arbitrary endpoint uniqueness).** The image of the actual $s\le t$ arrow has dimension $\#\{a:b_a\le s,\ t<d_a\}$. If two finite positive-length interval sums have the same actual arrow-image ranks for every $s\le t$, their multiplicities at every real birth and every finite or infinite death agree. In particular naturally isomorphic interval sums have equal interval multisets, without an assumed common endpoint set.
+

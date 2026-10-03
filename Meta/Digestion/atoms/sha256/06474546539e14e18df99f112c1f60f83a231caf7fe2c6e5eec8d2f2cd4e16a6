@@ -1,0 +1,2 @@
+**Corollary 5.2 (extended isometry).** The extended interleaving and bottleneck distances are equal, including infinity, because their feasible nonnegative $\epsilon$ sets are equal. This retains $\epsilon=0$, zero and empty diagrams, critical length $2\epsilon$, unequal essential counts and unrestricted tails. It is not merely an infimum-with-slack stability statement.
+

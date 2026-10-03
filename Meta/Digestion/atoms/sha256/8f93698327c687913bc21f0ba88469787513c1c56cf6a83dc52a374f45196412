@@ -1,0 +1,8 @@
+**Theorem 5.1 (exact interleaving iff occurrence matching).** For every $\epsilon\ge0$, two real extensions above admit actual natural maps $M\to N(\epsilon)$ and $N\to M(\epsilon)$ whose shifted composites equal the actual $2\epsilon$ structure maps if and only if their finite interval multisets admit an occurrence-level partial matching with all the following properties:
+
+- Matched finite births and finite deaths differ by at most $\epsilon$.
+- Every essential is paired to an essential, with births differing by at most $\epsilon$.
+- Every unmatched finite interval has length at most $2\epsilon$.
+
+The interleaving equations make the kernel and cokernel of the first map $2\epsilon$-trivial. Apply Theorem 4.1 and undo the target shift. Conversely scalar interval maps are identity on valid shifted overlap and zero elsewhere. Their naturality and both composites are checked before taking the finite direct sum and conjugating by the constructed decompositions. A paired pair can use zero maps when both intervals are $2\epsilon$-trivial, not merely when one is short. The $2\epsilon$ structure map of $[b,d)$ vanishes exactly when $d-b\le2\epsilon$; this includes endpoint equality. In Lemma 8.1(ii) of the source, the parameter must follow the actual $2\delta$ shift, and the assembled maps have shifted targets.
+

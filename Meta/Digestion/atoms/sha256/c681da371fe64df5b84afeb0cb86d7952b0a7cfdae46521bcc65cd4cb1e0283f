@@ -1,0 +1,4 @@
+## 7. Actual image ranks and endpoint separation
+
+For a finite occurrence family $A$ with real births $b_a$ and deaths $d_a\in\mathbb R\cup\{\infty\}$, $b_a<d_a$, define the interval-sum space at $r$ as the subspace of $K^A$ whose coordinates vanish outside $b_a\le r<d_a$. For $s\le t$, the actual arrow retains the coordinates with $t<d_a$ and kills the others. This is the finite sum of the scalar interval modules, including infinite-death intervals.
+

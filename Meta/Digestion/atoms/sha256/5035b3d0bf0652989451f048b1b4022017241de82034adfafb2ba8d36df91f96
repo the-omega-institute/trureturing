@@ -1,0 +1,10 @@
+**Theorem 2.1 (earliest live interval splitting).** In a nonzero finite diagram with actual maps $F_{ik}$, there are indices $b\le j$, vectors $w_i\in V_i$ and linear functionals $p_i:V_i\to K$ satisfying the following properties. The support is exactly $b\le i\le j$. Outside it, $w_i=0$ and $p_i=0$. On it, $p_i(w_i)=1$. For $i\le k$,
+
+$$
+F_{ik}(w_i)=\begin{cases}w_k&b\le i\text{ and }k\le j,\\0&\text{otherwise},\end{cases}
+\qquad
+p_k\circ F_{ik}=\begin{cases}p_i&b\le i\text{ and }k\le j,\\0&\text{otherwise}.\end{cases}
+$$
+
+Consequently $x\mapsto p_i(x)w_i$ is a natural idempotent projection, its image is the supported one-dimensional interval, and its kernels form the complementary diagram. Vertexwise, the actual isomorphism to $\operatorname{span}_K\{w_i\}\times\ker p_i$ sends $x$ to $(p_i(x)w_i,x-p_i(x)w_i)$, with inverse given by addition. The total kernel dimension is strictly less than $\sum_i\dim_K V_i$.
+

@@ -1,0 +1,8 @@
+## 1. Sources and objects
+
+Crawley-Boevey, *Decomposition of pointwise finite-dimensional persistence modules*, arXiv:1210.0819v3, Theorem 1.1 and its proof, supplies interval decomposition over a field. Bauer and Lesnick, *Induced Matchings and the Algebraic Stability of Persistence Barcodes*, arXiv:1311.3681v4, Sections 4–6 and 8, supplies induced matchings, algebraic stability and its converse. Chazal, de Silva, Glisse and Oudot, *The structure and stability of persistence modules*, arXiv:1207.3674, supplies the general stability framework. These are known mathematical results, not claims of new discovery. This note is reference input, not a kernel-verified assertion.
+
+Fix an arbitrary field $K$, a finite chain of finite-dimensional $K$-vector spaces $V_0,\ldots,V_{n-1}$, and arbitrary consecutive linear maps. Write $F_{ik}$ for the actual forward composites; $F_{ii}$ is the identity. The chain may be empty and the spaces may be zero. Given finite strictly increasing real breakpoints $t_0<\cdots<t_{n-1}$, its real extension is zero before $t_0$, equals $V_i$ on $[t_i,t_{i+1})$, and equals $V_{n-1}$ on the unrestricted last tail. Structure maps are the corresponding actual composites. No terminal zero is appended.
+
+An interval has finite birth $b$ and death $d\in\mathbb R\cup\{\infty\}$ with $b<d$. Its module is $K$ on $[b,d)$ and zero elsewhere, with identity maps between supported points. A barcode is a finite multiset; repeated intervals have distinct occurrences.
+

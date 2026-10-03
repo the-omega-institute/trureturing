@@ -1,0 +1,2 @@
+**Theorem 4.4 (ordered monomorphism occurrence injection).** Fix, for each death $d$, bijective enumerations of the source and target occurrences with death $d$, indexed from zero and sorted by increasing birth. Repeated occurrences are separately indexed; choose their tie order once. An actual componentwise injective natural morphism induces an injection from source occurrences to target occurrences that preserves death and the within-class ordinal, and whose target birth is at most the source birth. This assertion includes essential death $d=\infty$ and empty classes.
+

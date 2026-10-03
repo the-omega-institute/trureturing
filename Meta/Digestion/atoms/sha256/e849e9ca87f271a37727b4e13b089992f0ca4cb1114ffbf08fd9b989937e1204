@@ -1,0 +1,4 @@
+**Lemma 4.2 (actual monomorphism window counts).** For finite positive interval families $A,B$, an actual natural monomorphism $f:I_A\to I_B$, real $s\le t$ and an upper cut $u\in\mathbb R\cup\{\infty\}$ with $t\le u$,
+
+$$\#\{a:b_a\le s,\ t<d_a\le u\}\le\#\{b:b_b\le s,\ t<d_b\le u\}.$$
+

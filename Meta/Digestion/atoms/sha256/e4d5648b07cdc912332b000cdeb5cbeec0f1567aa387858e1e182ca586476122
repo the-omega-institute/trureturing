@@ -1,0 +1,4 @@
+## 6. Formal supplier boundary
+
+The project nilpotent Jordan-chain construction supplies ordinary ungraded Jordan chains over arbitrary fields. Its vectors need not be homogeneous in the vertex grading, so it does not supply this natural diagram splitting. Mathlib's scalar linear left inverses, complements, quotient/range equivalence and rank-nullity supply the ordinary linear algebra used inside the construction. Natural interval retraction and classification require compatible diagram constructions; arbitrary-endpoint uniqueness uses actual image recovery and common endpoint cuts. Actual-map matching estimates are a further obligation.
+
