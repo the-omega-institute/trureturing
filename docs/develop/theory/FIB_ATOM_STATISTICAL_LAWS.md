@@ -1938,4 +1938,171 @@ $$
 
 全部结论依赖固定单位速度、左反射右吸收、初态 $0$、给定阻抗与时钟，以及同一条随机历史的模型条件。本节结论不推出完整多点占用律、函数空间占用场收敛、高斯极限、物理热流、物理普适性或第11、14节速度扩展的占用结论。
 
+## 16. 固定有限多点的同轨占用联合律
+
+**定义 16.1（有限探针与缩放变量）。** 继续使用定义 15.1 的固定单位速度、左反射右吸收链、初态 $X_0=0$、同一条随机历史及
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad h_j=\epsilon_jL_j,
+\qquad D=\frac{\theta\varphi^4}{\delta\overline r}.
+$$
+
+给定固定的 $m\ge1$ 个探针 $u_1,\ldots,u_m\in[0,1]$，令
+
+$$
+\ell_j(u)=h_jV_{\iota_j(u)},\qquad
+\kappa(u)=\frac{1-u}{D}.
+$$
+
+若有若干探针坐标相同，先把它们的势合并；若 $u_k=1$，其占用恒为零，可以从联合变换中删去。以下结论先对剩余的互异坐标陈述。记
+
+$$
+C_{k\ell}=\kappa(\max(u_k,u_\ell)).
+$$
+
+**定理 16.2（固定有限维联合变换与非高斯极限）。** 对固定 $m$、固定互异探针坐标及任意 $z_1,\ldots,z_m\ge0$，有有限链精确式
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m z_kV_{a_k}\right)
+=\det\!\left(I_m+Q\,\operatorname{diag}(e^{z_k}-1)\right)^{-1},
+\qquad
+Q_{k\ell}=q_{\max(a_k,a_\ell)},
+$$
+
+其中 $a_k$ 按切点从小到大排列，$z_k\ge0$。因此，固定 $m$ 和固定空间坐标后，
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m s_k\ell_j(u_k)\right)
+\longrightarrow
+\det\!\left(I_m+C\,\operatorname{diag}(s_k)\right)^{-1}.
+$$
+
+极限向量可在同一概率空间的辅助表示中写成
+
+$$
+\Lambda(u)=\frac{B_1(\kappa(u))^2+B_2(\kappa(u))^2}{2},
+$$
+
+其中 $B_1,B_2$ 是两条相互独立的标准布朗运动，并且所有探针使用同一对布朗运动。因为
+
+$$
+C_{k\ell}=\min\{\kappa(u_k),\kappa(u_\ell)\},
+$$
+
+该表示的有限维拉普拉斯变换正是上式。特别地，
+
+$$
+\mathbb E\Lambda(u)=\kappa(u),\qquad
+\operatorname{Cov}(\Lambda(u),\Lambda(v))=\kappa(\max(u,v))^2,
+$$
+
+并且对 $0\le u<v<w<1$，
+
+$$
+\operatorname{cum}\bigl(\Lambda(u),\Lambda(v),\Lambda(w)\bigr)
+=2\,\kappa(v)\,\kappa(w)^2>0.
+$$
+
+所以该固定有限维极限在三个非退化探针上不是高斯向量。
+
+**证明。** 先固定一条有限链。对暂态切点设置非负行势 $z_i$，令
+
+$$
+H_i=\mathbb E_i\exp\!\left(-\sum_{0\le n<\tau}z_{X_n}\right),
+\qquad H_L=1,
+\qquad d_i=e^{z_i}-1.
+$$
+
+把当前步的势计入首步分解，得到
+
+$$
+\bigl(B+\operatorname{diag}(d)\bigr)H=B\mathbf1,
+\qquad
+H+G\operatorname{diag}(d)H=\mathbf1,
+$$
+
+其中 $B=I-K$、$G=B^{-1}$。在互异探针 $a_1<\cdots<a_m$ 上保留势，令
+
+$$
+Q_{k\ell}=G(a_k,a_\ell)=q_{\max(a_k,a_\ell)}.
+$$
+
+由于 $G(0,a_k)=G(a_1,a_k)$，第 $0$ 行与第 $a_1$ 行给出相同的非零势组合，故 $H_0=H_{a_1}$。探针行组成
+
+$$
+\bigl(I_m+Q\operatorname{diag}(d_k)\bigr)H_*=\mathbf1.
+$$
+
+写 $t_k=q_{a_k}$，则 $t_1\ge\cdots\ge t_m$。对任意非空指标集 $I=\{i_1<\cdots<i_r\}$，逐行相减给出主子式
+
+$$
+\det Q_I=t_{i_r}\prod_{h=1}^{r-1}(t_{i_h}-t_{i_{h+1}})\ge0.
+$$
+
+按列多线性展开，
+
+$$
+\det\!\left(I_m+Q\operatorname{diag}(d_k)\right)
+=\sum_{I\subseteq\{1,\ldots,m\}}\det(Q_I)\prod_{k\in I}d_k,
+$$
+
+其中空集主子式取为 $1$。再以全 $1$ 列替换第一列，并从最后一行向上以原相邻行相减；第一列随即变成 $(1,0,\ldots,0)^\mathsf T$，其余子矩阵为对角元全为 $1$ 的下三角矩阵。因此 Cramer 分子为 $1$，从而
+
+$$
+H_0=\det\!\left(I_m+Q\operatorname{diag}(d_k)\right)^{-1}.
+$$
+
+这证明了有限链精确式；重复探针必须在这一步先合并势，吸收点的势没有贡献。
+
+令 $a_k=\iota_j(u_k)$，并把 $z_k=s_kh_j$。由定理 10.2，固定 $m$ 时一致地有
+
+$$
+h_jq_{\max(a_k,a_\ell)}
+\longrightarrow
+\kappa(\max(u_k,u_\ell)),
+\qquad
+\frac{e^{s_kh_j}-1}{h_j}\longrightarrow s_k.
+$$
+
+将
+
+$$
+Q\operatorname{diag}(e^{s_kh_j}-1)
+=\bigl(h_jQ\bigr)\operatorname{diag}\!\left(\frac{e^{s_kh_j}-1}{h_j}\right)
+$$
+
+代入有限式，行列式的连续性给出所述极限。非负向量的拉普拉斯变换在所有 $s_k\ge0$ 上收敛，故由拉普拉斯连续性定理得到固定有限维分布收敛。这里 $m$ 必须先固定；结论不涉及 $m=m(j)$ 的增长。
+
+为识别极限表示，令 $T_k=\kappa(u_k)$。对 $r=1,2$，布朗向量
+
+$$
+\bigl(B_r(T_k)\bigr)_{k=1}^m
+$$
+
+的协方差矩阵为 $(\min(T_k,T_\ell))_{k,\ell}=C$。单条布朗运动的高斯二次型公式给出
+
+$$
+\mathbb E\exp\!\left(-\frac12X^\mathsf T S X\right)
+=\det(I_m+CS)^{-1/2}.
+$$
+
+两条独立布朗运动平方和相乘，得到 $\det(I_m+CS)^{-1}$，因此确实得到 $\Lambda$ 的有限维律。对该变换在零点求导得到均值和协方差。三阶累积量也可由
+
+$$
+\log\mathbb E e^{-\sum s_k\Lambda(u_k)}
+=-\log\det(I_m+CS)
+$$
+
+的三阶项读取：对互异坐标，其系数为
+
+$$
+2C_{12}C_{23}C_{31}
+=2\kappa(v)\kappa(w)^2
+$$
+
+（按 $u<v<w$ 排序）。它严格为正，而任意高斯向量的三阶累积量为零，故排除高斯有限维极限。
+
+本节仍只讨论固定单位速度、给定阻抗与时钟、左反射右吸收、初态 $0$ 及同一随机历史下的占用量。它不宣称 $m$ 随 $j$ 增长时的全场收敛、函数空间中的随机测度弱收敛、跨 $j$ 的路径耦合、速度扩展中的同一律，亦不推出物理热流、温度、量子输运或经验普适性。
+
 ## 追加锚（本行以下为增补区）
