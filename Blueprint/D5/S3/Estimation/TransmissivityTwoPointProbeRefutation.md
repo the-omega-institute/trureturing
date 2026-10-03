@@ -108,6 +108,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhou-bash-guha-gagatsos-2023-transmissivity-in-between-probe-refutation` (refuted) by `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhou-bash-guha-gagatsos-2023-transmissivity-in-between-probe-refutation","declaration_gid":"D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* B. Zhou; B. A. Bash; S. Guha; C. N. Gagatsos (2023). *Bayesian minimum mean square error for transmissivity sensing*. DOI: [10.1103/PhysRevResearch.5.043033](https://doi.org/10.1103/PhysRevResearch.5.043033). URL: <https://arxiv.org/abs/2304.05539v1>.

@@ -66,9 +66,11 @@ The equality follows from multiplicativity of the real square root on
 nonnegative factors and is checked locally where the proof computes outputs.
 
 For $\bar n=1/2$, $q=1/2$, $\tau_0=4/9$, $\tau_1=1$, all phased in-between states
-have MMSE $1625/23976$. The normalized competitor
-$(\sqrt3/2)|0\rangle+(1/2)|2\rangle$ has the same mean energy and MMSE
+have finite-POVM MMSE $1625/23976$. The normalized competitor
+$(\sqrt3/2)|0\rangle+(1/2)|2\rangle$ has the same mean energy and finite-POVM MMSE
 $110575/1674432$. The gap is $107725/61953984>0$.
+The identification with arbitrary-outcome MMSE is ASSUMED-UNVERIFIED;
+the kernel-checked comparison optimizes over finite POVMs.
 The Hermitian Sylvester certificates are
 
 $$B_\chi=\frac1{1332}\begin{pmatrix}787&145\\145&937\end{pmatrix},\qquad

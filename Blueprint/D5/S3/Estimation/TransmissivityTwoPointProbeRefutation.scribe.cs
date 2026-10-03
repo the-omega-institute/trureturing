@@ -32,7 +32,10 @@ internal sealed class TransmissivityTwoPointProbeRefutationDocument : IScribeDoc
                 "Section V, arXiv v1 PDF p. 4: \"" + Quote + "\" The prior parameters range over [0,1]; nbar is positive; N is any finite Fock cutoff. The psi input has Euclidean norm one and meanPhoton(psi)=nbar. The encoding says that some phased in-between state has finite-POVM MMSE no greater than each competing input. Each state's MMSE is computed on its own finite output span. Identification with the source's arbitrary-measurement optimum requires the compression argument stated above and a reduction from arbitrary outcomes to finite outcomes; that bridge is ASSUMED-UNVERIFIED and not kernel-checked here."),
             Node("result", "Strict error advantage of a nonadjacent Fock superposition", Disp(new Formula.Not(F.Id("claim"))),
                 "Take q=1/2, tau0=4/9, tau1=1 and nbar=1/2. Every in-between phase has MMSE 1625/23976, whereas psi=(sqrt(3)/2)|0>+(1/2)|2> has MMSE 110575/1674432, with positive gap 107725/61953984. Its Hilbert norm is one and its mean photon number is one half. For any finite POVM, the operator variance M2-M1^2 is a sum of positive semidefinite sandwiches. If Gamma0 B+B Gamma0=2 Gamma1, completing the square gives risk>=Re tr(Gamma2-B Gamma1). The phased two-dimensional certificate is [[787,145 exp(-i phi)],[145 exp(i phi),937]]/1332. The competitor certificate is [[62971,0,4293 sqrt(3)],[0,41344,0],[4293 sqrt(3),0,68965]]/93024. Both solve the Sylvester equation for the channel outputs. Spectral projections of each Hermitian certificate, with its eigenvalues as estimates, attain its lower bound. The rational comparison refutes the conjecture. It does not assert that the competitor is globally optimal, or settle the beta-prior conjecture.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhou-bash-guha-gagatsos-2023-transmissivity-in-between-probe-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
