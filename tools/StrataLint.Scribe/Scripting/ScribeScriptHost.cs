@@ -43,8 +43,6 @@ public sealed record ScribeScriptResult(
     DocumentDefinition? Definition,
     ScribeScriptFailure? Failure)
 {
-    public ImmutableArray<ScribeResourceInput> Inputs { get; internal init; } = [];
-
     public bool IsSuccess => Definition is not null && Failure is null;
 }
 
@@ -54,7 +52,6 @@ public sealed record ScribeScriptResult(
 /// </summary>
 public static class ScribeScriptHost
 {
-    public const int SemanticVersion = 1;
     private const string BlueprintPrefix = "Blueprint/";
     private const string SourceSuffix = ".scribe.cs";
 
@@ -85,15 +82,6 @@ public static class ScribeScriptHost
             allowlistPath: null, entryType);
 
     private static ScribeScriptResult ExecutePrepared(string repositoryRoot, string relativePath,
-        ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
-        CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
-    {
-        using var inputs = new ScribeInputRecorder(repositoryRoot);
-        return ExecutePreparedCore(repositoryRoot, relativePath, references, analyzers, parseOptions,
-            allowlistPath, entryTypeOverride) with { Inputs = inputs.Inputs };
-    }
-
-    private static ScribeScriptResult ExecutePreparedCore(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
         CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
     {
@@ -200,7 +188,7 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    internal static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
+    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
         string root,
         string entry,
         CSharpParseOptions parseOptions)
@@ -220,15 +208,15 @@ public static class ScribeScriptHost
                 return;
             }
 
-            var sourceBytes = ScribeInputRecorder.ReadFile(root, path);
-            if (sourceBytes is null)
+            var full = Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
+            if (!File.Exists(full))
             {
                 failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceMissing,
                     "declared shared source does not exist");
                 return;
             }
 
-            var text = ScribeInputRecorder.ReadText(root, path);
+            var text = File.ReadAllText(full);
             var tree = CSharpSyntaxTree.ParseText(text, parseOptions, path: path);
             foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
             {
@@ -378,11 +366,11 @@ public static class ScribeScriptHost
         return (image, entryTypes[0], null);
     }
 
-    internal static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
+    private static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
         ImmutableArray<MetadataReference> references, CSharpParseOptions parseOptions)
     {
         var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
-            ScribeInputRecorder.ReadText(root, path),
+            File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
             parseOptions,
             path: path)).Append(CSharpSyntaxTree.ParseText(
                 "global using System; global using System.Collections.Generic; global using System.IO; "
@@ -393,10 +381,9 @@ public static class ScribeScriptHost
             trees,
             references,
             ScriptCompilationOptions);
-
     }
 
-    internal static ImmutableArray<MetadataReference> ReferenceAssemblies()
+    private static ImmutableArray<MetadataReference> ReferenceAssemblies()
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var runtimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
@@ -437,7 +424,7 @@ public static class ScribeScriptHost
         public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(File.ReadAllText(path));
     }
 
-    internal static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
+    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
         typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
             .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value);
 
@@ -452,7 +439,7 @@ public static class ScribeScriptHost
                 SourceCodeKind.Regular, symbols);
     }
 
-    internal static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
+    private static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
         OutputKind.DynamicallyLinkedLibrary,
         optimizationLevel: OptimizationLevel.Release,
         nullableContextOptions: NullableContextOptions.Enable,
@@ -460,7 +447,7 @@ public static class ScribeScriptHost
         generalDiagnosticOption: ReportDiagnostic.Error,
         deterministic: true);
 
-    internal static string? NormalizePath(string path)
+    private static string? NormalizePath(string path)
     {
         if (string.IsNullOrWhiteSpace(path) || Path.IsPathRooted(path)) return null;
         var normalized = path.Replace('\\', '/');
