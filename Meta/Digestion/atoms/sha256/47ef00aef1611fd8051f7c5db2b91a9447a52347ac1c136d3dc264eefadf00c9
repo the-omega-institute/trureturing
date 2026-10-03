@@ -1,0 +1,15 @@
+# Parity complete mappings and translation transversals
+
+This is a repository-derived explicit construction in the setting of
+complete mappings of finite groups. The general Hall-Paige theorem is
+background, not a premise. This volume is reference input; the
+repository's mathematical truth source is its Lean declaration.
+
+For a positive integer $m$, let
+$H_m=(\mathbb Z/2\mathbb Z)\times(\mathbb Z/(2m)\mathbb Z)$.
+The addition table of $H_m$ has rows $x$, columns $y$, and symbol
+$x+y$. A graph $\{(x,\theta(x)):x\in H_m\}$ meets each row exactly
+once. It also meets each column and each symbol exactly once precisely
+when both $\theta$ and $x\mapsto x+\theta(x)$ are permutations. Such a
+map is a complete mapping of $H_m$.
+

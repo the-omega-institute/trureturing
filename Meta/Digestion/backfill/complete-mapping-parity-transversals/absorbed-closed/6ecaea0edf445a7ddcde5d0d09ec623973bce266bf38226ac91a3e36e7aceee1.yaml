@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6ecaea0edf445a7ddcde5d0d09ec623973bce266bf38226ac91a3e36e7aceee1
+  normalized_sha256: sha256:6ecaea0edf445a7ddcde5d0d09ec623973bce266bf38226ac91a3e36e7aceee1
+cas_ref: sha256:6ecaea0edf445a7ddcde5d0d09ec623973bce266bf38226ac91a3e36e7aceee1
+coverage_gids:
+  - gid: D5/S3/Factorization/CompleteMappingEvenProduct.theta_complete
+    target_statement_id: sha256:a0918822e0d66deb17316fc7a6260babe402b8eb94d427877deed91d289bcac6
+receipts:
+  unresolved_subitems: []

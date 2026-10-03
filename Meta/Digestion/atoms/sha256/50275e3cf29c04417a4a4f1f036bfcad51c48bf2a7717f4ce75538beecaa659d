@@ -1,0 +1,47 @@
+## theorem 1.1: Parity complete mapping
+
+For every $m>0$, the group
+$H_m$ admits a complete mapping. More explicitly, represent
+$\varepsilon\in\mathbb Z/2\mathbb Z$ by $\bar\varepsilon\in\{0,1\}$,
+put $k=j+\bar\varepsilon$ in $\mathbb Z/(2m)\mathbb Z$, and define
+
+\[
+ h(k)=\begin{cases}0,&0\le\bar k<m,\\1,&m\le\bar k<2m,
+ \end{cases}
+ \qquad
+ \theta_m(\varepsilon,j)=(\varepsilon+h(k),k).
+\]
+
+Both $\theta_m$ and $x\mapsto x+\theta_m(x)$ are bijections of $H_m$.
+
+**Proof.** The change of coordinates $(\varepsilon,j)\leftrightarrow
+(\varepsilon,k)$ is invertible, since $j=k-\bar\varepsilon$.
+The value $\theta_m(\varepsilon,j)=(\varepsilon+h(k),k)$ determines
+$k$, then $\varepsilon$, and hence $j$. Thus $\theta_m$ is injective.
+
+The sum map, in the changed coordinates, is
+
+\[
+ (\varepsilon,k)\longmapsto
+ \bigl(h(k),\,2k-\bar\varepsilon\bigr).
+\]
+
+Suppose two outputs agree. Reducing their second coordinates modulo
+$2$ gives $\varepsilon=\varepsilon'$, because the terms $2k$ and
+$2k'$ vanish there. The second coordinates then give $2k=2k'$ modulo
+$2m$, hence $k=k'$ modulo $m$. The first coordinates give
+$h(k)=h(k')$. In each of the two intervals $[0,m)$ and $[m,2m)$,
+reduction modulo $m$ is injective, so the common half and residue
+determine $k=k'$ modulo $2m$. The changed coordinates, and therefore
+the original inputs, agree. Both maps are injective on the finite
+group $H_m$, so both are bijective. $\square$
+
+The graph of $\theta_m$ is a transversal of the row, column, and
+sum-symbol projections on $H_m\times H_m$. Translating a transversal
+by $(u,v)$ translates these three projected coordinates by $u$, $v$,
+and $u+v$, respectively, so translation preserves the transversal
+condition. The upper-half bit is the arithmetic datum that separates
+the two lifts of a residue modulo $m$; without it, doubling loses
+exactly that distinction. The theorem concerns the family $H_m$ and
+does not assert a classification of complete mappings for all finite
+groups.

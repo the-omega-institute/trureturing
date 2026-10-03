@@ -1,0 +1,5 @@
+source_id = "complete-mapping-parity-transversals"
+path = "docs/develop/theory/COMPLETE_MAPPING_PARITY_TRANSVERSALS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
