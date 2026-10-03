@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -129,6 +130,27 @@ def text := "#seal_information_theory \\\" Contract.Seal"
         result = self.invoke("--output-dir", str(self.repository / "output"), "--list")
         self.assertEqual(result.returncode, 64)
         self.assertIn("OutputInsideRepository", result.stderr)
+
+    def test_repository_tmpdir_rejected_before_allocating_output(self):
+        self.source("Reg/Catalogs/Real.lean", "#seal_information_theory\n")
+        temporary = self.repository / "temporary"
+        temporary.mkdir()
+        result = subprocess.run([sys.executable, str(PROGRAM), "--repository",
+                                 str(self.repository), "--list"], text=True,
+                                capture_output=True, env=dict(os.environ, TMPDIR=str(temporary)))
+        self.assertEqual(result.returncode, 64)
+        self.assertIn("OutputInsideRepository", result.stderr)
+        self.assertEqual(list(temporary.iterdir()), [])
+
+    def test_output_child_symlink_into_repository_rejected(self):
+        self.source("Reg/Catalogs/Real.lean", "#seal_information_theory\n")
+        output = Path(self.temporary.name) / "outside output"
+        output.mkdir()
+        (output / "Reg").symlink_to(self.repository / "Reg", target_is_directory=True)
+        result = self.invoke("--output-dir", str(output), "--list")
+        self.assertEqual(result.returncode, 64)
+        self.assertIn("OutputInsideRepository", result.stderr)
+        self.assertEqual(result.stdout, "")
 
 
 class ProducerResultTests(unittest.TestCase):

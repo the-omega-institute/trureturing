@@ -265,10 +265,20 @@ def main():
         output = arguments.output_dir.resolve() if arguments.output_dir else None
         if output and output.is_relative_to(repository):
             raise ExportError(64, f"OutputInsideRepository path={output}")
+        temporary_parent = None
+        if output is None:
+            temporary_parent = Path(tempfile.gettempdir()).resolve()
+            if temporary_parent.is_relative_to(repository):
+                raise ExportError(64, f"OutputInsideRepository path={temporary_parent}")
+        else:
+            for root in roots:
+                directory = (output / root.replace(".", "/")).resolve()
+                if directory.is_relative_to(repository):
+                    raise ExportError(64, f"OutputInsideRepository root={root} path={directory}")
         if not arguments.list:
             validate_build(repository)
         if output is None:
-            output = Path(tempfile.mkdtemp(prefix="reg-seal-export-")).resolve()
+            output = Path(tempfile.mkdtemp(prefix="reg-seal-export-", dir=temporary_parent)).resolve()
         if not arguments.list:
             output.mkdir(parents=True, exist_ok=True)
         for root in roots:
