@@ -16,10 +16,11 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-Typed contract discovery accepts safe, closed `def` entries with one of the five
-direct Contract result heads and a structure literal body. Rigid universes remain
-unchanged. Parentheses around the result head are accepted; used section term
-variables receive `contract.discovery:term_parameters`.
+Typed contract discovery inspects the five direct Contract heads. Admitted entries
+are safe, closed `def` declarations with a structure literal body; standalone
+ExpectedDeclaration is rejected by the root structure rule. Rigid universes remain
+unchanged. Parentheses around the result head are accepted. Term parameters and
+used section variables cannot supply a closed entry.
 
 Metadata uses the following closed grammar. Mathematical payload fields keep
 ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
@@ -109,34 +110,68 @@ only `instance` and `reducible`, with no priority or other attribute arguments.
 Local/scoped markers do not expand the attribute-name table. Unlisted names
 receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
 
-Every Reg compiled declaration receives the result-type check before contract
-candidate filtering. Propositions and telescoped mathematical functions retain
-their compiled types; the endpoint candidate scan still rejects contractual
-functions and wrappers. Authored `let`/`have` in the type-producing head is
-checked separately from proof and mathematical payload arguments.
-Stored Sort projections are permitted only for
-`D5.S3.ConceptDynamics.InformationEscape.Arena`, `PrimitiveLawArena`,
-`DependentFamily.Signature` and `DependentFamily.Arena` under that namespace.
-Permission requires reading the actual selected field from a constant-backed
-constructor tree. Literal telescope substitution and nested constructor-field
-selection are structural operations; the field's complete constant closure
-must not reach any of the five Contract heads. Nonconstant instances, missing
-constructor literals and unsupported forms receive
-`contract.discovery:result_type_projection:…:carrier_unresolved`; Contract
-payloads receive `…:contract_payload`. The audit uses no whnf, isDefEq or
-user evaluation. Mathematical propositions and numeric value arguments do not
-supply a hidden contract result.
+Every audited Reg constant outside a validated contract entry is forbidden to
+directly reference any constant owned by an imported
+`LeanInformationAuditInterface.Contract.*` module in its compiled type or body.
+The check uses `ConstantInfo.getUsedConstantsAsSet`, including opaque bodies,
+and reads the explicit structure names of primitive `Expr.proj` nodes that Lean
+`foldConsts` omits. Constructors, projections, Ref, readout and option types all
+participate. It emits
+`contract.reg:contract_reference_outside_entry`. No dependency closure, reduction,
+carrier projection table, result-type shape gate or type-alias tracker is used.
+Ordinary mathematical definitions and theorems obey the same rule without shape
+restrictions. Entry heads, closed terms, literal metadata, Reg command permissions,
+interface command permissions and source/compiled inventory reconciliation remain
+checked.
+
+An entry auxiliary belongs to a validated entry only when its compiled owner is
+the same module, its name is a strict descendant of that entry, no independently
+authored declaration owns that descendant, and any published compiler range lies
+inside the entry range. Private names are compared using their original compiler
+identity for ownership and their user spelling for source ownership. A source
+declaration that merely uses an entry prefix receives no exemption.
+
+`Meta/reg-contract-structure.json` is the independent package module-kind inventory;
+it is registered in FILEMAP and the report configuration inputs. Its 84 catalog
+modules include 11 sealed catalogs. Ordinary modules contain no RootCatalog or
+Seal; catalog modules contain exactly one RootCatalog and no Seal; sealed catalog
+modules contain exactly one of each. Root IDs equal their owning module. A Seal
+covers only that module root, whose catalog retains the ordered expected/source/
+baseline arrays and contributor identities checked by the existing snapshot judge.
+The entire manifest is validated, including required source paths, before entry
+discovery. The compiled environment import inventory selects applicable module
+obligations independently of discovered entries; omitting an applicable module
+from the discover argument is a named failure. Production discovery also requires
+every loaded Reg module to be included, so a filtered ordinary helper module
+cannot hide the origin of a direct interface reference. Missing, extra and duplicate entries
+and wrong root IDs receive `contract.root_structure:*` failures.
+
+Typed expected occurrences come only from RootCatalog. `ExpectedDeclaration`
+remains an interface type for negative compatibility probes, but an entry of that
+type always receives `contract.root_structure:independent_expected_not_allowed`.
+Its decoder and snapshot output are absent; there is no independent-expected
+fallback. Removing this type in P3 affects only the retired negative fixtures and
+the interface companion inventory; P0 has zero production declarations of it.
+
+P2a keeps the production report on legacy inputs. The command/reference audit
+accepts existing Reg modules; strict typed discovery reports missing RootCatalogs
+for the 84 catalog modules until P2b/P3 rewrite them. This diagnostic is a migration
+state, not a successful typed inventory, and does not change production build
+acceptance. P3 installs typed discovery with the independent manifest.
 
 The compiled interface inventory admits only source types, kernel constructors,
 recorded projections and the pinned compiler's explicitly listed recursor,
 noConfusion, constructor and sizeOf companions. Unknown compiler products
 receive `contract.interface:compiled_non_type`.
 
-P3 must remove all 84 catalog `run_cmd` entries and their permission, together
-with the legacy registration/enrollment/seal command kinds. The three mathematical
-notations and `instance`/`reducible` entries remain only while their pure
-mathematical consumers remain. P3 must also delete the four legacy evalExpr
-paths; typed discovery has no evaluation fallback.
+P2b rewrites all 544 legacy commands (426 registrations, 23 enrollments,
+84 catalogs and 11 seals), the three local notations, and all attribute/reducible
+uses to the fixed grammar. P3 removes all 84 catalog `run_cmd` permissions and
+their table, all three notation permissions and their table, the temporary
+instance/reducible attribute permissions, and legacy registration/enrollment/seal
+command kinds. Attribute uses required by mathematical code must first be
+expressed by the fixed grammar rather than retained as exceptions. P3 also deletes
+the four legacy evalExpr paths; typed discovery has no evaluation fallback.
 
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的

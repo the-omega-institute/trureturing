@@ -19,9 +19,7 @@ structure Requirement where
 candidate discovery. Its entire inventory is checked, then the loaded import
 closure selects obligations even if the caller omits those modules from discover.
 No discovered entry content selects a module kind. -/
-def required (env : Environment) : IO (Array Requirement) := do
-  let json ← IO.ofExcept <| Json.parse (← IO.FS.readFile
-    (← Repository.source "Reg/contract-structure.json"))
+def readManifest (env : Environment) (json : Json) : IO (Array Requirement) := do
   unless (← IO.ofExcept (json.getObjValAs? Nat "schema_version")) == 1 do
     throw <| IO.userError "contract.root_structure:manifest_version"
   let rows ← IO.ofExcept <| json.getObjValAs? (Array Json) "modules"
@@ -44,6 +42,12 @@ def required (env : Environment) : IO (Array Requirement) := do
     if owner == env.header.mainModule || (env.getModuleIdx? owner).isSome then
       result := result.push ⟨owner, owner, kind⟩
   return result
+
+/-- Production obligations come from the registered package module manifest. -/
+def required (env : Environment) : IO (Array Requirement) := do
+  let json ← IO.ofExcept <| Json.parse (← IO.FS.readFile
+    (← Repository.source "Meta/reg-contract-structure.json"))
+  readManifest env json
 
 /-- Required owners cannot disappear through the discover module filter. -/
 def checkScope (requirements : Array Requirement) (modules : Array Name) : MetaM Unit := do

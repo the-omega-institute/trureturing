@@ -6,6 +6,7 @@ import LeanInformationAuditRegTests.ContractReferenceFixtures.NestedCarrier
 import LeanInformationAuditRegTests.ContractReferenceFixtures.OptionPayload
 import LeanInformationAuditRegTests.ContractReferenceFixtures.Ordinary
 import LeanInformationAuditRegTests.ContractReferenceFixtures.Projection
+import LeanInformationAuditRegTests.ContractReferenceFixtures.PrimitiveProjection
 import LeanInformationAuditRegTests.ContractReferenceFixtures.RefPayload
 import LeanInformationAuditRegTests.ContractReferenceFixtures.SigmaPayload
 import LeanInformationAuditRegTests.ContractReferenceFixtures.StoredType
@@ -18,7 +19,7 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
-  for fixture in #["AuthoredAuxiliary", "ComputedSignature", "NestedCarrier", "OptionPayload", "Projection", "RefPayload", "SigmaPayload", "StoredType", "TypeAlias", "TypeLambda", "TypeLet"] do
+  for fixture in #["AuthoredAuxiliary", "ComputedSignature", "NestedCarrier", "OptionPayload", "Projection", "PrimitiveProjection", "RefPayload", "SigmaPayload", "StoredType", "TypeAlias", "TypeLambda", "TypeLet"] do
     let owner := (`LeanInformationAuditRegTests.ContractReferenceFixtures).str fixture
     let error ← try
       discard <| Discovery.discoverWithStructure #[] #[owner]

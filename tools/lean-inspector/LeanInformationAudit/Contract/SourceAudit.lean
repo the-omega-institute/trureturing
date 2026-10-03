@@ -35,9 +35,18 @@ def interfaceConstant (env : Environment) (name : Name) : Bool :=
       env.header.moduleNames[idx.toNat]!
   | none => false
 
-/-- Direct references only: no transitive dependency scan or normalization. -/
-def directInterfaceReferences (env : Environment) (info : ConstantInfo) : Array Name :=
-  info.getUsedConstantsAsSet.toArray.filter (interfaceConstant env)
+/-- Direct references only: no transitive dependency scan or normalization.
+Lean foldConsts omits the structure name of primitive projection nodes, so those
+explicit kernel references are inspected directly in the same type/body trees. -/
+def directInterfaceReferences (env : Environment) (info : ConstantInfo) : Array Name := Id.run do
+  let mut names := info.getUsedConstantsAsSet.toArray.filter (interfaceConstant env)
+  for tree in #[some info.type, info.value? (allowOpaque := true)] do
+    if let some tree := tree then
+      if let some (.proj name _ _) := tree.find? (fun e => match e with
+          | .proj name _ _ => interfaceConstant env name
+          | _ => false) then
+        unless names.contains name do names := names.push name
+  return names
 
 def isHeadSpelling (stx : Syntax) (head : Name) : Bool :=
   !head.isAnonymous && stx.isIdent && #[head, head.getString!.toName, `Contract ++ head.getString!.toName,

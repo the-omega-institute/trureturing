@@ -57,6 +57,22 @@ run_meta do
       pure "accepted"
     catch ex => ex.toMessageData.toString
     assertTest s!"root.negative.{label}" (error.startsWith diagnostic)
+  let env ← getEnv
+  for (label, raw, diagnostic) in #[
+    ("Version", "{\"schema_version\":2,\"modules\":[]}", "manifest_version"),
+    ("Owner", "{\"schema_version\":1,\"modules\":[{\"module\":\"D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling\",\"kind\":\"catalog\"}]}", "manifest_owner"),
+    ("Kind", "{\"schema_version\":1,\"modules\":[{\"module\":\"Reg.Catalogs.IffRegistrations\",\"kind\":\"other\"}]}", "manifest_kind"),
+    ("DuplicateOwner", "{\"schema_version\":1,\"modules\":[{\"module\":\"Reg.Catalogs.IffRegistrations\",\"kind\":\"sealed_catalog\"},{\"module\":\"Reg.Catalogs.IffRegistrations\",\"kind\":\"sealed_catalog\"}]}", "duplicate_requirement"),
+    ("MissingSource", "{\"schema_version\":1,\"modules\":[{\"module\":\"Reg.Catalogs.AbsentSourceEntry\",\"kind\":\"catalog\"}]}", "required_source_missing")] do
+    let error ← try
+      discard <| RootStructure.readManifest env (← ofExcept (Json.parse raw))
+      pure "accepted"
+    catch ex => ex.toMessageData.toString
+    assertTest s!"root.manifest.negative.{label}"
+      (error.startsWith ("contract.root_structure:" ++ diagnostic))
+  let valid ← RootStructure.readManifest env (← ofExcept (Json.parse
+    "{\"schema_version\":1,\"modules\":[{\"module\":\"Reg.Catalogs.IffRegistrations\",\"kind\":\"sealed_catalog\"}]}"))
+  assertTest "root.manifest.positive.Valid" (valid.size == 1 && valid[0]?.any (·.kind == .sealedCatalog))
   let requirements ← RootStructure.required (← getEnv)
   assertTest "root.manifest.loaded_sealed_catalog"
     (requirements.any fun r => r.owner == `Reg.Catalogs.IffRegistrations && r.kind == .sealedCatalog)
