@@ -2,12 +2,21 @@ import LeanInformationAuditRegTests.ContractGuards
 import LeanInformationAuditRegTests.ContractReferenceFixtures.Auxiliary
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationEquation
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationDefinition
+import LeanInformationAuditRegTests.ContractReferenceFixtures.ImportedElaboration
 
 namespace LeanInformationAuditRegTests.ContractAuxiliaries
 open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
+  let imported := `LeanInformationAuditRegTests.ContractReferenceFixtures.ImportedElaboration
+  let error ← try
+    discard <| Discovery.discoverWithStructure #[] #[imported]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  assertTest "auxiliary.negative.ImportedElaboration"
+    (error.startsWith "contract.reg:contract_reference_outside_entry:")
+  logInfo m!"CONTRACT_DIAGNOSTIC auxiliary.ImportedElaboration {error}"
   for fixture in #["ElaborationEquation", "ElaborationDefinition"] do
     let owner := `LeanInformationAuditRegTests.ContractReferenceFixtures ++ fixture.toName
     let error ← try

@@ -116,9 +116,10 @@ private partial def nestedDeclarationNames (parent : Name) (stx : Syntax) : Arra
 
 /-- Authored elaboration has no compiler-equation permission. This includes
 named children emitted by term elaboration rather than declaration syntax. -/
-def hasAuthoredElaboration (entries : Array Entry) : Bool :=
+def hasAuthoredElaboration (entries : Array Entry) (forbidden : NameSet := {}) : Bool :=
   entries.any fun entry => (entry.command.find? fun stx =>
-    stx.isAtom && #["by_elab", "run_tac", "run_elab", "run_meta"].contains stx.getAtomVal).isSome
+    forbidden.contains stx.getKind ||
+      (stx.isAtom && #["by_elab", "run_tac", "run_elab", "run_meta"].contains stx.getAtomVal)).isSome
 
 private partial def declarations (command : Syntax) : Array Syntax :=
   if command.isOfKind ``Parser.Command.declaration then #[command]
@@ -160,7 +161,8 @@ def expansionKeys (entries : Array Entry) (coreDelegates : NameSet := {}) : Name
     if let some attrs := command.find? (·.isOfKind ``Parser.Term.attributes) then
       for attrSyntax in attrs[1].getSepArgs do
         let ids := identifiers attrSyntax
-        let kinds := #[`macro, `term_elab, `builtin_macro, `builtin_term_elab]
+        let kinds := #[`macro, `term_elab, `builtin_macro, `builtin_term_elab,
+          `tactic, `builtin_tactic, `command_elab, `builtin_command_elab]
         if ids.any kinds.contains then
           for id in ids do unless kinds.contains id do keys := keys.insert id
   return keys

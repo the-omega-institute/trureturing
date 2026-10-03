@@ -107,6 +107,12 @@ def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
       for entry in Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx do
         let value := match entry with | .global e | .scoped _ e => e
         unless coreStructureDelegate env value.declName do keys := keys.insert value.key
+      for entry in Elab.Tactic.tacticElabAttribute.ext.ext.getModuleEntries env idx do
+        let value := match entry with | .global e | .scoped _ e => e
+        keys := keys.insert value.key
+      for entry in Elab.Command.commandElabAttribute.ext.ext.getModuleEntries env idx do
+        let value := match entry with | .global e | .scoped _ e => e
+        keys := keys.insert value.key
   return keys
 
 /-- Exact nonrecursive equation suffixes emitted for literal entries by the
@@ -117,8 +123,9 @@ def entryEquationSuffixes : Array String := #["eq_1", "eq_def"]
 its simple reflexive equation shape, no authored ownership or elaboration, and
 same-module ownership. Every other compiled constant is audited normally. -/
 def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
-    (definitions : Array Definition) (env : Environment) (name : Name) : MetaM Bool := do
-  if SourceAudit.hasAuthoredElaboration entries then return false
+    (definitions : Array Definition) (env : Environment) (name : Name)
+    (forbidden : NameSet := {}) : MetaM Bool := do
+  if SourceAudit.hasAuthoredElaboration entries forbidden then return false
   if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) then
     return false
   let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
@@ -198,7 +205,7 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     found := found.push ⟨owner, value, range⟩
   for (name, info) in constants do
     if found.any (fun definition => definition.info.name == name) then continue
-    if ← generatedEntryAuxiliary owner entries found env name then continue
+    if ← generatedEntryAuxiliary owner entries found env name (expansionKeys.getD {}) then continue
     let references := SourceAudit.directInterfaceReferences env info
     unless references.isEmpty do
       throwError "contract.reg:contract_reference_outside_entry:{name}:{references}"
