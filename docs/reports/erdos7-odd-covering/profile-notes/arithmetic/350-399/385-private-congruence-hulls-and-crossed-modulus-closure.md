@@ -26176,6 +26176,20 @@ packet is exactly the displayed minimum repair: \(\{9,15\}\) for \(F_A\) and
 source problem: its classes must first be shown to have union exactly \(F_i\)
 before a retained-family density bound can be applied.
 
+Under the EB1 replacement order, this qualification can be removed for a
+whole-cover embedding using the Section 208 divisor interface.  Section 226
+already proves that one deleted class cannot realize either liability.  For
+\(F_A\), a joint deleted packet \(K\) with more than two classes could be
+replaced by the two-class repair of modulus sum \(24\), and a two-class packet
+with sum greater than \(24\) could be replaced at unchanged count.  EB1
+therefore forces \(|K|=2\) and \(\sum K\le24\).  After the occupied labels
+\(3,5,7\) are excluded, the only pair of distinct available odd divisors of
+\(Q\) with this sum bound is \(\{9,15\}\).  Similarly, the exact three-class
+repair for \(F_B\) forces \(|K|=3\) and \(\sum K\le45\); the only such triple
+is \(\{9,15,21\}\).  Hence (227.3)--(227.5) exclude every EB1 realization
+of these two liabilities within the stated divisor interface, including a
+choice of a different deleted packet.
+
 For \(N=35\cdot3^{e-1}\) with \(e\ge5\),
 
 \[
@@ -26245,3 +26259,93 @@ relax the retained-label interface, or choose a different deletion packet.
 Each option leaves the Section 208 contract and requires a new
 source-compatible bridge; the present calculation does not claim that such a
 bridge is impossible.
+
+## 228. All-phase hole bound for the complete $35\cdot3^e$ divisor model
+
+The preceding sections used selected phases.  The same three-prime period has
+an obstruction that is uniform in every phase choice.  Let
+
+\[
+ Q=35\cdot3^e,
+ \qquad
+ \mathcal D(Q)=\{d>1:d\mid Q\},
+\]
+
+and allow at most one residue class for each $d\in\mathcal D(Q)$.  This is
+the complete finite divisor model; it is not the unrestricted odd covering
+problem, since every modulus is forced to divide $Q$.
+
+Set
+
+\[
+ \sigma=\sum_{a=1}^{e}3^{-a}=\frac{1-3^{-e}}2.
+ \tag{228.1}
+\]
+
+After the pure $3^a$-classes are removed, let $u$ be the relative size of
+the surviving subset of $\mathbb Z/3^e\mathbb Z$.  The union bound gives
+
+\[
+ u\ge1-\sigma.
+\tag{228.2}
+\]
+
+After also removing one pure $5$-class and one pure $7$-class, the
+Chinese-remainder product $W$ of the surviving coordinates has density at
+least $24u/35$ in $\mathbb Z/Q\mathbb Z$.  The remaining divisor labels
+split into four groups.  Their total possible coverage inside $W$ is at
+most
+
+\[
+\begin{array}{c|c}
+\text{labels}&\text{coverage density upper bound in }W\\ \hline
+3^a5\ (1\le a\le e)&6\sigma/35\\
+3^a7\ (1\le a\le e)&4\sigma/35\\
+35&u/35\\
+3^a35\ (1\le a\le e)&\sigma/35.
+\end{array}
+\tag{228.3}
+\]
+
+Indeed, each line fixes the displayed CRT coordinates, while the remaining
+coordinate contributes at most the surviving density $u$, $4/5$, or $6/7$;
+summing the one-phase class densities gives (228.3).  Therefore the
+uncovered density is at least
+
+\[
+ \frac{24u-(11\sigma+u)}{35}
+ =\frac{23u-11\sigma}{35}
+ \ge\frac{23-34\sigma}{35}
+ =\frac{6+17\cdot3^{-e}}{35}.
+ \tag{228.4}
+\]
+
+Multiplying by $Q$ proves the uniform bound
+
+\[
+ \boxed{\#\{\text{uncovered residues modulo }Q\}
+ \ge 6\cdot3^e+17.}
+ \tag{228.5}
+\]
+
+If the modulus $Q$ itself is unavailable, its one possible class contributes
+at most one further point per period, and hence
+
+\[
+ \boxed{\#\{\text{uncovered residues modulo }Q\}
+ \ge 6\cdot3^e+18.}
+ \tag{228.6}
+\]
+
+For the $e=5$ instance $Q=8505$, (228.6) leaves at least
+$6\cdot243+18=1476$ holes for every phase assignment.  Thus the full
+three-prime divisor directory cannot be a whole cover even after all phase
+choices are optimized; the earlier CRT hole was only one witness inside this
+uniform obstruction.
+
+This result closes the complete finite $3^e\!\cdot5\!\cdot7$ divisor model,
+including its phase freedom.  It does not constrain a whole cover whose
+moduli introduce additional prime coordinates or do not divide $Q$.  The
+unrestricted problem still needs a source bridge that transfers the actual
+whole-cover hypotheses to a finite projected model without losing those
+external coordinates.
