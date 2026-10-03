@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/Decision/ExactRealProbeCosts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,13 +7,15 @@
    digest: Exact probes separate certificates from discovery costs. -/
 
 import D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization
+import D5.S3.ConceptDynamics.EscapeSpectrum.UncountableSingletonCutCountermodel
 import Mathlib.MeasureTheory.Constructions.UnitInterval
 import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
 
 /-!
 The source is the exact real probe interface in definition and theorem 22.3 of
 FIB_SCALE_READOUT_PERMISSION_GEOMETRY. Parameters retain their exact values.
-Histories reuse the dependent passive history carrier. The controller extends
+Sources reuse the unit-interval Boolean state carrier of the singleton-cut
+countermodel. Histories reuse the dependent passive history carrier. The controller extends
 history policies by an explicit stall action. Finite runs have no uniform depth
 bound; repeated parameters are allowed and charged once. A stall has no finite
 run witness, as does an infinite query execution. Neither source identity nor
@@ -29,10 +31,11 @@ open unitInterval
 open MeasureTheory Filter
 open scoped ENNReal
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist)
+open D5.S3.ConceptDynamics.EscapeSpectrum.UncountableSingletonCutCountermodel (State)
 
 noncomputable section
 
-abbrev Source := I × Bool
+local notation "Source" => State
 abbrev History := Hist (fun _ : I => Bool)
 abbrev Controller := History → Option (Sum I Bool)
 
