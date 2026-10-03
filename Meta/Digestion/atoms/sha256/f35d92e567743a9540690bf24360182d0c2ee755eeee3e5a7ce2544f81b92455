@@ -1,0 +1,46 @@
+### 定理 283.1 额外分支的秩形状与唯一深度层
+
+称 $p$ 在式（283.1）中具有额外分支秩形状，若
+\[
+z=3s,\qquad s>1,\qquad\gcd(s,6)=1.
+\tag{283.3}
+\]
+若不满足式（283.3），则对所有 $a\ge1$，
+\[
+\boxed{\quad
+\mathcal E_{p,a}=\{n\ge1:\ \operatorname{lcm}(6,z)\mid n\}.
+\quad}
+\tag{283.4}
+\]
+若满足式（283.3），则每个 $a\ge1$ 都有唯一整数 $r_a$ 满足
+\[
+0<r_a<6s,\qquad6\mid r_a,\qquad p^ar_a\equiv1\pmod s.
+\tag{283.5}
+\]
+它可显式写为
+\[
+r_a=6\bigl((6p^a)^{-1}\bmod s\bigr),
+\tag{283.6}
+\]
+其中逆元取 $\{1,\ldots,s-1\}$ 内的标准代表。实际扩张域为
+\[
+\boxed{\quad
+n\in\mathcal E_{p,a}
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\,
+\bigl(a=h,\ n\equiv r_a\pmod{6s}\bigr).
+\quad}
+\tag{283.7}
+\]
+因此额外指标分支恰在唯一指数层 $a=h$ 出现，其余指数层只有骨架分支。
+这些扩张域的自然密度分别为
+\[
+\operatorname{dens}(\mathcal E_{p,a})=
+\begin{cases}
+1/(3s),&a=h,\\
+1/(6s),&a\ne h.
+\end{cases}
+\tag{283.8}
+\]
+

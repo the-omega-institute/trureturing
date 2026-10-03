@@ -1,0 +1,21 @@
+### 定理 265.1 两种短平移的同整数分解
+
+对整数 $k\ge2$、$a\in\{1,2\}$，定义
+\[
+s_k=(-1)^k,\quad g_k=L_k,\quad d_k=L_k^2-s_k,\quad
+j_{k,a}=3k-a,\quad h_{k,a}=2k-a.
+\]
+则 $g_k\ge3$、$d_k>0$，并有黄金整数恒等式
+\[
+\boxed{\quad g_k\varphi^{j_{k,a}}+\varphi^{-a}
+=d_k\varphi^{h_{k,a}}.\quad}
+\tag{265.1}
+\]
+其中 $\varphi^{-1}=(-1,1)$ 对应 §264 的 $r=0$，
+$\varphi^{-2}=(2,-1)$ 对应 $r=1$。其数量满足
+\[
+\boxed{\quad N_{k,a}:=L_kF_{3k+3-a}+1
+=d_kF_{2k+3-a}.\quad}
+\tag{265.2}
+\]
+

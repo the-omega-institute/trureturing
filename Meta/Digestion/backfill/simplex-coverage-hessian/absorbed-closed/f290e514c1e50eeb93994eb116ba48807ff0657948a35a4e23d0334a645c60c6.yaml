@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f290e514c1e50eeb93994eb116ba48807ff0657948a35a4e23d0334a645c60c6
+  normalized_sha256: sha256:f290e514c1e50eeb93994eb116ba48807ff0657948a35a4e23d0334a645c60c6
+cas_ref: sha256:f290e514c1e50eeb93994eb116ba48807ff0657948a35a4e23d0334a645c60c6
+coverage_gids:
+  - gid: D5/S3/Resource/SimplexCoverageProbability.uniformSamples_recovered_top
+    target_statement_id: sha256:1fe5d150670c2aadbc82457dfbfd1c903105fa7142930c73a85fb5db6efd4170
+receipts:
+  unresolved_subitems: []

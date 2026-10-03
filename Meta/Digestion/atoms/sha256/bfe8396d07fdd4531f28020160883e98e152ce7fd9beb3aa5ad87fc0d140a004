@@ -1,0 +1,96 @@
+### 57.1 固定合同、假设与符号
+
+置
+$$
+t=\frac{\sqrt5-1}{2},\qquad
+g=t^3=2t-1=\sqrt5-2,\qquad
+u=t^2=\frac{1-g}{2},\qquad
+g^2+4g=1,
+$$
+$$
+\lambda=\frac{u}{10}=\frac{1-g}{20},\qquad
+0\le \beta<\lambda,\qquad
+\delta=\lambda-\beta>0.
+\tag{57.1}
+$$
+五个实际标签按根像的空间顺序写成
+$$
+3,0,5,2,25,
+$$
+其中 $25$ 是一个标签。记
+$$
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),
+\qquad
+f_a(x)=\Delta_a-gx,\qquad
+F_a(x)=\frac{\Delta_a-x}{g}.
+\tag{57.2}
+$$
+实际 guard 和合法边为
+$$
+0\to0:3,0,2,\qquad
+0\to1:5,25,\qquad
+1\to0:3,0,\qquad
+1\to1:5.
+\tag{57.3}
+$$
+因此根像为
+$$
+3:[-1,-u],\quad
+0:[-u,g],\quad
+5:[g,t],\quad
+2:[t,2t],\quad
+25:[2t,1+t].
+\tag{57.4}
+$$
+
+原闭色在本章实际用到的前三色是
+$$
+\begin{aligned}
+A&=\frac{3(g-1)}5,&
+B&=\frac{11g-1}{10},&
+C&=\frac{6g-1}{5},\\
+D&=\frac{3+7g}{10},&
+E&=\frac{1+4g}{5}.
+\end{aligned}
+\tag{57.5}
+$$
+为完整记录六色端点，再置
+$$
+\Phi=\frac{7+13g}{10},\qquad
+H=\frac{3+7g}{5},\qquad
+I=\frac{11+9g}{10}.
+\tag{57.5a}
+$$
+它们的次临界闭区间为
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&
+E_1^\beta&=[A+\delta,B-\delta],&
+E_2^\beta&=[C+\delta,D-\delta],\\
+E_3^\beta&=[E+\delta,\Phi-\delta],&
+E_4^\beta&=[H+\delta,I-\delta],&
+E_5^\beta&=[2t+\delta,1+t].
+\end{aligned}
+\tag{57.6}
+$$
+色 $0,5$ 各自只允许标签 $3,25$；色 $1,2,3,4$ 的可能不同标签对依次为
+$$
+(3,0),\quad(0,5),\quad(5,2),\quad(2,25).
+\tag{57.7}
+$$
+相应闭色宽度分别为
+$$
+t-2\delta,\qquad u-2\delta,\qquad
+t-2\delta,\qquad u-2\delta,
+\tag{57.8}
+$$
+均严格小于相应标签的平移差。非相邻闭色不交，每个点至多属于两个相邻闭色。
+
+固定一个含环原配对 SCC $S$。第一来源投影假设不相干；第二来源投影是实际 singleton、相干且本原周期为奇数 $p>1$ 的 rival。每条 $S$ 内非空返回长度都是 $2p$ 的倍数。记原返回长度的最大公约数为 $h$，并假设
+$$
+|V(S)|=h+2,\qquad h\ge6.
+\tag{57.9}
+$$
+第51章的单点传播命题说明第一片全部非退化；因而本文每个原片都是规范闭区间，端点仍保留。记同一实际 rival 周期尾在各相位的坐标为 $y_r$，标签为 $R_r$。在所有推导中，$y_r$ 来自这一条实际周期尾；不为不同边另选尾。由于所有返回长度被 $2p$ 整除，$h$ 为偶数。
+

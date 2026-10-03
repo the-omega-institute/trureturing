@@ -1,0 +1,13 @@
+**定义 1.1（Harmonic and defect potentials）。** For a finite simple graph $F$, let
+
+$$
+H(F)=\sum_{xy\in E(F)}\frac{2}{d_F(x)+d_F(y)},\qquad
+\phi(d,e)=\frac{(d-e)^2}{2de(d+e)},\qquad
+D(F)=\sum_{xy\in E(F)}\phi(d_F(x),d_F(y)).
+$$
+
+Every edge is unordered and counted once. The arithmetic is rational. Isolated
+vertices contribute zero to both sums. Endpoint degrees on an edge are positive.
+For a set $X$ of vertices, $F[V(F)\setminus X]$ retains all vertices outside $X$,
+including isolates, and uses their degrees in the induced graph.
+

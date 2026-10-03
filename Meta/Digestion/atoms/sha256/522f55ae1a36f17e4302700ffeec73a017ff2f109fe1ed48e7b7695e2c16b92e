@@ -1,0 +1,22 @@
+**定理 314.2（子族的正储备与任意晚负余量）。** 在上述输入下，RH 蕴含
+\[
+\liminf_{j\to\infty}\mathfrak q_j
+\ge2\sqrt2-2-C_\gamma>0.
+\tag{314.9}
+\]
+若 RH 不成立，则
+\[
+\forall K\ge0\ \forall J\ge2\ \exists j\ge J:\quad\mathfrak q_j<-K.
+\tag{314.10}
+\]
+对解析截止 $M\ge50$，定义
+\[
+\nu(M)=\#\{j\in\mathbb N:j\ge2,\ \mu_j\le M\}.
+\]
+则精确有
+\[
+\nu(M)=\left\lfloor\left(\frac{M-2}{3}\right)^{1/4}\right\rfloor-1,
+\qquad \nu(M)\sim(M/3)^{1/4}.
+\tag{314.11}
+\]
+

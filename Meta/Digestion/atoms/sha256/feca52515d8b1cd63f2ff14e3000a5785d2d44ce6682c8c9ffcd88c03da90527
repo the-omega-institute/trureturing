@@ -1,0 +1,25 @@
+**定理 39.2.1（两种符号的最小不变区间）。** 置
+
+$$
+a=(-g)^L,\qquad f_{U_i}(x)=A_{1i}+ax,\qquad
+f_{V_i}(x)=A_{2i}+ax,
+$$
+
+$$
+A_j^- =\min_{i=0,1}A_{ji},\qquad
+A_j^+=\max_{i=0,1}A_{ji},\qquad j=1,2.
+$$
+
+则 $0<|a|<1$，这些量属于 $\mathbb F$。两个分量的规范包络 $H_j=[m_j,M_j]$ 为
+
+$$
+(m_j,M_j)=
+\begin{cases}
+\displaystyle\left(\frac{A_j^-}{1-a},\frac{A_j^+}{1-a}\right),&a>0,\\[6pt]
+\displaystyle\left(\frac{A_j^-+aA_j^+}{1-a^2},
+\frac{A_j^++aA_j^-}{1-a^2}\right),&a<0.
+\end{cases}
+$$
+
+$H_j$ 是包含两映射各自像的最小非空紧区间，且 $H_j\subseteq I_{s_j}$。其端点在 $\mathbb F$ 中，由合法完成地址取得；按返回块计，端点地址的周期为一或至多二。这里的“包络”指最小不变区间，不宣称两映射吸引子填满该区间。
+

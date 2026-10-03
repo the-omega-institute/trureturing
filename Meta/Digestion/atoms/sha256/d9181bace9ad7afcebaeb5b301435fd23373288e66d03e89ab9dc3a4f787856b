@@ -1,0 +1,16 @@
+**Theorem 50.1 (dyadic series nonintegrality).** Let $r\geq1$ and
+$x>2$ be integers. For $j\geq0$, put $e_j=j+v_2(j!)$. Let
+$(s_j)_{j\geq0}$ be a complex sequence with $s_0=1$, such that
+$2^{e_j}s_j$ is an odd integer for every $j\geq1$ and
+
+$$
+|s_j|\leq(\sqrt2)^r4^j\qquad(j\geq0).
+$$
+
+Suppose that $\sum_{j\geq0}s_jx^{-2j}=\mu$ and
+$128\cdot6^r<x^2-4$. Then
+
+$$
+x^r\mu\notin\mathbb Z.
+$$
+

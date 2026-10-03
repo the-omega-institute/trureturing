@@ -1,0 +1,19 @@
+### corollary 262.3 临界递归网格保留单边 RH 判据
+
+取充分大的 $a_0$，定义
+
+$$
+a_{j+1}=a_j+W(a_j),\qquad j\ge0.
+\tag{262.4}
+$$
+
+该网格的相邻胞腔覆盖 $[a_0,\infty)$。
+在 §92.3 明列的经典单边 RH 桥接及定理 262.2 的实际源输入下，
+
+$$
+\mathrm{RH}\iff
+\exists K\ge0\ \exists J\in\mathbb N\quad
+\forall j\ge J,\quad w(a_j)\Phi(a_j)\ge-K.
+\tag{262.5}
+$$
+

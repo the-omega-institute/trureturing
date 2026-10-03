@@ -1,0 +1,25 @@
+### definition 260.1 局部中心化源与双端弦余量
+
+取 $1<a<b$、$y\in[a,b]$，置
+
+$$
+A=q(a),\quad B=q(b),\quad z=q(y),\qquad
+\lambda_y=\frac{z-B}{A-B},\qquad w(y)=\sqrt y\log y.
+$$
+
+定义
+
+$$
+E_a(v)=\Psi(v)-\Psi(a)-(v-a),\qquad
+M_{a,b}=\sup_{a\le v\le b}|E_a(v)|,
+$$
+
+$$
+\mathcal R_{a,b}(y)
+=\Phi(y)-\lambda_y\Phi(a)-(1-\lambda_y)\Phi(b).
+\tag{260.1}
+$$
+
+这里 $\mathcal R$ 是弦余量，区别于 §87 的正储备 $R$。
+紧区间内素数幂事件有限，故 $M_{a,b}<\infty$。
+

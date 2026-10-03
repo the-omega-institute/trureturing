@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0fcd6799e0fdcb4cbb7391c09795cf9492bad2b3163edeaa70476f581b500803
+  normalized_sha256: sha256:0fcd6799e0fdcb4cbb7391c09795cf9492bad2b3163edeaa70476f581b500803
+cas_ref: sha256:0fcd6799e0fdcb4cbb7391c09795cf9492bad2b3163edeaa70476f581b500803
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciRecurrencePolynomialCoefficients.fibonacci_recurrence_polynomial_coefficients
+    target_statement_id: sha256:3c169b46f1c9917a59c39b64700ef7dcd9cc1ae84de02b4491d61ad8daf939fa
+receipts:
+  unresolved_subitems: []

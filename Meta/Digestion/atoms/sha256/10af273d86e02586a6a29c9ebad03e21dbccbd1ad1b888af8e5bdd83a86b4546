@@ -1,0 +1,17 @@
+**引理 62.16（压力零点）。** 对任一非空二字母子移位 $X$，令 $\mathcal L_k(X)$ 为 $k$ 字因子集。对实数 $\theta$ 定义
+
+$$
+Z_X(k,\theta)=\sum_{w\in\mathcal L_k(X)}2^{-\theta\ell(w)},\qquad
+P_X(\theta)=\lim_{k\to\infty}\frac1k\log_2Z_X(k,\theta).
+\tag{62.34}
+$$
+
+极限存在，等于各 $k\ge1$ 商的下确界。对 $a>0$，
+
+$$
+P_X(\theta)-20a\le P_X(\theta+a)\le P_X(\theta)-6a.
+\tag{62.35}
+$$
+
+其唯一零点为 $\eta(X)$。
+

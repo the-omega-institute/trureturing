@@ -1,0 +1,7 @@
+**定理 40.9（精确闭根标量像的状态下界）。** 固定命题40.7的数据。对任意 $n\ge n_0$，每个定义40.1意义下标量像恰为 $E_2^{b_n}$ 的有限全路径 FIB 表示，其存活顶点数满足
+
+$$
+\boxed{\displaystyle
+s\ge\left\lceil\frac{m+6n}{2}\right\rceil\ge3n.}
+$$
+

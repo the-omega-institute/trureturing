@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0d8a599fc77f0c3212f781ac07c47e8fdde3480473e3e0e47e7b0d467150ac67
+  normalized_sha256: sha256:0d8a599fc77f0c3212f781ac07c47e8fdde3480473e3e0e47e7b0d467150ac67
+cas_ref: sha256:0d8a599fc77f0c3212f781ac07c47e8fdde3480473e3e0e47e7b0d467150ac67
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/PureCubicExponentResidues.pure_cubic_exponent_residues
+    target_statement_id: sha256:3d64edfffbc3d58e6d71cbf1a2548f2f6ff9416d16f88b9a9b0dcb36f6eed0d9
+receipts:
+  unresolved_subitems: []

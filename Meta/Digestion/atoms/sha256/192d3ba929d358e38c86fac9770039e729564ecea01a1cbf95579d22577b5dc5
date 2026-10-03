@@ -1,0 +1,31 @@
+### 50.1 原实际供应的接口
+
+沿用49.1—49.3的实际词 $U,V,C$、共同色词 $d,e$、原六格 $J_i$、固定合法归属 $o$、guard、前接次序和裁剪语义。窗口标签 $25$ 仍是一个标签，$0$ 仍是空窗；一窗对应三位 FIB 窗口。保留
+
+$$
+\begin{gathered}
+P=UC,\quad Q=VC,\quad h=de,\quad |P|=|Q|=|h|=26,\\
+\xi_H=UC^3\,5\,0^\infty,\qquad \xi_L=VC^3\,0^\infty,\\
+A_{m,r}=U^mC^r,\quad B_{m,r}=V^mC^r,\quad W_{m,r}=d^me^r,
+\qquad m\ge1,\quad r\in\{1,2\}.
+\end{gathered}
+$$
+
+其中两尾属于 $D_1$，不随列表、深度或预算改变；stems 从 guard 零到一，基本返回从一到一。沿用 $\rho=g^6$、$\chi=g^{20}$ 及49.2的 $h_j,E_j,X_j$。定理49.8给
+
+$$
+G_{j,m,r}(D)=(1-\rho^m)h_j+\rho^m\chi^rD,
+\qquad G_{j,m,r}([X_j,h_j))\subset(X_j,h_j),
+$$
+
+以及精确全槽闭成本
+
+$$
+\Theta_r=\lambda-g^2\chi^rX_H=\lambda-g^{2+20r}X_H,
+\qquad q_1=\min J_1.
+$$
+
+本章固定以下任一预算合同：$\Theta_r<b\le\lambda$，归属 $o$ 任意固定；或闭误差预算 $b=\Theta_r$ 且 $o_1=1$，即 $q_1$ 属于实际颜色1。严格内部预算还允许正开及逐记录严格余量合同。
+
+解码器 $\mathcal A$ 满足[固定修订 56e8039 的定义36.9](https://github.com/the-omega-institute/trureturing/blob/56e8039a65e5b406cd209b54152fa85ddf54185d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11179)：确定、因果、固定初态，每次取得仅作有限计算和有限输出批次；输出有序、只追加、不可回读；全部实际 $\Omega$ 记录上安全，全部实际 $D$ 记录上逐位置最终生效，包括无限空窗补齐。完整配置计入所有影响未来的可读控制、持久和临时数据、计数器、输入与输出位置、时序、可读时钟及输出侧存储；没有 End、支持上界、免费重放或免费外部记录。
+

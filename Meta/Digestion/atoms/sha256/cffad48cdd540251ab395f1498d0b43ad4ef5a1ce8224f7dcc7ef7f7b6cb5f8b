@@ -1,0 +1,4 @@
+## 15. 窗尺度下的 FIB 受控置换容量与外部记录
+
+本章沿用第14章与母卷 [FIBONACCI_ATOMIC_RELATION_GENERATION.md](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§150–151 的低位到高位窗口方向，把窗口长度推广为整数 $r\ge1$。所问的是：外部逐窗供给合法 FIB 命令时，一个有限的当前窗口读者能否用固定的置换分支跟随全部延续，以及内部状态和外部标签如何交换容量。它与第13章将来源一次初始化后自主运行的合同不同。
+

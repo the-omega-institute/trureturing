@@ -1,0 +1,82 @@
+### theorem 261.2 正脉冲源、全局误差及全部局部增量
+
+在 $x\ge X$ 上，$B$ 严格递增且
+
+$$
+\frac12\le B'(x)\le\frac32,\qquad B(x)\ge x/2.
+\tag{261.4}
+$$
+
+因此 $\Psi^*$ 非负、右连续、单调；每个紧区间只有有限个事件，
+每次内部事件的跳跃恰为一。全局有
+
+$$
+|\Psi^*(x)-x|\le(1+\omega)x^{3/4}+1.
+\tag{261.5}
+$$
+
+对每个 $a\ge X$ 及全部 $t\ge0$，有
+
+$$
+\boxed{|\Psi^*(a+t)-\Psi^*(a)-t|
+\le Dta^{-1/4}+1.}
+\tag{261.6}
+$$
+
+特别地，对每个固定 $c_0>0$，有
+$\Psi^*(x)-x=O(xe^{-c_0\sqrt{\log x}})$。
+若 $L_a=\log a$、$u_a=L_a^{1/4}$，则对
+$a^{2/3}\le t\le a^{0.99}$ 一致有
+
+$$
+|\Psi^*(a+t)-\Psi^*(a)-t|
+=o(tL_ae^{-u_a}).
+\tag{261.7}
+$$
+
+这是与 §260 由 Guth–Maynard 输入导出的 Chebyshev 增量预算相容的模型界；
+它不将人工事件计数识别为素数计数 $\pi$。
+
+**证明。** 对式（261.2）求导，其中 $A'$ 指对 $L$ 求导，得到
+
+$$
+A'(L)=\frac{(\omega^2L^2+\omega^2L-3/4)\sin(\omega L+c)
++\omega(L^2/4+5L/4)\cos(\omega L+c)}{(L+1)^2}.
+\tag{261.8}
+$$
+
+在 $L\ge1$ 时，直接由三角函数的绝对值上界得
+
+$$
+|A(L)|\le1+\omega,\qquad
+|A'(L)|\le\frac54+\omega^2+\frac{5\omega}{4}.
+$$
+
+第二界也可先对分子 $N(L)$ 求导：
+$N'=(1/4+\omega^2L)\sin(\omega L+c)+(\omega L/4)\cos(\omega L+c)$，
+再用 $|A'|\le |N'|/(L+1)+|N|/(L+1)^2$。
+所以
+
+$$
+B'(x)=1+x^{-1/4}\left(\frac34A(L)+A'(L)\right),\qquad
+|B'(x)-1|\le Dx^{-1/4}\le\frac12.
+$$
+
+阈值同时给 $x^{1/4}\ge2D\ge2(1+\omega)$，故
+$B(x)\ge x-(1+\omega)x^{3/4}\ge x/2$。
+连续严格递增的 $B$ 穿过整数时，$\lfloor B\rfloor$ 产生单位正跳跃，
+取整值在事件点取右值；紧区间内 $B$ 的值域有界，因而事件有限。
+由 $-1<\lfloor B(x)\rfloor-B(x)\le0$ 得式（261.5）。
+
+在 $[a,a+t]$ 对 $B'-1$ 积分，因 $v^{-1/4}\le a^{-1/4}$，有
+$|B(a+t)-B(a)-t|\le Dta^{-1/4}$。
+两个取整误差之差的绝对值小于一，故式（261.6）成立。
+最后，$e^{-L/4+c_0\sqrt L}\to0$；且在所列局部范围中
+
+$$
+\frac{Dta^{-1/4}+1}{tL_ae^{-u_a}}
+\le\frac{(Da^{-1/4}+a^{-2/3})e^{u_a}}{L_a}\longrightarrow0.
+$$
+
+这分别给出全局强 PNT 量级与一致局部预算。$\square$
+

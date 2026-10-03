@@ -12,6 +12,17 @@ internal sealed class CompletionEntropyMinimalityDocument : IScribeDocumentDefin
         H("Conditional Entropy under Completion Factorization"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("finite-pushforward-is-law"),
+                DeclarationHandle.Create(
+                    "D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.pushforward_is_law"),
+                H("Deterministic pushforward preserves probability laws"),
+                StatementSource.FromAuthor(PushforwardLawFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite carriers X and Y, a nonnegative real mass p with sum one "
+                    + "pushes forward along every function f : X -> Y to a nonnegative real mass with sum one. "
+                    + "The mass at y is the sum of p(x) over all x with f(x)=y. Surjectivity is unnecessary."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("factorized-completion-has-minimal-conditional-entropy"),
                 DeclarationHandle.Create(
                     "D5/S3/Entropy/Forgetting/CompletionEntropyMinimality."
@@ -43,6 +54,15 @@ internal sealed class CompletionEntropyMinimalityDocument : IScribeDocumentDefin
                             + "claimed conditional-entropy inequality. Library and repository searches "
                             + "found no exact theorem to bind."))),
                 DescribeRole.Theorem))));
+
+    private static Formula PushforwardLawFormula()
+    {
+        Formula p = F.Id("p"), f = F.Id("f");
+        Formula law(Formula mass) => Seq(Operatorname, Grp(F.Id("ProbabilityLaw")), Open, mass, Close);
+        Formula push = new Formula.Apply(Seq(Operatorname, Grp(F.Id("pushforward"))), [f, p]);
+        return Disp(Seq(Forall, Sp, F.Id("p"), Comma, Sp, F.Id("f"), Comma, Sp,
+            law(p), Sp, Implies, Sp, law(push)));
+    }
 
     private static Formula CompletionEntropyFormula()
     {

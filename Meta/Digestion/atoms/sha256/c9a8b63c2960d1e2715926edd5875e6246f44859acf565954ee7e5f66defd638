@@ -1,0 +1,17 @@
+## 61. Exact masking for arbitrary finite prime-power support
+
+Let $S$ be a nonempty finite set of distinct primes greater than five.
+Write $Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$,
+$\pi(m)$ for the order of $Q$ modulo a positive integer $m$, and
+$\pi_s(m)$ for the order of $Q^s$ modulo $m$. For $p\in S$, let
+$\tau_p=\pi(p)$, let $\rho(p)$ be the first positive Fibonacci index
+divisible by $p$, and keep its original depth
+$h_p=v_p(F_{\rho(p)})$. Fix positive integers $a_p$ and $s$, and put
+
+$$
+M_0=\prod_{p\in S}p,\qquad
+m=\prod_{p\in S}p^{a_p},\qquad
+T=\operatorname{lcm}_{p\in S}\tau_p,\qquad
+\beta_p=v_p(T),\qquad u_p=v_p(s).
+$$
+

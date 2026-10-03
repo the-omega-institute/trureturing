@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cadaf9bc099cab7eaff7aa97c3724e69efeb9fdbcf38339e00b65d615b0bd245
+  normalized_sha256: sha256:cadaf9bc099cab7eaff7aa97c3724e69efeb9fdbcf38339e00b65d615b0bd245
+cas_ref: sha256:cadaf9bc099cab7eaff7aa97c3724e69efeb9fdbcf38339e00b65d615b0bd245
+coverage_gids:
+  - gid: D5/S1/Scale/GoldenCubicBlockCongruences.golden_cubic_block_interlevel
+    target_statement_id: sha256:4acda001b37507b2c22fa66b80baa4e49b2c914e697386e4e3ee9db61607816c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,64 @@
+### 42.1 约定、来源合同与问题范围
+
+本章固定实际六格 FIB 仪器、原始来源标签、incoming guards 和完整包含边规则；引用本卷钉定修订 [`cfe06a9af05aff5b3d2ffa4d478cea124842a1a3`](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的已发表结果。置
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad g^2+4g=1,\qquad
+\lambda=\frac{t^2}{10}=\frac{1-g}{20}.
+$$
+状态区间为 $I_0=[-1,\phi]$、$I_1=[-1,t]$。来源标签及实际边为
+$$
+\begin{array}{c|c}
+0\longrightarrow0&3,0,2\\
+0\longrightarrow1&5,25\\
+1\longrightarrow0&3,0\\
+1\longrightarrow1&5
+\end{array}
+$$
+并且
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t).
+\tag{42.1}
+$$
+五个内部切点取为
+$$
+(q_1,q_2,q_3,q_4,q_5)
+=(-t^2-\lambda,\ g-3\lambda,\ t-5\lambda,\ 2t-7\lambda,\ 2t+\lambda),
+$$
+其中 $q_0=-1,q_6=\phi$，颜色格的闭包为 $J_c=[q_c,q_{c+1}]$。对预算 $0<\beta<\lambda$ 写
+$$
+E_c^\beta=I_0\cap[q_c-\beta,q_{c+1}+\beta].
+\tag{42.2}
+$$
+切点归属为 $\omega\in\{L,R\}^{\{1,\ldots,5\}}$：$\omega_k=L$ 将 $q_k$ 归给颜色 $k-1$，$\omega_k=R$ 将其归给颜色 $k$；相应实际取得集为
+$$
+O_{c,\omega}^{\beta}
+=\{x\in I_0:\exists z\in C_{c,\omega},\ |x-z|\le\beta\},
+\tag{42.3}
+$$
+其闭包是 $E_c^\beta$。闭端点属于 $E_c^\beta$ 不等于它属于 $O_{c,\omega}^\beta$。
+
+对合法边 $s\xrightarrow{\ell}s'$，完整图节点和边遵循
+$$
+P\subseteq f_\ell(I_{s'}),\qquad
+P'\subseteq F_\ell(P),\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g}.
+\tag{42.4}
+$$
+这里 $P,P'$ 是闭区间或单点。交集条件不能替代 (42.4) 的整片条件。$\Omega_s=A_s$ 表示 guard 为 $s$ 的全部合法尾，$D_s\subseteq\Omega_s$ 表示最终空尾。定理 14.7 给出每个固定 guard、每个标量在全部 $\Omega_s$ 中的编码纤维至多为二；双编码的两条地址均以非空周期极值尾结束，故一个实际 $D_s$ 标量在全部 $\Omega_s$ 中只有其唯一的 $D_s$ 编码。这不主张 $\kappa_s$ 在 $\Omega_s$ 上单射。guard 相对满像 $\kappa_s(\Omega_s)=I_s$ 和合法前接来自定理 17.2；对任一合法尾保留前 $m$ 个窗口再接 $0^\infty$，标量误差至多 $\phi g^m$，故 $\kappa_s(D_s)$ 在 $I_s$ 中稠密。这些前提与定理 31.4 的共同路径提升均在本章使用。对第 31、38 章的有限端点图，单点 $z$ 的 $D_s$-存活还要求其带 guard 单点沿合法逆边在有限步到达零，单有 $z\in\mathbb Q(t)$ 不够。
+
+本章只处理：第二来源片为 singleton、第二来源投影相干、第一来源投影可能不相干的已供应有限实际 SCC；以及由这些 SCC 抽出的固定返回族。$\beta\in\mathbb Q(t)$ 时第 31 章供应有限闭图；对其他实预算，下述有限图结论以所需实际全包含图已另行供应为前提，不宣称它自动有限。物理时空、热力学熵、五种普遍物理操作、全局转变半径的取得或精确值，都不由下述有限条件推出。
+
+若某个精确节点还带有有限 pending 等式集 $S$，其 live 条件为
+$$
+\begin{array}{c|c}
+\text{域}&\text{条件}\\ \hline
+\Omega&P\text{ 非退化，或 }P=\{z\},\ z\notin S,\\
+D&P\text{ 非退化，或 }P=\{z\},\ z\notin S,\ z\in\kappa_s(D_s).
+\end{array}
+\tag{42.0}
+$$
+非退化片的内部标量可以同时避开有限 $S$ 并由 $D_s$ 或 $\Omega_s$ 编码；单点必须逐字检查。式 (42.0) 保留 $D$-liveness 与 $\Omega$-safety 的区别，不能把竞争方的安全尾默认为有限尾。
+

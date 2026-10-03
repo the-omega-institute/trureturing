@@ -1,0 +1,20 @@
+**推论 53.4（原完整恢复合同下的必要记忆率）。** 固定任意归属 $o$ 及满足定义36.9的解码器 $\mathcal A$。下列任一供应条件足够：无锚族在 $b>\Theta_2$ 的闭或严格合同，或在 $b=\Theta_2,o_1=1$ 的闭合同；锚族在 $b\ge\widehat\Theta$、任意归属的闭或严格合同。后者在 $\widehat\Theta$ 有逐记录正余量，在 $\Theta_2$ 有家族统一正余量。
+
+令 $s=26$ 或 $52$ 分别对应无锚族与锚族。对 $n\ge39$，处理完 $s+2n$ 个 departure 颜色后的完整配置数至少为 $f_n$。固定宽度 $B$ 位与长度至多 $B$ 的变长二进制表示分别必须满足
+
+$$
+B\ge\lceil\log_2f_n\rceil,\qquad
+B\ge\lceil\log_2(f_n+1)\rceil-1 .
+$$
+
+若 $n_N=\lfloor(N-s)/2\rfloor\ge39$，则在较宽松的变长口径下也有
+
+$$
+\boxed{B^{\mathrm{worst}}_{b,\mathcal A}(N)
+\ge\alpha N-(s+123)\alpha-1},
+\qquad
+\liminf_{N\to\infty}\frac{B^{\mathrm{worst}}_{b,\mathcal A}(N)}N\ge\alpha .
+$$
+
+供应条件同时满足 $b\le\lambda$ 时，既有定理33.13给一个完整峰值 $O(N+1)$ 上界，故这些预算的最优最坏记忆阶数为 $\Theta(N+1)$。对更大预算，本推论只给满足合同的解码器必须遵守的下界。
+

@@ -1,0 +1,62 @@
+**定理 33.10（统一的真实误差余量）。** 有
+
+$$
+0\le\rho_U<\lambda,\qquad
+R_*:=\max\{\rho_U,R_C\}<\lambda,\qquad
+\boxed{\nu_0:=\frac{\lambda+R_*}{2}<\lambda},
+\tag{33.35}
+$$
+
+且 $\nu_*<\nu_0$。
+
+证明。定义33.7的六行精确后缀范围覆盖 $[\theta,t^2]$、$[0,\theta]$ 上每个实际坐标，其中只有位置 $4$ 在 $\theta$ 处达到半径 $\lambda$。引理33.8给出 $\chi^2\delta_H>0$、$\chi^2\delta_L>0$，故在 (33.33) 的闭区间上
+
+$$
+P_{U,4}(x)\ge a-\lambda+g^2\chi^2\delta_H>a-\lambda,\qquad
+P_{V,4}(y)\le b+\lambda-g^2\chi^2\delta_L<b+\lambda.
+$$
+
+位置 $4$ 的另一端分别严格小于 $a$、严格大于 $b$；其余五个位置在更大的闭比较区间上已经严格位于相应扩张格内部。因此 (33.34) 的每个端点距离都严格小于 $\lambda$，有限最大值给出 $\rho_U<\lambda$。距离到闭区间经过仿射图后是凸函数，它在 $H_1,L_1$ 上的最大值出现在端点，所以这一界覆盖引理33.8的每个中间输入，并非只控制返回点。再由 (33.29)，$R_*<\lambda$，且 $R_*<\nu_0<\lambda$。令
+
+$$
+\alpha=\frac{\nu_0-\rho_U}{2\phi^2}>0,\qquad
+T_i(z)=(1-\alpha)\operatorname{proj}_{J_i}(z)+\alpha m_i,
+$$
+
+其中 $m_i$ 是 $J_i$ 的中点。由于 $\nu_0>\rho_U\ge0$ 且 $\nu_0<\lambda<2\phi^2$，
+
+$$
+0<\alpha\le\frac{\nu_0}{2\phi^2}<1.
+$$
+
+因此 $T_i(z)$ 位于颜色格内部，且 $\operatorname{diam}X=\phi^2$，故每个 $U/V$ 坐标可用一个实际目标实现，误差至多
+
+$$
+\rho_U+\alpha\phi^2=\frac{\rho_U+\nu_0}{2}<\nu_0.
+\tag{33.36}
+$$
+
+$C$ 块使用 (33.29) 的固定内部目标及其末位零误差。因此所有同一实际来源上的有限前缀都有一个共同误差上界
+
+$$
+R_0=\max\left\{\frac{\rho_U+\nu_0}{2},R_C\right\}<\nu_0.
+\tag{33.37}
+$$
+
+不需要把不同坐标的标量见证拼成不同来源。
+
+为了比较两个预算，注意 $\max\{\rho_U,R_C\}\ge R_C$，而不计算 $\rho_U$ 也有
+
+$$
+\nu_0\ge\frac{3\lambda+g^2t^2}{4}=\frac{53-213g}{80}.
+$$
+
+由 (33.14)，
+
+$$
+\frac{53-213g}{80}-\nu_*=\frac{341-1437g}{400}>0.
+\tag{33.38}
+$$
+
+故 $\nu_*<\nu_0$。$\square$
+

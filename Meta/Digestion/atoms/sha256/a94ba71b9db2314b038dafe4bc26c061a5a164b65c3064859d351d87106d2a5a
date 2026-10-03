@@ -1,0 +1,20 @@
+**命题 18.3（平衡二步像与单叶改标的边界）。** 有如下两个实例。
+
+1. 将定义 17.1 的证书合同取为 $d=2$、$V=\rho^2(\alpha)=\langle\beta,\alpha\rangle$、精确组成 $(1,1)^{\mathsf T}$ 时，$h\ge1$ 的最小查询基数为一，且恰有两个最优集合 $\{\mathtt L\}$、$\{\mathtt R\}$；$h=0$ 时不存在有声集合。因此没有严格 $b-a>0$ 时，定理 18.1 的唯一性不能按此方式延伸到全部二步像。
+2. 对 $V=\rho^3(\alpha)$，把地址 $\mathtt L\mathtt R$ 的 $\alpha$ 改成 $\beta$ 得到 $W$，满足 $W\in\mathcal I_1\setminus\mathcal I_2$。所以定理 18.2 的 $\alpha\mapsto\beta$ 反例只能按其所用障碍排除二步像，不能据此排除一步像。
+
+**证明。** 第一项中，同组成的完整树只有 $\langle\beta,\alpha\rangle$ 与 $\langle\alpha,\beta\rangle$。后者含有 $\alpha$ 左孩子，故不在 $\mathcal I_1$，从而不在 $\mathcal I_2$。查询左叶的 $\mathsf{leaf}_\beta$ 或右叶的 $\mathsf{leaf}_\alpha$ 均排除后者，因此两个单地址集合都有声。空集合不能区分它们；其余单地址要么是两树共有的根分支，要么在两树中都不存在，也不能区分。因此恰有上述两个一查询最优解；$h=0$ 的全部查询集合也都不能区分。此例的 $b-a=0$。
+
+第二项明确为
+
+$$
+\begin{gathered}
+V=\langle\langle\beta,\alpha\rangle,\beta\rangle,\qquad
+W=\langle\langle\beta,\beta\rangle,\beta\rangle,\\
+W=\rho\bigl(\langle\langle\alpha,\alpha\rangle,\alpha\rangle\bigr).
+\end{gathered}
+\tag{18.13}
+$$
+
+后一等式给出 $W\in\mathcal I_1$ 的实际完整来源；其 $\langle\beta,\beta\rangle$ 末端樱桃排除 $W\in\mathcal I_2$。两树的组成分别为 $(1,2)^{\mathsf T}$ 与 $(0,3)^{\mathsf T}$，所以这个单叶改标见证属于定义 18.2 的无承诺竞争域，不是定义 17.1 的同组成竞争见证。证毕。
+

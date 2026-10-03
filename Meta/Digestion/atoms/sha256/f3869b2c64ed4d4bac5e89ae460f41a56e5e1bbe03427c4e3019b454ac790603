@@ -1,0 +1,25 @@
+**命题 5.2（前缀与迭代公式）。** $h_u$ 是到 $[u]\times G$ 的同胚，逆为 $\delta^k$ 在该柱集上的限制，并且对任意 $p=(\omega,z)\in K$，
+
+$$
+\delta^k p=\left(\sigma^k\omega,
+M^{-k}(z-t_{\omega|_k})\right).
+$$
+
+若 $u,v$ 长度分别为 $k,l$，则由共同尾 $(\nu,w)\in(F_u\cap F_v)\times G$ 给出的前缀替换 $h_v(\nu,w)\mapsto h_u(\nu,w)$ 具有公式
+
+$$
+z_p=t_u+M^{k-l}(z_q-t_v).
+$$
+
+完整共同尾条件准确是
+
+$$
+\sigma^k\omega_p=\sigma^l\omega_q=\nu,\qquad
+M^{-k}(z_p-t_u)=M^{-l}(z_q-t_v)=w,
+\qquad \nu\in F_u\cap F_v.
+$$
+
+证明。跨接缝合法性只有 $u_{k-1}\nu_0=0$，恰由 $F_u$ 表达。反复使用 $\delta$ 的定义，归纳得到迭代公式，随即给出 $h_u$ 的逆；算术仿射映射与符号前置、截断连续，故为同胚。消去共同算术尾 $w$ 得替换公式，反代即得到必要充分条件。$\square$
+
+仅符号尾相同不足够。例如 $p=(0^\infty,0)$ 与 $q=(0^\infty,\iota(\alpha))$ 地址全部相同，但任意剥离后的算术坐标分别是零与 $M^{-l}\alpha\ne0$，没有完整共同尾。
+

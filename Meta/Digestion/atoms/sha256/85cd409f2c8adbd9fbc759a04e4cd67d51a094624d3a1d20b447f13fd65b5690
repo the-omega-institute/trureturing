@@ -1,0 +1,52 @@
+### 40.3 一个固定的六周期来源邻域
+
+固定第36.1节的六格仪器。为避免预算符号与切点混淆，记
+
+$$
+a=-t^2-\lambda,\qquad c_-=g-3\lambda,\qquad
+c_+=t-5\lambda,\qquad c_3=2t-7\lambda,\qquad c_4=2t+\lambda.
+$$
+
+实际格 $C_i$ 的切点归属固定，其闭包为
+
+$$
+\begin{gathered}
+J_0=[-1,a],\quad J_1=[a,c_-],\quad J_2=[c_-,c_+],\\
+J_3=[c_+,c_3],\quad J_4=[c_3,c_4],\quad J_5=[c_4,\phi].
+\end{gathered}
+$$
+
+各格均有正长度；闭扩张记作 $E_i^b=(J_i+[-b,b])\cap X$。实际取得仍按同一个 $Q$ 和裁剪到 $X$ 的含噪坐标定义。
+
+置
+
+$$
+\rho=\frac{239g-44}{380},\qquad
+A=(3,3,5,0,3,0),\qquad
+B=(0,3,0,3,3,5),\qquad
+\mathbf d=(1,0,2,1,0,2),
+$$
+
+$$
+\alpha=-\frac{33+6g}{76},\qquad
+\beta=\frac{8+15g}{76}.
+$$
+
+这两个词在[引理36.10](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11215)中使用，其周期坐标及成本见[定理36.11的证明](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11299)。其 guard 链为
+
+$$
+0\xrightarrow{3}0\xrightarrow{3}0\xrightarrow{5}1
+\xrightarrow{0}0\xrightarrow{3}0\xrightarrow{0}0,
+$$
+
+$$
+1\xrightarrow{0}0\xrightarrow{3}0\xrightarrow{0}0
+\xrightarrow{3}0\xrightarrow{3}0\xrightarrow{5}1.
+$$
+
+$A$ 是 guard 零返回词，$B$ 是 guard 一返回词；$B$ 首标签为空，亦可从 guard 零起始，并在首步之后进入同一 guard 链。
+
+以下表列出 $A^\infty$ 的实际周期坐标及其所需闭格距离。
+
+| 40 周期相位 | 标签 | 坐标 $z_r$ | 颜色 $\mathbf d_r$ | 到所需闭格的距离 |
+| --- | --- | --- | --- | --- |

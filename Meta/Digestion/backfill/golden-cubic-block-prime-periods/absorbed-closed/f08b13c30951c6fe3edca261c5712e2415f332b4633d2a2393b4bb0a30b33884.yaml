@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f08b13c30951c6fe3edca261c5712e2415f332b4633d2a2393b4bb0a30b33884
+  normalized_sha256: sha256:f08b13c30951c6fe3edca261c5712e2415f332b4633d2a2393b4bb0a30b33884
+cas_ref: sha256:f08b13c30951c6fe3edca261c5712e2415f332b4633d2a2393b4bb0a30b33884
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenLucasNonsquareThreshold.golden_lucas_nonsquare_threshold
+    target_statement_id: sha256:284840f1289df00697af9316a48da800b0cb3533f8a0acf668af9307e4e3b544
+receipts:
+  unresolved_subitems: []

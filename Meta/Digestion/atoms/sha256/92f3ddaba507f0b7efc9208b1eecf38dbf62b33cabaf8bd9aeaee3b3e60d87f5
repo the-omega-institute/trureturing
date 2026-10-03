@@ -1,0 +1,43 @@
+**定理 335.1（实际五分谱证书的全实数有限累计亏损）。** 在上述已有解析输入下，不预设 RH，有
+\[
+\mathcal E^{\rm fin}(x)\le Z(x),\qquad
+0\le\mathcal L(X)\nearrow\mathcal L_\infty<\infty
+\quad(X\to\infty\text{，遍及全部实数截止}).
+\tag{335.4}
+\]
+更具体地，在块 $k$ 的相邻节点 $a\le b$ 上，
+\[
+0\le Z(x)-\mathcal E_k^{\rm fin}(x)
+\le2M_k\min\{x-a,b-x\},\qquad a\le x\le b,
+\]
+\[
+0\le\int_a^b[Z(x)-\mathcal E_k^{\rm fin}(x)]\frac{dx}{x}
+\le\frac{M_k(b-a)^2}{2a}.
+\tag{335.5}
+\]
+存在只依赖已固定输入的常数 $C,c>0$，使所有充分晚的块及 $X\ge A_k$ 满足
+\[
+0\le\mathcal L_\infty-\mathcal L(X)
+\le C(1+k)e^{-c\sqrt k}.
+\tag{335.6}
+\]
+保留旧节点及同一 $M_k$ 的五分递归加密使 $\mathcal E_k^{\rm fin}$ 逐点不减，从而在同一截止 $X$ 的亏损不增。此加密方向与固定证书下 $\mathcal L(X)$ 随截止增长不减的方向不同。
+
+**证明。** 同一块上的绝对连续性和共同几乎处处导数界给 $|Z(x)-Z(y)|\le M_k|x-y|$。将既有有限表达（335.1）代入每个锥，得 $\mathcal E_k^{\rm fin}\le Z$。在任一保留节点取其自身锥，给 $\mathcal E_k^{\rm fin}(a_{k,s})\ge Z(a_{k,s})$，故恰好插值真实谱值。分别使用相邻两个端点的锥，得第一条（335.5）；两端都保留是取得最近距离的必要输入。经典有限最大值的 Lipschitz 性保证每块连续。
+
+因 $x\ge a>0$，将非负误差除以 $x$ 后不超过 $2M_k\min(x-a,b-x)/a$。经典初等积分给
+\[
+\int_a^b\min\{x-a,b-x\}\,dx=\frac{(b-a)^2}4,
+\]
+得到第二条（335.5）。这些 Lipschitz 锥与初等积分是已知中间步骤，新的对象是定义335.1的实际有限真谱证书。
+
+§333 的实际网格预算给 $\sum_sM_k(a_{k,s+1}-a_{k,s})^2/(2a_{k,s})\le\beta_k$，其中 $\sum_k\beta_k<\infty$，并可取充分晚时 $\beta_k\le C_0\sqrt k\,e^{-c_0\sqrt k}$。所以正误差的整个积分被有限早段及这份可和预算控制。固定拼接证书下，$\mathcal L(Y)-\mathcal L(X)$ 是 $[X,Y]$ 上的非负误差积分，故单调不减并有界。经典单调收敛给有限极限；对任意实数截止的部分末块也由完整块的非负预算控制，因而没有粗端点运输缺口。
+
+若 $X\ge A_k$，剩余误差不超过 $\sum_{j\ge k}\beta_j$。充分晚时 $\sqrt t\,e^{-c_0\sqrt t}$ 递减，经典积分比较及 $u=\sqrt t$ 给
+\[
+\int_k^\infty\sqrt t\,e^{-c_0\sqrt t}dt
+=2e^{-c_0\sqrt k}\left(\frac{k}{c_0}
+ +\frac{2\sqrt k}{c_0^2}+\frac2{c_0^3}\right).
+\]
+加入起始项得到（335.6）。保留旧锥取更大最大值即得加密单调性。$\square$
+

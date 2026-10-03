@@ -1,0 +1,29 @@
+### 命题 279.1
+
+当 $n\to\infty$ 时，
+
+$$
+\boxed{
+\frac{W_n}{F_n}=\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.1}
+$$
+
+因此，若沿用 §270 的
+
+$$
+G_F(n,k)=\Phi\!\left(\frac{F_k}{F_n}\right),
+\qquad
+\Phi(x)=x\left\lfloor\frac1x\right\rfloor,
+$$
+
+则
+
+$$
+\boxed{
+\sum_{k=1}^{n}G_F(n,k)
+=n-\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.2}
+$$
+

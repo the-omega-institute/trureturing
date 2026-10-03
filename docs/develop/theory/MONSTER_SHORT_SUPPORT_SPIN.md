@@ -63,6 +63,7 @@ van Ekeren–Möller–Scheithauer 2020 提供满足其假设时的 VOA 扩展�
 | 地面截面是否形成统一的有限二次数据？ | **已形式化** | `labelQuadratic_groundSection` 与 `labelQuadratic_groundSection_polar`。 |
 | 全 `fullMap` 二次律是否成立？ | **已形式化** | `MonsterShortSupportSpin.labelQuadratic_fullMap`；证明消耗七段支持集合归纳、单截面值和两两极化值。 |
 | 实际多项式 Fock 算子的全整数 Virasoro 关系是否成立？ | **已形式化** | `PolynomialFockVirasoroCentral.L_commutator`；对既有 `L` 移植 Kytölä 的原始 Sugawara 证明，中心荷为 1。 |
+| 每个多项式 Fock 态是否已有创生、平移、局域性及相容共形场？ | **秩一全态场** | `PolynomialFockStateField.Y` 覆盖所有复系数多项式；`stateField_creation` 给出恒等场、实际流、全态真空创生及 `Y((1/2)X₀²)[[n]]=L(n−1)`；`stateField_translation` 使用实际 `L(-1)` 并含其真空消失；`stateField_locality` 对每对多项式先选自然数阶，再对所有整数模式给出端同态等式，阶不依赖输入向量。正规乘积与 Hasse 导数的局域性保持进入实际构造。不主张 Monster 实现、已封装的 Jacobi 接口或物理时空。 |
 | 该秩一关系是否构成 Monster 所需的中心荷 24 VOA？ | **开放** | 秩一算子关系不提供中心荷 24 实现、状态场映射、真空与局域性，也不识别 Monster 模块。 |
 | 标签是否已经是 VOA 模的索引？ | **开放** | 具体模块构造及模块公理；有限标签本身不提供此证据。 |
 | 标签加法是否是 VOA 融合？ | **开放** | 实际 intertwiner、结合/编织相容性和非零 OPE 见证。 |
@@ -71,6 +72,7 @@ van Ekeren–Möller–Scheithauer 2020 提供满足其假设时的 VOA 扩展�
 
 ## 参考文献与定位
 
+* [Matsuo–Nagatomo 1997, *On axioms for a vertex algebra and locality of quantum fields*](https://arxiv.org/abs/hep-th/9706118v1)：命题 1.5.5 给出正规乘积的局域性保持；定理 5.4.1 给出创生局域生成场的重构。秩一源码验证全态创生、实际平移、算子一致局域性与二次共形场同一性；文献引用不代替任何 Lean 证明，也不扩展为 Monster 或几何桥梁。来源、Carnahan 最小 Apache 2.0 内核适配及自身钉版 Mathlib 退休条件见 `Library/VertexAlgebra/matsuo1997locality.md`。
 * [Kytölä, *VirasoroProject*](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean)：固定修订的秩一玻色 Sugawara 原始 Lean 证明；本库移植中心关系并保留 Apache 2.0 许可，来源与版本适配见 `Library/VertexAlgebra/kytola2025virasoro.md`。
 * [PR #10310](https://github.com/the-omega-institute/trureturing/pull/10310)：Monster-defect 与 fusion-chain 理论卷；本页区分有限标签结果、实际秩一 Fock 算子关系与仍缺的 VOA 机制。
 * [Basak 2017, *The octonions as a twisted group algebra*](https://arxiv.org/abs/1702.05705)：符号表/扭群代数背景；不提供本页的 VOA 实现。

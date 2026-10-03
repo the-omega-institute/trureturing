@@ -1,0 +1,15 @@
+**命题 40.0（交替极值没有有限来源代表）。** 记
+
+$$
+m=-\frac{g}{1-g^2}=-\frac14,\qquad
+M=\frac1{1-g^2}=\frac{3+2t}{4}.
+$$
+
+则 $m,M\notin\mathbb Z[t]$。每个 $D$ 标量都属于 $\mathbb Z[t]$，因为它是有限窗口和
+
+$$
+\sum_{j=0}^{N-1}(-g)^j\Delta_{\ell_j}
+$$
+
+（其后为零标签），而 $g$ 与所有 $\Delta_\ell$ 都在 $\mathbb Z[t]$。因此 $m$ 与 $M$ 均没有有限来源代表。
+

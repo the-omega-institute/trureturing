@@ -1,0 +1,20 @@
+**约定 3.1（Objects, targets and reused structure）。** Throughout §§3–16, $\mathbb N$ includes zero. The ordered tree algebra $\mathcal T$ and its substitution are those of definitions [2.1](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L13) and [3.1](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L39). Write $A=\alpha$ and $B=\beta$ for its two leaves. A tree is finite and nonempty; its ordered binary constructor has neither associativity nor commutativity equations. Its composition is the map $c$ of definition [3.3](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L67). The actual composition domain, action and quantity are
+
+$$
+X=\mathbb N^2\setminus\{(0,0)\},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\rho(a,b)=M(a,b)^{\mathsf T}=(b,a+b),\qquad q(a,b)=2a+3b.
+$$
+
+We distinguish the tree action $\rho_{\mathcal T}$ from its composition action $\rho=M$. Every actual quantity is at least 2. Put $P=\{x\in X:q(x)\text{ is prime}\}$; its complement consists exactly of composite quantities. For every positive integer $L$, including $L=1$, define
+
+$$
+O_L(x)=q(x)\bmod L,\qquad
+\widehat B_L(x)=(O_L(x),O_L(\rho x)),\qquad
+F_L(x)=\{y\in X:y\equiv x\pmod L\text{ coordinatewise}\}.
+$$
+
+A tower will mean positive integers $L_r$ indexed by $r\in\mathbb N$, with $L_r\mid L_{r+1}$ and $L_r\to\infty$. Its fibers at one fixed actual source are $C_r(x)=F_{L_r}(x)$. The unsubscripted $C$ in §5 denotes a matrix. A universal prime certificate at layer $r$ means $C_r(x)\subseteq P$; a universal composite certificate means $C_r(x)\subseteq X\setminus P$. These are semantic statements about all admissible sources; an executable certificate additionally requires specified observations and proof rules.
+
+The tree recurrence and composition dynamics remain owned by theorems [3.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L51) and [3.4](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L81); the escape pair and inverse observation matrix by theorems [5.1](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L141) and [5.4](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L159) and corollary [5.5](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L176). The actual nonnegative fixed-quantity domain is the one described in theorem [117.3](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L10037), here with the origin removed. The arguments below use these results with their stated targets, rather than treating a change of notation as a new recovery theorem. In every comparison of future readings the same actual source is used at all times. A witness may depend on $L$; $\forall L\,\exists y\,\forall k$ does not mean $\exists y\,\forall L\,\forall k$.
+

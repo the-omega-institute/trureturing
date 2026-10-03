@@ -1,0 +1,13 @@
+### 定理 280.4 利用乘子来源后，实际 Robin 比值趋于零
+
+对同样两个 $a$，使用经典 Mertens 公式与 §184.1 的保留除数函数尾界，有
+\[
+\boxed{\quad
+\frac{Z(N_{k,a})}{e^\gamma\log\log N_{k,a}}\longrightarrow0,
+\qquad
+\frac{\Delta(N_{k,a})}{e^\gamma\log\log N_{k,a}}\longrightarrow1.
+\quad}
+\tag{280.12}
+\]
+两个有限分支可取共同起效阈值。
+

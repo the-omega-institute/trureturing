@@ -1,0 +1,104 @@
+**定理 35.11（最小候选在 $n+2$ 后的实际达到）。** 对 $n\ge2,K\ge n+2$，
+
+$$
+\boxed{a_K=A_{n,K\bmod2n}.}
+$$
+
+证明。令 $k=K\bmod2n$，选择已由命题35.5定义的最小候选 $a=A_{n,k}$，并置
+
+$$
+z=-a/q<0,\qquad h=d+zr,\qquad
+\eta=1-|z'|>0.
+$$
+
+由候选的共轭界与大小界，$|z'|<1$ 且 $|z|\le2\phi$；这些界在实际达到之前就已建立。相位环成员性给出 $D=d+ar\in R$，从而
+
+$$
+h=\frac{\delta-D}{q}\in R.
+$$
+
+取 $\sigma\in\{1,-1\}$ 使 $\sigma z'=|z'|$。非零代数整数 $(1+q)(1-\sigma z)$ 的范数绝对值至少一，故
+
+$$
+\eta\ge\frac{1}{|N(1+q)|(1+|z|)}
+\ge\frac{q}{(1+q)^2(1+|z|)}
+\ge\frac{qg}{(1+q)^2},
+$$
+
+最后一步用 $1+2\phi=g^{-1}$。这里非零性由 $|z'|<1$ 保证。
+
+为给出实际数量余量，将 $Q$ 按有理线性延伸至 $\mathbb Q(t)$。Binet 公式与 $r'=(-1)^K/r$ 分别给出
+
+$$
+B_K=\frac{(gr)^{-1}+(-1)^Kgr}{\sqrt5},\qquad
+Q(d+zr)=Q(d)+\frac{gzr+(-1)^Kz'/(gr)}{\sqrt5}.
+$$
+
+因而
+
+$$
+\begin{aligned}
+B_K-|Q(h)|
+&\ge\frac{\eta}{\sqrt5\,gr}
+-|Q(d)|-\frac{gr}{\sqrt5}(1+|z|)\\
+&\ge\frac{\eta}{\sqrt5\,gr}-C_z,
+\qquad
+C_z=|Q(d)|+\frac g{\sqrt5}(1+|z|).
+\end{aligned}
+$$
+
+现在显式控制这个常数。$n\ge2$ 给出 $q\le g^2$，且
+
+$$
+Q(d)=\frac1{\sqrt5}
+\left(\frac{t^2q}{1+q}-\frac{\phi^2}{1+sq}\right)<0.
+$$
+
+因此
+
+$$
+|Q(d)|<\frac{\phi^2}{\sqrt5(1-g^2)}
+=\frac{8+5t}{4\sqrt5}<\frac54.
+$$
+
+这里 $1-g^2=4g$，而最后不等式等价于 $t>3/5$。再用 $g(1+|z|)\le g(1+2\phi)=1$，得到
+
+$$
+\boxed{C_z<\frac54+\frac1{\sqrt5}.}
+$$
+
+当 $K\ge n+2$ 时，$r\le qg^2$，所以
+
+$$
+\begin{aligned}
+\frac{\eta}{\sqrt5\,gr}
+&\ge\frac{1}{\sqrt5\,g^2(1+g^2)^2}
+=\frac{g^{-4}}{20\sqrt5}\\
+&>\frac{25}{4}+\frac1{\sqrt5}.
+\end{aligned}
+$$
+
+等式用 $(1+g^2)^2=20g^2$。严格比较可直接核对为
+
+$$
+g^{-4}=305+72g,\qquad \sqrt5=2+g,\qquad
+g^{-4}-125\sqrt5-20=35-53g>0,
+$$
+
+其中 $0<g<1/4$。故 $B_K-|Q(h)|>5$。
+
+还须验证物理条带。由 $q\le g^2$ 和 $g<1/4$，有 $4g^2(1+q)<1$；于是
+
+$$
+|z|r\le2\phi qg^2<\frac d2,
+\qquad0<\frac d2<h<d\le\frac t2<t.
+$$
+
+环成员性、物理开条带与数量余量现在同时满足，引理35.10提供实际 $h\in H_K$。命题35.2的下分支给出
+
+$$
+F(h)-d=q(d-h)=ar.
+$$
+
+它达到命题35.5的全局下界，所以 $a_K=a$。这里实现的是各相位所需的最小候选，没有断言原候选集合的每一点都在此深度可达。$\square$
+

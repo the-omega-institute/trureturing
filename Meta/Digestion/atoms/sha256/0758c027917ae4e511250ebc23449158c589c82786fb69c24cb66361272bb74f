@@ -1,0 +1,14 @@
+**Theorem 11.3 (actual uniform physical recovery probability).** Assume additionally that $I$ is nonempty, has a measurable space with measurable singletons, and sampling has exactly the measure `MinimumRetrievalTime.uniformSamples I`. Write $N=|I|$ and $x_i=1/N\in\mathbb R$. For every $t\ge0$, the actual event `MinimumRetrievalTime.recovered a top t` satisfies
+
+$$
+\Pr(\operatorname{recovered}(a,V,t))
+=\operatorname{ofReal}\bigl(W_{0,t}(x)\bigr)
+=\operatorname{ofReal}\bigl(t!F_{0,t}(x)\bigr).
+$$
+
+This uses the original physical alphabet, not a projective pushforward, and imposes no full-spanning or finite-dimensional hypothesis. It includes zero ambient space, degree zero, and unspanned families. Nonemptiness is necessary for the specified uniform distribution and is not required by Theorem 11.2.
+
+**Proof.** Partition the event by its finite prefix words. Each word cylinder specifies precisely the first $t$ coordinates; distinct words give disjoint measurable cylinders. The finite-cylinder formula for the existing infinite product measure gives each cylinder measure $(N^{-1})^t$, including the empty prefix. A prefix is admitted exactly when its represented span is top, since recovery of top is the inclusion of top in the actual prefix span. Finite additivity over the admitted words gives the spanning-filtered word sum. Evaluating each monomial at the common nonnegative coordinate $1/N$ gives the same cylinder weight. The map `ENNReal.ofReal` preserves these finite sums and products because every evaluated summand is nonnegative. Theorem 11.2 gives the second identity.
+
+**Boundary 11.4.** These all-horizon identities are dependencies, not a settlement of the named optimizer. Projective transport, orbit averaging, zero-column replacement, the all-horizon probability comparison, and its transfer to the original actual expected retrieval time remain separate obligations. The existing `retrieval_time_probability_bridge` supplies the tail and expectation transfer once the appropriate full-spanning hypothesis and probability comparison have been proved.
+

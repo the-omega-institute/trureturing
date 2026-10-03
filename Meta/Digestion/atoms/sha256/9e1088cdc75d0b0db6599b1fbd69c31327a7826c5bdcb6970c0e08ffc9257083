@@ -1,0 +1,12 @@
+### 47.8. 工具来源与关系结论的范围
+
+风险恒等式与条件 Bayes 原理复用 §§14、34；整窗三类律、实际消息和 W 族复用 §§44–46。这里的具体综合推导是内点噪声 log-odds 对中窗 $bc$ 的必要响应、相对偏置 $\gamma$ 消去常数方向的唯一例外、任意参数下的正超额证书，以及两套同一输入上的全树相容达到。它改变的是所声明条件概率目标所需的关系接口：$bc$ 恢复交叠接缝的响应，计费的1或足额固定截距承载常数方向；同一个较薄分类分数仍可保持类序，却不能满足这个后验目标。
+
+成熟工具按其假设署名。Yang、Dai、Salakhutdinov、Cohen，[*Breaking the Softmax Bottleneck: A High-Rank RNN Language Model*](https://arxiv.org/pdf/1711.03953)，§2.1 Proposition 1、Corollary 1 给 log-probability 矩阵模逐上下文共同平移的秩视角；其充分性使用 universal-approximator 假设。本节以 log-odds 消去共同平移，并单独证明有界相对截距和齐次树的达到性，不借该假设。Nouy，[*Higher-order principal component analysis for the approximation of tensors in tree-based low-rank formats*](https://arxiv.org/pdf/1705.00880v2)，§3 的最小子空间等于展平秩、§5.1 的单展平 SVD 用于乘积测度 Hilbert 空间；本节的独立因子是完整窗口，窗内 $b,c$ 相关，其根秩约定也不能替代实际二坐标根的证明。逆矩阵、核向量距离和树归纳在本节直接给出必要与充分证书，未拼接分别最优的切面。
+
+Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 供应完整平方和的 Brier divergence 与正确方向的 KL；本节取负评分损失。Reid、Williamson，[*Information, Divergence and Risk for Binary Experiments*](https://jmlr.org/papers/volume12/reid11a/reid11a.pdf)，§3.2 与 Appendix E 的变差定义对应有限分布 $L^1$ 距离，自然对数 Pinsker 为 $\mathrm{KL}\ge\|r-p\|_1^2/2$。式（47.18）的特定局部逆 log-odds 常数则由内点线段直接证明。
+
+Müller、Kornblith、Hinton，[*When Does Label Smoothing Help?*](https://arxiv.org/pdf/1906.02629)，§1.1 的软目标 $(1-\alpha)e_C+(\alpha/K)\mathbf1$ 在 $K=3,\alpha=3\varepsilon$ 时等于式（47.3），§2 已讨论由目标决定的有限正确类／竞争类 logit 差；有限软目标置信度不是本节另创的原则。Olmin、Lindsten，[*Robustness and Reliability When Training With Noisy Labels*](https://proceedings.mlr.press/v151/olmin22a/olmin22a.pdf)，Lemma 3.1、Propositions 3.1–3.3 在其对称噪声条件下给概率变换和类序保留；取 $K=3,\omega=2\varepsilon$ 得本节的 $(1-3\varepsilon)e_C+\varepsilon\mathbf1$。其对干净标签的校准比较不改成本节的评分对象：这里始终对明确的噪声联合律评分。
+
+本节给指定精确实数模型的普通数学证明与显式资源证书，未求不足预算时的精确最优风险。有限族极小点不替代总体模型极小点，坐标数不等于物理神经元或比特，所列基也不具有唯一隐藏表示身份；这里没有训练、泛化、因果或运行时间结论。
+

@@ -1,0 +1,73 @@
+### 42.2 顶点、合法方向和逐颜色 tight
+
+设有限闭配对 SCC 的顶点写成
+$$
+v=(s_v,P_v;r_v,\{y_v\}),
+\tag{42.5}
+$$
+其中 $P_v$ 为第一片，$\{y_v\}$ 为第二片。定义共同闭色集合
+$$
+C_\beta(v)=\{c:P_v\subseteq E_c^\beta,\ y_v\in E_c^\beta\}.
+\tag{42.6}
+$$
+第二片的相干性给每条内部边 $e:v\to w$ 一个相同的第二来源词关系 $y_v=f_{m_e}(y_w)$。若第一片在含环 SCC 的一个顶点是单点，则由 (42.4) 沿路径传播后整个 SCC 的第一片都是单点。若该 SCC 的第一来源返回词不相干，取同基点、等长且第一词不同的两个返回 $U_0,U_1$，并用同一对终尾提升四条组合
+$$
+U_0U_0\tau,\quad U_0U_1\tau,\quad U_1U_0\tau,\quad U_1U_1\tau.
+$$
+它们从同一 guard 编码同一标量，却有至少四个不同的有限标签前缀，违背定理 14.7 的至多二重编码。因此不相干第一 SCC 的每个第一片都非退化。
+
+令
+$$
+B(v,c)=\operatorname{dist}(y_v,J_c)\le\beta.
+\tag{42.7}
+$$
+当 $B(v,c)=\beta>0$ 时，外侧符号为
+$$
+\sigma(v,c)=
+\begin{cases}
+-1,&y_v=q_c-\beta,\\
++1,&y_v=q_{c+1}+\beta.
+\end{cases}
+\tag{42.8}
+$$
+方向 $\eta\in\{-1,+1\}$ 在 $v$ 合法，意为存在 $\varepsilon>0$ 使
+$$
+y_v+\eta a\in I_{r_v}\qquad(0\le a\le\varepsilon).
+\tag{42.9}
+$$
+下端点只允许正方向，上端点只允许负方向，内部点允许两方向。边
+$$
+a:(v,\eta)\longrightarrow(w,-\eta)
+\tag{42.10}
+$$
+保留当且仅当其原边 $e:v\to w$ 合法，选取颜色 $c\in C_\beta(v)$，且
+$$
+B(v,c)<\beta
+\quad\text{或}\quad
+\bigl(B(v,c)=\beta,\ \sigma(v,c)\eta<0\bigr).
+\tag{42.11}
+$$
+方向翻转不是记号选择，而是实际误差运输
+$$
+\delta_v=-g\,\delta_w.
+\tag{42.12}
+$$
+对这条被选颜色边定义
+$$
+T(a)=[B(v,c)=\beta].
+\tag{42.13}
+$$
+顶点有另一种 tight 色，不能把选择的 slack 色边标为 $T=1$；tight 是逐边逐色的事实。
+
+若需要未扰动周期 rival 尾本身实际 owned，给颜色边附加
+$$
+\kappa(a)=
+\begin{cases}
+\varnothing,&B(v,c)<\beta,\\
+(k,R),&y_v=q_k-\beta,\ c=k,\\
+(k,L),&y_v=q_k+\beta,\ c=k-1.
+\end{cases}
+\tag{42.14}
+$$
+记由 (42.11) 得到的闭方向图为 $\mathcal H_\beta$，逐边通过 (42.14) 筛选的图为 $\mathcal H_{\beta,\omega}^{\mathrm{ref}}$。闭图允许用未拥有的周期点作参考再向内扰动；reference-owned 图才要求周期点自身通过五个切点归属。
+

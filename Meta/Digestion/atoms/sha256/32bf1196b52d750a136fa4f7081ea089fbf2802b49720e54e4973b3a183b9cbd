@@ -1,0 +1,119 @@
+### 57.4 同一原片 $P_F,P_Z$ 的精确条带
+
+令 $P_F$ 是循环类 $F$ 的同一个原第一片，令 $P_Z$ 是从 $F$ 的共同第一标签 $3$ 出发后下一循环类的同一个原第一片。因为 $P_F$ 的共同标签只能是 $3$，故
+$$
+P_F\subseteq E_0^\beta,\qquad T_0=R_F=3.
+\tag{57.25}
+$$
+在 $R_{\mathcal E}=3$ 时，$f_0(P_F)\subseteq E_1^\beta$；在 $R_{\mathcal E}=0$ 时，$f_3(P_F)\subseteq E_1^\beta$。注意这里始终是同一个 $P_F$，而非为两支路分别选取两个片。由闭包含规则得到
+$$
+\boxed{
+\begin{array}{c|c|c}
+R_{\mathcal E}&P_F&y_0\\ \hline
+3&
+[s_1+\delta/g,-u-\delta]&
+[-1+\delta/g,s_1-\delta/g]\\[1mm]
+0&
+[-1,s_1-\delta/g]&
+[s_1+\delta/g,-u-\delta].
+\end{array}}
+\tag{57.26}
+$$
+这里 $y_0$ 是同一实际 rival 尾在 $F$ 的坐标。证明如下。
+这正是合流点 $F$ 的表2.3；两行都指向同一个原 $P_F$，而不是两个重命名的片。
+
+若 $R_{\mathcal E}=3$，由(57.19)
+$$
+y_{\mathcal E}=f_3(y_0),\qquad
+y_{\mathcal E}\in[A+\delta,-u-\delta].
+$$
+用 $F_3$ 反演，得到
+$$
+-1+\frac{\delta}{g}\le y_0\le s_1-\frac{\delta}{g}.
+$$
+另一方面 $P_F\subseteq E_0^\beta$，而 $f_0(P_F)\subseteq E_1^\beta$。对于闭区间的每一个点，后一个包含给出
+$$
+f_0(P_F)\le B-\delta
+\quad\Longrightarrow\quad
+P_F\ge F_0(B-\delta)=s_1+\frac{\delta}{g}.
+$$
+色 $0$ 的上端给出 $P_F\le-u-\delta$。由于 $s_1<A$，$y_0$ 的整个区间只能处于色 $0$。
+
+若 $R_{\mathcal E}=0$，则
+$$
+y_{\mathcal E}=f_0(y_0),\qquad
+y_{\mathcal E}\in[C+\delta,B-\delta].
+$$
+逆像的下端为
+$$
+F_0(B-\delta)=s_1+\frac{\delta}{g},
+$$
+而 $F$ 处 rival 与第一片都在色 $0$，故其上端受 $-u-\delta$ 截断。对原边 $f_3(P_F)\subseteq E_1^\beta$，闭包含的上端给出
+$$
+P_F\le F_3(A+\delta)=s_1-\frac{\delta}{g};
+$$
+色 $0$ 的左端仍保留为 $-1$。因此(57.26)成立。特别地，$R_{\mathcal E}=0$ 行允许 $P_F$ 包含外部端点 $-1$；这是原闭片的合法端点，不能改成开区间或删除。
+
+令 $Z$ 为 $F$ 后的共同类。真实原边和同一 rival 尾满足
+$$
+f_3(P_Z)\subseteq P_F,\qquad y_0=f_3(y_1).
+\tag{57.27}
+$$
+若 $R_{\mathcal E}=3$，由 $P_F$ 的下端和 $y_0$ 的上端分别得到
+$$
+P_Z\le F_3\!\left(s_1+\frac{\delta}{g}\right)
+=\theta-\frac{\delta}{g^2},
+\qquad
+y_1\ge F_3\!\left(s_1-\frac{\delta}{g}\right)
+=\theta+\frac{\delta}{g^2}.
+$$
+若 $R_{\mathcal E}=0$，同理得到
+$$
+P_Z\ge F_3\!\left(s_1-\frac{\delta}{g}\right)
+=\theta+\frac{\delta}{g^2},
+\qquad
+y_1\le F_3\!\left(s_1+\frac{\delta}{g}\right)
+=\theta-\frac{\delta}{g^2}.
+$$
+在两种情形中，$P_Z$ 与 $y_1$ 属于同一配对顶点的共同闭色，并且分居 $\theta$ 两侧。由(57.23)，唯一能够同时包含两者的颜色是色 $2$。因此得到精确表
+$$
+\boxed{
+\begin{array}{c|c|c|c|c}
+R_{\mathcal E}&P_Z&y_1&T_1&R_{F+1}\\ \hline
+3&
+[C+\delta,\theta-\delta/g^2]&
+[\theta+\delta/g^2,D-\delta]&
+0\text{ 或 }5&5\\[1mm]
+0&
+[\theta+\delta/g^2,D-\delta]&
+[C+\delta,\theta-\delta/g^2]&
+5&0\text{ 或 }5.
+\end{array}}
+\tag{57.28}
+$$
+这里 $T_1$ 是共同链在 $Z$ 的第一标签，$R_{F+1}$ 是同一 rival 尾的下一标签。因为 $P_Z$ 在色 $2$，其可用标签只有 $0,5$；第一行允许两者，第二行因 $P_Z>\theta>g$ 只允许 $5$。第一行的 $y_1>\theta>g$ 强制 rival 下一标签为 $5$，第二行则允许 $0$ 或 $5$。每个标签的 guard 都是实际的：$T_0=R_F=3$ 输出 guard 零，$T_1,R_{F+1}$ 的选择均在该 guard 下合法。
+这正是合流后下一类 $Z$ 的表2.4；其中的 $T_1$ 和 $R_{F+1}$ 保留各自的实际类型。
+
+在第一行，沿同一 rival 分支 $5$ 再作一次真实逆像：
+$$
+y_2\in
+\left[s_2+\frac{\delta}{g},
+\kappa-\frac{\delta}{g^3}\right].
+\tag{57.29}
+$$
+由(57.23)这个区间严格位于 $(-u,t)$ 内，而标签 $3$ 的根像在 $[-1,-u]$，所以
+$$
+(R_F,R_{F+1},R_{F+2})
+=(3,5,\ell),\quad \ell\in\{0,5\}.
+$$
+在从 $F$ 编号时成立。把 $R_{\mathcal E}$ 作为 $E$ 处的第一项，可写成两个局部禁配模式
+$$
+R_{\mathcal E}=3:\quad(3,3,5,\ell),\quad \ell\in\{0,5\},
+\tag{57.30}
+$$
+$$
+R_{\mathcal E}=0:\quad(0,3,\ell),\quad \ell\in\{0,5\}.
+\tag{57.31}
+$$
+(57.30)和(57.31)只使用同一原片、同一 rival 逆分支和实际 guard；没有把共同尾换成形式上的标签尾。
+

@@ -1,0 +1,9 @@
+**引理 63.1（内部同源点提升为全包含边）。** 设 $P,Q$ 是固定 $B$ 的非退化原片，$s\xrightarrow{\ell}s'$ 合法且 $P\subseteq f_\ell(I_{s'})$。若
+
+$$
+x\in\operatorname{int}P,\qquad z\in\operatorname{int}Q,\qquad x=f_\ell(z),
+\tag{63.10}
+$$
+
+则 $Q\subseteq F_\ell(P)$，因而原边 $P\xrightarrow{\ell}Q$ 存在。
+

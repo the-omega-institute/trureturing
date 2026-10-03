@@ -1,0 +1,21 @@
+**Theorem 44.1 (half-binomial substitution).** Let
+$Q(t)\in\mathbb Z[[t]]$ have zero constant coefficient and an odd
+coefficient of $t$. Define the rational formal power series
+
+$$
+S_Q(t)=\sum_{m\geq0}\binom{1/2}{m}Q(t)^m.
+$$
+
+For every $j\geq1$,
+
+$$
+v_2([t^j]S_Q)=-j-v_2(j!).
+$$
+
+Only $m\leq j$ contributes to $[t^j]S_Q$, because $Q(0)=0$.
+Each $[t^j]Q^m$ is an integer. The coefficient of $t^j$ in $Q^j$
+is the $j$th power of the coefficient of $t$ in $Q$, hence is odd.
+Theorem 43.1 applies to this finite sum. In Theorem 33.1 the input
+is $Q=A-1$; identifying its linear coefficient with $q-2$ connects
+this statement to the valuation claim in (33.2).
+

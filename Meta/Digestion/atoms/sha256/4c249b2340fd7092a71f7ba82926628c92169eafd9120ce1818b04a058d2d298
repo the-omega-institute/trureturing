@@ -1,0 +1,22 @@
+**证明。** 定理286.3与约数权重的经典次乘法性给
+\[
+Z(B)\le\frac{16}{15}Z(5040F_n).
+\]
+固定基础族的 §172.1给 $Z(5040F_n)=o(\log n)$。
+令 $c=(\log2)/4$，§285.4已给 $\log(5040F_n)\ge cn$、$\log m_s\ge cs$，
+所以
+\[
+\log B\ge cR,
+\qquad
+\log B<\log5040+2R\log\varphi.
+\]
+这两界的常数都不依链长度、链选择或指数。
+当 $R$ 足够大时，$\log\log B\ge\tfrac12\log R>0$。
+对给定 $\varepsilon$，取 $N\ge2$ 使全部 $n\ge N$ 都满足
+$Z(5040F_n)<15\varepsilon e^\gamma\log n/32$。
+由于 $n\le R$，该范围内比值严格小于 $\varepsilon$。
+其余有限个基础指标的最大权重为
+$C_N=\max_{1\le n<N}Z(5040F_n)$；令
+$\log R>32C_N/(15\varepsilon e^\gamma)$ 即覆盖这一范围。
+两者共享同一个 $R_0$，证明式（286.15）。$\square$
+

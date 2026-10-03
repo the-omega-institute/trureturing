@@ -1,0 +1,14 @@
+**定理 37.1（有限标量迹核）。** 当 $r\ge1$ 时，
+
+$$
+T_{m,r}(p)=T_{m,r}(p')
+\Longleftrightarrow
+\begin{cases}
+ z'_0-z_0\equiv \Delta_0v\pmod m,\\
+ 2\Delta_j+\Delta_{j+1}\equiv0\pmod m\quad(0\le j\le r-2).
+\end{cases}
+\tag{37.2}
+$$
+
+当 $r=0$ 时核只有 $qz_0\equiv qz'_0\pmod m$；当 $m=1$ 时迹恒定。
+

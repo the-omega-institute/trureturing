@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:da943c8506aa5d6250193a6af0f0975e21fd0d600ab7643329864a23f36e790c
+  normalized_sha256: sha256:da943c8506aa5d6250193a6af0f0975e21fd0d600ab7643329864a23f36e790c
+cas_ref: sha256:da943c8506aa5d6250193a6af0f0975e21fd0d600ab7643329864a23f36e790c
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciRecurrencePolynomialChebyshev.fibonacci_recurrence_polynomial_chebyshev
+    target_statement_id: sha256:c08643f55dee168fc90ed02a625275b530c02217522fc6668a0f77439020769e
+receipts:
+  unresolved_subitems: []

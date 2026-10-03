@@ -1,0 +1,27 @@
+### 52.3. 一个不需要已知 $\alpha$ 的一向量恢复器
+
+对每个位置定义
+
+$$
+\psi_i=\frac{9h_i+2\ell_i}{11}-\frac25,qquad
+J_i=-\psi_i Z.
+\tag{52.13}
+$$
+
+由（52.3）和（52.6），在三种活动角色上的均值依次为
+
+$$
+\mathbb E[J_i]=
+\begin{cases}
+\alpha\tau,&i=p\text{ 或 }i=r,\\
+\alpha\,1066(\sqrt2-1)/6875,&i=q,\\
+0,&i\notin\{p,q,r\},
+\end{cases}
+\qquad
+\tau=\frac{336(\sqrt2-1)}{6875}=0.0202437464665\ldots .
+\tag{52.14}
+$$
+
+每个 $J_i$ 落在 $[-3/5,3/5]$。恢复器只保存一个长度为 $n$ 的经验向量 $\overline J_i$，选取其中最大的三个位置，按固定索引顺序破平，再排序为
+$\widehat\theta=(\widehat p,\widehat q,\widehat r)$。它不使用 $\alpha$、下界 $a$ 或候选三元组表。
+

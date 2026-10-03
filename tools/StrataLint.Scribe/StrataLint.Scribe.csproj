@@ -13,6 +13,7 @@
     <None Include="$(PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers)/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll"
           Link="Scripting/Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../Architecture/BannedSymbols*.txt" Link="Scripting/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../Architecture/ScribeScriptAllowlist.txt" Link="Scripting/ScribeScriptAllowlist.txt" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="Vendor/Katex/katex.min.js" LogicalName="katex.min.js" />
     <PackageReference Include="Jint" />
     <PackageReference Include="QuestPDF" />

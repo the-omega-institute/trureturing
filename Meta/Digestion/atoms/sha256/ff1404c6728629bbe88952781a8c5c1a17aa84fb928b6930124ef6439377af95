@@ -1,0 +1,24 @@
+**Theorem 4.3 (A sharp scale defect).** Let $\mu_2$ be the stationary Markov law in the order $(\alpha,\beta)$ with
+$$
+P=\begin{pmatrix}0&1\\ \varphi^{-1}&\varphi^{-2}\end{pmatrix},
+\qquad
+\pi=(\varphi^{-2},\varphi^{-1}).
+$$
+Its pair probabilities agree with $\nu$:
+$$
+\mu_2[\alpha\alpha]=0,
+\quad\mu_2[\alpha\beta]=\mu_2[\beta\alpha]=\varphi^{-2},
+\quad\mu_2[\beta\beta]=\varphi^{-3}.
+$$
+Nevertheless,
+$$
+\operatorname{TV}\bigl(O_3(\mu_2),O_3(R\mu_2)\bigr)=2\varphi^{-5}.
+$$
+If $C_N=\sum_{j=0}^{N-1}{\bf1}_{\alpha}(x_j)$, then
+$$
+|C_N-N\varphi^{-2}|\le1\quad\nu\text{-a.s.},
+\qquad
+\operatorname{Var}_{\mu_2}(C_N)=\varphi^{-6}N+O(1).
+$$
+The difference is a spatial counting law and does not determine a transport or quantum exponent.
+

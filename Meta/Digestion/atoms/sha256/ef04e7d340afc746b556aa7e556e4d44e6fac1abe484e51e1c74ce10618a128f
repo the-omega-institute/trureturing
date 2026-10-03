@@ -1,0 +1,55 @@
+**定理 346.3（饱和相位附近实际时间路径的对数收益）。** 额外假设 $\iota\in H$，置 $z(t)=\iota\phi(t)\in H$，并沿用定义344.1的 $J_\varepsilon,f_*,A$。存在充分小的固定 $t_0>0$，使
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{4\pi K^2\varepsilon^2}{\log^2(1/\varepsilon)}
++o\!\left(\frac{\varepsilon^2}{\log^2(1/\varepsilon)}\right).
+\tag{346.8}
+$$
+
+对该固定区间的任意极小点选取 $t_\varepsilon$，都有
+
+$$
+t_\varepsilon\sim\frac{4\pi K\varepsilon}{\log^2(1/\varepsilon)},\qquad
+t_\varepsilon>0\quad\text{充分晚时成立}.
+\tag{346.9}
+$$
+
+不要求极小点唯一，也不要求有限能量方向空间 $V$ 为零。
+
+证明。群闭包 $H$ 包含 $\phi(t)$，故振幅饱和使整条平移路径允许。将（344.1）的实际系数代入，得
+
+$$
+\begin{aligned}
+J_\varepsilon(z(t))&=\delta(t)+\varepsilon F_\iota(t)+\varepsilon^2G_\iota(t),\\
+F_\iota(t)&=\sum_\gamma a_\gamma[b_\gamma\cos\gamma t-c_\gamma\sin\gamma t],\\
+G_\iota(t)&=\sum_\gamma a_\gamma[g_\gamma\cos\gamma t-h_\gamma\sin\gamma t].
+\end{aligned}
+\tag{346.10}
+$$
+
+系数有界且 $\sum a_\gamma\gamma<\infty$，所以 $F_\iota,G_\iota$ 为 $C^1$，并且
+
+$$
+F_\iota(0)=f_*,\quad F_\iota'(0)=-2K,\quad G_\iota(0)=8A.
+\tag{346.11}
+$$
+
+取 $t_0<2\pi/\gamma_*$，使 $\delta$ 在 $[-t_0,t_0]$ 上仅于零点为零。紧区间上存在极小点；与 $t=0$ 的目标值比较及 $F_\iota,G_\iota$ 的一致有界性给 $\delta(t_\varepsilon)=O(\varepsilon)$。唯一零点及紧性迫使所有极小点选取趋零，边界最终被排除。零点处目标导数为 $-2K\varepsilon+O(\varepsilon^2)<0$，故它也不是极小点。一阶驻点方程为
+
+$$
+\delta'(t_\varepsilon)
+=-\varepsilon F_\iota'(t_\varepsilon)-\varepsilon^2G_\iota'(t_\varepsilon)
+=2K\varepsilon(1+o(1)).
+\tag{346.12}
+$$
+
+由定理346.1，充分近零处的 $\delta'(t)$ 与 $t$ 同号，因此极小点在正侧，并满足
+
+$$
+t_\varepsilon\log^2(1/t_\varepsilon)=4\pi K\varepsilon(1+o(1)).
+$$
+
+取对数并用 $\log L/L\to0$，先得到 $\log(1/t_\varepsilon)/\log(1/\varepsilon)\to1$，再得（346.9）；这里没有先假定极小点尺度。将它与 $F_\iota(t)=f_*-2Kt+o(t)$、$G_\iota(t)=8A+O(t)$ 代入（346.10），二次相位成本给 $+4\pi K^2\varepsilon^2/\log^2(1/\varepsilon)$，一阶驱动给其负两倍，余项均更小，即得（346.8）。$\square$
+

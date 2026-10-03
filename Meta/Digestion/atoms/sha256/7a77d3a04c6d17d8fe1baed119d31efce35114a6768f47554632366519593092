@@ -1,0 +1,11 @@
+**推论 59.13.1（必要完整记忆系数从左可逼近）。** 固定 $K\ge2$。对每个 $\epsilon>0$，存在 $b_0<\Psi_K$，使每个 $b\in(b_0,\Psi_K)$、每种固定归属和合同、每个满足完整恢复合同的解码器都有
+
+$$
+\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}{N}
+\ge\gamma_{K,L}>\alpha_K-\epsilon
+\tag{59.64}
+$$
+
+其中 $L$ 是先由 $\epsilon$ 选定的同一个有限串长。此式给必要系数的逼近，不识别全体最优解码器的精确系数。
+

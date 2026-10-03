@@ -1,0 +1,3 @@
+**问题 2143.7（理论接口核验问卷）。** 以下每问均以同一具体对象上的构造和等式为通过判据；前一问的迹等式不能代替后一问的结构。
+
+1. **Monster 根空间。** 能否在假设 2143.3 的同一批 $V^\natural$、$W_{m,n}$ 上证明 twined 行列式、维数和 $J$-分母三个等式，并判断固定根空间的迹观察是否存在式 (2143.4) 型纤维？需要证明到实际根空间的映射，不能把任意账本 $A,B$ 代入。依据：[FLM 1988](https://doi.org/10.1016/S0079-8169(08)X6136-7) [文献注](../../../Library/VertexAlgebra/flm1988monster.md)；[Borcherds 1992, §§7–8](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。

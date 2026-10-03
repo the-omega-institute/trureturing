@@ -1,0 +1,25 @@
+**定理 346.6（完整正纵坐标零点模型的主项与有限早段恢复）。** 令 $I_+$ 为所有满足 $\zeta(\rho)=0$、$0<\Re\rho<1$、$\Im\rho>0$ 的不同复零点，$m_\rho$ 为解析零点阶数，$\gamma_\rho=\Im\rho$，$a_\rho=m_\rho/[\gamma_\rho(1/4+\gamma_\rho^2)]$。以此指标集定义 $\delta_+(t)=\sum_{\rho\in I_+}2a_\rho(1-\cos\gamma_\rho t)$ 和 $v_+(t)=\sum_{\rho\in I_+}2a_\rho\gamma_\rho\sin\gamma_\rho t$。无需 RH，$\sum a_\rho$、$\sum a_\rho\gamma_\rho$ 绝对可和，且 $\delta_+'(t)=v_+(t)$ 对所有实 $t$ 成立，$v_+$ 连续。存在 $L\ge2$、$B\ge0$，使对每个 $0<|t|$ 且 $L|t|\le1$ 均有
+
+$$
+\begin{aligned}
+\left|\delta_+(t)-\frac{t^2}{4\pi}\log^2(1/|t|)\right|
+&\le t^2B[\log(1/|t|)+1],\\
+\left|v_+(t)-\frac{t}{2\pi}\log^2(1/|t|)\right|
+&\le |t|B[\log(1/|t|)+1].
+\end{aligned}
+$$
+
+同一纵坐标上不同复零点分别计数，其解析重数均被保留。本定理规定的是纵坐标相位模型；将其与 §§337–345 中涉及实际 $\rho$ 的 Robin 相位表达式识别，仍采用那条路线的 RH 假设。
+
+证明。复用无条件 dyadic Riemann–von Mangoldt 计数源。记 $c=1/(2\pi)$、$N(Y)=\sum_{0<\Im\rho\le Y}m_\rho$。其 dyadic 余项给 $E(T)=N(T)-cT\log T$ 满足 $|E(2T)-E(T)|\le KT$，固定基环带内 $|E(u)|\le D_0u$。取 $D\ge\max(K,D_0)$，倍增归纳给 $|E(2^nu)|\le D2^nu$；任意充分大实高度均可写成 $2^nu$、$u$ 在该基环带中，故累计粗界成立。
+
+选择 $L\ge2$ 位于粗界有效域，令 $S_L(Y)=\sum_{L<\Im\rho<Y}m_\rho$。对 $Y\ge L+1$，精确的端点夹逼为
+
+$$
+N(Y-1)-N(L)\le S_L(Y)\le N(Y).
+$$
+
+由于 $Y\log Y-(Y-1)\log(Y-1)\le2Y$，粗界 $|N(Y)-cY\log Y|\le DY$ 直接给严格高频计数的 $O(Y)$ 误差。区间 $L\le Y<L+1$ 用非负性控制；一个可用常数为 $C=D+2c+N(L)/L+c\log(L+1)$。因此无需另求 $O(\log Y)$ 的单位窗口误差，就能应用定理346.5。所需精度在这里决定了接口的证明成本：$O(Y)$ 计数余项经 $u^{-2}$ 积分已经足以给 $O(\log Y)$ 的矩余项。
+
+有限早段 $0<\Im\rho\le L$ 的二阶矩和记为 $M_0$，则其相位和与斜率和分别不超过 $t^2M_0$、$2|t|M_0$。这些界把高频结论恢复到完整正纵坐标谱，不需要假定第一零点的数值高度。令高频总权重为 $A_h$，取 $P=10c+2C$、$Q=8c+10C+c\log^2L+A_h/2+2M_0$、$B=P+Q+1$，高频的两个误差依次被 $t^2(P\log Y+Q-M_0)$、$|t|(P\log Y+Q-2M_0)$ 控制；加入早段后，使用 $P\log Y+Q\le B(\log Y+1)$ 即得两式。早段有限性与定理346.5的一阶可和主控同时给全部实时间的连续导数。$\square$
+

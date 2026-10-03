@@ -1,0 +1,34 @@
+### definition 262.4 临界宽度另一侧的人工源
+
+现在固定 $\delta>0$，置
+
+$$
+\varepsilon(a)=L_ae^{-u_a},\qquad
+h(a)=H_\delta^+(a),\qquad c=\frac1{128},\qquad
+\eta(s)=s^2(1-s)^2.
+\tag{262.7}
+$$
+
+取充分大的 $A$，使对全部 $a\ge A$ 有
+$L_a\ge1$、$\varepsilon(a)\le1$、$\varepsilon$ 递减及 $1\le h(a)\le a$。
+定义 $a_0=A$、$a_{j+1}=a_j+h(a_j)$，并在第 $j$ 个胞腔上置
+
+$$
+f(x)=-\alpha_j\eta\left(\frac{x-a_j}{h_j}\right),\qquad
+\alpha_j=c\frac{L_{a_j}^{2\delta-1}}{\sqrt{a_j}},\qquad
+h_j=h(a_j).
+\tag{262.8}
+$$
+
+在 $x\ge A$ 上定义
+
+$$
+B(x)=x-\frac{f'(x)}{k(x)},\qquad
+\Psi^*(x)=\lfloor B(x)\rfloor,\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{262.9}
+$$
+
+星号表示人工源；事件位置不要求为素数幂，质量为一。
+每个固定 $\delta$ 都有自己的源与起点，不把这族模型当作一个同时处理所有 $\delta$ 的源。
+

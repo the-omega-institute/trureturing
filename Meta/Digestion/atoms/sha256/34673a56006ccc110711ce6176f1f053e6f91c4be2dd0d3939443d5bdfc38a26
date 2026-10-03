@@ -1,0 +1,18 @@
+**推论 52.5（预测阶比较的共同范围）。** 若同一个学习器对所有 $\theta\in\Theta_n$ 和所有 $\alpha\in[0,1]$ 都以至少 $1-\delta$ 的训练概率满足实际 Brier 超额不超过 $\varepsilon$，则在
+
+$$
+n\ge4,\qquad
+0<\varepsilon\le\frac{\min(d_0,S)}9,\qquad
+0<\delta\le\frac14
+\tag{52.46}
+$$
+
+的范围内同时有
+
+$$
+m\ge\frac{d_0\log N}{108S\varepsilon},
+\qquad
+m\ge\frac{\log(1/\delta)}{108\varepsilon}.
+\tag{52.47}
+$$
+

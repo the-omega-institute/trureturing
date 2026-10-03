@@ -1,0 +1,56 @@
+**假设 18.4（引用的无限柱集定理及其精确有限桥）。** 以下引用固定为修订 `cd4bbbef4e52b52ce922b848cd52601c839d2918` 的 [`WindowCylinderPartition.window_cylinder_partition`](https://github.com/the-omega-institute/trureturing/blob/cd4bbbef4e52b52ce922b848cd52601c839d2918/D5/S1/Digit/Infinite/WindowCylinderPartition.lean#L81)。写
+
+$$
+\mathcal X=\{x:\mathbb N_0\to\{0,1\}:x_jx_{j+1}=0\},\qquad
+P_Lx=(x_0,\ldots,x_{L-1}),
+$$
+
+$$
+s_\infty(x)=\sum_{j\ge0}x_jc_j,\qquad
+\operatorname{ph}(x)=[s_\infty(x)],\qquad C_L(p)=\{x:P_Lx=p\}.
+$$
+
+绝对收敛由 $\sum_j|c_j|<\infty$ 保证。该定理的正宽度柱集部分给出：对每个 $L\ge1$，合法长 $L$ 词集合有限；对每个 $p$，将末位一补成 `10` 后的完成长度为 $d(p)$，完成词所对应的返回块词 $c(p)$ 的展开长度为 $d(p)$、有符号部分和为 $s_p$，并有
+
+$$
+C_L(p)=\operatorname{range}(\operatorname{prependWord}(c(p))),\qquad
+s_\infty(C_L(p))=I_p=[\ell_p,u_p],
+$$
+
+$$
+u_p-\ell_p=\alpha^{d(p)},\qquad 0<\alpha^{d(p)}<1,\qquad
+\bigcup_{p\in\mathcal P_L}I_p=[a,b].
+$$
+
+这里返回块为 `0` 与 `10`，从低位向高位串接，$\operatorname{prependWord}$ 表示把这些完整块放到任意合法尾列之前。不同 $p$ 的 $(\ell_p,u_p)$ 两两不交，全部圆周端点恰为 $\{E_1,\ldots,E_{G_L}\}$。对各正整数 $k$，定理中的有向端点流 $e^-_k,e^+_k$ 不同，并满足
+
+$$
+\operatorname{ph}(x)=E_k\quad\Longleftrightarrow\quad
+x=e^-_k\ \text{或}\ x=e^+_k.
+$$
+
+对于每个 $p$，存在 $1\le i,j\le G_L$，使 $[\ell_p]=E_i,[u_p]=E_j$，且精确柱公式是
+
+$$
+C_L(p)=\operatorname{ph}^{-1}\!\bigl(\mathcal A_L(p)\bigr)
+       \ \cup\ \{e^+_i,e^-_j\},\qquad
+\mathcal A_L(p)=\{[x]:\ell_p<x<u_p\}.
+$$
+
+此外，对每个 $k\ge1$，
+
+$$
+P_L(e^-_k)\ne P_L(e^+_k)\quad\Longleftrightarrow\quad k\le G_L.
+$$
+
+这个引用使用的是开内部加指定端点流的柱公式，不能把 $\mathcal A_L(p)$ 换成闭区间像后省略端点归属。源定理以 $[-k\varphi]$ 定义 $E_k$；由于 $\varphi=1+\alpha$，它与此处的 $[-k\alpha]$ 是同一圆周点。
+
+相关定义的对应为：`SignedSeriesRange` 的 $\alpha,a,b,\operatorname{signedValue}$ 分别就是本节的 $\alpha,a,b,s_\infty$；其两交替端点流在偶位、奇位分别取一，值为 $a,b$。`WindowSuccessorGraph` 的 $X(L),P,V,G$ 分别对应 $\mathcal P_L,P_L,V,G_L$。`SuccessorContinuity.LegalDigits` 对应整个 $\mathcal X$。`MultiplierObstruction.zRow(N)` 对应规范有限展开补零后的 $x_N$，其 `phase` 对应 $\operatorname{ph}$；`GoldenZeckendorfLanguage.canonical_indices_not_adjacent` 给出同一非相邻索引约定。由定理 17.4 的唯一性，这个规范自然数行与 $b_j(N)$ 一致。定理 17.6 于是给出
+
+$$
+P_Lx_N=q_L(N),\qquad \operatorname{ph}(x_N)=z_N,
+\qquad x_N\notin\{e^-_k,e^+_k\}\quad(k\ge1).
+$$
+
+把 $x_N$ 代入引用的精确柱公式，恰得到定理 18.3 的实际有限来源分类。定理 18.2—18.3 还给出了这个有限分类自身的直接证明。后文平移柱集时使用的是这一完整对应；单步后继图的逐边自然实现没有提供同一来源的任意联合路径，因而不承担联合观察的前提。
+
