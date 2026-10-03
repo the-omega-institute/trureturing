@@ -6,7 +6,7 @@
    utility: none
    digest: Minimum-cut partitions identify actual avoider and indecomposable cardinalities. -/
 
-import D5.S1.Words.Patterns.Separable.EndpointHistoryKernel
+import D5.S1.Words.Patterns.Separable.CappedExploration
 import Mathlib.Combinatorics.Enumerative.Schroder
 
 namespace D5.S1.Words.Patterns.Separable.ActualCardinality
@@ -22,79 +22,6 @@ abbrev ProperSigned (sign : Bool) (length : ℕ) :=
   {π : Avoider length // HasProperCut sign π.val}
 
 open Classical in
-theorem actual_signed_cut_enumeration (sign : Bool) (length : ℕ) :
-    (∃ equivalence : ProperSigned sign length ≃
-      Σ cut : ↥(Finset.Ioo 0 length),
-        Indecomposable sign cut.val × Avoider (length - cut.val),
-      ∀ π, MinimumCut sign π.val.val (equivalence π).1.val) ∧
-    Nat.card (ProperSigned sign length) =
-      ∑ cut ∈ Finset.Ioo 0 length,
-        Nat.card (Indecomposable sign cut) * Nat.card (Avoider (length - cut)) := by
-  classical
-  let fibers (cut : ↥(Finset.Ioo 0 length)) :=
-    {π : Avoider length // MinimumCut sign π.val cut.val}
-  let forget : (Σ cut, fibers cut) → ProperSigned sign length :=
-    fun item => ⟨item.2.val, item.1.val,
-      (Finset.mem_Ioo.mp item.1.property).1,
-      (Finset.mem_Ioo.mp item.1.property).2, item.2.property.1⟩
-  have bijective : Function.Bijective forget := by
-    constructor
-    · rintro ⟨firstCut, firstPermutation⟩ ⟨lastCut, lastPermutation⟩ equality
-      have samePermutation : firstPermutation.val = lastPermutation.val :=
-        congrArg Subtype.val equality
-      have sameValue : firstCut.val = lastCut.val := by
-        rcases lt_trichotomy firstCut.val lastCut.val with smaller | equal | larger
-        · exact False.elim (lastPermutation.property.2 firstCut.val
-            (Finset.mem_Ioo.mp firstCut.property).1 smaller
-            (samePermutation ▸ firstPermutation.property.1))
-        · exact equal
-        · exact False.elim (firstPermutation.property.2 lastCut.val
-            (Finset.mem_Ioo.mp lastCut.property).1 larger
-            (samePermutation.symm ▸ lastPermutation.property.1))
-      have sameCut : firstCut = lastCut := Subtype.ext sameValue
-      subst lastCut
-      congr 1
-      exact Subtype.ext samePermutation
-    · intro π
-      have existsCut : ∃ cut, 0 < cut ∧ cut < length ∧ Cut sign π.val.val cut :=
-        π.property
-      let cut := Nat.find existsCut
-      have chosen := Nat.find_spec existsCut
-      refine ⟨⟨⟨cut, Finset.mem_Ioo.mpr ⟨chosen.1, chosen.2.1⟩⟩,
-        π.val, chosen.2.2, ?_⟩, rfl⟩
-      intro smaller positive below comparison
-      exact Nat.find_min existsCut below ⟨positive, lt_trans below chosen.2.1, comparison⟩
-  let partition := Equiv.ofBijective forget bijective
-  let factorEquivalence (cut : ↥(Finset.Ioo 0 length)) :
-      fibers cut ≃ Indecomposable sign cut.val × Avoider (length - cut.val) := by
-    have positive := (Finset.mem_Ioo.mp cut.property).1
-    have below := (Finset.mem_Ioo.mp cut.property).2
-    have lengthEquality : cut.val + (length - cut.val) = length := by omega
-    let transport : MinimumFiber sign cut.val (length - cut.val) ≃ fibers cut :=
-      Equiv.cast (congrArg
-        (fun size => {π : Avoider size // MinimumCut sign π.val cut.val}) lengthEquality)
-    exact transport.symm.trans
-      (Classical.choose (minimum_cut_cartesian_kernel sign cut.val (length - cut.val)
-        positive (by omega))).symm
-  refine ⟨⟨partition.symm.trans (Equiv.sigmaCongrRight factorEquivalence), ?_⟩, ?_⟩
-  · intro π
-    have minimal := (partition.symm π).2.property
-    have reconstruction : (partition.symm π).2.val = π.val :=
-      congrArg Subtype.val (partition.apply_symm_apply π)
-    exact reconstruction ▸ minimal
-  · calc
-    Nat.card (ProperSigned sign length) = Nat.card (Σ cut, fibers cut) :=
-      Nat.card_congr partition.symm
-    _ = ∑ cut : ↥(Finset.Ioo 0 length), Nat.card (fibers cut) := Nat.card_sigma
-    _ = ∑ cut : ↥(Finset.Ioo 0 length),
-        Nat.card (Indecomposable sign cut.val) * Nat.card (Avoider (length - cut.val)) := by
-      apply Finset.sum_congr rfl
-      intro cut _
-      rw [Nat.card_congr (factorEquivalence cut), Nat.card_prod]
-    _ = _ := Finset.sum_coe_sort (Finset.Ioo 0 length)
-      (fun cut => Nat.card (Indecomposable sign cut) * Nat.card (Avoider (length - cut)))
-
-open Classical in
 theorem actual_schroder_cardinality :
     Nat.card (Avoider 0) = 1 ∧
     (∀ length, 0 < length → Nat.card (Avoider length) = Nat.largeSchroder (length - 1)) ∧
@@ -103,8 +30,142 @@ theorem actual_schroder_cardinality :
       2 * Nat.card (Indecomposable sign length) = Nat.card (Avoider length)) ∧
     (∀ sign length, 2 ≤ length →
       Nat.card (ProperSigned sign length) = Nat.card (Indecomposable (!sign) length)) ∧
-    (∀ sign length, length ≤ 1 → Nat.card (ProperSigned sign length) = 0) := by
+    (∀ sign length, length ≤ 1 → Nat.card (ProperSigned sign length) = 0) ∧
+    Nat.card (Avoider 1) = 1 ∧
+    (∀ sign, Nat.card (Indecomposable sign 0) = 1 ∧
+      Nat.card (Indecomposable sign 1) = 1) ∧
+    (∀ sign length, ∃ equivalence : ProperSigned sign length ≃
+      Σ cut : ↥(Finset.Ioo 0 length),
+        Indecomposable sign cut.val × Avoider (length - cut.val),
+      ∀ π, MinimumCut sign π.val.val (equivalence π).1.val ∧
+        (Nat.add_sub_of_le (Nat.le_of_lt
+          (Finset.mem_Ioo.mp (equivalence π).1.property).2) ▸
+          blockSum sign (equivalence π).2.1.val.val (equivalence π).2.2.val :
+            Equiv.Perm (Fin length)) = π.val.val) ∧
+    (∀ sign length, Nat.card (ProperSigned sign length) =
+      ∑ cut ∈ Finset.Ioo 0 length,
+        Nat.card (Indecomposable sign cut) * Nat.card (Avoider (length - cut))) := by
   classical
+  have enumeration (sign : Bool) (length : ℕ) :
+      (∃ equivalence : ProperSigned sign length ≃
+        Σ cut : ↥(Finset.Ioo 0 length),
+          Indecomposable sign cut.val × Avoider (length - cut.val),
+        ∀ π, MinimumCut sign π.val.val (equivalence π).1.val ∧
+          (Nat.add_sub_of_le (Nat.le_of_lt
+            (Finset.mem_Ioo.mp (equivalence π).1.property).2) ▸
+            blockSum sign (equivalence π).2.1.val.val (equivalence π).2.2.val :
+              Equiv.Perm (Fin length)) = π.val.val) ∧
+      Nat.card (ProperSigned sign length) =
+        ∑ cut ∈ Finset.Ioo 0 length,
+          Nat.card (Indecomposable sign cut) * Nat.card (Avoider (length - cut)) := by
+    let fibers (cut : ↥(Finset.Ioo 0 length)) :=
+      {π : Avoider length // MinimumCut sign π.val cut.val}
+    have recovered (π : ProperSigned sign length) :
+        ∃ cut : ↥(Finset.Ioo 0 length),
+          MinimumCut sign π.val.val cut.val ∧
+          ∀ other : ↥(Finset.Ioo 0 length),
+            MinimumCut sign π.val.val other.val → other.val = cut.val := by
+      have large : 2 ≤ length := by
+        obtain ⟨cut, positive, below, _⟩ := π.property
+        omega
+      obtain ⟨_, _, _, _, _, _, _, _, signLaw⟩ :=
+        endpoint_history_count_kernel (EndpointHistory.stop none length)
+      let carrier : Carrier (some (!sign)) length :=
+        ⟨π.val, (signLaw sign large π.val).mpr π.property⟩
+      let result := CappedExploration.recover carrier large
+      have sameSign : result.sign = sign := by
+        have compatibility := result.compatible
+        simp only [Option.some_ne_none, false_or, Option.some.injEq] at compatibility
+        have doubleNegation := congrArg Bool.not compatibility.symm
+        simpa only [Bool.not_not] using doubleNegation
+      have below : result.left < length := by
+        have total := result.sum_eq
+        have positive := result.right_pos
+        omega
+      have minimal : MinimumCut sign π.val.val result.left := by
+        simpa only [sameSign] using result.minimum
+      refine ⟨⟨result.left, Finset.mem_Ioo.mpr ⟨result.left_pos, below⟩⟩,
+        minimal, ?_⟩
+      intro other minimal
+      exact (result.unique sign other.val
+        (Finset.mem_Ioo.mp other.property).1
+        (Finset.mem_Ioo.mp other.property).2 minimal).2
+    let forget : (Σ cut, fibers cut) → ProperSigned sign length :=
+      fun item => ⟨item.2.val, item.1.val,
+        (Finset.mem_Ioo.mp item.1.property).1,
+        (Finset.mem_Ioo.mp item.1.property).2, item.2.property.1⟩
+    have bijective : Function.Bijective forget := by
+      constructor
+      · rintro ⟨firstCut, firstPermutation⟩ ⟨lastCut, lastPermutation⟩ equality
+        have samePermutation : firstPermutation.val = lastPermutation.val :=
+          congrArg Subtype.val equality
+        obtain ⟨cut, _, unique⟩ := recovered (forget ⟨firstCut, firstPermutation⟩)
+        have sameValue : firstCut.val = lastCut.val :=
+          (unique firstCut firstPermutation.property).trans
+            (unique lastCut (samePermutation.symm ▸ lastPermutation.property)).symm
+        have sameCut : firstCut = lastCut := Subtype.ext sameValue
+        subst lastCut
+        congr 1
+        exact Subtype.ext samePermutation
+      · intro π
+        obtain ⟨cut, minimal, _⟩ := recovered π
+        exact ⟨⟨cut, π.val, minimal⟩, rfl⟩
+    let partition := Equiv.ofBijective forget bijective
+    have factorization (cut : ↥(Finset.Ioo 0 length)) :
+        ∃ equivalence : fibers cut ≃
+          Indecomposable sign cut.val × Avoider (length - cut.val),
+        ∀ π, (Nat.add_sub_of_le (Nat.le_of_lt
+          (Finset.mem_Ioo.mp cut.property).2) ▸
+          blockSum sign (equivalence π).1.val.val (equivalence π).2.val :
+            Equiv.Perm (Fin length)) = π.val.val := by
+      have positive := (Finset.mem_Ioo.mp cut.property).1
+      have below := (Finset.mem_Ioo.mp cut.property).2
+      have lengthEquality : cut.val + (length - cut.val) = length :=
+        Nat.add_sub_of_le (Nat.le_of_lt below)
+      let transport : MinimumFiber sign cut.val (length - cut.val) ≃ fibers cut :=
+        Equiv.cast (congrArg
+          (fun size => {π : Avoider size // MinimumCut sign π.val cut.val}) lengthEquality)
+      obtain ⟨kernel, reconstruction, _⟩ :=
+        minimum_cut_cartesian_kernel sign cut.val (length - cut.val) positive (by omega)
+      refine ⟨transport.symm.trans kernel.symm, ?_⟩
+      intro π
+      have assembled : blockSum sign (kernel.symm (transport.symm π)).1.val.val
+          (kernel.symm (transport.symm π)).2.val = (transport.symm π).val.val := by
+        rw [← reconstruction, kernel.apply_symm_apply]
+      change (lengthEquality ▸ blockSum sign
+        (kernel.symm (transport.symm π)).1.val.val
+        (kernel.symm (transport.symm π)).2.val : Equiv.Perm (Fin length)) = π.val.val
+      rw [assembled]
+      have cancel {size : ℕ} (equality : size = length)
+          (sample : {π : Avoider length // MinimumCut sign π.val cut.val}) :
+          (equality ▸ ((Equiv.cast (congrArg
+            (fun size => {π : Avoider size // MinimumCut sign π.val cut.val})
+              equality)).symm sample).val.val : Equiv.Perm (Fin length)) =
+            sample.val.val := by
+        cases equality
+        rfl
+      exact cancel lengthEquality π
+    let factorEquivalence (cut : ↥(Finset.Ioo 0 length)) :=
+      Classical.choose (factorization cut)
+    refine ⟨⟨partition.symm.trans (Equiv.sigmaCongrRight factorEquivalence), ?_⟩, ?_⟩
+    · intro π
+      have reconstruction : (partition.symm π).2.val = π.val :=
+        congrArg Subtype.val (partition.apply_symm_apply π)
+      constructor
+      · exact reconstruction ▸ (partition.symm π).2.property
+      · exact (Classical.choose_spec (factorization (partition.symm π).1)
+          (partition.symm π).2).trans (congrArg Subtype.val reconstruction)
+    · calc
+        Nat.card (ProperSigned sign length) = Nat.card (Σ cut, fibers cut) :=
+          Nat.card_congr partition.symm
+        _ = ∑ cut : ↥(Finset.Ioo 0 length), Nat.card (fibers cut) := Nat.card_sigma
+        _ = ∑ cut : ↥(Finset.Ioo 0 length),
+            Nat.card (Indecomposable sign cut.val) * Nat.card (Avoider (length - cut.val)) := by
+          apply Finset.sum_congr rfl
+          intro cut _
+          rw [Nat.card_congr (factorEquivalence cut), Nat.card_prod]
+        _ = _ := Finset.sum_coe_sort (Finset.Ioo 0 length)
+          (fun cut => Nat.card (Indecomposable sign cut) * Nat.card (Avoider (length - cut)))
   have noCut (sign : Bool) (length : ℕ) (small : length ≤ 1)
       (π : Avoider length) : ¬HasProperCut sign π.val := by
     rintro ⟨cut, positive, below, _⟩
@@ -179,7 +240,7 @@ theorem actual_schroder_cardinality :
         rw [signedOpposite false length large, ← symmetry false length]
       _ = 2 * ∑ cut ∈ Finset.Ioo 0 length,
           Nat.card (Indecomposable false cut) * Nat.card (Avoider (length - cut)) := by
-        rw [(actual_signed_cut_enumeration false length).2]
+        rw [(enumeration false length).2]
       _ = 2 * Nat.card (Avoider (length - 1)) +
           2 * ∑ cut ∈ Finset.Ioo 1 length,
             Nat.card (Indecomposable false cut) * Nat.card (Avoider (length - cut)) := by
@@ -246,13 +307,16 @@ theorem actual_schroder_cardinality :
       rw [half sign length large, largeCounts length (by omega)]
       have shift := Nat.two_mul_smallSchroder_succ (n := length - 1) (by omega)
       simpa only [Nat.sub_add_cancel (by omega : 1 ≤ length)] using shift.symm
-  refine ⟨(tiny 0 (by omega)).1, largeCounts, smallCounts, half, signedOpposite, ?_⟩
+  refine ⟨(tiny 0 (by omega)).1, largeCounts, smallCounts, half, signedOpposite, ?_,
+    (tiny 1 (by omega)).1, fun sign =>
+      ⟨(tiny 0 (by omega)).2 sign, (tiny 1 (by omega)).2 sign⟩,
+    fun sign length => (enumeration sign length).1,
+    fun sign length => (enumeration sign length).2⟩
   intro sign length small
   have : IsEmpty (ProperSigned sign length) :=
     ⟨fun π => noCut sign length small π.val π.property⟩
   exact Nat.card_eq_zero.mpr (Or.inl inferInstance)
 
-#print axioms actual_signed_cut_enumeration
 #print axioms actual_schroder_cardinality
 
 end D5.S1.Words.Patterns.Separable.ActualCardinality

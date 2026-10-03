@@ -11,39 +11,10 @@ internal sealed class ActualCardinalityDocument : IScribeDocumentDefinition
         H("Actual Separable-Permutation Cardinalities"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("actual-signed-minimum-cut-enumeration"),
-                DeclarationHandle.Create(
-                    "D5/S1/Words/Patterns/Separable/ActualCardinality.actual_signed_cut_enumeration"),
-                H("Disjoint minimum-cut enumeration"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Call("d", F.Id("s"), F.Id("n")), Eq,
-                    Call("sum", Seq(D(0), Lt, F.Id("m"), Lt, F.Id("n")),
-                        Seq(Call("b", F.Id("s"), F.Id("m")), Times,
-                            Call("a", Seq(F.Id("n"), Minus, F.Id("m")))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "U(n) is the actual subtype of literal permutations avoiding 2413 and 3142; "
-                        + "J(s,n) consists of the members with no proper cut of sign s. D(s,n) "
-                        + "consists of the members admitting a proper cut, with no padding at "
-                        + "length zero or one. Their cardinalities are a, b and d respectively.")),
-                    Paragraph(Text(
-                        "For every Boolean sign and every natural length, the theorem supplies "
-                        + "an equivalence from D(s,n) to the dependent sum over 0<m<n of "
-                        + "J(s,m) times U(n-m). Its index is a minimum cut of the original "
-                        + "actual permutation. The finite sum above is the exact cardinality "
-                        + "of that disjoint union, including the empty index sets at n=0 and n=1.")),
-                    Paragraph(Text(
-                        "The proof constructs the least-cut partition and proves its "
-                        + "injectivity from minimum-cut uniqueness. Each fiber then uses the "
-                        + "frozen actual minimum-cut Cartesian equivalence, with an explicit "
-                        + "length transport. It does not import the unfrozen greatest-cut enumeration."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-shifted-schroder-cardinalities"),
                 DeclarationHandle.Create(
                     "D5/S1/Words/Patterns/Separable/ActualCardinality.actual_schroder_cardinality"),
-                H("The exact large and shifted small Schroder counts"),
+                H("Actual reconstruction, convolution and Schroder counts"),
                 StatementSource.FromAuthor(Disp(Seq(
                     F.Id("n"), Gt, D(0), Sp, Rightarrow, Sp,
                     Call("a", F.Id("n")), Eq,
@@ -52,6 +23,26 @@ internal sealed class ActualCardinalityDocument : IScribeDocumentDefinition
                     Call("smallSchroder", F.Id("n"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
+                    Paragraph(Text(
+                        "U(n) is the actual subtype of literal permutations avoiding 2413 and 3142; "
+                        + "J(s,n) consists of the members with no proper cut of sign s. D(s,n) "
+                        + "consists of the members admitting a proper cut, with no padding at "
+                        + "length zero or one. Their cardinalities are a, b and d respectively.")),
+                    Paragraph(Text(
+                        "For every Boolean sign and every natural length, this same theorem "
+                        + "exports an equivalence from D(s,n) to the dependent sum over 0<m<n "
+                        + "of J(s,m) times U(n-m). Its returned index is a minimum cut of the "
+                        + "input, and the actual blockSum of its returned factors equals the "
+                        + "input permutation after the explicit dependent-length transport "
+                        + "m+(n-m)=n. Thus its contract certifies reconstruction, not just "
+                        + "an index-preserving bijection. It also exports the convolution "
+                        + "d(s,n)=sum(0<m<n,b(s,m)*a(n-m)), including empty index sets.")),
+                    Paragraph(Text(
+                        "Inside this substantive count proof, frozen CappedExploration.recover "
+                        + "supplies the compatible sign, minimum cut and uniqueness on the "
+                        + "opposite-blocked actual carrier. Each fiber reuses the frozen actual "
+                        + "minimum-cut Cartesian equivalence and its reconstruction certificate. "
+                        + "No separate enumeration theorem or unfrozen greatest-cut supplier is used.")),
                     Paragraph(Text(
                         "The empty actual avoiding class has cardinality one. For all positive "
                         + "n, a(n)=largeSchroder(n-1). For every sign and every natural n, "

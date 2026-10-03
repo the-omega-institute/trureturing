@@ -105,11 +105,16 @@ enforce the right-child sign condition of Definition 2.2.
 
 ## Actual scalar cardinalities
 
-`Separable.ActualCardinality` uses the frozen minimum-cut Cartesian kernel
-and the frozen proper-sign/blocked-opposite interface, without importing
-the unfrozen greatest-cut enumeration. Its signed class consists precisely
-of actual avoiders with a proper cut, and has no length-zero or singleton
-padding. A least-cut disjoint union gives its actual convolution. Value
+`Separable.ActualCardinality` reuses frozen `CappedExploration.recover`
+on the opposite-blocked actual carrier: compatibility fixes the sign, and
+its minimum-cut and uniqueness fields supply the disjoint partition.
+The frozen minimum-cut Cartesian kernel supplies each actual factorization,
+without importing the unfrozen greatest-cut enumeration. The single
+substantive cardinality theorem exports the minimum-cut union and an explicit
+dependent-length transported `blockSum` equality reconstructing each input
+from its returned factors, as well as the actual convolution. Its signed
+class consists precisely of actual avoiders with a proper cut, and has no
+length-zero or singleton padding. Value
 complementation swaps the literal forbidden patterns and the cut sign;
 the resulting actual finite partitions yield the sign-half identity only
 at lengths at least two. Strong induction on that convolution gives
