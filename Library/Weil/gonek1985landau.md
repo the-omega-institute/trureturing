@@ -117,3 +117,5 @@ $$
 Letting $\varepsilon$ decrease gives (5). This applies an ordinary Laplace principle to the already fixed test; it is not a new zero estimate.
 
 Consequently the absolute allowance supplied by this transfer has exponential rate $b/2$, rather than a decaying rate. It cannot pay the existing guaranteed reserve $e^{-120R}$. This is a limitation of the theorem together with this absolute-error transfer, not a lower bound on the actual error or a sign assertion about $B_{H,T}$. Signed integration of the full remainder remains unresolved. The [existing half-weighted discrepancy note](chirrehelfgott2025nonnegative.md) records the corresponding arithmetic pairing; repeating its explicit formula does not supply the missing comparison.
+
+The [smoothed Landau source](kaczorowski2000landau.md) retains neighborhoods of prime powers and can be transported through a taper with a controlled far-tail difference. Its available total and mean-square allowances still leave this same signed comparison unresolved.
