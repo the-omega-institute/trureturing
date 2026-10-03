@@ -153,9 +153,119 @@ theorem ascending_positive_suffix_count (width suffix : ℕ) (hsuffix : 1 ≤ su
     have hmiddle : cut + 2 ∈ middle cut := by
       simp only [middle, List.mem_reverse, List.mem_range'_1]
       omega
+    have shuffleNormalForm (n : ℕ) (left right : List ℕ) (middle : ℕ)
+        (hperm : (left ++ 1 :: right).Perm (List.range' 1 n))
+        (hmiddle : middle ∈ right) (hascent : ¬ left.Pairwise (· > ·)) :
+        (¬ Occurs [1, 2, 3] (left ++ 1 :: right) ∧
+          ¬ Occurs [3, 4, 1, 2] (left ++ 1 :: right)) ↔
+        right.Pairwise (· > ·) ∧
+          (∀ value ∈ left,
+            (∀ other ∈ right, value < other) ∨ (∀ other ∈ right, other < value)) ∧
+          (left.filter (fun value => decide (value < middle))).Pairwise (· > ·) ∧
+          (left.filter (fun value => decide (middle < value))).Pairwise (· > ·) := by
+      classical
+      have hnodup := hperm.nodup_iff.mpr List.nodup_range'
+      have hdisjoint : ∀ value ∈ left, value ∉ right := by
+        intro value hvalue hright
+        exact (List.nodup_append.mp hnodup).2.2 _ hvalue _ (by simp [hright]) rfl
+      have hleast : ∀ value ∈ left ++ right, 1 < value := by
+        intro value hvalue
+        have hnot : value ≠ 1 := by
+          rcases List.mem_append.mp hvalue with hl | hr
+          · exact (List.nodup_append.mp hnodup).2.2 _ hl 1 (by simp)
+          · exact fun heq => (List.nodup_cons.mp
+              (List.nodup_append.mp hnodup).2.1).1 (heq ▸ hr)
+        have hmem : value ∈ left ++ 1 :: right := by
+          rcases List.mem_append.mp hvalue with hl | hr
+          · exact List.mem_append_left _ hl
+          · exact List.mem_append_right _ (List.mem_cons_of_mem _ hr)
+        have := List.mem_range'_1.mp (hperm.mem_iff.mp hmem)
+        omega
+      constructor
+      · intro havoid
+        obtain ⟨_, hdescending, _⟩ := (minimum_split_ascending _ _ hnodup hleast).mp havoid
+        obtain ⟨hinterval, hfilters⟩ := ascending_middle_interval n left right hperm
+          havoid hascent
+        refine ⟨hdescending, ?_, (hfilters middle hmiddle).1, (hfilters middle hmiddle).2⟩
+        intro value hvalue
+        have hne : value ≠ middle := fun heq => hdisjoint value hvalue (heq ▸ hmiddle)
+        by_cases hlow : value < middle
+        · left
+          intro other hother
+          have hneOther : value ≠ other := fun heq => hdisjoint value hvalue (heq ▸ hother)
+          by_contra hnot
+          have hgap : value ∈ right := hinterval other hother middle hmiddle value
+            (by omega) hlow
+          exact hdisjoint value hvalue hgap
+        · right
+          intro other hother
+          have hneOther : value ≠ other := fun heq => hdisjoint value hvalue (heq ▸ hother)
+          by_contra hnot
+          have hgap : value ∈ right := hinterval middle hmiddle other hother value
+            (by omega) (by omega)
+          exact hdisjoint value hvalue hgap
+      · rintro ⟨hdescending, houtside, hlowDescending, hhighDescending⟩
+        have crossing (lower upper : ℕ) (hpair : [lower, upper].Sublist left)
+            (horder : lower < upper) :
+            (∀ other ∈ right, lower < other) ∧ (∀ other ∈ right, other < upper) := by
+          have hlower : lower ∈ left := hpair.subset (by simp)
+          have hupper : upper ∈ left := hpair.subset (by simp)
+          have hneLow : lower ≠ middle := fun heq =>
+            hdisjoint lower hlower (heq ▸ hmiddle)
+          have hneHigh : upper ≠ middle := fun heq =>
+            hdisjoint upper hupper (heq ▸ hmiddle)
+          have hlow : lower < middle := by
+            by_contra hnot
+            have hfiltered : [lower, upper].Sublist
+                (left.filter (fun value => decide (middle < value))) := by
+              have := hpair.filter (fun value => decide (middle < value))
+              simpa [show middle < lower by omega, show middle < upper by omega] using this
+            have := List.pairwise_iff_forall_sublist.mp hhighDescending hfiltered
+            omega
+          have hhigh : middle < upper := by
+            by_contra hnot
+            have hfiltered : [lower, upper].Sublist
+                (left.filter (fun value => decide (value < middle))) := by
+              have := hpair.filter (fun value => decide (value < middle))
+              simpa [show lower < middle by omega, show upper < middle by omega] using this
+            have := List.pairwise_iff_forall_sublist.mp hlowDescending hfiltered
+            omega
+          constructor
+          · rcases houtside lower hlower with hl | hh
+            · exact hl
+            · have := hh middle hmiddle
+              omega
+          · rcases houtside upper hupper with hl | hh
+            · have := hl middle hmiddle
+              omega
+            · exact hh
+        apply (minimum_split_ascending _ _ hnodup hleast).mpr
+        refine ⟨⟨?_, ?_⟩, hdescending, ?_⟩
+        · rintro ⟨witness, hincreasing, _, hsub, _⟩
+          have h12 : witness 1 < witness 2 := hincreasing 1 (by omega) (by decide)
+          have h23 : witness 2 < witness 3 := hincreasing 2 (by omega) (by decide)
+          have firstPair := (by decide : [1, 2].Sublist [1, 2, 3]).map witness |>.trans hsub
+          have lastPair := (by decide : [2, 3].Sublist [1, 2, 3]).map witness |>.trans hsub
+          have hfirst := (crossing _ _ firstPair h12).2 middle hmiddle
+          have hlast := (crossing _ _ lastPair h23).1 middle hmiddle
+          omega
+        · rintro ⟨witness, hincreasing, _, hsub, _⟩
+          have h12 : witness 1 < witness 2 := hincreasing 1 (by omega) (by decide)
+          have h23 : witness 2 < witness 3 := hincreasing 2 (by omega) (by decide)
+          have h34 : witness 3 < witness 4 := hincreasing 3 (by omega) (by decide)
+          have firstPair := (by decide : [3, 4].Sublist [3, 4, 1, 2]).map witness
+            |>.trans hsub
+          have lastPair := (by decide : [1, 2].Sublist [3, 4, 1, 2]).map witness
+            |>.trans hsub
+          have hfirst := (crossing _ _ firstPair h34).1 middle hmiddle
+          have hlast := (crossing _ _ lastPair h12).2 middle hmiddle
+          omega
+        · intro lower upper hpair horder other hother
+          exact ⟨(crossing _ _ hpair horder).1 other hother,
+            (crossing _ _ hpair horder).2 other hother⟩
     have havoid : ¬ Occurs [1, 2, 3] (block cut word) ∧
         ¬ Occurs [3, 4, 1, 2] (block cut word) := by
-      apply (ascending_shuffle_normal_form _ word (middle cut) (cut + 2) hperm
+      apply (shuffleNormalForm _ word (middle cut) (cut + 2) hperm
         hmiddle (notDescending cut word hword)).mpr
       refine ⟨middleDesc cut, ?_, ?_, ?_⟩
       · intro value hvalue
@@ -234,10 +344,193 @@ theorem ascending_positive_suffix_count (width suffix : ℕ) (hsuffix : 1 ≤ su
       omega
     have hleftAscent : ¬ left.Pairwise (· > ·) := by
       simpa [hsplit, ← hleftLength] using hascent
-    obtain ⟨cut, top, _, _, hsum, hright, hlow, hhigh⟩ :=
-      ascending_interval_ranks _ left right (hsplit ▸ hperm)
-        (by simpa only [← hsplit] using And.intro h123 h3412) hleftAscent
-        (by intro hnil; simp [hnil] at hrightLength; omega)
+    have ranks : ∃ low high : ℕ, 1 ≤ low ∧ 1 ≤ high ∧
+        low + high + right.length + 1 = width + suffix + 1 ∧
+        right = (List.range' (low + 2) right.length).reverse ∧
+        left.filter (fun value => decide (value < low + 2)) =
+          (List.range' 2 low).reverse ∧
+        left.filter (fun value => decide (low + right.length + 1 < value)) =
+          (List.range' (low + right.length + 2) high).reverse := by
+      let size := width + suffix + 1
+      have hperm : (left ++ 1 :: right).Perm (List.range' 1 size) := hsplit ▸ hperm
+      have havoid : ¬ Occurs [1, 2, 3] (left ++ 1 :: right) ∧
+          ¬ Occurs [3, 4, 1, 2] (left ++ 1 :: right) := by
+        simpa only [← hsplit] using And.intro h123 h3412
+      have hascent := hleftAscent
+      have hnonempty : right ≠ [] := by
+        intro hnil
+        simp [hnil] at hrightLength
+        omega
+      have hnodup := hperm.nodup_iff.mpr List.nodup_range'
+      have hleftNodup := (List.nodup_append.mp hnodup).1
+      have bounds (value : ℕ) (hvalue : value ∈ left ++ right) :
+          2 ≤ value ∧ value ≤ size := by
+        have hnot : value ≠ 1 := by
+          rcases List.mem_append.mp hvalue with hl | hr
+          · exact (List.nodup_append.mp hnodup).2.2 _ hl 1 (by simp)
+          · exact fun heq => (List.nodup_cons.mp
+              (List.nodup_append.mp hnodup).2.1).1 (heq ▸ hr)
+        have hmem : value ∈ left ++ 1 :: right := by
+          rcases List.mem_append.mp hvalue with hl | hr
+          · exact List.mem_append_left _ hl
+          · exact List.mem_append_right _ (List.mem_cons_of_mem _ hr)
+        have := List.mem_range'_1.mp (hperm.mem_iff.mp hmem)
+        omega
+      obtain ⟨hconvex, hfilters⟩ := ascending_middle_interval size left right hperm havoid hascent
+      obtain ⟨_, hdescending, sandwich⟩ := (minimum_split_ascending _ _ hnodup (by
+        intro value hvalue
+        exact (bounds value hvalue).1)).mp havoid
+      have interval (word : List ℕ) (hnonempty : word ≠ [])
+          (hdescending : word.Pairwise (· > ·))
+          (hconvex : ∀ lower ∈ word, ∀ upper ∈ word, ∀ value,
+            lower < value → value < upper → value ∈ word) :
+          ∃ first, word = (List.range' first word.length).reverse := by
+        classical
+        cases word with
+        | nil => contradiction
+        | cons head tail =>
+          have inhabited : ∃ value, value ∈ head :: tail := ⟨head, by simp⟩
+          let first := Nat.find inhabited
+          have hfirst : first ∈ head :: tail := Nat.find_spec inhabited
+          have lower_bound (value : ℕ) (hvalue : value ∈ head :: tail) : first ≤ value :=
+            Nat.find_min' inhabited hvalue
+          have upper_bound (value : ℕ) (hvalue : value ∈ head :: tail) : value ≤ head := by
+            rcases List.mem_cons.mp hvalue with rfl | htail
+            · omega
+            · have := (List.pairwise_cons.mp hdescending).1 value htail
+              omega
+          have endpoints : first ≤ head := lower_bound head (by simp)
+          have membership (value : ℕ) : value ∈ head :: tail ↔
+              value ∈ List.range' first (head + 1 - first) := by
+            rw [List.mem_range'_1]
+            constructor
+            · intro hvalue
+              have := lower_bound value hvalue
+              have := upper_bound value hvalue
+              omega
+            · rintro ⟨hlower, hupper⟩
+              by_cases heqFirst : value = first
+              · exact heqFirst ▸ hfirst
+              by_cases heqHead : value = head
+              · simp [heqHead]
+              exact hconvex first hfirst head (by simp) value (by omega) (by omega)
+          have hperm : (head :: tail).Perm (List.range' first (head + 1 - first)).reverse := by
+            apply (List.perm_ext_iff_of_nodup hdescending.nodup
+              (List.nodup_reverse.mpr List.nodup_range')).mpr
+            intro value
+            simpa only [List.mem_reverse] using membership value
+          have hlength : (head :: tail).length = head + 1 - first := by
+            simpa using hperm.length_eq
+          refine ⟨first, ?_⟩
+          rw [hlength]
+          exact hperm.eq_of_pairwise (by intro lower upper hfirst hsecond; omega)
+            hdescending (List.pairwise_reverse.mpr (List.pairwise_lt_range' _ (by omega)))
+      obtain ⟨first, hright⟩ := interval right hnonempty hdescending hconvex
+      have hlength : 0 < right.length := List.length_pos_iff.mpr hnonempty
+      have hfirst : first ∈ right := by
+        rw [hright, List.mem_reverse]
+        simp only [List.mem_range'_1]
+        omega
+      have hlast : first + right.length - 1 ∈ right := by
+        rw [hright, List.mem_reverse]
+        simp only [List.mem_range'_1, List.length_reverse, List.length_range']
+        omega
+      have hfirstBound := bounds first (by simp [hfirst])
+      have hlastBound := bounds (first + right.length - 1) (by simp [hlast])
+      let low := first - 2
+      let high := size - low - right.length - 1
+      have hfirstEq : first = low + 2 := by dsimp [low]; omega
+      have hsum : low + high + right.length + 1 = size := by dsimp [low, high]; omega
+      have hlowNodup := hleftNodup.filter (fun value => decide (value < low + 2))
+      have hhighNodup := hleftNodup.filter
+        (fun value => decide (low + right.length + 1 < value))
+      have filter_membership (value : ℕ) :
+          value ∈ left.filter (fun value => decide (value < low + 2)) ↔
+            value ∈ List.range' 2 low := by
+        simp only [List.mem_filter, decide_eq_true_eq, List.mem_range'_1]
+        constructor
+        · rintro ⟨hvalue, hlt⟩
+          have := bounds value (by simp [hvalue])
+          omega
+        · rintro ⟨hlo, hhi⟩
+          have hmem : value ∈ left ++ 1 :: right := hperm.mem_iff.mpr
+            (List.mem_range'_1.mpr ⟨by omega, by omega⟩)
+          have hnot : value ∉ right := by
+            rw [hright, List.mem_reverse]
+            intro hvalue
+            have := List.mem_range'_1.mp hvalue
+            omega
+          rcases List.mem_append.mp hmem with hl | hr
+          · exact ⟨hl, by omega⟩
+          · simp only [List.mem_cons] at hr
+            rcases hr with heq | hr
+            · omega
+            · exact False.elim (hnot hr)
+      have high_membership (value : ℕ) :
+          value ∈ left.filter (fun value => decide (low + right.length + 1 < value)) ↔
+            value ∈ List.range' (low + right.length + 2) high := by
+        simp only [List.mem_filter, decide_eq_true_eq, List.mem_range'_1]
+        constructor
+        · rintro ⟨hvalue, hlt⟩
+          have := bounds value (by simp [hvalue])
+          omega
+        · rintro ⟨hlo, hhi⟩
+          have hmem : value ∈ left ++ 1 :: right := hperm.mem_iff.mpr
+            (List.mem_range'_1.mpr ⟨by omega, by omega⟩)
+          have hnot : value ∉ right := by
+            rw [hright, List.mem_reverse]
+            intro hvalue
+            have := List.mem_range'_1.mp hvalue
+            omega
+          rcases List.mem_append.mp hmem with hl | hr
+          · exact ⟨hl, by omega⟩
+          · simp only [List.mem_cons] at hr
+            rcases hr with heq | hr
+            · omega
+            · exact False.elim (hnot hr)
+      have hloDesc := (hfilters first hfirst).1
+      have hhiDesc := (hfilters (first + right.length - 1) hlast).2
+      have low_word : left.filter (fun value => decide (value < low + 2)) =
+          (List.range' 2 low).reverse := by
+        have hp : (left.filter (fun value => decide (value < low + 2))).Perm
+            (List.range' 2 low).reverse := by
+          apply (List.perm_ext_iff_of_nodup hlowNodup
+            (List.nodup_reverse.mpr List.nodup_range')).mpr
+          intro value
+          simpa only [List.mem_reverse] using filter_membership value
+        exact hp.eq_of_pairwise (by intro first last hfirst hlast; omega)
+          (by simpa [hfirstEq] using hloDesc)
+          (List.pairwise_reverse.mpr (List.pairwise_lt_range' _ (by omega)))
+      have high_word : left.filter (fun value => decide (low + right.length + 1 < value)) =
+          (List.range' (low + right.length + 2) high).reverse := by
+        have hp : (left.filter (fun value => decide (low + right.length + 1 < value))).Perm
+            (List.range' (low + right.length + 2) high).reverse := by
+          apply (List.perm_ext_iff_of_nodup hhighNodup
+            (List.nodup_reverse.mpr List.nodup_range')).mpr
+          intro value
+          simpa only [List.mem_reverse] using high_membership value
+        exact hp.eq_of_pairwise (by intro first last hfirst hlast; omega)
+          (by simpa [hfirstEq, show low + 2 + right.length - 1 = low + right.length + 1
+            by omega] using hhiDesc)
+          (List.pairwise_reverse.mpr (List.pairwise_lt_range' _ (by omega)))
+      have hexists : ∃ lower upper, [lower, upper].Sublist left ∧ lower < upper := by
+        rw [List.pairwise_iff_forall_sublist] at hascent
+        push Not at hascent
+        obtain ⟨lower, upper, hpair, hnot⟩ := hascent
+        have hne : lower ≠ upper := by simpa using hleftNodup.sublist hpair
+        exact ⟨lower, upper, hpair, by omega⟩
+      obtain ⟨lower, upper, hpair, horder⟩ := hexists
+      have hlower : lower ∈ left := hpair.subset (by simp)
+      have hupper : upper ∈ left := hpair.subset (by simp)
+      have hsandLow := (sandwich lower upper hpair horder first hfirst).1
+      have hsandHigh := (sandwich lower upper hpair horder _ hlast).2
+      have hlowerBound := bounds lower (by simp [hlower])
+      have hupperBound := bounds upper (by simp [hupper])
+      refine ⟨low, high, ?_, ?_, hsum, ?_, low_word, high_word⟩
+      · omega
+      · omega
+      · simpa [hfirstEq] using hright
+    obtain ⟨cut, top, _, _, hsum, hright, hlow, hhigh⟩ := ranks
     have hcutBound : cut ≤ width := by omega
     have htop : top = width - cut := by omega
     have hrightEq : right = middle cut := by simpa [middle, hrightLength] using hright
