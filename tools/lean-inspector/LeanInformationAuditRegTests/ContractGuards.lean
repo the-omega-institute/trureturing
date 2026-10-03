@@ -36,26 +36,6 @@ run_meta do
     assertTest s!"interface.command_allowlist.{label}" (match result with
       | .error error => error.startsWith "contract.interface:command_not_allowed:"
       | .ok _ => false)
-  let letIssue := LeanInformationAudit.Contract.SourceAudit.resultTypeIssue env
-    (.letE `hidden (.sort (.succ .zero)) (.sort .zero) (.bvar 0) false)
-  assertTest "reg.result_type.let_rejected"
-    (letIssue.any (·.startsWith "contract.discovery:result_type_let"))
-  let letEntries ← LeanInformationAudit.Contract.SourceAudit.parse env
-    "def x : (let T := Nat; T) := 0" "Reg.ResultTypeLetSyntax"
-  let letSyntaxIssue := letEntries.find? (·.sourceName == some `x) |>.bind fun entry =>
-    LeanInformationAudit.Contract.SourceAudit.sourceResultTypeIssue entry.command
-  assertTest "reg.result_type.source_let_rejected"
-    (letSyntaxIssue.any (·.startsWith "contract.discovery:result_type_let"))
-  let projection := Expr.proj ``LeanInformationAudit.Contract.TypeRef 1
-    (.const ``LeanInformationAudit.Contract.TypeRef [])
-  assertTest "reg.result_type.stored_sort_projection_rejected"
-    ((LeanInformationAudit.Contract.SourceAudit.resultTypeIssue env projection).any
-      (·.startsWith "contract.discovery:result_type_projection:"))
-  let allowedProjection := Expr.proj
-    ``D5.S3.ConceptDynamics.InformationEscape.Arena 0
-    (.const ``finiteArena [])
-  assertTest "reg.result_type.allowlisted_arena_projection"
-    ((LeanInformationAudit.Contract.SourceAudit.resultTypeIssue env allowedProjection).isNone)
   for (label, source) in #[
       ("run_meta", "run_meta pure ()"),
       ("macro", "macro \"x\" : command => `(skip)"),

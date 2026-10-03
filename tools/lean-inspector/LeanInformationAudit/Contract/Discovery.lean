@@ -32,20 +32,6 @@ def checkDefinition (info : ConstantInfo) : MetaM DefinitionVal := do
     throwError "contract.discovery:forwarding_or_computed:{info.name}"
   return value
 
-private def candidate (env : Environment) (info : ConstantInfo)
-    (unrelated : NameSet) : Bool × NameSet := Id.run do
-  if info.isCtor || info.isTheorem || isAuxRecursor env info.name ||
-      isNoConfusion env info.name || (env.getProjectionFnInfo? info.name).isSome then
-    return (false, unrelated)
-  if info.name == info.name.getPrefix.str "_flat_ctor" then
-    if let some (.ctorInfo _) := env.find? info.name.getPrefix then return (false, unrelated)
-  let (inType, unrelated) := SourceAudit.scanContract env (SourceAudit.resultType info.type) unrelated
-  if inType then return (true, unrelated)
-  if info.type.isSort then
-    if let some value := info.value? (allowOpaque := true) then
-      return SourceAudit.scanContract env value unrelated
-  return (false, unrelated)
-
 def requireRange (name : Name) : MetaM DeclarationRanges := do
   let some range ← findDeclarationRanges? name
     | throwError "contract.discovery:source_range:{name}"
@@ -123,6 +109,31 @@ def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
         unless coreStructureDelegate env value.declName do keys := keys.insert value.key
   return keys
 
+/-- Compiler ownership is a strict descendant of a validated entry in the same
+module, with no independently authored declaration of that name. If the compiler
+publishes a range, it must lie inside the owning entry. Source-name exclusion
+prevents a user-written `entry.eq_1` or private descendant from gaining permission;
+the command inventory prohibits external declaration-generating metaprogramming. -/
+def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
+    (definitions : Array Definition) (env : Environment) (name : Name) : MetaM Bool := do
+  if entries.any (fun entry => entry.sourceName == some (privateToUserName name)) then
+    return false
+  let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
+    else env.getModuleIdxFor? name == env.getModuleIdx? owner
+  unless belongs do return false
+  for definition in definitions do
+    unless definition.info.name != name && definition.info.name.isPrefixOf name do continue
+    if let some range ← findDeclarationRanges? name then
+      let outer := definition.range.range
+      let inner := range.range
+      unless (outer.pos.line < inner.pos.line ||
+          (outer.pos.line == inner.pos.line && outer.pos.column ≤ inner.pos.column)) &&
+          (inner.endPos.line < outer.endPos.line ||
+          (inner.endPos.line == outer.endPos.line && inner.endPos.column ≤ outer.endPos.column)) do
+        continue
+    return true
+  return false
+
 /-- Source and compiled inventories must agree, including private declarations.
 Rigid level parameters and their occurrences remain the compiler's original data. -/
 def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := do
@@ -132,10 +143,6 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     match SourceAudit.auditRegCommands owner entries with
     | .error error => throwError error
     | .ok _ => pure ()
-  if (`Reg).isPrefixOf owner then
-    for entry in entries do
-      if let some issue := SourceAudit.sourceResultTypeIssue entry.command then
-        throwError s!"{issue}:{entry.sourceName}"
   let map := FileMap.ofString source
   let mut found : Array Definition := #[]
   let mut expansionKeys : Option NameSet := none
@@ -147,33 +154,23 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
   let constants ← names.mapM fun name => do
     let some info := env.find? name | throwError "contract.discovery:constant_missing:{name}"
     return (name, info)
-  let mut unrelated : NameSet := {}
   for (name, info) in constants do
-    if (`Reg).isPrefixOf owner then
-      if let some issue := SourceAudit.resultTypeIssue env info.type then
-        throwError s!"{issue}:{info.name}"
-    let (relevant, cache) := candidate env info unrelated
-    unrelated := cache
-    unless relevant do continue
-    let head := (SourceAudit.resultType info.type).getAppFn.constName?.getD .anonymous
-    let functionDefinition := match info with
-      | .defnInfo _ => info.type.isForall
-      | _ => false
-    unless SourceAudit.heads.contains head || functionDefinition do
-      throwError "contract.discovery:type_alias_or_wrapper:{name}"
+    let head := info.type.getAppFn.constName?.getD .anonymous
+    unless SourceAudit.heads.contains head do continue
+    -- A generated auxiliary is not an authored entry, even if it has a head.
+    unless entries.any (fun entry => entry.sourceName == some (privateToUserName name)) do
+      continue
     let range ← requireRange name
     let start := map.ofPosition range.range.pos
     let stop := map.ofPosition range.range.endPos
     let some entry := entries.find? fun entry => entry.start ≤ start && stop ≤ entry.stop
       | throwError "contract.discovery:source_inventory_missing:{name}"
-    if (`Reg).isPrefixOf owner then
-      if let some issue := SourceAudit.sourceResultTypeIssue entry.command then
-        throwError s!"{issue}:{info.name}"
+    if entry.command[1].isOfKind ``Parser.Command.definition then
+      unless SourceAudit.isHeadSpelling
+          (SourceAudit.termHead entry.command[1][2][1][0][1]) head do continue
     match SourceAudit.audit entry.command head with
     | .error error => throwError "{error}:{name}"
     | .ok _ => pure ()
-    if info.type.isForall && SourceAudit.heads.contains head then
-      throwError "contract.discovery:term_parameters:{name}"
     if expansionKeys.isNone then
       expansionKeys := some (← importExpansionKeys owner fun _ => do
         return ← moduleSource owner)
@@ -184,6 +181,12 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     unless entry.sourceName == some (privateToUserName name) do
       throwError "contract.discovery:source_name_mismatch:{name}"
     found := found.push ⟨owner, value, range⟩
+  for (name, info) in constants do
+    if found.any (fun definition => definition.info.name == name) then continue
+    if ← generatedEntryAuxiliary owner entries found env name then continue
+    let references := SourceAudit.directInterfaceReferences env info
+    unless references.isEmpty do
+      throwError "contract.reg:contract_reference_outside_entry:{name}:{references}"
   for entry in entries do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
     if SourceAudit.hasInventory entry.command then

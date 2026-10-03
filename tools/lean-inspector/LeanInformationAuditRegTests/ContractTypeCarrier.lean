@@ -13,8 +13,7 @@ run_meta do
         ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
   catch ex => error := ← ex.toMessageData.toString
   assertTest "discovery.alias_through_type_carrier"
-    (error.startsWith "contract.discovery:type_alias_or_wrapper:" &&
-      (error.splitOn "hidden").length > 1)
+    (error.startsWith "contract.reg:contract_reference_outside_entry:")
   logInfo m!"CONTRACT_DIAGNOSTIC discovery.alias_through_type_carrier {error}"
 
 end LeanInformationAuditRegTests.ContractTypeCarrier

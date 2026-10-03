@@ -77,7 +77,6 @@ run_meta do
     catch ex => error := ← ex.toMessageData.toString
     assertTest s!"compiled.{name.getString!}" (error.startsWith expected)
     logInfo m!"CONTRACT_DIAGNOSTIC compiled.{name.getString!} {error}"
-    assertTest s!"inventory.{name.getString!}" (SourceAudit.containsContract (← getEnv) info.type)
   let mut noRange := (← getConstInfo ``forwarded).toConstantVal
   noRange := { noRange with name := `Synthetic.noRange }
   let value : DefinitionVal := { noRange with

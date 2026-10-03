@@ -16,10 +16,10 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 run_meta do
   for (fixture, diagnostic) in #[
-      ("Parameters", "term_parameters"),
-      ("Forall", "forall"),
-      ("Alias", "type_alias_or_wrapper"),
-      ("Wrapper", "type_alias_or_wrapper"),
+      ("Parameters", "reference"),
+      ("Forall", "reference"),
+      ("Alias", "reference"),
+      ("Wrapper", "reference"),
       ("Forwarding", "forwarding_or_computed"),
       ("Computed", "forwarding_or_computed"),
       ("Update", "structure_update"),
@@ -34,6 +34,7 @@ run_meta do
         LeanInformationAudit.Repository.source
           ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
     catch ex => error := ← ex.toMessageData.toString
-    assertTest s!"discovery.negative.{fixture}" (error.startsWith ("contract.discovery:" ++ diagnostic))
+    assertTest s!"discovery.negative.{fixture}" (error.startsWith (if diagnostic == "reference" then
+        "contract.reg:contract_reference_outside_entry:" else "contract.discovery:" ++ diagnostic))
     logInfo m!"CONTRACT_DIAGNOSTIC discovery.negative.{fixture} {error}"
 end LeanInformationAuditRegTests.ContractDiscoverNegative

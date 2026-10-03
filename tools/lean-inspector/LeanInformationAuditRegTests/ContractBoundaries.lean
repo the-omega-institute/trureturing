@@ -25,42 +25,42 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 private def check (label : String) (ok : Bool) : MetaM Unit := do
   if ok then logInfo m!"[PASS] {label}" else logError m!"[FAIL] {label}"
 run_meta do
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathematicalCompanion]
-    check "discovery.positive.MathematicalCompanion" (snapshot.definitions.size == 1)
-  catch ex =>
-    check "discovery.positive.MathematicalCompanion" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.HelperBody]
-    check "discovery.positive.HelperBody" (snapshot.definitions.size == 1)
-  catch ex =>
-    check "discovery.positive.HelperBody" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathCompanion]
-    check "discovery.positive.MathCompanion" (snapshot.definitions.size == 1)
-  catch ex =>
-    check "discovery.positive.MathCompanion" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathAux]
-    check "discovery.positive.MathAux" (snapshot.definitions.size == 1)
-  catch ex =>
-    check "discovery.positive.MathAux" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.RegCompanion]
-    check "discovery.positive.RegCompanion" (snapshot.definitions.size == 0)
-  catch ex =>
-    check "discovery.positive.RegCompanion" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
-  try
-    let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathParameter]
-    check "discovery.positive.MathParameter" (snapshot.definitions.size == 1)
-  catch ex =>
-    check "discovery.positive.MathParameter" false
-    logInfo m!"CONTRACT_DIAGNOSTIC {← ex.toMessageData.toString}"
+  let errorMathematicalCompanion ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathematicalCompanion]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.MathematicalCompanion"
+    (errorMathematicalCompanion.startsWith "contract.reg:contract_reference_outside_entry:")
+  let errorHelperBody ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.HelperBody]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.HelperBody"
+    (errorHelperBody.startsWith "contract.reg:contract_reference_outside_entry:")
+  let errorMathCompanion ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathCompanion]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.MathCompanion"
+    (errorMathCompanion.startsWith "contract.reg:contract_reference_outside_entry:")
+  let errorMathAux ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathAux]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.MathAux"
+    (errorMathAux.startsWith "contract.reg:contract_reference_outside_entry:")
+  let errorRegCompanion ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.RegCompanion]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.RegCompanion"
+    (errorRegCompanion.startsWith "contract.reg:contract_reference_outside_entry:")
+  let errorMathParameter ← try
+    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.MathParameter]
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  check "discovery.reference.MathParameter"
+    (errorMathParameter.startsWith "contract.reg:contract_reference_outside_entry:")
   try
     let snapshot ← Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.Constructors]
     check "discovery.positive.Constructors" (snapshot.definitions.size == 1)
@@ -82,7 +82,7 @@ run_meta do
   let mut errorSectionUsed := "accepted"
   try discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.SectionUsed]
   catch ex => errorSectionUsed := ← ex.toMessageData.toString
-  check "discovery.negative.SectionUsed" (errorSectionUsed.startsWith "contract.discovery:term_parameters:")
+  check "discovery.negative.SectionUsed" (errorSectionUsed.startsWith "contract.reg:contract_reference_outside_entry:")
   logInfo m!"CONTRACT_DIAGNOSTIC SectionUsed {errorSectionUsed}"
   let mut errorBuiltinMacro := "accepted"
   try discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractBoundaryFixtures.BuiltinMacro]

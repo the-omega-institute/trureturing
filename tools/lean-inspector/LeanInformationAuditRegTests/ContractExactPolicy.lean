@@ -83,23 +83,5 @@ run_meta do
     let result := SourceAudit.auditRegCommands owner entries
     assertTest s!"policy.notation.{label}"
       (if label == "ExistingNotation" then result.isOk else !result.isOk)
-  for (label, name) in #[("StoredField", ``storedResult)] do
-    let info ← getConstInfo name
-    assertTest s!"policy.carrier.{label}"
-      ((SourceAudit.resultTypeIssue env info.type).any (·.endsWith ":contract_payload"))
-  let wrapped ← getConstInfo ``wrappedResult
-  assertTest "policy.carrier.WrappedClosure" (SourceAudit.containsContract env wrapped.type)
-  let metadataType := Expr.mdata {} (mkApp (.const ``Option []) (.const ``Nat []))
-  assertTest "policy.result.MetadataApplication"
-    ((SourceAudit.resultTypeIssue env metadataType).isNone)
-  let unknown := Expr.proj
-    ``D5.S3.ConceptDynamics.InformationEscape.Arena 0 (.bvar 0)
-  assertTest "policy.carrier.Unresolved"
-    ((SourceAudit.resultTypeIssue env unknown).any (·.endsWith ":carrier_unresolved"))
-  let aliased := Expr.proj
-    ``D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature 0
-    (.const ``signatureAlias [])
-  assertTest "policy.carrier.ConstantClosure"
-    ((SourceAudit.resultTypeIssue env aliased).any (·.endsWith ":contract_payload"))
 
 end LeanInformationAuditRegTests.ContractExactPolicy
