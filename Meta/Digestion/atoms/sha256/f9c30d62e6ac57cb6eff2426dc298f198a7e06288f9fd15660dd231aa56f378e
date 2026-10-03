@@ -1,0 +1,18 @@
+**定理60.10（列表下界的双向散度证书）。** 令 $K=K_M(s,\varepsilon)<M$、$b=K/M$，并取 $0<\delta<1-b$。若一个任意可随机化学习器对揭示族每个位置都满足
+
+$$
+P_{P_i^{\otimes m},\xi}\{L_s(i,f_{D_m,\xi})>\varepsilon\}\le\delta,
+\tag{60.17}
+$$
+
+则
+
+$$
+(1-1/M)m\kappa_a
+\ge \operatorname{kl}(1-\delta,b)+\operatorname{kl}(b,1-\delta)
+=(1-\delta-b)\log\frac{(1-\delta)(1-b)}{\delta b}.
+\tag{60.18}
+$$
+
+第一项的增长由位置列表容量 $b$ 控制，第二项在固定 $b<1$ 时随 $\delta\downarrow0$ 按 $(1-b)\log(1/\delta)$ 增长；不能从列表基数单独推出置信成本。
+
