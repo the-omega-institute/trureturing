@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/MultivariateOccupancyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/davies-sandhu-seo-tan-2026-multivariate-occupancy-refutation` (refuted) by `D5/S3/StatisticalMechanics/HardCore/MultivariateOccupancyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"davies-sandhu-seo-tan-2026-multivariate-occupancy-refutation","declaration_gid":"D5/S3/StatisticalMechanics/HardCore/MultivariateOccupancyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ewan Davies; Juspreet Singh Sandhu; Jaehyeon Seo; Brian Tan (2026). *Degree-sequence bounds for independent sets via multivariate local occupancy*. DOI: [10.48550/arXiv.2605.05149](https://doi.org/10.48550/arXiv.2605.05149). URL: <https://arxiv.org/abs/2605.05149v1>.

@@ -29,7 +29,10 @@ internal sealed class MultivariateOccupancyRefutationDocument : IScribeDocumentD
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Davies, Lee),
                 Blocks(Paragraph(Text("Take Mathlib's starGraph on Fin 3 centered at 0 and set lam(0) = 15, lam(1) = lam(2) = 2. Its independent subsets are exactly the empty set, {0}, {1}, {2} and {1,2}; their product weights are 1,15,2,2,4. The partition is 24 and the cardinality-weighted sum is 27, giving expectedSize = 27/24 = 9/8. The degrees are 2,1,1, so the proposed lower bound is 15/46 + 2/5 + 2/5 = 259/230. The difference expectedSize minus this bound is -1/920. All fugacities are positive, contradicting the universal claim. The restricted small-fugacity theorem and the univariate Davies–Kang conjecture are separate statements."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("davies-sandhu-seo-tan-2026-multivariate-occupancy-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
