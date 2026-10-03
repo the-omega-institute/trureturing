@@ -1,13 +1,17 @@
 {
   "common_source_collision_for_every_map": true,
   "comparable_classes_disjoint": true,
+  "comparable_pair_count": 122,
   "distinct_odd_nonunit_moduli": true,
   "divisor_closed_label_set": true,
   "edge_count": 6,
+  "full_collision_moment": "159/20",
   "kappa": "3/10",
   "label_count": 51,
+  "literal_pullback_checks": 76500,
   "map_summary": [
     {
+      "full_collision_pairs": 8,
       "live_pairs": 1,
       "selected": [
         0,
@@ -17,6 +21,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 8,
       "live_pairs": 1,
       "selected": [
         0,
@@ -26,6 +31,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 8,
       "live_pairs": 1,
       "selected": [
         0,
@@ -35,6 +41,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -44,6 +51,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -53,6 +61,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -62,6 +71,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -71,6 +81,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -80,6 +91,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -89,6 +101,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         2,
@@ -98,6 +111,7 @@
       "u": 1
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -107,6 +121,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -116,6 +131,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -125,6 +141,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -134,6 +151,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -143,6 +161,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 7,
       "live_pairs": 1,
       "selected": [
         0,
@@ -152,6 +171,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -161,6 +181,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -170,6 +191,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         1,
@@ -179,6 +201,7 @@
       "u": 2
     },
     {
+      "full_collision_pairs": 9,
       "live_pairs": 3,
       "selected": [
         2,
@@ -188,7 +211,280 @@
       "u": 2
     }
   ],
+  "minimum_full_collisions": 7,
   "minimum_live_designated_collisions": 1,
+  "negative_controls": {
+    "compatible_comparable_pair_rejected": true,
+    "compatible_pair": {
+      "gcd": 21,
+      "moduli": [
+        21,
+        105
+      ],
+      "residues": [
+        1,
+        22
+      ]
+    },
+    "nondivisor_coordinate_rejected": true
+  },
+  "originals": [
+    {
+      "kind": "m",
+      "modulus": 7,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 21,
+      "residue": 8
+    },
+    {
+      "kind": "5m",
+      "modulus": 35,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 105,
+      "residue": 22
+    },
+    {
+      "kind": "m",
+      "modulus": 11,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 33,
+      "residue": 23
+    },
+    {
+      "kind": "5m",
+      "modulus": 55,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 165,
+      "residue": 133
+    },
+    {
+      "kind": "m",
+      "modulus": 13,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 39,
+      "residue": 14
+    },
+    {
+      "kind": "5m",
+      "modulus": 65,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 195,
+      "residue": 79
+    },
+    {
+      "kind": "m",
+      "modulus": 17,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 51,
+      "residue": 35
+    },
+    {
+      "kind": "5m",
+      "modulus": 85,
+      "residue": 52
+    },
+    {
+      "kind": "15m",
+      "modulus": 255,
+      "residue": 103
+    },
+    {
+      "kind": "m",
+      "modulus": 19,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 57,
+      "residue": 20
+    },
+    {
+      "kind": "5m",
+      "modulus": 95,
+      "residue": 77
+    },
+    {
+      "kind": "15m",
+      "modulus": 285,
+      "residue": 229
+    },
+    {
+      "kind": "m",
+      "modulus": 23,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 69,
+      "residue": 47
+    },
+    {
+      "kind": "5m",
+      "modulus": 115,
+      "residue": 93
+    },
+    {
+      "kind": "15m",
+      "modulus": 345,
+      "residue": 139
+    },
+    {
+      "kind": "m",
+      "modulus": 29,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 87,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 145,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 435,
+      "residue": 407
+    },
+    {
+      "kind": "m",
+      "modulus": 31,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 93,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 155,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 465,
+      "residue": 218
+    },
+    {
+      "kind": "m",
+      "modulus": 37,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 111,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 185,
+      "residue": 1
+    },
+    {
+      "kind": "15m",
+      "modulus": 555,
+      "residue": 149
+    },
+    {
+      "kind": "m",
+      "modulus": 41,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 123,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 205,
+      "residue": 42
+    },
+    {
+      "kind": "15m",
+      "modulus": 615,
+      "residue": 83
+    },
+    {
+      "kind": "m",
+      "modulus": 43,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 129,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 215,
+      "residue": 87
+    },
+    {
+      "kind": "15m",
+      "modulus": 645,
+      "residue": 44
+    },
+    {
+      "kind": "m",
+      "modulus": 47,
+      "residue": 0
+    },
+    {
+      "kind": "3m",
+      "modulus": 141,
+      "residue": 1
+    },
+    {
+      "kind": "5m",
+      "modulus": 235,
+      "residue": 48
+    },
+    {
+      "kind": "15m",
+      "modulus": 705,
+      "residue": 659
+    },
+    {
+      "kind": "3",
+      "modulus": 3,
+      "residue": 0
+    },
+    {
+      "kind": "5",
+      "modulus": 5,
+      "residue": 0
+    },
+    {
+      "kind": "15",
+      "modulus": 15,
+      "residue": 1
+    }
+  ],
   "pair_count": 12,
   "parameters": {
     "depth": 1,
@@ -201,9 +497,68 @@
   },
   "psi": "9/5",
   "psi_gt_one": true,
+  "psi_scope": "the twelve designated (5m,15m) pairs",
   "rho": "1/2",
   "scope": "finite source-global collision incidence model; not a whole cover",
   "source_map_count": 20,
   "status": "PASS",
+  "uncovered_witness": {
+    "coordinates": {
+      "cofactors": [
+        {
+          "modulus": 7,
+          "residue": 2
+        },
+        {
+          "modulus": 11,
+          "residue": 2
+        },
+        {
+          "modulus": 13,
+          "residue": 2
+        },
+        {
+          "modulus": 17,
+          "residue": 2
+        },
+        {
+          "modulus": 19,
+          "residue": 2
+        },
+        {
+          "modulus": 23,
+          "residue": 2
+        },
+        {
+          "modulus": 29,
+          "residue": 2
+        },
+        {
+          "modulus": 31,
+          "residue": 2
+        },
+        {
+          "modulus": 37,
+          "residue": 2
+        },
+        {
+          "modulus": 41,
+          "residue": 2
+        },
+        {
+          "modulus": 43,
+          "residue": 2
+        },
+        {
+          "modulus": 47,
+          "residue": 2
+        }
+      ],
+      "mod_3": 2,
+      "mod_5": 2
+    },
+    "modulus": 307444891294245705,
+    "residue": 2
+  },
   "whole_cover": false
 }

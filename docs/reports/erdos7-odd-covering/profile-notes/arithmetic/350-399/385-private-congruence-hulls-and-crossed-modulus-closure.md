@@ -28485,11 +28485,15 @@ multiplicity that is needed for a strict upper estimate.
 
 The finite 51-label control in §844 makes this limitation explicit.  It has
 12 designated pair events, all 20 common source maps are covered, and each
-event has \(\rho\kappa=3/20\), so \(\Psi=9/5\).  Thus the direct
-undistorted marginal assignment (the \(\delta_i=0\) specialization) charges
-\(9/5\), not a subunit amount.  This does not rule out a new distortion
-scheme; it rules out deriving (246.2) from the first-moment collision data
-alone.  The exact checker linked in §844 verifies this obstruction.
+event has \(\rho\kappa=3/20\), so this subfamily alone has total
+mass \(9/5\).  Including the twelve \((m,3m)\) pairs and the pure
+\((5,15)\) pair gives the complete collision moment \(\Psi=159/20\).
+Thus the direct undistorted marginal assignment (the \(\delta_i=0\)
+specialization) already charges \(9/5\) on the designated subfamily,
+not a subunit amount.  This does not rule out a new distortion scheme;
+it rules out deriving (246.2) from the first-moment collision data alone.
+The exact checker linked in §844 verifies this obstruction using actual
+CRT residues.
 
 Consequently, a reusable generalized chain theorem would have to take as
 input a finite common source \((\Omega,\mu)\), pair events with their

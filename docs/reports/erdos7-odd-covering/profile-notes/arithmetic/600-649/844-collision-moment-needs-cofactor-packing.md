@@ -101,9 +101,18 @@ cofactor \(m>5\) and include the divisor-closed packet
  m,\quad 3m,\quad 5m,\quad 15m.
 \]
 
-The phases are fixed by CRT: \(m\) has phase \(0\pmod m\), every multiple
-has phase \(1\pmod m\), the \(3m\)-class has the chosen safe colour and
-5-phase zero, and the \(15m\)-class has the other endpoint of the edge.
+The phases are fixed by CRT. For a chosen safe colour \(c\in\{1,2\}\)
+and oriented nonzero edge \((x,y)\), the \(m\)-class has phase zero, and
+every proper \(m\)-multiple has phase one modulo \(m\). The remaining
+coordinates are
+\[
+ 3m:\ 3-c\pmod3,\qquad
+ 5m:\ x\pmod5,\qquad
+ 15m:\ c\pmod3,\ y\pmod5.
+\]
+Only prime coordinates dividing the numerical modulus are imposed. In
+particular, \(3m\) and \(15m\) differ modulo three, while \(5m\) and
+\(15m\) differ modulo five.
 The edge orientation is chosen so that the colour-one \(15m\)-phase is not
 the pure \(15\)-phase.  The resulting 51 numerical moduli are pairwise
 distinct, odd, and divisor-closed; every comparable pair is phase-disjoint.
@@ -121,14 +130,22 @@ least one designated pair.  Each pair has
 \rho\kappa=\frac3{20},
 \]
 
-so the collision moment is
+so their designated subfamily has collision moment
 
 \[
-\Psi_{3,5}=12\cdot\frac3{20}=\frac95>1.
+\Psi_{\mathrm{designated}}=12\cdot\frac3{20}=\frac95>1.
 \]
 
-This family is still deliberately only a local incidence model: it is not a
-whole cover, and it carries no claim about the existence of an unrestricted
+The complete collision count also includes twelve \((m,3m)\) pairs,
+each surviving with probability \(1/2\), and the pure \((5,15)\) pair,
+surviving with probability \(3/20\). These exhaust the repeated numerical
+output columns. Hence the full moment of report 388 is
+\[
+ \Psi_{3,5}=\frac95+12\cdot\frac12+\frac3{20}=\frac{159}{20}>1.
+\]
+
+This family is a local incidence model: the integer two avoids every
+listed class, so it is not a whole cover. It carries no claim about the existence of an unrestricted
 counterexample.  Its role is sharper than a bare pair example: even
 distinctness, divisor closure, comparable disjointness, a common source, and
 the pointwise collision condition do not yield a global \(\Psi<1\) estimate.
@@ -162,7 +179,13 @@ or the cross-column budget.
 
 The [accompanying checker](../../../frontier/cover-geometry/source-global-collision-moment/collision_moment_no_cap.py)
 and its [result](../../../frontier/cover-geometry/source-global-collision-moment/collision_moment_no_cap.json) verify, with exact integer and rational arithmetic,
-the 51-label divisor-closed construction, distinctness and comparable
-disjointness, all 20 common source maps, the value \(\rho\kappa=3/20\), and
-\(\Psi=9/5\).  It checks only the finite obstruction and makes no whole-cover
-claim.
+the 51-label divisor-closed construction, distinctness, all 122 comparable
+pairs using actual CRT residues and numerical gcds, and all 20 common source
+maps. Its 76,500 literal source-to-output membership comparisons retain
+the same safe coordinate and child subset for all labels. The designated
+moment is \(9/5\), and the full collision moment is \(159/20\).
+The results retain all 51 numerical moduli and CRT phases, together with
+the uncovered witness two. Negative controls reject a coordinate absent
+from its modulus and a genuinely contained comparable class. These checks
+remain active under Python optimization. The program checks only the finite
+obstruction and makes no whole-cover claim.
