@@ -405,3 +405,75 @@ E_{\mathrm{rem}}(R)\ge-P_H(R)+B_H(R)
 $$
 
 for all sufficiently large real $R$. A relative version $E_{\mathrm{rem}}\ge-(1-\varepsilon(R))P_H$ pays the known safe-error bound when $\varepsilon(R)P_H(R)\ge B_H(R)$; an unspecified $o(1)$ reserve does not ensure this. This is a sufficient use of the absolute-error certificate, not a necessary condition for the unknown complete scalar. Pointwise complex asymptotics alone do not bound the summed error relative to $P_H$. The source mapping and these transfer obligations are paper-level applications, with the signed comparison and RH/Robin unresolved.
+
+## Admissibility of the five outer phase models
+
+The [full outer interface](../../docs/develop/theory/RH_RESEARCH_LANE_THEORY.md), §35, supplies five leading complex contributions $L_\pm,U_\pm,X$ and additive errors against their individual positive envelopes. It covers every sufficiently large $T=R\gamma$ with $|\tau|\le1/(2H)$, without restricting $\eta=\tau\sqrt T$. Reuse this interface and the [uniform local source mapping](neuschel2012uniformlaplace.md); neither identifies the leading contributions as exact compact-test transforms.
+
+The unchanged exact test is
+
+$$
+J_R(t)=R^{-1}J(t/R),\qquad
+h_R=-D_t^2(1-4D_t^2)^2J_R,\qquad
+\widehat h_R(z)=p(z)A_R(z).
+$$
+
+It is smooth and compactly supported on $[-bR,bR]$, so its Fourier transform is entire. This elementary compact-support consequence and the identity theorem are existing analytic tools. Their application distinguishes the exact test from its five-term asymptotic model.
+
+Fix $R>0$ and put $a=(b-1)/4$. On the principal positive-frequency cone, the cross model of §35 has the form
+
+$$
+X_R(z)=D_*(Rz)^{-15/8}
+\exp[-\sqrt{2Rz}-2^{3/4}\sqrt a\,(Rz)^{1/4}],
+\qquad D_*>0.
+$$
+
+Under $z=v^8/R$, its polynomial-weighted lift is
+
+$$
+p(v^8/R)X_R(v^8/R)
+=\frac{D_*}{R^2}v(1+4v^{16}/R^2)^2
+\exp[-\sqrt2v^4-2^{3/4}\sqrt a\,v^2].
+$$
+
+This is an odd analytic germ with nonzero linear coefficient $D_*/R^2$. Each weighted endpoint model instead has the form $v^{-2}$ times an analytic function of $v^4$, and is therefore even and meromorphic at zero. Cancellation among the four endpoints cannot remove the cross model's odd part.
+
+For an entire function $F(z)$, the lift $F(v^8/R)$ is even. Exact complex agreement with the five-term model on any continuous positive real frequency tail would, by the identity theorem on the common cone and its lifted continuation, force agreement on the punctured $v$-plane. The parity difference contradicts this. Thus neither the cross model nor the full five-term model is the exact entire transform of a compact test on that tail.
+
+This application does not invalidate the large-frequency asymptotics, rule out interpolation at isolated actual zeros, including an infinite set without finite accumulation, or address equality only of real parts. A high-height contour formula avoiding the origin is a candidate route requiring a separately justified exact identity, including analyticity, convergence, horizontal faces, other boundary integrals and remainders. Such an identity is a separate interface from direct substitution into the complete compact-test explicit formula.
+
+## The positive remainder allowance is not a small head reserve
+
+Keep the actual representative set $\mathcal U_H^+(R)$ of §35, with $\delta_\rho>0$, and its multiplicity-weighted positive cost, omitting only the uniform constant $4K$:
+
+$$
+G_R=\sum_{\rho\in\mathcal U_H^+(R)}m_\rho|p(z_\rho)|
+\left[T_\rho^{-1/4}|X_\rho|
++T_\rho^{-1/2}\sum_{\varepsilon=\pm1}
+(|L_{\varepsilon,\rho}|+|U_{\varepsilon,\rho}|)\right].
+$$
+
+Since $|\Phi(t)|\le M$ on the real line and $\int_1^bw(u)\,du=1$, the same verified head satisfies
+
+$$
+0<P_H(R)\le C_H:=2M^2\sum_{0<\gamma\le H}m_\rho p(\gamma)<\infty
+$$
+
+for sufficiently large $R$; positivity also follows from (3). Suppose an actual off-line zero exists. Its reflected positive-displacement representative has fixed $\delta>0$ and $\gamma>H$. It belongs to $\mathcal U_H^+(R)$ whenever $R>9\gamma/(25\delta^2)$, with the sufficiently-large-$T$ threshold also imposed. Its right-endpoint contribution to this cost is
+
+$$
+m_\rho|p(z_\rho)|T_\rho^{-1/2}|U_{+,\rho}|
+=c_\rho R^{-11/4}\exp[b\delta R-C_\rho\sqrt R],
+$$
+
+where $c_\rho>0$ and
+
+$$
+C_\rho=2(\sqrt b+\sqrt a)\operatorname{Re}\sqrt{\delta+i\gamma}>0.
+$$
+
+Consequently $G_R\to\infty$ and $G_R/P_H(R)\to\infty$ under this hypothesis. Only one persistent actual representative is used; no exchange of an infinite sum and a limit is needed. Multiplying this same positive endpoint allowance by any fixed inverse power of $R$ preserves its divergence; this statement does not address every possible sharper remainder estimate.
+
+This is a limitation of the displayed positive allowance, not a lower bound for the realized signed error. It does not rule out cancellation, a sharper signed remainder estimate, or a joint main-minus-cost comparison. In particular, the fact that this cost exceeds the head does not determine the sign of the leading sum.
+
+The target remains the actual signed comparison of §35 at every sufficiently large real scale. An admissible exact channel reconstruction or a complete high-height contour identity would supply a lawful arithmetic representation; either still needs a signed estimate for the same jointly realized prime, zero and remainder data. These method boundaries are paper-level applications of known analytic conditions to the prescribed models, without a new general theorem, Lean verification or RH/Robin conclusion.
