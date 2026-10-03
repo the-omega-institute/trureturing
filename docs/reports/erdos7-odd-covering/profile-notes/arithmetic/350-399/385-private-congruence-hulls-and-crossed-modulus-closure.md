@@ -26803,3 +26803,157 @@ with every label in the divisor closure (232.6) and with the actual overlap
 sets in (232.2).  No unrestricted contradiction follows until a hole lower
 bound survives that transport or the resulting closure is consumed by an
 EB1-compatible descent.
+
+## 233. The finite private-point flow is the valid Hall test
+
+The quotient-component decomposition is useful, but a count of \(H\)-fibres
+cannot count labels. Several labels in one component may have distinct
+private quotient coordinates above the same \(H\)-residue. The correct finite
+allocation therefore retains those coordinates and the coordinates of every
+other component.
+
+Retain the notation of Section 232 and define the quotient components
+explicitly. Put
+
+\[
+I_H=\{i:\ell_i>1\},
+\]
+
+join (i,j\in I_H) when \(\gcd(\ell_i,\ell_j)>1\), and let
+\(\mathfrak B_H\) be the resulting connected components. For
+\(B\in\mathfrak B_H\), put
+
+\[
+L_B=\operatorname{lcm}_{i\in B}\ell_i,
+\qquad G_B=\mathbb Z/L_B\mathbb Z.
+\]
+
+For \(r\in U_H\), define the quotient class induced by \(i\in B\) by
+
+\[
+ C_{i,r}=\begin{cases}
+ \{t\in G_B:t\equiv b_i(r)\pmod{\ell_i}\},
+     &r\equiv a_i\pmod {g_i},\\
+ \varnothing,&\text{otherwise}.
+ \end{cases}
+\]
+
+For each \(r\in U_H\), let
+\[
+R_B(r)=G_B\setminus\bigcup_{i\in B}C_{i,r},
+\qquad
+W(r)=\{B\in\mathfrak B_H:R_B(r)=\varnothing\}.
+\]
+
+The quotient CRT identifies the fibre above (r) with
+\(\prod_{B\in\mathfrak B_H}G_B\), so a whole cover forces
+\(W(r)\ne\varnothing\) for every \(r\in U_H\).
+
+The part of this class not covered by another label in the same component is
+
+\[
+ P_{i,r}=C_{i,r}\setminus
+       \bigcup_{j\in B\setminus\{i\}}C_{j,r}.
+ \tag{233.1}
+\]
+
+For a whole cover, if \(r\in U_H\) and a private point of \(i\in B\) lies
+above \(r\), then
+
+\[
+ W(r)=\{B\},\qquad
+ t_B\in P_{i,r},\qquad
+ t_{B'}\in R_{B'}(r)\quad(B'\ne B).
+ \tag{233.2}
+\]
+
+The private point is outside every other component, while whole coverage
+forces the component containing \(i\) to have empty remainder. Conversely,
+the conditions in (233.2), together with CRT on the quotient coordinates,
+produce a residue modulo \(Q\) covered by \(i\) and by no other label.
+
+The finite flow can be written without expanding all \(Q\) points. For each
+component \(B\), each \(r\in U_H\) with \(W(r)=\{B\}\), and each \(t\in G_B\),
+make a bucket
+
+\[
+ \beta=(B,r,t),\qquad
+ c(\beta)=\prod_{B'\ne B}|R_{B'}(r)|.
+ \tag{233.3}
+\]
+
+The capacity is the number of choices of the other component coordinates.
+Make a finite bipartite network with source-to-label arcs of capacity one,
+label-to-bucket arcs of capacity one when \(t\in P_{i,r}\), and
+bucket-to-sink arcs of capacity \(c(\beta)\). Let \(\nu_H\) be its maximum
+flow. Buckets belonging to different components are disjoint because
+\(W(r)\) is a singleton.
+
+### Finite private-point flow theorem
+
+For an irredundant whole cover, every external label \(i\in I_H\) has a
+private witness above \(U_H\), and the network above has
+
+\[
+ \boxed{\nu_H=|I_H|.}
+ \tag{233.4}
+\]
+
+Equivalently, every set \(S\subseteq I_H\) satisfies the capacitated Hall
+inequality
+
+\[
+ \boxed{
+ \sum_{\beta\in N(S)}c(\beta)\ge |S|,
+ }
+ \tag{233.5}
+\]
+
+where \(N(S)\) is the set of buckets adjacent to at least one label in \(S\).
+This is a finite necessary condition and can be checked by an integral
+max-flow computation.
+
+To prove (233.4), choose one private residue modulo \(Q\) for every external
+label. Private residues for different labels are distinct. Reduction modulo
+\(H\) gives \(r\in U_H\), and (233.2) puts the residue in a bucket adjacent to
+its label. At most \(c(\beta)\) selected residues use one bucket because the
+remaining component coordinates range over the product in (233.3). These
+private residues therefore define a flow of value \(|I_H|\). No phase is
+replaced by an independently chosen phase.
+
+This corrects the previously proposed inequality
+
+\[
+ \left|\bigcup_{B\in\mathcal S}\mathrm{Bad}_B\right|
+ \ge\sum_{B\in\mathcal S}\min(|B|,f_H+1).
+\]
+
+That inequality is not justified: its left side counts \(H\)-residues, while
+one residue can supply many distinct quotient private points. For example,
+with \(H=35\), quotient modulus \(3\), and labels
+
+\[
+(d_i,g_i,a_i)=(3,1,0),(15,5,5),(21,7,7),
+\]
+
+the fibre \(r=0\) carries three different quotient phases
+\(0,1,2\pmod 3\). One \(H\)-residue can therefore support three distinct
+private quotient points. The bucket capacity in (233.3) records precisely
+this multiplicity.
+
+The flow criterion is necessary for irredundancy, but it is not a proof that
+an arbitrary finite data set is a whole cover. To obtain an EB1 contradiction
+from it, one must exhibit a Hall deficit for the actual phases, or combine a
+strictly cheaper source-compatible replacement with the flow constraints. A
+componentwise bound using only the cardinalities of the \(E_B\) cannot supply
+that step.
+
+### Minimal finite verification
+
+A checker needs only integer arithmetic: compute \(Q\), choose \(H\mid Q\),
+enumerate \(r\in\mathbb Z/H\mathbb Z\), compute the \(C_{i,r}\), \(R_B(r)\),
+\(W(r)\), and the capacities (233.3), then run max-flow. Independently
+enumerate residues modulo \(Q\) and test each label's private set. Under the
+whole-cover hypothesis, the resulting private residues must realize the flow
+of value \(|I_H|\). This validates the compression and source/phase
+bookkeeping only; it cannot settle the unrestricted Erdős problem.
