@@ -4,6 +4,8 @@ import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationEquatio
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ElaborationDefinition
 import LeanInformationAuditRegTests.ContractReferenceFixtures.ImportedElaboration
 
+import LeanInformationAuditRegTests.ContractReferenceFixtures.Coexistence
+
 namespace LeanInformationAuditRegTests.ContractAuxiliaries
 open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
@@ -53,4 +55,20 @@ run_meta do
       (!(← Discovery.generatedEntryAuxiliary owner authored definitions (← getEnv) name))
     assertTest s!"auxiliary.same_module.{suffix}"
       (!(← Discovery.generatedEntryAuxiliary `Other.Module entries definitions (← getEnv) name))
+run_meta do
+  let owner := `LeanInformationAuditRegTests.ContractReferenceFixtures.Coexistence
+  let error ← try
+    let source ← IO.FS.readFile (← Discovery.moduleSource owner)
+    let entries ← SourceAudit.parse (← getEnv) source owner.toString
+    assertTest "auxiliary.coexistence.reg_syntax"
+      (SourceAudit.auditRegCommands `Reg.Coexistence entries).isOk
+    let definitions ← Discovery.auditModule owner source
+    for suffix in #["eq_1", "eq_def"] do
+      assertTest s!"auxiliary.coexistence.{suffix}"
+        (← Discovery.generatedEntryAuxiliary owner entries definitions (← getEnv)
+          (`ContractReferenceFixtures.Coexistence.entry |>.str suffix))
+    pure "accepted"
+  catch ex => ex.toMessageData.toString
+  assertTest "auxiliary.coexistence.discovery" (error == "accepted")
+  logInfo m!"CONTRACT_DIAGNOSTIC coexistence {error}"
 end LeanInformationAuditRegTests.ContractAuxiliaries

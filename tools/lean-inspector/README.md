@@ -146,10 +146,13 @@ Contract entries have no declaration suffix: `where`, termination hints,
 
 Only `eq_1` and `eq_def` have entry auxiliary permission. Both must be
 same-module theorem constants at Lean v4.33.0 reserved equation identities, with
-the simple reflexive equation shape for the validated literal entry. Source
+the simple reflexive equation shape with the validated entry body as its right
+hand side. Source
 where/let-rec declarations retain their own authored inventory. Authored term
-elaboration, including imported repository term/tactic/command expanders, grants
-no equation permission. The import syntax keys are checked against the complete
+elaboration in the entry command tree, including imported repository
+term/tactic/command expanders, grants no equation permission. Enclosing wrappers
+remain in that tree; sibling declarations in a mutual block do not. Unrelated
+mathematical declarations retain their ordinary syntax permissions. The import syntax keys are checked against the complete
 source command trees. All other compiled constants,
 including named elaboration children, obey the ordinary direct-reference rule.
 Private compiler identities and source user spellings remain distinct.

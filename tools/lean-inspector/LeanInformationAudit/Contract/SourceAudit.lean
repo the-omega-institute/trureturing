@@ -129,6 +129,16 @@ def hasAuthoredElaboration (entries : Array Entry) (forbidden : NameSet := {}) :
             stx.getAtomVal)).isSome then return true
     return false
 
+/-- Retain an entry's enclosing command wrappers while removing sibling
+declarations from a mutual command. Only its own tree controls equation permission. -/
+private partial def ownCommandTree (declaration : Syntax) (stx : Syntax) : Syntax :=
+  if stx.isOfKind ``Parser.Command.declaration && stx != declaration then .missing
+  else stx.setArgs (stx.getArgs.map (ownCommandTree declaration))
+
+def entryHasAuthoredElaboration (entry : Entry) (forbidden : NameSet := {}) : Bool :=
+  hasAuthoredElaboration #[{ entry with
+    originCommand := ownCommandTree entry.command entry.originCommand }] forbidden
+
 private partial def declarations (command : Syntax) : Array Syntax :=
   if command.isOfKind ``Parser.Command.declaration then #[command]
   else if command.isOfKind ``Parser.Command.mutual ||

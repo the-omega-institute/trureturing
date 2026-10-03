@@ -125,7 +125,6 @@ same-module ownership. Every other compiled constant is audited normally. -/
 def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
     (definitions : Array Definition) (env : Environment) (name : Name)
     (forbidden : NameSet := {}) : MetaM Bool := do
-  if SourceAudit.hasAuthoredElaboration entries forbidden then return false
   if entries.any (fun entry => entry.authoredNames.contains (privateToUserName name)) then
     return false
   let belongs := if owner == env.header.mainModule then env.getModuleIdxFor? name == none
@@ -137,12 +136,15 @@ def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
   for definition in definitions do
     let parent := privateToUserName definition.info.name
     let child := privateToUserName name
+    let some entry := entries.find? (·.sourceName == some parent) | continue
+    if SourceAudit.entryHasAuthoredElaboration entry forbidden then continue
     unless name == Meta.mkEqLikeNameFor env definition.info.name suffix &&
         isReservedName env name do continue
     if entries.any (fun entry => entry.authoredNames.any fun authored =>
         authored != parent && authored.isPrefixOf child) then continue
     unless info.type.isAppOfArity ``Eq 3 &&
         info.type.getAppArgs[1]!.isConstOf definition.info.name &&
+        info.type.getAppArgs[2]!.consumeMData == definition.info.value.consumeMData &&
         info.value.isAppOfArity ``Eq.refl 2 &&
         info.value.getAppArgs[1]!.isConstOf definition.info.name do continue
     if let some range ← findDeclarationRanges? name then

@@ -56,7 +56,9 @@ run_meta do
   for leaf in #["RootCatalog", "SealedCatalog"] do
     let owner := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror ++ leaf.toName
     let requirements ← RootStructure.requiredFor #[owner] Discovery.moduleSource
-    let snapshot ← Discovery.discoverWithStructure requirements #[owner]
-    assertTest s!"root.mirror.positive.{leaf}"
-      (snapshot.registrations.size == 1 && snapshot.roots.isEmpty && snapshot.seals.isEmpty)
+    let accepted ← try
+      let snapshot ← Discovery.discoverWithStructure requirements #[owner]
+      pure (snapshot.registrations.size == 1 && snapshot.roots.isEmpty && snapshot.seals.isEmpty)
+    catch _ => pure false
+    assertTest s!"root.mirror.positive.{leaf}" accepted
 end LeanInformationAuditRegTests.ContractPaths
