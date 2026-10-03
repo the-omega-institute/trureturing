@@ -259,6 +259,11 @@ class BuildWorkContracts(unittest.TestCase):
         self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
 
+    def test_failed_report_producer_leaves_no_work_fact(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, failure=23)
+        self.assertEqual(23, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+
 
 if __name__ == "__main__":
     unittest.main()
