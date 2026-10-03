@@ -1,0 +1,17 @@
+**定理60.3（奇偶阶梯与有限暴露极限）。** 有
+
+$$
+r_1=0,\qquad r_{2j}=r_{2j+1}
+=\tau\sum_{\ell=1}^{j}\operatorname{Cat}_{\ell-1}
+[\tau(1-\tau)]^{\ell}\quad(j\ge1),
+\tag{60.6}
+$$
+
+其中 $\operatorname{Cat}_v={2v\choose v}/(v+1)$。并且
+
+$$
+r_{2j}>r_{2j-1},\qquad r_k<\tau^2,\qquad
+\lim_{k\to\infty}r_k=\tau^2=4s^2.
+\tag{60.7}
+$$
+

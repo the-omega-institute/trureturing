@@ -546,5 +546,36 @@
     "trial_integer_centers"
   ],
   "full_local_result_sha256": "beff5f153927d3619cb0ed34ea752cccd0b039f4eeda795e83583db32d34f256",
-  "execution_scope": "Local package-producer replay, not independent execution. Author moment containment remains an explicit premise."
+  "execution_scope": "Local package-producer replay, not independent execution. Author moment containment remains an explicit premise.",
+  "independent_execution": {
+    "native_session_id": "01a1029d-ed4a-77a3-92b4-4e4fdaaf0e95",
+    "execution_kind": "Separate native Codex CLI session; same program and hash-bound inputs; producer environment reused after direct version checks",
+    "source_input_manifest_sha256": "e2dd9ea5530cf353d643895676230952ce7e803aea27c161c60c534454cd1133",
+    "consumer_sha256": "fbc63dac28828fee3effca02cfacd890fe594a6e1eaf5c6857733d6491ce71e9",
+    "decoded_input_sha256": {
+      "prime": "29fb7e7197098fb3daef8d6058541a6103335dad57abd482af60f9a53e905aba",
+      "kernel": "1c627477649520e1a0b9f26d57202841d392873e5d61a7d3cd16d190b6e4bce9"
+    },
+    "result_sha256": "1b1731dce5b98c52f08ce25a41d855344fffe41626194d738fe8f5aaba3a0080",
+    "arithmetic_versions": {
+      "python": "3.13.12",
+      "python_flint": "0.9.0",
+      "numpy": "2.5.3"
+    },
+    "wrapper_exit_code": 0,
+    "consumer_exit_code": 0,
+    "even_dimension": 256,
+    "precision_bits": 1536,
+    "serialized_pivot_lower_endpoints_checked": 256,
+    "all_serialized_pivot_lower_endpoints_strictly_positive": true,
+    "trial_integer_entries_checked": 65536,
+    "trial_squared_norm_recomputed_exactly": true,
+    "trial_exact_frobenius_bound": 32,
+    "directed_negative": false,
+    "proposal_quadratic_ball": "[2.2976529228465863775255694255517092447876029762960e-17 +/- 4.04e-67]",
+    "independent_implementation": false,
+    "independent_matrix_regeneration": false,
+    "moment_containment_independently_verified": false,
+    "scope": "Independent execution and inspection of the same conditional sufficient finite c9 comparison; no new mathematics, kernel proof, external human reproduction, cofinal full-Weil positivity or RH proof."
+  }
 }

@@ -1,0 +1,26 @@
+**定义 1.2（优先教师与有效签名）。** 教师参数为严格递增三元组 $t=(p,q,r)$，其中 $p<q<r$。定义门与三类教师为
+
+$$
+g_{ij}(x)=h(x_i)f(x_j),\qquad
+C_t(x)=
+\begin{cases}
+1,&g_{pq}(x)=1,\\
+2,&g_{pq}(x)=0\ \text{且}\ g_{qr}(x)=1,\\
+0,&g_{pq}(x)=g_{qr}(x)=0.
+\end{cases}
+$$
+
+第一道门具有优先权。有效位置对及有序签名为
+
+$$
+e_G(i,j)=
+\begin{cases}
+\bot,&(i,j)\in G,\\
+(i,j),&(i,j)\notin G,
+\end{cases}
+\qquad
+\sigma_G(t)=(e_G(p,q),e_G(q,r)).
+$$
+
+这里 $\bot$ 表示该门在合法域上恒关闭；签名保留两道门的次序。
+

@@ -1,0 +1,265 @@
+**定理 350.1（相位反推与两种弱极限）。** 在定义350.1和假设350.1下，先固定
+
+$$
+\begin{aligned}
+K_{\rm inv}&=2\alpha+3B,&Y_0&=16/T_0,&C_M&=B+136K_{\rm inv},\\
+C_2&=\max\bigl(C_M,Y_0^2A+\alpha\log^2Y_0\bigr),\\
+C_4&=\max\bigl(64K_{\rm inv},Y_0^2A\bigr),&
+C_T&=\max\bigl(32K_{\rm inv},Y_0^2A\bigr),\\
+C_{\rm num}&=C_2+C_4/8,&
+L_*&=\max\bigl(1,\log Y_0,4B/\alpha\bigr),\\
+t_*&=e^{-L_*},&Q_{\rm cdf}&=4(C_{\rm num}+B)/\alpha.
+\end{aligned} \tag{350.2}
+$$
+
+这些常数可以依赖总权重 $A$，不主张与谱质量无关。它们在任何时间、分位参数或截断的选择之前确定，并满足以下全部结论。
+
+对每个 $Y\ge1$ 和 $\diamond\in\{\le,<\}$，有
+
+$$
+\begin{aligned}
+\left|M_2^\diamond(Y)-\alpha\log^2Y\right|&\le C_2(\log Y+1),\\
+M_4^\diamond(Y)&\le C_4Y^2(\log Y+1),\\
+\mathcal T^{\ge}(Y),\ \mathcal T^{>}(Y)&\le C_TY^{-2}(\log Y+1).
+\end{aligned} \tag{350.3}
+$$
+
+对每个带符号的时间 $0<|t|\le t_*$，记 $L_t=\log(1/|t|)$。同时有
+
+$$
+\delta(t)\ge\frac\alpha2t^2L_t^2>0,
+\qquad
+\sup_{0\le s\le1}
+\left|\frac{\delta_{\diamond\exp(sL_t)}(t)}{\delta(t)}-s^2\right|
+\le\frac{Q_{\rm cdf}}{L_t},
+\quad\diamond\in\{\le,<\}. \tag{350.4}
+$$
+
+同一阈值和同一误差常数包括 $s=0,1$ 以及任何随 $t$ 变化而仍在 $[0,1]$ 内的 $s$。
+
+在上述邻域中，以原指标集形成离散概率质量及位置
+
+$$
+p_i(t)=\frac{2a_i(1-\cos(\gamma_i t))}{\delta(t)},
+\qquad x_i(t)=\frac{\log\gamma_i}{L_t}.
+$$
+
+令 $\operatorname{PMF}(I)$ 表示非负扩展实数族且其可和总质量为 $1$ 的离散概率空间。将 $p(t)\in\operatorname{PMF}(I)$ 先沿 $i\mapsto x_i(t)$ 映至 $\operatorname{PMF}(\mathbb R)$，再取对应的 Borel 概率测度，得到
+
+$$
+\mu_t=\sum_i p_i(t)\,\delta_{x_i(t)}
+\in\operatorname{ProbabilityMeasure}(\mathbb R).
+$$
+
+这里 $\delta_x$ 为 Dirac 测度；重复位置的质量相加，而不是删除原指标。无需在 $I$ 上另给可测结构。设
+
+$$
+\nu(E)=\int_{E\cap[0,1]}2s\,ds,
+\qquad E\subseteq\mathbb R\text{ 为 Borel 集}.
+$$
+
+则 $\nu$ 为 $\operatorname{Beta}(2,1)$ 概率测度，且在概率测度的通常弱拓扑中
+
+$$
+\mu_t\longrightarrow\nu
+\quad\bigl(t\to0,\ t\ne0\bigr). \tag{350.5}
+$$
+
+具体地，对每个固定的有界连续实函数 $f$，$\int f\,d\mu_t\to\int f\,d\nu$。此极限的时间滤子是实数的穿孔邻域滤子 $\mathcal N[\ne](0)$。
+
+再令 $\mathcal H=\operatorname{lp}(I;\mathbb C,2)=\ell^2(I;\mathbb C)$，赋予通常的复 Hilbert 结构。在同一邻域内定义
+
+$$
+w_t(i)=\frac{\sqrt{a_i}\,(e^{\mathrm i\gamma_i t}-1)}{\sqrt{\delta(t)}}.
+$$
+
+则 $w_t\in\mathcal H$、$\|w_t\|=1$，并在
+$\operatorname{WeakSpace}(\mathbb C,\mathcal H)$ 的通常复弱拓扑中有
+
+$$
+w_t\rightharpoonup0
+\quad\bigl(t\to0,\ t\ne0\bigr). \tag{350.6}
+$$
+
+即每个固定连续复线性泛函 $\lambda:\mathcal H\to\mathbb C$ 均满足 $\lambda(w_t)\to0$。若需要在全部实数上定义这两个族，可在邻域以外置 $\mu_t=\nu$、$w_t=0$；单位范数只在 $0<|t|\le t_*$ 内断言。
+
+**证明。** 首先取实数 $|x|\le1$，使用余弦估计
+
+$$
+\left|\cos x-\left(1-\frac{x^2}{2}\right)\right|
+\le\frac5{96}|x|^4.
+$$
+
+两倍误差满足 $5/48\le1/8$，故只需以下安全界：
+
+$$
+\left|2(1-\cos x)-x^2\right|\le\frac{x^4}{8},
+\qquad
+1-\cos(x/2)\ge\frac{x^2}{8}-\frac{5x^4}{1536}
+\ge\frac{x^2}{16}. \tag{350.7}
+$$
+
+并不需要两倍 Taylor 误差为 $x^4/12$ 的界。
+
+置 $D(u)=4\delta(u/2)-\delta(u)$。由可和性和倍角公式，对全部实数 $u$ 有精确恒等式
+
+$$
+D(u)=\sum_i4a_i\bigl(1-\cos(\gamma_i u/2)\bigr)^2\ge0. \tag{350.8}
+$$
+
+令 $r=\log2$、$\ell_u=\log(1/u)$。当 $0<u\le T_0$ 时，将（350.1）用于 $u/2,u$，得到
+
+$$
+\begin{aligned}
+D(u)&\le u^2\left[\alpha(2r\ell_u+r^2)
+ +B(2\ell_u+r+2)\right]\\
+&\le K_{\rm inv}u^2(\ell_u+1),
+\end{aligned} \tag{350.9}
+$$
+
+因为 $0<r<1$ 且 $\ell_u\ge1$。非负性不是误差式的推测，而是（350.8）的逐项平方。
+
+这个平方也可由既有加权 Hilbert 范数恒等式理解。固定 $0<\theta<1$，对单个模式置
+$P=e^{\mathrm i\theta\gamma_i u}-1$、$Q=e^{\mathrm i\theta\gamma_i u}(e^{\mathrm i(1-\theta)\gamma_i u}-1)$，则
+
+$$
+\frac{|P|^2}{\theta}+\frac{|Q|^2}{1-\theta}-|P+Q|^2
+=\frac{|(1-\theta)P-\theta Q|^2}{\theta(1-\theta)}.
+$$
+
+乘 $a_i$ 并求和，全部族由固定 $\theta$ 下的常数倍 $a_i$ 控制。因而
+$\delta(\theta u)/\theta+\delta((1-\theta)u)/(1-\theta)-\delta(u)\ge0$；$\theta=1/2$ 正是（350.8）。若 $p,q>0$、$p+q=m$，取 $\theta=p/m$、时间 $mu$，得到
+$\frac mp\delta(pu)+\frac mq\delta(qu)-\delta(mu)\ge0$，且任意平滑二次项 $cu^2$ 在此组合中消去。Fibonacci 的相邻项可取 $p=F_n$、$q=F_{n+1}$、$m=F_{n+2}$（$n\ge1$），其分裂比例趋于 $\varphi^{-2},\varphi^{-1}$；这里只是加法分裂对上述范数恒等式的应用，不识别 Fibonacci 数与纵坐标，也不产生关于 $5040$ 的数值等式。若以固定 $\theta$ 代入（350.1），组合的主项为
+$\alpha u^2[2h(\theta)\ell_u+c(\theta)]$，其中
+$h(\theta)=-\theta\log\theta-(1-\theta)\log(1-\theta)$、
+$c(\theta)=\theta\log^2\theta+(1-\theta)\log^2(1-\theta)$；但误差仍为 $O_\theta(u^2(\ell_u+1))$，故不由此断言精确极限系数。以下只使用二倍缺陷（350.8）。
+
+现在设 $Y\ge Y_0$，取 $u=1/Y$。对 $\gamma_i\le Y$，（350.7）给
+$4a_i(1-\cos(\gamma_i u/2))^2\ge a_i\gamma_i^4u^4/64$。
+对有限子和应用（350.9），再取上确界，得到
+
+$$
+M_4^{\le}(Y)\le64K_{\rm inv}Y^2(\log Y+1). \tag{350.10}
+$$
+
+严格截断满足相同界。
+
+高频不能在某个单独时间用 $1-\cos$ 的正下界控制；改取 $S=8/Y\le T_0/2$。对任意满足 $\gamma_i\ge Y$ 的指标，令 $z=\gamma_iS/2\ge4$。有限三角多项式的普通积分给
+
+$$
+\frac1S\int_0^S(1-\cos(\gamma_i u/2))^2\,du
+=\frac32-\frac{2\sin z}{z}+\frac{\sin(2z)}{4z}
+\ge\frac{15}{16}. \tag{350.11}
+$$
+
+对 $0<u\le S$，不等式 $\log x\le x-1$ 给
+
+$$
+u^2\log(S/u)\le Su-u^2\le S^2/4.
+$$
+
+结合（350.9）、$\log(1/S)+1\ge1$，有
+
+$$
+D(u)\le\frac{5K_{\rm inv}}4S^2\bigl(\log(1/S)+1\bigr). \tag{350.12}
+$$
+
+$u=0$ 时 $D(0)=0$，同界成立。取任何有限集合 $E\subseteq\{i:\gamma_i\ge Y\}$，其非负平方子和逐点不超过 $D(u)$。只对这个有限子和积分，利用（350.11）和（350.12），得到
+
+$$
+\frac{15}{4}\sum_{i\in E}a_i
+\le\frac{5K_{\rm inv}}4S^2\bigl(\log(1/S)+1\bigr).
+$$
+
+取有限子和上确界即得
+
+$$
+\mathcal T^{\ge}(Y)\le\frac{64K_{\rm inv}}3Y^{-2}(\log Y+1)
+\le32K_{\rm inv}Y^{-2}(\log Y+1). \tag{350.13}
+$$
+
+因此没有交换无穷和与积分，也没有使用端点为零的对数反常积分。严格尾由非负性直接继承此界。
+
+仍取 $t=1/Y$。将低频 Taylor 误差与高频 $2(1-\cos)\le4$ 的界相加，（350.10）和（350.13）给
+
+$$
+\begin{aligned}
+\left|\delta(t)-t^2M_2^\diamond(Y)\right|
+&\le\frac{t^4}{8}M_4^\diamond(Y)+4\mathcal T^{\rm comp}(Y)\\
+&\le136K_{\rm inv}t^2(\log Y+1),
+\qquad\diamond\in\{\le,<\}.
+\end{aligned} \tag{350.14}
+$$
+
+其中闭低频的补集用严格尾，严格低频的补集用闭尾。（350.1）于是给
+$|M_2^\diamond(Y)-\alpha\log^2Y|\le C_M(\log Y+1)$。
+当 $1\le Y\le Y_0$ 时，直接使用
+$0\le M_2^\diamond(Y)\le Y_0^2A$、
+$M_4^\diamond(Y)\le Y^4A\le Y_0^2AY^2$、
+$\mathcal T^{\ge}(Y)\le A\le Y_0^2AY^{-2}$，以及
+$0\le\log Y\le\log Y_0$，就恢复（350.3）的全部早段。特别地，矩和尾是（350.1）的结论，不是额外输入；$M_2(Y)\to\infty$ 还说明完整二阶矩并不有限。
+
+对 $0<|t|\le t_*$，偶性使（350.1）仍成立，且 $L_t\ge L_*\ge1$。由
+$B(L_t+1)\le2BL_t\le\alpha L_t^2/2$，得到（350.4）的正下界。
+对所有 $s\in[0,1]$ 同时置 $y=\exp(sL_t)$，则 $1\le y\le1/|t|$。逐项（350.7）及（350.3）给
+
+$$
+\begin{aligned}
+\left|\delta_{\diamond y}(t)-\alpha t^2(sL_t)^2\right|
+&\le t^2C_2(sL_t+1)+\frac{t^4}{8}C_4y^2(sL_t+1)\\
+&\le C_{\rm num}t^2(L_t+1).
+\end{aligned} \tag{350.15}
+$$
+
+分子与 $s^2\delta(t)$ 的差至多为
+$(C_{\rm num}+B)t^2(L_t+1)$。除以 $\delta(t)\ge\alpha t^2L_t^2/2$，再用 $L_t+1\le2L_t$，即得完整的（350.4）。
+
+下面验证测度极限。归一化质量非负、可和且总和为 $1$，故是上述任意指标的离散概率；可和非负族的非零支持至多可数，映射后的质量亦可和。先映离散概率再取实数上的测度，使 $I$ 的可测性不成为假设。极限测度有总质量 $\int_0^1 2s\,ds=1$，其完整分布函数为
+
+$$
+F_\nu(v)=\nu(( -\infty,v])=
+\begin{cases}
+0,&v<0,\\
+v^2,&0\le v\le1,\\
+1,&v>1.
+\end{cases} \tag{350.16}
+$$
+
+对 $v\in[0,1]$，（350.4）就是 $F_{\mu_t}(v)\to F_\nu(v)$。在 $\gamma_i\le1$ 上，全局界 $2(1-\cos x)\le x^2$ 给
+
+$$
+\mu_t(( -\infty,0])
+\le\frac{t^2\sum_{\gamma_i\le1}a_i\gamma_i^2}{\delta(t)}
+\le\frac{2A}{\alpha L_t^2}. \tag{350.17}
+$$
+
+因此全部 $v<0$ 由单调性得到分布函数趋零；全部 $v>1$ 由
+$0\le1-F_{\mu_t}(v)\le1-F_{\mu_t}(1)\le Q_{\rm cdf}/L_t$
+得到趋一。对所有实数 $b<c$，
+$\mu_t((b,c])=F_{\mu_t}(c)-F_{\mu_t}(b)$ 因而趋于 $\nu((b,c])$。
+半开区间 $(b,c]$ 构成生成实 Borel 结构的 $\pi$ 系统；$\nu$ 没有点质量，所以区间边界均为 $\nu$ 零集。概率测度的 Portmanteau 区间判据遂给其通常弱拓扑中的（350.5）。实数穿孔邻域有可数邻域基，故该判据亦直接适用于这里的时间滤子，而非只断言某一条序列上的极限。
+
+最后，对复 Hilbert 族，逐坐标弦恒等式给
+
+$$
+\sum_i|w_t(i)|^2
+=\frac{\sum_i2a_i(1-\cos(\gamma_i t))}{\delta(t)}=1.
+$$
+
+所以 $w_t\in\operatorname{lp}(I;\mathbb C,2)$ 且范数恰为 $1$。对每个固定指标，$|e^{\mathrm ix}-1|\le|x|$ 给
+
+$$
+|w_t(i)|\le\sqrt{2a_i/\alpha}\,\frac{\gamma_i}{L_t}\longrightarrow0. \tag{350.18}
+$$
+
+固定 $v\in\mathcal H$ 和 $\eta>0$，选有限集 $E\subseteq I$ 使
+$\|v-v_E\|<\eta$。有限坐标收敛给 $\langle v_E,w_t\rangle\to0$，而 Cauchy--Schwarz 给
+$|\langle v-v_E,w_t\rangle|\le\eta\|w_t\|=\eta$。于是
+$\langle v,w_t\rangle\to0$。复 Riesz 表示将每个连续复线性泛函写成
+$\lambda(w)=\langle v,w\rangle$，此处内积对第一变量共轭线性、第二变量线性。弱拓扑真正使用的是连续复对偶与向量之间的双线性评价
+$B(\lambda,w)=\lambda(w)$；把两变量 Hermitian 内积当成复双线性映射并不合法。Riesz 表示还保证对偶分离向量，所以这些评价正是 $\operatorname{WeakSpace}(\mathbb C,\mathcal H)$ 的分离弱拓扑，得到（350.6）。
+
+假设允许真正无限的有界频段，而不是暗含有限截断。例如从任何满足（350.1）的谱出发，在 $I\sqcup\mathbb N$ 的新指标上添
+$\gamma_n=1$、$a_n=2^{-(n+1)}$。新权重和为 $1$，新相位精确为
+$\delta_{\rm aug}(t)=\delta(t)+2(1-\cos t)$。由全局余弦界，新谱在同一个 $T_0$ 下满足（350.1），主系数仍是 $\alpha$，误差常数可取 $B+1$。每个新权重严格正，而闭截断 $\gamma\le1$ 包含全部新指标，故非有限；严格截断 $\gamma<Y$ 在 $Y>1$ 时亦非有限。以定理346.6的完整谱为原谱即可给非空实例，无需向该完整零点模型实际增添模式。新云的归一化能量至多为 $2/(\alpha L_t^2)$，其概率位置皆为 $0$，不改变两种弱极限。这说明本定理控制加权能量而不恢复未加权计数。$\square$
+

@@ -1,0 +1,15 @@
+**推论60.6（零训练 worst-case 半径与置信）。** 揭示族的精确零训练 minimax 半径是
+
+$$
+\inf_f\max_{i\in[M]}L_s(i,f)=r_M(s).
+\tag{60.11}
+$$
+
+若 $f$ 只由参数无关种子随机化，则
+
+$$
+\sup_f\min_{i\in[M]}P_\xi\{L_s(i,f)\le\varepsilon\}
+=\frac{K_M(s,\varepsilon)}{M}.
+\tag{60.12}
+$$
+
