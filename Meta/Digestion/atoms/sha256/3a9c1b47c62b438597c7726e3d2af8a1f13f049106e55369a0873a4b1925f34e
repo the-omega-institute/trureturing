@@ -1,0 +1,27 @@
+**定义 16.2（块尺度与首个歧义预算）。** 置 $T_j=\rho^j(\alpha)$，并置
+
+$$
+A_d=\rho^d(\alpha)=T_d,\qquad B_d=\rho^d(\beta)=T_{d+1},\qquad
+a=|\operatorname{Leaves}(A_d)|=F_{d+1},\qquad
+b=|\operatorname{Leaves}(B_d)|=F_{d+2}.
+\tag{16.6}
+$$
+
+母卷定理 3.2--3.4 给出 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 及组成递推；因而
+
+$$
+\operatorname{ht}(A_d)=d-1,\quad \operatorname{ht}(B_d)=d,\quad
+c(A_d)=(F_{d-1},F_d),\quad c(B_d)=(F_d,F_{d+1}),\quad
+b=a+F_d<2a.
+\tag{16.7}
+$$
+
+对 $h\in\mathbb N_0$ 定义实际像的首个歧义预算
+
+$$
+\Lambda_d(h)=\min\{|\operatorname{Leaves}(V)|:V\in\mathcal I_d,\ \operatorname{ht}(V)>h\}.
+\tag{16.8}
+$$
+
+这里的最小值取实际替换像，而非仅取组成可逆或组成祖先许可；定理 12.1 的固定组成纤维公式仍按其原范围使用。
+

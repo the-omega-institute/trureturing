@@ -1,0 +1,20 @@
+**定义 18.2（无组成与叶数承诺的有声性）。** 对定义 18.1 的 $V$、$h\in\mathbb N_0$ 与有限集合 $Q\subseteq\Sigma_{\le h}$，称 $Q$ **无承诺有声**，若
+
+$$
+\forall U\in\mathcal T,\qquad
+\bigl(\forall u\in Q,\ \operatorname{out}_U(u)=\operatorname{out}_V(u)\bigr)
+\quad\Longrightarrow\quad U\in\mathcal I_d.
+\tag{18.7}
+$$
+
+定义相应最小查询基数
+
+$$
+\tau_d^{\mathrm{un}}(V,h)=
+\min\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 无承诺有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{18.8}
+$$
+
+$V$ 仍是选址时的已知正实例，成本仍按定义 17.1 计算。竞争树 $U$ 遍历全部 $\mathcal T$，既不要求 $c(U)=c(V)$，也不要求任何叶数上界；$c(V)$ 在此仅用于记下 $V$ 自身的叶数。实际像目标仍取完整树的 $U\in\mathcal I_d$，不取组成祖先许可，且不附加实际逆执行动作。
+

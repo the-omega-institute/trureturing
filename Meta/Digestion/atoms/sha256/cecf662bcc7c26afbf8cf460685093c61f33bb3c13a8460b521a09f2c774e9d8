@@ -1,0 +1,100 @@
+**命题 23.3（实际 FIB 来源的无共享叶族与同组成严格对照）。** 对每个 $d=3k\ge3$，置
+
+$$
+A=\rho^d(\alpha),\qquad
+B=\rho^{d+2}(\alpha)=\rho^2(A),\qquad
+P_{\mathrm{dis}}=\langle A,B\rangle,\qquad
+Q_{\mathrm{dis}}=\langle B,A\rangle.
+\tag{23.7}
+$$
+
+这两个不同正例的叶地址集合互不相交，叶数均为
+
+$$
+n=F_{d+1}+F_{d+3},\qquad F_0=0,\quad F_1=1,\quad F_{j+2}=F_{j+1}+F_j.
+\tag{23.8}
+$$
+
+在定义 23.1 的全来源合同下，$D_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+1$、$R_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+\tfrac12$。
+
+特别地，在 $d=3$ 置
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+B=\langle C,A\rangle,
+\tag{23.9}
+$$
+
+并另取
+
+$$
+P_{\mathrm{con}}=\langle\langle A,A\rangle,C\rangle,
+\qquad
+Q_{\mathrm{con}}=\langle\langle A,C\rangle,A\rangle.
+\tag{23.10}
+$$
+
+四棵指定树均为实际 $\rho^3$ 像，均有 $c=(4,7)^{\mathsf T}$、$n=11$、$q=2\cdot4+3\cdot7=29$；其中
+
+$$
+\operatorname{out}_{P_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\alpha,
+\qquad
+\operatorname{out}_{Q_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\beta.
+\tag{23.11}
+$$
+
+因此同一组成和数量读数的两个指定正例对有严格不同的尖锐费用：
+
+$$
+\begin{aligned}
+(D_3^+,R_3^+)(P_{\mathrm{dis}},Q_{\mathrm{dis}})&=(12,\tfrac{23}{2}),\\
+(D_3^+,R_3^+)(P_{\mathrm{con}},Q_{\mathrm{con}})&=(11,11).
+\end{aligned}
+\tag{23.12}
+$$
+
+这些组成相等只比较指定的实际评价对象，不向未知输入域增加组成、数量或大小承诺。
+
+**证明。** 由替换的二叉同态规则，式（23.7）分别有完整前像
+
+$$
+P_{\mathrm{dis}}=
+\rho^d\bigl(\langle\alpha,\langle\beta,\alpha\rangle\rangle\bigr),
+\qquad
+Q_{\mathrm{dis}}=
+\rho^d\bigl(\langle\langle\beta,\alpha\rangle,\alpha\rangle\bigr).
+\tag{23.13}
+$$
+
+两前像字面不同，其像的不同性亦直接由规范编译卷命题 4.3 的单射性得到。$\rho^2(\alpha)=\langle\beta,\alpha\rangle$ 和 $\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 均非叶，所以在 $B=\rho^2(A)$ 中，$A$ 的每片叶都被非叶子树替换；$B$ 的每个叶地址严格延长某个 $A$ 叶地址。$A$ 的叶前沿前缀自由，故没有一个 $A$ 叶地址同时是 $B$ 的叶地址。于是
+
+$$
+\begin{aligned}
+L(P_{\mathrm{dis}})&=\mathtt L L(A)\ \cup\ \mathtt R L(B),\\
+L(Q_{\mathrm{dis}})&=\mathtt L L(B)\ \cup\ \mathtt R L(A),\\
+L(P_{\mathrm{dis}})\cap L(Q_{\mathrm{dis}})&=\varnothing,
+\end{aligned}
+\tag{23.14}
+$$
+
+其中 $\mathtt L L(A)=\{\mathtt L u:u\in L(A)\}$，其他前缀集合相同解释。直接复用[母卷定理 3.2 的种子树递推](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)：种子轨道的叶数从 $1,1$ 开始按 Fibonacci 递推，故 $|L(\rho^j\alpha)|=F_{j+1}$。相加得到（23.8），再用定理 23.2 得到一般族的费用。这里保留 $d=3k\ge3$ 的证书适用范围。
+
+在 $d=3$，同一个既有种子递推给 $E=\rho^2\alpha$、$A=\rho^3\alpha$、$C=\rho^4\alpha=\rho^3\beta$、$B=\rho^5\alpha$，恰为（23.9）的字面展开。除（23.13）的两前像外，另两棵树的完整前像为
+
+$$
+P_{\mathrm{con}}=
+\rho^3\bigl(\langle\langle\alpha,\alpha\rangle,\beta\rangle\bigr),
+\qquad
+Q_{\mathrm{con}}=
+\rho^3\bigl(\langle\langle\alpha,\beta\rangle,\alpha\rangle\bigr).
+\tag{23.15}
+$$
+
+由这些实际前像及 $\rho^3$ 的二叉同态性，四树均在 $\mathcal I_3$。组成加性给 $c(E)=(1,1)^{\mathsf T}$、$c(A)=(1,2)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$、$c(B)=(3,5)^{\mathsf T}$，所以 $c(A)+c(B)=2c(A)+c(C)=(4,7)^{\mathsf T}$，叶数为 $11$，定义 1.1 的数量读数为 $29$。在 $P_{\mathrm{con}}$ 上沿 $\mathtt L\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $Q_{\mathrm{con}}$ 上沿 $\mathtt L\mathtt R$ 到 $C$，再沿 $\mathtt L\mathtt R$ 到其左子树 $A$ 的右叶 $\beta$。这证明（23.11），所以该对满足 $H$，而无共享叶对不满足 $H$。定理 23.2 遂给（23.12）。
+
+这两个对照也显示后备判定的必要性：$A=\rho^3\alpha\in\mathcal I_3$ 在 $\mathtt L\mathtt L\mathtt L$ 上报告 $\mathsf{absent}$，而 $P_{\mathrm{dis}}$、$Q_{\mathrm{dis}}$ 分别报告 $\mathsf{leaf}_\beta$、$\mathsf{branch}$；在 $\mathtt L\mathtt R\mathtt L\mathtt R$ 上 $A$ 同样报告 $\mathsf{absent}$，与冲突对的两叶报告都不同。故无论从这里的无共享叶测试地址还是共享冲突测试地址开始，原型之外都存在合法实际正来源；把这种首响应直接判负会违反全来源正确性。定理 23.2 的构造将它们送入有限后备判定。证毕。
+

@@ -1,0 +1,59 @@
+**定义 8.3（许可行的半群前驱与两个朝向的候选）。** 对定义 8.1 的 $k$，记
+
+$$
+\mathcal S_k=\{v m+N n:m,n\in\mathbb N_0\}.
+$$
+
+对整数 $B$，定义
+
+$$
+M_k(B)=
+\begin{cases}
+-\infty,&B<0,\\[2pt]
+\displaystyle\max_{0\le n\le\min\{v-1,\lfloor B/N\rfloor\}}
+\left\{Nn+v\left\lfloor\frac{B-Nn}{v}\right\rfloor\right\},&B\ge0,
+\end{cases}
+\tag{8.7}
+$$
+
+其中 $n$ 取整数；$B\ge0$ 时允许 $n=0$，故最大值存在。对每个整数 $j\ge1$ 满足 $u=F_{j+1}\le H$，置 $w=F_j$、$T_+=H-u+w$，并定义
+
+$$
+\begin{aligned}
+L_+&=w,&
+B_+&=\min\left\{
+\left\lfloor\frac{T_+}{1+r}\right\rfloor,
+ w+\left\lceil\frac{H}{1+R}\right\rceil-1\right\},&
+b_+&=M_k(B_+),\\
+L_-&=\left\lceil\frac uR\right\rceil,&
+B_-&=\min\left\{H-u,
+\left\lfloor\frac{H}{1+r}\right\rfloor\right\},&
+b_-&=M_k(B_-).
+\end{aligned}
+\tag{8.8}
+$$
+
+仅当 $b_\sigma\ge L_\sigma$ 时保留朝向 $\sigma$，并对保留项置
+
+$$
+\begin{aligned}
+a_+&=\min\{\lfloor Rb_+\rfloor,T_+-b_+\},\\
+a_-&=\min\{\lfloor Rb_-\rfloor,H-b_-,
+ u+\lceil r(b_-+w)\rceil-1\}.
+\end{aligned}
+\tag{8.9}
+$$
+
+记所有保留项组成的有限集为 $\mathcal I_k(H)$。对 $(j,\sigma)\in\mathcal I_k(H)$，定义
+
+$$
+\begin{gathered}
+x_{j,\sigma}=(a_\sigma,b_\sigma),\qquad
+ y_{j,\sigma}=(a_\sigma+\sigma u,b_\sigma-\sigma w),\\
+D_{j,\sigma}=2a_\sigma+\sigma u+
+ \phi(2b_\sigma-\sigma w),\qquad
+W_{j,\sigma}=\phi^j D_{j,\sigma}.
+\end{gathered}
+\tag{8.10}
+$$
+
