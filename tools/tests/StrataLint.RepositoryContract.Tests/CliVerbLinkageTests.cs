@@ -76,7 +76,7 @@ public sealed class CliVerbLinkageTests
             [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
             {
                 "content-check", "emit", "emit-values", "filemap", "describe-report", "markdown-check",
-                "projections", "resources", "scripts",
+                "projections", "resources", "resources release", "resources verify-release", "scripts",
             },
         };
         var dangling = invocations
@@ -106,6 +106,19 @@ public sealed class CliVerbLinkageTests
                 && invocation.Verb == verb
                 && invocation.Program == CommandProgram.Scribe);
         }
+    }
+
+    [Fact]
+    public void ReleaseCommandsRemainVisibleToTheExtractor()
+    {
+        var invocations = CollectInvocations(TestRepositoryLayout.FindRoot())
+            .Where(invocation => invocation.File == "tools/scripts/scribe-release.sh").ToArray();
+        Assert.Equal(2, invocations.Length);
+        Assert.All(invocations, invocation =>
+        {
+            Assert.Equal(CommandProgram.Scribe, invocation.Program);
+            Assert.Equal("resources", invocation.Verb);
+        });
     }
 
     // `dotnet run --project <cli> --configuration Release -- <verb>` 与
@@ -148,6 +161,8 @@ public sealed class CliVerbLinkageTests
             var physicalLines = File.ReadAllLines(file);
             var arrays = ArrayLiteralVerbs(physicalLines);
             var scribeVariables = ScribeForwardedVariables(relative, physicalLines);
+            var projectIsScribe = physicalLines.Any(line => line.StartsWith("PROJECT=", StringComparison.Ordinal)
+                && line.Contains("StrataLint.Scribe.Documents.csproj", StringComparison.Ordinal));
             foreach (var (line, text) in LogicalLines(physicalLines))
             {
                 if (text.TrimStart().StartsWith('#'))
@@ -157,12 +172,13 @@ public sealed class CliVerbLinkageTests
 
                 var namesStrataLint = text.Contains("StrataLint.Cli.csproj", StringComparison.Ordinal)
                     || text.Contains("StrataLint.dll", StringComparison.Ordinal)
-                    || (relative != "tools/scripts/scribe.sh"
+                    || (!projectIsScribe
                         && text.Contains("$PROJECT", StringComparison.Ordinal))
                     || text.Contains("$CLI_PROJECT", StringComparison.Ordinal)
                     || text.Contains("$JUDGE_DLL", StringComparison.Ordinal);
                 var namesScribe = text.Contains("StrataLint.Scribe.csproj", StringComparison.Ordinal)
-                    || (relative == "tools/scripts/scribe.sh"
+                    || text.Contains("StrataLint.Scribe.Documents.csproj", StringComparison.Ordinal)
+                    || (projectIsScribe
                         && text.Contains("$PROJECT", StringComparison.Ordinal));
 
                 foreach (var (namesProgram, program) in new[]

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a9a34c311a2a46f25807efd0c7243fd7d03aa0269a5606847a081052312ae801
   normalized_sha256: sha256:a9a34c311a2a46f25807efd0c7243fd7d03aa0269a5606847a081052312ae801
 cas_ref: sha256:a9a34c311a2a46f25807efd0c7243fd7d03aa0269a5606847a081052312ae801
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/ExponentExchange/RoughPrimeSuffixBellman.rough_prime_suffix_complete
+    target_statement_id: sha256:e46a201d708c17e0228f017f70503676ec914074b386a10218cf65b7f44608c4
 receipts:
   unresolved_subitems: []
