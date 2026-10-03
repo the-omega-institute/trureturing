@@ -49,6 +49,13 @@ public sealed class RelationContractTests
     }
 
     [Fact]
+    public void NamedStringArgumentsMatchExecutionRegardlessOfSourceOrder()
+    {
+        using var root = Fixture("Paragraph(Ref(\"D5/S0/Test/First\".Replace(newValue: \"Second\", oldValue: \"First\")))");
+        EqualExecution(root);
+    }
+
+    [Fact]
     public void HelperCallSitesPreserveMultiplicity()
     {
         using var root = Fixture("Item(\"First\"), Item(\"First\")",

@@ -55,7 +55,63 @@ public sealed class RelationBoundaryTests
             """);
         var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
         Assert.Null(read.Projection);
-        Assert.Equal("ExpressionStatement", read.Failure?.Shape);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Fact]
+    public void IgnoredPresentationAssignmentIsRejected()
+    {
+        using var root = MutationFixture("string target = \"First\"; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(target = \"Second\"), Ref(\"D5/S0/Test/\" + target)))));");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Fact]
+    public void IgnoredPresentationLocalInitializerAssignmentIsRejected()
+    {
+        using var root = MutationFixture("string target = \"First\"; var ignored = target = \"Second\"; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"), Ref(\"D5/S0/Test/\" + target)))));");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Theory]
+    [InlineData("target += \"Second\";")]
+    [InlineData("target++;")]
+    [InlineData("Mutate(out target);")]
+    [InlineData("field = \"Second\";")]
+    public void IgnoredPresentationWritesAreRejected(string statement)
+    {
+        using var root = MutationFixture("string target = \"First\"; " + statement + " return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"), Ref(\"D5/S0/Test/\" + target)))));", "private string field = \"First\";\n        private static void Mutate(out string value) { value = \"Second\"; }\n        private static void Unknown(string value) { }");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Fact]
+    public void UnknownPresentationCallIsRejected()
+    {
+        using var root = MutationFixture(
+            "string target = \"First\"; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(DateTime.Now.ToString()), Ref(\"D5/S0/Test/\" + target)))));");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    private static TemporaryRoot MutationFixture(string body, string members = "")
+    {
+        var root = new TemporaryRoot();
+        File.WriteAllText(root.Resolve("global.json"), "{}");
+        File.WriteAllText(root.Resolve(RelationContractTests.Entry), $$"""
+            using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Relations : IScribeDocumentDefinition
+            {
+                {{members}}
+                public DocumentDefinition Create() { {{body}} }
+            }
+            """);
+        return root;
     }
 
     [Fact]
@@ -103,7 +159,7 @@ public sealed class RelationBoundaryTests
             """);
         var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
         Assert.Null(read.Projection);
-        Assert.Equal("SourceMutation", read.Failure?.Shape);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
     }
 
     [Theory]

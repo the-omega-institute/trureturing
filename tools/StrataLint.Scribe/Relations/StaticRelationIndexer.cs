@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace StrataLint.Scribe;
 
@@ -51,6 +52,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
 {
     internal const int MaximumHelperDepth = 8;
     private readonly HashSet<ISymbol> active = new(SymbolEqualityComparer.Default);
+    private readonly HashSet<ISymbol> relationCarriers = new(SymbolEqualityComparer.Default);
     private readonly Dictionary<SyntaxTree, SemanticModel> models = [];
     private sealed record Binding(ExpressionSyntax Expression, Dictionary<ISymbol, object?> Scope);
     private sealed record InlineReference(string Target);
@@ -73,6 +75,8 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             .Where(method => Model(method).GetDeclaredSymbol(method)?.ContainingType.AllInterfaces
                 .Any(type => type.ToDisplayString() == "StrataLint.Scribe.IScribeDocumentDefinition") == true).ToArray();
         if (candidates.Length != 1) throw Reject(tree.GetRoot(), "DefinitionCount", $"Found {candidates.Length} entry methods.");
+        relationCarriers.Clear();
+        CollectRelationCarriers(candidates[0], new(SymbolEqualityComparer.Default));
         ValidatePresentationEffects(candidates[0], new(SymbolEqualityComparer.Default));
         var packet = Method(candidates[0], new(SymbolEqualityComparer.Default)) as Packet
             ?? throw Reject(candidates[0], "DocumentStructure", "Entry did not construct a document.");
@@ -206,33 +210,115 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     private object? ResolveBinding(object? value) => value is Binding binding ? Eval(binding.Expression, binding.Scope)
         : value is object?[] items ? items.Select(ResolveBinding).ToArray() : value;
 
-    private void ValidatePresentationEffects(SyntaxNode node, HashSet<ISymbol> visited)
+    private void ValidatePresentationEffects(SyntaxNode node, HashSet<ISymbol> visited, bool ignored = false)
     {
         foreach (var child in node.DescendantNodes())
         {
             if (child is AssignmentExpressionSyntax assignment)
             {
-                var target = Model(assignment.Left).GetSymbolInfo(assignment.Left).Symbol;
-                if (target is not ILocalSymbol and not IParameterSymbol
-                    && Model(assignment.Left).GetTypeInfo(assignment.Left).Type is { } type && IsRelationType(type))
-                    throw Reject(assignment, "SourceMutation", "Source code may mutate shared relation state.");
+                if (IsRelationWrite(assignment.Left, ignored))
+                    throw Reject(assignment, "IgnoredWrite", "Ignored source code may not write observable state.");
+            }
+            if (child is PrefixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } prefix)
+            {
+                if (IsRelationWrite(prefix.Operand, ignored))
+                    throw Reject(prefix, "IgnoredWrite", "Ignored source code may not write observable state.");
+            }
+            if (child is PostfixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } postfix)
+            {
+                if (IsRelationWrite(postfix.Operand, ignored))
+                    throw Reject(postfix, "IgnoredWrite", "Ignored source code may not write observable state.");
             }
             if (child is ArgumentSyntax argument && argument.RefKindKeyword.RawKind != 0)
-                throw Reject(argument, "SourceMutation", "By-reference source arguments may mutate relations.");
+                throw Reject(argument, "IgnoredWrite", "By-reference source arguments may mutate observable state.");
             if (child is InvocationExpressionSyntax invocation
                 && Model(invocation).GetSymbolInfo(invocation).Symbol is IMethodSymbol method)
             {
+                var childIgnored = ignored || invocation.Ancestors().Any(IsIgnoredPresentationCall);
+                if (childIgnored && !IsRecognizedInvocation(method))
+                    throw Reject(invocation, "IgnoredWrite", "Ignored source code may call only recognized pure operations.");
                 if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
                     && helper is MethodDeclarationSyntax or LocalFunctionStatementSyntax
                     && visited.Add(method))
-                    ValidatePresentationEffects(helper, visited);
+                    ValidatePresentationEffects(helper, visited, childIgnored);
                 if (method.ContainingType.OriginalDefinition.ToDisplayString() == "System.Collections.Generic.List<T>"
                     && method.Name is "Add" or "AddRange" or "Clear" or "Remove" or "RemoveAt"
                     && method.ContainingType.TypeArguments.Any(IsRelationType))
-                    throw Reject(invocation, "SourceMutation", "Source code may mutate a relation collection.");
+                    throw Reject(invocation, "IgnoredWrite", "Source code may mutate a relation collection.");
             }
         }
     }
+
+    private bool IsRelationWrite(ExpressionSyntax target, bool ignored)
+    {
+        var type = Model(target).GetTypeInfo(target).Type;
+        if (type is null) return false;
+        var symbol = Model(target).GetSymbolInfo(target).Symbol;
+        if (ignored && symbol is not ILocalSymbol and not IParameterSymbol) return true;
+        if (symbol is ILocalSymbol or IParameterSymbol)
+            return relationCarriers.Contains(symbol) || IsRelationType(type) && type.SpecialType != SpecialType.System_String;
+        return IsRelationType(type);
+    }
+
+    private void CollectRelationCarriers(SyntaxNode node, HashSet<ISymbol> visited)
+    {
+        foreach (var invocation in node.DescendantNodes().OfType<InvocationExpressionSyntax>())
+        {
+            var method = Model(invocation).GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            if (method is null) continue;
+            if (method.ContainingType.ToDisplayString() == "StrataLint.Scribe.DefinitionDsl" && method.Name is "Ref")
+            {
+                foreach (var identifier in invocation.ArgumentList.Arguments.SelectMany(argument =>
+                    argument.Expression.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>()))
+                {
+                    if (Model(identifier).GetSymbolInfo(identifier).Symbol is { } symbol)
+                        relationCarriers.Add(symbol);
+                }
+            }
+            if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
+                && helper is MethodDeclarationSyntax or LocalFunctionStatementSyntax
+                && visited.Add(method))
+                CollectRelationCarriers(helper, visited);
+        }
+    }
+
+    private bool IsRecognizedInvocation(IMethodSymbol method)
+    {
+        if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is MethodDeclarationSyntax or LocalFunctionStatementSyntax)
+            return true;
+        var type = method.ContainingType.ToDisplayString();
+        if (method.ContainingType.OriginalDefinition.ToDisplayString() == "System.Collections.Generic.List<T>"
+            && method.Name is "Add" or "AddRange" or "Clear" or "Remove" or "RemoveAt")
+            return !method.ContainingType.TypeArguments.Any(IsRelationType);
+        if (type == "System.Linq.Enumerable"
+            && method.Name is "Select" or "SelectMany" or "Where" or "Concat" or "Append" or "Prepend" or "ToArray" or "ToList"
+                or "Aggregate" or "Reverse" or "Distinct" or "OrderBy" or "ThenBy")
+            return true;
+        if (type == "System.Array" && method.Name == "ConvertAll") return true;
+        if (type is "string" or "System.String" && method.Name is "Join" or "Split") return true;
+        return type is "string" or "System.String" && method.Name is "ToLowerInvariant" or "ToUpperInvariant" or "Trim" or "Replace"
+            || type.StartsWith("StrataLint.Scribe.", StringComparison.Ordinal);
+    }
+
+    private bool IsIgnoredPresentationCall(SyntaxNode node) => node switch
+    {
+        InvocationExpressionSyntax invocation when Model(invocation).GetSymbolInfo(invocation).Symbol is IMethodSymbol method =>
+            IsIgnoredPresentationMethod(method),
+        ObjectCreationExpressionSyntax creation when Model(creation).GetSymbolInfo(creation).Symbol is IMethodSymbol method =>
+            IsIgnoredPresentationMethod(method),
+        ImplicitObjectCreationExpressionSyntax creation when Model(creation).GetSymbolInfo(creation).Symbol is IMethodSymbol method =>
+            IsIgnoredPresentationMethod(method),
+        _ => false,
+    };
+
+    private static bool IsIgnoredPresentationMethod(IMethodSymbol method) =>
+        (method.ContainingType.ToDisplayString(), method.Name) switch
+        {
+            ("StrataLint.Scribe.DefinitionDsl", "Text" or "Math") => true,
+            ("StrataLint.Scribe.Inline.Text" or "StrataLint.Scribe.Inline.InlineFormula", ".ctor") => true,
+            ("StrataLint.Scribe.DocumentBlock.DisplayFormula", ".ctor") => true,
+            _ => false,
+        };
 
     private static bool IsRelationType(ITypeSymbol type) => type.SpecialType == SpecialType.System_String
         || type.ToDisplayString().StartsWith("StrataLint.Scribe.DocumentBlock", StringComparison.Ordinal)
@@ -267,14 +353,15 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             if (name is not ("ToLowerInvariant" or "ToUpperInvariant" or "Trim" or "Replace"))
                 throw Reject(node, "UnsupportedInvocation", "String operation is outside the closed set.");
             var receiver = Scalar(Eval(member.Expression, scope), member);
-            var values = arguments.Select(argument => Eval(argument.Expression, scope)).ToArray();
-            return (name, values) switch
+            return name switch
             {
-                ("ToLowerInvariant", []) => receiver.ToLowerInvariant(),
-                ("ToUpperInvariant", []) => receiver.ToUpperInvariant(),
-                ("Trim", []) => receiver.Trim(),
-                ("Replace", [string oldValue, string newValue]) => receiver.Replace(oldValue, newValue, StringComparison.Ordinal),
-                ("Replace", [char oldValue, char newValue]) => receiver.Replace(oldValue, newValue),
+                "ToLowerInvariant" when arguments.Count == 0 => receiver.ToLowerInvariant(),
+                "ToUpperInvariant" when arguments.Count == 0 => receiver.ToUpperInvariant(),
+                "Trim" when arguments.Count == 0 => receiver.Trim(),
+                "Replace" when Arg("oldValue") is string oldValue && Arg("newValue") is string newValue =>
+                    receiver.Replace(oldValue, newValue, StringComparison.Ordinal),
+                "Replace" when Arg("oldChar") is char oldChar && Arg("newChar") is char newChar =>
+                    receiver.Replace(oldChar, newChar),
                 _ => throw Reject(node, "UnsupportedInvocation", "String operation is outside the closed set."),
             };
         }
@@ -365,12 +452,21 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         Dictionary<ISymbol, object?> scope, SyntaxNode node)
     {
         var result = new Dictionary<string, object?>(StringComparer.Ordinal);
-        var position = 0;
-        foreach (var argument in arguments)
+        var operationArguments = Model(node).GetOperation(node) switch
         {
-            var parameter = argument.NameColon is { } named
-                ? method.Parameters.First(parameter => parameter.Name == named.Name.Identifier.ValueText)
-                : method.Parameters[Math.Min(position, method.Parameters.Length - 1)];
+            IInvocationOperation invocation => invocation.Arguments,
+            IObjectCreationOperation creation => creation.Arguments,
+            _ => ImmutableArray<IArgumentOperation>.Empty,
+        };
+        for (var index = 0; index < arguments.Count; index++)
+        {
+            var argument = arguments[index];
+            var parameter = index < operationArguments.Length
+                ? operationArguments[index].Parameter
+                : argument.NameColon is { } named
+                    ? method.Parameters.First(parameter => parameter.Name == named.Name.Identifier.ValueText)
+                    : method.Parameters[Math.Min(index, method.Parameters.Length - 1)];
+            parameter ??= method.Parameters[Math.Min(index, method.Parameters.Length - 1)];
             var binding = new Binding(argument.Expression, scope);
             if (parameter.IsParams)
             {
@@ -378,7 +474,6 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                 result[parameter.Name] = existing.Append(binding).ToArray();
             }
             else result[parameter.Name] = binding;
-            if (!parameter.IsParams && (argument.NameColon is null || parameter.Ordinal == position)) position++;
         }
         foreach (var parameter in method.Parameters.Where(parameter => !result.ContainsKey(parameter.Name)))
         {
