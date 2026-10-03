@@ -75,6 +75,7 @@ run_meta do
     assertTest s!"input.origin.{label}"
       (SourceAudit.hasAuthoredElaboration entries (NameSet.empty.insert key))
   let entries ← SourceAudit.parse env "def value : Nat := 0" owner.toString
+  let some original := entries[0]? | throwError "control:declaration_missing"
   for kind in #[``Parser.Command.in, ``Parser.Command.mutual, ``Parser.Command.set_option,
       `Unrecognized.commandWrapper] do
     let malformed := entries.map fun e =>
@@ -82,5 +83,17 @@ run_meta do
     assertTest s!"input.wrapper.{kind}" (match SourceAudit.auditRegCommands owner malformed with
       | .error e => e.startsWith "contract.reg:wrapper_not_allowed:" ||
           e.startsWith "contract.reg:metaprogramming_not_allowed:"
+      | .ok _ => false)
+  for (label, source, child, replacement) in #[
+      ("in_separator", "open Nat in\ndef value : Nat := 0", 1, mkAtom "while"),
+      ("option_suffix", "set_option maxRecDepth 4096", 2, mkNode `null #[mkAtom "."]),
+      ("mutual_children", "mutual\ndef value : Nat := 0\nend", 1,
+        mkNode `Unrecognized.children #[original.command])] do
+    let parsed ← SourceAudit.parse env source owner.toString
+    let some parsedEntry := parsed[0]? | throwError "control:wrapper_missing"
+    let origin := parsedEntry.originCommand.setArg child replacement
+    let malformed := entries.map fun e => { e with originCommand := origin }
+    assertTest s!"input.wrapper.{label}" (match SourceAudit.auditRegCommands owner malformed with
+      | .error e => e.startsWith "contract.reg:wrapper_not_allowed:"
       | .ok _ => false)
 end LeanInformationAuditRegTests.ContractInputLimits
