@@ -1,0 +1,33 @@
+{
+  "factorization": {
+    "Lambda": 8,
+    "budget": 8,
+    "completion_excess": 3,
+    "core_multiplicity_first_label": 4,
+    "external_labels": 9,
+    "flow_count": 4,
+    "gamma_values": [
+      8
+    ],
+    "kappa": 3,
+    "lambda": 4,
+    "neighbourhoods_disjoint": true,
+    "period": 15,
+    "q": 5,
+    "tau": 4
+  },
+  "scope": "Exact source-preserving private-bucket factorization and core multiplicity control; the indexed source repeats modulus 3q and does not certify an odd-distinct EB1 cover.",
+  "service_correction": {
+    "G_indices": [],
+    "R": 1155,
+    "candidate_label": 9,
+    "correction": "G is empty under E_A=A\\U; the retained-service fixture is not realizable.",
+    "g": 0,
+    "private_indices": [
+      1,
+      2
+    ],
+    "q": 3
+  },
+  "status": "PASS"
+}

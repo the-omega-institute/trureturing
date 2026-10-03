@@ -27981,3 +27981,140 @@ cover of a complete odd fibre by at most three proper restrictions is exactly
 three index-$3$ phases.  This is the local PFV6 interface only.  It neither
 proves that a private fibre is present nor supplies a whole-cover replacement,
 so PFV6 and the unrestricted Erdős--#7 conclusion remain open.
+
+## 242. Exact private-bucket factorization and the Section 240 service correction
+
+Sections 233 and 237--238 retain the actual source phases, but their network
+notation leaves a stronger fact implicit.  The private buckets do not compete
+between distinct external labels.  This gives an exact factorization of the
+flow choices and removes the putative capacity-versus-hitting separation.  It
+also exposes a correction to the retained-service term in Section 240.
+
+Keep the source-defined objects of Section 233.  For an external label \(i\),
+write \(N(i)\) for its bucket neighbourhood.  If a bucket
+\(\beta=(B,r,t)\) is adjacent to both \(i\) and \(j\), then \(i,j\in B\).  But
+\(t\in P_{i,r}\) implies \(t\notin C_{j,r}\), whereas
+\(t\in P_{j,r}\) implies \(t\in C_{j,r}\).  Hence
+
+\[
+ N(i)\cap N(j)=\varnothing\qquad(i\ne j).
+\tag{PB1}
+\]
+
+Every bucket over a singleton \(W(r)=\{B\}\) has positive capacity, since all
+other component remainders are nonempty.  Therefore an integral saturated flow
+chooses one bucket independently for every label, and conversely every such
+choice is a saturated flow:
+
+\[
+ \boxed{\mathcal Z_H\cong\prod_{i\in I_H}N(i).}
+\tag{PB2}
+\]
+
+In particular, the exact flow exists if and only if every \(N(i)\) is
+nonempty.  The capacitated Hall inequalities in (233.5) carry no additional
+multi-label obstruction for this source-defined network.
+
+For a quotient coordinate \(v\), put
+
+\[
+ A_{v,r}=\{i\in I_v:r\in\mathsf E_i(H)\}.
+\]
+
+The private buckets of the labels in \(A_{v,r}\) are distinct and have positive
+capacity, so the aggregate capacity in (238.3) satisfies
+
+\[
+ M_{v,r}\ge |A_{v,r}|.
+\tag{PB3}
+\]
+
+Every set \(Z\) that hits \(\mathsf E_i(H)\) for all \(i\in I_v\) therefore
+already has \(\sum_{r\in Z}M_{v,r}\ge |I_v|\).  With infeasible minima set to
+\(+\infty\), the Section 238 quantities obey
+
+\[
+ \boxed{\kappa_v\le\tau_{H,v}=\lambda_{H,v}.}
+\tag{PB4}
+\]
+
+The shared-route minimum is exact as well.  Given a feasible tuple
+\((Z_v)\) in (238.13), choose, for every \(i\), one
+\(r_i\in\mathsf E_i(H)\cap\bigcap_{v\in D_i}Z_v\), then choose any private
+bucket for \(i\) over \(r_i\).  By (PB1) these choices form a common saturated
+flow, and its activated fibre sets satisfy \(R_v(z)\subseteq Z_v\).  Applying
+(238.14) first to this flow and then to \(Z_v=R_v(z)\) gives
+
+\[
+ \boxed{\Lambda_H=\min_{z\in\mathcal Z_H}\Gamma_H(z).}
+\tag{PB5}
+\]
+
+This equality preserves the common source and the route of each label; it does
+not construct a whole cover.
+
+There is also no extra compatibility cost from requiring every minimal quotient
+core.  For a covered pair \(W(r)=\{B\}\), let \(\mathscr C_{r,B}\) be the
+ordinary inclusion-minimal subcovers of \(J_B(r)\), and set
+
+\[
+ A_{r,B}=\{i\in J_B(r):P_{i,r}\ne\varnothing\}.
+\]
+
+A private point of \(i\) must remain uncovered if \(i\) is deleted, while a
+label with \(P_{i,r}=\varnothing\) can be deleted before taking an ordinary
+minimal subcover.  Thus
+
+\[
+ \boxed{A_{r,B}=\bigcap_{C\in\mathscr C_{r,B}}C.}
+\tag{PB6}
+\]
+
+Every label routed over \(r\) lies in \(A_{r,B}\), so every saturated flow is
+compatible with every choice of the local minimal cores.  The flow choices and
+core choices consequently factor after the actual source has been fixed.  Core
+occurrence still has its own multiplicity: if
+
+\[
+ m_i=\#\{(r,B):i\in C_{r,B}\},\qquad
+ D_H=\sum_{r,B}|C_{r,B}|-|I_H|,
+\tag{PB7}
+\]
+
+then a flow routes \(i\) once and does not imply \(m_i=1\).  The finite indexed
+\(q=5\) control linked below has \(\Gamma_H=\Lambda_H=\mathcal B_H=8\), while
+the distinguished label occurs in four local cores and \(D_H=3\).  It therefore
+checks the common-source/core-multiplicity boundary without claiming an
+odd-distinct EB1 cover.
+
+Finally, the retained-service term in Section 240 is empty under its inherited
+liability definition.  There \(E_A=A\setminus\mathcal U_q\), where
+\(\mathcal U_q\) is the union of the retained classes after \(A\) and the top
+\(p\)-layer have been removed.  If a retained candidate class contains all of
+\(F_j\), then \(F_j\subseteq\mathcal U_q\), and hence
+
+\[
+ E_A\cap F_j=\varnothing.
+\]
+
+Such a \(j\) cannot lie in \(P_{A,q}\).  Therefore
+
+\[
+ \boxed{G_{A,q}=\varnothing,\qquad g_{A,q}=0.}
+\tag{PB8}
+\]
+
+The correct consequence of (PFV5) under these definitions is
+\(f_q\le r_{A,q}-1\).  The Section 240 fixture with \(r_{A,3}=2\), \(f_3=0\),
+and \(g_{A,3}=1\) cannot realize its claimed retained service: the retained
+label \(9\) contains \(F_0\), which is already absent from \(E_A\).  The
+partial-height unserved term (PFV6) remains meaningful, but the positive
+\(g_{A,q}\) branch must be removed.
+
+The finite source-preserving checks are maintained at
+[verify_private_flow_factorization.py](../../../frontier/cover-geometry/private-flow-factorization/verify_private_flow_factorization.py)
+and [private_flow_factorization.json](../../../frontier/cover-geometry/private-flow-factorization/private_flow_factorization.json).
+They check (PB1)--(PB8) on the indexed control and the Section 240 numerical parameters.
+The indexed control repeats the modulus
+\(3q\), so it is not an odd-distinct or EB1 witness; the factorization is an
+exact local network identity, not an unrestricted Erdős--#7 conclusion.
