@@ -8624,3 +8624,275 @@ F(X^{\varepsilon,u})
 但从有限状态核到连续作用量仍需统一嵌入、指数紧性和时间尺度。单步代价极限不自动给出长路径 LDP。
 
 核扰动的风险敏感值对小的总变差并不总是稳定：指数代价会放大稀有路径，必须同时给出共同支撑、代价上界和 \(T\theta\) 的控制。故相同 FIB 状态载体上改变动作代价、风险参数或核，可产生不同非线性谱、最优策略和稀有事件偏好；FIB 递归不决定风险厌恶、温度、作用量或任何真实物理自由能。
+
+## 88. FIB 上下文图上的渗流、随机簇与有限尺寸阈值
+
+取 FIB 递归给出的有限上下文图 \(G_j=(V_j,E_j)\)，另行给每条边独立开通状态
+\(\omega_e\sim\operatorname{Bernoulli}(p_e)\)，并令
+\(u\leftrightarrow_\omega v\) 表示存在开通路径。簇为
+\[
+C_\omega(u)=\{v\in V_j:u\leftrightarrow_\omega v\}.
+\]
+边集、重复边处理、开通概率、独立性、边界和图序列均不是 FIB 递归自动确定的。
+
+对均匀 \(p_e=p\) 和边界端集 \(B_j^-,B_j^+\)，跨越概率
+\[
+\Theta_j(p)=\Pr_p(B_j^-\leftrightarrow B_j^+)
+\]
+是 \(p\) 的单调多项式。平均易感度为
+\[
+\chi_j(p)
+=\frac1{|V_j|}\sum_{u,v}\Pr_p(u\leftrightarrow v)
+=\frac1{|V_j|}\sum_u\mathbb E_p|C_\omega(u)|.
+\]
+Russo 公式给出
+\[
+\frac d{dp}\Theta_j(p)
+=\sum_{e\in E_j}
+\Pr_p(e\text{ 对跨越事件为 pivotal}).
+\]
+单个有限图没有无限簇和严格临界点；可由
+\(\Theta_j(p_{j,q})=q\) 定义依赖 \(q\)、边界和尺度的伪阈值。
+
+若图序列在指定根点律下收敛到无限图 \(G\)，才可定义
+\[
+\theta(p)=\Pr_p(|C_\omega(o)|=\infty),
+\qquad
+p_c=\inf\{p:\theta(p)>0\}.
+\]
+若极限图只是无限路径，则 \(p_c=1\)，非平凡内部阈值不存在。若上下文图另加不可约多型 Galton–Watson 树结构，类型均值矩阵为 \(M\)、开边概率为 \(p_{ab}\)，则开簇均值矩阵
+\[
+B_{ab}=M_{ab}p_{ab}
+\]
+在标准二阶矩条件下以 \(\rho(B)=1\) 为生存阈值；普通词替换矩阵只有在确实实现独立树状分枝时才能充当 \(M\)。
+
+若再假设尺度 \(L_j\)、体积 \(|V_j|\asymp L_j^{d_f}\)、相关长度
+\(\xi(p)\asymp|p-p_c|^{-\nu}\)，则可条件性地写
+\[
+\Theta_j(p)
+=\Phi((p-p_c)L_j^{1/\nu})+o(1),
+\]
+\[
+\chi_j(p)\asymp
+L_j^{\gamma/\nu}\Psi((p-p_c)L_j^{1/\nu}),
+\qquad
+\theta(p)\asymp(p-p_c)^\beta.
+\]
+这些是附加标度假设或待检验结果，不能把词长 \(|W_j|\sim\varphi^j\) 直接当图距离。相关开边、长记忆环境和重复边会改变阈值；有限图大簇不等于无限簇，FIB 不自动推出真实物理相变。
+
+## 89. FIB 标签承载的外加动理学与碰撞极限
+
+令 \(E_j\) 为有限 FIB 上下文，\(v\in\mathcal V\) 为外加速度或离散动量标签。给定非负碰撞核
+\[
+B_j((x,v),(x',v');v_1,v_1')
+\]
+和外加单粒子转移律，定义两粒子碰撞算子
+\[
+(Q_jf)(v,v')
+=\sum_{v_1,v_1'}B_j(v,v';v_1,v_1')
+[f(v_1,v_1')-f(v,v')].
+\]
+碰撞守恒的质量、动量和能量必须显式满足
+\[
+\sum_vQ_jf(v)=0
+\]
+对 \(f=1\) 以及相应的外加守恒函数成立；FIB 标签本身不赋予这些量物理含义。
+
+若 \(N\) 粒子以弱相互作用碰撞，经验速度测度为
+\[
+\mu_t^{N,j}=\frac1N\sum_{i=1}^N\delta_{V_t^{N,i}},
+\]
+并且碰撞率按 \(N^{-1}\) 缩放、初态近似乘积、碰撞核有统一矩界，则固定时间窗内可能有
+\[
+\mu_t^{N,j}\Longrightarrow f_{t,j}(v)\,dv,
+\]
+其弱方程为
+\[
+\frac d{dt}\langle\varphi,f_{t,j}\rangle
+=\langle\mathcal Q_j(f_{t,j},f_{t,j}),\varphi\rangle
++\langle\mathcal T_j f_{t,j},\varphi\rangle,
+\]
+其中 \(\mathcal Q_j\) 是由 \(B_j\) 外加定义的二次碰撞算子，\(\mathcal T_j\) 是外加输运或杀死项。非负性、质量守恒和解的唯一性需要另行证明；没有这些条件，只能声称子列弱极限。
+
+若速度和空间同时嵌入，令 \(\varepsilon_j\) 为空间步长、\(\delta_j\) 为时间步长。只有在碰撞频率、输运尺度和二阶矩满足统一展开时，才可能得到
+\[
+\partial_t f+v\cdot\nabla_x f
+=\mathcal Q(f,f)+\mathcal R(f)
+\]
+或在快碰撞极限下得到扩散、流体或反应扩散方程。碰撞不变分布的线性化给出外加 Boltzmann 型谱隙；若核具有多个守恒量，零模不唯一，衰减只在其正交补上成立。
+
+同一 FIB 状态载体可取完全弹性核、随机重置核或带杀死的碰撞核，分别产生守恒、耗散或衰减动力学。碰撞核、粒子缩放、速度单位、空间嵌入和边界均外加，故本节不推出真实气体、温度、压强或 Boltzmann 普适律。
+
+## 90. FIB 候选状态上的自适应实验设计、主动观测与后验收缩
+
+固定有限上下文闭包 \(E_j\)。FIB 只给候选状态、标签和窗口结构；参数空间 \(\Theta\)、动作集 \(\mathcal A\)、受控核 \(Q_\theta^a\)、观测通道 \(O_\theta^a\)、先验 \(\Pi_0\) 和实验成本均为外加。历史 \(H_t\) 包含已选动作和观测，实验策略 \(q_t(a\mid H_t)\) 自适应选择下一动作。隐藏状态后验为 \(b_t^\theta\)，预测律为
+\[
+p_\theta(y\mid H_t,a)
+=\sum_{x,x'}b_t^\theta(x)
+Q_\theta^a(x,x')O_\theta^a(y\mid x').
+\]
+Bayes 更新为
+\[
+\Pi_{t+1}(d\theta)
+=\frac{p_\theta(Y_{t+1}\mid H_t,A_t)\Pi_t(d\theta)}
+{\int p_{\theta'}(Y_{t+1}\mid H_t,A_t)\Pi_t(d\theta')}.
+\]
+单步信息增益为
+\[
+IG_t(a)
+=I(\Theta;Y_{t+1}\mid H_t,A_t=a)
+=\mathbb E\!\left[
+D_{\mathrm{KL}}(p_\Theta(\cdot\mid H_t,a)
+\Vert\bar p_t(\cdot\mid H_t,a))
+\mid H_t,a
+\right],
+\]
+并有
+\[
+\mathbb E[H(\Pi_t)-H(\Pi_{t+1})\mid H_t,A_t=a]
+=IG_t(a),
+\]
+\[
+I(\Theta;D_T\mid H_0)
+=\sum_{t<T}\mathbb E\,IG_t(A_t).
+\]
+高信息增益不必等于任务效用增益；带任务收益 \(R\) 时应在后验空间做 Bellman 递推，而不是只最大化 \(IG_t\)。
+
+若 \(\Theta\) 有限、预测概率有正下界，真实参数为 \(\theta_0\)，且自适应策略满足对每个 \(\theta\ne\theta_0\)
+\[
+\liminf_{T\to\infty}\frac1T
+\sum_{t<T}
+D_{\mathrm{KL}}\!\left(
+p_{\theta_0}(\cdot\mid H_t,A_t)
+\Vert p_\theta(\cdot\mid H_t,A_t)
+\right)>0
+\quad\text{a.s.},
+\]
+则后验赔率 \(\Pi_T(\theta)/\Pi_T(\theta_0)\) 以正指数率趋于零。定义策略可达的观测等价
+\[
+\theta\sim_{\mathcal A}\theta'
+\Longleftrightarrow
+p_\theta(y\mid h,a)=p_{\theta'}(y\mid h,a)
+\]
+对所有可达 \((h,a,y)\) 成立。任何只使用动作集 \(\mathcal A\) 的实验至多把后验收缩到该等价类。
+
+反例：两个参数在动作 \(a=0\) 下都产生
+\(\operatorname{Bernoulli}(1/2)\)，在 \(a=1\) 下分别产生
+\(\operatorname{Bernoulli}(0.9)\) 与
+\(\operatorname{Bernoulli}(0.1)\)。若策略始终选 \(a=0\)，每步信息增益为零，后验不收缩；只有以正频率试验 \(a=1\) 才有 KL 分离。隐藏 FIB 状态被观测通道合并时，增加样本或重复同一探针不能恢复被消去的区别。信息增益、先验、动作成本、噪声和停止规则都是外加数据，不推出真实物理信息流或普适实验定律。
+
+## 91. FIB 上下文图上的离散拓扑缺陷与上同调电荷
+
+固定一个有限上下文闭包，构造有向图 \(G_j=(V_j,E_j)\)，再选定定向面集 \(F_j\) 将其填成有限胞腔复形 \(K_j\)。图的边、面的填充以及方向都不是 FIB 递归自动给出的。给每个顶点一个圆值相位
+\(\theta:V_j\to\mathbb R/2\pi\mathbb Z\)，或更一般地给边一个圆值 \(1\)-上链
+\(A\in C^1(K_j;\mathbb R/2\pi\mathbb Z)\)。沿定向边 \(e\) 取实提升
+\(\Delta_e\)，满足 \(\exp(i\Delta_e)=A_e\)；顶点相位的主值差是一个特例。对定向面 \(f\) 定义
+\[
+q_f=\frac1{2\pi}\sum_{e\in\partial f}\Delta_e.
+\]
+由于边界回路的圆值相位乘积为 \(1\)，有 \(q_f\in\mathbb Z\)。当 \(q_f\ne0\) 时，称 \(f\) 为离散拓扑缺陷。改变实提升或作规范变换 \(A\mapsto A+d\chi\) 只改变分支或边界项，整数电荷与闭回路周期保持不变。
+
+若只有图而未指定面，则可用
+\(H^1(G_j;\mathbb Z)\cong\operatorname{Hom}(H_1(G_j),\mathbb Z)\)。对闭路 \(C\) 的积分周期为
+\[
+W_C=\frac1{2\pi}\sum_{e\in C}\Delta_e\in\mathbb Z,
+\]
+它描述环路绕数或 holonomy；“面涡旋”必须依赖额外的填充 \(K_j\)。若 \(A=d\theta\) 且 \(\theta\) 已在整个复形上给定，所有周期均为零；非零 \(q_f\) 需要奇异插值或外加规范场，不能归因于词序本身。
+
+把 \(q=(2\pi)^{-1}d\widetilde A\) 视作实提升产生的整数 \(2\)-上链，则 \(dq=0\)。因此对任意 \(3\)-链 \(B\)，有
+\[
+\sum_{f\in\partial B}q_f=0.
+\]
+在闭定向二维复形上，总电荷 \(\langle q,[K_j]\rangle=0\)；有边界时内部电荷等于边界通量
+\(Q_{\mathrm{int}}=\langle A,\partial K_j\rangle/(2\pi)\)。若 FIB 替换确实诱导保持边界的胞腔链映射
+\(R_j:C_*(K_j)\to C_*(K_{j+1})\)，满足 \(\partial R_j=R_j\partial\)，则周期满足
+\[
+W_{R_jC}(A_{j+1})=W_C(R_j^*A_{j+1}).
+\]
+面映射度为 \(m\) 时总电荷按 \(m\) 倍传递；压缩或反向映射则可能使电荷消失或变号。仅有符号替换并未给出 \(R_j\)、面或方向，故不能推出拓扑荷守恒、量子化或缺陷数增长。
+
+同一 FIB 词可以承载不同电荷。对词 \(\alpha\beta\alpha\beta\) 的四边形，取相位
+\((0,0,0,0)\) 得 \(q=0\)；取 \((0,\pi/2,\pi,3\pi/2)\)，沿四条边取主值增量，环和为 \(2\pi\)，得 \(q=1\)。同一环图只作 \(1\)-复形时，\(H^1\) 保留一个整数周期；添加 \(2\)-胞腔填满该环后，该周期成为边界，\(H^1\) 可以降为零。这些反例说明拓扑量取决于外加相位、填充和映射，而非 FIB 词序单独决定。
+
+若再给面场 \(q_f(\omega)\) 一个平稳遍历或有限相关的随机律，令
+\[
+Q_j=\sum_{f\in F_j}q_f,
+\qquad
+\rho_j=Q_j/|F_j|,
+\qquad
+\chi_j=|F_j|^{-1}\operatorname{Var}(Q_j).
+\]
+在面数趋于无穷、均值为 \(\mu\) 且协方差可和，并满足外加混合条件时，可能有
+\[
+|F_j|^{-1/2}(Q_j-|F_j|\mu)\Rightarrow N(0,\chi),
+\qquad
+\chi=\sum_r\operatorname{Cov}(q_0,q_r).
+\]
+若压力
+\(p(\lambda)=\lim |F_j|^{-1}\log\mathbb E e^{\lambda Q_j}\) 存在且可微，则密度满足速率函数
+\[
+I(s)=\sup_\lambda\{\lambda s-p(\lambda)\}.
+\]
+独立的 \(\pm1\) 电荷给出 \(\chi=1\)，而严格中性约束 \(Q_j\equiv0\) 给出 \(\chi=0\)。随机相位、相关长度、边界、能量与相互作用均为外加，因此这些 CLT、易感率和大偏差结论不构成 FIB 内生的真实物理守恒律或相变定律。
+
+## 92. FIB 词序上的转移矩阵、散射与局域化
+
+固定有限上下文闭包或其路径子图。FIB 递归先给符号序列 \(a_n\)；若记忆阶为 \(r\)，可把
+\(c_n=(a_{n-r+1},\ldots,a_n)\) 增广为状态并写成 \(c_{n+1}=\Phi(c_n)\)。再取外加势和跃迁
+\(v_n=V(c_n,\eta_n)\)、\(t_n=T(c_n,c_{n+1},\eta_n)\ne0\)，定义 Jacobi 波方程
+\[
+t_n\psi_{n+1}+t_{n-1}\psi_{n-1}+v_n\psi_n=E\psi_n,
+\qquad
+\binom{\psi_{n+1}}{\psi_n}=T_n(E)\binom{\psi_n}{\psi_{n-1}},
+\]
+其中
+\[
+T_n(E)=
+\begin{pmatrix}
+(E-v_n)/t_n&-t_{n-1}/t_n\\
+1&0
+\end{pmatrix}.
+\]
+多通道时 \(\psi_n\in\mathbb C^d\)，转移矩阵为 \(2d\times2d\) 方块矩阵；自伴模型还需相应的辛或 \(J\)-酉结构。FIB 只决定 \(c_n\) 及允许的标签关系，不决定 \(V,T,E\) 的单位、波函数或环境。
+
+长度 \(L\) 的乘积为 \(M_L(E)=T_{L-1}(E)\cdots T_0(E)\)。若 \((c_n,\eta_n)\) 平稳遍历且
+\(\mathbb E\log^+\|T_0\|<\infty\)，Kingman 或 Furstenberg--Kesten 理论给出
+\[
+\gamma(E)=\lim_{L\to\infty}L^{-1}\log\|M_L(E)\|\quad\text{a.s.}
+\]
+在强不可约、非紧性和适当非共振条件下可进一步得到 Oseledets 分裂与指数衰减。若跃迁固定、存在积分态密度 \(N\)，则按所选归一化有 Thouless 公式
+\[
+\gamma(E)=\int\log|E-E'|\,dN(E')-\mathbb E\log|t_0|.
+\]
+一维非退化独立随机势在矩条件下通常有 \(\gamma(E)>0\)，定位长度可定义为 \(\xi(E)=1/\gamma(E)\)；对称点、相关退化和临界模型须单独检验。周期势在谱带内可有 \(\gamma=0\) 的 Bloch 波，在带隙中则有正指数。确定性 Fibonacci 型替换还可通过有序块乘积分析：若
+\(\sigma(a)=ab,\ \sigma(b)=a\)，则在固定乘积约定下
+\(M_{n+1}=M_{n-1}M_n\)。对 \(\det M_n=1\) 令 \(x_n=\tfrac12\operatorname{tr}M_n\)，有
+\[
+x_{n+1}=2x_nx_{n-1}-x_{n-2},
+\]
+且
+\[
+I=x_{n+1}^2+x_n^2+x_{n-1}^2-2x_{n+1}x_nx_{n-1}-1
+\]
+保持不变。这种确定性谱分析不能直接套用随机 Anderson 局域化结论。
+
+把有限 FIB 片段接到外加无耗散引线，匹配左右行波得到散射矩阵
+\(S(E)=\begin{psmallmatrix}r_L&t_R\\t_L&r_R\end{psmallmatrix}\)。自伴单通道模型满足
+\(|r_L|^2+|t_L|^2=1\)，透射为 \(\mathcal T_L=|t_L|^2\)；多通道则用 \(\operatorname{Tr}(t^*t)\)，有增益或吸收时 \(S\) 不再酉。若边界阻抗有界且处于一维局域化相，通常有
+\[
+-\frac1{2L}\log\mathcal T_L\to\gamma(E),
+\]
+边界只贡献次线性项；转移乘积满足混合 CLT 时，\(L^{-1/2}(\log\|M_L\|-L\gamma)\) 可收敛到均值为零的正态分布，但方差不是普适常数。
+
+在图而非路径上，可定义外加自伴图算子
+\[
+(H^\omega\psi)(u)=\sum_vt_{uv}(\omega)\psi(v)+v_u(\omega)\psi(u)
+\]
+及 Green 函数。若某能区满足分数矩条件
+\[
+\mathbb E|G^\omega(u,v;E+i0)|^s\le Ce^{-\mu d(u,v)},
+\qquad 0<s<1,
+\]
+才可推出谱或动力学局域化。扩散标度、Thouless 时间、平均能级间距和无量纲导通数同样需要外加动力学与谱极限，不能由词长直接推出。
+
+因此，同一 FIB 载体可以在不同外加势、跃迁、噪声、几何、边界和观测下承载 Bloch 传播、扩散、临界输运或指数局域化。FIB 递归本身只给出状态、标签、词序和组合关系，不能单独决定真实 Anderson 物理、散射定律或任何具有物理单位的普适统计律。
