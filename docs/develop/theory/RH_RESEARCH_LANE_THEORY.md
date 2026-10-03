@@ -13171,3 +13171,253 @@ $$
 上述 Bessel 核与渐近式归各自来源；[Paris, arXiv:2112.02928v1, §6](https://arxiv.org/pdf/2112.02928v1) 供应相符的一端系数系列。这里的承重补充是原有限积分的精确交叉射线分解和全射线余项控制，不能由其单端点渐近系列直接替代。来源接口及 [Temme, DOI 10.1137/0521013](https://doi.org/10.1137/0521013) 的实参数限制见 [既有文献注](../../../Library/Weil/tlas2020bump.md)。这些接口尚不控制有限外层积分的符号，也不控制实际带重数零点总和。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 原正伸缩平均的横向符号区域与实际剩余谱
+
+**定义 33.1（联合横向参数与精确外层分解）。** 对 $\gamma>0$、$\delta\in\mathbb R$、$R>0$，置
+
+$$
+z=\gamma-i\delta,\quad T=R\gamma,\quad
+\eta=\frac{R\delta}{\sqrt T},\quad x=iRz=\eta\sqrt T+iT,
+$$
+
+并保留同一个平均
+
+$$
+A_R(z)=\int_1^bw(u)\Phi(uRz)^2\,du,
+\qquad
+w(u)=\frac1{dM}e^{-a/(u-1)-a/(b-u)},
+\quad d=b-1,\ a=d/4.
+$$
+
+置 $c=\sqrt{d/2}$。当 $T$ 充分大且 $\eta$ 有界时，候签定理 32.1 给出精确的三项分解
+
+$$
+\begin{aligned}
+A_R(z)&=S_+(x)+C(x)+S_-(x),\\
+S_+(x)&=\int_1^bw(u)e^{ux}Q_-(ux)^2\,du,\\
+C(x)&=2\int_1^bw(u)Q_-(ux)Q_+(-ux)\,du,\\
+S_-(x)&=\int_1^bw(u)e^{-ux}Q_+(-ux)^2\,du.
+\end{aligned}
+\tag{33.1}
+$$
+
+这些是解析平方；只有其合法模长上界使用绝对值。
+
+**候签定理 33.1（统一横向区域内的加权实部正性）。** 若固定 $\eta_0>0$ 满足
+
+$$
+\eta_0<c,\qquad
+b\eta_0<\sqrt{2b}+c-\sqrt2,\qquad
+\eta_0\sqrt{b/2}<\pi/2,
+\tag{33.2}
+$$
+
+则存在仅依赖 $\eta_0$ 和原固定 bump 的有限 $T_0$，使所有 $\gamma>0$、$R>0$、$\delta\in\mathbb R$ 同时满足 $T=R\gamma\ge T_0$ 和 $|\eta|\le\eta_0$ 时，
+
+$$
+\Re\bigl(p(z)A_R(z)\bigr)>0.
+\tag{33.3}
+$$
+
+这里没有要求 $z$ 来自零点，也没有声称单个复数项本身为正。阈值是存在性阈值，未给出数值认证。
+
+证明。先取 $0\le\eta\le\eta_0$，负参数由复共轭处理。由于 $\delta/\gamma=\eta/\sqrt T$，原多项式有精确比值
+
+$$
+\frac{p(z)}{p(\gamma)}
+=(1-i\eta/\sqrt T)^2
+\left(\frac{1+4\gamma^2(1-i\eta/\sqrt T)^2}
+{1+4\gamma^2}\right)^2
+=1+O_{\eta_0}(T^{-1/2}).
+\tag{33.4}
+$$
+
+其均匀性来自 $4\gamma^2/(1+4\gamma^2)\in(0,1)$，特别有 $|p(z)|\le C p(\gamma)$，不让常数依赖任意大的或任意小的 $\gamma$。
+
+对全部实数 $u\in[1,b]$ 使用 (32.4)。主根给出
+
+$$
+\sqrt x+\sqrt{-x}
+=\sqrt{2T}-i\eta/\sqrt2+O_{\eta_0}(T^{-1/2}),
+$$
+
+而 $x^{-3/4}(-x)^{-3/4}=T^{-3/2}(1+O_{\eta_0}(T^{-1/2}))$。于是 (33.4) 支付
+
+$$
+p(z)Q_-(ux)Q_+(-ux)
+=p(\gamma)C_0^2u^{-3/2}T^{-3/2}e^{-\sqrt{2uT}}
+\bigl(e^{i\eta\sqrt{u/2}}+O_{\eta_0}(T^{-1/2})\bigr).
+\tag{33.5}
+$$
+
+第三个严格条件给出全实区间上的统一正余弦余量 $\cos(\eta_0\sqrt{b/2})>0$。因此充分大 $T$ 时，交叉项被积函数的加权实部在整个区间内非负，且大于正主包络的固定倍数。
+
+为取得不依赖外层鞍点展开的下界，仅保留 $u=1+t$、$T^{-1/4}\le t\le2T^{-1/4}$。当 $2T^{-1/4}<d/2$ 时，
+
+$$
+w(1+t)\ge(dM)^{-1}e^{-aT^{1/4}-1/2},
+\qquad
+\sqrt{2uT}\le\sqrt{2T}+\sqrt2\,T^{1/4}.
+$$
+
+其长度为 $T^{-1/4}$，故存在统一 $C_1>0$ 使
+
+$$
+\Re\bigl(p(z)C(x)\bigr)
+\ge C_1p(\gamma)T^{-7/4}
+ e^{-\sqrt{2T}-(a+\sqrt2)T^{1/4}}.
+\tag{33.6}
+$$
+
+下面估计完整的 $p(z)S_\pm(x)$，包括精确射线函数中的全部余项；不在原实区间上积分内层误差的绝对值。
+
+固定 $\ell=1/8$。把 $S_+$ 的外层路径变形为上半平面的有限多边形
+
+$$
+1\ \longrightarrow\ 1+\ell e^{i\pi/4}
+\ \longrightarrow\ b-\ell e^{-i\pi/4}
+\ \longrightarrow\ b,
+\tag{33.7}
+$$
+
+把 $S_-$ 的路径变形为其下半平面共轭路径。中段是高度 $\pm\ell/\sqrt2$ 的有限水平线段。其内部与原区间之间没有奇点；在截去端点的小弧之后使用 Cauchy 定理。端点坐标 $u-1$ 或 $b-u$ 的幅角均介于 $0$ 与 $\pm\pi/4$ 之间，因而 $e^{-a/(u-1)}$ 或 $e^{-a/(b-u)}$ 给出 $O(\varepsilon e^{-a/(\sqrt2\varepsilon)})$ 的消失弧界。其余因子对固定 $x$ 在该端点附近有界。
+
+整个有限路径上 $\Re u\ge1$、$|\arg u|<\pi/12$；当 $T$ 充分大，$\arg x$ 任意接近 $\pi/2$，因此 $ux$ 始终落在 (32.4) 的共同闭扇区内，$-ux$ 落在对应下扇区内。没有跨越 $u=0$ 或主根分支，也没有将外层轮廓延伸到无限射线。
+
+在任一端点 $r\in\{1,b\}$ 的长度参数 $0<t\le\ell$ 上，(32.4) 及固定紧路径上的平方根 Lipschitz 界给出
+
+$$
+|Q_-(ux)|^2\le C T^{-3/2}
+ e^{-\sqrt{2rT}+C\sqrt T\,t},
+\tag{33.8}
+$$
+
+$Q_+(-ux)$ 也满足同一界。这里 $\eta$ 对端点主根的修正为 $O(1)$，已吸收于固定 $C$。
+
+在匹配的上、下路径上，大线性相位的模长衰减至少为
+
+$$
+e^{\pm r\eta\sqrt T-(T-\eta_0\sqrt T)t/\sqrt2}.
+$$
+
+该端点的奇异权重为 $e^{-a/(\sqrt2t)}$，另一端点权重在该有限短射线上有界。结合 (33.4)、(33.8)，带 $p(z)$ 的端点积分被
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{(\pm r\eta-\sqrt{2r})\sqrt T}
+ \int_0^\infty e^{-A_Tt-B/t}\,dt,
+\quad
+A_T=T/\sqrt2-C_2\sqrt T,\quad B=a/\sqrt2
+\tag{33.9}
+$$
+
+控制，充分大 $T$ 时 $A_T>0$。这里的无限正实积分只是一份非负上界，不是外层复轮廓的无限延伸。已有 Bessel 核身份及其大正实参数界给出
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-A_Tt-B/t}\,dt
+&=2\sqrt{B/A_T}\,K_1(2\sqrt{A_TB})\\
+&\le C_3T^{-3/4}e^{-c\sqrt T},
+\end{aligned}
+\tag{33.10}
+$$
+
+因为 $2\sqrt{A_TB}=c\sqrt T+O(1)$。有限中段的模长则不超过
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T};
+$$
+
+权重在该段有界，内层主根的正实部允许丢弃其额外衰减。合并四个端点和两个中段，得到完整加权界
+
+$$
+\begin{aligned}
+|p(z)S_+(x)|+|p(z)S_-(x)|
+\le{}& C_4p(\gamma)T^{-9/4}
+ \sum_{\substack{r\in\{1,b\}\\\varepsilon\in\{-1,1\}}}
+ e^{(\varepsilon r\eta-\sqrt{2r}-c)\sqrt T}\\
+&+C_5p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T}.
+\end{aligned}
+\tag{33.11}
+$$
+
+前两个严格条件给出固定 $g>0$，使四个端点指数均不超过 $-(\sqrt2+g)\sqrt T$。因此 (33.11) 与 (33.6) 之比由
+
+$$
+C T^{-1/2}e^{-g\sqrt T+(a+\sqrt2)T^{1/4}}
++ C T^{1/4}e^{-\ell T/\sqrt2+(b\eta_0+\sqrt2)\sqrt T+(a+\sqrt2)T^{1/4}}
+\longrightarrow0
+$$
+
+统一控制。充分大 $T$ 时，同端点项无法抵消交叉项的正实部，证明 (33.3)。由于 $\phi$ 实且偶、$p$ 有实系数，负 $\delta$ 的完整项是正 $\delta$ 项的共轭，故同一结论适用于 $|\eta|\le\eta_0$。$\square$
+
+**候签推论 33.2（具体横向常数）。** $\eta_0=3/5$ 满足 (33.2)，且证明中的端点指数余量可取 $g=3/140$。
+
+证明。$4<b<17/4$ 给出 $c>6/5$ 和 $\sqrt{2b}>14/5$；另有 $\sqrt2<10/7$。于是
+
+$$
+\sqrt{2b}+c-\sqrt2>18/7,
+\qquad 3b/5<51/20,
+\qquad 18/7-51/20=3/140.
+$$
+
+第一端点的余量 $c-3/5>3/5>3/140$。最后，$(3/5)\sqrt{b/2}<9/10<\pi/2$。这些严格有理比较证明三条件及统一余量。$\square$
+
+**定义 33.2（实际受控谱与新剩余谱）。** 使用原实际零点、实际解析重数以及固定已验证高度 $H=3000175332800$。定义反射不变的集合
+
+$$
+\begin{aligned}
+\mathcal G_H(R)&=\{\rho:\gamma>H,\ |\beta-1/2|\le(3/5)\sqrt{\gamma/R}\},\\
+\mathcal U_H(R)&=\{\rho:\gamma>H,\ |\beta-1/2|>(3/5)\sqrt{\gamma/R}\}.
+\end{aligned}
+$$
+
+按原第 30—31 节的相同约定置
+
+$$
+E_{\rm controlled}(R)=2\sum_{\rho\in\mathcal G_H(R)}
+ m_\rho p(z_\rho)A_R(z_\rho),
+\qquad
+E_{\rm newrem}(R)=2\sum_{\rho\in\mathcal U_H(R)}
+ m_\rho p(z_\rho)A_R(z_\rho).
+\tag{33.12}
+$$
+
+外面的二倍保留负纵坐标对称；集合包含正纵坐标上全部水平反射项，未把复解析平方替换成模平方。
+
+**候签命题 33.3（实际符号分解与严格剩余高度）。** 当 $R\ge\max(1,T_0/H)$ 时，原共同可和界支付 (33.12)，且
+
+$$
+\bar q(R)=P_H(R)+E_{\rm controlled}(R)+E_{\rm newrem}(R),
+\qquad E_{\rm controlled}(R)\ge0.
+\tag{33.13}
+$$
+
+每个新剩余项满足严格关系
+
+$$
+H<\gamma<\frac{25}{9}R(\beta-1/2)^2<\frac{25}{36}R.
+\tag{33.14}
+$$
+
+因此 $E_{\rm newrem}$ 对每个固定 $R$ 是有限实际带重数的和。若能独立证明其对所有充分大实数 $R$ 满足
+
+$$
+E_{\rm newrem}(R)\ge-P_H(R),
+\tag{33.15}
+$$
+
+则原完整平均最终非负；(33.15) 本身仍待证明。
+
+证明。所有 $\gamma>H$ 的项均有 $T=R\gamma\ge T_0$。零点 $\beta=1/2$ 的项按原因子计为 $2m_\rho p(\gamma)A_R(\gamma)$；$\beta\ne1/2$ 的正纵坐标水平反射对具有相同实际重数，原因子汇合为 $4m_\rho\Re(p(z_\rho)A_R(z_\rho))$。候签定理 33.1 与推论 33.2 使所选贡献非负。原 strip/count/Fourier majorant 保证固定 $R$ 下绝对可和，故这些反射配对及集合分解合法。实际所选集合为空时只能断言零贡献，不断言严格正。
+
+新补集的定义给出 $\gamma<(25/9)R(\beta-1/2)^2$；实际临界带 $|\beta-1/2|<1/2$ 给出最后的严格界。高度 $H$ 的项仍属于头部，横向等号仍属于受控集合。由 (33.13) 可知 (33.15) 是充分的同对象预算条件。$\square$
+
+本节承重推导为原测试的仓内综合估计，复用第 32 节的精确余项与标准 Bessel 界；未将未命中文献等同于原创认证。该推导保留有限外层的全部连接段和同一实际谱，只在受限横向区域提供符号信息。既有文献注中的 $E_{\rm safe}$、$E_{\rm rem}$、$B_H$ 及其绝对预算仍按原定义使用；$E_{\rm newrem}$ 是这里独立定义的新补集，不能静默改称旧 $E_{\rm rem}$。
+
+一个假设存在的固定离线零点满足 $|\eta|=|\beta-1/2|\sqrt{R/\gamma}\to\infty$，故最终离开本节受控区域。候签命题 33.3 没有供应 (33.15)，没有取得 RH 或 Robin 的全称不等式，也没有建立 FIB 递归与实际素数作用的算术交织。黄金值 $b$ 在这里仍只是原测试的固定伸缩上端点。
+
+## 追加锚（本行以下为增补区）
