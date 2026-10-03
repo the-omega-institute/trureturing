@@ -72,3 +72,8 @@ the lower-bound reading of P ≺ m_k. The hatted class is not needed.
 Theorem 3.6, p. 4, states that there is no **largest** element in 𝒜_k for
 k ≥ 3. This does not state that no **maximal** element exists. Proposition
 3.8 and its proof on pp. 6–7 address k = 3 separately.
+
+## Verified locator
+
+- DOI: 10.53656/math2024-2-1-pro (journal record for *Properties and conjectures regarding discrete renewal sequences*).
+- URL: https://arxiv.org/abs/2307.00545v2 (arXiv v2, including Conjecture 3.7 and Proposition 3.8).

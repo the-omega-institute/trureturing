@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/RandomWalks/RenewalMinorantMaximalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nikolov-savov-2023-renewal-minorant-maximality-refutation` (refuted) by `D5/S3/StatisticalMechanics/RandomWalks/RenewalMinorantMaximalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nikolov-savov-2023-renewal-minorant-maximality-refutation","declaration_gid":"D5/S3/StatisticalMechanics/RandomWalks/RenewalMinorantMaximalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. Nikolov and M. Savov (2024). *Properties and conjectures regarding discrete renewal sequences*. DOI: [10.53656/math2024-2-1-pro](https://doi.org/10.53656/math2024-2-1-pro). URL: <https://arxiv.org/abs/2307.00545v2>.

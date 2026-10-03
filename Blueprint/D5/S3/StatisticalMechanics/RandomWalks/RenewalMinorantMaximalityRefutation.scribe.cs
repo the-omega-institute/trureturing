@@ -37,18 +37,23 @@ internal sealed class RenewalMinorantMaximalityRefutationDocument : IScribeDocum
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation at k = 4", Disp(new Formula.Not(F.Id("claim"))),
                 "Write x=p_1, y=p_2, z=p_3 and w=1−x−y−z. Set P=x^2(x+y+z)+xy. Then P−Q_4=xyw ≥ 0 on A_4. Its degree is at most 3, and it differs from Q_4: at x=y=z=w=1/4 the values are P=7/64 and Q_4=6/64. The initial renewal masses are u_1=x, u_2=x^2+y and u_3=x^3+2xy+z. The certificates u_1−P=x(z+(1+x)w), u_2−P=x^2w+y(1−x), and u_3−P=xy(1−x)+z(1−x^2) are nonnegative on A_4. Also P ≤ u_1 ≤ 1=u_0. For n ≥ 4 the recurrence is a convex combination of the preceding four masses, so strong induction gives P ≤ u_n for every positive n. Thus P belongs to 𝒜_4 and contradicts maximality of Q_4.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nikolov-savov-2023-renewal-minorant-maximality-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("renewal-minorant-" + (declaration switch
             {
                 "Ak" => "ak", "stepMass" => "step-mass", "polynomialLE" => "polynomial-le",
                 "minorantClass" => "minorant-class", "Q" => "q", _ => declaration,
             })),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
