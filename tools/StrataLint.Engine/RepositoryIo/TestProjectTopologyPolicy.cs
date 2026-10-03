@@ -79,15 +79,23 @@ internal static partial class RepositoryRules
     internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot) =>
         ReadRegisteredProjects(snapshot, EngineeringProjectRegistry.Read(snapshot).Projects);
 
-    internal static TestProjectTopologySnapshot ReadBaseProjects(RepositorySnapshot baseline, RepositorySnapshot candidate) =>
-        ReadRegisteredProjects(baseline, EngineeringProjectRegistry.ReadBase(baseline, candidate));
-
     private static TestProjectTopologySnapshot ReadRegisteredProjects(RepositorySnapshot snapshot, IReadOnlyList<EngineeringProjectDeclaration> projects) =>
         new(projects.Select(project => new TestProjectTopologyProject(project.Path,
             snapshot.Files[RepoPath.CreateKnown(project.Path)].Text, project)).ToArray());
 
+    private static TestProjectTopologySnapshot ReadComparableBaseProjects(RepositorySnapshot baseline, RepositorySnapshot candidate)
+    {
+        var candidatePaths = EngineeringProjectRegistry.Read(candidate).Projects
+            .Select(static project => project.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var declarations = EngineeringProjectRegistry.ReadBase(baseline, candidate)
+            .Where(project => candidatePaths.Contains(project.Path))
+            .ToArray();
+        return ReadRegisteredProjects(baseline, declarations);
+    }
+
     internal static TestProjectTopologyResult EvaluateSnapshots(RepositorySnapshot protectedBase, RepositorySnapshot candidate) =>
-        Evaluate(ReadBaseProjects(protectedBase, candidate), ReadSnapshotProjects(candidate));
+        Evaluate(ReadComparableBaseProjects(protectedBase, candidate), ReadSnapshotProjects(candidate));
 
     internal static TestProjectTopologyResult Evaluate(
         TestProjectTopologySnapshot protectedBase,

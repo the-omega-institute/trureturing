@@ -1,0 +1,23 @@
+**推论 56.7（锚的唯一阈值改进与上限比较）。** 有
+
+$$
+\boxed{0<\widehat\Theta_1<\Theta_1<\widehat\Theta_2
+<\Theta_2<\widehat\Theta_3<\widehat\Theta_4<\cdots<\lambda.}
+\tag{56.8}
+$$
+
+固定锚只在 $R=2$ 降低整族阈值；$R=1$ 的实际阈值不变，$R\ge3$ 的原族已有与锚族相同的阈值，无需锚。两族随上限增加的实际阈值均严格增加到 $\lambda$，且
+
+$$
+\begin{aligned}
+\lambda-\widehat\Theta_R&=\frac{g^2A_H\chi^R}{1-\rho\chi^R}>0,\\
+\widehat\Theta_{R+1}-\widehat\Theta_R
+&=\frac{g^2A_H\chi^R(1-\chi)}{(1-\rho\chi^R)(1-\rho\chi^{R+1})}>0.
+\end{aligned}
+\tag{56.9}
+$$
+
+证明。直接相减得(56.9)。$X_H<Z_{H,1}$、$X_H>\chi Z_{H,2}$、$X_H<Z_{H,2}$ 分别给(56.8)的前三个非平凡比较；$X_H>\chi h_H>\chi Z_{H,3}$ 给 $\Theta_2<\widehat\Theta_3$。正性由 $g^2\chi h_H<g^6<\lambda$ 得到，其余比较与极限随(56.9)成立。56.5给锚改进的完整分类。证毕。
+
+每个固定 $R$ 在预算 $\lambda$ 有共同正余量，但这些余量不能对所有上限共用。固定 $b<\lambda$ 只能供应阈值不超过 $b$ 的有限多个完整上限族；阈值相等时还须满足56.6的合同及归属条件。这不排除受限子族或其他来源。
+

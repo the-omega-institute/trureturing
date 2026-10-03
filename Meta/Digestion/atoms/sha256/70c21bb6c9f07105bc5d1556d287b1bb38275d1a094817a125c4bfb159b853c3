@@ -1,0 +1,18 @@
+**定义 345.1（实际关系的滤波读数）。** 在 §§338、344 的同一实际频率谱、正权重及 RH 假设下，额外假设全四分之一相位 $\iota\in H$，并沿用 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$、$r_\gamma=\gamma/(1/4+\gamma^2)$、$A=\|r\|_a^2$ 与闭子空间 $V$。记二阶相位储备为
+
+$$
+R_2:=8A-\|P_Vr\|_a^2.
+$$
+
+对每个非零有限支撑整数关系 $n$，即 $\sum_\gamma n_\gamma\gamma=0$，定义
+
+$$
+Q_n:=\sum_{\gamma\in\operatorname{supp}n}\frac{n_\gamma^2}{a_\gamma}>0,
+\qquad
+L_n:=\sum_{\gamma\in\operatorname{supp}n}
+\frac{n_\gamma\gamma}{1/4+\gamma^2}.
+\tag{345.1}
+$$
+
+$Q_n$ 是该关系的加权代价；$L_n$ 将同一零关系送过实际谱的一阶相位滤波。原频率组合为零，并不在定义上强迫这个滤波组合为零。
+

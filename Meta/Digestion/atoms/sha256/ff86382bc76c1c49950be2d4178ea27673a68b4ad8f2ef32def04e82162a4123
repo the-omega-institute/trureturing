@@ -1,0 +1,14 @@
+**Theorem 42.1 (half-binomial valuation).** For every $j\geq0$,
+
+$$
+v_2\binom{1/2}{j}=-j-v_2(j!).
+$$
+
+Multiply the generalized binomial coefficient by $2^j j!$. Its falling
+factorial formula becomes the product of the odd integers $1-2k$ for
+$0\leq k<j$. Every factor is prime to $2$, so the product is nonzero
+and has dyadic valuation zero. Subtracting the valuations of $2^j$
+and $j!$ gives the formula. The result supplies the exact valuation of
+the $m=j$ term in (33.2); strict separation from all $m<j$ terms and
+the non-square conclusion of Theorem 33.1 still require further proof.
+

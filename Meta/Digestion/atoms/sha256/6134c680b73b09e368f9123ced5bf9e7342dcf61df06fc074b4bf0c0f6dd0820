@@ -1,0 +1,4 @@
+### 258.4 分拆分支是另一种 Robin 分解，不是 FIB 分解
+
+[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)研究 Espinosa 分支，证明首支并报告若干依赖 Alaoglu--Erdős 猜想的高支实现。分支索引、钩形分拆及其 cutoff divisors 不等于 Fibonacci 秩、五窗包含状态或 $\omega(n)$。当前没有从 FIB 地址到其具体除数子集的保源映射，故不重复移植其渐近常数。
+

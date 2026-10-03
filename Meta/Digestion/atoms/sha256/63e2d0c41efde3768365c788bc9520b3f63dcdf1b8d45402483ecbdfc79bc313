@@ -1,0 +1,20 @@
+### 定理 264.3 乘子与平移共同增长的预算
+
+固定实数 $\alpha,\beta\ge0$，满足 $4\alpha+3\beta<1$。
+在定理264.2的全部实际来源和平移中，进一步要求
+\[
+2\le g\le N^\alpha,\qquad |r|\le N^\beta.
+\tag{264.8}
+\]
+则一致成立
+\[
+\boxed{D_r>\frac{N^{1-4\alpha-3\beta}}{50},\qquad
+U_*\ge\frac{N^{1-2\alpha-2\beta}}5.}
+\tag{264.9}
+\]
+特别地，$N\to\infty$ 时 $U_*\to\infty$。对每个固定 $0<\omega<1/2$，当 $N$ 充分大时，这些平移全部违反 §201 的慢范数条件：
+\[
+\boxed{\log\log(2+D_r)>(\log\log\log U_*)^\omega.}
+\tag{264.10}
+\]
+

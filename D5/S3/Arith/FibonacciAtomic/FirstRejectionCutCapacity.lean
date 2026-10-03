@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Actual window profiles determine ordered and Boolean capacities for every cut. -/
-
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Observer.Separation.SurjectiveColumnSharpWidth
 import D5.S3.ConceptDynamics.Communication.LanguagePostprocessingObstruction
@@ -81,6 +80,116 @@ noncomputable def interval (k l r : ℕ) : Finset (Fin (k + 1)) := by
 def x (k : ℕ) : Word k := fun r => if r.val = 0 then .high else if r.val = 1 then .low else .middle
 def y (k : ℕ) : Word k := fun r => if r = Fin.last k then .zero else .middle
 
+/-- A singleton coordinate is its unit interval. -/
+theorem singleton_interval (k : ℕ) (i : Fin (k + 1)) :
+    ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
+  classical
+  ext j
+  simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+  omega
+theorem interval_data (k l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
+    d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) ∧ (internals (interval k l r)).card = r-l-1 ∧
+    (∀ j ∈ internals (interval k l r), c (interval k l r) j = if l = 0 then 0 else 1) ∧
+    (Fin.last k ∈ interval k l r ↔ r = k + 1) ∧ delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
+  classical
+  have cross_iff (i : Fin k) : Cross (interval k l r) i ↔ (0 < l ∧ i.val+1 = l) ∨ (r < k + 1 ∧ i.val+1 = r) := by
+    simp only [Cross,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
+    omega
+  have internal_iff (i : Fin k) : Internal (interval k l r) i ↔ l ≤ i.val ∧ i.val+1 < r := by
+    simp only [Internal,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
+    omega
+  have dc : d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) := by
+    unfold d
+    by_cases hl : l = 0
+    · by_cases hrt : r = k + 1
+      · have he : crossings (interval k l r) = ∅ := by
+          ext i
+          simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff]
+          simp [hl,hrt]
+        rw [he]
+        simp [hl,hrt]
+      · let e : Fin k := ⟨r-1,by omega⟩
+        have he : crossings (interval k l r) = {e} := by
+          ext i
+          simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
+          dsimp [e]
+          omega
+        rw [he]
+        simp [hl,hrt]
+    · let e : Fin k := ⟨l-1,by omega⟩
+      by_cases hrt : r = k + 1
+      · have he : crossings (interval k l r) = {e} := by
+          ext i
+          simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
+          dsimp [e]
+          omega
+        rw [he]
+        simp [hl,hrt]
+      · let f : Fin k := ⟨r-1,by omega⟩
+        have hef : e ≠ f := by
+          simp only [ne_eq,Fin.ext_iff]
+          dsimp [e,f]
+          omega
+        have he : crossings (interval k l r) = {e,f} := by
+          ext i
+          simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_insert,Finset.mem_singleton,Fin.ext_iff]
+          dsimp [e,f]
+          omega
+        rw [he]
+        simp [hl,hrt,hef]
+  have jc : (internals (interval k l r)).card = r-l-1 := by
+    let f : {i : Fin k // Internal (interval k l r) i} → Fin (r-l-1) :=
+      fun i => ⟨i.val.val-l,by have hi := (internal_iff i.val).mp i.property; omega⟩
+    have hf : Function.Bijective f := by
+      constructor
+      · intro a b h
+        apply Subtype.ext
+        apply Fin.ext
+        have ha := (internal_iff a.val).mp a.property
+        have hb := (internal_iff b.val).mp b.property
+        have he := congrArg Fin.val h
+        dsimp [f] at he
+        omega
+      · intro a
+        have hbound := a.isLt
+        let j : Fin k := ⟨a.val+l,by omega⟩
+        have hj : Internal (interval k l r) j := (internal_iff j).mpr ⟨by dsimp [j]; omega,by dsimp [j]; omega⟩
+        refine ⟨⟨j,hj⟩,?_⟩
+        apply Fin.ext
+        simp [f,j]
+    have hc := Fintype.card_congr (Equiv.ofBijective f hf)
+    simpa [Fintype.card_subtype,internals] using hc
+  have pc (j : Fin k) (hj : j ∈ internals (interval k l r)) : c (interval k l r) j = if l = 0 then 0 else 1 := by
+    have hint : l ≤ j.val ∧ j.val+1 < r := (internal_iff j).mp (by simpa [internals] using hj)
+    unfold c
+    by_cases hl : l = 0
+    · have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = ∅ := by
+        ext i
+        simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.notMem_empty,iff_false]
+        omega
+      rw [he]
+      simp [hl]
+    · let e : Fin k := ⟨l-1,by omega⟩
+      have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = {e} := by
+        ext i
+        simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
+        dsimp [e]
+        omega
+      rw [he]
+      simp [hl]
+  have terminal_iff : Fin.last k ∈ interval k l r ↔ r = k + 1 := by
+    simp only [interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.val_last]
+    omega
+  have del : delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
+    by_cases hk : 0 < k
+    · simp only [delta,dif_pos hk,terminal_iff,interval,Finset.mem_filter, Finset.mem_univ,true_and,left,Fin.val_castSucc,Fin.val_last]
+      congr 1
+      apply propext
+      omega
+    · have hk0 : k = 0 := by omega
+      have hl0 : l = 0 := by omega
+      simp [delta,hk,hl0]
+  exact ⟨dc,jc,pc,terminal_iff,del⟩
 set_option maxHeartbeats 2000000 in
 -- The representative, fiber, and endpoint arguments are elaborated in one proof.
 /-- Every positive length and cut has the stated actual profile fibers and capacities. -/
@@ -744,114 +853,12 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
     have hclosed : Nat.card ClosedType = epsilon A := by
       by_cases h : Fin.last k ∈ A ∨ (internals A).Nonempty <;> simp [ClosedType,Nat.card_eq_fintype_card,Fintype.card_subtype,epsilon,h]
     simpa only [Types,Nat.card_sum,hgood,hclosed]
-  have interval_data (l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
-      d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) ∧ (internals (interval k l r)).card = r-l-1 ∧
-      (∀ j ∈ internals (interval k l r), c (interval k l r) j = if l = 0 then 0 else 1) ∧
-      (Fin.last k ∈ interval k l r ↔ r = k + 1) ∧ delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
-    have cross_iff (i : Fin k) : Cross (interval k l r) i ↔ (0 < l ∧ i.val+1 = l) ∨ (r < k + 1 ∧ i.val+1 = r) := by
-      simp only [Cross,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
-      omega
-    have internal_iff (i : Fin k) : Internal (interval k l r) i ↔ l ≤ i.val ∧ i.val+1 < r := by
-      simp only [Internal,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
-      omega
-    have dc : d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) := by
-      unfold d
-      by_cases hl : l = 0
-      · by_cases hrt : r = k + 1
-        · have he : crossings (interval k l r) = ∅ := by
-            ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff]
-            simp [hl,hrt]
-          rw [he]
-          simp [hl,hrt]
-        · let e : Fin k := ⟨r-1,by omega⟩
-          have he : crossings (interval k l r) = {e} := by
-            ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
-            dsimp [e]
-            omega
-          rw [he]
-          simp [hl,hrt]
-      · let e : Fin k := ⟨l-1,by omega⟩
-        by_cases hrt : r = k + 1
-        · have he : crossings (interval k l r) = {e} := by
-            ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
-            dsimp [e]
-            omega
-          rw [he]
-          simp [hl,hrt]
-        · let f : Fin k := ⟨r-1,by omega⟩
-          have hef : e ≠ f := by
-            simp only [ne_eq,Fin.ext_iff]
-            dsimp [e,f]
-            omega
-          have he : crossings (interval k l r) = {e,f} := by
-            ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_insert,Finset.mem_singleton,Fin.ext_iff]
-            dsimp [e,f]
-            omega
-          rw [he]
-          simp [hl,hrt,hef]
-    have jc : (internals (interval k l r)).card = r-l-1 := by
-      let f : {i : Fin k // Internal (interval k l r) i} → Fin (r-l-1) :=
-        fun i => ⟨i.val.val-l,by have hi := (internal_iff i.val).mp i.property; omega⟩
-      have hf : Function.Bijective f := by
-        constructor
-        · intro a b h
-          apply Subtype.ext
-          apply Fin.ext
-          have ha := (internal_iff a.val).mp a.property
-          have hb := (internal_iff b.val).mp b.property
-          have he := congrArg Fin.val h
-          dsimp [f] at he
-          omega
-        · intro a
-          have hbound := a.isLt
-          let j : Fin k := ⟨a.val+l,by omega⟩
-          have hj : Internal (interval k l r) j := (internal_iff j).mpr ⟨by dsimp [j]; omega,by dsimp [j]; omega⟩
-          refine ⟨⟨j,hj⟩,?_⟩
-          apply Fin.ext
-          simp [f,j]
-      have hc := Fintype.card_congr (Equiv.ofBijective f hf)
-      simpa [Fintype.card_subtype,internals] using hc
-    have pc (j : Fin k) (hj : j ∈ internals (interval k l r)) : c (interval k l r) j = if l = 0 then 0 else 1 := by
-      have hint : l ≤ j.val ∧ j.val+1 < r := (internal_iff j).mp (by simpa [internals] using hj)
-      unfold c
-      by_cases hl : l = 0
-      · have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = ∅ := by
-          ext i
-          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.notMem_empty,iff_false]
-          omega
-        rw [he]
-        simp [hl]
-      · let e : Fin k := ⟨l-1,by omega⟩
-        have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = {e} := by
-          ext i
-          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
-          dsimp [e]
-          omega
-        rw [he]
-        simp [hl]
-    have terminal_iff : Fin.last k ∈ interval k l r ↔ r = k + 1 := by
-      simp only [interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.val_last]
-      omega
-    have del : delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
-      by_cases hk : 0 < k
-      · simp only [delta,dif_pos hk,terminal_iff,interval,Finset.mem_filter, Finset.mem_univ,true_and,left,Fin.val_castSucc,Fin.val_last]
-        congr 1
-        apply propext
-        omega
-      · have hk0 : k = 0 := by omega
-        have hl0 : l = 0 := by omega
-        simp [delta,hk,hl0]
-    exact ⟨dc,jc,pc,terminal_iff,del⟩
   have interval_formula (l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
       2 ^ d (interval k l r) + (∑ j ∈ internals (interval k l r),2 ^ c (interval k l r) j) + (if Fin.last k ∈ interval k l r then
           2 ^ (d (interval k l r) - delta (interval k l r)) else 0) = 2 ^ ((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) +
         (r-l-1) * 2 ^ (if l = 0 then 0 else 1) + (if r = k + 1 then 2 ^ (((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) -
           (if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0)) else 0) := by
-    obtain ⟨hd,hj,hc,ht,hdel⟩ := interval_data l r hlr hr
+    obtain ⟨hd,hj,hc,ht,hdel⟩ := interval_data k l r hlr hr
     simp only [hd,hdel,ht]
     congr 2
     calc
@@ -895,9 +902,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
     omega
   have last_cap (hk : 1 ≤ k) (he : A = {Fin.last k}) : cap = 3 := by
     have hI : ({Fin.last k} : Finset (Fin (k + 1))) = interval k k (k + 1) := by
-      ext i
-      simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_last]
-      omega
+      exact singleton_interval k (Fin.last k)
     have h := int_cap k (k + 1) (by omega) le_rfl (he.trans hI)
     have hk0 : k ≠ 0 := by omega
     simp [hk0,show 0 < k by omega] at h
@@ -930,15 +935,10 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
         omega
       simpa [hk] using full_cap hfull
     · have hI : ({(0 : Fin (k + 1))} : Finset (Fin (k + 1))) = interval k 0 1 := by
-        ext i
-        simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_zero]
-        omega
+        exact singleton_interval k 0
       exact prefix_cap 1 le_rfl (by omega) (he.trans hI)
   have singleton_cap (i : Fin (k + 1)) (hi0 : 0 < i.val) (hik : i.val < k) (he : A = {i}) : cap = 4 := by
-    have hI : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
-      ext j
-      simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
-      omega
+    have hI := singleton_interval k i
     have h := internal_cap i.val (i.val+1) hi0 (by omega) (by omega) (he.trans hI)
     simpa using h
   have n1_cap (hk : k = 0) : (A = ∅ → cap = 1) ∧ (A = Finset.univ → cap = 2) := ⟨empty_cap, fun he => by simpa [hk] using full_cap he⟩

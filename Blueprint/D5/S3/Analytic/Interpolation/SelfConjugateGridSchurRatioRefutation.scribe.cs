@@ -191,7 +191,7 @@ internal sealed class SelfConjugateGridSchurRatioRefutationDocument : IScribeDoc
 
     private static Formula RatioFormula()
     {
-        Formula t = F.Id("t"), n = F.Id("n"), k = F.Id("k"), zeta = Zeta, d = F.Id("d");
+        Formula t = F.Id("t"), n = F.Id("n"), k = F.Id("k"), zeta = StrataLint.Scribe.FormulaDsl.Zeta, d = F.Id("d");
         Formula b = Sub(Sub(n, k), D(1));
         Formula numerator = Mul(Call("Nat.cast", Type("C"), Choose(t, Add(n, d))), Call("schurHook", d, b, zeta));
         Formula denominator = Mul(Call("Nat.cast", Type("C"), Choose(t, n)), Call("e", Sub(n, k), zeta));

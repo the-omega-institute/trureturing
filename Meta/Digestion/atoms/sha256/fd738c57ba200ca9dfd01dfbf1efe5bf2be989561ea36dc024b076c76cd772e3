@@ -1,0 +1,25 @@
+**定理 342.3（实际一阶抵消后的条件序列判别）。** 保持定理342.2的饱和条件，并假设实际临界预算 $D_{\rm crit}=B_\triangle-c_0\ge0$。若一个实际时间序列 $T_n\to\infty$ 满足
+
+$$
+T_n\bigl[T_n\Delta(T_n)+F(T_n)\bigr]\longrightarrow\ell\in\mathbb R,
+\tag{342.9}
+$$
+
+则
+
+$$
+T_n^2\bigl[D_{\rm crit}+\mathcal C^{\rm fin}(e^{T_n})\bigr]
+\longrightarrow\ell+G_*.
+\tag{342.10}
+$$
+
+若 $\ell+G_*>0$，该序列的全部充分晚点具有严格正余量；若 $\ell+G_*<0$，该序列提供任意晚的负余量。等号情形在本阶仍未判定。
+
+证明。$F$ 有界，（342.9）给 $T_n\Delta(T_n)+F(T_n)=O(T_n^{-1})$，从而 $\Delta(T_n)=O(T_n^{-1})\to0$。在饱和条件下
+
+$$
+\Delta(T_n)=2\sum_\gamma a_\gamma[1-\sin(\gamma T_n)].
+$$
+
+所有权重严格正，每个非负坐标亏损都趋零，所以 $e^{i\gamma T_n}\to i$。可和尾与 $G_H$ 的连续性给 $G(T_n)\to G_*$。将（342.2）乘以 $T_n^2$，第三阶余项变为 $O(T_n^{-1})$，即得（342.10）。极限的严格符号给上述判别。正号只覆盖给定序列，不能升级为所有实数截止的最终正号。$\square$
+

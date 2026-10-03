@@ -245,7 +245,7 @@ public sealed partial class CleanLanesCommandTests
             File.WriteAllText(Path.Combine(path, "Trureturing.lean"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(path, "lean-toolchain"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(
-                Path.Combine(path, "tools", "scripts", "ci-stage.sh"),
+                Path.Combine(path, "tools", "scripts", "local-harness-gate.sh"),
                 "fixture\n",
                 new UTF8Encoding(false));
             return path;

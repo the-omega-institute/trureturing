@@ -1,0 +1,23 @@
+## 317. CA价格下的临界乘子预算与单向余量运输
+
+本节直接复用 [CA价格与受控比较](../../../Library/Scale/baker2021smoothbeatty.md)、[Nicolas同截断包络](../../../Library/ArithSums/nicolas2025comparison.md) 及其既有素数尺度输入，不重证极大丰数的因子结构或包络渐近。新增内容是将这些输入组合到可增长的乘子范围，保留同一个实际整数的余量比较。全部结论为纸面推导，没有新增 Lean 核验或原创性声明。
+
+令 $C\to\infty$ 沿实际极大丰数（CA）取值，允许正价格处的并列极大点。记
+
+$$
+P=P^+(C),\qquad X=\log C,\qquad Z(n)=\sigma(n)/n,
+\qquad \Delta(n)=e^\gamma\log\log n-Z(n).
+\tag{317.1}
+$$
+
+取任一使 $C$ 在所有正整数上最大化 $Z(n)n^{-\epsilon}$ 的价格 $\epsilon>0$。所引接口给出
+
+$$
+X\sim P,\qquad
+0<\epsilon\le\frac{\log(1+1/P)}{\log P},\qquad
+\Delta(C)\longrightarrow0,\qquad Z(C)\sim e^\gamma\log P.
+\tag{317.2}
+$$
+
+这里的加性收敛复用 Nicolas包络、Dusart误差及 $\Sigma(C)=Z(C)$ 的既有应用；单凭相对 Grönwall极限不足以推出它。$P$ 始终是宿主 $C$ 的最大素因子，不替换为乘积的最大素因子。
+

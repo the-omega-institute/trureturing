@@ -1,0 +1,4 @@
+## 56. 有限返回上限、固定锚与延拓容量
+
+本章固定同一对实际字面尾，允许返回参数 $m\ge1$、$1\le r\le R$，其中 $R\ge1$ 为整数。预算结论针对这整个有限列表族；计数结论针对同长列表；恢复下界按完整可读配置计价。所用公开前提均取自本卷[固定正文 c99e47275ca3ebcebbff8fbb06ae894ff29aa122](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)：定义14.5与定理17.2的实际地址及合法前接，定义33.7和49.1—49.3的实际词、固定尾与六／二十槽证书，命题43.18的逐槽归属规则，定义36.9的完整恢复合同，以及定理33.13的存在性上界。共同第一未来的计数思路见39.7；这里直接证明所列 $D/D$ 对的单射，不调用竞争包络的内部尾存在条件。
+

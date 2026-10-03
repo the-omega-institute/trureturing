@@ -58,7 +58,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         # Exercise the optional-fetch caller protocol under errexit. Workflow
         # execution itself is verified by a real integration run, not YAML tests.
         return subprocess.run(["bash", "-euo", "pipefail", "-c", '''
-if ! "$1" fetch --allow-seed --repository "$2"; then
+if ! "$1" fetch --repository "$2"; then
     printf '%s\\n' 'Release seed unavailable; continuing with the normal Lean build.'
 fi
 make -C "$2" lean
@@ -476,16 +476,16 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual([], list(self.remote.iterdir()))
         self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
-    def test_legacy_fetch_flag_cannot_enable_cross_partition_selection(self):
+    def test_fetch_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)
         shutil.rmtree(self.root / ".lake/build")
-        restored = self.transport("fetch", arguments=("--allow-seed",))
+        restored = self.transport("fetch")
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertTrue((self.root / ".lake/build/lib/lean/D5/A.olean").is_file())
         shutil.rmtree(self.root / ".lake/build")
         self.manifest["packages"][0]["rev"] = OTHER
         self.save_manifest()
-        self.assertNotEqual(0, self.transport("fetch", arguments=("--allow-seed",)).returncode)
+        self.assertNotEqual(0, self.transport("fetch").returncode)
         self.assertFalse((self.root / ".lake/build").exists())
 
     def test_roundtrip_is_partitioned_and_source_sha_is_provenance_only(self):

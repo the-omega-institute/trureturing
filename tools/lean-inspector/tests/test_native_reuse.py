@@ -5,24 +5,15 @@ from test_reuse import EXECUTION
 
 class NativeReportConsumerTests:
     def test_impl_resource_preserves_production_reg_on_warm_report(self):
-        # Use the actual Impl resource selection, package target declarations,
-        # report entry and Lake compiler. Only the mathematical inputs are tiny.
-        sys.path.insert(0, str(ROOT / 'tools/scripts/workflow'))
-        import ci_plan
-        read = lambda path: (ROOT / path).read_bytes()
-        filemap = ci_plan.load_filemap(read(ci_plan.FILEMAP), read)
-        resources = {row['id']: row for row in filemap['resources']}
+        # Use the default program targets of a direct report call, the package
+        # target declarations, report entry and Lake compiler. Only the
+        # mathematical inputs are tiny.
         implementations = ('RegistrationGates', 'Registry', 'ProofBuilder')
-        for name in implementations:
-            impl = f'tools/lean-inspector/LeanInformationAudit/{name}.lean'
-            owner, = [row for row in filemap['files'] if ci_plan.glob(row['pattern']).fullmatch(impl)]
-            selected = ci_plan.closure(resources, owner['require'])
-            execution = ci_plan.execution_selection(read, [resources[key] for key in selected], resources)
-            self.assertIn('lean-report', execution['steps'])
+        targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
+                   'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
+                   'regInspector/LeanInformationAuditRegTests']
         self.reg_package()
         self.build()  # Restore the native fixture's private compiler stage.
-        self.copy('tools/scripts/workflow/ci_plan.py')
-        self.copy('Meta/ci-resources.json')
         root_config = self.root / 'lakefile.toml'
         root_config.write_text(root_config.read_text().replace(
             '[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n', ''))
@@ -57,7 +48,7 @@ class NativeReportConsumerTests:
             policy['dependency_sources']['include'].append(dict(
                 pattern=f'tools/lean-inspector/LeanInformationAudit/{name}.lean', optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
-        self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(execution['lean_targets'])
+        self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(targets)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
         def entry(phase):
@@ -65,7 +56,7 @@ class NativeReportConsumerTests:
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,
-                stdout=result.stdout, stderr=result.stderr, targets=execution['lean_targets']), paths)
+                stdout=result.stdout, stderr=result.stderr, targets=targets), paths)
             return result
 
         initial = entry('production-initial')
@@ -134,6 +125,7 @@ class NativeReportConsumerTests:
             exit_code=result.returncode, phases=phases,
             work=list(dict.fromkeys(line for line in [*result.stdout.splitlines(), *lines]
                                     if line.startswith('LEAN_INSPECTOR_WORK '))),
+            build_work=[line for line in result.stdout.splitlines() if line.startswith('LEAN_BUILD_WORK ')],
             lake_built_lines=sum('Built' in line.split() for line in lines)))
         if success:
             self.assertEqual(result.returncode, 0, '[FAIL] report_entry_success\n' + result.stdout + result.stderr)
@@ -144,9 +136,6 @@ class NativeReportConsumerTests:
     def test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs(self):
         self.reg_package()
         targets = ['leanInspector/reportInspector', 'trureturing/Audit']
-        self.copy('tools/scripts/workflow/ci_plan.py')
-        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
-            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[], lean_targets=targets)])))
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         policy['dependency_sources']['include'].append(dict(pattern='Audit.lean', optional=False))
@@ -171,6 +160,8 @@ class NativeReportConsumerTests:
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         first = self.inspect(phase='initial-publication')
+        fact = self.root / 'build/lean-cache/build-work.json'
+        self.assertTrue(fact.is_file(), '[FAIL] invocation_work_fact')
         self.assertIn('phase=report status=completed', first.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file(), '[FAIL] defaults_report_success_sealed')
         expected = output.read_bytes()
@@ -207,6 +198,8 @@ class NativeReportConsumerTests:
         self.assertNotIn('phase=ensure status=started', reused.stderr, '[FAIL] heavy_cache_not_required')
         self.assertNotIn('phase=report status=started', reused.stderr)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', reused.stdout)
+        work = json.loads(fact.read_text())
+        self.assertEqual((0, 0), (work['report'], work['programs']))
         self.assertEqual(expected, output.read_bytes())
         self.assertFalse((self.root / '.lake/packages').exists())
         # Resource planning neither parses material semantics nor vouches for
@@ -236,13 +229,16 @@ class NativeReportConsumerTests:
                 publication.validate_bundle(output, publication.coordinates(self.root), self.root)
         for suffix, data in sealed.items():
             publication.member(seed, suffix).write_bytes(data)
-        # This fixture now requests its explicitly registered program work.
+        # This fixture requests its program work through the public override.
         # Neither a valid nor invalid Audit edit changes report data.
-        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
+        self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(targets)
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         probe(phase='valid-audit-probe')
         clear_calls()
         compiled = self.inspect(phase='valid-audit-reuse')
+        work = json.loads(fact.read_text())
+        self.assertEqual(0, work['report'])
+        self.assertGreater(work['programs'], 0)
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertNotIn('phase=report status=started', compiled.stderr)
         self.assertEqual(expected, output.read_bytes())
@@ -253,6 +249,7 @@ class NativeReportConsumerTests:
         probe(phase='invalid-audit-probe')
         clear_calls()
         failed = self.inspect(success=False, phase='invalid-audit-reuse')
+        self.assertFalse(fact.exists(), '[FAIL] failed_build_has_no_successful_work_fact')
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())

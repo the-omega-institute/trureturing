@@ -1,0 +1,29 @@
+**定理 14.3（有限精确阈值与整数边界）。** 定义
+
+$$
+\begin{aligned}
+ \mathsf P_{k,j}(T):={}&(T-j)\prod_{i=1}^{E}(AT+Ej+i)\prod_{s=1}^{A}(DT+Aj+s)\\
+ &-(j+1)2^D\prod_{h=0}^{D-1}(2LT+2Dj+2h-1).
+ \tag{14.21}
+\end{aligned}
+$$
+
+并令
+
+$$
+ T_{k,j}=\min\left\{T\in\mathbb Z:\ 2j+2\le T\le\lceil U_{k,j}\rceil,\quad
+ \mathsf P_{k,j}(T)\ge0\right\}.
+ \tag{14.22}
+$$
+
+该集合非空，且 $T_{k,j}=\lceil\tau_{k,j}\rceil$。所有合法 $t<T_{k,j}$ 满足 $Q_{k,t,j}<1$，所有 $t>T_{k,j}$ 满足 $Q_{k,t,j}>1$；在 $T_{k,j}$ 处，恰当且仅当 $\mathsf P_{k,j}(T_{k,j})=0$ 时有整数并列 $Q_{k,T_{k,j},j}=1$。因此这是有限的精确 tie 决定，而不是对所有 $(k,j)$ 的无并列分类。
+
+证明。由（14.1）、（14.2）清除正分母，得到
+
+$$
+ \operatorname{sgn}(q_{k,j}(T)-1)=\operatorname{sgn}\mathsf P_{k,j}(T).
+ \tag{14.23}
+$$
+
+定理 14.2 给出根在 $2j+1$ 与 $U_{k,j}$ 之间，且在 $\lceil U_{k,j}\rceil$ 处符号为正，所以集合非空。严格增加性说明第一个非负整数正是 $\lceil\tau_{k,j}\rceil$，并给出两个分支及至多一个等号。证毕。
+

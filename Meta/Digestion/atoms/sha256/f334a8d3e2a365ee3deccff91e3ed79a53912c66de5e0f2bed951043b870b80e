@@ -1,0 +1,60 @@
+**证明。** 记
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+2}=F_{j+1}+F_j,
+$$
+
+并沿用
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\alpha=(1,0),\qquad q=(2,3),
+$$
+
+以及实际操作 $R(x)=Mx$、$G(x)=x+\alpha$。对任意 $k\ge1$ 和 $A,B\ge0$，按时间顺序执行
+
+$$
+R^{k-1},\quad G^A,\quad R,\quad G^B .
+$$
+
+这里的幂只是实际重复字母的简写。四个区块之后的状态依次为
+
+$$
+M^{k-1}v,\quad M^{k-1}v+A\alpha,\quad
+M^kv+A M\alpha,\quad M^kv+A M\alpha+B\alpha .
+$$
+
+因为 $M\alpha=(0,1)$、$qM\alpha=3$、$q\alpha=2$，末端标量的整数等式是
+
+$$
+q\bigl(W(v)\bigr)=qM^kv+3A+2B .
+$$
+
+这不是只在模 $H$ 中成立的记号恒等式，而是对每个实际非负中间状态成立的完整动作计算。
+
+当 $H>1$ 时，对 $c\in\{0,1,\ldots,H-1\}$ 取
+
+$$
+ t(c)=
+ \begin{cases}
+ 0,&c=0,\\
+ H+1,&c=1,\\
+ c,&2\le c<H.
+ \end{cases}
+$$
+
+于是 $t(c)\equiv c\pmod H$，且 $t(c)$ 要么为零，要么至少为二。$t=0$ 时取 $A=B=0$；$t\ge2$ 为偶数时取 $A=0,B=t/2$；$t\ge3$ 为奇数时取 $A=1,B=(t-3)/2$。所有系数都非负，并且
+
+$$
+3A+2B=t(c),\qquad A+B=\left\lfloor\frac{t(c)}2\right\rfloor
+ \le\left\lfloor\frac{H+1}2\right\rfloor .
+$$
+
+因此一次词的终端响应正好是
+
+$$
+\gcd\bigl(qM^kv+c,H\bigr),
+$$
+
+它有 $k$ 个实际 $R$ 字母和至多 $k+\lfloor(H+1)/2\rfloor$ 个实际 $G$ 字母。$c=1$ 使用 $H+1$，从而没有执行不可用的单位偏移。取 $k=1,2$ 并使用 §[133.5](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L13358) 的标量策略，便得到一个有限的 $O(H)$ 字母编译器。这是本批对旧有限存在结论的保留；后面的 Fibonacci 编译器只改善执行上界，既不追溯改变旧词的成本，也不宣称旧词或新词的最短性。
+

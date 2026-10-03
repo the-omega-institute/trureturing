@@ -1,0 +1,20 @@
+## 27. 实际未来的六格噪声上界、有限临界排除与严格余量边界
+
+沿用定义14.5和第26.1节的实际地址域 $\Omega$、最终为 null 的子域 $D$、三位删除 $T$、首窗标签 $\Lambda=\{3,0,5,2,25\}$ 及 $t,\phi,X,I$。置 $g=t^3=2t-1$，本章局部噪声记号为
+
+$$
+\lambda_{\mathrm{noise}}=\frac{t^2}{10},\qquad
+\lambda:=\lambda_{\mathrm{noise}}.
+$$
+
+这里的 $\lambda$ 只表示噪声半径，不是前文的概率测度或其他局部参数。第24–25章的噪声半径 $\mu=t^2/8$ 满足 $\lambda=4\mu/5$。
+
+固定一个各格均为非空连通区间的量化器 $Q:X\to\mathcal C$，其中颜色字母表 $\mathcal C$ 有限。同一 $Q$ 用于同一合法地址的每个连续实际坐标
+
+$$
+x_j(\omega)=\kappa_0(T^j\omega),\qquad
+R_j=Q\!\left(\operatorname{clip}_X(x_j(\omega)+\varepsilon_j)\right).
+$$
+
+误差在裁剪前分别任意选择；闭预算 $\nu$ 指每个 $|\varepsilon_j|\le\nu$，正开预算指每个 $|\varepsilon_j|<\nu$。一个固定确定解码器只接收实际取得的颜色记录并恢复 $\sigma_0(\omega)$。有限视界 $h\ge0$ 接收 $R_0,\ldots,R_h$；整个无限记录合同接收 $(R_j)_{j\ge0}$。允许任意合法端点归属和单点格。
+

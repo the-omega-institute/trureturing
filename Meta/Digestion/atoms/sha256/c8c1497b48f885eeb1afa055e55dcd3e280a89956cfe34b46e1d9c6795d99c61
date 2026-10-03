@@ -1,0 +1,5 @@
+## 25. A ternary budget from odd Fibonacci support
+
+Retain the Fibonacci entry ranks $\rho(p)$ and, for a finite set $H$ of
+primes, $R_H=\operatorname{lcm}_{p\in H}\rho(p)$.
+

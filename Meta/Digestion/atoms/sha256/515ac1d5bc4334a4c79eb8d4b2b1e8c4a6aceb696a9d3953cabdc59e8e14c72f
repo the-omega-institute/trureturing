@@ -1,0 +1,23 @@
+**定理 11.1（Failure of worst-case interchange on the actual source tower）。** For each fixed $x\in X$, the fibers $C_r(x)$ are nested and
+
+$$
+\bigcap_{r\ge0}C_r(x)=\{x\}.
+$$
+
+If $x\in P$, let $f=\mathbf1_P$ and $g=\mathbf1_{X\setminus P}=1-f$. Then
+
+$$
+\begin{aligned}
+\inf_{y\in C_r(x)}f(y)&=0\quad\text{for every }r,&
+\inf_{y\in\bigcap_r C_r(x)}f(y)&=1,\\
+\sup_{y\in C_r(x)}g(y)&=1\quad\text{for every }r,&
+\sup_{y\in\bigcap_r C_r(x)}g(y)&=0.
+\end{aligned}
+$$
+
+In particular the corresponding monotone limits of finite-layer extrema differ from the extrema on the intersection.
+
+证明。Divisibility gives $C_{r+1}(x)\subseteq C_r(x)$, and $x$ is in each fiber. A point in their intersection has every residue of $x$, and theorem 9.2 therefore identifies it with $x$. At each finite $r$, theorem 10.1 supplies a composite $y_r\in C_r(x)$. Thus $f$ attains 0 and $g$ attains 1 in that fiber; these are their extreme possible values. On the singleton intersection, $f(x)=1$ and $g(x)=0$.
+
+There is no common wrong-status actual point in all the fibers. The witnesses depend on $r$, and in the displayed construction their quantities are $n(1+2L_r)\to\infty$. Identification by intersection supplies neither a finite stage of identification nor an interchange law for infima or suprema. The sufficient hypotheses for such interchange are stated and proved in §16. $\square$
+

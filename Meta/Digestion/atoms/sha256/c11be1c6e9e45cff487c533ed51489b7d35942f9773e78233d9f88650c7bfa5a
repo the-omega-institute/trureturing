@@ -1,0 +1,8 @@
+### 10.5 Original odd-depth support: exact finite candidate sets
+
+For positive $n$ define
+$$U(n)=\{p>5:p\mid F_n,\ p\nmid n,\ h_p\text{ odd}\},$$
+$$T(n)=\{p>5:p\mid F_n,\ h_p\geq3\text{ odd}\}.$$
+For a finite set $S$ of primes greater than five let $H(S)$ be the
+closure of Section 5, and put $R_S=R_{H(S)}$.
+

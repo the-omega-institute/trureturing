@@ -6,9 +6,6 @@ namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    private const string GateForkSha = "0000000000000000000000000000000000000001";
-    private const string GateCandidateSha = "0000000000000000000000000000000000000002";
-
     [Fact]
     public void ScribeContentChecksUseTheExplicitNonEmptyReport()
     {
@@ -71,16 +68,13 @@ public sealed partial class MakeWorkflowTests
             result.ExitCode == 0,
             $"expected exit 0, actual {result.ExitCode}\nstdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\nstderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
         var invocations = File.ReadAllLines(log);
-        Assert.Equal(3, invocations.Length);
+        Assert.Single(invocations);
         Assert.All(invocations, line => Assert.StartsWith(explicitReport + "|", line, StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
         Assert.Contains(
             invocations,
-            static line => line.EndsWith(" describe-report --check", StringComparison.Ordinal));
-        Assert.Contains(
-            invocations,
             line => line.EndsWith(
-                $" markdown-check --report {explicitReport}",
+                $" content-check --report {explicitReport}",
                 StringComparison.Ordinal));
     }
 

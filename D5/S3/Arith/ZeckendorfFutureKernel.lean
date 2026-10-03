@@ -38,7 +38,8 @@ def sameFuture {M : ℕ} (previous : Bool)
 
 private def zeros (n : ℕ) : List Bool := List.replicate n false
 
-private def flag (previous : Bool) (w : List Bool) : Bool :=
+/-- The last bit of a word, retaining the incoming boundary for an empty word. -/
+def flag (previous : Bool) (w : List Bool) : Bool :=
   w.foldl (fun _ b => b) previous
 
 theorem value_append {R : Type*} [AddMonoid R]
@@ -52,7 +53,8 @@ theorem value_append {R : Type*} [AddMonoid R]
     rw [ih]
     exact (add_assoc _ _ _).symm
 
-private lemma legal_append (w w' : List Bool) (b : Bool) :
+/-- Concatenation is legal exactly when both parts are legal at their actual boundaries. -/
+lemma legal_append (w w' : List Bool) (b : Bool) :
     legal b (w ++ w') ↔ legal b w ∧ legal (flag b w) w' := by
   induction w generalizing b with
   | nil => simp [legal, flag]

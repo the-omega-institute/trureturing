@@ -1,0 +1,82 @@
+**Theorem 3.4 (A declared Markov dynamics and its joint functional Gaussian law).** For the Markov path of Hypothesis 3.1 put
+$$
+ m=\frac p{1+p},\qquad v=m(1-m),\qquad r=-p.
+$$
+The count variance is
+$$
+V_n=v\left[n\frac{1-p}{1+p}+\frac{2p(1-(-p)^n)}{(1+p)^2}\right],
+$$
+and for $m_0\le n$ the covariance of prefix counts of lengths $m_0,n$ is
+$$
+V_{m_0}+\frac{vr(1-r^{m_0})(1-r^{n-m_0})}{(1-r)^2}.
+$$
+The pathwise quantity identity of Theorem 3.2 remains valid, so the generation covariance is $F_{k+2}F_{\ell+2}V_n$. If $0<p<1$, fix $0<T<\infty$ and generations $k_1,\ldots,k_d$. Put
+$$
+X_N(t)=\frac{A_{0,\lfloor Nt\rfloor}-m\lfloor Nt\rfloor}{\sqrt N},
+\qquad
+Y_N^{(k)}(t)=
+\frac{Q_{0,\lfloor Nt\rfloor}^{(k)}-(F_{k+4}-mF_{k+2})\lfloor Nt\rfloor}{\sqrt N}.
+$$
+In $D([0,T],\mathbb R^{d+1})$ with the Skorohod $J_1$ topology,
+$$
+\bigl(X_N,Y_N^{(k_1)},\ldots,Y_N^{(k_d)}\bigr)
+\Longrightarrow
+\sigma_p B\,\bigl(1,-F_{k_1+2},\ldots,-F_{k_d+2}\bigr),
+\qquad
+\sigma_p^2=\frac{p(1-p)}{(1+p)^3}>0,
+$$
+where $B$ is one standard Brownian motion shared by all coordinates. In particular, centered prefix counts at finitely many nonnegative times, divided by $\sqrt N$, converge jointly to a centered Gaussian vector with covariance
+$$
+\sigma_p^2\min(t_i,t_j).
+$$
+The corresponding quantity coordinates have covariance $F_{k+2}F_{\ell+2}\sigma_p^2\min(t_i,t_j)$. The anchored spin correlations satisfy
+$$
+K_0=1,\qquad K_1=\frac{p-1}{p+1},\qquad
+K_{n+2}=-(1-p)K_{n+1}-pK_n.
+$$
+At $p=0$ the path is constant zero. At $p=1$ it alternates, with $V_n=0$ for even $n$ and $V_n=1/4$ for odd $n$; both endpoints have zero square-root fluctuation limit.
+
+**Proof.** For $f(i)=i-m$, direct multiplication gives $P_pf=-pf$. Thus the centered indicators have covariance $vr^{|i-j|}$, and summing the geometric series gives both finite formulas.
+
+For the path limit, set $g=f/(1+p)$, so $g-P_pg=f$ and $P_pg=-pg$. With $\mathcal F_n=\sigma(C_0,\ldots,C_n)$, the process
+$$
+M_n=\sum_{j=0}^{n-1}\bigl[g(C_{j+1})-P_pg(C_j)\bigr],
+\qquad M_0=0,
+$$
+is a square-integrable martingale. Telescoping gives the exact decomposition
+$$
+A_{0,n}-nm=M_n+g(C_0)-g(C_n).
+$$
+If $C_j=1$, the next state is zero and the martingale increment is zero. If $C_j=0$, that increment is $(C_{j+1}-p)/(1+p)$. Its conditional variance is therefore $p(1-p)/(1+p)^2$ at state zero and zero at state one. Hence its predictable bracket is
+$$
+\langle M\rangle_n
+=\frac{p(1-p)}{(1+p)^2}\sum_{j=0}^{n-1}(1-C_j)
+=\frac{p(1-p)}{(1+p)^2}(n-A_{0,n}).
+$$
+For fixed $t$, stationarity and the displayed variance formula $V_n=O(n)$ give
+$$
+\frac{\langle M\rangle_{\lfloor Nt\rfloor}}N
+\longrightarrow t\sigma_p^2\quad\text{in }L^2.
+$$
+This convergence is uniform in probability on compact time intervals: the bracket is nondecreasing, so between successive points of a finite time grid its error is bounded by the largest grid error plus $\sigma_p^2$ times the grid mesh. First let $N$ tend to infinity on the grid, then let the mesh tend to zero.
+
+The step martingale $M_{\lfloor Nt\rfloor}/\sqrt N$, with filtration $\mathcal F_{\lfloor Nt\rfloor}$, starts at zero and is locally square-integrable. Its maximum squared jump on $[0,T]$ is at most $1/((1+p)^2N)$, and the maximum jump of its predictable bracket is at most $p(1-p)/((1+p)^2N)$. These deterministic bounds also bound the expectations of the jumps. Thus the predictable-bracket and jump conditions of W. Whitt, [*Proofs of the martingale FCLT*](https://arxiv.org/pdf/0712.1929v2), Theorem 2.1(ii), apply and give convergence to $\sigma_p B$ in $J_1$. The remainder $g(C_0)-g(C_{\lfloor Nt\rfloor})$ is bounded by $1/(1+p)$ uniformly in $t$, so its division by $\sqrt N$ does not affect the limit. Finally, the exact common-path identity
+$$
+Y_N^{(k)}=-F_{k+2}X_N
+$$
+transfers this convergence to the joint count and quantity process. No stochastic assumption beyond Hypothesis 3.1 is used.
+
+The finite-dimensional limit can also be read directly from the tilted matrix $P_p\operatorname{diag}(1,e^z)$, whose leading eigenvalue is
+$$
+\Lambda(z)=\frac{1-p+\sqrt{(1-p)^2+4pe^z}}2,
+$$
+with expansion
+$$
+\log\Lambda(z)=mz+\tfrac12\sigma_p^2z^2+O(z^3).
+$$
+The second eigenvalue is $-p$ at zero and remains smaller in modulus near zero. For successive blocks, use tilts $z_i=iu_i/\sqrt N$; the leading spectral projections tend to $\mathbf1\pi_p$, subleading products vanish, and centering cancels the linear terms. The characteristic functions converge to
+$$
+\exp\left(-\frac{\sigma_p^2}{2}\sum_i u_i^2(t_i-t_{i-1})\right),
+$$
+which is the joint law of independent Gaussian increments. The anchored parity calculation replaces $e^z$ by $-1$; the matrix polynomial is $z^2-(1-p)z+p$, giving the recurrence after multiplication by $(-1)^n$. The endpoint assertions follow directly. $\square$
+

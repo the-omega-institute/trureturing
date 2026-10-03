@@ -19,5 +19,7 @@ For normalized common-label source families whose local rank-one projectors span
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Recovery/FiniteLocalRecoveryObstruction.actual_informationally_complete_obstruction`
+- Dependency: [D5/S3/Quantum/Recovery/FiniteLocalProtocol](FiniteLocalProtocol.md)
 - Dependency: [D5/S3/Quantum/Recovery/KrausLeftInverseNecessity](KrausLeftInverseNecessity.md)
+- Dependency: [D5/S3/Quantum/Recovery/ProductPrefixRigidity](ProductPrefixRigidity.md)
 - Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](PurifiedLocalPath.md)

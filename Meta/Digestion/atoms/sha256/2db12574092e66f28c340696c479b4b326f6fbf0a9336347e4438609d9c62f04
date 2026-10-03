@@ -1,0 +1,8 @@
+**定义 312.0。** 沿用 §§305、310–311 的同一实际整数 $T_L=\widetilde C_L$、$m_L=3L+2$、$E=e^\gamma$、$b_L$、$S,a,e,B,J,\tau$。对实数 $t\ge m_{16}=50$，取唯一整数 $L(t)\ge16$ 满足 $m_{L(t)}\le t<m_{L(t)}+3$，置
+\[
+\bar b(t)=b_{L(t)},\qquad
+\mathcal H(x)=\int_x^\infty\frac{\bar b(t)}t\,dt.
+\tag{312.1}
+\]
+$\mathcal H(x)$ 定义于 $x\ge50$。这里只把同一实际整数全序列作阶梯延拓；$\mathcal H$ 使用全部未来尺度的漂移。
+

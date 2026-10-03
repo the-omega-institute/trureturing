@@ -1,0 +1,43 @@
+**引理 47.5（根一维距离与统一 proper 转换）。** 若实际根 $q\le1$，不论传输峰值与偏置大小，都有一整个教师类上的所有输入满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_q:=\frac{\gamma}{\sqrt3};
+\qquad P_n(\text{该类})\ge\frac{16}{125}.
+\tag{47.17}
+$$
+
+对任意本节的后验 $r$ 和有限 softmax 预测 $p$，若 log-odds 误差至少为 $\delta\ge0$，则
+
+$$
+\begin{aligned}
+\|p-r\|_2^2&\ge\Phi_\varepsilon(\delta)
+:=\varepsilon^2\min\left\{\frac14,\frac{\delta^2}{12}\right\},\\
+\mathrm{KL}(r\Vert p)&\ge\|p-r\|_2^2.
+\end{aligned}
+\tag{47.18}
+$$
+
+证明。根至多一维意味着 $H(p)=Az+\beta$ 的实际像落在同一固定仿射直线上；像为点时把它包含在任意直线上。设直线的单位法向量为 $(u,v)$、法向偏移为 $t$。三个目标点的未加权质心为零，它们到该线的平方距离平均为
+
+$$
+\frac{(-\gamma u-\gamma v-t)^2+(\gamma u-t)^2+(\gamma v-t)^2}{3}
+=\frac{2\gamma^2}{3}(u^2+uv+v^2)+t^2
+\ge\frac{\gamma^2}{3},
+\tag{47.19}
+$$
+
+其中 $u^2+v^2=1$、$uv\ge-1/2$。至少一个目标点到直线距离为 $\gamma/\sqrt3$ 或更大；属于该类的所有预测仍在这条线上，得到式（47.17）。此处未加权几何只用来找整类，积分时用该类的真实质量。
+
+令 $e=\|p-r\|_2$。若 $e\le\varepsilon/2$，每个 $p_y\ge r_y-e\ge\varepsilon/2$，连接 $p,r$ 的线段每个坐标也至少为 $\varepsilon/2$。对数逐坐标的导数模至多 $2/\varepsilon$；差矩阵
+
+$$
+A=\begin{pmatrix}-1&1&0\\-1&0&1\end{pmatrix},\qquad
+AA^{\mathsf T}=\begin{pmatrix}2&1\\1&2\end{pmatrix},\qquad
+\|A\|_{\rm op}=\sqrt3
+\tag{47.20}
+$$
+
+给出沿线段积分后的 $\|H(p)-H(r)\|_2\le(2\sqrt3/\varepsilon)e$。因此此分支有 $e^2\ge\varepsilon^2\delta^2/12$；若 $e>\varepsilon/2$，直接有 $e^2>\varepsilon^2/4$。合并得式（47.18）的第一行，覆盖无界 log-odds。
+
+自然对数 Pinsker 给 $\mathrm{KL}(r\Vert p)\ge\|r-p\|_1^2/2$。差向量的坐标和为零；正分量总和与负分量绝对值总和同为 $s$，故 $\|r-p\|_2^2\le2s^2=\|r-p\|_1^2/2$。得到第二行，未引入按三类平均的因子。$\square$
+

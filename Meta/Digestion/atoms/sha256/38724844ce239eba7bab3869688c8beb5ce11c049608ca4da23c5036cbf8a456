@@ -1,0 +1,42 @@
+**定理 301.2。** 对每个固定 $C>0$ 及每个 $\varepsilon>0$，存在 $L_0$，使全部整数 $L\ge L_0$、$H\ge1$ 满足
+\[
+H\le\exp(C L\log L)
+\quad\Longrightarrow\quad
+1\le\frac{U_H}{U_{B_L(H)}}<1+\varepsilon.
+\tag{301.7}
+\]
+
+**证明。** §205 引理205.4 的截断估计给 $\delta_L\to1$。具体地，对 $L\ge4$，同一小素与大素拆分给
+\[
+\sum_{p\le L}p^{-A_L(p)-1}
+\le\frac1{\sqrt L}+\frac1{\sqrt L-1},\qquad
+0\le1-\delta_L\le\sum_{p\le L}p^{-A_L(p)-1}.
+\tag{301.8}
+\]
+前一部分使用 $p^{A_L(p)+1}>L$；后一部分使用 $A_L(p)\ge1$ 并扩为整数平方倒数尾和。因此这不是从阶乘同余估计推得的截断损失。
+
+取 $X=L(\log L)^2$；充分大时 $X\ge L$，且
+\[
+\frac{\log X}{\log L}
+=1+\frac{2\log\log L}{\log L}\longrightarrow1.
+\]
+经典 Mertens 乘积公式 $P(x)\sim e^\gamma\log x$ 给 $P(X)/P(L)\to1$。所用背景可见 Lichtman, *Mertens’ prime product formula, dissected*, [Theorem 1.1，式（1.2）](https://arxiv.org/html/2002.03361v3)；这里仅需其相对渐近，不需要加性 $o(1)$ 精度。
+
+高度假设给 $\log H\le C L\log L$。当 $\log L\ge1$ 时，$X-1\ge X/2$ 及 $\log X\ge\log L$ 给
+\[
+\frac{\log H}{(X-1)\log X}\le\frac{2C}{(\log L)^2}.
+\]
+因此式（301.6）的整个上界一致不超过
+\[
+E_C(L)=\delta_L^{-1}\frac{P(L(\log L)^2)}{P(L)}
+\exp\!\left(\frac{2C}{(\log L)^2}\right)\longrightarrow1,
+\]
+得到式（301.7）。这里固定的是 $C$，结论不允许 $C$ 随 $H$ 或 $L$ 任意增长。
+
+若把式（301.6）的上界记为 $E(L,H,X)$，则对每个实预算 $T$，
+\[
+U_{B_L(H)}E(L,H,X)<T\quad\Longrightarrow\quad U_H<T.
+\tag{301.9}
+\]
+取 $T=e^\gamma\log\log H$ 即给同一目标整数的一个充分 Robin 证书条件。定理301.2本身未保证该严格条件：相对误差趋零不等于误差小于实际 Robin 余量。式（301.9）仍以严格预算为假设，未给出价格剥离的有符号尾项估计。$\square$
+

@@ -9,57 +9,19 @@ public sealed partial class FileMapPolicyTests
     private const string GeneratedInput = "Generated/output.json";
 
     [Theory]
-    [InlineData("projects", true)]
-    [InlineData("historical_projects", true)]
-    [InlineData("projects", false)]
-    [InlineData("historical_projects", false)]
-    public void EngineeringPolicyQueriesDoNotReadGeneratedContent(string collection, bool targetExists)
+    [InlineData("projects", "include")]
+    [InlineData("historical_projects", "include")]
+    [InlineData("projects", "exclude")]
+    [InlineData("projects", "namespace_exclude")]
+    [InlineData("projects", "global_namespace_exceptions")]
+    public void EngineeringContentReferencesRemainDependenciesAlongsideQueries(string collection, string field)
     {
-        Assert.Empty(InspectEngineeringDependencies(EngineeringQuery(collection).ToJsonString(), targetExists));
-    }
-
-    [Theory]
-    [InlineData("projects", "owned-test", false)]
-    [InlineData("projects", "owned-test", true)]
-    [InlineData("projects", "cross-cutting-test", false)]
-    [InlineData("projects", "cross-cutting-test", true)]
-    [InlineData("historical_projects", "owned-test", false)]
-    [InlineData("historical_projects", "owned-test", true)]
-    [InlineData("historical_projects", "cross-cutting-test", false)]
-    [InlineData("historical_projects", "cross-cutting-test", true)]
-    public void EngineeringTestRuntimeInputsMayReferenceGeneratedContent(string collection, string role, bool query)
-    {
+        const string generated = "Generated/Fixture.cs";
         var document = EngineeringQuery(collection);
-        var project = document[collection]![0]!;
-        project["role"] = role;
-        if (role == "owned-test")
-            project["owner"] = new JsonObject { ["path"] = "tools/Owner/Owner.csproj", ["assembly"] = "Owner" };
-        if (!query) project["execution_filemap_paths"] = new JsonArray();
-        project["execution_inputs"]!.AsArray().Add(GeneratedInput);
-
-        Assert.Empty(InspectEngineeringDependencies(document.ToJsonString()));
-    }
-
-    [Theory]
-    [InlineData("projects", "build_inputs", false)]
-    [InlineData("projects", "build_inputs", true)]
-    [InlineData("historical_projects", "build_inputs", true)]
-    [InlineData("projects", "include", true)]
-    [InlineData("projects", "exclude", true)]
-    [InlineData("projects", "namespace_exclude", true)]
-    [InlineData("projects", "global_namespace_exceptions", true)]
-    public void EngineeringContentReferencesRemainDependenciesAlongsideQueries(string collection, string field, bool query)
-    {
-        var generated = field is "include" or "exclude" or "namespace_exclude" or "global_namespace_exceptions"
-            ? "Generated/Fixture.cs" : GeneratedInput;
-        var document = EngineeringQuery(collection, generated);
-        var project = document[collection]![0]!;
-        if (!query) project["execution_filemap_paths"] = new JsonArray();
-        project[field]!.AsArray().Add(generated);
-
-        var finding = Assert.Single(InspectEngineeringDependencies(document.ToJsonString(), generatedInput: generated));
+        document[collection]![0]![field]!.AsArray().Add(generated);
         Assert.Equal(new FileMapFinding("FILEMAP-DATA-GENERATED-DEPENDENCY", EngineeringManifest,
-            $"machine-readable data references generated artifact {generated}"), finding);
+            $"machine-readable data references generated artifact {generated}"),
+            Assert.Single(InspectEngineeringDependencies(document.ToJsonString(), generatedInput: generated)));
     }
 
     [Theory]
@@ -74,127 +36,14 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Theory]
-    [InlineData("build_inputs")]
-    [InlineData("include")]
-    [InlineData("exclude")]
-    [InlineData("namespace_exclude")]
-    [InlineData("global_namespace_exceptions")]
-    [InlineData("rule_build_inputs")]
-    [InlineData("test_partition")]
-    public void EngineeringRuntimeInputsDoNotHideOtherContentReferences(string field)
-    {
-        const string generated = "Generated/Fixture.cs";
-        var document = EngineeringQuery("projects", generated);
-        var project = document["projects"]![0]!;
-        project["execution_inputs"]!.AsArray().Add(generated);
-        if (field == "rule_build_inputs") document[field]!.AsArray().Add(generated);
-        else if (field == "test_partition") project[field] = generated;
-        else project[field]!.AsArray().Add(generated);
-
-        Assert.Equal(new FileMapFinding("FILEMAP-DATA-GENERATED-DEPENDENCY", EngineeringManifest,
-            $"machine-readable data references generated artifact {generated}"),
-            Assert.Single(InspectEngineeringDependencies(document.ToJsonString(), generatedInput: generated)));
-    }
-
-    [Theory]
-    [InlineData("production")]
-    [InlineData("test-support")]
-    [InlineData("compile-fail-proof")]
-    public void TestRuntimeDeclarationsDoNotHideNonTestContentReferences(string role)
-    {
-        var document = EngineeringQuery("projects");
-        var test = document["projects"]![0]!;
-        test["execution_inputs"]!.AsArray().Add(GeneratedInput);
-        var other = test.DeepClone();
-        other["path"] = "tools/Other/Other.csproj";
-        other["assembly"] = "Other";
-        other["role"] = role;
-        other["ci"] = false;
-        other["owned_test_assembly"] = role == "production" ? "Other.Tests" : null;
-        other["test_partition"] = null;
-        foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths" })
-            other[field] = null;
-        other["build_inputs"]!.AsArray().Add(GeneratedInput);
-        document["projects"]!.AsArray().Add(other);
-
-        Assert.Equal("FILEMAP-DATA-GENERATED-DEPENDENCY",
-            Assert.Single(InspectEngineeringDependencies(document.ToJsonString())).Code);
-    }
-
-    [Theory]
-    [InlineData("Meta/other-projects.json")]
-    [InlineData("Data/input.json")]
-    public void EngineeringRuntimeSemanticsRequireTheCanonicalManifestPath(string path)
-    {
-        var document = EngineeringQuery("projects");
-        document["projects"]![0]!["execution_inputs"]!.AsArray().Add(GeneratedInput);
-        Assert.Equal("FILEMAP-DATA-GENERATED-DEPENDENCY",
-            Assert.Single(InspectEngineeringDependencies(document.ToJsonString(), manifestPath: path)).Code);
-    }
-
-    [Theory]
     [InlineData("projects", "unknown-field")]
     [InlineData("historical_projects", "unknown-field")]
     [InlineData("projects", "duplicate-key")]
     [InlineData("historical_projects", "duplicate-key")]
     [InlineData("projects", "invalid-role")]
     [InlineData("historical_projects", "invalid-role")]
-    [InlineData("projects", "non-test-role")]
-    [InlineData("historical_projects", "non-test-role")]
     [InlineData("projects", "wrong-type")]
     [InlineData("historical_projects", "wrong-type")]
-    [InlineData("projects", "missing-filemap")]
-    [InlineData("historical_projects", "missing-filemap")]
-    [InlineData("projects", "excluded-filemap")]
-    [InlineData("historical_projects", "excluded-filemap")]
-    public void InvalidEngineeringSchemaCannotAcquireRuntimeSemantics(string collection, string defect)
-    {
-        var document = EngineeringQuery(collection);
-        var project = document[collection]![0]!;
-        project["execution_inputs"]!.AsArray().Add(GeneratedInput);
-        switch (defect)
-        {
-            case "unknown-field": project["unknown"] = GeneratedInput; break;
-            case "invalid-role": project["role"] = "unknown"; break;
-            case "non-test-role":
-                project["role"] = "test-support";
-                project["ci"] = false;
-                project["test_partition"] = null;
-                break;
-            case "wrong-type": project["execution_inputs"] = GeneratedInput; break;
-            case "missing-filemap": project["execution_inputs"] = new JsonArray(GeneratedInput); break;
-            case "excluded-filemap":
-                project["execution_inputs"] = new JsonArray("Meta/**", GeneratedInput);
-                project["execution_excludes"] = new JsonArray("Meta/FILEMAP.toml");
-                break;
-        }
-        var text = document.ToJsonString();
-        if (defect == "duplicate-key") text = text.Replace("\"version\":1", "\"version\":1,\"version\":1", StringComparison.Ordinal);
-        Assert.Throws<InvalidDataException>(() => InspectEngineeringDependencies(text));
-    }
-
-    [Fact]
-    public void EngineeringQuerySemanticsRequireTheCanonicalManifestPath()
-    {
-        var findings = InspectEngineeringDependencies(EngineeringQuery("projects").ToJsonString(),
-            manifestPath: "Meta/other-projects.json");
-        Assert.Equal("FILEMAP-DATA-GENERATED-DEPENDENCY", Assert.Single(findings).Code);
-    }
-
-    [Theory]
-    [InlineData("projects", "unknown-field")]
-    [InlineData("historical_projects", "unknown-field")]
-    [InlineData("projects", "duplicate-key")]
-    [InlineData("historical_projects", "duplicate-key")]
-    [InlineData("projects", "invalid-role")]
-    [InlineData("projects", "non-test-role")]
-    [InlineData("historical_projects", "non-test-role")]
-    [InlineData("projects", "wrong-type")]
-    [InlineData("historical_projects", "wrong-type")]
-    [InlineData("projects", "missing-filemap")]
-    [InlineData("historical_projects", "missing-filemap")]
-    [InlineData("projects", "excluded-filemap")]
-    [InlineData("projects", "misplaced-query")]
     public void InvalidEngineeringSchemaCannotAcquireQuerySemantics(string collection, string defect)
     {
         var document = EngineeringQuery(collection);
@@ -203,33 +52,23 @@ public sealed partial class FileMapPolicyTests
         {
             case "unknown-field": project["unknown"] = GeneratedInput; break;
             case "invalid-role": project["role"] = "unknown"; break;
-            case "non-test-role":
-                project["role"] = "test-support";
-                project["ci"] = false;
-                project["test_partition"] = null;
-                break;
-            case "wrong-type": project["execution_filemap_paths"] = GeneratedInput; break;
-            case "missing-filemap": project["execution_inputs"] = new JsonArray(); break;
-            case "excluded-filemap": project["execution_excludes"] = new JsonArray("Meta/**"); break;
-            case "misplaced-query": document["execution_filemap_paths"] = new JsonArray(GeneratedInput); break;
+            case "wrong-type": project["include"] = GeneratedInput; break;
         }
         var text = document.ToJsonString();
         if (defect == "duplicate-key") text = text.Replace("\"version\":1", "\"version\":1,\"version\":1", StringComparison.Ordinal);
-        // Schema rejection also applies when the queried target has no physical body.
+        Assert.Throws<InvalidDataException>(() => InspectEngineeringDependencies(text));
         Assert.Throws<InvalidDataException>(() => InspectEngineeringDependencies(text, targetExists: false));
     }
 
-    private static JsonNode EngineeringQuery(string collection, string generatedInput = GeneratedInput)
+    private static JsonNode EngineeringQuery(string collection)
     {
         var document = JsonNode.Parse($$"""
             {"version":1,"rule_build_inputs":[],"projects":[{
               "path":"tools/tests/Query/Query.csproj","assembly":"Query.Tests",
-              "role":"cross-cutting-test","ci":true,"include":[],"exclude":[],
+              "role":"cross-cutting-test","include":[],"exclude":[],
               "references":[],"owner":null,"owned_test_assembly":null,
               "test_partition":"query","root_namespace":"Query",
-              "namespace_exclude":[],"global_namespace_exceptions":[],"build_inputs":[],
-              "execution_inputs":["Meta/FILEMAP.toml"],"execution_excludes":[],
-              "execution_environment":[],"execution_filemap_paths":["{{generatedInput}}"]
+              "namespace_exclude":[],"global_namespace_exceptions":[]
             }],"historical_projects":[]}
             """)!;
         if (collection == "historical_projects")

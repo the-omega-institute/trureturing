@@ -1555,3 +1555,278 @@ exclude the cases where they do not. They retain, rather than discharge,
 the full window, residue, weighted divisor incidence, tied removals,
 merged valuations and cofactor-$h=1$ obligations. The cited optimization
 results supply no uniform weighted Robin estimate or proof of RH.
+
+## The low-loss divisor condition can already be saturated
+
+Before enlarging the residue graph with another constraint, check whether
+that constraint removes any of the hypothesized low-cost hosts. Reuse
+the actual increment source and finite comparison in FIB §234.1–§234.2;
+no new source, benefit theorem or optimization algorithm is introduced.
+This section is a paper application, with no Lean verification.
+
+For $s\ge1$, keep the maximal tied-layer reference $C_s$ and put
+$g=\gcd(N,C_s)$. Every exponent of $g$ is an accepted reference exponent.
+The same local comparison used at $C_s$ therefore gives
+
+$$
+r_s(g)=\frac{b_s(g)}{Z(g)^s}\ge\frac{\varphi(g)}g,
+\qquad D_s(g)=R_s(v),\qquad v=C_s/g.
+$$
+
+In particular, the existing identity
+$J_s(g)=D_s(g)-\log r_s(g)-\delta_s$, with
+$\delta_s=\log(\mathcal Q_s/M_s)\ge0$, supplies
+
+$$
+\boxed{
+J_s(g)\le R_s(v)+\log\frac g{\varphi(g)}-\delta_s
+\le R_s(v)+\log\frac{C_s}{\varphi(C_s)}.
+}
+$$
+
+Thus whenever the last expression is at most $J_0$, the particular
+divisor $g\mid N$ already witnesses the required low-loss incidence.
+This holds for every host with that same gcd, regardless of its added
+prime powers. It does not say $J_s(N)\le J_0$, and does not replace the
+complete weighted sum over divisors by the weight of $g$.
+
+For a hypothesized unpaid Robin budget, $D_s(N)\le T_s(N)$ and
+$R_s(v)\le D_s(N)$. Hence the sufficient saturation condition is
+
+$$
+T_s(N)+\log\frac{C_s}{\varphi(C_s)}\le J_0.
+$$
+
+Under it, imposing existence of a low-loss divisor cannot exclude any
+of those hypothesized hosts. In a fixed-gcd branch satisfying the sharper
+$R_s(v)+\log(g/\varphi(g))-\delta_s\le J_0$, that incidence constraint
+is redundant for the entire branch, including its relaxed residual words.
+An extra multiplier for it cannot raise the exact constrained optimum
+above the one without it; setting the multiplier to zero remains allowed.
+
+### A finite condition in the original growing-price window
+
+Keep $y=\log A$, $\ell=\log y$, $s=y\ell$, and $A\le N\le C_0A$
+with fixed $C_0>1$. Write
+
+$$
+L_y=\sum_{p\le y}\log(1-1/p)^{-1},\qquad
+\mathcal E_y=s(L_y-\gamma-\log\ell)+y-\vartheta(y-1).
+$$
+
+The reference first-prime threshold $x_s$, already defined by
+$s\log(1+1/x_s)=\log x_s$, lies in $(y-1,y)$ for $y>2$.
+For the lower endpoint use
+$\log(1+1/(y-1))>1/y$ and $\log(y-1)<\log y$;
+the upper endpoint follows from $\log(1+1/y)<1/y$.
+Therefore $\log C_s\ge\vartheta(y-1)$, while every prime of $C_s$
+is at most $y$ and $\log Z(C_s)\le L_y$. The actual Robin threshold
+also satisfies $\log(e^\gamma\log\log N)\ge\gamma+\log\ell$.
+Together these give the finite, signed upper bounds
+
+$$
+T_s(N)\le\mathcal E_y+\log C_0,\qquad
+\log\frac{C_s}{\varphi(C_s)}\le L_y.
+$$
+
+Consequently
+
+$$
+\boxed{\mathcal E_y+\log C_0+L_y\le J_0}
+$$
+
+is a sufficient window-wide condition for the saturation above. A negative
+$T_s(N)$ already makes $D_s(N)\le T_s(N)$ impossible; saturation never
+requires manufacturing a positive remaining budget in that case.
+
+The strong Mertens and prime-number inputs already used in
+[Weingartner's pinned author text, equation (9), PDF p.6](https://arxiv.org/pdf/1011.4262v1)
+give, for every fixed $K$, the classical remainders
+
+$$
+L_y=\gamma+\log\ell+O_K(\ell^{-K}),\qquad
+\vartheta(y-1)=y-1+O_K(y\ell^{-K}).
+$$
+
+Taking $K>3$ shows $\mathcal E_y=o(y/\ell^2)$ and
+$L_y=O(\log\ell)$. Thus the displayed condition holds eventually for
+the original $J_0=8(\pi^2/6)y/\ell^2$. This uses the stronger classical
+inputs, not only Dusart's previously quoted $O(\ell^{-2})$ Mertens
+remainder. No effective onset follows here.
+
+This identifies a redundant source filter in the dangerous budget range.
+It leaves the actual congruence and strict signed budget untouched.
+Existence of a low-loss divisor, including this explicit gcd witness,
+does not establish FIB §233.5 or RH.
+
+## Retain the actual unit residue and the original host window
+
+The remaining arithmetic constraint is the product congruence itself.
+Reuse the preceding budget-conditioned finite prime universe and Mohri's
+finite acyclic min-plus method. Replace only its endpoint quotient:
+each prime block acts by multiplication on $(\mathbb Z/V\mathbb Z)^\times$.
+This is a classical algorithm applied to a stronger observation, not a
+new shortest-path or residue-distribution theorem.
+
+For the same actual $N$, $g$, $e$ and $u_0$, put $G=gr^e$. Actual
+$N\equiv1\pmod V$ forces $(G,V)=1$ and
+
+$$
+\boxed{u_0\equiv\rho:=G^{-1}\pmod V.}
+$$
+
+There is no extra factor $u_0^{-1}$ in this endpoint. It belongs to the
+residual product itself, rather than to a chosen divisor separately from
+its cofactor. An inverse modulo a composite $V$ can be computed by the
+extended Euclidean algorithm without assuming a factorization of $V$.
+
+For $B=B_r(N)\ge0$, use **all** eligible primes $p\le P_B$ and every
+$k\in\mathcal K_p(B)$ from the preceding conditional test. Define
+
+$$
+Q_B^{\mathrm{unit}}(\lambda,\rho)=
+\min_{\substack{k_p\in\mathcal K_p(B)\\
+\prod_p p^{k_p}\equiv\rho\pmod V}}
+\sum_p\{W_p(k_p)-\lambda k_p\log p\}.
+$$
+
+The prime stage still advances once per block; negative reduced costs
+are permitted on that acyclic graph. If the actual residual cost were
+at most $B$, its exact word would be present. The existing weak-duality
+test therefore becomes
+
+$$
+\boxed{\lambda\log u_0+Q_B^{\mathrm{unit}}(\lambda,\rho)>B
+\quad\Longrightarrow\quad\mathcal A_s^{[r]}(N)>B.}
+$$
+
+For the same complete finite universe and the same multiplier,
+
+$$
+Q_B^{\mathrm{unit}}(\lambda,\rho)
+\ge Q_B(\lambda,j),\qquad \psi_V(\rho)=i^j.
+$$
+
+Only a subset of the quartic-endpoint words reaches the actual unit
+residue. No distribution theorem or independence of the prime labels is
+used. Equality remains possible. An empty endpoint-feasible set excludes
+the conditional low-cost host; the existence of a cheap path gives only
+a relaxed lower bound and supplies no violating integer.
+
+### A simultaneous fixed-gcd and fixed-index branch
+
+One can retain the original window without choosing a separate host at
+each optimum. Fix a divisor $g\mid C_s$ and an integer $e\ge0$, keep
+$v=C_s/g$, $G=gr^e$, and consider only hosts with
+
+$$
+\gcd(N,C_s)=g,\qquad v_r(N)=e,\qquad
+A\le N\le X,\qquad N\equiv1\pmod V.
+$$
+
+If $(G,V)>1$ or $X/G<1$, this branch is empty. Otherwise put
+
+$$
+U_{\min}=\max\{1,A/G\},\qquad U_{\max}=X/G.
+$$
+
+The eligible set $p\nmid vrV$ and the reference exponents $a_p$ ensure
+that a residual word keeps the fixed gcd and exact index valuation:
+primes removed from $C_s$ cannot be added back, other reference primes
+can only increase from their full accepted exponent, and $r$ is not
+reused. All zero-cost removals are retained in $R_s(v)$.
+
+In the original price choice $s=y\log y$, $y=\log A$, write $L=\log N$.
+The already defined threshold has derivative
+
+$$
+\frac{d}{dL}T_s(e^L)=1-\frac{s}{L\log L}\ge0
+\qquad(L\ge y>1).
+$$
+
+Thus every hypothesized unpaid host in this branch has residual cost at
+most the same ceiling
+
+$$
+B_0=T_s(X)-R_s(v)-L_r.
+$$
+
+If $B_0<0$, the removals and fixed index block already exclude that
+hypothesis throughout the branch. For $B_0\ge0$, build the complete
+finite universe using $B_0$, not an independently favorable host budget.
+For any real multiplier define
+
+$$
+H(\lambda)=
+\begin{cases}
+\lambda\log U_{\min},&\lambda\ge0,\\
+\lambda\log U_{\max},&\lambda<0.
+\end{cases}
+$$
+
+Every actual residual resource in the original window obeys
+$\lambda\log u_0\ge H(\lambda)$. Hence
+
+$$
+\boxed{H(\lambda)+Q_{B_0}^{\mathrm{unit}}(\lambda,G^{-1})>B_0}
+$$
+
+excludes every unpaid host in this **same** fixed-gcd/index/window branch.
+Pricing the interval retains a lower relaxation, not exact arithmetic
+attainability. Outside the low-loss saturation condition above, incidence
+is still an additional source condition; using a larger set of words is
+valid for exclusion but does not prove that any minimizing word has a
+low-loss divisor.
+
+Keep the resource and signed budget attached to the same integer to
+obtain a sharper comparison. Put $N_{\min}=\max\{A,G\}$ and
+
+$$
+\Theta_\lambda(N)=\lambda\log(N/G)
+-\{T_s(N)-R_s(v)-L_r\}.
+$$
+
+As a function of $L=\log N>1$, this is concave, since its second
+derivative is $-s(\log L+1)/(L^2(\log L)^2)<0$. Its minimum on the
+actual interval is therefore at an endpoint. Still use the **same**
+complete universe defined by $B_0$; the stronger sufficient test is
+
+$$
+\boxed{
+Q_{B_0}^{\mathrm{unit}}(\lambda,G^{-1})
++\min\{\Theta_\lambda(N_{\min}),\Theta_\lambda(X)\}>0.
+}
+$$
+
+For every actual word under the unpaid hypothesis, the left-hand
+expression is at most $D_s(N)-T_s(N)\le0$, yielding the contradiction.
+Also $\Theta_\lambda(N)\ge H(\lambda)-B_0$ throughout the interval,
+so this test retains every exclusion made by the separated window bound.
+For $\lambda=1$, $\Theta_1$ is increasing and the improvement in the
+lower certificate is exactly $T_s(X)-T_s(N_{\min})\ge0$. This is a
+joint-window calculation, not a gain established on an unpaid FIB host.
+Concavity supplies this endpoint comparison; it does not establish
+strong duality or the strict positivity of the resulting certificate.
+
+### Increase resolution only where a quotient loses a useful distinction
+
+The same finite-word minimum can first keep $u_0\bmod m$ for any $m\mid V$.
+For $m_1\mid m_2\mid V$, retaining the finer endpoint at the same budget,
+prime universe and price cannot decrease the minimum. These are compatible
+arithmetic observations of one residual product. A four-phase character
+is another quotient observation; it need not distinguish two different
+unit residues, even when both products have identical phase.
+
+The empty residual word is retained. For an actual $u_0=1$, its full
+residue is one and its cost is zero; no refinement can force a positive
+residual cost for that host. Restoration-only branches, tied removals and
+the divisor-cofactor $h=1$ branch are therefore not discarded. Keeping
+$g,e$ fixed does not cap the actual higher valuations at three.
+
+This application supplies a source-preserving **sufficient branch test**.
+It claims neither a uniform gain over the quartic bound nor feasibility
+of running a full $\varphi(V)$-state computation at arbitrary scale.
+To finish FIB §233.5, the strict signed budget must still be paid for all
+qualifying branches, or the unpaid branches excluded. A finite graph,
+more residue information, and the redundant low-loss incidence condition
+do not by themselves supply that estimate or a proof of RH.

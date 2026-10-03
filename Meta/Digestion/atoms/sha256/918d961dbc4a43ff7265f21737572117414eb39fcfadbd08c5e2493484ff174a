@@ -1,0 +1,25 @@
+### 定理 281.3 互素扩张的精确 Robin 差额与规模系数 5040
+
+对 $24\mid n$，记 $Z(x)=\sigma(x)/x$、$\Delta(x)=e^\gamma\log\log x-Z(x)$。
+则
+\[
+Z(A_n)=Z(B_n)Z(M_n),
+\tag{281.12}
+\]
+\[
+\boxed{\quad
+\Delta(A_n)-\Delta(B_n)
+=e^\gamma\log\frac{\log A_n}{\log B_n}
+-Z(B_n)\bigl(Z(M_n)-1\bigr).
+\quad}
+\tag{281.13}
+\]
+沿正整数 $n\to\infty$，还有
+\[
+\frac{\log A_n}{\log B_n}\longrightarrow5040,
+\qquad
+\log\log A_n-\log\log B_n\longrightarrow\log5040.
+\tag{281.14}
+\]
+最后两个极限对全体正指标成立，因而也可限制到 $24\mid n$ 或 $n=Dt$。
+

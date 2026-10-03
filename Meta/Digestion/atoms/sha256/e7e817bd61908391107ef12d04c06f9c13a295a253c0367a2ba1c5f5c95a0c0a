@@ -1,0 +1,12 @@
+### 39.9 与转变半径比较及条件取得的界限
+
+沿用定义36.26：对每个 $b\in\mathbb F\cap[0,\lambda)$ 取第31章的有效完整闭表示及完整闭分歧图 $\mathcal D_b$，置
+
+$$
+\mathcal B=\{b\in\mathbb F\cap[0,\lambda):
+\mathcal D_b\text{ 有来源对返回不相干的可达含环 SCC}\},
+\qquad R=\inf\mathcal B.
+$$
+
+定理36.27证明 $\mathcal B$ 非空、$0<R<\lambda$，并给每个实际实预算 $\nu<R$ 的 $O(\log(N+2))$ 完整上界。相干性按同步来源词判定，不按图路径或颜色词重数判定。以上是本节比较所需的已发布事实，不预设 $R\in\mathbb F$ 或下确界取得。
+

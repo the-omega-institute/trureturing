@@ -1,0 +1,23 @@
+### corollary 254.2 全大价格域的显式修正误差
+
+定义 $\mathcal M_N$ 如式（253.4），并置
+
+$$
+\boxed{E_N^*(t)=\frac{4e^{-t/2}}t
+\frac{(10/t)^{N+1}}{1-10/t}.}
+\tag{254.6}
+$$
+
+在 §251 的同一实际价格源与其 Dusart 输入下，
+对所有 $t\ge100$ 和所有 $N\ge0$，有
+
+$$
+|\mathcal M(t)-\mathcal M_N(t)|\le E_N^*(t),\qquad
+R(e^t)>\mathcal M_N(t)-B(t)-E_N^*(t),
+\tag{254.7}
+$$
+
+其中 $B(t)=\frac{2461}{500}e^{-t/2}t^{-3}$。
+因此 $\Phi(e^t)+\mathcal M_N(t)\ge B(t)+E_N^*(t)$
+蕴含 $\mathfrak D(e^t)>0$。
+

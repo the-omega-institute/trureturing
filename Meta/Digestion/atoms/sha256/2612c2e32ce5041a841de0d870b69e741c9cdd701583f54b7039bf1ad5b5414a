@@ -1,0 +1,42 @@
+**证明。** 式（252.2）的系数关系在 $|\xi|<1/2$ 给出
+
+$$
+\sum_{n\ge0}\frac{m_n}{n!}\xi^n
+=\sum_{n\ge0}(-2\xi)^n
++\sum_{n\ge0}\frac{h_n}{n!}\xi^n.
+$$
+
+第一项是几何级数 $1/(1+2\xi)$。
+第二项在任意紧圆盘上一致绝对收敛，因为
+
+$$
+\sum_{n\ge0}\frac{|h_n||\xi|^n}{n!}
+\le C\sum_{n\ge0}\frac{(q|\xi|)^n}{n!}=Ce^{q|\xi|}.
+$$
+
+于是式（253.1）成立，且修正项为整函数。
+在 $\xi=-1/2$ 附近，整函数不能改变
+$1/(1+2\xi)=\tfrac12(\xi+\tfrac12)^{-1}$ 的主部；
+故极点、留数与 Taylor 半径如所述。
+
+在正实轴上，$1/(1+2sz)$ 无奇点且绝对值不超过一。
+修正项的逐项积分交换由下列总预算保证：
+
+$$
+\sum_{n\ge0}\int_0^\infty
+e^{-z}\frac{|h_n|s^nz^n}{n!}\,dz
+=\sum_{n\ge0}|h_n|s^n
+\le\frac{C}{1-qs}<\infty.
+\tag{253.3}
+$$
+
+这里使用经典阶乘矩 $\int_0^\infty e^{-z}z^n\,dz=n!$。
+因此
+
+$$
+\int_0^\infty e^{-z}\widehat{\mathcal H}(sz)\,dz
+=\sum_{n\ge0}h_ns^n=\mathcal H(s).
+$$
+
+有理项的积分正是 $\mathcal J(s)$，由式（252.1）得到式（253.2）。$\square$
+

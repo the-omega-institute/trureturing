@@ -1,0 +1,25 @@
+**定义 339.1（同一实际证书的一阶坐标）。** 固定 §§337–338 的实际证书、起点和块斜率，并在本节假设 RH。沿用其正频率集 $\Gamma$、重数 $m_\gamma$、权重 $a_\gamma$、紧群 $H$、轨道 $\phi(T)$、中心 $c_0$ 和振幅 $A_*$。置
+
+$$
+D_\gamma=\frac14+\gamma^2,\qquad
+S(T)=-2\sum_{\gamma\in\Gamma}a_\gamma\sin(\gamma T),\qquad
+Y_0(T)=S'(T)=-2\sum_{\gamma\in\Gamma}\frac{m_\gamma}{D_\gamma}\cos(\gamma T),
+$$
+
+$$
+(Qf)(T)=\int_0^\infty e^{-v/2}f(T+v)\,dv,\qquad
+F(T)=S(T)-(QS)(T),\qquad
+\Delta(T)=A_*+S(T)\ge0.
+\tag{339.1}
+$$
+
+$Q$ 是向未来平移的指数积分，核的总质量为 $2$。§337 的标准零点计数给 $\sum_\gamma a_\gamma\gamma=\sum_\gamma m_\gamma/D_\gamma<\infty$，保证 $S$ 为 $C^1$；零频空洞另给 $\sum_\gamma a_\gamma/\gamma<\infty$，所以
+
+$$
+U(T)=2\sum_{\gamma\in\Gamma}\frac{a_\gamma}{\gamma}\cos(\gamma T)
+\quad\text{满足}\quad U'=S,\qquad \sup_{T\in\mathbb R}|U(T)|<\infty.
+\tag{339.2}
+$$
+
+不要求 $Y_0$ 可微；形式上的下一次频率导数不具有这里所需的绝对可和保证。
+

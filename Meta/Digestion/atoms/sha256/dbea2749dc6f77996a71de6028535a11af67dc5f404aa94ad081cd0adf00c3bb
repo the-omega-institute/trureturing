@@ -1,0 +1,43 @@
+### 定理 286.1 任意有限整包集的共同指标与祖先森林
+
+设 $P$ 为素数 $s\ge5$ 的非空有限集合，$a_s\ge1$，令
+\[
+M=\prod_{s\in P}m_s^{a_s},\qquad m=1260M,\qquad
+S=\prod_{s\in P}s,
+\qquad
+G=\{s\in P:a_s=1,\ s\nmid m\}.
+\tag{286.1}
+\]
+不同整包的素支撑不交。对全部 $n\ge1$，有精确合同
+\[
+\boxed{\quad
+n\in\mathcal E(m)
+\quad\Longleftrightarrow\quad
+24\mid n\quad\text{且}\quad
+\forall s\in P,\quad
+\left[s\mid n\ \text{或}\ \bigl(a_s=1,\ mn\equiv1\pmod s\bigr)\right].
+\quad}
+\tag{286.2}
+\]
+其允许指标恰为模 $24S$ 的 $2^{|G|}$ 个不同剩余类，自然密度为
+\[
+\frac{2^{|G|}}{24S}.
+\tag{286.3}
+\]
+所有非零局部相位都使用同一个实际系数 $m$。
+
+在 $P$ 上定义边 $t\longrightarrow s$ 当且仅当 $s\mid m_t$。
+则每条边满足
+\[
+z(s)=3t,\qquad s\ge6t-1>t.
+\tag{286.4}
+\]
+每个顶点的入度至多一，且没有有向环，所以该图为祖先森林。
+对于 $s\notin\{5,7\}$，$s\nmid m$ 当且仅当它在该森林中没有父顶点。
+若沿一条边路径 $s_0\to\cdots\to s_\ell$，还有
+\[
+5s_\ell-1\ge6^\ell(5s_0-1).
+\tag{286.5}
+\]
+因此按指标从小到大追加整包时，新整包不能使此前不整除系数的指标变成系数素因子；此前的非零相位仍可改变。
+

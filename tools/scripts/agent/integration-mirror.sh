@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # Mirror dev merges serially; GitHub checks supply every verdict.
 # Usage: integration-mirror.sh --integration BRANCH [--since DEV_MERGE_SHA]
-#          [--max N] [--state FILE] [--dry-run]
+#          [--max N] [--state FILE] [--dry-run] [--required-checks-under-test REF]
+# The integration branch must require exactly dev's required checks. When the
+# integration branch is testing a change of the required checks themselves,
+# --required-checks-under-test names the open issue or PR of this repository
+# that declares that change (#N); both sets are then logged and mirrors are
+# judged by the integration set.
 # First invocation requires --since. Later invocations resume from JSONL state
 # (default: <git-common-dir>/integration-mirror/<URL-encoded-branch>.jsonl).
 # Failed/conflicted entries are retried, never treated as completed cursors.
@@ -26,7 +31,7 @@ set -Eeuo pipefail
 VERSION=5
 # Watcher re-entry bound: GitHub registration latency and transient API errors.
 WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
-integration='' since='' state='' max=0 dry_run=0
+integration='' since='' state='' max=0 dry_run=0 checks_under_test=''
 mirrored=0 pending=0 scratch='' worktree='' lock=''
 merge='' original_pr=0 mirror_pr=0 head='' base='' verdicts='[]'
 repo='' output=''
@@ -106,7 +111,7 @@ watch_checks() {
     if read_verdicts; then
       log "watch mirror_pr=$mirror_pr attempt=$attempt exit=$watch_rc"
       jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null && return 0
-      jq -e --argjson required "$required" '
+      jq -e --argjson required "$integration_required" '
         ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
       ' <<<"$verdicts" >/dev/null && return 0
     fi
@@ -129,9 +134,11 @@ validate_head() {
 
 while (( $# )); do
   case $1 in
-    --integration|--since|--max|--state)
+    --integration|--since|--max|--state|--required-checks-under-test)
       (( $# >= 2 )) && [[ -n "$2" && "$2" != --* ]] || die 64 "missing value for $1"
       case $1 in
+        --required-checks-under-test) checks_under_test=$2
+          [[ "$checks_under_test" =~ ^#[1-9][0-9]*$ ]] || die 64 "--required-checks-under-test must be an issue or PR reference #N" ;;
         --integration) integration=$2 ;;
         --since) since=$2 ;;
         --max) max=$2
@@ -189,15 +196,27 @@ base=$integration_tip
 origin_url=$(git remote get-url origin) || die 64 "missing origin remote"
 repo=$(gh repo view "$origin_url" --json nameWithOwner --jq .nameWithOwner) || die 64 "cannot resolve origin GitHub repository"
 run protection-dev gh api "repos/$repo/branches/dev" || die 64 "cannot read dev protection"
-required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
+dev_required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
   ((.contexts // []) + [(.checks // [])[] | .context]) | unique |
-  select(length == 3 and all(.[]; type == "string" and length > 0))' <<<"$output") \
-  || die 64 "dev must require three checks"
+  select(length > 0 and all(.[]; type == "string" and length > 0))' <<<"$output") \
+  || die 64 "dev must declare a nonempty required-check set"
+log "dev required checks=$dev_required"
 run protection-integration gh api "repos/$repo/branches/$branch_key" || die 64 "cannot read integration protection"
-jq -e --argjson required "$required" 'select(.protected == true) |
-  .protection.required_status_checks |
-  ((.contexts // []) + [(.checks // [])[] | .context]) | unique | . == $required' \
-  <<<"$output" >/dev/null || die 64 "integration must be protected with the same three required checks as dev"
+integration_required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
+  ((.contexts // []) + [(.checks // [])[] | .context]) | unique |
+  select(length > 0 and all(.[]; type == "string" and length > 0))' <<<"$output") \
+  || die 64 "integration must declare a nonempty required-check set"
+if [[ "$integration_required" != "$dev_required" ]]; then
+  [[ -n "$checks_under_test" ]] \
+    || die 64 "integration must require the same checks as dev unless --required-checks-under-test names the declaring issue or PR"
+  ref_number=${checks_under_test#\#}
+  run declaring-ref gh api "repos/$repo/issues/$ref_number" || die 64 "cannot read $checks_under_test in $repo"
+  ref_state=$(jq -er --argjson n "$ref_number" 'select(.number == $n) | .state' <<<"$output") \
+    || die 64 "$checks_under_test is not an issue or PR of $repo"
+  [[ "$ref_state" == open ]] || die 64 "$checks_under_test is $ref_state; the declaring issue or PR must be open"
+  log "required checks under test ($checks_under_test open): dev=$dev_required integration=$integration_required"
+fi
+required="$integration_required"
 git rev-list --first-parent "$dev_tip" >"$scratch/first-parent"
 last=$(jq -r 'last.merge // empty' <<<"$state_data")
 if [[ -n "$last" ]]; then

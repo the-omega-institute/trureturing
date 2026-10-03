@@ -1,0 +1,28 @@
+**Theorem 2.4 (Occurrence law, exact short-observation fiber and incompatible pressure law).** The occurrence law $\mu_F$ exists for every fixed nonempty initial tree and is independent of that tree. Put
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad p=\varphi^{-2},\qquad r=\varphi^{-3}=1-2p.
+$$
+Then
+$$
+\mu_F[\alpha]=p,\quad \mu_F[\beta]=1-p,
+\quad \mu_F[\alpha\beta]=\mu_F[\beta\alpha]=p,
+\quad \mu_F[\beta\beta]=r,
+$$
+with $\mu_F[\alpha\alpha]=0$. Among all stationary laws on $X_M$ having these one- and two-letter observations, the possible triple vector, in the order
+$$
+(\alpha\beta\alpha,\alpha\beta\beta,\beta\alpha\beta,\beta\beta\alpha,\beta\beta\beta),
+$$
+is exactly
+$$
+(3p-1+e,\ r-e,\ p,\ r-e,\ e),\qquad 0\le e\le r.
+$$
+The occurrence law has $e=0$. The pressure law with transfer matrix
+$$
+W_\vartheta=\begin{pmatrix}0&1\\e^\vartheta&1\end{pmatrix}
+$$
+has pressure $P(\vartheta)=\log\lambda_\vartheta$, where
+$$
+\lambda_\vartheta=\frac{1+\sqrt{1+4e^\vartheta}}2.
+$$
+At $\vartheta=3\log\varphi$, its stationary Markov law has the same one- and two-letter observations but $e=\varphi^{-5}$ and is the unique entropy maximizer under those observations. Moreover, $h(\mu_F)=0$.
+

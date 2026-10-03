@@ -10,9 +10,9 @@ license: citation-only
 triage: anchor
 ---
 
-# Golden prime clocks and actual interlevel reciprocity
+# Golden prime clocks, original delays, and interlevel reciprocity
 
-## Primary source and precise role
+## Primary source and exact role
 
 Marc Renault, *The Period, Rank, and Order of the (a,b)-Fibonacci Sequence
 Mod m*, Mathematics Magazine 86 (2013), 372-380.
@@ -20,22 +20,80 @@ https://doi.org/10.4169/math.mag.86.5.372
 Author-hosted published text:
 https://webspace.ship.edu/msrenault/fibonacci/RenaultPeriodRankOrderMathMag.pdf
 
-The Preliminaries on printed pages373-374 identify the matrix order with
-the pair period, and scalar return with the zero rank. Theorem1 on page374
-proves the least-common-multiple laws. Theorem2 on page376 retains the
-initial prime-power plateau before each lift multiplies the period by p.
-These statements were read in the primary text; page376 was also viewed
-as an image. The page374 image request failed, so no visual check of that
-particular page is claimed. The proof of GPC1 also derives the needed
-odd-prime lifting directly by a unit binomial expansion.
+The Preliminaries on printed pages 373-374 identify matrix order with
+pair period and scalar return with the zero rank. Theorem 1 on page 374
+proves the least-common-multiple laws. Theorem 2 on page 376 retains the
+initial prime-power plateau before subsequent lifts multiply the period
+by p. The GPC period lift also follows directly from a unit binomial
+expansion. These are the period-theoretic inputs; the block and reciprocity
+identities below are proved in the problem owner.
 
-For the standard sequence, the repository's existing golden matrix differs
-from this paper's matrix by the swap of its two coordinates. This conjugacy
-preserves every modulus-dependent order. The real fractional-part return
-in `PERIODIC_TREE.md`, Section8, remains a different observation; it is not
-identified with reduction modulo a prime or a prime square.
+For the standard sequence, the two common Fibonacci matrices are conjugate
+by the swap of their coordinates. This preserves every residue order.
+The exact real eigenpairs recorded by the existing FibonacciEigen Scribe
+identify the same integer substitution, but do not decide its p-adic lift.
+The full golden-clock matrix at layer L is Q^(L+2); the scalar floor map
+and real fractional-part observation are kept distinct from the matrix
+modulo a prime square.
 
-## Existing owner: GPC.1-GPC.6
+## Mathematical consumer in the existing WSS owner
+
+`Problems/wall-sun-sun-golden-unit-lift.md`, PCL.1-PCL.7, proves the
+following ordinary specializations for the original recurrence:
+
+- With stride s and external-period valuation beta_p, the extra exponent
+  is max(0,a_p-h_p-max(beta_p,v_p(s))). Coupling and stride delays combine
+  by their maximum. The simultaneous square lift of a squarefree modulus
+  sees exactly the non-WSS sinks in its increasing prime-period graph.
+- The actual quotient F_(p^b)/F_(p^(b-1)) supplies larger primes of exact
+  rank p^b and period 4p^b. This constructs arbitrarily deep auxiliary
+  period masking, not new original WSS depths. The explicit cofactor
+  F_(p^b) gives the same period without requiring its factorization.
+- The two ternary families C_j=L_(3^j)^2+1 and B_j=L_(3^j)^2+3 have exact
+  native block-power periods. Lemma PCL7A includes their rank and actual
+  valuation proofs locally; no unmerged TBN or DCE appendix is required.
+- Their base periods contain only two and three, absent from their prime
+  supports. Native multiplicities nevertheless hide h_p. Replacing a
+  block product by its radical makes the square-lift ratio exactly the
+  product of simple factors. That radical still needs independent control.
+- The block products have an exact K+1-step period-iteration trajectory to
+  24, whereas the transient exponent of the largest prime P is
+  max(a-n*h_P,0). A common terminal fixed point does not decide WSS.
+
+The B-block period formula also occurs in GPC. PCL supplies an independent
+specialization without relying on GPC's reciprocity appendices. Independent
+priority of the block and masking specializations is not claimed.
+
+## Other classical sources retained from the prepared PCL package
+
+B. Benfield and O. Lippard, *Fixed Points of K-Fibonacci Sequences*,
+arXiv:2404.08194v2, Theorems 2.1-2.2, 2.6 and 2.11:
+https://arxiv.org/html/2404.08194v2
+The source attributes ordinary Fibonacci fixed-point classification and
+convergence to Fulton-Morris (1969). PCL proves the displayed special
+trajectories, not a new general fixed-point theorem. The separate
+conjecture about generalized (a,-1) sequences is not used.
+
+T. Ross, Z. Shen and T. Cai, *The p-adic Valuations of Mobius Duals of
+Lucas Sequences*, arXiv:2512.03481v1, Proposition 3.2 and the classical
+attribution in Theorem 3.3:
+https://arxiv.org/html/2512.03481v1
+The regular-sequence valuation input retains h_p and credits classical
+Lucas theory. It does not assert a simple primitive factor or a WSS example.
+
+## Common-field presentation cost of the same golden blocks
+
+The GIR fields generated by cube roots of these actual B_j also support
+GTC, with full ordinary proofs and classical source roles in
+`Library/Tower/first2017separablegenerators.md`. It computes exact dyadic
+splitting, local generator counts and the sharp unavoidable two-part of
+all primitive-element indices in that same tower. Its explicit global
+witnesses attain the bounds. This is a tower-presentation invariant at
+two, not the block normalization index detecting original WSS factors.
+The existing PCL and GIR/GNT/GMI statements and their attribution remain
+unchanged; no WSS prime-family decision follows from this cross-reference.
+
+## Interlevel reciprocity in GPC.1-GPC.6
 
 `Problems/wall-sun-sun-golden-unit-lift.md` keeps the actual blocks
 B_j=L_(3^j)^2+3 and r_j=3^(j+1), whose factor valuations are the original
@@ -82,16 +140,11 @@ classes. The class-field family here exists without a WSS assumption,
 but the target primes must still divide the specified integer B_j. No
 Chebotarev application replaces this actual divisibility requirement.
 
-The latest dev's HD/DF harmonic filters in the existing Medina-Rowland
-note were inspected separately. Their two-scale cancellation removal is
-prior repository work and is not recounted as a new GPC result.
-
 ## Formal and arithmetic boundary
 
-The matrices, period laws, exact integer products and character identities
-are ordinary proofs in the existing owner. The trace-image Scribe adds a
-contextual reference without changing its three declarations or formal
-formula. No new Lean source, compiler pass, kernel certificate, or solved
-external open problem is asserted. Quadratic characters see depth parity;
-they still allow both h=1 and odd h>=3. The remaining heterogeneous-depth
-WSS branch is constrained, not eliminated or constructed.
+The period, block-product and character identities are stated with ordinary
+proofs in the problem owner. The FibonacciEigen Scribe links this note as
+context without adding these claims to its formal declarations. Quadratic
+characters see depth parity and allow both h=1 and odd h>=3. The remaining
+obligation is a restriction on original depths or simple-factor support;
+these identities do not construct a WSS prime.

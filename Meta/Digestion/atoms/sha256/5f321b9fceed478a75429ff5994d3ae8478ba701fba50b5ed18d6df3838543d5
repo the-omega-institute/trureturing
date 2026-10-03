@@ -1,0 +1,41 @@
+**命题 43.9（固定历史的所有 active 槽与精确等号预算）。** 固定同一来源、共同颜色历史、同一对参考周期点 $h_i$、合法 stem 和合法返回。返回长度 $L$ 为正偶数，因而重复返回的运输因子为正 $g^L$. 令原有限历史为
+
+$$
+ H_n=H_{\rm pre}W^n,\qquad M_n=d+nL,
+$$
+
+其中只观察 departure 位置 $r<M_n$，终端位置 $M_n$ 不观察。active 指参考历史中到指定闭格的距离恰为 $\beta$ 的槽；假设至少一个这样的槽在某个有限前缀中实际出现。对每个会实际出现的 active 槽 $(i,r)$，选定原来向内的方向 $\varepsilon_i$ 和一次固定的正幅度 $\eta_i$，并取同一对固定实际尾
+
+$$
+ x_i=h_i+\varepsilon_i\eta_i\in T_{s_i}.
+$$
+
+假设 $\beta>0$；每个 active 槽的 signed transport 都沿 $\varepsilon_i$ 指向其闭格内部，并在所有 $n$ 中保留同一个单侧距离段；所有非 active 槽在参考值处有共同严格余量 $\Delta>0$. 若没有非 active 槽，约定 $\Delta=+\infty$ 并删除下述关于 $\Delta$ 的限制。幅度在假设中一次选定并满足
+
+$$
+\eta_{\max}:=\max_i\eta_i<\min\{\beta/2,\Delta/3\},
+$$
+
+其中 $\min\{\beta/2,+\infty\}=\beta/2$. 令
+
+$$
+ \mathcal A_n=\{(i,r):r<M_n\text{ 且该槽在 }H_n\text{ 中 active}\}.
+$$
+
+$\mathcal A_n$ 在每个深度都定义。只在 $\mathcal A_n\ne\varnothing$ 时定义
+
+$$
+\gamma_n=\min_{(i,r)\in\mathcal A_n}\eta_i g^{-r},\qquad
+\widehat b_n=\beta-g^{M_n}\gamma_n.
+$$
+
+在这些深度，同一对固定实际尾承担 $H_n$ 的最大闭距离恰为
+
+$$\boxed{\widehat b_n=\beta-g^{M_n}\gamma_n.}$$
+
+其等号槽为
+
+$$\boxed{\mathcal E_n=\{(i,j_i):j_i<M_n,\ \eta_i g^{-j_i}=\gamma_n\},}$$
+
+其中 $j_i$ 是分量 $i$ 在当前前缀中已经出现的第一次 active 时间；不存在于当前前缀的分量不计入。精确预算 $\widehat b_n$ 下，给定归属可实现当且仅当 $\mathcal E_n$ 中每一个实际等距目标的端点归属于指定颜色；所有最小者和 ties 都必须检查。
+

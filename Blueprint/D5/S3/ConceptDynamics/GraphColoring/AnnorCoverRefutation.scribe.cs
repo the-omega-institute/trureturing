@@ -5,6 +5,7 @@ using static StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.GraphColoring.Gra
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.GraphColoring;
 
+[ScribeSharedSource("Blueprint/D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination.scribe.cs")]
 internal sealed class AnnorCoverRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.";

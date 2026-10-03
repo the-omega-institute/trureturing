@@ -11,24 +11,25 @@ public sealed class AdmissionWorkflowTopologyTests
     {
         var bytes = Encoding.UTF8.GetBytes("""
             'on': {pull_request: {branches: [dev, integration-**]}}
-            jobs: {delta: {runs-on: fixture}}
+            jobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}
             """);
 
         Assert.True(AdmissionWorkflowTopology.HasRequiredBaseGate(bytes, "dev"));
     }
 
     [Theory]
-    [InlineData("pull_request_target", "dev", "delta", "delta")]
-    [InlineData("push", "dev", "delta", "delta")]
-    [InlineData("pull_request", "main", "delta", "delta")]
-    [InlineData("pull_request", "dev", "baseline-admission", "delta")]
-    [InlineData("pull_request", "dev", "delta", "renamed")]
+    [InlineData("pull_request_target", "dev", "current", "current", "check-delta")]
+    [InlineData("push", "dev", "current", "current", "check-delta")]
+    [InlineData("pull_request", "main", "current", "current", "check-delta")]
+    [InlineData("pull_request", "dev", "baseline-admission", "current", "check-delta")]
+    [InlineData("pull_request", "dev", "current", "renamed", "check-delta")]
+    [InlineData("pull_request", "dev", "current", "current", "check-current")]
     public void OtherEventsBranchesAndJobsDoNotActivateAdmission(
-        string trigger, string branch, string job, string name)
+        string trigger, string branch, string job, string name, string command)
     {
         var bytes = Encoding.UTF8.GetBytes($$"""
             on: { {{trigger}}: {branches: [{{branch}}]} }
-            jobs: { {{job}}: {name: '{{name}}', runs-on: fixture} }
+            jobs: { {{job}}: {name: '{{name}}', runs-on: fixture, steps: [{run: 'dotnet judge.dll {{command}}'}]} }
             """);
 
         Assert.False(AdmissionWorkflowTopology.HasRequiredBaseGate(bytes, "dev"));
@@ -42,14 +43,16 @@ public sealed class AdmissionWorkflowTopologyTests
         Assert.False(AdmissionWorkflowTopology.HasRequiredBaseGate(Encoding.UTF8.GetBytes(yaml), "dev"));
 
     [Theory]
-    [InlineData(".github/workflows/ci-pr.yml", true)]
-    [InlineData(".github/workflows/ci-push.yml", true)]
+    [InlineData(".github/workflows/ci-current.yml", true)]
+    [InlineData(".github/workflows/ci-tests-fixture.yml", true)]
     [InlineData(".github/workflows/ci-publication-verify.yml", true)]
-    [InlineData(".github/workflows/ci-publication-verify-extra.yml", false)]
+    [InlineData(".github/workflows/ci-publication-verify-extra.yml", true)]
     [InlineData(".github/workflows/lean-analysis-fixtures.yml", true)]
     [InlineData(".github/workflows/ci.yml", false)]
-    // Remove this allowance with the gate after ci-push/ci-pr and required-set migration.
-    [InlineData(".github/scripts/harness-gate.sh", true)]
+    [InlineData(".github/workflows/ci-tests_fixture.yml", false)]
+    [InlineData(".github/workflows/ci-Tests.yml", false)]
+    [InlineData(".github/workflows/ci-tests-fixture.yaml", false)]
+    [InlineData(".github/scripts/harness-gate.sh", false)]
     public void ControlPathRegistrationKeepsOnlyTheRequiredGateTransition(string value, bool accepted)
     {
         var policy = new RuleFixture().Build().Policy;
@@ -59,12 +62,12 @@ public sealed class AdmissionWorkflowTopologyTests
     }
 
     [Theory]
-    [InlineData(".github/workflows/ci-push.yml")]
-    [InlineData(".github/workflows/ci-pr.yml")]
-    [InlineData("tools/scripts/ci-stage.sh")]
-    [InlineData("tools/scripts/ci-build-outputs.targets")]
-    [InlineData("tools/scripts/workflow/ci.py")]
-    [InlineData("tools/StrataLint.EngineeringScope/CommonStages.cs")]
+    [InlineData(".github/workflows/ci-tests-fixture.yml")]
+    [InlineData(".github/workflows/ci-current.yml")]
+    [InlineData("tools/scripts/workflow/ci-entry.sh")]
+    [InlineData("tools/scripts/worktree/lean_actions.py")]
+    [InlineData("tools/scripts/report/lean-report-input.sh")]
+    [InlineData("tools/StrataLint.Cli/Admission/ProductionCliEnvironment.Checks.cs")]
     public void SharedStageDefinitionChangesWakeDeltaDefinitionValidation(string path) =>
         Assert.True(FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path));
 }

@@ -1,0 +1,26 @@
+**Theorem 55.2 (GCR3, each earlier oriented prime).** For every
+$1\leq i<j$ and each individual prime $p\mid B_i$, define
+$\kappa_{i,p}=(\lambda/\varpi_{i,p})_3$. Then
+
+$$
+\prod_{q\mid B_j}
+\left(\frac{\varpi_{i,p}}{\varpi_{j,q}}\right)_3^{h_q}
+=\kappa_{i,p}.
+$$
+
+Proof. Since $p\equiv1\pmod9$, the exponent $(p-1)/3$ is divisible by
+three, so $(\omega/\varpi_{i,p})_3=1$. The interlevel congruence
+$\eta_j\equiv\omega\lambda\pmod{\varpi_{i,p}}$ therefore yields
+$(\eta_j/\varpi_{i,p})_3=\kappa_{i,p}$. Cubic reciprocity and the
+oriented factorization of $\eta_j$ yield the product. The assertion
+retains every earlier prime, including primes with $3\mid h_p$.
+
+For $j\geq1$, let $S_j$ be the set of distinct rational primes
+dividing $B_i$ for some $1\leq i<j$, put $t_j=|S_j|$, and write
+$\varpi_p=\varpi_{i,p}$ for the unique earlier level containing $p$.
+Let $\kappa_p=(\lambda/\varpi_p)_3$. Set
+
+$$
+\mathcal M_j=E\bigl(\sqrt[3]{\varpi_p}:p\in S_j\bigr).
+$$
+

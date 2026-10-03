@@ -1,0 +1,13 @@
+**定理55.4（临界完整记忆下界）。** 固定任一合法归属及上述任一种临界合同。每个满足定义36.9的解码器 $\mathcal A$ 都有
+
+$$
+\mathcal C_{\lambda,\mathcal A}(26+2n)\ge f_n\qquad(n\ge31),
+$$
+
+$$
+\boxed{B^{\mathrm{worst}}_{\lambda,\mathcal A}(N)
+\ge\alpha_\infty N-107\alpha_\infty-1\qquad(N\in\mathbb Z_{\ge0}).}
+$$
+
+这里 $\mathcal C$ 是处理完指定次数取得后的完整配置数，$B^{\mathrm{worst}}$ 是截至该视界的最坏完整存储峰值。
+

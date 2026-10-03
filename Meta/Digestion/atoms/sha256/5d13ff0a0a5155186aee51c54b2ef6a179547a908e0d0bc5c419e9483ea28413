@@ -1,0 +1,38 @@
+**命题 14.9（有限来源上的连续性与非一致连续性）。** 删除在 $P$ 上诱导良定义映射
+\[
+g:P\to P,\qquad g(\kappa_0\omega)=\kappa_0(T\omega).
+\]
+截断任意合法地址并以 $\mathrm{null}^{\infty}$ 补尾可知 $P$ 在 $I_0$ 中稠密。它在 $P$ 的每一点连续，局部为
+\[
+g(x)=\frac{x-\Delta_\sigma}{\gamma}
+\]
+的仿射分支，但不一致连续，且不存在连续延拓 $\bar g:I_0\to I_0$。取
+\[
+L_N=(3,25)^N\mathrm{null}^{\infty},\qquad
+R_N=(25,3)^N\mathrm{null}^{\infty},\qquad
+\varepsilon_N=\gamma^{2N},
+\]
+则
+\[
+\kappa_0(L_N)=-1+\varepsilon_N,\qquad
+\kappa_0(R_N)=\phi(1-\varepsilon_N),
+\]
+并且
+\[
+\begin{aligned}
+x_N&=\kappa_0(3L_N),&
+y_N&=\kappa_0(\mathrm{null}R_N),\\
+|x_N-y_N|&=t\varepsilon_N\longrightarrow0,&
+|g(x_N)-g(y_N)|
+&=\phi^2(1-\varepsilon_N)\longrightarrow\phi^2.
+\end{aligned}
+\]
+
+证明。$D$ 避开根接触和所有外部极值，所以每个 $x\in P$ 落在唯一首分支的相对内部邻域，分支公式给出点态连续性。两列都在 $P$ 中且趋于同一接触点 $z$，但删窗后的值趋于 $-1$ 和 $\phi$，故不一致连续；若有连续延拓则两列像必须有同一极限，矛盾。若以首个不同窗口位置 $k$ 定义前缀超度量 $d_\gamma(\omega,\nu)=|\gamma|^k$，则
+\[
+|\kappa_0(\omega)-\kappa_0(\nu)|
+\le |I_0|\,d_\gamma(\omega,\nu)
+=\phi^2d_\gamma(\omega,\nu),
+\]
+所以 $\kappa_0$ 对符号前缀尺度是 $\phi^2$-Lipschitz；这不意味着其逆或普通实数完成具有同一一致结构。证毕。
+

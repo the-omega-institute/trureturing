@@ -1,0 +1,1 @@
+| Granville–Lamzouri, [arXiv:2604.02306v1，Theorem1.2、Corollary1.2](https://arxiv.org/html/2604.02306v1) | 支持模不超过一的乘法系数。其固定常数 $B$ 的条件 $(2q)^{\log(u+1)/B}\le y$，$u=\log x/\log y$，在当前尺度迫使 $\log(2q)\le(2+o(1))B$。因此不能静默纳入增长分母；比较类筛选也未证明是该乘法系数。 

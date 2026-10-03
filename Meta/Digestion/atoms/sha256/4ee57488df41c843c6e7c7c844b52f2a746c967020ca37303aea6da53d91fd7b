@@ -1,0 +1,24 @@
+**定理 14.2（Unbounded prime quantities lift to the same composition fiber）。** For $x=(a,b)\in X$, put $n=q(x)$. If $\gcd(n,L)=1$, then for every $H\in\mathbb N$ there exists an actual $y\in F_L(x)$ with prime quantity $q(y)>H$. The same $y$ reproduces all future $O_L$ readings of $x$. In particular the fiber contains infinitely many prime actual sources; $x$ itself need not be prime.
+
+证明。The elementary $2,3$ representation used in theorem [117.3](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L10037) is sufficient in the following explicit form: every integer $t\ge2$ equals $2u+3v$ with $u,v\in\mathbb N$. If $t$ is even take $u=t/2,v=0$; if it is odd take $u=(t-3)/2,v=1$, which is nonnegative because $t\ge3$. The exception $t=1$ explains the threshold needed below.
+
+Set $N=\max\{H,n+L\}$. Apply the named Dirichlet theorem with this threshold, modulus $L$ and residue $n$. It gives a prime $p>N$ congruent to $n$ modulo $L$. Since $p>n+L$, the integer congruence yields
+
+$$
+p-n=Lt,\qquad t>1,
+$$
+
+so $t$ is a natural integer at least 2. Write $t=2u+3v$ as above and define
+
+$$
+y=(a+Lu,b+Lv).
+$$
+
+It has nonnegative coordinates and is nonzero because $x$ is. It is coordinatewise congruent to $x$, while
+
+$$
+q(y)=n+L(2u+3v)=n+Lt=p>H.
+$$
+
+Thus scalar congruence has been lifted to the same actual composition fiber. Theorem 8.1 now gives $O_L(M^ky)=O_L(M^kx)$ for every $k$, with this one witness. If there were only finitely many prime sources in the fiber, their quantities would form a finite set with a maximum. Taking $H$ at least that maximum contradicts the construction. $\square$
+

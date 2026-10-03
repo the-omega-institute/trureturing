@@ -1,0 +1,22 @@
+**推论49.5（指定族的极限）。** 令
+
+$$
+\boxed{b_\infty=\lambda-g^{62}h_H.}
+$$
+
+则 $0<b_\infty<\beta_m<\lambda$，且
+
+$$
+\begin{gathered}
+\beta_m\downarrow b_\infty,\\
+\beta_m-b_\infty
+=g^{6m+62}h_H\frac{1-g^{40}}{1-g^{6m+40}},\\
+g^{6m+62}h_H(1-g^{40})
+<\beta_m-b_\infty
+\le\frac{g^{6m+62}h_H(1-g^{40})}{1-g^{46}}.
+\end{gathered}
+\tag{49.12}
+$$
+
+每个有限 $m$ 的实际类型词 $01$ 已在预算 $b_\infty$ 失败。
+

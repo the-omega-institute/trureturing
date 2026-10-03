@@ -446,3 +446,538 @@ an improved upper certificate for $m_1$ cannot change that fact on this
 family. The onset may depend on the fixed $b,c$. This is a paper-level
 application of the existing weighted estimate, not a new analytic theorem,
 an assertion $q\asymp n$, or an obstruction proved on SA/CA candidates.
+
+## The terminal CA prime band forces a conductor lower bound
+
+The preceding canonical family is not established to be an asymptotic CA family. For
+actual CA sources, a different restriction follows by applying the
+published [Thorner–Zaman prime count](thornerzaman2019chebotarev.md).
+This is a paper-level application of existing analytic and canonical
+interfaces, without a new analytic theorem, originality claim or Lean
+verification.
+
+Let $n$ be any actual CA maximizer, including an intermediate tied
+maximizer, and put $P=P^+(n)$. Retain its own canonical unit bit $h$,
+coordinates $A,B$, $c=4A+7B$, and signed discriminant
+$D=5h^2-4(A^2+AB-B^2)$. In the branch $h=1$ with nonsquare $D$,
+write $D=\delta s^2$ as above and let $q$ be its primitive quadratic
+conductor. The existing prime-power exception result gives
+
+$$
+p\mid n,\quad p\ne2,5,\quad\chi_\delta(p)=-1
+\quad\Longrightarrow\quad v_p(n)\text{ is even}.
+\tag{T3}
+$$
+
+This implication is reused at the same source; no canonical coordinates
+are transported from a larger representative. Primes dividing $q$
+remain character zeros.
+
+### The terminal support consists of exponent-one primes
+
+At the actual CA price $\epsilon$, use the classical thresholds
+$F(\xi_k,k)=\epsilon$, with $\xi=\xi_1$. The
+[Nicolas manuscript](https://hal.science/hal-05389053v1/document),
+equation (3.8) and Remark 3.1, printed p.11, give the prime-layer support
+and tied choices; (3.19)–(3.23), printed pp.12–13, give
+$\xi_2\le\sqrt{2\xi}$. Every prime below $\xi$ has strictly positive
+first-layer gain and is included. A first-layer tie can only affect the
+possible endpoint prime $\xi$. Hence $P\sim\xi$ by ordinary PNT,
+while $\xi_2=o(P)$.
+
+Every sufficiently large actual CA integer therefore satisfies
+
+$$
+v_p(n)=1\qquad\text{for every prime }P/2<p\le P.
+\tag{T4}
+$$
+
+Indeed $P/2>\xi_2$ eventually: each such prime is in the initial support
+and has strictly negative second-layer gain. A tied square activation
+at $\xi_2$ lies below this band. The argument permits every tied
+maximizer, rather than only the all-ties representative.
+
+### The primitive conductor is bounded below at the same candidate
+
+Let $C,x_0$ be the constants in the linked interval consequence (T2).
+If $P>\max\{10,2\xi_2\}$ and $P\ge x_0$, (T3)–(T4) prohibit any
+prime $p\in(P/2,P]$ with $\chi_\delta(p)=-1$. If $q^C\le P$,
+(T2) instead supplies at least $P/(8\log P)$ such primes. Consequently,
+with a fixed $\eta=1/C>0$,
+
+$$
+\boxed{q>P^\eta}
+\tag{T5}
+$$
+
+for every sufficiently large actual CA integer in this $h=1$,
+nonsquare-$D$ branch. No numerical CA onset or infinitude of this
+particular canonical branch is supplied.
+
+This is a lower bound for the actual primitive conductor, rather than
+for the raw discriminant or an upper-bound certificate for the mask.
+Since $m_1=\operatorname{lcm}(q,R_1)\ge q$, it also gives
+$m_1>P^\eta$. On an unbounded branch of these sources, neither $q$ nor
+$m_1$ can be bounded by a fixed power of $\log P$.
+
+For the existing sufficient cutoff $m_1^b\le Y=\log n$, the necessary
+range is now
+
+$$
+P^\eta<q\le m_1\le Y^{1/b},\qquad P\sim Y.
+\tag{T6}
+$$
+
+The small fixed $\eta$ supplied here leaves that interval compatible;
+it does not exclude fixed-power-in-$\log n$ conductors. No
+reciprocal-prime deficit, exception-weight payment or signed Robin
+margin follows. Unit-bit-zero sources, square discriminants and the
+remaining larger conductors still require their own estimates. The
+[raw-discriminant chain witnesses](../ArithSums/fibcomplement2026weightedresidues.md#recurring-doubling-activations-improve-the-unbounded-subset-rate)
+are not known to belong to this canonical branch, so their bound cannot
+be combined with (T5) by treating separately realized witnesses as one
+source. No actual Robin violation or RH proof is obtained.
+
+### A numerical exponent from the published progression interval
+
+The independently published [Haynes–White interval theorem](hayneswhite2014intervals.md)
+supplies a prime in $(P/2,P]$ with $\chi_\delta(p)=-1$ whenever
+$q\le P^\eta$, for every fixed $0<\eta<5/67$ and sufficiently large
+$P$. Applying the same contradiction (T3)–(T4), without reconstructing
+either interface, gives the numerical version
+
+$$
+\boxed{q>P^\eta\quad\text{eventually for every fixed }0<\eta<5/67}
+\tag{T7}
+$$
+
+on the same actual $h=1$, nonsquare-$D$ CA branch. The eventual onset
+can depend on $\eta$ and is not claimed effective. For example
+$q>P^{1/14}$ eventually. The effective existential version (T5) is
+retained independently; no comparison of its unnamed exponent with
+$5/67$ is asserted.
+
+This numerical conductor bound alone does not cross the faithful-mask
+cutoff. Its inequalities permit $m_1\le Y^5$ at $b=1/5$, while the lower
+bound is only $m_1>P^{1/14}$ and $P\sim Y$. A conductor lower bound
+$q>P^\eta$ would contradict $m_1^b\le Y$ by powers alone if
+$\eta b>1$; equality requires further constant or lower-order
+information. The supplied rate does not cross that scale in the
+stated $\beta_0<b<1/4$ regime. All same-source and unresolved-branch
+limitations above remain in force.
+
+## The progression count crosses the deep-layer capacity
+
+A published quantitative count now gives a stronger numerical conductor
+restriction than (T7). Reuse [Maynard, published Theorem 3.2](maynard2013bruntitchmarsh.md)
+through (M2), without reconstructing its proof or the preceding canonical
+and CA layer interfaces. This is a paper-level same-source application,
+with no new analytic theorem, originality claim or Lean verification.
+
+Take an actual CA maximizer $n$, including intermediate tied maximizers,
+whose own canonical unit bit is $h=1$ and whose own signed $D$ is
+nonsquare. Let $q$ be its primitive quadratic conductor and $P=P^+(n)$.
+Every prime up to $P$ belongs to its initial support. By (T3), every
+negative-character prime there, except possibly two and five, has even
+positive exponent and therefore is at most $\xi_2$. The existing
+$\xi_2\le\sqrt{2\xi}$ and $P\sim\xi$ give a fixed constant $C_A>0$
+such that, eventually at every such source,
+
+$$
+\pi_-(P;\chi)\le\pi(\xi_2)+2
+\le C_A\frac{\sqrt P}{\log P}.
+\tag{T8}
+$$
+
+This is an upper bound for the same actual negative-prime population;
+ramified primes remain zeros. It does not assume every prime below
+$\xi_2$ has even exponent.
+
+Suppose instead that $q\le P^{1/8}$ and $q\ge q_0$, where $q_0,c_0$
+are Maynard's effective constants. Then $P\ge q^8$ and (M2) supplies
+
+$$
+\pi_-(P;\chi)\ge\frac{c_0}{2}
+\frac{P\log q}{\sqrt q\log P}
+\ge\frac{c_0\log q_0}{2}
+\frac{P^{15/16}}{\log P}.
+\tag{T9}
+$$
+
+The ratio of (T9)'s lower bound to (T8)'s upper bound tends to infinity
+at least as a positive constant times $P^{7/16}$, uniformly throughout
+this conductor range. For the finitely many $q<q_0$, reuse (T2) from the
+[earlier effective terminal-interval supplier](thornerzaman2019chebotarev.md)
+with $P\ge\max\{x_0,q_0^C\}$; its negative primes in $(P/2,P]$
+contradict (T4). Thus
+
+$$
+\boxed{q>P^{1/8}}
+\tag{T10}
+$$
+
+for every sufficiently large actual CA source in this canonical $h=1$,
+nonsquare-$D$ branch. The exact endpoint is allowed here because
+Maynard's supplied range is $P\ge q^8$. No numerical CA onset or
+infinitude of this branch is asserted.
+
+For fixed $\beta_0<b<1/4$, any sufficiently large actual source in
+this branch that also satisfies the sufficient cutoff
+$m_1^b\le Y=\log n$ must have its faithful mask in the range
+
+$$
+P^{1/8}<q\le m_1\le Y^{1/b},\qquad Y=\log n\sim P.
+$$
+
+The conductor-only comparison does not rule out that cutoff by powers
+alone; the additional actual-mask constraint is supplied in (T22). The count comparison
+excludes a larger conductor range than (T7), but supplies neither a
+reciprocal-prime deficit nor the required signed Robin margin. Unit-bit
+zero, square $D$ and the larger remaining conductors stay unresolved.
+
+## All odd layers strengthen the signed-character restriction
+
+Together with a fixed contradiction assumption $q\le P^\eta$, the
+numerical bound (T10) supplies the compact parameter range needed to use [Szabó's published Proposition 6](szabo2024primeproducts.md)
+with the actual alternating CA layers. Reuse (T3), the classical
+thresholds and the literature estimate (S1); no new analytic theorem,
+originality claim or Lean verification is made.
+
+Continue with the same actual CA integer, its canonical $h=1$,
+nonsquare signed $D$, primitive quadratic character $\chi$ of conductor
+$q$, and $P=P^+(n)$. Put $L=\log P$. All asymptotics below hold along
+every sequence of such actual maximizers with $P\to\infty$, including
+intermediate tied choices; this quantification asserts no branch
+infinitude. For every fixed $k\ge1$, the classical activation formula gives
+
+$$
+\frac{\log\xi_k}{L}\longrightarrow\frac1k.
+\tag{T11}
+$$
+
+Indeed, $F(x,k)\sim1/(x^k\log x)$, and
+$F(\xi_k,k)=F(\xi_1,1)$ gives $\xi_k^k\sim k\xi_1$, with
+$\xi_1\sim P$. This is a fixed-layer consequence of the existing CA
+formula. A prime of exponent $k$ lies between $\xi_{k+1}$ and $\xi_k$,
+apart from the tied endpoints. In the logarithmic coordinate
+$u=\log p/L$, the odd layers therefore approach
+
+$$
+\mathcal O=\bigcup_{j\ge0}
+\left(\frac1{2j+2},\frac1{2j+1}\right),\qquad
+\int_{\mathcal O}du=\log2,\quad
+\int_{\mathcal O}u\,du=\frac{\pi^2}{24}.
+$$
+
+For each fixed $r\ge1$, Mertens' first theorem and partial summation give
+
+$$
+A_r(n):=\sum_{\substack{p\le P\\v_p(n)\ \mathrm{odd}}}
+\frac{\log p}{p}\left(r-\frac{\log p}{L}\right)
+=\left(r\log2-\frac{\pi^2}{24}+o(1)\right)L.
+\tag{T12}
+$$
+
+Here $\mathrm{odd}$ means the exponent $v_p(n)$ is odd. First fix
+$K$ and let $P\to\infty$ on the finitely many retained layers, then
+let $K\to\infty$. Their tied endpoint primes contribute
+$o(L)$ regardless of the intermediate maximizing choice. All omitted
+layers lie below $\xi_{K+1}$ and have total weight at most
+$r\log\xi_{K+1}+O_r(1)=O_r(L/(K+1))+o(L)$. Letting $K$ grow after
+$P$ proves (T12), without a uniform-in-$k$ threshold asymptotic.
+
+At every odd-exponent support prime other than two and five, (T3)
+prohibits $\chi(p)=-1$. Thus its value is $1$ unless $p\mid q$, when
+it is zero. The latter correction is bounded by
+
+$$
+r\sum_{p\mid q}\frac{\log p}{p}
+=O_r(\log\log(q+3)).
+\tag{T13}
+$$
+
+For large $q$, split at $p=\log q$: the smaller-prime contribution is
+$O(\log\log q)$ by Mertens, and the remaining contribution is at most
+$(\log q)^{-1}\sum_{p\mid q}\log p\le1$. The fixed primes two and
+five cost $O_r(1)$. In a range $q\le P^\eta$ with fixed $\eta>0$,
+these corrections are $o(L)$.
+
+Define the same-character sum over all primes, including those beyond
+$P$,
+
+$$
+S_r(\chi;P)=\sum_p\frac{\chi(p)\log p}{p}
+\left(r-\frac{\log p}{L}\right)_+.
+$$
+
+Its total unsigned weight is $(r^2/2+o(1))L$. Give all primes outside
+the protected odd layers the worst permissible value $-1$; keep the
+ramified corrections (T13). This yields
+
+$$
+S_r(\chi;P)\ge
+\left(2r\log2-\frac{\pi^2}{12}-\frac{r^2}{2}+o(1)\right)L.
+\tag{T14}
+$$
+
+To compare (S1), put $t=L/\log q$ and $\alpha=rt$. Then
+$f_\alpha(\log p/\log q)=t(r-\log p/L)_+$. In a contradiction range
+$P^{1/8}<q\le P^\eta$, supplied by (T10), $\alpha$ lies in a fixed
+compact interval. For fixed order bound two, the error in (S1) is
+uniform over the varying characters and moduli at each fixed mesh value
+of $\alpha$, as noted in the source citation. To make it uniform over
+this compact interval, use a finite mesh, the bound $|f_\alpha-f_\beta|\le|\alpha-\beta|$,
+and $\sum_{p\le q^A}\log p/p=O_A(\log q)$. First take $q\to\infty$
+for this finite mesh, then let its spacing tend to zero. Consequently
+
+$$
+S_r(\chi;P)\le\frac r8\log q+o_{r,\eta}(L).
+\tag{T15}
+$$
+
+Combining (T14)–(T15) gives
+
+$$
+\frac{\log q}{\log P}\ge
+16\log2-\frac{2\pi^2}{3r}-4r-o(1).
+$$
+
+The right side is maximized for $r\ge1$ at $r=\pi/\sqrt6$. Hence, with
+
+$$
+c_*:=16\log2-\frac{8\pi}{\sqrt6}
+=0.829956247664\ldots,
+$$
+
+one obtains the paper-level necessary condition
+
+$$
+\boxed{q>P^\eta\quad\text{eventually for every fixed }0<\eta<c_*}
+\tag{T16}
+$$
+
+for every actual CA source in this canonical branch, including
+intermediate ties. For $\eta\le1/8$, (T10) already suffices; the
+compact-parameter contradiction proves the remaining range.
+No endpoint $\eta=c_*$, branch infinitude or effective onset is claimed.
+The constant is the optimum of this particular triangular weight family,
+not an optimum over all explicit-formula weights.
+
+The later odd layers are material. Keeping only the terminal logarithmic
+band $(1/2,1]$ would instead give the lower coefficient
+$r-3/4-r^2/2=-(r-1)^2/2-1/4<0$, so this weight supplies no contradiction
+from that band alone. No square-depth distribution estimate is supplied here.
+
+Bound (T16) alone does not cross the sufficient faithful-mask cutoff:
+$c_*b<1$ for $\beta_0<b<1/4$. The full mask has the additional
+restriction (T22). The conductor-only bound proves neither $q^b\le P$ nor
+the faithful-mask condition. No weighted missing-prime deficit,
+signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
+follows. Every character and layer in the comparison belongs to the
+same actual integer; no separately realized raw-$D$ witnesses are joined.
+
+### A quantified same-source eligibility condition that would cross the cutoff
+
+The preceding bound alone does not cross the sufficient cutoff. The
+existing set $\mathcal E_1$, however, gives a specific missing FIB readout
+for this signed supplier. For fixed $r\ge1$, define its actual moment
+
+$$
+M_r(n)=\sum_{\substack{p\le P,\ p\ne2,5\\v_p(n)\ \mathrm{even}\\p^{v_p(n)/2}\mid c}}
+\frac{\log p}{p}\left(r-\frac{\log p}{L}\right).
+\tag{T17}
+$$
+
+This is the weight of the same source's supported potential exceptions,
+not the weight of an independently selected residue class. Its membership
+is determined by the existing readout $c\bmod H_1$.
+The total support weight is $(r-1/2+o(1))L$. Every negative support
+prime outside two and five belongs to this set. Keeping the conductor-zero
+cost (T13), one can therefore replace (T14) by
+
+$$
+S_r(\chi;P)\ge
+\left(2r-1-\frac{r^2}{2}+o(1)\right)L-2M_r(n).
+\tag{T18}
+$$
+
+In any fixed power range $q\le P^C$, (T15) then gives the conditional
+comparison
+
+$$
+\frac{\log q}{L}\ge
+16-\frac8r-4r-\frac{16M_r(n)}{rL}-o(1).
+\tag{T19}
+$$
+
+The range is available whenever the same source satisfies
+$m_1^b\le Y=\log n$, since $q\le m_1$ and $Y\sim P$.
+Fix $b=6/25$, which lies in $\beta_0<b<1/4$, and $r=\sqrt2$.
+For any fixed coefficient
+
+$$
+0\le\mu<\frac{71\sqrt2}{96}-1
+=0.045928780505\ldots,
+$$
+
+the two conditions
+
+$$
+M_{\sqrt2}(n)\le\mu\log P,\qquad m_1^{6/25}\le\log n
+\tag{T20}
+$$
+
+are incompatible at every sufficiently large actual CA source in the
+$h=1$, nonsquare-$D$ branch. Indeed, (T19)'s lower coefficient exceeds
+$25/6$, whereas the cutoff gives
+$\log q/L\le25/6+o(1)$. The strict fixed gap absorbs both errors.
+This is a conditional application of the same published signed estimate.
+Formula (T21) supplies its moment hypothesis whenever the actual cutoff
+holds; formula (T22) rules out that cutoff at sufficiently large sources
+in this branch.
+
+The unrestricted even-layer envelope is only
+
+$$
+M_r(n)\le
+\left(r(1-\log2)-\frac12+\frac{\pi^2}{24}+o(1)\right)L,
+$$
+
+whose coefficient at $r=\sqrt2$ is $0.345188935617\ldots$. It does
+not imply the required $0.045928\ldots$ bound without further conditions.
+The unrestricted actual-source upper estimate for square-depth membership
+in $c=4A+7B$ remains missing. The full large-mask signed budget and
+remaining branches require their own estimates. No distribution law, h=0 or
+square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
+
+## The actual mask pays the moment and leaves the reachable cutoff
+
+The modulus in (P4) is $m_1=\operatorname{lcm}(q,R_1)$, so both
+$q\le m_1$ and $R_1\le m_1$ hold for the same actual canonical source.
+A polynomial mask cap therefore controls the moment in (T17), in addition
+to the primitive conductor. This is an application of existing results,
+without a new analytic theorem, originality claim or Lean verification.
+
+Continue on the actual CA source, whose initial support contains every
+prime through $P$. For fixed $C>0$, suppose $m_1\le P^C$. Then every
+prime in (T17) divides $R_1$; splitting at $L=\log P$ gives
+
+$$
+0\le M_r(n)\le r\sum_{p\mid R_1}\frac{\log p}{p}
+\le r\sum_{p\le L}\frac{\log p}{p}
++\frac rL\log R_1
+\le r\log L+O_{r,C}(1)=o(L).
+\tag{T21}
+$$
+
+This reuses the same two-range Mertens estimate as (T13), here split
+at $L=\log P$. It requires no
+independence, residue distribution or additional upper hypothesis about
+the same source's square-depth membership. In particular the cutoff
+$m_1^{6/25}\le\log n\sim P$ would imply the moment condition in (T20)
+for any fixed $0<\mu<71\sqrt2/96-1$, at sufficiently large sources.
+The combined (T19) lower coefficient $16-8\sqrt2=4.686291\ldots$
+then exceeds $25/6$. This already rules out that joint cutoff.
+
+A stronger existing supplier directly applies to the faithful mask.
+The induced character $\widetilde\chi_1\bmod m_1$ is nonprincipal and
+quadratic: reduction from units modulo $m_1$ to units modulo $q$ is
+surjective, so a negative unit of the primitive character has a unit
+lift. Formula (P4) says every prime with
+$\widetilde\chi_1(\ell)=-1$ is missing from the actual integer.
+For every actual CA maximizer with largest prime $P$, including ties,
+all primes through $P$ are supported. Thus every such negative prime
+satisfies $\ell>P$.
+
+Along any unbounded sequence in this actual branch, the mask tends to
+infinity with $P$. Indeed a negative unit represented
+by $1\le a<m_1$ has a negative prime factor $\ell\le a<m_1$;
+faithfulness gives $P<\ell<m_1$. Reuse the original published
+Theorem 1.1 above, whose character need not be primitive. For every fixed
+$\varepsilon>0$ and sufficiently large masks, it supplies a negative prime
+
+$$
+P<\ell\le m_1^{\beta_0+\varepsilon},
+\qquad \beta_0=\frac1{4\sqrt e}.
+$$
+
+Consequently, for every fixed $0<\eta<4\sqrt e$, choosing
+$\varepsilon$ with $\eta(\beta_0+\varepsilon)<1$ gives
+
+$$
+\boxed{m_1>P^\eta\quad\text{eventually}.}
+\tag{T22}
+$$
+
+The statement covers every actual $h=1$, nonsquare-$D$ CA source with
+its own faithful mask, including intermediate ties; it asserts no
+infinitude of this branch, endpoint $\eta=4\sqrt e$ or numerical onset.
+It is a lower bound for the full mask, not for the primitive conductor
+$q$ alone. This direct use of Pollack's theorem is stronger than the
+mask bound obtainable from (T21) and the triangular signed estimate;
+neither analytic proof is repeated.
+
+For any fixed $b>\beta_0$, choose $1/b<\eta<4\sqrt e$ in (T22).
+Since $P\sim\log n$ on these actual CA sources,
+
+$$
+\frac{m_1^b}{\log n}\longrightarrow\infty
+\tag{T23}
+$$
+
+along every unbounded sequence in this branch. Thus the sufficient
+cutoff $m_1^b\le\log n$ has no sufficiently large realization there,
+including the weighted supplier's entire $\beta_0<b<1/4$ regime.
+The conductor-only lower bounds in (T10) and (T16) remain valid; their
+numerical power comparison alone omitted this further mask constraint.
+
+This excludes applicability of that small-mask route at large CA sources;
+it proves no Robin violation or safety there. Outside a polynomial mask
+cap, (T21) supplies no $o(L)$ bound for the actual moment. The full
+large-mask signed Robin estimate, unit bit zero and square discriminants
+remain unresolved. An average on free Beatty indices or independently
+selected residues cannot discharge this same-source obligation.
+
+### Small conductor forces a large actual exception radical
+
+The same moment budget remains useful when the primitive conductor is
+polynomial but the full mask is not. The split at
+$z=\max\{2,\log R_1\}$, again using the existing Mertens estimate,
+gives the uniform elementary bound
+
+$$
+M_r(n)\le r\log\log(R_1+3)+O_r(1).
+\tag{T24}
+$$
+
+For the large primes the contribution is at most
+$r(\log R_1)/z\le r$; the smaller primes contribute
+$r\log z+O_r(1)$. This uses the actual $R_1$, including any overlap
+with the conductor, without treating the two factors as coprime.
+
+Fix $0<C<K:=16-8\sqrt2$ and suppose the same actual source has
+$q\le P^C$. Formula (T19) is applicable through its fixed-power range
+and the existing bootstrap (T10), whether or not $m_1$ is polynomial.
+Taking $r=\sqrt2$ and inserting (T24) yields
+
+$$
+\frac{\log q}{\log P}
++16\frac{\log\log(R_1+3)}{\log P}\ge K-o(1).
+\tag{T25}
+$$
+
+Therefore for every fixed $0<\tau<(K-C)/16$ one has, eventually
+at every actual $h=1$, nonsquare-$D$ CA source satisfying $q\le P^C$,
+
+$$
+\boxed{\log R_1>P^\tau,\qquad m_1\ge R_1>\exp(P^\tau).}
+\tag{T26}
+$$
+
+For example $C=25/6$ permits every fixed
+$0<\tau<0.0324765521467\ldots$. This is a conditional tradeoff between
+the same integer's conductor and actual exception radical; it does not
+assert existence of infinitely many sources in that conductor range.
+No endpoint exponent, effective onset or universal distribution of the
+canonical lift is claimed. It quantifies why retaining the primitive
+conductor alone can lose the dominant mask scale, without proving Robin.

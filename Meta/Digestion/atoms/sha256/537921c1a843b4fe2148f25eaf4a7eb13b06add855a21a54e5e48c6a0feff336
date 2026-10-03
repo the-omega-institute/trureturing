@@ -1,0 +1,24 @@
+**定义 8.1（实际三角域的读数次序与许可朝向）。** 沿用定义 1.1、2.1、7.1 的非空有限有序完全二叉树、叶标签 $\alpha,\beta$、全局替换 $\rho$、初始叶预算、组成许可和有限阶段的单个有理响应。对整数 $k,H\ge1$，置
+
+$$
+\begin{gathered}
+D_H=\{(a,b)\in\mathbb N_0^2:1\le a+b\le H\},\qquad
+\ell(a,b)=a+\phi b,\qquad \phi=(1+\sqrt5)/2,\\
+t=3k,\qquad v=F_t,\qquad N=N_k=F_{t+1},\\
+r=r_k=\min\{F_{t-1}/F_t,F_t/F_{t+1}\},\qquad
+R=R_k=\max\{F_{t-1}/F_t,F_t/F_{t+1}\}.
+\end{gathered}
+\tag{8.1}
+$$
+
+许可标签仍为 $\chi_k(a,b)=\mathbf1_{\{S^{-k}(a,b)^{\mathsf T}\in\mathbb N_0^2\}}$；由式 (2.9)、(7.8)，它在 $D_H$ 上等价于 $b>0$ 且 $rb\le a\le Rb$，其中 $1/2\le r<1/\phi<R\le2/3$。$\Theta_k(H)$ 仍取式 (7.2) 的反标签相对比值最小值，空集合取 $+\infty$。整数点上的 $\ell$ 单射且在 $D_H$ 上严格为正，故它赋予 $D_H$ 一个严格全序；相邻指整个 $D_H$ 中没有读数严格介于两端之间的点。对 $j\ge1$，记
+
+$$
+u_j=F_{j+1},\qquad w_j=F_j,\qquad
+ d_j=(u_j,-w_j),\qquad
+ e_j=\ell(d_j)=(-1)^j\phi^{-j}.
+\tag{8.2}
+$$
+
+反标签点对的朝向 $\sigma\in\{+1,-1\}$ 以许可端点 $x=(a,b)$ 为起点，非许可端点为 $y=x+\sigma d_j$。这里的 $\ell$、$e_j$ 和 $\Theta_k(H)$ 只作证明量；实际观察仍为定义 7.1 的有限阶段有理响应。许可只取组成祖先存在性，树的括号、叶序、规范地址和指定树的语法祖先均不由该标签决定，实际逆执行也不包含在该定义中。
+

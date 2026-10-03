@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:97ab0d9e442212983d643d2cacfe189cfbbc9fdd6b54acdf9038dd6ed0379c41
+  normalized_sha256: sha256:97ab0d9e442212983d643d2cacfe189cfbbc9fdd6b54acdf9038dd6ed0379c41
+cas_ref: sha256:97ab0d9e442212983d643d2cacfe189cfbbc9fdd6b54acdf9038dd6ed0379c41
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/GoldenCubicBlockOrbitIndependence.cubic_orbit_independent_mod_fixed
+    target_statement_id: sha256:8c916596db1668c523494d337a8cbb8abfeb2dc3871c0b9f88093eb0b61ce4cf
+receipts:
+  unresolved_subitems: []

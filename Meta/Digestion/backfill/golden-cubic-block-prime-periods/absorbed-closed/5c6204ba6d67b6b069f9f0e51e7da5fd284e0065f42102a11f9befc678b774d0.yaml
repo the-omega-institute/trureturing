@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5c6204ba6d67b6b069f9f0e51e7da5fd284e0065f42102a11f9befc678b774d0
+  normalized_sha256: sha256:5c6204ba6d67b6b069f9f0e51e7da5fd284e0065f42102a11f9befc678b774d0
+cas_ref: sha256:5c6204ba6d67b6b069f9f0e51e7da5fd284e0065f42102a11f9befc678b774d0
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FiniteFibonacciRankClosure.finite_fibonacci_rank_closure
+    target_statement_id: sha256:98fbd494d359a2e19a34b720058937cd85629d0dd0d9469691bf6b72446429ba
+receipts:
+  unresolved_subitems: []

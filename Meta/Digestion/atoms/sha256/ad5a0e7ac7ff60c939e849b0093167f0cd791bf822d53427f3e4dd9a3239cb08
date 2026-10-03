@@ -1,0 +1,36 @@
+**命题 318.1（临界预算下的规范低位空窗）。** 对每个充分大的实际 CA宿主 $C$，存在 $1\le t_C\le Q_C$，使 $N_C=t_CC$ 的实际规范地址有单位位零及至少
+
+$$
+L_C=\left\lfloor\frac{\kappa\sqrt P}{3\log\varphi}\right\rfloor-2
+\tag{318.1}
+$$
+
+个连续低位 `[null]` 窗口，同时保留（317.6）、（317.10）。这里 $\varphi=(1+\sqrt5)/2$，有限初段取到 $L_C\ge0$ 后才使用公式。后继地址有限、合法并以原正值End终止；不指定第一非空标签或精确空窗深度。
+
+证明。对 $\alpha=C\varphi$ 和整数 $Q_C\ge1$ 应用已有有限Dirichlet定理，选得
+
+$$
+\|N_C\varphi\|\le\frac1{Q_C+1}<e^{-\kappa\sqrt P}.
+\tag{318.2}
+$$
+
+令 $r=\{N_C\varphi\}$。充分大时，$r$ 位于单位位零的低相位或高相位窗。写其真实规范组成为 $N_C=2A_C+3B_C$，令 $y_C=A_C+B_C\psi$、$\psi=1-\varphi$。所引规范读数给
+
+$$
+E_C=4A_C+7B_C-\sqrt5N_C
+=\begin{cases}-2r,&r\text{ 在低相位窗},\\2(1-r),&r\text{ 在高相位窗},\end{cases}
+\qquad E_C=2\psi^3y_C.
+\tag{318.3}
+$$
+
+所以对这个同一实际整数有
+
+$$
+|y_C|=\varphi^3\|N_C\varphi\|
+<\varphi^3e^{-\kappa\sqrt P}
+<\varphi^{-3L_C}.
+\tag{318.4}
+$$
+
+令 $\lambda=\psi^3=-\varphi^{-3}$。区间 $\lambda^{L_C}(-1,\varphi)$ 包含开区间 $(-\varphi^{-3L_C},\varphi^{-3L_C})$，奇数深度自动反转端点次序。因此 $y_C$ 严格处于连续 $L_C$ 个null分支的内部。沿 §151 的分支内部不交性及 §289.1 的有限来源识别逐层读回，即迫使原规范有限地址的前 $L_C$ 个窗口都为 `[null]`。来源始终是正整数 $N_C$ 的真实表示，不能以无限区间中的任意点代替它。该 $t_C$ 属于统一价格范围，所以 §317 的两种余量界同时适用。$\square$
+

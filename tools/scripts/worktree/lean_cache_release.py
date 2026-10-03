@@ -16,6 +16,7 @@ import sys
 import tarfile
 import tempfile
 import time
+from urllib.parse import quote
 
 from lean_cache import manifest_mathlib, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
@@ -133,6 +134,32 @@ def prefix(partition, verification=False):
     return namespace + partition.replace("/", "-") + "-"
 
 
+def validate_source_ref(repo, source_ref, source_commit, api):
+    def commit(value):
+        if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{40}", value) or value == "0" * 40:
+            raise ValueError("source commit must be a nonzero immutable 40-hex SHA")
+        return value
+
+    commit(source_commit)
+    if (not isinstance(source_ref, str) or not source_ref.startswith("refs/heads/")
+            or subprocess.run(["git", "check-ref-format", source_ref], capture_output=True).returncode != 0):
+        raise ValueError("source ref must be a full branch ref")
+    branch = source_ref.removeprefix("refs/heads/")
+    prefix = "repos/" + repo + "/"
+    source = api(prefix + "branches/" + quote(branch, safe=""))
+    if not isinstance(source, dict) or source.get("name") != branch or source.get("protected") is not True:
+        raise ValueError("source branch is not protected or its identity differs")
+    if not isinstance(source.get("commit"), dict):
+        raise ValueError("source branch snapshot is missing its commit")
+    tip = commit(source["commit"].get("sha"))
+    comparison = api(prefix + "compare/" + source_commit + "..." + tip)
+    if (not isinstance(comparison, dict) or comparison.get("status") not in ("ahead", "identical")
+            or not isinstance(comparison.get("merge_base_commit"), dict)
+            or comparison["merge_base_commit"].get("sha") != source_commit):
+        raise ValueError("source commit is not on the protected branch snapshot")
+    return branch
+
+
 def verification_identity(root, source_ref, source_commit, deadline):
     run, attempt = (os.environ.get(field, "") for field in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))
     if (os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("GITHUB_EVENT_NAME") != "push"
@@ -146,8 +173,6 @@ def verification_identity(root, source_ref, source_commit, deadline):
     dirty = checked_run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"], deadline).stdout
     if head != source_commit or dirty:
         raise ValueError("verification requires the clean fixed source checkout")
-    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
-    from source_reference import validate_source_ref
     request = lambda path: json.loads(gh(deadline, "api", path))
     branch = validate_source_ref(REPO, source_ref, source_commit, request)
     record = request(f"repos/{REPO}/actions/runs/{run}/attempts/{attempt}")
@@ -608,9 +633,6 @@ def main():
     parser.add_argument("--mode", choices=("production", "verification"), default="production")
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
-    # Transition for the default dev ci.yml fetch caller; selection stays partitioned.
-    # Remove after ci-push/ci-pr success and required-set migration, with its caller.
-    parser.add_argument("--allow-seed", action="store_true", help=argparse.SUPPRESS)
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--refresh-stale", action="store_true",

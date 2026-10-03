@@ -1,0 +1,123 @@
+对每个允许的三元组存在实数 $e_{k,p,q}$，使
+
+$$
+\boxed{\quad
+R_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{y(1-y)}
+ \exp\bigl(-ng(y)+e_{k,p,q}\bigr),
+\qquad |e_{k,p,q}|\le\frac2n.
+\quad}
+\tag{12.4}
+$$
+
+祖先因子 $N_{t,p}$ 在本式中保持精确，包括 $p=0$、$q=0$、$t=1$ 及有界的 $\min(p,q)$。删除指数余项后，所得近似与真实 $R_{k,p,q}$ 的相对误差至多 $\exp(2/n)-1$，所以沿任意允许的 $n\to\infty$ 序列均为相对等价；这包括 $t$ 固定、$k\to\infty$，不要求两个祖先坐标同时增长。
+
+其统一指数损失满足
+
+$$
+\begin{gathered}
+\left|\log R_{k,p,q}+tJ_k(x)\right|
+\le3\log(n+1)+3,\\
+\Gamma_k(x)\ge\gamma_*:=\log2+h(1/3)>0.
+\end{gathered}
+\tag{12.5}
+$$
+
+故沿任意 $n\to\infty$ 的允许序列，$R_{k,p,q}\to0$，且 $-\log R_{k,p,q}/n$ 与 $\Gamma_k(x)$ 的差一致趋零。递归深度与祖先规模同时变化时，进一步有
+
+$$
+\boxed{\quad
+\left|-\frac{\log R_{k,p,q}}n-B\right|
+\le\frac{\log8}{F_{d+1}}
+ + (\log2)\phi^{-2d}
+ +\frac{3\log(n+1)+3}{n}.
+\quad}
+\tag{12.6}
+$$
+
+因此 $k\to\infty$ 时，每片目标叶的实际像指数损失一致趋于 $B$，一致性覆盖所有非零祖先规模及两类祖先叶的全部混合比例。
+
+在 $0<x<1$ 上，连续祖先速率的曲率为
+
+$$
+J_k''(x)
+=\frac1{x(1-x)}
+ -\frac1{\ell_k(x)u_k(x)v_k(x)}
+\ge\frac{23}{6}.
+\tag{12.7}
+$$
+
+每个 $k\ge1$ 恰有一个连续最小点 $x_k\in(1/2,1)$。令 $y_k^*=y_k(x_k)$，它由
+
+$$
+\frac{x_k}{1-x_k}
+=4^{F_d}(y_k^*)^{-F_{d-2}}(1-y_k^*)^{-F_{d-1}}
+\tag{12.8}
+$$
+
+确定，并对所有 $x\in[0,1]$ 满足
+
+$$
+J_k(x)\ge J_k(x_k)+\frac{23}{12}(x-x_k)^2.
+\tag{12.9}
+$$
+
+因此两个纯祖先端点均有严格更大的连续指数损失。对每个固定 $k$，整数网格的最大密度仅在指数尺度上满足
+
+$$
+\lim_{t\to\infty}
+-\frac1t\log\left(\max_{p\in\{0,\ldots,t\}}
+R_{k,p,t-p}\right)=J_k(x_k).
+\tag{12.10}
+$$
+
+若比较时保留共同预算 $H_t$，须取 $H_t\ge F_{d+2}t$，以包含整张祖先网格对应的初始树纤维。本式不指定有限 $t$ 的精确最大点，也不将固定 $k$ 的网格结论扩展成增长 $k$ 的最优前因子。连续最小点的少数祖先叶比例由同一个 $B$ 控制，且对所有 $k\ge1$ 有
+
+$$
+\boxed{\quad
+\left|-\log(1-x_k)-F_d B\right|\le\frac5{F_d}.
+\quad}
+\tag{12.11}
+$$
+
+定义带符号的共轭来源偏差及黄金组成归一化因子
+
+$$
+\begin{gathered}
+D_{k,p,q}=a-\eta n
+=(-1)^k\phi^{-(d+1)}(p-q/\phi),\\
+\mathcal G_{k,p,q}
+=4\pi\sqrt2\,N_{t,p}n^2\sqrt{\eta(1-\eta)}\exp(-nB).
+\end{gathered}
+\tag{12.12}
+$$
+
+它们对所有参数同时满足
+
+$$
+\boxed{\quad
+\left|\log\frac{R_{k,p,q}}{\mathcal G_{k,p,q}}
+ + (\log\phi)D_{k,p,q}\right|
+\le\frac94\frac{D_{k,p,q}^2}{n}
+ +\frac34\frac{|D_{k,p,q}|}{n}+\frac2n.
+\quad}
+\tag{12.13}
+$$
+
+对任意允许的整数参数序列 $(k_i,p_i,q_i)$，只要求 $k_i\to\infty$，不限制 $t_i=p_i+q_i$ 的增长，则
+
+$$
+\boxed{\quad
+\frac{R_{k_i,p_i,q_i}}{\mathcal G_{k_i,p_i,q_i}}\longrightarrow1
+\quad\Longleftrightarrow\quad D_{k_i,p_i,q_i}\longrightarrow0.
+\quad}
+\tag{12.14}
+$$
+
+更一般地，对任意 $z\in\mathbb R$，$D_{k_i,p_i,q_i}\to z$ 时该比值趋于 $\phi^{-z}$；偏差趋于 $+\infty$ 时比值趋于零，偏差趋于 $-\infty$ 时比值趋于 $+\infty$。每个有限 $z$ 都可由合法整数组成达到。允许抵消的混合祖先可以在规模无上界的同时令 $D_{k_i,p_i,q_i}\to0$，故黄金组成归一化的相对有效性由此联合来源偏差决定，不能仅由深度或祖先总规模代替。
+
+证明。由[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#theorem-34-组成观察下的闭合动力学)的组成动力学及其迭代，有 $c\rho^d=M^dc$。直接复用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的完整树替换单射性，$\rho^d$ 仍为单射。若 $U\in\mathcal T_{a,b}$ 且 $U=\rho^d(T)$，则 $M^dc(T)=M^d(p,q)^{\mathsf T}$。因 $\det M=-1$，$M^d$ 在整数上可逆，强制 $c(T)=(p,q)^{\mathsf T}$。反向每棵 $\mathcal T_{p,q}$ 的树都映到 $\mathcal T_{a,b}$。于是 $\rho^d$ 在这两个集合之间给出到 $\mathcal I_{k,p,q}$ 的双射；这一步使用原有单射，不以矩阵可逆性替代树语法单射。
+
+具有 $s\ge1$ 片有序叶的完全二叉树形状有 $C_{s-1}$ 个，复用 [Flajolet–Sedgewick，《Analytic Combinatorics》，第 6–7 页](https://algo.inria.fr/flajolet/Publications/book.pdf) 的 Catalan 计数及 [Stanley，《Enumerative Combinatorics》第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf) 的二叉括号与平面完全二叉树对应。每个形状有固定的从左到右叶序，任选 $a$ 个位置放置 $\alpha$ 给 $\binom{s}{a}$ 种着色。这既不将括号取商，也不将叶位置取商。因此这些既有计数在当前纤维上给
+
+$$

@@ -40,10 +40,13 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Strip checkout remote state
+      - name: Validate candidate and strip checkout remote
         if: steps.checkout-publish.outcome == 'success'
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
         shell: bash
-        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA"
+        run: bash tools/scripts/workflow/ci-entry.sh
 
       - name: Set up the pinned .NET SDK
         uses: actions/setup-dotnet@v5

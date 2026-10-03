@@ -1,0 +1,10 @@
+## 2. Boundary and source
+
+The conclusion concerns one prime with valuation exactly one in $B$.
+It does not identify the full ring of integers when some other prime
+square divides $B$, or compute a field discriminant or normalization
+index. The proof combines the pinned Mathlib Eisenstein integrality
+criterion with the three-saturation theorem in
+`PURE_CUBIC_INTEGRAL_LATTICES.md`; the local statement is a
+repository-derived extension of that volume's squarefree case.
+

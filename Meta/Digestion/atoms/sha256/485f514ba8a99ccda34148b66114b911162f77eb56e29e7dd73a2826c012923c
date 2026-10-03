@@ -1,0 +1,8 @@
+**Definition 53.116 (LogDerivZetaHasBound).** The predicate $\mathsf{ZetaBound}(A,C)$ requires $|\zeta'(\sigma+it)/\zeta(\sigma+it)|\leq C(\log|t|)^9$ for every real $\sigma,t$ with $3<|t|$ and $\sigma\geq1-A/(\log|t|)^9$. It has no hidden upper bound on $\sigma$.
+
+```lean
+def LogDerivZetaHasBound (A C : ℝ) : Prop := ∀ (σ : ℝ) (t : ℝ) (_ : 3 < |t|)
+    (_ : σ ∈ Ici (1 - A / Real.log |t| ^ 9)), ‖ζ' (σ + t * I) / ζ (σ + t * I)‖ ≤
+    C * Real.log |t| ^ 9
+```
+
