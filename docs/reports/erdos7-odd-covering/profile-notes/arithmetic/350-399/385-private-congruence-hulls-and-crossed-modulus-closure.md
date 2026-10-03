@@ -26349,3 +26349,195 @@ moduli introduce additional prime coordinates or do not divide $Q$.  The
 unrestricted problem still needs a source bridge that transfers the actual
 whole-cover hypotheses to a finite projected model without losing those
 external coordinates.
+
+## 229. External coordinates pay for same-quotient phase collisions
+
+Section 228 closes the divisor model only after all moduli have been forced
+inside one finite period.  The next calculation keeps arbitrary original
+moduli and records what an external coordinate must pay when several original
+classes look like different phases of the same quotient class.
+
+Let
+
+\[
+ \mathcal C=\{a_i+d_i\mathbb Z:1\le i\le k\},
+ \qquad Q=\operatorname{lcm}(d_1,\ldots,d_k),
+\]
+
+where the $d_i>1$ are distinct odd moduli.  Fix any $H\mid Q$ and put
+
+\[
+ T=Q/H,\qquad g_i=\gcd(d_i,H),\qquad \ell_i=d_i/g_i.
+\]
+
+Define the internal hole set
+
+\[
+ U_H=\left\{r\in\mathbb Z/H\mathbb Z:
+ r\not\equiv a_i\pmod {d_i}\text{ for every }d_i\mid H\right\}.
+ \tag{229.1}
+\]
+
+For $r\in U_H$, the class $a_i+d_i\mathbb Z$ meets the fibre
+$r+H\mathbb Z$ exactly when $r\equiv a_i\pmod {g_i}$.  In that case its
+restriction to the fibre, written in the coordinate $x=r+Ht$, is one class
+
+\[
+ t\equiv b_i(r)\pmod {\ell_i},qquad
+ b_i(r)\equiv (H/g_i)^{-1}(a_i-r)/g_i\pmod {\ell_i}.
+ \tag{229.2}
+\]
+
+The inverse exists because $\gcd(H/g_i,\ell_i)=1$, and $\ell_i\mid T$.
+For each $\ell>1$, let $m_\ell(r)$ be the number of distinct values of
+$b_i(r)\pmod\ell$ among the active classes with $\ell_i=\ell$.  It counts
+actual quotient phases; repeated labels producing the same phase are counted
+once.
+
+Fix $\varepsilon>0$ and let $M$ be the threshold in Theorem 1.1 of
+[Balister--Bollobas--Morris--Sahasrabudhe--Tiba](../../../../../../Library/Arith/balister2018covering.md).
+Write
+
+\[
+ \mu(p^a)=1+\frac{(\log p)^{3+\varepsilon}}p
+\]
+
+for their multiplicative function, and set
+
+\[
+ C_r=\sum_{\substack{\ell\ge M\\m_\ell(r)>0}}
+       \frac{\mu(\ell)}\ell,
+ \qquad
+ \Gamma_r=\sum_{1<\ell<M}\frac{m_\ell(r)}\ell
+       +\sum_{\substack{\ell\ge M\\m_\ell(r)>0}}
+        \frac{m_\ell(r)-1}\ell.
+ \tag{229.3}
+\]
+
+On a fixed fibre, choose one of the distinct phases for each
+$\ell\ge M$.  The chosen quotient classes have distinct moduli, so BBMST
+gives them uncovered density at least $\tfrac12e^{-4C_r}$.  The small
+quotient classes and the remaining phases have union density at most
+$\Gamma_r$.  Averaging over the disjoint fibres therefore gives
+
+\[
+ \boxed{
+ d\!\left(\mathbb Z\setminus\bigcup\mathcal C\right)
+ \ge \frac1H\sum_{r\in U_H}
+ \left[\frac12e^{-4C_r}-\Gamma_r\right]_+ .}
+ \tag{229.4}
+\]
+
+In particular, a whole cover must satisfy the pointwise necessary condition
+
+\[
+ \Gamma_r\ge \frac12e^{-4C_r}
+ \qquad(r\in U_H).
+ \tag{229.5}
+\]
+
+This does not replace any original class or choose phases from different
+fibres.  It is a direct consequence of applying the published density
+estimate to one actual phase per quotient modulus and then paying for every
+additional actual phase.
+
+The phase payment can be written using the original labels.  For two labels
+with the same nontrivial quotient modulus $\ell_i=\ell_j=\ell$, define
+
+\[
+ K_{ij}=\{r\bmod H:r\equiv a_i\pmod {g_i},\ r\equiv a_j\pmod {g_j}\}.
+\]
+
+Let $\mathcal P_H$ consist of pairs satisfying
+
+\[
+ a_i\equiv a_j\pmod{\gcd(g_i,g_j)},
+ \qquad
+ a_i\not\equiv a_j\pmod{\gcd(d_i,d_j)}.
+ \tag{229.6}
+\]
+
+For such a pair the core activations are compatible, while the original
+classes are disjoint.  On every $r\in K_{ij}$ they consequently give two
+different phases in the same quotient modulus.  If $m$ different phases are
+active for one $\ell$, selecting one label from each phase gives at least
+$m-1$ such pairs.  Hence
+
+\[
+ m_\ell(r)-1\le
+ \#\{\{i,j\}\in\mathcal P_H:\ell_i=\ell,\ r\in K_{ij}\}.
+ \tag{229.7}
+\]
+
+Summing (229.5), and replacing each active small quotient phase by its
+original label, gives the original-source inequality
+
+\[
+ \boxed{
+ \begin{aligned}
+ \frac1{2H}\sum_{r\in U_H}e^{-4C_r}
+ \le{}&
+ \sum_{i:\,1<\ell_i<M}
+ \frac{|U_H\cap(a_i\bmod g_i)|}{H\ell_i}\\
+ &+\sum_{\substack{\{i,j\}\in\mathcal P_H\\\ell_i\ge M}}
+ \frac{|U_H\cap K_{ij}|}{H\ell_i}.
+ \end{aligned}}
+ \tag{229.8}
+\]
+
+The first term charges small external quotients.  The second charges only
+same-quotient pairs whose original phases are incompatible, so it cannot be
+replaced by an overlap budget for intersecting original classes.  A coarser,
+easier-to-check form follows by putting
+
+\[
+ C_H=\sum_{\substack{\ell\ge M\\\ell=\ell_i\text{ for some }i}}
+       \frac{\mu(\ell)}\ell.
+\]
+
+Since $|U_H\cap(a_i\bmod g_i)|\le H/g_i$ and
+$|K_{ij}|=H/\operatorname{lcm}(g_i,g_j)$ when it is nonempty,
+
+\[
+ \boxed{
+ \frac{|U_H|}{2H}e^{-4C_H}
+ \le
+ \sum_{i:\,1<\ell_i<M}\frac1{d_i}
+ +\sum_{\substack{\{i,j\}\in\mathcal P_H\\\ell_i\ge M}}
+   \frac1{\operatorname{lcm}(d_i,d_j)}.}
+ \tag{229.9}
+\]
+
+This is an unrestricted necessary condition: no bound is imposed on the
+external prime support or on its exponents.  It retains the original phases
+through $U_H$ and $K_{ij}$, and therefore does not identify a quotient label
+with an original modulus.
+
+For the $p=3$, $L=35$ branch, take
+
+\[
+ H=35\cdot3^e
+\]
+
+and use the all-phase hole bound from Section 228.  Removing some internal
+divisor classes can only enlarge $U_H$, so every actual family in this branch
+satisfies $|U_H|\ge6\cdot3^e+17$.  Thus (229.9) yields
+
+\[
+ \boxed{
+ \sum_{i:\,1<\ell_i<M}\frac1{d_i}
+ +\sum_{\substack{\{i,j\}\in\mathcal P_H\\\ell_i\ge M}}
+   \frac1{\operatorname{lcm}(d_i,d_j)}
+ \ge
+ \frac{6\cdot3^e+17}{70\cdot3^e}e^{-4C_H}.}
+ \tag{229.10}
+\]
+
+The term on the right is a genuine external-coordinate payment requirement.
+It is stronger than the earlier qualitative warning that quotient labels may
+repeat.  It still permits payment by many small external quotients or by many
+same-quotient, phase-incompatible pairs.  No strict failure of (229.10) has
+been proved for every hypothetical whole cover, and no common repair with
+the EB1 class-count and modulus-sum descent has been constructed.  Therefore
+this section narrows the external bridge but does not settle unrestricted
+Erdős #7.
