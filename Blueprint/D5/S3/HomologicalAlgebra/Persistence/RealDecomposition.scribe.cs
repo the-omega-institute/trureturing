@@ -29,7 +29,7 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                             + "equations give all real arrow squares, including the zero prefix "
                             + "and unrestricted final tail. An empty or zero chain has an empty "
                             + "occurrence set. These coordinate suppliers are applied inside "
-                            + "the substantive classification proof, not retained as a separate wrapper.")),
+                            + "the natural classification proof.")),
                     Paragraph(Text(
                         "Every competing finite positive-length interval family, with arbitrary "
                             + "real births and finite or infinite deaths, that is naturally isomorphic "
@@ -38,27 +38,40 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                             + "using the pinned range and finrank suppliers. The proof constructs "
                             + "the surviving-coordinate image equivalence, then uses common finite "
                             + "endpoint cuts and integer differences to isolate each multiplicity. "
-                            + "Induced matching, quantitative estimates, exact interleaving iff "
+                            + "Exact interleaving iff "
                             + "matching and extended isometry remain separate obligations."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("exists-image-decomposition"),
-                DeclarationHandle.Create(Prefix + "exists_image_decomposition"),
-                H("Classifying the image of the same actual morphism"),
+                DescribeId.Create("exists-quantitative-image-matching"),
+                DeclarationHandle.Create(Prefix + "exists_quantitative_image_matching"),
+                H("Fixed same-image matching with quantitative coverage"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The sorted union of both families' births and finite deaths determines "
                         + "a common grid. Endpoint membership establishes invertible source, "
                         + "target and image transports inside each cell. The zero prefix follows "
                         + "from actual target support, including an empty grid. Compatible "
-                        + "sampled-image maps form a natural isomorphism to the same categorical "
+                        + "sampled-image maps, using the image functor on invertible squares, "
+                        + "form a natural isomorphism to the same categorical "
                         + "image; finite-diagram classification constructs one image family. "
                         + "Both transported factors use that family and compose to the original "
                         + "morphism. A finite reindexing preserves arbitrary occurrence universes. "
-                        + "Sorted birth and death fibers produce two embeddings of this same "
-                        + "image family into source and target occurrences: the first preserves "
-                        + "birth and bounds death, the second preserves death and bounds birth. "
-                        + "Quantitative trim sandwiches and the exact interleaving "
-                        + "converse are not conclusions of this theorem."))),
+                        + "Sorted birth and death fibers and both ordinal-preserving embeddings "
+                        + "are returned once, before the universal quantifier over the independent "
+                        + "nonnegative kernel and cokernel parameters. Actual kernel and range "
+                        + "conditions for the original morphism transfer to these same factors. "
+                        + "Their trim estimates give target birth at most image birth, equal "
+                        + "image and source births, and image birth at most target birth plus "
+                        + "the cokernel parameter. Image and target deaths agree and are at "
+                        + "most source death; finite source death is at most image death plus "
+                        + "the kernel parameter. The fixed embeddings cover every source or "
+                        + "target interval longer than its corresponding parameter and every "
+                        + "essential. Source essential death is equivalent to image essential "
+                        + "death on paired occurrences. Every unmatched finite interval has "
+                        + "length at most its parameter. A zero kernel parameter forces full "
+                        + "source coverage and equal deaths; a zero cokernel parameter forces "
+                        + "full target coverage and equal births. Empty and zero families are "
+                        + "allowed. Exact stability, natural converse interleavings and equality "
+                        + "of extended-distance feasible sets remain separate conclusions."))),
                 DescribeRole.Theorem))));
 }

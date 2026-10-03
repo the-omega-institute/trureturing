@@ -5,7 +5,7 @@
    anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
      D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
    utility: none
-   digest: Natural real interval classification, arbitrary competitors and same-image matching. -/
+   digest: Natural interval classification and fixed same-image quantitative matching. -/
 
 import D5.S3.HomologicalAlgebra.Persistence.FiniteIntervalDecomposition
 import D5.S3.HomologicalAlgebra.Persistence.RealIntervalUniqueness
@@ -751,7 +751,7 @@ theorem exists_unique_decomposition (diagram : Fin n ⥤ ModuleCat.{v} K)
 
 set_option maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
-theorem exists_image_decomposition {Source Target : Type v}
+theorem exists_quantitative_image_matching {Source Target : Type v}
     [Fintype Source] [Fintype Target]
     (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ))
     (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
@@ -851,12 +851,78 @@ theorem exists_image_decomposition {Source Target : Type v}
               ((imageIso.inv ≫ Abelian.image.ι morphism).app time).hom) ∧
             (Abelian.factorThruImage morphism ≫ imageIso.hom) ≫
               (imageIso.inv ≫ Abelian.image.ι morphism) = morphism ∧
-            ∃ (sourceEmbedding : Occurrence ↪ Source) (targetEmbedding : Occurrence ↪ Target),
-              ∀ occurrence,
-                sourceFamily.1 (sourceEmbedding occurrence) = family.1 occurrence ∧
-                family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
-                targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
-                targetFamily.2 (targetEmbedding occurrence) = family.2 occurrence := by
+            ∃ (sourceBirthEnumeration : ∀ birth, Fin (Fintype.card
+                {occurrence // sourceFamily.1 occurrence = birth}) ≃
+                  {occurrence // sourceFamily.1 occurrence = birth})
+              (imageBirthEnumeration : ∀ birth, Fin (Fintype.card
+                {occurrence // family.1 occurrence = birth}) ≃
+                  {occurrence // family.1 occurrence = birth})
+              (imageDeathEnumeration : ∀ death, Fin (Fintype.card
+                {occurrence // family.2 occurrence = death}) ≃
+                  {occurrence // family.2 occurrence = death})
+              (targetDeathEnumeration : ∀ death, Fin (Fintype.card
+                {occurrence // targetFamily.2 occurrence = death}) ≃
+                  {occurrence // targetFamily.2 occurrence = death}),
+              (∀ birth, Antitone fun ordinal =>
+                sourceFamily.2 (sourceBirthEnumeration birth ordinal).val) ∧
+              (∀ birth, Antitone fun ordinal =>
+                family.2 (imageBirthEnumeration birth ordinal).val) ∧
+              (∀ death, Monotone fun ordinal =>
+                family.1 (imageDeathEnumeration death ordinal).val) ∧
+              (∀ death, Monotone fun ordinal =>
+                targetFamily.1 (targetDeathEnumeration death ordinal).val) ∧
+              ∃ (sourceEmbedding : Occurrence ↪ Source) (targetEmbedding : Occurrence ↪ Target),
+                (∀ occurrence, family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
+                  ∃ sameBirth : sourceFamily.1 (sourceEmbedding occurrence) = family.1 occurrence,
+                    ((sourceBirthEnumeration (family.1 occurrence)).symm
+                      ⟨sourceEmbedding occurrence, sameBirth⟩).val =
+                    ((imageBirthEnumeration (family.1 occurrence)).symm ⟨occurrence, rfl⟩).val) ∧
+                (∀ occurrence, targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
+                  ∃ sameDeath : targetFamily.2 (targetEmbedding occurrence) = family.2 occurrence,
+                    ((targetDeathEnumeration (family.2 occurrence)).symm
+                      ⟨targetEmbedding occurrence, sameDeath⟩).val =
+                    ((imageDeathEnumeration (family.2 occurrence)).symm ⟨occurrence, rfl⟩).val) ∧
+                ∀ (etaK etaC : ℝ) (kernel_nonnegative : 0 ≤ etaK)
+                  (cokernel_nonnegative : 0 ≤ etaC)
+                  (kernel_trivial : ∀ time, LinearMap.ker (morphism.app time).hom ≤
+                    LinearMap.ker (intervalArrow sourceFamily time (time + etaK) (by linarith)))
+                  (cokernel_trivial : ∀ time,
+                    LinearMap.range (intervalArrow targetFamily time (time + etaC) (by linarith)) ≤
+                      LinearMap.range (morphism.app (time + etaC)).hom),
+                  (∀ occurrence,
+                    targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
+                    family.1 occurrence = sourceFamily.1 (sourceEmbedding occurrence) ∧
+                    family.1 occurrence ≤ targetFamily.1 (targetEmbedding occurrence) + etaC ∧
+                    family.2 occurrence = targetFamily.2 (targetEmbedding occurrence) ∧
+                    family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
+                    WithTop.map (fun endpoint : ℝ => endpoint - etaK)
+                      (sourceFamily.2 (sourceEmbedding occurrence)) ≤ family.2 occurrence) ∧
+                  (∀ occurrence (sourceDeath imageDeath : ℝ),
+                    sourceFamily.2 (sourceEmbedding occurrence) = (sourceDeath : WithTop ℝ) →
+                    family.2 occurrence = (imageDeath : WithTop ℝ) →
+                    sourceDeath ≤ imageDeath + etaK) ∧
+                  (∀ occurrence, ((sourceFamily.1 occurrence + etaK : ℝ) : WithTop ℝ) <
+                    sourceFamily.2 occurrence → ∃ imageOccurrence,
+                      sourceEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, ((targetFamily.1 occurrence + etaC : ℝ) : WithTop ℝ) <
+                    targetFamily.2 occurrence → ∃ imageOccurrence,
+                      targetEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, sourceFamily.2 (sourceEmbedding occurrence) = ⊤ ↔
+                    family.2 occurrence = ⊤) ∧
+                  (∀ occurrence, sourceFamily.2 occurrence = ⊤ →
+                    ∃ imageOccurrence, sourceEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, targetFamily.2 occurrence = ⊤ →
+                    ∃ imageOccurrence, targetEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence (death : ℝ), sourceFamily.2 occurrence = (death : WithTop ℝ) →
+                    (¬ ∃ imageOccurrence, sourceEmbedding imageOccurrence = occurrence) →
+                      death - sourceFamily.1 occurrence ≤ etaK) ∧
+                  (∀ occurrence (death : ℝ), targetFamily.2 occurrence = (death : WithTop ℝ) →
+                    (¬ ∃ imageOccurrence, targetEmbedding imageOccurrence = occurrence) →
+                      death - targetFamily.1 occurrence ≤ etaC) ∧
+                  (etaK = 0 → Function.Surjective sourceEmbedding ∧
+                    ∀ occurrence, sourceFamily.2 (sourceEmbedding occurrence) = family.2 occurrence) ∧
+                  (etaC = 0 → Function.Surjective targetEmbedding ∧
+                    ∀ occurrence, family.1 occurrence = targetFamily.1 (targetEmbedding occurrence)) := by
   classical
   let intervalSpace := fun {Index : Type v}
       (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
@@ -950,12 +1016,78 @@ theorem exists_image_decomposition {Source Target : Type v}
                 ((imageIso.inv ≫ Abelian.image.ι morphism).app time).hom) ∧
               (Abelian.factorThruImage morphism ≫ imageIso.hom) ≫
                 (imageIso.inv ≫ Abelian.image.ι morphism) = morphism ∧
-            ∃ (sourceEmbedding : Occurrence ↪ Source) (targetEmbedding : Occurrence ↪ Target),
-              ∀ occurrence,
-                sourceFamily.1 (sourceEmbedding occurrence) = family.1 occurrence ∧
-                family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
-                targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
-                targetFamily.2 (targetEmbedding occurrence) = family.2 occurrence
+            ∃ (sourceBirthEnumeration : ∀ birth, Fin (Fintype.card
+                {occurrence // sourceFamily.1 occurrence = birth}) ≃
+                  {occurrence // sourceFamily.1 occurrence = birth})
+              (imageBirthEnumeration : ∀ birth, Fin (Fintype.card
+                {occurrence // family.1 occurrence = birth}) ≃
+                  {occurrence // family.1 occurrence = birth})
+              (imageDeathEnumeration : ∀ death, Fin (Fintype.card
+                {occurrence // family.2 occurrence = death}) ≃
+                  {occurrence // family.2 occurrence = death})
+              (targetDeathEnumeration : ∀ death, Fin (Fintype.card
+                {occurrence // targetFamily.2 occurrence = death}) ≃
+                  {occurrence // targetFamily.2 occurrence = death}),
+              (∀ birth, Antitone fun ordinal =>
+                sourceFamily.2 (sourceBirthEnumeration birth ordinal).val) ∧
+              (∀ birth, Antitone fun ordinal =>
+                family.2 (imageBirthEnumeration birth ordinal).val) ∧
+              (∀ death, Monotone fun ordinal =>
+                family.1 (imageDeathEnumeration death ordinal).val) ∧
+              (∀ death, Monotone fun ordinal =>
+                targetFamily.1 (targetDeathEnumeration death ordinal).val) ∧
+              ∃ (sourceEmbedding : Occurrence ↪ Source) (targetEmbedding : Occurrence ↪ Target),
+                (∀ occurrence, family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
+                  ∃ sameBirth : sourceFamily.1 (sourceEmbedding occurrence) = family.1 occurrence,
+                    ((sourceBirthEnumeration (family.1 occurrence)).symm
+                      ⟨sourceEmbedding occurrence, sameBirth⟩).val =
+                    ((imageBirthEnumeration (family.1 occurrence)).symm ⟨occurrence, rfl⟩).val) ∧
+                (∀ occurrence, targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
+                  ∃ sameDeath : targetFamily.2 (targetEmbedding occurrence) = family.2 occurrence,
+                    ((targetDeathEnumeration (family.2 occurrence)).symm
+                      ⟨targetEmbedding occurrence, sameDeath⟩).val =
+                    ((imageDeathEnumeration (family.2 occurrence)).symm ⟨occurrence, rfl⟩).val) ∧
+                ∀ (etaK etaC : ℝ) (kernel_nonnegative : 0 ≤ etaK)
+                  (cokernel_nonnegative : 0 ≤ etaC)
+                  (kernel_trivial : ∀ time, LinearMap.ker (morphism.app time).hom ≤
+                    LinearMap.ker (intervalArrow sourceFamily time (time + etaK) (by linarith)))
+                  (cokernel_trivial : ∀ time,
+                    LinearMap.range (intervalArrow targetFamily time (time + etaC) (by linarith)) ≤
+                      LinearMap.range (morphism.app (time + etaC)).hom),
+                  (∀ occurrence,
+                    targetFamily.1 (targetEmbedding occurrence) ≤ family.1 occurrence ∧
+                    family.1 occurrence = sourceFamily.1 (sourceEmbedding occurrence) ∧
+                    family.1 occurrence ≤ targetFamily.1 (targetEmbedding occurrence) + etaC ∧
+                    family.2 occurrence = targetFamily.2 (targetEmbedding occurrence) ∧
+                    family.2 occurrence ≤ sourceFamily.2 (sourceEmbedding occurrence) ∧
+                    WithTop.map (fun endpoint : ℝ => endpoint - etaK)
+                      (sourceFamily.2 (sourceEmbedding occurrence)) ≤ family.2 occurrence) ∧
+                  (∀ occurrence (sourceDeath imageDeath : ℝ),
+                    sourceFamily.2 (sourceEmbedding occurrence) = (sourceDeath : WithTop ℝ) →
+                    family.2 occurrence = (imageDeath : WithTop ℝ) →
+                    sourceDeath ≤ imageDeath + etaK) ∧
+                  (∀ occurrence, ((sourceFamily.1 occurrence + etaK : ℝ) : WithTop ℝ) <
+                    sourceFamily.2 occurrence → ∃ imageOccurrence,
+                      sourceEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, ((targetFamily.1 occurrence + etaC : ℝ) : WithTop ℝ) <
+                    targetFamily.2 occurrence → ∃ imageOccurrence,
+                      targetEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, sourceFamily.2 (sourceEmbedding occurrence) = ⊤ ↔
+                    family.2 occurrence = ⊤) ∧
+                  (∀ occurrence, sourceFamily.2 occurrence = ⊤ →
+                    ∃ imageOccurrence, sourceEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence, targetFamily.2 occurrence = ⊤ →
+                    ∃ imageOccurrence, targetEmbedding imageOccurrence = occurrence) ∧
+                  (∀ occurrence (death : ℝ), sourceFamily.2 occurrence = (death : WithTop ℝ) →
+                    (¬ ∃ imageOccurrence, sourceEmbedding imageOccurrence = occurrence) →
+                      death - sourceFamily.1 occurrence ≤ etaK) ∧
+                  (∀ occurrence (death : ℝ), targetFamily.2 occurrence = (death : WithTop ℝ) →
+                    (¬ ∃ imageOccurrence, targetEmbedding imageOccurrence = occurrence) →
+                      death - targetFamily.1 occurrence ≤ etaC) ∧
+                  (etaK = 0 → Function.Surjective sourceEmbedding ∧
+                    ∀ occurrence, sourceFamily.2 (sourceEmbedding occurrence) = family.2 occurrence) ∧
+                  (etaC = 0 → Function.Surjective targetEmbedding ∧
+                    ∀ occurrence, family.1 occurrence = targetFamily.1 (targetEmbedding occurrence))
   intro morphism
   let critical := Finset.univ.image sourceFamily.1 ∪ Finset.univ.image targetFamily.1 ∪
     (Finset.univ.filter fun occurrence => sourceFamily.2 occurrence ≠ ⊤).image
@@ -1092,30 +1224,43 @@ theorem exists_image_decomposition {Source Target : Type v}
       (cell_support sourceFamily source_birth_member source_death_member time index selected)
     have target_bijective := cell_arrow_bijective targetFamily _ _ ordered
       (cell_support targetFamily target_birth_member target_death_member time index selected)
-    constructor
-    · intro first second equal
-      apply mono_injective (grid index)
-      apply target_bijective.injective
-      have first_square := congrArg (fun arrow => arrow.hom first)
-        (mono.naturality (homOfLE ordered))
-      have second_square := congrArg (fun arrow => arrow.hom second)
-        (mono.naturality (homOfLE ordered))
-      change (mono.app time).hom ((image.map (homOfLE ordered)).hom first) =
-        intervalArrow targetFamily _ _ ordered ((mono.app (grid index)).hom first)
-        at first_square
-      change (mono.app time).hom ((image.map (homOfLE ordered)).hom second) =
-        intervalArrow targetFamily _ _ ordered ((mono.app (grid index)).hom second)
-        at second_square
-      rw [← first_square, ← second_square, equal]
-    · intro vector
-      obtain ⟨preimage, preimage_eq⟩ := epi_surjective time vector
-      obtain ⟨earlier, earlier_eq⟩ := source_bijective.surjective preimage
-      refine ⟨(epi.app (grid index)).hom earlier, ?_⟩
-      have square := congrArg (fun arrow => arrow.hom earlier)
-        (epi.naturality (homOfLE ordered))
-      change (epi.app time).hom (intervalArrow sourceFamily _ _ ordered earlier) =
-        (image.map (homOfLE ordered)).hom ((epi.app (grid index)).hom earlier) at square
-      rw [← square, earlier_eq, preimage_eq]
+    have point_fac (sample : ℝ) :
+        (Abelian.FunctorCategory.imageObjIso morphism sample).hom ≫
+          Abelian.image.ι (morphism.app sample) = mono.app sample := by
+      dsimp [Abelian.FunctorCategory.imageObjIso, Limits.kernel.mapIso, Limits.kernel.map]
+      simp only [Category.assoc, Limits.kernel.lift_ι, Category.comp_id,
+        Limits.PreservesKernel.iso_hom]
+      exact Limits.kernelComparison_comp_ι (Limits.cokernel.π morphism)
+        ((evaluation ℝ (ModuleCat.{max u v} K)).obj sample)
+    let sourceIso := (LinearEquiv.ofBijective
+      (intervalArrow sourceFamily (grid index) time ordered) source_bijective).toModuleIso
+    let targetIso := (LinearEquiv.ofBijective
+      (intervalArrow targetFamily (grid index) time ordered) target_bijective).toModuleIso
+    let squareIso : Arrow.mk (morphism.app (grid index)) ≅ Arrow.mk (morphism.app time) :=
+      Arrow.isoMk sourceIso targetIso (morphism.naturality (homOfLE ordered))
+    let transported : image.obj (grid index) ≅ image.obj time :=
+      Abelian.FunctorCategory.imageObjIso morphism (grid index) ≪≫
+        Abelian.im.mapIso squareIso ≪≫
+        (Abelian.FunctorCategory.imageObjIso morphism time).symm
+    have transported_fac : transported.hom ≫ mono.app time =
+        mono.app (grid index) ≫ (intervalSum targetFamily).map (homOfLE ordered) := by
+      dsimp only [transported, Iso.trans_hom, Iso.symm_hom]
+      simp only [Category.assoc]
+      rw [← point_fac time, Iso.inv_hom_id_assoc]
+      rw [Functor.mapIso_hom, Abelian.im_map]
+      erw [Limits.kernel.lift_ι]
+      simp only [squareIso, Arrow.isoMk_hom_right]
+      rw [← Category.assoc]
+      change ((Abelian.FunctorCategory.imageObjIso morphism (grid index)).hom ≫
+        Abelian.image.ι (morphism.app (grid index))) ≫ targetIso.hom = _
+      rw [point_fac]
+      rfl
+    have actual : image.map (homOfLE ordered) = transported.hom := by
+      apply (cancel_mono (mono.app time)).1
+      rw [transported_fac]
+      exact mono.naturality (homOfLE ordered)
+    rw [actual]
+    exact transported.toLinearEquiv.bijective
   have image_prefix_zero : ∀ time, selectedCell time = ⊥ →
       ∀ vector : image.obj time, vector = 0 := by
     intro time selected vector
@@ -1333,13 +1478,78 @@ theorem exists_image_decomposition {Source Target : Type v}
       {occurrence // smallFamily.2 occurrence = death} => smallFamily.1 occurrence.val)))
     (fun death => Classical.choose_spec (sorted (fun occurrence :
       {occurrence // targetFamily.2 occurrence = death} => targetFamily.1 occurrence.val)))
-  refine ⟨SmallOccurrence, inferInstance, smallFamily, small_positive, smallIso,
-    image_epi_surjective, image_mono_injective, ?_, sourceEmbedding, targetEmbedding, ?_⟩
-  · simp only [Category.assoc, smallIso.hom_inv_id_assoc]
+  have image_factorization : image_epi ≫ image_mono = morphism := by
+    simp only [image_epi, image_mono, Category.assoc, smallIso.hom_inv_id_assoc]
     exact Abelian.image.fac morphism
+  have source_sorted : ∀ birth, Antitone fun ordinal =>
+      sourceFamily.2 (sourceBirthEnumeration birth ordinal).val := fun birth =>
+    Classical.choose_spec (sorted (fun occurrence :
+      {occurrence // sourceFamily.1 occurrence = birth} =>
+        OrderDual.toDual (sourceFamily.2 occurrence.val)))
+  have image_birth_sorted : ∀ birth, Antitone fun ordinal =>
+      smallFamily.2 (imageBirthEnumeration birth ordinal).val := fun birth =>
+    Classical.choose_spec (sorted (fun occurrence :
+      {occurrence // smallFamily.1 occurrence = birth} =>
+        OrderDual.toDual (smallFamily.2 occurrence.val)))
+  have image_death_sorted : ∀ death, Monotone fun ordinal =>
+      smallFamily.1 (imageDeathEnumeration death ordinal).val := fun death =>
+    Classical.choose_spec (sorted (fun occurrence :
+      {occurrence // smallFamily.2 occurrence = death} => smallFamily.1 occurrence.val))
+  have target_sorted : ∀ death, Monotone fun ordinal =>
+      targetFamily.1 (targetDeathEnumeration death ordinal).val := fun death =>
+    Classical.choose_spec (sorted (fun occurrence :
+      {occurrence // targetFamily.2 occurrence = death} => targetFamily.1 occurrence.val))
+  refine ⟨SmallOccurrence, inferInstance, smallFamily, small_positive, smallIso,
+    image_epi_surjective, image_mono_injective, image_factorization,
+    sourceBirthEnumeration, imageBirthEnumeration, imageDeathEnumeration, targetDeathEnumeration,
+    source_sorted, image_birth_sorted, image_death_sorted, target_sorted,
+    sourceEmbedding, targetEmbedding, source_bounds, target_bounds, ?_⟩
+  intro etaK etaC kernel_nonnegative cokernel_nonnegative kernel_trivial cokernel_trivial
+  have component_factorization : ∀ time coordinates,
+      (image_mono.app time).hom ((image_epi.app time).hom coordinates) =
+        (morphism.app time).hom coordinates := by
+    intro time coordinates
+    exact congrArg (fun natural => (natural.app time).hom coordinates) image_factorization
+  have kernel_epi : ∀ time, LinearMap.ker (image_epi.app time).hom ≤
+      LinearMap.ker (intervalArrow sourceFamily time (time + etaK) (by linarith)) := by
+    intro time coordinates killed
+    apply kernel_trivial time
+    rw [LinearMap.mem_ker] at killed ⊢
+    rw [← component_factorization, killed, map_zero]
+  have cokernel_mono : ∀ time,
+      LinearMap.range (intervalArrow targetFamily time (time + etaC) (by linarith)) ≤
+        LinearMap.range (image_mono.app (time + etaC)).hom := by
+    intro time coordinates member
+    obtain ⟨original, equation⟩ := cokernel_trivial time member
+    exact ⟨(image_epi.app (time + etaC)).hom original,
+      (component_factorization (time + etaC) original).trans equation⟩
+  obtain ⟨death_bounds, finite_death_bounds, source_coverage, essential_equivalence,
+      source_essential, kernel_zero⟩ := epi_kernel_trim_estimates
+    sourceFamily smallFamily source_positive small_positive image_epi image_epi_surjective
+    sourceBirthEnumeration imageBirthEnumeration source_sorted image_birth_sorted
+    sourceEmbedding source_bounds etaK kernel_nonnegative kernel_epi
+  obtain ⟨birth_bounds, target_coverage, target_essential, cokernel_zero⟩ :=
+    mono_cokernel_trim_estimates smallFamily targetFamily small_positive target_positive
+      image_mono image_mono_injective imageDeathEnumeration targetDeathEnumeration
+      image_death_sorted target_sorted targetEmbedding target_bounds etaC
+      cokernel_nonnegative cokernel_mono
+  refine ⟨?_, finite_death_bounds, source_coverage, target_coverage, essential_equivalence,
+    source_essential, target_essential, ?_, ?_, kernel_zero, cokernel_zero⟩
   · intro occurrence
-    exact ⟨(source_bounds occurrence).2.choose, (source_bounds occurrence).1,
-      (target_bounds occurrence).1, (target_bounds occurrence).2.choose⟩
+    exact ⟨(target_bounds occurrence).1, (source_bounds occurrence).2.choose.symm,
+      birth_bounds occurrence, (target_bounds occurrence).2.choose.symm,
+      (source_bounds occurrence).1, death_bounds occurrence⟩
+  · intro occurrence death finite unmatched
+    have short : ¬ ((sourceFamily.1 occurrence + etaK : ℝ) : WithTop ℝ) <
+        sourceFamily.2 occurrence := fun long => unmatched (source_coverage occurrence long)
+    rw [finite, WithTop.coe_lt_coe] at short
+    linarith
+  · intro occurrence death finite unmatched
+    have short : ¬ ((targetFamily.1 occurrence + etaC : ℝ) : WithTop ℝ) <
+        targetFamily.2 occurrence := fun long => unmatched (target_coverage occurrence long)
+    rw [finite, WithTop.coe_lt_coe] at short
+    linarith
+
 
 
 end D5.S3.HomologicalAlgebra.Persistence.RealDecomposition
