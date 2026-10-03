@@ -26964,3 +26964,80 @@ enumerate residues modulo \(Q\) and test each label's private set. Under the
 whole-cover hypothesis, the resulting private residues must realize the flow
 of value \(|I_H|\). This validates the compression and source/phase
 bookkeeping only; it cannot settle the unrestricted Erdős problem.
+
+## 234. Connected phase payment can be arbitrarily large without covering
+
+The quotient-component tests of Section 233 cannot by themselves imply whole
+coverage. There is a source-compatible finite construction in which the
+quotient graph is connected, every label has a private witness, all original
+labels are distinct and odd, and every pointwise payment inequality of
+Section 229 holds strictly, while the family still has a hole on every
+surviving internal fibre.
+
+Start with any finite divisor-closed internal family \(\mathcal C_0\) whose
+least common multiple is \(H\), whose labels have private witnesses, and whose
+internal hole set \(U_H\) is nonempty. Choose a prime \(h\mid H\), write
+\[
+B_0=\{r\bmod h:r\in U_H\},
+\]
+and choose one \(r_b\in U_H\) for each \(b\in B_0\). Choose a fresh prime
+\(p>\max(M,5)\), and for each \(b\in B_0\) choose a finite set \(S_b\) of
+fresh primes \(q>\max(M,5)\), with all these primes distinct and outside \(Hp\).
+
+Append the first two rows below once. For each \(b\in B_0\) and
+\(q\in S_b\), append one copy of each of the last four rows; the displayed
+congruences specify their residues:
+\[
+\begin{array}{c|l}
+\text{modulus}&\text{residue conditions}\\ \hline
+p&x\equiv0\pmod p\\
+hp&x\equiv b_0\pmod h,\ x\equiv1\pmod p\\
+q&x\equiv0\pmod q\\
+hq&x\equiv b\pmod h,\ x\equiv1\pmod q\\
+pq&x\equiv2\pmod p,\ x\equiv2\pmod q\\
+hpq&x\equiv b\pmod h,\ x\equiv3\pmod p,\ x\equiv3\pmod q .
+\end{array}
+\tag{234.1}
+\]
+Here \(b_0\) is any one fixed element of \(B_0\). The new moduli are distinct
+odd nonunits. Since \(h\) is prime, their nonunit divisors are among
+\(h,p,q,hp,hq,pq,hpq\); divisor closure is therefore preserved. The quotient
+labels \(p,q,pq\) connect every \(q\)-branch through \(p\).
+
+The family remains source-compatible. Extend an old private witness by
+assigning the value \(4\) at every new prime coordinate. For \(p\) and \(hp\)
+use \(r_{b_0}\) and \(p\)-coordinates \(0\) and \(1\), respectively. For
+\(q\) and \(hq\) use \(r_b\), the \(q\)-coordinates \(0\) and \(1\), and
+\(p\)-coordinate \(4\). For \(pq\) and \(hpq\) use \(r_b\), the pairs
+\((2,2)\) and \((3,3)\), and value \(4\) at every unused fresh coordinate.
+Because \(p,q>5\), these points avoid every other appended class; because
+\(r_b\in U_H\), they avoid the internal family. CRT realizes all choices.
+Thus every appended label has a private witness.
+
+For \(r\in U_H\), let \(b=r\bmod h\). The only excess phases in a fixed
+quotient modulus are the pair \(p,hp\) when \(b=b_0\), the pair \(q,hq\)
+when \(b=r_b\bmod h\), and the pair \(pq,hpq\) on that same \(b\). Hence
+the exact excess-phase payment is
+\[
+\Gamma_r=
+\frac{\mathbf 1_{\{b=b_0\}}}{p}
++\left(1+\frac1p\right)\sum_{q\in S_b}\frac1q .
+\tag{234.2}
+\]
+The reciprocal prime sum diverges, so choose each finite \(S_b\) with
+\(\sum_{q\in S_b}1/q>A\) for a fixed \(A>1/2\). Then
+\(\Gamma_r>A>1/2\), whereas
+\(\frac12e^{-4C_r}\le1/2\). Every pointwise Section 229 payment test is
+therefore satisfied strictly, with the original phases retained.
+
+Nevertheless, prescribe \(x\equiv4\) modulo \(p\) and modulo every fresh
+\(q\), while retaining any \(r\in U_H\) modulo \(H\). CRT gives an integer
+outside the internal classes and outside every appended class. Thus every
+such fibre contains a hole, so this family is not a whole cover.
+
+The construction is a countercontrol, not an odd-cover counterexample. It
+shows that divisor closure, private witnesses, connected quotient graph, and
+arbitrarily large componentwise phase payment do not supply the missing
+whole-cover/EB1 bridge. Any successful unrestricted proof must use additional
+constraints from actual whole coverage and its joint private-point flow, not
+only the Section 229 pointwise inequalities.
