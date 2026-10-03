@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ce8b853efd7a7dd80994669756f1d34cd485d2c4ce4add33d3c37d725f588861
   normalized_sha256: sha256:ce8b853efd7a7dd80994669756f1d34cd485d2c4ce4add33d3c37d725f588861
 cas_ref: sha256:ce8b853efd7a7dd80994669756f1d34cd485d2c4ce4add33d3c37d725f588861
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Asymptotics/PhaseLawSpectralEscape.phase_law_spectral_escape
+    target_statement_id: sha256:a6ff3d6ed725fceb681f641a92fec80b4a9b1351263b8e24bde8b4253c1d87c5
 receipts:
   unresolved_subitems: []
