@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:41cc1b75a53cd4dd01a0a97bc7a0dc29ff1e1eda650d90ad5fd5845e4abdd12b
+  normalized_sha256: sha256:41cc1b75a53cd4dd01a0a97bc7a0dc29ff1e1eda650d90ad5fd5845e4abdd12b
+cas_ref: sha256:41cc1b75a53cd4dd01a0a97bc7a0dc29ff1e1eda650d90ad5fd5845e4abdd12b
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciExternalWitnessGrowth.fibonacci_external_witness_growth
+    target_statement_id: sha256:1d79d2c9d33970f424718690b76ca2a8f49492bbc63ff48cafbb74eb9b92dccc
+receipts:
+  unresolved_subitems: []

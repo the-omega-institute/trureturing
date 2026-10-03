@@ -1,0 +1,17 @@
+**Theorem 48.1 (integral coordinate equivalence).** Under the hypotheses
+of Theorem 46.1, let $\mathcal O_K$ be the full ring of integers of $K$.
+The map
+
+$$
+\Phi:\mathbb Z^3\longrightarrow\mathcal O_K,\qquad
+(u,r,s)\longmapsto u+r\alpha+s\gamma
+$$
+
+is an isomorphism of additive groups. Its values are algebraic integers
+by the integral-basis characterization. Every algebraic integer has
+such a triple of integer coordinates, and the triple is unique because
+$(1,\alpha,\gamma)$ is a rational basis of $K$. Addition and negation
+act coordinatewise. The next step toward Theorem 11.1 is to transport
+the order lattice through this equivalence and identify its quotient
+with the two cyclic coordinate factors.
+

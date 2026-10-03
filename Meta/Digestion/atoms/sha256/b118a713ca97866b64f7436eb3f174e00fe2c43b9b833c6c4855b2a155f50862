@@ -1,0 +1,38 @@
+### 10.1 Fixed objects and classical input
+
+Keep the original positive Fibonacci values. For a prime $p$ write
+$\rho(p)=\min\{r\geq1:p\mid F_r\}$ and $h_p=v_p(F_{\rho(p)})$.
+For $p>5$, $h_p=v_p(F_{p-(5/p)})$; thus WSS means $h_p\geq2$.
+For a positive integer $a$ let $\operatorname{Supp}(a)$ be its prime
+support, and put
+$$d(n)=\prod_{v_p(F_n)\ {\rm odd}}p\qquad(n\geq1).$$
+The positive rational square-class group is
+$$\mathcal G=\mathbb Q_{>0}^{\times}/(\mathbb Q_{>0}^{\times})^2
+ \simeq\bigoplus_{p\ {\rm prime}}\mathbb F_2.$$
+The coordinate of $[a]$ at $p$ is $v_p(a)\bmod2$. For a finite prime
+set $H$, let $\mathcal G_H=\langle[p]:p\in H\rangle$; it is isomorphic
+to $(\mathbb Z/2)^{|H|}$. The condition $[F_n]\in\mathcal G_H$ is
+exactly $\operatorname{Supp}(d(n))\subseteq H$.
+
+Two classical inputs are used with their full hypotheses. First, the
+Fibonacci valuation formulas of Lengyel, as restated in Medina-Rowland,
+Theorem 1.4, are
+$$
+v_p(F_n)=
+\begin{cases}h_p+v_p(n),&\rho(p)\mid n,\\0,&\rho(p)\nmid n,
+\end{cases}\quad(p\ne2,5),\qquad v_5(F_n)=v_5(n),
+$$
+and
+$$v_2(F_n)=\begin{cases}0,&3\nmid n,\\1,&n\equiv3\pmod6,\\
+v_2(n)+2,&6\mid n.\end{cases}$$
+The small ranks are $\rho(2)=3$, $\rho(3)=4$, $\rho(5)=5$.
+Second, the classical Fibonacci square-class theorem says that the only
+nonsingleton classes of positive indices are $\{1,2,12\}$ and $\{3,6\}$.
+It is stated in Ribenboim, *FFF: (Favorite Fibonacci Flowers)* (2005),
+(3.4), with attribution to his earlier paper. In particular, distinct
+indices whose ratio is $25$ never have square-equivalent Fibonacci
+values. These classical results are inputs, not new proofs of square-class
+rigidity or consequences of the coordinate-ring formalization.
+The source scopes are recorded in
+`Library/Factorization/ribenboim2005squareclasses.md`.
+

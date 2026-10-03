@@ -132,7 +132,7 @@ private noncomputable def outerSpan {n : ℕ} (T : Finset (Fin n))
     ∃ ψ ∈ C, v = tensorOp M *ᵥ ψ}
 
 /-- The single-qubit operator `A` acting on qubit `j`. -/
-private noncomputable def localOp {n : ℕ} (j : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
+noncomputable def localOp {n : ℕ} (j : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
   tensorOp (Function.update (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) j A)
 

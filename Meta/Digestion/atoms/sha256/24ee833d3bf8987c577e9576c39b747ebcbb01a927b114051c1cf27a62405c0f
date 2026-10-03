@@ -1,0 +1,17 @@
+## 3. Scope of the count kernel
+
+The minimum convention is different from the frozen greatest-cut
+enumeration. For the identity of length four the minimum direct cut is
+one and the greatest direct cut is three. The kernel above conditions
+on an actual minimum-cut event and must not be obtained by identifying
+those two random variables.
+
+All-length asymptotics require the precise actual-count input
+$s_{n-r}/s_n\to\rho^r$ for every fixed positive $r$, together with
+the actual sign and indecomposable counts. Finite-history iteration
+also needs the conditional laws of the remaining actual factor and
+literal coordinate transport through both endpoint choices. Neither
+the existence of this one-step kernel nor a generic measure theorem
+establishes the fixed-cylinder limit, occupation estimate, hitting
+transfer, or the full derangement-ratio limit.
+

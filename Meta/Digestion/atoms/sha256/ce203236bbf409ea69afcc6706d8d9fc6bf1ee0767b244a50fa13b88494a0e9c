@@ -1,0 +1,4 @@
+**Theorem 4.2 (Fibonacci congruences).** For every $j\geq1$,
+$F_{3^j}\equiv2\pmod4$, $v_2(F_{3^j})=1$, and
+$F_{3^{j+1}}=F_{3^j}C_j$.
+
