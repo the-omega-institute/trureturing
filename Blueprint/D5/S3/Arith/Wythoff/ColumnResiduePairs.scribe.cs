@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Wythoff;
 internal sealed class ColumnResiduePairsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/kimberling2025a035513");
+        LibraryNoteRef.Create("D5/L/Words/kimberling2025a035513");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The first two Wythoff columns attain all residue pairs modulo every positive integer.",

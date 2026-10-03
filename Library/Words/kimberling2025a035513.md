@@ -49,6 +49,7 @@ checked. These are the nested-floor definitions used by the Lean array.
 
 ## Verified locator
 
+- URL: https://oeis.org/A035513 (official OEIS entry; revision 223, Kimberling's 4 June 2025 conjecture block; retrieved 2026-10-03).
 - https://oeis.org/search?q=id:A035513&fmt=text : revision 223, Kimberling's
   conjecture block and the Bottomley and Mathar formulas; retrieved 2026-10-03.
 - https://oeis.org/history?seq=A035513 : history page retrieved with HTTP 200

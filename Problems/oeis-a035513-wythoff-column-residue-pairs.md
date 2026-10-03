@@ -41,7 +41,8 @@ and this repository. The implementation check additionally found no
 `Wythoff` or `A035513` declarations through Loogle, no Lean GitHub code
 search hit for `A035513`, and no repository search hit for `Wythoff Lean`.
 The OEIS history page was accessible; its whole revision history was not
-exhaustively searched. These finite checks do not establish global novelty.
+exhaustively searched. This bounded search did not locate a published
+resolution of the conjecture. These finite checks do not establish global novelty.
 
 ## Route
 
@@ -59,8 +60,11 @@ image equals the full finite product, whose cardinality is `m^2`.
 
 ## Falsifier
 
-A positive row where either nested-floor identity fails, or a positive
-modulus with a residue pair never attained, would contradict the claim.
+A positive modulus with a residue pair never attained would directly
+refute the original conjecture. A positive row where either nested-floor
+identity fails would first invalidate the object identification or the
+current proof route; that failure alone would not refute the original
+cardinality conjecture.
 Checking any finite number of rows or moduli does not prove the universal
 statement. A zero or negative row witness would fail the source quantifier.
 
