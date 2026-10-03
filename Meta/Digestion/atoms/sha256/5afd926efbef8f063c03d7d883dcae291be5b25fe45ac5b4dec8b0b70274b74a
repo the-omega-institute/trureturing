@@ -1,0 +1,48 @@
+**定理 54.9（完整记录上的位置最大值恢复）。** 固定 $n\ge4$、已知全支撑 $\mu$ 且 $t=1/2$、$0<a\le1$、$0<\delta<1$。记 $N=\binom n2$，$M_\mu=\max(s,2-s)=s<3/2$。用 $m$ 份完整记录计算
+
+$$
+\widehat T_{ij}=\frac1m\sum_{b=1}^m\psi(W_{b,i})\psi(W_{b,j})Z_b,
+\qquad \widehat A_i=\max_{j\ne i}|\widehat T_{ij}|.
+$$
+
+取 $\widehat A_i$ 最大的三个位置，固定按索引破平，再递增排序为 $\widehat\theta$。若
+
+$$
+m\ge\left\lceil
+\frac{128M_\mu^4}{a^2\gamma_\mu^2}\log\frac{2N}{\delta}
+\right\rceil,
+\tag{54.27}
+$$
+
+则对所有教师与 $\alpha\in[a,1]$，$P(\widehat\theta=\theta)\ge1-\delta$。在 $\mathcal M^{1/2}_\rho$ 上，一条统一充分预算为
+
+$$
+m\ge\left\lceil
+\frac{41472}{a^2\rho^2}\log\frac{n(n-1)}\delta
+\right\rceil.
+\tag{54.28}
+$$
+
+恢复规则使用已知 $s$，不估计或反演 $\alpha$；$a$ 只用于预算。以上常数为充分值，不声称尖锐。
+
+**证明。** 先给所用的成熟有界独立样本界。对有限取值 $V\in[l,u]$，令 $g(\lambda)=\log\mathbb E\exp(\lambda(V-\mathbb EV))$。指数倾斜后仍支撑于 $[l,u]$，所以 $g''(\lambda)$ 是该律的方差，至多 $(u-l)^2/4$：取区间中点 $c$，方差不超过 $\mathbb E(V-c)^2\le(u-l)^2/4$。由 $g(0)=g'(0)=0$ 积分得到 $g(\lambda)\le\lambda^2(u-l)^2/8$。对独立记录的和应用指数 Markov 并分别优化正、负 $\lambda$，即得 Hoeffding 界
+
+$$
+P(|\overline V-\mathbb EV|\ge\varepsilon)
+\le2\exp\left(-\frac{2m\varepsilon^2}{(u-l)^2}\right).
+\tag{54.29}
+$$
+
+每个固定配对的记录变量落在 $[-M_\mu^2,M_\mu^2]$。取 $\varepsilon=a\gamma_\mu/8$，对 $N$ 个配对取并集界，失败概率至多 $2N\exp[-ma^2\gamma_\mu^2/(128M_\mu^4)]$。在所有配对误差严格小于 $\varepsilon$ 时，非活动位置最大值小于 $\varepsilon$，每个活动位置最大值大于 $a\gamma_\mu/4-\varepsilon=\varepsilon$，故严格分开。这里只要求不同完整记录独立；同一记录的不同配对分数可以依赖。式（54.25）及 $M_\mu^4\le81/16$ 给（54.28）。$\square$
+
+对每个固定全支撑 $\mu$、$t=1/2$ 与 $\alpha>0$，有限个配对经验均值由强大数律同时收敛，此规则最终几乎必然恢复教师。这与统一有限置信预算不同。没有正 $\alpha$ 下界时，任意两教师的单记录总变差至多为 $\alpha/4$，因为条件行差的总变差为 $\alpha|C_\theta-C_\tau|/8$；$m$ 记录的总变差至多 $m\alpha/4$。固定有限 $m$ 而让 $\alpha\downarrow0$，两个实验趋于相同，所以不能对它们同时给任意固定 $\delta<1/2$ 的结构成功保证。
+
+全支撑本身也不供应统一质量间隙。取
+
+$$
+\mu_\varepsilon=(\varepsilon,1/2-3\varepsilon,\varepsilon,1/2,\varepsilon),\qquad 0<\varepsilon<1/6.
+\tag{54.30}
+$$
+
+对于 $(1,2,3)$ 与 $(1,2,4)$，教师只能在 $\ell_3\ne\ell_4$ 时不同；这个概率至多 $6\varepsilon$，所以两单记录律的总变差至多 $3\alpha\varepsilon/2$，固定 $m$ 的联合距离也趋零。极限中 $\ell$ 恒为一，末位不再可见。若某规则在两教师下错误都至多 $\delta$，其输出第一教师的事件迫使总变差至少为 $1-2\delta$，证明了上述两个无统一保证的结论。这不改变逐点一致性，也不把有限置信保证当成某份实现样本的概率一认证。
+

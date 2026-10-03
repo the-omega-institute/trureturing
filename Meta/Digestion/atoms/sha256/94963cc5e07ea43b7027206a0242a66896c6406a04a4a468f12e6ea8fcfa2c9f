@@ -1,0 +1,16 @@
+**定义 58.8（不限资源的异质准确恢复）。** 学习器可以使用公开保证参数及完整记录的任意计算、任意内存和参数无关随机化，但不可读取实际未知参数。记
+
+$$
+\begin{aligned}
+\mathfrak R_m^{\rm het}(n,a,\rho)
+&=\inf_{\mathcal A}\sup_{\boldsymbol\mu\in\mathcal H_{n,\rho},\,
+\alpha\in[a,1],\,\theta\in\Theta_n}
+P_{\boldsymbol\mu,\alpha,\theta}^{m}(\mathcal A(D_m)\ne\theta),\\
+m_*^{\rm het}(n,a,\rho,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m^{\rm het}\le\delta\}.
+\end{aligned}
+\tag{58.27}
+$$
+
+准确原函数版本允许输出任意 $g:\Sigma^n\to\{0,1,2\}$，成功指 $g=C_\theta$ 逐词成立；空集下确界约定为 $+\infty$。
+

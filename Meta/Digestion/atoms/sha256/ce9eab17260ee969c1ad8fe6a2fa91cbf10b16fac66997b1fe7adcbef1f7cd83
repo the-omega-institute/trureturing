@@ -1,0 +1,87 @@
+**命题 57.7（相邻行与完整输入条件化）。** 固定任意同一个全支撑 $\mu$、同一个 $0<\alpha\le1$ 和
+$q=n-1,r=n$，只让第一位置 $i\in\{1,\ldots,n-2\}$ 改变。
+令 $P_i=P_{\mu,\alpha,\theta_i}$。置
+
+$$
+U_\alpha=\frac{2+\alpha}{6},\qquad
+V_\alpha=\frac{4-\alpha}{12},\qquad
+M_\alpha=\frac{U_\alpha+V_\alpha}{2}.
+$$
+
+三个条件行为
+
+$$
+r_0=(U_\alpha,V_\alpha,V_\alpha),\quad
+r_1=(M_\alpha,V_\alpha,M_\alpha),\quad
+r_2=(V_\alpha,V_\alpha,U_\alpha).
+\tag{57.19}
+$$
+
+定义相邻行的 Jeffreys 散度为两向 KL 的和，则
+
+$$
+\begin{aligned}
+J_\alpha
+&=\operatorname{KL}(r_1\Vert r_0)+\operatorname{KL}(r_0\Vert r_1)\\
+&=\operatorname{KL}(r_1\Vert r_2)+\operatorname{KL}(r_2\Vert r_1)
+=\frac\alpha8\log\frac{4+2\alpha}{4-\alpha},\\
+\operatorname{KL}(P_i\Vert P_j)&=H(1-H)LJ_\alpha,\qquad i\ne j.
+\end{aligned}
+\tag{57.20}
+$$
+
+在（57.11）的同类困难律上，
+
+$$
+K_\alpha:=\operatorname{KL}(P_i\Vert P_j)
+=4\rho^2(1-2\rho)J_\alpha
+\le\frac{\alpha^2\rho^2}{2},\qquad
+\operatorname{KL}(P_i^m\Vert P_j^m)=mK_\alpha.
+\tag{57.21}
+$$
+
+**证明。** $M_\alpha-V_\alpha=U_\alpha-M_\alpha=\alpha/8$。
+对两个正向量，
+$\operatorname{KL}(s\Vert t)+\operatorname{KL}(t\Vert s) =\sum_y(s_y-t_y)\log(s_y/t_y)$。
+对 $r_1,r_0$ 代入，两非零项给
+$(\alpha/8)\log(U_\alpha/V_\alpha)$；交换标签0和2给另一相邻对。
+
+对完整输入取 $B=h_q\ell_r$，教师差仍为
+$(h_i-h_j)\ell_q(1-2B)$。写 $g=H(1-H)L$。全部有序分歧的实际质量为
+
+$$
+\begin{array}{c|cccc}
+(C_{\theta_i},C_{\theta_j})&(1,0)&(0,1)&(1,2)&(2,1)\\ \hline
+P_\mu&g(1-t)&g(1-t)&g t&g t
+\end{array}.
+\tag{57.22}
+$$
+
+例如 $P(h_i=1,h_j=0)=H(1-H)$，而
+$P(\ell_q=1,B=1)=tL$、
+$P(\ell_q=1,B=0)=L(1-t)$。
+这一步保留同一中窗的实际交集 $t$。
+其余输入两教师相同；不存在类0与2的分歧。
+
+两个实验的完整 $X$ 边缘相同，故在完整五符号记录空间上准确有
+
+$$
+\operatorname{KL}(P_i\Vert P_j)
+=\sum_{w\in\Sigma^n}\mu^{\otimes n}(w)
+\operatorname{KL}(r_{C_{\theta_i}(w)}\Vert r_{C_{\theta_j}(w)}).
+$$
+
+按（57.22）合并两种方向，得到
+$g(1-t)J_\alpha+gtJ_\alpha=gJ_\alpha$。
+这不是对分数、端点摘要或内存状态的 KL；中间位及全部未选中窗口仍在完整记录求和中。
+
+在 $\mu_*$ 上 $g=4\rho^2(1-2\rho)$。对 $0<\alpha\le1$，
+
+$$
+\log\frac{4+2\alpha}{4-\alpha}
+=\log\left(1+\frac{3\alpha}{4-\alpha}\right)
+\le\frac{3\alpha}{4-\alpha}\le\alpha.
+$$
+
+因此 $J_\alpha\le\alpha^2/8$，给所述上界。独立记录的对数似然比逐份相加，取期望即得准确的 $m$ 倍 KL，包括 $m=0$。证毕。 $\square$
+

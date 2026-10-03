@@ -1,0 +1,16 @@
+**引理 54.10（两个有符号角色锚点）。** 在 $t=1/2$、$\alpha>0$ 时，令
+
+$$
+\eta(W)=u\mathbf1_{\{W=001\}}-z\mathbf1_{\{W=000\}},\qquad M_\eta=\max(u,z)<1/2.
+$$
+
+则 $\mathbb E\eta=0$，并且
+
+$$
+\mathbb E[\eta(W_i)Z]=\begin{cases}\alpha g_q,&i=q,\\0,&i\ne q,\end{cases}
+\qquad g_q=uzL/2>0.
+\tag{54.31}
+$$
+
+在排除 $q$ 后，$\mathbb E[\psi(W_i)Z]$ 只在 $r$ 非零，准确为 $\alpha g_r$，其中 $g_r=HK_\ell/4>0$。以真实 $r$ 为锚，在排除 $q,r$ 的位置中，$T_{ir}$ 只在 $p$ 非零，准确为 $-\alpha g_p$，其中 $g_p=K_hK_\ell/4>0$。
+

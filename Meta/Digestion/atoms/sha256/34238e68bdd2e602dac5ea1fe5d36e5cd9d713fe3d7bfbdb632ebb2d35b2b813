@@ -1,0 +1,10 @@
+**命题 59.11（指定全词加权分数的未用坐标二阶矩）。** 即使理论上给出准确权重，直接将（59.19）的差
+$W=s_\theta-s_\tau$ 乘以完整 $w=w_Uw_{U^c}$，也有
+
+$$
+\mathbb E_{\mu,R_\alpha}[(wW)^2]
+=\mathbb E_{\mu_U,R_\alpha}[(w_UW)^2]
+\prod_{i\notin U}\left[\frac1{25}\sum_{b\in\Sigma}\frac1{\mu_i(b)}\right].
+\tag{59.27}
+$$
+

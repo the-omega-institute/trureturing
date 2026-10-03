@@ -1,0 +1,28 @@
+**定理 57.9（完整记录的匹配阶）。** 对 $n\ge4$、 $0<a\le1$、 $0<\rho\le1/8$，任何全参数准确恢复错误不超过 $0<\delta<1/2$ 的规则都满足
+
+$$
+mK_a\ge\bigl[(1-\delta)\log(n-2)-\log2\bigr]_+,\qquad
+mK_a\ge\operatorname{kl}(1-\delta,\delta).
+\tag{57.24}
+$$
+
+下界即使向规则揭示 $\mu_*,\alpha=a,q=n-1,r=n$ 仍成立。
+特别对 $0<\delta\le1/4$，两种准确恢复目标均满足
+
+$$
+\begin{aligned}
+\left\lceil
+\frac{\log n+\log(1/\delta)}{8a^2\rho^2}
+\right\rceil
+&\le m_*^{\rm free}(n,a,\rho,\delta)\\
+&\le
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{\binom n3-1}{\delta}\right\rceil,\\
+m_*^{\rm free}
+&=\Theta\left(\frac{\log n+\log(1/\delta)}{a^2\rho^2}\right),
+\end{aligned}
+\tag{57.25}
+$$
+
+其中常数为统一绝对常数，未声称尖锐。
+

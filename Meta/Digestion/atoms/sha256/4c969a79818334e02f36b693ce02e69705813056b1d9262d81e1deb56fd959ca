@@ -1,0 +1,21 @@
+**命题 53.10（秩所需的两组整数状态与单组替代）。** 写 $U=(-1,1,11)$，保存
+
+$$
+P_i=\sum_{j=1}^m\varphi(W_{j,i})U_{Y_j},\qquad V_i=\sum_{j=1}^m\varphi(W_{j,i})\mathbf1_{\{Y_j=2\}}. \tag{53.19}
+$$
+
+秩分数准确为 $(P_i-8\sqrt2V_i)/m$。固定 $m$ 时，$P_i\in[-2m,22m]$、$V_i\in[0,2m]$，两组共 $2n$ 个整数累加器可用
+$n\lceil\log_2(24m+1)\rceil+n\lceil\log_2(2m+1)\rceil$ 比特编码。它们不保存或估计 $e$。若另要实际中心化均值，才增加给定的 $e$ 与共享 $P_0=\sum U_{Y_j}\in[-m,11m]$、$N_2=\sum\mathbf1_{\{Y_j=2\}}\in[0,m]$，读出
+$[(P_i-eP_0)-8\sqrt2(V_i-eN_2)]/m$。
+
+一个只作算术费用比较的替代对比是 $v=(-2,2,-1)$。置
+$\varepsilon=(23-16\sqrt2)/4>0$，则
+
+$$
+Qv=(3A-3/2)\mathbf1+A(0,1,1)+\varepsilon(0,1,0). \tag{53.20}
+$$
+
+其中心化指纹为
+$\alpha[A\gamma_i+\varepsilon\operatorname{Cov}(\varphi(W_i),G_1)]$，而 $G_1$ 的三个活动协方差分别为 $LK_h,HK_\ell,0$。因此仍全部正；排序仅用
+$n$ 个 $\sum\varphi(W_i)v_Y\in[-4m,4m]$ 整数，编码为 $n\lceil\log_2(8m+1)\rceil$ 比特。在 $\mu_*$ 上，以区间宽度上界 $4M_\mu=5$ 和信号下界 $\alpha A(55/512)$ 得保守预算系数 $50/[A^2(55/512)^2]=25254.33388743\ldots$；这条证书不与（53.17）的归一精确 $F$ 常数混用。
+

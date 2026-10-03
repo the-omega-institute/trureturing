@@ -1,0 +1,10 @@
+### 54.5. 互补边给出的统一位置间隙
+
+以下固定 $t=1/2$。令
+
+$$
+b_1=xK_h,\qquad b_2=K_hK_\ell,\qquad b_3=|K_\ell(1-Hs)|,\qquad
+\gamma_\mu=\operatorname{median}(b_1,b_2,b_3).
+\tag{54.24}
+$$
+

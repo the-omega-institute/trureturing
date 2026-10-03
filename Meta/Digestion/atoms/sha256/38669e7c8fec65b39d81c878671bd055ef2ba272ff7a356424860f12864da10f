@@ -1,0 +1,13 @@
+- An action requires $m>0$ and parent state $U$ or $J^{1-\varepsilon}$.
+  Emission changes the state to $U$ and target to $(m-r)_+$; right removal
+  changes the state to $J^\varepsilon$ and leaves the target unchanged.
+
+Call this fixed finite family $\mathcal C(t,m,K,H)$. Given $n>HK$, each
+code reconstructs a supplied history $h_n(c)$: an action of size $r$
+leaves child size $n-r$, with the indicated actual state, and the stop
+leaves that full actual terminal carrier. All continued factors have
+positive length. Recompression of the reconstructed history and its
+terminal kind recovers the code. In particular the code-to-outcome map
+is injective at each such $n$. The supplied word is the length-independent
+word $w(c;B,v)$ obtained by the literal-offset rules of Section 4.
+
