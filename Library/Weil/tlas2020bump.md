@@ -477,3 +477,76 @@ Consequently $G_R\to\infty$ and $G_R/P_H(R)\to\infty$ under this hypothesis. Onl
 This is a limitation of the displayed positive allowance, not a lower bound for the realized signed error. It does not rule out cancellation, a sharper signed remainder estimate, or a joint main-minus-cost comparison. In particular, the fact that this cost exceeds the head does not determine the sign of the leading sum.
 
 The target remains the actual signed comparison of §35 at every sufficiently large real scale. An admissible exact channel reconstruction or a complete high-height contour identity would supply a lawful arithmetic representation; either still needs a signed estimate for the same jointly realized prime, zero and remainder data. These method boundaries are paper-level applications of known analytic conditions to the prescribed models, without a new general theorem, Lean verification or RH/Robin conclusion.
+## Canonical real inversion and the prime pairing
+
+The preceding entire-transform obstruction leaves another admissibility question: whether a real inverse transform of the complete five-term model can be inserted into the same unregularized prime-power functional. Consider the explicit leading functions themselves, independently of their approximation to the exact test at large frequency. Write
+
+$$
+F_R(z)=X_R(z)+\sum_{\varepsilon=\pm1}
+\bigl(L_{\varepsilon,R}(z)+U_{\varepsilon,R}(z)\bigr),
+$$
+
+where the endpoint models are (35.1) with $y_\varepsilon=i\varepsilon Rz$, on the same principal cone. Fix $R>0$. For $z>0$, the two endpoint pairs are conjugate and $X_R(z)$ is real, so $F_R(z)$ is real. Its explicit Puiseux expansion at zero gives
+
+$$
+p(z)F_R(z)=K_0R^{-9/4}z^{-1/4}+O_R(z^{1/8}),
+$$
+
+with
+
+$$
+K_0=2Be^{-1/4}\left[
+\cos(3\pi/8+\sqrt a)
++b^{-3/2}e^{\sqrt{a/b}}\cos(9\pi/8)
+\right]<0.
+$$
+
+Both cosine terms are negative: $1/4<a<1$ implies $\pi/2<3\pi/8+\sqrt a<\pi$. More explicitly,
+
+$$
+p(z)F_R(z)=z^{-1/4}E_R(\sqrt z)+z^{1/8}C_R(z^{1/4}),
+\qquad E_R(0)=K_0R^{-9/4},
+$$
+
+with $E_R,C_R$ analytic near zero. Differentiating these analytic factors gives the remainder derivative $O_R(z^{-7/8})$; this does not follow from an undifferentiated big-$O$ alone. These are convergent local expansions of the defined models; they do not extend the large-frequency approximation for $A_R$ to zero.
+
+Define the canonical even extension
+
+$$
+\mathcal F_R(\xi)=p(\xi)F_R(|\xi|),\qquad \xi\ne0.
+$$
+
+Its singularity at zero is integrable. The exact model formulas and their derivatives decay at infinity as a polynomial times $e^{-c\sqrt{|\xi|}}$, for fixed $R$ and some $c>0$. Thus $\mathcal F_R\in L^1(\mathbb R)$ and its inverse is
+
+$$
+g_R(t)=\frac1{2\pi}\int_{\mathbb R}\mathcal F_R(\xi)e^{it\xi}\,d\xi.
+$$
+
+On the positive axis subtract $K_0R^{-9/4}\xi^{-1/4}e^{-\xi}$. The remainder vanishes at zero and infinity, is absolutely continuous, and has integrable derivative. Integration by parts therefore bounds its cosine transform by $O_R(|t|^{-1})$.
+
+The existing [Gamma Laplace integral, DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1), with $\mu=1$, $\nu=3/4$ and $z=1-it$, gives
+
+$$
+\int_0^\infty \xi^{-1/4}e^{-\xi}\cos(t\xi)\,d\xi
+=\Gamma(3/4)\operatorname{Re}(1-it)^{-3/4}.
+$$
+
+Consequently
+
+$$
+g_R(t)=\frac{K_0R^{-9/4}}\pi\Gamma(3/4)\cos(3\pi/8)
+|t|^{-3/4}+O_R(|t|^{-1}).
+$$
+
+The leading coefficient is negative. For fixed $R$, $g_R$ is eventually negative and its primary-prime absolute terms satisfy
+
+$$
+\frac{\log p}{\sqrt p}|g_R(\log p)|
+\asymp_R\frac{(\log p)^{1/4}}{\sqrt p}.
+$$
+
+The sum of these terms diverges by comparison with the classical divergent prime harmonic sum $\sum_p1/p$. No prime number theorem or RH assumption is needed. Since the raw prime terms are eventually of one sign, conditional summation in the ordinary prime order does not repair their convergence. The full form's outer minus reverses this raw sign, without changing the divergence. This canonical inversion therefore does not supply an admissible test for the same unregularized prime-power formula.
+
+The exact compensating inverse is $h_R-g_R$. Outside $[-bR,bR]$ it equals $-g_R$, because $h_R$ has compact support. The two separate prime pairings diverge with opposite tails, whereas their pointwise sum has no prime-power contribution for $\log n>bR$. Recombination must precede use of the original arithmetic functional; these divergent individual terms cannot be separately estimated and then subtracted as finite quantities.
+
+This is a model-specific application of the Gamma integral, integration by parts and prime-harmonic divergence, not a new general Fourier theorem. It excludes this canonical unregularized inversion only. Alternative high-frequency completions, regularized pairings, compact truncations with their exact correction, isolated-zero interpolation and separately justified cone-contour identities remain distinct possibilities. The compensation identity supplies no sign for the surviving actual prime terms or the original compact test, no all-scale signed budget, and no RH/Robin conclusion; the application has not been Lean-verified.
