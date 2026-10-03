@@ -1,0 +1,60 @@
+**定理 1.3（正 Fibonacci 接枝表示）。** 对 $H>1$，令 $K$ 与 $\gamma$ 如下；每个模 $H$ 偏移都由权重 $2,3,5,\ldots,F_{K+3}$ 的非负实际接枝表示，接枝总数至多 $\gamma$。
+
+**证明。** 对 $H>1$ 置
+
+$$
+K=\min\{k\ge1:F_{k+4}\ge H\},\qquad
+\gamma=1+\left\lceil\frac{K+1}{2}\right\rceil .
+$$
+
+Fibonacci 数列无界，故 $K$ 有限；$K\ge1$ 同时提供权重 $F_3=2$ 与 $F_4=3$。对 $c\ne0$，有 $2\le t(c)\le H+1$，令 $u=t(c)-2$，则
+
+$$
+0\le u\le H-1<F_{K+4}.
+$$
+
+由 1.2 取 $N=K+3$，得到
+
+$$
+ u=\sum_{i=2}^{K+3}\varepsilon_iF_i,\qquad
+\varepsilon_i\in\{0,1\},\qquad
+\varepsilon_i\varepsilon_{i+1}=0.
+$$
+
+把辅助项 $F_2=1$ 与预留的权重 $2$ 合并。定义
+
+$$
+ d_0=\varepsilon_3+1-\varepsilon_2,\qquad
+ d_1=\varepsilon_4+\varepsilon_2,\qquad
+ d_j=\varepsilon_{j+3}\quad(2\le j\le K).
+$$
+
+这是恒等式
+
+$$
+2+\varepsilon_2=2(1-\varepsilon_2)+3\varepsilon_2
+$$
+
+在整数和中的改写，而不是执行一次权重一的接枝。于是
+
+$$
+ t(c)=\sum_{j=0}^{K}d_jF_{j+3}.
+$$
+
+非邻接性保证当 $\varepsilon_2=1$ 时 $\varepsilon_3=0$，所以 $d_0$ 从不为负；其余系数也显然非负。并且
+
+$$
+ d_0,d_1\in\{0,1,2\},\qquad d_j\in\{0,1\}\ (j\ge2).
+$$
+
+接枝总数满足
+
+$$
+\sum_{j=0}^{K}d_j
+ =1+\sum_{i=3}^{K+3}\varepsilon_i.
+$$
+
+指标区间 $3,4,\ldots,K+3$ 有 $K+1$ 个位置，非邻接的选点至多为 $\lceil(K+1)/2\rceil$：将相邻位置成对，每对至多选一个，若有余数再留一个单点。因此 $\sum_jd_j\le\gamma$。
+
+当 $c=0$ 时直接取全部 $d_j=0$。当 $K=1$ 时表示区间正是 $2,3,4$；$u=0$ 给出一个权重 $2$，$u=1$ 给出一个权重 $3$，上述公式仍逐项成立。特别地，$c=1$ 使用 $t(1)=H+1$，从未要求把 $1$ 作为实际权重。这样所有模 $H$ 偏移都由正实际接枝表示，且没有执行单位接枝。
+

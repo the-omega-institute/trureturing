@@ -1,0 +1,19 @@
+**引理 59.7（低返回和末端的共同下端）。** 固定整数 $K\ge2$。定义
+
+$$
+B_{\mathrm{low}}=A_H+\rho\chi^{K-1}A_H,
+\qquad Y_H=A_H+\rho\chi X_H,
+\qquad B:=B_{\mathrm{low}}.
+\tag{59.39}
+$$
+
+对任意实际完整后缀 $D_H>A_H$ 及任意低返回 $m\ge1$、$1\le r<K$，有
+
+$$
+G_{H,m,r}(D_H)>B,\qquad
+\boxed{Y_H>B>Z_K,\quad B<h_H.}
+\tag{59.40}
+$$
+
+所以一个高返回串右侧若紧接低返回，其实际位移严格高于 $B$；若高串处于外列表末端，在原字面尾之前支付固定 $(1,1)$ anchor 后，其右侧位移同样严格高于 $B$。这个 anchor 对 $K=2$ 仍须保留。
+

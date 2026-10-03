@@ -1,0 +1,8 @@
+## 14. 折叠、延续与边界几何
+
+本章固定 [FIBONACCI_ATOMIC_RELATION_GENERATION.md](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§150–151 的低位到高位窗口约定，并沿用本卷已经定义的 FIB 单位位、无相邻一条件和高位补零合同。记
+\[
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad q=(2,3).
+\]
+本章的“时间”只表示指定的删窗递推及其未来响应；“空间”只表示下述实区间商空间。两者的兼容性是定理条件，不是关于物理时空起源的断言。
+

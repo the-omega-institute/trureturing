@@ -1,0 +1,44 @@
+**引理 9.7（非可逆生成分割的不等式与逼近）。** 对任何保测映射 $T$ 和有限分割 $\mathcal Q,\mathcal R$，
+
+$$
+h_\rho(T,\mathcal Q)
+\le h_\rho(T,\mathcal R)+H_\rho(\mathcal Q\mid\mathcal R).
+$$
+
+若有限分割 $\mathcal R_r$ 递增且生成全部可测集模零，则对每个有限 $\mathcal Q$，
+$H_\rho(\mathcal Q\mid\mathcal R_r)\to0$。有限时间联合不改变熵率：
+
+$$
+h_\rho\left(T,\bigvee_{j=0}^{r-1}T^{-j}\mathcal P\right)
+=h_\rho(T,\mathcal P).
+$$
+
+以上不要求 $T$ 可逆。
+
+证明。链式法则与“增加条件不增大条件熵”给
+
+$$
+\begin{aligned}
+H_\rho(\mathcal Q^{(n)})
+&\le H_\rho(\mathcal R^{(n)})
+  +H_\rho(\mathcal Q^{(n)}\mid\mathcal R^{(n)})\\
+&\le H_\rho(\mathcal R^{(n)})
+  +\sum_{j=0}^{n-1}H_\rho(T^{-j}\mathcal Q\mid T^{-j}\mathcal R)\\
+&=H_\rho(\mathcal R^{(n)})+nH_\rho(\mathcal Q\mid\mathcal R).
+\end{aligned}
+$$
+
+最后一步是联合分布在保测逆像下不变，并未使用反向动力学。除以 $n$ 取极限，得到第一式。
+
+对于逼近，$\bigcup_r\sigma(\mathcal R_r)$ 为代数。能够在测度中由此代数任意逼近的集合，对补与有限并封闭，也对可数并封闭：先截取有限并控制测度尾差，再逼近该有限并。因此这类集合包含其生成的 $\sigma$ 代数。设 $\mathcal Q$ 有 $k$ 个原子，可用足够大的某个 $\mathcal R_r$ 的原子构造一个预测标签 $\widehat X_r$，使真实标签 $X$ 的误判概率 $e_r\to0$。令误判指示为 $E_r$，由于 $\widehat X_r$ 是 $\mathcal R_r$ 可测，链式法则给
+
+$$
+H_\rho(X\mid\mathcal R_r)
+\le H_\rho(E_r)+e_r\log k
+=-e_r\log e_r-(1-e_r)\log(1-e_r)+e_r\log k\longrightarrow0.
+$$
+
+递增性保证以后分割的条件熵更小，故整个序列趋零。
+
+最后，对 $\mathcal R=\bigvee_{j<r}T^{-j}\mathcal P$，其 $n$ 步联合恰是 $\mathcal P$ 的 $n+r-1$ 步联合。固定 $r$ 时把该熵除以 $n$，极限与 $\mathcal P$ 的熵率相同。$\square$
+

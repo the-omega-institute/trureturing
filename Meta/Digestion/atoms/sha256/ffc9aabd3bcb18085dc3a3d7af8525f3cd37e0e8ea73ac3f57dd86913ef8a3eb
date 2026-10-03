@@ -1,0 +1,28 @@
+**引理58.4（全槽公式与准确联合判据）。** 对同一实际块 $B$，其右侧实际坐标为 $c+\sigma_jD$，其中 $\sigma_H=1,\sigma_L=-1$，则位置 $p$ 的唯一坐标为
+
+$$
+x_{B,p}=f_{B[p:]}(c)+(-g)^{|B|-p}\sigma_jD.
+\tag{58.15}
+$$
+
+六字块位置4指定颜色1，坐标及闭距离恰为
+
+$$
+\begin{aligned}
+x_{U,4}&=q_1-\lambda+g^2D_H,&
+\operatorname{dist}(x_{U,4},J_1)&=\lambda-g^2D_H,\\
+x_{V,4}&=q_2+\lambda-g^2D_L,&
+\operatorname{dist}(x_{V,4},J_1)&=\lambda-g^2D_L.
+\end{aligned}
+\tag{58.16}
+$$
+
+其余六字槽及全部20个 $C$ 槽都满足
+
+$$
+\operatorname{dist}(x_{B,p},J_{\text{指定色}})\le\lambda-g^6.
+\tag{58.17}
+$$
+
+这些是公开引理49.3的逐槽证书。为明确其在本章的供应作用，下面保留其计算与比较域。
+

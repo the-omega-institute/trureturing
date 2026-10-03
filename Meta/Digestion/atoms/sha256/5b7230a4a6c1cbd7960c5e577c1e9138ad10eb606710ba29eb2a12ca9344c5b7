@@ -1,0 +1,27 @@
+**引理 62.7（两个不同的保护作用）。** 固定有限整数 $M\ge1$，使
+
+$$
+B_M=h-\rho^M(h-\chi A)>\max\{X_H,Y_H,d\}.
+\tag{62.19}
+$$
+
+令重置返回及其执行词、付费长度为
+
+$$
+R=(M,1),\qquad \mathcal R=\mathsf c\mathsf u^M,
+\qquad C_R=20+6M.
+\tag{62.20}
+$$
+
+实际完整输入 $D>A$ 时，重置输出 $>B_M$；辅助输入 $D\ge A$ 时，输出 $\ge B_M$。重置自身是低返回，全部槽由 $C_{\rm auto}$ 统一严格通过。此外，对 $m\ge1$、$1\le r\le K$、$z\ge A$，
+
+$$
+G_{m+1,r}(z)-G_{m,r}(h)
+=\rho^m\{A-\chi^rh+\rho\chi^rz\}>0.
+\tag{62.21}
+$$
+
+**证明。** [引理59.3.1](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24596-L24631)取 $h_H=h$、$A_H=A$、$d_b=d$，给同一个 $R=(M,1)$、$B_M\uparrow h$ 及实际完整输入 $D>A$ 的严格输出界。本章 (62.19) 的较强右侧仍小于 $h$，故存在满足该较强选择的有限 $M$；该选择不由前篇仅有的 $B_M>d$ 代替。重置映射的正斜率保留辅助输入 $D\ge A$ 的非严格输出界；$1<K$ 使其自身由低返回接口严格合法。展开两项得(62.21)，其括号严格为正，因为 $A>\chi h\ge\chi^rh$，其余项非负。证毕。
+
+重置直接抬高嵌入因子的首个 $\mathsf c$ 串起点；该串所对应的首个返回若是高返回，其控制槽由 $B_M-d$ 保护。随后，无论这个首个返回是高还是低，都在它后面的 $\mathsf u$ 串中增加一个 $\mathsf u$，由(62.21)使其完成输出支配任意辅助起点不超过 $h$ 的对应输出。增加 $m$ 本身不改善这个返回最内六字控制槽。后续高返回使用这种输出支配所继承的守卫；不能将未衰减的 $B_M-d$ 归给有先行低返回的较后首个高返回。重置与额外 $\mathsf u$ 都保持在首个 $\mathsf c$ 串所确定的位置。
+

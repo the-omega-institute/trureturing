@@ -1,0 +1,6 @@
+**命题 43.20（来源词、观察词与已证明的树族）。** 命题43.11—43.19证明的是：对每个 $n$ 和每个 $|z|\le n$，同一对固定实际 $D/D$ 尾使指定的来源词和 departure 颜色历史满足相应预算。它没有把 $2^n$ 个来源词自动识别成 $2^n$ 个不同观察历史。
+
+若另要推出不同历史，必须额外同时满足预算处于已发表有限来源唯一性合同的适用范围、两条来源的完整未来满足该合同的共同未来要求，以及来源词确实不同；本章的两条固定尾本身不替代这些假设。
+
+**证明。** 来源词由 $U_0\ne U_1$ 的字面分支区分，但颜色投影可能在有限前缀上相同。已发表[定理28.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7165)和[推论29.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7632)在其完整闭关系、实际有限来源和共同完整记录前提下才给单点纤维；没有这些前提，来源词计数只说明构造了多少来源实例，不说明观察历史的基数。故本章保留两种量词，不作未经证明的历史计数。证毕。
+

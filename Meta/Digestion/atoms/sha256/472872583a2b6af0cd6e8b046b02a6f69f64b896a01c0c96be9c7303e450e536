@@ -1,0 +1,185 @@
+**定理 7.2（最终精确极小对、方向切换与尖锐固定深度包络）。** 在定义 7.1 的合同下，取充分起点
+
+$$
+J=6k+1=2t+1,\qquad H_0=C_{k,J}.
+\tag{7.3}
+$$
+
+对每个整数 $H\ge H_0$，存在唯一 $j\ge J$ 使 $C_j\le H<C_{j+1}$。令
+
+$$
+\begin{gathered}
+u=F_{j+1},\qquad w=F_j,\qquad
+ e=u-\phi w=(-1)^j\phi^{-j},\\
+\tau=H-u+w,\qquad B_H=\left\lfloor\frac\tau s\right\rfloor,\\
+x_H=(\tau-B_H,B_H),\qquad
+y_H=(\tau-B_H+u,B_H-w),\\
+D_{j,H}=\ell(x_H)+\ell(y_H)
+=2\tau+2(\phi-1)B_H+e.
+\end{gathered}
+\tag{7.4}
+$$
+
+这两个组成由同一个初始预算内的实际树实现，且
+
+$$
+\boxed{
+\chi_k(x_H)=1,\quad \chi_k(y_H)=0,\quad
+|x_H|_1=\tau\le H,\quad |y_H|_1=H,\quad
+\Theta_k(H)=\frac{\phi^{-j}}{D_{j,H}}.}
+\tag{7.5}
+$$
+
+除差方向 $\pm(F_{j+1},-F_j)$ 外的全部反标签对，其相对比值严格更大；在该方向上，式 (7.4) 的平移使分母最大。因此 $C_j$ 不仅是这一差方向的共同来源预算，还在 $C_j\ge H_0$ 后成为式 (7.2) 极小差方向的准确切换预算。$H_0$ 是充分起点，不断言它是最小起点。
+
+对每个固定 $k$，尖锐渐近包络为
+
+$$
+\boxed{
+\begin{aligned}
+\liminf_{H\to\infty}H^2\Theta_k(H)
+&=\frac{\phi+r_-}{2\sqrt5},\\
+\limsup_{H\to\infty}H^2\Theta_k(H)
+&=\frac{(\phi+r_-)(1+r_-)\phi^2}
+ {2\sqrt5(2+\phi r_-)}.
+\end{aligned}}
+\tag{7.6}
+$$
+
+这里 $H$ 只沿正整数趋于无穷。两条预算墙子列分别达到这两个极限：
+
+$$
+\begin{aligned}
+\lim_{j\to\infty}C_j^2\Theta_k(C_j)
+&=\frac g{2\sqrt5},\\
+\lim_{j\to\infty}(C_{j+1}-1)^2\Theta_k(C_{j+1}-1)
+&=\frac{gs\phi^2}{2\sqrt5(2+\phi r_-)}.
+\end{aligned}
+\tag{7.7}
+$$
+
+证明。闭锥、整数祖先与最小许可预算直接复用[定理 2.3](#2-许可预算阶梯与深层碰撞前沿)。Fibonacci 递推及双根式给
+
+$$
+\frac12\le r_-<\frac1\phi<r_+\le\frac23,
+\qquad r_+-r_- =\frac1{F_tF_{t+1}},
+\qquad
+\chi_k(a,b)=1\ \Longleftrightarrow\ b>0,\ r_-b\le a\le r_+b.
+\tag{7.8}
+$$
+
+具体地，相邻倒比值 $F_{n-1}/F_n$ 位于 $1/2$ 与 $2/3$ 之间，并由 $F_{n-1}+\phi F_n=\phi^n$ 的共轭式交替处于 $1/\phi$ 两侧；Cassini 确定两端差为式 (7.8)。这些双根表达复用[母卷定义 18.1、命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)。
+
+$k\ge2$ 时，选一个辅助整数 $L^\dagger\ge k$，在[定理 3.2](#3-任意中间深度的许可噪声阶梯与共同实现预算)的条件下只取其方向预算结论；该结论允许任意 $j\ge t$，与 $L^\dagger$ 无关。$k=1$ 时直接用定理 2.2 的式 (2.5)。两者都给 $C_t=Q$、$C_j$ 严格递增且无界，故预算窗口指标唯一。这一步不把式 (3.5) 的有限输出残差延伸到 $j>3L+3$。
+
+先证式 (7.4) 的真实可行性。使用[母卷命题 105.2 证明中的矩阵幂与加法式](FIBONACCI_ATOMIC_RELATION_GENERATION.md#105-实际联合可达性标量返回与精确自主记忆)，有
+
+$$
+F_J=F_{2t+1}=F_t^2+F_{t+1}^2
+\ge2F_tF_{t+1}>sF_tF_{t+1}
+=\frac{s}{r_+-r_-}.
+\tag{7.9}
+$$
+
+因为 $s\le5/3<2$，最后比较严格。$j\ge J$ 因而给 $w\ge s/(r_+-r_-)$。由 $H\ge C_j\ge u+r_-w$，得 $\tau\ge sw$ 和 $B_H\ge w$。另一方面
+
+$$
+0\le\tau-sB_H<s\le(r_+-r_-)B_H,
+\qquad
+r_-B_H\le\tau-B_H\le r_+B_H.
+\tag{7.10}
+$$
+
+所以 $x_H$ 为许可非零整数组成。利用 $H,C_{j+1}$ 都是整数，$H<C_{j+1}=u+w+\lceil r_-u\rceil$ 蕴含 $H<su+w$，因为 $\lceil r_-u\rceil-1<r_-u$。于是
+
+$$
+0\le B_H-w
+\le\frac{H-u-r_-w}{s}
+<\frac{r_-u+(1-r_-)w}{s}<u.
+\tag{7.11}
+$$
+
+$y_H$ 的第一坐标至少为 $u$，第二坐标小于 $u$；而 $r_+<1$，故它非许可。两点的叶数恰为 $\tau,H$，且 $u>w$ 保证 $\tau<H$。其差为 $(u,-w)$，双根式给分子 $|e|=\phi^{-j}$。
+
+现在排除全部竞争方向。对任意反标签对，若差在交换符号后为 $(p,-z)$，其中整数 $p>z>0$，将许可端点记为 $a=(a_1,a_2)$。当另一端为 $a+(p,-z)$ 时，$a_2\ge z$ 且 $a_1\ge r_-a_2$，较大的叶数至少是 $p+r_-z$。当另一端为 $a-(p,-z)$ 时，$a_1\ge p$ 且 $a_2\ge a_1/r_+$，许可端点的叶数至少为 $(1+1/r_+)p>p+r_-z$。故两种方向都有必要条件
+
+$$
+\Lambda(p,z):=p+r_-z\le H.
+\tag{7.12}
+$$
+
+这重用式 (3.9)、(3.10) 的必要成本机制，不把它当作任意方向的可行性充分条件。
+
+Cassini 给 $\det((u,w),(u+w,u))=(-1)^j$，故两向量是整个整数格的一组基。唯一写成
+
+$$
+(p,z)=h(u,w)+i(u+w,u),\qquad h,i\in\mathbb Z,
+\qquad p-\phi z=e(h-i/\phi).
+\tag{7.13}
+$$
+
+后一式由 $u-\phi w=e$ 及 $(u+w)-\phi u=-e/\phi$ 得到。整数条件和 $H<C_{j+1}$ 又给
+$\Lambda(p,z)\le H<\Lambda(u+w,u)$。若 $h,i\ge0$，则 $i\ge1$ 已违反此严格预算界，所以 $i=0$，$h\ge1$；除 $(h,i)=(1,0)$ 外，残差至少为 $2|e|$。若两系数均非正，不能产生 $p,z>0$。若两系数异号且都非零，则 $|h-i/\phi|\ge1+1/\phi=\phi$。一个系数为零的其余情形或者已包含在第一种，或者不能产生正坐标。因此除 $(p,z)=(u,w)$ 外，这类方向的残差至少为 $\phi|e|$。
+
+若原差两个坐标同号，或一个坐标为零，其非零整数性给残差至少为一。异号差若写成 $(p,-z)$ 且 $p\le z$，则 $|p-\phi z|\ge(\phi-1)z\ge1/\phi$。$j\ge3$ 时，这两类也严格大于 $\phi|e|$。所以全部非 Fibonacci 竞争方向都已有严格分子间隙；尚须比较它们的相对分母。
+
+许可点 $a\in D_H$ 满足 $a_2\le H/s$，因而 $\ell(a)=|a|_1+(\phi-1)a_2\le\kappa H$；任意点 $b\in D_H$ 满足 $\ell(b)\le\phi H$。每个反标签分母因此至多为 $(\kappa+\phi)H$。式 (7.4) 的 $y_H$ 有叶数 $H$，故
+
+$$
+D_{j,H}=2\ell(y_H)-e\ge2H-|e|,
+\qquad
+\phi-\kappa=\frac{r_-}{\phi(1+r_-)}\ge\frac1{3\phi}.
+\tag{7.14}
+$$
+
+由 $H\ge3$、$j\ge3$，
+
+$$
+\phi D_{j,H}-(\kappa+\phi)H
+\ge(\phi-\kappa)H-\phi|e|
+\ge\frac1\phi-\phi^{-2}>0.
+\tag{7.15}
+$$
+
+因此任何非 Fibonacci 方向的比值至少为 $\phi|e|/((\kappa+\phi)H)>|e|/D_{j,H}$，分母不能逆转严格分子间隙。
+
+只剩 Fibonacci 方向。许可端点 $a$ 与另一端 $a-(u,-w)$ 的方向不可能：它要求 $|a|_1\ge(1+1/r_+)u\ge5u/2$，而 $H<su+w\le7u/3$；后一个弱界使用 $s\le5/3$ 及 $w/u\le2/3$。在另一方向，写许可端点为 $(a,b)$，非许可端点为 $(a+u,b-w)$。后者预算给 $a+b\le\tau$，许可锥给 $a\ge r_-b$，所以 $b\le B_H$，进而
+
+$$
+\ell(a,b)=a+b+(\phi-1)b
+\le\tau+(\phi-1)B_H.
+\tag{7.16}
+$$
+
+已构造的 $x_H$ 达到两个上界，故使 $2\ell(a,b)+e$ 最大。分子在此方向固定为 $|e|$，这证明式 (7.5) 及严格方向排除。
+
+这些可行点不是实锥替身。$S^{-k}$ 是整数矩阵，$S^{-k}x_H$ 为非零非负整数组成。按定义 1.1 先选一个具有此组成的完整有序树 $U$，再取初始树 $T_H=\rho^{3k}(U)$，就得到 $c(T_H)=x_H$、叶数 $\tau$。按 $y_H$ 的非负叶组成选择叶序与完整二叉括号，得到另一初始树 $T'_H$，叶数 $H$。随后才在这两棵初始树上施加合同规定的 $3L$ 次替换。此构造证明代表树存在，不断言任何指定树有这一语法祖先，不恢复括号或地址，也不授权逆执行。
+
+最后证明尖锐包络。经典 Binet 式与上述双嵌入表达在同一索引下给
+
+$$
+C_j=\frac{g\phi^j}{\sqrt5}+O_k(1),\qquad
+\frac{C_{j+1}}{C_j}\longrightarrow\phi,\qquad
+D_{j,H}=2\kappa(H-F_{j-1})+O_k(1).
+\tag{7.17}
+$$
+
+分母式由 $u-w=F_{j-1}$、$B_H=\tau/s+O(1)$ 及 $e=O(\phi^{-j})$ 得到，误差在整个窗口内有界。令 $h=H/C_j$，则 $1\le h<C_{j+1}/C_j$，Binet 还给 $F_{j-1}/C_j\to1/(\phi g)$。式 (7.5) 因而在窗口内一致给
+
+$$
+H^2\Theta_k(H)=f_k(h)+o(1),\qquad
+f_k(h)=\frac{gsh^2}{2\sqrt5(gh-1/\phi)}.
+\tag{7.18}
+$$
+
+一致性来自窗口内有界的 $h$ 与严格正的分母下界 $g-1/\phi=s$；$k$ 在此保持固定。导数为
+
+$$
+f'_k(h)=\frac{gs}{2\sqrt5}
+\frac{h(gh-2/\phi)}{(gh-1/\phi)^2}>0
+\quad(1\le h\le\phi),
+\tag{7.19}
+$$
+
+因为 $g\ge\phi+1/2>2/\phi$。在窗口上端稍超过 $\phi$ 的区间导数也仍正，且上端趋于 $\phi$，所以全部整数预算的极限下、上包络分别为 $f_k(1)$、$f_k(\phi)$。用 $g-1/\phi=s$ 与 $g\phi-1/\phi=2+\phi r_-$ 化简，得到式 (7.6)。取 $H=C_j$ 时 $h=1$；取 $H=C_{j+1}-1$ 时 $h\to\phi$，得到式 (7.7)。两个常数严格不同，因此不能将结论写成一个普遍常数乘 $H^{-2}$ 的渐近等式。证毕。
+

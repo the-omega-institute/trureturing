@@ -1,0 +1,14 @@
+**命题 43.16（选定 rival tight 锁下的双侧指数界）。** 假设命题43.11的槽清单中选定一个实际 rival 槽 $\alpha_\star$，满足
+
+$$
+ q_{\alpha_\star}(0)=0,\qquad q_{\alpha_\star}(1)>0.
+$$
+
+也就是该选定观察槽的周期极限成本恰为 $\beta$，而同一固定实际尾在该槽留下严格 seed margin。则存在常数 $C\ge c>0$，对所有 $n\ge0$ 有
+
+$$\boxed{c\,g^{Ln}=c\,a^n\le\beta-B_n\le C\,a^n=C\,g^{Ln},}$$
+
+并且 $B_n\uparrow\beta$。存在 $n_0$ 和 $\kappa>0$ 使
+
+$$\boxed{B_n=\beta-\kappa a^n\qquad(n\ge n_0).}$$
+

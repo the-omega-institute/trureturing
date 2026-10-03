@@ -1,0 +1,17 @@
+### 42.3 两旗标同步平方与精确充要条件
+
+本节的 $\mathcal H$ 可以取闭方向图 $\mathcal H_\beta$，或固定归属的 reference-owned 图 $\mathcal H_{\beta,\omega}^{\mathrm{ref}}$；第二来源投影均继承原 SCC 的相干性。
+
+在 $\mathcal H$ 的同步图中，状态为
+$$
+(u,v,d,a),\qquad d,a\in\{0,1\}.
+\tag{42.15}
+$$
+同步走边 $e:u\to u'$、$f:v\to v'$ 时，两条颜色边各自选择其配对来源两分量的共同颜色；$e$ 与 $f$ 的所选颜色可以不同。旗标更新为
+$$
+d'=d\lor[\ell_1(e)\ne\ell_1(f)],\qquad
+a'=a\lor T(e)\lor T(f).
+\tag{42.16}
+$$
+其中 $d$ 只看第一来源标签，颜色标签、第二来源标签和边编号都不能代替它。
+

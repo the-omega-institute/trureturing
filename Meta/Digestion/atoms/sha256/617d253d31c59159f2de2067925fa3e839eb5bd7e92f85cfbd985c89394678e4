@@ -1,0 +1,41 @@
+**命题 37.6（全部相容地址词、短长度与尖锐恢复）。** 以下分类列出每个达到的观察 $\rho=(w,r,(b_j))$ 的完整 $\mathcal A_\rho$；每个词的向量候选由引理 37.5 给出。
+
+$n=0$ 时 $\mathcal A_\rho=\{\varepsilon\}$，$R=(\omega|_k,z_0\bmod\ell)$ 是直接快照，目标仍为 $J_L$。
+
+$n=1$ 时
+
+$$
+\mathcal A_\rho=\{b\in\{0,1\}:bw\text{ 合法},\ b_0-qMr\equiv2b\pmod d\}.
+$$
+
+$d\le2$ 时它是全部接缝合法位，$d\ge3$ 时它是一个由 $R$ 确定的位。
+
+$n=2$ 时，令 $x_*=S^{-1}(b_0,b_1)^{\mathsf T}$，则
+
+$$
+\mathcal A_\rho=\{eb\in\{00,01,10\}:ebw\text{ 合法},\
+(-4e,2e-b)^{\mathsf T}\equiv M^2r-x_*\pmod d\}.
+$$
+
+因此 $d=1$ 时是全部接缝合法的相邻对；$d=2$ 时第二位 $b$ 确定，$b=0$ 时可为 $00,10$，$b=1$ 时仅可为 $01$；$d\ge3$ 时两位都确定。
+
+$n\ge3,m\ge3$ 时，保存的迹确定 $v=U_0\cdots U_{n-2}$ 及 $x_m=z_0\bmod m$，且
+
+$$
+\mathcal A_\rho=\{vb:b\in\{0,1\},\ vbw\text{ 合法},\
+x_m\equiv t_v+bM^{n-1}\alpha+M^nr\pmod d\}.
+$$
+
+$d=1$ 时两种接缝合法末位全部出现；$d\ge2$ 时末位唯一。
+
+$n\ge3,m=2$ 时，保存的迹确定非空中间词 $v=U_1\cdots U_{n-2}$ 及 $s_2=z_1\bmod2$，而相容词恰为
+
+$$
+\mathcal A_\rho=\{evb:e,b\in\{0,1\},\ evbw\text{ 合法},\
+s_2\equiv t_v+bM^{n-2}\alpha+M^{n-1}r\pmod d\}.
+$$
+
+这里 $d=\gcd(2,\ell)$。$\ell$ 偶时末位 $b$ 唯一，首位 $e$ 仅受 $ev$ 守卫；$\ell$ 奇时末位仅受 $vbw$ 守卫，首位仅受 $ev$ 守卫，全部合法组合共同出现。$n=2$ 时中间词为空，须用上面的相邻对分类。
+
+$n\ge3,m=1$ 时 $\mathcal A_\rho=\{u\in W_n:uw\text{ 合法}\}$，每个词的向量就是 $t_u+M^nr\bmod\ell$。
+

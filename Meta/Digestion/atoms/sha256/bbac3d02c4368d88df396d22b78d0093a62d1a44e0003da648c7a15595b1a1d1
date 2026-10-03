@@ -1,0 +1,25 @@
+**定理58.13（所有可供应模板历史的配置分离）。** 给定本章预算、归属与合同，取任意满足定义36.9的解码器 $\mathcal A$。在处理完长度 $N$ 历史的有限计算后，其实际完整配置数满足
+
+$$
+\mathcal C_{b,o,\kappa,\mathcal A}(N)
+\ge a^{\mathsf T}_{b,o,\kappa}(N)
+\quad(\mathsf T=\mathsf O,\mathsf A).
+\tag{58.58}
+$$
+
+因此
+
+$$
+B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)
+\ge\log_2\max\{1,a^{\mathsf T}_{b,o,\kappa}(N)\}-1,
+$$
+
+$$
+\boxed{\limsup_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}N
+\ge\eta^{\mathsf T}_{b,o,\kappa}.}
+\tag{58.59}
+$$
+
+仅凭 (58.14) 的 limsup 率，不能把 (58.59) 改写为同系数 liminf 下界。
+

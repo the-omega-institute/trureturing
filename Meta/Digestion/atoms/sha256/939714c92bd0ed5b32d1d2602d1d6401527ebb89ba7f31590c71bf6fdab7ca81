@@ -1,0 +1,53 @@
+**定义 1.1（共同来源、组成预算与末端响应）。** 令 $\mathcal T$ 为非空有限有序二叉树的集合，每个内节点恰有左右两个子树，每片叶标记为 $\alpha$ 或 $\beta$。组成计数 $c(T)=(a,b)^{\mathsf T}$ 的两个坐标分别是 $\alpha$ 叶数与 $\beta$ 叶数。全局替换 $\rho$ 在每片叶上按 $\alpha\mapsto\beta$、$\beta\mapsto\langle\beta,\alpha\rangle$ 作用，并以 $\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle$ 保持有序二叉括号；对应规则见[延拓卷 §1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#1-原始层关系先于数量解释)。叶地址是从根出发的有限左右词，左边记 $0$、右边记 $1$；地址、标签与括号属于来源，而本节恢复目标只取组成 $c(T)$。对整数 $H\ge1$，定义初始来源域及其任务商
+
+$$
+\mathcal T_H=\{T\in\mathcal T:|\operatorname{Leaves}(T)|\le H\},\qquad
+D_H=c(\mathcal T_H)
+=\{(a,b)\in\mathbb N_0^2:1\le a+b\le H\}.
+\tag{1.1}
+$$
+
+每个 $(a,b)\in D_H$ 都可实现：把 $a$ 个 $\alpha$ 和 $b$ 个 $\beta$ 排成叶序列，再任选完整二叉括号。不同叶序与括号可以有同一组成。按总叶数 $s=1,\ldots,H$ 分层，每层有 $s+1$ 个组成，故 $|D_H|=H(H+3)/2$。
+
+本节的格坐标实现、允许的前向动作及其数量响应分别为
+
+$$
+\begin{gathered}
+\gamma(T)=Bc(T)\in\mathbb R^2,\qquad
+B=\begin{pmatrix}2&3\\1&2\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\\
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+C=BSB^{-1}=\begin{pmatrix}3&2\\2&1\end{pmatrix},\qquad
+q=(2,3).
+\end{gathered}
+$$
+
+已知整数 $L\ge0$ 表示恰好 $3L$ 次全局替换 $\rho$。由 $c\rho=Mc$，
+
+$$
+\gamma(\rho^{3L}T)=C^L\gamma(T),\qquad
+n_L=qS^L=(F_m,F_{m+1}),\qquad m=3L+3,
+\tag{1.2}
+$$
+
+其中 Fibonacci 数列由 $F_0=0,F_1=F_2=1$ 及 $F_{j+2}=F_{j+1}+F_j$（$j\ge0$）定义。对 $x=(a,b)$ 写 $n_L(x)=F_ma+F_{m+1}b$；它也是 $C^LBx$ 的第一坐标。$B$ 仅作可逆换坐标，没有把原始组成认作五窗计数实现。$H$ 只限制初始叶数，替换中的来源及末端来源允许超过 $H$。
+
+末端观察合同固定已知 $E\in\mathbb Q_{\ge0}$，只给出一个 $r\in\mathbb Q$，其允许响应关系为
+
+$$
+\mathcal E_{H,L,E}
+=\{(x,r)\in D_H\times\mathbb Q:|r-n_L(x)|\le E\}.
+\tag{1.3}
+$$
+
+不提供早先读数档案、第二通道、叶标签或地址读取。令
+
+$$
+\phi=(1+\sqrt5)/2,\qquad \lambda=\phi^3,\qquad
+\widehat r=\lambda^{-L}r,\qquad \eta=\lambda^{-L}E.
+$$
+
+归一化报告与归一化真值的误差至多 $\eta$；因 $L$ 已知，这个缩放不增加观察信息。统一精确组成恢复指存在同一个 $R:\mathbb Q\to D_H$，使所有 $(x,r)\in\mathcal E_{H,L,E}$ 都满足 $R(r)=x$；恢复器可使用已知的 $H,L,E$。误差关系是数学传感器假设，不含实际设备的精度或执行结论。
+
+本来源域接受任意叶组成，不附加规范五窗的接缝、单位位或收缩条带。正数量规范来源的开条带另见[母卷命题 182.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#182-收缩窗口对规范来源的识别与范数预算)；它与 [Gazeau–Verger-Gaugry，Proposition 3.1／式 (3.2)、(3.11)](https://doi.org/10.5802/aif.2245) 中非负黄金基整数的条带合同的坐标对应见[来源联合完成卷约定 1.3](FIB_SOURCE_COMPLETION_DYNAMICS.md#1-有限来源组成与经典条带)。以下碰撞不反驳那些受限来源上的识别结论。
+

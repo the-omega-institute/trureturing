@@ -1,0 +1,44 @@
+#### 41.11.2　正负斜率凸包和严格筛选
+
+对语法合法 $F$ 置 $a=(-g)^L$，写
+
+$$
+ f_{U_i}(x)=A_{1i}+ax,\qquad f_{V_i}(y)=A_{2i}+ay,
+$$
+
+$A_j^- =\min_iA_{ji}$、$A_j^+=\max_iA_{ji}$，并用完整公式
+
+$$
+H_j=
+\begin{cases}
+\left[\dfrac{A_j^-}{1-a},\dfrac{A_j^+}{1-a}\right],&a>0,\\[8pt]
+\left[\dfrac{A_j^-+aA_j^+}{1-a^2},\dfrac{A_j^++aA_j^-}{1-a^2}\right],&a<0.
+\end{cases}
+$$
+
+然后列出全部 前缀/后缀 端点区间
+
+$$
+(f_\ell(H_1),c),\quad(f_m(H_2),c),
+$$
+
+$$
+(f_{U_i[r:]}(H_1),(W_i)_r),\quad
+(f_{V_i[r:]}(H_2),(W_i)_r),
+\quad i=0,1,\quad0\le r<L.
+$$
+
+对每项 $(K,j)$ 取端点距离最大值，全部项的最大值定义为 $\theta(F)$。因
+
+$$
+\operatorname{dist}(x,[u,v])=\max\{u-x,0,x-v\},
+$$
+
+$\theta(F)\in\mathbb Q(t)$ 且严格比较 $\theta(F)<\lambda$ 可决定。只保留
+
+$$
+\mathcal C_\epsilon=\{F:\text{语法合法且 }\theta(F)<\lambda\}.
+$$
+
+定理39.2.1和定理39.3.2给每个保留族一对固定合法终尾，支持所有有限二进制拼接（含空拼接）；单点对手和奇数返回均保留。
+

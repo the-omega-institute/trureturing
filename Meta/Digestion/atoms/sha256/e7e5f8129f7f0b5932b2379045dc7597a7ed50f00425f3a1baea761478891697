@@ -1,0 +1,37 @@
+**推论 12.6（左端删位熵及不消失的绝对修正）。** 对固定 $k\ge0$，
+
+$$
+\begin{aligned}
+E_k^{\rm left}:=\lim_{N\to\infty}E_{N,k}
+ &=p_{k,0}\log_2F_{k+2}+p_{k,1}\log_2F_{k+1}\\
+ &=k\log_2\phi+D_2(p_k\Vert p_0).
+\end{aligned}
+$$
+
+它也等于 $H_{\nu_{\rm left}}(\omega|_k\mid\sigma^k\omega)$。$k=0$ 时两项均零；对每个 $k>0$，$D_2(p_k\Vert p_0)>0$。进一步，
+
+$$
+p_k\longrightarrow\pi=\frac{(\phi^2,1)}{\phi^2+1},\qquad
+D_2(p_k\Vert p_0)\longrightarrow D_2(\pi\Vert p_0)>0,
+$$
+
+$$
+\frac{D_2(p_k\Vert p_0)}k\longrightarrow0,
+\qquad \frac{E_k^{\rm left}}k\longrightarrow\log_2\phi.
+$$
+
+证明。固定 $k$ 时在推论 12.4 中取 Binet 极限，得到第一行。为识别其条件熵，$k\ge1$ 时任意合法长度 $k+1$ 词 $ub$ 的 $\nu_{\rm left}$ 概率都是 $\phi^{-(k+1+b)}$。对同一 $b$ 有 $F_{k+2-b}$ 个这样的前缀。因此给定 $\omega_k=b$，前缀在 $\mathcal C_k(b)$ 上均匀；Markov 性使再给定任意有限未来柱不改变这个条件律。柱上的条件积分恒等式延伸到完整未来的 $\sigma$ 代数，得到一个正则条件分布版本，避免对零概率的单条无限尾取概率之比。其条件熵是 $\log_2F_{k+2-b}$，按 $p_k$ 平均即为 $E_k^{\rm left}$。空前缀的情形直接成立。
+
+准确比值为
+
+$$
+\frac{p_{k,0}}{p_{0,0}}=F_{k+2}\phi^{-k},\qquad
+\frac{p_{k,1}}{p_{0,1}}=F_{k+1}\phi^{-k}.
+$$
+
+将它们代入相对熵定义，便得到第二行。$k>0$ 时，$\phi^k=F_k\phi+F_{k-1}$ 是无理数，而 $F_{k+2}$ 是整数，故第一个比值不可能为一，$p_k\ne p_0$。引理 9.9 的相对熵非负性及等号准则遂给严格正性。
+
+Binet 公式还给 $p_{k,0}\to\phi/\sqrt5$、$p_{k,1}\to\phi^{-1}/\sqrt5$，这正是 $\pi$；并非 $p_0$。由于 $p_0$ 的两个坐标均正，相对熵在概率单纯形上连续。$\pi\ne p_0$ 给正的常数极限；除以 $k$ 才趋零。
+
+对平稳符号律 $\nu$，定理 11.6、11.7 的符号条件律给 $H_\nu(\omega|_k\mid\sigma^k\omega)=k\log_2\phi$。在 $\nu_{\rm left}$ 下，已知左端使相同完整尾的前缀均匀；在 $\nu$ 下，其权重为 $h_{u_0}/(\phi^kh_b)$。这里比较的是分别声明的两个来源律，正的 KL 项准确保留了它们的端点区别。无限地址的损失均指有限前缀的条件熵，不取整个无限流熵的“无穷减无穷”。$\square$
+

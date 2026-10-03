@@ -1,0 +1,37 @@
+**命题 43.13（rival 的凹余量，允许进入或穿过颜色格）。** 对命题43.11的每个第二分量槽 $\alpha$，令其后缀斜率为 $\gamma_\alpha=(-g)^{s_\alpha}$，并置
+
+$$
+ q_\alpha(t)=\beta-\operatorname{dist}\bigl(r_\alpha(y)+t\gamma_\alpha h,J_{c_\alpha}\bigr),\qquad 0\le t\le1.
+$$
+
+由于 $r_\alpha(y+t h)=r_\alpha(y)+t\gamma_\alpha h$ 沿同一合法 guard 区间的仿射像且位于物理支撑 $X$，而 $J_{c_\alpha}\subseteq X$，物理裁剪不改变到 $J_{c_\alpha}$ 的距离表达式。函数 $q_\alpha$ 在整个 $[0,1]$ 上都是凹函数；即使扰动进入或穿过颜色格，下列界仍成立。若 $q_\alpha(0)=0$，则
+
+$$
+ t q_\alpha(1)\le q_\alpha(t)\le|\gamma_\alpha h|t;
+$$
+
+若 $q_\alpha(0)>0$，则
+
+$$
+ q_\alpha(t)\ge\min\{q_\alpha(0),q_\alpha(1)\}>0.
+$$
+
+所以命题43.11的有限槽清单给出 $c_2>0$，使所有深度不超过 $n$ 的 rival departure 均满足
+
+$$
+\beta-\operatorname{dist}(r_\alpha(F^k(x_2)),J_{c_\alpha})\ge c_2a^n.
+$$
+
+**证明。** 到闭区间的距离是凸函数，故其负值加常数 $q_\alpha$ 凹；距离还是 1-Lipschitz，给出上界。由于 $F^k(x_2)=y+a^kh$，实际取值是 $q_\alpha(a^k)$。凹函数位于端点弦之上，分别得到两种下界。若 reference 值或固定尾值进入或穿过颜色格内部，公式仍只使用距离函数的凸性，不要求扰动停留在同一个外部侧；两端和整条线段均在 $X$ 内，所以物理裁剪不会改变所用距离。
+
+槽数有限，取
+
+$$
+ c_2=\min_\alpha\begin{cases}
+ q_\alpha(1),&q_\alpha(0)=0,\\
+ \min\{q_\alpha(0),q_\alpha(1)\},&q_\alpha(0)>0
+ \end{cases}>0.
+$$
+
+因 $k\le n$ 且 $a^k\ge a^n$，即得统一下界。证毕。
+

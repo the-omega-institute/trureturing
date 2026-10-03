@@ -1,0 +1,34 @@
+**定义 14.1（固定祖先少数坐标的实有限乘积延拓）。** 固定整数 $k\ge1$、$j\ge0$，置
+
+$$
+ d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad D=F_d=E+A,\quad L=F_{d+1}=A+D.
+$$
+
+对实数 $t\ge j+1$ 定义
+
+$$
+ a=At+Ej,\qquad b=Dt+Aj,\qquad n=Lt+Dj,
+$$
+
+并用 $(x)_m=\prod_{h=0}^{m-1}(x+h)$、$(x)_0=1$ 记上升乘积。置
+
+$$
+ H_{k,j}(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},
+ \qquad q_{k,j}(t)=\frac{t-j}{j+1}H_{k,j}(t).
+ \tag{14.1}
+$$
+
+在整数 $t\ge j+1$ 上，定义 13.1 的相邻密度比为 $Q_{k,t,j}=q_{k,j}(t)$。这是因为
+
+$$
+ (2n-1)_{2D}=4^D(n-\tfrac12)_D(n)_D,
+ \tag{14.2}
+$$
+
+而（13.5）中的 $(n)_D$ 正好约去。故 $q$ 在非整数处只是有限乘积的实辅助延拓，那里没有实叶数的树；整数网格仍由完整有序树、其组成祖先和替换像给出。由（12.3）、（12.15）及[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，每个整数网格使用同一个来源计数和生产者单射性；若同时保留 $0\le j\le t$ 的整张网格，可取共同预算
+
+$$
+ H_t\ge F_{d+2}t.
+ \tag{14.3}
+$$
+

@@ -1,0 +1,6 @@
+## 58. 固定预算下实际成对模板的容量、有限填充帽与严格过渡夹界
+
+本章固定同一 FIB 来源关系、六色仪器、guard、端点归属及完整恢复合同，只研究明确规定的两种成对返回模板。结论包括：固定亚临界预算下能够实际出现的 padding 指数的精确最大值，全部联合可供应模板历史的计数率上界，达到该上界的完整预算平台，以及平台之间的严格双侧界。计数上界的对象始终是这两个模板；它不成为全部实际历史或全局最优解码器的系数上界。
+
+公开数学前提固定为 [FIB_SOURCE_COMPLETION_DYNAMICS.md，修订 c99e47275ca3ebcebbff8fbb06ae894ff29aa122](https://github.com/the-omega-institute/trureturing/blob/c99e47275ca3ebcebbff8fbb06ae894ff29aa122/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的 §49.1–49.3、定理49.8、定义36.9、定理33.13、定理36.27、推论36.28及第38章。所需有限帽供应与精确长度递推在58.5–58.8.1复用 [已公开第56章，修订94fcad88b13f7899547a168f2a3a3655f33d331c](https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22347-L22756) 的56.2–56.11，其中56.5必须与56.100合读；其余公开前提仍固定如上。这里的容量是组合历史及完整可读配置的数学容量，结论是纸面数学证明。
+

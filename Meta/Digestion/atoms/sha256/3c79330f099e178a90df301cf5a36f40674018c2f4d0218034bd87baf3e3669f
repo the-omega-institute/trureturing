@@ -1,0 +1,26 @@
+**定义 5.3（带时差群胚与仿射参数）。** 定义
+
+$$
+\mathcal G_\delta
+=\{(p,n,q):\text{存在 }k,l\ge0, n=k-l,
+\ \delta^kp=\delta^lq\}.
+$$
+
+箭头从 $q$ 指向 $p$。单位为 $(p,0,p)$，逆为 $(q,-n,p)$，乘法为
+
+$$
+(p,n,q)(q,m,r)=(p,n+m,r).
+$$
+
+合法词 $u,v$ 与开集 $O\subseteq(F_u\cap F_v)\times G$ 定义开双截面
+
+$$
+Z(u,v,O)=\{(h_u(t),|u|-|v|,h_v(t)):t\in O\}.
+$$
+
+这些双截面给出群胚拓扑。时差 $n$ 保留前缀长度差；对箭头取参数
+
+$$
+a=t_u-M^nt_v\in\mathbb Z^2,\qquad z_p=M^nz_q+\iota(a).
+$$
+
