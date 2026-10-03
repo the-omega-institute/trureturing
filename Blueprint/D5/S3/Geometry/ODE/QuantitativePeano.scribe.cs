@@ -2,6 +2,8 @@ using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.ODE;
 internal sealed class QuantitativePeanoDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Geometry/rolfes2026peano");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A quantitative Peano integral solution from delayed Tonelli approximations.",
         H("Continuous cylinder fields and integral solutions"),
@@ -11,7 +13,7 @@ internal sealed class QuantitativePeanoDocument : IScribeDocumentDefinition
                 + "exists_eq_forall_mem_Icc_eq_integral"),
             H("Peano existence on the prescribed cylinder interval"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(Source),
             Blocks(
                 Paragraph(Text("Let E be a finite-dimensional real normed vector space, "
                     + "including dimension zero. Let f be jointly continuous on the closed "

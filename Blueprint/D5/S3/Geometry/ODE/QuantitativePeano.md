@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Geometry/ODE/QuantitativePeano.exists_eq_forall_mem_Icc_e
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/ODE/QuantitativePeano.exists_eq_forall_mem_Icc_eq_integral` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Julian Rolfes, Luke Schleef, Philipp Svinger, Paul Niessner, Florian Grube (2026). *Peano Existence Theorem*. URL: <https://github.com/philipp-svinger/mathlib4/blob/a6c8f2f1ae84638491c3f1635c9f8448bda1e727/Mathlib/Analysis/ODE/Peano.lean>.
 
 *Commentary.*
 

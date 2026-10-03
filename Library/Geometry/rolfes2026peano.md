@@ -14,6 +14,8 @@ triage: anchor
 
 # Quantitative Peano existence on a closed cylinder
 
+## Verified locator
+
 **Theorem 1.1 (quantitative Peano integral solution).** Let $E$ be a finite-dimensional real normed vector space, including dimension zero. Let $f:\mathbb R\times E\to E$, $t_{\min}\le t_0\le t_{\max}$, $x_0\in E$, and $r,L\ge0$. Assume that $f$ is jointly continuous on the cylinder $[t_{\min},t_{\max}]\times\overline B(x_0,r)$, that $\|f(t,x)\|\le L$ throughout that cylinder, and that
 
 $$
