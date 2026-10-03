@@ -45,6 +45,15 @@ class JudgeProducerContracts(unittest.TestCase):
         result = subprocess.run(['bash', str(ENTRY)], capture_output=True, text=True)
         self.assertEqual(2, result.returncode, result.stderr)
 
+    def test_absent_bundle_directory_reports_fallback_and_exits_zero(self):
+        temp = tempfile.TemporaryDirectory(prefix='judge-producer-contract-')
+        self.addCleanup(temp.cleanup)
+        bundle = Path(temp.name) / 'absent bundle'
+        result = subprocess.run(['bash', str(ENTRY), str(bundle)], capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual('', result.stdout)
+        self.assertEqual('JUDGE_LEAN_PRODUCER fallback reason=bundle-absent\n', result.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()
