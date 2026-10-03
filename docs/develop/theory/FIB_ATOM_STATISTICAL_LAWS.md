@@ -7047,3 +7047,557 @@ I(\mu)=\inf_{\eta:\,\text{流守恒且边缘为 }\mu}J(\eta).
 因此经验占用偏离平稳律的指数代价由核的相对熵结构决定；压力的梯度给出典型测度，压力的 Hessian 在可微点给出长期协方差。这里的“压力”“自由能”只是有限 Markov 模型的谱和大偏差术语，不能据此宣称真实热力学自由能。
 
 对 FIB 的结论边界是：只有在明确声明有限状态闭包、核 \(Q\)、初态和采样协议后，才可使用上述 LDP、Poisson 浓缩或分枝压力；递归本身不指定这些概率律，也不把词序统计自动升级成温度、熵产生、能量守恒或普适物理定律。
+
+## 68. 外加 Markov 电流、熵产生与线性响应
+
+**定义 68.1（有限上下文与外加核）。** 取 FIB 递归在某个有限上下文闭包上的状态集 \(\mathcal C\)，状态映射由逐字源或 ATOM 给出；另行指定有限核 \(Q=(Q_{ij})_{i,j\in\mathcal C}\)。假设 \(Q\) primitive，且 \(\pi Q=\pi\) 是唯一平稳律。FIB 只给出 \(\mathcal C\) 与标签，不给出 \(Q\)、初态或联合随机历史。以下轨迹 \(X_0,X_1,\ldots\) 均是外加核 \(Q\) 生成的平稳链；若只给定初态，所有渐近式另需说明初态边界项。
+
+**定义 68.2（边电流与压力）。** 令 \(j_{ij}=-j_{ji}\) 为有向边电流，在 \(Q_{ij}>0\) 的边上定义。置
+\[
+Y_t=j_{X_tX_{t+1}},\qquad
+J_n=\sum_{t=0}^{n-1}Y_t,\qquad
+\bar j=\sum_{ij}\pi_iQ_{ij}j_{ij}.
+\]
+对实 \(\chi\) 定义倾斜矩阵
+\[
+Q_\chi(i,j)=Q_{ij}e^{\chi j_{ij}},\qquad
+\Lambda(\chi)=\log\rho(Q_\chi).
+\]
+primitive 假设下，
+\[
+\lim_{n\to\infty}\frac1n\log\mathbb E_\pi e^{\chi J_n}
+=\Lambda(\chi),
+\]
+且 \(\Lambda\) 在零点邻域解析。
+
+**定理 68.3（Green–Kubo 与 Poisson—鞅表示）。** 令 \(\widetilde Y_t=Y_t-\bar j\)。有限 primitive 链的几何混合使协方差级数绝对收敛，并且
+\[
+\Lambda'(0)=\bar j,\qquad
+\Lambda''(0)=\Gamma,
+\]
+\[
+\Gamma=\operatorname{Var}_\pi(Y_0)
++2\sum_{m\ge1}\operatorname{Cov}_\pi(Y_0,Y_m).
+\]
+写
+\[
+b_i=\sum_jQ_{ij}j_{ij}-\bar j,\qquad
+(I-Q)h=b,\qquad
+\sum_i\pi_i h_i=0.
+\]
+令
+\[
+M(i,j)=j_{ij}-\bar j+h_j-h_i.
+\]
+则
+\[
+\mathbb E[M(X_t,X_{t+1})\mid X_t]=0,\qquad
+\Gamma=\sum_{ij}\pi_iQ_{ij}M(i,j)^2\ge0.
+\]
+并且
+\[
+J_n-n\bar j
+=\sum_{t=0}^{n-1}M(X_t,X_{t+1})
++h(X_0)-h(X_n),
+\]
+所以端点余项是有界边界项。若
+\[
+\Pi=\mathbf1\pi^{\mathsf T},\qquad
+Z=\sum_{m\ge0}(Q^m-\Pi)
+=(I-Q+\Pi)^{-1}-\Pi,
+\]
+则 \(h=Zb\)，给出有限状态 Green 算子版本的 Green–Kubo 公式。若物理时间取 \(t=n\delta\)，电流率的方差系数为 \(\Gamma/\delta\)，扩散系数约定为 \(\Gamma/(2\delta)\)。
+
+**定义 68.4（路径熵产生）。** 在有向支持对称
+\(Q_{ij}>0\Longleftrightarrow Q_{ji}>0\) 且 \(\pi_i>0\) 时，定义
+\[
+\sigma_{ij}
+=\log\frac{\pi_iQ_{ij}}{\pi_jQ_{ji}},
+\qquad
+\Sigma_n=\sum_{t=0}^{n-1}\sigma_{X_tX_{t+1}}.
+\]
+它是正向平稳路径与时间反演路径的对数似然比。平均率为
+\[
+\dot s=\sum_{ij}\pi_iQ_{ij}\sigma_{ij}
+=\frac12\sum_{ij}
+(\pi_iQ_{ij}-\pi_jQ_{ji})
+\log\frac{\pi_iQ_{ij}}{\pi_jQ_{ji}}\ge0,
+\]
+等号当且仅当满足详细平衡
+\(\pi_iQ_{ij}=\pi_jQ_{ji}\)。对
+\[
+\Lambda_\sigma(\chi)
+=\log\rho\!\left(Q_{ij}e^{\chi\sigma_{ij}}\right)
+\]
+有
+\[
+\Lambda_\sigma(\chi)=\Lambda_\sigma(-1-\chi),
+\]
+前提是支持对称且时间反演路径律具有相同的平稳边界项。一向边在对数比中给出无穷值，不能直接套用本式。这里的“熵”是路径相对熵率的无量纲名称，不能由 FIB 自动解释为热力学熵。
+
+**定理 68.5（精确线性响应）。** 设 \(Q_\theta\) 与平稳律 \(\pi_\theta\) 在 \(\theta=0\) 附近可微，支持不变，并令
+\[
+s_0(i)=\left.\partial_\theta\log\pi_\theta(i)\right|_0,
+\qquad
+s(i,j)=\left.\partial_\theta\log Q_\theta(i,j)\right|_0.
+\]
+对任意有限路径泛函 \(F(X_0,\ldots,X_T)\)，路径得分
+\[
+S_T=s_0(X_0)+\sum_{t=0}^{T-1}s(X_t,X_{t+1})
+\]
+满足 \(\mathbb E_0S_T=0\) 与
+\[
+\left.\partial_\theta\mathbb E_\theta F\right|_0
+=\operatorname{Cov}_0(F,S_T).
+\]
+取 \(F=J_T\) 并除以 \(T\)，在几何混合与可积条件下可得到稳态电流的响应率；没有额外假设时，响应由该 score 协方差决定，不能直接等同于同一电流的自相关。
+
+**推论 68.6（平衡涨落—耗散的受限形式）。** 若 \(Q_0\) 满足详细平衡，外场参数是与反时间奇电流 \(j\) 共轭的无量纲力，并且路径得分的反时间奇部分满足
+\[
+S_T^{\mathrm{odd}}=\tfrac12J_T+o(T),
+\]
+同时时间对称的 frenetic 部分对所测奇电流的长期协方差为零，则
+\[
+L:=\left.\partial_\theta\bar j_\theta\right|_0
+=\frac12\Gamma.
+\]
+多电流 \(j^a\) 时，
+\[
+L_{ab}
+=\frac12\sum_{m\in\mathbb Z}
+\operatorname{Cov}_0(Y_0^a,Y_m^b),
+\]
+并在这些平衡条件下满足 Onsager 对称性。若外场有物理量纲、熵单位取 \(k_B\)，还须由外加模型另给换算因子；FIB 不提供这些因子。脱离详细平衡、共轭得分或 frenetic 消失条件时，只保留定理 68.5 的 score 协方差式。
+
+本节的边界是：有限上下文不闭合、\(Q\) 非 primitive、无平稳律、支持不对称、初态或环境随时间改变时，只能给有限时长或分块结论，不能无条件取谱率或 Green–Kubo 极限。FIB 递归只提供词序、长度、类型或标签及可选有限状态闭包；\(Q\)、电流、时间反演、外场、温度、\(k_B\)、物理单位和观测通道均为外加选择。因此本节得到的是指定有限 Markov 模型中的统计关系，不推出真实热流、熵、输运系数或任何物理普适定律。
+
+## 69. 半马尔可夫重尾等待、异常 Green 响应与分数阶边界
+
+FIB 递归在本节只提供有限状态集 \(S\)、词序、组合关系和阻抗标签。嵌入核、等待时间、杀死概率和物理时钟均为外加模型。令 \(Q\) 为 \(S\) 上的子随机嵌入核，\(\rho(Q)<1\)。在状态 \(i\) 停留的等待时间为 \(W_i\)，其 Laplace 变换记为
+\[
+\phi_i(s)=\mathbb E e^{-sW_i},\qquad
+\Phi(s)=\operatorname{diag}(\phi_i(s)),\qquad
+\overline\Phi(s)
+=\operatorname{diag}\left(\frac{1-\phi_i(s)}s\right).
+\]
+约定先在当前状态等待，再按 \(Q\) 跳转。若 \(\nu\) 是初态行向量，则物理时间的活跃占用 Green 变换为
+\[
+\widehat U(s)
+=\nu[I-\Phi(s)Q]^{-1}\overline\Phi(s),
+\qquad
+\widehat S(s)=\widehat U(s)\mathbf1,
+\]
+其中 \(S(t)\) 是时刻 \(t\) 尚未吸收的概率。对状态奖励 \(g\)，累计物理时间响应的变换为
+\[
+\widehat R_g(s)=\widehat U(s)g.
+\]
+因此离散嵌入步数的 resolvent 与物理时钟的 resolvent 不是同一个对象；等待协议决定它们之间的变换。
+
+**定理 69.1（有限均值与重尾的分界）。** 若
+\[
+\phi_i(s)=1-\mu_i s+o(s),\qquad \mu_i<\infty,
+\]
+则
+\[
+\widehat U(0)
+=\nu(I-Q)^{-1}\operatorname{diag}(\mu_i)
+\]
+给出有限 Green 占用和有限期望寿命。若存在 \(\alpha\in(0,1)\) 和 \(a_i>0\) 使
+\[
+\phi_i(s)=1-a_i s^\alpha+o(s^\alpha),
+\qquad s\downarrow0,
+\]
+并满足非晶格与 Tauberian 条件，则
+\[
+\widehat S(s)\sim C s^{\alpha-1},
+\qquad
+C=\nu(I-Q)^{-1}a,
+\]
+从而
+\[
+S(t)\sim\frac{C}{\Gamma(1-\alpha)}t^{-\alpha},
+\qquad
+\int_0^tS(u)\,du
+\sim\frac{C}{\Gamma(2-\alpha)}t^{1-\alpha}.
+\]
+于是嵌入链可有几何杀死谱，而物理时间的生存尾却是幂律，且平均寿命发散。一般奖励 \(g\) 在相同 Tauberian 条件下具有
+\[
+\widehat R_g(s)\sim
+s^{\alpha-1}\,
+\nu(I-Q)^{-1}\operatorname{diag}(a)g
+\]
+所决定的异常标度；常数随奖励与状态依赖等待共同改变。
+
+若各状态共享 \(\phi(s)\)，则
+\[
+\widehat U(s)
+=\nu[I-\phi(s)Q]^{-1}\frac{1-\phi(s)}s.
+\]
+若同时引入小步长族
+\[
+Q_\delta=I+\delta^\alpha L+o(\delta^\alpha),
+\qquad
+\phi_\delta(s)=1-\delta^\alpha s^\alpha+o(\delta^\alpha),
+\]
+则在声明的逆稳定时钟缩放下
+\[
+\widehat U_\delta(s)
+\longrightarrow
+\nu s^{\alpha-1}(s^\alpha I-L)^{-1}.
+\]
+这是该外加模型的分数阶 resolvent。若 \(Q\) 固定且 \(\rho(Q)<1\)，只能推出幂律生存和异常窗口，不应直接把结果写成上述分数阶生成器。
+
+等待尾指数不一致时，最小指数、尾常数和状态访问次序共同决定主项；若 \(\rho(Q)=1\)、环境无谱隙或等待分布有更复杂的慢变因子，可能出现 aging 或 Lamperti 型极限，不能沿用 \(C\) 的简单公式。有限均值、重尾和时钟缩放必须分别声明。上述幂律、记忆核和分数阶术语属于半马尔可夫模型，不是 FIB 递归自动产生的真实异常扩散定律。
+
+## 70. 多型系谱二阶统计与随机上下文矩阵乘积
+
+令外加多型分枝的均值矩阵为 \(M\)，类型数有限，且 \(M\) primitive。记从类型 \(i\) 出发的第 \(n\) 代总数为 \(N_n\)，均值向量
+\[
+u_n(i)=\mathbb E_iN_n,\qquad
+u_{n+1}=Mu_n,\qquad u_0=\mathbf1.
+\]
+令
+\[
+B_i(p,q)
+=\mathbb E_i\!\left[\xi_p(\xi_q-\delta_{pq})\right]
+\]
+为二阶阶乘核，并令
+\[
+F_n(i)=\mathbb E_i[N_n(N_n-1)].
+\]
+则分枝独立性给出精确递推
+\[
+F_{n+1}=MF_n+b_n,\qquad F_0=0,
+\]
+其中
+\[
+(b_n)_i
+=\sum_{p,q}B_i(p,q)u_n(p)u_n(q).
+\]
+展开为
+\[
+F_n
+=\sum_{t=0}^{n-1}M^t b_{n-1-t}.
+\]
+深度 \(t\) 的项对应两条后代谱系最近共同祖先在该层分裂；归一化这些项得到 annealed 二粒子共同祖先的权重。对指定末端类型 \(a,b\)，同样有
+\[
+F_{n+1}(i;a,b)
+=\sum_jM_{ij}F_n(j;a,b)
++\sum_{p,q}B_i(p,q)
+(M^n)_{pa}(M^n)_{qb}.
+\]
+在 primitive、超临界和有限二阶矩条件下，若存在非退化可达分裂，固定 \(t\) 后 \(n\to\infty\) 的共同祖先尾部由
+\[
+F\text{ 的分裂项}\asymp \rho^{\,2n-t}
+\]
+控制；再对 \(t\) 取渐近时，可得到上下界形式
+\[
+c_1\rho^{-t}
+\le \liminf_{n\to\infty}\Pr(T_n\ge t)
+\le \limsup_{n\to\infty}\Pr(T_n\ge t)
+\le c_2\rho^{-t},
+\]
+其中常数和适用的周期类依赖根分布与 \(B_i\)。若没有可达二阶分裂、仅在周期类中分裂或二阶矩不有限，则不能声称该几何尾。
+
+均值矩阵 \(M\) 只决定一阶 Perron 增长，\(B_i\) 才决定方差、聚簇和共同祖先。单型 \(M=[2]\) 的两个模型——每个个体恒生两个子代，或以概率一半生零个、以概率一半生四个——有相同均值和 Perron 增长，但灭绝概率、极限变量方差和系谱共祖均不同。这一反例阻止把确定性 FIB 计数直接解释成唯一随机分枝律。
+
+还可令有限类型上下文随外加环境变化，得到非负矩阵乘积
+\[
+Z_n=\nu A_0A_1\cdots A_{n-1},
+\]
+其中 \(A_t\) 是环境 \(\omega_t\) 下的替换或转移矩阵。若环境平稳遍历、\(\mathbb E\log^+\|A_0\|<\infty\)，并有统一正块或投影收缩，则 Furstenberg–Kesten 率
+\[
+\lambda_q
+=\lim_{n\to\infty}\frac1n
+\log\|A_0A_1\cdots A_{n-1}v\|
+\]
+几乎处处存在。环境独立时
+\[
+\mathbb E Z_n=\nu(\mathbb EA_0)^n\!,
+\qquad
+\log\rho(\mathbb EA_0)\ge\lambda_q
+\]
+在适用的初态和正性条件下成立，且一般严格不等。若 \(\log\|A_t\|\) 具有指数矩，可定义
+\[
+\Lambda(\theta)
+=\lim_{n\to\infty}\frac1n
+\log\mathbb E
+\exp\!\left(
+\theta\log\|A_0\cdots A_{n-1}v\|
+\right).
+\]
+在 \(\Lambda\) 可微并满足 Gärtner–Ellis 条件时，增长率具有大偏差原理，\(\Lambda'(0)=\lambda_q\)，\(\Lambda''(0)\) 给出环境乘积的长期方差。矩阵环境、正性、独立性和范数均为外加条件，不能把 \(\lambda_q\) 或 annealed 率视为 FIB 内生的物理指数。
+
+## 71. 路径指数倾斜的非线性响应、后验稳定性与观测商类
+
+FIB 只提供路径载体、标签和组合索引。本节的基准路径律 \(P_0\)、路径奖励 \(A\)、观测通道和参数先验均为外加对象。对有限路径定义
+\[
+\frac{dP_\lambda}{dP_0}(x)
+=\exp\{\lambda A(x)-\Psi(\lambda)\},
+\qquad
+\Psi(\lambda)=\log\mathbb E_0e^{\lambda A}.
+\]
+若 \(A\) 有界，则 \(\Psi\) 在全实轴上光滑，并且
+\[
+\Psi'(0)=\mathbb E_0A,\qquad
+\Psi''(0)=\operatorname{Var}_0(A),\qquad
+\Psi^{(r)}(0)=\kappa_r(A).
+\]
+
+**定理 71.1（线性与二阶响应）。** 令
+\(m_F(\lambda)=\mathbb E_\lambda F\)，\(a=\mathbb E_0A\)。则
+\[
+m_F'(0)=\operatorname{Cov}_0(F,A),
+\]
+\[
+m_F''(0)
+=\mathbb E_0[(F-\mathbb E_0F)(A-a)^2]
+=\operatorname{Cov}_0\!\left(F,(A-a)^2\right).
+\]
+故
+\[
+|m_F'(0)|
+\le\sqrt{\operatorname{Var}_0(F)\operatorname{Var}_0(A)},
+\]
+\[
+|m_F''(0)|
+\le\sqrt{\operatorname{Var}_0(F)
+\operatorname{Var}_0((A-a)^2)}.
+\]
+这些是纯粹的路径测度恒等式；若动力学本身随 \(\lambda\) 改变，还必须加入核或初态的 score 与 Hessian 项，不能把指数倾斜公式冒充一般的物理涨落—响应定律。
+
+若 \(A_T=\sum_{t=0}^{T-1}a(X_t)\)，基准链平稳且满足
+\[
+|\operatorname{Cov}_0(a(X_0),a(X_k))|
+\le C\rho^k,\qquad 0\le\rho<1,
+\]
+则
+\[
+\operatorname{Var}_0(A_T)
+\le C\left[T+2\sum_{k=1}^{T-1}(T-k)\rho^k\right]
+\le CT\frac{1+\rho}{1-\rho}.
+\]
+因此一阶响应的自然上界为 \(O(\sqrt T)\)，而 \(\Psi''(0)=O(T)\)。这里的 \(\rho\)、平稳初态和协方差衰减来自外加核。
+
+**定理 71.2（似然扰动到后验的总变差界）。** 令参数空间为有限或可测空间，先验为 \(\Pi\)，观测为 \(y\)，基准似然和扰动似然分别为 \(L_\theta(y)\) 与 \(\widetilde L_\theta(y)\)。若两者在 \(\Pi\)-几乎处处的共同支撑上满足
+\[
+|\log\widetilde L_\theta(y)-\log L_\theta(y)|\le r,
+\]
+记相应后验为 \(\Pi_y,\widetilde\Pi_y\)。则
+\[
+\frac{d\widetilde\Pi_y}{d\Pi_y}(\theta)
+=\frac{e^{\delta(\theta)}}{\mathbb E_{\Pi_y}e^\delta},
+\qquad |\delta|\le r,
+\]
+并有
+\[
+e^{-2r}\le
+\frac{d\widetilde\Pi_y}{d\Pi_y}
+\le e^{2r},
+\qquad
+\operatorname{TV}(\Pi_y,\widetilde\Pi_y)
+\le\frac{e^{2r}-1}{e^{2r}+1}
+=\tanh r.
+\]
+任意有界后验泛函 \(b\) 满足
+\[
+|\mathbb E_{\Pi_y}b-\mathbb E_{\widetilde\Pi_y}b|
+\le\operatorname{osc}(b)\tanh r.
+\]
+若完整路径似然来自
+\[
+\nu_\theta(x_0)\prod_{t<T}Q_\theta(x_t,x_{t+1}),
+\]
+并且共同支撑上
+\[
+\left|\log\frac{\widetilde\nu_\theta}{\nu_\theta}\right|\le r_0,
+\qquad
+\left|\log\frac{\widetilde Q_\theta(i,j)}
+{Q_\theta(i,j)}\right|\le r_Q,
+\]
+则可取 \(r=r_0+Tr_Q\)，得到
+\[
+\operatorname{TV}(\Pi_y,\widetilde\Pi_y)
+\le\tanh(r_0+Tr_Q).
+\]
+行的总变差很小并不保证对数比很小；支撑出现零点时必须先处理绝对连续性。
+
+在 \(\nu\ll\widetilde\nu\)、\(Q(i,\cdot)\ll\widetilde Q(i,\cdot)\) 时，路径相对熵满足链式公式
+\[
+D_{\mathrm{KL}}(P_T^{\nu,Q}\|P_T^{\widetilde\nu,\widetilde Q})
+=
+D_{\mathrm{KL}}(\nu\|\widetilde\nu)
++\sum_{t=0}^{T-1}
+\mathbb E_{\nu,Q}
+D_{\mathrm{KL}}(Q(X_t,\cdot)\|
+\widetilde Q(X_t,\cdot)).
+\]
+Pinsker 不等式给出
+\[
+\operatorname{TV}(P_T^{\nu,Q},P_T^{\widetilde\nu,\widetilde Q})
+\le
+\sqrt{\tfrac12D_{\mathrm{KL}}(P_T^{\nu,Q}\|
+P_T^{\widetilde\nu,\widetilde Q})}.
+\]
+支撑不包含时相对熵为无穷，不能套用该界。
+
+**命题 71.3（观测推前的后验不可辨识）。** 设观测通道 \(O_T\) 将完整路径律 \(P_\theta\) 推前为 \(P_\theta^O\)。则
+\[
+\operatorname{TV}(P_\theta^O,P_{\theta'}^O)
+\le\operatorname{TV}(P_\theta,P_{\theta'}).
+\]
+若 \(P_\theta^O=P_{\theta'}^O\)，离散先验对两参数均为正，则对几乎所有观测 \(y\)
+\[
+\frac{\Pi(\theta\mid y)}{\Pi(\theta'\mid y)}
+=\frac{\Pi(\theta)}{\Pi(\theta')}.
+\]
+无穷数据也只能识别观测等价类
+\[
+[\theta]=\{\theta':P_{\theta'}^O=P_\theta^O\}.
+\]
+若两观测律的总变差至多为 \(\delta\)，则任意二元测试的两类错误和至少为 \(1-\delta\)；因此小的观测差异不能保证后验把两个参数稳定分开。这一结论是统计不可辨识边界，不是 FIB 递归对参数的否定。
+
+## 72. 外加多粒子平均场、传播混沌与水动力极限
+
+令 \(E_j\) 是第 \(j\) 代 FIB 合法的有限上下文闭包。FIB 只给出 \(E_j\)、标签和组合关系。给定外加核
+\[
+Q_j(x,\mu)\in\mathcal P(E_j),
+\]
+令 \(N\) 个粒子满足
+\[
+\mu_t^{N,j}=\frac1N\sum_{i=1}^N\delta_{X_t^{N,i}},
+\qquad
+\Pr(X_{t+1}^{N,i}=y\mid\mathcal F_t)
+=Q_j(X_t^{N,i},\mu_t^{N,j})(y),
+\]
+其中条件独立只表示给定当前经验测度后的抽样独立；初态、相互作用、边界、时间单位和 \(N\) 均为外加数据。定义
+\[
+\Phi_j(\mu)=\mu Q_{j,\mu},
+\qquad
+\mu_{t+1,j}=\Phi_j(\mu_{t,j}).
+\]
+
+**定理 72.1（固定时域传播混沌）。** 在 \(E_j\) 上取有界度量 \(d_j\le1\)，假设存在与 \(j\) 无关的 \(L\) 使
+\[
+\|Q_j(x,\mu)-Q_j(x,\nu)\|_{\mathrm{TV}}
+\le Ld_j(\mu,\nu),
+\]
+且初态经验测度误差为
+\[
+\mathbb E d_j(\mu_0^{N,j},\mu_{0,j})
+\le C_0N^{-1/2}.
+\]
+则对每个固定 \(T\) 存在 \(C_T\) 使
+\[
+\max_{0\le t\le T}
+\mathbb E d_j(\mu_t^{N,j},\mu_{t,j})
+\le C_TN^{-1/2}.
+\]
+有限状态的 Hoeffding 界还给出，对固定 \(\varepsilon>0\)
+\[
+\Pr\!\left(
+\max_{t\le T}d_j(\mu_t^{N,j},\mu_{t,j})>\varepsilon
+\right)
+\le C(T,|E_j|)
+\exp\!\left(-cN\varepsilon^2/C_T^2\right).
+\]
+令 \(Y^1,\ldots,Y^k\) 是转移核
+\(Q_j(\,\cdot\,,\mu_{t,j})\) 驱动的独立非线性链，则固定 \(k,T\) 时
+\[
+d_{\mathrm{BL}}\!\left(
+\mathcal L(X_{0:T}^{N,1:k}),
+\mathcal L(Y_{0:T}^{1:k})
+\right)
+\le C_{T,k}N^{-1/2}.
+\]
+这就是有限时域传播混沌。若初态仅交换而非渐近乘积，极限需条件于其 de Finetti 变量；若有公共噪声，则只能声称条件传播混沌。
+
+**命题 72.2（FIB 代数增长与粒子数的双尺度误差）。** 假设存在极限状态空间 \(E_\infty\)、嵌入 \(\iota_j:E_j\to E_\infty\)、极限核 \(Q_\infty\)，并且
+\[
+\sup_{x,\mu}
+d_{\mathrm{TV}}\!\left(
+(\iota_j)_\#Q_j(x,\mu),
+Q_\infty(\iota_jx,(\iota_j)_\#\mu)
+\right)
+\le\eta_j\longrightarrow0.
+\]
+若 Lipschitz 常数和初态误差在 \(j\) 上统一，令 \(\mu_t^\infty\) 由极限流递推，则
+\[
+\max_{t\le T}
+\mathbb E d\!\left(
+(\iota_j)_\#\mu_t^{N,j},\mu_t^\infty
+\right)
+\le
+C_T\bigl(N^{-1/2}+\eta_j+e_{0,j}\bigr).
+\]
+只有在 \(N\to\infty\)、\(j\to\infty\) 且各误差同时消失时，才可交换粒子数极限和 FIB 代数增长极限。没有统一逼近、矩界或 Lipschitz 常数时，只能逐 \(j\) 处理。
+
+若另给位置嵌入 \(x_j:E_j\to[0,1]\)、步长 \(\epsilon_j,\delta_j\)，对光滑测试函数定义外加离散生成器
+\[
+(\mathcal L_{j,\mu}\varphi)(x,c)
+=\delta_j^{-1}\sum_yQ_j((x,c),\mu)(y)
+[\varphi(x_j(y),c(y))-\varphi(x,c)].
+\]
+假设在紧集上一致有
+\[
+\mathcal L_{j,\mu}\varphi
+\longrightarrow
+b_c(x,\mu)\partial_x\varphi
++\tfrac12a_c(x,\mu)\partial_{xx}\varphi
++\sum_{d\in\mathcal C}
+R_{cd}(x,\mu)[\varphi(x,d)-\varphi(x,c)],
+\]
+并有初态紧性、二阶跳跃矩界和唯一弱解。若 \(N,j\to\infty\) 时离散误差与 \(N^{-1/2}\) 同时趋零，则经验测度的极限满足
+\[
+\partial_t\rho_c
+=-\partial_x(b_c\rho_c)
++\tfrac12\partial_{xx}(a_c\rho_c)
++\sum_dR_{dc}(x,\rho)\rho_d
+\]
+的弱形式。对每个光滑 \(\varphi\)，
+\[
+\langle\varphi,\rho_t\rangle
+=\langle\varphi,\rho_0\rangle
++\int_0^t
+\langle\mathcal A_{\rho_s}\varphi,\rho_s\rangle\,ds.
+\]
+反射或吸收边界必须写进 \(Q_j\) 和弱问题；不能从词序递归推出。证明的鞅为
+\[
+M_t^{N,j}(\varphi)
+=\langle\varphi,\mu_t^{N,j}\rangle
+-\langle\varphi,\mu_0^{N,j}\rangle
+-\sum_{s<t}\delta_j
+\langle\mathcal L_{j,\mu_s^{N,j}}\varphi,
+\mu_s^{N,j}\rangle,
+\]
+其固定宏观时间上的条件二次变差为 \(O(N^{-1})\)。若 PDE 不唯一，只能声称紧性和“任一子列极限均为弱解”。
+
+两型 \(\mathcal C=\{\alpha,\beta\}\) 的反应—扩散特例为
+\[
+\partial_t\rho_\alpha
+=D_\alpha\partial_{xx}\rho_\alpha
+-\partial_x(b_\alpha\rho_\alpha)
+-r_{\alpha\beta}(x,\rho)\rho_\alpha
++r_{\beta\alpha}(x,\rho)\rho_\beta,
+\]
+\[
+\partial_t\rho_\beta
+=D_\beta\partial_{xx}\rho_\beta
+-\partial_x(b_\beta\rho_\beta)
++r_{\alpha\beta}(x,\rho)\rho_\alpha
+-r_{\beta\alpha}(x,\rho)\rho_\beta.
+\]
+扩散系数、漂移、反应率和质量边界均由外加核确定；FIB 的 \(\alpha,\beta\) 出现频率不指定它们。
+
+**命题 72.3（统计动力学延拓不唯一）。** 给定同一 \(E_j\) 与同一 FIB 递归关系，任意 Lipschitz 映射
+\(\Psi:\mathcal P(E_j)\to\mathcal P(E_j)\) 都可令
+\[
+Q_\Psi(x,\mu)=\Psi(\mu).
+\]
+于是平均场流恰为
+\[
+\mu_{t+1}=\Psi(\mu_t).
+\]
+常值 \(\Psi\) 给出独立重采样；依赖 \(\alpha\) 占比的 \(\Psi\) 可给出合作或竞争流；选择带空间嵌入的 \(\Psi\) 可给出不同反应—扩散极限。它们共享同一 FIB 词序和计数，却有不同固定点、波速、扩散系数与反应项。因此不存在仅凭 FIB 递归唯一确定的传播混沌常数、PDE 或“物理定律”。
+
+本节的适用边界是：有限时域不能升级成长时稳定；\(N\to\infty\) 与 \(j\to\infty\) 的次序及联合缩放必须声明；初态、核、相互作用、位置嵌入、边界、噪声和观测通道均为外加条件。缺乏统一 Lipschitz 或矩界、初态不渐近乘积、公共噪声未条件化或 PDE 不唯一时，结论相应降为条件极限、随机极限或开放边界。水动力结论是所给离散模型的弱极限，不是 FIB 自身推出的真实热力学、能量守恒、普适性或物理实在性。
