@@ -8896,3 +8896,452 @@ I=x_{n+1}^2+x_n^2+x_{n-1}^2-2x_{n+1}x_nx_{n-1}-1
 才可推出谱或动力学局域化。扩散标度、Thouless 时间、平均能级间距和无量纲导通数同样需要外加动力学与谱极限，不能由词长直接推出。
 
 因此，同一 FIB 载体可以在不同外加势、跃迁、噪声、几何、边界和观测下承载 Bloch 传播、扩散、临界输运或指数局域化。FIB 递归本身只给出状态、标签、词序和组合关系，不能单独决定真实 Anderson 物理、散射定律或任何具有物理单位的普适统计律。
+
+## 93. FIB 状态载体上的外加热力学协议、功恒等式与粗粒化不可逆性
+
+固定有限 FIB 上下文闭包 \(S=E_j\)。递归只给状态、标签与词序；时间反演 \(\vartheta\)、能量 \(H_\lambda\)、温度 \(\beta^{-1}\)、协议 \(\lambda_0,\ldots,\lambda_T\)、初态律和转移核均是外加。正向第 \(k\) 步核为 \(P_k(x,y)\)，反向核记为 \(P_k^\dagger(\vartheta y,\vartheta x)\)，假设双向支撑相同，并以流入热浴的热量 \(q_k(x,y)\) 施加局部详细平衡
+\[
+\log\frac{P_k(x,y)}{P_k^\dagger(\vartheta y,\vartheta x)}=\beta q_k(x,y).
+\tag{93.1}
+\]
+外加第一定律约定为 \(H_{\lambda_{k+1}}(y)-H_{\lambda_k}(x)=w_k(x,y)-q_k(x,y)\)。对路径 \(\omega=(x_0,\ldots,x_T)\)，令 \(\Theta\omega=(\vartheta x_T,\ldots,\vartheta x_0)\)，并设
+\[
+P_F(\omega)=\rho_0(x_0)\prod_{k<T}P_k(x_k,x_{k+1}),\quad
+P_R(\Theta\omega)=\rho_T^\dagger(\vartheta x_T)\prod_{k<T}P_k^\dagger(\vartheta x_{k+1},\vartheta x_k).
+\]
+路径熵产生为
+\[
+\Sigma(\omega)=\log\frac{P_F(\omega)}{P_R(\Theta\omega)}
+=\log\frac{\rho_0(x_0)}{\rho_T^\dagger(\vartheta x_T)}+\beta\sum_{k<T}q_k(x_k,x_{k+1}).
+\tag{93.2}
+\]
+路径反演双射给出有限时域涨落恒等式
+\[
+\mathbb E_F e^{-\Sigma}=1,\qquad
+\mathbb E_F\Sigma=D_{\rm KL}(P_F\Vert P_R\circ\Theta)\ge0.
+\tag{93.3}
+\]
+若定义反向随机变量 \(\Sigma_R(\Theta\omega)=-\Sigma(\omega)\)，则共同支撑上
+\[
+p_F(s)=e^s p_R(-s).
+\tag{93.4}
+\]
+零均值当且仅当正、反向路径律在反演下相同；负的单条路径熵产生可以出现，但平均值不能为负。
+
+取两端 Gibbs 律 \(\pi_{\lambda_0},\pi_{\lambda_T}\)，其中 \(\pi_\lambda(x)=Z_\lambda^{-1}e^{-\beta H_\lambda(x)}\)，并令 \(\Delta F=-\beta^{-1}\log(Z_{\lambda_T}/Z_{\lambda_0})\)。由 (93.2) 和第一定律，\(W=\sum_{k<T}w_k\) 满足
+\[
+\Sigma=\beta(W-\Delta F),
+\qquad
+\mathbb E_F e^{-\beta W}=e^{-\beta\Delta F},
+\qquad
+\mathbb E_FW\ge\Delta F.
+\tag{93.5}
+\]
+这说明功界和 Jarzynski 恒等式需能量、热浴与协议同时存在；它们不由 FIB 递归单独给出。
+
+令 FIB 词或标签是外加映射 \(\phi:S\to\mathcal Y\)，并把逐时映射记为 \(Y=\phi^{\otimes(T+1)}(X)\)。推前正、反向路径律为 \(P_F^\phi\) 与 \(R^\phi\)，其中 \(R=P_R\circ\Theta\)。可见路径熵产生
+\[
+\Sigma_\phi(Y)=\log\frac{P_F^\phi(Y)}{R^\phi(Y)}
+\]
+满足
+\[
+\mathbb E_F\Sigma-\mathbb E_F\Sigma_\phi
+=D(P_F\Vert R)-D(P_F^\phi\Vert R^\phi)
+=\mathbb E_{Y\sim P_F^\phi}
+ D\!\left(P_F(\cdot\mid Y)\Vert R(\cdot\mid Y)\right)\ge0.
+\tag{93.6}
+\]
+故词层至多看见微观不可逆性；等号要求每个词纤维内正、反向条件路径律相同。若词映射把方向信息合并，词层可以表观详细平衡，而隐藏状态仍有正熵产生。
+
+反例取同一三状态 FIB 载体 \(S=\{0,1,2\}\)，恒等时间反演和恒定能量。外加核为
+\[
+P(i,i+1\!\!\pmod3)=p,\quad P(i,i-1\!\!\pmod3)=q,\quad P(i,i)=1-p-q,
+\]
+其中 \(p,q>0,\ p+q<1\)，平稳律均匀。反向核交换 \(p,q\)，稳态路径熵产生率为
+\[
+\sigma=(p-q)\log(p/q),
+\]
+所以 \(p=q\) 时为零，\(p\ne q\) 时为正。若 \(\phi(0)=\phi(1)=\phi(2)\)，所有词路径都相同而 \(\Sigma_\phi=0\)；同一载体在保留方向的标签映射下又可显示正的词层熵产生。改变 \(p,q\)、能量协议或读出映射即可得到相反的可见统计，而 FIB 递归不变。
+
+若支撑不互易、反向协议未定义或状态映射随层改变，(93.3)–(93.6)须改写为共同支撑上的扩展值相对熵；不能把有限路径恒等式无条件提升为长时熵率或真实第二定律。FIB 递归只提供组合载体，不提供温度、热量、能量、时间反演、局部详细平衡、熵单位或物理不可逆方向。
+
+## 94. FIB 外加更新奖励的重尾稳定极限与连续时间随机游走
+
+固定一条由 FIB ATOM 递归产生的上下文序列或再生块序列，记第 \(k\) 个块的上下文为 \(C_k\)。FIB 只给出 \(C_k\) 的组合来源、标签和词序；给定 \((C_k,C_{k+1})\) 后产生等待时间、奖励和位移的联合律
+\[
+K_{C_k,C_{k+1}}(dw,dy,dz)
+\]
+是外加的。它还必须另行指定再生协议、随机源、物理时钟和空间嵌入。令
+\[
+W_k>0,\qquad Y_k\in\mathbb R^m,\qquad J_k\in\mathbb R^d
+\]
+分别为等待、奖励和位移标记，
+\[
+T_n=\sum_{k=1}^nW_k,\qquad
+N(t)=\max\{n:T_n\le t\},\qquad
+R(t)=\sum_{k=1}^{N(t)}Y_k,\qquad
+X(t)=\sum_{k=1}^{N(t)}J_k .
+\]
+这里采用“完成第 \(N(t)\) 个块即计入奖励”的约定；换用另一约定会改变共同跳跃处的极限版本。若 \(\mathbb EW<\infty\) 且块序列遍历，通常有 \(N(t)/t\to1/\mathbb EW\)，并在 \(\mathbb EY\) 有限时得到 \(R(t)/t\to\mathbb EY/\mathbb EW\)。
+
+**定理 94.1（重尾更新时钟的稳定极限）。** 假设再生块独立同分布，或由具有足够混合和统一尾条件的有限型外加链调制，并且
+\[
+\Pr(W_1>t)\sim c_Wt^{-\alpha}L_W(t),
+\qquad 0<\alpha<1,
+\]
+其中 \(L_W\) 慢变。取正则变换的 \(a_n\) 使得
+\(n\Pr(W_1>a_n)\to1\)。在非晶格及标准域吸引条件下，存在稳定子过程 \(D_\alpha\)，使
+\[
+a_n^{-1}T_{\lfloor nu\rfloor}\Rightarrow D_\alpha(u),
+\qquad
+\mathbb E e^{-\lambda D_\alpha(u)}
+=\exp\{-u\,\kappa_W\lambda^\alpha\}.
+\]
+其逆过程
+\[
+E_\alpha(t)=\inf\{u:D_\alpha(u)>t\}
+\]
+满足
+\[
+\frac{N(a_nt)}n\Rightarrow E_\alpha(t).
+\]
+逆过程的函数空间收敛一般须按 \(M_1\) 拓扑或有限维分布表述；常数 \(\kappa_W\) 和尺度由尾常数及 \(a_n\) 的归一化决定。\(E_\alpha\) 在固定时刻给出 Mittag--Leffler 型随机时钟，因此重尾等待造成的是随机的操作时间变换，而非一个由 FIB 词长直接确定的分数阶时钟。
+
+**定理 94.2（更新奖励的稳定随机时间变换）。** 设奖励块在操作时间中满足域吸引条件。若 \(\mu_Y=\mathbb EY\) 存在，且存在 \(d_n\) 与 \(\beta\in(1,2]\) 使
+\[
+\frac1{d_n}\sum_{k=1}^{\lfloor nu\rfloor}(Y_k-\mu_Y)
+\Rightarrow Z_\beta(u),
+\]
+其中 \(Z_\beta\) 是 \(\beta\) 稳定 Lévy 过程；并且等待和奖励的联合极限没有未声明的共同跳跃（例如二者独立，或其联合 Lévy 测度已给定），则
+\[
+\frac{R(a_nt)-\mu_YN(a_nt)}{d_n}
+\Rightarrow Z_\beta(E_\alpha(t)).
+\]
+当 \(\beta=2\) 时，\(Z_2\) 是布朗运动，这给出被重尾逆时钟随机化的高斯奖励涨落。若 \(\beta\le1\)，\(\mu_Y\) 通常不存在，应改用相应的截尾中心化或直接写
+\[
+d_n^{-1}R(a_nt)\Rightarrow Z_\beta(E_\alpha(t));
+\]
+不能把有限均值公式强行延拓。等待与奖励在同一块内强相关时，联合极限一般是二维 Lévy 过程 \((D,Z)\)，共同跳跃会区分领先 CTRW、滞后 CTRW 和夹带奖励的版本；此时不能把 \(Z\) 与 \(E_\alpha\) 假设为独立。
+
+上述表达也给出重尾更新奖励的首要量级。若奖励均值非零，则
+\[
+\frac{R(a_nt)}n\Rightarrow\mu_YE_\alpha(t),
+\]
+而不是收敛到确定的线性函数；若奖励均值为零且方差有限，则波动尺度为 \(d_n\asymp n^{1/2}\)。有限二阶、零均值且与等待独立时，令
+\(\operatorname{Var}(J_1)=\sigma_J^2\)，则
+\[
+\mathbb E|X(t)|^2=\sigma_J^2 U_W(t),
+\qquad U_W(t)=\mathbb EN(t).
+\]
+只有在纯幂律尾且慢变因子归一化为常数时，才可进一步写 \(U_W(t)\sim C_{\alpha,W}t^\alpha\)，从而典型位移量级为 \(t^{\alpha/2}\)。
+
+**定理 94.3（CTRW 位移的稳定极限与异常扩散）。** 若位移标记在操作时间中满足
+\[
+(d_n^{(J)})^{-1}\sum_{k=1}^{\lfloor nu\rfloor}J_k
+\Rightarrow A_\gamma(u),
+\qquad 0<\gamma\le2,
+\]
+其中 \(A_\gamma\) 为对称或非对称 \(\gamma\) 稳定过程，且与等待极限的共同跳跃关系已明确，则在独立或无共同跳跃的情形
+\[
+\frac{X(a_nt)}{d_n^{(J)}}
+\Rightarrow A_\gamma(E_\alpha(t)).
+\]
+有限二阶、零均值且与等待独立时给出 \(t^{\alpha/2}\) 的典型尺度；若 \(J_k\) 具有 \(\gamma\) 稳定尾，则纯幂律归一化给出量级 \(t^{\alpha/\gamma}\)，但当 \(\gamma<2\) 时二阶矩不存在，不能继续使用均方位移作定义。若等待和位移耦合，例如另加 \(J_k=vW_ke_1\)，则
+\[
+X(t)=vT_{N(t)}e_1
+\]
+与 \(t\) 同阶，极限由年龄和剩余等待的 Lamperti 型比例决定；这与独立有限方差跳步的次扩散完全不同。
+
+**命题 94.4（FIB 类型调制只改变外加尾混合）。** 假设上下文 \(C_k\) 是一个外加不可约有限链，平稳频率为 \(\pi_i\)，且在类型 \(i\) 下
+\[
+\Pr(W_k>t\mid C_k=i)\sim c_i t^{-\alpha_i}L_i(t).
+\]
+在条件独立和足够混合下，平稳混合尾为
+\[
+\Pr(W_k>t)\sim
+\sum_i\pi_i c_i t^{-\alpha_i}L_i(t),
+\]
+所以具有正频率的最小 \(\alpha_i\) 通常支配更新时钟；若频率不存在、类型团簇长记忆或尾部条件律相关，必须重新计算联合尾，不能套用该混合式。FIB 替换频率至多提供候选类型权重；\(\pi_i\)、\(c_i\)、\(\alpha_i\)、混合性和尾部相关均是外加假设。
+
+反例保持同一 FIB 上下文序列不变：取 \(W_k\equiv1\)、独立有限方差对称 \(J_k\)，得到普通中心极限定标度 \(t^{1/2}\)；改取 Pareto-\(\alpha\) 等待而保持同一跳步，得到次扩散标度 \(t^{\alpha/2}\)；再把跳步与等待耦合为 \(J_k=vW_ke_1\)，位移变为 \(t\) 阶；改取独立的 \(\gamma\) 稳定跳步，则得到 \(t^{\alpha/\gamma}\) 的随机时间稳定过程。四种模型使用同一个 FIB 载体，却有不同甚至相反的长时统计律。若没有再生块的独立或混合条件、尾部域吸引、联合跳跃规则、初始延迟和边界约定，只能给有限时间恒等式或子列极限，不能声称稳定过程、Mittag--Leffler 时钟、CTRW 异常扩散或任何物理普适律。等待律、奖励律、随机时钟、空间嵌入、速度单位和观测协议全都外加；FIB 递归本身只提供状态、标签、词序和组合骨架。
+
+## 95. 外加边界驱动 FIB 上下文的守恒流、熵产生与稳态大偏差
+
+固定第 \(j\) 代 FIB 上下文图 \(E_j\)，另给内部跃迁反应 \(r\in\mathcal R_j\) 及计数状态 \(\eta\)。每个反应有化学计量向量 \(\nu_r\)、速率 \(c_r(\eta)\)；左右或多边界储库以 \(b\in\partial\) 的进出速率 \(c_b^+(\eta),c_b^-(\eta)\) 驱动。对线性守恒量 \(q\in\mathbb R^{E_j}\)，若
+\[
+q\cdot\nu_r=0\qquad(r\in\mathcal R_j),
+\]
+则内部动力学守恒；边界通量满足
+\[
+\frac d{dt}\langle q,\eta_t\rangle
+=\sum_{b\in\partial}q\cdot\nu_b\,J_b(t),
+\qquad
+J_b=c_b^+-c_b^-.
+\]
+FIB 递归只给标签和组合图，不给 \(\nu_r\)、速率或储库化学势；守恒量必须由外加反应网络登记。若内部边表示粒子从 \(x\) 到 \(y\) 的流，经验电荷
+\(m_q=\sum_xq(x)\eta(x)\) 满足离散连续性式
+\[
+\dot m_q=
+\frac12\sum_{x,y}(q(y)-q(x))J_{xy}
++\sum_bJ_b^q.
+\]
+
+对有限不可约的外加连续时间链，给定边界速率后存在唯一稳态
+\(\pi_j^{\mathrm{NESS}}\)；稳态流满足
+\[
+\operatorname{div}J=0\quad\text{在内部},
+\qquad
+J\cdot n=J_b\quad\text{在边界}.
+\]
+有限状态不可约性失败时，稳态可以不唯一。连续极限还需另给位置嵌入、网格宽度 \(h_j\)、密度尺度 \(K\) 和时间缩放；典型扩散尺度为 \(t\sim h_j^{-2}\)，边界速率须按 \(h_j\) 缩放以得到有限 Robin 通量。所得守恒场满足
+\[
+\partial_t\rho+\nabla\!\cdot j(\rho)=0,
+\qquad
+j(\rho)=-D(\rho)\nabla\rho+\chi(\rho)E,
+\]
+配以外加的 Dirichlet 储库密度、Robin 交换律
+\(j\cdot n=\kappa(\rho_b-\rho)\)，或周期、零通量边界。若左右化学势不同，稳态可有非零流；相等化学势且满足详细平衡时才是平衡特例。
+
+在离散链满足局部详细平衡记账时，稳态电流
+\[
+J_{xy}=\pi_j^{\mathrm{NESS}}(x)r(x,y)
+-\pi_j^{\mathrm{NESS}}(y)r(y,x)
+\]
+的内部加边界熵产生率为
+\[
+\dot S_{\mathrm{prod}}
+=\frac12\sum_{x,y}J_{xy}
+\log\frac{\pi_j^{\mathrm{NESS}}(x)r(x,y)}
+{\pi_j^{\mathrm{NESS}}(y)r(y,x)}
++\sum_bJ_b\mathcal A_b\ge0,
+\]
+其中 \(\mathcal A_b\) 是储库给定的化学势或热力学亲和力。若把储库状态并入总链，边界项同样包含在边求和中。连续本构满足相应 Einstein 或迁移率条件时，体熵产生可写为
+\[
+\sigma(\rho)=\int_\Omega
+j(\rho)^{\mathsf T}\chi(\rho)^{-1}j(\rho)\,du\ge0,
+\]
+并须另加边界项 \(J_b\mathcal A_b\)。非平衡流、迁移率和亲和力均来自外加核，FIB 标签不自动给出热力学能、温度或熵。
+
+令 \(K\) 为明确登记的系统尺度（可为粒子数、胞元数或体积；不能默认为 \(N\)）。在满足独立局部噪声、指数紧性和守恒连续性式的模型中，经验密度—流 \((\rho^K,j^K)\) 在固定宏观时域满足
+\[
+\Pr[(\rho^K,j^K)\approx(\rho,j)]
+\asymp\exp[-K I_{[0,T]}(\rho,j)],
+\qquad
+\partial_t\rho+\nabla\!\cdot j=0,
+\]
+典型扩散噪声为 \(2\chi(\rho)\)，此时
+\[
+I_{[0,T]}
+=\frac14\int_0^T\!\int_\Omega
+[j-j(\rho)]^{\mathsf T}\chi(\rho)^{-1}
+[j-j(\rho)]\,du\,dt
++I_{\partial}[j_b],
+\]
+其中 \(I_\partial\) 是外加边界储库通量的代价；若 \(\chi\) 奇异，改用受控通量表示并只在可达方向计费。稳态准势定义为
+\[
+V(\rho)=\inf_{\substack{T>0,\ \rho_{-T}=\bar\rho\\ \rho_0=\rho}}
+I_{[-T,0]}(\rho,j).
+\]
+在稳态大偏差成立时，
+\[
+\Pr(\rho^K\approx\rho)\asymp e^{-K V(\rho)}.
+\]
+对应 Hamilton 泛函（含边界项）满足
+\[
+\mathcal H(\rho,p)=
+\int_\Omega
+[\nabla p\cdot j(\rho)
++\nabla p^{\mathsf T}\chi(\rho)\nabla p]\,du
++\mathcal H_\partial(\rho,p),
+\qquad
+\mathcal H\!\left(\rho,\frac{\delta V}{\delta\rho}\right)=0
+\]
+（黏性意义）。
+
+需先固定 FIB 代数增长 \(j\)、粒子或体积尺度 \(K\)、网格宽度 \(h_j\)、时间缩放和边界速率；若要密度场而非测度值极限，通常还需每个宏观胞元的粒子数发散，例如 \(Nh_j^d\to\infty\)。在固定 \(j\)、固定 \(K\) 的有限链上只能得到有限状态 NESS；\(K\to\infty\) 的流体或大偏差极限要求统一速率、矩界、局部平衡及边界层控制。若内部反应不满足守恒、边界速率不具有限通量尺度、链不不可约，或 \(D,\chi\) 不足以保证唯一弱解，只能报告相应的子列或条件结果。改变同一 FIB 标签上的内部核或储库可把系统变成零流平衡、非零流 NESS、吸收态或多稳态；因此守恒律、熵产生、稳态准势和所谓热力学定律都不是 FIB 递归单独推出的。
+
+
+## 96. FIB 词模式命中、稀有事件与外加 Poisson 簇
+
+固定一个由 FIB 递归给出的模式 \(w^{(j)}=w_0\cdots w_{\ell_j-1}\)，并令外加读出序列 \(Y_0,Y_1,\ldots\) 取值于同一标签集。定义模式命中指标
+\[
+I_k^{(j)}
+=\mathbf 1\{(Y_k,\ldots,Y_{k+\ell_j-1})=w^{(j)}\},
+\qquad
+N_n^{(j)}=\sum_{k=0}^{n-1}I_k^{(j)},
+\]
+以及首次命中时间
+\[
+\tau_j=\inf\{k\ge0:I_k^{(j)}=1\}.
+\]
+模式概率 \(p_j=\Pr(I_0^{(j)}=1)\)、读出序列的混合率、初态和时钟均为外加；FIB 只提供候选模式及其组合来源。
+
+若 \(p_j\to0\)、\(n_jp_j\to\lambda\in(0,\infty)\)，读出序列满足足够强的混合和反聚簇条件，并且模式的自重叠在尺度 \(1/p_j\) 上可忽略，则模式出现点过程可能满足
+\[
+\sum_{k\ge0}I_k^{(j)}\,
+\delta_{\,p_j k}
+\ \Rightarrow\
+\operatorname{Poisson}(1)
+\]
+的有限窗版本；相应地，在适当初态修正后
+\[
+p_j\tau_j\Rightarrow \operatorname{Exp}(1),
+\qquad
+\frac{N_{\lfloor t/p_j\rfloor}^{(j)}}{1/p_j}
+\Rightarrow \operatorname{Poisson}(t).
+\]
+这些极限需要把模式长度、样本窗和概率尺度一起送到极限，固定有限模式的命中概率本身不会产生新的渐近律。
+
+若模式存在自重叠，令
+\[
+\mathcal O_j
+=\{r:1\le r<\ell_j,\
+(w_r,\ldots,w_{\ell_j-1})
+=(w_0,\ldots,w_{\ell_j-r-1})\}.
+\]
+相邻命中会形成簇，反聚簇条件被一个外加聚簇指数
+\(\vartheta_j\in(0,1]\) 取代。典型形式为
+\[
+\Pr(p_j\tau_j>t)\longrightarrow e^{-\vartheta t},
+\]
+而出现点过程变成强度 \(\vartheta\) 的复合 Poisson 簇过程；簇大小的平均值在标准归一化下约为 \(1/\vartheta\)。若底层链存在周期、禁转移或长记忆，甚至不能得到 Poisson 簇极限，只能保留有限时间命中概率或在周期类内分别结算。
+
+在外加独立标签律 \(\pi\) 下，
+\[
+p_j=\prod_{r=0}^{\ell_j-1}\pi(w_r);
+\]
+在平稳 Markov 读出核 \(Q\) 下，
+\[
+p_j=\pi(w_0)\prod_{r=0}^{\ell_j-2}Q(w_r,w_{r+1}).
+\]
+因此同一个 FIB 模式在独立公平读出、持续性 Markov 读出和带禁转移的读出下，可以分别具有不同的命中率、簇指数，甚至命中概率为零。若 \(Y_k\) 直接是确定性的 FIB 词，命中计数由词序完全决定，不存在上述随机 Poisson 结论。
+
+模式命中可作为外加稀有成核、反应触发或报警事件的数学模型；要把命中次数换成物理速率，还需另给空间嵌入、体积、能垒、时钟和观测单位。FIB 递归本身只规定模式的组合结构，不能单独决定 Poisson 参数、等待分布、聚簇指数或任何物理成核定律。
+
+## 97. FIB 类型队列网络的稳定性、重载反射极限与路由识别
+
+固定一条由 FIB ATOM 递归产生的上下文序列，记第 \(j\) 层的上下文类型集合为 \(\mathcal C_j\)。给定外加类型映射
+\[
+\tau_j:\mathcal C_j\longrightarrow I=\{1,\ldots,d\},
+\]
+把标签或上下文送入一个队列、服务台或“队列—类别”坐标。FIB 只决定上下文的组合来源、词序和可观察标签；外加模型还须指定外部到达过程 \(A_i\)、服务潜势过程 \(S_i\)、服务纪律、路由矩阵 \(P=(p_{ik})\) 以及物理时钟。令 \(D_i(t)\) 为截至 \(t\) 的第 \(i\) 类服务完成数，\(T_i(t)\) 为分配给该类的服务时间，写成
+\[
+D_i(t)=S_i(T_i(t)),\qquad
+Q(t)=Q(0)+A(t)-R D(t),\qquad R=I-P^{\mathsf T}.
+\tag{97.1}
+\]
+若服务完成后以概率 \(p_{ik}\) 进入类别 \(k\)，则 \(R\) 扣除完成者并加入内部路由者；多台服务台时，\(T_i\) 还须满足每个资源集合的容量约束和选定的非抢占或抢占纪律。式 (97.1) 是队列守恒恒等式，不是 FIB 递归的推论。
+
+假设在所选外加概率模型下
+\[
+\frac{A(t)}t\to\lambda,\qquad
+\frac{S_i(t)}t\to\mu_i
+\quad\text{几乎处处},
+\tag{97.2}
+\]
+且 \(P\) 是开放路由矩阵（例如 \(\rho(P)<1\)）。名义访问率由交通方程
+\[
+\nu=\lambda+P^{\mathsf T}\nu,
+\qquad \nu=R^{-1}\lambda
+\tag{97.3}
+\]
+给出；单服务台集合 \(s\) 的负荷为
+\[
+\varrho_s=\sum_{i\in s}\frac{\nu_i}{\mu_i}.
+\tag{97.4}
+\]
+在完全 \(S\) 型反射矩阵、可实现的非闲置纪律、不可约服务和适当的矩条件下，\(\max_s\varrho_s<1\) 是经典开放网络流体稳定性的充分条件：每个有限初值的流体轨道在统一有限时间内回到零邻域。若某一资源的负荷超过一，或 \(R\) 无法给出有限访问率，存在相应的线性工作量使轨道不能排空；这给出不稳定的证据。对任意调度纪律把 (97.4) 当作充要条件需要额外的可服务性与调度假设，不能由 FIB 类型频率单独推出。
+
+将潜在服务写成满负荷服务减去闲置量，可得流体反射形式
+\[
+q(t)=q(0)+x t+R y(t),\qquad
+x=\lambda-R\mu,
+\tag{97.5}
+\]
+其中 \(q(t)\in\mathbb R_+^d\)，\(y_i\) 非减，并满足互补条件
+\[
+\int_0^\infty q_i(t)\,dy_i(t)=0.
+\tag{97.6}
+\]
+若 \(R\) 是完全 \(S\) 矩阵且相应的 Skorokhod 映射 \(\Gamma_R\) 在所用路径拓扑下存在并连续，则
+\[
+q=\Gamma_R(q(0)+x\,\cdot).
+\tag{97.7}
+\]
+(97.5) 将“队列不能为负”编码为边界反射；反射方向、服务容量及闲置规则均是外加结构。若反射问题不唯一、服务台共享资源形成非凸可行域，或队列可在零点继续积累内部工作，则不能直接使用单一 \(\Gamma_R\)。
+
+**定理 97.1（有限方差重载极限的条件形式）。** 取一列外加队列网络，尺度参数为 \(n\)，并假设路由、服务纪律和反射矩阵在极限中固定。若
+\[
+\sqrt n\,x^{(n)}
+=\sqrt n\bigl(\lambda^{(n)}-R\mu^{(n)}\bigr)\longrightarrow\theta,
+\tag{97.8}
+\]
+且中心化的到达、服务和路由计数满足函数中心极限定理
+\[
+\widehat X^{(n)}(t)\Longrightarrow B_\Sigma(t),
+\tag{97.9}
+\]
+其中 \(B_\Sigma\) 为协方差矩阵 \(\Sigma\) 的布朗运动，反射映射对这些路径连续，初始条件满足 \(Q^{(n)}(0)/\sqrt n\to q_0\)，则
+\[
+\widehat Q^{(n)}(t):=\frac{Q^{(n)}(nt)}{\sqrt n}
+\Longrightarrow
+Z(t)=\Gamma_R\bigl(q_0+B_\Sigma(t)+\theta t\bigr).
+\tag{97.10}
+\]
+若另有完全资源汇聚和状态空间塌缩，存在工作量向量 \(\alpha\ge0\)，使主要极限可写成一维反射布朗运动
+\[
+W(t)=W(0)+\alpha^{\mathsf T}\theta\,t+\sigma_W B(t)+L(t),
+\qquad W(t)\ge0,
+\tag{97.11}
+\]
+其中 \(L\) 只在 \(W=0\) 时增加。漂移为负且存在平稳律时，\(W\) 的平稳尾为
+\[
+\Pr\{W>x\}
+=\exp\!\left(-\frac{2|\alpha^{\mathsf T}\theta|}{\sigma_W^2}x\right),
+\tag{97.12}
+\]
+在归一化成立的工作量坐标中成立。没有资源汇聚、反射矩阵连续性或函数中心极限定理时，不能把重载队列自动写成反射布朗运动；有限样本的排队波动也不由 FIB 词长决定。
+
+若到达或服务的中心化和不属于高斯域，而满足正则变换归一化下的稳定极限
+\[
+\widehat X^{(n)}\Longrightarrow L_\gamma(t),
+\qquad 0<\gamma<2,
+\tag{97.13}
+\]
+则在跳路径上的反射映射可测且连续的附加条件下，候选极限是
+\[
+\widehat Q^{(n)}
+\Longrightarrow
+\Gamma_R(q_0+L_\gamma+\theta\,\cdot).
+\tag{97.14}
+\]
+跳跃穿越边界时，左连续或右连续约定、溢出截断及路由同时跳跃会改变反射版本；若这些约定未登记，(97.14) 只有候选意义。对稳定尾原语，在一大跳、次指数和网络可达性条件下，平稳队列尾可出现
+\[
+\Pr\{Q_i>x\}
+\sim C_i x^{-\alpha_*}L_*(x),
+\qquad
+\alpha_*=\min\{\alpha_A,\alpha_S,\alpha_{\rm route}\},
+\tag{97.15}
+\]
+其中指数和慢变因子来自外加到达、服务和路由计数的联合尾；常数 \(C_i\) 由路由可达性、调度和相关结构决定。若不同重尾源相关、存在批量到达或一大跳条件失败，(97.15) 可能只给上下界或对数等价，不能将某个 FIB 频率当成普适尾指数。
+
+**命题 97.2（聚合读出下的路由不可识别）。** 设参数为
+\(\vartheta=(\lambda,\mu,P,\text{discipline})\)，观察只保留聚合队列长度、聚合到达与聚合离开及 FIB 标签 \(Y=\Psi(C,Q,D)\)。称 \(P\) 在该读出下可识别，当且仅当
+\[
+\mathcal L_\vartheta(Y)=\mathcal L_{\vartheta'}(Y)
+\Longrightarrow
+\vartheta'=\pi\vartheta
+\tag{97.16}
+\]
+对允许的类别置换 \(\pi\) 成立。若 \(\tau_j\) 非单射且只观察总队列，则通常只能识别有效访问率 \(\nu=R^{-1}\lambda\)、总服务能力或它们的某些组合，不能分别识别 \(P\)、\(\lambda\) 和 \(\mu\)。要恢复路由，需要带类别的离开标签、受控干预、独立服务时间观测或能切开 FIB 观测纤维的额外关系。对旧读数作任何后处理不能恢复被 \(\Psi\) 合并的路径差异。
+
+一个精确反例取同一 FIB 载体并令所有上下文映射到一个可见队列；外部到达为速率 \(\lambda\) 的 Poisson 过程。模型 A 的每个顾客只经历一次速率 \(m\) 的指数服务后离开。模型 B 每次服务尝试的时长为速率 \(m/p\) 的指数变量，完成后以概率 \(p\) 离开，以概率 \(1-p\) 沿隐藏路由返回，其中 \(0<p<1\)。模型 B 的一次顾客总服务时间是几何个数的指数和，其 Laplace 变换为
+\[
+\mathbb E e^{-sG}
+=\frac{p(m/p)}{s+p(m/p)}
+=\frac m{s+m},
+\tag{97.17}
+\]
+故聚合队列长度和聚合离开过程与模型 A 的 \(M/M/1\) 队列完全相同；但隐藏服务尝试数、路由矩阵和内部完成计数不同。若 \(p\) 改变而不按 (97.17) 同步调整尝试率，则同一 FIB 可由稳定模型变为临界或不稳定模型；若把指数服务改为重尾服务，又可把有限方差重载极限换成稳定反射极限。因而相同 FIB 递归能够承载指数尾、重尾、平稳、临界或发散的排队统计。
+
+队列稳定性、反射方向、重载缩放、尾部指数、路由矩阵、服务纪律、到达相关、物理时钟和观察通道全部属于外加模型。FIB 递归只提供类型、标签、词序和组合上下文；它不单独推出排队稳定定理、反射布朗运动、稳定尾或路由可识别性。
