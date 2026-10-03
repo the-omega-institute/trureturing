@@ -5,7 +5,7 @@ year: 2012
 title: Weighted Poincare Inequalities for Nonlocal Dirichlet Forms
 doi: null
 url: https://arxiv.org/abs/1207.7140v1
-claim: Theorem 5.1 supplies a weighted Poincare estimate for the exact theta Gamma jump energy, centered in the Phi-squared measure. Its controlled weight and unspecified constant do not supply the pole-weighted variance bound at one-half required by the full Weil form.
+claim: Theorem 5.1 controls a weaker-weight variance for the exact theta Gamma jump energy. A separate paper deduction gives zero Gamma-only gap in the pole measure and leading prime/Gamma compensation on the same normalized far-tail tests; the global joint Weil inequality remains unproved.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -147,3 +147,240 @@ deductions, not new Lean proofs or an originality claim. The source PDF has
 42 pages and SHA-256
 `82e717b0b790b169103b9cf1f9c39bd8612aaaf534723fad6199f6d6ecc64ca5`.
 No theorem from a later journal version is used without its own source check.
+
+## The Gamma-only target gap is zero
+
+Use the original theta kernel and the pole probability measure from the
+[even Weil interface](lagarias2004li.md):
+$d\nu=2\Phi(x)\cosh(x/2)\,dx$, with
+$I=\int\Phi(x)e^{x/2}\,dx=1/2$.
+The following is a paper deduction from the published theta inputs and the
+actual jump energy, rather than an additional theorem attributed to Chen–Wang.
+
+Fix a nonzero real $u\in C_c^\infty((0,1))$, extended by zero. For $R\ge2$
+put $\delta_R=e^{-2R}$ and
+
+$$
+h_R(x)=a_R\left[
+ u\left(\frac{x-R}{\delta_R}\right)
++u\left(\frac{-x-R}{\delta_R}\right)\right],
+\qquad \int |h_R|^2\,d\nu=1,
+$$
+
+with $a_R>0$. These are actual even compact smooth tests supported in
+$A_R=[R,R+\delta_R]\cup[-R-\delta_R,-R]$.
+[Romik's Lemma 2.3](../Analytic/romik2021orthogonal.md), printed p.10,
+equations (2.8)–(2.9), supplies the upper tail and first-term remainder.
+Its two-sided consequence is
+
+$$
+cg(r)\le\Phi(r)\le Cg(r),\qquad
+g(r)=\exp\bigl(9r/2-\pi e^{2r}\bigr),\qquad r\ge1.
+$$
+
+The local-scale identity recorded there gives
+$\Phi(r)\asymp\Phi(R)$ for $R-\delta_R\le r\le R+2\delta_R$.
+This is comparison by constants, not a ratio tending to one. Thus
+
+$$
+a_R^{-2}\asymp_u\delta_R\Phi(R)e^{R/2},\qquad
+N_R:=\int h_R^2\,dx\le C_u e^{-R/2}/\Phi(R),
+$$
+
+$$
+\|h_R'\|_2^2=\delta_R^{-2}
+\frac{\|u'\|_2^2}{\|u\|_2^2}N_R,
+\qquad W_R:=\int\Phi h_R^2\,dx\le e^{-R/2}.
+$$
+
+Also $|\nu(h_R)|^2\le\nu(A_R)
+=O(\delta_R\Phi(R)e^{R/2})$, so $\operatorname{Var}_\nu(h_R)\to1$.
+All comparison constants here and below are independent of $R$; those
+indexed by $u$ may depend on that fixed bump.
+
+Let $S(r)=\sup_{|x|\ge r}\Phi(x)$ and
+$J_R(t)=\int\Phi(x)\Phi(x+t)|h_R(x+t)-h_R(x)|^2\,dx$.
+For $0<t<\delta_R$, the contributing pairs lie in the local comparison
+region. The translation derivative bound gives
+$J_R(t)\le C\Phi(R)^2t^2\|h_R'\|_2^2$. Since $\psi(t)\le C/t$ for $t<1$,
+
+$$
+\int_0^{\delta_R}\psi(t)J_R(t)\,dt
+\le C_u\Phi(R)e^{-R/2}.
+$$
+
+This pays the derivative cost of the shrinking bump. For
+$\delta_R\le t<1$, the bound $|a-b|^2\le2(|a|^2+|b|^2)$ gives
+$J_R(t)\le4S(R-1)W_R$, hence
+
+$$
+\int_{\delta_R}^1\psi(t)J_R(t)\,dt
+\le C_u(1+R)S(R-1)e^{-R/2}.
+$$
+
+For $t\ge1$, use $\psi(t)\le Ce^{-t/2}$ and
+
+$$
+\int\Phi(y)e^{-|x-y|/2}\,dy\le I e^{-|x|/2}.
+$$
+
+For $x\ge0$ this follows from
+$e^{-|x-y|/2}\le e^{-x/2}e^{y/2}$; evenness supplies $x<0$.
+It gives $\int_1^\infty\psi(t)J_R(t)\,dt\le Ce^{-R}$.
+Together,
+
+$$
+E_\Gamma(h_R)\le C_u\left[
+e^{-R}+(1+R)S(R-1)e^{-R/2}+\Phi(R)e^{-R/2}\right]
+=O_u(e^{-R}). \tag{5}
+$$
+
+The theta tail makes the last two terms $o(e^{-R})$. Nonnegativity and
+the normalized variance give the paper-level conclusion
+
+$$
+\inf_{\substack{h\in C_c^\infty(\mathbb R;\mathbb C)\ \mathrm{even}\\
+                \operatorname{Var}_\nu(h)>0}}
+\frac{E_\Gamma(h)}{\operatorname{Var}_\nu(h)}=0. \tag{6}
+$$
+
+Thus Gamma alone cannot control the target variance by any positive
+uniform constant on this compact test class. This strengthens the
+weight-comparison observation to an estimate on the actual energy and
+does not conflict with (3), whose variance density is weaker.
+
+## Exact leading Gamma compensation on the same tests
+
+Put $f_R=\Phi h_R$ and
+$\operatorname{Corr}_f(t)=\int f(x+t)\overline{f(x)}\,dx$.
+For the shifts at least one, expanding the square gives the exact identity
+
+$$
+E_{\Gamma,\ge1}(h_R)
+=\int |h_R(x)|^2D_{\Gamma,\rm far}(x)\,d\nu(x)
+-2\Re\int_1^\infty\psi(t)\operatorname{Corr}_{f_R}(t)\,dt,
+$$
+
+$$
+D_{\Gamma,\rm far}(x)=
+\frac{\int_{|x-y|\ge1}\Phi(y)\psi(|x-y|)\,dy}
+     {2\cosh(x/2)}.
+$$
+
+For each fixed $y$, as $x\to+\infty$,
+
+$$
+\frac{e^x}{2\cosh(x/2)}
+\mathbf1_{\{|x-y|\ge1\}}\psi(|x-y|)\longrightarrow e^{y/2}.
+$$
+
+The integrand without $\Phi(y)$ is bounded by $Ce^{y/2}$, using
+$\psi(s)\le Ce^{-s/2}$ for $s\ge1$ and $|x-y|\ge x-y$.
+Dominated convergence and evenness therefore give
+$e^{|x|}D_{\Gamma,\rm far}(x)\to I$ at both tails.
+On the support of $h_R$, $|x|\in[R,R+\delta_R]$, so normalization makes
+the diagonal contribution $I e^{-R}+o(e^{-R})$.
+
+The far correlation is supported in $[2R,2R+2\delta_R]$. Writing
+$M_R=\|f_R\|_2^2=O(\Phi(R)e^{-R/2})$, Cauchy–Schwarz gives
+
+$$
+\left|\int_1^\infty\psi(t)\operatorname{Corr}_{f_R}(t)\,dt\right|
+\le C\delta_R e^{-R}M_R=o(e^{-R}).
+$$
+
+The two smaller-shift estimates in (5) are $o(e^{-R})$. Consequently
+
+$$
+E_\Gamma(h_R)=\tfrac12e^{-R}+o(e^{-R}). \tag{7}
+$$
+
+## Compact full-form estimate without a prime number theorem
+
+Reuse the existing [compact full-energy identity](../../D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity.lean)
+and [prime jump decomposition](../../D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition.lean).
+For an even compact smooth $f$ the entire finite prime diagonal mass cancels,
+leaving
+
+$$
+Q(f)=P(f)+G(f)+c_\Gamma\|f\|_2^2
+-2\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+\Re\operatorname{Corr}_f(\log n), \tag{8}
+$$
+
+where
+
+$$
+G(f)=\int_0^\infty\psi(t)\|f(\cdot+t)-f\|_2^2\,dt,
+\qquad P(f)=2\left|\int e^{x/2}f(x)\,dx\right|^2,
+$$
+
+and $c_\Gamma=\Re\operatorname{digamma}(1/4)-\log\pi$.
+Equation (8) is a reuse of the compact formula, not a new criterion.
+For support in $A_R$, a prime correlation is possible only when
+$\log n\in[2R,2R+2\delta_R]$: the same-interval differences are at most
+$\delta_R<\log2$. The corresponding integer interval has length at most
+
+$$
+e^{2R}(e^{2\delta_R}-1)\le2e^2.
+$$
+
+There are therefore uniformly boundedly many possible integer terms.
+Since $\Lambda(n)\le\log n$, their complete coefficient sum is
+$O((R+1)e^{-R})$. Every prime power is included; no short-interval prime
+number theorem is needed.
+
+The [differentiated theta series estimate](../Analytic/romik2021orthogonal.md)
+$|\Phi'(r)/\Phi(r)|\le Ce^{2r}$, together with local comparison and bump
+derivative scaling, gives
+$\|f_R'\|_2^2\le C_u\delta_R^{-2}M_R$.
+Splitting $G$ at $\delta_R$, the translation derivative bound on the first
+range and $\|f(\cdot+t)-f\|_2^2\le4\|f\|_2^2$ on the second give
+
+$$
+G(f_R)\le C_u(1+R)M_R,
+\qquad P(f_R)\le C\delta_R e^R M_R.
+$$
+
+Cauchy–Schwarz bounds each correlation by $M_R$. Thus
+
+$$
+|Q(f_R)|\le C_u(1+R)M_R=o(e^{-R}). \tag{9}
+$$
+
+Also $|\nu(h_R)|^2\le\nu(A_R)=o(e^{-R})$, so
+$\operatorname{Var}_\nu(h_R)=1+o(e^{-R})$.
+Apply the full weighted identity from the even Weil interface to these
+same tests, retaining all weighted prime diagonals:
+
+$$
+E_{\rm prime}(h_R)
+=\tfrac12\operatorname{Var}_\nu(h_R)+Q(f_R)-E_\Gamma(h_R)
+=\tfrac12-\tfrac12e^{-R}+o(e^{-R}). \tag{10}
+$$
+
+## Positivity on the restricted disconnected support class
+
+For every even complex compact smooth $f$ supported in $A_R$,
+$\operatorname{Corr}_f(t)=0$ for $\delta_R<t<1$. Hence
+$\|f(\cdot+t)-f\|_2^2=2\|f\|_2^2$ on that range. From (8),
+$P(f)\ge0$ and the complete prime coefficient bound give
+
+$$
+Q(f)\ge\left[c_\Gamma+2\int_{\delta_R}^1\psi(t)\,dt
+-C(R+1)e^{-R}\right]\|f\|_2^2. \tag{11}
+$$
+
+Since $\psi(t)=(2t)^{-1}+O(1)$ near zero, the bracket is
+$2R+O(1)$. It is positive for all sufficiently large $R$, uniformly over
+this support class. In particular $Q(f_R)>0$ there. Equations (7), (9)
+and (10) describe how the same normalized tests approach the target
+energy ratio one-half from a positive full-form side.
+
+This class does not exhaust all even compact tests. The global
+same-test joint lower bound remains unproved, as do RH and Robin's full
+inequality. These deductions establish no operator realization,
+essential-spectrum statement or continuous transport of FIB operations.
+They are independently checked paper derivations, without new Lean
+certification or an originality claim; the published inputs and existing
+compact identities retain their own provenance.
