@@ -2,11 +2,13 @@
 import json
 import os
 from pathlib import Path
+import runpy
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 REPO = Path(__file__).resolve().parents[4]
 
@@ -153,6 +155,30 @@ class BuildWorkContracts(unittest.TestCase):
         self.assertEqual(previous, retained.read_bytes())
         self.assertEqual([], list(fact.parent.glob(".build-work-*")))
 
+    def test_recorder_canonicalizes_the_repository_address(self):
+        root, logs, fact = self.recorder_inputs()
+        alias = root / "repository-link"
+        alias.symlink_to(root, target_is_directory=True)
+        result = self.run_recorder(alias, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(str(root.resolve()), json.loads(fact.read_text())["repository"])
+
+    def test_recorder_keeps_the_destination_present_until_replace(self):
+        root, logs, fact = self.recorder_inputs()
+        previous = fact.read_bytes()
+        replace = Path.replace
+
+        def checked_replace(source, destination):
+            self.assertTrue(destination.is_file(), "work fact disappeared before replacement")
+            self.assertEqual(previous, destination.read_bytes())
+            return replace(source, destination)
+
+        record = runpy.run_path(str(root / "build_work.py"))["record"]
+        with mock.patch.object(Path, "replace", autospec=True, side_effect=checked_replace) as replacing:
+            record(root, logs, fact, "report")
+        replacing.assert_called_once()
+        self.assertEqual(0, json.loads(fact.read_text())["report"])
+
     def test_recorder_io_failure_reports_unknown_and_exits_two(self):
         for defect in ("parent-file", "destination-directory", "missing-log"):
             with self.subTest(defect=defect):
@@ -230,6 +256,11 @@ class BuildWorkContracts(unittest.TestCase):
 
     def test_failed_build_removes_stale_fact_and_preserves_exit(self):
         result, fact, _ = self.invoke(failure=23)
+        self.assertEqual(23, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+
+    def test_failed_report_producer_leaves_no_work_fact(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, failure=23)
         self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
 

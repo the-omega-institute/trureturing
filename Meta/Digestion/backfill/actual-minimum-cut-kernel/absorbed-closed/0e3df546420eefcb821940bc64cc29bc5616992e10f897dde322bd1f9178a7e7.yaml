@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0e3df546420eefcb821940bc64cc29bc5616992e10f897dde322bd1f9178a7e7
+  normalized_sha256: sha256:0e3df546420eefcb821940bc64cc29bc5616992e10f897dde322bd1f9178a7e7
+cas_ref: sha256:0e3df546420eefcb821940bc64cc29bc5616992e10f897dde322bd1f9178a7e7
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_finite_mass_sums
+    target_statement_id: sha256:05a62cf6c796c2d685500ca5add0f9a646dce19e8e5aa73c30b483b3981f81ba
+receipts:
+  unresolved_subitems: []

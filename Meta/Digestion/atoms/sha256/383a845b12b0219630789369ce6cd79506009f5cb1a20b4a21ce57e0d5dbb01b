@@ -1,0 +1,2 @@
+2. 对 $V=\rho^3(\alpha)$，把地址 $\mathtt L\mathtt R$ 的 $\alpha$ 改成 $\beta$ 得到 $W$，满足 $W\in\mathcal I_1\setminus\mathcal I_2$。所以定理 18.2 的 $\alpha\mapsto\beta$ 反例只能按其所用障碍排除二步像，不能据此排除一步像。
+
