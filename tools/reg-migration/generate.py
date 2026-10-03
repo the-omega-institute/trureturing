@@ -11,39 +11,46 @@ if __package__ in {None, ""}:
 
     package_dir = Path(__file__).resolve().parent
     spec = importlib.util.spec_from_file_location(
-        "reg_migration", package_dir / "__init__.py",
-        submodule_search_locations=[str(package_dir)])
+        "reg_migration", package_dir / "__init__.py", submodule_search_locations=[str(package_dir)])
     assert spec and spec.loader
     package = importlib.util.module_from_spec(spec)
     sys.modules["reg_migration"] = package
     spec.loader.exec_module(package)
-    from reg_migration.generator import Generator  # type: ignore
+    from reg_migration.generator import Generator, GeneratorFailure
 else:
-    from .generator import Generator
+    from .generator import Generator, GeneratorFailure
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Plan/render fixed registration declarations")
+    parser = argparse.ArgumentParser(description="Plan and render contracts from compiled raw inputs and Lean parser spans")
     sub = parser.add_subparsers(dest="command", required=True)
     plan = sub.add_parser("plan")
     plan.add_argument("--repo", type=Path, required=True)
-    plan.add_argument("--report", type=Path, required=True)
+    plan.add_argument("--inputs", type=Path, required=True)
+    plan.add_argument("--syntax", type=Path, help="Lean parser output (or embed files in --inputs)")
     plan.add_argument("--mapping", type=Path, required=True)
-    plan.add_argument("--inputs", type=Path)
-    plan.add_argument("--root-inventory", type=Path)
     plan.add_argument("--output", type=Path, required=True)
     plan.add_argument("--input-sha256")
     plan.add_argument("--apply", type=Path, help="write to an explicit target tree after validation")
     args = parser.parse_args(argv)
-    generator = Generator(args.repo, args.report, args.mapping, args.inputs, args.root_inventory)
+    generator = Generator(args.repo, args.inputs, args.mapping, args.syntax)
     result = generator.plan(args.input_sha256)
-    args.output.mkdir(parents=True, exist_ok=True)
     summary = {"audit": result.audit, "failures": [failure.as_dict() for failure in result.failures]}
-    (args.output / "audit.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps(summary, sort_keys=True))
+    print(json.dumps(summary, sort_keys=True, ensure_ascii=False))
     if result.failures:
         return 1
-    generator.write(result, args.output / "rendered", args.apply)
+    try:
+        generator.write(result, args.output / "rendered", args.apply)
+    except (GeneratorFailure, OSError) as error:
+        print(json.dumps({"failures": [{"code": "write_preflight_failed", "detail": str(error)}]}, sort_keys=True))
+        return 1
+    args.output.mkdir(parents=True, exist_ok=True)
+    path = args.output / "audit.json"
+    data = (json.dumps(summary, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
+    if not path.exists() or path.read_bytes() != data:
+        temporary = path.with_name(path.name + ".tmp")
+        temporary.write_bytes(data)
+        temporary.replace(path)
     return 0
 
 

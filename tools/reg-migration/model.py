@@ -7,6 +7,7 @@ from typing import Any
 
 @dataclass(frozen=True)
 class Span:
+    """Half-open UTF-8 byte interval supplied by Lean's parser."""
     start: int
     end: int
 
@@ -20,6 +21,8 @@ class Registration:
     object_arena: str | None = None
     catalog: str | None = None
     primitive: str | None = None
+    actual: str | None = None
+    via_descriptor: str | None = None
     realization: str | None = None
     variation: str | None = None
     sensitivity: str | None = None
@@ -29,35 +32,34 @@ class Registration:
     escape_from_source: str | None = None
     continuation: str | None = None
     source_record: str | None = None
+    statement: str | None = None
+    proof: str | None = None
     finite_bridge: str | None = None
     inline_bridge: tuple[str, str] | None = None
     native: bool = False
     occurrence: bool = False
     source: bool = False
     finite_source: bool = False
-    options: dict[str, Any] = field(default_factory=dict)
+    variant: str = "legacy"
+    options: list[dict[str, Any]] = field(default_factory=list)
     snapshot: dict[str, Any] | None = None
+    source_text: str = ""
+    controlled_printing: list[str] = field(default_factory=list)
 
     @property
     def key(self) -> tuple[str, str, str, str, str]:
         row = self.snapshot or {}
-        key = row.get("key", {})
-        return (
-            str(key.get("root", self.module_name)),
-            str(key.get("registration_module", self.module_name)),
-            str(key.get("theorem", self.theorem)),
-            str(key.get("object_arena", self.object_arena or self.arena)),
-            str(key.get("catalog", self.catalog or self.arena)),
-        )
+        return (str(row.get("root_id", self.module_name)),
+                str(row.get("registration_module", self.module_name)),
+                str(row.get("theorem", self.theorem)),
+                str(row.get("object_arena", self.object_arena or self.arena)),
+                str(row.get("catalog", self.catalog or self.arena)))
 
     @property
     def module_name(self) -> str:
         parts = self.path.with_suffix("").parts
-        try:
-            index = parts.index("Reg")
-            return ".".join(parts[index:])
-        except ValueError:
-            return ".".join(parts)
+        index = parts.index("Reg") if "Reg" in parts else 0
+        return ".".join(parts[index:])
 
 
 @dataclass
@@ -67,7 +69,9 @@ class Template:
     name: str
     version: int = 1
     constructors: list[str] = field(default_factory=list)
-    options: dict[str, Any] = field(default_factory=dict)
+    options: list[dict[str, Any]] = field(default_factory=list)
+    snapshot: dict[str, Any] | None = None
+    source_text: str = ""
 
 
 @dataclass
@@ -75,15 +79,17 @@ class Root:
     path: Path
     span: Span
     root_id: str
-    expected: str
-    source: str
-    baseline: str
+    expected: list[dict[str, Any]]
+    source: list[dict[str, Any]]
+    baseline: list[dict[str, Any]]
     companion_prefix: str | None
     kind: str = "catalog"
     destination_path: str | None = None
     destination_module: str | None = None
     registration_module_names: dict[str, list[str]] = field(default_factory=dict)
     imports: list[str] = field(default_factory=list)
+    snapshot: dict[str, Any] | None = None
+    seal_options: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass
@@ -91,7 +97,8 @@ class Seal:
     path: Path
     span: Span
     root_id: str
-    options: dict[str, Any] = field(default_factory=dict)
+    options: list[dict[str, Any]] = field(default_factory=list)
+    snapshot: dict[str, Any] | None = None
 
 
 @dataclass
