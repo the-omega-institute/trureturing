@@ -1,0 +1,13 @@
+### 41.4 仍需显式验证的边界
+
+§40.2 的同端点异路径见证在 typed 核中只有在存在同一条、对 $h_L,h_R$ 都声明的 `Select` 边 $e_{\mathrm{sel}}$，且
+
+$$
+\mathrm{response}_{e_{\mathrm{sel}}}(\iota h_L)\ne
+\mathrm{response}_{e_{\mathrm{sel}}}(\iota h_R)
+$$
+
+时才给出一步分离；这里差异须是失败、标签或终端读出。若只有后继摘要不同，则要给出同一共同续接使多步 `response` 分离，或把摘要纳入 $L_e$ 或 $r$。§36.6 的幽灵线程和 §39 的共同像条件仍是适用边界，本节不重述其反例。
+
+本节的真实新增仅是 (PG.4101)–(PG.4103) 的 typed 历史嵌入与实际像闭合，以及 (PG.4106a) 的核商到带类型实际像桥；实例满足性、来源完备性、跨纪元刷新、取得成本、四视图物理解释和 Lean 核验均为 ASSUMED-UNVERIFIED/open。本节没有新增 Lean 声明、消化、freeze、coverage 或判官变更。
+

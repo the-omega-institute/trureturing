@@ -1,0 +1,70 @@
+### 42.3 有限核和完整核的拉回
+
+先区分三种关系。令
+
+$$
+E_n^{\mathrm{amb}}:=E\ \mathrm{Label}\ r\ \mathrm{step}\ n,
+\qquad
+B_{\mathrm{amb}}:=\mathrm{behaviorKernel}\ \mathrm{Label}\ r\ \mathrm{step}.
+\tag{PG.4208}
+$$
+
+PG.4103 的实际像闭合保证，§41.2 中把 `E` 限制到实际载体所得的关系，与
+\(E_n^{\mathrm{amb}}\) 在 \(\widehat\iota\) 下的限制相同；PG.4207 又给出
+\(\beta(h)=\operatorname{actualBehavior}(h)\) 的外延识别。因此定义
+
+$$
+\begin{aligned}
+E_n^{\mathrm{act}}(h,h')&\Longleftrightarrow
+ E_n^{\mathrm{amb}}\bigl(\widehat\iota\langle i,h\rangle,\widehat\iota\langle i',h'\rangle\bigr),\\
+K_{\mathrm{act}}(h,h')&\Longleftrightarrow
+ B_{\mathrm{amb}}\bigl(\widehat\iota\langle i,h\rangle,\widehat\iota\langle i',h'\rangle\bigr).
+\end{aligned}
+\tag{PG.4209}
+$$
+
+这里 \(h\in H_i^{\mathrm{act}}\)、\(h'\in H_{i'}^{\mathrm{act}}\)；若起始类型不同，typed
+行为的外层 \(\Sigma\) 标签已经使关系失败。于是，在二元拉回记号下
+
+$$
+K_{\mathrm{act}}=(\widehat\iota\times\widehat\iota)^{-1}(B_{\mathrm{amb}}),
+\qquad
+E_n^{\mathrm{act}}=(\widehat\iota\times\widehat\iota)^{-1}(E_n^{\mathrm{amb}}).
+\tag{PG.4210}
+$$
+
+PG.4207 和 `typed_finite_view_kernel` 的有限视图等式给出
+
+$$
+E_n^{\mathrm{act}}(h,h')
+\Longleftrightarrow
+\operatorname{actualFiniteView}_n(h)=\operatorname{actualFiniteView}_n(h'),
+\qquad
+K_{\mathrm{act}}=\bigcap_nE_n^{\mathrm{act}}.
+\tag{PG.4211}
+$$
+
+其中 §41 的 \(B(h,h')\Longleftrightarrow\beta(h)=\beta(h')\) 现在可写成
+\(B=K_{\mathrm{act}}\)，但这个等号是外延识别，不是把实际关系与 \(B_{\mathrm{amb}}\) 混用。
+若存在全 ambient 载体上的平台
+
+$$
+E_n^{\mathrm{amb}}=E_{n+1}^{\mathrm{amb}}
+\quad\text{on all }\Sigma_{i:I}S_i,
+\tag{PG.4212}
+$$
+
+则拉回后
+
+$$
+E_n^{\mathrm{act}}=E_{n+1}^{\mathrm{act}}=K_{\mathrm{act}},
+\qquad
+E_{n+k}^{\mathrm{act}}=E_n^{\mathrm{act}}\quad(k\in\mathbb N).
+\tag{PG.4213}
+$$
+
+反向不成立：实际像上的限制关系可能已经稳定，而 ambient typed 状态在实际像外仍继续分裂。
+例如实际像只有一个根历史时，所有拉回核都可能相等，而未取得的 ambient 状态仍可在下一层被区分，故
+\(E_n^{\mathrm{act}}=E_{n+1}^{\mathrm{act}}\) 不能推出
+\(E_n^{\mathrm{amb}}=E_{n+1}^{\mathrm{amb}}\)。
+

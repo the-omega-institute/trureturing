@@ -148,3 +148,102 @@ context without adding these claims to its formal declarations. Quadratic
 characters see depth parity and allow both h=1 and odd h>=3. The remaining
 obligation is a restriction on original depths or simple-factor support;
 these identities do not construct a WSS prime.
+
+## Actual sparse child observations
+
+The sparse consumer uses the locators for comparison. Its proof premises
+are the frozen Fibonacci and actual-source contracts, rather than a new
+primary-text assertion attributed to Renault.
+
+
+`D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.lean` uses the actual signed
+Fibonacci recurrence, rather than a supplied projective classifier. Its
+`sparse_gcd_sampling` reuses positive prime-power zero ranks and applies
+the frozen `fibonacci_entry_point` directly.
+Within a parent rank $R=r_{e-1}$ it uses
+
+$$
+M^R=cI+fM,\qquad c=F_{R-1},\quad f=F_R,
+\qquad p^{e-1}\mid f,\qquad f^2=0\pmod {p^e}.
+$$
+
+The square-zero estimate is $e\le2(e-1)$ and therefore includes
+$p=2,e=2$. Consecutive Fibonacci coprimality makes $c$ a unit. The resulting
+unit-normalized observations along the same parent are affine in the child
+index. For a primitive parent hit, actual rank growth forces a nonzero
+slope modulo $p$. At least $p-1$ distinct queried children determine its
+unique root; two omitted children admit distinct fixed signed initial
+states, realized through inverse integer Fibonacci action, with separation
+beyond every cutoff. Actual stagnation gives scalar threshold persistence
+for all signed initial states, including zero.
+
+The actual terminal criterion is defined by distinct phase images, with
+the mandatory/optional first-layer distinction, full coverage at stagnant
+layers, and at least $p-1$ children in every growth parent. Its failure on
+an arbitrary finite positive table yields the corresponding omitted phase
+or two omitted children; the hypothesis is not a small bound on $|S|$.
+Primitive hits have a single exact phase at every precision,
+and all signed threshold observations transport between congruent positive
+times. The root realization exposes its adjacent observation equal to one,
+its support at every lower precision, and its whole-time top support.
+Consequently the two-omitted-child growth construction gives complete gcd
+equality on every positive table avoiding those omitted phases, including
+off-parent readings, with exact late answers $p^e,p^{e-1}$.
+
+The frozen `GraftAffineClosure.result` supplies the actual observation inverse
+and bounded residue lifts. The same earning proof uses them to realize each
+signed pair by a fixed natural source below $Qp^e$, simultaneously at every
+positive time, with complete gcd answer $Q\gcd(|y_k|,p^e)$. This holds for
+every $Q>0$, including $p\mid Q$; source primitiveness is asserted only when
+$p\nmid Q$. The lifted growth collisions choose sources before every cutoff.
+
+The frozen `PrimePhaseGcdSampling.prime_phase_gcd_sampling` supplies the
+first-layer identification and collision clauses at its actual contract,
+with the mandatory-hit and optional-hit distinction and the ramified prime
+retained. For all signed
+pairs, including zero and saturated pairs, the minimum gcd on a positive
+table containing two different first-layer phases is the capped common
+content. This does not assume that divided signed pairs remain actual
+natural sources.
+
+Two distinct omitted first-layer phases give fixed primitive signed
+collisions. In the optional-hit first layer, a single omitted phase collides
+with a primitive no-hit state. At a stagnant higher layer, inverse action
+realizes the same lower supports with a permanent top exit. All these
+constructions also yield fixed bounded natural sources for every $Q>0$,
+with exact late answers $Qp^e$ and $Qp^{e-1}$.
+
+The public implication from failed $D$ to fixed whole-table collisions
+includes all four branches and the simultaneous bounded natural lifts.
+The same positive table identifies all actual natural futures at every
+$H>0$ exactly when $D$ holds at every complete prime-power factor of $H$.
+Each full gcd reading projects to its local reading. Recombination compares
+the factorization of the gcd readings, which are nonzero even when the raw
+observations are zero. For $H=1$ every reading is one, and an empty table
+suffices. A numerical minimum across different prime factors is not this
+recombination: at $H=6$, source $(5,1)$ and times $\{1,2,7\}$ have readings
+$2,3,2$ but capped source content one.
+The same shifted terminal condition is equivalent to its whole-tower
+condition and all four signed/natural identification domains. It supplies
+first-layer phase diversity and both signed and actual-natural local
+content minima. The native affine decoding equivalence is part of the
+same theorem. The shifted-to-unshifted quotient-child adapter, sharp
+horizons and query-cardinality consequences are separate statements.
+The sparse actual-state construction is not attributed to Renault's paper.
+The citation-only license permits no republication of the article; this
+note contains a paraphrase and repository-specific mathematics, not a copy
+of its text.
+
+Primary-text comparison uses Medina and Rowland, arXiv:0910.2907v4,
+Theorems 1.2 and 1.4 on printed pages 1–2, and Lengyel, *The Order of the
+Fibonacci and Lucas Numbers*, *Fibonacci Quarterly* 33(3), pages 234–239,
+especially the valuation theorem and proof on pages 236–237. Their baseline
+Fibonacci valuation statements are not arbitrary-seed sparse-identification
+theorems. Park, arXiv:1407.8086v1, Lemmas 3–4 and Theorem 19, treats a
+different generalized-recurrence setting, with explicit parameter restrictions;
+its prime-power counting Theorem 20 is not used: for the ordinary Fibonacci
+parameters $s=t=1$, the checked rank $r(27)=36$ exceeds $27+1$. Aka, arXiv:2508.08016v1,
+Theorem 1.1 and its proof on pages 1–3, concerns zero-free sequences with
+specified periods dividing $p-1$, excluding $p=2,5$, not this all-prime
+prime-power table criterion. None of these citations supplies a Lean proof
+or a global originality claim for the consumer.
