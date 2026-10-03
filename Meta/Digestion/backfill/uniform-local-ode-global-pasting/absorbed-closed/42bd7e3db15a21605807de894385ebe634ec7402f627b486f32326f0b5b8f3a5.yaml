@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:42bd7e3db15a21605807de894385ebe634ec7402f627b486f32326f0b5b8f3a5
+  normalized_sha256: sha256:42bd7e3db15a21605807de894385ebe634ec7402f627b486f32326f0b5b8f3a5
+cas_ref: sha256:42bd7e3db15a21605807de894385ebe634ec7402f627b486f32326f0b5b8f3a5
+coverage_gids:
+  - gid: D5/S3/Geometry/ODE/UniformLocalGlobalPasting.exists_global_solution_of_uniform_local
+    target_statement_id: sha256:b35819e7e040bb90e32be4dc22f809d0583c5117112a8f70cf8fce5086699e1a
+receipts:
+  unresolved_subitems: []

@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor.
+claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor. The classical Stechkin reserve alone fails the universal reduced certificate; the published xi null vector also obstructs dropping only the exact Stechkin residual, with the auxiliary line and other terms retained.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -370,7 +370,226 @@ $$
 C_L(f)\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2)\|f\|_2^2.
 $$
 
-This condition cannot hold for every compact smooth test. For a normalized test supported in an interval of width $d<\log2$, all primary-prime correlations vanish and the continuum estimate (9) gives $|C_L(f)|\le2(e^{d/2}-1)$. This tends to zero as $d\downarrow0$, while the required scalar is at least $\log2>0$. Such tests refute the universal sufficient condition, not positivity of their full Weil form. A useful all-test comparison must retain the actual positive contributions or a sharper joint estimate. The logarithmic budget has already consumed $E_*$, which cannot be counted again as an independent reserve. Equation (15) and this domain boundary remain paper-level deductions without a new Lean declaration, Robin estimate or RH conclusion.
+This condition cannot hold for every compact smooth test. For a normalized test supported in an interval of width $d<\log2$, all primary-prime correlations vanish and the continuum estimate (9) gives $|C_L(f)|\le2(e^{d/2}-1)$. This tends to zero as $d\downarrow0$, while the required scalar is at least $\log2>0$. Such tests refute the universal sufficient condition, not positivity of their full Weil form. A useful all-test comparison must retain the actual positive contributions or a sharper joint estimate. In the basic budget (8), $E_*$ has been spent; it cannot also be added to (15) as an independent reserve. Equation (15) and this domain boundary remain paper-level deductions without a new Lean declaration, Robin estimate or RH conclusion.
+
+The [classical Stechkin application](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison) supplies a stronger paper-level bound for the actual $\mathcal Z$ on this same test:
+
+$$
+\mathcal Z(f)\ge\kappa_S E_*(f)-2\|f\|_2^2,
+\qquad \kappa_S=1/\sqrt5.
+$$
+
+Thus the independently justified remainder
+
+$$
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2\|f\|_2^2\ge0
+$$
+
+gives the exact account
+
+$$
+\begin{aligned}
+Q_{\rm full}(f)={}&C_L(f)-\tfrac12|\int f|^2
+-(2C_{\rm odd}+\log2+2)\|f\|_2^2\\
+&+\kappa_S E_*(f)+\mathcal R_S(f)
++\mathcal D_{\rm odd}(f)+\mathcal J(f). \tag{16}
+\end{aligned}
+$$
+
+The retained fraction is paid for by a lower bound on $\mathcal Z$, including the scalar cost $2\|f\|_2^2$. It is not a second use of the full $E_*$ and is not obtained by defining an unknown Robin or Weil margin to be positive. A sufficient joint comparison is now
+
+$$
+C_L(f)+\kappa_S E_*(f)
+\ge\tfrac12|\int f|^2+(2C_{\rm odd}+\log2+2)\|f\|_2^2
+\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0. \tag{17}
+$$
+
+Equation (17) is sufficient rather than necessary: retaining the actual $\mathcal R_S$, $\mathcal D_{\rm odd}$ and $\mathcal J$ can reduce the required margin. The construction below shows that its antecedent cannot hold for every admitted test, even with the retained Gamma fraction. Every term belongs to the same actual $f$; separate extrema for $C_L$ and $E_*$ do not prove their joint comparison. The source reuse preserves a positive Gamma fraction without an RH hypothesis, but does not solve the remaining signed primary-prime/pole estimate or identify its tests with the Robin configurations.
+
+### A smooth obstruction to the retained-fraction scalarization
+
+The earlier scalarization obstruction discarded every positive contribution. Here the question is different: does keeping $\kappa_S E_*$ suffice after charging the scalar cost $2\|f\|_2^2$? A fixed smooth test refutes that stronger universal requirement. The construction uses standard convolution and translation estimates, not a new approximation or prime-distribution theorem.
+
+The classical suppliers are [Brezis, *Functional Analysis, Sobolev Spaces and Partial Differential Equations* (Springer, 2011)](https://doi.org/10.1007/978-0-387-70914-7), §4.4, Theorem 4.15, printed p.104 (convolution contraction), Propositions 4.18 and 4.20, pp.106–107 (support and smoothness), and §9.1, Lemma 9.1 and Proposition 9.3, pp.266–267 (weak-derivative commutation and translation). The parameter map is dimension one, $p=2$, the whole space $\mathbb R$, and the zero-extended seed below. Positive compact convolution and explicit norm control are used directly; no unspecified approximation sequence or extension of the Weil form to nonsmooth tests is needed.
+
+Start with the compact absolutely continuous function
+
+$$
+f_0(x)=\begin{cases}2\cos(2\pi x),&|x|\le1/4,\\0,&|x|>1/4.\end{cases}
+\qquad \|f_0\|_2^2=1,\qquad \|f_0'\|_2^2=4\pi^2<40.
+$$
+
+Choose any nonnegative even $\eta\in C_c^\infty(-1,1)$ of integral one. Put $\varepsilon=1/1000$, $\eta_\varepsilon(x)=\varepsilon^{-1}\eta(x/\varepsilon)$, $g=\eta_\varepsilon*f_0$, and $f=g/\|g\|_2$. Young's convolution inequality gives $\|g'\|_2\le\|f_0'\|_2$. Reuse the segment-integral translation estimate above, valid also for this absolutely continuous $f_0$, to obtain
+
+$$
+\|g-f_0\|_2\le\varepsilon\|f_0'\|_2<1/100,
+\qquad \|g\|_2>99/100,
+\qquad \|f'\|_2^2<\frac{40}{(99/100)^2}<42.
+$$
+
+This is an actual nonnegative even real compact smooth test with $\|f\|_2=1$, supported in $[-251/1000,251/1000]$. Its support width is less than $11/20<\log2$, so every primary-prime correlation vanishes. The existing continuum bound therefore gives
+
+$$
+0\le C_L(f)\le2(e^{11/40}-1)<1.
+$$
+
+For its shifted energy, nonnegativity makes $R_f(t)\ge0$, so the same translation estimate and norm identity give
+
+$$
+\|f-\tau_t f\|_2^2\le\min(42t^2,2).
+$$
+
+Since $1-e^{-2t}=2e^{-t}\sinh t\ge2te^{-t}$ for $t>0$, its actual kernel satisfies
+
+$$
+\frac{e^{-5t/2}}{1-e^{-2t}}\le\frac{e^{-3t/2}}{2t}.
+$$
+
+Split the energy integral at $t=1/4$ and $t=1$. On the first interval use the derivative bound, on the second use the bound two, and on the last also use $1/t\le1$. This yields
+
+$$
+E_*(f)\le\frac{42}{64}+\log4+\frac23e^{-3/2}
+<\frac{21}{32}+\frac75+\frac16
+=\frac{1067}{480}<\frac94.
+$$
+
+The scalar comparisons use only $\pi^2<10$, $\log4<7/5$, $e^{3/2}>4$, $\log2>11/20$, and $\log(3/2)>11/40$. Since $\kappa_S<1/2$ and $C_{\rm odd}\ge0$,
+
+$$
+\begin{aligned}
+C_L(f)+\kappa_S E_*(f)&<1+\frac98=\frac{17}{8},\\
+\tfrac12|\int f|^2+(2C_{\rm odd}+\log2+2)\|f\|_2^2&>\frac52.
+\end{aligned}
+$$
+
+Thus the antecedent in (17) fails by more than $3/8$ on an admitted smooth even test. Enlarging the ambient support does not repair it for this same $f$: the added continuum integrand is zero, and all newly admitted prime correlations still vanish.
+
+The discarded positive terms have concrete contributions on this very test. Every odd-power shift $k\log p$, $k\ge3$, exceeds its support width, so the existing energy definition gives
+
+$$
+\mathcal D_{\rm odd}(f)=2C_{\rm odd},\qquad
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2
+\ge2-\kappa_S E_*(f)>\frac78.
+$$
+
+These compensations do not by themselves determine the sign of the full form: the displayed estimates supply only a lower bound for the reduced deficit. They show why discarding independently positive terms is a substantive loss. This is a paper-level obstruction to that sufficient scalarization, not a negative-full-Weil example or a counterexample to RH or Robin. The actual values in (16) must be retained or bounded jointly if this account is used for an all-test proof. The construction and bounds have not been compiled in Lean.
+
+### The exact auxiliary line does not replace the discarded residual
+
+Retain the auxiliary line itself, rather than replacing it by the scalar lower bound in (16). Use the classical notation $Q_\sigma(t)=\Re(\xi'/\xi)(\sigma+it)$, $\kappa_S=1/\sqrt5$, and $\varphi=(1+\sqrt5)/2$, with the same entire $\xi$ as the [Stechkin supplier](broadbent2026mertens.md#retaining-a-gamma-fraction-by-the-classical-stechkin-comparison). For the same even compact smooth test set
+
+$$
+\mathcal A_\varphi(f)=\frac1{2\pi}\int_{\mathbb R}
+2\kappa_S Q_\varphi(2\tau)|\widehat f(\tau)|^2d\tau,
+\qquad
+\mathcal R_\varphi(f)=\mathcal Z(f)-\mathcal A_\varphi(f)\ge0.
+$$
+
+Dropping only this exact Stechkin residual from (15), while keeping every other actual contribution, gives
+
+$$
+\begin{aligned}
+Q_{\rm cmp}(f):=Q_{\rm full}(f)-\mathcal R_\varphi(f)
+={}&C_L(f)-\tfrac12|\int f|^2
+-(2C_{\rm odd}+\log2)\|f\|_2^2\\
+&+\mathcal A_\varphi(f)+\mathcal D_{\rm odd}(f)+\mathcal J(f).
+\end{aligned} \tag{18}
+$$
+
+Universal nonnegativity of (18) is still too strong. The applicable classical boundary is [Lagarias, arXiv:math/0404394v4](https://arxiv.org/pdf/math/0404394v4), §3, equation (3.1), printed p.12. His analytic class $\mathcal A$ consists of functions holomorphic on $0<\Re s<1$ with a uniform $O(1/|s|)$ bound away from $|\Im s|\le1$. He explicitly gives the nonzero null vector $F(s)=\xi(s,\pi)$ for the Weil scalar product. For the trivial representation this is $2\xi(s)$; that factor affects neither its zeros nor the logarithmic derivative. This is an existing null-vector result, not a new construction. Its compact-test application requires the domain argument below.
+
+Reuse the original positive even theta kernel $\Phi$ from [Romik](../Analytic/romik2021orthogonal.md), equations (1.6)–(1.11), Online First pp.2–3:
+
+$$
+\Phi(x)=\sum_{n\ge1}
+\bigl(4\pi^2n^4e^{9x/2}-6\pi n^2e^{5x/2}\bigr)
+ e^{-\pi n^2e^{2x}},
+\qquad
+\widehat\Phi(z)=\xi(1/2+iz). \tag{19}
+$$
+
+The Fourier convention here is $\widehat f(z)=\int e^{-izx}f(x)dx$. Since $\Phi$ is even, Romik's plus-sign convention agrees for every complex $z$, with no additional prefactor. The project's [theta transform](../../D5/S3/Analytic/Fourier/XiThetaTransform.lean), `source_theta_fourier_eq_xi`, already proves the all-complex identity for the identified kernel; `source_theta_normalized` supplies $\xi(1/2)>0$. Neither identity needs a new implementation.
+
+For the compact-domain bridge use the original all-real expression in (19), which is smooth at zero. Extending individual positive-half-line summands with $|x|$ would not by itself prove smoothness there. On $x\ge0$, termwise differentiation of the normally convergent theta series gives, for every derivative order $j$, constants $C_j,c_j$ such that
+
+$$
+|\Phi^{(j)}(x)|\le C_j e^{c_jx}e^{-(\pi/2)e^{2x}}.
+$$
+
+Indeed each derivative is a finite sum of exponential factors times $n^d e^{-\pi n^2e^{2x}}$; split the latter exponent using $n^2e^{2x}\ge(n^2+e^{2x})/2$ and sum $n^d e^{-\pi n^2/2}$. Evenness controls the negative half-line. In particular every derivative is integrable against $e^{a|x|}$ for each fixed $a>0$, and all tilted integration-by-parts boundary terms vanish. These derivative estimates and the cutoff passage are paper applications of the classical kernel, not consequences already bundled into the compiled Fourier identity.
+
+The multiplier of $\mathcal R_\varphi$ is
+
+$$
+r(\tau)=2[Q_1(2\tau)-\kappa_S Q_\varphi(2\tau)]\ge0.
+$$
+
+It is strictly positive at zero. To see the strictness without any low-zero computation, write an actual zero as $\rho=\beta+i\gamma$, let $u=\beta(1-\beta)>0$, $y=\gamma^2$, and define the reflected kernel pair
+
+$$
+F_\sigma(\rho)=\frac{\sigma-\beta}{(\sigma-\beta)^2+\gamma^2}
++\frac{\sigma-1+\beta}{(\sigma-1+\beta)^2+\gamma^2}.
+$$
+
+With positive denominators
+
+$$
+D_1=y^2+(1-2u)y+u^2,\qquad
+D_\varphi=y^2+(3-2u)y+(1+u)^2,
+$$
+
+the exact kernel difference is
+
+$$
+F_1(\rho)-\kappa_S F_\varphi(\rho)
+=\frac{y^2+6uy+u(1+u)}{D_1D_\varphi}>0. \tag{20}
+$$
+
+Reflection preserves the actual zero multiset and multiplicities $m_\rho$, so $Q_\sigma(0)=\tfrac12\sum_\rho m_\rho F_\sigma(\rho)$. The multiplier's factor two cancels this one-half, including for fixed critical-line zeros. The existing absolutely convergent real resolvent and nonempty zero set therefore give $r(0)>0$. Continuity and $\widehat\Phi(0)=\xi(1/2)>0$ imply
+
+$$
+0<\mathcal R_\varphi(\Phi)<\infty. \tag{21}
+$$
+
+Finiteness uses the same Poisson-pair bound in the supplier's equation (5): it is uniform over widths $0<a\le2$ and summable over the actual zero ordinates. All relevant widths $1-\beta$ and $\varphi-\beta$ lie in this interval. Weighted kernel derivatives give the necessary decay of $|\widehat\Phi|^2$ on the real Fourier line; no pointwise bound on narrow Poisson peaks is assumed.
+
+Take a real even $0\le\chi\le1$ in $C_c^\infty$, equal to one on $[-1,1]$ and supported in $[-2,2]$, and put $f_N(x)=\chi(x/N)\Phi(x)$. These are actual nonnegative even compact smooth tests. Their weighted two-jet errors satisfy
+
+$$
+\epsilon_N=\int e^{|x|/2}
+\bigl(|f_N-\Phi|+|(f_N-\Phi)''|\bigr)dx\longrightarrow0.
+$$
+
+Product differentiation and the weighted derivative tails above justify this limit. Integration by parts, with its vanishing boundary terms, gives
+
+$$
+|\widehat{f_N-\Phi}(v+iw)|
+\le\frac{\epsilon_N}{1+v^2},\qquad |w|\le1/2. \tag{22}
+$$
+
+This is the same weighted-jet mechanism as [closed-strip decay](../../D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.lean); that module's bundled test domain is compact, so its noncompact use here is an explicitly justified paper extension. The fixed-support rational approximation theorem is not substituted for this expanding-support cutoff.
+
+For every actual zero use $z_\rho=\gamma-i(\beta-1/2)$ and retain the correct paired factors
+
+$$
+Q_{\rm full}(f_N)=\sum_\rho m_\rho\,
+\widehat f_N(z_\rho)\,
+\overline{\widehat f_N(\overline{z_\rho})}.
+$$
+
+Equation (19) makes the limiting factor $\widehat\Phi(z_\rho)=\xi(\rho)$ vanish at every actual zero, without RH. A finite weighted two-jet budget $B$ for $\Phi$ and (22) bound the paired-product error by
+$\epsilon_N(2B+\epsilon_N)/(1+\gamma^2)^2$.
+The existing multiplicity-weighted inverse-fourth zero summability and compact-test explicit formula yield $Q_{\rm full}(f_N)\to0$. This defines no new arithmetic form on noncompact functions. Off the critical line the paired expression is not $|\widehat f_N(z_\rho)|^2$.
+
+On the real Fourier line the same product estimate, followed by the supplier's Poisson-pair bound applied separately to $Q_1$ and $Q_\varphi$, gives
+$\mathcal R_\varphi(f_N)\to\mathcal R_\varphi(\Phi)$.
+Consequently
+
+$$
+Q_{\rm cmp}(f_N)\longrightarrow-\mathcal R_\varphi(\Phi)<0. \tag{23}
+$$
+
+Thus for all sufficiently large $N$ an admitted nonnegative even smooth test makes (18) negative. Normalization by its nonzero $L^2$ norm preserves the sign. This applies the published null-vector boundary with an explicit compact-domain bridge; it makes no originality claim. It excludes discarding only the exact residual as an all-test positivity certificate, even when the auxiliary line and all other terms are kept. It supplies no sign for $Q_{\rm full}(f_N)$ itself, no Robin estimate, and no RH counterexample or proof. The theta Fourier identity is existing formalized mathematics; equations (18), (20)–(23) and their compact-domain application have not been compiled as a new Lean result.
 
 ## A prime edge crossing an intermediate FIB window
 

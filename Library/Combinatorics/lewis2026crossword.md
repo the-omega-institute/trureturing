@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Combinatorics/CrosswordRookCountsDefs
   - D5/S3/Combinatorics/CrosswordRookCounts
   - D5/S3/Combinatorics/CrosswordPermutationGridRefutation
+  - D5/S3/Combinatorics/CrosswordGrid/SkewMergedRook
 license: citation-only
 triage: anchor
 ---

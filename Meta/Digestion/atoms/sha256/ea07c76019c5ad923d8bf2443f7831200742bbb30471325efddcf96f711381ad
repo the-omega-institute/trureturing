@@ -1,0 +1,41 @@
+### 41.1 有类型实际像闭合
+
+令 $H^{\mathrm{act}}$、来源字段、档案和策略记录沿用 §39–40，$\tau:H^{\mathrm{act}}\to I$ 给出运行接口类型，并要求存在嵌入 $\iota:H^{\mathrm{act}}\hookrightarrow\Sigma_{i:I}S_i$。写
+
+$$
+H_i^{\mathrm{act}}:=\{h\in H^{\mathrm{act}}:\tau(h)=i\},
+\qquad
+\iota_i(h):=\text{第二分量}(\iota(h))\quad(h\in H_i^{\mathrm{act}}).
+$$
+
+新增的载体要求是
+
+$$
+\iota(h)=\langle\tau(h),\iota_{\tau(h)}(h)\rangle,
+\qquad
+\iota_i(h)=\iota_i(h')\Longrightarrow h=h'.
+\tag{PG.4101}
+$$
+
+这里的纤维单射把 §39 的共同来源记录忠实放进 typed 状态；它不授权读取未声明的历史，也不把各纤维中分别可达的字段拼成实际联合历史。采用 [TypedFiniteViewKernel.lean](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean) 的接口
+
+$$
+\mathrm{Edge}:I\to I\to\mathrm{Type},\qquad
+\mathrm{step}_e:S_i\to\mathrm{Option}(L_e\times S_j),\qquad
+r_i:S_i\to O_i.
+\tag{PG.4102}
+$$
+
+其中的边至少包含任务声明的读、游标、替换和（若任务可用）档案选择动作；参考、权限、writer 和句柄刷新必须在同一历史接续中更新，不能由 `epoch` 的数值变化代替。对每个 $e:i\to j$，给出实际接续 $T_e^{\mathrm{act}}$ 并要求
+
+$$
+\mathrm{step}_e(\iota_i h)
+=\mathrm{Option.map}(\mathrm{id}_{L_e}\times\iota_j)
+   (T_e^{\mathrm{act}}h),
+\qquad
+T_e^{\mathrm{act}}:H_i^{\mathrm{act}}\to\mathrm{Option}(L_e\times H_j^{\mathrm{act}}).
+\tag{PG.4103}
+$$
+
+于是 $A_i:=\iota_i(H_i^{\mathrm{act}})$ 对每条声明边闭合，失败的 `Option none` 也保留在响应比较中。需要区分拒绝原因、写入档案或继续执行时，必须把它们编码为同一 `Edge` 的标签和实际后继；裸 `none` 只表示没有后继。
+

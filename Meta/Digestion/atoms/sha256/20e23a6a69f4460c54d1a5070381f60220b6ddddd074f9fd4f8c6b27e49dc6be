@@ -1,0 +1,22 @@
+**定理 31.1（有限联合核的平台定理）。** 设 \(\mathsf S\) 有限。则：
+
+1. \(\Pi_{n+1}\) 细化 \(\Pi_n\)，并在至多 \(|\mathsf S|-|\Pi_0|\) 次严格细化后达到固定分割 \(\Pi_\ast\)；
+2. 对 \(q_\ast:\mathsf S\to\mathsf S/\Pi_\ast\)，以下商核良定义：
+
+$$
+\overline K_a(\ell,y,d,C\mid q_\ast(s))
+=\sum_{u\in C}K_a(\ell,y,d,u\mid s),
+\qquad C\in\Pi_\ast .
+\tag{EX.3106}
+$$
+
+3. 合法性、事件、输出、grade 增量和下一块都由 \(q_\ast(s)\) 决定；任意有限动作词的联合响应都从这个商递归得到；
+4. 若 \(r:\mathsf S\to R\) 也是一个保留 \(v_0\) 且使每个动作核在 \(r\)-纤维上强可合并的表示，则在实际摘要像上
+
+$$
+r(s)=r(t)\Longrightarrow q_\ast(s)=q_\ast(t).
+\tag{EX.3107}
+$$
+
+因而 \(\Pi_\ast\) 是指定任务下最粗的可执行动态边界。
+
