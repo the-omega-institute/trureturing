@@ -26170,6 +26170,12 @@ disjointness, the occupied labels, and any other exclusions only increases
 the largest possible density.  Thus the reciprocal sum of all non-unit
 divisors of \(N\) is an upper bound for every such retained union.
 
+The calculation below concerns the natural embedding in which the deleted
+packet is exactly the displayed minimum repair: \(\{9,15\}\) for \(F_A\) and
+\(\{9,15,21\}\) for \(F_B\).  Choosing a different packet is a separate
+source problem: its classes must first be shown to have union exactly \(F_i\)
+before a retained-family density bound can be applied.
+
 For \(N=35\cdot3^{e-1}\) with \(e\ge5\),
 
 \[
