@@ -142,17 +142,21 @@ public sealed class RelationContractTests
             root.Path, TextWriter.Null, new StringWriter(), TextReader.Null));
     }
 
-    internal static TemporaryRoot Fixture(string blocks, string helper = "", string attributes = "", string edges = "null")
+    internal static TemporaryRoot Fixture(string blocks, string helper = "", string attributes = "", string edges = "null",
+        string anchors = "null", string? header = null)
     {
         var root = new TemporaryRoot();
         File.WriteAllText(root.Resolve("global.json"), "{}");
+        var document = header is null
+            ? $"ScribeNode.Create(\"digest\", H(\"title\"), Blocks({blocks}), edges: {edges}, anchors: {anchors})"
+            : $"ScribeDocument.Create({header}, H(\"title\"), Blocks({blocks}), {edges})";
         File.WriteAllText(root.Resolve(Entry), $$"""
-            using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl;
+            using StrataLint.Scribe; using StrataLint.Engine; using static StrataLint.Scribe.DefinitionDsl;
             {{attributes}}
             internal sealed class Relations : IScribeDocumentDefinition
             {
                 public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H("title"), Blocks({{blocks}}), edges: {{edges}}));
+                    {{document}});
                 {{helper}}
             }
             """);
@@ -163,13 +167,14 @@ public sealed class RelationContractTests
         typeof(RelationContractTests).Assembly, ["relations", "verify", "--paths-from", "-"],
         root.Path, output, error, new StringReader(Entry));
 
-    internal static string EqualExecution(TemporaryRoot root)
+    internal static string EqualExecution(TemporaryRoot root, string additionalAllowlist = "")
     {
         var read = Read(root);
         Assert.Null(read.Failure);
         var allowlist = root.Resolve("allowlist.txt");
         File.WriteAllText(allowlist, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt"))
-            + "\nM:StrataLint.Scribe.BlockSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentBlock})\nM:StrataLint.Scribe.InlineSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.Inline})\nM:StrataLint.Scribe.DocumentBlock.Paragraph.#ctor(StrataLint.Scribe.InlineSequence)\nM:StrataLint.Scribe.Inline.GidReference.#ctor(StrataLint.Scribe.GidRef)\nM:System.String.Trim\nM:System.String.ToUpperInvariant\nM:StrataLint.Scribe.DocumentEdge.TruthAnchor.Create(StrataLint.Scribe.LeanDeclarationRef)\nM:StrataLint.Scribe.LeanDeclarationRef.Create(System.String,StrataLint.Scribe.IGidExistenceValidator)\nM:StrataLint.Scribe.DocumentEdge.NarrativeReference.ToDescribe(StrataLint.Scribe.GidRef,StrataLint.Scribe.DescribeId)\n");
+            + "\nM:StrataLint.Scribe.BlockSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentBlock})\nM:StrataLint.Scribe.InlineSequence.Create(System.Collections.Generic.IEnumerable{StrataLint.Scribe.Inline})\nM:StrataLint.Scribe.DocumentBlock.Paragraph.#ctor(StrataLint.Scribe.InlineSequence)\nM:StrataLint.Scribe.Inline.GidReference.#ctor(StrataLint.Scribe.GidRef)\nM:System.String.Trim\nM:System.String.ToUpperInvariant\nM:StrataLint.Scribe.DocumentEdge.TruthAnchor.Create(StrataLint.Scribe.LeanDeclarationRef)\nM:StrataLint.Scribe.LeanDeclarationRef.Create(System.String,StrataLint.Scribe.IGidExistenceValidator)\nM:StrataLint.Scribe.DocumentEdge.NarrativeReference.ToDescribe(StrataLint.Scribe.GidRef,StrataLint.Scribe.DescribeId)\n"
+            + additionalAllowlist);
         var host = ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, allowlist);
         Assert.True(host.IsSuccess, host.Failure?.ToString());
         var bytes = Encode(read.Projection!);

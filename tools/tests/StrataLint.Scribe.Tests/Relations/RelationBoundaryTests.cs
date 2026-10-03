@@ -108,6 +108,40 @@ public sealed class RelationBoundaryTests
         Assert.Equal("IgnoredWrite", read.Failure?.Shape);
     }
 
+    [Theory]
+    [InlineData("string.Join(\",\", new[] { \"a\" })")]
+    [InlineData("\"\" + System.Linq.Enumerable.Prepend(new[] { \"a\" }, \"b\")")]
+    [InlineData("\"\" + System.Linq.Enumerable.ToList(new[] { \"a\" })")]
+    [InlineData("\"\" + System.Linq.Enumerable.Distinct(new[] { \"a\" })")]
+    [InlineData("\"\" + System.Linq.Enumerable.OrderBy(new[] { \"a\" }, item => item)")]
+    [InlineData("\"\" + System.Linq.Enumerable.ThenBy(System.Linq.Enumerable.OrderBy(new[] { \"a\" }, item => item), item => item)")]
+    public void UnsupportedPresentationMembersAreRejected(string expression)
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Text(" + expression + "))");
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Theory]
+    [InlineData("Clear()")]
+    [InlineData("Remove(1)")]
+    [InlineData("RemoveAt(0)")]
+    public void UnsupportedPresentationListMutatorsAreRejected(string invocation)
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Text(Label()))", $$"""
+            private static string Label()
+            {
+                var values = new System.Collections.Generic.List<int> { 1 };
+                values.{{invocation}};
+                return "text";
+            }
+            """);
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
     private static TemporaryRoot MutationFixture(string body, string members = "")
     {
         var root = new TemporaryRoot();

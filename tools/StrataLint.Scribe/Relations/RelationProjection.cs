@@ -1,13 +1,15 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
 public sealed record RelationEdge(string Kind, string TargetKind, string Target, string? DescribeId);
 public sealed record RelationClaim(string Problem, string Resolution, ImmutableArray<string> Members);
 public sealed record RelationDescribe(
-    string Id, string KindSource, string? Kind, string? Role, string? Declaration, RelationClaim? Claim);
+    string Id, string KindSource, string? Kind, string? Role, string? Declaration, RelationClaim? Claim,
+    string? LiteratureReference, ImmutableArray<string> AcknowledgementReferences);
 
 /// <summary>Order-free relations retain the multiplicity of every authored occurrence.</summary>
 public sealed record RelationProjection(
@@ -15,7 +17,9 @@ public sealed record RelationProjection(
     string SourcePath,
     ImmutableArray<RelationEdge> Edges,
     ImmutableArray<string> InlineReferences,
-    ImmutableArray<RelationDescribe> Describes)
+    ImmutableArray<RelationDescribe> Describes,
+    string? EvidenceReference,
+    ImmutableArray<string> LiteratureAnchors)
 {
     public static RelationProjection FromDefinition(DocumentDefinition definition)
     {
@@ -44,7 +48,9 @@ public sealed record RelationProjection(
                         describes.Add(new(describe.Id.Value, derived is null ? "authored" : "report-derived",
                             authored?.Value.ToString() ?? derived?.Role?.ToString(), derived?.Role?.ToString(), declaration,
                             claim is null ? null : new(claim.ProblemSlug.Value, claim.ResolutionKind.ToString(),
-                                claim.Members(declaration ?? string.Empty).Order(StringComparer.Ordinal).ToImmutableArray())));
+                                claim.Members(declaration ?? string.Empty).Order(StringComparer.Ordinal).ToImmutableArray()),
+                            describe.LiteratureReference?.Value,
+                            describe.AcknowledgementReferences.Select(static reference => reference.Value).ToImmutableArray()));
                         Visit(describe.Content);
                         break;
                 }
@@ -52,7 +58,9 @@ public sealed record RelationProjection(
         }
         Visit(document.Content);
         return new(document.Header.Gid.Value, NormalizeSource(definition.SourcePath),
-            document.Edges.Select(Edge).ToImmutableArray(), references.ToImmutable(), describes.ToImmutable());
+            document.Edges.Select(Edge).ToImmutableArray(), references.ToImmutable(), describes.ToImmutable(),
+            (document.Header.MirrorEvidence as EvidenceMirror.Artifact)?.Reference.Value,
+            document.Header.Anchors.OfType<LiteratureAnchor>().Select(static anchor => anchor.CanonicalString).ToImmutableArray());
     }
 
     private static RelationEdge Edge(DocumentEdge edge) => edge switch
@@ -77,10 +85,13 @@ public sealed record RelationProjection(
     [
         "gid:" + JsonSerializer.Serialize(Gid),
         "path:" + JsonSerializer.Serialize(SourcePath),
+        "evidence:" + JsonSerializer.Serialize(EvidenceReference),
+        .. LiteratureAnchors.Select(static anchor => "literature-anchor:" + JsonSerializer.Serialize(anchor)).Order(StringComparer.Ordinal),
         .. Edges.Select(static edge => "edge:" + JsonSerializer.Serialize(edge)).Order(StringComparer.Ordinal),
         .. InlineReferences.Select(static reference => "inline:" + JsonSerializer.Serialize(reference)).Order(StringComparer.Ordinal),
         .. Describes.Select(static describe => "describe:" + JsonSerializer.Serialize(describe with
         {
+            AcknowledgementReferences = describe.AcknowledgementReferences.Order(StringComparer.Ordinal).ToImmutableArray(),
             Claim = describe.Claim is null ? null : describe.Claim with
             {
                 Members = describe.Claim.Members.Order(StringComparer.Ordinal).ToImmutableArray(),

@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Operations;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -57,7 +58,9 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     private sealed record Binding(ExpressionSyntax Expression, Dictionary<ISymbol, object?> Scope);
     private sealed record InlineReference(string Target);
     private sealed record Claim(string Problem, string Resolution, ImmutableArray<string> Additional);
-    private sealed record Packet(string Gid, string Path, object? Content, object? Edges);
+    private sealed record Header(string Gid, string? EvidenceReference, ImmutableArray<string> LiteratureAnchors);
+    private sealed record Provenance(string? LiteratureReference, ImmutableArray<string> Acknowledgements);
+    private sealed record Packet(Header Header, string Path, object? Content, object? Edges);
 
     private SemanticModel Model(SyntaxNode node)
     {
@@ -81,10 +84,11 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         var packet = Method(candidates[0], new(SymbolEqualityComparer.Default)) as Packet
             ?? throw Reject(candidates[0], "DocumentStructure", "Entry did not construct a document.");
         var content = Flatten(packet.Content).ToArray();
-        return new(packet.Gid, RelationProjection.NormalizeSource(packet.Path),
+        return new(packet.Header.Gid, RelationProjection.NormalizeSource(packet.Path),
             Flatten(packet.Edges).OfType<RelationEdge>().ToImmutableArray(),
             content.OfType<InlineReference>().Select(static reference => reference.Target).ToImmutableArray(),
-            content.OfType<RelationDescribe>().ToImmutableArray());
+            content.OfType<RelationDescribe>().ToImmutableArray(),
+            packet.Header.EvidenceReference, packet.Header.LiteratureAnchors);
     }
 
     private object? Method(SyntaxNode method, Dictionary<ISymbol, object?> scope)
@@ -181,6 +185,10 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     private object? Symbol(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope)
     {
         var symbol = Model(expression).GetSymbolInfo(expression).Symbol;
+        if (expression is MemberAccessExpressionSyntax { Name.Identifier.ValueText: "Anchor" } anchorMember
+            && symbol is IPropertySymbol anchorProperty
+            && anchorProperty.ContainingType.ToDisplayString() == "StrataLint.Scribe.LibraryNoteRef")
+            return LibraryNoteRef.Create(Scalar(Eval(anchorMember.Expression, scope), anchorMember)).Anchor;
         if (expression is MemberAccessExpressionSyntax { Name.Identifier.ValueText: "Value" } member
             && symbol is IPropertySymbol property && property.ContainingType.ToDisplayString() is
                 "StrataLint.Scribe.GidRef" or "StrataLint.Scribe.DeclarationHandle"
@@ -288,14 +296,14 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             return true;
         var type = method.ContainingType.ToDisplayString();
         if (method.ContainingType.OriginalDefinition.ToDisplayString() == "System.Collections.Generic.List<T>"
-            && method.Name is "Add" or "AddRange" or "Clear" or "Remove" or "RemoveAt")
+            && method.Name is "Add" or "AddRange")
             return !method.ContainingType.TypeArguments.Any(IsRelationType);
         if (type == "System.Linq.Enumerable"
-            && method.Name is "Select" or "SelectMany" or "Where" or "Concat" or "Append" or "Prepend" or "ToArray" or "ToList"
-                or "Aggregate" or "Reverse" or "Distinct" or "OrderBy" or "ThenBy")
+            && method.Name is "Select" or "SelectMany" or "Where" or "Concat" or "Append" or "ToArray"
+                or "Aggregate" or "Reverse")
             return true;
         if (type == "System.Array" && method.Name == "ConvertAll") return true;
-        if (type is "string" or "System.String" && method.Name is "Join" or "Split") return true;
+        if (type is "string" or "System.String" && method.Name is "Split") return true;
         return type is "string" or "System.String" && method.Name is "ToLowerInvariant" or "ToUpperInvariant" or "Trim" or "Replace"
             || type.StartsWith("StrataLint.Scribe.", StringComparison.Ordinal);
     }
@@ -328,7 +336,11 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             or "StrataLint.Scribe.LeanDeclarationRef" or "StrataLint.Scribe.DescribeId"
             or "StrataLint.Scribe.ProblemSlugRef" or "StrataLint.Scribe.LibraryNoteRef"
             or "StrataLint.Scribe.BlockSequence" or "StrataLint.Scribe.OpenProblemResolutionClaim"
-            or "StrataLint.Scribe.ScribeDocument" or "StrataLint.Scribe.DocumentDefinition";
+            or "StrataLint.Scribe.ScribeDocument" or "StrataLint.Scribe.DocumentDefinition"
+            or "StrataLint.Scribe.DocumentHeader"
+        || type.ToDisplayString().StartsWith("StrataLint.Scribe.AssessedProvenance", StringComparison.Ordinal)
+        || type.ToDisplayString().StartsWith("StrataLint.Scribe.EvidenceMirror", StringComparison.Ordinal)
+        || type.ToDisplayString() is "StrataLint.Engine.Anchor" or "StrataLint.Engine.LiteratureAnchor";
 
     private object? Call(ExpressionSyntax node, SeparatedSyntaxList<ArgumentSyntax> arguments,
         Dictionary<ISymbol, object?> scope)
@@ -380,6 +392,10 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             }
             finally { active.Remove(symbol); }
         }
+        if (type == "StrataLint.Engine.Anchor" && name == "ParseCanonical")
+            return Anchor.TryParseCanonical(Str("value")) is AnchorParseResult.Parsed parsedAnchor
+                ? parsedAnchor.Value
+                : throw Reject(node, "InvalidAnchor", "Anchor factory argument is not canonical.");
         if (!type.StartsWith("StrataLint.Scribe.", StringComparison.Ordinal))
             throw Reject(node, "UnsupportedInvocation", $"Unsupported factory: {type}.{name}");
         switch (type, name)
@@ -392,13 +408,19 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                 var path = RelationProjection.NormalizeSource(Str("sourcePath"));
                 if (!path.StartsWith("Blueprint/", StringComparison.Ordinal) || !path.EndsWith(".scribe.cs", StringComparison.Ordinal))
                     throw Reject(node, "InvalidDocumentPath", "Document source path is outside Blueprint.");
-                return new Packet(path["Blueprint/".Length..^".scribe.cs".Length], path, Arg("content"), Arg("edges"));
+                return new Packet(new Header(path["Blueprint/".Length..^".scribe.cs".Length], null, Anchors(Arg("anchors"))),
+                    path, Arg("content"), Arg("edges"));
             case ("StrataLint.Scribe.ScribeDocument", "Create"):
-                return new Packet(Str("header"), entry, Arg("content"), Arg("edges"));
+                return new Packet(Arg("header") as Header
+                    ?? throw Reject(node, "DocumentStructure", "Header argument is unsupported."), entry, Arg("content"), Arg("edges"));
             case ("StrataLint.Scribe.DefinitionDsl", "Header"):
-                return Str("gid");
+                return new Header(Str("gid"), null, Anchors(Arg("anchors")));
             case ("StrataLint.Scribe.DocumentHeader", "Create"):
-                return Str("gid");
+                return new Header(Str("gid"), Arg("mirrorEvidence") as string, Anchors(Arg("anchors")));
+            case ("StrataLint.Scribe.EvidenceMirror.Artifact", ".ctor"):
+                return Str("Reference");
+            case ("StrataLint.Scribe.EvidenceMirror.Waiver", ".ctor"):
+                return null;
             case ("StrataLint.Scribe.DefinitionDsl", "Blocks"):
             case ("StrataLint.Scribe.DefinitionDsl", "Paragraph"):
                 return Arg("content");
@@ -432,21 +454,31 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             case ("StrataLint.Scribe.OpenProblemResolutionClaim", ".ctor"):
                 return new Claim(Str("problemSlug"), EnumName(symbol.Parameters[1].Type, Arg("resolutionKind"), node),
                     Flatten(Arg("additionalMembers")).Select(value => Scalar(value, node)).ToImmutableArray());
+            case ("StrataLint.Scribe.AssessedProvenance", "FromRepo" or "NovelAfterSearch"):
+                return new Provenance(null, Flatten(Arg("acknowledgements")).Select(value => Scalar(value, node)).ToImmutableArray());
+            case ("StrataLint.Scribe.AssessedProvenance", "FromLiterature"):
+                return new Provenance(Str("noteRef"), []);
             case ("StrataLint.Scribe.Describe", "Lean" or "Remark" or "Example"):
                 var declaration = Arg("handle") as string;
                 var reportDerived = declaration is not null;
                 var role = name == "Remark" && reportDerived ? "Remark"
                     : Arg("role") is { } authoredRole ? EnumName(compilation.GetTypeByMetadataName("StrataLint.Scribe.DescribeRole")!, authoredRole, node) : null;
                 var claim = Arg("openProblemResolutionClaim") as Claim;
+                var provenance = Arg("provenance") as Provenance
+                    ?? throw Reject(node, "DescribeProvenance", "Provenance argument is unsupported.");
                 var describe = new RelationDescribe(Str("id"), reportDerived ? "report-derived" : "authored",
                     reportDerived ? role : name, role, declaration,
                     claim is null ? null : new(claim.Problem, claim.Resolution,
-                        new[] { declaration ?? string.Empty }.Concat(claim.Additional).Order(StringComparer.Ordinal).ToImmutableArray()));
+                        new[] { declaration ?? string.Empty }.Concat(claim.Additional).Order(StringComparer.Ordinal).ToImmutableArray()),
+                    provenance.LiteratureReference, provenance.Acknowledgements);
                 return new object?[] { describe, Arg("narrative") };
             default:
                 throw Reject(node, "UnsupportedInvocation", $"Unsupported relation factory: {type}.{name}");
         }
     }
+
+    private static ImmutableArray<string> Anchors(object? value) => Flatten(value).OfType<LiteratureAnchor>()
+        .Select(static anchor => anchor.CanonicalString).ToImmutableArray();
 
     private Dictionary<string, object?> Arguments(IMethodSymbol method, SeparatedSyntaxList<ArgumentSyntax> arguments,
         Dictionary<ISymbol, object?> scope, SyntaxNode node)
