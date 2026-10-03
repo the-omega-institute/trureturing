@@ -52,8 +52,8 @@ common law and two distinct increasing triples. Positions in Roles start at zero
 theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∀ μ : Laws n, Admissible rho μ → ∀ t u : Roles n, t ≠ u →
       gamma rho ≤ distance μ t u) ∧
-    (∃ μ : Laws n, Admissible rho μ ∧ ∃ t u : Roles n,
-      t ≠ u ∧ distance μ t u = gamma rho) := by
+    (Admissible rho (fun _ => extremal rho : Laws n) ∧ ∃ t u : Roles n,
+      t ≠ u ∧ distance (fun _ => extremal rho) t u = gamma rho) := by
   classical
   let E (μ : Laws n) (f : Input n → ℝ) : ℝ := ∑ w : Input n, (∏ i, μ i (w i)) * f w
   have factor {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
@@ -398,7 +398,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     intro h
     have := congrArg Fin.val h
     norm_num [t, u] at this
-  refine ⟨μ, hm, t, u, (fun he => hp (congrArg Roles.p he)), ?_⟩
+  refine ⟨hm, t, u, (fun he => hp (congrArg Roles.p he)), ?_⟩
   rw [same_tail t u rfl rfl, same_second hm.2 t u rfl hp]
   norm_num [μ, H, L, extremal, gamma]
   ring

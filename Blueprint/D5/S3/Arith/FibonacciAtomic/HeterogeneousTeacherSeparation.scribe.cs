@@ -61,7 +61,8 @@ internal sealed class HeterogeneousTeacherSeparationDocument : IScribeDocumentDe
                         + "restricting the middle window to 001 gives a sufficient bound: "
                         + "the first gate vanishes, the second gate is open to either third "
                         + "low bit, and the squared difference is four times their discrepancy.")),
-                    Paragraph(Text("The attaining common law gives masses "
+                    Paragraph(Text("The public equality clause fixes the admissible common law "
+                        + "mu(i,a)=extremal(rho)(a), with masses "
                         + "((1-3 rho)/2, rho, (1-3 rho)/2, rho, rho) in alphabet order. "
                         + "The triples (0,n-2,n-1) and (1,n-2,n-1) share the last two positions. "
                         + "Their squared class difference equals their first-gate discrepancy, "
@@ -86,9 +87,11 @@ internal sealed class HeterogeneousTeacherSeparationDocument : IScribeDocumentDe
         var gamma = Call("gamma", rho);
         var lower = All(mu, laws, Imp(admissible,
             All(t, roles, All(u, roles, Imp(different, Seq(gamma, Sp, Le, Sp, distance))))));
-        var attained = Ex(mu, laws, Seq(admissible, Sp, Land, Sp,
+        var common = Call("extremal", rho);
+        var commonLaw = Par(Seq(V("i"), Sp, Mapsto, Sp, common));
+        var attained = Seq(Call("Admissible", rho, commonLaw), Sp, Land, Sp,
             Ex(t, roles, Ex(u, roles, Seq(different, Sp, Land, Sp,
-                distance, Sp, Eq, Sp, gamma)))));
+                Call("distance", commonLaw, t, u), Sp, Eq, Sp, gamma))));
         var premises = Seq(D(4), Sp, Le, Sp, n, Sp, Land, Sp,
             D(0), Sp, Lt, Sp, rho, Sp, Land, Sp, rho, Sp, Le, Sp, new Formula.Fraction(D(1), D(8)));
         return All(n, Seq(Mathbb, Grp(V("N"))),
