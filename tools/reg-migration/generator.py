@@ -6,11 +6,11 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from .lean_syntax import (load_syntax_snapshot, parse_repository, relative_reg_path,
+from .lean_syntax import (byte_slice, load_syntax_snapshot, parse_repository, relative_reg_path,
                           source_module, syntax_sources)
 from .model import Failure, GeneratedFile, PlanResult, Registration, Root, Seal, Template
-from .render import render_registration, render_root, render_template, replace_spans
-from .snapshot import SnapshotError, closed_printed_term, load_input_snapshot, sha256_file, typed_options
+from .render import render_registration, render_root, render_template, replace_spans, target_uses_controlled_printing
+from .snapshot import SnapshotError, closed_printed_term, load_input_snapshot, sha256_file, type_arg_source_slots, typed_options, validate_expression_levels, validate_level_params
 
 
 class GeneratorFailure(RuntimeError):
@@ -115,9 +115,6 @@ class Generator:
                             fail("extra_compiled_input", f"{category}:{owner}:{index}", str(self.inputs_path))
                             continue
                         candidates = [index]
-                    elif isinstance(captured, str) and captured != original:
-                        candidates = [position for position, item in enumerate(source_items)
-                                      if getattr(item, "source_text", None) == captured]
                     elif len(source_items) == 1:
                         candidates = [0]
                     else:
@@ -134,7 +131,7 @@ class Generator:
                         fail("duplicate", f"{category}:{owner}:{position}")
                         continue
                     item = source_items[position]
-                    if source_required and captured not in {original, getattr(item, "source_text", None)}:
+                    if source_required and captured != original:
                         fail("compiled_source_mismatch", f"{category}:{owner}:{position}")
                         continue
                     if not source_required and relative not in bound_sources:
@@ -159,12 +156,23 @@ class Generator:
         bind(templates, "templates", True)
         bind(roots, "roots", False)
         bind(seals, "seals", False)
+        compile_blockers: list[dict[str, Any]] = []
         for reg in registrations:
             row = reg.snapshot or {}
             if "owner" not in row:
                 continue
+            if row.get("source_target_matches") is False:
+                compile_blockers.append({"code": "source_target_contract_mismatch", "owner": row["owner"],
+                                         "source_index": row.get("source_index"), "theorem": row.get("theorem"),
+                                         "theorem_type": row.get("theorem_type"), "bridge_type": row.get("bridge_type")})
             if row.get("registration_module", row["owner"]) != row["owner"]:
                 fail("wrong_registration_owner", str(row.get("registration_module")), str(reg.path))
+            try:
+                validate_level_params(row, reg.module_name)
+            except SnapshotError as error:
+                fail(error.code, error.detail, str(reg.path))
+                continue
+            declared_levels = row.get("level_params", []) + row.get("extra_level_params", []) if isinstance(row.get("level_params", []), list) and isinstance(row.get("extra_level_params", []), list) else []
             theorem = row.get("theorem")
             if not isinstance(theorem, str) or not theorem:
                 fail("missing_material", "compiled theorem name", str(reg.path))
@@ -174,9 +182,18 @@ class Generator:
             if not isinstance(universes, list) or len(universes) != 17 or not isinstance(arguments, list) or len(arguments) != 8:
                 fail("missing_material", "registration universe/type arguments", str(reg.path))
             else:
+                try:
+                    type_sources = type_arg_source_slots(row)
+                except SnapshotError as error:
+                    fail(error.code, f"{reg.module_name}:{error.detail}", str(reg.path))
+                    type_sources = [None] * 8
                 for index, value in enumerate(arguments):
+                    if type_sources[index] is not None:
+                        continue
                     try:
-                        closed_printed_term(value, f"type_args[{index}]")
+                        if closed_printed_term(value, f"type_args[{index}]") is None:
+                            raise SnapshotError("missing_type_arg_source", f"type_args[{index}]")
+                        validate_expression_levels(value, declared_levels, f"type_args[{index}]")
                         reg.controlled_printing.append(f"type_args[{index}]")
                     except SnapshotError as error:
                         fail(error.code, f"{reg.module_name}:type_args[{index}]", str(reg.path))
@@ -185,16 +202,25 @@ class Generator:
             slots = row.get("parser_slots", {})
             if row.get("open_continuation") and not reg.continuation:
                 reg.continuation = "open"
-            for field in ("bridge_arena", "inline_bridge_type"):
+            for field in ("bridge_arena", "inline_bridge_type", "inline_bridge_term", "target_term"):
+                if field == "target_term":
+                    if not target_uses_controlled_printing(row):
+                        continue
                 if field == "bridge_arena" and row.get("bridge_arena_from_source"):
                     continue
                 if row.get(field) is not None:
                     try:
                         closed_printed_term(row[field], field)
+                        field_levels = row.get("inline_bridge_level_params", declared_levels) if field == "inline_bridge_type" else declared_levels
+                        validate_expression_levels(row[field], field_levels, field)
                         reg.controlled_printing.append(field)
                     except SnapshotError as error:
                         fail(error.code, f"{reg.module_name}:{field}", str(reg.path))
             if reg.inline_bridge:
+                try:
+                    validate_level_params({"level_params": row.get("inline_bridge_level_params", row.get("level_params", []))}, reg.module_name + ":inline")
+                except SnapshotError as error:
+                    fail(error.code, error.detail, str(reg.path))
                 reg.actual = reg.inline_bridge[0]
             elif reg.native and reg.primitive:
                 reg.actual = reg.primitive
@@ -213,6 +239,7 @@ class Generator:
                     continue
                 try:
                     value = closed_printed_term(row[field], field)
+                    validate_expression_levels(row[field], declared_levels, field)
                     setattr(reg, attribute, value)
                     reg.controlled_printing.append(field)
                 except SnapshotError as error:
@@ -231,21 +258,43 @@ class Generator:
             row = template.snapshot or {}
             if "owner" not in row:
                 continue
+            try:
+                validate_level_params(row, row["owner"] + ":template")
+            except SnapshotError as error:
+                fail(error.code, error.detail, str(template.path))
+                continue
+            declared_levels = row.get("level_params", []) + row.get("extra_level_params", []) if isinstance(row.get("level_params", []), list) and isinstance(row.get("extra_level_params", []), list) else []
             template.name = row.get("name", "")
             template.version = row.get("version", 1)
             template.constructors = row.get("constructors", [])
+            if target_uses_controlled_printing(row, "name") and row.get("template_term") is not None:
+                try:
+                    closed_printed_term(row["template_term"], "template_term")
+                    validate_expression_levels(row["template_term"], declared_levels, "template_term")
+                    row["printed_template_term"] = True
+                except SnapshotError as error:
+                    fail(error.code, "template_term", str(template.path))
             constructor_types = row.get("constructor_types", {})
             if isinstance(constructor_types, list):
+                row["constructor_name_components"] = {item["name"]: item["name_components"] for item in constructor_types if "name_components" in item}
                 constructor_types = {item["name"]: item["type"] for item in constructor_types}
             row["constructor_types"] = constructor_types
-            for name in template.constructors:
-                if name not in constructor_types:
+            slots = row.get("parser_slots", {})
+            printed_constructors = []
+            for index, name in enumerate(template.constructors):
+                source_type = slots.get(f"constructor_{index}")
+                if source_type is not None:
+                    constructor_types[name] = source_type
+                elif name not in constructor_types or constructor_types[name] is None:
                     fail("missing_material", "constructor type:" + name, str(template.path))
                 else:
                     try:
                         closed_printed_term(constructor_types[name], "constructor_types:" + name)
+                        validate_expression_levels(constructor_types[name], declared_levels, "constructor_types:" + name)
+                        printed_constructors.append(name)
                     except SnapshotError as error:
                         fail(error.code, "constructor_types:" + name, str(template.path))
+            row["printed_constructors"] = printed_constructors
             if not template.name or type(template.version) is not int or template.version < 0 or not isinstance(template.constructors, list):
                 fail("missing_material", "template name/version/constructors", str(template.path))
         mapping: dict[str, Any] = {}
@@ -319,23 +368,52 @@ class Generator:
                     fail("mapping_occurrence_count_mismatch", f"{root.root_id}:{role}")
                     continue
                 for index, occurrence in enumerate(array):
-                    if occurrence.get("captured_statement") is not None:
-                        try:
-                            closed_printed_term(occurrence["captured_statement"], "captured_statement")
-                        except SnapshotError as error:
-                            fail(error.code, f"{root.root_id}:{role}:{index}:captured_statement")
+                    try:
+                        validate_level_params(occurrence, f"{root.root_id}:{role}:{index}")
+                    except SnapshotError as error:
+                        fail(error.code, error.detail)
+                    consumed_fields = ["captured_statement"]
+                    if not occurrence.get("proof") and target_uses_controlled_printing(occurrence):
+                        consumed_fields.append("target_term")
+                    for field in consumed_fields:
+                        if occurrence.get(field) is not None:
+                            try:
+                                closed_printed_term(occurrence[field], field)
+                                validate_expression_levels(occurrence[field], occurrence.get("level_params", []), field)
+                            except SnapshotError as error:
+                                fail(error.code, f"{root.root_id}:{role}:{index}:{field}")
                     owner = occurrence.get("registration_module")
-                    if not isinstance(owner, str) or not owner or owner == root.destination_module:
-                        fail("wrong_occurrence_owner", f"{root.root_id}:{role}:{index}")
-                    if owners is not None and owners[index] != owner:
+                    after = owners[index] if owners is not None else owner
+                    if not isinstance(owner, str) or not owner or not isinstance(after, str) or not after or after == root.destination_module:
                         fail("wrong_occurrence_owner", f"{root.root_id}:{role}:{index}")
                     if occurrence_mapping is not None:
                         mapped = occurrence_mapping[index]
                         for field in ("theorem", "object_arena", "statement_identity"):
                             if mapped.get(field) != occurrence.get(field):
                                 fail("mapping_occurrence_mismatch", f"{root.root_id}:{role}:{index}:{field}")
-                        if mapped.get("registration_module_name_after") != owner:
+                        if mapped.get("registration_module_name") != owner or mapped.get("registration_module_name_after") != after:
                             fail("wrong_occurrence_owner", f"{root.root_id}:{role}:{index}")
+                    elif after != owner:
+                        fail("unauthorized_owner_correction", f"{root.root_id}:{role}:{index}")
+                    if after != owner:
+                        matches = [registration for registration in snapshot["registrations"]
+                                   if registration.get("owner") == after
+                                   and registration.get("registration_module", after) == after
+                                   and registration.get("theorem") == occurrence.get("theorem")
+                                   and (registration.get("object_arena") or registration.get("resolved_arena") or registration.get("arena")) == occurrence.get("object_arena")]
+                        if not matches:
+                            fail("wrong_occurrence_owner", f"{root.root_id}:{role}:{index}:corrected owner has no matching registration")
+                    copied = getattr(root, role)[index]
+                    copied["registration_module"] = after
+                    if after != owner:
+                        owning_names = matches[0].get("name_components", {}) if matches else {}
+                        original_names = copied.get("name_components", {})
+                        if isinstance(original_names, dict):
+                            copied["name_components"] = {**original_names}
+                            if isinstance(owning_names, dict) and "owner" in owning_names:
+                                copied["name_components"]["registration_module"] = owning_names["owner"]
+                            else:
+                                copied["name_components"].pop("registration_module", None)
                 root.registration_module_names[role] = list(owners or [item.get("registration_module", "") for item in array])
         for root in roots:
             owned_seals = [seal for seal in seals if seal.path == root.path]
@@ -351,10 +429,145 @@ class Generator:
             if seal.snapshot and seal.snapshot.get("root_id") != seal.root_id:
                 fail("wrong_seal_owner", seal.root_id)
 
+        # Only parser-observed users of recorder companions require an ordinary
+        # definition. Compiled bindings resolve the identifiers, so Python never
+        # guesses a namespace or strips field projections from source text.
+        parser_consumers: set[tuple[str, int, int]] = set()
+        existing_names: dict[str, set[str]] = defaultdict(set)
+        for source_file in syntax["files"]:
+            relative = source_file["path"]
+            for command in source_file["commands"]:
+                existing_names[relative].update(command.get("declared_names", []))
+                name_slot = (command.get("slots") or {}).get("name")
+                if command["kind"] == "context" and name_slot:
+                    existing_names[relative].add(name_slot.get("text", ""))
+                for identifier in command.get("companion_identifiers", command.get("identifiers", [])):
+                    start, end = identifier.get("start"), identifier.get("end")
+                    byte_slice(originals[relative], start, end, "companion identifier")
+                    parser_consumers.add((relative, start, end))
+        companions = snapshot.get("companions", [])
+        bindings = snapshot.get("companion_bindings", [])
+        if not isinstance(companions, list) or not isinstance(bindings, list):
+            fail("invalid_companion_snapshot", "companions and companion_bindings must be arrays")
+            companions, bindings = [], []
+        binding_locations: set[tuple[str, int, int]] = set()
+        required_names: set[str] = set()
+        for binding in bindings:
+            relative = relative_reg_path(binding.get("path"))
+            key = (relative, binding.get("start"), binding.get("end"))
+            if key in binding_locations:
+                fail("duplicate_companion_binding", str(key))
+            binding_locations.add(key)
+            if key not in parser_consumers:
+                fail("extra_companion_binding", str(key))
+            name = binding.get("name")
+            if not isinstance(name, str) or not name:
+                fail("missing_companion_name", str(key))
+            else:
+                required_names.add(name.removeprefix("_root_."))
+        for key in sorted(parser_consumers - binding_locations):
+            fail("missing_compiled_companion", str(key))
+        companion_index: dict[str, dict[str, Any]] = {}
+        dependencies: dict[str, list[str]] = {}
+        for companion in companions:
+            name, owner = companion.get("name"), companion.get("owner")
+            if not isinstance(name, str) or not name or not isinstance(owner, str) or not owner:
+                fail("missing_companion_name", repr(companion))
+                continue
+            canonical_name = name.removeprefix("_root_.")
+            if canonical_name in companion_index:
+                fail("duplicate_companion", canonical_name)
+                continue
+            companion_index[canonical_name] = companion
+            values = companion.get("companion_dependencies", companion.get("dependencies", []))
+            if not isinstance(values, list) or any(not isinstance(value, str) or not value for value in values):
+                fail("invalid_companion_dependencies", canonical_name)
+                values = []
+            canonical_dependencies = [value.removeprefix("_root_.") for value in values]
+            if len(canonical_dependencies) != len(set(canonical_dependencies)):
+                fail("duplicate_companion_dependency", canonical_name)
+            dependencies[canonical_name] = sorted(set(canonical_dependencies))
+        visit_state: dict[str, int] = {}
+        ordered_names: list[str] = []
+
+        def visit(name: str, parent: str | None = None) -> None:
+            if name not in companion_index:
+                fail("missing_companion_dependency" if parent else "missing_compiled_companion", name)
+                return
+            if visit_state.get(name) == 1:
+                fail("companion_cycle", name)
+                return
+            if visit_state.get(name) == 2:
+                return
+            visit_state[name] = 1
+            for dependency in dependencies[name]:
+                visit(dependency, name)
+            visit_state[name] = 2
+            ordered_names.append(name)
+
+        for name in sorted(required_names):
+            visit(name)
+        for name in sorted(set(companion_index) - set(visit_state)):
+            fail("unreferenced_companion", name)
+        inline_names = {(item.snapshot or {}).get("realization"): item for item in registrations if item.inline_bridge}
+        helper_registrations: dict[str, Registration] = {}
+        for canonical_name in ordered_names:
+            companion = companion_index[canonical_name]
+            name, owner = companion["name"], companion["owner"]
+            anchor = companion.get("anchor_unit", canonical_name)
+            if not isinstance(anchor, str) or not anchor:
+                fail("missing_companion_anchor", canonical_name)
+                continue
+            anchor = anchor.removeprefix("_root_.")
+            matches = [item for item in registrations if (item.snapshot or {}).get("owner") == owner
+                       and (item.snapshot or {}).get("unit") == anchor]
+            if not matches:
+                fail("missing_companion_registration", canonical_name)
+                continue
+            registration = min(matches, key=lambda item: item.span.start)
+            helper_registrations[canonical_name] = registration
+            relative = registration.path.relative_to(self.repo).as_posix()
+            if canonical_name in existing_names[relative] or name in existing_names[relative]:
+                fail("name_collision", canonical_name, relative)
+            try:
+                validate_level_params(companion, canonical_name)
+            except SnapshotError as error:
+                fail("invalid_companion_levels", canonical_name)
+                continue
+            body = companion.get("body", companion.get("value"))
+            for field, value in (("type", companion.get("type")), ("body", body)):
+                try:
+                    if closed_printed_term(value, canonical_name + ":" + field) is None:
+                        fail("missing_companion_term", canonical_name + ":" + field)
+                    validate_expression_levels(value, companion.get("level_params", []), canonical_name + ":" + field)
+                except SnapshotError as error:
+                    fail(error.code, canonical_name + ":" + field)
+            # The inline source proof already recreates its original declaration.
+            # Its dependent units require that name, but need no second definition.
+            if canonical_name in inline_names:
+                if inline_names[canonical_name] is not registration:
+                    fail("wrong_companion_anchor", canonical_name)
+                continue
+            helper = {**companion, "name": "_root_." + canonical_name, "body": body}
+            registration.snapshot.setdefault("companion_helpers", []).append(helper)
+            registration.controlled_printing.extend(["companion:" + canonical_name + ":type", "companion:" + canonical_name + ":body"])
+        for name, registration in helper_registrations.items():
+            for dependency in dependencies[name]:
+                predecessor = helper_registrations.get(dependency)
+                if predecessor and predecessor.path == registration.path and predecessor.span.start > registration.span.start:
+                    fail("companion_order_conflict", name + ":" + dependency)
+        for registration in registrations:
+            if registration.inline_bridge:
+                inline_name = (registration.snapshot or {}).get("realization")
+                relative = registration.path.relative_to(self.repo).as_posix()
+                if inline_name in existing_names[relative] or "_root_." + str(inline_name) in existing_names[relative]:
+                    fail("name_collision", str(inline_name), relative)
+
         if failures:
             audit = {"snapshot_sha256": input_sha, "source_registrations": len(registrations),
                      "compiled_registrations": len(snapshot["registrations"]), "templates": len(templates),
                      "roots": len(roots), "seals": len(seals), "d5_writes": 0,
+                     "compile_blockers": compile_blockers,
                      "missing": sum(item.code == "missing_compiled_input" for item in failures),
                      "extra": sum(item.code == "extra_compiled_input" for item in failures),
                      "duplicate": sum(item.code == "duplicate" for item in failures),
@@ -387,15 +600,26 @@ class Generator:
         for relative in sorted(by_templates):
             for index, item in enumerate(sorted(by_templates[relative], key=lambda item: item.span.start)):
                 name = f"enrollment_{index + 1}"
-                if name in declared_names[relative]:
-                    fail("name_collision", name, relative)
+                namespace = (item.snapshot or {}).get("namespace", "")
+                full_name = f"{namespace}.{name}" if namespace else name
+                if name in declared_names[relative] or full_name in declared_names[relative]:
+                    fail("name_collision", full_name, relative)
                 replacements[relative].append((item.span.start, item.span.end, render_template(item, index)))
         for item in [*roots, *seals]:
             relative = item.path.relative_to(self.repo).as_posix()
             replacements[relative].append((item.span.start, item.span.end, ""))
+        parsed_imports = {file["path"]: set(file.get("imports", [])) for file in syntax["files"]}
         files: list[GeneratedFile] = []
         for relative in sorted(replacements):
             rendered = replace_spans(originals[relative], replacements[relative])
+            required_imports: set[str] = set()
+            if relative in by_path:
+                required_imports.add("LeanInformationAuditInterface.Contract.Registration")
+            if relative in by_templates:
+                required_imports.add("LeanInformationAuditInterface.Contract.Catalog")
+            missing_imports = sorted(required_imports - parsed_imports[relative])
+            if missing_imports:
+                rendered = "".join(f"import {module}\n" for module in missing_imports) + rendered
             files.append(GeneratedFile(relative, rendered, "leaf"))
         for root in sorted(roots, key=lambda item: item.destination_path or ""):
             if root.destination_path and root.destination_module:
@@ -425,19 +649,27 @@ class Generator:
                        "theorem": item.theorem, "fields": sorted(item.controlled_printing)}
                       for item in registrations if item.controlled_printing]
         for template in templates:
-            if template.constructors:
+            printed_constructors = (template.snapshot or {}).get("printed_constructors", [])
+            fields = ["constructor_types:" + name for name in printed_constructors]
+            if (template.snapshot or {}).get("printed_template_term"):
+                fields.append("template_term")
+            if fields:
                 print_rows.append({"owner": (template.snapshot or {}).get("owner"),
                                    "source_index": (template.snapshot or {}).get("source_index"),
-                                   "template": template.name, "fields": ["constructor_types:" + name for name in template.constructors]})
+                                   "template": template.name, "fields": fields})
         for root in roots:
             fields = [f"{role}[{index}].captured_statement" for role in ("expected", "source", "baseline")
                       for index, row in enumerate(getattr(root, role)) if row.get("captured_statement") is not None]
+            fields += [f"{role}[{index}].target_term" for role in ("expected", "source", "baseline")
+                       for index, row in enumerate(getattr(root, role))
+                       if not row.get("proof") and target_uses_controlled_printing(row) and row.get("target_term") is not None]
             if fields:
                 print_rows.append({"owner": root.root_id, "source_index": (root.snapshot or {}).get("source_index"),
                                    "root": root.root_id, "fields": fields})
         changed_files = [file for file in files if not (self.repo / file.path).is_file()
                          or (self.repo / file.path).read_bytes() != file.text.encode("utf-8")]
         audit = {"snapshot_sha256": input_sha, "changed_files": len(changed_files),
+                 "companion_inputs": len(companions), "companion_helpers": sum(len((item.snapshot or {}).get("companion_helpers", [])) for item in registrations), "companion_consumers": len(parser_consumers),
                  "source_registrations": len(registrations), "compiled_registrations": len(snapshot["registrations"]),
                  "templates": len(templates), "compiled_templates": len(snapshot["templates"]),
                  "roots": len(roots), "compiled_roots": len(snapshot["roots"]),
@@ -446,7 +678,7 @@ class Generator:
                  "extra": sum(failure.code == "extra_compiled_input" for failure in failures),
                  "duplicate": sum(failure.code == "duplicate" for failure in failures),
                  "ambiguous": sum(failure.code == "ambiguous_compiled_input" for failure in failures),
-                 "d5_writes": 0, "controlled_printing": print_rows,
+                 "d5_writes": 0, "controlled_printing": print_rows, "compile_blockers": compile_blockers,
                  "source_sha256": {path: _sha256_text(text) for path, text in sorted(originals.items())},
                  "mapping_sha256": sha256_file(self.mapping_path) if self.mapping_path else None}
         # A failed plan exposes diagnostics but no writeable file set.

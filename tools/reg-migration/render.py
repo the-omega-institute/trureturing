@@ -4,14 +4,78 @@ import json
 from typing import Any
 
 from .model import Registration, Root, Seal, Template
+from .snapshot import SnapshotError, closed_printed_term, type_arg_source_slots
 
 
 def _name(value: str) -> str:
     return value.removeprefix("_root_.")
 
 
-def _quoted_name(value: str) -> str:
+def _name_components(value: Any) -> list[str | int] | None:
+    if value is None:
+        return None
+    if not isinstance(value, list) or any(not isinstance(item, str) and type(item) is not int for item in value):
+        raise SnapshotError("invalid_name_components", repr(value))
+    if any(type(item) is int and item < 0 for item in value):
+        raise SnapshotError("invalid_name_components", repr(value))
+    return value
+
+
+def _quoted_name(value: str, components: Any = None) -> str:
+    components = _name_components(components)
+    if components is not None:
+        if not components:
+            return "Lean.Name.anonymous"
+        if any(type(item) is int or isinstance(item, str) and not item.isidentifier() for item in components) or components[0] == "_private":
+            result = "Lean.Name.anonymous"
+            for item in components:
+                if type(item) is int:
+                    result = f"(Lean.Name.num {result} {item})"
+                else:
+                    result = f"(Lean.Name.str {result} {_string(item)})"
+            return result
+        return "`" + ".".join(components)
+    elif _name(value).startswith("_private."):
+        raise SnapshotError("missing_name_components", value)
     return "`" + _name(value) if value else "Lean.Name.anonymous"
+
+
+def _row_name(row: dict[str, Any], field: str, fallback: str = "") -> str:
+    components = row.get("name_components", {})
+    if not isinstance(components, dict):
+        raise SnapshotError("invalid_name_components", field)
+    return _quoted_name(str(row.get(field, fallback)), components.get(field))
+
+
+def _private_name(value: str, components: Any = None) -> bool:
+    components = _name_components(components)
+    return _name(value).startswith("_private.") or bool(components and any(type(item) is int or isinstance(item, str) and "»" in item for item in components))
+
+
+def target_uses_controlled_printing(row: dict[str, Any], field: str = "theorem") -> bool:
+    components = row.get("name_components", {})
+    if not isinstance(components, dict):
+        raise SnapshotError("invalid_name_components", field)
+    return _private_name(str(row.get(field, "")), components.get(field))
+
+
+def _target(row: dict[str, Any], name: str, levels: list[str], field: str = "theorem") -> str:
+    components = row.get("name_components", {})
+    if not isinstance(components, dict):
+        raise SnapshotError("invalid_name_components", field)
+    if _private_name(name, components.get(field)):
+        if components.get(field) is None:
+            raise SnapshotError("missing_name_components", name)
+        target_field = "target_term" if field == "theorem" else "template_term"
+        term = closed_printed_term(row.get(target_field), target_field)
+        if field == "name" and not term:
+            source = row.get("parser_slots", {}).get("name")
+            if source:
+                return "@" + source + _suffix(levels)
+        if not term:
+            raise SnapshotError("missing_private_target_term", name)
+        return term
+    return _constant(name, levels, components.get(field))
 
 
 def _string(value: str) -> str:
@@ -42,10 +106,10 @@ def options_literal(options: list[dict[str, Any]]) -> str:
         elif kind == "string" and isinstance(value, str):
             literal = _string(value)
         elif kind == "name" and isinstance(value, str):
-            literal = _quoted_name(value)
+            literal = _quoted_name(value, setting.get("value_components"))
         else:
             raise ValueError("unsupported_option_type:" + str(kind))
-        rows.append(f"{{ name := {_quoted_name(setting['name'])}, value := .{kind} {literal} }}")
+        rows.append(f"{{ name := {_quoted_name(setting['name'], setting.get('name_components'))}, value := .{kind} {literal} }}")
     return "#[" + ", ".join(rows) + "]"
 
 
@@ -77,7 +141,7 @@ def _selection(selection: dict[str, Any] | None) -> str:
     if definition is None:
         definition_literal = "none"
     else:
-        definition_literal = "some { owner := " + _quoted_name(definition["owner"]) + ", name := " + _quoted_name(definition["name"]) + ", path := " + _array(definition["path"], _string) + " }"
+        definition_literal = "some { owner := " + _row_name(definition, "owner") + ", name := " + _row_name(definition, "name") + ", path := " + _array(definition["path"], _string) + " }"
     readouts = []
     for readout in selection["readouts"]:
         operand = readout.get("stateOperand")
@@ -86,7 +150,7 @@ def _selection(selection: dict[str, Any] | None) -> str:
                         ", functionOperand := " + ("true" if readout.get("functionOperand", False) else "false") +
                         ", stateOperand := " + ("none" if operand is None else "some " + _array(operand, _string)) +
                         ", booleanPredicate := " + ("true" if readout.get("booleanPredicate", False) else "false") + " }")
-    return "some { owner := " + _quoted_name(selection["owner"]) + ", definition := " + definition_literal + ", coordinates := " + _array(selection["coordinates"], str) + ", readouts := #[" + ", ".join(readouts) + "] }"
+    return "some { owner := " + _row_name(selection, "owner") + ", definition := " + definition_literal + ", coordinates := " + _array(selection["coordinates"], str) + ", readouts := #[" + ", ".join(readouts) + "] }"
 
 
 def _levels(row: dict[str, Any]) -> list[str]:
@@ -97,7 +161,12 @@ def _suffix(levels: list[str]) -> str:
     return ".{" + ", ".join(levels) + "}" if levels else ""
 
 
-def _constant(name: str, levels: list[str] | None = None) -> str:
+def _constant(name: str, levels: list[str] | None = None, components: Any = None) -> str:
+    components = _name_components(components)
+    if components is not None:
+        if any(type(item) is int for item in components):
+            raise SnapshotError("missing_private_target_term", name)
+        name = ".".join(item if item.isidentifier() else "«" + item + "»" for item in components)
     return "@_root_." + _name(name) + _suffix(levels or [])
 
 
@@ -124,9 +193,9 @@ def _bridge(reg: Registration, index: int) -> str:
         bridge = f"Iff.rfl"
     else:
         primitives = _term(reg.primitive)
-        bridge = reg.finite_bridge or reg.realization
+        bridge = reg.finite_bridge or reg.realization or reg.via_descriptor
     if reg.inline_bridge:
-        bridge = f"__p2b_inline_bridge_{index + 1}"
+        bridge = row.get("inline_bridge_term") or (_constant(row["realization"], _levels(row) + row.get("extra_level_params", [])) if row.get("realization") else f"__p2b_inline_bridge_{index + 1}")
     if kind not in {"legacy", "forward", "witness"}:
         raise ValueError("unknown_bridge_kind:" + str(kind))
     result = f".{kind} {arena} {_term(actual)} {primitives} {_ref(bridge)}"
@@ -147,23 +216,27 @@ def _registration_type(reg: Registration, row: dict[str, Any]) -> str:
                      "_" if reg.sensitivity else "Unit", "_" if reg.escape_from else "Unit",
                      "_" if reg.continuation and reg.continuation != "open" else "Unit",
                      "_" if reg.source_record and not reg.source else "Unit"]
-    return "Contract.Registration" + _suffix(universes) + " (" + _constant(reg.theorem, levels) + ") " + " ".join(_term(arg) for arg in arguments)
+    sources = type_arg_source_slots(row)
+    rendered_arguments = ["(type_of% (" + row["parser_slots"][source] + "))" if source is not None else _term(arg)
+                          for source, arg in zip(sources, arguments)]
+    return "LeanInformationAudit.Contract.Registration" + _suffix(universes) + " (" + _target(row, reg.theorem, levels) + ") " + " ".join(rendered_arguments)
 
 
 def render_registration(reg: Registration, index: int = 0) -> str:
     row = reg.snapshot or {}
     levels = _levels(row)
+    declaration_levels = levels + [level for level in row.get("extra_level_params", []) if level not in levels]
     source = row.get("realization_source")
-    realization_source = "some " + _quoted_name(source) if source else "none"
+    realization_source = "some " + _row_name(row, "realization_source") if source else "none"
     lines = [
-        f"noncomputable def registration_{index + 1}{_suffix(levels)} : {_registration_type(reg, row)} := {{",
-        f"  unitName := {_quoted_name(row.get('unit', reg.theorem + '.__information_unit'))},",
-        f"  realizationName := {_quoted_name(row.get('realization', reg.realization or reg.source_record or reg.theorem))},",
+        f"noncomputable def registration_{index + 1}{_suffix(declaration_levels)} : {_registration_type(reg, row)} := {{",
+        f"  unitName := {_row_name(row, 'unit', reg.theorem + '.__information_unit')},",
+        f"  realizationName := {_row_name(row, 'realization', reg.realization or reg.source_record or reg.theorem)},",
         f"  realizationSource := {realization_source},",
         f"  generated := {'true' if row.get('generated', reg.native) else 'false'},",
         f"  arena := {_ref(reg.arena or row.get('arena_term'))},",
         f"  objectArena := {_ref(reg.object_arena or reg.arena or row.get('object_arena_term'))},",
-        f"  catalog := {_quoted_name(row.get('catalog', reg.catalog or reg.arena))},",
+        f"  catalog := {_row_name(row, 'catalog', reg.catalog or reg.arena)},",
         f"  localNames := {'true' if row.get('local_registration_names', not (reg.source or reg.occurrence)) else 'false'},",
         f"  realization := {_bridge(reg, index)},",
         f"  readout := {_option(reg.readout)},",
@@ -177,14 +250,25 @@ def render_registration(reg: Registration, index: int = 0) -> str:
     ]
     if reg.inline_bridge:
         actual, proof = reg.inline_bridge
-        bridge_type = row.get("inline_bridge_type") or (
+        bridge_type = row.get("inline_bridge_type") or row.get("bridge_type") or (
             "D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization " +
-            _term(reg.arena) + " (" + _constant(reg.theorem, levels) + ") " + _term(actual))
-        lines[:0] = [f"theorem __p2b_inline_bridge_{index + 1}{_suffix(levels)} : {bridge_type} := {proof}", ""]
+            _term(reg.arena) + " (" + _target(row, reg.theorem, levels) + ") " + _term(actual))
+        bridge_type = _expression(bridge_type)
+        bridge_name = "_root_." + _name(row["realization"]) if row.get("realization") else f"__p2b_inline_bridge_{index + 1}"
+        bridge_levels = row.get("inline_bridge_level_params", declaration_levels)
+        lines[:0] = [f"theorem {bridge_name}{_suffix(bridge_levels)} : {bridge_type} := {proof}", ""]
     if reg.native:
         if not getattr(reg, "statement", None) or not getattr(reg, "proof", None):
             raise ValueError("missing_native_theorem")
         lines[:0] = [f"theorem _root_.{_name(reg.theorem)}{_suffix(levels)} : {reg.statement} := {reg.proof}", ""]
+    helpers = row.get("companion_helpers", [])
+    if helpers:
+        position = next(i for i, line in enumerate(lines) if line.startswith("noncomputable def registration_"))
+        declarations = []
+        for helper in helpers:
+            helper_levels = helper.get("level_params", [])
+            declarations += [f"noncomputable def {helper['name']}{_suffix(helper_levels)} : {_expression(helper['type'])} := {_expression(helper['body'])}", ""]
+        lines[position:position] = declarations
     return "\n".join(lines) + "\n"
 
 
@@ -193,13 +277,13 @@ def _occurrence_rows(rows: list[dict[str, Any]]) -> str:
     for row in rows:
         theorem = row["theorem"]
         statement = _expression(row.get("captured_statement")) or row.get("statement") or "_"
-        proof = _expression(row.get("proof")) or _constant(theorem, row.get("level_params", []))
+        proof = _expression(row.get("proof")) or _target(row, theorem, row.get("level_params", []))
         identity = row.get("statement_identity", "")
         rendered.append("{ statement := " + _term(statement) + ", proof := " + _term(proof) +
-                        ", theoremName := " + _quoted_name(theorem) + ", objectArenaName := " +
-                        _quoted_name(row["object_arena"]) + ", statementIdentity := " +
+                        ", theoremName := " + _row_name(row, "theorem") + ", objectArenaName := " +
+                        _row_name(row, "object_arena") + ", statementIdentity := " +
                         ("some " + _string(identity) if identity else "none") +
-                        ", registrationModuleName := " + _quoted_name(row["registration_module"]) + " }")
+                        ", registrationModuleName := " + _row_name(row, "registration_module") + " }")
     return "#[" + ",\n    ".join(rendered) + "]"
 
 
@@ -214,7 +298,7 @@ def render_root(root: Root, kind: str, destination_module: str) -> str:
              f"  expected := {_occurrence_rows(root.expected)},",
              f"  source := {_occurrence_rows(root.source)},",
              f"  baseline := {_occurrence_rows(root.baseline)},",
-             f"  companionPrefix := {'some ' + _quoted_name(root.companion_prefix) if root.companion_prefix else 'none'} }} }}"]
+             f"  companionPrefix := {'some ' + _row_name(root.snapshot or {}, 'companion_prefix', root.companion_prefix) if root.companion_prefix else 'none'} }} }}"]
     if kind == "sealed_catalog":
         lines += ["", f"def seal : Contract.Seal := {{ rootId := {_quoted_name(destination_module)}, options := {options_literal(getattr(root, 'seal_options', []))} }}"]
     lines += ["", f"end {destination_module}"]
@@ -224,13 +308,14 @@ def render_root(root: Root, kind: str, destination_module: str) -> str:
 def render_template(template: Template, index: int) -> str:
     row = getattr(template, "snapshot", None) or {}
     levels = row.get("level_params", [])
+    declaration_levels = levels + row.get("extra_level_params", [])
     constructor_types = row.get("constructor_types", {})
     if isinstance(constructor_types, list):
         constructor_types = {item["name"]: item["type"] for item in constructor_types}
-    constructors = "#[" + ", ".join("{ name := " + _quoted_name(name) + ", type := " + _term(constructor_types.get(name, name)) + " }" for name in template.constructors) + "]"
+    constructors = "#[" + ", ".join("{ name := " + _quoted_name(name, row.get("constructor_name_components", {}).get(name)) + ", type := " + _term(constructor_types.get(name, name)) + " }" for name in template.constructors) + "]"
     universes = row.get("enrollment_universes", ["_", "0"])
-    return (f"noncomputable def enrollment_{index + 1}{_suffix(levels)} : Contract.TemplateEnrollment{_suffix(universes)} ({_constant(template.name, levels)}) := {{\n"
-            f"  name := {_quoted_name(template.name)}, version := {template.version}, constructors := {constructors},\n"
+    return (f"noncomputable def enrollment_{index + 1}{_suffix(declaration_levels)} : LeanInformationAudit.Contract.TemplateEnrollment{_suffix(universes)} ({_target(row, template.name, levels, "name")}) := {{\n"
+            f"  name := {_row_name(row, 'name', template.name)}, version := {template.version}, constructors := {constructors},\n"
             f"  options := {options_literal(template.options)} }}\n")
 
 

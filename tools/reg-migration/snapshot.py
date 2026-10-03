@@ -51,7 +51,11 @@ def typed_options(value: Any) -> list[dict[str, Any]]:
         if not valid:
             raise SnapshotError("unsupported_option_type", repr(item))
         seen.add(name)
-        options.append({"name": name, "type": kind, "value": setting})
+        encoded = {"name": name, "type": kind, "value": setting}
+        for key in ("name_components", "value_components"):
+            if key in item:
+                encoded[key] = item[key]
+        options.append(encoded)
     return sorted(options, key=lambda item: item["name"])
 
 
@@ -68,3 +72,50 @@ def closed_printed_term(value: Any, field: str) -> str | None:
     if "?m." in text or "?u." in text or "sorryAx" in text:
         raise SnapshotError("unclosed_expression", field)
     return text
+
+
+def validate_level_params(row: dict[str, Any], label: str) -> None:
+    original, extra = row.get("level_params", []), row.get("extra_level_params", [])
+    for values in (original, extra):
+        if not isinstance(values, list) or any(not isinstance(value, str) or not value for value in values):
+            raise SnapshotError("invalid_level_params", label)
+        if len(values) != len(set(values)):
+            raise SnapshotError("duplicate_level_params", label)
+    if set(original) & set(extra):
+        raise SnapshotError("duplicate_level_params", label)
+
+
+def validate_expression_levels(value: Any, declared: list[str], label: str) -> None:
+    if not isinstance(value, dict) or value.get("printed") is not True:
+        return
+    if not isinstance(declared, list) or any(not isinstance(level, str) or not level for level in declared):
+        raise SnapshotError("invalid_level_params", label)
+    levels = value.get("level_params", [])
+    if not isinstance(levels, list) or any(not isinstance(level, str) or not level for level in levels):
+        raise SnapshotError("invalid_expression_levels", label)
+    if len(levels) != len(set(levels)):
+        raise SnapshotError("invalid_expression_levels", label)
+    missing = sorted(set(levels) - set(declared))
+    if missing:
+        raise SnapshotError("missing_level_params", label + ":" + ",".join(missing))
+
+
+def type_arg_source_slots(row: dict[str, Any]) -> list[str | None]:
+    sources = row.get("type_arg_source_slots", [None] * 8)
+    if not isinstance(sources, list) or len(sources) != 8:
+        raise SnapshotError("invalid_type_arg_source_slots", "expected eight source slots")
+    allowed = ({"arena"}, {"object_arena", "arena"}, {"readout"}, {"variation"},
+               {"sensitivity"}, {"escape_from"}, {"continuation"}, {"source_record"})
+    slots = row.get("parser_slots", {})
+    arguments = row.get("type_args", [])
+    for index, source in enumerate(sources):
+        if source is None:
+            continue
+        if not isinstance(source, str) or source not in allowed[index]:
+            raise SnapshotError("invalid_type_arg_source_slots", f"type_args[{index}]")
+        text = slots.get(source) if isinstance(slots, dict) else None
+        if not isinstance(text, str) or not text.strip() or source == "continuation" and text.strip() == "open":
+            raise SnapshotError("missing_type_arg_source", f"type_args[{index}]:{source}")
+        if index >= len(arguments) or arguments[index] is not None:
+            raise SnapshotError("type_arg_source_mismatch", f"type_args[{index}]:{source}")
+    return sources

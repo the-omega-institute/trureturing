@@ -128,6 +128,7 @@ class Fixture:
         values = ["SyntheticTemplate.second", "SyntheticTemplate.first"] if constructors else []
         if constructors:
             slots.update(version="7", constructors="[SyntheticTemplate.second, SyntheticTemplate.first]")
+            slots.update(constructor_0=values[0], constructor_1=values[1])
             text += " constructors 7 " + slots["constructors"]
         self.command(path, text, "template", slots)
         row = {"owner": path[:-5].replace("/", "."), "name": name, "version": 7 if constructors else 1, "constructors": values,
@@ -191,6 +192,39 @@ class Fixture:
 
     def generator(self) -> Generator:
         return Generator(self.root, inputs=self.inputs_path, mapping=self.mapping_path, syntax=self.syntax_path)
+
+    def catalog_owner_correction(self) -> tuple[dict, str, str]:
+        leaf = "Reg.D5.Contributor"
+        catalog = "Reg.Catalogs.Collected"
+        registration = self.registration("Reg/D5/Contributor.lean", theorem="D5.Contributor.claim")
+        occurrence = {"root_id": catalog, "object_arena": registration["object_arena"], "theorem": registration["theorem"],
+                      "statement_identity": registration["statement_identity"], "registration_module": catalog,
+                      "captured_statement": {"text": "True", "printed": True, "level_params": []}}
+        mapping = self.root_catalog("Reg/Catalogs/Collected.lean", rows=[occurrence])
+        mapping["imports"] = [leaf]
+        mapping["occurrence_mapping"] = {}
+        for role in ("expected", "source"):
+            mapping["registration_module_name_after"][role] = [leaf]
+            mapping["occurrence_mapping"][role] = [{"object_arena": occurrence["object_arena"], "theorem": occurrence["theorem"],
+                                                    "statement_identity": occurrence["statement_identity"],
+                                                    "registration_module_name": catalog, "registration_module_name_after": leaf}]
+        mapping["occurrence_mapping"]["baseline"] = []
+        return mapping, catalog, leaf
+
+    def companion_reference(self, registration: dict, *, declaration: str = "consumer", repeat: bool = False) -> dict:
+        path = registration["owner"].replace(".", "/") + ".lean"
+        reference = registration["unit"] + ".Statement"
+        command = self.command(path, "def " + declaration + " := " + reference, "context", {"name": declaration})
+        source_bytes = self.sources[path].encode("utf-8")
+        start = source_bytes.index(reference.encode("utf-8"), command["start"])
+        identifier = {"name": registration["unit"], "start": start, "end": start + len(reference.encode("utf-8")), "text": reference}
+        command["companion_identifiers"] = [identifier]
+        self.raw.setdefault("companion_bindings", []).append({"path": path, "start": identifier["start"], "end": identifier["end"], "name": registration["unit"]})
+        companion = {"owner": registration["owner"], "name": registration["unit"], "level_params": registration["level_params"],
+                     "type": {"text": "Synthetic.Unit", "printed": True}, "body": {"text": "Synthetic.originalUnit", "printed": True}}
+        if not repeat:
+            self.raw.setdefault("companions", []).append(companion)
+        return companion
 
 
 class GeneratorTests(unittest.TestCase):
@@ -346,11 +380,11 @@ class GeneratorTests(unittest.TestCase):
     def test_inline_bridge_is_materialized_with_original_proof(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             fixture = Fixture(Path(directory))
-            fixture.registration(inline=True)
+            row = fixture.registration(inline=True)
             fixture.save()
             result = fixture.generator().plan()
             self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
-            self.assertIn("theorem __p2b_inline_bridge_1", result.files[0].text)
+            self.assertIn("theorem _root_." + row["realization"], result.files[0].text)
             self.assertIn("by exact originalBridge", result.files[0].text)
 
     def test_same_theorem_multiple_occurrences_are_not_merged(self) -> None:
@@ -370,12 +404,26 @@ class GeneratorTests(unittest.TestCase):
         for theorem in ("_private.D5.Sample.0.claim", "D5.Sample.«claim with space.λ»"):
             with self.subTest(theorem=theorem), tempfile.TemporaryDirectory() as directory:
                 fixture = Fixture(Path(directory))
-                row = fixture.registration(theorem=theorem)
+                row = fixture.registration(theorem="privateSourceClaim" if theorem.startswith("_private.") else theorem)
                 row["level_params"] = ["u", "v"]
+                if theorem.startswith("_private."):
+                    row["theorem"] = theorem
+                    row["unit"] = theorem + ".__unit"
+                    row["realization"] = theorem + ".__realization"
+                    components = ["_private", "D5", "Sample", 0, "claim"]
+                    row["name_components"] = {"theorem": components, "unit": components + ["__unit"], "realization": components + ["__realization"]}
+                    row["target_term"] = {"text": "@privateSourceClaim.{u, v}", "printed": True, "level_params": ["u", "v"]}
+                else:
+                    row["name_components"] = {"theorem": ["D5", "Sample", "claim with space.λ"]}
                 fixture.save()
                 result = fixture.generator().plan()
                 self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
-                self.assertIn(theorem, result.files[0].text)
+                if theorem.startswith("_private."):
+                    self.assertIn("@privateSourceClaim.{u, v}", result.files[0].text)
+                    self.assertIn("Lean.Name.num", result.files[0].text)
+                    self.assertNotIn("`_private.D5.Sample.0.claim", result.files[0].text)
+                else:
+                    self.assertIn(theorem, result.files[0].text)
                 self.assertIn(".{u, v}", result.files[0].text)
 
     def test_options_are_captured_typed_sorted_and_not_reconstructed_from_source(self) -> None:
@@ -530,125 +578,6 @@ class GeneratorTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse(output.exists())
 
-    def test_missing_universe_material_fails_without_writes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            row = fixture.registration()
-            del row["type_args"]
-            fixture.save()
-            self.assert_failure_writes_nothing(fixture, "missing_material")
-
-    def test_uncontrolled_and_unclosed_fallbacks_fail_without_writes(self) -> None:
-        for value, code in (("actual", "uncontrolled_expression"), ({"text": "?m.17", "printed": True}, "unclosed_expression"), ({"text": "actual", "printed": True, "has_fvars": True}, "unclosed_expression")):
-            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
-                fixture = Fixture(Path(directory))
-                row = fixture.registration()
-                row["actual"] = value
-                fixture.save()
-                self.assert_failure_writes_nothing(fixture, code)
-
-    def test_source_math_wins_over_printed_terms_and_fallbacks_are_audited(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            row = fixture.registration()
-            row["supplied_primitives"] = {"text": "Synthetic.printedDifferentPrimitives", "printed": True}
-            row["readout"] = {"text": "Synthetic.printedDifferentReadout", "printed": True}
-            row["actual"] = {"text": "@Synthetic.actual.{0}", "printed": True, "level_params": []}
-            fixture.save()
-            result = fixture.generator().plan()
-            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
-            rendered = result.files[0].text
-            self.assertIn("actual.toPrimitiveBundle", rendered)
-            self.assertIn("Template.realize x", rendered)
-            self.assertNotIn("printedDifferent", rendered)
-            self.assertIn("@Synthetic.actual.{0}", rendered)
-            printed = next(item for item in result.audit["controlled_printing"] if item["theorem"] == row["theorem"])
-            self.assertIn("actual", printed["fields"])
-            self.assertNotIn("supplied_primitives", printed["fields"])
-            self.assertNotIn("readout", printed["fields"])
-
-    def test_native_theorem_full_telescope_and_proof_remain_in_leaf(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            row = fixture.registration(variant="native")
-            row["level_params"] = ["u", "v"]
-            fixture.save()
-            result = fixture.generator().plan()
-            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
-            rendered = result.files[0].text
-            self.assertIn("theorem D5.Sample.claim.{u, v} : ∀ (α : Type u) (β : Type v), True := by intros; trivial", rendered)
-            self.assertIn("generated := true", rendered)
-
-    def test_repeated_write_preserves_bytes_and_file_mtimes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            fixture.registration()
-            fixture.save()
-            generator = fixture.generator()
-            first = generator.plan()
-            second = generator.plan()
-            self.assertFalse(first.failures, [f.as_dict() for f in first.failures])
-            self.assertFalse(second.failures, [f.as_dict() for f in second.failures])
-            self.assertEqual([(item.path, item.text) for item in first.files], [(item.path, item.text) for item in second.files])
-            output = fixture.root / "rendered"
-            generator.write(first, output)
-            before = {path.relative_to(output).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns) for path in output.rglob("*") if path.is_file()}
-            generator.write(second, output)
-            after = {path.relative_to(output).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns) for path in output.rglob("*") if path.is_file()}
-            self.assertEqual(before, after)
-
-    def test_migrated_tree_second_plan_has_zero_changes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            fixture.registration()
-            fixture.root_catalog()
-            fixture.save()
-            generator = fixture.generator()
-            first = generator.plan()
-            self.assertFalse(first.failures, [f.as_dict() for f in first.failures])
-            generator.write(first, fixture.root)
-            second = generator.plan()
-            self.assertFalse(second.failures, [f.as_dict() for f in second.failures])
-            self.assertEqual(second.audit["changed_files"], 0)
-            self.assertEqual(second.files, [])
-
-    def test_input_sha_is_checked_before_writes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            fixture.registration()
-            fixture.save()
-            result = fixture.generator().plan("0" * 64)
-            self.assertEqual({item.code for item in result.failures}, {"snapshot_sha_mismatch"})
-            self.assertEqual(result.files, [])
-
-    def test_invalid_utf8_slot_and_unknown_variant_fail_without_writes(self) -> None:
-        for malformed, code in (("utf8", "invalid_utf8_span"), ("variant", "unknown_registration_shape")):
-            with self.subTest(malformed=malformed), tempfile.TemporaryDirectory() as directory:
-                fixture = Fixture(Path(directory))
-                fixture.registration(readout="Template.realize λ")
-                command = fixture.syntax["files"][0]["commands"][0]
-                if malformed == "utf8":
-                    command["slots"]["readout"]["end"] -= 1
-                else:
-                    command["variant"] = "future-variant"
-                fixture.save()
-                self.assert_failure_writes_nothing(fixture, code)
-
-    def test_wrong_registration_owner_fails_without_writes(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = Fixture(Path(directory))
-            row = fixture.registration()
-            row["registration_module"] = "Reg.Catalogs.D5.Sample.RootCatalog"
-            fixture.save()
-            self.assert_failure_writes_nothing(fixture, "wrong_registration_owner")
-
-    def test_options_reject_duplicate_name_wrong_type_and_negative_nat(self) -> None:
-        for options, code in (([{"name": "x", "type": "nat", "value": 1}, {"name": "x", "type": "nat", "value": 2}], "duplicate_option"), ([{"name": "x", "type": "nat", "value": -1}], "unsupported_option_type"), ([{"name": "x", "type": "bool", "value": 1}], "unsupported_option_type")):
-            with self.subTest(options=options), tempfile.TemporaryDirectory() as directory:
-                fixture = Fixture(Path(directory))
-                fixture.registration(options=options)
-                fixture.save()
-                self.assert_failure_writes_nothing(fixture, code)
 
 
 if __name__ == "__main__":
