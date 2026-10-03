@@ -30,7 +30,7 @@ run_meta do
     let owner := (`LeanInformationAuditRegTests.ContractNegativeFixtures).str fixture
     let mut error := "accepted"
     try
-      discard <| Discovery.discover #[owner] fun moduleName =>
+      discard <| Discovery.discoverWithStructure #[] #[owner] fun moduleName =>
         LeanInformationAudit.Repository.source
           ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
     catch ex => error := ← ex.toMessageData.toString

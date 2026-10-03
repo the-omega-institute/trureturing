@@ -389,17 +389,14 @@ def root : Contract.RootCatalog := {
       objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena
       statementIdentity := some "sha256:fixture"
       registrationModuleName := `LeanInformationAuditRegTests.ContractFixtures }]
-    source := #[], baseline := #[], companionPrefix := some `ContractTests } }
-
-def expected : Contract.ExpectedDeclaration := {
-  rootId := `ContractTests.root
-  occurrence := {
-    statement := _
-    proof := D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled
-    theoremName := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled
-    objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena
-    statementIdentity := none
-    registrationModuleName := `LeanInformationAuditRegTests.ContractFixtures } }
+    source := #[{
+      statement := _
+      proof := D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled
+      theoremName := `D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling.open_permits_only_unsettled
+      objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.IffRegistrations.openCodeArena
+      statementIdentity := none
+      registrationModuleName := `LeanInformationAuditRegTests.ContractFixtures }]
+    baseline := #[], companionPrefix := some `ContractTests } }
 
 private noncomputable def privateSeal : Contract.Seal := { rootId := `ContractTests.root, options := #[] }
 

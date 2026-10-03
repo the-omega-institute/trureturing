@@ -23,7 +23,7 @@ run_meta do
       path.1.putStr (source ++ "\n" ++ extra ++ "\n")
       path.1.flush
       let mut error := "accepted"
-      try discard <| Discovery.discover #[owner] fun _ => pure path.2
+      try discard <| Discovery.discoverWithStructure #[] #[owner] fun _ => pure path.2
       catch ex => error := ← ex.toMessageData.toString
       assertTest s!"inventory.{label}_source_without_compiled_entry"
         (error.startsWith "contract.discovery:compiled_inventory_missing")

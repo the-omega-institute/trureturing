@@ -1,6 +1,7 @@
 import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.Contract.SourceAudit
 import LeanInformationAudit.Contract.SourceLiteral
+import LeanInformationAudit.Contract.RootStructure
 
 namespace LeanInformationAudit.Contract.Discovery
 open Lean Meta
@@ -15,7 +16,6 @@ structure Snapshot where
   registrations : Array (Name × Decoder.CompanionInput) := #[]
   enrollments : Array (Name × TemplateEnrollmentInput) := #[]
   roots : Array (Name × RootCatalogContract) := #[]
-  expected : Array (Name × LeanInformationAudit.ExpectedOccurrence) := #[]
   seals : Array (Name × SealInput) := #[]
 
 def checkDefinition (info : ConstantInfo) : MetaM DefinitionVal := do
@@ -122,7 +122,11 @@ def generatedEntryAuxiliary (owner : Name) (entries : Array SourceAudit.Entry)
     else env.getModuleIdxFor? name == env.getModuleIdx? owner
   unless belongs do return false
   for definition in definitions do
-    unless definition.info.name != name && definition.info.name.isPrefixOf name do continue
+    let parent := privateToUserName definition.info.name
+    let child := privateToUserName name
+    unless definition.info.name != name && parent.isPrefixOf child do continue
+    if entries.any (fun entry => entry.sourceName.any fun authored =>
+        authored != parent && authored.isPrefixOf child) then continue
     if let some range ← findDeclarationRanges? name then
       let outer := definition.range.range
       let inner := range.range
@@ -207,11 +211,13 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
         a.range.range.pos.column < b.range.range.pos.column)
 
 
-def discover (moduleNames : Array Name)
+def discoverWithStructure (requirements : Array RootStructure.Requirement)
+    (moduleNames : Array Name)
     (sourceOf : Name → IO System.FilePath := moduleSource) : MetaM Snapshot := do
   let original ← getEnv
   setEnv (original.setExporting false)
   try
+    RootStructure.checkScope requirements moduleNames
     let mut result : Snapshot := {}
     let mut seen : NameSet := {}
     for owner in moduleNames do
@@ -231,11 +237,24 @@ def discover (moduleNames : Array Name)
         else if head == ``Contract.RootCatalog then
           result := { result with roots := result.roots.push (owner, ← Decoder.rootCatalog info.value) }
         else if head == ``Contract.ExpectedDeclaration then
-          result := { result with expected := result.expected.push (owner, ← Decoder.expectedDeclaration info.value) }
+          throwError "contract.root_structure:independent_expected_not_allowed:{owner}:{info.name}"
         else if head == ``Contract.Seal then
           result := { result with seals := result.seals.push (owner, ← Decoder.readSeal info.value) }
       result := { result with definitions := result.definitions ++ definitions }
+    RootStructure.check requirements moduleNames result.roots result.seals
     return result
   finally setEnv original
+
+/-- Production discovery always reads the independent Reg package manifest.
+The lower-level pipeline takes a fixed requirement inventory for isolated tests;
+production callers never infer that inventory from decoded contract entries. -/
+def discover (moduleNames : Array Name)
+    (sourceOf : Name → IO System.FilePath := moduleSource) : MetaM Snapshot := do
+  let env ← getEnv
+  let requirements ← RootStructure.required env
+  for owner in env.header.moduleNames.push env.header.mainModule do
+    if (`Reg).isPrefixOf owner && !moduleNames.contains owner then
+      throwError "contract.root_structure:required_module_missing:{owner}"
+  discoverWithStructure requirements moduleNames sourceOf
 
 end LeanInformationAudit.Contract.Discovery

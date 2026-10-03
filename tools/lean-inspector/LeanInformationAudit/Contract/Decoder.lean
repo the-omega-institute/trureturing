@@ -205,12 +205,4 @@ def readSeal (e : Expr) : MetaM SealInput := do
   return { rootId := ← liftLiteral <| Literal.name "seal.root" fs[0]!
            options := ← liftLiteral <| Literal.options fs[1]! }
 
-def expectedDeclaration (e : Expr) : MetaM LeanInformationAudit.ExpectedOccurrence := do
-  let fs ← fields ``Contract.ExpectedDeclaration e 2
-  let row ← expectedRow fs[1]!
-  return { rootId := ← liftLiteral <| Literal.name "expected.root" fs[0]!
-           theoremName := row.theoremName, objectArenaName := row.objectArenaName
-           statementIdentity := row.statementIdentity, capturedStatement := row.capturedStatement
-           registrationModuleName := row.registrationModuleName }
-
 end LeanInformationAudit.Contract.Decoder

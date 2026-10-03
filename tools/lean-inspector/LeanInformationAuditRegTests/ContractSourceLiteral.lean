@@ -11,7 +11,7 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
-  let literals ← Discovery.discover #[`LeanInformationAuditRegTests.ContractLiteralFixtures.Literals]
+  let literals ← Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractLiteralFixtures.Literals]
     fun moduleName => LeanInformationAudit.Repository.source
       ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
   let some (_, row) := literals.seals[0]? | throwError "setup: literal seal"
@@ -23,7 +23,7 @@ run_meta do
     let owner := (`LeanInformationAuditRegTests.ContractLiteralFixtures).str fixture
     let mut error := "accepted"
     try
-      discard <| Discovery.discover #[owner] fun moduleName =>
+      discard <| Discovery.discoverWithStructure #[] #[owner] fun moduleName =>
         LeanInformationAudit.Repository.source
           ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
     catch ex => error := ← ex.toMessageData.toString

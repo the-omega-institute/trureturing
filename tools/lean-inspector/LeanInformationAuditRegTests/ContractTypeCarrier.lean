@@ -8,7 +8,7 @@ open LeanInformationAuditRegTests.ContractGuards
 run_meta do
   let mut error := "accepted"
   try
-    discard <| Discovery.discover #[`LeanInformationAuditRegTests.ContractTypeCarrierFixture]
+    discard <| Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractTypeCarrierFixture]
       fun moduleName => LeanInformationAudit.Repository.source
         ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
   catch ex => error := ← ex.toMessageData.toString

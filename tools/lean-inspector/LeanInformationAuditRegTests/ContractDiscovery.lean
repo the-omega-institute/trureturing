@@ -7,12 +7,12 @@ open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
-  let result ← Discovery.discover #[`LeanInformationAuditRegTests.ContractFixtures] fun owner =>
+  let result ← Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractFixtures] fun owner =>
     LeanInformationAudit.Repository.source
       ("tools/lean-inspector/" ++ owner.toString.replace "." "/" ++ ".lean")
-  assertTest "discovery.five_heads"
+  assertTest "discovery.catalog_expected_only"
     (result.registrations.size == 12 && result.enrollments.size == 1 &&
-      result.roots.size == 1 && result.expected.size == 1 && result.seals.size == 1)
+      result.roots.size == 1 && result.seals.size == 1)
   assertTest "discovery.private_noncomputable"
     (result.definitions.any (fun d => isPrivateName d.info.name))
   for n in [:5] do
@@ -53,9 +53,9 @@ run_meta do
     (generated.2.input.options.get `maxHeartbeats (0 : Nat) == 2000000 &&
       generated.2.input.options.getBool `pp.unicode.fun)
   assertTest "decoder.expected_statement_capture"
-    (result.expected[0]!.2.capturedStatement.isSome &&
+    (result.roots[0]!.2.source[0]!.capturedStatement.isSome &&
       result.roots[0]!.2.expected[0]!.statementIdentity == "sha256:fixture")
-  let witness ← Discovery.discover #[`LeanInformationAuditRegTests.ContractWitnessFixture] fun owner =>
+  let witness ← Discovery.discoverWithStructure #[] #[`LeanInformationAuditRegTests.ContractWitnessFixture] fun owner =>
     LeanInformationAudit.Repository.source
       ("tools/lean-inspector/" ++ owner.toString.replace "." "/" ++ ".lean")
   let some (_, row) := witness.registrations[0]? | throwError "setup: witness"

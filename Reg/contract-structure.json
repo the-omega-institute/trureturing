@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "modules": [
+    {
+      "module": "Reg.Catalogs.ExistentialWitnessRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.GuardedEqualityRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.IffRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.InformationRoot",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.MapInjectiveRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.PointwiseDisequalityRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.PointwiseEqualityRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.PointwiseOrderRegistrations",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.SharedArenaPeers",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.SharedInformationRoot",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.TemplateShadow",
+      "kind": "sealed_catalog"
+    },
+    {
+      "module": "Reg.Catalogs.UnifiedCausalRegistration",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S0.Certificates.SkeletonChannelRetraction",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S0.History.Coding.EventCodeIntertranslation",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S0.Tower.DBonacci.Substitution",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.HughesIterationDepthNoGap",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalReadoutRegularity",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S1.Words.Powers.GoldenDesubstitution",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Arith.WuPyramidalComplement",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ArithSums.AgohAlternatingNumeratorRefutation",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ArithUnits.CenteredReducedResidueProgressions",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.ExperimentBoundary.BoundedRunUnion",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.UnifiedCausalRegistration",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.SharedArenaPeers",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.TemplateShadow",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.UnifiedCausalRegistration",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Estimation.ExperimentCost.FiniteBranchingPathClockCriterion",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Estimation.TimeArrow.ParityPathLikelihoodProducts",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Fourier.CharacterSelection.EdgeConnectivityGradientWeight",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.QuantumContext.ProjectionValuationObstruction",
+      "kind": "catalog"
+    },
+    {
+      "module": "Reg.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates",
+      "kind": "catalog"
+    }
+  ]
+}
