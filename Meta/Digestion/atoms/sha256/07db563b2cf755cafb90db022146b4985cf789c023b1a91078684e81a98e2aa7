@@ -1,0 +1,29 @@
+#### 41.11.5　完整最小值和证书边界
+
+在固定有限顺序下取
+
+$$
+F_\epsilon\in\operatorname*{argmin}_{F\in\mathcal C_\epsilon}\theta(F),
+\qquad\theta_\epsilon=\theta(F_\epsilon).
+$$
+
+有限性、非空性和 $\mathbb Q(t)$ 精确次序给出纸面终止性，并且
+
+$$
+R\le\theta_\epsilon\le\theta(F_*)\le R+\epsilon.
+$$
+
+返回的局部证书包括字面元组、两个 guard、两个凸包端点、全部后缀—颜色区间和端点最大值；它足以核对 $R\le\theta_\epsilon$。但是单个局部证书不能推出 $\theta_\epsilon-\epsilon\le R$；这一侧必须由完整预定候选集合的全局最小化与近优候选存在性共同承担。有限候选最小值的取得也不等于同一个族取得 $R$。
+
+由上述有限性和最小值选择可得：每个有效输入 $\epsilon\in\mathbb Q(t)$、$0<\epsilon<\lambda-\nu_0$ 都有一个完整有限候选集，其返回长度满足
+
+$$
+L\le B(\epsilon)=2N_\epsilon(2N_\epsilon-1),
+$$
+
+并可选择阈值满足
+
+$$
+R\le\theta_\epsilon\le R+\epsilon.
+$$
+

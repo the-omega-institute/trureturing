@@ -1,0 +1,53 @@
+**定理 21.1（固定纤维的两个实际正例与确定性发现代价）。** 对定义 21.1 的每个 $L$，整个 $X_L$ 有限，其组成集合恰为
+
+$$
+c(X_L)=
+\begin{cases}
+\{(0,7),(3,5),(6,3),(9,1)\},&L=0,\\[2pt]
+\{(3,5)\},&L\ge1,
+\end{cases}
+\qquad
+X_L\cap\rho^3(\mathcal T)=\{P,Q\},\quad P\ne Q.
+\tag{21.4}
+$$
+
+每组组成的全部自由有序满二叉树实现都保留在 $X_L$ 中。置
+
+$$
+k_L=
+\begin{cases}
+5,&L=0,\\
+3,&L\ge1.
+\end{cases}
+\tag{21.5}
+$$
+
+若 $h<4$，则 $\Pi_{L,h}=\varnothing$。若 $h\ge4$，每个 $\pi\in\Pi_{L,h}$ 都满足
+
+$$
+C_\pi(P)\ge k_L,\qquad C_\pi(Q)\ge k_L,\qquad
+C_\pi(P)+C_\pi(Q)\ge2k_L+1,
+\tag{21.6}
+$$
+
+并有精确的全输入最优值
+
+$$
+\boxed{
+D_{L,h}=
+\begin{cases}
++\infty,&h<4,\\
+6,&h\ge4,\ L=0,\\
+4,&h\ge4,\ L\ge1.
+\end{cases}}
+\tag{21.7}
+$$
+
+对于 $h\ge4$，有两种在整个 $X_L$ 上正确的策略 $\pi_P,\pi_Q$，仅查询深度至多 $4$ 的地址，不重复地址，全部输入的费用均至多 $k_L+1$，而正例费用分别为
+
+$$
+\bigl(C_{\pi_P}(P),C_{\pi_P}(Q)\bigr)=(k_L,k_L+1),\qquad
+\bigl(C_{\pi_Q}(P),C_{\pi_Q}(Q)\bigr)=(k_L+1,k_L).
+\tag{21.8}
+$$
+

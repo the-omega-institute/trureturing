@@ -1,0 +1,54 @@
+**定理 6.3（闭相对响应的尖锐恢复阈值与调和报告）。** 对定义 6.1 的全部参数及每个共同已知的 $\epsilon\in\mathbb Q_{\ge0}$，隐藏阶段初始组成许可的统一恢复存在，当且仅当
+
+$$
+\boxed{\quad
+\epsilon<\theta_{\mathrm{hid}}(H;k,\ell,d)
+\quad\Longleftrightarrow\quad
+H<G_{k,\ell,d}\ \text{且}\
+\epsilon<\min\{\theta_k(H,\ell),\theta_k(H,\ell+d)\}.
+\quad}
+\tag{6.19}
+$$
+
+显露实际阶段而保持式 (6.1) 的同一个响应关系时，统一恢复存在，当且仅当 $\epsilon<\theta_{\mathrm{cal}}(H;k,\ell,d)$。$H<N_k$ 的空反标签集合允许每个有限 $\epsilon$。每个有限相对间距的等号均在失败侧，零间距在 $\epsilon=0$ 时也失败；失败由相应合同中的实际初始树对及共同有理报告达到。
+
+证明。对每个 $r\in\mathbb Q$，定义原联合组成域内的有限候选集与总函数
+
+$$
+\begin{aligned}
+\mathcal C_\epsilon(r)
+&=\{(x,s)\in D_H\times\{\ell,\ell+d\}:
+|r-n_s(x)|\le\epsilon n_s(x)\},\\
+P_\epsilon(r)
+&=\begin{cases}
+1,&\mathcal C_\epsilon(r)\ne\varnothing\ \text{且}\
+\chi_k(x)=1\ \text{对每个 }(x,s)\in\mathcal C_\epsilon(r),\\
+0,&\text{其余情形}.
+\end{cases}
+\end{aligned}
+\tag{6.20}
+$$
+
+若一个候选集包含相反标签，其两个正整数真值 $u,v$ 必须满足
+
+$$
+|u-v|\le|u-r|+|r-v|\le\epsilon(u+v),
+$$
+
+因而 $\mathfrak r(u,v)\le\epsilon$。当 $\epsilon<\theta_{\mathrm{hid}}$ 时这不可能，故每个非空候选集都有共同标签。每个实际允许响应的来源都在该候选集中，式 (6.20) 因而总是输出正确标签；空候选集的零值使恢复器在全部有理报告上定义。若 $H<N_k$，所有候选初始标签都是零，同一函数就是常值零恢复器。
+
+反之，若 $\theta_{\mathrm{hid}}$ 有限，定理 6.2 给达到它的实际初始树 $T,T'$ 及阶段 $s,s'$。令 $u=n_s(c(T))>0$、$v=n_{s'}(c(T'))>0$、$\theta=\mathfrak r(u,v)=\theta_{\mathrm{hid}}$。两初始标签相反，且共同有理报告
+
+$$
+\begin{aligned}
+r_*&=\frac{2uv}{u+v}\in\mathbb Q_{>0},\\
+|r_*-u|&=\frac{u|v-u|}{u+v}=\theta u,\qquad
+|r_*-v|=\frac{v|v-u|}{u+v}=\theta v
+\end{aligned}
+\tag{6.21}
+$$
+
+在 $\epsilon=\theta$ 时已经同时合法，在每个更大 $\epsilon$ 时继续合法。因此任何单报告恢复器都须对同一个 $r_*$ 输出两个不同标签，统一恢复失败。$u=v$ 时调和报告就是共同精确读数，包含零间距端点。空反标签集合没有这一阻碍，并已由常值恢复器处理。于是隐藏阶段恢复恰在 $\epsilon<\theta_{\mathrm{hid}}$；代入定理 6.2 得式 (6.19)。
+
+显露阶段时，把式 (6.20) 的候选集限制为报告所给的那个 $s$，同一个三角不等式证明两个阶段分别在 $\epsilon<\theta_k(H,s)$ 时可恢复；共同合同要求两者同时成立，恰为 $\epsilon<\theta_{\mathrm{cal}}$。若这个最小值有限，选取达到它的同阶段实际树对，式 (6.21) 的调和报告与相同阶段标记同时合法，故等号及以上仍失败。该闭区间交叠论证是本卷定理 2.2、3.4 所用候选标签纤维判据在式 (6.1) 下的应用；其尖锐端点使用相对半径对应的调和报告。所有阈值仍判定初始组成许可，阶段只计替换次数。证毕。
+

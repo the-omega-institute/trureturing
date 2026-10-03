@@ -1,0 +1,29 @@
+**引理 40.3（唯一有限来源的晚位非空标签）。** 设定义40.1的一个非空表示，其总标量像的一个极值 $e$ 有实际最终空尾地址 $\omega\in D$，且该地址在零起始位置 $j$ 带非空标签。则该表示的存活顶点数满足
+
+$$
+s\ge\left\lceil\frac{j+2}{2}\right\rceil.
+$$
+
+**证明。** [定理14.7](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1921)分类的是固定起始状态下的全部编码纤维。两条地址若首次分歧，当前坐标必为相邻闭分支的公共端点，两个后继尾必为各自尾区间的极值。命题14.6列出的极值地址为
+
+$$
+L=(3,25)^\infty,\qquad
+R=(25,3)^\infty,\qquad U=5L.
+$$
+
+它们及其有限前接均非最终空尾。因此具有实际 $D$ 地址的 $e$ 不参加任何双编码；其地址在整个 $\Omega$ 中唯一：
+
+$$
+\kappa_0^{-1}\{e\}=\{\omega\}\qquad\text{在 }\Omega\text{ 中}.
+$$
+
+这是完整纤维分类的结论，强于 $\kappa_0$ 在 $D$ 上单射；只知 $e\in\mathbb Z[t]$ 不能替代实际有限来源。
+
+引理40.2给出的极值策略路径带合法 guard 零地址、标量为 $e$，故其标签序列必等于 $\omega$。策略的最终循环若含非空标签，该标签将无穷次出现，与最终空尾矛盾。所以全部非空标签都在暂态中，位置 $j$ 强制 $k\ge j+1$。由 $p\ge1$、$k+p\le2s$，
+
+$$
+2s\ge k+p\ge j+2,
+$$
+
+得到所述界。这里唯一的是来源地址，图内同一地址可以由多条路径承担。$\square$
+

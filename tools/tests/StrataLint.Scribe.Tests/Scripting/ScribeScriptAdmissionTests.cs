@@ -123,6 +123,33 @@ public sealed class ScribeScriptAdmissionTests
         Reject(ScribeScriptHost.Execute(root.Path, Entry), "Lock");
     }
 
+    [Theory]
+    [InlineData("System.IO.FileInfo")]
+    [InlineData("System.Collections.Generic.List<System.IO.FileInfo>")]
+    public void IsTypeRejectsUnregisteredTypeOperand(string type)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition($"object value = \"value\";\n_ = value is\n    {type};"));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Reject(result, "T:System.IO.FileInfo");
+        Assert.Contains(Entry + ":6: disallowed symbol T:System.IO.FileInfo", result.Failure!.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("new Formula.TypeArrow(Id(\"A\"), Id(\"B\"))", "arrow")]
+    [InlineData("Id(\"A\")", "other")]
+    [InlineData("null", "other")]
+    public void IsTypeAcceptsRegisteredTypeOperandAndExecutes(string expression, string expected)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition($"Formula? domain = {expression};",
+            "domain is Formula.TypeArrow ? \"arrow\" : \"other\""));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal(expected, result.Definition!.Document.Title.Value);
+    }
+
     [Fact]
     public void ExecutionFixesAndRestoresThreadCultures()
     {

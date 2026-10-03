@@ -1,0 +1,125 @@
+**定理 58.2（异质全类最小分离）。** 记
+
+$$
+d_{\boldsymbol\mu}(\theta,\tau)
+=\mathbb E_{\otimes_i\mu_i}(C_\theta-C_\tau)^2,\qquad
+\gamma_\rho=8\rho^2(1-2\rho).
+$$
+
+则对所有 $n\ge4$，
+
+$$
+\inf_{\boldsymbol\mu\in\mathcal H_{n,\rho}}
+\min_{\theta\ne\tau}d_{\boldsymbol\mu}(\theta,\tau)
+=\gamma_\rho.
+\tag{58.5}
+$$
+
+**证明。** 两个教师只依赖各自三元组的并集，至多六个位置。对其余独立坐标积分，保留的分布正是这些位置各自实际律的乘积。递增重标记仅改变坐标名称，每个原位置律随坐标一起移动。这给出至多六窗的解析归约，不把异质律变成共同律，也不改变同窗交集 $t_i$。
+
+先令 $\psi(s,t)=s+t-2st$。在 $[b,c]^2$ 上，双线性函数的最小值在四角达到。混合角与 $(b,b)$ 角之差为 $(c-b)(1-2b)\ge0$； $(c,c)$ 角之差为
+
+$$
+\psi(c,c)-\psi(b,b)=2(c-b)(1-b-c)=2\rho(1-5\rho)\ge0.
+$$
+
+故
+
+$$
+\psi(s,t)\ge2b(1-b)=4\rho(1-2\rho).
+\tag{58.6}
+$$
+
+若两个第一门 $A,A'$ 不同，则其中一个教师类为1，另一个为0或2，平方差恰为1。因此无论第三位置如何重叠，
+
+$$
+d_{\boldsymbol\mu}(\theta,\tau)\ge P(A\ne A').
+\tag{58.7}
+$$
+
+不同的递增第一位置对恰有下列四种关系。
+
+共同第一位置的 $(p,q),(p,s)$ 满足
+$P(A\ne A')=H_p\psi(L_q,L_s)$；共同第二位置的 $(p,q),(s,q)$ 满足
+$P(A\ne A')=L_q\psi(H_p,H_s)$。两式均由实际不同位置独立得到，再用（58.6）及 $H_p,L_q\ge2\rho$，给出 $\gamma_\rho$。
+
+交叉位置对可写为 $(p,q),(q,s)$， $p<q<s$。置 $h=H_p,l=L_s$，使用同一中窗的实际交集，有
+
+$$
+\begin{aligned}
+P(A\ne A')
+&=H_pL_q+H_qL_s-2H_pt_qL_s\\
+&=h x_q+l z_q+t_q\psi(h,l)\\
+&\ge\rho(h+l)+\rho\psi(h,l)
+=2\rho(h+l-hl)\\
+&\ge8\rho^2(1-\rho)\ge\gamma_\rho.
+\end{aligned}
+\tag{58.8}
+$$
+
+所有系数非负， $x_q,z_q,t_q\ge\rho$ 是同一合法中窗的同时约束；最后一步用 $h,l\ge2\rho$ 以及 $h+l-hl$ 对两个变量的单调性。反方向交叉只是交换两个门，不另引入分布。
+
+不相交的第一位置对使 $A,A'$ 为独立 Bernoulli，成功概率 $k,l$ 各在
+$[k_0,c_0]=[4\rho^2,(1-3\rho)^2]$。此区间满足 $k_0\le c_0$、 $k_0+c_0\le1$ 和 $k_0\le1/2$。再作四角比较，混合角差为 $(c_0-k_0)(1-2k_0)\ge0$，双上角差为 $2(c_0-k_0)(1-c_0-k_0)\ge0$，所以
+
+$$
+P(A\ne A')=\psi(k,l)
+\ge8\rho^2(1-4\rho^2)\ge\gamma_\rho.
+\tag{58.9}
+$$
+
+这里只需 $k_0+c_0=1-6\rho+13\rho^2\le1$；没有独立选择一个位置不相容的两个边缘极值。
+
+剩下的是共同第一位置对、不同第三位置的 $(p,q,r),(p,q,s)$。令 $K=(1-h_p\ell_q)h_q$，则
+
+$$
+\begin{aligned}
+C_\theta-C_\tau&=2K(\ell_r-\ell_s),\\
+d_{\boldsymbol\mu}(\theta,\tau)
+&=4(H_q-H_pt_q)\psi(L_r,L_s),\\
+H_q-H_pt_q&=z_q+t_q(1-H_p)\ge\rho.
+\end{aligned}
+\tag{58.10}
+$$
+
+两个第三位置都在共同第一位置对以外，故所用独立性成立。由（58.6），这里的下界为 $16\rho^2(1-2\rho)\ge\gamma_\rho$。以上覆盖所有三元组重叠。
+
+等号复用（57.11）的合法共同律子类：每个位置均取
+
+$$
+\mu_*=\left((1-3\rho)/2,\rho,(1-3\rho)/2,\rho,\rho\right),
+\quad H=L=2\rho,\quad
+\theta_i=(i,n-1,n),\quad 1\le i\le n-2.
+\tag{58.11}
+$$
+
+写 $q=n-1,r=n,B=h_q\ell_r$，对于 $i\ne j$，
+
+$$
+C_{\theta_i}-C_{\theta_j}
+=(h_i-h_j)\ell_q(1-2B),\qquad
+d_{\mu_*}(\theta_i,\theta_j)
+=2H(1-H)L=\gamma_\rho.
+\tag{58.12}
+$$
+
+此差只取 $0,\pm1$，所以 Hamming 距离也恰为 $\gamma_\rho$。所有五质量均合法；下界与等号共同证明（58.5）。正分离还证明不同候选给不同原函数。 $\square$
+
+异质律下的实际类质量为
+
+$$
+\pi_{1,\tau}=H_pL_q,\qquad
+\pi_{2,\tau}=(H_q-H_pt_q)L_r,
+$$
+
+从而
+
+$$
+\mathbb EC_\tau=\pi_{1,\tau}+2\pi_{2,\tau},\quad
+\mathbb EC_\tau^2=\pi_{1,\tau}+4\pi_{2,\tau},\quad
+\mathbb Ef_\tau^2=1-H_pL_q.
+\tag{58.13}
+$$
+
+这些量通常随候选变化。尖锐分离没有使用共同候选矩。
+

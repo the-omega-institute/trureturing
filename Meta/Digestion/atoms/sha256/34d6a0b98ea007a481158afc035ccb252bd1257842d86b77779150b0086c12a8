@@ -1,0 +1,15 @@
+**定理 59.8（任意分类器的源训练下界与全异质类上界）。** 对 $n\ge4$、 $0<a\le1$、 $0<\rho\le1/8$、 $0<\delta\le1/4$，在 $\varepsilon_0=3/125$ 下，
+
+$$
+\begin{aligned}
+\left\lceil\frac{\log n+\log(1/\delta)}{8a^2\rho^2}\right\rceil
+&\le m_*^\nu(\varepsilon_0,\delta)\\
+&\le\left\lceil\frac{128[\log\binom n3+\log(1/\delta)]}{a^2\rho^2}\right\rceil,\\
+m_*^\nu(\varepsilon_0,\delta)
+&=\Theta\!\left(\frac{\log n+\log(1/\delta)}{a^2\rho^2}\right).
+\end{aligned}
+\tag{59.18}
+$$
+
+实际上同一上下界适用于全部 $0\le\varepsilon<12/125$。全类精确 minimax 等价仍仅在（59.15）的较小严格区间声称。上界单独覆盖全部 $0<\delta<1$。对数均为自然对数。
+

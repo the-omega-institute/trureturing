@@ -30,7 +30,7 @@ public sealed record ScribeResourcePackManifest(
 public sealed class ScribeResourcePack
 {
     public const string SchemaName = "trureturing.scribe.resource-pack";
-    public const int SemanticVersion = 1;
+    public const int SemanticVersion = 3;
     private static readonly DateTimeOffset EntryTimestamp = new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private readonly IReadOnlyDictionary<string, byte[]> resources;
 

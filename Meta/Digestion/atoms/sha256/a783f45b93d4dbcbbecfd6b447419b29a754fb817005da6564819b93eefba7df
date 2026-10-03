@@ -1,0 +1,30 @@
+## 30. 完整逐窗流式恢复的有限状态障碍与增长历史构造
+
+本章把响应目标从原始首窗改为全部窗口的有序流式恢复。固定第28.1节的临界六格布局 (28.1)，以及第29章的同一实际来源合同。置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad \lambda=\frac{t^2}{10},\qquad
+X=I_0=[-1,\phi],\quad I_1=[-1,t].
+$$
+
+量化器 $Q:X\to\mathcal C$ 在所有时刻相同，颜色字母表为 $\mathcal C=\{0,1,2,3,4,5\}$，其切点为
+
+$$
+a^\star=-t^2-\lambda,\quad b^\star=g-3\lambda,\quad
+c^\star=t-5\lambda,\quad d^\star=2t-7\lambda,\quad
+e^\star=2t+\lambda.
+\tag{30.1}
+$$
+
+五个切点各取任意固定合法归属。来源窗口字母表为 $\Lambda=\{3,0,5,2,25\}$，其中 $0=\mathrm{null}$，$25$ 是一个窗口标签。$\Omega$ 为起始 guard 零的完整合法地址空间，$D\subset\Omega$ 为最终全是空窗的来源域。地址、guard 和颜色分别保留。一条实际来源承担全部观察坐标：
+
+$$
+x_j(\omega)=\kappa_0(T^j\omega),\qquad
+r_j=Q\!\left(\operatorname{clip}_X(x_j(\omega)+\varepsilon_j)\right),
+\qquad |\varepsilon_j|\le\lambda,\quad j\ge0.
+\tag{30.2}
+$$
+
+误差在裁剪前逐坐标分别受限。下述障碍使用严格小于 $\lambda$ 的完整实际误差流，恢复构造则安全地覆盖全部闭预算记录。本章只使用命题28.3的周期地址和内部目标、推论29.3的完成域单点纤维，以及定义29.6、命题29.7和定理29.8的精确有限图；不重复它们的完整证明。
+

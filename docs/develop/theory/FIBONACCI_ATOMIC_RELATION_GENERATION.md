@@ -14192,6 +14192,89 @@ $H=1$ 时这是空合取，每个 $S$ 都充分，包括空表。
 
 最后，$\gcd(y,1)=1$ 包括 $y=0$，所以模 1 只有一个未来，空表即可识别。模数大于一时，首层覆盖至少两个不同相位，故空表不充分。$\square$
 
+**定理 138.4（实际移位子相位的稀疏 gcd 判据）。** 对素数 $p$、精度 $e\ge1$ 和有限自然时间表 $S$，令 $r_j=\operatorname{zeroRank}(p^j)$，其中 zeroRank 是 Fibonacci 序列的最小正零索引。对整数观察对 $x=(n,z)$ 和实际非负来源 $v=(a,b)$，采用
+
+$$
+y(k,x)=F_{k-1}n+F_kz,\qquad
+g(H,k,x)=\gcd(|y(k,x)|,H),\qquad
+h(H,k,v)=\gcd(F_{k+3}a+F_{k+4}b,H).
+$$
+
+$k-1$ 是自然数截断减法；识别与碰撞结论只查询正时刻。实际来源的观察坐标为 $(2a+3b,3a+5b)$，因而 $k>0$ 时 $h(H,k,v)=g(H,k,(2a+3b,3a+5b))$。整数对在 $p$ 处本原是指至少一个坐标不被 $p$ 整除；实际来源的本原性按其原始坐标 $a,b$ 判断。所有未加本原限制的域都包括零对和非本原对。
+
+在 $e\ge2$ 时，令 $R=r_{e-1}$，并以实际查询定义移位子相位集合
+
+$$
+A_{p,e,t}(S)=\left\{u\in\mathbb Z/p\mathbb Z:\exists k\in S,
+\ (k-1)\bmod r_e=(t+\operatorname{val}(u)R)\bmod r_e\right\},
+$$
+
+其中 $\operatorname{val}(u)\in\{0,\ldots,p-1\}$ 是自然代表。它是集合，同一子相位的重复访问只计一次。定义末层条件 $D^{\mathrm{sh}}_{p,e}(S)$ 为
+
+$$
+\begin{array}{ll}
+e=1:&\left(\text{若 }r_1=p+1\text{ 则 }r_1-1\text{，否则 }r_1\right)
+\le|\{k\bmod r_1:k\in S\}|;\\
+e\ge2,\ r_e=R:&\forall t<r_e,\ \exists k\in S,\ (k-1)\bmod r_e=t;\\
+e\ge2,\ r_e\ne R:&\forall t<R,\quad p-1\le|A_{p,e,t}(S)|.
+\end{array}
+$$
+
+全塔条件为 $D^{\mathrm{sh}}_{p,e}(S)\land\bigwedge_{1\le j<e}D^{\mathrm{sh}}_{p,j}(S)$。称 $S$ 识别读出 $f$ 的正未来，若任意两个指定域内的固定来源在 $S$ 上读数相同，就在每个正时刻有相同读数。
+
+对每个有限正时间表 $S$，以下六项等价：$D^{\mathrm{sh}}_{p,e}(S)$；全塔条件；识别全部本原整数观察对的 $g(p^e,\cdot,\cdot)$ 未来；识别全部整数观察对的该未来；识别全部实际非负来源的 $h(p^e,\cdot,\cdot)$ 未来；识别全部在 $p$ 处本原的实际非负来源的该未来。所有六项使用同一个 $S$，不提供共同含量或额外读数。
+
+对任意有限时间表，若 $e\ge2$ 且 $D^{\mathrm{sh}}_{p,e}(S)$ 成立，则每个 $1\le j<e$ 和每对 $\alpha,\beta\in\mathbb Z/r_j\mathbb Z$ 都有 $k\in S$ 满足 $[k-1]_{r_j}+\alpha=\beta$；这一纯相位覆盖结论不要求 $S$ 中时刻为正。对有限正时间表，$D^{\mathrm{sh}}$ 还给出 $S\ne\varnothing$ 和两个不同的首层相位。更一般地，只要一个非空正时间表含两个不同首层相位，则对所有整数观察对
+
+$$
+\min_{k\in S}g(p^e,k,x)=\gcd(\gcd(|n|,|z|),p^e).
+$$
+
+特别地，$D^{\mathrm{sh}}$ 给出的同一表恢复所有实际非负来源的共同含量：
+
+$$
+\min_{k\in S}h(p^e,k,(a,b))=\gcd(\gcd(a,b),p^e).
+$$
+
+这些最小值均包括零来源和饱和来源。
+
+若 $D^{\mathrm{sh}}_{p,e}(S)$ 失败，则存在两个固定的本原整数观察对 $x,x'$，在整个 $S$ 上有相同 $g(p^e,k,\cdot)$ 答案。它们在选择任何 $Q>0$ 之前固定。对每个这样的 $Q$，存在固定实际非负来源 $v,w$，四个坐标均严格小于 $Qp^e$，对所有正时刻满足
+
+$$
+h(Qp^e,k,v)=Q g(p^e,k,x),\qquad
+h(Qp^e,k,w)=Q g(p^e,k,x').
+$$
+
+两者在整个 $S$ 上答案相同。对每个截止 $B\in\mathbb N$，又有 $k>B$、$k>0$、$k\notin S$，在该时刻的两个整数答案为 $p^e,p^{e-1}$，两个实际答案为 $Qp^e,Qp^{e-1}$。来源 $v,w$ 在选择 $B$ 之前已经固定。仅当 $p\nmid Q$ 时断言这两个实际来源在 $p$ 处本原；缩放允许 $p\mid Q$。这同时涵盖首层满轨道的两个遗漏相位、首层非满轨道的遗漏相位与无命中方向、高层增长的两个遗漏子相位以及高层停滞的退出方向。
+
+对所有 $H>0$ 和同一个有限正时间表，
+
+$$
+S\text{ 识别全部实际来源的模 }H\text{ gcd 未来}
+\quad\Longleftrightarrow\quad
+\bigwedge_{p^e\parallel H}D^{\mathrm{sh}}_{p,e}(S).
+$$
+
+这里 $p^e\parallel H$ 指 $p$ 为素数、$e\ge1$、$p^e\mid H$ 且 $p^{e+1}\nmid H$。若一个完整因子失败，则 $p\nmid H/p^e$，并有坐标均小于 $H$ 的固定实际来源，在整个 $S$ 上相同，而在每个截止之后的某个未查询正时刻分别为 $H,H/p$。$H=1$ 时，对包括零来源在内的每个实际来源和每个自然时刻（含零）都有 $h(1,k,v)=1$，所以空表也充分。
+
+此判据使用的实际 affine 解码同时具有如下准确陈述。对任意 $e\ge2$、$t,j\in\mathbb N$ 和整数对 $x$，若 $p^{e-1}\mid y(t+1,x)$，令
+
+$$
+c=F_{R-1},\qquad
+A=\left[c\,\frac{y(t+1,x)}{p^{e-1}}\right]_p,\qquad
+B=\left[\frac{F_R}{p^{e-1}}\,y(t+2,x)\right]_p.
+$$
+
+第一个商为整数商，Fibonacci 商为自然数商；取商后才映入 $\mathbb Z/p\mathbb Z$。则
+
+$$
+p^e\mid y(t+1+jR,x)\quad\Longleftrightarrow\quad A+[j]_pB=0.
+$$
+
+该等价对增长与停滞均成立，不限制 $j$ 的大小，也不排除 $p=2,5$。
+
+证明。秩及提升事实给 $M^R=cI+F_RM$ 和 $p^{e-1}\mid F_R$。当 $e\ge2$，$F_R^2=0\pmod{p^e}$，而相邻 Fibonacci 数互素使 $c$ 为单位；消去单位标量后得到上述实际 affine 等价。增长时，本原父命中的斜率非零，因此至多漏测一个子相位足以识别唯一根；两个遗漏子相位通过逆 Fibonacci 作用给出固定碰撞。停滞时，逆作用构造保持低层命中而退出末层的本原状态。首层两种情况由有限素数相位结果给出。全部整数域先用两个首层相位恢复共同含量，再在剩余精度中识别。模可逆观察矩阵把每个固定整数剩余对实现为有界自然来源，并在全部正时刻保持同一缩放关系。对完整因子的 gcd 投影分别应用局部结果，再由素数幂整除关系重组完整 gcd；必要性用同一有界来源隔离失败因子。$\square$
+
 ## 139. 准确非自适应查询数及同一表的三项最小值
 
 **定理 139.1（任意索引查询数等于连续时域）。** 沿用定理 126.5 的局部连续长度，显式写为
@@ -48663,5 +48746,1153 @@ $-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
 本命题保留 $\iota\in H$ 的相位相容假设。
 独立平移参数 $t_\varepsilon$ 与实际截止 $T=1/\varepsilon$ 仍未被识别；
 该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
+
+## 追加锚（本行以下为增补区）
+
+## 352. 整数秩容量、未填满余量与实际 Fibonacci 素数尾
+
+**定义 352.1（合并后的整数秩容量）。** 设 $r\in\mathbb N$、$r\ge1$，$I\subseteq\{r,r+1,\ldots\}$ 为有限集合，$A,N\ge0$ 为实数。对每个 $d\in I$ 给定质量 $c_d$，满足
+
+$$
+0\le c_d\le Ad,\qquad \sum_{d\in I}c_d\le N.
+$$
+
+定义
+
+$$
+x_d=\frac{c_d}{d},\qquad
+J=\sum_{d\in I}x_d,\qquad
+B=\sum_{d\in I}dx_d=\sum_{d\in I}c_d,
+\qquad D=\sum_{d\in I}x_d(A-x_d),\qquad C=(2r-1)A.
+$$
+
+因 $d\ge1$，上述条件等价于 $0\le x_d\le A$ 和 $B\le N$。若原载体是有限集合 $E$，带整数秩映射 $\rho:E\to\{r,r+1,\ldots\}$ 与非负质量 $a_e$，则这里的 $I=\rho(E)$、$c_d=\sum_{\rho(e)=d}a_e$；容量条件要求这个合并后的总质量满足 $c_d\le Ad$，而不是仅要求每个 $a_e\le A\rho(e)$。
+
+**定理 352.2（由最大秩归纳得到的容量与余量界）。** 定义352.1的全部参数满足
+
+$$
+D\ge0,\qquad J^2+CJ+D\le2AB\le2AN,
+\tag{352.1}
+$$
+
+且 $C^2+8AN-4D\ge0$，并有
+
+$$
+J\le\frac{\sqrt{C^2+8AN-4D}-C}{2}
+\le\frac{\sqrt{C^2+8AN}-C}{2}.
+\tag{352.2}
+$$
+
+这些结论包含空集、$A=0$ 和 $N=0$ 的情形。
+
+**证明。** 每项 $x_d(A-x_d)$ 非负，故 $D\ge0$。先证明（352.1）中以 $B$ 为右侧预算的部分。对 $I$ 按最大秩归纳；空集的各项均为零。加入最大秩 $a$ 时，旧集合 $I_0\subseteq\{r,\ldots,a-1\}$。互异整数秩给
+
+$$
+|I_0|\le a-r,\qquad
+J_0=\sum_{d\in I_0}x_d\le |I_0|A\le(a-r)A.
+$$
+
+置 $x=x_a$。平方项、线性项与未填满余量的总增量为
+
+$$
+\begin{aligned}
+&(J_0+x)^2-J_0^2+Cx+x(A-x)\\
+&\hspace{2em}=2J_0x+2rAx\le2Aax.
+\end{aligned}
+$$
+
+右侧恰是预算 $2AB$ 加入新秩时的增量；这证明归纳步骤，而未把前缀质量上界作为额外假设。再以 $B\le N$ 得到（352.1）。因为 $J,C\ge0$，将该不等式乘四并完成平方，得
+
+$$
+0\le(2J+C)^2\le C^2+8AN-4D.
+$$
+
+两侧开非负平方根给（352.2）的第一界；$D\ge0$ 与平方根的单调性给第二界。$A=0$ 时盒约束迫使全部 $x_d=0$；$N=0$ 时全部 $c_d=0$。这两种情形以及空集都给 $J=D=0$，符合上述公式。$\square$
+
+**命题 352.3（逐索引容量不能替代合并容量）。** 令 $E$ 有两个元素，二者的秩均为 $1$、质量均为 $1$，并取 $r=A=1$、$N=2$。每个索引分别满足容量条件，但不能对未合并的两个索引使用定理352.2。
+
+**证明。** 若将两个索引当作不同秩求和，则 $J=2$、逐索引的 $D=0$、$C=1$，会得到错误的 $J^2+CJ+D=6\le2AN=4$。真正合并后的秩集是 $I=\{1\}$，其质量为 $c_1=2>A\cdot1$，不满足定理的假设。$\square$
+
+**定义 352.4（实际 Fibonacci 零秩与严格截止权重）。** 令
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对素数 $p$，$z(p)$ 表示满足 $p\mid F_d$ 的最小正整数 $d$。对实数 $x\ge0$，记 $\vartheta(x)=\sum_{p\le x,\ p\ \mathrm{prime}}\log p$。对实数 $y\ge2$，在自然数载体上定义同一实际权重
+
+$$
+w_y(n)=
+\begin{cases}
+\displaystyle\frac1{n z(n)},&n\text{ 是素数且 }y<n,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+此定义只在素数分支使用 $z(n)$；任意有限 $T\subseteq\mathbb N$ 的尾质量为 $\sum_{n\in T}w_y(n)$。
+
+**定理 352.6（两个初始空秩后的半开壳界）。** 对每个实数 $Y\ge2$、$b>1$ 及有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{25+16bY}-5\right),
+\tag{352.4}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{25+16bY}-5\right)}{2Y\log Y}.
+\tag{352.5}
+$$
+
+**证明。** 先建立实际秩、合并纤维容量与素数预算。每个素数的 $z(p)$ 存在，且 $z(p)\ge3$、$p\mid F_{z(p)}$。若 $S$ 是任意有限素数集合，定义
+
+$$
+I=z(S),\qquad
+c_d=\sum_{\substack{p\in S\\z(p)=d}}\log p.
+$$
+
+则对每个 $d\in I$，$0\le c_d\le d\log2$。此外，对全部实数 $x\ge0$ 有 $\vartheta(x)\le2x\log2$；若 $S\subseteq[Y,bY)$、$Y\ge2$、$b>1$，则
+
+$$
+\sum_{d\in I}c_d=\sum_{p\in S}\log p\le2bY\log2.
+\tag{352.3}
+$$
+
+Fibonacci 模周期与首次整除秩的经典背景见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。这里所需的存在性也可直接证明：矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+在 $\mathrm{GL}_2(\mathbb F_p)$ 中可逆，该群有限，故某个正整数 $h$ 满足 $M^h=I$。因 $M^h(0,1)^{\mathsf T}=(F_h,F_{h+1})^{\mathsf T}$，有 $p\mid F_h$，故最小正秩存在。$F_1=F_2=1$ 排除秩 $1,2$。
+
+由递推归纳得 $0<F_d<2^d$（$d\ge1$）。固定纤维中各素数互异、两两互素，且均整除 $F_d$，所以
+
+$$
+\prod_{\substack{p\in S\\z(p)=d}}p\mid F_d,
+\qquad
+c_d=\log\prod_{\substack{p\in S\\z(p)=d}}p
+\le\log F_d<d\log2.
+$$
+
+非负性来自 $p\ge2$。
+
+为核对 Chebyshev 常数，对整数 $n$ 作强归纳。$n=0,1,2$ 的界直接成立；偶数 $n\ge4$ 不是素数，故 $\vartheta(n)=\vartheta(n-1)\le2(n-1)\log2$。对奇数 $n=2m+1\ge3$，区间 $(m+1,2m+1]$ 中每个素数均整除 $\binom{2m+1}{m}$。第 $m$、$m+1$ 个二项式系数相等，而所有系数之和为 $2^{2m+1}$，故 $\binom{2m+1}{m}\le2^{2m}$。于是
+
+$$
+\begin{aligned}
+\vartheta(2m+1)
+&\le\vartheta(m+1)+\log\binom{2m+1}{m}\\
+&\le2(m+1)\log2+2m\log2
+=2(2m+1)\log2.
+\end{aligned}
+$$
+
+实数情形由 $\vartheta(x)=\vartheta(\lfloor x\rfloor)$ 得到。按秩分纤维不改变总质量，而壳内素数均不超过 $bY$，故（352.3）成立。
+
+用上述合并质量，取定理352.2中的 $r=3$、$A=\log2$、$N=2bY\log2$。此时 $C=5\log2$，并且
+
+$$
+J=\sum_{d\in z(S)}\frac{c_d}{d}
+=\sum_{p\in S}\frac{\log p}{z(p)}.
+$$
+
+在（352.2）中舍弃非负 $D$，再将 $\log2>0$ 从平方根提出，便得（352.4）。因为 $p\ge Y\ge2$，有 $p\log p\ge Y\log Y>0$，逐项写成
+
+$$
+\frac1{p z(p)}
+=\frac{\log p/z(p)}{p\log p}
+\le\frac{\log p/z(p)}{Y\log Y},
+$$
+
+相加即得（352.5）。全程使用的是同一素数集合与合并纤维，不对纤维中的素数分别假设独立容量。$\square$
+
+**定理 352.8（所有实数截止下的完整四倍壳尾界）。** 对实数 $y\ge2$，定义
+
+$$
+W(y)=\sum_{n\ge0}w_y(n)
+=\sum_{\substack{p>y\\p\ \mathrm{prime}}}\frac1{p z(p)},
+\qquad
+E_3(y,k)=\frac{\log2\left(\sqrt{25+64y4^k}-5\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则 $E_3(y,k)\ge0$、$\sum_{k\ge0}E_3(y,k)$ 可和，且
+
+$$
+W(y)\le\sum_{k\ge0}E_3(y,k)
+\le\frac{8\log2}{\sqrt y\log y}.
+\tag{352.7}
+$$
+
+**证明。** 对每个实数 $y\ge2$，$w_y$ 可和。每个满足 $p>y$ 的素数唯一属于某个半开壳
+
+$$
+[y4^k,y4^{k+1}),\qquad k\in\mathbb N.
+\tag{352.6}
+$$
+
+素数 $p=y$ 不在活跃集合中，内部边界 $p=y4^k$（$k\ge1$）属于以该边界为左端点的壳。
+
+先核对同一实际权重的可和性，再形成其无穷和。引理191.2的确切粗界是：对全部实数 $y\ge2$，实际 Fibonacci 素数权重的尾和不超过 $16/\sqrt y$。因此每个有限 $T\subseteq\mathbb N$ 满足
+
+$$
+0\le\sum_{n\in T}w_y(n)\le\frac{16}{\sqrt y}.
+$$
+
+非负级数的有界有限部分和判据给 $w_y$ 可和。这里复用的是相同的 $p$、$z(p)$ 和严格筛选 $p>y$，不是从一个不同权重的结论作替换。
+
+已发表的另一项充分输入见 Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，arXiv:1704.00151v2，Lemma2.4 与 Lemma2.2(v)：记 $\ell(p)=\operatorname{lcm}(p,z(p))$，则
+
+$$
+\sum_{p>y}\frac1{\varphi(\ell(p))}\ll y^{-1/4},
+\qquad \ell(p)=p z(p)\quad(p\ne5).
+$$
+
+由于 $\varphi(m)\le m$，这也给 $y\ge5$ 时同一实际权重的可和性；较小截止只增加有限项。此文献界在这里仅作为已知的可和性输入，不作为（352.5）的常数来源。
+
+对 $p>y>0$，取 $k=\lfloor\log(p/y)/\log4\rfloor$，便有 $k\ge0$ 与 $4^k\le p/y<4^{k+1}$，证明存在性。若两个不同壳都含 $p$，较早壳的严格上端点条件与较晚壳的下端点条件矛盾，证明唯一性及边界归属。
+
+记 $Y_k=y4^k$。因 $Y_k\ge y\ge2$，分母为正；平方比较给
+
+$$
+0\le\sqrt{25+64Y_k}-5\le8\sqrt{Y_k}.
+$$
+
+由 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到共同几何主控
+
+$$
+0\le E_3(y,k)\le
+\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{352.8}
+$$
+
+所以右侧壳级数可和，其和不超过（352.7）的第二个右侧。
+
+对任意有限 $T\subseteq\mathbb N$，先保留其中满足 $p$ 为素数且 $p>y$ 的活跃子集，再按本证明中已确定的唯一壳编号分组。每组是 $[Y_k,4Y_k)$ 内的有限素数集合，定理352.6给其贡献不超过 $E_3(y,k)$。只有有限多个组非空，故
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_3(y,k)
+\le\sum_{k\ge0}E_3(y,k).
+$$
+
+本证明已先核对左侧同一实际权重可和，现对所有有限 $T$ 取上确界，得到完整尾和的第一界。没有以右側壳级数的可和性代替左侧权重的核对，也没有把严格截止改成 $p\ge y$。$\square$
+
+## 353. 秩递归的精确预算缺口、零缺口条件与价格归一化
+
+**定义 353.1（前缀缺口）。** 在定义352.1的整数秩与占位条件下，令 $\widetilde x_i=x_i$（$i\in I$），其余整数 $i$ 的 $\widetilde x_i=0$。对 $d\in I$ 定义
+
+$$
+g_d=A(d-r)-\sum_{\substack{i\in I\\i<d}}x_i,
+\qquad H=\sum_{d\in I}x_dg_d.
+$$
+
+$D$ 记录单秩的未填满余量，$H$ 记录相对于完整整数前缀的缺口；二者均按合并后的秩集合计算。
+
+**定理 353.2（精确恒等式与最大秩预算不变量）。** 定义353.1的量满足
+
+$$
+J^2+CJ+D+2H=2AB.
+\tag{353.1}
+$$
+
+加入最大秩 $a$、占位 $x=x_a$ 时，旧秩的 $g_d$ 均不变。若 $J_0$ 是旧总占位，则
+
+$$
+\begin{aligned}
+\Delta(J^2+CJ+D)&=2x(J_0+rA),\\
+\Delta H&=x\bigl(A(a-r)-J_0\bigr)=xg_a,\\
+2Aax-\Delta(J^2+CJ+D)&=2xg_a.
+\end{aligned}
+\tag{353.2}
+$$
+
+因此每步以新增预算 $ax$ 同时支付主项增量与精确缺口；在 $B\le N$ 时，$J^2+CJ+D+2H\le2AN$。
+
+**证明。** 空集满足（353.1）。若 $a$ 大于所有旧秩，则它不进入任何旧秩的前缀，故旧 $g_d$ 不变，$H$ 只增加 $xg_a$。定理352.2证明中的代数展开给（353.2）的第一式；第二式来自 $g_a$ 的定义。二者相加得到
+
+$$
+\Delta(J^2+CJ+D+2H)=2Aax=\Delta(2AB),
+$$
+
+完成最大秩归纳，也证明第三式。最后用 $A\ge0$ 和 $B\le N$ 即得预算上界。该恒等式描述的是每步预算如何分配，而不是对递归分支数量的估计。$\square$
+
+**定理 353.3（整数空台阶分解与零缺口的充要条件）。** 对每个 $d\in I$，有
+
+$$
+g_d=\sum_{i=r}^{d-1}(A-\widetilde x_i)\ge0,
+\qquad H\ge0.
+\tag{353.3}
+$$
+
+当 $A>0$ 时，
+
+$$
+H=0
+\quad\Longleftrightarrow\quad
+\forall d\in I\text{ 满足 }x_d>0,\quad
+\forall i\in\mathbb Z\text{ 满足 }r\le i<d,
+\quad i\in I\text{ 且 }x_i=A.
+\tag{353.4}
+$$
+
+这个条件不要求最后一个活跃秩填满。当 $A=0$ 时，所有 $x_d$、$J$、$B$、$D$、$g_d$、$H$ 都为零，零缺口本身不提供任何额外的秩集合归属信息。
+
+**证明。** $[r,d)$ 恰有 $d-r$ 个整数，其中属于 $I$ 的占位总和是 $\sum_{i\in I,i<d}x_i$，故（353.3）的等式成立。缺失秩的一项等于 $A$，已出现秩的一项等于 $A-x_i$，均非负。因此 $g_d\ge0$，进而 $x_dg_d\ge0$ 与 $H\ge0$。
+
+设 $A>0$。若 $H=0$，有限个非负项 $x_dg_d$ 都为零；对每个 $x_d>0$ 的秩有 $g_d=0$。再次用非负项之和为零，（353.3）的每个前缀项都为零。缺失秩的一项会等于 $A>0$，不可能为零，所以每个 $i\in[r,d)$ 都属于 $I$，且 $A-x_i=0$。反之，若所有活跃秩的严格前缀都存在并填满，则这些秩的 $g_d=0$；不活跃秩的 $x_d=0$，所以每项 $x_dg_d=0$，得到 $H=0$。最大活跃秩自己的占位不在它的严格前缀内，故可以部分填满。$A=0$ 的情形直接由 $0\le x_d\le A$ 及各定义得到，单独成立而不使用 $A>0$ 的排除步骤。$\square$
+
+**命题 353.4（两种余量互不替代及零容量例）。** 取 $r=3$、$A=1$。对 $I=\{3,5\}$、$x_3=x_5=1$，有 $D=0$、$H=1$。对 $I=\{3,4,5\}$、$x_3=x_4=1$、$x_5=1/2$，有 $D=1/4$、$H=0$。另外，取 $A=0$、$I=\{5\}$、$x_5=0$，则 $H=0$，但 $3,4\notin I$。
+
+**证明。** 第一例每项占位都为 $A$，所以 $D=0$；$g_3=0$、$g_5=2-1=1$，故 $H=1$。第二例 $g_3=g_4=g_5=0$，只有最后一项对 $D$ 有贡献，即 $(1/2)(1-1/2)=1/4$。零容量例中每项乘数和每个前缀缺口都为零，而所取集合确实不含 $3,4$。因此局部饱和不能消除缺失中间整数秩的损失，完整严格前缀也不能消除末端部分占位的余量。$\square$
+
+**命题 353.6（实际纤维不必实现放松后的最大值）。** 对有限 $I\subseteq\{r,r+1,\ldots\}$、$r\ge1$、$A,N\ge0$，定义放松可行集
+
+$$
+\mathcal X=\left\{x\in\mathbb R^I:
+0\le x_d\le A,\ \sum_{d\in I}dx_d\le N\right\}.
+$$
+
+取半开壳 $[2,4)$ 中的实际素数集合 $S=\{2\}$，以及 $r=3$、$A=\log2$、$N=8\log2$。它的秩集为 $I=\{3\}$，实际目标值严格小于同一 $I,A,N$ 下的 $\max_{x\in\mathcal X}\sum_{d\in I}x_d$。
+
+**证明。** 先在 $A>0$ 时定义
+
+$$
+\begin{aligned}
+\mathcal T&=\left\{t\in\mathbb R^I:
+0\le t_d\le1,\ \sum_{d\in I}dt_d\le N/A\right\}.
+\end{aligned}
+$$
+
+则 $t_d=x_d/A$ 与 $x_d=At_d$ 是互逆的可行集对应，且全部可行目标值满足确切集合等式
+
+$$
+\left\{\sum_{d\in I}x_d:x\in\mathcal X\right\}
+=\left\{A\sum_{d\in I}t_d:t\in\mathcal T\right\}.
+\tag{353.5}
+$$
+
+在这个归一化下，使用经典有限分数背包强对偶，成本为 $d$、收益为 $1$、预算为 $N/A$，得到
+
+$$
+\max_{x\in\mathcal X}\sum_{d\in I}x_d
+=A\inf_{\lambda\ge0}
+\left\{\lambda\frac NA+
+\sum_{d\in I}\max(0,1-\lambda d)\right\}.
+\tag{353.6}
+$$
+
+此处优化允许在固定秩集上重新分配占位；实际 Fibonacci 纤维给出的占位仅是其中一个可行点，不要求它达到该最大值。$A=0$ 时只有零占位，最大目标值为零，不使用除以 $A$ 的归一化。
+
+若 $x\in\mathcal X$，则除以正数 $A$ 给 $0\le x_d/A\le1$，且
+
+$$
+\sum_{d\in I}d\frac{x_d}{A}
+=\frac1A\sum_{d\in I}dx_d\le\frac NA,
+\qquad
+A\sum_{d\in I}\frac{x_d}{A}=\sum_{d\in I}x_d.
+$$
+
+这证明（353.5）左侧包含于右侧。反之，若 $t\in\mathcal T$，取 $x_d=At_d$，则 $0\le x_d\le A$，且
+
+$$
+\sum_{d\in I}dx_d=A\sum_{d\in I}dt_d\le N,
+\qquad \sum_{d\in I}x_d=A\sum_{d\in I}t_d.
+$$
+
+这证明反向包含及两个对应互逆。可行集非空、紧，目标连续，所以最大值存在。
+
+为明确这里应用的既有强对偶，记 $M_0=N/A$。对任意可行 $t$ 和价格 $\lambda\ge0$，有
+
+$$
+\sum_{d\in I}t_d
+=\lambda\sum_{d\in I}dt_d+
+\sum_{d\in I}(1-\lambda d)t_d
+\le\lambda M_0+\sum_{d\in I}\max(0,1-\lambda d).
+$$
+
+这个经典上界可达：将非空 $I$ 排为 $d_1<\cdots<d_m$。若 $M_0\ge\sum_i d_i$，全取 $t_i=1$ 并选 $\lambda=0$；若 $0\le M_0<\sum_i d_i$，令 $j$ 为首个满足 $\sum_{i\le j}d_i>M_0$ 的指标，置
+
+$$
+t_i=1\ (i<j),\qquad
+t_j=\frac{M_0-\sum_{i<j}d_i}{d_j},\qquad
+t_i=0\ (i>j),\qquad \lambda=\frac1{d_j}.
+$$
+
+该点可行，且原目标和价格表达式都等于 $j-1+t_j$。空集时两侧为零，$M_0=0$ 也包含在上述构造中。这核对了（353.6）所使用的有限分数背包强对偶及其归一化，而非另一个整数预算强对偶假设。收益成本比 $1/d$ 随秩严格下降，所以所给最优点先填低秩、至多有一个部分占位；稀疏秩集的这种最优点未必满足（353.4）的完整整数前缀条件。实际 Fibonacci 占位由固定素数集合确定，不随这里的价格优化而重分配。
+
+对于所取实际素数集合，$F_1=F_2=1$、$F_3=2$，故 $z(2)=3$，实际 $c_3=\log2$、$x_3=\log2/3$。放松后的点 $x_3=\log2$ 满足盒约束，且预算 $3\log2\le8\log2$，所以最大值为 $\log2>\log2/3$。这里的 $N$ 正是（352.3）在 $Y=b=2$ 时的上界预算；没有将实际纤维等同于可自由选择的最优占位。$\square$
+
+## 354. 素数截止排除低秩后的二十三阶容量与完整尾界
+
+**命题 354.1（早期 Fibonacci 因子的截止结论）。** 每个 $F_d$（$1\le d\le22$）的素因子都不超过 $1597$。因此每个素数 $p>1597$ 满足 $z(p)\ge23$；特别地，每个素数 $p>5040$ 满足同一结论。
+
+**证明。** 正指标的 Fibonacci 数列非减，$F_{17}=1597$，故 $1\le F_d\le1597$（$1\le d\le17$）。其后五项的精确因子分解为
+
+$$
+\begin{aligned}
+F_{18}&=2584=2^3\cdot17\cdot19,\\
+F_{19}&=4181=37\cdot113,\\
+F_{20}&=6765=3\cdot5\cdot11\cdot41,\\
+F_{21}&=10946=2\cdot13\cdot421,\\
+F_{22}&=17711=89\cdot199.
+\end{aligned}
+$$
+
+所列因子均为不超过 $1597$ 的素数。若 $p>1597$ 而 $1\le z(p)<23$，则 $p\mid F_{z(p)}$ 与上述因子结论矛盾，故 $z(p)\ge23$。$p>5040$ 的情形仅用 $5040>1597$ 作一次截止包含。该论证只用正指标 $1,\ldots,22$，不把 $F_0=0$ 的整除关系计入早期因子界。$\square$
+
+**定理 354.2（二十三阶起始秩的全部实数半开壳界）。** 对每个实数 $Y>1597$、$b>1$ 和有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{2025+16bY}-45\right),
+\tag{354.1}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{2025+16bY}-45\right)}{2Y\log Y}.
+\tag{354.2}
+$$
+
+**证明。** 每个 $p\in S$ 满足 $p\ge Y>1597$，所以命题354.1给 $z(p)\ge23$。按同一实际秩合并 $c_d=\sum_{p\in S,z(p)=d}\log p$，定理352.6证明中建立的实际纤维容量与素数预算仍给 $0\le c_d\le d\log2$ 与 $\sum c_d\le2bY\log2$。在定理352.2中取 $r=23$、$A=\log2$、$N=2bY\log2$，得到 $C=45\log2$。舍弃非负 $D$，根号内为
+
+$$
+C^2+8AN=(\log2)^2(2025+16bY),
+$$
+
+因而得到（354.1）。再用与定理352.6完全相同的逐项恒等式和 $p\log p\ge Y\log Y>0$，得到（354.2）。此处没有更换素数权重、纤维质量或预算；改变的只是已由实际截止证明的最小可用整数秩。$\square$
+
+**定义 354.3（二十三阶四倍壳包络）。** 对实数 $y>1597$、$k\in\mathbb N$，定义
+
+$$
+E_{23}(y,k)=
+\frac{\log2\left(\sqrt{2025+64y4^k}-45\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+完整尾 $W(y)$ 仍采用定义352.4的严格截止实际权重 $w_y$，与定理352.8的尾为同一对象。
+
+**定理 354.4（严格截止的完整二十三阶尾界）。** 对每个实数 $y>1597$，有 $E_{23}(y,k)\ge0$、$\sum_{k\ge0}E_{23}(y,k)$ 可和，并且
+
+$$
+W(y)\le\sum_{k\ge0}E_{23}(y,k),
+\qquad
+E_{23}(y,k)\le\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{354.3}
+$$
+
+**证明。** 置 $Y_k=y4^k>1597$。平方比较给
+
+$$
+0\le\sqrt{2025+64Y_k}-45\le8\sqrt{Y_k}.
+$$
+
+与（352.8）相同的计算，使用 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到（354.3）的逐项几何主控，因此包络可和。
+
+左侧是定理352.8证明中已经核对可和性的同一 $w_y$，不是另行选择的占位模型。对任意有限 $T\subseteq\mathbb N$，保留满足素性与 $p>y$ 的活跃子集，按唯一半开壳 $[Y_k,4Y_k)$ 分组，再应用定理354.2的 $b=4$ 情形，得到
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_{23}(y,k)
+\le\sum_{k\ge0}E_{23}(y,k).
+$$
+
+对所有有限 $T$ 取上确界，便得完整尾界。该过程保留 $p>y$ 的严格筛选，并将每个内部边界归入下一壳，因而没有漏项或重复计数。$\square$
+
+**命题 354.5（初始空秩包络的严格比较）。** 对 $u>0$，函数 $c\mapsto\sqrt{c^2+u}-c$ 在 $c\ge0$ 上严格下降。对共同适用域 $y>1597$，令
+
+$$
+E_1(y,k)=\frac{\log2\left(\sqrt{1+64y4^k}-1\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则这是仅用正秩 $z(p)\ge1$ 的四倍壳容量包络，并有
+
+$$
+0<E_{23}(y,k)<E_3(y,k)<E_1(y,k),
+\qquad
+\sum_{k\ge0}E_{23}(y,k)
+<\sum_{k\ge0}E_3(y,k)
+<\sum_{k\ge0}E_1(y,k).
+\tag{354.4}
+$$
+
+三个包络均界定同一 $W(y)$；较小包络不表示实际纤维达到容量最大值，也不识别某个唯一素数截止。
+
+**证明。** 有理化得到
+
+$$
+\sqrt{c^2+u}-c=\frac{u}{\sqrt{c^2+u}+c}.
+$$
+
+分母在 $c\ge0$ 上严格增加，分子为正，故函数严格下降。取 $u=64y4^k>0$，比较 $c=45,5,1$，并乘同一正因子 $\log2/[2y4^k\log(y4^k)]$，得到逐项严格不等式。$E_1$ 的几何主控仍是（352.8）的右侧，故三个级数均可和。各项差非负，且第零项差严格为正，得到级数和的严格比较。
+
+在定理352.2中用 $r=1$，同时保留定理352.6证明中的实际纤维容量和预算，再按四倍壳分组，即得 $W(y)\le\sum_k E_1(y,k)$；另两条尾界分别是定理352.8、354.4。因此比较的三个左侧权重完全相同。命题353.6已经给出实际纤维不实现放松最大值的具体实例。最后，二十三阶结论对每个实数 $y>1597$ 都成立，包含不同截止 $y=1600$、$y=5040$，并不选择其中之一为唯一截止。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 355. Clifford 叶积的组成余数与进位恢复边界
+
+**定义 355.1（有序原树的 Clifford 叶积观察）。** 沿用定义2.1的自由有序二叉树 $\mathcal T$、定义3.1的替换 $\rho$ 及规范轨道 $T_j=\rho^j(\alpha)$，不改变原树的相等关系。取实向量空间 $V=\mathbb R^2$，在其上使用定理22.1的二次型
+
+$$
+Q(a,b)=a^2+ab-b^2.
+$$
+
+令 $C=\operatorname{Cl}(V,Q)$ 为采用 $v^2=Q(v)1$ 约定的实 Clifford 代数，$A,B$ 分别为 $(1,0),(0,1)$ 的典范像。按定理2.2的结构解释定义
+
+$$
+E(\alpha)=A,\qquad E(\beta)=B,\qquad
+E(\langle s,t\rangle)=E(s)E(t),\qquad X_j=E(T_j).
+\tag{355.1}
+$$
+
+这里每个叶像按原树的叶次序相乘，乘法的结合性使读数不记录括号；代数关系还可使不同叶序列具有相同读数。因此 $E$ 是观察映射，其像中的相等不作为原树的相等。Clifford 构造、平方约定、极化关系与结合乘法使用 [Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1–2.3](https://arxiv.org/abs/0907.5356v1) 的标准定义；本定义的 $Q$、叶序及替换取自本卷 §§2、3、22。
+
+**定义 355.2（同一规范来源的余数、下一次进位与高位）。** 沿用定义3.3及定理3.4，记
+
+$$
+z_j=c(T_j)=M^j\binom10,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad j\ge0.
+\tag{355.2}
+$$
+
+对正整数 $m$，$[w]_m$ 表示整数向量 $w$ 的逐坐标标准代表，坐标取值于 $\{0,\ldots,m-1\}$；$w\bmod m$ 表示其剩余类。对任意正整数 $d,e$，定义
+
+$$
+r_j=[z_j]_d,\qquad
+\kappa_j=\left\lfloor\frac{r_{j,0}+r_{j,1}}d\right\rfloor,
+\qquad
+K_{d,e}(j)=(0,\kappa_j)\bmod e,
+\tag{355.3}
+$$
+
+$$
+H_{d,e}(j)=\frac{z_j-r_j}{d}\bmod e,\qquad
+L_{d,e}(j)=\bigl(r_j,H_{d,e}(j)\bigr).
+\tag{355.4}
+$$
+
+$K_{d,e}(j)$ 是定义26.1中作用于该来源低位的 $c_M(r_j)$，即更新 $z_j\mapsto Mz_j$ 所需的下一次进位；$H_{d,e}(j)$ 是当前来源本身的高位，二者不是同一个目标。这里的分解使用定义25.1的标准数字截面，并逐坐标应用定义26.1的运输式：
+
+$$
+L_{d,e}(j+1)
+=\bigl([Mr_j]_d,\,MH_{d,e}(j)+K_{d,e}(j)\bigr).
+\tag{355.5}
+$$
+
+令 $\mathcal X=\{X_j:j\ge0\}\subset C$。对任意集合 $Y$ 及目标 $g:\mathbb N\to Y$，称 $g$ 通过规范叶积因子化，是指存在函数 $\bar g:\mathcal X\to Y$，使所有 $j\ge0$ 同时满足 $g(j)=\bar g(X_j)$；该函数不能另读 $j$、$T_j$ 或 $z_j$。余数环模 $1$ 按单元素集合处理。
+
+**定理 355.3（规范叶积的尖锐恢复边界与原树替换障碍）。** 对定义355.1–355.2的同一观察、同一规范来源族及所有非负整数 $j$，有以下结论。
+
+1. 对每个整数 $D\ge1$，存在
+
+   $$
+   f_D:\mathcal X\longrightarrow(\mathbb Z/D\mathbb Z)^2,
+   \qquad f_D(X_j)=z_j\bmod D\quad(j\ge0)
+   $$
+
+   当且仅当 $D\mid4$。
+
+2. 对每个整数 $d\ge1$ 及 $e\ge2$，存在
+
+   $$
+   k_{d,e}:\mathcal X\longrightarrow(\mathbb Z/e\mathbb Z)^2,
+   \qquad k_{d,e}(X_j)=K_{d,e}(j)\quad(j\ge0)
+   $$
+
+   当且仅当 $d\mid4$。若 $e=1$，则对每个 $d\ge1$，模 $e$ 的进位输出恒为零并能因子化。若 $d=1$，则低位 $r_j=(0,0)$，整数进位 $\kappa_j=0$，故对所有 $e\ge1$ 均有 $K_{1,e}(j)=0$。
+
+3. 对每个整数 $d,e\ge1$，完整低高位目标 $L_{d,e}$ 通过 $X_j$ 因子化，当且仅当 $de\mid4$。特别地，在 $d\mid4$ 时，当前高位 $H_{d,e}$ 能因子化当且仅当 $de\mid4$；下一次进位能恢复并不保证当前高位能恢复。退化情形 $d=1$ 的完整分解恢复条件是 $e\mid4$。
+
+4. 同一规范轨道存在碰撞
+
+   $$
+   X_0=X_6=A,\qquad z_0=(1,0),\qquad z_6=(5,8).
+   \tag{355.6}
+   $$
+
+   其旧数量读数 $q_{2,3}(a,b)=2a+3b$ 分别为 $2,34$。在 $d=3$ 时，两个低位分别为 $(1,0),(2,2)$，所以对每个 $e\ge2$，下一次进位分别为 $(0,0),(0,1)$，在模 $e$ 下仍不同。在 $d=4,e=2$ 时，这两个来源的低位同为 $(1,0)$，下一次进位同为零，但当前高位分别为 $(0,0),(1,0)$。
+
+5. 在规范像 $\mathcal X$ 上，后继 $X_j\mapsto X_{j+1}$ 是良定义的；在全部原树像 $E(\mathcal T)$ 上，却不存在函数 $R:E(\mathcal T)\to C$ 使
+
+   $$
+   R(E(t))=E(\rho(t))\qquad(t\in\mathcal T).
+   \tag{355.7}
+   $$
+
+   一个全树域反例是
+
+   $$
+   t_2=\langle\alpha,\alpha\rangle,\qquad
+   t_4=\langle t_2,t_2\rangle:
+   \qquad E(t_2)=E(t_4)=1,
+   \quad E(\rho(t_2))=-1,\quad E(\rho(t_4))=1.
+   \tag{355.8}
+   $$
+
+   此外，$E$ 不能恢复全部原树的括号结构，即使组成和叶序已固定。
+
+本定理的量词覆盖完整无限轨道。若只给定有限的来源子集，以上整除条件仍是充分条件，但不再一概必要；例如限制到 $0\le j\le5$ 时，任意目标都能通过这些叶积因子化。各项只针对这里声明的 $E$ 及目标，不断言所有几何代数编码都有相同障碍。
+
+数学引文：Clifford 的标准构造与关系使用定义355.1所引的 Lundholm–Svensson，§§2.1–2.3；本条的模数分类、规范进位必要性及来源碰撞是由本卷 §§2、3、18、22、25、26 的定义推导的仓内结果。相关文献 [Flaut，*A Clifford algebra associated to generalized Fibonacci quaternions*，DOI:10.1186/1687-1847-2014-279](https://doi.org/10.1186/1687-1847-2014-279) 研究广义 Fibonacci 四元数关联的 Clifford 构造，属于不同对象，不能作为本条叶积恢复分类的依据。本条的全球原创性未确立。
+
+证明。先在恢复边界的推导内部确定 $X_j$ 的精确观察纤维。由标准平方约定和 $Q(1,1)=1$，
+
+$$
+A^2=1,\qquad B^2=-1,\qquad
+AB+BA=(A+B)^2-A^2-B^2=1.
+\tag{355.9}
+$$
+
+定理3.2保持原树的左、右子树次序，因而给出
+
+$$
+X_{j+2}=X_{j+1}X_j\qquad(j\ge0).
+\tag{355.10}
+$$
+
+按此乘法次序计算：$X_2=BA$；$X_3=BAB=A+B$；由 $ABA=A-B$ 得
+$X_4=(A+B)BA=-B$；再得 $X_5=-B(A+B)=1-BA=AB$、
+$X_6=(AB)(-B)=A$、$X_7=A(AB)=B$。于是
+
+$$
+(X_0,\ldots,X_7)=(A,B,BA,A+B,-B,AB,A,B).
+\tag{355.11}
+$$
+
+$(X_6,X_7)=(X_0,X_1)$ 及确定性的二项递推（355.10）给出 $X_{j+6}=X_j$。还须排除六项内部的额外碰撞，不能只凭递推把周期当成相等关系。为此，在 $M_2(\mathbb R)$ 中取
+
+$$
+\widehat A=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\widehat B=\begin{pmatrix}1/2&1\\-5/4&-1/2\end{pmatrix}.
+\tag{355.12}
+$$
+
+直接相乘有 $\widehat A^2=I$、$\widehat B^2=-I$、
+$\widehat A\widehat B+\widehat B\widehat A=I$。因此每个实数 $a,b$ 满足
+$(a\widehat A+b\widehat B)^2=Q(a,b)I$，由 Clifford 泛性质得到代数同态 $C\to M_2(\mathbb R)$。若
+
+$$
+sI+t\widehat A+u\widehat B+v\widehat A\widehat B=0,
+$$
+
+右上和左下元素分别给 $u+v=0$、$-5u/4+5v/4=0$，故 $u=v=0$；两个对角元素再给 $s+t=s-t=0$，故 $s=t=0$。所以 $1,A,B,AB$ 线性无关。用 $BA=1-AB$，六项的系数向量依次为
+
+$$
+(0,1,0,0),\ (0,0,1,0),\ (1,0,0,-1),\
+(0,1,1,0),\ (0,0,-1,0),\ (0,0,0,1),
+$$
+
+彼此不同。结合（355.11）和六周期，得到精确等价
+
+$$
+X_j=X_\ell\quad\Longleftrightarrow\quad j\equiv\ell\pmod6
+\qquad(j,\ell\ge0).
+\tag{355.13}
+$$
+
+因此任意目标 $g$ 能因子化当且仅当它满足 $g(j+6)=g(j)$：必要性由同叶积给同输出；充分性是在六个不同值 $X_0,\ldots,X_5$ 上规定 $\bar g(X_i)=g(i)$。这也证明规范叶积后继良定义，且在六个来源组成的有限片段上没有因子化限制。
+
+第一项中，矩阵计算给出
+
+$$
+M^6=\begin{pmatrix}5&8\\8&13\end{pmatrix},\qquad
+M^6-I=\begin{pmatrix}4&8\\8&12\end{pmatrix}.
+\tag{355.14}
+$$
+
+若 $z_j\bmod D$ 六周期，则在 $j=0,1$ 处，
+$(M^6-I)z_j\equiv0\pmod D$。由于 $z_0=(1,0)$、$z_1=(0,1)$ 是整数标准基，这等价于 $M^6-I$ 的每个元素均被 $D$ 整除；这些元素的最大公因数为 $4$，故 $D\mid4$。反向若 $D\mid4$，则（355.14）给 $M^6\equiv I\pmod D$，从而所有 $z_j\bmod D$ 六周期；再用（355.13）即得第一项，包括单元素输出的 $D=1$。
+
+第二项先处理退化参数。$d=1$ 时标准低位恒为零，故整数进位为零；$e=1$ 时输出剩余类恒为零，无须整数进位本身为零。以下设 $d\ge2,e\ge2$。由 $0\le r_{j,0},r_{j,1}<d$，有
+
+$$
+\kappa_j\in\{0,1\}.
+\tag{355.15}
+$$
+
+模 $e$ 在这个二元素集合上是单射，所以 $K_{d,e}$ 六周期当且仅当整数序列 $\kappa_j$ 六周期。充分性是第一项在 $D=d$ 的直接应用：若 $d\mid4$，则 $r_j$ 六周期，（355.3）给整数进位六周期。
+
+为证必要性，设 $\kappa_{j+6}=\kappa_j$ 对所有 $j\ge0$ 成立。沿用 §18 的 $F_0=0,F_1=1$ 及 $F_{j+2}=F_{j+1}+F_j$。由（355.2）归纳得到 $z_{j+1}=(F_j,F_{j+1})$。置
+
+$$
+u_j=[F_j]_d\in\{0,\ldots,d-1\}\qquad(j\ge0).
+$$
+
+实际低位相加的整数关系为
+
+$$
+u_{j+2}=u_{j+1}+u_j-d\kappa_{j+1}.
+\tag{355.16}
+$$
+
+这是同一来源的标准代表关系，不能用无来源的独立进位替换。定义整数差分
+
+$$
+\Delta_j=u_{j+6}-u_j.
+$$
+
+将（355.16）的 $j+6$ 式减去 $j$ 式，六周期进位项恰好消去，故
+
+$$
+\Delta_{j+2}=\Delta_{j+1}+\Delta_j,\qquad
+|\Delta_j|\le d-1\quad(j\ge0).
+\tag{355.17}
+$$
+
+以下有界性论证适用于每个有限正整数 $d$，不使用模数枚举。复用 §18 的两个根
+$\varphi=(1+\sqrt5)/2$、$\psi=(1-\sqrt5)/2$。由两根不同，存在唯一实系数 $a,b$ 使
+$\Delta_0=a+b$、$\Delta_1=a\varphi+b\psi$；递推归纳给
+
+$$
+\Delta_j=a\varphi^j+b\psi^j\qquad(j\ge0).
+\tag{355.18}
+$$
+
+因 $\varphi>1$、$|\psi|<1$，将（355.18）除以 $\varphi^j$，有界性使左侧趋零，右侧趋于 $a$，故 $a=0$。于是 $\Delta_j=b\psi^j\to0$。每个 $\Delta_j$ 是整数，所以存在 $N$ 使所有 $j\ge N$ 都有 $\Delta_j=0$。最后由反向递推
+$\Delta_j=\Delta_{j+2}-\Delta_{j+1}$，从相邻的两个零逐次回推，得到所有 $j\ge0$ 都有 $\Delta_j=0$。特别地，
+
+$$
+F_6\equiv F_0\pmod d,\qquad F_7\equiv F_1\pmod d.
+$$
+
+$F_6=8,F_7=13$ 给 $d\mid8$、$d\mid12$，因而 $d\mid\gcd(8,12)=4$。这证明第二项的全模数必要性。该推导需要无限序列的有界性，不能从有限来源检查推出同一必要条件。
+
+第三项逐坐标使用定义25.1的集合双射
+
+$$
+(\mathbb Z/de\mathbb Z)^2
+\longleftrightarrow
+\{0,\ldots,d-1\}^2\times(\mathbb Z/e\mathbb Z)^2,
+\qquad
+w\longmapsto\left([w]_d,\frac{w-[w]_d}{d}\bmod e\right).
+\tag{355.19}
+$$
+
+它的逆映射是 $(r,h)\mapsto r+dh\bmod de$，而 $z_j\bmod de$ 对应的恰是 $L_{d,e}(j)$。故完整分解能因子化当且仅当组成模 $de$ 能因子化，第一项即给 $de\mid4$。若 $d\mid4$，低位已能因子化，于是高位能因子化等价于完整分解能因子化；这给出第三项的高位结论及 $d=1$ 的条件。
+
+第四项由（355.11）、（355.14）取第一列得到（355.6），旧数量读数为 $2\cdot1+3\cdot0=2$ 及 $2\cdot5+3\cdot8=34$。在 $d=3$ 时，标准低位为 $(1,0)$、$(2,2)$，相应进位第二坐标是
+$\lfloor1/3\rfloor=0$、$\lfloor4/3\rfloor=1$；由 $e\ge2$ 的单射性知输出仍不同。在 $d=4,e=2$ 时，两个低位均为 $(1,0)$，进位均为零，而
+
+$$
+\frac{z_0-(1,0)}4=(0,0),\qquad
+\frac{z_6-(1,0)}4=(1,2)\equiv(1,0)\pmod2.
+$$
+
+所以相同叶积与可恢复进位仍不能在此模数下恢复高位。这些碰撞均来自实际的 $T_0,T_6$，没有改换来源。
+
+第五项在全部原树域内使用（355.9）和原替换：
+
+$$
+E(t_2)=A^2=1,\qquad E(t_4)=(A^2)^2=1,
+$$
+
+$$
+E(\rho(t_2))=B^2=-1,\qquad
+E(\rho(t_4))=(B^2)^2=1.
+$$
+
+矩阵表示（355.12）中 $-I\ne I$，故 $-1\ne1$；任何满足（355.7）的函数都须同时给 $R(1)=-1$ 和 $R(1)=1$，矛盾。$t_2,t_4$ 是自由语法中的不同树，这个反例不把二者当作同一个来源。最后，
+
+$$
+p=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad
+q=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+$$
+
+具有相同组成 $(3,0)$ 和相同叶序，却按定义2.1有 $p\ne q$；结合乘法给 $E(p)=E(q)=A$。因此在全部原树上不存在从 $E$ 恢复括号结构的函数。规范轨道的模组成与进位恢复、完整低高位恢复以及全部原树的结构恢复是不同的任务；上述各项已分别在它们的声明域内证成。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 356. 连续 Clifford 叶积窗口的尖锐闭合与历史纤维
+
+**定义 356.1（连续叶积窗口）。** 沿用定义 2.1、定义 3.1、定义 355.1 的自由有序二叉树 $\mathcal T$、替换 $\rho$、观察 $E$ 及 Clifford 代数 $C$。对整数 $m\ge1$ 定义
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr)\in C^m,
+\qquad
+W_m(\mathcal T)=\{W_m(t):t\in\mathcal T\}.
+$$
+
+窗口的 $m$ 个坐标必须来自同一棵实际原树 $t$。称全原树上的长度 $m$ 窗口闭合，是指存在唯一的函数
+
+$$
+F_m:W_m(\mathcal T)\longrightarrow W_m(\mathcal T),
+\qquad
+F_m(W_m(t))=W_m(\rho(t))\quad(t\in\mathcal T).
+$$
+
+这里的定义域和值域都是实际窗口像，不把 $C^m$ 中任意代数元组当作可实现的窗口。
+
+**引理 356.2（等级对合与共轭构成的代数自同构）。** 令 $\gamma$ 为 Clifford 代数的标准保持乘法次序的等级对合：$\gamma(1)=1$，$\gamma(v)=-v$ 对每个 $v\in V$ 成立，并按乘法延拓，满足 $\gamma^2=\operatorname{id}_C$。这里的等级对合使用 Lundholm–Svensson，§2.3 的标准运算，而非反转乘法次序的反对合。令
+
+$$
+J(x)=B\,\gamma(x)\,B^{-1}.
+$$
+
+则 $B^{-1}=-B$，$J$ 是保单位的代数自同构，且
+
+$$
+J(A)=A+B,\qquad J(B)=-B,\qquad J^2=\operatorname{id}_C.
+$$
+
+在向量子空间 $V=\mathbb RA\oplus\mathbb RB$ 上，$J$ 的坐标为
+
+$$
+J(aA+bB)=aA+(a-b)B,
+$$
+
+并保持二次型 $Q$：
+
+$$
+Q(a,a-b)=a^2+a(a-b)-(a-b)^2=a^2+ab-b^2=Q(a,b).
+$$
+
+更一般地，按 $1,A,B,AB$ 展开时有
+
+$$
+J(s+tA+uB+vAB)=(s+v)+tA+(t-u)B-vAB.
+\tag{356.1}
+$$
+
+**证明。** 由 $B^2=-1$，有 $B(-B)=(-B)B=1$，所以 $B^{-1}=-B$。等级对合是保单位的乘法自同构，内共轭 $x\mapsto BxB^{-1}$ 也是保单位的代数自同构，二者复合即为 $J$。
+
+由 $\gamma(A)=-A$、$\gamma(B)=-B$ 及 $B^{-1}=-B$，并用 $AB+BA=1$，得到
+
+$$
+J(A)=B(-A)(-B)=BAB=A+B,
+\qquad
+J(B)=B(-B)(-B)=-B.
+$$
+
+对任意 $x\in C$，利用 $\gamma(B)=-B$、$\gamma(B^{-1})=B$ 可得
+
+$$
+\begin{aligned}
+J^2(x)
+ &=B\,\gamma\bigl(B\gamma(x)B^{-1}\bigr)B^{-1}\\
+ &=B\,\gamma(B)\,x\,\gamma(B^{-1})B^{-1}\\
+ &=B(-B)xB(-B)=x.
+\end{aligned}
+$$
+
+又有 $J(AB)=J(A)J(B)=(A+B)(-B)=1-AB$。将 $J$ 作用于 $s+tA+uB+vAB$ 并收集四个基项，得到（356.1）。向量坐标公式和 $Q$ 的保持性由 $J(A),J(B)$ 的两式直接计算。这里的 $J$ 是 Clifford 代数上的自同构，不是组成矩阵 $M^3$，二者的作用域与含义不同。这里使用的 $1,A,B,AB$ 线性无关性沿用 §355 的矩阵表示；它也保证后文比较的系数确实给出不等元。$\square$
+
+**引理 356.3（全部原树的三步关系）。** 对任意 $t\in\mathcal T$ 及整数 $n\ge0$，有
+
+$$
+E\bigl(\rho^{n+3}(t)\bigr)=J\bigl(E(\rho^n(t))\bigr).
+\tag{356.2}
+$$
+
+**证明。** 记 §355 中的规范叶积为 $X_j=E(T_j)$。由 $AB+BA=1$，
+
+$$
+X_3=BAB=A+B,
+\qquad
+X_4=(A+B)BA=-B.
+$$
+
+这正好分别等于 $J(A)$ 和 $J(B)$。先证 $n=0$ 的情形。对 $t$ 作自由树结构归纳：在 $\alpha$、$\beta$ 两个原子处，上式就是 $X_3=J(A)$、$X_4=J(B)$；若 $t=\langle s,u\rangle$，则 $\rho$ 保持有序构造且 $E$ 保持乘法次序，于是由归纳假设
+
+$$
+\begin{aligned}
+E(\rho^3\langle s,u\rangle)
+ &=E\bigl(\langle\rho^3s,\rho^3u\rangle\bigr)\\
+ &=E(\rho^3s)E(\rho^3u)\\
+ &=J(E(s))J(E(u))\\
+ &=J(E(s)E(u))
+ =J(E(\langle s,u\rangle)).
+\end{aligned}
+$$
+
+对任意 $n$，把同一结论应用于实际原树 $\rho^n(t)$ 即得（356.2）。规范二项递推只用于原子处的 $X_3,X_4$；全原树上的关系由有序构造与 $J$ 的乘法性通过结构归纳得到。$\square$
+
+**定理 356.4（全原树连续窗口的尖锐闭合）。** 对每个整数 $m\ge1$，长度 $m$ 窗口在全原树 $\mathcal T$ 上闭合，当且仅当 $m\ge3$。当 $m\ge3$ 时，闭合后继唯一地由
+
+$$
+F_m(x_0,\ldots,x_{m-1})
+ =\bigl(x_1,\ldots,x_{m-1},J(x_{m-3})\bigr)
+\tag{356.3}
+$$
+
+给出。
+
+**证明。** 设 $m\ge3$，取任意实际代表 $W_m(t)=(x_0,\ldots,x_{m-1})$。前 $m-1$ 个坐标显然是 $E(\rho t),\ldots,E(\rho^{m-1}t)$；由（356.2）在 $n=m-3$ 处
+
+$$
+E(\rho^m t)=J\bigl(E(\rho^{m-3}t)\bigr)=J(x_{m-3}).
+$$
+
+故（356.3）满足 $F_m(W_m(t))=W_m(\rho t)$，并且所得元组确实属于 $W_m(\mathcal T)$。若一个实际窗口有两个代表 $t,u$，它们给出相同的 $x_i$，右侧（356.3）只依赖这 $m$ 个坐标，因而给出同一个输出；所以定义与代表无关。任何满足后继条件的函数都必须在每个实际窗口上取值为 $W_m(\rho t)$，故该函数唯一。
+
+下面排除较短窗口。令
+
+$$
+ t_2=\langle\alpha,\alpha\rangle,
+ \qquad
+ t_4=\langle t_2,t_2\rangle.
+$$
+
+则 $E(t_2)=A^2=1$、$E(t_4)=(A^2)^2=1$，而
+
+$$
+E(\rho t_2)=B^2=-1,
+\qquad
+E(\rho t_4)=(B^2)^2=1.
+$$
+
+因此 $W_1(t_2)=W_1(t_4)$ 而下一项不同；由 §355 的线性无关性（或其矩阵表示中的 $-I\ne I$），$1\ne-1$，所以 $m=1$ 不闭合。
+
+对 $m=2$，令
+
+$$
+ p=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+ \qquad
+ q=\langle\beta,\langle\alpha,\alpha\rangle\rangle,
+ \qquad S=BA.
+$$
+
+$p,q$ 都有组成 $(2,1)$，且都是同一右结合树形；直接按有序叶次序相乘，得到
+
+$$
+E(p)=A(AB)=B,\qquad E(q)=B(AA)=B,
+\qquad
+E(\rho p)=B(BS)=-S,\qquad E(\rho q)=S(BB)=-S.
+$$
+
+另一方面，由 $S^2=S+1$、
+
+$$
+S(A+B)=A+2B,
+\qquad
+(A+B)S=-B,
+\tag{356.4}
+$$
+
+有
+
+$$
+E(\rho^2p)=S^2(A+B)=2A+3B,
+\qquad
+E(\rho^2q)=(A+B)S^2=A.
+\tag{356.5}
+$$
+
+这些等式的有序乘法展开为
+
+$$
+\begin{aligned}
+S^2&=B(AB)A=B(1-BA)A=BA-B^2A^2=S+1,\\
+S(A+B)&=BA^2+BAB=B+(A+B)=A+2B,\\
+(A+B)S&=ABA+B^2A=(A-B)-A=-B.
+\end{aligned}
+$$
+
+因为 $\rho^2(\alpha)=T_2$、$\rho^2(\beta)=T_3$，$p,q$ 的第三项分别是 $S(S(A+B))$ 和 $(A+B)(SS)$。所以
+
+$$
+\begin{aligned}
+S^2(A+B)&=(S+1)(A+B)=(A+2B)+(A+B)=2A+3B,\\
+(A+B)S^2&=(A+B)(S+1)=-B+(A+B)=A.
+\end{aligned}
+$$
+
+由 $1,A,B,AB$ 线性无关，$2A+3B\ne A$。故两棵实际树满足
+
+$$
+W_2(p)=W_2(q)=(B,-BA),\qquad
+W_2(\rho p)=(-BA,2A+3B)\ne(-BA,A)=W_2(\rho q),
+$$
+
+$m=2$ 也不闭合。综上，恰当条件是 $m\ge3$。$\square$
+
+**推论 356.5（六周期后继与实际像上的逆）。** 对每个 $(x,y,z)\in W_3(\mathcal T)$，有
+
+$$
+F_3(x,y,z)=(y,z,Jx),
+\qquad
+F_3^{-1}(x,y,z)=(Jz,x,y).
+\tag{356.6}
+$$
+
+逆函数仍把实际像送回实际像，且在该实际像上 $F_3^6=\operatorname{id}$。对实际窗口，$F_3^5(W_3(t))=W_3(\rho^5t)$，所以逆的实际像性也由实际原树代表得到。
+
+**证明。** （356.3）在 $m=3$ 时就是第一式。由 $J^2=\operatorname{id}$，
+
+$$
+F_3^2(x,y,z)=(z,Jx,Jy),
+\quad
+F_3^3(x,y,z)=(Jx,Jy,Jz),
+$$
+
+继续迭代得 $F_3^6(x,y,z)=(x,y,z)$。直接组合（356.6）两式也得到左右逆。另一方面，每次应用 $F_3$ 都把 $W_3(t)$ 送到实际窗口 $W_3(\rho t)$；故 $F_3^5(W_3(t))=W_3(\rho^5t)$，逆确实在 $W_3(\mathcal T)$ 内。$\square$
+
+**推论 356.6（完整历史的六周期与最短充分窗口）。** 对任意实际原树 $t$，令 $x_r=E(\rho^r t)$（$r=0,1,2$）。对整数 $n=3q+r$，其中 $q\ge0$ 且 $r\in\{0,1,2\}$，有
+
+$$
+E(\rho^n t)=J^q(x_r).
+\tag{356.7}
+$$
+
+因而
+
+$$
+W_6(t)=(x_0,x_1,x_2,Jx_0,Jx_1,Jx_2),
+$$
+
+且 $W_3$、$W_6$ 与完整历史
+
+$$
+\mathscr H(t)=\bigl(E(t),E(\rho t),E(\rho^2t),\ldots\bigr)
+$$
+
+在 $\mathcal T$ 上具有相同的纤维，即任意 $t,u\in\mathcal T$ 满足 $W_3(t)=W_3(u)$、$W_6(t)=W_6(u)$、$\mathscr H(t)=\mathscr H(u)$ 三者等价。每棵树历史的最小正周期存在且整除 $6$，并不要求它恰好等于 $6$。
+
+**证明。** 对 $q$ 作归纳。$q=0$ 时是定义；若结论对 $q$ 成立，则由（356.2）
+
+$$
+E(\rho^{3(q+1)+r}t)=J\bigl(E(\rho^{3q+r}t)\bigr)=J^{q+1}(x_r).
+$$
+
+因为 $J^2=\operatorname{id}$，右侧只依赖 $q$ 模 $2$，故 $E(\rho^{n+6}t)=E(\rho^nt)$。
+
+若 $W_3(t)=W_3(u)$，式（356.7）逐项给出 $\mathscr H(t)=\mathscr H(u)$，同时 $W_6(t)=W_6(u)$。反向地，$W_6$ 的前三个坐标就是 $W_3$，而完整历史相等也当然蕴含前三项相等；三种观察的纤维因此相同。最小正周期存在，因为 $6$ 已经是周期；将 $6$ 除以最小正周期，若所得余数为正，则它也必是周期，最小性迫使该余数为零。$\square$
+
+**定理 356.7（历史纤维不能恢复组成与指定来源关系）。** 完整 Clifford 叶积历史在全部原树上不能恢复组成；即使限制到规范轨道，也不能恢复定义 355.2 在 $d=3,e\ge2$ 时的下一次进位或 $d=4,e=2$ 时的当前高位。更具体地，对任意 $t\in\mathcal T$ 及整数 $k\ge0$，令
+
+$$
+ t_k=\rho^{6k}(t),
+ \qquad c(t)=(a,b)^{\mathsf T}.
+$$
+
+则 $\mathscr H(t_k)=\mathscr H(t)$，而
+
+$$
+ c(t_k)=M^{6k}c(t),
+ \qquad
+M^6-I=
+\begin{pmatrix}4&8\\8&12\end{pmatrix}.
+\tag{356.8}
+$$
+
+本原树域不含空树，因此 $c(t)$ 的坐标非负且非零；$k=0$ 时 $t_0=t$，而对每个 $k\ge1$，$c(t_k)-c(t)$ 的两个坐标都严格为正。特别地，$T_0=\alpha$ 与 $T_6$ 具有同一完整历史而组成分别为 $(1,0)$ 与 $(5,8)$。
+
+**证明。** 由推论 356.6，叶积历史六周期，所以
+
+$$
+E(\rho^n t_k)=E(\rho^{n+6k}t)=E(\rho^nt)
+$$
+
+对每个 $n\ge0$ 成立。组成的等式来自定理 3.4。直接相乘得到（356.8）；于是
+
+$$
+(M^6-I)(a,b)^{\mathsf T}=(4a+8b,\,8a+12b)^{\mathsf T}.
+$$
+
+对非负且非零的 $(a,b)$，两坐标均为正。对每个 $i\ge0$，$M^{6i}c(t)$ 仍是非负非零向量，故
+
+$$
+c(t_{i+1})-c(t_i)=(M^6-I)M^{6i}c(t)
+$$
+
+的两坐标均为正。对 $i=0,\ldots,k-1$ 求和，得到所有 $k\ge1$ 的严格增长。取 $t=T_0$、$k=1$ 即得到 $c(T_0)=(1,0)$、$c(T_6)=(5,8)$。
+
+同一对 $T_0,T_6$ 还给出 §355 的两个具体目标碰撞。模 $d=3$ 时，低位分别是 $(1,0)$、$(2,2)$，所以整数进位分别为 $0$、$1$；因此对每个 $e\ge2$，$K_{3,e}$ 分别为 $(0,0)$ 和 $(0,1)$。$e=1$ 时目标值域是单元素集合，进位输出恒为零，本反例不构成障碍。模 $d=4,e=2$ 时，低位都为 $(1,0)$ 且进位都为零，但当前高位分别是
+
+$$
+\frac{(1,0)-(1,0)}4\equiv(0,0)\pmod2,
+\qquad
+\frac{(5,8)-(1,0)}4=(1,2)\equiv(1,0)\pmod2.
+$$
+
+因此不存在函数
+
+$$
+R_c:\mathscr H(\mathcal T)\longrightarrow\mathbb N^2,
+\qquad R_c(\mathscr H(t))=c(t)\quad(t\in\mathcal T).
+$$
+
+对每个整数 $e\ge2$，在规范历史像 $\{\mathscr H(T_j):j\ge0\}$ 上，也不存在分别满足
+
+$$
+R_{K,e}(\mathscr H(T_j))=K_{3,e}(j),
+\qquad
+R_H(\mathscr H(T_j))=H_{4,2}(j)\quad(j\ge0)
+$$
+
+的函数 $R_{K,e}$ 和 $R_H$，其值域分别是 $(\mathbb Z/e\mathbb Z)^2$ 和 $(\mathbb Z/2\mathbb Z)^2$：同一输入 $\mathscr H(T_0)=\mathscr H(T_6)$ 不能给出两种不同目标。任意有限窗口只是完整历史的前缀，故增加任何有限观察长度也不能恢复这些特定目标。该结论复用 §355 的实际来源反例，不重新进行其规范模数分类。$\square$
+
+**命题 356.8（固定组成下的叶序与固定叶序下的括号仍不可恢复）。** 令
+
+$$
+ s=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+ \qquad
+ u=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+则 $c(s)=c(u)=(2,2)$，且
+
+$$
+W_3(s)=W_3(u)=(-1,-S^2,S^2).
+\tag{356.9}
+$$
+
+因此二者的完整历史相同，而 $s\ne u$ 仍是自由有序树中的不同叶序。另令
+
+$$
+ p_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad
+ q_3=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+它们具有同一叶序和组成 $(3,0)$，但括号不同；对每个 $n\ge0$，
+
+$$
+E(\rho^n p_3)=X_n^3=E(\rho^n q_3).
+\tag{356.10}
+$$
+
+**证明。** 记 $X_n=E(T_n)$。对 $s$，前三个读数依次为
+
+$$
+A^2B^2=-1,
+\qquad
+B^2(BA)^2=-S^2,
+\qquad
+(BA)^2(A+B)^2=S^2,
+$$
+
+其中 $(A+B)^2=1$；对 $u$ 只是交换两个平方因子的次序，三式分别仍为 $-1,-S^2,S^2$。因此（356.9）成立，完整历史相同则由推论 356.6 得到。$s\ne u$ 是因为自由构造保留左右次序。
+
+对 $p_3,q_3$，替换 $\rho^n$ 保持两种括号而把三个 $\alpha$ 叶子都解释为 $T_n$，故两式的观察分别为 $(X_nX_n)X_n$ 与 $X_n(X_nX_n)$；结合律使它们都等于 $X_n^3$。原始语法不采用结合律。两棵替换后树的左子树分别是 $\langle T_n,T_n\rangle$ 和 $T_n$；前者叶数是后者的两倍，而 $T_n$ 的叶数为正，所以对每个 $n$ 两棵实际树仍不同。$\square$
+
+**推论 356.9（规范轨道与全原树范围的区别）。** 在规范轨道
+
+$$
+\mathcal X=\{X_j:j\ge0\}
+$$
+
+上，存在唯一函数 $F_{\mathcal X}:\mathcal X\to\mathcal X$ 满足
+
+$$
+F_{\mathcal X}(X_j)=X_{j+1}\quad(j\ge0).
+$$
+
+因而单次叶积已闭合；最小长度三只针对全原树的连续窗口。
+
+**证明。** §355 已证明 $X_j=X_\ell$ 当且仅当 $j\equiv\ell\pmod6$。所以相同规范叶积的后继仍相同，可以在六个不同值上规定 $F_{\mathcal X}(X_r)=X_{r+1}$（$r=0,\ldots,5$），其中 $X_6=X_0$；这也给出值域在 $\mathcal X$ 内及唯一性。定理 356.4 的两个较短窗口反例位于全原树域，其结论与本规范轨道的单次闭合兼容。$\square$
+
+这两个结论只涉及同一实际树产生的初始窗口；窗口长度 $m$ 不等同于任意编码的维数、状态总数、比特成本或实测加速。连续窗口的闭合只说明存在代数后继函数，不说明该函数恢复组成、来源身份、原始括号或叶序。
+
+数学引文与边界：等级对合、Clifford 泛性质及乘法关系沿用 Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，[arXiv:0907.5356v1](https://arxiv.org/abs/0907.5356v1)，§§2.1、2.3，以及 §355 的具体实例。原替换接口、三步关系、全原树最小窗口、历史纤维及其不可恢复见证是本卷对既有定义的综合推导；全球原创性未确立。本节没有 Lean 内核证明，纸面证明、精确有限代数计算与内核验证不混同。
 
 ## 追加锚（本行以下为增补区）

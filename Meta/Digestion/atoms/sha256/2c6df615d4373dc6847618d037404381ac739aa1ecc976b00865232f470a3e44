@@ -1,0 +1,18 @@
+### 定理 47.3（固定原图的有限碰撞—实际套索边界）
+
+在47.1的全部固定输入下，对每个碰撞条目 $a$，以下五项等价：
+
+1. 每个 $N\ge0$ 都有 $\mathcal I_a\cap H_{r+1,s_a}^{(N)}\ne\varnothing$。
+2. $\mathcal I_a\cap H_{r+1,s_a}^{(M+1)}\ne\varnothing$。
+3. $\mathcal J_a$ 在 $\mathcal P$ 中可达一个有向环。
+4. 存在一条同一实际尾 $\tau\in A_{s_a}$，初始标量在 $\mathcal I_a$ 中，且每个 $j\ge0$ 都有 $\kappa_0(T^j\tau)\in K_{r+1+j}$。
+5. 第4项可由同一字面尾 $\tau=A R^\infty$ 实现，且可取
+
+$$
+0\le |A|\le M-1,\qquad 1\le |R|\le M,\qquad
+|A|+|R|\le M,\qquad p\mid |R|.
+\tag{47.12}
+$$
+
+第五项的长度断言在存在见证时使用，因而此时 $M\ge1$。前接 $\ell,m$ 给两条不同实际地址 $\ell\tau,m\tau$；它们与同一 rival 的当前闭色分别为 $c,d$，以后的闭颜色词可完全相同。它们的共同未来是同一个字面 $\tau$，而非仅仅两个相等标量。
+

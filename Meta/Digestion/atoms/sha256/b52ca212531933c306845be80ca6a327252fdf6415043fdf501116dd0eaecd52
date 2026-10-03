@@ -1,0 +1,62 @@
+### 41.8　从 $\theta$ 出发的严格余量实际化
+
+将[定理39.8.1](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13526)用于上述一边前缀族。取 $\theta<\nu<\lambda$，置 $\delta=\nu-\theta>0$。从 $H_1,H_2$ 取 $x,y$，由状态相对满像取合法尾 $\xi\in A_{s_1}$、$\eta\in A_{s_2}$；单点也有合法尾。一次性选最终空尾
+
+$$
+\widehat\xi\in D_{s_1},\qquad \widehat\eta\in D_{s_2},\qquad
+|\widehat x-x|<\delta/4,\quad|\widehat y-y|<\delta/4.
+$$
+
+替换尾不随二进制词和长度改变，也不必留在旧凸包或网格片内。对 $z=z_1\cdots z_n$，令
+
+$$
+\widehat\alpha_z=\ell U_{z_1}\cdots U_{z_n}\widehat\xi,\qquad
+\widehat\beta_z=mV_{z_1}\cdots V_{z_n}\widehat\eta,
+$$
+
+$$
+h_z=i_*W_{z_1}\cdots W_{z_n},\qquad M_n=1+nL_*.
+$$
+
+把替换尾与预算 $\theta$ 下的原尾比较，在所有 $j<M_n$ 有
+
+$$
+\widehat x_j-x_j=(-g)^{M_n-j}(\widehat x-x),\qquad
+\widehat y_j-y_j=(-g)^{M_n-j}(\widehat y-y).
+$$
+
+故位移严格小于 $\delta/4$。距离到闭格为 $1$-Lipschitz；若 $p_i$ 是到 $J_i$ 的投影、$m_i$ 是格中点，取
+
+$$
+\tau=\frac{\delta}{4D_X}\in(0,1),\qquad T_i(v)=(1-\tau)p_i(v)+\tau m_i.
+$$
+
+目标在格内部且在 $X$ 内，故裁剪固定它，并有
+
+$$
+\operatorname{dist}(\widehat x_j,J_i)<\theta+\delta/4,\qquad
+|T_i(\widehat x_j)-\widehat x_j|<\theta+\delta/2<\nu,
+$$
+
+第二分量同理。该严格界对所有词、长度、分量和固定归属统一成立。完成 $M_n$ 次出发 后，未观察终尾正是 $\widehat\xi$ 或 $\widehat\eta$，分别接零误差未来得
+
+$$
+h_zS_{\widehat\xi},\qquad h_zS_{\widehat\eta}.
+$$
+
+第一分量未来 $S_{\widehat\xi}$ 对所有 $z,n$ 相同；两分量未来不要求同色，也没有重复取得终端。等长 $U_0\ne U_1$ 给出 $2^n$ 个不同第一来源。临界完整记录唯一性按预算包含适用于 $\nu<\lambda$，故不同二进制词的 $h_z$ 不可相同。首标签 $\ell\ne m$ 使安全性迫使整个 $h_z$ 期间静默；若两个末配置相同，接同一第一未来将导致相同输出，违背不同 $D$ 来源的逐位置生效。因此取得 $M_n$ 次后至少有 $2^n$ 个不同完整配置，得到
+
+$$
+B^{\mathrm{worst}}_{\nu,\mathcal A}(M_n)\ge n-O(1),\qquad
+B^{\mathrm{worst}}_{\nu,\mathcal A}(N)\ge
+\left\lfloor\frac{N-1}{L_*}\right\rfloor-O(1).
+$$
+
+沿用[定理39.9.1](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13609)证明中的正裕量反证：若 $\theta<R$，取 $\theta<\nu<R$，便与定理36.27的 $R$ 以下对数上界冲突，故
+
+$$
+R\le\theta\le c,\qquad\theta\in\mathbb Q(t).
+$$
+
+此处必须有 $\nu-\theta>0$，绝不以可能非正的 $\nu-c$ 替代；$\nu=\theta$ 不给出实际颜色结论。
+

@@ -1,0 +1,41 @@
+**约定 62.3（固定过渡预算与执行符号）。** 固定整数 $K\ge2$，简记 $h=h_H$、$A=A_H$，并置
+
+$$
+Z_K=\frac{A}{1-\rho\chi^K},\qquad
+q_K=\lambda-g^2\chi^Kh,\qquad
+\Psi_K=\lambda-g^2\chi^KZ_K.
+$$
+
+本章固定实预算及守卫为
+
+$$
+q_K<b<\Psi_K,\qquad
+s=\frac{\lambda-b}{g^2},\qquad d=\frac{s}{\chi^K},
+\qquad Z_K<d<h.
+\tag{62.9}
+$$
+
+$q_K$ 是预算阈值，区别于仪器切点 $q_1,\ldots,q_5$；$d$ 是标量守卫，区别于颜色词 $\mathbf d$。由 $0<g<1/4$ 得 $0<\chi<\rho<1$、$1-\rho>\chi$，所以
+
+$$
+Z_K>A>\chi h,\qquad q_K<\Psi_K<q_{K+1}<\lambda.
+\tag{62.10}
+$$
+
+由[定义59.3](https://github.com/the-omega-institute/trureturing/blob/f27cb4e38cec67e0a63cd941c1b8b68530e9d66d/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24572-L24594)在 $Q_K=q_K$、$d_b=d$、$h_H=h$、$A_H=A$ 下的同一过渡区，以及[定理58.10.1](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24063-L24107)的实际帽判据，本章 $K$ 就是 $K(b)$。称 $r=K$ 的返回为高返回，$1\le r<K$ 的返回为低返回；这区别于同一返回的高侧、低侧来源。[推论58.10.2](https://github.com/the-omega-institute/trureturing/blob/38c2cd288df0e0c17a6c7415912e8f5b5dc9baaf/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L24109-L24119)适用于这里的 $b>\Theta_1$、$b<\lambda$：预算帽只限制 $r$，不限制 $m$、完整返回长度、列表深度或总长度；允许某个 $r=K$ 实际出现不表示所有 cap $K$ 列表可供应。
+
+从字面尾向外执行一个返回，使用二字母词 $\mathsf c^r\mathsf u^m$，映射和实际长度权重为
+
+$$
+f_{\mathsf c}(D)=\chi D,\quad f_{\mathsf u}(D)=A+\rho D,
+\qquad \ell(\mathsf c)=20,\quad\ell(\mathsf u)=6,
+$$
+
+$$
+G_{m,r}(D)=f_{\mathsf u}^m\circ f_{\mathsf c}^r(D)
+=h-\rho^m(h-\chi^rD).
+\tag{62.11}
+$$
+
+执行次序与外到内列表相反：若执行列表为 $(m_i,r_i)_{i=1}^k$，则(62.5)使用反序 $(m_k,r_k),\ldots,(m_1,r_1)$。每个执行块 $\mathsf c^r\mathsf u^m$ 对应字面返回 $U^mC^r/V^mC^r$；块内原标签次序不反转。所有恢复到来源与颜色的构造均使用这一约定。
+

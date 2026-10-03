@@ -1,0 +1,17 @@
+**定义 352.1（合并后的整数秩容量）。** 设 $r\in\mathbb N$、$r\ge1$，$I\subseteq\{r,r+1,\ldots\}$ 为有限集合，$A,N\ge0$ 为实数。对每个 $d\in I$ 给定质量 $c_d$，满足
+
+$$
+0\le c_d\le Ad,\qquad \sum_{d\in I}c_d\le N.
+$$
+
+定义
+
+$$
+x_d=\frac{c_d}{d},\qquad
+J=\sum_{d\in I}x_d,\qquad
+B=\sum_{d\in I}dx_d=\sum_{d\in I}c_d,
+\qquad D=\sum_{d\in I}x_d(A-x_d),\qquad C=(2r-1)A.
+$$
+
+因 $d\ge1$，上述条件等价于 $0\le x_d\le A$ 和 $B\le N$。若原载体是有限集合 $E$，带整数秩映射 $\rho:E\to\{r,r+1,\ldots\}$ 与非负质量 $a_e$，则这里的 $I=\rho(E)$、$c_d=\sum_{\rho(e)=d}a_e$；容量条件要求这个合并后的总质量满足 $c_d\le Ad$，而不是仅要求每个 $a_e\le A\rho(e)$。
+

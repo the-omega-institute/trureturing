@@ -1,0 +1,22 @@
+**定理 18.2（无承诺证书的完整叶条件与唯一最优解）。** 对每个定义 18.1 的 $V$，每个 $h\in\mathbb N_0$ 与每个有限集合 $Q\subseteq\Sigma_{\le h}$，有
+
+$$
+\boxed{\quad Q\text{ 无承诺有声}\quad\Longleftrightarrow\quad L(V)\subseteq Q.\quad}
+\tag{18.9}
+$$
+
+特别地，
+
+$$
+\boxed{\qquad
+\tau_d^{\mathrm{un}}(V,h)=
+\begin{cases}
++\infty,&h<D,\\[2pt]
+n,&h\ge D,
+\end{cases}
+\qquad}
+\tag{18.10}
+$$
+
+而 $h\ge D$ 时唯一达到最小值的集合是 $Q=L(V)$。
+

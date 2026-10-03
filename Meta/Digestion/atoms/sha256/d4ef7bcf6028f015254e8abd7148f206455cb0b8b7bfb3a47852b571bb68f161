@@ -1,0 +1,48 @@
+**引理 37.5（共同 CRT 相容性与逐词算术重数）。** 记 $\mathcal A_\rho$ 为式 (37.4) 存在算术解的合法擦除词集合。每个相容擦除词的算术提升数为
+
+$$
+g_n=\begin{cases}a^2,&n=0,\\a,&n=1,\\1,&n\ge2.
+\end{cases}
+\tag{37.5}
+$$
+
+当 $n=1$ 时，候选位 $b$ 相容当且仅当 $bw$ 合法且
+
+$$
+b_0-qMr\equiv2b\pmod d.
+$$
+
+记
+
+$$
+S=\begin{pmatrix}2&3\\1&2\end{pmatrix},\qquad
+\upsilon=\binom{-3}{2}.
+$$
+
+当 $n\ge2$ 时，置
+
+$$
+x_m(u_0)=S^{-1}\binom{b_0}{b_1+u_0}
+=\begin{pmatrix}2&-3\\-1&2\end{pmatrix}\binom{b_0}{b_1+u_0}\pmod m.
+$$
+
+候选 $u$ 相容当且仅当 $uw$ 合法，并同时满足
+
+$$
+b_j-b_{j+1}-b_{j+2}\equiv2u_j+u_{j+1}\pmod m
+\quad(0\le j\le n-3),
+$$
+
+$$
+x_m(u_0)\equiv t_u+M^nr\pmod d.
+$$
+
+相容时其唯一向量 $y\bmod L$ 由
+
+$$
+y\equiv x_m(u_0)\pmod m,\qquad
+y\equiv t_u+M^nr\pmod\ell
+$$
+
+共同确定；$n=2$ 时递推残差条件为空。
+

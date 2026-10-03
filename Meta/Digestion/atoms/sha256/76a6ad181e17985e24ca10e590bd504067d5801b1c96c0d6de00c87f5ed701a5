@@ -1,0 +1,16 @@
+**命题 13.5（Three distinct axes and their commuting comparison）。** Temporal precision $h$, positional precision $\ell$ and tower index $r$ refer to different maps. The temporal trajectory is
+
+$$
+W(y)=(O(\rho^ky))_{k\ge0},\qquad B_h=p_h\circ W,
+$$
+
+where $p_h$ deletes times after $h$; this $W$ is not a canonical positional window. A joint temporal/modular observation can be written
+
+$$
+B_{r,h}(x)=(q(M^kx)\bmod L_r)_{0\le k\le h}.
+$$
+
+Deleting final temporal entries and reducing residues along divisibility commute. At fixed $r$, increasing $h$ past 1 adds no distinction; increasing $r$ through the unbounded double-reading tower identifies composition. Increasing $\ell$ reads more positions of the same quantity and applies neither $\rho$ nor any operation $n\mapsto n+t$.
+
+证明。Temporal truncation gives the fibers of definition 6.1. Modular reduction gives the maps of theorem 9.1. Entrywise reduction and deletion can be performed in either order, proving the commuting comparison without identifying the indices. The temporal stabilization is theorem 8.1; tower injection is theorem 9.2. Definition 13.2 changes only the number of inspected digits, and proposition 13.3 identifies its full target. For exact $q$, two temporal readings already recover composition by proposition 5.2. None of these observations recovers ordered syntax after the map $c$ has discarded it. $\square$
+

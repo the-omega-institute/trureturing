@@ -1,0 +1,20 @@
+### 51.11 剩余的内部偶返回分支
+
+可复用的不同返回内容必须先满足原完整柱尺度 (51.4)，并在每个基点满足图规模界 (51.6)。在 $p\le n<2p$ 时，不相干等价于出现实际不同的恰 $3p$ 返回词；$p$ 奇时它们还必须同时满足分侧、奇包络和原片全包含的 (51.8)—(51.10)。这些结论只是把定理36.22的标签／相位、引理36.29的 $n$ 顶点返回表和定理39.2.1的 $a=(-g)^L$ 包络应用到同一原图，并未另换一个图或加入初始可达性。
+
+若奇 $p>1$ 的实际 SCC 仅有偶数倍 $p$ 返回，其最短非空返回至少 $2p$，所以 $n\ge2p$；奇斜率论证在此没有输入。第一不相干将强制上述无限内部偶周期族：一般成员必须有 $v_2(q)\ge\nu$，构造族恰有 $v_2(q)=\nu$，并共享 rival 的非平凡奇公因子；素数 $p$ 时，构造族还满足 $h\mid q$，从而是真正的偶数倍 $p$ 本原周期。奇周期来源若沿该 SCC 实现则只能留在有限 $B$ 内，其端点路径周期不能替代这些内部字面周期。
+
+这些必要条件尚未构成矛盾，也没有供应满足全部原图条件的实际存在例。精确保留的分支是：在给定完整原图的同一实际 SCC 内，第一不相干、第二为奇周期 singleton rival、所有返回为偶数倍 $p$，并有上述内部偶周期伙伴族。奇三来源排序只适用于各周期整除同一奇长度的三条两两不同地址，不能用于这支偶周期族；双色并集也不能代替它要求的单个共同闭色。进一步排除或实现该分支，仍须保留同一联合来源、逐边所选原色、原 guard、原片及真实返程。本文不据此作所有奇周期的分类或原图全局排除。
+
+[51源14]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1852
+[51源17]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L3305
+[51源28]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7126
+[51源端点]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8343
+[51源31]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8403
+[51源图]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L16895
+[51源同尾]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11466
+[51源相位]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11762
+[51源短返]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11954
+[51源包络]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13238
+[51源单点]: https://github.com/the-omega-institute/trureturing/blob/5047af8dd1d1a1754a55e27518779560a532bf7e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13462
+

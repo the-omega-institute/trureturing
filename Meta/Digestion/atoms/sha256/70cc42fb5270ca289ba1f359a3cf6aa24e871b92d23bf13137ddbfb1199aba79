@@ -1,0 +1,103 @@
+**证明。** $L>-1$、$B_*<1$，故 $Z\in I_0$。
+由于 $f_2$ 的斜率为 $-g$，其在两端的值给
+
+$$
+v_6\in\left[\frac{45g-1}{10},\frac{4+30g}{10}\right].
+$$
+
+再前接一次 $2$，有 $v_5=1-g+g^2Z$。利用较宽的
+$Z\in[-1,1]$，其两端值为
+
+$$
+1-g-g^2=3g,\qquad
+1-g+g^2=2-5g,
+$$
+
+所以
+
+$$
+v_5\in[3g,2-5g]\subset\left(\frac23,\frac56\right).
+$$
+
+这里下界用 $3g>12/17>2/3$，上界用
+$2-5g<14/17<5/6$。由 $t<5/8$、$g<1/4$，
+
+$$
+-\frac56=-\frac58-\frac5{24}
+<v_4=-t-gv_5<-t<-\frac12.
+$$
+
+因此
+
+$$
+\frac12=t^2+\frac g2<v_3=t^2-gv_4
+<t^2+\frac{5g}{6}
+=\frac12+\frac g3<\frac7{12}.
+$$
+
+再前接一次 $5$，得到
+
+$$
+\frac{11}{48}<\frac12-\frac{13g}{12}<v_2
+<\frac12-g<\frac9{34},
+$$
+
+其中 $11/48>1/5$、$9/34<3/10$。最后
+
+$$
+v_1=-t-gv_2>-\frac58-\frac3{40}=-\frac7{10},
+\qquad v_1<-t<-\frac12.
+$$
+
+这些界同时核对状态区间。$v_1,v_2,v_5\in I_0$；
+$v_6>0$ 且 $v_6<(4+30/4)/10=23/20<\phi$，故 $v_6\in I_0$。
+$v_4\in(-1,t)$，而
+$v_3<7/12<21/34<t$，故 $v_3,v_4\in I_1$。
+于是 (48.14) 的每条原分支域条件都成立：
+
+$$
+0\xrightarrow3 0\xrightarrow5 1\xrightarrow5 1
+\xrightarrow3 0\xrightarrow2 0\xrightarrow2 0.
+$$
+
+这证明对每个 $Z\in[L,B_*]$ 都使用原六步链。
+
+原切点的有理界为
+
+$$
+q_1>-\frac{143}{340}>-\frac12,\quad
+q_2<\frac{11}{80}<\frac15,\quad
+\frac{29}{68}<q_3<\frac7{16},\quad
+q_4>\frac{329}{340}>\frac56.
+\tag{48.17}
+$$
+
+它们逐项由 (48.3) 代入 $q_c$ 的定义得到。
+因此相位 $1$—$5$ 的界分别落入
+$\operatorname{int}J_0,\operatorname{int}J_2,\operatorname{int}J_3,
+\operatorname{int}J_0,\operatorname{int}J_3$；这些相位均可零误差取得表列颜色。
+
+相位六的闭扩张端点由
+$q_4-\lambda=(3+7g)/5$、$q_5+\lambda=(11+9g)/10$ 得到。
+两端在 $I_0$ 内，缩小预算 $\delta$ 得 (48.16)。并且
+
+$$
+\frac{45g-1}{10}-\frac{3+7g}{5}
+=\frac{31g-7}{10}>\frac1{34},
+$$
+
+$$
+\frac{11+9g}{10}-\frac{4+30g}{10}
+=\frac{7-21g}{10}>\frac7{40}.
+$$
+
+第一式用 $g>4/17$，第二式用 $g<1/4$。
+结合 $\delta<1/20480$，两端距离均严格大于 $\delta$，故
+$v_6\in\operatorname{int}E_4^\beta$。
+每个 $J_c$ 都有正长度；若 $\operatorname{dist}(v,J_c)<\beta$，
+可把最近点向其内部移动少于
+$\beta-\operatorname{dist}(v,J_c)$ 的距离，取得内部目标且误差严格小于
+$\beta$。这也给相位六的实际颜色目标。
+相位 $1$—$6$ 的证明对全部 $Z\in[L,B_*]$ 同时成立；
+相位零的两点则使用 (48.9)。$\square$
+

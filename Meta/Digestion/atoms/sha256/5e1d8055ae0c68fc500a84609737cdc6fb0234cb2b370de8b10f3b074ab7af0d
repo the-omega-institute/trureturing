@@ -1,0 +1,44 @@
+**定义 55.1（质量受限的原教师实验）。** 固定 $n\ge4$、$0<\rho\le1/8$、$0<a\le1$。位按原卷 §104、§141 的低到高顺序，整个窗口字母及质量依次为
+
+$$
+\Sigma=(000,100,010,101,001),\quad \ell=b_1,\quad h=b_3,
+\qquad
+\mathcal M_\rho=
+\{\mu=(u,x,v,1/2,z):u,x,v,z\ge\rho,\ u+x+v+z=1/2\}.
+\tag{55.1}
+$$
+
+本节 $t=\mu(101)=1/2$、$z=\mu(001)$，沿用 §54 的命名。学习器事先取得完整的 $\mu\in\mathcal M_\rho$。不同窗口 $W_i$ 独立同分布于 $\mu$，窗内位不作独立化。记
+
+$$
+H=\mathbb Eh=1/2+z,\qquad L=\mathbb E\ell=1/2+x,
+\qquad \mathbb E[h\ell]=1/2,
+\qquad V_H=H(1-H),\quad V_L=L(1-L),\quad D=V_HV_L.
+\tag{55.2}
+$$
+
+未知教师为 $\theta=(p,q,r)\in\Theta_n=\{1\le p<q<r\le n\}$。保持原优先门与原预测目标
+
+$$
+G_1=h_p\ell_q,\qquad G_2=(1-G_1)h_q\ell_r,
+\qquad C_\theta=G_1+2G_2.
+\tag{55.3}
+$$
+
+标签合同准确取式（54.4）的
+
+$$
+R=\begin{pmatrix}1/2&1/4&1/4\\3/8&1/4&3/8\\1/4&1/4&1/2\end{pmatrix},
+\qquad R_\alpha=\alpha R+(1-\alpha)J/3,\qquad \alpha\in[a,1].
+\tag{55.4}
+$$
+
+通道族已知，共同 $\alpha$ 在取得记录前固定，可以未知。一次完整记录 $(X,Y)=(W_1,\ldots,W_n,Y)$ 的律为
+
+$$
+P_{\mu,\alpha,\theta}(w,j)=\mu^{\otimes n}(w)(R_\alpha)_{C_\theta(w),j}.
+\tag{55.5}
+$$
+
+训练记录相互独立；测试独立于训练并使用同一输入律和通道。此处仍是局部五符号的整窗产品实验，不施加跨窗 seam 或全局 positive-End 条件化。原卷的规范终止语言提供字母语义，不把它的来源约束或自主读者状态数搬进这个采样模型。以下对数均为自然对数。
+

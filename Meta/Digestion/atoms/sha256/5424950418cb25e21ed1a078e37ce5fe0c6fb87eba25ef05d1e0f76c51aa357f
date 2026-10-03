@@ -1,0 +1,21 @@
+### 29.3 两个代数嵌入限定的有限端点集
+
+继续使用定义14.5的合法 guard 图及平移量。对每条合法边 $s\xrightarrow{\ell}s'$，记
+
+$$
+f_\ell(y)=\Delta_\ell-gy,\qquad
+F_\ell(x)=\frac{\Delta_\ell-x}{g},\qquad
+D_{s,\ell}=f_\ell(I_{s'}).
+\tag{29.7}
+$$
+
+$D_{s,\ell}$ 是该带 guard 分支的完整闭域。合法边为
+
+$$
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5.
+\tag{29.8}
+$$
+
+它们的根像和全部端点由命题14.6、定理17.2给出。
+

@@ -1,0 +1,21 @@
+**定理 59.6（固定过渡预算的严格率增益）。** 对每个固定 (59.13)，取引理59.3.1的一个有限 $M$。两个模板、每种固定合法归属及三个合同都满足
+
+$$
+\boxed{\alpha_{K-1}<\beta_{K,M}
+\le\eta^{\mathsf T}_{b,o,\kappa}<\alpha_K.}
+\tag{59.34}
+$$
+
+对该预算、归属和合同的每个正确完整解码器 $\mathcal A$，有
+
+$$
+\boxed{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)
+\ge\beta_{K,M}N-O_{K,M}(1),\qquad
+\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}{N}
+\ge\beta_{K,M}>\alpha_{K-1}.}
+\tag{59.35}
+$$
+
+由于 $M$ 已固定于 $K,b$，误差项也可写成 $O_{K,b}(1)$。
+

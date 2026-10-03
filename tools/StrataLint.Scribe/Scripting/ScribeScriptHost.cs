@@ -133,7 +133,7 @@ public static class ScribeScriptHost
                 {
                     CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                     CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
-                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, () =>
+                    definition = StatementProjectionFixtureLoader.WithScriptRepositoryRoot(root, () =>
                     {
                         var instance = Activator.CreateInstance(type, nonPublic: true)
                             as IScribeDocumentDefinition
@@ -188,7 +188,7 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    internal static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
+    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
         string root,
         string entry,
         CSharpParseOptions parseOptions)
@@ -366,7 +366,7 @@ public static class ScribeScriptHost
         return (image, entryTypes[0], null);
     }
 
-    internal static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
+    private static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
         ImmutableArray<MetadataReference> references, CSharpParseOptions parseOptions)
     {
         var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
@@ -381,10 +381,9 @@ public static class ScribeScriptHost
             trees,
             references,
             ScriptCompilationOptions);
-
     }
 
-    internal static ImmutableArray<MetadataReference> ReferenceAssemblies()
+    private static ImmutableArray<MetadataReference> ReferenceAssemblies()
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var runtimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
@@ -425,7 +424,7 @@ public static class ScribeScriptHost
         public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(File.ReadAllText(path));
     }
 
-    internal static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
+    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
         typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
             .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value);
 
@@ -440,7 +439,7 @@ public static class ScribeScriptHost
                 SourceCodeKind.Regular, symbols);
     }
 
-    internal static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
+    private static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
         OutputKind.DynamicallyLinkedLibrary,
         optimizationLevel: OptimizationLevel.Release,
         nullableContextOptions: NullableContextOptions.Enable,
@@ -448,7 +447,7 @@ public static class ScribeScriptHost
         generalDiagnosticOption: ReportDiagnostic.Error,
         deterministic: true);
 
-    internal static string? NormalizePath(string path)
+    private static string? NormalizePath(string path)
     {
         if (string.IsNullOrWhiteSpace(path) || Path.IsPathRooted(path)) return null;
         var normalized = path.Replace('\\', '/');

@@ -1,0 +1,86 @@
+**定义 39.1.1（来源与拥有端点的观察区间）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad \mathbb F=\mathbb Q(t),\qquad
+\lambda=\frac{t^2}{10},
+$$
+
+$$
+I_0=X=[-1,\phi],\qquad I_1=[-1,t],\qquad 0<g<1.
+$$
+
+窗口标签为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 表示空窗，$25$ 是一个三位窗口标签。实际 guard 边与平移量为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx.
+\end{gathered}
+$$
+
+沿用定义14.5的状态地址域 $A_s$，$A_0=\Omega$，$D_s\subset A_s$ 为最终空尾地址，$D=D_0$。两个 guard 使用同一个级数编码 $\kappa_s$。对合法词 $w=w_0\cdots w_{r-1}$，前接映射的次序始终是
+
+$$
+f_w=f_{w_0}\circ\cdots\circ f_{w_{r-1}},\qquad
+f_\varnothing=\mathrm{id},\qquad f_w(x)=A_w+(-g)^r x.
+$$
+
+定理17.2给出 $\kappa_s(A_s)=I_s$ 及合法前接等式。定理14.7给出每个固定 guard、每个标量的完成地址纤维至多为二；每个双编码均在有限前缀后使用命题14.6的非空周期极值尾。因此 $\kappa_s$ 在 $D_s$ 上单射。空尾 $0^\infty$ 从两种 guard 都合法且编码为零。给任一 $\xi\in A_s$ 保留前 $m$ 个窗口，再接 $0^\infty$，所得地址在 $D_s$ 中；若原终端标量为 $x_m$，截断误差为 $(-g)^m x_m$，绝对值至多 $\phi g^m$。故 $\kappa_s(D_s)$ 在 $I_s$ 中稠密。这个密度是 guard 区间中的密度，不预设任何返回吸引子中有稠密的有限尾。
+
+固定式 (28.1) 的六个颜色格，并固定一次合法切点归属。记五个切点为
+
+$$
+q_1=-t^2-\lambda,\quad q_2=g-3\lambda,\quad
+q_3=t-5\lambda,\quad q_4=2t-7\lambda,\quad
+q_5=2t+\lambda.
+$$
+
+实际格为 $C_i=Q^{-1}(i)$，$i=0,\ldots,5$；其闭包依次为
+
+$$
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad
+J_2=[q_2,q_3],\quad J_3=[q_3,q_4],\quad
+J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+$$
+
+这些端点属于 $\mathbb F$，六个闭包均有正长度。颜色标签、来源标签和 guard 是三种不同的对象。实际取得按同一个 $Q$ 计算
+
+$$
+r_j=Q\!\left(\operatorname{clip}_X(x_j+e_j)\right),\qquad
+x_j=\Delta_{\sigma_j}-gx_{j+1}.
+$$
+
+闭预算 $c\ge0$ 要求每个 $|e_j|\le c$。定义
+
+$$
+E_i^c=\{x\in X:\operatorname{dist}(x,J_i)\le c\},\qquad
+O_i^c=\{x\in X:\exists y\in C_i, |x-y|\le c\}.
+$$
+
+$E_i^c$ 是闭松弛区间，$O_i^c$ 是保留实际端点旗标的可取得区间。后者恰好表示含裁剪的实际颜色可取得性：裁剪非扩张且固定 $x\in X$，所以实际目标 $y$ 满足 $|y-x|\le |e|$；反向取 $e=y-x$，裁剪固定 $y$ 即可。
+
+若 $J_i=[l_i,u_i]$，则
+
+$$
+E_i^c=[\max\{-1,l_i-c\},\min\{\phi,u_i+c\}].
+$$
+
+一个 $x\in E_i^c$ 属于 $O_i^c$，当且仅当
+
+$$
+\operatorname{dist}(x,J_i)<c
+\quad\text{或}\quad
+\bigl(\operatorname{dist}(x,J_i)=c
+\text{ 且 }\operatorname{proj}_{J_i}(x)\in C_i\bigr).
+$$
+
+严格不等号时可在投影附近选实际格点；等号时，区间上唯一最近点必须被该格拥有。$c=0$ 时该规则直接还原 $x\in C_i$。由此包括支撑裁剪在内，始终有
+
+$$
+\overline{O_i^c}=E_i^c,\qquad
+E_i^c\setminus O_i^c\subseteq\partial E_i^c.
+$$
+

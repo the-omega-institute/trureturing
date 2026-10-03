@@ -1,0 +1,36 @@
+**定理58.7。** anchor 输出为
+
+$$
+Y_j=A_j+\rho\chi X_j,\qquad X_j<Y_j<Z_{j,1},\qquad
+Y_j>Z_{j,R}\quad(R\ge2).
+\tag{58.25}
+$$
+
+anchor 有限帽族的后缀下确界及全槽阈值为
+
+$$
+\widehat\mu_{j,R}=\begin{cases}Y_j,&R=1,\\Z_{j,R},&R\ge2,\end{cases}
+\qquad
+\widehat\Theta_R=\begin{cases}
+\Theta_1,&R=1,\\
+\Psi_R:=\lambda-g^2\chi^RZ_{H,R},&R\ge2.
+\end{cases}
+\tag{58.26}
+$$
+
+其中 $R=1$ 的阈值由 anchor **自身**的输入 $\chi X_H$ 决定。阈值处分类为：
+
+| anchor cap | 有限历史达到上确界 | 阈值处整族闭供应 | 整族逐槽严格及逐记录余量 | 全族统一正余量 |
+| --- | --- | --- | --- | --- |
+| $R=1$ | 每条历史在 anchor 达到 | 恰需 $o_1=1$ | 不可 | 不可 |
+| $R\ge2$ | 无有限历史达到 | 任意归属可 | 任意归属可 | 不可 |
+
+在阈值以下整族失败，在阈值以上任意归属都有统一正余量。并且
+
+$$
+\widehat\Theta_1=\Theta_1,\qquad
+\Theta_1<\Psi_2<\Theta_2,\qquad
+\widehat\Theta_R=\Theta_R\quad(R\ge3).
+\tag{58.27}
+$$
+

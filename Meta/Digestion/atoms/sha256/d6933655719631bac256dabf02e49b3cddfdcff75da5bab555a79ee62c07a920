@@ -1,0 +1,18 @@
+**定理 352.8（所有实数截止下的完整四倍壳尾界）。** 对实数 $y\ge2$，定义
+
+$$
+W(y)=\sum_{n\ge0}w_y(n)
+=\sum_{\substack{p>y\\p\ \mathrm{prime}}}\frac1{p z(p)},
+\qquad
+E_3(y,k)=\frac{\log2\left(\sqrt{25+64y4^k}-5\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则 $E_3(y,k)\ge0$、$\sum_{k\ge0}E_3(y,k)$ 可和，且
+
+$$
+W(y)\le\sum_{k\ge0}E_3(y,k)
+\le\frac{8\log2}{\sqrt y\log y}.
+\tag{352.7}
+$$
+

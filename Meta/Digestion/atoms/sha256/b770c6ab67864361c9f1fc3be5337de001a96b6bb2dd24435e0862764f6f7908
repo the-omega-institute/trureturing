@@ -1,0 +1,26 @@
+**引理 36.20（完整紧致类型3域的严格间隙）。** 令
+
+$$
+\mathcal K=\{(\omega,\eta)\in\Omega^2:
+\sigma_0(\omega)=5,\ \sigma_0(\eta)=2,\
+\sigma_1(\omega)=\sigma_1(\eta)\}.
+$$
+
+对 $z,z'\in X$ 定义共同闭颜色成本
+
+$$
+c_*(z,z')=\min_i\max\{\operatorname{dist}(z,J_i),
+\operatorname{dist}(z',J_i)\},\qquad
+\mathcal C_6(\omega,\eta)=\max_{0\le j<6}c_*(x_j(\omega),x_j(\eta)).
+$$
+
+则非空紧致 $\mathcal K$ 上取得的最小值
+
+$$
+\beta_3=\min_{\mathcal K}\mathcal C_6
+$$
+
+满足 $\beta_3>\nu_L$。域保留全部共同下一标签3、0、5；成本使用闭格，不声称闭目标在任意归属下可取得。
+
+证明。合法地址空间紧致，有限标签映射局部常值，实际标量映射连续，故 $\mathcal K$ 闭开、紧致。$(5,0)0^\infty$ 与 $(2,0)0^\infty$ 使其非空。有限个距离、最小值和最大值连续，故最小值取得。$\mathcal C_6\le v$ 当且仅当在六个位置分别有一个共同闭色，使同一两地址的坐标均在 $E_i^v$ 中。若取得的 $\beta_3\le\nu_L$，则一个完整域成员在 $\nu_L$ 有六个共同闭色；初始5、2在该预算唯一共同色为3，下一标签共同，与引理36.19矛盾。得到严格间隙。这不是非紧集上逐点严格不等式的统一化，也不只最小化旧等号枝。$\square$
+

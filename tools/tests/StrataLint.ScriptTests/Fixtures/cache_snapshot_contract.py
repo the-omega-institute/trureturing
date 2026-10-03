@@ -3,6 +3,7 @@ import contextlib
 import importlib
 import io
 import json
+import math
 import os
 import pathlib
 import queue
@@ -348,6 +349,36 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertGreater(opened.call_args.kwargs["timeout"], 0)
                 self.assertNotIn("synthetic-token", json.dumps(receipt))
 
+    def test_project_lookup_supplies_github_json_accept_header(self):
+        opened = self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
+        opened.assert_called_once()
+        self.assertEqual("application/vnd.github+json", opened.call_args.args[0].get_header("Accept"))
+
+    def test_project_lookup_supplies_github_api_version_header(self):
+        opened = self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
+        opened.assert_called_once()
+        self.assertEqual("2022-11-28", opened.call_args.args[0].get_header("X-github-api-version"))
+
+    def test_project_lookup_encodes_prefix_and_ref_query_parameters(self):
+        owner = self.restore_owner()
+        prefix, ref = "cache+&?# /%-", "refs/heads/feature+&?# /%"
+        with mock.patch.object(urllib.request, "urlopen", return_value=self.cache_page()) as opened:
+            with self.assertRaisesRegex(owner.SeedLookupUnavailable, "lookup-no-eligible-seed"):
+                owner.lookup_project_seed(dict(restore_prefix=prefix), ref, "synthetic-token",
+                                          "owner/repository", "https://cache.example.test/api/v3")
+        opened.assert_called_once()
+        query = urllib.parse.urlsplit(opened.call_args.args[0].full_url).query
+        self.assertEqual(dict(key=[prefix], ref=[ref], per_page=["100"], sort=["created_at"],
+                              direction=["desc"]), urllib.parse.parse_qs(query))
+
+    def test_project_lookup_requires_a_finite_positive_request_timeout(self):
+        opened = self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
+        opened.assert_called_once()
+        timeout = opened.call_args.kwargs.get("timeout")
+        self.assertIsInstance(timeout, (int, float))
+        self.assertTrue(math.isfinite(timeout))
+        self.assertGreater(timeout, 0)
+
     def test_project_restore_receipt_reports_requested_and_actual_keys_even_on_a_miss(self):
         owner, keys, _ = self.native_seed("project")
         preferred = keys["project"]["restore_prefix"] + "100-2"
@@ -376,6 +407,26 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         entry = json.loads(result.getvalue().splitlines()[0].removeprefix("LEAN_ACTIONS_CACHE "))
         self.assertEqual(preferred, entry["requested_key"])
         self.assertEqual(actual, entry["key"])
+
+    def test_dependency_restore_receipt_shape_excludes_project_requested_and_miss_keys(self):
+        for outcome in ("success", "skipped", "failure"):
+            with self.subTest(outcome=outcome):
+                owner, keys, _ = self.native_seed("dependency")
+                key = keys["dependency"]["key"]
+                with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as result:
+                    owner.restore(self.root, keys, {"dependency": key}, ["dependency"],
+                                  outcomes={"dependency": outcome})
+                entries = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                           for line in result.getvalue().splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
+                self.assertEqual(1, len(entries), result.getvalue())
+                entry = entries[0]
+                if outcome == "success":
+                    self.assertEqual(dict(layer="dependency", status="restored", key=key,
+                                          partition=keys["partition"], transport="actions-native"), entry)
+                else:
+                    reason = ("Actions supplied no cache" if outcome == "skipped" else
+                              "Actions restore did not succeed or supplied no matched cache")
+                    self.assertEqual(dict(layer="dependency", status="miss", reason=reason), entry)
 
     def test_dependency_only_keys_do_not_perform_a_project_lookup(self):
         owner = self.restore_owner()
@@ -611,6 +662,13 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 ready, receipts = self.snapshot_result()
                 self.assertEqual("false", ready["project_ready"])
                 self.assertEqual("build-work-unknown", receipts["project"]["reason"])
+
+    def test_project_work_from_another_run_cannot_publish(self):
+        self.native_seed("project")
+        self.work(run_id="16")
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("false", ready["project_ready"])
+        self.assertEqual("build-work-unknown", receipts["project"]["reason"])
 
     def test_pull_requests_never_publish_project_seeds_even_with_build_work(self):
         self.native_seed("project")

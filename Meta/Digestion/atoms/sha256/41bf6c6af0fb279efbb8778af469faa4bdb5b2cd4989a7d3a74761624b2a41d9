@@ -1,0 +1,9 @@
+**定义 18.6（局部不连续核与聚点）。** 令
+
+$$
+K_Q=\{z\}\cup\{s_n:n\ge0\}\cup\{r_n:n\ge0\}
+=\{z\}\cup\{F^n(\phi),F^n(2t):n\ge0\}.
+$$
+
+$K_Q$ 是本章的标量不连续核，不是本卷此前的 joint-domain $K$。对集合 $B\subset X$，$B'$ 表示在 $X$ 相对拓扑中的聚点集，即每个相对邻域都含有不同于该点的 $B$ 中点的所有点。$\operatorname{Disc}(Q)$ 表示 $Q:X\to\mathcal C$ 的不连续点集。
+

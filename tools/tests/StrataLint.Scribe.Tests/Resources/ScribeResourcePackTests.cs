@@ -122,7 +122,7 @@ public sealed class ScribeResourcePackTests
 
         Assert.Equal(2, pack.Manifest.EntryCount);
         Assert.Equal(ScribeResourcePack.SchemaName, pack.Manifest.Schema);
-        Assert.Equal(1, pack.Manifest.Version);
+        Assert.Equal(3, pack.Manifest.Version);
         Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
         Assert.Equal(definitions.Sum(item => (long)ScribeResourceCodec.Encode(item).Length), pack.TotalUncompressedBytes);
         Assert.Equal(["D5/S0/Synthetic/First.scribe.json", "D5/S0/Synthetic/Second.scribe.json"],
@@ -157,7 +157,8 @@ public sealed class ScribeResourcePackTests
 
         var rewritten = ScribeResourcePack.Open(path);
         Assert.Equal(original.TotalSha256, rewritten.Manifest.TotalSha256);
-        Assert.Equal(original.Entries.ToArray(), rewritten.Manifest.Entries.ToArray());
+        Assert.Equal(original.Entries.Select(entry => (entry.Path, entry.Gid, entry.Sha256)),
+            rewritten.Manifest.Entries.Select(entry => (entry.Path, entry.Gid, entry.Sha256)));
         Assert.False(originalBytes.SequenceEqual(File.ReadAllBytes(path)));
         Assert.Equal(2, rewritten.ReadAll().Count());
     }

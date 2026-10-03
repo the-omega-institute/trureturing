@@ -568,6 +568,11 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
+    internal static T WithScriptRepositoryRoot<T>(string repositoryRoot, Func<T> action) =>
+        FreshStatements.Value is { } fresh && fresh.Root == Path.GetFullPath(repositoryRoot)
+            ? WithRepositoryRoot(repositoryRoot, action)
+            : WithFreshRepositoryRoot(repositoryRoot, action);
+
     internal static T WithFreshRepositoryRoot<T>(string repositoryRoot, Func<T> action)
     {
         var root = Path.GetFullPath(repositoryRoot);

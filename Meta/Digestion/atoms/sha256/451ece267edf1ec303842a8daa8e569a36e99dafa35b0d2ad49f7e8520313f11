@@ -1,0 +1,15 @@
+**引理 53.5（已知 $Q$ 的归一对比）。** 置
+
+$$
+w=(-1,1,11-8\sqrt2),\qquad \kappa=20\sqrt2-28>0,\qquad B=31-22\sqrt2.
+\tag{53.9}
+$$
+
+则 $|w_j|\le1$，且
+
+$$
+Qw=B\mathbf1+\kappa(0,1,1),\qquad
+\mathbb E[w_Y\mid X]=\alpha\kappa F_\theta+\alpha B+(1-\alpha)\bar w,\quad \bar w=(w_0+w_1+w_2)/3.
+\tag{53.10}
+$$
+

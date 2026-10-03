@@ -1,0 +1,42 @@
+**命题 57.7（相邻行与完整输入条件化）。** 固定任意同一个全支撑 $\mu$、同一个 $0<\alpha\le1$ 和
+$q=n-1,r=n$，只让第一位置 $i\in\{1,\ldots,n-2\}$ 改变。
+令 $P_i=P_{\mu,\alpha,\theta_i}$。置
+
+$$
+U_\alpha=\frac{2+\alpha}{6},\qquad
+V_\alpha=\frac{4-\alpha}{12},\qquad
+M_\alpha=\frac{U_\alpha+V_\alpha}{2}.
+$$
+
+三个条件行为
+
+$$
+r_0=(U_\alpha,V_\alpha,V_\alpha),\quad
+r_1=(M_\alpha,V_\alpha,M_\alpha),\quad
+r_2=(V_\alpha,V_\alpha,U_\alpha).
+\tag{57.19}
+$$
+
+定义相邻行的 Jeffreys 散度为两向 KL 的和，则
+
+$$
+\begin{aligned}
+J_\alpha
+&=\operatorname{KL}(r_1\Vert r_0)+\operatorname{KL}(r_0\Vert r_1)\\
+&=\operatorname{KL}(r_1\Vert r_2)+\operatorname{KL}(r_2\Vert r_1)
+=\frac\alpha8\log\frac{4+2\alpha}{4-\alpha},\\
+\operatorname{KL}(P_i\Vert P_j)&=H(1-H)LJ_\alpha,\qquad i\ne j.
+\end{aligned}
+\tag{57.20}
+$$
+
+在（57.11）的同类困难律上，
+
+$$
+K_\alpha:=\operatorname{KL}(P_i\Vert P_j)
+=4\rho^2(1-2\rho)J_\alpha
+\le\frac{\alpha^2\rho^2}{2},\qquad
+\operatorname{KL}(P_i^m\Vert P_j^m)=mK_\alpha.
+\tag{57.21}
+$$
+

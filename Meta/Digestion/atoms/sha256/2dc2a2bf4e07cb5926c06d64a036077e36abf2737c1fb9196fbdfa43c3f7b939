@@ -1,0 +1,157 @@
+## 34. 共同历史关系的四因子化与恢复
+
+本节把 §§30–33 的确定性、部分、有类型历史放进一个共同的实际载体。定义 1.1(d)
+区分动作未定义与动作执行后报告失败。为明确这一区分，本节用 $H_R$ 表示只含
+成功输出的历史子集，用 $H_R^{\rm run}$ 表示全部已执行历史（包括报告失败的步骤）；
+两者都允许空历史。§33 的端点商论证分别应用于这两个历史域时，须使用各自的
+可达端点像，不能把两个可达域混同。四种表达不是四张可以
+各自实现再事后对齐的表，而是同一实际关系的四个投影。为此固定一个联合编码
+
+$$
+\Phi=(\mathsf{Space},\mathsf{Time},\mathsf{Boundary},\mathsf{Memory}) :
+H_R\longrightarrow X_S\times X_T\times X_B\times X_M .
+\tag{PG.3401}
+$$
+
+先固定 §33 的实际状态载体与它的 work-state 投影。定义 1.1(b) 中的
+$S_i$ 是完整联合像；因此本节把带标签的完整状态写成
+
+$$
+\mathsf S_R:=\coprod_{(\xi,\nu,i)\in I_R}S_{\xi,\nu,i},
+\qquad
+\mathsf C:=\coprod_{(\xi,\nu,i)\in I_R}X_{\xi,\nu,i},
+$$
+
+其中不交并标签同时记录 source identity $\xi$、epoch $\nu$ 和当前 type $i$，而
+$\mathsf C$ 只收纳定义 1.1(b) 的 work-state 坐标。由于每个
+$S_{\xi,\nu,i}$ 是相应像的子集，有规范投影
+
+$$
+\operatorname{arc}:\mathsf S_R\to\mathsf A_R^{\rm state},\quad
+\operatorname{cfg}:\mathsf S_R\to\mathsf C,\quad
+\operatorname{ref}:\mathsf S_R\to\mathsf{Ref}_R,\quad
+\operatorname{perm}:\mathsf S_R\to\mathsf{Perm}_R,
+$$
+
+并令 $\eta_{\rm cfg}:=\operatorname{cfg}\circ\eta$。后文的 $\eta$ 仍是 §33
+给出的完整状态端点；出现 $\eta_{\rm cfg}$ 时才指 work-state 坐标。
+对每个纤维，令 $\operatorname{Ref}_{\xi,\nu,i}$ 与
+$\operatorname{Perm}_{\xi,\nu,i}$ 分别为定义 1.1(b) 的整个来源关系坐标（包含 reference）与 permission 集合；这些
+集合的乘积只提供字段类型，不表示可以独立任取一个 archive、reference 和 permission。
+令 $\operatorname{root}(h)$ 表示历史 $h$ 在 $H_R$ 中的出发根。先定义候选记录域
+
+$$
+\Omega_R^0:=
+\coprod_{\substack{r\in R\\(\xi,\nu,i)\in I_R}}
+\left\{\omega=(h,s,\rho,\pi)\ \middle|\
+\begin{array}{l}
+h\in H_R,\ \operatorname{root}(h)=r,\ \text{$h$ 的每一步均成功},\\
+s=\eta(h)\in S_{\xi,\nu,i},\quad
+\rho\in\operatorname{Ref}_{\xi,\nu,i},\quad
+\pi\in\operatorname{Perm}_{\xi,\nu,i}
+\end{array}\right\}.
+\tag{PG.3400}
+$$
+
+定义同一来源的联合映射
+
+$$
+\begin{aligned}
+\widehat\chi_R:\Omega_R^0&\longrightarrow
+\mathsf A_R^{\rm archive}\times\mathsf C\times\mathsf{Ref}_R\times\mathsf{Perm}_R,\\
+\widehat\chi_R(r;h,s,\rho,\pi)&:=
+\bigl(\operatorname{arc}(s),\operatorname{cfg}(s),\operatorname{ref}(s),\operatorname{perm}(s)\bigr),
+\end{aligned}
+\tag{PG.3400a}
+$$
+
+其中 $\mathsf A_R^{\rm archive}:=\mathsf A_R^{\rm state}$ 是定义 1.1(b) 的
+archive 坐标（其内容可包含完整输入历史），
+$\mathsf{Ref}_R:=\coprod_{(\xi,\nu,i)\in I_R}\operatorname{Ref}_{\xi,\nu,i}$，
+$\mathsf{Perm}_R:=\coprod_{(\xi,\nu,i)\in I_R}\operatorname{Perm}_{\xi,\nu,i}$。
+共同来源合同给出带候选见证的谓词
+$\operatorname{Compat}_R(\omega,\widehat\chi_R(\omega))$，它要求四个分量由同一实际来源记录、
+同一 $\xi,\nu,i$、同一历史 archive 和同一取得合同见证；于是实际记录域为
+
+$$
+\Omega_R:=\{\omega\in\Omega_R^0:\operatorname{Compat}_R(\omega,\widehat\chi_R(\omega))\},
+\qquad
+\chi_R:=\widehat\chi_R|_{\Omega_R},\qquad
+\mathsf J_R:=\operatorname{im}(\chi_R)\subseteq
+\mathsf A_R^{\rm archive}\times\mathsf C\times\mathsf{Ref}_R\times\mathsf{Perm}_R.
+\tag{PG.3400b}
+$$
+
+这里的 $\mathsf J_R$ 才是定义 1.1(b) 的**可达实际联合像**；它的元素同时携带
+archive、work-state、reference、permission 及 source/epoch/type 标签。$\mathsf C$
+只是其 configuration/work-state 坐标的值域，不承载完整状态的其他联合字段；完整状态
+仍位于 $\mathsf S_R$。$\operatorname{Compat}_R$ 还要求候选见证中的 $\rho,\pi$
+与 $\operatorname{ref}(s),\operatorname{perm}(s)$ 及取得合同一致。
+
+取得合同还必须满足以下**共同来源满性**；它是本节的附加假设，不由定义 1.1(b) 自动给出。先写
+$Q(h):=(\xi(h),\nu(h),i(h))$ 为 $h$ 的 source/epoch/type 标签，并令
+$\operatorname{type}(\xi,\nu,i)=i$：
+
+$$
+\begin{aligned}
+\operatorname{Full}_R:\quad
+&\forall h\in H_R,\quad
+\exists\rho\in\operatorname{Ref}_{Q(h)},\ \pi\in\operatorname{Perm}_{Q(h)}:\\[-2pt]
+&\qquad\omega_h=(\operatorname{root}(h);h,\eta(h),\rho,\pi)\in\Omega_R^0\ \land\\[-2pt]
+&\qquad\operatorname{Compat}_R\bigl(\omega_h,\widehat\chi_R(\omega_h)\bigr).
+\end{aligned}
+\tag{PG.3400b-full}
+$$
+
+其中 $Q(h)$ 是该 $h$ 的实际 source/epoch/type 标签；见证保留同一 $h$、同一
+$\eta(h)$ 和全部标签。下文均假定
+(PG.3400b-full)；它给出 $\eta_{\rm cfg}(H_R)\subseteq\operatorname{pr}_{\mathsf C}(\mathsf J_R)$，
+而 $\Omega_R^0$ 的定义给出反向包含，故
+
+$$
+\operatorname{pr}_{\mathsf C}(\mathsf J_R)=\eta_{\rm cfg}(H_R)=\operatorname{cfg}(\operatorname{Reach}(R))
+\subseteq\mathsf C.
+\tag{PG.3400b-full-pr}
+$$
+
+$\mathsf J_R$ 是定义 1.1(b) 的实际联合像条件：实际配置不是四个值域的自由乘积，
+而是由一个共同来源见证得到的像。以下说“同一来源见证”均指在 $\mathsf J_R$ 中的
+同一联合元，而不是分别选择几个分量。令
+$\mathsf C_R^{\mathrm{cfg}}:=\operatorname{pr}_{\mathsf C}(\mathsf J_R)$，它仅表示 endpoint/work-state projection，则
+
+$$
+\mathsf C_R^{\mathrm{cfg}}=\eta_{\rm cfg}(H_R)=\operatorname{cfg}(\operatorname{Reach}(R))
+\subseteq
+\mathsf C=\coprod_{(\xi,\nu,i)\in I_R}X_{\xi,\nu,i}.
+\tag{PG.3400b'}
+$$
+
+这里 $\mathsf C_R^{\mathrm{cfg}}$ 仅表示 $\mathsf J_R$ 在 endpoint/work-state 坐标上的投影；完整实际配置仍由 $\mathsf J_R$ 中的联合元表示。
+
+对 $h\in H_R$ 写 $Q(h)=(\xi_h,\nu_h,i_h)$。对已声明边 $e\in E_{i_hj}$，
+令 $L_e^{\rm ok}$ 为成功输出标签；其余已执行失败标签在运行层处理。
+next-contract 给出 $\operatorname{NextCompat}_e\subseteq\mathsf J_R^2$。
+下式中 $\omega_h=(\operatorname{root}(h);h,\eta(h),\rho,\pi)$，
+$\omega'=(\operatorname{root}(h);he,s',\rho',\pi')$ 是由各量词变量确定的元组：
+
+$$
+\begin{aligned}
+&\forall h\in H_R,\ \forall j\in I,\ \forall e\in E_{i_hj},\quad
+\forall\rho\in\operatorname{Ref}_{Q(h)},\ \forall\pi\in\operatorname{Perm}_{Q(h)},\quad
+\forall\ell\in L_e^{\rm ok},\ \forall s'\in S_{\xi_h,\nu_h,j},\\
+&\quad\bigl(\omega_h\in\Omega_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')\bigr)\\
+&\qquad\Longrightarrow\quad
+he\in H_R\ \land\ \eta(he)=s'\ \land\
+\exists\rho'\in\operatorname{Ref}_{\xi_h,\nu_h,j},\ \exists\pi'\in\operatorname{Perm}_{\xi_h,\nu_h,j}:\\
+&\qquad\qquad\omega'\in\Omega_R\ \land\
+\bigl(\chi_R(\omega_h),\chi_R(\omega')\bigr)\in\operatorname{NextCompat}_e.
+\end{aligned}
+\tag{PG.3400c}
+$$
+
+历史项 $he$ 的端点只在 $he\in H_R$ 的分支内求值。这里 reference、permission、
+archive 和后继 $s'$ 都来自同一个 $\omega'$；不把分别存在的分量当作联合存在。
+source $\xi_h$ 与固定 epoch $\nu_h$ 按 §33 的 step 合同保持，目标 type $j$ 随边更新。
+这给出实际像上的附加取得闭合条件；已执行失败使用下文的运行像闭合条件。
+

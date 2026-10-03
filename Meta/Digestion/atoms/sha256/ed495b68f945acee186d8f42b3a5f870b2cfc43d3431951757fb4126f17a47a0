@@ -1,0 +1,33 @@
+**定理 59.5（固定容差内的不限资源等价）。** 对每个 $m$、每个 $0\le\varepsilon<48/625$，
+
+$$
+\mathfrak R_m^\nu(\varepsilon)=\mathfrak R_m^{\rm het},\qquad
+m_*^\nu(\varepsilon,\delta)=m_*^{\rm het}(\delta).
+\tag{59.15}
+$$
+
+第二式在 $0\le\delta\le1$ 取相同的空集下确界约定；它是记录预算等价，不是计算或存储等价。
+
+**证明。** 对任意已固定的分类器 $f$，逐词有
+
+$$
+\mathbf1_{\{C_\theta\ne C_\tau\}}
+\le\mathbf1_{\{C_\theta\ne f\}}
++\mathbf1_{\{f\ne C_\tau\}}.
+\tag{59.16}
+$$
+
+若 $L_\nu(\theta,f)\le\varepsilon$，则每个 $\tau\ne\theta$ 满足
+
+$$
+L_\nu(\tau,f)\ge\Delta_{\rm all}-\varepsilon
+>\varepsilon\ge L_\nu(\theta,f).
+\tag{59.17}
+$$
+
+因此已知目标律下的最近教师唯一为 $\theta$。该结论对每个实现的 $(D_m,\xi)$ 分别成立，完全保留训练成功概率 $1-\delta$，没有把种子或训练风险先取平均。
+
+任意目标预测器后接这个解码器，给准确恢复器，逐次准确失败不超过目标风险失败。反向从准确恢复器输出 $C_{\widehat\theta}$；因 $\varepsilon<\Delta_{\rm all}$，目标风险失败恰等于索引失败。两个方向对所有规则成立，分别取上确界、下确界即得（59.15），无需假设下确界已经达到。 $\square$
+
+解码只需要有限候选公式和已知均匀律，可枚举全部 $5^n$ 个词，调用已固定 $f$，比较整数分歧计数，并用固定字典序处理坏事件的平局。一般实现可付出 $N5^n$ 次候选评价以及词生成、 $f$ 求值、计数、地址和比较费用， $N=\binom n3$。它不取目标标签，也不读取真实三元组。这个不限资源下界归约不是下面的充分学习器，不能获得免费或高效解码名义。
+

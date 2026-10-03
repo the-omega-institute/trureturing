@@ -1,0 +1,17 @@
+**定义 18.1（完成长度与柱区间）。** 对 $p\in\mathcal P_m$、$m\ge1$，令
+
+$$
+s_p=\sum_{j<m}p_jc_j,\qquad
+d(p)=\begin{cases}m,&p_{m-1}=0,\\m+1,&p_{m-1}=1,\end{cases}
+\qquad I_p=s_p+r^{d(p)}J.
+$$
+
+区间记号表示仿射像，即使 $r^{d(p)}$ 为负也不改变其含义。记其有序端点为 $\ell_p,u_p$，并记
+
+$$
+\mathcal A_m(p)=\{[x]:\ell_p<x<u_p\},\qquad
+\mathcal C_m=\{E_k:1\le k\le G_m\}.
+$$
+
+为递归起点，空词取 $s_{()}=0,d(())=0,I_{()}=J$。
+

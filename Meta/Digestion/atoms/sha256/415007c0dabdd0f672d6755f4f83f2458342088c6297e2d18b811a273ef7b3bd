@@ -1,0 +1,10 @@
+**定理 59.5（固定容差内的不限资源等价）。** 对每个 $m$、每个 $0\le\varepsilon<48/625$，
+
+$$
+\mathfrak R_m^\nu(\varepsilon)=\mathfrak R_m^{\rm het},\qquad
+m_*^\nu(\varepsilon,\delta)=m_*^{\rm het}(\delta).
+\tag{59.15}
+$$
+
+第二式在 $0\le\delta\le1$ 取相同的空集下确界约定；它是记录预算等价，不是计算或存储等价。
+

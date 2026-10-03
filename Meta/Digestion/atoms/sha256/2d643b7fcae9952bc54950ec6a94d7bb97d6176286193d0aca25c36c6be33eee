@@ -1,0 +1,38 @@
+### 32.2 完整有限路径响应与行为核
+
+对 \(p:i\to k\) 和 \(s\in S_i\)，递归定义响应
+
+$$
+\operatorname{Resp}_{1_i}(s)=\operatorname{ok}(q_i(s)),
+\tag{TG.3204}
+$$
+
+若 \(p\) 以 \(e:i\to j\) 开始，则
+
+$$
+\operatorname{Resp}_{p\circ e}(s)=
+\begin{cases}
+\operatorname{fail}(e),&
+\operatorname{step}_e(s)=\operatorname{none},\\
+\operatorname{event}\bigl(e,\ell,
+\operatorname{Resp}_p(s')\bigr),&
+\operatorname{step}_e(s)=\operatorname{some}(\ell,s').
+\end{cases}
+\tag{TG.3205}
+$$
+
+这里的响应保留动作、原子标识、事件、失败、终端读出和路径顺序。定义完整行为
+
+$$
+\beta_i(s):
+\bigl\{p:i\to k\text{ 的有限 typed path}\bigr\}
+\longrightarrow
+\operatorname{Response},
+\qquad
+\beta_i(s)(p)=\operatorname{Resp}_p(s).
+\tag{TG.3206}
+$$
+
+在实际根集合 \(R_i\subseteq S_i\) 上，只取由（TG.3202）反复产生的可达闭包
+\(\operatorname{Reach}(R)\)。所有后续等价和最小性都在这个闭包上判断；未从声明根可达的状态和边不被当前观察自动恢复。
+

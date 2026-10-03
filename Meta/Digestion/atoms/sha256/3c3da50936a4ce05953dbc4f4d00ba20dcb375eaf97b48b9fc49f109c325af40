@@ -1,0 +1,52 @@
+### 36.1 固定共同历史域上的分辨率码
+
+令 $a$ 表示一个取得合同类型，固定实际来源、绝对纪元、参考类和比较权限类型。
+选择一个在全部分辨率上共同使用的实际历史域
+
+$$
+D^a_\infty\subseteq D_{K_a}\subseteq H_R,
+\qquad n\in\mathbb N=\{0,1,2,\ldots\}.
+\tag{PG.3601}
+$$
+
+$D_{K_a}$ 取 §35.1 的含义。同一权限类型内仍可有不同的实际权限见证；允许
+比较两个历史不等于允许它们执行同一动作。若每层原有不同取得域 $D^a_n$，
+须先声明共同子域 $D^a_\infty\subseteq\bigcap_nD^a_n$，再在这个子域上写下
+所有等式；不能逐层换代表，或把不同来源的边缘读数乘起来当作历史。
+
+每层联合码保留以下数据：
+
+$$
+\begin{aligned}
+c^a_n(h)=\bigl(&\xi(h),\nu(h),r(h),A_n(h),
+\operatorname{cursor}_n(h),\rho_n(h),\pi(h);\\
+&\mathsf{Space}_n(h),\mathsf{Time}_n(h),
+\mathsf{Boundary}_n(h),\mathsf{Memory}_n(h)\bigr)
+\in C^a_n.
+\end{aligned}
+\tag{PG.3602}
+$$
+
+来源 $\xi$、纪元 $\nu$、参考类 $r$ 与实际权限 $\pi$ 是整份联合记录的共享
+元数据，不是四张视图各自选取的标签。$A_n$ 是指定分辨率下的档案，
+$\operatorname{cursor}_n$ 必须保留该层任务所需的有序地址与上下文；$\rho_n$
+是运行参考的相应读数。四视图复用 §34 的共同历史投影约定，时间视图不把
+分辨率指标 $n$ 当成绝对纪元，记忆视图也不预设只含一个来源后验就足够。
+$C^a_n$ 是合同声明的良构联合码空间，可以取实际像，也可以含尚未实现的候选
+码；元组的字段类型不授予独立组合它们的权限。
+
+与 §35 的固定域取得码接合，还须给出实际像上的分辨率选择
+
+$$
+\sigma^a_n:\operatorname{im}(c_{K_a}|_{D^a_\infty})\longrightarrow C^a_n,
+\qquad
+c^a_n=\sigma^a_n\circ c_{K_a}|_{D^a_\infty}.
+\tag{PG.3603}
+$$
+
+这是合同义务：若所需视图依赖 $c_{K_a}$ 未取得的字段，便不能宣称已给出
+$\sigma^a_n$。增加取得支持须声明扩大后的合同，再固定它的共同域。
+[Transport–Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§23 的同一出生来源、§24 的绝对纪元与有序游标、§25 的档案和权限联合边界
+提供字段的语义依据；这些引用不证明 (PG.3602)–(PG.3603) 的具体取得实现。
+

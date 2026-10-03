@@ -1,0 +1,31 @@
+**命题 34.8（闭记录集合的联合闭包）。** 对固定闭预算，定义
+
+$$
+\begin{aligned}
+V_u^D&=\{(A(u)+cy+e_0,y+e_n):
+ y\in T_{s(u)},\ |e_0|\le\varepsilon_0,\ |e_n|\le\varepsilon_n\},\\
+V_u^\Omega&=\{(A(u)+cy+e_0,y+e_n):
+ y\in I_{s(u)},\ |e_0|\le\varepsilon_0,\ |e_n|\le\varepsilon_n\}.
+\end{aligned}
+$$
+
+则
+
+$$
+\boxed{\overline{V_u^D}=V_u^\Omega.}
+$$
+
+若此预算在 $D$ 上允许恢复，令 $V^D=\bigcup_uV_u^D$，其唯一强制前缀函数为 $F$，值域取离散拓扑、记录域取最大范数的子空间拓扑。对 $r\in V_u^D$，有
+
+$$
+\boxed{F\text{ 在 }r\text{ 连续}
+\quad\Longleftrightarrow\quad
+r\notin\bigcup_{v\ne u}V_v^\Omega.}
+$$
+
+证明。$V_u^\Omega$ 是紧区间和闭误差矩形的连续像，故紧且闭，包含 $V_u^D$。反向固定一条实现 $y$ 的合法完成尾和两处固定误差；只截断这一条尾后补零，得 $y_k\in T_{s(u)}$ 趋于 $y$。保持同一误差对，两处实际记录共同趋于指定记录，证明逆包含。
+
+若有效 $r$ 属于某个 rival 完成记录集，则该集的联合闭包等式给出不同前缀的实际有限记录趋于 $r$，强制函数不连续。若 $r$ 不属于任何 rival 集，有限个前缀对应的紧集之并是闭集，故 $r$ 有一个邻域不遇到任何 rival 实际记录，函数在那里局部常值。$\square$
+
+本闭包等式属于当前两实值闭误差合同；它保留一条实际尾及两处固定误差。它没有把量化器的端点归属、开格记录或第32章的逐地址接受语义替换为闭包展开。
+

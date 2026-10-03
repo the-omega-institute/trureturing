@@ -1,0 +1,13 @@
+**定理 42.10（精确圆柱并与量词）。**
+$$
+\boxed{
+F_\beta(\omega)
+\iff
+\omega\in\bigcup_{\mu\in\mathscr M_\beta}[\mu]
+\iff
+\bigvee_{\mu\in\mathscr M_\beta}
+\bigwedge_{k\in\operatorname{dom}\mu}[\omega_k=\mu(k)].
+}
+\tag{42.60}
+$$
+
