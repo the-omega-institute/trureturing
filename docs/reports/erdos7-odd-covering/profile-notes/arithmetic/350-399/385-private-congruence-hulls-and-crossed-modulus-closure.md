@@ -26495,8 +26495,10 @@ easier-to-check form follows by putting
        \frac{\mu(\ell)}\ell.
 \]
 
-Since $|U_H\cap(a_i\bmod g_i)|\le H/g_i$ and
-$|K_{ij}|=H/\operatorname{lcm}(g_i,g_j)$ when it is nonempty,
+Since $C_r\le C_H$ for every $r$, the left side of (229.8) is at least
+$|U_H|e^{-4C_H}/(2H)$.  Also
+$|U_H\cap(a_i\bmod g_i)|\le H/g_i$ and
+$|K_{ij}|=H/\operatorname{lcm}(g_i,g_j)$ when it is nonempty.  Therefore
 
 \[
  \boxed{
