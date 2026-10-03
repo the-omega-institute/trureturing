@@ -9,12 +9,12 @@ public sealed class RelationContractTests
     internal const string Entry = "Blueprint/D5/S0/Test/Relations.scribe.cs";
 
     [Theory]
-    [InlineData("true ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"", "ConditionalExpression")]
+    [InlineData("Choice ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"", "ConditionalExpression")]
     [InlineData("new[] { \"D5/S0/Test/First\" }[0]", "ElementAccessExpression")]
     [InlineData("string.Join(\"/\", \"D5\", \"S0\", \"Test\", \"First\")", "UnsupportedInvocation")]
     public void UnknownRelationExpressionsFailClosed(string expression, string shape)
     {
-        using var root = Fixture("Paragraph(Ref(" + expression + "))");
+        using var root = Fixture("Paragraph(Ref(" + expression + "))", "private static bool Choice => true;");
         var result = Read(root);
         Assert.Null(result.Projection);
         var failure = result.Failure;
@@ -122,7 +122,7 @@ public sealed class RelationContractTests
     [Fact]
     public void RelationsVerifyNamesUnreadableShape()
     {
-        using var root = Fixture("Paragraph(Ref(true ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"))");
+        using var root = Fixture("Paragraph(Ref(Choice ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"))", "private static bool Choice => true;");
         var output = new StringWriter();
         var error = new StringWriter();
         Assert.Equal(1, Run(root, output, error));
