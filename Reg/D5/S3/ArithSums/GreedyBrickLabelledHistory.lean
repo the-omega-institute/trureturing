@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ArithSums.GreedyBrickLabelledHistory
 import Reg.Support.DependentFamily
