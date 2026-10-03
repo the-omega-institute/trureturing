@@ -1,0 +1,9 @@
+**Proof.** Summing the elements of $S+t=S$ gives
+$\sum_{p\in S}p=|S|t+\sum_{p\in S}p$, proving the first assertion.
+The action of $H$ on $S$ is free, because a translation fixing one
+point is zero. Its orbits therefore all have $|H|$ elements, proving
+the divisibility. The orbit of $p$ is contained in $S$ and has
+$|H|=|S|$ elements, so it is all of $S$. When $|S|=3$, the divisibility
+and $t\ne0$ force $|H|=3$; the three powers $0,t,2t$ exhaust $H$.
+$\square$
+
