@@ -1,0 +1,19 @@
+## 2. Literal labels
+
+With zero-based indexing and $\alpha\in J_m^\varepsilon$, $\beta\in U_k$,
+the actual block sum satisfies
+$$
+\begin{aligned}
+\pi(i)&=(\varepsilon?k:0)+\alpha(i) &&(i<m),\\
+\pi(m+j)&=(\varepsilon?0:m)+\beta(j) &&(j<k).
+\end{aligned}
+$$
+An active interval with low offset $v$ adds $v$ to these values. A
+left-finite direct transition emits $v+\alpha(i)$ and consumes $m$
+low values. A left-finite skew transition emits $v+k+\alpha(i)$ and
+consumes no low values. A right-finite skew transition discards $k$
+low values; a right-finite direct transition discards high values and
+does not change $v$. Right factors are pending suffixes, not emitted
+prefix positions. Keeping these distinct is necessary for absolute
+fixedpoint cylinders, rather than standardized block tests.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:edefbb852061ab1419e7ce8ada58cc2de5a211b1650253784302439ca7966de0
+  normalized_sha256: sha256:edefbb852061ab1419e7ce8ada58cc2de5a211b1650253784302439ca7966de0
+cas_ref: sha256:edefbb852061ab1419e7ce8ada58cc2de5a211b1650253784302439ca7966de0
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/AdjacentSupportPayment.adjacent_support_harmonic_payment
+    target_statement_id: sha256:ca486e8e9f138a593e02eece9ab27d191c73ce15f81dde823ad56ef4f2899208
+receipts:
+  unresolved_subitems: []

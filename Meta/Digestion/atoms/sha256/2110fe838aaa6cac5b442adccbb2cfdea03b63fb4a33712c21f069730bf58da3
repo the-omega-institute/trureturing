@@ -1,0 +1,11 @@
+Record values $0,\ldots,B-1$ literally and all other values as a star.
+If the terminal length exceeds $B$, the emitted prefix has the same
+finite-alphabet word for every terminal actual shape. This word is
+computed by emitting $v+\alpha(i)$ at direct left steps, stars at skew
+left steps, and increasing the low offset by the right length exactly
+at skew right steps. Direct left steps also increase the low offset
+by the left length. Every pending right suffix stays after the
+terminal active interval. Consequently any fixed-coordinate cylinder
+on at most the emitted positions selects either the whole history
+event or none of it, with its exact actual uniform probability.
+
