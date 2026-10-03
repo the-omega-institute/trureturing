@@ -28259,6 +28259,12 @@ the essential quotient cover \(0,1,2\bmod3\), attaining
 \(1+(3-1)\), while the family itself leaves \(2\) uncovered.  It is a
 boundary control, not a counterexample to Erdős--#7.
 
+The exact blocker reformulation is audited on 183,368 bounded finite option
+systems (916,828 positive-weight comparisons) by
+[`verify_activation_blocker_equivalence.py`](../../../frontier/cover-geometry/activation-blocker-equivalence/verify_activation_blocker_equivalence.py).
+The audit returns PASS for its declared universe and option-family catalogue;
+it is a finite consistency check and supplies no unrestricted lower bound.
+
 Thus the unrestricted problem remains open at precisely the source-global
 activation/liability bridge; no local-flow identity in this report is being
 promoted to a proof of the original universal statement.
