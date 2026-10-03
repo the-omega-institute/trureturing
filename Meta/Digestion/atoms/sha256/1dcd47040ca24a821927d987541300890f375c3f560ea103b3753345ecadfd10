@@ -1,0 +1,42 @@
+**定理58.12。** 固定 $K=K(b)\ge2$ 且
+
+$$
+Q_K<b<\Psi_K.
+\tag{58.48}
+$$
+
+令
+
+$$
+a=\rho\chi^K,\qquad
+\zeta=\frac{s/\chi^K-Z_K}{h_H-Z_K}\in(0,1),\qquad
+L=1+\left\lceil\frac{\log\zeta}{\log a}\right\rceil\ge2.
+\tag{58.49}
+$$
+
+令 $B$ 表示字面返回参数 $(1,K)$。每条联合可供应外列表都避免字面子串 $B^L$。定义
+
+$$
+w(z)=z^{6+20K},\qquad
+A_K(z)=\mathcal B_K(z)-w(z),\qquad
+S_L(w)=1+w+\cdots+w^{L-1}.
+\tag{58.50}
+$$
+
+存在唯一 $z_{K,L}\in(0,1)$ 满足
+
+$$
+A_K(z_{K,L})S_L(w(z_{K,L}))=1.
+\tag{58.51}
+$$
+
+置 $\beta_{K,L}=-\log_2z_{K,L}$。两个模板、全部归属及三种合同均满足
+
+$$
+\boxed{\alpha_{K-1}\le\eta^{\mathsf T}_{b,o,\kappa}
+\le\beta_{K,L}<\alpha_K.}
+\tag{58.52}
+$$
+
+这是实际模板率的双侧界，未把 $\beta_{K,L}$ 声称为实际率。
+

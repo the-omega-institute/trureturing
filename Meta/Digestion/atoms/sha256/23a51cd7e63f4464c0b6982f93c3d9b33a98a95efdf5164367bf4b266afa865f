@@ -1,0 +1,23 @@
+**定义 30.5（已取得历史的共同候选与前缀集）。** 令 $E_i$ 为 (28.2) 的闭扩张区间，等价地，
+
+$$
+E_i=\{x\in X:\operatorname{dist}(x,\overline{C_i})\le\lambda\},
+$$
+
+其中 $C_i=Q^{-1}(i)$ 保留实际归属。对已取得 $n\ge0$ 个颜色的历史 $r|_n$，定义
+
+$$
+F_n(r)=\{\eta\in\Omega:x_j(\eta)\in E_{r_j}\text{ 对 }0\le j<n\},
+\qquad F_0(r)=\Omega,
+\tag{30.15}
+$$
+
+以及对 $L\ge0$ 的有限窗口前缀集
+
+$$
+\mathcal P_{n,L}(r)=\{\eta|_L:\eta\in F_n(r)\}.
+\tag{30.16}
+$$
+
+$\eta|_L=(\sigma_0(\eta),\ldots,\sigma_{L-1}(\eta))$；$L=0$ 时是空词。这里的所有约束都作用于同一条 $\eta$。$F_n$ 是闭关系候选，不把扩张端点宣称为任意归属下可实际取得的目标；只有真实记录到该闭关系的必要包含被使用。
+

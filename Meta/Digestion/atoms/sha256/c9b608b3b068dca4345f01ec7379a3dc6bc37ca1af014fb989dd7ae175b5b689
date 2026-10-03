@@ -1,0 +1,13 @@
+**命题 40.7（固定内点极限、系数分母与共轭增长）。** 固定以上 $J,H_A,\xi,w$，置 $m=|w|$，定义
+
+$$
+b_*=c_--f_w(\alpha),\qquad
+b_n=c_--f_w(y_n).
+$$
+
+存在一个 $n_0\ge1$，使所有 $n\ge n_0$ 的 $b_n$ 两两不同，属于 $J\cap\mathbb Q(t)$，趋于同一个固定内点 $b_*\in J$，并满足 $10b_n\in\mathbb Z[t]$。若撇号表示非平凡共轭嵌入，则
+
+$$
+b_n'=b_*'-g^{-(m+6n)}(x'-\alpha'),\qquad |b_n'|\longrightarrow\infty.
+$$
+

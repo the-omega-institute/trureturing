@@ -1,0 +1,35 @@
+### 定义 45.4（相位条带、颜色类型及同源终端递推）
+
+以后统一置
+$$
+s_j=-1+\frac{j\phi}{5}\ (0\le j\le5),\qquad
+\theta=\frac{2t}{5},\quad u=\frac t5,\quad
+v_*=-\frac{5+g}{10},\quad H=\frac{t^2-\theta}{g},
+$$
+$$
+K_*=2-8g,\qquad J_*=\frac{7+2g}{5},\qquad
+\eta=\frac{3t}{5},\qquad L_*=f_3f_3(c)=\frac{96g-25}{5}.
+\tag{45.7}
+$$
+特别地 $s_1=(g-7)/10$、$s_2=(g-2)/5$、$s_3=-gt/5=(3g-1)/10$、$s_4=(1+2g)/5$、$s_5=t$。本章 $u$ 仅表示 $t/5$；分支5的平移始终写成 $t^2$。定义严格临界带及其逆条带
+$$
+\begin{aligned}
+B_1&=(a,-t^2),&B_2&=(c,b),&B_3&=(e,d),&B_4&=(h,f),&B_5&=(2t,i),\\
+C_j&=(s_{j-1},s_j),& F_{r_j}(B_j)&=C_j.
+\end{aligned}
+\tag{45.8}
+$$
+这些 $B_j$ 只表示临界 $\lambda$ 成员资格。实际双色带为相应闭交 $E_{j-1}^\beta\cap E_j^\beta\subset B_j$。令 $U_j=\{j-1,j\}$ 为**颜色指标集**，$H_j^\beta=\bigcup_{a\in U_j}E_a^\beta$ 为**标量集合**。其临界外包络分别是 $[-1,b],[a,d],[c,f],[e,i],[h,\phi]$。
+
+单双色相位旋到零，带号为 $j$，后四个固定原单色为 $C=(c_1,c_2,c_3,c_4)$。对指标集 $A\subseteq\{0,\ldots,5\}$，定义
+$$
+H(A)=\bigcup_{a\in A}E_a^\beta,\qquad
+\mathcal K_s^A(\varnothing)=I_s\cap H(A),
+$$
+$$
+\mathcal K_s^A(cC')=E_c^\beta\cap
+\bigcup_{s\xrightarrow{\ell}s'} f_\ell\bigl(\mathcal K_{s'}^A(C')\bigr).
+\tag{45.9}
+$$
+当 $A=\{0,\ldots,5\}$ 时，$H(A)=X$，表示不加终端颜色；当 $A=U_j$ 时，表示下一相位零的颜色必要条件。递推的每条分支是一条实际共同来源和全程 guard，固定字面四尾时只保留该分支。并集表示不同整条合法尾的选择，不授予各坐标独立自由。
+

@@ -1,0 +1,31 @@
+## 41. 正预算余量下的有限回返分支表示
+
+本章固定临界六格 FIB 仪器、一个固定切点归属和出发时钟。记
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad g=t^3,\qquad \lambda=\frac{t^2}{10},
+$$
+
+$$
+X=I_0=[-1,\phi],\qquad I_1=[-1,t],\qquad D_X=\operatorname{diam}X=\phi^2,
+$$
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,t^2,1,2-t).
+$$
+
+来源字母表为 $\Lambda=\{3,0,5,2,25\}$，颜色字母表为 $\mathcal C=\{0,1,2,3,4,5\}$。合法 guard 边为
+
+$$
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad 1\to0:3,0;\qquad 1\to1:5.
+$$
+
+$A_s$ 是 incoming guard 为 $s$ 的完整合法来源地址，$D_s\subseteq A_s$ 是最终全为空窗的地址，且 $\Omega=A_0$、$D=D_0$。来源边在 出发时取得一个颜色；取得 $M$ 个颜色观察坐标 $0,\ldots,M-1$，坐标 $M$ 的尾端不观察。颜色格闭包记为 $J_i$，闭预算 $a$ 的扩张为
+
+$$
+E_i^a=\{x\in X:\operatorname{dist}(x,J_i)\le a\}.
+$$
+
+来源身份、guard、颜色和标量属于不同层次；同标量的不同字面来源地址始终保留。以下直接使用定理39.2.1、推论39.2.2和定理39.3.2给出的规范凸包、来源非退化性及最小闭预算；正裕量转移和与 $R$ 的比较分别沿用定理39.8.1与定理39.9.1的相应证明。
+

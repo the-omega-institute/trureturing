@@ -1,0 +1,23 @@
+**定理 59.11（有界高串的精确率）。** 令 $c_n^{(K,L)}$ 为定理59.10图中从 $b_0$ 到任意接受边界、路径长恰为 $n$ 的路径数，含 $c_0^{(K,L)}=1$。则存在依赖 $K,L$ 的正数 $a_-,a_+$ 及有限 $n_0$，使
+
+$$
+a_-\zeta_{K,L}^{-2n}\le c_n^{(K,L)}
+\le a_+\zeta_{K,L}^{-2n}\qquad(n\ge n_0),
+$$
+
+$$
+\boxed{\log_2c_n^{(K,L)}=2\gamma_{K,L}n+O_{K,L}(1).}
+\tag{59.54}
+$$
+
+因此付费 anchor 与 stem 的完整历史在所有充分大偶数长度 $52+2n$ 上有精确率 $\gamma_{K,L}$，奇数长度计数为零。对每个固定 $b_L<b<\Psi_K$，两个模板的点态率至少为 $\gamma_{K,L}$；每个正确完整解码器满足
+
+$$
+B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)
+\ge\gamma_{K,L}N-O_{K,L}(1),\qquad
+\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}{N}
+\ge\gamma_{K,L}.
+\tag{59.55}
+$$
+

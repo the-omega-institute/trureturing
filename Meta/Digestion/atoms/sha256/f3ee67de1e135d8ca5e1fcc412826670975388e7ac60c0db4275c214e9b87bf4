@@ -1,0 +1,65 @@
+**命题 43.14（所有长度不超过 $n$ 的精确闭成本）。** 令 $B_n$ 是命题43.11整棵树中所有实际来源、所有 departure 观察坐标到各自指定闭格的最大距离。若
+
+$$
+ c=\min\{c_1,c_2\}>0,
+$$
+
+则
+
+$$
+ B_n\le\beta-ca^n<\beta.
+$$
+
+$B_n$ 可由固定有限个实际端点公式精确取得。具体地，令
+
+$$
+ A_-=\min\{A_0,A_1\},\quad A_+=\max\{A_0,A_1\},\quad
+ p_-=\frac{A_-}{1-a},\quad p_+=\frac{A_+}{1-a}.
+$$
+
+第一分量在所有至多 $N$ 个返回后的终端值的区间包络为
+
+$$
+ K_N^{(1)}=[\ell_N,u_N],
+$$
+
+$$
+ \ell_N=\min\{x_1,p_-+a^N(x_1-p_-)\},\qquad
+ u_N=\max\{x_1,p_++a^N(x_1-p_+)\}.
+$$
+
+第二分量包络为
+
+$$
+ K_N^{(2)}=[\ell_N^{(2)},u_N^{(2)}],\qquad
+ \ell_N^{(2)}=\min\{x_2,y+a^N(x_2-y)\},\quad
+ u_N^{(2)}=\max\{x_2,y+a^N(x_2-y)\}.
+$$
+
+令 $\mathscr F_{\rm st}$ 为第一分量的 stem 槽，$\mathscr F_{\rm ret}$ 为其两种返回槽，令 $\mathscr R_{\rm st}$ 为 rival 的 stem 槽，$\mathscr R_{\rm ret}$ 为 rival 的共同返回槽（各自带上 $W_0,W_1$ 两种颜色副本）。对 $\alpha\in\mathscr F_{\rm st}\cup\mathscr R_{\rm st}$ 取 $N_\alpha=n$；对 $\alpha\in\mathscr F_{\rm ret}\cup\mathscr R_{\rm ret}$ 在 $n\ge1$ 时取 $N_\alpha=n-1$，在 $n=0$ 时删去这些返回槽。若 $f_\alpha$ 是第一分量槽的固定后缀，$r_\alpha$ 是 rival 槽的固定后缀，则
+
+$$
+\begin{aligned}
+ B_n=\max\Bigl(\{\operatorname{dist}(f_\alpha(\ell_{N_\alpha}),J_{c_\alpha}),
+ \operatorname{dist}(f_\alpha(u_{N_\alpha}),J_{c_\alpha}):
+ \alpha\in\mathscr F_{\rm st}\cup\mathscr F_{\rm ret}\text{ 当前存在}\}
+ \\cup\{\operatorname{dist}(r_\alpha(\ell_{N_\alpha}^{(2)}),J_{c_\alpha}),
+ \operatorname{dist}(r_\alpha(u_{N_\alpha}^{(2)}),J_{c_\alpha}):
+ \alpha\in\mathscr R_{\rm st}\cup\mathscr R_{\rm ret}\text{ 当前存在}\}\Bigr).
+\end{aligned}
+$$
+
+若这些有限槽在 $n=0$ 均为空，则约定 $B_0=0$；否则上式只取实际存在的槽。
+
+每个列出的端点分别由一个实际词实现；该最大值不是把不同词的独立极值拼接成一条来源。
+
+**证明。** 由于 $a>0$，固定长度 $k$ 的第一返回组合在 $x_1$ 上的最小值和最大值分别由全取 $A_-$ 和全取 $A_+$ 的词取得，所得值为
+
+$$
+ p_-+a^k(x_1-p_-),\qquad p_++a^k(x_1-p_+).
+$$
+
+对 $0\le k\le N$，每个序列单调趋向其固定点，所以全部实际点的最小值、最大值就是 $\ell_N,u_N$；若极值为 $x_1$，由空词取得，若为迭代值，使用重复极值返回取得。第二分量只有一个返回映射，故其两个端点由空词或重复 $V$ 取得。
+
+任一第一分量 departure 坐标是其终端值经 $f_\alpha$ 得到，任一 rival 坐标是其终端值经 $r_\alpha$ 得到。距离到闭区间是凸函数，在相应闭区间 hull 上的最大值出现在端点，因此上述分量特定的有限清单给出上界。反过来每个端点都由实际词取得，清单中的每一项都是一个真实历史的成本；其中最大的那一项也被实际取得，故等式成立。stem 槽的 $N=n$、返回槽的 $N=n-1$ 正是因为观察发生在当前返回块离开时，当前块之后还剩这些返回；终端本身未观察，所以没有额外颜色项。命题43.12和43.13给出每个项的统一 margin，因而 $B_n\le\beta-ca^n$；若没有观察项则 $B_0=0$。证毕。
+

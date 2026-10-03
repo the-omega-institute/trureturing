@@ -1,0 +1,23 @@
+**引理49.3（共享来源的全槽活跃约束）。** 在高、低侧比较域 $x\in[c,T_2]$、$y\in[0,c]$ 内，$U,V$ 的位置4指定颜色1，距离恰为
+
+$$
+\begin{aligned}
+f_{33}(c+D_H)&=q_1-\lambda+g^2D_H,\\
+f_{03}(c-D_L)&=q_2+\lambda-g^2D_L,\\
+\operatorname{dist}(f_{33}(c+D_H),J_1)&=\lambda-g^2D_H,\\
+\operatorname{dist}(f_{03}(c-D_L),J_1)&=\lambda-g^2D_L
+\qquad(0<D_j\le E_j).
+\end{aligned}
+\tag{49.3}
+$$
+
+所有其余 $U/V$ 位置以及 $C$ 的全部20个位置，在 $C$ 输入域 $[0,T_2]$ 上均满足
+
+$$
+\boxed{\operatorname{dist}(\text{实际出发坐标},J_{\text{指定色}})
+\le\lambda-g^6.}
+\tag{49.4}
+$$
+
+这些式子可同时用于 stems 及本章全部返回的内部槽。
+

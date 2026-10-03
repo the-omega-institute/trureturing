@@ -1,0 +1,14 @@
+**定理 15.1（Exact sourcewise criterion and the later layer）。** Fix $x\in X$ with composite $n=q(x)$ and a positive unbounded divisibility tower $(L_r)$. The following are equivalent:
+
+1. There exists $r_0$ with $\gcd(n,L_{r_0})>1$.
+2. There exists $R$ with $C_R(x)\subseteq X\setminus P$.
+3. There exists $R$ such that $C_r(x)\subseteq X\setminus P$ for every $r\ge R$.
+
+If every $L_r$ is coprime to $n$, each finite fiber contains infinitely many prime actual sources.
+
+证明。Assume the first condition. Choose a prime divisor $p$ of $\gcd(n,L_{r_0})$; taking the least divisor greater than 1 proves its existence. Then $p\mid n$ and $p\mid L_{r_0}$. Since $n$ is composite, $p<n$. Divisibility makes $p\mid L_r$ for every $r\ge r_0$. Unboundedness supplies $R\ge r_0$ with $L_R>n$.
+
+For any $y\in C_R(x)$, the quantity has the form $q(y)=n+tL_R$ with $t\in\mathbb Z$. Since $0<n<L_R$ and $q(y)\ge2$, one cannot have $t\le-1$, which would give $q(y)\le n-L_R<0$. Thus $q(y)\ge n>p$. Also $p\mid q(y)$, so it is a proper divisor and $q(y)$ is composite. This proves the second condition. Nestedness gives the third; the third gives the second by taking $r=R$.
+
+For necessity, a layer with $\gcd(n,L_R)=1$ has an actual prime witness by theorem 14.2 and hence cannot certify compositeness. Therefore the second condition implies the first. If every layer is coprime, apply theorem 14.2 independently at each layer to obtain the stated infinite witnesses. All these certificates concern the actual composition fibers; the existence proof does not provide an additional measurement mechanism. $\square$
+

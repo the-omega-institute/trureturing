@@ -1,0 +1,59 @@
+**定义58.3。** 外列表按外到内写成
+
+$$
+\mathbf a=((m_1,r_1),\ldots,(m_k,r_k)),\qquad m_i,r_i\ge1,
+\tag{58.10}
+$$
+
+允许空列表。原模板 $\mathsf O$ 的唯一规定成对来源与历史是
+
+$$
+\begin{aligned}
+\alpha_{\mathbf a}&=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\xi_H,\\
+\gamma_{\mathbf a}&=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\xi_L,\\
+H_{\mathbf a}&=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}.
+\end{aligned}
+\tag{58.11}
+$$
+
+anchor 模板 $\mathsf A$ 在外列表与同一对尾之间插入固定 $(1,1)$ 返回：
+
+$$
+\begin{aligned}
+\widehat\alpha_{\mathbf a}
+ &=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\,UC\,\xi_H,\\
+\widehat\gamma_{\mathbf a}
+ &=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\,VC\,\xi_L,\\
+\widehat H_{\mathbf a}
+ &=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}\,de.
+\end{aligned}
+\tag{58.12}
+$$
+
+固定长度偏移为 $\ell_{\mathsf O}=26$、$\ell_{\mathsf A}=52$，精确 departure 观察长度为
+
+$$
+N_{\mathsf T}(\mathbf a)=\ell_{\mathsf T}+\sum_{i=1}^k(6m_i+20r_i).
+\tag{58.13}
+$$
+
+长度 $N$ 观察位置 $0,\ldots,N-1$；终端 $N$ 尚未观察。其后的完整未来必须分别是同一字面尾的零误差记录 $S_{\xi_H}$、$S_{\xi_L}$，从该终端开始，不再重复取得终端以前的坐标。
+
+给定 $\mathsf T,b,o,\kappa$，称列表联合可供应，是指存在高、低两组误差，使 (58.11) 或 (58.12) 中**这两条规定来源**分别产生同一个规定有限历史，并接各自规定零误差未来；两条完整记录均满足合同 $\kappa$。两组误差可以不同；两来源的列表、guard、字面尾不能不同，也不能替换成产生同颜色的其他来源。
+
+定义精确长度计数及率
+
+$$
+a^{\mathsf T}_{b,o,\kappa}(N)
+=\#\{H:\ |H|=N,\ H\text{ 来自该模板的一条联合可供应列表}\},
+$$
+
+$$
+\eta^{\mathsf T}_{b,o,\kappa}
+=\limsup_{N\to\infty}
+\frac{\log_2\max\{1,a^{\mathsf T}_{b,o,\kappa}(N)\}}{N}.
+\tag{58.14}
+$$
+
+这里数不同历史，不数误差选择次数。对于这对零误差未来，$b>0$ 时逐槽严格可供应等价于逐记录余量可供应：有限历史有有限个严格误差，其最大值与 $b$ 相差正数；未来误差全为零。这个等价不提供全族统一余量。所有奇数 $N$ 的计数均为零。
+

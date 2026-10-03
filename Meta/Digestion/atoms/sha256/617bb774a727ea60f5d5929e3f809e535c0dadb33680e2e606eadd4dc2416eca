@@ -1,0 +1,37 @@
+**定理 23.2（叶地址与标签的共同取得判据及两正例锐值）。** 在定义 23.1 的合同下，确定性费用与随机期望费用同时达到两个个体下界 $(n_P,n_Q)$ 的充要条件均为
+
+$$
+P=Q\quad\text{或}\quad H(P,Q).
+\tag{23.3}
+$$
+
+其中 $P=Q$ 只复用同一个正例的最优证书。若 $P\ne Q$ 且 $H(P,Q)$ 不成立，则每个 $\pi\in\mathfrak D_d$ 及每个 $\Pi\in\mathfrak R_d$ 分别满足
+
+$$
+\begin{aligned}
+C_\pi(P)+C_\pi(Q)&\ge n_P+n_Q+1,\\
+\mathbb E_\mu C_\Pi(\cdot,P)+\mathbb E_\mu C_\Pi(\cdot,Q)&\ge n_P+n_Q+1.
+\end{aligned}
+\tag{23.4}
+$$
+
+确定性费用对 $(n_P,n_Q+1)$ 和 $(n_P+1,n_Q)$ 分别由一个全域正确且有限终止的策略取得。两个目标的精确值为
+
+$$
+\begin{aligned}
+D_d^+(P,Q)&=
+\begin{cases}
+n+1,&P\ne Q,\ \neg H(P,Q),\ n_P=n_Q=n,\\
+\max\{n_P,n_Q\},&\text{其余情形},
+\end{cases}\\[3pt]
+R_d^+(P,Q)&=
+\begin{cases}
+n+\tfrac12,&P\ne Q,\ \neg H(P,Q),\ n_P=n_Q=n,\\
+\max\{n_P,n_Q\},&\text{其余情形}.
+\end{cases}
+\end{aligned}
+\tag{23.5}
+$$
+
+式（23.2）的下确界全部达到。所有策略均须在全部 $\mathcal T$ 上满足其正确性和终止合同；取得性不附加未知输入承诺。
+

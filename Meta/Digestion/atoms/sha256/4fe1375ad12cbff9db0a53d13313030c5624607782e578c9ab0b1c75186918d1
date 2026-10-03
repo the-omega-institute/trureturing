@@ -1,0 +1,62 @@
+**引理 37.5（共同 CRT 相容性与逐词算术重数）。** 记 $\mathcal A_\rho$ 为式 (37.4) 存在算术解的合法擦除词集合。每个相容擦除词的算术提升数为
+
+$$
+g_n=\begin{cases}a^2,&n=0,\\a,&n=1,\\1,&n\ge2.
+\end{cases}
+\tag{37.5}
+$$
+
+当 $n=1$ 时，候选位 $b$ 相容当且仅当 $bw$ 合法且
+
+$$
+b_0-qMr\equiv2b\pmod d.
+$$
+
+记
+
+$$
+S=\begin{pmatrix}2&3\\1&2\end{pmatrix},\qquad
+\upsilon=\binom{-3}{2}.
+$$
+
+当 $n\ge2$ 时，置
+
+$$
+x_m(u_0)=S^{-1}\binom{b_0}{b_1+u_0}
+=\begin{pmatrix}2&-3\\-1&2\end{pmatrix}\binom{b_0}{b_1+u_0}\pmod m.
+$$
+
+候选 $u$ 相容当且仅当 $uw$ 合法，并同时满足
+
+$$
+b_j-b_{j+1}-b_{j+2}\equiv2u_j+u_{j+1}\pmod m
+\quad(0\le j\le n-3),
+$$
+
+$$
+x_m(u_0)\equiv t_u+M^nr\pmod d.
+$$
+
+相容时其唯一向量 $y\bmod L$ 由
+
+$$
+y\equiv x_m(u_0)\pmod m,\qquad
+y\equiv t_u+M^nr\pmod\ell
+$$
+
+共同确定；$n=2$ 时递推残差条件为空。
+
+**证明。** 对两个模数，广义 CRT 在每个坐标上给出：指定模 $m$ 与模 $\ell$ 余数可合并，当且仅当它们模 $d$ 相同；合并值在模 $L$ 下唯一。确切地，写 $m=da$、$\ell=d\ell'$，则 $\gcd(a,\ell')=1$。在一个模 $\ell$ 代表 $x_\ell$ 上加 $\ell e$ 后，要求模 $m$ 等于 $x_m$，归结为 $\ell'e\equiv(x_m-x_\ell)/d\pmod a$；右端有意义恰在相容时，且 $\ell'$ 可逆，故逐坐标唯一。这同一个相容判据作用于整个向量，没有独立拼接标量边缘。
+
+$n=0$ 时仅有 $y\equiv r\pmod\ell$，$y=r+\ell e\pmod L$ 的两坐标 $e\bmod a$ 各有 $a$ 种，因此有 $a^2$ 个提升，地址词恰为 $w$，包括 $k=0$ 的空词。
+
+$n=1$ 时终端给出 $x_\ell=b\alpha+Mr\pmod\ell$，保存行是 $qy\equiv b_0\pmod m$。取该向量的整数代表，写 $y=x_\ell+\ell e\pmod L$。标量方程可解必须且只需 $b_0-qx_\ell\equiv0\pmod d$，即声明的位相容式。相容时剩下
+
+$$
+(\ell/d)qe\equiv(b_0-qx_\ell)/d\pmod a.
+$$
+
+$\ell/d$ 是模 $a$ 的单位；$S$ 在每个模数下都是双射，所以 $e\mapsto qe$ 是满射，给定其第一行后第二行仍有且仅有 $a$ 种。因而每个相容位的向量解恰有 $a$ 个。这里 $a=1$ 也成立。
+
+$n\ge2$ 时给定首位，前两读数给 $Sy=(b_0,b_1+u_0)^{\mathsf T}\pmod m$，$\det S=1$ 使 $y\bmod m$ 唯一。定理 37.1 的同一递推证明保证其余保存读数恰由上述残差条件检验。再与终端所给的模 $\ell$ 向量按广义 CRT 合并，存在时恰有一个模 $L$ 向量。后续读数只排除词，不增加向量重数。证毕。
+

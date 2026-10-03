@@ -1,0 +1,78 @@
+**定理 9.3（全部极限并列项的精确有限比较）。** 对定义 9.1 的 $k,H$，$\mathcal J_k(H)$ 的不同项具有不同指标 $j$。将共同最大得分写成 $W=U+V\phi$，则 $U,V$ 为正整数。对每个整数 $L\ge0$ 满足 $m=3L+3>\max_{i\in\mathcal J_k(H)}j_i$，有
+
+$$
+R_L(x_i,y_i)
+=\frac{F_{m-j_i}}{T_i(L)}
+=\frac1{U+V\,F_{m-j_i+1}/F_{m-j_i}}.
+\tag{9.10}
+$$
+
+任意两项 $i=(j,\sigma)$、$h=(q,\tau)$ 的准确差为
+
+$$
+\begin{gathered}
+c_{ih}=s_hF_q\beta_i-s_iF_j\beta_h\in\mathbb Z,\\
+R_L(x_i,y_i)-R_L(x_h,y_h)
+=\frac{(-1)^{L+1}c_{ih}}{T_i(L)T_h(L)}.
+\end{gathered}
+\tag{9.11}
+$$
+
+当 $i\ne h$ 时 $c_{ih}\ne0$。这些项按比值从小到大的完整次序是：先取 $j\equiv m\pmod2$ 的全部指标，按 $j$ 严格递减排列；再取另一奇偶的全部指标，按 $j$ 严格递增排列。空的一组略去。
+
+证明。若两个并列项具有同一指标 $j$，其 $W$ 相等给 $\alpha_i+\phi\beta_i=\alpha_h+\phi\beta_h$，无理性使两整数坐标分别相等。若朝向也相同，式 (9.2) 的和、差确定相同端点，从而是同一项。若朝向相反，将正朝向记为 $i$，则
+
+$$
+2x_i+d_j=2x_h-d_j\quad\Longrightarrow\quad x_h=x_i+d_j=y_i.
+$$
+
+左边的 $x_h$ 许可，右边的 $y_i$ 非许可，矛盾。这证明同一指标没有两个极限并列项。
+
+复用[式 (8.18)](#8-全预算相对极小对的实际域相邻性与整数平移优化)和[母卷命题 105.2 证明中的矩阵幂](FIBONACCI_ATOMIC_RELATION_GENERATION.md#1052-标量返回位置构成循环相位的子群)，有
+
+$$
+\binom UV=M^j\binom{\alpha_i}{\beta_i},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+M^j=\begin{pmatrix}F_{j-1}&F_j\\F_j&F_{j+1}\end{pmatrix}.
+\tag{9.12}
+$$
+
+许可端点的第二坐标为正，故 $\beta_i>0$，而 $\alpha_i\ge0$、$j\ge1$，所以 $U,V>0$。对 $m>j$，经典 Fibonacci 加法式和 Cassini 在这些索引下给
+
+$$
+A_LF_{j+1}-B_LF_j=(-1)^jF_{m-j},\qquad
+(F_{m-j},F_{m-j+1})M^j=(F_m,F_{m+1}).
+$$
+
+第一式确定绝对值分子；第二式与式 (9.12) 给 $T_i(L)=UF_{m-j}+VF_{m-j+1}$，从而证明式 (9.10)。
+
+为得式 (9.11)，在证明中记 $N_i(z)=s_i(F_{j+1}-F_jz)$、$D_i(z)=\alpha_i+\beta_i z$。$N_i(\phi)=\phi^{-j}>0$，且 $N_i(\phi)/D_i(\phi)=1/W$。因此
+
+$$
+N_i(z)D_h(z)-N_h(z)D_i(z)
+=c_{ih}(z^2-z-1),
+\tag{9.13}
+$$
+
+因为左边为至多二次的整数多项式、在 $\phi$ 处为零，其二次项系数恰为 $c_{ih}$；$z^2-z-1$ 是 $\phi$ 的最小多项式。$m>j,q$ 时两个 $N(\xi_L)$ 均为正，上式就是准确比值差的交叉分子。Cassini 给
+
+$$
+\xi_L^2-\xi_L-1
+=\frac{F_{m+1}^2-F_mF_{m+1}-F_m^2}{F_m^2}
+=\frac{(-1)^m}{A_L^2},
+$$
+
+而 $D_i(\xi_L)=T_i(L)/A_L$、$m\equiv L+1\pmod2$，证明式 (9.11)。
+
+最后置 $q_t=F_{t+1}/F_t$（$t\ge1$）。Fibonacci 双根残差及 Cassini 给
+
+$$
+q_t-\phi=\frac{(-1)^t\phi^{-t}}{F_t},\qquad
+q_{t+2}-q_t=\frac{(-1)^{t+1}}{F_tF_{t+2}}.
+\tag{9.14}
+$$
+
+故偶数 $t$ 的 $q_t$ 全部大于 $\phi$，随 $t$ 严格下降；奇数 $t$ 的 $q_t$ 全部小于 $\phi$，随 $t$ 严格上升。这正是经典收敛子的交替单调性，参见 [Hančl–Turek，*One-sided Diophantine approximations*，§3 Proposition 3.2](https://arxiv.org/pdf/1809.01013v2)：在 $\phi=[1;1,1,\ldots]$ 下，该文零起指标 $n=t-1$ 的 $p_n/q_n$ 对应这里的 $F_{t+1}/F_t$。
+
+式 (9.10) 因 $V>0$ 而随 $q_{m-j}$ 严格下降。$m-j$ 为偶数的一组先于奇数组；在前一组中，$j$ 越大、$m-j$ 越小、$q_{m-j}$ 越大；在后一组中，$j$ 越小、$m-j$ 越大、$q_{m-j}$ 越大。由指标互异，得到所述严格全序。特别地不同项的准确比值不相等，式 (9.11) 的 $c_{ih}$ 遂非零。证毕。
+

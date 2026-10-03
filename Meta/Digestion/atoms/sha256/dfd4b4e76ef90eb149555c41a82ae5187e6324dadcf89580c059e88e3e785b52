@@ -1,0 +1,13 @@
+**命题 63.2（两返回原片准入）。** 对每个命名位置 $v$，令 $s_v$ 为实际 incoming guard，令 $H_v$ 为 (63.7) 或 (63.8) 的区间，并令 $r(v)$ 为该位置的 rival 相位。以下条件是两条指定返回在固定完整图 $G_B$ 中按命名位置实现的充要条件：
+
+$$
+\begin{aligned}
+&\text{(i) }H_v\subseteq I_{s_v}\text{，并且对其实际首标签，}H_v\text{ 位于相应合法根域；}\\
+&\text{(ii) }B\cap\operatorname{int}H_v=\varnothing;\\
+&\text{(iii) 存在一个原闭色 }c_v\text{ 使 }H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^{\beta}.
+\end{aligned}
+\tag{63.11}
+$$
+
+在此条件下，每个 $H_v$ 位于唯一的非退化原片 $P_v$ 中，且每条拟议首标签边都成为原全包含边；于是两条词确实给出原配对返回。
+

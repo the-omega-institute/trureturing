@@ -1,0 +1,103 @@
+**命题 48.1（原六色布局及临界代数）。** 取原六个闭颜色
+
+$$
+\begin{aligned}
+q_1&=-\frac{11t^2}{10},&
+q_2&=\frac{23g-3}{20},&
+q_3&=\frac{1+3g}{4},\\
+q_4&=\frac{13+27g}{20},&
+q_5&=2t+\lambda,
+\end{aligned}
+$$
+
+$$
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad
+J_2=[q_2,q_3],\quad J_3=[q_3,q_4],\quad
+J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+$$
+
+这些切点分别等于式 (28.1) 的
+$-t^2-\lambda,g-3\lambda,t-5\lambda,2t-7\lambda,2t+\lambda$。
+固定任意一种合法切点归属，记实际量化器为 $Q$；每个
+$\operatorname{int}J_c$ 都属于 $Q^{-1}(c)$。对预算 $b$ 记
+
+$$
+E_c^b=\{x\in I_0:\operatorname{dist}(x,J_c)\le b\}.
+$$
+
+定义
+
+$$
+L=\frac{3(g-1)}5,\qquad
+B_*=\frac{11g-1}{10},\qquad
+s=\frac{-4+t}{5},\qquad z=\frac t5,
+$$
+
+$$
+e_-=z-L=\frac65-t=\frac{7-5g}{10},\qquad
+e_+=B_*-z=g-\frac15.
+$$
+
+则
+
+$$
+B_*-L=t,\qquad e_-+e_+=t,\qquad
+4e_-=(61+15g)e_+.
+\tag{48.1}
+$$
+
+再置
+
+$$
+a=g^7,\qquad h=g^6,\qquad D=1+a,
+\qquad
+m_-=\frac{ae_-}{D},\qquad m_+=\frac{ae_+}{D},
+$$
+
+$$
+\delta=\frac{m_+}{4}
+=\frac{a(g-\frac15)}{4(1+a)},\qquad
+\boxed{\ \beta=\lambda-\delta
+=\lambda-\frac{a(g-\frac15)}{4(1+a)}\ }.
+\tag{48.2}
+$$
+
+所有这些数都属于 $\mathbb Q(t)$，并且 $0<\beta<\lambda$。
+
+**证明。** 由 $t^2+t=1$ 得
+
+$$
+g^2+4g=1,\qquad \frac4{17}<g<\frac14,\qquad
+t=\frac{1+g}{2},\qquad t^2=\frac{1-g}{2}.
+\tag{48.3}
+$$
+
+有理界的证明只需考察在非负轴严格递增的多项式
+$p(u)=u^2+4u-1$：$p(4/17)=-1/289<0$，而
+$p(1/4)=1/16>0$。因此
+$0<e_+=g-1/5<1/20$，
+$e_--e_+=(9-15g)/10>0$，且 $e_-<1$。
+又 $0<a=g^7<g^4<(1/4)^4=1/256$，所以
+
+$$
+0<\delta<\frac1{20480},\qquad
+0<m_+<\frac1{5120},\qquad
+0<m_-<\frac1{256}.
+\tag{48.4}
+$$
+
+因为 $D>1$ 且 $\lambda=(1-g)/20>3/80$，有
+$0<\delta<\lambda$，即 $0<\beta<\lambda$。
+所有运算均在 $\mathbb Q(t)$ 内，分母 $D$ 非零，故域成员关系成立。
+
+关系 (48.1) 由 $t=(1+g)/2$ 化简得到。例如
+
+$$
+(61+15g)(g-1/5)
+=58g+15g^2-61/5
+=14/5-2g
+=4e_-.
+$$
+
+其余两式直接由 $L,B_*,z$ 的定义相减得到。$\square$
+
