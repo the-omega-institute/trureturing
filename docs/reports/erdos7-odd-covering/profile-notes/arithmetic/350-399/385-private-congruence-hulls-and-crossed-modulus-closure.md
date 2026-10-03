@@ -26158,3 +26158,84 @@ distinct odd whole-cover family satisfying EB1.  Its role is narrower and
 exact: any whole-cover bridge must retain source fibres and phases (or an
 equivalent future-behaviour quotient), rather than infer repair attainability
 from the numerical hull alone.
+
+## 227. Divisor-only density barrier for the Section 226 pair
+
+The Section 208 retained-family contract gives a stronger obstruction to
+embedding this pair.  In that contract every retained modulus divides \(N\),
+the moduli are distinct, and one phase is retained for each modulus.  If a
+deleted packet has liability \(F_i\), every retained class in a realization
+of its complement must be disjoint from \(F_i\).  Disregarding that
+disjointness, the occupied labels, and any other exclusions only increases
+the largest possible density.  Thus the reciprocal sum of all non-unit
+divisors of \(N\) is an upper bound for every such retained union.
+
+For \(N=35\cdot3^{e-1}\) with \(e\ge5\),
+
+\[
+ \sum_{\substack{d\mid N\\d>1}}\frac1d
+ =
+ \left(\sum_{j=0}^{e-1}3^{-j}\right)
+   \left(1+\frac15\right)\left(1+\frac17\right)-1
+ =\frac{37}{35}-\frac{72}{35\cdot3^e}.
+ \tag{227.1}
+\]
+
+For \(F_A\), the displayed repair removes labels 9 and 15.  Even if all
+ other divisor labels were made available, the retained union would have
+ upper density
+
+\[
+ S_A\le
+ \frac{37}{35}-\frac{72}{35\cdot3^e}
+ -\frac19-\frac1{15}
+ =\frac{277}{315}-\frac{72}{35\cdot3^e}.
+ \tag{227.2}
+\]
+
+The complement of the three deleted \(N\)-fibres has density
+
+\[
+ 1-\frac3N=1-\frac{3^{2-e}}{35},
+\]
+
+and the gap between this required density and (227.2) is
+
+\[
+ \left(1-\frac3N\right)-S_A
+ \ge \frac{38}{315}+\frac9{5\cdot3^e}>0.
+ \tag{227.3}
+\]
+
+For \(F_B\), labels 9, 15, and 21 are used by the three-class repair, so
+
+\[
+ S_B\le
+ \frac{37}{35}-\frac{72}{35\cdot3^e}
+ -\frac19-\frac1{15}-\frac1{21}
+ =\frac{262}{315}-\frac{72}{35\cdot3^e},
+ \tag{227.4}
+\]
+
+whereas
+
+\[
+ \left(1-\frac3N\right)-S_B
+ \ge \frac{53}{315}+\frac9{5\cdot3^e}>0.
+ \tag{227.5}
+\]
+
+The density of a union is at most the sum of the densities of its classes,
+so (227.3) and (227.5) rule out an exact complement realization for both
+families under the divisor-only Section 208 interface.  This argument even
+allows the forbidden labels 3, 5, and 7 in the upper bound; imposing their
+actual occupied status only strengthens the obstruction.  It is therefore a
+uniform proof for every \(e\ge5\), rather than a finite solver check.
+
+Consequently Section 226 remains a selected-liability counterexample to a
+numerical boundary, not a whole-cover construction.  Any attempt to turn it
+into one must introduce a modulus not dividing \(N\), repeat or otherwise
+relax the retained-label interface, or choose a different deletion packet.
+Each option leaves the Section 208 contract and requires a new
+source-compatible bridge; the present calculation does not claim that such a
+bridge is impossible.
