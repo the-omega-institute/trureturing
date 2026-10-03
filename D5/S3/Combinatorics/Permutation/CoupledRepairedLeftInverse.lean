@@ -7,6 +7,9 @@
    digest: The coupled repaired digit maps recover both original permutations and have bounded forward digits. -/
 
 import Mathlib
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Order.Fin.Tuple
+import Mathlib.Data.Finset.Sort
 
 set_option autoImplicit false
 set_option maxHeartbeats 1200000
