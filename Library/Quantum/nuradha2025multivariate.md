@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2404.16101v3
 claim: Multivariate SDP fidelity maximizes jointly positive block coherences, is bounded by average pairwise root fidelity, and motivates the explicit operational question in Section 6 item 2.
 strata_touched:
   - D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator
+  - D5/S3/Quantum/Information/ZFidelityDistanceRefutation
 license: citation-only
 triage: anchor
 ---
@@ -25,3 +26,33 @@ Section 6 item 2 asks for information-theoretic operational interpretations of m
 The positive block in (5.27) directly parametrizes one population-preserving, conditional-state-calibrated recovery channel. The normalized mean of real coherences is its SDP objective. Allowing an independently measured phase for each pair gives a modulus objective, which is generally different. Both quantities are bounded by pairwise root fidelities.
 
 The new paper derivation refines this comparison with a projective-cycle obstruction and, for three orthogonal thermal qubit states, a matching fourth-order high-temperature gap. The basic SDP-to-channel correspondence is standard and is not presented as the sole research contribution. The external operational question is used as a precise research anchor; this note does not register its full resolution, assert that no later interpretation exists, or establish global priority.
+
+## The z-fidelity and Open Question 3
+
+The arXiv v3 source `Accepted.tex` (md5 `f268d19b50ae16e92c968f131065dc6d`)
+defines the bivariate $z$-fidelity (Eq. (eq:z-fid-def), l. 83):
+
+> $F_z(\rho,\sigma) \coloneqq \Tr\!\left[  \left( \sigma^{\frac{1}{4z}} \rho^{\frac{1}{2z}} \sigma^{\frac{1}{4z}} \right)^z \right]$
+
+Item 3 of the open questions in Section 6 (l. 2205) asks:
+
+> Is $\sqrt{2(1-F_z(\rho,\sigma))}$ a distance measure for $z \in (1/2,1)\cup(1,\infty)$?
+
+The encoding takes real powers of positive semidefinite matrices through the
+continuous functional calculus, records the real part of the trace, and reads
+"distance measure" through its triangle inequality on the density matrices of
+every finite dimension.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1088/1751-8121/adc645 (J. Phys. A 58(16), 165304
+  (2025)).
+- URL: https://arxiv.org/abs/2404.16101v3 (v3, June 2025, the latest
+  version; source `Accepted.tex`, md5 `f268d19b50ae16e92c968f131065dc6d`):
+  - Proposition 5.10, Eq. (5.27);
+  - Theorem 5.33, Eq. (5.80);
+  - the $z$-fidelity, Eq. (eq:z-fid-def) (l. 83);
+  - the Bures and Hellinger distances (l. 600–604);
+  - the open questions of Section 6 (l. 2177–2210), including item 3
+    (l. 2205).
+
