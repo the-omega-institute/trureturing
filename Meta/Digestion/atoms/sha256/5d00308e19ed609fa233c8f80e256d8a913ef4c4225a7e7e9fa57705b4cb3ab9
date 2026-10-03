@@ -1,0 +1,9 @@
+**定义 1.1（全节点均匀树律）。** 固定整数 $2\le r<s$，记 $[s]=\{0,\ldots,s-1\}$，$\mathcal C_{r,s}=\{S\subseteq[s]:|S|=r\}$。对每个有限高度 $B\ge0$，令
+
+$$
+\Omega_0=\{\bullet\},\qquad
+\Omega_{B+1}=\mathcal C_{r,s}\times\Omega_B^{[s]}.
+$$
+
+$\mathbb P_0$ 为点质量；$\mathbb P_{B+1}$ 是 $\mathcal C_{r,s}$ 上的均匀律与 $s$ 份 $\mathbb P_B$ 的独立乘积。因此所有深度小于 $B$ 的目标节点都有独立的均匀 $r$ 子集选择，包括未从根到达的节点。
+
