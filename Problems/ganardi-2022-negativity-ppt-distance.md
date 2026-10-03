@@ -179,7 +179,7 @@ module's `claim`.
   - *Unaffected:* the definition of $Q_X$ and the ordering
     $Q_{\mathrm{PROD}}\ge Q_{\mathrm{CC}}\ge Q_{\mathrm{PPT}}$, which follow from
     $\mathrm{PROD}\subset\mathrm{CC}\subset\mathrm{PPT}$ (l. 347–361); the
-    equality for states of positive binegativity (Theorem 1), hence the
+    equality for states of positive binegativity (§2.2, l. 301–310), hence the
     pure-state results $Q_{\mathrm{PPT}}(\psi)=Q_{\mathrm{CC}}(\psi)=N(\psi)$
     (l. 385–389) and the pure-state subadditivity (l. 439–470); and the
     non-decomposability bound (l. 477–520), which uses only
