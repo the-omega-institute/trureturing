@@ -5781,3 +5781,497 @@ f_r=\sum_{b=0}^{d}(H^{-1})_{rb}\psi_b,
 因此任意数量的边界起点一阶占用探针都不能同时区分 Robin 参数和全局速度尺度。施加 \(\int w=1\) 等归一化并排除全局缩放方向后，才可使用上述 \(d+1\) 维秩判据。
 
 这些结论只针对固定源、阻抗、时钟、有限维速度族、共同随机历史和一阶均值读出；完整路径律可能携带额外信息。它们不声称任意速度函数、任意 Robin 模型或任何物理装置都可由有限探针识别；若使用非负探针、不同副本或改变边界，必须重新计算可用秩与协方差。
+
+## 55. FIB 杀死链的更新/再生结构与极限边界
+
+**假设 55.1（参考切点与一次更新）。** 固定第12节单位速度、左反射右吸收的 FIB 链，暂态集 \(E_j=\{0,\ldots,L_j-1\}\)，吸收点 \(L_j\)，转移核 \(K_j\)，并假设 \(\rho(K_j)<1\)。取参考态 \(a_j\in E_j\)，从 \(a_j\) 出发令
+\[
+\sigma_0=0,\qquad
+\sigma_{r+1}=\inf\{n>\sigma_r:X_n\in\{a_j,L_j\}\}.
+\]
+记 \(R_j=\{X_{\sigma_1}=a_j\}\)、\(D_j=\{X_{\sigma_1}=L_j\}\)、\(\kappa_j=\mathbb P_{a_j}(D_j)\in(0,1)\)。一次段的持续时间和有界奖励分别为
+\[
+T_j=\sigma_1,\qquad
+Y_j=\sum_{n=0}^{\sigma_1-1}g_j(X_n),\qquad
+g_j:E_j\to\mathbb R_+^d.
+\]
+定义两个子概率测度
+\[
+\mu_j^R(B)=\mathbb P_{a_j}((T_j,Y_j)\in B;R_j),\qquad
+\mu_j^D(B)=\mathbb P_{a_j}((T_j,Y_j)\in B;D_j).
+\]
+它们的总质量分别为 \(1-\kappa_j\) 和 \(\kappa_j\)。区间 \([\sigma_r,\sigma_{r+1})\) 不重复计入返回端点。
+
+**定理 55.2（更新测度与精确首达律）。** 定义
+\[
+U_j=\sum_{m\ge0}(\mu_j^R)^{*m},
+\qquad
+U_j=\delta_{(0,0)}+\mu_j^R*U_j.
+\]
+则 \(U_j\) 的总质量为 \(\kappa_j^{-1}\)，且杀死前的总时长与总奖励
+\[
+\tau_j=\inf\{n:X_n=L_j\},\qquad
+A_j=\sum_{n<\tau_j}g_j(X_n)
+\]
+满足精确卷积律
+\[
+\mathbb P_{a_j}((\tau_j,A_j)\in\cdot)
+=(U_j*\mu_j^D)(\cdot).
+\]
+对 \(s\ge0\)、\(\lambda\in\mathbb R_+^d\)，令
+\[
+\phi_j^R(s,\lambda)
+=\mathbb E_{a_j}[e^{-sT_j-\langle\lambda,Y_j\rangle};R_j],
+\qquad
+\phi_j^D(s,\lambda)
+=\mathbb E_{a_j}[e^{-sT_j-\langle\lambda,Y_j\rangle};D_j].
+\]
+则
+\[
+\mathbb E_{a_j}e^{-s\tau_j-\langle\lambda,A_j\rangle}
+=\frac{\phi_j^D(s,\lambda)}
+{1-\phi_j^R(s,\lambda)}.
+\]
+分母的零点给出首达变换的极点；若允许有符号奖励，则该公式限于变换存在的参数邻域。
+
+令
+\[
+\eta_j^e(k)
+=\mathbb E_{a_j}\left[
+\sum_{0\le n<\sigma_1}{\bf1}_{\{X_n=k\}};e
+\right],
+\qquad e\in\{R_j,D_j\}.
+\]
+则 Green 占用有精确再生分解
+\[
+G_j(a_j,k)=\frac{\eta_j^{R_j}(k)+\eta_j^{D_j}(k)}{\kappa_j},
+\qquad
+\mathbb E_{a_j}\sum_{n<\tau_j}g_j(X_n)
+=\frac{\eta_j^{R_j}(g_j)+\eta_j^{D_j}(g_j)}{\kappa_j}.
+\]
+参考态访问次数
+\[
+V_{a_j}=\sum_{n<\tau_j}{\bf1}_{\{X_n=a_j\}}
+\]
+满足
+\[
+\mathbb P(V_{a_j}=m)=\kappa_j(1-\kappa_j)^{m-1},
+\qquad
+\mathbb E V_{a_j}=G_j(a_j,a_j)=\kappa_j^{-1}.
+\]
+因此 \(\kappa_j=1/G_j(a_j,a_j)\)。
+
+**FIB 特例 55.3（参考态 \(0\) 的成功概率）。** 对 \(a_j=0\)，沿用第52节 Green 公式，
+\[
+G_j(0,0)=\frac1\theta\sum_{i=0}^{L_j-1}r_{(W_j)_i}.
+\]
+故
+\[
+\kappa_j=\frac{\theta}{\sum_{i<L_j}r_{(W_j)_i}},
+\qquad
+L_j\kappa_j\longrightarrow\frac{\theta}{\bar r},
+\qquad
+\bar r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta.
+\]
+这里 \(L_j\)、词序和标签由 FIB 递归给出；核、阻抗、\(\theta\)、边界和初态仍是外加模型。
+
+**定理 55.4（再生扩展中的更新奖励 CLT/FCLT）。** 这是在杀死链上增加外加重启协议后的再生扩展。令
+\((T_{j,r}^R,Y_{j,r}^R)_{r\ge1}\) 为按 \(\mu_j^R/(1-\kappa_j)\) 归一化的独立同分布返回段，令
+\[
+S_{j,n}=\sum_{r\le n}T_{j,r}^R,\qquad
+N_j(t)=\max\{n:S_{j,n}\le t\},\qquad
+\mathcal R_j(t)=\sum_{r\le N_j(t)}Y_{j,r}^R.
+\]
+若 \(\mu_{T,j}=\mathbb E T_{j,1}^R\in(0,\infty)\)、\(\mu_{Y,j}=\mathbb E Y_{j,1}^R\) 有限，令 \(\gamma_j=\mu_{Y,j}/\mu_{T,j}\)。若
+\[
+\Sigma_j=\frac1{\mu_{T,j}}
+\operatorname{Cov}(Y_{j,1}^R-\gamma_jT_{j,1}^R)
+\]
+有限，则固定 \(j\) 时
+\[
+\left\{
+\frac{\mathcal R_j(nt)-\gamma_jnt}{\sqrt n}:0\le t\le T
+\right\}
+\Rightarrow
+\Sigma_j^{1/2}B(t)
+\]
+于 \(D([0,T],\mathbb R^d)\)。若 \(j\) 随 \(n\) 变化，还需对
+\(\xi_{j,r}=Y_{j,r}^R-\gamma_jT_{j,r}^R\) 另加三角阵列 Lindeberg 条件及 \(T_j\) 的统一一阶矩和非退化条件；FIB 递归不自动给出这些条件。
+
+**定理 55.5（自然杀死机制的几何更新边界）。** 以下限于标量奖励。原杀死链只完成有限次返回。令返回段数 \(\mathcal N_j\) 满足
+\[
+\mathbb P(\mathcal N_j=m)=(1-\kappa_j)^m\kappa_j,\qquad m\ge0.
+\]
+设返回段条件均值和方差为
+\[
+m_j=\mathbb E Y_j^R,\qquad v_j=\operatorname{Var}(Y_j^R),
+\]
+终段奖励为 \(Y_j^D\)。若 \(\kappa_j\to0\)，
+\[
+\frac{\kappa_j\mathbb E|Y_j^D|}{m_j}\to0,
+\qquad
+\frac{\kappa_jv_j}{m_j^2}\to\chi\in[0,\infty),
+\]
+并且返回段满足相应的 Lindeberg 条件，则
+\[
+\frac{\kappa_j}{m_j}
+\left(A_j-\frac{m_j}{\kappa_j}\right)
+\Rightarrow
+E-1+\sqrt{\chi E}\,Z,
+\]
+其中 \(E\sim\operatorname{Exp}(1)\)、\(Z\sim N(0,1)\) 独立。 \(\chi=0\) 时极限为 \(E-1\) 而非高斯；\(\chi>0\) 时为指数随机化的正态混合。终段不可忽略时，必须加入其联合极限，不能套用该式。
+
+这些更新恒等式只需有限图和 \(\rho(K_j)<1\)。连续扩散极限、\(j\to\infty\) 与更新次数或时间同时取极限，需要一致尾界、矩界和三角阵列条件。返回段的条件律是外加再生协议，不是 FIB 递归内生的独立样本；\(\kappa_j\) 的 FIB 渐近也不能推广到任意速度权重、非对称核、Robin 边界或真实物理装置。更新奖励、Brownian 极限和混合极限均不自动代表热流、扩散噪声或普适物理涨落。
+
+## 56. 有限 FIB 转移算子的谱测度、符号熵率与转移熵
+
+本节固定一个外加有限状态统计模型。设第 \(m\) 层 FIB 递归给出的状态标签集合为有限集 \(\mathcal S_m\)，另给行随机核 \(Q\) 和平稳律 \(\pi\)，其中 \(\pi_i>0\)、\(\pi Q=\pi\)。递归本身不选择概率核、初态或观测通道。
+
+**定理 56.1（可逆转移核的谱测度与协方差生成函数）。** 若 \(Q\) 对
+\[
+\langle f,g\rangle_\pi=\sum_i\pi_i f(i)g(i)
+\]
+自伴且链不可约，取正交归一特征系
+\[
+\phi_0\equiv1,\qquad Q\phi_a=\lambda_a\phi_a,\qquad \lambda_0=1.
+\]
+对中心化观测 \(\pi g=0\)，定义
+\[
+\mu_g=\sum_{a\ge1}|\langle g,\phi_a\rangle_\pi|^2\delta_{\lambda_a}.
+\]
+则
+\[
+C_g(n):=\operatorname{Cov}_\pi(g(X_0),g(X_n))
+=\langle g,Q^ng\rangle_\pi
+=\int_{[-1,1]}\lambda^n\,d\mu_g(\lambda),
+\]
+并且 \(C_g(0)=\mu_g([-1,1])\)。在 \(|z|<1\) 时，
+\[
+R_g(z):=\sum_{n\ge0}z^nC_g(n)
+=\int\frac{d\mu_g(\lambda)}{1-z\lambda}.
+\]
+若 \(\operatorname{supp}\mu_g\subset[-1+\gamma,1-\gamma]\)，则
+\[
+C_g(0)+2\sum_{n\ge1}C_g(n)
+=\int\frac{1+\lambda}{1-\lambda}\,d\mu_g(\lambda).
+\]
+若链周期导致 \(-1\) 谱质量，上式须改作 Abel 极限或不宣称收敛。谱测度是外加核作用于 FIB 状态标签后的统计对象，不是递归内生谱。
+
+**定理 56.2（符号观测的传递矩阵与 Rényi 熵率）。** 取有限字母表 \(\mathcal A\) 及记忆无关发射通道 \(O(a\mid i)\)，满足 \(\sum_aO(a\mid i)=1\)。令
+\[
+D_a=\operatorname{diag}(O(a\mid i)),\qquad M_a=D_aQ.
+\]
+若 \(Y_t\) 条件于 \(X_t\) 独立发射，则任意词 \(a_0^{n-1}\) 的概率为
+\[
+p_n(a_0^{n-1})
+=\pi^{\mathsf T}M_{a_0}M_{a_1}\cdots M_{a_{n-1}}\mathbf1.
+\]
+对整数 \(\alpha\ge2\)，定义
+\[
+\mathcal T_\alpha=\sum_{a\in\mathcal A}M_a^{\otimes\alpha}.
+\]
+则
+\[
+\sum_{a_0^{n-1}}p_n(a_0^{n-1})^\alpha
+=(\pi^{\otimes\alpha})^{\mathsf T}
+\mathcal T_\alpha^n\mathbf1^{\otimes\alpha}.
+\]
+若 \(\mathcal T_\alpha\) primitive 且首末向量对其 Perron 向量投影为正，则
+\[
+h_\alpha(Y)
+=\lim_{n\to\infty}\frac1{1-\alpha}
+\frac1n\log\sum_{a_0^{n-1}}p_n(a_0^{n-1})^\alpha
+=\frac{\log\rho(\mathcal T_\alpha)}{1-\alpha}.
+\]
+\(\alpha=2\) 时 \(h_2(Y)=-\log\rho(\sum_aM_a\otimes M_a)\)。Shannon 熵率
+\[
+h(Y)=\lim_{n\to\infty}n^{-1}H(Y_0,\ldots,Y_{n-1})
+\]
+对平稳有限字母过程存在；一般隐藏 Markov 输出不能把它直接替换为 \(\alpha\to1\) 的张量谱式，除非另加可微延拓条件。若观测是状态本身，则
+\[
+h(X)=-\sum_i\pi_i\sum_jQ_{ij}\log Q_{ij}.
+\]
+
+**推论 56.3（互信息率的可计算差）。** 在同一定义下，
+\[
+H(Y_0^{n-1}\mid X_0^{n-1})
+=n\sum_i\pi_iH(O(\cdot\mid i)).
+\]
+因此整条隐藏状态与符号输出的互信息率为
+\[
+I(X;Y)
+=h(Y)-\sum_i\pi_iH(O(\cdot\mid i))\ge0.
+\]
+若初态非平稳，需另给熵率收敛条件，不能仅凭有限层 FIB 递归把该极限视为默认结论。
+
+**定理 56.4（有限窗口转移熵的矩阵可计算式）。** 现在以同一状态链产生联合输出 \((U_t,Y_t)\)，给定 \(X_t=i\) 时按外加通道 \(O(u,y\mid i)\) 发射。令
+\[
+D_{u,y}=\operatorname{diag}(O(u,y\mid i)),\qquad
+M_{u,y}=D_{u,y}Q.
+\]
+则
+\[
+p_n(u_0^{n-1},y_0^{n-1})
+=\pi^{\mathsf T}M_{u_0,y_0}\cdots M_{u_{n-1},y_{n-1}}\mathbf1.
+\]
+对 \(k,\ell\ge0\)，定义有限历史转移熵
+\[
+T_{U\to Y}^{(k,\ell)}
+=I(U_{t-k}^{t-1};Y_t\mid Y_{t-\ell}^{t-1}).
+\]
+由 \(p_n\) 对未涉及坐标求和即可得到所需边缘概率，因此
+\[
+T_{U\to Y}^{(k,\ell)}
+=H(Y_t\mid Y_{t-\ell}^{t-1})
+-H(Y_t\mid Y_{t-\ell}^{t-1},U_{t-k}^{t-1}).
+\]
+零概率项按 \(0\log0=0\) 处理。有限字母平稳过程的无限历史量
+\[
+T_{U\to Y}^{(\infty)}
+=I(U_{-\infty}^{-1};Y_0\mid Y_{-\infty}^{-1})
+\]
+由条件熵极限给出；它为零当且仅当
+\[
+P(Y_0\mid U_{-\infty}^{-1},Y_{-\infty}^{-1})
+=P(Y_0\mid Y_{-\infty}^{-1})
+\quad\text{几乎处处}.
+\]
+即使 \(U_t,Y_t\) 在给定同一时刻状态时条件独立，\(U\) 的过去仍可能通过隐藏状态携带额外预测信息，故转移熵不自动为零。
+
+FIB 递归只提供有限状态标签、词序和组合索引；\(Q,\pi,O\)、共同历史、平稳性和发射协议均为外加。若递归给出的图可约或周期，需按强连通分量和周期子列重写 Perron 极限与熵率。谱测度、自相关、Shannon 熵率和转移熵都不等于热力学熵、真实因果流、能量耗散、温度或热流。
+
+## 57. 多探针联合响应的秩识别、实验设计与规范退化
+
+本节把第54节的一阶占用均值秩判据扩展到一阶响应、二阶协方差和有限时间窗口的联合读出。所有动力学、初态、读出噪声与速度参数均为外加模型；FIB 递归只提供逐字源、切点载体及组合坐标。
+
+**定义 57.1（有限链的联合响应数据）。** 令暂态集合为 \(I=\{0,\ldots,L-1\}\)，参数 \(\vartheta\in\Theta\subset\mathbb R^d\)，\(K_\vartheta\) 为声明的暂态子核，\(B_\vartheta=I-K_\vartheta\) 可逆，\(G_\vartheta=B_\vartheta^{-1}\)。令初态律为行向量 \(\nu\)，并写
+\[
+q_\vartheta=G_\vartheta^{\mathsf T}\nu^{\mathsf T}.
+\]
+若 \(V=(V_i)_{i\in I}\) 是杀死链占用向量，\(C_\vartheta=\operatorname{Cov}_\vartheta(V)\)，取 \(m\) 个有符号占用探针组成 \(F\in\mathbb R^{m\times L}\)，读出
+\[
+Y=FV+\xi,\qquad
+\mathbb E\xi=0,\qquad
+\operatorname{Cov}(\xi)=\Gamma,
+\]
+其中 \(\xi\) 与链独立且已知 \(\Gamma\)。联合响应数据为
+\[
+\mathcal D_F(\vartheta)=\bigl(\mu_F(\vartheta),\Sigma_F(\vartheta)\bigr),
+\qquad
+\mu_F=Fq_\vartheta,\qquad
+\Sigma_F=FC_\vartheta F^{\mathsf T}+\Gamma.
+\]
+对对称矩阵用 \(\operatorname{vech}\) 收集上三角元素。
+
+**定理 57.2（联合响应的局部秩判据）。** 若 \(K_\vartheta\) 关于 \(\vartheta\) 为 \(C^1\)，则
+\[
+J_F(\vartheta)=
+\begin{bmatrix}
+D\mu_F(\vartheta)\\
+D\operatorname{vech}\Sigma_F(\vartheta)
+\end{bmatrix}
+\]
+是联合一阶、二阶响应的 Jacobian，并满足
+\[
+\ker J_F
+=\ker D\mu_F\cap\ker D\operatorname{vech}\Sigma_F.
+\]
+若 \(\operatorname{rank}J_F=d\)，则在该参数点邻域内，\(\vartheta\) 由联合均值和协方差局部唯一确定。若秩小于 \(d\)，存在非零切向量使均值和协方差均沿该方向一阶不变；这只说明一阶不可见，不推出非线性精确等价。若存在非恒定曲线 \(\vartheta(t)\) 使 \(\mathcal D_F(\vartheta(t))\) 恒定，则这些观测对该曲线精确不可辨。
+
+**推论 57.3（探针数量与增量信息）。** 仅用均值时至少需 \(m\ge d\) 才可能正则识别；联合均值与对称协方差的输出数为
+\[
+M=m+\frac{m(m+1)}2,
+\]
+故正则识别必有 \(d\le M\)。对固定探针，
+\[
+\ker J_F=\ker J_\mu\cap\ker J_\Sigma.
+\]
+因此若 \(N=\ker J_\mu\)，则二阶读出消除均值退化，当且仅当 \(D\Sigma_F|_N\) 为单射。未知的 \(\Gamma\)、未知时钟或未知初态必须把相应参数一并加入 \(\vartheta\)，不能直接沿用已知噪声结论。
+
+**定理 57.4（速度族的联合灵敏度公式）。** 在第54节的有限 FIB 切链中，先固定单位速度核与阻抗，令 \(q_i=G(0,i)\)、\(Q=\operatorname{diag}(q_i)\)。允许局部速度
+\[
+v(\eta)=v^0+\Phi\eta,\qquad \eta\in\mathbb R^d,
+\]
+并以行缩放得到 \(G^{(v)}=GV\)。在反射—吸收最近邻链的共同历史下，
+\[
+\mu_F(\eta)=FQv(\eta),
+\]
+且
+\[
+C^{(v)}_{ik}
+=q_{\max(i,k)}^2v_iv_k-\mathbf1_{\{i=k\}}q_iv_i.
+\]
+对任意速度方向 \(z\in\mathbb R^L\)，
+\[
+\dot C^{(v)}[z]_{ik}
+=q_{\max(i,k)}^2(z_iv_k+v_iz_k)
+-\mathbf1_{\{i=k\}}q_iz_i.
+\]
+所以联合响应的参数 Jacobian 为
+\[
+J_{F,v}=
+\begin{bmatrix}
+FQ\Phi\\
+\operatorname{vech}\!\left(F\dot C^{(v)}[\Phi]F^{\mathsf T}\right)
+\end{bmatrix}.
+\]
+速度族在该点由一阶均值和协方差局部识别，当且仅当 \(\operatorname{rank}J_{F,v}=d\)。该式来自行缩放 Green 矩阵和共同历史的二阶占用公式。
+
+**反例 57.5（一个总占用探针的均值退化被方差解除）。** 取两个暂态点 \(0,1\)，\(r_\alpha=r_\beta=1\)、\(\theta=1/4\)，左端反射、右端吸收。单位速度下
+\[
+K=\begin{pmatrix}3/4&1/4\\1/4&1/2\end{pmatrix},\qquad
+G=(I-K)^{-1}=\begin{pmatrix}8&4\\4&4\end{pmatrix},\qquad
+q=(8,4).
+\]
+取一个总占用探针 \(F=(1,1)\)，速度为 \(v=(v_0,v_1)\) 时
+\[
+\mathbb E Y=8v_0+4v_1,
+\]
+\[
+\operatorname{Var}(Y)
+=64v_0^2+32v_0v_1+16v_1^2-8v_0-4v_1.
+\]
+在 \(v=(1,1)\) 处，\((\mathbb EY,\operatorname{Var}Y)\) 对 \((v_0,v_1)\) 的 Jacobian 为
+\[
+\begin{pmatrix}8&4\\152&60\end{pmatrix},
+\qquad
+\det=-128\ne0.
+\]
+单独均值只有一维秩，方向 \((1,-2)\) 不可见；加入同一探针的二阶响应后满秩。若叠加已知独立读出噪声，只需在观测方差中加入常数 \(\Gamma\)，Jacobian 不变；若噪声方差未知，则它成为新的不可辨方向。
+
+**定理 57.6（连续时间窗口的联合设计判据）。** 在第53节声明的反射—吸收扩散模型中，取有限窗口 \(I_r\) 和探针 \(f_r\)，令
+\[
+A_r=\int_{I_r}f_r(Z_t)\,dt,\qquad
+\mu_r(\vartheta)=\mathbb E_\vartheta A_r,\qquad
+\mathcal C_{rs}(\vartheta)=\operatorname{Cov}_\vartheta(A_r,A_s).
+\]
+若半群、初态与读出关于 \(\vartheta\) 为 \(C^1\)，定义
+\[
+J^{(1)}_{ra}=\partial_{\vartheta_a}\mu_r,\qquad
+J^{(2)}_{(r,s),a}=\partial_{\vartheta_a}\mathcal C_{rs}.
+\]
+联合窗口响应局部识别当且仅当
+\[
+\operatorname{rank}
+\begin{bmatrix}J^{(1)}\\J^{(2)}\end{bmatrix}=d.
+\]
+若静态均值有规范退化方向 \(h\ne0\)，即 \(J^{(1)}h=0\)，而协方差核导数在所选探针张成的张量积空间上对 \(h\) 非零，则协方差读出解除该方向的一阶退化；若同样为零，则联合一、二阶数据仍不能在一阶识别它。
+
+**实验设计推论 57.7（双重灵敏度与稳定性）。** 对固定参数点，把 \(J_F\) 的最小奇异值记为 \(s_{\min}(J_F)\)。满秩只给局部唯一性；在有界观测噪声下，若要有统一的一阶稳定性，需要设计序列满足
+\[
+\inf_j s_{\min}(J_{F,j})>0.
+\]
+可先选探针使均值灵敏度形成对偶框架，再在均值零空间内选择使协方差灵敏度非零的时间窗或探针。若探针被限制为非负、局部支撑或来自独立副本，必须重新计算联合秩。
+
+**反例 57.8（全局速度—跳尺度规范的精确不可辨性）。** 在原始跳率 \(\theta/(v_ir_i)\) 中，若 \(\theta\) 也未知，则对任意允许的 \(c>0\)
+\[
+(v,\theta)\longmapsto(cv,c\theta)
+\]
+保持每条边的跳跃概率、持留概率、吸收停时的完整路径律，以及所有占用探针的各阶响应不变。因此不加 \(\theta\) 或速度总量归一化时，任何数量的同链探针都不能分离这一全局尺度；固定 \(\theta\)、规定 \(\sum_i v_i\) 或校准一个局部速度，才可去掉该规范轨道。
+
+本节的 FIB 边界是：递归仅提供合法源词、长度、组合和切点载体；\(K_\vartheta\)、初态、局部速度、阻抗、时间窗、读出噪声与物理单位均由外加模型声明。联合均值—协方差的满秩只给声明模型的局部统计识别，不给全局识别或完整路径律；同一前两阶响应可由不同高阶路径律实现。上述响应、易感性、信息矩阵和规范名称是数学类比，不推出真实物理外场、温度、热流、耗散或普适定律。
+
+## 58. 有限 FIB 核的 Perron 谱扰动与压力曲率
+
+前面的压力和秩判据分别固定了核或只观察一阶均值。本节把有限活跃图上的核扰动写成谱微分，区分压力可见的方向与只能由完整路径读出的方向。
+
+**定理 58.1（简单 Perron 根的二阶响应）。** 令 \(K(\eta)\) 是有限状态上的 primitive 子随机核族，
+\[
+K(\eta)=K_0+\sum_{a=1}^{d}\eta_a A_a,
+\]
+并令 \(\rho(\eta)\) 为 Perron 根。取
+\[
+K_0r=\rho_0r,\qquad
+\ell^{\mathsf T}K_0=\rho_0\ell^{\mathsf T},\qquad
+\ell^{\mathsf T}r=1,
+\]
+其中 \(\rho_0=\rho(0)\)。定义 \(P=r\ell^{\mathsf T}\)，并令约化 resolvent \(R\) 满足
+\[
+(\rho_0I-K_0)R=R(\rho_0I-K_0)=I-P,\qquad
+Rr=0,\qquad \ell^{\mathsf T}R=0.
+\]
+则
+\[
+\partial_a\rho(0)=\ell^{\mathsf T}A_ar,
+\]
+且
+\[
+\partial_{ab}\rho(0)
+=\ell^{\mathsf T}
+\bigl(A_aRA_b+A_bRA_a\bigr)r.
+\]
+令 \(\Psi(\eta)=\log\rho(\eta)\)，则
+\[
+\partial_{ab}\Psi(0)
+=\frac{\partial_{ab}\rho(0)}{\rho_0}
+-\frac{\partial_a\rho(0)\,\partial_b\rho(0)}{\rho_0^2}.
+\]
+若 \(K(\eta)\) 还含有非线性项 \(A_{ab}=\partial_{ab}K(0)\)，只需在 \(\partial_{ab}\rho(0)\) 右端加上 \(\ell^{\mathsf T}A_{ab}r\)。
+
+**推论 58.2（倾斜压力与核参数的混合曲率）。** 对有界占用 \(c\) 令
+\[
+D_\vartheta=\operatorname{diag}(e^{\vartheta c(i)}),\qquad
+K_{\vartheta,\eta}=D_\vartheta K(\eta),\qquad
+\Psi(\vartheta,\eta)=\log\rho(K_{\vartheta,\eta}).
+\]
+在 \((0,0)\) 附近保持 primitive 时，\(\partial_\vartheta\Psi\) 是 Perron Doob 核下的长期占用均值，\(\partial_{\vartheta\vartheta}\Psi\) 是该核下的渐近占用方差；混合导数 \(\partial_{\vartheta a}\Psi\) 给出占用压力对第 \(a\) 个核参数的一阶响应。它们均由定理 58.1 的左右 Perron 向量和约化 resolvent 计算。
+
+若参数方向 \(u\in\mathbb R^d\) 满足
+\[
+\ell^{\mathsf T}\Bigl(\sum_a u_aA_a\Bigr)r=0,
+\]
+则该方向对 Perron 压力的一阶响应为零；若同时所有给定占用倾斜的混合导数也为零，则任何只读取这些压力的一阶和混合曲率的实验都不能在该阶区分该方向。完整路径、端点分布或其他探针仍可能携带额外信息。
+
+这里 \(A_a\)、初态、倾斜函数和读出协议都是外加模型。FIB 递归只提供状态标签、词序和允许的组合图；谱曲率不自动等于物理易感性、线性响应或能量二阶导数。
+
+## 59. 逆向路径似然比与有限图涨落对称
+
+本节把有限 FIB 图上的正向路径与反向路径放在同一概率空间中，得到一个纯粹的路径似然比恒等式。
+
+**定理 59.1（有限时间逆向路径关系）。** 令 \(Q\) 是有限不可约核，\(\pi\) 是其严格正的平稳律，并假定
+\[
+Q(i,k)>0\quad\Longleftrightarrow\quad Q(k,i)>0.
+\]
+对每条有向边定义
+\[
+a(i,k)=\log\frac{\pi(i)Q(i,k)}{\pi(k)Q(k,i)}.
+\]
+令 \(X_0,\ldots,X_T\) 从 \(\pi\) 出发，并定义
+\[
+\mathcal S_T=\sum_{t=0}^{T-1}a(X_t,X_{t+1}).
+\]
+对路径 \(\omega=(x_0,\ldots,x_T)\) 和反向路径
+\(\omega^\leftarrow=(x_T,\ldots,x_0)\)，有
+\[
+\frac{\mathbb P_\pi(\omega)}
+{\mathbb P_\pi(\omega^\leftarrow)}
+=e^{\mathcal S_T(\omega)}.
+\]
+因此对所有可取值 \(s\)，
+\[
+\mathbb P_\pi(\mathcal S_T=s)
+=e^s\mathbb P_\pi(\mathcal S_T=-s).
+\]
+
+令
+\[
+M_\zeta(i,k)=Q(i,k)e^{\zeta a(i,k)},\qquad
+\Lambda(\zeta)=\log\rho(M_\zeta).
+\]
+则
+\[
+\mathbb E_\pi e^{\zeta\mathcal S_T}
+=\pi^{\mathsf T}M_\zeta^T\mathbf1,
+\qquad
+\Lambda(\zeta)=\Lambda(-1-\zeta).
+\]
+第二式来自
+\[
+M_\zeta
+=\operatorname{diag}(\pi)^{-1}
+M_{-1-\zeta}^{\mathsf T}
+\operatorname{diag}(\pi),
+\]
+故两矩阵相似而有相同谱半径。若 \(Q\) 满足详细平衡，则 \(a(i,k)=0\)，上述随机量恒为零；若双向支撑条件失败，反向路径可能没有有限似然比，需改用扩展值或限制在共同支撑上。
+
+该对称性只描述声明的有限核、平稳初态和反向路径协议。FIB 递归不单独选择 \(Q\)、\(\pi\) 或时间反演规则；\(\mathcal S_T\) 不能直接命名为真实熵产生、热力学不可逆性或任何物理涨落定律。
