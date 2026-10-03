@@ -1939,3 +1939,2210 @@ $$
 全部结论依赖固定单位速度、左反射右吸收、初态 $0$、给定阻抗与时钟，以及同一条随机历史的模型条件。本节结论不推出完整多点占用律、函数空间占用场收敛、高斯极限、物理热流、物理普适性或第11、14节速度扩展的占用结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 固定有限多点的同轨占用联合律
+
+**定义 16.1（有限探针与缩放变量）。** 继续使用定义 15.1 的固定单位速度、左反射右吸收链、初态 $X_0=0$、同一条随机历史及
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad h_j=\epsilon_jL_j,
+\qquad D=\frac{\theta\varphi^4}{\delta\overline r}.
+$$
+
+给定固定的 $m\ge1$ 个探针 $u_1,\ldots,u_m\in[0,1]$，令
+
+$$
+\ell_j(u)=h_jV_{\iota_j(u)},\qquad
+\kappa(u)=\frac{1-u}{D}.
+$$
+
+若有若干探针坐标相同，先把它们的势合并；若 $u_k=1$，其占用恒为零，可以从联合变换中删去。以下结论先对剩余的互异坐标陈述。记
+
+$$
+C_{k\ell}=\kappa(\max(u_k,u_\ell)).
+$$
+
+**定理 16.2（固定有限维联合变换与非高斯极限）。** 对固定 $m$、固定互异探针坐标及任意 $z_1,\ldots,z_m\ge0$，有有限链精确式
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m z_kV_{a_k}\right)
+=\det\!\left(I_m+Q\,\operatorname{diag}(e^{z_k}-1)\right)^{-1},
+\qquad
+Q_{k\ell}=q_{\max(a_k,a_\ell)},
+$$
+
+其中 $a_k$ 按切点从小到大排列，$z_k\ge0$。因此，固定 $m$ 和固定空间坐标后，
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m s_k\ell_j(u_k)\right)
+\longrightarrow
+\det\!\left(I_m+C\,\operatorname{diag}(s_k)\right)^{-1}.
+$$
+
+极限向量可在同一概率空间的辅助表示中写成
+
+$$
+\Lambda(u)=\frac{B_1(\kappa(u))^2+B_2(\kappa(u))^2}{2},
+$$
+
+其中 $B_1,B_2$ 是两条相互独立的标准布朗运动，并且所有探针使用同一对布朗运动。因为
+
+$$
+C_{k\ell}=\min\{\kappa(u_k),\kappa(u_\ell)\},
+$$
+
+该表示的有限维拉普拉斯变换正是上式。特别地，
+
+$$
+\mathbb E\Lambda(u)=\kappa(u),\qquad
+\operatorname{Cov}(\Lambda(u),\Lambda(v))=\kappa(\max(u,v))^2,
+$$
+
+并且对 $0\le u<v<w<1$，
+
+$$
+\operatorname{cum}\bigl(\Lambda(u),\Lambda(v),\Lambda(w)\bigr)
+=2\,\kappa(v)\,\kappa(w)^2>0.
+$$
+
+所以该固定有限维极限在三个非退化探针上不是高斯向量。
+
+**证明。** 先固定一条有限链。对暂态切点设置非负行势 $z_i$，令
+
+$$
+H_i=\mathbb E_i\exp\!\left(-\sum_{0\le n<\tau}z_{X_n}\right),
+\qquad H_L=1,
+\qquad d_i=e^{z_i}-1.
+$$
+
+把当前步的势计入首步分解，得到
+
+$$
+\bigl(B+\operatorname{diag}(d)\bigr)H=B\mathbf1,
+\qquad
+H+G\operatorname{diag}(d)H=\mathbf1,
+$$
+
+其中 $B=I-K$、$G=B^{-1}$。在互异探针 $a_1<\cdots<a_m$ 上保留势，令
+
+$$
+Q_{k\ell}=G(a_k,a_\ell)=q_{\max(a_k,a_\ell)}.
+$$
+
+由于 $G(0,a_k)=G(a_1,a_k)$，第 $0$ 行与第 $a_1$ 行给出相同的非零势组合，故 $H_0=H_{a_1}$。探针行组成
+
+$$
+\bigl(I_m+Q\operatorname{diag}(d_k)\bigr)H_*=\mathbf1.
+$$
+
+写 $t_k=q_{a_k}$，则 $t_1\ge\cdots\ge t_m$。对任意非空指标集 $I=\{i_1<\cdots<i_r\}$，逐行相减给出主子式
+
+$$
+\det Q_I=t_{i_r}\prod_{h=1}^{r-1}(t_{i_h}-t_{i_{h+1}})\ge0.
+$$
+
+按列多线性展开，
+
+$$
+\det\!\left(I_m+Q\operatorname{diag}(d_k)\right)
+=\sum_{I\subseteq\{1,\ldots,m\}}\det(Q_I)\prod_{k\in I}d_k,
+$$
+
+其中空集主子式取为 $1$。再以全 $1$ 列替换第一列，并从最后一行向上以原相邻行相减；第一列随即变成 $(1,0,\ldots,0)^\mathsf T$，其余子矩阵为对角元全为 $1$ 的下三角矩阵。因此 Cramer 分子为 $1$，从而
+
+$$
+H_0=\det\!\left(I_m+Q\operatorname{diag}(d_k)\right)^{-1}.
+$$
+
+这证明了有限链精确式；重复探针必须在这一步先合并势，吸收点的势没有贡献。
+
+令 $a_k=\iota_j(u_k)$，并把 $z_k=s_kh_j$。由定理 10.2，固定 $m$ 时一致地有
+
+$$
+h_jq_{\max(a_k,a_\ell)}
+\longrightarrow
+\kappa(\max(u_k,u_\ell)),
+\qquad
+\frac{e^{s_kh_j}-1}{h_j}\longrightarrow s_k.
+$$
+
+将
+
+$$
+Q\operatorname{diag}(e^{s_kh_j}-1)
+=\bigl(h_jQ\bigr)\operatorname{diag}\!\left(\frac{e^{s_kh_j}-1}{h_j}\right)
+$$
+
+代入有限式，行列式的连续性给出所述极限。非负向量的拉普拉斯变换在所有 $s_k\ge0$ 上收敛，故由拉普拉斯连续性定理得到固定有限维分布收敛。这里 $m$ 必须先固定；结论不涉及 $m=m(j)$ 的增长。
+
+为识别极限表示，令 $T_k=\kappa(u_k)$。对 $r=1,2$，布朗向量
+
+$$
+\bigl(B_r(T_k)\bigr)_{k=1}^m
+$$
+
+的协方差矩阵为 $(\min(T_k,T_\ell))_{k,\ell}=C$。单条布朗运动的高斯二次型公式给出
+
+$$
+\mathbb E\exp\!\left(-\frac12X^\mathsf T S X\right)
+=\det(I_m+CS)^{-1/2}.
+$$
+
+两条独立布朗运动平方和相乘，得到 $\det(I_m+CS)^{-1}$，因此确实得到 $\Lambda$ 的有限维律。对该变换在零点求导得到均值和协方差。三阶累积量也可由
+
+$$
+\log\mathbb E e^{-\sum s_k\Lambda(u_k)}
+=-\log\det(I_m+CS)
+$$
+
+的三阶项读取：对互异坐标，其系数为
+
+$$
+2C_{12}C_{23}C_{31}
+=2\kappa(v)\kappa(w)^2
+$$
+
+（按 $u<v<w$ 排序）。它严格为正，而任意高斯向量的三阶累积量为零，故排除高斯有限维极限。
+
+本节仍只讨论固定单位速度、给定阻抗与时钟、左反射右吸收、初态 $0$ 及同一随机历史下的占用量。它不宣称 $m$ 随 $j$ 增长时的全场收敛、函数空间中的随机测度弱收敛、跨 $j$ 的路径耦合、速度扩展中的同一律，亦不推出物理热流、温度、量子输运或经验普适性。
+
+## 17. 连续探针占用随机测度的 Fredholm 极限
+
+**定义 17.1（占用随机测度）。** 在定义 15.1 的固定单位速度、左反射右吸收、初态 $0$ 及同一随机历史下，令
+
+$$
+\mu_j=\epsilon_j\sum_{0\le n<\tau_j}\delta_{X_n/L_j}
+=\epsilon_j\sum_{i=0}^{L_j-1}V_i\,\delta_{i/L_j}.
+$$
+
+对连续函数 $f$，记 $\langle f,\mu_j\rangle=\int f\,d\mu_j$。定义连续核
+
+$$
+C(u,v)=\frac{1-\max(u,v)}{D}
+=\kappa(\max(u,v)),
+\qquad
+\kappa(u)=\frac{1-u}{D},
+$$
+
+并令 $\mathsf C$ 为 $L^2([0,1])$ 上的积分算子
+
+$$
+(\mathsf C f)(u)=\int_0^1 C(u,v)f(v)\,dv.
+$$
+
+**定理 17.2（连续探针的随机测度弱收敛）。** 对每个非负连续函数 $f\in C([0,1])$，
+
+$$
+\mathbb E_0\exp\bigl(-\langle f,\mu_j\rangle\bigr)
+\longrightarrow
+\det\nolimits_F\!\left(I+\mathsf C M_f\right)^{-1},
+$$
+
+其中 $M_f$ 是乘法算子，$\det_F$ 是 Fredholm 行列式。若
+
+$$
+\Lambda(u)=\frac{B_1(\kappa(u))^2+B_2(\kappa(u))^2}{2},
+\qquad
+\mu(du)=\Lambda(u)\,du,
+$$
+
+且 $B_1,B_2$ 是同一对独立标准布朗运动，则
+
+$$
+\det\nolimits_F\!\left(I+\mathsf C M_f\right)^{-1}
+=
+\mathbb E\exp\left(-\int_0^1 f(u)\Lambda(u)\,du\right).
+$$
+
+因此
+
+$$
+\mu_j\Longrightarrow\mu
+$$
+
+于 $[0,1]$ 上有限非负 Borel 测度的弱拓扑。特别地，对任意有限个连续探针 $f_1,\ldots,f_r$，向量
+
+$$
+\bigl(\langle f_1,\mu_j\rangle,\ldots,\langle f_r,\mu_j\rangle\bigr)
+$$
+
+收敛到相应的 $\mu$ 积分向量。极限测度几乎处处具有连续密度 $\Lambda$；这仍不等同于路径过程 $X_n/L_j$ 的函数空间收敛。
+
+**证明。** 先把全部暂态切点都作为势的支持。对 $f_i=f(i/L_j)$，令
+
+$$
+d_{j,i}=e^{f_i\epsilon_j}-1.
+$$
+
+第 16 节的首步方程与嵌套 Green 矩阵的 Cramer 计算，在支持取为全部切点时给出有限维精确式
+
+$$
+\mathbb E_0e^{-\langle f,\mu_j\rangle}
+=\det\nolimits_{L_j}\!\left(I+G_j\operatorname{diag}(d_{j,i})\right)^{-1}.
+$$
+
+这里零势坐标可以先删去，再由连续性恢复；全部坐标的式子是同一行列式恒等式的全支持版本。
+
+写
+
+$$
+g_{j,i}=\frac{e^{f_i\epsilon_j}-1}{\epsilon_j},
+\qquad
+\mathcal K_j(i/L_j,k/L_j)=h_jG_j(i,k).
+$$
+
+由 $h_j=\epsilon_jL_j$，上式的有限行列式可写成
+
+$$
+\det\nolimits_{L_j}\!\left(I+\mathsf T_jM_{g_j}\right)^{-1},
+\qquad
+(\mathsf T_j\psi)(i/L_j)
+=\frac1{L_j}\sum_{k=0}^{L_j-1}
+\mathcal K_j(i/L_j,k/L_j)\psi(k/L_j).
+$$
+
+由于 $f$ 连续且 $\epsilon_j\to0$，有 $g_j\to f$ 一致成立。下文把 $g_j$ 延拓为阶梯函数：在 $[i/L_j,(i+1)/L_j)$ 上取值 $g_{j,i}$，并在 $u=1$ 取右端极限。定理 10.2 给出
+
+$$
+\sup_{u,v\in[0,1]}
+\left|\mathcal K_j(u,v)-C(u,v)\right|\longrightarrow0.
+$$
+
+将 $\mathsf T_j$ 嵌入 $L^2([0,1])$ 的分片常数子空间，并记其核为相应的阶梯核。Green 矩阵 $G_j(i,k)=q_{\max(i,k)}$ 对称正定，所以正对称化算子
+
+$$
+\mathsf A_j=M_{\sqrt{g_j}}\mathsf T_jM_{\sqrt{g_j}},
+\qquad
+\mathsf A=M_{\sqrt f}\mathsf C M_{\sqrt f}
+$$
+
+都是正自伴算子；$\mathsf A$ 为迹类。第 13.3 节给出的特征值
+$\rho_m=[D(m+1/2)^2\pi^2]^{-1}$ 也直接说明了 $\mathsf C$ 的迹类性质。均匀核收敛与 $g_j\to f$ 一致收敛给出 $\|\mathsf A_j-\mathsf A\|_{\mathrm{op}}\to0$。同时，对角线的黎曼和给出
+
+$$
+\operatorname{tr}\mathsf A_j
+=\frac1{L_j}\sum_{i=0}^{L_j-1}
+g_{j,i}\mathcal K_j(i/L_j,i/L_j)
+\longrightarrow
+\int_0^1 f(u)C(u,u)\,du
+=\operatorname{tr}\mathsf A.
+$$
+
+对正自伴算子，算子范数收敛与迹收敛结合有限秩谱截断给出迹范数收敛，因此
+
+$$
+\|\mathsf A_j-\mathsf A\|_1\longrightarrow0.
+$$
+
+有限维行列式的循环恒等式给出
+
+$$
+\det\nolimits_{L_j}(I+\mathsf T_jM_{g_j})
+=\det\nolimits_F(I+\mathsf A_j),
+$$
+
+Fredholm 行列式对迹范数连续，因而
+
+$$
+\det\nolimits_{L_j}(I+\mathsf T_jM_{g_j})
+\longrightarrow
+\det\nolimits_F(I+\mathsf A)
+=\det\nolimits_F(I+\mathsf C M_f).
+$$
+
+再用两条独立布朗运动的高斯二次型公式。对 $T_k=\kappa(u_k)$ 及 $r=1,2$，向量 $(B_r(T_k))_k$ 的协方差核为 $C$，故对非负 $f$
+
+$$
+\mathbb E\exp\left(
+-\frac12\int f(u)B_r(\kappa(u))^2\,du
+\right)
+=\det\nolimits_F(I+\mathsf A)^{-1/2}.
+$$
+
+两条独立布朗运动相乘，得到 $\mu$ 的 Laplace 泛函。最后，
+
+$$
+\mathbb E_0\mu_j([0,1])
+=\frac1{L_j}\sum_{i=0}^{L_j-1}
+\mathcal K_j(0,i/L_j)
+\longrightarrow
+\int_0^1 C(0,v)\,dv
+=\frac1{2D},
+$$
+
+所以总质量族紧。有限底空间上的随机有限测度由全部非负连续函数的 Laplace 泛函唯一确定，故得到所述弱收敛。$\square$
+
+**推论 17.3（连续探针的均值、协方差与通过时间核对）。** 对连续 $f,g$，
+
+$$
+\mathbb E\langle f,\mu\rangle
+=\int_0^1 f(u)\kappa(u)\,du,
+$$
+
+$$
+\operatorname{Cov}\bigl(\langle f,\mu\rangle,\langle g,\mu\rangle\bigr)
+=\int_0^1\int_0^1
+f(u)g(v)C(u,v)^2\,du\,dv.
+$$
+
+取 $f=g=1$，得到 $\operatorname{Var}(\mu([0,1]))=1/(6D^2)$，与定理 15.3 及定理 10.3 的通过时间方差一致。 对常数探针 $f\equiv s$，Fredholm 行列式满足 $\det_F(I+s\mathsf C)=\cosh\sqrt{s/D}$，其逆为 $\operatorname{sech}\sqrt{s/D}$，恢复定理 10.3 的通过时间变换。
+
+本节的随机测度收敛只覆盖连续测试函数的占用积分。它不推出 $\ell_j(\cdot)$ 在 $C([0,1])$ 中一致收敛、不推出 $m=m(j)$ 的逐点行列式律、不指定跨 $j$ 的样本耦合，也不延伸到第 11、14 节的速度权重扩展或物理热流、温度与经验普适性。
+
+## 18. 反向空间的平方贝塞尔统计场
+
+**定义 18.1（反向坐标与径向场）。** 对第 16、17 节的极限密度作反向坐标变换
+
+$$
+Y(s)=\Lambda(1-s),\qquad 0\le s\le1.
+$$
+
+令
+
+$$
+R_t=\frac{B_1(t)^2+B_2(t)^2}{2}.
+$$
+
+则 $Y(s)=R_{s/D}$，并且 $Y(0)=0$。这里的 $s$ 只是把吸收端到反射端的空间坐标反向排列，不引入新的动力学核。
+
+**定理 18.2（平方贝塞尔/移民扩散律）。** 在同一对布朗运动耦合下，存在一条一维布朗运动 $W$ 使得
+
+$$
+dY(s)=\frac1D\,ds+\sqrt{\frac{2Y(s)}D}\,dW(s),
+\qquad Y(0)=0.
+$$
+
+其生成元为
+
+$$
+\mathcal A\phi(y)=\frac1D\bigl(\phi'(y)+y\phi''(y)\bigr).
+$$
+
+对 $0\le s\le1$、$0\le h\le1-s$ 及 $z\ge0$，条件拉普拉斯变换为
+
+$$
+\mathbb E\!\left[e^{-zY(s+h)}\mid Y(s)=y\right]
+=
+\left(1+\frac{zh}{D}\right)^{-1}
+\exp\!\left(
+-\frac{yz}{1+zh/D}
+\right).
+$$
+
+因此
+
+$$
+\mathbb E[Y(s+h)\mid Y(s)=y]=y+\frac hD,
+$$
+
+$$
+\operatorname{Var}(Y(s+h)\mid Y(s)=y)
+=\frac{2yh}{D}+\frac{h^2}{D^2}.
+$$
+
+这是归一化的维数为 $2$ 平方贝塞尔扩散在时间 $s/D$ 下的径向能量律，也等价于带常数移民项的临界 Feller 扩散。它是极限占用密度的 Markov 表示，不是递归本身选择的物理温度或热流方程。
+
+**证明。** 对 $R_t$ 直接使用 Itô 公式：
+
+$$
+dR_t=B_1(t)\,dB_1(t)+B_2(t)\,dB_2(t)+dt.
+$$
+
+其局部鞅的二次变差为 $2R_t\,dt$，所以可重写为
+
+$$
+dR_t=dt+\sqrt{2R_t}\,dW_t.
+$$
+
+将 $t=s/D$ 代入并作布朗时间变换，得到所述随机微分方程与生成元。对固定初值 $R_0=y$，函数
+
+$$
+F(t,y)=\frac1{1+zt}\exp\!\left(-\frac{yz}{1+zt}\right)
+$$
+
+满足平方贝塞尔生成元的后向方程及初值 $F(0,y)=e^{-zy}$，由唯一性得到条件拉普拉斯变换；代入 $t=h/D$ 即得显示式。对 $z$ 在零点求一、二阶导数得到条件均值与方差。$\square$
+
+**定理 18.3（全阶累积量与路径非单调性）。** 对互异探针 $0\le u_1<\cdots<u_r<1$，令
+
+$$
+C_{ab}=\kappa(\max(u_a,u_b)).
+$$
+
+则对 $r\ge2$，
+
+$$
+\operatorname{cum}\bigl(\Lambda(u_1),\ldots,\Lambda(u_r)\bigr)
+=
+\frac1r\sum_{\sigma\in S_r}
+\prod_{q=1}^r C_{\sigma(q),\sigma(q+1)},
+\qquad \sigma(r+1)=\sigma(1).
+$$
+
+等价地，求和可按循环旋转类进行，每个无向重复的有向循环分别计一次。所有因子均为正，所以每个 $r\ge2$ 的累积量严格为正；$r=2$ 给出 $C_{12}^2$，$r=3$ 给出第 16 节的 $2\kappa(u_2)\kappa(u_3)^2$。
+
+虽然 $\mathbb E Y(s)=s/D$ 随 $s$ 线性增加，但 $Y$ 的样本路径不具有必然的逐样本单调性：对任意 $y>0$ 与允许的 $h>0$，二维布朗增量把当前半径移入更小半径开集的概率为正，故 $\Pr_y(Y(s+h)<y)>0$。因此不能把平均密度梯度解释为逐样本的单向输运或热流方向。
+
+**证明。** 在 $t_1,\ldots,t_r$ 充分接近零、使谱半径 $\rho(C\operatorname{diag}(t_a))<1$ 的邻域内，展开第 16 节的联合变换：
+
+$$
+\log\mathbb E
+\exp\!\left(\sum_{a=1}^r t_a\Lambda(u_a)\right)
+=
+-\log\det\!\left(I-C\operatorname{diag}(t_a)\right)
+=
+\sum_{n\ge1}\frac1n
+\operatorname{tr}\!\left((C\operatorname{diag}(t_a))^n\right).
+$$
+
+取互异变量的 $r$ 阶混合导数时，只有 $n=r$ 项保留；按循环旋转合并 $r$ 次重复，得到所列公式。正性来自 $u_r<1$ 时所有 $C_{ab}>0$。平方贝塞尔扩散的非单调性也可由其非退化扩散系数看出：从任意 $y>0$ 出发，在足够小的向内开集中有正概率到达更小的值；条件方差公式给出同一结论。$\square$
+
+本节的平方贝塞尔与 Feller 名称只描述极限随机场的统计等价结构。它依赖固定单位速度、给定阻抗与时钟、左反射右吸收、初态 $0$ 及同一随机历史；不延伸为 FIB 递归内生的物理定律，也不覆盖第 11、14 节速度权重扩展、路径过程收敛或经验普适性。
+
+## 19. 连续速度权重下的加权径向场
+
+**定义 19.1（连续正速度密度的扩展链）。** 取连续函数 $v\in C([0,1])$，满足
+
+$$
+0<v_*:=\min_{[0,1]}v\le \max_{[0,1]}v=:v^*<\infty,
+\qquad
+2\theta\le v_*\min(r_\alpha,r_\beta).
+$$
+
+在第 15 节的同一逐字源、边界、时钟与初态下，对内部暂态切点 $i$，把两条跨边概率改为
+
+$$
+\frac{\theta}{v(i/L_j)r_{(W_j)_{i-1}}},
+\qquad
+\frac{\theta}{v(i/L_j)r_{(W_j)_i}},
+$$
+
+并以剩余概率持留；$0$ 处仍按反射边界只保留右跳。令 $V_j^{(v)}$ 为相应的局部速度权重对角矩阵，令 $V_i^{(v)}$ 为扩展链在切点 $i$ 的占用量。于是
+
+$$
+B_j^{(v)}=(V_j^{(v)})^{-1}B_j,
+\qquad
+G_j^{(v)}=G_jV_j^{(v)}.
+$$
+
+**定理 19.2（加权有限维律与加权随机测度极限）。** 设互异探针 $0\le u_1<\cdots<u_m<1$，并令
+
+$$
+\ell_j^{(v)}(u)=h_jV_{\iota_j(u)}^{(v)}.
+$$
+
+则
+
+$$
+\mathbb E_0\exp\!\left(-\sum_{k=1}^m s_k\ell_j^{(v)}(u_k)\right)
+\longrightarrow
+\det\!\left(I_m+C\,\operatorname{diag}(v(u_k)s_k)\right)^{-1}.
+$$
+
+若
+
+$$
+\mu_j^{(v)}
+=\epsilon_j\sum_{i=0}^{L_j-1}V_i^{(v)}\delta_{i/L_j},
+$$
+
+则在有限非负测度弱拓扑下
+
+$$
+\mu_j^{(v)}
+\Longrightarrow
+\mu^{(v)}(du):=v(u)\Lambda(u)\,du,
+$$
+
+其中 $\Lambda$ 是第 16—18 节的同一辅助平方贝塞尔统计场的密度表示。这里“同一”只指分布表示；没有给出不同速度链在原概率空间上的逐样本耦合。
+
+特别地，
+
+$$
+\mathbb E X_v(u)=v(u)\kappa(u),
+\qquad
+\operatorname{Cov}(X_v(u),X_v(w))
+=v(u)v(w)C(u,w)^2,
+$$
+
+其中 $X_v(u)=v(u)\Lambda(u)$。对 $r\ge2$，
+
+$$
+\operatorname{cum}\bigl(X_v(u_1),\ldots,X_v(u_r)\bigr)
+=
+\left(\prod_{a=1}^rv(u_a)\right)
+\operatorname{cum}\bigl(\Lambda(u_1),\ldots,\Lambda(u_r)\bigr).
+$$
+
+**证明。** 固定有限链并取互异暂态切点 $a_1<\cdots<a_m$。第 16 节的首步方程适用于 $G_j^{(v)}$，而
+
+$$
+G_j^{(v)}(a_k,a_\ell)
+=q_{\max(a_k,a_\ell)}\,v(a_\ell/L_j).
+$$
+
+因此探针矩阵是
+
+$$
+Q^{(v)}=Q\,\operatorname{diag}\bigl(v(a_\ell/L_j)\bigr).
+$$
+
+其任意主子式等于 $\det(Q_I)\prod_{\ell\in I}v(a_\ell/L_j)$，仍非负；第 16 节的第一列 Cramer 分子仍为 $1$，所以有限链变换为
+
+$$
+\det\!\left(I_m+
+Q\,\operatorname{diag}\bigl(v(a_k/L_j)(e^{z_k}-1)\bigr)\right)^{-1}.
+$$
+
+令 $z_k=s_kh_j$，应用第 10.2 节的核极限即得固定有限维式。
+
+对全体切点取势时，同一行列式写成第 17 节的阶梯算子，并把 $g_j$ 换为 $v_jg_j$。正对称化算子变为
+
+$$
+\mathsf A_j^{(v)}
+=M_{\sqrt{v_jg_j}}\mathsf T_jM_{\sqrt{v_jg_j}},
+$$
+
+其极限为 $M_{\sqrt{vf}}\mathsf C M_{\sqrt{vf}}$。连续正性、对角线迹的黎曼和与第 17 节相同的迹范数论证给出 Fredholm 行列式收敛，因此得到 $\mu_j^{(v)}\Rightarrow v\Lambda\,du$。均值、协方差与全阶累积量由逐点乘法直接得到。$\square$
+
+**推论 19.3（加权反向场的时间非齐次 Markov 表示）。** 令
+
+$$
+Y_v(s)=X_v(1-s)=w(s)Y(s),\qquad w(s)=v(1-s).
+$$
+
+对任意连续正函数 $v$，确定性的逐时缩放 $y\mapsto w(s)y$ 都可逆，所以 $Y_v$ 仍具有连续路径的时间非齐次 Markov 表示。具体地，对 $0\le s<s+h\le1$、$z\ge0$，其转移核满足
+
+$$
+\mathbb E\!\left[e^{-zY_v(s+h)}\mid Y_v(s)=y\right]
+=
+\left(1+\frac{z w(s+h)h}{D}\right)^{-1}
+\exp\!\left(
+-\frac{y\,z\,w(s+h)/w(s)}{1+z w(s+h)h/D}
+\right).
+$$
+
+这直接由第 18.2 节的条件变换与 $Y(s)=Y_v(s)/w(s)$ 得到，不要求 $v$ 可微。
+
+若进一步有 $v\in C^1([0,1])$，才可对乘积使用 Itô 公式，将同一辅助表示写成含 $w'/w$ 的 SDE：
+
+$$
+dY_v(s)
+=
+\left(\frac{w'(s)}{w(s)}Y_v(s)+\frac{w(s)}D\right)ds
++\sqrt{\frac{2w(s)Y_v(s)}D}\,dW(s),
+\qquad Y_v(0)=0.
+$$
+
+当 $v\equiv c>0$ 时，该场具有同类齐次平方贝塞尔律，但有效参数为
+
+$$
+D'=\frac Dc,\qquad
+dY_c(s)=\frac1{D'}\,ds+\sqrt{\frac{2Y_c(s)}{D'}}\,dW(s).
+$$
+
+只有 $c=1$ 时，这个参数及其转移律才逐字等于第 18 节。一般连续正 $v$ 的 Markov 表示仍成立；$C^1$ 假设只用于上述导数形式的随机微分方程。
+
+**推论 19.4（速度权重的可识别性边界）。** 将初态 $0$ 下极限占用密度的单点均值记为
+
+$$
+m_{\mathrm{occ}}(u)=\mathbb E X_v(u)
+=v(u)\kappa(u)=\frac{v(u)(1-u)}D.
+$$
+
+若 $D$ 与全空间的 $m_{\mathrm{occ}}$ 已知，则对 $u<1$
+
+$$
+v(u)=\frac{m_{\mathrm{occ}}(u)}{\kappa(u)},
+$$
+
+并由连续性确定 $v(1)$。所有起点的极限平均通过时间另记为
+
+$$
+T_v(x)=\int_0^1 C(x,u)v(u)\,du
+=\frac1D\left[
+(1-x)\int_0^xv(u)\,du+
+\int_x^1(1-u)v(u)\,du
+\right].
+$$
+
+这里 $x$ 是初始切点的归一化位置；$T_v$ 与占用均值函数 $m_{\mathrm{occ}}$ 是不同的读数。由连续 $v$ 对上式求导，
+
+$$
+-DT_v''(x)=v(x),\qquad T_v'(0)=0,\qquad T_v(1)=0.
+$$
+
+因此已知 $D$ 及所有起点的平均通过时间函数 $T_v$ 也能恢复速度密度。单一起点均值、总速度质量或有限个测试函数均值只给有限个线性约束，不能识别一般连续 $v$；第 14.3 节的平滑速度例子已经给出同均值而不同二阶律的具体边界。
+
+本节是第 11、14 节外加速度模型与第 17、18 节统计场的接口，不是 FIB 递归内生的物理定律；不推出速度扩展中的路径耦合、函数空间一致收敛或经验热流解释。
+
+## 20. 等阻抗有限链的精确谱尾与 Fibonacci 扩散尾律
+
+**定义 20.1（等阻抗谱模型）。** 取
+
+$$
+r_\alpha=r_\beta=r>0,\qquad
+p=\frac{\theta}{r}\in(0,1/2],
+$$
+
+并沿用第 10 节的长度与时钟
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+D=\frac{p\varphi^4}{\delta}.
+$$
+
+暂态切点为 $0,\ldots,L_j-1$，$0$ 处以概率 $p$ 向右跳并以概率 $1-p$ 持留；内部切点左右跳概率均为 $p$，剩余概率持留；$L_j$ 吸收。允许初始切点律 $\nu_j$，记 $\nu_{j,i}$ 为其暂态切点 $i<L_j$ 的质量；其归一化坐标律 $(i\mapsto i/L_j)_\#\nu_j$ 满足
+
+$$
+(i\mapsto i/L_j)_\#\nu_j\Longrightarrow\nu
+\quad\text{于 }[0,1].
+$$
+
+**定理 20.2（精确余弦谱与扩散尾律）。** 对 $L=L_j$，令
+
+$$
+q_{L,m}=\frac{(2m+1)\pi}{2L+1},
+\qquad
+\lambda_{L,m}=1-2p+2p\cos q_{L,m},
+\qquad 0\le m<L.
+$$
+
+则暂态核的本征函数与范数为
+
+$$
+\phi_{L,m}(i)=\cos\!\left((i+1/2)q_{L,m}\right),
+\qquad
+\|\phi_{L,m}\|^2=\frac{2L+1}{4}.
+$$
+
+对整数 $n\ge0$，有限链吸收尾满足精确谱式
+
+$$
+\Pr_{\nu_j}(\tau_j>n)
+=\sum_{m=0}^{L-1}a_{L,m}(\nu_j)\lambda_{L,m}^{\,n},
+$$
+
+其中
+
+$$
+a_{L,m}(\nu_j)
+=
+\frac{2(-1)^m}{2L+1}
+\cot\!\left(\frac{q_{L,m}}2\right)
+\sum_{i=0}^{L-1}\nu_{j,i}
+\cos\!\left((i+1/2)q_{L,m}\right).
+$$
+
+若 $t>0$，则
+
+$$
+\Pr_{\nu_j}\!\left(\epsilon_j\tau_j>t\right)
+\longrightarrow
+S_\nu(t):=
+\sum_{m=0}^{\infty}
+\frac{4(-1)^m}{(2m+1)\pi}
+\left[
+\int_{[0,1]}
+\cos\!\left(\frac{(2m+1)\pi x}{2}\right)d\nu(x)
+\right]
+e^{-D\pi^2(2m+1)^2t/4}.
+$$
+
+吸收端的质量自动不贡献尾部，因为各余弦系数在 $x=1$ 为零。若
+
+$$
+b_0(\nu)=\frac4\pi\int_{[0,1]}\cos(\pi x/2)\,d\nu(x)>0,
+$$
+
+则长时间尾满足
+
+$$
+S_\nu(t)\sim b_0(\nu)e^{-D\pi^2t/4}
+\qquad(t\to\infty).
+$$
+
+**证明。** 暂态核是带反射半格点边界与吸收端点的实对称 Jacobi 矩阵。令 $\phi(i)=\cos((i+1/2)q)$，内部递推给出 $\lambda=1-2p+2p\cos q$；反射边界在 $0$ 自动满足，吸收边界要求 $\phi(L)=0$，即 $q=(2m+1)\pi/(2L+1)$。离散余弦正交关系给出范数 $(2L+1)/4$，再将常数函数投影到这些本征函数上即得系数 $a_{L,m}$ 与精确尾式。
+
+由 Fibonacci 比例
+
+$$
+\frac{N_j}{L_j}\longrightarrow\varphi^2,
+\qquad
+\epsilon_jL_j^2\longrightarrow\frac{\delta}{\varphi^4},
+$$
+
+对固定 $m$ 有
+
+$$
+1-\lambda_{L_j,m}
+=\frac{p\pi^2(2m+1)^2}{(2L_j+1)^2}
++O_m(L_j^{-4}),
+$$
+
+从而
+
+$$
+\lambda_{L_j,m}^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow
+e^{-D\pi^2(2m+1)^2t/4}.
+$$
+
+同样，谱投影系数趋于
+
+$$
+\frac{4(-1)^m}{(2m+1)\pi}
+\int_{[0,1]}\cos\!\left(\frac{(2m+1)\pi x}{2}\right)d\nu(x).
+$$
+
+半格点分母 $(2L_j+1)^2$ 必须保留；将其换成 $4L_j^2$ 会产生 $L_j^{-3}$ 阶修正，不能同时声称余项仍为 $O_m(L_j^{-4})$。
+
+先固定低频截断 $M$，再令 $j\to\infty$。对 $m\le M$ 使用上述逐模态极限。对固定 $t>0$ 及充分大的 $j$，系数式与 $1-\lambda_{L,m}=4p\sin^2(q_{L,m}/2)$ 给出
+
+$$
+|a_{L,m}(\nu_j)|\le\frac{C}{m+1},\qquad
+\lambda_{L,m}^{\lfloor t/\epsilon_j\rfloor}
+\le e^{-c_t(m+1)^2}\quad(\lambda_{L,m}\ge0),
+$$
+
+其中 $C,c_t>0$ 不随 $j,m,\nu_j$ 变化。因此非负谱中 $m>M$ 的尾项由可求和级数控制，并随 $M\to\infty$ 消失。当 $p<1/2$ 时，负本征值的绝对值不超过 $4p-1<1$（$p\le1/4$ 时没有负本征值）；其系数绝对值之和至多为 $O(\log L)$，所以负谱贡献在扩散时标上也趋零。
+
+当 $p=1/2$ 时，$\lambda_{L,m}=\cos q_{L,m}$。对负谱即 $q_{L,m}>\pi/2$，反向编号为
+
+$$
+m=L-1-k,\qquad
+q_{L,L-1-k}=\pi-\frac{2(k+1)\pi}{2L+1},\qquad k\ge0.
+$$
+
+由 $\cot(q/2)=\tan((\pi-q)/2)$ 及起始律总质量不超过一，统一有
+
+$$
+|a_{L,L-1-k}(\nu_j)|\le\frac{C(k+1)}{L^2}.
+$$
+
+所以 $k\ge1$ 时系数为 $O(k/L^2)$；最末模态 $k=0$ 须单列为 $O(L^{-2})$，不能把 $O(k/L^2)$ 写到 $k=0$。若初态为 $0$，额外的余弦因子还给出 $O((k+1)^2/L^3)$。对固定 $t>0$ 及充分大的 $j$，在上述整个负谱范围内，
+
+$$
+|\lambda_{L,L-1-k}|^{\lfloor t/\epsilon_j\rfloor}
+\le \exp\bigl(-c_t(k+1)^2\bigr)
+\le \exp(-c_t k^2).
+$$
+
+这是因为 $|\lambda|=\cos(2(k+1)\pi/(2L+1))$，且 $\epsilon_jL_j^2$ 趋于严格正的常数。于是负谱的标量贡献至多为
+
+$$
+\frac{C}{L^2}\sum_{k\ge0}(k+1)e^{-c_t(k+1)^2}
+\longrightarrow0.
+$$
+
+该可求和控制只用于生存函数的投影，不把靠近 $-1$ 的高频模态升级为全空间算子范数收敛。合并正、负谱后，取 $M\to\infty$ 即得所列级数。首模态与其余模态的指数率严格分离，给出长时间渐近式。$\square$
+
+本节的谱尾律需要固定 $p>0$、$\delta>0$、等阻抗、左反射右吸收和初始律收敛；$p=0$ 时不发生该吸收扩散缩放，$p>1/2$ 时转移核不满足本定义。谱式中的高频系数可带符号，不能把每一项解释为独立概率或几何变量和。递归只提供 $W_j$、$L_j$ 与 $N_j/L_j$ 的比例；阻抗、跳率、时钟、边界和初始律仍是外加动力学。该结论不推出物理热流、量子输运、路径空间收敛或一般速度权重下的同一谱律。
+
+## 21. 不等阻抗的固定低频谱与二字母定量同质化
+
+**定义 21.1（逐字阻抗与低频编号）。** 沿用定义 10.1 的逐字源 $W_j$、固定单位速度、左反射右吸收边界及数量缩放时钟。固定
+
+$$
+r_\alpha,r_\beta>0,\qquad
+0<\theta\le\frac{\min(r_\alpha,r_\beta)}2,\qquad
+\delta>0,
+$$
+
+并令
+
+$$
+a=\varphi^{-2},\qquad
+\overline r=a r_\alpha+(1-a)r_\beta,\qquad
+D=\frac{\theta\varphi^4}{\delta\overline r},
+$$
+
+$$
+L_j=F_{j+1},\qquad N_j=F_{j+3},\qquad
+\epsilon_j=\frac{\delta}{N_j^2},\qquad
+\Delta_r=|r_\alpha-r_\beta|.
+$$
+
+记暂态核为 $K_j$，$B_j=I-K_j$，$G_j=B_j^{-1}$。实对称三对角核 $K_j$ 的本征值按递减次序编号为
+
+$$
+\lambda_{j,0}>\lambda_{j,1}>\cdots>\lambda_{j,L_j-1},
+$$
+
+因此 $m=0$ 表示 $B_j$ 的最低频模态。将相应本征向量 $f_{j,m}$ 归一化为
+
+$$
+\frac1{L_j}\sum_{i=0}^{L_j-1}f_{j,m}(i)^2=1,
+\qquad f_{j,m}(0)>0,
+$$
+
+并嵌入分片常数函数：在 $[i/L_j,(i+1)/L_j)$ 上取值 $f_{j,m}(i)$，在吸收端 $u=1$ 取零。以下低频极限一律先固定整数 $m\ge0$，再令 $j\to\infty$；本征对只在充分大且 $L_j>m$ 的 $j$ 上使用。
+
+**定理 21.2（二字母阻抗的区间差异与同长度比较）。** 对每个 $0\le b\le c\le L_j$，
+
+$$
+\left|\sum_{i=b}^{c-1}r_{(W_j)_i}
+-\overline r(c-b)\right|\le\Delta_r.
+$$
+
+归一化 Green 核
+
+$$
+\mathcal K_j(u,v)
+=\epsilon_jL_jG_j(\iota_j(u),\iota_j(v))
+$$
+
+按定义 10.1 在吸收端取零。若
+
+$$
+C(u,v)=\frac{1-\max(u,v)}D,\qquad
+c_j=\frac{\epsilon_j\overline rL_j^2}{\theta},
+$$
+
+则
+
+$$
+\|\mathcal K_j-C\|_\infty
+\le |c_j-D^{-1}|
++\frac{\epsilon_jL_j}{\theta}(\overline r+\Delta_r)
+=O(L_j^{-1}).
+$$
+
+这里的误差常数只依赖固定的阻抗、跳尺度与时钟。为区分极限平均与有限词的实际平均，再令
+
+$$
+\widehat r_j=\frac1{L_j}\sum_{i=0}^{L_j-1}r_{(W_j)_i},
+\qquad
+|\widehat r_j-\overline r|\le\frac{\Delta_r}{L_j}.
+$$
+
+对任意正数 $r_0$，记同长度 $L_j$、同 $\theta,\epsilon_j$ 的常阻抗 Green 核为
+
+$$
+\mathcal K_j^{[r_0]}(u,v)
+=\frac{\epsilon_jL_j r_0}{\theta}
+\bigl(L_j-\max(\iota_j(u),\iota_j(v))\bigr),
+$$
+
+并在任一参数等于 $1$ 时取零。则有两种同长度比较界：
+
+$$
+\|\mathcal K_j-\mathcal K_j^{[\overline r]}\|_\infty
+\le\frac{\epsilon_jL_j}{\theta}\Delta_r,
+\qquad
+\|\mathcal K_j-\mathcal K_j^{[\widehat r_j]}\|_\infty
+\le\frac{2\epsilon_jL_j}{\theta}\Delta_r.
+$$
+
+后一比较保持有限词的总阻抗不变；两者均为 $O(L_j^{-1})$。
+
+**证明。** 第 3.2、10.2 节的机械词表示使任一区间的 $\alpha$ 数与 $a(c-b)$ 的差小于一。将总阻抗写为
+
+$$
+r_\beta(c-b)+(r_\alpha-r_\beta)A_{b,c-b}
+$$
+
+即得区间差异界。第 10.2 节的精确 Green 逆为
+
+$$
+G_j(i,k)=\frac1\theta
+\sum_{\ell=\max(i,k)}^{L_j-1}r_{(W_j)_\ell}.
+$$
+
+将尾区间的总阻抗替换为 $\overline r$ 乘以尾长度，误差不超过 $\Delta_r$；再将格点坐标换为连续坐标，误差不超过 $\overline r$ 乘以一个格点长度。结合
+
+$$
+c_j=D^{-1}+O(L_j^{-2}),\qquad
+\epsilon_jL_j=O(L_j^{-1}),
+$$
+
+即得一致核估计与第一种同长度比较。全词区间的同一界给出 $|\widehat r_j-\overline r|\le\Delta_r/L_j$。任一尾区间长度不超过 $L_j$，所以将 $\overline r$ 再换成 $\widehat r_j$ 额外损失不超过 $\Delta_r$，得到第二种比较。$\square$
+
+**定理 21.3（不等阻抗的固定低频本征对）。** 对每个先固定的整数 $m\ge0$，在充分大且 $L_j>m$ 时，
+
+$$
+\rho_{j,m}:=\frac{\epsilon_j}{1-\lambda_{j,m}}
+\longrightarrow
+\rho_m:=\frac{4}{D\pi^2(2m+1)^2}.
+$$
+
+上述分片常数嵌入的本征函数满足
+
+$$
+f_{j,m}(u)\longrightarrow
+\psi_m(u):=\sqrt2\cos\!\left(\frac{(2m+1)\pi u}{2}\right)
+$$
+
+于 $[0,1]$ 的一致范数，因而也于 $L^2([0,1])$。此外，令同长度实际平均阻抗链的本征值为
+
+$$
+\widehat\lambda_{j,m}
+=1-2\widehat p_j+
+2\widehat p_j\cos\!\left(\frac{(2m+1)\pi}{2L_j+1}\right),
+\qquad
+\widehat p_j=\frac{\theta}{\widehat r_j},
+$$
+
+则对这些固定 $m$ 的本征值有定量比较
+
+$$
+\left|
+\frac{\epsilon_j}{1-\lambda_{j,m}}
+-\frac{\epsilon_j}{1-\widehat\lambda_{j,m}}
+\right|
+\le\frac{2\epsilon_jL_j}{\theta}\Delta_r,
+\qquad
+\rho_{j,m}=\rho_m+O_m(L_j^{-1}).
+$$
+
+**证明。** 在 $L^2([0,1])$ 上令 $\mathcal T_j$ 为 $\mathcal K_j$ 的积分算子，$\mathsf C$ 为 $C$ 的积分算子。两者正自伴；$\mathcal T_j$ 在分片常数子空间上恰为 $\epsilon_jG_j$，在其正交补上为零。因此它的非零本征值是按递减次序排列的 $\rho_{j,m}$。定理 21.2 的一致核误差给出
+
+$$
+\|\mathcal T_j-\mathsf C\|_{2\to2}
+\le\|\mathcal K_j-C\|_\infty=O(L_j^{-1}).
+$$
+
+对 $y=\mathsf C f$，第 10.2 节的边值关系为
+
+$$
+-Dy''=f,\qquad y'(0)=0,\qquad y(1)=0.
+$$
+
+所以 $\mathsf C$ 的非零本征对正是 $(\rho_m,\psi_m)$：诺伊曼—狄利克雷条件给出半整数频率，每个本征值严格正且单重。正紧自伴算子的极小极大原理与算子范数收敛于是给出每个固定 $m$ 的本征值收敛；孤立单重本征值的谱投影收敛给出相应本征函数在 $L^2$ 中的收敛，先允许选择符号。
+
+为把 $L^2$ 收敛提升到一致收敛，使用本征方程
+
+$$
+f_{j,m}=\rho_{j,m}^{-1}\mathcal T_j f_{j,m},
+\qquad
+\psi_m=\rho_m^{-1}\mathsf C\psi_m.
+$$
+
+一致核误差使 $\mathcal T_j-\mathsf C$ 从 $L^2$ 到有界函数的一致范数趋零，而连续有界核 $C$ 使 $\mathsf C$ 从 $L^2$ 到 $C([0,1])$ 连续。由于固定 $m$ 的 $\rho_m>0$，本征方程给出一致收敛。暂态三对角矩阵的相邻非对角元非零，所以本征向量在 $0$ 的值不能为零；$f_{j,m}(0)>0$ 与 $\psi_m(0)=\sqrt2$ 最终选择同一符号。
+
+对实际平均阻抗核应用定理 21.2 的第二种比较，所得算子范数差不超过 $2\epsilon_jL_j\Delta_r/\theta$。再次使用极小极大原理，得到显示的同长度本征值比较界。该常阻抗链满足定义 20.1 的概率条件，因为 $\widehat r_j\ge\min(r_\alpha,r_\beta)$。第 20.2 节保留半格点分母的谱式，结合 $\widehat r_j=\overline r+O(L_j^{-1})$ 与 $\epsilon_jL_j^2=\delta/\varphi^4+O(L_j^{-2})$，给出固定 $m$ 的 $O_m(L_j^{-1})$ 估计。$\square$
+
+**命题 21.4（有限谱的转移矩阵递归与边界根）。** 对谱参数 $z$ 定义
+
+$$
+\mathsf T_r(z)=
+\begin{pmatrix}
+1+zr/\theta&r/\theta\\
+z&1
+\end{pmatrix},
+\qquad
+M_j(z)=
+\mathsf T_{r_{(W_j)_{L_j-1}}}(z)\cdots
+\mathsf T_{r_{(W_j)_0}}(z).
+$$
+
+每个矩阵的行列式为 $1$。由 $W_{j+2}=W_{j+1}W_j$，乘法次序为
+
+$$
+M_{j+2}=M_jM_{j+1}.
+$$
+
+若 $x_j(z)=\tfrac12\operatorname{tr}M_j(z)$，则
+
+$$
+x_{j+2}=2x_{j+1}x_j-x_{j-1}\qquad(j\ge1),
+$$
+
+初值为
+
+$$
+x_0=1+\frac{zr_\alpha}{2\theta},\qquad
+x_1=1+\frac{zr_\beta}{2\theta},\qquad
+x_2=1+\frac{z(r_\alpha+r_\beta)}{\theta}
++\frac{z^2r_\alpha r_\beta}{2\theta^2}.
+$$
+
+这给出有限词转移矩阵的半迹递归。反射—吸收本征值仍须由实际边界根判定：
+
+$$
+\bigl(M_j(\lambda-1)\bigr)_{11}=0.
+$$
+
+不能仅以半迹的某个取值替代此边界条件。
+
+**证明。** 令 $f$ 为本征向量并设
+
+$$
+J_i=\frac{\theta}{r_{(W_j)_i}}(f_{i+1}-f_i),
+\qquad J_{-1}=0,\qquad f_{L_j}=0.
+$$
+
+本征方程 $K_jf=\lambda f$ 给出 $J_i-J_{i-1}=(\lambda-1)f_i$，所以
+
+$$
+\binom{f_{i+1}}{J_i}
+=\mathsf T_{r_{(W_j)_i}}(\lambda-1)
+\binom{f_i}{J_{i-1}}.
+$$
+
+左反射条件固定初始向量为 $(f_0,0)^{\mathsf T}$，且非零本征向量必有 $f_0\ne0$；右吸收条件因此恰为 $M_{11}=0$。反过来，该根和初始向量 $(1,0)^{\mathsf T}$ 构造出非零本征向量，所以边界根条件是充要的。半迹递归来自 $M_{j+1}=M_{j-1}M_j$、循环迹恒等式及行列式为一时的 Cayley—Hamilton 恒等式，不另给边界谱条件。$\square$
+
+**推论 21.5（等阻抗回接与结论边界）。** 当 $r_\alpha=r_\beta=r$，令 $p=\theta/r$，并写
+
+$$
+\lambda=1-2p+2p\cos q,\qquad 0\le q<\pi.
+$$
+
+由反射初始向量产生的解为
+
+$$
+\frac{f_i}{f_0}
+=\frac{\cos((i+1/2)q)}{\cos(q/2)},
+\qquad
+(M_j(\lambda-1))_{11}
+=\frac{\cos((L_j+1/2)q)}{\cos(q/2)}.
+$$
+
+因此边界根恰为
+
+$$
+q=\frac{(2m+1)\pi}{2L_j+1},\qquad 0\le m<L_j,
+$$
+
+回到第 20 节的精确余弦根与固定低频极限。$q=\pi$ 时分子和分母同时为零，不能只解分子零点而将其计作额外本征根；连续延拓的实际边界值为
+
+$$
+\lim_{q\to\pi}
+\frac{\cos((L_j+1/2)q)}{\cos(q/2)}
+=(-1)^{L_j}(2L_j+1)\ne0.
+$$
+
+故 $q=\pi$ 是该分子方程引入的伪根。转移矩阵半迹递归在本节只用于有限谱递归；固定低频的同质化由 Green 核比较与孤立本征值论证承担。
+
+本节不主张不等阻抗的全谱极限、$m$ 随 $j$ 增长时的谱或本征函数极限、原离散时钟半群的全空间范数收敛或大偏差原理。它也不推出物理热流、温度、量子输运或经验普适性。递归提供逐字二字母阻抗排列和 Fibonacci 长度比例；单位速度、阻抗值、跳尺度、时钟及反射—吸收边界仍是外加模型条件。
+
+## 22. 统一 Green 核的四重表征与低频接口
+
+本节把前面各层结果接到同一个连续算子上。这里仍固定正阻抗 $r_\alpha,r_\beta$、单位速度、左反射右吸收边界、数值时钟 $\epsilon_j=\delta/N_j^2$、初态 $0$ 及逐字源 $W_j$；速度权重、不同边界和不同初始律不并入本节的统一接口。
+
+**定义 22.1（连续 Green 算子）。** 令
+
+$$
+C(u,v)=\frac{1-\max(u,v)}D,
+\qquad
+(\mathsf C f)(u)=\int_0^1C(u,v)f(v)\,dv,
+$$
+
+并令 $\mathsf H$ 是带边界条件
+
+$$
+\mathsf H=-D\frac{d^2}{du^2},
+\qquad
+f'(0)=0,\quad f(1)=0
+$$
+
+的算子。于是 $\mathsf C=\mathsf H^{-1}$。记
+
+$$
+ k_m=\left(m+\frac12\right)\pi,
+\qquad
+\psi_m(u)=\sqrt2\cos(k_m u),
+\qquad
+\rho_m=\frac1{Dk_m^2}.
+$$
+
+**定理 22.2（统一 Green 核桥）。** 设 $\bar r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta$，并令
+
+$$
+D=\frac{\theta\varphi^4}{\delta\bar r},
+\qquad
+\mathcal K_j(u,v)=\epsilon_jL_jG_j(\iota_j(u),\iota_j(v)),
+$$
+
+其中 $G_j=(I-K_j)^{-1}$ 是暂态 Green 矩阵。则
+
+$$
+G_j(i,k)=\frac1\theta\sum_{h=\max(i,k)}^{L_j-1}r_{(W_j)_h},
+$$
+
+并且
+
+$$
+\|\mathcal K_j-C\|_\infty
+\le
+\left|\frac{\epsilon_j\bar rL_j^2}{\theta}-\frac1D\right|
++\frac{\epsilon_jL_j}{\theta}
+\bigl(\bar r+|r_\alpha-r_\beta|\bigr)
+=O(L_j^{-1}).
+$$
+
+**证明。** 机械词的区间平衡给出任意区间内的 $\alpha$ 个数与 $\varphi^{-2}$ 乘区间长度之差小于一。因此该区间的阻抗和与 $\bar r$ 乘区间长度之差不超过 $|r_\alpha-r_\beta|$。首步方程的离散通量消元给出 Green 矩阵的尾和公式。将尾和中的阻抗和替换为 $\bar r$ 乘尾长度，误差至多为 $|r_\alpha-r_\beta|$；格点取整再增加至多一个格点长度的误差。最后使用 $N_j/L_j\to\varphi^2$ 及 $\epsilon_jL_j=O(L_j^{-1})$，得到所列一致估计。$\square$
+
+**推论 22.3（同一算子的四种读法）。** 在定理 22.2 的条件下，下列对象共享同一连续核，但量词仍分别受前面各节的范围约束：
+
+1. 对固定有限个探针，$C$ 的有限主子矩阵给出第16节的联合 Laplace 行列式。
+2. 对非负连续函数 $f$，$M_{\sqrt f}\mathsf C M_{\sqrt f}$ 是正迹类算子，并给出第17节的 Fredholm Laplace 泛函
+
+   $$
+   \mathbb E\exp\left(-\int_0^1f(u)\Lambda(u)\,du\right)
+   =\det_F(I+\mathsf C M_f)^{-1}.
+   $$
+
+3. 反向坐标场 $Y(s)=\Lambda(1-s)$ 是第18节的二维平方贝塞尔能量过程，满足
+
+   $$
+   dY(s)=\frac1D\,ds+\sqrt{\frac{2Y(s)}D}\,dW(s).
+   $$
+
+4. $\mathsf C$ 的非零谱为 $(\rho_m)_{m\ge0}$，本征函数为 $(\psi_m)_{m\ge0}$。因此第20、21节的固定低频本征对都回接到同一组半整数 Neumann—Dirichlet 模态。
+
+这里“四种读法”是同一 Green 核的不同投影，不是一个新的全局收敛定理；有限探针、连续测度、Markov 表示和低频谱各自保留原有的固定量词。
+
+**推论 22.4（Fredholm 行列式与通过时间的回接）。** 对常数探针 $f\equiv s\ge0$，有
+
+$$
+\det_F(I+s\mathsf C)
+=\prod_{m=0}^{\infty}(1+s\rho_m)
+=\cosh\sqrt{\frac{s}{D}}.
+$$
+
+于是极限总占用质量满足
+
+$$
+\mathbb E\exp\left(-s\int_0^1\Lambda(u)\,du\right)
+=\operatorname{sech}\sqrt{\frac{s}{D}}.
+$$
+
+等价地，若 $(E_m)_{m\ge0}$ 是独立均值为 $1$ 的指数变量，则
+
+$$
+\int_0^1\Lambda(u)\,du
+\ \stackrel{d}{=}\ \sum_{m=0}^{\infty}\rho_mE_m,
+\qquad
+\sum_{m\ge0}\rho_m=\frac1{2D},
+\qquad
+\sum_{m\ge0}\rho_m^2=\frac1{6D^2}.
+$$
+
+这同时回接总占用质量的极限均值与方差；它仍是分布等式，不指定不同 $j$ 之间的逐样本耦合。
+
+该表达式与反射—吸收连续扩散从 $0$ 出发的通过时间 Laplace 变换一致，也与第10节和第15节的标量极限相接。
+
+**证明。** 半整数本征值给出 Fredholm 行列式的乘积；Euler 乘积公式
+
+$$
+\cosh z=\prod_{m=0}^{\infty}
+\left(1+\frac{4z^2}{(2m+1)^2\pi^2}\right)
+$$
+
+代入 $z=\sqrt{s/D}$ 即得。指数变量级数的 Laplace 变换是上述乘积的倒数。常数探针的占用质量是通过时间的缩放极限，所以其 Laplace 变换与连续反射—吸收问题的预解式相同。$\square$
+
+**推论 22.5（低频生存谱接口）。** 令 $x\in[0,1)$。连续反射—吸收扩散的生存函数为
+
+$$
+S_x(t)=2\sum_{m=0}^{\infty}
+\frac{(-1)^m\cos(k_mx)}{k_m}
+\exp(-Dk_m^2t),
+\qquad t>0.
+$$
+
+特别地，
+
+$$
+\int_0^\infty e^{-st}S_0(t)\,dt
+=\frac{1-\operatorname{sech}\sqrt{s/D}}s.
+$$
+
+离散生存谱要回接到此式，必须同时满足两个条件：对每个预先固定的 $m$，离散本征缺陷与 $\epsilon_jDk_m^2$ 的比值趋于一，并且对任意 $t_0>0$，$t\ge t_0$ 时高频余项具有统一可求和控制。仅有固定模态的逐项收敛不足以推出整条生存级数的收敛。
+
+**证明。** 连续核的边值问题给出 $\psi_m$ 和 $Dk_m^2$；常数函数在这些本征函数上的投影为 $2(-1)^m/k_m$，逐项求和得到 $S_x$。对 $x=0$ 使用
+
+$$
+\int_0^\infty e^{-st}S_0(t)\,dt
+=\frac{1-\mathbb E_0e^{-s\tau}}s,
+$$
+
+再代入推论22.4。离散级数需要额外的高频尾控制，因为当 $p=1/2$ 时存在接近 $-1$ 的高频本征值；该尾控制不能由低频本征对的收敛自动得到。$\square$
+
+本节的统一接口不改变各层边界：$f$ 必须是非负连续测试函数；Fredholm 行列式需要迹类或等价的谱尾控制；固定低频结论不延伸到 $m=m(j)$、全谱、全空间半群范数或 $t=0$ 一致生存尾；有限 Green 核的一致收敛不单独推出完整转移概率的同质化。速度权重应改写为加权算子 $\mathsf C M_v$ 或其对称化，而不能沿用原来的同一谱参数。Brownian 场与平方贝塞尔过程只是极限分布的辅助表示，不给出跨 $j$ 或跨速度模型的原概率空间耦合。递归仍不选择阻抗、跳率、边界或时钟，也不推出物理热流、温度、量子输运或经验普适性。
+
+## 追加锚（本行以下为增补区）
+
+## 23. Green 核的物理类比接口与识别边界
+
+第22节的共同核可以产生若干物理术语的数学对应，但对应关系必须停留在明确的算子、概率和边界条件上。以下把可直接推出的部分与需要外加模型的部分分开。
+
+**定义 23.1（源—响应算子）。** 对连续源 $g$，令
+
+$$
+(Tg)(x)=(\mathsf Cg)(x)=\int_0^1C(x,u)g(u)\,du.
+$$
+
+则 $Tg$ 是边值问题
+
+$$
+-D(Tg)''=g,
+\qquad
+(Tg)'(0)=0,
+\qquad
+(Tg)(1)=0
+$$
+
+的唯一 $C^2$ 解。因而 $C$ 可以严格称为该反射—吸收模型的静态源—响应核。若 $\mathsf S(t)=e^{-t\mathsf H}$ 是同一边值问题的杀死扩散半群，则
+
+$$
+\mathsf C=\int_0^\infty\mathsf S(t)\,dt
+$$
+
+在强算子意义下成立；$C$ 是零频或时间积分响应，而不是自动给定的因果物理易感率。
+
+**命题 23.2（生成泛函的响应—涨落恒等式）。** 对非负连续源 $f$，令
+
+$$
+Z(f)=\mathbb E\exp\left(-\int_0^1f(u)\Lambda(u)\,du\right)
+=\det_F(I+\mathsf C M_f)^{-1}.
+$$
+
+对连续方向 $h,k$，在零源处有
+
+$$
+\left.\frac{d}{dt}\log Z(th)\right|_{t=0}
+=-\int_0^1h(u)C(u,u)\,du,
+$$
+
+以及
+
+$$
+\left.\frac{\partial^2}{\partial s\,\partial t}
+\log Z(sh+tk)\right|_{s=t=0}
+=\int_0^1\int_0^1h(u)k(v)C(u,v)^2\,du\,dv.
+$$
+
+左式给出占用场的均值响应，右式给出两个源方向的联合涨落；它们也分别等于
+
+$$
+\mathbb E\int h\,d\mu,
+\qquad
+\operatorname{Cov}\left(\int h\,d\mu,\int k\,d\mu\right).
+$$
+
+**证明。** 将
+
+$$
+\log Z(f)=-\operatorname{Tr}\log(I+\mathsf C M_f)
+$$
+
+在零源处展开。一次项为 $-\operatorname{Tr}(\mathsf C M_h)$，等于 $-\int h(u)C(u,u)du$；二次混合项由迹的循环不变性合并为 $\operatorname{Tr}(\mathsf C M_h\mathsf C M_k)$，其核为 $h(u)k(v)C(u,v)^2$。这与第17、18节的均值和协方差公式一致。$\square$
+
+**推论 23.3（谱弛豫的数学读法）。** 连续半群的模态满足
+
+$$
+\mathsf S(t)\psi_m=e^{-Dk_m^2t}\psi_m.
+$$
+
+因此
+
+$$
+\tau_m=\frac1{Dk_m^2}=\rho_m
+$$
+
+是第 $m$ 个数学弛豫时间，最低模态给出最长时间尺度
+
+$$
+\tau_0=\frac4{D\pi^2}.
+$$
+
+这说明 Green 核、总占用质量和生存谱共享同一组弛豫模态：Green 特征值是模态时间尺度，生存函数是模态指数衰减，随机总质量是同一谱权重下的指数级数。
+
+**推论 23.4（能量与配分函数的受限类比）。** 对非负权重 $f$，可定义抽象占用泛函
+
+$$
+E_f=\int_0^1f(u)\Lambda(u)\,du.
+$$
+
+它满足
+
+$$
+\mathbb E E_f=\int_0^1f(u)\frac{1-u}{D}\,du,
+$$
+
+$$
+\operatorname{Cov}(E_f,E_g)
+=\int_0^1\int_0^1f(u)g(v)C(u,v)^2\,du\,dv.
+$$
+
+常数权重下，
+
+$$
+\mathbb E E_1=\frac1{2D},
+\qquad
+\operatorname{Var}(E_1)=\frac1{6D^2},
+$$
+
+而 $-\log Z(s)$ 具有二次高斯系综中自由能的形式。这里的“能量”和“配分函数”只是对非负随机泛函及其 Laplace 变换的命名类比；它们没有自动取得物理单位、Gibbs 权重、熵或相变含义。
+
+**推论 23.5（速度权重的响应重整化）。** 若额外加入连续正速度权重 $v$，则静态响应改为
+
+$$
+T_vg=\mathsf C(vg),
+\qquad
+-D(T_vg)''=v g,
+$$
+
+相应的对称谱问题为
+
+$$
+-D\phi''=\lambda v\phi,
+\qquad
+\phi'(0)=0,\quad \phi(1)=0.
+$$
+
+因此 $v$ 改变的是响应核和谱度量；它不能与单位速度模型共用同一个谱参数、平方贝塞尔参数或涨落—耗散解释。
+
+本节给出的“静态响应”“谱弛豫”“涨落—耗散形式”“占用能量”和“配分函数”之间的关系，都是 Green 逆、正半群、Gaussian 二次泛函与平方贝塞尔表示之间的数学关系。要把它们提升为物理定律，还必须另行指定实际观测量与单位、外部扰动的耦合、因果时间协议、热浴或平衡系综、温度、耗散系数、能量守恒及详细平衡。当前模型没有这些数据，因此不能由 FIB 递归单独推出物理热流、温度、实验线性响应、涨落—耗散定律、Gibbs 熵、量子输运或经验普适性；第5、6、11、14、15节的不可识别性例子进一步说明相同部分静态读数可以对应不同通量、通过时间或联合耦合。
+
+## 追加锚（本行以下为增补区）
+
+## 24. 被杀死半群与物理读出的条件迁移
+
+第22、23节使用的是被杀死半群，必须把它与在吸收端停留的完整过程分开。令 $Z_t$ 表示到达吸收端前的过程，并把吸收后的状态记为墓地点 $\partial$。其半群为
+
+$$
+(\mathsf S_t f)(x)=\mathbb E_x\bigl[f(Z_t)\,\mathbf 1_{\{t<\tau\}}\bigr],
+$$
+
+在连续区间上对应 $f(1)=0$ 的 Dirichlet 端点，因此会损失总质量。若 $X_t$ 是到达 $1$ 后永久停留的完整吸收过程，则对 $x<1$ 有
+
+$$
+\widetilde{\mathsf S}_t f(x)
+=\mathsf S_t\bigl(f-f(1)\bigr)(x)+f(1),
+$$
+
+并且 $\delta_1$ 是完整过程的吸收不变律。占用测度 $\mu_j$ 与场 $\Lambda$ 记录的是吸收前的暂态占用，不能直接解释为完整过程的平衡温度或 Gibbs 状态。
+
+**定理 24.1（物理读出的条件迁移）。** 假设在第12节的路径缩放下，离散过程 $Z_j$ 弱收敛到反射—吸收极限 $Z$。若另给物理读出映射 $\Phi_j$，并且在选定路径拓扑下
+
+$$
+\Phi_j(Z_j)\Longrightarrow\Phi(Z),
+$$
+
+其中 $\Phi$ 连续于极限路径的满概率集合，则物理读出的极限律是
+
+$$
+\operatorname{Law}\bigl(\Phi(Z)\bigr).
+$$
+
+这只是指定读出下的条件统计结论。若进一步假设一个标量场 $T$ 是该半群的线性期望状态，并另行给出守恒律、本构关系
+
+$$
+\partial_tT=D\partial_u^2T,
+\qquad
+J=-D\partial_uT,
+$$
+
+以及左端零通量、右端固定值的边界条件，才可以把相应的 $T$ 解释为该物理接口下的扩散温度场和 $J$ 解释为通量。若这些读出、单位、守恒和本构假设没有登记，统一 Green 核只给出数学响应与概率律。
+
+**证明。** 第一部分是路径弱收敛与连续映射定理的直接应用。第二部分由所给守恒—本构方程和边界条件识别其生成元为 $D\partial_u^2$；这些方程是额外假设，不由 FIB 递归或占用场自动产生。$\square$
+
+因此，反射—吸收路径极限不能单独推出物理温度、热流或热平衡；量子输运还需要 Hilbert 空间、Hamiltonian 或 Lindblad 动力学、初态密度矩阵以及 current/Kubo 观测映射。完整吸收过程、被杀死半群和任何物理读出若采用不同边界或单位，必须重新登记其映射，不能沿用本卷的 Dirichlet Green 核。
+
+## 追加锚（本行以下为增补区）
+
+## 25. FIB 区间平衡与响应—输运的可识别性
+
+第22节的统一核给出宏观响应，但宏观核会压缩部分微观信息。本节记录这种压缩的精确边界。
+
+**命题 25.1（区间平衡产生的有效响应）。** 令 $a_F=\varphi^{-2}$，并沿用
+
+$$
+\bar r=a_Fr_\alpha+(1-a_F)r_\beta,
+\qquad
+D=\frac{\theta\varphi^4}{\delta\bar r}.
+$$
+
+对 Fibonacci 词的任意区间 $[b,c)$，有
+
+$$
+\left|\sum_{i=b}^{c-1}r_{(W_j)_i}-\bar r(c-b)\right|
+\le |r_\alpha-r_\beta|.
+$$
+
+因此对每个连续源 $f$，离散 Green 算子
+
+$$
+(\mathcal T_jf)(u)=\epsilon_j\sum_{i=0}^{L_j-1}
+G_j(\iota_j(u),i)f(i/L_j)
+$$
+
+收敛到
+
+$$
+(\mathcal Tf)(u)=\frac1D\int_0^1(1-\max(u,v))f(v)\,dv,
+$$
+
+并满足
+
+$$
+-D(\mathcal Tf)''=f,
+\qquad
+(\mathcal Tf)'(0)=0,
+\qquad
+(\mathcal Tf)(1)=0.
+$$
+
+这里的 $O(L_j^{-1})$ 一致核误差来自均匀区间平衡；只有整体字母频率收敛而没有区间误差界时，不能推出这个一致响应结论。
+
+**命题 25.2（微观阻抗的有限层识别与宏观丢失）。** 若完整有限 Green 矩阵的对角读数
+
+$$
+q_{j,i}=G_j(i,i)
+$$
+已知，则逐边阻抗可由
+
+$$
+ r_{(W_j)_i}=\theta(q_{j,i}-q_{j,i+1}),
+\qquad q_{j,L_j}=0
+$$
+
+精确恢复。相反，连续极限核只保留 $\bar r$ 进入的组合 $D$，一般不能恢复 $r_\alpha$ 与 $r_\beta$ 各自的值。
+
+为说明这一点，取足够小且非零的 $t$，令
+
+$$
+ r'_\alpha=r_\alpha+t(1-a_F),
+ \qquad
+ r'_\beta=r_\beta-ta_F.
+$$
+
+若 $t$ 足够小使两组阻抗都满足随机核条件，则
+
+$$
+ a_Fr'_\alpha+(1-a_F)r'_\beta=\bar r,
+$$
+
+所以 $D$、连续 Green 核、占用场极限和固定低频极限都不变；但只要两字母均在有限词中出现，尾和 Green 矩阵一般改变，因而有限层的完整响应不同。这是宏观同质化不可逆丢失微观阻抗对比的成对实例。
+
+**命题 25.3（速度权重的尺度歧义）。** 连续正速度权重下，所有起点的平均通过时间满足
+
+$$
+T_v(x)=\frac1D\int_0^1(1-\max(x,u))v(u)\,du,
+\qquad
+-DT_v''=v.
+$$
+
+若 $D$ 已知，则完整函数 $T_v$ 或完整占用均值
+
+$$
+ m_{\mathrm{occ}}(u)=\frac{v(u)(1-u)}D
+$$
+
+可以恢复 $v$。若 $D$ 也未知，则变换
+
+$$
+(D,v)\longmapsto(cD,cv),qquad c>0
+$$
+
+保持 $T_v$、占用均值和连续输运生成元中的比值 $D/v$ 不变；观测只能恢复 $v/D$。单一起点均值或有限个测试函数均值只提供有限个线性约束，不能识别一般连续速度函数。
+
+**推论 25.4（何时才能称为输运定律）。** 要把 $\mathcal T$ 或 $T_v$ 称为物理输运定律，至少还需固定：
+
+1. 空间与物理长度的映射；
+2. 离散时间与物理时间的映射；
+3. 初始律、速率核和边界类型；
+4. 指定的路径、半群或生成元收敛拓扑；
+5. 位置、占用、响应到实际观测量的映射；
+6. 若使用温度或热流，还需守恒方程、本构关系、单位和热浴。
+
+第13节的近 $-1$ 高频模态说明，Green 核或零频统计收敛仍不足以推出原离散半群的全空间范数输运；第14节说明同一总速度质量和同一左端均值仍可有不同二阶通过律；第15节说明相同边缘律仍可有不同联合历史。因此有效介质类比是有条件的宏观响应结论，不是由 FIB 递归单独产生的普适输运定律。
+
+## 追加锚（本行以下为增补区）
+
+## 26. 物理读出与算子层级的条件修正
+
+为避免把不同层级的极限混在一起，本节固定算子空间与读出假设。令
+
+$$
+\mathcal D(\mathsf H)=\{f\in H^2([0,1]):f'(0)=0,\ f(1)=0\},
+\qquad
+\mathsf Hf=-Df''.
+$$
+
+在 $L^2([0,1])$ 上，$\mathsf H$ 是正自伴算子，且 $\mathsf C=\mathsf H^{-1}$；因此第23节的半群积分是在强算子意义下理解的。对非负连续方向 $h,k$，第23节的生成泛函公式首先按右导数成立。若要使用带符号方向，必须另行声明零源邻域内的 Fredholm 行列式解析延拓及相应的可积性条件。
+
+**定理 26.1（连续读出迁移）。** 设离散路径 $Z_j$ 在指定路径拓扑下收敛于 $Z$。若存在连续读出 $\Phi$ 以及近似读出 $\Phi_j$，满足
+
+$$
+ d\bigl(\Phi_j(Z_j),\Phi(Z_j)\bigr)\longrightarrow0
+$$
+
+依概率成立，则
+
+$$
+\Phi_j(Z_j)\Longrightarrow\Phi(Z).
+$$
+
+这里的距离和连续性必须使用同一物理读出空间；它们不能由 Green 核收敛自动替代。若要把单路径极限变成温度或密度场，还需明确取期望 $T(t,u)=\mathbb E[\Phi(Z_t)(u)]$，或给出独立粒子/经验测度的极限与归一化。
+
+**定理 26.2（守恒—本构条件下的热方程）。** 若另行给出标量场 $T$、通量 $J$ 和源 $q$，满足
+
+$$
+\partial_tT+\partial_uJ=q,
+\qquad
+J=-D\partial_uT,
+$$
+
+并指定左端零通量、右端固定值及初值，则可推出
+
+$$
+\partial_tT=D\partial_u^2T+q
+$$
+
+及相应边界条件。这里热方程由守恒和本构关系推出；它们不是 FIB 递归、Green 核或单条占用路径的自动结论。
+
+因此，缺少读出连续性、期望或经验测度构造、守恒律、本构关系和单位映射时，只能报告数学路径律、占用分布和算子响应。该条件修正也保持被杀死半群与完整吸收过程的区分；吸收端的质量是否进入场变量，必须由物理读出另行规定。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 总占用的谱隙尾与累积量
+
+令
+
+$$
+M=\int_0^1\Lambda(u)\,du,
+\qquad
+\rho_m=\frac4{D\pi^2(2m+1)^2},
+\qquad
+\lambda_m=\rho_m^{-1}.
+$$
+
+**定理 27.1（标量总占用的完整累积量与尾部）。** 在第22节的极限分布下，存在独立均值为 $1$ 的指数变量 $E_m$，使
+
+$$
+M\ \stackrel d=\ \sum_{m=0}^{\infty}\rho_mE_m.
+$$
+
+其矩母函数在 $t<\lambda_0=D\pi^2/4$ 时为
+
+$$
+\mathbb E e^{tM}
+=\prod_{m=0}^{\infty}(1-t\rho_m)^{-1}
+=\sec\sqrt{\frac tD},
+$$
+
+其中 $t\ge0$ 时的收敛域是 $0\le t<\lambda_0$。对每个整数 $n\ge1$，$M$ 的第 $n$ 阶累积量为
+
+$$
+\kappa_n(M)
+=(n-1)!\sum_{m=0}^{\infty}\rho_m^n
+=(n-1)!\frac{(2^{2n}-1)\zeta(2n)}{D^n\pi^{2n}}.
+$$
+
+特别地，
+
+$$
+\kappa_1(M)=\frac1{2D},
+\qquad
+\kappa_2(M)=\frac1{6D^2}.
+$$
+
+此外，
+
+$$
+\Pr(M>x)\sim\frac4\pi
+\exp\left(-\frac{D\pi^2}{4}x\right)
+\qquad(x\to\infty).
+$$
+
+**证明。** 指数变量的独立性给出
+
+$$
+\mathbb E e^{tM}=\prod_m(1-t\rho_m)^{-1}.
+$$
+
+Euler 乘积将分母化为 $\cos\sqrt{t/D}$；首个奇数模态确定收敛半径 $\lambda_0$。对数展开
+
+$$
+\log\mathbb E e^{tM}
+=\sum_{n\ge1}\frac{t^n}{n}\sum_m\rho_m^n
+$$
+
+给出累积量公式；奇数倒数幂和为
+
+$$
+\sum_{m\ge0}(2m+1)^{-2n}=(1-2^{-2n})\zeta(2n).
+$$
+
+最后写 $M=\rho_0E_0+Y$，其中 $Y=\sum_{m\ge1}\rho_mE_m$ 与 $E_0$ 独立。因为 $\lambda_1=9\lambda_0$，$Y$ 在 $\lambda_0$ 右侧仍有指数矩，故
+
+$$
+\Pr(M>x)\sim e^{-\lambda_0x}\mathbb E e^{\lambda_0Y}.
+$$
+
+而
+
+$$
+\mathbb E e^{\lambda_0Y}
+=\prod_{m=1}^{\infty}
+\left(1-\frac{\rho_m}{\rho_0}\right)^{-1}
+=\prod_{m=1}^{\infty}
+\left(1-\frac1{(2m+1)^2}\right)^{-1}
+=\frac4\pi.
+$$
+这证明了尾部常数。$\square$
+
+**推论 27.2（通过时间的谱隙尾）。** 由于第22.4节的总占用质量与连续反射—吸收通过时间具有相同分布，连续通过时间的长时间尾为
+
+$$
+\Pr_0(\tau>t)
+\sim\frac4\pi e^{-D\pi^2t/4}.
+$$
+
+这与第20节的首低频模态系数和衰减率一致。谱隙 $D\pi^2/4$ 是该模型的数学弛豫率；把它解释成激活能、温度倒数或 Arrhenius 常数，还需要额外的物理能量和温度映射。
+
+本节只给出连续极限的一个标量尾部和累积量序列，不给出占用场的全局大偏差原理，也不把有限链的高频尾自动替换成统一的矩母函数或尾部估计。长时间渐近的顺序是先固定连续极限再令 $t\to\infty$，不能交换 $j\to\infty$ 与 $t\to\infty$，也不能把首模态指数率称为 Arrhenius 激活率。没有独立复制数、指数紧性和统一的 $j$ 依赖对数矩母函数，不能推出 Cramér 或 Gärtner—Ellis 大偏差。特别是在 $p=1/2$ 时，近 $-1$ 高频模态仍阻止原离散半群的全空间范数结论；本节的谱隙尾只适用于已经取定的连续极限或具有额外高频尾控制的标量投影。
+
+## 追加锚（本行以下为增补区）
+
+## 28. 初态律对标量尾部的限定
+
+第27节的随机变量 $M=\int_0^1\Lambda(u)\,du$ 对应初态为 $0$ 的连续极限。若改用一般初态律 $\nu$，通过时间生存函数的首模态系数改为
+
+$$
+ b_0(\nu)=\frac4\pi\int_{[0,1]}\cos\left(\frac{\pi x}{2}\right)d\nu(x),
+$$
+
+并在 $b_0(\nu)>0$ 时满足
+
+$$
+\Pr_\nu(\tau>t)\sim b_0(\nu)e^{-D\pi^2t/4}.
+$$
+
+只有 $\nu=\delta_0$ 时，前因子才是 $4/\pi$，并且通过时间才与第27节的 $M$ 具有同一分布。改变初态律会改变模态投影和尾部常数；谱隙本身保持不变，但不能把初态为 $0$ 的总占用级数恒等式直接用于一般 $\nu$。
+
+## 追加锚（本行以下为增补区）
+
+## 29. 连续探针泛函的连通涨落层级
+
+对非负连续探针 $f$，令
+
+$$
+E_f=\int_0^1f(u)\Lambda(u)\,du.
+$$
+
+**定理 29.1（积分观测量的累积量）。** 对任意整数 $n\ge1$，有
+
+$$
+\operatorname{cum}_n(E_f)
+=(n-1)!\operatorname{Tr}\bigl((\mathsf C M_f)^n\bigr)
+=(n-1)!\operatorname{Tr}\bigl((M_{\sqrt f}\mathsf C M_{\sqrt f})^n\bigr)\ge0.
+$$
+
+对非负连续探针 $f_1,\ldots,f_n$，混合累积量满足
+
+$$
+\begin{aligned}
+&\operatorname{cum}(E_{f_1},\ldots,E_{f_n})\\
+&=\frac1n\sum_{\sigma\in S_n}
+\int_{[0,1]^n}
+\prod_{q=1}^n f_{\sigma(q)}(u_q)
+C(u_q,u_{q+1})\,du_1\cdots du_n,
+\qquad u_{n+1}=u_1.
+\end{aligned}
+$$
+
+因此所有非负连续探针的连通累积量均非负；当探针在共同的非退化区域上为正时，$n\ge2$ 的相应累积量严格为正，故这些积分观测量一般不是高斯族。
+
+**证明。** 对足够小的参数 $t_i$，第22节的 Fredholm 公式给出
+
+$$
+\log\mathbb E\exp\left(\sum_i t_iE_{f_i}\right)
+=-\operatorname{Tr}\log\left(I-\mathsf C M_{\sum_i t_if_i}\right)
+=\sum_{r\ge1}\frac1r
+\operatorname{Tr}\left((\mathsf C M_{\sum_i t_if_i})^r\right).
+$$
+
+取 $n$ 个互异参数的混合导数时只有 $r=n$ 项保留，得到循环迹公式。相同探针时，循环迹经过相似变换化为正自伴算子的幂迹，故非负；混合形式的积分核逐项非负。$\square$
+
+**推论 29.2（连接到响应与物理类比）。** 一阶累积量是静态源—响应的对角读数，二阶累积量是第23节的 $C^2$ 涨落核，高阶累积量则是由同一 Green 核组成的闭合循环。它们可以作为“连通响应簇”或“非高斯涨落簇”的数学类比，但不自动构成热力学关联函数、场论图展开或局部相互作用。
+
+本节的累积量层级是固定连续极限、固定有限探针和有限阶 $n$ 的结论。它不推出探针数、复制数或系统尺寸增长时的统一控制，不给出大偏差率函数、Gibbs 自由能或热力学相变；若要作这些外推，必须另行指定相应的随机序列、尺度和指数紧性。
+
+## 追加锚（本行以下为增补区）
+
+## 30. 有限链通过时间的精确预解式接口
+
+令暂态矩阵为 $K_j$，起点为暂态切点 $i<L_j$，并记
+
+$$
+M_j=\epsilon_j\tau_j,
+\qquad q=e^{-s\epsilon_j},\quad s\ge0.
+$$
+
+**命题 30.1（有限链的 Laplace—resolvent 恒等式）。** 有限链上有精确公式
+
+$$
+\mathbb E_i e^{-sM_j}
+=1-(1-q)e_i^{\mathsf T}(I-qK_j)^{-1}\mathbf1.
+$$
+
+若生存函数写成
+
+$$
+\Pr_i(\tau_j>n)=\sum_m a_{j,m}(i)\lambda_{j,m}^{,n},
+$$
+
+则相应的谱表达式为
+
+$$
+\mathbb E_i e^{-sM_j}
+=1-(1-q)\sum_m\frac{a_{j,m}(i)}{1-q\lambda_{j,m}}.
+$$
+
+将 $q=e^{z\epsilon_j}$ 代入时，在有限 resolvent 的收敛域内得到正向矩母函数；它对有限 $j$ 不等于连续极限的 $\sec\sqrt{z/D}$。
+
+**证明。** 对整数值吸收时间，尾和恒等式为
+
+$$
+1-\mathbb E_i q^{\tau_j}
+=(1-q)\sum_{n\ge0}q^n\Pr_i(\tau_j>n).
+$$
+
+而
+
+$$
+\sum_{n\ge0}q^n\Pr_i(\tau_j>n)
+=e_i^{\mathsf T}(I-qK_j)^{-1}\mathbf1.
+$$
+
+代入即得第一式；对生存谱逐项求和即得第二式。特别地，若 $\tau_j=1$ 恒定，则公式给出 $\mathbb E q^{\tau_j}=q$，核对了前面的符号。$\square$
+
+对每个固定 $s\ge0$，第10.3节的 Green 算子收敛给出 $\mathbb E_i e^{-sM_j}$ 的连续极限；对每个固定矩阶数，求导则回到第10.3节的矩递推。这个接口不提供 $s$ 随 $j$ 增长时的统一控制，也不把带符号的有限谱系数解释为独立概率。正向矩母函数在极限半径内的一致收敛仍需额外的指数尾界；近 $-1$ 高频模态和初态投影可能改变有限 $j$ 的远尾。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 有限 resolvent 的正向域与量词修正
+
+为把第30节的有限链接口用于正向矩母函数，令
+
+$$
+q_+(z)=e^{z\epsilon_j},
+\qquad
+\rho(K_j)=\max_m|\lambda_{j,m}|.
+$$
+
+则
+
+$$
+\mathbb E_i e^{z\epsilon_j\tau_j}
+=1+(q_+(z)-1)e_i^{\mathsf T}
+(I-q_+(z)K_j)^{-1}\mathbf1
+$$
+
+只在
+
+$$
+q_+(z)\rho(K_j)<1
+$$
+
+的有限 resolvent 域内成立。等价地，对正 $z$ 需要
+
+$$
+0\le z<-epsilon_j^{-1}\log\rho(K_j).
+$$
+
+这个有限 $j$ 的域不自动给出连续极限域 $z<D\pi^2/4$ 上的统一收敛；若要在 $z\le D\pi^2/4-\eta$ 上交换 $j\to\infty$ 与正向 resolvent 极限，必须另加统一高频指数尾控制。
+
+对 Laplace 方向，若起点序列满足 $i_j/L_j\to x$，则固定 $s\ge0$ 时第10.3节给出
+
+$$
+\mathbb E_{i_j}e^{-s\epsilon_j\tau_j}
+\longrightarrow
+\frac{\cosh(x\sqrt{s/D})}{\cosh(\sqrt{s/D})}.
+$$
+
+固定阶矩也不能仅由 Laplace 收敛和形式求导得到。必须使用第10.3节的离散矩递推
+
+$$
+B_jM_{j,p}=\epsilon_j^p\mathbf1
++\sum_{k=1}^{p-1}\binom pk\epsilon_j^{p-k}K_jM_{j,k}
+$$
+
+以及预先固定的阶数 $p$ 和一个更高阶的统一矩界，以取得均匀可积性。因而这里的合法量词是“先固定 $p$ 和 $i_j/L_j\to x$，再令 $j\to\infty$”；不覆盖 $p=p(j)$ 或 $s=s(j)$。
+
+最后区分两种有限谱率：
+
+$$
+ g_{j,m}=\frac{1-\lambda_{j,m}}{\epsilon_j},
+\qquad
+ \widehat g_{j,m}=-\epsilon_j^{-1}\log|\lambda_{j,m}|.
+$$
+
+前者是生成元缺陷，后者是离散生存尾的绝对指数率；低频极限下二者趋于同一连续值，但有限 $j$ 时不能互换。近 $-1$ 模态尤其说明，零频 Green 收敛、固定低频收敛和全时域生存尾是不同命题。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 初态律、谱投影与响应幅度
+
+令 $\nu_j$ 是暂态切点及吸收端上的初态概率律，并假设其归一化坐标推前弱收敛到 $\nu$。记
+
+$$
+L_{j,\nu_j}(s)=\mathbb E_{\nu_j}e^{-s\epsilon_j\tau_j}.
+$$
+
+**定理 32.1（初态律的连续 Laplace 变换）。** 对每个固定 $s\ge0$，有
+
+$$
+L_{j,\nu_j}(s)\longrightarrow L_\nu(s)
+=\frac{\displaystyle\int_{[0,1]}
+\cosh\left(x\sqrt{\frac{s}{D}}\right)d\nu(x)}
+{\displaystyle\cosh\sqrt{\frac{s}{D}}}.
+$$
+
+吸收端的质量给出分式中的恒等值 $1$，与到达吸收端后通过时间为零相容。若固定整数 $p\ge1$ 并使用第10.3节的统一高阶矩界，则
+
+$$
+\mathbb E_{\nu_j}(\epsilon_j\tau_j)^p
+\longrightarrow
+p!\int_{[0,1]}(\mathcal T^p\mathbf1)(x)d\nu(x).
+$$
+
+**推论 32.2（初态只改变投影幅度）。** 令 $k_m=(m+1/2)\pi$。连续生存函数可写为
+
+$$
+S_\nu(t)=\sum_{m=0}^{\infty}b_m(\nu)e^{-Dk_m^2t},
+$$
+
+其中
+
+$$
+ b_m(\nu)=\frac{2(-1)^m}{k_m}
+\int_{[0,1]}\cos(k_mx)d\nu(x).
+$$
+
+因此谱率 $Dk_m^2$ 由动力学和边界决定，而 $b_m(\nu)$ 由初态准备决定。若 $b_0(\nu)>0$，则
+
+$$
+S_\nu(t)\sim b_0(\nu)e^{-D\pi^2t/4}
+\qquad(t\to\infty).
+$$
+
+**证明。** 第10.3节给出的嵌入 Laplace 变换对起点坐标在 $[0,1]$ 上连续且有界；弱收敛的初态律因此可与该连续函数积分，得到第一式。固定阶矩的结论使用同一节的离散递推和统一可积性，而不是仅对 Laplace 极限形式求导。生存函数由 Neumann—Dirichlet 本征函数对初态律的投影得到；首模态与其余模态的指数率严格分离，给出尾部渐近。$\square$
+
+这一节把“初态准备”和“动力学谱”分开：同一 FIB 词、阻抗、时钟和边界可以因初态律不同而产生不同均值、尾部幅度和有限时间响应，但不改变连续极限的本征率。该分离仍不提供物理制备协议、热浴选择或跨不同初态的共同样本耦合。
+
+## 追加锚（本行以下为增补区）
+
+## 33. 有限链初态混合的谱投影接口
+
+令 $\nu_j$ 是 $\{0,1,\ldots,L_j\}$ 上的初态律，$\nu_j^{\mathrm{tr}}$ 为其在暂态集合 $\{0,\ldots,L_j-1\}$ 上的限制，并令
+
+$$
+\widehat\nu_j=\sum_{i=0}^{L_j}\nu_j(i)\,\delta_{i/L_j}.
+$$
+
+设 $\widehat\nu_j\Rightarrow\nu$ 于 $[0,1]$，并把有限链的生存谱写成
+
+$$
+\Pr_i(\tau_j>n)=\sum_m a_{j,m}(i)\lambda_{j,m}^{\,n},
+\qquad
+a_{j,m}(\nu_j)=\sum_{i<L_j}\nu_j(i)a_{j,m}(i).
+$$
+
+吸收端的质量不进入 $a_{j,m}(\nu_j)$；它只在连续坐标中对应 $x=1$。
+
+**定理 33.1（逐模态投影与标量生存函数的统一接口）。** 记 $k_m=(m+\tfrac12)\pi$。假设对每个固定 $m$，当 $j\to\infty$ 时有
+
+$$
+a_{j,m}(\nu_j)\longrightarrow b_m(\nu),
+\qquad
+\lambda_{j,m}\ge0\ \text{最终成立},
+\qquad
+-\epsilon_j^{-1}\log\lambda_{j,m}\longrightarrow Dk_m^2,
+$$
+
+其中
+
+$$
+b_m(\nu)=\frac{2(-1)^m}{k_m}
+\int_{[0,1]}\cos(k_mx)\,d\nu(x).
+$$
+
+若对任意 $0<t_0<T<\infty$ 还有标量高频尾条件
+
+$$
+\lim_{M\to\infty}\limsup_{j\to\infty}
+\sup_{t\in[t_0,T]}
+\sum_{m>M}|a_{j,m}(\nu_j)|
+|\lambda_{j,m}|^{\lfloor t/\epsilon_j\rfloor}=0,
+$$
+
+则
+
+$$
+S_{j,\nu_j}(t):=\Pr_{\nu_j}(\epsilon_j\tau_j>t)
+\longrightarrow
+S_\nu(t):=\sum_{m\ge0}b_m(\nu)e^{-Dk_m^2t}
+$$
+
+在每个紧区间 $[t_0,T]$ 上一致成立。这里的级数只对 $t>0$ 作解释；在 $t=0$ 不要求绝对收敛。
+
+**证明。** 固定 $M$ 时，有限个模态的假设给出
+
+$$
+\lambda_{j,m}^{\lfloor t/\epsilon_j\rfloor}
+\longrightarrow e^{-Dk_m^2t}
+$$
+
+并且在 $[t_0,T]$ 上一致。将有限和与 $m>M$ 的尾部分开，有限和先取 $j\to\infty$，两侧尾项再由假设控制。连续级数的尾部由 $|b_m(\nu)|\le 2/k_m$ 及
+
+$$
+\sum_{m>M}\frac{2}{k_m}e^{-Dk_m^2t_0}\longrightarrow0
+$$
+
+控制，故得到一致收敛。该论证只涉及标量生存函数；它不推出转移算子或全空间范数的收敛。$\square$
+
+**推论 33.2（端点边界层与首模态）。** 对任意概率律 $\nu$，有
+
+$$
+b_0(\nu)=\frac4\pi\int_{[0,1]}
+\cos\left(\frac{\pi x}{2}\right)d\nu(x).
+$$
+
+由于被积函数在 $[0,1)$ 上严格为正，$b_0(\nu)>0$ 当且仅当 $\nu([0,1))>0$。在该条件下
+
+$$
+S_\nu(t)\sim b_0(\nu)e^{-D\pi^2t/4}
+\qquad(t\to\infty).
+$$
+
+若 $\nu=\delta_1$，则通过时间恒为零，所有 $b_m(\nu)$ 均为零。更一般地，若 $\nu(\{1\})>0$，则
+
+$$
+S_\nu(0+)=1-\nu(\{1\}),
+$$
+
+而有限链在所有初态均取暂态点时仍有 $S_{j,\nu_j}(0)=1$。因此从有限链到连续极限的生存函数收敛只能先在 $t>0$ 的紧区间上陈述；$t=0$ 可能存在由吸收端质量产生的边界层。
+
+**推论 33.3（有限时间响应的可传递形式）。** 在定理 33.1 的条件下，对任意有界连续函数 $\phi$ 和 $0<t_0<T<\infty$，有
+
+$$
+\int_{t_0}^{T}\phi(t)S_{j,\nu_j}(t)\,dt
+\longrightarrow
+\int_{t_0}^{T}\phi(t)S_\nu(t)\,dt.
+$$
+
+这给出初态混合下的有限时间标量响应接口。若要把 $t_0\downarrow0$ 或 $T\uparrow\infty$，还必须分别补充端点一致性或统一尾界；紧区间上的谱投影收敛本身不提供这两种交换极限。
+
+**推论 33.4（预解式与生存尾的分层）。** 定理 33.1 的条件即使成立，也不能单独推出正向矩母函数在连续谱隙以内的一致收敛。Laplace 预解式只需固定 $s\ge0$ 的有界 Green 核和初态弱收敛；正向参数 $z>0$ 还需要在整个时间轴上的统一指数尾界。因而以下三种陈述严格分开：固定低频 $s$ 的预解式收敛、固定 $t>0$ 紧区间上的生存函数收敛、以及 $z$ 取连续谱隙以内时的正向矩母函数收敛。它们不能仅凭逐模态极限相互推出。
+
+
+## 34. 完整 Laplace 曲线对初态律的可识别性
+
+对 $[0,1]$ 上的概率律 $\nu$，定义
+
+$$
+\mathcal L(\nu)(s)
+=\frac{\displaystyle\int_{[0,1]}
+\cosh\left(x\sqrt{\frac{s}{D}}\right)d\nu(x)}
+{\displaystyle\cosh\sqrt{\frac{s}{D}}},
+\qquad s\ge0.
+$$
+
+**定理 34.1（连续初态律的变换识别）。** 若两个概率律 $\nu$ 与 $\widetilde\nu$ 满足
+
+$$
+\mathcal L(\nu)(s)=\mathcal L(\widetilde\nu)(s)
+\qquad\text{对所有 }s\ge0,
+$$
+
+则 $\nu=\widetilde\nu$。此外，
+
+$$
+\lim_{s\to\infty}\mathcal L(\nu)(s)=\nu(\{1\}).
+$$
+
+因此完整的连续 Laplace 曲线同时识别吸收端质量和暂态初态律；只给定有限个频率或有限个矩则没有这个识别性。
+
+**证明。** 令 $a=\sqrt{s/D}$ 并置
+
+$$
+G_\nu(a)=\cosh(a)\,\mathcal L(\nu)(Da^2)
+=\int_{[0,1]}\cosh(ax)\,d\nu(x).
+$$
+
+$G_\nu$ 是整函数。若两条 Laplace 曲线在 $s\ge0$ 上相同，则相应的整函数在 $a\ge0$ 上相同，恒等定理给出它们在整个复平面上相同。对 $a=0$ 作偶阶导数，得到
+
+$$
+\int_{[0,1]}x^{2r}\,d\nu(x)
+=\int_{[0,1]}x^{2r}\,d\widetilde\nu(x)
+\qquad(r\ge0).
+$$
+
+映射 $x\mapsto x^2$ 在 $[0,1]$ 上为双射，故两个推前律具有相同的全部幂矩。连续函数可由多项式一致逼近，因而两个推前律在所有连续测试函数上的积分相同，得到 $\nu=\widetilde\nu$。另一方面，$x<1$ 时
+
+$$
+\frac{\cosh(ax)}{\cosh(a)}\longrightarrow0,
+\qquad
+\frac{\cosh(a)}{\cosh(a)}=1,
+$$
+
+并且该比值始终位于 $[0,1]$，由支配收敛定理得到端点质量的极限。最后，固定 $R$ 阶导数只给出 $R+1$ 个偶阶矩。取 $R+2$ 个不同点并对矩阵 $(x_i^{2r})_{0\le r\le R}$ 求非零零空间向量，再对一个在这些点上有正质量的基准概率律作足够小的正负扰动，即得到两个不同概率律而保持这 $R+1$ 个矩不变。$\square$
+
+**推论 34.2（统计读出的层级）。** 只观察一个固定 $s$ 的响应，或只观察有限个矩阶，不能唯一确定初态律；它们只确定相应的有限维投影。若获得全 $s\ge0$ 的连续变换曲线，并且第32节的有限链到连续变换收敛在该曲线上成立，则初态律在连续模型内可识别。这个识别结论仍只关于初态概率律，不反推出 FIB 递归本身选择了哪一个制备协议，也不把变换曲线解释为物理实验中的温度谱或热浴响应。
+
+## 35. 未知扩散尺度与初态律的联合识别边界
+
+对 $D>0$ 写
+
+$$
+\mathcal L_{\nu,D}(s)
+=\frac{\int_{[0,1]}\cosh(x\sqrt{s/D})\,d\nu(x)}
+{\cosh\sqrt{s/D}}.
+$$
+
+**定理 35.1（未知 $D$ 的联合可识别性）。** 设 $D,\widetilde D>0$，$\nu,\widetilde\nu\in\mathcal P([0,1])$。若两条曲线在任意含聚点的非退化 $s>0$ 区间上相等，则只有以下退化例外：
+
+$$
+\nu=\widetilde\nu=\delta_1,
+\qquad
+\mathcal L_{\delta_1,D}(s)\equiv1,
+$$
+
+此时 $D$ 与 $\widetilde D$ 任意；除此之外必有 $D=\widetilde D$ 且 $\nu=\widetilde\nu$。
+
+**证明。** 令
+
+$$
+\Phi_\nu(q)=\int_{[0,1]}\cosh(xq)\,d\nu(x),
+\qquad c=\sqrt{D/\widetilde D}.
+$$
+
+实轴上的相等性经整函数恒等定理给出
+
+$$
+\Phi_\nu(q)\cosh(cq)
+=\Phi_{\widetilde\nu}(cq)\cosh(q).
+$$
+
+若 $\nu\ne\delta_1$，则
+
+$$
+\Phi_\nu(i\pi/2)=\int\cos(\pi x/2)d\nu(x)>0,
+$$
+
+因为被积函数在 $[0,1)$ 上严格为正。若 $\widetilde\nu\ne\delta_1$，在 $q=i\pi/2$ 和 $q=i\pi/(2c)$ 分别代入上式，得到 $c$ 与 $1/c$ 都是正奇整数，故 $c=1$。此时 $\Phi_\nu=\Phi_{\widetilde\nu}$，再由第34节的矩确定性得到 $\nu=\widetilde\nu$。若一方为 $\delta_1$，其曲线恒等于 $1$；对任意 $s>0$，只要另一方在 $[0,1)$ 有质量，积分核严格小于 $1$，故另一方也必须为 $\delta_1$。$\square$
+
+**推论 35.2（谱率与尺度的边界）。** 在 $\nu([0,1))>0$ 且几何边界已归一化为 $[0,1]$ 时，最近负极点为 $-D\pi^2/4$，并且
+
+$$
+D=\frac4{\pi^2}\lim_{t\to\infty}\frac{-\log S_\nu(t)}{t}.
+$$
+
+若物理长度 $\ell$ 未知，只观察未归一化坐标，则读出只能确定 $D/\ell^2$；必须固定长度单位、时间单位和吸收端位置，才能把无量纲谱率解释为 $D$ 本身。$\nu=\delta_1$ 时生存函数恒为零，$D$ 不可由该读出识别。
+
+## 36. 有限频率与有限噪声下的逆问题稳定性
+
+固定 $S>0$，令
+
+$$
+\mathcal A_S\nu=\mathcal L_{\nu,D}\big|_{[0,S]}
+\in C([0,S]).
+$$
+
+**定理 36.1（精确连续逆与有限读出的不可识别）。** 在概率律空间 $\mathcal P([0,1])$ 的弱拓扑和 $C([0,S])$ 的一致范数下，$\mathcal A_S$ 是连续单射，其逆在像集上连续。可是，对任意有限频率集合 $s_1,\ldots,s_m$，存在不同的概率律 $\nu_+\ne\nu_-$ 具有相同的全部读数
+
+$$
+\mathcal L_{\nu_+,D}(s_i)=\mathcal L_{\nu_-,D}(s_i),
+\qquad 1\le i\le m.
+$$
+
+**证明。** 连续性来自核 $x\mapsto\cosh(x\sqrt{s/D})/\cosh\sqrt{s/D}$ 的联合连续性。第34节的整函数论证说明在一整段 $[0,S]$ 上相等即可得到全部偶矩相等，故得到单射；$\mathcal P([0,1])$ 紧而 $C([0,S])$ Hausdorff，紧集到像集的连续双射逆连续。有限频率时，取 $m+2$ 个不同点 $x_j$，向量
+
+$$
+\left(1,\mathcal L_{\delta_{x_j},D}(s_1),\ldots,
+\mathcal L_{\delta_{x_j},D}(s_m)\right)
+$$
+
+位于 $\mathbb R^{m+1}$ 中，存在非零系数 $c_j$ 使其线性组合为零。以这些点上的正基准概率律作足够小的正负扰动，得到所需的 $\nu_+,\nu_-$。$\square$
+
+**推论 36.2（连续但严重病态）。** $\mathcal A_S^{-1}$ 的连续性不提供统一 Lipschitz 或 Hölder 误差率。取 $q+2$ 个不同点 $x_j$，选择非零系数 $c_j$ 使
+
+$$
+\sum_j c_jx_j^{2r}=0\quad(0\le r\le q),
+\qquad
+\sum_j|c_j|=1,
+$$
+
+并令 $p_j^\pm=|c_j|\pm c_j$。则 $p^\pm$ 是两个总质量为 $1$ 的概率律，且它们的总变差距离为 $1$；同时它们的 $x^{2r}$ 矩在 $0\le r\le q$ 全部相同，而其 Laplace 曲线在 $[0,S]$ 上的差异为
+
+$$
+O\left((S/D)^{q+1}\!/(2q+2)!\right).
+$$
+
+令 $q\to\infty$，输出差异趋于零而输入总变差保持为 $1$，所以不存在统一的总变差连续逆，更不存在固定指数的 Lipschitz 或 Hölder 误差率。因此有限噪声下的恢复必须加入有限维、解析密度或矩界等额外先验；完整无噪声曲线的精确可识别性不能被宣传为稳定的实验重建算法。
+
+这一节仍只讨论归一化连续模型中的数学逆问题，不把有限频率读数解释成温度、热浴或物理仪器的充分统计量。
+
+## 37. 长度—时间校准与边界读出的不变性
+
+设无量纲坐标为 $u\in[0,1]$、无量纲时间为 $t$，并把物理读出写成
+
+$$
+y=\ell u,
+\qquad T=\eta t,
+\qquad \ell,\eta>0.
+$$
+
+若无量纲扩散方程的系数为 $D$，则物理坐标中的扩散系数为
+
+$$
+\kappa=\frac{D\ell^2}{\eta},
+$$
+
+物理 Laplace 读出满足
+
+$$
+L_{\mathrm{phys}}(\sigma)
+=\mathcal L_{\nu,D}(\eta\sigma),
+$$
+
+物理谱率为
+
+$$
+\Lambda_m^{\mathrm{phys}}
+=\frac{D}{\eta}\left(m+\tfrac12\right)^2\pi^2
+=\frac{\kappa}{\ell^2}\left(m+\tfrac12\right)^2\pi^2.
+$$
+
+**定理 37.1（校准不变性与可识别组合）。** 在固定 Neumann—Dirichlet 几何和归一化坐标下，谱率比
+
+$$
+\frac{\Lambda_m^{\mathrm{phys}}}{\Lambda_0^{\mathrm{phys}}}=(2m+1)^2
+$$
+
+以及 Laplace 曲线的无量纲形状保持不变。若时间校准 $\eta$ 未知，物理时间读出至多识别 $D/\eta$；若长度 $\ell$ 未知，物理扩散系数至多识别 $\kappa/\ell^2=D/\eta$。因此不能由 FIB 递归单独分离 $D,\ell,\eta$ 或物理单位下的初态位置律。
+
+**证明。** 由 $T=\eta t$ 有 $\mathbb E e^{-\sigma T}=\mathbb E e^{-(\eta\sigma)t}$，得到第一式；由 $y=\ell u$ 有 $\partial_T=(D/\eta)\partial_u^2=(D\ell^2/\eta)\partial_y^2$，得到 $\kappa$ 和谱率表达式。对任意 $a,b>0$，变换
+
+$$
+(D,\ell,\eta)\longmapsto(aD,b\ell,a\eta)
+$$
+
+保持 $D/\eta$ 与 $\kappa/\ell^2$，故未经标定的参数不能分别识别。$\square$
+
+若位置读出为未知单调映射 $y=\ell F(u)$，则一般不能继续使用常系数热方程。令 $G=F^{-1}$，对 $v(y,t)=p(G(y),t)$ 有
+
+$$
+\partial_t v
+=D\left(F'(G(y))^2\partial_y^2v+F''(G(y))\partial_yv\right)
+=D F'(G(y))\partial_y\left(F'(G(y))\partial_yv\right).
+$$
+
+因此只有 $F$ 已知并满足额外正则条件时，才可把无量纲 Green 核解释成给定物理介质的算子；未知 $F$ 时，递归只确定抽象核及其推前测度，不能宣称均匀介质或常系数热流。
+
+**推论 37.2（边界条件是独立模型输入）。** 若左端改为 Robin 条件 $h'(0)=\rho h(0)$、右端仍为吸收端 $h(1)=1$，则命中 Laplace 变换为
+
+$$
+h_{\rho}(x,s)=
+\frac{\cosh(kx)+(\rho/k)\sinh(kx)}
+{\cosh(k)+(\rho/k)\sinh(k)},
+\qquad k=\sqrt{s/D}.
+$$
+
+当前的 $\cosh(kx)/\cosh(k)$ 只是 $\rho=0$ 的 Neumann 特例。未知边界类型时，FIB 递归不能选择 Neumann、Robin 或 Dirichlet 的谱；对应的零点、谱隙和 Green 核均需随边界假设重新推导。物理温度、热流、容量和热浴解释还需额外的源项、通量和观测映射，不能由递归本身推出。
