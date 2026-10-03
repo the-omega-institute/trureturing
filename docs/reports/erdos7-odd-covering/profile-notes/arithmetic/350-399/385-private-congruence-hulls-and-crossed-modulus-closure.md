@@ -28268,3 +28268,133 @@ it is a finite consistency check and supplies no unrestricted lower bound.
 Thus the unrestricted problem remains open at precisely the source-global
 activation/liability bridge; no local-flow identity in this report is being
 promoted to a proof of the original universal statement.
+
+## 244. Integer-rank capacity gives a conditional activation interface, not the global bridge
+
+The newly frozen theorem
+`D5/S3/Analytic/Knapsack/IntegerRankCapacityDefect.integer_rank_capacity_defect`
+is reusable here only after an explicit rank aggregation.  Its input is a
+finite set (I) of *distinct natural ranks*, a mass function (c(d)), a
+per-rank cap
+
+\[
+0\le c(d)\le A d,
+\tag{244.1}
+\]
+
+and a total budget (sum_{d\in I}c(d)\le N).  With
+
+\[
+x(d)=c(d)/d,qquad J=\sum_{d\in I}x(d),qquad
+D=\sum_{d\in I}x(d)(A-x(d)),
+\]
+
+it proves the defect-sensitive upper bound
+
+\[
+J^2+(2r-1)AJ+D\le 2AN,
+\tag{244.2}
+\]
+
+and the exact prefix-slack identity.  The theorem is a capacity upper bound;
+it does not contain labels, activation options, blockers, or joint-owner
+strata.
+
+To apply it to Section 243, choose an explicit finite rank map
+
+\[
+\rho:V_H\longrightarrow\mathbb N,qquad
+c(d)=\sum_{v:\rho(v)=d}w_v,qquad w_v=p(v)-1.
+\tag{244.3}
+\]
+
+The map must then prove (244.1), the common budget with
+\(N=\mathcal B_H\), and a lower bridge from every feasible activation to
+the occupancy (J).  None of these hypotheses is supplied by (243.1)--(243.9).
+
+In particular, taking \(\rho(v)=p(v)\) is not legal without a cap on the
+*aggregated* mass at each numerical prime.  Four indexed atoms with the same
+prime (p=3) already have aggregate mass (4(3-1)=8), so the tempting
+pointwise cap (c(3)\le3) fails.  Replacing the rank by an injective index
+changes the denominator in (J) and no longer represents the activation
+cost (p(v)-1).  The fact that (V_H) is finite does not provide a uniform
+cap independent of the number of repeated component/residue atoms.
+
+There is a second, directional obstruction.  Equation (244.2) can only
+contradict Section 243 after proving a coverage-to-occupancy estimate of the
+form
+
+\[
+J(U)\ge L_H
+\quad\text{for every }U\text{ feasible in (243.1)},
+\qquad
+\frac{\sqrt{((2r-1)A)^2+8A\mathcal B_H-4D}-(2r-1)A}{2}<L_H.
+\tag{244.4}
+\]
+
+The first inequality must retain atom identity and all higher-owner strata
+in (243.6).  It cannot follow from the number of labels alone: arbitrarily
+many labels may have the same singleton option (T(i,b)=\{v\}), while the
+activation cost and the rank occupancy remain those of the one atom (v).
+
+Thus the exact reusable consequence is conditional: a rank aggregation
+satisfying (244.1), a common budget, and the joint-liability lower bound
+(244.4) would imply \(\Lambda_H>\mathcal B_H\), contradicting the
+hypothetical whole cover.  The current Section 243 data prove none of these
+three extra conditions.  This closes the proposed shortcut and identifies the
+next genuine obligation as a source-compatible lower bound such as (244.4),
+or a direct EB1 replacement satisfying (243.7)--(243.9); it does not settle
+unrestricted Erdős--#7.
+
+## 245. The reusable global route is a charge adapter, not another collision moment
+
+The repository already contains the correct whole-cover direction for this
+route.  `D5.S3.Arith.Congruence.ActualCylinderChain.ordinary_cover_forces_charge_and_caps`
+takes an actual odd distinct covering system, an arbitrary correlated law on a
+complete head, and a full-history tail chain.  Under its explicit
+`headSafe` premise it proves, for the same joint source,
+
+\[
+1\le \mathbb E[\texttt{totalCharge}],
+\tag{245.1}
+\]
+
+and packages the exact conditional coordinate caps needed by the imported
+Schroeder comparison theorem.  The companion theorem
+`Erdos7.ThreePrime.PhysicalChain.one_le_charge_of_cover` is the final
+coverage-to-charge inequality.  These are reused source results; they do not
+assume a three-prime bound in the abstract chain, and they do not themselves
+give an upper charge bound.
+
+The remaining whole problem can therefore be stated as one adapter obligation:
+encode the source-global collision groups of §844 by the chain coordinates so
+that, on one common source law,
+
+\[
+\texttt{BaseCaps},
+\qquad
+\mathbb E[\texttt{totalCharge}]<1
+\tag{245.2}
+\]
+
+hold for every finite odd distinct cover.  Then (245.1) contradicts (245.2)
+and gives noncoverage directly, without an EB1 replacement.  The labels,
+phases, and all cofactor heights must remain in the same coordinate history;
+independently optimized cofactor laws cannot be substituted.
+
+The current §844 data do not establish (245.2).  Its one-group estimate
+controls \(\Psi^{(b,m)}\), while the charge chain needs a single ordered list
+of coordinate events and a uniform conditional cap at each event.  The missing
+map must specify the coordinate index, the request predicate, the depth/run
+specification, and the common source measure, then prove that every original
+label—including labels with more than three prime factors—appears in the same
+history.  A bound on one collision moment or on the number of numerical
+cofactor groups is insufficient.
+
+The public results checked for this adapter are Lettl--Sun's exact-phase
+essential-point inequalities and BBMST's bounded-reuse exploration-tree
+lemma.  They supply candidate charging mechanisms, but neither theorem gives
+the required map from the §844 collision groups to this chain with a strict
+subunit budget.  The resulting status is precise: the charge route is a
+conditional reusable bridge; its caps and strict budget remain open, and no
+unrestricted Erdős--#7 conclusion follows yet.
