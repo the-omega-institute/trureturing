@@ -209,7 +209,7 @@ public sealed class ScribeResourceInputContractTests
             for (var i = 0; i < 2; i++)
             {
                 _ = Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create("D5/S0/Test/Alpha.claim"),
-                        H("Claim"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(), DescribeRole.Theorem);
+                        H("Claim"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("body"))), DescribeRole.Theorem);
             }
             """ : "";
         TemporaryFileSystem.File.WriteAllText(root.Resolve(PathFor(name)), $$"""
