@@ -1,0 +1,8 @@
+**定义 1.2（采样叶与存活）。** 令 $T_\bullet=\{\varepsilon\}$。对 $\Theta=(S,(\Theta_a)_{a\in[s]})\in\Omega_{B+1}$，递归定义
+
+$$
+T_\Theta=\bigcup_{a\in S}\{av:v\in T_{\Theta_a}\}\subseteq[s]^{B+1}.
+$$
+
+对长度 $\ell\le B$ 的词 $w\in[s]^\ell$，记 $A_w=\{\Theta:\exists v\in T_\Theta,\ w\text{ 是 }v\text{ 的前缀}\}$。对任意集合 $F\subseteq[s]^B$，记 $H_F=\{\Theta:T_\Theta\cap F\ne\varnothing\}$。空词事件 $A_\varepsilon$ 是整个样本空间。所有事件均在同一个 $\Omega_B$ 上定义。
+
