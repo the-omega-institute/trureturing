@@ -38,9 +38,8 @@ $C(\psi)=2|\psi_{00}\psi_{11}-\psi_{01}\psi_{10}|$.
 The encoding indexes two-qubit matrices by `Fin 2 × Fin 2`, takes the
 partial transposition on the second qubit (the binegativity does not depend
 on which qubit is transposed), uses Mathlib's negative part of a self-adjoint
-matrix, and reads the negativity as twice the sum of the absolute values of
-the negative eigenvalues of $\sigma^\Gamma$, which equals
-$2\Tr[\sigma^{\Gamma}_-]$.
+matrix, and writes the negativity as in the paper,
+$N(\sigma)=2\Tr[\sigma^{\Gamma}_-]$.
 
 ## Verified locator
 

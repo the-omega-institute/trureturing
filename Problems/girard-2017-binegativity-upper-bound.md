@@ -69,16 +69,15 @@ novelty.
    positive and negative parts gives $(\rho^\Gamma)_-=ww^T/91$, of trace
    $1/13$.
 3. With $z=(2,3,3,-2)$, the same argument gives
-   $((ww^T/91)^\Gamma)_-=3zz^T/2366$, of trace $3/91$. Hence $N_2=1/7$.
-4. $\operatorname{Tr}[A_-]=\sum_i\lambda_i(A)_-$ for Hermitian $A$, so
-   $N=2/13$.
-5. In any pure-state decomposition the zero entry $\rho_{11,11}$ forces
+   $((ww^T/91)^\Gamma)_-=3zz^T/2366$, of trace $3/91$. Hence $N=2/13$ and
+   $N_2=1/7$.
+4. In any pure-state decomposition the zero entry $\rho_{11,11}$ forces
    $\psi_i(11)=0$ for every $\psi_i$ of positive weight, and the triangle
    inequality gives $\sum_ip_iC(\psi_i)\ge2|\rho_{01,10}|=4/13$; the
    decomposition with weights $9/13,1/26,7/26$ and vectors
    $(-7,-4,-4,0)/9$, $(1,-2,-2,0)/3$, $(1,0,0,0)$ shows the infimum is over a
    nonempty set. So $C\ge4/13$.
-6. For $\nu=2/13$ and $c\ge4/13$,
+5. For $\nu=2/13$ and $c\ge4/13$,
    $9(c^2+\nu^2)-5(c+\nu)^2=2(2c-\nu)(c-2\nu)\ge0$, so the bound is at most
    $9/65<1/7$.
 
@@ -87,11 +86,11 @@ novelty.
 The kernel-checked `result` is the negation of the statement that every
 two-qubit density matrix $\sigma$ (`IsDensity`, positive semidefinite with
 trace one) with positive negativity satisfies
-$N_2(\sigma)\le\frac N2\frac{(C+N)^2}{C^2+N^2}$. The negativity is the frozen
-`StructuredNegativityCoincidenceRefutation.negativity 2`, twice the sum of
-the absolute values of the negative eigenvalues of the frozen
-`partialTransposeB` (partial transposition on the second qubit); the
-binegativity uses Mathlib's negative part; the concurrence is the infimum
+$N_2(\sigma)\le\frac N2\frac{(C+N)^2}{C^2+N^2}$. The negativity is the
+paper's $N(\sigma)=2\operatorname{Tr}[(\sigma^\Gamma)_-]$, written out in the
+claim with the frozen `partialTransposeB` (partial transposition on the
+second qubit) and Mathlib's negative part, which the binegativity also
+uses; the concurrence is the infimum
 over finite decompositions into unit vectors with nonnegative weights. The
 refutation uses only a lower bound on the concurrence, since the bound
 decreases in $c$ for $c>\nu$.
@@ -107,16 +106,17 @@ certificates, the spin-flip product) agrees.
 
 The canonical source is
 `D5/S3/Quantum/Entanglement/TwoQubitBinegativityUpperBoundRefutation.lean`.
-Its public declarations are `TwoQubit`, `binegativity`, `pureConcurrence`,
-`concurrence`, `claim`, `vec4`, `witness` and `result`; the partial
-transposition, `IsDensity`, `negativity` and `eigenvalues` are frozen in
+Its public declarations are `binegativity`, `pureConcurrence`, `concurrence`,
+`claim`, `vec4`, `witness` and `result`, on the two-qubit matrices
+`Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ`; the partial
+transposition and `IsDensity` are frozen in
 `D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation`.
 The frozen module state has statement identity
-`sha256:c166aa3f4c3cf9510f60ee56dd2a14f037202b3c299954aba9ef87dd1d69bd13`. The
+`sha256:07b1c3c99e9d5590b1af730376d46694569510a56e1abb12cc7af8529dfb1030`. The
 result declaration has statement identity
 `sha256:797223f7896ecb504da3573b596cab0819aedc8da21c22c10e588861af289ec0`. The
 Freeze event is
-`sha256:ed176054285b1816246cd4065eac0738d584fa0d98e3b274b78cf0014aa365ba`; its
+`sha256:a6519b47341a84496f313b7d83b6ad8f81e15a670ca7eac60a6e1b067a9a10c7`; its
 project-level frozen prerequisite is the Freeze event of
 `D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation`. The
 proof uses only the standard axioms `propext`, `Classical.choice` and
@@ -138,13 +138,12 @@ content; no escape witness); `admission_basis: open-problem-resolution`
   $9/65$.
 - **Proved inside the proof of `result`, for the state $\rho$ only:** the
   negative parts $(\rho^\Gamma)_-=ww^T/91$ and
-  $((\rho^\Gamma)_-^\Gamma)_-=3zz^T/2366$; the evaluation
-  $\operatorname{Tr}[(\rho^\Gamma)_-]=\sum_i\lambda_i(\rho^\Gamma)_-$, which
-  gives $N(\rho)=2/13$; and the convex-roof bound
+  $((\rho^\Gamma)_-^\Gamma)_-=3zz^T/2366$, which give $N(\rho)=2/13$; and
+  the convex-roof bound
   $C(\rho)\ge2|\rho_{01,10}|=4/13$ from $\rho_{11,11}=0$.
-- **Follows from the same steps (not stated in Lean):** the trace identity
-  holds for every Hermitian $A$, and $C(\sigma)\ge2|\sigma_{01,10}|$ for every
-  two-qubit state with $\sigma_{11,11}=0$.
+- **Follows from the same steps (not stated in Lean):**
+  $C(\sigma)\ge2|\sigma_{01,10}|$ for every two-qubit state with
+  $\sigma_{11,11}=0$.
 - **Mechanism (computed, not stated in Lean):** by the Sazim–Awasthi
   identity $N_2=\frac N2(1+N(\rho_\psi))$, the upper bound of Eq. (9) is
   equivalent to $N(\rho_\psi)\le2CN/(C^2+N^2)$ for the negative eigenvector

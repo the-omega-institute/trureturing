@@ -15,7 +15,7 @@ internal sealed class TwoQubitBinegativityUpperBoundRefutationDocument : IScribe
         H("The upper binegativity bound of Girard and Gour fails"),
         Blocks(
             Node("bineg", "Binegativity", BinegFormula(),
-                "For a two-qubit matrix sigma, sigma^Gamma is the partial transposition on the second qubit (the existing partialTransposeB at d = 2) and X_- is the negative part of a self-adjoint matrix X, so that X = X_+ - X_- with X_+ and X_- positive semidefinite and X_+ X_- = 0 (Mathlib's negative part). The binegativity is Tr[(sigma^Gamma)_-] + 2 Tr[(((sigma^Gamma)_-)^Gamma)_-]. The negativity N(sigma) = 2 Tr[(sigma^Gamma)_-] is the existing negativity at d = 2, twice the sum of the absolute values of the negative eigenvalues of sigma^Gamma.",
+                "For a two-qubit matrix sigma, sigma^Gamma is the partial transposition on the second qubit (the existing partialTransposeB at d = 2) and X_- is the negative part of a self-adjoint matrix X, so that X = X_+ - X_- with X_+ and X_- positive semidefinite and X_+ X_- = 0 (Mathlib's negative part). The binegativity is Tr[(sigma^Gamma)_-] + 2 Tr[(((sigma^Gamma)_-)^Gamma)_-]. The negativity of the paper is N(sigma) = 2 Tr[(sigma^Gamma)_-].",
                 "binegativity", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("pure", "Concurrence of a pure state", PureFormula(),
                 "For a unit vector psi of two qubits, the concurrence is 2 |psi_00 psi_11 - psi_01 psi_10|.",
@@ -30,7 +30,7 @@ internal sealed class TwoQubitBinegativityUpperBoundRefutationDocument : IScribe
                 "The state is the mixture of |v><v|/17 with weight 17/26, v = (3, 2, 2, 0) in the basis 00, 01, 10, 11, and of |00><00| with weight 9/26. It is positive semidefinite with trace one.",
                 "witness", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "The upper bound fails", Disp(new Formula.Not(F.Id("claim"))),
-                "Let A be the partial transpose of the state. With w = (-1, 1, 1, 2), A = (A + ww^T/91) - ww^T/91, where A + ww^T/91 is a sum of three positive rank-one terms with rational coefficients and annihilates w, so the uniqueness of the positive and negative parts gives A_- = ww^T/91, of trace 1/13. In the same way, with z = (2, 3, 3, -2), the negative part of (A_-)^Gamma is 3zz^T/2366, of trace 3/91. Hence the binegativity is 1/13 + 6/91 = 1/7. The trace of A_- is also the sum of the negative parts of the eigenvalues of A, so the negativity is 2/13. In every decomposition of the state into pure states, the zero entry at 11,11 forces every vector with positive weight to have zero 11 amplitude, so its concurrence is 2 |psi_01 psi_10| and the triangle inequality gives a total of at least 2 |rho_(01,10)| = 4/13; the rational decomposition with weights 9/13, 1/26, 7/26 and vectors (-7, -4, -4, 0)/9, (1, -2, -2, 0)/3 and (1, 0, 0, 0) shows that the infimum is taken over a nonempty set. For nu = 2/13 the bound (nu/2)(c + nu)^2/(c^2 + nu^2) is at most 9/65 when c >= 4/13, because 9(c^2 + nu^2) - 5(c + nu)^2 = 2(2c - nu)(c - 2nu) >= 0, and 9/65 < 1/7.",
+                "Let A be the partial transpose of the state. With w = (-1, 1, 1, 2), A = (A + ww^T/91) - ww^T/91, where A + ww^T/91 is a sum of three positive rank-one terms with rational coefficients and annihilates w, so the uniqueness of the positive and negative parts gives A_- = ww^T/91, of trace 1/13. In the same way, with z = (2, 3, 3, -2), the negative part of (A_-)^Gamma is 3zz^T/2366, of trace 3/91. Hence the binegativity is 1/13 + 6/91 = 1/7. The negativity 2 Tr[A_-] is therefore 2/13. In every decomposition of the state into pure states, the zero entry at 11,11 forces every vector with positive weight to have zero 11 amplitude, so its concurrence is 2 |psi_01 psi_10| and the triangle inequality gives a total of at least 2 |rho_(01,10)| = 4/13; the rational decomposition with weights 9/13, 1/26, 7/26 and vectors (-7, -4, -4, 0)/9, (1, -2, -2, 0)/3 and (1, 0, 0, 0) shows that the infimum is taken over a nonempty set. For nu = 2/13 the bound (nu/2)(c + nu)^2/(c^2 + nu^2) is at most 9/65 when c >= 4/13, because 9(c^2 + nu^2) - 5(c + nu)^2 = 2(2c - nu)(c - 2nu) >= 0, and 9/65 < 1/7.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("girard-2017-binegativity-upper-bound"),
@@ -80,18 +80,18 @@ internal sealed class TwoQubitBinegativityUpperBoundRefutationDocument : IScribe
     private static Formula NumberSet(Formula name) => Seq(Mathbb, Grp(name));
     private static Formula Nat() => NumberSet(F.Id("N"));
     private static Formula Real() => NumberSet(F.Id("R"));
-    private static Formula TwoQubit() => F.Id("TwoQubit");
+    private static Formula Pairs() =>
+        Seq(Call(F.Id("Fin"), D(2)), Sp, F.Times, Sp, Call(F.Id("Fin"), D(2)));
+    private static Formula TwoQubit() =>
+        Call(F.Id("Matrix"), Parenthesized(Pairs()), Parenthesized(Pairs()), NumberSet(F.Id("C")));
     private static Formula SumOver(Formula index, Formula body) =>
         Seq(Sum, Underscore, Grp(index), Sp, body);
-    private static Formula Labels() =>
-        Seq(Call(F.Id("Fin"), D(2)), Sp, F.Times, Sp, Call(F.Id("Fin"), D(2)), Sp, To, Sp,
-            NumberSet(F.Id("C")));
+    private static Formula Labels() => Seq(Pairs(), Sp, To, Sp, NumberSet(F.Id("C")));
     private static Formula ReTr(Formula x) => Call(F.Id("ReTr"), x);
     private static Formula NegPart(Formula x) => Call(F.Id("negPart"), x);
     private static Formula Pt(Formula x) => Call(F.Id("partialTransposeB"), x);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Entry(Formula psi, Formula a, Formula b) => Call(psi, Pair(a, b));
-    private static Formula Neg2(Formula sigma) => Call(F.Id("negativity"), D(2), sigma);
     private static Formula Conc(Formula sigma) => Call(F.Id("concurrence"), sigma);
 
     private static Formula BinegFormula()
@@ -133,7 +133,7 @@ internal sealed class TwoQubitBinegativityUpperBoundRefutationDocument : IScribe
     private static Formula ClaimFormula()
     {
         Formula sigma = F.Id("sigma");
-        Formula nu = Neg2(sigma), c = Conc(sigma);
+        Formula nu = Mul(D(2), ReTr(NegPart(Pt(sigma)))), c = Conc(sigma);
         Formula bound = Mul(Frac(nu, D(2)),
             Frac(Pow(Parenthesized(Add(c, nu)), D(2)), Add(Pow(c, D(2)), Pow(nu, D(2)))));
         Formula body = Imp(Call(F.Id("IsDensity"), sigma),
