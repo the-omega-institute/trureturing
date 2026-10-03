@@ -276,3 +276,216 @@ of Theorem 1, and its two exceptional orbits exhaust $\mathcal T_3$.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Affine graph stabilizers over commutative rings
+
+**Theorem 9.1 (affine graph translation stabilizer).** Let $R$ be any
+commutative ring, let $X\subset R$ be a nonempty finite set, and let
+$a,b\in R$. Define
+
+$$
+  \Gamma_{a,b}(X)=\{(x,ax+b):x\in X\},\qquad
+  \operatorname{Stab}_R(X)=\{h\in R:h+X=X\}.
+$$
+
+Then the translation stabilizer of the graph is
+
+$$
+  \operatorname{Stab}_{R^2}(\Gamma_{a,b}(X))
+    =\{(h,ah):h\in\operatorname{Stab}_R(X)\}.
+$$
+
+The map $h\mapsto(h,ah)$ is an injective additive homomorphism and
+identifies these two stabilizers. There is no domain, prime-modulus,
+unit-slope, nonzero-slope, or three-element assumption.
+
+**Proof.** Translation by $(h,k)$ gives the graph identity
+
+$$
+  (h,k)+\Gamma_{a,b}(X)
+    =\Gamma_{a,b+k-ah}(h+X).
+$$
+
+Indeed, put $x'=h+x$ in a translated graph point; its second coordinate
+is $k+ax+b=ax'+b+k-ah$. If the translated graph equals the original,
+their first-coordinate projections give $h+X=X$. Choose $x\in X$.
+The unique points above this same first coordinate in the two equal
+graphs have second coordinates $ax+b+k-ah$ and $ax+b$. Additive
+cancellation gives $k=ah$. Conversely, $h+X=X$ and $k=ah$ make the
+displayed translated graph equal to the original. Finally, distributivity
+gives $a(h+h')=ah+ah'$, and the first coordinate makes the slope map
+injective. $\square$
+
+The nonempty condition cannot be omitted uniformly. An empty graph is
+fixed by every translation, so its stabilizer is all of $R^2$; the
+abscissa stabilizer of the empty set is all of $R$, whose image under
+the slope map is only $\{(h,ah):h\in R\}$. For $R=\mathbb Z$ and
+$a=0$, the translation $(0,1)$ fixes the empty graph and is outside
+that image. The stated equality still includes the zero ring whenever
+$X$ is nonempty.
+
+## 10. Fixed-slope translation census for arbitrary moduli
+
+**Theorem 10.1 (slope-filtered fixed-point census).** For each
+nonnegative integer $n$ and each $a\in\mathbb Z/n\mathbb Z$, let
+
+$$
+  \mathcal V_a=
+    \{X\subset\mathbb Z/n\mathbb Z:|X|=3,
+      \ x\mapsto ax\text{ is injective on }X\}.
+$$
+
+Translation by any $t\in\mathbb Z/n\mathbb Z$ preserves
+$\mathcal V_a$, without a positivity assumption on $n$. If $n>0$
+and $t\ne0$, the exact fixed-point count is
+
+$$
+  |\operatorname{Fix}_t(\mathcal V_a)|=
+  \begin{cases}
+    n/3,&3t=0\text{ and }at\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+$$
+
+Only injectivity on the individual set $X$ is required; multiplication
+by $a$ need not be injective on the whole ring, and $a$ need not be a unit.
+
+**Proof.** Translation is a bijection and hence preserves cardinality.
+If $a(t+x)=a(t+y)$ with $x,y\in X$, cancellation of $at$ gives
+$ax=ay$, and injectivity on $X$ gives $x=y$. Thus it also preserves
+the injectivity condition for every $n$.
+
+Suppose $t+X=X$ and $|X|=3$. Summing the elements on both sides and
+cancelling their sum gives $3t=0$. If $at=0$, each $x\in X$ and its
+distinct translate $x+t\in X$ have equal images, which excludes
+$X\in\mathcal V_a$. This proves the zero cases for nonzero $t$.
+
+Now assume $3t=0$ and $at\ne0$. Both $t$ and $at$ have additive
+order three: their orders divide the prime three and neither is zero.
+Consequently
+
+$$
+  C_t=\{0,t,2t\}
+$$
+
+has three elements, its image under multiplication by $a$ has three
+elements, and $t+C_t=C_t$. For any fixed $X$, choose $x\in X$.
+Invariance puts $x,x+t,x+2t$ in $X$; these are distinct and exhaust
+its three elements. Therefore the fixed members are precisely the
+translates of $C_t$. Its translation stabilizer is $C_t$: every element
+of this subgroup fixes it, and a stabilizing $h$ lies in $C_t$ because
+$h=h+0\in h+C_t=C_t$. Ordinary orbit-stabilizer now counts its
+translates as $n/3$. $\square$
+
+For $n=6$, $a=2$, and $t=2$, the fixed family is exactly
+
+$$
+  \operatorname{Fix}_2(\mathcal V_2)
+    =\bigl\{\{0,2,4\},\{1,3,5\}\bigr\}.
+$$
+
+These are distinct even and odd cosets, so the count is two despite the
+nonunit slope. For $n=3$, $a=1$, and $t=1$, the only fixed member is
+$\{0,1,2\}$, giving count one. Further boundary values are
+
+$$
+\begin{aligned}
+  n=6:&\quad |\operatorname{Fix}_2(\mathcal V_3)|=0,
+    \qquad |\operatorname{Fix}_1(\mathcal V_2)|=0,\\
+  n=9:&\quad |\operatorname{Fix}_3(\mathcal V_2)|=3,
+    \qquad |\operatorname{Fix}_3(\mathcal V_3)|=0,\\
+  n=3:&\quad |\operatorname{Fix}_1(\mathcal V_0)|=0,
+    \qquad |\operatorname{Fix}_0(\mathcal V_1)|=1,\\
+  n=2:&\quad |\operatorname{Fix}_1(\mathcal V_1)|=0.
+\end{aligned}
+$$
+
+In each row, $\mathcal V_a$ is taken in the indicated modulus. The
+zero-translation value for $n=3$ shows why $t\ne0$ belongs in the
+counting statement: identity translation fixes the whole class. For
+$n=1$, there is no nonzero $t$.
+
+This census keeps the slope fixed and counts admissible abscissa sets.
+Enumeration across different slopes requires an overlap analysis before
+their counts can be combined.
+
+## 11. Homomorphism-filtered translation census
+
+**Theorem 11.1 (homomorphism-filtered fixed-point census).** Let $G$
+be a finite abelian group, let $A$ be any abelian group, and let
+$f:G\to A$ be an additive homomorphism. Put
+
+$$
+  \mathcal V_f=\{X\subset G:|X|=3,
+    \ f\text{ is injective on }X\}.
+$$
+
+Translation by $G$ preserves $\mathcal V_f$. For every nonzero
+$t\in G$,
+
+$$
+  |\operatorname{Fix}_t(\mathcal V_f)|=
+  \begin{cases}
+    |G|/3,&3t=0\text{ and }f(t)\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+$$
+
+The codomain $A$ may be infinite. Preservation itself holds for any
+abelian $G$, without a finiteness assumption.
+
+**Proof.** Translation preserves cardinality, and
+$f(t+x)=f(t)+f(x)$ shows by cancellation that injectivity on $X$
+implies injectivity on $t+X$. If $t+X=X$ with $|X|=3$, summing
+gives $3t=0$. If $f(t)=0$, then $x$ and $x+t$ are distinct members
+with equal images, so no such $X$ is in $\mathcal V_f$.
+
+When $3t=0$ and $f(t)\ne0$, both $t$ and $f(t)$ have order three.
+The subgroup $C_t=\{0,t,2t\}$ therefore belongs to $\mathcal V_f$.
+Every translate of it is admissible and fixed by $t$. Conversely, any
+fixed three-element set contains the three distinct points
+$x,x+t,x+2t$ for each $x$ in it, so it is exactly $x+C_t$. Thus the
+fixed family is one translation orbit of $C_t$. Its stabilizer is
+exactly $C_t$, since a stabilizing $h$ must satisfy
+$h=h+0\in h+C_t=C_t$. Orbit-stabilizer gives $|G|/3$ members.
+Neither classification nor counting uses finiteness of $A$. $\square$
+
+Theorem 10.1 is the case $G=A=\mathbb Z/n\mathbb Z$ and $f(x)=ax$.
+An infinite-codomain example is $G=\mathbb Z/3\mathbb Z$,
+$A=(\mathbb Z/3\mathbb Z)\times\mathbb Z$, and $f(x)=(x,0)$.
+For $t=1$, the sole three-element subset is all of $G$, it is
+$f$-injective, and it is fixed, giving count one.
+
+For $G=(\mathbb Z/3\mathbb Z)^2$ and $f(x,y)=x$, all eight nonzero
+directions have order three. Exactly six survive the kernel condition:
+
+$$
+  D=\{(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)\}.
+$$
+
+Each direction in $D$ fixes three admissible triples. The two nonzero
+kernel directions $(0,1)$ and $(0,2)$ each fix none. The survivors pair
+into the three distinct order-three subgroups
+
+$$
+\begin{aligned}
+  H_0&=\{0,(1,0),(2,0)\},\\
+  H_1&=\{0,(1,1),(2,2)\},\\
+  H_2&=\{0,(1,2),(2,1)\}.
+\end{aligned}
+$$
+
+The directions $(1,0),(2,0)$ have fixed family equal to the cosets of
+$H_0$; $(1,1),(2,2)$ have the cosets of $H_1$; and $(1,2),(2,1)$
+have the cosets of $H_2$. For each $i\in\{0,1,2\}$ those cosets are
+exactly
+
+$$
+  \{H_i,\ (0,1)+H_i,\ (0,2)+H_i\}.
+$$
+
+They form one translation orbit of size three. The three orbits are
+pairwise disjoint, since the stabilizer of a coset is its corresponding
+subgroup and $H_0,H_1,H_2$ are distinct.
+
+## 追加锚（本行以下为增补区）
