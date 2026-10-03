@@ -31,14 +31,18 @@ internal sealed class TokenGraphLaplacianRadiusRefutationDocument : IScribeDocum
                 H("One edge and two isolated vertices"), StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take the graph on Fin 4 whose only edge is {0,1}. Its two-token graph has edges {0,2}–{1,2} and {0,3}–{1,3}, with {0,1} and {2,3} isolated. Both nonzero Laplacians satisfy L² = 2L. Applied to an eigenvector, this identity gives λ² = 2λ, so every eigenvalue is zero or two; if all were zero, the Hermitian matrix itself would be zero. Hence both radii are two. For n = 4, the only integer k in the conjecture's range is two. The original graph has one edge, while the star on four vertices has three; isomorphisms preserve this edge count. Thus the left side of the asserted equivalence holds and its right side fails. This result addresses the literal all-graphs statement; the version restricted to connected graphs remains open."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song-dalfo-fiol-zhang-2026-token-graph-laplacian-radius-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, AssessedProvenance provenance) => Describe.Lean(
+        string declaration, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("tokrad-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);

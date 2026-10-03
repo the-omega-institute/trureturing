@@ -47,3 +47,9 @@ graphs remains open.
 arXiv:2610.00500v1, Abstract (page 1), Conjecture 1.1 (page 4), and
 Laplacian notation (section 2, page 5):
 https://arxiv.org/pdf/2610.00500v1 .
+
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2610.00500
+- URL: https://arxiv.org/abs/2610.00500v1
+- Location: Abstract (page 1), Conjecture 1.1 (page 4), and section 2 (page 5).

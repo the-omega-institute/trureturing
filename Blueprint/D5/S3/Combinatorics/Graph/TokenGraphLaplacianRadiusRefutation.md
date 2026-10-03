@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/song-dalfo-fiol-zhang-2026-token-graph-laplacian-radius-refutation` (refuted) by `D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"song-dalfo-fiol-zhang-2026-token-graph-laplacian-radius-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* X. Song and C. Dalfó and M. À. Fiol and S. Zhang (2026). *The Algebraic Connectivity and Laplacian Spectral Radius of Token Graphs*. DOI: [10.48550/arXiv.2610.00500](https://doi.org/10.48550/arXiv.2610.00500). URL: <https://arxiv.org/abs/2610.00500v1>.
