@@ -186,6 +186,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
                 failure = Member(((IRangeOperation)operation).Method, node); break;
             case OperationKind.VariableDeclarator:
                 failure = Type(((IVariableDeclaratorOperation)operation).Symbol.Type, node); break;
+            case OperationKind.IsType:
+                failure = Type(((IIsTypeOperation)operation).TypeOperand, node); break;
             case OperationKind.Interpolation:
                 failure = Formatting(((IInterpolationOperation)operation).Expression, interpolation: true); break;
             case OperationKind.Loop:
