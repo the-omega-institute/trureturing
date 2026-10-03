@@ -78,7 +78,7 @@ public static class ScribeCli
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (command == "resources")
         {
-            return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
+            return ScribeResourceCommands.Run(arguments, workingDirectory,
                 () => FindRepositoryRoot(workingDirectory), output, error);
         }
 
