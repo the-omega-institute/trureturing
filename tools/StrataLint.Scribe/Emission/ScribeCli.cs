@@ -278,14 +278,13 @@ public static class ScribeCli
                     output.WriteLine("emitted: 0 changed blueprint(s)");
                     return 0;
                 }
-                var report = leanReport ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
                 return ScribeEmitter.EmitPaths(
                     repositoryRoot,
                     paths,
                     arguments.Count == 4,
                     output,
                     error,
-                    report);
+                    () => leanReport ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot));
             }
             catch (Exception exception) when (
                 exception is IOException or UnauthorizedAccessException or ArgumentException

@@ -89,6 +89,111 @@ public sealed class ScribeDefinitionSelectionTests
         Assert.Empty(ScribeDefinitionSelector.Select(root.Path, []).Paths);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EmitRejectsCrossDocumentDescribeReferenceInFullAndScopedModes(bool scoped)
+    {
+        using var root = new TemporaryRoot();
+        const string source = "Blueprint/D5/S0/Test/Source.scribe.cs";
+        Add(root, source, """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Source : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Source"), Blocks(Paragraph(Text("body"))),
+                        [DocumentEdge.NarrativeReference.ToDescribe(
+                            GidRef.Create("D5/S0/Test/Target"), DescribeId.Create("target"))]));
+            }
+            """);
+        const string target = "Blueprint/D5/S0/Test/Target.scribe.cs";
+        Add(root, target, """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Target : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Target"), Blocks(Describe.Remark(
+                        DescribeId.Create("target"), H("Target"), Num(1),
+                        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("body")))))));
+            }
+            """);
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+        var error = new StringWriter();
+        int exit;
+        if (scoped)
+        {
+            exit = ScribeEmitter.EmitPaths(root.Path, [source], false, TextWriter.Null, error, report);
+        }
+        else
+        {
+            var results = ScribeScriptHost.ExecuteBatch(root.Path, [source, target]);
+            Assert.All(results, result => Assert.True(result.IsSuccess, result.Failure?.ToString()));
+            exit = ScribeEmitter.Emit(root.Path, false, TextWriter.Null, error, report,
+                results.Select(result => result.Definition!).ToArray());
+        }
+
+        Assert.Equal(1, exit);
+        Assert.Contains("code=cross-document-describe-reference path=D5/S0/Test/Source",
+            error.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(root.Resolve("Blueprint/D5/S0/Test/Source.md")));
+    }
+
+    [Fact]
+    public void ScriptSelfDescribeReferencePreservesFullEmissionBytesInScopedCheck()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
+        Add(root, path, """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Local : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Local"), Blocks(Describe.Remark(
+                        DescribeId.Create("target"), H("Target"), Num(1),
+                        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("body"))))),
+                        [DocumentEdge.NarrativeReference.ToDescribe(
+                            GidRef.Create("D5/S0/Test/Local"), DescribeId.Create("target"))]));
+            }
+            """);
+        var result = ScribeScriptHost.Execute(root.Path, path);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+        var error = new StringWriter();
+
+        Assert.Equal(0, ScribeEmitter.Emit(root.Path, false, TextWriter.Null, error, report,
+            [result.Definition!]));
+        var bytes = File.ReadAllBytes(root.Resolve("Blueprint/D5/S0/Test/Local.md"));
+        Assert.Contains("<a id=\"describe-target\"></a>",
+            System.Text.Encoding.UTF8.GetString(bytes), StringComparison.Ordinal);
+        Assert.Equal(0, ScribeEmitter.EmitPaths(root.Path, [path], true, TextWriter.Null, error, report));
+        Assert.Empty(error.ToString());
+        Assert.Equal(bytes, File.ReadAllBytes(root.Resolve("Blueprint/D5/S0/Test/Local.md")));
+    }
+
+    [Theory]
+    [InlineData("docs/unrelated.md")]
+    [InlineData("Blueprint/D5/S0/Test/Deleted.scribe.cs")]
+    public void NonEmptyManifestWithEmptySelectionDoesNotReadLeanReport(string path)
+    {
+        using var root = new TemporaryRoot();
+        Directory.CreateDirectory(root.Resolve("Blueprint"));
+        File.WriteAllText(root.Resolve("global.json"), "{}\n");
+        var error = new StringWriter();
+        var output = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            () => throw new InvalidOperationException("documents assembly must not be loaded"),
+            ["emit", "--paths-from", "-", "--check"],
+            root.Path, output, error, leanReport: null, new StringReader(path));
+
+        Assert.Equal(0, exit);
+        Assert.Empty(error.ToString());
+        Assert.Contains("emitted: 0 changed blueprint(s)", output.ToString(), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void MissingManifestReturnsTwoWithoutLoadingDocuments()
     {
@@ -140,6 +245,42 @@ public sealed class ScribeDefinitionSelectionTests
         var selected = ScribeDefinitionSelector.Select(root.Path, ["Blueprint/Shared.scribe.cs"]);
         Assert.True(selected.Paths.SequenceEqual(
             ["Blueprint/D5/S0/Test/First.scribe.cs", "Blueprint/Shared.scribe.cs"]));
+    }
+
+    [Fact]
+    public void SharedSourceLeafSelectsAllThreeTransitiveUsers()
+    {
+        using var root = new TemporaryRoot();
+        const string leaf = "Blueprint/Leaf.scribe.cs";
+        const string first = "Blueprint/First.scribe.cs";
+        const string second = "Blueprint/Second.scribe.cs";
+        const string third = "Blueprint/Third.scribe.cs";
+        Add(root, leaf, "class Leaf {}");
+        Add(root, first, $"[ScribeSharedSource(\"{leaf}\")] class First {{}}");
+        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
+        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
+        Add(root, "Blueprint/Unrelated.scribe.cs", "class Unrelated {}");
+
+        var selected = ScribeDefinitionSelector.Select(root.Path, [leaf]);
+
+        Assert.Equal(new[] { first, leaf, second, third }, selected.Paths.ToArray());
+    }
+
+    [Fact]
+    public void SharedSourceCycleSelectionTerminatesAndIncludesTransitiveUsers()
+    {
+        using var root = new TemporaryRoot();
+        const string first = "Blueprint/First.scribe.cs";
+        const string second = "Blueprint/Second.scribe.cs";
+        const string third = "Blueprint/Third.scribe.cs";
+        Add(root, first, $"[ScribeSharedSource(\"{second}\")] class First {{}}");
+        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
+        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
+
+        Assert.Equal(new[] { first, second, third },
+            ScribeDefinitionSelector.Select(root.Path, [first]).Paths.ToArray());
+        Assert.Equal(ScribeScriptFailureCode.SharedSourceCycle,
+            ScribeScriptHost.Execute(root.Path, third).Failure!.Code);
     }
 
     [Fact]

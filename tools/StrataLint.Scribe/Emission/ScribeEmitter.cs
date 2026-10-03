@@ -19,9 +19,21 @@ public static class ScribeEmitter
         TextWriter error,
         LeanAxiomReport leanReport)
     {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        return EmitPaths(repositoryRoot, changedPaths, check, output, error, () => leanReport);
+    }
+
+    internal static int EmitPaths(
+        string repositoryRoot,
+        IEnumerable<string> changedPaths,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        Func<LeanAxiomReport> loadLeanReport)
+    {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(changedPaths);
-        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(loadLeanReport);
         var selection = ScribeDefinitionSelector.Select(repositoryRoot, changedPaths);
         if (!selection.IsSuccess)
         {
@@ -35,6 +47,7 @@ public static class ScribeEmitter
             return 0;
         }
 
+        var leanReport = loadLeanReport();
         return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(repositoryRoot, () =>
         {
             var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, selection.Paths);
@@ -343,6 +356,13 @@ public static class ScribeEmitter
                 declarationCatalog,
                 graphRepositoryRoot,
                 validateDocumentGraph);
+            if (!graph.Findings.IsEmpty)
+            {
+                foreach (var finding in graph.Findings)
+                    error.WriteLine(
+                        $"describe red code={finding.Code} path={finding.Path} message={finding.Message}");
+                return new ScribeEmissionRun(1, null);
+            }
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(

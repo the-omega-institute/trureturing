@@ -84,8 +84,7 @@ public sealed class DocumentGraphTests
             "D5/S0/Test/Source",
             [
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Target")),
-                DocumentEdge.NarrativeReference.ToDescribe(
-                    GidRef.Create("D5/S0/Test/Target"), DescribeId.Create("target")),
+                DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/Target")),
                 DocumentEdge.TruthAnchor.Create(lean),
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Auxiliary")),
             ]);
@@ -109,12 +108,11 @@ public sealed class DocumentGraphTests
             + "- Truth anchor: `D5/S0/Test/Target.anchor`\n"
             + "- Dependency: [D5/S0/Test/Auxiliary](Auxiliary.md)\n"
             + "- Dependency: [D5/S0/Test/Target](Target.md)\n"
-            + "- Narrative reference: [D5/S0/Test/Target#describe/target](Target.md#describe-target)\n");
+            + "- Narrative reference: [D5/S0/Test/Target](Target.md)\n");
         var expectedTarget = Encoding.UTF8.GetBytes(
             "# D5/S0/Test/Target\n\n"
             + "## Abstract\n\n"
             + "Test document.\n\n"
-            + "<a id=\"describe-target\"></a>\n\n"
             + "**Remark 1.1 (Target).**\n\n"
             + "$$\n1\n$$\n\n"
             + "*Source.* Repository-derived.\n\n"
@@ -126,6 +124,63 @@ public sealed class DocumentGraphTests
         Assert.Equal(
             expectedTarget,
             CanonicalMarkdownWriter.Write(target, catalog, graph: graph).ToArray());
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void CrossDocumentDescribeReferenceIsRejectedByItsSource(
+        bool validateTargets, bool includeTarget)
+    {
+        var source = Document("D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDescribe(
+                GidRef.Create("D5/S0/Test/Target"), DescribeId.Create("target"))]);
+        var target = Document("D5/S0/Test/Target");
+
+        var graph = DocumentGraphAssembler.Assemble(
+            includeTarget ? [source, target] : [source], EmptyCatalog(),
+            validateTargets: validateTargets);
+
+        var finding = Assert.Single(graph.Findings);
+        Assert.Equal("cross-document-describe-reference", finding.Code);
+        Assert.Equal(source.Header.Gid.Value, finding.Path);
+        Assert.Contains("use a document-level reference", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IncomingDescribeReferenceCannotChangeTargetMarkdown()
+    {
+        var target = Document("D5/S0/Test/Target");
+        var source = Document("D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDescribe(
+                target.Header.Gid, DescribeId.Create("target"))]);
+        var full = DocumentGraphAssembler.Assemble([source, target], EmptyCatalog());
+        var scoped = DocumentGraphAssembler.Assemble([target], EmptyCatalog(), validateTargets: false);
+
+        var fullBytes = CanonicalMarkdownWriter.Write(target, graph: full).ToArray();
+        Assert.Equal(CanonicalMarkdownWriter.Write(target, graph: scoped).ToArray(), fullBytes);
+        Assert.Equal(CanonicalMarkdownWriter.Write(target).ToArray(), fullBytes);
+        Assert.DoesNotContain("<a id=", Encoding.UTF8.GetString(fullBytes), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SelfDescribeReferenceEmitsAnchorWithIdenticalFullAndScopedBytes()
+    {
+        var document = Document("D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDescribe(
+                GidRef.Create("D5/S0/Test/Source"), DescribeId.Create("target"))]);
+        var full = DocumentGraphAssembler.Assemble(
+            [document, Document("D5/S0/Test/Other")], EmptyCatalog());
+        var scoped = DocumentGraphAssembler.Assemble([document], EmptyCatalog(), validateTargets: false);
+
+        Assert.Empty(full.Findings);
+        Assert.Empty(scoped.Findings);
+        var fullBytes = CanonicalMarkdownWriter.Write(document, graph: full).ToArray();
+        Assert.Equal(CanonicalMarkdownWriter.Write(document, graph: scoped).ToArray(), fullBytes);
+        Assert.Equal(CanonicalMarkdownWriter.Write(document).ToArray(), fullBytes);
+        Assert.Contains("<a id=\"describe-target\"></a>", Encoding.UTF8.GetString(fullBytes), StringComparison.Ordinal);
     }
 
     [Fact]

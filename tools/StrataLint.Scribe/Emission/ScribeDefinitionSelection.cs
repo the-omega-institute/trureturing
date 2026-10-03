@@ -60,16 +60,27 @@ internal static class ScribeDefinitionSelector
             .ToHashSet(StringComparer.Ordinal);
         if (sharedChanges.Count != 0)
         {
+            var users = new Dictionary<string, List<string>>(StringComparer.Ordinal);
             foreach (var source in allSources)
             {
-                var declaredSources = ScribeScriptHost.ReadSharedSourcePaths(root, source);
-                foreach (var shared in sharedChanges)
+                foreach (var shared in ScribeScriptHost.ReadSharedSourcePaths(root, source))
                 {
-                    if (declaredSources.Contains(shared, StringComparer.Ordinal))
-                    {
-                        selected.Add(source);
-                        break;
-                    }
+                    if (!users.TryGetValue(shared, out var sources))
+                        users.Add(shared, sources = []);
+                    sources.Add(source);
+                }
+            }
+
+            var pending = new Queue<string>(sharedChanges);
+            while (pending.TryDequeue(out var shared))
+            {
+                if (!users.TryGetValue(shared, out var sources))
+                    continue;
+                foreach (var source in sources)
+                {
+                    selected.Add(source);
+                    if (sharedChanges.Add(source))
+                        pending.Enqueue(source);
                 }
             }
         }
