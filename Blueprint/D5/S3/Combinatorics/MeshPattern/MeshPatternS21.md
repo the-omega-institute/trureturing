@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/MeshPattern/MeshPatternS21.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MeshPattern/MeshPatternS21.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lv-zhang-mesh-123-321-joint-symmetry` (proved) by `D5/S3/Combinatorics/MeshPattern/MeshPatternS21.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lv-zhang-mesh-123-321-joint-symmetry","declaration_gid":"D5/S3/Combinatorics/MeshPattern/MeshPatternS21.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shuzhen Lv, Philip B. Zhang (2025). *Joint Equidistributions of Mesh Patterns 123 and 321 with Symmetric and Minus-Antipodal Shadings*. DOI: [10.48550/arXiv.2501.00357](https://doi.org/10.48550/arXiv.2501.00357). URL: <https://arxiv.org/abs/2501.00357v3>.

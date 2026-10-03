@@ -11,7 +11,7 @@ internal sealed class MeshPatternS21Document : IScribeDocumentDefinition
         "The mesh patterns 123 and 321 with the common shading R = {0,1,2} squared together with {(3,3)} have a symmetric joint occurrence distribution.",
         H("Joint Symmetry of the Mesh Pattern Pair S21"),
         Blocks(
-            Node("mesh-pattern-s21-result", "Joint equidistribution", "result", "For all nonnegative integers n, k and l, the number of permutations of one through n having k occurrences of the mesh pattern 123 and l occurrences of the mesh pattern 321 equals the number having l occurrences of 123 and k occurrences of 321, where both patterns have shading R = {0,1,2} squared together with {(3,3)}.", DescribeRole.Theorem)),
+            Node("mesh-pattern-s21-result", "Joint equidistribution", "result", "For all nonnegative integers n, k and l, the number of permutations of one through n having k occurrences of the mesh pattern 123 and l occurrences of the mesh pattern 321 equals the number having l occurrences of 123 and k occurrences of 321, where both patterns have shading R = {0,1,2} squared together with {(3,3)}.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("lv-zhang-mesh-123-321-joint-symmetry"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
