@@ -113,7 +113,7 @@ public sealed class CliVerbLinkageTests
     {
         var invocations = CollectInvocations(TestRepositoryLayout.FindRoot())
             .Where(invocation => invocation.File == "tools/scripts/scribe-release.sh").ToArray();
-        Assert.Equal(3, invocations.Length);
+        Assert.Equal(2, invocations.Length);
         Assert.All(invocations, invocation =>
         {
             Assert.Equal(CommandProgram.Scribe, invocation.Program);

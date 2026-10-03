@@ -337,7 +337,7 @@ internal static class ScriptHarnessScratch
         File.WriteAllText(
             path,
             "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
-            new System.Text.UTF8Encoding(false));
+            System.Text.Encoding.UTF8);
         File.SetUnixFileMode(
             path,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);

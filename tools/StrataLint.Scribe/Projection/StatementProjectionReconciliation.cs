@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 
 public static class StatementProjectionReconciliation
 {
-    private static readonly string FixtureRoot = ScribeResourceInputPaths.ProjectionDirectoryName + "/";
+    private const string FixtureRoot = "Golden/Projection/";
 
     internal static bool IsAffectedBy(RepositorySnapshot snapshot, RawChangeSet? changes)
     {

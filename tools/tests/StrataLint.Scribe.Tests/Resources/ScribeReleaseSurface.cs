@@ -5,16 +5,9 @@ namespace StrataLint.Scribe.Tests;
 
 internal static class ScribeReleaseSurface
 {
-    internal const string Schema = "trureturing.scribe.release-identity";
-    internal const string Commit = "0123456789abcdef0123456789abcdef01234567";
     internal const string ResourceName = "scribe-resources.zip";
     internal const string BundleFile = "StrataLint.Scribe.ResourceBundle.dll";
 
-    internal static object Identity(int version, int count, string digest) => Activator.CreateInstance(
-        RequireType("ScribeReleaseIdentity"), Schema, Commit, version, count, digest)!;
-
-    internal static byte[] Encode(object identity) => (byte[])Invoke("ScribeReleaseIdentityCodec", "Encode", identity);
-    internal static object Decode(byte[] bytes) => Invoke("ScribeReleaseIdentityCodec", "Decode", bytes);
     internal static byte[] Bundle(byte[] bytes) => (byte[])Invoke("ScribeResourceBundle", "Write", bytes);
     internal static byte[] Unbundle(byte[] bytes) => (byte[])Invoke("ScribeResourceBundle", "ReadPackBytes", bytes);
     internal static ScribeResourcePack OpenBundle(byte[] bytes) => (ScribeResourcePack)Invoke("ScribeResourceBundle", "Open", bytes);

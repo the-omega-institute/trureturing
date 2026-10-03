@@ -19,7 +19,6 @@ public static class ScribeCli
         "resources",
         "resources release",
         "resources verify-release",
-        "resources verify-source",
         "scripts",
     ];
 
@@ -308,9 +307,8 @@ public static class ScribeCli
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
         + "| resources pack --out <file> | resources verify --pack <file> "
-        + "| resources release --source-commit <commit> --out <directory> "
-        + "| resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--tree-from <file>] "
-        + "| resources verify-source --source-commit <commit> --commit-from <file> --tree-from <file> "
+        + "| resources release --out <directory> "
+        + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "
         + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>

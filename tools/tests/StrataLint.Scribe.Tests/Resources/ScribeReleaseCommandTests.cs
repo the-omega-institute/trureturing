@@ -24,67 +24,9 @@ public sealed class ScribeReleaseCommandTests
         Script(root, "Neutral");
         var error = new StringWriter();
         Assert.False(Directory.Exists(Path.Combine(root.Path, "parent")));
-        Assert.Equal(0, Run(root, ["resources", "release", "--source-commit", ScribeReleaseSurface.Commit,
-            "--out", "parent/release"], error));
+        Assert.Equal(0, Run(root, ["resources", "release", "--out", "parent/release"], error));
         Assert.Empty(error.ToString());
-        Assert.Equal(3, Directory.GetFiles(Path.Combine(root.Path, "parent/release")).Length);
-    }
-
-    [Theory]
-    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\0", "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.")]
-    [InlineData("Blueprint/D5/S0/Synthetic/First.scribe.cs\0Blueprint/D5/S0/Synthetic/Second.scribe.cs\0Blueprint/D5/S0/Synthetic/Third.scribe.cs\0",
-        "MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.")]
-    [InlineData("Blueprint/D5/S0/Synthetic/Third.scribe.cs\0",
-        "UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/First.scribe.cs.")]
-    public void VerifyTreeFromReportsEveryExtraAndMissingPath(string paths, string reason)
-    {
-        using var root = Assets();
-        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("tree.txt"), Tree(paths));
-        var error = new StringWriter();
-        Assert.Equal(1, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
-        Assert.Contains(reason, error.ToString(), StringComparison.Ordinal);
-        if (paths == "Blueprint/D5/S0/Synthetic/Third.scribe.cs\0")
-        {
-            Assert.Contains("UnexpectedDefinitionPath: Blueprint/D5/S0/Synthetic/Second.scribe.cs.", error.ToString(), StringComparison.Ordinal);
-            Assert.Contains("MissingDefinitionPath: Blueprint/D5/S0/Synthetic/Third.scribe.cs.", error.ToString(), StringComparison.Ordinal);
-        }
-    }
-
-    [Fact]
-    public void VerifyTreeFromAcceptsExactlyTheDefinitionSetInAnyOrder()
-    {
-        using var root = Assets();
-        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("tree.txt"), Tree(
-            "Blueprint/D5/S0/Synthetic/Second.scribe.cs\0Blueprint/D5/S0/Synthetic/First.scribe.cs\0"));
-        var error = new StringWriter();
-        Assert.Equal(0, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
-        Assert.Empty(error.ToString());
-    }
-
-    [Theory]
-    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint//Neutral.scribe.cs\0")]
-    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint/../Neutral.scribe.cs\0")]
-    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint\\Neutral.scribe.cs\0")]
-    [InlineData("100644 blob 0000000000000000000000000000000000000000\tBlueprint/Neutral.scribe.cs")]
-    public void VerifyTreeFromRejectsInvalidEntriesWithExitTwo(string tree)
-    {
-        using var root = Assets();
-        TemporaryFileSystem.File.WriteAllText(root.Resolve("tree.txt"), tree);
-        var error = new StringWriter();
-        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
-        Assert.Contains("InvalidDefinitionTree", error.ToString(), StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void VerifyTreeFromRejectsUnreadableFileWithExitTwo(bool directory)
-    {
-        using var root = Assets();
-        if (directory) TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("tree.txt"));
-        var error = new StringWriter();
-        Assert.Equal(2, Run(root, ["resources", "verify-release", "--dir", "release", "--tree-from", "tree.txt"], error));
-        Assert.NotEmpty(error.ToString());
+        Assert.Equal(2, Directory.GetFiles(Path.Combine(root.Path, "parent/release")).Length);
     }
 
     [Fact]
@@ -133,54 +75,37 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Theory]
-    [InlineData("0123")]
-    [InlineData("0123456789ABCDEF0123456789abcdef01234567")]
-    [InlineData("g123456789abcdef0123456789abcdef01234567")]
-    public void ReleaseRejectsInvalidSourceCommit(string commit)
+    [InlineData("release", "--out")]
+    [InlineData("verify-release", "--dir")]
+    public void SourceCommitOptionIsUnknown(string command, string directoryOption)
     {
         using var root = Prepare();
         var error = new StringWriter();
-        Assert.Equal(2, Run(root, ["resources", "release", "--source-commit", commit, "--out", "release"], error));
-        Assert.Contains("InvalidSourceCommit", error.ToString(), StringComparison.Ordinal);
+        Assert.Equal(2, Run(root, ["resources", command, directoryOption, "release",
+            "--source" + "-commit", new string('0', 40)], error));
+        Assert.Contains("InvalidReleaseArguments: unknown, empty or duplicate option.",
+            error.ToString(), StringComparison.Ordinal);
         Assert.False(Directory.Exists(root.Resolve("release")));
     }
 
     [Theory]
     [InlineData("resources", "release")]
-    [InlineData("resources", "release", "--out", "release")]
     [InlineData("resources", "verify-release")]
     [InlineData("resources", "verify-release", "--dir", "")]
     [InlineData("resources", "verify-release", "--dir", "release", "--unknown", "value")]
     [InlineData("resources", "verify-release", "--dir", "release", "--dir", "release")]
-    [InlineData("resources", "verify-release", "--dir", "release", "--source-commit", "bad")]
     [InlineData("resources", "verify-release", "--dir", "release", "--total-sha256", "bad")]
     public void InvalidArgumentsReturnTwoAndCompleteUsage(params string[] arguments)
     {
         using var root = Prepare();
         var error = new StringWriter();
         Assert.Equal(2, Run(root, arguments, error));
-        Assert.Contains("resources release --source-commit", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("resources release --out", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify-release --dir", error.ToString(), StringComparison.Ordinal);
     }
 
-    [Theory]
-    [InlineData("entryCount", "3", "EntryCountMismatch")]
-    [InlineData("totalSha256", "\"0000000000000000000000000000000000000000000000000000000000000000\"", "TotalSha256Mismatch")]
-    [InlineData("packFormatVersion", "2", "PackFormatVersionMismatch")]
-    public void VerifyReportsIdentityPackMismatch(string field, string value, string reason)
-    {
-        using var root = Assets();
-        var path = root.Resolve("release/identity.json");
-        var json = JsonNode.Parse(File.ReadAllBytes(path))!.AsObject();
-        json[field] = JsonNode.Parse(value);
-        TemporaryFileSystem.File.WriteAllText(path, json.ToJsonString());
-        var error = new StringWriter();
-        Assert.Equal(1, Verify(root, error));
-        Assert.Contains(reason, error.ToString(), StringComparison.Ordinal);
-    }
-
     [Fact]
-    public void VerifyRejectsBundlePackDigestMismatch()
+    public void VerifyRejectsBundlePackBytesMismatch()
     {
         using var root = Assets();
         var other = root.Resolve("other.zip");
@@ -189,10 +114,30 @@ public sealed class ScribeReleaseCommandTests
             ScribeReleaseSurface.Bundle(File.ReadAllBytes(other)));
         var error = new StringWriter();
         Assert.Equal(1, Verify(root, error));
-        Assert.Contains("BundleTotalSha256Mismatch", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("BundlePackBytesMismatch", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void VerifyRejectsBundlePackByteMismatchWithEqualManifest()
+    {
+        using var root = Assets();
+        var zipPath = root.Resolve("release/scribe-resources.zip");
+        var other = root.Resolve("other.zip");
+        var entries = ScribeResourcePackTests.ReadZip(zipPath);
+        entries.Reverse();
+        ScribeResourcePackTests.RewriteZip(other, entries);
+        Assert.Equal(ScribeResourcePack.Open(zipPath).Manifest.TotalSha256,
+            ScribeResourcePack.Open(other).Manifest.TotalSha256);
+        Assert.False(File.ReadAllBytes(zipPath).AsSpan().SequenceEqual(File.ReadAllBytes(other)));
+        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("release/" + ScribeReleaseSurface.BundleFile),
+            ScribeReleaseSurface.Bundle(File.ReadAllBytes(other)));
+        var error = new StringWriter();
+        Assert.Equal(1, Verify(root, error));
+        Assert.Contains("BundlePackBytesMismatch", error.ToString(), StringComparison.Ordinal);
     }
 
     [Theory]
+    [InlineData("identity.json")]
     [InlineData("extra.txt")]
     [InlineData("nested/extra.txt")]
     public void VerifyRejectsAdditionalFiles(string extra)
@@ -207,7 +152,6 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Theory]
-    [InlineData("identity.json")]
     [InlineData("scribe-resources.zip")]
     [InlineData("StrataLint.Scribe.ResourceBundle.dll")]
     public void VerifyRejectsMissingFileWithExitTwo(string file)
@@ -221,7 +165,6 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Theory]
-    [InlineData("identity.json")]
     [InlineData("scribe-resources.zip")]
     [InlineData("StrataLint.Scribe.ResourceBundle.dll")]
     public void VerifyRejectsMalformedAssetWithExitTwo(string file)
@@ -234,9 +177,8 @@ public sealed class ScribeReleaseCommandTests
     }
 
     [Theory]
-    [InlineData("--source-commit", "0000000000000000000000000000000000000000", "SourceCommitMismatch")]
     [InlineData("--total-sha256", "0000000000000000000000000000000000000000000000000000000000000000", "ExpectedTotalSha256Mismatch")]
-    public void VerifyReportsExpectedIdentityMismatch(string option, string value, string reason)
+    public void VerifyReportsExpectedDigestMismatch(string option, string value, string reason)
     {
         using var root = Assets();
         var error = new StringWriter();
@@ -273,7 +215,7 @@ public sealed class ScribeReleaseCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ReleaseProducesExactlyThreeAssetsAndVerifies(bool existed)
+    public void ReleaseProducesExactlyTwoAssetsAndVerifies(bool existed)
     {
         using var root = Prepare();
         Script(root, "First");
@@ -283,14 +225,14 @@ public sealed class ScribeReleaseCommandTests
         var error = new StringWriter();
         Assert.Equal(0, Release(root, output, error));
         Assert.Empty(error.ToString());
-        Assert.Equal(new[] { ScribeReleaseSurface.BundleFile, "identity.json", "scribe-resources.zip" },
+        Assert.Equal(new[] { ScribeReleaseSurface.BundleFile, "scribe-resources.zip" },
             Directory.GetFiles(root.Resolve("release")).Select(Path.GetFileName).Order(StringComparer.Ordinal));
         var pack = ScribeResourcePack.Open(root.Resolve("release/scribe-resources.zip"));
         Assert.Equal(2, pack.Manifest.EntryCount);
-        Assert.Equal(FormattableString.Invariant($"resources release: sourceCommit={ScribeReleaseSurface.Commit} entries=2 totalSha256={pack.Manifest.TotalSha256}")
+        Assert.Equal(FormattableString.Invariant($"resources release: entries=2 totalSha256={pack.Manifest.TotalSha256}")
             + Environment.NewLine, output.ToString());
         Assert.Equal(0, Run(root, ["resources", "verify-release", "--dir", "release",
-            "--source-commit", ScribeReleaseSurface.Commit, "--total-sha256", pack.Manifest.TotalSha256], error));
+            "--total-sha256", pack.Manifest.TotalSha256], error));
         Assert.Empty(error.ToString());
         Assert.Equal(File.ReadAllBytes(root.Resolve("release/scribe-resources.zip")), ScribeReleaseSurface.Unbundle(
             File.ReadAllBytes(root.Resolve("release/" + ScribeReleaseSurface.BundleFile))));
@@ -302,9 +244,7 @@ public sealed class ScribeReleaseCommandTests
         var target = root.Resolve("release");
         TemporaryFileSystem.Directory.CreateDirectory(target);
         var path = root.Resolve("release/scribe-resources.zip");
-        var manifest = ScribeResourcePack.Write(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
-        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("release/identity.json"), ScribeReleaseSurface.Encode(
-            ScribeReleaseSurface.Identity(manifest.Version, manifest.EntryCount, manifest.TotalSha256)));
+        ScribeResourcePack.Write(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
         TemporaryFileSystem.File.WriteAllBytes(root.Resolve("release/" + ScribeReleaseSurface.BundleFile),
             ScribeReleaseSurface.Bundle(File.ReadAllBytes(path)));
         return root;
@@ -334,8 +274,7 @@ public sealed class ScribeReleaseCommandTests
     }
 
     private static int Release(TemporaryRoot root, TextWriter? output = null, TextWriter? error = null) =>
-        ScribeCli.Run(typeof(ScribeResourcePack).Assembly, ["resources", "release", "--source-commit", ScribeReleaseSurface.Commit,
-            "--out", "release"], root.Path, output ?? TextWriter.Null, error ?? TextWriter.Null);
+        ScribeCli.Run(typeof(ScribeResourcePack).Assembly, ["resources", "release", "--out", "release"], root.Path, output ?? TextWriter.Null, error ?? TextWriter.Null);
 
     private static int Verify(TemporaryRoot root, TextWriter error) =>
         Run(root, ["resources", "verify-release", "--dir", "release"], error);
@@ -343,10 +282,4 @@ public sealed class ScribeReleaseCommandTests
     private static int Run(TemporaryRoot root, string[] args, TextWriter error) =>
         ScribeCli.Run(typeof(ScribeResourcePack).Assembly, args, root.Path, TextWriter.Null, error);
 
-    private static byte[] Tree(string paths)
-    {
-        var entries = paths.Split('\0', StringSplitOptions.RemoveEmptyEntries)
-            .Select(path => $"100644 blob {new string('0', 40)}\t{path}\0");
-        return Encoding.UTF8.GetBytes(string.Concat(entries));
-    }
 }

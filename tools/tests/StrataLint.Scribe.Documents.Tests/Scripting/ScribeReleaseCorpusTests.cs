@@ -17,14 +17,15 @@ public sealed class ScribeReleaseCorpusTests(ITestOutputHelper output)
         try
         {
             var target = Path.Combine(temporary.FullName, "release");
-            const string commit = "0123456789abcdef0123456789abcdef01234567";
             var error = new StringWriter();
             Assert.Equal(0, ScribeCli.Run(typeof(DocumentAssembly).Assembly,
-                ["resources", "release", "--source-commit", commit, "--out", target], root, TextWriter.Null, error));
+                ["resources", "release", "--out", target], root, TextWriter.Null, error));
             Assert.Empty(error.ToString());
             Assert.Equal(0, ScribeCli.Run(typeof(DocumentAssembly).Assembly,
-                ["resources", "verify-release", "--dir", target, "--source-commit", commit], root, TextWriter.Null, error));
+                ["resources", "verify-release", "--dir", target], root, TextWriter.Null, error));
             Assert.Empty(error.ToString());
+            Assert.Equal(new[] { "StrataLint.Scribe.ResourceBundle.dll", "scribe-resources.zip" },
+                Directory.GetFiles(target).Select(Path.GetFileName).Order(StringComparer.Ordinal));
             var bytes = File.ReadAllBytes(Path.Combine(target, "StrataLint.Scribe.ResourceBundle.dll"));
             var type = typeof(ScribeResourcePack).Assembly.GetType("StrataLint.Scribe.ScribeResourceBundle");
             Assert.NotNull(type);
@@ -42,7 +43,7 @@ public sealed class ScribeReleaseCorpusTests(ITestOutputHelper output)
             var module = Assert.Single(metadata.TypeDefinitions);
             Assert.Equal("<Module>", metadata.GetString(metadata.GetTypeDefinition(module).Name));
             Assert.Single(metadata.ManifestResources);
-            output.WriteLine($"release definitions={pack.Manifest.EntryCount}; mismatches=0; totalSha256={pack.Manifest.TotalSha256}; bundleTypeDefinitions={metadata.TypeDefinitions.Count}; zipBytes={new FileInfo(Path.Combine(target, "scribe-resources.zip")).Length}; identityBytes={new FileInfo(Path.Combine(target, "identity.json")).Length}; bundleBytes={bytes.Length}");
+            output.WriteLine($"release definitions={pack.Manifest.EntryCount}; mismatches=0; totalSha256={pack.Manifest.TotalSha256}; bundleTypeDefinitions={metadata.TypeDefinitions.Count}; zipBytes={new FileInfo(Path.Combine(target, "scribe-resources.zip")).Length}; bundleBytes={bytes.Length}");
         }
         finally { temporary.Delete(recursive: true); }
     }

@@ -14,7 +14,7 @@ public static class ScribeResourceScriptPacker
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(outputPath);
         var root = Path.GetFullPath(repositoryRoot);
-        var paths = Directory.EnumerateFiles(ScribeResourceInputPaths.BlueprintDirectory(root), "*.scribe.cs", SearchOption.AllDirectories)
+        var paths = Directory.EnumerateFiles(Path.Combine(root, "Blueprint"), "*.scribe.cs", SearchOption.AllDirectories)
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
             .Order(StringComparer.Ordinal).ToImmutableArray();
         return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(root, () =>

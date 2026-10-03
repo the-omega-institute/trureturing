@@ -789,8 +789,6 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.TruthRelease.Tests/*
             [tests-workflow-script]
-            tools/StrataLint.Scribe/*
-            tools/StrataLint.Scribe.Documents/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/test_xi_quantization.py
@@ -801,7 +799,6 @@ jobs:
             tools/scripts/report/echo-residual-summary.sh
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
-            tools/scripts/scribe-release.sh
             tools/scripts/scribe.sh
             tools/scripts/update-renderer-contract.sh
             tools/scripts/workflow/math-gate.sh

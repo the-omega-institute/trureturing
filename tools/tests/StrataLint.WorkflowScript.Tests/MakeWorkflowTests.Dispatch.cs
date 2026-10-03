@@ -443,7 +443,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make scribe-release  Produce or verify local Scribe release assets for the clean HEAD", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make dotnet", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make tools-test", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", rootOutput, StringComparison.Ordinal);

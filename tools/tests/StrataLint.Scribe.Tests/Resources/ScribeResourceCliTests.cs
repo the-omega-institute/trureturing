@@ -16,7 +16,7 @@ public sealed class ScribeResourceCliTests
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(Documents, [], root.Path, TextWriter.Null, error));
         Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
-        Assert.Contains("resources release --source-commit <commit> --out <directory>", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("resources release --out <directory>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify-release --dir <directory>", error.ToString(), StringComparison.Ordinal);
     }
 
@@ -35,7 +35,7 @@ public sealed class ScribeResourceCliTests
 
         Assert.Equal(2, ScribeCli.Run(Documents, arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
-        Assert.Contains("resources release --source-commit <commit> --out <directory>", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("resources release --out <directory>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify-release --dir <directory>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify --pack <file>", error.ToString(), StringComparison.Ordinal);
     }
