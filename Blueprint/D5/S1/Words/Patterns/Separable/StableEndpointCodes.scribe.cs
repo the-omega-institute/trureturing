@@ -25,12 +25,31 @@ internal sealed class StableEndpointCodesDocument : IScribeDocumentDefinition
                 + "or J(not sign). Emission resets the child state to U and target to max(m-r,0); right "
                 + "removal sets the child to J(sign) with unchanged target. For n>H*K, history reconstructs "
                 + "actual positive sizes and states by subtracting each bounded endpoint length.")),
+            Paragraph(Text(
+                "In the displays, t ranges over Option(Bool), and m,B,K,H,n are natural numbers. "
+                + "Allowed(t) is the initial source inside U(n): all of U(n) for t=none, and the "
+                + "members without a proper cut of sign s for t=some(s). An event A is any subset "
+                + "of U(n), and intersect denotes set intersection. mass(n,E) is the original "
+                + "full-avoider uniform mass card(E)/card(U(n)), not mass conditional on Allowed(t). "
+                + "history(c,n) reconstructs the supplied history from the underlying code c.val. "
+                + "Under the full threshold, codeFiber(c) denotes Fiber(m,B,H,K,(history(c,n),terminal(c))), "
+                + "the actual deterministic classifier fiber; terminal(c) means terminal(c.val). "
+                + "Recompression returns an Option(Code(K,H)), so some(c.val), not c, is its result.")),
             Describe.Lean(
                 DescribeId.Create("stable-success-fibers"),
                 DeclarationHandle.Create("D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_success_fibers"),
                 H("Complete successful supplied-history fibers"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Call("Fiber", F.Id("c")), Iff, Call("Event", Call("history", F.Id("c")))))),
+                    F.Id("n"), Gt, F.Id("H"), Star, F.Id("K"), Plus,
+                    Call("max", Seq(D(2), Star, F.Id("K")), Call("max", F.Id("m"), F.Id("B"))),
+                    Implies, Forall, Sp, F.Id("c"), Colon,
+                    Call("StableCode", F.Id("t"), F.Id("m"), F.Id("K"), F.Id("H")), Comma, Sp,
+                    Call("terminal", F.Id("c")), Eq, F.Id("good"), Implies,
+                    Forall, Sp, F.Id("pi"), InMacro, Call("Avoider", F.Id("n")), Comma, Sp,
+                    Call("Fiber", F.Id("m"), F.Id("B"), F.Id("H"), F.Id("K"),
+                        Seq(Open, Call("history", F.Id("c"), F.Id("n")), Comma, F.Id("good"), Close),
+                        F.Id("pi")), Iff,
+                    Call("Event", Call("history", F.Id("c"), F.Id("n")), F.Id("pi"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every natural K,H, every state t, targets m,B and length n with "
@@ -47,7 +66,12 @@ internal sealed class StableEndpointCodesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_code_transport"),
                 H("Stable reconstruction and actual recoding"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Call("compress", Call("history", F.Id("c"))), Eq, F.Id("c")))),
+                    F.Id("n"), Gt, F.Id("H"), Star, F.Id("K"), Implies,
+                    Forall, Sp, F.Id("c"), Colon,
+                    Call("StableCode", F.Id("t"), F.Id("m"), F.Id("K"), F.Id("H")), Comma, Sp,
+                    Call("compress", Call("history", F.Id("c"), F.Id("n")),
+                        Call("terminal", F.Id("c")), F.Id("K"), F.Id("H")), Eq,
+                    Call("some", Seq(F.Id("c"), Dot, F.Id("val")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every stable code and n>H*K, its reconstructed supplied history has at most H "
@@ -64,7 +88,13 @@ internal sealed class StableEndpointCodesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_finite_mass_sums"),
                 H("Fixed-family exact restricted sums and successful products"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Call("mass", F.Id("A")), Eq, Call("sum", F.Id("StableCode"), Call("fiberMass", F.Id("A")))))),
+                    F.Id("n"), Gt, F.Id("H"), Star, F.Id("K"), Plus,
+                    Call("max", Seq(D(2), Star, F.Id("K")), Call("max", F.Id("m"), F.Id("B"))),
+                    Implies, Forall, Sp, F.Id("A"), Subseteq, Call("Avoider", F.Id("n")), Comma, Sp,
+                    Call("mass", F.Id("n"), Call("intersect", Call("Allowed", F.Id("t")), F.Id("A"))),
+                    Eq, new Formula.Subscript(Sum, Seq(F.Id("c"), Colon,
+                        Call("StableCode", F.Id("t"), F.Id("m"), F.Id("K"), F.Id("H")))), Sp,
+                    Call("mass", F.Id("n"), Call("intersect", Call("codeFiber", F.Id("c")), F.Id("A")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

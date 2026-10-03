@@ -8,9 +8,11 @@ U(n) consists of the actual permutations of Fin(n) avoiding literal 2413 and 314
 
 StableCode(t,m,K,H) is the fixed finite subtype satisfying the actual target and state guards. A stop is good when m=0, exhausted for positive m at horizon zero, or cap for positive m at positive horizon. An action needs positive unmet target and parent U or J(not sign). Emission resets the child state to U and target to max(m-r,0); right removal sets the child to J(sign) with unchanged target. For n>H*K, history reconstructs actual positive sizes and states by subtracting each bounded endpoint length.
 
+In the displays, t ranges over Option(Bool), and m,B,K,H,n are natural numbers. Allowed(t) is the initial source inside U(n): all of U(n) for t=none, and the members without a proper cut of sign s for t=some(s). An event A is any subset of U(n), and intersect denotes set intersection. mass(n,E) is the original full-avoider uniform mass card(E)/card(U(n)), not mass conditional on Allowed(t). history(c,n) reconstructs the supplied history from the underlying code c.val. Under the full threshold, codeFiber(c) denotes Fiber(m,B,H,K,(history(c,n),terminal(c))), the actual deterministic classifier fiber; terminal(c) means terminal(c.val). Recompression returns an Option(Code(K,H)), so some(c.val), not c, is its result.
+
 **Theorem 1.1 (Complete successful supplied-history fibers).**
 
-$$\operatorname{Fiber}\left(c\right)\iff\operatorname{Event}\left(\operatorname{history}\left(c\right)\right)$$
+$$n>H*K+\operatorname{max}\left(2*K, \operatorname{max}\left(m, B\right)\right)\implies\forall c:\operatorname{StableCode}\left(t, m, K, H\right), \operatorname{terminal}\left(c\right)=good\implies\forall pi\in\operatorname{Avoider}\left(n\right), \operatorname{Fiber}\left(m, B, H, K, (\operatorname{history}\left(c, n\right),good), pi\right)\iff\operatorname{Event}\left(\operatorname{history}\left(c, n\right), pi\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_success_fibers` (`✓ std3`). ∎
 
@@ -22,7 +24,7 @@ For every natural K,H, every state t, targets m,B and length n with n>H*K+max(2*
 
 **Theorem 1.2 (Stable reconstruction and actual recoding).**
 
-$$\operatorname{compress}\left(\operatorname{history}\left(c\right)\right)=c$$
+$$n>H*K\implies\forall c:\operatorname{StableCode}\left(t, m, K, H\right), \operatorname{compress}\left(\operatorname{history}\left(c, n\right), \operatorname{terminal}\left(c\right), K, H\right)=\operatorname{some}\left(c.val\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_code_transport` (`✓ std3`). ∎
 
@@ -34,7 +36,7 @@ For every stable code and n>H*K, its reconstructed supplied history has at most 
 
 **Theorem 1.3 (Fixed-family exact restricted sums and successful products).**
 
-$$\operatorname{mass}\left(A\right)=\operatorname{sum}\left(StableCode, \operatorname{fiberMass}\left(A\right)\right)$$
+$$n>H*K+\operatorname{max}\left(2*K, \operatorname{max}\left(m, B\right)\right)\implies\forall A\subseteq\operatorname{Avoider}\left(n\right), \operatorname{mass}\left(n, \operatorname{intersect}\left(\operatorname{Allowed}\left(t\right), A\right)\right)=\sum_{c:\operatorname{StableCode}\left(t, m, K, H\right)} \operatorname{mass}\left(n, \operatorname{intersect}\left(\operatorname{codeFiber}\left(c\right), A\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/Separable/StableEndpointCodes.stable_finite_mass_sums` (`✓ std3`). ∎
 
