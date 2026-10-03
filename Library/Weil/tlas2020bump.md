@@ -198,3 +198,84 @@ $$
 $$
 
 In particular this subset can use less than half the fixed head for all sufficiently large real $R$, without a numerical threshold claim. This is a restricted application of existing bounds. The complementary actual zeros with $\gamma>H$ and $|\beta-1/2|>R^{-1/2}$ still have an uncontrolled signed contribution. Every hypothetical fixed nonzero horizontal displacement eventually belongs to that complement. Thus (5) neither excludes off-line zeros nor establishes positivity of the complete average, RH, Robin, or the FIB-to-prime intertwining.
+
+## Keep height and transverse displacement together
+
+The same majorant permits a larger parameter region when its scale factor $u$ is retained in both growth and decay. All sums continue to range over distinct positive-ordinate zeros with actual analytic multiplicities; the outer factor two accounts for the negative-ordinate symmetry. Put
+
+$$
+\epsilon_H=\frac{11}{\sqrt H},\qquad
+a_H=\frac{1/3-\epsilon_H}{\sqrt b}>0,
+\qquad \delta_\rho=\beta-\tfrac12,
+$$
+
+and, for each real $R\ge7$, define
+
+$$
+\mathcal S_H(R)=
+\{\rho:\gamma>H,\ |\delta_\rho|\le a_H\sqrt{\gamma/R}\},
+\qquad
+E_{\mathrm{safe}}(R)=
+2\sum_{\rho\in\mathcal S_H(R)}m_\rho p(z_\rho)
+\int_1^bw(u)\Phi(uRz_\rho)^2\,du.
+$$
+
+Membership is fixed during the $u$ integral. The actual strip still supplies $|\delta_\rho|<1/2$ for the polynomial bound, even where the new cap exceeds $1/2$. For $\rho\in\mathcal S_H(R)$ and $1\le u\le b$, the existing complex Fourier estimate gives
+
+$$
+\begin{aligned}
+|\Phi(uRz_\rho)|^2
+&\le16\exp\!\left(uR|\delta_\rho|-\frac{\sqrt{uR\gamma}}3\right)\\
+&\le16\exp\!\left(\sqrt{R\gamma}\left[a_Hu-\frac{\sqrt u}3\right]\right)
+\le16e^{-\epsilon_H\sqrt{R\gamma}}.
+\end{aligned}
+$$
+
+Here $a_Hu\le(1/3-\epsilon_H)\sqrt u$ and $u\ge1$. Apply the same nonnegative full-count/Stieltjes calculation of §31.2 with $\alpha=\epsilon_H\sqrt R$ and $X=\alpha\sqrt H=11\sqrt R\ge28$. Its count factor remains $4H^7\log H\,e^{-X}$, so $2\cdot45\cdot16\cdot4\le6000$ gives
+
+$$
+|E_{\mathrm{safe}}(R)|\le6000H^7\log H\,e^{-11\sqrt R},
+\qquad R\ge7.
+\tag{6}
+$$
+
+Combining with (3), in its eventual real-scale range,
+
+$$
+\frac{|E_{\mathrm{safe}}(R)|}{P_H(R)}
+\le\frac{6000H^7\log H}{c}\,R^{3/2}e^{-\sqrt R}
+\longrightarrow0.
+\tag{7}
+$$
+
+This reuses the existing Fourier and counting bounds; no stronger complex saddle estimate is assumed. The admissible region includes the earlier cap because $a_H\sqrt H>1$, hence $\mathcal C_H(R)\subseteq\mathcal S_H(R)$. This inclusion does not assert that the two actual zero subsets differ. The broader cap trades the sharper bound in (4) for a bound that still decays faster than the fixed-head floor.
+
+The complementary signed sum has a stricter joint height condition. Define
+
+$$
+\kappa_H=\frac1{4a_H^2}
+=\frac{b}{4(1/3-11/\sqrt H)^2}<10.
+$$
+
+For the last inequality, $H>3300^2$ gives $\epsilon_H<1/300$, while $b<17/4$; thus $\kappa_H<10625/1089<10$. Every complementary term satisfies strictly
+
+$$
+H<\gamma<\frac{R\delta_\rho^2}{a_H^2}<\kappa_HR<10R.
+\tag{8}
+$$
+
+Consequently its independently specified expression is the finite sum
+
+$$
+E_{\mathrm{rem}}(R)=
+2\sum_{\substack{H<\gamma<\kappa_HR\\
+|\delta_\rho|>a_H\sqrt{\gamma/R}}}
+m_\rho p(z_\rho)\int_1^bw(u)\Phi(uRz_\rho)^2\,du,
+\qquad
+\bar q(R)=P_H(R)+E_{\mathrm{safe}}(R)+E_{\mathrm{rem}}(R).
+\tag{9}
+$$
+
+Both subsets retain reflected pairs, actual multiplicities and analytic squares; the common positive majorant gives absolute convergence. Equality in the transverse cap belongs to $\mathcal S_H(R)$, and height $H$ remains in the head. The remaining height restriction improves the earlier $250000R$ cutoff without changing the fixed verified height. The height cutoff is finite for each $R$ and grows linearly with $R$; no fixed height cutoff for the remainder is established.
+
+The outstanding estimate is still a signed comparison for this same $E_{\mathrm{rem}}$. Any hypothetical fixed off-line zero eventually leaves $\mathcal S_H(R)$, so (6)–(9) do not exclude one. They control a larger parameter region and specify the residual more tightly; they do not establish complete eventual nonnegativity or RH/Robin. The golden value of $b$ fixes the existing dilation band and supplies no additional FIB-to-prime transport.

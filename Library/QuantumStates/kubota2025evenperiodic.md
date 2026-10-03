@@ -30,3 +30,11 @@ After Theorem 4.10, Question 4.11 is printed as:
 > Let l be an odd integer that is a multiple of 3. Do 2l-periodic 3-regular graphs exist?
 
 The formal settlement proves the negative answer for every odd l, so the divisibility-by-3 premise is unnecessary for the obstruction.
+
+## Verified locator
+
+DOI: `10.1016/j.disc.2024.114345` identifies *Regular graphs to induce even
+periodic Grover walks* by S. Kubota, H. Sekido and K. Yoshino, published in
+Discrete Mathematics 348 (2025), article 114345. The version at
+https://arxiv.org/abs/2307.13227v1 supplies the definitions in §§2.1–2.2,
+Theorem 4.10 and the quoted Question 4.11.
