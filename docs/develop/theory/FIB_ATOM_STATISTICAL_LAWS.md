@@ -6275,3 +6275,395 @@ M_{-1-\zeta}^{\mathsf T}
 故两矩阵相似而有相同谱半径。若 \(Q\) 满足详细平衡，则 \(a(i,k)=0\)，上述随机量恒为零；若双向支撑条件失败，反向路径可能没有有限似然比，需改用扩展值或限制在共同支撑上。
 
 该对称性只描述声明的有限核、平稳初态和反向路径协议。FIB 递归不单独选择 \(Q\)、\(\pi\) 或时间反演规则；\(\mathcal S_T\) 不能直接命名为真实熵产生、热力学不可逆性或任何物理涨落定律。
+
+## 60. FIB 阻抗随机环境的 quenched/annealed Green 同质化
+
+固定逐字斐波那契词 \(W_j\)、\(L_j=F_{j+1}\)、\(N_j=F_{j+3}\)、\(\epsilon_j=\delta/N_j^2\) 及左反射右吸收切链。令
+\[
+r_{\min}=\min(r_\alpha,r_\beta),
+\]
+在外加环境 \(\xi=(\xi_k)_{k\ge0}\) 上取独立同分布扰动，满足
+\[
+\mathbb E\xi_0=0,\qquad
+\operatorname{Var}(\xi_0)=\sigma^2,\qquad
+|\xi_k|\le\eta<r_{\min},
+\qquad
+\theta\le\frac{r_{\min}-\eta}{2}.
+\]
+定义静态环境阻抗
+\[
+r_{j,k}^{\omega}=r_{(W_j)_k}+\xi_k.
+\]
+FIB 只给 \(W_j\)、词序、长度和确定性机械不差分；\(\xi\)、核、时钟和边界均为外加。
+
+**定义与精确恒等式。** 条件于 \(\omega\) 的暂态 Green 矩阵满足
+\[
+G_j^\omega(i,m)
+=\frac1\theta\sum_{k=\max(i,m)}^{L_j-1}
+\bigl(r_{(W_j)_k}+\xi_k\bigr).
+\]
+令
+\[
+\mathcal K_j^\omega(u,v)
+=\epsilon_jL_jG_j^\omega(\iota_j(u),\iota_j(v)),
+\qquad
+c_j=\frac{\epsilon_jL_j}{\theta},
+\]
+并令 \(M_L(\omega)\) 为所有区间扰动和的最大绝对值：
+\[
+M_L(\omega)=\max_{0\le a\le b\le L}
+\left|\sum_{k=a}^{b-1}\xi_k\right|.
+\]
+则
+\[
+\mathcal K_j^\omega(u,v)-\mathcal K_j^0(u,v)
+=c_j\sum_{k=\max(\iota_j(u),\iota_j(v))}^{L_j-1}\xi_k,
+\]
+从而
+\[
+\sup_{u,v}|\mathcal K_j^\omega-\mathcal K_j^0|
+\le c_jM_{L_j}(\omega).
+\]
+结合确定性 FIB 机械不差分估计，得到
+\[
+\sup_{u,v}|\mathcal K_j^\omega-\mathcal K(u,v)|
+\le \frac{C_F}{L_j}+c_jM_{L_j}(\omega),
+\qquad
+c_j=\frac{\delta}{\theta\varphi^4L_j}+O(L_j^{-3}).
+\]
+
+**定理 60.1（quenched 极限与高概率误差）。** 独立有界扰动满足区间形式的强大数律
+\[
+\frac{M_L}{L}\longrightarrow0\qquad\text{几乎处处}.
+\]
+故对几乎所有静态环境，
+\[
+\mathcal K_j^\omega\longrightarrow
+\mathcal K_{\mathrm{ar}}(u,v)
+=\frac{1-\max(u,v)}{D},
+\qquad
+D=\frac{\theta\varphi^4}{\delta\bar r},
+\qquad
+\bar r=\varphi^{-2}r_\alpha+\varphi^{-1}r_\beta,
+\]
+在 \([0,1]^2\) 一致成立。若用 Hoeffding 不等式并对至多 \(L^2\) 个区间并合，则
+\[
+\mathbb P(M_L\ge t)
+\le2L^2\exp\left(-\frac{t^2}{2L\eta^2}\right).
+\]
+因而以概率至少 \(1-2e^{-x}\)，随机同质化误差的环境部分为
+\[
+\sup|\mathcal K_j^\omega-\mathcal K_j^0|
+\le c_j\eta
+\sqrt{2L_j\bigl(\log(2L_j^2)+x\bigr)}.
+\]
+这给出 \(O(\sqrt{(\log L_j+x)/L_j})\) 的高概率量级；仅有遍历性而无区间函数极限定理的环境仍可给极限，但不自动给此速率或高斯涨落。
+
+**定理 60.2（annealed 均值与 quenched 中心极限）。** 定义静态环境的 annealed Green 为
+\[
+\overline{\mathcal K}_j=\mathbb E_\omega\mathcal K_j^\omega.
+\]
+由于 Green 尾和对阻抗线性且 \(\mathbb E\xi_0=0\)，有精确恒等式
+\[
+\overline{\mathcal K}_j=\mathcal K_j^0,
+\qquad
+\sup|\overline{\mathcal K}_j-\mathcal K|=O(L_j^{-1}).
+\]
+若 \(\xi_k\) 独立同分布且有限方差，并采用线性插值，在标准紧性条件下
+\[
+\sqrt{L_j}\bigl(\mathcal K_j^\omega-\overline{\mathcal K}_j\bigr)
+\Rightarrow
+\mathscr B(u,v)
+=\frac{\delta\sigma}{\theta\varphi^4}
+\bigl[B(1)-B(\max(u,v))\bigr]
+\]
+有限维收敛；若把 \(\xi\) 的部分和作线性插值并满足 Donsker 紧性条件，则在 \(C([0,1]^2)\) 的一致拓扑下收敛。其协方差为
+\[
+\operatorname{Cov}(\mathscr B(u,v),\mathscr B(u',v'))
+=\left(\frac{\delta\sigma}{\theta\varphi^4}\right)^2
+\bigl[1-\max\{u,v,u',v'\}\bigr].
+\]
+该极限只描述静态环境造成的 Green 随机性，尚未加入链路径鞅噪声。
+
+**命题 60.3（两种 annealed 操作不可混同）。** 真正静态环境的 annealed 占用均值是 \(\mathbb E_\omega G_j^\omega\)，而
+\[
+G(\mathbb E_\omega K_j^\omega)
+\]
+是先平均一步核后再求 Green 的另一模型；一般
+\[
+\mathbb E_\omega(I-K_j^\omega)^{-1}
+\ne (I-\mathbb E_\omega K_j^\omega)^{-1}.
+\]
+若各边环境独立同分布，令
+\[
+\widetilde r_\ell
+=\left(\mathbb E[(r_\ell+\xi_0)^{-1}]\right)^{-1},
+\qquad
+\bar r_{\mathrm{harm}}
+=\varphi^{-2}\widetilde r_\alpha
++\varphi^{-1}\widetilde r_\beta.
+\]
+则 \(\mathbb E_\omega K_j^\omega\) 对应于阻抗 \(\widetilde r_{(W_j)_k}\) 的确定性切链，其缩放极限为
+\[
+\mathcal K_{\mathrm{harm}}(u,v)
+=\frac{\delta\bar r_{\mathrm{harm}}}{\theta\varphi^4}
+\bigl(1-\max(u,v)\bigr).
+\]
+由 Jensen，
+\[
+\widetilde r_\ell\le\mathbb E(r_\ell+\xi_0)=r_\ell,
+\]
+严格非退化噪声时至少一项严格，故 harmonic 模型与 arithmetic 静态平均模型在内点不同。静态环境先抽取一次再对路径积分的真正 annealed 路径一般不是 Markov；\(G(\mathbb E_\omega K_j^\omega)\) 对应的是逐步重抽或平均一步的替代模型，只有在额外重抽协议下才具有该含义。
+
+若扰动具有长程相关或重尾，误差率和极限可能改变；若 \(\mathbb E\xi_0\ne0\) 或均值依赖字母，也必须相应修改 \(\bar r\)。Green 极限、\(D\) 及其扩散类比均属于声明模型，不推出真实物理热流、温度或普适定律。
+
+## 61. 杀死链的极值、首达尾与稀有事件谱律
+
+令 \(S\) 为有限活跃集，\(K\) 为 primitive 子随机核，杀死态记为 \(\partial\)，Perron 根为 \(\rho\)，左右向量 \(r,\ell\) 满足 \(\ell^{\mathsf T}r=1\)。令
+\[
+\widehat K(i,k)=\frac{K(i,k)r(k)}{\rho r(i)}
+\]
+为 Doob 核。给定观测 \(g:S\to\mathbb R\)、阈值 \(u\)，定义
+\[
+A_u=\{i:g(i)>u\},\qquad
+S_u=S\setminus A_u,\qquad
+K_u=K|_{S_u\times S_u}.
+\]
+
+**定理 61.1（有限时间极值与首达谱率）。** 令
+\[
+M_T=\max_{0\le t\le T}g(X_t),\qquad
+\tau_\partial=\inf\{t\ge1:X_t=\partial\}.
+\]
+若初态律 \(\nu\) 支持于 \(S_u\)，则
+\[
+\mathbb P_\nu(M_T\le u,\tau_\partial>T)
+=\nu^{\mathsf T}K_u^T\mathbf1,
+\]
+并且若
+\[
+b_{A_u}(i)=\sum_{a\in A_u}Q(i,a),
+\]
+则
+\[
+\mathbb P_\nu(\tau_{A_u}=n+1<\tau_\partial)
+=\nu^{\mathsf T}K_u^n b_{A_u}.
+\]
+若 \(K_u\) primitive、\(\rho_u=\rho(K_u)\)，则
+\[
+\lim_{T\to\infty}\frac1T
+\log\mathbb P_\nu(M_T\le u,\tau_\partial>T)
+=\log\rho_u,
+\]
+而条件存活极值率为
+\[
+\lim_{T\to\infty}\frac1T
+\log\mathbb P_\nu(M_T\le u\mid\tau_\partial>T)
+=\log\rho_u-\log\rho.
+\]
+在 Doob 核下同一比值写成
+\[
+\widehat\rho_u=\frac{\rho_u}{\rho},
+\]
+即避开 \(A_u\) 的长期率为 \(\log\widehat\rho_u\)。谱隙
+\[
+\eta_u=\max_{m\ge1}\frac{|\lambda_{u,m}|}{\rho_u}<1
+\]
+还给出 Perron 首项和 \(O(\eta_u^T)\) 的相对修正；周期或可约时须改用周期子列或最大强连通分量。
+
+**定理 61.2（稀有极值与聚簇系数）。** 在 Doob 核的平稳律 \(\widehat\pi\) 下，令稀有集合 \(A_n=\{g>u_n\}\)，
+\[
+\alpha_n=\widehat\pi(A_n)\longrightarrow0.
+\]
+记
+\[
+\widehat\rho_{A_n}
+=\rho\!\left(\widehat K|_{A_n^c\times A_n^c}\right).
+\]
+若存在混合滞后 \(r_n\to\infty\) 使远程相关小于 \(o(\alpha_n)\)，且近程回返满足
+\[
+b_n=\sum_{t=1}^{r_n}
+\mathbb P_{\widehat\pi}(X_0\in A_n,X_t\in A_n)
+=o(\alpha_n),
+\]
+则在 \(T_n\alpha_n\to\tau\) 时，
+\[
+\mathbb P_{\widehat\pi}
+\left(\max_{0\le t<T_n}g(X_t)\le u_n\right)
+\longrightarrow e^{-\tau}.
+\]
+若允许近程聚簇，令
+\[
+\theta_n=
+\mathbb P_{\widehat\pi(\cdot\mid A_n)}
+\bigl(\tau_{A_n}^{+}>r_n\bigr)
+\longrightarrow\theta\in[0,1],
+\]
+并保持远程混合条件，则
+\[
+-\log\widehat\rho_{A_n}
+=\theta_n\alpha_n(1+o(1)),
+\]
+极值律改为 \(e^{-\theta\tau}\)。\(\theta<1\) 表示一次命中伴随多个近程命中。
+
+二周期核
+\[
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\]
+取 \(A=\{0\}\) 时没有混合，命中事件确定交替，不能套用 \(e^{-\tau}\)。若稀有态满足 \(\widehat K(a,a)=1-\varepsilon\)，则回返形成几何簇，\(\theta\) 约为 \(\varepsilon\) 而非 \(1\)。若 \(\widehat\pi_{\min}\) 或谱隙随 FIB 层数退化，也不能宣称统一极值律。
+
+固定有限 \(S\) 和固定 \(g\) 只有有限阈值层；非平凡 \(u_n\) 必须让 \(g_n\)、阈值和图大小共同变化。FIB 递归只给词序、长度、组合和标签；\(K\)、初态、\(g\)、阈值、时钟、Doob 协议和稀有集合均为外加。极值率和聚簇系数不自动是自由能、温度、熵产生或普适物理参数。
+
+## 62. FIB 标签观测通道的贝叶斯滤波、可预测性与隐状态可识别性
+
+本节把 FIB 递归给出的有限状态标签送入一个声明的观测通道。FIB 只提供状态集合、词序、长度与组合索引以及状态标签函数；转移核、初态律、观测噪声、时钟和先验均为外加模型。
+
+**定义 62.1（外加的隐状态与观测核）。** 令 \(S\) 为由有限 FIB 切点或标签索引的有限集合，\(Q(i,j)\) 为行随机核，\(\nu\) 为 \(X_0\) 的初态律。令 \(\mathcal Y\) 为有限观测字母表，\(O_i(y)\ge0\)、\(\sum_yO_i(y)=1\) 为观测核，并假定给定 \(X_{0:T}\) 时 \(Y_t\) 条件独立且
+\[
+\Pr(Y_t=y\mid X_t=i)=O_i(y).
+\]
+若 \(U_t=g(X_t)\) 是 FIB 标签读出，则 \(g\) 也是外加的可观测函数。记
+\[
+D_y=\operatorname{diag}(O_i(y))_{i\in S},\qquad
+\mathbf1=(1,\ldots,1)^{\mathsf T}.
+\]
+对观测历史 \(y_{0:t}\) 定义后验行向量
+\[
+\alpha_t(i)=\Pr_\nu(X_t=i\mid Y_{0:t}=y_{0:t}),
+\qquad
+\beta_{t+1}=\alpha_tQ.
+\]
+在分母非零时，Bayes 更新为
+\[
+\alpha_{t+1}(k)
+=\frac{\beta_{t+1}(k)O_k(y_{t+1})}
+{\sum_j\beta_{t+1}(j)O_j(y_{t+1})}
+=\frac{(\beta_{t+1}D_{y_{t+1}})_k}
+{\beta_{t+1}D_{y_{t+1}}\mathbf1}.
+\]
+零概率历史上的后验可任意定义，不影响几乎处处结论。
+
+**定理 62.2（滤波递归与预测充分性）。** 对任意 \(n\ge1\)，给定 \(Y_{0:t}\)，未来观测词的条件律为
+\[
+\Pr(Y_{t+1:t+n}=z_{1:n}\mid Y_{0:t})
+=\alpha_tQD_{z_1}QD_{z_2}\cdots QD_{z_n}\mathbf1.
+\]
+故 \(\alpha_t\) 是未来观测的预测充分统计量：若两段历史产生同一 \(\alpha_t\)，则它们对所有有限未来词给出同一概率。一步预测分布为
+\[
+\bar O_{\beta_{t+1}}(y)=\sum_i\beta_{t+1}(i)O_i(y),
+\qquad
+\Pr(Y_{t+1}=y\mid Y_{0:t})=\bar O_{\beta_{t+1}}(y).
+\]
+初态似然为
+\[
+\Pr_\nu(Y_{0:T}=y_{0:T})
+=\nu D_{y_0}QD_{y_1}\cdots QD_{y_T}\mathbf1.
+\]
+创新对数得分是这些预测概率的逐步和，不是 FIB 递归自身给出的量。
+
+**定理 62.3（一步观测信息与熵分解）。** 令 \(\mathscr Y_t=\sigma(Y_0,\ldots,Y_t)\)，\(\beta_{t+1}=\Pr(X_{t+1}\in\cdot\mid\mathscr Y_t)\)，并记 \(h(p)=-\sum_y p(y)\log p(y)\)。则
+\[
+H(Y_{t+1}\mid\mathscr Y_t)
+=\mathbb E\,h(\bar O_{\beta_{t+1}}),
+\]
+且
+\[
+\begin{aligned}
+I(X_{t+1};Y_{t+1}\mid\mathscr Y_t)
+&=H(Y_{t+1}\mid\mathscr Y_t)-H(Y_{t+1}\mid X_{t+1})\\
+&=\mathbb E\sum_i\beta_{t+1}(i)
+D_{\rm KL}\!\left(O_i\middle\|\bar O_{\beta_{t+1}}\right)\\
+&=H(X_{t+1}\mid\mathscr Y_t)-H(X_{t+1}\mid\mathscr Y_{t+1})\ge0.
+\end{aligned}
+\]
+零值当且仅当对几乎处处历史，所有 \(\beta_{t+1}(i)>0\) 的状态给出相同的观测分布。
+
+**定理 62.4（正观测通道下的初态遗忘）。** 假定存在 \(\varepsilon>0\)，使所有 \(Q(i,j)\ge\varepsilon\)、\(O_i(y)\ge\varepsilon\)。对同一观测串，用
+\[
+\mathsf F_y(\alpha)=\frac{\alpha QD_y}{\alpha QD_y\mathbf1}
+\]
+迭代任意两个全支撑初始后验，则存在依赖于 \(\varepsilon\) 和 \(|S|\) 的 \(C<\infty\)、\(0<\kappa<1\)，使
+\[
+\left\|
+\mathsf F_{y_t}\circ\cdots\circ\mathsf F_{y_1}(\alpha)
+-\mathsf F_{y_t}\circ\cdots\circ\mathsf F_{y_1}(\alpha')
+\right\|_1
+\le C\kappa^t.
+\]
+这是正矩阵乘积的 Hilbert 距离收缩及有限维范数等价的结果。仅有可达性而无正性时，周期、零支撑和观测不可区分类必须另行处理。
+
+**推论 62.5（观测熵率与创新得分）。** 若 \(Q\) 以平稳律 \(\pi\) 初始化且隐链遍历，则输出过程平稳；有限字母下熵率
+\[
+h_Y=\lim_{T\to\infty}T^{-1}H(Y_0^{T-1})
+\]
+存在。若再满足定理 62.4 的正性，有限历史滤波器收敛到平稳全历史滤波器；记其一步预测后验为 \(\beta_0^\infty\)，则
+\[
+h_Y
+=\mathbb E\,h(\bar O_{\beta_0^\infty})
+=\lim_{T\to\infty}\frac1T
+\sum_{t=0}^{T-1}\mathbb E[-\log\bar O_{\beta_t}(Y_{t+1})].
+\]
+故熵率是长期贝叶斯创新的平均对数损失。
+
+**推论 62.6（转移熵是滤波预测的 KL 差）。** 在平稳模型中，令
+\[
+\mathcal Y_-=\sigma(Y_{-\infty:-1}),\qquad
+\mathcal U_-=\sigma(U_{-\infty:-1}),
+\]
+并定义
+\[
+\beta=\Pr(X_0\in\cdot\mid\mathcal Y_-),\qquad
+\beta^U=\Pr(X_0\in\cdot\mid\mathcal Y_-,\mathcal U_-).
+\]
+若 \(U_t=g(X_t)\)，则
+\[
+T_{U\to Y}^{(\infty)}
+=\mathbb E\,D_{\rm KL}
+\!\left(\bar O_{\beta^U}\middle\|\bar O_\beta\right)\ge0.
+\]
+并且
+\[
+T_{U\to Y}^{(\infty)}
+\le I(X_0;Y_0\mid\mathcal Y_-).
+\]
+等号需要 \(U\) 的过去保留 \(X_0\) 对 \(Y_0\) 的全部相关预测信息，一般不成立。
+
+**定义 62.7（隐状态的观测等价）。** 对有限未来词 \(w=y_0\ldots y_{n-1}\)，定义从状态 \(i\) 出发的观测词概率
+\[
+W_n(i,w)
+=e_i^{\mathsf T}D_{y_0}QD_{y_1}\cdots QD_{y_{n-1}}\mathbf1.
+\]
+称 \(i\sim_{\rm obs}j\) 当且仅当对所有 \(n\ge1\) 和所有 \(w\in\mathcal Y^n\)，
+\[
+W_n(i,w)=W_n(j,w).
+\]
+令 \(\mathcal V\) 为包含 \(\mathbf1\) 且对所有 \(D_yQ\) 不变的最小线性子空间，则
+\[
+i\sim_{\rm obs}j
+\quad\Longleftrightarrow\quad
+(e_i-e_j)^{\mathsf T}v=0\quad(\forall v\in\mathcal V).
+\]
+由于 \(\dim\mathcal V\le|S|\)，该等价性可由有限维线性代数检验。对初态 \(\nu,\nu'\)，所有未来观测律相同当且仅当
+\[
+(\nu-\nu')^{\mathsf T}\mathcal V=0.
+\]
+
+**推论 62.8（可观测分块与不可识别方向）。** 若分割 \(c:S\to C\) 满足对同一类内任意 \(i,j\) 及每个类 \(C'\)，
+\[
+\sum_{k:c(k)=C'}Q(i,k)
+=\sum_{k:c(k)=C'}Q(j,k),
+\]
+且 \(O_i=\bar O_{c(i)}\)，则 \(c(X_t)\) 是 Markov 链，输出律仅由分块核与 \(\bar O\) 决定；类内速度、阻抗或初态重新分配无法由 \(Y\) 识别。该 lumpability 条件是充分条件，不是所有观测等价的必要条件。
+
+**推论 62.9（Hankel 预测维数的上界）。** 对有限词 \(u,v\) 令
+\[
+H_{u,v}=\Pr(Y_{0:|u|+|v|-1}=uv).
+\]
+按前缀后的隐藏后验行向量与后缀的条件概率列向量定义 \(r_u,c_v\)，则
+\[
+H_{u,v}=r_uc_v,\qquad
+\operatorname{rank}H\le|S|.
+\]
+若可达后验与观测延续空间均为全维，则线性预测维数达到 \(|S|\)；若秩更低，任何输出序列统计都不能提供同样数量的独立隐状态方向。
+
+FIB 边界是：递归只提供可编号的状态标签、词序与组合结构；\(Q,\nu,O\)、平稳初态、正性条件、先验和噪声均由外加模型声明。贝叶斯滤波给出声明模型中的后验与预测充分性，熵率给出输出序列的长期编码量，转移熵给出加入另一段历史后的预测 KL 增益；这些量不能自动推出真实物理中的测量、温度、熵产生、因果流、能量或普适定律。
