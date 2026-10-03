@@ -22,9 +22,11 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Def("ActualImage", "Actual substitution image", "ActualImage(d) is the range of the d-fold native substitution on complete source trees."),
             Def("Within", "Finite depth window", "Within(h,Q) means that each address in the finite set Q has length at most h."),
             Def("Sound", "Positive address certificate", "Sound(d,V,h,Q) means Within(h,Q) and: every complete tree U with c(U)=c(V) "
-                + "and out(U,u)=out(V,u) for every u in Q belongs to ActualImage(d). There is no leaf budget on U, "
+                + "and out(U,u)=out(V,u) for every u in Q belongs to ActualImage(d). Exact composition is the only competitor promise, "
                 + "no prefix-closure condition on Q, and no adaptive or random query order."),
             Def("alphaAddresses", "Alpha leaf addresses", "The finite set contains exactly the root-first addresses of alpha leaves."),
+            Def("leafAddresses", "Complete leaf frontier", "The finite set contains exactly all alpha and beta leaf addresses."),
+            Def("UnSound", "Certificates without a composition promise", "Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately."),
             Def("subtree", "Complete addressed subtree", "The addressed subtree is present exactly when the path reaches a node; otherwise it is absent."),
             Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
             Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
@@ -45,7 +47,26 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                     Paragraph(Text("Certificate complexity and lower bounds from disjoint sensitive blocks are classical, as in Nisan's "
                         + "CREW PRAMs and Decision Trees (1991) and Buhrman and de Wolf's Complexity Measures and Decision Tree Complexity: A Survey (2002). "
                         + "The exact cardinality for these actual substitution images with fixed composition is the tree-specific conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-address-certificate-rigidity"),
+                DeclarationHandle.Create(Prefix + "rigidity"), H("Unique optimal certificates and the complete leaf frontier"),
+                StatementSource.FromAuthor(RigidityFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For k at least one, V belongs to I(3 times k). Write A(V) for its alpha addresses, "
+                        + "L(V) for all its leaf addresses, a(V) for its alpha count and n(V) for its total leaf count. "
+                        + "W(h,Q) means Within(h,Q), and U(d,V,Q) means UnSound(d,V,Q). "
+                        + "At or above D(V), the complete leaf frontier is the unique minimum certificate without a composition promise.")),
+                    Paragraph(Text("Three substitution steps give strictly more beta leaves than alpha leaves. If a sound set of a(V) queries "
+                        + "omits an alpha leaf, it also omits a beta leaf. Exchanging those labels preserves composition and all queried results. "
+                        + "If the chosen beta is the alpha leaf's left sibling, the exchange puts an alpha on the left. Otherwise the old "
+                        + "terminal pair becomes (beta,beta). Both possibilities violate the structure of a twice-substituted tree.")),
+                    Paragraph(Text("Without a composition promise, omitting any leaf permits a single label flip. An alpha-to-beta flip creates "
+                        + "a terminal (beta,beta) pair. A beta-to-alpha flip cannot obey the rule that every alpha is the right leaf of a "
+                        + "terminal (beta,alpha) pair. Conversely, matching the labeled complete leaf frontier forces equality of the "
+                        + "ordered source trees, by recursively matching the two child frontiers.")),
+                    Paragraph(Text("The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, "
+                        + "all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. "
+                        + "The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general "
+                        + "decision-tree certificate complexity supplies neighboring background."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
@@ -67,13 +88,34 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
         Seq(F.Exists, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
     private static Formula ResultFormula()
     {
-        Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,k);
+        Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
         Formula a=Call("a",t), depth=Call("D",t), queries=Call("Finset",V("Address"));
         Formula sound=Call("S",d,t,h,q);
-        Formula small=Imp(Seq(h,Sp,Lt,Sp,depth),Seq(Neg,Exists("Q",queries,sound)));
-        Formula attained=Imp(LeOf(depth,h),Exists("Q",queries,And(sound,EqOf(Call("card",q),a))));
+        Formula small=Imp(Seq(h,Sp,Lt,Sp,depth),Seq(Neg,Exists("R",queries,Call("S",d,t,h,V("R")))));
+        Formula attained=Imp(LeOf(depth,h),Exists("R",queries,And(Call("S",d,t,h,V("R")),EqOf(Call("card",V("R")),a))));
         Formula lower=All("Q",queries,Imp(sound,LeOf(a,Call("card",q))));
         return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),All("V",V("Source"),
             Imp(InOf(t,Call("I",d)),All("h",V("Nat"),And(small,attained,lower)))))));
     }
+    private static Formula IffOf(Formula a, Formula b) => Seq(Par(a),Sp,Leftrightarrow,Sp,Par(b));
+    private static Formula RigidityFormula()
+    {
+        Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
+        Formula a=Call("a",t), n=Call("n",t), depth=Call("D",t);
+        Formula alpha=Call("A",t), leaves=Call("L",t), queries=Call("Finset",V("Address"));
+        Formula within=Call("W",h,q), sound=Call("S",d,t,h,q), un=Call("U",d,t,q);
+        Formula unique=All("h",V("Nat"),Imp(LeOf(depth,h),All("Q",queries,
+            Imp(within,IffOf(And(sound,EqOf(Call("card",q),a)),EqOf(q,alpha))))));
+        Formula full=All("h",V("Nat"),All("Q",queries,
+            Imp(within,IffOf(un,Seq(leaves,Sp,Subseteq,Sp,q)))));
+        Formula shallow=All("h",V("Nat"),Imp(Seq(h,Sp,Lt,Sp,depth),Seq(Neg,
+            Exists("R",queries,And(Call("W",h,V("R")),Call("U",d,t,V("R")))))));
+        Formula bounds=All("Q",queries,Imp(within,Imp(un,And(LeOf(n,Call("card",q)),
+            IffOf(EqOf(Call("card",q),n),EqOf(q,leaves))))));
+        Formula attained=All("h",V("Nat"),Imp(LeOf(depth,h),And(Call("W",h,leaves),
+            Call("U",d,t,leaves),EqOf(Call("card",leaves),n),bounds)));
+        return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),All("V",V("Source"),
+            Imp(InOf(t,Call("I",d)),And(unique,full,shallow,attained))))));
+    }
+
 }
