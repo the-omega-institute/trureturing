@@ -329,8 +329,8 @@ $$
 $$
 
 A finite prefix and the existing summable global theta majorant bound
-this expression. No numerical values or certified effective convergence
-rate are supplied here.
+this expression. The effective original-series estimates below give a
+specified convergence rate without discarding the shifted adjoints.
 
 The same equation, $a_p\ge0$ and (BD) also give
 
@@ -361,3 +361,141 @@ complete spectral certification remain separate obligations. The
 $1/\varepsilon$ loss is uncontrolled as $\varepsilon\to0$; threshold
 accumulation and subthreshold eigenvectors are not excluded. The
 RH-strength exact-half bound remains unproved.
+
+## Effective original-measure cutoff inputs
+
+Reuse the [original theta series majorants](../Analytic/romik2021orthogonal.md)
+and the [explicit prime-diagonal transfer](trudgian2014pnt.md).
+The following bounds evaluate the inputs to (LT) and (FN) for the same
+individual eigenvector, measure, minimal form and cutoff. They do not
+construct a finite spectral certificate.
+
+### Full prime off-diagonal tail
+
+Let $C_\Phi=144/5$. From the theta majorant (ST), the exact $b_n$
+coefficient and $\cosh\ge1$,
+
+$$
+b_n(x)\le\frac{C_\Phi}{2}w_n
+ \exp\left[-\frac34
+       \bigl(e^{2|x|}+e^{2|x+\log n|}\bigr)\right].
+$$
+
+The quantity in parentheses is at least $2n$, by the arithmetic-geometric
+mean and $|x|+|x+\log n|\ge\log n$. For $|x|>R$ it is also at least
+$e^{2R}$. Its mean lower bound is thus $(e^{2R}+2n)/2$.
+Exactly the same two bounds hold for the shifted adjoint $b_n(x-\log n)$:
+its pair is $x-\log n,x$, so the exterior endpoint is still retained.
+Using $w_n\le n$, $e^{-3/4}<1/2$ and
+$\sum_{n\ge2}n2^{-n}=3/2$ in the full two-direction norm sum gives
+
+$$
+\boxed{b_R\le\frac{216}{5}
+          \exp\left(-\frac38e^{2R}\right)}\quad(R\ge0). \tag{BT}
+$$
+
+Both prime powers and crossing edges occur in this bound. Because
+$(3/8)e^{2R}\ge R$ for $R\ge1$, a simpler consequence is
+
+$$
+b_R\le44e^{-R}\quad(R\ge1). \tag{BR}
+$$
+
+The nonlinear inequality follows at $R=1$ from $e^2>7$ and thereafter
+from its positive derivative. No individual translation is claimed compact.
+
+### Gamma cutoff error
+
+For $t>0$ the elementary bound
+$1-e^{-2t}\ge2t/(1+2t)$ gives
+$\psi(t)t^2\le3/2$ for $0<t\le1$.
+For $t\ge1$ one has $\psi(t)\le d e^{-t/2}$ with
+$d=(1-e^{-2})^{-1}<7/6$. Thus
+$k(t)=\psi(t)\min(1,t^2)\le3/2$ everywhere.
+
+For $|x|\ge R$, divide the cutoff row by
+$2\cosh(x/2)\ge e^{|x|/2}$ and split at $|x-y|=1$.
+On long jumps, use
+$e^{-|x-y|/2}\le e^{-|x|/2}e^{|y|/2}$ and the original normalization
+$\int\Phi(y)e^{|y|/2}\,dy\le1$.
+On short jumps, the Lipschitz cutoff bound applies and $|y|>R-1$.
+Hence
+
+$$
+e_R(x)\le d e^{-R}
+       +\frac32e^{-R/2}T(R-1)\quad(|x|\ge R).
+$$
+
+For $|x|\le R$, $\eta_R(x)=0$; a nonzero row term requires $|y|>R$.
+The same $k$ bound and $2\cosh(x/2)\ge2$ give
+$e_R(x)\le(3/4)T(R)$. Combining the two ranges,
+
+$$
+E_R\le d e^{-R}+\frac94T(R-1)\quad(R\ge1).
+$$
+
+The theta integrated tail (IT) gives $T(R-1)\le e^{-R}$ for $R\ge4$.
+Indeed, its ratio to $e^{-R}$ is at most
+$(96/5)e^{2-R}\exp[-(3/2)e^{2(R-1)}]$, which decreases; at $R=4$
+it is less than $24/35$ using $e^2>7$ and $e^{3/2}>4$.
+Therefore the actual ordered Gamma cutoff error satisfies
+
+$$
+\boxed{E_R\le4e^{-R}\quad(R\ge4).} \tag{ER}
+$$
+
+This sharpens the coarse rate (TR) for these cutoffs. It keeps the singular
+Gamma kernel and all endpoint interactions; it is not a fractional-kernel
+substitution or a censored exterior energy.
+
+### A specified fixed-gap form-approximation radius
+
+Fix $0<\varepsilon\le1/2$ and a tolerance $0<\tau\le1$.
+Use $R_{\rm PNT}(\varepsilon)$ from (PR) in the linked prime-diagonal
+note, and take
+
+$$
+R\ge\max\left\{
+R_{\rm PNT}(\varepsilon),
+\log\frac{11264}{\varepsilon\tau},
+2\log\frac{256}{\sqrt\varepsilon\,\tau},
+\log\frac8{\tau^2}
+\right\}. \tag{FR}
+$$
+
+For any actual normalized eigenvector $Ah=\lambda h$ with
+$\lambda\le1/2-\varepsilon$, (LT), (BR) and (ER) give
+
+$$
+t_R\le\frac{2b_R}{\varepsilon}
+               +\sqrt{\frac{E_R}{\varepsilon}}
+\le\frac{88e^{-R}}{\varepsilon}
+               +\frac{2e^{-R/2}}{\sqrt\varepsilon}
+\le\frac\tau{64}.
+$$
+
+Let $h_R=(1-\eta_R)h$. With $\|a_p\|_\infty<432$ from (AC),
+the three terms in (FN) are at most
+$(1731/8192)\tau^2$, $(11/128)\tau^3$ and $\tau^2/4$,
+respectively. The middle estimate uses (BR) and the last radius in (FR).
+Thus
+
+$$
+\boxed{
+\|h-h_R\|_\nu^2+D(h-h_R)
+\le\frac{1121}{2048}\tau^2<\tau^2.
+} \tag{FA}
+$$
+
+The reducing projection $P_{\mathcal R}$ retains at most this error for
+$h\in\mathcal R$; its image generally remains noncompact. These are
+coarse analytic constants, with no directed numerical computation,
+new Lean certification or originality claim.
+
+The conclusion concerns each individual actual eigenvector under the
+stated fixed gap. An operator-norm estimate for a whole spectral projector
+with different eigenvalues has not been derived from it. Interior
+discretization, a complete lower spectral certificate and control uniform
+as $\varepsilon\downarrow0$ remain missing. The radius in (FR) diverges
+with shrinking gap; threshold accumulation, RH and full Robin remain
+unresolved.
