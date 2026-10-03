@@ -40,13 +40,6 @@ run_meta do
        else error.startsWith "unclassified_form:contract.target_statement:")
 
   for (label, source) in #[
-      ("QuotedName", "run_cmd do let _ : Lean.Name := `LeanInformationAudit.RootCatalogs.declare; pure ()"),
-      ("UnusedReference", "run_cmd do let _ := LeanInformationAudit.RootCatalogs.declare; pure ()"),
-      ("SuffixMatch", "run_cmd Other.RootCatalogs.declare {}"),
-      ("ExtraStatement", "run_cmd do LeanInformationAudit.RootCatalogs.declare {}; pure ()"),
-      ("RunMetaReference", "run_meta do let _ := LeanInformationAudit.RootCatalogs.declare; pure ()"),
-      ("RunElabReference", "run_elab do let _ := LeanInformationAudit.RootCatalogs.declare; pure ()"),
-      ("ArchitectureQuotedName", "run_meta do let _ : Lean.Name := `LeanInformationAudit.RootCatalogs.declare; Lean.logInfo \"message\""),
       ("WrappedCommand", "set_option maxRecDepth 4096 in\nrun_meta Lean.logInfo \"message\""),
       ("WrappedRunCmd", "set_option maxRecDepth 4096 in\nrun_cmd pure ()"),
       ("UnknownAttribute", "attribute [unlistedForm] Nat"),
@@ -72,32 +65,5 @@ run_meta do
     assertTest s!"policy.interface.{label}"
       (error.startsWith "contract.interface:command_not_allowed:")
     logInfo m!"CONTRACT_DIAGNOSTIC {label} {error}"
-  let owner := `Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau
-  for (label, source) in #[
-      ("ExistingNotation", "local notation \"F\" => Nat.fib"),
-      ("ChangedNotationToken", "local notation \"G\" => Nat.fib"),
-      ("ChangedNotationTerm", "local notation \"F\" => Nat.succ"),
-      ("MetadataNotation", "local notation \"false\" => Bool.true"),
-      ("DuplicateNotation", "local notation \"F\" => Nat.fib\nlocal notation \"F\" => Nat.fib")] do
-    let entries ← SourceAudit.parse env source owner.toString
-    let result := SourceAudit.auditRegCommands owner entries
-    assertTest s!"policy.notation.{label}"
-      (if label == "ExistingNotation" then result.isOk else !result.isOk)
-
-run_meta do
-  let env := (← getEnv).setExporting false
-  let notationText := "local notation \"ζ\" => riemannZeta\nlocal notation \"ζ'\" => deriv ζ\nlocal notation \"𝓜\" => mellin"
-  for leaf in #["PntContourBound", "PntLongVertical", "PntShortContour", "PntSmoothing", "PntTail"] do
-    let owner := `Reg.D5.S3.Weil.PrimeNumberTheorem ++ leaf.toName
-    for (label, source, accepted) in #[
-        ("distinct", notationText, true),
-        ("duplicate", notationText ++ "\nlocal notation \"ζ\" => riemannZeta", false),
-        ("changed", "local notation \"ζ\" => Nat", false)] do
-      let entries ← SourceAudit.parse env source owner.toString
-      let result := SourceAudit.auditRegCommands owner entries
-      assertTest s!"policy.notation.pinned.{leaf}.{label}" (result.isOk == accepted)
-    let entries ← SourceAudit.parse env notationText owner.toString
-    assertTest s!"policy.notation.pinned.{leaf}.other_owner"
-      (!(SourceAudit.auditRegCommands `Reg.UnlistedForm entries).isOk)
 
 end LeanInformationAuditRegTests.ContractExactPolicy
