@@ -1,0 +1,13 @@
+**定理 358.2（首现层恒等式、二次规模与最终严格缺口）。** 对所有整数 $d\ge2$、$n,m\ge1$ 及素数 $p$，有
+
+$$
+\begin{gathered}
+d\mid F_n\ \Longleftrightarrow\ z(d)\mid n,\qquad
+v_p(\Psi_n)=\#\{k\ge1:z(p^k)=n\},\\
+v_p(Q_m)=\#\{k\ge1:z(p^k)\le m\},\qquad
+\Psi_n\in\mathbb N_{>0},\qquad Q_m=\prod_{n\le m}\Psi_n.
+\end{gathered}
+\tag{358.3}
+$$
+
+这些公式包括 $p=2,5$ 和多个素幂具有相同首次秩的情形，不需任何首赋值为一的假设。

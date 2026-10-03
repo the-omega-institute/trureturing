@@ -1,0 +1,2 @@
+**定义 1.3（共同嵌入）。** 在每个被选节点，将其 $r$ 个已选目标孩子按自然顺序与 $[r]$ 对应。从根递归得到各层单射 $\theta_j:[r]^j\hookrightarrow[s]^j$。它们与截取前缀相容，且 $\operatorname{im}\theta_B=T_\Theta$。这一嵌入同时用于全部目标词。若 $\mathcal F$ 是长度不超过 $B$ 的有限前缀族，令 $F$ 为其中各词的全部深度 $B$ 扩张的并；则 $\bigcup_{v\in\mathcal F}A_v=H_F$，因为每个已到达的节点都有 $r\ge1$ 个后继。
+

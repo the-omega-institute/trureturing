@@ -1,0 +1,5 @@
+source_id = "common-tree-union-conditioning"
+path = "docs/develop/theory/COMMON_TREE_UNION_CONDITIONING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

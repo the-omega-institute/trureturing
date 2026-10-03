@@ -1,0 +1,42 @@
+**定理 29.3（原随机合同的有限可测投影与全部五个锐值）。** 对每个定义 29.1 的原随机策略 $\Pi$，存在 $\mathcal V_F$ 上的概率向量 $p=(p_v)_{v\in\mathcal V_F}$ 及以同一所选控制器共同评价全部原型的有限混合 $\widehat\Pi$，使
+
+$$
+\begin{aligned}
+\mathbb E C_{\widehat\Pi}(\cdot,P_i)
+ &=\sum_{v\in\mathcal V_F}p_vv_i
+ \le\mathbb E C_\Pi(\cdot,P_i)\quad(i\in[m]),\\
+\mathbb E\!\left[\max_i C_{\widehat\Pi}(\cdot,P_i)\right]
+ &=\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ \le\mathbb E\!\left[\max_i C_\Pi(\cdot,P_i)\right].
+\end{aligned}
+\tag{29.7}
+$$
+
+原期望允许无穷。每个概率向量 $p$ 的有限混合都可用固定 $[0,1]$ 种子空间实际取得，在每个声明种子和每个有限树上均正确且有限终止；每个固定树的费用是有限可测阶梯函数。于是
+
+$$
+\begin{aligned}
+D(F)&=\min_{v\in\mathcal V_F}\max_i v_i,\\
+R(F)=R_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\max_i\sum_{v\in\mathcal V_F}p_vv_i,\\
+W(F)=W_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ =D(F),
+\end{aligned}
+\tag{29.8}
+$$
+
+其中 $\Delta(\mathcal V_F)=\{p:p_v\ge0,\ \sum_vp_v=1\}$。这些下确界全部有限取得，$R(F)$ 有理且有有理最优权重；其精确有限 LP 为
+
+$$
+\begin{aligned}
+\text{最小化 }&t,\\
+p_v&\ge0\quad(v\in\mathcal V_F),\qquad \sum_vp_v=1,\\
+\sum_vp_vv_i&\le t\quad(i\in[m]),\qquad
+0\le t\le M_F,\qquad M_F=\max_{v\in\mathcal V_F}\max_i v_i.
+\end{aligned}
+\tag{29.9}
+$$
+
+$m=1$ 时 $\mathcal V_F=\{(n_1)\}$，五个值均为 $n_1$。概率质量的存在不要求在线执行原策略的反事实评价、检验好种子集或计算任意原策略的律。
+

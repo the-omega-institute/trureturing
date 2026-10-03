@@ -1,0 +1,25 @@
+**引理 357.2（整数子环的模五字符）。** 在实代数 $C$ 中令
+
+$$
+\mathcal O=\mathbb Z\cdot1\oplus\mathbb Z\cdot A
+           \oplus\mathbb Z\cdot B\oplus\mathbb Z\cdot AB.
+$$
+
+每个元素的四个整数系数唯一，$\mathcal O$ 是含单位的子环，且所有 $E(\rho^n(t))$ 都属于 $\mathcal O$。映射
+
+$$
+\eta:\mathcal O\longrightarrow\mathbb F_5,
+\qquad
+\eta(s+tA+uB+vAB)=[s+t+3u+3v]_5
+\tag{357.4}
+$$
+
+保单位、加法和乘法。对 $c(t)=(a,b)$，有
+
+$$
+\eta(E(t))=3^b\ne0\quad\text{于 }\mathbb F_5.
+\tag{357.5}
+$$
+
+这里 $\eta$ 只定义于整数子环，不是整个实 Clifford 代数的降模映射。
+

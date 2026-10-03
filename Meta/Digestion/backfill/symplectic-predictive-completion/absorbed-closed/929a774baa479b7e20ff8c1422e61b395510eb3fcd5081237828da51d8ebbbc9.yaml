@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:929a774baa479b7e20ff8c1422e61b395510eb3fcd5081237828da51d8ebbbc9
+  normalized_sha256: sha256:929a774baa479b7e20ff8c1422e61b395510eb3fcd5081237828da51d8ebbbc9
+cas_ref: sha256:929a774baa479b7e20ff8c1422e61b395510eb3fcd5081237828da51d8ebbbc9
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/SymplecticBasis.exists_isSymplecticBasis
+    target_statement_id: sha256:604119a6ff9f6dda96701286ad067bdfd2b50b8366b5f68e7f821a40ddcd2377
+receipts:
+  unresolved_subitems: []

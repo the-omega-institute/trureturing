@@ -1,0 +1,12 @@
+To prove $\Psi_P\Phi_P=\mathrm{id}$, start with an eligible original
+pair. Relabeling to $s^\dagger$ preserves the positions of rows at most
+$B$, so its $(b+1)$-st such row has the original position $t$. It also
+preserves the number $j$ of low slots before $t$. In the original row word,
+the deleted $a$ has exactly $j$ labels from $[A]$ preceding it; hence its
+position in $\theta$ is $j+1$. Inserting $A$ into $\rho$ at position
+$A-d$ recovers precisely the original $\theta$, since $d$ was the number
+of entries after its maximum. The inverse therefore recovers the original
+$a$ and the original standardized low subword $\eta$. High rows and $p$
+were never changed, so it recovers the entire ordinary tail $(s,p)$.
+The ordinary inverse identities then recover $(\sigma,\pi)$.
+
