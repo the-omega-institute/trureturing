@@ -26541,3 +26541,59 @@ been proved for every hypothetical whole cover, and no common repair with
 the EB1 class-count and modulus-sum descent has been constructed.  Therefore
 this section narrows the external bridge but does not settle unrestricted
 Erdős #7.
+
+## 230. Support-prime counts do not force a multi-prime top cofactor
+
+The support lower bound and divisor closure cannot by themselves supply the
+missing $p=3$ bridge.  Take
+
+\[
+ \Lambda=\{3,5,7,11,13,17,19,23,29\},
+ \qquad
+ Q=3^2\,5^2\,7\,11\,13\,17\,19\,23\,29,
+\]
+
+and define the numerical inventory
+
+\[
+ D_0=\{d>1:d\mid Q,\ v_3(d)<2\}\cup\{9,45,225\}.
+ \tag{230.1}
+\]
+
+Every member is odd and the labels are distinct.  The set is divisor-closed:
+all proper nonunit divisors of the three added labels already have
+$v_3<2$, apart from $9$, which is itself added.  Its support is exactly
+$\Lambda$, so it has nine support primes, and this remains true if the six
+primes above $5$ are replaced by any finite additional set of odd primes.
+
+Nevertheless its maximal $3$-height layer is exactly
+
+\[
+ \{d\in D_0:v_3(d)=2\}=\{9,45,225\}
+   =3^2\{1,5,25\}.
+ \tag{230.2}
+\]
+
+The lcm of the top cofactors is therefore
+
+\[
+ L_{\mathrm{top}}=\operatorname{lcm}(1,5,25)=25,
+ \qquad
+ \tau(L_{\mathrm{top}})=3,
+ \qquad
+ \omega(L_{\mathrm{top}})=1.
+ \tag{230.3}
+\]
+
+Thus the nine-support conclusion, the odd/distinct conditions, divisor
+closure, and even the three-label top layer are all compatible with a
+single-prime top cofactor.  The same construction gives arbitrarily many
+support primes while keeping the top layer unchanged.
+
+This is an inventory control, not a covering system: no phases are assigned
+and no whole-cover claim is made.  Its exact consequence is negative for a
+proposed scalar bridge from $\omega(Q)\ge9$ (or from support plus divisor
+closure) to $\omega(L_{\mathrm{top}})\ge2$.  Any such conclusion must use
+the actual whole-cover phases, complete liability, or another source-
+compatible hypothesis.  In particular, the external-coordinate payment in
+Section 229 cannot be replaced by a support-count assertion alone.
