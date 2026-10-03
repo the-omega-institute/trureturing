@@ -2538,20 +2538,145 @@ arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有�
 
 ## 追加锚（本行以下为增补区）
 
+### 36.5 有限单纯形变分支配：既有证明的完整应用
 
-### 36.5 形式化增补：有限单纯形变分支配（待 CI）
+令 $I$ 为任意宇宙中的非空有限指标型，$A:I\times I\to\mathbb R$
+逐项非负；不要求 $A$ 对称或正半定。定义
 
-当前分支新增公开 Lean 声明：
+$$
+\begin{aligned}
+\Delta_I&=\{p:I\to\mathbb R:p_i\ge0,\ \sum_i p_i=1\},\\
+Q_A(w)&=\sum_{i,j}A_{ij}w_iw_j,\\
+R_A(p,x)&=\sum_{i,j}\sqrt{p_i}\sqrt{p_j}A_{ij}
+                 \operatorname{Re}(\overline{x_i}x_j).
+\end{aligned}
+$$
 
-`D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form`。
+存在同一个 $r\in\Delta_I$，同时满足
 
-对非空有限扇区型和逐项非负实矩阵 A，该声明给出同一个单纯形点 r，使二次型 Q_A(w) 不超过 Q_A(r) 对每个单纯形点 w 成立，并且对任意单纯形点 p 与满足 sum_i norm(x_i)^2 = 1 的复向量 x，有加权复二次型 R_A(p,x) 不超过 Q_A(r)。证明把 y_i = sqrt(p_i) * norm(x_i) 放入单纯形：有限 Cauchy--Schwarz 给出 sum_i y_i <= 1，在一个固定坐标填补质量亏缺得到 w >= y，再使用相位不等式和 A_ij >= 0。这正是被动参考上界所需的变分步骤，不是连续引力 RT 结论。
+$$
+\begin{aligned}
+&\forall w\in\Delta_I,\quad Q_A(w)\le Q_A(r),\\
+&\forall p\in\Delta_I\ \forall x:I\to\mathbb C,\quad
+ \sum_i|x_i|^2=1\ \Longrightarrow\ R_A(p,x)\le Q_A(r).
+\end{aligned}
+$$
 
-声明、Blueprint 和 Scribe 已在 `lane/theory/rt-variational-20260930`；本节的 focused Lean/kernel/CI 状态仍待 pull-request harness 核验。
+$r$ 的存在量词在两组全称量词之前，因而不随 $w,p,x$ 改变。单指标、
+零矩阵、$p$ 的零坐标及非对称非负矩阵都在范围内。由非空紧单纯形
+上的连续多项式取最大点 $r$。对任意允许的 $p,x$，置
+$y_i=\sqrt{p_i}|x_i|$、$m=\sum_i y_i$；Cauchy--Schwarz 给出
 
-### 36.6 形式化增补：5040/7 相位的平凡取向覆盖
+$$
+0\le m,\qquad
+m^2\le\left(\sum_i(\sqrt{p_i})^2\right)
+       \left(\sum_i|x_i|^2\right)=1,
+\qquad m\le1.
+$$
 
-仓库有限 Fibonacci 证书给出模 5040 = 16 * 9 * 5 * 7 的共同权重相位周期 80，而模 7 的局部周期为 16。GoldenScaleHelix 的每一步翻转一个 Boolean 取向。新增声明
-`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy`
-证明任意偶数长度周期的取向单值性，并给出 80 步与 16 步实例。因此，在这个明确的 Boolean 翻转模型中，这些有限相位数据上的两层覆盖是平凡的；若要在同一模型中得到 Mobius 取向翻转，必须另外提供奇数闭环或独立的参数胶合。这个结果只约束所选有限模型，不排除无关的几何实现，也不把 Klein 四群轨道误写成 Klein 瓶拓扑。
+固定 $i_0\in I$，令 $w_i=y_i+(1-m)\mathbf1_{i=i_0}$。则
+$w\ge y\ge0$ 且 $\sum_iw_i=1$。逐项使用
+$\operatorname{Re}(\overline{x_i}x_j)\le|x_i||x_j|$，乘以非负系数
+$\sqrt{p_i}\sqrt{p_j}A_{ij}$ 后求和，得到完整链
 
+$$
+R_A(p,x)\le Q_A(y)\le Q_A(w)\le Q_A(r).
+$$
+
+这是既有 `FiniteSectorSchurUpper.lean` 的 `schur_upper` 证明中，
+局部 `hSchurPureUpper` 内 `hRayleighMax` 的 `hRayleigh` 推导的应用。
+任意 $A$ 的范围来自这段局部证明；公开 `schur_upper` 的残余重叠
+核假设不能直接替代该范围。紧性、相位界和亏缺填补均沿既有证明
+使用，不增加独立的绑定声明。此步骤提供有限扇区被动参考估计的
+变分上界，不将 §36.1 的全信道优化或连续引力 RT 当作其结论。
+
+### 36.6 实际有限相位、取向覆盖胶合与隐藏层边界
+
+`docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
+使用初值 $(2,3)$ 及以下模 $m>0$ 递推：
+
+$$
+T_m(u,v)=((u+2v)\bmod m,(2u+3v)\bmod m),\qquad
+ a_m(0)=(2\bmod m,3\bmod m),\quad a_m(k+1)=T_ma_m(k).
+$$
+
+模 $5040=16\cdot9\cdot5\cdot7$ 的最小正返回时间为 80；模
+$7,16,9,5$ 的最小正返回时间分别为 $16,8,8,20$。这些是实际
+残余对的周期。各表的初行是 $(2,3)$，末行是 $(0,1)$；所有行
+在 $[0,m)^2$ 内且互异，逐行递推成立，末行经 $T_m$ 回到初行。
+因此递推归纳给出实际迭代，互异性排除更早返回。例如模 7 的
+完整 16 行依次为
+
+$$
+\begin{aligned}
+&(2,3),(1,6),(6,6),(4,2),(1,0),(1,2),(5,1),(0,6),\\
+&(5,4),(6,1),(1,1),(3,5),(6,0),(6,5),(2,6),(0,1).
+\end{aligned}
+$$
+
+记各最小周期为 $N_m$。共同表的第 $k$ 行逐坐标模 $m$ 等于
+$a_m(k\bmod N_m)$，给出与递推及闭合边相容的共同到局部投影。
+
+对任意正偶数 $N$，取有限环 $C_N=\{0,\ldots,N-1\}$，
+$s_N(i)=(i+1)\bmod N$。两层总空间是 $C_N\times\{0,1\}$，
+投影 $\pi(i,b)=i$，提升后继 $F_N(i,b)=(s_N(i),b\mathbin\oplus1)$；
+$\oplus$ 表示 Boolean XOR。令 $\epsilon(i)=i\bmod2$，定义
+
+$$
+G_N(i,b)=(i,b\mathbin\oplus\epsilon(i)),\qquad
+H_N(i,b)=(s_N(i),b).
+$$
+
+$G_N$ 为自身的逆，保留投影。普通边的指标奇偶性翻转；闭合边上
+$N-1$ 为奇数而 $s_N(N-1)=0$，奇偶性同样翻转。因此
+
+$$
+G_NF_N=H_NG_N,\qquad
+G_N(0,b\mathbin\oplus1)
+=(0,b\mathbin\oplus1)=H_N(G_N(N-1,b)).
+$$
+
+这给出包含闭合胶合的等变平凡化，不仅是抽象集合间的双射或偶数
+步取向返回。以 $B_m=\{a_m(i):0\le i<N_m\}$ 为实际残余基底，
+互异性给出 $O_m:C_{N_m}\to B_m$ 的双射，$O_m(i)=a_m(i)$，且
+$T_mO_m=O_ms_{N_m}$。令 $P_m(i,b)=(O_m(i),b)$ 并运输得到
+$E_m=P_mG_{N_m}P_m^{-1}$。在实际基底上，
+$F_m(q,b)=(T_mq,b\mathbin\oplus1)$、$H_m(q,b)=(T_mq,b)$，则
+$E_m$ 保留残余投影，满足 $E_mF_m=H_mE_m$，并有明确闭合方程
+
+$$
+E_m(O_m(0),b\mathbin\oplus1)
+=(O_m(0),b\mathbin\oplus1)
+=H_m(E_m(O_m(N_m-1),b)).
+$$
+
+这涵盖实际共同 80 环、局部 16 环及局部 8、8、20 环。共同到局部
+投影保留 $b$ 并与提升后继相容；各局部周期为偶数，也与上述奇偶
+规范变换相容。
+
+既有 `GoldenScaleHelix.lean` 中状态为 $(\ell,t,b)$，其中
+$\ell\in\mathbb N$ 是隐藏层，$t\in\mathbb R$ 是尺度提升；一步为
+$S(\ell,t,b)=(\ell+1,t+L,b\mathbin\oplus1)$，$L=2\log\varphi>0$。
+有限读出定义为
+
+$$
+f_m(\ell,t,b)=(a_m(\ell\bmod N_m),b).
+$$
+
+每个 $(O_m(i),b)$ 有原像 $(i,0,b)$，故读出满射；递推及闭合方程
+给出 $f_mS=F_mf_m$。有限相位模型由完整螺旋状态的实际等变读出
+得到，丢弃尺度提升，仅保留层数模 $N_m$ 与取向。另一方面，归纳
+给出 $\operatorname{level}(S^nz)=\operatorname{level}(z)+n$，所以
+对每个状态及每个 $n>0$，$S^nz\ne z$。完整隐藏层从无正周期。
+既有 `GoldenHelixParityReadout.lean` 的
+`golden_helix_even_orientation_completion` 供应任意偶数步取向
+返回，特别包括 80 与 16；奇数步取向翻转由其既有奇数定理供应。
+
+此处的平凡覆盖专指所定义的有限有向环与 Boolean 提升。没有独立
+定义的几何 Möbius/Klein 覆盖、连续投影或同胚，也不把有限群轨道
+解释为瓶面拓扑。奇数翻转环会有非平凡取向单值性，但不是上述
+选定的偶数相位环。无关几何实现和连续引力 RT 不由这些应用判定。
+完整英文定义与论证见
+[有限变分与相位取向说明](../../../Library/QuantumBounds/codex2026finitertvariation.md)。
+
+## 追加锚（本行以下为增补区）
