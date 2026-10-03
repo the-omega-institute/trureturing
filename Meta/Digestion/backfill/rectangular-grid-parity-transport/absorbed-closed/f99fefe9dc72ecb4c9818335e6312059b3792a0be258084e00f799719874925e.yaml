@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
   normalized_sha256: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
 cas_ref: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference
+    target_statement_id: sha256:d50bb66c085d146ca989ac6b08cc72684acd7741d9a5f2a3f6d5448ceac0fae5
 receipts:
   unresolved_subitems: []
