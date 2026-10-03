@@ -1,0 +1,5 @@
+**Proof.** In Burnside's fixed-point sum, the identity contributes $A(n)$,
+the four eligible nonzero vectors contribute $n^2/3$ each by Theorem 5,
+and every other term is zero. Since $n^2=3(n^2/3)$ and $A(n)\ge0$, an orbit
+count of zero or one would contradict the displayed equality. Setting
+$q=O(n)-2$ gives $A(n)=n^2q+2n^2/3$. $\square$

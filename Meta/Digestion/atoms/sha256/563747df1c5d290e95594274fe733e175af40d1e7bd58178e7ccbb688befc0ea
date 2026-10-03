@@ -1,0 +1,8 @@
+**Theorem 3 (finite translation stabilizers).** Let $G$ be a finite
+abelian group, let $S\subseteq G$ be finite, and write
+$H=\{t\in G:S+t=S\}$. For every $t\in H$,
+$|S|t=0$, and $|H|$ divides $|S|$. If $|H|=|S|$ and $p\in S$, then
+$S=p+H$. In particular, if $|S|=3$ and $H$ contains a nonzero element
+$t$, then $|H|=3$ and
+$S=\{p,p+t,p+2t\}$ for every $p\in S$.
+

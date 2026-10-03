@@ -1,0 +1,10 @@
+**Proof.** Translation by $t$ permutes $S$. Summing the three points
+before and after translation gives $3t=0$. For either coordinate $x$
+of $t$, this means $n$ divides $3x$ in any integer representative.
+Since $n=3m$, the representative is a multiple of $m$; its range
+$0\leq x<3m$ leaves only $0,m,2m$. Neither coordinate can be zero:
+otherwise translating any point of $S$ gives a second point of $S$
+with the same corresponding coordinate, unless the translation fixes
+that point, in which case $t=0$. The four stated pairs are therefore
+the only possibilities. $\square$
+

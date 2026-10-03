@@ -1,0 +1,8 @@
+**定理 53.4（固定全支撑律上的完整联合辨识）。** 对定义 53.1 的同一个已知 $\mu$，
+
+$$
+P_{\theta,\alpha}=P_{\eta,\beta}\quad\Longleftrightarrow\quad
+\alpha=\beta\ \text{且}\ (\alpha=0\ \text{或}\ \theta=\eta).
+\tag{53.8}
+$$
+
