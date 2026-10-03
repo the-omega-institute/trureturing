@@ -1,0 +1,18 @@
+**Definition 1.1 (Strict records and block sums).** For $n\in\mathbb N$, let
+$\mathfrak S_n$ be the permutations of $\{0,\ldots,n-1\}$. A position $i$ of
+$\pi\in\mathfrak S_n$ is a right maximum if $\pi(j)<\pi(i)$ for every $j>i$.
+Let $r(\pi)$ count these positions. For $\alpha\in\mathfrak S_m$ and
+$\beta\in\mathfrak S_h$, their direct and skew sums are
+
+$$
+\begin{aligned}
+(\alpha\oplus\beta)(i)&=\begin{cases}\alpha(i)&i<m,\\m+\beta(i-m)&m\le i<m+h,\end{cases}\\
+(\alpha\ominus\beta)(i)&=\begin{cases}h+\alpha(i)&i<m,\\\beta(i-m)&m\le i<m+h.\end{cases}
+\end{aligned}
+$$
+
+These definitions allow $m=0$ and $h=0$. A proper direct cut of a permutation
+of length $n$ is an integer $c$ with $0<c<n$ such that every value before $c$
+is smaller than every value at or after $c$. A proper skew cut reverses this
+inequality. Write $s=0$ for direct cuts and $s=1$ for skew cuts.
+
