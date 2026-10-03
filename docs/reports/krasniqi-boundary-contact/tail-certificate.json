@@ -1,0 +1,16 @@
+{
+  "report": {
+    "name": "tail",
+    "nodes": 1,
+    "positive_leaves": 1,
+    "excluded_leaves": 0,
+    "maxdepth": 0,
+    "fail": null
+  },
+  "leaves": [
+    [
+      "",
+      "positive"
+    ]
+  ]
+}
