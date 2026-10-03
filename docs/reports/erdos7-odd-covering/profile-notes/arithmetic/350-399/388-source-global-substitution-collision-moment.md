@@ -1107,76 +1107,83 @@ existence has been established. The argument reuses the digit split,
 whole-liability hull and SC23 accounting; it is ordinary mathematics,
 without new Lean verification or a conclusion for unrestricted Erdős #7.
 
-## 14. Fresh-prime transport fixes the complete cofactor-complement hull
+## 14. Existing deep projection bounds constrain the complete cofactor complement
 
-The hull-one alternative in SC54 is forced when \(r=3\). This follows
-by applying the existing fresh-prime root transport to an auxiliary
-cover; it does not require a new prime-substitution theorem.
+The complete complement in SC54 inherits the deep projection theorem
+of [report 375, Sections 1--4](375-deep-prime-prefix-projections-and-tree-contraction.md#1-complete-fibres-and-the-blocked-tree-count).
+This reuses the existing whole-source transport and tree duality; no
+new prime-substitution theorem is needed.
 
 For the same actual original family put
 \[
  K_G=(\mathbb Z/M\mathbb Z)
                  \setminus\bigcup_{g\in G}(\alpha_g\bmod g).
 \]
-This set is nonempty: otherwise the proper original subfamily \(G\)
-would itself be a smaller distinct odd whole cover. For \(x\in K_G\),
-let
+Let \(\mathcal C_0\) be all original classes whose moduli are
+\(r\)-free, on the complete carrier \(\mathbb Z/(s^BM)\mathbb Z\),
+and let \(R_r\) be their complement. Original \(r\) occurs, so
+\(|\mathcal C_0|<K\). Minimum cardinality makes \(R_r\) nonempty;
+otherwise \(\mathcal C_0\) would already be a smaller distinct odd
+whole cover. Every original in \(G\) lies in \(\mathcal C_0\), and
+its membership depends only on the \(M\)-coordinate. Consequently
+\[
+ \operatorname{pr}_M(R_r)\subseteq K_G. \tag{SC56}
+\]
+In particular \(K_G\ne\varnothing\). This inclusion uses the same
+actual original phases throughout.
+
+Fix a prime \(q\mid M\) with \(q>r\), and put
+\(H_q=v_q(M)\), \(t_q=q-r+1\). Apply report 375 DP6 with smaller
+prime \(r\), larger prime \(q\), and its residual \(R_r\).
+Together with SC56, that result says that
+\[
+ \operatorname{pr}_{q^{H_q}}(K_G)
+ \text{ contains a complete }t_q\text{-ary depth-}H_q
+ \text{ subtree of the }q\text{-ary prefix tree}. \tag{SC57}
+\]
+Prefixes read digits from lowest to highest. In particular, for every
+\(1\le h\le H_q\),
+\[
+ |\operatorname{pr}_{q^h}(K_G)|\ge(q-r+1)^h. \tag{SC58}
+\]
+The same report's DP7 supplies a probability on actual \(R_r\)
+with mass at most \(t_q^{-h}\) on every \(q^h\)-cylinder. Push it
+forward through \(\operatorname{pr}_M\). Its support lies in \(K_G\)
+by SC56, and the same bound holds for every \(0\le h\le H_q\).
+These are, for each \(q\), one law controlling all its depths;
+neither DP7 nor this projection supplies one law controlling all
+primes simultaneously. Nor can the separate counts SC58 be multiplied
+to obtain a joint CRT volume.
+
+For \(x\in K_G\), define its complete hull by
 \[
  \Gamma_G=\gcd\bigl(M,\{y-x:y\in K_G\}\bigr).
 \]
-Every prime divisor of \(\Gamma_G\) is strictly smaller than \(r\).
-In particular,
+The definition is independent of representatives and the base point,
+as in PH3--PH4. A prime \(q\mid\Gamma_G\) would make the entire
+\(q\)-projection a singleton. SC58 excludes every \(q>r\), while
+\(q=r\) is absent from \(M\). Hence all prime divisors of
+\(\Gamma_G\) are smaller than \(r\). Since \(M\) is odd,
 \[
  r=3\quad\Longrightarrow\quad\Gamma_G=1. \tag{SC55}
 \]
-The definition is independent of representatives and the selected base
-point, as in PH3--PH4; \(M=1\) gives the stated value directly.
-
-Suppose a prime \(q\mid\Gamma_G\) satisfied \(q>r\). Divisor
-closure of the original inventory gives \(q\in G\), and the entire
-complement lies in \(\beta\bmod q\), with
-\(\beta=x\bmod q\ne\alpha_q\bmod q\). Hence
-\[
- \{\alpha_g\bmod g:g\in G\}\cup\{\beta\bmod q\}
- \tag{SC56}
-\]
-is a whole cover with exactly two distinct pure-\(q\) classes and
-all other numerical moduli distinct. Its period divides \(M\), so
-\(r\) is absent from this auxiliary cover, even though \(r\) is
-present in the original EB1 family.
-
-Apply [report 348, Section 1](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#1-replace-one-digit-and-retain-the-complete-remaining-coordinates),
-which reuses the Harrington--Sun--Wong construction with literal source
-coordinates and permits selecting fewer old root branches. In that
-interface the old prime is \(q\), the fresh target is \(r\), and
-there are \(q-2\ge r\) old roots outside the two pure classes.
-Select \(r\) of them for the \(r\) new roots. No pure-\(r\)
-closing class is needed. Every remaining auxiliary label contributes
-at most one output: a \(q\)-free label is unchanged, and a surviving
-\(q\)-bearing label \(d\ne q\) becomes \(rd/q\).
-Freshness and the existing transport preserve numerical distinctness,
-oddness, nonunit moduli and whole coverage, at arbitrary original
-heights. The number of output classes is at most
-\[
- (|G|+1)-2=|G|-1<K,
-\]
-contradicting EB1. This proves the prime-support assertion and SC55.
-The comparison replaces the whole original cover by a smaller one;
-it does not require \(r\) to be absent from the original ambient period.
+The case \(M=1\) gives the same value directly.
 
 Now take \(r=3\). Whenever the pure-\(s\) output survives at root
 \(j_s\), choosing \(\rho\ne j_s\) in Section 13 forces
 \(P_{j_s}=K_G\), a nonempty set with hull one. Thus
 \(\mathcal V_{j_s}=\varnothing\) for every retained family SC44.
+More precisely, its complete cofactor projection occupies at least
+\((q-2)^h\) residues modulo every \(q^h\mid M\), by SC58.
 The certified one-root construction can succeed only by buying
 \(\rho=j_s\), or by choosing a common tree that omits the pure-\(s\)
 root. In the first case it receives no whole-root top-service credit,
 as already shown in Section 13. A different slot-safety test alone
 cannot provide a single nonunit-cofactor patch for the full \(K_G\).
 
-SC55 concerns this complete complement, not the smaller individual
-residuals \(J_g\) or projections obtained after retaining additional
-service. It asserts neither positive uniform density nor independent
-coordinates. The remaining patch-existence problem persists. This is
-an ordinary application of the cited transport and original extremal
-count, without new Lean verification or unrestricted noncoverage.
+These consequences concern the complete complement, not the smaller
+individual residuals \(J_g\) or projections obtained after retaining
+additional service. They assert neither independent coordinates nor
+a uniform lower density. The remaining patch-existence problem
+persists. This is an ordinary application of the existing projection
+theorem, without new Lean verification or unrestricted noncoverage.
