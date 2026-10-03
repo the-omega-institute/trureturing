@@ -118,9 +118,15 @@ every \(u\in U_r\) and every compatible \(\theta\), at least one pair in
 \(\bigcup_{b,m}\mathcal P_{b,m}\) survives together:
 
 \[
- \boxed{\text{every common-source map has at least one output-label
+\boxed{\text{every common-source map has at least one output-label
  collision}.} \tag{SC6}
 \]
+
+Here a surviving pair means that both individual pullback classes are
+nonempty under the same source map.  It does not require one source point to
+satisfy both original congruences: the free \(M\)-coordinate can realize each
+phase separately.  Different \(m\)-phases therefore remain different output
+phases while still giving a numerical-modulus collision.
 
 The collision is numerical, not a duplicate phase. If two surviving labels
 in one \(\mathcal P_{b,m}\) had equal output phase, compatibility of the
@@ -248,7 +254,10 @@ counterexample or a proof of Erdős #7.
 The accompanying checker enumerates all compatible depth-one and depth-two
 embeddings for small \(r<s\), and verifies (SC9)--(SC10) by exact rational
 counting. It also verifies the factorization of a pair-survival probability
-into the independent safe-coordinate factor (SC8) and the common-tree factor.
+into the independent safe-coordinate factor (SC8) and the common-tree
+factor. The divisor-closed local family in the
+[follow-up checker](../../../frontier/cover-geometry/source-global-collision-moment/collision_moment_no_cap.py)
+keeps equal cofactor phases as an explicit valid special case.
 It is a kernel check for the new finite probability identity; it does not
 instantiate the universal EB1 hypothesis or certify (SC12) for an unknown
 cover.

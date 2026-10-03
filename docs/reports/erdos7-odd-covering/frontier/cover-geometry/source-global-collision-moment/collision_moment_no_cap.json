@@ -1,0 +1,209 @@
+{
+  "common_source_collision_for_every_map": true,
+  "comparable_classes_disjoint": true,
+  "distinct_odd_nonunit_moduli": true,
+  "divisor_closed_label_set": true,
+  "edge_count": 6,
+  "kappa": "3/10",
+  "label_count": 51,
+  "map_summary": [
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        2,
+        3
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        2,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        3,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        2,
+        3
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        2,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        3,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        2,
+        3,
+        4
+      ],
+      "u": 1
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        2
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        1,
+        4
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        2,
+        3
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        2,
+        4
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 1,
+      "selected": [
+        0,
+        3,
+        4
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        2,
+        3
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        2,
+        4
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        1,
+        3,
+        4
+      ],
+      "u": 2
+    },
+    {
+      "live_pairs": 3,
+      "selected": [
+        2,
+        3,
+        4
+      ],
+      "u": 2
+    }
+  ],
+  "minimum_live_designated_collisions": 1,
+  "pair_count": 12,
+  "parameters": {
+    "depth": 1,
+    "r": 3,
+    "s": 5,
+    "safe_coordinates": [
+      1,
+      2
+    ]
+  },
+  "psi": "9/5",
+  "psi_gt_one": true,
+  "rho": "1/2",
+  "scope": "finite source-global collision incidence model; not a whole cover",
+  "source_map_count": 20,
+  "status": "PASS",
+  "whole_cover": false
+}
