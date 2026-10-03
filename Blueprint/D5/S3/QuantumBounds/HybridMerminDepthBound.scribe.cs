@@ -25,14 +25,18 @@ internal sealed class HybridMerminDepthBoundDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The maximum is attained and equals the bound", Disp(F.Id("claim")),
                 "Distribute the weight over the k+m marked coordinates. Fixing a marked coordinate to true removes it and replaces the sign s(h+1) by t(h)=(-1)^NatDiv(h,2). Both remaining cells are nonempty because k,m >= 2. Fix all but one setting in each of these cells. Each resulting four-term block is a CHSH expression up to local sign changes, so its absolute value is at most 2. There are 2^(r+s-2) such blocks for remaining cell sizes r,s; their sum is at most 2^(r+s-1). Each marked-coordinate contribution is therefore at most 2^(k+m-2). The responses A(x)=t(hammingDist(x,const(Fin k,false))) and B(y)=t(hammingDist(y,const(Fin m,false))) make every four-term block equal to 2, attaining all marked-coordinate bounds simultaneously. The exact sharp value follows. The formal assertion concerns the deterministic correlator functional; the passage to the convex hybrid model uses the linearity and symmetry described above. Models with a singleton cell and sharp bounds for more cells are outside this assertion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bernards-guhne-2022-hybrid-nonlocality-depth-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("hybrid-mermin-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
