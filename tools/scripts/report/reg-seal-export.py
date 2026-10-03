@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export numerical seals using the checkout's production assessment and analysis export.
 
-Python 3.12+, GNU/BSD make, bash, dotnet and the pinned Lean/Lake toolchain
+Python 3.12+, GNU make, bash, dotnet and the pinned Lean/Lake toolchain
 must be on PATH. Run from any directory:
   python3 tools/scripts/report/reg-seal-export.py --repository REPOSITORY
   python3 tools/scripts/report/reg-seal-export.py --repository REPOSITORY \
