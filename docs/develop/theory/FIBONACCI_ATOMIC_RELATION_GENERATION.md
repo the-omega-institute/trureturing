@@ -49428,3 +49428,388 @@ $$
 具有相同组成 $(3,0)$ 和相同叶序，却按定义2.1有 $p\ne q$；结合乘法给 $E(p)=E(q)=A$。因此在全部原树上不存在从 $E$ 恢复括号结构的函数。规范轨道的模组成与进位恢复、完整低高位恢复以及全部原树的结构恢复是不同的任务；上述各项已分别在它们的声明域内证成。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 356. 连续 Clifford 叶积窗口的尖锐闭合与历史纤维
+
+**定义 356.1（连续叶积窗口）。** 沿用定义 2.1、定义 3.1、定义 355.1 的自由有序二叉树 $\mathcal T$、替换 $\rho$、观察 $E$ 及 Clifford 代数 $C$。对整数 $m\ge1$ 定义
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr)\in C^m,
+\qquad
+W_m(\mathcal T)=\{W_m(t):t\in\mathcal T\}.
+$$
+
+窗口的 $m$ 个坐标必须来自同一棵实际原树 $t$。称全原树上的长度 $m$ 窗口闭合，是指存在唯一的函数
+
+$$
+F_m:W_m(\mathcal T)\longrightarrow W_m(\mathcal T),
+\qquad
+F_m(W_m(t))=W_m(\rho(t))\quad(t\in\mathcal T).
+$$
+
+这里的定义域和值域都是实际窗口像，不把 $C^m$ 中任意代数元组当作可实现的窗口。
+
+**引理 356.2（等级对合与共轭构成的代数自同构）。** 令 $\gamma$ 为 Clifford 代数的标准保持乘法次序的等级对合：$\gamma(1)=1$，$\gamma(v)=-v$ 对每个 $v\in V$ 成立，并按乘法延拓，满足 $\gamma^2=\operatorname{id}_C$。这里的等级对合使用 Lundholm–Svensson，§2.3 的标准运算，而非反转乘法次序的反对合。令
+
+$$
+J(x)=B\,\gamma(x)\,B^{-1}.
+$$
+
+则 $B^{-1}=-B$，$J$ 是保单位的代数自同构，且
+
+$$
+J(A)=A+B,\qquad J(B)=-B,\qquad J^2=\operatorname{id}_C.
+$$
+
+在向量子空间 $V=\mathbb RA\oplus\mathbb RB$ 上，$J$ 的坐标为
+
+$$
+J(aA+bB)=aA+(a-b)B,
+$$
+
+并保持二次型 $Q$：
+
+$$
+Q(a,a-b)=a^2+a(a-b)-(a-b)^2=a^2+ab-b^2=Q(a,b).
+$$
+
+更一般地，按 $1,A,B,AB$ 展开时有
+
+$$
+J(s+tA+uB+vAB)=(s+v)+tA+(t-u)B-vAB.
+\tag{356.1}
+$$
+
+**证明。** 由 $B^2=-1$，有 $B(-B)=(-B)B=1$，所以 $B^{-1}=-B$。等级对合是保单位的乘法自同构，内共轭 $x\mapsto BxB^{-1}$ 也是保单位的代数自同构，二者复合即为 $J$。
+
+由 $\gamma(A)=-A$、$\gamma(B)=-B$ 及 $B^{-1}=-B$，并用 $AB+BA=1$，得到
+
+$$
+J(A)=B(-A)(-B)=BAB=A+B,
+\qquad
+J(B)=B(-B)(-B)=-B.
+$$
+
+对任意 $x\in C$，利用 $\gamma(B)=-B$、$\gamma(B^{-1})=B$ 可得
+
+$$
+\begin{aligned}
+J^2(x)
+ &=B\,\gamma\bigl(B\gamma(x)B^{-1}\bigr)B^{-1}\\
+ &=B\,\gamma(B)\,x\,\gamma(B^{-1})B^{-1}\\
+ &=B(-B)xB(-B)=x.
+\end{aligned}
+$$
+
+又有 $J(AB)=J(A)J(B)=(A+B)(-B)=1-AB$。将 $J$ 作用于 $s+tA+uB+vAB$ 并收集四个基项，得到（356.1）。向量坐标公式和 $Q$ 的保持性由 $J(A),J(B)$ 的两式直接计算。这里的 $J$ 是 Clifford 代数上的自同构，不是组成矩阵 $M^3$，二者的作用域与含义不同。这里使用的 $1,A,B,AB$ 线性无关性沿用 §355 的矩阵表示；它也保证后文比较的系数确实给出不等元。$\square$
+
+**引理 356.3（全部原树的三步关系）。** 对任意 $t\in\mathcal T$ 及整数 $n\ge0$，有
+
+$$
+E\bigl(\rho^{n+3}(t)\bigr)=J\bigl(E(\rho^n(t))\bigr).
+\tag{356.2}
+$$
+
+**证明。** 记 §355 中的规范叶积为 $X_j=E(T_j)$。由 $AB+BA=1$，
+
+$$
+X_3=BAB=A+B,
+\qquad
+X_4=(A+B)BA=-B.
+$$
+
+这正好分别等于 $J(A)$ 和 $J(B)$。先证 $n=0$ 的情形。对 $t$ 作自由树结构归纳：在 $\alpha$、$\beta$ 两个原子处，上式就是 $X_3=J(A)$、$X_4=J(B)$；若 $t=\langle s,u\rangle$，则 $\rho$ 保持有序构造且 $E$ 保持乘法次序，于是由归纳假设
+
+$$
+\begin{aligned}
+E(\rho^3\langle s,u\rangle)
+ &=E\bigl(\langle\rho^3s,\rho^3u\rangle\bigr)\\
+ &=E(\rho^3s)E(\rho^3u)\\
+ &=J(E(s))J(E(u))\\
+ &=J(E(s)E(u))
+ =J(E(\langle s,u\rangle)).
+\end{aligned}
+$$
+
+对任意 $n$，把同一结论应用于实际原树 $\rho^n(t)$ 即得（356.2）。规范二项递推只用于原子处的 $X_3,X_4$；全原树上的关系由有序构造与 $J$ 的乘法性通过结构归纳得到。$\square$
+
+**定理 356.4（全原树连续窗口的尖锐闭合）。** 对每个整数 $m\ge1$，长度 $m$ 窗口在全原树 $\mathcal T$ 上闭合，当且仅当 $m\ge3$。当 $m\ge3$ 时，闭合后继唯一地由
+
+$$
+F_m(x_0,\ldots,x_{m-1})
+ =\bigl(x_1,\ldots,x_{m-1},J(x_{m-3})\bigr)
+\tag{356.3}
+$$
+
+给出。
+
+**证明。** 设 $m\ge3$，取任意实际代表 $W_m(t)=(x_0,\ldots,x_{m-1})$。前 $m-1$ 个坐标显然是 $E(\rho t),\ldots,E(\rho^{m-1}t)$；由（356.2）在 $n=m-3$ 处
+
+$$
+E(\rho^m t)=J\bigl(E(\rho^{m-3}t)\bigr)=J(x_{m-3}).
+$$
+
+故（356.3）满足 $F_m(W_m(t))=W_m(\rho t)$，并且所得元组确实属于 $W_m(\mathcal T)$。若一个实际窗口有两个代表 $t,u$，它们给出相同的 $x_i$，右侧（356.3）只依赖这 $m$ 个坐标，因而给出同一个输出；所以定义与代表无关。任何满足后继条件的函数都必须在每个实际窗口上取值为 $W_m(\rho t)$，故该函数唯一。
+
+下面排除较短窗口。令
+
+$$
+ t_2=\langle\alpha,\alpha\rangle,
+ \qquad
+ t_4=\langle t_2,t_2\rangle.
+$$
+
+则 $E(t_2)=A^2=1$、$E(t_4)=(A^2)^2=1$，而
+
+$$
+E(\rho t_2)=B^2=-1,
+\qquad
+E(\rho t_4)=(B^2)^2=1.
+$$
+
+因此 $W_1(t_2)=W_1(t_4)$ 而下一项不同；由 §355 的线性无关性（或其矩阵表示中的 $-I\ne I$），$1\ne-1$，所以 $m=1$ 不闭合。
+
+对 $m=2$，令
+
+$$
+ p=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+ \qquad
+ q=\langle\beta,\langle\alpha,\alpha\rangle\rangle,
+ \qquad S=BA.
+$$
+
+$p,q$ 都有组成 $(2,1)$，且都是同一右结合树形；直接按有序叶次序相乘，得到
+
+$$
+E(p)=A(AB)=B,\qquad E(q)=B(AA)=B,
+\qquad
+E(\rho p)=B(BS)=-S,\qquad E(\rho q)=S(BB)=-S.
+$$
+
+另一方面，由 $S^2=S+1$、
+
+$$
+S(A+B)=A+2B,
+\qquad
+(A+B)S=-B,
+\tag{356.4}
+$$
+
+有
+
+$$
+E(\rho^2p)=S^2(A+B)=2A+3B,
+\qquad
+E(\rho^2q)=(A+B)S^2=A.
+\tag{356.5}
+$$
+
+这些等式的有序乘法展开为
+
+$$
+\begin{aligned}
+S^2&=B(AB)A=B(1-BA)A=BA-B^2A^2=S+1,\\
+S(A+B)&=BA^2+BAB=B+(A+B)=A+2B,\\
+(A+B)S&=ABA+B^2A=(A-B)-A=-B.
+\end{aligned}
+$$
+
+因为 $\rho^2(\alpha)=T_2$、$\rho^2(\beta)=T_3$，$p,q$ 的第三项分别是 $S(S(A+B))$ 和 $(A+B)(SS)$。所以
+
+$$
+\begin{aligned}
+S^2(A+B)&=(S+1)(A+B)=(A+2B)+(A+B)=2A+3B,\\
+(A+B)S^2&=(A+B)(S+1)=-B+(A+B)=A.
+\end{aligned}
+$$
+
+由 $1,A,B,AB$ 线性无关，$2A+3B\ne A$。故两棵实际树满足
+
+$$
+W_2(p)=W_2(q)=(B,-BA),\qquad
+W_2(\rho p)=(-BA,2A+3B)\ne(-BA,A)=W_2(\rho q),
+$$
+
+$m=2$ 也不闭合。综上，恰当条件是 $m\ge3$。$\square$
+
+**推论 356.5（六周期后继与实际像上的逆）。** 对每个 $(x,y,z)\in W_3(\mathcal T)$，有
+
+$$
+F_3(x,y,z)=(y,z,Jx),
+\qquad
+F_3^{-1}(x,y,z)=(Jz,x,y).
+\tag{356.6}
+$$
+
+逆函数仍把实际像送回实际像，且在该实际像上 $F_3^6=\operatorname{id}$。对实际窗口，$F_3^5(W_3(t))=W_3(\rho^5t)$，所以逆的实际像性也由实际原树代表得到。
+
+**证明。** （356.3）在 $m=3$ 时就是第一式。由 $J^2=\operatorname{id}$，
+
+$$
+F_3^2(x,y,z)=(z,Jx,Jy),
+\quad
+F_3^3(x,y,z)=(Jx,Jy,Jz),
+$$
+
+继续迭代得 $F_3^6(x,y,z)=(x,y,z)$。直接组合（356.6）两式也得到左右逆。另一方面，每次应用 $F_3$ 都把 $W_3(t)$ 送到实际窗口 $W_3(\rho t)$；故 $F_3^5(W_3(t))=W_3(\rho^5t)$，逆确实在 $W_3(\mathcal T)$ 内。$\square$
+
+**推论 356.6（完整历史的六周期与最短充分窗口）。** 对任意实际原树 $t$，令 $x_r=E(\rho^r t)$（$r=0,1,2$）。对整数 $n=3q+r$，其中 $q\ge0$ 且 $r\in\{0,1,2\}$，有
+
+$$
+E(\rho^n t)=J^q(x_r).
+\tag{356.7}
+$$
+
+因而
+
+$$
+W_6(t)=(x_0,x_1,x_2,Jx_0,Jx_1,Jx_2),
+$$
+
+且 $W_3$、$W_6$ 与完整历史
+
+$$
+\mathscr H(t)=\bigl(E(t),E(\rho t),E(\rho^2t),\ldots\bigr)
+$$
+
+在 $\mathcal T$ 上具有相同的纤维，即任意 $t,u\in\mathcal T$ 满足 $W_3(t)=W_3(u)$、$W_6(t)=W_6(u)$、$\mathscr H(t)=\mathscr H(u)$ 三者等价。每棵树历史的最小正周期存在且整除 $6$，并不要求它恰好等于 $6$。
+
+**证明。** 对 $q$ 作归纳。$q=0$ 时是定义；若结论对 $q$ 成立，则由（356.2）
+
+$$
+E(\rho^{3(q+1)+r}t)=J\bigl(E(\rho^{3q+r}t)\bigr)=J^{q+1}(x_r).
+$$
+
+因为 $J^2=\operatorname{id}$，右侧只依赖 $q$ 模 $2$，故 $E(\rho^{n+6}t)=E(\rho^nt)$。
+
+若 $W_3(t)=W_3(u)$，式（356.7）逐项给出 $\mathscr H(t)=\mathscr H(u)$，同时 $W_6(t)=W_6(u)$。反向地，$W_6$ 的前三个坐标就是 $W_3$，而完整历史相等也当然蕴含前三项相等；三种观察的纤维因此相同。最小正周期存在，因为 $6$ 已经是周期；将 $6$ 除以最小正周期，若所得余数为正，则它也必是周期，最小性迫使该余数为零。$\square$
+
+**定理 356.7（历史纤维不能恢复组成与指定来源关系）。** 完整 Clifford 叶积历史在全部原树上不能恢复组成；即使限制到规范轨道，也不能恢复定义 355.2 在 $d=3,e\ge2$ 时的下一次进位或 $d=4,e=2$ 时的当前高位。更具体地，对任意 $t\in\mathcal T$ 及整数 $k\ge0$，令
+
+$$
+ t_k=\rho^{6k}(t),
+ \qquad c(t)=(a,b)^{\mathsf T}.
+$$
+
+则 $\mathscr H(t_k)=\mathscr H(t)$，而
+
+$$
+ c(t_k)=M^{6k}c(t),
+ \qquad
+M^6-I=
+\begin{pmatrix}4&8\\8&12\end{pmatrix}.
+\tag{356.8}
+$$
+
+本原树域不含空树，因此 $c(t)$ 的坐标非负且非零；$k=0$ 时 $t_0=t$，而对每个 $k\ge1$，$c(t_k)-c(t)$ 的两个坐标都严格为正。特别地，$T_0=\alpha$ 与 $T_6$ 具有同一完整历史而组成分别为 $(1,0)$ 与 $(5,8)$。
+
+**证明。** 由推论 356.6，叶积历史六周期，所以
+
+$$
+E(\rho^n t_k)=E(\rho^{n+6k}t)=E(\rho^nt)
+$$
+
+对每个 $n\ge0$ 成立。组成的等式来自定理 3.4。直接相乘得到（356.8）；于是
+
+$$
+(M^6-I)(a,b)^{\mathsf T}=(4a+8b,\,8a+12b)^{\mathsf T}.
+$$
+
+对非负且非零的 $(a,b)$，两坐标均为正。对每个 $i\ge0$，$M^{6i}c(t)$ 仍是非负非零向量，故
+
+$$
+c(t_{i+1})-c(t_i)=(M^6-I)M^{6i}c(t)
+$$
+
+的两坐标均为正。对 $i=0,\ldots,k-1$ 求和，得到所有 $k\ge1$ 的严格增长。取 $t=T_0$、$k=1$ 即得到 $c(T_0)=(1,0)$、$c(T_6)=(5,8)$。
+
+同一对 $T_0,T_6$ 还给出 §355 的两个具体目标碰撞。模 $d=3$ 时，低位分别是 $(1,0)$、$(2,2)$，所以整数进位分别为 $0$、$1$；因此对每个 $e\ge2$，$K_{3,e}$ 分别为 $(0,0)$ 和 $(0,1)$。$e=1$ 时目标值域是单元素集合，进位输出恒为零，本反例不构成障碍。模 $d=4,e=2$ 时，低位都为 $(1,0)$ 且进位都为零，但当前高位分别是
+
+$$
+\frac{(1,0)-(1,0)}4\equiv(0,0)\pmod2,
+\qquad
+\frac{(5,8)-(1,0)}4=(1,2)\equiv(1,0)\pmod2.
+$$
+
+因此不存在函数
+
+$$
+R_c:\mathscr H(\mathcal T)\longrightarrow\mathbb N^2,
+\qquad R_c(\mathscr H(t))=c(t)\quad(t\in\mathcal T).
+$$
+
+对每个整数 $e\ge2$，在规范历史像 $\{\mathscr H(T_j):j\ge0\}$ 上，也不存在分别满足
+
+$$
+R_{K,e}(\mathscr H(T_j))=K_{3,e}(j),
+\qquad
+R_H(\mathscr H(T_j))=H_{4,2}(j)\quad(j\ge0)
+$$
+
+的函数 $R_{K,e}$ 和 $R_H$，其值域分别是 $(\mathbb Z/e\mathbb Z)^2$ 和 $(\mathbb Z/2\mathbb Z)^2$：同一输入 $\mathscr H(T_0)=\mathscr H(T_6)$ 不能给出两种不同目标。任意有限窗口只是完整历史的前缀，故增加任何有限观察长度也不能恢复这些特定目标。该结论复用 §355 的实际来源反例，不重新进行其规范模数分类。$\square$
+
+**命题 356.8（固定组成下的叶序与固定叶序下的括号仍不可恢复）。** 令
+
+$$
+ s=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+ \qquad
+ u=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+则 $c(s)=c(u)=(2,2)$，且
+
+$$
+W_3(s)=W_3(u)=(-1,-S^2,S^2).
+\tag{356.9}
+$$
+
+因此二者的完整历史相同，而 $s\ne u$ 仍是自由有序树中的不同叶序。另令
+
+$$
+ p_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad
+ q_3=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+它们具有同一叶序和组成 $(3,0)$，但括号不同；对每个 $n\ge0$，
+
+$$
+E(\rho^n p_3)=X_n^3=E(\rho^n q_3).
+\tag{356.10}
+$$
+
+**证明。** 记 $X_n=E(T_n)$。对 $s$，前三个读数依次为
+
+$$
+A^2B^2=-1,
+\qquad
+B^2(BA)^2=-S^2,
+\qquad
+(BA)^2(A+B)^2=S^2,
+$$
+
+其中 $(A+B)^2=1$；对 $u$ 只是交换两个平方因子的次序，三式分别仍为 $-1,-S^2,S^2$。因此（356.9）成立，完整历史相同则由推论 356.6 得到。$s\ne u$ 是因为自由构造保留左右次序。
+
+对 $p_3,q_3$，替换 $\rho^n$ 保持两种括号而把三个 $\alpha$ 叶子都解释为 $T_n$，故两式的观察分别为 $(X_nX_n)X_n$ 与 $X_n(X_nX_n)$；结合律使它们都等于 $X_n^3$。原始语法不采用结合律。两棵替换后树的左子树分别是 $\langle T_n,T_n\rangle$ 和 $T_n$；前者叶数是后者的两倍，而 $T_n$ 的叶数为正，所以对每个 $n$ 两棵实际树仍不同。$\square$
+
+**推论 356.9（规范轨道与全原树范围的区别）。** 在规范轨道
+
+$$
+\mathcal X=\{X_j:j\ge0\}
+$$
+
+上，存在唯一函数 $F_{\mathcal X}:\mathcal X\to\mathcal X$ 满足
+
+$$
+F_{\mathcal X}(X_j)=X_{j+1}\quad(j\ge0).
+$$
+
+因而单次叶积已闭合；最小长度三只针对全原树的连续窗口。
+
+**证明。** §355 已证明 $X_j=X_\ell$ 当且仅当 $j\equiv\ell\pmod6$。所以相同规范叶积的后继仍相同，可以在六个不同值上规定 $F_{\mathcal X}(X_r)=X_{r+1}$（$r=0,\ldots,5$），其中 $X_6=X_0$；这也给出值域在 $\mathcal X$ 内及唯一性。定理 356.4 的两个较短窗口反例位于全原树域，其结论与本规范轨道的单次闭合兼容。$\square$
+
+这两个结论只涉及同一实际树产生的初始窗口；窗口长度 $m$ 不等同于任意编码的维数、状态总数、比特成本或实测加速。连续窗口的闭合只说明存在代数后继函数，不说明该函数恢复组成、来源身份、原始括号或叶序。
+
+数学引文与边界：等级对合、Clifford 泛性质及乘法关系沿用 Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，[arXiv:0907.5356v1](https://arxiv.org/abs/0907.5356v1)，§§2.1、2.3，以及 §355 的具体实例。原替换接口、三步关系、全原树最小窗口、历史纤维及其不可恢复见证是本卷对既有定义的综合推导；全球原创性未确立。本节没有 Lean 内核证明，纸面证明、精确有限代数计算与内核验证不混同。
+
+## 追加锚（本行以下为增补区）
