@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Syntax
@@ -57,18 +58,7 @@ def arena : Arena where
       ∀ pStar ε : ℝ, 0 < pStar → pStar ≤ p → D ρ σ ≤ ε → ε < pStar →
         0 < q ∧ D ((1 / p) • Φ ρ) ((1 / q) • Φ σ) ≤ ε / pStar
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
-  let sourceName := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance ++
-    `branch_conditioned_trace_distance
-  let identity := "sha256:b0402a35876d7baf34f9739ea040e967bd9424a79b7beeec1e4813eca3c8b804"
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -121,20 +111,29 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem branch_conditioned_trace_distance in arena
-  readout via (realize branchSignature
-    (fun _ p σ => traceNorm (p.2 - σ) / 2)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branch_conditioned_trace_distance.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{0, 0, 0, 0, 0} branchSignature
+    (fun _ p σ => traceNorm.{0, 0, 0} (p.2 - σ) / 2)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "BranchConditionedTraceDistance") "branch_conditioned_trace_distance") "Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance/Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} branchSignature
+    (fun _ p σ => traceNorm.{0, 0, 0} (p.2 - σ) / 2)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

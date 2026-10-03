@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.PrimeNumberTheorem.PntContourBound
 import Reg.Support.DependentFamily
 import Reg.Support.PntAuditFacts
@@ -286,21 +287,33 @@ def registration : Registration arena
     intro h
     linarith
 
-register_information_theorem _root_.SmoothedChebyshevContourBound in arena
-  readout via (realize signature (fun _ p C₅ => ‖I₁ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖ + ‖I₂ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ +
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.SmoothedChebyshevContourBound) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p C₅ => ‖I₁ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖ + ‖I₂ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ +
         ‖I₃ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ + ‖I₄ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.2 p.2.1‖ +
         C₅ * p.2.2.1 ^ p.2.1 / p.2.2.2.1 + ‖I₆ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.2 p.2.1‖ +
         ‖I₇ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ + ‖I₈ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ +
-        ‖I₉ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Weil.PrimeNumberTheorem.PntContourBound
-    coordinates := #[0, 5, 9, 10, 11, 12]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg"] }] })
-  escape continues (open)
+        ‖I₉ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "SmoothedChebyshevContourBound") "Reg.D5.S3.Weil.PrimeNumberTheorem.PntContourBound/Reg.D5.S3.Weil.PrimeNumberTheorem.PntContourBound.ContourBound.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntContourBound.ContourBound.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p C₅ => ‖I₁ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖ + ‖I₂ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ +
+        ‖I₃ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ + ‖I₄ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.2 p.2.1‖ +
+        C₅ * p.2.2.1 ^ p.2.1 / p.2.2.2.1 + ‖I₆ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.2 p.2.1‖ +
+        ‖I₇ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ + ‖I₈ p.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.1 p.2.2.2.2.2‖ +
+        ‖I₉ p.1 p.2.2.2.1 p.2.2.1 p.2.2.2.2.1‖) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.PntContourBound, definition := none, coordinates := #[0, 5, 9, 10, 11, 12], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end ContourBound
 end

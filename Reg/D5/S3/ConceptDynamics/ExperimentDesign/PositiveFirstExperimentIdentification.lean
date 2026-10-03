@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -5,17 +6,7 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations
 import Reg.Support.GuardedEqualityRegistrations
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena, theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model,
-      statementIdentity := "sha256:ff72989c2b45d52570a4d716b0ba5064b872ce6bd51d804858fc59ab4b2c0e58",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena, theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model,
-      statementIdentity := "sha256:ff72989c2b45d52570a4d716b0ba5064b872ce6bd51d804858fc59ab4b2c0e58",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification }
+
 
 namespace Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
 
@@ -29,12 +20,31 @@ open GuardedEqualityRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping
 open _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model in positiveFirstArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
+noncomputable def _root_.Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstArena (∀ (model : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))), @Eq.{1} Bool (D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping.E_X model) Bool.true → @Eq.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) model D5.S3.ConceptDynamics.ExperimentDesign.AdaptiveEarlyStopping.M_XY) D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstRealization D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirst_bridge D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model) (type_of% (positiveFirstArena)) (type_of% (positiveFirstArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
-    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode))
-  primitives positiveFirstRealization.toPrimitiveBundle realization positiveFirst_bridge
-  variation positiveFirst_lawSensitive sensitivity positiveFirst_slotSensitive
+    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode))) (type_of% (positiveFirst_lawSensitive)) (type_of% (positiveFirst_slotSensitive)) (Unit) (Unit) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.D5.S3.ConceptDynamics.ExperimentDesign.PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirst_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(positiveFirstArena)⟩,
+  objectArena := ⟨(positiveFirstArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (positiveFirstArena) (D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrations.positiveFirstRealization) (positiveFirstRealization.toPrimitiveBundle) ⟨(positiveFirst_bridge)⟩,
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.GuardedEqualityRegistrationTemplates.guardedEqRealization
+    (Fin 3) (Fin 3) (instDecidableEqFin 3)
+    (fun model => positiveFirstReadout model) (fun model => model) (fun _ => modelXYCode)),
+  variation := some ⟨(positiveFirst_lawSensitive)⟩,
+  sensitivity := some ⟨(positiveFirst_slotSensitive)⟩,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .absent,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section

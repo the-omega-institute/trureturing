@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Syntax
@@ -77,18 +78,7 @@ def arena : Arena where
       ∃ scalar : ℝ, 0 < scalar ∧
         Q.readout () ι R = (scalar : ℂ) • 1)
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
-  let sourceName := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost ++
-    `exact_conditional_preparation_cost
-  let identity := captureStatement (← getEnv) sourceName
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    capturedStatement := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -147,17 +137,25 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem exact_conditional_preparation_cost in arena
-  readout via (realize effectSignature.{u} (fun _ _ R => R) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.exact_conditional_preparation_cost.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} effectSignature.{u_1} (fun _ _ R => R) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "ExactConditionalPreparationCost") "exact_conditional_preparation_cost") "Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost/Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} effectSignature.{u_1} (fun _ _ R => R) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.ExactConditionalPreparationCost, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

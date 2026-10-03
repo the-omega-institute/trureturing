@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -5,17 +6,7 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations
 import Reg.Support.ExistentialWitnessRegistrationTemplates
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena, theoremName := `D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts,
-      statementIdentity := "sha256:9fe223b46afd61e89e3883878aabd3f4184a39542015b7c4e40ec8c599a7c46c",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena, theoremName := `D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts,
-      statementIdentity := "sha256:9fe223b46afd61e89e3883878aabd3f4184a39542015b7c4e40ec8c599a7c46c",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability }
+
 
 namespace Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
 
@@ -30,10 +21,27 @@ open ExistentialWitnessRegistrationTemplates LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
 open _root_.D5.S3.ConceptDynamics.ConceptJoinUniversal
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts in recognitionArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true))
-  primitives recognitionRealization.toPrimitiveBundle realization recognition_bridge
-  variation recognition_lawSensitive sensitivity recognition_slotSensitive
+noncomputable def _root_.Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena (@Exists.{1} (Bool → Bool) fun (C₁ : Bool → Bool) => @Exists.{1} (Bool → Bool) fun (C₂ : Bool → Bool) => @Exists.{1} Bool fun (b₁ : Bool) => @Exists.{1} Bool fun (b₂ : Bool) => And (@Ne.{1} (Bool → Bool) C₁ C₂) (@D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.MutuallyRecognized.{0, 0, 0} Bool Bool Bool (@Set.univ.{0} Bool) C₁ C₂ (@Prod.mk.{0, 0} Bool Bool b₁ b₂))) D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognition_bridge D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts) (type_of% (recognitionArena)) (type_of% (recognitionArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true))) (type_of% (recognition_lawSensitive)) (type_of% (recognition_slotSensitive)) (Unit) (Unit) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognition_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(recognitionArena)⟩,
+  objectArena := ⟨(recognitionArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (recognitionArena) (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionRealization) (recognitionRealization.toPrimitiveBundle) ⟨(recognition_bridge)⟩,
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true)),
+  variation := some ⟨(recognition_lawSensitive)⟩,
+  sensitivity := some ⟨(recognition_slotSensitive)⟩,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .absent,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfResidualMachine
 import Reg.Support.DependentFamily
 
@@ -61,12 +62,27 @@ def selection : LeanInformationAudit.SourceSelection := {
   coordinates := #[]
   readouts := #[{path := #["body","arg","fn","arg"], stateBinder := 0}] }
 
-register_information_theorem finite_residual_realization in arena
-  readout via (realize signature
-    (fun _ _ c => c) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfResidualMachine.finite_residual_realization) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ c => c) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfResidualMachine") "finite_residual_realization") "Reg.D5.S1.Digit.ZeckendorfResidualMachine/Reg.D5.S1.Digit.ZeckendorfResidualMachine.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfResidualMachine.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ c => c) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfResidualMachine, definition := none, coordinates := #[], readouts := #[{ path := #["body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

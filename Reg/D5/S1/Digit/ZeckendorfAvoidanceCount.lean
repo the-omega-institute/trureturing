@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfAvoidanceCount
 import Reg.Support.DependentFamily
 
@@ -67,13 +68,29 @@ def selection : LeanInformationAudit.SourceSelection := {
   coordinates := #[]
   readouts := #[{path := #["body","fn","arg","arg"], stateOperand := some #["arg","arg","fn","arg"]}] }
 
-register_information_theorem uniform_avoidance_count in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfAvoidanceCount.uniform_avoidance_count) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ _ H => ((legalWords H 0).filter (fun w => decide (¬ B1 <:+: w))).length)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfAvoidanceCount") "uniform_avoidance_count") "Reg.D5.S1.Digit.ZeckendorfAvoidanceCount/Reg.D5.S1.Digit.ZeckendorfAvoidanceCount.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfAvoidanceCount.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ H => ((legalWords H 0).filter (fun w => decide (¬ B1 <:+: w))).length)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfAvoidanceCount, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

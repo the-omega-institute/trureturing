@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ArithSums.GreedyBrickCapacityTotality
 import Reg.Support.DependentFamily
 
@@ -62,13 +63,29 @@ def selection : LeanInformationAudit.SourceSelection := {
     { path := #["body", "body", "body", "arg"], stateBinder := 1 },
     { path := #["body", "body", "body", "fn", "arg"], stateBinder := 1 }] }
 
-register_information_theorem row_transition_correspondence in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ArithSums.GreedyBrickCapacityTotality.row_transition_correspondence) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun role n cs => if role then sourceRowStep n (widths cs) else widths (step n cs))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ArithSums") "GreedyBrickCapacityTotality") "row_transition_correspondence") "Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality/Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun role n cs => if role then sourceRowStep n (widths cs) else widths (step n cs))
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality, definition := some { owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality, name := `D5.S3.ArithSums.GreedyBrickCapacityTotality.RowTransitionCorrespondence, path := #[] }, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -130,11 +147,25 @@ def selection : LeanInformationAudit.SourceSelection := {
       "arg", "arg", "fn", "fn", "fn", "arg"]
     stateBinder := 2 }] }
 
-register_information_theorem source_row_geometry in arena
-  readout via (realize signature (fun _ n ws => sourceRowStep n ws) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ArithSums.GreedyBrickCapacityTotality.source_row_geometry) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ n ws => sourceRowStep n ws) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ArithSums") "GreedyBrickCapacityTotality") "source_row_geometry") "Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality/Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ArithSums.GreedyBrickCapacityTotality.GeometryAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ n ws => sourceRowStep n ws) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ArithSums.GreedyBrickCapacityTotality, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "fn", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

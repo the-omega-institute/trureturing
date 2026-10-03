@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision
 import Reg.Support.DependentFamily
 
@@ -117,22 +118,29 @@ def registration : Registration arena (arena.Law actual) where
     change Nat.gcd 0 (1 * 2 ^ 2) ≠ Nat.gcd 1 (1 * 2 ^ 2)
     norm_num
 
-register_information_theorem sparse_prime_power_gcd_collision in arena
-  readout via (realize signature (fun _ parameters value =>
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision.sparse_prime_power_gcd_collision) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ parameters value =>
     Nat.gcd value (parameters.2.2 * parameters.1 ^ parameters.2.1))
-    (fun anchor => nomatch anchor))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
-        "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"]
-      stateOperand := some #["fn", "arg"] }] })
-  escape continues (open)
+    (fun anchor => nomatch anchor))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "SparsePrimePowerCollision") "sparse_prime_power_gcd_collision") "Reg.D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision/Reg.D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ parameters value =>
+    Nat.gcd value (parameters.2.2 * parameters.1 ^ parameters.2.1))
+    (fun anchor => nomatch anchor)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.SparsePrimePowerCollision, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

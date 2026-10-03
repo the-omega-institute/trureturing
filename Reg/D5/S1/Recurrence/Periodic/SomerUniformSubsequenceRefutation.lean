@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -5,17 +6,7 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration
 import Reg.Support.CertificateWordRegistrationTemplates
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateArena, theoremName := `D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result,
-      statementIdentity := "sha256:9607a2d52421641d8fb269a93c91598c90346842c7c21a7b75b88596e8b83b79",
-      registrationModuleName := `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateArena, theoremName := `D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result,
-      statementIdentity := "sha256:9607a2d52421641d8fb269a93c91598c90346842c7c21a7b75b88596e8b83b79",
-      registrationModuleName := `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation }]
-  companionPrefix := some `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation }
+
 
 namespace Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation
 
@@ -32,11 +23,25 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCerti
 attribute [local instance] _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.instDecidableEqCertificateWord
 attribute [local instance] _root_.D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.instDecidableEqStateCertificateArena in
 
-register_information_theorem _root_.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result in certificateArena
-  readout via (@certificateWordRealization CertificateWord (fun word index => word index))
-  primitives certificateRealization.toPrimitiveBundle realization certificateBridge
-  variation certificateVariation sensitivity certificateSensitivity
-  escape from (actualWord) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result) (type_of% (certificateArena)) (type_of% (certificateArena)) (type_of% (@certificateWordRealization CertificateWord (fun word index => word index))) (type_of% (certificateVariation)) (type_of% (certificateSensitivity)) (type_of% (actualWord)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation.result.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateBridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(certificateArena)⟩,
+  objectArena := ⟨(certificateArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (certificateArena) (D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration.certificateRealization) (certificateRealization.toPrimitiveBundle) ⟨(certificateBridge)⟩,
+  readout := some (@certificateWordRealization CertificateWord (fun word index => word index)),
+  variation := some ⟨(certificateVariation)⟩,
+  sensitivity := some ⟨(certificateSensitivity)⟩,
+  escapeFrom := some (actualWord),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation

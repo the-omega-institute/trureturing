@@ -15,53 +15,7 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.Catalogs.SharedArenaPeers
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
-      statementIdentity := "sha256:fd8c5bad3c9b38d167e59ff3889f6897c82fdd7070d8feaae13528062ac13140",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer,
-      statementIdentity := "sha256:1a6132946d7a8891764ed2653324de2bf30ed7e60a456bc3718245df3f8e4916",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion.boolean_counterfactual_varies_on_coupling_fiber,
-      statementIdentity := "sha256:cb61e898923980980a8546c9854a68fceece05576107f21c3d55ce166b9297aa",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable,
-      statementIdentity := "sha256:a8c89fcc1db5d6e828261153109783acdf6c889d18caab542dfa8b17800caf2c",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative.interventional_marginal_sufficient_but_counterfactual_joint_not,
-      statementIdentity := "sha256:8b649e1191e8e2c40391ae6cd263fafc09d16bf7c6c684f60f8ff7430cc97052",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
-      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.SharedArenaPeers },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation,
-      statementIdentity := "sha256:87ec84d0c4c656a0524de84c33660dda95d43fde6d2b8c2284d448a1efbb5391",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
-      statementIdentity := "sha256:fd8c5bad3c9b38d167e59ff3889f6897c82fdd7070d8feaae13528062ac13140",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.SharedArenaPeers },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer,
-      statementIdentity := "sha256:1a6132946d7a8891764ed2653324de2bf30ed7e60a456bc3718245df3f8e4916",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion.boolean_counterfactual_varies_on_coupling_fiber,
-      statementIdentity := "sha256:cb61e898923980980a8546c9854a68fceece05576107f21c3d55ce166b9297aa",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable,
-      statementIdentity := "sha256:a8c89fcc1db5d6e828261153109783acdf6c889d18caab542dfa8b17800caf2c",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteInterventionArena, theoremName := `D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative.interventional_marginal_sufficient_but_counterfactual_joint_not,
-      statementIdentity := "sha256:8b649e1191e8e2c40391ae6cd263fafc09d16bf7c6c684f60f8ff7430cc97052",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
-      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.SharedArenaPeers },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation,
-      statementIdentity := "sha256:87ec84d0c4c656a0524de84c33660dda95d43fde6d2b8c2284d448a1efbb5391",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness }]
-  companionPrefix := some `Reg.Catalogs.SharedArenaPeers }
+
 
 
 namespace Reg.Catalogs.SharedArenaPeers
@@ -263,7 +217,7 @@ open EscapeRecord
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.CIRPT
 
-#seal_information_theory
+
 end
 
 section

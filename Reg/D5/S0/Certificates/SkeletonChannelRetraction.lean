@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -5,23 +6,7 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations
 import Reg.Support.PointwiseDisequalityRegistrations
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S0.Certificates.SkeletonChannelRetraction
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena, theoremName := `D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two,
-      statementIdentity := "sha256:5d44afb033ddb3092bb7a2e8025826dbb3617a6a8c332bfe7ea171362b77ead2",
-      registrationModuleName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena, theoremName := `D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero,
-      statementIdentity := "sha256:7af706b36940ff69c2a70352c0a715b51cd4cac8c3d1ee9c762770d82221d2b4",
-      registrationModuleName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena, theoremName := `D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two,
-      statementIdentity := "sha256:5d44afb033ddb3092bb7a2e8025826dbb3617a6a8c332bfe7ea171362b77ead2",
-      registrationModuleName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena, theoremName := `D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero,
-      statementIdentity := "sha256:7af706b36940ff69c2a70352c0a715b51cd4cac8c3d1ee9c762770d82221d2b4",
-      registrationModuleName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction }]
-  companionPrefix := some `Reg.D5.S0.Certificates.SkeletonChannelRetraction }
+
 
 namespace Reg.D5.S0.Certificates.SkeletonChannelRetraction
 
@@ -35,13 +20,31 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
-register_information_theorem _root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two in digitArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+noncomputable def _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena (∀ (d : Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))), @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract d) (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (nat_lit 2) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (nat_lit 2)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentRealization D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrent_bridge D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo))
-  primitives recurrentRealization.toPrimitiveBundle realization recurrent_bridge
-  variation recurrent_lawSensitive sensitivity digit_slotSensitive
-  escape from (Fin 4) escape continues (recurrentResidual)
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo))) (type_of% (recurrent_lawSensitive)) (type_of% (digit_slotSensitive)) (type_of% (Fin 4)) (type_of% (recurrentResidual)) (Unit) := {
+  unitName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.recurrentRetract_ne_two.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrent_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(digitArena)⟩,
+  objectArena := ⟨(digitArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentRealization) (recurrentRealization.toPrimitiveBundle) ⟨(recurrent_bridge)⟩,
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+    (Fin 4) (Fin 4) (instDecidableEqFin 4)
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.recurrentReadout d) (fun _ => digitTwo)),
+  variation := some ⟨(recurrent_lawSensitive)⟩,
+  sensitivity := some ⟨(digit_slotSensitive)⟩,
+  escapeFrom := some (Fin 4),
+  sourceSelection := none,
+  continuation := .evidence ⟨(recurrentResidual)⟩,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section
@@ -54,13 +57,31 @@ open PointwiseRegistrationTemplates LeanInformationAudit
 open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
 open _root_.D5.S0.Certificates.SkeletonChannelRetraction
 
-register_information_theorem _root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero in digitArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+noncomputable def _root_.Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero.__information_unit : D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.{0, 0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena) := @D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.digitArena (∀ (d : Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))), @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (D5.S0.Certificates.SkeletonChannelRetraction.transientRetract d) (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) (nat_lit 0) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (nat_lit 0)))) D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientRealization D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transient_bridge D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero
+
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero) (type_of% (digitArena)) (type_of% (digitArena)) (type_of% (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
     (Fin 4) (Fin 4) (instDecidableEqFin 4)
-    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero))
-  primitives transientRealization.toPrimitiveBundle realization transient_bridge
-  variation transient_lawSensitive sensitivity digit_slotSensitive
-  escape from (Fin 4) escape continues (transientResidual)
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero))) (type_of% (transient_lawSensitive)) (type_of% (digit_slotSensitive)) (type_of% (Fin 4)) (type_of% (transientResidual)) (Unit) := {
+  unitName := `Reg.D5.S0.Certificates.SkeletonChannelRetraction.D5.S0.Certificates.SkeletonChannelRetraction.transientRetract_ne_zero.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transient_bridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(digitArena)⟩,
+  objectArena := ⟨(digitArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (digitArena) (D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientRealization) (transientRealization.toPrimitiveBundle) ⟨(transient_bridge)⟩,
+  readout := some (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization
+    (Fin 4) (Fin 4) (instDecidableEqFin 4)
+    (fun d => D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations.transientReadout d) (fun _ => digitZero)),
+  variation := some ⟨(transient_lawSensitive)⟩,
+  sensitivity := some ⟨(digit_slotSensitive)⟩,
+  escapeFrom := some (Fin 4),
+  sourceSelection := none,
+  continuation := .evidence ⟨(transientResidual)⟩,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section

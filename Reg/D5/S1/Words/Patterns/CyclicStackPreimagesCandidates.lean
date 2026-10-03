@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily
 import Reg.Support.CyclicStackFamily
 
@@ -33,16 +34,25 @@ def registration : Registration OddFibre.arena (∀ (m : ℕ) (hm : 0 < m),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-register_information_theorem oddCandidate_lower_bound in OddFibre.arena
-  readout via (realize OddFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m + 1)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Patterns.CyclicStackPreimagesCandidates
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.oddCandidate_lower_bound) (type_of% (OddFibre.arena)) (type_of% (OddFibre.arena)) (type_of% (realize.{0, 0, 0, 0, 0} OddFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "oddCandidate_lower_bound") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCandidates/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.OddFibre.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCandidates.OddFibreAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(OddFibre.arena)⟩,
+  objectArena := ⟨(OddFibre.arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (OddFibre.arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} OddFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m + 1)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesCandidates, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end OddFibreAudit
 
@@ -72,16 +82,25 @@ def registration : Registration EvenFibre.arena (∀ (m : ℕ) (hm : 0 < m),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-register_information_theorem evenCandidate_lower_bound in EvenFibre.arena
-  readout via (realize EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Patterns.CyclicStackPreimagesCandidates
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.evenCandidate_lower_bound) (type_of% (EvenFibre.arena)) (type_of% (EvenFibre.arena)) (type_of% (realize.{0, 0, 0, 0, 0} EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "evenCandidate_lower_bound") "Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCandidates/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.EvenFibre.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCandidates.EvenFibreAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(EvenFibre.arena)⟩,
+  objectArena := ⟨(EvenFibre.arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (EvenFibre.arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimagesCandidates, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end EvenFibreAudit
 

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Syntax
@@ -45,18 +46,7 @@ def arena : Arena where
     (∀ n < (couplingGraph H).dist i j, R.readout () ⟨d, H, i, j⟩ n = 0) ∧
       0 < (H ^ (couplingGraph H).dist i j) j i
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
-  let sourceName := `D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance ++
-    `first_nonzero_power_eq_graph_distance
-  let identity := "sha256:f93df77c5b48e83e40d3dba0b9f74eefc46b8a1e5a1d7c3ddecb5d0cff0457ca"
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -101,19 +91,29 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem first_nonzero_power_eq_graph_distance in arena
-  readout via (realize graphDistanceSignature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance.first_nonzero_power_eq_graph_distance) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} graphDistanceSignature
     (fun _ p n => (p.2.1 ^ n) p.2.2.2 p.2.2.1)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance
-    coordinates := #[0, 1, 4, 5]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Dynamics") "ResponseOrderGraphDistance") "first_nonzero_power_eq_graph_distance") "Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance/Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} graphDistanceSignature
+    (fun _ p n => (p.2.1 ^ n) p.2.2.2 p.2.2.1)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Dynamics.ResponseOrderGraphDistance, definition := none, coordinates := #[0, 1, 4, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

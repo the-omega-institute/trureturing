@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyAgenda
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
@@ -10,17 +11,7 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow
-  expected := #[
-    { objectArenaName := `Reg.Support.LegacyAgenda.arena, theoremName := `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
-      statementIdentity := "sha256:384a1edc32c16ec0b4045c373ce00d995b3fa571bb9cbf36960355b33a93cc00",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow }]
-  source := #[
-    { objectArenaName := `Reg.Support.LegacyAgenda.arena, theoremName := `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
-      statementIdentity := "sha256:384a1edc32c16ec0b4045c373ce00d995b3fa571bb9cbf36960355b33a93cc00",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow }
+
 
 
 namespace Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow
@@ -28,12 +19,24 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.Reg.Support.LegacyFiniteTransport
 open _root_.Reg.Support.LegacyAgenda
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power in arena
-  readout via (agendaRealization (fun s => winnerCode s) (fun s => valid s))
-  primitives actual.toPrimitiveBundle
-  realization bridge
-  variation variation
-  sensitivity sensitivity
-  escape from (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) (type_of% (arena)) (type_of% (arena)) (type_of% (agendaRealization (fun s => winnerCode s) (fun s => valid s))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.__information_unit,
+  realizationName := `Reg.Support.LegacyAgenda.bridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} Reg.Support.LegacyAgenda.arena) (Reg.Support.LegacyAgenda.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩,
+  readout := some (agendaRealization (fun s => winnerCode s) (fun s => valid s)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.Agenda),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow

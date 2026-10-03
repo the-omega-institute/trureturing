@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant
 import Reg.Support.DependentFamily
 
@@ -136,16 +137,24 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨(), 0, 1, by change (0 : ℝ)⁻¹ ≠ 1⁻¹; norm_num⟩
 
-register_information_theorem conditioning_trace_distance_constant in arena
-  readout via (realize signature (fun _ _ x => x⁻¹) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "body",
-        "body", "fn", "arg", "fn", "arg", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.conditioning_trace_distance_constant) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => x⁻¹) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "ConditioningTraceDistanceConstant") "conditioning_trace_distance_constant") "Reg.D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant/Reg.D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => x⁻¹) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Quantum.Measurement.ConditioningTraceDistanceConstant

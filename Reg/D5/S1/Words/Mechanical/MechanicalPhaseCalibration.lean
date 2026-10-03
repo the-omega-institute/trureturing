@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -5,19 +6,7 @@ import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law,
-      statementIdentity := "sha256:46ab84fc00f32e087739c4648260bfde5b9e5b16a6b25ed0fa6ee6b92f10a371",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law,
-      statementIdentity := "sha256:46ab84fc00f32e087739c4648260bfde5b9e5b16a6b25ed0fa6ee6b92f10a371",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration
@@ -114,14 +103,26 @@ theorem phaseSensitivity : FiniteSlotSensitivity phaseArena.toPrimitiveLawArena 
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law
-  in phaseArena
-  readout via (@mechanicalReadoutRealization PhaseOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.phaseReadout))
-  primitives phaseRealization.toPrimitiveBundle
-  realization phaseBridge
-  variation phaseVariation sensitivity phaseSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law) (type_of% (phaseArena)) (type_of% (phaseArena)) (type_of% (@mechanicalReadoutRealization PhaseOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.phaseReadout))) (type_of% (phaseVariation)) (type_of% (phaseSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.phaseBridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(phaseArena)⟩,
+  objectArena := ⟨(phaseArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.phaseRealization) (phaseRealization.toPrimitiveBundle) ⟨(phaseBridge)⟩,
+  readout := some (@mechanicalReadoutRealization PhaseOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.phaseReadout)),
+  variation := some ⟨(phaseVariation)⟩,
+  sensitivity := some ⟨(phaseSensitivity)⟩,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration

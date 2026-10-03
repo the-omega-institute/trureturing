@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity
 import Reg.Support.DependentFamily
 
@@ -79,18 +80,25 @@ def registration : Registration arena (∀ N : ℕ,
     change f.stateDimension ≠ g.stateDimension
     omega
 
-register_information_theorem finite_sample_rank_ambiguity in arena
-  readout via (realize signature (fun _ _ r => r.stateDimension) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg",
-        "fn", "arg", "fn", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0} (@_root_.D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity.finite_sample_rank_ambiguity) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 1, 0, 0, 0} signature (fun _ _ r => r.stateDimension) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Hankel") "FiniteSampleRankAmbiguity") "finite_sample_rank_ambiguity") "Reg.D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity/Reg.D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 1, 0, 0, 0} signature (fun _ _ r => r.stateDimension) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.Hankel.FiniteSampleRankAmbiguity, definition := none, coordinates := #[], readouts := #[{ path := #["body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

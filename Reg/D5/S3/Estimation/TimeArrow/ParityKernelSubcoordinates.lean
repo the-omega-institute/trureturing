@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 import Reg.Support.ParityKernelRegistrationTemplates
 import LeanInformationAuditInterface.Syntax
@@ -14,17 +15,7 @@ open Lean Elab Command
 noncomputable section
 namespace Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 
-run_cmd do
-  let root := `Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
-  let owner := `D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
-  let lawRow : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `lawArena
-    theoremName := owner ++ `subcoordinateLaw_eq
-    statementIdentity := "sha256:7c157665ce037dde96ecbbb8d69e0cf53810af5a7416ca1930a9ff88e929a20a"
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[lawRow], source := #[lawRow],
-    companionPrefix := some root }
+
 
 /-! ### The coordinate-record law -/
 
@@ -123,17 +114,27 @@ def lawRegistration : Registration lawArena (lawArena.Law lawActual) where
   sensitivity := law_sensitivity
   dependence := law_dependence
 
-register_information_theorem subcoordinateLaw_eq in lawArena
-  readout via (realize subcoordinateRecordSignature
-    (fun _ p w => (subcoordinateLaw p.2.1 p.2.2.1 p.2.2.2 w : ℝ)) (fun e => nomatch e))
-  realizes lawRegistration
-  escape from source ({
-    owner := `D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
-    coordinates := #[0, 1, 2, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.subcoordinateLaw_eq) (type_of% (lawArena)) (type_of% (lawArena)) (type_of% (realize.{0, 0, 0, 0, 0} subcoordinateRecordSignature
+    (fun _ p w => (subcoordinateLaw p.2.1 p.2.2.1 p.2.2.2 w : ℝ)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "ParityKernelSubcoordinates") "subcoordinateLaw_eq") "Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates/Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.lawArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.lawRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(lawArena)⟩,
+  objectArena := ⟨(lawArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (lawArena) ⟨(lawRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} subcoordinateRecordSignature
+    (fun _ p w => (subcoordinateLaw p.2.1 p.2.2.1 p.2.2.2 w : ℝ)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates, definition := none, coordinates := #[0, 1, 2, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms lawRejected_law
 #print axioms law_sensitivity

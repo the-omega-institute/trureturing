@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Syntax
@@ -55,17 +56,7 @@ def arena : Arena where
         (Set.range (suffixCode hle)).ncard *
             (Set.range (prefixCode hle)).ncard = 2 ^ (d + 2)
 
-run_cmd do
-  let root := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
-  let sourceName := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound ++
-    `shared_control_bit_storage_bound
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := "sha256:0784cf503dfe5b78a65875009000f173bf6ffa84e7614fb47b4041a701fe3e3e"
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem actual_law : arena.Law actual := by
   intro d hd α β _ _ u v hu hv hjoint
@@ -139,18 +130,25 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem shared_control_bit_storage_bound in arena
-  readout via (realize signature (fun _ _ u => u) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
-    coordinates := #[0, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg", "arg", "fn", "arg", "domain", "fn",
-        "arg", "arg", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{1, 0, 0, 0, 0} signature (fun _ _ u => u) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms") "SharedControlBitStorageBound") "shared_control_bit_storage_bound") "Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound/Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{1, 0, 0, 0, 0} signature (fun _ _ u => u) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "domain", "fn", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

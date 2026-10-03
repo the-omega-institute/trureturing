@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Digit.ZeckendorfRawWindow
 import Reg.Support.DependentFamily
 
@@ -57,14 +58,25 @@ def coordinateRegistration : Registration coordinateArena (coordinateArena.Law c
     refine ⟨(), [], [1], ?_⟩
     simp [coordinateActual, coordinateRejected, realize, support]
 
-register_information_theorem source_word_coordinates in coordinateArena
-  readout via (realize coordinateSignature (fun _ _ w => support w) (fun e => nomatch e))
-  realizes coordinateRegistration
-  escape from source ({
-    owner := `D5.S1.Digit.ZeckendorfRawWindow
-    coordinates := #[]
-    readouts := #[{path := #["body", "body", "fn", "arg", "arg"], stateBinder := 0}]})
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfRawWindow.source_word_coordinates) (type_of% (coordinateArena)) (type_of% (coordinateArena)) (type_of% (realize.{0, 0, 0, 0, 0} coordinateSignature (fun _ _ w => support w) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfRawWindow") "source_word_coordinates") "Reg.D5.S1.Digit.ZeckendorfRawWindow/Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfRawWindow.coordinateRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(coordinateArena)⟩,
+  objectArena := ⟨(coordinateArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (coordinateArena) ⟨(coordinateRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} coordinateSignature (fun _ _ w => support w) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfRawWindow, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev expansionSignature : Signature where
   Params := ℕ
@@ -115,16 +127,29 @@ def expansionRegistration : Registration expansionArena (expansionArena.Law expa
       Nat.greatestFib] at he
     simp [mu] at he
 
-register_information_theorem source_expansion in expansionArena
-  readout via (realize expansionSignature
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfRawWindow.source_expansion) (type_of% (expansionArena)) (type_of% (expansionArena)) (type_of% (realize.{0, 0, 0, 0, 0} expansionSignature
     (fun _ n t => ((List.range t).map (fun i => q (n + i))).flatMap mu)
-    (fun e => nomatch e))
-  realizes expansionRegistration
-  escape from source ({
-    owner := `D5.S1.Digit.ZeckendorfRawWindow
-    coordinates := #[0]
-    readouts := #[{path := #["body", "body", "fn", "arg"], stateBinder := 1}] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfRawWindow") "source_expansion") "Reg.D5.S1.Digit.ZeckendorfRawWindow/Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfRawWindow.expansionRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(expansionArena)⟩,
+  objectArena := ⟨(expansionArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (expansionArena) ⟨(expansionRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} expansionSignature
+    (fun _ n t => ((List.range t).map (fun i => q (n + i))).flatMap mu)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfRawWindow, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev congruenceSignature : Signature where
   Params := ℕ
@@ -185,14 +210,25 @@ def congruenceRegistration : Registration congruenceArena (congruenceArena.Law c
     rw [h0, h1] at hh
     cases hh
 
-register_information_theorem window_residual_congruence in congruenceArena
-  readout via (realize congruenceSignature (fun _ c w => residual c w) (fun e => nomatch e))
-  realizes congruenceRegistration
-  escape from source ({
-    owner := `D5.S1.Digit.ZeckendorfRawWindow
-    coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 1}]})
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Digit.ZeckendorfRawWindow.window_residual_congruence) (type_of% (congruenceArena)) (type_of% (congruenceArena)) (type_of% (realize.{0, 0, 0, 0, 0} congruenceSignature (fun _ c w => residual c w) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Digit") "ZeckendorfRawWindow") "window_residual_congruence") "Reg.D5.S1.Digit.ZeckendorfRawWindow/Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Digit.ZeckendorfRawWindow.congruenceRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(congruenceArena)⟩,
+  objectArena := ⟨(congruenceArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (congruenceArena) ⟨(congruenceRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} congruenceSignature (fun _ c w => residual c w) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Digit.ZeckendorfRawWindow, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms coordinateRegistration
 #print axioms expansionRegistration

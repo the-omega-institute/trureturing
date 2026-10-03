@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace
 import Reg.Support.DependentFamily
 
@@ -72,18 +73,27 @@ def registration : Registration arena (arena.Law actual) where
     simp only [List.length_reverse, T.initial_capacity, List.length_singleton] at hh
     omega
 
-register_information_theorem
-  _root_.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.literal_trace_realization in arena
-  readout via (realize signature
-    (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace
-    coordinates := #[0]
-    readouts := #[{
-      path := #["arg", "body", "arg", "fn", "arg", "body", "fn", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.literal_trace_realization) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "GreedyBrick") "LiteralRestTrace") "literal_trace_realization") "Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace/Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ T e => (T.state e).capacity.reverse) (fun a => nomatch a)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.GreedyBrick.LiteralRestTrace, definition := none, coordinates := #[0], readouts := #[{ path := #["arg", "body", "arg", "fn", "arg", "body", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

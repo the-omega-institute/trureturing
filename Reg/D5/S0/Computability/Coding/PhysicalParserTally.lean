@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.Coding.PhysicalParserTally
 import Reg.Support.PhysicalParserCells
 
@@ -54,11 +55,26 @@ def cellSensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, cellRealization.readout () b ≠ cellRealization.readout () b' :=
   ⟨false, true, Bool.false_ne_true⟩
 
-register_information_theorem _root_.D5.S0.Computability.Coding.PhysicalParserTally.count_one in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
-  primitives cellRealization.toPrimitiveBundle
-  realization inline (cellRealization) := by exact ⟨Iff.rfl⟩
-  variation cellVariation sensitivity cellSensitivity
-  escape from (Bool) escape continues (open)
+theorem _root_._private.Reg.D5.S0.Computability.Coding.PhysicalParserTally.0.D5.S0.Computability.Coding.PhysicalParserTally.count_one.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.Coding.PhysicalParserTally.arena (∀ (m : D5.S0.Computability.Coding.PhysicalSixParser.Track → Int → Bool) (h : D5.S0.Computability.Coding.PhysicalSixParser.Track → Int) (u n : Nat) (c : D5.S0.Computability.Coding.PhysicalSixParser.Continuation), @Exists.{1} Nat fun (T : Nat) => And (@LE.le.{0} Nat instLENat T (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 8) (instOfNatNat (nat_lit 8))) (@List.length.{0} Bool (Nat.bits n))) (@OfNat.ofNat.{0} Nat (nat_lit 14) (instOfNatNat (nat_lit 14))))) (And (@Eq.{1} D5.S0.Computability.Coding.PhysicalSixParser.Configuration (D5.S0.Computability.Coding.PhysicalSixParser.run (D5.S0.Computability.Coding.PhysicalParserTally.configuration m h u (Nat.bits n) (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (D5.S0.Computability.Coding.PhysicalSixParser.Control.count c (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 19) (instOfNatNat (nat_lit 19)))) (nat_lit 0) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 19) (instOfNatNat (nat_lit 19))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 18) (instOfNatNat (nat_lit 18)))) (nat_lit 0))))) T) (D5.S0.Computability.Coding.PhysicalParserTally.configuration m h (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) u (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (Nat.bits (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (D5.S0.Computability.Coding.PhysicalSixParser.resume c))) (∀ (t : Nat), @LE.le.{0} Nat instLENat t T → D5.S0.Computability.Coding.PhysicalParserTally.Frame m h u (@List.length.{0} Bool (Nat.bits n)) (D5.S0.Computability.Coding.PhysicalSixParser.run (D5.S0.Computability.Coding.PhysicalParserTally.configuration m h u (Nat.bits n) (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (D5.S0.Computability.Coding.PhysicalSixParser.Control.count c (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 19) (instOfNatNat (nat_lit 19)))) (nat_lit 0) (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 19) (instOfNatNat (nat_lit 19))) (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 18) (instOfNatNat (nat_lit 18)))) (nat_lit 0))))) t)))) Reg.D5.S0.Computability.Coding.PhysicalParserTally.cellRealization := by exact ⟨Iff.rfl⟩
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Computability.Coding.PhysicalParserTally.count_one) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))) (type_of% (cellVariation)) (type_of% (cellSensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "Coding") "PhysicalParserTally") 0) "D5") "S0") "Computability") "Coding") "PhysicalParserTally") "count_one") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "Coding") "PhysicalParserTally") 0) "D5") "S0") "Computability") "Coding") "PhysicalParserTally") "count_one") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((cellRealization)) (cellRealization.toPrimitiveBundle) ⟨(D5.S0.Computability.Coding.PhysicalParserTally.count_one.__primitive_realization)⟩,
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x)),
+  variation := some ⟨(cellVariation)⟩,
+  sensitivity := some ⟨(cellSensitivity)⟩,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.Coding.PhysicalParserTally

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.ClauseQueryPreprocessor
 import Reg.Support.PhysicalParserCells
 
@@ -88,13 +89,28 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false, true, by change false ≠ true; decide⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.pre_query_run in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+theorem _root_._private.Reg.D5.S0.Computability.ClauseQueryPreprocessor.0.PredictiveThermodynamic.pre_query_run.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.ClauseQueryPreprocessor.arena (∀ {n : Nat} (F : PredictiveThermodynamic.UnaryFormula n) (width : ∀ (c : Std.Sat.CNF.Clause.{0} (Fin n)), @Membership.mem.{0, 0} (Std.Sat.CNF.Clause.{0} (Fin n)) (PredictiveThermodynamic.UnaryFormula n) (@List.instMembership.{0} (Std.Sat.CNF.Clause.{0} (Fin n))) F c → @LE.le.{0} Nat instLENat (@List.length.{0} (Std.Sat.Literal.{0} (Fin n)) c) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))), And (Nonempty.{1} (Turing.TM2OutputsInTime PredictiveThermodynamic.preMachine (@PredictiveThermodynamic.sourceWord n F) (@Option.some.{0} (List.{0} (Turing.FinTM2.Γ PredictiveThermodynamic.preMachine (Turing.FinTM2.k₁ PredictiveThermodynamic.preMachine))) (@PredictiveThermodynamic.queryWord n F)) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (@HPow.hPow.{0, 0, 0} Nat Nat Nat (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Bool (@PredictiveThermodynamic.sourceWord n F)) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))) (@Eq.{1} Nat (@List.length.{0} Bool (@PredictiveThermodynamic.queryWord n F)) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Bool (@PredictiveThermodynamic.sourceWord n F)) (@OfNat.ofNat.{0} Nat (nat_lit 6) (instOfNatNat (nat_lit 6)))) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@List.length.{0} (Std.Sat.CNF.Clause.{0} (Fin n)) F) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))) Reg.D5.S0.Computability.ClauseQueryPreprocessor.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => @pre_query_run⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.PredictiveThermodynamic.pre_query_run) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseQueryPreprocessor") 0) "PredictiveThermodynamic") "pre_query_run") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseQueryPreprocessor") 0) "PredictiveThermodynamic") "pre_query_run") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.pre_query_run.__primitive_realization)⟩,
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.ClauseQueryPreprocessor

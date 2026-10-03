@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage
 import Reg.Support.DependentFamily
 
@@ -69,22 +70,31 @@ def registration : Registration arena (arena.Law actual) where
     have hfirst := congrArg Prod.fst he
     cases i <;> norm_num [actual, realize, traceGram, reconstruct] at hfirst
 
-register_information_theorem integral_image in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.integral_image) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun i n => match i with
     | false => traceGram n
-    | true => reconstruct n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage
-    coordinates := #[0]
-    -- Bool.fintype enumerates true (reconstruction), then false (trace).
-    readouts := #[{
-      path := #["body", "body", "arg", "arg", "body", "body", "arg"]
-      stateOperand := some #["arg"] }, {
-      path := #["body", "body", "arg", "fn", "arg", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+    | true => reconstruct n) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Lattices") "PrimeCyclotomicTraceImage") "integral_image") "Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage/Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun i n => match i with
+    | false => traceGram n
+    | true => reconstruct n) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Lattices.PrimeCyclotomicTraceImage, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg", "arg", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }, { path := #["body", "body", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

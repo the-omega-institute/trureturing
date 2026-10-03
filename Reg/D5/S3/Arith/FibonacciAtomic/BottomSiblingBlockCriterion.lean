@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion
 import Reg.Support.DependentFamily
 
@@ -78,17 +79,29 @@ def registration : Registration arena (arena.Law actual) where
     rw [hx,hy]
     decide
 
-register_information_theorem actual_common_depth_fullness in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_common_depth_fullness) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion
-    coordinates := #[0, 2, 3]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "arg",
-      "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 7}] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_common_depth_fullness") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p source => (sourceNumber source.val : ZMod p.1))
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[0, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -147,17 +160,29 @@ def nonconverseRegistration :
       exact hz
     omega
 
-register_information_theorem actual_nonconverse in nonconverseArena
-  readout via (realize nonconverseSignature
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_nonconverse) (type_of% (nonconverseArena)) (type_of% (nonconverseArena)) (type_of% (realize.{0, 0, 0, 0, 0} nonconverseSignature
     (fun _ _ available => centers 2 4 0 1 available)
-    (fun e => nomatch e))
-  realizes nonconverseRegistration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion
-    coordinates := #[]
-    readouts := #[{path := #["arg", "body", "arg", "arg", "body", "fn",
-      "arg", "fn", "arg", "arg"], stateBinder := 1}] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_nonconverse") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.nonconverseRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(nonconverseArena)⟩,
+  objectArena := ⟨(nonconverseArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (nonconverseArena) ⟨(nonconverseRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} nonconverseSignature
+    (fun _ _ available => centers 2 4 0 1 available)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "body", "arg", "arg", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms nonconverseRegistration
 
@@ -254,20 +279,29 @@ def futureRegistration : Registration futureArena (futureArena.Law futureActual)
     rw [hx,hy]
     decide
 
-register_information_theorem actual_future_residue_equivalence in futureArena
-  readout via (realize futureSignature
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.actual_future_residue_equivalence) (type_of% (futureArena)) (type_of% (futureArena)) (type_of% (realize.{0, 0, 0, 0, 0} futureSignature
     (fun _ p source => (sourceNumber source.val : ZMod p.1))
-    (fun e => nomatch e))
-  realizes futureRegistration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion
-    coordinates := #[0, 2, 3]
-    readouts := #[
-      {path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "fn", "arg"], stateBinder := 5},
-      {path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg"], stateBinder := 6}] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "BottomSiblingBlockCriterion") "actual_future_residue_equivalence") "Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion/Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion.futureRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(futureArena)⟩,
+  objectArena := ⟨(futureArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (futureArena) ⟨(futureRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} futureSignature
+    (fun _ p source => (sourceNumber source.val : ZMod p.1))
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion, definition := none, coordinates := #[0, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms futureRegistration
 

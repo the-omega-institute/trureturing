@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.PrimeNumberTheorem.PntLongVertical
 import Reg.Support.DependentFamily
 import Reg.Support.PntAuditFacts
@@ -80,17 +81,25 @@ def registration : Registration arena
       1 * 1 * 1 ^ (-(0 : ℝ) / (Real.log 4 ^ 9)) / 1
     norm_num
 
-register_information_theorem _root_.I3Bound in arena
-  readout via (realize signature (fun _ p C => C * p.2.1 * p.2.1 ^ (-p.1 / (Real.log p.2.2.2 ^ 9)) / p.2.2.1) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Weil.PrimeNumberTheorem.PntLongVertical
-    coordinates := #[3, 10, 12, 15]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.I3Bound) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2.1 * p.2.1 ^ (-p.1 / (Real.log p.2.2.2 ^ 9)) / p.2.2.1) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "I3Bound") "Reg.D5.S3.Weil.PrimeNumberTheorem.PntLongVertical/Reg.D5.S3.Weil.PrimeNumberTheorem.PntLongVertical.I3Bound.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntLongVertical.I3Bound.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p C => C * p.2.1 * p.2.1 ^ (-p.1 / (Real.log p.2.2.2 ^ 9)) / p.2.2.1) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.PntLongVertical, definition := none, coordinates := #[3, 10, 12, 15], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end I3Bound
 

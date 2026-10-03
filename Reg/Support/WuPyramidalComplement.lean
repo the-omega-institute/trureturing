@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Catalog
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -14,5 +15,8 @@ attribute [local instance] _root_.D5.S3.Arith.WuPyramidalComplement.instDecidabl
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 open LeanInformationAudit
-register_information_template branchRealization
+noncomputable def _root_.Reg.Support.WuPyramidalComplement.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{1, 0} (@_root_.D5.S3.Arith.WuPyramidalComplement.branchRealization) := {
+  name := `D5.S3.Arith.WuPyramidalComplement.branchRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end

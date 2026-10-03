@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity
 import Reg.Support.DependentFamily
 
@@ -124,16 +125,25 @@ def registration : Registration arena.{u}
     intro h
     exact top_ne_bot (congrArg ambientHaar h)
 
-register_information_theorem _root_.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity.result in arena
-  readout via (realize signature.{u} (fun _ _ H => H) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, u_1, 0, 0} (@_root_.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity.result.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ H => H) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "Asymptotics") "TorusSubgroupHaarContinuity") "result") "Reg.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity/Reg.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ H => H) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

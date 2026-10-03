@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.ClausePreprocessorClock
 import Reg.Support.PhysicalParserCells
 
@@ -92,13 +93,28 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false, true, by change false ≠ true; decide⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.pre_total_clock in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+theorem _root_._private.Reg.D5.S0.Computability.ClausePreprocessorClock.0.PredictiveThermodynamic.pre_total_clock.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.ClausePreprocessorClock.arena (∀ (w : List.{0} Bool), @Exists.{1} (List.{0} Bool) fun (out : List.{0} Bool) => And (Nonempty.{1} (Turing.TM2OutputsInTime PredictiveThermodynamic.preMachine w (@Option.some.{0} (List.{0} (Turing.FinTM2.Γ PredictiveThermodynamic.preMachine (Turing.FinTM2.k₁ PredictiveThermodynamic.preMachine))) out) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@List.length.{0} Bool w)) (@OfNat.ofNat.{0} Nat (nat_lit 20) (instOfNatNat (nat_lit 20)))) (@List.length.{0} Bool w)) (@OfNat.ofNat.{0} Nat (nat_lit 13) (instOfNatNat (nat_lit 13)))))) (@LE.le.{0} Nat instLENat (@List.length.{0} Bool out) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@List.length.{0} Bool w)) (@OfNat.ofNat.{0} Nat (nat_lit 20) (instOfNatNat (nat_lit 20)))) (@List.length.{0} Bool w)) (@OfNat.ofNat.{0} Nat (nat_lit 13) (instOfNatNat (nat_lit 13)))) (@Lax51Proofs.RamToTM.programPushBound PredictiveThermodynamic.PreStack PredictiveThermodynamic.PreLabel PredictiveThermodynamic.PreControl (fun (x : PredictiveThermodynamic.PreStack) => Bool) (@inferInstance.{1} (Fintype.{0} PredictiveThermodynamic.PreLabel) PredictiveThermodynamic.instFintypePreLabel) (Turing.FinTM2.m PredictiveThermodynamic.preMachine))))) Reg.D5.S0.Computability.ClausePreprocessorClock.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => pre_total_clock⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.PredictiveThermodynamic.pre_total_clock) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClausePreprocessorClock") 0) "PredictiveThermodynamic") "pre_total_clock") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClausePreprocessorClock") 0) "PredictiveThermodynamic") "pre_total_clock") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.pre_total_clock.__primitive_realization)⟩,
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.ClausePreprocessorClock

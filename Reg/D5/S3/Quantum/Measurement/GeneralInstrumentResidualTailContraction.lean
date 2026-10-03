@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Syntax
@@ -70,18 +71,7 @@ def arena : Arena where
           X - noClickDual Q X = (1 : Matrix (Fin d) (Fin d) ℂ) - F →
             0 ≤ X → X ≤ c • ((1 : Matrix (Fin d) (Fin d) ℂ) - F) → X = T)
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction
-  let sourceName := `D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction ++
-    `residual_tail_contraction
-  let identity := captureStatement (← getEnv) sourceName
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    capturedStatement := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem actual_law : arena.Law actual := by
   intro d α ι _ _ Q L hcomp F hF
@@ -131,17 +121,25 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem residual_tail_contraction in arena
-  readout via (realize residualSignature (fun _ _ F => F) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction.residual_tail_contraction) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} residualSignature (fun _ _ F => F) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "GeneralInstrumentResidualTailContraction") "residual_tail_contraction") "Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction/Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} residualSignature (fun _ _ F => F) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

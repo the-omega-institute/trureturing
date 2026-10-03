@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -6,19 +7,7 @@ import D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration
 import Reg.Support.PointwiseEqualityRegistrations
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average,
-      statementIdentity := "sha256:c5da0649ff1675503963a41a48ceac32ae9c8be19ab3a7d9baf2a52cbbafecea",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average,
-      statementIdentity := "sha256:c5da0649ff1675503963a41a48ceac32ae9c8be19ab3a7d9baf2a52cbbafecea",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
@@ -90,16 +79,30 @@ theorem phaseAverageSensitivity : FiniteSlotSensitivity phaseAverageArena.toPrim
     (x := ()) (a := fun _ : PhaseAverageInput => (0 : ENNReal))
     (b := fun _ : PhaseAverageInput => (1 : ENNReal)) hne
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average
-  in phaseAverageArena
-  readout via (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
-    (Classical.decEq _)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average) (type_of% (phaseAverageArena)) (type_of% (phaseAverageArena)) (type_of% (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
+    (Classical.decEq.{1} _)
     (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
-    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume))
-  primitives phaseAverageRealization.toPrimitiveBundle
-  realization phaseAverageBridge
-  variation phaseAverageVariation sensitivity phaseAverageSensitivity
-  escape from (Set ℝ) escape continues (open)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume))) (type_of% (phaseAverageVariation)) (type_of% (phaseAverageSensitivity)) (type_of% (Set.{0} ℝ)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage.phaseAverageBridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(phaseAverageArena)⟩,
+  objectArena := ⟨(phaseAverageArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration.phaseAverageRealization) (phaseAverageRealization.toPrimitiveBundle) ⟨(phaseAverageBridge)⟩,
+  readout := some (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
+    (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume)),
+  variation := some ⟨(phaseAverageVariation)⟩,
+  sensitivity := some ⟨(phaseAverageSensitivity)⟩,
+  escapeFrom := some (Set.{0} ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage

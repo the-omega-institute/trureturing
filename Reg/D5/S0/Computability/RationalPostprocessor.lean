@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.RationalPostprocessor
 import Reg.Support.BoundedRunSpace
 
@@ -95,13 +96,28 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false, true, by change false ≠ true; decide⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.dyadic_response_run in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+theorem _root_._private.Reg.D5.S0.Computability.RationalPostprocessor.0.PredictiveThermodynamic.dyadic_response_run.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.RationalPostprocessor.arena (∀ (xs : List.{0} Bool) (e : Nat) (divisible : @Dvd.dvd.{0} Nat Nat.instDvd (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (Lax51Proofs.RamToTM.msbValue (@List.cons.{0} Bool Bool.true xs))) (oddNumerator : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) e → @Odd.{0} Nat Nat.instSemiring (Lax51Proofs.RamToTM.msbValue (@List.cons.{0} Bool Bool.true xs))), And (Nonempty.{1} (Turing.TM2OutputsInTime PredictiveThermodynamic.postMachine (PredictiveThermodynamic.responseWord xs e) (@Option.some.{0} (List.{0} (Turing.FinTM2.Γ PredictiveThermodynamic.postMachine (Turing.FinTM2.k₁ PredictiveThermodynamic.postMachine))) (PredictiveThermodynamic.binaryWord (PredictiveThermodynamic.responseOutput xs e))) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))) (@List.length.{0} PredictiveThermodynamic.ResponseSymbol (PredictiveThermodynamic.responseWord xs e))) (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))))) (@Eq.{1} Nat (Lax51Proofs.RamToTM.msbValue (PredictiveThermodynamic.responseOutput xs e)) (@ite.{1} Nat (@Eq.{1} Nat e (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) (instDecidableEqNat e (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) (Lax51Proofs.RamToTM.msbValue (@List.cons.{0} Bool Bool.true xs)) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) (@HDiv.hDiv.{0, 0, 0} Nat Nat Nat (@instHDiv.{0} Nat Nat.instDiv) (Lax51Proofs.RamToTM.msbValue (@List.cons.{0} Bool Bool.true xs)) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) (@HPow.hPow.{0, 0, 0} Nat Nat Nat (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) e (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))))) Reg.D5.S0.Computability.RationalPostprocessor.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => dyadic_response_run⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.PredictiveThermodynamic.dyadic_response_run) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Bool)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "RationalPostprocessor") 0) "PredictiveThermodynamic") "dyadic_response_run") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "RationalPostprocessor") 0) "PredictiveThermodynamic") "dyadic_response_run") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.dyadic_response_run.__primitive_realization)⟩,
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.RationalPostprocessor

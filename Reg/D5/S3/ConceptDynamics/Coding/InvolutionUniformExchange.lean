@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Group.ULift
@@ -133,15 +134,25 @@ def distinctRegistration : Registration distinctArena.{u}
   sensitivity := elementSensitivity distinctArena.Law distinct_rejected_law
   dependence := elementDependence
 
-register_information_theorem source_ne_target in distinctArena
-  readout via (realize elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))
-  realizes distinctRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
-    coordinates := #[0, 3]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
-      "fn", "arg", "arg"], stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.source_ne_target.{u}) (type_of% (distinctArena.{u})) (type_of% (distinctArena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "InvolutionUniformExchange") "source_ne_target") "Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange/Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.distinctArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.distinctRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(distinctArena.{u})⟩,
+  objectArena := ⟨(distinctArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (distinctArena.{u}) ⟨(distinctRegistration.{u})⟩,
+  readout := some (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 def forwardArena : Arena where
   signature := elementSignature.{u}
@@ -170,16 +181,25 @@ def forwardRegistration : Registration forwardArena.{u}
   sensitivity := elementSensitivity forwardArena.Law forward_rejected_law
   dependence := elementDependence
 
-register_information_theorem factors_forward in forwardArena
-  readout via (realize elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))
-  realizes forwardRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.factors_forward.{u}) (type_of% (forwardArena.{u})) (type_of% (forwardArena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "InvolutionUniformExchange") "factors_forward") "Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange/Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.forwardArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.forwardRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(forwardArena.{u})⟩,
+  objectArena := ⟨(forwardArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (forwardArena.{u}) ⟨(forwardRegistration.{u})⟩,
+  readout := some (realize.{u + 1, u, 0, u, 0} elementSignature.{u} (fun _ _ t => t) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 /-- A total carrier-only intervention, including singleton and empty fibers. -/
 def other {α : Type u} (x : α) : α := by
@@ -298,17 +318,25 @@ def reverseRegistration : Registration reverseArena.{u}
     intro i
     exact ⟨G2.{u}, (1 : G2.{u}), g2s, Ne.symm g2_not_one⟩
 
-register_information_theorem factors_reverse in reverseArena
-  readout via (realize carrierSignature.{u} (fun _ _ s => s) (fun e => nomatch e))
-  realizes reverseRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.factors_reverse.{u}) (type_of% (reverseArena.{u})) (type_of% (reverseArena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} carrierSignature.{u} (fun _ _ s => s) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "InvolutionUniformExchange") "factors_reverse") "Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange/Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.reverseArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange.reverseRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(reverseArena.{u})⟩,
+  objectArena := ⟨(reverseArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (reverseArena.{u}) ⟨(reverseRegistration.{u})⟩,
+  readout := some (realize.{u + 1, u, 0, u, 0} carrierSignature.{u} (fun _ _ s => s) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms distinctRegistration
 #print axioms forwardRegistration
