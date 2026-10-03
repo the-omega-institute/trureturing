@@ -14192,6 +14192,89 @@ $H=1$ 时这是空合取，每个 $S$ 都充分，包括空表。
 
 最后，$\gcd(y,1)=1$ 包括 $y=0$，所以模 1 只有一个未来，空表即可识别。模数大于一时，首层覆盖至少两个不同相位，故空表不充分。$\square$
 
+**定理 138.4（实际移位子相位的稀疏 gcd 判据）。** 对素数 $p$、精度 $e\ge1$ 和有限自然时间表 $S$，令 $r_j=\operatorname{zeroRank}(p^j)$，其中 zeroRank 是 Fibonacci 序列的最小正零索引。对整数观察对 $x=(n,z)$ 和实际非负来源 $v=(a,b)$，采用
+
+$$
+y(k,x)=F_{k-1}n+F_kz,\qquad
+g(H,k,x)=\gcd(|y(k,x)|,H),\qquad
+h(H,k,v)=\gcd(F_{k+3}a+F_{k+4}b,H).
+$$
+
+$k-1$ 是自然数截断减法；识别与碰撞结论只查询正时刻。实际来源的观察坐标为 $(2a+3b,3a+5b)$，因而 $k>0$ 时 $h(H,k,v)=g(H,k,(2a+3b,3a+5b))$。整数对在 $p$ 处本原是指至少一个坐标不被 $p$ 整除；实际来源的本原性按其原始坐标 $a,b$ 判断。所有未加本原限制的域都包括零对和非本原对。
+
+在 $e\ge2$ 时，令 $R=r_{e-1}$，并以实际查询定义移位子相位集合
+
+$$
+A_{p,e,t}(S)=\left\{u\in\mathbb Z/p\mathbb Z:\exists k\in S,
+\ (k-1)\bmod r_e=(t+\operatorname{val}(u)R)\bmod r_e\right\},
+$$
+
+其中 $\operatorname{val}(u)\in\{0,\ldots,p-1\}$ 是自然代表。它是集合，同一子相位的重复访问只计一次。定义末层条件 $D^{\mathrm{sh}}_{p,e}(S)$ 为
+
+$$
+\begin{array}{ll}
+e=1:&\left(\text{若 }r_1=p+1\text{ 则 }r_1-1\text{，否则 }r_1\right)
+\le|\{k\bmod r_1:k\in S\}|;\\
+e\ge2,\ r_e=R:&\forall t<r_e,\ \exists k\in S,\ (k-1)\bmod r_e=t;\\
+e\ge2,\ r_e\ne R:&\forall t<R,\quad p-1\le|A_{p,e,t}(S)|.
+\end{array}
+$$
+
+全塔条件为 $D^{\mathrm{sh}}_{p,e}(S)\land\bigwedge_{1\le j<e}D^{\mathrm{sh}}_{p,j}(S)$。称 $S$ 识别读出 $f$ 的正未来，若任意两个指定域内的固定来源在 $S$ 上读数相同，就在每个正时刻有相同读数。
+
+对每个有限正时间表 $S$，以下六项等价：$D^{\mathrm{sh}}_{p,e}(S)$；全塔条件；识别全部本原整数观察对的 $g(p^e,\cdot,\cdot)$ 未来；识别全部整数观察对的该未来；识别全部实际非负来源的 $h(p^e,\cdot,\cdot)$ 未来；识别全部在 $p$ 处本原的实际非负来源的该未来。所有六项使用同一个 $S$，不提供共同含量或额外读数。
+
+对任意有限时间表，若 $e\ge2$ 且 $D^{\mathrm{sh}}_{p,e}(S)$ 成立，则每个 $1\le j<e$ 和每对 $\alpha,\beta\in\mathbb Z/r_j\mathbb Z$ 都有 $k\in S$ 满足 $[k-1]_{r_j}+\alpha=\beta$；这一纯相位覆盖结论不要求 $S$ 中时刻为正。对有限正时间表，$D^{\mathrm{sh}}$ 还给出 $S\ne\varnothing$ 和两个不同的首层相位。更一般地，只要一个非空正时间表含两个不同首层相位，则对所有整数观察对
+
+$$
+\min_{k\in S}g(p^e,k,x)=\gcd(\gcd(|n|,|z|),p^e).
+$$
+
+特别地，$D^{\mathrm{sh}}$ 给出的同一表恢复所有实际非负来源的共同含量：
+
+$$
+\min_{k\in S}h(p^e,k,(a,b))=\gcd(\gcd(a,b),p^e).
+$$
+
+这些最小值均包括零来源和饱和来源。
+
+若 $D^{\mathrm{sh}}_{p,e}(S)$ 失败，则存在两个固定的本原整数观察对 $x,x'$，在整个 $S$ 上有相同 $g(p^e,k,\cdot)$ 答案。它们在选择任何 $Q>0$ 之前固定。对每个这样的 $Q$，存在固定实际非负来源 $v,w$，四个坐标均严格小于 $Qp^e$，对所有正时刻满足
+
+$$
+h(Qp^e,k,v)=Q g(p^e,k,x),\qquad
+h(Qp^e,k,w)=Q g(p^e,k,x').
+$$
+
+两者在整个 $S$ 上答案相同。对每个截止 $B\in\mathbb N$，又有 $k>B$、$k>0$、$k\notin S$，在该时刻的两个整数答案为 $p^e,p^{e-1}$，两个实际答案为 $Qp^e,Qp^{e-1}$。来源 $v,w$ 在选择 $B$ 之前已经固定。仅当 $p\nmid Q$ 时断言这两个实际来源在 $p$ 处本原；缩放允许 $p\mid Q$。这同时涵盖首层满轨道的两个遗漏相位、首层非满轨道的遗漏相位与无命中方向、高层增长的两个遗漏子相位以及高层停滞的退出方向。
+
+对所有 $H>0$ 和同一个有限正时间表，
+
+$$
+S\text{ 识别全部实际来源的模 }H\text{ gcd 未来}
+\quad\Longleftrightarrow\quad
+\bigwedge_{p^e\parallel H}D^{\mathrm{sh}}_{p,e}(S).
+$$
+
+这里 $p^e\parallel H$ 指 $p$ 为素数、$e\ge1$、$p^e\mid H$ 且 $p^{e+1}\nmid H$。若一个完整因子失败，则 $p\nmid H/p^e$，并有坐标均小于 $H$ 的固定实际来源，在整个 $S$ 上相同，而在每个截止之后的某个未查询正时刻分别为 $H,H/p$。$H=1$ 时，对包括零来源在内的每个实际来源和每个自然时刻（含零）都有 $h(1,k,v)=1$，所以空表也充分。
+
+此判据使用的实际 affine 解码同时具有如下准确陈述。对任意 $e\ge2$、$t,j\in\mathbb N$ 和整数对 $x$，若 $p^{e-1}\mid y(t+1,x)$，令
+
+$$
+c=F_{R-1},\qquad
+A=\left[c\,\frac{y(t+1,x)}{p^{e-1}}\right]_p,\qquad
+B=\left[\frac{F_R}{p^{e-1}}\,y(t+2,x)\right]_p.
+$$
+
+第一个商为整数商，Fibonacci 商为自然数商；取商后才映入 $\mathbb Z/p\mathbb Z$。则
+
+$$
+p^e\mid y(t+1+jR,x)\quad\Longleftrightarrow\quad A+[j]_pB=0.
+$$
+
+该等价对增长与停滞均成立，不限制 $j$ 的大小，也不排除 $p=2,5$。
+
+证明。秩及提升事实给 $M^R=cI+F_RM$ 和 $p^{e-1}\mid F_R$。当 $e\ge2$，$F_R^2=0\pmod{p^e}$，而相邻 Fibonacci 数互素使 $c$ 为单位；消去单位标量后得到上述实际 affine 等价。增长时，本原父命中的斜率非零，因此至多漏测一个子相位足以识别唯一根；两个遗漏子相位通过逆 Fibonacci 作用给出固定碰撞。停滞时，逆作用构造保持低层命中而退出末层的本原状态。首层两种情况由有限素数相位结果给出。全部整数域先用两个首层相位恢复共同含量，再在剩余精度中识别。模可逆观察矩阵把每个固定整数剩余对实现为有界自然来源，并在全部正时刻保持同一缩放关系。对完整因子的 gcd 投影分别应用局部结果，再由素数幂整除关系重组完整 gcd；必要性用同一有界来源隔离失败因子。$\square$
+
 ## 139. 准确非自适应查询数及同一表的三项最小值
 
 **定理 139.1（任意索引查询数等于连续时域）。** 沿用定理 126.5 的局部连续长度，显式写为
