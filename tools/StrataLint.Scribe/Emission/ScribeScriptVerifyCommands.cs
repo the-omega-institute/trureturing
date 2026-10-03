@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 
 internal static class ScribeScriptVerifyCommands
 {
-    internal static int Run(Assembly documentsAssembly, IReadOnlyList<string> arguments,
+    internal static int Run(Func<Assembly> documentsAssembly, IReadOnlyList<string> arguments,
         string repositoryRoot, TextReader? input, TextWriter output, TextWriter error)
     {
         if (arguments.Count is not (2 or 4) || arguments[0] != "scripts" || arguments[1] != "verify"
@@ -25,7 +25,7 @@ internal static class ScribeScriptVerifyCommands
                 error.WriteLine("EmptyScriptSelection: no definition paths were selected");
                 return 1;
             }
-            var current = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot)
+            var current = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot)
                 .ToDictionary(item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
             var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, paths);
             var resultCounts = results.GroupBy(static result => result.RelativePath, StringComparer.Ordinal)
