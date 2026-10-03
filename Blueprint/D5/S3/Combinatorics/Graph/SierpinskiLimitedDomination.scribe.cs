@@ -26,15 +26,19 @@ internal sealed class SierpinskiLimitedDominationDocument : IScribeDocumentDefin
             Node("claim", "Conjecture 12", "claim", ClaimFormula(),
                 "Section 6, Conjecture 12 (p. 9) states verbatim: \"Let n, m, and k be integers such that n ≥ 1 and 1 ≤ k ≤ m − 1. Then γ_k^L(S(n, m)) = (m−k)·m^(n−1).\" The formal encoding uses n,m,k : ℕ, the graph rank n−1, and gamma for γ_k^L.", DescribeRole.Definition),
             Node("result", "Conjecture 12 proved", "result", ResultFormula(),
-                "The theorem result has type claim. Its proof gives a recursive coloring constant on linking edges and bijective on every base clique for the upper bound; the lower bound charges every empty base clique an additional k−1 vertices. The result also specializes the source's Theorems 10 and 11 at k = 1 and m = 3.", DescribeRole.Theorem)),
+                "The theorem result has type claim. Its proof gives a recursive coloring constant on linking edges and bijective on every base clique for the upper bound; the lower bound charges every empty base clique an additional k−1 vertices. The result also specializes the source's Theorems 10 and 11 at k = 1 and m = 3.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bozovic-2026-sierpinski-limited-domination"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role) => Describe.Lean(
+        Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("sierpinski-limited-domination-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula AdjacencyFormula()
     {

@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SierpinskiLimitedDomination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bozovic-2026-sierpinski-limited-domination` (proved) by `D5/S3/Combinatorics/Graph/SierpinskiLimitedDomination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bozovic-2026-sierpinski-limited-domination","declaration_gid":"D5/S3/Combinatorics/Graph/SierpinskiLimitedDomination.result","resolution_kind":"proved"} -->
+
 *Citation.* D. Božović (2026). *On k-limited domination: complexity and Sierpiński graphs*. DOI: [10.48550/arXiv.2610.01584](https://doi.org/10.48550/arXiv.2610.01584). URL: <https://arxiv.org/abs/2610.01584v1>.
 
 *Commentary.*
