@@ -26819,7 +26819,7 @@ explicitly. Put
 I_H=\{i:\ell_i>1\},
 \]
 
-join (i,j\in I_H) when \(\gcd(\ell_i,\ell_j)>1\), and let
+join \(i,j\in I_H\) when \(\gcd(\ell_i,\ell_j)>1\), and let
 \(\mathfrak B_H\) be the resulting connected components. For
 \(B\in\mathfrak B_H\), put
 
@@ -26827,6 +26827,13 @@ join (i,j\in I_H) when \(\gcd(\ell_i,\ell_j)>1\), and let
 L_B=\operatorname{lcm}_{i\in B}\ell_i,
 \qquad G_B=\mathbb Z/L_B\mathbb Z.
 \]
+
+Every prime-power factor of \(Q/H\) occurs in some \(\ell_i\), so the
+component construction gives
+\[
+\prod_{B\in\mathfrak B_H}L_B=Q/H,
+\]
+and the different \(L_B\) are pairwise coprime.
 
 For \(r\in U_H\), define the quotient class induced by \(i\in B\) by
 
@@ -26845,7 +26852,7 @@ R_B(r)=G_B\setminus\bigcup_{i\in B}C_{i,r},
 W(r)=\{B\in\mathfrak B_H:R_B(r)=\varnothing\}.
 \]
 
-The quotient CRT identifies the fibre above (r) with
+The quotient CRT identifies the fibre above $r$ with
 \(\prod_{B\in\mathfrak B_H}G_B\), so a whole cover forces
 \(W(r)\ne\varnothing\) for every \(r\in U_H\).
 
