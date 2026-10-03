@@ -1,0 +1,21 @@
+**Definition 1.2 (Avoidance and record fibers).** Let $A_n$ be the permutations
+of length $n$ avoiding the classical patterns $2413$ and $3142$. Let $B_{s,n}$
+be the members of $A_n$ with no proper cut of sign $s$, and let $P_{s,n}$ be
+those with a proper cut of sign $s$. For all $s\in\{0,1\}$ and $n,k\in\mathbb N$,
+put
+
+$$
+\begin{aligned}
+U(n,k)&=|\{\pi\in A_n:r(\pi)=k\}|,& j(s,n)&=|B_{s,n}|,\\
+J(s,n,k)&=|\{\pi\in B_{s,n}:r(\pi)=k\}|,&
+D(s,n,k)&=|\{\pi\in P_{s,n}:r(\pi)=k\}|.
+\end{aligned}
+$$
+
+The empty permutation has zero records and belongs to $A_0$ and both $B_{s,0}$.
+Following Chen, Kitaev and Zhang, an irreducible permutation has positive
+length and no proper direct cut. A reducible permutation has a proper direct
+cut. Thus the empty permutation is in neither of these two classes, the
+singleton is irreducible, and the reducible class at length one is empty.
+Their Section 1.2 uses strict, unshifted record counts.
+
