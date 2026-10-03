@@ -116,7 +116,13 @@ The canonical source is
 declarations are `dft`, `phase`, `jointProb`, `eventProb`, `cglmpI3`,
 `cglmpAt`, `IsCglmpValue`, `rhoAB`, `rhoBC`, `rhoAC`, `claim`, `stateVec`, `rho`, `ang` and
 `result`.
-FREEZE_IDENTITIES
+The frozen module state has statement identity
+`sha256:d702782b03881bd0fe04184abc5c12dd2f56c345b4e8b79d37b27c6366d172fd`. The
+result declaration has statement identity
+`sha256:9db90f908beb62a379f1fc501b8cd0b9b122407fc08b9390544e7b57547d5a96`. The Freeze event is
+`sha256:712f68a6d1b05afac438770e5b0bfab63c5d138e8cc655c55cfa93d9aeeed287`; its
+project-level frozen prerequisites are the Freeze events of the three reused
+modules.
 The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
