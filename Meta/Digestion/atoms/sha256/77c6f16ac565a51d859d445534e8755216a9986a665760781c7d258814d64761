@@ -1,0 +1,9 @@
+**定理 45.5（峰值一的统一错误与完整损失底）。** 对每个 $n\ge3$、每棵固定树及任意峰值 $w\le1$ 的仿射-logit softmax 模型，
+
+$$
+R_{01}\ge\frac1{125},\qquad
+R_2\ge\frac1{250},\qquad
+R_{\log}\ge\frac{\log2}{125}.
+\tag{45.15}
+$$
+

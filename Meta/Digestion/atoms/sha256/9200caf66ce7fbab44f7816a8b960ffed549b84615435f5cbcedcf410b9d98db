@@ -1,0 +1,45 @@
+### 定理 286.2 从实际素因子生成的无穷链只保留根入口
+
+令 $s_0=19$，逐步选择
+\[
+s_{j+1}\text{ 为 }m_{s_j}\text{ 的任意素因子}.
+\tag{286.6}
+\]
+每一步都有这样的素因子，因此存在无限链；每个 $s_j$ 都是至少五的素数，且严格增加。
+对任意有限长度 $k\ge1$、任意正指数 $a_0,\ldots,a_{k-1}$，令
+\[
+M_k=\prod_{j=0}^{k-1}m_{s_j}^{a_j},\qquad
+m_k=1260M_k,\qquad D_k=\prod_{j=1}^{k-1}s_j,
+\qquad S_k=19D_k.
+\tag{286.7}
+\]
+空积取一。则 $19\nmid m_k$，每个 $1\le j<k$ 却满足 $s_j\mid m_k$。
+定义标准正逆元
+\[
+t_k=(24D_km_k)^{-1}\bmod19\in\{1,\ldots,18\},\qquad
+r_k=24D_kt_k\in(0,24S_k).
+\tag{286.8}
+\]
+有精确判据
+\[
+\boxed{\quad
+n\in\mathcal E(m_k)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{24S_k}
+\ \text{或}\
+\bigl(a_0=1,\ n\equiv r_k\pmod{24S_k}\bigr).
+\quad}
+\tag{286.9}
+\]
+因此额外入口的存在性只依根深度 $a_0$，不依后代深度；后代深度仍进入实际相位。
+自然密度为 $1/(12S_k)$ 当 $a_0=1$，否则为 $1/(24S_k)$。
+
+在根相位群 $(\mathbb Z/19\mathbb Z)^\times$ 中，追加一个整包的更新为
+\[
+\boxed{\quad
+t_{k+1}=t_k\bigl(s_km_{s_k}^{a_k}\bigr)^{-1}.
+\quad}
+\tag{286.10}
+\]
+其相位寄存器仅有十八个可能值，尺度寄存器 $D_k$ 无界。
+

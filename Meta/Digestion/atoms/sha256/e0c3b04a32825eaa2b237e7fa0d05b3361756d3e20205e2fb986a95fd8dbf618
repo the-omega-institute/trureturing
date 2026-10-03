@@ -1,0 +1,91 @@
+证明。采用式（49.7）的同一个 $H$ 坐标图。旧律三点为 $(k+\zeta,2\zeta)$、$\zeta=-t,0,t$，仿射维数恰为一。置
+
+$$
+\eta=\log\frac{A'}{r'},\quad \xi=\log\frac{r'}{e'},\quad
+\lambda=\log\frac{r'}{D'},\quad \delta=\log\frac{125}{98}.
+$$
+
+退化律的三个目标点为
+
+$$
+v_0=(\eta,-\lambda),\qquad v_1=(\xi,0),\qquad
+v_2=(\eta+\lambda,\lambda).
+\tag{49.14}
+$$
+
+精确代数给
+
+$$
+(A')^2=\frac23D',\qquad
+(r')^3D'-(A')^2(e')^2=\frac{D'}{64}>0,\qquad
+\frac{(r')^3D'}{(A')^2(e')^2}=\frac{125}{98}.
+\tag{49.15}
+$$
+
+其中 $(r')^3=125/1728$，而 $(A')^2(e')^2=(98/1728)D'$，两者的差系数为 $27/1728=1/64$。故
+
+$$
+2(\xi-\eta)-\lambda=\delta,\qquad
+\det(v_1-v_0,v_2-v_0)=\lambda\delta>0.
+\tag{49.16}
+$$
+
+因为本例 $r'>D'>0$，三个点共线当且仅当 $(A')^2(e')^2=(r')^3D'$。它约束 log-odds 的仿射维数；式（49.12）的两个普通概率秩相同，不能用它们区分根一维与根二维。
+
+现在证明所需的条带距离。$s>4/3$ 给 $r'/D'>5/3>125/98$，所以 $\lambda>\delta>0$；又 $125/98<2$ 给 $\delta<\log2<1$。式（49.16）说明
+
+$$
+v_1-\frac{v_0+v_2}{2}=\left(\frac\delta2,0\right),\qquad
+\|v_2-v_0\|_2=\sqrt5\lambda,\qquad
+\|v_1-v_0\|_2^2,\|v_2-v_1\|_2^2<2\lambda^2.
+$$
+
+因此 $v_0v_2$ 是最长边，三角形的二倍面积为 $\lambda\delta$。
+
+这里使用的三角形最小条带事实可以直接证明。对单位方向 $\nu=(\cos\theta,\sin\theta)$，宽度为
+
+$$
+W(\nu)=\max_i\nu\cdot v_i-\min_i\nu\cdot v_i.
+$$
+
+非退化三角形给 $W>0$。投影次序只在 $\nu$ 垂直于某条边时改变；在两次改变之间，极大、极小顶点固定，故 $W(\theta)=\nu\cdot(v_i-v_j)$，且 $W''=-W<0$。这样的开区间内不可能有局部极小点。因此单位圆上连续宽度的最小值在某条边的法向方向取得。该方向上这条边的两个顶点投影相同，第三顶点在另一条平行支撑线上，宽度就是该边的高，即二倍面积除以边长。最小宽度于是是最长边上的高，本例为 $\delta/\sqrt5$。对任意仿射直线 $\ell$，设其单位法向为 $\nu$；若所有顶点到 $\ell$ 的距离至多 $a$，则其投影落在长 $2a$ 的区间内。因此
+
+$$
+\max_c\operatorname{dist}(v_c,\ell)\ge
+\frac12\min_\nu W(\nu)=\frac{\delta}{2\sqrt5}=:d_*.
+\tag{49.17}
+$$
+
+这个固定目标三角形的几何证明没有给学习参数或根消息设置紧致域。
+
+根 $q\le1$ 时，消去第0类 logit 后 $H(p(X))=\beta+Mz(X)$ 落在一个固定仿射直线上；仿射像为点时，把它包含在任意直线内即可。式（49.17）选出一个教师类 $c_*$，使其目标到该线的距离至少为 $d_*$。于是对这个类的每个原始输入和每个尾，均有 $\|H(p)-v_{c_*}\|_2\ge d_*$。
+
+把几何距离转成概率误差必须保留内点和大误差两个分支。记 $a_p=\|p-Q'_{c_*}\|_2$。若 $a_p\le\mu/2$，连接二者的概率线段上每个坐标至少为 $\mu/2$。差分矩阵
+
+$$
+M_0=\begin{pmatrix}-1&1&0\\-1&0&1\end{pmatrix},\qquad
+M_0M_0^{\mathsf T}=\begin{pmatrix}2&1\\1&2\end{pmatrix}
+$$
+
+的算子范数为 $\sqrt3$，各对数导数绝对值至多 $2/\mu$。沿该线段积分得到
+
+$$
+d_*\le\|H(p)-v_{c_*}\|_2\le\frac{2\sqrt3}{\mu}a_p,\qquad
+a_p^2\ge\frac{\mu^2\delta^2}{240}.
+\tag{49.18}
+$$
+
+若 $a_p>\mu/2$，直接有 $a_p^2>\mu^2/4\ge\mu^2\delta^2/240$，因为 $\delta<1$。所以式（49.18）的最后一个下界覆盖所有预测，包括逼近单纯形边界的参数序列。所选整类的实际质量至少为 $16/125$，故
+
+$$
+\mathbb E_{P_n}\|p-\rho'\|_2^2
+\ge\frac{16}{125}\frac{\mu^2\delta^2}{240}
+=\frac{\mu^2\delta^2}{1875}.
+$$
+
+只用了一个整类见证，未把重叠障碍的下界相加；也未选取一个尾词而付出 $5^{-(n-3)}$ 的代价。
+
+自然对数 Pinsker 给 $\mathrm{KL}(R\Vert p)\ge\|R-p\|_1^2/2$。因差向量的坐标和为零，正、负部分各有同一总质量 $m$，各部分平方和至多 $m^2$，所以 $\|R-p\|_2^2\le2m^2=\|R-p\|_1^2/2$。由式（49.11）得对数超额的同一个底。这里的 Pinsker 常数复用 Reid、Williamson，[*Information, Divergence and Risk for Binary Experiments*](https://jmlr.org/papers/volume12/reid11a/reid11a.pdf)，§3.2、Appendix E 的完整 $L^1$ 变差约定。
+
+softmax 的 log-probability 因子化与概率混合逃出单 softmax 秩限制的成熟视角见 Yang、Dai、Salakhutdinov、Cohen，[*Breaking the Softmax Bottleneck: A High-Rank RNN Language Model*](https://arxiv.org/pdf/1711.03953)，§2.1、§2.4；其 universal-approximator 充分性不用于本节。Ganea、Gelly、Bécigneul、Severyn，[*Breaking the Softmax Bottleneck via Learnable Monotonic Pointwise Non-linearities*](https://proceedings.mlr.press/v97/ganea19a/ganea19a.pdf)，§3 区分 log-probability 逼近、交叉熵和众数匹配；其 Theorem 2 固定词嵌入的最大熵刻画不替代本节对全部头的统一风险底。式（49.15）–（49.18）把这些视角接到当前实际整窗律与自由偏置合同，正底由固定三角形和内点常数直接给出。$\square$
+

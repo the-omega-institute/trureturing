@@ -18126,3 +18126,1415 @@ $$
 本节分类仅针对固定 $\pi,\nu,T$、正可达支撑与全部整数 $m\ge2$ 的公共有限历史实验；来源实现、原始树、实际历史、控制种子及物理经过时间的恢复须另按声明任务和实际纤维核对。
 
 ## 86.99 追加锚
+
+## 87. 同一来源续接的有限预测律与后验边界
+
+本节固定第81节的同一 FIB 来源族、同一 Contract B、同一实际生产者和同一隐藏整数 $m$。
+它只研究一个明确声明的续接接口，以及该接口上的精确有限概率律。
+历史控制器、种子律、初始化和至多 $T$ 个宏动作仍是同一个 $(\pi,\nu,T)$ 实验；不把不同来源下另选的控制器拼成一项实验。
+历史像取第86节的正概率、实际可达前缀，并删去已经停止或仅靠补齐符号延长的前缀，保留仍处于 active phase 且由接口明确提供续接端口的集合 $H_{\mathrm{port}}$。
+这里的正性是第86.2节的控制相容权重 $\kappa(h)>0$；因此对原实验的每个 $m\ge2$ 都有 $p_m(h)>0$，而 active 条件排除停止和补齐历史。
+
+### 87.1 共同续接端口
+
+**定义 87.1（正的共同续接像）。** 对 $h\in H_{\mathrm{port}}$，$k(h)$ 是实际执行的 $\rho$ 次数，$E(h)$ 是第86节的带符号数值剖面。
+端口的权限、控制阶段和初始化在全部 $h\in H_{\mathrm{port}}$ 及全部 $m\ge2$ 的相应实现上取同一共同声明值；$H_{\mathrm{port}}$ 是按可见前缀选出的集合，端口在每个相应实现上都由合同供应。这个集合不是隐藏的事后筛选，也不是随来源 $m$ 改变端口可用性的事件，因而不改变后验。
+端口接管命令权；旧选择器只参与交接前的可见接口约定，交接后不作为未来控制输入或因果侧道。它在同一个物理生产者上继续运行；来源计数仍由 $m$ 和后续实际的 $\rho$ 次数决定。
+采样和应答沿用第86.1节的 type-only 合同：只返回类型，不提供形状或叶身份输入。端口只允许使用新的未来输出和自己的新独立种子，禁止读取 $h$、旧选择器、已经实现的旧私有种子、被擦除的旧记录、隐藏 $m$、来源相关成本或时钟以及其他旧记录侧道。
+
+这里的“共同”是接口的显式条件，而不是从统计律推出的重置权。
+端口不重置、重抽或复制生产者，也不恢复全局已经停止的观察者；补齐前缀不因本定义而重新变成 active。
+若要在停止前预装一个阶段控制器，必须把该控制器作为另一个明确的物理合同声明；本节采取较窄的实际 active 像。
+这个 handoff 是需要承担成本的条件接口，本节不实现或认证它的物理可得性。
+
+固定一个整数 $T\ge1$，它仍是原历史实验的宏动作上界，并不表示物理时间。
+对每个 $h\in H_{\mathrm{port}}$，令 $\mu_h$ 为给定先验下的后验：
+
+$$
+\mu_h(m)=\frac{w_mL_{E(h)}(1/m)}{Z_h},\qquad
+Z_h=\sum_{\ell\ge2}w_\ell L_{E(h)}(1/\ell)>0,
+$$
+
+其中 $w_m\ge0$、$\sum_{m\ge2}w_m=1$，$S=\{m:w_m>0\}$ 可以有限或无限。
+为处理可数支撑，这里直接给出归一化证明。由 (86.7) 约去 $m$ 的幂后，实际 $E$ 的似然可写成有限个整数幂的乘积
+$$
+L_E(\theta)=\prod_{d\in\mathcal D}(d-\theta)^{E_d}.
+$$
+每个 $d\ge1$，故在 $\theta\in[0,1/2]$ 上 $d-\theta\ge1/2$；$L_E$（允许负整数幂）在该紧区间上正且连续。于是存在
+$$
+0<c_E\le L_E(\theta)\le C_E<\infty\qquad(0\le\theta\le1/2).
+$$
+端点 $\theta=0$ 只是代数上的紧化端点，并非实际整数来源。由于共同概率权重满足 $\sum_mw_m=1$，有 $c_E\le Z_h\le C_E$；每个 $w_m>0$ 的似然又严格为正，所以 $\mu_h$ 的支撑恰为 $S$。这一步是本节对可数先验的证明；(86.11) 只处理有限先验。
+该先验是共同声明的数学输入，不是观察者免费拥有的计算或取样预言机。
+
+未来固定探针 $Q_T$ 先执行一次 $\mathrm{Read}$，再在当前深度连续执行 $2T$ 次恢复的 $\mathrm{PairRead}$；不在探针内执行 $\rho$。
+所有命令预先固定，因而不依赖 $k,m,E$，总宏调用数为 $2T+1$。
+条件于保持不变的实际 $m$，每次成对抽样使用新的生产者随机性；不把混合后的无条件输出称为独立同分布。
+
+### 87.2 探针的深度和矩读数
+
+写当前深度的
+
+$$
+A=A_k=F_{k+1},\qquad B=B_k=F_{k+2},\qquad n=n_k=A+B=F_{k+3},
+$$
+
+并令
+
+$$
+ r_k=\frac{A}{n},\qquad
+ u_k(m)=\frac{A(A-1/m)}{n(n-1/m)}.
+$$
+
+对 $0\le j\le2T$，定义 $M_j(h)$ 为 $Q_T$ 的前 $j$ 个 PairRead 全部返回 $aa$ 的概率，$M_0(h)=1$。
+条件于 $m$ 时，恢复抽样的独立性给出
+
+$$
+M_j(h)=\sum_{m\in S}\mu_h(m)u_k(m)^j.
+\tag{87.1}
+$$
+
+先行的 Read 直接给出
+
+$$
+\Pr(\mathrm{Read}\ \alpha\mid m,k)=\frac{mA}{mn}=\frac{A}{n}=r_k.
+$$
+
+物理计数是 $mA,mB$；这里的物理来源始终取实际整数 $m\ge2$。完整 PairRead 四格律中第一叶为 $\alpha$ 的可观测边际为
+
+$$
+P_{m,k}(aa)+P_{m,k}(ab)
+=\frac{A(mA-1)+mAB}{n(mn-1)}=\frac{A}{n}.
+\tag{87.2}
+$$
+
+相邻 Fibonacci 数互素；由 $F_{i+2}=F_{i+1}+F_i$ 反复使用 Euclid 算法，
+$\gcd(F_{k+1},F_{k+3})=\gcd(F_{k+1},F_{k+2})=1$。
+又 $F_{k+3}$ 对 $k\ge0$ 严格递增，所以 $r_k=F_{k+1}/F_{k+3}$ 已约分且随 $k$ 取不同值。
+这是精确概率律对深度的识别；一次实际只观测到一个二值 Read 结果并不能零误差地解出该概率。
+
+若 $T\ge1$，可删去先行的 Read，使用
+
+$$
+\widehat Q_T=(\mathrm{PairRead})^{2T}
+$$
+
+作为透明主探针。
+先行 Read 的条件律只由 $k$ 决定，与 $m$ 和后续 PairRead 的生产者随机性无关；因此在给定 $k$ 后，$Q_T$ 的整条输出律等于一个已知的 Read 因子与 $\widehat Q_T$ 的整条输出律的乘积。
+反向也成立：若 $\widehat Q_T$ 的两条律相等，因 $T\ge1$ 至少有一个 PairRead，其第一叶为 $\alpha$ 的边际由 (87.2) 确定 $k$；随后前 $2T$ 个全为 $aa$ 事件给出相同的 $M_j$，(87.9) 给出相同后验。给定相同的 $k$ 和后验，条件于持久的 $m$ 的有限词乘积律相同，再对同一后验求和即可恢复整条 $\widehat Q_T$ 律。因此两探针具有同一预测分区；仅有给定 $k$ 的因子分解本身不足以推出这一点。
+$Q_T$ 的一个上界保留了先行 Read，$\widehat Q_T$ 只需 $2T$ 个宏调用；两者都不是尖锐的物理时间界，也不是有限样本恢复保证。
+
+当 $T=0$ 时，原历史像只有空前缀，$k=0$、$E=0$ 且 $\mu=w$。
+空探针已经给出唯一预测类；若接口额外允许一次 Read，把它作为无害的上界即可，不把它误称为必要调用。
+
+### 87.3 有界有理后验桥
+
+固定 $k$，令 $\theta=1/m\in[0,1/2]$。
+函数
+
+$$
+ u(\theta)=\frac{A}{n}\frac{A-\theta}{n-\theta}
+$$
+
+的导数为 $\frac{A}{n}\frac{A-n}{(n-\theta)^2}<0$，所以它在物理区间严格单调，从而 $m\mapsto u_k(m)$ 在 $S$ 上单射。
+其反函数写成
+
+$$
+ \theta=\frac{A^2-n^2u}{A-nu},\qquad
+ D(u):=A-nu=\frac{AB}{n-\theta}>0.
+\tag{87.3}
+$$
+
+令 $J_k=u([0,1/2])$。
+历史中一次深度 $j$ 的同色 PairRead，在去掉与 $m$ 无关的正因子后给出 $(d-\theta)/(n_j-\theta)$，其中 $d=A_j$ 或 $B_j$；混色 PairRead 给出 $1/(n_j-\theta)$。
+所有旧 PairRead 的次数总和 $N_{\mathrm{pair}}(h)$ 不超过 $T$。
+
+把 (87.3) 代回，定义
+
+$$
+ \ell_d(u)=dD(u)-(A^2-n^2u)
+       =A(d-A)+n(n-d)u.
+\tag{87.4}
+$$
+
+则
+
+$$
+ d-\theta=\frac{\ell_d(u)}{D(u)},\qquad
+ n_j-\theta=\frac{\ell_{n_j}(u)}{D(u)}.
+$$
+
+在 $J_k$ 上 $\ell_d(u(\theta))=D(u(\theta))(d-\theta)>0$。
+所以每个同色因子可写为 $\ell_d/\ell_{n_j}$，每个混色因子可写为 $D/\ell_{n_j}$；虽不要求多项式系数逐项为正，但这些函数在整个实际区间都为正。
+
+删除单叶 Read 因子、控制相容权重和每次 PairRead 的正来源无关常数后，得到
+
+$$
+ F_h(u)=\frac{P_h(u)}{Q_h(u)}>0\quad(u\in J_k),
+$$
+
+其中 $P_h,Q_h$ 是由上述一次因子相乘得到的多项式，
+
+$$
+ \deg P_h\le N_{\mathrm{pair}}(h)\le T,
+ \qquad
+ \deg Q_h\le N_{\mathrm{pair}}(h)\le T,
+ \qquad Q_h(u)>0\ (u\in J_k).
+\tag{87.5}
+$$
+
+这是原始次数包络，不声称最小次数或资源最优。
+存在有限正的
+
+$$
+ z_h=\sum_{m\in S}w_m\frac{P_h(u_k(m))}{Q_h(u_k(m))}
+$$
+
+使同一深度的后验成为
+
+$$
+ \mu_h(m)=w_m\frac{P_h(u_m)}{z_hQ_h(u_m)},
+ \qquad u_m:=u_k(m).
+\tag{87.6}
+$$
+
+$P_h/Q_h$ 在紧区间上有界且 $Q_h$ 有正下界，故 (87.6) 的可数和绝对收敛；$z_h$ 与 87.1 中定义的 $Z_h$ 只是相应规范形的两个正归一化常数。
+
+### 87.4 单一有限律的后验分离
+
+设 $h,h'$ 属于同一深度 $k$ 的实际续接像。
+由 (87.5) 定义
+
+$$
+ V(u)=z_{h'}P_h(u)Q_{h'}(u)-z_hP_{h'}(u)Q_h(u),
+ \qquad \deg V\le2T.
+\tag{87.7}
+$$
+
+由 (87.6)，
+
+$$
+ \mu_h(m)-\mu_{h'}(m)
+ =\frac{w_mV(u_m)}{z_hz_{h'}Q_h(u_m)Q_{h'}(u_m)}.
+\tag{87.8}
+$$
+
+若 $M_j(h)=M_j(h')$ 对全部 $0\le j\le2T$ 成立，将 $V$ 展开为次数至多 $2T$ 的幂和，得到
+
+$$
+ 0=\sum_{m\in S}(\mu_h(m)-\mu_{h'}(m))V(u_m)
+ =\sum_{m\in S}\frac{w_mV(u_m)^2}
+ {z_hz_{h'}Q_h(u_m)Q_{h'}(u_m)}.
+\tag{87.9}
+$$
+
+第一项级数绝对收敛，因为 $V$ 在 $J_k$ 有界且两后验总变差不超过 $2$。
+第二项也绝对收敛，且每项非负：分母在紧区间上有正下界，$\sum w_m=1$。
+故 (87.9) 的每一项在 $S$ 上都为零，进而 $V(u_m)=0$；(87.8) 给出 $\mu_h=\mu_{h'}$。
+反向若后验相等，则 (87.1) 的所有矩当然相等。
+
+因此，在固定深度的实际像上，前 $2T$ 个 $aa$ 矩恰好恢复整个后验；论证直接使用有界有理比和正平方和，不把无限支撑截断为有限支撑，也不调用渐近矩定理。
+这也说明该结论允许 $S$ 无限，并不引入“$m=\infty$”的额外来源。
+
+### 87.5 精确预测边界与有限支持条件
+
+**定理 87.2（有限探针与共同未来响应的精确边界）。** 在上述共同端口和持久来源条件下，实际接口上的有限探针与所有共同未来程序具有如下同一边界：
+由 (87.2)、(87.9) 以及 $\widehat Q_T$ 的条件乘积律，得到实际接口上的等价关系
+
+$$
+ \mathcal L_h(Q_T)=\mathcal L_{h'}(Q_T)
+ \quad\Longleftrightarrow\quad
+ k(h)=k(h')\ \text{且}\ \mu_h=\mu_{h'}.
+\tag{87.10}
+$$
+
+**证明。**
+正向先由 Read 边际的约分值确定 $k$，再用 PairRead 的 $aa$ 矩确定后验。
+反向固定同一个 $k$ 和后验，条件于持久的 $m$，每个有限 PairRead 词的概率是相应单次因子的乘积；对同一后验求和即得全词律相同。
+这里使用的是条件于 $m$ 的独立性，不能把后验混合后的多次输出说成无条件 iid。
+
+任意共同初始化的未来程序 $\sigma$ 只读新未来记录并使用共同独立种子时，记其有限未来记录核为
+$K_{k,m}^{\sigma}$。这个核与 $h$ 无关，可先固定一个新的控制种子 $s^+$，再按未来前缀长度 $\ell$ 归纳。若此前缀含 $q_\ell$ 次未来 $\rho$，当前计数就是 $m(A_{k+q_\ell},B_{k+q_\ell})$；恢复的 Read 与 PairRead 不改计数。固定 $s^+$ 后，下一动作只由这个新前缀、共同初始化和 $s^+$ 决定；固定 $m$ 后，生产者的下一输出律只由当前计数和该动作决定。因此新增一步仍给出不依赖旧 $h$ 的前缀核。对共同的、与来源及旧历史独立的新种子律积分，便得到每个有限未来前缀的共同核 $K_{k,m}^{\sigma}$。此处不假定种子能从记录恢复，也不把增长次数 $q_\ell$ 当作总前缀长度 $\ell$。
+由于生产者未变且 $m$ 持久，历史 $h$ 下的响应律为
+
+$$
+ \mathcal L_h^\sigma=\sum_{m\in S}\mu_h(m)K_{k(h),m}^{\sigma}.
+\tag{87.11}
+$$
+
+所以相同 $(k,\mu)$ 给出所有这类程序的相同未来律；反过来，所有程序的相等包含合法的 $Q_T$，再由 (87.10) 得到相同 $(k,\mu)$。
+第52.12–52.13节的完整后续响应闭合以及
+[D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.lean](../../../D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.lean)
+的实际未来律因子结论，正是在这个实际像上把 (87.11) 的边界取为唯一因子。
+这里没有把实际像扩张成任意的 $k$ 与任意后验的笛卡尔积。
+
+这证明了定理 87.2。
+
+先验全支撑 $S=\{2,3,\ldots\}$ 时，若同一 $k$ 的两个后验相等，则
+$L_{E(h)}(1/m)/L_{E(h')}(1/m)$ 对全部整数 $m\ge2$ 为常数。
+第86.4节的有理函数分类于是给出 $E(h)=E(h')$；反向由 (86.7) 立即成立。
+因此全支撑下，(87.10) 也可写成 $(k,E)$ 的实际预测边界。
+
+更一般地，若 $|S|\ge2T+1$，(87.7) 在互异的 $u_m$ 上至少有 $2T+1$ 个零点，次数界迫使 $V$ 恒等于零。
+于是 (87.6) 的有理比在整个 $J_k$ 上恒定，特别在所有整数 $m\ge2$ 上恒定；再用第86.4节得到 $E(h)=E(h')$。
+这是足够的有限支撑条件，不是必要条件，也不是尖锐界；较小支撑仍可能在给定实际像上分离全部 $E$。
+若历史继续取得更多 PairRead，应用同一证明时必须以实际总次数上界 $R$ 替换 $T$，相应有限支撑条件变为 $|S|\ge2R+1$。
+式（86.12）的 $E$ 更新仍保持其充分记录地位，但旧的有限支撑数值不能被当作新阶段的最小性证明；无限或全支撑则继续由同一无限来源分类保持区分。
+
+点质量先验的非恢复可以在同一个实际实验中见证。一个共同控制器先在深度 $0$ 执行一次 PairRead，再把控制权交给 ACTIVE；输出 $aa$ 与 $ab$ 对所有 $m\ge2$ 都有正概率，所得两个可见前缀都在 $k=0$，而
+$$
+E_{aa}=e_1-e_2,\qquad E_{ab}=-e_2.
+$$
+取 $w=\delta_{m_0}$，两前缀都有 $\mu_h=\mu_{h'}=\delta_{m_0}$，故按定理 87.2 在本共同端口下所有未来律都相同。这里 $T=1$ 已足够，且没有全局停止。较小支撑的其他情形仍可能分离；后验边界 $(k,\mu)$ 对任意非空 $S$ 仍由 (87.10) 给出。
+
+### 87.6 完整未来律与单条样本
+
+**命题 87.3（无限轨迹的非恢复）。** 固定同一深度 $k$、同一支撑 $S$，取任意共同允许的无限延续程序 $\sigma$，并令
+$K_{k,m}^{\sigma}$ 为固定 $m$ 下的无限未来轨迹律（停止后用固定补齐符号，轨迹空间取相应乘积空间）。对 $H_{\mathrm{port}}$ 中同深度的任意 $h,h'$，两份完整未来轨迹律互相绝对连续；若 $E(h)\ne E(h')$，不存在只接收该未来轨迹的同一个解码器，在两种历史下都几乎必然输出各自的正确旧标签。允许解码器使用一个共同独立随机种子，结论仍成立。
+**证明。**
+对同一 $k$ 的任意两个历史，(87.11) 给出
+
+$$
+ Q_h^\sigma(A)=\sum_{m\in S}\mu_h(m)K_{k,m}^{\sigma}(A).
+$$
+
+因为每个 $\mu_h(m)$ 在 $S$ 上严格为正，
+
+$$
+ Q_h^\sigma(A)=0
+ \Longleftrightarrow
+ K_{k,m}^{\sigma}(A)=0\ \text{对每个 }m\in S
+ \Longleftrightarrow
+ Q_{h'}^\sigma(A)=0.
+\tag{87.12}
+$$
+
+故两个完整未来律互相绝对连续，即使它们作为精确律对象数值不同并可由有限探针区分。
+若 $E(h)\ne E(h')$，共同解码器不能从一条未来轨迹在两种历史下都几乎必然输出各自正确的 $E$ 标签：若事件 $A$ 上第一历史输出 $E(h)$ 的概率为一，则其补集对 $Q_h^\sigma$ 为零，(87.12) 使该补集对 $Q_{h'}^\sigma$ 也为零；第二历史遂以概率一输出同一标签，和 $E(h')$ 不同矛盾。
+把解码器的独立随机种子并入轨迹空间，论证不变。
+
+证毕。
+
+(87.12) 不是“没有信息增益”命题，也不排除在无限记录下识别实际保留的 $m$，更不妨碍读取另行保存的旧档案。
+它依赖共同端口排除旧历史、旧种子和来源侧道，并依赖一个运行中持久的 $m$；若每次另行从后验混合重备来源，得到的是不同实验，不能套用本结论。
+有限律的相等或不等是精确的数学数据，不是观察者从有限样本自动得到的 law oracle。
+
+### 87.7 来源边界与方法范围
+
+本节的有限桥只承担 FIB 特有的 Fibonacci 比例、Contract B 的有序无放回律、(87.4) 的 Möbius 变换、次数界和正平方和。
+式（86.12）承担局部 $E$ 更新，第52.12–52.13节承担条件后续响应的顺序闭合；本节不重证这些局部更新或一般预测商。
+
+[Littman、Sutton、Singh 的 Predictive Representations of State](https://papers.neurips.cc/paper/1983-predictive-representations-of-state.pdf) 提供有限过程的预测表示背景，但不提供这里的可数离散尺度、共同 handoff 或有界历史有理后验桥。
+[Karlsson、Lindquist、Ringh](https://arxiv.org/html/1504.03626v4) 的 Theorem 3.4 与 Corollary 3.5 使用固定正分子和锥边界条件；它们说明相关的有理矩分离背景，却不直接覆盖本节分子与分母同时变化、先验为离散支撑的情形。
+
+因此本节结论的量词始终限于 $H_{\mathrm{port}}$、同一 $(\pi,\nu,T)$、同一 Contract B、共同先验和持久实际来源。
+一般旧历史依赖的选择器、不同权限、终止状态、物理形状、经过成本和旧档案恢复，仍由第79–80节及过程几何第39–42节的实际纤维条件另行决定。
+
+## 87.99 追加锚
+
+## 88. 同一来源续接的旧历史任务与三种恢复分区
+
+**约定 88.0（实际任务、共同原始记录与观察合同）。** 沿用第87.1节的共同 ACTIVE 端口、Contract B 和持久 FIB 来源，记固定的有界旧取得实验为 $\mathrm{ONE}(\pi,\nu,T)$，其中 $T\in\mathbb N$。只取这一实验中正概率、实际可达且由合同供应端口的非空像 $H_{\mathrm{port}}$；空像没有实际旧历史任务。共同先验满足
+
+$$
+w_m\ge0,\qquad \sum_{m\ge2}w_m=1,\qquad
+S=\{m\ge2:w_m>0\}\ne\varnothing.
+$$
+
+$S$ 可为任意非空有限或可数支撑。第87.1节给出每个 $h$ 的正且归一化的后验 $\mu_h$，其支撑都恰为 $S$。实际生产者和一次抽取的整数 $M=m$ 在交接后继续保留，不重抽、不重置；$\mu_h$ 是条件分布，不是交接时新产生的物理尺度。
+
+固定确定性任务 $D:H_{\mathrm{port}}\to\Lambda$，其中 $\Lambda\ne\varnothing$，实际标签像 $\Lambda_D=D(H_{\mathrm{port}})$ 有限且非空，赋予离散可测结构。恢复器只需在 $\Lambda_D$ 中输出。对于这个固定任务，只允许一份在全部 $h$ 下共同初始化的未来可测程序 $\sigma$ 和一份共同解码器；它们可以使用新的未来动作—应答和共同新控制种子 $s^+\sim\nu^+$。新种子在生成未来记录之前与旧实验、$M$ 及生产者抽样随机性独立，解码器可以观察它，额外独立解码随机化也并入它。旧种子、旧选择器、旧历史及档案、树形或叶身份、来源相关时钟或成本和隐藏选择侧道均不作为未来输入。端口在全部相应实现上的共同可用性是第87.1节供应的条件接口，不由下述统计论证推出。
+
+令 $\mathsf U$ 为新种子的共同可测空间，$\mathsf R$ 为合同的有限宏记录字母表，含实际动作、应答以及停止后的固定补齐。全部比较都在同一个原始可测空间和过滤上进行：
+
+$$
+\Omega_{\mathrm{RAW}}=\mathsf U\times\mathsf R^{\mathbb N},\qquad
+\mathcal F_n=\sigma(s^+,V_1,\ldots,V_n).
+\tag{88.1}
+$$
+
+空间取种子可测结构与离散记录乘积可测结构，不按旧 $h$ 另取完成化的 $\sigma$ 代数。控制后的轨迹一般与 $s^+$ 相关；共同条件分量必须是种子—轨迹的联合律，不能将二者当作独立乘积。以 $Q_h^\sigma$ 记给定旧 $h$ 后在此空间上的未来律。
+
+**推论 88.1（遗忘旧历史任务的三种精确恢复条件）。** 在约定88.0下，有以下三个条件分类，所有因子都只定义在实际达到的像上。
+
+1. 存在共同允许的程序、几乎必然有限的停止时刻 $\tau$ 和共同停止解码器，使停止标签事件 $\{\tau=n,\widehat D=d\}\in\mathcal F_n$，并且
+
+   $$
+   Q_h^\sigma(\tau<\infty,\ \widehat D=D(h))=1
+   \qquad\text{对每个 }h\in H_{\mathrm{port}},
+   \tag{88.2}
+   $$
+
+   当且仅当 $D$ 在整个 $H_{\mathrm{port}}$ 上为常数。
+
+2. 存在共同允许的程序和一份接收整个无限未来记录（可含 $s^+$）的原始可测解码器 $\delta$，使
+
+   $$
+   Q_h^\sigma(\delta=D(h))=1
+   \qquad\text{对每个 }h\in H_{\mathrm{port}},
+   \tag{88.3}
+   $$
+
+   当且仅当 $D=d\circ k$，即 $D$ 在每个达到的深度纤维上为常数。必要性对每一个共同自适应程序都成立，充分性是允许程序中的存在性结论。
+
+3. 当 $T\ge1$ 时，第87.2定理的指定分离探针 $Q_T$ 的精确律对象恢复 $D$，当且仅当
+
+   $$
+   D(h)=g(k(h),\mu_h).
+   \tag{88.4}
+   $$
+
+   等价地，$D$ 在实际达到的 $(k,\mu)$ 纤维上为常数。以所有有限共同未来程序的精确律族为输入，恢复条件相同；不是每一个任意有限探针都分离这些纤维。$T=0$ 时，非空端口像只能包含唯一空历史，空探针已足够，三项均退化为常标签。
+
+第二项只给出整条记录上的数学几乎处处可测性，不给出有限停机、有效性、有界记忆、逐路径成功或物理无限访问。第三项以精确概率律本身为输入，不把有限次抽样的输出当成这个律对象。
+
+**证明。** 先证明第一项所需的跨初始深度有限前缀桥。固定一个共同程序 $\sigma$，只固定新控制种子 $s$，不固定生产者抽样随机性。对长度 $n$ 的宏记录词 $v$，令 $q_i(v)$ 为第 $i$ 槽之前实际执行的未来 $\rho$ 次数，$a_i(v),e_i(v)$ 为该槽的动作和应答。按第81.10定理的密度论证，相对于共同 $\nu^+$ 与有限词计数测度的乘积，种子—前缀联合律的密度为
+
+$$
+f_{h,n}(s,v)=\chi_\sigma(s,v)
+\sum_{m\in S}\mu_h(m)
+\prod_{i=1}^n
+\ell_{m,k(h)+q_i(v)}(e_i(v)\mid a_i(v)).
+\tag{88.5}
+$$
+
+$\chi_\sigma$ 是只由共同控制规则和合同相容性决定的指标。固定相容的 $s,v$ 后，第 $i$ 次调用前的计数为 $m(A_{k(h)+q_i(v)},B_{k(h)+q_i(v)})$。两个分量都至少为 $2$，所以每个 Read 或 PairRead 的相容输出因子严格为正；$\rho$、停止和补齐的相容固定应答因子为 $1$。因此有限乘积严格为正，正后验混合也严格为正；不相容时共同指标为零。特别地，
+
+$$
+f_{h,n}(s,v)=0\quad\Longleftrightarrow\quad
+\chi_\sigma(s,v)=0\quad\Longleftrightarrow\quad
+f_{h',n}(s,v)=0
+\tag{88.6}
+$$
+
+对任意 $h,h'$ 成立，不要求其深度相同。于是全部种子—有限前缀联合律互相绝对连续。没有假定单个种子点具有正质量，也没有假定跨 $m,k,n$ 的统一概率下界；即使未来增长无界，每个有限前缀的 $k(h)+q_i(v)$ 仍有限。
+
+若 $D(h)\ne D(h')$ 而 (88.2) 成立，则可数并
+$\bigcup_{n\ge0}\{\tau=n,\widehat D=D(h)\}$ 在 $h$ 下概率为 $1$，故其中一个有限 $n$ 的事件有正概率。该事件属于共同 $\mathcal F_n$，(88.6) 将正概率传到 $h'$，产生正概率的错误旧标签，矛盾。反向对常数任务在 $n=0$ 直接输出其标签，便满足 (88.2)。
+
+对于第二项的必要性，直接采用第87.3命题的正共同分量混合论证。将固定 $k,m$ 和共同程序的分量取为整个种子—轨迹联合律 $\widetilde K_{k,m}^\sigma$。同一 $k,m$ 下的 type-only 合同、共同初始化和程序决定同一个联合核，与旧 $h$ 无关；这里保留种子与受控记录的相关性。于是对每个原始可测事件 $A$，
+
+$$
+\begin{aligned}
+Q_h^\sigma(A)&=\sum_{m\in S}\mu_h(m)\widetilde K_{k(h),m}^\sigma(A),\\
+Q_h^\sigma(A)=0
+&\quad\Longleftrightarrow\quad
+\widetilde K_{k(h),m}^\sigma(A)=0\ \text{对每个 }m\in S.
+\end{aligned}
+\tag{88.7}
+$$
+
+同深度的任意 $h,h'$ 因而有互相绝对连续的完整联合律。若共同解码器在 $h$ 下以概率一输出 $D(h)$，事件 $\{\delta\ne D(h)\}$ 的零概率也传到 $h'$；它在 $h'$ 下仍以概率一输出 $D(h)$。所以 (88.3) 迫使同一深度纤维内的标签相同。这适用于每一个共同程序，包括自适应增长或停止的程序。
+
+充分性只需永久 Read，不执行 $\rho$，也不需要更强的 PairRead 权限。令 $X_i$ 为第 $i$ 次新 Read 返回 $\alpha$ 的指标。固定 $k,m$ 时，恢复读取和新生产者随机性使这些指标独立同分布，且
+
+$$
+\Pr(X_i=1\mid k,m)=r_k=\frac{F_{k+1}}{F_{k+3}}.
+\tag{88.8}
+$$
+
+其全部有限乘积律都与 $m$ 无关；对 $\mu_h$ 混合仍保留同一个 Bernoulli 乘积律。这个特殊事实只用于此 Read 程序，一般的 PairRead 记录在后验混合后不必独立同分布。
+
+所用强大数律是 [Durrett, *Probability: Theory and Examples*, Version 5, Theorem 2.4.1，印刷页76／PDF页84](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)：两两独立、同分布且可积的实随机变量，其样本均值几乎必然趋于共同期望。这里 $0\le X_i\le1$ 保证可积，完整独立性保证两两独立性，同分布由 (88.8) 给出，故对每个固定 $k,m$，
+
+$$
+\frac1n\sum_{i=1}^nX_i\longrightarrow r_k\quad\text{几乎必然}.
+\tag{88.9}
+$$
+
+对后验求和也给出每个 $h$ 下的同一几乎必然结论。在整个原始空间上，把 $X_i$ 定义为第 $i$ 槽为 Read 且返回 $\alpha$ 的指标，令
+
+$$
+C_k=\bigcap_{j\ge1}\ \bigcup_{N\ge1}\ \bigcap_{n\ge N}
+\left\{\left|\frac1n\sum_{i=1}^nX_i-r_k\right|<\frac1j\right\}.
+\tag{88.10}
+$$
+
+每个 $C_k$ 都是原始可测事件。第87.2节已证明不同 $k$ 的 $r_k$ 互异，所以这些事件两两不交。达到的深度集合 $K=k(H_{\mathrm{port}})\subseteq\{0,\ldots,T\}$ 有限；若 $D=d\circ k$，则在 $C_k$ 上输出相应共同纤维标签 $d(k)$，在其余记录上输出一个固定 $d_0\in\Lambda_D$。这是一份共同可测解码器，且每个 $h$ 给自己的 $C_{k(h)}$ 概率 $1$，从而满足 (88.3)。这恰好实现深度任务分区。
+
+存在这样的程序不表示每个共同程序都识别深度。例如永久执行 $\rho$ 的程序只返回固定应答，整个种子—记录律在全部旧历史下相同，不能恢复非常数深度任务。此处固定深度的 Read 程序也不属于第82节“每层有限批次后增长”的调度类，不借用该节的增长识别阈值。
+
+第三项直接由第87.2定理给出的实际像等价关系
+
+$$
+\mathcal L_h(Q_T)=\mathcal L_{h'}(Q_T)
+\quad\Longleftrightarrow\quad
+(k(h),\mu_h)=(k(h'),\mu_{h'})
+\tag{88.11}
+$$
+
+得到，不重证其有界有理后验矩桥。若精确律对象恢复 $D$，相同律必给出相同标签，故 $D$ 在这些纤维上常数；反向为每个达到的 $(k,\mu)$ 指派共同标签，(88.11) 就使探针律上的解码函数定义良好。第87.2定理同时给出相同 $(k,\mu)$ 下所有有限共同程序的律相同，反向又包含指定探针；若解码器还能观察新种子，同一个联合核的后验混合仍保持这个等价关系。因而整个有限共同未来律族的恢复条件不变。$T=0$ 时只有空历史，前述常标签结论逐项适用。证毕。
+
+强大数律的上述条件也对应钉版 [mathlib 的实值强大数律](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/StrongLaw.lean#L598-L602)；仓内 [FinitePrefixInfiniteCompletionSeparation](../../../D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.lean)提供有限与无限 Bernoulli 观察分离的形式证明背景，二者均不代替本节共同续接合同下的普通数学桥接证明。
+
+**命题 88.2（一个实际实验中的一块、两块与三块分区）。** 存在 $T=1$ 的同一实验、同一共同端口和同一先验，使推论88.1的三种恢复任务分区依次为
+
+$$
+\begin{aligned}
+\mathcal P_{\mathrm{stop}}&=\{\{\rho,aa,ab,ba,bb\}\},\\
+\mathcal P_{\mathrm{infinite}}&=\{\{\rho\},\{aa,ab,ba,bb\}\},\\
+\mathcal P_{\mathrm{law}}&=\{\{\rho\},\{aa,bb\},\{ab,ba\}\}.
+\end{aligned}
+\tag{88.12}
+$$
+
+这里的 $\rho$ 简写含固定应答的一动作历史，四个成对结果简写各自的 PairRead 动作—应答历史。因此有限停止恢复只容许常任务，无限单条记录恢复严格增加深度任务，而精确律恢复又严格增加同深度内的后验任务。
+
+**证明。** 初始化时从 $w_2=w_3=1/2$ 一次抽取持久的 $M$，其他 $w_m=0$。一个共同公平的旧独立比特选择 $\rho$ 或 PairRead，恰执行一个动作，然后在全局停止之前给每个结果提供相同 ACTIVE 端口。只在这一动作边界提供端口，不在空前缀提供端口。旧比特、选择器和记录在交接后不可访问，新种子与旧实验独立。于是端口像恰有五个历史，不包含空前缀，不含隐藏事后筛选。
+
+$\rho$ 分支到达 $k=1$，计数为 $(m,2m)$，没有成对似然因子，$E=0$，后验仍为共同先验。PairRead 分支保留 $k=0$ 和计数 $(m,m)$。按式（81.6），
+
+$$
+\begin{array}{c|cc}
+m & P_{m,0}(aa)=P_{m,0}(bb) & P_{m,0}(ab)=P_{m,0}(ba)\\\hline
+2 & 1/6 & 1/3\\
+3 & 1/5 & 3/10
+\end{array}
+\tag{88.13}
+$$
+
+Bayes 公式中的旧选择比特质量相同并约去，给出
+
+$$
+\mu_{aa}(2)=\mu_{bb}(2)=\frac{1/6}{1/6+1/5}=\frac5{11},\qquad
+\mu_{ab}(2)=\mu_{ba}(2)=\frac{1/3}{1/3+3/10}=\frac{10}{19}.
+\tag{88.14}
+$$
+
+用 $e_d$ 表示第86节数值坐标 $d$ 的单位向量，实际分组如下。“每个历史质量”是共同先验和旧公平比特下的质量，合并行内每个历史分别取该值。
+
+| 一动作历史分组 | $k$ | 当前计数 | $E$ | $\mu_h(2)$ | 每个历史质量 |
+| --- | --- | --- | --- | --- | --- |
+| $\rho$ | $1$ | $(m,2m)$ | $0$ | $1/2$ | $1/2$ |
+| $aa,bb$ | $0$ | $(m,m)$ | $e_1-e_2$ | $5/11$ | $11/120$ |
+| $ab,ba$ | $0$ | $(m,m)$ | $-e_2$ | $10/19$ | $19/120$ |
+
+总质量为 $1/2+2(11/120)+2(19/120)=1$。五个历史在 $m=2,3$ 下各有正概率，且同一控制器下对全部整数 $m\ge2$ 也正：旧比特两值都正，两个计数分量至少为 $2$，四个 PairRead 输出因子都正。故这里的五历史确实来自一个实际实验的完整端口像。
+
+表中深度恰有两类，$(k,\mu)$ 恰有三类，推论88.1立即给出 (88.12)。具体地，深度位 $D_{\mathrm{depth}}(h)=k(h)$ 可由单条无限未来恢复，却不能由共同零误差有限停止恢复；给三个精确律块分别赋三个不同标签的 $D_{\mathrm{law}}$ 可由精确律恢复，却不能由任何共同程序的一条无限未来记录几乎必然恢复。
+
+这一例中，交接后的一次 PairRead 的精确律就已经分离三个块。其首抽为 $\alpha$ 的边际在 $\rho$ 历史后为 $1/3$，在其他四历史后为 $1/2$；其 $aa$ 质量分别为
+
+$$
+\begin{aligned}
+\Pr(aa\mid\rho)
+&=\frac12\left(\frac1{15}+\frac1{12}\right)=\frac3{40},\\
+\Pr(aa\mid aa\text{ 或 }bb)
+&=\frac5{11}\frac16+\frac6{11}\frac15=\frac{61}{330},\\
+\Pr(aa\mid ab\text{ 或 }ba)
+&=\frac{10}{19}\frac16+\frac9{19}\frac15=\frac{52}{285},\\
+\frac{61}{330}-\frac{52}{285}&=\frac1{418}>0.
+\end{aligned}
+\tag{88.15}
+$$
+
+第一行使用持久来源 $m=2,3$ 在深度 $1$ 的计数 $(2,4),(3,6)$，其 $aa$ 质量为 $1/15,1/12$；不是从后验重备两棵新树。其余两行使用各自旧历史的后验和相同的深度 $0$ 条件律。这是本例的一次探针分离，不改进第87.2定理对一般实际像的 $2T$ 成对调用上界，也不是一次采样输出的零误差解码。证毕。
+
+约定88.0还区分旧历史任务与潜在来源任务。若 $|S|\ge2$，每个 $\mu_h$ 至少保留两个正质量尺度，所以旧 $h$ 不确定实际 $M$；若 $S$ 为单点，$M$ 已几乎必然为常数。两种情形的分类对象始终是指定的 $D(h)$，不涵盖任意潜在来源标签；未来对实际 $M$ 的推断不反驳推论88.1。
+
+这里的 $k$ 是已执行增长操作的次数，其区别保留在当前组成的深度关系中，不是物理经过时间或完整路径。当前类型计数与固定接口可以保留某些深度关系，同时不保留过去读取序列；后验 $\mu$ 又保留了精确条件预测所需的关系，而非一份可逐次重新抽取的物理记忆。上述分区均以共同端口的明确权限和被遗忘记录为边界，不推出全树、空间顺序、旧档案或可重建宇宙的恢复，也不给出 Bayes 风险或总变差最优化的结论。
+
+## 88.99 追加锚
+## 89. 同一来源交接深度的正误差取得成本
+
+第88节的无限 Read 记录可以恢复交接时的增长深度。本节量化同一共同端口上允许正误差的有限取得成本；目标始终是交接时的深度，后续增长只是一种付费取得动作。
+
+### 89.1 逐旧历史的资源合同
+
+**约定 89.0（正误差深度任务与付费原始过滤）。** 沿用约定88.0的实际持久 FIB 来源、Contract B、共同 ACTIVE 端口和正的实际旧历史像。固定整数 $T\ge0$，令 $\mathcal C_T$ 为全部满足该合同、旧宏调用数至多 $T$、端口像 $H_E$ 非空的旧取得实验 $E$。每个实验有一份共同的正规化先验 $w$，其支撑是整数 $m\ge2$ 的非空有限或可数集合；实际 $M$ 在初始化时只抽取一次。端口的权限和初始化共同声明且不依赖隐藏来源，端口供应规则满足第87.1节的实际像条件。给定每个正概率旧历史 $h\in H_E$，实际 $M$ 的条件分布是 $\mu_h$，交接时深度是 $k(h)\in\{0,\ldots,T\}$。
+
+一份共同的未来可测程序和解码器可以依赖公开的 $E,T,\varepsilon$，但不能依赖实际 $h$。它只能取得新动作—应答及自己的共同新控制种子 $s\sim\nu^+$。种子在未来记录生成之前与整个旧实验、$M$ 和生产者抽样随机性独立；所有额外控制或解码随机化都并入它。固定种子只使控制确定，不固定生产者随机性，也不使种子与受控记录独立。旧选择器、旧种子、旧记录与档案、树形、叶身份、来源相关时钟或成本均不可访问。来源不重置、不重抽、不复制；每次 Read 恢复被读叶，每次 PairRead 有序读取两个不同叶后恢复它们，跨调用使用新的生产者随机性。
+
+每次实际执行的 Read、PairRead 或 $\rho$ 各计一宏调用；停止、解码和停止后的固定补齐计零。令 $V_i$ 为第 $i$ 次付费调用的动作—应答，若此前已停止则取共同固定补齐符号。令
+
+$$
+\Omega_{\mathrm{RAW}}=\mathsf U\times\mathsf R^{\mathbb N},\qquad
+\mathcal F_n=\sigma(s,V_1,\ldots,V_n),\qquad
+\mathcal F_0=\sigma(s).
+\tag{89.1}
+$$
+
+这里 $\mathsf R$ 是上述付费记录与补齐的有限字母表，取共同原始乘积可测结构，不按 $h$ 分别完成化。停止付费调用数 $\tau$ 允许为零，停止解码必须满足
+
+$$
+\{\tau=n,\widehat k=j\}\in\mathcal F_n
+\quad(n\ge0,\ 0\le j\le T).
+\tag{89.2}
+$$
+
+只对本节正误差深度任务，输出目录取完整的 $\{0,\ldots,T\}$，替代约定88.0只在实际任务像中输出的约定；未达到的猜测也计为错误。程序不获得实际深度像的免费查询。恢复目标是 $k(h)$，不是停止时的 $k(h)+q_\tau$，其中 $q_\tau$ 为未来增长次数。
+
+用 $P_h^\sigma$ 表示给定旧 $h$ 后的种子—未来记录联合律，其中包括同一持久 $M$ 的后验 $\mu_h$。对 $0<\varepsilon\le1/4$ 定义
+
+$$
+\begin{aligned}
+R_\varepsilon(E)
+&:=\inf_{(\sigma,\widehat k)}\ \sup_{h\in H_E}\mathbb E_h^\sigma\tau,\\
+&P_h^\sigma(\tau<\infty)=1,\qquad
+P_h^\sigma(\widehat k\ne k(h))\le\varepsilon
+\quad\text{对每个 }h\in H_E,\\
+R_T^*(\varepsilon)&:=\sup_{E\in\mathcal C_T}R_\varepsilon(E).
+\end{aligned}
+\tag{89.3}
+$$
+
+第一行的下确界只在满足第二行的同一共同程序—解码器上取，空集时为 $+\infty$。误差和期望均逐实际旧历史计算，不是按旧历史先验质量平均；共同程序选定后才取历史上确界，再取实验上确界。该定义不交换这些量词，也不计交接接口本身的取得成本。
+
+### 89.2 有限取得的上界与一个实际实验的下界
+
+**命题 89.1（深度间距与最坏宏调用阶）。** 对 $T\ge1$ 写
+
+$$
+n_k=F_{k+3},\qquad r_k=\frac{F_{k+1}}{n_k},\qquad
+\Delta_T:=\min_{0\le i<j\le T}|r_i-r_j|
+=\frac1{F_{T+2}F_{T+3}},
+\tag{89.4}
+$$
+
+其中 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$。对约定89.0中的每个 $E$，一份固定深度 Read 程序在
+
+$$
+N=\left\lceil2\Delta_T^{-2}\log\frac2\varepsilon\right\rceil
+\tag{89.5}
+$$
+
+次付费调用后停止，逐 $h$ 误差不超过 $\varepsilon$。另一方面，存在一项 $E_T\in\mathcal C_T$，其端口恰有三个实际旧历史，任何符合相同误差合同的共同自适应程序都有
+
+$$
+R_\varepsilon(E_T)\ge
+\frac{d(\varepsilon)}{648\Delta_T^2},\qquad
+ d(\varepsilon):=(1-2\varepsilon)\log\frac{1-\varepsilon}{\varepsilon}.
+\tag{89.6}
+$$
+
+因而
+
+$$
+\frac{d(\varepsilon)}{648\Delta_T^2}
+\le R_T^*(\varepsilon)
+\le\left\lceil2\Delta_T^{-2}\log\frac2\varepsilon\right\rceil,
+\qquad
+R_T^*(\varepsilon)
+=\Theta\!\left(F_{T+2}^2F_{T+3}^2\log\frac1\varepsilon\right)
+\tag{89.7}
+$$
+
+在全部 $T\ge1,\ 0<\varepsilon\le1/4$ 上使用共同的绝对常数。下界允许自适应混用 Read、PairRead、增长和停止；它是最坏旧实验界，不声称每个固定先验或每个实际深度像都需要这一成本。
+
+**证明。** 第87.2节给出 $r_k$ 互异；这里的精确间距使用 [Fibonacci 关系生成卷 theorem 44.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的行列式公式。取 $s=i+1,t=j+1$，把第一列加到第二列，第二列变成 $F_{i+3},F_{j+3}$，所以
+
+$$
+|F_{i+1}n_j-n_iF_{j+1}|=F_{j-i},\qquad
+|r_i-r_j|=\frac{F_{j-i}}{n_i n_j}.
+\tag{89.8}
+$$
+
+同一绝对值恒等式也由既有 [fib_vajda](../../../D5/S1/Recurrence/FibVajda.lean) 的参数 $n=i+1$、两移位 $2,j-i$ 得到，因为 $F_2=1$。对 $i<j\le T$，有 $F_{j-i}\ge1$ 和 $n_i n_j\le n_{T-1}n_T$，而相邻对 $(T-1,T)$ 取等，故（89.4）成立，含 $T=1$ 的 $\Delta_1=1/6$。
+
+先证上界。共同程序不增长，连续执行 $N$ 次恢复的 Read，令 $X_i$ 为第 $i$ 次输出 $\alpha$ 的指标。给定任意实际 $m$ 和旧 $h$，$X_i$ 独立且有共同 Bernoulli 参数 $r_{k(h)}$；这个整条乘积律不依赖 $m$，故对 $\mu_h$ 混合后仍是同一个乘积律。取 $\overline X=N^{-1}\sum_iX_i$，输出使 $|\overline X-r_j|$ 最小的 $j\in\{0,\ldots,T\}$，并以预定次序处理并列。若 $|\overline X-r_{k(h)}|<\Delta_T/2$，猜测必正确。对独立 $[0,1]$ 变量应用经典 Hoeffding 两侧界，得到
+
+$$
+P_h^\sigma(\widehat k\ne k(h))
+\le2\exp\!\left(-\frac{N\Delta_T^2}{2}\right)
+\le\varepsilon.
+\tag{89.9}
+$$
+
+这只控制真实参数附近的一个偏差事件，无须对 $T+1$ 个猜测作并集估计。程序在同一实际来源上工作，不从后验重新备源。
+
+为证下界，构造一项旧实验。取有限整数点先验 $w=\delta_{m_0}$，其中 $m_0=n_T\ge3$。旧控制器的一个独立公平比特选择执行 $\rho^T$，或执行 $\rho^{T-1}$ 后的一次 Read。每个分支恰有 $T$ 次旧付费调用，前一分支没有追加 Read。只在这个边界、全局停止之前供应共同 ACTIVE 端口，丢弃旧选择比特、种子和记录；不在中间前缀供应端口。端口像恰为
+
+$$
+h_+=\rho^T,\qquad
+h_-=\rho^{T-1};\mathrm{Read}\ \alpha,\qquad
+h_\beta=\rho^{T-1};\mathrm{Read}\ \beta,
+\tag{89.10}
+$$
+
+其中增长的固定应答略写。三者的旧实验质量分别为 $1/2,r_{T-1}/2,(1-r_{T-1})/2$，均正且总和为一；深度分别为 $T,T-1,T-1$，后验均为 $\delta_{m_0}$。每条路径都在这个共同端口继续同一生产者，没有空前缀、停止补齐或隐藏筛选。未来程序可知道这项公开实验和 $m_0$，但不能知道实际是哪条旧历史。
+
+比较 $h_-$ 下的未来联合律 $P$ 和 $h_+$ 下的未来联合律 $Q$。在同一个新种子和相容新前缀上，共同程序已经执行的未来增长次数 $q$ 相同；两种实现的当前深度为 $T-1+q,T+q$。由（89.8），对全部 $q\ge0$ 有
+
+$$
+\delta_q:=|r_{T-1+q}-r_{T+q}|
+=\frac1{n_{T-1+q}n_{T+q}}\le\Delta_T.
+\tag{89.11}
+$$
+
+还需控制 PairRead 的有限来源修正。按命题82.2，深度 $k$ 的四格律为
+
+$$
+\left(r_k^2-c_{m,k},\ r_k(1-r_k)+c_{m,k},\
+r_k(1-r_k)+c_{m,k},\ (1-r_k)^2-c_{m,k}\right),
+\qquad
+c_{m,k}=\frac{r_k(1-r_k)}{mn_k-1}.
+\tag{89.12}
+$$
+
+这里使用 $1/3\le r_k\le1/2$。命题82.2已有下界 $1/27$；本证明另由实际计数 $a=mF_{k+1},b=mF_{k+2}\ge2$ 得到更强的 $1/18$。令 $L=a+b,r=a/L$，则
+
+$$
+\begin{aligned}
+P(aa)&=r^2\frac{1-1/a}{1-1/L}\ge\frac{r^2}{2},\\
+P(bb)&=(1-r)^2\frac{1-1/b}{1-1/L}\ge\frac{(1-r)^2}{2},\\
+P(ab)=P(ba)&=\frac{r(1-r)}{1-1/L}\ge r(1-r).
+\end{aligned}
+\tag{89.13}
+$$
+
+三种右端分别至少为 $1/18,1/8,2/9$，所以全部四格均至少为 $1/18$，对所有实际整数 $m\ge2,k\ge0$ 成立。
+
+本硬实验中，令 $D=n_{T-1}n_T=\Delta_T^{-1}\ge6$。两边深度都至少为 $T-1$，所以
+
+$$
+0<c_{m_0,k}\le\frac1{4(m_0n_{T-1}-1)}
+=\frac1{4(D-1)}\le\frac1D=\Delta_T.
+\tag{89.14}
+$$
+
+两边修正项之差的绝对值于是至多 $\Delta_T$。三个未修正函数 $r^2,r(1-r),(1-r)^2$ 在 $[1/3,1/2]$ 上的 Lipschitz 常数均至多 $2$，结合（89.11）使每个 PairRead 格质量之差至多 $3\Delta_T$。
+
+对有限正概率向量 $p,q$，由 $\log u\le u-1$ 有
+
+$$
+\mathrm{KL}(p\Vert q)=\sum_xp_x\log\frac{p_x}{q_x}
+\le\sum_x\frac{(p_x-q_x)^2}{q_x}.
+\tag{89.15}
+$$
+
+Read 的两个 $Q$ 格质量均至少为 $1/3$，格质量之差为 $\delta_q$；PairRead 的四个 $Q$ 格质量由（89.13）至少为 $1/18$。故每个相容新前缀、全部 $q\ge0$ 下，沿 $P$ 到 $Q$ 的单次条件 KL 满足
+
+$$
+\mathrm{KL}_{\mathrm{Read}}\le6\Delta_T^2,\qquad
+\mathrm{KL}_{\mathrm{PairRead}}\le4\cdot9\cdot18\Delta_T^2
+=648\Delta_T^2,\qquad
+\mathrm{KL}_{\rho}=0.
+\tag{89.16}
+$$
+
+增长只给共同固定应答，停止后的共同补齐也有零 KL。该估计容许任意多的未来增长，没有从有限枚举推出统一结论。
+
+最后把单次界提升到自适应停止。固定这同一共同程序，把全部新控制随机化置于 $s$。令 $P_N,Q_N$ 为种子与前 $N$ 个付费记录槽（含补齐）的联合律。相对于共同 $\nu^+$ 与有限记录词计数测度的乘积，两份密度为
+
+$$
+f_{X,N}(s,v)=\chi_\sigma(s,v)
+\prod_{i=1}^N\ell_{m_0,k_X+q_i(v)}(e_i(v)\mid a_i(v)),
+\qquad
+k_P=T-1,\quad k_Q=T,
+\tag{89.17}
+$$
+
+其中 $\chi_\sigma$ 是共同控制、停止、补齐与合同相容性的指标，$q_i$ 为第 $i$ 槽之前的未来增长次数，$\ell$ 为相应动作的生产者输出质量；补齐因子为一。相容词上两边全部因子正，不相容词上共同为零。每个读取因子均在 $[1/18,1]$ 中，确定应答的相容因子为一，因而
+
+$$
+\left|\log\frac{f_{P,N}}{f_{Q,N}}\right|\le N\log18
+\quad\text{在共同相容支撑上}.
+\tag{89.18}
+$$
+
+这也适用于非原子控制种子：密度使用共同种子测度，不要求任何单个种子点有正质量。记录依赖种子，始终保留其联合律。
+
+把（89.17）的有限对数乘积展开，先对给定种子及前缀的下一输出求和，再对种子和前缀积分，即是有限链式法则。上述有界性使每项可积，无须处理无界停止时刻的对数积分。若 $K_{X,i}$ 表示此前缀下的下一记录核，则（89.16）给出
+
+$$
+\begin{aligned}
+\mathrm{KL}(P_N\Vert Q_N)
+&=\sum_{i=1}^N
+\mathbb E_P\!\left[\mathrm{KL}(K_{P,i}\Vert K_{Q,i})\right]\\
+&\le648\Delta_T^2\sum_{i=1}^NP(\tau\ge i)
+=648\Delta_T^2\mathbb E_P[\min(\tau,N)].
+\end{aligned}
+\tag{89.19}
+$$
+
+在已经停止的前缀上核是同一个固定补齐；在仍继续的前缀上动作由共同种子和记录决定，所以该链式展开没有把两个不同控制规则相比较。
+
+取共同原始事件
+
+$$
+A_N=\{\tau\le N,\widehat k=T-1\}\in\mathcal F_N,
+\qquad
+\operatorname{kl}(u,v):=
+ u\log\frac uv+(1-u)\log\frac{1-u}{1-v},
+\tag{89.20}
+$$
+
+并以扩展值定义端点。对事件及其补集应用 log-sum 不等式，即有限前缀的数据处理，得到
+
+$$
+\operatorname{kl}(P(A_N),Q(A_N))
+\le\mathrm{KL}(P_N\Vert Q_N)
+\le648\Delta_T^2\mathbb E_P[\min(\tau,N)].
+\tag{89.21}
+$$
+
+由（89.2），$A_N$ 是有限个共同停止标签事件的并，故包括 $\tau=0$ 且确实属于共同 $\mathcal F_N$。这些事件单调增加；两边几乎必然有限停止和逐旧历史误差合同给出
+
+$$
+P(A_N)\longrightarrow p=P(\widehat k=T-1)\ge1-\varepsilon,
+\qquad
+Q(A_N)\longrightarrow q=Q(\widehat k=T-1)\le\varepsilon.
+\tag{89.22}
+$$
+
+后一个不等式仅使用：在 $h_+$ 下输出 $T-1$ 是错误，即使目录中还有其他标签也成立。二元 KL 的扩展值下半连续性处理 $q=0$ 等端点；在 $p>q$ 的内部，它随 $p$ 增大而增大、随 $q$ 增大而减小，所以
+
+$$
+\begin{aligned}
+d(\varepsilon)
+&=\operatorname{kl}(1-\varepsilon,\varepsilon)
+\le\operatorname{kl}(p,q)\\
+&\le\liminf_{N\to\infty}\operatorname{kl}(P(A_N),Q(A_N))
+\le648\Delta_T^2\mathbb E_P\tau.
+\end{aligned}
+\tag{89.23}
+$$
+
+最后一步只用 $\min(\tau,N)\uparrow\tau$ 的单调收敛；若 $\mathbb E_P\tau=\infty$，下界直接成立。因此每个满足合同的共同程序的历史最坏期望至少为（89.6），对程序取下确界仍成立。上界对每个 $E$ 成立，而下界来自同一项 $E_T$，于是得到（89.7），没有交换下确界与上确界。对 $0<\varepsilon\le1/4$，有 $\tfrac14\log(1/\varepsilon)\le d(\varepsilon)\le\log(1/\varepsilon)$，且 $\log(2/\varepsilon)\le\tfrac32\log(1/\varepsilon)$；取整项可吸收进绝对常数，故所示共同阶成立。证毕。
+
+### 89.3 来源与适用边界
+
+（89.9）使用经典独立有界变量浓缩：见 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25。该定理是单侧界，对 $X_i$ 与 $-X_i$ 各用一次得到这里的两侧界；第83节的已知深度尺度估计使用同一供应方法，但没有给出本节未知交接深度的成本。
+
+[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) 的 Lemma 1（页7）及 Appendix A.1（页25）提供序贯换测度的方法背景，其每个臂供应固定分布的 iid 样本。本节的输出核随增长状态变化，因此不直接套用该固定臂引理；（89.17）—（89.23）在共同实际前缀上给出所需的有限链式展开和极限，不使用无界可选停止。
+
+钉版 mathlib 的 [ChainRule](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 中 `klDiv_compProd_eq_add`、`integral_llr_compProd_eq_add` 以及 [DataProcessing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/DataProcessing.lean) 中 `klDiv_map_le` 对应组合乘积链式法则、可积对数似然和可测映射的数据处理；ChainRule 的条件 KL 积分形式仍列为 TODO。这些声明只是方法供应的对应，不构成本节有状态自适应期望界的精确形式化证明。本节给出普通数学推导，不主张 Lean 核验或原创性。
+
+$T=0$ 时交接深度恒为零，直接输出零，成本为零。若另要求 $\varepsilon=0$，实际深度像含至少两个值时，第88.1推论仍排除共同几乎必然有限停止的零误差恢复；增加未达到的输出标签不能避开该停止标签事件论证。深度像为单点时常标签成本为零。
+
+（89.7）的常数刻意保守，不是尖锐样本常数。它表明在本合同的最坏旧实验中，PairRead 和未来增长不改变取得成本阶；它不排除较小实际深度像或其他固定先验更容易，也不把后验混合的 PairRead 记录称为 iid。成本只计新宏调用数，未给出物理时间、位存储、计算量、硬件或端口实现成本界。所恢复的是当前组成保留的交接深度关系，不是完整旧路径、旧读取顺序、空间形状或被擦除档案。
+
+## 89.99 追加锚
+
+## 90. 公开固定尺度下成对关联的交接深度成本
+
+第89节的全先验最坏下界使用随 $T$ 增长的尺度。本节固定两种观察器共同已知的同一个整数 $m$，比较同一旧实验类上的两种未来权限；有限来源的成对关联给出与 Read-only 相匹配的成本比较。
+
+### 90.1 公共参数与同一旧实验类
+
+**约定 90.0（公开固定尺度的逐历史合同）。** 固定整数 $m\ge2$ 和 $T\ge0$，沿用第87–89节的实际树族 $t_m$、初始化后一直保留的同一来源、type-only 抽样合同和共同 ACTIVE 端口。令 $\mathcal C_T(m)$ 为约定89.0中先验恰为 $\delta_m$ 的旧实验子类：旧宏调用数至多 $T$，正概率实际端口像 $H_E$ 非空，每个 $h\in H_E$ 的交接深度 $k(h)\in\{0,\ldots,T\}$，后验仍为 $\delta_m$。整数 $m$ 作为公共参数显式供应给两种未来观察器；这仅替代继承合同中禁止输入隐藏 $m$ 的条款，不开放其他隐藏信息。两种比较使用完全相同的旧实验类，旧实验仍可使用原合同的全部动作；仅未来权限分别为
+
+$$
+\mathcal A_{\mathrm{pair}}=\{\mathrm{Read},\mathrm{PairRead},\rho\},
+\qquad
+\mathcal A_{\mathrm{read}}=\{\mathrm{Read},\rho\},
+\tag{90.1}
+$$
+
+两者均可自由停止。每个实际执行的采样或 $\rho$ 计一宏调用，解码、停止和停止后的共同固定补齐计零；交接接口的取得成本不在此指标内。Read 恢复所读叶，PairRead 在一次调用内均匀抽取同一当前树的两个有序且互异的叶出现，恢复两叶；跨调用使用与过去独立的新生产者随机性。来源不重置、不重抽、不复制。端口不重新激活全局已经停止的观察者，其共同可用性是第87.1节供应的模型条件。
+
+同一共同可测程序—解码器可依赖公开的 $E,m,T,\varepsilon$，不能依赖实际旧 $h$。新的控制种子 $s\sim\nu^+$ 位于共同标准 Borel 空间 $\mathsf U$，在未来记录生成之前与整个旧实验、$M=m$ 和生产者抽样随机性独立，全部额外控制及解码随机化并入它。种子与其受控记录保留联合律。旧选择器、旧种子、旧记录与档案、树形、叶身份、来源句柄或隐藏态、来源相关时钟或成本及隐藏选择侧道均不可访问。公共的候选律表可由 $m$ 和候选深度计算，但合同不提供返回实际深度或实际概率律的预言机，也不提供实际深度像的免费查询。
+
+令 $V_i$ 为第 $i$ 次付费调用的动作—应答，已停止后取共同固定补齐符号。在第89节的共同 RAW 空间上取
+
+$$
+\Omega_{\mathrm{RAW}}=\mathsf U\times\mathsf R^{\mathbb N},
+\qquad
+\mathcal F_n=\sigma(s,V_1,\ldots,V_n),\qquad
+\mathcal F_0=\sigma(s).
+\tag{90.2}
+$$
+
+$\mathsf R$ 是共同有限记录字母表，取原始乘积可测结构，不按 $h$ 分别完成化。停止付费调用数 $\tau$ 允许为零，输出目录为完整的 $\{0,\ldots,T\}$，并要求 $\{\tau=n,\widehat k=j\}\in\mathcal F_n$ 对全部 $n\ge0,0\le j\le T$ 成立；未达到的输出也计错误。目标是交接时的 $k(h)$，不是未来增长后的深度。
+
+对 $a\in\{\mathrm{pair},\mathrm{read}\}$，以 $\mathfrak P_a(E,m,T,\varepsilon)$ 表示满足相应未来权限及下列逐历史条件的共同程序—解码器集合。用 $P_h^\sigma$ 表示给定旧 $h$ 后的种子—记录联合律，定义
+
+$$
+\begin{aligned}
+R^a_{T,m}(\varepsilon)
+&:=\sup_{E\in\mathcal C_T(m)}
+\inf_{(\sigma,\widehat k)\in\mathfrak P_a(E,m,T,\varepsilon)}
+\sup_{h\in H_E}\mathbb E_h^\sigma\tau,\\
+P_h^\sigma(\tau<\infty)&=1,\qquad
+P_h^\sigma(\widehat k\ne k(h))\le\varepsilon
+\quad\text{对每个 }h\in H_E.
+\end{aligned}
+\tag{90.3}
+$$
+
+空程序集合的下确界为 $+\infty$。同一程序选定后才取历史上确界，再取旧实验上确界；误差不按历史质量平均，也不交换这三个量词。
+
+### 90.2 成对关联的匹配成本界
+
+**命题 90.1（已知尺度的两种权限成本）。** 对所有整数 $T\ge1,m\ge2$ 和 $0<\varepsilon\le1/4$，沿用（89.4）、（89.8）的记号，令
+
+$$
+\begin{aligned}
+n_k&=F_{k+3},\qquad r_k=\frac{F_{k+1}}{n_k},\qquad
+v_k=r_k(1-r_k),\qquad \Delta_T=\frac1{n_{T-1}n_T},\\
+\Gamma_{T,m}&:=\Delta_T+\frac1{m n_{T-1}}
+=\Delta_T\left(1+\frac{n_T}{m}\right),\\
+d(\varepsilon)&:=(1-2\varepsilon)\log\frac{1-\varepsilon}{\varepsilon}.
+\end{aligned}
+\tag{90.4}
+$$
+
+所有对数取自然对数。则
+
+$$
+\begin{aligned}
+\frac{d(\varepsilon)}{288\Gamma_{T,m}^2}
+&\le R^{\mathrm{pair}}_{T,m}(\varepsilon)
+\le\left\lceil2\cdot56^2\Gamma_{T,m}^{-2}\log\frac8\varepsilon\right\rceil,\\
+\frac{d(\varepsilon)}{6\Delta_T^2}
+&\le R^{\mathrm{read}}_{T,m}(\varepsilon)
+\le\left\lceil2\Delta_T^{-2}\log\frac2\varepsilon\right\rceil.
+\end{aligned}
+\tag{90.5}
+$$
+
+因此用对全部 $m,T,\varepsilon$ 共同的绝对常数，有
+
+$$
+\begin{aligned}
+R^{\mathrm{pair}}_{T,m}(\varepsilon)
+&=\Theta\!\left(\Gamma_{T,m}^{-2}\log\frac1\varepsilon\right),\qquad
+R^{\mathrm{read}}_{T,m}(\varepsilon)
+=\Theta\!\left(\Delta_T^{-2}\log\frac1\varepsilon\right),\\
+\frac{R^{\mathrm{read}}_{T,m}(\varepsilon)}
+{R^{\mathrm{pair}}_{T,m}(\varepsilon)}
+&=\Theta\!\left(\left(1+\frac{n_T}{m}\right)^2\right).
+\end{aligned}
+\tag{90.6}
+$$
+
+该比值是两个最坏旧实验成本的比值。权限包含只保证对每项固定 $E$，成对权限的内层最优成本不大于 Read-only 的内层最优成本；不保证每项 $E$ 都有严格改进。
+
+**证明。** 以下简写 $\Gamma=\Gamma_{T,m}$，$c_k=v_k/(mn_k-1)$。命题82.2和（89.12）给出同一来源深度 $k$ 的实际四格律，其中 $a,b$ 分别缩写叶类型 $\alpha,\beta$
+
+$$
+P_{m,k}=(r_k^2-c_k,\ v_k+c_k,\ v_k+c_k,\ (1-r_k)^2-c_k)
+\quad\text{按 }aa,ab,ba,bb\text{ 排列}.
+\tag{90.7}
+$$
+
+由（89.13），每格对全部 $m\ge2,k\ge0$ 至少为 $1/18$。已有比例范围给出 $v_k\in[2/9,1/4]$。Fibonacci 递推及 $F_{k+1}\le F_{k+2}$ 给出 $n_k\le2F_{k+2}$ 和 $n_{k+1}=n_k+F_{k+2}\ge3n_k/2$，包括 $k=0$ 的 $n_0=2,n_1=3$。若 $x=mn_k,y=mn_{k+1}$，则 $y\ge x>1$，交叉相乘得 $(x-1)/(y-1)\le x/y\le2/3$。因而
+
+$$
+\frac{c_{k+1}}{c_k}
+=\frac{v_{k+1}}{v_k}\frac{mn_k-1}{mn_{k+1}-1}
+\le\frac98\cdot\frac23=\frac34.
+\tag{90.8}
+$$
+
+对 $0\le i<j\le T$，有 $i\le T-1$，所以
+
+$$
+\begin{aligned}
+c_i-c_j
+&\ge\left(1-\left(\frac34\right)^{j-i}\right)c_i
+\ge\frac{c_i}{4}
+\ge\frac1{18(mn_i-1)}
+\ge\frac1{18mn_i}
+\ge\frac1{18m n_{T-1}},\\
+c_k&\le\frac1{4(mn_k-1)}\le\frac1{3mn_k}\qquad(k\ge0).
+\end{aligned}
+\tag{90.9}
+$$
+
+最后一个不等式等价于 $mn_k\ge4$，由 $m,n_k\ge2$ 满足；$T=1$ 时上述最小指标就是 $T-1=0$，没有负指标。
+
+令 $d_{ij}=\|P_{m,i}-P_{m,j}\|_\infty$。从四格向量重建 $r=p_{aa}+p_{ab}$ 和 $c=r^2-p_{aa}$，故 $|r_i-r_j|\le2d_{ij}$。又因 $r_i+r_j\le1$，有
+$|c_i-c_j|\le(r_i+r_j)|r_i-r_j|+|p_{aa,i}-p_{aa,j}|\le3d_{ij}$。利用（89.8）的精确最小比例间距和（90.9），得到
+
+$$
+\Delta_T\le2d_{ij},\qquad
+\frac1{m n_{T-1}}\le54d_{ij},\qquad
+d_{ij}\ge\frac{\Gamma}{56}.
+\tag{90.10}
+$$
+
+这同时控制比例变化和有限来源修正，排除了两者在四格向量中的抵消。
+
+先证成对上界。共同程序在交接深度保持树不变，只执行 $N$ 次恢复的 PairRead。给定每个旧 $h$，固定点先验 $\delta_m$、恢复和跨调用新随机性使这 $N$ 个四值输出独立同分布，律为 $P_{m,k(h)}$。计算四格经验频率 $\widehat P_N$，在公共目录 $\{P_{m,j}:0\le j\le T\}$ 中选择距它的无穷范数最近者，按预定次序处理并列。目录由有限整数、有理运算计算，不查询实际 $k(h)$。若 $\|\widehat P_N-P_{m,k(h)}\|_\infty<\Gamma/112$，由（90.10）和三角不等式，唯一最近标签就是 $k(h)$。对每格的 iid 指标应用第89.3节所引 Hoeffding 两侧界，再对四格取并集，得
+
+$$
+P_h^\sigma(\widehat k\ne k(h))
+\le8\exp\!\left(-\frac{N\Gamma^2}{2\cdot56^2}\right).
+\tag{90.11}
+$$
+
+取（90.5）的 $N$ 即得逐历史上界，无须对 $T+1$ 个标签取并集。此处 iid 使用固定 $m$ 和保持深度不变的采样，不转用到非平凡后验混合或自适应增长后的全部记录。Read-only 上界直接复用（89.5）、（89.9）的不增长 Read 程序，它对每个先验都成立，当然适用于本子类。
+
+两个下界使用同一项实际旧实验 $E_{m,T}$，与 $\varepsilon$ 无关。在本节指定的点先验 $\delta_m$ 下，旧控制器的独立公平比特选择 $\rho^T$，或 $\rho^{T-1};\mathrm{Read}$。每个分支恰有 $T$ 次旧宏调用，前一分支没有额外 Read；只在这个共同边界、全局停止之前供应共同 ACTIVE 端口。交接后旧选择比特、种子和记录均不可访问。三个实际历史为
+
+$$
+h_+=\rho^T,\qquad
+h_-=\rho^{T-1};\mathrm{Read}\ \alpha,\qquad
+h_\beta=\rho^{T-1};\mathrm{Read}\ \beta,
+\tag{90.12}
+$$
+
+其质量分别为 $1/2,r_{T-1}/2,(1-r_{T-1})/2$，均正且和为一；深度分别为 $T,T-1,T-1$，后验均为 $\delta_m$。增长的固定应答略写。不在中间前缀供应端口，也不以隐藏信息事后筛选历史，故 $E_{m,T}\in\mathcal C_T(m)$。未来程序可以知道 $m$ 和整个公共设置，仍不能知道实际旧历史。
+
+比较 $h_-$ 下的未来联合律 $P$ 和 $h_+$ 下的未来联合律 $Q$。在同一个新种子和相容未来前缀上，共同程序的动作相同，已执行的未来增长数 $q$ 相同，当前深度分别为 $T-1+q,T+q$。对每个 $q\ge0$，（89.8）给出 Read 参数差
+
+$$
+\delta_q=\frac1{n_{T-1+q}n_{T+q}}\le\Delta_T.
+\tag{90.13}
+$$
+
+由（90.8）、（90.9），两边修正项之差满足
+$|c_{T-1+q}-c_{T+q}|\le c_{T-1+q}\le1/(3m n_{T-1})$。三个未修正函数 $r^2,r(1-r),(1-r)^2$ 在 $[1/3,1/2]$ 上的 Lipschitz 常数均至多 $2$，所以每格 PairRead 质量之差至多
+$2\Delta_T+1/(3m n_{T-1})\le2\Gamma$。应用（89.15），Read 的两个 $Q$ 格质量至少为 $1/3$，PairRead 的四个 $Q$ 格质量至少为 $1/18$，于是对所有相容前缀、全部 $q\ge0$，有
+
+$$
+\begin{aligned}
+\mathrm{KL}_{\mathrm{Read}}&\le6\Delta_T^2,\qquad
+\mathrm{KL}_{\mathrm{PairRead}}
+\le4\cdot(2\Gamma)^2\cdot18=288\Gamma^2,\\
+\mathrm{KL}_{\rho}&=\mathrm{KL}_{\mathrm{padding}}=0,\qquad
+K_{\mathrm{pair}}:=288\Gamma^2\ge6\Delta_T^2,
+\qquad K_{\mathrm{read}}:=6\Delta_T^2.
+\end{aligned}
+\tag{90.14}
+$$
+
+因此 $K_{\mathrm{pair}}$ 控制成对权限的全部允许动作，$K_{\mathrm{read}}$ 控制 Read-only 的全部允许动作；任意多的自适应增长也在这些解析界内。
+
+下面复用（89.17）—（89.23）的有限联合前缀计算，换入本节指定的 $m$ 和相应 $K_a$；这不是把命题89.1中随 $T$ 选择的硬先验下界特化。固定任意满足（90.3）的共同程序，把全部控制和解码随机化置于同一 $s$。相对于共同 $\nu^+$ 与有限记录词计数测度的乘积，种子及前 $N$ 个记录槽的两份密度为
+
+$$
+f_{X,N}(s,v)=\chi_\sigma(s,v)
+\prod_{i=1}^N\ell_{m,k_X+q_i(v)}(e_i(v)\mid a_i(v)),
+\qquad k_P=T-1,\quad k_Q=T.
+\tag{90.15}
+$$
+
+$\chi_\sigma$ 是共同控制、停止、补齐与合同相容性的指标，$q_i$ 是第 $i$ 槽之前的实际未来增长数，$\ell$ 为该动作的生产者输出质量；已停止槽的相容补齐因子取一。控制可测，$q_i,a_i,e_i$ 由有限记录词取得，故指标和有限乘积可测。相容词上采样因子属于 $[1/18,1]$，固定应答因子为一；不相容词上两密度同时为零。因此两边共同支撑相同，支撑上的对数似然比满足
+$|\log(f_{P,N}/f_{Q,N})|\le N\log18$，在支撑外取零即可积。不要求单个种子点具有正质量，也没有把种子与受控记录当作独立乘积。
+
+有限对数乘积展开后，先对给定种子和共同前缀下的下一输出求和，再对种子和前缀积分。有界性保证每项可积。若 $K_{X,i}$ 是该前缀的下一记录核，则相同种子和前缀选择相同动作；已停止核是共同固定补齐，仍执行第 $i$ 个付费调用的事件为 $\{\tau\ge i\}$。所以对 $a\in\{\mathrm{pair},\mathrm{read}\}$ 的相应程序，得到
+
+$$
+\begin{aligned}
+\mathrm{KL}(P_N\Vert Q_N)
+&=\sum_{i=1}^N\mathbb E_P
+\bigl[\mathrm{KL}(K_{P,i}\Vert K_{Q,i})\bigr]\\
+&\le K_a\sum_{i=1}^NP(\tau\ge i)
+=K_a\mathbb E_P[\min(\tau,N)].
+\end{aligned}
+\tag{90.16}
+$$
+
+取共同 RAW 事件 $A_N=\{\tau\le N,\widehat k=T-1\}$。它是（90.2）的有限个停止标签事件之并，包含 $\tau=0$ 的 $\mathcal F_0$ 事件，故 $A_N\in\mathcal F_N$。对 $A_N$ 及其补集上的密度积分应用 log-sum 不等式，得有限前缀的二元数据处理
+
+$$
+\operatorname{kl}(P(A_N),Q(A_N))
+\le\mathrm{KL}(P_N\Vert Q_N)
+\le K_a\mathbb E_P[\min(\tau,N)],
+\quad
+\operatorname{kl}(u,v)=u\log\frac uv+(1-u)\log\frac{1-u}{1-v}.
+\tag{90.17}
+$$
+
+二元 KL 按扩展值定义端点。$A_N$ 单调增加，两边几乎必然有限停止和逐历史误差条件给出
+$P(A_N)\to p=P(\widehat k=T-1)\ge1-\varepsilon$、
+$Q(A_N)\to q=Q(\widehat k=T-1)\le\varepsilon$。后一界只用该标签在 $h_+$ 下是错误，目录中的其他标签不影响它。在 $p>q$ 的内部二元 KL 随 $p$ 增大而增大、随 $q$ 增大而减小；端点由扩展值下半连续性处理。结合 $\min(\tau,N)\uparrow\tau$ 的单调收敛，得到
+
+$$
+d(\varepsilon)=\operatorname{kl}(1-\varepsilon,\varepsilon)
+\le\operatorname{kl}(p,q)
+\le\liminf_{N\to\infty}\operatorname{kl}(P(A_N),Q(A_N))
+\le K_a\mathbb E_P\tau.
+\tag{90.18}
+$$
+
+若 $\mathbb E_P\tau=\infty$，下界直接成立；否则上述有限积分和极限给出所需不等式，不调用无界可选停止。每个共同程序的历史最坏期望至少为 $\mathbb E_P\tau$，先对程序取下确界，再用同一 $E_{m,T}$ 取实验上确界，便得到（90.5）的两个下界，未交换量词。
+
+最后，对 $0<\varepsilon\le1/4$，第89节已有
+$\tfrac14\log(1/\varepsilon)\le d(\varepsilon)\le\log(1/\varepsilon)$；又有
+$\log(8/\varepsilon)\le\tfrac52\log(1/\varepsilon)$ 和
+$\log(2/\varepsilon)\le\tfrac32\log(1/\varepsilon)$。因 $n_{T-1}\ge2,n_T\ge3,m\ge2$，有 $\Delta_T\le1/6$ 和 $\Gamma\le1/6+1/4=5/12$，故两个上界的取整项都可吸收进共同绝对常数。这证明（90.6）。证毕。
+
+### 90.3 尺度交叉、压缩例子与适用边界
+
+由 $n_T/2\le n_{T-1}\le n_T$ 和（90.4），成对成本的统一尺度因子为
+$\Gamma_{T,m}^{-2}=(n_{T-1}n_T)^2/(1+n_T/m)^2$。当 $m$ 相比 $n_T$ 小时保留 $m^2n_T^2$ 的阶；当 $m$ 与 $n_T$ 可比或更大时，两种权限同阶。固定 $m$ 而 $T\to\infty$，在共同的 $\log(1/\varepsilon)$ 因子之外，成对成本为 $n_T^2$ 阶，Read-only 为 $n_T^4$ 阶，常数可依赖这个固定 $m$。这里的多项式变量是深度所对应的叶数尺度 $n_T$；Fibonacci 的 $n_T$ 随增长次数 $T$ 指数增长，不是关于 $T$ 的多项式成本界。
+
+一个静止采样压缩反例已经发生在 $m=2,T\ge2$：由（90.7），深度1和2的四格律分别为
+
+$$
+P_{2,1}=\left(\frac1{15},\frac4{15},\frac4{15},\frac25\right),
+\qquad
+P_{2,2}=\left(\frac2{15},\frac4{15},\frac4{15},\frac13\right).
+\tag{90.19}
+$$
+
+它们的完整律不同，但不匹配位 $Z=\mathbf1_{\{ab,ba\}}$ 的概率都为 $8/15$。恢复且保持深度不变时，全部不匹配位记录都是同一个 Bernoulli 乘积律，因而只保留这个位不能分辨这两个交接深度。此例只否定这种静止的不匹配位压缩，没有判定带增长或其他读数的全部受控压缩方案，也不主张四输出字母表最小。
+
+在同一深度执行两个独立有放回 Read，联合律为 $(r_k^2,v_k,v_k,(1-r_k)^2)$，其有限来源修正 $c$ 为零。它不能替代一次真正排除同一叶出现的 PairRead。若把 PairRead 按两叶收费为2，而 Read 和增长仍各为1，每份程序的总成本介于原成本与其两倍之间，相同误差和停止约束不变；两种最坏成本及（90.6）的比值阶因此只改变常数。取得速率的阶差不只是把两个输出算成一次调用的记账效果。
+
+比例间距及静态 Fibonacci 供应沿用（89.8）和既有 [fib_vajda](../../../D5/S1/Recurrence/FibVajda.lean)，四格律沿用命题82.2，统一格下界沿用（89.13）；新增推导是这些实际律在公开固定尺度下的关联分离及匹配成本。浓缩使用 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25，对每格指标及其负值各用一次单侧界。[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) 的 Lemma 1（页7）及 Appendix A.1（页25）仍只是固定 iid 臂的序贯方法背景；本节有状态输出使用（90.15）—（90.18）的实际有限前缀计算。
+
+钉版 mathlib 的 [ChainRule](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 中 `klDiv_compProd_eq_add`、`integral_llr_compProd_eq_add` 和 [DataProcessing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/DataProcessing.lean) 中 `klDiv_map_le` 是第89.3节已有的静态方法对应，ChainRule 的条件 KL 积分形式仍列为 TODO；它们不是本节已知尺度自适应停止成本的精确形式化证书。本节给出普通数学证明，不主张 Lean 核验或原创性。
+
+$T=0$ 时直接输出零；实际深度像为单点时输出其常标签，成本均为零。$\varepsilon=0$ 且实际深度像至少含两个值时，第88.1推论的有限停止障碍仍在；公共 $m$ 没有破坏其同种子有限前缀共同正支撑。某些旧实验比最坏界容易，（90.5）没有给每项旧实验统一下界。模型所供应的持久来源、抽样随机性和共同端口未由本节认证为物理实现；宏调用成本没有包括物理时间、位存储、计算量、硬件或接口成本。目标仅是交接深度，不是完整旧路径、读取顺序、空间树形或被擦除的档案。
+
+## 90.99 追加锚
+## 91. 无供应深度上界的共同停止、逐点期望与理想标签边界
+
+### 91.1 无界旧取得与共同原始合同
+
+**约定 91.1（每条实际历史仍为有限深度）。** 固定公开整数 $m\ge2$，保留约定90.0的实际持久来源 $t_m$、点先验 $\delta_m$、type-only Read、同一当前树上有序互异叶出现的 PairRead、增长 $\rho$、恢复及跨调用新生产者随机性。只移去旧取得的确定性有限调用上界：一项公共旧实验 $E$ 几乎必然在有限个旧调用后交接，正概率实际端点像 $H_E$ 非空且可数，每个 $h\in H_E$ 有有限交接深度 $k(h)\in\mathbb N$。共同 ACTIVE 端口仍按第87.1节的可见前缀规则在全局 Stop 前供应，排除已经停止及补齐的历史；其可用性、权限和初始化在全部实际端点一致。旧控制器的结束与命令权交接不是全局 Stop。
+
+未来只能使用新的输出和独立的新控制种子。交接前擦除旧种子、选择器、调用计数、全部记录与档案、时间和成本信息，再作相同 ACTIVE 初始化；树形、叶身份、来源句柄、隐藏态或实际概率律亦不可查询。来源不重置、不重抽、不复制。新种子 $s$ 的全部值在使用前与整个旧实验、来源和生产者随机性独立，控制及解码随机化均并入它；受控记录与种子保持联合律。程序可以知道公开的 $E,m$ 和误差精度整数，不能知道实际 $h,k(h)$，也不获得有限深度上界或实际深度像查询。
+
+仍以每个执行的 Read、PairRead、$\rho$ 各一宏调用收费，停止、解码及共同固定补齐收费零；交接接口本身的取得成本不计入未来指标。沿用共同 RAW 空间及原始过滤
+
+$$
+\Omega_{\mathrm{RAW}}=\mathsf U\times\mathsf R^{\mathbb N},\qquad
+\mathcal F_n=\sigma(s,V_1,\ldots,V_n),\qquad \mathcal F_0=\sigma(s).
+\tag{91.1}
+$$
+
+不按旧历史分别完成化。输出目录扩为全部 $\mathbb N$，停止付费调用数 $\tau$ 允许为零，并要求
+$\{\tau=n,\widehat k=l\}\in\mathcal F_n$ 对全部 $n,l\in\mathbb N$ 成立。目标仍是交接时深度 $k(h)$，未达到的猜测亦计错误。记给定实际旧 $h$ 的未来联合律为 $P_h^\sigma$；误差与期望均逐 $h$ 计算。
+
+沿用（82.3）、（89.8）、（89.12）的记号和实际律：
+
+$$
+\begin{aligned}
+n_k&=F_{k+3},\qquad r_k=\frac{F_{k+1}}{n_k},\qquad
+c_{m,k}=\frac{r_k(1-r_k)}{mn_k-1},\\
+|r_i-r_j|&=\frac{F_{|j-i|}}{n_i n_j}\quad(i\ne j),\\
+P_{m,k}&=(r_k^2-c_{m,k},\
+r_k(1-r_k)+c_{m,k},\
+r_k(1-r_k)+c_{m,k},\
+(1-r_k)^2-c_{m,k}).
+\end{aligned}
+\tag{91.2}
+$$
+
+四格按 $aa,ab,ba,bb$ 排列，$a,b$ 缩写 $\alpha,\beta$。给定任何实际旧 $h$，不增长而连续恢复 Read 的指标流是 iid Bernoulli$(r_{k(h)})$：当前计数只由固定 $m,k(h)$ 决定，旧 Read 不改变树，未来随机性与旧取得独立。这条整流律不依赖 $m$，也不依赖同深度的其他旧记录。
+
+### 91.2 有理共同停止器及每个有限深度的有限期望
+
+**定理 91.2（无供应上界的 FIB 深度取得）。** 对约定91.1的全部 $E,m$，存在同一份只使用 Read 的未来程序；它仅以公开整数 $\ell\ge2$ 为精度输入，并对每个实际 $h$ 满足
+
+$$
+P_h^\sigma(\tau<\infty)=1,\qquad
+P_h^\sigma(\widehat k\ne k(h))\le2^{-\ell},\qquad
+\mathbb E_h^\sigma\tau<\infty.
+\tag{91.3}
+$$
+
+其候选隔离半径为
+
+$$
+a_k:=\inf_{\substack{l\ge0\\l\ne k}}|r_k-r_l|
+=\frac1{n_k n_{k+2}}>0,
+\tag{91.4}
+$$
+
+最小值由 $l=k+2$ 取得。
+
+**证明。** 先核对隔离式。若 $l=k+d,d\ge1$，Fibonacci 递推给出
+
+$$
+n_{k+d}=F_d n_{k+1}+F_{d-1}n_k
+\le F_d(n_{k+1}+n_k)=F_d n_{k+2},
+$$
+
+其中 $F_{d-1}\le F_d$，含 $d=1$ 的 $F_0=0$。将它代入（91.2）得到
+$|r_k-r_{k+d}|\ge1/(n_k n_{k+2})$；$d=2$ 时 $F_2=1$ 且取等。若 $l<k$，正整数分子至少为一，且 $n_l<n_{k+2}$，故距离严格大于右侧。$k=0$ 没有过去候选，$d=1$ 的距离仍满足上述界。因此（91.4）涵盖全部端点，不借助有限目录上界。
+
+令 $X_i$ 为不停止的假想恢复 Read 流中第 $i$ 个 $\alpha$ 指标，停止前与实际读取一致。第 $j=0,1,\ldots$ 阶段使用累计样本数和宽度
+
+$$
+N_j=(j+\ell+1)4^j,\qquad w_j=2^{-j},\qquad
+x_j=\frac1{N_j}\sum_{i=1}^{N_j}X_i.
+\tag{91.5}
+$$
+
+阶段间继续同一恢复 Read 前缀，不重启实验。读至 $N_j$ 后，只检查有限候选 $l\in\{0,\ldots,j\}$；若存在
+
+$$
+|x_j-r_l|+w_j<a_l/2,
+\tag{91.6}
+$$
+
+立即停止并输出该 $l$，否则继续。若两个不同候选都通过，令其距离为 $d$；由隔离定义两半径均不大于 $d$，三角不等式却给出
+$d<(a_l+a_{l'})/2\le d$，矛盾。因此通过者唯一，也可事先固定检索次序。Fibonacci 数、隔离半径、均值、宽度和比较均为整数或有理量，每阶段只作有限计算；程序不使用隐藏真深度，也不计算超越函数。每个停止标签事件依赖有限新前缀，满足（91.1）的可测性合同。
+
+固定一个实际 $h$，简写 $k=k(h)$。在同一假想无限恢复 Read 流上应用经典两侧 Hoeffding 界，得
+
+$$
+\begin{aligned}
+P_k(|x_j-r_k|\ge w_j)
+&\le2\exp(-2N_jw_j^2)
+=2\exp(-2(j+\ell+1))\\
+&\le2^{-j-\ell-1},\qquad
+\sum_{j\ge0}2^{-j-\ell-1}=2^{-\ell}.
+\end{aligned}
+\tag{91.7}
+$$
+
+最后的不等式只用 $e\ge2$ 和 $j+\ell+1\ge1$。阶段共享样本，这里用可数并界，不假定阶段事件独立。故同时事件
+$\mathcal G_k=\bigcap_{j\ge0}\{|x_j-r_k|<w_j\}$ 的概率至少为 $1-2^{-\ell}$。在 $\mathcal G_k$ 上，任何通过的 $l\ne k$ 都会使
+$|r_k-r_l|\le|r_k-x_j|+|x_j-r_l|<a_l/2$，违反（91.4）。早期错误停止因此只可能在 $\mathcal G_k^c$ 上。这正是第83.3–83.4节孤立候选与全阶段置信逻辑在本深度目录中的应用；时间一致并界的角色亦见 WaveParticleEvents 定理219.2。
+
+尚须控制坏置信事件内的停止尾，不能仅从 $P_k(\mathcal G_k)\ge1-2^{-\ell}$ 推出几乎必然停止。取明确的有限整数
+
+$$
+J=J_k:=\min\{j\ge k:2^j\ge8n_k n_{k+2}\},\qquad
+\lambda_k=a_k^2/8>0.
+\tag{91.8}
+$$
+
+这只是证明中的深度相关阈值，不是程序输入。对 $j\ge J$，真候选已在有限检索表内，且 $w_j\le a_k/8$。若 $|x_j-r_k|<a_k/4$，真候选满足（91.6），算法至迟在该阶段停止。即使实际算法已提前停止，假想继续的同一 iid 流仍定义 $x_j$，于是
+
+$$
+P_k(\tau>N_j)
+\le P_k(|x_j-r_k|\ge a_k/4)
+\le2\exp(-N_j a_k^2/8).
+\tag{91.9}
+$$
+
+对允许取 $\infty$ 的非负整数付费调用数用尾和公式，按累计调用区间分组，得到
+
+$$
+\mathbb E_k\tau
+\le N_J+
+2\sum_{j\ge J}(N_{j+1}-N_j)\exp(-\lambda_k N_j)<\infty.
+\tag{91.10}
+$$
+
+为核对最后的级数，令
+$D_j=N_{j+1}-N_j=(3j+3\ell+7)4^j$。有 $N_{j+1}\ge4N_j$、$D_j\ge3N_j$ 及 $D_{j+1}/D_j\le6$，故正项的相邻比值至多
+$6\exp(-3\lambda_kN_j)\to0$。尾项最终由一个收敛几何级数支配，有限首段也有限。尾和公式计的是样本宏调用数，不是阶段数；有限期望同时给出几乎必然有限停止。结合（91.7）便得全部（91.3）。证毕。
+
+任何预定正误差 $\varepsilon$ 都可由公开有限整数 $\ell\ge2$ 满足 $2^{-\ell}\le\varepsilon$ 来实现。这个精度合同只要求供应这样的整数，不要求程序对一个不可计算实数输入作精确比较。
+
+### 91.3 一项实际无界旧实验的无限最坏历史成本
+
+**定理 91.3（逐点有限不产生统一成本界）。** 对每个固定公开 $m\ge2$，存在约定91.1中的单一实际旧实验 $E_m$。对任意 $0<\varepsilon\le1/4$，每份允许 Read、PairRead、$\rho$、逐实际历史几乎必然停止且错误不超过 $\varepsilon$ 的共同程序，均满足
+
+$$
+\sup_{h\in H_{E_m}}\mathbb E_h^\sigma\tau=\infty,\qquad
+\inf_{(\sigma,\widehat k)}\sup_{h\in H_{E_m}}\mathbb E_h^\sigma\tau=\infty,
+\tag{91.11}
+$$
+
+其中下确界仅取上述同一逐历史误差合同的程序。
+
+**证明。** 旧控制器以独立种子抽取有限整数 $K\ge1$，$P(K=k)=2^{-k}$，执行 $\rho^K$ 后恰执行一次恢复 Read；在第一次旧 Read 的类型应答后、全局 Stop 前立即交接。供应规则就是“第一次 Read 已返回”，由可见前缀决定；不同增长长度的端点因 Read 的出现位置不同而互不为前缀。因而
+
+$$
+\begin{aligned}
+H_{E_m}&=\{h_{k,a}=\rho^k;\mathrm{Read}\ a,\
+h_{k,b}=\rho^k;\mathrm{Read}\ b:k\ge1\},\\
+P(h_{k,a})&=2^{-k}r_k,\qquad
+P(h_{k,b})=2^{-k}(1-r_k).
+\end{aligned}
+\tag{91.12}
+$$
+
+增长的固定应答略写。所有质量为正，总和为一；旧调用数 $K+1$ 几乎必然有限，端点深度为 $k$，来源先验及端点后验都是 $\delta_m$。各端点交接前按约定91.1擦除全部旧记录、种子、计数、时间和成本，再作同一 ACTIVE 初始化，恢复 Read 后继续同一实际生产者。这里没有以仅含 $\rho$ 的前缀作终端历史，没有新增阶段标记或记录字母，也没有重新激活已经全局停止的观察者。隐藏的几何选择只决定何时第一次执行 Read，不决定 Read 应答后的可见交接判据。
+
+比较 $h_{k,a}$ 与 $h_{k+1,a}$ 下的未来联合律 $P,Q$。在同一种子和相容新前缀上，程序动作相同，未来增长次数 $q$ 相同，当前深度为 $k+q,k+1+q$。记
+
+$$
+G_k=\frac1{n_k n_{k+1}}+\frac1{mn_k}\longrightarrow0.
+\tag{91.13}
+$$
+
+（90.13）—（90.14）的逐调用解析界取 $T=k+1$ 即给出：Read 参数差至多 $1/(n_kn_{k+1})$，PairRead 每格差至多 $2G_k$，作为 $Q$ 的四格质量至少为 $1/18$，所以全部允许动作的条件 KL 不超过 $288G_k^2$；增长及补齐的 KL 为零。该界对全部 $q\ge0$ 成立，故包括任意自适应增长。这里复用逐前缀核计算，不把无界 $E_m$ 归入第90节的有界旧实验类。
+
+固定有限 $N$，相对共同新种子律与有限记录词计数测度，两边 RAW 前缀密度仍是（90.15）的共同相容指标乘上实际输出质量的有限乘积，只把初始深度换成 $k,k+1$。支撑相同，支撑上对数似然比绝对值不超过 $N\log18$。可测性和有界性允许先对下一有限输出求和，再对种子与前缀积分；种子即使没有原子也无须逐点赋予正质量。有限链式展开得
+
+$$
+\mathrm{KL}(P_N\Vert Q_N)
+\le288G_k^2\sum_{i=1}^NP(\tau\ge i)
+=288G_k^2\mathbb E_P\min(\tau,N).
+\tag{91.14}
+$$
+
+取 $B_N=\{\tau\le N,\widehat k=k\}\in\mathcal F_N$，包括 $\tau=0$ 的种子事件。虽然输出目录可数，这个事件仍只是有限个停止时刻事件的并。对它和补集使用有限 log-sum 不等式，随后按（90.17）—（90.18）取单调极限：$P(B_N)\to p\ge1-\varepsilon$、$Q(B_N)\to q\le\varepsilon$，二元 KL 的单调性及端点下半连续性给出
+
+$$
+\mathbb E_{h_{k,a}}^\sigma\tau
+\ge\frac{d(\varepsilon)}{288G_k^2},\qquad
+d(\varepsilon)=(1-2\varepsilon)\log\frac{1-\varepsilon}{\varepsilon}>0.
+\tag{91.15}
+$$
+
+若期望无限则下界直接成立；否则用 $\min(\tau,N)\uparrow\tau$ 的单调收敛得到此式，不使用无界可选停止。由于 $n_k\to\infty$，右侧随 $k\to\infty$ 发散。每份共同程序的历史上确界都无限，随后取程序下确界仍无限；定理91.2保证该程序类非空。全部比较发生在这同一 $E_m$ 的正质量端点内，不是合并不同旧实验，也不使用无限实际树。证毕。
+
+### 91.4 非孤立理想深度标签的有限前缀障碍
+
+**定理 91.4（加入理想标签改变共同可停止性）。** 另声明一个比较实验，参数目录为 $\mathbb N\cup\{\infty\}$。有限 $k$ 时使用实际来源 $\rho^k t_m$；只在标签 $\infty$ 时供应理想输出仪器：Read 为 Bernoulli$(r_\infty)$，PairRead 为同一参数的独立两抽乘积律，$\rho$ 返回固定应答且保持该律，其中
+
+$$
+r_\infty=\frac{3-\sqrt5}{2}.
+\tag{91.16}
+$$
+
+各调用恢复并使用新随机性，公开 $m$、共同 RAW 种子—记录空间、控制权限、停止及补齐合同与有限标签相同；标签本身不可访问。理想仪器不是从无限叶集合均匀抽样，也不是本节实际旧实验中的来源。
+
+对任意共同自适应程序和固定有限记录长度 $N$，令 $P_{m,k,N}^\sigma,P_{\infty,N}^\sigma$ 为包含共同种子的 RAW 前缀律。则
+
+$$
+\begin{aligned}
+\delta_k&=2(4/9)^k|1/2-r_\infty|+\frac2{3mn_k},\\
+\operatorname{TV}(P_{m,k,N}^\sigma,P_{\infty,N}^\sigma)
+&\le\min(1,N\delta_k)\longrightarrow0
+\quad(k\to\infty).
+\end{aligned}
+\tag{91.17}
+$$
+
+因此对任何 $0\le\varepsilon<1/2$，不存在在所有有限 $k$ 及理想标签 $\infty$ 下都几乎必然有限停止、错误不超过 $\varepsilon$ 的同一共同解码器。
+
+**证明。** 本模型的比例递推为 $r_0=1/2$、
+$r_{k+1}=f(r_k)$，其中 $f(r)=(1-r)/(2-r)$。它把 $[1/3,1/2]$ 映入自身，$r_\infty$ 在此区间并满足 $f(r_\infty)=r_\infty$；对任意区间内的 $r,u$，
+
+$$
+|f(r)-f(u)|=\frac{|r-u|}{(2-r)(2-u)}
+\le\frac49|r-u|.
+\tag{91.18}
+$$
+
+故对全部未来增长次数 $q\ge0$，
+$|r_{k+q}-r_\infty|\le(4/9)^k|1/2-r_\infty|$。实际修正项满足
+
+$$
+0<c_{m,k+q}
+\le\frac1{4(mn_{k+q}-1)}
+\le\frac1{3mn_{k+q}}
+\le\frac1{3mn_k},
+\tag{91.19}
+$$
+
+这里 $r(1-r)\le1/4$，中间交叉相乘所需的条件是 $mn_{k+q}\ge4$，由 $m,n_{k+q}\ge2$ 满足。
+
+两个 Bernoulli 律的 TV 是参数绝对差。两个独立抽样的乘积律可以逐抽使用同一均匀随机数耦合，至少一次不同的概率至多两倍参数差。实际 PairRead 与参数 $r_{k+q}$ 的独立乘积律之差向量为 $(-c,c,c,-c)$，其 TV 恰为 $2c$。三角不等式于是使每个共同前缀上的 Read 或 PairRead 条件输出核的 TV 都不超过 $\delta_k$，而 $\rho$ 和已停止的补齐核相同。这是对 $q$ 的统一一调用界。
+
+在共同 RAW 空间先耦合同一个种子。只要两份有限记录尚相同，共同程序就选择相同动作；用有限输出核的最大耦合，使下一槽不匹配的条件概率至多 $\delta_k$。一旦不匹配则任取具有正确边缘的继续核。有限字母表允许按各格最小质量显式构造这些可测耦合；对任意共同种子律积分，不要求种子有原子。前 $N$ 槽至少一次不匹配的概率至多 $N\delta_k$，耦合不等式与 TV 至多一给出（91.17）。这仅是每个固定有限前缀的结论，没有推断完整无限路径律的 TV 收敛。
+
+若所述解码器存在，输出目录取 $\mathbb N\cup\{\infty\}$，并对包含 $\infty$ 的全部标签要求原始停止事件可测。令
+
+$$
+A_N=\{\tau\le N,\widehat k=\infty\}\in\mathcal F_N.
+\tag{91.20}
+$$
+
+在理想律下 $A_N$ 单调增加，几乎必然有限停止及误差条件使
+$P_\infty^\sigma(A_N)\uparrow
+P_\infty^\sigma(\widehat k=\infty)\ge1-\varepsilon>\varepsilon$。
+因此存在有限 $N$ 使 $P_\infty^\sigma(A_N)>\varepsilon$。固定这个 $N$，由（91.17），充分大而仍有限的实际 $k$ 满足
+$P_{m,k}^\sigma(A_N)>\varepsilon$；但标签 $\infty$ 在该来源是错误，违反它的逐标签错误界。矛盾仅用 $A_N$ 的单调收敛和有限前缀连续性，不要求理想律与实际律的完整路径等价，也不否定定理91.2的全有限实际目录结论。证毕。
+
+### 91.5 量词、来源与资源范围
+
+**约定 91.5（三个结论的作用域）。** 定理91.2在全部实际有限深度上使用同一有效有理停止规则，有限期望界（91.10）依赖真实深度的隔离半径；定理91.3在一项实际实验内量化每份共同程序的历史最坏成本；定理91.4只在另加理想标签的比较实验中排除共同停止。逐历史均值有限并不推出按旧历史先验平均的均值有限，本节不给额外的先验平均界。
+
+计数及四格律取自第81–82节；共同端口与旧历史任务的边界取自第87–88节。候选隔离推导使用（89.8）的精确比例恒等式，其静态供应为 [FibVajda](https://github.com/the-omega-institute/trureturing/blob/c199f582acea40a546d9cfcdc5a839ef6381adc6/D5/S1/Recurrence/FibVajda.lean)。阶段置信与第一可认证候选停止复用第83.3–83.4节及 [WaveParticleEvents 定理219.2](https://github.com/the-omega-institute/trureturing/blob/c199f582acea40a546d9cfcdc5a839ef6381adc6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md) 的 Hoeffding 可和并界逻辑；第83节原结论没有期望时间界，本节的逐点调用尾由（91.9）—（91.10）补足。两侧浓缩的经典供应仍是 [Vershynin《High-Dimensional Probability》第一版 Theorem 2.2.6](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)，印刷页17、PDF页25，对指标及其负值分别应用单侧界。
+
+下界复用（90.13）—（90.18）的实际有限 RAW 前缀计算。[Kaufmann–Cappé–Garivier《On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models》](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf) Lemma 1 与 Appendix A.1 只供应固定 iid 臂的序贯换测度背景，不替代这里的状态核推导。第84节是尺度趋于边界、有限能量下的完整律 TV 比较，并明确没有把比较律当作实际来源；（91.17）则只承担交接深度趋于理想标签的有限前缀比较，二者不互换。
+
+这些结论是上述 FIB 生产合同的综合推导，不主张新的通用可数识别或置信序列方法，也不作原创性声明。有限次整数及有理计算可以需要增长的位长，定理91.2没有给有界位存储、物理时间、速率最优性或 minimax 成本上界；第83.5节的计算与物理边界仍适用。持久生产者、恢复随机抽样和共同 ACTIVE 端口都是供应条件，未在这些数学结论中获得物理可得性认证；恢复目标始终只为交接深度，不是旧路径、空间树形或被擦除档案。
+
+## 91.99 追加锚
+
+## 92. 固定有限记忆对交接奇偶的统一随机猜测界
+
+### 92.1 时间齐次的有限控制状态
+
+**约定 92.1（全部可读记忆计入状态）。** 固定公开整数 $m\ge2$，只取约定91.1与（91.12）的同一项实际旧实验 $E_m$，继承旧历史擦除、共同 ACTIVE 端口、同一持久有限生产者及 Read、PairRead、$\rho$ 的权限。每宏仍收费1，停止收费0；目标改为交接时的一位 $k(h)\bmod2$，不是未来增长后的奇偶。
+
+一份控制器有固定有限非空状态集 $Q$，从与旧实验及生产者独立的共同分布 $\mu$ 初始化。令 $\mathcal A=\{\mathrm{Read},\mathrm{PairRead},\rho\}$，$\mathcal Y_a$ 为动作 $a$ 的共同有限应答集。在状态 $u$，以固定质量 $d_u(b)$ 停止并输出 $b\in\{0,1\}$，或以固定质量 $\pi_u(a)$ 执行一宏；收到 $y\in\mathcal Y_a$ 后按固定核 $R_{u,a,y}$ 更新状态。它们满足
+
+$$
+\sum_{b=0}^1d_u(b)+\sum_{a\in\mathcal A}\pi_u(a)=1,
+\qquad
+\sum_{v\in Q}R_{u,a,y}(v)=1,
+\qquad d_u(b),\pi_u(a),R_{u,a,y}(v)\ge0.
+\tag{92.1}
+$$
+
+这些表可依赖公开的 $m,E_m$，不能依赖实际 $h$、来源隐藏态或未记录的执行步数。允许任意固定实概率，不要求这些常数可计算，正值可以任意小。每次控制选择及更新使用新鲜独立的局部随机抽取，与生产者随机性独立；影响以后动作或输出的全部可读信息、程序位置、有限阶段和有限初始种子均计入 $Q$。一次非停止决策恰执行一宏，局部计算并入该决策；不允许无界的零费用循环。免费时钟、无界调用索引、旧档案、完整可读随机带、未计入状态的持久随机参数及演化实数寄存器均不在此类。
+
+这是第91节共同程序的严格子类，不是对完整可读种子策略的等价表示。分析可以在不可读的独立乘积随机带上实现新鲜抽取，但控制器只获得当次抽取所需的信息；下文仅条件于已经揭示的过去与当前状态，绝不条件于未来随机币。每份程序的 $Q$ 固定，程序之间不设共同状态数上界。
+
+### 92.2 实际端点上的最坏奇偶风险
+
+**定理 92.2（有限记忆不能取得统一正优势）。** 令 $\mathfrak F_m$ 为约定92.1中在 $E_m$ 的每个正质量实际端点几乎必然停止的控制器类。则
+
+$$
+\inf_{\sigma\in\mathfrak F_m}
+\sup_{h\in H_{E_m}}
+P_h^\sigma\!\left(\widehat b\ne k(h)\bmod2\right)=\frac12.
+\tag{92.2}
+$$
+
+**证明。** 先把已有的支持图吸收方法接到这个适应性 FIB 来源上。[EffectiveResolution 命题6.5.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#65-有限状态资源与较弱过程前提的边界)按历史条件概率迭代吸收块；[PhaseBoundary 引理348.1](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#3482-共同支持图与全部内点的吸收)用固定支持图把一处几乎必终止传到全部内点。它们的原状态模型不同，此处只补足当前控制表与生产者输出之间的边概率下界。
+
+在 $Q$ 上画边 $u\to v$，当且仅当某个 $a\in\mathcal A,y\in\mathcal Y_a$ 满足 $\pi_u(a)R_{u,a,y}(v)>0$；另画 $u\to\partial_b$，当且仅当 $d_u(b)>0$。所有动作在共同端口合法。（89.13）及（90.13）—（90.14）给出：在每个有限当前深度，Read 的两个应答质量至少为 $1/3$，PairRead 的四个应答质量至少为 $1/18$，而 $\rho$ 的固定应答质量为1。因此每条图路径在任何实际端点都有正概率，从 $\operatorname{supp}\mu$ 可达的控制状态集共同。
+
+若某可达状态没有终端路径，在任一实际端点以正概率到达它后就永不停止。所以即使只在一个实际端点几乎必停止，也迫使全部可达状态都有终端路径。记可达决策状态数为 $S\ge1$；最短终端路径不重复决策状态，含最后停止边的长度至多 $S$。在（92.1）的有限索引范围内忽略零项，取
+
+$$
+\begin{aligned}
+\gamma&:=\min\Bigl(
+\{d_u(b):d_u(b)>0\}\cup
+\{\pi_u(a)R_{u,a,y}(v):\pi_u(a)R_{u,a,y}(v)>0\}
+\Bigr)>0,\\
+\eta&:=\gamma/18,\qquad \beta:=1-\eta^S\in(0,1).
+\end{aligned}
+\tag{92.3}
+$$
+
+令 $\mathcal H_i$ 只记录初始化状态与前 $i$ 个决策已经揭示的局部抽取、动作、应答、状态及停止结果。条件于 $\mathcal H_i$，若当前尚未停止且状态为 $u$，选定 $a,y,v$ 的边概率是 $\pi_u(a)$、当前生产者应答质量及 $R_{u,a,y}(v)$ 的乘积，至少为 $\eta$；停止边也至少为 $\eta$。所选终端路径于是至少以概率 $\eta^S$ 在随后 $S$ 个决策内停止。令 $D$ 为含最后停止的决策数，则 $D=\tau+1$。逐块条件化而不假定块独立，得到对全部实际 $h$ 及 $j\ge0$
+
+$$
+P_h^\sigma(D>jS)\le\beta^j,
+\qquad
+\sup_h\mathbb E_h^\sigma\tau
+\le\sup_h\mathbb E_h^\sigma D
+\le S\sum_{j\ge0}\beta^j=\frac S{\eta^S}<\infty.
+\tag{92.4}
+$$
+
+这也证明同一控制器在全部实际端点几乎必停止。这里没有把来源与控制器的联合过程当作有限链：来源深度仍可增长。$\gamma,S$ 只属于这份控制器，对所有控制器没有共同正下界或共同尾界；初始 $\mu$ 只用于共同可达性，无须另设初始质量下界。
+
+再比较同一 $E_m$ 中的相邻实际端点 $h_{k,a},h_{k+1,a}$。沿用（91.13）的
+
+$$
+G_k=\frac1{n_k n_{k+1}}+\frac1{mn_k}\longrightarrow0.
+\tag{92.5}
+$$
+
+在匹配的新前缀上，两边控制状态及已执行增长数 $q$ 相同，当前深度为 $k+q,k+1+q$。（90.13）—（90.14）给 Read 条件律的 TV 至多 $G_k$；PairRead 四格各差至多 $2G_k$，故 TV 至多 $4G_k$；$\rho$ 的条件律相同。先耦合同一初始化和控制选择，匹配动作后对有限应答用最大耦合；匹配的 $u,a,y$ 使用同一次局部抽取更新到相同状态，停止选择也相同。前 $N$ 个决策内至多执行 $N$ 宏，因而停止并补齐的 $N$ 决策前缀发生分歧的概率至多 $\min(1,4NG_k)$。补齐只用于分析，不是控制器的新动作。这正是（91.17）的有限前缀耦合方法在两个实际端点上的应用，不需要理想来源或完整无限路径的 TV 收敛。
+
+令 $B_N=\{D\le N,\widehat b=1\}$，它由前 $N$ 个决策确定，并记
+$z_k=P_{h_{k,a}}^\sigma(\widehat b=1)$、$t_N=\beta^{\lfloor N/S\rfloor}$。有限前缀界及（92.4）给出
+
+$$
+|z_k-z_{k+1}|
+\le\min(1,4NG_k)+2t_N.
+\tag{92.6}
+$$
+
+先固定 $N$ 令 $k\to\infty$，再令 $N\to\infty$，得到 $|z_k-z_{k+1}|\to0$。若这份程序的历史最坏错误 $r<1/2$，相邻端点的真奇偶相反，正确率条件便迫使 $|z_k-z_{k+1}|\ge1-2r>0$，矛盾。因此每份 $\sigma\in\mathfrak F_m$ 的最坏错误至少为 $1/2$。一状态控制器取 $d_u(0)=d_u(1)=1/2$ 并立即停止，在每个端点错误恰为 $1/2$，给出上界及（92.2）。证明不限制误差在 $1/4$ 以下；$N$ 只是分析者的截断，不是供应给程序的时钟。证毕。
+
+### 92.3 增长计数器的直接复用
+
+对任意要求的正误差 $\varepsilon$，选择公开整数 $\ell\ge2$ 使 $2^{-\ell}\le\varepsilon$，直接运行定理91.2的同一共同 Read 程序，停止时输出 $\widehat b=\widehat k\bmod2$。奇偶错误包含于深度错误，故对每个实际 $h$
+
+$$
+P_h^\sigma(\widehat b\ne k(h)\bmod2)\le2^{-\ell}\le\varepsilon,
+\qquad P_h^\sigma(\tau<\infty)=1,
+\qquad \mathbb E_h^\sigma\tau<\infty.
+\tag{92.7}
+$$
+
+这里复用已有估计器，没有另造解码方法。阶段、样本计数及有理计算的可区分状态可以增长，所以它不属于固定有限 $Q$ 的类；逐点有限期望也不提供关于全部历史的统一均值界或有界记忆保证。
+
+### 92.4 来源与结论范围
+
+本节是已有条件吸收与有限前缀方法在同一实际 FIB 合同上的综合推导。[Hellman–Cover《Learning with Finite Memory》](https://isl.stanford.edu/~cover/papers/paper018.pdf)及[Berg–Ordentlich–Shayevitz《Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules》v1](https://arxiv.org/pdf/2005.07445v1)供应有限记忆、时间齐次控制及随机化的定义与边界背景。前者允许随机化，后者主问题限制确定转移；两者研究固定 iid 假设下的长期错误，不能直接证明这里允许增长动作、共同停止及全部实际历史最坏风险的结论。此处不作原创性、Lean 核验、物理记忆或速率最优性声明。
+
+（92.2）排除的是存在同一正数 $\delta$、在所有实际历史上错误都至多 $1/2-\delta$ 的固定有限记忆程序。它不排除每个历史都严格优于 $1/2$、但优势随深度消失的可能性，也不判定这种程序存在；历史最坏风险不是按（91.12）的质量加权的 Bayes 平均错误。外供时钟、索引或档案会改变控制器类，固定有限阶段则可计入 $Q$。目标只为旧交接深度的一位，不恢复旧记录；实际来源始终为有限深度，本节不加入理想标签，也不由此裁定实际目录中奇偶恢复的开放性。
+
+## 92.99 追加锚

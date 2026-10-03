@@ -1,0 +1,10 @@
+### theorem 255.4 非 RH 情形的同点全阶证书失败
+
+在相同的经典分析输入下，若 RH 不成立，则
+
+$$
+\boxed{\forall L\ge0\ \forall T\ge100\ \exists t\ge T
+\quad\forall N\ge0,\quad \mathscr C_N(t)<-L.}
+\tag{255.6}
+$$
+

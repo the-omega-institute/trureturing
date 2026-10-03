@@ -1,0 +1,29 @@
+**推论 42.3（坐标最小值与公平的布尔参照）。** 定义42.1的两个合同分别有
+
+$$
+q_{\mathrm{hom}}(A,T_n)=\kappa_A(T_n),\qquad
+q_{\mathrm{aff}}(A,T_n)=\kappa_A(T_n)-1.
+\tag{42.4}
+$$
+
+将同一完整标签查询约定用于 $F_n$，其矩阵 $M_A(F_n)=[\mathbf1-H_A(F_n),H_A(F_n)]$，其中 $\mathbf1$ 是同形全一矩阵。于是
+
+$$
+\begin{aligned}
+\operatorname{rank}_{\mathbb R}M_A(F_n)&=\kappa_A(F_n)=2^{d_A}+\epsilon_A,\\
+q_{\mathrm{hom}}(A,F_n)&=\kappa_A(F_n),\qquad
+q_{\mathrm{aff}}(A,F_n)=\kappa_A(F_n)-1,\\
+\Delta_A&=q_{\mathrm{hom}}(A,T_n)-q_{\mathrm{hom}}(A,F_n)\\
+&=q_{\mathrm{aff}}(A,T_n)-q_{\mathrm{aff}}(A,F_n)\\
+&=\sum_{j\in J_A}2^{c_A(j)}
++\mathbf1_{\{n\in A\}}2^{d_A-\delta_A}-\epsilon_A\ge0.
+\end{aligned}
+\tag{42.5}
+$$
+
+证明。齐次解码使 $M=ZD$，故 $q\ge\operatorname{rank}M$。仿射解码使 $M=[\mathbf1,Z]D$，故 $q+1\ge\operatorname{rank}M$。对 $k=\kappa_A(T_n)$ 个剖面使用标准基 $e_s\in\mathbb R^k$，每个查询以对应响应值为系数，即达到齐次下界。仿射编码删除中性剖面 $o_A=(\infty,0)$ 的坐标：它送到零，其余送到 $\mathbb R^{k-1}$ 的标准基；被删坐标以 $1-\sum_{s\ne o_A}z_s$ 恢复，即达到仿射下界。引理的 $k$ 行线性独立，使相对中性行的 $k-1$ 个行差也独立，故响应行的仿射维数为 $k-1$。
+
+布尔 lift 的列空间恰为 $\operatorname{span}(\operatorname{col}H_A,\mathbf1)$。当 $\epsilon_A=0$ 时，命题35.2的中性补全给 $H_A$ 的全一列，故 lift 的秩仍为 $2^{d_A}$。当 $\epsilon_A=1$ 时，有一个原始行在 $H_A$ 中恒零；全一列不在其列空间中，故 lift 的秩增加一。定理35.3给其类型数也为 $2^{d_A}+\epsilon_A$，同样的标准基与删坐标编码达到两种下界。式（42.5）的非负性也由 $F_n$ 是 $T_n$ 的标签投影而得。$\square$
+
+空切面的齐次、仿射维数为 $1,0$，仿射的 $\mathbb R^0$ 只有一个值，所有响应由固定查询常数给出；全切面分别为 $n+1,n$。特别地 $n=1$ 的根维数为 $2,1$。这些维数不能用 §35 的单输出矩阵 $H_A$ 直接作诊断增量：当 $n=4,A=\{2,3\}$ 时，$\operatorname{rank}H_A=4$、$\operatorname{rank}M_A(F_n)=5$、$\operatorname{rank}M_A(T_n)=6$，在同一查询合同下的诊断增量是 $1$。有限消息最少仍为 $\kappa_A(T_n)$ 个完整值，固定长度二进制编码为 $\lceil\log_2\kappa_A(T_n)\rceil$ 位；这些是与实坐标不同的资源。
+

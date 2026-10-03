@@ -1,0 +1,30 @@
+**命题 52.6（匹配排序与统一恢复预算）。** 对 $m\ge1$，定义
+
+$$
+M_\eta=\frac1m\sum_{j=1}^{m}
+\mathbf1\{Y_j=C_\eta(X_j)\},
+\qquad
+\widehat\theta_M=\underset{\eta\in\Theta_n}{\arg\max}\ M_\eta,
+\tag{52.48}
+$$
+
+并按固定候选次序破平。在真实律 $P_{\theta,\alpha}$ 下，因为 $Q$ 的三个对角元均为 $1/2$，
+
+$$
+\mathbb E_{\theta,\alpha}M_\eta
+=\frac13+\frac\alpha6-\alpha\Gamma(\theta,\eta).
+\tag{52.49}
+$$
+
+故 $\alpha>0$ 时真实教师是唯一的总体最大者；这个排序规则不需要已知 $\alpha$ 或逐候选标量拟合。对 $n\ge4$、$0<a\le1$、$0<\delta<1$，统一充分预算为
+
+$$
+m\ge\left\lceil
+\frac{2\log(2N/\delta)}{a^2\Gamma_*^2}
+\right\rceil,
+\qquad
+\inf_{\theta\in\Theta_n,\,\alpha\in[a,1]}
+P_{\theta,\alpha}^{m}\{\widehat\theta_M=\theta\}\ge1-\delta.
+\tag{52.50}
+$$
+

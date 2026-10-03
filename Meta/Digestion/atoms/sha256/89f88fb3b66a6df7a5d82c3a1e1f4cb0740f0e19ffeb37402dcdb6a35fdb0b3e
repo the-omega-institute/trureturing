@@ -1,0 +1,84 @@
+**引理 51.7（实际标量头的两种准确跨律恒等式）。** 在估计值 $\beta\in[0,1]$ 处，把式（50.2）的 $R,E,U,V$ 记作 $R_\beta,E_\beta,U_\beta,V_\beta$。定义
+
+$$
+\begin{aligned}
+\lambda_\beta&=\log(R_\beta/V_\beta),&
+\eta_\beta&=\log(U_\beta/R_\beta),&
+\xi_\beta&=\log(R_\beta/E_\beta),\\
+g_\beta&=2(\xi_\beta-\eta_\beta)-\lambda_\beta,&
+0\le g_\beta&\le6A\beta(1-\beta),& A&=\sqrt2-1.
+\end{aligned}
+\tag{51.19}
+$$
+
+$g$ 是式（50.9）的几何位移，不是置信失败概率 $\delta$；它在内部严格正，在两个端点为零，这些事实与上界复用式（50.11）–（50.12）。使用定理50.5的实际标量根 $C$ 及原头
+
+$$
+p_\beta^{(1)}(X)=\operatorname{softmax}
+\left(0,\eta_\beta+\frac{\lambda_\beta}2 C(X),
+-\lambda_\beta+\lambda_\beta C(X)\right).
+\tag{51.20}
+$$
+
+令 $f(z)=\log(2+e^z)$，并置
+
+$$
+\begin{aligned}
+\widetilde R_\beta&=f'(\xi_\beta-g_\beta/2),\qquad
+ e_\beta=R_\beta-\widetilde R_\beta,\qquad 0\le e_\beta\le g_\beta/8,\\
+L_\beta&=\frac4{25}
+\left[f(\xi_\beta-g_\beta/2)-f(\xi_\beta)
++R_\beta g_\beta/2\right],\qquad
+0\le L_\beta\le g_\beta^2/200.
+\end{aligned}
+\tag{51.21}
+$$
+
+那么对每个真实参数 $\alpha\in[0,1]$，准确有
+
+$$
+\begin{aligned}
+\Delta_{\log}(\alpha,p_\beta^{(1)})
+&=D_F(\alpha,\beta)+L_\beta
++\frac{(\alpha-\beta)g_\beta}{75},\\
+\Delta_B(\alpha,p_\beta^{(1)})
+&=S(\alpha-\beta)^2+\frac6{25}e_\beta^2
++\frac2{25}(\alpha-\beta)e_\beta.
+\end{aligned}
+\tag{51.22}
+$$
+
+特别在 $|\alpha-\beta|\le r$ 上，两种损失共享证书
+
+$$
+\begin{aligned}
+\Delta_{\log}(\alpha,p_\beta^{(1)})&\le U_1
+:=Kr^2+\frac{g_\beta^2}{200}+\frac{rg_\beta}{75},\\
+\Delta_B(\alpha,p_\beta^{(1)})
+&\le Sr^2+\frac{3g_\beta^2}{800}+\frac{rg_\beta}{100}
+\le U_1.
+\end{aligned}
+\tag{51.23}
+$$
+
+证明。式（51.20）在类0、2等于 $q_\beta$，类1的 logits 为 $(0,\xi_\beta-g_\beta/2,0)$；这是既有 secant 头的逐类值。由于 $f'(\xi_\beta)=R_\beta$、$0<f''=f'(1-f')\le1/4$，式（51.21）的两个界就是式（50.21）–（50.22）所用的一维积分界。
+
+对数交叉项可准确求出。在类1，三个坐标的 $\log(q_\beta/p_\beta^{(1)})$ 都含共同项 $f(\xi_\beta-g_\beta/2)-f(\xi_\beta)$，中间坐标另含 $g_\beta/2$。从真实 $q_\alpha$ 而非 $q_\beta$ 对它取期望，平均差为
+
+$$
+\pi_1(R_\alpha-R_\beta)g_\beta/2
+=\frac4{25}\frac{\alpha-\beta}{6}\frac{g_\beta}{2}
+=\frac{(\alpha-\beta)g_\beta}{75}.
+$$
+
+类0、2的这项差为零。将 $\operatorname{KL}(q_\alpha\Vert q_\beta)$ 加回，得到第一个恒等式。
+
+Brier 使用同一个真实差向量分解。类1有
+
+$$
+w_1=(-1/12,1/6,-1/12),\qquad
+q_\beta(1)-p_\beta^{(1)}(1)=(-e_\beta/2,e_\beta,-e_\beta/2).
+$$
+
+两向量内积为 $e_\beta/4$，后者平方范数为 $3e_\beta^2/2$。展开 $\|q_\alpha-p_\beta^{(1)}\|^2$ 后，估计项为 $S(\alpha-\beta)^2$，其余两项乘 $\pi_1=4/25$，恰为式（51.22）的两个系数。交叉项的符号随 $\alpha-\beta$ 改变，不能把自律近似误差与估计误差简单相加当成跨律恒等式。最后用引理51.6与式（51.21），再逐系数比较 $S<K$、$3/800<1/200$、$1/100<1/75$，即得同时证书。$\square$
+

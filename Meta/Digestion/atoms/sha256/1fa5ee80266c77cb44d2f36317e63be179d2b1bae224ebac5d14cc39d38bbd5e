@@ -1,0 +1,27 @@
+**证明。** $g\ge2$ 给 $g^2+1\le5g^2/4$；$N\ge1$ 与 $\beta\ge0$ 给
+$1+|r|\le2N^\beta$。故式（264.5）的分母至多为
+\[
+4\left(\frac54N^{2\alpha}\right)^2(2N^\beta)^3
+=50N^{4\alpha+3\beta},
+\]
+得到第一个不等式。式（264.7）还给
+\[
+d_r\le\frac54N^{2\alpha}\,4N^{2\beta}
+=5N^{2\alpha+2\beta},
+\]
+得到第二个不等式。由 $4\alpha+3\beta<1$ 可知 $2\alpha+2\beta<2/3$，故其增长指数严格为正。
+
+记 $\varepsilon=1-4\alpha-3\beta>0$。
+当 $N$ 充分大时，$D_r>N^\varepsilon/50$ 一致给
+\[
+\log(2+D_r)>\frac\varepsilon2\log N,\qquad
+\log\log(2+D_r)>\log\log N+\log(\varepsilon/2).
+\]
+又因 $1\le d_r$，有 $U_*\le N$；其共同下界保证所有三层对数最终均在所需定义域内。
+于是
+\[
+(\log\log\log U_*)^\omega\le(\log\log\log N)^\omega
+=o(\log\log N),
+\]
+由此得式（264.10）。所有阈值只依赖固定的 $\alpha,\beta,\omega$，不依赖来源或平移。$\square$
+

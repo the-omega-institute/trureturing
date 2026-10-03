@@ -1,0 +1,13 @@
+**引理 52.1（角色指纹）。** 对任意 $\theta=(p,q,r)$，令协方差在完整输入律下计算，则
+
+$$
+\begin{array}{c|ccc}
+ i & p & q & r\\ \hline
+\operatorname{Cov}(h_i,C_\theta)&36/625&106/625&16/625\\
+\operatorname{Cov}(\ell_i,C_\theta)&6/625&56/625&96/625
+\end{array}
+\tag{52.6}
+$$
+
+而对所有 $i\notin\{p,q,r\}$ 两项均为零。特别地，$\{p,q,r\}$ 是非零坐标的支撑，三种非零向量又区分低位角色、中间角色和高位角色。
+

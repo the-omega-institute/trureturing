@@ -3617,3 +3617,513 @@ Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
 新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 实际射线比较、有界扰动收敛与径向逃逸端点存在
+
+对任意原实际等距映射 e 和原归一化零光锥点 b，
+`h3_boundary_geodesic_vector_exp_null_decomposition` 把原测地线向量
+分解为 `(exp(t)/2)*b+(exp(-t)/2)*opposite(b)`，其中原反向点的
+时间坐标仍为 1，三个空间坐标取负。
+`h3_actual_isometry_boundary_geodesic_kernel_defect` 计算原实际点
+`e(ray(b,t))` 与 `ray(action(e,b),t)` 的原配对相对时间零的差：
+它等于 `(exp(-t)^2-1)/4` 乘原线性表示送出的反向零向量与另一
+反向零向量的配对。原零光锥配对非负，而 t 非负时该指数系数
+非正，故 `h3_actual_isometry_boundary_geodesic_distance_bound`
+给出原距离上界 `dist(e(o),o)`，其中 o 是原上半空间点 `(0,1)`。
+这个射线比较界由原等距几何推出，没有作为前提输入。它描述
+实际等距映射，并不供应原给定同伦提升的几何控制。
+
+`h3_lorentz_coordinates_time_ge_one` 从原单位未来向量的自配对
+和正时间分支推出时间坐标至少为 1。
+`h3_normalized_coordinate_difference_sq_le_pairing` 利用归一化后
+时间坐标等于 1、两个原自配对非负，证明任一原四维坐标的差
+平方至多为两倍原归一化配对。结合原配对与距离的 cosh 恒等式，
+`h3_bounded_distance_normalized_coordinate_difference_sq` 在非负 C
+和原距离 `dist(p,q)≤C` 下给出上界 `2*cosh(C)/time(p)`。
+由此，`h3_bounded_distance_preserves_normalized_boundary_convergence`
+对任意滤子和实际点族 P、Q 证明：若 P 的原归一化坐标趋于原
+边界点 b，且每个参数处 `dist(P,Q)≤C`，则 Q 的原归一化坐标
+也趋于同一个 b。这里 C 非负；没有要求 Q 已有极限，也没有
+要求滤子非底。这比此前“两条路径都已有极限”的端点唯一性
+多供应了一条路径的收敛。任意滤子的收敛传递不冒充任意滤子
+下的极限唯一性；此前唯一性定理的非底条件仍保留。
+
+`h3_lorentz_time_eq_cosh_basepoint_distance` 证明原时间坐标等于
+到同一个原点 o 的原距离的 cosh。
+`h3_radial_escape_inverse_time_bound` 因而对任意实数 R 和实际点 p，
+在 `R≤dist(p,o)` 时推出 `1/time(p)≤2*exp(-R)`；R 不必非负。
+证明使用正时间、指数单调性和原 cosh 公式。
+
+`h3_geometric_inverse_time_sequence_has_boundary_endpoint` 对实际
+H³ 序列 P 构造原归一化零光锥边界点 b。明确条件是非负 C、A，
+`0≤r<1`，每步原距离 `dist(P(n),P(n+1))≤C`，以及
+`1/time(P(n))≤A*(r^n)^2`。上述坐标差平方界使每个归一化坐标
+的相邻差被 `sqrt(2*cosh(C)*A)*r^n` 控制；经典几何级数 Cauchy
+判据和实数完备性供应各坐标极限，而非预设其存在。
+这些坐标组成原四维极限 v。时间坐标恒为 1；时间倒数被几何
+序列控制并趋于零，因此归一化自配对趋于零。原配对联合连续性
+给出 `K(v,v)=0`，于是 v 确实定义原边界点 b，并且原归一化
+坐标沿自然数正无穷趋于 b。
+
+`h3_linearly_escaping_bounded_step_sequence_has_boundary_endpoint`
+直接以原距离的条件得到同一存在结论：C 非负，a 严格为正，
+B 是任意实数，每步距离至多 C，且每个自然数 n 满足
+`a*n-B≤dist(P(n),o)`。径向倒数界给出
+`1/time(P(n))≤2*exp(B)*(exp(-a/2)^n)^2`，其中指数比严格小于 1，
+从而应用上述实际端点构造。没有要求调用者供应边界映射、
+端点或端点极限，也没有只假设序列逃向无穷而省略增长速率。
+这次存在结论的参数是自然数序列；尚未由此证明任意连续参数
+射线像的收敛、边界映射的单射性或连续性。
+
+三个完整模块串行编译通过，共十一项公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，零警告；成功编译中
+未抑制的 ring 技巧建议不计作错误或警告。四次完整失败尝试
+均保留并整次排除，只有完整成功编译被接受。
+这些原 H³ 几何工具没有添加紧性或可定向前提。完整有限体积
+Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，目标包含非紧尖点和
+非可定向情形。尚未证明原给定同伦等价能供应保持同一个诱导
+群同构 d 的受控提升，因而也尚未构造该 d 的单射等变边界映射
+或迫使其保持原交比。离散端点存在定理不关闭这些缺口；尖点
+情形不能由紧流形的粗等距论证自动涵盖。
+Lean 源仍位于忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
+CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从原距离控制构造连续等变边界映射
+
+本轮输入是一个实际原 H³ 映射 F，以及原距离上的全局双边控制：
+对所有原点 p、q，`dist(F(p),F(q))≤L*dist(p,q)+K`，且
+`a*dist(p,q)-B≤dist(F(p),F(q))`，其中 L、K 非负，a 严格为正，
+B 是实数。这里没有假设 F 连续，也没有输入一个边界映射。
+
+`h3_coarse_map_ray_step_and_escape` 对每个原归一化零光锥点 b，
+在同一原实际测地线的整数时刻证明：像序列的相邻原距离至多
+`L+K`，到原点 o 的原径向距离至少为
+`a*n-(B+dist(F(o),o))`；o 始终是原上半空间点 `(0,1)`。
+此前已证明的径向逃逸端点存在定理因而供应每条像序列的实际
+原边界极限。`h3_coarse_map_constructs_equivariant_discrete_boundary_map`
+选择这些极限，构造同一个原边界映射 φ。它进一步对任意一对
+原实际等距映射 e、e′ 证明：若同一个 F 在每个原点处满足
+`F(e(p))=e′(F(p))`，则同一个 φ 在每个原边界点处满足
+`φ(action(e,b))=action(e′,φ(b))`。
+证明把原实际等距射线比较界送入 F 的同一个距离上界，并由
+一条已知端点的收敛推导另一条路径的同端点收敛，最后使用
+自然数正无穷滤子的非底性与原四维 Hausdorff 极限唯一性。
+φ 及其极限均由原距离控制构造，没有作为这条存在结论的前提。
+
+`h3_coarse_upper_control_extends_discrete_ray_endpoint_to_real_times`
+利用 `floor(max(t,0))` 采样。采样自然数随 t 趋于正无穷；原
+单位速度测地线上的采样点与 `max(t,0)` 时刻的点相距至多 1，
+故其 F 像的原距离至多 `L+K`。有界扰动收敛定理把整数极限
+传到整条实参数射线，且 t 最终非负，夹零参数与原参数最终
+相同。`h3_coarse_map_constructs_equivariant_real_ray_boundary_map`
+将这一步应用于同一个实际构造的 φ，保留上述所有逐点等变
+关系。F 连续性和另一个实参数极限都不是额外前提。
+
+为了证明边界映射连续，另构造定量坐标误差界。若实际原点
+p、q 的原距离至多非负 C，且 `1/time(p)≤A*(r^n)^2`，其中
+A、r 非负，则每个原归一化坐标差的绝对值至多
+`sqrt(2*cosh(C)*A)*r^n`。若这个几何时间倒数界在序列每一步
+都成立、每步距离至多 C、`r<1`，且该序列的原归一化极限为 b，
+经典几何级数尾项界进一步给出任一坐标误差上界
+`sqrt(2*cosh(C)*A)*r^n/(1-r)`。
+该定量中间定理使用已知极限；最终构造中的极限仍由此前的
+存在定理供应，不把它重新变成外部假设。
+
+对同一个受控 F，设
+`A=2*exp(B+dist(F(o),o))`、`r=exp(-a/2)`、`C=L+K`，并令
+`D=sqrt(2*cosh(C)*A)`、`T=D/(1-r)`。
+`h3_coarse_map_ray_inverse_time_geometric_bound` 从原距离下界
+推导每条整数射线像的时间倒数界 `A*(r^n)^2`。
+`h3_coarse_map_ray_endpoint_uniform_coordinate_tail` 因而将同一
+映射 φ 的每个坐标误差统一控制在 `T*r^n`；常数与 b、坐标 i
+无关，且 `0<r<1`。
+
+`h3_boundary_geodesic_vector_continuous_at_time` 证明固定任意实数
+t 时原测地线向量随原边界点连续。原配对联合连续性、自配对
+等于 1 及原 cosh 距离恒等式进一步说明：对于固定 c、t，b 在
+c 的某个邻域中时，原射线点 `ray(b,t)` 与 `ray(c,t)` 距离至多 1。
+这一步没有借助 F 的连续性。
+在 n 时刻满足这个原距离条件时，F 像的归一化坐标差至多
+`D*r^n`；两个像序列各自的端点尾项至多 `T*r^n`，故
+`h3_coarse_map_boundary_coordinate_pair_bound` 给出
+`abs(φ(b)_i-φ(c)_i)≤(2*T+D)*r^n`。
+先令 n 足够大，再取上述原边界邻域，这个统一界使每个 φ
+坐标连续；有限乘积和原零光锥截面的子空间拓扑给出
+`h3_coarse_map_ray_endpoint_map_continuous`。
+最后，`h3_coarse_map_constructs_continuous_equivariant_boundary_map`
+实际供应同一个连续 φ、整条实参数射线像的原归一化收敛和
+所有由同一个 F 逐点实现的原等距作用等变关系。没有要求
+调用者供应连续 φ、射线追踪界或 Morse 引理。
+
+四个完整模块串行编译通过，共十三项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+三次完整失败尝试均保留并整次排除；成功编译中未抑制的 ring
+技巧建议不计作错误或警告。这些结果复用经典原 H³ 几何与
+实数、滤子、几何级数分析，没有新增紧性或可定向前提。
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，范围
+包含非紧尖点与非可定向流形。尚未从原给定同伦等价供应保持
+其同一个诱导群同构 d 的受控 F；当前逐点等变构造只在这样的
+F 及其原距离控制已给定时应用。也尚未证明同一个 φ 的单射性
+或迫使其保持原交比；这里的连续映射不是已证明的边界同胚。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
+CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 一般点族的边界扩展与受控逆映射
+
+`h3PolarBoundaryDirection` 从实际原 H³ 点 p 的原 Lorentz 空间
+坐标除以 `sinh(dist(p,o))` 构造原归一化零光锥方向；原点仍为
+`o=(0,1)`。当 p=o 时使用实际零光锥点 `(1,1,0,0)`。
+原自配对为 1、时间坐标等于 `cosh(dist(p,o))` 及原双曲恒等式
+证明这确是原边界点，而非输入一个方向。
+`h3_polar_ray_reconstruction` 对每个实际原点 p 证明
+`ray(direction(p),dist(p,o))=p`；射线表示是结论。
+
+对于任意同一个滤子 l 和实际原点族 P，若 P 的原归一化坐标
+趋近实际原边界点 b，已有的时间倒数趋零结论和原 cosh 距离
+恒等式给出 `dist(P(z),o)` 趋于正无穷。
+`h3_polar_direction_spatial_coordinates_away` 将实际极坐标方向
+的空间坐标写成 `cosh(radius)/sinh(radius)` 乘原归一化坐标。
+原 sinh/cosh 的无穷远极限供应系数趋于 1，最终
+`h3_boundary_convergence_polar_direction_tendsto` 证明实际构造的
+方向在原边界子空间拓扑中趋于同一个 b。
+没有输入径向逃逸或极坐标方向极限，也不要求 l 非底；这一段
+是收敛推导，不是任意滤子上的极限唯一性。
+
+设实际原映射 F 在所有原点对上满足距离上界 `L*dist+K` 和
+下界 `a*dist-B`，其中 L、K 非负，a 严格为正，B 任意实数。
+极坐标射线在 `floor(radius)` 的采样点与 p 的原距离至多 1，
+故 F 像间距离至多 `L+K`。保留此前同一个实际构造的 φ，以及
+`A=2*exp(B+dist(F(o),o))`、`r=exp(-a/2)`、`C=L+K`、
+`D=sqrt(2*cosh(C)*A)`、`T=D/(1-r)`。
+整数射线的统一端点尾界和采样像的归一化坐标差界共同给出
+`h3_coarse_map_point_uniform_coordinate_tail`：任意实际原点 p
+的 F 像归一化坐标与 `φ(direction(p))` 的各坐标误差至多
+`(T+D)*r^floor(radius)`。
+径向逃逸使这个界趋零，实际极坐标方向趋近 b，已证明的同一
+φ 连续性使 `φ(direction(P(z)))` 趋近 `φ(b)`。
+`h3_coarse_map_extends_any_normalized_boundary_convergence` 因而
+供应任意原边界趋近点族的 F 像归一化极限，不再局限于固定
+射线。最终构造定理供应同一个连续 φ、所有这些一般点族极限
+和由同一个 F 在每个原点处实现的所有原等距作用等变关系。
+中间尾界定理使用整数端点极限；实际构造仍由此前的存在定理
+供应这些极限，没有重新把它们变成构造的外部假设。
+
+进一步设另一个实际原映射 G 也具有它自己的全局原距离双边
+控制 `LG*dist+KG`、`aG*dist-BG`，其中 LG、KG 非负，aG 严格
+为正，BG 任意实数；F 的控制仍保持上述全部条件。
+若存在非负 C 使所有原点 p 都满足 `dist(G(F(p)),p)≤C`，一般
+点族扩展可应用于 F 的原射线像。有界扰动又把同一复合像的
+端点供应为原 b；自然数正无穷滤子的非底性与原坐标空间极限
+唯一性证明实际构造的两个边界映射满足 `ψ(φ(b))=b`。
+`h3_controlled_left_inverse_constructs_injective_boundary_map`
+据此实际构造同一个连续单射 φ、F 的整条实参数射线端点极限
+和所有原逐点作用等变关系。这里只需这一侧的复合距离界。
+
+若还存在非负 D0，使所有原点 q 满足
+`dist(F(G(q)),q)≤D0`，对称论证供应 `φ(ψ(b))=b`。
+`h3_controlled_inverse_constructs_equivariant_boundary_homeomorphism`
+从这两个实际构造的连续映射及双向逆关系构造原边界同胚 E。
+它保留同一个 F、G 的整条实参数射线极限；对每一对由同一个
+F 在每个原点处联系的原实际等距作用，E 保留对应等变关系，
+而 E 的逆对由同一个 G 逐点联系的作用也保留对应等变关系。
+最终单射和同胚构造均没有输入边界映射、端点极限、单射性、
+同胚或 Morse/射线追踪前提；实际原 F、G 的各自全局控制及
+所使用的一侧或两侧原复合距离界始终是明确的输入条件。
+
+四个完整模块串行编译成功，共十五项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+三次完整失败尝试均保留并整次排除，没有接受失败尝试中的
+部分闭包。完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，
+包含非紧尖点、非可定向流形、两侧原度量及原给定同伦等价
+诱导的同一个群同构 d。本轮没有从该原 h/d 供应满足上述条件
+的 F、G 和原一致有界复合，也没有迫使同一个边界映射保持
+原交比；条件下的实际边界同胚构造不等于原目标实例已构造。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
+按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从粗稠密性构造逆映射与一般边界同胚
+
+设实际原 H³ 映射 F 在所有原点对上满足原距离上界
+`L*dist+K` 和下界 `a*dist-B`，其中 L、K 非负，a 严格为正，
+B 任意实数。再设 R 非负，且每个实际原目标点 q 都有原点 p
+使 `dist(F(p),q)≤R`。`h3_coarse_density_constructs_controlled_inverse`
+从这个实际粗稠密性逐点选择 G(q)，不再输入另一个受控 G。
+同一个实际选择的 G 满足 `dist(F(G(q)),q)≤R`，并由原 F 的
+距离下界导出 `dist(G(F(p)),p)≤max(0,(B+R)/a)`。
+原三角不等式与同一个 F 的距离双边控制还供应 G 自己的全局
+原距离上界 `(1/a)*dist+max(0,(B+2R)/a)`，以及下界
+`(1/(L+1))*dist-(K+2R)/(L+1)`；前者的系数和常数非负，
+后者的系数严格为正。两侧一致有界逆复合和 G 的控制均为
+构造结论，没有成为新的外部输入。
+
+这个选择的 G 不保证逐点等变。对每一对实际原等距映射
+e、e′，若同一个 F 在每个原点上满足 `F(e(p))=e′(F(p))`，
+`h3_coarse_inverse_approximate_intertwining` 则给出所有原点 q
+上的一致原距离界
+`dist(G(e′(q)),e(G(q)))≤max(0,(B+2R)/a)`。
+证明比较两个 F 像：它们与同一个 `e′(q)` 的原距离各至多 R，
+再应用同一个原 F 的距离下界。
+`h3_coarse_density_constructs_approximately_equivariant_inverse`
+保留实际构造的同一个 G、它自己的全局控制、双向逆复合界
+以及对所有上述原等距映射对的这一近似等变界。
+
+在上述同一个实际原 F 的全部条件和 R 粗稠密性下，
+`h3_coarse_density_constructs_general_equivariant_boundary_homeomorphism`
+实际构造同一个 G 与原归一化零光锥边界上的同胚 E。
+它使用已导出的 G 控制及双向逆复合界，而非输入 G 或 E。
+F 和 G 的整条实参数原射线像分别趋于 `E(b)` 与 `E.symm(b)`。
+从这些实际构造的整条实射线极限导出整数射线极限，再复用
+一般点族扩展，得到任意滤子 l、实际原点族 P 的双向结论：
+若 P 的原归一化坐标趋于原边界 b，则 F(P) 的原归一化坐标
+趋于 `E(b)`，G(P) 的原归一化坐标趋于 `E.symm(b)`。
+同一个 G、E 同时实现这些射线及一般点族极限；没有额外的
+F 连续性、G 连续性、Morse/射线追踪或滤子非底前提。
+任意滤子上的这段推导仍是收敛传递，不是极限唯一性断言。
+
+对每一对由同一个 F 在所有原点处联系的原实际等距映射
+e、e′，同一个 E 满足
+`E(action(e,b))=action(e′,E(b))`。
+`h3_boundary_homeomorphism_inverse_intertwining` 从这个同一个
+E 的逆关系代数地推出
+`E.symm(action(e′,c))=action(e,E.symm(c))`。
+逆边界映射的精确等变性由同一个 F 的原逐点关系和边界逆
+关系供应，没有假称实际选择的 G 具有原逐点精确等变性。
+对原给定群同构 d 的应用仍须由所构造的 F 在所有原点处
+联系同一个 d 对应的两侧原表示；本轮没有供应该原 h/d 的 F。
+
+三个完整模块串行本地 Lean 成功，共六项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+一次完整失败尝试保留并整次排除，包括其中的部分标准闭包
+和后续 `sorryAx` 诊断；没有接受失败尝试的任何闭包。
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，范围
+保留非紧尖点、非可定向情形、两侧原度量和原给定同伦等价
+诱导的同一个群同构 d。尚未从该原 h/d 构造具有上述距离
+控制和粗稠密性的 F，也没有迫使同一个边界映射保持原交比。
+条件下的实际 G 和边界同胚不等于原目标实例已构造。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
+按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从水平数据构造原 H³ 高度保持映射
+
+`h3HorizontalHeightExtension T` 将实际水平映射 `T : ℂ → ℂ`
+延伸到实际原 H³：水平坐标变为 T 的像，严格正的原高度保持。
+若 C、D 都至少为 1，且所有水平点对 z、w 满足欧氏距离上界
+`dist(T(z),T(w))≤C*dist(z,w)` 与反向界
+`dist(z,w)≤D*dist(T(z),T(w))`，
+`h3_horizontal_height_extension_native_distance_controls` 就在所有
+原 H³ 点对 p、q 上推导原双曲距离双边界：
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`。
+F 是上述同一个实际高度保持延伸；双曲距离控制是推导结论，
+没有作为水平输入条件。证明用原坐标的精确 cosh 距离式、
+复数欧氏距离平方、严格正的高度分母及 cosh 加法公式。
+`h3_horizontal_height_extension_surjective` 还从 T 的实际满射性
+构造同一个 F 的实际原 H³ 满射性；目标高度保持为原正高度。
+这个满射结论本身不需要 C、D 或水平距离控制。
+
+对每一对实际原等距映射 e、e′，若它们在原 Lorentz 表示中
+都将原无穷远零光锥标架射线按同一个 a 缩放，且所有水平点 z
+满足 `T(h3InfinityHorizontalMap(e,z))=h3InfinityHorizontalMap(e′,T(z))`，
+`h3_horizontal_height_extension_intertwines_original_isometries`
+就在每个实际原 H³ 点 p 上推导
+`F(e(p))=e′(F(p))`。它用实际原等距作用的水平坐标与高度律，
+推导原逐点关系，没有再输入 F 的逐点等变性；没有加入定向
+保持条件。同一个缩放 a 的正性由实际原射线固定关系供应。
+这段等变推导自身不需要 T 的双边距离控制或满射性。
+
+`h3PeriodBasisHorizontalEquiv b b′` 从两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ` 构造同一个实际连续实线性
+等价 T；`h3PeriodBasisHeightExtension b b′` 是它的原 H³ 高度
+保持延伸 F。`h3_period_bases_construct_controlled_surjective_translation_map`
+不再输入 T、F 或水平距离控制，而是从这两组有同一索引配对
+的基实际构造它们。T 与 T.symm 的算子范数给出各自的常数
+`C=max(1,‖T‖)`、`D=max(1,‖T.symm‖)`，推导同一个 F 的上述
+所有原 H³ 距离双边界和实际满射性。对每个整数系数族
+`m : Fin 2 → ℤ` 及每个原 H³ 点 p，同一个 F 精确联系实际
+水平平移：源平移向量是 `∑j (m(j):ℝ)•b(j)`，目标平移向量
+是使用同一个 m 的 `∑j (m(j):ℝ)•b′(j)`。这些平移的逐点关系
+来自所构造的同一个基等价的线性性，没有输入该原 F 的
+平移等变性。两组实基及同一索引的配对仍是明示的周期输入，
+本轮没有从原 h/d 构造尖点上的这两组周期基。
+
+三个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+四次完整失败尝试全部排除；其中的部分标准闭包、`sorryAx`
+诊断及警告均未接收。仅修正距离平方规范化、实基类型的
+命名空间、反向算子范数界的常数推断及原正高度证明的显式参数，不改变数学条件和
+目标陈述，不压制诊断。
+
+前两个模块以实际水平 T 及明示的水平控制、满射或等变条件
+为相应输入；第三个模块从明示的两组实基构造 T、F 及全部
+距离控制、满射性和上述全部整数周期关系。尚未为原给定同伦等价诱导的同一个全甲板群
+同构 d 构造尖点水平映射 T，也没有完成尖点与紧核心的原
+全局等变拼接或迫使原交比保持。完整有限体积 Mostow–Prasad
+仍为 **ACTIVE/INCOMPLETE**，保留非紧尖点、非可定向情形、
+两侧原度量及原 h 所诱导的同一个 d。Lean 源仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 正规平移周期、有限轨道平均与尖点仿射修正
+
+`h3_affine_finite_index_zero_stabilizer_constructs_fixed_shift` 对实际
+实仿射表示 `ψ : G →* (ℂ ≃ᵃ[ℝ] ℂ)` 和给定的有限指数子群 H，
+若每个 h∈H 都满足 `ψ(h)(0)=0`，便构造整个 G 的固定点 c。
+证明先建立实际求值作用，由 H 包含于零点稳定子推导实际零点
+轨道有限，再取这个非空有限轨道的重心。仿射组合保持重心且
+每个群元素置换同一个轨道，故每个 `ψ(g)` 都固定 c。
+这里不要求整个 G 有限、H 正规或作用保持定向，也没有输入
+固定点。有限指数和所有 H 元素固定零点仍是明示条件。
+
+`h3_affine_period_linear_compatibility_constructs_full_conjugacy`
+对同一个 G 的两个实际实仿射表示 r、s，给定可逆连续实线性
+A 和有限指数 H，若每个 g、z 满足
+`A(r(g).linear(z))=s(g).linear(A(z))`，且每个 h∈H 满足
+`A(r(h)(0))=s(h)(0)`，则构造实际 c 和同一个
+`T(z)=A(z)+c`，证明 T 双射及每个 g、z 的精确关系
+`T(r(g)(z))=s(g)(T(z))`。它实际构造平移缺陷仿射表示：
+`δ(g)=s(g)(0)-A(r(g)(0))`，`ψ(g)(c)=δ(g)+s(g).linear(c)`，
+从原 r、s 的乘法及上述线性兼容性证明该表示的乘法，再用
+前一重心构造修正 c。没有输入 c、T 或完整仿射共轭关系；
+T 的线性部分保持为上述同一个可逆 A，没有通过平均任意
+映射来假定可逆性。这个阶段仍输入每个 g 的线性兼容性。
+
+`h3_normal_translation_periods_construct_full_affine_conjugacy`
+进一步从周期数据推导该线性兼容性。条件是同一个 G 的实际
+仿射表示 r、s，有正规有限指数 H，在两侧每个 h∈H 都按
+`z↦z+r(h)(0)`、`z↦z+s(h)(0)` 平移；给定两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ`，每个 h∈H 的两侧平移
+向量使用同一个整数系数族分别展开在 b、b′ 中，且 b 的每个
+基向量实际出现为某个源 H 元素的平移向量。由两组基构造
+同一个连续实线性 A，H 的正规性将每个周期的共轭仍留在 H；
+比较实际共轭平移的两侧向量，然后用基的外延性，导出每个
+g 的线性兼容性。随后构造同一个 c 及双射 T，对所有 G 元素
+和所有水平点实现上述仿射关系。没有输入线性兼容性、T、c
+或仿射共轭；H 的正规性、有限指数和全部匹配周期仍是输入。
+没有增加定向保持条件，因此条件允许外围作用含反射。
+
+`h3_prescribed_period_data_construct_original_controlled_equivariant_map`
+将此构造接回原 H³。输入是两个给定无穷远稳定子群 G、G′ 的
+群同构 d，两侧实际原 H³ 等距表示在每个群元素处都按单位
+实比例固定原无穷远零光锥标架射线，以及在所有水平点处与
+原水平映射相等的实际仿射表示 r、s。再输入源 G 中上述正规
+有限指数 H、两组实基、所有同系数周期与源基向量的实现；
+目标仿射表示使用同一个 `s.comp d.toMonoidHom`。
+由这些数据构造同一个 c、T(z)=A(z)+c 及原高度保持延伸
+`h3PeriodAffineHeightExtension b b′ c`。A 与 A 的逆的算子范数
+实际给出 C、D≥1，在每个原 H³ 点对上导出
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`，
+证明同一个 F 满射，且对每个 g∈G、每个原点 p 精确满足
+`F(ρ(g)(p))=ρ′(d(g))(F(p))`。没有输入 F、距离控制、满射性、
+水平或原逐点等变性，也没有定向保持条件。
+
+这最后一段是无穷远稳定子群的条件桥接，不能把“所有 G
+元素”理解成有限体积流形的整个甲板群。两侧尖点稳定子群的
+识别、单位缩放、实际水平仿射表示、正规有限指数平移子群及
+周期数据仍未从原给定 h/d 构造；这里的 d 也尚未被实现为原
+同伦等价诱导的同一个全甲板群同构在尖点上的限制。全局尖点
+与紧核心的受控粗稠密等变拼接和原交比保持仍缺，完整非紧、
+含尖点、非可定向、两侧原度量及原 h 所诱导同一个全甲板群 d
+的 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**。
+
+四个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。四次完整
+失败尝试全部排除，未接受其 `sorryAx` 诊断或警告；修正仅为
+实例/仿射强制转换、同一个原逆像的显式化、已有正规性证明
+参数和单位实标量类型，不压制诊断。Lean 仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 原甲板群限制、自由作用与构造的公共平移子群
+
+`h3_original_unit_infinity_action_constructs_affine_representation`
+对给定原 H³ 等距表示，若每个群元素以单位实比例固定原
+无穷远零光锥射线，实际构造水平仿射群表示。水平距离保持和
+满射性给出实际水平等距映射，Mazur–Ulam 给出其实仿射结构；
+原表示的乘法和原水平图与高度无关的性质证明群表示乘法。
+仿射表示及其与原水平图的逐点相等关系都成为结论，没有输入
+这些关系，也没有定向保持条件；单位缩放仍是输入。
+
+`h3_original_full_deck_d_period_restriction_constructs_cusp_map`
+保持同一个给定全群同构 `d : Γ ≃* Γ′`、两侧原 H³ 表示及
+源子群 `P : Subgroup Γ`。若每个 P 元素及其同一个 d 的像都
+以单位实比例固定原无穷远射线，实际构造两侧在同一个 P 上的
+仿射表示，目标表示直接沿 `d` 和原包含映射拉回。给定
+`H : Subgroup P` 的正规性、有限指数、两侧实际原水平平移、
+两组实基、所有 H 元素的同整数系数周期匹配及每个源基向量
+的实现后，构造原高度延伸 F，推导全部原双曲距离双边加性界、
+满射性和每个 g∈P、每个原点 p 的关系
+`F(ρ(g)(p))=ρ′(d(g))(F(p))`。这里不再输入局部 d、仿射
+表示或水平图相等关系；P、单位缩放和周期子群数据仍是输入。
+
+`h3_free_unit_infinity_horizontal_fixedpoint_forces_identity`
+在原单位无穷远作用及原 `FreeRepresentation` 条件下，将
+水平固定点实际提升为高度 1 的原 H³ 固定点，推出原群元素
+为单位元。`h3_free_unit_infinity_excludes_nontrivial_horizontal_rotation`
+继而对原水平公式 `z↦b+u*z`，在 u≠1 时构造
+`b/(1-u)`，由原自由性和单位元原水平作用推出矛盾，因此
+u=1。没有输入水平自由性或排除旋转的结论。
+
+`h3_free_unit_infinity_constructs_normal_translation_subgroup`
+对同一原单位无穷远自由表示，构造实际水平仿射表示 r，并取
+其实际线性群表示的核 H。原旋转/反射分类和前述旋转排除
+说明线性像至多含恒等及一种反射：任意两种反射的乘积是
+旋转，原自由性迫使该乘积的线性部分为恒等，故反射线性
+部分相同。实际线性像落在一个至多两元素集合中，从而推导
+H 正规、有限指数且 `H.index≤2`，并证明每个 H 元素的原
+水平作用都是平移。H、正规性、有限指数、平移结构及定向
+保持条件均非输入；原自由性与单位缩放仍是条件。
+
+`h3_same_full_deck_d_constructs_common_peripheral_translation_subgroup`
+对同一个原全群同构 d、两侧原自由表示和给定 P，若 P 及其
+同一个 d 的像满足上述单位无穷远条件，则沿原包含映射与 d
+证明两侧在同一个 P 上的自由性，构造两侧实际仿射表示和
+各自指数至多 2 的正规平移核。取它们在 P 内的交 H，推导
+H 正规、有限指数且 `H.index≤4`，两侧每个 H 元素都按实际
+原水平平移作用。不输入公共 H、正规性、指数或两侧平移
+结构，也不选择新的目标同构；允许原作用含反射。
+
+`h3_free_same_full_deck_d_constructs_period_cusp_extension`
+将这个公共 H 直接接入原尖点映射构造。量词顺序是：从上述
+两侧原自由性、同一个 d、P 和单位无穷远条件实际构造
+正规有限指数 H，随后对任意两组实际实基，在每个 H 元素的
+同整数系数原周期匹配及每个源基向量实际实现的条件下，
+构造同一个 c 和原高度 F，由两组基线性等价及其逆的算子
+范数给出 C、D≥1，对所有原点对证明
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`，
+并证明 F 满射及所有 g∈P、原点 p 的上述同一个 d 的作用
+关系。没有输入 H、两侧平移、仿射表示、F、控制常数或满射性。
+两组基、秩二周期存在性及同系数匹配仍未构造，不能把这个
+条件结论理解为已证明这些周期条件一定成立。
+
+P 仍是给定子群，尚未从原有限体积流形识别为实际尖点稳定子；
+两侧单位无穷远规范化及原同伦等价诱导的 d 与这些数据的
+绑定仍缺。所有 P 元素的等变性不等于整个原甲板群的等变性。
+全局尖点/紧核心拼接、粗稠密性与原交比保持尚未完成；完整
+含尖点、非可定向、两侧原度量及原给定同伦等价的
+Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**。
+
+六个完整模块串行本地 Lean 成功，七项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。三次完整
+诊断尝试全部排除，其中一次编译退出 0 但含一项风格警告；
+另两次退出 1 的 `sorryAx` 诊断均未接受。修正限于既有
+强制转换、原坐标展开、隐式参数和推荐的策略语法，不改
+数学条件或压制诊断。Lean 仍在忽略目录 `.lake`，跟踪交付
+仅为研究笔记，无跟踪 Lean、准入、冻结或新颖性声明。
+逃逸审计未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

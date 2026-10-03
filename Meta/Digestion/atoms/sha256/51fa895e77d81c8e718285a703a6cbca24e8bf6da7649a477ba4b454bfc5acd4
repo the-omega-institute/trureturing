@@ -1,0 +1,49 @@
+**命题 47.10（同一 Bayes 分类下的过度置信）。** 取 §46.5 式（46.16）的实际族
+
+$$
+W=2ab-cd,\qquad z=(\lambda W,\lambda),\qquad
+(L_0,L_1,L_2)=\lambda(1/2,W,-W),\qquad \lambda>0.
+\tag{47.29}
+$$
+
+它仍在每棵树上使用峰值三、实际根二与零头偏置。对式（47.3）的噪声律，它对每个 $\lambda>0$ 都有 Bayes 分类风险 $2\varepsilon$。令 $R_{\log,0}(\lambda),R_{2,0}(\lambda)$ 专指式（46.24）的这个严格分类 W 族，则
+
+$$
+R_{\log,\varepsilon}(\lambda)
+=R_{\log,0}(\lambda)+\frac{227\varepsilon}{125}\lambda.
+\tag{47.30}
+$$
+
+该族的对数风险有唯一有限正极小点 $\lambda_\star\in(0,\infty)$；越过它继续提高置信度，分类不变，对数风险严格增加。完整 Brier 风险则满足
+
+$$
+\begin{aligned}
+R_{2,\varepsilon}(\lambda)
+&=R_{2,0}(\lambda)+2\varepsilon\bigl(3\mathbb E_{P_n}[p_C(\lambda)]-1\bigr),\\
+\lim_{\lambda\to\infty}R_{2,\varepsilon}(\lambda)&=4\varepsilon,\qquad
+\lim_{\lambda\to\infty}\Delta_2(\lambda)=6\varepsilon^2>0.
+\end{aligned}
+\tag{47.31}
+$$
+
+证明。式（46.18）–（46.22）已经给共同树的三通道搬运与直接二坐标根。此族在所有词上教师类严格最大，故在新噪声律下仍作条件 Bayes 分类。两个未缩放真类差 $(g,h)$ 的实际词数分别是 $(1/2,1/2)$ 上89词、$(1/2,2)$ 上20词、$(3/2,4)$ 上16词。第二组包括4个类1、$W=1$ 的词与16个类2的词，第三组是16个类1、$W=2$ 的词；这些计数不能与类质量表逐行等同。它们的差之和均值为
+
+$$
+\mathbb E[g+h]=\frac{89+50+88}{125}=\frac{227}{125}.
+\tag{47.32}
+$$
+
+逐词噪声对数损失与无噪声损失之差为 $\varepsilon[(L_C-L_j)+(L_C-L_k)]$，得到式（47.30）。式（46.24）的每个 $\log(1+e^{-\lambda g}+e^{-\lambda h})$ 二阶导数，是三种斜率 $0,-g,-h$ 在其正指数权重下的方差；至少两个斜率不同，故严格为正。加上线性噪声项后仍严格凸，且延伸至 $\lambda=0$ 的右导数与无穷处导数分别为
+
+$$
+R'_{\log,\varepsilon}(0)=\frac{227(3\varepsilon-1)}{375}<0,
+\qquad
+\lim_{\lambda\to\infty}R'_{\log,\varepsilon}(\lambda)
+=\frac{227\varepsilon}{125}>0.
+\tag{47.33}
+$$
+
+连续严格递增导数因此恰过零一次，得到唯一有限正族内极小点。平方风险逐词展开，噪声相对无噪声的改变量为 $-2(r-e_C)\cdot p=2\varepsilon(3p_C-1)$，给式（47.31）。该族所有真类差为正，所以 $p_C\to1$、$R_{2,0}\to0$，完整风险极限为 $4\varepsilon$；减去 $4\varepsilon-6\varepsilon^2$ 得超额极限。$\square$
+
+这里的唯一性限于 W 的单参数族。零偏置、峰值三在本节内点噪声目标下已有定理47.6的正超额底，故该族的对数极小值也不能成为整个允许模型的 Bayes 值。保持分类的优先顺序不等于准确概率：无噪声时可把置信尺度推向无穷，这里两个竞争类的正条件质量会对过大的 logit 差收费。
+

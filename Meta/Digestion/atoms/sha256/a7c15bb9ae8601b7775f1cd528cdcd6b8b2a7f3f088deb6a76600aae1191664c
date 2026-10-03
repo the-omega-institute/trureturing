@@ -1,0 +1,11 @@
+**定义 347.1（极小位移的两个对数尺度）。** 沿用定义344.1和定理346.3的同一谱、相位包络及固定允许区间。置
+
+$$
+c=\frac1{2\pi},\qquad C_* = \frac{2K}{c}=4\pi K,
+\qquad D_* = \frac{2K^2}{c}=4\pi K^2,
+\qquad L_\varepsilon=\log(1/\varepsilon).
+$$
+
+对于该固定区间的任意极小点选取 $t_\varepsilon$，其充分晚时为正，置
+$\ell_\varepsilon=\log(1/t_\varepsilon)$。
+

@@ -1,0 +1,29 @@
+### theorem 251.1 移动截止模型的精确微分与零锚
+
+定义
+
+$$
+\mathcal M(t)=\frac{e^{-t/2}(U(t)-1)}t
++\operatorname E_1\!\left(\frac t2+\log U(t)\right)
+-\frac12\operatorname E_1(t/2).
+\tag{251.1}
+$$
+
+则 $\mathcal M$ 恰为式（247.10）的连续储备，且对全部 $t>0$ 有
+
+$$
+\boxed{\mathcal M'(t)
+=-\frac{e^{-t/2}(t+1)}{t^2}(U(t)-1),\qquad
+\mathcal M(t)=\int_t^\infty
+\frac{e^{-v/2}(v+1)}{v^2}(U(v)-1)\,dv.}
+\tag{251.2}
+$$
+
+特别地，
+
+$$
+0<\mathcal M(t)<\frac{c_R e^{-t/2}}t,
+\qquad \lim_{t\to\infty}\mathcal M(t)=0.
+\tag{251.3}
+$$
+

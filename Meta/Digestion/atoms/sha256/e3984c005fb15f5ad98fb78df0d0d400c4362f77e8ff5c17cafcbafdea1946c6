@@ -1,0 +1,28 @@
+**定义 335.1（沿用有限真谱值的实际证书）。** 沿用 §§87、92、313、330、333 的同源 $Z(x)=\sqrt x\log x\,I_\psi(x)$，区分本节的有限素数幂和
+\[
+A(x)=\sum_{\substack{p\text{ 素数},\ r\ge1\\p^r\le x}}\frac1{rp^r}
+=\sum_{1<n\le x}\frac{\Lambda(n)}{n\log n}
+\]
+与 §§313、334 的 Euler 乘积 $P(x)$。复用 §87.3、§92 及《黄金分层算术观察理论》“定理1.1：尾积分的有限算式”的经典同截断表达
+\[
+z_{\rm fin}(x)=\sqrt x\log x\left[
+\gamma+\log\log x-A(x)+\frac{\psi(x)-x}{x\log x}\right]=Z(x),\qquad x>1.
+\tag{335.1}
+\]
+该已知表达由有效素数定理、Stieltjes 分部求和及 Mertens 常数得出；其文献背景与适用核已在 §87.3 注明，这里不另立有限谱公式为新定理。每个素数幂 $p^r\le x$ 的底数均 $p\le x$。
+
+取定义333.1的实际 Fibonacci 五分平方密度网格，块端点为 $A_k=3F_k+2$，节点为 $a_{k,s}=3U_{k,s}+2$，包括每块两端。固定 §333 的同一有效 PNT 输入及已证实的共同导数界 $M_k\ge0$。定义
+\[
+\mathcal E_k^{\rm fin}(x)=\max_s[
+ z_{\rm fin}(a_{k,s})-M_k|x-a_{k,s}|],\qquad A_k\le x\le A_{k+1}.
+\tag{335.2}
+\]
+在每个块上固定节点及共同 $M_k$，令 $\mathcal E^{\rm fin}$ 为这些块函数的拼接，并记
+\[
+\mathcal C^{\rm fin}(X)=\int_{A_{k_0}}^X\mathcal E^{\rm fin}(x)\frac{dx}{x},\qquad
+\mathcal S(X)=\int_{A_{k_0}}^XZ(x)\frac{dx}{x},\qquad
+\mathcal L(X)=\mathcal S(X)-\mathcal C^{\rm fin}(X),\quad X\ge A_{k_0}.
+\tag{335.3}
+\]
+两侧块在共同端点都等于 $Z$，故拼接连续。早块可以采用另外的已证实有限共同导数界，不从绝对连续性单独推出它的存在。
+

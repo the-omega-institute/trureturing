@@ -1,0 +1,13 @@
+**推论 311.4（四分之一尺度的实际最优尾与半尺度偏移）。** 在假设310.1之外采用本节解析输入，则该假设中的有限漂移极限必为 $\beta=0$，从而
+\[
+I_L\longrightarrow0,\qquad
+\frac{m-z_L^*}{m^{3/4}}\longrightarrow0
+\quad\text{对每个实际最小截止序列}.
+\tag{311.21}
+\]
+与此同时，不能把（311.4）扩至 $\lambda=1/2$：若 $\sqrt m\,B(m)$ 有有限极限 $d$，则
+\[
+\sqrt m\,b_L\longrightarrow d+\sqrt2.
+\tag{311.22}
+\]
+

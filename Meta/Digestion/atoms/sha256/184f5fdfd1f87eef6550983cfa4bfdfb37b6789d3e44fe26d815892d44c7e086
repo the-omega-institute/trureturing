@@ -1,0 +1,9 @@
+**定义 330.2（Fibonacci 块上的五分整数叶）。** 取 $k\ge8$，$F=F_k$、$h=F_{k-1}$，于是 $F_{k+1}=F+h$ 且 $F/2\le h\le F$。取满足 $b=5^r\le h$ 的整数深度 $r\ge0$，定义
+\[
+U_s=F+\left\lfloor\frac{sh}{b}\right\rfloor\quad(0\le s\le b),
+\qquad a_s=3U_s+2,
+\qquad \ell_s=U_{s+1}-U_s.
+\tag{330.9}
+\]
+这些节点对应实际整数 $T_{U_s}$。相邻 Fibonacci 块的共同边界只保留一次。这里的五分是采样分割，不额外假定它等同于原有五窗口语法。
+

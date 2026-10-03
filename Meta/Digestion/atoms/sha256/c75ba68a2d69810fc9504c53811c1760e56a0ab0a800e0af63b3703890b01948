@@ -1,0 +1,100 @@
+**定理 306.2（有限端点的精确缩放下确界及实际达到族）。** 假设306.1成立。则
+\[
+\ell^2\Delta(N_L^*)\longrightarrow\kappa,
+\qquad
+\ell^2 \mathfrak D_L(1/4)\longrightarrow\kappa,
+\tag{306.9}
+\]
+其中 $\mathfrak D_L$ 是（304.4）的实数下确界，且 $N_L^*\in\mathcal B_L(1/4)$。更具体地，对每个 $\varepsilon>0$，全部充分大的 $L$ 与全部 $H\in\mathcal B_L(1/4)$ 一致满足
+\[
+\ell^2\Delta(H)\ge\kappa-\varepsilon.
+\tag{306.10}
+\]
+因而整个端点预算纤维最终严格满足 Robin 不等式，成员均为超过5040的整数。任何同饱和签名的严格 Robin 违例最终必须满足
+\[
+K_L(H)>\frac{m}{4\log m},
+\quad\text{等价地}\quad K_L(H)\ge k_L+1.
+\tag{306.11}
+\]
+
+**证明。** §305 的二阶计数给
+\[
+\#\{p\le m:p\nmid A_L\}
+=\frac{m}{4\ell}+\frac{cm}{4\ell^2}+O(m/\ell^3)>k_L
+\tag{306.12}
+\]
+最终成立。因此全部前 $k_L$ 个缺失素数都在 $m/2<p\le m$、$p\equiv1\pmod3$ 的实际缺失带内。对 $1\le K\le k_L$，令 $z_{L,K}=q_{L,K}$、$\beta_{L,K}=z_{L,K}/m$；对 $K=0$，明确置 $\beta_{L,0}=1/2$。以下误差对全部这些整数 $K$ 一致。
+
+先计算最后的截止 $\beta_L^*=\beta_{L,k_L}$。§304 的首项计数已给 $\beta_L^*\to1$。由（305.17），一致于 $1/2\le\beta\le1$，
+\[
+\pi_1(\beta m)-\pi_1(m/2)
+=\frac{m(\beta-1/2)}{2\ell}
++\frac{m}{2\ell^2}\left[\beta(1-\log\beta)-\frac{1+\log2}{2}\right]
++O(m/\ell^3).
+\tag{306.13}
+\]
+在 $\beta=\beta_L^*$ 时左侧恰为 $k_L=m/(4\ell)+O(1)$。代入 $\beta_L^*\to1$，先得 $1-\beta_L^*=O(1/\ell)$，再展开括号项得
+\[
+\beta_L^*=1-\frac{c}{2\ell}+O(\ell^{-2}).
+\tag{306.14}
+\]
+这里有固定比例区间的一致绝对误差，不要求一个移动短区间的相对计数估计。
+
+对 $\beta=\beta_{L,K}$，$N_{L,K}$ 的第一层支撑恰为三、模三等于一且不超过 $\beta m$ 的素数、以及模三等于二且不超过 $m$ 的素数。更高层来自 $A_L$，总对数贡献为 $O(\sqrt m\log m)$，独立于 $K$。假设302.1因而给
+\[
+\log N_{L,K}=\frac{1+\beta}{2}m+O(m/\ell^3)+O(\sqrt m\log m),
+\qquad
+\log\log N_{L,K}=\ell+\log\frac{1+\beta}{2}+O(\ell^{-3}).
+\tag{306.15}
+\]
+三轴贡献的 $O(\log m)$ 已含在高层误差中。
+
+同一支撑的精确 Euler 比为
+\[
+\frac{W_{L,K}}{P(m)}
+=\prod_{\substack{\beta m<p\le m\\p\equiv1\pmod3}}(1-p^{-1}).
+\tag{306.16}
+\]
+对 $\vartheta_1(t)$ 的经典分部求和给
+\[
+\log\frac{W_{L,K}}{P(m)}
+=\frac12\log\frac{\ell+\log\beta}{\ell}+O(\ell^{-4}).
+\tag{306.17}
+\]
+为核对精度，可用上述 $w(t)$：两个端点的 $[\vartheta_1(t)-t/2]w(t)$ 都为 $O(\ell^{-4})$，而在 $[m/2,m]$ 上积分 $\int_{\beta m}^m[\vartheta_1(t)-t/2]w\prime(t)\,dt$ 也为 $O(\ell^{-4})$；将 $w(t)$ 替换为 $1/(t\log t)$ 仅差 $O(1/(m\ell))$。这是对所有 $\beta$ 的绝对误差，包括空区间，不把 $o(1)$ 偷换成更细尺度。
+
+由（306.4）及（306.17），一致地有
+\[
+W_{L,K}=E\sqrt{\ell(\ell+\log\beta)}+o(\ell^{-2}).
+\tag{306.18}
+\]
+式（306.17）的相对 $O(\ell^{-4})$ 误差乘 $P(m)=O(\ell)$ 后为 $O(\ell^{-3})$，低于所需尺度。
+
+定义证明内的经典 AM–GM 缺口
+\[
+g(\beta)=\log\frac{1+\beta}{2\sqrt\beta}
+=\frac12\log\left(1+\frac{(1-\beta)^2}{4\beta}\right).
+\tag{306.19}
+\]
+它在 $0<\beta\le1$ 上递减。平方根的凹性还给
+\[
+\ell+\log\frac{1+\beta}{2}-\sqrt{\ell(\ell+\log\beta)}
+\ge g(\beta)\ge g(\beta_L^*),
+\tag{306.20}
+\]
+其中充分大 $L$ 时 $\ell+\log\beta>0$。最后由（306.14），
+\[
+\ell^2g(\beta_L^*)\longrightarrow\frac{c^2}{32}.
+\tag{306.21}
+\]
+（306.6）、（306.15）、（306.18）与（306.20）–（306.21）给（306.10）。下界只通过 $K$ 的预算读取目标，故覆盖任意已有素数指数及任意高度的成员。
+
+在实际达到族 $N_L^*$ 上，$\log\beta_L^*=O(1/\ell)$，所以（306.20）中平方根凹性多出的差为 $O(\ell^{-3})$。还须恢复实际约数权重：$D_L\mid A_L\mid N_L^*$，所有支撑素数不超过 $m$。将精确局部截断缺损按 $p\le\sqrt L$ 与 $p>\sqrt L$ 分开，前段每项小于 $1/L$，后段每项至多 $p^{-2}$，总和为 $O(L^{-1/2})$。有限乘积界给
+\[
+0\le W_{L,k_L}-U_{N_L^*}=O(\ell/\sqrt m)=o(\ell^{-2}).
+\tag{306.22}
+\]
+因此（306.15）、（306.18）与（306.21）给（306.9）的第一个极限。构造的签名与预算成员关系来自定理306.1；（306.10）给非空预算集合的下确界下界，实际成员 $N_L^*$ 给上界，夹逼得第二个极限。没有断言每个有限 $L$ 的精确下确界由 $N_L^*$ 取得。
+
+取 $\varepsilon=\kappa/2$，一致正余量给整个纤维的最终严格 Robin 性。$H\ge A_L$ 与 $\log A_L\sim3m/4$ 保证最终超过5040，且由定理302.1均为5040的倍数。（306.11）是该安全域的逆否命题。$\square$
+

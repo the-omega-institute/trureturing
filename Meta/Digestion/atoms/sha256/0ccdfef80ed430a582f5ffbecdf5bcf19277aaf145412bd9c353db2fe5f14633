@@ -1,0 +1,12 @@
+**定理 49.3（退化后的根一维不能逼近 proper Bayes 值）。** 在定义49.1的原仿射-softmax 头合同内，对每个 $n\ge3$、固定树、任意有限参数、任意峰值及全部尾输入，只要实际根 $q\le1$，就有
+
+$$
+\Delta_2^{\mathrm{g}}(p)\ge\kappa,\qquad
+\Delta_{\log}^{\mathrm{g}}(p)\ge\kappa,\qquad
+\kappa=\frac{\mu^2}{1875}\left[\log\frac{125}{98}\right]^2
+=\frac{193-132\sqrt2}{270000}\left[\log\frac{125}{98}\right]^2>0.
+\tag{49.13}
+$$
+
+这一下界同时排除准确后验和两种零 proper 超额下确界，允许偏置、斜率及内部消息沿任意参数序列无界。
+

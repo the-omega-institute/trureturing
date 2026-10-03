@@ -1,0 +1,82 @@
+**定理 307.2（保留相关失衡后的交叉尺度极限）。** 在假设307.1下，$h_L$、$s_L$、$M_L$ 按 $z=z_L$ 取值，则
+\[
+\sqrt m\left[
+\frac{\Delta(H_L(z_L))-\Delta(T_L)}E
+-\frac{h_L}m b_L\right]\longrightarrow\frac{d^2}{8}.
+\tag{307.10}
+\]
+结合（305.8），亦有
+\[
+\sqrt m\left[\Delta(H_L(z_L))-S(m)-E\frac{h_L}m b_L\right]
+\longrightarrow E\left(2\sqrt2+\frac{d^2}{8}\right).
+\tag{307.11}
+\]
+
+**证明。** 记 $F_L(v)=\vartheta_1(m)-\vartheta_1(m-v)$。在 $v=D_L$ 代入（307.9）得
+\[
+h_L=D_L/2+o(D_L).
+\tag{307.12}
+\]
+有限求和的 Stieltjes 分部求和给
+\[
+M_L=D_LF_L(D_L)-\int_0^{D_L}F_L(v)\,dv
+=D_L^2/4+o(D_L^2).
+\tag{307.13}
+\]
+即使 $z_L$ 本身是素数，式子仍成立：$F_L$ 取严格下端的（307.1）约定，端点单点不改变积分。
+
+对于 $p=m-v$、$0\le v\le D_L=o(m)$，在整个短边上一致展开经典光滑核
+\[
+\frac1{p\log p}
+=\frac1{m\ell}
++\frac{(1+1/\ell)v}{m^2\ell}
++O\!\left(\frac{v^2}{m^3\ell}\right),
+\qquad
+\log(1+p^{-1})=p^{-1}+O(p^{-2}).
+\tag{307.14}
+\]
+按 $\log p$ 加权求和，得到
+\[
+s_L=\frac{h_L}{m\ell}
++\frac{(1+1/\ell)M_L}{m^2\ell}
++O\!\left(\frac{D_L^2h_L}{m^3\ell}+\frac{h_L}{m^2\ell}\right).
+\tag{307.15}
+\]
+第二项中的 $1/\ell$ 不能在有限恒等式里抹去，但在下述极限中趋零。假设302.1与（305.11）、（305.16）给
+\[
+\frac{U_L}{E\ell}\to1,\qquad\frac m{X_L}\to1.
+\tag{307.16}
+\]
+（307.12）–（307.16）说明
+\[
+\sqrt m\,\frac{U_L}E\left(s_L-\frac{h_L}{m\ell}\right)\to\frac{d^2}4,
+\qquad
+\sqrt m\,(h_L/X_L)^2\to\frac{d^2}4,
+\tag{307.17}
+\]
+而 $h_L/X_L=O(m^{-1/4})$、$s_L=O(m^{-1/4}/\ell)$。故对数三阶余项及指数二阶余项满足
+\[
+\sqrt m\,\frac{(h_L/X_L)^3}{1-h_L/X_L}\to0,
+\qquad
+\sqrt m\,\frac{U_L}E s_L^2\to0.
+\tag{307.18}
+\]
+
+将（307.7）的一阶项作精确分解：
+\[
+\frac{U_L}Es_L-\frac{h_L}{X_L}
+=\frac{h_L}m b_L
++\frac{U_L}E\left(s_L-\frac{h_L}{m\ell}\right).
+\tag{307.19}
+\]
+经典 Taylor 余项估计给（307.7）等于（307.19）减 $(h_L/X_L)^2/2$，再加一个由（307.18）控制的 $o(m^{-1/2})$。第二式（307.17）的一半从第一式减去，留下 $d^2/4-d^2/8=d^2/8$，即（307.10）。与（305.8）中 $T_L$ 的共同基线展开相加得到（307.11）。
+
+更明确地，对 $|a|<1$、$|s|\le1$，经典对数级数与指数 Taylor 界给
+\[
+\left|\log(1-a)+\lambda(1-e^{-s})-
+(\lambda s-a-a^2/2)\right|
+\le\frac{|a|^3}{1-|a|}+|\lambda|s^2.
+\tag{307.20}
+\]
+这里取 $a=h_L/X_L$、$\lambda=U_L/E$；（307.18）恰使右端在 $\sqrt m$ 尺度趋零。$\square$
+

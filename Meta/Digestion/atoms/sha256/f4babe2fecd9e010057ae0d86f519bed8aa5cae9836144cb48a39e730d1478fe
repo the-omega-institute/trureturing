@@ -1,0 +1,22 @@
+**定理 309.1（实际累积质量的校准与有限矩误差）。** 存在固定 $C>0$，使充分大的 $L$ 上，定义
+\[
+\epsilon_L=\frac C\ell,\qquad
+\delta_L=C\left(\frac{m^{-1/12}}\ell+m^{-1/4}\ell^2\right),
+\tag{309.3}
+\]
+则 $\epsilon_L,\delta_L\to0$，并且对每个 $m/2\le z_L\le m$ 与 $0\le v\le D_L$，
+\[
+|F_L(v)-v/2|\le\epsilon_Lv+\delta_L\rho^3.
+\tag{309.4}
+\]
+更一般地，只要一个实际 $L,z_L$ 满足（309.4）、$\epsilon_L\ge0$，便有有限恒等式与误差证书
+\[
+M_L=D_Lh_L-\int_0^{D_L}F_L(v)\,dv,
+\tag{309.5}
+\]
+\[
+|M_L-D_L^2/4|
+\le2D_L(\epsilon_LD_L+\delta_L\rho^3).
+\tag{309.6}
+\]
+

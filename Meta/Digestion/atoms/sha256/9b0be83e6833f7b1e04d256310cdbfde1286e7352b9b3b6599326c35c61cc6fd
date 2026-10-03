@@ -1,0 +1,45 @@
+**定理 346.5（原始实频率计数产生的统一相位界）。** 设指标集 $I$ 任意，实频率 $\gamma_i$、实重数 $m_i$ 满足 $\gamma_i\ge L>1$、$m_i\ge0$，且每个严格截断 $\{i:\gamma_i<Y\}$ 有限。令 $c\ge0$、$C\in\mathbb R$，假设对每个 $u\ge L$ 均有
+
+$$
+\left|N_<(u)-cu\log u\right|\le Cu,\qquad N_<(u)=\sum_{\gamma_i<u}m_i.
+$$
+
+置 $a_i=m_i/[\gamma_i(1/4+\gamma_i^2)]$、$A=\sum_i a_i$、$M(Y)=\sum_{\gamma_i<Y}a_i\gamma_i^2$，并定义
+
+$$
+\delta(t)=\sum_i2a_i(1-\cos\gamma_it),\quad v(t)=\sum_i2a_i\gamma_i\sin\gamma_it,
+$$
+
+$$
+R(L,Y)=c\log Y+C+\frac c2\log^2L+C(\log Y-\log L)+\frac A4.
+$$
+
+则 $\sum_i a_i$ 与 $\sum_i a_i\gamma_i$ 绝对可和，$\delta'(t)=v(t)$ 对每个实 $t$（包括零）成立，且 $v$ 连续。对 $0<|t|$、$L|t|\le1$ 和 $Y=1/|t|$，同时有
+
+$$
+\begin{aligned}
+|\delta(t)-t^2M(Y)|&\le t^2(9c\log Y+8c+9C),\\
+|v(t)-2tM(Y)|&\le |t|(5c\log Y+4c+5C),\\
+|\delta(t)-\tfrac c2t^2\log^2Y|&\le t^2(9c\log Y+8c+9C+R(L,Y)),\\
+|v(t)-ct\log^2Y|&\le |t|(5c\log Y+4c+5C+2R(L,Y)).
+\end{aligned}
+$$
+
+证明。严格截断的有限层积分给出精确恒等式
+
+$$
+\sum_{\gamma_i<Y}\frac{m_i}{\gamma_i}
+=\frac{N_<(Y)}Y+\int_L^Y\frac{N_<(u)}{u^2}\,du.
+$$
+
+计数误差除以 $u^2$ 后积分，其绝对值不超过 $C(\log Y-\log L)$。恒等式 $m_i/\gamma_i-a_i\gamma_i^2=a_i/4$ 给出 $|M(Y)-(c/2)\log^2Y|\le R(L,Y)$。对任意有限高频集合使用同一层积分，得到包含截断端点的界
+
+$$
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^2}
+\le\frac{2[c(\log Y+1)+C]}Y,\qquad
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^3}
+\le\frac{2[c(\log Y+1)+C]}{Y^2}.
+$$
+
+有限集合和的一致上界先产生无限可和性，再允许无限和比较。这两界控制 $\sum_{\gamma_i\ge Y}a_i\gamma_i$ 与 $\sum_{\gamma_i\ge Y}a_i$；低频四阶矩满足 $\sum_{\gamma_i<Y}a_i\gamma_i^4\le Y^2(c\log Y+C)$。在 $Y=1/|t|$ 分割，低频的四阶余弦余项和三阶正弦余项与高频有界三角函数给出前两式，随后代入矩界得到后两式。导数项的一致可和主控为 $2a_i\gamma_i$，而相位在零时逐项为零，因此在全部实时间可以作一次求导并取得连续导数；本论证不交换二次求导。$\square$
+
