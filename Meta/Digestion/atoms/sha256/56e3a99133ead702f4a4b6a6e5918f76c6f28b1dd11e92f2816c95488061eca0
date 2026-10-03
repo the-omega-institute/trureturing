@@ -1,0 +1,36 @@
+**定理 62.18（等权码本的共同实现）。** 固定 $D_0\in\{X_H,Y_H\}$。先取一个 $N>0$，使 $a_N=a_{D_0}^{\ge}(N)\ge1$，以全部这些弱可行词组成有限码本 $\mathcal V_N$。每词前置同一重置，形成
+
+$$
+\mathcal W_N=\{\mathcal Rv:v\in\mathcal V_N\},\qquad
+L=N+C_R,\qquad \delta=B_M-D_0>0.
+\tag{62.39}
+$$
+
+该码本的全部有限实际拼接，以及全部双无限辅助拼接，具有共同严格高守卫余量。具体地，原码字中每个高返回的起点至少为
+
+$$
+d+\delta g^N,
+\tag{62.40}
+$$
+
+第 $K$ 个 $\mathsf c$ 前的共同余量至少为
+
+$$
+\varepsilon_N^{\rm state}=\chi^{K-1}\delta g^N>0.
+\tag{62.41}
+$$
+
+因而选取有限 $n\ge K$ 满足
+
+$$
+h\rho^n<\varepsilon_N^{\rm state}
+\tag{62.42}
+$$
+
+后，全部双无限拼接属于 $X_n^-$，并有
+
+$$
+\gamma_n^-\ge\frac{\log_2a_N}{N+C_R}.
+\tag{62.43}
+$$
+

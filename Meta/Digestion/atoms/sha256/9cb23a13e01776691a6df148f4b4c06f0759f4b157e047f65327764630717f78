@@ -1,0 +1,4 @@
+**推论 8.2（Behavioral distance at a fixed modulus）。** Apply theorem 7.2 with $Y=X$, $O=O_L$ and $\rho=M$. The zero-distance classes are precisely $F_L(x)$ and the behavioral quotient is a genuine ultrametric space with $L^2$ points. For $L=1$ it is a singleton. On $X$ itself the distance is only a pseudometric, since its zero classes are infinite.
+
+证明。Theorem 8.1 identifies $R_{\infty,L}$ with coordinatewise congruence. The representative independence and separation on the quotient are exactly those proved in theorem 7.2. $\square$
+

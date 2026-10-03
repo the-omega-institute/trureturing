@@ -1,0 +1,56 @@
+**引理 9.9（有限图的熵等号强制 Markov 性）。** 对任意 $m\ge1$，$\mathscr G_m$ 的任意平稳单边路径测度的熵不超过 $\log\phi$；达到 $\log\phi$ 的唯一测度是命题 9.3 的平稳 Markov 测度。
+
+证明。设顶点过程为 $(V_j)_{j\ge0}$。其有限字母分割和全部未来逆像生成路径 Borel 集。由引理 9.7，其系统熵等于块熵率。令
+
+$$
+c_j=H(V_j\mid V_0,\ldots,V_{j-1}),\qquad j\ge1.
+$$
+
+平稳性及条件熵单调性给
+
+$$
+c_{j+1}\le H(V_{j+1}\mid V_1,\ldots,V_j)=c_j.
+$$
+
+块熵为 $H(V_0)+\sum_{j=1}^{n-1}c_j$，所以熵率 $h=\lim_jc_j\le c_1$。
+
+设 $\zeta_v=\Pr(V_0=v)$，在 $\zeta_v>0$ 的顶点上令实际一步条件转移为 $p_v(w)$。路径合法使它只支持允许边，而 $Q_m(v,w)>0$ 在所有这些边成立。由 $Q_m$ 的正向量公式及平稳性，
+
+$$
+\begin{aligned}
+\mathbb E[-\log Q_m(V_0,V_1)]
+&=\log\phi+\mathbb E[\log R_{V_0}-\log R_{V_1}]\\
+&=\log\phi.
+\end{aligned}
+$$
+
+因而
+
+$$
+H(V_1\mid V_0)
+=\log\phi-\sum_{v:\zeta_v>0}\zeta_v
+D(p_v\Vert Q_m(v,\cdot))
+\le\log\phi.
+$$
+
+这里 $D(p\Vert q)=\sum_wp(w)\log(p(w)/q(w))\ge0$，且等号当且仅当 $p=q$。非负性可由 $-\log t\ge1-t$ 应用于 $t=q(w)/p(w)$ 后求和得到；等号要求各正概率位置比值一，并且不存在剩余 $q$ 质量。因此 $h\le c_1\le\log\phi$。
+
+若 $h=\log\phi$，两个不等式都取等。KL 等号先迫所有 $\zeta_v>0$ 的实际转移为 $Q_m$。于是平稳顶点分布满足 $\zeta Q_m=\zeta$，零概率顶点不贡献额外项。引理 9.4 的唯一平稳性迫 $\zeta=\Pi_m$，特别地全部顶点概率正。
+
+此外 $c_j$ 递减而极限已经等于 $c_1$，所以每个 $c_j=c_1$。平稳性又有 $H(V_j\mid V_{j-1})=c_1$，因此对每个 $j$，
+
+$$
+H(V_j\mid V_{j-1})-
+H(V_j\mid V_0,\ldots,V_{j-1})=0.
+$$
+
+该差是各有限历史条件分布相对仅给当前顶点的条件分布的平均 KL 散度。等号迫每个正概率历史上的下一顶点分布只依赖最后顶点，且等于 $Q_m$。这对所有有限历史成立，链式概率公式遂给全部块概率
+
+$$
+\Pr(V_0=v_0,\ldots,V_{k-1}=v_{k-1})
+=\Pi_m(v_0)\prod_{j=0}^{k-2}Q_m(v_j,v_{j+1}).
+$$
+
+所以路径过程是一阶 Markov，测度唯一。反之，这个平稳 Markov 测度的条件转移就是 $Q_m$，其块熵率为
+$\mathbb E[-\log Q_m(V_0,V_1)]=\log\phi$，确实取等。$\square$
+

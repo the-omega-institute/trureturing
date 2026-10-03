@@ -1,0 +1,15 @@
+**定理 62.15（加权谱根）。** 令 $M_n^\pm(z)$ 为上述图在可双向延伸部分的加权邻接矩阵，平行边的权相加。存在唯一 $z_n^\pm\in(0,1)$ 使
+
+$$
+\operatorname{spr}(M_n^\pm(z_n^\pm))=1.
+\tag{62.32}
+$$
+
+置 $\gamma_n^\pm=-\log_2z_n^\pm$，则 $\gamma_n^\pm=\eta(X_n^\pm)$，并且
+
+$$
+\gamma_n^-\le\eta_b\le\gamma_n^+,\qquad
+\gamma_n^-\text{ 不减},\quad\gamma_n^+\text{ 不增}.
+\tag{62.33}
+$$
+

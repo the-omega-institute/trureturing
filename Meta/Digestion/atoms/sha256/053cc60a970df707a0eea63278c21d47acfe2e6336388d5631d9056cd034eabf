@@ -1,0 +1,17 @@
+**定义 7.1（有限图与无限路径因子）。** 对每个 $m\ge1$，令 $B_m=(\mathbb Z/m\mathbb Z)^2$。图 $\mathscr G_m$ 的顶点为 $V_m=\{0,1\}\times B_m$，边定义为
+
+$$
+(s,r)\longrightarrow(t,w)
+\quad\Longleftrightarrow\quad
+st=0\text{ 且 }w=M^{-1}(r-s\alpha)\pmod m.
+$$
+
+图无平行重边。令 $X_m$ 为该图的单边无限顶点路径空间，路径左移为 $\tau_m$；另记
+
+$$
+K_m=\Omega\times B_m,\qquad
+\delta_m(\omega,r)=(\sigma\omega,M^{-1}(r-\omega_0\alpha)).
+$$
+
+有限的是图，而非 $X_m$ 或 $K_m$。一个顶点可以有两个后继；单值的剥离动力学作用于整条路径，不能把边关系当作顶点集合上的确定性动力学。
+

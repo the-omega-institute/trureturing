@@ -1,0 +1,12 @@
+**定理58.13.1（完整有限帽整族给全视界 liminf）。** 若模板 $\mathsf T$ 的完整 cap $R$ 整族在该预算、归属与合同下联合可供应，则对每个正确完整解码器，
+
+$$
+B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)
+\ge\alpha_RN-O_R(1),\qquad
+\boxed{\liminf_{N\to\infty}
+\frac{B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)}N\ge\alpha_R.}
+\tag{58.60}
+$$
+
+原模板包含可供应的 anchor cap $R$ 子族时，也可用 anchor 偏移52得到同一结论。
+

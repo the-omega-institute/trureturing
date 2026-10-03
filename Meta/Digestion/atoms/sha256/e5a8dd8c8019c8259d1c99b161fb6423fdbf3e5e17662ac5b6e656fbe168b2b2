@@ -1,0 +1,32 @@
+**定义 17.1（选址正证书与查询基数）。** 固定 $d=3k$、$k\ge1$，取实际像中的正实例 $V\in\mathcal I_d$，并把其完整组成
+
+$$
+c(V)=(a,b)^{\mathsf T}
+$$
+
+作为已知输入。对 $h\in\mathbb N_0$，令 $Q$ 遍历 $\Sigma_{\le h}$ 的有限子集；$Q$ 中每个地址只查询一次，并以定义 16.1 的四值结果
+
+$$
+\mathsf{leaf}_\alpha,\qquad \mathsf{leaf}_\beta,\qquad \mathsf{branch},\qquad \mathsf{absent}
+$$
+
+与 $V$ 的结果逐项比较。称 $Q$ 对 $(V,h)$ **有声**，若对每一棵合法的完整有序树 $U\in\mathcal T$，都有
+
+$$
+c(U)=c(V)\quad\text{且}\quad
+\bigl(\forall u\in Q,\ \operatorname{out}_U(u)=\operatorname{out}_V(u)\bigr)
+\quad\Longrightarrow\quad U\in\mathcal I_d .
+\tag{17.1}
+$$
+
+定义
+
+$$
+\tau_d(V,h)=
+\min\bigl\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 有声}\bigr\},
+\qquad \min\varnothing=+\infty .
+\tag{17.2}
+$$
+
+这里的选择是在 $V$ 与精确的 $c(V)$ 已知后进行；$h$ 只限制地址长度，$|Q|$ 只计不同地址的数目，不另行计地址描述所含的比特或定位成本。树 $U$ 的竞争范围是全部 $\mathcal T$ 中的同组成树，不加预算截断，不要求前缀闭包，也不引入自适应次序、随机化、发现算法或物理取得模型。因此 $\tau_d(V,h)$ 是正实例证书的基数—深度关系；它既不是从未知树中寻找 $Q$ 的复杂度，也不是组成逆像或实际逆执行的许可。
+

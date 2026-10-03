@@ -1,0 +1,23 @@
+**引理 62.7（两个不同的保护作用）。** 固定有限整数 $M\ge1$，使
+
+$$
+B_M=h-\rho^M(h-\chi A)>\max\{X_H,Y_H,d\}.
+\tag{62.19}
+$$
+
+令重置返回及其执行词、付费长度为
+
+$$
+R=(M,1),\qquad \mathcal R=\mathsf c\mathsf u^M,
+\qquad C_R=20+6M.
+\tag{62.20}
+$$
+
+实际完整输入 $D>A$ 时，重置输出 $>B_M$；辅助输入 $D\ge A$ 时，输出 $\ge B_M$。重置自身是低返回，全部槽由 $C_{\rm auto}$ 统一严格通过。此外，对 $m\ge1$、$1\le r\le K$、$z\ge A$，
+
+$$
+G_{m+1,r}(z)-G_{m,r}(h)
+=\rho^m\{A-\chi^rh+\rho\chi^rz\}>0.
+\tag{62.21}
+$$
+

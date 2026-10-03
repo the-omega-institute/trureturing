@@ -1,0 +1,2 @@
+**定义 5.1（Escape from a current observation）。** For an observation $O$ and action $\rho$, an escape pair is a pair $u,v$ with $O(u)=O(v)$ but $O(\rho u)\ne O(\rho v)$.
+

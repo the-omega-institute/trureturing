@@ -1,0 +1,45 @@
+**证明。** $0<\chi,a<1$、$b_H,b_L>0$，且
+
+$$
+\chi b_j<d_j^-<d_j^+<h_j;
+$$
+
+末式来自 $(1-s)/(1-s\chi^2)<1$。定义33.7给出 $h_H<t^2-c$、$h_L<c$，于是
+
+$$
+H_1\times H_2\subset
+\operatorname{int}\bigl([c+\chi b_H,t^2]\times[0,c-\chi b_L]\bigr).
+\tag{44.9}
+$$
+
+这同时保持实际 guard 一尾域。高侧物理极小、极大返回分别是 $A_1,A_0$；低侧换回 $y=c-D$ 后分别是 $B_0,B_1$，不能照搬位移端点的次序。
+
+退出 $5\,0^\infty$、$0^\infty$ 的标量为 $t^2,0$。令 $E_H=t^2-c$、$E_L=c$，由 (44.7)
+
+$$
+X_j=\chi b_j+aE_j,\qquad x_1=c+X_H,\qquad x_2=c-X_L.
+\tag{44.10}
+$$
+
+以下用有理界检查内部性。$g^2+4g=1$ 给 $0<g<1/4$，所以
+
+$$
+h_H>\frac{39-6/4}{380}>\frac1{16},\qquad
+h_L>\frac{46}{380}>\frac1{16},\qquad
+0<E_H,E_L<1,\quad \chi,s<\frac14,\quad a<\frac1{256}.
+$$
+
+并且 $E_j>h_j>d_j^-$；高侧的严格差是 $t^2-z_U=(15-52g)/76>0$，低侧的严格差是 $z_V>0$。因此
+
+$$
+(1-\chi)b_j=(1-\chi)(1-s)h_j>\frac9{256}>aE_j,
+\tag{44.11}
+$$
+
+$$
+X_j-d_j^-=a(E_j-d_j^-)>0,\qquad
+X_j<\chi b_j+(1-\chi)b_j=b_j<d_j^+.
+$$
+
+第一等式使用 $d_j^-=\chi b_j+ad_j^-$。这证明 (44.4) 的字面尾严格位于 (44.8) 内部，不留下另选实际尾的假设。证毕。
+

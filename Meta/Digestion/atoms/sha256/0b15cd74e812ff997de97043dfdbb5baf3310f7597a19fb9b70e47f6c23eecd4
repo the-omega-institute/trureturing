@@ -1,0 +1,74 @@
+**定理 34.3（指定 guards 的有限尾差值）。** 有精确集合等式
+
+$$
+\boxed{T_1=-tT_0,\qquad T_1-T_0=R\cap(-\phi^2,\phi).}
+$$
+
+特别地，$(T_1-T_0)\cap[0,\phi)=R\cap[0,\phi)$。右侧每个差值都由两条实际有限合法尾精确实现，而非只由一个趋近序列逼近。
+
+证明。guard 一的尾首位必须为零；删去这一个零位得到任意 guard 零尾，反向前接一个零位也始终合法。位级数给出 $T_1=-tT_0$。这是实际地址的字面前接操作，重新分成三位窗口后仍是同一固定原点和外部单位位合同，并非更换标量坐标。
+
+有限尾的严格端点界给出
+
+$$
+T_1-T_0\subset R\cap(-1-\phi,t+1)
+=R\cap(-\phi^2,\phi).
+$$
+
+反向使用约定1.3的实际正数量条带输入。对 $x=A+Bt\in R$，定义整数数量泛函
+
+$$
+\mathsf q(x)=2A-3B.
+$$
+
+它对应整数组成 $(A,-B)$，其标量是 $A+Bt$。约定1.3给出的充分条件是
+
+$$
+x\in R,\qquad -1<x<\phi,\qquad \mathsf q(x)>0
+\quad\Longrightarrow\quad x\in T_0.
+$$
+
+零来源另由命题1.2处理。命题1.2还给出单个实际占位的数量
+
+$$
+\mathsf q((-t)^j)=F_{j+3}\qquad(j\ge0).
+$$
+
+固定任意 $h\in R\cap(-\phi^2,\phi)$。为实现 $h=y-z$，需要 $y\in(-1,t)$ 且 $z=y-h\in(-1,\phi)$，即
+
+$$
+J_h=(L,U),\qquad L=\max(-1,h-1),\qquad U=\min(t,h+\phi).
+$$
+
+所给 $h$ 的界恰使 $L<U$，而 $L,U\in R$。选择整数 $m\ge1$ 使 $0<t^{2m}<U-L$，置 $w=U-t^{2m}\in R\cap J_h$。对 $k>m$ 置
+
+$$
+y_k=w+t^{2k},\qquad z_k=y_k-h,\qquad x_k=-\phi y_k.
+$$
+
+由于 $L<w<y_k<U$，有
+
+$$
+-1<z_k<\phi,\qquad -1<x_k<\phi.
+$$
+
+此时不能只凭环成员和区间位置宣告有限来源。还须同时使两个实际整数数量为正。利用加性及单占位数量式，得到
+
+$$
+\begin{aligned}
+\mathsf q(z_k)&=\mathsf q(w-h)+F_{2k+3},\\
+\mathsf q(x_k)&=\mathsf q(-\phi w)+F_{2k+2},
+\end{aligned}
+$$
+
+其中 $-\phi t^{2k}=-t^{2k-1}=(-t)^{2k-1}$。两个固定项都是整数；Fibonacci 项趋于正无穷，所以同一个充分大的 $k$ 使两处严格正性同时成立。约定1.3于是分别提供实际有限 guard 零尾 $\alpha_k,\beta_k$，其标量为 $x_k,z_k$。前接一个零位得到实际有限 guard 一尾 $0\alpha_k$，并且
+
+$$
+\kappa_1(0\alpha_k)=-t x_k=y_k,
+\qquad \kappa_1(0\alpha_k)-\kappa_0(\beta_k)=y_k-z_k=h.
+$$
+
+这给出逆包含，证明完整条带。$\square$
+
+这里使用的是严格正整数数量 $\mathsf q$，不是经典黄金基整数的非负共轭实坐标。约定1.3所区分的两种正性保持各自的前提；本章复用母卷输入，不重新审计其证明。差值条带也不意味着单尾等式 $T_s=R\cap\operatorname{int}I_s$：例如 $t\in R\cap(-1,\phi)$ 却有 $\mathsf q(t)=-3$，不是实际 guard 零有限尾。上面的共同小位平移使两个数量同时为正，同时精确保留指定差值。
+

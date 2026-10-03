@@ -1,0 +1,16 @@
+**定理 59.8.1（严格预算阶梯与统一余量）。** 有
+
+$$
+Q_K<b_L<\Psi_K,\qquad b_L\text{ 随 }L\text{ 严格增加},
+\qquad b_L\uparrow\Psi_K.
+\tag{59.45}
+$$
+
+对每个固定 $L$ 及固定预算 $b_L<b<\Psi_K$，有界高串语言在两模板、每种归属及三个合同下联合可供应。全部槽闭距离不超过 $b_L$，可取全族统一正余量
+
+$$
+\varepsilon_{b,L}=\frac{b-b_L}{2}>0,
+\qquad |e_p|<b-\varepsilon_{b,L}.
+\tag{59.46}
+$$
+

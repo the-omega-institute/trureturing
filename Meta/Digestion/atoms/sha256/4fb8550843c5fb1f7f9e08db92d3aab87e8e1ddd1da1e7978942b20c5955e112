@@ -1,0 +1,54 @@
+**定义 16.1（有限前缀恢复与实际误差记录）。** 沿用定义14.5的合法地址域 $A_0=\Omega$、$A_1$、五窗图、区间 $I_0=[-1,\phi]$、$I_1=[-1,t]$ 及编码 $\kappa_s$。本章固定
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad
+\phi=1+t,\qquad
+a=t^3=2t-1,\qquad
+\gamma=-a=-t^3,\qquad
+T=\sigma^3.
+$$
+
+一个时间步删除三个地址位。令 $b(\mathrm{null})=b(2)=b(3)=0$、$b(5)=b(25)=1$，其中 $b(\ell)$ 是窗口 $\ell$ 的输出 guard；起始 guard 为零时五窗都允许，起始 guard 为一时只允许 $\mathrm{null},3,5$。对 $y\in I_{b(\ell)}$ 置
+
+$$
+f_\ell(y)=\Delta_\ell-a y,\qquad
+(\Delta_3,\Delta_{\mathrm{null}},\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t).
+$$
+
+母卷 [FIBONACCI_ATOMIC_RELATION_GENERATION.md](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§150–151 与本卷命题14.6给出的实际分支区间为
+
+$$
+\begin{array}{c|cc}
+\ell&\text{合法尾区间}&f_\ell(I_{b(\ell)})\\ \hline
+3&I_0&[-1,t-1]\\
+\mathrm{null}&I_0&[t-1,a]\\
+5&I_1&[a,t]\\
+2&I_0&[t,2t]\\
+25&I_1&[2t,\phi].
+\end{array}
+$$
+
+这些区间包含端点；每个合法尾区间内的点都由对应 guard 的某条实际合法地址取得。这里保持地址，不将共同区间端点的两条来源识别。外部单位位沿用定义1.1，固定为零；高位补零不产生独立长度或 End 读出。令 $D\subset\Omega$ 为最终全是 $\mathrm{null}$ 的地址，允许有限非零部分的长度任意大；$D$ 不是具有统一长度上限的有限码本。
+
+固定整数 $h\ge1$，恢复目标为前 $h$ 个窗口
+
+$$
+W_h(\omega)=(\sigma_0(\omega),\ldots,\sigma_{h-1}(\omega)).
+$$
+
+实际取得的初始连续样本为
+
+$$
+z_j=\kappa_0(T^j\omega),\qquad 0\le j\le h,\qquad
+Z_h(\omega)=(z_0,\ldots,z_h).
+$$
+
+它们来自同一地址的实际演化，并满足
+
+$$
+z_j+a z_{j+1}=\Delta_{\sigma_j(\omega)},\qquad 0\le j<h.
+$$
+
+对来源域 $X=\Omega$ 或 $D$，闭误差合同为 $\|r-Z_h(\omega)\|_\infty\le\varepsilon$，开误差合同为 $\|r-Z_h(\omega)\|_\infty<\varepsilon$。解码器只须在各合同的实际观察域上返回 $W_h(\omega)$；同一观察域中的所有相容来源必须给出同一前缀。闭合同取 $\varepsilon\ge0$，开合同取 $\varepsilon>0$。以下“统一恢复”指对域内全部来源和合同内全部误差正确，并不要求解码器连续。$h=0$ 的空前缀任务另行视为平凡任务。
+

@@ -1,0 +1,33 @@
+**推论 50.2（正整数组合的实际共同未来容量）。** 对 $k\ge1$，置
+
+$$
+\mathscr M_k=\{(m_1,\ldots,m_k):m_i\ge1,\ \sum_{i=1}^k m_i=2k\},
+\qquad C_k=\binom{2k-1}{k-1}.
+$$
+
+每个 $\mathbf m\in\mathscr M_k$ 使用同一列表构造
+
+$$
+\begin{aligned}
+\alpha_{\mathbf m,r}&=P A_{m_1,r}\cdots A_{m_k,r}\xi_H,\\
+\gamma_{\mathbf m,r}&=Q B_{m_1,r}\cdots B_{m_k,r}\xi_L,\\
+H_{\mathbf m,r}&=h W_{m_1,r}\cdots W_{m_k,r}.
+\end{aligned}
+$$
+
+这些是原实际 $D/D$ 来源对；恰有 $C_k$ 个不同的第一来源和不同的等长观察历史，长度为
+
+$$
+M_{k,r}=26+\sum_{i=1}^k(6m_i+20r)=26+(12+20r)k.
+\tag{50.1}
+$$
+
+在50.1的每个固定预算与合同下，每个正确解码器均有
+
+$$
+\boxed{\mathcal C_{b,\mathcal A}(M_{k,r})\ge C_k,}
+\tag{50.2}
+$$
+
+其中 $\mathcal C$ 是恰好完成这些取得及其有限处理后的完整配置数；见证可分布在不同实际记录上。
+

@@ -1,0 +1,40 @@
+**证明。** 定理 17.1 已证明 $A(V)$ 有声、其基数为 $a$，并在证明中给出 $a$ 个两两不交的末端樱桃端点对
+
+$$
+\{r\mathtt L,r\mathtt R\},\qquad
+V|_r=\langle\beta,\alpha\rangle.
+\tag{18.3}
+$$
+
+这些端点对包含全部 $\alpha$ 叶；任一有声集合都必须命中每一对。于是有声且大小为 $a$ 的 $Q$ 必须在每一对中恰取一个端点，且不能含有这些端点之外的地址。
+
+严格的 $\beta$ 盈余由同一实际来源给出。写 $V=\rho^d(T)=\rho^3(Z)$，其中 $Z=\rho^{d-3}(T)\in\mathcal T$，并记 $c(Z)=(x,y)^{\mathsf T}$。由定义 1.1 的组成作用 $M^3$，
+
+$$
+a=x+2y,\qquad b=2x+3y,\qquad
+b-a=x+y\ge1.
+\tag{18.4}
+$$
+
+因此除（18.3）中的 $a$ 片 $\beta$ 左端叶外，还有 $b-a$ 片不属于任何末端樱桃端点对的 $\beta$ 叶；它们都不在 $Q$ 中。式（18.4）也给出 $n=3x+5y\ge3$，所以 $V$ 的根不是叶。
+
+若 $Q\ne A(V)$，取一片未查询的 $\alpha$ 叶地址 $s=r\mathtt R$，并取一片上述未配对的 $\beta$ 叶地址 $t$。只把 $s$ 的标签改成 $\beta$、把 $t$ 的标签改成 $\alpha$，得到合法完整树 $W$。形状和叶地址保持相同，且
+
+$$
+c(W)=c(V),\qquad
+\operatorname{out}_W(u)=\operatorname{out}_V(u)\quad
+(u\notin\{s,t\}).
+\tag{18.5}
+$$
+
+后一等式覆盖全部有限地址：内节点不变，除两片叶外的叶标签不变，在任何叶处继续行走仍为 $\mathsf{absent}$。故 $W$ 匹配 $Q$ 的全部四值结果。
+
+[运输记忆完成卷命题 22.2 的式（RA.2207）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)给出的实际一步像语法要求，每片 $\alpha$ 叶都是扩张块 $\langle\beta,\alpha\rangle$ 的右端。若 $t$ 是左孩子，$W$ 的新 $\alpha$ 叶立即违反该要求。若 $t$ 是右孩子，其左兄弟在 $V$ 中必为内节点：否则 $t$ 所在末端樱桃的右端为 $\beta$，与定理 16.1、17.1 证明中全部末端樱桃均为 $\langle\beta,\alpha\rangle$ 的性质矛盾。改标保持形状，所以该左兄弟在 $W$ 中仍为内节点；新 $\alpha$ 叶也违反一步像语法。因此
+
+$$
+W\notin\mathcal I_1,\qquad W\notin\mathcal I_d.
+\tag{18.6}
+$$
+
+这与 $Q$ 的有声性矛盾，故 $Q=A(V)$。这里直接使用既有像语法；树替换的单射性由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)供应，完整树编码由[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。证毕。
+

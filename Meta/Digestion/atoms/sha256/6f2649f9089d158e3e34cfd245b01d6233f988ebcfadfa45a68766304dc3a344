@@ -1,0 +1,87 @@
+**定理 9.2（整个初始域的严格比较保持与有效起点）。** 对每个整数 $H\ge1$，定义
+
+$$
+L_*(H)=\min\{L\in\mathbb N_0:F_{3L+3}\ge2H^2\}.
+\tag{9.3}
+$$
+
+此最小值存在，且
+
+$$
+L_*(H)\le\min\{L\in\mathbb N_0:2^L\ge H\}.
+\tag{9.4}
+$$
+
+若 $L\ge L_*(H)$，则 $\ell_{\xi_L}$ 在整个 $D_H$ 上的严格次序与 $\ell_\phi$ 相同。对 $D_H$ 中任意两个不同端点的无序组成对 $P,Q$，它们在 $\phi$ 处的相对比值若严格不等，该严格次序在 $\xi_L$ 处保持。因此，对定义 9.1 的每个固定 $k,H$，所有有限阶段极小组成对都属于 $\mathcal J_k(H)$ 给出的极限极小组成对集合。
+
+证明。使用[母卷定义 15.5](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-155-共轭与范数)、[定义 18.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#definition-181-算术的两个实嵌入)的共轭及整数范数。对每个 $c=(a,b)\in D_H$，非负性与 $a+b\le H$ 给
+
+$$
+\psi H\le\ell_\psi(c)\le H.
+$$
+
+故对不同 $x,y\in D_H$，$|\ell_\psi(x-y)|\le(1-\psi)H=\phi H$。$\ell_\phi(x-y)$ 非零，其范数
+
+$$
+\ell_\phi(x-y)\ell_\psi(x-y)
+=(x_1-y_1)^2+(x_1-y_1)(x_2-y_2)-(x_2-y_2)^2
+$$
+
+是非零整数，因而
+
+$$
+|\ell_\phi(x-y)|\ge\frac1{\phi H}.
+\tag{9.5}
+$$
+
+[定理 7.4](#7-固定许可深度的最终精确极小对与尖锐预算包络)及[母卷命题 18.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#18-minkowski-双坐标窗口与全息解释边界)的 Fibonacci 双根式给
+
+$$
+\eta_L:=|\xi_L-\phi|=\frac{\phi^{-m}}{F_m}.
+$$
+
+$F_2<\phi^2/2$、$F_3<\phi^3/2$，由两边相同的加法递推，归纳得到 $F_n<\phi^n/2$ 对所有 $n\ge2$ 成立。因此，当 $A_L\ge2H^2$ 时，
+
+$$
+\eta_L<\frac1{2A_L^2}\le\frac1{8H^4},\qquad
+|\ell_{\xi_L}(x-y)-\ell_\phi(x-y)|
+\le H\eta_L<\frac1{8H^3}<\frac1{\phi H}.
+\tag{9.6}
+$$
+
+最后一个严格不等式对 $H\ge1$ 成立，因为 $\phi<2<8H^2$。这证明整个来源组成域的次序保持，并排除该阶段的不同组成碰撞。
+
+将 $P,Q$ 的端点各按 $\phi$ 读数记为 $p_+,p_-$ 和 $q_+,q_-$，高端在前。置整数系数多项式
+
+$$
+Z(z)=\ell_z(p_+)\ell_z(q_-)-\ell_z(p_-)\ell_z(q_+).
+$$
+
+其相对比值之差在这些朝向保持时等于
+
+$$
+\frac{2Z(z)}
+{\ell_z(p_++p_-)\ell_z(q_++q_-)}.
+\tag{9.7}
+$$
+
+若两比值在 $\phi$ 处严格不等，则 $Z(\phi)\ne0$。将 $Z$ 按 $z^2=z+1$ 归约为 $u+vz$，其中 $u,v\in\mathbb Z$，其范数 $Z(\phi)Z(\psi)=u^2+uv-v^2$ 是非零整数。任意两个 $\ell_\psi(c)$ 的乘积都在 $[\psi H^2,H^2]$ 内：异号时下界为 $\psi H^2$，同号时上界不超过 $H^2$，其中两负数相乘也因 $\psi^2<1$ 而满足该上界。遂有
+
+$$
+|Z(\psi)|\le(1-\psi)H^2=\phi H^2,
+\qquad |Z(\phi)|\ge\frac1{\phi H^2}.
+\tag{9.8}
+$$
+
+$\xi_L,\phi\in[1,2]$。在此区间，$0<\ell_z(c)\le2H$ 且 $0\le c_2\le H$。每个乘积 $\ell_z(c)\ell_z(d)$ 的导数在 $[0,4H^2]$ 内；$Z'$ 是两个这样的非负导数之差，故 $|Z'(z)|\le4H^2$。于是
+
+$$
+|Z(\xi_L)-Z(\phi)|
+\le4H^2\eta_L<\frac1{2H^2}<\frac1{\phi H^2}.
+\tag{9.9}
+$$
+
+$Z$ 的非零符号保持；结合已经证明的端点朝向保持和式 (9.7) 的正分母，全部严格比值比较都保持。每个极限落败对与一个极限极小对有严格比值差，因而不能在此阶段达到极小值。极限极小对的完整刻画直接取自定理 8.4，这证明最后一项，而无需先限制有限阶段的差方向。
+
+最后，Fibonacci 递推给 $F_{n+3}=3F_n+2F_{n-1}\ge4F_n$（$n\ge3$），因为 $F_n\le2F_{n-1}$。由 $F_3=2$ 归纳得 $F_{3L+3}\ge2\cdot4^L$。$2^L\ge H$ 即蕴含 $F_{3L+3}\ge2H^2$，证明存在性与式 (9.4)。$F_{3L+3}$ 随 $L$ 严格增加，所以条件在 $L_*(H)$ 以后一直成立。证毕。
+
