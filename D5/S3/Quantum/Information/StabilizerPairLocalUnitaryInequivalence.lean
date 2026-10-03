@@ -144,7 +144,7 @@ private def flipBit : Pauli → Fin 2
   | .Z => 0
 
 /-- The sign of a real Pauli (`I`, `X`, `Z`) at a basis bit. -/
-private def phaseZ : Pauli → Fin 2 → ℤ
+def phaseZ : Pauli → Fin 2 → ℤ
   | .Z, 1 => -1
   | _, _ => 1
 

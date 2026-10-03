@@ -1,0 +1,9 @@
+**命题 353.6（实际纤维不必实现放松后的最大值）。** 对有限 $I\subseteq\{r,r+1,\ldots\}$、$r\ge1$、$A,N\ge0$，定义放松可行集
+
+$$
+\mathcal X=\left\{x\in\mathbb R^I:
+0\le x_d\le A,\ \sum_{d\in I}dx_d\le N\right\}.
+$$
+
+取半开壳 $[2,4)$ 中的实际素数集合 $S=\{2\}$，以及 $r=3$、$A=\log2$、$N=8\log2$。它的秩集为 $I=\{3\}$，实际目标值严格小于同一 $I,A,N$ 下的 $\max_{x\in\mathcal X}\sum_{d\in I}x_d$。
+

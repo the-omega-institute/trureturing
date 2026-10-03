@@ -1,0 +1,24 @@
+**定理 54.11（两独立批次恢复）。** 在定理 54.9 的同一参数域下，取互相独立、同律的两批完整记录，大小分别为
+
+$$
+\begin{aligned}
+m_1&\ge\left\lceil\frac8{a^2}
+\max\left(\frac{M_\eta^2}{g_q^2},\frac{M_\mu^2}{g_r^2}\right)
+\log\frac{8n}{\delta}\right\rceil,\\
+m_2&\ge\left\lceil\frac{8M_\mu^4}{a^2g_p^2}
+\log\frac{4n}{\delta}\right\rceil.
+\end{aligned}
+\tag{54.32}
+$$
+
+第一批取最大有符号 $\eta Z$ 经验均值的位置为 $\widehat q$；排除它后取最大有符号 $\psi Z$ 经验均值的位置为 $\widehat r$。第二批在排除 $\widehat q,\widehat r$ 后，取最大绝对配对经验值 $|\widehat T_{i\widehat r}|$ 的位置为 $\widehat p$，最后递增排序三个位置。固定按索引破平。此规则对全部教师和 $\alpha\in[a,1]$ 成功概率至少为 $1-\delta$。
+
+在 $\mathcal M^{1/2}_\rho$ 上，以下两条统一充分预算成立：
+
+$$
+m_1\ge\left\lceil\frac{32}{a^2\rho^4}\log\frac{8n}{\delta}\right\rceil,
+\qquad
+m_2\ge\left\lceil\frac{10368}{625a^2\rho^4}\log\frac{4n}{\delta}\right\rceil.
+\tag{54.33}
+$$
+

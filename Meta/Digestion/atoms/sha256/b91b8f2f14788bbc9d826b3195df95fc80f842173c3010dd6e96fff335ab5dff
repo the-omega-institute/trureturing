@@ -1,0 +1,73 @@
+**定理 57.9（完整记录的匹配阶）。** 对 $n\ge4$、 $0<a\le1$、 $0<\rho\le1/8$，任何全参数准确恢复错误不超过 $0<\delta<1/2$ 的规则都满足
+
+$$
+mK_a\ge\bigl[(1-\delta)\log(n-2)-\log2\bigr]_+,\qquad
+mK_a\ge\operatorname{kl}(1-\delta,\delta).
+\tag{57.24}
+$$
+
+下界即使向规则揭示 $\mu_*,\alpha=a,q=n-1,r=n$ 仍成立。
+特别对 $0<\delta\le1/4$，两种准确恢复目标均满足
+
+$$
+\begin{aligned}
+\left\lceil
+\frac{\log n+\log(1/\delta)}{8a^2\rho^2}
+\right\rceil
+&\le m_*^{\rm free}(n,a,\rho,\delta)\\
+&\le
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{\binom n3-1}{\delta}\right\rceil,\\
+m_*^{\rm free}
+&=\Theta\left(\frac{\log n+\log(1/\delta)}{a^2\rho^2}\right),
+\end{aligned}
+\tag{57.25}
+$$
+
+其中常数为统一绝对常数，未声称尖锐。
+
+**证明。** 限制到同类子实验（57.11）、 $\alpha=a$，并提供上述附加信息。每条未知参数规则都是这个较易实验中忽略附加信息的一条规则；因此较易实验的全规则下界作用于原规则。附加值在各假设下相同，既不携带第一位置索引，也不增加 KL。允许随机计算整个 $X,Y$，并没有限制为（57.15）的分数。
+
+令第一位置索引 $I$ 均匀分布于 $M=n-2$ 个值，记
+$\overline P=M^{-1}\sum_iP_i^m$。由 $-\log$ 的凸性及命题57.7，
+
+$$
+I(I;D_m)
+=\frac1M\sum_i\operatorname{KL}(P_i^m\Vert\overline P)
+\le\frac1{M^2}\sum_{i,j}\operatorname{KL}(P_i^m\Vert P_j^m)
+\le mK_a.
+\tag{57.26}
+$$
+
+输出不在子族时改报固定子族元素，不增加子族错误。共同随机决定核不增加互信息；等价地加入独立种子不增加索引信息。有限 Fano 的
+$H(I\mid\widehat I)\le\log2+P(\widehat I\ne I)\log M$
+便给（57.24）第一式。该有限信息不等式的作用与 §55.6 相同，此处供应的是不同同类困难律和准确完整记录 KL。
+
+另取第一位置1与2。以输出第一教师为事件 $E$，统一成功给
+$P_1^m(E)\ge1-\delta$、 $P_2^m(E)\le\delta$。二元 KL 数据处理给
+
+$$
+mK_a\ge
+\operatorname{kl}(P_1^m(E),P_2^m(E))
+\ge\operatorname{kl}(1-\delta,\delta)
+=(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{57.27}
+$$
+
+随机决定可先加入同一条件决定核，再将联合空间分成 $E,E^c$ 两块；log-sum 不等式给同一结果。于是这个下界也覆盖任意内部随机化，不遗漏完整输入的其他可用特征。
+
+当 $\delta\le1/4$ 时，
+$\operatorname{kl}(1-\delta,\delta)\ge\frac14\log(1/\delta)$；
+证明用 $1-2\delta\ge1/2$、 $1-\delta\ge\sqrt\delta$。
+若 $n\ge6$，则 $M\ge4$，
+$(1-\delta)\log M-\log2\ge\frac14\log M$，且 $M\ge\sqrt n$。
+再用 $K_a\le a^2\rho^2/2$，得到
+$m\ge\log n/(4a^2\rho^2)$ 及
+$m\ge\log(1/\delta)/(2a^2\rho^2)$；
+它们的最大值不小于（57.25）的左端未取整值。
+若 $n=4,5$，则 $\log n\le2\log(1/\delta)$，仅二元项也足够。
+
+若风险下确界没有达到，取最坏错误至多 $\delta+\varepsilon<1/2$ 的逼近规则，先使用（57.24），再令 $\varepsilon\downarrow0$。右端连续，故同一数值界适用于 $\mathfrak R_m^{\rm free}\le\delta$，整数性给向上取整。定理57.6给上界； $\log(\binom n3-1)\le3\log n$，所以阶相合。
+
+最后，不同三元组给不同原函数，也可由三个必要坐标直接看出：固定 $W_q=100,W_r=000$，切换 $W_p=000,001$ 得0、1；固定 $W_p=001,W_r=000$，切换 $W_q=000,100$ 得0、1；固定 $W_p=000,W_q=001$，切换 $W_r=000,100$ 得0、2。其余坐标不出现，递增支撑指定全部角色。全支撑使几乎处处相等等价于逐词相等。任意准确输出函数可在有限词域上与有限教师类比较，匹配时解码唯一三元组，否则报固定值；成功函数必解码成功。此计算只用于不限资源的下界归约，不成为免费部署操作。反向按学到的三元组求原门即可。证毕。 $\square$
+

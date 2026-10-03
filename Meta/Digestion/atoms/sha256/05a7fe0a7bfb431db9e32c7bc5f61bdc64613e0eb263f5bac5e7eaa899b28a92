@@ -1,0 +1,21 @@
+**定理 56.8（未知律的统一准确恢复）。** 对定义56.1的全部参数及 $0<\delta<1$，定义56.6取
+
+$$
+m_1=m_2=\left\lceil
+\frac{4096}{a^2\rho}\log\frac{24n}{\delta}
+\right\rceil.
+\tag{56.18}
+$$
+
+则同一个不读取 $\mu,\alpha$ 的规则满足
+
+$$
+\inf_{\mu\in\mathcal M_\rho,\ \alpha\in[a,1],\ \theta\in\Theta_n}
+P^{m_1+m_2}_{\mu,\alpha,\theta}\{\widehat\theta=\theta\}\ge1-\delta,
+\qquad
+m_1+m_2\le\frac{8192}{a^2\rho}\log\frac{24n}{\delta}+2.
+\tag{56.19}
+$$
+
+在同一成功事件上，$\widehat C=C_\theta$ 在全部 $\Sigma^n$ 上逐词成立。因此训练平均的独立同律原教师测试错误不超过 $\delta$。
+

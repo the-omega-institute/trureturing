@@ -1,0 +1,17 @@
+**定理 57.6（自由未知质量的统一恢复）。** 对所有定义57.1的参数及整数 $m\ge1$，
+
+$$
+P_{\mu,\alpha,\theta}^{m}(\widehat\theta\ne\theta)
+\le(N-1)\exp\left(-\frac{m\alpha^2\gamma_\rho}{128}\right).
+\tag{57.16}
+$$
+
+因而对任意 $0<\delta<1$，以下整数预算足以使统一失败概率不超过 $\delta$：
+
+$$
+m\ge
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{N-1}{\delta}\right\rceil.
+\tag{57.17}
+$$
+

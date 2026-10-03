@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7090af54939a7e4b9b948745dca8fbdb0f465814b35b9e88663a87b0bac16338
+  normalized_sha256: sha256:7090af54939a7e4b9b948745dca8fbdb0f465814b35b9e88663a87b0bac16338
+cas_ref: sha256:7090af54939a7e4b9b948745dca8fbdb0f465814b35b9e88663a87b0bac16338
+coverage_gids:
+  - gid: D5/S3/Arith/ShortIntervals/ThreeRowSquareRootLock.three_row_square_root_lock
+    target_statement_id: sha256:13c2287afa511efb277b0bcbf1d106a4b8d078838fff3716fe7be5f3586535a6
+receipts:
+  unresolved_subitems: []

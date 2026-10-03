@@ -1,0 +1,21 @@
+**引理 57.4（有符号分数与分歧方差）。** 对任意真实参数，每个条件通道行的坐标至少为 $1/4$，且
+
+$$
+\mathbb E[Z\mid X]=\frac{\alpha}{4}(C_\theta-1),
+\qquad
+\mathbb E[Z^2\mid X]=\beta:=\frac{8+\alpha}{12}\le\frac34.
+\tag{57.13}
+$$
+
+令 $D=C_\theta-C_\tau$、 $W=ZD$，则
+
+$$
+\mathbb EW=\frac{\alpha}{8}d_\mu(\theta,\tau),\qquad
+\mathbb EW^2=\beta d_\mu(\theta,\tau),\qquad
+\operatorname{Var}(W)\le\frac34d_\mu(\theta,\tau).
+\tag{57.14}
+$$
+
+所以正 $\alpha$ 时，真实教师唯一最大化总体分数
+$\mathbb E[ZC_\tau(X)]$。
+
