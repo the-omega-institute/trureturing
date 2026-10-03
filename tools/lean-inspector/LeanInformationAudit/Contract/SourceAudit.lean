@@ -117,9 +117,17 @@ private partial def nestedDeclarationNames (parent : Name) (stx : Syntax) : Arra
 /-- Authored elaboration has no compiler-equation permission. This includes
 named children emitted by term elaboration rather than declaration syntax. -/
 def hasAuthoredElaboration (entries : Array Entry) (forbidden : NameSet := {}) : Bool :=
-  entries.any fun entry => (entry.command.find? fun stx =>
-    forbidden.contains stx.getKind ||
-      (stx.isAtom && #["by_elab", "run_tac", "run_elab", "run_meta"].contains stx.getAtomVal)).isSome
+  Id.run do
+    let mut seen : Array String.Pos.Raw := #[]
+    for entry in entries do
+      let pos := entry.originCommand.getPos?.getD entry.start
+      if seen.contains pos then continue
+      seen := seen.push pos
+      if (entry.originCommand.find? fun stx =>
+          forbidden.contains stx.getKind ||
+          (stx.isAtom && #["by_elab", "run_tac", "run_elab", "run_meta"].contains
+            stx.getAtomVal)).isSome then return true
+    return false
 
 private partial def declarations (command : Syntax) : Array Syntax :=
   if command.isOfKind ``Parser.Command.declaration then #[command]
@@ -207,6 +215,35 @@ private def ordinaryRegCommands : Array Name := #[
   `LeanInformationAudit.sealInformationTheoryCmd,
   `LeanInformationAudit.«command__Constructors_[_,,]»]
 
+/-- Exact source option names and their literal types. The table applies also
+inside terms and tactics; option name prefixes grant no permission. -/
+private def booleanRegOptions : Array Name := #[
+  `autoImplicit, `relaxedAutoImplicit, `backward.isDefEq.respectTransparency,
+  `backward.isDefEq.respectTransparency.types, `trace.InformationRegistration.check]
+
+private def naturalRegOptions : Array Name := #[
+  `maxHeartbeats, `maxRecDepth, `maxSynthPendingDepth]
+
+private partial def auditRegInputs (owner : Name) (stx : Syntax) : Except String Unit := do
+  if stx.isOfKind ``Parser.Command.declModifiers then
+    for modifier in #["unsafe", "partial"] do
+      if (stx.find? fun s => s.isAtom && s.getAtomVal == modifier).isSome then
+        throw s!"contract.reg:declaration_modifier_not_allowed:{owner}:{modifier}"
+  if #[``Parser.Command.set_option, ``Parser.Term.set_option,
+      ``Parser.Tactic.set_option].contains stx.getKind then
+    let arity := if stx.isOfKind ``Parser.Command.set_option then 4 else 6
+    unless stx.getArgs.size == arity && stx[1].isIdent && stx[2].getArgs.isEmpty do
+      throw s!"contract.reg:wrapper_not_allowed:{owner}:{stx.getKind}"
+    let name := stx[1].getId
+    unless booleanRegOptions.contains name || naturalRegOptions.contains name do
+      throw s!"contract.reg:option_not_allowed:{owner}:{name}"
+    let value := stx[3]
+    let valid := if booleanRegOptions.contains name then
+        value.isAtom && #["true", "false"].contains value.getAtomVal
+      else value.isNatLit?.isSome
+    unless valid do throw s!"contract.reg:option_literal_type:{owner}:{name}"
+  for child in stx.getArgs do auditRegInputs owner child
+
 private partial def auditRegCommand (owner : Name) (command : Syntax)
     (target : Option Name) (allowPinned : Bool := true) : Except String Unit := do
   if let some attr := attributesIssue command then
@@ -218,12 +255,19 @@ private partial def auditRegCommand (owner : Name) (command : Syntax)
     unless allowPinned && RegPolicy.localNotations.contains (owner, RegPolicy.fingerprint command) do
       throw s!"contract.reg:metaprogramming_not_allowed:{owner}:notation_binding"
   else if command.isOfKind ``Parser.Command.in then
+    unless command.getArgs.size == 3 && command[1].isAtom &&
+        command[1].getAtomVal.trimAscii.toString == "in" do
+      throw s!"contract.reg:wrapper_not_allowed:{owner}:{command.getKind}"
     auditRegCommand owner command[0] target false
     auditRegCommand owner command[2] target false
   else if command.isOfKind ``Parser.Command.mutual then
+    unless command.getArgs.size == 3 && command[1].getKind == `null do
+      throw s!"contract.reg:wrapper_not_allowed:{owner}:{command.getKind}"
     for child in command[1].getArgs do auditRegCommand owner child target false
-  else if command.isOfKind ``Parser.Command.set_option ||
-      command.isOfKind ``Parser.Command.attribute then
+  else if command.isOfKind ``Parser.Command.set_option then
+    unless command.getArgs.size == 4 do
+      throw s!"contract.reg:wrapper_not_allowed:{owner}:{command.getKind}"
+  else if command.isOfKind ``Parser.Command.attribute then
     pure ()
   else unless ordinaryRegCommands.contains command.getKind do
     throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
@@ -238,6 +282,7 @@ def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit
     let pos := entry.originCommand.getPos?.getD entry.start
     if seen.contains pos then continue
     seen := seen.push pos
+    auditRegInputs owner entry.originCommand
     auditRegCommand owner entry.originCommand entry.catalogTarget
     if entry.originCommand.getKind == `Lean.runCmd then
       catalogs := catalogs + 1

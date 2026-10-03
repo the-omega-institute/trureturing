@@ -110,6 +110,22 @@ only `instance` and `reducible`, with no priority or other attribute arguments.
 Local/scoped markers do not expand the attribute-name table. Unlisted names
 receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
 
+Source `set_option` accepts exactly `autoImplicit`, `relaxedAutoImplicit`,
+`backward.isDefEq.respectTransparency`,
+`backward.isDefEq.respectTransparency.types`, `maxHeartbeats`, `maxRecDepth`,
+`trace.InformationRegistration.check`, and `maxSynthPendingDepth`. Values are
+literals of the option type: Boolean for the implicit/transparency/trace options,
+Nat for the resource bounds. Name prefixes grant no permission. Other names
+receive `contract.reg:option_not_allowed`; mistyped literals receive
+`contract.reg:option_literal_type`.
+
+Every Reg declaration rejects `unsafe` and `partial` with
+`contract.reg:declaration_modifier_not_allowed`; `noncomputable`, `private`, and
+`protected` remain permitted. These checks traverse the complete source trees,
+including `in`, `mutual`, and command/term/tactic `set_option`. Unrecognized command
+wrappers fail by name. Authored elaboration reads deduplicated origin commands,
+including their wrappers.
+
 Every audited Reg constant outside a validated contract entry is forbidden to
 directly reference any constant owned by an imported
 `LeanInformationAuditInterface.Contract.*` module in its compiled type or body.
