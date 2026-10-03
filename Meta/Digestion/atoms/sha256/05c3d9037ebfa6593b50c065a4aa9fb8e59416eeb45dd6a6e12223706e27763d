@@ -1,0 +1,11 @@
+## 7. Exact actual cardinalities and the shifted Schröder convention
+
+Use the actual carriers $U_n$ and $J_n^\varepsilon$ of Section 1.
+Let $D_n^\varepsilon$ be the actual members of $U_n$ admitting a proper
+cut of sign $\varepsilon$, without any empty or singleton padding.
+Write $a_n=|U_n|$, $b_n^\varepsilon=|J_n^\varepsilon|$, and
+$d_n^\varepsilon=|D_n^\varepsilon|$. Define the large Schröder numbers by
+$L_0=1$ and $L_{r+1}=L_r+\sum_{i=0}^rL_iL_{r-i}$. The pinned Mathlib
+small Schröder sequence has the shifted convention $S_0=S_1=1$ and
+$2S_{r+1}=L_r$ for $r\geq1$; in particular $S_2=1$ and $S_3=3$.
+

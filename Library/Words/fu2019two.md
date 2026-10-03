@@ -10,6 +10,7 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/ProperCut
   - D5/S1/Words/Patterns/Separable/CutFactorization
   - D5/S1/Words/Patterns/Separable/GreatestCutEnumeration
+  - D5/S1/Words/Patterns/Separable/ActualCardinality
 license: citation-only
 triage: anchor
 ---
@@ -101,3 +102,32 @@ actual-avoider/di-sk-tree bijection. The generating-function cubic, gamma
 identities, and the analytic real-rootedness argument remain separate.
 For the increasing permutation 123, a least-cut choice would not by itself
 enforce the right-child sign condition of Definition 2.2.
+
+## Actual scalar cardinalities
+
+`Separable.ActualCardinality` reuses frozen `CappedExploration.recover`
+on the opposite-blocked actual carrier: compatibility fixes the sign, and
+its minimum-cut and uniqueness fields supply the disjoint partition.
+The frozen minimum-cut Cartesian kernel supplies each actual factorization,
+without importing the unfrozen greatest-cut enumeration. The single
+substantive cardinality theorem exports the minimum-cut union and an explicit
+dependent-length transported `blockSum` equality reconstructing each input
+from its returned factors, as well as the actual convolution. Its signed
+class consists precisely of actual avoiders with a proper cut, and has no
+length-zero or singleton padding. Value
+complementation swaps the literal forbidden patterns and the cut sign;
+the resulting actual finite partitions yield the sign-half identity only
+at lengths at least two. Strong induction on that convolution gives
+`Nat.card (Avoider n) = Nat.largeSchroder (n - 1)` for every positive n.
+The empty class separately has cardinality one.
+
+The numerical supplier is pinned Mathlib commit
+`db584cd6d46c92f209a44c0f1c829460d327499d`,
+`Mathlib/Combinatorics/Enumerative/Schroder.lean`.
+Its `smallSchroder` is shifted: values at zero and one are both one,
+and `two_mul_smallSchroder_succ` states
+`2 * smallSchroder (r + 1) = largeSchroder r` for nonzero r.
+Accordingly each actual sign-indecomposable class of length n has
+cardinality `Nat.smallSchroder n`, including zero and one. These exact
+carrier bridges do not establish count-ratio asymptotics or the complete
+derangement-ratio limit, and do not claim a newly solved open problem.

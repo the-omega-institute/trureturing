@@ -1,0 +1,27 @@
+**定义 1.1（Permutation words and order maps）。** For an integer $m\geq0$, let
+$[m]=\{1,\ldots,m\}$, with $[0]=\varnothing$, and let $\mathfrak S_m$ be the
+set of words containing every element of $[m]$ exactly once. In particular,
+$\mathfrak S_0$ contains the empty word. For a word $x$ with distinct entries,
+put
+
+$$
+\operatorname{inv}(x)=\#\{(u,v):1\leq u<v\leq |x|,\ x_u>x_v\}.
+$$
+
+The subword on a specified set of labels retains their original order. Write
+$\mathbf1_{\mathcal A}$ for the indicator of a condition $\mathcal A$. If
+$a\in[m+1]$, define the increasing bijections
+
+$$
+\begin{aligned}
+\delta_a:[m+1]\setminus\{a\}&\longrightarrow[m],
+&\delta_a(r)&=r-\mathbf1_{r>a},\\
+\ell_a:[m]&\longrightarrow[m+1]\setminus\{a\},
+&\ell_a(r)&=r+\mathbf1_{r\geq a}.
+\end{aligned}
+$$
+
+Standardizing after deletion of the label $a$ means applying $\delta_a$ to
+every surviving entry. The maps $\delta_a$ and $\ell_a$ are inverse on their
+displayed domains; this follows separately for labels below and above $a$.
+
