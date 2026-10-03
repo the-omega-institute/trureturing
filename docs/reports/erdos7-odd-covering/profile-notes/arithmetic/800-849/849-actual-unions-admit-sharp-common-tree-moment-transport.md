@@ -182,6 +182,97 @@ optimality of the first and second moments. Applying it to a full BBMST
 construction still needs the actual legal exposure order, the old laws at
 every stage and a strict sum of all stage charges below one.
 
+### A legal exposure order supplies the required independence
+
+[BBMST, arXiv:1811.03547v1, Section 2, p. 5](https://arxiv.org/pdf/1811.03547v1)
+allows the support primes to be listed in an order that is not increasing.
+In report 388 write the original period as \(r^As^BM\), with
+\(\gcd(M,rs)=1\), and each original modulus as \(r^as^bm\). Fix a safe
+\(u\bmod r^A\). Expose all primes dividing \(M\) before exposing the
+replacement \(r\)-block. Choose this order and all preceding distortion
+parameters before sampling the common tree.
+
+The earlier stages contain exactly the active originals with \(b=0\).
+Their pullbacks depend on \(u\) and the original cofactor phases, but not
+on the tree. The actual old probability \(P_M^u\) constructed by the
+BBMST kernels is consequently independent of \(\Theta\). The last stage
+contains every active \(b\ge1\) original, with output modulus \(r^bm\).
+Every cofactor \(m\mid M\) is now old, irrespective of its largest prime.
+Thus (8) applies to the complete last block without a cofactor-support
+cutoff.
+
+More generally, choose \(u\) from a fixed law \(\lambda\) before sampling
+the tree. The joint old law
+\[
+ \nu(du,dx)=\lambda(du)P_M^u(dx)
+ \tag{10a}
+\]
+has the required independence, though its two coordinates can be
+correlated. This is the physical old probability; it need not be supported
+on old survivors. Tree-dependent choices of the old kernels or
+\(\lambda\) are outside this conclusion.
+
+Repeated output numerical moduli cause no difficulty for the actual-union
+kernel. The paper's equation (5), Lemma 2.1 and Lemma 3.3 use only measurable
+bad sets and their fibre fractions. The same kernel is already used in
+[the arbitrary-head transfer, Capped deletion](../../../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md).
+For a fixed \(0<\delta\le1/2\), its exact bad mass is the old expectation
+of
+\[
+ g_\delta(t)=\frac{(t-\delta)_+}{1-\delta}.
+ \tag{10b}
+\]
+The one-class-per-modulus counting bounds in BBMST Theorem 3.2, and the
+increasing-prime numerical tail estimates, do not transfer automatically
+to this reordered family with repeated output labels.
+
+Let \(C_{\mathrm{pre}}(u)\) be the sum of the actual bad masses at all
+preceding stages. With \(M_1,M_2\) evaluated under (10a), the condition
+\[
+ \mathbb E_\lambda C_{\mathrm{pre}}(u)
+ +\min\left\{M_1,
+ \frac{(1-c_{r,s})M_2+c_{r,s}M_1}{4\delta(1-\delta)}\right\}<1
+ \tag{10c}
+\]
+would give an uncovered point for at least one pair \((u,\Theta)\):
+average the last-stage bound over this one source, and use preservation of
+the earlier marginals and the union bound. Report 388's source map sends
+that point to an uncovered original integer. No bound proving (10c)
+for every hypothetical odd distinct cover has been supplied.
+
+### The averaged transport budget is dominated by the original block
+
+Under exactly this order, the unreplaced source
+\(\{u\}\times M\times\mathbb Z/s^B\mathbb Z\) has the same earlier bad
+sets, kernels, \(P_M^u\), and \(C_{\mathrm{pre}}(u)\). Its last
+\(s\)-block has fibre fraction \(\mu(u,x)\). Since \(M_2\le M_1\),
+\[
+ \min\{M_1,M_2/d_\delta\}
+ \le
+ \min\{M_1,[(1-c_{r,s})M_2+c_{r,s}M_1]/d_\delta\}.
+ \tag{10d}
+\]
+Consequently, (10c) cannot certify an instance that the direct original
+\(s\)-block moment criterion fails to certify with the same old law and
+parameters. Even replacing its upper bound by the exact averaged second
+moment in (5) retains this limitation, because the added variance is
+nonnegative.
+
+The exact averaged last-stage bad mass has the same comparison. Convexity
+of the existing hinge (10b) and pointwise unbiasedness give
+\[
+ \mathbb E_\Theta\mathbb E_\nu
+       g_\delta(\alpha_\Theta(u,x))
+ \ge \mathbb E_\nu g_\delta(\mu(u,x)).
+ \tag{10e}
+\]
+This is a Jensen comparison for one predetermined \(\delta\), not a claim
+that every individual tree is worse. A specially selected tree, a justified
+tree-dependent construction, or an EB1 use of the reduced original-label
+inventory can still require different information. The average-moment
+transport alone supplies no improvement over the direct original-block
+test.
+
 ## 5. Marginal Haar does not replace tree independence
 
 Already at height one, sample a uniform \(r\)-subset \(S\subset[s]\),
