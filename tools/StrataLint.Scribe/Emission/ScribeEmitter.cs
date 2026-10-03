@@ -11,6 +11,79 @@ public static class ScribeEmitter
 
     internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
 
+    internal static int EmitPaths(
+        string repositoryRoot,
+        IEnumerable<string> changedPaths,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        return EmitPaths(repositoryRoot, changedPaths, check, output, error, () => leanReport);
+    }
+
+    internal static int EmitPaths(
+        string repositoryRoot,
+        IEnumerable<string> changedPaths,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        Func<LeanAxiomReport> loadLeanReport)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(changedPaths);
+        ArgumentNullException.ThrowIfNull(loadLeanReport);
+        var selection = ScribeDefinitionSelector.Select(repositoryRoot, changedPaths);
+        if (!selection.IsSuccess)
+        {
+            error.WriteLine(selection.Failure);
+            return 2;
+        }
+
+        if (selection.Paths.IsEmpty)
+        {
+            output.WriteLine("emitted: 0 changed blueprint(s)");
+            return 0;
+        }
+
+        var leanReport = loadLeanReport();
+        return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(repositoryRoot, () =>
+        {
+            var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, selection.Paths);
+            var failures = results.Where(static result => !result.IsSuccess).ToArray();
+            if (failures.Length != 0)
+            {
+                foreach (var failure in failures)
+                    error.WriteLine(failure.Failure);
+                return 1;
+            }
+
+            // The resource boundary is deliberate: scoped emission consumes the same
+            // strongly typed bytes that a release consumer reads.
+            var definitions = results
+                .Select(static result => ScribeResourceCodec.Decode(
+                    ScribeResourceCodec.Encode(result.Definition!),
+                    expectedGid: result.Definition!.Document.Header.Gid.Value,
+                    expectedSourcePath: result.RelativePath))
+                .ToArray();
+            return Run(
+                repositoryRoot,
+                check,
+                output,
+                error,
+                _ => leanReport,
+                validateRepository: false,
+                tolerateAbsentDocuments: false,
+                suppliedDefinitions: definitions,
+                writeAttestation: false,
+                checkFreshness: check,
+                graphRepositoryRoot: repositoryRoot,
+                validateDocumentGraph: false,
+                validateSourceBijection: false).ExitCode;
+        });
+    }
+
     public static int Emit(
         Assembly documentsAssembly,
         string repositoryRoot,
@@ -175,7 +248,12 @@ public static class ScribeEmitter
         IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null,
         MarkdownFormulaScope? markdownScope = null,
         FrozenStateCatalog? frozenState = null,
-        FrozenStatementIndex? frozenStatements = null)
+        FrozenStatementIndex? frozenStatements = null,
+        bool writeAttestation = true,
+        bool checkFreshness = false,
+        string? graphRepositoryRoot = null,
+        bool validateDocumentGraph = true,
+        bool validateSourceBijection = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -208,7 +286,7 @@ public static class ScribeEmitter
             var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
                 documentsAssembly!,
                 repositoryRoot);
-            if (check && !tolerateAbsentDocuments)
+            if (check && validateSourceBijection && !tolerateAbsentDocuments)
             {
                 var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
                 var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(
@@ -275,7 +353,16 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                declarationCatalog);
+                declarationCatalog,
+                graphRepositoryRoot,
+                validateDocumentGraph);
+            if (!graph.Findings.IsEmpty)
+            {
+                foreach (var finding in graph.Findings)
+                    error.WriteLine(
+                        $"describe red code={finding.Code} path={finding.Path} message={finding.Message}");
+                return new ScribeEmissionRun(1, null);
+            }
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(
@@ -299,7 +386,7 @@ public static class ScribeEmitter
 
             return EmitVerified(
                 repositoryRoot, check, output, error,
-                declarationCatalog, definitions, graph);
+                declarationCatalog, definitions, graph, writeAttestation, checkFreshness);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -320,7 +407,9 @@ public static class ScribeEmitter
         TextWriter error,
         DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
-        DocumentGraph graph)
+        DocumentGraph graph,
+        bool writeAttestation = true,
+        bool checkFreshness = false)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -355,6 +444,21 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
+        if (check && checkFreshness)
+        {
+            var mismatches = rendered
+                .Where(item => !File.Exists(Path.Combine(repositoryRoot, item.Definition.RelativePath.Value))
+                    || !File.ReadAllBytes(Path.Combine(repositoryRoot, item.Definition.RelativePath.Value))
+                        .AsSpan().SequenceEqual(item.Bytes))
+                .Select(item => item.Definition.RelativePath.Value)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            foreach (var path in mismatches)
+                error.WriteLine($"md mismatch: {path}");
+            if (mismatches.Length != 0)
+                return new ScribeEmissionRun(1, null);
+        }
+
         var writes = 0;
         if (!check)
         {
@@ -376,7 +480,7 @@ public static class ScribeEmitter
             }
         }
 
-        if (!check)
+        if (!check && writeAttestation)
         {
             var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
             var currentAttestation = File.Exists(attestationPath)
