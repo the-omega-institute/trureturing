@@ -1,0 +1,27 @@
+**注记 349.2（允许路径和目标值同时来自同一谱）。** 在乘积复数空间中置
+
+$$
+\phi(t)_\rho=e^{i\gamma_\rho t},\qquad
+H=\overline{\{\phi(s):s\in\mathbb R\}},\qquad
+\iota_\rho=i,\qquad z(t)=\iota\phi(t).
+$$
+
+若 $\iota\in H$，则全部实数 $t$ 都有 $z(t)\in H$。证明使用连续映射 $x\mapsto x\phi(t)$ 和精确轨道加法
+
+$$
+\phi(s)\phi(t)=\phi(s+t).
+$$
+
+轨道在此映射下仍落在自身；取闭包即得所需包含关系。这是相位“像群一样相关”的一个具体含义：允许状态不是逐坐标随意选择，沿同一个时间轨道平移会保持其闭包。结论仍保留 $\iota\in H$，没有把实际闭包替换成自由圆环。
+
+同源相位包络沿这条路径满足全部实数 $\varepsilon,t$ 上的精确恒等式
+
+$$
+J_\varepsilon(z(t))
+=2M_0-2\sum_\rho a_\rho\cos(\gamma_\rho t)
++\varepsilon F(t)+\varepsilon^2G(t)
+=\mathcal J_\varepsilon(t).
+$$
+
+这里 $\operatorname{Re}z(t)_\rho=-\sin(\gamma_\rho t)$、$\operatorname{Im}z(t)_\rho=\cos(\gamma_\rho t)$。常数与余弦项的拆分使用 $\sum a_\rho<\infty$；不能在没有可和性依据时任意拆分无穷和。目标恒等式不要求 $\iota\in H$：该条件只决定这条精确路径是否允许进入实际相位闭包。公开定理也按这两个不同的作用域表达。
+

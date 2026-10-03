@@ -1,0 +1,4 @@
+## 349. RH 作为谱投影的忠实性条件：同源目标、轨道闭包与完整极小路径
+
+本节补上 §348 的公开形式化坐标。`ZetaOrdinateCompleteOptimizer.actual_zeta_complete_optimizer` 已由 Lean 核验；其公理闭包只有 `propext`、`Classical.choice`、`Quot.sound`。它在一个公开定理中证明定理348.1的完整结论，并同时连接同源相位目标、实际轨道闭包和 RH 条件下的复零点识别。冻结覆盖与 PR 落地属于交付状态，不由本段的编译事实代替。
+
