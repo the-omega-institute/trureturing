@@ -28,14 +28,18 @@ internal sealed class CrossFrameWelchBoundRefutationDocument : IScribeDocumentDe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjecture is false", Disp(new Formula.Not(F.Id("claim"))),
                 "Take n = 2, k = 3 and F = ((-3,-3),(-3,3),(-1,0)), with G = ((-3/19,-1/6),(-3/19,1/6),(-1/19,0)). Both reconstruction equations hold for every x. Each family therefore spans: reconstruction writes every x as a linear combination of its members. The six off-diagonal inner products are -1/38, 3/19, -1/38, 3/19, 3/19, 3/19 in the order (0,1),(0,2),(1,0),(1,2),(2,0),(2,1). Their maximum absolute value is 3/19, strictly below sqrt(1/9) = 1/3. These exact rational computations refute the universally quantified claim.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aceska-kaczanowski-2022-cross-frame-welch-bound-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("cross-frame-welch-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>
