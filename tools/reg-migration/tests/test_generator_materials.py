@@ -13,6 +13,22 @@ from test_generator import Fixture, Generator, GeneratorFailure, options_literal
 
 
 class GeneratorMaterialTests(unittest.TestCase):
+    def universe_specialization(self, fixture: Fixture, row: dict, anchor: str, captured: str) -> dict:
+        path = row["owner"].replace(".", "/") + ".lean"
+        file = next(file for file in fixture.syntax["files"] if file["path"] == path)
+        command = [command for command in file["commands"] if command["kind"] == "registration"][row["source_index"]]
+        span = command["slots"]["readout"]
+        raw, marker = span["text"].encode("utf-8"), anchor.encode("utf-8")
+        offset = raw.index(marker) + len(marker) - 1
+        start = span["start"] + offset
+        span.setdefault("universe_occurrences", []).append({"start": start, "end": start + 1,
+                                                            "text": "u", "name_components": ["u"]})
+        entry = {"kind": "universe-parameter", "start": start, "end": start + 1,
+                 "text": "u", "term": "(" + captured + ")", "levels": [captured],
+                 "level_params": [captured]}
+        row.setdefault("source_specializations", {}).setdefault("readout", []).append(entry)
+        return entry
+
     def assert_failure_writes_nothing(self, fixture: Fixture, code: str) -> None:
         result = fixture.generator().plan()
         self.assertIn(code, {failure.code for failure in result.failures}, [failure.as_dict() for failure in result.failures])
@@ -70,6 +86,10 @@ class GeneratorMaterialTests(unittest.TestCase):
             rendered = result.files[0].text
             self.assertIn("theorem _root_.D5.Sample.claim.{u, v} : ∀ (α : Type u) (β : Type v), True := by intros; trivial", rendered)
             self.assertIn("generated := true", rendered)
+            realization = next(line for line in rendered.splitlines() if line.startswith("  realization := "))
+            self.assertTrue(realization.endswith(" ⟨(⟨Iff.rfl⟩)⟩,"), realization)
+            self.assertFalse(realization.endswith(" ⟨(Iff.rfl)⟩,"), realization)
+            self.assertFalse(realization.endswith(" ⟨Iff.rfl⟩,"), realization)
 
     def test_repeated_write_preserves_bytes_and_file_mtimes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -195,7 +215,7 @@ class GeneratorMaterialTests(unittest.TestCase):
             self.assertEqual(rendered.count(helper), 1)
             self.assertIn("def consumer := " + first["unit"] + ".Statement", rendered)
             self.assertNotIn("noncomputable def _root_." + second["unit"], rendered)
-            self.assertLess(rendered.index(helper), rendered.index("noncomputable def registration_1"))
+            self.assertLess(rendered.index(helper), rendered.index("noncomputable def _root_.Reg.D5.Sample.registration_1"))
             self.assertEqual(result.audit["companion_helpers"], 1)
             self.assertEqual(result.audit["companion_consumers"], 1)
             printed = next(item["fields"] for item in result.audit["controlled_printing"] if "companion:" + first["unit"] + ":body" in item["fields"])
@@ -302,7 +322,7 @@ class GeneratorMaterialTests(unittest.TestCase):
             result = fixture.generator().plan()
             self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
             rendered = result.files[0].text
-            self.assertIn("def registration_1.{u, v}", rendered)
+            self.assertIn("def _root_.Reg.D5.Sample.registration_1.{u, v}", rendered)
             self.assertIn("@_root_.D5.Sample.claim.{u}", rendered)
             self.assertNotIn("@_root_.D5.Sample.claim.{u, v}", rendered)
             self.assertIn("@Synthetic.actual.{v}", rendered)
@@ -394,9 +414,9 @@ class GeneratorMaterialTests(unittest.TestCase):
             self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
             rendered = result.files[0].text
             self.assertIn("theorem _root_." + row["realization"] + ".{v} : Synthetic.Bridge.{v}", rendered)
-            self.assertIn("def registration_1.{u}", rendered)
+            self.assertIn("def _root_.Reg.D5.Sample.registration_1.{u}", rendered)
             self.assertIn("@_root_." + row["realization"] + ".{u}", rendered)
-            self.assertNotIn("def registration_1.{u, v}", rendered)
+            self.assertNotIn("def _root_.Reg.D5.Sample.registration_1.{u, v}", rendered)
 
     def test_inline_bridge_aligned_term_requires_declared_target_universes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -773,6 +793,102 @@ class GeneratorMaterialTests(unittest.TestCase):
                                                          "def keptOuter := viewAlias", "end Scope")]
             self.assertEqual(positions, sorted(positions))
             self.assertFalse(any(file.path.startswith("D5/") for file in result.files))
+
+    def test_source_universe_annotation_and_constant_application_share_captured_level(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            original = 'Template.realize signature.{u} (fun λ (I : Type u) (J : Sort u) => ("Type u", I, J))'
+            row = fixture.registration(readout=original)
+            row["extra_level_params"] = ["u_1"]
+            constant = fixture.specialize(row, "readout", "signature.{u}", ["u_1"])
+            slot = fixture.syntax["files"][0]["commands"][0]["slots"]["readout"]
+            slot["identifiers"][0]["source_levels"] = [{"kind": "param", "name_components": ["u"]}]
+            parameter = self.universe_specialization(fixture, row, "Type u", "u_1")
+            sort_parameter = self.universe_specialization(fixture, row, "Sort u", "u_1")
+            row["source_specializations"]["readout"].reverse()
+            row["type_arg_source_slots"] = [None, None, "readout", None, None, None, None, None]
+            row["type_args"][2] = None
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [failure.as_dict() for failure in result.failures])
+            expected = 'Template.realize signature.{u_1} (fun λ (I : Type (u_1)) (J : Sort (u_1)) => ("Type u", I, J))'
+            self.assertEqual(result.registrations[0].readout, expected)
+            self.assertIn("readout := some (" + expected + ")", result.files[0].text)
+            self.assertIn("(type_of% (" + expected + "))", result.files[0].text)
+            self.assertEqual(result.audit["source_specializations"][0]["entries"], [constant, parameter, sort_parameter])
+
+    def test_invalid_or_ambiguous_source_universe_annotations_fail_without_writes(self) -> None:
+        for malformed, code in (("ambiguous", "ambiguous_source_universe_mapping"),
+                                ("wrong_byte_span", "source_specialization_span_mismatch"),
+                                ("not_ast_universe", "source_specialization_span_mismatch"),
+                                ("wrong_term", "source_specialization_term_mismatch"),
+                                ("multiple_levels", "invalid_source_specialization"),
+                                ("undeclared_level", "missing_level_params")):
+            with self.subTest(malformed=malformed), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                row = fixture.registration(readout="Template.realize (fun (I : Type u) (J : Sort u) => (I, J))")
+                row["extra_level_params"] = ["u_1", "v_1"]
+                entry = self.universe_specialization(fixture, row, "Type u", "u_1")
+                if malformed == "ambiguous":
+                    self.universe_specialization(fixture, row, "Sort u", "v_1")
+                elif malformed == "wrong_byte_span":
+                    entry["start"] += 1
+                    entry["end"] += 1
+                elif malformed == "not_ast_universe":
+                    fixture.syntax["files"][0]["commands"][0]["slots"]["readout"]["universe_occurrences"] = []
+                elif malformed == "wrong_term":
+                    entry["term"] = "(v_1)"
+                elif malformed == "multiple_levels":
+                    entry["levels"] = ["u_1", "v_1"]
+                else:
+                    entry.update(term="(w)", levels=["w"], level_params=["w"])
+                fixture.save()
+                self.assert_failure_writes_nothing(fixture, code)
+
+    def test_compiled_universe_arrays_reject_open_markers_and_placeholders_without_writes(self) -> None:
+        for category in ("registration", "template"):
+            for level, code in (("?u.7", "unclosed_universe"), ("max 1 ?m.9", "unclosed_universe"),
+                                (" ?_mvar.2331 + 1", "unclosed_universe"), ("max 1 (?_uniq.42)", "unclosed_universe"),
+                                ("_", "unclosed_universe"), ("max (_+1) u_1", "unclosed_universe"),
+                                (None, "invalid_universe"), ("", "invalid_universe")):
+                with self.subTest(category=category, level=level), tempfile.TemporaryDirectory() as directory:
+                    fixture = Fixture(Path(directory))
+                    if category == "registration":
+                        row = fixture.registration()
+                        row["registration_universes"][0] = level
+                    else:
+                        row = fixture.template()
+                        row["enrollment_universes"][0] = level
+                    fixture.save()
+                    self.assert_failure_writes_nothing(fixture, code)
+
+    def test_missing_captured_normalized_bridge_arena_cannot_fall_back_to_source_object_arena(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            row = fixture.registration()
+            row["bridge_arena_from_source"] = False
+            row["bridge_arena"] = None
+            fixture.save()
+            self.assert_failure_writes_nothing(fixture, "missing_material")
+
+    def test_sealed_catalog_escapes_declaration_keyword_and_preserves_name_identity(self) -> None:
+        from reg_migration.render import render_seal
+
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            fixture.registration()
+            mapping = fixture.root_catalog(sealed=True)
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [failure.as_dict() for failure in result.failures])
+            root = next(file for file in result.files if file.kind == "root")
+            self.assertIn("def «seal» : Contract.Seal", root.text)
+            self.assertNotIn("\ndef seal ", root.text)
+            direct = render_seal(result.seals[0], mapping["destination_module"])
+            self.assertIn("def «seal» : LeanInformationAudit.Contract.Seal", direct)
+            seal_row = next(row for row in result.audit["reconciliation"] if row["category"] == "seals")
+            self.assertEqual(seal_row["output_decl"], mapping["destination_module"] + ".seal")
+
 
 
 if __name__ == "__main__":

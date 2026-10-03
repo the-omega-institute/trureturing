@@ -35,6 +35,10 @@ class LeanParserIntegrationTests(unittest.TestCase):
                 self.assertLessEqual(command["start"], slot["start"])
                 self.assertLessEqual(slot["end"], command["end"])
                 self.assertEqual(raw[slot["start"]:slot["end"]].decode("utf-8"), slot["text"])
+                for occurrence in slot["universe_occurrences"]:
+                    self.assertLessEqual(slot["start"], occurrence["start"])
+                    self.assertLessEqual(occurrence["end"], slot["end"])
+                    self.assertEqual(raw[occurrence["start"]:occurrence["end"]].decode("utf-8"), occurrence["text"])
         return value
 
     def test_actual_registration_grammar_variants_and_keyword_slots(self) -> None:
@@ -58,7 +62,7 @@ register_information_theorem finiteSourceClaim in arena
   escape from source (selectedSource) escape continues (residual)
 information_theorem nativeClaim in arena
   readout via (Template.realize x) primitives actual variation varying sensitivity sensitive
-  escape from (Nat) escape continues (open) : True := by exact True.intro
+  escape from (Nat) escape continues (open) : ∀ (α : Type u), True := by intro α; exact True.intro
 information_theorem nativeOccurrence in arena object_arena objectArena catalog catalog
   primitives actual variation varying sensitivity sensitive : True := by exact True.intro
 private theorem privateClaim : True := by exact True.intro
@@ -81,16 +85,29 @@ register_information_theorem D5.Sample.«claim with space.λ» in arena
         self.assertEqual(by_name["inlineClaim"]["slots"]["inline_proof"]["text"], "by exact originalBridge")
         self.assertEqual(by_name["inlineClaim"]["slots"]["inline_actual"]["text"], "actual")
         self.assertEqual(by_name["forwardClaim"]["slots"]["via_descriptor"]["text"], "(@descriptor.{u, v})")
+        descriptor = by_name["forwardClaim"]["slots"]["via_descriptor"]
+        explicit = [identifier for identifier in descriptor["identifiers"] if identifier["explicit_universes"]]
+        self.assertEqual(len(explicit), 1)
+        self.assertEqual(explicit[0]["head_text"], "descriptor")
+        self.assertEqual(explicit[0]["source_levels"], [
+            {"kind": "param", "name_components": ["u"]},
+            {"kind": "param", "name_components": ["v"]},
+        ])
+        self.assertEqual([(item["text"], item["name_components"]) for item in descriptor["universe_occurrences"]], [
+            ("u", ["u"]), ("v", ["v"]),
+        ])
         self.assertEqual(by_name["forwardClaim"]["slots"]["output_evidence"]["text"], "outputProof")
         self.assertEqual(by_name["sourceClaim"]["slots"]["escape_from_source"]["text"], "selectedSource")
         self.assertEqual(by_name["finiteSourceClaim"]["slots"]["finite_bridge"]["text"], "finiteBridge")
-        self.assertEqual(by_name["nativeClaim"]["slots"]["target_type"]["text"], "True")
-        self.assertEqual(by_name["nativeClaim"]["slots"]["native_proof"]["text"], "by exact True.intro")
+        target_type = by_name["nativeClaim"]["slots"]["target_type"]
+        self.assertEqual(target_type["text"], "∀ (α : Type u), True")
+        self.assertEqual([(item["text"], item["name_components"]) for item in target_type["universe_occurrences"]], [("u", ["u"])])
+        self.assertEqual(by_name["nativeClaim"]["slots"]["native_proof"]["text"], "by intro α; exact True.intro")
         self.assertIn("privateClaim", by_name)
         self.assertIn("D5.Sample.«claim with space.λ»", by_name)
 
     def test_actual_nested_terms_comments_strings_and_utf8_offsets(self) -> None:
-        readout = 'Template.realize (fun x => (let marker := "primitives escape continues λ"; (x, (marker, "後"))))'
+        readout = 'Template.realize (fun (α : Type u) (β : Sort v) x => (let marker := "primitives escape continues λ Type u Sort v descriptor.{u}"; (x, (marker, "後"))))'
         prefix = IMPORTS + '-- α register_information_theorem falseClaim in arena\n/- 外 /- primitives realization -/ readout via -/\ndef keywordString := "variation sensitivity escape from"\n'
         source = prefix + "register_information_theorem «真命题» in arena\n  readout via (" + readout + ")\n  primitives (actual.toPrimitiveBundle) realization bridge\n  escape from (Nat × (String × Nat)) escape continues (by exact residual)\n"
         with tempfile.TemporaryDirectory() as directory:
@@ -103,6 +120,14 @@ register_information_theorem D5.Sample.«claim with space.λ» in arena
         self.assertEqual(item["slots"]["readout"]["text"], readout)
         self.assertEqual(item["slots"]["escape_from"]["text"], "Nat × (String × Nat)")
         self.assertEqual(item["slots"]["continuation"]["text"], "by exact residual")
+        raw = source.encode("utf-8")
+        identifiers = item["slots"]["readout"]["identifiers"]
+        self.assertTrue(any(identifier["head_text"] == "Template.realize" for identifier in identifiers))
+        for identifier in identifiers:
+            self.assertEqual(raw[identifier["start"]:identifier["end"]].decode("utf-8"), identifier["text"])
+        occurrences = item["slots"]["readout"]["universe_occurrences"]
+        self.assertEqual([(entry["text"], entry["name_components"]) for entry in occurrences], [("u", ["u"]), ("v", ["v"])])
+        self.assertTrue(all(entry["start"] < raw.index(b'let marker') for entry in occurrences))
 
     def test_actual_templates_three_root_entries_seal_and_notation(self) -> None:
         source = IMPORTS + """register_information_template SimpleTemplate
@@ -140,8 +165,14 @@ local notation "view" => Template.realize x
 
     def test_actual_namespace_section_scoped_options_and_private_declarations(self) -> None:
         source = IMPORTS + """namespace Outer
+namespace MatrixObservation
+def matrixIdentity := True
+end MatrixObservation
+open MatrixObservation
+universe u v
 section Scoped
 set_option maxRecDepth 91
+open Classical in
 set_option pp.universes true in
   register_information_theorem scopedClaim in arena primitives actual.toPrimitiveBundle realization bridge
 private theorem «private claim» : True := by exact unresolvedProof
@@ -155,7 +186,22 @@ register_information_theorem rootClaim in arena primitives actual.toPrimitiveBun
         registrations = [item for item in value["commands"] if item["kind"] == "registration"]
         self.assertEqual([item["slots"]["theorem"]["text"] for item in registrations], ["scopedClaim", "outsideClaim", "rootClaim"])
         self.assertEqual([item["namespace"] for item in registrations], ["Outer", "Outer", ""])
-        self.assertIn("set_option maxRecDepth 91", source[value["commands"][2]["start"]:value["commands"][2]["end"]])
+        self.assertEqual([item["ambient_universes"] for item in registrations], [["u", "v"], ["u", "v"], []])
+        for registration in registrations[:2]:
+            self.assertTrue(any(item.get("namespace") == "Outer.MatrixObservation" and
+                                item.get("namespace_components") == ["Outer", "MatrixObservation"]
+                                for item in registration["open_decls"]))
+        self.assertEqual(registrations[2]["open_decls"], [])
+        self.assertTrue(any("set_option maxRecDepth 91" in source[item["start"]:item["end"]] for item in value["commands"]))
+        wrappers = registrations[0]["scope_wrappers"]
+        self.assertEqual(len(wrappers), 2)
+        raw = source.encode("utf-8")
+        for wrapper in wrappers:
+            self.assertEqual(raw[wrapper["start"]:wrapper["end"]].decode("utf-8"), wrapper["text"])
+            self.assertLessEqual(wrapper["end"], registrations[0]["start"])
+        prefix = raw[min(wrapper["start"] for wrapper in wrappers):registrations[0]["start"]].decode("utf-8")
+        self.assertIn("open Classical in", prefix)
+        self.assertIn("set_option pp.universes true in", prefix)
         self.assertTrue(any("private claim" in source.encode("utf-8")[item["start"]:item["end"]].decode("utf-8") for item in value["commands"]))
 
     def test_actual_parser_does_not_elaborate_or_execute_source_commands(self) -> None:

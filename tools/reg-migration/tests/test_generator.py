@@ -226,6 +226,27 @@ class Fixture:
             self.raw.setdefault("companions", []).append(companion)
         return companion
 
+    def specialize(self, row: dict, slot: str, identifier: str, levels: list[str], *, occurrence: int = 0) -> dict:
+        path = row["owner"].replace(".", "/") + ".lean"
+        file = next(file for file in self.syntax["files"] if file["path"] == path)
+        kind = "template" if "name" in row else "registration"
+        command = [command for command in file["commands"] if command["kind"] == kind][row["source_index"]]
+        span = command["slots"][slot]
+        content, needle = span["text"].encode("utf-8"), identifier.encode("utf-8")
+        position = content.index(needle)
+        for _ in range(occurrence):
+            position = content.index(needle, position + len(needle))
+        start, end = span["start"] + position, span["start"] + position + len(needle)
+        head = identifier.split(".{", 1)[0]
+        span.setdefault("identifiers", []).append({"start": start, "end": end, "text": identifier,
+                                                   "head_text": head, "name_components": head.split("."),
+                                                   "explicit_universes": ".{" in identifier})
+        entry = {"start": start, "end": end, "text": identifier,
+                 "term": head + (".{" + ", ".join(levels) + "}" if levels else ""),
+                 "levels": levels, "level_params": levels}
+        row.setdefault("source_specializations", {}).setdefault(slot, []).append(entry)
+        return entry
+
 
 class GeneratorTests(unittest.TestCase):
     def assert_failure_writes_nothing(self, fixture: Fixture, code: str) -> None:
@@ -359,6 +380,9 @@ class GeneratorTests(unittest.TestCase):
                 self.assertIn(row["unit"], rendered)
                 self.assertIn(row["realization"], rendered)
                 self.assertNotIn("targetName :=", rendered)
+                if variant in {"legacy", "forward", "witness", "occurrence"}:
+                    self.assertIn("⟨(bridge)⟩", rendered)
+                    self.assertNotIn("Iff.rfl", rendered)
                 if variant == "finite-source":
                     self.assertIn("familyRecord", rendered)
                     self.assertIn("finiteBridge", rendered)
@@ -578,6 +602,341 @@ class GeneratorTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse(output.exists())
 
+
+    def test_reconciliation_covers_each_input_once_with_exact_utf8_spans_and_output_names(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            path = "Reg/D5/Sample.lean"
+            fixture.source(path, "import LeanInformationAuditInterface.Syntax\n-- 前置 λ\n")
+            fixture.registration(path, variant="occurrence", occurrence=1)
+            fixture.registration(path, variant="occurrence", occurrence=2)
+            fixture.syntax["files"][0]["commands"][1]["namespace"] = "Nested.Qualified"
+            fixture.template(constructors=True)
+            mapping = fixture.root_catalog(path, sealed=True)
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            rows = result.audit["reconciliation"]
+            self.assertEqual([row["category"] for row in rows], ["registrations", "registrations", "templates", "roots", "seals"])
+            keys = [(row["category"], row["owner"], row["source_index"]) for row in rows]
+            self.assertEqual(len(keys), len(set(keys)))
+            for category in ("registrations", "templates", "roots", "seals"):
+                self.assertEqual(sum(row["category"] == category for row in rows), len(fixture.raw[category]))
+            for row in rows:
+                file = next(file for file in fixture.syntax["files"] if file["path"] == row["source_path"])
+                commands = [command for command in file["commands"] if command["kind"] == {"registrations": "registration", "templates": "template", "roots": "root", "seals": "seal"}[row["category"]]]
+                command = commands[row["source_index"]]
+                self.assertEqual(row["source_span"], {"start": command["start"], "end": command["end"]})
+                original = file["source_text"].encode("utf-8")[command["start"]:command["end"]].decode("utf-8")
+                self.assertIn(original.splitlines()[0], file["source_text"])
+                self.assertTrue(any(output.path == row["output_path"] for output in result.files))
+            registrations = rows[:2]
+            self.assertEqual([row["identity"]["theorem"] for row in registrations], ["D5.Sample.claim"] * 2)
+            self.assertNotEqual(registrations[0]["identity"]["unit"], registrations[1]["identity"]["unit"])
+            self.assertEqual([row["output_decl"] for row in registrations], ["Reg.D5.Sample.registration_1", "Nested.Qualified.registration_2"])
+            self.assertEqual([row["identity"]["object_arena"] for row in registrations], ["objectArena1", "objectArena2"])
+            self.assertEqual(rows[2]["output_decl"], "Reg.Support.Template.enrollment_1")
+            self.assertEqual(rows[3]["output_decl"], mapping["destination_module"] + ".rootCatalog")
+            self.assertEqual(rows[4]["output_decl"], mapping["destination_module"] + ".seal")
+            self.assertEqual(rows[3]["output_path"], rows[4]["output_path"])
+            self.assertEqual(rows[3]["output_owner"], mapping["destination_module"])
+
+    def test_reconciliation_preserves_template_and_occurrence_array_order_and_owner_corrections(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            mapping, before, after = fixture.catalog_owner_correction()
+            template = fixture.template(constructors=True)
+            root = fixture.raw["roots"][0]
+            for role in ("expected", "source"):
+                second = copy.deepcopy(root[role][0])
+                second["statement_identity"] = "a-second"
+                root[role].append(second)
+                mapping["registration_module_name_after"][role].append(after)
+                second_map = copy.deepcopy(mapping["occurrence_mapping"][role][0])
+                second_map["statement_identity"] = "a-second"
+                mapping["occurrence_mapping"][role].append(second_map)
+            root["baseline"] = [copy.deepcopy(root["expected"][1]), copy.deepcopy(root["expected"][0])]
+            mapping["registration_module_name_after"]["baseline"] = [after, after]
+            mapping["occurrence_mapping"]["baseline"] = list(reversed(copy.deepcopy(mapping["occurrence_mapping"]["expected"])))
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            rows = result.audit["reconciliation"]
+            template_identity = next(row["identity"] for row in rows if row["category"] == "templates")
+            self.assertEqual(template_identity["constructors"], template["constructors"])
+            self.assertEqual(template_identity["version"], 7)
+            identity = next(row["identity"] for row in rows if row["category"] == "roots")
+            self.assertEqual(identity["root_id_before"], before)
+            self.assertEqual(identity["root_id_after"], mapping["destination_module"])
+            for role in ("expected", "source", "baseline"):
+                rows = identity["occurrences"][role]
+                self.assertEqual([row["index"] for row in rows], [0, 1])
+                self.assertEqual([row["statement_identity"] for row in rows], [row["statement_identity"] for row in root[role]])
+                self.assertEqual([row["registration_module_before"] for row in rows], [before, before])
+                self.assertEqual([row["registration_module_after"] for row in rows], [after, after])
+
+    def test_reconciliation_is_input_order_independent_and_complete_on_stdout(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            fixture.registration("Reg/D5/Z.lean", theorem="D5.Z.claim", occurrence=2)
+            fixture.registration("Reg/D5/A.lean", theorem="D5.A.claim", occurrence=1)
+            fixture.template()
+            fixture.root_catalog("Reg/D5/Z.lean", sealed=True)
+            fixture.root_catalog("Reg/D5/A.lean")
+            fixture.save()
+            expected = fixture.generator().plan().audit["reconciliation"]
+            for category in ("registrations", "templates", "roots", "seals"):
+                fixture.raw[category].reverse()
+            fixture.syntax["files"].reverse()
+            fixture.mapping["modules"].reverse()
+            fixture.save()
+            shuffled = fixture.generator().plan()
+            self.assertFalse(shuffled.failures, [f.as_dict() for f in shuffled.failures])
+            self.assertEqual(shuffled.audit["reconciliation"], expected)
+            output = fixture.root / "stdout output"
+            result = subprocess.run([sys.executable, str(PACKAGE_DIR / "generate.py"), "plan", "--repo", str(fixture.root), "--inputs", str(fixture.inputs_path), "--syntax", str(fixture.syntax_path), "--mapping", str(fixture.mapping_path), "--output", str(output)], text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(json.loads(result.stdout)["audit"]["reconciliation"], expected)
+
+    def test_failed_plans_expose_empty_reconciliation(self) -> None:
+        for failure_stage in ("binding", "rendering", "parser", "invalid_snapshot"):
+            with self.subTest(failure_stage=failure_stage), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                fixture.registration()
+                if failure_stage == "binding":
+                    fixture.raw["registrations"] = []
+                elif failure_stage == "rendering":
+                    fixture.command("Reg/D5/Sample.lean", "def registration_1 := 2", "context", {"name": "registration_1"})
+                elif failure_stage == "parser":
+                    fixture.command("Reg/D5/Sample.lean", "register_new unsupported", "unsupported")
+                else:
+                    fixture.raw["schema"] = "unsupported-raw-schema"
+                fixture.save()
+                result = fixture.generator().plan()
+                self.assertTrue(result.failures)
+                self.assertEqual(result.files, [])
+                self.assertEqual(result.audit["reconciliation"], [])
+
+    def test_root_scope_enrollments_in_importing_owners_have_distinct_global_names(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            fixture.template("Reg/Support/First.lean")
+            fixture.source("Reg/Support/Second.lean", "import LeanInformationAuditInterface.Syntax\nimport Reg.Support.First\n\n")
+            fixture.template("Reg/Support/Second.lean")
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            declarations = [row["output_decl"] for row in result.audit["reconciliation"]]
+            self.assertEqual(declarations, ["Reg.Support.First.enrollment_1", "Reg.Support.Second.enrollment_1"])
+            self.assertEqual(len(set(declarations)), 2)
+            for output in result.files:
+                owner = output.path[:-5].replace("/", ".")
+                self.assertIn("noncomputable def _root_." + owner + ".enrollment_1", output.text)
+                self.assertNotIn("noncomputable def enrollment_1", output.text)
+
+    def test_ambient_universes_are_not_redeclared_and_target_applications_keep_all_levels(self) -> None:
+        for variant in ("native", "inline", "companion", "template"):
+            with self.subTest(variant=variant), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                path = "Reg/Support/Ambient.lean"
+                fixture.source(path, "import LeanInformationAuditInterface.Syntax\nuniverse u\n\n")
+                row = fixture.template(path) if variant == "template" else fixture.registration(path, variant="native" if variant == "native" else "legacy", inline=variant == "inline")
+                row["level_params"] = ["u", "v"]
+                fixture.syntax["files"][0]["commands"][0]["ambient_universes"] = ["u"]
+                if variant == "inline":
+                    row["inline_bridge_level_params"] = ["u", "v"]
+                if variant == "companion":
+                    fixture.companion_reference(row)
+                fixture.save()
+                result = fixture.generator().plan()
+                self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+                rendered = result.files[0].text
+                if variant == "template":
+                    self.assertIn("def _root_.Reg.Support.Ambient.enrollment_1.{v}", rendered)
+                    self.assertIn("@_root_.SyntheticTemplate.{u, v}", rendered)
+                else:
+                    self.assertIn("def _root_.Reg.Support.Ambient.registration_1.{v}", rendered)
+                    self.assertIn("@_root_.D5.Sample.claim.{u, v}", rendered)
+                if variant == "native":
+                    self.assertIn("theorem _root_.D5.Sample.claim.{v}", rendered)
+                if variant == "inline":
+                    self.assertIn("theorem _root_." + row["realization"] + ".{v}", rendered)
+                if variant == "companion":
+                    self.assertIn("def _root_." + row["unit"] + ".{v}", rendered)
+                for declaration in (line for line in rendered.splitlines() if line.startswith(("theorem ", "noncomputable def "))):
+                    self.assertNotIn(".{u,", declaration.split(" : ", 1)[0])
+
+    def test_source_specializations_use_ast_spans_keep_utf8_and_ignore_matching_strings(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            readout = 'Template.realize (fun λ => ("Template.realize", Template.realize.{old} λ))'
+            row = fixture.registration(readout=readout)
+            row["extra_level_params"] = ["u", "v"]
+            first = fixture.specialize(row, "readout", "Template.realize", ["u", "v"])
+            second = fixture.specialize(row, "readout", "Template.realize.{old}", ["u", "v"])
+            row["source_specializations"]["readout"].reverse()
+            row["type_arg_source_slots"] = [None, None, "readout", None, None, None, None, None]
+            row["type_args"][2] = None
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            expected = 'Template.realize.{u, v} (fun λ => ("Template.realize", Template.realize.{u, v} λ))'
+            rendered = result.files[0].text
+            self.assertIn("readout := some (" + expected + ")", rendered)
+            self.assertIn("(type_of% (" + expected + "))", rendered)
+            self.assertNotIn(".{old}.{", rendered)
+            self.assertEqual(result.audit["source_specializations"][0]["entries"], [first, second])
+            printed = [field for item in result.audit["controlled_printing"] for field in item["fields"]]
+            self.assertNotIn("readout", printed)
+            self.assertNotIn("type_args[2]", printed)
+
+    def test_template_constructor_specializations_preserve_order_and_source_terms(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            row = fixture.template(constructors=True)
+            row["extra_level_params"] = ["u"]
+            fixture.specialize(row, "constructor_0", "SyntheticTemplate.second", ["u"])
+            fixture.specialize(row, "constructor_1", "SyntheticTemplate.first", ["u"])
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            rendered = result.files[0].text
+            self.assertLess(rendered.index("type := (SyntheticTemplate.second.{u})"), rendered.index("type := (SyntheticTemplate.first.{u})"))
+            self.assertEqual([row["slot"] for row in result.audit["source_specializations"]], ["constructor_0", "constructor_1"])
+
+    def test_invalid_source_specializations_fail_without_writes_or_partial_audit(self) -> None:
+        cases = (("not_map", "invalid_source_specializations"), ("not_entry", "invalid_source_specialization"),
+                 ("missing_slot", "invalid_source_specializations"), ("shifted_span", "source_specialization_span_mismatch"),
+                 ("wrong_term", "source_specialization_term_mismatch"), ("undeclared_level", "missing_level_params"),
+                 ("string_span", "source_specialization_span_mismatch"), ("unclosed_level", "unclosed_expression"),
+                 ("overlap", "overlapping_source_specializations"))
+        for case, code in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                row = fixture.registration(readout='Template.realize ("Template.realize")')
+                row["extra_level_params"] = ["u"]
+                entry = fixture.specialize(row, "readout", "Template.realize", ["u"])
+                if case == "not_map": row["source_specializations"] = []
+                elif case == "not_entry": row["source_specializations"]["readout"] = ["bad"]
+                elif case == "missing_slot": row["source_specializations"] = {"missing": [entry]}
+                elif case == "shifted_span": entry["start"] += 1
+                elif case == "wrong_term": entry["term"] = "Different.realize.{u}"
+                elif case == "undeclared_level": entry["level_params"] = ["undeclared"]
+                elif case == "string_span":
+                    entry["start"] += len('Template.realize ("'.encode())
+                    entry["end"] = entry["start"] + len("Template.realize".encode())
+                elif case == "unclosed_level": entry.update(levels=["?u.4"], term="Template.realize.{?u.4}", level_params=[])
+                else: row["source_specializations"]["readout"].append(copy.deepcopy(entry))
+                fixture.save()
+                self.assert_failure_writes_nothing(fixture, code)
+                self.assertEqual(fixture.generator().plan().audit.get("source_specializations", []), [])
+
+    def test_normalized_object_arena_does_not_replace_captured_primitive_bridge_arena(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            row = fixture.registration()
+            row["bridge_arena_from_source"] = False
+            row["bridge_arena"] = {"text": "@PrimitiveArena.{u}", "printed": True, "level_params": ["u"]}
+            row["extra_level_params"] = ["u"]
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            self.assertIn("realization := .legacy (@PrimitiveArena.{u})", result.files[0].text)
+            self.assertIn("arena := ⟨(arena)⟩", result.files[0].text)
+            fields = [field for item in result.audit["controlled_printing"] for field in item["fields"]]
+            self.assertIn("bridge_arena", fields)
+
+    def test_nested_scope_prefix_applies_to_every_inserted_declaration(self) -> None:
+        prefix = "open Classical in\nattribute [local instance] arena.toArena.stateDecidableEq in\n"
+        for native in (False, True):
+            with self.subTest(native=native), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                path = "Reg/Support/Scoped.lean"
+                header = "import LeanInformationAuditInterface.Syntax\n-- λ\n"
+                fixture.source(path, header + prefix)
+                row = fixture.registration(path, variant="native" if native else "legacy", inline=not native)
+                command = fixture.syntax["files"][0]["commands"][0]
+                start = len(header.encode("utf-8"))
+                middle = start + len("open Classical in\n".encode("utf-8"))
+                command["scope_wrappers"] = [{"start": start, "end": middle, "text": "open Classical in\n"},
+                                               {"start": middle, "end": command["start"], "text": prefix.split("\n", 1)[1]}]
+                fixture.companion_reference(row)
+                fixture.save()
+                result = fixture.generator().plan()
+                self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+                rendered = result.files[0].text
+                self.assertEqual(rendered.count(prefix), 3)
+                self.assertIn(prefix + "theorem _root_." + (row["theorem"] if native else row["realization"]), rendered)
+                self.assertIn(prefix + "noncomputable def _root_." + row["unit"], rendered)
+                self.assertIn(prefix + "noncomputable def _root_.Reg.Support.Scoped.registration_1", rendered)
+                self.assertIn("\ndef consumer := " + row["unit"] + ".Statement\n", rendered)
+
+    def test_removed_scoped_root_and_seal_leave_no_dangling_prefix(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            path = "Reg/Catalogs/Scoped.lean"
+            header, prefix = "import LeanInformationAuditInterface.Syntax\n\n", "open Classical in\n"
+            fixture.source(path, header + prefix)
+            fixture.root_catalog(path, sealed=True)
+            root, seal = fixture.syntax["files"][0]["commands"]
+            root["scope_wrappers"] = [{"start": len(header.encode()), "end": root["start"], "text": prefix}]
+            old_seal_start = seal["start"]
+            source = fixture.sources[path].encode("utf-8")
+            fixture.sources[path] = (source[:old_seal_start] + prefix.encode() + source[old_seal_start:]).decode("utf-8")
+            seal["start"] += len(prefix.encode())
+            seal["end"] += len(prefix.encode())
+            seal["scope_wrappers"] = [{"start": old_seal_start, "end": seal["start"], "text": prefix}]
+            fixture.command(path, "def kept := True", "context", {"name": "kept"})
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            leaf = next(file for file in result.files if file.path == path)
+            self.assertNotIn(prefix, leaf.text)
+            self.assertIn("def kept := True", leaf.text)
+            self.assertEqual(len(result.audit["reconciliation"]), 2)
+
+    def test_invalid_scoped_prefix_metadata_fails_without_writes(self) -> None:
+        for case, code in (("not_array", "invalid_scope_wrapper"), ("not_object", "invalid_scope_wrapper"),
+                           ("after_command", "invalid_scope_wrapper"), ("wrong_text", "scope_wrapper_source_mismatch")):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                path = "Reg/Support/Scoped.lean"
+                header, prefix = "import LeanInformationAuditInterface.Syntax\n", "open Classical in\n"
+                fixture.source(path, header + prefix)
+                fixture.registration(path)
+                command = fixture.syntax["files"][0]["commands"][0]
+                wrapper = {"start": len(header.encode()), "end": command["start"], "text": prefix}
+                if case == "not_array": command["scope_wrappers"] = "bad"
+                elif case == "not_object": command["scope_wrappers"] = ["bad"]
+                else:
+                    command["scope_wrappers"] = [wrapper]
+                    if case == "after_command": wrapper["end"] += 1
+                    else: wrapper["text"] = "different in\n"
+                fixture.save()
+                self.assert_failure_writes_nothing(fixture, code)
+
+    def test_invalid_ambient_universe_metadata_fails_without_writes(self) -> None:
+        for levels in ("u", ["u", "u"], [""], [1]):
+            with self.subTest(levels=levels), tempfile.TemporaryDirectory() as directory:
+                fixture = Fixture(Path(directory))
+                fixture.registration()
+                fixture.syntax["files"][0]["commands"][0]["ambient_universes"] = levels
+                fixture.save()
+                self.assert_failure_writes_nothing(fixture, "invalid_ambient_universes")
+
+    def test_private_template_source_specialization_adds_universe_application_once(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = Fixture(Path(directory))
+            row = fixture.template()
+            row.update(name="_private.Reg.Template.0.template", level_params=["u", "v"], template_term=None,
+                       name_components={"name": ["_private", "Reg", "Template", 0, "template"]})
+            fixture.specialize(row, "name", "SyntheticTemplate", ["u", "v"])
+            fixture.save()
+            result = fixture.generator().plan()
+            self.assertFalse(result.failures, [f.as_dict() for f in result.failures])
+            self.assertIn("(@SyntheticTemplate.{u, v})", result.files[0].text)
+            self.assertNotIn(".{u, v}.{u, v}", result.files[0].text)
+            self.assertEqual(result.audit["source_specializations"][0]["slot"], "name")
 
 
 if __name__ == "__main__":
