@@ -89,6 +89,46 @@ public sealed class ScribeDefinitionSelectionTests
     }
 
     [Fact]
+    public void MissingManifestReturnsTwoWithoutLoadingDocuments()
+    {
+        using var root = new TemporaryRoot();
+        Directory.CreateDirectory(root.Resolve("Blueprint"));
+        File.WriteAllText(root.Resolve("global.json"), "{}\n");
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            () => throw new InvalidOperationException("documents assembly must not be loaded"),
+            ["emit", "--paths-from", "missing.paths"],
+            root.Path,
+            TextWriter.Null,
+            error,
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
+
+        Assert.Equal(2, exit);
+        Assert.NotEmpty(error.ToString());
+    }
+
+    [Fact]
+    public void ChangedDefinitionSelectionIgnoresUnrelatedDefinitions()
+    {
+        using var root = new TemporaryRoot();
+        Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
+        Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
+
+        var selected = ScribeDefinitionSelector.Select(
+            root.Path,
+            ["Blueprint/D5/S0/Test/First.scribe.cs"]);
+        Assert.Single(selected.Paths);
+        Assert.Equal("Blueprint/D5/S0/Test/First.scribe.cs", selected.Paths[0]);
+
+        Add(root, "Blueprint/D5/S0/Test/Third.scribe.cs", "class Third {}");
+        var afterUnrelatedAddition = ScribeDefinitionSelector.Select(
+            root.Path,
+            ["Blueprint/D5/S0/Test/First.scribe.cs"]);
+        Assert.Equal(selected.Paths.ToArray(), afterUnrelatedAddition.Paths.ToArray());
+    }
+
+    [Fact]
     public void SharedSourceSelectsItsUsers()
     {
         using var root = new TemporaryRoot();
@@ -112,6 +152,28 @@ public sealed class ScribeDefinitionSelectionTests
             ["D5/S0/Test/First.lean", "Golden/Projection/changed.json"]);
         Assert.Single(selected.Paths);
         Assert.Equal("Blueprint/D5/S0/Test/First.scribe.cs", selected.Paths[0]);
+    }
+
+    [Fact]
+    public void DeletedDefinitionLeavesItsMarkdownProjectionUntouched()
+    {
+        using var root = new TemporaryRoot();
+        File.WriteAllText(root.Resolve("global.json"), "{}\n");
+        const string markdown = "Blueprint/D5/S0/Test/Deleted.md";
+        File.WriteAllText(root.Resolve(markdown), "retained\n");
+        var error = new StringWriter();
+
+        var exit = ScribeEmitter.EmitPaths(
+            root.Path,
+            ["Blueprint/D5/S0/Test/Deleted.scribe.cs"],
+            check: false,
+            TextWriter.Null,
+            error,
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
+
+        Assert.Equal(0, exit);
+        Assert.Empty(error.ToString());
+        Assert.Equal("retained\n", File.ReadAllText(root.Resolve(markdown)));
     }
 
     private static void Add(TemporaryRoot root, string path, string text) =>
