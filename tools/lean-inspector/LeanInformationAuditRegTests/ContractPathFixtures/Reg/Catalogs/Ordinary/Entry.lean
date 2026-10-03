@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean LeanInformationAudit
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Ordinary.Entry
 def value : Nat := 0

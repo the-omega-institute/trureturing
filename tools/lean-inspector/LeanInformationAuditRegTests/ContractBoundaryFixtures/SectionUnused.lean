@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 namespace LeanInformationAuditRegTests.ReviewBoundaryFixtures.SectionUnused
 section
 variable (n : Nat)

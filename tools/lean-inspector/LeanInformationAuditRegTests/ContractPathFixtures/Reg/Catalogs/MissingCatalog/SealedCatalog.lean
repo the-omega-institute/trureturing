@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean LeanInformationAudit
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingCatalog.SealedCatalog
 def sealEntry : Contract.Seal := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingCatalog.SealedCatalog, options := #[] }

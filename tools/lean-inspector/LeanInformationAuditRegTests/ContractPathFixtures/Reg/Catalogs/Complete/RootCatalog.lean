@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean LeanInformationAudit
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Complete.RootCatalog
 def catalog : Contract.RootCatalog := { data := {

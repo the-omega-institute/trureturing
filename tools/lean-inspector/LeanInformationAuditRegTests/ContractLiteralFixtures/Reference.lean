@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractLiteralFixtures.Reference
 def metadataName : Lean.Name := .anonymous

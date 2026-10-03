@@ -28,10 +28,10 @@ partial def termHead (stx : Syntax) : Syntax :=
 
 /-- Interface ownership, rather than a list of selected type heads, includes
 constructors, projections and compiler companions of all Contract interface types.
-Implementation helpers live in a different package and grant no interface entry. -/
+Implementation helpers live in a different library and grant no interface entry. -/
 def interfaceConstant (env : Environment) (name : Name) : Bool :=
   match env.getModuleIdxFor? name with
-  | some idx => (`LeanInformationAuditInterface.Contract).isPrefixOf
+  | some idx => (`LeanInformationAuditContract).isPrefixOf
       env.header.moduleNames[idx.toNat]!
   | none => false
 

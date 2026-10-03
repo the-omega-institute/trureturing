@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 namespace Boundary.TermNotation
 notation "metadataTerm" => (`root : Lean.Name)
 def entry : LeanInformationAudit.Contract.Seal := { rootId := metadataTerm, options := #[] }

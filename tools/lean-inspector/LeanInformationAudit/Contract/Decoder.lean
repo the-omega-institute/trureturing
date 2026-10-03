@@ -1,7 +1,7 @@
 import LeanInformationAudit.Registry
 import LeanInformationAudit.Contract.Literal
-import LeanInformationAuditInterface.Contract.Registration
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Registration
+import LeanInformationAuditContract.Catalog
 
 namespace LeanInformationAudit.Contract.Decoder
 open Lean Meta

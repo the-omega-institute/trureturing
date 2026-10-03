@@ -1,5 +1,5 @@
 import Reg.D5.S0.Certificates.SkeletonChannelRetraction
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractSealFixtures.Reg.Catalogs.PointwiseDisequality.SealedCatalog
 open LeanInformationAudit

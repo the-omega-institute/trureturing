@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean LeanInformationAudit
 namespace ContractReferenceFixtures.SigmaPayload
 def value : Sigma (fun _ : Unit => Contract.Seal) := ⟨(), { rootId := `root, options := #[] }⟩

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Core
+import LeanInformationAuditContract.Core
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 import D5.S3.ConceptDynamics.InformationEscape.EscapeRecord

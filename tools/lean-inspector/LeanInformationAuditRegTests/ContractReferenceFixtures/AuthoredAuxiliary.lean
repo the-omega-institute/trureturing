@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean LeanInformationAudit
 namespace ContractReferenceFixtures.AuthoredAuxiliary
 def entry : Contract.Seal := { rootId := `root, options := #[] }

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractNegativeFixtures.Forall
 def bad : Nat → LeanInformationAudit.Contract.Seal := fun _ => { rootId := Lean.Name.anonymous, options := #[] }

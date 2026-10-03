@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 namespace Boundary.TermElabRules
 syntax "metadataTerm" : term
 elab_rules : term | `(metadataTerm) => return Lean.toExpr (`root : Lean.Name)

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 namespace Boundary.IntInstance
 local instance : OfNat Int 7 := ⟨Int.ofNat 99⟩
 def entry : LeanInformationAudit.Contract.Seal := {

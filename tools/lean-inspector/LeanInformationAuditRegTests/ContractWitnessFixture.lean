@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditContract.Registration
 
 namespace LeanInformationAuditRegTests.ContractWitnessFixture
 open LeanInformationAudit

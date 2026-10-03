@@ -5,13 +5,15 @@ namespace LeanInformationAudit.Repository
 /-- Judge implementation and its stable Interface, by compiler module owner.
 Declaration namespaces do not identify the package that supplied a definition. -/
 def isInspectorModule (name : Lean.Name) : Bool :=
-  (`LeanInformationAudit).isPrefixOf name || (`LeanInformationAuditInterface).isPrefixOf name
+  (`LeanInformationAudit).isPrefixOf name || (`LeanInformationAuditInterface).isPrefixOf name ||
+    (`LeanInformationAuditContract).isPrefixOf name
 
 /-- The implementation package and its downstream test/analysis host share
 this source directory. These are library namespaces, not individual module pins. -/
 def isImplementationSourceModule (name : Lean.Name) : Bool :=
   #[`LeanInformationAudit, `LeanInformationAuditAnalysis,
-    `LeanInformationAuditRegTests, `LeanInformationAuditRegAnalysis].contains name.getRoot
+    `LeanInformationAuditContract, `LeanInformationAuditRegTests,
+    `LeanInformationAuditRegAnalysis].contains name.getRoot
 
 /-- Local data/type bodies include registration support; external libraries remain
 opaque. This classifies a supplied owner, without enumerating loaded modules. -/

@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Contract.Catalog
+import LeanInformationAuditContract.Catalog
 open Lean Meta Elab Tactic
 namespace Quality.LocalBuiltinMacro
 local macro_rules

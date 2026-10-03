@@ -14,11 +14,11 @@ def finiteArena : D5.S3.ConceptDynamics.InformationEscape.Arena where
 run_meta do
   let env := (← getEnv).setExporting false
   let interfaceModules := env.header.moduleNames.filter
-    ((`LeanInformationAuditInterface.Contract).isPrefixOf ·)
+    ((`LeanInformationAuditContract).isPrefixOf ·)
   assertTest "interface.contract_modules" (interfaceModules.size >= 4)
   for owner in interfaceModules do
     let source ← IO.FS.readFile (← LeanInformationAudit.Repository.source
-      ("tools/lean-inspector-interface/" ++ owner.toString.replace "." "/" ++ ".lean"))
+      (LeanInformationAudit.TemplateAudit.sourcePath owner))
     let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source owner.toString
     let result := LeanInformationAudit.Contract.InterfaceGuard.audit env owner entries
     assertTest s!"interface.types_only.{owner.getString!}" result.isOk
