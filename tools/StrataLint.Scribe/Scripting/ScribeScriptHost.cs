@@ -133,7 +133,7 @@ public static class ScribeScriptHost
                 {
                     CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                     CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
-                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, () =>
+                    definition = StatementProjectionFixtureLoader.WithScriptRepositoryRoot(root, () =>
                     {
                         var instance = Activator.CreateInstance(type, nonPublic: true)
                             as IScribeDocumentDefinition
