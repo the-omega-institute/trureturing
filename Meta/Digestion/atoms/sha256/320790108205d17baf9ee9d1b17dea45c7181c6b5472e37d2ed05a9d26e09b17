@@ -1,0 +1,32 @@
+**Theorem 6.1 (stable successful fibers).** For every natural $m,B,H,K,n$
+and initial state $t$, if
+$$
+n>HK+\max(2K,\max(m,B)),
+$$
+then the deterministic actual classifier has values in
+$\mathcal C(t,m,K,H)$, and reconstruction of its code gives exactly its
+supplied history and stop kind. For every code with terminal kind good,
+its actual classifier fiber equals the complete supplied-history event
+$E_n(c)$. Thus every actual terminal leaf is selected on a successful
+code, and its conditional actual mass is the true product
+$$
+P_n(c)=\prod_{\text{actions}}
+\frac{|\text{actual child carrier}|}{|\text{actual parent carrier}|}.
+$$
+For a left action the child carrier is $U_{n-r}$, and for a right action
+it is $J_{n-r}^\varepsilon$ at that parent size. A right action really
+fails the left precedence test: the parent size exceeds $2K$ and its
+right factor has size at most $K$, so its left size exceeds $K$.
+
+*Proof.* Recursion on the horizon reconstructs positive child lengths
+and the actual states. Recursion also verifies recompression, the horizon
+bound, the endpoint cap, and the literal word equality. On an assembled
+successful history the minimum-cut trace and uniqueness of the recovered
+sign, cut and Cartesian factors force the first action to be precisely
+the recorded action. The strict $2K$ inequality forces the right-action
+precedence check. Apply the induction to the actual child. At a good stop
+the unmet target is zero and the terminal size exceeds $B$, independently
+of the actual leaf. The reverse fiber inclusion follows from the
+classifier's reconstruction equation. The supplied history count kernel
+then gives the displayed conditional product. $\square$
+

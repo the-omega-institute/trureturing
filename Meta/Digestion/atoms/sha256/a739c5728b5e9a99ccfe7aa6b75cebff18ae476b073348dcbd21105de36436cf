@@ -1,0 +1,72 @@
+**定理 352.8（所有实数截止下的完整四倍壳尾界）。** 对实数 $y\ge2$，定义
+
+$$
+W(y)=\sum_{n\ge0}w_y(n)
+=\sum_{\substack{p>y\\p\ \mathrm{prime}}}\frac1{p z(p)},
+\qquad
+E_3(y,k)=\frac{\log2\left(\sqrt{25+64y4^k}-5\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则 $E_3(y,k)\ge0$、$\sum_{k\ge0}E_3(y,k)$ 可和，且
+
+$$
+W(y)\le\sum_{k\ge0}E_3(y,k)
+\le\frac{8\log2}{\sqrt y\log y}.
+\tag{352.7}
+$$
+
+**证明。** 对每个实数 $y\ge2$，$w_y$ 可和。每个满足 $p>y$ 的素数唯一属于某个半开壳
+
+$$
+[y4^k,y4^{k+1}),\qquad k\in\mathbb N.
+\tag{352.6}
+$$
+
+素数 $p=y$ 不在活跃集合中，内部边界 $p=y4^k$（$k\ge1$）属于以该边界为左端点的壳。
+
+先核对同一实际权重的可和性，再形成其无穷和。引理191.2的确切粗界是：对全部实数 $y\ge2$，实际 Fibonacci 素数权重的尾和不超过 $16/\sqrt y$。因此每个有限 $T\subseteq\mathbb N$ 满足
+
+$$
+0\le\sum_{n\in T}w_y(n)\le\frac{16}{\sqrt y}.
+$$
+
+非负级数的有界有限部分和判据给 $w_y$ 可和。这里复用的是相同的 $p$、$z(p)$ 和严格筛选 $p>y$，不是从一个不同权重的结论作替换。
+
+已发表的另一项充分输入见 Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，arXiv:1704.00151v2，Lemma2.4 与 Lemma2.2(v)：记 $\ell(p)=\operatorname{lcm}(p,z(p))$，则
+
+$$
+\sum_{p>y}\frac1{\varphi(\ell(p))}\ll y^{-1/4},
+\qquad \ell(p)=p z(p)\quad(p\ne5).
+$$
+
+由于 $\varphi(m)\le m$，这也给 $y\ge5$ 时同一实际权重的可和性；较小截止只增加有限项。此文献界在这里仅作为已知的可和性输入，不作为（352.5）的常数来源。
+
+对 $p>y>0$，取 $k=\lfloor\log(p/y)/\log4\rfloor$，便有 $k\ge0$ 与 $4^k\le p/y<4^{k+1}$，证明存在性。若两个不同壳都含 $p$，较早壳的严格上端点条件与较晚壳的下端点条件矛盾，证明唯一性及边界归属。
+
+记 $Y_k=y4^k$。因 $Y_k\ge y\ge2$，分母为正；平方比较给
+
+$$
+0\le\sqrt{25+64Y_k}-5\le8\sqrt{Y_k}.
+$$
+
+由 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到共同几何主控
+
+$$
+0\le E_3(y,k)\le
+\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{352.8}
+$$
+
+所以右侧壳级数可和，其和不超过（352.7）的第二个右侧。
+
+对任意有限 $T\subseteq\mathbb N$，先保留其中满足 $p$ 为素数且 $p>y$ 的活跃子集，再按本证明中已确定的唯一壳编号分组。每组是 $[Y_k,4Y_k)$ 内的有限素数集合，定理352.6给其贡献不超过 $E_3(y,k)$。只有有限多个组非空，故
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_3(y,k)
+\le\sum_{k\ge0}E_3(y,k).
+$$
+
+本证明已先核对左侧同一实际权重可和，现对所有有限 $T$ 取上确界，得到完整尾和的第一界。没有以右側壳级数的可和性代替左侧权重的核对，也没有把严格截止改成 $p\ge y$。$\square$
+
