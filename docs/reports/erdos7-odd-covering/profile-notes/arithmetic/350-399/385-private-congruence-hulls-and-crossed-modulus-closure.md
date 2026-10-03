@@ -28510,8 +28510,9 @@ Erdős--#7.
 
 ## 247. BBMST bounded reuse identifies the missing global packing adapter
 
-The local source laws and complete-liability transfers above do not by
-themselves give a global packing inequality. A relevant structural input is
+Sections 245--246 identify the current charge-interface mismatch. The local
+source laws and complete-liability transfers above do not by themselves give a
+global packing inequality. A relevant structural input is
 Balister--Bollobás--Morris--Sahasrabudhe--Tiba, [*The structure and number of
 Erdős covering systems*, arXiv:1904.04806v2](https://arxiv.org/abs/1904.04806v2),
 Lemmas 4.7--4.9. For one exploration tree, let \(\beta(i)\) be the depth-first
