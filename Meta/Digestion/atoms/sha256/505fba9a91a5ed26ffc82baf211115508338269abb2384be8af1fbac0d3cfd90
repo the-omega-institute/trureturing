@@ -1,0 +1,13 @@
+**推论 25.3（三元均取得时的四元条件）。** 设 $F\subseteq\mathcal I_3$ 有四个元素，每个三元素子族都确定性相容，或等价地都期望相容。则
+
+$$
+\boxed{\quad
+F\text{ 确定性相容}
+\ \Longleftrightarrow\
+F\text{ 期望相容}
+\ \Longleftrightarrow\
+\Delta(F)\ne\varnothing.
+\quad}
+\tag{25.11}
+$$
+
