@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4213f434840529a424d7e88f8d3e4ce0fbda6a5f66381489a9711e6fb98462c1
-  normalized_sha256: sha256:4213f434840529a424d7e88f8d3e4ce0fbda6a5f66381489a9711e6fb98462c1
-cas_ref: sha256:4213f434840529a424d7e88f8d3e4ce0fbda6a5f66381489a9711e6fb98462c1
-coverage_gids:
-  - gid: D5/S3/Geometry/ODE/QuantitativePeano.exists_eq_forall_mem_Icc_eq_integral
-    target_statement_id: sha256:3d72d3975bdae5e84d6aa8293a2947fbf1004a97c238a0e4046215b0173f014c
-receipts:
-  unresolved_subitems: []
