@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/SourceDensityCrossing
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/SourceDensityCrossing
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -23,24 +23,6 @@ noncomputable def sourceDensity (k t i : ℕ) : ℝ :=
   (GenealogicalFiberTransport.fiberCount (t - i, i) : ℝ) /
     (GenealogicalFiberTransport.fiberCount
       (GraftAffineClosure.step^[3 * k] (t - i, i)) : ℝ)
-
-/-- The six clauses of the real crossing and integer source-density bridge. -/
-def Conclusion (k j : ℕ) : Prop :=
-  0 < c k ∧
-  StrictMonoOn (q k j) (Ici ((j : ℝ) + 1)) ∧
-  Tendsto (fun t : ℝ => q k j t / t) atTop (nhds (c k / (j + 1))) ∧
-  (∃! τ : ℝ, τ ∈ Ici ((j : ℝ) + 1) ∧ q k j τ = 1) ∧
-  (∃ τ : ℝ, τ ∈ Ici ((j : ℝ) + 1) ∧ q k j τ = 1 ∧
-    2 * j + 1 < τ ∧ τ < j + (j + 1) / c k ∧
-    ∀ t : ℕ, j + 1 ≤ t →
-      (q k j t < 1 ↔ (t : ℝ) < τ) ∧
-      (q k j t = 1 ↔ (t : ℝ) = τ) ∧
-      (1 < q k j t ↔ τ < (t : ℝ)) ∧
-      (sourceDensity k t (j + 1) / sourceDensity k t j < 1 ↔ (t : ℝ) < τ) ∧
-      (sourceDensity k t (j + 1) / sourceDensity k t j = 1 ↔ (t : ℝ) = τ) ∧
-      (1 < sourceDensity k t (j + 1) / sourceDensity k t j ↔ τ < (t : ℝ))) ∧
-  (∀ t : ℕ, j + 1 ≤ t →
-    q k j t = sourceDensity k t (j + 1) / sourceDensity k t j)
 
 /-- Strict increase, asymptotic slope, and the unique bounded crossing of the real ratio. -/
 theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :

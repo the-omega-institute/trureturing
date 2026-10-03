@@ -32,11 +32,6 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
             Def("sourceDensity", "Composition count ratio", "sourceDensity(k,t,i) is the ratio of "
                 + "fiberCount(t-i,i) to fiberCount(step iterated 3k times on (t-i,i)). "
                 + "The subtraction is natural subtraction."),
-            Def("Conclusion", "Crossing and integer bridge", "Conclusion(k,j) asserts positivity "
-                + "of c, strict increase, the asymptotic slope, the unique crossing with its "
-                + "bounds and integer comparisons, and equality with the adjacent sourceDensity "
-                + "ratio at every legal integer. Both the finite-product and actual count "
-                + "ratios satisfy the three comparison equivalences."),
             Paragraph(Text("In the displayed statement, logQ(k,j) denotes the function "
                 + "t maps to log(q(k,j,t)), and qOverT(k,j) denotes t maps to q(k,j,t)/t. "
                 + "R and N denote the real numbers and natural numbers.")),

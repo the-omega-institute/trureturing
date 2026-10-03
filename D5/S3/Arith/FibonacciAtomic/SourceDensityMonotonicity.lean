@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -213,14 +213,16 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
           (∑ i ∈ Finset.range m, 1 / (x - 1 / 2 + i)) -
             (∑ i ∈ Finset.range m, 1 / (x + 1 / 2 + i)) =
             1 / (x - 1 / 2) - 1 / (x + m - 1 / 2) := by
-        induction m with
-        | zero => simp
-        | succ m hm =>
-          rw [Finset.sum_range_succ, Finset.sum_range_succ, Nat.cast_add_one]
-          have h1 : x - 1 / 2 + m = x + m - 1 / 2 := by ring
-          have h2 : x + 1 / 2 + m = x + (m + 1) - 1 / 2 := by ring
-          rw [h1, h2]
-          linarith
+        rw [← Finset.sum_sub_distrib]
+        convert Finset.sum_range_sub' (fun i : ℕ => 1 / (x - 1 / 2 + (i : ℝ))) m using 1
+        · congr 1
+          funext i
+          push_cast
+          congr 1
+          ring
+        · simp only [Nat.cast_zero, add_zero]
+          congr 1
+          ring
       have he : 1 / (x - 1 / 2) - 1 / (x + m - 1 / 2) =
           m / ((x - 1 / 2) * (x + m - 1 / 2)) := by
         have hp : 0 < x - 1 / 2 := by linarith
