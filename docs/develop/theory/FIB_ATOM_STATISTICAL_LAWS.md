@@ -4359,3 +4359,525 @@ $$
 因此第40节的弱误差控制不能被解释成端点原子质量的稳定恢复。端点质量、总变差与弱初态距离必须各按自己的读出精度和极限顺序处理。
 
 ## 追加锚（本行以下为增补区）
+
+## 42. 连续速度权重的广义 Sturm–Liouville 极限
+
+第19节给出了连续正速度权重的占用场。这里把其标量通过响应和谱结构单独闭合，并区分速度权重与原坐标中的扩散系数。
+
+**定义 42.1（连续速度 Green 算子）。** 取 \(v\in C([0,1])\) 满足
+\[
+0<v_-\le v(u)\le v_+<\infty.
+\]
+在固定的反射—吸收连续模型中定义
+\[
+(\mathsf T_v f)(x)
+ =\frac1D\int_0^1(1-\max(x,y))v(y)f(y)\,dy,
+\qquad f\in C([0,1]).
+\]
+相应的加权 Hilbert 空间为 \(L^2([0,1],v(y)\,dy)\)。
+
+**定理 42.2（加权预解式与广义谱）。** \(\mathsf T_v\) 是 \(L^2(v\,dy)\) 上的紧正自伴算子。其逆算子在相应定义域上为
+\[
+A_v=-D\,v^{-1}\frac{d^2}{dx^2},
+\qquad
+f'(0)=0,\quad f(1)=0.
+\]
+因此存在简单离散谱
+\[
+0<\lambda_0(v)<\lambda_1(v)<\cdots,\qquad
+\lambda_n(v)\to\infty,
+\]
+其特征函数满足
+\[
+-D\psi_n''=\lambda_n(v)v\psi_n,\qquad
+\psi_n'(0)=0,\quad \psi_n(1)=0,
+\]
+并在 \(L^2(v\,dx)\) 中构成完备系。对任意 \(s\ge0\)，函数
+\[
+h_{v,s}(x)=\frac{c_v(s,x)}{c_v(s,1)}
+\]
+是方程
+\[
+D c_v''=s\,v\,c_v,\qquad c_v(s,0)=1,\quad
+\partial_xc_v(s,0)=0
+\]
+所确定的唯一解，并满足
+\[
+h_{v,s}+s\mathsf T_vh_{v,s}=1,\qquad
+D h_{v,s}''=s\,v\,h_{v,s},\quad
+h_{v,s}'(0)=0,\quad h_{v,s}(1)=1.
+\]
+当 \(v\equiv1\) 时，\(\lambda_n(v)=D(n+\tfrac12)^2\pi^2\)，且
+\(h_{v,s}(x)=\cosh(x\sqrt{s/D})/\cosh\sqrt{s/D}\)。
+
+**证明。** 对 \(f,g\in H^1([0,1])\) 且 \(f(1)=g(1)=0\)，闭二次型
+\[
+\mathfrak a(f,g)=D\int_0^1 f'(x)g'(x)\,dx
+\]
+在 \(L^2(v\,dx)\) 上给出正自伴算子；一维分离边界条件使特征值简单，紧嵌入给出离散谱。对 \(u=\mathsf T_vf\)，核的二阶分布导数满足
+\[
+-Du''=vf,\qquad u'(0)=0,\quad u(1)=0,
+\]
+所以 \(A_v\mathsf T_v=I\) 且 \(\mathsf T_vA_v=I\) 在相应定义域上成立。有限链的 Feynman–Kac 首步方程在缩放后为
+\[
+h_{j,v,s}+\gamma_j(s)T_{j,v}h_{j,v,s}=1,\qquad
+\gamma_j(s)=\frac{e^{s\epsilon_j}-1}{\epsilon_j}.
+\]
+离散核的一致收敛和 \(v\) 的一致连续性给出 \(T_{j,v}\to \mathsf T_v\)，从而得到积分方程和其等价的边值问题。初值与边界条件唯一确定 \(c_v\)，故整列收敛到 \(h_{v,s}\)。恒等速度时直接解常系数方程即得余弦谱和双曲余弦核。 \(\square\)
+
+**推论 42.3（矩递推、Fredholm 总质量与速度识别）。** 令 \(M_{p,v}(x)\) 为从 \(x\) 出发的 \(p\) 阶通过时间矩，且 \(M_{0,v}=1\)。则
+\[
+M_{p,v}=p!\,\mathsf T_v^p1,
+\]
+并满足
+\[
+-DM_{p,v}''=p\,v\,M_{p-1,v},\qquad
+M_{p,v}'(0)=0,\quad M_{p,v}(1)=0.
+\]
+特别地，\(m_v=M_{1,v}=\mathsf T_v1\) 给出
+\[
+-Dm_v''=v,\qquad m_v'(0)=0,\quad m_v(1)=0.
+\]
+所以若 \(D\) 与完整均值剖面 \(m_v\) 已知，则
+\[
+v(x)=-D\,m_v''(x)
+\]
+在分布意义下唯一恢复；单一起点的均值或总质量只给有限个线性约束，不能识别一般连续 \(v\)。
+
+令 \(\mathcal M_v:=\mu^{(v)}([0,1])=\int_0^1 v(u)\Lambda(u)\,du\)。对任意 \(S\ge0\)，Fredholm 恒等式为
+\[
+\det\nolimits_F(I+S \mathsf T_v)
+ =c_v(S,1)
+ =\prod_{n\ge0}\left(1+\frac S{\lambda_n(v)}\right).
+\]
+因此极限总占用质量 \(\mathcal M_v\) 的变换为
+\[
+\mathbb E e^{-S\mathcal M_v}
+ =c_v(S,1)^{-1}
+ =h_{v,S}(0).
+\]
+这把总质量读出、广义谱和带权 Green 算子连接起来，但不把任意有限个谱值当成速度的唯一编码。
+
+**命题 42.4（速度扰动的定量连续性）。** 若 \(v,w\) 满足同一正下界，记
+\(\eta=\|v-w\|_\infty\)，则
+\[
+\|\mathsf T_v-T_w\|_{\infty\to\infty}
+ \le \frac{\eta}{2D}.
+\]
+在固定 \(S\) 的有界区间上，存在只依赖 \(S,D,v_-,v_+\) 的常数 \(C\)，使
+\[
+\|h_{v,S}-h_{w,S}\|_\infty
+ +|c_v(S,1)-c_w(S,1)|
+ \le C\eta.
+\]
+由带权 Rayleigh 商，谱在 \(v\) 的一致扰动下连续；这只提供连续模，不给出从单一总质量变换反演 \(v\) 的算法或总变差稳定性。
+
+**证明。** 核的行积分满足
+\[
+\sup_x\int_0^1\frac{1-\max(x,y)}D\,dy\le\frac1{2D},
+\]
+故第一式成立。积分方程的 resolvent 恒等式和正下界给出 \(h\) 的一致估计；基本解方程的 Gronwall 估计给出 \(c_v\) 的第二项。谱连续性由同一闭二次型和权函数的有界正扰动得到。 \(\square\)
+
+\(v\) 在这里是数学上的局部停留权或 speed measure。它只有在额外规定物理状态空间、能量泛函和观测映射后才可作介质参数；广义 Sturm–Liouville 谱和 Fredholm 形式本身不推出温度、热流、量子输运或经验普适性。离散 FIB 词只提供长度、数量及嵌入序列，插值函数 \(v\)、边界和时钟仍是外加模型输入。
+
+## 43. 同轨多探针的联合生成泛函与共同实现边界
+
+**定义 43.1（同轨与边缘耦合）。** 沿用前文固定单位速度、左反射右吸收、初态 \(0\) 的逐字链。取互异探针坐标 \(0\le u_1<\cdots<u_m<1\)，令
+\[
+a_{j,k}=\iota_j(u_k),\qquad
+V_{j,k}=\sum_{n<\tau_j}{\bf1}_{\{X_n=a_{j,k}\}},\qquad
+\ell_{j,k}=h_jV_{j,k}.
+\]
+同轨实现指全部 \(V_{j,k}\) 从同一条 \(X^{(j)}\) 与同一停时 \(\tau_j\) 读取；边缘耦合只要求每个坐标具有给定的单探针边缘律。记
+\[
+Q_j=(q_{\max(a_{j,k},a_{j,\ell})})_{k,\ell},
+\qquad
+C_{k\ell}=\frac{1-\max(u_k,u_\ell)}D.
+\]
+
+**定理 43.2（同轨有限多点 PGF 与缩放 Laplace 律）。** 对暂态上互异的 \(a_1<\cdots<a_m\) 及 \(0<z_k\le1\)，令 \(Z=\operatorname{diag}(z_1,\ldots,z_m)\)。同轨占用满足
+\[
+\mathbb E_0\prod_{k=1}^m z_k^{V_{a_k}}
+ =\det\!\left(I_m+Q_j\,\operatorname{diag}(z_1^{-1}-1,\ldots,z_m^{-1}-1)\right)^{-1}
+ =\frac{\det Z}{\det\!\left(Z+Q_j(I_m-Z)\right)}.
+\]
+当某个 \(z_k=0\) 时取右侧的 \(z_k\downarrow0\) 极限；在暂态探针上占用至少一次，故单点极限为零。重复坐标必须先合并其势；吸收点坐标的占用恒为零。令 \(s_k\ge0\)、\(z_k=e^{-h_js_k}\)，则
+\[
+\mathbb E_0e^{-\sum_k s_k\ell_{j,k}}
+ =\det\!\left(I_m+C_j\operatorname{diag}(\gamma_j(s_k))\right)^{-1},
+\quad
+C_j=h_jQ_j,\quad
+\gamma_j(s)=\frac{e^{h_js}-1}{h_j}.
+\]
+由 Green 核的一致收敛，固定 \(m\) 时
+\[
+\mathbb E_0e^{-\sum_k s_k\ell_{j,k}}
+ \longrightarrow
+ \det\!\left(I_m+C\,\operatorname{diag}(s_1,\ldots,s_m)\right)^{-1}.
+\tag{43.1}
+\]
+右侧是同一极限场的联合变换，不能换成各单点变换的乘积。
+
+**证明。** 令 \(d_k=z_k^{-1}-1\)。离散 Feynman–Kac 方程在探针行的消元给出 \(\det(I_m+Q_j\operatorname{diag}d)^{-1}\)；利用
+\[
+\left(Z+Q_j(I_m-Z)\right)Z^{-1}
+=I_m+Q_j(Z^{-1}-I_m)
+\]
+得到等价的第二式。取 \(z_k=e^{-h_js_k}\) 后 \(d_k=e^{h_js_k}-1\)，再用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。\(\square\)
+
+**推论 43.3（混合累积量与非高斯性）。** 令 \(\Lambda_k=\Lambda(u_k)\)，在 \(T=\operatorname{diag}(t_k)\) 足够小时，
+\[
+\log\mathbb E e^{\sum_k t_k\Lambda_k}
+ =-\log\det(I_m-CT)
+ =\sum_{r\ge1}\frac1r\operatorname{tr}((CT)^r).
+\]
+任取指标 \(i_1,\ldots,i_r\)，有
+\[
+\operatorname{cum}(\Lambda_{i_1},\ldots,\Lambda_{i_r})
+ =\frac1r\sum_{\pi\in S_r}
+ \prod_{\nu=1}^{r} C_{i_{\pi(\nu)},i_{\pi(\nu+1)}},
+ \qquad i_{\pi(r+1)}=i_{\pi(1)}.
+\tag{43.2}
+\]
+当所有 \(u_k<1\) 时 \(C_{k\ell}>0\)，故这些混合累积量为正。特别地
+\[
+\operatorname{Cov}(\Lambda(u),\Lambda(v))
+ =C(u,v)^2
+ =\frac{(1-\max(u,v))^2}{D^2},
+\]
+而 \(0\le u<v<w<1\) 时
+\[
+\operatorname{cum}(\Lambda(u),\Lambda(v),\Lambda(w))
+ =2C(u,v)C(v,w)C(w,u)>0.
+\]
+因此有限维占用场不是非退化高斯场，单点指数边缘也不意味着多点独立。
+
+**证明。** 离散 Feynman–Kac 方程在探针行的消元给出第一式；\(G(0,a)=G(a,a)=q_a\)、\(G(a,b)=q_{\max(a,b)}\) 使矩阵为 \(Q_j\)。取 \(z_k=e^{-h_js_k}\) 并用 \(h_jQ_j\to C\)、\(\gamma_j(s)\to s\) 得 (43.1)。对 (43.1) 的矩生成函数在零点邻域展开迹级数，取混合导数即得 (43.2)。\(\square\)
+
+**定理 43.4（同轨连续占用泛函）。** 对 \(s_r\ge0\) 及 \(f_r\in C([0,1],[0,\infty))\)（\(1\le r\le p\)），令
+\[
+\mathcal A_j(f)=\epsilon_j\sum_{n<\tau_j}f(X_n/L_j),
+\qquad
+f=\sum_{r=1}^p s_r f_r.
+\]
+则
+\[
+\mathbb E_0\exp\!\left(-\sum_{r=1}^p s_r\mathcal A_j(f_r)\right)
+ \longrightarrow
+ \det\nolimits_F(I+\mathsf C M_f)^{-1}.
+\tag{43.3}
+\]
+这就是同轨占用随机测度的联合生成泛函；其混合累积量由核 \(\mathsf C(u,v)=(1-\max(u,v))/D\) 的环积分给出。该式只涉及连续测试函数积分，不宣称占用密度样本路径在 \(C([0,1])\) 中一致收敛。
+
+**定理 43.5（同边缘不确定联合律）。** 若第 \(k\) 个探针从独立副本读取，则边缘极限仍为均值 \(\kappa(u_k)\) 的指数律，而联合变换为
+\[
+\prod_{k=1}^m(1+\kappa(u_k)s_k)^{-1}.
+\tag{43.4}
+\]
+同轨实现却给出 (43.1) 的非零混合累积量。更一般地，指定各坐标边缘只指定一个 coupling 纤维；没有共同历史、独立性或其他 coupling 合同，边缘信息不能决定联合变换。
+
+**物理类比边界。** \(\mathsf C\) 是声明的反射—吸收连续模型 Green 核，(43.3) 是该模型的占用随机测度生成泛函；“共同噪声”“同一粒子历史”只是 coupling 的类比。FIB 递归本身不选择概率律、阻抗、边界、时钟、初态或跨探针 coupling，因此单点指数边缘不能推出物理相关性、热流、温度、熵产生或普适性。
+
+## 44. Green 响应与涨落的同源条件
+
+**定义 44.1（有限硬核 Gibbs 场与静态响应）。** 设 \(G=(V,E)\) 是有限简单图，\(\mathcal I_G(V)\) 为其独立集族。给定严格正的顶点活动
+\[
+\lambda_v=e^{\theta_v}>0,\qquad v\in V,
+\]
+定义
+\[
+Z(\theta)=\sum_{S\in\mathcal I_G(V)}
+ \exp\!\left(\sum_{v\in S}\theta_v\right),
+\qquad
+p_\theta(S)=\frac{\exp(\sum_{v\in S}\theta_v)}{Z(\theta)}.
+\]
+令
+\[
+\eta_v(S)={\bf1}_{\{v\in S\}},\qquad
+N_f(S)=\sum_{v\in V}f_v\eta_v(S).
+\]
+对任意随机变量 \(F\) 写 \(\langle F\rangle_\theta\) 和
+\(\operatorname{Cov}_\theta(F,H)\) 表示在 \(p_\theta\) 下的期望与协方差。对场 \(h=(h_v)_{v\in V}\)，令
+\[
+N_h=\sum_{v\in V}h_v\eta_v.
+\]
+沿活动的对数方向定义静态响应
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}(\theta)
+ =
+ \left.\frac{d}{d\varepsilon}
+ \langle F\rangle_{\theta+\varepsilon h}\right|_{\varepsilon=0}.
+\]
+
+定义顶点涨落核
+\[
+\mathcal C_\theta(u,v)
+ =\operatorname{Cov}_\theta(\eta_u,\eta_v).
+\]
+它诱导有限维算子
+\[
+(\mathcal C_\theta h)_v
+ =\sum_{u\in V}\mathcal C_\theta(v,u)h_u.
+\]
+这里的 \(\mathcal C_\theta\) 首先是协方差核或静态易感核。只有在另行给出可逆线性算子 \(L_\theta\)、源算子 \(Q_\theta\) 以及
+\[
+L_\theta\mathcal C_\theta=Q_\theta
+\]
+时，才能把它写成 Green 表示
+\[
+\mathcal C_\theta=L_\theta^{-1}Q_\theta.
+\]
+若 \(Q_\theta=I\)，才得到通常意义的 \(L_\theta^{-1}\) Green 算子。
+
+**定理 44.2（有限硬核场的精确涨落—响应恒等式）。** 在定义 44.1 的条件下，对任意有限构型函数 \(F\) 与场 \(h\)，有
+\[
+\boxed{
+\mathcal R^{\mathrm{stat}}_{F,h}(\theta)
+ =
+\operatorname{Cov}_\theta(F,N_h).
+}
+\]
+特别地，对 \(F=N_f\)，
+\[
+\left.\frac{d}{d\varepsilon}
+ \langle N_f\rangle_{\theta+\varepsilon h}
+\right|_{\varepsilon=0}
+ =
+\sum_{u,v\in V}f_v\,
+\mathcal C_\theta(v,u)h_u.
+\]
+逐点取 \(f={\bf1}_{\{v\}}\) 得
+\[
+\boxed{
+\frac{\partial}{\partial\theta_u}
+ \langle\eta_v\rangle_\theta
+ =
+\mathcal C_\theta(v,u).
+}
+\]
+因此
+\[
+\nabla_\theta^2\log Z(\theta)=\mathcal C_\theta,
+\qquad
+h^{\mathsf T}\mathcal C_\theta h
+ =\operatorname{Var}_\theta(N_h)\ge0.
+\]
+协方差核作为矩阵是对称半正定的，但其非对角元不必逐项非负。
+
+若所有活动相同，即 \(\theta_v=\log\lambda\)，并取 \(h_v=1\)，则
+\[
+\lambda\,\frac{d}{d\lambda}
+ \mathbb E_{V,\lambda}|S|
+ =
+\operatorname{Var}_{V,\lambda}(|S|),
+\]
+这是有限 Gibbs 场中活动导数—方差恒等式的顶点分辨率形式。
+
+**证明。** 直接写出
+\[
+\langle F\rangle_{\theta+\varepsilon h}
+ =
+\frac{\sum_{S\in\mathcal I_G(V)}
+ F(S)e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}
+ {\sum_{S\in\mathcal I_G(V)}
+ e^{\sum_{v\in S}\theta_v}
+ e^{\varepsilon N_h(S)}}.
+\]
+有限和逐项可导，且
+\[
+\left.\frac{d}{d\varepsilon}
+e^{\varepsilon N_h(S)}\right|_{\varepsilon=0}
+=N_h(S).
+\]
+商法则给出
+\[
+\mathcal R^{\mathrm{stat}}_{F,h}
+ =
+\langle FN_h\rangle_\theta
+ -\langle F\rangle_\theta\langle N_h\rangle_\theta.
+\]
+对 \(F=\eta_v\) 得顶点公式；对
+\(\partial_{\theta_u}\partial_{\theta_v}\log Z\) 作同样计算得到协方差 Hessian。证毕。
+
+**定义 44.3（固定动力学下的 Green 响应）。** 令
+\(\Omega=\mathcal I_G(V)\) 为有限状态空间，\((P_t)_{t\ge0}\) 为保持 \(p_\theta\) 的 Markov 半群，生成元记为 \(\mathscr L\)。固定动力学，只改变初始 Gibbs 场。对 \(z>0\) 定义
+\[
+\mathscr G_z
+ =\int_0^\infty e^{-zt}P_t\,dt
+ =(zI-\mathscr L)^{-1}.
+\]
+对观测量 \(F\) 和场 \(h\)，定义
+\[
+\mathcal R_{F,h}(t)
+ =
+\left.\frac{d}{d\varepsilon}
+ \mathbb E_{\theta+\varepsilon h}
+ [F(X_t)]\right|_{\varepsilon=0}.
+\]
+此处 \(X_0\sim p_{\theta+\varepsilon h}\)，而 \(P_t\) 不随 \(\varepsilon\) 改变。
+
+**定理 44.4（平衡初始扰动的动态 Green—涨落关系）。** 在定义 44.3 的条件下，
+\[
+\boxed{
+\mathcal R_{F,h}(t)
+ =
+\operatorname{Cov}_\theta
+ \bigl(F(X_t),N_h(X_0)\bigr).
+}
+\]
+若以
+\[
+\langle A,B\rangle_\theta
+ =\sum_{S\in\Omega}p_\theta(S)A(S)B(S),
+\qquad
+\widetilde N_h=N_h-\langle N_h\rangle_\theta,
+\]
+记 \(\mathscr G_z\) 的积分核表示，则
+\[
+\int_0^\infty e^{-zt}\mathcal R_{F,h}(t)\,dt
+ =
+\left\langle
+ \mathscr G_zF,\widetilde N_h
+\right\rangle_\theta.
+\]
+若半群满足详细平衡
+\[
+p_\theta(x)P_t(x,y)=p_\theta(y)P_t(y,x),
+\]
+则 \(\mathscr G_z\) 在该内积下自伴，从而
+\[
+\boxed{
+\int_0^\infty e^{-zt}\mathcal R_{F,h}(t)\,dt
+ =
+\left\langle
+ F,\mathscr G_z\widetilde N_h
+\right\rangle_\theta.
+}
+\]
+因此，在共同 Gibbs 状态、固定 Markov 动力学以及详细平衡条件下，响应可以严格写成 Green resolvent 作用于涨落场后的配对。这时“涨落—响应”与“Green 响应”两个名称具有同一数学等式的依据。
+
+**证明。** 由 Markov 半群定义，
+\[
+\mathbb E_{\theta+\varepsilon h}[F(X_t)]
+ =
+\left\langle P_tF\right\rangle_{\theta+\varepsilon h}.
+\]
+应用定理44.2，
+\[
+\mathcal R_{F,h}(t)
+ =
+\operatorname{Cov}_\theta(P_tF,N_h)
+ =
+\operatorname{Cov}_\theta(F(X_t),N_h(X_0)).
+\]
+对 \(t\) 积分并使用
+\[
+\mathscr G_zF=\int_0^\infty e^{-zt}P_tF\,dt
+\]
+即得第一种 resolvent 配对。详细平衡使 \(P_t\) 及其积分 \(\mathscr G_z\) 自伴，得到第二种写法。证毕。
+
+**命题 44.5（动态扰动的额外义务）。** 若活动扰动同时改变生成元
+\[
+\mathscr L_\varepsilon
+ =\mathscr L+\varepsilon\dot{\mathscr L}_h+o(\varepsilon),
+\]
+则固定初始分布时
+\[
+\left.\frac{d}{d\varepsilon}
+ P_t^{(\varepsilon)}F\right|_{\varepsilon=0}
+ =
+\int_0^t
+ P_{t-s}\dot{\mathscr L}_hP_sF\,ds.
+\]
+若初始 Gibbs 分布也同时改变，还必须加上
+\[
+\operatorname{Cov}_\theta(P_tF,N_h)
+\]
+这一项。除非另行证明
+\(\dot{\mathscr L}_h\) 与 \(N_h\) 满足相应的局部详细平衡或时间反演关系，否则不能把上式简化为
+\[
+\operatorname{Cov}_\theta(F(X_t),N_h(X_0)).
+\]
+
+**证明。** 有限维矩阵指数的 Duhamel 恒等式给出
+\[
+\left.\frac{d}{d\varepsilon}
+ e^{t\mathscr L_\varepsilon}\right|_{\varepsilon=0}
+ =
+\int_0^t
+ e^{(t-s)\mathscr L}
+ \dot{\mathscr L}_h
+ e^{s\mathscr L}\,ds.
+\]
+初始分布的导数由定理44.2给出。两项来源不同，不能在未给出生成元—场对应时合并。证毕。
+
+**结论范围。** 上述活动导数、有限图协方差和固定半群的 resolvent 配对，均属于明确 Gibbs 构型与动力学假设下的数学结果。它们不自动给出时间动力学、热流、耗散、温度、KMS 条件、量子对易子或物理 Green 函数。复活动力 \(z\) 位于零自由域时，\(Z(z)\) 的导数和 Hessian 仍可作为解析响应研究，但没有正概率测度，不能把相应复数二阶导数称为概率方差。活动为零时，对数活动坐标不存在，只能使用未缩放的多项式导数。
+
+因此，只有在以下条件同时明确时，才可使用“涨落—响应”的数学名称：响应参数属于同一归一化 Gibbs 族；涨落和响应取自同一共同概率源；若涉及时间，则给出具体半群或生成元；若称某核为 Green 算子，则另行给出其逆算子或 resolvent 方程；若扰动动力学，则证明生成元导数与扰动场的对应。没有这些条件时，应分别称为活动导数、协方差 Hessian、静态易感性或半群相关函数，不把数学类比外推成物理普遍律。
+
+## 45. 坐标规范变换与标量吸收读出的联合不可识别性
+
+第38节给出了非线性位置映射后的微分算子，但还需要把这种变换对完整读出的影响写清楚。下面的等价性是路径级的，因此比只比较某个低频系数更强。
+
+**定义 45.1（坐标推前的吸收模型）。** 令 \(U\) 是区间 \([0,1]\) 上生成元为 \(D\partial_u^2\) 的左端反射、右端吸收扩散，\(D>0\)，吸收时刻记为 \(\tau=\inf\{t:U_t=1\}\)。取严格递增的 \(C^2\) 微分同胚 \(F:[0,1]\to[0,1]\)，满足 \(F(0)=0\)、\(F(1)=1\)，并令 \(Y_t=F(U_t)\)。写 \(G=F^{-1}\)。在内部坐标 \(y\in(0,1)\) 上，\(Y\) 的后向算子为
+
+$$
+(\mathcal L_F f)(y)
+=D\left(F'(G(y))^2 f''(y)+F''(G(y))f'(y)\right),
+$$
+
+其反射边界条件为 \(f'(0)=0\)，吸收端为 \(y=1\)。对初态律 \(\nu\) 记 \(\nu^F=F_\#\nu\)，并定义标量边界读出
+
+$$
+H_{F,\nu}(s)=\mathbb E_{\nu^F}\!\left[e^{-s\tau_F}\right],
+\qquad s\ge0,
+$$
+
+其中 \(\tau_F\) 是 \(Y\) 到达 \(1\) 的时刻。
+
+**定理 45.2（坐标推前保持完整吸收曲线）。** 对每个 \(s\ge0\)，有
+
+$$
+H_{F,\nu}(s)=H_{\mathrm{id},\nu}(s)
+=\int_{[0,1]}\frac{\cosh(x\sqrt{s/D})}{\cosh\sqrt{s/D}}\,d\nu(x).
+$$
+
+特别地，若初态固定为反射端 \(\nu=\delta_0\)，则所有满足上述条件的 \(F\) 都给出同一曲线
+
+$$
+H_{F,\delta_0}(s)=\operatorname{sech}\sqrt{s/D},
+$$
+
+但当 \(F\) 非恒等时，\(\mathcal L_F\) 的扩散系数 \(D(F'\circ G)^2\) 与漂移系数 \(D(F''\circ G)\) 一般随 \(y\) 改变。
+
+**证明。** 由定义 \(Y_t=F(U_t)\) 且 \(F(1)=1\)，两条路径在同一时刻到达各自吸收端：
+
+$$
+\tau_F=\inf\{t:Y_t=1\}=\inf\{t:U_t=1\}=\tau
+$$
+
+逐样本成立。初态 \(Y_0\) 的律是 \(F_\#\nu\)，所以取期望立即得到 \(H_{F,\nu}(s)=\mathbb E_\nu[e^{-s\tau}]\)。恒等坐标下的后向边值问题为 \(Dh''=sh\)、\(h'(0)=0\)、\(h(1)=1\)，其解为
+
+$$
+h(x,s)=\frac{\cosh(x\sqrt{s/D})}{\cosh\sqrt{s/D}}.
+$$
+
+这给出所列积分式。对算子公式，只需对 \(f(F(u))\) 作两次链式法则：
+
+$$
+D\partial_u^2(f\circ F)(u)
+=D\left(F'(u)^2 f''(F(u))+F''(u)f'(F(u))\right),
+$$
+
+再令 \(u=G(y)\)。反射条件由 \(\partial_u(f\circ F)(0)=F'(0)f'(0)\) 得到；\(F'(0)>0\)，故等价于 \(f'(0)=0\)。\(\square\)
+
+**推论 45.3（可识别对象是坐标等价类）。** 只给出单一起点的完整标量曲线 \(H(s)\)，即使 \(s\ge0\) 的连续曲线无噪声可得，也不能在允许上述 \(C^2\) 坐标推前的模型类中唯一恢复空间依赖的扩散系数和漂移系数。至少所有
+
+$$
+\left(D(F'\circ G)^2,\;D(F''\circ G),\;\delta_0\right)
+$$
+
+都属于同一读出等价类。要打破此等价性，必须额外固定物理坐标、限制算子为已知无漂移的子类，或加入内部位置探针与其观测映射；增加频率范围本身不能打破路径级等价。
+
+这里的“规范”是数学上的坐标选择，不是递归内生的物理对称性。若实验另行规定物理位置、局部通量或速度密度，必须先证明这些读出在 \(F\) 下如何变换；否则不能把同一 \(H(s)\) 宣称为同一物理扩散介质。
