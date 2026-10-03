@@ -1,0 +1,6 @@
+## 55. 无上界正返回的临界实际供应与精确长度率
+
+允许同一返回列表的每个参数独立取正整数 $m_i,r_i\ge1$，指定的字面固定尾供应族仍在预算 $\lambda$ 可行；每个有限槽的闭距离都严格小于 $\lambda$，全族上确界却恰为 $\lambda$。其非空列表的返回长度生成式为 $z^{26}/(1-z^6-z^{20})$。在原完整恢复合同下，这给出精确偶数格点率 $\alpha_\infty$ 及每个正确解码器的完整记忆下界 $\alpha_\infty N-107\alpha_\infty-1$。
+
+本章的数学前提为本卷[固定修订12e9e70a44e06fb3f915721ee5490d10da0b043e](https://github.com/the-omega-institute/trureturing/blob/12e9e70a44e06fb3f915721ee5490d10da0b043e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的定义33.7（返回块和共同颜色）及其逐坐标证书、定理33.13（临界闭图的线性峰值上界）与定义36.9（完整记忆恢复合同），以及本卷[已发布固定修订fd4b8ca5424438d72b86659262bea2a3235b6058](https://github.com/the-omega-institute/trureturing/blob/fd4b8ca5424438d72b86659262bea2a3235b6058/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md) 的约定49.1、命题49.2（固定实际数据）与引理49.3（共享来源的全槽活跃约束）。以下保留实际来源及其全部后缀坐标，不修改原来源图。
+

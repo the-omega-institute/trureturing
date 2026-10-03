@@ -76,7 +76,7 @@ public sealed class CliVerbLinkageTests
             [CommandProgram.Scribe] = new HashSet<string>(StringComparer.Ordinal)
             {
                 "content-check", "emit", "emit-values", "filemap", "describe-report", "markdown-check",
-                "projections", "resources", "resources release", "resources verify-release", "scripts", "relations",
+                "projections", "resources", "resources compare", "resources release", "resources verify-release", "scripts", "relations",
             },
         };
         var dangling = invocations

@@ -1,0 +1,30 @@
+**证明。** 记 $Y=y_0$，带4给 $h+\delta\le Y\le f-\delta$，相位零标签2及 guard 零，故
+$$
+y_1\in[s_3+\delta/g,s_4-\delta/g].
+$$
+共同尾须从 guard 一合法；高首标签25取色4，给 $x_1\ge s_4+\delta/g$。因 $b<s_4<e$，phase 1 共同色只能2，且共同尾标签为5。因此
+$$
+s_2+\delta/g\le x_2\le\eta-\delta/g^2.
+\tag{45.23}
+$$
+rival 相位一单色2给 $y_1>b-\delta$，使用弱式也足够。若此处用0，则 $y_2\le-(b-\delta)/g<a+\delta$，因为
+$$
+b+ga-(1-g)\delta>b+ga-(1-g)\lambda=2g^2/5>0.
+\tag{45.24}
+$$
+它只能取色0，而 $x_2\ge s_2+\delta/g>-t^2-\delta$ 不能取色0，矛盾。故 rival 相位一也为5，给 $y_2\ge\eta+\delta/g^2$。由 $b<\eta<e$，相位二共同色也只能2，rival $y_2>\eta>g$ 强制标签5，继而
+$$
+s_2+\delta/g\le y_3\le g/5-\delta/g^3.
+$$
+此区间在根0内部，故相位三标签0且 $y_4\ge-1/5+\delta/g^4$。下一周期首标签2要求末输出零，末标签只可能3、0、2。末0给 $y_4=-gY\le-gh<-1/5$，其中 $gh=(7-25g)/5>1/5$；末3更低，均矛盾。故 rival 必为 $(2,5,5,0,2)$，其实际周期固定点为
+$$
+Y=\frac{21-85g}{D},\quad D=1+g^5,\quad
+y_2=t^2+g^2-g^3Y.
+$$
+精确恒等式
+$$
+(y_2-e)-(Y-h)=\frac{54g^4}{5D}>0
+\tag{45.25}
+$$
+使 $y_2>e+\delta$；原共同色2又给 $y_2\le d-\delta<f-\delta$，所以相位二还严格允许原色3，产生第二实际双色。矛盾在检查第一终端以前已经发生，故未约束终端的 $M_{2,25}^{\{0,\ldots,5\}}$ 确实为空；加入 $A=U_4$ 仍为空。$\square$
+

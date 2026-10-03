@@ -1,0 +1,88 @@
+**定义 59.1（固定对象与量词）。** 沿用定义58.1–58.3。为明确本章不变的数据，置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1=t^3,\quad g^2+4g=1,
+\quad T_2=t^2=1-t,\quad \phi=1+t,
+$$
+
+$$
+\lambda=\frac{T_2}{10},\quad c=\frac{2t}{5},\quad
+\rho=g^6,\quad\chi=g^{20}.
+\tag{59.1}
+$$
+
+来源标签保持 $\{3,0,5,2,25\}$，其中 $25$ 是一个窗口标签，$0$ 是空窗。原合法边、支撑和平移量为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad1\to1:5,\\
+I_0=X=[-1,\phi],\qquad I_1=[-1,t],\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,T_2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx.
+\end{gathered}
+\tag{59.2}
+$$
+
+词按外到内写，$f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}}$，最右映射先作用。$\Omega$ 是从 guard 零出发的全部实际合法地址，$D_s$ 是从 guard $s$ 出发最终为空窗的实际地址，$D=D_0$。
+
+固定任意合法切点归属 $o=(o_1,\ldots,o_5)$，$o_a\in\{a-1,a\}$，保留原六色切点与闭包
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad
+q_3=t-5\lambda,\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\ J_1=[q_1,q_2],\ J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\ J_4=[q_4,q_5],\ J_5=[q_5,\phi].
+\end{gathered}
+\tag{59.3}
+$$
+
+实际色格 $C_i^o$ 依此归属取得切点，观察为 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。预算阈值统一写成大写 $Q_k$，与小写颜色切点 $q_a$ 分开。
+
+保留实际词
+
+$$
+\begin{aligned}
+U&=(5,0,3,0,3,3),&V&=(0,3,3,5,0,3),\\
+d&=(2,1,0,2,1,0),\\
+C&=(5,5,3,2,2,0,3,3,3,25,5,0,0,2,2,25,3,3,0,5),\\
+e&=(2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2).
+\end{aligned}
+\tag{59.4}
+$$
+
+stems 为 $P=UC$、$Q=VC$，共同颜色词为 $h=de$，长度26。两条字面尾始终为
+
+$$
+\xi_H=UC^3\,5\,0^\infty,\qquad
+\xi_L=VC^3\,0^\infty.
+\tag{59.5}
+$$
+
+对有限外列表 $\mathbf a=((m_1,r_1),\ldots,(m_k,r_k))$，$m_i,r_i\ge1$，原模板 $\mathsf O$ 的成对来源及共同历史为
+
+$$
+\begin{aligned}
+\alpha_{\mathbf a}&=P\,U^{m_1}C^{r_1}\cdots U^{m_k}C^{r_k}\xi_H,\\
+\gamma_{\mathbf a}&=Q\,V^{m_1}C^{r_1}\cdots V^{m_k}C^{r_k}\xi_L,\\
+H_{\mathbf a}&=h\,d^{m_1}e^{r_1}\cdots d^{m_k}e^{r_k}.
+\end{aligned}
+\tag{59.6}
+$$
+
+anchor 模板 $\mathsf A$ 在同一外列表与两尾之间分别再插入 $UC$、$VC$，共同历史再接 $de$。这是固定 $(1,1)$ 返回，付费长度26，其全部槽属于历史。空外列表也允许。偏移为 $\Delta_{\mathsf O}=26$、$\Delta_{\mathsf A}=52$。两来源始终使用同一个列表；误差可以分别选择，但不能另选后缀或替换来源。
+
+固定 $\kappa\in\{\mathrm{cl},\mathrm{st},\mathrm{rm}\}$，分别表示每槽 $|e_p|\le b$、每槽 $|e_p|<b$、每条完整记录存在其自己的 $\varepsilon>0$ 使全部 $|e_p|\le b-\varepsilon$。严格合同在 $b>0$ 使用。联合可供应与精确长度计数 $a^{\mathsf T}_{b,o,\kappa}(N)$ 均按定义58.3：两条规定来源供应同一个有限历史，随后分别接原字面尾的零误差完整未来。只数不同历史，不数误差选择。点态率为
+
+$$
+\eta^{\mathsf T}_{b,o,\kappa}
+=\limsup_{N\to\infty}
+\frac{\log_2\max\{1,a^{\mathsf T}_{b,o,\kappa}(N)\}}{N}.
+\tag{59.7}
+$$
+
+这是三个合同各自的率。“全族统一正余量”仅是本章固定见证族的加强性质，不定义第四个熵。有限历史严格取得、未来误差为零时，每条完整记录自动有自己的正余量；整个无限族共享余量还需另证。
+
+只观察 departure 位置：长 $N$ 历史观察 $0,\ldots,N-1$，走过 $N$ 条来源边，终端 $N$ 尚未观察。第一未来 $S_{\xi_H}$ 从该终端开始；第二未来为 $S_{\xi_L}$。解码器 $\mathcal A$ 的合同是公开定义36.9及定义58.1：确定、因果、固定初态、每次取得后只作有限计算和有限有序追加输出、输出不可回读；在该预算与合同的全部实际 $\Omega$ 记录上安全，在全部实际 $D$ 记录上每位置最终生效，包括空窗补齐。全部影响未来的可读状态均计价，完整最坏峰值记为 $B^{\mathrm{worst}}_{b,o,\kappa,\mathcal A}(N)$。
+

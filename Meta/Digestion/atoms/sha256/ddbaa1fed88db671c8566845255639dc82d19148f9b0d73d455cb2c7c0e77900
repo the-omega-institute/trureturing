@@ -1,0 +1,18 @@
+**命题 62.14（固定下图的共同实际误差余量）。** 若固定下图存在允许高边，置
+
+$$
+\varepsilon_{\rm graph}=\min_{\text{允许高边 }(w,\mathsf c)}
+\{L_n(w)-\tau\}>0.
+\tag{62.30}
+$$
+
+将该固定下图的每个有限因子按定理62.11嵌入实际完整列表，所有得到的同列表来源对及其零误差未来可以共用
+
+$$
+\varepsilon_{\rm actual}
+=\frac12\min\{b-C_{\rm auto},\ g^2\chi^K(B_M-d),\ g^2\chi\varepsilon_{\rm graph}\}>0
+\tag{62.31}
+$$
+
+作为实际误差余量。无高边时省略最后一项。
+

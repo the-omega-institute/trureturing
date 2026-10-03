@@ -1,0 +1,20 @@
+**定义 17.5（有符号坐标与圆周相位）。** 令
+
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \varphi=1+\alpha=\alpha^{-1},\qquad
+\beta=\alpha^2=1-\alpha,\qquad r=-\alpha,
+$$
+
+$$
+a=-\alpha,\qquad b=\alpha^2,\qquad J=[a,b],\qquad
+c_j=(-1)^{j+1}\alpha^{j+2}=-\alpha^2r^j.
+$$
+
+以 $\mathbb T=\mathbb R/\mathbb Z$ 为周长一的圆周，$[x]$ 表示相位，$\{x\}$ 表示其在 $[0,1)$ 内的代表。定义
+
+$$
+s(N)=\sum_j b_j(N)c_j,\qquad z_N=[N\alpha],\qquad E_k=[-k\alpha]\quad(k\in\mathbb Z).
+$$
+
+以后 $E_k$ 的整数下标不是该切点在圆上的排序号。
+

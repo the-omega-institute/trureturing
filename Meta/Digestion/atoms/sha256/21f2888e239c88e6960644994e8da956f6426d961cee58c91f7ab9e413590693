@@ -1,0 +1,35 @@
+**引理 59.2（实际位移与内部槽的准确域）。** 置
+
+$$
+h_H=\frac{39-6g}{380},\quad h_L=\frac{46+31g}{380},\quad
+E_H=T_2-c,\quad E_L=c,
+$$
+
+$$
+A_j=(1-\rho)h_j,\qquad X_j=A_j+\rho\chi^3E_j,
+\quad T_j(D)=A_j+\rho D,
+$$
+
+$$
+G_{j,m,r}(D)=h_j-\rho^m(h_j-\chi^rD),\qquad j=H,L.
+\tag{59.8}
+$$
+
+公开命题49.2与命题58.2供应
+
+$$
+0<\chi E_j<A_j<X_j<h_j<E_j<1,\quad
+A_j>\chi h_j,\quad h_H<h_L,\quad X_H<X_L,
+\quad1-\rho>\chi.
+\tag{59.9}
+$$
+
+从实际固定尾出发，加入任意有限完整返回或付费 anchor 后，在每个完整返回边界都有
+
+$$
+\boxed{A_j<D_j<h_j,\qquad D_H<D_L.}
+\tag{59.10}
+$$
+
+该不变式不适用于任意内部切口。返回内部的实际六字输入必须写成 $\chi^rD_j$、$T_j(\chi^rD_j)$、$\ldots$；$C$ 的内部输入必须按实际 $\chi$ 幂和后缀公式计算。所有六字块输入的高、低坐标分别在 $[c,T_2]$、$[0,c]$，所有 $C$ 块输入在 $[0,T_2]$，所以公开引理49.3的全部槽证书同时适用。
+

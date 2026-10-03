@@ -1,0 +1,13 @@
+**证明。** [约定1.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L34)把母卷的正数量条件翻译为 $R$ 中的整数条带；定理34.3及命题35.9把同一条件写成当前 guard、支持和 $Q$ 的坐标形式。于是已发表的有限来源数量条件对 guard 零给出
+
+$$
+ x\in R,\quad -1<x<\phi,\quad Q(x)>0
+ \Longrightarrow x\in T_0,
+$$
+
+而 $Q(x)=0$ 时，写 $A=3m,B=2m$ 得 $x=m/g$。在 $(-1,\phi)$ 内只有 $m=0$，[命题1.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L30)的零来源正好给出 $x=0$。反向方向由任何有限位串的实际展开直接得到 $x\in R\cap J_0^{\mathrm{fin}}$ 和 $Q(x)\ge0$。
+
+guard 一的首位必须为零。删去这个首位得到 guard 零地址，标量乘以 $-t$，所以 $T_1=-tT_0$。若首位为一，则下一位受 no-$11$ 约束为零，标量为 $1+t^2z>1-t^2=t$, $z\in(-1,\phi)$，仍在 guard 零条带，却位于 guard 一条带的另一侧，因而不属于 incoming guard 一。于是两个 guard 都满足所写集合等式。
+
+命题14.6给出每个根分支的实际极值尾，定理14.7给出每个标量 $x\in I_s$ 在固定 guard 的全部 $A_s$ 中至多两个编码，并说明双编码只能在有限前缀后接非零周期极值尾。根极值和这些双编码尾都不是 eventually-null；因此 $D_s$ 避开双编码点，定理14.7之后的限制 $\kappa_s|_{D_s}$ 在每个 guard 上单射。证毕。
+

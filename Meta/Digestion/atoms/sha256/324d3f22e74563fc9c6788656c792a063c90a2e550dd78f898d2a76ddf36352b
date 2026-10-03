@@ -1,0 +1,10 @@
+**命题 12.3（Proper prime divisors and finite arithmetic certificates）。** For $2\le n\le B_0$, compositeness is equivalent to the existence of a prime $p$ such that
+
+$$
+p^2\le B_0,\qquad p\mid n,\qquad p<n.
+$$
+
+One may replace the first bound by $p^2\le n$. Thus testing all primes up to $\sqrt{B_0}$ for proper divisibility is a finite primality criterion on this domain. The case $n=p$ must be excluded.
+
+证明。A proper prime divisor gives $n=pk$ with $p,k\ge2$, hence compositeness. Conversely write a composite $n$ as $uv$ with $1<u\le v$. Then $u^2\le n\le B_0$. The least divisor of $u$ greater than 1 is prime: otherwise a nontrivial factor would be a smaller divisor of $u$. Call it $p$. It satisfies $p\le u$, $p^2\le n$, $p\mid n$ and $p<n$. These implications give both versions. If a divisibility test returns success at $n=p$, it has not supplied a proper divisor and cannot certify compositeness. The finite list is an arithmetic criterion; an observed or executable certificate also needs the divisibility and properness checks to be permitted actions, or computations on an exactly recovered $n$, with their costs included. $\square$
+

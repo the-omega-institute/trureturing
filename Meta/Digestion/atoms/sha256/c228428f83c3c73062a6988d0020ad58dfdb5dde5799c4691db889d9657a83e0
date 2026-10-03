@@ -1,0 +1,24 @@
+**定义 13.2（Unit and low-to-high windows）。** The unit is $\varepsilon=b_0$, of weight $F_2=1$. Window $j\ge0$ is
+
+$$
+w_j=(b_{3j+1},b_{3j+2},b_{3j+3}),
+$$
+
+with respective weights $(F_{3j+3},F_{3j+4},F_{3j+5})$. Its possible modes are
+
+$$
+\mathsf E=000,\quad\mathsf A=100,\quad\mathsf B=010,\quad
+\mathsf C=101,\quad\mathsf D=001.
+$$
+
+These window-mode symbols are distinct in type from the tree leaves $A,B$. Internal neighboring bits cannot both be 1. When a first window is read its seam condition is $\varepsilon(w_0)_0=0$; between windows the condition is $(w_j)_2(w_{j+1})_0=0$. Equivalently initialize $s=\varepsilon$, require $s(w_j)_0=0$, and then set $s=(w_j)_2$. At zero window precision there is no seam condition on an unread window.
+
+Put
+
+$$
+Z_\ell(n)=(\varepsilon,w_0,\ldots,w_{\ell-1}),\qquad Z_0(n)=(\varepsilon),\qquad
+P_\ell(x)=\{y\in X:Z_\ell(q(y))=Z_\ell(q(x))\}.
+$$
+
+Thus $Z_\ell$ fixes exactly bits 0 through $3\ell$. Above the canonical end the bits are padded with zero and windows with $\mathsf E$. This supplies digits, not an observed End certificate. On trees the observation is $Z_\ell\circ q\circ c$; it is a code of quantity.
+

@@ -1,0 +1,58 @@
+**定义 32.1（根区间、端点归属与无限字识别）。** 全章沿用定义31.1的 $\mathbb F,t,\phi,g,I_s,X,A_s,\Omega$ 和 (31.2) 的实际标签、合法 guard 边及仿射分支。具体地，
+
+$$
+\begin{gathered}
+\mathbb F=\mathbb Q(t),\quad t=(\sqrt5-1)/2,\quad
+\phi=1+t,\quad g=t^3=2t-1,\quad 0<g<1,\\
+I_0=X=[-1,\phi],\qquad I_1=[-1,t],\\
+\Lambda=\{3,0,5,2,25\},\qquad
+0\to0:3,0,2;\quad 0\to1:5,25;\quad
+1\to0:3,0;\quad 1\to1:5.
+\end{gathered}
+\tag{32.1}
+$$
+
+$0$ 是空窗口，$25$ 是一个窗口标签。初始 guard 固定为零。读取 $\sigma_n(\omega)$ 就是读取同一实际位地址的第 $n$ 个三位窗口；合法无限标签字与这些实际地址对应。$\mathbb F$ 表示域，$A_s$ 表示状态地址域，$\Omega=A_0$ 表示完成来源，$X$ 表示标量区间；既有 $K$ 仍表示联合完成域。$T$ 仍是删除最低三位的来源映射，$g$ 只是正收缩系数。对同一地址记
+
+$$
+x_n=\kappa_{s_n}(T^n\omega)\in I_{s_n},\qquad
+s_n\xrightarrow{\ell_n}s_{n+1},\qquad
+x_n=\Delta_{\ell_n}-gx_{n+1}.
+\tag{32.2}
+$$
+
+这里平移量仍为 $(-t,0,t^2,1,2-t)$，按标签 $(3,0,5,2,25)$ 排列。两种状态的编码使用同一个窗口级数。定理17.2给出 $\kappa_s(A_s)=I_s$，并保留所有实际端点尾；不把共同标量的不同地址识别，也不选择一个自主标量删除分支。
+
+设 $J\subseteq X$ 为非空区间，令 $a=\inf J$、$b=\sup J$，并令 $\alpha,\beta\in\{0,1\}$ 分别表示 $a,b$ 是否属于 $J$。若 $a=b$，非空性要求 $\alpha=\beta=1$，此时 $J=\{a\}$。统一写为
+
+$$
+\begin{aligned}
+J&=\{x\in X:
+[x>a\ \lor\ (\alpha=1\land x=a)]
+\land[x<b\ \lor\ (\beta=1\land x=b)]\},\\
+L_J&=\kappa_0^{-1}(J)
+=\{\omega\in\Omega:\kappa_0(\omega)\in J\}.
+\end{aligned}
+\tag{32.3}
+$$
+
+$L_J$ 是完整原像，同标量的全部地址具有同一成员答案。若名义区间 $E$ 延伸到支撑外，先取 $J=E\cap X$；非空时本章端点条件只作用于 $a,b$，归属也按交集确定。空交集单独处理，不给不存在的有效端点施加条件。
+
+有限 Büchi 自动机每步消费一个实际窗口标签；一个字被接受，指存在从有限初始状态集出发、无限次访问指定接受状态的无限运行。这里“$\omega$-正则”按有限非确定 Büchi 自动机定义，其在 $\Lambda^{\mathbb N}$ 中的接受字必须恰为指定的合法地址语言。确定型每个字只有一条运行；弱型指每个强连通分量的接受位一致。非法 guard 字不能被接受。根条件 (32.3) 是唯一观察约束，不给 $x_n$ 再施加一列移位观察。
+
+地址空间 $\Omega$ 在有限标签的前缀拓扑下是紧致闭空间，合法有限前缀 $w=\ell_0\cdots\ell_{N-1}$ 的柱记为 $[w]_\Omega$。若其终端 guard 为 $s_N$，置 $H_0=\phi,H_1=t$，则由实际尾满像得到
+
+$$
+\begin{aligned}
+p_N(w)&=\sum_{j<N}(-g)^j\Delta_{\ell_j},\\
+I_w:=\kappa_0([w]_\Omega)
+&=p_N(w)+(-g)^N I_{s_N}
+=f_{\ell_0}\circ\cdots\circ f_{\ell_{N-1}}(I_{s_N}),\\
+\operatorname{diam}(I_w)
+&=g^N(1+H_{s_N})>0.
+\end{aligned}
+\tag{32.4}
+$$
+
+每个柱的所有标量值由同一已观察前缀的合法延续取得，柱像是非退化闭区间。对一个固定地址，这些像嵌套且直径趋零。柱的开闭性来自前缀拓扑，编码连续性也直接由统一级数余项得到。全章使用完整 $\Omega$，不换成最终空尾子域 $D$。
+

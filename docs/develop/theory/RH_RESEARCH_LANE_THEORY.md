@@ -13713,3 +13713,274 @@ $$
 此应用扩大的是固定解析测试的可支付实尺度区间，复用的实际零点验证高度仍为 $H$。它没有计算或认证新的零点高度；尺度上端点有限，不能代替第 29 节对所有充分大实数 $R$ 的符号判据。对超过该尺度区间的新剩余谱，条件 (33.15) 仍未证明，RH、Robin 及 FIB 算术交织仍不由此结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 全实际横向区域的外层复相位与逐项包络余项
+
+**定义 35.1（固定小角度与无界横向伸缩）。** 保留第 32—34 节的原函数、主分支、$H$、$a=d/4$ 与 $C_0=\sqrt{\pi/2}e^{-1/4}$。令
+
+$$
+T>0,\qquad |\tau|\le\frac1{2H},\qquad
+k=1-i\tau,\qquad x=iTk,\qquad
+c=\sqrt{2T}\,k^{1/2},\qquad \kappa=c/2.
+$$
+
+对实际参数，$\tau=\delta/\gamma$、$T=R\gamma$，而 $\eta=\tau\sqrt T$。这里的小角度条件不限制 $\eta$；特别是固定非零 $\tau$ 时，$|\eta|\to\infty$。
+
+以 $S_{+1}=S_+$、$S_{-1}=S_-$ 记 (33.1) 的两项。对 $\varepsilon\in\{1,-1\}$，置 $y_\varepsilon=\varepsilon x$，并定义
+
+$$
+\begin{aligned}
+B&=\frac{C_0^2\sqrt\pi\,a^{1/4}}{dM},\\
+L_\varepsilon(T,\tau)
+&=B e^{-1/4}y_\varepsilon^{-3/2}(-y_\varepsilon)^{-3/4}
+\exp\!\left(
+y_\varepsilon-2\sqrt{y_\varepsilon}
+-2\sqrt{-ay_\varepsilon}-i\varepsilon\sqrt a
+\right),\\
+U_\varepsilon(T,\tau)
+&=B e^{-1/4}b^{-3/2}y_\varepsilon^{-9/4}
+\exp\!\left(
+by_\varepsilon-2\sqrt{by_\varepsilon}
+-2\sqrt{ay_\varepsilon}+\sqrt{a/b}
+\right),\\
+X(T,\tau)
+&=2B e^{-1/4+a/4}T^{-3/2}k^{-3/2}\kappa^{-3/4}
+\exp\!\left(-c-2\sqrt{a\kappa}\right).
+\end{aligned}
+\tag{35.1}
+$$
+
+这些主项均非零；其模长只作为独立的正误差包络使用。$L_\varepsilon$ 和 $U_\varepsilon$ 分别来自 $u=1$ 和 $u=b$，$X$ 来自交叉项在 $u=1$ 的外层边界尺度。
+
+**候签定理 35.1（含 Fourier 方向的统一加法余项）。** 存在仅依赖原固定函数与 $H$ 的有限常数 $K,T_1>0$，使 $T\ge T_1$、$|\tau|\le1/(2H)$ 时，精确外层分解满足
+
+$$
+\begin{aligned}
+\left|S_\varepsilon(x)-L_\varepsilon-U_\varepsilon\right|
+&\le KT^{-1/2}\bigl(|L_\varepsilon|+|U_\varepsilon|\bigr),\\
+|C(x)-X|
+&\le KT^{-1/4}|X|.
+\end{aligned}
+\tag{35.2}
+$$
+
+因而
+
+$$
+\begin{aligned}
+A_R(z)&=X+\sum_{\varepsilon=\pm1}(L_\varepsilon+U_\varepsilon)
++\mathcal E(T,\tau),\\
+|\mathcal E(T,\tau)|
+&\le K\left[
+T^{-1/4}|X|+
+T^{-1/2}\sum_{\varepsilon=\pm1}(|L_\varepsilon|+|U_\varepsilon|)
+\right].
+\end{aligned}
+\tag{35.3}
+$$
+
+所有相位都保留 $\tau$ 的完整表达式；没有使用 $\eta$ 有界的展开，也没有用可能抵消的五项之和作余项分母。
+
+证明。以下的均匀常数均独立于 $T,\tau$。由于 $H>500$，全部参数满足 $|\tau|<1/1000$。主分支精确给出
+
+$$
+\sqrt x+\sqrt{-x}=\sqrt{2T}\,k^{1/2},\qquad
+x^{-3/4}(-x)^{-3/4}=T^{-3/2}k^{-3/2}.
+\tag{35.4}
+$$
+
+先说明证明内复用的 Bessel 核及矩估计。对 $\Re\zeta>0$，第 32 节使用的已有核身份与 [DLMF 10.40.2](https://dlmf.nist.gov/10.40.E2) 给出
+
+$$
+\begin{aligned}
+I_0(\zeta)
+&=\int_0^\infty e^{-\zeta(v+v^{-1})}\,dv
+=2K_1(2\zeta)
+=\sqrt{\pi/\zeta}\,e^{-2\zeta}(1+O(|\zeta|^{-1})),\\
+I_1(\zeta)
+&=\int_0^\infty(v-1)e^{-\zeta(v+v^{-1})}\,dv
+=2\bigl(K_2(2\zeta)-K_1(2\zeta)\bigr)
+=O\!\left(|\zeta|^{-3/2}e^{-2\Re\zeta}\right).
+\end{aligned}
+\tag{35.5}
+$$
+
+第二式使用两份 $K$ 展开的相同首项相消。这里需要的 $\zeta$ 全在固定闭扇区 $|\arg\zeta|<\pi/3$ 内，故所引渐近式的常数均匀。对 $s\to+\infty$，恒等式 $v+v^{-1}-2=(v-1)^2/v$ 在 $[1/2,2]$ 给出 Gaussian 界，在其补集给出严格相位间隔。因此
+
+$$
+\int_0^\infty(v-1)^2e^{-s(v+v^{-1})}\,dv
+=O(s^{-3/2}e^{-2s}).
+\tag{35.6}
+$$
+
+具体地，中心区间上 $(v-1)^2/v\ge(v-1)^2/2$；$v\ge2$ 和 $v\le1/2$ 的尾部通过 $v+v^{-1}\ge5/2$ 及其线性或倒数增长支付。(35.5)—(35.6) 只是已有核方法在本证明中的应用，不作为独立新结论。
+
+先处理 $S_\varepsilon$。固定 $\ell=1/8$。令 $y=y_\varepsilon$，从 $u=1$ 出发的短边取
+
+$$
+u=1+t,\qquad
+t=r e^{-i\arg(-y)/2},\qquad 0<r\le\ell;
+$$
+
+进入 $u=b$ 的短边取
+
+$$
+u=b-t,\qquad
+t=r e^{-i\arg y/2},\qquad \ell\ge r>0.
+$$
+
+用一条直线连接两条短边的非奇异端点。$\varepsilon=1$ 时此多边形在上半平面，$\varepsilon=-1$ 时在下半平面。所有点满足 $\Re u\ge1$、$|\arg u|<\pi/12$，且 $yu$ 保持在第 32 节对应的共同闭扇区。因为这些角度与各自分支切线有固定间隔，$\sqrt{yu}=\sqrt y\sqrt u$ 合法。
+
+先在完整的精确射线函数上进行 Cauchy 变形。两端小弧按第 33 节的端点衰减趋零；变形域没有穿过 $u=0,1,b$ 或射线函数的定义边界。故连接段及两条短边共同等于原积分。连接段满足
+
+$$
+\varepsilon\Im u\ge1/12,
+\qquad
+\Re(yu)\le-T/12+bT/1000<-T/16.
+$$
+
+两个权重倒数的实部均非负，内层平方根的实部为正。于是整条连接段的贡献为 $O(T^{-3/2}e^{-T/16})$。而 $|L_\varepsilon|\ge c_1T^{-9/4}e^{-T/1000-c_2\sqrt T}$，所以这份完整连接贡献统一为 $o(T^{-1/2}|L_\varepsilon|)$。
+
+在左端取 $q=-y$，在右端取 $q=y$，并在相应短边置
+
+$$
+t=\sqrt{a/q}\,v,\qquad
+0<v<V_T=\ell\sqrt{|q|/a},\qquad
+\zeta=\sqrt{aq}.
+$$
+
+线性相位和奇异端点权重成为精确核 $e^{-\zeta(v+v^{-1})}$。$|\zeta|\asymp\sqrt T$、$\Re\zeta\asymp|\zeta|$，其中的比较常数统一。此时才在已经变形的短边上使用 (32.4) 的全纯余项；其相对误差为 $O(T^{-1/2})$。
+
+在 $v\in[1/2,2]$，左端的内层指数满足
+
+$$
+-2\sqrt{y(1+t)}
+=-2\sqrt y-i\varepsilon\sqrt a\,v+O(T^{-1/2}),
+$$
+
+因为 $\sqrt y/\sqrt{-y}=i\varepsilon$。右端则满足
+
+$$
+-2\sqrt{y(b-t)}
+=-2\sqrt{by}+\sqrt{a/b}\,v+O(T^{-1/2}).
+$$
+
+其余权重在两个端点分别给出 $e^{-a/d}=e^{-1/4}$；幂因子给出 $1$ 和 $b^{-3/2}$，误差同为 $O(T^{-1/2})$。因此中心区间的振幅分别是这些固定因子乘以
+
+$$
+g_1(v)=e^{-i\varepsilon\sqrt a\,v},\qquad
+g_b(v)=e^{\sqrt{a/b}\,v},
+$$
+
+加上统一的 $O(T^{-1/2})$ 误差。
+
+这里不只估计中心 Gaussian。在整个短边上，平方根的 Lipschitz 界给出相对振幅模长 $\le C e^{Cv}$。令 $s=\Re\zeta$。当 $s\ge16C$、$v\notin[1/2,2]$ 时，直接比较两端点和单调性可得
+
+$$
+s(v+v^{-1})-Cv
+\ge(2+1/8)s+\frac{s}{32}(v+v^{-1}).
+\tag{35.7}
+$$
+
+它控制了直到 $V_T$ 的全部增长尾部。将核乘以至多一次的 Taylor 多项式延伸到无穷时，超过 $V_T$ 的部分也由此指数间隔支付。
+
+只在 $[1/2,2]$ 将 $g_r(v)$ 写成 $g_r(1)+g_r'(1)(v-1)+O((v-1)^2)$，再用 (35.5)—(35.6)。一次项的积分和二次余项相对于正首项包络均为 $O(|\zeta|^{-1})=O(T^{-1/2})$。全纯内层误差在同一鞍点射线上取模，其积分也为该包络的 $O(T^{-1/2})$；没有把它搬回原实区间取模。Jacobian 与核首项合成
+
+$$
+\sqrt{a/q}\,\sqrt{\pi/\zeta}
+=\sqrt\pi\,a^{1/4}q^{-3/4}.
+$$
+
+代入 $g_1(1),g_b(1)$ 及上述固定因子，分别得到 $L_\varepsilon,U_\varepsilon$，并支付 (35.2) 的第一行。
+
+再处理交叉项。由 (32.4)、(35.4)，在所需共同扇区内均匀有
+
+$$
+Q_-(ux)Q_+(-ux)
+=C_0^2u^{-3/2}T^{-3/2}k^{-3/2}
+e^{-c\sqrt u}(1+O(T^{-1/2})).
+\tag{35.8}
+$$
+
+仍先变形精确函数。以 $t=u-1$ 为坐标，近零路径取 $t=r e^{-i\arg c/2}$、$0<r\le\ell$，随后沿 $|t|=\ell$ 的短弧返回正实轴，再沿 $[\ell,d]$ 到另一个端点。当 $\tau=0$ 时短弧退化，路径就是原实轴。零附近小弧仍消失；所有路径均位于所需全纯扇区，无分支穿越。
+
+在半径 $\ell$ 的连接弧上，$|\arg t|<1/4000$、$|\arg c|<1/2000$，且
+
+$$
+\Re\!\left[c(\sqrt{1+t}-1)\right]
+\ge(\ell/4)\Re c.
+$$
+
+这可由 $\sqrt{1+t}-1=t/(\sqrt{1+t}+1)$、分母模长小于 $3$ 及这些小角度界直接得到。实段 $t\ge\ell$ 的同一差额至少为 $(\ell/3)\Re c$。权重模长不超过 $1$，包括 $t=d$ 的消失端点。因此全部连接弧和剩余实段的贡献为
+
+$$
+O\!\left(T^{-3/2}e^{-(1+\ell/4)\Re c}\right),
+$$
+
+统一指数小于 $|X|$，因为 $\Re c\asymp\sqrt T$ 而 $\Re\sqrt{a\kappa}\asymp T^{1/4}$。
+
+在第一条短边置
+
+$$
+t=\sqrt{a/\kappa}\,v,\qquad
+\zeta=\sqrt{a\kappa},\qquad
+0<v<\ell\sqrt{|\kappa|/a}.
+$$
+
+保留 $e^{-c}$ 后，核仍是 $e^{-\zeta(v+v^{-1})}$。在 $[1/2,2]$，
+
+$$
+-c\left(\sqrt{1+t}-1-t/2\right)
+=av^2/4+O(T^{-1/4}).
+$$
+
+另外 $(1+t)^{-3/2}=1+O(T^{-1/4})$，$e^{-a/(d-t)}=e^{-1/4}(1+O(T^{-1/4}))$。因此中心振幅是 $g_0(v)+O(T^{-1/4})$，其中
+
+$$
+g_0(v)=e^{-1/4+av^2/4}.
+$$
+
+这只是一份中心区间展开，不将 $e^{av^2/4}$ 延伸到无穷积分。对整条短边，$|t|\le\ell$ 的解析平方根恒等式给出
+
+$$
+\left|c(\sqrt{1+t}-1-t/2)\right|
+\le |c||t|^2/4
+\le(\ell/2)|\zeta|v
+<\frac{\Re\zeta}{15}v.
+$$
+
+所以真实振幅在全短边上的增长可被 $e^{sv/15}$ 支付，$s=\Re\zeta$。与 (35.7) 相同的端点比较给出其两侧尾部的固定指数间隔，包含全部增长的重标度范围。
+
+只把 $g_0$ 在 $v=1$ 的一次 Taylor 多项式通过核延伸到无穷。此时 $|\zeta|\asymp T^{1/4}$，(35.5)—(35.6) 给出 $O(T^{-1/4})$ 的包络相对误差；中心振幅误差及 (35.8) 的内层全纯误差也由同一射线核支付。代入 $g_0(1)=e^{-1/4+a/4}$、Jacobian 及 (35.8)，得到 $X$ 和 (35.2) 的第二行。合并精确三项分解即得 (35.3)。$\square$
+
+本节的承重接口是精确内层余项经过有限外层轮廓后，在整个小角度区域取得五份保留复相位的独立包络。Bessel 核与其渐近式复用所引来源；统一局部 Laplace 方法亦可按 [Neuschel 的参数接口](../../../Library/Weil/neuschel2012uniformlaplace.md) 直接调用；[既有文献注](../../../Library/Weil/tlas2020bump.md) 中单端点严格扇区公式不替代这里的外层轮廓与余项义务。
+
+**定义 35.2（同一实际剩余和的显式误差成本）。** 对第 33 节的 $\mathcal U_H(R)$，从每份正纵坐标水平反射对中取 $\delta_\rho=\beta-1/2>0$ 的代表，保留实际重数 $m_\rho$，代表集记为 $\mathcal U_H^+(R)$。当 $R\ge\max(1,T_1/H)$ 时，每个代表满足定义 35.1 的小角度条件。置
+
+$$
+\begin{aligned}
+\mathcal A_\rho(R)
+&=X(T_\rho,\tau_\rho)+
+\sum_{\varepsilon=\pm1}(L_\varepsilon(T_\rho,\tau_\rho)+U_\varepsilon(T_\rho,\tau_\rho)),\\
+\mathcal G_\rho(R)
+&=T_\rho^{-1/4}|X|+
+T_\rho^{-1/2}\sum_{\varepsilon=\pm1}(|L_\varepsilon|+|U_\varepsilon|),
+\end{aligned}
+$$
+
+其中 $T_\rho=R\gamma$、$\tau_\rho=\delta_\rho/\gamma$，第二行所有项在同一参数处取值。实际有限和满足
+
+$$
+\left|
+E_{\rm newrem}(R)-
+4\sum_{\rho\in\mathcal U_H^+(R)}m_\rho
+\Re\bigl(p(z_\rho)\mathcal A_\rho(R)\bigr)
+\right|
+\le4K\sum_{\rho\in\mathcal U_H^+(R)}
+m_\rho|p(z_\rho)|\mathcal G_\rho(R).
+\tag{35.9}
+$$
+
+这是 (35.3) 在实际重数及反射约定下的直接应用，未用其他零点配置替代实际联合实现。要通过这份误差成本支付 (33.15)，仍需将同一主项总和的下界与右端总成本、$P_H(R)$ 作联合比较，覆盖每个充分大实数 $R$。逐项误差趋零没有证明右端为 $o(P_H)$，所保留主项的实部也没有统一符号。本节没有供应这份实际联合比较，未得到 RH、Robin 的全称结论或 FIB 与实际素数作用的算术运输。
+
+## 追加锚（本行以下为增补区）

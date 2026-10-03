@@ -1,0 +1,62 @@
+**定理 11.6（Parry–Haar 律下给定完整未来的前缀分布）。** 令输入联合点按定义 9.1 的 $\lambda=\nu\times\mu$ 分布。仅在此概率律下，对 $k>0$，给定完整输出 $Y=(\eta,z)$ 的一个正则条件分布版本为
+
+$$
+\Pr_\lambda(U=u\mid Y=(\eta,z))=
+\begin{cases}
+\displaystyle\frac{r_{u_0}}{\phi^k r_b},&u\in\mathcal C_k(b),\\
+0,&u\notin\mathcal C_k(b),
+\end{cases}
+\qquad b=\eta_0,\quad r_0=\phi,\ r_1=1.
+$$
+
+相应原点的条件分布把上述质量放在 $h_u(\eta,z)$ 上。$k=0$ 时空前缀的概率为一、原点条件分布为 $Y$ 上的点质量。输出算术坐标 $z_{\rm out}$ 与整个输入符号地址 $\omega$ 独立。
+
+证明。命题 9.3 的一步逆核是 $A_{st}r_s/(\phi r_t)$。将合法前缀与末端首位 $b$ 连起来，逆核的 $k$ 个因子望远镜消去，得到
+
+$$
+\prod_{j=0}^{k-1}\frac{A_{u_j u_{j+1}}r_{u_j}}{\phi r_{u_{j+1}}}
+=\frac{r_{u_0}}{\phi^k r_b},\qquad u_k=b.
+$$
+
+为验证条件确实包含完整符号未来，而非只有首接缝，固定任意合法有限未来柱 $[bv_1\cdots v_n]$。按定义 9.1 的 Markov 柱公式，前缀与此柱的联合概率除以未来柱的概率，未来内部的转移因子全部抵消，余下
+
+$$
+\frac{\pi_{u_0}}{\pi_b}
+\prod_{j=0}^{k-1}P_{u_j u_{j+1}}
+=\frac{r_{u_0}^2}{r_b^2}
+\frac{r_b}{\phi^k r_{u_0}}
+=\frac{r_{u_0}}{\phi^k r_b}.
+$$
+
+非法接缝给零。所有有限未来柱生成完整尾的 Borel 集，柱上的条件积分恒等式因而延伸到全部尾事件。各前缀概率的和为一，既可由上述柱分解得到，也可由 $\pi P^k=\pi$ 验证。
+
+还必须检查联合算术未来。命题 5.2 给
+
+$$
+z_{\rm out}=M^{-k}(z_{\rm in}-t_{\omega|_k}).
+$$
+
+对每个固定的整个地址 $\omega$，这一仿射映射保持 $\mu$：$M\in\operatorname{GL}_2(\mathbb Z)$ 且 Haar 测度平移不变。因此对任意 Borel 集 $B\subseteq\Omega,C\subseteq G$，
+
+$$
+\begin{aligned}
+\Pr_\lambda(\omega\in B,z_{\rm out}\in C)
+&=\int_B\mu\{v:M^{-k}(v-t_{\omega|_k})\in C\}\,d\nu(\omega)\\
+&=\nu(B)\mu(C).
+\end{aligned}
+$$
+
+所以 $z_{\rm out}$ 与 $(U,\eta)$ 独立，再给定任意完整算术尾事件也不改变前缀权重。将符号柱与算术模柱组合并延伸到其生成的 Borel 集，就验证了所述联合条件分布。有限分支公式是 Borel 核，故给出一个正则条件分布版本；任意条件版本只须 $\lambda$ 几乎处处相同。原点由 $U,Y$ 唯一恢复，得到 $h_u(Y)$ 上的条件质量。输出之后的全部剥离轨道也由 $Y$ 决定，不再另增条件信息。$\square$
+
+三位时，该版本的非零权重明确为
+
+$$
+\begin{aligned}
+b=0:\quad &p(000)=p(001)=p(010)=\phi^{-3},\\
+&p(100)=p(101)=\phi^{-4};\\
+b=1:\quad &p(000)=p(010)=\phi^{-2},\qquad p(100)=\phi^{-3}.
+\end{aligned}
+$$
+
+它们依赖前缀首位及保留尾首位；五个逆分支没有被均分。概率中的地址与组成仍来自同一个输入点，独立性是产品 Haar 律的结论。
+

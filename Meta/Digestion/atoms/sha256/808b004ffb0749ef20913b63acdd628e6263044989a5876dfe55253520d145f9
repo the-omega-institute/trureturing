@@ -1,0 +1,12 @@
+**证明。** 定义40.1所说明的满像与合法空尾截断给出有限来源稠密性，因此存在这样的 $\xi$。[定理16.4证明中的有限和观察](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L2812)指出 $\mathbb Z[t]=\{a+bt:a,b\in\mathbb Z\}$ 对加法、乘法封闭；有限来源标量是 $-g$ 的幂与原平移量的有限乘积和，故 $x\in\mathbb Z[t]$。另一方面
+
+$$
+\alpha=-\frac{27+12t}{76}\notin\mathbb Z[t].
+$$
+
+若它等于整数系数的 $a+bt$，基 $1,t$ 上有理系数的唯一性将强制 $a=-27/76$、$b=-12/76$，矛盾。因此 $x\ne\alpha$。
+
+$A$ 从 guard 零返回零，故 $A^j\xi$ 为一条接缝合法的实际有限来源，复合公式给出其标量 $y_j$。返回不变性给 $y_j\in H_A$；$0<g^6<1$ 及 $x-\alpha\ne0$ 给出两两不同与单调收敛。$\square$
+
+现在固定一条 $\eta\in A_1$，使 $\kappa_1(\eta)\in H_B$，例如取 $\eta=B^\infty$。对每个 $j$，引理40.4保证同一对完整来源 $A^j\xi,B^j\eta$ 联合实现整个历史 $\mathbf d^j$，且对所有 $b\in J$ 均有严格余量。$\xi,\eta$ 固定，只有前接块数改变。这不把不同长度见证的坐标混用，也不把有限点 $y_j$ 宣称为某个图中的回归顶点。
+

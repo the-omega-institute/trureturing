@@ -1,0 +1,2 @@
+**引理54.1（实际侧别逐边解码）。** 两条实际来源逐时有原共同闭色，第二条为上述rival，且 $x_j\ne y_j$。记 $\sigma_j=\operatorname{sgn}(x_j-y_j)$。则 $\sigma_{j+1}=-\sigma_j$ 恰当第一标签 $a_j=R_j$；$\sigma_{j+1}=\sigma_j$ 恰当 $a_j\ne R_j$，此时 $a_j$ 是 $R_j$ 在 $\sigma_j$ 方向的相邻根标签。
+

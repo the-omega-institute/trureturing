@@ -1,0 +1,28 @@
+**命题54.8（八行必要偏移与失配）。** 令 $R_{\mathcal D},R_{\mathcal E}$ 为这两个实际rival标签。$R_{\mathcal E}=3$ 时 $y_{\mathcal E}$ 必在 $[\alpha+\delta,-u-\delta]$，$R_{\mathcal E}=0$ 时必在 $[\chi+\delta,\zeta-\delta]$。局部必要标签为
+
+| $(a,b)$ | $\mathcal D$共同色 | $R_{\mathcal E}=3$ 时 $R_{\mathcal D}$ | $R_{\mathcal E}=0$ 时 $R_{\mathcal D}$ |
+| --- | --- | --- | --- |
+| $(3,0)$ | $1$ | $0$ | $0$ |
+| $(0,5)$ | $2$ | $0$ | $5$ |
+| $(5,2)$ | $3$ | $5$ | $2$ |
+| $(2,25)$ | $4$ | $2$ | $2$ |
+
+令同一rival从 $F$ 到 $\mathcal D$ 的词为 $V$，$|V|=h-2$，并置
+$$
+\eta=g^{h-2},\quad f_T(z)=A_T+\eta z,\quad
+f_V(z)=A_V+\eta z,\quad \mathcal D_T=A_T-A_V,
+\quad M_T=\#\{j:T_j\ne V_j\}.
+$$
+则以下八行均为必要条件：
+
+| $(a,b)$ | $(R_{\mathcal D},R_{\mathcal E})$ | 共同链平移 | 共同链失配数 |
+| --- | --- | --- | --- |
+| $(3,0)$ | $(0,3)$ | $\mathcal D_T>\eta t$ | 奇数，至少1 |
+| $(0,5)$ | $(0,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(5,2)$ | $(5,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(2,25)$ | $(2,3)$ | $\mathcal D_T>0$ | 偶数，至少2 |
+| $(3,0)$ | $(0,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(0,5)$ | $(5,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(5,2)$ | $(2,0)$ | $\mathcal D_T<0$ | 偶数，至少2 |
+| $(2,25)$ | $(2,0)$ | $\mathcal D_T<-\eta u$ | 奇数，至少1 |
+

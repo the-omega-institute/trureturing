@@ -1,0 +1,31 @@
+**引理 40.2（带符号极值路径的定量计数）。** 定义40.1的非空表示有 $s$ 个存活顶点时，其初始总标量像的最小值、最大值均由一条确定的带符号策略路径取得。若该策略轨道的暂态长为 $k$、循环长为 $p$，则
+
+$$
+p\ge1,\qquad k+p\le2s,
+\qquad k\le2s-1.
+$$
+
+**证明。** 对每个存活顶点 $v$，全部无限后续路径构成有限离散边字母表乘积中的非空闭集，因而紧致。标量级数的尾部统一趋零，所以其像 $\mathcal S_v$ 为非空紧集。记 $m_v=\min\mathcal S_v$、$M_v=\max\mathcal S_v$。全路径接受保证完整的首边分解；负斜率于是给出
+
+$$
+\begin{aligned}
+\mathcal S_v&=\bigcup_{e:v\to z}
+\bigl(\Delta_{\ell(e)}-g\mathcal S_z\bigr),\\
+m_v&=\min_{e:v\to z}
+\bigl(\Delta_{\ell(e)}-gM_z\bigr),\\
+M_v&=\max_{e:v\to z}
+\bigl(\Delta_{\ell(e)}-gm_z\bigr).
+\end{aligned}
+$$
+
+这就是[定理31.6](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8454)的交替极值等式。在每个 $v$ 的两个有限极值式中各固定选一条取得等号的边。带符号状态 $(v,-)$ 表示取得 $m_v$，沿所选最小边转到 $(z,+)$；$(v,+)$ 表示取得 $M_v$，沿所选最大边转到 $(z,-)$。这些选择在至多 $2s$ 个状态上定义确定转移，每步仍是一条实际图边。
+
+初始总像为有限并 $\bigcup_{v\in V_{\rm in}}\mathcal S_v$。选一个取得所需初始极值的顶点及符号，沿上述策略前进。若 $z_j$ 是第 $j$ 个带符号状态所对应的真实极值，则
+
+$$
+z_j=\Delta_{\ell_j}-gz_{j+1},\qquad
+z_0=\sum_{j=0}^{N-1}(-g)^j\Delta_{\ell_j}+(-g)^Nz_N.
+$$
+
+所有 $z_N$ 有界，故余项趋零，该无限图路径确实取得初始极值，并按全路径合同接受。确定轨道首次重复前至多经过 $2s$ 个不同状态，分成 $k$ 个暂态状态和 $p\ge1$ 个循环状态，得到 $k+p\le2s$。最小、最大相互交替是负斜率所强制的；计数须保留加倍状态集。$\square$
+
