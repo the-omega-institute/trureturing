@@ -66,7 +66,8 @@ public static class ScribeEmitter
                 writeAttestation: false,
                 checkFreshness: check,
                 graphRepositoryRoot: repositoryRoot,
-                validateDocumentGraph: false).ExitCode;
+                validateDocumentGraph: false,
+                validateSourceBijection: false).ExitCode;
         });
     }
 
@@ -238,7 +239,8 @@ public static class ScribeEmitter
         bool writeAttestation = true,
         bool checkFreshness = false,
         string? graphRepositoryRoot = null,
-        bool validateDocumentGraph = true)
+        bool validateDocumentGraph = true,
+        bool validateSourceBijection = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -271,7 +273,7 @@ public static class ScribeEmitter
             var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
                 documentsAssembly!,
                 repositoryRoot);
-            if (check && !tolerateAbsentDocuments)
+            if (check && validateSourceBijection && !tolerateAbsentDocuments)
             {
                 var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
                 var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(

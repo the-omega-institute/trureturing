@@ -39,6 +39,7 @@ public sealed class ScribeDefinitionSelectionTests
                     ScribeNode.Create("digest", H("Scoped"), Blocks(Paragraph(Text("content")))));
             }
             """);
+        File.WriteAllText(root.Resolve("Blueprint/D5/S0/Test/Unselected.scribe.cs"), "class Unselected {}");
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
         var error = new StringWriter();
 
