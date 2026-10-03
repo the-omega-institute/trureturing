@@ -21503,3 +21503,395 @@ $$
 一般预测充分性、最大纤维补充容量、有限纤维识别、合并后的区别不能由共同确定性后处理恢复、以及保留输入的逻辑可逆扩展，分别已有 `CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient`、`DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity`、`FiberBinaryIdentification.arbitrary_binary_questions_identify_target`、`ForwardMergePersistence.forward_merge_persistence` 和 `LogicalReversibleExtension.logical_reversible_extension`；《运输与记忆补全》§16已区分可读界面更新与自主补充记忆。这里综合的是同一付费来源上的具体乘积条件律、全部已得过去的算术编号与固定模取得、同一观察历史的投影拼接，以及重复半系数给出的全路径精确容量。结论为上述有限载荷合同下的普通数学证明，不作一般编号方法或侧信息原理的新颖性主张。观察器仍只使用本次已付费返回，没有新增来源端口、回放、重置、全局 Stop 后 Read 或与来源相关的外部随机性；条件行不是一个新供应的采样器，记忆反解也不是物理动力学反转。
 
 ## 102.99 追加锚
+
+## 103. 有限参考的关系重量、字符谱与同源过去容量
+
+沿用定义102.1的同一付费来源、共同隐藏深度 $K$ 或一个固定共同先验、实际取得且保留可见的 $R\in\mathbb F_q$、$q=2^d$，以及原解析器与原 Stop。公开 $\ell\ge1$，固定实际值 $R=\rho$；载荷统计条件仍是 $Q_{2\ell}=q_0=(0,\ell)$，接受事件仍是 $E_\rho=\{R=\rho,Q_{2\ell}=q_0,\widetilde A=1\}$。恢复接口严格为已供给的 $(\ell,\rho,c,\beta,h)$，目标是已发生的载荷标记过去；在零循环记录中才由标记恢复字面载荷。§102.4已证明并由因果秩达到的全路径最小补充字母表为
+
+$$
+T_\ell(\rho)=\sum_{t=0}^{\ell}\sum_{g\in\mathbb F_q}M_t(g)^2.
+$$
+
+这里求它在实际参考下的精确数值及增长，不另立一般容量定理。为避免把多项式与次数混写，置
+
+$$
+G_\rho(X)=\operatorname{lcm}(m_\rho(X),X+1),\qquad
+L_\rho=\deg G_\rho,\qquad e=\deg m_\rho.
+$$
+
+$L_\rho$ 保留§101.4的次数含义。半字统一用下标 $0\le i<\ell$，$\sigma_\rho(x)=\sum_i x_i\rho^i$，并约定 $\rho^0=1$，包括 $\rho=0$。
+
+### 103.1 实际关系支持给出的有序配对数
+
+**命题 103.1（关系核的重量计数）。** 令 $C_{\ell,\rho}$ 为所有次数小于 $\ell$、被 $G_\rho$ 整除的二进制系数多项式集合，包含零多项式；$w(f)$ 为其系数重量。则所有 $w(f)$ 都是偶数，且
+
+$$
+T_\ell(\rho)
+=\sum_{f\in C_{\ell,\rho}}
+2^{\ell-w(f)}\binom{w(f)}{w(f)/2}.
+\tag{103.1}
+$$
+
+在首个超过§101阈值的长度 $\ell=L_\rho+1$，此式特别成为
+
+$$
+T_{L_\rho+1}(\rho)
+=2^{L_\rho+1}
++2^{L_\rho+1-w(G_\rho)}\binom{w(G_\rho)}{w(G_\rho)/2}.
+\tag{103.2}
+$$
+
+证明。平方和恰计数所有有序半字对 $(x,z)$，满足整数重量 $|x|=|z|$ 且 $\sigma_\rho(x)=\sigma_\rho(z)$。对每一对，令 $f=\sum_i(x_i+z_i)X^i$，加法在 $\mathbb F_2$ 中。综合征相等给 $m_\rho\mid f$；重量相等给对称差偶数，即 $f(1)=0$，所以 $G_\rho\mid f$。反之，固定 $f\in C_{\ell,\rho}$，其支持 $S$ 有偶数个位置。在 $S$ 外 $x=z$，有 $2^{\ell-w(f)}$ 个任意共同选择；在 $S$ 内 $z_i=1-x_i$，整数重量相等恰要求 $x$ 占据其中一半，有 $\binom{w(f)}{w(f)/2}$ 个选择。这些选择与上述有序对双射，既不遗漏也不重复；包括 $f=0$ 的 $2^\ell$ 个对角对。求和给（103.1）。次数小于 $L_\rho+1$ 的 $G_\rho$ 倍式只能是 $0,G_\rho$，给（103.2）。
+
+每个这样的 $(x,z)$ 对应完整载荷 $(x,1-z)$，其重量为 $\ell$，且重复半系数的指纹为零。补位映射可逆，故这也是终端接受记录的计数。§102.1的同源质量给每个记录与指定种子相同的严格正质量；这些关系是实际支持中的过去歧义。$\ell\le L_\rho$ 时只有零关系，从而 $T_\ell=2^\ell$，直接复用§101阈值；$T_\ell$ 对原供给接口的最小性与可取得性仍由命题102.7承担。证毕。
+
+**命题 103.2（同一个十六元域中同次数的不同关系重量）。** 取共同公开表示
+
+$$
+\mathbb F_{16}=\mathbb F_2[X]/(X^4+X+1),\qquad
+\eta=[X],\qquad \rho=\eta^3.
+$$
+
+两者的最小多项式次数均为4，但在 $\ell=6$ 时，
+
+$$
+\begin{aligned}
+m_\eta&=X^4+X+1,&
+G_\eta&=X^5+X^4+X^2+1,& T_6(\eta)&=88,\\
+m_\rho&=X^4+X^3+X^2+X+1,&
+G_\rho&=X^5+1,& T_6(\rho)&=96.
+\end{aligned}
+\tag{103.3}
+$$
+
+两种补充字母表的最少定长数据位都为7。
+
+证明。$X^4+X+1$ 在0、1处均非零；在二元域唯一首一不可约二次式 $X^2+X+1$ 模下余式为1。四次式若可约且没有一次因子，就必须有不可约二次因子，故此四次式不可约，商环为域，$m_\eta$ 如上。由 $\eta^4=\eta+1$，有 $\eta^5=\eta^2+\eta\ne1$；也有 $\eta^3\ne1$，因为否则存在次数小于4的非零多项式以 $\eta$ 为根。$\eta$ 非零，阶整除15；排除阶1、3、5后阶为15，所以 $\rho=\eta^3$ 阶为5。$\rho\ne1$ 且 $\rho^5=1$，故 $\rho$ 是 $X^4+X^3+X^2+X+1$ 的根。此式也无二元根，在 $X^2+X+1$ 模下余式为 $X+1$，同样不可约，遂是 $m_\rho$。两最小多项式均与 $X+1$ 互素，乘法给所列 $G$，它们次数都为5而重量分别为4、2。用（103.2），
+
+$$
+T_6(\eta)=64+4\binom42=88,\qquad
+T_6(\rho)=64+16\binom21=96.
+$$
+
+$64<88<96\le128$，所以二者位宽都是7。这比较的是同一 $q=16$ 付费提种与同一共同 $K$ 载荷实验中 $R=\eta$、$R=\rho$ 两个正质量条件切片；没有更换来源或重新挑选种子。相同次数控制后述固定参考的主项，但不决定有限长度的精确关系歧义，也不保证取整位宽不同。证毕。
+
+### 103.2 评价字符的消去与精确谱公式
+
+置
+
+$$
+V_\ell=\operatorname{span}_{\mathbb F_2}\{1,\rho,\ldots,\rho^{\ell-1}\},\qquad
+r_\ell=\min(e,\ell),\qquad
+V_\ell^*=\operatorname{Hom}_{\mathbb F_2}(V_\ell,\mathbb F_2),
+$$
+
+并对 $\lambda\in V_\ell^*$ 定义
+
+$$
+w_\lambda=|\{i:0\le i<\ell,\ \lambda(\rho^i)=1\}|.
+$$
+
+这里的指标是评价像空间上的线性泛函。其评价行空间为
+
+$$
+\mathcal R_{\ell,\rho}
+=\{(\lambda(\rho^i))_{i=0}^{\ell-1}:\lambda\in V_\ell^*\}.
+$$
+
+这与增加奇偶约束后的 $C_{\ell,\rho}^{\perp}$ 须分别使用：因为 $C_{\ell,\rho}=\{u:\sigma_\rho(u)=0,\ \sum_i u_i=0\text{ in }\mathbb F_2\}$，对其线性方程作消元即得 $C_{\ell,\rho}^{\perp}=\mathcal R_{\ell,\rho}+\operatorname{span}_{\mathbb F_2}\{(1,\ldots,1)\}$。下式只对评价行求和，归一化为 $2^{-r_\ell}$，没有把这个较大的奇偶增广行空间当作同一指标集。
+
+**命题 103.3（具体半字纤维的字符谱及内点界）。** $\dim V_\ell=r_\ell$。采用不含额外 $1/2$ 因子的约定
+
+$$
+S(a,b)=\frac{(2a)!(2b)!}{a!b!(a+b)!}\qquad(a,b\ge0),\qquad
+B_\ell=\binom{2\ell}{\ell},
+$$
+
+包括 $a=0$ 或 $b=0$，则
+
+$$
+\begin{aligned}
+T_\ell(\rho)&=2^{-r_\ell}\sum_{\lambda\in V_\ell^*}
+S(\ell-w_\lambda,w_\lambda),\\
+\frac{S(\ell-w,w)}{B_\ell}
+&=\frac{\binom\ell w}{\binom{2\ell}{2w}}quad(0\le w\le\ell).
+\end{aligned}
+\tag{103.4}
+$$
+
+比值在 $w=0,\ell$ 为1；若 $\ell\ge2$，在所有 $1\le w\le\ell-1$ 上不超过 $1/(2\ell-1)$。
+
+证明。前 $e$ 个幂线性独立，否则以 $\rho$ 为根的非零多项式次数小于 $e$；由最小多项式递推，后续所有幂都在它们的张成内。因此 $\dim V_\ell=\min(e,\ell)$，评价映射满射到 $V_\ell$，泛函到评价行的映射为单射。
+
+在 $V_\ell$ 的加法群上有有限字符消去式
+
+$$
+2^{-r_\ell}\sum_{\lambda\in V_\ell^*}(-1)^{\lambda(u)}
+=\begin{cases}1,&u=0,\\0,&u\ne0.\end{cases}
+\tag{103.5}
+$$
+
+$u=0$ 时各项为1；$u\ne0$ 时延伸 $u$ 为一组基，取 $\lambda_0(u)=1$，则配对 $\lambda\leftrightarrow\lambda+\lambda_0$ 使项相消。这正是 [Forney, *Codes on Graphs: Duality and MacWilliams Identities*, arXiv:0911.5508v4](https://arxiv.org/pdf/0911.5508v4) §3.1的有限加法字符正交机制在二元评价像上的应用。
+
+令 $a_t(\lambda)=\sum_g M_t(g)(-1)^{\lambda(g)}$，其中 $g\in V_\ell$，像外计数为零。展开平方并用（103.5），
+
+$$
+\sum_gM_t(g)^2=2^{-r_\ell}\sum_\lambda a_t(\lambda)^2.
+$$
+
+逐位置展开半字，$a_t(\lambda)$ 是
+
+$$
+P_\lambda(z)=(1+z)^{\ell-w_\lambda}(1-z)^{w_\lambda}
+$$
+
+的 $z^t$ 系数。对于 $w=w_\lambda$，系数平方和的常数项恒等式为
+
+$$
+\begin{aligned}
+\sum_{t=0}^{\ell}([z^t]P_\lambda(z))^2
+&=[z^0]P_\lambda(z)P_\lambda(z^{-1})\\
+&=(-1)^w[z^\ell](1+z)^{2(\ell-w)}(1-z)^{2w}\\
+&=(-1)^wK_\ell^{2\ell}(2w).
+\end{aligned}
+\tag{103.6}
+$$
+
+第一行把两个系数指标相等的项选出；第二行使用 $P_\lambda(z^{-1})=(-1)^wz^{-\ell}P_\lambda(z)$；最后采用 $K_j^N(x)=\sum_h(-1)^h\binom{x}{h}\binom{N-x}{j-h}$，范围外二项式为零。[Georgiadis–Munemasa–Tanaka, *A note on super Catalan numbers*, arXiv:1101.1579v4](https://arxiv.org/pdf/1101.1579v4) Eq. (2) 为
+
+$$
+K_{a+b}^{2(a+b)}(2a)=(-1)^aS(a,b).
+$$
+
+其精确参数对应是 $(a,b)=(w,\ell-w)$，即该文的 $(m,n)=(w,\ell-w)$。故（103.6）等于 $S(w,\ell-w)=S(\ell-w,w)$；对 $t$ 求和得（103.4）第一式。这个既有超 Catalan 恒等式直接应用于本源的系数平方和，未引入一般编码对偶定理。
+
+约去阶乘得第二式。写比值为 $H_\ell(w)$，在 $0\le w<\ell$ 有
+
+$$
+\frac{H_\ell(w+1)}{H_\ell(w)}
+=\frac{2w+1}{2\ell-2w-1},\qquad
+H_\ell(w)=H_\ell(\ell-w).
+\tag{103.7}
+$$
+
+相邻比值在 $w\le(\ell-1)/2$ 时不超过1，随后不小于1；所以内点最大值在 $w=1$ 或 $\ell-1$，其值为 $1/(2\ell-1)$。端点值为1，所有项非负。当 $\ell=1$ 时没有内点，$V_1$ 的两泛函重量为0、1，两项均为 $S(1,0)=2$，得到 $T_1(\rho)=2$，对每个种子成立。证毕。
+
+### 103.3 端点排除、有限包络与不变的实际参考
+
+**命题 103.4（固定参考的有限包络及例外）。** 对 $\rho\ne1$ 且 $\ell\ge e+1$，有
+
+$$
+\frac{B_\ell}{2^e}
+\le T_\ell(\rho)
+\le\frac{B_\ell}{2^e}
+\left(1+\frac{2^e-1}{2\ell-1}\right).
+\tag{103.8}
+$$
+
+对全部 $\ell\ge1$，两个特殊参考的精确值为
+
+$$
+T_\ell(1)=B_\ell,\qquad
+T_\ell(0)=2\binom{2\ell-2}{\ell-1},\qquad
+\frac{T_\ell(0)}{B_\ell}
+=\frac{\ell}{2\ell-1}
+=\frac12\left(1+\frac1{2\ell-1}\right).
+\tag{103.9}
+$$
+
+所以 $\rho=0$ 在 $\ell\ge2$ 达到（103.8）的上界。
+
+证明。此长度范围下 $r_\ell=e$，零泛函的 $w=0$ 项是 $B_\ell$。非零泛函不可能在全部幂上为零，因为这些幂张成 $V_\ell$。它也不可能在全部幂上为1：$m_\rho(\rho)=0$ 涉及 $0,\ldots,e$ 次幂，全部都已出现；若泛函取值全为1，对此关系作用就得到 $0=m_\rho(1)$。$\rho\ne1$ 时不可约的 $m_\rho$ 与 $X+1$ 互素，故 $m_\rho(1)=1$，矛盾。因而全部 $2^e-1$ 个非零泛函重量都在 $1,\ldots,\ell-1$，每项由（103.4）的内点界控制；项非负给下界，逐项求和给上界。
+
+$\rho=1$ 时综合征是重量的奇偶值，固定重量后不再细分，故 $T=\sum_t\binom\ell t^2=B_\ell$。最后一个等式是 $(1+z)^\ell(1+z)^\ell$ 的 $z^\ell$ 系数。$\rho=0$ 时综合征只读首位：首位0、1的重量 $t$ 计数分别为 $\binom{\ell-1}{t}$、$\binom{\ell-1}{t-1}$。平方求和得到两份 $\sum_j\binom{\ell-1}{j}^2$，即（103.9）；$\ell=1$ 用 $\binom00=1$ 仍成立。阶乘约分给其比值。证毕。
+
+$+1$ 不能从（103.8）的长度条件中删掉。取 $\mathbb F_4=\mathbb F_2[X]/(X^2+X+1)$、$\omega=[X]$，$\ell=e=2$。幂 $(1,\omega)$ 是基，存在泛函在两者上都为1；四个泛函的重量为 $0,1,1,2$。由（103.4），$T_2(\omega)=(6+2+2+6)/4=4$，但把包络误用于 $\ell=e$ 会给上界 $6(1+3/3)/4=3$。缺失的最高次幂让全1字符不能被最小多项式关系排除。
+
+把同一个 $\rho$ 通过域嵌入 $\iota:\mathbb F_q\hookrightarrow\mathbb F_{q'}$ 搬到更大域，不改变 $T_\ell$。对任何二进制多项式，$f(\iota(\rho))=\iota(f(\rho))$，嵌入单射使零关系完全相同；重量约束也不变，于是（103.1）的每一项都相同。等价地，$V_\ell$ 与其嵌入像线性同构，字符重量谱保持。此断言固定实际参考及其关系；在更大域重新执行一个均匀提种实验，种子集合、付费获取与接受后分布都变了，不能由这个不变性把两实验当作同一来源律。包络也未宣称每个非零种子的 $O(1/\ell)$ 误差都最优。
+
+### 103.4 固定实际参考的增长及补充容量边界
+
+**命题 103.5（固定参考的实数容量与取整位宽）。** 固定实际有限参考 $\rho$，因而固定其次数 $e$。当公开长度 $\ell\to\infty$ 时，若 $\rho\ne1$，
+
+$$
+\begin{aligned}
+T_\ell(\rho)&\sim\frac{4^\ell}{2^e\sqrt{\pi\ell}},\\
+\log_2T_\ell(\rho)
+&=2\ell-e-\tfrac12\log_2(\pi\ell)+O_\rho(1/\ell).
+\end{aligned}
+\tag{103.10}
+$$
+
+$\rho=1$ 时同样成立但去掉 $2^e$ 因子及 $-e$ 项。最少定长补充数据位为 $b_\ell(\rho)=\lceil\log_2T_\ell(\rho)\rceil$，所以其相应展开只有 $O_\rho(1)$ 的加性取整误差。
+
+证明。直接应用 [Robbins, *A Remark on Stirling's Formula*, *The American Mathematical Monthly* 62(1), 26–29 (1955)](https://dornsife.usc.edu/sergey-lototsky/wp-content/uploads/sites/211/2024/02/Stirling-Robbins.pdf) 印刷页26的 Eq. (1)–(2)：对正整数 $n$，
+
+$$
+n!=\sqrt{2\pi}\,n^{n+1/2}\exp(-n)\exp(a_n),\qquad
+\frac1{12n+1}<a_n<\frac1{12n}.
+$$
+
+这里只有 $n=\ell,2\ell>0$ 的两次应用。约分得
+
+$$
+\begin{aligned}
+B_\ell&=\frac{4^\ell}{\sqrt{\pi\ell}}\exp(\varepsilon_\ell),
+&\varepsilon_\ell&=a_{2\ell}-2a_\ell,\\
+\frac1{24\ell+1}-\frac1{6\ell}
+&<\varepsilon_\ell
+<\frac1{24\ell}-\frac2{12\ell+1}.
+\end{aligned}
+\tag{103.11}
+$$
+
+因而 $\varepsilon_\ell=O(1/\ell)$，并且 $\log_2B_\ell=2\ell-\frac12\log_2(\pi\ell)+\varepsilon_\ell/\ln2$。对于固定 $\rho\ne1$，由（103.8）写 $T_\ell=2^{-e}B_\ell(1+u_\ell)$，其中 $0\le u_\ell\le(2^e-1)/(2\ell-1)$。固定 $e$ 给 $u_\ell=O_\rho(1/\ell)$，且 $0\le\ln(1+u_\ell)\le u_\ell$，得到（103.10）两式。$\rho=1$ 时直接用 $T=B$。最后 $0\le\lceil x\rceil-x<1$，故对位宽只能保留 $O(1)$，不能把实数对数余项误报为取整后的 $O(1/\ell)$。证毕。
+
+实数对数容量相对于未按综合征拆分的平衡基准 $B_\ell$ 的下降为
+
+$$
+\log_2B_\ell-\log_2T_\ell(\rho)
+=e-\log_2(1+u_\ell)\longrightarrow e
+\quad(\rho\ne1),
+\tag{103.12}
+$$
+
+而 $\rho=1$ 时处处为0。这里 $B_\ell$ 是平衡完整标记字的未分割字母表；它不是在同一已供给 $(\ell,\rho,c,\beta,h)$ 接口下删去接受要求所得的最小补充容量，后者已经由命题102.7证明仍为 $T_\ell$，包含拒绝路径。上述下降也不自动成为实际定长位宽的同值下降：$\rho=0,\ell=5$ 时 $B_5=252$、$T_5(0)=140$，但两者的最少定长位数都是8。
+
+真互补档案的终端完整载荷有 $2^\ell$ 种，其字母表对数为 $\ell$。所以固定 $\rho\ne1$ 时相对它的实数容量差为
+
+$$
+\log_2T_\ell(\rho)-\ell
+=\ell-e-\tfrac12\log_2(\pi\ell)+O_\rho(1/\ell),
+\tag{103.13}
+$$
+
+定长位数差有相应 $O_\rho(1)$ 误差；$\rho=1$ 则去掉 $-e$。有限参考压缩的是关系类的一个固定次数主项，仍留下随载荷长度增长的精确过去区别。
+
+固定参考条件不能推广为次数随 $\ell$ 变化的统一展开。任取一个 $e=\ell$ 的参考，前 $\ell$ 个幂线性独立，所有半字的综合征都不同，由（103.1）只有零关系，精确有 $T_\ell=2^\ell$。这样的参考沿任意趋于无穷的素数长度 $\ell$ 存在：取 $\mathbb F_{2^\ell}$ 中 $\rho\notin\mathbb F_2$，中间域 $\mathbb F_2[\rho]$ 的次数 $e$ 由扩张塔整除素数 $\ell$，且 $e\ne1$，故 $e=\ell$。若把（103.10）误当统一式，其主项会变成 $2^\ell/\sqrt{\pi\ell}$，与精确值之比发散。这里变化的是公开有限实验族的参考，不是一个固定有限观察器获得无限过去的证明。
+
+全路径补充容量由§102的因果完整秩达到；它不含也不免除域表示及运算、付费种子前奏、$(\rho,c,\beta,h)$ 与幂系数、计数表、程序描述、解析器与平衡和循环监视、算术与解码工作区、载荷输出及原 Stop 成本。表的保存或重算仍按§102.5收费。这些字母表和对数比较不推出总内存、物理熵或时间净收益，也没有增添来源端口。
+
+### 103.5 同一已付费种子的接受分布与真配对比例
+
+**命题 103.6（接受后真实种子律及有限恢复界）。** 固定共同域 $\mathbb F_q$，定义
+
+$$
+c_\rho=\begin{cases}1,&\rho=1,\\2^{-e_\rho},&\rho\ne1,\end{cases}
+\qquad Z_q=\sum_{\rho\in\mathbb F_q}c_\rho,
+\qquad e_\rho=\deg m_\rho.
+$$
+
+对所有 $\ell\ge d+1$，写
+
+$$
+\frac{T_\ell(\rho)}{B_\ell}=c_\rho+\delta_{\ell,\rho},\qquad
+D_\ell=\sum_\rho\delta_{\ell,\rho},\qquad
+U_\ell=\frac{q-Z_q}{2\ell-1}.
+$$
+
+则 $\delta_{\ell,1}=0$，对其余种子 $0\le\delta_{\ell,\rho}\le(1-c_\rho)/(2\ell-1)$，故 $0\le D_\ell\le U_\ell$。实际接受后种子律为
+
+$$
+p_{\ell,q}(\rho)
+:=\Pr(R=\rho\mid Q_{2\ell}=q_0,\widetilde A=1)
+=\frac{T_\ell(\rho)}{\sum_\eta T_\ell(\eta)}
+=\frac{c_\rho+\delta_{\ell,\rho}}{Z_q+D_\ell},
+\tag{103.14}
+$$
+
+并满足
+
+$$
+\operatorname{TV}\left(p_{\ell,q},(c_\rho/Z_q)_\rho\right)
+\le\frac{D_\ell}{Z_q+D_\ell}
+\le\frac{U_\ell}{Z_q+U_\ell}.
+\tag{103.15}
+$$
+
+真实互补档案在这个接受事件中的比例为
+
+$$
+\begin{aligned}
+H_{\ell,q}
+&:=\Pr(A=1\mid Q_{2\ell}=q_0,\widetilde A=1)
+=\frac{q\,2^\ell}{\sum_\rho T_\ell(\rho)}
+=\frac{q\,2^\ell}{B_\ell(Z_q+D_\ell)},\\
+\frac{q\,2^\ell}{B_\ell(Z_q+U_\ell)}
+&\le H_{\ell,q}
+\le\min\left\{1,\frac{q\,2^\ell}{B_\ell Z_q}\right\}.
+\end{aligned}
+\tag{103.16}
+$$
+
+对固定 $q$，
+
+$$
+p_{\ell,q}(\rho)\longrightarrow\frac{c_\rho}{Z_q},\qquad
+H_{\ell,q}
+=\frac q{Z_q}\sqrt{\pi\ell}\,2^{-\ell}
+\bigl(1+O_q(1/\ell)\bigr).
+\tag{103.17}
+$$
+
+把实际 $W$ 的接受条件律与真档案条件律作比较、边缘化 $R$ 后，其 TV 恰为 $1-H_{\ell,q}$。
+
+证明。先核对实际共同质量，不把边缘混合另行相乘。固定 $k$ 时每个零循环平衡完整载荷字的质量为 $r_k^\ell(1-r_k)^{2\ell}>0$。在一个固定共同先验下，记
+
+$$
+\kappa_\ell=\sum_{k\ge1}\pi(k)r_k^\ell(1-r_k)^{2\ell}>0;
+$$
+
+固定 $k$ 就使用单项。命题100.2已把提种前奏的所有停止内容求和，保证选择前 $R$ 与整个 $(K,W)$ 联合独立。因此每个实际种子—平衡载荷对的联合质量都为 $\kappa_\ell/q$。指定 $\rho$ 有 $T_\ell(\rho)$ 个接受字，接受的总对数为 $\sum_\rho T_\ell(\rho)$；相同正质量相消给（103.14）的第一个计数比。这是（101.9）与（102.9）的直接接合。每个真档案载荷恰有互补半字形式 $(x,1-x)$，共 $2^\ell$ 个，且对全部 $q$ 个种子都接受；故真部分有 $q2^\ell$ 对，同一质量相消给（103.16）的精确式。选择前均匀性只用于这一步，没有把接受后种子当作均匀或重新抽样。
+
+每个 $e_\rho\le d$，所以 $\ell\ge d+1$ 保证（103.8）同时适用于所有非1参考。（103.8）约去 $B_\ell$ 后的余项上界恰为 $c_\rho(2^{e_\rho}-1)/(2\ell-1)=(1-c_\rho)/(2\ell-1)$；参考1的精确式给零余项。对全部种子求和得到 $D_\ell\le(q-Z_q)/(2\ell-1)$，以及（103.14）的后一个等式。若 $D_\ell=0$，两种子律相同；否则
+
+$$
+p_{\ell,q}
+=\frac{Z_q}{Z_q+D_\ell}(c_\rho/Z_q)_\rho
++\frac{D_\ell}{Z_q+D_\ell}(\delta_{\ell,\rho}/D_\ell)_\rho.
+$$
+
+两个概率律的 TV 至多1，直接按质量绝对差求和给（103.15）的第一界；函数 $x/(Z_q+x)$ 递增给第二界。把 $0\le D_\ell\le U_\ell$ 代入精确分母给（103.16）的两边界，另用概率至多1收紧上界。固定 $q$ 时 $D_\ell=O_q(1/\ell)$，故（103.15）给种子收敛。把（103.11）代入精确比例，$\exp(-\varepsilon_\ell)=1+O(1/\ell)$、$Z_q/(Z_q+D_\ell)=1+O_q(1/\ell)$，得到（103.17）的比例渐近。
+
+对 $\ell\ge2$，命题100.6已给接受 $W$ 律是真条件律与假条件律的互不交支撑混合，真混合系数正是 $H_{\ell,q}$，故 TV 为 $1-H_{\ell,q}$。它比较同一实际 $W$ 的两个选择事件，种子已边缘化，不是给定某个中点或某个种子的未来行误差。当 $\ell=1$，由 $T_1(\rho)=2$ 得接受总对数 $2q$、$H_{1,q}=1$，所有平衡载荷都是真互补档案，TV直接为0，种子律为均匀 $1/q$；此处不把无假支撑的事件强行条件化。证毕。
+
+在 $q=2$ 时只有参考0、1，$Z_2=3/2$，所有 $\ell\ge1$ 的精确种子律为
+
+$$
+\bigl(p_{\ell,2}(0),p_{\ell,2}(1)\bigr)
+=\left(\frac{\ell}{3\ell-1},\frac{2\ell-1}{3\ell-1}\right)
+\longrightarrow(1/3,2/3).
+\tag{103.18}
+$$
+
+这由（103.9）的 $T_\ell(0)/B_\ell=\ell/(2\ell-1)$ 直接约分。比如 $\ell=3$，两参考的 $T$ 为 $(12,20)$，接受后种子律 $(3/8,5/8)$、真比例 $H_{3,2}=1/2$，相应 $W$ TV为 $1/2$。
+
+在 $q=4$ 时，按 $(0,1,\omega,\omega^2)$ 排列，后三者中 $\omega,\omega^2$ 同为 $X^2+X+1$ 的根，次数为2。因此
+
+$$
+(c_\rho)_\rho=(1/2,1,1/4,1/4),\qquad Z_4=2,\qquad
+p_{\ell,4}\longrightarrow(1/4,1/2,1/8,1/8).
+\tag{103.19}
+$$
+
+$\ell=3$ 时两二次参考仍在§101阈值内，$T=8$；$\ell=4$ 时首个关系为 $(X+1)(X^2+X+1)=X^3+1$，重量2，由（103.2）得 $T=16+4\binom21=24$。结合（103.9），精确有限读数是
+
+$$
+\begin{aligned}
+\ell=3:\quad &(T_\ell(\rho))_\rho=(12,20,8,8),
+& p_{3,4}&=(1/4,5/12,1/6,1/6),
+& H_{3,4}&=2/3,\\
+\ell=4:\quad &(T_\ell(\rho))_\rho=(40,70,24,24),
+& p_{4,4}&=(20/79,35/79,12/79,12/79),
+& H_{4,4}&=32/79.
+\end{aligned}
+\tag{103.20}
+$$
+
+对应 $W$ TV分别为 $1/3,47/79$。这些数值由已证明的关系计数算得；在固定域内加长载荷并不使真配对比例趋于1，反而由（103.17）趋于0。种子偏置、过去标签容量和实际载荷条件误差是同一实验的不同量，不相互替代。
+
+来源与贡献范围。有限字符正交直接复用 Forney §3.1，系数平方和的超 Catalan 求值精确应用 Georgiadis–Munemasa–Tanaka Eq. (2)，中央二项式的余项使用 Robbins 原始 Eq. (1)–(2)。§101的碰撞阈值、§102的共同全路径容量及因果取得、§100的同源提种与条件 TV继续承担各自结论；仓内既有的最大纤维补充、预测充分性与合并持续性结果不因这里的计数而取得新颖性。这里新增到项目的是最小多项式关系支持的具体重量计数、其评价字符谱与同一实际参考下的过去容量和接受分布之间的桥梁，结论具有上述完整普通数学证明；不作全球原创性或 Lean 核验主张。
+
+未决范围。长度渐近是公开有限实验族的比较，不能当作对单个观察器无限运行历史的恢复保证；自适应内部切面选择及其偏置、提种前奏和返回循环的完整原始历史、未供给的原始时间与物理经过时间仍未由这些公式恢复。空间、时间、边界与记忆的更广互恢复条件及长期递归关系目标仍为 open；本节只推进已声明同源零循环载荷接口中的关系计数与有限过去恢复边界。
+
+## 103.99 追加锚
