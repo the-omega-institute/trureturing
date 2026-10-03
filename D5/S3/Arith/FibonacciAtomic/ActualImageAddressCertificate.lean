@@ -16,38 +16,6 @@ namespace D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
 
 open GenealogicalFiberTransport (Source substitution composition decompose)
 open D5.S0.History.FiniteDescriptionSelfCode (FiniteDescription)
-
-private theorem alpha_card (t : Source) : (alphaAddresses t).card = (composition t).1 := by
-  have prefix_disjoint (A B : Finset FiniteDescription) :
-      Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
-    apply Finset.disjoint_left.mpr
-    intro u hu hv
-    rcases Finset.mem_image.mp hu with ⟨a, _, rfl⟩
-    rcases Finset.mem_image.mp hv with ⟨b, _, hb⟩
-    simp at hb
-  induction t with
-  | of b => cases b <;> simp [alphaAddresses, composition]
-  | mul s t hs ht =>
-    simp only [alphaAddresses, Finset.card_union_of_disjoint (prefix_disjoint _ _),
-      Finset.card_image_of_injective _ List.cons_injective, composition,
-      Prod.fst_add, hs, ht]
-
-private theorem alpha_spec (t : Source) (u : FiniteDescription) :
-    u ∈ alphaAddresses t ↔ out t u = .leafAlpha := by
-  induction t generalizing u with
-  | of b => cases b <;> cases u <;> simp [alphaAddresses, out]
-  | mul s t hs ht =>
-    cases u with
-    | nil => simp [alphaAddresses, out]
-    | cons b u => cases b <;> simp [alphaAddresses, out, hs, ht]
-
-private theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
-  induction t with
-  | of b => cases b <;> simp [composition]
-  | mul s t hs ht =>
-    simp only [composition, Prod.fst_add, Prod.snd_add]
-    omega
-
 private theorem structural (t : Source) :
     AlphaCovered (substitution (substitution t)) ∧
     (∀ u ∈ alphaAddresses (substitution (substitution t)), ∃ r : FiniteDescription,
@@ -103,7 +71,6 @@ private theorem structural (t : Source) :
           (Finset.mem_image.mpr ⟨us, hus, rfl⟩), ?_⟩
         change us.length + 1 = max (height S) (height T) + 1
         rw [hds, max_eq_left hle]
-
 private theorem no_left_alpha (t : Source) : ∀ r : FiniteDescription,
     subtree (substitution t) (r ++ [false]) ≠ some (.of true) := by
   have no_alpha (t : Source) : substitution t ≠ .of true := by
@@ -142,7 +109,6 @@ private theorem no_left_alpha (t : Source) : ∀ r : FiniteDescription,
       simp only [subtree]
       exact fun he => no_alpha s (Option.some.inj he)
     | cons b r => cases b <;> first | exact hs r | exact ht r
-
 private theorem swap_local (V : Source) (r : FiniteDescription)
     (hr : subtree V r = some (.mul (.of false) (.of true))) :
     composition (replace V r (.mul (.of true) (.of false))) = composition V ∧
@@ -203,6 +169,61 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       Sound (3 * k) V h Q ∧ Q.card = (composition V).1) ∧
     (∀ Q : Finset FiniteDescription, Sound (3 * k) V h Q → (composition V).1 ≤ Q.card) := by
   classical
+  have alpha_card (t : Source) : (alphaAddresses t).card = (composition t).1 := by
+    have disj (A B : Finset FiniteDescription) :
+        Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
+      apply Finset.disjoint_left.mpr
+      intro u hu hv
+      rcases Finset.mem_image.mp hu with ⟨a, _, rfl⟩
+      rcases Finset.mem_image.mp hv with ⟨b, _, hb⟩
+      simp at hb
+    let F : Source →ₙ* Multiplicative ℕ := {
+      toFun := fun t => Multiplicative.ofAdd (alphaAddresses t).card
+      map_mul' := by
+        intro s t
+        change (alphaAddresses (.mul s t)).card = (alphaAddresses s).card + (alphaAddresses t).card
+        simp only [alphaAddresses, Finset.card_union_of_disjoint (disj _ _),
+          Finset.card_image_of_injective _ List.cons_injective] }
+    let G : Source →ₙ* Multiplicative ℕ :=
+      ⟨fun t => Multiplicative.ofAdd (composition t).1, fun _ _ => rfl⟩
+    have he : F = G := FreeMagma.hom_ext (by
+      funext b; change Multiplicative.ofAdd (alphaAddresses (.of b)).card = Multiplicative.ofAdd (composition (.of b)).1
+      cases b <;> simp [alphaAddresses, composition])
+    exact congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
+  have alpha_spec (t : Source) (u : FiniteDescription) :
+      u ∈ alphaAddresses t ↔ out t u = .leafAlpha := by
+    let op (P R : FiniteDescription → Prop) : FiniteDescription → Prop
+      | [] => False | false :: u => P u | true :: u => R u
+    letI : Mul (FiniteDescription → Prop) := ⟨op⟩
+    let F : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t u => u ∈ alphaAddresses t
+      map_mul' := by
+        intro s t; funext u; apply propext
+        change (u ∈ alphaAddresses (.mul s t)) ↔ op (fun v => v ∈ alphaAddresses s) (fun v => v ∈ alphaAddresses t) u
+        cases u with
+        | nil => simp [alphaAddresses, op]
+        | cons b u => cases b <;> simp [alphaAddresses, op] }
+    let G : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t u => out t u = .leafAlpha
+      map_mul' := by intro s t; funext u; cases u with
+        | nil => change (out (.mul s t) [] = .leafAlpha) = False; simp [out]
+        | cons b u => cases b <;> rfl }
+    have he : F = G := FreeMagma.hom_ext (by
+      funext b u; cases b <;> cases u <;> simp [F, G, alphaAddresses, out])
+    exact (congrArg (fun f : Source →ₙ* (FiniteDescription → Prop) => f t u) he).to_iff
+  have positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+    let F : Source →ₙ* Multiplicative ℕ := {
+      toFun := fun t => Multiplicative.ofAdd ((composition t).1 + (composition t).2)
+      map_mul' := by
+        intro s t
+        change (composition (.mul s t)).1 + (composition (.mul s t)).2 =
+          ((composition s).1 + (composition s).2) + ((composition t).1 + (composition t).2)
+        simp only [composition, Prod.fst_add, Prod.snd_add]; omega }
+    let G : Source →ₙ* Multiplicative ℕ :=
+      ⟨fun t => Multiplicative.ofAdd t.length, fun _ _ => rfl⟩
+    have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
+    have ht := congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
+    change (composition t).1 + (composition t).2 = t.length at ht; rw [ht]; exact FreeMagma.length_pos t
   have alpha_depth (t : Source) (u : FiniteDescription) (hu : u ∈ alphaAddresses t) :
       u.length ≤ height t := by
     induction t generalizing u with
@@ -367,7 +388,6 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       exact hu.trans ((congrArg (fun r : FiniteDescription => r ++ [true]) hrs).trans hv.symm)
     rw [← alpha_card V]
     exact Finset.card_le_card_of_injective hf
-
 private theorem leaf_data (t : Source) :
     (leafAddresses t).card = (composition t).1 + (composition t).2 ∧
     (∀ u, u ∈ leafAddresses t ↔ out t u = .leafAlpha ∨ out t u = .leafBeta) ∧
@@ -427,7 +447,6 @@ private theorem leaf_data (t : Source) :
         Finset.card_image_of_injective _ List.cons_injective,
         Finset.card_image_of_injective _ List.cons_injective, hbs, hbt]
       rfl
-
 private theorem subtree_out (t v : Source) (r u : FiniteDescription)
     (hr : subtree t r = some v) : out t (r ++ u) = out v u := by
   induction r generalizing t with
@@ -436,17 +455,6 @@ private theorem subtree_out (t v : Source) (r u : FiniteDescription)
     cases t with
     | of c => simp [subtree] at hr
     | mul s t => cases b <;> first | exact ih s hr | exact ih t hr
-
-private theorem leaf_subtree (t : Source) (s : FiniteDescription) (b : Bool)
-    (hs : out t s = out (.of b) []) : subtree t s = some (.of b) := by
-  induction s generalizing t with
-  | nil => cases t with
-    | of c => cases b <;> cases c <;> simp_all [out, subtree]
-    | mul x y => cases b <;> simp [out] at hs
-  | cons c s ih => cases t with
-    | of x => cases b <;> simp [out] at hs
-    | mul x y => cases c <;> first | exact ih x hs | exact ih y hs
-
 private theorem leaf_change (t : Source) (s : FiniteDescription) (b c : Bool)
     (hs : subtree t s = some (.of b)) :
     subtree (replace t s (.of c)) s = some (.of c) ∧
@@ -491,7 +499,6 @@ private theorem leaf_change (t : Source) (s : FiniteDescription) (b c : Bool)
           | cons x u => cases x with
             | false => rfl
             | true => exact ho u (fun he => hu (congrArg (List.cons true) he))
-
 private theorem no_beta_cherry (t : Source) (hc : AlphaCovered t) (r : FiniteDescription)
     (hl : out t (r ++ [false]) = .leafBeta)
     (hr : out t (r ++ [true]) = .leafBeta) : False := by
@@ -500,10 +507,14 @@ private theorem no_beta_cherry (t : Source) (hc : AlphaCovered t) (r : FiniteDes
     cases t with
     | of b => simp [out] at hl
     | mul s t =>
-      have hs : s = .of false :=
-        Option.some.inj (by simpa only [subtree] using leaf_subtree s [] false hl)
-      have ht : t = .of false :=
-        Option.some.inj (by simpa only [subtree] using leaf_subtree t [] false hr)
+      have hs : s = .of false := by
+        cases s with
+        | of b => cases b <;> simp_all [out]
+        | mul x y => simp [out] at hl
+      have ht : t = .of false := by
+        cases t with
+        | of b => cases b <;> simp_all [out]
+        | mul x y => simp [out] at hr
       subst s; subst t
       simp [AlphaCovered, alphaAddresses] at hc
   | cons b r ih =>
@@ -513,13 +524,27 @@ private theorem no_beta_cherry (t : Source) (hc : AlphaCovered t) (r : FiniteDes
       cases b with
       | false => exact ih s hc.1 hl hr
       | true => exact ih t hc.2.1 hl hr
-
 private theorem leaf_recovery (V U : Source)
     (hm : ∀ u ∈ leafAddresses V, out U u = out V u) : U = V := by
+  have positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+    let F : Source →ₙ* Multiplicative ℕ := {
+      toFun := fun t => Multiplicative.ofAdd ((composition t).1 + (composition t).2)
+      map_mul' := by
+        intro s t
+        change (composition (.mul s t)).1 + (composition (.mul s t)).2 =
+          ((composition s).1 + (composition s).2) + ((composition t).1 + (composition t).2)
+        simp only [composition, Prod.fst_add, Prod.snd_add]; omega }
+    let G : Source →ₙ* Multiplicative ℕ :=
+      ⟨fun t => Multiplicative.ofAdd t.length, fun _ _ => rfl⟩
+    have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
+    have ht := congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
+    change (composition t).1 + (composition t).2 = t.length at ht; rw [ht]; exact FreeMagma.length_pos t
   induction V generalizing U with
   | of b =>
     have he := hm [] (by simp [leafAddresses])
-    exact Option.some.inj (by simpa only [subtree] using leaf_subtree U [] b he)
+    cases U with
+    | of c => cases b <;> cases c <;> simp_all [out]
+    | mul x y => cases b <;> simp [out] at he
   | mul s t hs ht =>
     cases U with
     | of b =>
@@ -560,6 +585,81 @@ theorem rigidity (k : ℕ) (hk : 1 ≤ k) (V : Source)
         (composition V).1 + (composition V).2 ≤ Q.card ∧
         (Q.card = (composition V).1 + (composition V).2 ↔ Q = leafAddresses V)) := by
   classical
+  have alpha_card (t : Source) : (alphaAddresses t).card = (composition t).1 := by
+    have disj (A B : Finset FiniteDescription) :
+        Disjoint (A.image (List.cons false)) (B.image (List.cons true)) := by
+      apply Finset.disjoint_left.mpr
+      intro u hu hv
+      rcases Finset.mem_image.mp hu with ⟨a, _, rfl⟩
+      rcases Finset.mem_image.mp hv with ⟨b, _, hb⟩
+      simp at hb
+    let F : Source →ₙ* Multiplicative ℕ := {
+      toFun := fun t => Multiplicative.ofAdd (alphaAddresses t).card
+      map_mul' := by
+        intro s t
+        change (alphaAddresses (.mul s t)).card = (alphaAddresses s).card + (alphaAddresses t).card
+        simp only [alphaAddresses, Finset.card_union_of_disjoint (disj _ _),
+          Finset.card_image_of_injective _ List.cons_injective] }
+    let G : Source →ₙ* Multiplicative ℕ :=
+      ⟨fun t => Multiplicative.ofAdd (composition t).1, fun _ _ => rfl⟩
+    have he : F = G := FreeMagma.hom_ext (by
+      funext b; change Multiplicative.ofAdd (alphaAddresses (.of b)).card = Multiplicative.ofAdd (composition (.of b)).1
+      cases b <;> simp [alphaAddresses, composition])
+    exact congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
+  have alpha_spec (t : Source) (u : FiniteDescription) :
+      u ∈ alphaAddresses t ↔ out t u = .leafAlpha := by
+    let op (P R : FiniteDescription → Prop) : FiniteDescription → Prop
+      | [] => False | false :: u => P u | true :: u => R u
+    letI : Mul (FiniteDescription → Prop) := ⟨op⟩
+    let F : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t u => u ∈ alphaAddresses t
+      map_mul' := by
+        intro s t; funext u; apply propext
+        change (u ∈ alphaAddresses (.mul s t)) ↔ op (fun v => v ∈ alphaAddresses s) (fun v => v ∈ alphaAddresses t) u
+        cases u with
+        | nil => simp [alphaAddresses, op]
+        | cons b u => cases b <;> simp [alphaAddresses, op] }
+    let G : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t u => out t u = .leafAlpha
+      map_mul' := by intro s t; funext u; cases u with
+        | nil => change (out (.mul s t) [] = .leafAlpha) = False; simp [out]
+        | cons b u => cases b <;> rfl }
+    have he : F = G := FreeMagma.hom_ext (by
+      funext b u; cases b <;> cases u <;> simp [F, G, alphaAddresses, out])
+    exact (congrArg (fun f : Source →ₙ* (FiniteDescription → Prop) => f t u) he).to_iff
+  have positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+    let F : Source →ₙ* Multiplicative ℕ := {
+      toFun := fun t => Multiplicative.ofAdd ((composition t).1 + (composition t).2)
+      map_mul' := by
+        intro s t
+        change (composition (.mul s t)).1 + (composition (.mul s t)).2 =
+          ((composition s).1 + (composition s).2) + ((composition t).1 + (composition t).2)
+        simp only [composition, Prod.fst_add, Prod.snd_add]; omega }
+    let G : Source →ₙ* Multiplicative ℕ :=
+      ⟨fun t => Multiplicative.ofAdd t.length, fun _ _ => rfl⟩
+    have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
+    have ht := congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he
+    change (composition t).1 + (composition t).2 = t.length at ht; rw [ht]; exact FreeMagma.length_pos t
+  have leaf_subtree (t : Source) (s : FiniteDescription) (b : Bool)
+      (hs : out t s = out (.of b) []) : subtree t s = some (.of b) := by
+    let op (P R : FiniteDescription → Prop) : FiniteDescription → Prop
+      | [] => False | false :: u => P u | true :: u => R u
+    letI : Mul (FiniteDescription → Prop) := ⟨op⟩
+    let F : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t s => subtree t s = some (.of b)
+      map_mul' := by intro x y; funext s; cases s with
+        | nil => change (some (.mul x y : Source) = some (.of b)) = False; apply propext; constructor <;> intro he <;> cases he
+        | cons c s => cases c <;> rfl }
+    let G : Source →ₙ* (FiniteDescription → Prop) := {
+      toFun := fun t s => out t s = out (.of b) []
+      map_mul' := by intro x y; funext s; cases s with
+        | nil => change (out (.mul x y) [] = out (.of b) []) = False; cases b <;> simp [out]
+        | cons c s => cases c <;> rfl }
+    have he : F = G := FreeMagma.hom_ext (by
+      funext c s; apply propext; cases s <;> cases b <;> cases c <;>
+        simp only [F, G, MulHom.coe_mk, out, subtree, Option.some.injEq] <;>
+        constructor <;> intro he <;> first | rfl | cases he)
+    exact (congrArg (fun f : Source →ₙ* (FiniteDescription → Prop) => f t s) he).to_iff.mpr hs
   have image_structure (U : Source) (hU : U ∈ ActualImage (3 * k)) :
       AlphaCovered U ∧ ∀ u ∈ alphaAddresses U, ∃ r : FiniteDescription,
         u = r ++ [true] ∧ subtree U r = some (.mul (.of false) (.of true)) := by
