@@ -150,6 +150,14 @@ Neither the first-moment collision, its one-group bound, nor the local family
 provides either bridge.  The unrestricted odd distinct-modulus problem remains
 open at this boundary.
 
+For a conditional second-moment route,
+[report 848](../800-849/848-common-old-coordinate-refines-collision-moments.md)
+filters same-column pairs by their actual old cofactor phase and obtains the
+smaller coefficient \(r/((r-2)(s-1))\). Its common-old-coordinate
+replica weight contains \(1/m\), not \(1/m^2\). That bound controls one
+part of a conditional labelled-load moment, not the full \(\Psi_{r,s}\)
+or the cross-column budget.
+
 ## 5. Exact finite check
 
 The [accompanying checker](../../../frontier/cover-geometry/source-global-collision-moment/collision_moment_no_cap.py)

@@ -14,7 +14,9 @@ actual common-source pullback, that the output classes cover their complete
 quotient. It gives an exact decomposition of the missing capacity into two
 source-preserving quantities: overlap among collision columns and excess
 singleton mass. The unrestricted Erdős #7 problem remains open; the new
-statement is a precise target for the remaining whole-cover argument.
+statement is a target for this full-pair endpoint adapter. It is not a
+necessary condition for every possible noncoverage argument; see
+[report 847](847-selector-charge-is-weaker-than-pair-demand.md).
 
 ## 1. The complete output cover and the first threshold
 
@@ -118,9 +120,9 @@ On the event \(F\) of report 845, every collision column has modulus at least
 \(9\), and report 845 gives
 \[
  \mu(F)>\frac27,\qquad
- W_{\mathrm c}<\frac{2}{9}N.
+ W_{\mathrm c}\le\frac{2}{9}N.
 \]
-Consequently \(F\subseteq A\), so
+Since \(C W_{\mathrm c}\le(2C/9)N<N\), we still have \(F\subseteq A\), so
 \[
  \boxed{\mu(A)>\frac27.} \tag{7}
 \]
@@ -267,7 +269,7 @@ with unused distinct odd nonunit moduli and preserve the original phases.
 Conversely, numerical collisions do not prove that any original class is
 redundant.
 
-The new whole-cover target is therefore the source-preserving surplus
-inequality (5), or an alternative charge construction that proves the same
-capacity without it. No proof of (5), no admissible violating whole cover,
+For this full-pair adapter, the remaining target is the source-preserving
+surplus inequality (5). A different charge construction need not satisfy this
+capacity requirement. No proof of (5), no admissible violating whole cover,
 and no unrestricted Erdős #7 settlement is claimed here.

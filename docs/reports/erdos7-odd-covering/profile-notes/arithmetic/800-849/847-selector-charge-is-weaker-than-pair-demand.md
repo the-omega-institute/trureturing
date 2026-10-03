@@ -1,12 +1,12 @@
 # A source selector is weaker than full labelled-pair demand
 
-[Index](../../../marked_head_profile.md) · [Endpoint capacity](845-endpoint-capacity-forces-singleton-charges.md) · [Whole-cover surplus](846-whole-cover-surplus-decomposition-for-endpoint-capacity.md) · [BBMST audit](../../../../problem-details/76-global-repair-literature-audit.md)
+[Index](../../../marked_head_profile.md) · [Endpoint capacity](845-endpoint-capacity-forces-singleton-charges.md) · [Whole-cover surplus](846-whole-cover-surplus-decomposition-for-endpoint-capacity.md) · [BBMST audit](../../../problem-details/76-global-repair-literature-audit.md) · [Conditional replicas](848-common-old-coordinate-refines-collision-moments.md)
 
 Reports 845--846 study a deliberately strong endpoint adapter: on each actual
 source outcome it asks the surviving originals to pay one unit for every
-labelled numerical collision pair. The original Erdős #7 route does not have
-that requirement. It needs a source-preserving collision selector or union
-charge that meets the BBMST conditional-cap and strict-budget hypotheses.
+labelled numerical collision pair. An Erdős #7 proof need not have that
+requirement. A route through a source-preserving collision selector or union
+charge would instead need the appropriate conditional caps and strict budget.
 Consequently, the endpoint obstruction is a boundary result for that adapter
 class, not a contradiction to the unrestricted problem.
 
@@ -47,8 +47,10 @@ full-pair contract. It does not rule out a selector or union charge.
 
 ## 2. The published BBMST interface is a moment condition
 
-The reusable BBMST statement recorded in report 76 is the phase-sensitive
-condition
+The reusable BBMST statement recorded in report 76 and proved in
+[*The density of the uncovered set*, Theorem 3.1 and Lemma 3.3](https://arxiv.org/pdf/1811.03547v1)
+is the phase-sensitive sufficient condition, for its one sequentially
+constructed law and \(0\le\delta_i\le1/2\),
 
 \[
  \sum_i\min\!\left\{M_i^{(1)},
@@ -56,30 +58,41 @@ condition
 \tag{3}
 \]
 
-where the second term is built from the square of an actual conditional union
-fraction. It is not the pointwise requirement \(N(\omega)\) in (1). For one
-output column of modulus \(n\), suppose its \(k\) surviving phases are distinct.
-Its union fraction in the common endpoint coordinate is
+where the second term is omitted at \(\delta_i=0\). Here
+\(M_i^{(2)}=\mathbb E[\alpha_i(X)^2]\) fixes the same old word \(X\) and
+averages two independent new-coordinate words. It is not the pointwise
+requirement \(N(\omega)\) in (1).
+
+For one full output column of modulus \(n\), suppose its \(k\) surviving
+phases are distinct. Its complete-endpoint density and square are
 
 \[
- \alpha=\frac{k}{n},
+ \rho_{\mathrm{full}}=\frac{k}{n},
  \qquad
- \alpha^2=\frac{k^2}{n^2}
+ \rho_{\mathrm{full}}^2=\frac{k^2}{n^2}
        =\frac{k+2\binom{k}{2}}{n^2}.
 \tag{4}
 \]
 
-Thus a collision pair contributes with the two factors \(n^{-2}\) in the
-second-moment interface. The full-pair demand in (1) counts the same pair with
-unit weight. If phases coincide, the union is smaller still; replacing it by
-\(k/n\) is then an upper bound, not an identity.
+Equation (4) samples two independent complete endpoints. It cannot be
+identified with the BBMST conditional second moment without an additional
+source map. For \(n=mp^b\), group the full phases by their old residue
+\(t\bmod m\); let \(k_t\) be the number of distinct new \(p^b\)-phases in
+that group. Under old Haar measure the conditional moment is instead
 
-This distinction is quantitative. In the abstract single-column pattern
-\(n=11,k=11\) with all phases distinct, \(N=55\) while the union fraction is
-\(\alpha=1\) and its square is \(1\). The endpoint contract would request 55
-units before any tree or conditional-cap restriction, whereas the BBMST
-second-moment term sees a unit union. This finite pattern is only an
-accounting example; it is not an Erdős #7 covering counterexample.
+\[
+ M_{\mathrm{col}}^{(2)}
+ =\frac1{mp^{2b}}\sum_{t\bmod m} k_t^2.
+ \tag{4a}
+\]
+
+For full phases \(0,6\bmod15\), with old coordinate modulo \(3\) and new
+coordinate modulo \(5\), this gives \(4/75\), whereas (4) gives \(4/225\).
+Same-old-residue pairs receive one cofactor probability, and incompatible
+old-residue pairs receive zero. General labelled tuple bounds with the
+\(\operatorname{lcm}\) of the old cofactors are already BBMST Theorem 3.2
+and Lemma 3.6; report 848 retains their phase filter for the common embedding.
+Neither moment formula supplies the required strict total budget by itself.
 
 ## 3. What the source-global collision result supplies
 
