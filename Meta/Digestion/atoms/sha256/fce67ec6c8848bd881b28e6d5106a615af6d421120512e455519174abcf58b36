@@ -1,0 +1,20 @@
+## 5. Conventional binary names and actual dictionary routines
+
+A conventional name is a positive most significant bit first binary spelling.
+Its word representation replaces each bit $b$ by the pair $1b$ and appends a
+zero terminator. Write $E(a)$ for this escaped representation of a Boolean
+word $a$, and define the dictionary stream of a list $D$ of names by
+
+$$
+S(D)=E(\operatorname{rev}(D_1))\cdots E(\operatorname{rev}(D_{|D|})).
+$$
+
+The conventional clause word has a clause prefix `01`, a literal prefix
+`11` followed by its Boolean polarity and escaped name, a clause terminator
+`10`, and a final formula terminator `00`. Each clause has at most three
+literals. Names have leading bit one. There is no declared variable-universe
+header. The independently defined count ranges over Boolean assignments to
+exactly the distinct names appearing in the parsed clauses, evaluates the
+ordinary CNF, and assigns zero to malformed words. The empty formula has one
+assignment, and an empty clause rejects every assignment.
+

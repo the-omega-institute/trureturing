@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c27816a7a93f05c0acb0705578b7f2a504065ebaa3fa89fca63d78c3014f2517
+  normalized_sha256: sha256:c27816a7a93f05c0acb0705578b7f2a504065ebaa3fa89fca63d78c3014f2517
+cas_ref: sha256:c27816a7a93f05c0acb0705578b7f2a504065ebaa3fa89fca63d78c3014f2517
+coverage_gids:
+  - gid: D5/S0/Computability/ConventionalClauseWords.conventional_word_run
+    target_statement_id: sha256:7f23ecfe047e3262beee33349acce4157e356de9b6896dffdbbef08af6241596
+receipts:
+  unresolved_subitems: []
