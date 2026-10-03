@@ -1,0 +1,37 @@
+**定理 357.3（两个同源读数恢复组成模四）。** 定义
+
+$$
+\begin{aligned}
+\ell:\mathbb F_5^\times&\longrightarrow\mathbb Z/4\mathbb Z,\\
+\ell(1)&=0,\quad\ell(3)=1,\quad\ell(4)=2,\quad\ell(2)=3,
+\end{aligned}
+$$
+
+并在 $\{x\in\mathcal O:\eta(x)\ne0\}$ 上定义 $\chi(x)=\ell(\eta(x))$。则来源无关的函数
+
+$$
+f_4:W_2(\mathcal T)\longrightarrow(\mathbb Z/4\mathbb Z)^2,
+\qquad
+f_4(x_0,x_1)=\bigl(\chi(x_1)-\chi(x_0),\chi(x_0)\bigr)
+\tag{357.7}
+$$
+
+满足 $f_4(W_2(t))=c(t)\bmod4$。对每个正整数 $m\mid4$，令 $\widehat f_4(x)\in\{0,1,2,3\}^2$ 为 $f_4(x)$ 的标准代表，并定义
+
+$$
+v_m(x)=[\widehat f_4(x)]_m\in\{0,\ldots,m-1\}^2.
+\tag{357.8}
+$$
+
+那么 $v_m(W_2(t))=[c(t)]_m$。对 $W_3$ 或完整历史，取其前两项后使用同一函数。
+
+**证明。** $3$ 在 $\mathbb F_5^\times$ 中的幂依次为 $1,3,4,2,1$，且前四项不同，所以阶恰为 $4$。由引理 357.2，$\chi(E(t))=b\bmod4$。同一棵树的下一次组成是 $(b,a+b)$，故
+
+$$
+\chi(E(\rho(t)))=a+b\bmod4.
+$$
+
+两者之差给 $a\bmod4$，得到（357.7）。实际像上每个所用 $\eta$ 值非零，故 $\chi$ 处处有定义。该公式直接读取两项的四系数，不选择任何来源代表。
+
+若 $m\mid4$，把模四标准代表再约化模 $m$ 与直接约化 $c(t)$ 相同，证明（357.8）。这一约化的良定义依赖 $m\mid4$。$W_3$ 与完整历史的前两项正是 $W_2$，因此相同公式适用；无需假设 $W_2$ 在替换下闭合。$\square$
+
