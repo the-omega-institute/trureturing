@@ -2,17 +2,18 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/TypedPortTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.Ring.Nat, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Typed terminal counts and an incidence-capacity ledger force the port defect identity. -/
+   digest: Two partial matching graphs force the typed port defect identity. -/
 
 /-
 proof_shape: content
-escape_witness: D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference
+escape_witness: D5/S3/Combinatorics/Graph/TypedPortTransport.matching_defect_eq_terminal_difference
 admission_basis: escape-witness
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -49,15 +50,78 @@ structure RouteEndpoints where
 
 attribute [instance] RouteEndpoints.instPath RouteEndpoints.instPathDecidableEq
 
-/-- The finite ledger supplied by the actual edge/port incidence construction. -/
-structure CapacityLedger where
-  actualEdges : ℕ
-  capacities : ℕ
-  totalDegree : ℕ
-  leftTerminals : ℕ
-  slackTerminals : ℕ
-  incidence : 2 * actualEdges = leftTerminals + totalDegree
-  capacity : totalDegree + slackTerminals = 2 * capacities
+/-- Ports left unmatched by the local pairing but matched by an actual edge. -/
+noncomputable def leftTerminalsOf {P : Type} [Fintype P] [DecidableEq P]
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+  univ.filter fun v => actual.degree v = 1 ∧ pairing.degree v = 0
+
+/-- Ports left unmatched by an actual edge but matched by the local pairing. -/
+noncomputable def slackTerminalsOf {P : Type} [Fintype P] [DecidableEq P]
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+  univ.filter fun v => actual.degree v = 0 ∧ pairing.degree v = 1
+
+private noncomputable def sharedPorts {P : Type} [Fintype P] [DecidableEq P]
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj] : Finset P :=
+  univ.filter fun v => actual.degree v = 1 ∧ pairing.degree v = 1
+
+theorem matching_defect_eq_terminal_difference {P : Type} [Fintype P] [DecidableEq P]
+    (actual pairing : SimpleGraph P) [DecidableRel actual.Adj] [DecidableRel pairing.Adj]
+    (hactual : ∀ v, actual.degree v ≤ 1) (hlocal : ∀ v, pairing.degree v ≤ 1) :
+    (2 : ℤ) * (actual.edgeFinset.card : ℤ) -
+        2 * (pairing.edgeFinset.card : ℤ) =
+      (leftTerminalsOf actual pairing).card - (slackTerminalsOf actual pairing).card := by
+  classical
+  have actual_sum : ∑ v, actual.degree v =
+      (leftTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
+    calc
+      (∑ v, actual.degree v) =
+          ∑ v, ((if actual.degree v = 1 ∧ pairing.degree v = 0 then 1 else 0) +
+            (if actual.degree v = 1 ∧ pairing.degree v = 1 then 1 else 0)) := by
+        apply sum_congr rfl
+        intro v hv
+        have ha_le := hactual v
+        have hl_le := hlocal v
+        by_cases ha : actual.degree v = 1
+        · by_cases hl : pairing.degree v = 1
+          · simp [ha, hl]
+          · have hl0 : pairing.degree v = 0 := by omega
+            simp [ha, hl, hl0]
+        · have ha0 : actual.degree v = 0 := by omega
+          by_cases hl : pairing.degree v = 1
+          · simp [ha, ha0, hl]
+          · have hl0 : pairing.degree v = 0 := by omega
+            simp [ha, ha0, hl, hl0]
+      _ = (leftTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
+        rw [sum_add_distrib]
+        simp [leftTerminalsOf, sharedPorts, Finset.sum_boole]
+  have pairing_sum : ∑ v, pairing.degree v =
+      (slackTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
+    calc
+      (∑ v, pairing.degree v) =
+          ∑ v, ((if actual.degree v = 0 ∧ pairing.degree v = 1 then 1 else 0) +
+            (if actual.degree v = 1 ∧ pairing.degree v = 1 then 1 else 0)) := by
+        apply sum_congr rfl
+        intro v hv
+        have ha_le := hactual v
+        have hl_le := hlocal v
+        by_cases ha : actual.degree v = 1
+        · by_cases hl : pairing.degree v = 1
+          · simp [ha, hl]
+          · have hl0 : pairing.degree v = 0 := by omega
+            simp [ha, hl, hl0]
+        · have ha0 : actual.degree v = 0 := by omega
+          by_cases hl : pairing.degree v = 1
+          · simp [ha, ha0, hl]
+          · have hl0 : pairing.degree v = 0 := by omega
+            simp [ha, ha0, hl, hl0]
+      _ = (slackTerminalsOf actual pairing).card + (sharedPorts actual pairing).card := by
+        rw [sum_add_distrib]
+        simp [slackTerminalsOf, sharedPorts, Finset.sum_boole]
+  have actual_edges := SimpleGraph.sum_degrees_eq_twice_card_edges actual
+  have pairing_edges := SimpleGraph.sum_degrees_eq_twice_card_edges pairing
+  have actual_edges_z : (∑ v, actual.degree v : ℕ) = 2 * actual.edgeFinset.card := actual_edges
+  have pairing_edges_z : (∑ v, pairing.degree v : ℕ) = 2 * pairing.edgeFinset.card := pairing_edges
+  omega
 
 private theorem left_sum_formula (r : RouteEndpoints) :
     (∑ p, r.leftCount p) =
@@ -117,30 +181,29 @@ theorem terminal_counts (r : RouteEndpoints) :
 
 /-- The typed port defect `C - R = a - b`, with subtraction interpreted in `ℤ`.
 
-The proof combines the endpoint counts with the two incidence ledgers.  The
-incidence equation counts every actual edge twice, while the capacity equation
-counts the same positive-capacity vertex incidences as capacity plus slack. -/
-theorem defect_eq_route_difference (r : RouteEndpoints) (ledger : CapacityLedger)
-    (hleft : r.leftTerminals = ledger.leftTerminals)
-    (hslack : r.slackTerminals = ledger.slackTerminals) :
-    (ledger.actualEdges : ℤ) - ledger.capacities =
+The proof combines endpoint counts with the degree balance for two partial
+matching graphs. The matching balance is obtained from the finite graph
+degree-sum theorem and a pointwise classification of degree pairs. -/
+theorem defect_eq_route_difference (r : RouteEndpoints)
+    (actual pairing : SimpleGraph r.Path) [DecidableRel actual.Adj] [DecidableRel pairing.Adj]
+    (hactual : ∀ v, actual.degree v ≤ 1) (hlocal : ∀ v, pairing.degree v ≤ 1)
+    (hleft : r.leftTerminals = (leftTerminalsOf actual pairing).card)
+    (hslack : r.slackTerminals = (slackTerminalsOf actual pairing).card) :
+    (actual.edgeFinset.card : ℤ) - pairing.edgeFinset.card =
       ((univ.filter (fun p => r.kind p = .ll)).card : ℤ) -
         (univ.filter (fun p => r.kind p = .hh)).card := by
   obtain ⟨hleftCount, hslackCount⟩ := terminal_counts r
-  have hinc : (2 : ℤ) * ledger.actualEdges =
-      ledger.leftTerminals + ledger.totalDegree := by
-    exact_mod_cast ledger.incidence
-  have hcap : (ledger.totalDegree : ℤ) + ledger.slackTerminals =
-      2 * ledger.capacities := by
-    exact_mod_cast ledger.capacity
-  have hleftZ : (ledger.leftTerminals : ℤ) =
+  have hbalance := matching_defect_eq_terminal_difference actual pairing hactual hlocal
+  have hbalance' := hbalance
+  rw [← hleft, ← hslack] at hbalance'
+  have hleftZ : (r.leftTerminals : ℤ) =
       2 * (univ.filter (fun p => r.kind p = .ll)).card +
         (univ.filter (fun p => r.kind p = .lh)).card := by
-    exact_mod_cast (hleft ▸ hleftCount)
-  have hslackZ : (ledger.slackTerminals : ℤ) =
+    exact_mod_cast hleftCount
+  have hslackZ : (r.slackTerminals : ℤ) =
       2 * (univ.filter (fun p => r.kind p = .hh)).card +
         (univ.filter (fun p => r.kind p = .lh)).card := by
-    exact_mod_cast (hslack ▸ hslackCount)
+    exact_mod_cast hslackCount
   omega
 
 end D5.S3.Combinatorics.Graph.TypedPortTransport

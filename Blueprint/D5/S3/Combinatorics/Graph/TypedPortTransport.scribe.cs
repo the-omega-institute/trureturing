@@ -7,7 +7,7 @@ internal sealed class TypedPortTransportDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/TypedPortTransport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite typed port routing has LL, HH and LH path types. Endpoint counting gives ell=2a+c and slack=2b+c. When actual-edge incidence and capacity ledgers satisfy 2C=ell+totalDegree and totalDegree+slack=2R, the signed defect C-R equals a-b.",
+        "A finite typed port routing has LL, HH and LH path types. Endpoint counting gives ell=2a+c and slack=2b+c. Two partial matching graphs on the same finite port type compute these terminal sets from their degree pairs; the signed difference of their edge counts then equals a-b.",
         H("Typed port transport and the defect identity"),
         Blocks(
             Describe.Lean(
@@ -29,11 +29,19 @@ internal sealed class TypedPortTransportDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("capacity-ledger"),
                 DeclarationHandle.Create(Prefix + "CapacityLedger"),
-                H("Incidence and capacity ledger"),
+                H("Computed matching terminals"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("CapacityLedger contains the actual-edge count C, capacity sum R, total degree, and terminal totals. The two ledger equations are 2C=ell+totalDegree and totalDegree+slack=2R."))),
+                Blocks(Paragraph(Text("For actual and pairing matching graphs on the same finite port type, leftTerminalsOf contains ports of degree pair (1,0), and slackTerminalsOf contains ports of degree pair (0,1). These are computed from the graphs rather than supplied as endpoint labels."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("matching-balance"),
+                DeclarationHandle.Create(Prefix + "matching_defect_eq_terminal_difference"),
+                H("Partial matching balance"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If both graph degrees are at most one, twice the actual edge count minus twice the pairing edge count equals the difference between the computed (1,0) and (0,1) terminal counts. The proof classifies all degree pairs pointwise and applies the finite graph degree-sum theorem."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("terminal-counts"),
                 DeclarationHandle.Create(Prefix + "terminal_counts"),
@@ -49,7 +57,7 @@ internal sealed class TypedPortTransportDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("If the endpoint totals of the route and capacity ledgers agree, then (C:R viewed in integers) satisfies C-R=card(LL)-card(HH). The proof combines the two endpoint counts with the incidence and capacity equations.")),
+                    Paragraph(Text("If the endpoint totals of the route and matching ledgers agree, then (C:R viewed in integers) satisfies C-R=card(LL)-card(HH). The proof combines endpoint counting with the partial-matching degree balance.")),
                     Paragraph(Text("The statement is the generic counting core of the port-routing defect identity. It does not claim that an arbitrary finite graph admits the geometric routing hypotheses used by a rectangular-grid application."))),
                 DescribeRole.Theorem))));
 }
