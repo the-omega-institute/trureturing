@@ -9,6 +9,7 @@ CENSUS_PREFIX ?= D5
 .PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit scribe-release scribe-release-publish scribe-release-fetch ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr-open pr-watch gate census census-derivational
 
 help:
+	@printf '%s\n' 'make lean [LEAN_TARGETS="..."] [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock'
 	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack'
 
 test:
@@ -31,6 +32,7 @@ lean-cache-from-github-without-mathlib:
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
 
+lean: export LEAN_SKIP_LOCK ?= 0
 lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 

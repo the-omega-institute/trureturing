@@ -3,7 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 [[ $# -gt 0 ]] || { echo 'lean-cache-run: COMMAND is required' >&2; exit 2; }
 cd "$ROOT"
-if [[ "$1" == --build ]]; then
+if [[ "$1" == --build && "${LEAN_SKIP_LOCK:-0}" != 1 ]]; then
   # All linked worktrees share this Git directory. Keep the descriptor open
   # through cache preparation and every build phase; never unlink the lock file.
   lean_common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"

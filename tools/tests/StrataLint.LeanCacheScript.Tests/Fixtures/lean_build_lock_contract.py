@@ -39,7 +39,8 @@ class LeanBuildLockTests(unittest.TestCase):
         producer.chmod(0o755)
         self.env = dict(os.environ, PATH=str(bin_directory) + os.pathsep + os.environ["PATH"],
                         STRATALINT_LEAN_PRODUCER_DLL="", STRATALINT_LEAN_CACHE_DONOR_REPOSITORY="")
-        for name in ("MAKEFLAGS", "MFLAGS", "MAKELEVEL", "GIT_DIR", "GIT_WORK_TREE", "GIT_COMMON_DIR"):
+        for name in ("MAKEFLAGS", "MFLAGS", "MAKELEVEL", "GIT_DIR", "GIT_WORK_TREE", "GIT_COMMON_DIR",
+                     "LEAN_SKIP_LOCK"):
             self.env.pop(name, None)
 
     @staticmethod
@@ -54,10 +55,16 @@ class LeanBuildLockTests(unittest.TestCase):
     def git(root, *args):
         subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True)
 
-    def start(self, root, targets="D5.Probe", wrapper=False):
+    def start(self, root, targets="D5.Probe", wrapper=False, skip_lock=None):
         command = (["bash", WRAPPER, "--build", *targets.split()] if wrapper else
                    ["make", "--no-print-directory", "-s", "lean", "LEAN_TARGETS=" + targets])
-        process = subprocess.Popen(command, cwd=root, env=self.env, stdin=subprocess.PIPE,
+        env = dict(self.env)
+        if skip_lock is not None:
+            if wrapper:
+                env["LEAN_SKIP_LOCK"] = skip_lock
+            else:
+                command.append("LEAN_SKIP_LOCK=" + skip_lock)
+        process = subprocess.Popen(command, cwd=root, env=env, stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                    text=True, start_new_session=True)
         self.addCleanup(self.cleanup_process, process)
@@ -179,6 +186,39 @@ class LeanBuildLockTests(unittest.TestCase):
         output, _ = process.communicate("0\n")
         self.assertNotEqual(0, process.returncode)
         self.assertNotIn("producer entered", output)
+
+    def test_skip_lock_runs_while_another_build_holds_lock_without_releasing_it(self):
+        holder = self.start(self.root)
+        self.expect(holder, "producer entered")
+        bypass = self.start(self.worktrees[0], skip_lock="1")
+        self.expect(bypass, "producer entered")
+        waiter = self.start(self.worktrees[1], skip_lock="0")
+        self.expect(waiter, WAITING)
+        self.finish_phase(bypass)
+        self.assertEqual(0, bypass.wait())
+        self.assert_locked()
+        self.finish_phase(holder)
+        self.assertEqual(0, holder.wait())
+        self.expect(waiter, "producer entered")
+        self.finish_phase(waiter)
+        self.assertEqual(0, waiter.wait())
+        self.assert_unlocked()
+
+    def test_skip_lock_does_not_block_other_builds_during_any_package_phase(self):
+        bypass = self.start(self.root, targets="", skip_lock="1")
+        self.expect(bypass, "producer entered")
+        self.assert_unlocked()
+        normal = self.start(self.worktrees[0])
+        self.expect(normal, "producer entered")
+        self.assert_locked()
+        self.finish_phase(normal)
+        self.assertEqual(0, normal.wait())
+        for phase in range(4):
+            self.assert_unlocked()
+            self.finish_phase(bypass)
+            if phase < 3:
+                self.expect(bypass, "producer entered")
+        self.assertEqual(0, bypass.wait())
 
 
 if __name__ == "__main__":
