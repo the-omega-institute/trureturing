@@ -27519,6 +27519,84 @@ from one common flow, and they do not enforce the shared bucket capacities.
 Thus failure of the left inequality in (238.9) rules out a hypothetical
 whole-cover flow, while passing it does not construct one.
 
+### 238.2. Joint hitting-capacity cuts
+
+The two lower bounds above use different projections of the same routed
+labels.  They can be imposed simultaneously before minimizing the number of
+fibres.  For a coordinate \(v\) with \(I_v\ne\varnothing\), define
+
+\[
+\lambda_{H,v}=
+\min\left\{|Z|:
+\begin{array}{l}
+ Z\subseteq U_H,\\
+ Z\cap\mathsf E_i(H)\ne\varnothing\quad(i\in I_v),\\
+ \displaystyle\sum_{r\in Z}M_{v,r}\ge |I_v|
+\end{array}\right\},
+\tag{238.10}
+\]
+
+with the value \(+\infty\) when no such \(Z\) exists.  The first condition
+is the phase-sensitive hitting requirement, while the second is the
+capacity requirement from (238.3).  Every saturated flow has
+
+\[
+Z=R_v(z)=\{r:K_r(z)\cap I_v\ne\varnothing\}
+\]
+
+as an admissible set in (238.10): it hits every actual private-fibre set,
+and the labels in \(I_v\) routed over \(Z\) use at most the aggregated
+capacities \(M_{v,r}\).  Hence
+
+\[
+ n_v(z)=|R_v(z)|\ge\lambda_{H,v}.
+\tag{238.11}
+\]
+
+Combining this with (237.3) gives the joint necessary chain
+
+\[
+\boxed{
+ \sum_{v:I_v\ne\varnothing}(p(v)-1)\lambda_{H,v}
+ \ \le\ \Gamma_H(z)\ \le\ \mathcal B_H
+ \qquad(z\in\mathcal Z_H).
+}
+\tag{238.12}
+\]
+
+If one coordinate has \(\lambda_{H,v}=+\infty\), the private-point flow is
+already impossible.  In general
+
+\[
+\lambda_{H,v}\ge\max(\tau_{H,v},\kappa_v),
+\]
+
+and the inequality can be strict because a smallest hitting set need not
+carry enough capacity.  For example, take three abstract fibres with
+capacities \(M=(3,3,1)\) and five labels having available-fibre sets
+\[
+ \{3\},\quad\{1,2\},\quad\{1,2\},\quad\{1,2\},\quad\{1,2\}.
+\]
+Then \(\tau=2\) (fibres \(3\) and either \(1\) or \(2\) hit all sets), and
+\(\kappa=2\) (the two largest capacities sum to \(6\)), but every two-fibre
+set satisfying the hitting condition has capacity at most \(4\).  Thus
+
+\[
+\lambda=3>\max(\tau,\kappa)=2;
+\]
+
+all five labels can nevertheless be routed (the singleton set uses fibre
+3 and the remaining four labels use fibres 1 and 2).  This finite control
+shows why taking the two earlier minima separately loses a genuine joint
+constraint.  It is an abstract network witness for the inequality, not a
+claim of an odd whole cover.
+
+The new cut remains only necessary.  It uses the same original labels,
+phases, private-fibre sets, and bucket capacities as (233.3); it does not
+choose independent phases for different coordinates or prove that a passing
+family admits a common flow.  Its intended use is to screen a hypothetical
+whole cover before attempting the still-open source-global EB1 bridge.
+
 ## 239. The coarse lower bound is the Simpson budget; support leakage is the gap
 
 The coordinate-wise lower bound has a familiar coarse value. For a positive
