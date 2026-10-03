@@ -13479,7 +13479,7 @@ K_2(s)\le\sqrt{\frac\pi{2s}}e^{-s}
 $$
 Here $1/\sqrt{1+t^2}\le1$ is used only for this upper bound.
 
-For either accepted upper or lower ray function, write $\mathcal Q(y)$ for $Q_-(y)$ or $Q_+(y)$, respectively. On its sector $\pi/3\le|\arg y|\le2\pi/3$, (32.2) with $N=1$ reads
+For either specified upper or lower ray function, write $\mathcal Q(y)$ for $Q_-(y)$ or $Q_+(y)$, respectively. On its sector $\pi/3\le|\arg y|\le2\pi/3$, (32.2) with $N=1$ reads
 $$
 \mathcal Q(y)=e^{-1/4}y^{-1/2}K_1(\sqrt y)+\mathcal R(y),
 \quad
@@ -13497,7 +13497,7 @@ $$
 \qquad |\epsilon(y)|\le\frac{50}{\sqrt{|y|}}.
 \tag{34.3}
 $$
-This is a bound for the exact ray function, including the full accepted ray remainder.
+This is a bound for the exact ray function, including the full specified ray remainder.
 
 再控制原多项式的统一比值和交叉项的实部。
 
@@ -13563,7 +13563,7 @@ $$
 
 在原有限轮廓上保留共同扇区和端点模长。
 
-Use exactly the accepted upper and lower polygons with $\ell=1/8$. Everywhere on them and their intervening deformation regions, $1\le\Re u\le b$ and $|\Im u|\le\ell/\sqrt2<1/8$. Thus
+Use exactly the specified upper and lower polygons with $\ell=1/8$. Everywhere on them and their intervening deformation regions, $1\le\Re u\le b$ and $|\Im u|\le\ell/\sqrt2<1/8$. Thus
 $$
 |\arg u|<1/8,\quad
 |\arg x-\pi/2|=\arctan\tau<1/16,
@@ -13617,7 +13617,7 @@ $$
 $$
 In detail, $K_1(s_T)\le2\sqrt{\pi/(2s_T)}e^{-s_T}\le4T^{-1/4}e^{12-c\sqrt T}$, and $2\sqrt{B/A_T}\le4T^{-1/2}$.
 
-The accepted exact rational comparisons for $\eta_0=3/5$ give
+The specified exact rational comparisons for $\eta_0=3/5$ give
 $$
 \pm r\eta-\sqrt{2r}-c\le-\sqrt2-g,
 \qquad g=3/140.
@@ -13683,5 +13683,33 @@ $$
 
 
 本节的标准 Bessel 核归其来源；承重应用是把原测试的全部误差、有限端点与连接段同时接到一个明确阈值。它没有供应第 33 节对全部充分大实尺度所需的实际新余项预算。
+
+
+**候签推论 34.2（同一实际平均的有限实尺度区间）。** 复用第 31 节的既有实际验证高度 $H=3000175332800$、临界线上固定头部及第 30 节的正头部下界。则同一个原平均对每个实数
+
+$$
+1\le R\le\frac{36}{25}H=4\,320\,252\,479\,232
+$$
+
+满足纸面估计
+
+$$
+\bar q(R)\ge P_H(R)\ge e^{-120R}>0,
+\qquad
+\bar{\mathcal W}(R)\ge R^3e^{-120R}>0.
+\tag{34.14}
+$$
+
+证明。所有实际高零点 $\gamma>H$ 满足
+
+$$
+T=R\gamma>H>10^{12},\qquad
+|\eta|=|\beta-1/2|\sqrt{R/\gamma}
+<\tfrac12\sqrt{\frac{36H}{25\gamma}}<\frac35.
+$$
+
+因此候签定理 34.1 支付全部高零点项的横向符号条件；这里没有把 $H$ 以上的零点假设为临界零点。它们全部属于定义 33.2 的 $\mathcal G_H(R)$，$\mathcal U_H(R)$ 为空。第 31 节的实际谱可和界及候签命题 33.3 的原反射重数合同给出 $E_{\rm controlled}\ge0$ 和 $E_{\rm newrem}=0$。再直接应用候签推论 30.2 的既有头部下界，得到 (34.14)。$\square$
+
+此应用扩大的是固定解析测试的可支付实尺度区间，复用的实际零点验证高度仍为 $H$。它没有计算或认证新的零点高度；尺度上端点有限，不能代替第 29 节对所有充分大实数 $R$ 的符号判据。对超过该尺度区间的新剩余谱，条件 (33.15) 仍未证明，RH、Robin 及 FIB 算术交织仍不由此结算。
 
 ## 追加锚（本行以下为增补区）
