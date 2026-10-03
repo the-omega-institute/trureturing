@@ -264,6 +264,38 @@ public static class ScribeCli
             }
         }
 
+        if (command == "emit" && arguments.Count is (3 or 4)
+            && arguments[1] == "--paths-from"
+            && !string.IsNullOrWhiteSpace(arguments[2])
+            && (arguments.Count == 3 || arguments[3] == "--check"))
+        {
+            try
+            {
+                var repositoryRoot = FindRepositoryRoot(workingDirectory);
+                var paths = ReadPaths(arguments[2], input);
+                if (paths.IsEmpty)
+                {
+                    output.WriteLine("emitted: 0 changed blueprint(s)");
+                    return 0;
+                }
+                var report = leanReport ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+                return ScribeEmitter.EmitPaths(
+                    repositoryRoot,
+                    paths,
+                    arguments.Count == 4,
+                    output,
+                    error,
+                    report);
+            }
+            catch (Exception exception) when (
+                exception is IOException or UnauthorizedAccessException or ArgumentException
+                    or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
         var check = arguments.Count == 2
             && string.Equals(arguments[1], "--check", StringComparison.Ordinal);
         if (arguments.Count is < 1 or > 2
@@ -302,7 +334,7 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
-        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
+        + "emit|emit-values|filemap [--check] | emit --paths-from <file|-> [--check] | describe-report [--json] [--check] "
         + "| content-check --report <file> [--paths-from <file|->] "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
