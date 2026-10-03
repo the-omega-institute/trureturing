@@ -1,0 +1,27 @@
+**定理 357.3（两个同源读数恢复组成模四）。** 定义
+
+$$
+\begin{aligned}
+\ell:\mathbb F_5^\times&\longrightarrow\mathbb Z/4\mathbb Z,\\
+\ell(1)&=0,\quad\ell(3)=1,\quad\ell(4)=2,\quad\ell(2)=3,
+\end{aligned}
+$$
+
+并在 $\{x\in\mathcal O:\eta(x)\ne0\}$ 上定义 $\chi(x)=\ell(\eta(x))$。则来源无关的函数
+
+$$
+f_4:W_2(\mathcal T)\longrightarrow(\mathbb Z/4\mathbb Z)^2,
+\qquad
+f_4(x_0,x_1)=\bigl(\chi(x_1)-\chi(x_0),\chi(x_0)\bigr)
+\tag{357.7}
+$$
+
+满足 $f_4(W_2(t))=c(t)\bmod4$。对每个正整数 $m\mid4$，令 $\widehat f_4(x)\in\{0,1,2,3\}^2$ 为 $f_4(x)$ 的标准代表，并定义
+
+$$
+v_m(x)=[\widehat f_4(x)]_m\in\{0,\ldots,m-1\}^2.
+\tag{357.8}
+$$
+
+那么 $v_m(W_2(t))=[c(t)]_m$。对 $W_3$ 或完整历史，取其前两项后使用同一函数。
+

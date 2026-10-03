@@ -1,0 +1,81 @@
+**定义 357.1（实际来源、同源观察与恢复量词）。** 沿用 §§2、3、355、356 的原始对象。来源域是全部自由有序非空二叉树
+
+$$
+t::=\alpha\mid\beta\mid\langle s,u\rangle,
+\qquad s,u\in\mathcal T.
+$$
+
+原树的相等保留左右次序与括号，不施加交换律或结合律，也不添加空树。组成与原替换为
+
+$$
+\begin{aligned}
+c(\alpha)&=(1,0),&c(\beta)&=(0,1),&
+c(\langle s,u\rangle)&=c(s)+c(u),\\
+\rho(\alpha)&=\beta,&\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho(\langle s,u\rangle)&=\langle\rho(s),\rho(u)\rangle.
+\end{aligned}
+$$
+
+因此每个 $c(t)=(a,b)$ 满足 $a,b\ge0$、$a+b\ge1$；允许其中一个坐标为零。定理 3.4 给出同一实际来源的组成运输
+
+$$
+c(\rho(t))=Mc(t)=(b,a+b),
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+令 $C=\operatorname{Cl}(\mathbb R^2,Q)$，其中 $Q(a,b)=a^2+ab-b^2$，采用 $v^2=Q(v)1$ 的平方约定。典范叶像 $A,B$ 满足 §355 的关系
+
+$$
+A^2=1,\qquad B^2=-1,\qquad BA=1-AB.
+$$
+
+观察保持叶序：$E(\alpha)=A$、$E(\beta)=B$、$E(\langle s,u\rangle)=E(s)E(u)$。对 $m\ge1$，定义同源窗口与完整历史
+
+$$
+W_m(t)=\bigl(E(t),E(\rho(t)),\ldots,E(\rho^{m-1}(t))\bigr),
+\qquad
+\mathscr H(t)=\bigl(E(\rho^n(t))\bigr)_{n\ge0}.
+$$
+
+特别地，$W_2$ 与 $W_3$ 分别保留前两项和前三项；$W_m(\mathcal T)$、$\mathscr H(\mathcal T)$ 均指实际像，坐标必须来自同一棵树。直接复用 §355 的 $1,A,B,AB$ 线性无关性，以及推论 356.6 的历史六周期与同纤维结论
+
+$$
+W_3(t)=W_3(u)\quad\Longleftrightarrow\quad
+\mathscr H(t)=\mathscr H(u).
+\tag{357.1}
+$$
+
+这些供应结果并未把全原树域限制为规范轨道 $T_j=\rho^j(\alpha)$。
+
+对整数 $m\ge1$，$[z]_m$ 是逐坐标取 $0,\ldots,m-1$ 的标准代表，$z\bmod m$ 是剩余类；对标量采用相同记号。对全部整数参数 $D,d,e\ge1$ 和每个实际来源 $t$，定义
+
+$$
+\begin{aligned}
+R_D(t)&=c(t)\bmod D,&r_d(t)&=[c(t)]_d,\\
+\kappa_d(t)&=\left\lfloor\frac{r_{d,0}(t)+r_{d,1}(t)}d\right\rfloor,&
+K_{d,e}(t)&=(0,\kappa_d(t))\bmod e,\\
+H_{d,e}(t)&=\frac{c(t)-r_d(t)}d\bmod e
+             =\left\lfloor\frac{c(t)}d\right\rfloor\bmod e,&
+L_{d,e}(t)&=\bigl(r_d(t),H_{d,e}(t)\bigr).
+\end{aligned}
+\tag{357.2}
+$$
+
+向量的取整逐坐标进行。$R_D$ 的值域是 $(\mathbb Z/D\mathbb Z)^2$；$K_{d,e}$、$H_{d,e}$ 的值域是 $(\mathbb Z/e\mathbb Z)^2$；$L_{d,e}$ 的值域是 $\{0,\ldots,d-1\}^2\times(\mathbb Z/e\mathbb Z)^2$。模 $1$ 为单元素集合。这里 $K_{d,e}$ 是下一次组成更新的进位，$H_{d,e}$ 是当前组成的高位；定义 26.1 的运输式逐坐标给出
+
+$$
+L_{d,e}(\rho(t))
+=\bigl([Mr_d(t)]_d,\,MH_{d,e}(t)+K_{d,e}(t)\bigr).
+$$
+
+对 $\Omega\in\{W_2,W_3,\mathscr H\}$ 及指定目标 $g:\mathcal T\to Y$，称 $g$ 可由 $\Omega$ 恢复，是指存在来源无关的函数
+
+$$
+f:\Omega(\mathcal T)\longrightarrow Y,
+\qquad
+\forall t\in\mathcal T,\quad f(\Omega(t))=g(t).
+\tag{357.3}
+$$
+
+函数只读取实际观察，不能另读代表树、叶词、组成或迭代次数。下文所有充分性都给出这样的函数；所有必要性反例都在 $\mathcal T$ 中实现。
+
