@@ -109,6 +109,59 @@ escape witness is claimed. This is an unbounded general theorem with
 `utility: none`, rather than a finite enumeration or certified instance.
 There is no digestion atom or coverage edge.
 
+- **已证 — odd-index mechanism.** Within `result`, `odd_coprime`
+  establishes that `P(m)` is coprime to every `Q(j)` when `m` is odd.
+  Companion oddness and `P(m)%2=m%2` force any index dividing either
+  odd partial-sum factorization to be odd. Coprimality then forces
+  `P(m)=1`, and strict growth forces the positive index to be one.
+- **已证 — compression and growth.** Within `result`, `compress`
+  gives `A|2BC => A|2*gcd(A,B)*gcd(A,C)`. Strong divisibility turns
+  the latter gcds into Pell terms at `d=gcd(m,r)` and `e=gcd(m,s)`.
+  If `m` exceeds the proposed maximum, these are positive proper
+  divisors of `m`. For consecutive `r,s`, their coprimality gives
+  `d+e<m`, hence `0<2P(d)P(e)<=P(d+e)<P(m)`. In the square branch,
+  `2d<=m`; strict growth handles `2d<m`, and `Q(d)>P(d)` with
+  `d>=2` handles `2d=m`, giving `0<2P(d)^2<P(m)`. A positive
+  multiple of `P(m)` cannot be smaller than `P(m)`, excluding every
+  larger dividing index.
+- **已证 — sharp bounds.** All four values are exact maxima, not
+  merely upper bounds: each `IsGreatest` clause of `result` includes
+  positivity and divisibility at the stated index as well as the
+  bound on every other positive dividing index.
+- **已算 — zero-index boundary.** The latter two classes require
+  `k>=1`. At `k=0`, `S(0)=0` is divisible by every `P(j)` with
+  `j>=1`, so there is no greatest dividing index. The integer index
+  `4k-1` is then `-1`, outside the sum's domain; Lean's natural
+  subtraction truncates it to zero and does not extend that domain.
+- **已算 — square-branch boundary.** The local `square_bound`
+  requires `r>=2`. Replacing this with `r>=1` fails at `r=1,m=2`:
+  `P(1)=1`, `P(2)=2`, and `P(2)|2P(1)^2=2`, although `2>1`.
+- **已算 — source dependency check.** In arXiv:2409.01296v1
+  [Section 4.5](https://arxiv.org/html/2409.01296v1#S4.SS5),
+  Theorem 19 uses the identities `S(4k)=2P(2k)P(2k+1)` and
+  `S(4k-1)=2P(2k)^2`, which supply the same multiplier `2P(2k)`
+  at adjacent sum and term indices, followed by
+  [Theorem 13](https://arxiv.org/html/2409.01296v1#Thmtheorem13)'s
+  transfer to sequences with the same recurrence. Its proof does
+  not require Conjecture 18's maximality. Settling the conjecture
+  proves the maximum suggested by Table 8; it does not change
+  Theorem 19's hypotheses or conclusion. This is a source-dependency
+  check, not an additional Lean formalization of Theorem 19.
+- **未决 — neighbouring recurrences.** A greatest-index
+  classification for `x(n+2)=a*x(n+1)+x(n)`, with `x(0)=0,x(1)=1`
+  and varying `a`, is not established here. The proof uses the
+  companion's oddness and `P(m)%2=m%2` for its odd-sum branch,
+  and the coefficient-2 addition, norm and partial-sum identities
+  for compression and growth. These properties are established
+  for the Pell recurrence; changing `a` requires appropriate
+  companion identities, parity conditions and growth estimates.
+  Theorem 19 transfers a sum identity while keeping coefficient 2;
+  it supplies no maximum-index classification for varying `a`.
+  Any new candidate requires separate preregistration, proof-shape
+  and admission review, utility assessment and literature checks.
+  This analysis introduces no new Lean declaration and does not
+  extend this conjecture's resolution basis to another problem.
+
 ## ASSUMED-UNVERIFIED
 
 Literature completeness is `ASSUMED-UNVERIFIED`; Bradie 2010 full text

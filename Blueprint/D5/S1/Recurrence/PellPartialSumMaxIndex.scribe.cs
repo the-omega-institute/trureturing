@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 internal sealed class PellPartialSumMaxIndexDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/byrapuram2024pellpartialsums");
+        LibraryNoteRef.Create("D5/L/ArithSums/byrapuram2024pellpartialsums");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Pell partial sums have greatest dividing indices in four residue classes.",
