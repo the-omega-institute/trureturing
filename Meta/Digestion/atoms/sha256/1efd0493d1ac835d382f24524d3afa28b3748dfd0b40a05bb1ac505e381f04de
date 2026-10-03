@@ -1,0 +1,40 @@
+**定义 56.1（未知律实验）。** 固定 $n\ge4$、$0<\rho\le1/8$、$0<a\le1$，取
+
+$$
+\Sigma=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3,
+\qquad
+\mathcal M_\rho=
+\{(u,x,v,1/2,z):u,x,v,z\ge\rho,\ u+x+v+z=1/2\}.
+\tag{56.1}
+$$
+
+这里三位由低到高排列，字母语义取[原卷 §104.1、§141.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#104-规范三位窗口正值-end-与任务相关的联合未来商)；§57 的高位优先坐标须反转。$000$ 是消耗位置的窗口。采样模型准确取定义55.1的整窗产品实验：$W_1,\ldots,W_n$ 独立同分布于同一个未知 $\mu\in\mathcal M_\rho$，不附加跨窗 seam 或正值 End 条件化，窗内位也不独立化。$t=\mu(101)=1/2$ 是公开类约束，其他四质量未知。以下
+
+$$
+H=1/2+z,\qquad L=1/2+x,\qquad \mathbb E[h\ell]=1/2
+\tag{56.2}
+$$
+
+只用于证明，不是算法的输入。
+
+未知递增教师为 $\theta=(p,q,r)\in\Theta_n$，原目标和通道为
+
+$$
+\begin{aligned}
+G_1&=h_p\ell_q,&G_2&=(1-G_1)h_q\ell_r,& C_\theta&=G_1+2G_2,\\
+R&=\begin{pmatrix}1/2&1/4&1/4\\3/8&1/4&3/8\\1/4&1/4&1/2\end{pmatrix},&&
+R_\alpha=\alpha R+(1-\alpha)J/3,&\alpha&\in[a,1].
+\end{aligned}
+\tag{56.3}
+$$
+
+共同 $\alpha$ 在采样前固定且未知。学习器知道 $n,a,\rho$、有限字母表、通道族和递增模板，未取得 $\mu,\alpha,\theta$。每份收费完整记录的律仍为
+
+$$
+P_{\mu,\alpha,\theta}(w,j)
+=\mu^{\otimes n}(w)(R_\alpha)_{C_\theta(w),j}.
+\tag{56.4}
+$$
+
+不同训练记录独立，测试记录独立于训练且同律。以下 $\log$ 为自然对数。排序器可以只接收两个正整数批长；$a,\rho$ 与置信目标只用于选择批长。
+

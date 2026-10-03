@@ -1,0 +1,30 @@
+### 57.11. 成熟供应、实际重叠与关系范围
+
+本卷的实际五点代数和多项式供应是 §2—3、式（44.22）、（49.21）；式（54.44）已经给共同教师矩的相关排序。
+§55—56提供半质量子类的稀有方差、条件取得、整数比较和不限资源完整记录下界。
+本节使用这些对象和接口，将自由五质量下的全重叠尖锐分离、取得等号的共同困难族、准确相邻行 KL 和分歧支持方差接在一起。移除输入律描述、有限候选数或一般相关排序本身不取得新意资格。
+
+[Bartlett、Mendelson，*Empirical Minimization*](https://www.stat.berkeley.edu/~bartlett/papers/bm-em-05.pdf)，§1.1、Definition 2.6 给均值控制二阶矩的 Bernstein 类背景。这里（57.14）准确有
+$\mathbb EW^2\le(6/\alpha)\mathbb EW$，体现同一成熟机制；
+未把有限候选差类假设成星形类，也未调用其需要额外结构的整体经验过程结论。Tropp 上引 Theorem 6.1(ii) 供应实际使用的单侧标量不等式。
+
+[Gerchinovitz、Ménard、Stoltz，*Fano's inequality for random variables*，v3](https://arxiv.org/pdf/1702.05985v3)，§1、§2.1、Lemma 1及Corollary 2给有限检验、KL 和二元数据处理背景。仓内
+[FanoMethodSampleComplexity](../../../D5/S3/Estimation/FanoMethodSampleComplexity.lean) 的独立重复信息界、
+[LiteralWindowEnd](../../../D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean) 的低到高字母及
+[FirstRejectionProfileMass](../../../D5/S3/Arith/FibonacciAtomic/FirstRejectionProfileMass.lean) 的完整首失败质量具有各自合同。前者是成熟信息工具；后两者不将完整相邻扫描或均匀质量模型转成当前未知三窗口教师。信息工具的通用形式不供应（57.7）的模型特定分离，也不把均匀首失败律换成未知三窗口律。
+
+[Jan Arpe，*Learning Juntas in the Presence of Noise*，ECCC TR05-088](https://eccc.weizmann.ac.il/report/2005/088/download/)，摘要、§§4.3—4.4研究带独立属性翻转及分类翻转的 Boolean junta，先发现相关变量再学习响应。
+该问题提供稀疏带噪发现的成熟比较，但其独立位、Boolean 输出及翻转通道不供应相关五符号整窗、三值优先门和（57.7）的质量指数。
+相关性或同名噪声参数不能替代这些对应条件。
+
+输入因子消去准确复用命题56.14并由（57.33）直接证明；
+[Will Fithian，*Sufficiency*](https://stat210a.berkeley.edu/fall-2024/reader/sufficiency.html) 的 factorization theorem 给共同条件律和参数无关因子消去的标准背景。
+[尺度读出卷§22](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#22-可数只读记录的有声返回与终止精确探针许可的分界)将理想精确参数查询、可数记录和有限描述区分；
+[边界动力学卷§96](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#96-同一四态反馈的停止记录共同恢复与有限饱和)将记录的共同律恢复、实际已发生记录与计数器取得区分。
+这些边界使有限整数预算、付费样本端口和反复取得的控制条件不能相互免费替代；它们的来源、停止记录和观察合同不直接提供本节教师样本率。
+
+结论限于共享整窗 IID 律、所列五符号、已知三标签通道族、共同正信号下界及递增原教师。
+异质窗口律、跨窗依赖、主动查询、任意教师或未知通道须另给共同矩、合法操作和信息比较。
+本节不声明全局文献优先权、计数器／时间／批次最优性、物理资源最优性或有限精度实数树头保证。
+精确最小分离与完整记录样本阶由上面的全称解析证明承担，有限整数实现由所列预算和操作承担。
+

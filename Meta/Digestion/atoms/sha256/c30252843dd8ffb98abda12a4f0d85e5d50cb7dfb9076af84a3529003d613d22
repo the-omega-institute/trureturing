@@ -1,0 +1,17 @@
+**定理 58.2（异质全类最小分离）。** 记
+
+$$
+d_{\boldsymbol\mu}(\theta,\tau)
+=\mathbb E_{\otimes_i\mu_i}(C_\theta-C_\tau)^2,\qquad
+\gamma_\rho=8\rho^2(1-2\rho).
+$$
+
+则对所有 $n\ge4$，
+
+$$
+\inf_{\boldsymbol\mu\in\mathcal H_{n,\rho}}
+\min_{\theta\ne\tau}d_{\boldsymbol\mu}(\theta,\tau)
+=\gamma_\rho.
+\tag{58.5}
+$$
+

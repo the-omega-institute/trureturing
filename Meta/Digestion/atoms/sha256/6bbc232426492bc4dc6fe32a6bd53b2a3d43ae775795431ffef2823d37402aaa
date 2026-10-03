@@ -1,0 +1,27 @@
+**定理 54.9（完整记录上的位置最大值恢复）。** 固定 $n\ge4$、已知全支撑 $\mu$ 且 $t=1/2$、$0<a\le1$、$0<\delta<1$。记 $N=\binom n2$，$M_\mu=\max(s,2-s)=s<3/2$。用 $m$ 份完整记录计算
+
+$$
+\widehat T_{ij}=\frac1m\sum_{b=1}^m\psi(W_{b,i})\psi(W_{b,j})Z_b,
+\qquad \widehat A_i=\max_{j\ne i}|\widehat T_{ij}|.
+$$
+
+取 $\widehat A_i$ 最大的三个位置，固定按索引破平，再递增排序为 $\widehat\theta$。若
+
+$$
+m\ge\left\lceil
+\frac{128M_\mu^4}{a^2\gamma_\mu^2}\log\frac{2N}{\delta}
+\right\rceil,
+\tag{54.27}
+$$
+
+则对所有教师与 $\alpha\in[a,1]$，$P(\widehat\theta=\theta)\ge1-\delta$。在 $\mathcal M^{1/2}_\rho$ 上，一条统一充分预算为
+
+$$
+m\ge\left\lceil
+\frac{41472}{a^2\rho^2}\log\frac{n(n-1)}\delta
+\right\rceil.
+\tag{54.28}
+$$
+
+恢复规则使用已知 $s$，不估计或反演 $\alpha$；$a$ 只用于预算。以上常数为充分值，不声称尖锐。
+

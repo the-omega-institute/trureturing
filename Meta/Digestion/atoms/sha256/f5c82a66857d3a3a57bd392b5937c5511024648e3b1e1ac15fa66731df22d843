@@ -1,0 +1,13 @@
+**定理 58.9（相同类的匹配记录阶）。** 对 $n\ge4$、 $0<a\le1$、 $0<\rho\le1/8$、 $0<\delta\le1/4$，两种准确恢复目标都满足
+
+$$
+\begin{aligned}
+\left\lceil\frac{\log n+\log(1/\delta)}{8a^2\rho^2}\right\rceil
+&\le m_*^{\rm het}(n,a,\rho,\delta)\\
+&\le\left\lceil\frac{128[\log\binom n3+\log(1/\delta)]}{a^2\rho^2}\right\rceil,\\
+m_*^{\rm het}
+&=\Theta\left(\frac{\log n+\log(1/\delta)}{a^2\rho^2}\right).
+\end{aligned}
+\tag{58.28}
+$$
+

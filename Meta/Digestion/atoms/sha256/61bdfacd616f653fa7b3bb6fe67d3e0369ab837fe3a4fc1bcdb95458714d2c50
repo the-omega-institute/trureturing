@@ -1,0 +1,90 @@
+**证明。** 先比较第一对 $(p,q)$ 和 $(p',q')$，写
+$A=h_p\ell_q,A'=h_{p'}\ell_{q'}$。如果 $A\ne A'$，恰有一个教师值为1，另一个值属于 $\{0,2\}$，无论第三位置怎样重叠，两个教师都不同。因此
+
+$$
+d_\mu(\theta,\tau)\ge P_\mu(A\ne A').
+$$
+
+两个不同递增第一对只能共用一个位置，或不共用位置；若共用位置，它具有相同角色或交叉角色。两个交叉相等不能同时成立，否则违背递增顺序。全部可能性为
+
+$$
+\begin{array}{c|c|c}
+\text{第一对关系}&\mathbb E[AA']&P(A\ne A')\\ \hline
+p=p',\ q\ne q'&HL^2&2HL(1-L)\\
+q=q',\ p\ne p'&LH^2&2LH(1-H)\\
+q=p'\ \text{或}\ q'=p&HtL&2HL(1-t)\\
+\{p,q\}\cap\{p',q'\}=\varnothing&H^2L^2&2HL(1-HL)
+\end{array}.
+\tag{57.8}
+$$
+
+每行由 $P(A=1)=P(A'=1)=HL$ 及
+$P(A\ne A')=2HL-2\mathbb E[AA']$ 得到。交叉行的共享窗口实际贡献 $t$，不是 $HL$。某个第三位置属于另一教师的第一对，或者两个第三位置相同，都不改变 $C=1\iff A=1$ 的强制区别，所以表中不遗漏这种交叠。
+
+同一个允许律满足
+
+$$
+2\rho\le H,L\le1-3\rho,\qquad
+H(1-H),L(1-L)\ge b_\rho:=2\rho(1-2\rho).
+\tag{57.9}
+$$
+
+后一个界来自凹函数 $s(1-s)$ 的区间端点：
+$3\rho(1-3\rho)-2\rho(1-2\rho)=\rho(1-5\rho)\ge0$。
+前两行于是至少为 $4\rho b_\rho=\gamma_\rho$。
+第三行用 $t\le H$，得到
+$2HL(1-t)\ge2L H(1-H)\ge4\rho b_\rho$；
+第四行用 $HL\le L$，得到
+$2HL(1-HL)\ge2H L(1-L)\ge4\rho b_\rho$。
+这些不等式全部作用于正在比较的同一个 $\mu$，没有将分别可达的极值假装成一个共同实现。
+
+剩下的情形是第一对完全相同而 $r\ne r'$。两个第三窗均在 $\{p,q\}$ 之外且彼此不同；直接相减得
+
+$$
+C_\theta-C_\tau
+=2(1-h_p\ell_q)h_q(\ell_r-\ell_{r'}),
+\qquad
+d_\mu(\theta,\tau)=8HL(1-t)(1-L).
+\tag{57.10}
+$$
+
+其中 $\mathbb E[(1-h_p\ell_q)h_q]=H-Ht=H(1-t)$，
+$P(\ell_r\ne\ell_{r'})=2L(1-L)$。由
+$H(1-t)\ge H(1-H)$，此距离至少为
+$8b_\rho^2$。又
+
+$$
+\frac{8b_\rho^2}{\gamma_\rho}=4(1-2\rho)\ge3,
+$$
+
+故同第一对的所有情形也满足所需界。这两个分支穷尽不同递增教师。
+
+为取得等号，取实际全支撑律和同一末位锚点族
+
+$$
+\mu_*=\left(\frac{1-3\rho}{2},\rho,
+\frac{1-3\rho}{2},\rho,\rho\right),\qquad
+H=L=2\rho,\qquad
+\theta_i=(i,n-1,n),\quad 1\le i\le n-2.
+\tag{57.11}
+$$
+
+所有五质量至少为 $\rho$，因为 $\rho\le1/8<1/5$。
+置 $B=h_{n-1}\ell_n$。对 $i\ne j$，
+
+$$
+C_{\theta_i}-C_{\theta_j}
+=(h_i-h_j)\ell_{n-1}(1-2B).
+$$
+
+$B\in\{0,1\}$ 使 $(1-2B)^2=1$，故差的绝对值在分歧上恰为1，且
+
+$$
+d_{\mu_*}(\theta_i,\theta_j)
+=P_{\mu_*}(C_{\theta_i}\ne C_{\theta_j})
+=2H(1-H)L=8\rho^2(1-2\rho).
+\tag{57.12}
+$$
+
+$n\ge4$ 保证至少两个这样的教师。这取得全类下界。系数2使上述末因子为正负一；将任务换成二值非零指示会改变这条分歧恒等式。证毕。 $\square$
+
