@@ -10,17 +10,16 @@ noncomputable def sourceUnit := _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.regis
 noncomputable def source0 : Contract.Registration.{_, _, _, _, _, _, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add) DependentFamily.Arena DependentFamily.Arena
     (DependentFamily.Realization _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena.signature) Unit Unit Unit Unit Unit := {
-  targetName := `D5.S0.Tower.GoldenGapZeckendorf.wdigits_fib_add
   unitName := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog.sourceUnit
   realizationName := `Reg.D5.S0.Tower.GoldenGapZeckendorf.registration
   realizationSource := none
   generated := false
-  arena := ⟨`Reg.D5.S0.Tower.GoldenGapZeckendorf.arena, _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena⟩
-  objectArena := ⟨`Reg.D5.S0.Tower.GoldenGapZeckendorf.arena, _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena⟩
+  arena := ⟨_root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena⟩
+  objectArena := ⟨_root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena⟩
   catalog := `Reg.D5.S0.Tower.GoldenGapZeckendorf.arena
   localNames := false
   realization := .source _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena
-    ⟨`Reg.D5.S0.Tower.GoldenGapZeckendorf.registration, _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.registration⟩
+    ⟨_root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.registration⟩
   readout := some (DependentFamily.realize _root_.Reg.D5.S0.Tower.GoldenGapZeckendorf.arena.signature
     (fun _ (Q : Nat) (j : Fin (Nat.fib (Q + 2))) =>
       _root_.D5.S0.Conventions.wdigits (Nat.fib (Q + 3) + j.val))

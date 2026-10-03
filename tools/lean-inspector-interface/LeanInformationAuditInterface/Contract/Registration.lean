@@ -12,7 +12,6 @@ structure Registration {P : Prop} (target : P)
     (Readout : Type d) (Variation : Sort f)
     (Sensitivity : Sort g) (From : Type h) (Residual : Sort i)
     (FamilyRecord : Sort j) where
-  targetName : Name
   unitName : Name
   realizationName : Name
   realizationSource : Option Name

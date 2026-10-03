@@ -23,20 +23,19 @@ def registration : Contract.Registration.{_, _, _, _, _, _, _, _, 0, 0, 0, 0, 0,
     result WitnessArena WitnessArena (PrimitiveRealization arena.signature)
     (arena.Law actual ∧ ¬ arena.Law arena.constantTrue)
     (FiniteSlotSensitivity arena.toPrimitiveLawArena) (Type) Unit Unit := {
-  targetName := `LeanInformationAuditRegTests.ContractWitnessFixture.result
   unitName := `ContractTests.witness.unit
   realizationName := `LeanInformationAuditRegTests.ContractWitnessFixture.bridge
   realizationSource := none
   generated := false
-  arena := ⟨`LeanInformationAuditRegTests.ContractWitnessFixture.arena, arena⟩
-  objectArena := ⟨`LeanInformationAuditRegTests.ContractWitnessFixture.arena, arena⟩
+  arena := ⟨arena⟩
+  objectArena := ⟨arena⟩
   catalog := `ContractTests.witness
   localNames := true
   realization := .witness arena actual actual.toPrimitiveBundle
-    ⟨`LeanInformationAuditRegTests.ContractWitnessFixture.bridge, bridge⟩ positive
+    ⟨bridge⟩ positive
   readout := some actual
-  variation := some ⟨`LeanInformationAuditRegTests.ContractWitnessFixture.variation, variation⟩
-  sensitivity := some ⟨`LeanInformationAuditRegTests.ContractWitnessFixture.sensitivity, sensitivity⟩
+  variation := some ⟨variation⟩
+  sensitivity := some ⟨sensitivity⟩
   escapeFrom := some Nat
   sourceSelection := none
   continuation := .unknown

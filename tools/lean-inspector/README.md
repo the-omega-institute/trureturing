@@ -22,6 +22,13 @@ ExpectedDeclaration is rejected by the root structure rule. Rigid universes rema
 unchanged. Parentheses around the result head are accepted. Term parameters and
 used section variables cannot supply a closed entry.
 
+`Contract.Ref` stores only `value`. The decoder reads its compiled constant head
+by stripping Expr metadata and following application functions. Lambda, let,
+projection, open and unknown-constant payloads receive a field-role diagnostic;
+the decoder never reduces them. Registration target identity comes from the
+target constant in the contract type, with theorem, closure, arity and rigid
+universe checks. `Registration.targetName` is absent.
+
 Metadata uses the following closed grammar. Mathematical payload fields keep
 ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
 user code.

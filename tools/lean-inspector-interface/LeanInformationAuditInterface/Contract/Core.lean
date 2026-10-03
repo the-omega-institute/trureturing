@@ -6,7 +6,6 @@ universe u
 
 /-- The value is kernel checked; its source identity is checked by the report. -/
 structure Ref (T : Sort u) : Type u where
-  name : Name
   value : T
 
 inductive OptionValue where

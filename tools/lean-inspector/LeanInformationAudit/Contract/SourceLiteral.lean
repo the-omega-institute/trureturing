@@ -22,14 +22,14 @@ private def fields (type : Name) : Array (Name × Shape) :=
   let name := lit `Lean.Name
   let options := Shape.array (recd `OptionSetting)
   match type.getString! with
-  | "Registration" => #[(`targetName, name), (`unitName, name), (`realizationName, name),
+  | "Registration" => #[(`unitName, name), (`realizationName, name),
       (`realizationSource, .optional name), (`generated, lit `Bool), (`arena, ref),
       (`objectArena, ref), (`catalog, name), (`localNames, lit `Bool),
       (`realization, recd `Implementation), (`readout, .math), (`variation, optRef),
       (`sensitivity, optRef), (`escapeFrom, .math),
       (`sourceSelection, .optional (recd `SourceSelection)),
       (`continuation, recd `Continuation), (`familyRecord, optRef), (`options, options)]
-  | "Ref" => #[(`name, name), (`value, .math)]
+  | "Ref" => #[(`value, .math)]
   | "TypeRef" => #[(`name, name), (`type, .math)]
   | "TemplateEnrollment" => #[(`name, name), (`version, lit `Nat),
       (`constructors, .array (recd `TypeRef)), (`options, options)]
