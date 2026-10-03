@@ -14,9 +14,13 @@ namespace D5.S3.Factorization.Collinear.PrimeCollinearTripleCensus
 
 open D5.S3.Factorization.CollinearTripleTranslationOrbits
 
-/-- The exact count of unordered admissible collinear triples over a prime residue field. -/
-theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
-    Nat.card (Triple p) = p * (p - 1) * Nat.choose p 3 := by
+/-- A nonzero slope, an intercept, and three first coordinates over the residue field. -/
+def PrimeTripleParameters (p : ℕ) :=
+  (({a : ZMod p // a ≠ 0} × ZMod p) × {X : Finset (ZMod p) // X.card = 3})
+
+/-- The unique affine-line parameters of a triple, with inverse given by its graph. -/
+noncomputable def parametersEquiv (p : ℕ) (hp : p.Prime) :
+    Triple p ≃ PrimeTripleParameters p := by
   classical
   letI : Fact p.Prime := ⟨hp⟩
   letI : NeZero p := ⟨hp.ne_zero⟩
@@ -110,25 +114,22 @@ theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
         intro z hz
         exact Prod.ext rfl ((line_spec s).2 z hz).symm
       _ = s.val := Finset.image_id
-  let Data := ({a : K // a ≠ 0} × K) × {X : Finset K // X.card = 3}
-  let encode : Triple p → Data := fun s =>
+  let encode : Triple p → PrimeTripleParameters p := fun s =>
     ((⟨(line s).1, (line_spec s).1⟩, (line s).2),
       ⟨s.val.image Prod.fst, (Finset.card_image_of_injOn s.property.2.1).trans s.property.1⟩)
-  have encode_injective : Function.Injective encode := by
-    intro s t h
-    have ha : (line s).1 = (line t).1 := congrArg (fun d : Data => d.1.1.val) h
-    have hb : (line s).2 = (line t).2 := congrArg (fun d : Data => d.1.2) h
-    have hX : s.val.image Prod.fst = t.val.image Prod.fst :=
-      congrArg (fun d : Data => d.2.val) h
+  refine
+    { toFun := encode
+      invFun := fun d => ⟨graph d.1.1.val d.1.2 d.2.val,
+        graph_valid d.1.1.val d.1.2 d.1.1.property d.2.val d.2.property⟩
+      left_inv := ?_
+      right_inv := ?_ }
+  · intro s
     apply Subtype.ext
-    calc
-      s.val = graph (line s).1 (line s).2 (s.val.image Prod.fst) := (graph_eq s).symm
-      _ = graph (line t).1 (line t).2 (t.val.image Prod.fst) := by rw [ha, hb, hX]
-      _ = t.val := graph_eq t
-  have encode_surjective : Function.Surjective encode := by
-    intro d
+    exact graph_eq s
+  · intro d
     let s : Triple p := ⟨graph d.1.1.val d.1.2 d.2.val,
       graph_valid d.1.1.val d.1.2 d.1.1.property d.2.val d.2.property⟩
+    change encode s = d
     have hline : (d.1.1.val, d.1.2) = line s := by
       apply line_unique
       constructor
@@ -136,7 +137,6 @@ theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
       · intro z hz
         rcases Finset.mem_image.mp hz with ⟨x, hx, rfl⟩
         rfl
-    refine ⟨s, ?_⟩
     refine Prod.ext ?_ ?_
     · apply Prod.ext
       · apply Subtype.ext
@@ -145,8 +145,16 @@ theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
         exact congrArg Prod.snd hline.symm
     · apply Subtype.ext
       exact graph_fst d.1.1.val d.1.2 d.2.val
-  have hcard : Nat.card (Triple p) = Nat.card Data :=
-    Nat.card_congr (Equiv.ofBijective encode ⟨encode_injective, encode_surjective⟩)
+
+/-- The exact count of unordered admissible collinear triples over a prime residue field. -/
+theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
+    Nat.card (Triple p) = p * (p - 1) * Nat.choose p 3 := by
+  classical
+  letI : Fact p.Prime := ⟨hp⟩
+  letI : NeZero p := ⟨hp.ne_zero⟩
+  let K := ZMod p
+  have hcard : Nat.card (Triple p) = Nat.card (PrimeTripleParameters p) :=
+    Nat.card_congr (parametersEquiv p hp)
   have hnonzero : Nat.card {a : K // a ≠ 0} = p - 1 := by
     rw [Nat.card_eq_fintype_card]
     have h : Fintype.card {a : K // a ≠ 0} =
@@ -163,7 +171,7 @@ theorem card_triples_prime (p : ℕ) (hp : p.Prime) :
     simp [K]
   have hK : Nat.card K = p := by simp [K]
   rw [hcard]
-  simp only [Data, Nat.card_prod, hnonzero, hchoose, hK]
+  simp only [PrimeTripleParameters, Nat.card_prod, hnonzero, hchoose, hK]
   rw [Nat.mul_comm (p - 1) p]
 
 #print axioms card_triples_prime
