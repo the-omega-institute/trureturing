@@ -22036,7 +22036,6 @@ but it still does not force a reciprocal pair in every hypothetical odd
 whole cover, nor does it turn the phase-specific vacancy (FT3) into the
 global statement \(J\cap\{e:e\mid\Gamma_L\}=\varnothing\) from (OL3).
 
-
 ## 180. Reused published bounds isolate the high-factor branch
 
 Several published results already apply to the exact finite, distinct, odd
@@ -24844,7 +24843,6 @@ attainment is a single-source, whole-liability construction; the remaining
 unrestricted gap is the forcing of a low class and packet for which this
 construction yields a strict EB1 descent.
 
-
 ## 212. Vacant mixed moduli give a source-compatible strict route
 
 [Report 528](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md), in its result (FC1128), supplies a separate strict-descent
@@ -27041,3 +27039,128 @@ arbitrarily large componentwise phase payment do not supply the missing
 whole-cover/EB1 bridge. Any successful unrestricted proof must use additional
 constraints from actual whole coverage and its joint private-point flow, not
 only the Section 229 pointwise inequalities.
+
+## 235. A finite nine-support control beats the internal-hole mass
+
+The preceding construction can be made completely explicit and keeps all
+quotient phases distinct. This gives a small exact countercontrol for the
+remaining small-quotient route.
+
+Take
+\[
+Q_0=735=3\cdot5\cdot7^2,\qquad H=49,
+\]
+and use the following original classes:
+\[
+\begin{array}{c|c|c}
+d&a&\text{private witness}\\ \hline
+3&0&3\\
+5&0&5\\
+7&1&1\\
+15&8&23\\
+21&7&7\\
+35&14&14\\
+49&2&2\\
+105&77&77\\
+147&11&11\\
+245&4&4\\
+735&686&686
+\end{array}
+\tag{235.1}
+\]
+The moduli are exactly the nonunit divisors of \(735\), hence distinct, odd,
+and divisor-closed. Direct substitution shows that the witness in the third
+column belongs to its own class and no other class. Thus the family is
+irredundant. The two classes internal at \(H=49\) are \(1\bmod7\) and
+\(2\bmod49\), so
+\[
+U_{49}=(\mathbb Z/49\mathbb Z)\setminus
+       \bigl((1\bmod7)\cup\{2\}\bigr),
+\qquad |U_{49}|=41.
+\]
+In particular \(0\in U_{49}\).
+
+On the fibre \(x=49t\), the active classes at \(r=0\) are
+\[
+0,1\pmod3;\qquad 0,1\pmod5;\qquad
+2,8,14\pmod{15}.
+\tag{235.2}
+\]
+They cover every \(t\): the first pair covers the residues not equal to
+\(2\bmod3\), and on the remaining five residues modulo \(15\), the two
+modulus-\(5\) classes cover \(5,11\), while the three modulus-\(15\) classes
+cover \(2,8,14\). The induced component is connected because \(15\) joins the
+\(3\)- and \(5\)-quotients. It is also irredundant on this fibre, with private
+quotient points \(3,4,5,11,2,8,14\), respectively.
+
+The original family is not a whole cover: \(13\) avoids all eleven classes.
+Thus this is a connected mixed component that fully covers an actual internal
+hole fibre while retaining distinct odd original labels and private
+witnesses.
+
+Now let
+\[
+P=\{11,13,17,19,23,29\},\qquad
+R=\prod_{p\in P}p=30\,808\,063.
+\]
+For each \(p\in P\), add the two classes
+\[
+x\equiv1\pmod p,\qquad
+x\equiv c_p\pmod{3p},\quad
+c_p\equiv2\pmod3,\quad c_p\equiv0\pmod p.
+\tag{235.3}
+\]
+The six composite residues \(c_p\) are
+\(11,26,17,38,23,29\) for \(p=11,13,17,19,23,29\), respectively. The
+result has \(23\) distinct odd moduli and
+\[
+Q=735R=22\,643\,926\,305.
+\]
+Divisor closure persists, and all quotient labels at \(H=49\) lie in one
+connected component: each new \(p\)-quotient is joined to the old
+\(3\)-quotient through \(3p\). Private witnesses remain source-compatible:
+use an old private witness with every new prime coordinate equal to \(2\) for
+an old class; use the old holes \(13\) and \(17\) with the target coordinate
+\(1\) or \(0\), respectively, and coordinate \(2\) at every other new prime
+for the new classes. CRT gives the required witnesses.
+
+For every cutoff \(M>87\), all these quotient moduli are small. The original
+eleven classes contribute exactly
+\[
+S_{49}^{\mathrm{old}}=\frac35
+\]
+to the source-sensitive payment
+\[
+S_H(M)=\sum_{i:\,1<\ell_i<M}
+\frac{|U_H\cap(a_i\bmod g_i)|}{H\ell_i}.
+\tag{235.4}
+\]
+Each added \(p\)-class contributes \(41/(49p)\), and each \(3p\)-class
+contributes \(41/(147p)\). Consequently
+\[
+\begin{aligned}
+S_{49}(M)
+&=\frac35+\frac{41}{49}\frac43\sum_{p\in P}\frac1p\\
+&=\frac{3\,230\,197\,249}{3\,234\,846\,615}
+>\frac{41}{49}=\frac{|U_{49}|}{49}.
+\end{aligned}
+\tag{235.5}
+\]
+The inequality is not caused by duplicate phases: each quotient modulus
+occurs with one phase, except for the explicitly displayed distinct phases
+within the old \(3,5,15\) chains.
+
+An explicit global hole is the integer
+\[
+N=10\,228\,276\,918.
+\]
+It satisfies \(N\equiv13\pmod{735}\) and \(N\equiv2\pmod R\). The first
+congruence avoids every old class; the second avoids \(1\bmod p\), while
+\(N\equiv2\bmod p\) avoids each \(c_p\equiv0\bmod p\) class. Hence the
+extended family remains a noncover.
+
+This exact control rules out the universal estimate
+\(S_H(M)<|U_H|/H\) from the listed local structural hypotheses, even with nine
+support primes and one connected quotient component. It does not produce an
+odd whole cover. A closing proof must use a stronger across-fibre constraint
+from whole coverage or EB1, beyond the pointwise component payment.
