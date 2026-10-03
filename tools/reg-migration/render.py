@@ -71,7 +71,8 @@ def _target(row: dict[str, Any], name: str, levels: list[str], field: str = "the
         if field == "name" and not term:
             source = row.get("parser_slots", {}).get("name")
             if source:
-                return "@" + source + _suffix(levels)
+                specialized = bool(row.get("source_specializations", {}).get("name"))
+                return "@" + source + ("" if specialized else _suffix(levels))
         if not term:
             raise SnapshotError("missing_private_target_term", name)
         return term
@@ -181,6 +182,8 @@ def _continuation(reg: Registration) -> str:
 def _bridge(reg: Registration, index: int) -> str:
     row = reg.snapshot or {}
     kind = row.get("bridge_kind", "source" if reg.source and not reg.finite_source else "legacy")
+    if row.get("bridge_arena_from_source") is False and row.get("bridge_arena") is None:
+        raise SnapshotError("missing_material", "compiled normalized bridge arena")
     arena = _term(reg.arena if row.get("bridge_arena_from_source", False) else (row.get("bridge_arena") or reg.arena))
     if kind == "source":
         return f".source {arena} {_ref(reg.source_record or reg.realization)}"
@@ -190,7 +193,7 @@ def _bridge(reg: Registration, index: int) -> str:
     if reg.native:
         actual = reg.primitive
         primitives = f"({_term(actual)}).toPrimitiveBundle"
-        bridge = f"Iff.rfl"
+        bridge = "⟨Iff.rfl⟩"
     else:
         primitives = _term(reg.primitive)
         bridge = reg.finite_bridge or reg.realization or reg.via_descriptor
@@ -222,14 +225,32 @@ def _registration_type(reg: Registration, row: dict[str, Any]) -> str:
     return "LeanInformationAudit.Contract.Registration" + _suffix(universes) + " (" + _target(row, reg.theorem, levels) + ") " + " ".join(rendered_arguments)
 
 
+def generated_declaration_name(row: dict[str, Any], name: str) -> tuple[str, str]:
+    namespace = row.get("namespace", "")
+    if namespace:
+        return name, namespace + "." + name
+    owner = row.get("owner", "")
+    return ("_root_." + owner + "." + name, owner + "." + name) if owner else (name, name)
+
+
+def _declaration_levels(row: dict[str, Any], levels: list[str]) -> list[str]:
+    return [level for level in levels if level not in row.get("ambient_universes", [])]
+
+
+def _scoped_commands(row: dict[str, Any], commands: list[str]) -> str:
+    prefix = row.get("scope_prefix", "")
+    return ("\n\n" + prefix).join(commands) + "\n"
+
+
 def render_registration(reg: Registration, index: int = 0) -> str:
     row = reg.snapshot or {}
     levels = _levels(row)
-    declaration_levels = levels + [level for level in row.get("extra_level_params", []) if level not in levels]
+    declaration_levels = _declaration_levels(row, levels + [level for level in row.get("extra_level_params", []) if level not in levels])
     source = row.get("realization_source")
     realization_source = "some " + _row_name(row, "realization_source") if source else "none"
+    declaration_name, _ = generated_declaration_name(row, f"registration_{index + 1}")
     lines = [
-        f"noncomputable def registration_{index + 1}{_suffix(declaration_levels)} : {_registration_type(reg, row)} := {{",
+        f"noncomputable def {declaration_name}{_suffix(declaration_levels)} : {_registration_type(reg, row)} := {{",
         f"  unitName := {_row_name(row, 'unit', reg.theorem + '.__information_unit')},",
         f"  realizationName := {_row_name(row, 'realization', reg.realization or reg.source_record or reg.theorem)},",
         f"  realizationSource := {realization_source},",
@@ -248,6 +269,11 @@ def render_registration(reg: Registration, index: int = 0) -> str:
         f"  familyRecord := {_option(reg.source_record if not reg.source or reg.finite_source else None, True)},",
         f"  options := {options_literal(reg.options)} }}",
     ]
+    commands = []
+    if reg.native:
+        if not getattr(reg, "statement", None) or not getattr(reg, "proof", None):
+            raise ValueError("missing_native_theorem")
+        commands.append(f"theorem _root_.{_name(reg.theorem)}{_suffix(_declaration_levels(row, levels))} : {reg.statement} := {reg.proof}")
     if reg.inline_bridge:
         actual, proof = reg.inline_bridge
         bridge_type = row.get("inline_bridge_type") or row.get("bridge_type") or (
@@ -255,21 +281,15 @@ def render_registration(reg: Registration, index: int = 0) -> str:
             _term(reg.arena) + " (" + _target(row, reg.theorem, levels) + ") " + _term(actual))
         bridge_type = _expression(bridge_type)
         bridge_name = "_root_." + _name(row["realization"]) if row.get("realization") else f"__p2b_inline_bridge_{index + 1}"
-        bridge_levels = row.get("inline_bridge_level_params", declaration_levels)
-        lines[:0] = [f"theorem {bridge_name}{_suffix(bridge_levels)} : {bridge_type} := {proof}", ""]
-    if reg.native:
-        if not getattr(reg, "statement", None) or not getattr(reg, "proof", None):
-            raise ValueError("missing_native_theorem")
-        lines[:0] = [f"theorem _root_.{_name(reg.theorem)}{_suffix(levels)} : {reg.statement} := {reg.proof}", ""]
+        bridge_levels = _declaration_levels(row, row.get("inline_bridge_level_params", declaration_levels))
+        commands.append(f"theorem {bridge_name}{_suffix(bridge_levels)} : {bridge_type} := {proof}")
     helpers = row.get("companion_helpers", [])
     if helpers:
-        position = next(i for i, line in enumerate(lines) if line.startswith("noncomputable def registration_"))
-        declarations = []
         for helper in helpers:
-            helper_levels = helper.get("level_params", [])
-            declarations += [f"noncomputable def {helper['name']}{_suffix(helper_levels)} : {_expression(helper['type'])} := {_expression(helper['body'])}", ""]
-        lines[position:position] = declarations
-    return "\n".join(lines) + "\n"
+            helper_levels = _declaration_levels(row, helper.get("level_params", []))
+            commands.append(f"noncomputable def {helper['name']}{_suffix(helper_levels)} : {_expression(helper['type'])} := {_expression(helper['body'])}")
+    commands.append("\n".join(lines))
+    return _scoped_commands(row, commands)
 
 
 def _occurrence_rows(rows: list[dict[str, Any]]) -> str:
@@ -300,7 +320,7 @@ def render_root(root: Root, kind: str, destination_module: str) -> str:
              f"  baseline := {_occurrence_rows(root.baseline)},",
              f"  companionPrefix := {'some ' + _row_name(root.snapshot or {}, 'companion_prefix', root.companion_prefix) if root.companion_prefix else 'none'} }} }}"]
     if kind == "sealed_catalog":
-        lines += ["", f"def seal : Contract.Seal := {{ rootId := {_quoted_name(destination_module)}, options := {options_literal(getattr(root, 'seal_options', []))} }}"]
+        lines += ["", f"def «seal» : Contract.Seal := {{ rootId := {_quoted_name(destination_module)}, options := {options_literal(getattr(root, 'seal_options', []))} }}"]
     lines += ["", f"end {destination_module}"]
     return "\n".join(lines) + "\n"
 
@@ -308,21 +328,22 @@ def render_root(root: Root, kind: str, destination_module: str) -> str:
 def render_template(template: Template, index: int) -> str:
     row = getattr(template, "snapshot", None) or {}
     levels = row.get("level_params", [])
-    declaration_levels = levels + row.get("extra_level_params", [])
+    declaration_levels = _declaration_levels(row, levels + row.get("extra_level_params", []))
     constructor_types = row.get("constructor_types", {})
     if isinstance(constructor_types, list):
         constructor_types = {item["name"]: item["type"] for item in constructor_types}
     constructors = "#[" + ", ".join("{ name := " + _quoted_name(name, row.get("constructor_name_components", {}).get(name)) + ", type := " + _term(constructor_types.get(name, name)) + " }" for name in template.constructors) + "]"
     universes = row.get("enrollment_universes", ["_", "0"])
-    return (f"noncomputable def enrollment_{index + 1}{_suffix(declaration_levels)} : LeanInformationAudit.Contract.TemplateEnrollment{_suffix(universes)} ({_target(row, template.name, levels, "name")}) := {{\n"
+    declaration_name, _ = generated_declaration_name(row, f"enrollment_{index + 1}")
+    return _scoped_commands(row, [f"noncomputable def {declaration_name}{_suffix(declaration_levels)} : LeanInformationAudit.Contract.TemplateEnrollment{_suffix(universes)} ({_target(row, template.name, levels, "name")}) := {{\n"
             f"  name := {_row_name(row, 'name', template.name)}, version := {template.version}, constructors := {constructors},\n"
-            f"  options := {options_literal(template.options)} }}\n")
+            f"  options := {options_literal(template.options)} }}"])
 
 
 def render_seal(seal: Seal, destination_module: str) -> str:
     return ("import LeanInformationAuditInterface.Contract.Catalog\n\n" +
             f"namespace {destination_module}\n" +
-            f"def seal : LeanInformationAudit.Contract.Seal := {{ rootId := {_quoted_name(destination_module)}, options := {options_literal(seal.options)} }}\n" +
+            f"def «seal» : LeanInformationAudit.Contract.Seal := {{ rootId := {_quoted_name(destination_module)}, options := {options_literal(seal.options)} }}\n" +
             f"end {destination_module}\n")
 
 

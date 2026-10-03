@@ -1,5 +1,7 @@
 import LeanInformationAuditInterface.Store
 import Lake.Build.Trace
+import Lean.Util.CollectLevelMVars
+import Lean.Util.ReplaceLevel
 
 namespace LeanInformationAudit.RegMigration
 
@@ -153,7 +155,7 @@ private def alignedArenaExpression (name : Name) (expected : Expr)
   let expression ← mkConstWithFreshMVarLevels name
   let type ← whnf (← inferType expression)
   let comparison ← if type.isConstOf RegistrationElaboration.objectDomainArenaName then
-      return (← RegistrationElaboration.normalizeArena expression).law
+      pure (← RegistrationElaboration.normalizeArena expression).law
     else pure expression
   unless ← isDefEq comparison expected do throwError "RM-INPUT-ARENA-ALIGNMENT: {name}"
   Term.levelMVarToParam (← instantiateMVars expression)
@@ -171,6 +173,10 @@ private def typeLevel (expression : Expr) : MetaM Level := do
 private def levelText (level : Level) : String :=
   toString level
 
+private def closedLevelsJson (label : String) (levels : Array Level) : MetaM Json := do
+  if levels.any (·.hasMVar) then throwError "RM-INPUT-OPEN-UNIVERSE: {label}"
+  return toJson (levels.map levelText)
+
 private def sourceBacked (slots : Json) (name : String) : Bool :=
   (slots.getObjVal? name).isOk
 
@@ -178,8 +184,182 @@ private def fallbackExpressionJson (slots : Json) (slot label : String)
     (expression : Option Expr) : MetaM Json :=
   if sourceBacked slots slot then pure Json.null else optionalExpressionJson label expression
 
+private def jsonName (value : Json) : MetaM Name := do
+  let components ← Lean.ofExcept <| value.getArr?
+  components.foldlM (init := Name.anonymous) fun name component =>
+    match component.getStr? with
+    | .ok word => pure (name.str word)
+    | .error _ => do
+      let number ← Lean.ofExcept <| component.getNat?
+      pure (name.num number)
+
+private partial def expressionConstants (expression : Expr) : Array (Name × List Level) :=
+  match expression with
+  | .const name levels => #[(name, levels)]
+  | .app function argument => expressionConstants function ++ expressionConstants argument
+  | .lam _ type body _ | .forallE _ type body _ =>
+      expressionConstants type ++ expressionConstants body
+  | .letE _ type value body _ =>
+      expressionConstants type ++ expressionConstants value ++ expressionConstants body
+  | .mdata _ body | .proj _ _ body => expressionConstants body
+  | _ => #[]
+
+private partial def sourceLevel (value : Json) : MetaM Level := do
+  let kind ← Lean.ofExcept <| value.getObjValAs? String "kind"
+  match kind with
+  | "param" => return .param (← jsonName (← Lean.ofExcept <| value.getObjVal? "name_components"))
+  | "nat" => return Level.ofNat (← Lean.ofExcept <| value.getObjValAs? Nat "value")
+  | "add" =>
+      let left ← sourceLevel (← Lean.ofExcept <| value.getObjVal? "left")
+      return left.addOffset (← Lean.ofExcept <| value.getObjValAs? Nat "offset")
+  | "max" | "imax" =>
+      let args ← Lean.ofExcept <| value.getObjValAs? (Array Json) "args"
+      unless args.size >= 2 do throwError "RM-INPUT-SOURCE-UNIVERSE-SHAPE: {kind}"
+      let levels ← args.mapM sourceLevel
+      return (levels.extract 0 (levels.size - 1)).foldr
+        (if kind == "max" then mkLevelMax else mkLevelIMax) levels.back!
+  | _ => throwError "RM-INPUT-SOURCE-UNIVERSE-UNRESOLVED: {kind}"
+
+private partial def compositeSourceLevel : Level → Bool
+  | .max _ _ | .imax _ _ => true
+  | .succ level => compositeSourceLevel level
+  | _ => false
+
+private partial def substituteSourceLevel (slot : String) (source : Level)
+    (mapping : NameMap Level) : MetaM Level := do
+  match source with
+  | .param name =>
+      let some captured := mapping.find? name
+        | throwError "RM-INPUT-SOURCE-UNIVERSE-AMBIGUOUS: {slot}: {name}"
+      return captured
+  | .zero => return .zero
+  | .succ level => return .succ (← substituteSourceLevel slot level mapping)
+  | .max left right =>
+      return mkLevelMax (← substituteSourceLevel slot left mapping)
+        (← substituteSourceLevel slot right mapping)
+  | .imax left right =>
+      return mkLevelIMax (← substituteSourceLevel slot left mapping)
+        (← substituteSourceLevel slot right mapping)
+  | .mvar _ => throwError "RM-INPUT-SOURCE-UNIVERSE-OPEN: {slot}"
+
+private partial def matchSourceLevel (slot : String) (source captured : Level)
+    (mapping : NameMap Level) : MetaM (NameMap Level) := do
+  if captured.hasMVar then throwError "RM-INPUT-SOURCE-UNIVERSE-OPEN: {slot}"
+  match source with
+  | .param name =>
+      if let some prior := mapping.find? name then
+        unless prior.normalize == captured.normalize do
+          throwError "RM-INPUT-SOURCE-UNIVERSE-AMBIGUOUS: {slot}: {name}"
+      return mapping.insert name captured
+  | .zero =>
+      unless captured.normalize == .zero do
+        throwError "RM-INPUT-SOURCE-UNIVERSE-UNRESOLVED: {slot}: zero"
+      return mapping
+  | .succ predecessor =>
+      let some predecessorCaptured := captured.normalize.dec
+        | throwError "RM-INPUT-SOURCE-UNIVERSE-UNRESOLVED: {slot}: successor"
+      matchSourceLevel slot predecessor predecessorCaptured mapping
+  | .max _ _ | .imax _ _ =>
+      let instantiated ← substituteSourceLevel slot source mapping
+      unless instantiated.normalize == captured.normalize do
+        throwError "RM-INPUT-SOURCE-UNIVERSE-UNRESOLVED: {slot}: composite"
+      return mapping
+  | .mvar _ => throwError "RM-INPUT-SOURCE-UNIVERSE-OPEN: {slot}"
+
+/-- Source syntax survives; its constant universe applications and universe parameter
+annotations use the levels retained in the compiled input. No source term is elaborated here. -/
+private def sourceSpecializations (context slots : Json) (terms : Array (String × Expr)) :
+    MetaM Json := do
+  let ns ← jsonName (← Lean.ofExcept <| context.getObjVal? "namespace_components")
+  let mut opens : List OpenDecl := []
+  for entry in (← Lean.ofExcept <| context.getObjValAs? (Array Json) "open_decls") do
+    let kind ← Lean.ofExcept <| entry.getObjValAs? String "kind"
+    if kind == "simple" then
+      let name ← jsonName (← Lean.ofExcept <| entry.getObjVal? "namespace_components")
+      opens := opens.concat (.simple name [])
+    else if kind == "explicit" then
+      let name ← jsonName (← Lean.ofExcept <| entry.getObjVal? "name_components")
+      let declaration ← jsonName (← Lean.ofExcept <| entry.getObjVal? "declaration_components")
+      opens := opens.concat (.explicit name declaration)
+    else throwError "RM-INPUT-SOURCE-OPEN-KIND: {kind}"
+  let env ← getEnv
+  let mut result : List (String × Json) := []
+  for (slot, expression) in terms do
+    let .ok slotSyntax := slots.getObjVal? slot | continue
+    let constants := expressionConstants expression
+    let mut specializations := #[]
+    let mut sourceMapping : NameMap Level := {}
+    let mut compositeConstraints : Array (Level × Level) := #[]
+    for identifier in (← Lean.ofExcept <| slotSyntax.getObjValAs? (Array Json) "identifiers") do
+      let name ← jsonName (← Lean.ofExcept <| identifier.getObjVal? "name_components")
+      let resolutions := ResolveName.resolveGlobalName env {} ns opens name
+      let candidates := constants.filter fun (constant, _) =>
+        resolutions.any fun (resolved, projections) => resolved == constant && projections.isEmpty
+      let candidates := candidates.foldl (init := #[]) fun found candidate =>
+        if found.contains candidate then found else found.push candidate
+      if candidates.size > 1 then
+        throwError "RM-INPUT-SOURCE-UNIVERSE-AMBIGUOUS: {slot}: {name}"
+      let some (_, levels) := candidates[0]? | continue
+      if levels.isEmpty then continue
+      if levels.any (·.hasMVar) then
+        if (identifier.getObjValAs? Bool "explicit_universes").toOption == some true then
+          throwError "RM-INPUT-SOURCE-UNIVERSE-OPEN: {slot}: {name}"
+        continue
+      if (identifier.getObjValAs? Bool "explicit_universes").toOption == some true then
+        let sourceLevels ← Lean.ofExcept <| identifier.getObjValAs? (Array Json) "source_levels"
+        unless sourceLevels.size == levels.length do
+          throwError "RM-INPUT-SOURCE-UNIVERSE-SHAPE: {slot}: {name}"
+        for (source, captured) in sourceLevels.toList.zip levels do
+          let source ← sourceLevel source
+          if compositeSourceLevel source then
+            compositeConstraints := compositeConstraints.push (source, captured)
+          else sourceMapping ← matchSourceLevel slot source captured sourceMapping
+      let head ← Lean.ofExcept <| identifier.getObjValAs? String "head_text"
+      let text ← Lean.ofExcept <| identifier.getObjValAs? String "text"
+      let term := head ++ ".{" ++ String.intercalate ", " (levels.map levelText) ++ "}"
+      if term == text then continue
+      let usedLevels := levels.foldl (fun used level => collectLevelParams used (.sort level)) {}
+      specializations := specializations.push <| Json.mkObj [
+        ("start", ← Lean.ofExcept <| identifier.getObjVal? "start"),
+        ("end", ← Lean.ofExcept <| identifier.getObjVal? "end"),
+        ("text", Json.str text), ("term", Json.str term),
+        ("levels", toJson (levels.map levelText)),
+        ("level_params", namesJson usedLevels.params.toList)]
+    for (source, captured) in compositeConstraints do
+      sourceMapping ← matchSourceLevel slot source captured sourceMapping
+    for occurrence in (← Lean.ofExcept <| slotSyntax.getObjValAs? (Array Json) "universe_occurrences") do
+      let start ← Lean.ofExcept <| occurrence.getObjValAs? Nat "start"
+      let stop ← Lean.ofExcept <| occurrence.getObjValAs? Nat "end"
+      if specializations.any (fun entry =>
+          (entry.getObjValAs? Nat "start").toOption.getD stop <= start &&
+          stop <= (entry.getObjValAs? Nat "end").toOption.getD start) then continue
+      let name ← jsonName (← Lean.ofExcept <| occurrence.getObjVal? "name_components")
+      let captured ← match sourceMapping.find? name with
+        | some level => pure level
+        | none =>
+            if (collectLevelParams {} expression).params.contains name then pure (.param name)
+            else throwError "RM-INPUT-SOURCE-UNIVERSE-UNRESOLVED: {slot}: {name}"
+      let text ← Lean.ofExcept <| occurrence.getObjValAs? String "text"
+      let level := levelText captured
+      if level == text then continue
+      specializations := specializations.push <| Json.mkObj [
+        ("kind", Json.str "universe-parameter"), ("start", toJson start), ("end", toJson stop),
+        ("text", Json.str text), ("term", Json.str ("(" ++ level ++ ")")),
+        ("levels", toJson [level]),
+        ("level_params", namesJson (collectLevelParams {} (.sort captured)).params.toList)]
+    if !specializations.isEmpty then result := result.concat (slot, Json.arr specializations)
+  return Json.mkObj result
+
+private def freshenCapturedUniverses (expression : Expr) : MetaM Expr := do
+  let mut replacements : NameMap Level := {}
+  for metaVariable in (collectLevelMVars {} expression).result do
+    replacements := replacements.insert metaVariable.name (← mkFreshLevelMVar)
+  return expression.replaceLevel fun
+    | .mvar metaVariable => replacements.find? metaVariable.name
+    | _ => none
+
 private def registrationJson (owner : Name) (index : Nat) (input : RegistrationInput)
-    (slots : Json) :
+    (context slots : Json) :
     TermElabM Json := do
   let entry := input.entry
   let target ← getConstInfo entry.theoremName
@@ -225,7 +405,19 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
       pure (some (← instantiateMVars value))
     | _, _, _ => pure input.suppliedPrimitives
   let declaration := input.declaration
-  let descriptor := declaration.bind (·.descriptor)
+  let descriptor ← match declaration.bind (·.descriptor) with
+    | none => pure none
+    | some descriptor => do
+        let descriptor ← if descriptor.hasLevelMVar then freshenCapturedUniverses descriptor
+          else pure descriptor
+        let descriptor ← instantiateMVars descriptor
+        if bridgeKind == "source" && descriptor.hasLevelMVar then
+          let sourceActual := mkProj
+            `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 0 bridge
+          let expectedType ← inferType sourceActual
+          unless ← isDefEq (← inferType descriptor) expectedType do
+            throwError "RM-INPUT-SOURCE-READOUT-ALIGNMENT: {entry.theoremName}"
+        pure (some (← instantiateMVars descriptor))
   let escape := declaration.map (·.escapeInput) |>.getD {}
   let family ← match declaration.bind (·.sourceRecord) with
     | none => pure none
@@ -244,9 +436,17 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
   let argumentLevels ← typeArgs.mapIdxM fun index type =>
     if index == 2 || index == 5 then typeLevel type else sortLevel type
   let mut implementationLevels := Array.replicate 9 Level.zero
-  let bridgeArena := if generated then arena else bridgeType.getAppArgs[0]?.getD arena
-  let bridgeArenaFromSource := bridgeArena.consumeMData == arena
+  let bridgeArena ← if generated then do
+      pure (← RegistrationElaboration.normalizeArena arena).law
+    else pure (bridgeType.getAppArgs[0]?.getD arena)
+  let sourceArenaIsObjectDomain := arenaType.isConstOf RegistrationElaboration.objectDomainArenaName
   let bridgeArenaType ← whnf (← inferType bridgeArena)
+  let originalArenaType ← whnfR (← inferType provisionalArena)
+  let sourceBridgeTypesAlign ← liftM <| (Lean.withoutModifyingState
+    (isDefEq originalArenaType bridgeArenaType) : MetaM Bool)
+  let bridgeArenaFromSource := !sourceArenaIsObjectDomain && sourceBridgeTypesAlign &&
+    bridgeArena.consumeMData == arena.consumeMData &&
+    bridgeArena.consumeMData == provisionalArena.consumeMData
   let arenaLevels := bridgeArenaType.getAppFn.constLevels!
   if bridgeKind == "source" then
     unless arenaLevels.length == 5 do throwError "RM-INPUT-SOURCE-UNIVERSES: {entry.theoremName}"
@@ -268,6 +468,17 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
   let typeArgSourceSlots := sourceTerms.mapIdx fun index term =>
     if term.isSome && sourceBacked slots typeSlotNames[index]! then some typeSlotNames[index]!
     else none
+  let specializedTerms := (#[
+    ("arena", some arena), ("object_arena", some objectArena), ("readout", descriptor),
+    ("variation", variation), ("sensitivity", sensitivity), ("escape_from", escape.fromObject),
+    ("continuation", escape.continuation),
+    ("source_record", if entry.sourceBound then some bridge else family),
+    ("primitive", suppliedPrimitives), ("via_descriptor", input.viaDescriptor),
+    ("output_evidence", input.outputEvidence), ("realization", some bridge),
+    ("inline_actual", actual), ("inline_proof", some bridge),
+    ("finite_bridge", some bridge)] : Array (String × Option Expr)).filterMap
+      fun (slot, term) => term.map (slot, ·)
+  let specializations ← liftM <| sourceSpecializations context slots specializedTerms
   let typeJson ← typeArgs.mapIdxM fun index value =>
     if typeArgSourceSlots[index]!.isSome then pure Json.null
     else expressionJson s!"type_args[{index}]" value
@@ -284,6 +495,7 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
   return Json.mkObj [
     ("owner", Json.str owner.toString), ("source_index", toJson index),
     ("source_text", Json.str input.sourceText), ("options", ← optionJson input.options),
+    ("source_specializations", specializations),
     ("theorem", Json.str entry.theoremName.toString), ("level_params", namesJson levels),
     ("name_components", nameComponentsMap [
       ("owner", owner), ("theorem", entry.theoremName), ("unit", entry.unitName),
@@ -301,7 +513,8 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
     ("type_args", Json.arr typeJson),
     ("type_arg_source_slots", Json.arr (typeArgSourceSlots.map fun slot =>
       slot.map Json.str |>.getD Json.null)),
-    ("registration_universes", toJson ((argumentLevels ++ implementationLevels).map levelText)),
+    ("registration_universes", ← closedLevelsJson s!"registration: {owner}: {entry.theoremName}"
+      (argumentLevels ++ implementationLevels)),
     ("bridge_kind", Json.str bridgeKind),
     ("bridge_type", ← if bridgeSourceSlot.isSome then pure Json.null
       else expressionJson "bridge_type" bridgeType),
@@ -349,15 +562,17 @@ private def registrationJson (owner : Name) (index : Nat) (input : RegistrationI
     ("realization_source", Json.str (input.realizationSource.map nameText |>.getD ""))]
 
 private def enrollmentJson (owner : Name) (index : Nat) (input : TemplateEnrollmentInput)
-    (slots : Json) :
+    (context slots : Json) :
     MetaM Json := do
   let info ← getConstInfo input.name
   let mut constructors := #[]
   let mut constructorUniverse := Level.zero
   let mut usedLevels := collectLevelParams {} info.type
+  let mut sourceTerms := #[("name", mkConst input.name (info.levelParams.map Level.param))]
   for index in [:input.constructors.size] do
     let name := input.constructors[index]!
     let type ← constantExpression name info.levelParams
+    sourceTerms := sourceTerms.push (s!"constructor_{index}", type)
     usedLevels := collectLevelParams (collectLevelParams usedLevels type) (← inferType type)
     constructorUniverse := mkLevelMax constructorUniverse (← typeLevel type)
     constructors := constructors.push <| Json.mkObj [
@@ -371,12 +586,14 @@ private def enrollmentJson (owner : Name) (index : Nat) (input : TemplateEnrollm
     ("constructors", Json.arr (input.constructors.map fun name => Json.str name.toString)),
     ("constructor_types", Json.arr constructors), ("level_params", namesJson info.levelParams),
     ("extra_level_params", namesJson (usedLevels.params.toList.filter (!info.levelParams.contains ·))),
-    ("enrollment_universes", toJson #[levelText (← sortLevel info.type), levelText constructorUniverse]),
+    ("enrollment_universes", ← closedLevelsJson s!"template: {owner}: {input.name}"
+      #[(← sortLevel info.type), constructorUniverse]),
     ("template_type", ← fallbackExpressionJson slots "name" "template_type" (some info.type)),
     ("template_type_source_slot", if sourceBacked slots "name" then Json.str "name" else Json.null),
     ("template_term", ← fallbackExpressionJson slots "name" "template_term"
       (some (mkConst input.name (info.levelParams.map Level.param)))),
-    ("source_text", Json.str input.sourceText), ("options", ← optionJson input.options)]
+    ("source_text", Json.str input.sourceText), ("options", ← optionJson input.options),
+    ("source_specializations", ← sourceSpecializations context slots sourceTerms)]
 
 private def sealJson (owner : Name) (index : Nat) (input : SealInput) : CoreM Json := do
   return Json.mkObj [
@@ -460,7 +677,7 @@ private def compiledSource (repo : System.FilePath) (owner : Name) : IO Json := 
     ("source_text", Json.str source), ("trace_verified", Json.bool true),
     ("trace_source_hash", Json.str sourceHashes[0]!)]
 
-private def sourceSlots (snapshot : Json) (owner : Name) (index : Nat) (category : String) :
+private def sourceCommand (snapshot : Json) (owner : Name) (index : Nat) (category : String) :
     MetaM Json := do
   let files ← Lean.ofExcept <| snapshot.getObjValAs? (Array Json) "files"
   let path := String.intercalate "/" (owner.toString.splitOn ".") ++ ".lean"
@@ -470,7 +687,7 @@ private def sourceSlots (snapshot : Json) (owner : Name) (index : Nat) (category
   let commands := commands.filter fun command =>
     (command.getObjValAs? String "kind").toOption == some category
   let some command := commands[index]? | throwError "RM-INPUT-SYNTAX-INDEX: {owner}: {category}: {index}"
-  Lean.ofExcept <| command.getObjVal? "slots"
+  return command
 
 private partial def companionPrefix (name : Name) : Option Name :=
   match name with
@@ -604,12 +821,14 @@ private def extract (env : Environment) (repo : System.FilePath) (syntaxSnapshot
     ("registrations", Json.arr (← (indexedOwned (RegistrationInputs.owned env)).mapM
       fun (owner, index, input) => do
         withEnv (env.setMainModule owner) <| withInputContext s!"registration: {owner}: {input.entry.theoremName}" do
-          registrationJson owner index input (← sourceSlots syntaxSnapshot owner index "registration"))),
+          let context ← sourceCommand syntaxSnapshot owner index "registration"
+          registrationJson owner index input context (← Lean.ofExcept <| context.getObjVal? "slots"))),
     ("templates", Json.arr (← (indexedOwned (TemplateEnrollmentInputs.owned env)).mapM
       fun (owner, index, input) => do
         withEnv (env.setMainModule owner) <| withInputContext s!"template: {owner}: {input.name}" do
-          let slots ← sourceSlots syntaxSnapshot owner index "template"
-          liftM <| enrollmentJson owner index input slots)),
+          let context ← sourceCommand syntaxSnapshot owner index "template"
+          let slots ← Lean.ofExcept <| context.getObjVal? "slots"
+          liftM <| enrollmentJson owner index input context slots)),
     ("seals", Json.arr (← (indexedOwned (SealInputs.owned env)).mapM
       fun (owner, index, input) => sealJson owner index input)),
     ("roots", Json.arr (← (indexedOwned (RootCatalogs.owned env)).mapM
@@ -618,28 +837,12 @@ private def extract (env : Environment) (repo : System.FilePath) (syntaxSnapshot
           (liftM <| rootJson owner index input)))]
 
 syntax (name := regMigrationExtract) "#reg_migration_extract " str str : command
-syntax (name := regMigrationExtractModules) "#reg_migration_extract_modules " str str : command
 
 elab_rules : command
   | `( #reg_migration_extract $snapshot:str $path:str ) => do
     let snapshot ← liftIO <| IO.FS.readFile snapshot.getString
     let snapshot ← Lean.ofExcept <| Json.parse snapshot
     let output ← liftTermElabM <| extract (← getEnv) "." snapshot
-    liftIO <| IO.FS.writeFile path.getString (output.compress ++ "\n")
-
-elab_rules : command
-  | `( #reg_migration_extract_modules $manifest:str $path:str ) => do
-    let data ← liftIO <| IO.FS.readFile manifest.getString
-    let data ← Lean.ofExcept <| Json.parse data
-    let modules ← Lean.ofExcept <| data.getObjValAs? (Array String) "modules"
-    let repo := (data.getObjValAs? String "repo").toOption.getD "."
-    let snapshot ← Lean.ofExcept <| data.getObjValAs? String "syntax_snapshot"
-    let snapshot ← liftIO <| IO.FS.readFile snapshot
-    let snapshot ← Lean.ofExcept <| Json.parse snapshot
-    let imports := modules.map fun module => ({ module := module.toName } : Import)
-    liftIO <| unsafe enableInitializersExecution
-    let env ← liftIO <| importModules imports {} (loadExts := true)
-    let output ← liftTermElabM <| withEnv env <| extract env repo snapshot
     liftIO <| IO.FS.writeFile path.getString (output.compress ++ "\n")
 
 private def ioJson (label : String) (result : Except String α) : IO α :=

@@ -100,6 +100,14 @@ def validate_expression_levels(value: Any, declared: list[str], label: str) -> N
         raise SnapshotError("missing_level_params", label + ":" + ",".join(missing))
 
 
+def validate_universe_text(value: Any, label: str) -> None:
+    if not isinstance(value, str) or not value.strip():
+        raise SnapshotError("invalid_universe", label)
+    tokens = value.replace("+", " ").split()
+    if "?u." in value or "?m." in value or "?_mvar." in value or any(token.lstrip("(").startswith("?") or token.strip("()") == "_" for token in tokens):
+        raise SnapshotError("unclosed_universe", label)
+
+
 def type_arg_source_slots(row: dict[str, Any]) -> list[str | None]:
     sources = row.get("type_arg_source_slots", [None] * 8)
     if not isinstance(sources, list) or len(sources) != 8:

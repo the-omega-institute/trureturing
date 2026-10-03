@@ -9,8 +9,8 @@ from typing import Any
 from .lean_syntax import (byte_slice, load_syntax_snapshot, parse_repository, relative_reg_path,
                           source_module, syntax_sources)
 from .model import Failure, GeneratedFile, PlanResult, Registration, Root, Seal, Template
-from .render import render_registration, render_root, render_template, replace_spans, target_uses_controlled_printing
-from .snapshot import SnapshotError, closed_printed_term, load_input_snapshot, sha256_file, type_arg_source_slots, typed_options, validate_expression_levels, validate_level_params
+from .render import generated_declaration_name, render_registration, render_root, render_template, replace_spans, target_uses_controlled_printing
+from .snapshot import SnapshotError, closed_printed_term, load_input_snapshot, sha256_file, type_arg_source_slots, typed_options, validate_expression_levels, validate_level_params, validate_universe_text
 
 
 class GeneratorFailure(RuntimeError):
@@ -32,9 +32,9 @@ class Generator:
         try:
             return self._plan(expected_sha256)
         except SnapshotError as error:
-            return PlanResult("", [], [], [], [], [], [Failure(error.code, error.path, error.detail)], {})
+            return PlanResult("", [], [], [], [], [], [Failure(error.code, error.path, error.detail)], {"reconciliation": []})
         except (OSError, ValueError, KeyError, TypeError) as error:
-            return PlanResult("", [], [], [], [], [], [Failure("invalid_snapshot", str(self.inputs_path), str(error))], {})
+            return PlanResult("", [], [], [], [], [], [Failure("invalid_snapshot", str(self.inputs_path), str(error))], {"reconciliation": []})
 
     def _plan(self, expected_sha256: str | None) -> PlanResult:
         snapshot, input_sha = load_input_snapshot(self.inputs_path)
@@ -143,7 +143,7 @@ class Generator:
                             continue
                     seen.add(position)
                     parser_metadata = item.snapshot or {}
-                    item.snapshot = {**row, **parser_metadata}
+                    item.snapshot = {**row, **parser_metadata, "source_index": position}
                     if category != "roots":
                         try:
                             item.options = typed_options(row.get("options"))
@@ -156,6 +156,95 @@ class Generator:
         bind(templates, "templates", True)
         bind(roots, "roots", False)
         bind(seals, "seals", False)
+        specialization_audit: list[dict[str, Any]] = []
+        for category, items in (("registrations", registrations), ("templates", templates)):
+            for item in items:
+                row = item.snapshot or {}
+                if "owner" not in row:
+                    continue
+                specializations = row.get("source_specializations", {})
+                if not isinstance(specializations, dict):
+                    fail("invalid_source_specializations", row["owner"], str(item.path))
+                    continue
+                slots = row["parser_slots"]
+                declared_levels = row.get("level_params", []) + row.get("extra_level_params", []) if isinstance(row.get("level_params", []), list) and isinstance(row.get("extra_level_params", []), list) else []
+                for slot, entries in sorted(specializations.items()):
+                    span = row["parser_slot_spans"].get(slot)
+                    identifiers = row["parser_slot_identifiers"].get(slot, [])
+                    if span is None or not isinstance(entries, list):
+                        fail("invalid_source_specializations", f"{row['owner']}:{slot}")
+                        continue
+                    edits: list[tuple[int, int, str]] = []
+                    accepted = []
+                    universe_mapping: dict[str, str] = {}
+                    for entry in entries:
+                        if not isinstance(entry, dict):
+                            fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                            continue
+                        start, end, text, term = (entry.get(key) for key in ("start", "end", "text", "term"))
+                        kind = entry.get("kind", "constant")
+                        if kind not in {"constant", "universe-parameter"}:
+                            fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                            continue
+                        occurrences = row["parser_slot_universes"].get(slot, []) if kind == "universe-parameter" else identifiers
+                        matches = [identifier for identifier in occurrences if
+                                   (identifier.get("start"), identifier.get("end"), identifier.get("text")) == (start, end, text)]
+                        if type(start) is not int or type(end) is not int or not span["start"] <= start < end <= span["end"] or len(matches) != 1:
+                            fail("source_specialization_span_mismatch", f"{row['owner']}:{slot}")
+                            continue
+                        levels = entry.get("levels")
+                        if not isinstance(levels, list) or any(not isinstance(level, str) or not level for level in levels):
+                            fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                            continue
+                        if kind == "universe-parameter":
+                            if len(levels) != 1:
+                                fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                                continue
+                            components = matches[0].get("name_components")
+                            if not isinstance(components, list) or not components or any(not isinstance(component, str) and type(component) is not int or type(component) is int and component < 0 for component in components):
+                                fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                                continue
+                            key = json.dumps(components, ensure_ascii=False)
+                            if key in universe_mapping and universe_mapping[key] != levels[0]:
+                                fail("ambiguous_source_universe_mapping", f"{row['owner']}:{slot}")
+                                continue
+                            universe_mapping[key] = levels[0]
+                            expected = {levels[0], "(" + levels[0] + ")"}
+                        else:
+                            head = matches[0].get("head_text")
+                            if not isinstance(head, str) or not head:
+                                fail("invalid_source_specialization", f"{row['owner']}:{slot}")
+                                continue
+                            expected = {head + (".{" + ", ".join(levels) + "}" if levels else "")}
+                        if not isinstance(term, str) or term not in expected or byte_slice(originals[item.path.relative_to(self.repo).as_posix()], start, end, slot) != text:
+                            fail("source_specialization_term_mismatch", f"{row['owner']}:{slot}")
+                            continue
+                        try:
+                            controlled = {"text": term, "printed": True, "level_params": entry.get("level_params", [])}
+                            closed_printed_term(controlled, "source_specializations:" + slot)
+                            for level in levels:
+                                validate_universe_text(level, "source_specializations:" + slot)
+                            validate_expression_levels(controlled, declared_levels, "source_specializations:" + slot)
+                        except SnapshotError as error:
+                            fail(error.code, f"{row['owner']}:{slot}")
+                            continue
+                        edits.append((start - span["start"], end - span["start"], term))
+                        accepted.append(entry)
+                    try:
+                        slots[slot] = replace_spans(slots[slot], edits)
+                    except ValueError:
+                        fail("overlapping_source_specializations", f"{row['owner']}:{slot}")
+                    if accepted:
+                        specialization_audit.append({"category": category, "owner": row["owner"],
+                                                     "source_index": row["source_index"], "slot": slot,
+                                                     "entries": sorted(accepted, key=lambda entry: (entry["start"], entry["end"]))})
+                if category == "registrations":
+                    for field in ("arena", "object_arena", "catalog", "primitive", "realization", "variation", "sensitivity", "readout", "output_evidence", "escape_from", "escape_from_source", "continuation", "source_record", "finite_bridge", "via_descriptor"):
+                        if field in slots:
+                            setattr(item, field, slots[field])
+                    if "inline_actual" in slots and "inline_proof" in slots:
+                        item.inline_bridge = (slots["inline_actual"], slots["inline_proof"])
+                    item.statement, item.proof = slots.get("target_type"), slots.get("native_proof")
         compile_blockers: list[dict[str, Any]] = []
         for reg in registrations:
             row = reg.snapshot or {}
@@ -167,6 +256,8 @@ class Generator:
                                          "theorem_type": row.get("theorem_type"), "bridge_type": row.get("bridge_type")})
             if row.get("registration_module", row["owner"]) != row["owner"]:
                 fail("wrong_registration_owner", str(row.get("registration_module")), str(reg.path))
+            if row.get("bridge_arena_from_source") is False and row.get("bridge_arena") is None:
+                fail("missing_material", "compiled normalized bridge arena", str(reg.path))
             try:
                 validate_level_params(row, reg.module_name)
             except SnapshotError as error:
@@ -182,6 +273,11 @@ class Generator:
             if not isinstance(universes, list) or len(universes) != 17 or not isinstance(arguments, list) or len(arguments) != 8:
                 fail("missing_material", "registration universe/type arguments", str(reg.path))
             else:
+                for index, universe in enumerate(universes):
+                    try:
+                        validate_universe_text(universe, f"registration_universes[{index}]")
+                    except SnapshotError as error:
+                        fail(error.code, f"{reg.module_name}:{error.detail}", str(reg.path))
                 try:
                     type_sources = type_arg_source_slots(row)
                 except SnapshotError as error:
@@ -267,6 +363,15 @@ class Generator:
             template.name = row.get("name", "")
             template.version = row.get("version", 1)
             template.constructors = row.get("constructors", [])
+            universes = row.get("enrollment_universes")
+            if not isinstance(universes, list) or len(universes) != 2:
+                fail("missing_material", "template enrollment universe arguments", str(template.path))
+            else:
+                for index, universe in enumerate(universes):
+                    try:
+                        validate_universe_text(universe, f"enrollment_universes[{index}]")
+                    except SnapshotError as error:
+                        fail(error.code, f"{row['owner']}:{error.detail}", str(template.path))
             if target_uses_controlled_printing(row, "name") and row.get("template_term") is not None:
                 try:
                     closed_printed_term(row["template_term"], "template_term")
@@ -567,7 +672,7 @@ class Generator:
             audit = {"snapshot_sha256": input_sha, "source_registrations": len(registrations),
                      "compiled_registrations": len(snapshot["registrations"]), "templates": len(templates),
                      "roots": len(roots), "seals": len(seals), "d5_writes": 0,
-                     "compile_blockers": compile_blockers,
+                     "compile_blockers": compile_blockers, "reconciliation": [], "source_specializations": [],
                      "missing": sum(item.code == "missing_compiled_input" for item in failures),
                      "extra": sum(item.code == "extra_compiled_input" for item in failures),
                      "duplicate": sum(item.code == "duplicate" for item in failures),
@@ -575,6 +680,18 @@ class Generator:
             return PlanResult(input_sha, registrations, templates, roots, seals, [], failures, audit)
 
         replacements: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
+        reconciliation: list[dict[str, Any]] = []
+
+        def reconcile(category: str, item: Any, output_path: str, output_owner: str,
+                      output_decl: str, identity: dict[str, Any]) -> None:
+            row = item.snapshot or {}
+            reconciliation.append({"category": category, "owner": row["owner"],
+                                   "source_index": row["source_index"],
+                                   "source_path": item.path.relative_to(self.repo).as_posix(),
+                                   "source_span": {"start": item.span.start, "end": item.span.end},
+                                   "output_path": output_path, "output_owner": output_owner,
+                                   "output_decl": output_decl, "identity": identity})
+
         declared_names: dict[str, set[str]] = defaultdict(set)
         for file in syntax["files"]:
             for command in file["commands"]:
@@ -589,25 +706,32 @@ class Generator:
         for relative in sorted(by_path):
             for index, item in enumerate(sorted(by_path[relative], key=lambda item: item.span.start)):
                 name = f"registration_{index + 1}"
-                namespace = (item.snapshot or {}).get("namespace", "")
-                full_name = f"{namespace}.{name}" if namespace else name
+                _, full_name = generated_declaration_name(item.snapshot or {}, name)
                 if name in declared_names[relative] or full_name in declared_names[relative]:
                     fail("name_collision", full_name, relative)
                 replacements[relative].append((item.span.start, item.span.end, render_registration(item, index)))
+                row = item.snapshot or {}
+                reconcile("registrations", item, relative, row["owner"], full_name,
+                          {"theorem": item.theorem, "unit": row.get("unit"),
+                           "object_arena": row.get("object_arena"), "catalog": row.get("catalog"),
+                           "statement_identity": row.get("statement_identity")})
         by_templates: dict[str, list[Template]] = defaultdict(list)
         for item in templates:
             by_templates[item.path.relative_to(self.repo).as_posix()].append(item)
         for relative in sorted(by_templates):
             for index, item in enumerate(sorted(by_templates[relative], key=lambda item: item.span.start)):
                 name = f"enrollment_{index + 1}"
-                namespace = (item.snapshot or {}).get("namespace", "")
-                full_name = f"{namespace}.{name}" if namespace else name
+                _, full_name = generated_declaration_name(item.snapshot or {}, name)
                 if name in declared_names[relative] or full_name in declared_names[relative]:
                     fail("name_collision", full_name, relative)
                 replacements[relative].append((item.span.start, item.span.end, render_template(item, index)))
+                reconcile("templates", item, relative, (item.snapshot or {})["owner"], full_name,
+                          {"template": item.name, "version": item.version, "constructors": list(item.constructors)})
         for item in [*roots, *seals]:
             relative = item.path.relative_to(self.repo).as_posix()
-            replacements[relative].append((item.span.start, item.span.end, ""))
+            wrappers = (item.snapshot or {}).get("scope_wrappers", [])
+            start = min([item.span.start] + [wrapper["start"] for wrapper in wrappers])
+            replacements[relative].append((start, item.span.end, ""))
         parsed_imports = {file["path"]: set(file.get("imports", [])) for file in syntax["files"]}
         files: list[GeneratedFile] = []
         for relative in sorted(replacements):
@@ -624,6 +748,22 @@ class Generator:
         for root in sorted(roots, key=lambda item: item.destination_path or ""):
             if root.destination_path and root.destination_module:
                 files.append(GeneratedFile(root.destination_path, render_root(root, root.kind, root.destination_module), "root"))
+                identity = {"root_id_before": root.root_id, "root_id_after": root.destination_module,
+                            "occurrences": {}}
+                for role in ("expected", "source", "baseline"):
+                    original_rows = (root.snapshot or {})[role]
+                    identity["occurrences"][role] = [
+                        {"index": index, "theorem": row["theorem"], "object_arena": row["object_arena"],
+                         "statement_identity": row.get("statement_identity"),
+                         "registration_module_before": original_rows[index]["registration_module"],
+                         "registration_module_after": row["registration_module"]}
+                        for index, row in enumerate(getattr(root, role))]
+                reconcile("roots", root, root.destination_path, root.destination_module,
+                          root.destination_module + ".rootCatalog", identity)
+                for seal in sorted((item for item in seals if item.path == root.path), key=lambda item: item.span.start):
+                    reconcile("seals", seal, root.destination_path, root.destination_module,
+                              root.destination_module + ".seal",
+                              {"root_id_before": seal.root_id, "root_id_after": root.destination_module})
         paths: set[str] = set()
         for file in files:
             relative_reg_path(file.path)
@@ -679,6 +819,10 @@ class Generator:
                  "duplicate": sum(failure.code == "duplicate" for failure in failures),
                  "ambiguous": sum(failure.code == "ambiguous_compiled_input" for failure in failures),
                  "d5_writes": 0, "controlled_printing": print_rows, "compile_blockers": compile_blockers,
+                 "source_specializations": [] if failures else sorted(specialization_audit, key=lambda row:
+                     (row["category"], row["owner"], row["source_index"], row["slot"])),
+                 "reconciliation": [] if failures else sorted(reconciliation, key=lambda row:
+                     (("registrations", "templates", "roots", "seals").index(row["category"]), row["owner"], row["source_index"])),
                  "source_sha256": {path: _sha256_text(text) for path, text in sorted(originals.items())},
                  "mapping_sha256": sha256_file(self.mapping_path) if self.mapping_path else None}
         # A failed plan exposes diagnostics but no writeable file set.

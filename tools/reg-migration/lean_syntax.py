@@ -110,6 +110,25 @@ def parse_repository(repo: Path, snapshot: dict[str, Any] | Path | None = None) 
                     raise SnapshotError("slot_source_mismatch", name, relative)
                 slots[name] = text
             span = Span(start, end)
+            ambient_universes = command.get("ambient_universes", [])
+            if not isinstance(ambient_universes, list) or any(not isinstance(level, str) or not level for level in ambient_universes) or len(set(ambient_universes)) != len(ambient_universes):
+                raise SnapshotError("invalid_ambient_universes", relative)
+            scope_wrappers = command.get("scope_wrappers", [])
+            if not isinstance(scope_wrappers, list):
+                raise SnapshotError("invalid_scope_wrapper", relative)
+            for wrapper in scope_wrappers:
+                if not isinstance(wrapper, dict) or type(wrapper.get("end")) is not int or wrapper["end"] > start:
+                    raise SnapshotError("invalid_scope_wrapper", relative)
+                prefix = byte_slice(source, wrapper.get("start"), wrapper.get("end"), "scope wrapper")
+                if not prefix or wrapper.get("text") != prefix:
+                    raise SnapshotError("scope_wrapper_source_mismatch", relative)
+            parser_metadata = {"parser_slots": slots,
+                               "parser_slot_spans": {name: {"start": slot["start"], "end": slot["end"]} for name, slot in (command.get("slots") or {}).items()},
+                               "parser_slot_identifiers": {name: slot.get("identifiers", []) for name, slot in (command.get("slots") or {}).items()},
+                               "parser_slot_universes": {name: slot.get("universe_occurrences", []) for name, slot in (command.get("slots") or {}).items()},
+                               "namespace": command.get("namespace", ""),
+                               "ambient_universes": ambient_universes, "scope_wrappers": scope_wrappers,
+                               "scope_prefix": byte_slice(source, min(wrapper["start"] for wrapper in scope_wrappers), start, "scope prefix") if scope_wrappers else ""}
             if kind == "registration":
                 variant = command.get("variant", "legacy")
                 if variant not in VARIANTS:
@@ -123,16 +142,20 @@ def parse_repository(repo: Path, snapshot: dict[str, Any] | Path | None = None) 
                 item.via_descriptor = slots.get("via_descriptor")
                 item.native, item.occurrence = variant == "native", variant == "occurrence"
                 item.source, item.finite_source = variant == "source", variant == "finite-source"
-                item.snapshot = {"parser_slots": slots, "namespace": command.get("namespace", ""), "variant": variant}
+                item.snapshot = {**parser_metadata, "variant": variant}
                 registrations.append(item)
             elif kind == "template":
                 item = Template(path, span, slots.get("name", ""), source_text=body)
-                item.snapshot = {"parser_slots": slots, "namespace": command.get("namespace", "")}
+                item.snapshot = parser_metadata
                 templates.append(item)
             elif kind == "root":
-                roots.append(Root(path, span, source_module(relative), [], [], [], None))
+                item = Root(path, span, source_module(relative), [], [], [], None)
+                item.snapshot = parser_metadata
+                roots.append(item)
             elif kind == "seal":
-                seals.append(Seal(path, span, source_module(relative)))
+                item = Seal(path, span, source_module(relative))
+                item.snapshot = parser_metadata
+                seals.append(item)
             elif kind == "notation":
                 notations.append((path, span, body))
     return registrations, templates, roots, seals, notations

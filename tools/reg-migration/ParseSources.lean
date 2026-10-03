@@ -4,13 +4,75 @@ import Lean.Elab.Import
 namespace LeanInformationAudit.RegMigration
 open Lean Elab Command
 
-private def spanJson (source : String) (stx : Syntax) : Except String Json := do
+private def nameComponents : Name → Array Json
+  | .anonymous => #[]
+  | .str parent word => nameComponents parent |>.push (Json.str word)
+  | .num parent value => nameComponents parent |>.push (toJson value)
+
+private def plainSpanJson (source : String) (stx : Syntax) : Except String Json := do
   let some range := stx.getRange? | throw "RM-SYNTAX-MISSING-SPAN"
   let start := range.start.byteIdx
   let stop := range.stop.byteIdx
   let some text := String.fromUTF8? (source.toUTF8.extract start stop)
     | throw "RM-SYNTAX-UTF8-SPAN"
   return Json.mkObj [("start", toJson start), ("end", toJson stop), ("text", Json.str text)]
+
+private partial def levelSyntaxJson (stx : Syntax) : Json :=
+  if stx.isIdent then Json.mkObj [("kind", Json.str "param"),
+    ("name_components", Json.arr (nameComponents stx.getId))]
+  else if let some value := stx.isNatLit? then
+    Json.mkObj [("kind", Json.str "nat"), ("value", toJson value)]
+  else if stx.isOfKind ``Parser.Level.paren then levelSyntaxJson stx[1]
+  else if stx.isOfKind ``Parser.Level.addLit then
+    Json.mkObj [("kind", Json.str "add"), ("left", levelSyntaxJson stx[0]),
+      ("offset", stx[2].isNatLit?.map toJson |>.getD Json.null)]
+  else if stx.isOfKind ``Parser.Level.max || stx.isOfKind ``Parser.Level.imax then
+    Json.mkObj [("kind", Json.str (if stx.isOfKind ``Parser.Level.max then "max" else "imax")),
+      ("args", Json.arr (stx[1].getArgs.map levelSyntaxJson))]
+  else Json.mkObj [("kind", Json.str (if stx.isOfKind ``Parser.Level.hole then "hole" else "unsupported")),
+    ("syntax_kind", Json.str stx.getKind.toString)]
+
+private partial def levelOccurrences (source : String) (stx : Syntax) :
+    Except String (Array Json) := do
+  if stx.isIdent then
+    let span ← plainSpanJson source stx
+    return #[Json.mkObj [("start", ← span.getObjVal? "start"),
+      ("end", ← span.getObjVal? "end"), ("text", ← span.getObjVal? "text"),
+      ("name_components", Json.arr (nameComponents stx.getId))]]
+  stx.getArgs.foldlM (fun found child => return found ++ (← levelOccurrences source child)) #[]
+
+private partial def universeOccurrences (source : String) (stx : Syntax) :
+    Except String (Array Json) := do
+  if stx.isOfKind ``Parser.Term.quot then return #[]
+  if stx.isOfKind ``Parser.Term.explicitUniv then return ← levelOccurrences source stx[2]
+  if stx.isOfKind ``Parser.Term.type || stx.isOfKind ``Parser.Term.sort then
+    return ← levelOccurrences source stx[1]
+  stx.getArgs.foldlM (fun found child => return found ++ (← universeOccurrences source child)) #[]
+
+private partial def syntaxIdentifiers (source : String) (stx : Syntax) :
+    Except String (Array Json) := do
+  if stx.isOfKind ``Parser.Term.quot then return #[]
+  let explicit := stx.isOfKind ``Parser.Term.explicitUniv
+  let head := if explicit then stx[0] else stx
+  if head.isIdent then
+    let span ← plainSpanJson source stx
+    let headSpan ← plainSpanJson source head
+    return #[Json.mkObj [
+      ("start", ← span.getObjVal? "start"), ("end", ← span.getObjVal? "end"),
+      ("text", ← span.getObjVal? "text"), ("head_text", ← headSpan.getObjVal? "text"),
+      ("name_components", Json.arr (nameComponents head.getId)),
+      ("explicit_universes", Json.bool explicit),
+      ("source_levels", if explicit then Json.arr <|
+        (stx[2].getArgs.filter (!·.isAtom)).map levelSyntaxJson else Json.arr #[])]]
+  stx.getArgs.foldlM (fun found child => return found ++ (← syntaxIdentifiers source child)) #[]
+
+private def spanJson (source : String) (stx : Syntax) : Except String Json := do
+  let span ← plainSpanJson source stx
+  return Json.mkObj [
+    ("start", ← span.getObjVal? "start"), ("end", ← span.getObjVal? "end"),
+    ("text", ← span.getObjVal? "text"),
+    ("identifiers", Json.arr (← syntaxIdentifiers source stx)),
+    ("universe_occurrences", Json.arr (← universeOccurrences source stx))]
 
 /-- Only grammar-inserted optional/list groups are flattened. Terms remain opaque. -/
 private partial def grammarItems (stx : Syntax) : Array Syntax :=
@@ -160,6 +222,9 @@ private def declarationNames (ns : Name) (stx : Syntax) : Array Name := Id.run d
   let name := id[0].getId
   return #[if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else ns ++ name]
 
+private partial def namespacePrefixes (name : Name) : Array Name :=
+  if name.isAnonymous then #[] else (namespacePrefixes name.getPrefix).push name
+
 private partial def companionPrefix (name : Name) : Option Name :=
   match name with
   | .anonymous => none
@@ -167,11 +232,6 @@ private partial def companionPrefix (name : Name) : Option Name :=
   | .str parent word =>
     if word == "__information_unit" || word == "__primitive_realization" then some name
     else companionPrefix parent
-
-private def nameComponents : Name → Array Json
-  | .anonymous => #[]
-  | .str parent word => nameComponents parent |>.push (Json.str word)
-  | .num parent value => nameComponents parent |>.push (toJson value)
 
 private partial def companionIdentifiers (source : String) (stx : Syntax) : Except String (Array Json) := do
   if stx.isOfKind ``Parser.Term.quot then return #[]
@@ -195,17 +255,37 @@ private def openDeclJson : OpenDecl → Json
       ("name_components", Json.arr (nameComponents name)),
       ("declaration_components", Json.arr (nameComponents declaration))]
 
-private partial def commandJson (source : String) (ns : Name) (opens : List OpenDecl)
-    (stx : Syntax) : Except String (Array Json) := do
+private partial def commandJson (source : String) (namespaceEnv : Environment)
+    (ns : Name) (opens : List OpenDecl)
+    (ambientUniverses : Array Name) (stx : Syntax) (wrappers : Array Json := #[]) :
+    Except String (Array Json) := do
   if stx.isOfKind ``Parser.Command.in then
-    return ← ((stx.getArgs.flatMap grammarItems).filter
-      (fun child => !child.isAtom && child.getRange?.isSome)).flatMapM (commandJson source ns opens)
+    let children := (stx.getArgs.flatMap grammarItems).filter
+      (fun child => !child.isAtom && child.getRange?.isSome)
+    let some inner := children.back? | throw "RM-SYNTAX-SCOPED-COMMAND"
+    let some outerRange := stx.getRange? | throw "RM-SYNTAX-MISSING-SPAN"
+    let some innerRange := inner.getRange? | throw "RM-SYNTAX-MISSING-SPAN"
+    let wrapperSpan := Syntax.node (SourceInfo.synthetic outerRange.start innerRange.start true) nullKind #[]
+    let mut innerOpens := opens
+    if let some outer := children[0]? then
+      if outer.isOfKind ``Parser.Command.open then
+        for (name, simple) in openNamespaces outer do
+          if simple then
+            for resolved in ResolveName.resolveNamespace namespaceEnv ns innerOpens name do
+              innerOpens := .simple resolved [] :: innerOpens
+    return ← commandJson source namespaceEnv ns innerOpens ambientUniverses inner
+      (wrappers.push (← plainSpanJson source wrapperSpan))
   if stx.isOfKind ``Parser.Command.set_option then
     let nested := (stx.getArgs.flatMap grammarItems).filter (fun child => isRegistration child || isTemplate child ||
       child.isOfKind ``Parser.Command.set_option ||
       child.getKind == `LeanInformationAudit.sealInformationTheoryCmd)
     if !nested.isEmpty then
-      return ← nested.flatMapM (commandJson source ns opens)
+      let some outerRange := stx.getRange? | throw "RM-SYNTAX-MISSING-SPAN"
+      return ← nested.flatMapM fun child => do
+        let some innerRange := child.getRange? | throw "RM-SYNTAX-MISSING-SPAN"
+        let wrapperSpan := Syntax.node (SourceInfo.synthetic outerRange.start innerRange.start true) nullKind #[]
+        commandJson source namespaceEnv ns opens ambientUniverses child
+          (wrappers.push (← plainSpanJson source wrapperSpan))
   let span ← spanJson source stx
   let start ← span.getObjValAs? Nat "start"
   let stop ← span.getObjValAs? Nat "end"
@@ -238,6 +318,8 @@ private partial def commandJson (source : String) (ns : Name) (opens : List Open
     ("variant", Json.str form), ("start", toJson start), ("end", toJson stop),
     ("namespace", Json.str (if ns.isAnonymous then "" else ns.toString)), ("slots", slots), ("constructors", constructors),
     ("namespace_components", Json.arr (nameComponents ns)),
+    ("ambient_universes", Json.arr (ambientUniverses.map fun name => Json.str name.toString)),
+    ("scope_wrappers", Json.arr wrappers),
     ("open_decls", Json.arr (opens.toArray.map openDeclJson)),
     ("companion_identifiers", Json.arr (← companionIdentifiers source stx)),
     ("declared_names", Json.arr ((declarationNames ns stx).map fun name => Json.str name.toString))]]
@@ -254,7 +336,9 @@ private def parseFile (repo : System.FilePath) (path : String) : IO Json := do
   let mut state := initial
   let mut ns := Name.anonymous
   let mut opens : List OpenDecl := []
-  let mut scopes : List (Name × Environment × List OpenDecl) := []
+  let mut ambientUniverses : Array Name := #[]
+  let mut sourceNamespaces : Array Name := #[]
+  let mut scopes : List (Name × Environment × List OpenDecl × Array Name) := []
   let mut commands := #[]
   repeat
     let (stx, next, messages) := Parser.parseCommand input
@@ -264,25 +348,38 @@ private def parseFile (repo : System.FilePath) (path : String) : IO Json := do
       throw <| IO.userError s!"RM-SYNTAX-PARSE: {path}: {errors}"
     if Parser.isTerminalCommand stx then break
     if next.pos == state.pos then throw <| IO.userError s!"RM-SYNTAX-PROGRESS: {path}"
-    match commandJson source ns opens stx with
+    let namespaceEnv := sourceNamespaces.foldl Environment.registerNamespace env
+    match commandJson source namespaceEnv ns opens ambientUniverses stx with
     | .error error => throw <| IO.userError s!"{error}: {path}"
     | .ok entries => commands := commands ++ entries
     if stx.isOfKind ``Parser.Command.namespace then
-      scopes := (ns, env, opens) :: scopes
+      scopes := (ns, env, opens, ambientUniverses) :: scopes
       let name := stx[1].getId
       ns := if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else ns ++ name
+      for namespaceName in namespacePrefixes ns do
+        if !sourceNamespaces.contains namespaceName then
+          sourceNamespaces := sourceNamespaces.push namespaceName
       env := Parser.parserExtension.activateScoped env ns
     else if stx.isOfKind ``Parser.Command.section then
-      scopes := (ns, env, opens) :: scopes
+      scopes := (ns, env, opens, ambientUniverses) :: scopes
     else if stx.isOfKind ``Parser.Command.end then
       let previous :: rest := scopes | throw <| IO.userError s!"RM-SYNTAX-SCOPE: {path}"
-      ns := previous.1
-      env := previous.2.1
-      opens := previous.2.2
+      let (previousNs, previousEnv, previousOpens, previousUniverses) := previous
+      ns := previousNs
+      env := previousEnv
+      opens := previousOpens
+      ambientUniverses := previousUniverses
       scopes := rest
+    if stx.isOfKind ``Parser.Command.universe then
+      ambientUniverses := ambientUniverses ++ identifiers stx
+    for declarationName in declarationNames ns stx do
+      for namespaceName in namespacePrefixes declarationName.getPrefix do
+        if !sourceNamespaces.contains namespaceName then
+          sourceNamespaces := sourceNamespaces.push namespaceName
     if stx.isOfKind ``Parser.Command.open then
+      let namespaceEnv := sourceNamespaces.foldl Environment.registerNamespace env
       for (name, simple) in openNamespaces stx do
-        for resolved in ResolveName.resolveNamespace env ns opens name do
+        for resolved in ResolveName.resolveNamespace namespaceEnv ns opens name do
           env := Parser.parserExtension.activateScoped env resolved
           if simple then opens := .simple resolved [] :: opens
     state := next
