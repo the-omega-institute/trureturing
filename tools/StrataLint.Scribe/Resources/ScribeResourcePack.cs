@@ -19,10 +19,7 @@ public sealed class ScribeResourcePackException : FormatException
     public ScribeResourcePackErrorCode ReasonCode { get; }
 }
 
-public sealed record ScribeResourcePackEntry(string Path, string Gid, string Sha256)
-{
-    public ImmutableArray<ScribeResourceInput> Inputs { get; init; } = [];
-}
+public sealed record ScribeResourcePackEntry(string Path, string Gid, string Sha256);
 
 public sealed record ScribeResourcePackManifest(
     string Schema, int Version, int EntryCount, ImmutableArray<ScribeResourcePackEntry> Entries, string TotalSha256)
@@ -33,7 +30,7 @@ public sealed record ScribeResourcePackManifest(
 public sealed class ScribeResourcePack
 {
     public const string SchemaName = "trureturing.scribe.resource-pack";
-    public const int SemanticVersion = 2;
+    public const int SemanticVersion = 3;
     private static readonly DateTimeOffset EntryTimestamp = new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private readonly IReadOnlyDictionary<string, byte[]> resources;
 
@@ -46,9 +43,7 @@ public sealed class ScribeResourcePack
     public ScribeResourcePackManifest Manifest { get; }
     public long TotalUncompressedBytes => Manifest.TotalUncompressedBytes;
 
-    /// <summary>Serializes definitions and optional execution inputs. Unattested entries cannot pass repository comparison.</summary>
-    public static ScribeResourcePackManifest Write(string path, IEnumerable<DocumentDefinition> definitions,
-        IReadOnlyDictionary<string, ImmutableArray<ScribeResourceInput>>? inputs = null)
+    public static ScribeResourcePackManifest Write(string path, IEnumerable<DocumentDefinition> definitions)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         ArgumentNullException.ThrowIfNull(definitions);
@@ -69,11 +64,7 @@ public sealed class ScribeResourcePack
         {
             var bytes = ScribeResourceCodec.Encode(item.Definition);
             totalBytes = checked(totalBytes + bytes.LongLength);
-            entries.Add(new ScribeResourcePackEntry(item.Path, item.Gid, Digest(bytes))
-            {
-                Inputs = inputs is null ? [] : inputs[item.Gid]
-                    .OrderBy(input => input.Path, StringComparer.Ordinal).ToImmutableArray(),
-            });
+            entries.Add(new ScribeResourcePackEntry(item.Path, item.Gid, Digest(bytes)));
             WriteEntry(zip, item.Path, bytes);
         }
         var list = entries.ToImmutable();
