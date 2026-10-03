@@ -32,8 +32,7 @@ public static class ScribeResourceScriptPacker
             {
                 return new ScribeResourceScriptPackResult(null, failures);
             }
-            var manifest = ScribeResourcePack.Write(outputPath, results.Select(result => result.Definition!),
-                results.ToDictionary(result => result.Definition!.Document.Header.Gid.Value, result => result.Inputs, StringComparer.Ordinal));
+            var manifest = ScribeResourcePack.Write(outputPath, results.Select(result => result.Definition!));
             return new ScribeResourceScriptPackResult(manifest, failures);
         });
     }
