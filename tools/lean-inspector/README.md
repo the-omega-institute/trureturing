@@ -96,13 +96,14 @@ LeanInformationAudit`; their resolved target is fully qualified. References,
 quoted Names, suffix matches, changed arguments and additional statements
 have no entry. No audit executes a source command or macro.
 
-Local notation has exactly three module/syntax bindings:
+Local notation has exactly eighteen module/syntax bindings:
 
 | Module | Exact notation |
 | --- | --- |
 | `Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau` | `local notation "F" => Nat.fib` |
 | `Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry` | `local notation "F" => Nat.fib` |
 | `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost` | `local notation "kact" => fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X` |
+| `Reg.D5.S3.Weil.PrimeNumberTheorem.{PntContourBound,PntLongVertical,PntShortContour,PntSmoothing,PntTail}` | each admits `local notation "ζ" => riemannZeta`, `local notation "ζ'" => deriv ζ`, and `local notation "𝓜" => mellin` |
 
 Changing the token or right hand term loses permission; duplicate catalog or
 notation commands are rejected. Standalone `attribute` and `@[…]` accept

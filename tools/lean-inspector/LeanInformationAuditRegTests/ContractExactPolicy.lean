@@ -84,4 +84,20 @@ run_meta do
     assertTest s!"policy.notation.{label}"
       (if label == "ExistingNotation" then result.isOk else !result.isOk)
 
+run_meta do
+  let env := (← getEnv).setExporting false
+  let notationText := "local notation \"ζ\" => riemannZeta\nlocal notation \"ζ'\" => deriv ζ\nlocal notation \"𝓜\" => mellin"
+  for leaf in #["PntContourBound", "PntLongVertical", "PntShortContour", "PntSmoothing", "PntTail"] do
+    let owner := `Reg.D5.S3.Weil.PrimeNumberTheorem ++ leaf.toName
+    for (label, source, accepted) in #[
+        ("distinct", notationText, true),
+        ("duplicate", notationText ++ "\nlocal notation \"ζ\" => riemannZeta", false),
+        ("changed", "local notation \"ζ\" => Nat", false)] do
+      let entries ← SourceAudit.parse env source owner.toString
+      let result := SourceAudit.auditRegCommands owner entries
+      assertTest s!"policy.notation.pinned.{leaf}.{label}" (result.isOk == accepted)
+    let entries ← SourceAudit.parse env notationText owner.toString
+    assertTest s!"policy.notation.pinned.{leaf}.other_owner"
+      (!(SourceAudit.auditRegCommands `Reg.UnlistedForm entries).isOk)
+
 end LeanInformationAuditRegTests.ContractExactPolicy

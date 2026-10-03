@@ -283,10 +283,10 @@ private partial def auditRegCommand (owner : Name) (command : Syntax)
     throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
 
 /-- Every command must have a finite permission. run_meta/run_elab have none.
-Exact notation/catalog inputs can each occur only once in an audited module. -/
+Each exact notation input and the catalog input can occur only once in a module. -/
 def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit := do
   let mut catalogs : Nat := 0
-  let mut notations : Nat := 0
+  let mut notations : Array String := #[]
   let mut seen : Array String.Pos.Raw := #[]
   for entry in entries do
     let pos := entry.originCommand.getPos?.getD entry.start
@@ -299,9 +299,10 @@ def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit
       if catalogs > 1 then
         throw s!"contract.reg:metaprogramming_not_allowed:{owner}:duplicate_catalog"
     if entry.originCommand.isOfKind ``Parser.Command.notation then
-      notations := notations + 1
-      if notations > 1 then
+      let identity := RegPolicy.fingerprint entry.originCommand
+      if notations.contains identity then
         throw s!"contract.reg:metaprogramming_not_allowed:{owner}:duplicate_notation"
+      notations := notations.push identity
 
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do
