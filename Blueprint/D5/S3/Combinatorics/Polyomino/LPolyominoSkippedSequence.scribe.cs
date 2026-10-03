@@ -31,14 +31,18 @@ internal sealed class LPolyominoSkippedSequenceDocument : IScribeDocumentDefinit
                 "Section 6.3, p. 28: “We believe S(5, 1, 2) is the same as the instance sequence for [L pentomino], and we suspect that the instance sequence for the L n-omino is S(n, 1, 2) in general.” The bracketed label denotes the source's inline L pentomino diagram. The n ≥ 3 domain comes from Section 4.4 and the N ≥ 1 domain from Section 1. Both independent sides use exactly the definitions above.", DescribeRole.Definition),
             Node("result", "Identification for every n and N", ClaimFormula(),
                 "Put d = n − 2 and weight a cell (x,y) by x + d y. The top and right-most cells of every instance share a level. Injecting anchors into earlier levels and excluding the maximum-x cell at the current level bounds the number I of instances by the sum of floor(i/d) for 0 ≤ i < |P| − I, for every finite cell set P. No connectivity assumption is needed for this lower bound. A trimmed down-set attains the bound and is edge-connected. If K is the least integer with N ≤ sum of floor(i/d) for 0 ≤ i ≤ K, the attained minimum is N + 1 + K. The prefix-sum identity H(K+d) = H(K) + K identifies the jump positions of this minimum with the values absent from its earlier range. Strong induction then identifies it with the independently defined skipped-number recursion. In particular, the believed L pentomino case n = 5 follows.",
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("condon-dugan-goldman-williams-2026-l-polyomino-skipped-sequence"),
+                    ResolutionKind.Proved))),
         []));
 
-    private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("l-polyomino-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
