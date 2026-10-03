@@ -49,7 +49,7 @@ internal sealed class RelationSyntaxException(RelationReadFailure failure) : Exc
 }
 
 /// <summary>A closed relation algebra; it never emits or invokes source-defined code.</summary>
-internal sealed class RelationSyntaxEvaluator(Compilation compilation, string entry)
+internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, string entry)
 {
     internal const int MaximumHelperDepth = 8;
     private readonly HashSet<ISymbol> active = new(SymbolEqualityComparer.Default);
@@ -80,7 +80,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         if (candidates.Length != 1) throw Reject(tree.GetRoot(), "DefinitionCount", $"Found {candidates.Length} entry methods.");
         relationCarriers.Clear();
         CollectRelationCarriers(candidates[0], new(SymbolEqualityComparer.Default));
-        ValidatePresentationEffects(candidates[0], new(SymbolEqualityComparer.Default));
+        ValidatePresentationEffects(candidates[0], new(SymbolEqualityComparer.Default), new(SymbolEqualityComparer.Default));
         var packet = Method(candidates[0], new(SymbolEqualityComparer.Default)) as Packet
             ?? throw Reject(candidates[0], "DocumentStructure", "Entry did not construct a document.");
         var content = Flatten(packet.Content).ToArray();
@@ -101,7 +101,14 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         };
         if (expressionBody is not null) return Eval(expressionBody.Expression, scope);
         if (body is null) throw Reject(method, "HelperBody", "Expected an expression or straight-line body.");
-        foreach (var statement in body.Statements)
+        if (Statements(body.Statements, scope, out var result)) return result;
+        throw Reject(method, "MissingReturn", "Method has no return expression.");
+    }
+
+    private bool Statements(IEnumerable<StatementSyntax> statements, Dictionary<ISymbol, object?> scope,
+        out object? result)
+    {
+        foreach (var statement in statements)
         {
             switch (statement)
             {
@@ -114,26 +121,45 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                     }
                     break;
                 case ReturnStatementSyntax { Expression: { } expression }:
-                    return Eval(expression, scope);
+                    result = Eval(expression, scope);
+                    return true;
+                case IfStatementSyntax conditional:
+                    var selected = Condition(conditional.Condition, scope, conditional)
+                        ? conditional.Statement : conditional.Else?.Statement;
+                    if (selected is not null && Statements([selected], scope, out result)) return true;
+                    break;
+                case BlockSyntax block:
+                    if (Statements(block.Statements, new(scope, SymbolEqualityComparer.Default), out result)) return true;
+                    break;
                 case LocalFunctionStatementSyntax:
                     break;
                 default:
-                    throw Reject(statement, statement.Kind().ToString(), "Only local initializers and one return are supported.");
+                    throw Reject(statement, statement.Kind().ToString(), "Only local initializers, constant branches and returns are supported.");
             }
         }
-        throw Reject(method, "MissingReturn", "Method has no return expression.");
+        result = null;
+        return false;
     }
 
     private object? Eval(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope)
     {
-        // Control and indexing are refused even where Roslyn can fold a branch.
-        if (expression is ConditionalExpressionSyntax or ElementAccessExpressionSyntax or LambdaExpressionSyntax)
+        // Indexing and standalone lambdas are outside the closed relation algebra.
+        if (expression is ElementAccessExpressionSyntax or LambdaExpressionSyntax)
             throw Reject(expression, expression.Kind().ToString(), "Unsupported relation expression.");
         var constant = Model(expression).GetConstantValue(expression);
         if (constant.HasValue && expression is LiteralExpressionSyntax or IdentifierNameSyntax or MemberAccessExpressionSyntax)
             return constant.Value;
         switch (expression)
         {
+            case BinaryExpressionSyntax coalesce when coalesce.IsKind(SyntaxKind.CoalesceExpression):
+                var left = KnownValue(coalesce.Left, scope, coalesce);
+                return left ?? Eval(coalesce.Right, scope);
+            case ConditionalExpressionSyntax conditional:
+                return Eval(Condition(conditional.Condition, scope, conditional)
+                    ? conditional.WhenTrue : conditional.WhenFalse, scope);
+            case SwitchExpressionSyntax selection:
+                return Eval(SwitchArm(selection, scope).Expression, scope);
+
             case ParenthesizedExpressionSyntax parenthesized:
                 return Eval(parenthesized.Expression, scope);
             case CastExpressionSyntax cast:
@@ -159,10 +185,11 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                     _ => throw Reject(part, "InterpolationFormat", "Formatted interpolation is unsupported."),
                 }));
             case CollectionExpressionSyntax collection:
-                return collection.Elements.Select(element => element switch
+                return collection.Elements.SelectMany(element => element switch
                 {
-                    ExpressionElementSyntax item => Eval(item.Expression, scope),
-                    SpreadElementSyntax spread => Eval(spread.Expression, scope),
+                    ExpressionElementSyntax item => new[] { Eval(item.Expression, scope) },
+                    SpreadElementSyntax spread => Eval(spread.Expression, scope) as object?[]
+                        ?? throw Reject(spread, "CollectionElement", "Spread requires a statically known collection."),
                     _ => throw Reject(element, "CollectionElement", "Unknown collection element."),
                 }).ToArray();
             case ArrayCreationExpressionSyntax { Initializer: { } initializer }:
@@ -217,45 +244,6 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
 
     private object? ResolveBinding(object? value) => value is Binding binding ? Eval(binding.Expression, binding.Scope)
         : value is object?[] items ? items.Select(ResolveBinding).ToArray() : value;
-
-    private void ValidatePresentationEffects(SyntaxNode node, HashSet<ISymbol> visited, bool ignored = false)
-    {
-        foreach (var child in node.DescendantNodes())
-        {
-            var childIgnored = ignored || child.Ancestors().Any(IsIgnoredPresentationCall);
-            if (child is AssignmentExpressionSyntax assignment)
-            {
-                if (IsRelationWrite(assignment.Left, childIgnored))
-                    throw Reject(assignment, "IgnoredWrite", "Ignored source code may not write observable state.");
-            }
-            if (child is PrefixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } prefix)
-            {
-                if (IsRelationWrite(prefix.Operand, childIgnored))
-                    throw Reject(prefix, "IgnoredWrite", "Ignored source code may not write observable state.");
-            }
-            if (child is PostfixUnaryExpressionSyntax { OperatorToken.ValueText: "++" or "--" } postfix)
-            {
-                if (IsRelationWrite(postfix.Operand, childIgnored))
-                    throw Reject(postfix, "IgnoredWrite", "Ignored source code may not write observable state.");
-            }
-            if (child is ArgumentSyntax argument && argument.RefKindKeyword.RawKind != 0)
-                throw Reject(argument, "IgnoredWrite", "By-reference source arguments may mutate observable state.");
-            if (child is InvocationExpressionSyntax invocation
-                && Model(invocation).GetSymbolInfo(invocation).Symbol is IMethodSymbol method)
-            {
-                if (childIgnored && !IsRecognizedInvocation(method))
-                    throw Reject(invocation, "IgnoredWrite", "Ignored source code may call only recognized pure operations.");
-                if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
-                    && helper is MethodDeclarationSyntax or LocalFunctionStatementSyntax
-                    && visited.Add(method))
-                    ValidatePresentationEffects(helper, visited, childIgnored);
-                if (method.ContainingType.OriginalDefinition.ToDisplayString() == "System.Collections.Generic.List<T>"
-                    && method.Name is "Add" or "AddRange" or "Clear" or "Remove" or "RemoveAt"
-                    && method.ContainingType.TypeArguments.Any(IsRelationType))
-                    throw Reject(invocation, "IgnoredWrite", "Source code may mutate a relation collection.");
-            }
-        }
-    }
 
     private bool IsRelationWrite(ExpressionSyntax target, bool ignored)
     {
@@ -357,6 +345,9 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         string Str(string parameter) => Scalar(Arg(parameter), node);
         object? Resolve(object? value) => value is Binding binding ? Eval(binding.Expression, binding.Scope)
             : value is object?[] items ? items.Select(Resolve).ToArray() : value;
+
+        if (type == "System.Linq.Enumerable" && name is "Select" or "ToArray")
+            return ProjectSequence(node, symbol, mapped, scope);
 
         if (type == "string" || type == "System.String")
         {
@@ -493,14 +484,15 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         for (var index = 0; index < arguments.Count; index++)
         {
             var argument = arguments[index];
-            var parameter = index < operationArguments.Length
-                ? operationArguments[index].Parameter
-                : argument.NameColon is { } named
+            var parameter = operationArguments.FirstOrDefault(item => item.Syntax == argument)?.Parameter
+                ?? (argument.NameColon is { } named
                     ? method.Parameters.First(parameter => parameter.Name == named.Name.Identifier.ValueText)
-                    : method.Parameters[Math.Min(index, method.Parameters.Length - 1)];
-            parameter ??= method.Parameters[Math.Min(index, method.Parameters.Length - 1)];
+                    : method.Parameters[Math.Min(index, method.Parameters.Length - 1)]);
             var binding = new Binding(argument.Expression, scope);
-            if (parameter.IsParams)
+            if (parameter.IsParams && SymbolEqualityComparer.Default.Equals(
+                Model(argument).GetTypeInfo(argument.Expression).ConvertedType, parameter.Type))
+                result[parameter.Name] = binding;
+            else if (parameter.IsParams)
             {
                 var existing = result.GetValueOrDefault(parameter.Name) as object?[] ?? [];
                 result[parameter.Name] = existing.Append(binding).ToArray();
@@ -511,6 +503,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         {
             result[parameter.Name] = parameter.GetAttributes().Any(attribute => attribute.AttributeClass?.ToDisplayString()
                 == "System.Runtime.CompilerServices.CallerFilePathAttribute") ? node.SyntaxTree.FilePath
+                : parameter.IsParams ? Array.Empty<object?>()
                 : parameter.HasExplicitDefaultValue ? parameter.ExplicitDefaultValue : null;
         }
         return result;
