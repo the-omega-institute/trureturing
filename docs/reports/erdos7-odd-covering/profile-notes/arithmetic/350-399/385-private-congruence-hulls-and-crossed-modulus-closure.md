@@ -26926,25 +26926,59 @@ remaining component coordinates range over the product in (233.3). These
 private residues therefore define a flow of value \(|I_H|\). No phase is
 replaced by an independently chosen phase.
 
-This corrects the previously proposed inequality
-
-\[
- \left|\bigcup_{B\in\mathcal S}\mathrm{Bad}_B\right|
- \ge\sum_{B\in\mathcal S}\min(|B|,f_H+1).
-\]
-
-That inequality is not justified: its left side counts \(H\)-residues, while
-one residue can supply many distinct quotient private points. For example,
+The flow test is not the same as the coarse EB1 consequence below. If one
+tries to justify the latter merely by counting quotient private points, the
+argument fails: one \(H\)-residue can carry several such points. For example,
 with \(H=35\), quotient modulus \(3\), and labels
 
 \[
 (d_i,g_i,a_i)=(3,1,0),(15,5,5),(21,7,7),
 \]
-
 the fibre \(r=0\) carries three different quotient phases
 \(0,1,2\pmod 3\). One \(H\)-residue can therefore support three distinct
 private quotient points. The bucket capacity in (233.3) records precisely
 this multiplicity.
+
+There is nevertheless a separate **EB1** argument for the coarse inequality.
+Let \(F_H\) be the unused odd core moduli dividing \(H\), put
+\(f_H=|F_H|\), and define
+
+\[
+E_B=\{r\in U_H:W(r)=\{B\}\}.
+\]
+
+For a single component \(B\), deleting \(B\) leaves liability exactly on
+fibres with \(W(r)=\{B\}\), so its \(H\)-residue projection is \(E_B\). If
+\(|E_B|<\min(|B|,f_H+1)\), assign distinct unused core moduli to the residues
+of \(E_B\). The corresponding core classes cover every integer in that
+liability. Retaining all other original classes would then give fewer classes
+than \(B\), contradicting the cardinality part of EB1. Hence
+
+\[
+|E_B|\ge\min(|B|,f_H+1)
+\qquad(B\in\mathfrak B_H).
+\]
+
+The sets \(E_B\) are disjoint by definition. Summing these individual EB1
+bounds over any \(\mathcal S\subseteq\mathfrak B_H\) gives the valid conditional
+inequality
+
+\[
+\boxed{
+\left|\bigcup_{B\in\mathcal S}E_B\right|
+\ge
+\sum_{B\in\mathcal S}\min(|B|,f_H+1),
+\qquad \mathcal S\subseteq\mathfrak B_H .
+}
+\tag{233.6}
+\]
+
+Since \(E_B\subseteq\mathrm{Bad}_B\), the same lower bound holds with
+\(\mathrm{Bad}_B\) in place of \(E_B\). Thus the \(H=35\) example refutes only
+the unqualified quotient-point counting argument; it does not refute the
+EB1-minimality consequence (233.6). The argument uses whole-cover liability
+and the EB1 comparison, so it must not be applied to an arbitrary finite data
+set or to irredundancy alone.
 
 The flow criterion is necessary for irredundancy, but it is not a proof that
 an arbitrary finite data set is a whole cover. To obtain an EB1 contradiction
@@ -27216,10 +27250,18 @@ Only fibres with a unique empty component contribute. Fibres with two or more
 empty components cannot contain a private witness for any label, because a
 second empty component would cover every quotient point in that fibre.
 
-This is stronger than counting the \(H\)-residues: several labels may use one
-\(r\), but their demand is charged against the actual product of the other
-components' surviving coordinates. It is also weaker than the full flow,
-because it forgets which \(t_B\) each label can use.
+Since each \(\Delta_{B'}(r)\le 1\), (236.2) implies the scaled residue
+bound
+\[
+\frac{|B|}{Q/H}\le |E_B|.
+\]
+The weighted form retains the actual surviving-coordinate factors and is
+strictly sharper than this scaled count whenever one of the relevant products
+is below one. It does not imply \(|B|\le |E_B|\), and it is not uniformly
+stronger than the bare nonemptiness statement \(|E_B|\ge1\). It is also
+weaker than the full flow, because it forgets which \(t_B\) each label can
+use.
+
 
 The bound alone does not contradict the unrestricted problem. The factor
 \(\prod_{B'\ne B}\Delta_{B'}(r)\) may be close to one, and \(Q/H\) can be
