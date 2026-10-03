@@ -889,3 +889,220 @@ repair lower bound is the preceding argument using SC39, not a
 bounded search over replacement moduli. These are ordinary mathematical
 deductions reusing the cited covering theorem; no new Lean verification
 or unrestricted Erdős #7 conclusion is asserted.
+
+## 13. Released original chains fund a complete root-and-patch repair
+
+The ternary rigid-ideal regime has a count supply stronger than merely
+\(\sigma\ge A\). It does not supply the patch phases. Keep the same
+hypothetical EB1 whole cover, common source, lower family and terminal
+pool of Sections 7--10. For a labelled family \(\mathcal A\), write
+\(U_{\mathcal A}=\bigcup_{d\in\mathcal A}C_d\).
+Choose a retained subfamily \(\mathcal R\subseteq\mathcal L\) with
+\[
+ G\subseteq\mathcal R,\qquad
+ d\mapsto n_d\text{ injective on }\mathcal R,\qquad
+ r\notin H_{\mathcal R}:=\{n_d:d\in\mathcal R\}.
+ \tag{SC44}
+\]
+The choice \(\mathcal R=G\) always satisfies this contract. Set
+\(t=|\mathcal L|-|\mathcal R|\). Its exact released-or-omitted
+original-label budget is
+\[
+ \Delta=\sigma+t=K-|\mathcal R|-|\mathcal T|.
+ \tag{SC45}
+\]
+This counts original labels, including nonsurviving ones; it does not
+assert that their surviving liabilities have already been paid.
+
+### Arithmetic supply of the count budget
+
+From the original numerical inventory define
+\[
+ p_0=\#\{(a,g):1\le a<A,\ g\in G,\ r^ag\in D\}.
+\]
+For a finite set \(\mathcal H\) of distinct nonunit divisors of
+\(M\) with \(rh\notin H_{\mathcal R}\) for every \(h\in\mathcal H\),
+also define
+\[
+ p_1(\mathcal H)=\#\{(a,h):0\le a<A,\ h\in\{1\}\cup\mathcal H,
+                                      \ r^ash\in D\}.
+\]
+Then the original labels give the unconditional count inequality
+\[
+ \Delta\ge A+p_0+p_1(\mathcal H). \tag{SC46}
+\]
+The \(A\) pure \(r\)-powers belong to neither \(\mathcal R\) nor
+\(\mathcal T\). An original counted by \(p_0\) has height below
+\(A\) and so is not a top label. If it survives, its output slot
+\(g\) is already occupied in \(\mathcal R\) by original \(g\);
+otherwise it is an omission. In either case that original is counted
+in \(\Delta\). The same argument applies to \(p_1\), because its
+output slot \(rh\) is deliberately excluded from \(\mathcal R\).
+These three original-label families are disjoint, distinguished by
+cofactor one, nonunit \(s\)-free cofactor, and \(s\)-valuation one.
+This proves SC46 without using any later hole or reservation conclusion.
+
+Since original \(s\in D\), \(p_1(\varnothing)\ge1\). If
+\(r^ag\in D\) for \(1\le a<A\), \(g\in G\), divisor closure
+also gives
+\[
+ p_0\ge a(\tau(g)-1).
+\]
+In particular SC26 implies
+\[
+ \Delta\ge A+p_0+1\ge4. \tag{SC47}
+\]
+The weaker assumption \(p_0>0\) already suffices for this bound:
+matching the chosen prefix determines whether these originals are
+released or omitted, not whether they contribute to the budget.
+
+### Pay complete lower liability and every displaced top
+
+Choose an output root \(\rho\bmod r\) and purchase the whole class
+\(S_\rho=\rho\bmod r\). Its slot is free in \(\mathcal R\).
+Let
+\[
+ H_0=H_{\mathcal R}\cup\{r\},\qquad
+ \mathcal T_0=\{d\in\mathcal T:n_d\in H_0\},
+\]
+and form the complete liability
+\[
+ Y=(U_{\mathcal L}\cup U_{\mathcal T_0})
+       \setminus(U_{\mathcal R}\cup S_\rho). \tag{SC48}
+\]
+It includes all old lower service and every top class whose slot is
+already displaced. In particular every \(r\)-free top output has a
+nonunit modulus in \(G\), by original divisor closure, and is included
+in this accounting. Retaining its parent phase does not preserve that
+top class automatically.
+
+For \(j\ne\rho\), let
+\[
+ P_j=\{z\bmod M:z\in Y,\ z\equiv j\pmod r\},\qquad
+ \mathcal J=\{j\ne\rho:P_j\ne\varnothing\},\quad k=|\mathcal J|.
+\]
+These are complete projections, including every higher \(r\)-digit
+lift. For each nonempty \(P_j\), choose \(y_j\in P_j\) and set
+\[
+ \Gamma_j=\gcd\bigl(M,\{y-y_j:y\in P_j\}\bigr).
+ \tag{SC49}
+\]
+This is the existing whole-liability hull PH3--PH4 of report 385,
+applied to the actual projection. A singleton gives \(\Gamma_j=M\).
+For \(1<h\mid\Gamma_j\), the class
+\[
+ B_{j,h}=\{z:z\equiv j\pmod r,\ z\equiv y_j\pmod h\}
+ \tag{SC50}
+\]
+has modulus \(rh\mid N\) and pays every point of \(Y\) in root \(j\).
+
+Let \(\mathcal V_j\) contain precisely those \(h>1\) dividing
+\(\Gamma_j\) for which \(rh\notin H_{\mathcal R}\) and either
+no top occupies slot \(rh\), or its complete class is contained in
+\(S_\rho\), or its class equals \(B_{j,h}\). These are explicit
+sufficient tests for retaining old top service. A top at that numerical
+slot has original label \(r^Ash\). Its first original \(s\)-digit
+is \(\theta_1(\rho)\) in the whole-root alternative; equality with
+the patch requires digit \(\theta_1(j)\) and cofactor phase
+\(y_j\bmod h\). No phases from different sources are combined.
+
+Suppose distinct choices \(h_j\in\mathcal V_j\), \(j\in\mathcal J\),
+exist. Take the actual lower repair
+\[
+ \mathcal B=\{C_d:d\in\mathcal R\}\cup\{S_\rho\}
+               \cup\{B_{j,h_j}:j\in\mathcal J\}. \tag{SC51}
+\]
+Its labels are distinct odd nonunit divisors of \(N\). SC48--SC50
+pay all lower outputs and all top classes occupying \(H_0\). Every
+further top displaced by a patch has its whole old service paid by
+that patch or by \(S_\rho\), by the definition of its menu. Thus
+\(\mathcal B\), together with every unreserved top, covers
+\(U_{\mathcal L}\cup U_{\mathcal T}=X\). This proves complete
+coverage directly, including all old liabilities.
+
+For the actual reserved-top count
+\(b=|\{d\in\mathcal T:n_d\in\operatorname{moduli}(\mathcal B)\}|\),
+SC23 now reads
+\[
+ |\mathcal F|=K-\Delta+1+k-b,
+ \qquad e=1+k-t. \tag{SC52}
+\]
+The inequality SC46 can use the same selected set
+\(\mathcal H=\{h_j:j\in\mathcal J\}\). If a selected patch slot
+is occupied by a top, divisor closure supplies all \(A\) originals
+\(sh_j,rsh_j,\ldots,r^{A-1}sh_j\) counted in \(p_1(\mathcal H)\).
+Their surviving liabilities were included in SC48; this extra count
+supply does not waive their coverage.
+
+For any odd \(r\), a further supplied case occurs when \(A\ge2\)
+and each selected \(h_j\) has \(rh_j\in D\) or \(sh_j\in D\).
+Choose one such original donor per patch. An \(rh_j\) donor supplies
+a \(p_0\) entry, since divisor closure puts \(h_j\) in \(G\);
+an \(sh_j\) donor supplies a \(p_1\) entry. Distinct patches have
+distinct donors, and original \(s\) supplies one more \(p_1\) entry.
+Thus \(p_0+p_1(\mathcal H)\ge k+1\), and SC46--SC52 give
+\[
+ |\mathcal F|\le K-A-b<K.
+\]
+This is already a strict class-count descent, with no equal-count
+modulus-sum case left to settle. Donor existence does not supply the
+required simultaneous safe phase choices.
+
+### A necessary ternary menu obstruction
+
+Take \(r=3\) and \(p_0>0\), in particular the SC26 rigidity regime.
+Then \(k\le2\), and SC47--SC52 give
+\[
+ |\mathcal F|\le K-4+3-b<K.
+\]
+Hence every hypothetical EB1 cover, at every fixed common tree,
+retained family SC44 and choice of \(\rho\), must satisfy
+\[
+ \begin{array}{ll}
+ k=0:&\text{impossible},\\
+ k=1:&\mathcal V_j=\varnothing,\\
+ k=2:&\mathcal V_{j_1}=\varnothing\ \text{or}\
+       \mathcal V_{j_2}=\varnothing\ \text{or}\
+       \mathcal V_{j_1}=\mathcal V_{j_2}=\{h\}
+       \text{ for some }h.
+ \end{array} \tag{SC53}
+\]
+For two nonempty menus, equality to the same singleton is exactly the
+failure to choose distinct numerical cofactors. This does not require
+a new matching theorem. The strict funding comes from original-label
+inventory even if \(b=0\). The allowed-menu service tests are
+conservative: SC53 does not classify every possible split or every
+possible way to cover a displaced top.
+
+### The pure source root couples the patch liability to its credit
+
+If the original pure \(s\)-class survives, denote its output root by
+\(j_s\), so \(\theta_1(j_s)=\alpha_s\bmod s\). Comparable
+original disjointness forces every other \(s\)-bearing original to
+avoid that first \(s\)-digit. Consequently no top class is contained
+in \(S_{j_s}\): purchasing that root pays the pure-\(s\) lower output,
+but pays no top by the whole-root alternative above.
+
+If instead \(\rho\ne j_s\), then
+\[
+ P_{j_s}=(\mathbb Z/M\mathbb Z)
+              \setminus\bigcup_{g\in G}(\alpha_g\bmod g).
+ \tag{SC54}
+\]
+Indeed, the lower pure-\(s\) output supplies the entire root before
+subtraction. Every retained \(s\)-bearing output avoids it, while the
+retained \(s\)-free originals are exactly \(G\): any higher original
+\(r^ag\) would collide with its retained \(g\)-slot. Subtracting
+\(U_{\mathcal R}\) therefore removes precisely the indicated
+cofactor union, at all higher output digits. If this complete complement
+has hull one, its menu is empty. Choosing \(\rho=j_s\) avoids this
+particular liability but forfeits the whole-root top service just
+identified.
+
+Thus the count cost of this simultaneous repair is supplied in the
+ternary rigid regime. The remaining task is to force some actual
+\(\theta,\mathcal R,\rho\) with feasible whole-liability menus, or
+to derive a contradiction from the universal obstruction SC53. Neither
+existence has been established. The argument reuses the digit split,
+whole-liability hull and SC23 accounting; it is ordinary mathematics,
+without new Lean verification or a conclusion for unrestricted Erdős #7.
