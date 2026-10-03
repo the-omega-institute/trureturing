@@ -87,4 +87,4 @@ parameters do not by themselves prove distinct unmarked manifolds, a general
 hyperbolic realization, or a counterexample to the minimum-six CFMP conjecture.
 Sections 133–139 separately give the fuller dynamics and geometric families;
 their finite auxiliary checks are in
-[cfmp_fibonacci_ramification_check.py](../../docs/develop/theory/cfmp_fibonacci_ramification_check.py).
+[cfmp_fibonacci_ramification_check.py](../../tools/scripts/agent/cfmp/cfmp_fibonacci_ramification_check.py).
