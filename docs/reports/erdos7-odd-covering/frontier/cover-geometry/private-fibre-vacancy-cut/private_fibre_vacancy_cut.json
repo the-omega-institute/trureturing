@@ -1,0 +1,59 @@
+{
+  "exhaustive_interface_checks": 230,
+  "one_vacancy_strict_fixture": {
+    "R": 1155,
+    "a": 1,
+    "candidate_labels": [
+      9,
+      45,
+      63,
+      99,
+      315,
+      495,
+      693,
+      3465
+    ],
+    "f": 1,
+    "g": 1,
+    "private": [
+      0,
+      1
+    ],
+    "r": 2,
+    "served": [
+      0
+    ],
+    "strict_trigger": true,
+    "vacant": [
+      45
+    ]
+  },
+  "partial_height_fixture": {
+    "R": 1155,
+    "a": 1,
+    "candidate_labels": [
+      9,
+      45,
+      63,
+      99,
+      315,
+      495,
+      693,
+      3465
+    ],
+    "f": 0,
+    "g": 1,
+    "private": [
+      0,
+      1
+    ],
+    "r": 2,
+    "served": [
+      0
+    ],
+    "strict_trigger": false,
+    "vacant": []
+  },
+  "scope": "Private-fibre source-replacement interface for q<p, including a<v_q(Q); no whole-cover realization or unrestricted Erdos-7 conclusion.",
+  "status": "PASS"
+}

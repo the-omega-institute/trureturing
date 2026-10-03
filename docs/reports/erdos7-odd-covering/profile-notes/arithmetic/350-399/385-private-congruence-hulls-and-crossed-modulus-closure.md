@@ -27731,3 +27731,143 @@ available from whole coverage and EB1 alone; proving it, or charging the
 missing coordinates through the capacity-refined \(\kappa_v\) terms, is exactly
 a remaining whole-cover/source bridge. Thus (239.3)--(239.4) are a conditional
 diagnostic, not an unrestricted exclusion.
+
+## 240. Private-fibre vacancy is the exact partial-height strict cut
+
+The phase-aware vacancy bound in Section 213 counts all (q) subfibres of
+the occupied (R)-class.  For a partially occupied lower-(q) layer, the
+actual private part of that class can meet fewer than (q) subfibres.  The
+same source replacement then gives a sharper strict cut.
+
+Keep the occupied-top-(p) notation of Section 200, with (q<p) an odd
+prime.  Put
+
+\[
+ a=v_q(L),\qquad J=L/q^a,\qquad N=R/q^a=p^{e-1}J,
+\]
+
+so (q\nmid N), and use the candidate labels
+
+\[
+ \mathcal U_q=\{q^{a+1}d:d\mid N\}.
+\tag{PFV1}
+\]
+
+For (j\in\mathbb Z/q\mathbb Z), let
+
+\[
+ F_j=a_R+jR+qR\mathbb Z.
+\tag{PFV2}
+\]
+
+These are the complete (q)-subfibres of (A=[a_R]_R).  Let
+
+\[
+ P_{A,q}=\{j:E_A\cap F_j\ne\varnothing\},
+ \qquad r_{A,q}=|P_{A,q}|,
+\tag{PFV3}
+\]
+
+and let (G_{A,q}\subseteq P_{A,q}) consist of those (j) for which an
+already retained class with numerical label in
+
+\(
+ \mathcal U_q\cap D
+\)
+
+contains the whole fibre (F_j).  Write (g_{A,q}=|G_{A,q}|) and
+
+\[
+ f_q=|\mathcal U_q\setminus D|.
+\tag{PFV4}
+\]
+
+Then every EB1 representative satisfies the sharper private-fibre vacancy
+inequality
+
+\[
+\boxed{f_q+g_{A,q}\le r_{A,q}-1.}
+\tag{PFV5}
+\]
+
+In particular, (r_{A,q}=q) recovers the Section 213 bound (PV1), while
+(r_{A,q}<q) records the actual private support rather than charging all
+subfibres of (A).
+
+### Proof
+
+Assume (f_q+g_{A,q}\ge r_{A,q}).  For every private fibre indexed by
+
+\[
+ P_{A,q}\setminus G_{A,q}
+\]
+
+choose a distinct vacant label (u_j=q^{a+1}d_j\in\mathcal U_q\setminus D).
+This is possible by (PFV4).  Pick
+(x_j\in E_A\cap F_j) and give (u_j) the CRT phase (x_j\pmod {u_j}).
+Since (u_j\mid qR), the resulting class contains the whole (F_j).
+The retained classes counted by (G_{A,q}) already contain the other private
+fibres.  Therefore the newly chosen classes cover all of (E_A), while the
+source class (B) covers (E_B) by the identity in Section 200.
+
+Delete (A) and the (p) top-layer classes, and insert (B) together with
+the (r_{A,q}-g_{A,q}) fresh classes.  The new block has
+
+\[
+ 1+r_{A,q}-g_{A,q}\le 1+q<p+1
+\]
+
+classes, so it is a strict EB1 cardinality descent.  Freshness is automatic:
+the chosen labels are vacant, have (q)-valuation (a+1), whereas every
+top cofactor (m_i) has (q)-valuation at most (a), and (R) has
+q-valuation (a).  The CRT phases are chosen from the same actual source
+fibres, so no independently optimized phase has been introduced.  This
+contradicts EB1 and proves (PFV5). \(\square\)
+
+The lemma applies without assuming (a=v_q(Q)).  Thus it is valid exactly
+in the partially occupied case (a<v_q(Q)), where all labels in
+\(\mathcal U_q\) still divide (Q) but some may already be occupied.  Its
+remaining gap is explicit: if
+
+\[
+ r_{A,q}-f_q-g_{A,q}\ge1,
+\tag{PFV6}
+\]
+
+at least one private (q)-fibre is not serviceable by the candidate layer.
+The argument does not turn that missing fibre into a vacancy; it requires a
+larger release or a source-compatible class using an external coordinate.
+Consequently (PFV5) is a strict necessary cut for partial height, not a
+whole-cover resolution.
+
+### A finite boundary fixture
+
+The cut is genuinely sharper than (PV1) when only part of (A) is private.
+Take
+
+\[
+ p=5, q=3, e=2, L=3\cdot7\cdot11=231,
+ \qquad R=5L=1155,
+\]
+
+and (a=v_3(L)=1<v_3(Q)=2).  Then
+
+\[
+ \mathcal U_3
+ =\{9,45,63,99,315,495,693,3465\}.
+\]
+
+If the private part of (A) meets only (F_0,F_1), and the occupied label
+9 has the phase containing (F_0) while all other candidate labels are
+phase-incompatible, then (r_{A,3}=2), (f_3=0), and (g_{A,3}=1).  The
+inequality (PFV5) is tight:
+
+\[
+ 0+1=2-1.
+\]
+
+There is no candidate-only strict repair for the remaining private fibre,
+despite the fact that the global (q)-fibre count in (PV1) would only record
+the weaker (1\le2).  This is a finite source/service fixture, not a whole
+cover; it demonstrates why the unserved term in (PFV6) cannot be silently
+treated as a vacant label.
