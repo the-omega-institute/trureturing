@@ -1,0 +1,5 @@
+source_id = "redundant-leaf-matching-transport"
+path = "docs/develop/theory/REDUNDANT_LEAF_MATCHING_TRANSPORT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
