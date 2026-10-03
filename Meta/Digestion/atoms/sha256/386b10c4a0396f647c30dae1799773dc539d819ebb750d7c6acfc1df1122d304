@@ -1,0 +1,18 @@
+**定义 352.4（实际 Fibonacci 零秩与严格截止权重）。** 令
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对素数 $p$，$z(p)$ 表示满足 $p\mid F_d$ 的最小正整数 $d$。对实数 $x\ge0$，记 $\vartheta(x)=\sum_{p\le x,\ p\ \mathrm{prime}}\log p$。对实数 $y\ge2$，在自然数载体上定义同一实际权重
+
+$$
+w_y(n)=
+\begin{cases}
+\displaystyle\frac1{n z(n)},&n\text{ 是素数且 }y<n,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+此定义只在素数分支使用 $z(n)$；任意有限 $T\subseteq\mathbb N$ 的尾质量为 $\sum_{n\in T}w_y(n)$。
+

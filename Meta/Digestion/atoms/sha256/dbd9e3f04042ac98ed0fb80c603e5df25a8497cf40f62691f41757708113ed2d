@@ -1,0 +1,23 @@
+**命题 58.12（有限下界系数的补偿）。** 已给正整数 $A$、承诺 $b=1/A\le a\le\alpha$ 时，也可排序
+
+$$
+8\sum_sZ_sC_\tau-b\sum_sf_\tau^2,
+\qquad\text{等价整数分数 }8A K_\tau-T_\tau,
+\quad K_\tau=\sum_sZ_sC_\tau,\quad T_\tau=\sum_sf_\tau^2.
+\tag{58.33}
+$$
+
+这个单批路线无需强度估计。令其未乘 $A$ 的逐记录差为
+$W_b=8ZD-b(f_\theta^2-f_\tau^2)$。逐有序类对的条件均值为：真实类1对端点时 $b$，真实端点对类1时 $2\alpha-b$，端点互换时 $4\alpha$，相同时0。因此
+
+$$
+bd\le\mathbb EW_b\le2d,\quad
+W_b^2\le81D^2,\quad |W_b|\le16,\quad
+|W_b-\mathbb EW_b|\le32.
+$$
+
+Bernstein 给单竞争者失败至多 $\exp(-mb^2d/256)$：分母不超过
+$2(81+64/3)d$，均值平方至少 $b^2d^2$。于是有限预算
+$m=64A^2R^2(b_N+d_{\rm cert}+2)$ 足够。其每候选整数范围可取
+$[-(16A+1)m,16Am]$，较大系数的描述、字段宽度、更新、读出和 $A$ 倍乘都必须计费；完整取得仍为 $mn$ 窗口加 $m$ 标签。它是一条已证充分替代，不给所有常数、字宽或机器费用上均优于固定表的结论。
+

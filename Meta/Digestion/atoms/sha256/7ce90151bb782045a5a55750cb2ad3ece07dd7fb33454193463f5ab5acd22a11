@@ -1,0 +1,60 @@
+### 41.3 联合读出、核商与动作下降
+
+四视图读出按 §39.2 取 $q_k(h):=(\tau(h),v_k(h))$，令 $q=(q_k)_k$、$J=q(H^{\mathrm{act}})$；类型标签因此属于读出值域，不会把不同纤维的相同数值错误合并。为避免把带类型函数核和像混为一谈，定义
+
+$$
+\ker_H(f):=\{(h,h')\in H^{\mathrm{act}}\times H^{\mathrm{act}}:f(h)=f(h')\},
+\qquad
+R_k:=\ker_H(q_k),
+\qquad
+\ker_H(q)=\bigcap_kR_k.
+\tag{PG.4106}
+$$
+
+按每个纤维取
+
+$$
+R_{k,i}:=R_k\cap(H_i^{\mathrm{act}}\times H_i^{\mathrm{act}}),
+$$
+
+再把像放回带类型的和中，有核商到实际像的双射
+
+$$
+H_i^{\mathrm{act}}/R_{k,i}\;\cong\;q_k(H_i^{\mathrm{act}}),
+\qquad [h]\longmapsto q_k(h).
+\tag{PG.4106a}
+$$
+
+这是数学识别，不声称 `JointPredictionRelation` 或 `CompatibleFusionEmbedding` 已直接证明该桥；前者给出联合核交集，后者的 `compatibleImage` 仍要求同一实际历史代表，故 $J$ 不是边缘像的自由积。
+
+若摘要 $d$ 要在 $d(H^{\mathrm{act}})$ 上继续执行，先给出各纤维的带类型分量 $d_i:H_i^{\mathrm{act}}\to D_i$，并写 $d_j$ 为目标纤维分量；则必须对同类型 $h,h'$ 及 $e:i\to j$ 满足
+
+$$
+d(h)=d(h')\Longrightarrow
+\left\{
+\begin{aligned}
+r_i(\iota_i h)&=r_i(\iota_i h'),\\
+\mathrm{Option.map}(\mathrm{id}_{L_e}\times d_j)(T_e^{\mathrm{act}}h)
+&=\mathrm{Option.map}(\mathrm{id}_{L_e}\times d_j)(T_e^{\mathrm{act}}h').
+\end{aligned}\right.
+\tag{PG.4107}
+$$
+
+这是 §32.3 的下降条件在实际 typed 历史上的专门化。复用 §32.4 与 Transport–Memory §27 时，联合视图达到最小预测边界仍需另证
+
+$$
+\ker_H(q)=B.
+\tag{PG.4108}
+$$
+
+端点投影 $\eta$ 是否与该边界互恢复，也仍分别检查
+
+$$
+\eta=D_\eta\circ q\Longleftrightarrow\ker_H(q)\subseteq\ker_H(\eta),
+\qquad
+q=D_q\circ\eta\Longleftrightarrow\ker_H(\eta)\subseteq\ker_H(q).
+\tag{PG.4109}
+$$
+
+这些式子是接入检查，不把既有一般下降定理冒充为 FIB 实例已满足。
+

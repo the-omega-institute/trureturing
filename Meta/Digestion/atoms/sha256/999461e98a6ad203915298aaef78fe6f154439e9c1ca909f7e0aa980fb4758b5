@@ -1,0 +1,21 @@
+**证明。** 不同窗口独立，故
+$\mathbb EA_\theta=\mathbb EB_\theta=HL$，而
+
+$$
+\mathbb E[A_\theta B_\theta]
+=\mathbb E h_p\,\mathbb E(\ell_qh_q)\,\mathbb E\ell_r
+=HtL.
+$$
+
+$C_\theta=1$ 当且仅当 $A_\theta=1$，而 $C_\theta=2$ 当且仅当 $A_\theta=0,B_\theta=1$。这给类质量和两个矩；中窗必须使用实际联合质量 $t$。 $H,L>0,t<1$ 给前两个非零类正质量；事件 $h_p=h_q=0$ 保证类0，故 $\pi_0\ge(1-H)^2>0$。
+
+令 $U=\{p,q,r,p',q',r'\}$， $k=|U|\le6$。对只依赖 $W_U$ 的任意函数 $f$，对其他窗口逐个求和得到
+
+$$
+\mathbb E_{\mu^{\otimes n}}f(W_U)
+=\sum_{w_U\in\Sigma^U}f(w_U)\prod_{i\in U}\mu(w_i),
+\tag{57.6}
+$$
+
+因为每个被积分窗口的质量和为1。把 $U$ 按升序双射到 $\{1,\ldots,k\}$，保留每个教师的三个角色与每个窗内的 $h,\ell$，便得到相同的乘积质量和同一门表达式。绝对位置及未选中窗口不贡献额外项。这是完整产品律中的解析约化，不依赖有限枚举。共同矩是总体结论，不能理解为不同候选的经验均值或经验平方范数也相等。证毕。 $\square$
+

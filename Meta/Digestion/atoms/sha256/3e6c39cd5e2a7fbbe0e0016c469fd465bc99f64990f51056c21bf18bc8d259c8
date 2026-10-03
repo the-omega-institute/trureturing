@@ -1,0 +1,16 @@
+**定理 354.2（二十三阶起始秩的全部实数半开壳界）。** 对每个实数 $Y>1597$、$b>1$ 和有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{2025+16bY}-45\right),
+\tag{354.1}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{2025+16bY}-45\right)}{2Y\log Y}.
+\tag{354.2}
+$$
+

@@ -1,0 +1,15 @@
+**证明。** （53.10）的后两项与输入无关，被中心化消去。非活动窗口与 $F$ 独立。对端点，展开
+$F=h_p\ell_q+h_q\ell_r-h_p\ell_qh_q\ell_r$ 后，其条件斜率分别为 $L(1-z),H(1-z)$。局部恒等式
+$H(1-H)+z-HL=Ht+(1-H)z$ 给 $K_h$，另一式交换 $H,L$。
+
+中窗的四种端点状态 $(\ell,h)=(00,10,01,11)$ 质量为 $t,u,v,z$，$\varphi$ 值为 $0,1,1,2$，条件 $F$ 均值为 $0,H,L,H+L-HL$。有限协方差恒等式
+
+$$
+\operatorname{Cov}(a_S,b_S)=\sum_{s<s'}p_sp_{s'}(a_s-a_{s'})(b_s-b_{s'})
+\tag{53.13}
+$$
+
+给出（53.11）；六对中 10 与 01 项为零，其余五项全非负且前两项严格正。
+
+在 $\mathcal M_\rho$ 中，$H,L\ge2\rho,t\ge2\rho,z\ge\rho,1-z\ge4\rho$，而 $K_h,K_\ell$ 是 $t,z$ 的凸组合，至少为 $\rho$。两端因此至少为 $8\rho^3$；中窗同时保留两项，由 $tuH\ge4\rho^3,tvL\ge4\rho^3$ 得 $\gamma_q\ge tuH+tvL\ge4\rho^3+4\rho^3=8\rho^3$。这是充分下界，不主张其 $\rho$ 指数尖锐。 $\square$
+

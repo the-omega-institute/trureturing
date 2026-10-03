@@ -1,0 +1,30 @@
+### 33.3 端点观察的必要性与充分性
+
+对 \(h,k\in H_R\)，写精确端点比较观察为
+
+$$
+\operatorname{EqEnd}(h,k)\;:\Longleftrightarrow\;\eta(h)=\eta(k).
+\tag{EG.3310}
+$$
+
+相对于已知且带完整响应装饰的前缀展开 \(U_R\)、已供应的根/类型、标签、读出及可选 grade/support 字段，全部成对的 \(\operatorname{EqEnd}\) 恰好给出 \(K_{\mathrm{end}}\)。这里“必要且充分”只指：由这些输入与端点比较可构造端点商图；反过来，由该图连同历史求值映射可恢复端点比较，因而在式（EG.3306）的规范对应下互相可恢复。它不是比特数或查询次数的下界，也不能恢复输入中遗漏的装饰。充分性来自先取端点类再按（EG.3307）接边；必要性指任何连同历史求值精确恢复端点身份的重建，都必须能判定这同一端点核，否则无法确定哪些历史指向同一顶点。等价地，可以使用一个端点代码 \(c\) 代替成对比较，只要
+
+$$
+c(h)=c(k)\quad\Longleftrightarrow\quad\operatorname{EqEnd}(h,k).
+\tag{EG.3311}
+$$
+
+行为观察只给出 \(K_{\mathrm{beh}}\)。用 §32 的动态同余（TG.3208）定义该商的转移：若 \(\operatorname{step}_e(\eta(h))=\operatorname{none}\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{none}\)；若 \(he\in H_R\) 且该步返回 \(\ell\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{some}(\ell,[he])\)。同余保证合法性、事件及后继行为类与代表无关，商边沿用动作/原子标签及已供应的 \(\delta_1(e)\)，当前读出由空路径响应下降。以 \([\varepsilon_r]\) 标记根，便得到行为商 typed graph \(\mathcal G_{\mathrm{beh}}\)，其顶点集为 \(H_R/K_{\mathrm{beh}}\)。因此
+
+$$
+\overline\eta_{\mathrm{beh}}:\mathcal G_{\mathrm{beh}}\longrightarrow\mathcal G_R,
+\qquad
+\overline\eta_{\mathrm{beh}}([h])=\eta(h)
+\quad\text{为良定义的规范同构}
+\quad\Longleftrightarrow\quad
+K_{\mathrm{end}}=K_{\mathrm{beh}},
+\tag{EG.3312}
+$$
+
+这里 \(\overline\eta_{\mathrm{beh}}\) 的公式先是顶点映射候选；两核相等时它良定义且为双射，再由上述商转移成为同构，仍保留根标记、typed edge、合法性、标签、读出和已供应的单步 grade。其他已供应的端点不变量也在两核相等时下降；不额外宣称它们在一般行为类上不变。若包含关系严格，则行为商只恢复行为核心，不能恢复端点图的全部 gluing。仅测试“是否回到根”更弱：它只回答某条历史的端点是否等于指定根，不能比较两个非根端点，也不能区分两个都不回根但彼此不同的端点。
+

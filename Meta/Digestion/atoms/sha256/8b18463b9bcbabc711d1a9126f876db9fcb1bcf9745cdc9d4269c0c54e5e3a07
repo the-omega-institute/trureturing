@@ -1,0 +1,36 @@
+**命题 35.2（取得码重建判据）。** 存在唯一的函数
+
+$$
+\gamma_K:\operatorname{im}(\eta|_{D_K})\longrightarrow\operatorname{im}(c_K)
+$$
+
+满足
+
+$$
+c_K=\gamma_K\circ\eta|_{D_K}
+\tag{PG.3506}
+$$
+
+当且仅当
+
+$$
+\boxed{\ker(\eta|_{D_K})\subseteq\ker(c_K).}
+\tag{PG.3507}
+$$
+
+两条命题合起来给出精确的双向恢复条件：
+
+$$
+\boxed{
+\eta\text{ 与 }c_K\text{ 在 }D_K\text{ 上互相恢复}
+\iff
+\ker(\eta|_{D_K})=\ker(c_K).
+}
+\tag{PG.3508}
+$$
+
+这里的“互相恢复”是指定比较域上的相互因子化，不是说完整 FIB 树、全部历史或所有
+未授权接口都已经暴露。若 (PG.3505) 严格成立而 (PG.3507) 失败，取得码仍是端点的
+充分表示，却保留了端点本身看不出的档案或权限区别；若反过来，只能由端点重建取得
+码，不能声称观察者已经取得端点。
+

@@ -1,0 +1,9 @@
+**引理 56.7（单组占用及条件均值界）。** 固定一个质量 $\pi\ge\rho$ 的输入组 $A$，批长 $m\ge1$。令 $N,S$ 为（56.14）的两整数，$z_A=\mathbb E[Z\mid A]$。对 $0<a\le1$，
+
+$$
+P\left\{N<m\pi/2\ \text{或}\
+\left(N>0\ \text{且}\ |S/N-z_A|\ge a/32\right)\right\}
+\le3\exp\left(-\frac{ma^2\rho}{4096}\right).
+\tag{56.15}
+$$
+

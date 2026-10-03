@@ -1,0 +1,80 @@
+**定理 55.4（线性计数的统一充分样本预算）。** 对所有定义55.1的参数以及任意 $0<\delta<1$，取得相互独立、同律的两批完整记录，大小为
+
+$$
+m_1=\left\lceil\frac{264}{a^2\rho}\log\frac{8n}{\delta}\right\rceil,
+\qquad
+m_2=\left\lceil\frac{352}{a^2\rho}\log\frac{4n}{\delta}\right\rceil.
+\tag{55.13}
+$$
+
+第一批同时计算全部 $A_i^{\rm obs}$、$B_i^{\rm obs}$ 的经验均值。先取第一组的最大有符号均值位置为 $\widehat q$；排除该位置后，取第二组的最大有符号均值位置为 $\widehat r$。第二批计算
+
+$$
+\frac1{m_2}\sum_{b=1}^{m_2}
+(h_{b,i}-H)(\ell_{b,\widehat r}-L)Z_b,
+\qquad i\notin\{\widehat q,\widehat r\},
+\tag{55.14}
+$$
+
+取最小有符号均值位置为 $\widehat p$。全部平局按固定索引规则处理；若 $\widehat p<\widehat q<\widehat r$ 不成立，则输出一个预先固定的合法三元组。该规则不估计 $\alpha$，并且
+
+$$
+\inf_{\substack{\mu\in\mathcal M_\rho,\ \theta\in\Theta_n\\\alpha\in[a,1]}}
+P_{\mu,\alpha,\theta}^{m_1+m_2}\{\widehat\theta=\theta\}\ge1-\delta,
+\qquad
+m_1+m_2\le\frac{616}{a^2\rho}\log\frac{8n}{\delta}+2.
+\tag{55.15}
+$$
+
+证明。所用成熟工具是有界 Bernstein 不等式。对独立同分布原始分数 $S$，若 $|S|\le M$、$\operatorname{Var}(S)\le V$，则
+
+$$
+P\{|\overline S-\mathbb ES|\ge\varepsilon\}
+\le2\exp\left[-\frac{m\varepsilon^2}{2(V+2M\varepsilon/3)}\right].
+\tag{55.16}
+$$
+
+这是 Tropp，[*User-Friendly Tail Bounds for Sums of Random Matrices*](https://arxiv.org/pdf/1004.4389)，Theorem 6.1(ii) 的标量特例：对 $S-\mathbb ES$ 及其负值分别使用维数一的结论，中心化上界为 $2M$，方差和至多 $mV$，阈值为 $m\varepsilon$，再取两侧并集。这里只在不同完整记录之间使用独立性。
+
+若唯一非零均值的绝对值至少为 $d$，所有经验偏差严格小于 $d/2$ 就会把它与零均值位置严格分开。将 $\varepsilon=d/2$ 代入（55.16），充分指数系数为
+
+$$
+K=\frac{8V}{d^2}+\frac{8M}{3d}.
+\tag{55.17}
+$$
+
+对三个角色依次使用
+
+$$
+(d_q,d_r,d_p)=(auzL/2,\ aHV_L/4,\ aD/4),
+\qquad
+(V_q,V_r,V_p)=(3uz(u+z)/4,\ 3V_L/4,\ 3D/4).
+$$
+
+范围取引理55.2所列。每组的信号均值可以比 $d$ 大，仍用共同误差阈值 $d/2$。完整常数链为
+
+$$
+\begin{aligned}
+K_q&=\frac{24(u+z)}{a^2uzL^2}+\frac{16M_q}{3auzL}
+\le\frac{192}{a^2\rho}+\frac{32}{3a^2\rho}
+=\frac{608}{3a^2\rho}<\frac{264}{a^2\rho},\\
+K_r&=\frac{96}{a^2H^2V_L}+\frac{32L}{3aHV_L}
+\le\frac{256}{a^2\rho}+\frac{64}{9a^2\rho}
+=\frac{2368}{9a^2\rho}<\frac{264}{a^2\rho},\\
+K_p&=\frac{96}{a^2D}+\frac{32HL}{3aD}
+\le\frac{1024}{3a^2\rho}+\frac{256}{27a^2\rho}
+=\frac{9472}{27a^2\rho}<\frac{352}{a^2\rho}.
+\end{aligned}
+\tag{55.18}
+$$
+
+第一行用 $1/u+1/z\le2/\rho$、$M_q/(uz)=1/\min(u,z)\le1/\rho$ 和 $L\ge1/2$；第二行用 $H\ge1/2$、$V_L\ge3\rho/2$，并将范围项写成 $32/[3aH(1-L)]$；第三行用（55.11），将范围项写成 $32/[3a(1-H)(1-L)]$。所有范围项的 $a^{-1}$ 均由 $a\le1$ 吸收到 $a^{-2}$。
+
+第一批的两组分数在选择位置之前就是固定的两个至多 $n$ 个变量族。各自的并集失败概率至多
+$2n\exp[-\log(8n/\delta)]=\delta/4$。在它们的共同成功事件 $E_1$ 上，唯一正 $A$ 均值确定真实 $q$，再排除它后唯一正 $B$ 均值确定真实 $r$；同一记录中的位置分数和两个族之间可以依赖。
+
+条件于 $E_1$，第二批依然是未受第一批事件改变的原律独立记录，且锚点准确为固定的真实 $r$。对至多 $n$ 个固定配对使用第三行和 $\log(4n/\delta)$，条件失败概率至多 $\delta/2$；唯一负均值的最小位置为真实 $p$。因此总体失败概率不超过
+$P(E_1^c)+P(E_1\cap E_2^c)\le\delta/2+\delta/2$。成功事件上的角色本来递增，不依赖失败分支的回退。两个向上取整和对数单调性给总预算。$\square$
+
+第二批支付新的取得费用；预先取得后留出的独立记录块也可以充当它，但同一固定记录不能重用后自称独立新批。证明不声称同批选择后的随机锚点分数无条件仍独立同分布。$q$ 的间隙在某些律上为 $O(\rho^2)$，但其二阶矩同时为 $O(\rho^3)$；决定预算的是方差除以间隙平方以及范围项，不是间隙平方单独一项。
+

@@ -1,0 +1,27 @@
+### 30.2 从同一载体导出的四种视图
+
+给定一条合法路径 \(p\)，四种视图分别记录不同层次的关系：
+
+$$
+\begin{aligned}
+B(p)&=(\tau(s(p)),s(p);\tau(t(p)),t(p)),\\
+T(p)&=(\text{原子标识序列},\text{路径前缀顺序},\operatorname{grade}(p)),\\
+M_{\mathcal Q}(p)(q)&=\operatorname{Obs}(p\circ q)\qquad(q\in\mathcal Q),
+\end{aligned}
+\tag{PG.3003}
+$$
+
+其中 \(\mathcal Q\) 是声明的后续测试族，\(\operatorname{Obs}\) 至少包括合法性、失败、事件、记录和指定后继读数。\(B\) 是边界视图；\(T\) 是路径时间视图；\(M_{\mathcal Q}\) 是记忆视图，因为它保存了这条历史面对后续接口的响应。
+
+空间视图取 \(\sigma\) 的支持图。若 \(\sigma\) 只标出无向相邻边，并给每条边正权，空间距离可以约定为支持图上的最短路距离；这是一条模型合同，不是由裸过程关系自动推出的物理度量。
+
+因此，四视图不是四个独立对象：
+
+$$
+\mathsf V_{\mathfrak P}(p)=
+\bigl(\operatorname{Space}_\sigma(p),B(p),T(p),M_{\mathcal Q}(p)\bigr)
+\tag{PG.3004}
+$$
+
+是同一个 \(\mathfrak P\) 的不同投影。若只给出四份边缘表而没有同一实际来源中的联合路径，则不能把它们重新拼成（PG.3001）。
+

@@ -1,0 +1,23 @@
+### 32.4 四视图恢复的方向性
+
+令 \(\Phi\) 是第30节的联合视图，限制在 \(\operatorname{Reach}(R)\) 上。由（TG.3207）得到
+
+$$
+\ker\Phi\subseteq\approx
+\quad\Longleftrightarrow\quad
+\text{\(\Phi\) 足以决定指定的全部有限路径响应}.
+\tag{TG.3212}
+$$
+
+若还要求 \(\Phi\) 本身就是最小动态边界，则必须有
+
+$$
+\ker\Phi=\approx .
+\tag{TG.3213}
+$$
+
+只有当联合视图含有空路径读出、全部声明动作及其失败响应、原子标识和所有允许的有限 typed continuation 时，\(\ker\Phi\) 才有机会达到（TG.3213）。遗漏空路径会遗漏当前边界读数；遗漏某个动作会把不同的合法性合并；遗漏某个后缀会把未来才出现的区别推到视图核中。
+
+这也给出一个更精简的生成层—视图层分界：
+
+* \(I,S_i,E_{ij},\operatorname{step}_e,q_i\) 决定可达过程和完整行为核；

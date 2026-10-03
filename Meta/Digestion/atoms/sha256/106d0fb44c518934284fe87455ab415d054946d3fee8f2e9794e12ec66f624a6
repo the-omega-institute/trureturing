@@ -1,0 +1,54 @@
+### 39.2 四个具体视图的动态充分性
+
+设四个视图都是同一实际像上的映射
+
+$$
+ E_{\mathrm{sp}},E_{\mathrm{tm}},E_{\partial},E_{\mathrm{mem}}:
+ \mathsf H^{\mathrm{act}}_{r,\nu}\longrightarrow Y_i,
+ \tag{PG.3903}
+$$
+
+分别保存声明任务所需的空间端口、时间与事件词、边界摘要和可调用记忆。称它们对 $(\mathcal V,K_{\mathcal V})$ **精确动态充分**，若满足：
+
+1. 对每个 $i$，$\ker E_i=K_{\mathcal V}^{r,\nu}$；
+2. 对每个允许动作 $a$，合法性、指定输出、失败标签和选择器输入在 $E_i$ 的纤维上恒定，且合法后继仍落在相应的实际像中；
+3. 若动作成功，$E_i$ 上存在单值后继更新 $\overline T^i_a$，满足
+   $$
+   E_i(T_a h)=\overline T^i_a(E_i h);
+   \tag{PG.3904}
+   $$
+   失败分支也由同一摘要决定。
+
+在这些条件下，任意两个视图之间存在唯一的运输
+
+$$
+R_{ij}:\operatorname{im}E_i\longrightarrow\operatorname{im}E_j,
+\qquad
+R_{ij}(E_i h)=E_j h,
+\tag{PG.3905}
+$$
+
+并且
+
+$$
+R_{ji}R_{ij}=\operatorname{id},
+\qquad
+R_{jk}R_{ij}=R_{ik},
+\qquad
+R_{ij}\,\overline T^i_a=\overline T^j_a\,R_{ij}.
+\tag{PG.3906}
+$$
+
+反过来，若四个视图具有这样的唯一、更新相容的两两运输，并且每个视图的动作合同能由自身恢复，则它们在实际像上的核都等于 $K_{\mathcal V}^{r,\nu}$。因此，
+
+$$
+\boxed{
+\text{四视图的精确互相恢复}
+\iff
+\text{共同任务核相等 + 每个视图动态闭合}.
+}
+\tag{PG.3907}
+$$
+
+证明只用纤维因子化。由核相等，式（PG.3905）与代表元无关；若 $E_i h=E_i h'$，则 $hK_{\mathcal V}h'$，从而 $E_j h=E_j h'$。反向由 $R_{ji}R_{ij}=\operatorname{id}$ 得到各视图纤维相同，再用任一视图对全部未来词的恢复性得到共同任务核。式（PG.3906）的更新行则由（PG.3904）和代表元计算直接得到。这里的“精确”仍只相对于声明的 $\mathcal V$、标签和记录字段，不表示恢复未声明的完整内部语法。
+

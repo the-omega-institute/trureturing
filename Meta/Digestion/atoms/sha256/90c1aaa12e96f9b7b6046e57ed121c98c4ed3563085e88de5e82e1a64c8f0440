@@ -1,0 +1,13 @@
+**定理 57.3（自由五质量的精确最小分离）。** 对定义57.1的参数，
+
+$$
+\inf_{\mu\in\mathcal M_\rho^{\rm free}}\ 
+\inf_{\substack{\theta,\tau\in\Theta_n\\\theta\ne\tau}}
+d_\mu(\theta,\tau)
+=\gamma_\rho,\qquad
+\gamma_\rho:=8\rho^2(1-2\rho).
+\tag{57.7}
+$$
+
+特别，所有不同递增三元组在每个允许律上都给不同的原函数。
+

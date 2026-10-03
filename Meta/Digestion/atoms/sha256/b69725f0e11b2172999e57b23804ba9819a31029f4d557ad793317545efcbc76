@@ -1,0 +1,18 @@
+### 54.4. 两个配对关系与总体观察阶的准确相图
+
+定义平衡局部函数及其实际中心化为
+
+$$
+\varphi=h+\ell,\qquad \psi=\varphi-s,
+\qquad K_h=\mathbb E[\psi h],\quad K_\ell=\mathbb E[\psi\ell],\quad K_t=\mathbb E[\psi h\ell].
+$$
+
+直接计算给
+
+$$
+K_h=eH+t(1-H)=t+H(1-s)>0,\quad
+K_\ell=eL+t(1-L)=t+L(1-s)>0,\quad
+K_t=t(2-s).
+\tag{54.16}
+$$
+

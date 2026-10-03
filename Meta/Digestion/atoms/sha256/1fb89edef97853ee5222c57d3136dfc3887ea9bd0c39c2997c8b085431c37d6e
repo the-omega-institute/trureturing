@@ -1,0 +1,53 @@
+**定理 55.7（不限资源的准确恢复下界）。** 对 $n\ge4$、$0<a\le1$、$0<\rho\le1/8$，任何在全部允许参数下准确恢复失败概率至多 $0<\delta<1/2$ 的完整记录学习器都满足
+
+$$
+m\ge\frac8{3a^2\rho}
+\left[(1-\delta)\log(n-2)-\log2\right]_+,
+\qquad
+m\ge\frac8{3a^2\rho}(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{55.24}
+$$
+
+它们对已知 $\alpha$ 的学习器也成立，甚至可以预先提供（55.20）的 $q,r$。特别在 $0<\delta\le1/4$ 时，
+
+$$
+\frac{\log n+\log(1/\delta)}{6a^2\rho}
+\le m_*^{\rm known}(n,a,\rho,\delta)
+\le m_*(n,a,\rho,\delta)
+\le m_1+m_2
+\le\frac{616}{a^2\rho}\log\frac{8n}{\delta}+2.
+\tag{55.25}
+$$
+
+证明。将任何全参数成功规则限制到命题55.6的困难子族。输出不属于该子族时可统一改报一个固定子族元素，得到子族解码器；这不增加子族中的错误。令 $V$ 在 $M=n-2$ 个第一位置上均匀取值，$\overline P=M^{-1}\sum_pP_p^m$。互信息满足
+
+$$
+I(V;D_m)=\frac1M\sum_p\operatorname{KL}(P_p^m\Vert\overline P)
+\le\frac1{M^2}\sum_{p,p'}\operatorname{KL}(P_p^m\Vert P_{p'}^m)
+\le\frac38ma^2\rho.
+\tag{55.26}
+$$
+
+中间不等式来自 $-\log$ 的凸性。独立随机种子与 $V,D_m$ 独立，或等价的共同随机输出核，不增加此信息预算。有限 Fano 给
+$H(V\mid\widehat V)\le\log2+P(\widehat V\ne V)\log M$：先报告是否错误，错误时剩余至多 $M-1$ 个选择，再把二元熵界为 $\log2$。数据处理与 $H(V)=\log M$ 给（55.24）第一项。成熟条件及这个有限族形式见 Scarlett、Cevher，[*An Introductory Guide to Fano's Inequality with Applications in Statistical Estimation*](https://arxiv.org/pdf/1901.00555)，Theorem 1、Lemma 4，式（26）–（27）；该文是 Fano 方法的综述，不是其历史起源。
+
+两教师时上述粗 Fano 可以为空，故另取 $p=1$ 对 $p=2$。令二元决定事件 $E$ 为学习器输出第一教师。统一恢复给 $P_1^m(E)\ge1-\delta$、$P_2^m(E)\le\delta$。对共同决定核作二元 KL 数据处理，有
+
+$$
+\operatorname{KL}(P_1^m\Vert P_2^m)
+\ge\operatorname{kl}(P_1^m(E),P_2^m(E))
+\ge\operatorname{kl}(1-\delta,\delta)
+=(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{55.27}
+$$
+
+这里 $\operatorname{kl}(b,c)=b\log(b/c)+(1-b)\log((1-b)/(1-c))$。数据处理可直接在 $E,E^c$ 两块分别用 log-sum 不等式；随机决定先给两实验加入同一条件决定核，再分块，其联合 KL 仍为输入 KL。由于 $1-\delta>\delta$，二元 KL 对第一个概率递增、对第二个概率递减于这些允许区间；零概率边界按连续或无穷值解释。结合命题55.6即得第二项。正记录律保证所用绝对连续性。
+
+下面明确比较范围。若 $\delta\le1/4$，则 $1-2\delta\ge1/2$ 且 $1-\delta\ge\sqrt\delta$，所以（55.27）至少为 $\frac14\log(1/\delta)$。二元下界因此至少为
+$2\log(1/\delta)/(3a^2\rho)$。若 $n\ge6$，$M\ge4$，有
+$(1-\delta)\log M-\log2\ge\frac14\log M$，以及 $M=n-2\ge\sqrt n$，所以 Fano 下界至少为 $\log n/(3a^2\rho)$。取这两个下界最大值不小于它们和的一半，得到（55.25）的左端。若 $n=4,5$，则 $\log n\le2\log(1/\delta)$，仅二元项已足以得到同一左端。
+
+下确界的表述不要求假设 minimax 规则达到最小值：若 $\mathfrak R_m\le\delta$，可取最坏错误不超过 $\delta+\varepsilon$ 的逼近规则；先对 $\delta+\varepsilon<1/2$ 使用（55.24），再令 $\varepsilon\downarrow0$。其右端连续，刚才的 $\delta\le1/4$ 数值界于是仍成立。已知 $\alpha$ 只扩大学习器类，但困难子族早已固定并可提供 $\alpha=a,q,r$，同一下界有效。定理55.4给未知 $\alpha$ 上界，额外知识可被忽略，遂得全部不等式。$\square$
+
+这是对已知输入律族的最坏律准确恢复样本阶，包括固定置信与上述小失败概率域；不是每个固定律都需要 $\rho^{-1}$。例如平衡律可满足任意更小的声明质量下界，但它自身的各间隙和方差没有随该声明变化。$n=3$ 只有一个递增三元组，结构样本量为零，即使 $\alpha=0$ 也如此。$n\ge4,\alpha=0$ 时每行均匀，全部教师记录律相同；均匀猜测的 minimax 错误为 $1-1/\binom n3$，更多记录不能改善。没有在 $\delta\uparrow1/2$ 的范围声称（55.25）的匹配系数，也不将准确恢复下界套到任意固定预测容差。
+

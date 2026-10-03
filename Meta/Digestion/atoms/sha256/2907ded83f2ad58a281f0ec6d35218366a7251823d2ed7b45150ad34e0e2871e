@@ -1,0 +1,36 @@
+### 30.1 有类型原子过程关系
+
+取类型集 \(I\)，每类接口的载体为 \(X_i\)，令
+
+$$
+X=\coprod_{i\in I}X_i .
+$$
+
+一个**有类型过程关系**由以下数据组成：
+
+$$
+\mathfrak P=(X,\tau,E,s,t,a,\lambda,\iota,\mathsf D,\circ,1,\delta_1,\sigma).
+\tag{PG.3001}
+$$
+
+其中：
+
+* \(\tau:X\to I\) 给出接口类型；
+* \(E\) 是原子边集合，\(s,t:E\to X\) 给出源与靶，\(a:E\to A\) 给出动作标签，\(\lambda:E\to L\) 给出事件、失败或读数标签；
+* \(\iota:E\hookrightarrow J\) 是单射的原子标识，并进入可观察记录，用来区分同端点、同标签的平行原子边；
+* \(\mathsf D\subseteq E\times E\) 是可接续域，\(e_2\circ e_1\) 只在 \(\mathsf D\) 上定义，并保留中间类型与中间事件；
+* \(1_x\) 是接口 \(x\) 上的单位过程，单位和结合律只在声明的有类型路径上要求；
+* \(\delta_1:E\to G\) 是取值于加法幺半群 \(G\) 的单步 grade；
+* \(\sigma:E\to S\) 是可选的空间支持或边权数据。若空间被定义为过程支持，需要另声明从 \(S\) 到支持图的解释；若空间有独立连接或度量，\(\sigma\) 必须作为额外数据声明。\(\sigma\) 本身不是动作选择器；若它参与选择，必须另给出可访问的选择合同。
+
+路径是 \(E\) 中满足 \(\mathsf D\) 的有限词；\(\operatorname{Path}(\mathfrak P)\) 还包含单位路径和合法复合，单位路径长度为零。定义 \(\operatorname{grade}:\operatorname{Path}(\mathfrak P)\to G\) 为
+
+$$
+\operatorname{grade}(1_x)=0,\qquad
+\operatorname{grade}(e)=\delta_1(e),\qquad
+\operatorname{grade}(e_2\circ e_1)=\operatorname{grade}(e_1)+\operatorname{grade}(e_2).
+\tag{PG.3002}
+$$
+
+顺序写在复合符号中：先执行 \(e_1\)，再执行 \(e_2\)。若一个接口可以有多个后继，由 \(s,a,t\) 给出的可接续关系不是函数；不能把关系的多值性偷偷改写成一个选择器。
+
