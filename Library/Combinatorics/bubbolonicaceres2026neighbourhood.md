@@ -14,11 +14,18 @@ triage: anchor
 
 # The neighbourhood convexity
 
+## Verified locator
+
 Daniela Bubboloni and José Cáceres, arXiv:2608.25912v1, version published
-2026-08-26. The versioned HTML is
+2026-08-26. DOI: `10.48550/arXiv.2608.25912`. The primary versioned HTML is
 https://arxiv.org/html/2608.25912v1. Its inspected SHA256 is
 `f10465fb6352f039eecb0bebd801fd4b839c50b7154c1c36e91a1409632e24af`.
+The verified scope is Sections 2.1 and 2.2, Definitions 3, 5, 9 and 28,
+Proposition 12, Lemma 29, and the exact unnumbered upset conjecture in
+“Conclusions and future lines of work” quoted below.
 This note quotes and cites the source; it does not redistribute the paper.
+
+## Source scope and conjecture
 
 Sections 2.1 and 2.2 fix a finite nonempty simple undirected graph and the
 convex-geometry condition. Definitions 3, 5 and 9 and Proposition 12 give

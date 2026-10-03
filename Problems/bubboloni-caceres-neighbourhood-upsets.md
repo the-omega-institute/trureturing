@@ -135,5 +135,4 @@ global novelty or priority. General web searches supplied no usable exclusion
 evidence. The source quotation, version and search findings are external
 qualification evidence; Lean does not authenticate publication history.
 The result is a project proof of the cited assertion, not a claim that the
-original paper published a settlement. No independent implementation or
-review panel is claimed by this Stage A source delivery.
+original paper published a settlement.
