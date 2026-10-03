@@ -1,0 +1,44 @@
+**定义 2.1（Tail parameters and ordinary deletion）。** Let $k\geq1$ and
+let $P$ be admissible. Write
+
+$$
+A=n-\lambda_1,\qquad B=k-\mu_1,\qquad L=A-1,
+\qquad P'=(\lambda_2,\ldots,\lambda_k;
+           \mu_2,\ldots,\mu_k).
+$$
+
+The tail $P'$ has size $k-1$. Its thresholds, indexed by $i\in[k-1]$, are
+
+$$
+f'_i=f_{i+1}-1=k-\lambda_{i+1},\qquad
+g'_i=g_{i+1}-1=k-\mu_{i+1}.
+$$
+
+For $(\sigma,\pi)\in\mathcal E(P)$ put $t=\pi_1$ and $a=\sigma_t$.
+Delete position $t$ from the row word and delete the first column label,
+standardizing in both cases:
+
+$$
+s_u=\begin{cases}
+\delta_a(\sigma_u),&u<t,\\
+\delta_a(\sigma_{u+1}),&u\geq t,
+\end{cases}
+\qquad
+p_i=\delta_t(\pi_{i+1}).
+$$
+
+Here $s\in\mathfrak S_k$ and $p\in\mathfrak S_{k-1}$. Ordinary insertion
+with data $(s,p,a,t)$ reverses these formulas: lift every row by $\ell_a$,
+insert $a$ immediately before row position $t$, and set
+
+$$
+\begin{aligned}
+\sigma_u&=\begin{cases}
+\ell_a(s_u),&u<t,\\
+a,&u=t,\\
+\ell_a(s_{u-1}),&u>t,
+\end{cases}\\
+\pi_1&=t,\qquad \pi_{i+1}=\ell_t(p_i)\quad(1\leq i<k).
+\end{aligned}
+$$
+

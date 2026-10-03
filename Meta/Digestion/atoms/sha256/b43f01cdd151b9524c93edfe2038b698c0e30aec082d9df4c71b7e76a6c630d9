@@ -1,0 +1,55 @@
+**定义 1.3（Actual eligible pairs and distinguished endpoint）。** For
+$\sigma\in\mathfrak S_n$ and $\pi\in\mathfrak S_k$, define two row words
+$w,v\in\mathfrak S_n$ by
+
+$$
+\begin{aligned}
+w_i&=\sigma_{\pi_i},&v_i&=\sigma_{\pi_i+1}&& (1\leq i\leq k),\\
+w_n&=\sigma_n,&v_n&=\sigma_1.
+\end{aligned}
+$$
+
+The set of eligible pairs is the literal subset
+
+$$
+\mathcal E(P)=\{(\sigma,\pi)\in\mathfrak S_n\times\mathfrak S_k:
+ w_i\leq f_i\text{ and }v_i\leq g_i\text{ for every }i\in[k]\}.
+$$
+
+The index $n$ is an unconstrained distinguished endpoint; it is not a column
+of the board. There is no value $\pi_n$. Define
+
+$$
+\begin{aligned}
+H_f(\sigma,\pi;P)
+ &=\#\{(i,j):1\leq i<j\leq k,
+       w_i<w_j,\ \pi_i>\pi_j,\ w_j>f_i\},\\
+H_b(\sigma,\pi;P)
+ &=\#\{(i,j):1\leq i<j\leq n,
+       v_i<v_j,\ v_j>g_i,
+       [j=n\text{ or }(j\leq k\text{ and }\pi_i>\pi_j)]\},\\
+E_P(\sigma,\pi)
+ &=\operatorname{inv}(\sigma)+\operatorname{inv}(\pi)-H_f-H_b\in\mathbb Z.
+\end{aligned}
+$$
+
+The subtraction in $E_P$ is integer subtraction. Nonnegativity is a
+consequence of the bijection below, rather than part of this definition.
+At $k=0$ the only pair is $((1),())$; both forbidden-cell counts and its
+integer weight are zero.
+
+These conventions are those of [Koprowski–Lewis](../../../Library/Combinatorics/koprowski2026enumeration.md),
+Definition 4.4 and Propositions 4.24–4.25 of the arXiv version. In their
+notation $v=wc$, where
+$c=\bar\pi^{-1}(1\ 2\ \cdots\ n)\bar\pi$ and $w=\sigma\bar\pi$.
+In particular $wc(n)=\sigma_1$. Their forbidden-entry statistic $h$ is
+$H_f+H_b$ on $\mathcal E(P)$. To see the precise correspondence, take a
+forbidden front cell $(r,i)$ and write $r=w_j$, uniquely. Eligibility and
+monotonicity rule out $j\leq i$, since then $w_j\leq f_j\leq f_i$.
+Also $w_i\leq f_i<r=w_j$. The cited front-entry criterion therefore says
+exactly that $j\leq k$ and $\pi_i>\pi_j$; the front endpoint contributes no
+cell. In the back layer write $r=v_j$. Again $j>i$ and $v_i<v_j$, and the
+cited back-entry criterion is exactly $j=n$ or $\pi_i>\pi_j$. Each cell has
+one target index $j$, so these are counts of the actual forbidden entries,
+without multiplicity or an additional restriction on matrix-product indices.
+

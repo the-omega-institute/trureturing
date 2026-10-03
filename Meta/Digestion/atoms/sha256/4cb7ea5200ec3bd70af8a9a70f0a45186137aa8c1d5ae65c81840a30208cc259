@@ -1,0 +1,43 @@
+**定理 2.2（Coupled repaired digit bijection and exact weight）。** For every
+admissible $P$ of size $k\geq1$, the following construction defines a
+bijection
+
+$$
+\Phi_P:\mathcal E(P)\longrightarrow
+\mathcal E(P')\times\{0,\ldots,A-1\}\times\{0,\ldots,B-1\}.
+$$
+
+Starting with $(\sigma,\pi)$, form its ordinary deletion $(s,p)$ as in
+Definition 2.1. Let $\theta$ be the subword of $\sigma$ on $[A]$, let $\rho$
+be $\theta$ with its maximum label $A$ removed, and put
+
+$$
+d=\#\{\text{entries after }A\text{ in }\theta\},\qquad
+b=\#\{u<t:s_u\leq B\}.
+$$
+
+Replace the entries in the low-row slots $\{u:s_u\leq L\}$, in their
+existing order, by the word $\rho$, and leave all other entries unchanged.
+Call the resulting row word $s^\dagger$. Then
+
+$$
+\Phi_P(\sigma,\pi)=((s^\dagger,p),d,b),\qquad
+E_P(\sigma,\pi)=E_{P'}(s^\dagger,p)+d+b.
+$$
+
+The inverse $\Psi_P$ is as follows, for every eligible tail
+$(s^\dagger,p)$ and every pair of digits in the displayed intervals.
+Read $\rho$ from the subword of $s^\dagger$ on $[L]$ and insert the maximum
+$A$ at position $A-d$ to obtain $\theta$. Select $t$ to be the position of
+the $(b+1)$-st entry of $s^\dagger$ whose label is at most $B$. Put
+
+$$
+j=\#\{u<t:s^\dagger_u\leq L\},\qquad a=\theta_{j+1}.
+$$
+
+Delete this entry $a$ from $\theta$ and apply $\delta_a$ to obtain a word
+$\eta\in\mathfrak S_L$. Replace the low-row slots of $s^\dagger$ by
+$\eta$ to obtain $s$, then apply the ordinary insertion formulas of
+Definition 2.1 to $(s,p,a,t)$. In particular, the tail pair is one coupled
+state: the row word and column permutation are retained together.
+
