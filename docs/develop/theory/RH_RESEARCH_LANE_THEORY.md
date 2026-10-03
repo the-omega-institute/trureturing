@@ -13421,3 +13421,267 @@ $$
 一个假设存在的固定离线零点满足 $|\eta|=|\beta-1/2|\sqrt{R/\gamma}\to\infty$，故最终离开本节受控区域。候签命题 33.3 没有供应 (33.15)，没有取得 RH 或 Robin 的全称不等式，也没有建立 FIB 递归与实际素数作用的算术交织。黄金值 $b$ 在这里仍只是原测试的固定伸缩上端点。
 
 ## 追加锚（本行以下为增补区）
+
+## 34. 原横向符号区域的显式阈值
+
+**定义 34.1（统一误差与比较参数）。** 保留第 32—33 节的全部函数、分支、权重与有限轮廓，固定 $\eta_0=3/5$。置 $q=\sqrt T$、$v=T^{1/4}$、$\tau=\eta/q$，并定义正比较量
+
+$$
+L(T)=\frac{p(\gamma)}{80dM}T^{-7/4}
+ e^{-\sqrt{2T}-(5/2)T^{1/4}}.
+$$
+
+**候签定理 34.1（无未定渐近常数的横向阈值）。** 对每个 $\gamma>0$、$R>0$、$\delta\in\mathbb R$，若 $T=R\gamma\ge10^{12}$ 且 $|\eta|=|R\delta|/\sqrt T\le3/5$，则原平均满足纸面估计
+
+$$
+\Re\bigl(p(z)A_R(z)\bigr)>\tfrac12L(T)>0,
+\qquad z=\gamma-i\delta.
+$$
+
+因此第 33 节可使用显式阈值 $T_0=10^{12}$。这只量化原测试的参数条件，不增加实际零点资料。
+
+证明。先取 $0\le\eta\le3/5$，负位移由原共轭身份处理。以下 $q\ge10^6$、$v\ge1000$，常数对全部 $\gamma>0$ 均匀。外层归一化 $M$ 在最终比值中精确消去。引用的分析前置仍为候签定理 32.1 的精确射线余项、候签定理 33.1 中的有限轮廓变形及 [DLMF 10.32.9](https://dlmf.nist.gov/10.32.E9) 的标准 $K_\nu$ 积分；不从 $O(\cdot)$ 记号推断阈值。
+
+先把已引用的 Bessel 核与全射线余项量化。
+
+For $\Re\zeta>0$, use
+$$
+K_\nu(\zeta)=\int_0^\infty e^{-\zeta\cosh s}\cosh(\nu s)\,ds.
+$$
+The substitution $t=\sinh(s/2)$ gives
+$$
+K_1(\zeta)=2e^{-\zeta}\int_0^\infty e^{-2\zeta t^2}
+ \frac{1+2t^2}{\sqrt{1+t^2}}\,dt.
+$$
+For real $t\ge0$,
+$$
+0\le\frac{1+2t^2}{\sqrt{1+t^2}}-1\le2t^2.
+$$
+The complex Gaussian integral supplies the leading term, and taking absolute values only in the error yields
+$$
+\left|\frac{K_1(\zeta)}{\sqrt{\pi/(2\zeta)}e^{-\zeta}}-1\right|
+\le\frac{1}{2|\zeta|\cos^{3/2}(\arg\zeta)}
+\le\frac{2}{|\zeta|}
+\quad (|\arg\zeta|\le\pi/3).
+\tag{34.1}
+$$
+The first inequality follows explicitly from
+$4\int_0^\infty t^2e^{-2\Re\zeta\,t^2}dt
+=\sqrt\pi/(2\Re\zeta)^{3/2}$.
+
+The same substitution for real $s>0$, with
+$\cosh(2r)=1+8t^2+8t^4$, gives
+$$
+K_2(s)\le\sqrt{\frac\pi{2s}}e^{-s}
+ \left(1+\frac2s+\frac{3}{2s^2}\right)
+\le2\sqrt{\frac\pi{2s}}e^{-s}\qquad(s\ge4).
+\tag{34.2}
+$$
+Here $1/\sqrt{1+t^2}\le1$ is used only for this upper bound.
+
+For either accepted upper or lower ray function, write $\mathcal Q(y)$ for $Q_-(y)$ or $Q_+(y)$, respectively. On its sector $\pi/3\le|\arg y|\le2\pi/3$, (32.2) with $N=1$ reads
+$$
+\mathcal Q(y)=e^{-1/4}y^{-1/2}K_1(\sqrt y)+\mathcal R(y),
+\quad
+|\mathcal R(y)|\le\frac{C_1}{2|y|}K_2(\Re\sqrt y),
+\quad C_1=2(e^{1/2}+3e)<22.
+$$
+If $|y|\ge64$, then $\Re\sqrt y\ge\sqrt{|y|}/2\ge4$. The relative remainder against $C_0y^{-3/4}e^{-\sqrt y}$ is at most
+$$
+\frac{C_1e^{1/4}}{\sqrt{|y|}\sqrt{\cos(\arg y/2)}}
+<\frac{44}{\sqrt{|y|}},
+$$
+using $e^{1/4}<4/3$ and $\sqrt2<3/2$. Adding (34.1),
+$$
+\mathcal Q(y)=C_0y^{-3/4}e^{-\sqrt y}(1+\epsilon(y)),
+\qquad |\epsilon(y)|\le\frac{50}{\sqrt{|y|}}.
+\tag{34.3}
+$$
+This is a bound for the exact ray function, including the full accepted ray remainder.
+
+再控制原多项式的统一比值和交叉项的实部。
+
+With $\theta=4\gamma^2/(1+4\gamma^2)\in(0,1)$,
+$$
+P:=\frac{p(z)}{p(\gamma)}=(1-i\tau)^2[1+\theta(-2i\tau-\tau^2)]^2.
+$$
+For $0\le\tau\le1/10$, set $A=-2i\tau-\tau^2$. Since $|A|\le3\tau$,
+$$
+|P-1|\le(1+3\tau)^3-1\le12\tau\le8/q,
+\qquad |P|\le2.
+\tag{34.4}
+$$
+For the norm bound, write $D=(1-i\tau)^2$ and $B_\theta=(1-\theta)+\theta D$. Then $|D|=1+\tau^2$ and $|B_\theta|\le1+\tau^2$, hence $|P|\le(1+\tau^2)^3<2$. These estimates do not depend on $\gamma$.
+
+For real $u\in[1,b]$, use the exact principal-branch identities
+$$
+x^{-3/4}(-x)^{-3/4}=T^{-3/2}(1-i\tau)^{-3/2},
+\quad
+\sqrt x+\sqrt{-x}=\sqrt{2T}\sqrt{1-i\tau}.
+$$
+Along $1-it$, derivative bounds give
+$$
+|(1-i\tau)^{-3/2}-1|\le3\tau/2\le1/q,
+\quad
+\left|\sqrt{1-i\tau}-1+i\tau/2\right|\le\tau^2/8.
+$$
+Consequently, writing $r=\sqrt{1-i\tau}-1+i\tau/2$,
+$$
+|\sqrt{2uT}\,r|\le\frac{\sqrt{2b}\eta_0^2}{8q}<1/q,
+\quad
+|e^{-\sqrt{2uT}r}-1|\le2/q.
+$$
+Together with (34.3)–(34.4), these are five multiplicative errors with coefficients $8,1,2,50,50$, summing to $111$. Hence
+$$
+p(z)Q_-(ux)Q_+(-ux)
+=p(\gamma)C_0^2u^{-3/2}T^{-3/2}e^{-\sqrt{2uT}}
+ e^{i\eta\sqrt{u/2}}(1+\rho_u),
+\qquad
+|\rho_u|\le e^{111/q}-1\le222/q<1/100.
+\tag{34.5}
+$$
+The elementary inequality $e^t-1\le2t$ is used for $0\le t\le1/2$. Since
+$\eta\sqrt{u/2}<9/10$,
+$$
+\Re[e^{i\eta\sqrt{u/2}}(1+\rho_u)]
+\ge1-\tfrac12(9/10)^2-1/100>1/4.
+$$
+This holds on the entire real integration interval, so restriction to a short interval discards only nonnegative contributions.
+
+Retain $u=1+t$, $v^{-1}\le t\le2v^{-1}$. Here $t<d/2$,
+$$
+w(1+t)\ge(dM)^{-1}e^{-av-1/2},
+\quad \sqrt{2uT}\le\sqrt{2T}+\sqrt2\,v.
+$$
+Using $C_0^2>3/4$, $b^{-3/2}>1/15$, $e^{-1/2}>1/2$, and $a+\sqrt2<5/2$, the exact cross term in (33.1) satisfies
+$$
+\Re[p(z)C(x)]\ge L(T):=
+\frac{p(\gamma)}{80dM}T^{-7/4}
+ e^{-\sqrt{2T}-(5/2)T^{1/4}}>0.
+\tag{34.6}
+$$
+
+在原有限轮廓上保留共同扇区和端点模长。
+
+Use exactly the accepted upper and lower polygons with $\ell=1/8$. Everywhere on them and their intervening deformation regions, $1\le\Re u\le b$ and $|\Im u|\le\ell/\sqrt2<1/8$. Thus
+$$
+|\arg u|<1/8,\quad
+|\arg x-\pi/2|=\arctan\tau<1/16,
+\quad 1/8+1/16<\pi/6.
+$$
+Therefore $ux$ and $-ux$ lie in the sectors of (34.3), and $|ux|\ge T$. The existing exact deformation applies with these quantified sector margins.
+
+At either endpoint $r\in\{1,b\}$, parametrize each adjacent diagonal by $|u-r|=t\in(0,\ell]$. The compared upper principal roots lie in the first quadrant, and the lower roots in the fourth, so the denominator in the difference-of-roots formula has norm at least $\sqrt{rT}$. As $|x|\le2T$ and $\eta_0\sqrt b<3/2$,
+$$
+|\sqrt{ux}-\sqrt{riT}|\le2\sqrt T\,t+3/2,
+$$
+with the identical estimate for the lower roots. From (34.3), $C_0^2<2$, $(1+50/\sqrt T)^2<4$, and $e^3<27$,
+$$
+|Q_-(ux)|^2,\ |Q_+(-ux)|^2
+\le216T^{-3/2}
+ e^{-\sqrt{2rT}+4\sqrt T\,t}.
+\tag{34.7}
+$$
+Both reciprocal endpoint coordinates of the weight have positive real part on the finite paths. At a diagonal endpoint one singular factor has modulus $e^{-a/(\sqrt2t)}$, while the other has modulus at most one. Thus no additional weight constant is omitted.
+
+四个对角端点贡献使用同一非负上界。
+
+The matching linear phase has modulus at most
+$$
+e^{\pm r\eta\sqrt T-(T-\eta_0\sqrt T)t/\sqrt2}.
+$$
+Combining (34.4), (34.7), and the weight bound, each weighted endpoint piece is at most
+$$
+\frac{432p(\gamma)}{dM}T^{-3/2}
+ e^{(\pm r\eta-\sqrt{2r})\sqrt T}
+ \int_0^\infty e^{-A_Tt-B/t}\,dt,
+\quad A_T=T/\sqrt2-5\sqrt T,\quad B=a/\sqrt2.
+\tag{34.8}
+$$
+The coefficient $5$ pays $4+\eta_0/\sqrt2$. Extending the nonnegative majorant to infinity is solely an upper bound; it does not extend the outer complex path.
+
+Here $A_T\ge T/(2\sqrt2)>0$, $B<1$, so
+$\sqrt{B/A_T}<2T^{-1/2}$. For $s_T=2\sqrt{A_TB}$,
+$$
+s_T=c\sqrt T\sqrt{1-5\sqrt2/\sqrt T}
+\ge c\sqrt T-5\sqrt2c>c\sqrt T-12>\sqrt T.
+$$
+The last inequalities use $6/5<c<3/2$ and $\sqrt T\ge10^6$. By the exact positive-real Bessel identity and (34.1),
+$$
+\begin{aligned}
+\int_0^\infty e^{-A_Tt-B/t}\,dt
+&=2\sqrt{B/A_T}K_1(s_T)\\
+&\le16e^{12}T^{-3/4}e^{-c\sqrt T}.
+\end{aligned}
+\tag{34.9}
+$$
+In detail, $K_1(s_T)\le2\sqrt{\pi/(2s_T)}e^{-s_T}\le4T^{-1/4}e^{12-c\sqrt T}$, and $2\sqrt{B/A_T}\le4T^{-1/2}$.
+
+The accepted exact rational comparisons for $\eta_0=3/5$ give
+$$
+\pm r\eta-\sqrt{2r}-c\le-\sqrt2-g,
+\qquad g=3/140.
+$$
+Adding all four endpoint pieces gives the bound
+$$
+E_{\mathrm{end}}(T)\le
+\frac{27648e^{12}p(\gamma)}{dM}T^{-9/4}
+ e^{-(\sqrt2+g)\sqrt T}.
+\tag{34.10}
+$$
+
+两个有限水平连接段也全部计入。
+
+On each connecting segment, $|w(u)|\le1/(dM)$, its length is less than $d<4$, and the imaginary height has magnitude
+$k=1/(8\sqrt2)$. The positive real part of the principal root allows its extra exponential decay to be discarded. From (34.3)–(34.4), the two weighted connecting pieces together satisfy
+$$
+E_{\mathrm{mid}}(T)\le
+\frac{128p(\gamma)}{dM}T^{-3/2}
+ e^{-kT+b\eta_0\sqrt T}.
+\tag{34.11}
+$$
+This includes both complete finite connecting segments.
+
+最后对每个 $T\ge10^{12}$ 作严格比较。
+
+Divide (34.10) by (34.6). Since
+$2211840e^{12}<2211840\cdot3^{12}=1175462461440<2\cdot10^{12}$,
+$$
+\frac{E_{\mathrm{end}}(T)}{L(T)}
+<2\cdot10^{12}T^{-1/2}
+ e^{-(3/140)\sqrt T+(5/2)T^{1/4}}.
+$$
+For $v=T^{1/4}\ge1000$, $3/140>1/50$ and $(5/2)v\le v^2/400$, so its exponent is at most
+$-7v^2/400\le-17500$. Therefore
+$$
+E_{\mathrm{end}}(T)/L(T)<2\cdot10^6e^{-17500}<1/4,
+\tag{34.12}
+$$
+where the final comparison already follows from $e>2$, $17500>23$, and $2^{23}>8\cdot10^6$.
+
+For the connecting pieces, $k>1/12$ and $b\eta_0+\sqrt2<5$, so
+$$
+\frac{E_{\mathrm{mid}}(T)}{L(T)}
+\le10240T^{1/4}
+ e^{-T/12+5\sqrt T+(5/2)T^{1/4}}
+\le10240T^{1/4}e^{-T/24}.
+$$
+The second inequality uses $(5/2)T^{1/4}\le\sqrt T$ and $6\sqrt T\le T/24$, both valid here. The last displayed function decreases for $T>6$. At $10^{12}$, it is bounded by
+$10240000e^{-10^{12}/24}<1/4$, since $10^{12}/24>26$ and $2^{26}>40960000$. Hence
+$$
+E_{\mathrm{mid}}(T)/L(T)<1/4
+\quad\text{for every }T\ge10^{12}.
+\tag{34.13}
+$$
+The exact decomposition now gives
+$$
+\Re[p(z)A_R(z)]
+\ge\Re[p(z)C(x)]-E_{\mathrm{end}}(T)-E_{\mathrm{mid}}(T)
+>\tfrac12 L(T)>0.
+$$
+所有常数对 $\gamma>0$ 和 $|\eta|\le3/5$ 均匀，得到所述结论。$\square$
+
+
+本节的标准 Bessel 核归其来源；承重应用是把原测试的全部误差、有限端点与连接段同时接到一个明确阈值。它没有供应第 33 节对全部充分大实尺度所需的实际新余项预算。
+
+## 追加锚（本行以下为增补区）
