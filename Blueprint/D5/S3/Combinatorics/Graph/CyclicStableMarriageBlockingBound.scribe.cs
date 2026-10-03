@@ -53,15 +53,19 @@ internal sealed class CyclicStableMarriageBlockingBoundDocument : IScribeDocumen
                     + "These two classes and the mixed blocking pairs partition W × U, giving B(p) + q ≤ qk. "
                     + "Since k + q = n and (k - q - 1)^2 ≥ 0, we get 4 B(p) ≤ (n - 1)^2 and therefore claim. "
                     + "The conclusion concerns the cyclic profile; the minimum over all preference profiles is a separate question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo())),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ishida-2026-cyclic-stable-marriage-blocking-upper-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("cyclic-shield-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));

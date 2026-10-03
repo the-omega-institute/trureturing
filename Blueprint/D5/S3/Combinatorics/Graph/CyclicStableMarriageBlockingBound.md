@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CyclicStableMarriageBlockingBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ishida-2026-cyclic-stable-marriage-blocking-upper-bound` (proved) by `D5/S3/Combinatorics/Graph/CyclicStableMarriageBlockingBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ishida-2026-cyclic-stable-marriage-blocking-upper-bound","declaration_gid":"D5/S3/Combinatorics/Graph/CyclicStableMarriageBlockingBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
