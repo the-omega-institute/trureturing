@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinColumn.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinColumn.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cigler-motzkin-column-hankel` (proved) by `D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinColumn.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cigler-motzkin-column-hankel","declaration_gid":"D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinColumn.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johann Cigler (2022). *Some remarks and conjectures about Hankel determinants of polynomials which are related to Motzkin paths*. DOI: [10.48550/arXiv.2204.09910](https://doi.org/10.48550/arXiv.2204.09910). URL: <https://arxiv.org/abs/2204.09910v4>.
