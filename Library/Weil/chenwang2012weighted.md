@@ -384,3 +384,92 @@ essential-spectrum statement or continuous transport of FIB operations.
 They are independently checked paper derivations, without new Lean
 certification or an originality claim; the published inputs and existing
 compact identities retain their own provenance.
+
+## A five-mode FIB address selects an exact prime-correlation cut
+
+The sparse support can be centered using the project's existing FIB
+quantity observation, without changing either the theta kernel or $Q$.
+Use $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$,
+$S=M^3=\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)$ and
+$q(a,b)=2a+3b$. The increments for
+`[null,2,3,2 5,5]` are respectively
+$(0,0),(1,0),(0,1),(2,1),(1,1)$.
+For the low-to-high address `[null]^L` followed by one nonempty window
+$\sigma$, its readout is $H_L=q(S^Ld_\sigma)$. Unit1 and End are separate;
+no unit offset is added here.
+
+| Last window $\sigma$ | $H_L$, with $F_0=0,F_1=1$ | Seeds $(H_0,H_1)$ | Parity |
+|---|---|---|---|
+| `[2]` | $F_{3L+3}$ | $(2,8)$ | even |
+| `[3]` | $F_{3L+4}$ | $(3,13)$ | odd |
+| `[2 5]` | $F_{3L+3}+F_{3L+5}=\operatorname{Lucas}_{3L+4}$ | $(7,29)$ | odd |
+| `[5]` | $F_{3L+5}$ | $(5,21)$ | odd |
+
+These are applications of the Fibonacci recurrence and the classical
+Lucas/Fibonacci trace identity. Each sequence satisfies
+$H_{L+2}=4H_{L+1}+H_L$, since $S^2=4S+I$.
+Parity is already visible in the composition cut: $S\equiv I\pmod2$
+and $q(a,b)\equiv b\pmod2$. The entirely null address has $H=0$ and is
+not a logarithmic support center.
+
+For any integer $H\ge2$, set $R=\log H$, $\delta=H^{-2}$ and use
+$A_R=[R,R+\delta]\cup[-R-\delta,-R]$.
+Same-interval differences are at most $\delta<\log2$. Cross-interval
+correlations can be nonzero only for
+
+$$
+2\log H<\log n<2\log H+2H^{-2}.
+$$
+
+At either endpoint the overlap has measure zero, so $n=H^2$ contributes
+nothing even when it is a prime power. Also
+$H^2e^{2/H^2}<H^2+3$. Indeed, for $t=2/H^2\le1/2$,
+$e^t\le1+t+e^{1/2}t^2/2$, whence
+$H^2(e^t-1)\le2+2e^{1/2}/H^2<3$.
+Thus only $H^2+1$ and $H^2+2$ can survive in the correlation sum (8).
+
+For even $H$, $H^2+2\equiv2\pmod4$ and $H^2+2>2$, so it is not a prime
+power. For odd $H$, the same argument excludes $H^2+1$.
+For $H=F_j$, $j\ge4$, the other exclusion is supplied by the classical
+Cassini and Catalan identities:
+
+$$
+F_j^2+1=
+\begin{cases}
+F_{j-1}F_{j+1},&j\text{ even},\\
+F_{j-2}F_{j+2},&j\text{ odd}.
+\end{cases}
+$$
+
+The [existing Vajda identity](../../D5/S1/Recurrence/FibVajda.lean)
+supplies these specializations. Pinned mathlib also supplies
+`Int.fib_succ_mul_fib_pred_sub_fib_sq`,
+`Int.fib_add_sq_sub_fib_mul_fib_add_two_mul` and `Nat.fib_gcd`.
+For even $j$, $\gcd(j-1,j+1)=1$; for odd $j$,
+$\gcd(j-2,j+2)=\gcd(j-2,4)=1$. Fibonacci strong divisibility therefore
+makes the two factors coprime. Both exceed one in the stated range, so
+their product is not a prime power.
+
+For `[null]^L[2]`, $L\ge1$, these two exclusions eliminate every
+von-Mangoldt-weighted correlation. Equation (8) consequently reduces,
+for every even complex compact smooth $f$ supported in its $A_R$, to
+
+$$
+Q(f)=P(f)+G(f)+c_\Gamma\|f\|_2^2. \tag{12}
+$$
+
+The $L=0$ exception is essential: $H=2$ gives the possible correlation
+$H^2+1=5$. For the other three nonempty modes, only $H^2+2$ remains a
+candidate; it is not asserted composite or excluded. For example,
+the `[5]` seed $H=5$ gives the prime power $27$, so restricting the sum
+to primes would lose a real candidate.
+
+This is a support calculation and a use of existing recurrence and
+divisibility results, not new Fibonacci mathematics or an originality
+claim. It covers only these one-nonempty-window addresses. No density
+or exhaustion of the full test space follows. For nonzero tests the
+weighted $E_{\rm prime}$ still has its positive diagonal terms, including
+large prime powers whose compact correlations vanish. Equation (12)
+does not make that energy zero and does not supply the global joint
+bound needed for RH or Robin. The address-to-support bridge is a
+paper derivation, without an exact Lean proof of its analytic conclusion.
