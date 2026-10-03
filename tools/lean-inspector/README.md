@@ -171,8 +171,9 @@ IDs equal their owning module. Missing, extra, duplicate entries and wrong root
 IDs receive `contract.root_structure:*` failures. Expected/source/baseline arrays
 and contributor identities retain the existing snapshot checks. Files at other
 leaves that still use legacy catalog commands have a pre-migration state: the
-path rule imposes ordinary typed-entry obligations until their migration moves
-them to a reserved leaf and rewrites their entries.
+path rule imposes ordinary typed-entry obligations. Typed catalog and seal
+entries belong in reserved leaves within Reg/Catalogs; D5 registration mirrors
+retain their original addresses.
 
 Typed expected occurrences come only from RootCatalog. `ExpectedDeclaration`
 remains an interface type for negative compatibility probes, but an entry of that
