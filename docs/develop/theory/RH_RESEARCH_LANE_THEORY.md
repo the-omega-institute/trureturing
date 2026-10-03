@@ -12471,3 +12471,129 @@ $$
 固定乘法区间的素数定理、Hermite–Lindemann、有限加权 Gram 插值与迹理想连续性是复用工具；实际正负谱配对复用 Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv)、式 (77)，固定小支撑正性复用该文 Theorem 6.11、式 (141)。新增综合内容是精确最小活跃集上微小尾部与角能量失稳的共同实现，以及该实际族对舍弃负能量证书的必要误差约束；这些纸面推导未作 Lean 核验，也不认证世界原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 原扩张测试的 Laplace 延拓与多项式余量障碍
+
+本章保留第 19.3 节的固定标准实偶 bump $\phi$ 及原扩张测试 $f_R$，并直接使用包含全部极点与纯素数幂的经典全 Weil 显式公式。只在回接实际 Sonin 迹时使用第 18—21 节的物理合同；标量延拓不要求变动素数集的评价密度渐近式。
+
+**定义 28.1（原测试族的完整标量与尾部变换）。** 令
+
+$$
+\Phi(z)=\widehat\phi(z),\qquad p(z)=z^2(1+4z^2)^2,\qquad
+\mathcal W(R)=Q_{\rm full}(f_R),\qquad q(R)=R^{-3}\mathcal W(R),\quad R\ge1.
+$$
+
+对非平凡零点 $\rho=\beta+i\gamma$，置 $z_\rho=\gamma-i(\beta-1/2)$，并按不同零点求和、用 $m_\rho$ 计入重数。第 19.3 节的精确 Fourier 身份与完整显式公式给出
+
+$$
+\widehat H_{f_R}(z)=R^3p(z)\Phi(Rz)^2,\qquad
+q(R)=2\sum_{\gamma>0}m_\rho p(z_\rho)\Phi(Rz_\rho)^2.
+$$
+
+这里是复数平方，不是把离线零点项改成绝对平方；正纵坐标之和由零点对称性为实数。所用显式公式可在 Suzuki, arXiv:2206.03682v4, 式 (5.15) 中逐项核对：两个极点项、两份完整 von Mangoldt 和及 Gamma 项均保留。其 Fourier 零点坐标的符号差由 $H_{f_R}$ 的偶性消除；两个极点评价则由 $\widehat H_{f_R}(\pm i/2)=0$ 精确消失。
+
+采用经典零点事实
+
+$$
+|\Im z_\rho|<\frac12,\qquad
+\gamma_*:=\inf_{\gamma>0}\gamma>0,\qquad
+\sum_{\gamma>0}m_\rho(1+\gamma)^{-2}<\infty.
+$$
+
+正的纵坐标间隔只用非平凡实零点不存在及有界条带内的离散性，不要求数值零点验证。固定标准 $\phi$ 的支撑是 $[-1/2,1/2]$，不能为它选严格小于 $1/2$ 的支撑半径。Paley–Wiener 的分部积分界在 $b=1/2$ 时给出
+
+$$
+|\Phi(w)|\le C_N(1+|w|)^{-N}e^{|\Im w|/2}
+\quad(N\ge0).
+$$
+
+因此上述零点和在紧的 $R$ 区间上正常收敛，且 $|q(R)|\le Ce^{R/2}$。定义初始 Laplace 变换
+
+$$
+L(s)=\int_1^\infty e^{-sR}q(R)\,dR,\qquad \Re s>1/2.
+$$
+
+**候签定理 28.1（最终非负时的全尾矩约束）。** 对这一原固定形状测试族，若存在 $R_0\ge1$ 使 $\mathcal W(R)\ge0$ 对所有实数 $R\ge R_0$ 成立，则
+
+$$
+\boxed{
+\int_{R_0}^\infty R^n\mathcal W(R)\,dR<\infty
+\qquad(n=0,1,2,\ldots).
+}
+$$
+
+因此，对任意实数 $M\ge0$、$c>0$ 与 $R_1\ge1$，存在实数 $R\ge R_1$ 满足
+
+$$
+\mathcal W(R)<cR^{-M},\qquad
+\liminf_{R\to\infty}R^M\mathcal W(R)\le0.
+$$
+
+后一结论不假定最终非负，也不声称某个测试的实际 Weil 值为负。
+
+证明。对 $z=\gamma+iy$、$\gamma\ge\gamma_*$、$|y|<1/2$，令
+
+$$
+I_z(s)=\frac1z\int_0^\infty
+ e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+它在 $\Re(s/z)>0$ 上全纯。令 $K=\phi*\phi$，则 $\widehat K=\Phi^2$、$\operatorname{supp}K=[-1,1]$。对实数 $s>1/2$，两种积分均可由 Fubini 精确计算为
+
+$$
+I_z(s)=\int_1^\infty e^{-sR}\Phi(Rz)^2\,dR
+=\int_{-1}^1K(u)\frac{e^{-(s+izu)}}{s+izu}\,du.
+$$
+
+左侧的水平射线积分使用 $\Re(s/z)>0$；中间的尺度积分使用 $\Re(s+izu)\ge s-1/2>0$。没有以未经验证的弧积分消失代替这份身份。
+
+置
+
+$$
+\Omega=\left\{s:\Re s>\frac{|\Im s|}{2\gamma_*}\right\},\qquad
+G(s)=2\sum_{\gamma>0}m_\rho p(z_\rho)I_{z_\rho}(s).
+$$
+
+在 $\Omega$ 内，
+
+$$
+\Re(s/z_\rho)
+=\frac{\gamma\Re s+y\Im s}{|z_\rho|^2}>0.
+$$
+
+水平射线 $z_\rho+t$ 始终处于 $|\Im w|<1/2$ 的固定条带，故 $\Phi(z_\rho+t)$ 在 $\gamma+t$ 上任意快速下降。这同时支付 $p$ 的六次增长与零点重数，证明 $G$ 在 $\Omega$ 的紧子集上正常收敛并全纯。它与初始 $L$ 相等，所以 $L$ 可全纯延拓穿过每个正实数点。
+
+进一步，对任意整数 $j\ge0$，
+
+$$
+I_z^{(j)}(s)=\frac{(-1)^j}{z^{j+1}}
+\int_0^\infty (z+t)^j e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+当 $s\ge0$ 为实数时，指数的模不超过一。取 $2N>j+1$，上述条带下降界给出
+
+$$
+|I_z^{(j)}(s)|\le C_{j,N}|z|^{-j-1}
+\int_0^\infty(1+\gamma+t)^{j-2N}\,dt
+\le C'_{j,N}(1+\gamma)^{-2N}.
+$$
+
+增大 $N$ 后可在所有 $s\ge0$ 上统一求和，故 $G^{(j)}(s)$ 在 $s\downarrow0$ 时具有有限右极限。这只给出端点的右侧光滑性，不主张 $G$ 在零点附近全纯。
+
+若 $q$ 最终非负，扣除紧初始区间后，
+
+$$
+L_0(s)=G(s)-\int_1^{R_0}e^{-sR}q(R)\,dR
+$$
+
+是非负尾部的初始 Laplace 变换。直接复用 Landau–Widder 的非负函数收敛横坐标定理：有限实收敛横坐标必为奇点。由于 $L_0$ 在每个正实数点附近均全纯，它的收敛横坐标不能为正，故定义积分对每个实数 $s>0$ 收敛。该标准定理在 Suzuki, arXiv:2209.12832v1, §3 中明确引用 Widder, *The Laplace Transform*, Chapter II, Theorem 5b；这里验证的是原 $f_R$ 的变换延拓，不把 Suzuki 的 screw-function 判据直接当成这一族的结论。
+
+于是
+
+$$
+(-1)^jL_0^{(j)}(s)=\int_{R_0}^\infty R^j e^{-sR}q(R)\,dR.
+$$
+
+令 $s\downarrow0$，左侧具有有限极限，右侧按非负性单调增加，得到全部 $q$ 尾矩有限。取 $j=n+3$ 即得 $\mathcal W$ 的陈述。若有最终下界 $\mathcal W(R)\ge cR^{-M}$，它本身给出最终非负，而任一整数 $n\ge M$ 的尾矩都会发散，矛盾。$\square$
+
+## 追加锚（本行以下为增补区）
