@@ -13,7 +13,7 @@ triage: anchor
 
 # Common-cut Schur induction: an unadopted all-scale claim
 
-The inspected primary version is [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), submitted **20 September 2026**, 69 pages. The arXiv history still lists v2 as current at the 1 October inspection. Theorem 0.1 and Theorem 8.7 explicitly claim RH through positivity of the actual localized Weil operator on the real odd logarithmic channel. This is an all-zero claim, distinct from a proportion or fixed-window result. The full proof, external inputs and [supplementary certificates](https://doi.org/10.5281/zenodo.22864087) have not been independently verified here. No counterexample to the main proof was established by the bounded interface review either.
+The inspected primary version is [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), submitted **20 September 2026**, 69 pages. The arXiv history still lists v2 as current at the 3 October inspection. Theorem 0.1 and Theorem 8.7 explicitly claim RH through positivity of the actual localized Weil operator on the real odd logarithmic channel. This is an all-zero claim, distinct from a proportion or fixed-window result. The full proof, external inputs and [supplementary certificates](https://doi.org/10.5281/zenodo.22864087) have not been independently verified here. No counterexample to the main proof was established by the bounded interface review either.
 
 ## The actual induction step
 
@@ -141,6 +141,31 @@ K(\phi(u),\phi(v))
 $$
 
 Using only the transported off-diagonal kernel $\sqrt{J(u)J(v)}K(\phi(u),\phi(v))$ in an ordinary $|g(u)-g(v)|^2$ form leaves a multiplication term to account for, together with the transported endpoint potential. The exponential kernel identities in Lemma 5.1 do not by themselves perform this diagonal comparison. Before applying the later one-cell lower form, its full transported potential must be identified or bounded in the same coordinates. The bounded review has not completed the identification of the source's $c_A$ with all the later collar and fixed-target forms. No failure of the entire RH claim follows merely from this outstanding correspondence.
+
+The source formulas give a specific normalization benchmark for this interface. Denote the archimedean form in (61), with the pole and prime terms excluded, by $\mathfrak a_{\mathrm{arch},a}$. For $a>0$, use the affine unitary
+
+$$
+(Tf)(t)=\sqrt2\,f(2t-1),\qquad 0<t<1.
+$$
+
+On the smooth compactly supported core, substitution in (12)–(15), (50) and (62) gives
+
+$$
+\mathfrak a_{\mathrm{arch},a}[T^{-1}g]
+=\mathfrak b[g]+\bigl(c_0(a)-\log2\bigr)\|g\|_2^2
+-\langle g,K_{\gamma,2a}^{(0,1)}g\rangle,
+\qquad c_0(a)-\log2=-\log(4\pi a)-\gamma,
+$$
+
+where $K_{\gamma,2a}^{(0,1)}$ has kernel $2a\rho(2a|t-s|)$. The singular difference energy retains its coefficient, while
+
+$$
+V(2t-1)=-\log2-\frac12\log\bigl(t(1-t)\bigr).
+$$
+
+The original odd domain becomes $g(1-t)=-g(t)$. Extension of this core calculation requires the actual transported closed-form domain and common form-core contract. This affine map is not identified with the exponential $U_A$ or the paper's complete collar gauge. The benchmark states which scalar and regular-kernel terms occur before that identification; it neither supplies a new lower bound nor contradicts Proposition 5.3. Reusing the later $\mathfrak b$ estimates still requires the complete realization and allocation of these terms in the same direct/source forms. The displayed calculation is paper-level source bookkeeping, without a Lean validation of the integral or domain transport.
+
+The [existing small-support spectral supplier](suzuki2026screw.md) and [localization account](frankliebseiringer2006hardy.md) already cover the corresponding basic boundary energy and its small-window use. They should be reused; neither supplies this paper's all-scale collar correspondence. The supplementary scalarization audit limits its PASS to the stated scalarization risk and does not independently establish the complete diagonal identification.
 
 ## Relation to the FIB research gap
 
