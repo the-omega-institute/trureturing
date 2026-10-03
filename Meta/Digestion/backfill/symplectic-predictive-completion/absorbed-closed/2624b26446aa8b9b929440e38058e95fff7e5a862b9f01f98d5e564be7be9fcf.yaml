@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2624b26446aa8b9b929440e38058e95fff7e5a862b9f01f98d5e564be7be9fcf
+  normalized_sha256: sha256:2624b26446aa8b9b929440e38058e95fff7e5a862b9f01f98d5e564be7be9fcf
+cas_ref: sha256:2624b26446aa8b9b929440e38058e95fff7e5a862b9f01f98d5e564be7be9fcf
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/Hermite/GaussianPolynomialTotality.gaussian_polynomial_totality
+    target_statement_id: sha256:940e4b36c54fb4506a4c708b55ae01ed1ce271898e321300b5859e80de214df9
+receipts:
+  unresolved_subitems: []
