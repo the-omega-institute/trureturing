@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7fa0ba3a13c4bf7efb60e9aa29a4ea5257e8a65ba9e4b33a18816c04c92789cc
   normalized_sha256: sha256:7fa0ba3a13c4bf7efb60e9aa29a4ea5257e8a65ba9e4b33a18816c04c92789cc
 cas_ref: sha256:7fa0ba3a13c4bf7efb60e9aa29a4ea5257e8a65ba9e4b33a18816c04c92789cc
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/CappedExploration.actual_capped_partition
+    target_statement_id: sha256:218ce98bc485ebd09cf47fa81ce9bb33a925d2c819788d77634719990f586c0b
 receipts:
   unresolved_subitems: []
