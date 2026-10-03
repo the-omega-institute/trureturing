@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor.
+claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor. The classical Stechkin reserve alone also fails the universal reduced certificate on an actual smooth even test.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -410,6 +410,8 @@ Equation (17) is sufficient rather than necessary: retaining the actual $\mathca
 
 The earlier scalarization obstruction discarded every positive contribution. Here the question is different: does keeping $\kappa_S E_*$ suffice after charging the scalar cost $2\|f\|_2^2$? A fixed smooth test refutes that stronger universal requirement. The construction uses standard convolution and translation estimates, not a new approximation or prime-distribution theorem.
 
+The classical suppliers are [Brezis, *Functional Analysis, Sobolev Spaces and Partial Differential Equations* (Springer, 2011)](https://doi.org/10.1007/978-0-387-70914-7), §4.4, Theorem 4.15, printed p.104 (convolution contraction), Propositions 4.18 and 4.20, pp.106–107 (support and smoothness), and §9.1, Lemma 9.1 and Proposition 9.3, pp.266–267 (weak-derivative commutation and translation). The parameter map is dimension one, $p=2$, the whole space $\mathbb R$, and the zero-extended seed below. Positive compact convolution and explicit norm control are used directly; no unspecified approximation sequence or extension of the Weil form to nonsmooth tests is needed.
+
 Start with the compact absolutely continuous function
 
 $$
@@ -460,7 +462,17 @@ C_L(f)+\kappa_S E_*(f)&<1+\frac98=\frac{17}{8},\\
 \end{aligned}
 $$
 
-Thus the antecedent in (17) fails by more than $3/8$ on an admitted smooth even test. This is a paper-level obstruction to that sufficient scalarization, not a negative-full-Weil example or a counterexample to RH or Robin. The independent positive terms in (16) have been discarded by (17); their actual values must be retained or bounded jointly if this account is used for an all-test proof. The construction and bounds have not been compiled in Lean.
+Thus the antecedent in (17) fails by more than $3/8$ on an admitted smooth even test. Enlarging the ambient support does not repair it for this same $f$: the added continuum integrand is zero, and all newly admitted prime correlations still vanish.
+
+The discarded positive terms have concrete contributions on this very test. Every odd-power shift $k\log p$, $k\ge3$, exceeds its support width, so the existing energy definition gives
+
+$$
+\mathcal D_{\rm odd}(f)=2C_{\rm odd},\qquad
+\mathcal R_S(f)=\mathcal Z(f)-\kappa_S E_*(f)+2
+\ge2-\kappa_S E_*(f)>\frac78.
+$$
+
+These compensations do not by themselves determine the sign of the full form: the displayed estimates supply only a lower bound for the reduced deficit. They show why discarding independently positive terms is a substantive loss. This is a paper-level obstruction to that sufficient scalarization, not a negative-full-Weil example or a counterexample to RH or Robin. The actual values in (16) must be retained or bounded jointly if this account is used for an all-test proof. The construction and bounds have not been compiled in Lean.
 
 ## A prime edge crossing an intermediate FIB window
 
