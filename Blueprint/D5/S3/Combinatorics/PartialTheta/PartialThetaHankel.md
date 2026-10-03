@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/PartialTheta/PartialThetaHankel.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PartialTheta/PartialThetaHankel.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cigler-partial-theta-hankel` (proved) by `D5/S3/Combinatorics/PartialTheta/PartialThetaHankel.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cigler-partial-theta-hankel","declaration_gid":"D5/S3/Combinatorics/PartialTheta/PartialThetaHankel.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johann Cigler (2024). *Hankel determinants of backward shifts of the coefficients of a partial theta function*. DOI: [10.48550/arXiv.2407.05768](https://doi.org/10.48550/arXiv.2407.05768). URL: <https://arxiv.org/abs/2407.05768v2>.
