@@ -14,7 +14,7 @@ def finiteArena : D5.S3.ConceptDynamics.InformationEscape.Arena where
 run_meta do
   let env := (← getEnv).setExporting false
   let interfaceModules := env.header.moduleNames.filter
-    ((`LeanInformationAuditContract).isPrefixOf ·)
+    ((`LeanInformationAuditInterface.Contract).isPrefixOf ·)
   assertTest "interface.contract_modules" (interfaceModules.size >= 4)
   for owner in interfaceModules do
     let source ← IO.FS.readFile (← LeanInformationAudit.Repository.source

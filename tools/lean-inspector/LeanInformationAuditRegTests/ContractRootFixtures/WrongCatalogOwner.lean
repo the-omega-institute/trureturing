@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit
 namespace ContractRootFixtures.WrongCatalogOwner
 def catalog : Contract.RootCatalog := { data := { rootId := `OtherRoot, expected := #[], source := #[], baseline := #[], companionPrefix := none } }

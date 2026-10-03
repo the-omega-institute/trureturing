@@ -103,7 +103,7 @@ run_cmd do
         package = ROOT / 'tools/lean-inspector-interface'
         sources = {str(path.relative_to(ROOT)) for path in package.rglob('*.lean')
                    if '.lake' not in path.parts}
-        contract = ROOT / 'tools/lean-inspector/LeanInformationAuditContract'
+        contract = package / 'LeanInformationAuditInterface/Contract'
         sources.update(str(path.relative_to(ROOT)) for path in contract.glob('*.lean'))
         self.assertTrue(any(path.startswith(str(contract.relative_to(ROOT))) for path in sources))
         self.assertTrue(sources)
@@ -121,7 +121,7 @@ run_cmd do
         self.assertTrue(source.is_dir(), 'missing standalone declaration Interface package')
         package = self.root / 'interface package'
         policy = tomllib.loads((source / 'lakefile.toml').read_text())
-        self.assertEqual(policy.get('require', []), [], 'Recorder package must have zero requires')
+        self.assertEqual(policy.get('require', []), [{'name': 'trureturing', 'path': '../..'}])
         copy_recorder_interface(source, package)
         shutil.copyfile(ROOT / 'lean-toolchain', package / 'lean-toolchain')
         config = package / 'lakefile.toml'

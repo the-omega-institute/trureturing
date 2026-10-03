@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Registration
+import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditRegTests.ContractAssertions
 import D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 import Reg.Support.LegacyRelations.Preemption

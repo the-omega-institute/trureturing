@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit
 namespace ContractReferenceFixtures.NestedCarrier
 def box : Option (Type × Unit) := some (Contract.Seal, ())

@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit.Contract
 namespace Boundary.LiteralGrammar
 def parenthesized : (LeanInformationAudit.Contract.Seal) := {

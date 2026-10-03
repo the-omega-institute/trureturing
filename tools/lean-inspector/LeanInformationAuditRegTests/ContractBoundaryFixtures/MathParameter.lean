@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 namespace Boundary.MathParameter
 open LeanInformationAudit.Contract
 def entry : Seal := { rootId := `root, options := #[] }

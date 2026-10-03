@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 namespace LeanInformationAuditRegTests.ReviewBoundaryFixtures.Constructors
 def literal : LeanInformationAudit.Contract.Seal := {
  rootId := Lean.Name.str (Lean.Name.num Lean.Name.anonymous (Nat.succ Nat.zero)) "λ😀"

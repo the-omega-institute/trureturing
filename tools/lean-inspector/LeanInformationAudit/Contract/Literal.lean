@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Core
+import LeanInformationAuditInterface.Contract.Core
 
 namespace LeanInformationAudit.Contract.Literal
 open Lean

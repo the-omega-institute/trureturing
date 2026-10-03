@@ -1,5 +1,5 @@
-import LeanInformationAuditContract.Registration
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 import Reg.Support.LegacyRelations.Preemption
 import Reg.D5.S0.Tower.GoldenGapZeckendorf

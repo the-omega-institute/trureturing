@@ -13,10 +13,6 @@ package leanInspector where
 require trureturing from "../.."
 require leanInspectorInterface from "../lean-inspector-interface"
 
-lean_lib LeanInformationAuditContract where
-  roots := #[`LeanInformationAuditContract]
-  globs := #[.submodules `LeanInformationAuditContract]
-
 @[default_target]
 lean_lib LeanInformationAudit where
   globs := #[.submodules `LeanInformationAudit]

@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean Meta Elab Term
 namespace LeanInformationAudit
 private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx expected => do

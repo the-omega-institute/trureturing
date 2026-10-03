@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 
 namespace Quality.MathCompanion
 def entry : LeanInformationAudit.Contract.Seal := { rootId := `Quality.root, options := #[] }

@@ -1,5 +1,5 @@
 import LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.RootCatalog
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Membership.RootCatalog
 open LeanInformationAudit

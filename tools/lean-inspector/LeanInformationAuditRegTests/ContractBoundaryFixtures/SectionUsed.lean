@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 namespace LeanInformationAuditRegTests.ReviewBoundaryFixtures.SectionUsed
 section
 variable (n : Nat)

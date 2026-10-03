@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit
 namespace ContractReferenceFixtures
 syntax (name := emitEquation) "emit_equation" : term

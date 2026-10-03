@@ -20,8 +20,14 @@ import zipfile
 import zlib
 
 def copy_recorder_interface(source, target):
-    """Copy the standalone core-only recorder package."""
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake'))
+    """Copy the core recorder modules without the D5-dependent contract types."""
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Contract'))
+    config = target / 'lakefile.toml'
+    config.write_text(re.sub(r'\n\[\[require\]\]\nname = "trureturing"\npath = "../.."\n', '', config.read_text()))
+    manifest = target / 'lake-manifest.json'
+    policy = json.loads(manifest.read_text())
+    policy['packages'] = []
+    manifest.write_text(json.dumps(policy))
 
 
 try:

@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractNegativeFixtures.Forwarding
 def good : LeanInformationAudit.Contract.Seal := { rootId := Lean.Name.anonymous, options := #[] }

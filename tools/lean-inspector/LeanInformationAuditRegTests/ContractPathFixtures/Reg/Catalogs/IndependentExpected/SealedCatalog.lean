@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.IndependentExpected.SealedCatalog
 def expected : Contract.ExpectedDeclaration := { rootId := `LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.IndependentExpected.SealedCatalog, occurrence := {

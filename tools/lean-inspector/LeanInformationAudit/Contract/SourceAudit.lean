@@ -30,7 +30,7 @@ constructors, projections and compiler companions of all Contract interface type
 Implementation helpers live in a different library and grant no interface entry. -/
 def interfaceConstant (env : Environment) (name : Name) : Bool :=
   match env.getModuleIdxFor? name with
-  | some idx => (`LeanInformationAuditContract).isPrefixOf
+  | some idx => (`LeanInformationAuditInterface.Contract).isPrefixOf
       env.header.moduleNames[idx.toNat]!
   | none => false
 

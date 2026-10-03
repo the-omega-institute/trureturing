@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAuditRegTests.ContractNegativeFixtures.Where
 def bad : LeanInformationAudit.Contract.Seal where

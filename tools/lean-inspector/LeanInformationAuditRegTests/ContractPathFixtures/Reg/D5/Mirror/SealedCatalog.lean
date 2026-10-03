@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Registration
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.D5.S0.Tower.GoldenGapZeckendorf
 
 namespace LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog

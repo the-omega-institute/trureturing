@@ -119,7 +119,7 @@ including their wrappers.
 
 Every audited Reg constant outside a validated contract entry is forbidden to
 directly reference any constant owned by an imported
-`LeanInformationAuditContract.*` module in its compiled type or body.
+`LeanInformationAuditInterface.Contract.*` module in its compiled type or body.
 The check uses `ConstantInfo.getUsedConstantsAsSet`, including opaque bodies,
 and reads the explicit structure names of primitive `Expr.proj` nodes that Lean
 `foldConsts` omits. Constructors, projections, Ref, readout and option types all

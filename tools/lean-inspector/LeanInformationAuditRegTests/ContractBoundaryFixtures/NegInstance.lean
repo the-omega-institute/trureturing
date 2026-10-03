@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 namespace Boundary.NegInstance
 local instance : Neg Int := ⟨fun _ => Int.ofNat 99⟩
 def entry : LeanInformationAudit.Contract.Seal := {

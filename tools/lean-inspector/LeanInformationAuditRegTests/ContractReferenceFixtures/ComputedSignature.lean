@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Lean LeanInformationAudit
 namespace ContractReferenceFixtures.ComputedSignature

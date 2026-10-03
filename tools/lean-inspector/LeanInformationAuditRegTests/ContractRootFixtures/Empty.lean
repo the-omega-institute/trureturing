@@ -1,4 +1,4 @@
-import LeanInformationAuditContract.Catalog
+import LeanInformationAuditInterface.Contract.Catalog
 open Lean LeanInformationAudit
 namespace ContractRootFixtures.Empty
 def ordinary : Nat := 0
