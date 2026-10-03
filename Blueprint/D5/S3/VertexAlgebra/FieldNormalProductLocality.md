@@ -12,7 +12,7 @@ Lean statement: `D5/S3/VertexAlgebra/FieldNormalProductLocality.normalMinusOne_l
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FieldNormalProductLocality.normalMinusOne_locality` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/VertexAlgebra/FieldNormalProductLocality.dividedDerivativ
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FieldNormalProductLocality.dividedDerivative_locality` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
