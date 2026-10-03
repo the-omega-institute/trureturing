@@ -1,0 +1,9 @@
+**推论 7.4（Unit error bound in the original model）。** For $\delta_{01}$ the bounded Bellman fixed point is the distance of theorem 7.2, with
+
+$$
+0\le d_\infty-d_h\le\eta^{h+1},\qquad
+d_\infty(\rho x,\rho y)\le\eta^{-1}d_\infty(x,y).
+$$
+
+证明。Apply theorem 7.3 with $D=1$; theorem 7.2 already verifies the discrete ultrametric assumptions. The exponent $h+1$ counts the first unobserved time after times $0,\ldots,h$. $\square$
+

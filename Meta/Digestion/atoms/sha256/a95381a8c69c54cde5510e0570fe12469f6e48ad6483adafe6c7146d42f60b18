@@ -1,0 +1,22 @@
+### 42.10 声明 SCC 的全局 ownership 圆柱
+
+固定一个预算 $\beta$、一个已供应的完整闭分歧图及其声明的有限 SCC 家族 $\mathcal S_\beta$：每个 $S\in\mathcal S_\beta$ 是原始图 flag-one 区域的含环 SCC，第一投影不相干、第二片 singleton 且第二投影相干。此处使用原 SCC，未作方向筛选。对每个顶点保留真实颜色边的 ownership 要求 (42.14)。在 $S$ 上构造带状态
+$$
+(v,w,d,\mu),\qquad d\in\{0,1\},
+\tag{42.57}
+$$
+其中 $\mu$ 是已累积的五切点部分赋值。同步走两条原配对边 $e:v\to v'$、$f:w\to w'$ 时，分别选择 $c\in C_\beta(v)$ 和 $c'\in C_\beta(w)$：$c$ 是 $e$ 自身两来源分量的共同颜色，$c'$ 是 $f$ 自身两来源分量的共同颜色，二者无须相等。将所选颜色副本 $\kappa(e,c)$、$\kappa(f,c')$ 的两项要求都加入 $\mu$，冲突即拒绝，并置 $d'=d\lor[\ell_1(e)\ne\ell_1(f)]$。这是两条返回各自的共同历史，不要求两条返回共享同一个色词。从 $(q,q,0,\varnothing)$ 到 $(q,q,1,\mu)$ 的路径给出一个 ownership 证书；未观察终端不添加要求。所有这样的 $\mu$ 的包含极小族记为 $\mathscr M_S$，再令
+$$
+\mathscr M_\beta=\min_{\subseteq}\bigcup_{S\in\mathcal S_\beta}\mathscr M_S,\qquad
+[\mu]=\{\omega:\mu\subseteq\omega\}.
+\tag{42.58}
+$$
+定义受 ownership 保留的谓词
+$$
+F_\beta(\omega)\iff
+\exists S\in\mathcal S_\beta:
+S_\omega\text{ 含第一投影不相干的含环 SCC}.
+\tag{42.59}
+$$
+这里 $S_\omega$ 保留原实际来源边，并在每个 departure 只保留至少一个被 $\omega$ 接受的共同颜色：要求该颜色包含整个第一闭片且对周期 singleton rival 实际可取得。第一闭片无需全体 owned，后面的内部尾处理其实际性；终端坐标仍未观察。
+

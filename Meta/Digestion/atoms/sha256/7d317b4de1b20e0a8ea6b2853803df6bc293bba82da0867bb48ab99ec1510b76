@@ -1,0 +1,61 @@
+**命题 43.16（选定 rival tight 锁下的双侧指数界）。** 假设命题43.11的槽清单中选定一个实际 rival 槽 $\alpha_\star$，满足
+
+$$
+ q_{\alpha_\star}(0)=0,\qquad q_{\alpha_\star}(1)>0.
+$$
+
+也就是该选定观察槽的周期极限成本恰为 $\beta$，而同一固定实际尾在该槽留下严格 seed margin。则存在常数 $C\ge c>0$，对所有 $n\ge0$ 有
+
+$$\boxed{c\,g^{Ln}=c\,a^n\le\beta-B_n\le C\,a^n=C\,g^{Ln},}$$
+
+并且 $B_n\uparrow\beta$。存在 $n_0$ 和 $\kappa>0$ 使
+
+$$\boxed{B_n=\beta-\kappa a^n\qquad(n\ge n_0).}$$
+
+**证明。** 下界已由命题43.14给出。对上界，若 $\alpha_\star$ 是 stem 槽，取恰有 $n$ 个返回的实际 stem 词。由距离的 1-Lipschitz 性质和 $q_{\alpha_\star}(0)=0$，
+
+$$
+ 0\le q_{\alpha_\star}(a^n)\le|\gamma_{\alpha_\star}h|a^n,
+$$
+
+所以该实际槽给出
+
+$$
+ \beta-B_n\le|\gamma_{\alpha_\star}h|a^n.
+$$
+
+若它只在一个返回内部出现，则对 $n\ge1$ 取以该返回开头、其后接 $n-1$ 个返回的实际词，得到
+
+$$
+ \beta-B_n\le|\gamma_{\alpha_\star}h|a^{n-1}
+ =a^{-1}|\gamma_{\alpha_\star}h|a^n.
+$$
+
+$n=0$ 的返回槽不存在，但 $\beta-B_0\le\beta$；把 $\beta$ 加入 $C$ 即得所有 $n$ 的上界。于是 $B_n\to\beta$，而嵌套历史给出单调非降。
+
+为得到最终精确式，把命题43.14中的 $\ell_N,u_N$ 按固定符号分支展开。对 $n\ge1$ 置 $z=a^n$；stem 端点是 $z$ 的仿射函数，返回端点是 $z/a$ 的仿射函数。对闭格 $J=[l,r]$，
+
+$$
+ \operatorname{dist}(x,J)=\max\{l-x,0,x-r\}.
+$$
+
+所以存在一个固定有限集 $\mathcal F$ 和域内常数 $b_j,k_j$，使
+
+$$
+ B_n=\max_{j\in\mathcal F}(b_j+k_j a^n),\qquad n\ge1.
+$$
+
+令 $B_*=\max_jb_j=\sup_nB_n$。选定的 rival tight 槽和上界已经给 $B_*=\beta$。令
+
+$$
+ k_*=\max\{k_j:b_j=\beta\}.
+$$
+
+单调性和 $B_n<\beta$ 强迫 $k_*<0$：若 $k_*>0$，最终会超过 $\beta$；若 $k_*=0$，最终最大值会等于 $\beta$，也与命题43.14的严格 margin 矛盾。有限个截距小于 $\beta$ 的直线最终低于截距为 $\beta$、斜率为 $k_*$ 的直线，因此某个 $n_0$ 后
+
+$$
+ B_n=\beta+k_*a^n=\beta-\kappa a^n,\qquad\kappa=-k_*>0.
+$$
+
+这条上界锁来自 $\alpha_\star$ 的实际周期极限，未使用无关颜色或任意扩大后的 hull 端点。证毕。
+

@@ -1,0 +1,2 @@
+**证明。** 来源词由 $U_0\ne U_1$ 的字面分支区分，但颜色投影可能在有限前缀上相同。已发表[定理28.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7165)和[推论29.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7632)在其完整闭关系、实际有限来源和共同完整记录前提下才给单点纤维；没有这些前提，来源词计数只说明构造了多少来源实例，不说明观察历史的基数。故本章保留两种量词，不作未经证明的历史计数。证毕。
+

@@ -1,0 +1,10 @@
+#### 41.11.4　非空性和近优候选
+
+输入条件及 $R\le\nu_0$ 给出 $R+\epsilon<\lambda$。在正确性证明中取 $b\in\mathcal B$ 满足 $R\le b<R+\epsilon/2$，令 $c_*=R+\epsilon$。前述网格—改根构造给出语法合法 $F_*$，其长度不超过 $B(\epsilon)$ 且
+
+$$
+\theta(F_*)\le c_*=R+\epsilon<\lambda.
+$$
+
+故 $F_*\in\mathcal C_\epsilon$，候选集非空。未知 $R,b,c_*$ 只在存在性证明出现，不是候选生成、阈值计算或比较预言机的输入。
+

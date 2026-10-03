@@ -1,0 +1,22 @@
+**证明。** 两个 $x_i$ 都在 $R$，故
+
+$$
+ \varepsilon_2x_1-\varepsilon_1x_2
+ =\varepsilon_2h-\varepsilon_1y\in R.
+$$
+
+将这个等式乘以单位 $\varepsilon_2$，得到
+
+$$
+ x_1-\varepsilon_1\varepsilon_2x_2
+ =h-\varepsilon_1\varepsilon_2y\in R,
+$$
+
+即得所写条件。反过来，该条件使
+
+$$
+\varepsilon_1(R-h)=\varepsilon_2(R-y)
+$$
+
+成为同一个 $R$ 陪集，故只在环成员层面存在共同幅度。要得到实际尾，还必须同时检查 $J_{s_i}^{\mathrm{fin}}$ 和 $Q(x_i)\ge0$；命题43.2给出这个检查的充要性。证毕。
+

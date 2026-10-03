@@ -1,0 +1,7 @@
+## 3. Scope boundary
+
+The transport is not a bijection: in $K_{1,2}$ with centre $a$ and leaves $u,v$, the two
+maximal matchings $\{au\}$ and $\{av\}$ both fold to $\{\bar a\bar v\}$ after deleting $u$.
+No connectedness or upper bound on vertex degrees is required. The statement concerns
+matching transport only and asserts no harmonic-index conclusion.
+

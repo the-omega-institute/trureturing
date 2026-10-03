@@ -1,0 +1,29 @@
+### 46.4 原闭颜色的有符号共同尾碰撞区间
+
+对 $\ell\ne m$ 及 $c,d\in\mathcal C_r$，令 $s=\max\{o(\ell),o(m)\}$，定义
+
+$$
+\mathcal I_{\ell,m}^{c,d}
+=I_s\cap f_\ell^{-1}(E_c^b)\cap f_m^{-1}(E_d^b).
+\tag{46.14}
+$$
+
+它检测的是一个共同尾标量 $x$：两个当前值分别为 $f_\ell(x),f_m(x)$。尾必须能接在两标签之后；因 $A_1\subset A_0$，两 outgoing guards 的共同地址域恰是 $A_s$，其标量域为较严格的 $I_s$。不能为两侧分别选择两个尾标量。
+
+原映射斜率为负，故精确的闭区间公式是
+
+$$
+\boxed{
+\mathcal I_{\ell,m}^{c,d}
+=I_s\cap
+\left[
+\max\left\{\frac{\Delta_\ell-U_c}{g},
+                 \frac{\Delta_m-U_d}{g}\right\},
+\min\left\{\frac{\Delta_\ell-L_c}{g},
+                 \frac{\Delta_m-L_d}{g}\right\}
+\right].}
+\tag{46.15}
+$$
+
+左端大于右端时为空，相等时保留单点。式中不附加碰撞发生处在 $S$ 中的 incoming guard 限制；所有标签均可从 guard 零前接。这样可能添加无法从某个原顶点出发的候选，却不会漏掉原路径的最后不同标签碰撞。共同尾的 outgoing guard 限制及(46.11)中的未来合法 guard 均未放宽。实际不相干返回必产生候选的论证因此仍成立。
+

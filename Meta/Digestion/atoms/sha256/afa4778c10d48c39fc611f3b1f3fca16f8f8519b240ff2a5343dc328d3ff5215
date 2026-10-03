@@ -1,0 +1,36 @@
+**引理 44.7（有限深度的精确端点与归属）。** 记
+
+$$
+D_{j,-}=x_j-m_j>0,\qquad D_{j,+}=M_j-x_j>0,
+\qquad d_\alpha=\begin{cases}0,&\text{stem 槽},\\1,&\text{返回槽}.
+\end{cases}
+$$
+
+全部长度不超过 $N$ 的返回复合作用于 $x_j$ 后，标量凸包恰为
+
+$$
+K_{j,N}=[m_j+a^ND_{j,-},\ M_j-a^ND_{j,+}]\qquad(N\ge0).
+\tag{44.14}
+$$
+
+每个端点均由实际长度恰为 $N$ 的词取得。对 $n\ge1$，精确成本为
+
+$$
+\boxed{\begin{aligned}
+B_n=\max_{\alpha\in\mathscr L}\max\bigl\{&
+\operatorname{dist}(f_\alpha(m_j+a^{n-d_\alpha}D_{j,-}),J_{c_\alpha}),\\
+&\operatorname{dist}(f_\alpha(M_j-a^{n-d_\alpha}D_{j,+}),J_{c_\alpha})\bigr\},
+\qquad j=j(\alpha).
+\end{aligned}}
+\tag{44.15}
+$$
+
+零层只保留52个 stem 槽，$B_0=\max_{\alpha\text{ 为 stem 槽}}\operatorname{dist}(f_\alpha(x_{j(\alpha)}),J_{c_\alpha})$。此外
+
+$$
+B_n<\beta\quad(n\ge0),\qquad B_n\uparrow\beta.
+\tag{44.16}
+$$
+
+预算恰为 $B_n$ 时，实际取得整棵有限树的充要条件是每个现存槽在 (44.15) 中的两端实际坐标均属于 $O_{c_\alpha}^{B_n}$；零层以 $f_\alpha(x_j)$ 检查。任意 $b>B_n$ 则对每种固定合法归属都能以内部目标实际取得。
+

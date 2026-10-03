@@ -1,0 +1,15 @@
+**定义 29.6（闭基本片和全包含图）。** 对每个 $s\in\{0,1\}$，将有限集 $B_s=B\cap I_s$ 按实数顺序排列。令 $\mathcal A_s$ 包含每个端点单点集 $\{b\}$，以及 $B_s$ 中每对相邻端点之间的闭区间 $[b,c]$。这些非空紧集构成 $I_s$ 的有限闭覆盖；端点上的重叠被保留。
+
+图节点为 $(s,P)$，其中 $P\in\mathcal A_s$。定义带来源标签的边
+
+$$
+(s,P)\xrightarrow{\ell}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法},\quad
+P\subseteq D_{s,\ell},\quad
+Q\subseteq F_\ell(P).
+\tag{29.17}
+$$
+
+节点与颜色 $i$ 相容的条件是 $P\subseteq E_i$。两个边条件分别要求整个当前片位于合法分支域、整个后继片位于同一个分支像内。
+

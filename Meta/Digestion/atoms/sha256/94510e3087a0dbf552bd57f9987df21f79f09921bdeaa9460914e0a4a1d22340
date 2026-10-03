@@ -1,0 +1,41 @@
+**定义 35.1（有限尾合同与归一化余量）。** 沿用定义1.1、14.5、34.1和约定23.1的来源、guard 与位支持约定，置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t=t^{-1},\qquad
+R=\mathbb Z[t],\qquad g=t^3=\sqrt5-2,
+$$
+
+$$
+q=g^n,\qquad r=g^K,\qquad s=(-1)^n,\qquad
+\delta=\phi q,\qquad d=d_n=\frac{\phi q}{1+q}.
+$$
+
+对实际来源 $\omega\in D_{3(n+K)}$，令
+
+$$
+E_n(\omega)=(\kappa_0(\omega),\kappa_0(T^n\omega))=(x_0,x_n),
+\qquad P_n(\omega)=(\omega_0,\ldots,\omega_{3n-1}).
+$$
+
+两个坐标各只取得一次；原始误差独立允许于闭区间 $[-d/2,d/2]$，即涵盖全部这样的误差对，不附加随机独立性前提。没有量化器、中间样本或独立 End 字段。外部单位位为零，没有相邻一，高位补零不改变来源身份。定义
+
+$$
+d_{n,K}=\min_{\substack{\omega,\nu\in D_{3(n+K)}\\
+P_n(\omega)\ne P_n(\nu)}}
+\|E_n(\omega)-E_n(\nu)\|_\infty,
+\qquad \mu_{n,K}=d_{n,K}-d,\qquad a_K=g^{-K}\mu_{n,K}.
+$$
+
+来源集有限，且零前缀与只在第 $3n-1$ 位为一的前缀均可补零实现，所以最小值有竞争对象且达到。$d$ 是推论34.6的无统一支持上界时的临界距离；$\mu_{n,K}$ 是加入证书后的额外距离。记 $T_{b,K}$ 为从 incoming guard $b\in\{0,1\}$ 出发、支持严格低于位 $3K$ 的实际有限尾标量集合，并令
+
+$$
+H_K=T_{1,K}-T_{0,K}.
+$$
+
+每条尾的位索引从自己的原点零开始。$T_{b,0}=\{0\}$，而零延长给出 $T_{b,K}\subseteq T_{b,K+1}$。对 $z\in\mathbb Q(t)$，撇号表示 $t'=-\phi$ 的代数共轭，$N(z)=zz'$ 表示域范数；特别地
+
+$$
+g'=-g^{-1},\qquad q'=s/q,\qquad
+\delta'=-st/q,\qquad d'=-\frac{t}{1+sq}.
+$$
+

@@ -1,0 +1,43 @@
+**证明。** 第一分量取 $\operatorname{int}H_1$ 的固定 $D$ 尾，所有后缀将 $H_1$ 送入对应闭扩张格，故只需检查第二分量。若 A 成立，固定编码周期点 $y$ 的合法周期尾；$F(y)=y$，每个槽的像落在对应实际取得集，故整个有限族可行。若 B 成立，取小的 $u>0$ 并令 $x=y+\eta u$。active 槽满足
+$$
+\operatorname{dist}(G_\alpha(y+\eta v),J_{c_\alpha})
+=\beta+\sigma_\alpha\gamma_\alpha\eta v<\beta
+\quad(0<v\le u),
+\tag{42.43}
+$$
+slack 槽由有限正间隙保持严格可行。因 $a>0$，
+$$
+F^n(x)=y+\eta a^n u,
+\tag{42.44}
+$$
+全部迭代留在同一单侧区间，因此一条固定合法尾支持每个有限词，包括空词。
+
+反设 $K_\omega\ne\varnothing$ 且 A 失败，取 $x\in K_\omega$，则 $x\ne y$；若 $a<0$，$x$ 与 $F(x)$ 在 $y$ 两侧，而二者均在 $T_\omega$，凸性迫使 $y\in T_\omega$，矛盾。因此 $a>0$。对任一 active 槽，闭可行性给
+$$
+\sigma_\alpha\gamma_\alpha(x-y)\le0.
+\tag{42.45}
+$$
+因为 $\gamma_\alpha\ne0$ 且 $x\ne y$，(42.45) 实际严格小于零，方向 $\eta=\operatorname{sign}(x-y)$ 满足 (42.41)，且从 $y$ 朝 $x$ 的小段仍在 guard 区间。故 B 成立。第一分量的固定 $D$ 尾与第二分量的固定 $\Omega$ 尾合并即得 (42.42)。B 供应非空单侧开区间，可再由 $D$ 密度选第二尾为 $D$；A 单独只保证周期 $\Omega$ 尾。$\square$
+
+若 $a<0$ 且存在 active 槽，取 $x,F(x)\in T_\omega$，则
+$$
+\sigma_\alpha\gamma_\alpha(x-y)\le0,\qquad
+a\,\sigma_\alpha\gamma_\alpha(x-y)\le0,
+$$
+只能有 $x=y$。所以
+$$
+a<0,\ \mathscr A\ne\varnothing
+\Longrightarrow
+K_\omega=
+\begin{cases}
+\{y\},&\mathrm A\text{ 成立},\\
+\varnothing,&\mathrm A\text{ 失败}.
+\end{cases}
+\tag{42.46}
+$$
+没有 active 槽时 A 自动成立，负斜率也可有非周期 guard 终尾。不能通过将奇长返回平方而消除固定全族中的 active 交替：原族允许其后返回数相差一的两个历史；若 active 只在 stem，这两个条件分别来自空返回词和一个返回词。只留下偶数块会改变原族。若额外要求 rival 终尾留在原 singleton 片 $\{y\}$，则唯一候选是 $y$，B 的非零扰动被该附加限制杀死，判据只剩 A。
+
+(42.42) 是 unrestricted guard criterion：$x$ 只需在真实终端 guard 区间 $I_r$ 中，并由固定来源词前接。第 38.7 节的 piece-restricted criterion 则把终尾限制在指定 $P_2$，并从中删除所有 pending 等式，得到 $K_2=P_2\setminus S_2^*$；二者不能混写。
+
+方向图接口还要求同一批已选 stem 和返回路径满足 (42.4)、两原片的逐色闭全包含，并且图上的 rival 参考值与词后缀值一致。B 使 $L$ 为偶数；将基点方向 $\eta$ 运输为返回位置 $j$ 的 $(-1)^{L-j}\eta$ 和 stem 位置 $j$ 的 $(-1)^{|Q|-j}\eta$，每条边翻转，两个返回在同一方向闭合，stem 到达该方向。合法 guard 前接保证全部运输方向合法，(42.41) 正好保证每个 active 所选边被闭方向图保留；反向从闭合提升读取基点方向就恢复 B。原 singleton 参考自身再通过所有归属槽恰为 A。因此在这个同路径图接口下，reference-owned 版本的闭合提升条件是 A 与 B 的合取，而固定混合终尾存在性是 A 与 B 的析取。族自身预算不自动使一个在更大预算供应的原片图满足这些全包含条件。
+

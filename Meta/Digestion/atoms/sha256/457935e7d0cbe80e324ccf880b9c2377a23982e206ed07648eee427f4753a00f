@@ -1,0 +1,18 @@
+**定义 3.1（自然移位与添位）。** 记 $\sigma\omega=(\omega_1,\omega_2,\ldots)$，$\Omega_i=\{\omega:\omega_0=i\}$，$K_i=\Omega_i\times G$。定义
+
+$$
+R(\omega,z)=h_0(\omega,z)=(0\omega,Mz),
+$$
+
+$$
+h_1:K_0\longrightarrow K_1,\qquad
+h_1(\omega,z)=(1\omega,\alpha+Mz),
+$$
+
+$$
+\delta:K\longrightarrow K,\qquad
+\delta(\omega,z)=(\sigma\omega,M^{-1}(z-\omega_0\alpha)).
+$$
+
+$R$ 是在最低端添加一个零；$R^3$ 才是添加一个三位零窗口。添一的守卫是原首位为零。$M^{-1}=\left(\begin{smallmatrix}-1&1\\1&0\end{smallmatrix}\right)$ 为整数矩阵，所以以上算术公式在 $G$ 上有意义。
+

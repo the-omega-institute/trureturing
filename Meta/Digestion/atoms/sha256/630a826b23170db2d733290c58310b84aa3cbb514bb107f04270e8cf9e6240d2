@@ -1,0 +1,25 @@
+**定理 10.1（No universal prime certificate on the unrestricted domain）。** Let $x=(a,b)\in X$ have prime quantity $n=q(x)$. For every positive $L$, the one actual source
+
+$$
+y_L=(a+Ln,b)
+$$
+
+has composite quantity, belongs to $F_L(x)$, and reproduces every future modular reading of $x$:
+
+$$
+q(y_L)=n(1+2L),\qquad
+\forall k\ge0,\quad O_L(M^ky_L)=O_L(M^kx).
+$$
+
+Consequently no finite layer, nor any finite prefix of the divisibility tower, universally certifies primality of $x$ on $X$.
+
+证明。The coordinates are nonnegative and not both zero, so $y_L$ is actual. Its difference from $x$ is $(Ln,0)$, whose coordinates are divisible by $L$. The quantity calculation is
+
+$$
+2(a+Ln)+3b=n+2Ln=n(1+2L).
+$$
+
+Both factors exceed 1 because $n\ge2$ and $L\ge1$. For every $k$, the coordinates of $M^k(y_L-x)$ remain divisible by $L$ because $M$ has integer entries. Applying $q$ proves the congruence for all times with this same witness. The full all-future fiber therefore contains both $x\in P$ and $y_L\notin P$, not merely two sources sharing a current reading. A finite tower prefix is covered by its last modulus, so the same obstruction applies.
+
+The exact quantifiers are $\forall L\,\exists y_L\,\forall k$. Theorem 9.2 rules out a distinct fixed actual $y$ that would work at all unbounded tower layers. The algebraic construction also gives a composite point for any integer quantity $n\ge2$, but its role here is to obstruct a certificate for a prime source. A known uniform source bound changes the admissible fibers, as specified in §12. $\square$
+

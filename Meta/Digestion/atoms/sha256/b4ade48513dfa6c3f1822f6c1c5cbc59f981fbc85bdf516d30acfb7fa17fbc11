@@ -1,0 +1,34 @@
+**定理58.8（有限帽的精确组合率）。** 令 $z$ 标记实际观察长度。cap $R$ 的单个返回、全部有限外列表及非空外列表的生成函数分别为
+
+$$
+\mathcal B_R(z)=\frac{z^6\sum_{r=1}^Rz^{20r}}{1-z^6},\qquad
+\mathcal F_R(z)=\frac1{1-\mathcal B_R(z)}
+=\frac{1-z^6}{1-z^6\sum_{r=0}^Rz^{20r}},
+$$
+
+$$
+\mathcal T_R(z)=\mathcal F_R(z)-1
+=\frac{z^6\sum_{r=1}^Rz^{20r}}
+{1-z^6\sum_{r=0}^Rz^{20r}}.
+\tag{58.28}
+$$
+
+两模板完整有限历史的精确生成函数为 $z^{26}\mathcal F_R(z)$、$z^{52}\mathcal F_R(z)$。这些函数数的是规定列表、不同实际历史和不同同长第一来源，三者一一对应。
+
+存在唯一 $z_R\in(0,1)$ 满足
+
+$$
+z_R^6\sum_{r=0}^Rz_R^{20r}=1,\qquad
+\alpha_R=-\log_2z_R>0.
+\tag{58.29}
+$$
+
+若 $f_n^{(R)}$ 为返回总长恰为 $2n$ 的非空列表数，则
+
+$$
+\log_2 f_n^{(R)}=2\alpha_Rn+O_R(1)\quad(n\ge39).
+\tag{58.30}
+$$
+
+因此两个完整有限帽语言的精确长度 limsup 率均为 $\alpha_R$；所有奇数长度计数为零，不能把这个 limsup 换成跨全部整数长度的普通极限。
+

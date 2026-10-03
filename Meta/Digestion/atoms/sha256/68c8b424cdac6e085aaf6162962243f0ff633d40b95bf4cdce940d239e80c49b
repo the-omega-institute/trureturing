@@ -1,0 +1,9 @@
+**定理 62.22（必要的下极限存储系数）。** 固定归属及本章所列任一实际误差合同。每个满足完整恢复合同的解码器 $\mathcal A$ 都满足
+
+$$
+\liminf_{N_{\rm obs}\to\infty}
+\frac{B^{\rm worst}_{b,\mathcal A}(N_{\rm obs})}{N_{\rm obs}}
+\ge\eta_b.
+\tag{62.49}
+$$
+

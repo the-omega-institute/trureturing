@@ -1,0 +1,22 @@
+### 41.1　正余量主定理
+
+令 $0\le b<c<\lambda$，$\Delta=c-b>0$，并置
+
+$$
+q_\Delta=\left\lceil\frac{D_X}{(1-g)\Delta}\right\rceil+1,\qquad N_\Delta=64q_\Delta^2.
+$$
+
+则存在一个至多含 $8q_\Delta$ 个单来源顶点的有限闭片表示。记 $\mathcal L_a(w)$ 为真实完整来源在预算 $a$ 下实现颜色词 $w$ 的集合，有限词只约束已取得的 出发坐标，空词不施加颜色约束；记 $\mathcal L_{\rm mesh}(w)$ 为下述完整无限网格路径语言，则对每个有限或无限 $w$ 有
+
+$$
+\mathcal L_b(w)\subseteq\mathcal L_{\rm mesh}(w)\subseteq\mathcal L_c(w).
+$$
+
+有序单来源乘积至多含 $N_\Delta$ 个成对顶点。若 $b$ 有闭分支族，则 $c$ 的成对表示有可达含环 SCC，其第一来源投影不相干；可取得两个同基点返回，未同步时每个返回的长度和分歧边数至多 $2N_\Delta-1$。同步并改根到一条来源边的末端后，有一条出发边前缀和两条等长不相干返回，返回共同长度至多
+
+$$
+2N_\Delta(2N_\Delta-1).
+$$
+
+该字族还有 $\theta\in\mathbb Q(t)$ 满足 $R\le\theta\le c$，其中 $R$ 是完整闭图不相干分支预算集合的下确界。下面证明这些断言，并始终分开网格余量 $c-b$ 与实际化余量 $\nu-\theta$。
+

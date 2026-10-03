@@ -1,0 +1,9 @@
+**定理 59.12（有限高串率趋近完整帽率）。** 对每个固定 $K\ge2$，有
+
+$$
+\zeta_{K,L}\text{ 随 }L\text{ 严格下降},\qquad
+\boxed{\zeta_{K,L}\downarrow z_K,\quad
+\gamma_{K,L}\uparrow\alpha_K.}
+\tag{59.59}
+$$
+

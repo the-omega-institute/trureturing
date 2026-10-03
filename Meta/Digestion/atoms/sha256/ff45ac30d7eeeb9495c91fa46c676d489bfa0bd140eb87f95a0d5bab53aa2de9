@@ -1,0 +1,11 @@
+**定理 59.13（两个模板与三个合同的左连续性）。** 固定整数 $K\ge2$。对每个固定模板 $\mathsf T\in\{\mathsf O,\mathsf A\}$、固定合法归属 $o$ 及 $\kappa\in\{\mathrm{cl},\mathrm{st},\mathrm{rm}\}$，在 $Q_K<b<\Psi_K$ 中始终绑定 $K(b)=K$，有
+
+$$
+\boxed{\lim_{b\uparrow\Psi_K}\eta^{\mathsf T}_{b,o,\kappa}
+=\alpha_K
+=\eta^{\mathsf T}_{\Psi_K,o,\kappa}.}
+\tag{59.61}
+$$
+
+平台本身仍准确为 $\Psi_K\le b\le Q_{K+1}$。在任何一个固定过渡预算下，(59.34) 的严格上端仍成立。
+

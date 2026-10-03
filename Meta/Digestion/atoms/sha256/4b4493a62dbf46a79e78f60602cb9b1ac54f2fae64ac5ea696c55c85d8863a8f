@@ -1,0 +1,25 @@
+### 37.5 有限终边界、CRT 规则与共同实现
+
+现在只给有限终端数据。对已知 $m,\ell\ge1$、$n,k\ge0$，定义
+
+$$
+R=R^{\rm fin}_{m,\ell;n,k}(p)=
+\left((\sigma^n\omega)|_k,\ z_n\bmod\ell,\ (c_j\bmod m)_{j<n}\right),
+$$
+
+$$
+d=\gcd(m,\ell),\qquad L=\operatorname{lcm}(m,\ell),\qquad a=m/d=L/\ell,
+$$
+
+$$
+J_L=(\omega|_{n+k},z_0\bmod L).
+$$
+
+$W_t$ 表示全部合法长度 $t$ 词，$W_0=\{\varepsilon\}$。$R=f(J_L)$，目标集合是 $\mathcal J=W_{n+k}\times(\mathbb Z/L\mathbb Z)^2$，令 $\mathcal F_\rho=f^{-1}\{\rho\}$；纤维只在有限集合上取，且只对达到的观察值 $\rho\in f(\mathcal J)$ 取最大值。$n=0$ 时仍以 $J_L=(\omega|_k,z_0\bmod L)$ 为目标；不能把目标模数改成 $\ell$。
+
+设终端词为 $w$、终端向量余数为 $r\bmod\ell$、保存读数为 $b_j\bmod m$。令
+
+$$
+t_u=\sum_{i<|u|}u_iM^i\alpha.
+$$
+
