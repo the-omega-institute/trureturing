@@ -65,13 +65,13 @@ def claim : Prop :=
 
 /-! The counterexample, computed over the Gaussian integers. -/
 
-private def pauliZ : Pauli → Matrix (Fin 2) (Fin 2) GaussianInt
+def pauliZ : Pauli → Matrix (Fin 2) (Fin 2) GaussianInt
   | .I => !![1, 0; 0, 1]
   | .X => !![0, 1; 1, 0]
   | .Y => !![0, ⟨0, -1⟩; ⟨0, 1⟩, 0]
   | .Z => !![1, 0; 0, -1]
 
-private def wordZ (g : Fin 3 → Pauli) : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) GaussianInt :=
+def wordZ (g : Fin 3 → Pauli) : Matrix (Fin 3 → Fin 2) (Fin 3 → Fin 2) GaussianInt :=
   Matrix.of fun x y => ∏ i, pauliZ (g i) (x i) (y i)
 
 /-- The fiducial `(-1 + 2i, 1, …, 1)` of Hoggar's lines, read on the three-qubit labels through the
@@ -84,7 +84,7 @@ private def βw (g : Fin 3 → Pauli) : Fin 2 :=
   if star vZ ⬝ᵥ (wordZ g *ᵥ vZ) = 4 then 0 else 1
 
 /-- The base-4 digit of a Pauli label, inverse to `sigmaOfDigit` on `{0, 1, 2, 3}`. -/
-private def pauliDigit : Pauli → ℕ
+def pauliDigit : Pauli → ℕ
   | .I => 0
   | .X => 1
   | .Y => 2
