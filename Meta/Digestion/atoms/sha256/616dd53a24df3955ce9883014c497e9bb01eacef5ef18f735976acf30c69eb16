@@ -1,0 +1,18 @@
+### 31.5 回接第30节与 FIB
+
+第30节中的四视图在本有限模型中分别进入：
+
+* \(\operatorname{Space}_\sigma\) 与 \(B\) 进入 \(v_0\) 或其指定静态细化；
+* 原子标识 \(\iota\)、动作 \(a\)、失败/读数 \(\lambda\) 进入 \((\ell,y)\)；
+* 路径 grade 通过 \(d\) 的加法运输；
+* 未来续接记忆由 \(\Pi_\ast\) 的行为类承担。
+
+对 FIB，\(\alpha,\beta\) 仍只是自由树的叶生成元；有序配对和 \(\rho\) 生成源结构与纪元变化。真正进入 \(K_a\) 的是带游标、来源、绝对纪元、参考和权限合同的 ReadTag、DownL、DownR、Up、ApplyRho 动作。因而一个可执行的最小边界应至少形如
+
+$$
+(\text{sort},\text{cursor},\text{reference/permission},[s]_{\Pi_\ast}),
+\tag{EX.3112}
+$$
+
+其中最后一项是指定未来任务的稳定行为类；只保存 \(\alpha,\beta\) 计数、当前端点或来源边缘后验，不能保证下一次 DownL/DownR 的合法性和读出。
+

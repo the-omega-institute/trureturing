@@ -1,0 +1,19 @@
+**分离例（§33.4 的 $C_3$ 工作态图的档案提升）。** 取固定 source/epoch/type，
+完整状态为 $(n\bmod3,a^n)$，其中 $a^n$ 是档案，根为 $(0,\varepsilon)$；唯一动作
+$a$ 把状态送到 $((n+1)\bmod3,a^{n+1})$，单步 grade 为一。事件、任务读出和 support
+均为常量，边界合同不查询档案或 grade；该合同下所有有限续接响应相同。令被动记忆为 $M=\beta$。则 $\varepsilon$ 与 $a$ 具有相同的
+Boundary 和 Memory，但 work-state 端点分别为 $0$ 与 $1$，累计 grade 分别为 $0$ 与
+$1$。另一方面，$\varepsilon$ 与 $a^3$ 在 $C_3$ 中具有相同 work-state 端点 $0$、
+相同常量 support 和相同 Boundary，却有不同累计 grade $0$ 与 $3$。这里
+$\eta_{\rm cfg}(\varepsilon)=\eta_{\rm cfg}(a^3)$ 只说明 configuration/work-state projection 相同；相应的
+完整 archive 已使它们在 $\mathsf J_R$（运行时在
+$\mathsf J_R^{\mathrm{run}}$）中是不同的联合元。因此不存在
+从该粗边界/记忆自动恢复端点或 grade 的结论。更丰富的 archive 可以把路径或来源
+字段加入 $M$ 并细化其核；该例证明的是缺少自动恢复，而不是任何丰富记忆都不可
+恢复。它也说明完整有序路径与累计 grade 必须保持为不同分量。
+
+本节给出 §30 四视图、§31 联合核、§32 行为同余及 §33 端点核之间的共同来源接口；
+因子化判据复用已有结果，新增部分明确完整状态与工作态投影、取得合同及运行档案之间的对应。本节保持 theory-only 边界：无
+Lean 证明、无 FIB 实例化或完成、无物理时空完成。未声明的 support、取得权限、跨
+source 比较和非确定性/概率提升仍属 open 边界。
+

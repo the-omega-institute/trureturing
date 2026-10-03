@@ -1,0 +1,44 @@
+### 35.4 取得码的动态闭合
+
+静态核相等还不足以让取得码成为一个可运行的边界。设 $e$ 是声明的带类型操作，
+在完整历史上有部分后继
+
+$$
+T_e:H_R\longrightarrow\operatorname{Option}(L_e\times H_R),
+$$
+
+并假定执行成功或失败的事件标签都属于 $L_e$。若该操作在取得合同下保持比较域，
+把所有仍在 $D_K$ 中的后继写成
+
+$$
+T_e^K:D_K\longrightarrow\operatorname{Option}(L_e\times D_K).
+$$
+
+要在取得码上定义后继，必须有一个
+
+$$
+\overline T_{e,K}:\operatorname{im}(c_K)
+\longrightarrow
+\operatorname{Option}(L_e\times\operatorname{im}(c_K))
+\tag{PG.3509}
+$$
+
+使下图交换：
+
+$$
+\boxed{
+c_K\,T_e^K=\overline T_{e,K}\,c_K
+}
+\tag{PG.3510}
+$$
+
+这里的等式按 `Option` 和事件标签逐项解释。它成立的充分且必要条件是：对任意
+$h,k\in D_K$，若 $c_K(h)=c_K(k)$，则 $T_e^K(h)$ 与 $T_e^K(k)$ 同时
+非法或同时合法；合法时事件标签相同，并且后继仍在 $D_K$ 且取得码相同。若操作会
+改变 source、epoch、reference class 或 permission type，则必须把新的比较域和新的
+取得码一并声明，不能沿用旧的静态因子化。
+
+这正是“边界是可继续使用的关系状态”的条件。仅有 (PG.3505) 而没有 (PG.3510)，
+取得码只是一次性报告；仅有工作态后继相同而没有档案和事件相容，也不能推出同一段
+FIB 过程。
+
