@@ -27871,3 +27871,113 @@ despite the fact that the global (q)-fibre count in (PV1) would only record
 the weaker (1\le2).  This is a finite source/service fixture, not a whole
 cover; it demonstrates why the unserved term in (PFV6) cannot be silently
 treated as a vacant label.
+
+## 241. A complete odd fibre has a three-patch ternary boundary
+
+The unserved term in (PFV6) has a sharp local interface in the $p=3$
+Type-I branch.  The statement below is only about a complete odd fibre.  It
+does not assert that the private part of an occupied class contains such a
+fibre, or that the local patches extend to a whole covering system.
+
+Keep the notation of Section 208:
+
+\[
+ Q=3^eM,\qquad 3\nmid M,\qquad N=Q/3=3^{e-1}M.
+\tag{TF3.1}
+\]
+
+Let
+\[
+ H_i=[a_i]_{3^e s_i}\qquad (1\le i\le4),\qquad s_i\mid M,
+\tag{TF3.2}
+\]
+be four distinct proper high classes.  On an $N$-fibre with base $y$,
+put
+\[
+ g_i=3^{e-1}s_i.
+\tag{TF3.3}
+\]
+The class $H_i$ is active on that fibre exactly when
+$y\equiv a_i\pmod {g_i}$.  If active, its restriction to
+$y+N\mathbb Z$ has index $3$, hence occupies one ternary phase
+$t\equiv\beta_i(y)\pmod3$.  Let $Y_0\subseteq\mathbb Z/N\mathbb Z$ be a
+set of fibre bases such that every fibre $y+N\mathbb Z$, $y\in Y_0$, is
+complete in the liability and is covered by the four classes $H_i$.
+
+Then every $y\in Y_0$ has at least three active classes.  Moreover, some
+three active classes have the three distinct phases
+$0,1,2\pmod3$.  Consequently
+
+\[
+ \boxed{
+ \frac{|Y_0|}{N}
+ \le
+ \sum_{\substack{J\subseteq\{1,2,3,4\}\\|J|=3}}
+ \frac1{\operatorname{lcm}(g_i:i\in J)}
+ =
+ 3^{-(e-1)}
+ \sum_{\substack{J\subseteq\{1,2,3,4\}\\|J|=3}}
+ \frac1{\operatorname{lcm}(s_i:i\in J)} .
+ }
+\tag{TF3.4}
+\]
+
+If a low class $C=[c]_d$, $d\mid N$, is also present, let $Y$ be a base set of
+complete liable fibres covered by $C,H_1,H_2,H_3,H_4$.  The low class contains
+exactly the bases $y\equiv c\pmod d$, so
+
+\[
+ \boxed{
+ \frac{|Y|}{N}
+ \le \frac1d+
+ 3^{-(e-1)}
+ \sum_{\substack{J\subseteq\{1,2,3,4\}\\|J|=3}}
+ \frac1{\operatorname{lcm}(s_i:i\in J)} .
+ }
+\tag{TF3.5}
+\]
+
+### Proof
+
+An active high class contributes only one residue of the ternary parameter
+on a complete fibre.  Two active classes therefore cover at most two of the
+three ternary tails.  Thus a covered complete fibre has at least three
+active classes, and any active triple that covers it has pairwise distinct
+phases.  For a triple $J$, simultaneous activity is the residue condition
+
+\[
+ y\equiv a_i\pmod {g_i}\qquad(i\in J).
+\tag{TF3.6}
+\]
+
+It is either empty or one residue class modulo
+$\operatorname{lcm}(g_i:i\in J)$, whose density in
+$\mathbb Z/N\mathbb Z$ is the reciprocal of that modulus.  The preceding
+paragraph gives a cover of $Y_0$ by the four triple-activity sets.  Summing
+their densities proves (TF3.4).  Since each $g_i$ has the common factor
+\(3^{e-1}\), its displayed second form follows.  The bases served by $C$
+form one residue class modulo $d$; adjoining that class and using the union
+bound gives (TF3.5).  The argument uses the complete integer lifts in each
+fibre, not only a count of bases.
+
+For an EB1 five-class Type-I repair, the low-plus-four-high pattern therefore
+has the necessary modulus-sum comparison
+
+\[
+ d+3^e(s_1+s_2+s_3+s_4)\ge \Sigma_h,
+\tag{TF3.7}
+\]
+
+where \(\Sigma_h\) is the five-label packet cost from Section 208.  A repair
+with four high classes and no low class has only four classes and is excluded
+already by the class-count coordinate of EB1.  Equation (TF3.7) is a
+necessary tie condition; it does not show that a source-compatible repair
+attains the density bound.
+
+The finite check
+[`verify_full_fibre_three_patch_barrier.py`](../../../frontier/cover-geometry/full-fibre-three-patch-barrier/verify_full_fibre_three_patch_barrier.py)
+enumerates the induced odd restrictions and confirms that an inclusion-minimal
+cover of a complete odd fibre by at most three proper restrictions is exactly
+three index-$3$ phases.  This is the local PFV6 interface only.  It neither
+proves that a private fibre is present nor supplies a whole-cover replacement,
+so PFV6 and the unrestricted Erdős--#7 conclusion remain open.

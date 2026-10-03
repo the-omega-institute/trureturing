@@ -1,0 +1,5 @@
+{
+  "exhaustive_restriction_checks": 13849,
+  "scope": "On a complete odd fibre, an inclusion-minimal cover by at most three proper odd restrictions is exactly three index-3 phases; this is a local PFV6 interface check, not a whole-cover result.",
+  "status": "PASS"
+}
