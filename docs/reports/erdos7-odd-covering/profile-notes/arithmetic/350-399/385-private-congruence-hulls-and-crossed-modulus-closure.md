@@ -27857,20 +27857,20 @@ and (a=v_3(L)=1<v_3(Q)=2).  Then
  =\{9,45,63,99,315,495,693,3465\}.
 \]
 
-If the private part of (A) meets only (F_0,F_1), and the occupied label
-9 has the phase containing (F_0) while all other candidate labels are
-phase-incompatible, then (r_{A,3}=2), (f_3=0), and (g_{A,3}=1).  The
-inequality (PFV5) is tight:
+If the private part of (A) meets only (F_0,F_1), take every label in
+\(\mathcal U_3\) to be occupied with a phase incompatible with both private
+fibres.  Then (r_{A,3}=2), (f_3=0), and (g_{A,3}=0), so (PFV5) reads
 
 \[
- 0+1=2-1.
+ 0+0\le 2-1.
 \]
 
-There is no candidate-only strict repair for the remaining private fibre,
-despite the fact that the global (q)-fibre count in (PV1) would only record
-the weaker (1\le2).  This is a finite source/service fixture, not a whole
-cover; it demonstrates why the unserved term in (PFV6) cannot be silently
-treated as a vacant label.
+This finite source/service fixture only shows that an unserved private fibre
+is not a vacancy.  The verifier also contains a separate abstract
+one-vacancy strict-trigger control with (f_3=1) and (g_{A,3}=1); that control
+checks the cardinality implication but does not use the inherited definition
+\(E_A=A\setminus\mathcal U_3\).  Neither fixture is a whole-cover
+realization.
 
 ## 241. A complete odd fibre has a three-patch ternary boundary
 

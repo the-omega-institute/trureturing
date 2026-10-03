@@ -101,18 +101,21 @@ def main() -> None:
     p, q, e, L = 5, 3, 2, 231
     a, R, U = candidate_labels(p, q, e, L)
     # Partial q-height: a=v_3(L)=1, while the common period may have
-    # v_3(Q)=2.  All candidate labels are occupied, but only 9 serves F_0.
+    # v_3(Q)=2.  All candidate labels are occupied and phase-incompatible
+    # with both private fibres.  Under E_A=A\U no retained candidate can
+    # service a fibre that remains in E_A.
     occupied = {u: 1 for u in U}
-    occupied[9] = 0
     result = check_interface(p, q, e, L, {0, 1}, occupied)
     assert (a, R) == (1, 1155)
     assert U == [9, 45, 63, 99, 315, 495, 693, 3465]
-    assert result['f'] == 0 and result['g'] == 1 and result['r'] == 2
+    assert result['f'] == 0 and result['g'] == 0 and result['r'] == 2
     assert not result['strict_trigger']
 
-    # Make one label vacant and phase it for F_1.  The source replacement now
-    # has one fresh candidate, hence two new local classes versus six old ones.
-    occupied_one_vacancy = dict(occupied)
+    # Abstract interface control: one vacancy and a phase serving F_0.  This
+    # is not an inherited E_A=A\U fixture; it only checks the cardinality
+    # implication used by the vacancy lemma.
+    occupied_one_vacancy = {u: 1 for u in U}
+    occupied_one_vacancy[9] = 0
     del occupied_one_vacancy[45]
     improved = check_interface(p, q, e, L, {0, 1}, occupied_one_vacancy)
     assert improved['f'] == 1 and improved['g'] == 1
@@ -122,7 +125,7 @@ def main() -> None:
         'status': 'PASS',
         'exhaustive_interface_checks': checks,
         'partial_height_fixture': result,
-        'one_vacancy_strict_fixture': improved,
+        'abstract_one_vacancy_strict_fixture': improved,
         'scope': ('Private-fibre source-replacement interface for q<p, '
                   'including a<v_q(Q); no whole-cover realization or '
                   'unrestricted Erdos-7 conclusion.'),

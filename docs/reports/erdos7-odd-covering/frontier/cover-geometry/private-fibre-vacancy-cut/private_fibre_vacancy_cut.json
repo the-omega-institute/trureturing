@@ -1,6 +1,5 @@
 {
-  "exhaustive_interface_checks": 230,
-  "one_vacancy_strict_fixture": {
+  "abstract_one_vacancy_strict_fixture": {
     "R": 1155,
     "a": 1,
     "candidate_labels": [
@@ -28,6 +27,7 @@
       45
     ]
   },
+  "exhaustive_interface_checks": 230,
   "partial_height_fixture": {
     "R": 1155,
     "a": 1,
@@ -42,15 +42,13 @@
       3465
     ],
     "f": 0,
-    "g": 1,
+    "g": 0,
     "private": [
       0,
       1
     ],
     "r": 2,
-    "served": [
-      0
-    ],
+    "served": [],
     "strict_trigger": false,
     "vacant": []
   },
