@@ -1,0 +1,6 @@
+## Scope and notation
+
+The offsets and both roots are real. Only the scale and the quotient are integers. Write $N=S^2$, interpreting the integer $S$ as a real number in the norm equations. All three offsets belong to one interval containing zero, not three independently selected intervals. This is a conditional arithmetic estimate, not a solution of Grimm's conjecture or a proof that an original owner system supplies its premises.
+
+The supplied mathematical input is the caller's three-row common-short-hull candidate, with the earlier ordinary integer square-norm argument as context. The argument below is an ordinary derivation using ordered real arithmetic; no external literature or novel-priority assertion is needed. The local implementation and the independent unfrozen review have separate roles; a single implementation does not establish model diversity or consensus.
+
