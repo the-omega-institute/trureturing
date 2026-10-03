@@ -5264,3 +5264,520 @@ c_\#\pi_0=c_\#\pi_1=\delta_{(a,b)},\qquad
 \]
 
 **范围边界。** 这些结论只针对静态源律和完整 quantity trajectory 这一观测映射；若加入叶序窗口、路径、输运时间、受控操作或跨探针 joint coupling，须重新计算观测推前，以上零总变差结论不自动延伸。结果也不声称 composition 推前可由数量轨迹反演，不把隐藏性质下界解释成物理噪声、热流或普适统计定律；它只说明在未增加能切开纤维的观测前，composition 因子化带来的信息缺口具有上述 minimax 代价。
+
+
+## 50. 杀死链的准平稳谱、Yaglom 极限与 Doob 变换
+
+本节把第12节的有限 FIB 杀死链从首达时间读出扩展到长期存活条件下的空间律。准平稳分布和条件化过程依赖杀死核与初态协议，不由源递归单独选择。
+
+**定理 50.1（有限 FIB 杀死链的准平稳谱）。** 固定第12.1节的单位速度链，令 \(K_j\) 为暂态集合 \(\{0,\ldots,L_j-1\}\) 上的子核，
+\[
+\tau_j=\inf\{n\ge0:X_n=L_j\}.
+\]
+令 \(p_{j,i}=\theta/r_{(W_j)_i}\)，并令 \(K_j\) 的 Perron 根为 \(\lambda_{j,0}\)，取正的 Perron 向量 \(\phi_{j,0}\)，归一化为
+\[
+\sum_{i=0}^{L_j-1}\phi_{j,0}(i)^2=1.
+\]
+因为每条内部边的两个方向概率相同，\(K_j\) 对计数测度自伴；状态 \(0\) 的正持留概率使该有限连通核 primitive。取按计数内积正交归一的完整特征系
+\[
+(\lambda_{j,m},\phi_{j,m})_{0\le m<L_j},
+\qquad
+\lambda_{j,0}>\lvert\lambda_{j,m}\rvert\quad(1\le m<L_j).
+\]
+因此
+\[
+0<\lambda_{j,0}<1,\qquad
+\eta_j:=
+\begin{cases}
+\displaystyle\max_{1\le m<L_j}\frac{|\lambda_{j,m}|}{\lambda_{j,0}},&L_j\ge2,\\[6pt]
+0,&L_j=1,
+\end{cases}
+\quad \eta_j<1.
+\]
+定义
+\[
+\pi_j(i)=\frac{\phi_{j,0}(i)}{\sum_a\phi_{j,0}(a)}.
+\]
+则 \(\pi_j\) 是唯一准平稳分布，满足
+\[
+\pi_jK_j=\lambda_{j,0}\pi_j,\qquad
+\mathbb P_{\pi_j}(X_n=i\mid\tau_j>n)=\pi_j(i),\qquad
+\mathbb P_{\pi_j}(\tau_j>n)=\lambda_{j,0}^{\,n}.
+\]
+对任意暂态初态律 \(\mu_j\)，有
+\[
+\mathbb P_{\mu_j}(X_n=i,\tau_j>n)
+=\sum_m\lambda_{j,m}^{\,n}
+\langle\mu_j,\phi_{j,m}\rangle\phi_{j,m}(i),
+\]
+从而在固定 \(j\) 后令 \(n\to\infty\) 得
+\[
+\lambda_{j,0}^{-n}\mathbb P_{\mu_j}(\tau_j>n)
+\longrightarrow
+\left(\sum_a\mu_j(a)\phi_{j,0}(a)\right)
+\left(\sum_i\phi_{j,0}(i)\right),
+\]
+且
+\[
+\left\|\mathcal L_{\mu_j}(X_n\mid\tau_j>n)-\pi_j\right\|_{\mathrm{TV}}
+=O_{\mu_j}(\eta_j^n).
+\]
+
+**证明。** 对称性、连通性和 \(0\) 点自环给出 Perron–Frobenius 的正简单首特征值。有限维谱展开直接给出生存质量和条件分布的首项；由于 \(\mu_j\) 非负且 \(\phi_{j,0}>0\)，首项系数严格为正，余项由 \(\eta_j^n\) 控制。
+
+**定理 50.2（准平稳测度的连续极限）。** 在第10.2节 Green 核一致收敛、固定简单模态的谱扰动以及第12.3节路径极限均成立的条件下，对每个固定 \(m\ge0\)（并取 \(j\) 足够大使 \(m<L_j\)），
+\[
+\frac{1-\lambda_{j,m}}{\epsilon_j}
+\longrightarrow
+\kappa_m=D\left(m+\frac12\right)^2\pi^2,
+\]
+若 \(J_j\phi\) 表示在区间 \([i/L_j,(i+1)/L_j)\) 上取值 \(\phi(i)\) 的阶梯嵌入，则归一化特征函数满足
+\[
+\sqrt{L_j}\,J_j\phi_{j,m}\longrightarrow
+e_m(u)=\sqrt2\cos\left((m+\tfrac12)\pi u\right).
+\]
+因此
+\[
+\Pi_j:=\sum_{i=0}^{L_j-1}\pi_j(i)\,\delta_{i/L_j}
+\Rightarrow
+\Pi(du):=\frac\pi2\cos\left(\frac{\pi u}{2}\right)du.
+\]
+声明的数学连续模型是 \(0\) 反射、\(1\) 杀死、扩散系数 \(D\) 的过程。若初态律 \(\nu_0\) 在 \([0,1)\) 上有正质量，则固定 \(\nu_0\) 后令 \(t\to\infty\) 有
+\[
+\mathbb P_{\nu_0}(\tau>t)
+\sim
+\left(\int e_0\,d\nu_0\right)
+\left(\int_0^1e_0(u)\,du\right)e^{-\kappa_0t},
+\qquad
+\kappa_0=\frac{D\pi^2}{4},
+\]
+以及 Yaglom 极限
+\[
+\mathcal L_{\nu_0}(Z_t\mid\tau>t)\Rightarrow\Pi.
+\]
+这里的极限顺序是先固定初态和连续模型，再令 \(t\to\infty\)；它不提供任意 \(t=t_j\) 下的离散—连续联合极限。
+
+**推论 50.3（有限链与连续链的 Doob \(h\) 变换）。** 令 \(h_j=\phi_{j,0}\)，定义
+\[
+K_j^h(i,k)=\frac{K_j(i,k)h_j(k)}{\lambda_{j,0}h_j(i)}.
+\]
+这是暂态状态空间上的随机核，不变律为
+\[
+\widehat\pi_j(i)=\frac{h_j(i)^2}{\sum_a h_j(a)^2}.
+\]
+对固定 \(j\) 和固定路径长度 \(n\)，令 \(N\to\infty\)，则
+\[
+\mathcal L_{\mu_j}\bigl((X_0,\ldots,X_n)\mid\tau_j>N\bigr)
+\Longrightarrow
+\mu_j^h(i_0)\prod_{r=0}^{n-1}K_j^h(i_r,i_{r+1}),
+\]
+其中
+\[
+\mu_j^h(i)=\frac{\mu_j(i)h_j(i)}{\sum_a\mu_j(a)h_j(a)}.
+\]
+连续极限中 \(h=e_0\) 时，条件化过程的生成元为
+\[
+\mathcal L^h f
+=h^{-1}\bigl(D(hf)''+\kappa_0hf\bigr)
+=Df''-D\pi\tan\left(\frac{\pi u}{2}\right)f',
+\]
+其不变密度为 \(h(u)^2=2\cos^2(\pi u/2)\)。该漂移是“在长期存活条件下”的 Doob 变换项，不是 FIB 递归内生的物理外力。
+
+FIB 递归在这里提供 \(L_j=F_{j+1}\)、\(N_j=F_{j+3}\) 及相应词序；给定外加参数 \(\delta,r_\alpha,r_\beta,\theta\) 后，所声明模型再定义 \(r_i\)、\(\epsilon_j=\delta/N_j^2\)、累计阻抗 \(\overline r\) 和 \(D=\theta\varphi^4/(\delta\overline r)\)。准平稳律、杀死边界、初态协议和条件化过程仍是外加统计模型。若允许 \(r_\alpha=r_\beta\)、\(\theta=r_\alpha/2\)，第13.4节的近负一高频模态可使 \(\eta_j\to1\)，所以不能宣称原阶梯时钟下存在 uniform-in-\(j\) 的 Yaglom 速率，也不能任意交换 \(j\to\infty\) 与 \(n\to\infty\)。
+
+物理上可把 \(\Pi\) 类比为阻抗 FIB 链中长期幸存粒子的空间剖面，把 Doob 过程类比为把陷阱条件化为“永不命中”的路径律；这些名称不推出真实热流、势能、热浴或物理普适性。
+
+## 51. 有限 FIB 杀死图的占用倾斜、首达压力与条件大偏差
+
+准平稳谱描述长期存活，指数倾斜则描述在存活条件下偏好某种占用率的路径族。为避免把这种压力误读成物理自由能，本节把所有有限状态和时间假设写出。
+
+**定理 51.1（占用倾斜—首达压力）。** 固定一个有限 FIB 状态图及其已声明转移矩阵 \(Q_m\)。取互不相交的活跃集 \(S\)、目标集 \(H\) 和杀死态 \(\dagger\)，令
+\[
+K=Q_m|_{S\times S},\qquad
+b_H(i)=\sum_{h\in H}Q_m(i,h),
+\]
+并把离开 \(S\cup H\) 的质量并入 \(\dagger\)。设 \(K\) primitive、\(H\) 从 \(S\) 可达，初态律为 \(\nu\)，且 \(\nu\) 对 Perron 右向量有正投影。对有界占用 \(c:S\to\mathbb R\)，令
+\[
+N_T=\sum_{t=0}^{T-1}c(X_t),\quad
+D_\vartheta=\operatorname{diag}(e^{\vartheta c(i)}),\quad
+K_\vartheta=D_\vartheta K,\quad
+h_\vartheta=D_\vartheta b_H.
+\]
+令
+\[
+\tau_\partial=\inf\{t\ge1:X_t\notin S\},\qquad
+\tau_\dagger=\inf\{t\ge1:X_t=\dagger\},\qquad
+\tau_H=\inf\{t\ge1:X_t\in H\}.
+\]
+按上述把所有离开 \(S\cup H\) 的质量并入 \(\dagger\) 的构造，有
+\(\tau_\partial=\tau_H\wedge\tau_\dagger\)。
+则有限时域和首达系数精确为
+\[
+Z_T(\vartheta):=\mathbb E_\nu[e^{\vartheta N_T};\tau_\partial>T]
+=\nu^{\mathsf T}K_\vartheta^T\mathbf1,
+\]
+\[
+p_n(\vartheta):=\mathbb E_\nu[e^{\vartheta N_{\tau_H}};\tau_H=n+1<\tau_\dagger]
+=\nu^{\mathsf T}K_\vartheta^n h_\vartheta.
+\]
+因此
+\[
+G_\vartheta(z)=\sum_{n\ge0}z^{n+1}p_n(\vartheta)
+=z\,\nu^{\mathsf T}(I-zK_\vartheta)^{-1}h_\vartheta,
+\]
+其收敛半径为 \(\rho(K_\vartheta)^{-1}\)。
+
+令 \(\rho(\vartheta)=\rho(K_\vartheta)\)、\(\psi(\vartheta)=\log\rho(\vartheta)\)。Perron–Frobenius 理论给出
+\[
+\lim_{T\to\infty}\frac1T\log Z_T(\vartheta)=\psi(\vartheta),
+\qquad
+\lim_{n\to\infty}\frac1n\log p_n(\vartheta)=\psi(\vartheta).
+\]
+第二个极限使用 primitive；若 \(K\) 仅不可约而有周期，逐点首达系数可能在部分剩余类为零，只能改写为周期子列或 limsup。特别地，未倾斜生存尾的指数率是 \(\log\rho(K)<0\)；若只累计“在 \(T\) 前命中”的概率，则其对数除以 \(T\) 的极限在 \(\rho(K)<1\) 时为 \(0\)，不能直接写成 \(\log\rho(K)\)。
+
+令 \(r_\vartheta,\ell_\vartheta>0\) 为右、左 Perron 向量，归一化 \(\ell_\vartheta^{\mathsf T}r_\vartheta=1\)，并令
+\[
+\widehat K_\vartheta(i,k)=
+\frac{K_\vartheta(i,k)r_\vartheta(k)}
+{\rho(\vartheta)r_\vartheta(i)},\qquad
+\widehat\nu_\vartheta(i)=
+\frac{\nu(i)r_\vartheta(i)}
+{\nu^{\mathsf T}r_\vartheta}.
+\]
+则 \(\widehat K_\vartheta\) 是随机核，且
+\[
+Z_T(\vartheta)=
+\rho(\vartheta)^T(\nu^{\mathsf T}r_\vartheta)
+\widehat{\mathbb E}_{\vartheta,\widehat\nu_\vartheta}
+[r_\vartheta(X_T)^{-1}].
+\]
+这说明 Doob 变换只增加有界端点修正；当 \(\vartheta=0\) 时它是条件长时存活的 Q-process，当 \(\vartheta\ne0\) 时是占用指数倾斜后的 Q-process。两者都不是原链“无限存活”这一正概率事件。
+
+在条件律 \(\mathbb P_\nu(\,\cdot\,\mid\tau_\partial>T)\) 下，
+\[
+\lim_{T\to\infty}\frac1T
+\log\mathbb E_\nu[e^{\vartheta N_T}\mid\tau_\partial>T]
+=\overline\psi(\vartheta):=\psi(\vartheta)-\psi(0).
+\]
+若 \(c\) 不是 \(K\) 上的常数加 coboundary，即存在两个有向闭路具有不同的 \(c\)-平均，则有限状态压力的 Legendre 变换
+\[
+I(x)=\sup_{\vartheta\in\mathbb R}
+\{\vartheta x-\overline\psi(\vartheta)\}
+\]
+给出 \(N_T/T\) 在该条件律下的完整大偏差速率函数。若 \(c\) 是常数加 coboundary，速率函数退化到相应单点；若 \(K\) 可约，压力是强连通分量压力的最大值，可能出现不可微点，必须逐分量分析。
+
+证明链是路径展开、矩阵乘积、Perron–Frobenius 谱率、resolvent/Doob 望远镜和有限状态 Gärtner–Ellis 结论。长时域命题固定 \(m,S,H,\dagger\) 和时间齐次 \(Q_m\)；让图大小随 \(T\) 增长、让杀死集随 \(T\) 改变、或进入无限图，均需另加一致谱隙、紧性或尾控制。
+
+FIB 递归在此只提供有限状态图的合法源和组合索引；\(Q_m\)、活跃集、目标集和占用函数是外加模型。谱半径是有限步数压力，不自动是热力学自由能；没有能量单位、温度协议和物理实现映射，不能推出真实相变、熵产生或时间箭头。
+
+## 52. 净边流、Green 占用与共同历史鞅
+
+本节回到第12节的有序切点链，直接把“电流—电阻—扩散”的类比拆成可验证的有限链恒等式。
+
+**定理 52.1（净边流的连续性方程与 Green 公式）。** 固定 \(j\)，暂记 \(L=L_j\)、\(r_i=r_{(W_j)_i}\)、\(p_i=\theta/r_i\)，并约定 \(p_{-1}=p_L=0\)。从 \(X_0=0\) 出发，令 \(\tau=\inf\{n:X_n=L\}\)，并对 \(N\ge0\) 定义
+\[
+\mathsf L_N(k)=\sum_{0\le n<N\wedge\tau}{\bf1}_{\{X_n=k\}},
+\]
+\[
+\mathsf J_N(i)=\sum_{0\le n<N\wedge\tau}
+\left({\bf1}_{\{X_n=i,X_{n+1}=i+1\}}
+-{\bf1}_{\{X_n=i+1,X_{n+1}=i\}}\right).
+\]
+规定 \(\mathsf L_N(L)=0\)、\(\mathsf J_N(-1)=\mathsf J_N(L)=0\)。则逐路径有
+\[
+{\bf1}_{\{X_{N\wedge\tau}=k\}}-{\bf1}_{\{X_0=k\}}
+=\mathsf J_N(k-1)-\mathsf J_N(k),
+\qquad 0\le k\le L.
+\]
+因而对任意边电荷 \(q_i=x_{i+1}-x_i\)，
+\[
+x_{X_{N\wedge\tau}}-x_{X_0}
+=\sum_{i=0}^{L-1}q_i\mathsf J_N(i),
+\]
+并且终止于吸收端时 \(\mathsf J_\tau(i)=1\) 对每条路径成立。
+
+令
+\[
+\mathcal G(k)=\mathbb E_0\mathsf L_\tau(k).
+\]
+则
+\[
+\mathcal G(k)-\mathcal G(k+1)=\frac1{p_k}=\frac{r_k}{\theta},
+\qquad
+\mathcal G(k)=\frac1\theta\sum_{i=k}^{L-1}r_i,
+\]
+其中 \(\mathcal G(L)=0\)。对任意函数 \(f:\{0,\ldots,L-1\}\to\mathbb R\)，
+\[
+\mathbb E_0\sum_{n<\tau}f(X_n)
+=\sum_{k=0}^{L-1}f(k)\mathcal G(k)
+=\frac1\theta\sum_{i=0}^{L-1}r_i\sum_{k=0}^{i}f(k).
+\]
+特别地 \(f\equiv1\) 给出
+\[
+\mathbb E_0\tau=\frac1\theta\sum_{i=0}^{L-1}(i+1)r_i,
+\]
+即第5.2节的均值公式；这里的占用和来自同一条历史，不能拆成独立访问。
+
+**推论 52.2（边流鞅与条件协方差）。** 在共同历史过滤 \(\mathcal F_n=\sigma(X_0,\ldots,X_n)\) 下，令
+\[
+M_N^i=\mathsf J_N(i)-p_i\bigl(\mathsf L_N(i)-\mathsf L_N(i+1)\bigr).
+\]
+则 \(M_N^i\) 是鞅。若
+\[
+b_i(k)=p_i({\bf1}_{\{k=i\}}-{\bf1}_{\{k=i+1\}}),
+\]
+则一步条件协方差核为
+\[
+\Gamma^{\mathrm{edge}}_{ij}(k)
+=\delta_{ij}p_i({\bf1}_{\{k=i\}}+{\bf1}_{\{k=i+1\}})
+-b_i(k)b_j(k),
+\]
+并且
+\[
+\langle M^i,M^j\rangle_N
+=\sum_{n<N\wedge\tau}\Gamma^{\mathrm{edge}}_{ij}(X_n).
+\]
+在终点 \(\tau\)，净边流本身恒为 \(1\)，所以正确的随机量是鞅终值：
+\[
+\operatorname{Cov}(M_\tau^i,M_\tau^j)
+=\sum_{k=0}^{L-1}\mathcal G(k)\Gamma^{\mathrm{edge}}_{ij}(k)
+=\operatorname{Cov}\left(
+p_i(\mathsf L_\tau(i)-\mathsf L_\tau(i+1)),
+p_j(\mathsf L_\tau(j)-\mathsf L_\tau(j+1))
+\right).
+\]
+这里不能把不同边的流当成独立历史；相邻边虽无同一步双跨，却可通过同一当前位置产生条件协方差。
+
+**定理 52.3（任意占用泛函的 Green–Doob 分解）。** 令 \(P\) 为包括吸收点 \(L\) 的完整核，并将 \(h_f(L)=0\)。对
+\[
+S_f(i)=\sum_{k=0}^{i}f(k),\qquad
+h_f(i)=\frac1\theta\sum_{a=i}^{L-1}r_aS_f(a),
+\]
+有 \((I-P)h_f=f\)（在暂态点上）。于是
+\[
+A_N^f:=\sum_{n<N\wedge\tau}f(X_n)
+=M_N^f+h_f(X_0)-h_f(X_{N\wedge\tau}),
+\]
+其中
+\[
+M_N^f=\sum_{n<N\wedge\tau}
+\bigl(h_f(X_{n+1})-(Ph_f)(X_n)\bigr)
+\]
+是鞅。对两个探针 \(f,g\)，令
+\[
+\Gamma_{fg}(k)=P(h_fh_g)(k)-(Ph_f)(k)(Ph_g)(k).
+\]
+固定初态 \(X_0=0\) 且在 \(\tau\) 停止时，\(h_f(X_\tau)=0\)，所以
+\[
+\mathbb E_0A_\tau^f=h_f(0),\qquad
+\operatorname{Cov}_0(A_\tau^f,A_\tau^g)
+=\sum_{k=0}^{L-1}\mathcal G(k)\Gamma_{fg}(k).
+\]
+若初态为随机律，需另加终端校正项 \(h_f(X_0),h_g(X_0)\) 的协方差及其与鞅项的相应交叉项。
+
+逐步至多跨一条边还给出
+\[
+M_N^f=\sum_{i=0}^{L-1}
+\bigl(h_f(i+1)-h_f(i)\bigr)M_N^i,
+\]
+所以任意占用泛函的条件协方差可以由同一边流矩阵 \(\Gamma^{\mathrm{edge}}\) 组合得到。若另行给出 \(L\to\infty\) 的局部跳率、宏观时钟和预测二次变差收敛，离散鞅 FCLT 才能把该分解接到连续扩散的 Itô 鞅；这些收敛条件不由 \(\rho\) 自动提供。
+
+“电流”“电阻”“扩散”在这里是有限链的关系名称。\(r_i,\theta,\delta\) 是外加核参数，FIB 递归不选择它们，也不由上述鞅恒等式推出物理电流、耗散或热流。
+
+## 53. 有限时间窗口占用的 Green—鞅协方差与归一化响应
+
+第43节的联合泛函和第46节的时间有序半群给出变换；本节进一步保留绝对时间和任意初态，给出有限窗口协方差的后向值函数分解。
+
+**定理 53.1（窗口协方差的 Green—鞅分解）。** 在第12.3节连续反射—吸收模型中，令 \(Z\) 从概率律 \(\nu\) 出发，在 \(0\) 反射、到 \(1\) 后停留；令 \(\tau=\inf\{t:Z_t=1\}\)，杀死半群为
+\[
+(S_t f)(x)=\mathbb E_x[f(Z_t);t<\tau],\qquad H=-D\partial_x^2.
+\]
+固定 \(T<\infty\)、有限个窗口 \(I_r=[\alpha_r,\beta_r]\subset[0,T]\) 和实探针 \(f_r\in C^2([0,1])\) 满足 \(f_r(1)=0\)，定义
+\[
+A_r=\int_{\alpha_r}^{\beta_r}f_r(Z_s)\,ds.
+\]
+令
+\[
+U_r(t,x)=
+\begin{cases}
+\displaystyle\int_{\max(t,\alpha_r)}^{\beta_r}(S_{s-t}f_r)(x)\,ds,&t<\beta_r,\\[6pt]
+0,&t\ge\beta_r.
+\end{cases}
+\]
+则
+\[
+\mathbb E_\nu A_r=\int U_r(0,x)\,\nu(dx),
+\]
+并且对 \(s\le t\)，
+\[
+K_{r,k}(s,t)
+=\nu S_s\bigl(f_r\,S_{t-s}f_k\bigr)
+-\bigl(\nu S_s f_r\bigr)\bigl(\nu S_t f_k\bigr).
+\]
+令 \(K_{r,k}(s,t)=K_{k,r}(t,s)\)（当 \(t<s\)），则
+\[
+\operatorname{Cov}_\nu(A_r,A_k)
+=\int_{I_r}\int_{I_k}K_{r,k}(s,t)\,dt\,ds.
+\]
+
+在该模型的共同 Brownian 历史上，\(U_r\) 满足反射边界的后向方程。对停时 \(T\wedge\tau\) 使用 Itô 公式得到
+\[
+A_r=U_r(0,Z_0)
++\sqrt{2D}\int_0^{T\wedge\tau}
+\partial_xU_r(t,Z_t)\,dB_t.
+\]
+因此
+\[
+\operatorname{Cov}_\nu(A_r,A_k)
+=\operatorname{Cov}_{X\sim\nu}(U_r(0,X),U_k(0,X))
++2D\int_0^T\mathbb E_\nu\left[
+{\bf1}_{\{t<\tau\}}
+\partial_xU_r(t,Z_t)\partial_xU_k(t,Z_t)
+\right]dt.
+\]
+对任意 \(c\in\mathbb R^q\)，若 \(B=(\operatorname{Cov}(A_r,A_k))\)，则
+\[
+c^{\mathsf T}Bc
+=\operatorname{Var}_{X\sim\nu}\left(\sum_rc_rU_r(0,X)\right)
++2D\int_0^T\mathbb E_\nu\left[{\bf1}_{\{t<\tau\}}
+\left(\sum_rc_r\partial_xU_r(t,Z_t)\right)^2\right]dt\ge0.
+\]
+这只保证协方差矩阵半正定，非对角元可以为负。
+
+对任意固定实向量 \(\lambda\)，定义完整停时路径律上的归一化响应
+\[
+F_T(\lambda)=\log\mathbb E_\nu\exp\left(\sum_r\lambda_rA_r\right).
+\]
+则
+\[
+\partial_{\lambda_r}F_T(\lambda)=\mathbb E_\lambda A_r,\qquad
+\partial_{\lambda_k}\partial_{\lambda_r}F_T(\lambda)
+=\operatorname{Cov}_\lambda(A_r,A_k),
+\]
+其中 \(d\mathbb P_\lambda/d\mathbb P_\nu=\exp(\lambda\cdot A-F_T(\lambda))\)。在 \(\lambda=0\) 时 Hessian 就是上述窗口协方差。若改用杀死半群筛选“存活至 \(T\)”的路径，归一化分母必须同步改为条件路径律；不能把完整停时响应与存活条件响应混用。
+
+**有限 FIB 版本。** 令 \(a_{j,r}=\lfloor\alpha_r/\epsilon_j\rfloor\)、\(b_{j,r}=\lfloor\beta_r/\epsilon_j\rfloor\)、\(f_{j,r}(i)=f_r(i/L_j)\)，并定义
+\[
+A_{j,r}=\epsilon_j\sum_{n=a_{j,r}}^{b_{j,r}-1}f_{j,r}(X_n),
+\]
+吸收点的探针值为零。令 \(\widehat K_j\) 为包含吸收态的完整核，并把 \(f_{j,r}\) 在吸收态延拓为零；\(u_{j,r,n}\) 为从时间 \(n\) 到窗口终点的条件期望
+\[
+u_{j,r,n}(i)=
+\epsilon_j\sum_{m=\max(n,a_{j,r})}^{b_{j,r}-1}
+(\widehat K_j^{m-n}f_{j,r})(i)
+\]
+（当 \(n\ge b_{j,r}\) 置零）。则对每个固定 \(j\) 有精确协方差式
+\[
+\operatorname{Cov}(A_{j,r},A_{j,k})
+=\operatorname{Cov}(u_{j,r,0}(X_0),u_{j,k,0}(X_0))
++\sum_{n=0}^{M_j-1}\mathbb E\,Q_{j,n}^{r,k}(X_n),
+\]
+其中 \(M_j=\max_r b_{j,r}\)，
+\[
+Q_{j,n}^{r,k}
+=\widehat K_j(u_{j,r,n+1}u_{j,k,n+1})
+-(\widehat K_j u_{j,r,n+1})(\widehat K_j u_{j,k,n+1}).
+\]
+由第12.3节路径极限和固定窗口的连续映射，\((A_{j,r})\) 的联合律、均值和二阶矩在 \(j\to\infty\) 时收敛到上述连续对象；这需要固定 \(T\)、窗口和探针，不能把 \(T\) 或窗口宽度同时推到极限。
+
+取 \(f,g\ge0\) 为各自非零、支持在内部且互不相交的光滑探针，固定 \(t_0>0\)，并取足够小的 \(\eta>0\) 使 \(t_0+3\eta\le T\)。在相邻窗口 \(I_\eta=[t_0,t_0+\eta]\)、\(J_\eta=[t_0+2\eta,t_0+3\eta]\) 上，有
+\[
+\eta^{-2}\operatorname{Cov}_0\left(\int_{I_\eta}f(Z_s)ds,
+\int_{J_\eta}g(Z_t)dt\right)
+\longrightarrow
+-(S_{t_0}f)(0)(S_{t_0}g)(0)<0
+\]
+沿用第12.3节的同一共同历史。因此非负探针在同一时刻的协方差矩阵虽半正定，两个足够短且不重叠的时间窗口仍可有严格负协方差。
+
+物理类比上，\(R_h=\int_0^hS_sds\) 是声明扩散模型的有限时间源响应算子，鞅项是该随机路径模型的噪声相关，\(F_T\) 的 Hessian 是路径指数重加权的统计易感性。它们不自动等于真实外场的因果响应、Kubo 核、温度、热浴、耗散、熵产生或量子对易子；若要作这些识别，必须另给物理读出、单位和外场—生成元耦合。
+
+## 54. Green 加权探针的秩判据与 Robin—速度不可分辨边界
+
+第48节从一对内部探针识别 Robin 形状参数。本节把“需要多少探针”写成有限维速度族的秩条件，并给出一个新的全局尺度退化。
+
+**定理 54.1（有限链速度族的探针秩判据）。** 固定一个有限 FIB 切链的单位速度矩阵 \(B=I-K\)、Green 矩阵 \(G=B^{-1}\)，令 \(\tau\) 为到达吸收端 \(L\) 的停时，并令
+\[
+q_i=G(0,i),\qquad Q=\operatorname{diag}(q_0,\ldots,q_{L-1}).
+\]
+允许局部速度权重属于有限维族
+\[
+v(\eta)=v^0+\Phi\eta,\qquad \Phi\in\mathbb R^{L\times d},
+\]
+并限制参数在使行缩放后的核仍为随机核的开邻域内。行缩放给出
+\[
+B^{(v)}=V(\eta)^{-1}B,\qquad G^{(v)}=G V(\eta).
+\]
+令
+\[
+V_{\mathrm{occ}}
+=\bigl(\mathsf L_\tau(0),\ldots,\mathsf L_\tau(L-1)\bigr)^{\mathsf T}
+\]
+为暂态占用向量。若 \(m\) 个有符号线性占用探针写成 \(Y=F V_{\mathrm{occ}}\)，则
+\[
+\mathbb E_\eta Y=FQv^0+J\eta,\qquad J=FQ\Phi.
+\]
+因此该参数族由这些均值局部可识别，当且仅当
+\[
+\operatorname{rank}J=d.
+\]
+必有 \(m\ge d\)。若 \(\operatorname{rank}\Phi=d\) 且允许任意有符号探针，令 \(A=Q\Phi\) 并取
+\[
+F=(A^{\mathsf T}A)^{-1}A^{\mathsf T},
+\]
+则 \(FA=I_d\)，所以 \(d\) 个探针足够。若探针必须非负、局部支持或来自不同副本，则最少数和可识别方向仍由实际的 \(FQ\Phi\) 秩决定，不能沿用有符号结论。
+
+在单位速度共同历史下，已有占用协方差给出
+\[
+C_{ik}=q_{\max(i,k)}^2-\mathbf1_{\{i=k\}}q_i,
+\]
+所以探针协方差为
+\[
+\Sigma=F C F^{\mathsf T}.
+\]
+若另有独立读出噪声协方差 \(\Gamma\succ0\)，则
+\[
+\mathcal I=J^{\mathsf T}(\Sigma+\Gamma)^{-1}J
+\]
+是协方差归一化的信息矩阵；只有在额外声明高斯读出误差时，才可称为 Fisher 信息。由于 \(\Sigma+\Gamma\) 正定，\(\mathcal I\succ0\) 当且仅当 \(\operatorname{rank}J=d\)。
+
+**连续 Robin 扩展。** 在 \([0,1]\) 上取 \(-D\partial^2\)，右端 Dirichlet \(y(1)=0\)，左端 Robin \(y'(0)=\beta y(0)\)、\(\beta\ge0\)。其 Green 核为
+\[
+G_\beta(u,v)=\frac{(1+\beta\min(u,v))(1-\max(u,v))}{D(1+\beta)}.
+\]
+若速度密度为 \(w_\eta=w^0+\sum_{a=1}^d\eta_a\phi_a\)，并假定 \(w^0,\phi_a\in C([0,1])\)，从边界起点 \(0\) 的一阶探针均值为
+\[
+\mu_{\beta,\eta}(f)
+=\int_0^1 f(v)\frac{1-v}{D(1+\beta)}w_\eta(v)\,dv.
+\]
+在给定参数点，定义灵敏度函数
+\[
+\psi_0(v)=-\frac{(1-v)w_\eta(v)}{D(1+\beta)^2},\qquad
+\psi_a(v)=\frac{(1-v)\phi_a(v)}{D(1+\beta)}
+\quad(1\le a\le d).
+\]
+对 \(m\) 个连续探针 \(f_r\)，参数 \(\beta,\eta\) 的均值 Jacobian 为
+\[
+J_{ra}=\int_0^1 f_r(v)\psi_a(v)\,dv.
+\]
+所以局部可识别当且仅当 \(\operatorname{rank}J=d+1\)。若 \(\psi_0,\ldots,\psi_d\) 在线性空间中独立，则至少需要且足够 \(d+1\) 个探针。取 \(a,b=0,\ldots,d\) 的 Gram 矩阵
+\[
+H_{ab}=\int_0^1\psi_a(v)\psi_b(v)\,dv
+\]
+并取 \(m=d+1\)、\(r=0,\ldots,d\) 的探针
+\[
+f_r=\sum_{b=0}^{d}(H^{-1})_{rb}\psi_b,
+\]
+即可得到 \(J=I_{d+1}\)。
+
+若速度族允许全局缩放 \(w\mapsto cw\)，同时令
+\[
+\beta'=c(1+\beta)-1
+\]
+且 \(c\) 取在保持 \(\beta'\ge0\) 的邻域内，则
+\[
+\frac{1-v}{D(1+\beta')}cw(v)
+=\frac{1-v}{D(1+\beta)}w(v).
+\]
+因此任意数量的边界起点一阶占用探针都不能同时区分 Robin 参数和全局速度尺度。施加 \(\int w=1\) 等归一化并排除全局缩放方向后，才可使用上述 \(d+1\) 维秩判据。
+
+这些结论只针对固定源、阻抗、时钟、有限维速度族、共同随机历史和一阶均值读出；完整路径律可能携带额外信息。它们不声称任意速度函数、任意 Robin 模型或任何物理装置都可由有限探针识别；若使用非负探针、不同副本或改变边界，必须重新计算可用秩与协方差。
