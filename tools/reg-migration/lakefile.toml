@@ -1,0 +1,23 @@
+name = "regMigration"
+version = "0.1.0"
+packagesDir = "../../.lake/packages"
+buildDir = "../../.lake/build/reg-migration"
+defaultTargets = ["RegMigration"]
+
+[[require]]
+name = "reg"
+path = "../../Reg"
+
+[[lean_lib]]
+name = "RegMigration"
+roots = ["ExtractInputs", "ParseSources"]
+
+[[lean_exe]]
+name = "regMigrationParse"
+root = "ParseSources"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "regMigrationExtract"
+root = "ExtractInputs"
+supportInterpreter = true
