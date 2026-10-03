@@ -1106,3 +1106,77 @@ to derive a contradiction from the universal obstruction SC53. Neither
 existence has been established. The argument reuses the digit split,
 whole-liability hull and SC23 accounting; it is ordinary mathematics,
 without new Lean verification or a conclusion for unrestricted Erdős #7.
+
+## 14. Fresh-prime transport fixes the complete cofactor-complement hull
+
+The hull-one alternative in SC54 is forced when \(r=3\). This follows
+by applying the existing fresh-prime root transport to an auxiliary
+cover; it does not require a new prime-substitution theorem.
+
+For the same actual original family put
+\[
+ K_G=(\mathbb Z/M\mathbb Z)
+                 \setminus\bigcup_{g\in G}(\alpha_g\bmod g).
+\]
+This set is nonempty: otherwise the proper original subfamily \(G\)
+would itself be a smaller distinct odd whole cover. For \(x\in K_G\),
+let
+\[
+ \Gamma_G=\gcd\bigl(M,\{y-x:y\in K_G\}\bigr).
+\]
+Every prime divisor of \(\Gamma_G\) is strictly smaller than \(r\).
+In particular,
+\[
+ r=3\quad\Longrightarrow\quad\Gamma_G=1. \tag{SC55}
+\]
+The definition is independent of representatives and the selected base
+point, as in PH3--PH4; \(M=1\) gives the stated value directly.
+
+Suppose a prime \(q\mid\Gamma_G\) satisfied \(q>r\). Divisor
+closure of the original inventory gives \(q\in G\), and the entire
+complement lies in \(\beta\bmod q\), with
+\(\beta=x\bmod q\ne\alpha_q\bmod q\). Hence
+\[
+ \{\alpha_g\bmod g:g\in G\}\cup\{\beta\bmod q\}
+ \tag{SC56}
+\]
+is a whole cover with exactly two distinct pure-\(q\) classes and
+all other numerical moduli distinct. Its period divides \(M\), so
+\(r\) is absent from this auxiliary cover, even though \(r\) is
+present in the original EB1 family.
+
+Apply [report 348, Section 1](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#1-replace-one-digit-and-retain-the-complete-remaining-coordinates),
+which reuses the Harrington--Sun--Wong construction with literal source
+coordinates and permits selecting fewer old root branches. In that
+interface the old prime is \(q\), the fresh target is \(r\), and
+there are \(q-2\ge r\) old roots outside the two pure classes.
+Select \(r\) of them for the \(r\) new roots. No pure-\(r\)
+closing class is needed. Every remaining auxiliary label contributes
+at most one output: a \(q\)-free label is unchanged, and a surviving
+\(q\)-bearing label \(d\ne q\) becomes \(rd/q\).
+Freshness and the existing transport preserve numerical distinctness,
+oddness, nonunit moduli and whole coverage, at arbitrary original
+heights. The number of output classes is at most
+\[
+ (|G|+1)-2=|G|-1<K,
+\]
+contradicting EB1. This proves the prime-support assertion and SC55.
+The comparison replaces the whole original cover by a smaller one;
+it does not require \(r\) to be absent from the original ambient period.
+
+Now take \(r=3\). Whenever the pure-\(s\) output survives at root
+\(j_s\), choosing \(\rho\ne j_s\) in Section 13 forces
+\(P_{j_s}=K_G\), a nonempty set with hull one. Thus
+\(\mathcal V_{j_s}=\varnothing\) for every retained family SC44.
+The certified one-root construction can succeed only by buying
+\(\rho=j_s\), or by choosing a common tree that omits the pure-\(s\)
+root. In the first case it receives no whole-root top-service credit,
+as already shown in Section 13. A different slot-safety test alone
+cannot provide a single nonunit-cofactor patch for the full \(K_G\).
+
+SC55 concerns this complete complement, not the smaller individual
+residuals \(J_g\) or projections obtained after retaining additional
+service. It asserts neither positive uniform density nor independent
+coordinates. The remaining patch-existence problem persists. This is
+an ordinary application of the cited transport and original extremal
+count, without new Lean verification or unrestricted noncoverage.
