@@ -1,0 +1,12 @@
+若 $N_+$、$N_-$ 按 $\mu(r)=1,-1$ 分开计数，则 $N_++N_-=N_{\mathrm{live}}$、$N_+-N_-=\Delta_{7,10}$。所以
+
+$$
+\boxed{
+\mathrm{RH}\iff
+N_\pm(X)=\frac{X}{16\pi^2}+O_\varepsilon(X^{1/2+\varepsilon})
+\quad(\forall\varepsilon>0).
+}
+$$
+
+这里无符号密度是无条件计数，带符号平衡才承载 RH 等价性。
+
