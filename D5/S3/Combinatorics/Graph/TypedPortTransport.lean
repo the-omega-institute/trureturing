@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/TypedPortTransport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum,
-             mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum, mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Two partial matching graphs force the typed port defect identity. -/
 
