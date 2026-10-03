@@ -1,0 +1,28 @@
+**定义 26.5（固定策略空间中的个体最优集合与 Helly 阶数）。** 对每个 $P\in\mathcal I_3$，在固定的全域确定性策略空间中定义
+
+$$
+\mathcal O(P)=\{\pi\in\mathfrak D_3:C_\pi(P)=n_P\}.
+\tag{26.20}
+$$
+
+还固定一次种子概率空间
+
+$$
+(\Omega_{\mathrm u},\mathcal A_{\mathrm u},\mu_{\mathrm u})
+=([0,1],\mathcal L,\operatorname{Leb}),
+\tag{26.21}
+$$
+
+其中 $\mathcal L$ 为 Lebesgue 可测集。以 $\mathfrak R_3^{\mathrm u}$ 记恰在这个空间与种子律上满足定义 25.1 的随机策略集合，并定义
+
+$$
+\mathcal O_{\mathrm u}(P)=
+\{\Pi\in\mathfrak R_3^{\mathrm u}:
+\mathbb E_{\mu_{\mathrm u}}C_\Pi(\cdot,P)=n_P\}.
+\tag{26.22}
+$$
+
+$\mathfrak R_3^{\mathrm u}$ 是指定种子空间的策略类；这里只按其合同将每个元素视为 $\mathfrak R_3$ 中的一个随机策略，不把不同种子空间与种子律的控制器相互识别。两个固定空间均由已有后备非空，每个上述个体最优集合也非空；确定性个体取得策略在固定均匀种子上作常值提升即可供应后一结论。空交分别解释为 $\mathfrak D_3$ 和 $\mathfrak R_3^{\mathrm u}$。
+
+对任一固定空间中的集合系统，称整数 $h\ge1$ 是其有限 Helly 阶数，若每个有限子系统在所有至多 $h$ 个集合的交都非空时，全体交必非空。此处只比较集合系统 $\{\mathcal O(P):P\in\mathcal I_3\}$ 或 $\{\mathcal O_{\mathrm u}(P):P\in\mathcal I_3\}$；同组成限定表示每个被检验的有限来源族内部有一个共同组成。
+
