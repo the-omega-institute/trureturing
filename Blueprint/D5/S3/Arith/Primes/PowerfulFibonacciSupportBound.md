@@ -2,9 +2,9 @@
 
 ## Abstract
 
-A finite original odd-depth support bounds powerful Fibonacci indices under explicit classical inputs.
+A finite original odd-depth support bounds powerful Fibonacci indices.
 
-Fix a finite set S of primes greater than five and its least Fibonacci rank closure H(S). This theorem assumes the prime-index odd-factor input, the classification of powerful Fibonacci values with five-smooth indices, and uniqueness of the remaining Fibonacci square classes for all positive indices. These three results remain explicit premises in the Lean statement; prime-to-index valuation is proved.
+Fix a finite set S of primes greater than five and its least Fibonacci rank closure H(S). The theorem establishes the count using the prime-index nonsquare theorem, the five-adic depth law, prime-to-index valuation, and Fibonacci square-class rigidity. Its only parameter condition is that S consists of primes greater than five.
 
 **Definition 1.1 (Odd prime support).**
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Arith/Primes/PowerfulFibonacciSupportBound.powerful_fibon
 
 *Commentary.*
 
-Under the three stated premises, there is a finite set containing exactly the supported powerful indices, with cardinality at most two to the size of H(S) minus four. The proof places every odd prime support inside H(S), uses the index-support descent to reduce small odd support to five-smooth indices, and injects all remaining indices into the subsets of H(S) outside the eight small supports. The small group contributes at most four indices.
+There is a finite set containing exactly the supported powerful indices, with cardinality at most two to the size of H(S) minus four. The proof places every odd prime support inside H(S), uses the index-support descent to reduce small odd support to five-smooth indices, proves their powerful-value classification, and injects all remaining indices into the subsets of H(S) outside the eight small supports. The small group contributes at most four indices.
 
 ## References
 
@@ -48,4 +48,7 @@ Under the three stated premises, there is a finite set containing exactly the su
 - Truth anchor: `D5/S3/Arith/Primes/PowerfulFibonacciSupportBound.powerful_fibonacci_support_bound`
 - Truth anchor: `D5/S3/Arith/Primes/PowerfulFibonacciSupportBound.supportedPowerfulIndex`
 - Dependency: [D5/S3/Arith/Powerful/PowerfulNumber](../Powerful/PowerfulNumber.md)
+- Dependency: [D5/S3/Arith/Primes/FibSquareclassRigidity](FibSquareclassRigidity.md)
+- Dependency: [D5/S3/Arith/Primes/FibonacciFiveAdicDepth](FibonacciFiveAdicDepth.md)
+- Dependency: [D5/S3/Arith/Primes/FibonacciOddIndexNonsquare](FibonacciOddIndexNonsquare.md)
 - Dependency: [D5/S3/Arith/Primes/OriginalOddDepthSupport](OriginalOddDepthSupport.md)
