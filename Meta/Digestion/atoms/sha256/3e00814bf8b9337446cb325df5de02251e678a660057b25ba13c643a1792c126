@@ -1,0 +1,20 @@
+For the back statistic, all unchanged comparisons are likewise preserved,
+using $a\leq g_i$ and
+$\delta_a(x)>g_i-1\Longleftrightarrow x>g_i$. The one changed back row,
+at a predecessor column or at the endpoint, originally equals $a$ and
+now equals $\delta_a(c)$. The original values $a,c$ are at most $B+1$,
+and every original back threshold is at least $B+1$; the new value is
+at most $B$, and every tail back threshold is at least $B$.
+It can therefore be a forbidden target neither before nor after deletion.
+When it occurs as a source for a forbidden target, the comparison that
+the source is smaller is automatically true on both sides. The column
+comparison and distinguished endpoint status are preserved. This treats
+the changed row in both roles and proves equality of all surviving back
+contributions.
+
+For the deleted first column, $v_1=c\leq B+1$. The ordinary target columns
+with $\pi_j<t$ select path positions $2,\ldots,t$, and the distinguished
+target $j=n$ selects position $1$, since $v_n=\sigma_1$. Position $t$
+has row $a\leq B+1$ and cannot contribute. Hence the remaining forbidden
+targets are exactly the prefix rows above $B+1$:
+
