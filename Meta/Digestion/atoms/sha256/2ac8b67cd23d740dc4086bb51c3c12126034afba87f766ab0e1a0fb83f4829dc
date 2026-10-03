@@ -1,0 +1,142 @@
+**定理 31.3（实际双行入口、联合时钟与宏观自然帽行数）。** 在假设 31.1 下，对定义 31.2 的每个 $k,v$，存在整数 $R\ge2$，使 $\theta(k,v)=2R$。同一实际轨道的首对外侧点为来源 C.7 的
+
+$$
+\begin{aligned}
+x_1&=B-v+\sigma,\\
+x_2&=A+a_1,
+&a_1&=J-v+Q_{k-2}(v-\sigma),
+&J-v&\le a_1\le J.
+\end{aligned}
+\tag{31.5}
+$$
+
+对全部整数 $1\le r<R$，令 $a_r=x_{2r}-A$、$b_r=A-x_{2r+1}$，并令 $a_R=x_{2R}-A$。则
+
+$$
+\begin{aligned}
+1\le a_r&\le J,&b_r&=v+\iota_k(a_r),&v<b_r&\le v+J\le F_{k-3},\\
+x_{2r+1}&=A-b_r,&a_{r+1}&=Q_{k-1}(b_r)-v,
+&a_{r+1}&\le\frac{2a_r-v}{3},\\
+a_r&<q a_{r+1}+\gamma,&-v&\le a_R\le0.
+\end{aligned}
+\tag{31.6}
+$$
+
+各次 $Q_{k-1}(b_r)$ 均在其实际自然闭块域中。所有正 $a_r$ 严格递减，精确停止条件及入口缺口为
+
+$$
+\begin{aligned}
+Q_{k-1}(b_r)&>v&&(1\le r<R-1),\\
+Q_{k-1}(b_{R-1})&\le v,&
+v<b_{R-1}&\le L+Pv,&a_{R-1}&<\gamma,\\
+r_0&=A-x_{\theta}=v-Q_{k-1}(b_{R-1})\in[0,v]\cap\mathbb Z.
+\end{aligned}
+\tag{31.7}
+$$
+
+在同一个入口之前实际访问的右侧物理行
+
+$$
+\mathcal Y_{k,v}=\{y_r=A+a_r:1\le r<R\}
+$$
+
+两两不同，都是非锚，且全部满足
+
+$$
+\begin{aligned}
+A<y_r&\le A+J<N-1<N,\\
+\mathfrak c(y_r)&=Q_k(F_k-y_r)
+\ge F_{k-5}\ge N/13,\\
+|\mathcal Y_{k,v}|=R-1&>\beta(k,v),\\
+\theta(k,v)&>2+2\beta(k,v),
+&\theta(k,v)&\le\mu_N\le d_N.
+\end{aligned}
+\tag{31.8}
+$$
+
+因此每个被计数的点值 $C(y_r)$ 都在实际规定深度之前被这条入口轨道使用。这里的宏观亏量结论只针对 $\mathfrak c$，不提供 $E_C$、$D$ 或内周期长度的下界。
+
+证明。先核对来源首对公式的使用域。由定理 24.3 的平台，$v=0,1$ 时 $\sigma=0$；$v\ge2$ 时锚降界给 $0\le\sigma\le\lfloor2(v+1)/3\rfloor\le v$。因此 $v-\sigma\in[0,v]\subseteq[0,F_{k-4}]$，$v+1$ 也在 $Q_k$ 的域中。直接调用 [Recursive descent，C.7](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 得到式 (31.5) 的两个恒等式；锚降界给 $0\le Q_{k-2}(v-\sigma)\le2(v-\sigma)/3$，故 $J-v\le a_1\le J$。$x_0>A$、$x_2>A$，而
+
+$$
+x_1-(A-v)=-F_{k-3}+\sigma<0.
+$$
+
+于是时间 $0,1,2$ 均尚未入 $I$。这一首对及 $v=0$ 的锚点时钟按 C.7、定理 24.6 直接复用；以下保留正缺口与两条实际行之间的联合约束。
+
+对每个整数 $1\le a\le J$，同一实际右侧点满足
+
+$$
+\begin{aligned}
+1&\le\iota_k(a)\le a,\\
+\iota_k(a)&\ge G(A+a)-G(A)>\alpha a-1.
+\end{aligned}
+\tag{31.9}
+$$
+
+第一行下界来自 $G(A+1)=B+1$ 与 $G$ 非减，上界来自 $U(A+a)=\min(B+a,A)\le B+a$；第二行由两个取整数之差取得。故在任一实际右侧点 $A+a_r$，字面内步首先到达
+
+$$
+x_{2r+1}=N-C(A+a_r)=A-v-\iota_k(a_r)=A-b_r.
+$$
+
+这个奇数时间点严格在 $I$ 左侧。$b_r\le v+J\le3J/2\le F_{k-3}$，因为 $F_{k-3}=J+F_{k-5}$ 且 $J\le2F_{k-5}$。所以它是同一 $Q_{k-1}$ 的合法实际自变量；在这一物理行上作下一步，恰好得到
+
+$$
+x_{2r+2}=N-C(A-b_r)=A+Q_{k-1}(b_r)-v.
+$$
+
+锚降界与 $\iota_k(a_r)\le a_r$ 给
+
+$$
+a_{r+1}\le\frac23\bigl(v+\iota_k(a_r)\bigr)-v
+\le\frac{2a_r-v}{3}.
+$$
+
+只要下一偶数坐标仍为正，它便严格小于前一正整数坐标，也仍不超过 $J$。正整数不可能如此无限下降，故存在首次非正坐标 $a_R$，且 $R\ge2$；非负的 $Q$ 又保证 $a_R\ge-v$。其前各偶数点在 $I$ 右侧，奇数点在 $I$ 左侧，首次进入恰在 $2R$。这证明式 (31.6) 的实际配对及式 (31.7) 的精确停止谓词，没有把来自不同轮廓的值拼接成一条轨道。
+
+由式 (31.2) 在末次实际奇数行上的应用，
+
+$$
+b_{R-1}\le L+P Q_{k-1}(b_{R-1})\le L+Pv.
+$$
+
+将 $b_{R-1}=v+\iota_k(a_{R-1})>v+\alpha a_{R-1}-1$ 代入，得 $a_{R-1}<\gamma$。入口缺口公式直接来自 $a_R=Q_{k-1}(b_{R-1})-v$，并保持非负实际缺口表示。
+
+更一般地，在每一对实际访问行上同时有
+
+$$
+v+\alpha a_r-1<b_r
+\le L+P Q_{k-1}(b_r)
+=L+P(a_{r+1}+v).
+$$
+
+重排就是 $a_r<q a_{r+1}+\gamma$。从同一最终 $a_R\le0$ 沿恰好 $R-1$ 对反向代入，得
+
+$$
+\begin{aligned}
+J-v\le a_1
+&<q^{R-1}a_R+\gamma\sum_{i=0}^{R-2}q^i\\
+&\le\frac{L+(P-1)v+1}{P-\alpha}\bigl(q^{R-1}-1\bigr).
+\end{aligned}
+\tag{31.10}
+$$
+
+因 $q>1$、$P-\alpha>0$，即有 $R-1>\beta(k,v)$ 与 $\theta>2+2\beta(k,v)$。这里的上、下估计始终约束同一个右点及其实际下一奇数点，未取各自独立可达的极值。
+
+正 $a_r$ 严格下降，故 $y_r$ 为 $R-1$ 个不同物理行。$A<y_r\le A+J<F_k$，其间没有 Fibonacci 锚。还因 $B=2J+F_{k-5}$、$v\le J/2$ 及 $k\ge23$，有 $B-v-J-1>0$，所以 $A+J<N-1$。这些行的自然最高权重为 $A$，且 $F_k-y_r=B-a_r\in[0,B]$。同一上包络于是给
+
+$$
+\begin{aligned}
+\mathfrak c(y_r)
+&=A-C(A+a_r)\\
+&\ge A-B-a_r\\
+&\ge F_{k-3}-J=F_{k-5}.
+\end{aligned}
+\tag{31.11}
+$$
+
+Fibonacci 恒等式 $F_k=8F_{k-5}+5F_{k-6}\le13F_{k-5}$ 以及 $N\le F_k$ 给出 $\mathfrak c(y_r)\ge N/13$。这一步估计的是自然帽高度，不把它代入规范黄金缺陷。
+
+最后，假设 24.1 的捕获及不变性使该轨道的最终周期包含于 $I$。首次到周期不能先于首次到 $I$，故 $\theta\le\mu_N$；规定深度已入周期又给 $\mu_N\le d_N$。于是 $2r\le\theta-2<d_N$ 对全部被计数右行成立，完成同一规定起点、深度与被选相位的对应。证毕。
+
