@@ -1,0 +1,21 @@
+**引理 54.5（实际优先门的配对恒等式）。** 对不同位置定义 $T_{ij}=\mathbb E[\psi(W_i)\psi(W_j)Z]$。只要一个端点不活动，$T_{ij}=0$；三个活动配对为
+
+$$
+\begin{aligned}
+T_{pq}&=\frac\alpha4K_h(K_\ell-2LK_t),\\
+T_{pr}&=-\frac\alpha2tK_hK_\ell,\\
+T_{qr}&=\frac\alpha2K_\ell(K_h-HK_t).
+\end{aligned}
+\tag{54.17}
+$$
+
+特别在 $t=1/2$ 时，
+
+$$
+T_{pq}=-\frac\alpha4xK_h<0,\qquad
+T_{pr}=-\frac\alpha4K_hK_\ell<0,\qquad
+T_{qr}=\frac\alpha4K_\ell(1-Hs)
+\quad(\alpha>0).
+\tag{54.18}
+$$
+

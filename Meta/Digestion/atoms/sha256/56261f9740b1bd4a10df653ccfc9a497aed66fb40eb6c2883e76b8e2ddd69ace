@@ -1,0 +1,25 @@
+**引理 55.3（足够的联合质量界）。** 对每个 $\mu\in\mathcal M_\rho$，
+
+$$
+V_L\ge\frac{3\rho}{2},\qquad
+(1-H)(1-L)\ge\frac{9\rho}{8},\qquad
+D\ge\frac{9\rho}{32}.
+\tag{55.11}
+$$
+
+证明。$H,L\ge1/2$，且 $1-H=u+x+v\ge3\rho$、$1-L=u+v+z\ge3\rho$，故 $V_L\ge3\rho/2$。令 $s_0=u+v\ge2\rho$，则 $x+z=1/2-s_0$，于是
+
+$$
+\begin{aligned}
+(1-H)(1-L)&=(s_0+x)(s_0+z)=s_0/2+xz,\\
+xz&\ge\rho(x+z)-\rho^2,\\
+(1-H)(1-L)&\ge(s_0+\rho)(1/2-\rho)
+\ge3\rho(1/2-\rho)\ge9\rho/8.
+\end{aligned}
+\tag{55.12}
+$$
+
+第二行来自 $(x-\rho)(z-\rho)\ge0$，最后一行使用 $\rho\le1/8$。再乘 $HL\ge1/4$ 得 $D$ 的界。$\square$
+
+两个补质量共享同一五符号预算，不能同时独立地逼近各自的 $3\rho$ 下界。若只把两个单独的方差下界相乘，会把真实可用的线性 $\rho$ 界削弱为二次界。这条关系使第一位置的负配对信号与其方差具有同一质量尺度；所用系数只是充分值。
+

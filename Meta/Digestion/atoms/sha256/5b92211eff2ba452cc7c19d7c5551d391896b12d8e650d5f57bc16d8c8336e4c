@@ -1,0 +1,31 @@
+**命题 58.3（精确方向与归一化条件）。** 令 $Z=\mathbf1_{\{Y=2\}}-\mathbf1_{\{Y=0\}}$。实际三行可写为
+
+$$
+r_0=(U,V,V),\quad r_1=(M,V,M),\quad r_2=(V,V,U),
+\quad U=(4+2\alpha)/12,\quad V=(4-\alpha)/12,\quad M=(8+\alpha)/24.
+$$
+
+对每个输入，
+
+$$
+\mathbb E[Z\mid X]=\alpha f_\theta/4,\qquad
+\mathbb E[Z^2\mid X]=\kappa_\alpha=(8+\alpha)/12,
+\qquad P(Y=1\mid X)=V.
+\tag{58.14}
+$$
+
+若 $D=C_\theta-C_\tau$、 $d=\mathbb ED^2$，则原始相关分数的差满足
+
+$$
+\begin{aligned}
+\mathbb E[ZD]
+&=\frac\alpha8\left[d+\mathbb E(f_\theta^2-f_\tau^2)\right]\\
+&=\frac\alpha8\left[d+P(A_\tau=1)-P(A_\theta=1)\right]\\
+&=\frac\alpha4P(A_\theta=0,A_\tau=1)
++\frac\alpha2P(\{C_\theta,C_\tau\}=\{0,2\}).
+\end{aligned}
+\tag{58.15}
+$$
+
+在本节全支撑实验中，这个差对每个 $\tau\ne\theta$ 都严格为正，但没有统一的 $\alpha d$ 阶下界。
+

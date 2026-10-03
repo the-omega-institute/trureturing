@@ -1,0 +1,20 @@
+**证明。** $N\sim\operatorname{Binomial}(m,\pi)$。对 $2^{-N}$ 使用 Markov 不等式，
+
+$$
+P(N<m\pi/2)
+\le2^{m\pi/2}(1-\pi/2)^m\le\exp(-m\pi/8).
+\tag{56.16}
+$$
+
+后一式使用 $\log(1-x)\le-x$ 和 $(\log2)/2-1/2\le-1/8$。现在条件于此一个固定组的完整成员指标序列 $(\mathbf1_A(X_b))_{b=1}^m$。完整记录的独立乘积律使保留的 $N$ 个标签独立，且每个准确服从 $\operatorname{Law}(Y\mid A)$；未条件于其他坐标组或经验排序。在 $N\ge1$ 时，$Z\in[-1,1]$，故式（54.29）的宽度二 Hoeffding 界给
+
+$$
+P\{|S/N-z_A|\ge\varepsilon\mid\text{成员指标序列}\}
+\le2\exp(-N\varepsilon^2/2).
+\tag{56.17}
+$$
+
+所用成熟供应为 Hoeffding，[*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Theorem 1 的有界独立变量界；这里准确保留宽度二的重标度。其区间矩母函数和独立和接口也见钉版 Mathlib 的 [hasSubgaussianMGF_of_mem_Icc、measure_sum_range_ge_le_of_iIndepFun](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean)。本证明仅使用该普通概率不等式。
+
+在占用成功时 $N\ge m\pi/2>0$，取 $\varepsilon=a/32$，得到误差概率不超过 $2\exp[-ma^2\pi/4096]$。占用失败项由 $a\le1$ 也不超过 $\exp[-ma^2\pi/4096]$；求和并用 $\pi\ge\rho$ 得（56.15）。这个界单独支付了空组与随机分母。$\square$
+

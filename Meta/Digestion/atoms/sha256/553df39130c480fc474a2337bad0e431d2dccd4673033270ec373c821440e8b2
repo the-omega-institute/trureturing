@@ -1,0 +1,11 @@
+**命题 56.14（完整似然中的输入律因子消去）。** 对任意有限完整记录，定义56.1的似然分解为
+
+$$
+\mathcal L(\mu,\alpha,\theta;D_m)
+=\left[\prod_{b=1}^m\prod_{i=1}^n\mu(W_{b,i})\right]
+\left[\prod_{b=1}^m(R_\alpha)_{C_\theta(X_b),Y_b}\right].
+\tag{56.29}
+$$
+
+在 $\mu\in\mathcal M_\rho$ 上剖面化得到的第一因子与 $\theta,\alpha$ 无关，因此不改变教师／标量候选之间的完整似然比较。
+
