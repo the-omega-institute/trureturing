@@ -48665,3 +48665,492 @@ $-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
 该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 352. 整数秩容量、未填满余量与实际 Fibonacci 素数尾
+
+**定义 352.1（合并后的整数秩容量）。** 设 $r\in\mathbb N$、$r\ge1$，$I\subseteq\{r,r+1,\ldots\}$ 为有限集合，$A,N\ge0$ 为实数。对每个 $d\in I$ 给定质量 $c_d$，满足
+
+$$
+0\le c_d\le Ad,\qquad \sum_{d\in I}c_d\le N.
+$$
+
+定义
+
+$$
+x_d=\frac{c_d}{d},\qquad
+J=\sum_{d\in I}x_d,\qquad
+B=\sum_{d\in I}dx_d=\sum_{d\in I}c_d,
+\qquad D=\sum_{d\in I}x_d(A-x_d),\qquad C=(2r-1)A.
+$$
+
+因 $d\ge1$，上述条件等价于 $0\le x_d\le A$ 和 $B\le N$。若原载体是有限集合 $E$，带整数秩映射 $\rho:E\to\{r,r+1,\ldots\}$ 与非负质量 $a_e$，则这里的 $I=\rho(E)$、$c_d=\sum_{\rho(e)=d}a_e$；容量条件要求这个合并后的总质量满足 $c_d\le Ad$，而不是仅要求每个 $a_e\le A\rho(e)$。
+
+**定理 352.2（由最大秩归纳得到的容量与余量界）。** 定义352.1的全部参数满足
+
+$$
+D\ge0,\qquad J^2+CJ+D\le2AB\le2AN,
+\tag{352.1}
+$$
+
+且 $C^2+8AN-4D\ge0$，并有
+
+$$
+J\le\frac{\sqrt{C^2+8AN-4D}-C}{2}
+\le\frac{\sqrt{C^2+8AN}-C}{2}.
+\tag{352.2}
+$$
+
+这些结论包含空集、$A=0$ 和 $N=0$ 的情形。
+
+**证明。** 每项 $x_d(A-x_d)$ 非负，故 $D\ge0$。先证明（352.1）中以 $B$ 为右侧预算的部分。对 $I$ 按最大秩归纳；空集的各项均为零。加入最大秩 $a$ 时，旧集合 $I_0\subseteq\{r,\ldots,a-1\}$。互异整数秩给
+
+$$
+|I_0|\le a-r,\qquad
+J_0=\sum_{d\in I_0}x_d\le |I_0|A\le(a-r)A.
+$$
+
+置 $x=x_a$。平方项、线性项与未填满余量的总增量为
+
+$$
+\begin{aligned}
+&(J_0+x)^2-J_0^2+Cx+x(A-x)\\
+&\hspace{2em}=2J_0x+2rAx\le2Aax.
+\end{aligned}
+$$
+
+右侧恰是预算 $2AB$ 加入新秩时的增量；这证明归纳步骤，而未把前缀质量上界作为额外假设。再以 $B\le N$ 得到（352.1）。因为 $J,C\ge0$，将该不等式乘四并完成平方，得
+
+$$
+0\le(2J+C)^2\le C^2+8AN-4D.
+$$
+
+两侧开非负平方根给（352.2）的第一界；$D\ge0$ 与平方根的单调性给第二界。$A=0$ 时盒约束迫使全部 $x_d=0$；$N=0$ 时全部 $c_d=0$。这两种情形以及空集都给 $J=D=0$，符合上述公式。$\square$
+
+**命题 352.3（逐索引容量不能替代合并容量）。** 令 $E$ 有两个元素，二者的秩均为 $1$、质量均为 $1$，并取 $r=A=1$、$N=2$。每个索引分别满足容量条件，但不能对未合并的两个索引使用定理352.2。
+
+**证明。** 若将两个索引当作不同秩求和，则 $J=2$、逐索引的 $D=0$、$C=1$，会得到错误的 $J^2+CJ+D=6\le2AN=4$。真正合并后的秩集是 $I=\{1\}$，其质量为 $c_1=2>A\cdot1$，不满足定理的假设。$\square$
+
+**定义 352.4（实际 Fibonacci 零秩与严格截止权重）。** 令
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对素数 $p$，$z(p)$ 表示满足 $p\mid F_d$ 的最小正整数 $d$。对实数 $x\ge0$，记 $\vartheta(x)=\sum_{p\le x,\ p\ \mathrm{prime}}\log p$。对实数 $y\ge2$，在自然数载体上定义同一实际权重
+
+$$
+w_y(n)=
+\begin{cases}
+\displaystyle\frac1{n z(n)},&n\text{ 是素数且 }y<n,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+此定义只在素数分支使用 $z(n)$；任意有限 $T\subseteq\mathbb N$ 的尾质量为 $\sum_{n\in T}w_y(n)$。
+
+**定理 352.6（两个初始空秩后的半开壳界）。** 对每个实数 $Y\ge2$、$b>1$ 及有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{25+16bY}-5\right),
+\tag{352.4}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{25+16bY}-5\right)}{2Y\log Y}.
+\tag{352.5}
+$$
+
+**证明。** 先建立实际秩、合并纤维容量与素数预算。每个素数的 $z(p)$ 存在，且 $z(p)\ge3$、$p\mid F_{z(p)}$。若 $S$ 是任意有限素数集合，定义
+
+$$
+I=z(S),\qquad
+c_d=\sum_{\substack{p\in S\\z(p)=d}}\log p.
+$$
+
+则对每个 $d\in I$，$0\le c_d\le d\log2$。此外，对全部实数 $x\ge0$ 有 $\vartheta(x)\le2x\log2$；若 $S\subseteq[Y,bY)$、$Y\ge2$、$b>1$，则
+
+$$
+\sum_{d\in I}c_d=\sum_{p\in S}\log p\le2bY\log2.
+\tag{352.3}
+$$
+
+Fibonacci 模周期与首次整除秩的经典背景见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。这里所需的存在性也可直接证明：矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+在 $\mathrm{GL}_2(\mathbb F_p)$ 中可逆，该群有限，故某个正整数 $h$ 满足 $M^h=I$。因 $M^h(0,1)^{\mathsf T}=(F_h,F_{h+1})^{\mathsf T}$，有 $p\mid F_h$，故最小正秩存在。$F_1=F_2=1$ 排除秩 $1,2$。
+
+由递推归纳得 $0<F_d<2^d$（$d\ge1$）。固定纤维中各素数互异、两两互素，且均整除 $F_d$，所以
+
+$$
+\prod_{\substack{p\in S\\z(p)=d}}p\mid F_d,
+\qquad
+c_d=\log\prod_{\substack{p\in S\\z(p)=d}}p
+\le\log F_d<d\log2.
+$$
+
+非负性来自 $p\ge2$。
+
+为核对 Chebyshev 常数，对整数 $n$ 作强归纳。$n=0,1,2$ 的界直接成立；偶数 $n\ge4$ 不是素数，故 $\vartheta(n)=\vartheta(n-1)\le2(n-1)\log2$。对奇数 $n=2m+1\ge3$，区间 $(m+1,2m+1]$ 中每个素数均整除 $\binom{2m+1}{m}$。第 $m$、$m+1$ 个二项式系数相等，而所有系数之和为 $2^{2m+1}$，故 $\binom{2m+1}{m}\le2^{2m}$。于是
+
+$$
+\begin{aligned}
+\vartheta(2m+1)
+&\le\vartheta(m+1)+\log\binom{2m+1}{m}\\
+&\le2(m+1)\log2+2m\log2
+=2(2m+1)\log2.
+\end{aligned}
+$$
+
+实数情形由 $\vartheta(x)=\vartheta(\lfloor x\rfloor)$ 得到。按秩分纤维不改变总质量，而壳内素数均不超过 $bY$，故（352.3）成立。
+
+用上述合并质量，取定理352.2中的 $r=3$、$A=\log2$、$N=2bY\log2$。此时 $C=5\log2$，并且
+
+$$
+J=\sum_{d\in z(S)}\frac{c_d}{d}
+=\sum_{p\in S}\frac{\log p}{z(p)}.
+$$
+
+在（352.2）中舍弃非负 $D$，再将 $\log2>0$ 从平方根提出，便得（352.4）。因为 $p\ge Y\ge2$，有 $p\log p\ge Y\log Y>0$，逐项写成
+
+$$
+\frac1{p z(p)}
+=\frac{\log p/z(p)}{p\log p}
+\le\frac{\log p/z(p)}{Y\log Y},
+$$
+
+相加即得（352.5）。全程使用的是同一素数集合与合并纤维，不对纤维中的素数分别假设独立容量。$\square$
+
+**定理 352.8（所有实数截止下的完整四倍壳尾界）。** 对实数 $y\ge2$，定义
+
+$$
+W(y)=\sum_{n\ge0}w_y(n)
+=\sum_{\substack{p>y\\p\ \mathrm{prime}}}\frac1{p z(p)},
+\qquad
+E_3(y,k)=\frac{\log2\left(\sqrt{25+64y4^k}-5\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则 $E_3(y,k)\ge0$、$\sum_{k\ge0}E_3(y,k)$ 可和，且
+
+$$
+W(y)\le\sum_{k\ge0}E_3(y,k)
+\le\frac{8\log2}{\sqrt y\log y}.
+\tag{352.7}
+$$
+
+**证明。** 对每个实数 $y\ge2$，$w_y$ 可和。每个满足 $p>y$ 的素数唯一属于某个半开壳
+
+$$
+[y4^k,y4^{k+1}),\qquad k\in\mathbb N.
+\tag{352.6}
+$$
+
+素数 $p=y$ 不在活跃集合中，内部边界 $p=y4^k$（$k\ge1$）属于以该边界为左端点的壳。
+
+先核对同一实际权重的可和性，再形成其无穷和。引理191.2的确切粗界是：对全部实数 $y\ge2$，实际 Fibonacci 素数权重的尾和不超过 $16/\sqrt y$。因此每个有限 $T\subseteq\mathbb N$ 满足
+
+$$
+0\le\sum_{n\in T}w_y(n)\le\frac{16}{\sqrt y}.
+$$
+
+非负级数的有界有限部分和判据给 $w_y$ 可和。这里复用的是相同的 $p$、$z(p)$ 和严格筛选 $p>y$，不是从一个不同权重的结论作替换。
+
+已发表的另一项充分输入见 Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，arXiv:1704.00151v2，Lemma2.4 与 Lemma2.2(v)：记 $\ell(p)=\operatorname{lcm}(p,z(p))$，则
+
+$$
+\sum_{p>y}\frac1{\varphi(\ell(p))}\ll y^{-1/4},
+\qquad \ell(p)=p z(p)\quad(p\ne5).
+$$
+
+由于 $\varphi(m)\le m$，这也给 $y\ge5$ 时同一实际权重的可和性；较小截止只增加有限项。此文献界在这里仅作为已知的可和性输入，不作为（352.5）的常数来源。
+
+对 $p>y>0$，取 $k=\lfloor\log(p/y)/\log4\rfloor$，便有 $k\ge0$ 与 $4^k\le p/y<4^{k+1}$，证明存在性。若两个不同壳都含 $p$，较早壳的严格上端点条件与较晚壳的下端点条件矛盾，证明唯一性及边界归属。
+
+记 $Y_k=y4^k$。因 $Y_k\ge y\ge2$，分母为正；平方比较给
+
+$$
+0\le\sqrt{25+64Y_k}-5\le8\sqrt{Y_k}.
+$$
+
+由 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到共同几何主控
+
+$$
+0\le E_3(y,k)\le
+\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{352.8}
+$$
+
+所以右侧壳级数可和，其和不超过（352.7）的第二个右侧。
+
+对任意有限 $T\subseteq\mathbb N$，先保留其中满足 $p$ 为素数且 $p>y$ 的活跃子集，再按本证明中已确定的唯一壳编号分组。每组是 $[Y_k,4Y_k)$ 内的有限素数集合，定理352.6给其贡献不超过 $E_3(y,k)$。只有有限多个组非空，故
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_3(y,k)
+\le\sum_{k\ge0}E_3(y,k).
+$$
+
+本证明已先核对左侧同一实际权重可和，现对所有有限 $T$ 取上确界，得到完整尾和的第一界。没有以右側壳级数的可和性代替左侧权重的核对，也没有把严格截止改成 $p\ge y$。$\square$
+
+## 353. 秩递归的精确预算缺口、零缺口条件与价格归一化
+
+**定义 353.1（前缀缺口）。** 在定义352.1的整数秩与占位条件下，令 $\widetilde x_i=x_i$（$i\in I$），其余整数 $i$ 的 $\widetilde x_i=0$。对 $d\in I$ 定义
+
+$$
+g_d=A(d-r)-\sum_{\substack{i\in I\\i<d}}x_i,
+\qquad H=\sum_{d\in I}x_dg_d.
+$$
+
+$D$ 记录单秩的未填满余量，$H$ 记录相对于完整整数前缀的缺口；二者均按合并后的秩集合计算。
+
+**定理 353.2（精确恒等式与最大秩预算不变量）。** 定义353.1的量满足
+
+$$
+J^2+CJ+D+2H=2AB.
+\tag{353.1}
+$$
+
+加入最大秩 $a$、占位 $x=x_a$ 时，旧秩的 $g_d$ 均不变。若 $J_0$ 是旧总占位，则
+
+$$
+\begin{aligned}
+\Delta(J^2+CJ+D)&=2x(J_0+rA),\\
+\Delta H&=x\bigl(A(a-r)-J_0\bigr)=xg_a,\\
+2Aax-\Delta(J^2+CJ+D)&=2xg_a.
+\end{aligned}
+\tag{353.2}
+$$
+
+因此每步以新增预算 $ax$ 同时支付主项增量与精确缺口；在 $B\le N$ 时，$J^2+CJ+D+2H\le2AN$。
+
+**证明。** 空集满足（353.1）。若 $a$ 大于所有旧秩，则它不进入任何旧秩的前缀，故旧 $g_d$ 不变，$H$ 只增加 $xg_a$。定理352.2证明中的代数展开给（353.2）的第一式；第二式来自 $g_a$ 的定义。二者相加得到
+
+$$
+\Delta(J^2+CJ+D+2H)=2Aax=\Delta(2AB),
+$$
+
+完成最大秩归纳，也证明第三式。最后用 $A\ge0$ 和 $B\le N$ 即得预算上界。该恒等式描述的是每步预算如何分配，而不是对递归分支数量的估计。$\square$
+
+**定理 353.3（整数空台阶分解与零缺口的充要条件）。** 对每个 $d\in I$，有
+
+$$
+g_d=\sum_{i=r}^{d-1}(A-\widetilde x_i)\ge0,
+\qquad H\ge0.
+\tag{353.3}
+$$
+
+当 $A>0$ 时，
+
+$$
+H=0
+\quad\Longleftrightarrow\quad
+\forall d\in I\text{ 满足 }x_d>0,\quad
+\forall i\in\mathbb Z\text{ 满足 }r\le i<d,
+\quad i\in I\text{ 且 }x_i=A.
+\tag{353.4}
+$$
+
+这个条件不要求最后一个活跃秩填满。当 $A=0$ 时，所有 $x_d$、$J$、$B$、$D$、$g_d$、$H$ 都为零，零缺口本身不提供任何额外的秩集合归属信息。
+
+**证明。** $[r,d)$ 恰有 $d-r$ 个整数，其中属于 $I$ 的占位总和是 $\sum_{i\in I,i<d}x_i$，故（353.3）的等式成立。缺失秩的一项等于 $A$，已出现秩的一项等于 $A-x_i$，均非负。因此 $g_d\ge0$，进而 $x_dg_d\ge0$ 与 $H\ge0$。
+
+设 $A>0$。若 $H=0$，有限个非负项 $x_dg_d$ 都为零；对每个 $x_d>0$ 的秩有 $g_d=0$。再次用非负项之和为零，（353.3）的每个前缀项都为零。缺失秩的一项会等于 $A>0$，不可能为零，所以每个 $i\in[r,d)$ 都属于 $I$，且 $A-x_i=0$。反之，若所有活跃秩的严格前缀都存在并填满，则这些秩的 $g_d=0$；不活跃秩的 $x_d=0$，所以每项 $x_dg_d=0$，得到 $H=0$。最大活跃秩自己的占位不在它的严格前缀内，故可以部分填满。$A=0$ 的情形直接由 $0\le x_d\le A$ 及各定义得到，单独成立而不使用 $A>0$ 的排除步骤。$\square$
+
+**命题 353.4（两种余量互不替代及零容量例）。** 取 $r=3$、$A=1$。对 $I=\{3,5\}$、$x_3=x_5=1$，有 $D=0$、$H=1$。对 $I=\{3,4,5\}$、$x_3=x_4=1$、$x_5=1/2$，有 $D=1/4$、$H=0$。另外，取 $A=0$、$I=\{5\}$、$x_5=0$，则 $H=0$，但 $3,4\notin I$。
+
+**证明。** 第一例每项占位都为 $A$，所以 $D=0$；$g_3=0$、$g_5=2-1=1$，故 $H=1$。第二例 $g_3=g_4=g_5=0$，只有最后一项对 $D$ 有贡献，即 $(1/2)(1-1/2)=1/4$。零容量例中每项乘数和每个前缀缺口都为零，而所取集合确实不含 $3,4$。因此局部饱和不能消除缺失中间整数秩的损失，完整严格前缀也不能消除末端部分占位的余量。$\square$
+
+**命题 353.6（实际纤维不必实现放松后的最大值）。** 对有限 $I\subseteq\{r,r+1,\ldots\}$、$r\ge1$、$A,N\ge0$，定义放松可行集
+
+$$
+\mathcal X=\left\{x\in\mathbb R^I:
+0\le x_d\le A,\ \sum_{d\in I}dx_d\le N\right\}.
+$$
+
+取半开壳 $[2,4)$ 中的实际素数集合 $S=\{2\}$，以及 $r=3$、$A=\log2$、$N=8\log2$。它的秩集为 $I=\{3\}$，实际目标值严格小于同一 $I,A,N$ 下的 $\max_{x\in\mathcal X}\sum_{d\in I}x_d$。
+
+**证明。** 先在 $A>0$ 时定义
+
+$$
+\begin{aligned}
+\mathcal T&=\left\{t\in\mathbb R^I:
+0\le t_d\le1,\ \sum_{d\in I}dt_d\le N/A\right\}.
+\end{aligned}
+$$
+
+则 $t_d=x_d/A$ 与 $x_d=At_d$ 是互逆的可行集对应，且全部可行目标值满足确切集合等式
+
+$$
+\left\{\sum_{d\in I}x_d:x\in\mathcal X\right\}
+=\left\{A\sum_{d\in I}t_d:t\in\mathcal T\right\}.
+\tag{353.5}
+$$
+
+在这个归一化下，使用经典有限分数背包强对偶，成本为 $d$、收益为 $1$、预算为 $N/A$，得到
+
+$$
+\max_{x\in\mathcal X}\sum_{d\in I}x_d
+=A\inf_{\lambda\ge0}
+\left\{\lambda\frac NA+
+\sum_{d\in I}\max(0,1-\lambda d)\right\}.
+\tag{353.6}
+$$
+
+此处优化允许在固定秩集上重新分配占位；实际 Fibonacci 纤维给出的占位仅是其中一个可行点，不要求它达到该最大值。$A=0$ 时只有零占位，最大目标值为零，不使用除以 $A$ 的归一化。
+
+若 $x\in\mathcal X$，则除以正数 $A$ 给 $0\le x_d/A\le1$，且
+
+$$
+\sum_{d\in I}d\frac{x_d}{A}
+=\frac1A\sum_{d\in I}dx_d\le\frac NA,
+\qquad
+A\sum_{d\in I}\frac{x_d}{A}=\sum_{d\in I}x_d.
+$$
+
+这证明（353.5）左侧包含于右侧。反之，若 $t\in\mathcal T$，取 $x_d=At_d$，则 $0\le x_d\le A$，且
+
+$$
+\sum_{d\in I}dx_d=A\sum_{d\in I}dt_d\le N,
+\qquad \sum_{d\in I}x_d=A\sum_{d\in I}t_d.
+$$
+
+这证明反向包含及两个对应互逆。可行集非空、紧，目标连续，所以最大值存在。
+
+为明确这里应用的既有强对偶，记 $M_0=N/A$。对任意可行 $t$ 和价格 $\lambda\ge0$，有
+
+$$
+\sum_{d\in I}t_d
+=\lambda\sum_{d\in I}dt_d+
+\sum_{d\in I}(1-\lambda d)t_d
+\le\lambda M_0+\sum_{d\in I}\max(0,1-\lambda d).
+$$
+
+这个经典上界可达：将非空 $I$ 排为 $d_1<\cdots<d_m$。若 $M_0\ge\sum_i d_i$，全取 $t_i=1$ 并选 $\lambda=0$；若 $0\le M_0<\sum_i d_i$，令 $j$ 为首个满足 $\sum_{i\le j}d_i>M_0$ 的指标，置
+
+$$
+t_i=1\ (i<j),\qquad
+t_j=\frac{M_0-\sum_{i<j}d_i}{d_j},\qquad
+t_i=0\ (i>j),\qquad \lambda=\frac1{d_j}.
+$$
+
+该点可行，且原目标和价格表达式都等于 $j-1+t_j$。空集时两侧为零，$M_0=0$ 也包含在上述构造中。这核对了（353.6）所使用的有限分数背包强对偶及其归一化，而非另一个整数预算强对偶假设。收益成本比 $1/d$ 随秩严格下降，所以所给最优点先填低秩、至多有一个部分占位；稀疏秩集的这种最优点未必满足（353.4）的完整整数前缀条件。实际 Fibonacci 占位由固定素数集合确定，不随这里的价格优化而重分配。
+
+对于所取实际素数集合，$F_1=F_2=1$、$F_3=2$，故 $z(2)=3$，实际 $c_3=\log2$、$x_3=\log2/3$。放松后的点 $x_3=\log2$ 满足盒约束，且预算 $3\log2\le8\log2$，所以最大值为 $\log2>\log2/3$。这里的 $N$ 正是（352.3）在 $Y=b=2$ 时的上界预算；没有将实际纤维等同于可自由选择的最优占位。$\square$
+
+## 354. 素数截止排除低秩后的二十三阶容量与完整尾界
+
+**命题 354.1（早期 Fibonacci 因子的截止结论）。** 每个 $F_d$（$1\le d\le22$）的素因子都不超过 $1597$。因此每个素数 $p>1597$ 满足 $z(p)\ge23$；特别地，每个素数 $p>5040$ 满足同一结论。
+
+**证明。** 正指标的 Fibonacci 数列非减，$F_{17}=1597$，故 $1\le F_d\le1597$（$1\le d\le17$）。其后五项的精确因子分解为
+
+$$
+\begin{aligned}
+F_{18}&=2584=2^3\cdot17\cdot19,\\
+F_{19}&=4181=37\cdot113,\\
+F_{20}&=6765=3\cdot5\cdot11\cdot41,\\
+F_{21}&=10946=2\cdot13\cdot421,\\
+F_{22}&=17711=89\cdot199.
+\end{aligned}
+$$
+
+所列因子均为不超过 $1597$ 的素数。若 $p>1597$ 而 $1\le z(p)<23$，则 $p\mid F_{z(p)}$ 与上述因子结论矛盾，故 $z(p)\ge23$。$p>5040$ 的情形仅用 $5040>1597$ 作一次截止包含。该论证只用正指标 $1,\ldots,22$，不把 $F_0=0$ 的整除关系计入早期因子界。$\square$
+
+**定理 354.2（二十三阶起始秩的全部实数半开壳界）。** 对每个实数 $Y>1597$、$b>1$ 和有限素数集合 $S\subseteq[Y,bY)$，有
+
+$$
+\sum_{p\in S}\frac{\log p}{z(p)}
+\le\frac{\log2}{2}\left(\sqrt{2025+16bY}-45\right),
+\tag{354.1}
+$$
+
+以及
+
+$$
+\sum_{p\in S}\frac1{p z(p)}
+\le\frac{\log2\left(\sqrt{2025+16bY}-45\right)}{2Y\log Y}.
+\tag{354.2}
+$$
+
+**证明。** 每个 $p\in S$ 满足 $p\ge Y>1597$，所以命题354.1给 $z(p)\ge23$。按同一实际秩合并 $c_d=\sum_{p\in S,z(p)=d}\log p$，定理352.6证明中建立的实际纤维容量与素数预算仍给 $0\le c_d\le d\log2$ 与 $\sum c_d\le2bY\log2$。在定理352.2中取 $r=23$、$A=\log2$、$N=2bY\log2$，得到 $C=45\log2$。舍弃非负 $D$，根号内为
+
+$$
+C^2+8AN=(\log2)^2(2025+16bY),
+$$
+
+因而得到（354.1）。再用与定理352.6完全相同的逐项恒等式和 $p\log p\ge Y\log Y>0$，得到（354.2）。此处没有更换素数权重、纤维质量或预算；改变的只是已由实际截止证明的最小可用整数秩。$\square$
+
+**定义 354.3（二十三阶四倍壳包络）。** 对实数 $y>1597$、$k\in\mathbb N$，定义
+
+$$
+E_{23}(y,k)=
+\frac{\log2\left(\sqrt{2025+64y4^k}-45\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+完整尾 $W(y)$ 仍采用定义352.4的严格截止实际权重 $w_y$，与定理352.8的尾为同一对象。
+
+**定理 354.4（严格截止的完整二十三阶尾界）。** 对每个实数 $y>1597$，有 $E_{23}(y,k)\ge0$、$\sum_{k\ge0}E_{23}(y,k)$ 可和，并且
+
+$$
+W(y)\le\sum_{k\ge0}E_{23}(y,k),
+\qquad
+E_{23}(y,k)\le\frac{4\log2}{\sqrt y\log y}\,2^{-k}.
+\tag{354.3}
+$$
+
+**证明。** 置 $Y_k=y4^k>1597$。平方比较给
+
+$$
+0\le\sqrt{2025+64Y_k}-45\le8\sqrt{Y_k}.
+$$
+
+与（352.8）相同的计算，使用 $\sqrt{Y_k}=\sqrt y\,2^k$ 和 $\log Y_k\ge\log y>0$，得到（354.3）的逐项几何主控，因此包络可和。
+
+左侧是定理352.8证明中已经核对可和性的同一 $w_y$，不是另行选择的占位模型。对任意有限 $T\subseteq\mathbb N$，保留满足素性与 $p>y$ 的活跃子集，按唯一半开壳 $[Y_k,4Y_k)$ 分组，再应用定理354.2的 $b=4$ 情形，得到
+
+$$
+\sum_{n\in T}w_y(n)
+\le\sum_{\substack{k\ge0\\\text{活跃壳}}}E_{23}(y,k)
+\le\sum_{k\ge0}E_{23}(y,k).
+$$
+
+对所有有限 $T$ 取上确界，便得完整尾界。该过程保留 $p>y$ 的严格筛选，并将每个内部边界归入下一壳，因而没有漏项或重复计数。$\square$
+
+**命题 354.5（初始空秩包络的严格比较）。** 对 $u>0$，函数 $c\mapsto\sqrt{c^2+u}-c$ 在 $c\ge0$ 上严格下降。对共同适用域 $y>1597$，令
+
+$$
+E_1(y,k)=\frac{\log2\left(\sqrt{1+64y4^k}-1\right)}
+{2y4^k\log(y4^k)}.
+$$
+
+则这是仅用正秩 $z(p)\ge1$ 的四倍壳容量包络，并有
+
+$$
+0<E_{23}(y,k)<E_3(y,k)<E_1(y,k),
+\qquad
+\sum_{k\ge0}E_{23}(y,k)
+<\sum_{k\ge0}E_3(y,k)
+<\sum_{k\ge0}E_1(y,k).
+\tag{354.4}
+$$
+
+三个包络均界定同一 $W(y)$；较小包络不表示实际纤维达到容量最大值，也不识别某个唯一素数截止。
+
+**证明。** 有理化得到
+
+$$
+\sqrt{c^2+u}-c=\frac{u}{\sqrt{c^2+u}+c}.
+$$
+
+分母在 $c\ge0$ 上严格增加，分子为正，故函数严格下降。取 $u=64y4^k>0$，比较 $c=45,5,1$，并乘同一正因子 $\log2/[2y4^k\log(y4^k)]$，得到逐项严格不等式。$E_1$ 的几何主控仍是（352.8）的右侧，故三个级数均可和。各项差非负，且第零项差严格为正，得到级数和的严格比较。
+
+在定理352.2中用 $r=1$，同时保留定理352.6证明中的实际纤维容量和预算，再按四倍壳分组，即得 $W(y)\le\sum_k E_1(y,k)$；另两条尾界分别是定理352.8、354.4。因此比较的三个左侧权重完全相同。命题353.6已经给出实际纤维不实现放松最大值的具体实例。最后，二十三阶结论对每个实数 $y>1597$ 都成立，包含不同截止 $y=1600$、$y=5040$，并不选择其中之一为唯一截止。$\square$
+
+## 追加锚（本行以下为增补区）
