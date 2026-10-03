@@ -1,0 +1,34 @@
+### 39.4 两个有限失效见证
+
+第一，单一当前数量不能承担动态边界。令 $c(\alpha)=(1,0)$、$c(\beta)=(0,1)$，并取 $q(a,b)=2a+3b$。则
+
+$$
+q(c(3\alpha))=q(c(2\beta))=6,
+$$
+
+但
+
+$$
+q(c(\rho(3\alpha)))=9,
+\qquad
+q(c(\rho(2\beta)))=10.
+$$
+
+所以同一 $q$ 值要求两个不同的后继读数；若不补充第二个边界读数或等价的行为状态，式（PG.3904）不存在。
+
+第二，端点与总步数不能替代有序事件记录。以共同初态 $(\alpha,\beta)$ 为例，令 `RhoL` 只作用于左分量，`RhoR` 只作用于右分量，最后执行 `Pair`。两条合法词
+
+$$
+\texttt{RhoL;RhoR;Pair},
+\qquad
+\texttt{RhoR;RhoL;Pair}
+$$
+
+都得到
+
+$$
+\langle\beta,\langle\beta,\alpha\rangle\rangle
+$$
+
+并且都有三步，但事件词不同。若时间视图只保存终树和总步数，便把两段历史合并；只要任务读取动作次序，二者就在 $K_{\mathcal V}$ 中分离。相同组成的 $\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 还说明：只有在任务显式加入头叶或路径探针时，结构次序才属于必须保留的行为。
+

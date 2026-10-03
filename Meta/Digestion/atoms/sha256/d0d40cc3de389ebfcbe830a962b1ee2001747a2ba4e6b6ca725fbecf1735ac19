@@ -1,0 +1,10 @@
+**命题60.7（预测列表与 $K$-列表恢复的记录预算等价）。** 在揭示族，对任意 $\varepsilon,\delta$，达到
+
+$$
+P_{D_m,\xi}\{L_s(I,f_{D_m,\xi})\le\varepsilon\}\ge1-\delta
+\quad\text{对每个 }I\in[M]
+\tag{60.13}
+$$
+
+所需的最坏记录预算，等于恢复一个大小至多 $K_M(s,\varepsilon)$ 的位置列表、并对每个真实位置以概率至少 $1-\delta$ 覆盖它所需的最坏记录预算。
+

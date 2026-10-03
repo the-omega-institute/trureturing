@@ -1,0 +1,78 @@
+### 36.2 相容线程、实际像与分离
+
+对 $m\le n$ 给出限制映射 $r^a_{mn}:C^a_n\to C^a_m$，满足
+
+$$
+r^a_{nn}=\operatorname{id},\qquad
+r^a_{\ell m}\circ r^a_{mn}=r^a_{\ell n}\quad(\ell\le m\le n),
+\qquad
+c^a_m=r^a_{mn}\circ c^a_n.
+\tag{PG.3604}
+$$
+
+限制保留共享来源、纪元、参考类与权限见证，只按合同限制档案、游标、运行
+参考和四视图。它不是对四个边缘值任意实施四次互不相关的压缩。
+定义形式逆极限和实际线程为
+
+$$
+\begin{aligned}
+L^a&=\varprojlim_n C^a_n
+=\{x=(x_n)_n:\ r^a_{mn}(x_n)=x_m\ (m\le n)\},\\
+c^a_\infty(h)&=(c^a_n(h))_n,\qquad
+I^a=\operatorname{im}(c^a_\infty)\subseteq L^a.
+\end{aligned}
+\tag{PG.3605}
+$$
+
+$I^a$ 要求存在一个共同的 $h$ 实现全部层；$L^a$ 只检查码间限制相容。
+即便每层满足 $C^a_n=\operatorname{im}(c^a_n)$，也不能推出 $I^a=L^a$。
+$L^a\setminus I^a$ 中的幽灵线程不承担实际来源或端点语义。
+
+所有核都在同一个 $D^a_\infty$ 上比较。令
+$\eta_a:D^a_\infty\to E_a$ 是 §33–§35 意义下的完整端点映射；
+$\beta_a:D^a_\infty\to\mathcal B_a$ 是指定任务的完整有限续接响应。
+其测试族 $\mathcal Q$ 保留空路径当前读出、全部声明动作的合法性、事件、失败
+与任务所需记录，并对有类型前缀和续接封闭，如 §32.2 所规定。
+执行后报告失败与动作未定义须区分。由线程逐坐标相等，
+
+$$
+\ker(c^a_\infty)=\bigcap_n\ker(c^a_n).
+\tag{PG.3606}
+$$
+
+沿用 §§31.3、35.2–35.3 的实际像因子化判据，有
+
+$$
+\begin{aligned}
+\eta_a=\delta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\eta_a),\\
+c^a_\infty=\gamma_a\circ\eta_a
+&\iff \ker(\eta_a)\subseteq\ker(c^a_\infty),\\
+\beta_a=\theta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\beta_a),\\
+c^a_\infty=\zeta_a\circ\beta_a
+&\iff \ker(\beta_a)\subseteq\ker(c^a_\infty).
+\end{aligned}
+\tag{PG.3607}
+$$
+
+这里 $\delta_a:I^a\to\operatorname{im}\eta_a$、
+$\gamma_a:\operatorname{im}\eta_a\to I^a$、
+$\theta_a:I^a\to\operatorname{im}\beta_a$、
+$\zeta_a:\operatorname{im}\beta_a\to I^a$，存在时均唯一。
+按同一码或端点的任一实际代表定义因子，核包含保证代表无关；实际像保证唯一性。
+因而三份表示互相恢复的精确条件是
+
+$$
+\boxed{
+\ker(c^a_\infty)=\ker(\eta_a)=\ker(\beta_a)
+\quad\text{（仅在 }D^a_\infty\text{ 上）。}
+}
+\tag{PG.3608}
+$$
+
+端点分离只要求 (PG.3607) 第一行，不要求区分端点相同的全部历史。行为分离
+不自动等于端点分离，正如 §33 的端点拼接与行为核心之别。若某些档案或权限
+区别不影响指定任务，则联合码可以严格细于行为码；四视图也不因共同来源而
+逐一取得与端点相同的核。
+

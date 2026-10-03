@@ -1,0 +1,43 @@
+### 37.1 有限自由源与运输条件
+
+本节固定 [FIB 原子关系生成](FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+§§2–3 的原始语法。$\mathcal T$ 是全部非空有限有序二叉树构成的自由代数：
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\alpha\ne\beta,
+\qquad
+\langle s,t\rangle=\langle s',t'\rangle
+\iff s=s'\ \text{且}\ t=t'.
+\tag{PG.3701}
+$$
+
+两个叶构造与配对构造不交；没有空树、交换律、结合律或行为商等同。
+替换及其迭代为
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&
+\rho(\beta)&=\langle\beta,\alpha\rangle,\\
+\rho(\langle s,t\rangle)&=\langle\rho(s),\rho(t)\rangle,&
+\rho^0&=\operatorname{id}_{\mathcal T}.
+\end{aligned}
+\tag{PG.3702}
+$$
+
+这里的全局源运输是总映射 $F:\mathcal T\to\mathcal T$，要求对所有
+$s,t\in\mathcal T$ 满足
+
+$$
+F(\langle s,t\rangle)=\langle F(s),F(t)\rangle,
+\qquad F(\rho(t))=\rho(F(t)).
+\tag{PG.3703}
+$$
+
+不要求 $F$ 固定具名叶 $\alpha,\beta$，也不预设 $F$ 可逆。
+[Transport–Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§15.4 的 (RA.1512) 给出生成元判据
+$v=\rho(u)$、$\rho(v)=\langle v,u\rangle$；该卷 §22.1 的 (RA.2207)
+给出 $\rho$ 的像语法、唯一解析与单射性。下面的条件推导以这两个具体接口为依赖。
+

@@ -1,0 +1,21 @@
+**定理 56.13（相同未知律类的准确恢复阶）。** 对 $n\ge4$、$0<a\le1$、$0<\rho\le1/8$，任何统一错误至多 $0<\delta<1/2$ 的未知律完整记录规则均满足实际定理55.7的两条下界
+
+$$
+m\ge\frac8{3a^2\rho}\bigl[(1-\delta)\log(n-2)-\log2\bigr]_+,
+\qquad
+m\ge\frac8{3a^2\rho}(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{56.26}
+$$
+
+特别对 $0<\delta\le1/4$，
+
+$$
+\left\lceil\frac{\log n+\log(1/\delta)}{6a^2\rho}\right\rceil
+\le m_*^{\rm unk}(n,a,\rho,\delta)
+\le2\left\lceil\frac{4096}{a^2\rho}\log\frac{24n}{\delta}\right\rceil.
+\tag{56.27}
+$$
+
+同样的上下界适用于准确函数恢复。因此此域内两种目标均有最坏律样本阶
+$\Theta((\log n+\log(1/\delta))/(a^2\rho))$；没有尖锐常数结论。
+

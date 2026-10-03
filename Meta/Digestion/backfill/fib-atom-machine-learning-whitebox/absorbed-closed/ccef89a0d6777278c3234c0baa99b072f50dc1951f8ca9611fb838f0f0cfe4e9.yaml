@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ccef89a0d6777278c3234c0baa99b072f50dc1951f8ca9611fb838f0f0cfe4e9
+  normalized_sha256: sha256:ccef89a0d6777278c3234c0baa99b072f50dc1951f8ca9611fb838f0f0cfe4e9
+cas_ref: sha256:ccef89a0d6777278c3234c0baa99b072f50dc1951f8ca9611fb838f0f0cfe4e9
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/LegalPriorityTeacher.result
+    target_statement_id: sha256:599942c1759a14f8b1dab2753251c9b90fe8b999ea5fd34bb89591e24af4e86a
+receipts:
+  unresolved_subitems: []

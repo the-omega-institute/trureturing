@@ -1,0 +1,15 @@
+**定义 59.4（目标预测 minimax）。** 学习器仅使用定义59.1的训练记录、公开保证参数及参数无关随机化。计算和内存不限，输出任意固定分类器。记
+
+$$
+\begin{aligned}
+\mathfrak R_m^\nu(\varepsilon)
+&=\inf_{\mathcal A}\sup_{\theta,\boldsymbol\mu,\alpha}
+P_{D_m,\xi}\{L_\nu(\theta,\mathcal A(D_m,\xi))>\varepsilon\},\\
+m_*^\nu(\varepsilon,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m^\nu(\varepsilon)\le\delta\}.
+\end{aligned}
+\tag{59.14}
+$$
+
+上确界取定义59.1的全部参数。预算是固定记录数，或具有统一最坏上界的记录数；后一情形可补齐无用记录到上界。这里没有期望停止时间保证。 $\mathfrak R_m^{\rm het}$、 $m_*^{\rm het}$ 指（58.27）的同一训练实验准确三元组恢复。
+

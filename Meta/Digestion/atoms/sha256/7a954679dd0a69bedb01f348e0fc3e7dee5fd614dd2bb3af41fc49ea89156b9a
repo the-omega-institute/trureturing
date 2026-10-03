@@ -1,0 +1,17 @@
+**定理 58.7（补偿排序的置信界）。** 对 $n\ge4$、 $m\ge1$ 和定义58.1的全部参数，
+
+$$
+P(\widehat\theta\ne\theta)
+\le(N-1)\exp\left(-\frac{m\alpha^2\gamma_\rho}{512}\right).
+\tag{58.24}
+$$
+
+因此任意 $0<\delta<1$ 下，充分预算为
+
+$$
+m\ge\left\lceil\frac{128[\log N+\log(1/\delta)]}{a^2\rho^2}\right\rceil.
+\tag{58.25}
+$$
+
+统计式中的对数均为自然对数。
+

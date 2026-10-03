@@ -1,0 +1,22 @@
+**引理60.9（实际通道的完整记录 KL）。** 置
+
+$$
+U=\frac{4+2a}{12},\qquad V=\frac{4-a}{12},\qquad T=\frac{U+V}{2},
+$$
+
+则三行分别为 $(U,V,V),(T,V,T),(V,V,U)$。相邻行的 Jeffreys 散度为
+
+$$
+J_a=\frac a8\log\frac{4+2a}{4-a},
+\tag{60.15}
+$$
+
+且任意 $i\ne j$ 的完整一记录 KL 为
+
+$$
+\kappa_a=4\rho^2(1-2\rho)J_a\le\frac{a^2\rho^2}{2},
+\qquad
+\operatorname{KL}(P_i^{\otimes m}\Vert P_j^{\otimes m})=m\kappa_a.
+\tag{60.16}
+$$
+

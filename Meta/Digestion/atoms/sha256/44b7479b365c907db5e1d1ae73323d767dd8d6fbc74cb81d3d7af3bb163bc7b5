@@ -1,0 +1,35 @@
+### 32.1 最小的有类型生成数据
+
+取类型集 \(I\)，每个类型 \(i\) 的配置纤维为 \(S_i\)，每对类型的原子边集合为 \(E_{ij}\)。一条边 \(e\in E_{ij}\) 的动作标签、事件标签和原子标识记为
+
+$$
+a(e)\in A,\qquad
+\lambda(e)\in L,\qquad
+\iota(e)\in J .
+\tag{TG.3201}
+$$
+
+每个类型有当前读出 \(q_i:S_i\to O_i\)。边的单步语义是部分函数
+
+$$
+\operatorname{step}_e:S_i\longrightarrow
+\operatorname{Option}\bigl(L_e\times S_j\bigr),
+\qquad e\in E_{ij}.
+\tag{TG.3202}
+$$
+
+返回 \(\operatorname{none}\) 表示该边在当前配置不合法；返回 \(\operatorname{some}(\ell,s')\) 同时给出事件标签和后继。若过程具有随机性，把右侧换成有限次概率分布，并保留每个输出标签到后继类的质量；本节先写确定性版本。
+
+从这些数据导出有限 typed path。空路径 \(1_i:i\to i\) 是每个类型的单位；若 \(e:i\to j\) 且 \(p:j\to k\)，则 \(p\circ e:i\to k\)。只有索引相等的边才能接续，因此不需要另把“接口类型相容”作为一个无类型布尔条件附加在路径外。
+
+若每条边还有单步 grade \(\delta_1(e)\in G\)，其中 \(G\) 是加法幺半群，则路径 grade 由
+
+$$
+\operatorname{grade}(1_i)=0,\qquad
+\operatorname{grade}(p\circ e)
+=\delta_1(e)+\operatorname{grade}(p)
+\tag{TG.3203}
+$$
+
+导出。空间支持 \(\sigma(e)\) 若不由边类型和 step 定义，也必须作为独立字段加入；它不是生成器可以免费推出来的坐标。
+

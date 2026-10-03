@@ -1,0 +1,22 @@
+### 41.2 接到 typed 有限路径核
+
+在 $A_i$ 上限制 `Path`、`response` 和边动作，定义
+
+$$
+\begin{aligned}
+E_n(h,h')&:=\mathrm{E}(L,r,\mathrm{step}^A,n)(\iota h,\iota h'),\\
+B(h,h')&\Longleftrightarrow\beta(h)=\beta(h'),
+\end{aligned}
+\tag{PG.4104}
+$$
+
+其中 $\beta$ 收集空路径、所有有限前缀和失败响应，且保留起始类型。`typed_finite_view_kernel` 供应 $E_{n+1}\subseteq E_n$ 以及 $B=\bigcap_nE_n$ 的抽象接口；只有在实际载体上另证
+
+$$
+E_n=E_{n+1}\Longrightarrow E_n=B,
+\qquad E_{n+k}=E_n\ (k\in\mathbb N)
+\tag{PG.4105}
+$$
+
+才可把该层称为完整有限行为核。这里“有限”只指深度证书，不声称 $\Sigma_iA_i$ 或动作分支有限。`GradedPredictionShift.lean` 的平台与闭合更新只适用于其单个总更新假设；不能自动替代上面的 typed、部分动作条件。
+

@@ -1,0 +1,20 @@
+**定理 348.1（同一阈值控制全部极小点的三项误差）。** 对定义348.1，令 $c=1/(2\pi)$、$d=2K$、$C_*=d/c=4\pi K$、$D_*=d^2/(2c)=4\pi K^2$。存在固定的 $a>0$、$0<\varepsilon_0<e^{-2}$、$Q\ge1$，使对每个 $0<\varepsilon<\varepsilon_0$，$\mathcal J_\varepsilon$ 在 $[-a,a]$ 上取得极小值，且该区间上每一个极小点 $t$ 均满足 $0<t<a$、$\mathcal J_\varepsilon'(t)=0$。记 $L=\log(1/\varepsilon)$、$\ell=\log(1/t)$，同时有
+
+$$
+\left|\ell-[L+2\log L-\log C_*]\right|
+\le Q\frac{\log L}{L},
+$$
+
+$$
+\left|\frac{tL^2}{C_*\varepsilon}-\left(1-\frac{4\log L}{L}\right)\right|
+\le\frac QL,
+$$
+
+$$
+\left|\mathcal J_\varepsilon(t)-\left[f_*\varepsilon+8A\varepsilon^2
+-D_*\frac{\varepsilon^2}{L^2}\left(1-\frac{4\log L}{L}\right)\right]\right|
+\le Q\frac{\varepsilon^2}{L^3}.
+$$
+
+常数不依赖极小点的选择，结论不要求极小点唯一。
+

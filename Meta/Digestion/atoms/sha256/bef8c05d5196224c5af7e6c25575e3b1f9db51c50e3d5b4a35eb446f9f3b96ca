@@ -1,0 +1,18 @@
+### 59.9. 成熟背景与关系增量的范围
+
+[杉山、Krauledat、Müller，*Covariate Shift Adaptation by Importance Weighted Cross Validation*，JMLR 8:985–1005](https://www.jmlr.org/papers/volume8/sugiyama07a/sugiyama07a.pdf) §2—§3研究保持条件输出律的输入漂移，其理论加权风险接口假设密度比已知。保持同一教师而改变输入律、重要性加权及无偏风险思想均是成熟背景；它不直接提供当前未知三值通道的原教师恢复合同。
+
+[Ben-David、Blitzer、Crammer、Kulesza、Pereira、Vaughan，*A theory of learning from different domains*，Machine Learning 79:151–175](https://www.alexkulesza.com/pubs/adapt_mlj10.pdf) Lemma 3、Theorem 2按假设类分歧距离和共同低风险假设控制目标错误。分类误差三角不等式、类相关分歧与共同实现的比较不是新方法。这里需要额外核验的是同一优先门的确定几何、未知观测通道训练实验和训练置信量词，而非直接改写一般域适应上界。
+
+[Ben-David、Luu、Lu、Pál，*Impossibility Theorems for Domain Adaptation*，AISTATS 2010，PMLR 9:129–136](https://proceedings.mlr.press/v9/david10a/david10a.pdf) Theorems 1—2说明单靠 covariate shift 与另一个局部条件不足以保证一般无目标标签适应；其不可区分目标构造不直接成为当前全支撑、固定有限教师和正通道强度实验的反例。当前匹配下界由实际 §57 完整记录合同承担。
+
+[Cortes、Mansour、Mohri，*Learning Bounds for Importance Weighting*](https://cs.nyu.edu/~mohri/pub/importance.pdf) Lemma 1及 Theorem 3按权重二阶矩／Rényi 量给加权分析，也覆盖不要求权重一致有界的条件。故一个全空间最坏比或一个指定分数的二阶矩例子不能裁决所有加权算法；（59.27）—（59.29）只给本题可核验的乘积因子。
+
+[Arpe，*Learning Juntas in the Presence of Noise*，ECCC TR05-088](https://eccc.weizmann.ac.il/report/2005/088/download/)研究 Boolean junta、独立属性翻转和分类翻转；其 §5 的非均匀属性扩展有单调类与相应边缘范围条件。稀疏变量发现、对数维数样本依赖及噪声学习已有成熟供应，但这些接口不能直接取代相关端点五符号整窗与三值优先门通道。
+
+仓内 [UniqueDecodingRadius](../../../D5/S3/Arith/Coding/UniqueDecodingRadius.lean) 的 `unique_decoding_radius` 和钉版 Mathlib `InformationTheory.Hamming` 的 `hammingDist_triangle` 已给通用半距离解码及三角结构；它们不提供新的本模型学习率。[FanoMethodSampleComplexity](../../../D5/S3/Estimation/FanoMethodSampleComplexity.lean)供应一般独立重复信息界，Mathlib `Probability/Moments/SubGaussian` 供应有界变量及独立和尾界；这里直接复用 §57—§58 已完成的模型对应，不新增一般浓缩、Fano、表证明或绑定包装。上述通用声明不直接承担当前源—目标原任务的模型量词。
+
+[原 FIB 卷定义104.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md)、[边界卷定义14、43](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md)、[尺度卷§25](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)、[动力学卷§99](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)分别保留字面接缝、共同完成、共同策略费用和条件档案信息合同。条件档案或共享来源不能免费供应这里的独立乘积采样；各对边缘最优也不能取代同一实现的同时质量或全窗取得。
+
+均匀目标几何已由 §52 给出，稀有源函数恢复和补偿表已由 §57—§58 给出。本节的关系增量是将同一训练实验连接到任意分类器的固定正目标容差，明确逐次置信与记录 minimax 等价的严格半径；另给异质源分类分离的同时尖锐实现，以及教师差异和任意错误集合两种不同的风险比。通用迁移、解码、枚举和信息不等式不取得模型内新增知识名义。当前结果是解析理论，未声称 Lean kernel 核验、穷尽文献的原创性、最优常数或物理采样能力； §52.11 的既有条件及未决边界保持其原范围。
+

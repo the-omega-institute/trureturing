@@ -1,0 +1,21 @@
+**引理 57.2（有限支撑约化与共同矩）。** 对同一个 $\mu$，所有 $\theta\in\Theta_n$ 的类质量及前两个矩相同，准确为
+
+$$
+\begin{aligned}
+\pi_1&=HL,\qquad \pi_2=HL(1-t),\qquad
+\pi_0=1-HL(2-t),\\
+\mathbb E_\mu C_\theta&=HL(3-2t),\qquad
+\mathbb E_\mu C_\theta^2=HL(5-4t).
+\end{aligned}
+\tag{57.4}
+$$
+
+三个类都具有正质量。任意两个教师的平方分歧
+
+$$
+d_\mu(\theta,\tau)=\mathbb E_{\mu^{\otimes n}}(C_\theta-C_\tau)^2
+\tag{57.5}
+$$
+
+只依赖其至多六个选中位置的升序重叠模式。
+

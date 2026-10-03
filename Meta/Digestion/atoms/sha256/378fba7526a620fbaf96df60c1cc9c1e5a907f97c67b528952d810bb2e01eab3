@@ -1,0 +1,20 @@
+**theorem 8.3 (Complete reverse execution with the explicit phase clock).**
+For every raw unary word $w$, let $(n,F)$ be its total prepared explicit-universe
+formula: the decoder's formula on acceptance and the zero-variable
+one-empty-clause formula on rejection. Let $v(w)$ be the conventional output
+of Theorem 6.2. The fixed ten-stack reverse machine reaches its exact clean
+halt with output $v(w)$ within
+
+$$
+(4|w|+20)|w|+13
+ +\sum_{c\in F}\left(n+6+\sum_{(i,\epsilon)\in c}(i+4)\right)
+ +2+n(n+3)+2n+6+|v(w)|
+$$
+
+actual transitions. The execution includes the complete total unary
+preprocessor, coefficient removal, canonical binary name writing, restored
+index counters, one tautology for every declared variable and output reversal.
+Those tautologies occur only in $v(w)$; they do not enter the raw physical
+formula. This statement supplies the actual execution before the decoder and
+assignment-count refinement of Theorem 6.2.
+
