@@ -2,6 +2,36 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class RelationFoldingTests
 {
+    [Fact]
+    public void LocalFunctionCaptureCannotReplaceDiscriminantBinding()
+    {
+        using var root = RelationContractTests.Fixture("Item(Paragraph(Ref(\"D5/S0/Test/First\")), Paragraph(Ref(\"D5/S0/Test/Second\")))", """
+            private static bool Choice => false;
+            private static DocumentBlock Item(DocumentBlock a, DocumentBlock b)
+            {
+                bool flag = false;
+                Heading Title() { flag = Choice; return H("title"); }
+                var title = Title();
+                return new DocumentBlock.Section(title, Blocks(flag ? a : b));
+            }
+            """);
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("IgnoredWrite", read.Failure?.Shape);
+    }
+
+    [Fact]
+    public void ReadonlyDiscriminantCannotReadLaterFieldInitializer()
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Ref(Choice ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"))", """
+            private static readonly bool Choice = Later;
+            private static readonly bool Later = true;
+            """);
+        var read = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(read.Projection);
+        Assert.Equal("ConditionalExpression", read.Failure?.Shape);
+    }
+
     [Theory]
     [InlineData("Unknown ?? \"First\"", "CoalesceExpression")]
     [InlineData("Choice ? \"First\" : \"Second\"", "ConditionalExpression")]

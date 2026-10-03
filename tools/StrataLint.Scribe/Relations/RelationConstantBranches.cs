@@ -7,18 +7,30 @@ namespace StrataLint.Scribe;
 
 internal sealed partial class RelationSyntaxEvaluator
 {
-    private object? KnownValue(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope, SyntaxNode owner)
+    private int knownValueDepth;
+    private bool readingNullness;
+
+    private object? KnownValue(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope, SyntaxNode owner,
+        bool nullnessOnly = false)
     {
+        if (readingRelations) ValidateDiscriminantWrite(expression);
         var constant = Model(expression).GetConstantValue(expression);
         if (constant.HasValue && IsConstant(constant.Value)) return constant.Value;
         var symbol = Model(expression).GetSymbolInfo(expression).Symbol;
         if (symbol is not null && scope.TryGetValue(symbol, out var value) && value is Binding binding)
-            return KnownValue(binding.Expression, binding.Scope, owner);
-        try { return Eval(expression, scope); }
-        catch (RelationSyntaxException)
+            return KnownValue(binding.Expression, binding.Scope, owner, nullnessOnly);
+        var previousNullness = readingNullness;
+        try
+        {
+            readingNullness = nullnessOnly;
+            knownValueDepth++;
+            return Eval(expression, scope);
+        }
+        catch (RelationSyntaxException exception) when (exception.Failure.Shape != "IgnoredWrite")
         {
             throw Reject(owner, owner.Kind().ToString(), "Branch discriminant has no supported static value.");
         }
+        finally { knownValueDepth--; readingNullness = previousNullness; }
     }
 
     private static bool IsConstant(object? value) => value is null or string or char or bool
@@ -29,7 +41,8 @@ internal sealed partial class RelationSyntaxEvaluator
         bool Evaluate(ExpressionSyntax value) => Condition(value, scope, owner);
         if (Model(expression).GetOperation(expression) is IIsPatternOperation
             { Pattern: IConstantPatternOperation constantPattern } isPattern)
-            return ConstantPattern(constantPattern, KnownValue((ExpressionSyntax)isPattern.Value.Syntax, scope, owner), owner);
+            return ConstantPattern(constantPattern, KnownValue((ExpressionSyntax)isPattern.Value.Syntax, scope, owner,
+                constantPattern.Value.ConstantValue is { HasValue: true, Value: null }), owner);
         switch (expression)
         {
             case ParenthesizedExpressionSyntax parenthesized:
@@ -169,7 +182,7 @@ internal sealed partial class RelationSyntaxEvaluator
                     ValidatePresentationEffects(conditional.Condition, visited, scope, ignored, foldBranches);
                     break;
                 case BinaryExpressionSyntax coalesce when coalesce.IsKind(SyntaxKind.CoalesceExpression):
-                    selected = KnownValue(coalesce.Left, scope, coalesce) is null ? coalesce.Right : null;
+                    selected = KnownValue(coalesce.Left, scope, coalesce, nullnessOnly: true) is null ? coalesce.Right : null;
                     selectedBranch = true;
                     ValidatePresentationEffects(coalesce.Left, visited, scope, ignored, foldBranches);
                     break;

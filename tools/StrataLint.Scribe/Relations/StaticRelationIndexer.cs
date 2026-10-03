@@ -80,7 +80,9 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
         if (candidates.Length != 1) throw Reject(tree.GetRoot(), "DefinitionCount", $"Found {candidates.Length} entry methods.");
         relationCarriers.Clear();
         CollectRelationCarriers(candidates[0], new(SymbolEqualityComparer.Default));
+        CollectDiscriminantWrites(candidates[0]);
         ValidatePresentationEffects(candidates[0], new(SymbolEqualityComparer.Default), new(SymbolEqualityComparer.Default));
+        readingRelations = true;
         var packet = Method(candidates[0], new(SymbolEqualityComparer.Default)) as Packet
             ?? throw Reject(candidates[0], "DocumentStructure", "Entry did not construct a document.");
         var content = Flatten(packet.Content).ToArray();
@@ -152,7 +154,7 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
         switch (expression)
         {
             case BinaryExpressionSyntax coalesce when coalesce.IsKind(SyntaxKind.CoalesceExpression):
-                var left = KnownValue(coalesce.Left, scope, coalesce);
+                var left = KnownValue(coalesce.Left, scope, coalesce, nullnessOnly: true);
                 return left ?? Eval(coalesce.Right, scope);
             case ConditionalExpressionSyntax conditional:
                 return Eval(Condition(conditional.Condition, scope, conditional)
@@ -212,6 +214,9 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
     private object? Symbol(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope)
     {
         var symbol = Model(expression).GetSymbolInfo(expression).Symbol;
+        if (readingRelations && knownValueDepth > 0) ValidateDiscriminantWrite(expression);
+        if (readingRelations && knownValueDepth > 0 && symbol is IPropertySymbol)
+            throw Reject(expression, "UnresolvedSymbol", "Properties are not supported branch discriminants.");
         if (expression is MemberAccessExpressionSyntax { Name.Identifier.ValueText: "Anchor" } anchorMember
             && symbol is IPropertySymbol anchorProperty
             && anchorProperty.ContainingType.ToDisplayString() == "StrataLint.Scribe.LibraryNoteRef")
@@ -229,6 +234,8 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
         if (symbol is IFieldSymbol sourceField && sourceField.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax()
             is VariableDeclaratorSyntax { Initializer.Value: { } initializer })
         {
+            if (readingRelations && knownValueDepth > 0 && !IsConstantDiscriminantField(sourceField, initializer))
+                throw Reject(expression, "UnresolvedSymbol", "Branch fields require independent static readonly constant initializers.");
             if (!sourceField.IsReadOnly) throw Reject(expression, "MutableField", "Only readonly field initializers are supported.");
             if (sourceField.ContainingType.Constructors.Any(constructor => !constructor.IsImplicitlyDeclared)
                 || sourceField.ContainingType.StaticConstructors.Any(constructor => !constructor.IsImplicitlyDeclared))
@@ -243,6 +250,7 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
     }
 
     private object? ResolveBinding(object? value) => value is Binding binding ? Eval(binding.Expression, binding.Scope)
+        : value is ProjectedValue projected ? ResolveProjectedValue(projected)
         : value is object?[] items ? items.Select(ResolveBinding).ToArray() : value;
 
     private bool IsRelationWrite(ExpressionSyntax target, bool ignored)
@@ -331,6 +339,20 @@ internal sealed partial class RelationSyntaxEvaluator(Compilation compilation, s
         || type.ToDisplayString() is "StrataLint.Engine.Anchor" or "StrataLint.Engine.LiteratureAnchor";
 
     private object? Call(ExpressionSyntax node, SeparatedSyntaxList<ArgumentSyntax> arguments,
+        Dictionary<ISymbol, object?> scope)
+    {
+        if (!readingRelations || !readingNullness
+            || Model(node).GetSymbolInfo(node).Symbol is not IMethodSymbol method || !IsNonNullRelationFactory(method))
+            return CallValue(node, arguments, scope);
+        var previousDepth = knownValueDepth;
+        var previousNullness = readingNullness;
+        knownValueDepth = 0;
+        readingNullness = false;
+        try { return CallValue(node, arguments, scope); }
+        finally { knownValueDepth = previousDepth; readingNullness = previousNullness; }
+    }
+
+    private object? CallValue(ExpressionSyntax node, SeparatedSyntaxList<ArgumentSyntax> arguments,
         Dictionary<ISymbol, object?> scope)
     {
         if (node is InvocationExpressionSyntax { Expression: IdentifierNameSyntax { Identifier.ValueText: "nameof" } })

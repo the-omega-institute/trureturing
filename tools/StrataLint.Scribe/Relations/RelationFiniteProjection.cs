@@ -5,17 +5,26 @@ namespace StrataLint.Scribe;
 
 internal sealed partial class RelationSyntaxEvaluator
 {
+    private sealed record ProjectedValue(object? Value, object? Source);
+
+    private object? ResolveProjectedValue(ProjectedValue projected)
+    {
+        if (readingRelations && knownValueDepth > 0) ResolveBinding(projected.Source);
+        return projected.Value;
+    }
+
     private object?[] ProjectSequence(ExpressionSyntax node, IMethodSymbol method,
         Dictionary<string, object?> arguments, Dictionary<ISymbol, object?> scope)
     {
+        var sourceBinding = method.ReducedFrom is not null
+            && node is InvocationExpressionSyntax { Expression: MemberAccessExpressionSyntax member }
+            ? new Binding(member.Expression, scope) : arguments.GetValueOrDefault("source");
         object? source;
         try
         {
-            source = method.ReducedFrom is not null
-                && node is InvocationExpressionSyntax { Expression: MemberAccessExpressionSyntax member }
-                ? Eval(member.Expression, scope) : ResolveBinding(arguments.GetValueOrDefault("source"));
+            source = ResolveBinding(sourceBinding);
         }
-        catch (RelationSyntaxException)
+        catch (RelationSyntaxException exception) when (exception.Failure.Shape != "IgnoredWrite")
         {
             throw Reject(node, "UnsupportedInvocation", "Projection source is not a statically known finite collection.");
         }
@@ -41,7 +50,7 @@ internal sealed partial class RelationSyntaxEvaluator
         {
             var nested = new Dictionary<ISymbol, object?>(binding.Scope, SymbolEqualityComparer.Default)
             {
-                [parameter] = item,
+                [parameter] = new ProjectedValue(item, sourceBinding),
             };
             var value = Eval(body, nested);
             projected.Add(value);
