@@ -1,0 +1,10 @@
+**命题 14.3（细化表示的精确收益）。** 设 $e=r\circ e'$，并允许各表示上的全部实值读出。记 $R_*(e)=\inf_h\mathbb E[(Y-h(e(X)))^2]$。则
+
+$$
+R_*(e)-R_*(e')=
+\mathbb E\!\left[(\mathbb E[Y\mid e'(X)]-\mathbb E[Y\mid e(X)])^2\right].
+\tag{14.4}
+$$
+
+严格改善当且仅当两个条件均值以正概率不同。
+
