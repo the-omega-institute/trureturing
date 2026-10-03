@@ -1,39 +1,75 @@
-# Typed Port Transport
+# Typed port transport and the defect identity
 
-## Definition 1.1: Route endpoint kinds
+## Abstract
 
-`RouteKind` has the three endpoint types `ll`, `hh`, and `lh`. A finite routing path has exactly one of these types.
+A finite typed port routing has LL, HH and LH path types. Endpoint counting gives ell=2a+c and slack=2b+c. Two partial matching graphs on the same finite port type compute these terminal sets from their degree pairs; the signed difference of their edge counts then equals a-b.
 
-*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteKind`.
+**Definition 1.1 (Endpoint types).**
 
-## Definition 1.2: Finite route endpoint ledger
+Lean statement: `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteKind`
 
-`RouteEndpoints` records a finite type of paths, its endpoint kind, the number of left and slack terminals on each path, and the two endpoint totals. An `ll` path contributes two left terminals, an `hh` path contributes two slack terminals, and an `lh` path contributes one of each.
+*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteKind` (`✓ std3`).
 
-*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteEndpoints`.
+*Source.* Repository-derived.
 
-## Definition 1.3: Partial matching endpoint sets
+*Commentary.*
 
-For two finite simple graphs on the same port type, `leftTerminalsOf` is the set of ports with actual degree one and pairing degree zero, while `slackTerminalsOf` is the set with actual degree zero and pairing degree one. These sets are computed from the matching graphs themselves.
+RouteKind distinguishes LL, HH and LH paths. The labels record endpoint types and do not identify a graph embedding or a choice of local pairing.
 
-*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.leftTerminalsOf`, `D5/S3/Combinatorics/Graph/TypedPortTransport.slackTerminalsOf`.
+**Definition 1.2 (Finite endpoint ledger).**
 
-## Theorem 1.4: Partial matching balance
+Lean statement: `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteEndpoints`
 
-Let `actual` and `pairing` be finite simple matching graphs on the same port type. The difference of twice their edge counts equals the difference between the computed left and slack terminal counts. The proof uses the degree sum theorem and a pointwise classification of the possible degree pairs `(0,0)`, `(1,0)`, `(0,1)`, and `(1,1)`.
+*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteEndpoints` (`✓ std3`).
 
-*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.matching_defect_eq_terminal_difference` (internal proof witness).
+*Source.* Repository-derived.
 
-## Theorem 1.5: Typed port defect identity
+*Commentary.*
 
-For every finite route endpoint ledger and two finite matching graphs whose computed terminal sets agree with its endpoint totals, if `a`, `b`, and `c` count `ll`, `hh`, and `lh` paths respectively, then
+RouteEndpoints contains a finite path type, its endpoint kind, per-path left and slack terminal counts, and their totals. LL contributes (2,0), HH contributes (0,2), and LH contributes (1,1).
 
-\[
-  C-R=a-b.
-\]
+**Theorem 1.3 (Partial matching balance).**
 
-The proof first derives `ell=2a+c` and `slack=2b+c` by finite endpoint counting. It then applies the partial-matching degree balance and combines the two equations; no nonnegativity or truncated subtraction is used because the identity is stated in `\mathbb Z`.
+Lean statement: `D5/S3/Combinatorics/Graph/TypedPortTransport.matching_defect_eq_terminal_difference`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference`.
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TypedPortTransport.matching_defect_eq_terminal_difference` (`✓ std3`). ∎
 
-*Source.* `docs/develop/theory/RECTANGULAR_GRID_PARITY_TRANSPORT.md`, Theorem 4.3. The Lean theorem formalizes the generic typed-port counting core; the geometric construction of a particular grid routing remains a separate obligation.
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If both graph degrees are at most one, twice the actual edge count minus twice the pairing edge count equals the difference between the computed (1,0) and (0,1) terminal counts. The proof classifies all degree pairs pointwise and applies the finite graph degree-sum theorem.
+
+**Theorem 1.4 (Endpoint counting).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/TypedPortTransport.terminal_counts`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TypedPortTransport.terminal_counts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite endpoint ledger forces ell=2 card(LL)+card(LH) and slack=2 card(HH)+card(LH).
+
+**Theorem 1.5 (Typed port defect identity).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If the endpoint totals of the route and matching ledgers agree, then (C:R viewed in integers) satisfies C-R=card(LL)-card(HH). The proof combines endpoint counting with the partial-matching degree balance.
+
+The statement is the generic counting core of the port-routing defect identity. It does not claim that an arbitrary finite graph admits the geometric routing hypotheses used by a rectangular-grid application.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteEndpoints`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TypedPortTransport.RouteKind`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TypedPortTransport.defect_eq_route_difference`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TypedPortTransport.matching_defect_eq_terminal_difference`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TypedPortTransport.terminal_counts`
