@@ -28507,3 +28507,207 @@ phase-compatible replacement obligation from a numerical collision.  This
 section records an interface failure and its exact missing hypotheses; it
 does not assert a generalized chain theorem or settle unrestricted
 Erdős--#7.
+
+## 247. BBMST bounded reuse identifies the missing global packing adapter
+
+The local source laws and complete-liability transfers above do not by
+themselves give a global packing inequality. A relevant structural input is
+Balister--Bollobás--Morris--Sahasrabudhe--Tiba, [*The structure and number of
+Erdős covering systems*, arXiv:1904.04806v2](https://arxiv.org/abs/1904.04806v2),
+Lemmas 4.7--4.9. For one exploration tree, let \(\beta(i)\) be the depth-first
+selected vertex for the \(i\)-th original hyperplane, let \(B\) be the bad
+indices, and let \(\mathcal G_i\) be their associated garbage hyperplanes. Their
+Lemma 4.9 gives
+
+\[
+\left|\bigcup_{i\in B}\mathcal G_i\right|
+   \ge {1\over5\lambda}\sum_{i\in B}|S_i| .
+\tag{BR1}
+\]
+
+The point of (BR1) is the bounded reuse in its proof. If
+
+\[
+\ell_i(H)=|F(H)\cap I_{\beta(i)}|,
+\]
+
+then Lemma 4.7 puts any two occurrences of a fixed \(H\) on one ancestor
+chain, and Lemma 4.8 makes the positive ranks \(\ell_i(H)\) distinct. Therefore one
+original \(H\) is charged at most
+
+\[
+\sum_{\ell\ge2}2^{-\ell/4}<5,
+\]
+
+even when it belongs to many selected garbage sets. This is a charge on one
+tree and one fixed original object; it is not a sum of independently
+optimized branches.
+
+For the present collision groups, an actual use of this result would require
+one exploration tree on the literal source, an assignment of every collision
+contribution to a path of that tree, and a proof that the assigned ranks are
+strictly decreasing for every repeated original contribution. A further
+normalization would then have to turn the resulting charge into the desired
+strict \(\Psi<1\) bound. Distinct numerical cofactors do not provide that assignment:
+their source events may overlap, and (BR1) by itself is proportional to the
+original-label budget rather than dimensionless. Sections 155, 174, and
+176--177 preserve complete actual sources and liabilities but do not construct
+this one-tree adapter. Thus BBMST supplies a precise reusable mechanism for
+bounded reuse and a sharper statement of the remaining gap; it does not close
+the unrestricted whole-cover bridge.
+
+## 248. Occupied-\(R\) contraction can fail under complete whole-cover minimality
+
+Dalton--Trifonov, [*Extreme Covering Systems*, arXiv:1905.07386v2](https://arxiv.org/abs/1905.07386v2), Lemma 6 and Corollary 9, contract an exhaustive \(p^a\)-stratum: when exactly \(p\) classes have moduli \(p^am_1,\ldots,p^am_p\), their union can be replaced by one class of modulus
+
+\[
+R=p^{a-1}\operatorname{lcm}(m_1,\ldots,m_p).
+\]
+
+The operation preserves coverage, but it does not ensure that \(R\) is an
+unused numerical label or that its phase agrees with an occupied \(R\)-class.
+The following complete example shows that whole coverage and size-then-sum
+minimality do not repair this defect.
+
+Consider
+
+\[
+\mathcal C=\{1\pmod 2,\ 2\pmod 4,\ 0\pmod 3,\ 4\pmod 6,\ 8\pmod {12}\}.
+\tag{OR1}
+\]
+
+Its labels are all nonunit divisors of \(12\). Odd integers are in the first
+class, integers \(2\pmod4\) are in the second, and the remaining residues
+\(0,4,8\pmod {12}\) are covered by the last three classes. The witnesses
+\(1,2,0,4,8\), in the displayed order, make the cover irredundant. It is also
+size-then-sum minimal among distinct covers. Indeed Simpson's bound gives
+
+\[
+k\ge1+\sum_p v_p(N)(p-1).
+\]
+
+For \(k\le5\), a prime at least \(7\) is impossible; a factor \(5\) leaves
+only \(N=5\), which cannot cover; and a pure prime-power period has total
+reciprocal mass below one. The only mixed periods left are \(6\) and \(12\).
+Period \(6\) has three nonunit divisor labels although the bound requires four;
+period \(12\) has exactly the five labels in (OR1). Hence the minimum is
+
+\[
+(|D|,\sum D)=(5,27),\qquad D=\{2,3,4,6,12\}.
+\tag{OR2}
+\]
+
+Delete
+
+\[
+H=\{0\pmod3,\ 4\pmod6,\ 8\pmod {12}\}.
+\]
+
+Its complete liability is \(0\pmod4\). The contraction therefore outputs
+\(0\pmod4\), whose numerical label \(4\) is already occupied by the retained
+class \(2\pmod4\), with a different phase.
+
+Keeping the two retained classes fixed, there is no EB1-decreasing
+distinct-label repair, even if arbitrary phases, unbounded moduli, and labels
+outside \(D\) are allowed. Pull the liability back through \(x=4t\). A
+replacement \(a\pmod q\) has empty pullback or one residue class of modulus
+
+\[
+\ell(q)={q\over\gcd(q,4)}\ge2,
+\qquad \ell(q)=2\Longleftrightarrow q=8,
+\tag{OR3}
+\]
+
+where \(q=2,4\) are excluded because those labels are retained. Two distinct
+replacement labels cover at most \(1/2+1/3=5/6\) of the \(t\)-source, so at
+least three replacements are needed. If \(q=8\) is absent, all three
+\(\ell(q)\ge3\); density one forces all three \(\ell(q)=3\). The only numerical
+labels with this pullback modulus are \(q=3,6,12\), whose sum is \(21\), the
+sum of the three deleted labels. There is no strict sum decrease.
+
+If \(q=8\) is present, its pullback occupies one parity class of \(t\). On the
+other parity, a pullback of modulus \(\ell\ge3\) has conditional density at
+most \(\gcd(\ell,2)/\ell\le1/2\), with equality only at \(\ell=4\).
+Two remaining distinct labels could cover that parity only if both had
+\(\ell=4\), but \(\ell(q)=4\) has the unique solution \(q=16\). Thus three
+replacements cannot cover in this case either. More than three replacements
+would leave more than five classes after the two retained classes and so would
+increase cardinality. Consequently (OR1) admits no strict size-then-sum
+descent through the occupied-\(R\) contraction.
+
+This is an all-replacement-moduli obstruction, rather than a bounded search.
+It lies outside the all-odd category, so it is not a counterexample to the
+odd bridge. It does show that whole coverage, divisor closure, and EB1
+minimality alone cannot turn the standard contraction into a distinct-label
+repair; an odd-specific phase-capacity theorem is still required.
+
+## 249. The three-prime density expression has no arbitrary-support extension
+
+Harrington--Klein--Lowrance--Trifonov, [arXiv:2605.18644v1](https://arxiv.org/abs/2605.18644v1), Theorem 1.9, proves the following bound only when
+\(\operatorname{lcm}(M)=2^a3^b5^c\). For distinct moduli \(M=\{m_i\}\), the
+covered density is at most
+
+\[
+B(M)=\sum_i{1\over m_i}
+-\sum_{\substack{i<j\\(m_i,m_j)=1}}{1\over m_im_j}
++\sum_{\substack{i<j<k\\
+(m_i,m_j)=(m_i,m_k)=(m_j,m_k)=1}}
+ {1\over m_im_jm_k}.
+\tag{DS1}
+\]
+
+The paper's Problem 4 asks whether the support restriction can be removed.
+Keeping (DS1) while allowing arbitrary support is false. Choose disjoint finite
+sets \(P,Q\) of primes at least \(7\) such that
+
+\[
+\prod_{p\in P}(1+1/p)>9,
+\qquad
+\prod_{q\in Q}(1+1/q)>15;
+\tag{DS2}
+\]
+
+such sets exist because the prime product diverges, even after deleting
+finitely many primes. Put \(P_*=\prod_{p\in P}p\), \(Q_*=\prod_{q\in Q}q\), and
+
+\[
+M_3=\{3d:d\mid P_*\},\qquad
+M_5=\{5e:e\mid Q_*\},\qquad M=M_3\cup M_5.
+\tag{DS3}
+\]
+
+All labels are distinct odd integers and all phases may be taken to be zero on
+the common period \(15P_*Q_*\). Two labels in \(M_3\) share \(3\), two labels
+in \(M_5\) share \(5\), and every cross pair is coprime; hence (DS1) has no
+triple term. Writing
+
+\[
+u=\sum_{d\mid P_*}{1\over3d}
+ ={1\over3}\prod_{p\in P}(1+1/p)>3,
+\qquad
+v=\sum_{e\mid Q_*}{1\over5e}
+ ={1\over5}\prod_{q\in Q}(1+1/q)>3,
+\]
+
+the unrestricted version of (DS1) gives
+
+\[
+B(M)=u+v-uv=1-(u-1)(v-1)<-3.
+\tag{DS4}
+\]
+
+The actual union is exactly
+
+\[
+\bigcup_{m\in M}(0\pmod m)
+ =(0\pmod3)\cup(0\pmod5),
+\qquad
+\operatorname{dens}= {1\over3}+{1\over5}-{1\over15}={7\over15}>0.
+\tag{DS5}
+\]
+
+Thus the arbitrary-support form of (DS1) would give a negative upper bound
+for a positive-density set. This family is deliberately redundant and is not
+a whole cover, so it does not refute the EB1 odd problem. It does rule out
+using the three-prime expression as an unrestricted cofactor-packing estimate
+without an additional overlap hypothesis.
