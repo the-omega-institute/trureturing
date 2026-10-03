@@ -1,0 +1,8 @@
+**定义 12.1（A uniformly bounded source domain）。** Let $B_0\ge2$ be a known integer and restrict every admissible source to
+
+$$
+K_{B_0}=\{(a,b)\in X:2a+3b\le B_0\}.
+$$
+
+The bound is part of the common domain promise, not merely a fact true of an unobserved distinguished source.
+

@@ -1,0 +1,32 @@
+**定理 16.2（Semicontinuity, exact extrema limits and attainment）。** In the compact closed nested-fiber setting of theorem 16.1, let $f:K\to\mathbb R$ be bounded. If $f$ is lower semicontinuous, then
+
+$$
+\lim_{r\to\infty}\inf_{D_r}f=\inf_{D_\infty}f,
+$$
+
+and all the infima are attained. If $f$ is upper semicontinuous, then
+
+$$
+\lim_{r\to\infty}\sup_{D_r}f=\sup_{D_\infty}f,
+$$
+
+and all the suprema are attained.
+
+证明。First let $D$ be any nonempty compact closed subset of $K$ and $a=\inf_Df$. For a bounded lower semicontinuous $f$, each
+
+$$
+D\cap\{f\le a+1/j\}\qquad(j\ge1)
+$$
+
+is nonempty by the definition of infimum, and closed by lower semicontinuity. They are nested. The finite-intersection property yields a point with value at most $a+1/j$ for every $j$, hence at most $a$ and therefore equal to $a$. This proves attainment using compactness, without assuming sequential compactness.
+
+Put $m_r=\min_{D_r}f$. It is nondecreasing and bounded, so $m=\sup_rm_r$ is finite and is its limit. Each $E_r=D_r\cap\{f\le m\}$ is nonempty because a minimizer in $D_r$ has value $m_r\le m$. They are nested and closed. Their intersection contains a point $z\in D_\infty$ with $f(z)\le m$. Conversely $D_\infty\subseteq D_r$ gives $m_r\le\inf_{D_\infty}f$ for every $r$, hence $m\le\inf_{D_\infty}f$. Combining the inequalities yields
+
+$$
+m=\inf_{D_\infty}f=f(z).
+$$
+
+This proves the infimum identity and attainment on the limit fiber. For upper semicontinuous $f$, apply the result to the lower semicontinuous function $-f$ and negate. The finite-layer suprema are nonincreasing and converge to the attained supremum on the intersection.
+
+For a binary success function $f=\mathbf1_T$, lower semicontinuity is equivalent to openness of $T$: its nontrivial strict superlevel sets are exactly $T$. Equivalently $W$ is closed. If the limit fiber is successful, its infimum is 1; a convergent sequence of infima in $\{0,1\}$ with limit 1 must eventually equal 1, recovering theorem 16.1. Likewise $\mathbf1_W$ is upper semicontinuous exactly when $W$ is closed. Thus lower semicontinuity belongs to minimizing success and upper semicontinuity to maximizing loss. $\square$
+

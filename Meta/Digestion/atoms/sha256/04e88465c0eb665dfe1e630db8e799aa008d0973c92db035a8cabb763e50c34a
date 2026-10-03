@@ -1,0 +1,20 @@
+**定理 9.1（Finite quotient lifts and commuting maps）。** Suppose $L\mid L'$ and set $m=L'/L$. Coordinate reduction
+
+$$
+d_{L',L}:(\mathbb Z/L'\mathbb Z)^2\longrightarrow(\mathbb Z/L\mathbb Z)^2
+$$
+
+is onto and each of its fibers has exactly $m^2$ elements. It commutes with the actual residue maps and with $C,M$; under $\widehat B_L=C\pi_L$ it is also the projection of double-reading quotients. A scalar current-reading quotient has $m$ lifts per residue. These counts concern quotient classes, not actual sources.
+
+证明。A representative $0\le a<L$ has precisely the lifts $a+iL$ for $0\le i<m$ modulo $L'$. Any representative reducing to $a$ has this form by division by $L$; two such lifts agree modulo $L'=mL$ only when $m\mid i-j$, which in the stated range forces $i=j$. The two coordinates vary independently, giving $m^2$ lifts. A single coordinate gives $m$.
+
+Reduction commutes with every integer linear map, so
+
+$$
+d_{L',L}(\pi_{L'}(x))=\pi_L(x),\qquad
+d_{L',L}(Cz)=Cd_{L',L}(z),\qquad
+d_{L',L}(Mz)=Md_{L',L}(z).
+$$
+
+This proves all the asserted commuting relations, including reduction of both observed quantities. Theorem 8.1 shows that each quotient class itself has infinitely many actual sources. $\square$
+
