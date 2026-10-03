@@ -46,12 +46,12 @@ Thus the source variable $\widetilde k=2\pi k$ is $t/2$, and its two exponential
 
 ## Retain the saddle coefficient before taking real parts
 
-On p.3 the contour integral is written as twice the real part of a single complex integral. For these parameters the latter has, up to its nonzero complex leading coefficient, the form
+On p.3 the contour integral is written as twice the real part of a single complex integral. For these parameters the latter has the form, for a fixed $C\ne0$,
 
 $$
-\widetilde k^{-3/4}
+C\widetilde k^{-3/4}
 \exp\!\left(-i\widetilde k+(-1+i)\sqrt{\widetilde k}\right)
-(o(1))\widetilde k^{-3/4}e^{-\sqrt{\widetilde k}}.
++o\!\left(\widetilde k^{-3/4}e^{-\sqrt{\widetilde k}}\right).
 $$
 
 The prefactor $\widetilde k^{-1/2}$ outside the source's saddle integral combines with its $\widetilde k^{-1/4}$ saddle prefactor. Consequently (1) gives constants $a>0$, $\eta\in\mathbb R$ and a real remainder $\varepsilon(t)\to0$ such that
