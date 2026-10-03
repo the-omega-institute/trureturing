@@ -1,0 +1,12 @@
+**命题 59.9（全输入密度比较的尖锐值与用途）。** 定义
+$w(x)=\nu(x)/\mu(x)$。则
+
+$$
+\sup_{\boldsymbol\mu\in\mathcal H_{n,\rho}}\max_x w(x)
+=(5\rho)^{-n},\qquad
+L_\nu(\theta,f)\le(5\rho)^{-n}L_\mu(\theta,f).
+\tag{59.23}
+$$
+
+第二式对任意分类器成立，其统一乘法常数不可减小。
+

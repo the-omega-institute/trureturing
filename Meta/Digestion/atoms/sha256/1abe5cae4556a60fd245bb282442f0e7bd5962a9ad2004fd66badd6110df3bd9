@@ -1,0 +1,21 @@
+**命题 53.2（整个局部一阶投影的消去）。** 对旧标签读数 $Z=\mathbf1_{\{Y=0\}}-\mathbf1_{\{Y=2\}}$，每个局部实函数 $f:\Sigma\to\mathbb R$ 满足
+
+$$
+\begin{aligned}
+\mathbb E[Z\mid X]&=\alpha A(1-C_\theta),\\
+\mathbb E[C_\theta\mid W_p]&=2HL+L(1-2z)h_p,\\
+\operatorname{Cov}(f(W_p),Z)&=-\alpha A L(1-2z)\operatorname{Cov}_\mu(f,h).
+\end{aligned}
+\tag{53.4}
+$$
+
+特别取按 $\Sigma$ 顺序排列的
+
+$$
+\mu_*=(1/8,1/8,1/8,1/2,1/8).
+\tag{53.5}
+$$
+
+此律全支撑，$H=L=5/8,z=1/2$，而
+$\mathbb E[C_\theta\mid W_p]=25/32$ 对五个字母全部相同。因此第一位置的每个中心化局部旧 $Z$ 矩都为零，单独更换局部特征不能恢复它。
+

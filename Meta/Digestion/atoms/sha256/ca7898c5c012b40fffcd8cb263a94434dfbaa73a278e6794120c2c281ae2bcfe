@@ -1,0 +1,14 @@
+**引理 54.8（中位边间隙）。** $\gamma_\mu>0$，且最小活动位置分数准确为 $\alpha\gamma_\mu/4$。对已知律族
+
+$$
+\mathcal M^{1/2}_\rho=\{\mu:t=1/2,\ \mu(w)\ge\rho\text{ 对全部 }w\in\Sigma\},
+\qquad 0<\rho\le1/8,
+$$
+
+统一有
+
+$$
+\gamma_\mu\ge\rho/8.
+\tag{54.25}
+$$
+

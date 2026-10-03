@@ -1,0 +1,16 @@
+**定义 55.5（准确教师恢复的 minimax 样本量）。** 对整数 $m\ge0$，允许任意计算、存储、特征和参数无关随机化。学习器族 $\mathcal A_{\mu,a,\rho}$ 可以使用给定完整输入律及预算参数，但不能使用未知 $\alpha,\theta$；它读 $m$ 份完整（55.5）记录并输出 $\Theta_n$ 中的元素。定义
+
+$$
+\begin{aligned}
+\mathfrak R_m(n,a,\rho)
+&=\inf_{\mathcal A}\sup_{\mu\in\mathcal M_\rho}
+\sup_{\alpha\in[a,1]}\sup_{\theta\in\Theta_n}
+P_{\mu,\alpha,\theta}^{m}\{\mathcal A_{\mu,a,\rho}\ne\theta\},\\
+m_*(n,a,\rho,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m(n,a,\rho)\le\delta\}.
+\end{aligned}
+\tag{55.19}
+$$
+
+失败概率包含独立内部随机种子。另以 $\mathfrak R_m^{\rm known}$、$m_*^{\rm known}$ 表示学习器还取得真实共同 $\alpha$ 的版本；其余上确界和准确恢复目标相同。这里没有限制学习器为保留矩、单窗表、线性状态或树模型。
+

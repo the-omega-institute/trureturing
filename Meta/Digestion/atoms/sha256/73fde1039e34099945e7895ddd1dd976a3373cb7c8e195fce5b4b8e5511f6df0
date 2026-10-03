@@ -1,0 +1,45 @@
+**定理 57.6（自由未知质量的统一恢复）。** 对所有定义57.1的参数及整数 $m\ge1$，
+
+$$
+P_{\mu,\alpha,\theta}^{m}(\widehat\theta\ne\theta)
+\le(N-1)\exp\left(-\frac{m\alpha^2\gamma_\rho}{128}\right).
+\tag{57.16}
+$$
+
+因而对任意 $0<\delta<1$，以下整数预算足以使统一失败概率不超过 $\delta$：
+
+$$
+m\ge
+\left\lceil\frac{32}{a^2\rho^2}
+\log\frac{N-1}{\delta}\right\rceil.
+\tag{57.17}
+$$
+
+**证明。** 固定竞争者 $\tau\ne\theta$，写
+$d=d_\mu(\theta,\tau)>0,\lambda=\mathbb EW=\alpha d/8$。
+不同完整记录使 $W_s$ 独立同分布；同一记录内的候选分数可以依赖。
+$|W_s|\le2$，故 $|W_s-\lambda|\le4$，方差至多 $3d/4$。
+标量单侧 Bernstein 给
+
+$$
+\begin{aligned}
+P(S_\theta-S_\tau\le0)
+&\le\exp\left[
+-\frac{m\lambda^2}{2(3d/4+4\lambda/3)}
+\right]\\
+&=\exp\left[-\frac{m\alpha^2d}{64(3/2+\alpha/3)}\right]
+\le\exp(-m\alpha^2d/128).
+\end{aligned}
+\tag{57.18}
+$$
+
+所用供应是 Tropp 的 [*User-Friendly Tail Bounds for Sums of Random Matrices*](https://arxiv.org/pdf/1004.4389v7)，Theorem 6.1(ii) 的维数一特例：对独立零均值变量
+$\lambda-W_s$ 取上界4、总方差 $3md/4$、阈值 $m\lambda$。
+最后一步用 $\alpha\le1$ 和 $64(3/2+1/3)<128$。
+
+对 $N-1$ 个竞争者取并集界；若所有真实分数差严格正，破平规则不会改变结果。即使真实候选在平局中排后，失败仍包含于这个并集，因此（57.16）包括平局。定理57.3给 $d\ge\gamma_\rho$。
+又 $\gamma_\rho\ge6\rho^2$，故（57.17）令指数至少达到
+$\log((N-1)/\delta)$。没有使用经验候选范数相等或候选间独立的假设。证毕。 $\square$
+
+共同范数下的相关排序是成熟的内积代数，本卷式（54.44）已给其总体恒等式。它在总体上与适当平方距离排序对应，却不等于经验最小二乘：经验的 $\sum_s C_\tau(X_s)^2$ 通常因候选而异。若只对有界 $ZC_\tau$ 分别作范围浓缩，会把小均值差平方，失去这里由（57.14）保留的稀有尺度。方差与均值的联系也属成熟快率机制；此处仅逐候选用标量 Bernstein 和有限并集，不使用星形函数类结论。
+
