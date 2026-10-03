@@ -34,7 +34,10 @@ internal sealed class PairTunnelingAnsatzGroundStateRefutationDocument : IScribe
                 "claim", DescribeRole.Definition),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "At N = 8, the positive factorial weights conjugate H to the coefficient action x²∂_y² + y²∂_x². For the sum state, its eigen-equations imply, with t = c², 10t² - 2t - 1 = 0 and 12t³ + 38t² - 12t - 3 = 0. Eliminating the cubic term forces 68t - 26 = 0, which contradicts the quadratic. For the difference state, c = 0 gives the zero vector; otherwise the eigen-equations force the eigenvalue -24t - 18 and 6t² + 4t - 3 = 0. Nonnegative t then satisfies t < 9/20, so the eigenvalue exceeds -144/5. The even and odd coefficient blocks satisfy the annihilating polynomials λ(λ² - 832)(λ² - 112) and λ⁴ - 904λ² + 63504, respectively. If λ < -8√13, then λ² > 832 and both polynomials are nonzero, forcing every eigenvector coordinate to vanish. Thus every real eigenvalue is at least -8√13. The coefficient vector (1,0,-4√13,0,30,0,-4√13,0,1), multiplied by the factorial weights, is a nonzero eigenvector at -8√13 < -144/5, so this is the exact ground energy. A ground-state ansatz would have to attain it. Both Boolean choices therefore fail.",
-                "result", DescribeRole.Theorem, true)),
+                "result", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("volkoff-2016-pair-tunneling-ansatz-ground-state-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

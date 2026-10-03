@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PairTunnelingAnsatzGroundStateRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/volkoff-2016-pair-tunneling-ansatz-ground-state-refutation` (refuted) by `D5/S3/Quantum/Dynamics/PairTunnelingAnsatzGroundStateRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"volkoff-2016-pair-tunneling-ansatz-ground-state-refutation","declaration_gid":"D5/S3/Quantum/Dynamics/PairTunnelingAnsatzGroundStateRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. J. Volkoff (2016). *Optimal and near-optimal probe states for quantum metrology of number conserving two-mode bosonic Hamiltonians*. URL: <https://arxiv.org/abs/1610.05807v1>.
