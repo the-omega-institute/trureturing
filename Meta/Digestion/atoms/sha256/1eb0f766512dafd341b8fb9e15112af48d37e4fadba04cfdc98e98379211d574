@@ -1,0 +1,21 @@
+**引理55.3（精确长度计数）。** 非空正参数列表与块词 $UWC$ 双射，其中 $W$ 是任意有限 $U/C$ 块词，包括空词。令 $f_n$ 为总返回长度恰为 $2n$ 的非空列表数，负下标取零，则
+
+$$
+\mathcal T(z)=\frac{z^{26}}{1-z^6-z^{20}},\qquad
+\sum_{n\ge0}f_nw^n=\frac{w^{13}}{1-w^3-w^{10}},\qquad
+f_n=f_{n-3}+f_{n-10}+\mathbf1_{\{n=13\}}.
+$$
+
+其精确支撑为 $n=13+3a+10b$，$a,b\ge0$。取唯一 $x\in(0,1)$ 满足 $x^3+x^{10}=1$，则
+
+$$
+\boxed{x^{40-n}\le f_n\le x^{13-n}\quad(n\ge31).}
+$$
+
+令 $z_*=\sqrt{x}$、$\alpha_\infty=-\log_2z_*$，即 $z_*^6+z_*^{20}=1$，有
+
+$$
+\log_2f_n=2\alpha_\infty n+O(1),\qquad
+\lim_{n\to\infty}\frac{\log_2f_n}{2n}=\alpha_\infty.
+$$
+

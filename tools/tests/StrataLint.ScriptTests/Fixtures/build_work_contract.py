@@ -2,16 +2,19 @@
 import json
 import os
 from pathlib import Path
+import runpy
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
+from unittest import mock
 
 REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
@@ -56,6 +59,9 @@ class BuildWorkContracts(unittest.TestCase):
         if native_work:
             path = root / "tools/scripts/worktree/lean-cache-run.sh"
             path.write_text(path.read_text().replace("cat <<'LOG'", "printf '%s\\n' '{\"kind\":\"extract\",\"count\":1}' >> \"$STRATALINT_INSPECTOR_ACTIVITY\"\ncat <<'LOG'"))
+        if recorder_failure:
+            script("tools/lean-inspector/build_work.py",
+                   "import sys\nprint('LEAN_BUILD_WORK_UNKNOWN recorder unavailable', file=sys.stderr)\nsys.exit(2)\n")
         env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
@@ -64,6 +70,145 @@ class BuildWorkContracts(unittest.TestCase):
                                  "--repository", str(root), "--output", str(root / "report.json")],
                                 env=env, capture_output=True, text=True)
         return result, fact, root
+
+    def recorder_inputs(self, output="Build completed successfully (1 jobs).\n", activity=()):
+        temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
+        self.addCleanup(temp.cleanup)
+        root = Path(temp.name)
+        script = root / "build_work.py"
+        shutil.copyfile(REPO / "tools/lean-inspector/build_work.py", script)
+        logs = root / "logs"
+        logs.mkdir()
+        for name, text in (("report.exit.log", "0"), ("report.stdout.log", output),
+                           ("report.stderr.log", ""),
+                           ("native-work.jsonl", "".join(json.dumps(row) + "\n" for row in activity))):
+            (logs / name).write_text(text)
+        project = root / ".lake/build/lib/lean/Probe.olean"
+        project.parent.mkdir(parents=True)
+        project.write_bytes(b"project artifact")
+        fact = root / "work/build-work.json"
+        fact.parent.mkdir()
+        fact.write_text('{"report":999,"programs":999}')
+        return root, logs, fact
+
+    def run_recorder(self, root, logs, fact):
+        return subprocess.run([sys.executable, "-B", str(root / "build_work.py"),
+                               str(root), str(logs), str(fact), "report"],
+                              capture_output=True, text=True)
+
+    def test_aggregate_native_activity_is_added_to_report_work(self):
+        root, logs, fact = self.recorder_inputs(
+            output="✔ [1/1] Built Probe\nBuild completed successfully (1 jobs).\n",
+            activity=({"kind": "aggregate", "count": 2}, {"kind": "extract", "count": 3},
+                      {"kind": "aggregate", "count": 0}))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual((6, 0), (json.loads(fact.read_text())["report"],
+                                json.loads(fact.read_text())["programs"]))
+
+    def test_malformed_native_activity_reports_unknown_and_exits_two(self):
+        for row in ({"kind": "other", "count": 1}, {"count": 1},
+                    {"kind": "extract", "count": True}, {"kind": "aggregate", "count": -1},
+                    {"kind": "aggregate", "count": "1"}, {"kind": "extract", "count": 1.5},
+                    {"kind": "extract", "count": None}, {"kind": "extract"}, [], None, "activity"):
+            with self.subTest(row=row):
+                root, logs, fact = self.recorder_inputs(activity=(row,))
+                previous = fact.read_bytes()
+                result = self.run_recorder(root, logs, fact)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("LEAN_BUILD_WORK_UNKNOWN invalid native build activity", result.stderr)
+                self.assertNotIn("LEAN_BUILD_WORK ", result.stdout)
+                self.assertEqual(previous, fact.read_bytes())
+
+    def test_extensionless_executable_captions_resolve_project_and_package_outputs(self):
+        for caption, expected in (("projectProbe", 1), ("fixture/projectProbe:exe", 1),
+                                  ("packageProbe", 0), ("dependency/packageProbe:exe", 0)):
+            with self.subTest(caption=caption):
+                root, logs, fact = self.recorder_inputs(
+                    output="✔ [1/1] Built " + caption + "\nBuild completed successfully (1 jobs).\n")
+                for name in (".lake/build/bin/projectProbe",
+                             ".lake/packages/dependency/.lake/build/bin/packageProbe"):
+                    path = root / name
+                    path.parent.mkdir(parents=True)
+                    path.write_text("#!/bin/sh\nexit 0\n")
+                    path.chmod(0o755)
+                result = self.run_recorder(root, logs, fact)
+                self.assertEqual(0, result.returncode, result.stderr)
+                self.assertEqual(expected, json.loads(fact.read_text())["report"])
+
+    def test_known_project_work_remains_a_lower_bound_with_unresolved_captions(self):
+        root, logs, fact = self.recorder_inputs(
+            output="✔ [1/2] Built Probe\n✔ [2/2] Built UnknownTarget\n"
+                   "Build completed successfully (2 jobs).\n")
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(1, json.loads(fact.read_text())["report"])
+
+    def test_recorder_atomically_replaces_the_work_fact(self):
+        root, logs, fact = self.recorder_inputs(activity=({"kind": "aggregate", "count": 2},))
+        previous = fact.read_bytes()
+        retained = fact.with_name("previous-work.json")
+        os.link(fact, retained)
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(2, json.loads(fact.read_text())["report"])
+        self.assertEqual(previous, retained.read_bytes())
+        self.assertEqual([], list(fact.parent.glob(".build-work-*")))
+
+    def test_recorder_canonicalizes_the_repository_address(self):
+        root, logs, fact = self.recorder_inputs()
+        alias = root / "repository-link"
+        alias.symlink_to(root, target_is_directory=True)
+        result = self.run_recorder(alias, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(str(root.resolve()), json.loads(fact.read_text())["repository"])
+
+    def test_recorder_keeps_the_destination_present_until_replace(self):
+        root, logs, fact = self.recorder_inputs()
+        previous = fact.read_bytes()
+        replace = Path.replace
+
+        def checked_replace(source, destination):
+            self.assertTrue(destination.is_file(), "work fact disappeared before replacement")
+            self.assertEqual(previous, destination.read_bytes())
+            return replace(source, destination)
+
+        record = runpy.run_path(str(root / "build_work.py"))["record"]
+        with mock.patch.object(Path, "replace", autospec=True, side_effect=checked_replace) as replacing:
+            record(root, logs, fact, "report")
+        replacing.assert_called_once()
+        self.assertEqual(0, json.loads(fact.read_text())["report"])
+
+    def test_recorder_io_failure_reports_unknown_and_exits_two(self):
+        for defect in ("parent-file", "destination-directory", "missing-log"):
+            with self.subTest(defect=defect):
+                root, logs, fact = self.recorder_inputs()
+                previous = fact.read_bytes()
+                if defect == "parent-file":
+                    blocked = root / "blocked"
+                    blocked.write_text("not a directory")
+                    destination = blocked / "build-work.json"
+                elif defect == "destination-directory":
+                    destination = fact.parent / "blocked"
+                    destination.mkdir()
+                    (destination / "keep").write_bytes(previous)
+                else:
+                    destination = fact
+                    (logs / "report.stdout.log").unlink()
+                result = self.run_recorder(root, logs, destination)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("LEAN_BUILD_WORK_UNKNOWN ", result.stderr)
+                self.assertNotIn("LEAN_BUILD_WORK ", result.stdout)
+                self.assertEqual(previous, fact.read_bytes())
+                self.assertEqual([], list(fact.parent.glob(".build-work-*")))
+                if defect == "destination-directory":
+                    self.assertEqual(previous, (destination / "keep").read_bytes())
+
+    def test_optional_recorder_failure_preserves_successful_inspector_exit(self):
+        result, fact, _ = self.invoke(recorder_failure=True)
+        self.assertIn("LEAN_BUILD_WORK_UNKNOWN recorder unavailable", result.stderr)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
 
     def test_reused_report_still_records_program_work(self):
         result, fact, root = self.invoke(output="✔ [1/1] Built Probe (15ms)\nBuild completed successfully (1 jobs).\n")
@@ -111,6 +256,11 @@ class BuildWorkContracts(unittest.TestCase):
 
     def test_failed_build_removes_stale_fact_and_preserves_exit(self):
         result, fact, _ = self.invoke(failure=23)
+        self.assertEqual(23, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+
+    def test_failed_report_producer_leaves_no_work_fact(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, failure=23)
         self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
 

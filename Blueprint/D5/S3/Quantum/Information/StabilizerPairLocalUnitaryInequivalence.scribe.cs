@@ -27,6 +27,9 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
             Node("word", "Pauli words", WordFormula(),
                 "The operator of a word g of Pauli labels is the product operator of the Pauli matrices of its letters.",
                 "wordOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("local", "Single-qubit operators", LocalFormula(),
+                "The operator A acting on qubit j alone is the product operator of the family update(const(1), j, A): the constant family of identity matrices with its factor at qubit j replaced by the two-by-two matrix A.",
+                "localOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("permutation", "Qubit permutations", PermutationFormula(),
                 "The permutation sigma of the qubits acts by (P psi)(x) = psi(x o sigma): the entry at x and y is 1 when y = x o sigma and 0 otherwise.",
                 "qubitPermutation", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -104,6 +107,15 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
         Formula product = Seq(Sub(Prod, Seq(i, Sp, InMacro, Sp, Call("Fin", n))), Sp, entry);
         return Disp(All("x", Bits(n), All("y", Bits(n),
             Equal(new Formula.Apply(Call("tensorOp", m), [x, y]), product))));
+    }
+
+    private static Formula LocalFormula()
+    {
+        Formula j = F.Id("j"), a = F.Id("A"), n = F.Id("n");
+        Formula qubitMatrices = Call("Matrix", Call("Fin", D(2)), Call("Fin", D(2)), Complexes());
+        return Disp(All("n", Seq(Mathbb, Grp(F.Id("N"))), All("j", Call("Fin", n),
+            All("A", qubitMatrices, Equal(Call("localOp", j, a),
+                Call("tensorOp", Call("update", Call("const", D(1)), j, a)))))));
     }
 
     private static Formula WordFormula()

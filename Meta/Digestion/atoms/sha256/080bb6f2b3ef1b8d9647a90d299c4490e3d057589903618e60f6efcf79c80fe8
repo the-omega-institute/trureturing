@@ -1,0 +1,61 @@
+**定义 40.1（全路径 FIB 表示及其标量像）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+g=t^3=2t-1,\qquad \lambda=\frac{t^2}{10},\qquad
+I_0=X=[-1,\phi],\qquad I_1=[-1,t].
+$$
+
+沿用定义14.5的来源域 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$。令 $D_s\subset A_s$ 为最终空尾地址，$D=D_0$。标签集为 $\Lambda=\{3,0,5,2,25\}$，其中 $0=\mathrm{null}=000$，$25=101$ 是一个窗口标签。标签与仿射数据固定为
+
+$$
+f_\ell(y)=\Delta_\ell-gy,\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t).
+$$
+
+合法边恰为
+
+$$
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5.
+$$
+
+一条边对应一个三位窗口步。对合法词 $w=(\ell_0,\ldots,\ell_{m-1})$，约定 $f_w=f_{\ell_0}\circ\cdots\circ f_{\ell_{m-1}}$，故其斜率为 $(-g)^m$。删除算子 $T$ 每步删除一个这样的窗口。
+
+一个全路径表示是顶点集、边集均有限的有向图。每个顶点带 incoming guard；有限初始集中的顶点全为 guard 零；每条边带原标签 $\ell$、原映射 $f_\ell$，并遵守上述 guard 接续。接受对象恰为从初始集出发的全部无限边路径，其标量为
+
+$$
+\pi(\ell_0\ell_1\cdots)
+=\sum_{j\ge0}(-g)^j\Delta_{\ell_j}.
+$$
+
+不附加实数成员测试、Büchi 条件或外部路径筛选，不把来源相关偏移藏入初始值，也不以多窗口宏边改变计数。原标签与 guard 保证每条接受路径给出实际 $\Omega$ 地址，且 $\pi=\kappa_0$。
+
+全部接受路径的标量集合称为图的标量像。标量像恰为 $E\subseteq X$，称为标量像意义下的精确表示。更强的完整根原像表示要求边标签地址语言恰为
+
+$$
+\{\omega\in\Omega:\kappa_0(\omega)\in E\}.
+$$
+
+两种要求的关系来自[定理17.2](https://github.com/the-omega-institute/trureturing/blob/b7e6d6b26598bea84f42ed06e830a11bd5cff1ea/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L3305)的状态相对满像 $\kappa_s(A_s)=I_s$：完整根原像相等蕴含标量像相等。主下界只使用后者。
+
+按定义31.5剪除没有无限延续的顶点，将边及初始集限制到剩余部分；这不改变无限初始路径。令 $s$ 为剩余的存活顶点数，也可进一步剪除不可达顶点。非空标量像保证至少有一个存活初始顶点。原图允许非确定选择、平行边与多个初始顶点。
+
+状态零的五个完整闭分支像依空间顺序为
+
+$$
+[-1,-t^2],\quad[-t^2,g],\quad[g,t],\quad[t,2t],\quad[2t,\phi].
+$$
+
+状态一只允许前三个分支，覆盖 $I_1$。分支接触点及其全部合法端点尾均保留。每条合法边 $s\xrightarrow{\ell}s'$ 的实际尾域为 $I_{s'}$，其当前域为 $f_\ell(I_{s'})$。两个状态使用同一窗口级数，故状态一地址在 $A_1\subset A_0$ 中的两个编码相同。
+
+给定 $x\in I_s$，可逐步在当前 guard 的闭分支中选择一个包含当前坐标的分支，并取其合法逆像作为下一坐标。对所得合法标签和 guard，
+
+$$
+x=\sum_{j=0}^{N-1}(-g)^j\Delta_{\ell_j}+(-g)^Nx_N,
+\qquad x_N\in I_{s_N}\subseteq X.
+$$
+
+余项趋零，证明状态相对满像。空标签从两种 guard 均合法且把下一 guard 重置为零；截断任意合法地址并接 $0^\infty$ 仍合法，原标量与截断标量之差至多 $\phi^2g^N$。因此有限来源标量在各 $I_s$ 中稠密。以下选择有限来源时使用的正是这个实际来源构造，而非任意环元素的实现性。
+

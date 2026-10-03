@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:22f9f83f1935c095cda953cb5a334d508c4a12262daa9d710f95298f7bf69978
+  normalized_sha256: sha256:22f9f83f1935c095cda953cb5a334d508c4a12262daa9d710f95298f7bf69978
+cas_ref: sha256:22f9f83f1935c095cda953cb5a334d508c4a12262daa9d710f95298f7bf69978
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/EndpointHistoryKernel.endpoint_history_count_kernel
+    target_statement_id: sha256:1008921784035de0d21c4adb973cec412b32e62c579160939daa55034d6e46e9
+receipts:
+  unresolved_subitems: []

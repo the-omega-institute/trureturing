@@ -1,0 +1,31 @@
+**定理 59.9（有界高串生成函数）。** 定义低、高单返回的实际长度级数
+
+$$
+A(z)=\frac{z^6\sum_{r=1}^{K-1}z^{20r}}{1-z^6},\qquad
+H(z)=\frac{z^{6+20K}}{1-z^6},\qquad
+S_L(u)=\sum_{j=0}^{L}u^j.
+\tag{59.48}
+$$
+
+有界高串外列表（含空列表）的精确函数为
+
+$$
+\mathcal G_{K,L}(z)=\frac{S_L(H(z))}{1-A(z)S_L(H(z))}.
+\tag{59.49}
+$$
+
+存在唯一 $\zeta_{K,L}\in(0,1)$ 满足
+
+$$
+A(\zeta_{K,L})S_L(H(\zeta_{K,L}))=1.
+\tag{59.50}
+$$
+
+置 $\gamma_{K,L}=-\log_2\zeta_{K,L}$，则
+
+$$
+\boxed{z_K<\zeta_{K,L}<z_{K-1},\qquad
+\alpha_{K-1}<\gamma_{K,L}<\alpha_K.}
+\tag{59.51}
+$$
+

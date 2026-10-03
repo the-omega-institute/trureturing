@@ -1,0 +1,115 @@
+**定理 1.4（完整组成失效后的许可窗口与尖锐噪声边界）。** 记
+
+$$
+A=F_m,\qquad B_{\mathrm{num}}=F_{m+1},\qquad
+K=B_{\mathrm{num}}+A/2,\qquad m=3L+3.
+$$
+
+$A$ 是偶数，故 $K$ 为整数，且 $B_{\mathrm{num}}<K$。在同一个任意叶组成域上，有准确分离：
+
+$$
+\boxed{
+\begin{array}{ll}
+B_{\mathrm{num}}\le H<K:
+ &\text{完整组成在 }E=0\text{ 时已不能恢复，}\quad
+   \chi\text{ 统一可恢复}\ \Longleftrightarrow\ 2E<1;\\[2pt]
+H\ge K:
+ &\chi\text{ 在 }E=0\text{ 时也不能统一恢复。}
+\end{array}}
+\tag{1.11}
+$$
+
+第一行的归一化许可阈值是 $2\eta<\lambda^{-L}$，等号失败。若 $H<B_{\mathrm{num}}$，式 (1.5) 的组成恢复条件足以恢复 $\chi$，但不主张它是这个二值任务的最优条件。特别地，$H=1,2$ 时没有许可组成，$\chi$ 为常值零，对任意 $E$ 都可恢复。全部结论包括 $L=0$：这时 $A=2,B_{\mathrm{num}}=3,K=4$，许可窗口是 $H=3$，在 $H=4$ 已有精确跨类碰撞。
+
+证明。$S\equiv I\pmod2$，因此 $(A,B_{\mathrm{num}})=qS^L\equiv(0,1)\pmod2$，给出 $A$ 偶数。$m\ge3$ 保证 $0<A<B_{\mathrm{num}}$。Cassini 等式 $F_m^2-F_{m-1}F_{m+1}=(-1)^{m-1}$ 给 $\gcd(A,B_{\mathrm{num}})=1$，故数量行的整数核准确为
+
+$$
+\ker_{\mathbb Z} n_L=\mathbb Z(B_{\mathrm{num}},-A).
+\tag{1.12}
+$$
+
+设许可点 $x=(a,b)\ne0$ 与另一个非负整数点 $x'$ 有相同读数。由式 (1.12)，存在非零整数 $z$ 使
+
+$$
+x'=x+z(B_{\mathrm{num}},-A).
+$$
+
+若 $z>0$，非负性给 $b\ge zA$，许可不等式 $b\le2a$ 给 $a\ge zA/2$，所以
+
+$$
+x'_1+x'_2=a+b+z(B_{\mathrm{num}}-A)
+\ge z(B_{\mathrm{num}}+A/2)=zK\ge K.
+$$
+
+若 $z=-s<0$，非负性给 $a\ge sB_{\mathrm{num}}$，许可不等式 $3a\le2b$ 给 $b\ge3sB_{\mathrm{num}}/2$。于是
+
+$$
+a+b\ge(5/2)sB_{\mathrm{num}}\ge sK\ge K,
+$$
+
+其中 $K=B_{\mathrm{num}}+A/2<(3/2)B_{\mathrm{num}}$。这分别处理了两个核方向：任何许可点与不同非负点的共同初始预算至少为 $K$。因此 $H<K$ 时，每个包含许可点的精确读数纤维都是单点；两个不同的非许可点仍可处在同一纤维。
+
+当 $H\ge B_{\mathrm{num}}$ 时，定理 1.2 的两个轴组成已给出完整组成的精确碰撞；这两个轴组成的 $\chi$ 都是零，并未构成许可标签碰撞。在 $B_{\mathrm{num}}\le H<K$ 内，任意跨类读数都是不同整数，故其间距至少为一。
+
+为证明该跨类间距准确为一，令
+
+$$
+u=F_{m-1},\qquad v=F_{m-2},\qquad t=\lceil v/2\rceil,
+\qquad x_+=(t,2t),\qquad x_-=(t+u,2t-v).
+\tag{1.13}
+$$
+
+这里 $u\ge v\ge1$、$1\le t\le v$，且 $2t-v\in\{0,1\}$。$x_+$ 在许可锥的上边界 $b=2a$，故 $\chi(x_+)=1$；$x_-$ 的第二坐标至多一，第一坐标至少二，故 $3(x_-)_1>2(x_-)_2$，于是 $\chi(x_-)=0$。又由 $B_{\mathrm{num}}=2u+v$，
+
+$$
+|x_+|_1=3t\le3v\le2u+v=B_{\mathrm{num}},\qquad
+|x_-|_1=u+3t-v\le u+2v\le2u+v.
+$$
+
+因此两点都属于 $D_{B_{\mathrm{num}}}\subseteq D_H$。在式 (1.8) 中取 $j=m-2$，经典 Cassini 残差给
+
+$$
+|n_L(x_-)-n_L(x_+)|
+=|Au-B_{\mathrm{num}}v|=1.
+$$
+
+$m=3$ 时 $u=v=t=1$，仍是非空合法点 $(1,2)$ 与非许可点 $(2,1)$，没有退化索引。
+
+若 $2E<1$，同一有理报告的有限候选集 $\mathcal C(r)$ 不能同时含两个不同许可标签：否则相应跨类整数读数的距离至多 $2E<1$。非空候选集上的共同标签定义 $P(r)$，空候选集取零，便得到统一许可恢复器。反向，式 (1.13) 的两读数有共同有理中点，到两者距离均为 $1/2$；它在 $2E\ge1$ 时同时允许，且两个正确标签不同。因此等号及更大误差均不能恢复。乘以 $\lambda^{-L}$ 给出归一化边界。
+
+预算达到 $K$ 时，取
+
+$$
+x_{\mathrm{yes}}=(A/2,A),\qquad
+x_{\mathrm{no}}=(K,0).
+\tag{1.14}
+$$
+
+前者非零且 $S^{-1}x_{\mathrm{yes}}=(A/2,0)\in\mathbb N_0^2$，后者不满足许可不等式。它们的叶数分别为 $3A/2\le K$ 与 $K$，而
+
+$$
+x_{\mathrm{no}}-x_{\mathrm{yes}}=(B_{\mathrm{num}},-A),\qquad
+n_L(x_{\mathrm{yes}})=AK=n_L(x_{\mathrm{no}}).
+$$
+
+所以 $H=K$ 已有合法的精确跨类碰撞，每个更大 $H$ 继续包含该对；任何非负误差预算也继续允许共同精确报告。这证明式 (1.11) 的第二行。$H=1,2$ 的常值条款来自许可非零整数点必有 $a\ge1$、$b\ge\lceil3a/2\rceil$，故叶数至少为三。$H<B_{\mathrm{num}}$ 时，先用定理 1.2 的恢复器取得组成再计算式 (1.10)，给出所声明的充分性，不对二值任务额外作最优性断言。
+
+组成许可与树语法逆的区别已见[母卷定义 116.2 后的语法逆边界](FIBONACCI_ATOMIC_RELATION_GENERATION.md#116-规范数值的前缀隐藏尾部与接缝密度)。在本节的三步合同下，同样可直接比较实际树
+
+$$
+\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+T'=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+$$
+
+两者组成同为 $(1,2)$，所以在 $H\ge3$ 时具有同一个许可标签一。若 $T'$ 是某棵树 $U$ 的 $\rho^3$ 像，则由 $S$ 两列的叶数三、五，$3c(U)_1+5c(U)_2=3$ 强制 $c(U)=(1,0)$。唯一的一叶来源是 $\alpha$，其三步像是上面第一棵树，左右结构与 $T'$ 不同，矛盾。因此即使完整组成及其许可都已恢复，也没有判定指定树的三步逆语法。
+
+最后，格坐标的代数守恒直接引用[母卷命题 145.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#145-五窗递归中的守恒异号扇区与勾股的适用对象)：$Q(y)=y_1^2-y_1y_2-y_2^2$ 满足 $Q(C^2y)=Q(y)$。该式不给来源锥 $\mathcal K=B\mathbb N_0^2$ 上的群作用。例如在环境整数格中，
+
+$$
+C^{-2}B\binom10=B\binom{13}{-8}=\binom2{-3}\notin\mathcal K,
+\tag{1.15}
+$$
+
+因为 $B^{-1}$ 将它送到含负坐标的 $(13,-8)$。许可条件属于非负组成锥，二次型守恒属于环境线性坐标；两者条件不同。本定理只针对定义 1.1 的一个末端有理报告和任意叶组成域，不恢复完整关系来源、不取得实际逆执行，也不将代数洛伦兹型二次式解释为现实相对论。证毕。
+

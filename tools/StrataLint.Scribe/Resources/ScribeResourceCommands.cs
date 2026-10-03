@@ -4,11 +4,16 @@ namespace StrataLint.Scribe;
 
 internal static class ScribeResourceCommands
 {
-    private const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>";
+    internal const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>"
+        + " | resources compare --pack <file> | resources release --out <directory>"
+        + " | resources verify-release --dir <directory> [--total-sha256 <digest>]";
 
-    internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
+    internal static int Run(Func<Assembly> assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)
     {
+        if (arguments.Count > 1 && arguments[1] is "release" or "verify-release")
+            return ScribeReleaseCommands.Run(arguments, workingDirectory, repositoryRoot, output, error);
+
         if (arguments.Count != 4
             || arguments[1] is not ("pack" or "verify")
             || arguments[2] != (arguments[1] == "pack" ? "--out" : "--pack")
@@ -38,7 +43,7 @@ internal static class ScribeResourceCommands
             }
 
             var pack = ScribeResourcePack.Open(path);
-            var definitions = DocumentDefinitions.Discover(assembly, root)
+            var definitions = DocumentDefinitions.Discover(assembly(), root)
                 .ToDictionary(item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
             var mismatches = 0;
             foreach (var entry in pack.Manifest.Entries)

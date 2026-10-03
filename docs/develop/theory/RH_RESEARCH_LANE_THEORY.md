@@ -12204,3 +12204,1783 @@ $$
 固定乘法区间的 PNT、Fourier 平移、普通加权度量界、已发表谱配对与 CC 小支撑正性均是复用前置；本章的候选综合内容是实际非活跃素数簇对正角预算的失效以及被它强迫的大量配对抵消，不认证世界原创性。该构造使用超出当前测试活跃支撑的大素数，因此没有决定第 22 节 $\mathcal P_{\mathcal R}^{\mathrm{act}}\subseteq\mathcal P\subseteq\{p:p\le e^{\mathcal R}\}$ 的扩张族，也没有排除精心选择有限素数集或直接保留 $E_S^+-E_S^-$ 的方法。完整 constrained 同一测试正性、FIB 来源到实际素数伸缩的交织及 Robin 的全整数估计均未由此构造解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 精确最小活跃素数集上的正角预算障碍
+
+本章沿用第 18—21 节的实际物理投影、完整迹与普通加权评价合同，并保留 archimedean 对角输入
+
+$$
+\sigma_{\{\infty\}}(f)=\mathcal T_0(f)
+=\int_{\mathbb R}|\widehat f(t)|^2d(t)\,d\mu(t),\qquad
+0\le d(t),\qquad \frac{d(t)}{\log|t|}\longrightarrow1,
+$$
+
+其中 $d$ 局部有界。只使用这一 archimedean 对角输入及 $d_S\le\chi_Sd$，不要求变动 $S$ 的密度渐近式。实际普通投影始终是 $P_S=TPK_S^{-1}PT^*$；所有算术响应均按全部纯素数幂计数。
+
+**定义 26.1（收缩总权重的远端素数簇）。** 令 $f_0=\phi_0'-4\phi_0'''$ 为定义 25.1 的固定测试，记 $M=\|f_0\|_2^2$、$J_1=\|f_0'\|_2$、$q_0=Q_{\rm full}(f_0)$。取
+
+$$
+a=\frac14,\quad b=\frac13,\quad c=a+b=\frac7{12},\quad
+\delta_0=\min\left\{\frac1{12},\frac{\sqrt M}{128J_1}\right\},\quad
+\varepsilon_L=L^{-1/4}.
+$$
+
+对充分大的整数 $L$，按递增顺序从 $[e^L,e^{L+\delta_0}]$ 中选择素数，直到 $\sum p^{-1/2}$ 第一次达到 $\varepsilon_L$，所得集合记为 $\mathcal P_L$，令 $S_L=\{\infty\}\cup\mathcal P_L$。记全部位于交叉响应开带内的纯素数幂时刻为
+
+$$
+\mathcal R_L=\{k\log p:L-c<k\log p<L+c,\ p\text{ 为素数},\ k\ge1\}.
+$$
+
+这个集合有限，包括不属于 $\mathcal P_L$ 的素数及高次幂。
+
+**候签定理 26.1（微小尾部、精确活跃性与发散角能量）。** 在本章明确保留的合同下，存在实函数 $f_L\in C_c^\infty(\mathbb R)$ 与正数 $h_L$，使
+
+$$
+\widehat f_L(0)=\widehat f_L(i/2)=\widehat f_L(-i/2)=0,
+\qquad f_L\longrightarrow f_0\quad\text{于 Schwartz 拓扑},
+$$
+
+且对每个素数 $p$ 与每个 $k\ge1$，精确成立
+
+$$
+H_{f_L}(k\log p)=
+\begin{cases}
+h_L,&p\in\mathcal P_L,\ k=1,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+因此 $S_{\rm act}(f_L)=S_L$ 恰为最小活跃集，没有额外非活跃素数。在这同一份测试与实际切面上，
+
+$$
+\begin{aligned}
+\chi_{S_L}&\longrightarrow1,\\
+\sigma_{S_L}(f_L)&\longrightarrow\sigma_{\{\infty\}}(f_0),\\
+D_{{\rm lin},S_L}(f_L)&\longrightarrow D_{{\rm lin},\{\infty\}}(f_0),\\
+Q_{\rm full}(f_L)&\longrightarrow q_0>0,\\
+N_{S_L}(f_L)&\longrightarrow N_{\{\infty\}}(f_0),\\
+E^+_{S_L}(f_L)&\ge\frac{M\sqrt L}{128}\longrightarrow\infty,\\
+E^-_{S_L}(f_L)&=E^+_{S_L}(f_L)-N_{S_L}(f_L)\longrightarrow\infty.
+\end{aligned}
+$$
+
+能量下界在充分大的 $L$ 上成立。这里 $E^-$ 是第 25.1 节已发表谱配对所确定的实际负角能量；每个固定 $L$ 的两份能量都有限。
+
+证明。固定乘法区间的素数定理及第 25 节贪心选择直接给出
+
+$$
+\varepsilon_L\le s_L:=\sum_{p\in\mathcal P_L}p^{-1/2}
+\le\varepsilon_L+e^{-L/2},\qquad
+\log\chi_{S_L}\le16\varepsilon_L\longrightarrow0.
+$$
+
+这一选择没有使用变窄素数区间的假设。对所有充分大的 $L$，$\varepsilon_L\le1/64$ 且 $e^{-L/2}\le\varepsilon_L^2$。第 25 节完整 Euler 相位比较于是仍给出
+
+$$
+h_{S_L,f_0}(u)=h_0(u)+\varepsilon_Lh_0(u+L)
+-\varepsilon_Lh_0(u-L)+r_L(u),
+\qquad
+\|r_L\|_2\le\frac18\varepsilon_L\sqrt M,
+$$
+
+其中 $h_0=\mathscr F^{-1}(m_\infty\widehat f_0(-t))$，完整 Gamma 乘子与全部高次素数幂均保留。
+
+因为 $\varepsilon_L$ 趋于零，原先仅用 $L^2$ 尾部趋零的步骤须补充速率。第 21.3 节 Gamma 相位导数界及 $\widehat f_0$ 的快速下降给出 $m_\infty\widehat f_0(-t)\in H^1$，故 $u h_0\in L^2$。选固定 $A>0$ 使 $\|\mathbf1_{[-A,A]}h_0\|_2\ge3\sqrt M/4$，则
+
+$$
+\|\mathbf1_{(-\infty,-L+A]}h_0\|_2
+\le\frac{\|u h_0\|_2}{L-A}
+=O(L^{-1})=o(\varepsilon_L).
+$$
+
+背景及反向平移因此满足第 25 节同一个延迟窗口估计；继而
+
+$$
+\mathcal H_{S_L}(f_0)\ge\frac{\varepsilon_L^2ML}{8},\qquad
+E^+_{S_L}(f_0)\ge\frac{\varepsilon_L^2ML}{32}
+=\frac{M\sqrt L}{32}.
+$$
+
+现在构造真正激活这些素数的尾部。对 $t\in\mathcal R_L$，在 $(-b,b)$ 上令
+
+$$
+v_t(y)=f_0(y-(t-L)),
+$$
+
+并加入三个极点约束核 $1,e^{y/2},e^{-y/2}$。这些有限个实函数在 $(-b,b)$ 上线性独立。每个平移 bump 至少有一个支撑端点严格落在这个区间内，因为 $|t-L|<a+b$ 且 $b>a$。同侧端点相撞要求相同的 $t$；异侧相撞要求 $t_i-t_j=\pm2a=\pm1/2$。后者不可能：$e^{t_i-t_j}$ 是有理素数幂比，而标准 Hermite–Lindemann 定理给出 $e^{\pm1/2}$ 超越。
+
+在每个核的这个独有内部端点，其他核及三个指数核均解析。该 bump 自身平坦但不解析，并在端点内侧任意邻域非零；其非零性来自 $f_0$ 的显式解析公式及内部恒等原理。如果一个线性组合为零，则其他项组成的解析函数在该 bump 为零的一侧恒为零，因而在整个小邻域为零；该 bump 的系数随即为零。逐个消去这些系数后，三个不同指数的核也线性独立。
+
+将全部核列为 $(v_i)$，取 $\eta_b\in C_c^\infty(\mathbb R)$ 在 $(-b,b)$ 上严格正且支撑于 $[-b,b]$。标准有限加权 Gram 构造给出正定矩阵
+
+$$
+\mathsf G_{ij}=\int_{-b}^b\eta_b(y)v_i(y)v_j(y)\,dy.
+$$
+
+令响应向量 $z$ 在三个极点核上取零，在 $t=\log p$、$p\in\mathcal P_L$ 上取一，在 $\mathcal R_L$ 的全部其余时刻取零，并设
+
+$$
+g_L(y)=\eta_b(y)\sum_i(\mathsf G^{-1}z)_iv_i(y).
+$$
+
+于是 $g_L$ 实、光滑、支撑于 $[-b,b]$，三个指数矩为零，而且
+
+$$
+\int f_0(x)g_L(x+t-L)\,dx
+=\begin{cases}1,&t=\log p,\ p\in\mathcal P_L,\\0,&t\in\mathcal R_L\text{ 的其余时刻}.\end{cases}
+$$
+
+矩阵大小与条件数没有统一界；此处只主张有限系统的精确可解性，不主张计算资源估计。这份响应 Gram 矩阵不是普通 Sonin 度量 $K_{S_L}$。
+
+写 $w_L(x)=g_L(x-L)$、$f_L=f_0+h_Lw_L$。零指数矩在平移后仍为零，所以三个 Fourier 约束精确成立。$f_L$ 实，故其自相关实偶；没有要求 $f_L$ 本身仍为奇函数。两个自相关岛分别支撑于 $[-2a,2a]$ 与 $[-2b,2b]$，且 $2b<\log2$，所以都不贡献任何正素数幂响应。正的交叉岛支撑于 $[L-c,L+c]$，反向交叉岛支撑于其负像。正岛内的响应就是上述插值；端点因平坦支撑自动为零。带外响应也为零，这就证明了所有 $p,k$ 的精确公式。
+
+严格正的基准值直接复用 Connes–Consani, arXiv:2006.13771v1, Theorem 6.11、式 (141)，包括该来源的小支撑及其源前提。参数对应为 $g_0(\rho)=f_0(\log\rho)$，支撑 $[e^{-1/4},e^{1/4}]\subset[2^{-1/2},2^{1/2}]$，源要求的 $\widehat g_0(-i/2)=0$ 与消去秩一误差的 $\widehat g_0(0)=0$ 均精确满足。固定 $f_0$ 的全部有限素数项与极点项为零，故
+
+$$
+q_0\ge\operatorname{Tr}(A_{f_0}P)=\mathcal T_0(f_0)>0.
+$$
+
+最后一步使用本章显式对角输入：$d$ 在充分高的频率上为正，而非零紧支撑 $f_0$ 的整个 Fourier 变换不可能在一个实开区间恒为零。这不将小支撑正性外推到 $f_L$ 的扩大支撑。
+
+对每个固定 $L$，所有待缩放的光滑紧支撑范数与实际平滑后迹量均有限；$Q_{\rm full}(f_0+h w_L)$ 是在 $h=0$ 取值 $q_0$ 的有限实二次多项式。因此可以选严格正的 $h_L$，同时满足
+
+$$
+\begin{aligned}
+\|h_Lw_L\|_2&\le L^{-2},\\
+\mathcal T_0(h_Lw_L)^{1/2}&\le L^{-1},\\
+\|C_{S_L}X_{h_Lw_L}\|_{\rm HS}&\le L^{-1},\\
+\sup_x(1+|x|)^m|(h_Lw_L)^{(n)}(x)|&\le L^{-1}
+\quad(m,n\ge0,\ m+n\le L),\\
+|Q_{\rm full}(f_L)-q_0|&\le\min\{q_0/2,L^{-1}\}.
+\end{aligned}
+$$
+
+最后一项单独控制实际全形式；没有从 Schwartz 收敛推断变动支撑上 Weil 形式的连续性。正的 $h_L$ 再小也不改变精确活跃集。Hilbert–Schmidt 反向三角不等式给出
+
+$$
+\sqrt{E^+_{S_L}(f_L)}
+\ge\sqrt{M\sqrt L/32}-L^{-1},
+$$
+
+从而得到所述正角能量下界。
+
+为处理普通迹的极限，$s_L\to0$ 给出 $\|T_L-I\|\le\beta_{S_L}-1\to0$，且由完整 Euler 相位 $\|\mathcal F_{S_L}-\mathcal F_\infty\|\to0$。因此 $K_L\to I_V$、$K_L^{-1}\to I_V$，并保留精确运输
+
+$$
+A_{f_0}P_{S_L}=T_L(A_{f_0}P)K_L^{-1}PT_L^*.
+$$
+
+第 18 节供应的 $A_{f_0}P$ 迹类接口于是给出这份式子的迹范数收敛。再对实际正迹使用 Cauchy–Schwarz 及 $\sigma_{S_L}(h_Lw_L)\le\chi_{S_L}\mathcal T_0(h_Lw_L)$，得到变动测试的 $\sigma_{S_L}(f_L)\to\sigma_{\{\infty\}}(f_0)$。
+
+所有相关自相关均支撑于 $[-r,r]$、$r=L+c$。第 18 节共同条带分解的两个 Hilbert–Schmidt 因子给出
+
+$$
+\|B_{f_L}-B_{f_0}\|_1
+\le (L+c)(\|f_L\|_2+\|f_0\|_2)\|f_L-f_0\|_2
+=O(L^{-1}).
+$$
+
+结合 $C_{S_L}\to C_\infty$、$\mathcal F_{S_L}\to\mathcal F_\infty$ 的算子范数收敛，这证明线性迹收敛。全部素数幂已精确控制，故同一实际载体的完整恒等式为
+
+$$
+N_{S_L}(f_L)=\sigma_{S_L}(f_L)-D_{{\rm lin},S_L}(f_L)-Q_{\rm full}(f_L).
+$$
+
+其右侧逐项收敛，极限就是 $N_{\{\infty\}}(f_0)$。最后复用第 25.1 节的有限性及已发表谱配对 $N=E^+-E^-$，得到负角能量的发散；没有使用 $[A_f,C]=0$ 或 $C^2$ 迹类假设。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 27. 最小活跃切面的抵消精度与连续性边界
+
+本章所有量均取候签定理 26.1 的同一实际 $f_L,S_L=S_{\rm act}(f_L)$，保留其物理迹与 archimedean 对角前提。缩小尾部使每个素数响应趋于零，却不按响应大小缩减该素数在完整 Euler 因子中的作用。因此最小活跃性提供精确的算术选择，不能单独提供角能量的支付界。
+
+**候签定理 27.1（丢弃固定比例负能量的证书仍失败）。** 对每个固定 $0\le\theta<1$，在候签定理 26.1 的前提下，
+
+$$
+\boxed{
+\sigma_{S_L}(f_L)-D_{{\rm lin},S_L}(f_L)
+-E^+_{S_L}(f_L)+\theta E^-_{S_L}(f_L)
+\longrightarrow-\infty,
+\qquad Q_{\rm full}(f_L)\longrightarrow q_0>0.
+}
+$$
+
+若 $0\le\theta_L\le1$ 且该族上的同类证书对充分大的 $L$ 为非负，则必须
+
+$$
+\boxed{
+(1-\theta_L)E^-_{S_L}(f_L)\le Q_{\rm full}(f_L),
+\qquad 1-\theta_L=O(L^{-1/2}).
+}
+$$
+
+证明。复用同一测试的完整账本及实际谱配对，不另立新的配对引理：
+
+$$
+\begin{aligned}
+&\sigma_{S_L}(f_L)-D_{{\rm lin},S_L}(f_L)
+-E^+_{S_L}(f_L)+\theta_LE^-_{S_L}(f_L)\\
+&\qquad=Q_{\rm full}(f_L)-(1-\theta_L)E^-_{S_L}(f_L).
+\end{aligned}
+$$
+
+候签定理 26.1 给出 $Q_{\rm full}(f_L)\to q_0$、$N_{S_L}(f_L)=O(1)$，以及
+
+$$
+E^-_{S_L}(f_L)\ge\frac{M\sqrt L}{128}-O(1).
+$$
+
+固定 $\theta<1$ 时第一式右侧趋于负无穷；证书为非负时得到必要不等式，除以最后一式的正下界即得比例速率。$\square$
+
+这份必要条件针对被丢弃的能量总量。若以真实负能量的下界 $\underline E^-_L\le E^-_{S_L}(f_L)$ 替代它，则证书成功的精确条件是
+
+$$
+0\le E^-_{S_L}(f_L)-\underline E^-_L\le Q_{\rm full}(f_L).
+$$
+
+所以该族要求被丢弃的绝对能量受控；固定相对误差不够。若直接上估实际有符号项 $N_{S_L}(f_L)\le U_L$，则同一式变成
+
+$$
+\sigma_{S_L}(f_L)-D_{{\rm lin},S_L}(f_L)-U_L
+=Q_{\rm full}(f_L)-\bigl(U_L-N_{S_L}(f_L)\bigr).
+$$
+
+这种估计只需控制有符号项的单侧过估误差，并不必分别高精度求出两份大角能量。$\theta=1$ 正好保留完整抵消，上述失败结论不覆盖它。
+
+**候签命题 27.2（按最小活跃集选择的正角读出不连续）。** 在候签定理 26.1 的前提下，在实的三个 Fourier 零点 constrained 紧支撑光滑测试上定义
+
+$$
+\mathscr E(f)=E^+_{S_{\rm act}(f)}(f).
+$$
+
+赋予该测试域由 Schwartz 空间诱导的拓扑，则 $\mathscr E$ 在 $f_0$ 处不连续；相应的正角支付证书沿 $f_L\to f_0$ 趋于负无穷，尽管实际完整形式趋于严格正的 $q_0$。
+
+证明。$S_{\rm act}(f_0)=\{\infty\}$，且第 21 节的平滑合同给出 $\mathscr E(f_0)<\infty$。候签定理 26.1 同时给出 $f_L\to f_0$ 于 Schwartz 拓扑与 $\mathscr E(f_L)\to\infty$，故这份复合读出不连续。第 26 节的正迹、线性迹及完整形式极限给出其余结论。$\square$
+
+不连续的是 $f\mapsto E^+_{S_{\rm act}(f)}(f)$；此处没有断言固定 $S$ 上的能量泛函不连续，也没有从 $f_L\to f_0$ 单独推出全形式连续。实际全形式的极限是通过尾部幅度中的独立二次型约束取得的。算子范数 $\mathcal F_{S_L}\to\mathcal F_\infty$ 与普通度量条件数 $\chi_{S_L}\to1$ 同样不足以保证这些变动切面的正角 Hilbert–Schmidt 能量连续。
+
+**定义 27.1（尚未闭合的全有符号目标）。** 对所有实际紧支撑 constrained 测试 $f$ 及支撑完整的实际有限素数集 $S$，目标比较仍是
+
+$$
+\sigma_S(f)-D_{{\rm lin},S}(f)\ge N_S(f)
+=E_S^+(f)-E_S^-(f).
+$$
+
+第 26—27 节仅给出特造双岛插值族上的证书限制，没有给出这份全称比较，也没有决定第 22 节固定形状扩张奇测试 $f_{\mathcal R}$ 上的有符号比较。它们不建立 FIB 来源递归与实际素数伸缩之间的交织，不给出 Robin 的全部整数估计。
+
+固定乘法区间的素数定理、Hermite–Lindemann、有限加权 Gram 插值与迹理想连续性是复用工具；实际正负谱配对复用 Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv)、式 (77)，固定小支撑正性复用该文 Theorem 6.11、式 (141)。新增综合内容是精确最小活跃集上微小尾部与角能量失稳的共同实现，以及该实际族对舍弃负能量证书的必要误差约束；这些纸面推导未作 Lean 核验，也不认证世界原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 28. 原扩张测试的 Laplace 延拓与多项式余量障碍
+
+本章保留第 19.3 节的固定标准实偶 bump $\phi$ 及原扩张测试 $f_R$，并直接使用包含全部极点与纯素数幂的经典全 Weil 显式公式。只在回接实际 Sonin 迹时使用第 18—21 节的物理合同；标量延拓不要求变动素数集的评价密度渐近式。
+
+**定义 28.1（原测试族的完整标量与尾部变换）。** 令
+
+$$
+\Phi(z)=\widehat\phi(z),\qquad p(z)=z^2(1+4z^2)^2,\qquad
+\mathcal W(R)=Q_{\rm full}(f_R),\qquad q(R)=R^{-3}\mathcal W(R),\quad R\ge1.
+$$
+
+对非平凡零点 $\rho=\beta+i\gamma$，置 $z_\rho=\gamma-i(\beta-1/2)$，并按不同零点求和、用 $m_\rho$ 计入重数。第 19.3 节的精确 Fourier 身份与完整显式公式给出
+
+$$
+\widehat H_{f_R}(z)=R^3p(z)\Phi(Rz)^2,\qquad
+q(R)=2\sum_{\gamma>0}m_\rho p(z_\rho)\Phi(Rz_\rho)^2.
+$$
+
+这里是复数平方，不是把离线零点项改成绝对平方；正纵坐标之和由零点对称性为实数。所用显式公式可在 Suzuki, arXiv:2206.03682v4, 式 (5.15) 中逐项核对：两个极点项、两份完整 von Mangoldt 和及 Gamma 项均保留。其 Fourier 零点坐标的符号差由 $H_{f_R}$ 的偶性消除；两个极点评价则由 $\widehat H_{f_R}(\pm i/2)=0$ 精确消失。
+
+采用经典零点事实
+
+$$
+|\Im z_\rho|<\frac12,\qquad
+\gamma_*:=\inf_{\gamma>0}\gamma>0,\qquad
+\sum_{\gamma>0}m_\rho(1+\gamma)^{-2}<\infty.
+$$
+
+正的纵坐标间隔只用非平凡实零点不存在及有界条带内的离散性，不要求数值零点验证。固定标准 $\phi$ 的支撑是 $[-1/2,1/2]$，不能为它选严格小于 $1/2$ 的支撑半径。Paley–Wiener 的分部积分界在 $b=1/2$ 时给出
+
+$$
+|\Phi(w)|\le C_N(1+|w|)^{-N}e^{|\Im w|/2}
+\quad(N\ge0).
+$$
+
+因此上述零点和在紧的 $R$ 区间上正常收敛，且 $|q(R)|\le Ce^{R/2}$。定义初始 Laplace 变换
+
+$$
+L(s)=\int_1^\infty e^{-sR}q(R)\,dR,\qquad \Re s>1/2.
+$$
+
+**候签定理 28.1（最终非负时的全尾矩约束）。** 对这一原固定形状测试族，若存在 $R_0\ge1$ 使 $\mathcal W(R)\ge0$ 对所有实数 $R\ge R_0$ 成立，则
+
+$$
+\boxed{
+\int_{R_0}^\infty R^n\mathcal W(R)\,dR<\infty
+\qquad(n=0,1,2,\ldots).
+}
+$$
+
+因此，对任意实数 $M\ge0$、$c>0$ 与 $R_1\ge1$，存在实数 $R\ge R_1$ 满足
+
+$$
+\mathcal W(R)<cR^{-M},\qquad
+\liminf_{R\to\infty}R^M\mathcal W(R)\le0.
+$$
+
+后一结论不假定最终非负，也不声称某个测试的实际 Weil 值为负。
+
+证明。对 $z=\gamma+iy$、$\gamma\ge\gamma_*$、$|y|<1/2$，令
+
+$$
+I_z(s)=\frac1z\int_0^\infty
+ e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+它在 $\Re(s/z)>0$ 上全纯。令 $K=\phi*\phi$，则 $\widehat K=\Phi^2$、$\operatorname{supp}K=[-1,1]$。对实数 $s>1/2$，两种积分均可由 Fubini 精确计算为
+
+$$
+I_z(s)=\int_1^\infty e^{-sR}\Phi(Rz)^2\,dR
+=\int_{-1}^1K(u)\frac{e^{-(s+izu)}}{s+izu}\,du.
+$$
+
+左侧的水平射线积分使用 $\Re(s/z)>0$；中间的尺度积分使用 $\Re(s+izu)\ge s-1/2>0$。没有以未经验证的弧积分消失代替这份身份。
+
+置
+
+$$
+\Omega=\left\{s:\Re s>\frac{|\Im s|}{2\gamma_*}\right\},\qquad
+G(s)=2\sum_{\gamma>0}m_\rho p(z_\rho)I_{z_\rho}(s).
+$$
+
+在 $\Omega$ 内，
+
+$$
+\Re(s/z_\rho)
+=\frac{\gamma\Re s+y\Im s}{|z_\rho|^2}>0.
+$$
+
+水平射线 $z_\rho+t$ 始终处于 $|\Im w|<1/2$ 的固定条带，故 $\Phi(z_\rho+t)$ 在 $\gamma+t$ 上任意快速下降。这同时支付 $p$ 的六次增长与零点重数，证明 $G$ 在 $\Omega$ 的紧子集上正常收敛并全纯。它与初始 $L$ 相等，所以 $L$ 可全纯延拓穿过每个正实数点。
+
+进一步，对任意整数 $j\ge0$，
+
+$$
+I_z^{(j)}(s)=\frac{(-1)^j}{z^{j+1}}
+\int_0^\infty (z+t)^j e^{-s(1+t/z)}\Phi(z+t)^2\,dt.
+$$
+
+当 $s\ge0$ 为实数时，指数的模不超过一。取 $2N>j+1$，上述条带下降界给出
+
+$$
+|I_z^{(j)}(s)|\le C_{j,N}|z|^{-j-1}
+\int_0^\infty(1+\gamma+t)^{j-2N}\,dt
+\le C'_{j,N}(1+\gamma)^{-2N}.
+$$
+
+增大 $N$ 后可在所有 $s\ge0$ 上统一求和，故 $G^{(j)}(s)$ 在 $s\downarrow0$ 时具有有限右极限。这只给出端点的右侧光滑性，不主张 $G$ 在零点附近全纯。
+
+若 $q$ 最终非负，扣除紧初始区间后，
+
+$$
+L_0(s)=G(s)-\int_1^{R_0}e^{-sR}q(R)\,dR
+$$
+
+是非负尾部的初始 Laplace 变换。直接复用 Landau–Widder 的非负函数收敛横坐标定理：有限实收敛横坐标必为奇点。由于 $L_0$ 在每个正实数点附近均全纯，它的收敛横坐标不能为正，故定义积分对每个实数 $s>0$ 收敛。该标准定理在 Suzuki, arXiv:2209.12832v1, §3 中明确引用 Widder, *The Laplace Transform*, Chapter II, Theorem 5b；这里验证的是原 $f_R$ 的变换延拓，不把 Suzuki 的 screw-function 判据直接当成这一族的结论。
+
+于是
+
+$$
+(-1)^jL_0^{(j)}(s)=\int_{R_0}^\infty R^j e^{-sR}q(R)\,dR.
+$$
+
+令 $s\downarrow0$，左侧具有有限极限，右侧按非负性单调增加，得到全部 $q$ 尾矩有限。取 $j=n+3$ 即得 $\mathcal W$ 的陈述。若有最终下界 $\mathcal W(R)\ge cR^{-M}$，它本身给出最终非负，而任一整数 $n\ge M$ 的尾矩都会发散，矛盾。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 29. 同一固定伸缩轨道的零点检测与有符号目标
+
+本章继续使用第 19.3 节的唯一固定 bump 及第 28 节的完整标量 $\mathcal W(R)$。所讨论的量词是全部充分大的**实尺度**，不是整数尺度、一个离散子序列或一个有界支撑区间。正性仍是待证目标；下面给出检测能力的纸面桥，未作 Lean 核验。
+
+一形状伸缩与最终符号检测已有直接文献先例。[Suzuki, arXiv:2206.03682v4](https://arxiv.org/html/2206.03682v4), §3.4、式 (3.9)—(3.11)，给出 $\Delta_t(x)=\tfrac12(t-|x|)_+$ 是矩形函数的自相关，且 $W(\Delta_t)=\Psi(t)$、$\widehat\Delta_t(z)=(1-\cos(tz))/z^2$。其 Theorem 11.1 取 $\omega=0$，已经给出 $\Psi(t)$ 在全部充分大实数上的非负性等价于 RH。直接复用这份既有结果即可取得一般现象；它的矩形／三角形测试不等于本卷带三个精确 Fourier 零点的光滑 $f_R$，没有直接支付前几章所保留的原测试比较。下述推导只核对这份固定权重与实际有符号目标的接口。
+
+**候签定理 29.1（原固定族的最终非负检测）。** 对第 19.3 节定义的同一 $f_R$ 及经典完整 Weil 形式，
+
+$$
+\boxed{
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\exists R_0\ge1\ \forall R\in\mathbb R,
+\quad R\ge R_0\Longrightarrow Q_{\rm full}(f_R)\ge0.
+}
+$$
+
+此处不假设非临界零点具有全局最大实部，不截断零点和，也不将非临界谱项改成模平方。
+
+证明。沿用第 28 节的 $q(R)=R^{-3}\mathcal W(R)$、$z_\rho=\gamma-i(\beta-1/2)$、$p(z)=z^2(1+4z^2)^2$、$K=\phi*\phi$ 与水平射线积分 $I_z$。只取正纵坐标零点并计入重数。原 bump 在 $(-1/2,1/2)$ 严格为正，故 $K$ 为实偶光滑函数、支撑恰为 $[-1,1]$，且
+
+$$
+K(u)>0\qquad(-1<u<1).
+$$
+
+第 28 节的 Fubini 身份提供每个单项的另一个表达：
+
+$$
+F_z(s)=\int_{-1}^1
+ K(u)\frac{e^{-(s+izu)}}{s+izu}\,du,
+\qquad s\notin[-iz,iz].
+$$
+
+它在所示切段外全纯。在半平面 $\Re(s/z)>0$ 中，切段位于边界，$F_z$ 与 $I_z$ 均全纯；二者在实数 $s>1/2$ 上相等，恒等定理给出该半平面内的相等。对完整零点和仍保留水平表达的快速下降，不把所有单项的 Cauchy 表达直接作绝对求和。
+
+第一步：将完整变换接到正半平面的局部有限切段外。置
+
+$$
+\lambda_\rho=iz_\rho=\rho-1/2,\qquad
+\mathcal C=\bigcup_{\gamma>0}[-\lambda_\rho,\lambda_\rho],\qquad
+D=\{\Re s>0\}\setminus\mathcal C.
+$$
+
+设一个紧集满足 $\Re s\ge\delta>0$、$|\Im s|\le T$。若 $s=t\lambda_\rho$ 落在该紧集、$|t|\le1$，则 $|\Re\lambda_\rho|<1/2$ 强迫 $|t|\ge2\delta$，因而 $\gamma\le T/(2\delta)$。有界零点计数说明只有限多切段能遇到该紧集。于是 $\mathcal C$ 在正半平面相对闭，$D$ 为开集。
+
+同时，对所有充分大的 $\gamma$，该紧集上
+
+$$
+\Re(s/z_\rho)
+\ge \frac{\delta\gamma-T/2}{|z_\rho|^2}>0.
+$$
+
+因此在每个这样的局部窗口中，只需把有限多个低零点项写成 $F_z$，其余项用 $I_z$。第 28 节的固定条带下降界使高零点尾部正常收敛且全纯。不同窗口的表达在重叠处相等，因为替换的单项满足 $F_z=I_z$。它们定义了 $D$ 上单值全纯函数 $\widetilde G$，延拓原 $G$。
+
+$D$ 是连通的：从任一 $s\in D$ 沿 $t\mapsto ts$、$t\ge1$ 向外走，不会遇到同射线的切段，否则 $s$ 原本就属于那条切段；其他射线不相交。走到 $\Re s>1/2$ 后，所有切段已在左侧，而该右半平面连通。因此后续恒等定理可以使用同一个连通域，不能为不同端点独立选择解析分支。
+
+第二步：最终非负强迫真实 Laplace 变换在整个正半平面全纯。若 $q(R)\ge0$ 对所有 $R\ge R_0$ 成立，第 28 节所复用的 Landau–Widder 收敛横坐标定理给出
+
+$$
+\int_{R_0}^\infty e^{-sR}q(R)\,dR<\infty
+\qquad(s>0).
+$$
+
+其非负性与在较小正实数参数上的收敛，使定义积分在整个 $\Re s>0$ 正常收敛并全纯。加回有限初始区间，得到真实变换 $L(s)$ 在整个正半平面全纯。在 $\Re s>1/2$ 它等于 $\widetilde G$；由 $D$ 连通，在全部 $D$ 上相等。
+
+第三步：任一离线零点给出正半平面内不能消除的端点。若 RH 不成立，零点对称性给出 $\lambda_0=\rho_0-1/2=a_0+i\gamma_0$，其中 $a_0>0$、$\gamma_0>0$。在同一正射线上，零点只能是 $t\lambda_0$，且
+
+$$
+0<t<\frac1{2a_0}.
+$$
+
+因此该射线上纵坐标有界，零点只有有限多个。选此射线上模最大的零点，仍记为 $\lambda_0$。这里仅选**一条射线上的最外点**，没有假设全部零点中存在最右点。
+
+由局部有限性，可取以 $\lambda_0$ 为中心、闭包位于正半平面的圆盘 $B$，使它不遇到任何其他切段；较短同射线切段也已在圆盘外。同一个零点的全部重数合并。故在 $B$ 去掉末端切段后，
+
+$$
+\widetilde G(s)=H(s)+2m_{\rho_0}p(z_{\rho_0})F_{z_{\rho_0}}(s),
+$$
+
+其中 $H$ 在整个 $B$ 全纯。系数不为零，因为 $z_{\rho_0}$ 的实部为 $\gamma_0>0$，不可能是 $p$ 的根 $0,\pm i/2$。负纵坐标配对已通过 $p$ 和 $\Phi^2$ 的偶性成为前面的系数二，不能在这里再按相反符号抵消。
+
+使用整函数身份
+
+$$
+\frac{e^{-v}}v=\frac1v+E(v),\qquad E\text{ 整函数},
+$$
+
+得到 $F_{z_{\rho_0}}$ 的奇性部分
+
+$$
+\int_{-1}^1\frac{K(u)}{s+\lambda_0u}\,du
+=\frac1{\lambda_0}
+\int_{-1}^1\frac{K(u)}{s/\lambda_0-u}\,du,
+$$
+
+其中第二式用 $K$ 的偶性。其余项在整个 $s$ 平面全纯。这个 Cauchy 变换沿末端切段两侧的边界值之差，在 $s=\lambda_0t$、$t<1$ 且充分靠近一时为非零常数乘 $K(t)$。$K(t)>0$，故差不为零。虽然 $K$ 在端点平坦，任意靠近端点的内部仍具有非零跳跃，因此不能通过端点全纯延伸。
+
+第二步却要求它等于整个 $B$ 上全纯的 $(L-H)/(2m_{\rho_0}p(z_{\rho_0}))$。圆盘去掉从边界到端点的切段是连通的，这份身份同时约束切段两侧；两侧来自同一全纯延拓，跳跃必须为零，矛盾。因而不存在离线零点。
+
+反向直接复用经典 Weil 正性：RH 下所有 $z_\rho=\gamma$ 为实数，$p(\gamma)\ge0$ 且 $\Phi(R\gamma)$ 为实数，所以完整正常收敛的谱和逐项非负，所有实尺度 $R\ge1$ 均满足 $\mathcal W(R)\ge0$。$\square$
+
+**候签推论 29.2（同测试证书的尾部误差要求）。** 若原普通 Sonin 迹合同对同一实际 $f_R$ 及支撑完整的 $S_R$ 给出
+
+$$
+\mathcal W(R)=\sigma_{S_R}(f_R)-D_{{\rm lin},S_R}(f_R)-N_{S_R}(f_R),
+$$
+
+且实际单侧上估 $U_R\ge N_{S_R}(f_R)$ 在全部充分大的实尺度上提供非负证书，置
+
+$$
+\epsilon_R=U_R-N_{S_R}(f_R)\ge0,\qquad
+c_R=\sigma_{S_R}(f_R)-D_{{\rm lin},S_R}(f_R)-U_R\ge0.
+$$
+
+若这两项可测，则对每个整数 $n\ge0$，
+
+$$
+\int_{R_0}^\infty R^n\epsilon_R\,dR<\infty,
+\qquad
+\int_{R_0}^\infty R^nc_R\,dR<\infty.
+$$
+
+特别地，对任意 $n\ge0$，其 dyadic 总质量均为 $o(T^{-n})$。它们不能具有最终严格正的多项式下界；这里没有推出逐点超多项式下降，稀疏尖峰仍被允许。
+
+证明。精确账本是 $\mathcal W=\epsilon_R+c_R$，两份非负量均不超过 $\mathcal W$。复用候签定理 28.1 的尾矩即可。对 dyadic 区间用 $R\ge T$ 后再取尾积分趋于零，得到所述 $o$ 界。第 19.3 节的 $\|f_R\|_2^2\ge v^2/4>0$ 同时排除最终证书余量 $cR^{-M}\|f_R\|_2^2$，而一个只有 $O(R^{-M})$ 的误差上界并未被此论证反驳。$\square$
+
+回接物理几何时保留 $P_{S_R}=TPK_{S_R}^{-1}PT^*$ 的普通逆、$C_{S_R}=Q\mathcal F_{S_R}Q$ 及完整有符号项 $N=E^+-E^-$。候签定理 29.1 不需要假设 $C_{S_R}^2$ 为迹类，也不需要 $A_f$ 与 $C_{S_R}$ 交换；实际普通迹身份仍按第 18—21 节的原合同承担。
+
+这份桥将一个受限族的目标与原 RH 目标接上，但尚未给出 $\mathcal W(R)$ 的最终非负估计。下一步真正承重的是同一测试上的完整有符号比较，而不是再次命名检测判据、证明标准块代数或重做有限支撑正性。五模式地址和四相运输也尚未供应实际素数项的符号；FIB 到物理素数伸缩的交织，以及全部目标整数的 Robin 上界，仍各有未证义务。
+
+本章复用完整显式公式、Landau–Widder 和 Cauchy 边界跳跃等经典工具；一般的一形状最终非负判据复用 Suzuki 的上述三角形族。第 28—29 节提供的是原固定光滑族的接口推导，未认证世界原创性。所核对的 Suzuki 式 (5.15)、§3.4、Theorem 11.1 及 arXiv:2209.12832v1 的 §3，分别供应完整显式公式、既有三角形检测族与正性—收敛横坐标工具，没有在这些段落直接供应本卷的多项式加权光滑族命题。未找到该精确供应者只说明限定的检索范围，不能推出文献不存在，也不把变换形状本身计为新方法。
+
+## 追加锚（本行以下为增补区）
+
+## 30. 原测试族的正尺度平均与低零点贡献
+
+本章保留第 19.3 节的同一个 $\phi$、$f_R$，以及第 28 节的完整显式公式，不另换一个更容易取正的测试形状。所增加的是这一实际测试族的正权混合；Hardy 空间的 Poisson–Jensen 对数主控、凸 Jensen 不等式及有限高度零点资料均作为既有输入复用。下面的估计是纸面接口推导，未作 Lean 核验。
+
+**定义 30.1（黄金尺度带上的同测试平均）。** 令
+
+$$
+b=\varphi^3=2+\sqrt5,\qquad M=\int_{\mathbb R}\phi(x)\,dx>0,
+$$
+
+$$
+w(u)=\frac{\phi\bigl((u-(1+b)/2)/(b-1)\bigr)}{(b-1)M}.
+$$
+
+这个权重的支撑为 $[1,b]$，在内部严格为正，且 $\int_1^bw(u)\,du=1$。沿用 $q(R)=R^{-3}\mathcal W(R)$，定义
+
+$$
+\bar q(R)=\int_1^b w(u)q(uR)\,du,\qquad
+\bar{\mathcal W}(R)=R^3\bar q(R)
+=\int_1^bw(u)u^{-3}\mathcal W(uR)\,du.
+$$
+
+这里是同一来源族的正混合，不断言它等于某个单独 $f_R$ 的 Weil 值。因 $u^{-3}>0$，若每个被混合的完整形式非负，则平均非负；反向不能从平均非负推出每个尺度都非负。
+
+设 $K=\phi*\phi$，则
+
+$$
+\bar K(v)=\int_1^b\frac{w(u)}uK(v/u)\,du,
+\qquad
+\widehat{\bar K}(z)=\int_1^bw(u)\Phi(uz)^2\,du.
+$$
+
+$\bar K$ 为实偶光滑函数，支撑恰为 $[-b,b]$，且在 $(-b,b)$ 严格为正。该身份仍保留多项式因子 $p(z)=z^2(1+4z^2)^2$；复零点处依旧是解析平方。选择 $b=\varphi^3$ 只规定了尺度带宽，没有建立 FIB 来源递归与实际素数伸缩的交织。
+
+**候签引理 30.1（正尺度平均的实频率下界）。** 对原实偶非负 bump，设 $0<a_1<b_1$，$\Delta=b_1-a_1$。若可积权重 $w$ 在整个积分域非负，并在 $[a_1,b_1]$ 上几乎处处满足 $w\ge w_0>0$，则对每个实数 $r>0$，
+
+$$
+\int w(u)\Phi(ur)^2\,du
+\ge w_0M^2\Delta
+\exp\!\left(-\frac{\pi b_1^2r}{2\Delta}\right).
+$$
+
+证明。直接应用经典有界解析函数的 Poisson–Jensen 对数主控。置
+
+$$
+B(z)=e^{iz/2}\Phi(z)/M,
+\qquad \ell(t)=-\log|\Phi(t)/M|\ge0.
+$$
+
+在上半平面，$B$ 是非零的有界全纯函数且 $|B|\le1$：将它写成 $M^{-1}\int\phi(x)e^{iz(1/2-x)}dx$，指数中的 $1/2-x$ 属于 $[0,1]$。偶性与非负性又给出 $B(iy)\ge e^{-y/2}$，$y>0$。经典对数主控的准确方向是
+
+$$
+\frac y\pi\int_{\mathbb R}\frac{\ell(t)}{t^2+y^2}\,dt
+\le-\log|B(iy)|\le\frac y2.
+$$
+
+不需要 $B$ 无零点或为外函数。内零点及奇异内因子的损耗非负，不能把这个不等式错误地替换为无损耗等式。令 $y\downarrow0$ 并用非负函数单调收敛，再用偶性，得到
+
+$$
+\int_0^\infty\frac{\ell(t)}{t^2}\,dt\le\frac\pi4.
+$$
+
+$\Phi(0)=M$，且偶解析性给出 $\ell(t)=O(t^2)$；实零点处的对数按局部可积函数解释。故
+
+$$
+\int_{a_1}^{b_1}\ell(ur)\,du
+=\frac1r\int_{a_1r}^{b_1r}\ell(t)\,dt
+\le\frac{\pi b_1^2r}{4}.
+$$
+
+原 $\Phi$ 在实轴为实数。对 $e^{-2\ell}$ 用凸 Jensen 不等式，并保留整个积分域上的 $w\ge0$，即得陈述。$\square$
+
+该对数主控是经典 Jensen 公式／Hardy 内外因子分解的直接应用，可直接核对 [Khabibullin, arXiv:2005.00408v1](https://arxiv.org/html/2005.00408v1), §1.1、式 (1.1) 所重述的经典 Poisson–Jensen 公式。对本章有界解析函数作圆盘映射，再用 Jensen 与 Fatou 取得所需方向；不是建立新的 Hardy 理论。Ahlfors, *Complex Analysis*, §5.3.1 与 Rudin, *Real and Complex Analysis*, Theorem 17.17 是标准书籍来源，其原书原页未独立复核。
+
+**候签推论 30.2（已验证低零点部分的正指数下界）。** 令 $T\ge15$，假设所有 $0<\gamma\le T$ 的实际非平凡零点都在临界线上，且其中有一个实际零点的纵坐标 $\gamma_0\in[14,15]$。重数保持为实际 $m_\rho$。定义
+
+$$
+P_T(R)=2\sum_{0<\gamma\le T}m_\rho p(\gamma)
+\int_1^bw(u)\Phi(uR\gamma)^2\,du.
+$$
+
+则所有实数 $R\ge1$ 满足
+
+$$
+P_T(R)\ge e^{-120R}>0.
+$$
+
+证明。只保留所指定的一个实际临界零点，其余低零点项非负。对原 $\phi$，
+
+$$
+M\ge\frac12e^{-4/3},\qquad M\le1.
+$$
+
+第一式只在 $[-1/4,1/4]$ 积分。取 $[a_1,b_1]=[5/4,5/2]$，$\Delta=5/4$。由 $b=2+\sqrt5$ 得整个核心区间上
+
+$$
+\left|\frac{u-(1+b)/2}{b-1}\right|\le\frac37,
+\qquad
+w(u)\ge\frac{e^{-49/13}}{(b-1)M}\ge\frac{e^{-4}}{4M}.
+$$
+
+因此 $w_0M^2\Delta\ge(5/32)e^{-16/3}$。候签引理 30.1 取 $r=R\gamma_0$，并用 $m_{\rho_0}\ge1$、$\gamma_0\in[14,15]$，得到
+
+$$
+P_T(R)\ge\frac{5p(14)}{16}e^{-16/3}
+\exp\!\left(-\frac{75\pi}{2}R\right).
+$$
+
+其中 $p(14)=196\cdot785^2=120780100$，所以前因子大于一；$75\pi/2<120$。这些粗化可分别用 $e<3$ 与 $\pi<22/7$ 支付，给出陈述。$\square$
+
+这份下界使用实际低零点，不把非临界复谱项换成模平方；它也不依赖逐一计算 $T$ 以下所有变换值。正平均的作用是跨过 $\Phi$ 实轴上的孤立零点，以同一个固定低零点取得所有实尺度上的正贡献。指数下界与第 28 节排除的最终正多项式下界不同；完整高零点余项仍须另行支付。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 完整高零点尾界与有限实尺度正性
+
+本章把第 30 节的正贡献下界与同一平均的全部未知高零点尾部比较。使用已发表的有限高度验证，不重算零点，不把它升级为无界高度验证；零点计数亦直接复用现成显式界。新增纸面内容是这些输入对原 constrained 测试族的共同参数应用，未作 Lean 核验，也不认证文献原创性。
+
+**候签引理 31.1（原 bump 的全复方向衰减常数）。** 对第 19.3 节的原 $\phi$ 及 Fourier 约定 $\Phi(z)=\int\phi(x)e^{-izx}dx$，所有整数 $n\ge0$ 与所有 $z\in\mathbb C$ 满足
+
+$$
+\|\phi^{(n)}\|_1\le12^n(n!)^2,
+\qquad
+|\Phi(z)|\le4\exp\!\left(\frac{|\Im z|}{2}-\frac{\sqrt{|z|}}6\right).
+$$
+
+证明。在 $|x|<1/2$ 置 $d_x=1/2-|x|$。考虑以 $x$ 为心、半径 $d_x/2$ 的复圆盘。由
+
+$$
+\frac1{1-4\zeta^2}
+=\frac14\left(\frac1{1/2-\zeta}+\frac1{1/2+\zeta}\right),
+$$
+
+以及 $a>r$、$|h|\le r$ 时 $\Re(1/(a+h))\ge1/(a+r)$，离 $x$ 最近的端点贡献至少 $1/(6d_x)$，另一端点项的实部为正。因此
+
+$$
+\Re\frac1{1-4\zeta^2}\ge\frac1{6d_x}.
+$$
+
+圆盘不遇到分母的零点。Cauchy 导数估计给出
+
+$$
+|\phi^{(n)}(x)|\le n!\left(\frac2{d_x}\right)^n e^{-1/(6d_x)}
+\le12^n(n!)^2,
+$$
+
+其中第二步取 $t=1/(6d_x)$ 并用 $t^ne^{-t}\le n!$。第一份界在两个端点趋于零，零延拓平坦；支撑长度为一，所以同样的常数支付 $L^1$ 范数。对 $z\ne0$ 作 $n$ 次 Fourier 分部积分，端点项消失，得到
+
+$$
+|\Phi(z)|\le e^{|\Im z|/2}\frac{12^n(n!)^2}{|z|^n}.
+$$
+
+取 $n=\lfloor\sqrt{|z|/48}\rfloor$。由 $n!\le n^n$，右侧不超过 $e^{|\Im z|/2}4^{-n}$，而
+
+$$
+4^{-n}\le4\exp\!\left(-\frac{\log4}{\sqrt{48}}\sqrt{|z|}\right)
+\le4e^{-\sqrt{|z|}/6}.
+$$
+
+$n=0$ 及 $z=0$ 直接用 $|\Phi(z)|\le Me^{|\Im z|/2}$。$\square$
+
+标准 bump 的实频率鞍点渐近已有 [Johnson, arXiv:1508.04376v1](https://arxiv.org/html/1508.04376v1), §2 的直接分析；[Tlas, arXiv:2003.12364v2](https://arxiv.org/html/2003.12364v2) 的引理与定理还提供相关渐近及另一种具有正、单调 Fourier 变换的紧支撑构造。它们不在所述陈述中直接给出本章原固定 $\Phi$ 的全复方向显式常数；换成 Tlas 的函数会改变指定测试。本章使用标准 Cauchy/Gevrey 方法支付当前需要的常数，不把这些成熟方法当成新理论。在非实方向必须保留 $e^{|\Im z|/2}$；只有实轴衰减不足以支付未验证零点。
+
+**定义 31.1（按实际高度切开的完整余项）。** 假设 $T\ge5$ 以下的全部实际非平凡零点均在临界线上。对第 30 节的同一 $w$，按实际解析重数置
+
+$$
+\bar q(R)=P_T(R)+\mathcal R_T(R),
+$$
+
+$$
+\mathcal R_T(R)=2\sum_{\gamma>T}m_\rho p(z_\rho)
+\int_1^bw(u)\Phi(uRz_\rho)^2\,du,
+\qquad z_\rho=\gamma-i(\beta-1/2).
+$$
+
+$P_T$ 包含所有 $0<\gamma\le T$ 的零点；尾部包含所有更高零点，不把实际 $\beta$ 设成 $1/2$。实尺度上的完整和及余项均为实数，估计其绝对值时仍先保留解析平方再用三角不等式。
+
+令 $N_+(Y)$ 按重数计数 $0<\gamma\le Y$ 的全部零点。直接供应者是 [Trudgian, arXiv:1208.5846v2](https://arxiv.org/pdf/1208.5846v2), Corollary 1，PDF p.2：对 $Y\ge Y_0\ge e$，
+
+$$
+\left|N(Y)-\frac Y{2\pi}\log\frac Y{2\pi e}-\frac78\right|
+\le0.111\log Y+0.275\log\log Y+2.450+\frac{0.2}{Y_0}.
+$$
+
+取 $Y_0=e$，用 $\log\log Y\le\log Y$ 与 $\pi>3$，在 $Y\ge5$ 上粗化为
+
+$$
+N_+(Y)\le\left(\frac Y6+4\right)\log Y
+\le Y\log Y.
+$$
+
+原文对 $0<\gamma<Y$ 计数；从非零点高度取右极限即可保留含端点的约定。该作者稿的定理与量词已核读，不重新证明计数界，也不宣称它与出版版逐字一致。更尖锐的计数常数不是这份宽包络所需的新输入。
+
+**候签命题 31.2（同平均的完整未知尾部）。** 在上述计数界下，若 $R\ge1$ 且 $X=\sqrt{RT}/3\ge28$，则
+
+$$
+|\mathcal R_T(R)|\le6000\,T^7\log T
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RT}}3\right).
+$$
+
+证明。对 $\gamma\ge1$，$|\Im z_\rho|<1/2$ 给出
+
+$$
+|p(z_\rho)|\le45\gamma^6.
+$$
+
+候签引理 31.1 对所有 $1\le u\le b$ 给出
+
+$$
+|\Phi(uRz_\rho)|^2
+\le16\exp\!\left(\frac{bR}{2}-\frac{\sqrt{R\gamma}}3\right).
+$$
+
+由于 $w\ge0$、$\int w=1$，先得到完整尾部绝对界
+
+$$
+|\mathcal R_T(R)|
+\le1440e^{bR/2}
+\sum_{\gamma>T}m_\rho\gamma^6e^{-\sqrt{R\gamma}/3}.
+$$
+
+置 $\alpha=\sqrt R/3$、$F(t)=t^6e^{-\alpha\sqrt t}$，则 $F$ 在 $[T,\infty)$ 上递减。对实际含重数计数作 Stieltjes 分部积分，保留高度 $T$ 的头尾约定：
+
+$$
+\begin{aligned}
+\sum_{\gamma>T}m_\rho F(\gamma)
+&=-N_+(T)F(T)+\int_T^\infty N_+(t)(-F'(t))\,dt\\
+&\le\frac\alpha2\int_T^\infty t^{13/2}\log t\,e^{-\alpha\sqrt t}\,dt.
+\end{aligned}
+$$
+
+$T$ 处全部零点重数在 $P_T$ 中，不在余项中；末端 $N_+(t)F(t)$ 趋于零。取 $y=\alpha\sqrt t$，上述积分等于
+
+$$
+T^7\int_X^\infty
+\left(\frac yX\right)^{14}
+\left(\log T+2\log\frac yX\right)e^{-y}\,dy.
+$$
+
+再写 $y=X+s$。因为 $X\ge28$，
+
+$$
+(1+s/X)^{14}\le e^{s/2},\qquad
+\log(1+s/X)\le s/X,
+$$
+
+所以该值不超过
+
+$$
+T^7e^{-X}\left(2\log T+\frac8X\right)
+\le4T^7\log T\,e^{-X}.
+$$
+
+$1440\cdot4=5760\le6000$，给出陈述。这份可和界也支付有限尺度区间上的求和、平均交换；没有以有限零点截断代替完整显式公式。$\square$
+
+**候签定理 31.3（原族平均在有限实尺度带上的正性）。** 采用已发表的实际零点资料：所有 $0<\gamma\le H$ 的零点在临界线上，其中
+
+$$
+H=3\,000\,175\,332\,800,
+$$
+
+且有一个实际临界零点 $\gamma_0\in[14,15]$。则第 30 节的同一平均对所有实数 $1\le R\le H/250000$ 满足纸面估计
+
+$$
+\boxed{\bar q(R)\ge\frac12e^{-120R}>0,}
+\qquad
+\bar{\mathcal W}(R)\ge\frac{R^3}{2}e^{-120R}.
+$$
+
+上端点是 $12\,000\,701.3312$；不只是在这个区间中抽取整数或样本尺度。
+
+所用验证高度直接来自 [Platt–Trudgian, arXiv:2004.09765v1](https://arxiv.org/html/2004.09765v1), Theorem 1。这是该文以区间算术和零点总数核对取得的有限验证；本章复用其结论，没有重跑计算。[Odlyzko 的公开零点表](https://www-users.cse.umn.edu/~odlyzko/zeta_tables/) 的 `zeros1` 首项为 $14.134725142$，表索引说明误差不超过 $3\cdot10^{-9}$，因此供应所需宽区间 $[14,15]$；其 [MathWorld 表项](https://mathworld.wolfram.com/RiemannZetaFunctionZeros.html) 给出相同首项。这里只复用既有资料，不新增首零点认证。
+
+证明。候签推论 30.2 及候签命题 31.2 对同一谱分解给出
+
+$$
+\bar q(R)\ge e^{-120R}-A_H
+\exp\!\left(\frac{bR}{2}-\frac{\sqrt{RH}}3\right),
+\qquad A_H=6000H^7\log H.
+$$
+
+无需扫描尺度即可支付剩余常数：$H<e^{30}$、$\log6000<9$、$\log\log H<4$ 给出 $\log A_H<230$，同时 $\sqrt H/12>100000$、$b<5$。若 $1\le R\le H/250000$，则 $\sqrt{RH}\ge500R$，且 $X\ge28$。拆开 $1/3=1/4+1/12$，尾界与正下界之比的对数满足
+
+$$
+\begin{aligned}
+\log\frac{A_He^{bR/2-\sqrt{RH}/3}}{e^{-120R}}
+&=\log A_H+\left(120+\frac b2\right)R
+-\frac{\sqrt{RH}}4-\frac{\sqrt{RH}}{12}\\
+&<230+\frac{245}{2}R-125R-100000\\
+&<-\log2.
+\end{aligned}
+$$
+
+所以完整未知余项的绝对值小于正下界的一半，得到陈述。$\square$
+
+**定义 31.2（同一支撑完整切面上的物理消费者）。** 回接第 18—21 节的普通 Sonin 迹合同时，对固定 $R$，选一份包含所有实际素数 $p\le e^{bR}$ 的共同支撑完整集合 $S_R$，使整个 $1\le u\le b$ 上的 $f_{uR}$ 均使用这同一集合。定义
+
+$$
+\bar\sigma_R=\int_1^bw(u)u^{-3}\sigma_{S_R}(f_{uR})\,du,
+$$
+
+并以相同权重定义 $\bar D_{{\rm lin},R}$、$\bar N_R$。在原普通迹合同及这些积分的存在条件下，精确身份是
+
+$$
+\bar{\mathcal W}(R)=\bar\sigma_R-\bar D_{{\rm lin},R}-\bar N_R,
+\qquad \bar N_R=\overline{E^+}_R-\overline{E^-}_R.
+$$
+
+因此候签定理 31.3 对这同一实际正混合供应的是有限尺度内的共同有符号余量。仍使用 $P_{S_R}=TPK_{S_R}^{-1}PT^*$ 的普通逆；不假设 $C_{S_R}^2$ 为迹类，也不假设 $A_f$ 与 $C_{S_R}$ 交换。不能为正迹、线性迹和角能量分别优化不同 $S$ 后把所得最佳值合在一起；也没有把这些条件性的普通迹接口当成已取得全域解析证明。
+
+固定 $H$ 的以上绝对尾界含 $e^{bR/2}$，其与正下界之比的对数为
+
+$$
+\log A_H+(120+b/2)R-\sqrt{RH}/3.
+$$
+
+该表达在 $R\to\infty$ 时趋于正无穷。这说明当前比较不能支付全部充分大尺度，不说明实际余项变成负值。要延伸至无界 $R$，仍须取得实际未知零点尾部的更强共同有符号估计，或另一份能支付全部尺度的独立信息；不能把 $H\to\infty$ 当成合法已验证输入。
+
+这份有限正平均不推出每个 $q(uR)$ 非负，不推出第 29 节所需的全部充分大实尺度正性，也不证明 RH、Robin 或 FIB 到实际素数作用的交织。Suzuki 的已有一形状最终符号判据、经典 Poisson–Jensen/Gevrey 方法、Trudgian 的计数界与 Platt–Trudgian 的零点验证均归各自来源；本章只填原测试族此前缺少的一个有限尺度共同估计接口，不把改换平均或重述文献结果当成新判据。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 原 bump 的精确双端点射线与全射线余项
+
+**定义 32.1（保持原测试的端点坐标）。** 保留第 30—31 节的 $\phi$、$\Phi$、$b=2+\sqrt5$、$M=\int\phi$、$w$ 与 $p(z)=z^2(1+4z^2)^2$。置 $h=1/4$，并定义
+
+$$
+F(x)=\int_0^1 e^{-xv-h/v-h/(1-v)}\,dv,
+\qquad \Phi(s)=e^{is/2}F(is).
+$$
+
+在严格锥域 $D=\{x:\Im x>|\Re x|\}$ 上，沿所示方向从零出发定义
+
+$$
+\begin{aligned}
+Q_-(x)&=\int_{0}^{\infty e^{-i\pi/4}}
+ e^{-xv-h/v-h/(1-v)}\,dv,\\
+Q_+(-x)&=\int_{0}^{\infty e^{i\pi/4}}
+ e^{xv-h/v-h/(1-v)}\,dv.
+\end{aligned}
+$$
+
+两条射线均避开 $v=1$。所有平方根和分数幂取主支；$Q_+(-x)$ 的参数 $-x$ 使用下半平面的主幅角。
+
+**候签定理 32.1（精确双端点分解及扇区余项）。** 以上两个射线积分在 $D$ 上绝对收敛、全纯，且
+
+$$
+F(x)=Q_-(x)+e^{-x}Q_+(-x).
+\tag{32.1}
+$$
+
+令 $f(v)=e^{-h/(1-v)}$、$a_j=f^{(j)}(0)/j!$。对固定整数 $N\ge1$，在闭扇区 $\pi/3\le\arg x\le2\pi/3$ 上有
+
+$$
+\begin{aligned}
+Q_-(x)&=\sum_{j=0}^{N-1}2a_j(h/x)^{(j+1)/2}
+ K_{j+1}(2\sqrt{hx})+R_N^-(x),\\
+Q_+(-x)&=\sum_{j=0}^{N-1}2a_j(h/(-x))^{(j+1)/2}
+ K_{j+1}(2\sqrt{-hx})+R_N^+(x),
+\end{aligned}
+\tag{32.2}
+$$
+
+其中 $K_\nu$ 为标准修正 Bessel 函数，余项是相应全纯射线积分，满足
+
+$$
+\begin{aligned}
+|R_N^-(x)|&\le2C_N(h/|x|)^{(N+1)/2}
+ K_{N+1}(2\Re\sqrt{hx}),\\
+|R_N^+(x)|&\le2C_N(h/|x|)^{(N+1)/2}
+ K_{N+1}(2\Re\sqrt{-hx}),\\
+C_N&=2^N(e^{2h}+3e^{4h}).
+\end{aligned}
+\tag{32.3}
+$$
+
+特别地，令 $C_0=\sqrt{\pi/2}\,e^{-1/4}>0$，则均匀有
+
+$$
+\begin{aligned}
+Q_-(x)&=C_0x^{-3/4}e^{-\sqrt x}
+ (1+O(|x|^{-1/2})),\\
+Q_+(-x)&=C_0(-x)^{-3/4}e^{-\sqrt{-x}}
+ (1+O(|x|^{-1/2})).
+\end{aligned}
+\tag{32.4}
+$$
+
+陈述中的均匀性包含 Fourier 方向 $\arg x=\pi/2$；它不要求 $F(x)$ 的两个端点贡献之和有非零下界。
+
+证明。写 $x=A+iB$，其中 $B>|A|$。第一条射线上 $\Re(xv)=(A+B)|v|/\sqrt2>0$，第二条上 $\Re(-xv)=(B-A)|v|/\sqrt2>0$；零附近均有 $\Re(h/v)>0$。其余端点因子在射线上有界，给出绝对收敛及紧子域上的全纯性。
+
+为了保留交叉射线的方向，取 $L>1$，截断点为 $U=L-iL$、$V=1-L-iL$。链 $0\to U\to V\to1\to0$ 在 $c=(1-i)/2$ 交叉。把它分成上方三角形 $0\to c\to1\to0$ 和下方三角形 $c\to U\to V\to c$，分别用 Cauchy 定理；两者内部均没有奇点。零端点的小弧满足 $-\pi/4\le\arg v\le0$，另一端点以 $1-v$ 为坐标满足 $0\le\arg(1-v)\le\pi/4$，弧积分由 $O(\varepsilon e^{-h/(\sqrt2\varepsilon)})$ 控制而趋于零。
+
+底边写成 $v=t-iL$，$1-L\le t\le L$。其长度为 $2L-1$，并有 $\Re(xv)\ge(B-|A|)L$、$|v|,|1-v|\ge L$，故底边模长不超过
+
+$$
+(2L-1)e^{-(B-|A|)L+2h/L}\longrightarrow0.
+$$
+
+返回边 $V\to1$ 经 $v=1-y$ 恰好成为 $e^{-x}$ 乘以从零出发的上射线积分，符号为正。于是得到 (32.1)。严格锥域边界不包括在此字面射线积分陈述内。
+
+在所示闭扇区上，将第一条射线转至 $\arg v=-\arg x/2\in[-\pi/3,-\pi/6]$，第二条转至 $\arg v=-\arg(-x)/2\in[\pi/6,\pi/3]$。转动楔域不含 $v=1$；大弧的线性相位实部有固定正余量，小弧仍由 $e^{-h/v}$ 支付。因此两个转动均合法。在这些整条射线上 $|1-v|\ge1/2$，所以 $|f(v)|\le e^{2h}$。
+
+Cauchy 系数界在 $|v|=3/4$ 上给出 $|a_j|\le e^{4h}(4/3)^j$。令 $r_N(v)=f(v)-\sum_{j<N}a_jv^j$。当 $|v|\le1/2$ 时，几何级数给出
+
+$$
+|r_N(v)|\le3e^{4h}(4/3)^N|v|^N.
+$$
+
+当 $|v|\ge1/2$ 时，使用全射线的 $f$ 界及有限多项式界，得到
+
+$$
+\frac{|r_N(v)|}{|v|^N}
+\le2^Ne^{2h}+e^{4h}\sum_{j<N}(4/3)^j2^{N-j}
+\le2^N(e^{2h}+3e^{4h})=C_N.
+$$
+
+这控制了整条射线，不把增长的重标度尾部丢掉。
+
+对 $y=x$ 或 $y=-x$，在相应转动射线上置 $v=\sqrt{h/y}\,t$，$t>0$。使用已有的 Bessel 核身份
+
+$$
+\int_0^\infty t^j e^{-k(t+t^{-1})}\,dt=2K_{j+1}(2k),
+\qquad \Re k>0,
+$$
+
+即可得到 (32.2)；此核身份是 [DLMF 10.32.9](https://dlmf.nist.gov/10.32.E9) 的标准变量代换。对 $r_N$ 的同一积分取模，令 $k=\sqrt{hy}$，得到 (32.3)。因为 $\Re\sqrt{hy}\ge\sqrt{h|y|}/2$，已有的大正实参数 $K_\nu$ 界支付
+
+$$
+R_N(y)=O_N\bigl(|y|^{-N/2-3/4}
+ e^{-2\Re\sqrt{hy}}\bigr).
+$$
+
+再对 $N=1$ 的主项使用标准闭扇区渐近式 [DLMF 10.40.2](https://dlmf.nist.gov/10.40.E2)，其所需扇区含 $\arg\sqrt{hy}\in[-\pi/3,\pi/3]$，得到 (32.4)。$\square$
+
+上述 Bessel 核与渐近式归各自来源；[Paris, arXiv:2112.02928v1, §6](https://arxiv.org/pdf/2112.02928v1) 供应相符的一端系数系列。这里的承重补充是原有限积分的精确交叉射线分解和全射线余项控制，不能由其单端点渐近系列直接替代。来源接口及 [Temme, DOI 10.1137/0521013](https://doi.org/10.1137/0521013) 的实参数限制见 [既有文献注](../../../Library/Weil/tlas2020bump.md)。这些接口尚不控制有限外层积分的符号，也不控制实际带重数零点总和。
+
+## 追加锚（本行以下为增补区）
+
+## 33. 原正伸缩平均的横向符号区域与实际剩余谱
+
+**定义 33.1（联合横向参数与精确外层分解）。** 对 $\gamma>0$、$\delta\in\mathbb R$、$R>0$，置
+
+$$
+z=\gamma-i\delta,\quad T=R\gamma,\quad
+\eta=\frac{R\delta}{\sqrt T},\quad x=iRz=\eta\sqrt T+iT,
+$$
+
+并保留同一个平均
+
+$$
+A_R(z)=\int_1^bw(u)\Phi(uRz)^2\,du,
+\qquad
+w(u)=\frac1{dM}e^{-a/(u-1)-a/(b-u)},
+\quad d=b-1,\ a=d/4.
+$$
+
+置 $c=\sqrt{d/2}$。当 $T$ 充分大且 $\eta$ 有界时，候签定理 32.1 给出精确的三项分解
+
+$$
+\begin{aligned}
+A_R(z)&=S_+(x)+C(x)+S_-(x),\\
+S_+(x)&=\int_1^bw(u)e^{ux}Q_-(ux)^2\,du,\\
+C(x)&=2\int_1^bw(u)Q_-(ux)Q_+(-ux)\,du,\\
+S_-(x)&=\int_1^bw(u)e^{-ux}Q_+(-ux)^2\,du.
+\end{aligned}
+\tag{33.1}
+$$
+
+这些是解析平方；只有其合法模长上界使用绝对值。
+
+**候签定理 33.1（统一横向区域内的加权实部正性）。** 若固定 $\eta_0>0$ 满足
+
+$$
+\eta_0<c,\qquad
+b\eta_0<\sqrt{2b}+c-\sqrt2,\qquad
+\eta_0\sqrt{b/2}<\pi/2,
+\tag{33.2}
+$$
+
+则存在仅依赖 $\eta_0$ 和原固定 bump 的有限 $T_0$，使所有 $\gamma>0$、$R>0$、$\delta\in\mathbb R$ 同时满足 $T=R\gamma\ge T_0$ 和 $|\eta|\le\eta_0$ 时，
+
+$$
+\Re\bigl(p(z)A_R(z)\bigr)>0.
+\tag{33.3}
+$$
+
+这里没有要求 $z$ 来自零点，也没有声称单个复数项本身为正。阈值是存在性阈值，未给出数值认证。
+
+证明。先取 $0\le\eta\le\eta_0$，负参数由复共轭处理。由于 $\delta/\gamma=\eta/\sqrt T$，原多项式有精确比值
+
+$$
+\frac{p(z)}{p(\gamma)}
+=(1-i\eta/\sqrt T)^2
+\left(\frac{1+4\gamma^2(1-i\eta/\sqrt T)^2}
+{1+4\gamma^2}\right)^2
+=1+O_{\eta_0}(T^{-1/2}).
+\tag{33.4}
+$$
+
+其均匀性来自 $4\gamma^2/(1+4\gamma^2)\in(0,1)$，特别有 $|p(z)|\le C p(\gamma)$，不让常数依赖任意大的或任意小的 $\gamma$。
+
+对全部实数 $u\in[1,b]$ 使用 (32.4)。主根给出
+
+$$
+\sqrt x+\sqrt{-x}
+=\sqrt{2T}-i\eta/\sqrt2+O_{\eta_0}(T^{-1/2}),
+$$
+
+而 $x^{-3/4}(-x)^{-3/4}=T^{-3/2}(1+O_{\eta_0}(T^{-1/2}))$。于是 (33.4) 支付
+
+$$
+p(z)Q_-(ux)Q_+(-ux)
+=p(\gamma)C_0^2u^{-3/2}T^{-3/2}e^{-\sqrt{2uT}}
+\bigl(e^{i\eta\sqrt{u/2}}+O_{\eta_0}(T^{-1/2})\bigr).
+\tag{33.5}
+$$
+
+第三个严格条件给出全实区间上的统一正余弦余量 $\cos(\eta_0\sqrt{b/2})>0$。因此充分大 $T$ 时，交叉项被积函数的加权实部在整个区间内非负，且大于正主包络的固定倍数。
+
+为取得不依赖外层鞍点展开的下界，仅保留 $u=1+t$、$T^{-1/4}\le t\le2T^{-1/4}$。当 $2T^{-1/4}<d/2$ 时，
+
+$$
+w(1+t)\ge(dM)^{-1}e^{-aT^{1/4}-1/2},
+\qquad
+\sqrt{2uT}\le\sqrt{2T}+\sqrt2\,T^{1/4}.
+$$
+
+其长度为 $T^{-1/4}$，故存在统一 $C_1>0$ 使
+
+$$
+\Re\bigl(p(z)C(x)\bigr)
+\ge C_1p(\gamma)T^{-7/4}
+ e^{-\sqrt{2T}-(a+\sqrt2)T^{1/4}}.
+\tag{33.6}
+$$
+
+下面估计完整的 $p(z)S_\pm(x)$，包括精确射线函数中的全部余项；不在原实区间上积分内层误差的绝对值。
+
+固定 $\ell=1/8$。把 $S_+$ 的外层路径变形为上半平面的有限多边形
+
+$$
+1\ \longrightarrow\ 1+\ell e^{i\pi/4}
+\ \longrightarrow\ b-\ell e^{-i\pi/4}
+\ \longrightarrow\ b,
+\tag{33.7}
+$$
+
+把 $S_-$ 的路径变形为其下半平面共轭路径。中段是高度 $\pm\ell/\sqrt2$ 的有限水平线段。其内部与原区间之间没有奇点；在截去端点的小弧之后使用 Cauchy 定理。端点坐标 $u-1$ 或 $b-u$ 的幅角均介于 $0$ 与 $\pm\pi/4$ 之间，因而 $e^{-a/(u-1)}$ 或 $e^{-a/(b-u)}$ 给出 $O(\varepsilon e^{-a/(\sqrt2\varepsilon)})$ 的消失弧界。其余因子对固定 $x$ 在该端点附近有界。
+
+整个有限路径上 $\Re u\ge1$、$|\arg u|<\pi/12$；当 $T$ 充分大，$\arg x$ 任意接近 $\pi/2$，因此 $ux$ 始终落在 (32.4) 的共同闭扇区内，$-ux$ 落在对应下扇区内。没有跨越 $u=0$ 或主根分支，也没有将外层轮廓延伸到无限射线。
+
+在任一端点 $r\in\{1,b\}$ 的长度参数 $0<t\le\ell$ 上，(32.4) 及固定紧路径上的平方根 Lipschitz 界给出
+
+$$
+|Q_-(ux)|^2\le C T^{-3/2}
+ e^{-\sqrt{2rT}+C\sqrt T\,t},
+\tag{33.8}
+$$
+
+$Q_+(-ux)$ 也满足同一界。这里 $\eta$ 对端点主根的修正为 $O(1)$，已吸收于固定 $C$。
+
+在匹配的上、下路径上，大线性相位的模长衰减至少为
+
+$$
+e^{\pm r\eta\sqrt T-(T-\eta_0\sqrt T)t/\sqrt2}.
+$$
+
+该端点的奇异权重为 $e^{-a/(\sqrt2t)}$，另一端点权重在该有限短射线上有界。结合 (33.4)、(33.8)，带 $p(z)$ 的端点积分被
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{(\pm r\eta-\sqrt{2r})\sqrt T}
+ \int_0^\infty e^{-A_Tt-B/t}\,dt,
+\quad
+A_T=T/\sqrt2-C_2\sqrt T,\quad B=a/\sqrt2
+\tag{33.9}
+$$
+
+控制，充分大 $T$ 时 $A_T>0$。这里的无限正实积分只是一份非负上界，不是外层复轮廓的无限延伸。已有 Bessel 核身份及其大正实参数界给出
+
+$$
+\begin{aligned}
+\int_0^\infty e^{-A_Tt-B/t}\,dt
+&=2\sqrt{B/A_T}\,K_1(2\sqrt{A_TB})\\
+&\le C_3T^{-3/4}e^{-c\sqrt T},
+\end{aligned}
+\tag{33.10}
+$$
+
+因为 $2\sqrt{A_TB}=c\sqrt T+O(1)$。有限中段的模长则不超过
+
+$$
+C p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T};
+$$
+
+权重在该段有界，内层主根的正实部允许丢弃其额外衰减。合并四个端点和两个中段，得到完整加权界
+
+$$
+\begin{aligned}
+|p(z)S_+(x)|+|p(z)S_-(x)|
+\le{}& C_4p(\gamma)T^{-9/4}
+ \sum_{\substack{r\in\{1,b\}\\\varepsilon\in\{-1,1\}}}
+ e^{(\varepsilon r\eta-\sqrt{2r}-c)\sqrt T}\\
+&+C_5p(\gamma)T^{-3/2}
+ e^{-\ell T/\sqrt2+b\eta_0\sqrt T}.
+\end{aligned}
+\tag{33.11}
+$$
+
+前两个严格条件给出固定 $g>0$，使四个端点指数均不超过 $-(\sqrt2+g)\sqrt T$。因此 (33.11) 与 (33.6) 之比由
+
+$$
+C T^{-1/2}e^{-g\sqrt T+(a+\sqrt2)T^{1/4}}
++ C T^{1/4}e^{-\ell T/\sqrt2+(b\eta_0+\sqrt2)\sqrt T+(a+\sqrt2)T^{1/4}}
+\longrightarrow0
+$$
+
+统一控制。充分大 $T$ 时，同端点项无法抵消交叉项的正实部，证明 (33.3)。由于 $\phi$ 实且偶、$p$ 有实系数，负 $\delta$ 的完整项是正 $\delta$ 项的共轭，故同一结论适用于 $|\eta|\le\eta_0$。$\square$
+
+**候签推论 33.2（具体横向常数）。** $\eta_0=3/5$ 满足 (33.2)，且证明中的端点指数余量可取 $g=3/140$。
+
+证明。$4<b<17/4$ 给出 $c>6/5$ 和 $\sqrt{2b}>14/5$；另有 $\sqrt2<10/7$。于是
+
+$$
+\sqrt{2b}+c-\sqrt2>18/7,
+\qquad 3b/5<51/20,
+\qquad 18/7-51/20=3/140.
+$$
+
+第一端点的余量 $c-3/5>3/5>3/140$。最后，$(3/5)\sqrt{b/2}<9/10<\pi/2$。这些严格有理比较证明三条件及统一余量。$\square$
+
+**定义 33.2（实际受控谱与新剩余谱）。** 使用原实际零点、实际解析重数以及固定已验证高度 $H=3000175332800$。定义反射不变的集合
+
+$$
+\begin{aligned}
+\mathcal G_H(R)&=\{\rho:\gamma>H,\ |\beta-1/2|\le(3/5)\sqrt{\gamma/R}\},\\
+\mathcal U_H(R)&=\{\rho:\gamma>H,\ |\beta-1/2|>(3/5)\sqrt{\gamma/R}\}.
+\end{aligned}
+$$
+
+按原第 30—31 节的相同约定置
+
+$$
+E_{\rm controlled}(R)=2\sum_{\rho\in\mathcal G_H(R)}
+ m_\rho p(z_\rho)A_R(z_\rho),
+\qquad
+E_{\rm newrem}(R)=2\sum_{\rho\in\mathcal U_H(R)}
+ m_\rho p(z_\rho)A_R(z_\rho).
+\tag{33.12}
+$$
+
+外面的二倍保留负纵坐标对称；集合包含正纵坐标上全部水平反射项，未把复解析平方替换成模平方。
+
+**候签命题 33.3（实际符号分解与严格剩余高度）。** 当 $R\ge\max(1,T_0/H)$ 时，原共同可和界支付 (33.12)，且
+
+$$
+\bar q(R)=P_H(R)+E_{\rm controlled}(R)+E_{\rm newrem}(R),
+\qquad E_{\rm controlled}(R)\ge0.
+\tag{33.13}
+$$
+
+每个新剩余项满足严格关系
+
+$$
+H<\gamma<\frac{25}{9}R(\beta-1/2)^2<\frac{25}{36}R.
+\tag{33.14}
+$$
+
+因此 $E_{\rm newrem}$ 对每个固定 $R$ 是有限实际带重数的和。若能独立证明其对所有充分大实数 $R$ 满足
+
+$$
+E_{\rm newrem}(R)\ge-P_H(R),
+\tag{33.15}
+$$
+
+则原完整平均最终非负；(33.15) 本身仍待证明。
+
+证明。所有 $\gamma>H$ 的项均有 $T=R\gamma\ge T_0$。零点 $\beta=1/2$ 的项按原因子计为 $2m_\rho p(\gamma)A_R(\gamma)$；$\beta\ne1/2$ 的正纵坐标水平反射对具有相同实际重数，原因子汇合为 $4m_\rho\Re(p(z_\rho)A_R(z_\rho))$。候签定理 33.1 与推论 33.2 使所选贡献非负。原 strip/count/Fourier majorant 保证固定 $R$ 下绝对可和，故这些反射配对及集合分解合法。实际所选集合为空时只能断言零贡献，不断言严格正。
+
+新补集的定义给出 $\gamma<(25/9)R(\beta-1/2)^2$；实际临界带 $|\beta-1/2|<1/2$ 给出最后的严格界。高度 $H$ 的项仍属于头部，横向等号仍属于受控集合。由 (33.13) 可知 (33.15) 是充分的同对象预算条件。$\square$
+
+本节承重推导为原测试的仓内综合估计，复用第 32 节的精确余项与标准 Bessel 界；未将未命中文献等同于原创认证。该推导保留有限外层的全部连接段和同一实际谱，只在受限横向区域提供符号信息。既有文献注中的 $E_{\rm safe}$、$E_{\rm rem}$、$B_H$ 及其绝对预算仍按原定义使用；$E_{\rm newrem}$ 是这里独立定义的新补集，不能静默改称旧 $E_{\rm rem}$。
+
+一个假设存在的固定离线零点满足 $|\eta|=|\beta-1/2|\sqrt{R/\gamma}\to\infty$，故最终离开本节受控区域。候签命题 33.3 没有供应 (33.15)，没有取得 RH 或 Robin 的全称不等式，也没有建立 FIB 递归与实际素数作用的算术交织。黄金值 $b$ 在这里仍只是原测试的固定伸缩上端点。
+
+## 追加锚（本行以下为增补区）
+
+## 34. 原横向符号区域的显式阈值
+
+**定义 34.1（统一误差与比较参数）。** 保留第 32—33 节的全部函数、分支、权重与有限轮廓，固定 $\eta_0=3/5$。置 $q=\sqrt T$、$v=T^{1/4}$、$\tau=\eta/q$，并定义正比较量
+
+$$
+L(T)=\frac{p(\gamma)}{80dM}T^{-7/4}
+ e^{-\sqrt{2T}-(5/2)T^{1/4}}.
+$$
+
+**候签定理 34.1（无未定渐近常数的横向阈值）。** 对每个 $\gamma>0$、$R>0$、$\delta\in\mathbb R$，若 $T=R\gamma\ge10^{12}$ 且 $|\eta|=|R\delta|/\sqrt T\le3/5$，则原平均满足纸面估计
+
+$$
+\Re\bigl(p(z)A_R(z)\bigr)>\tfrac12L(T)>0,
+\qquad z=\gamma-i\delta.
+$$
+
+因此第 33 节可使用显式阈值 $T_0=10^{12}$。这只量化原测试的参数条件，不增加实际零点资料。
+
+证明。先取 $0\le\eta\le3/5$，负位移由原共轭身份处理。以下 $q\ge10^6$、$v\ge1000$，常数对全部 $\gamma>0$ 均匀。外层归一化 $M$ 在最终比值中精确消去。引用的分析前置仍为候签定理 32.1 的精确射线余项、候签定理 33.1 中的有限轮廓变形及 [DLMF 10.32.9](https://dlmf.nist.gov/10.32.E9) 的标准 $K_\nu$ 积分；不从 $O(\cdot)$ 记号推断阈值。
+
+先把已引用的 Bessel 核与全射线余项量化。
+
+For $\Re\zeta>0$, use
+$$
+K_\nu(\zeta)=\int_0^\infty e^{-\zeta\cosh s}\cosh(\nu s)\,ds.
+$$
+The substitution $t=\sinh(s/2)$ gives
+$$
+K_1(\zeta)=2e^{-\zeta}\int_0^\infty e^{-2\zeta t^2}
+ \frac{1+2t^2}{\sqrt{1+t^2}}\,dt.
+$$
+For real $t\ge0$,
+$$
+0\le\frac{1+2t^2}{\sqrt{1+t^2}}-1\le2t^2.
+$$
+The complex Gaussian integral supplies the leading term, and taking absolute values only in the error yields
+$$
+\left|\frac{K_1(\zeta)}{\sqrt{\pi/(2\zeta)}e^{-\zeta}}-1\right|
+\le\frac{1}{2|\zeta|\cos^{3/2}(\arg\zeta)}
+\le\frac{2}{|\zeta|}
+\quad (|\arg\zeta|\le\pi/3).
+\tag{34.1}
+$$
+The first inequality follows explicitly from
+$4\int_0^\infty t^2e^{-2\Re\zeta\,t^2}dt
+=\sqrt\pi/(2\Re\zeta)^{3/2}$.
+
+The same substitution for real $s>0$, with
+$\cosh(2r)=1+8t^2+8t^4$, gives
+$$
+K_2(s)\le\sqrt{\frac\pi{2s}}e^{-s}
+ \left(1+\frac2s+\frac{3}{2s^2}\right)
+\le2\sqrt{\frac\pi{2s}}e^{-s}\qquad(s\ge4).
+\tag{34.2}
+$$
+Here $1/\sqrt{1+t^2}\le1$ is used only for this upper bound.
+
+For either specified upper or lower ray function, write $\mathcal Q(y)$ for $Q_-(y)$ or $Q_+(y)$, respectively. On its sector $\pi/3\le|\arg y|\le2\pi/3$, (32.2) with $N=1$ reads
+$$
+\mathcal Q(y)=e^{-1/4}y^{-1/2}K_1(\sqrt y)+\mathcal R(y),
+\quad
+|\mathcal R(y)|\le\frac{C_1}{2|y|}K_2(\Re\sqrt y),
+\quad C_1=2(e^{1/2}+3e)<22.
+$$
+If $|y|\ge64$, then $\Re\sqrt y\ge\sqrt{|y|}/2\ge4$. The relative remainder against $C_0y^{-3/4}e^{-\sqrt y}$ is at most
+$$
+\frac{C_1e^{1/4}}{\sqrt{|y|}\sqrt{\cos(\arg y/2)}}
+<\frac{44}{\sqrt{|y|}},
+$$
+using $e^{1/4}<4/3$ and $\sqrt2<3/2$. Adding (34.1),
+$$
+\mathcal Q(y)=C_0y^{-3/4}e^{-\sqrt y}(1+\epsilon(y)),
+\qquad |\epsilon(y)|\le\frac{50}{\sqrt{|y|}}.
+\tag{34.3}
+$$
+This is a bound for the exact ray function, including the full specified ray remainder.
+
+再控制原多项式的统一比值和交叉项的实部。
+
+With $\theta=4\gamma^2/(1+4\gamma^2)\in(0,1)$,
+$$
+P:=\frac{p(z)}{p(\gamma)}=(1-i\tau)^2[1+\theta(-2i\tau-\tau^2)]^2.
+$$
+For $0\le\tau\le1/10$, set $A=-2i\tau-\tau^2$. Since $|A|\le3\tau$,
+$$
+|P-1|\le(1+3\tau)^3-1\le12\tau\le8/q,
+\qquad |P|\le2.
+\tag{34.4}
+$$
+For the norm bound, write $D=(1-i\tau)^2$ and $B_\theta=(1-\theta)+\theta D$. Then $|D|=1+\tau^2$ and $|B_\theta|\le1+\tau^2$, hence $|P|\le(1+\tau^2)^3<2$. These estimates do not depend on $\gamma$.
+
+For real $u\in[1,b]$, use the exact principal-branch identities
+$$
+x^{-3/4}(-x)^{-3/4}=T^{-3/2}(1-i\tau)^{-3/2},
+\quad
+\sqrt x+\sqrt{-x}=\sqrt{2T}\sqrt{1-i\tau}.
+$$
+Along $1-it$, derivative bounds give
+$$
+|(1-i\tau)^{-3/2}-1|\le3\tau/2\le1/q,
+\quad
+\left|\sqrt{1-i\tau}-1+i\tau/2\right|\le\tau^2/8.
+$$
+Consequently, writing $r=\sqrt{1-i\tau}-1+i\tau/2$,
+$$
+|\sqrt{2uT}\,r|\le\frac{\sqrt{2b}\eta_0^2}{8q}<1/q,
+\quad
+|e^{-\sqrt{2uT}r}-1|\le2/q.
+$$
+Together with (34.3)–(34.4), these are five multiplicative errors with coefficients $8,1,2,50,50$, summing to $111$. Hence
+$$
+p(z)Q_-(ux)Q_+(-ux)
+=p(\gamma)C_0^2u^{-3/2}T^{-3/2}e^{-\sqrt{2uT}}
+ e^{i\eta\sqrt{u/2}}(1+\rho_u),
+\qquad
+|\rho_u|\le e^{111/q}-1\le222/q<1/100.
+\tag{34.5}
+$$
+The elementary inequality $e^t-1\le2t$ is used for $0\le t\le1/2$. Since
+$\eta\sqrt{u/2}<9/10$,
+$$
+\Re[e^{i\eta\sqrt{u/2}}(1+\rho_u)]
+\ge1-\tfrac12(9/10)^2-1/100>1/4.
+$$
+This holds on the entire real integration interval, so restriction to a short interval discards only nonnegative contributions.
+
+Retain $u=1+t$, $v^{-1}\le t\le2v^{-1}$. Here $t<d/2$,
+$$
+w(1+t)\ge(dM)^{-1}e^{-av-1/2},
+\quad \sqrt{2uT}\le\sqrt{2T}+\sqrt2\,v.
+$$
+Using $C_0^2>3/4$, $b^{-3/2}>1/15$, $e^{-1/2}>1/2$, and $a+\sqrt2<5/2$, the exact cross term in (33.1) satisfies
+$$
+\Re[p(z)C(x)]\ge L(T):=
+\frac{p(\gamma)}{80dM}T^{-7/4}
+ e^{-\sqrt{2T}-(5/2)T^{1/4}}>0.
+\tag{34.6}
+$$
+
+在原有限轮廓上保留共同扇区和端点模长。
+
+Use exactly the specified upper and lower polygons with $\ell=1/8$. Everywhere on them and their intervening deformation regions, $1\le\Re u\le b$ and $|\Im u|\le\ell/\sqrt2<1/8$. Thus
+$$
+|\arg u|<1/8,\quad
+|\arg x-\pi/2|=\arctan\tau<1/16,
+\quad 1/8+1/16<\pi/6.
+$$
+Therefore $ux$ and $-ux$ lie in the sectors of (34.3), and $|ux|\ge T$. The existing exact deformation applies with these quantified sector margins.
+
+At either endpoint $r\in\{1,b\}$, parametrize each adjacent diagonal by $|u-r|=t\in(0,\ell]$. The compared upper principal roots lie in the first quadrant, and the lower roots in the fourth, so the denominator in the difference-of-roots formula has norm at least $\sqrt{rT}$. As $|x|\le2T$ and $\eta_0\sqrt b<3/2$,
+$$
+|\sqrt{ux}-\sqrt{riT}|\le2\sqrt T\,t+3/2,
+$$
+with the identical estimate for the lower roots. From (34.3), $C_0^2<2$, $(1+50/\sqrt T)^2<4$, and $e^3<27$,
+$$
+|Q_-(ux)|^2,\ |Q_+(-ux)|^2
+\le216T^{-3/2}
+ e^{-\sqrt{2rT}+4\sqrt T\,t}.
+\tag{34.7}
+$$
+Both reciprocal endpoint coordinates of the weight have positive real part on the finite paths. At a diagonal endpoint one singular factor has modulus $e^{-a/(\sqrt2t)}$, while the other has modulus at most one. Thus no additional weight constant is omitted.
+
+四个对角端点贡献使用同一非负上界。
+
+The matching linear phase has modulus at most
+$$
+e^{\pm r\eta\sqrt T-(T-\eta_0\sqrt T)t/\sqrt2}.
+$$
+Combining (34.4), (34.7), and the weight bound, each weighted endpoint piece is at most
+$$
+\frac{432p(\gamma)}{dM}T^{-3/2}
+ e^{(\pm r\eta-\sqrt{2r})\sqrt T}
+ \int_0^\infty e^{-A_Tt-B/t}\,dt,
+\quad A_T=T/\sqrt2-5\sqrt T,\quad B=a/\sqrt2.
+\tag{34.8}
+$$
+The coefficient $5$ pays $4+\eta_0/\sqrt2$. Extending the nonnegative majorant to infinity is solely an upper bound; it does not extend the outer complex path.
+
+Here $A_T\ge T/(2\sqrt2)>0$, $B<1$, so
+$\sqrt{B/A_T}<2T^{-1/2}$. For $s_T=2\sqrt{A_TB}$,
+$$
+s_T=c\sqrt T\sqrt{1-5\sqrt2/\sqrt T}
+\ge c\sqrt T-5\sqrt2c>c\sqrt T-12>\sqrt T.
+$$
+The last inequalities use $6/5<c<3/2$ and $\sqrt T\ge10^6$. By the exact positive-real Bessel identity and (34.1),
+$$
+\begin{aligned}
+\int_0^\infty e^{-A_Tt-B/t}\,dt
+&=2\sqrt{B/A_T}K_1(s_T)\\
+&\le16e^{12}T^{-3/4}e^{-c\sqrt T}.
+\end{aligned}
+\tag{34.9}
+$$
+In detail, $K_1(s_T)\le2\sqrt{\pi/(2s_T)}e^{-s_T}\le4T^{-1/4}e^{12-c\sqrt T}$, and $2\sqrt{B/A_T}\le4T^{-1/2}$.
+
+The specified exact rational comparisons for $\eta_0=3/5$ give
+$$
+\pm r\eta-\sqrt{2r}-c\le-\sqrt2-g,
+\qquad g=3/140.
+$$
+Adding all four endpoint pieces gives the bound
+$$
+E_{\mathrm{end}}(T)\le
+\frac{27648e^{12}p(\gamma)}{dM}T^{-9/4}
+ e^{-(\sqrt2+g)\sqrt T}.
+\tag{34.10}
+$$
+
+两个有限水平连接段也全部计入。
+
+On each connecting segment, $|w(u)|\le1/(dM)$, its length is less than $d<4$, and the imaginary height has magnitude
+$k=1/(8\sqrt2)$. The positive real part of the principal root allows its extra exponential decay to be discarded. From (34.3)–(34.4), the two weighted connecting pieces together satisfy
+$$
+E_{\mathrm{mid}}(T)\le
+\frac{128p(\gamma)}{dM}T^{-3/2}
+ e^{-kT+b\eta_0\sqrt T}.
+\tag{34.11}
+$$
+This includes both complete finite connecting segments.
+
+最后对每个 $T\ge10^{12}$ 作严格比较。
+
+Divide (34.10) by (34.6). Since
+$2211840e^{12}<2211840\cdot3^{12}=1175462461440<2\cdot10^{12}$,
+$$
+\frac{E_{\mathrm{end}}(T)}{L(T)}
+<2\cdot10^{12}T^{-1/2}
+ e^{-(3/140)\sqrt T+(5/2)T^{1/4}}.
+$$
+For $v=T^{1/4}\ge1000$, $3/140>1/50$ and $(5/2)v\le v^2/400$, so its exponent is at most
+$-7v^2/400\le-17500$. Therefore
+$$
+E_{\mathrm{end}}(T)/L(T)<2\cdot10^6e^{-17500}<1/4,
+\tag{34.12}
+$$
+where the final comparison already follows from $e>2$, $17500>23$, and $2^{23}>8\cdot10^6$.
+
+For the connecting pieces, $k>1/12$ and $b\eta_0+\sqrt2<5$, so
+$$
+\frac{E_{\mathrm{mid}}(T)}{L(T)}
+\le10240T^{1/4}
+ e^{-T/12+5\sqrt T+(5/2)T^{1/4}}
+\le10240T^{1/4}e^{-T/24}.
+$$
+The second inequality uses $(5/2)T^{1/4}\le\sqrt T$ and $6\sqrt T\le T/24$, both valid here. The last displayed function decreases for $T>6$. At $10^{12}$, it is bounded by
+$10240000e^{-10^{12}/24}<1/4$, since $10^{12}/24>26$ and $2^{26}>40960000$. Hence
+$$
+E_{\mathrm{mid}}(T)/L(T)<1/4
+\quad\text{for every }T\ge10^{12}.
+\tag{34.13}
+$$
+The exact decomposition now gives
+$$
+\Re[p(z)A_R(z)]
+\ge\Re[p(z)C(x)]-E_{\mathrm{end}}(T)-E_{\mathrm{mid}}(T)
+>\tfrac12 L(T)>0.
+$$
+所有常数对 $\gamma>0$ 和 $|\eta|\le3/5$ 均匀，得到所述结论。$\square$
+
+
+本节的标准 Bessel 核归其来源；承重应用是把原测试的全部误差、有限端点与连接段同时接到一个明确阈值。它没有供应第 33 节对全部充分大实尺度所需的实际新余项预算。
+
+
+**候签推论 34.2（同一实际平均的有限实尺度区间）。** 复用第 31 节的既有实际验证高度 $H=3000175332800$、临界线上固定头部及第 30 节的正头部下界。则同一个原平均对每个实数
+
+$$
+1\le R\le\frac{36}{25}H=4\,320\,252\,479\,232
+$$
+
+满足纸面估计
+
+$$
+\bar q(R)\ge P_H(R)\ge e^{-120R}>0,
+\qquad
+\bar{\mathcal W}(R)\ge R^3e^{-120R}>0.
+\tag{34.14}
+$$
+
+证明。所有实际高零点 $\gamma>H$ 满足
+
+$$
+T=R\gamma>H>10^{12},\qquad
+|\eta|=|\beta-1/2|\sqrt{R/\gamma}
+<\tfrac12\sqrt{\frac{36H}{25\gamma}}<\frac35.
+$$
+
+因此候签定理 34.1 支付全部高零点项的横向符号条件；这里没有把 $H$ 以上的零点假设为临界零点。它们全部属于定义 33.2 的 $\mathcal G_H(R)$，$\mathcal U_H(R)$ 为空。第 31 节的实际谱可和界及候签命题 33.3 的原反射重数合同给出 $E_{\rm controlled}\ge0$ 和 $E_{\rm newrem}=0$。再直接应用候签推论 30.2 的既有头部下界，得到 (34.14)。$\square$
+
+此应用扩大的是固定解析测试的可支付实尺度区间，复用的实际零点验证高度仍为 $H$。它没有计算或认证新的零点高度；尺度上端点有限，不能代替第 29 节对所有充分大实数 $R$ 的符号判据。对超过该尺度区间的新剩余谱，条件 (33.15) 仍未证明，RH、Robin 及 FIB 算术交织仍不由此结算。
+
+## 追加锚（本行以下为增补区）
+
+## 35. 全实际横向区域的外层复相位与逐项包络余项
+
+**定义 35.1（固定小角度与无界横向伸缩）。** 保留第 32—34 节的原函数、主分支、$H$、$a=d/4$ 与 $C_0=\sqrt{\pi/2}e^{-1/4}$。令
+
+$$
+T>0,\qquad |\tau|\le\frac1{2H},\qquad
+k=1-i\tau,\qquad x=iTk,\qquad
+c=\sqrt{2T}\,k^{1/2},\qquad \kappa=c/2.
+$$
+
+对实际参数，$\tau=\delta/\gamma$、$T=R\gamma$，而 $\eta=\tau\sqrt T$。这里的小角度条件不限制 $\eta$；特别是固定非零 $\tau$ 时，$|\eta|\to\infty$。
+
+以 $S_{+1}=S_+$、$S_{-1}=S_-$ 记 (33.1) 的两项。对 $\varepsilon\in\{1,-1\}$，置 $y_\varepsilon=\varepsilon x$，并定义
+
+$$
+\begin{aligned}
+B&=\frac{C_0^2\sqrt\pi\,a^{1/4}}{dM},\\
+L_\varepsilon(T,\tau)
+&=B e^{-1/4}y_\varepsilon^{-3/2}(-y_\varepsilon)^{-3/4}
+\exp\!\left(
+y_\varepsilon-2\sqrt{y_\varepsilon}
+-2\sqrt{-ay_\varepsilon}-i\varepsilon\sqrt a
+\right),\\
+U_\varepsilon(T,\tau)
+&=B e^{-1/4}b^{-3/2}y_\varepsilon^{-9/4}
+\exp\!\left(
+by_\varepsilon-2\sqrt{by_\varepsilon}
+-2\sqrt{ay_\varepsilon}+\sqrt{a/b}
+\right),\\
+X(T,\tau)
+&=2B e^{-1/4+a/4}T^{-3/2}k^{-3/2}\kappa^{-3/4}
+\exp\!\left(-c-2\sqrt{a\kappa}\right).
+\end{aligned}
+\tag{35.1}
+$$
+
+这些主项均非零；其模长只作为独立的正误差包络使用。$L_\varepsilon$ 和 $U_\varepsilon$ 分别来自 $u=1$ 和 $u=b$，$X$ 来自交叉项在 $u=1$ 的外层边界尺度。
+
+**候签定理 35.1（含 Fourier 方向的统一加法余项）。** 存在仅依赖原固定函数与 $H$ 的有限常数 $K,T_1>0$，使 $T\ge T_1$、$|\tau|\le1/(2H)$ 时，精确外层分解满足
+
+$$
+\begin{aligned}
+\left|S_\varepsilon(x)-L_\varepsilon-U_\varepsilon\right|
+&\le KT^{-1/2}\bigl(|L_\varepsilon|+|U_\varepsilon|\bigr),\\
+|C(x)-X|
+&\le KT^{-1/4}|X|.
+\end{aligned}
+\tag{35.2}
+$$
+
+因而
+
+$$
+\begin{aligned}
+A_R(z)&=X+\sum_{\varepsilon=\pm1}(L_\varepsilon+U_\varepsilon)
++\mathcal E(T,\tau),\\
+|\mathcal E(T,\tau)|
+&\le K\left[
+T^{-1/4}|X|+
+T^{-1/2}\sum_{\varepsilon=\pm1}(|L_\varepsilon|+|U_\varepsilon|)
+\right].
+\end{aligned}
+\tag{35.3}
+$$
+
+所有相位都保留 $\tau$ 的完整表达式；没有使用 $\eta$ 有界的展开，也没有用可能抵消的五项之和作余项分母。
+
+证明。以下的均匀常数均独立于 $T,\tau$。由于 $H>500$，全部参数满足 $|\tau|<1/1000$。主分支精确给出
+
+$$
+\sqrt x+\sqrt{-x}=\sqrt{2T}\,k^{1/2},\qquad
+x^{-3/4}(-x)^{-3/4}=T^{-3/2}k^{-3/2}.
+\tag{35.4}
+$$
+
+先说明证明内复用的 Bessel 核及矩估计。对 $\Re\zeta>0$，第 32 节使用的已有核身份与 [DLMF 10.40.2](https://dlmf.nist.gov/10.40.E2) 给出
+
+$$
+\begin{aligned}
+I_0(\zeta)
+&=\int_0^\infty e^{-\zeta(v+v^{-1})}\,dv
+=2K_1(2\zeta)
+=\sqrt{\pi/\zeta}\,e^{-2\zeta}(1+O(|\zeta|^{-1})),\\
+I_1(\zeta)
+&=\int_0^\infty(v-1)e^{-\zeta(v+v^{-1})}\,dv
+=2\bigl(K_2(2\zeta)-K_1(2\zeta)\bigr)
+=O\!\left(|\zeta|^{-3/2}e^{-2\Re\zeta}\right).
+\end{aligned}
+\tag{35.5}
+$$
+
+第二式使用两份 $K$ 展开的相同首项相消。这里需要的 $\zeta$ 全在固定闭扇区 $|\arg\zeta|<\pi/3$ 内，故所引渐近式的常数均匀。对 $s\to+\infty$，恒等式 $v+v^{-1}-2=(v-1)^2/v$ 在 $[1/2,2]$ 给出 Gaussian 界，在其补集给出严格相位间隔。因此
+
+$$
+\int_0^\infty(v-1)^2e^{-s(v+v^{-1})}\,dv
+=O(s^{-3/2}e^{-2s}).
+\tag{35.6}
+$$
+
+具体地，中心区间上 $(v-1)^2/v\ge(v-1)^2/2$；$v\ge2$ 和 $v\le1/2$ 的尾部通过 $v+v^{-1}\ge5/2$ 及其线性或倒数增长支付。(35.5)—(35.6) 只是已有核方法在本证明中的应用，不作为独立新结论。
+
+先处理 $S_\varepsilon$。固定 $\ell=1/8$。令 $y=y_\varepsilon$，从 $u=1$ 出发的短边取
+
+$$
+u=1+t,\qquad
+t=r e^{-i\arg(-y)/2},\qquad 0<r\le\ell;
+$$
+
+进入 $u=b$ 的短边取
+
+$$
+u=b-t,\qquad
+t=r e^{-i\arg y/2},\qquad \ell\ge r>0.
+$$
+
+用一条直线连接两条短边的非奇异端点。$\varepsilon=1$ 时此多边形在上半平面，$\varepsilon=-1$ 时在下半平面。所有点满足 $\Re u\ge1$、$|\arg u|<\pi/12$，且 $yu$ 保持在第 32 节对应的共同闭扇区。因为这些角度与各自分支切线有固定间隔，$\sqrt{yu}=\sqrt y\sqrt u$ 合法。
+
+先在完整的精确射线函数上进行 Cauchy 变形。两端小弧按第 33 节的端点衰减趋零；变形域没有穿过 $u=0,1,b$ 或射线函数的定义边界。故连接段及两条短边共同等于原积分。连接段满足
+
+$$
+\varepsilon\Im u\ge1/12,
+\qquad
+\Re(yu)\le-T/12+bT/1000<-T/16.
+$$
+
+两个权重倒数的实部均非负，内层平方根的实部为正。于是整条连接段的贡献为 $O(T^{-3/2}e^{-T/16})$。而 $|L_\varepsilon|\ge c_1T^{-9/4}e^{-T/1000-c_2\sqrt T}$，所以这份完整连接贡献统一为 $o(T^{-1/2}|L_\varepsilon|)$。
+
+在左端取 $q=-y$，在右端取 $q=y$，并在相应短边置
+
+$$
+t=\sqrt{a/q}\,v,\qquad
+0<v<V_T=\ell\sqrt{|q|/a},\qquad
+\zeta=\sqrt{aq}.
+$$
+
+线性相位和奇异端点权重成为精确核 $e^{-\zeta(v+v^{-1})}$。$|\zeta|\asymp\sqrt T$、$\Re\zeta\asymp|\zeta|$，其中的比较常数统一。此时才在已经变形的短边上使用 (32.4) 的全纯余项；其相对误差为 $O(T^{-1/2})$。
+
+在 $v\in[1/2,2]$，左端的内层指数满足
+
+$$
+-2\sqrt{y(1+t)}
+=-2\sqrt y-i\varepsilon\sqrt a\,v+O(T^{-1/2}),
+$$
+
+因为 $\sqrt y/\sqrt{-y}=i\varepsilon$。右端则满足
+
+$$
+-2\sqrt{y(b-t)}
+=-2\sqrt{by}+\sqrt{a/b}\,v+O(T^{-1/2}).
+$$
+
+其余权重在两个端点分别给出 $e^{-a/d}=e^{-1/4}$；幂因子给出 $1$ 和 $b^{-3/2}$，误差同为 $O(T^{-1/2})$。因此中心区间的振幅分别是这些固定因子乘以
+
+$$
+g_1(v)=e^{-i\varepsilon\sqrt a\,v},\qquad
+g_b(v)=e^{\sqrt{a/b}\,v},
+$$
+
+加上统一的 $O(T^{-1/2})$ 误差。
+
+这里不只估计中心 Gaussian。在整个短边上，平方根的 Lipschitz 界给出相对振幅模长 $\le C e^{Cv}$。令 $s=\Re\zeta$。当 $s\ge16C$、$v\notin[1/2,2]$ 时，直接比较两端点和单调性可得
+
+$$
+s(v+v^{-1})-Cv
+\ge(2+1/8)s+\frac{s}{32}(v+v^{-1}).
+\tag{35.7}
+$$
+
+它控制了直到 $V_T$ 的全部增长尾部。将核乘以至多一次的 Taylor 多项式延伸到无穷时，超过 $V_T$ 的部分也由此指数间隔支付。
+
+只在 $[1/2,2]$ 将 $g_r(v)$ 写成 $g_r(1)+g_r'(1)(v-1)+O((v-1)^2)$，再用 (35.5)—(35.6)。一次项的积分和二次余项相对于正首项包络均为 $O(|\zeta|^{-1})=O(T^{-1/2})$。全纯内层误差在同一鞍点射线上取模，其积分也为该包络的 $O(T^{-1/2})$；没有把它搬回原实区间取模。Jacobian 与核首项合成
+
+$$
+\sqrt{a/q}\,\sqrt{\pi/\zeta}
+=\sqrt\pi\,a^{1/4}q^{-3/4}.
+$$
+
+代入 $g_1(1),g_b(1)$ 及上述固定因子，分别得到 $L_\varepsilon,U_\varepsilon$，并支付 (35.2) 的第一行。
+
+再处理交叉项。由 (32.4)、(35.4)，在所需共同扇区内均匀有
+
+$$
+Q_-(ux)Q_+(-ux)
+=C_0^2u^{-3/2}T^{-3/2}k^{-3/2}
+e^{-c\sqrt u}(1+O(T^{-1/2})).
+\tag{35.8}
+$$
+
+仍先变形精确函数。以 $t=u-1$ 为坐标，近零路径取 $t=r e^{-i\arg c/2}$、$0<r\le\ell$，随后沿 $|t|=\ell$ 的短弧返回正实轴，再沿 $[\ell,d]$ 到另一个端点。当 $\tau=0$ 时短弧退化，路径就是原实轴。零附近小弧仍消失；所有路径均位于所需全纯扇区，无分支穿越。
+
+在半径 $\ell$ 的连接弧上，$|\arg t|<1/4000$、$|\arg c|<1/2000$，且
+
+$$
+\Re\!\left[c(\sqrt{1+t}-1)\right]
+\ge(\ell/4)\Re c.
+$$
+
+这可由 $\sqrt{1+t}-1=t/(\sqrt{1+t}+1)$、分母模长小于 $3$ 及这些小角度界直接得到。实段 $t\ge\ell$ 的同一差额至少为 $(\ell/3)\Re c$。权重模长不超过 $1$，包括 $t=d$ 的消失端点。因此全部连接弧和剩余实段的贡献为
+
+$$
+O\!\left(T^{-3/2}e^{-(1+\ell/4)\Re c}\right),
+$$
+
+统一指数小于 $|X|$，因为 $\Re c\asymp\sqrt T$ 而 $\Re\sqrt{a\kappa}\asymp T^{1/4}$。
+
+在第一条短边置
+
+$$
+t=\sqrt{a/\kappa}\,v,\qquad
+\zeta=\sqrt{a\kappa},\qquad
+0<v<\ell\sqrt{|\kappa|/a}.
+$$
+
+保留 $e^{-c}$ 后，核仍是 $e^{-\zeta(v+v^{-1})}$。在 $[1/2,2]$，
+
+$$
+-c\left(\sqrt{1+t}-1-t/2\right)
+=av^2/4+O(T^{-1/4}).
+$$
+
+另外 $(1+t)^{-3/2}=1+O(T^{-1/4})$，$e^{-a/(d-t)}=e^{-1/4}(1+O(T^{-1/4}))$。因此中心振幅是 $g_0(v)+O(T^{-1/4})$，其中
+
+$$
+g_0(v)=e^{-1/4+av^2/4}.
+$$
+
+这只是一份中心区间展开，不将 $e^{av^2/4}$ 延伸到无穷积分。对整条短边，$|t|\le\ell$ 的解析平方根恒等式给出
+
+$$
+\left|c(\sqrt{1+t}-1-t/2)\right|
+\le |c||t|^2/4
+\le(\ell/2)|\zeta|v
+<\frac{\Re\zeta}{15}v.
+$$
+
+所以真实振幅在全短边上的增长可被 $e^{sv/15}$ 支付，$s=\Re\zeta$。与 (35.7) 相同的端点比较给出其两侧尾部的固定指数间隔，包含全部增长的重标度范围。
+
+只把 $g_0$ 在 $v=1$ 的一次 Taylor 多项式通过核延伸到无穷。此时 $|\zeta|\asymp T^{1/4}$，(35.5)—(35.6) 给出 $O(T^{-1/4})$ 的包络相对误差；中心振幅误差及 (35.8) 的内层全纯误差也由同一射线核支付。代入 $g_0(1)=e^{-1/4+a/4}$、Jacobian 及 (35.8)，得到 $X$ 和 (35.2) 的第二行。合并精确三项分解即得 (35.3)。$\square$
+
+本节的承重接口是精确内层余项经过有限外层轮廓后，在整个小角度区域取得五份保留复相位的独立包络。Bessel 核与其渐近式复用所引来源；统一局部 Laplace 方法亦可按 [Neuschel 的参数接口](../../../Library/Weil/neuschel2012uniformlaplace.md) 直接调用；[既有文献注](../../../Library/Weil/tlas2020bump.md) 中单端点严格扇区公式不替代这里的外层轮廓与余项义务。
+
+**定义 35.2（同一实际剩余和的显式误差成本）。** 对第 33 节的 $\mathcal U_H(R)$，从每份正纵坐标水平反射对中取 $\delta_\rho=\beta-1/2>0$ 的代表，保留实际重数 $m_\rho$，代表集记为 $\mathcal U_H^+(R)$。当 $R\ge\max(1,T_1/H)$ 时，每个代表满足定义 35.1 的小角度条件。置
+
+$$
+\begin{aligned}
+\mathcal A_\rho(R)
+&=X(T_\rho,\tau_\rho)+
+\sum_{\varepsilon=\pm1}(L_\varepsilon(T_\rho,\tau_\rho)+U_\varepsilon(T_\rho,\tau_\rho)),\\
+\mathcal G_\rho(R)
+&=T_\rho^{-1/4}|X|+
+T_\rho^{-1/2}\sum_{\varepsilon=\pm1}(|L_\varepsilon|+|U_\varepsilon|),
+\end{aligned}
+$$
+
+其中 $T_\rho=R\gamma$、$\tau_\rho=\delta_\rho/\gamma$，第二行所有项在同一参数处取值。实际有限和满足
+
+$$
+\left|
+E_{\rm newrem}(R)-
+4\sum_{\rho\in\mathcal U_H^+(R)}m_\rho
+\Re\bigl(p(z_\rho)\mathcal A_\rho(R)\bigr)
+\right|
+\le4K\sum_{\rho\in\mathcal U_H^+(R)}
+m_\rho|p(z_\rho)|\mathcal G_\rho(R).
+\tag{35.9}
+$$
+
+这是 (35.3) 在实际重数及反射约定下的直接应用，未用其他零点配置替代实际联合实现。要通过这份误差成本支付 (33.15)，仍需将同一主项总和的下界与右端总成本、$P_H(R)$ 作联合比较，覆盖每个充分大实数 $R$。逐项误差趋零没有证明右端为 $o(P_H)$，所保留主项的实部也没有统一符号。本节没有供应这份实际联合比较，未得到 RH、Robin 的全称结论或 FIB 与实际素数作用的算术运输。
+
+## 追加锚（本行以下为增补区）

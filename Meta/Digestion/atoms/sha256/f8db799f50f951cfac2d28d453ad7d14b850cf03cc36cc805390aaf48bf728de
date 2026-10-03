@@ -1,0 +1,17 @@
+**Theorem 3 (finite translation stabilizers).** Let $G$ be a finite
+abelian group, let $S\subseteq G$ be finite, and write
+$H=\{t\in G:S+t=S\}$. For every $t\in H$,
+$|S|t=0$, and $|H|$ divides $|S|$. If $|H|=|S|$ and $p\in S$, then
+$S=p+H$. In particular, if $|S|=3$ and $H$ contains a nonzero element
+$t$, then $|H|=3$ and
+$S=\{p,p+t,p+2t\}$ for every $p\in S$.
+
+**Proof.** Summing the elements of $S+t=S$ gives
+$\sum_{p\in S}p=|S|t+\sum_{p\in S}p$, proving the first assertion.
+The action of $H$ on $S$ is free, because a translation fixing one
+point is zero. Its orbits therefore all have $|H|$ elements, proving
+the divisibility. The orbit of $p$ is contained in $S$ and has
+$|H|=|S|$ elements, so it is all of $S$. When $|S|=3$, the divisibility
+and $t\ne0$ force $|H|=3$; the three powers $0,t,2t$ exhaust $H$.
+$\square$
+

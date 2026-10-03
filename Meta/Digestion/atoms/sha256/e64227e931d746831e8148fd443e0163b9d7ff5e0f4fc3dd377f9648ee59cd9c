@@ -1,0 +1,19 @@
+**Theorem 69.4 (rational Galois action and actual conjugation).**
+For every $J\geq0$, $N_J/\mathbb Q$ is Galois. There is an
+automorphism $c\in\operatorname{Gal}(N_J/\mathbb Q)$ satisfying
+$c(x)=\overline x$ in the designated complex embedding for all
+$x\in N_J$, with $c^2=1$ and $c\ne1$. For every
+$\sigma\in\operatorname{Gal}(N_J/E)$, regard $\sigma$ also as a
+rational automorphism. Then
+
+$$
+c\sigma c=\sigma^{-1}.
+$$
+
+Proof. The field contains every conjugate of each radical and
+of $\omega$, so it is a splitting field. Conjugation fixes the
+positive roots and inverts $\omega$. The same-root cubic
+coordinate action consequently changes every exponent to its
+negative under conjugation; the generators determine the whole
+automorphism.
+

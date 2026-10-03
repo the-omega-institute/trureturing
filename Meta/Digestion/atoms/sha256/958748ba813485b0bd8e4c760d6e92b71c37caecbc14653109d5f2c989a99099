@@ -1,0 +1,17 @@
+**命题 43.17（没有选定 tight 锁时的正确中心）。** 若不具备命题43.16的选定 tight 槽，则有限仿射包络仍给出
+
+$$
+ B_n=\max_{j\in\mathcal F}(b_j+k_ja^n)\quad(n\ge1),\qquad
+ B_*=\sup_nB_n=\max_jb_j,
+$$
+
+并且存在 $n_0$ 及 $k_*\le0$ 使
+
+$$
+ B_n=B_*+k_*a^n\quad(n\ge n_0).
+$$
+
+此时只能以实际族阈值 $B_*$ 为中心；若写 $\kappa=-k_*$，它可以为零。不能把 $B_*$ 替换成给定的 $\beta$，也不能由没有 tight 锁的 margin 证明 $\beta-B_n=\Theta(a^n)$。
+
+这里仍须保留命题43.11的逐槽严格 seed margin；删去它，命题43.14的正下界 $c a^n$ 以及任意归属下的严格放松都不再成立。
+

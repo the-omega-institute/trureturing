@@ -1,0 +1,14 @@
+**定义 18.1（正实例的两类叶地址）。** 沿用定义 16.1、17.1 的自由有序满二叉树、实际替换像与地址查询。固定 $d=3k$、$k\ge1$，以及已知的完整正实例 $V\in\mathcal I_d$，记
+
+$$
+\begin{gathered}
+c(V)=(a,b)^{\mathsf T},\qquad n=a+b,\qquad D=\operatorname{ht}(V),\\
+A(V)=\{u:\operatorname{out}_V(u)=\mathsf{leaf}_\alpha\},\\
+L(V)=\{u:\operatorname{out}_V(u)\in
+\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta\}\}.
+\end{gathered}
+\tag{18.1}
+$$
+
+因而 $|A(V)|=a$、$|L(V)|=n$，且 $A(V)$ 就是定理 17.1 证明中的 $Q_\alpha(V)$。对任意整数 $j\ge1$，仍记 $\mathcal I_j=\rho^j(\mathcal T)$。查询地址集合始终是某个 $\Sigma_{\le h}$ 的有限子集，结果仍为 $\mathsf{leaf}_\alpha$、$\mathsf{leaf}_\beta$、$\mathsf{branch}$、$\mathsf{absent}$ 四值；选择在完整 $V$ 已知后进行，查询基数只数不同地址，深度只限制地址长度，不计地址描述位数与定位成本，也不要求地址集合前缀闭合。
+

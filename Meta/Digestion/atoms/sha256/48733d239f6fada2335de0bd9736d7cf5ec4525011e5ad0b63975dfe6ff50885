@@ -1,0 +1,16 @@
+**Theorem 69.2 (relative ramification at three with its completion map).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+$\mathfrak p\mid(3)$ in $\mathcal O_E$ and every
+$\mathfrak P\mid\mathfrak p$ in $\mathcal O_{N_J}$,
+there is a continuous surjective ring homomorphism
+$\iota_{\mathfrak p,\mathfrak P}:E_{\mathfrak p}\to(N_J)_{\mathfrak P}$
+agreeing with both embeddings of every $x\in E$, and
+
+$$
+e(\mathfrak P/\mathfrak p)=1.
+$$
+
+Proof. The compatible completion map transports the base
+valuation to the tower valuation. Surjectivity identifies their
+value groups, so the relative ramification index is one.
+

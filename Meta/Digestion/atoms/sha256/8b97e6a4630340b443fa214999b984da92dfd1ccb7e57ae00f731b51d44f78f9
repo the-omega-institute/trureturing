@@ -1,0 +1,6 @@
+## 3. Entry ranks and original depths of block factors
+
+Retain $B_j=L_{3^j}^2+3$ and $C_j=L_{3^j}^2+1$ for $j\geq1$. For a
+prime $p$, let $\rho(p)$ be the least positive index with $p\mid F_{\rho(p)}$.
+The valuations below are taken in the original Fibonacci sequence.
+

@@ -1,0 +1,77 @@
+**定义 34.1（两个实际端点与误差合同）。** 沿用定义1.1、14.5与17.1，置
+
+$$
+t=\phi^{-1}=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad
+R=\mathbb Z[t],\qquad K=\mathbb Q(t),
+$$
+
+$$
+g=t^3,\qquad \gamma=-g,\qquad N=3n,\qquad
+a=g^n,\qquad \sigma=(-1)^n,\qquad c=\gamma^n=\sigma a,
+\qquad \delta=\delta_n=t^{3n-1}=\phi a.
+$$
+
+$\Omega$ 是起始 guard 零的全部合法单侧地址，$D\subset\Omega$ 是最终全零的地址；外部单位位固定为零，高位补零不提供独立长度坐标。窗口标签仍为
+
+$$
+(0,2,3,25,5)=(000,100,010,101,001),\qquad 0=\mathrm{null},
+$$
+
+$$
+(\Delta_0,\Delta_2,\Delta_3,\Delta_{25},\Delta_5)
+=(0,1,-t,2-t,t^2).
+$$
+
+删除 $T$ 每次删去三位。对一条实际来源 $\omega$，两个真实坐标与目标为
+
+$$
+x_0=\kappa_0(\omega),\qquad x_n=\kappa_0(T^n\omega),\qquad
+P_n(\omega)=(\omega_0,\ldots,\omega_{N-1}).
+$$
+
+这里 $P_n$ 写成 $N$ 个位，与前 $n$ 个窗口等价。实际取得的记录是
+
+$$
+r=(r_0,r_n)=(x_0+e_0,x_n+e_n)\in\mathbb R^2.
+$$
+
+两个误差独立允许，意指合同涵盖全部允许的误差对，不作随机独立性假设。没有中间样本、量化器、受限记录字母表或统一尾支持上界；两次真实坐标始终由同一来源共同给出。闭合同取有限非负半径 $\varepsilon_0,\varepsilon_n$，要求 $|e_0|\le\varepsilon_0,|e_n|\le\varepsilon_n$。正开合同取两个正半径并将两处不等式改为严格；正混合合同取两个正半径，恰有一处严格。记
+
+$$
+H=\varepsilon_0+a\varepsilon_n.
+$$
+
+“恢复”先指存在一个精确实记录上的确定函数，对每条允许来源及每个允许误差对返回 $P_n$。实际有效记录域之外的输出任意。普通 Cauchy 近似访问、连续性及终止性另行讨论，不能由这个函数的集合论存在直接取得。
+
+对合法长度 $N$ 位前缀 $u$，令末 guard 为 $s(u)=u_{N-1}$，并置
+
+$$
+A(u)=\sum_{j=0}^{N-1}u_j(-t)^j,
+\qquad I_0=[-1,\phi],\qquad I_1=[-1,t],
+$$
+
+$$
+T_s=\{\kappa_s(\eta):\eta\text{ 从 guard }s\text{ 合法且最终全零}\}.
+$$
+
+状态下标只限制合法尾域，不改变同一地址的标量级数。实际分支方程逐次展开给出
+
+$$
+x_0=A(u)+cx_n,\qquad A(u)=x_0-cx_n.
+$$
+
+因此前缀 $u$ 的精确共同端点集合为
+
+$$
+E_u^\Omega=\{(A(u)+cy,y):y\in I_{s(u)}\},\qquad
+E_u^D=\{(A(u)+cy,y):y\in T_{s(u)}\}.
+$$
+
+定理17.2的状态相对满像和合法前接使第一式的每一点都由一条实际完整来源取得；第二式使用实际有限尾。每个 $T_s$ 是可数的，包含零，属于 $R$，并在 $I_s$ 中稠密：固定一条合法尾，保留越来越长的前缀后补零即可。命题14.6的极值尾非有限，故
+
+$$
+T_0\subset R\cap(-1,\phi),\qquad T_1\subset R\cap(-1,t).
+$$
+
+这些共同端点集合不是两个边缘区间的乘积。即使 $A(u)$ 落在一个有限码本中，实际来源及其尾也没有因此获得支持上界证书。
+

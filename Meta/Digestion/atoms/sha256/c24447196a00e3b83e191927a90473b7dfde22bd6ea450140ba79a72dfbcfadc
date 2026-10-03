@@ -1,0 +1,11 @@
+## 3. Source and verification boundary
+
+The entry congruences are the result named
+`fibonacci_apparition_entry_point` in `D5/S3/Arith/GoldenApparition.lean`.
+The faithful multiplication-matrix representation is the result named
+`golden_matrix_faithful` in `D5/S3/Arith/GoldenMatrixPeriodBridge.lean`.
+The exact two-branch statement appears as `golden_prime_period_bounds` in
+`D5/S3/Arith/GoldenPrimePeriodBounds.lean`. This volume adds no assertion
+that either divisibility bound is always an equality. Its literature status
+is `repo-derived`; no independent originality claim is made.
+

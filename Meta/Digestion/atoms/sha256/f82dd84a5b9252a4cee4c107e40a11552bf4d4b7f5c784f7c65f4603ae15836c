@@ -1,0 +1,9 @@
+**命题 62.13（嵌套及上交集）。** 有
+
+$$
+X_n^-\subseteq X_{n+1}^-\subseteq X_d
+\subseteq X_{n+1}^+\subseteq X_n^+,\qquad
+\bigcap_{n\ge K}X_n^+=X_d.
+\tag{62.29}
+$$
+

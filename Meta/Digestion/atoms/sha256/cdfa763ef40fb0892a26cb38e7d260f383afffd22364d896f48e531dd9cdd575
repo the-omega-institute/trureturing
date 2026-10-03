@@ -1,0 +1,17 @@
+**定义 8.1（分区和拓扑熵）。** 对 $L\ge1,m\ge1$，取闭开分区
+
+$$
+\mathcal P_{L,m}=
+\{[u]\times\{z:z\bmod m=r\}:u\in W_L,\ r\in B_m\}.
+$$
+
+对于有限开覆盖 $\mathcal U$，以 $N(\mathcal U)$ 表示最小子覆盖数，定义
+
+$$
+h(\delta,\mathcal U)=\limsup_{n\to\infty}\frac1n
+\log N\left(\bigvee_{j=0}^{n-1}\delta^{-j}\mathcal U\right),\qquad
+h_{\rm top}(\delta)=\sup_{\mathcal U}h(\delta,\mathcal U).
+$$
+
+本卷使用自然对数。
+

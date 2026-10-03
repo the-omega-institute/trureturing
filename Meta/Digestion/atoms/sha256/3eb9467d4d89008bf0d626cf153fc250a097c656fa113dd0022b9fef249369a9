@@ -1,0 +1,49 @@
+**引理 4.2（完整整数仿射纤维、共同预算与闭许可区间）。** 在定义 4.1 的条件下，对任意非零非负整数组成 $y$，写 $S^dy=(a,b)^{\mathsf T}$、$Q=a+b$。满足跨阶段读数等式的全部整数解，且仅有这些解，是
+
+$$
+n_\ell(x)=n_{\ell+d}(y)
+\quad\Longleftrightarrow\quad
+x=x_z=(a+zB_\ell,b-zA_\ell)^{\mathsf T},\qquad z\in\mathbb Z.
+\tag{4.4}
+$$
+
+若 $|y|_1\le H$，则 $x_z\in D_H$ 的允许参数准确为 $\mathbb Z\cap I_H(y)$，其中
+
+$$
+I_H(y)=
+\left[
+\max\left\{\left\lceil\frac{-a}{B_\ell}\right\rceil,
+\left\lceil\frac{1-Q}{v_\ell}\right\rceil\right\},
+\min\left\{\left\lfloor\frac b{A_\ell}\right\rfloor,
+\left\lfloor\frac{H-Q}{v_\ell}\right\rfloor\right\}
+\right].
+\tag{4.5}
+$$
+
+左端大于右端时此区间为空；若 $|y|_1>H$，该 $y$ 没有共同预算内的联合来源对。在允许区间内，$\chi_k(x_z)=1$ 当且仅当 $z\in P_k(y)$，其中闭许可参数区间为
+
+$$
+P_k(y)=
+\left[
+\left\lceil\frac{r_kb-a}{B_\ell+r_kA_\ell}\right\rceil,
+\left\lfloor\frac{R_kb-a}{B_\ell+R_kA_\ell}\right\rfloor
+\right].
+\tag{4.6}
+$$
+
+因而给定预算内的全部反标签跨阶段解准确对应
+
+$$
+\begin{cases}
+\mathbb Z\cap I_H(y)\cap P_k(y),&\chi_k(y)=0,\\
+\mathbb Z\cap\bigl(I_H(y)\setminus P_k(y)\bigr),&\chi_k(y)=1.
+\end{cases}
+\tag{4.7}
+$$
+
+这些式子包括 $z=0$、正负两向平移及许可锥的两个闭端点。
+
+证明。$n_{\ell+d}=n_\ell S^d$，故读数相等当且仅当 $x-S^dy$ 属于 $n_\ell$ 的整数核。式 (1.12) 已给出 $\gcd(A_\ell,B_\ell)=1$ 和该核恰为 $\mathbb Z(B_\ell,-A_\ell)$，直接得到式 (4.4)，不删除任何整数平移。两个坐标非负分别要求 $z\ge\lceil-a/B_\ell\rceil$、$z\le\lfloor b/A_\ell\rfloor$；其叶数是 $Q+zv_\ell$，非空与预算上界分别要求 $z\ge\lceil(1-Q)/v_\ell\rceil$、$z\le\lfloor(H-Q)/v_\ell\rfloor$。四项相交恰给式 (4.5)。
+
+复用式 (2.9) 的闭锥判据，将 $r_k(b-zA_\ell)\le a+zB_\ell\le R_k(b-zA_\ell)$ 分别解为 $z$ 的下界和上界。两个分母严格为正，整数取整即为式 (4.6)。允许点已经非零且非负；若许可区间内的第二坐标为零，上边界会强制第一坐标也为零，与非空性矛盾，故式 (2.9) 的 $b_z>0$ 无须另加条件。固定 $y$ 的标签后，取许可区间或其在允许区间内的补集即得式 (4.7)，因此两种标签方向均完整。证毕。
+

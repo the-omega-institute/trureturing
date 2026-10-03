@@ -1,0 +1,8 @@
+**推论58.8.1（根的比较，不转移固定预算）。** 令 $z_\infty\in(0,1)$ 是 $z_\infty^6+z_\infty^{20}=1$ 的唯一根，$\alpha_\infty=-\log_2z_\infty$，则
+
+$$
+z_R\downarrow z_\infty,\qquad
+0<\alpha_R\uparrow\alpha_\infty,\qquad \alpha_R<\alpha_\infty.
+\tag{58.34}
+$$
+

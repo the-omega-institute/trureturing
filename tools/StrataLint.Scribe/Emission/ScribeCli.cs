@@ -17,8 +17,20 @@ public static class ScribeCli
         "markdown-check",
         "projections",
         "resources",
+        "resources compare",
+        "resources release",
+        "resources verify-release",
         "scripts",
+        "relations",
     ];
+
+    public static int Run(
+        Func<Assembly> documentsAssembly,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error) =>
+        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null);
 
     public static int Run(
         Assembly documentsAssembly,
@@ -47,6 +59,19 @@ public static class ScribeCli
         TextReader? input = null)
     {
         ArgumentNullException.ThrowIfNull(documentsAssembly);
+        return Run(() => documentsAssembly, arguments, workingDirectory, output, error, leanReport, input);
+    }
+
+    internal static int Run(
+        Func<Assembly> documentsAssembly,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport? leanReport,
+        TextReader? input = null)
+    {
+        ArgumentNullException.ThrowIfNull(documentsAssembly);
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(workingDirectory);
         ArgumentNullException.ThrowIfNull(output);
@@ -55,6 +80,9 @@ public static class ScribeCli
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (command == "resources")
         {
+            if (arguments.Count > 1 && arguments[1] == "compare")
+                return ScribeResourceCompareCommand.Run(arguments, workingDirectory,
+                    () => FindRepositoryRoot(workingDirectory), output, error);
             return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
                 () => FindRepositoryRoot(workingDirectory), output, error);
         }
@@ -73,6 +101,19 @@ public static class ScribeCli
             }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
                 or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "relations")
+        {
+            try
+            {
+                return ScribeRelationVerifyCommands.Run(arguments, FindRepositoryRoot(workingDirectory), input, output, error);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or InvalidOperationException)
             {
                 error.WriteLine(exception.Message);
                 return 2;
@@ -172,7 +213,7 @@ public static class ScribeCli
                     repositoryRoot,
                     arguments[2]);
 
-                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
                 // An explicit scope remains caller-owned; current mode needs no Git history.
                 IEnumerable<string> paths = arguments.Count == 5
                     ? ReadPaths(arguments[4], input)
@@ -218,7 +259,7 @@ public static class ScribeCli
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var reportMaterial = leanReport
                     ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
-                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
                 var report = DescribeReport.Build(
                     repositoryRoot,
                     definitions.Select(static definition => definition.Document),
@@ -264,9 +305,10 @@ public static class ScribeCli
                 return FileMapEmitter.Emit(repositoryRoot, check, output, error);
             }
 
+            var assembly = documentsAssembly();
             return leanReport is null
-                ? ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error)
-                : ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error, leanReport);
+                ? ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error)
+                : ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error, leanReport);
         }
         catch (Exception exception) when (
             exception is IOException or UnauthorizedAccessException or ArgumentException)
@@ -283,7 +325,10 @@ public static class ScribeCli
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
         + "| resources pack --out <file> | resources verify --pack <file> "
-        + "| scripts verify [--paths-from <file|->]";
+        + "| resources compare --pack <file> | resources release --out <directory> "
+        + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "
+        + "| scripts verify [--paths-from <file|->] "
+        + "| relations verify [--paths-from <file|->]";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's

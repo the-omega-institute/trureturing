@@ -1,0 +1,16 @@
+**定义58.10。** 以下固定
+
+$$
+\Theta_1<b<\lambda,\qquad
+\delta_b=\lambda-b>0,\qquad s=\frac{\delta_b}{g^2}.
+\tag{58.36}
+$$
+
+定义预算阈值及预算绑定的帽
+
+$$
+Q_k=\lambda-g^2\chi^kh_H\quad(k\ge1),\qquad
+K=K(b):=\max\{r\ge1:\chi^rh_H>s\}.
+\tag{58.37}
+$$
+

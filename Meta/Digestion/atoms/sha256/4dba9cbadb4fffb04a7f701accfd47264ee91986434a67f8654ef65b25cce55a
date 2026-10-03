@@ -1,0 +1,4 @@
+**命题 14.3（Exact infinity criterion and its limit）。** For one fixed actual fiber $F_L(x)$, it contains infinitely many prime sources if and only if $\gcd(q(x),L)=1$.
+
+证明。The sufficient direction is theorem 14.2. For necessity let $g=\gcd(n,L)>1$. Every $y\in F_L(x)$ has $q(y)\equiv n\pmod L$, hence $g\mid q(y)$. If $q(y)$ is prime $p$, its only positive divisors are 1 and $p$, so $g=p$. If $g$ is not prime there are no prime sources; if it is prime, all prime sources have the single quantity $g$. Nonnegative solutions of $2u+3v=g$ are finite, since $u\le g/2$ and $v\le g/3$. Thus there cannot be infinitely many prime sources. The proof establishes existence and infinity only; it supplies no bound for the least witnessing prime and no prime-search cost. $\square$
+

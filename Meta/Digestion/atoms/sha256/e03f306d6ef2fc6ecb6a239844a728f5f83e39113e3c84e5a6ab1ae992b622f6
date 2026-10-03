@@ -1,0 +1,39 @@
+**约定 62.1（来源、仪器与观察长度）。** 置
+
+$$
+t=\frac{\sqrt5-1}{2},\quad g=2t-1,\quad \phi=1+t,\quad
+T_2=t^2=1-t,\quad \lambda=\frac{T_2}{10},\quad c_0=\frac{2t}{5},
+\quad \rho=g^6,\quad \chi=g^{20}.
+\tag{62.1}
+$$
+
+这里 $c_0$ 是第49章的中心坐标 $c$。来源的 guard 为0、1，支撑分别为 $I_0=X=[-1,\phi]$、$I_1=[-1,t]$。合法来源边及其平移量为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,T_2,1,2-t),\qquad F_\ell(x)=\Delta_\ell-gx,\\
+F_w=F_{w_0}\circ\cdots\circ F_{w_{|w|-1}}.
+\end{gathered}
+$$
+
+窗口标签0表示空窗，25是一个标签。$D_s$ 表示从 guard $s$ 出发、最终为空窗的实际地址；这些地址包含在完整恢复合同的实际来源类 $\Omega$ 中。来源标签、颜色标签和 guard 是三种不同对象。
+
+固定合法端点归属向量 $o=(o_1,\ldots,o_5)$，$o_a\in\{a-1,a\}$ 表示切点 $q_a$ 属于哪个颜色。色格闭包为
+
+$$
+\begin{gathered}
+q_1=-T_2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+\tag{62.2}
+$$
+
+实际色格 $C_i^o$ 依归属分配这些切点，支撑外端点 $-1,\phi$ 分别归颜色0、5。实际读数为 $\mathcal Q_o(\operatorname{clip}_X(x+e))$。若 $\operatorname{dist}(x,J_i)<b$，可以选择色格内部目标取得颜色 $i$，误差严格小于 $b$；若距离恰为 $b>0$，闭预算的实际取得等价于唯一最近点归颜色 $i$ 所有。裁剪不扩张距离，不能绕过这个端点条件。
+
+历史只读来源边的出发位置。长 $M$ 的历史读位置 $0,\ldots,M-1$，走过 $M$ 条来源边后的位置 $M$ 尚未观察。终尾为 $\xi$ 时，零误差完整未来 $S_\xi$ 从这个未观察终端开始。
+

@@ -1,0 +1,51 @@
+**证明。** 在两种共同 $5$ 分支，$K$ 的共同色均为 $0$。对已经实际通过所选边的对应 $Q$ 坐标 $x_Q$，实际等式而非单独片包含给
+$$
+F_5(x_Q)\le-u-\delta
+\quad\Longrightarrow\quad
+x_Q\ge u+gu+g\delta=2g+g\delta.
+\tag{60.21}
+$$
+第二行的 rival 满足 $y_K=F_5(y_Q)$，故 $y_Q\ge2g+g\delta$。再用真实等式 $y_Z=f_5(y_Q)$ 得(60.18)。
+
+第四行的两条返回从同一个 $F$ 沿共同原片 $Z,Q,K$ 前进；$h\ge6$，所以三边确实均在共同前缀 $T$ 中，即使 $h=6$ 时 $K=G$ 也如此。各实际周期点均满足
+$$
+x_{Q,\pm}=F_5(z_\pm)\in P_Q,\qquad
+x_{K,\pm}=F_5(x_{Q,\pm})\in P_K\subseteq E_0^\beta.
+$$
+因此(60.21)分别适用于这两个点，$z_\pm=f_5(x_{Q,\pm})\le\zeta-g^2\delta$。下界来自60.3对同一 $P_Z$ 的整片高条带。
+
+再核对间距。置 $\eta=g^{h-2}$，写 $f_T(x)=A_T+\eta x$，并记
+$$
+\gamma=\Delta_b-\Delta_a,\qquad
+c_-=\Delta_a+gt,\quad c_+=\Delta_b.
+$$
+因 $h$ 偶，两返回复合分别为 $A_T+\eta c_\pm+g^hx$，故
+$$
+\xi_\pm=\frac{A_T+\eta c_\pm}{1-g^h},\qquad
+\xi_+-\xi_-=
+\frac{g^{h-2}(\gamma-gt)}{1-g^h}
+=\frac{\varepsilon_{a,b}g^{h-1}}{1-g^h}>0.
+$$
+两固定点按60.1的联合提升来自各自实际返回，均在 $P_F$。第一共同边使用 $3$，$F_3$ 斜率为 $-g^{-1}$，因此顺序翻转，精确给(60.19)。$z_-,z_+$ 不能独立选择位置，(60.20)还强制
+$$
+W_Z\le\zeta-\theta-(g^2+g^{-2})\delta.
+\tag{60.22}
+$$
+原全包含始终只是 $P_K\subseteq F_5(P_Q)$，其像可以覆盖多个原片。它不意味着 $F_5(P_Q)\subseteq P_K$，也不使 $P_Z$ 的任意点都沿所选边通过 $K$。故不能将(60.20)的上界推广为整片上界。$\square$
+
+两种 $r$ 的整片条带仍和同一个精确 $W_Z$ 联用，给
+$$
+W_Z\le\begin{cases}
+\theta-C-(1+g^{-2})\delta,&r=3,\\
+D-\theta-(1+g^{-2})\delta,&r=0.
+\end{cases}
+\tag{60.23}
+$$
+$r=3,T_1=5$ 还须由原根域满足
+$$
+W_Z\le\theta-g-\delta/g^2,\qquad
+\delta\le\frac{g^4}{5}-\frac{\varepsilon_{a,b}g^h}{1-g^h}.
+\tag{60.24}
+$$
+这些只是相同原片的必要宽度比较，不是全局预算转变结论。
+

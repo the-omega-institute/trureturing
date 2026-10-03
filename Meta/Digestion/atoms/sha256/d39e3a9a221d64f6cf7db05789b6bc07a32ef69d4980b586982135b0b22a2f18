@@ -1,0 +1,12 @@
+**定理 18.1（精确组成最优证书的唯一性）。** 对定义 18.1 的每个 $V$，每个 $h\ge D$ 与每个有限集合 $Q\subseteq\Sigma_{\le h}$，有
+
+$$
+\boxed{\quad
+Q\text{ 按定义 17.1 有声且 }|Q|=a
+\quad\Longleftrightarrow\quad Q=A(V).
+\quad}
+\tag{18.2}
+$$
+
+因此定理 17.1 的有限最小值 $a$ 只有这一组地址达到；$h<D$ 时的无证书结论仍直接取自定理 17.1。
+

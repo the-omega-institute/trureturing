@@ -100,7 +100,7 @@ internal sealed class ZetaGibbsDocument : IScribeDocumentDefinition
                     D(1), Lt, F.Id("s"), Sp, Rightarrow, Sp,
                     Operatorname, Grp(F.Id("toReal")), Open,
                     F.Id("Z"), Open, F.Id("s"), Close, Close, Eq,
-                    Zeta, Open, F.Id("s"), Close))),
+                    StrataLint.Scribe.FormulaDsl.Zeta, Open, F.Id("s"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "After taking the finite ENNReal total back to the reals and embedding it in " +

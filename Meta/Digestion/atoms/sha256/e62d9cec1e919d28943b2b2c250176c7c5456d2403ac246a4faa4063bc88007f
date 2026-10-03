@@ -1,0 +1,50 @@
+**Theorem 4.1 (actual history count and literal cylinder transport).**
+Every such finite history reconstructs an injective family of actual
+avoiders indexed by its terminal actual source class. Its specified
+cuts are the actual minimum cuts and every reconstructed parent belongs
+to its indicated source class. Its event cardinality is exactly the
+terminal actual-class cardinality. Its probability conditional on its
+initial source class is the product, along the history, of the ratios
+of child-class to parent-class cardinalities. A left step resets the
+child to $U$; a right step conditions it to $J^\varepsilon$.
+
+Record values $0,\ldots,B-1$ literally and all other values as a star.
+If the terminal length exceeds $B$, the emitted prefix has the same
+finite-alphabet word for every terminal actual shape. This word is
+computed by emitting $v+\alpha(i)$ at direct left steps, stars at skew
+left steps, and increasing the low offset by the right length exactly
+at skew right steps. Direct left steps also increase the low offset
+by the left length. Every pending right suffix stays after the
+terminal active interval. Consequently any fixed-coordinate cylinder
+on at most the emitted positions selects either the whole history
+event or none of it, with its exact actual uniform probability.
+
+*Proof.* At a left step, specialize the actual minimum-cut Cartesian
+kernel to its specified left shape; at a right step specialize it to
+its specified right shape. The surviving factor maps are injective.
+Opposite cut signs cannot coexist, since comparison of the first and
+last entries would require two opposite strict inequalities. Induction
+therefore proves source membership, the actual minimum-cut certificates,
+and injectivity of reconstruction. The terminal actual class is in
+bijection with the resulting full actual-permutation event. The ratios
+telescope, since each source class is nonempty: an identity or reversal
+gives a concrete witness for each $J$ class, including small lengths.
+
+For coordinate transport split each actual value list at the cut. A
+left step contributes its entire first block and then the child prefix.
+A right step contributes only the child prefix: the pending suffix is
+after a child interval at least as long as the terminal interval.
+The literal block-sum equations give precisely the stated low-offset
+updates. At a skew left step every high label is at least the remaining
+child length, which is no smaller than the terminal length and is
+therefore outside the finite alphabet. Induction gives the same literal
+prefix for every terminal shape. Restricting a cylinder to this constant
+word proves the last assertion. $\square$
+
+This theorem supplies exact finite-history products and a literal
+finite-alphabet transport, not their limiting products or a probability
+law on infinite histories. Exhaustive capped-history partitioning,
+truncation error bounds, all-length count asymptotics, the coupled law,
+and occupied/hitting instantiations remain separate obligations.
+
+<!-- APPEND -->

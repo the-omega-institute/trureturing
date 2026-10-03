@@ -1,0 +1,24 @@
+**命题 43.2（两种 incoming guard 的有限尾集合）。** 令
+
+$$
+ t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad g=t^3,\qquad R=\mathbb Z[t],\qquad t'=-\phi,\qquad g'=-g^{-1}.
+$$
+
+置
+
+$$
+ J_0^{\mathrm{fin}}=(-1,\phi),\qquad J_1^{\mathrm{fin}}=(-1,t).
+$$
+
+若 $x=A+Bt\in R$，定义
+
+$$
+ Q(x)=2A-3B=\frac{gx+g^{-1}x'}{\sqrt5}.
+$$
+
+对 guard $s=0,1$，实际最终空窗地址的标量集合恰为
+
+$$\boxed{T_s=\{x\in R\cap J_s^{\mathrm{fin}}:Q(x)\ge0\}.}$$
+
+其中 $Q(x)>0$ 是非零有限来源的严格数量条件；$Q(x)=0$ 在 $J_0^{\mathrm{fin}}$ 中只给 $x=0$，它是零来源例外。guard 一的集合也可写为 $T_1=-tT_0$。同一 guard 下，每个标量 $x\in I_s$ 在全部完成地址域 $A_s$ 中至多有两个编码；若有编码属于 $D_s$，该标量在全部 $A_s$ 中即只有这一条编码。由于 $A_s\subseteq\Omega$ 且有限地址避开 guard 零的全部双编码点，每个实际有限地址的标量在整个 $\Omega$ 中也只有这一条编码。
+

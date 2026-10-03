@@ -1,0 +1,15 @@
+**定理 39.7.1（固定第一 $D$ 尾、竞争 $\Omega$ 尾的同预算计数）。** 假设 $\theta<\lambda$，stems $P,Q$ 不同，首次不同位置为 $k<a_0$，并且本族存在定理39.5.2所要求的固定竞争尾：第二包络非退化，或其单点可行判据成功；如附加原图片限制，则相应交集判据也成功。对每个符合定义36.9的解码器 $\mathcal A$，有
+
+$$
+\#\{\text{处理完 }h_z\text{ 的完整配置}:z\in\{0,1\}^n\}
+\ge\frac{2^n}{k+1},
+$$
+
+$$
+B^{\mathrm{worst}}_{\theta,\mathcal A}(N)
+\ge\left\lfloor\frac{N-a_0}{L}\right\rfloor-O(1)
+\qquad(N\ge a_0).
+$$
+
+与定理33.13合并，在这个指定预算 $\theta$ 的最优最坏完整记忆为 $\Theta(N+1)$。
+

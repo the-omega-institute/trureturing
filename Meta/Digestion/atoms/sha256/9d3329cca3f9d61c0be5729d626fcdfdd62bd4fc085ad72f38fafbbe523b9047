@@ -1,0 +1,56 @@
+**命题 13.8（唯一历史提升及其非满射反例）。** 设 $E$ 为任意集合，$g:E\to E$ 为双射，$\eta:E\to D$ 满足全局等式 $\eta g=\delta\eta$。则存在唯一映射 $\Lambda:E\to\mathcal H_D$，满足
+
+$$
+\pi_0\Lambda=\eta,\qquad
+\Lambda g=\widehat\delta\Lambda,
+\qquad
+\Lambda(e)=(\eta(g^{-n}e))_{n\ge0}.
+$$
+
+即使 $\eta$ 为满射，$\Lambda$ 也不必为满射。具体地，定义
+
+$$
+Z_{\rm fin}
+=\{z\in Z_D:|\{j\in\mathbb Z:z_j=1\}|<\infty\},
+\qquad
+\eta_{\rm fin}(z)=(z_j)_{j\ge0}.
+$$
+
+$Z_{\rm fin}$ 是 $Z_D$ 的可数、真、稠密子空间，$S$ 及 $S^{-1}$ 都保持它，$\eta_{\rm fin}$ 满射到 $D$，且
+
+$$
+\eta_{\rm fin}S=\delta\eta_{\rm fin}.
+$$
+
+此可逆实现的唯一历史提升为 $\Phi|_{Z_{\rm fin}}$，其像严格小于 $\mathcal H_D$。因此，为每个来源提供至少一条允许过去与保留每条允许的无限过去，是两个不同要求。
+
+证明。全局等式给出
+
+$$
+\delta\eta(g^{-(n+1)}e)=\eta(g^{-n}e),
+$$
+
+所以所列 $\Lambda(e)$ 是兼容历史。其第零坐标为 $\eta(e)$。$\Lambda(ge)$ 的第零坐标为 $\delta\eta(e)$，第 $n\ge1$ 坐标为 $\eta(g^{-(n-1)}e)$，这恰为 $\widehat\delta\Lambda(e)$。
+
+若 $\Lambda':E\to\mathcal H_D$ 也满足这两个交换等式，由 $g$ 和 $\widehat\delta$ 可逆可得 $\Lambda'g^{-n}=\widehat\delta^{-n}\Lambda'$。于是
+
+$$
+(\Lambda'(e))^{(n)}
+=\pi_0\widehat\delta^{-n}\Lambda'(e)
+=\pi_0\Lambda'(g^{-n}e)
+=\eta(g^{-n}e),
+$$
+
+对所有 $n\ge0$ 成立，给出唯一性。
+
+整数集的有限子集构成可数集合，所以 $Z_{\rm fin}$ 至多可数；仅在一个整数指标为一的地址已给出可数无穷多个成员。双向平移保持有限支持与无相邻一条件。对每个 $x\in D$，负指标补零得到 $Z_{\rm fin}$ 中的前像，故 $\eta_{\rm fin}$ 满射；坐标计算给全局交换等式。
+
+令 $z_{-2m}=1$ 对每个 $m\ge1$ 成立，其余坐标全为零，就得到 $Z_D\setminus Z_{\rm fin}$ 的成员，证明子空间为真。任意 $z\in Z_D$ 的截断
+
+$$
+z^{[M]}_j=\begin{cases}z_j,&-M\le j\le M,\\0,&\text{其他 }j\end{cases}
+\qquad(M\ge0)
+$$
+
+都在 $Z_{\rm fin}$ 中：改位为零不能制造相邻一。任意有限坐标柱在足够大的 $M$ 下与 $z$ 一致，故 $z^{[M]}\to z$，证明稠密。唯一提升公式在这些双边地址上恰给 $\Phi$；由于 $\Phi$ 单射且 $Z_{\rm fin}$ 为真子空间，提升不是满射。这个可数反例也说明命题 13.7 的连续统纤维不是一般可逆实现的记忆基数下界。$\square$
+

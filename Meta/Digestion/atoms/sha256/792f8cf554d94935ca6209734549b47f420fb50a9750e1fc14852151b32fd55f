@@ -1,0 +1,58 @@
+**引理 31.2（有限 $\mathbb F$ 端点族的有界闭合集）。** 令 $C$ 为全部非空 $\bar E_i$ 的端点、两个状态区间端点和所有合法分支域端点的并。存在整数 $q\ge1$ 及实数 $R\ge0$，使
+
+$$
+\mathscr L_q=q^{-1}\mathbb Z[t],\qquad
+B=\{x\in\mathscr L_q\cap X:|x'|\le R\}
+\tag{31.5}
+$$
+
+是包含 $C$ 的有限集，并满足
+
+$$
+x\in B,\quad F_\ell(x)\in X
+\quad\Longrightarrow\quad F_\ell(x)\in B.
+\tag{31.6}
+$$
+
+这里 $t'=-\phi$，撇号为 $\mathbb F$ 的非平凡共轭嵌入。
+
+证明。$\mathbb F$ 中每个数都唯一写成 $a+bt$，$a,b\in\mathbb Q$。$C$ 有限，故对这些有理系数取公分母即可得到 $C\subseteq\mathscr L_q$。状态端点和分支端点本来就在 $\mathbb Z[t]$ 中。沿用 (29.11)—(29.12) 的代数单位和共轭恒等式，
+
+$$
+g^{-1}=3+2t\in\mathbb Z[t],\qquad
+g'=-g^{-1},\qquad
+F_\ell(x)'=gx'-g\Delta_\ell'.
+\tag{31.7}
+$$
+
+因此每个 $F_\ell$ 保持 $\mathscr L_q$。令 $A_\Delta=\max_{\ell\in\Lambda}|\Delta_\ell'|$，选取
+
+$$
+R\ge\max_{c\in C}|c'|,\qquad
+R\ge\frac{gA_\Delta}{1-g}.
+\tag{31.8}
+$$
+
+此处 $C$ 包含状态端点，因而非空。对 $x\in B$，共轭更新给出
+
+$$
+|F_\ell(x)'|\le g(R+A_\Delta)\le R.
+\tag{31.9}
+$$
+
+结合格保持及实嵌入中的条件 $F_\ell(x)\in X$，得到 (31.6)。
+
+有限性使用两个嵌入。若 $x=(m+nt)/q\in B$，其中 $m,n\in\mathbb Z$，则
+
+$$
+n=\frac{q(x-x')}{\sqrt5},\qquad m=qx-nt,
+\qquad
+|n|\le\frac{q(\phi+R)}{\sqrt5},\quad
+|m|\le q\phi+t|n|.
+\tag{31.10}
+$$
+
+所以两个整数系数同时有界，$B$ 有限。只给实坐标 $x\in X$ 不够；有限性来自双嵌入的联合界。$C\subseteq B$ 则由 (31.8) 直接得到。$\square$
+
+这个推广把第29章固定的公分母五和共轭界八替换为适配有限端点族的 $q,R$。它要求的是端点属于 $\mathbb F$，不是端点只在某个更大的代数扩域中。这里的有限性不提供具体图节点数量或最小状态数。
+
