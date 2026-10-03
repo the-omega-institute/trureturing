@@ -662,3 +662,230 @@ The unresolved step is an arithmetic supply of these simultaneous
 slots and full lower coverage, or another paid split construction.
 This application has no new Lean verification and does not settle
 unrestricted Erdős #7.
+
+## 12. Complete lower liability can force an exact ten-class fan repair
+
+The local conditions in SC24 do not guarantee an affordable repair even
+if arbitrary new odd moduli and arbitrary heights are permitted. The
+following refinement gives an exact repair cost and a sharp residual
+density. It is a noncover, so the complete service inclusions SC15 remain
+an essential hypothesis of the whole-cover problem.
+
+Write \(a(n)\) for \(a\bmod n\), and take the original family
+\[
+ \mathcal C=\{0(3),0(5),0(7),0(11),1(21),23(33),
+                  16(35),46(55),3(77)\}. \tag{SC34}
+\]
+It has \(K=9\), period \(1155\), modulus sum \(247\),
+divisor-closed numerical labels, initial odd-prime support, and disjoint
+comparable classes. In the displayed order, private integers are
+\(6,5,7,11,1,23,16,46,157\). Its reciprocal sum is
+\(19/21<1\), and it leaves 380 residues of its period uncovered.
+Thus it does not satisfy EB1 or even the necessary whole-cover density
+condition.
+
+Use \(r=3,s=5,A=B=1,M=77\) and the common tree
+\(\theta(j)=j\) for \(0\le j<3\). The literal source is
+\[
+ F_u(z)\equiv u\pmod3,\qquad
+ F_u(z)\equiv\theta(z\bmod3)\pmod5,\qquad
+ F_u(z)\equiv z\pmod{77}.
+\]
+The inherited lower and top families on period \(231\) are
+\[
+ \mathcal L=\{0(3),0(7),0(11),16(21),13(33),3(77)\},
+ \qquad \mathcal T_1=\{1(7)\},\quad
+ \mathcal T_2=\{1(11)\}. \tag{SC35}
+\]
+All phases are forced by the source. With
+\(E=\mathbb Z\setminus\bigcup\mathcal L\), the complete-fan
+locus is
+\[
+ V=E\cap1(77)=1(231)\cup155(231). \tag{SC36}
+\]
+At every point of \(V\), \(F_0(z)\) is private to the original
+pure 3 class, and its complete fan is exactly \(\{21,33\}\).
+The two parent slots 7 and 11 survive at their incompatible phase zero.
+Here \(|\mathcal L|=6\), \(|\mathcal T|=2\), and \(\sigma=1\).
+
+For any finite family \(\mathcal F\) of distinct odd nonunit AP
+moduli, with arbitrary phases and no bound on its primes or heights,
+\[
+ \bigcup\mathcal L\subseteq\bigcup\mathcal F,\quad
+ |\mathcal F|\le9
+ \quad\Longrightarrow\quad
+ \operatorname{dens}\!\left(1(77)\setminus\bigcup\mathcal F\right)
+       \ge\frac1{693}. \tag{SC37}
+\]
+The density uses a common period of 231 and all repair moduli.
+Furthermore,
+\[
+ \min\{|\mathcal F|:
+       \bigcup\mathcal L\cup1(77)\subseteq\bigcup\mathcal F\}
+       =10. \tag{SC38}
+\]
+Both bounds are attained. Covering this target is exactly preserving the
+entire lower union and covering every complete-fan point.
+
+### The published small-cover bound forces five complete lower classes
+
+Reuse Simpson's whole-period irredundant-cover bound, already cited in
+[report 343, Section 2](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md),
+from [Corollary 2, pages 151--152](https://doi.org/10.4064/aa-45-2-145-152):
+\[
+ k\ge1+f(N),\qquad f(N)=\sum_p v_p(N)(p-1). \tag{SC39}
+\]
+Here \(N\) is the lcm of the entire irredundant subcover. A redundant
+cover must first be reduced and its lcm recomputed. No disjointness
+assumption is imposed.
+
+A proper odd cover with each numerical modulus used at most twice and
+at most nine classes must have exactly nine classes and lcm 45.
+Indeed, SC39 restricts an irredundant subcover to
+\[
+ N\in\{3,5,7,9,15,21,25,27,45,81\}.
+\]
+At a prime-power period \(p^a\), its reciprocal sum is at most
+\(2\sum_{j=1}^a p^{-j}<1\). At period \(3p\), for \(p=5,7\),
+a root missed by the at most two modulus-3 classes receives relative
+mass at most \(4/p<1\) from the modulus-\(p\) and modulus-\(3p\)
+classes. Only 45 remains, and SC39 then requires all nine classes.
+In particular, no such cover has at most eight classes, and a nine-class
+one cannot contain a class of modulus 7 or 11.
+
+Suppose now \(|\mathcal F|\le9\) and it covers the lower union.
+The class \(0(3)\) is forced. Otherwise restriction to \(0(3)\)
+has proper relative moduli \(d/\gcd(d,3)\), each occurring at most
+twice. A relative modulus divisible by 3 has at most one original
+numerical preimage. The preceding classification would require nine
+classes of period 45, but their reciprocal sum is at most
+\[
+ \frac13+\frac19+\frac25+\frac1{15}+\frac1{45}
+       =\frac{14}{15}<1.
+\]
+
+The classes \(0(7)\) and \(0(11)\) are forced as well. If \(0(7)\)
+is absent, restriction to it again has proper odd relative moduli of
+multiplicity at most two. All nine restrictions must be essential and
+have period 45. Thus all original repair moduli are \(\ell\) or
+\(7\ell\), with \(1<\ell\mid45\). They are coprime to 11 and
+on the other required class \(0(11)\) have total relative mass at most
+\[
+ \frac87\sum_{1<\ell\mid45}\frac1\ell
+       =\frac{88}{105}<1.
+\]
+If \(0(11)\) is absent, the symmetric bound on \(0(7)\) is
+\((12/11)(11/15)=4/5<1\).
+
+Next restrict to the entire \(16(21)\). The forced classes \(0(3)\)
+and \(0(7)\) vanish, leaving at most seven active classes. If
+\(16(21)\) itself is absent, all restrictions are proper: its other
+containing divisor slots 3 and 7 are already occupied incompatibly.
+SC39 restricts a minimal relative subcover to
+\(N\in\{3,5,7,9,15,27\}\). For a relative \(3^j\), the only
+numerical preimages are \(3^{j+1}\) and \(7\cdot3^{j+1}\),
+so a pure 3-power period has total mass less than one. A relative
+index 5 or 7 has at most four preimages, giving mass at most \(4/5\)
+or \(4/7\). The only remaining period is 15, which needs seven
+essential classes. But the forced \(0(11)\) has a nonempty relative
+index-11 restriction and cannot belong to that subcover. Excluding it
+leaves at most six classes, a contradiction. Interchanging 7 and 11
+gives the same conclusion for \(13(33)\); the forced \(0(7)\)
+then cannot belong to a period-15 core. Hence \(\mathcal F\) contains
+the exact five classes
+\[
+ 0(3),\quad0(7),\quad0(11),\quad16(21),\quad13(33).
+ \tag{SC40}
+\]
+
+### Four further labels cannot pay both cofactor pairs
+
+Consider the four complete period-231 fibres
+\[
+ W=\{1,155,157,80\}\pmod{231}.
+\]
+Their \((3,7,11)\)-coordinates, in this order, are
+\((1,1,1),(2,1,1),(1,3,3),(2,3,3)\).
+The first pair is the fan; the second is part of the old \(3(77)\)
+liability. Every class in SC40 misses \(W\).
+
+Give these four complete fibres equal normalized mass. For any further
+class \(a(n)\), put \(g=\gcd(n,231)\), \(\delta=n/g\).
+CRT gives the exact formula, including arbitrary new primes and heights,
+\[
+ \mu_W(a(n))=
+ \frac{|\{w\in\{1,155,157,80\}:w\equiv a\pmod g\}|}
+      {4\delta}. \tag{SC41}
+\]
+The only unused numerical divisors of 231 are 77 and 231. Every other
+available label has \(\delta>1\). If \(\delta\ge5\), its mass
+is at most \(1/5\). If \(\delta=3\), its modulus has exact
+3-adic exponent two and fixes one of the two old ternary roots; its
+mass is at most \(1/6\). The same \(1/5\) bound holds when
+normalized on either of the two cofactor pairs alone.
+
+There are at most four further labels. If neither 77 nor 231 is used,
+they cover at most \(4/5\) of \(W\), leaving ordinary density
+at least \(4/(5\cdot231)\). If only 231 is used, their covered
+mass is at most \(1/4+3/5\), leaving \(3/(5\cdot231)\).
+If only 77 is used, that class misses at least one full cofactor pair,
+and the other three cover at most \(3/5\) of that pair, leaving
+\(4/(5\cdot231)\). If both are used, their union misses at least
+one full period-231 fibre. Each of the remaining two classes has a
+proper odd relative index on that fibre and covers at most one third
+of it. This leaves density at least \(1/(3\cdot231)\).
+The smallest of these four lower bounds is \(1/693\).
+Since \(\mathcal F\) covers the old \(3(77)\), any uncovered
+part of \(W\) belongs to the fan pair. This proves SC37.
+
+### Equality repairs and the exact budget boundary
+
+The following actual families attain the bounds:
+\[
+ \mathcal F_9=\mathcal L\cup\{1(231),2(9),50(63)\},
+ \qquad
+ 1(77)\setminus\bigcup\mathcal F_9=386(693),
+\]
+\[
+ \mathcal F_{10}=\mathcal F_9\cup\{89(99)\}.
+ \tag{SC42}
+\]
+The latter covers the entire target and has distinct odd nonunit labels.
+On the fan at old ternary root 2, its last three added classes have
+next ternary residues 2, 5 and 8 modulo 9; their cofactor conditions are
+respectively empty, 1 modulo 7, and 1 modulo 11. The other fan root is
+paid by \(1(231)\). Its numerical modulus sum is 554, without a
+claim of minimum sum among ten-class repairs.
+
+For this comparison enlarge the SC18 repair palette to arbitrary odd
+nonunit moduli, and pull \(E\), the lower outputs and both top classes
+back to their common period with the repair. The same literal union and
+slot count give \(|\mathcal F|=8+e-b\). The attaining family is
+itself a lower repair with both top slots reserved; its modulus-9 labels
+are not available in the original divisor-only palette at \(N=231\).
+Consequently the exact minimum, among complete lower repairs whose
+resulting family also covers the complete fan, is
+\[
+ \min(e-b)=2>\sigma=1. \tag{SC43}
+\]
+Thus neither a strict count descent nor an equal-count descent is
+available for this fixed source and target. This obstruction includes
+arbitrary split repairs, new primes and unbounded exponents; it does
+not assume classwise containment or restrict the repair to the old
+period.
+
+It does not obstruct every common tree. Omitting old 5-root 1 makes
+the two lower outputs from 35 and 55 disappear. Nor does it supply
+SC15: the source point \(z=2\) lies in \(E\) and is missed by
+both top families. Raising the omitted-label budget also changes the
+comparison: the same minimum \(e-b=2\) ties at \(\sigma=2\)
+and is affordable in class count when \(\sigma\ge3\).
+The unrestricted missing step remains a repair or exclusion using
+the full whole-cover service conditions, with the actual height budget.
+
+The displayed source maps, privacy witnesses and equality families have
+been checked over their complete finite periods. The unrestricted
+repair lower bound is the preceding argument using SC39, not a
+bounded search over replacement moduli. These are ordinary mathematical
+deductions reusing the cited covering theorem; no new Lean verification
+or unrestricted Erdős #7 conclusion is asserted.
