@@ -12,6 +12,10 @@ license: Apache-2.0
 triage: anchor
 ---
 
+## Verified locator
+
+URL: https://github.com/zblore/csd-lean4/blob/39182b9e91a2791f5acb5ceaa2612ed71da921b5/CsdLean4/Mathlib/LinearAlgebra/BilinearForm/SymplecticBasis.lean
+
 The immutable source revision is 39182b9e91a2791f5acb5ceaa2612ed71da921b5.
 The source SHA-256 is
 0aad253cae916206016ca59cdfe15c23a113dc84c78636551f69e3677d1add36.
