@@ -1,0 +1,41 @@
+**证明。** 把学习器种子并入观察 $Z$，令
+
+$$
+Q_i=P_i^{\otimes m}\otimes\nu_\xi,\qquad
+\bar Q=M^{-1}\sum_{i=1}^M Q_i.
+$$
+
+在乘积空间上定义
+
+$$
+A(i,dz)=M^{-1}Q_i(dz),\qquad B(i,dz)=M^{-1}\bar Q(dz).
+$$
+
+有限正记录律和共同种子律使这些分布相对于同一支配测度有正密度 $q_i,\bar q$。因此可直接展开对数项：
+
+$$
+\begin{aligned}
+\operatorname{KL}(A\Vert B)+\operatorname{KL}(B\Vert A)
+&=M^{-1}\sum_i\left[\operatorname{KL}(Q_i\Vert\bar Q)+\operatorname{KL}(\bar Q\Vert Q_i)\right]\\
+&=M^{-2}\sum_{i,j}\operatorname{KL}(Q_i\Vert Q_j).
+\end{aligned}
+\tag{60.19}
+$$
+
+第二个等号中的 $\bar q$ 项因 $\bar q=M^{-1}\sum_jq_j$ 相消；这是耦合的双向混合恒等式，而不是把两个单向凸性上界相加。共同种子因子不改变任意 $Q_i,Q_j$ 的 KL，且 $i=j$ 项为零、$i\ne j$ 项均为 $m\kappa_a$，故右端为 $(1-1/M)m\kappa_a$。$Q_i$ 还保留每条记录的全部窗口和观测标签。
+
+令 $E=\{(i,z):i\in S(f_z)\}$。由（60.17），$A(E)\ge1-\delta$；由（60.9），$B(E)\le K/M=b$。二元数据处理及二元 Jeffreys 散度在 $1-\delta>b$ 的区域单调，给出（60.18）。由于 $A,B$ 保留完整源记录，未假设不同位置成功事件不交；这正是双向项保留置信代价的原因。$\square$
+
+在 $K\le M/2$、$0<\delta\le1/4$ 时，置
+$L=\log(M/K)+\log(1/\delta)$。有
+$1-\delta-b\ge1/4$、
+$\log((1-\delta)(1-b))\ge-\log(8/3)\ge-L/2$，故
+（60.18）的右端至少为 $L/8$；再结合（60.16）得到一个保守化为
+
+$$
+m\ge\frac{\log(M/K)+\log(1/\delta)}{4a^2\rho^2}.
+\tag{60.20}
+$$
+
+这只在声明的列表和置信范围内成立；当 $\delta\ge1-K/M$ 时零数据基线已经可行，式（60.18）不应外推到该区域。
+
