@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 internal static class ScribeResourceCommands
 {
     internal const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>"
-        + " | resources compare --pack <file> | resources release --out <directory>"
+        + " | resources release --out <directory>"
         + " | resources verify-release --dir <directory> [--total-sha256 <digest>]";
 
     internal static int Run(Func<Assembly> assembly, IReadOnlyList<string> arguments, string workingDirectory,

@@ -1,0 +1,11 @@
+## 6. Fixed bounded endpoint codes
+
+For a cap $K$ and horizon $H$, a code consists of a stop kind or an
+endpoint action followed by a code with horizon $H-1$. An action records
+its sign, a length in $\{1,\ldots,K\}$, and the actual bounded endpoint
+shape: a member of $J_r^\varepsilon$ for an emission, or of $U_r$ for a
+right removal. Neither the initial length nor the terminal permutation is
+recorded. This is a finite type depending only on $K,H$. For initial
+state $t$ and unmet target $m$, retain the codes obeying these rules:
+
+- A stopped code is good exactly when $m=0$.
