@@ -1,0 +1,15 @@
+**定理 3.1（定量 Peano 积分解）。** 令 $E$ 为有限维实赋范向量空间，$f:\mathbb R\times E\to E$，$t_{\min}\le t_0\le t_{\max}$，$x_0\in E$，$r,L\ge0$。假设 $f$ 在圆柱 $[t_{\min},t_{\max}]\times\overline B(x_0,r)$ 上联合连续，并且在该圆柱上 $\|f(t,x)\|\le L$，且
+
+$$
+L\max(t_{\max}-t_0,t_0-t_{\min})\le r.
+$$
+
+则存在连续曲线 $\alpha:[t_{\min},t_{\max}]\to\overline B(x_0,r)$，满足对每个 $t\in[t_{\min},t_{\max}]$，
+
+$$
+\alpha(t)=x_0+\int_{t_0}^{t}f(s,\alpha(s))\,ds.
+$$
+
+不要求空间变量的 Lipschitz 条件，不要求 $E$ 非零维，也不主张解唯一。构造使用步长趋零的延迟 Tonelli 积分近似；统一速度界同时给出范围控制与等度连续，有限维闭球紧性与 Arzela–Ascoli 给出统一收敛子列，支配收敛将实际近似积分方程传到极限。时间反射给出反向区间的解，两侧在 $t_0$ 取同一值并拼接。微积分基本定理在区间内部给出微分方程。
+
+源码来源为 philipp-svinger/mathlib4 修订 a6c8f2f1ae84638491c3f1635c9f8448bda1e727 的 Mathlib/Analysis/ODE/Peano.lean，适用 Apache 2.0 许可证。该定理只建立分析存在性；CFMP 的真实几何实现、度量域不变性、体积恒等式、唯一性和收敛不由此得到。
