@@ -38,8 +38,8 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                             + "using the pinned range and finrank suppliers. The proof constructs "
                             + "the surviving-coordinate image equivalence, then uses common finite "
                             + "endpoint cuts and integer differences to isolate each multiplicity. "
-                            + "Exact interleaving iff "
-                            + "matching and extended isometry remain separate obligations."))),
+                            + "The exact stability theorem transfers interleavings through these "
+                            + "natural classifications."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("exists-quantitative-image-matching"),
@@ -71,28 +71,35 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                         + "length at most its parameter. A zero kernel parameter forces full "
                         + "source coverage and equal deaths; a zero cokernel parameter forces "
                         + "full target coverage and equal births. Empty and zero families are "
-                        + "allowed. Exact stability, natural converse interleavings and equality "
-                        + "of extended-distance feasible sets remain separate conclusions."))),
+                        + "allowed. The exact stability theorem applies these estimates to an "
+                        + "actual shifted interleaving map."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("matching-interleaving"),
-                DeclarationHandle.Create(Prefix + "matching_interleaving"),
-                H("Actual interleaving from a partial occurrence matching"),
+                DescribeId.Create("exists-exact-stability"),
+                DeclarationHandle.Create(Prefix + "exists_exact_stability"),
+                H("Exact actual interleaving, occurrence matching and extended isometry"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "Two occurrence embeddings specify the matched pairs without identifying "
-                        + "repeated intervals. Both birth inequalities and both extended death "
-                        + "inequalities have the same nonnegative radius. Every unmatched death "
-                        + "is at most its birth plus twice that radius. Each forward component "
-                        + "copies a matched source coordinate when the shifted target survives, "
-                        + "and is zero otherwise; the reverse component is constructed symmetrically. "
-                        + "The birth inequalities ensure supported values, and the death inequalities "
-                        + "give every naturality square. A coordinate surviving the double shift "
-                        + "necessarily survives the intermediate matched interval. Both composites "
-                        + "therefore equal the actual double-shift structure maps. Unmatched "
-                        + "coordinates vanish by their length bounds. No overlap, nonempty family "
-                        + "or nonzero radius is assumed; essential deaths remain infinite. "
-                        + "This is the supported-sum converse, not the full classification-based "
-                        + "equivalence or extended-distance equality."))),
+                    "For any two finite-dimensional finite diagrams over an arbitrary field "
+                        + "and their independently chosen strictly increasing real grids, the "
+                        + "natural classifications supply positive-length finite occurrence "
+                        + "families and actual real-extension isomorphisms. These families are "
+                        + "chosen before the radius. At every nonnegative real radius, actual "
+                        + "natural maps satisfying both shifted composite equations exist if "
+                        + "and only if there is a partial occurrence matching with both endpoint "
+                        + "deviations at most that radius and every unmatched length at most "
+                        + "twice the radius. Infinite deaths must be paired to infinite deaths. "
+                        + "The forward proof uses both equations to obtain the kernel condition "
+                        + "and the cokernel range condition at the correctly shifted component. "
+                        + "A natural coordinate comparison expresses the shifted target by "
+                        + "translated endpoints, and the fixed same-image estimates provide "
+                        + "one occurrence matching. Conversely, conditional scalar coordinate "
+                        + "copies satisfy every naturality square and both actual composites, "
+                        + "including short or disjoint pairs. Conjugation by the classifications "
+                        + "transfers both directions to the original real extensions. The finite "
+                        + "nonnegative feasible-radius sets agree, hence their infima in the "
+                        + "extended nonnegative reals agree. Empty feasible sets have infimum "
+                        + "infinity. Zero radius, critical lengths, tied occurrences, empty "
+                        + "diagrams, essential bars and unrestricted tails are included."))),
                 DescribeRole.Theorem))));
 }

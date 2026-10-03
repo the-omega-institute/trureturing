@@ -5,7 +5,7 @@
    anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
      D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
    utility: none
-   digest: Natural interval classification, quantitative image matching and actual converse maps. -/
+   digest: Natural classification and exact interleaving-matching equivalence with extended isometry. -/
 
 import D5.S3.HomologicalAlgebra.Persistence.FiniteIntervalDecomposition
 import D5.S3.HomologicalAlgebra.Persistence.RealIntervalUniqueness
@@ -21,11 +21,14 @@ import Mathlib.Data.Finset.Sort
 import Mathlib.Data.Fintype.Sort
 import Mathlib.Data.Prod.Lex
 import Mathlib.Algebra.Order.Group.OrderIso
+import Mathlib.Data.ENNReal.Basic
 
 namespace D5.S3.HomologicalAlgebra.Persistence.RealDecomposition
 
 open CategoryTheory Module FiniteIntervalSplit FiniteIntervalDecomposition
   RealIntervalUniqueness
+
+open scoped NNReal ENNReal
 
 universe u v
 
@@ -1553,29 +1556,14 @@ theorem exists_quantitative_image_matching {Source Target : Type v}
 
 
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 1600000 in
 set_option backward.isDefEq.respectTransparency false in
-theorem matching_interleaving {Source Target Match : Type v}
-    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ))
-    (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
-    (sourceEmbedding : Match ↪ Source) (targetEmbedding : Match ↪ Target)
-    (epsilon : ℝ) (nonnegative : 0 ≤ epsilon)
-    (birth_bounds : ∀ occurrence,
-      targetFamily.1 (targetEmbedding occurrence) ≤
-        sourceFamily.1 (sourceEmbedding occurrence) + epsilon ∧
-      sourceFamily.1 (sourceEmbedding occurrence) ≤
-        targetFamily.1 (targetEmbedding occurrence) + epsilon)
-    (death_bounds : ∀ occurrence,
-      targetFamily.2 (targetEmbedding occurrence) ≤
-        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
-          (sourceFamily.2 (sourceEmbedding occurrence)) ∧
-      sourceFamily.2 (sourceEmbedding occurrence) ≤
-        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
-          (targetFamily.2 (targetEmbedding occurrence)))
-    (source_unmatched : ∀ occurrence, (¬ ∃ matched, sourceEmbedding matched = occurrence) →
-      sourceFamily.2 occurrence ≤ ((sourceFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ))
-    (target_unmatched : ∀ occurrence, (¬ ∃ matched, targetEmbedding matched = occurrence) →
-      targetFamily.2 occurrence ≤ ((targetFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) :
+theorem exists_exact_stability {m : ℕ}
+    (sourceDiagram : Fin n ⥤ ModuleCat.{v} K)
+    (targetDiagram : Fin m ⥤ ModuleCat.{v} K)
+    [∀ index, FiniteDimensional K (sourceDiagram.obj index)]
+    [∀ index, FiniteDimensional K (targetDiagram.obj index)]
+    (sourceGrid : Fin n ↪o ℝ) (targetGrid : Fin m ↪o ℝ) :
     let intervalSpace := fun {Index : Type v}
         (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
       Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
@@ -1616,179 +1604,627 @@ theorem matching_interleaving {Source Target Match : Type v}
                lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
              simp [intervalArrow, survives, middle_survives]
            · simp [intervalArrow, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
-    let shift := (OrderIso.addRight epsilon).monotone.functor;
-    ∃ (forward : intervalSum sourceFamily ⟶ shift ⋙ intervalSum targetFamily)
-      (reverse : intervalSum targetFamily ⟶ shift ⋙ intervalSum sourceFamily),
-      (∀ time, (reverse.app (time + epsilon)).hom.comp (forward.app time).hom =
-        intervalArrow sourceFamily time (time + epsilon + epsilon) (by linarith)) ∧
-      (∀ time, (forward.app (time + epsilon)).hom.comp (reverse.app time).hom =
-        intervalArrow targetFamily time (time + epsilon + epsilon) (by linarith)) := by
+    let realExtension := fun {length : ℕ} (diagram : Fin length ⥤ ModuleCat.{v} K)
+        (grid : Fin length ↪o ℝ) =>
+      let V := fun index => diagram.obj index
+      let maps := fun source target (ordered : source ≤ target) =>
+        (diagram.map (homOfLE ordered)).hom
+      let prefixedDiagram : WithBot (Fin length) ⥤ ModuleCat.{v} K := {
+        obj slot := match slot with
+          | ⊥ => ModuleCat.of K (ULift.{v} PUnit.{1})
+          | (index : Fin length) => ModuleCat.of K (V index)
+        map {source target} arrow := by
+          cases source with
+          | bot => exact ModuleCat.ofHom 0
+          | coe source =>
+            cases target with
+            | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom arrow))
+            | coe target =>
+              exact ModuleCat.ofHom
+                (maps source target (WithBot.coe_le_coe.mp (leOfHom arrow)))
+        map_id index := by
+          cases index with
+          | bot =>
+            ext vector
+          | coe index =>
+            change ModuleCat.ofHom (maps index index le_rfl) = _
+            exact congrArg ModuleCat.ofHom (congrArg ModuleCat.Hom.hom (diagram.map_id index))
+        map_comp {source middle target} first second := by
+          cases source with
+          | bot =>
+            have : Subsingleton (ULift.{v} PUnit.{1}) := by
+              infer_instance
+            ext vector
+            have zero : vector = 0 := Subsingleton.elim _ _
+            subst vector
+            simp
+          | coe source =>
+            cases middle with
+            | bot => exact False.elim (WithBot.not_coe_le_bot source (leOfHom first))
+            | coe middle =>
+              cases target with
+              | bot => exact False.elim (WithBot.not_coe_le_bot middle (leOfHom second))
+              | coe target =>
+                change ModuleCat.ofHom _ = ModuleCat.ofHom _ ≫ ModuleCat.ofHom _
+                exact diagram.map_comp _ _
+      }
+      let selectedCell : ℝ → WithBot (Fin length) := fun time => by
+        classical
+        exact Finset.univ.sup fun index => if grid index ≤ time then
+          (index : WithBot (Fin length)) else ⊥
+      let selector := (show Monotone (selectedCell) from by
+        classical
+        intro source target ordered
+        apply Finset.sup_mono_fun
+        intro index _
+        by_cases born : grid index ≤ source
+        · simp [born, born.trans ordered]
+        · simp [born]).functor;
+      selector ⋙ prefixedDiagram;
+    let interleaved := fun (source target : ℝ ⥤ ModuleCat.{v} K) (epsilon : ℝ) =>
+      0 ≤ epsilon ∧
+      ∃ (forward : source ⟶ (OrderIso.addRight epsilon).monotone.functor ⋙ target)
+        (reverse : target ⟶ (OrderIso.addRight epsilon).monotone.functor ⋙ source),
+        (∀ time (ordered : time ≤ time + epsilon + epsilon),
+          forward.app time ≫ reverse.app (time + epsilon) = source.map (homOfLE ordered)) ∧
+        (∀ time (ordered : time ≤ time + epsilon + epsilon),
+          reverse.app time ≫ forward.app (time + epsilon) = target.map (homOfLE ordered));
+    let matched := fun {Source Target : Type v}
+        (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ))
+        (targetFamily : (Target → ℝ) × (Target → WithTop ℝ)) (epsilon : ℝ) =>
+      0 ≤ epsilon ∧
+      ∃ (Match : Type v) (finite : Fintype Match), letI := finite;
+        ∃ (sourceEmbedding : Match ↪ Source) (targetEmbedding : Match ↪ Target),
+          (∀ occurrence,
+            targetFamily.1 (targetEmbedding occurrence) ≤
+              sourceFamily.1 (sourceEmbedding occurrence) + epsilon ∧
+            sourceFamily.1 (sourceEmbedding occurrence) ≤
+              targetFamily.1 (targetEmbedding occurrence) + epsilon) ∧
+          (∀ occurrence,
+            targetFamily.2 (targetEmbedding occurrence) ≤
+              WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+                (sourceFamily.2 (sourceEmbedding occurrence)) ∧
+            sourceFamily.2 (sourceEmbedding occurrence) ≤
+              WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+                (targetFamily.2 (targetEmbedding occurrence))) ∧
+          (∀ occurrence, (¬ ∃ paired, sourceEmbedding paired = occurrence) →
+            sourceFamily.2 occurrence ≤
+              ((sourceFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) ∧
+          (∀ occurrence, (¬ ∃ paired, targetEmbedding paired = occurrence) →
+            targetFamily.2 occurrence ≤
+              ((targetFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ));
+    let feasible := fun (predicate : ℝ → Prop) =>
+      {radius : ℝ≥0∞ | ∃ epsilon : ℝ≥0, (epsilon : ℝ≥0∞) = radius ∧ predicate epsilon};
+    ∃ (Source : Type v) (sourceFinite : Fintype Source)
+      (Target : Type v) (targetFinite : Fintype Target),
+      letI := sourceFinite;
+      letI := targetFinite;
+      ∃ (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ))
+        (targetFamily : (Target → ℝ) × (Target → WithTop ℝ)),
+        (∀ occurrence, (sourceFamily.1 occurrence : WithTop ℝ) <
+          sourceFamily.2 occurrence) ∧
+        (∀ occurrence, (targetFamily.1 occurrence : WithTop ℝ) <
+          targetFamily.2 occurrence) ∧
+        ∃ (sourceIso : realExtension sourceDiagram sourceGrid ⋙
+            ModuleCat.uliftFunctor.{u} K ≅ intervalSum sourceFamily)
+          (targetIso : realExtension targetDiagram targetGrid ⋙
+            ModuleCat.uliftFunctor.{u} K ≅ intervalSum targetFamily),
+          (∀ epsilon, interleaved (realExtension sourceDiagram sourceGrid)
+            (realExtension targetDiagram targetGrid) epsilon ↔
+              matched sourceFamily targetFamily epsilon) ∧
+          feasible (interleaved (realExtension sourceDiagram sourceGrid)
+              (realExtension targetDiagram targetGrid)) =
+            feasible (matched sourceFamily targetFamily) ∧
+          sInf (feasible (interleaved (realExtension sourceDiagram sourceGrid)
+              (realExtension targetDiagram targetGrid))) =
+            sInf (feasible (matched sourceFamily targetFamily)) := by
   classical
-  intro intervalSpace intervalArrow intervalSum shift
-  have shift_lt (time : ℝ) (death : WithTop ℝ) :
-      ((time + epsilon : ℝ) : WithTop ℝ) <
-        WithTop.map (fun endpoint : ℝ => endpoint + epsilon) death ↔
-      (time : WithTop ℝ) < death := by
-    cases death <;> simp
-  have construction {First Second : Type v}
-      (firstFamily : (First → ℝ) × (First → WithTop ℝ))
-      (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
-      (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
-      (born_bound : ∀ occurrence, secondFamily.1 (secondEmbedding occurrence) ≤
-        firstFamily.1 (firstEmbedding occurrence) + epsilon)
-      (dies_bound : ∀ occurrence, secondFamily.2 (secondEmbedding occurrence) ≤
-        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
-          (firstFamily.2 (firstEmbedding occurrence))) :
-      ∃ transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily,
-        (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
-          ((transformation.app time).hom coordinates).val (secondEmbedding occurrence) =
-            if ((time + epsilon : ℝ) : WithTop ℝ) <
-              secondFamily.2 (secondEmbedding occurrence) then
-              coordinates.val (firstEmbedding occurrence) else 0) ∧
-        (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
-          (¬ ∃ matched, secondEmbedding matched = occurrence) →
-          ((transformation.app time).hom coordinates).val occurrence = 0) := by
-    let component (time : ℝ) :=
-      (LinearMap.pi fun occurrence : Second =>
-        if paired : ∃ matched, secondEmbedding matched = occurrence then
-          if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence then
-            (LinearMap.proj (firstEmbedding (Classical.choose paired)) :
-              (First → K) →ₗ[K] K) else 0
-        else 0).domRestrict (intervalSpace firstFamily time)
-    have supported (time : ℝ) (coordinates : intervalSpace firstFamily time) :
-        component time coordinates ∈ intervalSpace secondFamily (time + epsilon) := by
-      intro occurrence unsupported
-      by_cases paired : ∃ matched, secondEmbedding matched = occurrence
-      · have paired_eq := Classical.choose_spec paired
-        by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
-        · have not_born : ¬ firstFamily.1 (firstEmbedding (Classical.choose paired)) ≤ time := by
-            intro born
-            apply unsupported
-            refine ⟨?_, survives⟩
-            have bound := born_bound (Classical.choose paired)
-            rw [paired_eq] at bound
-            linarith
-          have zero : coordinates.val (firstEmbedding (Classical.choose paired)) = 0 :=
-            coordinates.property _ (by tauto)
-          simpa [component, paired, survives, LinearMap.proj, LinearMap.pi,
-            ← WithTop.coe_add] using zero
-        · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
-            ← WithTop.coe_add]
-      · simp [component, paired, LinearMap.proj, LinearMap.pi]
-    let transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily := {
-      app time := ModuleCat.ofHom ((component time).codRestrict
-        (intervalSpace secondFamily (time + epsilon)) (supported time))
-      naturality {start finish} arrow := by
-        apply ModuleCat.hom_ext
+  intro intervalSpace intervalArrow intervalSum realExtension interleaved matched feasible
+  let supportedInterleaved := fun (source target : ℝ ⥤ ModuleCat.{max u v} K) (epsilon : ℝ) =>
+    0 ≤ epsilon ∧
+    ∃ (forward : source ⟶ (OrderIso.addRight epsilon).monotone.functor ⋙ target)
+      (reverse : target ⟶ (OrderIso.addRight epsilon).monotone.functor ⋙ source),
+      (∀ time (ordered : time ≤ time + epsilon + epsilon),
+        forward.app time ≫ reverse.app (time + epsilon) = source.map (homOfLE ordered)) ∧
+      (∀ time (ordered : time ≤ time + epsilon + epsilon),
+        reverse.app time ≫ forward.app (time + epsilon) = target.map (homOfLE ordered))
+  obtain ⟨Source, sourceFinite, sourceFamily, source_positive, sourceIso, source_unique⟩ :=
+    exists_unique_decomposition (K := K) sourceDiagram sourceGrid
+  letI := sourceFinite
+  obtain ⟨Target, targetFinite, targetFamily, target_positive, targetIso, target_unique⟩ :=
+    exists_unique_decomposition (K := K) targetDiagram targetGrid
+  letI := targetFinite
+  have supported_equivalence (epsilon : ℝ) :
+      supportedInterleaved (intervalSum sourceFamily) (intervalSum targetFamily) epsilon ↔
+        matched sourceFamily targetFamily epsilon := by
+    constructor
+    · rintro ⟨nonnegative, forward, reverse, first_composite, second_composite⟩
+      refine ⟨nonnegative, ?_⟩
+      have first (time : ℝ) :
+          (reverse.app (time + epsilon)).hom.comp (forward.app time).hom =
+            intervalArrow sourceFamily time (time + epsilon + epsilon) (by linarith) :=
+        congrArg ModuleCat.Hom.hom (first_composite time (by linarith))
+      have second (time : ℝ) :
+          (forward.app (time + epsilon)).hom.comp (reverse.app time).hom =
+            intervalArrow targetFamily time (time + epsilon + epsilon) (by linarith) :=
+        congrArg ModuleCat.Hom.hom (second_composite time (by linarith))
+      let shiftedFamily : (Target → ℝ) × (Target → WithTop ℝ) :=
+        ⟨fun occurrence => targetFamily.1 occurrence - epsilon,
+          fun occurrence => WithTop.map (fun endpoint : ℝ => endpoint - epsilon)
+            (targetFamily.2 occurrence)⟩
+      have shifted_lt (time : ℝ) (death : WithTop ℝ) :
+          (time : WithTop ℝ) < WithTop.map (fun endpoint : ℝ => endpoint - epsilon) death ↔
+            ((time + epsilon : ℝ) : WithTop ℝ) < death := by
+        cases death with
+        | top => simp
+        | coe death =>
+          rw [WithTop.map_coe, WithTop.coe_lt_coe, WithTop.coe_lt_coe]
+          constructor <;> intro comparison <;> linarith
+      have support_eq (time : ℝ) : intervalSpace shiftedFamily time =
+          intervalSpace targetFamily (time + epsilon) := by
+        apply congrArg (fun support : Set Target =>
+          Submodule.pi support (fun _ => (⊥ : Submodule K K)))
+        ext occurrence
+        simp [shiftedFamily, shifted_lt, sub_le_iff_le_add]
+      let components (time : ℝ) := (LinearEquiv.ofEq
+        (intervalSpace targetFamily (time + epsilon))
+        (intervalSpace shiftedFamily time) (support_eq time).symm).toModuleIso
+      have components_eval (time : ℝ) (coordinates : intervalSpace targetFamily
+          (time + epsilon)) (occurrence : Target) :
+          ((components time).hom.hom coordinates).val occurrence = coordinates.val occurrence := rfl
+      have arrow_eval {Index : Type v} (family : (Index → ℝ) × (Index → WithTop ℝ))
+          (start finish : ℝ) (ordered : start ≤ finish)
+          (coordinates : intervalSpace family start) (occurrence : Index) :
+          (intervalArrow family start finish ordered coordinates).val occurrence =
+            if (finish : WithTop ℝ) < family.2 occurrence then coordinates.val occurrence else 0 := by
+        by_cases survives : (finish : WithTop ℝ) < family.2 occurrence
+        · simp only [intervalArrow, LinearMap.codRestrict_apply, LinearMap.domRestrict_apply,
+            LinearMap.pi_apply, if_pos survives, LinearMap.proj_apply]
+        · simp only [intervalArrow, LinearMap.codRestrict_apply, LinearMap.domRestrict_apply,
+            LinearMap.pi_apply, if_neg survives, LinearMap.zero_apply]
+      let shiftedIso : (OrderIso.addRight epsilon).monotone.functor ⋙
+          intervalSum targetFamily ≅ intervalSum shiftedFamily :=
+        NatIso.ofComponents components (by
+          intro start finish arrow
+          apply ModuleCat.hom_ext
+          apply LinearMap.ext
+          intro coordinates
+          apply Subtype.ext
+          funext occurrence
+          change ((components finish).hom.hom (intervalArrow targetFamily
+            (start + epsilon) (finish + epsilon)
+            (show start + epsilon ≤ finish + epsilon from
+              add_le_add (show start ≤ finish from leOfHom arrow) le_rfl)
+            coordinates)).val occurrence =
+            (intervalArrow shiftedFamily start finish (leOfHom arrow)
+              ((components start).hom.hom coordinates)).val occurrence
+          rw [components_eval, arrow_eval, arrow_eval, components_eval]
+          dsimp only [shiftedFamily, Prod.snd]
+          simp only [shifted_lt]
+          all_goals first
+            | exact leOfHom arrow
+            | exact add_le_add (show start ≤ finish from leOfHom arrow) (le_refl epsilon))
+      let morphism : intervalSum sourceFamily ⟶ intervalSum shiftedFamily :=
+        forward ≫ shiftedIso.hom
+      have kernel_double (time : ℝ) : LinearMap.ker (morphism.app time).hom ≤
+          LinearMap.ker (intervalArrow sourceFamily time (time + epsilon + epsilon)
+            (by linarith)) := by
+        intro coordinates killed
+        change (morphism.app time).hom coordinates = 0 at killed
+        have killed_forward : (forward.app time).hom coordinates = 0 := by
+          apply (shiftedIso.app time).toLinearEquiv.injective
+          change (shiftedIso.hom.app time).hom ((forward.app time).hom coordinates) =
+            (shiftedIso.hom.app time).hom 0
+          rw [map_zero]
+          exact killed
+        change intervalArrow sourceFamily time (time + epsilon + epsilon)
+          (by linarith) coordinates = 0
+        rw [← first time]
+        exact (congrArg (reverse.app (time + epsilon)).hom killed_forward).trans
+          (map_zero (reverse.app (time + epsilon)).hom)
+      have cokernel_double (time : ℝ) :
+          LinearMap.range (intervalArrow shiftedFamily time (time + epsilon + epsilon)
+            (by linarith)) ≤ LinearMap.range (morphism.app (time + epsilon + epsilon)).hom := by
+        intro vector member
+        obtain ⟨coordinates, rfl⟩ := member
+        refine ⟨(reverse.app (time + epsilon)).hom
+          ((shiftedIso.inv.app time).hom coordinates), ?_⟩
+        change (shiftedIso.hom.app (time + epsilon + epsilon)).hom
+          ((forward.app (time + epsilon + epsilon)).hom
+            ((reverse.app (time + epsilon)).hom ((shiftedIso.inv.app time).hom coordinates))) = _
+        have composition := congrArg
+          (fun linear => linear ((shiftedIso.inv.app time).hom coordinates)) (second (time + epsilon))
+        simp only [LinearMap.comp_apply] at composition
+        erw [composition]
+        have natural := congrArg (fun linear => linear ((shiftedIso.inv.app time).hom coordinates))
+          (congrArg ModuleCat.Hom.hom (shiftedIso.hom.naturality
+            (homOfLE (show time ≤ time + epsilon + epsilon by linarith))))
+        simp only [ModuleCat.hom_comp, LinearMap.comp_apply] at natural
+        have cancel : (shiftedIso.hom.app time).hom
+            ((shiftedIso.inv.app time).hom coordinates) = coordinates :=
+          ModuleCat.hom_inv_apply (shiftedIso.app time) coordinates
+        rw [cancel] at natural
+        change (shiftedIso.hom.app (time + epsilon + epsilon)).hom
+          (intervalArrow targetFamily (time + epsilon) (time + epsilon + epsilon + epsilon)
+            (by linarith) ((shiftedIso.inv.app time).hom coordinates)) =
+          intervalArrow shiftedFamily time (time + epsilon + epsilon) (by linarith) coordinates
+          at natural
+        exact natural
+      have kernel_trivial (time : ℝ) : LinearMap.ker (morphism.app time).hom ≤
+          LinearMap.ker (intervalArrow sourceFamily time (time + 2 * epsilon) (by linarith)) := by
+        intro coordinates killed
+        have killed_double : intervalArrow sourceFamily time (time + epsilon + epsilon)
+            (by linarith) coordinates = 0 := kernel_double time killed
+        have composed := congrArg ModuleCat.Hom.hom ((intervalSum sourceFamily).map_comp
+          (homOfLE (show time ≤ time + epsilon + epsilon by linarith))
+          (homOfLE (show time + epsilon + epsilon ≤ time + 2 * epsilon by linarith)))
+        change intervalArrow sourceFamily time (time + 2 * epsilon) (by linarith) =
+          (intervalArrow sourceFamily (time + epsilon + epsilon) (time + 2 * epsilon)
+            (by linarith)).comp
+          (intervalArrow sourceFamily time (time + epsilon + epsilon) (by linarith)) at composed
+        change intervalArrow sourceFamily time (time + 2 * epsilon) (by linarith) coordinates = 0
+        rw [composed]
+        exact (congrArg (intervalArrow sourceFamily (time + epsilon + epsilon)
+          (time + 2 * epsilon) (by linarith)) killed_double).trans (map_zero _)
+      have cokernel_trivial (time : ℝ) :
+          LinearMap.range (intervalArrow shiftedFamily time (time + 2 * epsilon) (by linarith)) ≤
+            LinearMap.range (morphism.app (time + 2 * epsilon)).hom := by
+        intro vector member
+        obtain ⟨coordinates, rfl⟩ := member
+        obtain ⟨lifted, image_eq⟩ := cokernel_double time
+          (show intervalArrow shiftedFamily time (time + epsilon + epsilon)
+            (by linarith) coordinates ∈ LinearMap.range (intervalArrow shiftedFamily time
+              (time + epsilon + epsilon) (by linarith)) from
+            ⟨coordinates, rfl⟩)
+        refine ⟨intervalArrow sourceFamily (time + epsilon + epsilon)
+          (time + 2 * epsilon) (by linarith) lifted, ?_⟩
+        have natural := congrArg (fun linear => linear lifted)
+          (congrArg ModuleCat.Hom.hom (morphism.naturality (homOfLE
+            (show time + epsilon + epsilon ≤ time + 2 * epsilon by linarith))))
+        change (morphism.app (time + 2 * epsilon)).hom
+            (intervalArrow sourceFamily (time + epsilon + epsilon) (time + 2 * epsilon)
+              (by linarith) lifted) =
+          intervalArrow shiftedFamily (time + epsilon + epsilon) (time + 2 * epsilon)
+            (by linarith) ((morphism.app (time + epsilon + epsilon)).hom lifted) at natural
+        rw [image_eq] at natural
+        have composed := congrArg (fun linear => linear coordinates)
+          (congrArg ModuleCat.Hom.hom ((intervalSum shiftedFamily).map_comp
+            (homOfLE (show time ≤ time + epsilon + epsilon by linarith))
+            (homOfLE (show time + epsilon + epsilon ≤ time + 2 * epsilon by linarith))))
+        change intervalArrow shiftedFamily time (time + 2 * epsilon) (by linarith) coordinates =
+          intervalArrow shiftedFamily (time + epsilon + epsilon) (time + 2 * epsilon)
+            (by linarith) (intervalArrow shiftedFamily time (time + epsilon + epsilon)
+              (by linarith) coordinates) at composed
+        exact natural.trans composed.symm
+      have shifted_positive : ∀ occurrence, (shiftedFamily.1 occurrence : WithTop ℝ) <
+          shiftedFamily.2 occurrence := by
+        intro occurrence
+        apply (shifted_lt _ _).mpr
+        simpa [shiftedFamily] using target_positive occurrence
+      obtain ⟨Occurrence, finite, rest⟩ := exists_quantitative_image_matching
+        (K := K) sourceFamily shiftedFamily source_positive shifted_positive morphism
+      letI := finite
+      obtain ⟨family, positive, imageIso, image_surjective, image_injective, factorization,
+        sourceBirthEnumeration, imageBirthEnumeration, imageDeathEnumeration,
+        targetDeathEnumeration, source_sorted, image_birth_sorted, image_death_sorted, target_sorted,
+        sourceEmbedding, targetEmbedding, source_ordinal, target_ordinal, estimates⟩ := rest
+      obtain ⟨bounds, finite_bounds, source_coverage, target_coverage, essential_equivalence,
+        source_essential, target_essential, source_short, target_short, kernel_zero,
+        cokernel_zero⟩ := estimates (2 * epsilon) (2 * epsilon) (by linarith) (by linarith)
+          kernel_trivial cokernel_trivial
+      refine ⟨Occurrence, finite, sourceEmbedding, targetEmbedding, ?_, ?_, ?_, ?_⟩
+      · intro occurrence
+        obtain ⟨target_le, source_eq, image_le, death_eq, image_death_le, trim_le⟩ := bounds occurrence
+        dsimp [shiftedFamily] at target_le image_le
+        constructor <;> linarith
+      · intro occurrence
+        obtain ⟨target_le, source_eq, image_le, death_eq, image_death_le, trim_le⟩ := bounds occurrence
+        rw [death_eq] at image_death_le trim_le
+        dsimp [shiftedFamily] at image_death_le trim_le
+        cases source_death : sourceFamily.2 (sourceEmbedding occurrence) with
+        | top =>
+          cases target_death : targetFamily.2 (targetEmbedding occurrence) with
+          | top => simp [source_death, target_death]
+          | coe target_death =>
+            simp [source_death, target_death] at trim_le
+        | coe source_death =>
+          cases target_death : targetFamily.2 (targetEmbedding occurrence) with
+          | top => simp [source_death, target_death] at image_death_le
+          | coe target_death =>
+            rw [source_death, target_death, WithTop.map_coe, WithTop.coe_le_coe] at image_death_le
+            rw [source_death, target_death, WithTop.map_coe, WithTop.map_coe,
+              WithTop.coe_le_coe] at trim_le
+            constructor <;> apply WithTop.coe_le_coe.mpr <;> linarith
+      · intro occurrence unmatched
+        exact le_of_not_gt fun long => unmatched (source_coverage occurrence long)
+      · intro occurrence unmatched
+        apply le_of_not_gt
+        intro long
+        apply unmatched
+        apply target_coverage occurrence
+        apply (shifted_lt _ _).mpr
+        simpa only [shiftedFamily, Prod.fst, Prod.snd,
+          show targetFamily.1 occurrence - epsilon + 2 * epsilon + epsilon =
+            targetFamily.1 occurrence + 2 * epsilon by ring] using long
+    · rintro ⟨nonnegative, Match, finite, sourceEmbedding, targetEmbedding,
+        birth_bounds, death_bounds, source_unmatched, target_unmatched⟩
+      refine ⟨nonnegative, ?_⟩
+      let shift := (OrderIso.addRight epsilon).monotone.functor
+      have shift_lt (time : ℝ) (death : WithTop ℝ) :
+          ((time + epsilon : ℝ) : WithTop ℝ) <
+            WithTop.map (fun endpoint : ℝ => endpoint + epsilon) death ↔
+          (time : WithTop ℝ) < death := by
+        cases death <;> simp
+      have construction {First Second : Type v}
+          (firstFamily : (First → ℝ) × (First → WithTop ℝ))
+          (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
+          (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
+          (born_bound : ∀ occurrence, secondFamily.1 (secondEmbedding occurrence) ≤
+            firstFamily.1 (firstEmbedding occurrence) + epsilon)
+          (dies_bound : ∀ occurrence, secondFamily.2 (secondEmbedding occurrence) ≤
+            WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+              (firstFamily.2 (firstEmbedding occurrence))) :
+          ∃ transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily,
+            (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+              ((transformation.app time).hom coordinates).val (secondEmbedding occurrence) =
+                if ((time + epsilon : ℝ) : WithTop ℝ) <
+                  secondFamily.2 (secondEmbedding occurrence) then
+                  coordinates.val (firstEmbedding occurrence) else 0) ∧
+            (∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+              (¬ ∃ matched, secondEmbedding matched = occurrence) →
+              ((transformation.app time).hom coordinates).val occurrence = 0) := by
+        let component (time : ℝ) :=
+          (LinearMap.pi fun occurrence : Second =>
+            if paired : ∃ matched, secondEmbedding matched = occurrence then
+              if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence then
+                (LinearMap.proj (firstEmbedding (Classical.choose paired)) :
+                  (First → K) →ₗ[K] K) else 0
+            else 0).domRestrict (intervalSpace firstFamily time)
+        have supported (time : ℝ) (coordinates : intervalSpace firstFamily time) :
+            component time coordinates ∈ intervalSpace secondFamily (time + epsilon) := by
+          intro occurrence unsupported
+          by_cases paired : ∃ matched, secondEmbedding matched = occurrence
+          · have paired_eq := Classical.choose_spec paired
+            by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
+            · have not_born : ¬ firstFamily.1 (firstEmbedding (Classical.choose paired)) ≤ time := by
+                intro born
+                apply unsupported
+                refine ⟨?_, survives⟩
+                have bound := born_bound (Classical.choose paired)
+                rw [paired_eq] at bound
+                linarith
+              have zero : coordinates.val (firstEmbedding (Classical.choose paired)) = 0 :=
+                coordinates.property _ (by tauto)
+              simpa [component, paired, survives, LinearMap.proj, LinearMap.pi,
+                ← WithTop.coe_add] using zero
+            · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
+                ← WithTop.coe_add]
+          · simp [component, paired, LinearMap.proj, LinearMap.pi]
+        let transformation : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily := {
+          app time := ModuleCat.ofHom ((component time).codRestrict
+            (intervalSpace secondFamily (time + epsilon)) (supported time))
+          naturality {start finish} arrow := by
+            apply ModuleCat.hom_ext
+            apply LinearMap.ext
+            intro coordinates
+            apply Subtype.ext
+            funext occurrence
+            change ((component finish) (intervalArrow firstFamily start finish
+              (leOfHom arrow) coordinates)) occurrence =
+              (intervalArrow secondFamily (start + epsilon) (finish + epsilon)
+                (by have ordered := leOfHom arrow; linarith)
+                ⟨component start coordinates, supported start coordinates⟩).val occurrence
+            by_cases paired : ∃ matched, secondEmbedding matched = occurrence
+            · have paired_eq := Classical.choose_spec paired
+              by_cases survives : ((finish + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
+              · have start_survives : ((start + epsilon : ℝ) : WithTop ℝ) <
+                    secondFamily.2 occurrence := lt_of_le_of_lt
+                      (WithTop.coe_le_coe.mpr (by have ordered := leOfHom arrow; linarith)) survives
+                have first_survives : (finish : WithTop ℝ) <
+                    firstFamily.2 (firstEmbedding (Classical.choose paired)) := by
+                  apply (shift_lt finish _).mp
+                  have bound := dies_bound (Classical.choose paired)
+                  rw [paired_eq] at bound
+                  exact survives.trans_le bound
+                simp [component, intervalArrow, paired, survives, start_survives, first_survives,
+                  LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+              · simp [component, intervalArrow, paired, survives,
+                  LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+            · simp [component, intervalArrow, paired, LinearMap.proj, LinearMap.pi,
+                apply_ite, ite_apply] }
+        refine ⟨transformation, ?_, ?_⟩
+        · intro time coordinates occurrence
+          have paired : ∃ matched, secondEmbedding matched = secondEmbedding occurrence :=
+            ⟨occurrence, rfl⟩
+          have chosen : Classical.choose paired = occurrence :=
+            secondEmbedding.injective (Classical.choose_spec paired)
+          change component time coordinates (secondEmbedding occurrence) = _
+          by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) <
+              secondFamily.2 (secondEmbedding occurrence)
+          · simp [component, paired, chosen, survives, LinearMap.proj, LinearMap.pi,
+              ← WithTop.coe_add]
+          · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
+              ← WithTop.coe_add]
+        · intro time coordinates occurrence unmatched
+          change component time coordinates occurrence = _
+          simp [component, unmatched, LinearMap.proj, LinearMap.pi]
+      obtain ⟨forward, forward_paired, forward_unmatched⟩ :=
+        construction sourceFamily targetFamily sourceEmbedding targetEmbedding
+          (fun occurrence => (birth_bounds occurrence).1) (fun occurrence => (death_bounds occurrence).1)
+      obtain ⟨reverse, reverse_paired, reverse_unmatched⟩ :=
+        construction targetFamily sourceFamily targetEmbedding sourceEmbedding
+          (fun occurrence => (birth_bounds occurrence).2) (fun occurrence => (death_bounds occurrence).2)
+      have composite {First Second : Type v}
+          (firstFamily : (First → ℝ) × (First → WithTop ℝ))
+          (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
+          (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
+          (firstMap : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily)
+          (secondMap : intervalSum secondFamily ⟶ shift ⋙ intervalSum firstFamily)
+          (first_paired : ∀ time (coordinates : intervalSpace firstFamily time) occurrence,
+            ((firstMap.app time).hom coordinates).val (secondEmbedding occurrence) =
+              if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 (secondEmbedding occurrence)
+                then coordinates.val (firstEmbedding occurrence) else 0)
+          (second_paired : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
+            ((secondMap.app time).hom coordinates).val (firstEmbedding occurrence) =
+              if ((time + epsilon : ℝ) : WithTop ℝ) < firstFamily.2 (firstEmbedding occurrence)
+                then coordinates.val (secondEmbedding occurrence) else 0)
+          (second_unmatched : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
+            (¬ ∃ matched, firstEmbedding matched = occurrence) →
+            ((secondMap.app time).hom coordinates).val occurrence = 0)
+          (dies_bound : ∀ occurrence, firstFamily.2 (firstEmbedding occurrence) ≤
+            WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
+              (secondFamily.2 (secondEmbedding occurrence)))
+          (unmatched_bound : ∀ occurrence, (¬ ∃ matched, firstEmbedding matched = occurrence) →
+            firstFamily.2 occurrence ≤ ((firstFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) :
+          ∀ time, (secondMap.app (time + epsilon)).hom.comp (firstMap.app time).hom =
+            intervalArrow firstFamily time (time + epsilon + epsilon) (by linarith) := by
+        intro time
         apply LinearMap.ext
         intro coordinates
         apply Subtype.ext
         funext occurrence
-        change ((component finish) (intervalArrow firstFamily start finish
-          (leOfHom arrow) coordinates)) occurrence =
-          (intervalArrow secondFamily (start + epsilon) (finish + epsilon)
-            (by have ordered := leOfHom arrow; linarith)
-            ⟨component start coordinates, supported start coordinates⟩).val occurrence
-        by_cases paired : ∃ matched, secondEmbedding matched = occurrence
-        · have paired_eq := Classical.choose_spec paired
-          by_cases survives : ((finish + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 occurrence
-          · have start_survives : ((start + epsilon : ℝ) : WithTop ℝ) <
-                secondFamily.2 occurrence := lt_of_le_of_lt
-                  (WithTop.coe_le_coe.mpr (by have ordered := leOfHom arrow; linarith)) survives
-            have first_survives : (finish : WithTop ℝ) <
-                firstFamily.2 (firstEmbedding (Classical.choose paired)) := by
-              apply (shift_lt finish _).mp
-              have bound := dies_bound (Classical.choose paired)
-              rw [paired_eq] at bound
-              exact survives.trans_le bound
-            simp [component, intervalArrow, paired, survives, start_survives, first_survives,
-              LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
-          · simp [component, intervalArrow, paired, survives,
-              LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
-        · simp [component, intervalArrow, paired, LinearMap.proj, LinearMap.pi,
-            apply_ite, ite_apply] }
-    refine ⟨transformation, ?_, ?_⟩
-    · intro time coordinates occurrence
-      have paired : ∃ matched, secondEmbedding matched = secondEmbedding occurrence :=
-        ⟨occurrence, rfl⟩
-      have chosen : Classical.choose paired = occurrence :=
-        secondEmbedding.injective (Classical.choose_spec paired)
-      change component time coordinates (secondEmbedding occurrence) = _
-      by_cases survives : ((time + epsilon : ℝ) : WithTop ℝ) <
-          secondFamily.2 (secondEmbedding occurrence)
-      · simp [component, paired, chosen, survives, LinearMap.proj, LinearMap.pi,
-          ← WithTop.coe_add]
-      · simp [component, paired, survives, LinearMap.proj, LinearMap.pi,
-          ← WithTop.coe_add]
-    · intro time coordinates occurrence unmatched
-      change component time coordinates occurrence = _
-      simp [component, unmatched, LinearMap.proj, LinearMap.pi]
-  obtain ⟨forward, forward_paired, forward_unmatched⟩ :=
-    construction sourceFamily targetFamily sourceEmbedding targetEmbedding
-      (fun occurrence => (birth_bounds occurrence).1) (fun occurrence => (death_bounds occurrence).1)
-  obtain ⟨reverse, reverse_paired, reverse_unmatched⟩ :=
-    construction targetFamily sourceFamily targetEmbedding sourceEmbedding
-      (fun occurrence => (birth_bounds occurrence).2) (fun occurrence => (death_bounds occurrence).2)
-  have composite {First Second : Type v}
-      (firstFamily : (First → ℝ) × (First → WithTop ℝ))
-      (secondFamily : (Second → ℝ) × (Second → WithTop ℝ))
-      (firstEmbedding : Match ↪ First) (secondEmbedding : Match ↪ Second)
-      (firstMap : intervalSum firstFamily ⟶ shift ⋙ intervalSum secondFamily)
-      (secondMap : intervalSum secondFamily ⟶ shift ⋙ intervalSum firstFamily)
-      (first_paired : ∀ time (coordinates : intervalSpace firstFamily time) occurrence,
-        ((firstMap.app time).hom coordinates).val (secondEmbedding occurrence) =
-          if ((time + epsilon : ℝ) : WithTop ℝ) < secondFamily.2 (secondEmbedding occurrence)
-            then coordinates.val (firstEmbedding occurrence) else 0)
-      (second_paired : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
-        ((secondMap.app time).hom coordinates).val (firstEmbedding occurrence) =
-          if ((time + epsilon : ℝ) : WithTop ℝ) < firstFamily.2 (firstEmbedding occurrence)
-            then coordinates.val (secondEmbedding occurrence) else 0)
-      (second_unmatched : ∀ time (coordinates : intervalSpace secondFamily time) occurrence,
-        (¬ ∃ matched, firstEmbedding matched = occurrence) →
-        ((secondMap.app time).hom coordinates).val occurrence = 0)
-      (dies_bound : ∀ occurrence, firstFamily.2 (firstEmbedding occurrence) ≤
-        WithTop.map (fun endpoint : ℝ => endpoint + epsilon)
-          (secondFamily.2 (secondEmbedding occurrence)))
-      (unmatched_bound : ∀ occurrence, (¬ ∃ matched, firstEmbedding matched = occurrence) →
-        firstFamily.2 occurrence ≤ ((firstFamily.1 occurrence + 2 * epsilon : ℝ) : WithTop ℝ)) :
-      ∀ time, (secondMap.app (time + epsilon)).hom.comp (firstMap.app time).hom =
-        intervalArrow firstFamily time (time + epsilon + epsilon) (by linarith) := by
-    intro time
-    apply LinearMap.ext
-    intro coordinates
-    apply Subtype.ext
-    funext occurrence
-    change ((secondMap.app (time + epsilon)).hom ((firstMap.app time).hom coordinates)).val
-      occurrence = (intervalArrow firstFamily time (time + epsilon + epsilon)
-        (by linarith) coordinates).val occurrence
-    by_cases paired : ∃ matched, firstEmbedding matched = occurrence
-    · obtain ⟨matched, rfl⟩ := paired
-      rw [second_paired]
-      by_cases survives : ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
-          firstFamily.2 (firstEmbedding matched)
-      · have middle_survives : ((time + epsilon : ℝ) : WithTop ℝ) <
-            secondFamily.2 (secondEmbedding matched) := by
-          apply (shift_lt (time + epsilon) _).mp
-          exact survives.trans_le (dies_bound matched)
-        rw [if_pos survives, first_paired, if_pos middle_survives]
-        simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
-      · simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
-    · rw [second_unmatched _ _ _ paired]
-      by_cases born : firstFamily.1 occurrence ≤ time
-      · have not_survives : ¬ ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
-            firstFamily.2 occurrence := by
-          apply not_lt_of_ge
-          exact (unmatched_bound occurrence paired).trans
-            (WithTop.coe_le_coe.mpr (by linarith))
-        simp [intervalArrow, not_survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
-      · have zero : coordinates.val occurrence = 0 := coordinates.property _ (by tauto)
-        simp [intervalArrow, zero, LinearMap.proj, LinearMap.pi, apply_ite, ite_apply]
-  exact ⟨forward, reverse,
-    composite sourceFamily targetFamily sourceEmbedding targetEmbedding forward reverse
-      forward_paired reverse_paired reverse_unmatched
-      (fun occurrence => (death_bounds occurrence).2) source_unmatched,
-    composite targetFamily sourceFamily targetEmbedding sourceEmbedding reverse forward
-      reverse_paired forward_paired forward_unmatched
-      (fun occurrence => (death_bounds occurrence).1) target_unmatched⟩
+        change ((secondMap.app (time + epsilon)).hom ((firstMap.app time).hom coordinates)).val
+          occurrence = (intervalArrow firstFamily time (time + epsilon + epsilon)
+            (by linarith) coordinates).val occurrence
+        by_cases paired : ∃ matched, firstEmbedding matched = occurrence
+        · obtain ⟨matched, rfl⟩ := paired
+          rw [second_paired]
+          by_cases survives : ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
+              firstFamily.2 (firstEmbedding matched)
+          · have middle_survives : ((time + epsilon : ℝ) : WithTop ℝ) <
+                secondFamily.2 (secondEmbedding matched) := by
+              apply (shift_lt (time + epsilon) _).mp
+              exact survives.trans_le (dies_bound matched)
+            rw [if_pos survives, first_paired, if_pos middle_survives]
+            simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+          · simp [intervalArrow, survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+        · rw [second_unmatched _ _ _ paired]
+          by_cases born : firstFamily.1 occurrence ≤ time
+          · have not_survives : ¬ ((time + epsilon + epsilon : ℝ) : WithTop ℝ) <
+                firstFamily.2 occurrence := by
+              apply not_lt_of_ge
+              exact (unmatched_bound occurrence paired).trans
+                (WithTop.coe_le_coe.mpr (by linarith))
+            simp [intervalArrow, not_survives, LinearMap.proj, LinearMap.pi, ← WithTop.coe_add]
+          · have zero : coordinates.val occurrence = 0 := coordinates.property _ (by tauto)
+            simp [intervalArrow, zero, LinearMap.proj, LinearMap.pi, apply_ite, ite_apply]
+      refine ⟨forward, reverse, ?_, ?_⟩
+      · intro time ordered
+        apply ModuleCat.hom_ext
+        exact composite sourceFamily targetFamily sourceEmbedding targetEmbedding forward reverse
+          forward_paired reverse_paired reverse_unmatched
+          (fun occurrence => (death_bounds occurrence).2) source_unmatched time
+      · intro time ordered
+        apply ModuleCat.hom_ext
+        exact composite targetFamily sourceFamily targetEmbedding sourceEmbedding reverse forward
+          reverse_paired forward_paired forward_unmatched
+          (fun occurrence => (death_bounds occurrence).1) target_unmatched time
+  have transfer {First Second Third Fourth : ℝ ⥤ ModuleCat.{max u v} K}
+      (firstIso : First ≅ Third) (secondIso : Second ≅ Fourth) (epsilon : ℝ) :
+      supportedInterleaved First Second epsilon → supportedInterleaved Third Fourth epsilon := by
+    rintro ⟨nonnegative, forward, reverse, first_composite, second_composite⟩
+    let shift := (OrderIso.addRight epsilon).monotone.functor
+    let transformedForward := firstIso.inv ≫ forward ≫
+      Functor.whiskerLeft shift secondIso.hom
+    let transformedReverse := secondIso.inv ≫ reverse ≫
+      Functor.whiskerLeft shift firstIso.hom
+    refine ⟨nonnegative, transformedForward, transformedReverse, ?_, ?_⟩
+    · intro time ordered
+      change (firstIso.inv.app time ≫ forward.app time ≫ secondIso.hom.app (time + epsilon)) ≫
+        (secondIso.inv.app (time + epsilon) ≫ reverse.app (time + epsilon) ≫
+          firstIso.hom.app (time + epsilon + epsilon)) = Third.map (homOfLE ordered)
+      calc
+        _ = firstIso.inv.app time ≫ (forward.app time ≫ reverse.app (time + epsilon)) ≫
+            firstIso.hom.app (time + epsilon + epsilon) := by
+          simp only [Category.assoc, Iso.hom_inv_id_app_assoc]
+        _ = firstIso.inv.app time ≫ First.map (homOfLE ordered) ≫
+            firstIso.hom.app (time + epsilon + epsilon) := by
+          rw [first_composite time ordered]
+        _ = Third.map (homOfLE ordered) := by
+          rw [firstIso.hom.naturality]
+          simp only [← Category.assoc, Iso.inv_hom_id_app, Category.id_comp]
+    · intro time ordered
+      change (secondIso.inv.app time ≫ reverse.app time ≫ firstIso.hom.app (time + epsilon)) ≫
+        (firstIso.inv.app (time + epsilon) ≫ forward.app (time + epsilon) ≫
+          secondIso.hom.app (time + epsilon + epsilon)) = Fourth.map (homOfLE ordered)
+      calc
+        _ = secondIso.inv.app time ≫ (reverse.app time ≫ forward.app (time + epsilon)) ≫
+            secondIso.hom.app (time + epsilon + epsilon) := by
+          simp only [Category.assoc, Iso.hom_inv_id_app_assoc]
+        _ = secondIso.inv.app time ≫ Second.map (homOfLE ordered) ≫
+            secondIso.hom.app (time + epsilon + epsilon) := by
+          rw [second_composite time ordered]
+        _ = Fourth.map (homOfLE ordered) := by
+          rw [secondIso.hom.naturality]
+          simp only [← Category.assoc, Iso.inv_hom_id_app, Category.id_comp]
+  let lift := ModuleCat.uliftFunctor.{u, v} K
+  have lift_equivalence (source target : ℝ ⥤ ModuleCat.{v} K) (epsilon : ℝ) :
+      interleaved source target epsilon ↔
+        supportedInterleaved (source ⋙ lift) (target ⋙ lift) epsilon := by
+    constructor
+    · rintro ⟨nonnegative, forward, reverse, first_composite, second_composite⟩
+      refine ⟨nonnegative, Functor.whiskerRight forward lift,
+        Functor.whiskerRight reverse lift, ?_, ?_⟩
+      · intro time ordered
+        exact (lift.map_comp _ _).symm.trans (congrArg lift.map (first_composite time ordered))
+      · intro time ordered
+        exact (lift.map_comp _ _).symm.trans (congrArg lift.map (second_composite time ordered))
+    · rintro ⟨nonnegative, forward, reverse, first_composite, second_composite⟩
+      let shift := (OrderIso.addRight epsilon).monotone.functor
+      let rawForward : source ⟶ shift ⋙ target := {
+        app time := lift.preimage (forward.app time)
+        naturality {start finish} arrow := by
+          apply lift.map_injective
+          change lift.map (source.map arrow ≫ lift.preimage (forward.app finish)) =
+            lift.map (lift.preimage (forward.app start) ≫ target.map (shift.map arrow))
+          simpa only [Functor.map_comp, Functor.map_preimage, Functor.comp_map]
+            using forward.naturality arrow }
+      let rawReverse : target ⟶ shift ⋙ source := {
+        app time := lift.preimage (reverse.app time)
+        naturality {start finish} arrow := by
+          apply lift.map_injective
+          change lift.map (target.map arrow ≫ lift.preimage (reverse.app finish)) =
+            lift.map (lift.preimage (reverse.app start) ≫ source.map (shift.map arrow))
+          simpa only [Functor.map_comp, Functor.map_preimage, Functor.comp_map]
+            using reverse.naturality arrow }
+      refine ⟨nonnegative, rawForward, rawReverse, ?_, ?_⟩
+      · intro time ordered
+        apply lift.map_injective
+        change lift.map (lift.preimage (forward.app time) ≫
+          lift.preimage (reverse.app (time + epsilon))) = lift.map (source.map (homOfLE ordered))
+        simpa only [Functor.map_comp, Functor.map_preimage, Functor.comp_map]
+          using first_composite time ordered
+      · intro time ordered
+        apply lift.map_injective
+        change lift.map (lift.preimage (reverse.app time) ≫
+          lift.preimage (forward.app (time + epsilon))) = lift.map (target.map (homOfLE ordered))
+        simpa only [Functor.map_comp, Functor.map_preimage, Functor.comp_map]
+          using second_composite time ordered
+
+  have exact_equivalence (epsilon : ℝ) :
+      interleaved (realExtension sourceDiagram sourceGrid)
+        (realExtension targetDiagram targetGrid) epsilon ↔
+          matched sourceFamily targetFamily epsilon := by
+    constructor
+    · intro witness
+      exact (supported_equivalence epsilon).mp (transfer sourceIso targetIso epsilon
+        ((lift_equivalence _ _ epsilon).mp witness))
+    · intro witness
+      exact (lift_equivalence _ _ epsilon).mpr
+        (transfer sourceIso.symm targetIso.symm epsilon
+          ((supported_equivalence epsilon).mpr witness))
+  have feasible_eq :
+      feasible (interleaved (realExtension sourceDiagram sourceGrid)
+          (realExtension targetDiagram targetGrid)) =
+        feasible (matched sourceFamily targetFamily) := by
+    ext radius
+    constructor
+    · rintro ⟨epsilon, radius_eq, witness⟩
+      exact ⟨epsilon, radius_eq, (exact_equivalence epsilon).mp witness⟩
+    · rintro ⟨epsilon, radius_eq, witness⟩
+      exact ⟨epsilon, radius_eq, (exact_equivalence epsilon).mpr witness⟩
+  exact ⟨Source, sourceFinite, Target, targetFinite, sourceFamily, targetFamily,
+    source_positive, target_positive, sourceIso, targetIso, exact_equivalence,
+    feasible_eq, congrArg sInf feasible_eq⟩
 
 end D5.S3.HomologicalAlgebra.Persistence.RealDecomposition
