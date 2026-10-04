@@ -1,0 +1,237 @@
+{
+  "scope": "Paper-model original-kernel/root and Fourier-action coefficients; retained integrals, projection, residual Gram and matrix sign unpaid; no Lean or RH certificate",
+  "runtime": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "precision_bits": 128
+  },
+  "input_sha256": {
+    "high-trial-bounds-result.json": "88bb6871cc29fedecbfd79076e37b39d65b33337a26076b2f15c49cbd88d669a",
+    "common-trials.json": "6ac0df5db3b09a26b15ae6457eebb6d8aa96b50b8a210d59ac923ec45cb10045"
+  },
+  "physical_nonvanishing_strip": "1/6",
+  "contour_delta": "1/8",
+  "right_chart_minimum_real": "-1/8",
+  "root_retained_theta_terms": 8,
+  "relative_remainder_rational_upper": "56000/342657 < 1/6",
+  "relative_root_series_tail_upper": {
+    "display": "[7.4878216125472887396323638118204743558e-66 +/- 2.43e-104]",
+    "dyadic": [
+      "134166472696544939132490551829890076947",
+      "-343"
+    ]
+  },
+  "s_strip_sup_upper": {
+    "display": "[1.8024184837518625391964685591797921390 +/- 1.49e-38]",
+    "dyadic": [
+      "306665613916566425344483888866732946507",
+      "-127"
+    ]
+  },
+  "s_real_sup_upper": {
+    "display": "[1.7148402239993501608265346052837316809 +/- 3.68e-38]",
+    "dyadic": [
+      "291764945156865588081842188390560126091",
+      "-127"
+    ]
+  },
+  "s_line_L2_upper": {
+    "display": "[1.1421871031676633596852366089031878315 +/- 3.27e-38]",
+    "dyadic": [
+      "194333065466231309252056077430637966857",
+      "-127"
+    ]
+  },
+  "v0_line_L2_upper": {
+    "display": "[1.9013714357980085735424698858686831039 +/- 4.44e-38]",
+    "dyadic": [
+      "323501586284604772025142545535524916063",
+      "-127"
+    ]
+  },
+  "retained_forward_line_L2_operator_upper": {
+    "display": "[443827.62532336822111995641221126115583 +/- 2.02e-33]",
+    "dyadic": [
+      "288060598087187165603277200616771110909",
+      "-109"
+    ]
+  },
+  "common_high_line_L2_operator_upper": {
+    "display": "[756406848.92620279186283862501825046397 +/- 3.24e-30]",
+    "dyadic": [
+      "239714899014511151811259240882237063887",
+      "-98"
+    ]
+  },
+  "low_sp_two_line_L2_operator_upper": {
+    "display": "[7598.4758145238029100694412141038191741 +/- 6.95e-36]",
+    "dyadic": [
+      "315628336811238459331943305320091668825",
+      "-115"
+    ]
+  },
+  "high_sZ_two_line_L2_operator_upper": {
+    "display": "[1928084586.3948958265352047561040308308 +/- 3.30e-29]",
+    "dyadic": [
+      "152758598952142945164548365527753874319",
+      "-96"
+    ]
+  },
+  "tail_bounds": [
+    {
+      "frequency_band_Omega": 128,
+      "full_gamma_symbol_envelope_upper": {
+        "display": "[9.5451850738158866565365598503279799891 +/- 4.51e-38]",
+        "dyadic": [
+          "50750908900257541175431727191659518683",
+          "-122"
+        ]
+      },
+      "low_sp_fourier_tail_norm_upper": {
+        "display": "[0.00085509580338750087363509800431012516229 +/- 4.32e-42]",
+        "dyadic": [
+          "297957400494960872850721894130101901937",
+          "-138"
+        ]
+      },
+      "high_sZ_fourier_tail_operator_norm_upper": {
+        "display": "[216.97733580346004686906431428791261371 +/- 2.30e-36]",
+        "dyadic": [
+          "288412349200783867094887697332350804329",
+          "-120"
+        ]
+      },
+      "low_full_gamma_action_tail_upper": {
+        "display": "[0.013996607704750028573099954746033116923 +/- 3.94e-40]",
+        "dyadic": [
+          "304819123112715747502987409238709786137",
+          "-134"
+        ]
+      },
+      "high_full_gamma_action_tail_upper": {
+        "display": "[3551.5864281310246119172172739587428063 +/- 3.32e-35]",
+        "dyadic": [
+          "295054256857594375226509576593792515137",
+          "-116"
+        ]
+      },
+      "high_high_gamma_form_tail_upper": {
+        "display": "[449379.33590942439510627702978115615484 +/- 3.68e-33]",
+        "dyadic": [
+          "291663864266621417979239944752201074317",
+          "-109"
+        ]
+      }
+    },
+    {
+      "frequency_band_Omega": 256,
+      "full_gamma_symbol_envelope_upper": {
+        "display": "[10.238326532384502627699829449016077530 +/- 3.23e-37]",
+        "dyadic": [
+          "217745124109327680066087450961433437823",
+          "-124"
+        ]
+      },
+      "low_sp_fourier_tail_norm_upper": {
+        "display": "[9.6228355635917650608616842966075811938e-11 +/- 2.64e-49]",
+        "dyadic": [
+          "35159474829888516513888678753763100219",
+          "-158"
+        ]
+      },
+      "high_sZ_fourier_tail_operator_norm_upper": {
+        "display": "[2.4417582394761732596013028825434637035e-5 +/- 2.90e-44]",
+        "dyadic": [
+          "272265141674854291411856672041858188643",
+          "-143"
+        ]
+      },
+      "low_full_gamma_action_tail_upper": {
+        "display": "[1.6894903011633078618204402546740657735e-9 +/- 1.10e-47]",
+        "dyadic": [
+          "308649105175606839414663018455474935339",
+          "-157"
+        ]
+      },
+      "high_full_gamma_action_tail_upper": {
+        "display": "[0.00042870179336627802012669017656490934093 +/- 1.89e-42]",
+        "dyadic": [
+          "149380772812726436013300689021968702247",
+          "-138"
+        ]
+      },
+      "high_high_gamma_form_tail_upper": {
+        "display": "[6.1042779471839465706787530853742263564e-9 +/- 4.61e-47]",
+        "dyadic": [
+          "278794131704133151231784389716024465165",
+          "-155"
+        ]
+      }
+    },
+    {
+      "frequency_band_Omega": 512,
+      "full_gamma_symbol_envelope_upper": {
+        "display": "[10.931472282436383923766438168789523162 +/- 4.49e-37]",
+        "dyadic": [
+          "232486703887380390827689949689062104689",
+          "-124"
+        ]
+      },
+      "low_sp_fourier_tail_norm_upper": {
+        "display": "[1.2186518262903706728154123828647179036e-24 +/- 3.84e-62]",
+        "dyadic": [
+          "250662141743576959653071509963534835169",
+          "-207"
+        ]
+      },
+      "high_sZ_fourier_tail_operator_norm_upper": {
+        "display": "[3.0922830575590999548486947917632232333e-19 +/- 4.27e-57]",
+        "dyadic": [
+          "242632191836388219578907336263358879983",
+          "-189"
+        ]
+      },
+      "low_full_gamma_action_tail_upper": {
+        "display": "[2.2844516122329854869103457746688835157e-23 +/- 1.80e-61]",
+        "dyadic": [
+          "293677776477277673850447927476314467211",
+          "-203"
+        ]
+      },
+      "high_full_gamma_action_tail_upper": {
+        "display": "[5.7967098263211704395121114804517312527e-18 +/- 1.84e-56]",
+        "dyadic": [
+          "71067455684245398079040007731062016903",
+          "-183"
+        ]
+      },
+      "high_high_gamma_form_tail_upper": {
+        "display": "[1.0452908285364608348468602525382105795e-36 +/- 3.55e-74]",
+        "dyadic": [
+          "118199618063322319602565540711507278109",
+          "-246"
+        ]
+      }
+    }
+  ],
+  "callback_checks": {
+    "point_branch_checks": 35,
+    "full_box_overlap_checks": 6,
+    "invalid_whole_boxes_rejected": 5,
+    "invalid_analytic_probes_nonfinite": 5,
+    "valid_analytic_probes_finite": 1,
+    "scope": "Bounded branch checks only; all-strip proof is in strip-root.md"
+  },
+  "high_trial_definition": "Z=Q H_1024,64 E B; g=Q v0; exact continuous Q",
+  "retained_integrals_evaluated": false,
+  "original_derivative_grid_rerun": false,
+  "unpaid": [
+    "retained whole-line integrals",
+    "physical/input truncation",
+    "continuous projection quadrature",
+    "coefficient and ground transport",
+    "common residual Gram",
+    "matrix sign",
+    "cofinal c to 1/2"
+  ]
+}
