@@ -1,0 +1,41 @@
+**喷发极值 283.6。** 对观测窗内 `R_j` 次事件定义
+
+$$
+M_{j,R_j}=\max_{1\le r\le R_j}S_{j,r}.
+$$
+
+若事件规模在给定层级上独立同分布、分布函数为 `F_j`，则精确地有
+
+$$
+\Pr(M_{j,R_j}\le x)=F_j(x)^{R_j}.
+$$
+
+若外加随机强度、注入和观测协议导致
+
+$$
+1-F_j(x)\sim c_jx^{-\alpha},
+\qquad
+\alpha>0,
+$$
+
+并且该尾部渐近在所需尺度上一致成立、同时 `R_j c_j` 趋于无穷，则
+
+$$
+\Pr\!\left(
+\frac{M_{j,R_j}}{(R_jc_j)^{1/\alpha}}\le y
+\right)
+\longrightarrow
+\exp\!\left(-y^{-\alpha}\right),
+\qquad y>0.
+$$
+
+有限上端点或指数尾则分别可能落入 Weibull 或 Gumbel 型极值标度。相邻喷发若共享 FIB 通道、压力历史或岩浆室，则独立假设失效；在满足适当混合条件时，极限可写为
+
+$$
+\Pr(M_{j,R_j}\le u_{j,R_j})
+\longrightarrow
+\exp(-\vartheta\tau),
+$$
+
+其中 `\vartheta` 是由事件簇相关性和外加加载过程确定的极值指标，而非 FIB 递归单独确定的常数。
+

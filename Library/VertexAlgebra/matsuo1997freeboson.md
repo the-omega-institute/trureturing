@@ -74,3 +74,34 @@ paragraph is independent of the background-charge parameter used to
 choose a conformal vector. The Heisenberg assertion does not assert
 Virasoro irreducibility or supply a proof of the all-state charged
 vertex-algebra module Jacobi identity, intertwiner or fusion laws.
+
+## Verified locator
+
+- Exact frontmatter URL: https://arxiv.org/abs/hep-th/9704060v1
+- Versioned PDF: https://arxiv.org/pdf/hep-th/9704060v1
+- PDF SHA-256: `b15b4c89a2ee0a8c38019a29270e5ab5cd6000590bd394e57fb8b2de4aaa16c1`.
+- Sections 2.2–2.3, printed pages 20–22: charged polynomial modes,
+  the vacuum and state-field background. The correspondence is
+  $x_{j+1}=X_j$ on the existing $\operatorname{MvPolynomial}\,\mathbb N\,\mathbb C$.
+  For every complex charge $\lambda$, mode zero is
+  $\lambda\operatorname{id}$, negative mode $-j-1$ multiplies by $X_j$,
+  and positive mode $j+1$ is $(j+1)\partial_{X_j}$.
+
+The exact positional charged expansion in
+[question 2147.7](../../docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md)
+is a proposed implementation question, not a solved formula, a verbatim
+source theorem or a mathematical novelty claim. It asks for arbitrary
+complex charge, arbitrary polynomial states $u,v$ and every integer mode,
+using the actual right-nested divided-derivative normal products and an
+independently defined finite powerset of positions. Repeated positions stay
+distinct, and the coefficient suppliers are the existing zero-charge
+subword fields on the same arbitrary $v$, not only the vacuum.
+
+The existing [Verified locator](matsuo1997locality.md#verified-locator) for
+https://arxiv.org/abs/hep-th/9706118v1 is reused. Sections 1.2–1.4, printed
+pages 5–8, supply normalized modes, divided derivatives, statewise
+truncation and the ordered minus-one residue split. Original summands and
+each individual transformed normal-product summand need finite support
+before rearrangement. These classical references supply conventions and
+background only; they do not supply the charged module proof or settle
+module Jacobi, fusion, a Monster realization, string theory or AdS/CFT.
