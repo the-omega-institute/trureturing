@@ -9950,3 +9950,341 @@ or higher original ternary height. These are ordinary
 deductions from the existing projection inequality and packet
 constructions; no new Lean verification or enumeration is
 asserted.
+
+## 68. Ternary residuals force original 5-heights and pay small menus
+
+Use Section 66's one original EB1 cover of ternary height two,
+fixed tree $\theta$, height-zero-priority retained family
+$\mathcal F_0$, bought root $S=[s]_3$, common 5-free period
+$N_0$, and full actual safe top menus. Retain its inventories
+$V_1,V_2$, output-index set $\mathscr T$ and $\tau=|\mathscr T|$.
+Thus $H=\mathbb Z\setminus\bigcup\mathcal F_0$ avoids all
+original height-zero outputs,
+$|\mathcal F_0|=K-(2+v_1+v_2)-z$, and $\tau\le v_2$.
+Assume
+
+$$
+H\subseteq T_2\cap T_5\cap T_8,\qquad
+E_j=H\setminus T_j\ (j=3,6),\qquad
+\Gamma_{N_0}(E_3\cup E_6)=g\in\{3,9\}.
+\tag{SC393}
+$$
+
+An empty $H$ already gives descent, and SC194 makes both
+inner deficits nonempty. Write $E_3\cup E_6\subseteq[w]_g$.
+For every nonunit $e\mid g$, SC229's virtual-enclosure
+argument supplies an actual outer top $C_e=[w]_e$, of original
+label $9\chi(e)$ and color $c_e$. Its count reserve needs no
+actual enclosing lower: a nonempty complete outer menu gives
+$v_2\ge1$ and hence $v_1\ge1$, exactly as in SC373.
+For $g=9$, SC230 puts the partners at indices 3 and 9 in
+different outer colors. Their original labels are 45 and 225.
+The actual 45 and the existing global inventory bound give
+$v_1\ge15$ by SC242.
+
+### Preserve congruence prefixes while moving the ternary enclosure
+
+Put $a=w\bmod3\ne s$. For $g=3$, choose $e=3$ and let
+$\psi$ exchange the two first ternary roots outside $S$,
+retaining higher output ternary digits and all other prime
+coordinates. For $g=9$, choose $e=9$ and any
+$\beta\bmod9$ with $\beta\bmod3\ne s$ and
+$\beta\ne w\bmod9$. A rooted ternary-tree automorphism
+$\psi$ takes $[w]_9$ to $[\beta]_9$ while preserving $S$.
+For either of the two targets with $\beta\bmod3=a$, exchange
+the corresponding second-digit children within root $a$ and
+fix all first digits. For the other three targets, exchange
+the unbought first roots and permute the children in the
+destination branch. Higher output tails remain fixed.
+
+These permutations preserve every congruence partition of
+the common output carrier and fix nonternary coordinates.
+Each 5-free AP therefore remains one AP with the same
+numerical modulus, on all periodic integer lifts. Put $d=2$
+for a within-root exchange and $d=1$ for a first-root exchange.
+Then $\psi$ fixes ternary prefixes of length $d-1$.
+The common tree $\theta$ commutes with truncation, so
+$F_c(x)$ and $F_c(\psi(x))$ have the same original 5-prefix
+through depth $d-1$. No affine property of $\theta$ or
+agreement of higher original 5-digits is required.
+
+Fix $j\in\{3,6\}$ and use Section 66's placement with
+$c=c_e$, virtual partner $B=\psi(C_e)$, and $\psi$ in place
+of $\phi_b$. Thus transport $\mathcal F_0$, the two
+nonpartner outer menus and both inner menus; keep
+$\mathcal T_c$ unchanged except for removing its supplier
+$C_e$ at fresh root 1. The partner index $e$ is replaced
+once by $B$ at fresh root 4. The rootwise proof of SC375
+applies because $\psi(E_j)$ and $C_e$ have disjoint residues
+modulo $e$. Consequently the entire integer hole, numerical
+interface and exact count are
+
+$$
+\begin{aligned}
+R_{\psi,j}&=\psi(E_j)\setminus T_c,\\
+\mathbb Z\setminus\bigcup\mathcal B_{\psi,j}
+  &=[1]_5\cap R_{\psi,j},\\
+\operatorname{Mod}(\mathcal B_{\psi,j})
+  &=\operatorname{Mod}(\mathcal F_0)
+      \cup\{5\}\cup\{5n:n\in\mathscr T\},\\
+|\mathcal B_{\psi,j}|
+  &=K-1-v_1-v_2-z+\tau\le K-1-v_1-z.
+\end{aligned}
+\tag{SC394}
+$$
+
+Every safe top index occurs once; all exceed one. Retained
+labels have 5-valuation zero and added labels valuation one,
+so the candidate labels are distinct odd nonunits. There is
+no responsibility left at another fresh root or outside
+$\psi(H)$. The transformed menus need not arise from a new
+common original cover.
+
+EB1 makes $R_{\psi,j}$ nonempty. It avoids $S$ and lies in
+the transported enclosure. Reuse SC137's eleven-class
+complete-$3p$ packet and SC236's fifteen-class complete-27
+packet, inserted by SC233 at fresh root 1. Their costs are
+at most $v_1$, so SC394 gives the same hull restrictions as
+SC243:
+
+$$
+g=3\Longrightarrow\Gamma_{N_0}(R_{\psi,j})\in\{3,9\},
+\qquad
+g=9\Longrightarrow\Gamma_{N_0}(R_{\psi,j})=9.
+\tag{SC395}
+$$
+
+Indeed any additional prime factor is greater than 5 and
+gives a complete $3p$ enclosure, while additional ternary
+depth gives an enclosure modulo 27. In the $g=9$ branch,
+one may also use $e=3$ and the first-root exchange; the same
+count and hull-nine conclusion hold.
+
+### Within-root exchange forces at least two original 5-levels
+
+Assume additionally $H\cap L_2=\varnothing$. For
+$y\in R_{\psi,j}$ put $x=\psi^{-1}(y)\in E_j\subseteq H$,
+and inspect an original owner of $F_c(y)$. It cannot have
+ternary height two: every nonempty actual top pullback at
+$c$ is included in the unchanged $T_c$, which $y$ avoids.
+The owner has ternary height zero or is an outer lower.
+
+If its original 5-height were below $d$, its membership
+would be unchanged at $F_c(x)$: the original ternary
+condition, required original 5-prefix and all other
+coordinates agree. A height-zero owner contradicts
+height-zero-priority retention, while an outer lower
+contradicts $H\cap L_2=\varnothing$. Hence the complete
+residual is served by actual outputs satisfying
+
+$$
+n=3^h m,\qquad h\ge d,\qquad (m,15)=1,
+\quad\text{from height-zero owners or outer lowers}.
+\tag{SC396}
+$$
+
+Thus a first-root exchange forces original 5-height at
+least one; either within-root exchange in the hull-nine
+branch forces height at least two. This does not force
+$m>1$, a lower or top numerical counterpart, or distinct
+output indices across the two original roles. The
+$g=3$ conclusion here is a transport and owner interface;
+the new paid menu result below concerns modulo-9 residuals.
+
+### Three common classes leave two requests per actual source
+
+Let $R=R_{\psi,j}\subseteq[\beta]_9$ be a complete SC394
+residual. Suppose a finite actual menu $\mathcal W$, of
+either original role, serves all of $R$, with outputs
+
+$$
+R\subseteq\bigcup_{d\in\mathcal W}C_d,\qquad
+C_d=[\eta_d]_{n_d},\qquad
+n_d=3^{h_d}m_d,\quad
+h_d\ge2,\quad m_d>1,\quad(m_d,15)=1,
+\tag{SC397}
+$$
+
+and pairwise distinct numerical indices $n_d$. This is
+service of the complete mask, not selected witnesses.
+Write $r=|\mathcal W|$ and $\lambda_t=1+5t\bmod25$.
+Three common classes cover its first three fresh children:
+
+$$
+[\lambda_0]_{25},\qquad
+[\lambda_1]_{25}\cap[\beta]_3,\qquad
+[\lambda_2]_{25}\cap[\beta]_9.
+\tag{SC398}
+$$
+
+For each source assign two globally distinct slots
+$s_{d,3},s_{d,4}\mid n_d$, excluding $1,3,9$, and add
+$[\lambda_t]_{25}\cap[\eta_d]_{s_{d,t}}$ for $t=3,4$.
+These actual-phase divisor patches cover everything served
+by that source on their respective children. Their labels
+$25s_{d,t}$ avoid the three common labels $25,75,225$.
+The packet costs $3+2r$, has distinct labels of 5-valuation
+two, is fresh against SC394, and covers every integer lift
+of the entire hole.
+
+For a nonempty source subset $X$, put $x=|X|$, let $c_X$
+count its distinct numerical cofactors $m$, and let
+$H_X=\max_{d\in X}h_d$. Its full divisor union
+$\mathcal N(X)=\bigcup_{d\in X}\{s:s\mid n_d,\ s\notin
+\{1,3,9\}\}$ contains three disjoint families: its $x$
+actual outputs, the $2c_X$ indices $m,3m$, and the
+$H_X-2$ unit-cofactor indices $3^3,\ldots,3^{H_X}$.
+Numerical distinctness also bounds the number of pairs
+$(h,m)$. Therefore
+
+$$
+|\mathcal N(X)|\ge x+2c_X+H_X-2,\qquad
+x\le(H_X-1)c_X,\qquad
+x\le7\Longrightarrow|\mathcal N(X)|\ge2x.
+\tag{SC399}
+$$
+
+For the final implication, $c_X=1$ or $H_X\le3$ is
+immediate. If $H_X=4$, then $c_X\le2$ gives
+$x\le3c_X\le2c_X+2$, while $c_X\ge3$ gives
+$2c_X+2\ge8$. If $H_X\ge5$ and $c_X\ge2$, then
+$2c_X+H_X-2\ge7$. The existing finite Hall theorem on
+two copies per source, as used in SC328, now assigns the
+two slots whenever $r\le7$.
+
+### One original inventory pays six sources, or a qualified seventh
+
+If $r\le6$, the packet costs $3+2r\le15\le v_1$, so
+
+$$
+K'\le K-1-v_1-v_2-z+\tau+(3+2r)
+   \le K-1-z<K.
+\tag{SC400}
+$$
+
+This uses the actual global reserve SC242. It permits
+height-zero suppliers without lower counterparts, provided
+their output indices are distinct.
+
+For $r=7$, additionally require
+$3\chi(n_d)\in D$ for every source, which holds
+automatically for actual outer lowers. Let
+$\mathcal N=\mathcal N(\mathcal W)$. SC399 gives
+$|\mathcal N|\ge14$. Divisor closure supplies a distinct
+original lower donor $3\chi(s)$ for every $s\in\mathcal N$.
+The further original labels 15 and 75 have excluded indices
+3 and 9. If $|\mathcal N|\ge15$, these already give
+$v_1\ge17$.
+
+If $|\mathcal N|=14$, some prime
+$\ell\in\{17,19,23,29\}$ divides none of the $m_d$.
+Otherwise $\mathcal N$ would contain the eight distinct
+indices $\ell,3\ell$ for those four primes, as well as
+the seven actual outputs of 3-height at least two, giving
+at least fifteen indices. The original initial prime
+support and $P\ge29$, together with Report 385 GHA10,
+supply the actual lower $3\ell$. Its index $\ell$ is
+outside the full $\mathcal N$, not merely outside a chosen
+matching, and differs from 3 and 9. Thus in either case
+
+$$
+r=7,\quad 3\chi(n_d)\in D\ (d\in\mathcal W)
+\quad\Longrightarrow\quad
+v_1\ge17=3+2r.
+\tag{SC401}
+$$
+
+SC400 again gives strict descent. All credits are distinct
+labels in one original $V_1$ inventory. No donor phase
+replaces an actual patch phase, and no original top budget
+is added to this payment.
+
+### Two sibling targets impose a concrete original-inventory condition
+
+Assume $g=9$. For either sibling residue $\beta\bmod9$
+with $\beta\bmod3=w\bmod3$ and $\beta\ne w\bmod9$, use
+its within-root exchange $\psi_\beta$. Let
+$\mathcal W_\beta$ contain all actual outer lowers with
+output prefix $\beta\bmod9$, original 5-height at least
+two and nonunit 3,5-free cofactor. Their output indices
+are distinct because their original lower labels are
+distinct. For either inner color $j$, SC400--SC401 force
+
+$$
+|\mathcal W_\beta|\le7
+\quad\Longrightarrow\quad
+R_{\psi_\beta,j}\setminus
+\bigcup_{d\in\mathcal W_\beta}C_d\ne\varnothing.
+\tag{SC402}
+$$
+
+Under $H\cap L_2=\varnothing$, every original owner at a
+point of this remainder is height zero or an outer lower
+with $m=1$; SC396 still forces its original 5-height to
+be at least two. An outer lower with $m>1$ owning such a
+point would have the specified prefix and belong to
+$\mathcal W_\beta$.
+
+In particular, if the residuals at both sibling targets
+are completely served by these nonunit-cofactor outer
+lowers, choosing either inner color at each target, then
+each $\mathcal W_\beta$ has at least eight members.
+The different modulo-9 prefixes make these sixteen
+original identities disjoint. Their original labels
+have the form $3\cdot5^h m$, $h\ge2$, $m>1$.
+The actual labels 15,75 and
+$3\ell$ for $\ell\in\{17,19,23,29\}$ lie outside both
+families. Consequently this conditional complete service
+requires
+
+$$
+v_1\ge16+2+4=22.
+\tag{SC403}
+$$
+
+This counts one original inventory; it does not add the
+budgets of two alternative repairs.
+
+### Boundaries of the small-menu conclusion
+
+At eight numerical sources, the full-divisor allocation
+can fail: take heights $2,3,4,5$ in each of two distinct
+prime-cofactor columns. After excluding $1,3,9$, their
+divisor union has fifteen slots for sixteen requests.
+This is a boundary of this allocation, not an EB1
+realization or a failure of every possible repair.
+
+Pure-cofactor service remains a separate obstacle.
+Reuse SC139's complete-envelope mass argument on
+$C=[\beta]_9$. A class of numerical label
+$3^a5^\ell$, $\ell\ge1$, has relative $C$-mass at most
+$5^{-\ell}$ for $a=0,1,2$, and at most
+$3^{2-a}5^{-\ell}$ for $a\ge3$. The sum over all
+available numerical labels is
+
+$$
+\left(3+\sum_{a\ge3}3^{2-a}\right)
+\sum_{\ell\ge1}5^{-\ell}
+=\frac78<1.
+\tag{SC404}
+$$
+
+Thus no finite distinct packet from this pure $\{3,5\}$
+palette covers the complete modulo-9 AP. After SC233
+inserts it at the deficient root, these relative 5-levels
+become absolute levels at least two. Smaller actual
+residuals, extra cofactor primes and unused absolute
+depth-one slots are outside this obstruction; no claim
+identifies the full AP with an actual EB1 residual.
+
+The ternary permutation changes the original 5-prefix
+selected by $\theta$. It supplies SC396, not an independent
+nonternary-prime phase or Section 61's extra-cofactor
+projection. Complete mixed service with repeated numerical
+outputs, pure-5-power original parts and larger menus is
+not excluded. Three complete outer menus have not been
+forced for a general cover, and original ternary heights
+above two remain untreated here. These are ordinary
+mathematical deductions using existing packets and finite
+Hall; no new Lean verification is asserted. Unrestricted
+Erdős #7 remains unresolved.
