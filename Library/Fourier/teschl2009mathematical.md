@@ -5,7 +5,7 @@ year: 2009
 title: "Mathematical Methods in Quantum Mechanics: With Applications to Schrodinger Operators"
 doi: null
 url: "https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf"
-claim: "The maximal L2 multiplication domain is the strong derivative domain of its unitary exponential. For a finite complex Borel measure, Wiener's mean-square limit is the sum of squared atomic masses."
+claim: "The maximal L2 domain of a real multiplication operator is exactly the set of vectors whose pointwise product is in L2; the strong derivative domain of its unitary exponential equals that operator domain."
 strata_touched: []
 license: "citation-only"
 triage: "anchor"
@@ -43,7 +43,6 @@ Conversely, a strong derivative v makes the quotient classes at t_n = 1/(n+1) co
 https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
 
 Equation (2.21), printed pages 59-60; Theorem 5.1(ii), printed pages 123-124. The author-hosted file identifies the 2009 first edition, Graduate Studies in Mathematics volume 99. The online-use permission appears on its title page; this note cites the source and paraphrases the argument.
-
 ## Finite-measure Fourier mean squares
 
 In the same retained first-edition PDF, Theorem 5.4, Section 5.2,
