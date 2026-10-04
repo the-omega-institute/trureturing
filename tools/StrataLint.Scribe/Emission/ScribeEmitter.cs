@@ -48,7 +48,7 @@ public static class ScribeEmitter
             return 2;
         }
 
-        var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths, changes);
+        var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths);
         if (admission.ExitCode != 0)
         {
             admission.WriteFailure(error);

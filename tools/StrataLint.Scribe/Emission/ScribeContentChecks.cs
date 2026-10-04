@@ -17,7 +17,7 @@ internal static class ScribeContentChecks
             error.WriteLine(selection.Failure);
             return 2;
         }
-        var admission = ScribeSdkAdmission.Check(root, selection.Paths, changedPaths);
+        var admission = ScribeSdkAdmission.Check(root, selection.Paths);
         if (admission.ExitCode != 0)
         {
             admission.WriteFailure(error);
