@@ -44,9 +44,12 @@ orchestrator-reported; they establish no exhaustive publication priority.
 `CartanDatum r` encodes finite-type symmetrizable generalized Cartan matrices
 at every finite rank r: integer matrices on `Fin r`, a symmetric positive-definite
 Gram form, positive integer d, G(i,j)=d(i)C(i,j), and G(i,i)=2d(i).
-At positive rank, some d(i)=1 normalizes the shortest simple roots to squared
-length 2; at rank zero that condition is vacuous. The integral Gram form is
-even on all integral coordinate vectors. `claim` quantifies over every rank,
+`short_normalization` requires a vertex with d=1 in every connected Dynkin
+component: every index reaches an index with d=1 in the graph of
+nonzero off-diagonal Cartan entries. This normalizes the shortest simple roots
+in each component to squared length 2; at rank zero the condition is vacuous.
+The integral Gram form is even on all integral coordinate vectors.
+`claim` quantifies over every rank,
 every such datum, and every nonnegative coordinate vector `Fin r → ℕ`.
 The module constructs the C2 inhabitant and proves every field obligation:
 Cartan [[2,-2],[-1,2]], Gram [[2,-2],[-2,4]], d=(1,2).
@@ -54,11 +57,12 @@ The quadratic form is $2(x-y)^2+2y^2$, positive away from zero.
 
 `J` implements Definition 1.1's equation (2), with the self-term moved to the
 left, in `RatFunc ℚ`; q remains an indeterminate. `qFactor` is the displayed
-product over all coordinates. `quad` chooses the integer half k certified by
-$\sum_{i,j}\beta_i G_{ij}\beta_j=k+k$ and uses integer powers, so the
-exponent is literally $(\beta,\beta)/2$ with no truncation or conversion to
-natural numbers. Recursion descends by total coordinate height; no certificate
-values enter these definitions.
+product over all coordinates. `quad` is the literal integer quotient
+$\left(\sum_{i,j}\beta_i\beta_j G_{ij}\right)/2$. The datum supplies evenness
+of the double Gram sum, making this quotient its exact integer half.
+`J` uses integer powers, so the exponent is literally $(\beta,\beta)/2$
+with no truncation or conversion to natural numbers. Recursion descends by total
+coordinate height; no certificate values enter these definitions.
 
 Within `result`, all nine values for 0≤a,b≤2 are derived from the recursion by
 clearing nonzero denominators. At (2,2), the numerator is
@@ -88,7 +92,9 @@ A failure of any obligation would invalidate this refutation.
 has type `¬ claim`, with no hypotheses. The explicit public surface is
 CartanDatum, qFactor, quad, J, Unimodal, claim, c2, and result; height is private.
 There are no private theorem declarations or companion results.
-The import is `Mathlib.FieldTheory.RatFunc.AsPolynomial`.
+The two imports are `Mathlib.FieldTheory.RatFunc.AsPolynomial` and
+`Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected`; the latter supplies
+`Reachable` for the component normalization.
 The result's axiom closure is propext, Classical.choice, and Quot.sound.
 
 ## Triage

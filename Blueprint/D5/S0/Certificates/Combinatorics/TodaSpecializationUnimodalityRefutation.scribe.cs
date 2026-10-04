@@ -8,7 +8,7 @@ internal sealed class TodaSpecializationUnimodalityRefutationDocument : IScribeD
 {
     private const string Prefix = "D5/S0/Certificates/Combinatorics/TodaSpecializationUnimodalityRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/labelle2025toda");
+        LibraryNoteRef.Create("D5/L/LieTheory/labelle2025toda");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Labelle's recursively defined Toda specialization has a non-unimodal numerator in type C2 at the positive-root coordinates (2,2).",
