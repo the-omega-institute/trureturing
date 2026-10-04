@@ -9866,3 +9866,253 @@ $F_{17}$ 的四个不同成员两两非冲突，上面对每个子集的应用�
 上述关系是指定实际替换、完整树语法、原始四值报告与同一运行费用之间的仓内推导。有限识别及响应相关费用的背景仅沿用[Nowak，*The Geometry of Generalized Binary Search*，arXiv:0910.4397v5，第 II.A 节](https://arxiv.org/pdf/0910.4397v5#page=3)、[Saettler–Laber–Cicalese，*Trading off Worst and Expected Cost in Decision Tree Problems and a Value Dependent Model*，arXiv:1406.3655v1，第 1.1 节](https://arxiv.org/pdf/1406.3655v1#page=3)及[Sabato，*Submodular Learning and Covering with Response-Dependent Costs*，arXiv:1602.07120v3，定义 4.4、引理 4.5](https://arxiv.org/pdf/1602.07120v3#page=12)。这些有限模型不供应全有限树域的完整叶认证、总后备或十七叶门槛，也不由所引范围推出世界原创性。式（34.28）只属于确定性不同实际地址费用，不扩展为随机逐来源期望目标。完整树来源、组成、规范数量地址与观察响应保持原类型；组成祖先许可不成为实际逆执行，环境代数守恒或单射性不建立物理时间或 Lorentz 对应。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 35. 十七叶五来源的条件非叶退出与一次超额门槛
+
+### 35.1 完整前像与十个共享叶前沿
+
+**定义 35.1（同组成五来源与原全有限树合同）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal T$、$\mathcal I_3=\rho^3(\mathcal T)$、$\mathcal I_3(n)$、$\operatorname{NC}$、$K,K_\circ,D$ 和 $\mathsf{Cap}$。未知输入仍为任意非空有限自由有序满二叉 $\alpha/\beta$ 树 $U\in\mathcal T$；同一个确定性控制器须在全部 $\mathcal T$ 上正确判定 $\iota_3(U)$ 并有限终止。共同初始化只含固定描述，不给未知输入组成、叶数、高度、正性或候选身份承诺。所有有限左右地址，包括空地址，均可直接查询同一不变输入；四值报告保持 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$，费用只计真实缓存后的不同实际请求地址。计算、定位和地址长度沿用原费用约定。
+
+以下 $P_i,Q_i,F$ 均限于本章。直接使用式（30.2）的既有字面块
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+B=\langle C,A\rangle=\rho^3(\langle\beta,\alpha\rangle).
+\tag{35.1}
+$$
+
+取五棵完整树及五个完整字面前像描述：
+
+$$
+\begin{aligned}
+P_1&=\langle A,\langle A,\langle A,B\rangle\rangle\rangle,
+&Q_1&=\langle\alpha,\langle\alpha,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle\rangle,\\
+P_2&=\langle A,\langle A,\langle B,A\rangle\rangle\rangle,
+&Q_2&=\langle\alpha,\langle\alpha,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle\rangle,\\
+P_3&=\langle A,\langle B,\langle A,A\rangle\rangle\rangle,
+&Q_3&=\langle\alpha,\langle\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_4&=\langle B,\langle A,\langle A,A\rangle\rangle\rangle,
+&Q_4&=\langle\langle\beta,\alpha\rangle,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_5&=\langle\langle\langle A,\langle A,A\rangle\rangle,A\rangle,C\rangle,
+&Q_5&=\langle\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,\beta\rangle,\\
+F&=\{P_1,P_2,P_3,P_4,P_5\}.&&
+\end{aligned}
+\tag{35.2}
+$$
+
+对树 $T$ 记 $\mathcal F(T)=\{(u,\lambda_T(u)):u\in L(T)\}$。对地址 $w$ 及带标签前沿 $\Phi$，写 $w\Phi=\{(wu,\ell):(u,\ell)\in\Phi\}$；$wL(T)$ 同样表示地址拼接。若 $V$ 是地址集，$\mathcal F(T)|_V$ 表示保留地址属于 $V$ 的带标签叶。本定义只指定实际树和只读接口，不以组成逆公式生成前像。
+
+**定理 35.2（十七叶实际五族与全部子集的相容复形）。** 定义 35.1 的五个 $Q_i$ 是两两不同的完整前像，并且
+
+$$
+\begin{gathered}
+\rho^3(Q_i)=P_i\in\mathcal I_3(17),\qquad
+c(Q_i)=(4,1)^{\mathsf T},\qquad
+c(P_i)=(6,11)^{\mathsf T},\qquad n(P_i)=17
+\quad(1\le i\le5),\\
+|F|=5,\qquad
+\operatorname{NC}(P_i,P_j)\quad(1\le i<j\le5),\qquad
+K(F)=K_\circ(F).
+\end{gathered}
+\tag{35.3}
+$$
+
+最后一个等式确定每个子集的共同叶最优取得性，不只是整个 $F$ 的不相容性。
+
+**证明。** [母卷定义 3.1 的二叉同态替换](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)把式（35.2）每个 $Q_i$ 中的 $\alpha$、$\beta$、$\langle\beta,\alpha\rangle$ 分别送到 $A,C,B$，保留所有括号与左右次序，逐行得到 $\rho^3(Q_i)=P_i$。五个 $Q_i$ 的字面括号或叶位置不同。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的既有树替换单射性复合三次，直接给五个像的不同性与这些前像的唯一性。每个所列 $Q_i$ 恰有四片 $\alpha$、一片 $\beta$。母卷定义 3.3、定理 3.4 的组成作用给
+
+$$
+c(P_i)=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}
+\begin{pmatrix}4\\1\end{pmatrix}
+=\begin{pmatrix}6\\11\end{pmatrix},
+\qquad n(P_i)=6+11=17.
+\tag{35.4}
+$$
+
+这只是已指定完整树的组成计算，不给未知输入任何免费组成报告。
+
+为证明全部十对非冲突，先展开式（35.1）的完整带标签前沿：
+
+$$
+\begin{aligned}
+\mathcal F(A)=\{& (\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)=\{& (\mathtt{LLL},\beta),(\mathtt{LLR},\alpha),(\mathtt{LR},\beta),
+(\mathtt{RL},\beta),(\mathtt{RR},\alpha)\},\\
+\mathcal F(B)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),
+(\mathtt{LRL},\beta),(\mathtt{LRR},\alpha),\\
+& (\mathtt{RLL},\beta),(\mathtt{RLR},\alpha),(\mathtt{RR},\beta)\}.
+\end{aligned}
+\tag{35.5}
+$$
+
+这些局部展开是既有 $A,C,B$ 在当前构造中的代入。令 $S_i$ 为第 $i$ 棵树中所列 $A$ 块的根，$v_i$ 为剩余块的根，$T_i$ 为该剩余块。式（35.2）保留的全部块根精确为
+
+$$
+\begin{array}{c|c|c|c}
+i&S_i&v_i&T_i\\ \hline
+1&\{\mathtt L,\mathtt{RL},\mathtt{RRL}\}&\mathtt{RRR}&B\\
+2&\{\mathtt L,\mathtt{RL},\mathtt{RRR}\}&\mathtt{RRL}&B\\
+3&\{\mathtt L,\mathtt{RRL},\mathtt{RRR}\}&\mathtt{RL}&B\\
+4&\{\mathtt{RL},\mathtt{RRL},\mathtt{RRR}\}&\mathtt L&B\\
+5&\{\mathtt{LLL},\mathtt{LLRL},\mathtt{LLRR},\mathtt{LR}\}&\mathtt R&C
+\end{array}
+\tag{35.6}
+$$
+
+每一行的块根构成该树全部终端块的前缀自由集合。因此，没有遗漏的叶，且
+
+$$
+\mathcal F(P_i)=
+\left(\bigsqcup_{w\in S_i}w\mathcal F(A)\right)
+\sqcup v_i\mathcal F(T_i).
+\tag{35.7}
+$$
+
+把式（35.5）的每个地址按式（35.6）逐项加前缀，取任意两行的地址交集，得到下表的 $U_{ij}$。表的含义同时包括地址和标签的完整等式：
+
+$$
+\begin{aligned}
+V_{ij}:=L(P_i)\cap L(P_j)
+ &=\bigsqcup_{w\in U_{ij}}wL(A),\\
+\mathcal F(P_i)|_{V_{ij}}
+ &=\mathcal F(P_j)|_{V_{ij}}
+ =\bigsqcup_{w\in U_{ij}}w\mathcal F(A).
+\end{aligned}
+\tag{35.8}
+$$
+
+$$
+\begin{array}{c|c|c}
+(i,j)&U_{ij}&|V_{ij}|\\ \hline
+(1,2)&\{\mathtt L,\mathtt{RL}\}&6\\
+(1,3)&\{\mathtt L,\mathtt{RRL}\}&6\\
+(1,4)&\{\mathtt{RL},\mathtt{RRL}\}&6\\
+(1,5)&\{\mathtt{RL}\}&3\\
+(2,3)&\{\mathtt L,\mathtt{RRR}\}&6\\
+(2,4)&\{\mathtt{RL},\mathtt{RRR}\}&6\\
+(2,5)&\{\mathtt{RL}\}&3\\
+(3,4)&\{\mathtt{RRL},\mathtt{RRR}\}&6\\
+(3,5)&\varnothing&0\\
+(4,5)&\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\}&9
+\end{array}
+\tag{35.9}
+$$
+
+为逐类核对这些等式，前四行来源在四个互不为前缀的槽位 $\mathtt L,\mathtt{RL},\mathtt{RRL},\mathtt{RRR}$ 中各放三个 $A$ 和一个 $B$。式（35.5）给 $L(A)\cap L(B)=\varnothing$；两个不同来源的 $B$ 位不同，因而它们只有剩下两个共同 $A$ 位的叶能重合，恰给表中六个 $i,j\le4$ 的交集和相同标签。
+
+与 $P_5$ 比较时，先按式（35.5）展开右侧 $C$：它在 $\mathtt{RL}$ 下恰为 $A$，在 $\mathtt{RR}$ 下为 $E$。$P_1,P_2,P_4$ 在 $\mathtt{RL}$ 下也恰为 $A$，$P_3$ 在该处为 $B$ 而无共同叶。在 $\mathtt{RR}$ 下，前三棵来源 $P_1,P_2,P_3$ 的子树分别是 $\langle A,B\rangle,\langle B,A\rangle,\langle A,A\rangle$，$P_4$ 的子树也是 $\langle A,A\rangle$。其根的两个孩子都为分支，而 $E$ 的两个孩子是叶，故这里没有重合叶。
+
+$P_5$ 的左子树是 $\langle\langle A,\langle A,A\rangle\rangle,A\rangle$。它在左子树内部的 $\mathtt{LL},\mathtt{LR},\mathtt R$ 三个 $A$ 叶地址上都为分支，所以与 $P_1,P_2,P_3$ 的左块 $A$ 没有共同叶。与 $P_4$ 的左块 $B=\langle C,A\rangle$ 比较，右孩子都是 $A$，给全树地址前缀 $\mathtt{LR}$ 的共同前沿；左孩子分别为 $\langle A,\langle A,A\rangle\rangle$ 和 $C=\langle A,E\rangle$，它们的左孩子都是 $A$，给前缀 $\mathtt{LLL}$ 的共同前沿。其右孩子 $\langle A,A\rangle$ 与 $E$ 没有共同叶，因为前者在 $\mathtt L,\mathtt R$ 处为分支，后者在这两个地址为叶。加上右侧已核对的前缀 $\mathtt{RL}$，恰给最后一行三个带相同标签的 $A$ 前沿。这核对了与 $P_5$ 的全部四对及其余位置无共同叶，故式（35.8）不是只比较共享叶数量，也没有漏查相反标签。每对的带标签限制相同，遂有全部十个 $\operatorname{NC}(P_i,P_j)$。
+
+最后对每个 $S\subseteq F$ 直接应用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。若 $|S|\ge2$，取其中两个不同成员 $P_i,P_j$；式（35.8）使 $\Delta(\{P_i,P_j\})=\varnothing$。因 $\{P_i,P_j\}\subseteq S$，原定理对 $S$ 的遗传条件在这个二元素子集处失败，故 $S\notin K(F)$。空集及每个单点的遗传条件为空，原定理与既有单原型完整叶测试供应其相容性。因此所有子集的成员身份均已确定，得到 $K(F)=K_\circ(F)$。证毕。
+
+### 35.2 三个条件地址与一个全域总控制器
+
+**定理 35.3（五来源的同一控制器与十八地址锐费用）。** 定义 35.1 的原全有限树合同下，存在一个 $\sigma\in\mathfrak D_3$，使它在五个指定来源上的实际不同付费地址集精确为
+
+$$
+\begin{aligned}
+J_\sigma(P_1)&=L(P_1),\\
+J_\sigma(P_2)&=L(P_2)\cup\{\mathtt{RRLR}\},\\
+J_\sigma(P_3)&=L(P_3)\cup\{\mathtt{RLR}\},\\
+J_\sigma(P_4)&=L(P_4)\cup\{\mathtt{LR}\},\\
+J_\sigma(P_5)&=L(P_5)\cup\{\mathtt{RRLR}\}.
+\end{aligned}
+\tag{35.10}
+$$
+
+每行新列出的非叶地址确实在该行的叶集之外，并且
+
+$$
+\bigl(C_\sigma(P_1),C_\sigma(P_2),C_\sigma(P_3),
+C_\sigma(P_4),C_\sigma(P_5)\bigr)
+=(17,18,18,18,18),\qquad D(F)=18.
+\tag{35.11}
+$$
+
+**证明。** 固定三个互异的实际地址
+
+$$
+q_1=\mathtt{RLR},\qquad
+q_2=\mathtt{RRLR},\qquad
+q_3=\mathtt{LR}.
+\tag{35.12}
+$$
+
+控制器从空的外层真实缓存开始，先请求 $q_1$。若报告 $\mathsf{branch}$，暂选 $P_3$ 并结束路由；若报告 $\mathsf{leaf}_\beta$，才请求 $q_2$；若报告 $\mathsf{leaf}_\alpha$ 或 $\mathsf{absent}$，进入全域总后备。在 $q_2$ 上，报告 $\mathsf{branch}$ 时暂选 $P_2$，报告 $\mathsf{absent}$ 时暂选 $P_5$，二者均结束路由；报告 $\mathsf{leaf}_\beta$ 时才请求 $q_3$，报告 $\mathsf{leaf}_\alpha$ 时进入同一总后备。在 $q_3$ 上，报告 $\mathsf{leaf}_\beta$ 时暂选 $P_1$，报告 $\mathsf{branch}$ 时暂选 $P_4$；另两个报告均进入同一总后备。因此 $q_2$ 只在一个 $\beta$ 叶报告之后请求，$q_3$ 只在连续两个 $\beta$ 叶报告之后请求。暂选不承担接受或正性证明。
+
+完整原型核对使用[定理 29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已有的单原型叶测试：从被选测试自己的完整初始化、空逻辑历史和初始控制状态开始，按固定顺序请求式（35.7）的全部十七个带标签叶。每个请求只有精确等于该原型的叶标签报告才匹配；相反标签、分支或不存在都立即转入同一个总后备。全部叶精确匹配才返回 $1$。外层缓存只保存当前实际 $U$ 的已请求地址及其原始报告；仅在后续请求完全相同的地址时供应该真实报告，并将此次请求—报告写入后续测试自己的逻辑历史。推断的报告、其他原型的描述和未请求的前缀都不写入真实缓存。
+
+每次进入总后备，无论发生于哪个意外路由报告或哪次原型核对不匹配，都建立后备自己的独立初始化、空逻辑历史与初始控制状态；外层真实缓存只在后备实际请求相同地址时供应。这正使用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)的独立续接，不把此前路由或核对历史预填入后备的控制状态。
+
+总后备使用定理 23.2、29.2 已有的从根恢复实际有限树的遍历：请求 $\varepsilon$，只在实际报告为 $\mathsf{branch}$ 的节点继续请求左右孩子，遇叶停止扩展。来源是有限满二叉树，遍历只访问它的有限节点，故有限终止，恢复完整字面树 $\widehat U=U$；有限描述与路径恢复直接沿用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。恢复之后，用定义 30.1 已给的实际像语法
+
+$$
+X::=A\mid C\mid\langle X,X\rangle
+\tag{35.13}
+$$
+
+作有限成员检查：所测子树字面等于 $A$ 或 $C$ 时通过，否则仅在它是二叉节点且两孩子都通过时通过，原子叶不通过。每次递归进入严格较小的已恢复子树，所以这项计算有限。式（35.13）就是 $\rho^3$ 的两个原子像及二叉同态作用：每个实际三步像按前像根分解属于该语法，每个该语法描述也由其原子 $A,C$ 的既有前像和有序配对产生实际三步像。因此后备返回此检查的真值恰为 $\iota_3(U)$。这里的语法检查只判已恢复字面树的成员身份，不对未知树执行替换或逆替换，也不从组成许可推出完整树身份。
+
+完整叶接受的正确性直接采用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)在 $d=3=3\cdot1$ 的充分性：匹配所选原型全部带标签叶的完整树只能是该原型，故确在 $\mathcal I_3$。任一未接受的路径进入正确总后备；路由至多三问，核对至多十七个叶请求，每个实际有限输入的后备均有限终止。于是这个固定控制器属于 $\mathfrak D_3$。根叶输入在 $q_1$ 上报告不存在并由后备拒绝；族外的其他有限正、负输入同样由完整核对或后备正确处理。不向族外输入断言十八地址上界。
+
+再逐行验证实际路由。由式（35.2），$P_3|_{q_1}=A$，其余四棵在 $q_1$ 处都是 $\beta$ 叶。第一次 $\beta$ 报告后的四个评价幸存者为 $P_1,P_2,P_4,P_5$；在 $q_2$ 处，$P_1,P_4$ 是 $\beta$ 叶，$P_2|_{q_2}=A$ 是分支，$P_5$ 则已在前缀 $\mathtt{RRL}$ 到达 $\beta$ 叶，故继续到 $\mathtt{RRLR}$ 的报告为不存在。剩余 $P_1,P_4$ 在 $q_3$ 上分别是 $\beta$ 叶和子树 $A$ 的分支。故所有实际请求列为
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{来源}&q_1&q_2&q_3&\text{暂选原型}\\ \hline
+P_1&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&P_1\\
+P_2&\mathsf{leaf}_\beta&\mathsf{branch}&\text{未请求}&P_2\\
+P_3&\mathsf{branch}&\text{未请求}&\text{未请求}&P_3\\
+P_4&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&\mathsf{branch}&P_4\\
+P_5&\mathsf{leaf}_\beta&\mathsf{absent}&\text{未请求}&P_5
+\end{array}
+\tag{35.14}
+$$
+
+表中没有给未请求地址免费报告。在实际评价输入 $P_i$ 上，路由恰选中自身，完整叶核对全部匹配，不调用后备。引理 27.3 的真实缓存并集费用因此给 $J_\sigma(P_i)=L(P_i)\cup B_i$，其中 $B_i$ 是该行真正请求的路由地址集。$P_1$ 的三个路由地址都是自身叶；$P_2,P_3,P_4,P_5$ 的路由叶外地址分别且仅为 $q_2,q_1,q_3,q_2$。这证明式（35.10）。五行路由已查叶数分别为 $3,1,0,2,1$，核对还需新增 $14,16,17,15,16$ 个不同叶地址。路由叶外地址分别为 $0,1,1,1,1$ 个，各行付费集大小遂为 $17,18,18,18,18$。这里不把逻辑历史长度、地址长度或复用请求次数当成不同地址费用。
+
+尤其在历史 $(q_1,\mathsf{leaf}_\beta)$ 之后，$q_2$ 的 $\mathsf{branch}$ 与 $\mathsf{absent}$ 是两个不同的非叶响应孩子，分别只有 $P_2$ 与 $P_5$。二者各自只花这一片叶外地址，接上各自完整叶证书即可结束评价路由；把二者合为一个非叶符号会消去本控制器在此处的两个单点退出，改变原四值观察合同。这一实际条件分裂允许五来源在十七叶规模共同取得一次超额，并不要求每增加一个来源都添一个新的三叶槽位。
+
+同一个控制器已经给 $D(F)\le18$。反向，任取 $\pi\in\mathfrak D_3$，将其评价限制到不同、非冲突且同为十七叶的 $P_3,P_5$。直接应用[定理 23.2 的式（23.4）](#23-全有限来源上两个指定正例的共同最优地址费用)，有 $C_\pi(P_3)+C_\pi(P_5)\ge35$。两个费用均为整数，故 $\max_{P\in F}C_\pi(P)\ge18$；对全部同一合同控制器取下确界仍得 $D(F)\ge18$。这与上界合起来证明式（35.11），无须把个体最优证书拼成不同控制器的共同运行。证毕。
+
+### 35.3 五来源首次规模与统一线性门槛的反例
+
+**推论 35.4（五来源一次超额的首次规模与 $3m+5$ 的失效）。** 在定义 30.6 的原全有限树合同下，
+
+$$
+\boxed{\mathsf{Cap}(17,1)\ge5,\qquad
+\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge5\}=17.}
+\tag{35.15}
+$$
+
+因此，以下全量词必要性命题为假：
+
+$$
+\begin{gathered}
+\forall n\in\mathbb N_0\ \forall F'\subseteq\mathcal I_3(n),\quad
+\bigl(F'\text{ 有限},\ |F'|\ge2,\ K(F')=K_\circ(F'),\ D(F')\le n+1\bigr)\\
+\Longrightarrow\quad n\ge3|F'|+5.
+\end{gathered}
+\tag{35.16}
+$$
+
+相应的统一公式 $\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge m\}=3m+5$ 不能对所有整数 $m\ge2$ 同时成立。
+
+**证明。** 定理 35.2 给 $F\subseteq\mathcal I_3(17)$、$|F|=5$ 与逐子集成立的 $K(F)=K_\circ(F)$；定理 35.3 给同一个全域正确总控制器取得 $D(F)=18=17+1$。所以这个实际族满足定义 30.6 的全部容量条件，$\mathsf{Cap}(17,1)\ge5$。对每个非负整数 $n<17$，直接使用[推论 34.6](#34-四来源一次超额共同取得的首次叶数)已经证明的完整排除 $\mathsf{Cap}(n,1)\le3$，特别地小于五。这些排除的域与费用合同和此处相同，不要求未知输入属于某个评价族，故得到式（35.15）的首次规模。
+
+式（35.16）在 $n=17,F'=F$ 的所有前提均成立，结论却要求
+
+$$
+17\ge3\cdot5+5=20,
+\qquad\text{而实际为}\quad17<20.
+\tag{35.17}
+$$
+
+这给完整实际树族和同一全域控制器的反例。统一首次规模公式在 $m=5$ 也给二十，与式（35.15）的十七不同。既有二、三、四来源门槛只是所引范围内的结果，不足以推出该全量词公式；本推论不改变它们，也不把槽位类比作为证明。
+
+式（35.15）只给十七叶容量的下界和五来源的首次规模，不给 $\mathsf{Cap}(17,1)$ 的精确值或任意 $n,m$ 的完整公式。这些结论限定于原确定性不同实际地址费用，不推出随机逐来源期望值。式（35.2）、（35.8）和（35.14）连接的是完整树来源、带标签地址前沿与实际四值报告；组成相等、规范数量地址、组成祖先许可与实际逆执行保持不同类型。成员判定不授权实际逆执行，环境代数守恒或单射性不建立物理时间对应。上述反例是这些指定来源与既有结果的仓内推导，不由其有限范围推出世界原创性。证毕。
+
+## 追加锚（本行以下为增补区）
