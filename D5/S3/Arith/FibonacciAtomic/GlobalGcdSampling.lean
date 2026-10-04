@@ -50,6 +50,137 @@ def IdentifiesOn {A : Type} (domain : A → Prop) (read : ℕ → A → ℕ)
     (S : Finset ℕ) : Prop :=
   ∀ x y : A, domain x → domain y → (∀ k ∈ S, read k x = read k y) →
     ∀ k : ℕ, 0 < k → read k x = read k y
+def castState (m : ℕ) (z : ℤ × ℤ) : ZMod m × ZMod m := (z.1, z.2)
+
+theorem iterate_second {A : Type} [CommSemiring A] (t : ℕ) (x : A × A) :
+    (step^[t] x).2 = (Nat.fib t : A) * x.1 + (Nat.fib (t + 1) : A) * x.2 := by
+  induction t generalizing x with
+  | zero => simp [step]
+  | succ t ih =>
+    rw [Function.iterate_succ_apply, ih]
+    simp only [step, Nat.fib_add_two, Nat.cast_add]
+    ring
+
+theorem iterate_first {A : Type} [CommSemiring A] (t : ℕ) (ht : 0 < t) (x : A × A) :
+    (step^[t] x).1 = (Nat.fib (t - 1) : A) * x.1 + (Nat.fib t : A) * x.2 := by
+  obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : t ≠ 0)
+  rw [Function.iterate_succ_apply', show (s + 1) - 1 = s by omega]
+  exact iterate_second s x
+
+private theorem iterate_matrix {A : Type} [CommSemiring A] (r : ℕ) (hr : 0 < r) (x : A × A) :
+    step^[r] x = (Nat.fib (r - 1) * x.1 + Nat.fib r * x.2,
+      Nat.fib (r - 1) * x.2 + Nat.fib r * (x.1 + x.2)) := by
+  apply Prod.ext (iterate_first r hr x)
+  rw [iterate_second, Nat.fib_add_one hr.ne']
+  push_cast
+  ring
+
+theorem actual_source_value (k : ℕ) (v : ℕ × ℕ) :
+    quantity (step^[k] v) = Nat.fib (k + 3) * v.1 + Nat.fib (k + 4) * v.2 := by
+  have hbridge := GraftAffineClosure.result.2 1 (by omega) (0, 0)
+  have htime := hbridge.2.2.2.2.2.2.2.2.2.2.2.2.1
+  have hh := htime k v
+  rw [(hbridge.2.2.2.2.2.2.2.2.2.2.2.1 v).1,
+    ← Function.iterate_add_apply] at hh
+  exact hh.symm.trans (iterate_first (k + 4) (by omega) v)
+
+theorem actual_signed_quantity (k : ℕ) (v : ℕ × ℕ) (hk : 0 < k) :
+    (quantity (A := ℕ) (step^[k] v) : ℤ) = signedValue k ((observe v).1, (observe v).2) := by
+  have hbridge := GraftAffineClosure.result.2 1 (by omega) (0, 0)
+  have htime := hbridge.2.2.2.2.2.2.2.2.2.2.2.2.1
+  simpa [signedValue] using congrArg (Nat.cast : ℕ → ℤ)
+    ((iterate_first k hk (observe v)).symm.trans (htime k v)).symm
+
+theorem actual_quantity_scaling (Q k : ℕ) (v : ℕ × ℕ) :
+    quantity (step^[k] (Q * v.1, Q * v.2)) = Q * quantity (step^[k] v) := by
+  rw [actual_source_value, actual_source_value]
+  ring
+
+private theorem cast_state_semiconj (m : ℕ) : Function.Semiconj (castState m) (step (A := ℤ)) step := fun z => by
+  simp [castState, step]
+
+private theorem signed_modular_value (m k : ℕ) (x : ℤ × ℤ) :
+    (signedValue (k + 1) x : ZMod m) = (step^[k] (castState m x)).2 := by
+  simpa [signedValue, castState] using (iterate_second k (castState m x)).symm
+
+private theorem rank_facts (p : ℕ) (hp : p.Prime) (e : ℕ) (he : 1 ≤ e) :
+    3 ≤ zeroRank (p ^ e) ∧ p ^ e ∣ Nat.fib (zeroRank (p ^ e)) ∧
+    ∀ k : ℕ, p ^ e ∣ Nat.fib k ↔ zeroRank (p ^ e) ∣ k := by
+  have hm := (PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon p 2 hp le_rfl).1 e
+  have hbound : Nat.fib 2 < Nat.fib (zeroRank (p ^ e)) := by
+    simpa using lt_of_lt_of_le (hp.one_lt.trans_le (Nat.le_self_pow (by omega) p))
+      (Nat.le_of_dvd (Nat.fib_pos.mpr hm.1) hm.2.1)
+  have hsmall := Nat.succ_le_of_lt ((Nat.fib_lt_fib (m := 2) le_rfl).mp hbound)
+  exact ⟨hsmall, hm.2.1,
+    fun k => D5.S3.Arith.FibonacciRank.fibonacci_entry_point hm.1 hm.2.1 hm.2.2⟩
+
+private theorem phase_period (p : ℕ) (hp : p.Prime) (d : ℕ) (hd : 1 ≤ d) (k j : ℕ) (x : ZMod (p ^ d) × ZMod (p ^ d)) :
+    (step^[k + j * zeroRank (p ^ d)] x).2 =
+      (Nat.fib (zeroRank (p ^ d) - 1) : ZMod (p ^ d)) ^ j * (step^[k] x).2 := by
+  let r := zeroRank (p ^ d)
+  have hr := rank_facts p hp d hd
+  have hrpos : 0 < r := by dsimp [r]; omega
+  have hf : (Nat.fib r : ZMod (p ^ d)) = 0 :=
+    (ZMod.natCast_eq_zero_iff _ _).mpr hr.2.1
+  induction j with
+  | zero => simp
+  | succ j ih =>
+    rw [Nat.succ_mul, ← Nat.add_assoc, Nat.add_comm (k + j * r) r,
+      Function.iterate_add_apply, iterate_matrix r hrpos]
+    simp only [Prod.snd, hf, zero_mul, add_zero]
+    rw [ih, pow_succ]
+    ring
+
+private theorem rank_scalar_unit (p : ℕ) (hp : p.Prime) (d m : ℕ) (hd : 1 ≤ d) :
+    IsUnit (Nat.fib (zeroRank (p ^ d) - 1) : ZMod (p ^ m)) := by
+  have hr := rank_facts p hp d hd
+  have hcop : (Nat.fib (zeroRank (p ^ d) - 1)).Coprime
+      (Nat.fib (zeroRank (p ^ d))) := by
+    simpa [Nat.sub_add_cancel (by omega : 1 ≤ zeroRank (p ^ d))] using
+      Nat.fib_coprime_fib_succ (zeroRank (p ^ d) - 1)
+  apply (ZMod.isUnit_iff_coprime _ _).mpr
+  exact (hcop.of_dvd_right (dvd_trans (dvd_pow_self p (by omega)) hr.2.1)).pow_right m
+
+theorem phase_transport (p : ℕ) (hp : p.Prime) (d : ℕ) (hd : 1 ≤ d) (s t : ℕ) (x : ℤ × ℤ)
+    (hst : s % zeroRank (p ^ d) = t % zeroRank (p ^ d)) :
+    (p : ℤ) ^ d ∣ signedValue (s + 1) x ↔
+      (p : ℤ) ^ d ∣ signedValue (t + 1) x := by
+  let r := zeroRank (p ^ d)
+  let z := castState (p ^ d) x
+  have hreduce (k : ℕ) :
+      (signedValue (k + 1) x : ZMod (p ^ d)) = 0 ↔ (step^[k % r] z).2 = 0 := by
+    rw [signed_modular_value (p ^ d), ← Nat.mod_add_div k r]
+    rw [Nat.mul_comm r (k / r), phase_period p hp d hd,
+      (rank_scalar_unit p hp d d hd).pow (k / r) |>.mul_right_eq_zero]
+    simp [Nat.add_mod, castState, z]
+  rw [show (p : ℤ) ^ d = (p ^ d : ℕ) by simp,
+    ← ZMod.intCast_zmod_eq_zero_iff_dvd, ← ZMod.intCast_zmod_eq_zero_iff_dvd,
+    hreduce, hreduce, hst]
+
+theorem phase_from_unit (p : ℕ) (hp : p.Prime) (d : ℕ) (hd : 1 ≤ d) (t k : ℕ) (x : ℤ × ℤ)
+    (hu : IsUnit ((step^[t] ((x.1, x.2) : ZMod (p ^ d) × ZMod (p ^ d))).1))
+    (hz : (signedValue (t + 1) x : ZMod (p ^ d)) = 0) :
+    (p : ℤ) ^ d ∣ signedValue (k + 1) x ↔
+      k % zeroRank (p ^ d) = t % zeroRank (p ^ d) := by
+  let r := zeroRank (p ^ d)
+  let z := castState (p ^ d) x
+  let N := k + t * r
+  have hr := rank_facts p hp d hd
+  change IsUnit ((step^[t] (castState (p ^ d) x)).1) at hu
+  have hrpos : 0 < r := by dsimp [r]; omega
+  have htN : t ≤ N := (Nat.le_mul_of_pos_right t hrpos).trans (Nat.le_add_left _ _)
+  have hNk : N % r = k % r := by simp [N, Nat.add_mod]
+  rw [← phase_transport p hp d hd N k x hNk]
+  rw [show (p : ℤ) ^ d = (p ^ d : ℕ) by simp,
+    ← ZMod.intCast_zmod_eq_zero_iff_dvd, signed_modular_value (p ^ d),
+    ← Nat.sub_add_cancel htN, Function.iterate_add_apply, iterate_second]
+  have hz' : (step^[t] (castState (p ^ d) x)).2 = 0 := by rw [← signed_modular_value (p ^ d)]; exact hz
+  rw [hz', mul_zero, add_zero, hu.mul_left_eq_zero, ZMod.natCast_eq_zero_iff,
+    hr.2.2, ← Nat.modEq_iff_dvd' htN]
+  change t % r = N % r ↔ k % r = t % r
+  rw [hNk]
+  exact eq_comm
+
 theorem sparse_gcd_sampling :
   let collisionLaw (p : ℕ) : Prop :=
     ∀ e : ℕ, 1 ≤ e → ∀ S : Finset ℕ, (∀ k ∈ S, 0 < k) → ¬ D p e S →
@@ -104,49 +235,29 @@ theorem sparse_gcd_sampling :
         Nat.gcd (Nat.gcd v.1 v.2) (p ^ e)) := by
   intro collisionLaw localLaw
   classical
-  let U {A : Type} [Add A] (x : A × A) : A × A := (x.2, x.1 + x.2)
+  let U {A : Type} [Add A] (x : A × A) : A × A := step x
   have hbij {A : Type} [AddCommGroup A] : Function.Bijective (U (A := A)) := by
     exact ((Equiv.prodComm A A).trans
       (Equiv.prodShear (Equiv.refl A) (fun a => Equiv.addRight a))).bijective
   have hiter {A : Type} [CommSemiring A] (t : ℕ) (x : A × A) :
       (U^[t] x).2 = (Nat.fib t : A) * x.1 + (Nat.fib (t + 1) : A) * x.2 := by
-    induction t generalizing x with
-    | zero => simp [U]
-    | succ t ih =>
-      rw [Function.iterate_succ_apply, ih]
-      simp only [U, Nat.fib_add_two, Nat.cast_add]
-      ring
+    exact iterate_second t x
   have hfirst {A : Type} [CommSemiring A] (t : ℕ) (ht : 0 < t) (x : A × A) :
       (U^[t] x).1 = (Nat.fib (t - 1) : A) * x.1 + (Nat.fib t : A) * x.2 := by
-    obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : t ≠ 0)
-    rw [Function.iterate_succ_apply', show (s + 1) - 1 = s by omega]
-    exact hiter s x
+    exact iterate_first t ht x
   have hmatrix {A : Type} [CommSemiring A] (r : ℕ) (hr : 0 < r) (x : A × A) :
       U^[r] x = (Nat.fib (r - 1) * x.1 + Nat.fib r * x.2,
         Nat.fib (r - 1) * x.2 + Nat.fib r * (x.1 + x.2)) := by
-    apply Prod.ext (hfirst r hr x)
-    rw [hiter, Nat.fib_add_one hr.ne']
-    push_cast
-    ring
-  have hbridge := GraftAffineClosure.result.2 1 (by omega) (0, 0)
-  have htime := hbridge.2.2.2.2.2.2.2.2.2.2.2.2.1
-  have hsource (k : ℕ) (v : ℕ × ℕ) :
-      quantity (step^[k] v) = Nat.fib (k + 3) * v.1 + Nat.fib (k + 4) * v.2 := by
-    have hh := htime k v
-    rw [(hbridge.2.2.2.2.2.2.2.2.2.2.2.1 v).1,
-      ← Function.iterate_add_apply] at hh
-    exact hh.symm.trans (hfirst (k + 4) (by omega) v)
+    exact iterate_matrix r hr x
   have hnatural (k : ℕ) (v : ℕ × ℕ) (hk : 0 < k) :
       (quantity (A := ℕ) (step^[k] v) : ℤ) = signedValue k ((observe v).1, (observe v).2) := by
-    simpa [signedValue] using congrArg (Nat.cast : ℕ → ℤ)
-      ((hfirst k hk (observe v)).symm.trans (htime k v)).symm
+    exact actual_signed_quantity k v hk
   have hactual (H k : ℕ) (v : ℕ × ℕ) (hk : 0 < k) :
       actualGcd H k v = gcdValue H k ((observe v).1, (observe v).2) := by
     simp only [gcdValue, ← hnatural k v hk, Int.natAbs_natCast, actualGcd]
   have hscale (Q k : ℕ) (v : ℕ × ℕ) :
       quantity (step^[k] (Q * v.1, Q * v.2)) = Q * quantity (step^[k] v) := by
-    rw [hsource, hsource]
-    ring
+    exact actual_quantity_scaling Q k v
   have hext (H a b : ℕ) (hH : 0 < H) (ha : a ∣ H) (hb : b ∣ H)
       (hreads : ∀ p : ℕ, p.Prime →
         Nat.gcd a (p ^ H.factorization p) = Nat.gcd b (p ^ H.factorization p)) : a = b := by
@@ -165,91 +276,40 @@ theorem sparse_gcd_sampling :
         rootBase p e t x + (j : ZMod p) * rootSlope p e t x = 0)) := by
     have hp2 := hp.two_le
     letI : NeZero p := ⟨hp.ne_zero⟩
-    let castState (m : ℕ) (z : ℤ × ℤ) : ZMod m × ZMod m := (z.1, z.2)
-    have hcastState (m : ℕ) : Function.Semiconj (castState m) (U (A := ℤ)) U := fun z => by
-      simp [castState, U]
+    have hcastState (m : ℕ) : Function.Semiconj (castState m) (U (A := ℤ)) U :=
+      cast_state_semiconj m
     have hvalue (m k : ℕ) (x : ℤ × ℤ) :
         (signedValue (k + 1) x : ZMod m) = (U^[k] (castState m x)).2 := by
-      simpa [signedValue, castState] using (hiter k (castState m x)).symm
+      exact signed_modular_value m k x
     have hrank (e : ℕ) (he : 1 ≤ e) :
         3 ≤ zeroRank (p ^ e) ∧ p ^ e ∣ Nat.fib (zeroRank (p ^ e)) ∧
         ∀ k : ℕ, p ^ e ∣ Nat.fib k ↔ zeroRank (p ^ e) ∣ k := by
-      have hm := (PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon p 2 hp le_rfl).1 e
-      have hbound : Nat.fib 2 < Nat.fib (zeroRank (p ^ e)) := by
-        simpa using lt_of_lt_of_le (hp.one_lt.trans_le (Nat.le_self_pow (by omega) p))
-          (Nat.le_of_dvd (Nat.fib_pos.mpr hm.1) hm.2.1)
-      have hsmall := Nat.succ_le_of_lt ((Nat.fib_lt_fib (m := 2) le_rfl).mp hbound)
-      exact ⟨hsmall, hm.2.1,
-        fun k => D5.S3.Arith.FibonacciRank.fibonacci_entry_point hm.1 hm.2.1 hm.2.2⟩
+      exact rank_facts p hp e he
     have hperiod (d : ℕ) (hd : 1 ≤ d) (k j : ℕ) (x : ZMod (p ^ d) × ZMod (p ^ d)) :
         (U^[k + j * zeroRank (p ^ d)] x).2 =
           (Nat.fib (zeroRank (p ^ d) - 1) : ZMod (p ^ d)) ^ j * (U^[k] x).2 := by
-      let r := zeroRank (p ^ d)
-      have hr := hrank d hd
-      have hrpos : 0 < r := by dsimp [r]; omega
-      have hf : (Nat.fib r : ZMod (p ^ d)) = 0 :=
-        (ZMod.natCast_eq_zero_iff _ _).mpr hr.2.1
-      induction j with
-      | zero => simp
-      | succ j ih =>
-        rw [Nat.succ_mul, ← Nat.add_assoc, Nat.add_comm (k + j * r) r,
-          Function.iterate_add_apply, hmatrix r hrpos]
-        simp only [Prod.snd, hf, zero_mul, add_zero]
-        rw [ih, pow_succ]
-        ring
+      exact phase_period p hp d hd k j x
     have hrankUnit (d m : ℕ) (hd : 1 ≤ d) :
         IsUnit (Nat.fib (zeroRank (p ^ d) - 1) : ZMod (p ^ m)) := by
-      have hr := hrank d hd
-      have hcop : (Nat.fib (zeroRank (p ^ d) - 1)).Coprime
-          (Nat.fib (zeroRank (p ^ d))) := by
-        simpa [Nat.sub_add_cancel (by omega : 1 ≤ zeroRank (p ^ d))] using
-          Nat.fib_coprime_fib_succ (zeroRank (p ^ d) - 1)
-      apply (ZMod.isUnit_iff_coprime _ _).mpr
-      exact (hcop.of_dvd_right (dvd_trans (dvd_pow_self p (by omega)) hr.2.1)).pow_right m
+      exact rank_scalar_unit p hp d m hd
     have htransport (d : ℕ) (hd : 1 ≤ d) (s t : ℕ) (x : ℤ × ℤ)
         (hst : s % zeroRank (p ^ d) = t % zeroRank (p ^ d)) :
         (p : ℤ) ^ d ∣ signedValue (s + 1) x ↔
           (p : ℤ) ^ d ∣ signedValue (t + 1) x := by
-      let r := zeroRank (p ^ d)
-      let z : ZMod (p ^ d) × ZMod (p ^ d) := (x.1, x.2)
-      have hreduce (k : ℕ) :
-          (signedValue (k + 1) x : ZMod (p ^ d)) = 0 ↔ (U^[k % r] z).2 = 0 := by
-        rw [hvalue (p ^ d), ← Nat.mod_add_div k r]
-        rw [Nat.mul_comm r (k / r), hperiod d hd,
-          (hrankUnit d d hd).pow (k / r) |>.mul_right_eq_zero]
-        simp [Nat.add_mod, castState, z]
-      rw [show (p : ℤ) ^ d = (p ^ d : ℕ) by simp,
-        ← ZMod.intCast_zmod_eq_zero_iff_dvd, ← ZMod.intCast_zmod_eq_zero_iff_dvd,
-        hreduce, hreduce, hst]
+      exact phase_transport p hp d hd s t x hst
     have hphase (d : ℕ) (hd : 1 ≤ d) (t k : ℕ) (x : ℤ × ℤ)
-        (hu : IsUnit ((U^[t] ((x.1, x.2) : ZMod (p ^ d) × ZMod (p ^ d))).1))
+        (hu : IsUnit ((U^[t] (castState (p ^ d) x)).1))
         (hz : (signedValue (t + 1) x : ZMod (p ^ d)) = 0) :
         (p : ℤ) ^ d ∣ signedValue (k + 1) x ↔
           k % zeroRank (p ^ d) = t % zeroRank (p ^ d) := by
-      let r := zeroRank (p ^ d)
-      let z : ZMod (p ^ d) × ZMod (p ^ d) := (x.1, x.2)
-      let N := k + t * r
-      have hr := hrank d hd
-      have hrpos : 0 < r := by dsimp [r]; omega
-      have htN : t ≤ N := (Nat.le_mul_of_pos_right t hrpos).trans (Nat.le_add_left _ _)
-      have hNk : N % r = k % r := by simp [N, Nat.add_mod]
-      rw [← htransport d hd N k x hNk]
-      rw [show (p : ℤ) ^ d = (p ^ d : ℕ) by simp,
-        ← ZMod.intCast_zmod_eq_zero_iff_dvd, hvalue (p ^ d),
-        ← Nat.sub_add_cancel htN, Function.iterate_add_apply, hiter]
-      have hz' : (U^[t] z).2 = 0 := by rw [← hvalue (p ^ d)]; exact hz
-      rw [hz', mul_zero, add_zero, hu.mul_left_eq_zero, ZMod.natCast_eq_zero_iff,
-        hr.2.2, ← Nat.modEq_iff_dvd' htN]
-      change t % r = N % r ↔ k % r = t % r
-      rw [hNk]
-      exact eq_comm
+      exact phase_from_unit p hp d hd t k x hu hz
     have hsourceLift (e : ℕ) (he : 1 ≤ e) (Q : ℕ) (hQ : 0 < Q) (x : ℤ × ℤ) :
         ∃ v : ℕ × ℕ, v.1 < Q * p ^ e ∧ v.2 < Q * p ^ e ∧
           (Primitive p x → ¬ p ∣ Q → Primitive p ((v.1 : ℤ), (v.2 : ℤ))) ∧
           ∀ k : ℕ, 0 < k → actualGcd (Q * p ^ e) k v = Q * gcdValue (p ^ e) k x := by
       let P := p ^ e
       have hP : 0 < P := pow_pos hp.pos _
-      let z : ZMod P × ZMod P := (x.1, x.2)
+      let z := castState P x
       let w : ZMod P × ZMod P := (5 * z.1 - 3 * z.2, -3 * z.1 + 2 * z.2)
       obtain ⟨_, _, _, _, _, _, _, _, _, hbounded, _, _, _, _, _, _, hinverse, _⟩ :=
         D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result.2 P hP (0, 0)
@@ -266,7 +326,7 @@ theorem sparse_gcd_sampling :
           ((ZMod.natCast_eq_zero_iff _ _).mpr ((hp.dvd_mul.mp hvNat.2).resolve_left hnQ))
         let lower : ZMod P →+* ZMod p := ZMod.castHom (dvd_pow_self p (by omega)) (ZMod p)
         have hred : observe (residue p A) = ((x.1 : ZMod p), (x.2 : ZMod p)) := by
-          simpa [observe, quantity, step, residue, z, map_ofNat] using
+          simpa [observe, quantity, step, residue, z, castState, map_ofNat] using
             congrArg (Prod.map lower lower) hobs
         rw [hzero] at hred
         have hcoords := Prod.ext_iff.mp hred.symm
@@ -276,7 +336,7 @@ theorem sparse_gcd_sampling :
       · intro k hk
         have hread : (quantity (A := ℕ) (step^[k] A) : ZMod P) = (signedValue k x : ZMod P) := by
           rw [← Int.cast_natCast, hnatural k A hk]
-          simpa [signedValue, observe, quantity, step, residue, z] using
+          simpa [signedValue, observe, quantity, step, residue, z, castState] using
             congrArg (fun u : ZMod P × ZMod P =>
               (Nat.fib (k - 1) : ZMod P) * u.1 + Nat.fib k * u.2) hobs
         have hcong : Int.ModEq P (quantity (A := ℕ) (step^[k] A)) (signedValue k x) :=
@@ -384,7 +444,7 @@ theorem sparse_gcd_sampling :
         hzs, mul_zero, add_zero, hf.mul_right_eq_zero] at hzt
       have hzero : U^[s - 1] ((0, 0) : ZMod (p ^ d) × ZMod (p ^ d)) = (0, 0) := by
         apply Function.IsFixedPt.iterate
-        simp [Function.IsFixedPt, U]
+        simp [Function.IsFixedPt, U, step]
       have hxzero := (hbij (A := ZMod (p ^ d))).injective.iterate (s - 1)
         ((Prod.ext hzt hzs).trans hzero.symm)
       refine hpmin.trans (Nat.dvd_antisymm ?_ ?_)
@@ -564,11 +624,12 @@ theorem sparse_gcd_sampling :
           c⁻¹ ^ j * (signedValue (t + 1 + j * R) x : ZMod P) =
             (signedValue (t + 1) x : ZMod P) +
               (j : ZMod P) * c⁻¹ * f * (signedValue (t + 2) x : ZMod P) := by
-        let z : ZMod P × ZMod P := (x.1, x.2)
+        let z := castState P x
         have hval := fun k => hvalue P k x
         have hnext : (signedValue (t + 2) x : ZMod P) =
             (U^[t] z).1 + (U^[t] z).2 := by
           rw [show t + 2 = (t + 1) + 1 by omega, hval, Function.iterate_succ_apply']
+          rfl
         rw [show t + 1 + j * R = (t + j * R) + 1 by omega, hval, hval, hnext,
           Nat.add_comm t (j * R), Function.iterate_add_apply, hblocks]
         rw [← mul_assoc, ← mul_pow, hcinv, one_pow, one_mul]
