@@ -1,0 +1,9 @@
+### 69.3 原始接口的四类目标与全历史排除
+
+定义以下全局地址，拼接按字面左右词理解：
+
+$$
+p_t=LR^{t-1}L,\qquad q_t=LR^{t-1}LLR\ (1\le t\le k+1),\qquad
+b_h=RLR^{h-1}LLR,\qquad d=RR.
+$$
+
