@@ -17,7 +17,7 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
         Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
     private static Formula And(Formula a, Formula b) => Par(Seq(a, Sp, Land, Sp, b));
     private static Formula Imp(Formula a, Formula b) => Par(Seq(a, Sp, Rightarrow, Sp, b));
-    private static Formula Power(Formula d) => new Formula.Superscript(D(2), d);
+    private static Formula Power(Formula d) => new Formula.Power(D(2), d);
     private static Formula Term(Formula p, Formula d) =>
         new Formula.Fraction(Call("R", p, d), Power(d));
     private static Formula IndexedSum(Formula i, Formula domain, Formula body) =>
@@ -29,7 +29,7 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
         Blocks(
             Describe.Lean(DescribeId.Create("residual"), DeclarationHandle.Create(Prefix + "residual"),
                 H("Dyadic residual"), StatementSource.FromAuthor(ResidualFormula()),
-                AssessedProvenance.FromLiterature("lumbroso2013ddg"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                 Blocks(Paragraph(Text("R(p,d) counts unassigned dyadic cylinders algebraically. "
                     + "The floor is the integer floor. For a nonnegative real probability vector "
                     + "with five coordinates summing to one, R(p,d) is an integer between zero "
@@ -37,7 +37,7 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("cost"), DeclarationHandle.Create(Prefix + "cost"),
                 H("Classical dyadic tail cost"), StatementSource.FromAuthor(CostFormula()),
-                AssessedProvenance.FromLiterature("lumbroso2013ddg"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                 Blocks(Paragraph(Text("L(p) is the real infinite sum of these normalized residuals. "
                     + "The geometric bound four divided by 2 to the power d gives summability "
                     + "on the entire five-outcome simplex. The series expression is the classical "
@@ -75,13 +75,14 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
     private static Formula ResultFormula()
     {
         var p = V("p"); var i = V("i"); var d = V("d"); var t = V("t");
-        var assumptions = And(All(i, Indices, Seq(D(0), Le, Call("p", i))),
+        var assumptions = And(All(i, Indices, Seq(D(0), Sp, Le, Sp, Call("p", i))),
             Equal(IndexedSum(i, Indices, Call("p", i)), D(1)));
-        var bounds = And(Seq(D(0), Le, t), And(Seq(t, Le, new Formula.Fraction(D(1), D(5))),
-            And(Seq(D(1, 6), Sp, t, Le, Call("L", p)),
-                Seq(D(4, 8), Sp, t, Sp, Minus, Sp, D(6), Le, Call("L", p)))));
+        var bounds = And(Seq(D(0), Sp, Le, Sp, t),
+            And(Seq(t, Sp, Le, Sp, new Formula.Fraction(D(1), D(5))),
+            And(Seq(D(1, 6), Sp, t, Sp, Le, Sp, Call("L", p)),
+                Seq(D(4, 8), Sp, t, Sp, Minus, Sp, D(6), Sp, Le, Sp, Call("L", p)))));
         return Disp(All(p, Laws, Imp(assumptions,
-            And(Call("Summable", Lambda("d", Nat, Term(p, d))),
+            And(Call("Summable", Seq(d, Colon, Sp, Nat, Sp, Mapsto, Sp, Term(p, d))),
                 All(t, Real, Imp(Equal(t, Call("min", p)), bounds))))));
     }
 }
