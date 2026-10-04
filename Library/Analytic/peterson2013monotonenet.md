@@ -1,0 +1,56 @@
+---
+bibkey: peterson2013monotonenet
+authors: Jesse Peterson
+year: 2013
+title: Notes on von Neumann algebras
+doi: null
+url: https://math.vanderbilt.edu/peters10/teaching/spring2013/vonNeumannAlgebras.pdf
+claim: An increasing norm-bounded net of positive operators on a complex Hilbert space converges strongly; its strong limit is its operator-order least upper bound.
+strata_touched:
+  - D5/S3/Quantum/Measurements/DirectedPositiveNet
+license: citation-only
+triage: anchor
+---
+
+# Monotone convergence of positive operator nets
+
+Peterson, *Notes on von Neumann algebras*, Lemma 2.7.1, states strong convergence of an increasing norm-bounded net of positive operators on a Hilbert space. The formulation below starts from an existing operator-order least upper bound. The square-root estimate is the estimate used in Peterson's proof; construction from vector Cauchy limits and identification of the least upper bound are written out here. No countable cofinal subset is required.
+
+## Theorem 1 (strong convergence to the operator-order least upper bound)
+
+Let $H$ be any complete complex inner-product space, including the zero space, and let $J$ be a nonempty directed preorder. Let $X:J\to B(H)$ be a monotone net of positive operators. Suppose $U\in B(H)$ is the actual least upper bound of $\{X_j:j\in J\}$ for the positive-operator order. Then
+
+$$
+\forall j\in J,\quad \|X_j\|\leq\|U\|,
+\qquad
+\forall v\in H,\quad X_jv\longrightarrow Uv
+\quad(j\to\infty).
+$$
+
+**Proof.** Positivity and $X_j\leq U$ imply the norm bound. If $D\geq0$, set $R=D^{1/2}$. Self-adjointness of $R$, $R^2=D$, and the C-star identity give
+
+$$
+\|Dv\|^2=\|R(Rv)\|^2
+\leq\|R\|^2\|Rv\|^2
+=\|D\|\operatorname{Re}\langle Dv,v\rangle.
+$$
+
+For fixed $v$, the real scalar net $q_j(v)=\operatorname{Re}\langle X_jv,v\rangle$ is monotone and bounded above by $\operatorname{Re}\langle Uv,v\rangle$. Thus it converges to its real supremum $Q(v)$. This does not yet identify $Q(v)$ with the quadratic form of $U$.
+
+Set $C=\|U\|+1>0$. For $i\leq k$, positivity yields $0\leq X_k-X_i\leq U$ and hence
+
+$$
+\|X_kv-X_iv\|^2
+\leq C\bigl(q_k(v)-q_i(v)\bigr)
+\leq C\bigl(Q(v)-q_i(v)\bigr).
+$$
+
+Given $\varepsilon>0$, choose $N$ such that $Q(v)-q_i(v)<\varepsilon^2/(16C)$ whenever $i\geq N$. For $i,j\geq N$, directedness gives $k\geq i,j$. The displayed estimate and the triangle inequality give $\|X_iv-X_jv\|<\varepsilon$. Thus the vector net is Cauchy and has a limit $s(v)$. Uniqueness of vector limits proves additivity and complex linearity of $s$. Passing the operator-norm bound to the limit gives $\|s(v)\|\leq\|U\|\|v\|$, so $s$ defines a bounded linear operator $S$.
+
+The cone of positive operators is closed under pointwise strong limits: for every $v$, the nonnegative complex numbers $\langle F_jv,v\rangle$ converge to $\langle Fv,v\rangle$, which is real and nonnegative. For fixed $i$, the net $X_j-X_i$ is eventually positive, so $S-X_i$ is positive. If $V$ is any upper bound of every $X_j$, then $V-X_j$ is positive for every $j$, so $V-S$ is positive. Consequently $S$ is a least upper bound. Uniqueness of least upper bounds gives $S=U$, proving the claimed strong convergence. The positive constant $C$ also covers $U=0$; none of the argument excludes $H=0$.
+
+## Verified locator
+
+https://math.vanderbilt.edu/peters10/teaching/spring2013/vonNeumannAlgebras.pdf
+
+Jesse Peterson, *Notes on von Neumann algebras*, April 5, 2013, Lemma 2.7.1, page 32. The original PDF states strong convergence for an increasing norm-bounded net of positive operators. The operator-order least-upper-bound identification is derived in Theorem 1 above.
