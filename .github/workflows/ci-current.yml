@@ -123,7 +123,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/scripts/clean-lanes.sh
             tools/scripts/dotnet-build.sh
@@ -148,7 +147,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/scripts/clean-lanes.sh
             tools/scripts/dotnet-build.sh
@@ -201,7 +199,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/scripts/clean-lanes.sh
             tools/scripts/dotnet-build.sh
@@ -226,7 +223,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/*
             tools/lean-inspector/InformationSourceFixture.lean
@@ -338,7 +334,6 @@ jobs:
             tools/tests/StrataLint.RepositoryTopology.Tests/*
             tools/tests/StrataLint.ResourceObservation.Tests/*
             tools/tests/StrataLint.Rules.Tests/*
-            tools/tests/StrataLint.Scribe.Documents.Tests/*
             tools/tests/StrataLint.Scribe.Tests/*
             tools/tests/StrataLint.SourceAtomizer.Tests/*
             tools/tests/StrataLint.Tests/*
@@ -394,7 +389,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.CliTestSupport/*
@@ -426,7 +420,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.CliTestSupport/*
@@ -452,7 +445,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.CliTestSupport/*
@@ -612,7 +604,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/atom_dedup.sh
@@ -745,10 +736,6 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.Scribe.Tests/*
             tools/tests/StrataLint.Tests/Commands/*
-            [tests-scribe-documents]
-            tools/StrataLint.Scribe.Documents/*
-            tools/StrataLint.Scribe/*
-            tools/tests/StrataLint.Scribe.Documents.Tests/*
             [tests-source-atomizer]
             Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901
             Meta/Digestion/backfill/periodic-tree-registry/*
@@ -759,7 +746,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.CliTestSupport/*
             tools/TestSupport/StrataLint.DigestionTestSupport/*
@@ -780,7 +766,6 @@ jobs:
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.CliTestSupport/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
@@ -903,14 +888,12 @@ jobs:
             **/NuGet.config
             **/global.json
             **/nuget.config
-            Blueprint/**/*.scribe.cs
             tools/Architecture/BannedSymbols*.txt
             tools/StrataLint.Cli/**
             tools/StrataLint.Configuration/**
             tools/StrataLint.Engine/**
             tools/StrataLint.FileMap/**
             tools/StrataLint.Lean/**
-            tools/StrataLint.Scribe.Documents/**
             tools/StrataLint.Scribe/**
             tools/StrataLint.TestEvidence/**
             tools/Trureturing.Truth/**
@@ -932,7 +915,6 @@ jobs:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
       - id: keys
         env:
@@ -984,7 +966,6 @@ jobs:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
       - id: lean_report
         name: Build the Lean report
@@ -1016,7 +997,7 @@ jobs:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - name: Current-tree rules
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT"
+        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/changed-paths"
       - name: Scribe content
         if: ${{ !cancelled() }}
         env:
@@ -1310,12 +1291,6 @@ jobs:
     with:
       project: tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj
 
-  tests-scribe-documents:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe-documents']
-    uses: ./.github/workflows/ci-unit.yml
-    with:
-      project: tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj
 
   tests-source-atomizer:
     needs: detect
@@ -1363,7 +1338,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-scribe-documents, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

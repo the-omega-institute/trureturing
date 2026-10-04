@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using StrataLint.FileMap;
-using StrataLint.Scribe.Documents;
 using StrataLint.EngineeringScope;
 
 namespace StrataLint.RepositoryFileMap.Tests;
@@ -17,7 +16,7 @@ public sealed class CanonicalFileMapFixture
     // global registry/actor/inventory checks without reading unrelated bodies.
     private readonly Lazy<ImmutableArray<FileMapFinding>> findings = new(() =>
         FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot(),
-            DocumentAssembly.Definitions.Select(static definition => definition.RelativePath.Value), new FileMapInspectionScope(
+            FileMapPolicy.DocumentPaths(TestRepositoryLayout.FindRoot()), new FileMapInspectionScope(
             ["lean-report-inputs.json", "Meta/ci-cache-paths.json", "Meta/ci-checks.json", "Meta/engineering-projects.json",
                 "Blueprint/D5/S0/Carrier/Ring.md"], Actors: true, Inventory: true)).ToImmutableArray());
 

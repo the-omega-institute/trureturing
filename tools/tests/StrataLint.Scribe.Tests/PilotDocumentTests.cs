@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
@@ -26,7 +25,7 @@ public sealed class DocumentDiscoveryTests
     public void DiscoveryRejectsDefinitionWhoseGidDoesNotMatchItsSourcePath()
     {
         var exception = Assert.Throws<InvalidOperationException>(
-            () => DocumentDefinitions.Discover(Assembly.GetExecutingAssembly()));
+            () => DocumentDefinitions.ValidateBijection(new MismatchedDefinition().Create()));
 
         Assert.Contains("D5/S1/Phase/Basic", exception.Message, StringComparison.Ordinal);
         Assert.Contains(

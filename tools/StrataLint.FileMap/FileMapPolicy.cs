@@ -30,7 +30,7 @@ internal static partial class FileMapPolicy
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =
-        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj";
+        "tools/StrataLint.Scribe/Scripting/ScribeScriptHost.cs";
     private const string SnapshotDecoderPath =
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
@@ -190,6 +190,19 @@ internal static partial class FileMapPolicy
         }
 
         return findings;
+    }
+
+    internal static IEnumerable<string> DocumentPaths(string repositoryRoot)
+    {
+        var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        foreach (var path in TrackedPaths(repositoryRoot)
+            .Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && path.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                && manifest.Entries.Any(entry => entry.Kind == FileMapKind.Data
+                    && entry.Matches(path)))
+            .Select(path => path[..^".scribe.cs".Length] + ".md")
+            .Order(StringComparer.Ordinal))
+            yield return path;
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectRepository(

@@ -13,7 +13,7 @@ help:
 	@printf '%s\n' 'make lean [LEAN_TARGETS="..."] [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make emit [BASE=origin/dev] [PATHS=FILE]  Emit changed Scribe projections and values' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack'
 
 test:
-	@set -e; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)"
+	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"
 
 lean-cache-ensure:
 	@/bin/bash tools/scripts/worktree/lean-cache-ensure.sh
@@ -156,8 +156,8 @@ gate:
 	@set -e; \
 	make lean-report; \
 	dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; \
-	cli=tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll; \
-	dotnet "$$cli" check-current --candidate-lean-report "$(LEAN_REPORT)"; \
-	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)"; \
+	cli=tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; \
+	dotnet "$$cli" check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"; \
+	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)" tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$$paths"; \
 	dotnet "$$cli" filemap-conform; \
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"
