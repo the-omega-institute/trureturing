@@ -1327,3 +1327,167 @@ terminal fan. They exclude the \(p_0=0,A\ge2\) branch and enlarge
 the available repair budget, but do not provide the simultaneous
 patches or close the \(A=1\) case. This is ordinary mathematical
 analysis without new Lean verification or unrestricted noncoverage.
+
+## 16. Omitting heavily occupied source roots funds more patches at every height
+
+Let \(N_s=\#\{d\in D:s\mid d\}\), and write
+\(\alpha_s\) for the first root of the original pure \(s\)-class.
+Require the common tree \(\theta\) to retain \(\alpha_s\) at its
+first level. Every other \(s\)-bearing original avoids this root:
+its modulus is comparable with \(s\), so its original class is
+disjoint from the pure \(s\)-class. For each other first root \(\xi\),
+let \(n_\xi\) count the original \(s\)-bearing labels with that root.
+These are counts of the original labels, including all their heights,
+and satisfy
+\[
+ \sum_{\xi\ne\alpha_s}n_\xi=N_s-1.
+\]
+Choose the other \(r-1\) retained first roots to have the smallest
+loads. The omitted \(s-r\) roots then contain at least
+\[
+ z_\theta\ge
+ \left\lceil\frac{(s-r)(N_s-1)}{s-1}\right\rceil \tag{SC63}
+\]
+original labels. Here \(z_\theta\) counts all \(s\)-bearing originals
+whose complete prefix is rejected by the common tree. Every compatible
+extension of the selected first level satisfies SC63; deeper choices
+can only add rejected labels. This is one common tree for every column.
+
+For any terminal prefix \(v\) used in Section 7, none of the rejected
+labels can belong to \(\mathcal R\) or \(\mathcal T\). In addition,
+all \(A\) pure \(r\)-powers are absent. The original pure \(s\)-class
+survives the source restriction, but cannot belong to \(\mathcal R\)
+because its output slot is \(r\); it is not a height-\(A\) top.
+These three sets of omitted original labels are disjoint. Therefore
+every retained family allowed in Section 15 satisfies
+\[
+ \Delta\ge A+1+z_\theta
+ \ge A+1+
+ \left\lceil\frac{(s-r)(N_s-1)}{s-1}\right\rceil,
+ \qquad A\ge1. \tag{SC64}
+\]
+The count uses only original membership and omission. It does not
+require the retained lower representatives to be the original \(G\)
+classes, or any independence between first roots and cofactor phases.
+At \(A=1\), if \(\mathcal R=\mathcal L\setminus\{s\}\), every
+other original either survives in this retained family or the pooled
+tops, or is counted by \(z_\theta\). Then
+\(\Delta=2+z_\theta\) exactly. Smaller retained families only give
+the lower bound.
+
+Let \(P>s\) be the largest support prime. Directly reuse
+[report 385 NF66](385-private-congruence-hulls-and-crossed-modulus-closure.md#56-the-original-cover-needs-enough-small-prime-labels-to-block-compression),
+which gives \(N_s\ge P-s+2\) for this same EB1 cover, with no
+height restriction. At \(r=3,s=5\), SC64 and the oddness of \(P\)
+give \(\Delta\ge A+(P-1)/2\). SC62 also holds for the chosen tree,
+so the two bounds combine as
+\[
+ \boxed{\Delta\ge\max\{3A-1,\ A+(P-1)/2\}.} \tag{SC65}
+\]
+They cannot be added: the original ancestors counted in SC61 may
+already be among the rejected labels counted in SC64.
+
+Using the attributed nine-prime support theorem recorded in
+[Schroeder's source entry](../../../../../../Library/Arith/schroeder2026nine.md),
+report 385 NF68 gives \(P\ge29\). Under this source input,
+SC65 yields \(\Delta\ge A+14\ge15\). The source entry records
+the pinned edition and its completed finite-geometry verification;
+no complete local kernel replay of the arbitrary-height source
+theorem is asserted. The parameter bound SC65 does not need this
+additional numerical input.
+
+Consequently a complete legal one-root repair using this tree gives
+strict descent whenever
+\[
+ c-b\le\max\{3A-1,\ A+(P-1)/2\}-2. \tag{SC66}
+\]
+With the attributed \(P\ge29\), thirteen net additional classes
+are funded at every \(A\ge1\). All patch and rescue classes still
+count in \(c\), and each removed old top counts once in \(b\).
+Coverage, numerical-slot uniqueness and the complete displaced
+service remain required. In particular SC66 supplies a budget,
+not a construction of thirteen compatible patches. This is ordinary
+mathematical analysis without new Lean verification.
+
+## 17. Changing retained representatives preserves the unbought pure-root obstruction
+
+Fix actual retained families \(\mathcal R\) and
+\(\mathcal T_+\subseteq\mathcal T\), with all their numerical
+output slots distinct. As in Section 15, require
+\(\mathcal R\subseteq\mathcal L\) and exclude output slot \(r\),
+but do not require \(G\subseteq\mathcal R\). Let \(\mathcal F_0\)
+consist of the retained output classes whose original labels have
+\(b(d)=0\). Their moduli are distinct nonunit divisors of \(M\).
+Moreover
+\[
+ |\mathcal F_0|\le|\mathcal R|+|\mathcal T|<K.
+\]
+Define their complete cofactor complement using their actual phases:
+\[
+ K_{\mathcal F_0}=(\mathbb Z/M\mathbb Z)
+                    \setminus\bigcup\mathcal F_0. \tag{SC67}
+\]
+Global minimum cardinality makes this set nonempty: otherwise
+\(\mathcal F_0\) would itself be a smaller distinct odd whole cover.
+It need not equal the old \(K_G\).
+
+The contraction in [report 375 DP4--DP5](375-deep-prime-prefix-projections-and-tree-contraction.md#2-one-common-source-map-for-the-selected-subtree)
+applies to \(\mathcal F_0\) itself. Fix \(q\mid M\), \(q>r\),
+and \(H_q=v_q(M)\). If the complement of the \(q^{H_q}\)-projection
+of \(K_{\mathcal F_0}\) contained a complete \(r\)-ary subtree,
+every full cofactor fibre selected by that tree would be covered by
+\(\mathcal F_0\). The DP4 source map would pull these classes back
+to a whole cover with at most \(|\mathcal F_0|<K\) classes. All
+input moduli are \(r\)-free, so the DP5 output-modulus map is
+injective and its outputs are odd nonunits. This contradicts the
+same global minimum \(K\); no claim that \(\mathcal F_0\) was
+an original subfamily is needed.
+
+The existing dual-tree argument DP6--DP7 therefore gives
+\[
+ \begin{gathered}
+ \operatorname{pr}_{q^{H_q}}K_{\mathcal F_0}
+ \text{ contains a complete }(q-r+1)\text{-ary subtree},\\
+ |\operatorname{pr}_{q^h}K_{\mathcal F_0}|\ge(q-r+1)^h
+ \qquad(1\le h\le H_q).
+ \end{gathered} \tag{SC68}
+\]
+For each such \(q\), it also supplies one probability supported on
+this new complete complement with all its \(q^h\)-cylinder masses
+at most \((q-r+1)^{-h}\). These probabilities are separate for
+different primes. They are not the old law on \(R_r\), and no
+common balanced probability is inferred. The complete congruence
+hull of \(K_{\mathcal F_0}\) has only prime factors smaller than
+\(r\); in particular it equals one when \(r=3\).
+
+Suppose now that \(\theta\) retains the original pure \(s\) first
+root, whose output root is \(j_s\), and that the bought root is
+\(\rho\ne j_s\). Every other \(s\)-bearing original is disjoint
+from the pure \(s\)-class, hence its output avoids \(j_s\).
+The pure \(s\) original itself is excluded by the reserved slot
+\(r\). Thus on this root the retained lower and top service is
+exactly \(\mathcal F_0\), independently of all higher \(r\)-digits.
+The complete residual after this retained service and the bought
+root consequently has the exact slice
+\[
+ \{j_s\}\times\{\text{all higher }r\text{-digit tails}\}
+             \times K_{\mathcal F_0}. \tag{SC69}
+\]
+At \(r=3\), its periodic lift to the integers has full difference
+gcd exactly \(r\): the cofactor hull is one and all higher
+\(r\)-digits are free. Any single AP containing this whole
+periodic slice must have modulus dividing \(r\). For a nonunit
+modulus it must be the class \(j_s\bmod r\), but that numerical
+slot is already used by \(S_\rho\). Therefore at least two new
+classes must meet and together cover this slice in any legal repair.
+The conclusion also permits patch moduli outside the old period;
+containment in one AP still imposes the same difference-gcd condition.
+
+Changing lower representatives or keeping more distinct-slot tops
+does not remove this single-patch obstruction. Nothing here says
+that another root has the same complete cofactor residual. Buying
+\(j_s\), or omitting the pure \(s\) source root from the common
+tree, removes the premise supplying SC69. Multiple patches may
+still cover the slice; neither their existence nor their exclusion
+is proved. SC67--SC69 reuse the existing contraction on a newly
+specified actual AP family and have no new Lean verification.
