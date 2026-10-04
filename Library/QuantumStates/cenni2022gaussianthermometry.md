@@ -18,7 +18,7 @@ M. F. B. Cenni, L. Lami, A. Acín and M. Mehboudi, arXiv:2110.02098v4 (2022).
 
 Page 6, §3.2.2, Eq. (36), defines the zero-displacement Gaussian-measurement Fisher information by
 
-> "${\cal F}^{\rm C}({\bm \sigma};{\bm \sigma}_s^{M}) \equiv {\cal F}^{\rm C}({\bm 0},{\bm \sigma};{\bm \sigma}_s^{M})$" and "${\cal F}^{\rm C}({\bm d},{\bm \sigma};{\bm \sigma}_s^{M}) = \partial_{T} {\bm d}^{T}({\bm \sigma} + {\bm \sigma}_s^{M})^{-1}\partial_{T}{\bm d} + \frac{1}{2}\Tr \left[\left(({m \sigma} + {\bm \sigma}_s^{M})^{-1} \partial_{T}{\bm \sigma}\right)^2 \right]$."
+> "${\cal F}^{\rm C}({\bm \sigma};{\bm \sigma}_s^{M}) \equiv {\cal F}^{\rm C}({\bm 0},{\bm \sigma};{\bm \sigma}_s^{M})$" and "${\cal F}^{\rm C}({\bm d},{\bm \sigma};{\bm \sigma}_s^{M}) = \partial_{T} {\bm d}^{T}({\bm \sigma} + {\bm \sigma}_s^{M})^{-1}\partial_{T}{\bm d} + \frac{1}{2}\Tr \left[\left(({\bm \sigma} + {\bm \sigma}_s^{M})^{-1} \partial_{T}{\bm \sigma}\right)^2 \right]$."
 
 For a thermal mode the paper writes
 
