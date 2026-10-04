@@ -5059,3 +5059,184 @@ This is an ordinary constructive consequence of the existing
 five-menu service, actual-phase root patch and inventory identities.
 It uses no new enumeration, independent source optimization, or
 Lean verification.
+
+## 45. The identical-output partner has an original parent-private boundary
+
+Keep the single-inner-deficit hypotheses and their forced partner:
+one actual lower $\ell\in L_0$, an outer top $t$ of color
+$c\in\{2,5,8\}$, and
+
+$$
+C_\ell=C_t=[\eta]_n,\qquad
+D_c\cap E_3\ne\varnothing,\qquad
+D_c\cap E_6\ne\varnothing.
+\tag{SC205}
+$$
+
+All sets, original phases and maps use the same original family
+and the same substitution tree. Put $n=3^bm$ and
+$w=\chi(n)=5^bm>1$, with $(m,15)=1$. The two original
+numerical labels are $3w$ and $9w$. Report 388 SC2--SC4 gives
+their actual phases from one common inverse tree coordinate.
+Equality of the output APs therefore implies equality of their
+original residues modulo $w$; denote that residue by $a$.
+Their original first ternary roots remain different: zero for
+the lower and two for the outer top.
+
+### The original cofactor parent must have private points in both roots
+
+Original divisor closure supplies the original label $w$.
+Write its actual phase as $a_w\pmod w$. Comparable-original
+disjointness gives $a_w\ne a$, because otherwise its class
+would contain the original lower $3w$.
+
+The original parent phase group
+
+$$
+J_a=\{M\in D:w\mid M,\ M>w,\ \alpha_M\equiv a\pmod w\}
+$$
+
+contains both $3w$ and $9w$. Reuse Report 385 DR1--DR5:
+moving the original $w$-class to $a\pmod w$ and deleting
+the whole $J_a$ leaves exactly the complete original private
+region $P_w$. Since $|J_a|\ge2$, DR5 gives
+
+$$
+3w\nmid\Gamma_w,
+\tag{SC206}
+$$
+
+where $\Gamma_w$ is the hull of the complete original private
+region, not of a selected source trace. Every point of $P_w$
+already has residue $a_w\pmod w$. If all such points had one
+residue modulo 3, they would lie in one AP modulo $3w$, contrary
+to SC206 and the existing private-hull equivalence. The original
+pure class $[1]_3$ excludes root one from $P_w$. Consequently
+
+$$
+P_w\cap[0]_3\ne\varnothing,
+\qquad
+P_w\cap[2]_3\ne\varnothing.
+\tag{SC207}
+$$
+
+The root-zero private points also avoid the original pure
+$[0]_9$, so their old words lie in $\{3,6\}$. SC207 does
+not require both of those words, and its two private points need
+not have the same complete cofactor coordinate.
+
+These private points have $w$-phase $a_w$, whereas the paired
+lower/top classes and their source witnesses have $w$-phase
+$a$. They cannot be identified with one another. SC207 is a direct
+consumer of the existing crowded-parent result, not a new general
+parent-exchange theorem.
+
+### With one active inner lower and no outer lower, the deficit witnesses are private
+
+For this paragraph impose the additional conditions
+
+$$
+H\cap L_2=\varnothing,
+\qquad
+\ell\text{ is the only active source in }L_0.
+\tag{SC208}
+$$
+
+Choose, separately for $j=3,6$, any
+
+$$
+x_j\in D_c\cap E_j.
+$$
+
+Both original image points are then private to their indicated
+original labels:
+
+$$
+F_{j,\theta}(x_j)\in P_{3w},
+\qquad
+F_{c,\theta}(x_j)\in P_{9w}.
+\tag{SC209}
+$$
+
+To check the first assertion, use the exact original-owner
+pullback SC2--SC4. The point $x_j\in H$ misses every
+height-zero output by the retained-source convention of the
+five-menu construction. At old word $j$, any height-one owner
+has its output in $L_0$. Only $\ell$ can contain a point
+of $H$, by SC208; an inactive output cannot contain $x_j$.
+Height-two owners have color $j$, and none contains $x_j$
+because $x_j\in E_j$. The lower does contain $x_j$, since
+the two deficits lie in $C_\ell$. Thus it is the unique owner
+in the entire original family.
+
+For the second assertion, height-zero ownership is excluded in
+the same way. A height-one owner at old word $c$ would belong
+to $L_2$, excluded by SC208. Among height-two owners, only color
+$c$ is compatible. The definition of $D_c$ excludes every
+other top of that color, while $T_c$ covers $H$, so $t$
+owns the point. This proves unique original ownership.
+
+For each fixed $j$, the two points in SC209 share the complete
+original 3-free coordinate: their 5-coordinate is the same
+$\theta_B(x_j\bmod3^B)$, and their $M$-coordinate is the
+same $x_j\bmod M$. Only the old ternary word changes from
+$j$ to $c$. The witnesses $x_3,x_6$ may differ; no common
+point of $D_c\cap E_3\cap E_6$ is asserted.
+
+In particular the complete private region of the original lower
+meets both inner words:
+
+$$
+P_{3w}\cap[3]_9\ne\varnothing,
+\qquad
+P_{3w}\cap[6]_9\ne\varnothing,
+\qquad 9w\nmid\Gamma_{3w}.
+\tag{SC210}
+$$
+
+Without SC208, an inner image can also have another active
+$L_0$-owner and an outer image can have an $L_2$-owner.
+SC205 alone therefore does not make its witnesses original-private.
+
+### What the existing exchanges do and do not pay
+
+Applying DR1 instead to the original parent $3w$, at the
+outer top's projected phase, absorbs that top and any other
+proper descendants in the same phase. Its exact liability is
+the entire original $P_{3w}$. It is not merely
+$F_{3,\theta}(E_3)\cup F_{6,\theta}(E_6)$: that selected
+tree may omit original 5-prefixes, and the deficits impose no
+condition on all other original-private points.
+
+Under SC208, SC210 also rules out repairing that complete liability
+with a single freed $9w$-class, regardless of its new phase.
+The original lower's private region has two distinct residues
+modulo $9w$. The reciprocal-hull swap of Report 385 RH1--RH6
+likewise does not apply to the pair $(3w,9w)$, because it would
+require $9w\mid\Gamma_{3w}$. Its other divisibility,
+$3w\mid\Gamma_{9w}$, is automatic but insufficient.
+
+The original $w$-parent exchange has a different exact
+liability, $P_w$, as in SC207. Any proposal to pay that move must
+cover this full region using labels outside $D\setminus J_a$,
+with the class-count and, at equality, modulus-sum budgets of DR2.
+Two private witnesses do not certify such coverage.
+
+Report 385 OHL6--OHL7 supplies a complete-hole exchange for a
+packet of original full-height top labels at one common ternary
+word and one fixed first auxiliary-prime digit, with one fixed
+code per original. The present pair has different original
+ternary heights and different old roots, so that packet interface
+does not directly apply to it. A larger proposed packet would
+need its actual complete deletion-hole projection and a lawful
+fixed-code covering of every required new branch; SC205 or SC209
+does not provide those universal conditions.
+
+Thus the parent bridge and SC209 give additional necessary
+structure, but no complete paid elimination of the identical
+partner has been obtained. The remaining obligation is a legal
+repair of one specified complete original liability, or another
+whole-hole construction, under the actual shared phases and
+original numerical inventory. These are ordinary deductions
+from existing owner, private-hull and exchange results, without
+new enumeration or Lean verification.
