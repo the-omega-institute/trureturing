@@ -94,10 +94,30 @@ Computed by the kernel-checked certificate in
 the orbit average is −1/73, hence nonzero. The m = 2 odd-n result proved in
 the follow-up and the max-minus-min homomesy theorem in
 `D5/S3/Combinatorics/Geometry/RectangleRowmotionHomomesy.result` survive;
-they concern different scopes or statistics. The candidate family for
-n = 8k + 6 described in issue 13084 remains open and is not asserted by
-this module. Whether any replacement hypothesis yields signed-cardinality
-homomesy for the remaining m = 3 cases is open.
+they concern different scopes or statistics. Whether any replacement
+hypothesis yields signed-cardinality homomesy for the remaining m = 3 cases
+is open.
+
+The following readings are computed by exhaustive enumeration of all
+interval-closed sets of [3] × [n] and their literal rowmotion orbits:
+
+- Exceptional orbits at n = 12 (computed). IC([3] × [12]) has 47,373
+  members in 1,615 rowmotion orbits. Exactly two orbits have a nonzero
+  signed-cardinality sum: both have length 73, with sums −1 and +1. The
+  poset anti-automorphism (i, j) ↦ (4 − i, 13 − j) maps one onto the other
+  and negates every signed weight. The row-major and the rank-major reverse
+  extensions give the same orbit decomposition.
+- Global cancellation (computed). The sum of the statistic over all of
+  IC([3] × [12]) is 0, so the global average still cancels. The conjecture
+  fails orbit by orbit, not on average.
+- Small cases (computed). For m = 3 the clause m + n − 1 even holds exactly
+  at even n. At n = 2, 4, 6, 8, 10 (5, 19, 72, 229 and 661 orbits) every
+  orbit has signed-cardinality sum 0. So n = 12 is the first even n at which
+  the conjecture fails for m = 3.
+- Candidate family n = 8k + 6 (computed; open as a theorem). The seed
+  {(1,12), (1,13), (2,6)} is interval-closed in [3] × [n]. Its literal
+  orbit has length (n² − 20)/2 and signed-cardinality sum −1 for each of
+  n = 14, 22, 30, …, 158 (19 values). No proof covers all k.
 
 The refutation removes Conjecture 4.12 as a valid general premise for later
 arguments; results in the source that use the separately proved m = 2
@@ -108,5 +128,6 @@ conjecture require revision.
 
 The literature check covers the cited arXiv versions and the repository's
 registered notes; it does not establish exhaustive worldwide priority or
-exclude an unindexed later settlement. The candidate family beyond n = 12
-is an open computational question.
+exclude an unindexed later settlement. The enumeration readings in the
+Triage are computed, not kernel-checked; only the n = 12 witness orbit is
+kernel-checked.
