@@ -350,4 +350,4 @@ serializes that target before the driver releases its Environment and proof
 objects. Cross-target collision checks retain only names and digest strings;
 there is no array of target environments or constant bodies.
 
-`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和含类型化输入目标的 `assess`；该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
+`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和固定驱动完成的逐目标 `assess`（包括空 assessment）；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。

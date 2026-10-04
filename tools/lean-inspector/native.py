@@ -270,9 +270,8 @@ def module(root, name, source, utility_path, executable, output):
         artifact = directory / 'module.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
-        if input_projection(root, name)['inputs']:
-            print('LEAN_INSPECTOR_ASSESS module=' + name)
-            module_work('assess', [name])
+        print('LEAN_INSPECTOR_ASSESS module=' + name)
+        module_work('assess', [name])
         module_work('extract', [name])
         activity('extract', 1)
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
@@ -338,9 +337,8 @@ def produce_batch_chunk(requests):
             raise ValueError('unreferenced batch materials')
         for row in raw['modules']:
             print('LEAN_INSPECTOR_EXTRACT module=' + row['module'])
-            if input_projection(root, row['module'])['inputs']:
-                print('LEAN_INSPECTOR_ASSESS module=' + row['module'])
-                module_work('assess', [row['module']])
+            print('LEAN_INSPECTOR_ASSESS module=' + row['module'])
+            module_work('assess', [row['module']])
         module_work('extract', [row['module'] for row in raw['modules']])
         activity('extract', len(requests))
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
