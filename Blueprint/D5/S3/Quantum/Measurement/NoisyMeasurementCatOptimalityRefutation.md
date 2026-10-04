@@ -78,7 +78,7 @@ The second member of the conjectured optimal pair.
 
 **Definition 1.7 (The conjectured optimality of cat pairs).**
 
-$$(claim) \Leftrightarrow (\forall d : \mathbb{N}, (2 \le d) \Rightarrow (\forall X : Type, [\operatorname{Fintype}\left(X\right)], \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, ((\forall x : X, \forall i : \operatorname{Fin}\left(d\right), 0 \le p\left(x, i\right)) \land (\forall i : \operatorname{Fin}\left(d\right), \sum_{x \in X} p\left(x, i\right) = 1)) \Rightarrow (\forall N : \mathbb{N}, (1 \le N) \Rightarrow (\exists j, k : \operatorname{Fin}\left(d\right), (j \ne k) \land (\exists \theta : \mathbb{R}, \forall zeta, zetaperp : (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right)) \to \mathbb{C}, (((\langle zeta, zeta \rangle = 1) \land (\langle zetaperp, zetaperp \rangle = 1)) \land (\langle zetaperp, zeta \rangle = 0)) \Rightarrow (\operatorname{gamma}\left(p, zeta, zetaperp\right) \le \operatorname{gamma}\left(p, \operatorname{catState}\left(j, k, \theta\right), \operatorname{catPerp}\left(j, k, \theta\right)\right)))))))$$
+$$(claim) \Leftrightarrow (\forall d : \mathbb{N}, (2 \le d) \Rightarrow (\forall X : Type, [\operatorname{Fintype}\left(X\right)], \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, ((\forall x : X, \forall i : \operatorname{Fin}\left(d\right), 0 < p\left(x, i\right)) \land (\forall i : \operatorname{Fin}\left(d\right), \sum_{x \in X} p\left(x, i\right) = 1)) \Rightarrow (\forall N : \mathbb{N}, (1 \le N) \Rightarrow (\exists j, k : \operatorname{Fin}\left(d\right), (j \ne k) \land (\exists \theta : \mathbb{R}, \forall zeta, zetaperp : (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right)) \to \mathbb{C}, (((\langle zeta, zeta \rangle = 1) \land (\langle zetaperp, zetaperp \rangle = 1)) \land (\langle zetaperp, zeta \rangle = 0)) \Rightarrow (\operatorname{gamma}\left(p, zeta, zetaperp\right) \le \operatorname{gamma}\left(p, \operatorname{catState}\left(j, k, \theta\right), \operatorname{catPerp}\left(j, k, \theta\right)\right)))))))$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.claim` (`✓ std3`).
 
@@ -86,7 +86,7 @@ $$(claim) \Leftrightarrow (\forall d : \mathbb{N}, (2 \le d) \Rightarrow (\foral
 
 *Commentary.*
 
-For every d >= 2, every finite outcome set X, every classical noise channel p and every N >= 1 there are labels j != k and an angle theta whose cat pair attains the largest gamma among all orthonormal pairs. Orthonormality uses <a, b> = sum_s conj(a(s)) b(s). This is the weakest reading of the conjecture; it does not require j and k to be found from a single probe.
+For every d >= 2, every finite outcome set X, every classical noise channel p with all entries positive, so that a maximizing pair exists, and every N >= 1 there are labels j != k and an angle theta whose cat pair attains the largest gamma among all orthonormal pairs. Orthonormality uses <a, b> = sum_s conj(a(s)) b(s). This is the weakest reading of the conjecture; it does not require j and k to be found from a single probe.
 
 **Definition 1.8 (The detector).**
 
@@ -146,7 +146,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take d = 3, X = Fin 3, the detector above and N = 2. Write m_x(s) = p(x_1|s_1) p(x_2|s_2). For orthonormal vectors supported on two words u != v the coefficient is gamma = sum_x t (1 - t) (m_x(u) - m_x(v))^2 / (t m_x(u) + (1 - t) m_x(v)), where t is the squared weight of u in (zeta + zeta_perp)/sqrt(2). The witness pair has u = 10, v = 21 and t = 1/2, and gamma = 6643859399/9075312000 > 73/100. Every cat pair with j != k has u = jj, v = kk and t = (cos(theta) - sin(theta))^2 / 2. Each summand is D - ab/D - (2t - 1)(a - b) with D = ta + (1 - t)b, and ab/D >= ab (2/D_0 - D/D_0^2) for D_0 = t_0 a + (1 - t_0) b, so gamma is bounded by an affine function of t. Evaluating it at t = 0 and t = 1 with t_0 = 2061/4000, 191/500, 1939/4000, 363/800, 309/500 or 437/800 for the six ordered pairs (j, k) gives gamma < 73/100. So no cat pair maximizes gamma.
+Take d = 3, X = Fin 3, the detector above and N = 2. Write m_x(s) = p(x_1|s_1) p(x_2|s_2). For real orthonormal vectors supported on two words u != v the coefficient is gamma = sum_x t (1 - t) (m_x(u) - m_x(v))^2 / (t m_x(u) + (1 - t) m_x(v)), where t is the squared weight of u in (zeta + zeta_perp)/sqrt(2). The witness pair has u = 10, v = 21 and t = 1/2, and gamma = 6643859399/9075312000 > 73/100. Every cat pair with j != k has u = jj, v = kk and t = (cos(theta) - sin(theta))^2 / 2. Each summand is D - ab/D - (2t - 1)(a - b) with D = ta + (1 - t)b, and ab/D >= ab (2/D_0 - D/D_0^2) for D_0 = t_0 a + (1 - t_0) b, so gamma is bounded by an affine function of t. Evaluating it at t = 0 and t = 1 with t_0 = 2061/4000, 191/500, 1939/4000, 363/800, 309/500 or 437/800 for the six ordered pairs (j, k) gives gamma < 73/100. So no cat pair maximizes gamma.
 
 ## References
 

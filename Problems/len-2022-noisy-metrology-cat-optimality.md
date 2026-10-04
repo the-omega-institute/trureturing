@@ -82,7 +82,7 @@ worldwide novelty.
 
 The kernel-checked `result` is the negation of the following statement. For
 every $d\ge2$, every finite type $X$, every $p:X\to\mathrm{Fin}\,d\to\mathbb R$
-with $p\ge0$ and $\sum_xp(x|i)=1$, and every $N\ge1$, there are $j\ne k$ in
+with $p>0$ and $\sum_xp(x|i)=1$, and every $N\ge1$, there are $j\ne k$ in
 $\mathrm{Fin}\,d$ and $\theta\in\mathbb R$ such that every orthonormal pair
 $\zeta,\zeta_\perp$ of vectors on the words $\mathrm{Fin}\,N\to\mathrm{Fin}\,d$
 has $\gamma(\zeta,\zeta_\perp)\le\gamma(\text{cat pair})$. The definitions
@@ -95,6 +95,14 @@ are as follows:
   each summand, whose numerator and denominator are real in the source;
 - `basisPower j` is $|j\rangle^{\otimes N}$, and `catState`, `catPerp` are the
   displayed cat pair.
+
+With all $p(x|i)>0$ every $M_{\mathbf x}$ is positive definite, so $\gamma$ is
+continuous on the compact set of orthonormal pairs and attains its maximum
+(orchestrator reasoning, not in Lean); the conjecture's "the optimal" pair
+presupposes one. With zero entries the maximum need not be attained
+(seat-reported: Zhou–Michalakis–Gefen, arXiv:2210.11393v3, the assumption
+before Theorem 6 and its appendix), and the encoding does not treat that
+case.
 
 ## Evidence
 
@@ -113,9 +121,9 @@ The canonical source is
   `catState`, `catPerp`, `claim`, `detector`, `witness`, `witnessPerp` and
   `result`.
 - Freeze identities:
-  - module statement `sha256:d92e17f8245bfa59b4499764b7133b03489c1ea25a3ef16b4c1bed9fa7280e32`;
+  - module statement `sha256:1ee13a5291b015024e4111c47a75b5883a73699dab5ae04df0b574bc2e20f085`;
   - `result` statement `sha256:776162f0773ebb482186286dec12dab90a961361f14c4ded6b203265e197a2d4`;
-  - Freeze event `sha256:6eb3fdc4a916fcafef5ab89835f95ad767628a1d9ea43cdc3182532ddb11bf70`.
+  - Freeze event `sha256:fb0919ca0050f4afdc48df2cf72b4162c040c0d135d26bea69781c6bc11f7826`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 
@@ -152,8 +160,12 @@ Tier 1 conjecture of a 2022 journal article. Resolution: `Refuted`, by
     unaffected: Bhattacharyya coefficients multiply over probes, so a
     repeated pair of the best single-probe labels minimizes them
     (orchestrator reasoning, not in Lean).
-  - At $N=1$ every pair supported on two basis states is a cat pair, so by
-    Zhou–Michalakis–Gefen Theorem 6 the conjecture holds for one probe.
+  - At $N=1$, for detectors with all $p(x|i)>0$, Zhou–Michalakis–Gefen
+    Theorem 6 gives an optimal pair of the form
+    $\sqrt q\,|k\rangle+\sqrt{1-q}\,|l\rangle$,
+    $\sqrt{1-q}\,|k\rangle-\sqrt q\,|l\rangle$ on two basis states, which
+    is a cat pair; so the conjecture holds for one probe under that
+    assumption (seat-reported reading of the theorem statement).
 - **Open here:**
   - the qubit specialization of the paper ($d=2$, labels $0,1$);
   - for which detectors and which $N\ge2$ cat pairs fail;

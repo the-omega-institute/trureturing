@@ -33,7 +33,8 @@ The conjecture (Supplement, end of "A note on optimality"):
 > In fact this intuition together with some numerical evidence leads us to conjecture that for any classical noise channel, $M_{x}=\sum_{i}p\!\left(x|i\right)\Pi_{i}$ that is applied independently on each of the $N$ probes, the optimal $|\zeta^{N} \rangle,|\zeta_{\perp}^{N}\rangle$ take the form of ``cat states": $|\zeta^{N} \rangle =\cos\left(\theta\right)|j\rangle^{\otimes N}+\sin\left(\theta\right)|k\rangle^{\otimes N}$, $|\zeta_{\perp}^{N} \rangle =-\sin\left(\theta\right)|j\rangle^{\otimes N}+\cos\left(\theta\right)|k\rangle^{\otimes N}$, where $ \ket{j}, \ket{k}$ can be found numerically for just a single probe, and $\theta$ depends on $N$ and should be found numerically.
 
 The encoding reads "optimal" as maximizing Eq. (AgammaN) over all
-orthonormal pairs $\zeta,\zeta_\perp$, with $V_\Phi\psi=(\zeta+\zeta_\perp)/\sqrt2$
+orthonormal pairs $\zeta,\zeta_\perp$ for channels with all $p(x|i)>0$, where
+a maximizing pair exists, with $V_\Phi\psi=(\zeta+\zeta_\perp)/\sqrt2$
 and $V_\Phi\psi_\perp=(\zeta-\zeta_\perp)/\sqrt2$, and states the conjecture
 as the existence of some cat pair with $j\ne k$ attaining that maximum.
 

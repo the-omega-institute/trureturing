@@ -33,7 +33,7 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
                 "The second member of the conjectured optimal pair.",
                 "catPerp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjectured optimality of cat pairs", ClaimFormula(),
-                "For every d >= 2, every finite outcome set X, every classical noise channel p and every N >= 1 there are labels j != k and an angle theta whose cat pair attains the largest gamma among all orthonormal pairs. Orthonormality uses <a, b> = sum_s conj(a(s)) b(s). This is the weakest reading of the conjecture; it does not require j and k to be found from a single probe.",
+                "For every d >= 2, every finite outcome set X, every classical noise channel p with all entries positive, so that a maximizing pair exists, and every N >= 1 there are labels j != k and an angle theta whose cat pair attains the largest gamma among all orthonormal pairs. Orthonormality uses <a, b> = sum_s conj(a(s)) b(s). This is the weakest reading of the conjecture; it does not require j and k to be found from a single probe.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("detector", "The detector", DetectorFormula(),
                 "Row x lists p(x|0), p(x|1), p(x|2); every column sums to 1 and every entry is at least 1/20.",
@@ -45,7 +45,7 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
                 "The basis word 21 of two qutrits.",
                 "witnessPerp", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "A crossed pair beats every cat pair", Disp(new Formula.Not(F.Id("claim"))),
-                "Take d = 3, X = Fin 3, the detector above and N = 2. Write m_x(s) = p(x_1|s_1) p(x_2|s_2). For orthonormal vectors supported on two words u != v the coefficient is gamma = sum_x t (1 - t) (m_x(u) - m_x(v))^2 / (t m_x(u) + (1 - t) m_x(v)), where t is the squared weight of u in (zeta + zeta_perp)/sqrt(2). The witness pair has u = 10, v = 21 and t = 1/2, and gamma = 6643859399/9075312000 > 73/100. Every cat pair with j != k has u = jj, v = kk and t = (cos(theta) - sin(theta))^2 / 2. Each summand is D - ab/D - (2t - 1)(a - b) with D = ta + (1 - t)b, and ab/D >= ab (2/D_0 - D/D_0^2) for D_0 = t_0 a + (1 - t_0) b, so gamma is bounded by an affine function of t. Evaluating it at t = 0 and t = 1 with t_0 = 2061/4000, 191/500, 1939/4000, 363/800, 309/500 or 437/800 for the six ordered pairs (j, k) gives gamma < 73/100. So no cat pair maximizes gamma.",
+                "Take d = 3, X = Fin 3, the detector above and N = 2. Write m_x(s) = p(x_1|s_1) p(x_2|s_2). For real orthonormal vectors supported on two words u != v the coefficient is gamma = sum_x t (1 - t) (m_x(u) - m_x(v))^2 / (t m_x(u) + (1 - t) m_x(v)), where t is the squared weight of u in (zeta + zeta_perp)/sqrt(2). The witness pair has u = 10, v = 21 and t = 1/2, and gamma = 6643859399/9075312000 > 73/100. Every cat pair with j != k has u = jj, v = kk and t = (cos(theta) - sin(theta))^2 / 2. Each summand is D - ab/D - (2t - 1)(a - b) with D = ta + (1 - t)b, and ab/D >= ab (2/D_0 - D/D_0^2) for D_0 = t_0 a + (1 - t_0) b, so gamma is bounded by an affine function of t. Evaluating it at t = 0 and t = 1 with t_0 = 2061/4000, 191/500, 1939/4000, 363/800, 309/500 or 437/800 for the six ordered pairs (j, k) gives gamma < 73/100. So no cat pair maximizes gamma.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("len-2022-noisy-metrology-cat-optimality"),
@@ -209,7 +209,7 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
     {
         Formula d = F.Id("d"), x = F.Id("X"), p = F.Id("p"), n = F.Id("N"), xo = F.Id("x"), i = F.Id("i"),
             j = F.Id("j"), k = F.Id("k"), theta = Theta, zeta = F.Id("zeta"), zetaP = F.Id("zetaperp");
-        Formula nonneg = All(xo, x, All(i, Fin(d), LeTo(D(0), Of(p, xo, i))));
+        Formula positive = All(xo, x, All(i, Fin(d), Rel(D(0), FormulaRelationOperator.LessThan, Of(p, xo, i))));
         Formula columns = All(i, Fin(d), EqTo(SumOver(Seq(xo, Sp, InMacro, Sp, x), Of(p, xo, i)), D(1)));
         Formula orthonormal = And(And(EqTo(Inner(zeta, zeta), D(1)), EqTo(Inner(zetaP, zetaP), D(1))),
             EqTo(Inner(zetaP, zeta), D(0)));
@@ -218,7 +218,7 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
         Formula pair = Some(Vars(j, k), Fin(d), And(Rel(j, FormulaRelationOperator.NotEqual, k),
             Some(theta, Real(), All(Vars(zeta, zetaP), Vectors(n, d), Imp(orthonormal, best)))));
         Formula body = Imp(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, d),
-            FiniteType(x, All(p, Channels(x, d), Imp(And(nonneg, columns),
+            FiniteType(x, All(p, Channels(x, d), Imp(And(positive, columns),
                 All(n, Nat(), Imp(Rel(D(1), FormulaRelationOperator.LessThanOrEqual, n), pair))))));
         return Disp(Logic(F.Id("claim"), FormulaLogicOperator.Iff, All(d, Nat(), body)));
     }
