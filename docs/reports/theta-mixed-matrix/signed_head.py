@@ -51,17 +51,25 @@ def continuum_coefficients(midpoint, end, width):
             4*(-width/2).exp()/width, zero]
 
 
-def produce(precision=192):
+def compute_heads(precision=192, cutoffs=('17/2', '69/2', '289/2'),
+                  tent_width='1/8', frequency_bands=(8, 16)):
     if precision < 128:
         raise ValueError('At least 128 bits required')
     ctx.prec = precision
-    width = arb(fmpq(1, 8))
-    if not width < arb(2).log():
+    width = arb(fmpq(tent_width))
+    if not 0 < width < arb(2).log():
         raise ValueError('Negative prime tents must not cross the positive half-line')
+    if not cutoffs or not frequency_bands:
+        raise ValueError('Nonempty cutoff and frequency families required')
     results = []
-    for cutoff in ('17/2', '69/2', '289/2'):
+    for cutoff in cutoffs:
         exact = Fraction(cutoff)
         count = exact.numerator//exact.denominator
+        first, second = 0, 1
+        while second < count:
+            first, second = second, first+second
+        if count < 2 or second != count:
+            raise ValueError('The cutoff integer must be a Fibonacci number at least two')
         end = arb(fmpq(cutoff)).log()
         if not end > 2*width:
             raise ValueError('Distinct continuum pieces required')
@@ -118,7 +126,7 @@ def produce(precision=192):
         if not variation > 0:
             raise ValueError('Positive exact total variation required')
         bands = []
-        for band in (8, 16):
+        for band in frequency_bands:
             half = width*band/2
             if not 0 < width*band < 2*arb.pi():
                 raise ValueError('Nonzero band Fourier floor required')
@@ -156,6 +164,11 @@ def produce(precision=192):
             'total_variation_interval': interval(variation),
             'bands': bands,
         })
+    return results
+
+
+def produce(precision=192):
+    results = compute_heads(precision)
     return {
         'scope': 'Same signed finite prime-discrepancy head; a low/complement allowance input, not full-form positivity, cofinal control, RH/Robin/Lean or a priority claim',
         'precision_bits': precision,
