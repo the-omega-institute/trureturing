@@ -20,14 +20,18 @@ open ActualImageSevenLeafSeparation (leafLabel leafAddresses Nonconflict)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
 
 /-- The leaf labels remain distinct; branch and absent have the same coarse reply. -/
-def κ : Reply → Option Bool
+def kappa : Reply → Option Bool
   | .alpha => some true
   | .beta => some false
   | .branch | .absent => none
 
+local notation "κ" => kappa
+
 /-- Coarsening retains every actual address, its order, and repeated requests. -/
-def κHist (h : Hist (fun _ : Address => Reply)) : Hist (fun _ : Address => Option Bool) :=
+def kappa_hist (h : Hist (fun _ : Address => Reply)) : Hist (fun _ : Address => Option Bool) :=
   h.map (fun a => ⟨a.1, κ a.2⟩)
+
+local notation "κHist" => kappa_hist
 
 /-- The original selector depends only on its coarse chronological history. -/
 def CoarseObservable (p : Policy) : Prop :=

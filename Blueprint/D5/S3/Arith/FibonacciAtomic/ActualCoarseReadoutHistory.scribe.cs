@@ -13,8 +13,8 @@ internal sealed class ActualCoarseReadoutHistoryDocument : IScribeDocumentDefini
         H("Fresh Coarse Divergence and Saturated Shared Histories"),
         Blocks(
             Paragraph(Text("Sources, addresses, four-valued replies, globally correct strategies, terminal histories and paid sets are the original actual-tree objects. A strategy terminates correctly on every finite source from the same empty initial history. No uniform fuel bound, source description, or finite-family promise is assumed. The coarse readout is the existing leafLabel: alpha is some(true), beta is some(false), while branch and absent both give none. L(W) denotes the existing leafAddresses(W).")),
-            Def("κ", "Coarse reply map", "Kappa sends alpha to some(true), beta to some(false), and both branch and absent to none. The reply carrier is Option Bool."),
-            Def("κHist", "Chronological coarse histories", "KappaHist maps each original report to its address and coarse reply. It preserves order, length and repeated requests. The coarse history carrier H is the existing dependent history type over Address with constant response type Option Bool."),
+            Def("kappa", "Coarse reply map", "Kappa sends alpha to some(true), beta to some(false), and both branch and absent to none. The reply carrier is Option Bool."),
+            Def("kappa_hist", "Chronological coarse histories", "KappaHist maps each original report to its address and coarse reply. It preserves order, length and repeated requests. The coarse history carrier H is the existing dependent history type over Address with constant response type Option Bool."),
             Def("CoarseObservable", "Coarse-observable original policies", "A policy p is coarse-observable when p(a)=p(b) whenever kappaHist(a)=kappaHist(b), for all raw histories a and b, including histories not reached on any source. The strategy, execution and fee definitions are unchanged."),
             Describe.Lean(DescribeId.Create("actual-coarse-readout-shared-history-obstruction"),
                 DeclarationHandle.Create(Prefix + "shared_history_obstruction"),
@@ -27,7 +27,7 @@ internal sealed class ActualCoarseReadoutHistoryDocument : IScribeDocumentDefini
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("actual-coarse-readout-" + (name == "κ" ? "kappa" : name == "κHist" ? "kappahist" : name.ToLowerInvariant())),
+        DescribeId.Create("actual-coarse-readout-" + name.ToLowerInvariant().Replace("_", "-")),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula V(string s) => F.Id(s);
@@ -65,6 +65,6 @@ internal sealed class ActualCoarseReadoutHistoryDocument : IScribeDocumentDefini
         Formula premises = And(Call("Positive", u), Call("Positive", v), Ne(u, v), Call("NC", u, v),
             Prefix(h, T(u)), Prefix(h, T(v)));
         return All("pi", Call("Strategy"), Imp(Call("O", Call("policy", pi)),
-            All("U", source, All("V", source, All("h", history, Imp(premises, conclusion)))));
+            All("U", source, All("V", source, All("h", history, Imp(premises, conclusion))))));
     }
 }
