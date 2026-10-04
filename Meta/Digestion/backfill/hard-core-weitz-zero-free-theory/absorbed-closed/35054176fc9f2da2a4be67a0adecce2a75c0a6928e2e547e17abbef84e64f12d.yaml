@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:35054176fc9f2da2a4be67a0adecce2a75c0a6928e2e547e17abbef84e64f12d
   normalized_sha256: sha256:35054176fc9f2da2a4be67a0adecce2a75c0a6928e2e547e17abbef84e64f12d
 cas_ref: sha256:35054176fc9f2da2a4be67a0adecce2a75c0a6928e2e547e17abbef84e64f12d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/HardCore/CompleteStraightPathCounts.complete_straight_path_bounds
+    target_statement_id: sha256:6ff1068c8b2a836e0a3ef08ca7e20d66d39010665bcca230efc28f0b3e3457ca
 receipts:
   unresolved_subitems: []

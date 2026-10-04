@@ -1,0 +1,18 @@
+**定理 364.2（有序共同闭包、精确实际纤维与二十三的塌缩）。** 对每个有限素数调色板 $H$，有以下共同刻画。
+
+（一）$\mathsf V(H)$ 是有限素数集合，且对任意有限素数调色板 $H'$，
+
+$$
+\begin{gathered}
+H\subseteq\mathsf V(H),\qquad
+H\subseteq H'\ \Longrightarrow\ \mathsf V(H)\subseteq\mathsf V(H'),\\
+\mathsf V(\varnothing)=\varnothing,\qquad
+\mathsf V(\mathsf V(H))=\mathsf V(H),\\
+\operatorname{Supp}(A_H)=\mathsf V(H),\qquad
+A_H=\mathscr C\!\left(\prod_{p\in H}p\right).
+\end{gathered}
+\tag{364.4}
+$$
+
+$A_H\in\mathcal M$ 是使支撑包含 $H$ 的整除最小实际值：对所有 $M\in\mathcal M$，$H\subseteq\operatorname{Supp}(M)$ 当且仅当 $A_H\mid M$。特别地，存在 $M\in\mathcal M$ 满足 $\operatorname{Supp}(M)=H$，当且仅当 $\mathsf V(H)=H$；此时 $A_H$ 本身就是这样的实现。值支撑的饱和一次即完成。
+

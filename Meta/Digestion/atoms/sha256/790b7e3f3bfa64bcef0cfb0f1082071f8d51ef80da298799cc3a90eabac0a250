@@ -1,0 +1,24 @@
+**定义 365.1（完整支撑纤维与去二三部分）。** 沿用定义 364.1 的标准 Fibonacci 序列、正指标有限最小公倍数族 $\mathcal M$、完整素支撑 $\operatorname{Supp}$、正入口秩 $z(p)$ 及不带种子的值支撑操作 $\mathsf V$。具体地，对有限 $S\subseteq\mathbb N_{>0}$ 和有限素数调色板 $H$，允许二者为空，记
+
+$$
+\begin{aligned}
+M(S)&=\operatorname{lcm}_{s\in S}F_s,&M(\varnothing)&=1,\\
+\mathcal M&=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\},&
+\operatorname{Supp}(m)&=\{p:p\text{ 为素数且 }p\mid m\}\quad(m>0),\\
+A_H&=\operatorname{lcm}_{p\in H}F_{z(p)},&A_{\varnothing}&=1,\\
+\mathsf V(H)&=\bigcup_{p\in H}\operatorname{Supp}(F_{z(p)}),&
+\mathcal T_H&=\{m\in\mathcal M:\operatorname{Supp}(m)=H\}.
+\end{aligned}
+\tag{365.1}
+$$
+
+这里支撑包含全部素因子，不按赋值的奇偶性筛选。称 $H$ 可实现，若 $\mathcal T_H\ne\varnothing$。对可实现的 $H$，沿用（364.7）–（364.8）的 $E_H=\{n>0:\operatorname{Supp}(F_n)\subseteq H\}$ 与 $B_H=\operatorname{lcm}_{n\in E_H}F_n$，并唯一写成
+
+$$
+A_H=2^a3^bK,\qquad a=v_2(A_H),\quad b=v_3(A_H),
+\quad K\in\mathbb N_{>0},\quad\gcd(K,6)=1.
+\tag{365.2}
+$$
+
+$K$ 只表示 $A_H$ 去掉二、三素幂后的整数部分，不另假定 $K\in\mathcal M$。对整数 $n>5040$，$\mathcal R(n)$ 始终是（362.2）的同一个 Robin 比值 $\sigma(n)/(e^\gamma n\log\log n)$，其中 $\sigma(n)=\sum_{d\mid n}d$，$\gamma$ 为 Euler 常数，所有对数均为自然对数。
+
