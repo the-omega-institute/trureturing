@@ -265,6 +265,21 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("inventory unavailable", summary["inventory_error"])
         self.assertEqual(1, summary["counts"]["tmp:removed"])
 
+    def test_unreadable_candidate_is_retained_and_counted(self):
+        artifact = self.old_file(self.root / "old-output")
+        with patch.object(cleanup, "inspect_candidate", side_effect=PermissionError("access denied")):
+            result = cleanup.clean_candidate(artifact, self.cutoff, [], delete=True)
+        self.assertEqual("kept", result["action"])
+        self.assertEqual("unreadable", result["reason"])
+        self.assertTrue(artifact.exists())
+
+    def test_delete_permission_failure_is_still_a_failure(self):
+        artifact = self.old_file(self.root / "old-output")
+        with patch.object(Path, "unlink", side_effect=PermissionError("delete denied")):
+            result = cleanup.clean_candidate(artifact, self.cutoff, [], delete=True)
+        self.assertEqual("failed", result["action"])
+        self.assertTrue(artifact.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

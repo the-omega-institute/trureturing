@@ -107,6 +107,7 @@ def inspect_candidate(path, cutoff, protected):
 
 def clean_candidate(path, cutoff, protected, delete=False):
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
+    removal_started = False
     try:
         before = inspect_candidate(path, cutoff, protected)
         result.update({key: value for key, value in before.items() if key != "fingerprint"})
@@ -119,6 +120,7 @@ def clean_candidate(path, cutoff, protected, delete=False):
         if after != before:
             result["reason"] = "changed"
             return result
+        removal_started = True
         if path.is_dir():
             shutil.rmtree(path)
         else:
@@ -126,6 +128,11 @@ def clean_candidate(path, cutoff, protected, delete=False):
         result["action"] = "removed"
     except FileNotFoundError:
         result["reason"] = "vanished"
+    except PermissionError as error:
+        if removal_started:
+            result.update(action="failed", reason=str(error))
+        else:
+            result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
         result.update(action="failed", reason=str(error))
     return result
@@ -282,7 +289,7 @@ def run_clean(options):
                 apparent_bytes += result["apparent_bytes"]
             elif result["action"] == "kept":
                 skipped[result["reason"]] += 1
-            if options.verbose or result["action"] == "failed":
+            if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
                 emit("host_cleanup_item", category=category, **result)
     except OSError as error:
         inventory_error = str(error)
