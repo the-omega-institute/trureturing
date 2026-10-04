@@ -1,0 +1,56 @@
+**命题 358.3（秩预算的实际占位与 Euler 目标不同）。** 令 $c_n=\log\Psi_n$，则 $c_1=c_2=0$、$0\le c_n\le Ln$，并且对 $m\ge1$，
+
+$$
+J_m:=\sum_{n\le m}\frac{c_n}{n}
+=\sum_{\substack{p\ \mathrm{prime},\ k\ge1\\z(p^k)\le m}}
+\frac{\log p}{z(p^k)},\qquad
+|J_m-\kappa m|\le L(H_m+1)+H_m.
+\tag{358.14}
+$$
+
+若仅保留整数秩盒约束和实际总预算，定义放松目标
+
+$$
+\mathcal J(B)=\sup\left\{\sum_{n\ge3}x_n:
+0\le x_n\le L,\quad \sum_{n\ge3}nx_n\le B\right\},
+$$
+
+其中各和按非负级数理解，则
+
+$$
+\mathcal J(b_m)\sim\frac{L}{\sqrt{\zeta(2)}}m,
+\qquad
+\frac{J_m}{\mathcal J(b_m)}\longrightarrow\frac1{\sqrt{\zeta(2)}}<1.
+\tag{358.15}
+$$
+
+所以即使以固定比例接近这种放松的秩预算最大值，也不能据此认定实际 Fibonacci 占位最优，更不能认定 Robin Euler 乘积最优。
+
+**证明。** （358.3）给 $c_n=\sum_{p,k:z(p^k)=n}\log p$，以及 $\Psi_n\mid F_n$，后者和 $F_n\le\Phi^{n-1}$ 给盒约束。按有限首现层分组得（358.14）的等式。经典公式 $\varphi(n)/n=\sum_{d\mid n}\mu(d)/d$ 给
+
+$$
+\left|\sum_{n\le m}\frac{\varphi(n)}n-\frac{m}{\zeta(2)}\right|
+\le H_m+1:
+$$
+
+取整误差至多 $\sum_{d\le m}1/d$，补齐 $\sum\mu(d)/d^2$ 的尾误差至多一。再将（358.4）的每层误差乘 $1/n$ 相加，得到 $J_m$ 的误差。
+
+为核对放松的渐近而不把放松极值当作实际可实现值，令 $C_h=L\sum_{n=3}^h n$（整数 $h\ge2$，$C_2=0$）。当 $C_h\le B<C_{h+1}$ 时，经典分数背包填充 $x_3=\cdots=x_h=L$、$x_{h+1}=(B-C_h)/(h+1)$，其余为零。这个点达到上界：以价格 $\lambda=1/(h+1)$，对每个可行点逐项有
+
+$$
+\sum_{n\ge3}x_n
+\le\lambda B+L\sum_{3\le n<h+1}(1-\lambda n).
+$$
+
+正收益的秩只有有限多个，故该界同样覆盖无限可行点；所给填充达到等号。于是 $h\sim\sqrt{2B/L}$、$\mathcal J(B)\sim\sqrt{2LB}$。用 $b_m\sim\kappa m^2/2$ 和 $J_m\sim\kappa m$ 得（358.15）。这是 §353.6 的同一经典放松优化，对每个 $m\ge1$，实际前缀在指标 $n\ge3$ 上给出可行点 $x_n^{(m)}=c_n/n$（$3\le n\le m$）、$x_n^{(m)}=0$（$n>m$），满足盒约束 $0\le x_n^{(m)}\le L$，且有限成本 $\sum_{n\ge3}nx_n^{(m)}=b_m$、收益 $\sum_{n\ge3}x_n^{(m)}=J_m$；$m=1,2$ 时取零序列，因 $c_1=c_2=0$，上述等式仍成立。
+
+上述目标对同一素数的每个首现素幂分别收费 $\log p/z(p^k)$；Robin 的饱和支撑目标却是
+
+$$
+A(Q_m)=\sum_{z(p)\le m}-\log(1-1/p),
+$$
+
+每个素数只出现一次，较高素幂只通过实际截断修正 $E(Q_m)$ 影响 $\sigma(Q_m)/Q_m$。例如 $z(2)=3$、$z(4)=z(8)=6$，而 $\Psi_6=4$：秩六有两份 $\log2$ 的素幂质量，radical 在秩六却没有新增二方向。由 $F_1,\ldots,F_6=1,1,2,3,5,8$ 直接核对这些数值。故 radical 分配、素幂分配以及两种收益权重不能相互替换。$\square$
+
+式（358.5）只处理这个实际 lcm 前缀族最终越过 $5040$ 后的固定严格 Robin 缺口；$5040$ 在这里是 Robin 的整数阈值，没有由拓扑数字七或 Fibonacci 巧合来证明它的特殊性。该族结论不推出任意整数的 Robin 不等式或 RH，不给出新的数值认证区间，也不确定此族比值的精确极限。缺失素支撑机制与秩预算机制的连接成立，但二者的优化目标仍不同。
+

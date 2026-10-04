@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:605a494f131c8188f5656d9a0e6190b084d921964860a732833df395db08bcf0
+  normalized_sha256: sha256:605a494f131c8188f5656d9a0e6190b084d921964860a732833df395db08bcf0
+cas_ref: sha256:605a494f131c8188f5656d9a0e6190b084d921964860a732833df395db08bcf0
+coverage_gids:
+  - gid: D5/S3/Arith/ShortIntervals/TripleProductSumRigidity.triple_product_sum_rigidity
+    target_statement_id: sha256:d3e5cfe753e533578aab3987703176dbfd40e7d29092fbb36e8c21c226fe2946
+receipts:
+  unresolved_subitems: []
