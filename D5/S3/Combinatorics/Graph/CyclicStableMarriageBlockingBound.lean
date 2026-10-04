@@ -7,8 +7,8 @@
    digest: For n >= 1, every cyclic matching has at most (n - 1)^2 / 4 blocking pairs. -/
 
 /-
-proof_shape: result: content
-escape_witness: cut_balance (the cut-crossing equality used by upper_nestings/lower_nestings)
+proof_shape: result: bind-only
+escape_witness: none
 admission_basis: open-problem-resolution (#12486; Proved)
 Direct frozen dependencies: none (pinned Mathlib only)
 Information-escape registration is paused under CLAUDE.md §3.9.

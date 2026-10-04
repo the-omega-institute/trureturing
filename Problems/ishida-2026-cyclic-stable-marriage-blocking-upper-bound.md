@@ -43,6 +43,10 @@ therefore determines the cyclic-profile maximum and settles the second equality 
 the Shield-Core conjecture. The first equality compares the cyclic profile with all
 strict complete profiles and is a separate question.
 
+`proof_shape: bind-only`; `escape_witness: none`; `admission_basis: open-problem-resolution`
+(issue #12486). The result directly specializes and normalizes pinned Mathlib facts;
+all auxiliary steps remain local inside `result`, with no helper theorem declaration.
+
 ## Gap
 
 The source explicitly leaves the upper bound open. The preregistration records a bounded

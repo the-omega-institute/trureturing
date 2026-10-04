@@ -78,7 +78,7 @@ $$claim$$
 
 *Commentary.*
 
-Split matched edges into U = {i : i ≤ p(i)} and W = {i : p(i) < i}, of sizes k and q. The cyclic rank comparisons divide blocking pairs into inversions within U, inversions within W, and mixed pairs. Across every cut t, the number of edges starting below t and ending at or above t equals the number going the other way, since p permutes the labels below t. Applying this balance at p(j) + 1 bounds the U inversions by mixed nesting pairs; applying it at w bounds the W inversions plus q by another disjoint class of mixed pairs. These two classes and the mixed blocking pairs partition W × U, giving B(p) + q ≤ qk. Since k + q = n and (k - q - 1)^2 ≥ 0, we get 4 B(p) ≤ (n - 1)^2 and therefore claim. The conclusion concerns the cyclic profile; the minimum over all preference profiles is a separate question.
+Split matched edges into U = {i : i ≤ p(i)} and W = {i : p(i) < i}, of sizes k and q. The cyclic rank comparisons divide blocking pairs into inversions within U, inversions within W, and mixed pairs. Across every cut t, the number of edges starting below t and ending at or above t equals the number going the other way, since permutation reindexing preserves the total number of endpoints below t. Applying this balance at p(j) + 1 bounds the U inversions by mixed nesting pairs; applying it at w bounds the W inversions plus q by another disjoint class of mixed pairs. These two classes and the mixed blocking pairs partition W × U, giving B(p) + q ≤ qk. Since k + q = n and (k - q - 1)^2 ≥ 0, we get 4 B(p) ≤ (n - 1)^2 and therefore claim. The conclusion concerns the cyclic profile; the minimum over all preference profiles is a separate question.
 
 ## References
 
