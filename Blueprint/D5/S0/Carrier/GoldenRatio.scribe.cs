@@ -24,3 +24,4 @@ internal sealed class GoldenRatioDocument : IScribeDocumentDefinition
         [DocumentEdge.NarrativeReference.ToDocument(
             GidRef.Create("D5/S0/Conventions/Notation"))]));
 }
+// Trigger probe comment.
