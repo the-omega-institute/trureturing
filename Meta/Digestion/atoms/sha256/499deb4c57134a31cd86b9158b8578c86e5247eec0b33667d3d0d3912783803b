@@ -1,0 +1,6 @@
+### theorem 9.3 (unique natural endomorphism reconstruction)
+
+For every nonempty right-streamlined zigzag and every linear endomorphism $a:V_n\to V_n$ preserving every layer of its recursively constructed right filtration, there exists exactly one natural endomorphism of the actual oriented path-category diagram whose terminal component is $a$. In particular, all adjacent-arrow squares and the squares for every composed path commute. The literature statement is the endomorphism-isomorphism remark after Lemma 3.18, PDF pages 16–17, not an unrestricted interpretation of Lemma 4.3.
+
+Backward induction restricts and conjugates through an injective forward arrow. Through a surjective backward arrow it descends via the kernel quotient: preservation of the first inverse-image layer gives preservation of the kernel. In each case it proves preservation of the predecessor right filtration before applying induction. Injectivity or surjectivity forces the predecessor component, giving uniqueness; composition gives all path squares. The conclusion assumes neither a compatible family nor its naturality. A length-zero zigzag has no terminal vertex and lies outside this theorem.
+

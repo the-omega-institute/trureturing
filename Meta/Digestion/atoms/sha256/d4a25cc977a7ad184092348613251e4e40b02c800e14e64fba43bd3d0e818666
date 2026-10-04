@@ -1,0 +1,4 @@
+## 9. Arbitrary-orientation zigzags and right-filtration reconstruction
+
+This section has its own source: Carlsson and de Silva, *Zigzag Persistence*, arXiv:0812.0197v1, as located in [the zigzag Library note](carlsson2008zigzag.md). Its arbitrary-orientation scope is distinct from the forward-only claims above and is not attributed to Bauer–Lesnick. All statements here are reference input from known mathematics, not a claim of formal verification.
+

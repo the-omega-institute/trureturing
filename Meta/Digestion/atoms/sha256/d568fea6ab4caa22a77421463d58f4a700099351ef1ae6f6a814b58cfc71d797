@@ -1,0 +1,4 @@
+### definition 9.1 (actual zigzag and right filtration)
+
+Over any field $K$, a finite zigzag consists of actual finite-dimensional spaces $V_1,\ldots,V_n$ and, at each adjacent pair, one chosen arrow $f_i:V_i\to V_{i+1}$ or $g_i:V_{i+1}\to V_i$. Its diagram is the functor from the finite oriented path category obtained by composing these actual arrows. Zero vertices and every characteristic are allowed. For $n=1$, $R(V)=(0,V_1)$. If $R(V)=(R_0,\ldots,R_n)$, append a forward arrow by $(f(R_0),\ldots,f(R_n),V_{n+1})$, and append a backward arrow by $(0,g^{-1}(R_0),\ldots,g^{-1}(R_n))$. These are Definition 3.1 on PDF page 10.
+

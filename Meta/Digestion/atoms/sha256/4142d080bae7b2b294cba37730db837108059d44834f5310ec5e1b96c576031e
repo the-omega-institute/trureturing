@@ -1,0 +1,4 @@
+### definition 9.2 (right-streamlining)
+
+The zigzag is right-streamlined precisely when all its forward arrows are injective and all its backward arrows are surjective, as in Definition 3.15 on PDF page 15. No natural endomorphism or lift is part of this hypothesis. The zero-dimensional cases remain allowed.
+
