@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.CylindricPartition;
 internal sealed class LiUncuRecurrenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CylindricPartition/LiUncuRecurrence.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QSeries/li2025macmahon");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/li2025macmahon");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Counting paths by deleted peaks yields a primed Gaussian recurrence, including negative virtual lengths.",

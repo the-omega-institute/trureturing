@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.CylindricPartition;
 internal sealed class LiUncuPathsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CylindricPartition/LiUncuPaths.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QSeries/li2025macmahon");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/li2025macmahon");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sum of peak abscissae gives a polynomial weight on paths with horizontal edges only at the floor.",

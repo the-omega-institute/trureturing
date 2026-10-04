@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.CylindricPartition;
 internal sealed class LiUncuDefsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CylindricPartition/LiUncuDefs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QSeries/li2025macmahon");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/li2025macmahon");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Gaussian binomials with a primed boundary convention define the two polynomial sums in the finite Andrews-Gordon companion identity.",
