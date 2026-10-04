@@ -1016,7 +1016,7 @@ jobs:
 
           def keyed(path):
               value = read(path)
-              return dict(line.split(maxsplit=1) for line in value.splitlines() if ' ' in line) if value else None
+              return dict(parts for line in value.splitlines() if len(parts := line.split(maxsplit=1)) == 2) if value else None
 
           def modules(arguments):
               return arguments[6::3] if isinstance(arguments, list) else None
@@ -1026,8 +1026,13 @@ jobs:
               record = {'timestamp': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                         'monotonic_s': time.monotonic(), 'MemTotal': memory.get('MemTotal:'),
                         'MemAvailable': memory.get('MemAvailable:'),
+                        'MemFree': memory.get('MemFree:'), 'SwapTotal': memory.get('SwapTotal:'),
+                        'SwapFree': memory.get('SwapFree:'),
                         'memory_pressure': read('/proc/pressure/memory'),
                         'cpu': (read('/proc/stat') or '').splitlines()[:1]}
+              vmstat = keyed('/proc/vmstat') or {}
+              record['vmstat'] = {key: vmstat.get(key) for key in
+                  ('oom_kill', 'pgmajfault', 'pgscan_kswapd', 'pgscan_direct', 'pswpin', 'pswpout')}
               group = Path('/sys/fs/cgroup')
               for line in (read('/proc/self/cgroup') or '').splitlines():
                   if line.startswith('0::'):
@@ -1036,7 +1041,7 @@ jobs:
                           group = candidate
                       break
               record['cgroup'] = {'path': str(group), **{name: read(group / name) for name in
-                  ('memory.current', 'memory.peak', 'memory.max', 'memory.events')}}
+                  ('memory.current', 'memory.peak', 'memory.max', 'memory.events', 'memory.stat')}}
               processes = []
               uptime = float((read('/proc/uptime') or '0').split()[0])
               for folder in Path('/proc').iterdir():
@@ -1049,14 +1054,17 @@ jobs:
                       command = ' '.join(argv)
                       rss = int(status.get('VmRSS:', '0 kB').split()[0])
                       name = status.get('Name:', '')
-                      role = ('lake' if name == 'lake' else 'lean' if name == 'lean' else
-                              'native_inspector' if name == 'reportInspector' else
+                      executable = Path(argv[0]).name
+                      role = ('lake' if executable == 'lake' else 'lean' if executable == 'lean' else
+                              'native_inspector' if executable == 'reportInspector' else
                               'native_driver' if any(arg.endswith('/native.py') for arg in argv) else None)
                       item = {'pid': int(folder.name), 'ppid': int(stat[1]), 'name': name,
                               'role': role, 'state': stat[0], 'rss_kib': rss,
                               'etime_s': round(uptime - int(stat[19]) / ticks, 2),
                               'cpu_s': round((int(stat[11]) + int(stat[12])) / ticks, 2),
                               'command': command[:160]}
+                      if role == 'lean':
+                          item['lean_sources'] = [arg for arg in argv[1:] if arg.endswith('.lean')]
                       if '--request-file' in argv:
                           request = Path(argv[argv.index('--request-file') + 1])
                           item['request_file'] = str(request)
