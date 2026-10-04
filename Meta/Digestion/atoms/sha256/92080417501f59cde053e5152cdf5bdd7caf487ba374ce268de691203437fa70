@@ -1,0 +1,14 @@
+**Theorem 1.2 (Gaussian Schwartz existence).** For every real normed inner
+product space $V$, without a completeness or finite-dimensionality assumption,
+there exists $u\in\mathcal S(V,\mathbb R)$ such that
+$u(x)=\exp(-\|x\|^2/2)$ for every $x\in V$.
+
+*Proof.* The construction of Gregory J. Loges in PhysLean,
+`Physlib/Mathematics/InnerProductSpace/Gaussian.lean`, revision
+`b9043cc548ef6d63a28454cf3a57fb12a0c2e142`, bounds the $n$th derivatives of
+$\langle x,x\rangle$ by $(2+\|x\|^2)^n$. The chain rule bounds the $n$th
+derivative of $G_V$ by $n!G_V(x)(2+\|x\|^2)^n$. For every $k,n$, exponential
+decay and a maximum on a compact interval bound
+$t^{k/2}(2+t)^n\exp(-t/2)$ on $t\ge0$. Taking $t=\|x\|^2$ gives the
+Schwartz estimates. This is the cited source construction.
+

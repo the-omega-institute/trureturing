@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9dd4bf46a90ab0a1c64d35ec8d5ffc796973df1d5859b83e48d95527b65cdda3
+  normalized_sha256: sha256:9dd4bf46a90ab0a1c64d35ec8d5ffc796973df1d5859b83e48d95527b65cdda3
+cas_ref: sha256:9dd4bf46a90ab0a1c64d35ec8d5ffc796973df1d5859b83e48d95527b65cdda3
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/SchwartzWeakAdjoint.compact_test_adjoint_graph
+    target_statement_id: sha256:83158a4337f3adfaed466375d57fe2eadcda0a3fdfac6cd70ba329ddf6ee6275
+receipts:
+  unresolved_subitems: []
