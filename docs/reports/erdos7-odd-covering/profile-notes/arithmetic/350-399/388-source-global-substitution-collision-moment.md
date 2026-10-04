@@ -6040,3 +6040,174 @@ remain separate obligations. SC247 does not cover either one,
 and neither the 3 nor the 9 hull alternative is excluded. These
 are ordinary deductions using existing complete packets and
 inventory bounds, without new enumeration or Lean verification.
+
+## 50. The fresh height-two transport charges the two actual mixed layers
+
+These inventory constraints apply to the same original EB1 whole
+cover with ternary height $A=2$, without the single-deficit premise
+SC227. For an actual support prime $p\ge23$, write
+
+$$
+\begin{aligned}
+t_p&=\#\{d\in D:3p\mid d\},\\
+u_p&=\#\{d\in D:p\mid d,\ v_3(d)=1\},\\
+v_p&=\#\{d\in D:p\mid d,\ v_3(d)=2\}.
+\end{aligned}
+\tag{SC248}
+$$
+
+Thus $t_p=u_p+v_p$. Here $v_p$ denotes this cardinality, not
+a prime valuation. Every count uses the original numerical labels
+and their actual phases.
+
+The all-root injection inequality
+[Report 385 NF104](385-private-congruence-hulls-and-crossed-modulus-closure.md#65-all-root-injections-charge-every-deleted-mixed-original)
+gives
+
+$$
+\boxed{t_p\ge p-8,\qquad
+       v_p>0\ \Longrightarrow\ t_p\ge p-7.}
+\tag{SC249}
+$$
+
+### Apply the existing transport at its fresh third ternary level
+
+Take the actual pure 3 and 9 guards and use ternary prefix height
+three. The 15 live prefixes modulo 27 lie in the two first-3
+branches in groups of sizes six and nine. No original label has
+ternary height three, so the collision reservations at this depth
+are empty. NF79 already gives $t_p\ge p-15>0$. Consequently
+NF104 forbids a full injection of these live prefixes into all
+$p$ first roots, avoiding the actual mixed forbidden lists.
+The pure-$p$ root zero is allowed: NF104 pays the strict reduction
+by deleting mixed originals. No new common-witness map or generic
+matching theorem is needed.
+
+The existing Hall obstruction supplies a nonempty live-prefix set
+$I$, of size $k\le15$, and first-$p$ roots $W$ forbidden at
+every prefix of $I$, with
+
+$$
+|W|\ge p-k+1.
+\tag{SC250}
+$$
+
+If $I$ lies in one first-3 branch, $k\le9$. Distinct roots
+of $W$ require different original mixed labels, giving
+$t_p\ge|W|\ge p-8$. If $I$ meets both first-3 branches,
+each root of $W$ requires at least two originals, because an
+original has only one first-3 root. Thus
+
+$$
+t_p\ge2|W|\ge2(p-14)\ge p-8.
+\tag{SC251}
+$$
+
+This proves the first part of SC249. No mixed original is charged
+once for every deeper prefix that it forbids.
+
+### A height-two mixed original cannot pay a whole three-word branch alone
+
+Assume $v_p>0$. In the one-branch case, $k\le7$ already gives
+$t_p\ge p-6$. If $k=8$ or $9$, the prefixes of $I$ meet
+all three old modulo-9 words of that branch. An actual mixed
+original of ternary height two forbids only one of these old words;
+an original of height one can forbid the whole branch.
+
+At each root of $W$, either there is a height-one supplier or
+there must be at least three height-two suppliers, one for each
+old word. Suppliers at different first-$p$ roots are disjoint
+original labels. Even crediting all the original mixed inventory
+therefore gives
+
+$$
+u_p+\frac{v_p}{3}\ge|W|,
+\qquad
+ t_p=u_p+v_p\ge |W|+\left\lceil\frac{2v_p}{3}\right\rceil\ge |W|+1.
+\tag{SC252}
+$$
+
+The last step uses integrality and $v_p\ge1$. Hence
+$t_p\ge p-7$. The same weighted charge is valid for $k=7$,
+although it is unnecessary for this lower bound. In the two-branch
+case, $p\ge23$ gives
+$2(p-14)\ge p-7$. This proves the second part of SC249.
+Higher $p$ digits and all other coordinates remain those in the
+existing transport; none allows a height-two original to forbid
+a different old modulo-9 word.
+
+For the largest support prime $P\ge47$, the existing GHA10
+consequence supplies $9P^{H_P}\in D$, so $v_P>0$.
+Initial-segment support gives at least 14 odd support primes, and
+NF83 gives $c_1\ge s-5\ge9$ for the $P$-free height-one
+inventory. Thus the same original counts satisfy
+
+$$
+P\ge47\ \Longrightarrow\
+ c_1+t_P\ge P+2,\qquad N_3\ge P+c_2+2.
+\tag{SC253}
+$$
+
+This constrains the joint $c_1,c_2,t_P$ inventory. It does not
+replace the existing NF82 bound by a uniformly stronger total
+$N_3$ bound; neither estimate supplies an upper bound on the
+inventory.
+
+### The first-root equality has an actual phase restriction
+
+A separate consequence retains information lost by the scalar
+counts. Let $p\ge17$ be an actual support prime and suppose
+
+$$
+c_1+t_p=p,\qquad t_p\ge3,
+\tag{SC254}
+$$
+
+where $c_1$ is now the $p$-free height-one inventory. Use the
+actual NF66 collision set $T$ and $D_0=(\mathbb Z/p\mathbb Z)
+\setminus T$, and let $d_0=|D_0|$. Then
+$d_0\ge p-c_1=t_p\ge3$. The NF66 graph has two live first-3
+roots. A deficient set containing both would require
+$t_p\ge2(d_0-1)\ge2t_p-2$, contrary to $t_p\ge3$.
+Its obstruction is therefore a singleton root $b$.
+
+The singleton counting chain forces equality everywhere:
+
+$$
+t_p\ge |D_0\cap F_b|\ge d_0\ge t_p.
+\tag{SC255}
+$$
+
+Consequently $|T|=c_1$, and all $t_p$ mixed originals have
+pairwise different first-$p$ roots, exactly $D_0$, and the same
+first-3 root $b$. This is a statement about all original mixed
+suppliers, not just those used in a selected Hall witness.
+
+At fresh ternary height three, let $\ell_{\rm opp}$ be the
+number of live prefixes in the other first-3 branch. It is six
+or nine. Every root of $T$ is allowed at every live prefix,
+whereas every root of $D_0$ is allowed at every opposite-branch
+prefix. If
+$c_1+\min(t_p,\ell_{\rm opp})\ge15$, first assign as many
+opposite prefixes as needed to distinct roots of $D_0$, and
+assign the remaining prefixes to distinct roots of $T$. This
+would be an all-root injection forbidden by NF104. Therefore
+
+$$
+c_1+\min(t_p,\ell_{\rm opp})\le14,
+\qquad
+c_1\le14-\ell_{\rm opp}\in\{5,8\}.
+\tag{SC256}
+$$
+
+For the second implication, $t_p\le\ell_{\rm opp}$ would
+make the first left side equal $p\ge17$, a contradiction.
+Unlike NF75's pure-root deletion version, this application may
+use the entire $T$, including zero, because $t_p>0$.
+The equality restriction is useful also for smaller support primes;
+SC253 already excludes the equality when $p=P\ge47$.
+
+All arguments are consumers of the existing original-cover
+transport, Hall charge and forced-label results. They use no
+independently optimized source, new enumeration or Lean
+verification, and leave arbitrary-height noncoverage unresolved.
