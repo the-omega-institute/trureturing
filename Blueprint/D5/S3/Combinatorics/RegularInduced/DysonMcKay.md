@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/RegularInduced/DysonMcKay.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RegularInduced/DysonMcKay.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/dyson-mckay-cycle-clique-optimality` (proved) by `D5/S3/Combinatorics/RegularInduced/DysonMcKay.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dyson-mckay-cycle-clique-optimality","declaration_gid":"D5/S3/Combinatorics/RegularInduced/DysonMcKay.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul W. Dyson, Brendan D. McKay (2026). *Ramsey numbers for regular induced subgraphs*. DOI: [10.48550/arXiv.2604.08215](https://doi.org/10.48550/arXiv.2604.08215). URL: <https://arxiv.org/abs/2604.08215v3>.
