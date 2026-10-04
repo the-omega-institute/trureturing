@@ -70,13 +70,17 @@ Lean statement: `D5/S0/CayleyGrowth/CayleyPyConjectureOneRefutation.cayleyPy_con
 
 *Proof.* Machine-checked in Lean as `D5/S0/CayleyGrowth/CayleyPyConjectureOneRefutation.cayleyPy_conjecture1_refuted` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chervov-2025-cayleypy-conjecture-one-refutation` (refuted) by `D5/S0/CayleyGrowth/CayleyPyConjectureOneRefutation.cayleyPy_conjecture1_refuted`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chervov-2025-cayleypy-conjecture-one-refutation","declaration_gid":"D5/S0/CayleyGrowth/CayleyPyConjectureOneRefutation.cayleyPy_conjecture1_refuted","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Chervov and others (2025). *CayleyPy Growth: Efficient growth computations and hundreds of new conjectures on Cayley graphs*. DOI: [10.48550/arXiv.2509.19162](https://doi.org/10.48550/arXiv.2509.19162). URL: <https://arxiv.org/abs/2509.19162v2>.
 
 *Commentary.*
 
-At square sizes use products of at most three transpositions; otherwise use all transpositions. Both generator sets have polynomial-size explicit enumerations. The full-support rotation gives the nonsquare lower bound, and the triple-product bound gives the square upper bound. The output-time estimate is discharged outside Lean.
+At square sizes use products of at most three transpositions; otherwise use all transpositions. Both generator sets have polynomial-size explicit enumerations. The full-support rotation gives the nonsquare lower bound, and the triple-product bound gives the square upper bound. The output-time estimate is discharged outside Lean. The source claim is: ‘For any generators of S_n (or A_n) which can be constructed by an algorithm with say polynomial complexity in n (e.g. a Python function which takes as input n and outputs generators in time polynomial in n) the diameter of the Cayley graph will be given by some quadratic or linear quasi-polynomial in n (at least for n large enough).’
 
 ## References
 

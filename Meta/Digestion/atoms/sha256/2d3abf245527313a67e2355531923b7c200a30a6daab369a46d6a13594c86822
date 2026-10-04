@@ -1,0 +1,32 @@
+**定义 5.1（清尾条件和递归条件）。** 固定 $f_v$。对整数 $t\ge0$、$h=k-tm>0$ 和 $S\subseteq P$，设
+
+$$
+R_a(t,S)=S\times\{h-a,\ldots,h-1\}\qquad(0\le a\le h),
+\tag{5.1}
+$$
+
+其中 $R_0=\varnothing$。条件 $C_v(t,S,a)$ 表示：$f_v$ 在 $R_a(t,S)$ 上恒定，并且对每个 $\theta\in S$，在
+
+$$
+\{\theta\}\times\{0,\ldots,h-a-1\}
+\tag{5.2}
+$$
+
+上分别恒定。不同相位在（5.2）的恒定目标值可以不同；拒绝集（5.1）却只有一个共同目标值。空集上的恒定性约定为真。
+
+定义 $A_v(t,\varnothing)=\mathrm{true}$。对非空 $S$ 和 $h>0$，以递减的 $h$ 定义
+
+$$
+\begin{aligned}
+A_v(t,S)\Longleftrightarrow{}&
+\bigl[\exists a\in\{0,\ldots,\min(m-1,h-1)\}:C_v(t,S,a)\bigr]\\
+&\quad\lor\Bigl[h>m\ \land\ f_v\text{ 在 }R_m(t,S)\text{ 上恒定}\\
+&\hspace{38mm}\land\ \bigwedge_{\substack{b\in\mathbb F_2\\S_b\ne\varnothing}}
+A_v(t+1,S_b)\Bigr],\\
+S_b={}&\{\theta\in S:I_t(\theta)=b\}.
+\end{aligned}
+\tag{5.3}
+$$
+
+递归只在 $h>m$ 时出现，子节点的 $h$ 为 $h-m>0$，所以定义有限。所有目标值均取自原来的 $f_v(\theta,s)$；没有将目标换成更新后尾或更新后值。
+
