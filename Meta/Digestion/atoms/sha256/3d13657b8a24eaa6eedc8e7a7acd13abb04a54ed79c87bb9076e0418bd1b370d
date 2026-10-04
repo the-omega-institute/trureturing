@@ -1,0 +1,10 @@
+**Proof.** If the reverse weak inequality holds, assign $m_i+1$ to indices
+in $C$ and zero to the others. Their sum is at most $l$. Add the residual
+mass to coordinate zero. This gives a point of $T_{n,l}$ whose selected
+coordinates strictly exceed the coordinate minima. The indexed-order minima
+of $\sigma$ realize those coordinate minima, contradicting dominance.
+
+The same inequality bounds differences of cell coordinates by $2(n+1)$ and
+bounds coordinates outside $C$ by $n+1$. After division by $l$ these give
+vanishing cell diameter and vanishing coordinates outside a constant $C$.
+

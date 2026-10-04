@@ -1,0 +1,13 @@
+**Definition 1.2 (dominant cells).** Let $T$ carry, for each index $i\in I$,
+a linear order $\leq_i$. For finite subsets $\sigma\subseteq T$ and
+$C\subseteq I$, call $(\sigma,C)$ dominant if
+
+$$\forall y\in T\;\exists i\in C\;\forall x\in\sigma,\quad y\leq_i x.$$
+
+A cell is a dominant pair. A room is a cell with $|C|=|\sigma|$.
+A door is a cell with $|C|=|\sigma|+1$. An internal door has
+$\sigma\ne\varnothing$; an outside door has $\sigma=\varnothing$.
+For nonempty $\sigma$, let $m_i(\sigma)=\min_{\leq_i}\sigma$.
+Every point of a dominant nonempty cell is one of these minima, so
+$\sigma=\{m_i(\sigma):i\in C\}$ and $|\sigma|\leq |C|$.
+
