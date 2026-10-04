@@ -222,3 +222,19 @@ derivative pairing and transports the original theta variance to its
 exact rank-one-corrected metric. It states the outstanding cofinal
 relative estimate, including the loss in a scalar unweighted transfer.
 It does not supply that estimate or a further numerical margin.
+
+The [target-dependent correction](target-correction.md) chooses new exact
+correction maps from those saved actions and reuses the ground moments
+to control both complementary ground tails. Under the same paper premises
+it gives a whole-form ground-orthogonal gap greater than $0.00186736$
+at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
+requested joint gap $1/1000$ fails its sufficient comparison. Neither
+result closes the cofinal, RH, full Robin or Lean obligations.
+
+The [fixed-test and centered-window interface](centered-window.md)
+distinguishes the relative scalar conversion from a sufficient absolute
+fixed-test limit, and maps the published pole constraint to the original
+theta mean. It retains the unproved signed arithmetic estimate.
+A new four-bump example shows why pole cancellation alone does not turn
+a generic pointwise exponential error envelope into that estimate.
+The example kernel is not the actual arithmetic kernel.
