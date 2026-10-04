@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/TwoQubitBinegativityMonotonicityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/girard-2017-binegativity-monotonicity` (refuted) by `D5/S3/Quantum/Entanglement/TwoQubitBinegativityMonotonicityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"girard-2017-binegativity-monotonicity","declaration_gid":"D5/S3/Quantum/Entanglement/TwoQubitBinegativityMonotonicityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mark W. Girard; Gilad Gour (2017). *The binegativity of two qubits*. DOI: [10.48550/arXiv.1701.02724](https://doi.org/10.48550/arXiv.1701.02724). URL: <https://arxiv.org/abs/1701.02724v3>.

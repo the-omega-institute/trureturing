@@ -28,14 +28,18 @@ internal sealed class TwoQubitBinegativityMonotonicityRefutationDocument : IScri
                 Blocks(Paragraph(Text("Sazim and Awasthi, arXiv:1711.03717v2, p. 1: \"On the basis of numerical evidence, it is conjectured that the binegativity behaves monotonically under both LOCC and PPT channels [15].\" The statement above uses finite one-way LOCC channels, a subclass of LOCC.")))),
             Node("result", "The conjecture fails", Disp(new Formula.Not(F.Id("claim"))),
                 "The input in the basis 00,01,10,11 is rho = (3/4)|00><00| + (1/8)(|01>+|10>)(<01|+<10|). Alice uses diag(1/2,1) and (sqrt(3)/2)|0><0|. Bob does nothing on outcome 0 and resets to |1> on outcome 1. The output matrix has entries rho'(00,00)=3/16, rho'(01,01)=11/16, rho'(10,10)=1/8 and rho'(01,10)=rho'(10,01)=1/16, with every other entry zero. Positive semidefinite rank-one decompositions with zero positive-negative product identify both successive negative parts. Their traces give N_2(rho) = -1/4 + 7 sqrt(10)/80 and N_2(rho') = -1/32 + 7 sqrt(13)/416. The rational certificates sqrt(10) < 31623/10000 and sqrt(13) > 36055/10000 show a strict increase. The input is a density matrix and each conditional local Kraus family is complete, so this is a deterministic one-way LOCC counterexample.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Girard))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Girard),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("girard-2017-binegativity-monotonicity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("tqbm-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
