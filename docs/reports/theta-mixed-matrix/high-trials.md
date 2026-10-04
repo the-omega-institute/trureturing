@@ -148,6 +148,13 @@ $U<313165777.4653100$. Its chosen sufficient count is $J'=262144$,
 with complete action-tail bound below $0.000448454143055800<1/1000$.
 This count is not asserted minimal or practical.
 
+The [coherent-root Fourier supplier](strip-root.md) bounds the full
+Gamma action omitted beyond a finite frequency band on this same
+five-generator family. It retains $Z=QH_{1024,64}EB$ even when a later
+action uses the full digamma symbol. Its directed band-$512$ allowance
+is below $5.80\cdot10^{-18}$; it does not evaluate retained integrals
+or certify a residual Gram.
+
 This bound is uniform on the five explicit high generators. Applying it
 to $Y$ requires their actual common coefficient map and the ground
 normalization, rather than substituting a unit trial bound separately

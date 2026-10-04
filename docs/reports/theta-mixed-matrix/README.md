@@ -143,3 +143,12 @@ away from zero. It transports the low and high action allowances to
 one common residual map on the exact ground complement, with difference
 below $0.000662$. This is an action-tail difference, not a residual norm
 or a certificate of its retained Gram.
+
+The [original-kernel strip and coherent-root supplier](strip-root.md)
+applies an explicit relative original-series bound before transporting
+the square root. It supplies exponential Fourier-action tails on the
+same fixed whole-line high family: the full Gamma action beyond
+$|\xi|=512$ is below $5.80\cdot10^{-18}$ in its five-generator coefficient
+norm. Finite-frequency integrals, exact projection and common residual
+Gram remain unpaid. This supplies paper-model inputs with directed
+coefficient bounds, without a matrix sign or new Lean certification.
