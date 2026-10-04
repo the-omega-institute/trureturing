@@ -166,6 +166,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Decoherence/DampedSpinKernelPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/brody-graefe-melanathuru-2026-damped-kernel-positivity` (refuted) by `D5/S3/Quantum/Decoherence/DampedSpinKernelPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"brody-graefe-melanathuru-2026-damped-kernel-positivity","declaration_gid":"D5/S3/Quantum/Decoherence/DampedSpinKernelPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dorje C. Brody; Eva-Maria Graefe; Rishindra Melanathuru (2026). *Phase-space measurements and decoherence for angular momentum systems*. DOI: [10.48550/arXiv.2605.02696](https://doi.org/10.48550/arXiv.2605.02696). URL: <https://arxiv.org/abs/2605.02696v1>.

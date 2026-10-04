@@ -40,14 +40,18 @@ internal sealed class DampedSpinKernelPositivityRefutationDocument : IScribeDocu
                 "Equation (44), page 5: \"F^σ(θ, ϕ, t) = a_J Σ_{L,k} e^{−γ L(L+1) t/2} ( C(2J, L) / C(2J+L+1, L) )^{−σ/2} ρ_{Lk}(0) overline(Y_{Lk}(θ, ϕ)).\" Equations (35)–(36) give a_J=(2J+1)^{−1/2}. The outer sum is over range(n+1) and the inner sum over the integer interval Icc(−castInt(L),castInt(L)). rpow denotes the real power, ofReal the complex embedding. sigma, gamma, theta and phi stand for σ, γ, θ and ϕ.", true),
             Node("claim", "The positivity conjecture", ClaimFormula(), SourceQuotation(), true),
             Node("result", "Refutation at spin three-halves", new Formula.Not(Named("claim")),
-                "Set n=3, sigma=1, gamma=log(20/11), t=1, rho=Matrix.single(3,3,1) on Fin 4, and theta=phi=0. The four binomial ratios are 1, 3/5, 1/5 and 1/35, and q=exp(−gamma)=11/20 satisfies q^(L(L+1)/2)≤r(3,L) for every L≤3. At the north pole only k=0 contributes. The lowest-weight state's multipole signs alternate, giving F=(1−3q+5q³−7q⁶)/4=−760927/256000000<0. The density predicate is reused directly from D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity: positive semidefinite and trace one. The counterexample has t=1, so equation (53)'s printed omission of t does not affect the refutation.", false, DescribeRole.Theorem))));
+                "Set n=3, sigma=1, gamma=log(20/11), t=1, rho=Matrix.single(3,3,1) on Fin 4, and theta=phi=0. The four binomial ratios are 1, 3/5, 1/5 and 1/35, and q=exp(−gamma)=11/20 satisfies q^(L(L+1)/2)≤r(3,L) for every L≤3. At the north pole only k=0 contributes. The lowest-weight state's multipole signs alternate, giving F=(1−3q+5q³−7q⁶)/4=−760927/256000000<0. The density predicate is reused directly from D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.IsDensity: positive semidefinite and trace one. The counterexample has t=1, so equation (53)'s printed omission of t does not affect the refutation.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brody-graefe-melanathuru-2026-damped-kernel-positivity"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("damped-spin-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
