@@ -148,6 +148,13 @@ $U<313165777.4653100$. Its chosen sufficient count is $J'=262144$,
 with complete action-tail bound below $0.000448454143055800<1/1000$.
 This count is not asserted minimal or practical.
 
+The [coherent-root Fourier supplier](strip-root.md) bounds the full
+Gamma action omitted beyond a finite frequency band on this same
+five-generator family. It retains $Z=QH_{1024,64}EB$ even when a later
+action uses the full digamma symbol. Its directed band-$512$ allowance
+is below $5.80\cdot10^{-18}$; it does not evaluate retained integrals
+or certify a residual Gram.
+
 This bound is uniform on the five explicit high generators. Applying it
 to $Y$ requires their actual common coefficient map and the ground
 normalization, rather than substituting a unit trial bound separately
@@ -170,3 +177,18 @@ integration grid is repeated. Outputs include exact upper dyadics,
 trial and source hashes, the selected sufficient $J'$ and the unpaid
 matrix obligations. The program is project-authored; directed arithmetic
 and dependency licensing come from python-flint/FLINT.
+
+
+The [stable projected-ground application](stable-ground.md) gives a
+nonzero $e=E^*Pv_0$ directly from the existing one-sided operator tail
+and exact ground relation. On $u\perp e$, the lift (HT2) becomes
+$YEu=ZAu$. Its classical second Schur allowance is less than
+$0.004660867160108$; the actual direction and restricted matrix remain
+uncomputed.
+
+The [continuous sinc projection supplier](continuous-projection.md)
+applies to the localized forward map $H_{1024,64}EB$ before sharp-$Q$,
+which can create spatial tails. It pays the infinite physical-lattice
+quadrature and omitted input samples for the true cutoff64. Actual
+forward sample errors, off-lattice high prime evaluations, common Grams
+and the restricted matrix sign are separate obligations.
