@@ -1,0 +1,61 @@
+**命题 33.2（十四叶实际像的根分解全集）。** 全部十四叶实际三步像恰为以下三个互不相交的集合之并：
+
+$$
+\boxed{\begin{aligned}
+\mathcal I_3(14)
+={}&\{\langle A,D\rangle,\langle D,A\rangle:D\in\mathcal Z\}\\
+ &\ \cup\{\langle C,S\rangle,\langle S,C\rangle,
+               \langle C,R\rangle,\langle R,C\rangle\}\\
+ &\ \cup\{\langle H,T\rangle,\langle T,H\rangle,
+               \langle H,B\rangle,\langle B,H\rangle\}.
+\end{aligned}}
+\tag{33.5}
+$$
+
+它们共有二十棵，每棵的唯一实际前像组成都为 $(3,1)^{\mathsf T}$，输出组成都为 $(5,9)^{\mathsf T}$。特别地，式（33.4）的六棵树互不相同，均具有这种前像和输出组成。
+
+**证明。** [式（32.5）](#32-非冲突分歧的-α-分离双孔取等与递归容量)由母卷定理 3.4 的三步组成作用给出：前像组成 $(a,b)^{\mathsf T}$ 的像有 $3a+5b$ 片叶，输出组成为 $(a+2b,2a+3b)^{\mathsf T}$。非负整数方程 $3a+5b=14$ 只有解 $(a,b)=(3,1)$：模 $3$ 给 $b\equiv1\pmod3$，而 $5b\le14$，故 $b=1,a=3$。像的输出组成随即为 $(5,9)^{\mathsf T}$。这里组成只限定可能的前像叶数和标记，不决定括号或次序。
+
+采用引理 30.2 之前的唯一实际像语法：每棵实际像是 $A$、$C$ 或 $\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。唯一前像与解析直接来自[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，不另立替换单射性。逐个检查所需的小叶数根分拆，得到
+
+$$
+\begin{aligned}
+\mathcal I_3(3)&=\{A\}, &\mathcal I_3(5)&=\{C\},
+ &\mathcal I_3(6)&=\{H\},\\
+\mathcal I_3(8)&=\{\langle C,A\rangle,\langle A,C\rangle\}=\{B,T\},
+ &\mathcal I_3(9)&=\{\langle A,H\rangle,\langle H,A\rangle\}=\{S,R\},\\
+\mathcal I_3(11)&=
+ \{\langle A,B\rangle,\langle A,T\rangle,
+      \langle B,A\rangle,\langle T,A\rangle,
+      \langle C,H\rangle,\langle H,C\rangle\}
+ =\mathcal Z.
+\end{aligned}
+\tag{33.6}
+$$
+
+具体地，原子像的叶数只有 $3,5$，复合像的每个孩子至少有三片叶，且除 $A$ 外至少有五片叶。六叶的唯一根分拆是 $3+3$；八叶是 $3+5$ 或 $5+3$；九叶是 $3+6$ 或 $6+3$，因为四叶像不存在；十一叶是 $3+8,8+3,5+6,6+5$。各孩子已由更小叶数的语法确定，这就给式（33.6）的全部选择，不是由一个有限响应表推断全集。
+
+十四叶像不可能为原子。对其两个孩子，正叶数都属于既有可行集 $\mathcal N$；小于十四时，能配对相加为十四的叶数仅有
+
+$$
+3+11,\quad 11+3,\quad 5+9,\quad 9+5,\quad 6+8,\quad 8+6.
+\tag{33.7}
+$$
+
+例如 $10,12,13$ 分别需要不存在的四叶、二叶、一叶孩子，七叶孩子也不存在；其余小叶数已在上述分拆中。代入式（33.6），$3+11$ 及其逆序各有六种，$5+9$ 及其逆序各有两种，$6+8$ 及其逆序各有两种，恰得式（33.5）。不同根分拆的左右叶数不同，集合互不相交；同一根分拆内孩子的字面语法不同，故没有重复。于是总数为 $12+4+4=20$，与原有[式（30.10）及推论 32.7](#32-非冲突分歧的-α-分离双孔取等与递归容量)的 $N_{14}=20$ 一致；计数只作核对，全集已由根语法给出。
+
+式（33.5）的每棵树都由 $A,C$ 以原有二叉构造组成。将每个 $A$ 换成 $\alpha$、每个 $C$ 换成 $\beta$，给出它的实际前像；母卷定义 3.1 的同态规则保证三步像正是原树，规范编译卷命题 4.3 保证此前像唯一。对 $F_\eta$，也可直接在式（33.3）中把 $B$ 换成 $\langle\beta,\alpha\rangle$、把两棵 $A$ 换成 $\alpha$，得到三个完整前像。按 $\eta=\mathrm R,\mathrm L$ 各自的槽编号，六棵前像明确为
+
+$$
+\begin{aligned}
+&\langle\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,
+&&\langle\alpha,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle,
+&&\langle\alpha,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle,\\
+&\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+&&\langle\langle\alpha,\langle\beta,\alpha\rangle\rangle,\alpha\rangle,
+&&\langle\langle\alpha,\alpha\rangle,\langle\beta,\alpha\rangle\rangle.
+\end{aligned}
+$$
+
+它们各有三片 $\alpha$、一片 $\beta$；在左右孩子的形状或标签上逐字不同。因此它们的像也互不相同，不能仅凭相同组成代替这种不同性。证毕。
+
