@@ -11388,3 +11388,215 @@ coding-prime height but still grows with that height;
 unrestricted odd distinct covering remains open. These are
 ordinary mathematical deductions, with no Lean verification
 of the exchanges or their consequences asserted here.
+
+## 72. Adjacent mixed heights suffice for the q-tail code
+
+For distinct original support primes $p,q$, define the numerical
+profile of the same original EB1 family by
+
+$$
+h_j=\max\{v_p(d):d\in D,\ v_q(d)=j\},\qquad
+0\le j\le G=H_q.
+$$
+
+Original divisor closure gives
+$h_0=H_p\ge h_1\ge\cdots\ge h_G$ and supplies every pure
+$q^j$. The strengthened all-height necessary condition is
+
+$$
+\boxed{q<p^{h_k+h_{k+1}+1}\qquad(0\le k<G).}
+\tag{SC449}
+$$
+
+Report 385 HPM5 remains valid but has the weaker exponent
+$\max(H_p,h_k+h_{k+1}+1)$. The full old $p$ coordinate must
+remain in the comparison carrier; the code need only read the
+digits tested by the originals it transports. These are separate
+requirements. No restriction to ternary height two is used here.
+
+### One contraction of all q-tails
+
+First consider any finite distinct odd whole cover with every
+modulus dividing $p^Hq^GM$, where $(M,pq)=1$ and $p,q$ are
+distinct odd primes. Fix $0\le k<G$, an actual pure original
+$q^{k+1}$, and nonnegative bounds $A,B$ satisfying
+
+$$
+v_q(d)>k\ \Longrightarrow\ v_p(d)\le A,
+\qquad
+v_q(d)=k\ \Longrightarrow\ v_p(d)\le B.
+\tag{SC450}
+$$
+
+Suppose $q>p^{A+B+1}$. Set
+
+$$
+w=A+1,\quad E_j=B+jw\quad(1\le j\le G-k),\qquad
+N=p^{\max(H,E_{G-k})}q^kM.
+\tag{SC451}
+$$
+
+For each parent $u\bmod q^k$, inject the complete first
+$p^{E_1}$-symbol alphabet into $q-1$ next digits. At the actual
+parent of the pure $q^{k+1}$ original, omit that original's next
+digit; elsewhere omit any digit. Encode each later block of $w$
+base-$p$ digits into one base-$q$ digit. Both alphabet sizes
+are smaller than $q$. Fix all these compatible injections once,
+independently of every cofactor and original owner. Write their
+prefix maps as $\theta_{u,j}$.
+
+For an output $z\bmod N$, put $u=z\bmod q^k$ and define one
+source by CRT:
+
+$$
+\Psi(z)\equiv z\pmod{p^H},\qquad
+\Psi(z)\equiv u+q^k\theta_{u,G-k}(z)\pmod{q^G},\qquad
+\Psi(z)\equiv z\pmod M.
+\tag{SC452}
+$$
+
+The maximum in SC451 makes this well-defined even when the
+entire code reads fewer than $H$ old digits. Retain every original
+with $q$-height at most $k$ unchanged. Every coordinate tested by
+such an original is preserved, so it contains $z$ exactly when it
+contains $\Psi(z)$.
+
+A transported original is $d=p^aq^{k+j}m$, with $a\le A$,
+$j\ge1$, and $m\mid M$. Its literal $q$ phase fixes one parent
+and one tail prefix. Injectivity gives either no inverse or one
+$p$ prefix $c_d\bmod p^{E_j}$. Since $a\le A<E_1\le E_j$,
+the old $p^a$ test is constant on that prefix. If compatible, the
+complete inverse is exactly
+
+$$
+z\equiv u_d\pmod{q^k},\qquad
+z\equiv c_d\pmod{p^{E_j}},\qquad
+z\equiv\rho_d\pmod m.
+\tag{SC453}
+$$
+
+Higher old $p$ digits impose no further condition: this transported
+original does not test them. There is no safe-word or private-region
+mask. Enclose each nonempty inverse by truncating its $p$ prefix to
+
+$$
+\kappa_j(a)=B+1+(j-1)(A+1)+a,
+\qquad
+\widehat d=p^{\kappa_j(a)}q^km.
+\tag{SC454}
+$$
+
+Here $B<\kappa_j(a)\le E_j$. A retained label below $q$-height
+$k$ has different $q$-height; a retained label at height $k$ has
+$p$-height at most $B$. Thus none equals a new label. For new
+labels, quotient and remainder of $\kappa_j(a)-B-1$ by $A+1$
+recover $j-1,a$, and the prime-free cofactor recovers $m$.
+Original numerical distinctness excludes every new/new collision.
+The moduli are odd nonunits and divide $N$.
+
+For every output, original coverage of the one source SC452
+supplies an owner. A retained owner covers that output unchanged;
+a transported owner covers it through SC453 and its enclosure.
+The actual pure $q^{k+1}$ original has empty inverse because its
+own parent's code excludes its next digit. Each other original
+produces at most one class. This is a whole cover with at most
+$K-1$ classes. Moreover, every charged modulus satisfies
+
+$$
+\frac{\widehat d}{d}
+=\frac{p^{B+1}}q
+ \left(\frac{p^{A+1}}q\right)^{j-1}<1,
+\tag{SC455}
+$$
+
+so its numerical modulus sum also decreases. The construction
+requires neither divisor closure nor extremality; those hypotheses
+are used only when forbidding the resulting reduction.
+
+For the EB1 profile take $A=h_{k+1}$ and $B=h_k$. Its monotonicity
+supplies SC450. Count minimality prohibits $q>p^{A+B+1}$.
+Equality is impossible for distinct primes: an exponent one would
+give $q=p$, and a larger exponent makes the right side composite.
+This proves SC449, including $A=B=0$ and $k=G-1$.
+
+### Repeated larger primes force actual penultimate mixed labels
+
+For any integer $r\ge1$, divisor closure and SC449 give
+
+$$
+\boxed{G\ge2,\ q\ge p^{2r-1}
+\quad\Longrightarrow\quad p^r q^{G-1}\in D.}
+\tag{SC456}
+$$
+
+Indeed, absence of that original label would imply both
+$h_{G-1},h_G\le r-1$, contradicting SC449 at $k=G-1$.
+In particular,
+
+$$
+\boxed{p<q,\ H_q\ge2\ \Longrightarrow\ pq^{H_q-1}\in D,}
+\qquad
+\boxed{p<q,\ pq\notin D\ \Longrightarrow\ H_q=1.}
+\tag{SC457}
+$$
+
+At $p=3$, this forces $3q^{G-1}$ for $q\ge5$,
+$9q^{G-1}$ for $q\ge29$, and $27q^{G-1}$ for $q\ge251$,
+provided $G\ge2$. If the required $p$-height exceeds the original
+height, it excludes that height/support combination. These are
+actual individual numerical labels. Their phases are not prescribed,
+and labels forced for separate primes do not supply their product
+as another original, a common cofactor point, or a complete menu.
+
+### Opposite concentrated colors become flatter
+
+Retain Report 385 CP1's original private-root color convention.
+Opposite concentrated primes have no original multiple of their
+product. Hence the larger member of any opposite pair has height
+one, by SC457, with no assumption on shared primes or on $H_3$.
+
+If original 5 and 7 have opposite colors $S_5,S_7$, the same
+family consequently satisfies
+
+$$
+\begin{gathered}
+H_7=1,\qquad H_5\le7,\qquad H_3\le28,\\
+H_r=1\quad(r\in(S_5\cup S_7)\setminus\{5\}),\\
+r<49\quad(r\in S_5),\qquad
+r<5^{H_5+1}\le5^8\quad(r\in S_7).
+\end{gathered}
+\tag{SC458}
+$$
+
+The first assertion uses the missing product 35. The height bound
+on 5 is the existing OCP8 value $6+\lfloor4/4\rfloor=7$;
+OCP6 supplies the ternary bound. Every member of $S_7$ exceeds 5,
+and every member of $S_5\setminus\{5\}$ exceeds 7, so CP1 and
+SC457 give the other height-one assertions. Existing HPM1, using
+the opposite coding prime and zero mixed height, gives the two
+displayed prime bounds. None of these steps bounds every shared
+prime or makes shared primes squarefree. If the shared set is
+additionally a singleton, Report 385 section 165 excludes
+$H_5=H_7=1$, sharpening that particular branch to $2\le H_5\le7$.
+
+More generally, if the shared set avoids $\{5,7,11,13\}$, the
+existing GM1 choice supplies an opposite pair $5,\ell$ with
+$\ell\in\{7,11,13\}$. Then
+
+$$
+H_\ell=1,\qquad r<\ell^2\le169\quad(r\text{ in 5's color}).
+\tag{SC459}
+$$
+
+Every prime in the opposite color has height one. Primes in 5's
+color above $\ell$ have height one; the smaller members are not
+flattened by this argument.
+
+SC449 controls adjacent mixed layers, not the unrestricted value
+of $H_3$. For example, numerical profiles with arbitrarily large
+$h_0=\cdots=h_{G-1}$ and $h_G=0$ can satisfy its inequalities
+when $q<p^{h_{G-1}+1}$; this is a profile boundary, not a whole-cover
+example. A uniform bound on all relevant mixed layers, or a forced
+missing product for every repeated prime, remains unavailable.
+These constructions and consumers are ordinary mathematical
+deductions. No Lean verification of SC449--SC459 is asserted.
