@@ -6712,3 +6712,155 @@ transported liabilities would also need payment. The result is an
 ordinary phase-explicit construction using the existing private
 reset and complete-menu interfaces, without new enumeration or
 Lean verification.
+
+## 54. The two inner deficits have a common point and a small common-overlap hull
+
+Keep precisely SC227 and the surviving alternatives SC239. Define
+
+$$
+I=E_3\cap E_6=H\setminus(T_3\cup T_6).
+\tag{SC278}
+$$
+
+Then $I$ is nonempty. For its complete congruence hull, choose
+$x_0\in I$ and write $\Delta=\Gamma_N(I)$ in one common odd,
+5-free period $N$. The phase anchor belongs to the intersection;
+an arbitrary earlier point of $E_3\cup E_6$ need not have its
+finer congruence phase.
+
+### One root retains exactly the common inner deficit
+
+Assign the four menus
+
+$$
+T_2,\qquad T_5,\qquad T_8,\qquad T_3\cup T_6
+\tag{SC279}
+$$
+
+to four distinct nonzero fresh 5-roots, and add $[0]_5$.
+Every actual safe top supplier occurs once. Its patch has the
+unchanged output phase and numerical label $5n_t$; top-output
+uniqueness makes these labels pairwise distinct. They differ from
+5 because every $n_t>1$, and from every retained modulus because
+those are 5-free.
+
+The first three menus cover the whole $H$. At the fourth root,
+the only remaining responsibility is the root restriction of the
+entire $I$. Points outside $H$ retain their original
+$\mathcal F_0$ service. The base cost is at most $1+v_2$.
+If $I$ were empty, the resulting whole cover would have at most
+$K-N_3-z+1+v_2=K-(1+v_1+z)<K$ classes. Hence EB1 forces
+$I\ne\varnothing$.
+
+### The existing packets bound its complete hull
+
+Because $I\subseteq E_3\cup E_6$, its hull is divisible by
+$\Gamma$. The exact remaining alternatives are
+
+$$
+\boxed{
+\begin{aligned}
+\Gamma=3&\ \Longrightarrow\ \Delta\in\{3,9\},\\
+\Gamma=9&\ \Longrightarrow\ \Delta=9,\\
+\Gamma=p>5\text{ prime}&\ \Longrightarrow\ \Delta=p.
+\end{aligned}}
+\tag{SC280}
+$$
+
+To prove them, shift a complete packet one 5-level deeper at the
+deficient root by SC233. A packet of $q$ classes gives total cost
+at most $1+v_2+q$, strictly below $N_3+z$ whenever $q\le v_1$.
+The shifted labels have 5-depth at least two, whereas the base
+labels have depth one and the retained labels depth zero. The
+shift keeps all 5-free phases fixed and covers every integer lift
+of the remaining liability.
+
+For $\Gamma\in\{3,9\}$, SC242 already gives $v_1\ge15$.
+A prime factor $p>5$ in $\Delta$ supplies the complete enclosure
+$[x_0]_{3p}$, paid by SC137's eleven-class packet. A factor 27
+supplies $[x_0]_{27}$, paid by SC236's fifteen-class packet.
+Thus only the two displayed ternary possibilities remain. This
+payment requires no actual top of output modulus 27.
+
+For $\Gamma=p>5$, use $v_1\ge11$ from SC231. Any
+$\Delta>p$ has either a composite 3-free divisor or the divisor
+$3p$. The nine-class SC136 packet or eleven-class SC137 packet
+then covers the complete corresponding enclosure outside $S$.
+Since $I\subseteq H$ avoids $S$, this pays the whole remaining
+responsibility and contradicts EB1.
+
+For any nonunit divisor $d\mid\Delta$, the actual safe top
+menus must contain a supplier of output modulus $d$. Otherwise,
+one additional patch $[r]_5\cap[x_0]_d$ at the deficient root
+is numerically fresh and covers all of $I$. Its total cost is
+at most $2+v_2=N_3-v_1<N_3+z$. In particular,
+
+$$
+\Gamma=3,\ \Delta=9
+\quad\Longrightarrow\quad
+\text{an active safe top has output modulus }9.
+\tag{SC281}
+$$
+
+This is numerical occupancy only. It supplies neither that top's
+color nor equality of its actual phase with the overlap enclosure.
+
+### Common inner privacy and the full union use the same source
+
+Now impose SC208. For every $x\in I$, both source images are
+private to the same actual original lower:
+
+$$
+F_3(x),F_6(x)\in P_{3\chi(n)}.
+\tag{SC282}
+$$
+
+They have the same complete original 3-free coordinate and differ
+only in the old ternary word. This follows from the existing owner
+check: $x\in H$ misses all height-zero outputs, the designated
+lower is the only active $L_0$ source, and $x$ misses both inner
+top menus. It does not make either outer image private or place
+$x$ in any $D_e$.
+
+For the lower-private hull one can use the entire deficits, not
+only the intersections $R_{e,j}$. The same check gives
+$F_j(E_j)\subseteq P_{3\chi(n)}$ separately for $j=3,6$.
+Put
+
+$$
+Y=F_3(E_3)\cup F_6(E_6).
+$$
+
+Both old words occur, so $Y$ has ternary hull depth exactly one.
+At every other prime, its coordinate projection is exactly the
+common source projection of the whole union $E=E_3\cup E_6$.
+The prefix-depth argument of SC263 therefore gives
+
+$$
+\Gamma_Q(Y)=3\chi(\Gamma),\qquad
+3\chi(n)\mid\Gamma_Q(P_{3\chi(n)})\mid3\chi(\Gamma).
+\tag{SC283}
+$$
+
+This calculation retains every point in the two complete deficit
+images; it does not choose or identify their individual witnesses.
+In the $\Gamma=3$ branch one has $n=3$, so it sharpens the
+corresponding SC269 row to
+
+$$
+\boxed{\Gamma=3\ \Longrightarrow\ \Gamma_Q(P_{15})=15
+       \quad\text{under SC208}.}
+\tag{SC284}
+$$
+
+For $\Gamma=9,n=3$, the two values 15 and 75 remain possible
+from this argument. For $\Gamma=9,n=9$ and for the prime
+branch, SC283 recovers the already established exact lower-private
+hulls 75 and $3p$.
+
+The overlap and private-hull conclusions do not cover any complete
+original ancestor liability and do not force a common point with
+$D_3\cap D_9$. The three original hull branches and the forcing
+of SC227 or SC208 remain unresolved. These are ordinary deductions
+from the fixed source, actual full menus and existing packets,
+without new enumeration or Lean verification.
