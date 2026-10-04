@@ -30,7 +30,10 @@ internal sealed class MultisetRookEulerianInterlacingRefutationDocument : IScrib
                 H("Refutation on board 333344"), StatementSource.FromAuthor(F.Disp(new Formula.Not(Id("claim")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The content (2,2,1,1) on the board (3,3,3,3,4,4) has sixty fitting words. The two relevant refinements are R₁ = 2X⁴ + 15X³ + 7X² = X²(X+7)(2X+1) and R₃ = X³ + 8X² + 3X. Their decreasing roots, with multiplicity, are respectively [0,0,−1/2,−7] and [0,−4+√13,−4−√13]. Since 3 < √13 < 4, the bottom comparison would require −7 ≤ −4−√13, which is false. This refutes the interlacing-sequence clause and hence the conjunction. The universal real-rootedness clause is not decided by this refutation."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alexandersson-jal-quemener-2025-rook-eulerian-interlacing"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role) =>

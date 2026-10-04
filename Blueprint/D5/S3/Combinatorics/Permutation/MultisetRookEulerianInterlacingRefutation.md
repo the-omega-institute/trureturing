@@ -84,6 +84,10 @@ $$\neg \mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alexandersson-jal-quemener-2025-rook-eulerian-interlacing` (refuted) by `D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alexandersson-jal-quemener-2025-rook-eulerian-interlacing","declaration_gid":"D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
