@@ -59,10 +59,10 @@ public sealed class MarkdownCurrentCommandTests
         var temporary = new TemporaryRoot();
         SyntheticScribeRepository.WriteInputs(temporary.Path, Definition());
         TemporaryFileSystem.File.WriteAllText(temporary.Resolve("global.json"), "{}\n");
-        TemporaryFileSystem.File.WriteAllText(temporary.Resolve(Definition().SourcePath), """
+        TemporaryFileSystem.File.WriteAllText(temporary.Resolve(Definition().SourcePath), $$"""
             using StrataLint.Scribe;
             using static StrataLint.Scribe.DefinitionDsl;
-            """ + "\nnamespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n" + """
+            {{"namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;"}}
             internal sealed class CurrentMarkdown : IScribeDocumentDefinition
             {
                 public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
