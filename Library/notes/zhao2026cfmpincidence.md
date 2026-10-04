@@ -218,3 +218,200 @@ Exact finite checks cover the two new cosine values, the Taylor margin, the
 derivative identity for the two-cap extremum, the positive-integral formula
 for 22/7-pi, and the nineteen-neighbor criterion on the stated packets. These
 checks supply no mathematical independence or kernel certification.
+
+## Standard topology and the original face-pairing boundary interface
+
+The generalized-triangulation and vertex-truncation facts below are existing
+mathematics, not additional CFMP realization theorems. Primary locators are the
+[Regina Handbook, Chapter 3](https://regina-normal.github.io/docs/triangulations.html),
+[validity and vertex links](https://regina-normal.github.io/docs/tri-analysis.html#tri-basicprops),
+and [truncating vertices](https://regina-normal.github.io/docs/tri-modification.html#tri-truncate).
+The handbook allows faces of the same tetrahedron to be paired, describes
+edge reversal as an invalid identification, and identifies vertex truncation
+with replacement by real boundary components. The
+[engine's three-dimensional triangulation interface](https://regina-normal.github.io/engine-docs/classregina_1_1Triangulation_3_013_01_4.html)
+gives the corresponding validity and truncation contracts.
+
+The following coordinate argument makes those standard facts explicit for the
+actual original face pairing used by CFMP. It preserves occurrences, both
+ordered ends and cap marking; it supplies the topology interface used in the
+existing finite examples. It is a reuse argument, not a new theory result or
+a Lean-certified theorem. References to Sections 1--4 and Proposition 1.1
+refer to `docs/develop/theory/CFMP_ORIGINAL_LINK_INTERFACE.md`; Sections 5--11
+below number this note's topology discussion. A sphere-link vertex is also
+truncated in the displayed model, creating a sphere cap; identifying this
+model with a supplied original manifold still requires its actual
+triangulation realization.
+
+## 5. 原始截断商与有限闭关系
+
+沿用第 1 节的实际面配对，假设四面体集合 $T$ 有限。取 $\varepsilon=1/4$，在每个四面体使用闭截断单形
+
+$$
+K=\left\{z\in\mathbb R^4:\ z_i\ge0,\ \sum_i z_i=1,\ z_i\le3/4\right\}.
+$$
+
+令 $X=\coprod_{t\in T}K$。只有在 $z_f=0$ 时，面 $(t,f)$ 的实际配对才生成识别
+
+$$
+(t,z)\sim\left(u,P_{\sigma_{t,f}}z\right),\qquad
+(P_\sigma z)_i=z_{\sigma^{-1}(i)}.
+$$
+
+记其等价闭包为 $R$，商空间为 $Q=X/R$，商映射为 $q$。所有商均使用这组实际面限制；不同出现和端口保留其原始身份。令
+
+$$
+U=\{(t,z)\in X:\ \exists v,\ z_v=3/4\},\qquad B=q(U).
+$$
+
+**命题 5.1（实际截断商的紧性与分离性）。** 对任意上述有限面配对，$R$ 是 $X\times X$ 的闭子集，$Q$ 紧且 Hausdorff，$q$ 是闭映射，$U$ 饱和且 $B$ 闭。此结论不要求边不反转。
+
+证明。固定源四面体 $t$，以 $(u,\rho,Z)$ 为运输状态，其中 $u\in T$、$\rho\in\operatorname{Sym}(4)$、$Z\subseteq I$。初始状态为 $(t,\mathrm{id},\varnothing)$。在当前四面体 $u$ 选择面 $f$，配对至 $(u',g)$，更新为
+
+$$
+(u,\rho,Z)\longmapsto
+\left(u',\sigma_{u,f}\circ\rho,\ Z\cup\{\rho^{-1}(f)\}\right).
+$$
+
+状态可达性仅记录原始面路径，不要求其零坐标条件已成立。实际关系的精确表达式是
+
+$$
+R((t,z),(u,w))\iff
+\exists\rho,Z:\ (u,\rho,Z)\text{ 可达},\quad
+\bigwedge_{i\in Z}z_i=0,\quad w=P_\rho z.
+$$
+
+实际识别路径逐步积累拉回源点的零坐标条件，得到正向蕴含。反向沿状态的见证路径行走，累积条件使每一步实际面识别合法。逆面限制本身也是生成识别，故此描述包含对称闭包，初始状态包含反身性。每个源四面体至多有 $|T|\cdot24\cdot16$ 个状态。固定标签、排列和零坐标集合时，右端条件定义闭集；有限并仍闭。
+
+空间 $X$ 是有限个紧 Hausdorff 多面体的不交并。闭等价关系在紧 Hausdorff 空间上的商是紧 Hausdorff，且商映射闭：闭集的饱和是闭关系与该闭集乘 $X$ 的交集的紧投影，因此闭。这个闭商结论也可由商映射的紧纤维、适当映射的乘积和闭对角线判据得到。坐标排列保留“某坐标等于 $3/4$”，所以 $U$ 饱和；它是有限个闭 cap 面的并，$B$ 由闭商映射得到闭性。
+
+## 6. 实际两端口圈与端点运输
+
+固定一个实际全局边 $e$，令 $O_e$ 为其原始局部出现集合。每个出现恰有两个包含该边的面端口。记 $\tau$ 为同一出现内的端口交换，$J$ 为跨实际配对面的端口运输。二者都是端口集合上的无不动点对合；$J$ 的无不动点性来自原始面配对的无不动面条件。
+
+**引理 6.1（保留环和重边的有向端口圈）。** 两对合生成的实际边分量有两个 $S=\tau\circ J$ 轨道，彼此由 $\tau$ 交换；每个轨道恰好经过 $O_e$ 中每次出现一次。
+
+证明。将 $\tau$ 和 $J$ 看作端口上的两种颜色的完美匹配。一个连通分量是有限交替偶圈；允许两种匹配连接同一对端口。沿圈每次前进两步给出两个奇偶位置轨道，而每个 $\tau$ 配对包含一个奇位置和一个偶位置。实际边关系正是跨 $J$ 并在出现内切换端口生成的连通关系，因此所选分量对应整个 $O_e$。圈长度为 $2|O_e|$，每个两步轨道在每个出现取一个端口。一个出现的情形是两个匹配连接同一对端口，$S$ 有两个单点轨道；两个出现的情形保留两条平行面运输。证明不使用简单图假设。
+
+选择一个轨道，按 $k\in\mathbb Z/m\mathbb Z$ 编号，其中 $m=|O_e|>0$。将该轨道中的端口称为出端口，其同出现的另一个端口称为入端口。跨第 $k$ 个出端口恰到达第 $k+1$ 个出现的入端口。
+
+此后假设第 1 节的边不反转条件。命题 1.1 给出实际边上的两个有序端类。任意边路径可运输一个所选端点，故该端类到达每次出现；若同一端类在某次出现包含两个端点，就违反边不反转。选择其一 $\eta$，则每次出现 $o$ 有唯一端点 $v_o$ 属于 $\eta$；另一端点记为 $w_o$。实际面运输保留这一选择。即使两个端点具有相同的全局角点标签，也不能将这两个端类合并。
+
+## 7. 横截面到圆盘的显式映射
+
+在第 $k$ 次出现中，令 $a$ 为出端口遗漏顶点的坐标，$b$ 为入端口遗漏顶点的坐标。取 $\delta>0$，在闭三角形 $a,b\ge0$、$a+b\le\delta$ 上定义 $r=a+b$，并定义
+
+$$
+F_k(a,b)=
+\begin{cases}
+0,&r=0,\\
+r\exp\!\left(2\pi i\dfrac{k+b/r}{m}\right),&r>0.
+\end{cases}
+$$
+
+出端口面上 $a=0$，角参数为 $k+1$；配对目标的入端口面上 $b'=0$，角参数同为 $k+1$。最后一个出端口与第一个入端口也由指数的周期性一致。
+
+**引理 7.1（实际扇商是圆盘）。** 将上述 $m$ 个闭三角形按实际相邻端口识别，其商由 $F_k$ 同胚到闭圆盘 $\overline D_\delta\subset\mathbb C$。对任意紧区间 $L$，保留第二坐标的同一映射给出实际扇乘区间的商到 $\overline D_\delta\times L$ 的同胚。
+
+证明。$r>0$ 时公式连续；在原点，$|F_k(a,b)|=a+b$ 给出连续性，毋须角参数有极限。相同像先由范数给出相同 $r$，再由指数周期性给出
+
+$$
+\frac{k+b/r}{m}\equiv\frac{l+b'/r}{m}\pmod1.
+$$
+
+当 $k,l\in\{0,\ldots,m-1\}$ 且两个比值位于 $[0,1]$ 时，这恰好表示同一扇内相同点、相邻端口射线上的配对点，或首尾射线上的配对点。原点则沿连通端口圈全部识别。$m=1$ 时同一三角形的两条射线配对，$m=2$ 时两对相邻射线均须保留；上述纤维描述仍逐项成立。
+
+每个非零圆盘点的方向可选择于一整圈内，再放入这 $m$ 个角区间之一，取 $b=rt$、$a=r(1-t)$ 即得原像。映射因此连续、满射且纤维恰为实际识别类。它从紧商到 Hausdorff 圆盘诱导连续双射，故为同胚。乘紧区间的陈述对整个紧源使用同一个连续映射和纤维论证得到，不预设商与乘积交换。
+
+## 8. 原始边内部的实际邻域
+
+固定实际边内部一点，选择第 6 节的端类及有向端口圈。令
+
+$$
+s=\frac{z_{v_o}}{1-r},\qquad
+z_{v_o}=(1-r)s,\qquad z_{w_o}=(1-r)(1-s).
+$$
+
+在中心边 $r=0$ 上，截断条件给出 $1/4<s<3/4$。选取包含该点纵向参数于内部的闭区间 $[A,C]\subset(1/4,3/4)$，取 $\delta=1/16$，并以 $0\le r\le\delta$ 为横截面参数。上述两个端点坐标均大于 $\delta$，另外两个坐标至多为 $\delta$，故在同一原四面体内，两个大坐标唯一恢复该局部边出现。端点坐标严格小于 $3/4$，因此这些 patch 不碰 cap。
+
+实际配对保留 $r,s$；仅两个横向面可能有零坐标，它们恰给出第 7 节的射线配对。由引理 7.1，整个闭 patch 的实际商经 $(F_k,s)$ 同胚到 $\overline D_\delta\times[A,C]$。闭 patch 是饱和的，其商到 $Q$ 的像也是紧到 Hausdorff 的连续单射，故上述同胚确实描述 $Q$ 的该子空间。
+
+限制到 $r<\delta$、$A<s<C$。其完整原像在 $X$ 中相对开：这组严格不等式和两个端点坐标大于 $\delta$ 可在每个原四面体内直接表达。它仍饱和，因为实际面运输保留所选端点和纵向参数。按商拓扑定义，其像是 $Q$ 的开邻域，坐标目标为 $D_\delta\times(A,C)$，即实三维空间的开子集。
+
+## 9. cap 顶点及其余四种局部情形
+
+在原始有序端 $(t,v,w)$ 对应的 cap 顶点处，选择其实际端类，取
+
+$$
+u=3/4-z_{v_o},\qquad
+z_{v_o}=3/4-u,\qquad z_{w_o}=1/4+u-r.
+$$
+
+令 $0\le u,r\le\delta=1/16$。则
+
+$$
+11/16\le z_{v_o}\le3/4,\qquad
+3/16\le z_{w_o}\le5/16,\qquad
+0\le a,b\le1/16.
+$$
+
+两个大坐标再次唯一恢复实际局部边出现，且还区分所选 cap 端点。只有两个横向面能提供识别；它们保留 $u,r$，恰给出实际扇的射线关系。唯一可能的 cap 坐标是 $v_o$，cap 条件等价于 $u=0$。
+
+**命题 9.1（实际 cap 顶点的带标记半空间坐标）。** 上述闭 patch 商经 $(F_k,u)$ 同胚到 $\overline D_\delta\times[0,\delta]$。限制到 $r<\delta$、$u<\delta$ 得到 $Q$ 中的开邻域 $V$，其坐标目标为 $D_\delta\times[0,\delta)$，且
+
+$$
+(F,u)(V\cap B)=D_\delta\times\{0\}.
+$$
+
+证明。引理 7.1 给出闭 patch 的紧商同胚，闭 patch 饱和，故它同胚于 $Q$ 中的实际像。较小 patch 的完整原像可写成 $r<\delta$、$u<\delta$，连同已自动满足的两个大坐标严格下界；这些条件在原始 $K$ 中相对开。原始面限制保留这些条件，因此原像饱和，商像开。目标在 $\mathbb C\times[0,\infty)$ 中相对开；最后的标记等式直接来自唯一 cap 坐标及 $u=0$。
+
+其余四种情形的坐标也可以直接写出。配对面上的切向坐标一律通过同一个实际 $\sigma$ 运输，法向坐标在两侧取相反符号。
+
+| 情形 | 坐标与逆公式 | 局部目标 |
+|---|---|---|
+| 四面体内部 | 省去一个坐标，按总和为一恢复它 | 仿射三维空间的开集 |
+| 配对面内部，$z_f=0$ | $h=z_f$，$y_i=z_i/(1-h)$；逆为 $z_f=h$、$z_i=(1-h)y_i$ | 切向开圆盘乘开法向区间 |
+| cap 内部，$z_v=3/4$ | $u=3/4-z_v$，$y_i=z_i/(1/4+u)$；逆为 $z_v=3/4-u$、$z_i=(1/4+u)y_i$ | 切向开圆盘乘 $[0,\delta)$ |
+| cap 侧边内部，$z_v=3/4,z_f=0$ | $u=3/4-z_v$、$h=z_f$、$t=z_w/(1/4+u-h)$；另一个顶点为 $c$ | 开切向区间乘开法向区间乘 $[0,\delta)$ |
+
+最后一行的完整逆公式为
+
+$$
+z_v=3/4-u,\quad z_f=h,\quad
+z_w=(1/4+u-h)t,\quad z_c=(1/4+u-h)(1-t).
+$$
+
+在配对目标侧取实际运输后的 $v,w,c$，并把 $h$ 的符号取反；合并两侧后，逆公式中的非负重心坐标使用 $|h|$。选择 $t$ 的闭区间 $I$ 严格位于 $(0,1)$，令 $\mu=\inf_{t\in I}\min(t,1-t)>0$，再选 $\delta\le1/16$ 满足 $\delta<(1/4-\delta)\mu$，则整个 patch 上 $z_w,z_c>\delta$。这个半径依赖所选点的切向正坐标余量；不对所有 cap 侧边中心强行使用同一个半径。只有 $f$ 能有零坐标，只有 $v$ 能达到 cap 上界。因此两侧除了 $h=0$ 的原面配对外没有额外识别，且 cap 恰为 $u=0$。
+
+配对面内部同样先选取面内部的紧切向圆盘，再选法向半径，使另外三个坐标均严格大于该半径且小于 cap 上界。两侧紧半盒在 $h=0$ 上由实际运输相接；连续映射的纤维正好是该配对，由紧到 Hausdorff 获得闭盒同胚。取切向圆盘的内部和 $|h|<\delta$，其完整原像相对开且由唯一小面条件给出饱和性，因而得到商中的开邻域。即使两配对面属于同一原四面体，它们的小 patch 也由不同的唯一小坐标区分，互不重叠。cap 侧边取 $t\in\operatorname{int}I$、$|h|<\delta$、$u<\delta$，其饱和开原像给出对应的半空间开邻域。两个无配对的内部情形直接使用仿射或有理逆公式和严格坐标余量，cap 内部同样取切向圆盘的内部及 $u<\delta$。
+
+## 10. 六种坐标的汇合与实际 cap 链接
+
+**定理 10.1（由原始面配对构造的带边界三维拓扑流形）。** 有限原始面配对满足边不反转时，$Q$ 是紧三维拓扑流形，边界标记恰为 $B$。具体地，$Q\setminus B$ 的每点具有与实三维开集同胚的开邻域；$B$ 的每点具有与标准闭半空间的相对开集同胚的开邻域，且局部同胚将 $B$ 精确送到高度为零的平面。空 $T$ 给出空流形。
+
+证明。$K$ 的点至多有两个零坐标，否则剩下的一个坐标等于一，违反截断上界；至多有一个 cap 坐标，否则坐标总和大于一。因此“零坐标数为零、一、二”和“有无 cap 坐标”恰好产生六种情形。第 8 节、第 9 节及其表格为它们逐一构造实际商的开邻域。没有 cap 的三种情形给出实三维开集，有 cap 的三种给出闭半空间的相对开集，并都保留高度零标记。命题 5.1 给出 Hausdorff 性和紧性。紧性选出有限个这样的图卡覆盖；每个图卡有可数基，有限并给出 $Q$ 的可数基。故满足拓扑流形的分离性和可数性条件。这些半空间图卡确定的流形边界为 $B$。
+
+令 $L$ 为第 1 节同一原始角点三角形的实际链接商。每个原角点 $(t,v)$ 的三角形写为
+
+$$
+\Delta_v=\left\{\lambda:\lambda_v=0,\ \lambda_i\ge0,\ \sum_i\lambda_i=1\right\}.
+$$
+
+其边 $\lambda_f=0$ 按实际 $\sigma_{t,f}$ 配对，且只允许 $f\ne v$。
+
+**命题 10.2（链接到实际边界 cap 的原代表对应）。** 对任意有限原始面配对，映射
+
+$$
+[t,v,\lambda]\longmapsto
+\left[t,\frac34e_v+\frac14\lambda\right]
+$$
+
+给出 $L\cong B$。在定理 10.1 的边不反转条件下，这是原始链接与 $Q$ 的流形边界的同胚。
+
+证明。cap 点具有唯一坐标等于 $3/4$，所以在识别前可由该坐标恢复 $v$，并将其余坐标乘四恢复 $\lambda$。该映射是有限不交并上到 $U$ 的同胚，且与实际坐标排列交换。对于 $f\ne v$，$\lambda_f=0$ 等价于目标点的 $z_f=0$；$f=v$ 不可能提供 cap 点的面识别。每一条从 cap 出发的实际识别路径始终留在 cap 中，逆映射因此逐步恢复链接识别路径。诱导映射的纤维精确，得到从紧链接商到 Hausdorff 子空间 $B$ 的连续双射，故为同胚。这里的链接商紧性仅需其源有限紧三角形并的连续商；没有预先假设链接是曲面。
+
+## 11. 拓扑结论的适用范围
+
+第 5–10 节给出同一原始面配对上的书面拓扑构造，使用有限闭关系、显式扇坐标和紧到 Hausdorff 的同胚判据。环、重边、同一四面体的不同配对面，以及两个端点具有相同全局角点标签的情形都保留原始出现身份。结论不要求可定向性、角结构或双曲度量，也没有文献原创性声明。
+
+同一个原始流形 $N$ 的边界对应仍须连接其原始理想剖分的实际实现。若该实现已给出 $Q\cong N$，可通过边界不变性传递上述标记；若只给出内部或删点空间的同胚，还需 collar 或端部延拓论证。任意内部同胚不能直接宣称延拓到 cap。上述拓扑坐标也不提供共同六边长度或全局双曲能量的物理识别。
