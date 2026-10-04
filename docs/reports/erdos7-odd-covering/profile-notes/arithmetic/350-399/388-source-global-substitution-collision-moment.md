@@ -7861,3 +7861,274 @@ liability; it supplies no repair of it, no released numerical
 labels and no new descent. The statements are ordinary
 same-source consequences of SC285, SC288, SC290 and SC296,
 without new enumeration or Lean verification.
+
+## 60. A shared prime ladder pays repeated positive-height outer-lower service
+
+Keep Section 58's original EB1 cover of ternary height two, SC227
+in its prime branch, the complete group $J_a=\{3p,9p\}$ with
+$p>5$, and one fixed source tree $\theta$. Keep every actual safe
+top with nonempty pullback as in Section 53. Fix $b\ne a$ and
+$j\in\{3,6\}$, and write $R=R_{b,j}$. SC285 supplies
+$R\subseteq[b]_p$, $R\cap S=\varnothing$ for the bought root
+$S=[s]_3$, and a base whose only remaining integer liability is
+one fresh-5-root restriction of the entire $R$. Its cost is at
+most $1+v_2$, on top of $K-N_3-z$ retained classes, where
+$N_3=2+v_1+v_2$.
+
+Suppose a finite family $\mathcal W$ of actual original outer
+lowers at first-$p$ phase $b$ supplies complete service:
+
+$$
+\begin{gathered}
+R\subseteq\bigcup_{d\in\mathcal W}C_d,\qquad
+d=3\cdot5^{h_d}m_d,\qquad p\mid m_d,\quad(m_d,15)=1,\\
+C_d=[\eta_d]_{3^{h_d}m_d}.
+\end{gathered}
+\tag{SC315}
+$$
+
+The ternary prefix of $\eta_d$ is the actual output prefix under
+the same tree. The containment includes all integer lifts and all
+higher prime-power coordinates. It does not replace $R$ by a
+hull or require agreement between different supplier phases.
+
+### Two divisor requests cover each supplier's remaining service
+
+For each source use the numerical menu
+
+$$
+\mathcal N_d=
+\{3^e t:0\le e\le h_d,\ t\mid m_d,\ p\mid t\}
+ \setminus\{p,3p\}.
+\tag{SC316}
+$$
+
+Suppose two slots $s_{d,3},s_{d,4}\in\mathcal N_d$ per source
+can be assigned with all slots globally distinct. This reuses the
+divisor-slot construction SC125--SC126; the complete residual's
+common $p$-phase and avoidance of $S$ reduce the requests to two.
+The concrete profile below supplies the allocation automatically.
+
+Normalize the deficient fresh root to 1. Put
+$\lambda_t=1+5t\pmod{25}$ for $0\le t\le4$, and let
+$\alpha,\beta$ be the two modulo-3 roots other than $s$.
+Add four common classes and the two assigned classes per source:
+
+$$
+\begin{gathered}
+[\lambda_0]_{25},\qquad
+[\lambda_1]_{25}\cap[b]_p,\\
+[\lambda_2]_{25}\cap[\alpha]_3,\qquad
+[\lambda_2]_{25}\cap[\beta]_3\cap[b]_p,\\
+[\lambda_t]_{25}\cap[\eta_d]_{s_{d,t}}
+\quad(d\in\mathcal W,\ t=3,4).
+\end{gathered}
+\tag{SC317}
+$$
+
+These are single CRT classes. For an integer in $[1]_5\cap R$,
+the first two common classes cover second 5-digits 0 and 1.
+At digit 2 its ternary root is $\alpha$ or $\beta$, and the
+other two common classes cover both cases. At digit 3 or 4,
+SC315 supplies an actual owner; the assigned slot divides that
+owner's output modulus and retains its actual phase. Thus every
+integer in the complete remaining liability is covered. The
+retained family and SC285 base cover every other integer.
+
+The four common numerical labels are $25,25p,75,75p$.
+Every source slot is $p$-bearing, so it differs from 1 and 3;
+SC316 also excludes $p,3p$. Hence the globally distinct source
+labels $25s_{d,t}$ differ from all common labels. Every packet
+label has 5-valuation two, every base label has 5-valuation one,
+and every retained label is 5-free. All output moduli are
+therefore distinct odd nonunits. The packet costs
+$4+2|\mathcal W|$ classes. Its coverage does not require the
+mixed output menus to be pullbacks of a modified original cover.
+
+### Actual height-one donors pay both requests and the common classes
+
+For a slot $3^e t$, use the original donor $3\cdot5^e t$.
+It divides its actual source $3\cdot5^{h_d}m_d$, so divisor
+closure supplies it. The donor map is injective, and every donor
+is a nonpure original of ternary height one counted in $v_1$.
+The donor's phase supplies no patch phase: SC317 uses only the
+actual source phase. No additional original service is deleted.
+
+Four other actual $v_1$ labels are outside this donor image.
+One is the designated $3p$, because slot $p$ was excluded.
+The largest original prime satisfies $P\ge29$ as in SC302.
+Initial-segment support therefore permits three distinct primes
+$q_1,q_2,q_3\in\{17,19,23,29\}\setminus\{p\}$.
+Report 385 GHA10 and divisor closure supply the actual labels
+$3q_i$; its Section 60 also supplies these shallow labels directly.
+They are $p$-free, whereas every assigned donor is $p$-bearing.
+They differ from one another and from $3p$. Consequently
+
+$$
+\begin{aligned}
+v_1&\ge2|\mathcal W|+4,\\
+K'&\le K-N_3-z+(1+v_2)+(4+2|\mathcal W|)\\
+  &=K+3+2|\mathcal W|-v_1-z
+   \le K-1-z<K.
+\end{aligned}
+\tag{SC318}
+$$
+
+This uses one original inventory. The four reserved labels pay
+the common classes by count; they need no phase agreement with
+those classes. The $v_2$ inventory already used by the SC285 base
+is not counted again. Thus any complete menu admitting the stated
+two-slot assignment contradicts EB1.
+
+### One repeated positive-height column always admits the assignment
+
+Suppose every source in SC315 has $h_d\ge1$ and $m_d\ne p$.
+Permit one cofactor $m_*$ to occur at arbitrarily many distinct
+positive heights; every other numerical cofactor occurs in at
+most one selected source. Different cofactors may overlap or
+divide one another, and their actual phases remain arbitrary.
+
+For each source outside the special column assign its two slots
+$m_d,3m_d$. For a special source at height $h$, use the menu
+
+$$
+\{3^e m_*:0\le e\le h\}
+ \ \cup\ \{3^e p:2\le e\le h\}.
+\tag{SC319}
+$$
+
+These two ladders are disjoint and have $(h+1)+(h-1)=2h$ slots
+for every $h\ge1$. Their menus are nested. At most $h$ special
+sources have height at most $h$: two at the same height would
+have the same actual original label $3\cdot5^h m_*$.
+Ordering the special heights $h_1<\cdots<h_t$ gives
+
+$$
+2i\le2h_i
+=\#\bigl(\{3^e m_*:0\le e\le h_i\}
+          \cup\{3^e p:2\le e\le h_i\}\bigr).
+\tag{SC320}
+$$
+
+There is an explicit assignment: give the first special source
+$m_*,3m_*$, and give source $i\ge2$ the slots
+$3^i m_*,3^i p$. They divide its output modulus because
+$h_i\ge i$. They are all distinct, and unique 3-free parts
+separate them from all nonspecial columns. The common $p$-ladder
+starts at exponent two and avoids $p,3p$. Every slot lies in
+SC316. SC318 therefore excludes this concrete complete-service
+profile without a further matching hypothesis.
+The special column may be absent, recovering one positive height
+per cofactor with no restriction on the number of cofactors.
+
+Pure-$p$ sources are excluded from this automatic profile. Their
+putative slots $p,3p$ are precisely the forbidden ones. Merely
+requiring a pure-$p$ source to have positive height does not pay it.
+
+### Several repeated columns share one joint prime-ladder capacity
+
+For a source with $m\ne p$ and height $h$, now restrict its menu
+to its private ladder $\{3^e m:0\le e\le h\}$ together with
+the common ladder $\{3^e p:2\le e\le h\}$. A source with
+$m=p$ has only that common ladder. Each common numerical slot
+occurs once across all columns.
+
+Let $L_m(h)$ count the selected actual sources with cofactor $m$
+and height at most $h$. Sums over cofactors below range over the
+finitely many cofactors occurring in $\mathcal W$. For integers
+$H\ge0$ define
+
+$$
+\delta_m(H)=\max_{0\le h\le H}(2L_m(h)-h-1)_+
+\quad(m\ne p),\qquad
+c(H)=\max(H-1,0).
+\tag{SC321}
+$$
+
+The existing finite Hall theorem, applied to two copies of each
+source, gives the following exact condition for this restricted
+private-plus-common allocation:
+
+$$
+\boxed{2L_p(H)+\sum_{m\ne p}\delta_m(H)\le c(H)
+       \quad\text{for every integer }H\ge0.}
+\tag{SC322}
+$$
+
+For necessity, fix $H$. In every column with
+$\delta_m(H)>0$, choose a prefix height attaining that maximum
+and include all sources in the prefix. A positive maximum is
+attained at an actual source height: between occurring heights
+the count is constant and $2L_m(h)-h-1$ decreases. Include also
+all pure-$p$ sources through $H$. After its private slots are
+subtracted, each non-$p$ column has request surplus
+$\delta_m(H)$. The pure-$p$ sources have no private slots,
+and all common slots lie among the $c(H)$ slots through $H$.
+Hall's inequality forces SC322. An empty chosen subset gives
+zero demand and satisfies it immediately.
+
+For sufficiency, take any nonempty subset $X$ of sources and
+let $H$ be its largest height. For each represented $m\ne p$,
+write $X_m$ for that column's subset and $h_m$ for its largest
+height. Its private union has $h_m+1$ slots. These unions are
+disjoint from one another and from the common union, which has
+exactly $c(H)$ slots. The remaining demand obeys
+
+$$
+\begin{aligned}
+2|X|-\sum_{\substack{m\ne p\\X_m\ne\varnothing}}(h_m+1)
+&=2|X_p|+
+  \sum_{\substack{m\ne p\\X_m\ne\varnothing}}
+       (2|X_m|-h_m-1)\\
+&\le2L_p(H)+\sum_{m\ne p}\delta_m(H)
+ \le c(H).
+\end{aligned}
+\tag{SC323}
+$$
+
+Thus every subset passes the two-request Hall test. This is a
+joint condition: separate bounds $\delta_m(H)\le c(H)$ would
+spend the same common ladder repeatedly. Proper cofactor-divisor
+slots in SC316 may improve an allocation that fails SC322;
+necessity is asserted only for the restricted ladders.
+
+At $H=0$ the common capacity is zero. A height-zero source in a
+non-$p$ column has one private slot for two requests and makes
+$\delta_m(0)\ge1$; a pure-$p$ height-zero source has no slot.
+Both are correctly rejected by this restricted-ladder test;
+proper-divisor slots in SC316 can give a different allocation.
+A pure-$p$ source of height one
+also has no slot, and one of height two has only $9p$.
+A single pure-$p$ source of height three can use $9p,27p$ when
+other columns have not spent that common capacity. All these
+cases are covered by SC322 without a second private $p$-column.
+It suffices to test zero and heights occurring in the actual
+selected family: between them the left side is constant and
+the right side is nondecreasing.
+
+For positive-height outer lowers, actual-label uniqueness gives
+$L_m(h)\le h$. A column with at most one such source has
+$\delta_m(H)=0$; the one repeated column in SC319 has
+$\delta_{m_*}(H)\le c(H)$. With no pure-$p$ source this
+recovers the automatic profile directly from SC322.
+
+SC125--SC126 provide the actual-phase divisor patch and donor
+injection; SC148 provides common-root sharing; SC187 and DP12
+provide the nested matching rule. Section 41's two requests per
+lower use four complete safe-color menus for the whole $H$.
+Here only one actual outer-lower menu of $R$ is assumed, and
+SC317 explicitly pays the other three fresh subroots using its
+common $p$-phase and avoidance of $S$.
+
+The argument does not force outer lowers to cover any complete
+$R$: SC287 also permits original height-zero owners. Nor does
+it force the general repeated-column allocation. Deeper fresh-5
+splitting alone cannot replace the missing actual supplier
+geometry by the entire prime envelope: SC139 already excludes
+that envelope's one-prime palette, with capacity at most $91/96$
+and at most $7/8$ when only cofactor types $1,p$ are used.
+The actual residual can be smaller and is the set repaired here.
+The height-zero role, unrestricted repeated-column service, the
+full paired-prime branch and unrestricted odd distinct covering
+remain unresolved. These are ordinary mathematical deductions;
+no new enumeration or Lean verification is asserted.
