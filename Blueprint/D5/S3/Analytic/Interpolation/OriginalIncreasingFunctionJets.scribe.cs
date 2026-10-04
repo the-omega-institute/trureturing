@@ -163,5 +163,8 @@ internal sealed class OriginalIncreasingFunctionJetsDocument : IScribeDocumentDe
                     Paragraph(Text("The coordinate-transform function sends each endpoint-jet vector b to its reversed factorial coordinates:")),
                     Paragraph(Math(Disp(Fn("n", N, Fn("b", VectorType, Fn("k", FinType,
                         Multiply(Call("NatToReal", Call("factorial", Call("val", V("k")))),
-                            Apply(V("b"), Call("rev", V("k"))))))))))), DescribeRole.Theorem))));
+                            Apply(V("b"), Call("rev", V("k"))))))))))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("burke-haris-madhavendra-increasing-function-jets"),
+                    ResolutionKind.Proved)))));
 }

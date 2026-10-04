@@ -298,6 +298,10 @@ $$\forall n \in \operatorname{Nat}\left(\right),\; \operatorname{P}\left(n\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/OriginalIncreasingFunctionJets.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/burke-haris-madhavendra-increasing-function-jets` (proved) by `D5/S3/Analytic/Interpolation/OriginalIncreasingFunctionJets.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"burke-haris-madhavendra-increasing-function-jets","declaration_gid":"D5/S3/Analytic/Interpolation/OriginalIncreasingFunctionJets.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Maxim R. Burke; Maleeha Haris; Madhavendra (2025). *Repeated integrals of increasing functions*. DOI: [10.48550/arXiv.2512.02151](https://doi.org/10.48550/arXiv.2512.02151). URL: <https://arxiv.org/abs/2512.02151v1>.
