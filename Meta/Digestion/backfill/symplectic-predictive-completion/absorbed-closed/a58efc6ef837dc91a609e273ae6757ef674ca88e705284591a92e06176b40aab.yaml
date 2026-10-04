@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a58efc6ef837dc91a609e273ae6757ef674ca88e705284591a92e06176b40aab
   normalized_sha256: sha256:a58efc6ef837dc91a609e273ae6757ef674ca88e705284591a92e06176b40aab
 cas_ref: sha256:a58efc6ef837dc91a609e273ae6757ef674ca88e705284591a92e06176b40aab
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/Hermite/PhysicalProductTotality.physical_product_totality
+    target_statement_id: sha256:4de121b6020a4ab5eb315270b676c969f8d58e0d505db9b72d2b151fac35096d
 receipts:
   unresolved_subitems: []
