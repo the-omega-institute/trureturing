@@ -428,10 +428,7 @@ internal static partial class DigestionStatusEvaluator
                 continue;
             }
 
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-            if (Affected(gid.Path.Value)
-                || Affected(ScribeEmissionAttestation.DefinitionPath(documentGid))
-                || Affected(ScribeEmissionAttestation.EmissionPath(documentGid)))
+            if (Affected(gid.Path.Value))
             {
                 return true;
             }

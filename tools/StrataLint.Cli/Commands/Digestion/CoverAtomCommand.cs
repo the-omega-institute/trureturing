@@ -152,9 +152,6 @@ internal static partial class CoverAtomCommand
                 }
 
                 inputPaths.Add(gid.Path.Value);
-                var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-                inputPaths.Add(ScribeEmissionAttestation.DefinitionPath(documentGid));
-                inputPaths.Add(ScribeEmissionAttestation.EmissionPath(documentGid));
             }
 
             var repositoryPaths = repositoryChanges.Entries
