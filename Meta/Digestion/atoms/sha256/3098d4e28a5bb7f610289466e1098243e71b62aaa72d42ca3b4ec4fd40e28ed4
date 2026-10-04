@@ -1,0 +1,8 @@
+**Proof.** The image of the minimum map is $\tau$ and its domain has
+one more point. Lemma 1.1 gives a collision pair. Erasing an index outside
+that pair leaves the collision and gives an image too small to be $\tau$.
+For a preserving erasure, dominance excludes every point of $M_i$.
+Conversely, emptiness of $M_i$ gives, for every $y$, an index
+$k\in D\setminus\{i\}$ with $y\leq_k m_k(\tau)$, hence
+$y\leq_k x$ for all $x\in\tau$.
+

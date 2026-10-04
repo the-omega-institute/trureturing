@@ -90,7 +90,7 @@ public static class ScribeCli
             try
             {
                 var root = FindRepositoryRoot(workingDirectory);
-                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(root, arguments[2]);
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepositoryFiles(root, arguments[2]);
                 if (command == "content-check")
                 {
                     var exit = Run(["projections", "--check", "--report", arguments[2]],
@@ -122,7 +122,7 @@ public static class ScribeCli
             try
             {
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
-                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepositoryFiles(
                     repositoryRoot,
                     arguments[3]);
                 var findings = StatementProjectionReconciliation.Check(
@@ -165,7 +165,7 @@ public static class ScribeCli
             {
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var reportMaterial = leanReport
-                    ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+                    ?? LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot);
                 var pack = ScribeResourcePack.Open(arguments[2]);
                 if (pack.Manifest.TotalSha256 != arguments[4])
                     throw new FormatException("ScribePackDigestMismatch: the pack digest does not match");
@@ -212,7 +212,7 @@ public static class ScribeCli
                     arguments.Count == 4,
                     output,
                     error,
-                    () => leanReport ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot));
+                    () => leanReport ?? LeanCompiledArtifactReports.ReadRepositoryFiles(repositoryRoot));
             }
             catch (Exception exception) when (
                 exception is IOException or UnauthorizedAccessException or ArgumentException

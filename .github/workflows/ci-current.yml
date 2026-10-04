@@ -140,6 +140,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/*
             tools/tests/BannedApiCompileFailProof/*
             tools/tests/CompileFailProof/*
@@ -164,6 +165,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/*
             tools/tests/BannedApiCompileFailProof/*
             tools/tests/CompileFailProof/*
@@ -216,6 +218,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/*
             tools/tests/BannedApiCompileFailProof/*
             tools/tests/CompileFailProof/*
@@ -306,6 +309,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/*
             tools/tests/BannedApiCompileFailProof/*
             tools/tests/CompileFailProof/*
@@ -409,6 +413,7 @@ jobs:
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/cache_material.py
             tools/scripts/worktree/lean-cache-ensure.sh
             tools/scripts/worktree/lean-cache-run.sh
@@ -678,6 +683,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/lean-cache-ensure.sh
             tools/scripts/worktree/lean-cache-input.sh
             tools/scripts/worktree/lean-cache-publish.sh
@@ -792,6 +798,7 @@ jobs:
             tools/scripts/workflow/playbook-workflows.sh
             tools/scripts/workflow/scribe-content-checks.sh
             tools/scripts/worktree-init.sh
+            tools/scripts/host-cleanup.py
             tools/scripts/worktree/cache_material.py
             tools/scripts/worktree/lean-cache-ensure.sh
             tools/scripts/worktree/warm-donor.sh

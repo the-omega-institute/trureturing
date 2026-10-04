@@ -1,11 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.GraphColoring.GraphDominationFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.GraphColoring;
 
-[ScribeSharedSource("Blueprint/D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination.scribe.cs")]
 internal sealed class AnnorCoverRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.";
@@ -74,4 +72,23 @@ internal sealed class AnnorCoverRefutationDocument : IScribeDocumentDefinition
         return Display(Seq(Forall, Sp, Typed(F.Id("r"), Nat()), Comma,
             Sup(PlusOne(twice), n), Sp, Le, Sp, D(2), Sp, Cdot, Sp, Sup(twice, n)));
     }
+
+    private static Formula Sup(Formula value, Formula exponent) => Seq(value, Caret, Grp(exponent));
+    private static Formula Type() => Seq(Operatorname, Grp(F.Id("Type")));
+    private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Typed(Formula x, Formula type) => Seq(x, Colon, Sp, type);
+    private static Formula PlusOne(Formula x) => Seq(Open, x, Plus, D(1), Close);
+    private static Formula And(params Formula[] clauses)
+    {
+        List<Formula> items = [];
+        for (int i = 0; i < clauses.Length; i++)
+        {
+            if (i > 0) { items.Add(Sp); items.Add(Land); items.Add(Sp); }
+            items.Add(Seq(Open, clauses[i], Close));
+        }
+        return Seq([.. items]);
+    }
+    private static Formula Gamma(Formula g) => Call("dominationNumber", g);
+    private static Formula Display(Formula body) => Disp(Seq(Begin, Grp(F.Id("gathered")), body, End, Grp(F.Id("gathered"))));
 }

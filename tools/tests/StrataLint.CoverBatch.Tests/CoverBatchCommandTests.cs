@@ -26,6 +26,34 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CoverBatchWritesCoverageWithoutCallingScribeVerifier(bool unavailableScribe)
+    {
+        const string definitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        using var world = new BatchWorld { UseGitReader = true, ChangedPaths = [definitionPath] };
+        WriteScribeFixture(world.Root, definitionPath, "invalid C#");
+        TestGit.Run(world.Root, "init", "--quiet");
+        var inputPath = Path.Combine(world.Root, "atoms.tsv");
+        File.WriteAllText(inputPath, Row(First, Gid) + Row(Second, OtherGid));
+        var calls = 0;
+        var environment = new ProductionCliEnvironment(world.Root, world.Repository, world.Report,
+            unavailableScribe ? null : new CallbackVerifier(() =>
+            {
+                calls++;
+                throw new InvalidOperationException("Scribe must not execute during cover-batch");
+            }), CoverWorld.TimeProvider);
+
+        var result = environment.CoverBatch(["--atoms", inputPath, "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(0, calls);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.Equal([Gid], world.Entry(First).CoverageGids.ToArray());
+        Assert.Equal([OtherGid], world.Entry(Second).CoverageGids.ToArray());
+    }
+
+    [Theory]
     [InlineData("")]
     [InlineData("atom D5/S0/Carrier/Probe.probe\n")]
     [InlineData("atom\tD5/S0/Carrier/Probe.probe\textra\n")]
@@ -42,7 +70,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Equal(0, world.Repository.ReadCount);
         Assert.Equal(0, world.Report.CallCount);
-        Assert.Equal(0, world.EmitCount);
+        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
         Assert.Equal(before, world.LedgerImage());
     }
 
@@ -63,11 +91,12 @@ public sealed partial class CoverBatchCommandTests
         Assert.Single(world.Repository.ReadRevisionCalls);
         Assert.Single(world.Repository.ReadChangesCalls);
         Assert.Equal(1, world.Report.CallCount);
-        Assert.Equal(1, world.EmitCount);
+        Assert.Single(result.Output.Split('\n'), line =>
+            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
     [Fact]
-    public void IndependentFailureContinuesAndPartialSuccessEmitsOnce()
+    public void IndependentFailureContinuesAndPartialSuccessEmitsValuesOnce()
     {
         using var world = new BatchWorld();
 
@@ -77,7 +106,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(["failed", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        Assert.Equal(1, world.EmitCount);
+        Assert.Single(result.Output.Split('\n'), line =>
+            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -114,9 +144,9 @@ public sealed partial class CoverBatchCommandTests
     public void SharedContextFailureAfterSuccessKeepsCommittedAtoms(bool deletePolicy)
     {
         using var world = new BatchWorld();
-        world.DuringVerification = () =>
+        world.DuringInputRead = () =>
         {
-            if (world.VerificationCount != 2) return;
+            if (world.InputReadCount != 2) return;
             var policyPath = Path.Combine(world.Root, "Meta/FILEMAP.toml");
             if (deletePolicy) File.Delete(policyPath);
             else File.AppendAllText(policyPath, "# changed\n");
@@ -127,7 +157,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(["applied", "failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
         Assert.Single(world.Entry(First).Coverage);
         Assert.Empty(world.Entry(Second).Coverage);
-        Assert.Equal(0, world.EmitCount);
+        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -150,7 +180,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld { UseGitReader = true };
         TestGit.Run(world.Root, "init");
-        world.DuringVerification = () =>
+        world.DuringInputRead = () =>
         {
             if (change == "added") File.WriteAllText(Path.Combine(world.Root, "new-input.txt"), "new input");
             else File.Delete(Path.Combine(world.Root, "Meta/FILEMAP.toml"));
@@ -159,7 +189,7 @@ public sealed partial class CoverBatchCommandTests
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
 
         Assert.Equal(["failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Equal(0, world.EmitCount);
+        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -210,7 +240,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld();
         var session = new CoverAtomCommand.Session(world.Root, world.Repository, world.Report,
-            new CallbackVerifier(() => { }), CoverWorld.FixtureUtc, "baseline", Gid);
+            CoverWorld.FixtureUtc, "baseline", Gid);
         Assert.True(session.Apply(First, [Gid]).Success);
         Assert.True(session.Apply(First, [OtherGid]).Success);
 
@@ -233,7 +263,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.NotNull(world.Entry(First).Receipts.CoverDisposition);
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        Assert.Equal(1, world.EmitCount);
+        Assert.Single(result.Output.Split('\n'), line =>
+            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -265,7 +296,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Contains(Second, Results(result)[1].Reason, StringComparison.Ordinal);
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Null(world.Entry(First).Receipts.CoverDisposition);
-        Assert.Equal(1, world.EmitCount);
+        Assert.Single(result.Output.Split('\n'), line =>
+            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -282,7 +314,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("cycle", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(before, world.LedgerImage());
-        Assert.Equal(0, world.EmitCount);
+        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -298,7 +330,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(["already_applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(appliedBytes, TemporaryFileSystem.File.ReadAllBytes(appliedPath));
-        Assert.Equal(2, world.EmitCount);
+        Assert.Single(result.Output.Split('\n'), line =>
+            line.Contains(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, StringComparison.Ordinal));
     }
 
     [Theory]
@@ -331,7 +364,7 @@ public sealed partial class CoverBatchCommandTests
     public void ConcurrentChangeAbortsRemainingItemsAndDoesNotEmit(bool changeSharedInput)
     {
         using var world = new BatchWorld();
-        world.DuringVerification = () =>
+        world.DuringInputRead = () =>
         {
             var path = changeSharedInput
                 ? Path.Combine(world.Root, "D5/S0/Carrier/Probe.lean")
@@ -343,22 +376,8 @@ public sealed partial class CoverBatchCommandTests
 
         Assert.Equal(1, result.ExitCode);
         Assert.Equal(["failed", "blocked"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Equal(0, world.EmitCount);
-        Assert.Equal(1, world.VerificationCount);
-    }
-
-    [Fact]
-    public void EmitFailureKeepsAppliedWritesAndReturnsFailure()
-    {
-        using var world = new BatchWorld { EmitFailure = true };
-
-        var result = world.Run(Row(First, Gid));
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Equal("applied", Assert.Single(Results(result)).Status);
-        Assert.Single(world.Entry(First).Coverage);
-        Assert.Contains("synthetic emit failure", result.Error, StringComparison.Ordinal);
-        Assert.Equal(1, world.EmitCount);
+        Assert.DoesNotContain(StrataLint.Scribe.CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Equal(1, world.InputReadCount);
     }
 
     [Fact]
@@ -402,18 +421,17 @@ public sealed partial class CoverBatchCommandTests
         internal string Root { get; }
         internal FakeRepositoryGateway Repository { get; }
         internal FakeLeanReportSource Report { get; }
-        internal int EmitCount { get; private set; }
-        internal int VerificationCount { get; private set; }
-        internal bool EmitFailure { get; init; }
+        internal int InputReadCount { get; private set; }
         internal bool UseGitReader { get; init; }
-        internal Action? DuringVerification { get; set; }
+        internal IReadOnlyList<string> ChangedPaths { get; init; } = [];
+        internal Action? DuringInputRead { get; set; }
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
-        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false)
+        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false, bool targetUnchanged = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
+            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"], BaselineTargetIdentical = targetUnchanged }.Materialize();
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -482,37 +500,52 @@ public sealed partial class CoverBatchCommandTests
             }
             foreach (var path in ProducerInputFixture.CopyBatchProducerInputs(Root))
                 inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
-            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null,
-                CoverWorld.Raw(inputs.Baseline), currentReader: () => UseGitReader
-                    ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles());
-            Report = new FakeLeanReportSource(inputs.Report);
+            WriteValuesInputs(Root);
+            foreach (var path in StrataLint.Scribe.CanonicalValuesWriter.InputPaths)
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
+            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null, null,
+                changesForBase: _ => RawChangeSet.Create(ChangedPaths),
+                currentReader: () => UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles(),
+                revisionReader: _ => CoverWorld.Raw(inputs.Baseline));
+            var reports = inputs.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value,
+                StringComparer.Ordinal);
+            foreach (var path in Directory.EnumerateFiles(Root, "*.lean", SearchOption.AllDirectories)
+                .Select(path => Path.GetRelativePath(Root, path).Replace('\\', '/'))
+                .Where(LeanClosureValidator.IsReportLean))
+                reports.TryAdd(path, new LeanFileReport([], []));
+            Report = new FakeLeanReportSource(LeanAxiomReport.Create(reports));
         }
 
-        internal CommandResult Run(string input, IScribeEmissionVerifier? verifier = null)
+        internal CommandResult Run(string input)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, Report,
-                verifier ?? new CallbackVerifier(() => { VerificationCount++; DuringVerification?.Invoke(); }),
-                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"],
-                emit: () =>
-                {
-                    EmitCount++;
-                    return EmitFailure
-                        ? new CommandResult(false, string.Empty, "synthetic emit failure\n")
-                        : new CommandResult(true, "emitted\n", string.Empty);
-                }, readInputs: UseGitReader ? null : ReadFiles);
+                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"], readInputs: ReadInputs);
         }
 
-        internal void RunSingles(IScribeEmissionVerifier? verifier = null)
+        private RawRepositorySnapshot ReadInputs()
+        {
+            InputReadCount++;
+            DuringInputRead?.Invoke();
+            return UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root,
+                static path => !IngestCommand.IsLedgerPath(path)) : ReadFiles();
+        }
+
+        internal void RunSingles()
         {
             foreach (var (atom, gid) in new[] { (First, Gid), (Second, OtherGid) })
             {
-                var result = CoverAtomCommand.Run(Root, Repository, Report,
-                    verifier ?? new CallbackVerifier(() => { }), CoverWorld.FixtureUtc,
+                var result = CoverAtomCommand.Run(Root, Repository, Report, CoverWorld.FixtureUtc,
                     ["--cover-atom", atom, "--gid", gid, "--base", "baseline"]);
                 Assert.True(result.Success, result.Error);
             }
+        }
+
+        internal void KeepAtBaseline(params string[] paths)
+        {
+            foreach (var path in paths)
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
         }
 
         internal string WriteReportBundle()
@@ -531,17 +564,12 @@ public sealed partial class CoverBatchCommandTests
             return reportPath;
         }
 
-        internal CommandResult RunProducers(string input, bool scripts = false)
+        internal CommandResult RunProducers(string input)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                scripts ? new ProductionScribeEmissionVerifier() :
-                    new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
-                        () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })),
-                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"],
-                emissionDefinitions: scripts ? null : root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
-                    () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
+                CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"], readInputs: ReadInputs);
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(

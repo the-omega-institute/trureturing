@@ -65,7 +65,7 @@ node, the emitted `.md`, and the `Library/` note if the lane cites literature. K
 - **Phase B (after the freeze).** Now add the `OpenProblemResolutionClaim` node to the Scribe and write the
   `Problems/` dossier whose motivation GID names the now-frozen declaration. `make emit` twice again, second run
   0 changed. Then ONE builder commit carrying the door's delta — the Freeze event, the state pin, the new
-  dossier and the re-emitted mirror — followed by `make gate BASE="$(git rev-parse origin/dev^{{commit}})"`, push and `make pr-open`.
+  dossier and the re-emitted mirror — followed by `make gate BASE="$(git rev-parse origin/dev^{{commit}})"`, push and `make pr-open AUTO_MERGE=0`.
 
 Two commits, in that order. If you find yourself wanting to emit the claim before the deposit, re-read this: the
 validator is asking for a frozen host, and only the door can give it one.

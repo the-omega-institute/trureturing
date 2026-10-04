@@ -1,0 +1,8 @@
+### 15.6 供应边界与未解项
+
+本章沿用固定版本的 [KBonacci 实际取得几何](https://raw.githubusercontent.com/the-omega-institute/trureturing/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) 定义 2.1–2.4、命题 4.1–4.3 的规范原阶合法词、精确尾和声明相位接口；引理 15.1 对所需标量像给出直接的同词构造。一般行为商与预算更新框架沿用本卷第 3 章所用接口；规范匹配泛函、加性读出的逐位响应签名与尖锐视界，以及模二周期和窗口数，分别由[固定版本观察器](https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md)第 13 节式 (30)–(31)、定理 12.2／命题 12.3、定理 14.1 供应，不使用该卷第 1–7 节的 $\Psi_a$ 前缀。本章的新增接口是块端点合同下实际 $P/P+1$ 窗口的算术分区。
+
+后缀区分的历史归属可追溯到 Nerode 的线性自动机变换（[1958，Lemma 2](https://doi.org/10.1090/S0002-9939-1958-0135681-9)）；Rutten 的行为系统例子（[Example 10.2(5)](https://ir.cwi.nl/pub/4802/4802D.pdf)）及 Charlier–Rampersad–Rigo–Waxweiler 的贪心表示整除语言的状态复杂度结果（[Theorem 14、Corollary 19](https://arxiv.org/abs/1008.1668v1)）研究的是不同输入、输出或计数合同，不能作为 (15.9) 或 (15.17) 的来源。这里的新内容是同一实际原阶 $k$、低位先读、模二匹配输出和块端点合同下的 $P/P+1$ 相邻一窗口及其精确分区。
+
+结论只适用于原阶禁词 $1^k$、模二匹配值、独立吸收拒绝和完整宽度 $m$ 的块。它没有给出任意模数、任意非零或非满射标量读出、任意控制字母表、固定长度实际词像、矩阵词最优分类、全阶 Smith 不变量或取得成本的分类；这些边界仍按本卷前述开放问题保留。改变原阶 $k$ 会改变 $T$、相邻一位置和实际语言，不能用本章公式运输到另一个原阶。
+

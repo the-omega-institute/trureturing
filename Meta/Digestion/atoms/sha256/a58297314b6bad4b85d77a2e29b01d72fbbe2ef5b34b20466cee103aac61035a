@@ -1,0 +1,12 @@
+### 68.6 整控制器实现、来源与白盒解释边界
+
+上述所有混合均可在固定种子空间 $[0,1]$ 上实现：把它按有限菜单的相应质量划为半开区间，每个区间指定一个已经全域补全的确定性控制器；零质量区间为空，点 $1$ 另指定任一固定总控制器。对每棵固定输入树，费用是有限分段常数函数；每个种子均给正确、有限终止的整控制器。所列 $R,W$ 取得律的质量均有理；原始前沿的一般实参数只要求声明的可测选取，不另断言非可计算概率的有效采样。因而可测性、同种子反事实费用及所有最优值的取得均由这些实际控制器支持，不需要输入分布或逐输入例外种子集假设。
+
+原始读出的随机平均改善须交换共同种子最大费用：在 $r=R_{\rm raw}$ 时最小 $w$ 为 $n+1+k/(5k+1)$；单独最小 $W$ 为 $n+1$。粗读出则可用同一有限混合同时取得两个最小值，但其逐种子最大费用至少 $n+2$。这个差异来自原族的完整叶支持及不存在／分叉的实际回复关系，家族只用于评价，全部控制器仍判定全域 $\rho^3$ 成员任务。
+
+原块、共同补偿、完整前像和 NC 来自 [Scale 第 37 章](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)；完整叶认证、实际取得、阶段独立逻辑历史、地址并集收费和静态剪枝分别复用同卷第 18、23、25、27、29、34 章。本卷第 66、67 章的付费种子模型与其原族另有参数，不能替换本章的免费整控制器律。Scale 第 39 章的原始确定性一次超额容量密度 $2/3$、第 40 章的原始确定性二次超额容量二次项 $2/9$ 属于其各自容量接口；它们没有供应本章的粗读出或随机前沿。
+
+相关基础正文包括 [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)、[ActualJointResponseCostCore](../../../D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.lean)、[ActualLeafHistoryRigidity](../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean)、[ActualImageSevenLeafSeparation](../../../D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.lean)、[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)、[ActualHistorySingleHoleRecovery](../../../D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.lean)。这里复用它们各自的取得、费用、叶历史和同胞／纤维接口，不把这些模块的既有结论扩称为本章全参数随机结论。本章给出普通定义与证明，有限决策树、证书与有限混合等成熟方法不计作新机制；来源对照限于上述指定正文，不作全球原创性或结果不存在的断言。
+
+主结论不依赖付费位扩展、通用优化框架或数值实验。迁移到机器学习模型，须另证对象、可达状态、合法操作、读出及费用的保持对应，尤其不得把可表达或可逆自动当作可取得。这里没有神经精度、训练改善、泛化、Bayes 风险、因果、物理时间／能量或统一族外复杂度保证。
+

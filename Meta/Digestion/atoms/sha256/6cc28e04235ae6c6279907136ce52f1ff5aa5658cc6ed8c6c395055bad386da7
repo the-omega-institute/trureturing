@@ -1,0 +1,26 @@
+**定理 62.5（位置与置信成本）。** 对 $n\geq4$、$0<\delta\leq1/4$，任何上述完整自适应算法都必须满足
+
+$$
+m\geq\frac1{K_a}
+ \max\!\left\{(1-\delta)\ln N-\ln2,\
+                 \operatorname{kl}(1-\delta,\delta)\right\}
+ \geq\frac{\ln N+\ln(1/\delta)}{8K_a}
+ \geq\frac{\ln N+\ln(1/\delta)}{2a^2}.
+\tag{62.21}
+$$
+
+证明。$N\geq4$，第一项至少 $\ln N/4$。第二项等于
+$(1-2\delta)\ln((1-\delta)/\delta)$；
+$1-2\delta\geq1/2$、$1-\delta\geq\sqrt\delta$，故至少 $\ln(1/\delta)/4$。取最大值至少为两项和的一半，再用式（62.18）。 $\square$
+
+这是两个分别成立的必要条件经过明确常数合并后的阶界，不把两个最优常数直接相加。$\ln N$ 与 $\ln n$ 对 $n\geq4$ 同阶，故式（62.16）、（62.21）给出
+
+$$
+m^*_{\mathrm{controlled}}
+ =\Theta\!\left(a^{-2}\bigl(\ln n+\ln(1/\delta)\bigr)\right),
+ \qquad n\geq4,\quad0<\delta\leq1/4.
+\tag{62.22}
+$$
+
+这里的最小量仅指该查询合同下的标签数；不包含物理写入、总计算或内存的最优性结论。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:74f364467596d240143f54b106ab9295d832cc78c92c7a1138d42095317a4e45
+  normalized_sha256: sha256:74f364467596d240143f54b106ab9295d832cc78c92c7a1138d42095317a4e45
+cas_ref: sha256:74f364467596d240143f54b106ab9295d832cc78c92c7a1138d42095317a4e45
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/CommonTreeEmbedding.rank_encode_coherent_and_exact
+    target_statement_id: sha256:e03a552cc25e100c3d2928585545d8551b2c7e607b8041b663c16533d80baebb
+receipts:
+  unresolved_subitems: []

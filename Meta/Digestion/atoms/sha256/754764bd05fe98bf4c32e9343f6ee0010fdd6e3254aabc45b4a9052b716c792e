@@ -1,0 +1,6 @@
+**Proof.** Equal-image cardinality would imply injectivity and contradict the
+deficit, so a collision pair exists. A third point with that image would give
+$|f(s)|\leq |s|-2$ by separating the three-point fiber. The erased image is
+therefore $f(s)\setminus\{f(a)\}$ and has the same cardinality as
+$s\setminus\{a,b\}$, proving injectivity there.
+

@@ -1,0 +1,11 @@
+## Verified locator
+
+The immutable donor source is
+https://github.com/TauCetiProject/TauCeti/tree/f749c1bb6b118c898f8d152e8ff9ad3d2b339dfd.
+The authenticated source paths at this revision are
+`TauCeti/RingTheory/Polynomial/Hermite/Derivative.lean`,
+`TauCeti/Analysis/SpecialFunctions/Hermite/Orthogonality.lean`, and
+`TauCeti/Analysis/SpecialFunctions/Hermite/Function/Orthonormal.lean`.
+This locator identifies the Hermite lowering and weighted integration-by-parts
+argument. The positive physical rescalings and Euclidean product-volume
+transport for the displayed functions belong to the receiving construction.

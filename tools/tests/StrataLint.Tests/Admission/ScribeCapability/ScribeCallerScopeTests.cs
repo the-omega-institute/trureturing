@@ -6,12 +6,12 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomScopeIncludesTheRequestedGidEvenWhenItsInputsAreUnchanged()
+    public void CoverAtomDoesNotRequestScribeVerificationForChangedInputs()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var verifier = new FakeScribeEmissionVerifier(inputs.VerifiedEmissions);
+        var verifier = new FakeScribeEmissionVerifier(null);
         var environment = new ProductionCliEnvironment(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(inputs.Files), CoverWorld.Raw(inputs.Baseline)),
             new FakeLeanReportSource(inputs.Report), verifier);
@@ -19,9 +19,11 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.CoverAtom(CoverArgs(inputs));
 
         Assert.True(result.Success, result.Error);
-        var scope = Assert.Single(verifier.Scopes);
-        Assert.Contains("Blueprint/D5/S0/Carrier/Probe.scribe.cs", scope.Paths.Select(path => path.Value));
-        Assert.DoesNotContain("Blueprint/D5/S0/Test/Unrelated.scribe.cs", scope.Paths.Select(path => path.Value));
+        Assert.Equal(0, verifier.CallCount);
+        Assert.Empty(verifier.Scopes);
+        var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
     }
 
     [Fact]

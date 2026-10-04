@@ -1,0 +1,43 @@
+**共同环境与两种谱 294.2。** 若环境随轮次变化，淬火增长率由
+
+$$
+\lambda_{\mathrm q}
+=\lim_{n\to\infty}
+\frac1n\log\left\|
+K(\vartheta_{n-1})^{\mathsf T}\cdots K(\vartheta_0)^{\mathsf T}
+\right\|
+\tag{294.6}
+$$
+
+（若极限存在）给出；退火均值则由
+
+$$
+\lambda_{\mathrm a}
+=\limsup_{n\to\infty}
+\frac1n\log\mathbb E\|\widetilde Z_n\|
+\tag{294.7}
+$$
+
+给出。两者可以方向相反。取一型标量环境倍率 `m(\vartheta)`，令 `m=0.1` 的概率为 `0.9`，`m=10` 的概率为 `0.1`，则
+
+$$
+\mathbb Em=1.09>1,
+\qquad
+\mathbb E\log m
+=0.9\log0.1+0.1\log10<0.
+\tag{294.8}
+$$
+
+退火均值指数增长，而同一环境历史下的典型乘积几乎必然衰减。故 `\rho(\mathbb EK)>1` 不能替代淬火 Lyapunov 指数；环境是否在不同母体之间共享也必须登记。
+
+若每个分支个体共享同一代级时钟并附加寿命 `\tau`，物理时间内的存活量还要由
+
+$$
+T_n=\sum_{k=1}^n\tau_k,
+\qquad
+N(t)=\max\{n:T_n\le t\}
+\tag{294.9}
+$$
+
+重新索引。若个体各自拥有寿命，则必须在分支树上使用个体标记的年龄结构或 Crump–Mode–Jagers 型时间模型，不能用单一 `T_n` 代替全部个体时钟。重尾寿命可使组合轮次上的超临界候选在物理时间中表现为次线性更新；这与第 291 节的 Markov renewal 边界一致。
+

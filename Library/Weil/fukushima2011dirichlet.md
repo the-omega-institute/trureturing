@@ -577,3 +577,15 @@ Its entries, signs and cofinal $\varepsilon\downarrow0$ certificates
 remain uncomputed. The translated-kernel/FIB construction retains its
 own margin and floor conditions. This cosine construction supplies no
 arithmetic advantage from relabeling frequency cells by FIB addresses.
+
+
+## Ordered-transition hypotheses must be checked separately
+
+The [Karlin–McGregor source application](karlinmcgregor1959coincidence.md)
+tests the unchanged minimal even semigroup in radial order. Three
+separated nonnegative core functions give a strictly negative ordered
+two-by-two bilinear minor for all sufficiently small positive times.
+The Gamma conductance alone supplies the crossing. Thus the inherited
+positivity preservation does not supply all-times order-two positivity
+for a spectral-ordering argument. This paper application retains every
+prime power and supplies no sharp Poincare or RH conclusion.

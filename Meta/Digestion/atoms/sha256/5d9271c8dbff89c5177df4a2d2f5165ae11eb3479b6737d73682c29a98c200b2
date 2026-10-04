@@ -1,0 +1,7 @@
+其精确标量模量由定理 23.1 取 $\alpha=F_C/r$ 给出，最小全局常数为
+
+$$
+L_s=\frac1{F_C(k+1-\rho)},\qquad
+L_R=\frac{\max(1,\rho)}{F_C(k+1-\rho)}.
+$$
+
