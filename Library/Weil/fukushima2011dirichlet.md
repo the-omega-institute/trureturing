@@ -589,3 +589,100 @@ The Gamma conductance alone supplies the crossing. Thus the inherited
 positivity preservation does not supply all-times order-two positivity
 for a spectral-ordering argument. This paper application retains every
 prime power and supplies no sharp Poincare or RH conclusion.
+
+## Even polynomials in the same minimal form norm
+
+The following is a paper application of the existing theta tail,
+cutoff and Fourier-approximation estimates, without a new generic
+density theorem, originality claim or Lean certification. It concerns
+the unchanged $J$, $\nu$ and $\mathcal F_{\min,\rm even}$ above. The
+[Fourier/Laurent core at bounded support](connesconsanimoscovici2026spectral.md)
+belongs to a different realization and is not used as a core theorem
+for this domain. The project's finite polynomial Mellin windows likewise
+do not establish density in this form norm.
+
+First let $h$ be smooth, with
+$|h(x)|+|h'(x)|\le C e^{a|x|}$ for some fixed $C,a>0$.
+The [original theta bound](../Analytic/romik2021orthogonal.md#weighted-fourier-coefficient-suppliers)
+implies, for every fixed $0<b<\pi$,
+$\Phi(x)\le C_b\exp(-b e^{2|x|})$. In particular
+$h\in L^2(\nu)$. For Gamma jumps $0<t<1$, the square increment is
+bounded by $C_a t^2 e^{2a|x|}$; boundedness of $\Phi(x+t)$ and
+integrability of $e^{2a|x|}\Phi(x)$ pay the diagonal singularity.
+For $t\ge1$, use the two separate bounds
+$|h(x+t)-h(x)|^2\le2C^2(e^{2a|x|}+e^{2a|x+t|})$ and
+$\psi(t)\le C e^{-t/2}$. The resulting double integral is finite.
+
+For the prime shifts put $t=\log n$ and
+$S=e^{2|x|}+e^{2|x+t|}$. Absorbing the fixed exponential growth into
+the two theta tails gives, with a fixed $b>0$,
+
+$$
+\begin{aligned}
+\Phi(x)\Phi(x+t)|h(x+t)-h(x)|^2
+&\le C_a e^{-bS}\\
+&\le C_a e^{-bn}\exp\!\left(-\tfrac b2e^{2|x|}\right),
+\qquad S\ge2n. \tag{PC1}
+\end{aligned}
+$$
+
+The final factor is integrable in $x$; multiplication by
+$\Lambda(n)/\sqrt n\le\log n/\sqrt n$ leaves a summable series.
+Thus (PC1) pays every prime power, rather than integrating a constant
+over an infinite line. The same majorants, with constants uniform in
+$R\ge1$, apply to $(1-\chi_R)h$ and its derivative. Their increments
+tend pointwise to zero. Dominated convergence yields
+$\chi_Rh\to h$ in the original form norm, hence
+$h\in\mathcal F_{\min}$. Even $h$ lies in its even restriction.
+
+Next fix $h\in C_{c,\rm even}^\infty$. Choose an even smooth Fourier
+cutoff $\eta$ supported on $[-1,1]$, equal to one near zero, and put
+
+$$
+h_A(x)=\frac1{2\pi}\int_{-A}^A
+\eta(\xi/A)\widehat h(\xi)e^{i\xi x}\,d\xi.
+$$
+
+Fourier inversion and integrability of $\widehat h$ and
+$\xi\widehat h$ give uniform convergence of $h_A$ and $h_A'$ to
+$h$ and $h'$. Each $h_A$ is even and entire, with bounded function
+and derivative on the real line, so the preceding cutoff argument
+puts it in the same minimal domain. The global second moment gives
+directly, also for these noncompact Lipschitz differences,
+
+$$
+D(h_A-h)\le\tfrac12M_2\|h_A'-h'\|_\infty^2\longrightarrow0.
+\tag{PC2}
+$$
+
+For fixed $A$, let $p_{A,N}$ be the Taylor polynomial of $h_A$ through
+degree $2N$. Odd coefficients vanish. Termwise integration of the
+finite Taylor sum, and then the exponential series, give
+
+$$
+|p_{A,N}(x)|\le C_A e^{A|x|},\qquad
+|p_{A,N}'(x)|\le A C_A e^{A|x|},
+$$
+
+uniformly in $N$. Both polynomials and their derivatives converge
+pointwise to $h_A$ and $h_A'$. The complete Gamma and prime majorants
+above therefore show $p_{A,N}\to h_A$ in the same form norm.
+Combining this with (PC2) and the established compact smooth even core
+shows that even polynomials are form-dense in
+$\mathcal F_{\min,\rm even}$.
+
+For $j,k\ge1$ define the original finite matrices
+
+$$
+H^{(m)}_{jk}=D(x^{2j},x^{2k})
+-\tfrac12\left[\nu(x^{2j+2k})-\nu(x^{2j})\nu(x^{2k})\right],
+\qquad 1\le j,k\le m.
+$$
+
+Constants have zero energy and variance. Continuity in the original
+form norm consequently makes the full half-bound equivalent to
+$H^{(m)}\succeq0$ for **every** $m$. The
+[two-direction polynomial certificate](../../docs/reports/theta-mixed-matrix/theta-polynomial-energy-bounds.md)
+only addresses $m=2$. No all-degree PSD result, effective exhaustion
+rate, uniformly conditioned polynomial basis or RH/Robin conclusion
+is supplied by this density argument.
