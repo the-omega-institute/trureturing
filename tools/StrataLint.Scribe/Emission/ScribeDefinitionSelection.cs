@@ -23,12 +23,6 @@ internal static class ScribeDefinitionSelector
             .Where(static path => path is not null)
             .Select(static path => path!)
             .ToImmutableHashSet(StringComparer.Ordinal);
-        var sourceRoot = Path.Combine(root, "Blueprint");
-        var allSources = Directory.Exists(sourceRoot)
-            ? Directory.EnumerateFiles(sourceRoot, "*.scribe.cs", SearchOption.AllDirectories)
-                .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
-                .ToImmutableArray()
-            : ImmutableArray<string>.Empty;
         var selected = new HashSet<string>(StringComparer.Ordinal);
 
         foreach (var change in changes)
@@ -52,36 +46,6 @@ internal static class ScribeDefinitionSelector
                 var projectionFailure = AddProjectionRecords(root, selected, change);
                 if (projectionFailure is not null)
                     return new([], projectionFailure);
-            }
-        }
-
-        var sharedChanges = changes
-            .Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal))
-            .ToHashSet(StringComparer.Ordinal);
-        if (sharedChanges.Count != 0)
-        {
-            var users = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-            foreach (var source in allSources)
-            {
-                foreach (var shared in ScribeScriptHost.ReadSharedSourcePaths(root, source))
-                {
-                    if (!users.TryGetValue(shared, out var sources))
-                        users.Add(shared, sources = []);
-                    sources.Add(source);
-                }
-            }
-
-            var pending = new Queue<string>(sharedChanges);
-            while (pending.TryDequeue(out var shared))
-            {
-                if (!users.TryGetValue(shared, out var sources))
-                    continue;
-                foreach (var source in sources)
-                {
-                    selected.Add(source);
-                    if (sharedChanges.Add(source))
-                        pending.Enqueue(source);
-                }
             }
         }
 
