@@ -98,6 +98,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Combinatorics/TodaSpecializationUnimodalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/labelle-2025-toda-numerator-unimodality-refutation` (refuted) by `D5/S0/Certificates/Combinatorics/TodaSpecializationUnimodalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"labelle-2025-toda-numerator-unimodality-refutation","declaration_gid":"D5/S0/Certificates/Combinatorics/TodaSpecializationUnimodalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Labelle, A. (2025). *On a specialization of Toda eigenfunctions*. DOI: [10.48550/arXiv.2502.10655](https://doi.org/10.48550/arXiv.2502.10655). URL: <https://arxiv.org/abs/2502.10655v3>.
