@@ -5868,3 +5868,175 @@ forcing of SC227 in a general whole cover, and arbitrary original
 ternary height remain unresolved. These are ordinary constructive
 deductions using existing enclosure, prefix and inventory
 results, without a new Lean verification or a resolution of #7.
+
+## 49. Small hulls constrain the complete residuals and their common outer responsibility
+
+Keep the complete same-source hypotheses SC227 and the surviving
+hull alternatives SC239. For each nonunit $e\mid\Gamma$, retain
+the actual outer partner $t_e$, its color $c_e$, and the complete
+post-deletion color responsibility $D_e$ from SC229. Write
+
+$$
+R_{e,j}=D_e\cap E_j,\qquad j\in\{3,6\}.
+\tag{SC241}
+$$
+
+Every such set is nonempty. For any nonempty periodic set $X$ below,
+$\Gamma_N(X)$ denotes its complete congruence hull in the same
+common odd, 5-free period $N$. No hull is computed from selected
+private witnesses.
+
+### The ternary alternatives have a fifteen-class repair reserve
+
+If $\Gamma\in\{3,9\}$, SC229 supplies the actual outer top
+of output modulus 3, whose original label is 45. The original
+$P$-free height-two inventory therefore contains both 9 and 45.
+The existing bounds $P\ge29$ and SC211 give
+
+$$
+c_2\ge2,\qquad N_3\ge P+c_2\ge31,
+\qquad v_1\ge15.
+\tag{SC242}
+$$
+
+The last inequality uses $N_3=2+v_1+v_2\le2+2v_1$.
+When $\Gamma=9$, the additional actual partner of output modulus
+9 supplies the original label 225, so $c_2\ge3$ and
+$N_3\ge32$. Thus the same reserve remains valid. These are
+actual original numerical labels; no independent supplier phases
+are chosen.
+
+Consequently SC233 can shift the fifteen-class complete-27 packet
+SC236 into any one deficient fresh root of a base construction
+costing at most $1+v_2$. The total costs at most
+$1+v_2+15\le N_3-1$. The nine-class composite enclosure packet
+SC136 and the eleven-class complete-$3p$ packet SC137 are also
+affordable. Shifted labels have fresh 5-depth at least two, whereas
+base menu labels have depth one and retained labels depth zero.
+
+### Complete partner residuals cannot acquire deeper hulls
+
+The resulting restrictions are
+
+$$
+\begin{array}{c|c|c}
+\Gamma & e & \Gamma_N(R_{e,j})\\\hline
+3 & 3 & \text{one of }3,9\\
+9 & 3\text{ or }9 & 9\\
+p>5\text{ prime} & p & p.
+\end{array}
+\tag{SC243}
+$$
+
+For the first two rows, $R_{e,j}\subseteq E$ makes its hull
+divisible by $\Gamma$. If the residual hull has a prime factor
+$p>5$, the entire residual lies in one class modulo $3p$.
+If it is divisible by 27, the entire residual lies in one class
+modulo 27. Apply the respective eleven- or fifteen-class packet
+at the exact deficient root SC232. Each produces a strict descent
+by SC242. Since $N$ is odd and 5-free, only the displayed hulls
+remain.
+
+For the prime row, the residual hull is divisible by $p$. Any
+larger hull has either a composite 3-free divisor or a divisor
+$3p$. The nine- or eleven-class packet then pays the complete
+residual using the original reserve $v_1\ge11$ in SC231. This
+extends the SC240 enclosure argument to $D_p\cap E_j$ itself;
+it does not assume the stronger reserve SC242 for that branch.
+
+The two complete inner deficits obey the same hull restrictions:
+
+$$
+\begin{aligned}
+\Gamma=3&\ \Longrightarrow\
+  \Gamma_N(E_j)\in\{3,9\},\\
+\Gamma=9&\ \Longrightarrow\
+  \Gamma_N(E_j)=9.
+\end{aligned}
+\tag{SC244}
+$$
+
+Indeed $R_{3,j}\subseteq E_j\subseteq E$ gives
+$\Gamma\mid\Gamma_N(E_j)\mid\Gamma_N(R_{3,j})$.
+The prime case for $E_j$ is already SC240. None of these
+statements identifies a residual or deficit with its full enclosing
+AP, and no new actual partner at a residual-hull divisor is assumed.
+
+### Two different outer partners have a common complete responsibility
+
+Assume now $\Gamma=9$. Let $a=c_3$, $b=c_9$, and let $c$
+be the third outer color. SC230 gives $a\ne b$. Both actual
+partner outputs
+
+$$
+C_{t_3}=[w]_3,\qquad C_{t_9}=[w]_9
+$$
+
+contain all of $E$. Partition all actual safe top suppliers into
+four menus:
+
+$$
+\begin{aligned}
+\mathcal M_1&=T_3\cup C_{t_3},\\
+\mathcal M_2&=T_6\cup C_{t_9},\\
+\mathcal M_3&=
+ \bigcup_{\substack{v\text{ of color }a\\v\ne t_3}}C_v
+ \ \cup\!
+ \bigcup_{\substack{v\text{ of color }b\\v\ne t_9}}C_v,\\
+\mathcal M_4&=T_c.
+\end{aligned}
+\tag{SC245}
+$$
+
+Removing a partner means removing its supplier, while retaining
+all other same-color service. Each top supplier occurs once.
+The first two menus cover $H$ because their added partners
+contain the respective complete inner deficits. The fourth covers
+$H$ by SC227. The complete part missed by the third menu is
+exactly
+
+$$
+R_*=H\setminus\mathcal M_3=D_3\cap D_9.
+\tag{SC246}
+$$
+
+Assign the four menus to distinct nonzero fresh 5-roots and add
+$[0]_5$. Top output moduli are globally distinct, so all added
+labels $5q$ are distinct. Every retained label is 5-free. The
+base patch costs at most $1+v_2$, and its only remaining hole
+is the third menu's root restriction of the entire $R_*$.
+An empty $R_*$ would therefore contradict EB1 by a strict
+class-count descent.
+
+Furthermore, $D_3\subseteq C_{t_3}$ and
+$D_9\subseteq C_{t_9}$ imply $R_*\subseteq[w]_9$.
+The same eleven- and fifteen-class packet argument used for SC243
+excludes any additional prime factor or additional ternary depth
+in its hull. Thus
+
+$$
+\boxed{D_3\cap D_9\ne\varnothing,\qquad
+       \Gamma_N(D_3\cap D_9)=9.}
+\tag{SC247}
+$$
+
+The separate incidences $D_e\cap E_j\ne\varnothing$ in
+SC229 do not by themselves imply this common outer responsibility.
+SC245 supplies a new whole-hole comparison proving it. No point
+common to $R_*,E_3,E_6$ is asserted.
+
+If the additional condition $H\cap L_2=\varnothing$ holds,
+every $x\in R_*$ gives simultaneous original-private points
+for labels 45 and 225 at old words $a$ and $b$, with the same
+complete original 3-free coordinate. The owner check is the one
+in SC209: height-zero owners miss $H$, height-one owners at
+these outer words would lie in $L_2$, and $D_3,D_9$ exclude
+all other top owners in the respective colors. This assertion
+requires no uniqueness of the inner lower. Without the displayed
+condition, the two points are not claimed private.
+
+The complete original private regions of the ancestors 5 and 25
+remain separate obligations. SC247 does not cover either one,
+and neither the 3 nor the 9 hull alternative is excluded. These
+are ordinary deductions using existing complete packets and
+inventory bounds, without new enumeration or Lean verification.
