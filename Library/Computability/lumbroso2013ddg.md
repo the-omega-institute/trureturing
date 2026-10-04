@@ -7,7 +7,7 @@ doi: null
 url: https://arxiv.org/abs/1304.1916v1
 claim: "Section 2.1, equations (1)-(3), gives the optimal DDG random-bit cost as a sum of dyadic fractional parts."
 strata_touched:
-  - D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound
+  - D5/S3/Arith/FibonacciAtomic/DyadicSupportLines
 license: citation-only
 triage: anchor
 ---
