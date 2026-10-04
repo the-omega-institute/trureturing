@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cenni-lami-acin-mehboudi-2022-gaussian-thermometry-local-global-refutation` (refuted) by `D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cenni-lami-acin-mehboudi-2022-gaussian-thermometry-local-global-refutation","declaration_gid":"D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. F. B. Cenni; L. Lami; A. Acín; M. Mehboudi (2022). *Thermometry of Gaussian quantum systems using Gaussian measurements*. URL: <https://arxiv.org/abs/2110.02098v4>.
