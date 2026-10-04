@@ -10,10 +10,10 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
     private static Formula V(string name) => F.Id(name);
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula Indices => Call("Fin", D(5));
+    private static Formula Indices(byte n) => Call("Fin", D(n));
     private static Formula Finite(Formula type, Formula body) =>
         All(type, V("Type"), Seq(OpenBracket, Call("Fintype", type), CloseBracket, Comma, Sp, body));
-    private static Formula Laws => Seq(Indices, Sp, To, Sp, Real);
+    private static Formula Laws(byte n) => Seq(Indices(n), Sp, To, Sp, Real);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula All(Formula x, Formula type, Formula body) =>
         Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
@@ -26,8 +26,8 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, domain)), body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Two supporting lines for the classical dyadic cost of every five-outcome real law.",
-        H("Five-Outcome Dyadic Cost Support Bounds"),
+        "Affine supporting inequalities for the classical dyadic cost on the three- and five-outcome real simplexes.",
+        H("Dyadic Cost Support Lines"),
         Blocks(
             Describe.Lean(DescribeId.Create("residual"), DeclarationHandle.Create(Prefix + "residual"),
                 H("Dyadic residual"), StatementSource.FromAuthor(ResidualFormula()),
@@ -48,7 +48,7 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
                     + "real vectors. Lean takes an unsummable real tsum to be zero; values outside "
                     + "the probability simplex do not represent sampling costs."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("support-bounds"), DeclarationHandle.Create(Prefix + "result"),
-                H("Two affine supporting inequalities"), StatementSource.FromAuthor(ResultFormula()),
+                H("Five-outcome support lines"), StatementSource.FromAuthor(ResultFormula(5, D(1, 6), D(4, 8), D(6))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every real probability vector on Fin(5), let t be its "
                     + "smallest coordinate. The series is summable, 0 <= t <= 1/5, and both "
@@ -60,7 +60,23 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
                     + "L(p)=27/8+L(q)/16. Iterating an error bound of size 4/16^n and taking "
                     + "its zero limit proves the second supporting line, including the uniform "
                     + "law. The two bounds supply necessary inequalities and assert no "
-                    + "attainment claim for each prescribed smallest coordinate."))), DescribeRole.Theorem))));
+                    + "attainment claim for each prescribed smallest coordinate."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("three-support-bounds"),
+                DeclarationHandle.Create(Prefix + "three_outcome"),
+                H("Three-outcome support lines"),
+                StatementSource.FromAuthor(ResultFormula(3, D(6), D(1, 4), D(2))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real probability vector on Fin(3), its smallest "
+                    + "coordinate t lies between zero and 1/3, the dyadic series is summable, and "
+                    + "6t <= L(p) and 14t-2 <= L(p). At t=0 nonnegativity suffices. When "
+                    + "0<t<=1/4, the first two terms total at least 3/2. Above 1/4 all "
+                    + "coordinates are below 1/2, those terms total two, and "
+                    + "q(i)=4p(i)-1 is a probability vector with L(p)=2+L(q)/4. "
+                    + "An error bound of size 3/4^n tends to zero and supplies the second "
+                    + "line on the entire real simplex, including the uniform vector. "
+                    + "For the uniform three-outcome law the same exact tail identity gives "
+                    + "L(p)=8/3. These are support inequalities for the numerical series; "
+                    + "no optimization or phase-transition statement is asserted."))), DescribeRole.Theorem))));
 
     private static Formula ResidualFormula()
     {
@@ -78,16 +94,16 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
         return Disp(Finite(type, All(p, laws, Equal(Call("L", p), IndexedSum(d, Nat, Term(p, d))))));
     }
 
-    private static Formula ResultFormula()
+    private static Formula ResultFormula(byte n, Formula first, Formula second, Formula intercept)
     {
         var p = V("p"); var i = V("i"); var d = V("d"); var t = V("t");
-        var assumptions = And(All(i, Indices, Seq(D(0), Sp, Le, Sp, Call("p", i))),
-            Equal(IndexedSum(i, Indices, Call("p", i)), D(1)));
+        var assumptions = And(Par(All(i, Indices(n), Seq(D(0), Sp, Le, Sp, Call("p", i)))),
+            Equal(IndexedSum(i, Indices(n), Call("p", i)), D(1)));
         var bounds = And(Seq(D(0), Sp, Le, Sp, t),
-            And(Seq(t, Sp, Le, Sp, new Formula.Fraction(D(1), D(5))),
-            And(Seq(D(1, 6), Sp, t, Sp, Le, Sp, Call("L", p)),
-                Seq(D(4, 8), Sp, t, Sp, Minus, Sp, D(6), Sp, Le, Sp, Call("L", p)))));
-        return Disp(All(p, Laws, Imp(assumptions,
+            And(Seq(t, Sp, Le, Sp, new Formula.Fraction(D(1), D(n))),
+            And(Seq(first, Sp, t, Sp, Le, Sp, Call("L", p)),
+                Seq(second, Sp, t, Sp, Minus, Sp, intercept, Sp, Le, Sp, Call("L", p)))));
+        return Disp(All(p, Laws(n), Imp(assumptions,
             And(Call("Summable", Seq(d, Colon, Sp, Nat, Sp, Mapsto, Sp, Term(p, d))),
                 All(t, Real, Imp(Equal(t, Call("min", p)), bounds))))));
     }

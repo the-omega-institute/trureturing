@@ -470,4 +470,199 @@ theorem result (p : Fin 5 → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
   · exact low p hp hs _ min_datum.1 lower hlow
   · linarith only [line2, hlow]
 
+/-- The three-outcome real simplex satisfies both affine dyadic support lines. -/
+theorem three_outcome (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    let t := Finset.univ.inf' (by simp) p
+    Summable (fun d : ℕ => residual p d / (2 : ℝ) ^ d) ∧
+      0 ≤ t ∧ t ≤ 1 / 3 ∧ 6 * t ≤ cost p ∧ 14 * t - 2 ≤ cost p := by
+  classical
+  have data (P : Fin 3 → ℝ) (hS : ∑ i, P i = 1) :
+      (∀ d, 0 ≤ residual P d ∧ residual P d ≤ 2) ∧
+        Summable (fun d : ℕ => residual P d / (2 : ℝ) ^ d) ∧ 0 ≤ cost P := by
+    have bounds (d : ℕ) : 0 ≤ residual P d ∧ residual P d ≤ 2 := by
+      have hsum : ∑ i, (2 : ℝ) ^ d * P i = (2 : ℝ) ^ d := by
+        rw [← Finset.mul_sum, hS, mul_one]
+      have hlo : (∑ i, (⌊(2 : ℝ) ^ d * P i⌋ : ℝ)) ≤ (2 : ℝ) ^ d := by
+        calc
+          _ ≤ ∑ i, (2 : ℝ) ^ d * P i := Finset.sum_le_sum fun i _ => Int.floor_le _
+          _ = _ := hsum
+      have hhi : (2 : ℝ) ^ d < (∑ i, (⌊(2 : ℝ) ^ d * P i⌋ : ℝ)) + 3 := by
+        have H := Finset.sum_lt_sum_of_nonempty (s := Finset.univ)
+          (by simp : (Finset.univ : Finset (Fin 3)).Nonempty)
+          (fun i _ => Int.lt_floor_add_one ((2 : ℝ) ^ d * P i))
+        simpa [hsum, Finset.sum_add_distrib] using H
+      have hi : (2 : ℤ) ^ d - ∑ i, ⌊(2 : ℝ) ^ d * P i⌋ < 3 := by
+        have H : ((2 : ℤ) ^ d - ∑ i, ⌊(2 : ℝ) ^ d * P i⌋ : ℝ) < 3 := by
+          push_cast
+          linarith only [hhi]
+        exact_mod_cast H
+      constructor
+      · simp only [residual, Int.cast_sum]
+        linarith only [hlo]
+      · have H : (2 : ℤ) ^ d - ∑ i, ⌊(2 : ℝ) ^ d * P i⌋ ≤ 2 := by omega
+        have H' : ((2 : ℤ) ^ d - ∑ i, ⌊(2 : ℝ) ^ d * P i⌋ : ℝ) ≤ 2 := by exact_mod_cast H
+        simpa [residual] using H'
+    have nonneg (d : ℕ) : 0 ≤ residual P d / (2 : ℝ) ^ d :=
+      div_nonneg (bounds d).1 (by positivity)
+    have summable : Summable (fun d : ℕ => residual P d / (2 : ℝ) ^ d) := by
+      apply Summable.of_nonneg_of_le nonneg
+        (fun d => div_le_div_of_nonneg_right (bounds d).2 (by positivity))
+      simpa [div_pow, div_eq_mul_inv] using
+        (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left 2
+    exact ⟨bounds, summable, tsum_nonneg nonneg⟩
+  have lower (i : Fin 3) : Finset.univ.inf' (by simp) p ≤ p i :=
+    Finset.inf'_le _ (Finset.mem_univ i)
+  have minimum_data : 0 ≤ Finset.univ.inf' (by simp) p ∧
+      Finset.univ.inf' (by simp) p ≤ 1 / 3 := by
+    have H := Finset.sum_le_sum (s := Finset.univ) (fun i _ => lower i)
+    norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at H
+    rw [hs] at H
+    exact ⟨Finset.le_inf' (by simp) p (fun i _ => hp i), by linarith only [H]⟩
+  have atom_upper (P : Fin 3 → ℝ) (hS : ∑ i, P i = 1) (t : ℝ)
+      (ht : ∀ i, t ≤ P i) (i : Fin 3) : P i ≤ 1 - 2 * t := by
+    have H := Finset.single_le_sum (f := fun j => P j - t)
+      (fun j _ => sub_nonneg.mpr (ht j)) (Finset.mem_univ i)
+    simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fin, nsmul_eq_mul, hS] at H
+    norm_num at H
+    linarith only [H]
+  have trunc (P : Fin 3 → ℝ) (hS : ∑ i, P i = 1) :
+      ∑ d ∈ Finset.range 2, residual P d / (2 : ℝ) ^ d ≤ cost P :=
+    (data P hS).2.1.sum_le_tsum _
+      (fun d _ => div_nonneg ((data P hS).1 d).1 (by positivity))
+  have low (P : Fin 3 → ℝ) (hS : ∑ i, P i = 1)
+      (t : ℝ) (ht0 : 0 ≤ t) (ht : ∀ i, t ≤ P i) (htlow : t ≤ 1 / 4) :
+      6 * t ≤ cost P ∧ 14 * t - 2 ≤ cost P := by
+    by_cases htzero : t = 0
+    · have H := (data P hS).2.2
+      constructor <;> simp only [htzero, mul_zero] <;> linarith only [H]
+    have htpos : 0 < t := lt_of_le_of_ne ht0 (Ne.symm htzero)
+    have f0 (i : Fin 3) : ⌊P i⌋ = 0 := by
+      apply Int.floor_eq_iff.mpr
+      have H := atom_upper P hS t ht i
+      have H' := ht i
+      norm_num
+      constructor <;> linarith only [H, H', htpos]
+    have first_bucket : (∑ i, ⌊2 * P i⌋ : ℤ) ≤ 1 := by
+      have hf (i : Fin 3) : (⌊2 * P i⌋ : ℝ) ≤ 2 * P i := Int.floor_le _
+      have hsum : ∑ i, 2 * P i = 2 := by rw [← Finset.mul_sum, hS]; norm_num
+      have H : ((∑ i, ⌊2 * P i⌋ : ℤ) : ℝ) ≤ 2 := by
+        simpa [hsum, Int.cast_sum] using
+          Finset.sum_le_sum (s := Finset.univ) (fun i _ => hf i)
+      have Hint : (∑ i, ⌊2 * P i⌋ : ℤ) ≤ 2 := by exact_mod_cast H
+      by_contra hnot
+      have heq : (∑ i, ⌊2 * P i⌋ : ℤ) = 2 := by omega
+      have equal : ∑ i, (⌊2 * P i⌋ : ℝ) = ∑ i, 2 * P i := by
+        rw [hsum, ← Int.cast_sum, heq]; norm_num
+      have hi (i : Fin 3) : 1 ≤ ⌊2 * P i⌋ := by
+        have he := (Finset.sum_eq_sum_iff_of_le (fun j _ => hf j)).mp equal i
+          (Finset.mem_univ i)
+        have hp' := ht i
+        have hh : (0 : ℝ) < (⌊2 * P i⌋ : ℝ) := by rw [he]; linarith only [htpos, hp']
+        have hh' : 0 < ⌊2 * P i⌋ := by exact_mod_cast hh
+        omega
+      have H' := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hi i)
+      norm_num [heq] at H'
+    have H := trunc P hS
+    have W : ((∑ i, ⌊2 * P i⌋ : ℤ) : ℝ) ≤ 1 := by exact_mod_cast first_bucket
+    norm_num [Finset.sum_range_succ, residual, f0, Fin.sum_univ_succ] at H W
+    constructor <;> linarith only [H, W, htlow]
+  have high (P : Fin 3 → ℝ) (hS : ∑ i, P i = 1)
+      (t : ℝ) (ht : ∀ i, t ≤ P i) (hthi : 1 / 4 < t) :
+      let Q := fun i => 4 * P i - 1
+      (∀ i, 0 ≤ Q i) ∧ (∑ i, Q i = 1) ∧ cost P = 2 + cost Q / 4 := by
+    let Q : Fin 3 → ℝ := fun i => 4 * P i - 1
+    change (∀ i, 0 ≤ Q i) ∧ (∑ i, Q i = 1) ∧ cost P = 2 + cost Q / 4
+    have hQ (i : Fin 3) : 0 ≤ Q i := by
+      dsimp only [Q]
+      have H := ht i
+      linarith only [H, hthi]
+    have hSQ : ∑ i, Q i = 1 := by
+      simp only [Q, Finset.sum_sub_distrib, ← Finset.mul_sum,
+        Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hS]
+      norm_num
+    have hinterval (i : Fin 3) : 1 / 4 < P i ∧ P i < 1 / 2 := by
+      have H := atom_upper P hS t ht i
+      have H' := ht i
+      constructor <;> linarith only [H, H', hthi]
+    have f0 (i : Fin 3) : ⌊P i⌋ = 0 := by
+      apply Int.floor_eq_iff.mpr
+      have H := hinterval i
+      norm_num
+      constructor <;> linarith only [H.1, H.2]
+    have f2 (i : Fin 3) : ⌊2 * P i⌋ = 0 := by
+      apply Int.floor_eq_iff.mpr
+      have H := hinterval i
+      norm_num
+      constructor <;> linarith only [H.1, H.2]
+    have floor_tail (i : Fin 3) (d : ℕ) :
+        ⌊(2 : ℝ) ^ (d + 2) * P i⌋ = ⌊(2 : ℝ) ^ d * Q i⌋ + (2 : ℤ) ^ d := by
+      have scale : (2 : ℝ) ^ (d + 2) * P i =
+          (2 : ℝ) ^ d * Q i + (((2 : ℕ) ^ d : ℕ) : ℝ) := by
+        simp only [Q, pow_add, Nat.cast_pow, Nat.cast_ofNat]
+        ring
+      rw [scale, Int.floor_add_natCast]
+      norm_cast
+    have tail (d : ℕ) :
+        residual P (d + 2) / (2 : ℝ) ^ (d + 2) =
+          (residual Q d / (2 : ℝ) ^ d) / 4 := by
+      have hR : residual P (d + 2) = residual Q d := by
+        unfold residual
+        simp_rw [floor_tail]
+        simp only [Finset.sum_add_distrib, Finset.sum_const,
+          Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, pow_add]
+        push_cast
+        ring
+      rw [hR, pow_add]
+      norm_num
+      ring
+    have head : ∑ d ∈ Finset.range 2, residual P d / (2 : ℝ) ^ d = 2 := by
+      norm_num [residual, Finset.sum_range_succ, f0, f2]
+    have tails : (∑' d, residual P (d + 2) / (2 : ℝ) ^ (d + 2)) = cost Q / 4 := by
+      simp_rw [tail]
+      exact tsum_div_const
+    have split := Summable.sum_add_tsum_nat_add 2 (data P hS).2.1
+    rw [head, tails] at split
+    exact ⟨hQ, hSQ, split.symm⟩
+  have approximate (n : ℕ) : ∀ (P : Fin 3 → ℝ), (∑ i, P i = 1) →
+      ∀ t : ℝ, 0 ≤ t → t ≤ 1 / 3 → (∀ i, t ≤ P i) →
+        14 * t - 2 - 3 * (1 / 4 : ℝ) ^ n ≤ cost P := by
+    induction n with
+    | zero =>
+      intro P hS t ht0 htmax ht
+      have H := (data P hS).2.2
+      norm_num
+      linarith only [H, htmax]
+    | succ n ih =>
+      intro P hS t ht0 htmax ht
+      by_cases hlow : t ≤ 1 / 4
+      · have H := (low P hS t ht0 ht hlow).2
+        have H' : 0 ≤ 3 * (1 / 4 : ℝ) ^ (n + 1) := by positivity
+        linarith only [H, H']
+      · have hhigh : 1 / 4 < t := lt_of_not_ge hlow
+        let Q : Fin 3 → ℝ := fun i => 4 * P i - 1
+        obtain ⟨hQ, hSQ, heq⟩ := high P hS t ht hhigh
+        change (∑ i, Q i) = 1 at hSQ
+        change cost P = 2 + cost Q / 4 at heq
+        have H := ih Q hSQ (4 * t - 1) (by linarith) (by linarith)
+          (fun i => by dsimp only [Q]; have HH := ht i; linarith)
+        rw [pow_succ]
+        linarith only [H, heq]
+  have second : 14 * Finset.univ.inf' (by simp) p - 2 ≤ cost p := by
+    have limit := tendsto_pow_atTop_nhds_zero_of_lt_one
+      (by norm_num : (0 : ℝ) ≤ 1 / 4) (by norm_num : (1 / 4 : ℝ) < 1)
+    have limit' : Filter.Tendsto
+        (fun n : ℕ => 14 * Finset.univ.inf' (by simp) p - 2 - 3 * (1 / 4 : ℝ) ^ n)
+        Filter.atTop (nhds (14 * Finset.univ.inf' (by simp) p - 2)) := by
+      simpa only [mul_zero, sub_zero] using
+        tendsto_const_nhds.sub (limit.const_mul 3)
+    exact le_of_tendsto limit' (Filter.Eventually.of_forall
+      (fun n => approximate n p hs _ minimum_data.1 minimum_data.2 lower))
+  refine ⟨(data p hs).2.1, minimum_data.1, minimum_data.2, ?_, second⟩
+  by_cases hlow : Finset.univ.inf' (by simp) p ≤ 1 / 4
+  · exact (low p hs _ minimum_data.1 lower hlow).1
+  · obtain ⟨_, hSQ, H⟩ := high p hs _ lower (lt_of_not_ge hlow)
+    have H' := (data (fun i => 4 * p i - 1) hSQ).2.2
+    linarith only [H, H', minimum_data.2]
+
 end D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
