@@ -24,6 +24,18 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
             Def("A", "Alpha image", "A=(E,beta)=rho cubed(alpha), with three leaves."),
             Def("C", "Beta image", "C=(A,E)=rho cubed(beta), with five leaves."),
             Def("B", "Smallest compatible compound", "B=(C,A), with eight leaves."),
+            Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets."),
+            Def("mu", "Alpha weight", "mu(P) is the cardinality of the original alpha-leaf address set."),
+            Def("OneHole", "One source hole", "A context has one hole, and is built by attaching complete fixed source trees on its left or right. "
+                + "OneHole.fill(g,H,X) inserts X and applies g to each fixed source sibling. Using g=rho cubed makes all fixed siblings actual images; using the identity retains the preimage. "
+                + "OneHole.address records every ordered left or right choice from the root."),
+            Def("TwoHole", "Two source holes", "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
+                + "TwoHole.fill(J,g,X,Y) inserts the named trees exactly once, retaining the entire outer context and each fixed sibling. "
+                + "TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other."),
+            Def("frontier", "Canonical divergence frontier", "Comparison is performed on complete preimages. Equal subtrees stop; two branches recurse into the ordered children; an atom-compound comparison records the current address."),
+            Def("forwardCount", "Atomic-side hole count", "forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound."),
+            Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(id,J,beta,(alpha,y)) and T=fill(id,J,(alpha,y),beta). "
+                + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(id,J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
             Describe.Lean(DescribeId.Create("actual-image-seven-leaf-separation-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp separation and the smallest pair"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -40,6 +52,14 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
                         + "An eleven-leaf image has two children in that list. The resulting six ordered possibilities have exactly "
                         + "one distinct nonconflicting unordered pair: (A,B) and (B,A). This pair has no shared leaves. "
                         + "Every finite pairwise nonconflicting family of eleven-leaf actual images consequently has at most two members.")),
+                    Paragraph(Text("For all complete preimages S,T, put P=rho cubed(S) and Q=rho cubed(T). Distinct equal-leaf nonconflicting images have at least three alpha addresses missing in each direction. "
+                        + "Either deficit equals three precisely when NormalForm(S,T) holds. The same Y is C or (A,A) at both holes. Equality implies identical compositions of both the actual trees and their preimages.")),
+                    Paragraph(Text("Every complete two-hole source context and each permitted y produce distinct equal-leaf nonconflicting actual images with both directed alpha deficits equal to three. "
+                        + "The canonical preimage frontier consists of exactly their two independent holes, and the actual tree equalities retain both address replacements. The total unshared leaf counts, denoted unsharedCount(y), are seven when y is beta, and eight when y is (alpha,alpha).")),
+                    Paragraph(Text("At every atom-compound hole, the atomic side contributes at least one alpha deficit and the compound side at least two. Equal total leaf counts force both orientations to occur. "
+                        + "A deficit of three forces exactly one hole in each orientation. A compound-side deficit of two forces the comparison C versus (A,Y), with Y=C or (A,A); its leaf increase is three or four. "
+                        + "The other hole must balance this increase, excluding the alpha-atom comparison, whose increase is at least five. The unique five- and six-leaf images force the same Y at both holes. "
+                        + "Deficits and compatibility add over distinct child addresses and are preserved by each common fixed sibling.")),
                     Paragraph(Text("Substitution trees, Fibonacci trees and their leaf-induced subtrees are established neighboring subjects. "
                         + "Patera's Generating the Fibonacci Chain in O(log n) Space and O(n) Time studies generation of substitution words; "
                         + "Legendre's Labeled Fibonacci Trees studies integer labels; Dossou-Olory's Leaf-Induced Subtrees of Leaf-Fibonacci Trees "
@@ -47,7 +67,7 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("actual-image-seven-leaf-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("actual-image-seven-leaf-" + name.ToLowerInvariant().Replace('.', '-')), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula V(string x) => F.Id(x);
@@ -90,6 +110,26 @@ internal sealed class ActualImageSevenLeafSeparationDocument : IScribeDocumentDe
         Formula family=All("F",Call("Finset",V("Source")),Imp(And(
             All("P",V("F"),And(In(p,V("I")),Equal(np,D(1,1)))),
             All("P",V("F"),All("Q",V("F"),Imp(distinct,Call("NC",p,q))))),Le(Call("card",V("F")),D(2))));
-        return Disp(And(bound,attained,classify,converse,family));
+        Formula ss=V("S"),tt=V("T"),pp=Call("rho3",ss),qq=Call("rho3",tt);
+        Formula dpq=Call("delta",pp,qq),dqp=Call("delta",qq,pp),nf=Call("NormalForm",ss,tt);
+        Formula alphaHypotheses=And(Seq(Neg,Par(Equal(pp,qq))),
+            Equal(Call("n",pp),Call("n",qq)),Call("NC",pp,qq));
+        Formula alphaConclusions=And(
+            Le(D(3),dpq),Le(D(3),dqp),Seq(Par(Equal(dpq,D(3))),Sp,Leftrightarrow,Sp,Par(nf)),
+            Seq(Par(Equal(dqp,D(3))),Sp,Leftrightarrow,Sp,Par(nf)),Imp(Equal(dpq,D(3)),And(
+                Equal(Call("c",pp),Call("c",qq)),Equal(Call("c",ss),Call("c",tt)))));
+        Formula alpha=All("S",V("Source"),All("T",V("Source"),Imp(alphaHypotheses,alphaConclusions)));
+        Formula j=V("J"),yy=V("y"),small=Seq(Par(Equal(yy,V("beta"))),Sp,Lor,Sp,
+            Par(Equal(yy,Call("pair",V("alpha"),V("alpha")))));
+        Formula sx=Call("fill",Call("id"),j,V("beta"),Call("pair",V("alpha"),yy));
+        Formula tx=Call("fill",Call("id"),j,Call("pair",V("alpha"),yy),V("beta"));
+        Formula px=Call("rho3",sx),qx=Call("rho3",tx),count=Call("unsharedCount",yy);
+        Formula alphaConverse=All("J",V("TwoHole"),All("y",V("Source"),Imp(small,And(
+            In(px,V("I")),In(qx,V("I")),Call("NormalForm",sx,tx),Seq(Neg,Par(Equal(px,qx))),
+            Equal(Call("n",px),Call("n",qx)),Call("NC",px,qx),
+            Equal(Call("delta",px,qx),D(3)),Equal(Call("delta",qx,px),D(3)),
+            Equal(Call("c",px),Call("c",qx)),Equal(Call("c",sx),Call("c",tx)),
+            Equal(Call("nu",px,qx),count),Equal(Call("nu",qx,px),count)))));
+        return Disp(And(And(bound,attained,classify,converse,family),alpha,alphaConverse));
     }
 }
