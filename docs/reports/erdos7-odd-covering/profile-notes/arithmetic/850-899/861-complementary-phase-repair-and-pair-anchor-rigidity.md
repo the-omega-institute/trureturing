@@ -284,6 +284,24 @@ CP13 preserves all joint realizability conditions. It neither makes
 $V_C$ a group or coset nor permits applying a coset-cover theorem
 to it without another bridge.
 
+In particular, every moving digit separately covers the same entire
+masked component base:
+
+$$
+V_C=\bigcup_{\substack{i\in C\\c_i=c}}F_i
+\qquad(c\in U).
+$$
+
+More precisely, for every $b\in V_C$ and every complete q-word
+starting with c, an original in C with first digit c covers that
+full point. Whole coverage and CP13 give the owner; its literal
+q-phase gives the specified first digit. Conversely every displayed
+$F_i$ lies in $V_C$ by definition. This is a relation on the same
+whole masked source for all colors, not just at chosen private
+points. The required owner can still change with b and the suffix;
+the identity does not assign compatible replacement prefixes to
+original labels.
+
 ## A universal four-owner bound in one top word
 
 Fix an old word $u\bmod9$ and three distinct cofactor primes
@@ -470,12 +488,30 @@ axioms. No pure guard, safe-word condition, q-bearing condition,
 divisor-closure premise or selected-prime upper bound is required
 for that final conditional theorem.
 
+A third transient check proves CP13 directly for integer originals
+with moduli $3^{a_i}q^{e_i}m_i$. It assumes prime $q\ne3$, positive
+W coprime to 3q, $a_i\le2$, $e_i\le G$ with $G\ge1$, $m_i\mid W$,
+and actual integer whole coverage. The coordinate map uses literal
+residues modulo 9, W and $q^G$, including negative integers. Two
+applications of CRT prove its surjectivity, and the coprime-product
+congruence equivalence proves exact original-AP membership; neither
+transport fact remains an assumed premise. The retained mask is the
+exact q-free complement, moving digits exclude all unit-cofactor
+first digits, and shared masked supports derive component ownership.
+Both inclusions of CP13, every higher-q suffix, and the same-source
+coverage by each moving digit are checked. With
+the actual pure 3 and pure 9 guards, the check also places the mask
+inside their safe corridor and identifies the restricted masked
+supports. All twenty-four checked axiom closures use only the same
+standard axioms. Minimality and a bound on the number of support
+primes are not premises of this deletion-hole identity.
+
 These exact applications reuse the pinned finite-set, prime-product,
-CRT and counting results. They add no retained mathematical declaration.
-The cap-28 sum comparison,
-phase packing, component deductions and published weighted theorem
-application above remain ordinary deductions in this verification
-scope. The check does not settle the EB1 branch.
+CRT, connected-component and counting results. They add no retained
+mathematical declaration. The cap-28 sum comparison, phase packing,
+full-support connectivity deductions and published weighted theorem
+application remain ordinary deductions in this verification scope.
+The checks do not settle the EB1 branch.
 
 CP4 bounds phase concentration, whereas Report 850's rectangle
 counts at least $5(n-5)$ distinct actual top labels across five words
