@@ -25,20 +25,18 @@ internal static partial class CoverAtomCommand
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier scribeEmissionVerifier,
         DateTimeOffset recordedAtUtc,
         IReadOnlyList<string> arguments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
-        ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
             var options = ParseArguments(arguments);
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, recordedAtUtc, options.BaselineRevision, options.Gids[0]);
+                recordedAtUtc, options.BaselineRevision, options.Gids[0]);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -237,12 +235,6 @@ internal static partial class CoverAtomCommand
                 }
             }
 
-            session.Scribe.Verify(
-                current,
-                report,
-                receiptVerificationChanges,
-                session.FrozenState,
-                session.FrozenStatements);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
                 document,
