@@ -1,0 +1,18 @@
+## 288. FIB ATOM 与物理标准模型数学结构的可推导边界
+
+令裸 FIB 数据在第 `j` 层写成
+
+$$
+A_j=(V_j,E_j,\Sigma_j,\mathcal P_j),
+$$
+
+其中只包含节点、边、接缝、端口和合法路径。由此可以构造自由路径范畴 `\mathsf C_j`、路径半群代数 `\mathbb C[\mathcal P_j]`、邻接算子 `T_j` 以及按接缝递归得到的转移核。若层间映射已给出，还可以取直接极限或逆极限
+
+$$
+\mathsf C_\infty=\varinjlim_j\mathsf C_j,
+\qquad
+\mathbb A_\infty=\varinjlim_j\mathbb C[\mathcal P_j].
+$$
+
+这些是 FIB 能够直接承载的组合和代数骨架；它们没有自动包含时空坐标、度规、连续性、局部性或物理单位。
+

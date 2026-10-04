@@ -1,0 +1,23 @@
+**定义 366.1（无界指标偏序、有限下集与呈现）。** 取 $F_0=0$、$F_1=F_2=1$、$F_{n+2}=F_{n+1}+F_n$。所有生成指标集合 $S$ 都是 $\mathbb N_{>0}$ 的有限子集，不是多重集，也不包含零。记
+
+$$
+M(S)=\operatorname{lcm}_{s\in S}F_s,\qquad M(\varnothing)=1,\qquad
+\mathcal M=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\},\qquad
+P=\{n\in\mathbb N:n\ge3\}.
+\tag{366.1}
+$$
+
+$P$ 按指标整除排序，没有全局指标上界。令 $\mathcal J_{\mathrm{fin}}(P)$ 为它的有限下集族：$I\subseteq P$ 有限，且 $n\in I$、$d\in P$、$d\mid n$ 蕴涵 $d\in I$。这里允许空下集，不要求非空或有向。对 $M\in\mathcal M$，定义
+
+$$
+\begin{aligned}
+I(M)&=\{n\in P:F_n\mid M\},&
+G(M)&=\operatorname{Max}_{\mid}I(M),\\
+U(M)&=\{1,2\}\cup I(M),&
+\Pi(M)&=\{S\subseteq\mathbb N_{>0}:S\text{ 有限且 }M(S)=M\}.
+\end{aligned}
+\tag{366.2}
+$$
+
+$\operatorname{Max}_{\mid}I$ 指 $I$ 中的整除极大元：$g\in I$ 且 $g\mid j$、$j\in I$ 时必有 $j=g$。空集的极大元集为空。完整素支撑 $\operatorname{Supp}$、入口秩 $z(q)$ 和 $A_H$ 沿用定义 364.1、365.1。
+

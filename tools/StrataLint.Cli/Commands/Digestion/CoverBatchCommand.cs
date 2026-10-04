@@ -110,8 +110,7 @@ internal static partial class CoverBatchCommand
         {
             session.RequireUnchanged();
             emission = (emit ?? (() => Emit(repositoryRoot, session, reportBundle,
-                options.Items.SelectMany(item => item.Gids).Select(gid =>
-                    ScribeEmissionAttestation.DefinitionPath(ScribeEmissionAttestation.DocumentGid(gid))), emissionDefinitions)))();
+                session.Changes.Paths.Select(path => path.Value), emissionDefinitions)))();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -147,7 +146,7 @@ internal static partial class CoverBatchCommand
         })).Append('\n');
 
     private static CommandResult Emit(string root, CoverAtomCommand.Session session,
-        PrecomputedLeanReportSource.CapturedBundle? reportBundle, IEnumerable<string> definitionPaths,
+        PrecomputedLeanReportSource.CapturedBundle? reportBundle, IEnumerable<string> changedPaths,
         Func<string, IReadOnlyList<DocumentDefinition>>? definitions)
     {
         if (reportBundle is null)
@@ -156,11 +155,14 @@ internal static partial class CoverBatchCommand
         session.RequireUnchanged();
         var output = new StringWriter();
         var error = new StringWriter();
-        // Match scribe.sh's ordered producers while retaining the validated batch inputs.
-        var exit = definitions is null
-            ? ScribeEmitter.EmitPaths(root, definitionPaths, false, output, error, session.Report,
+        var selection = ScribeDefinitionSelector.Select(root, changedPaths);
+        if (!selection.IsSuccess)
+            throw new InvalidOperationException("SCRIBE_SCOPE_INVALID: " + selection.Failure);
+        var exit = selection.Paths.IsEmpty ? 0 : definitions is null
+            ? ScribeEmitter.EmitPaths(root, selection.Paths, false, output, error, session.Report,
                 validateRepository: true, session.FrozenState, session.FrozenStatements)
-            : ScribeEmitter.Emit(root, false, output, error, session.Report, definitions(root),
+            : ScribeEmitter.Emit(root, false, output, error, session.Report,
+                definitions(root).Where(definition => selection.Paths.Contains(definition.SourcePath)).ToArray(),
                 scoped: true, validateRepository: true, session.FrozenState, session.FrozenStatements);
         if (exit == 0) exit = ValuesEmitter.Emit(root, false, output, error);
 
