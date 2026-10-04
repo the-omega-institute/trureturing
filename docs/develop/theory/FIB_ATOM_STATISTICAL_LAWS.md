@@ -15011,3 +15011,269 @@ $$
 只有另加热浴温度和涨落—耗散关系时，\(\eta_e\) 才是热噪声；phase slip、Shapiro 台阶和电压分布依赖结参数、驱动、噪声和网络环路。
 
 若图列细化、面权和 \(\xi,\lambda\) 按外加规则缩放，(192.3) 可趋向连续二维或三维 GL 泛函；先取 \(q\to0\)、强阻尼或不同热力学极限会改变量子化、动力学和涡旋统计。振幅观测可以看见 \(|\psi|^2\) 却看不见环路绕数，稀疏电流观测也可能漏掉同调环路的磁通。因此正常态、Meissner 态、涡旋晶格、随机 Josephson 相滑移及其统计均是外加参数和边界条件下的模型结论，不存在由 FIB ATOM 递归单独确定的普适超导定律。
+
+## 193. FIB 网络上的外加超流体、Gross–Pitaevskii 动力学与量子涡旋
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，另给顶点质量、边长、空间嵌入和面胞腔。FIB 只给顶点、边、词序和合法路径，不给 \(m,\hbar\)、相互作用、化学势、温度或物理距离。给顶点复振幅 \(\psi_v\) 和外加权重，可定义
+$$
+H_j(\psi)=\sum_v\left[V_{j,v}|\psi_v|^2+\frac{g_{j,v}}2|\psi_v|^4\right]
++\sum_{e=(u,v)}K_{j,e}|\psi_v-\psi_u|^2,
+\tag{193.1}
+$$
+$$
+{\rm i}\hbar\dot\psi_v=\frac{\partial H_j}{\partial\bar\psi_v}.
+\tag{193.2}
+$$
+无泵浦、无耗散且参数静态时，全局 \(U(1)\) 对称性给出
+$$
+N_j=\sum_v|\psi_v|^2,\qquad \frac{{\rm d}N_j}{{\rm d}t}=0 .
+\tag{193.3}
+$$
+稳态 \(\psi_v=e^{-{\rm i}\mu t/\hbar}\phi_v\) 满足
+$$
+\mu\phi_v=\frac{\partial H_j}{\partial\bar\phi_v}.
+\tag{193.4}
+$$
+凝聚、局域集中和调制不稳定取决于 \(g\)、图谱、边界、固定 \(N\) 还是固定 \(\mu\)，以及外加耗散。沿边的质量流和相位速度可写成
+$$
+\mathcal J_{u\to v}=\frac{2K_{j,e}}{\hbar}{\rm Im}(\bar\psi_u\psi_v),
+\qquad
+v_e=\frac{\hbar}{m}\frac{\theta_v-\theta_u}{\ell_e},
+\tag{193.5}
+$$
+其中 \(\psi_v=\sqrt{n_v}e^{{\rm i}\theta_v}\)，边长 \(\ell_e\) 仍为外加量。
+
+若闭环 \(C\) 上振幅处处非零，单值相位给出
+$$
+\sum_{e\in C}{\rm unwrap}(\theta_{h(e)}-\theta_{t(e)})=2\pi n_C,
+\qquad
+\Gamma_C=\sum_{e\in C}\ell_ev_e=n_C\frac hm .
+\tag{193.6}
+$$
+树图没有非平凡绕数；面填充、相位单值性和涡旋核心正则化必须另行指定。在外加细化和连续嵌入下，模型可趋向
+$$
+{\rm i}\hbar\partial_t\psi=
+\left[-\frac{\hbar^2}{2m}\Delta+V+g|\psi|^2\right]\psi .
+\tag{193.7}
+$$
+均匀排斥凝聚的 Bogoliubov 色散为
+$$
+\hbar^2\omega^2(k)=\varepsilon_k(\varepsilon_k+2g\rho_0),
+\qquad
+\varepsilon_k=\frac{\hbar^2|k|^2}{2m},
+\tag{193.8}
+$$
+离散图上须用外加拉普拉斯谱替代 \(|k|^2\)。声速、愈合长度和 Landau 临界速度依赖 \(g,m,\rho_0\)、缺陷和探针；有限温度的涡旋产生湮灭还需噪声和耗散。只测 \(|\psi|^2\) 看不见环路绕数，因此超流态、涡旋晶格和正常态均不是 FIB 单独决定的。
+
+## 194. FIB 路径上的外加辐射输运、黑体辐射与光学厚度极限
+
+固定 FIB 路径并外加每条边的长度、方向、时间步长和光子频率 \(\nu\)。FIB 只给可拼接状态与次序；光速、频率测度、吸收/散射截面、发射源、温度和边界入射量均外加。离散输运可写成
+$$
+I_{k+1}(\nu,\Omega)
+=\int K_k(\nu,\Omega\mid\nu',\Omega')I_k(\nu',\Omega')\,{\rm d}\nu'{\rm d}\Omega'
++S_k(\nu,\Omega).
+\tag{194.1}
+$$
+连续嵌入中，给定 \(\kappa_\nu,\sigma_\nu,j_\nu\) 和相函数 \(p_\nu\)，比强度满足
+$$
+\frac1c\partial_tI_\nu+\Omega\cdot\nabla_xI_\nu
+=-(\kappa_\nu+\sigma_\nu)I_\nu+j_\nu
++\sigma_\nu\int_{S^2}p_\nu(\Omega,\Omega')I_\nu(\Omega')\,{\rm d}\Omega'.
+\tag{194.2}
+$$
+令
+$$
+u_\nu=\frac1c\int_{S^2}I_\nu\,{\rm d}\Omega,\qquad
+F_\nu=\int_{S^2}\Omega I_\nu\,{\rm d}\Omega .
+\tag{194.3}
+$$
+频率保持的弹性散射下，
+$$
+\partial_tu_\nu+\nabla\cdot F_\nu=4\pi j_\nu-c\kappa_\nu u_\nu .
+\tag{194.4}
+$$
+若光学厚度大、角向混合充分且边界层可分离，输运消光 \(\chi_\nu^{\rm tr}=\kappa_\nu+\sigma_\nu(1-g_\nu)\) 给出
+$$
+F_\nu=-D_\nu\nabla u_\nu+O(\epsilon_\nu^2),
+\qquad D_\nu=\frac{c}{3\chi_\nu^{\rm tr}},
+\qquad \epsilon_\nu=\frac1{L(\kappa_\nu+\sigma_\nu)} ,
+\tag{194.5}
+$$
+以及辐射扩散方程
+$$
+\partial_tu_\nu-\nabla\cdot(D_\nu\nabla u_\nu)
+=4\pi j_\nu-c\kappa_\nu u_\nu+O(\epsilon_\nu^2).
+\tag{194.6}
+$$
+光学薄区沿特征线自由传播；重尾自由程可产生 Lévy 超扩散，不能由 FIB 路径长度决定。
+
+Planck 谱还要求局部热平衡、Kirchhoff 关系、各向同性腔和零光子化学势：
+$$
+j_\nu=\kappa_\nu B_\nu(T),\qquad
+B_\nu(T)=\frac{2h\nu^3}{c^2}\frac1{e^{h\nu/(k_BT)}-1},
+\tag{194.7}
+$$
+$$
+u_\nu^{\rm eq}=\frac{4\pi}{c}B_\nu(T).
+\tag{194.8}
+$$
+只有弹性散射而没有数目改变的发射/吸收时，平衡可带非零化学势而非必然 Planck 谱。只测总强度无法分别识别频率依赖的吸收、散射和发射。自由流、厚介质扩散、超扩散、LTE 腔和非 LTE 稳态都可由同一 FIB 接续承载，具体选择来自外加核、边界和热力学条件。
+
+## 195. FIB 关系网络上的外加地震/断层动力学、Gutenberg–Richter 震级律与 Omori 余震统计
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，选出可解释为断层片段的边集 \(\mathcal F_j\)。FIB 只给接缝和层级；坐标、片段面积、弹性模量、应力、摩擦、加载时钟、破裂准则、波速和观测窗均外加。给滑移 \(s_e(t)\)、剪应力 \(\tau_e(t)\) 和弹性传递矩阵 \(K_j\)，准静态模型为
+$$
+\tau(t)=\tau^0+\dot\tau_{\rm load}t-K_js(t).
+\tag{195.1}
+$$
+\(K_j\) 来自外加弹性 Green 函数和边界，不能等同 FIB 邻接矩阵。库仑裕度和速率—状态摩擦可写成
+$$
+C_e=\tau_e-\mu_e(V_e,\theta_e)\sigma_{n,e},
+\qquad
+\mu_e=\mu_{0,e}+a_e\log\frac V{V_{0,e}}+b_e\log\frac{\theta V_{0,e}}{D_{c,e}} .
+\tag{195.2}
+$$
+触发、应力更新和动态波传播由外加规则决定。
+
+一次事件的地震矩和震级可取
+$$
+M_0(E)=\sum_{e\in\mathcal F_j}G_eA_e|\Delta s_e|,
+\qquad
+m_w(E)=\frac23\log_{10}\frac{M_0(E)}{M_\star}.
+\tag{195.3}
+$$
+在完备区间，经验 Gutenberg–Richter 关系为
+$$
+\mathbb EN([m,\infty);T)\simeq C_T10^{-bm},
+\qquad m_c\le m\le m_{\max}(L).
+\tag{195.4}
+$$
+\(b\) 不由 FIB 分支数、词频或递归深度给出。给定主震与余震分类，改进 Omori 形式为
+$$
+r(t\mid m_0)=r_{\rm bg}+K10^{\alpha(m_0-m_c)}(t+c)^{-p}.
+\tag{195.5}
+$$
+带空间核的 Hawkes/ETAS 过程还需震级分布、时间核和空间触发核；分支比 \(n<1\) 才给出有限平均簇，\(n\approx1\) 可产生长相关。检测概率 \(q(m,x,t)\) 使
+$$
+\lambda_{\rm obs}(x,t,m)=q(m,x,t)\lambda_{\rm true}(x,t,m),
+\tag{195.6}
+$$
+早期余震拥挤、空间盲区、震级饱和、去簇和观测窗会偏移 \(b,p,c\)。断层破裂也不自动等同 Abelian 沙堆：前者通常非交换并含波传播与历史依赖，后者的交换性和守恒—耗散账式需另行证明。因此地震标度是外加接触、摩擦、应力传递和观测条件下的经验或模型结论。
+
+## 196. FIB 路径上的外加核衰变、分支 Markov 链与放射性计数统计
+
+固定 FIB 上下文路径，另给有限核素状态集 \(\mathcal S\)。FIB 不给质量、能级、核矩阵元、衰变通道或时间单位。对状态 \(i\) 给总衰变率 \(\lambda_i\) 和分支比 \(b_{ij}^{(c)}\)，满足
+$$
+\sum_{j,c}b_{ij}^{(c)}=1,\qquad
+q_{ij}=\sum_c\lambda_i b_{ij}^{(c)}\mathbf1_{j\ne i},\qquad
+q_{ii}=-\lambda_i .
+\tag{196.1}
+$$
+常率 Markov 近似下，
+$$
+S_i(t)=e^{-\lambda_i t},\qquad
+f_i(t)=\lambda_i e^{-\lambda_i t},\qquad
+t_{1/2}=\frac{\log2}{\lambda_i}.
+\tag{196.2}
+$$
+有限初始样本满足
+$$
+N(t)\sim{\rm Binomial}(N_0,e^{-\lambda_i t}),
+\qquad
+\mathbb EN(t)=N_0e^{-\lambda_i t},
+\tag{196.3}
+$$
+所以有限样本计数不是严格 Poisson；Poisson 只在稀有事件和相应大样本极限中出现。
+
+分支链由
+$$
+\frac{{\rm d}}{{\rm d}t}p(t)=p(t)Q,\qquad p(t)=p(0)e^{tQ}
+\tag{196.4}
+$$
+描述；Bateman 级联是矩阵指数的特殊情形。量子谱下界会破坏全时指数律：
+$$
+S(t)=|\langle\psi|e^{-{\rm i}Ht}|\psi\rangle|^2
+=1-(\Delta H)^2t^2+O(t^3),
+\tag{196.5}
+$$
+短时可有 Zeno 抑制，中间时指数段需弱记忆，长时可出现 \(S(t)\asymp t^{-p}\)。随机环境给出
+$$
+S_i(t\mid\omega)=\exp\!\left[-\int_0^t\lambda_i(s,\omega)\,{\rm d}s\right],
+\tag{196.6}
+$$
+环境平均通常产生混合指数和过度离散，不能以 \(\exp[-t\,\mathbb E\lambda]\) 代替。
+
+级联后代数 \(K\) 的稀疏计数可有复合 Poisson 生成函数
+$$
+G_N(z)=\exp[\Lambda(G_K(z)-1)],
+\qquad {\rm Var}N=\Lambda\mathbb EK^2,
+\tag{196.7}
+$$
+重尾等待时间则产生更新过程而非固定半衰期。探测效率、能量响应、死时间、背景和脉冲堆积进一步改变计数；理想 Poisson 稀疏化只在独立保留且无死时间时保持 Poisson。只测总计数通常只能识别初始活度、衰变率和效率的乘积，能谱与寿命也可能在观测纤维中混淆。故指数衰减、非指数修正、级联和更新统计均需外加核物理与探测条件。
+
+## 197. FIB 关系网络上的外加电化学离子输运、Nernst–Planck/Poisson、Butler–Volmer 与阻抗统计
+
+固定 FIB 孔道—接触骨架 \(G_j=(V_j,E_j)\)，另指定顶点体积、边长、孔隙截面和电极。FIB 不给浓度、扩散系数、迁移率、介电常数、价态、温度、反应或电势单位。离散电化学势和通量可取
+$$
+\mu_{\alpha,v}=k_BT\log c_{\alpha,v}+z_\alpha F\phi_v+\mu_{\alpha,v}^{\rm ext},
+\tag{197.1}
+$$
+$$
+J_{\alpha,e}=-M_{\alpha,e}\bar c_{\alpha,e}(B\mu_\alpha)_e,
+\qquad
+\dot c_\alpha=B^{\mathsf T}J_\alpha+S_\alpha .
+\tag{197.2}
+$$
+取 \(M_{\alpha,e}=D_{\alpha,e}/(k_BT)\) 得离散 Nernst–Planck 形式
+$$
+J_{\alpha,e}=-D_{\alpha,e}(Bc_\alpha)_e
+-\frac{z_\alpha FD_{\alpha,e}}{k_BT}\bar c_{\alpha,e}(B\phi)_e .
+\tag{197.3}
+$$
+空间电荷模型还需离散 Poisson 方程
+$$
+L_j^\varepsilon\phi=B^{\mathsf T}W_j^\varepsilon B\phi
+=\rho_{\rm ch},\qquad
+\rho_{{\rm ch},v}=F\sum_\alpha z_\alpha c_{\alpha,v}+\rho_v^{\rm fixed}.
+\tag{197.4}
+$$
+当 Debye 长度与孔道尺度之比 \(\lambda_D/L\to0\) 时可外加电中性约束
+$$
+F\sum_\alpha z_\alpha c_\alpha+\rho^{\rm fixed}=0,
+\tag{197.5}
+$$
+而 \(\lambda_D/L=O(1)\) 时双电层、空间电荷和浓差极化不可忽略。
+
+反应接触上的 Butler–Volmer 关系为
+$$
+j_r=j_{0,r}\left[
+\exp\!\left(\frac{\alpha_{a,r}F\eta_r}{RT}\right)
+-\exp\!\left(-\frac{\alpha_{c,r}F\eta_r}{RT}\right)
+\right],
+\tag{197.6}
+$$
+$$
+E_r^{\rm eq}=E_r^\circ+\frac{RT}{n_rF}\log\frac{a_{\rm ox}}{a_{\rm red}},
+\qquad
+\eta_r=\Delta\phi_r-E_r^{\rm eq}.
+\tag{197.7}
+$$
+交换电流、转移系数、活度、化学计量和接触面积均外加。双电层与外部电路可加入
+$$
+i_r=C_{{\rm dl},r}\dot\eta_r+A_rj_r+i_r^{\rm ext}.
+\tag{197.8}
+$$
+热噪声解释还需要温度和涨落—耗散关系。
+
+对稳态作线性化，端电流的频域导纳和阻抗可写成
+$$
+\mathsf Y_j(\omega)
+=\mathsf Y_{\infty,j}
++\mathsf C_j({\rm i}\omega I-\mathsf A_j)^{-1}\mathsf B_j,
+\qquad
+\mathsf Z_j(\omega)=\mathsf Y_j(\omega)^{-1}.
+\tag{197.9}
+$$
+半无限连续孔道、特定谱密度和扩散边界下才出现 Warburg 型 \(\omega^{-1/2}\)；有限图、空间电荷和反应边界会产生多个时间常数或不同幂律。电中性、空间电荷和电极反应极限由 \(\lambda_D/L\)、Damköhler 数及取极限次序决定。只测总电流时，内部浓度极化和电势模态可能完全不可见；不同参数也可保持 \(L^2/D\)、\(\lambda_D/L\) 或 \(R_{\rm ct}C_{\rm dl}\) 等组合不变而产生相同有限频带阻抗。
+
+因此 FIB 只提供孔道与接触的组合骨架。Nernst–Planck/Poisson、Butler–Volmer、电中性或空间电荷极限以及阻抗谱均依赖浓度、迁移率、介电权重、反应化学计量、温度、边界、噪声和连续极限等外加结构；同一 FIB 网络可在这些结构变化下呈现欧姆输运、空间电荷限制、反应极化或不同阻抗统计，不存在由 FIB ATOM 递归单独确定的普适电化学定律。
