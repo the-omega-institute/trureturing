@@ -77,9 +77,9 @@ novelty.
 ## Falsifier
 
 The kernel-checked `result` is the negation of the following statement. For
-all $d,N$ and every family of positive definite $d\times d$ matrices
-$\rho_i$ of trace $1$, some POVM $E$ (positive semidefinite effects summing
-to $I$) maximizes $\sum_i\operatorname{Re}\operatorname{tr}(\rho_iE_i/N)$ over
+all $k$ and $N\ge1$ and every family of positive definite
+$(k+1)\times(k+1)$ matrices $\rho_i$ of trace $1$, some POVM $E$ (the frozen
+`finitePOVM`: positive semidefinite effects summing to $I$) maximizes $\sum_i\operatorname{Re}\operatorname{tr}(\rho_iE_i/N)$ over
 all POVMs and satisfies
 $(|A|-1)(P_A-\tfrac1N)\le(N-1)(P-\tfrac1N)$ for $A=\{i:E_i\ne0\}$, where
 $P_A=\sum_{i\in A}\operatorname{Re}\operatorname{tr}(\tilde\sigma_iS_A^{-1/2}\tilde\sigma_iS_A^{-1/2})$
@@ -89,6 +89,8 @@ power, and $P=P_{\text{all}}$.
 "Some optimal POVM" is the weakest reading of "the optimal POVM"; step 3 shows
 that all optimal POVMs share the active set here. Positive definite states
 make every nonempty $S_A$ invertible, so no pseudo-inverse convention enters.
+With $N=0$ no family of effects sums to $I$, so the statement is restricted
+to $N\ge1$.
 
 ## Evidence
 
@@ -100,17 +102,20 @@ make every nonempty $S_A$ invertible, so no pseudo-inverse convention enters.
 
 The canonical source is
 `D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation.lean`.
-- Public declarations: `IsPOVM`, `success`, `pgmScore`, `claim`, `rho` and
-  `result`.
-- Reuse: the frozen `RHLinalg.trace_mul_nonneg_of_posSemidef` of
+- Public declarations: `success`, `pgmScore`, `claim`, `rho` and `result`.
+- Reuse: POVMs are the frozen `finitePOVM` of
+  `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation`; the frozen
+  `RHLinalg.trace_mul_nonneg_of_posSemidef` of
   `D5/S3/Weil/ZetaLinear/RankTrace` gives $\operatorname{tr}((\Gamma-\tilde\sigma_i)E_i)\ge0$.
 - Freeze identities:
-  - module statement `sha256:6fa6bba96d8acf3cbb06287980ae92f44124b4be885ea6579f6d201ef34a47a1`;
+  - module statement `sha256:499d6d8f22e22e48a12c630feec4a062a483954bb6d44049462c784d08fcbed0`;
   - `result` statement `sha256:f104b8902c769f052711b726d8c3c1c94e515fbee68913c5de2896f0c00ca752`;
-  - Freeze event `sha256:95daba5c358368d02a87504a08cd435bf3bd320e476459428fb9fd49dba82704`.
-    Its project-level frozen prerequisite is the Freeze event of
+  - Freeze event `sha256:1bd0f4a60d0dcb930d838e18a6b343f702642a6f21881452dded016d9d9e7c64`.
+    Its project-level frozen prerequisites are the Freeze events of
     `D5/S3/Weil/ZetaLinear/RankTrace`,
-    `sha256:2545e42281a81b560d4722b6cfad7faa69d374292d088017884c95478fc1c5ee`.
+    `sha256:2545e42281a81b560d4722b6cfad7faa69d374292d088017884c95478fc1c5ee`, and of
+    `D5/S3/Estimation/TransmissivityTwoPointProbeRefutation`,
+    `sha256:c8592cb2ef4a3d9951504e1f8702e2e7cd810bcc07d6f3a1167895a4ae424e8c`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 
@@ -126,12 +131,12 @@ Tier 1 conjecture of a 2026 journal article. Resolution: `Refuted`, by
 
 ### What the settlement shows
 
-- **Proved by `result`:** for three positive definite qubit states with equal
-  priors, every optimal POVM has active set $\{1,2\}$ and Eq. (18) fails.
-- **Proved inside the proof of `result`:** the dual certificate and the
-  complementary-slackness argument fixing the active set, and the inverse
-  square roots of the two diagonal matrices $S$, $S_+$ through the continuous
-  functional calculus.
+- **Proved by `result`:** `¬ claim`, so Eq. (18) fails for some equiprobable
+  ensemble.
+- **Proved inside the proof of `result`:** for the three states above every
+  optimal POVM has active set $\{1,2\}$ (dual certificate and complementary
+  slackness), the inverse square roots of the diagonal matrices $S$, $S_+$
+  through the continuous functional calculus, and the violated inequality.
 - **Where the gap comes from (computed, not stated in Lean):** adding the
   inactive $\tilde\sigma_3$ changes the ratio of the diagonal entries of
   the averaged matrix from $400$ ($S_+$) to $121$ ($S$). The pretty good

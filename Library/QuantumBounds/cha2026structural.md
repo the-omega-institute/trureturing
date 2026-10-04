@@ -34,8 +34,8 @@ The conjecture (l. 636–640; journal Section 4.1.3, Eq. (18)):
 
 > $(|\text{I}_+(\mathcal{E})| - 1) \left( P_\mathcal{E}^{\text{PGM}+} - \frac{1}{N} \right) \leq (N - 1) \left( P_\mathcal{E}^{\text{PGM}} - \frac{1}{N} \right).$ Numerical attempts have failed to identify any exceptions to Eq. (equiprobable_pgm_bound_inequality). Consequently, we conjecture that it holds universally for equiprobable states.
 
-The encoding states it for positive definite states with equal priors and for
-some optimal POVM.
+The encoding states it for $N\ge1$ positive definite states with equal
+priors and for some optimal POVM.
 
 ## Verified locator
 

@@ -14,9 +14,6 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
         "Cha and Lee (arXiv:2507.05778, Quantum Information Processing 25, 310) compare two upper bounds on the optimal success probability of minimum-error state discrimination, one built from the pretty good measurement on all states and one built from it on the active set I_+ of labels with nonzero optimal effects. For equal priors they conjecture (|I_+| - 1)(P^PGM_+ - 1/N) <= (N - 1)(P^PGM - 1/N). Three positive definite qubit states with rational entries violate it.",
         H("The equiprobable pretty-good-measurement comparison of Cha and Lee fails"),
         Blocks(
-            Node("is-povm", "Measurements", IsPovmFormula(),
-                "A POVM with N outcomes on C^d: positive semidefinite effects that sum to the identity.",
-                "IsPOVM", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("success", "The success probability", SuccessFormula(),
                 "For the equiprobable ensemble sigma_i = rho_i / N, the success probability of the POVM E is sum_i tr(sigma_i E_i); the real part reads this real trace.",
                 "success", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -24,7 +21,7 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
                 "For a set A of labels, S_A = sum_{j in A} sigma_j and the pretty good measurement has effects S_A^{-1/2} sigma_i S_A^{-1/2} for i in A; its score keeps the original weights sigma_i = rho_i / N. S_A^{-1/2} is the continuous-functional-calculus power. With A all labels this is P^PGM; with A = I_+ it is P^PGM_+.",
                 "pgmScore", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjectured comparison", ClaimFormula(),
-                "Journal Eq. (18) for equal priors, with I_+ the set of labels whose optimal effect is nonzero. The encoding asks for some optimal POVM, the weakest reading of the optimal POVM, and restricts to positive definite states, for which every S_A is invertible.",
+                "Journal Eq. (18) for equal priors, with I_+ the set of labels whose optimal effect is nonzero. POVMs are the frozen finitePOVM: positive semidefinite effects on C^(k+1) that sum to the identity. The encoding asks for some optimal POVM, the weakest reading of the optimal POVM, and restricts to N >= 1 positive definite states, for which every nonempty S_A is invertible.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("rho", "The three states", RhoFormula(),
                 "Three positive definite qubit density matrices with rational entries; mat(a, b, c, e) is the 2 x 2 matrix with rows (a, b) and (c, e).",
@@ -70,6 +67,8 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
         Seq(Exists, Sp, variable, Sp, Colon, Sp, domain, Comma, Sp, body);
     private static Formula Sub(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula Frac(Formula top, Formula bottom) => new Formula.Fraction(top, bottom);
@@ -104,15 +103,6 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
         Call(F.Id("mat"), a, b, c, e);
     private static Formula Q(byte[] num, byte[] den) => Frac(D(num), D(den));
 
-    private static Formula IsPovmFormula()
-    {
-        Formula d = F.Id("d"), n = F.Id("N"), e = F.Id("E"), i = F.Id("i");
-        Formula psd = All(i, Fin(n), Call(F.Id("PosSemidef"), Of(e, i)));
-        Formula total = EqTo(SumOver(Seq(i, Sp, InMacro, Sp, Fin(n)), Of(e, i)), D(1));
-        return Disp(All(Vars(d, n), Nat(), All(e, Families(n, d),
-            Logic(Call(F.Id("IsPOVM"), e), FormulaLogicOperator.Iff, And(psd, total)))));
-    }
-
     private static Formula SuccessFormula()
     {
         Formula d = F.Id("d"), n = F.Id("N"), rho = F.Id("rho"), e = F.Id("E"), i = F.Id("i");
@@ -134,11 +124,12 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
 
     private static Formula ClaimFormula()
     {
-        Formula d = F.Id("d"), n = F.Id("N"), rho = F.Id("rho"), e = F.Id("E"), f = F.Id("F"), i = F.Id("i"),
+        Formula k = F.Id("k"), n = F.Id("N"), rho = F.Id("rho"), e = F.Id("E"), f = F.Id("F"), i = F.Id("i"),
             a = F.Id("A");
+        Formula dim = Add(k, D(1));
         Formula states = And(All(i, Fin(n), Call(F.Id("PosDef"), Of(rho, i))),
             All(i, Fin(n), EqTo(Tr(Of(rho, i)), D(1))));
-        Formula optimal = All(f, Families(n, d), Imp(Call(F.Id("IsPOVM"), f),
+        Formula optimal = All(f, Families(n, dim), Imp(Call(F.Id("finitePOVM"), f),
             LeTo(Call(F.Id("success"), rho, f), Call(F.Id("success"), rho, e))));
         Formula active = EqTo(a, Seq(Esc, OpenBrace, i, Sp, Mid, Sp,
             Rel(Of(e, i), FormulaRelationOperator.NotEqual, D(0)), Esc, CloseBrace));
@@ -147,11 +138,11 @@ internal sealed class EquiprobablePgmActiveSetRefutationDocument : IScribeDocume
                 Parenthesized(Sub(Call(F.Id("pgmScore"), rho, a), Frac(D(1), n)))),
             Mul(Parenthesized(Sub(n, D(1))),
                 Parenthesized(Sub(Call(F.Id("pgmScore"), rho, Call(F.Id("univ"), Fin(n))), Frac(D(1), n)))));
-        Formula body = Imp(states, Some(e, Families(n, d),
-            And(And(Call(F.Id("IsPOVM"), e), optimal),
-                All(a, Call(F.Id("Finset"), Fin(n)), Imp(active, comparison)))));
+        Formula body = Imp(Rel(D(0), FormulaRelationOperator.LessThan, n), Imp(states,
+            Some(e, Families(n, dim), And(And(Call(F.Id("finitePOVM"), e), optimal),
+                All(a, Call(F.Id("Finset"), Fin(n)), Imp(active, comparison))))));
         return Disp(Logic(F.Id("claim"), FormulaLogicOperator.Iff,
-            All(Vars(d, n), Nat(), All(rho, Families(n, d), body))));
+            All(Vars(k, n), Nat(), All(rho, Families(n, dim), body))));
     }
 
     private static Formula RhoFormula()
