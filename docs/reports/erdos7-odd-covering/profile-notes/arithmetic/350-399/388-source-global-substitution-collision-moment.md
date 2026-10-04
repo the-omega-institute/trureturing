@@ -7529,3 +7529,335 @@ would not refute the desired common-point implication. These
 two sections give ordinary mathematical deductions without Lean
 verification. Eliminating $J_a=\{3p,9p\}$ and unrestricted odd
 distinct covering remain unresolved.
+
+## 58. Four complete outer-lower residual menus force a paid descent
+
+Keep the prime branch of Sections 53 and 55, on the same original
+EB1 cover and the same fixed tree $\theta$. Thus original ternary
+height is two, $p>5$, and the complete original group is
+$J_a=\{3p,9p\}$. The original $3p$ is the designated inner lower,
+the original $9p$ has outer word $c$, and original pure $p$ has
+phase $a_p\ne a$. All actual safe top outputs with nonempty
+pullback remain in the menus, as required in Section 53.
+
+For $b\ne a$ and $j\in\{3,6\}$, retain the entire residual
+$R_{b,j}=\phi_b(E_j)\setminus T_c$ from SC285. The transformed
+retained family has $K-N_3-z$ classes, and SC285 covers every
+remaining integer except one fresh-5-root restriction of $R_{b,j}$
+at a base cost at most $1+v_2$. Here
+$N_3=2+v_1+v_2$, $v_2\le v_1$, and $z\ge0$.
+
+The stronger original inventory SC257 applies to this same source.
+Its prime $P$ is the largest original support prime, whether or not
+$P=p$, and its count is
+$c_2=\#\{d\in D:P\nmid d,\ v_3(d)=2\}$. Pure $9$ gives
+$c_2\ge1$, and the existing height-two support restriction gives
+$P\ge29$. Consequently
+
+$$
+2+2v_1\ge N_3\ge P+c_2+1\ge31,
+\qquad \boxed{v_1\ge15.}
+\tag{SC302}
+$$
+
+### A complete menu retains the actual original supplier identities
+
+For $b\notin\{a,a_p\}$, let $\mathcal G_b$ consist of all
+actual original outer lowers with first-$p$ phase $b$ and labels
+$d=3n_d$ satisfying $p\mid n_d$ and $\gcd(n_d,15)=1$.
+Their original ternary root is 2 and their original 5-height is
+zero. Hence their output classes are literally
+$C_d=[\eta_d]_{n_d}$, where $\eta_d=a_d\bmod n_d$; the
+fixed tree changes none of these cofactor phases.
+
+The numerical $n_d$ are distinct across the whole family of roots,
+since the original labels $3n_d$ are distinct. They differ from
+1 and $p$: the only original $3p$ is the designated inner lower
+at phase $a$. Say that a root is eligible if one of its two
+complete residuals has this service:
+
+$$
+\exists j\in\{3,6\},\qquad
+R_{b,j}\subseteq\bigcup_{d\in\mathcal G_b}C_d.
+\tag{SC303}
+$$
+
+This condition concerns every point of $R_{b,j}$, including all
+integer lifts and all higher-prime-power coordinates. No enclosure
+hull is substituted for that set.
+
+### One common-p menu and one actual menu give a single packet
+
+Suppose a subfamily of $r$ actual suppliers gives SC303 for a
+fixed $b,j$, and write its classes as $[\eta_i]_{n_i}$.
+SC285 and the retained bought root $S=[s]_3$ give
+
+$$
+R:=R_{b,j}\subseteq[b]_p\cap
+       \bigcup_{i=1}^r[\eta_i]_{n_i},
+\qquad R\cap S=\varnothing.
+$$
+
+Apply the existing two-menu, three-row packet SC88--SC89, or its
+complete-service form SC113--SC114, to the two menus
+$\{[b]_p\}$ and $\{[\eta_i]_{n_i}:1\le i\le r\}$.
+SC233 shifts it one fresh 5-level deeper, preserving every
+cofactor phase.
+
+For the explicit phases, assign the deficient outer color $c$ to
+fresh root 1. The SC285 base consists of $[0]_5$, the two other
+outer menus at roots 2 and 3, $C_\ell'\cup T_k'$ at root 4,
+and $(T_c\setminus\{t_p\})\cup T_j'$ at root 1, where
+$\{j,k\}=\{3,6\}$. Each supplier is intersected with its
+assigned fresh root. Its sole remaining liability is $[1]_5\cap R$.
+Put $\lambda_t=1+5t\pmod{25}$ for $0\le t\le4$, and let
+$\alpha,\beta\in\{0,1,2\}$ be the two roots other than $s$.
+The last column below has one class for every $i$.
+
+| New modulus factor | Unconditional class | Common $p$-class | Actual supplier classes |
+|---|---|---|---|
+| $25$ | $[\lambda_0]_{25}$ | $[\lambda_1]_{25}\cap[b]_p$ | $[\lambda_2]_{25}\cap[\eta_i]_{n_i}$ |
+| $75$ | $[\lambda_3]_{25}\cap[\alpha]_3$ | $[\lambda_3]_{25}\cap[\beta]_3\cap[b]_p$ | $[\lambda_4]_{25}\cap[\alpha]_3\cap[\eta_i]_{n_i}$ |
+| $225$ | $[\lambda_4]_{25}\cap[\beta]_9$ | $[\lambda_4]_{25}\cap[\beta+3]_9\cap[b]_p$ | $[\lambda_4]_{25}\cap[\beta+6]_9\cap[\eta_i]_{n_i}$ |
+
+These are single CRT classes. The complete-service proof of
+SC88--SC89 applies to every integer in $[1]_5\cap R$: both
+supplier menus cover $R$, and its ternary root is never $s$.
+The retained family and the SC285 base already cover every other
+integer. Thus this is one simultaneous completion of the exact
+liability, with labels and cost
+
+$$
+\{25,75,225\}\cdot\{1,p,n_1,\ldots,n_r\},
+\qquad c_{\rm packet}=6+3r.
+\tag{SC304}
+$$
+
+Within each row the cofactors $1,p,n_1,\ldots,n_r$ are
+distinct. Different rows have different 3-valuations, since all
+these cofactors are 3-free. Every packet label has 5-valuation
+two, every base label has 5-valuation one, and every retained
+label is 5-free. Hence all numerical labels are distinct, odd
+and greater than one. The common $p$-classes are shared once
+across the actual menu; there is no assembly of separate packets
+with repeated labels.
+
+The complete output cover therefore satisfies
+
+$$
+\begin{aligned}
+K'&\le K-N_3-z+(1+v_2)+(6+3r)\\
+  &=K+5+3r-v_1-z,\\
+6+3r\le v_1+z&\quad\Longrightarrow\quad K'\le K-1<K.
+\end{aligned}
+\tag{SC305}
+$$
+
+The construction uses the phase-transformed output family already
+specified by SC273. Its coverage does not require those mixed
+menus to be simultaneous pullbacks of a modified original cover.
+
+### The same original inventory pays a repair among four roots
+
+Suppose four distinct roots outside $\{a,a_p\}$ are eligible.
+At each choose one successful inner color and one complete actual
+menu, of size $r_b$. Different roots use disjoint original labels,
+because every original has only one first-$p$ phase. All selected
+labels count in $v_1$.
+
+Two further members of that same $v_1$ inventory belong to none of
+these menus. The first is the designated inner $3p$. For the second,
+initial-segment support and $P\ge29$ permit a support prime
+$q\in\{17,19\}\setminus\{p\}$. Report 385 GHA10 supplies
+the actual original $3q^{H_q}$, and divisor closure supplies the
+actual original $3q$. Equivalently, Report 385 Section 60 already
+supplies this shallow label. It is a nonpure height-one original,
+so it counts in $v_1$, and it is $p$-free, so it cannot occur
+in any $\mathcal G_b$. It differs from $3p$. Thus, without
+adding any independently optimized inventory,
+
+$$
+\sum_{\text{four roots }b}r_b\le v_1-2,
+\qquad 4r\le v_1-2,
+\quad r:=\min_b r_b.
+\tag{SC306}
+$$
+
+If $r\le3$, then $6+3r\le15\le v_1$ by SC302. If $r\ge4$,
+then $6+3r\le4r+2\le v_1$ by SC306. In both cases SC305
+constructs a distinct odd whole cover with at most $K-1-z$ classes,
+contrary to EB1. Therefore
+
+$$
+\boxed{\#\{b\notin\{a,a_p\}:b\text{ satisfies SC303}\}\le3.}
+\tag{SC307}
+$$
+
+Only the least-cost repair is executed. The other three complete
+menus certify its affordability using disjoint identities in the
+one original cover. The reserved $3p$ and $3q$ are not extra
+credit beyond $N_3$; they reduce the menu share of the existing
+$v_1$ term in SC305. The successful inner colors at different
+roots need not agree.
+
+### At least p-5 roots require service outside these outer-lower menus
+
+Now impose $H\cap L_2=\varnothing$. There are $p-2$ roots
+outside $\{a,a_p\}$. By SC307, at least $p-5$ of them are
+not eligible, and at each such root both complete residuals fail
+SC303. Consequently there is a set $B$ of at least $p-5$ roots
+such that
+
+$$
+\forall b\in B\ \forall j\in\{3,6\}\ \exists y_{b,j},\qquad
+ y_{b,j}\in R_{b,j}\setminus\bigcup_{d\in\mathcal G_b}C_d.
+\tag{SC308}
+$$
+
+Every original owner of $F_c(y_{b,j})$ is then a $p$-bearing
+height-zero original or a $p$-bearing outer lower of positive
+original 5-height. Indeed, the full top convention and
+$y_{b,j}\notin T_c$ exclude every top owner. The same-source
+owner argument of SC287, using $H\cap L_2=\varnothing$, excludes
+$p$-free owners. The defining exclusion in SC308 removes the
+remaining 5-free outer lowers. Whole original coverage ensures
+that an owner exists.
+
+The witnesses for $j=3$ and $j=6$ need not coincide. SC307 itself
+does not require absence of outer lowers on $H$, or the
+sole-active-inner-lower condition of SC208; the additional
+hypothesis is used only for this owner classification. No bound
+here repairs the service supplied by the remaining two original
+roles, forces SC227 or SC208, or covers arbitrary original
+ternary height. These are ordinary deductions from the existing
+packet and original inventory, without enumeration or Lean
+verification; elimination of the entire paired-prime branch and
+unrestricted odd distinct covering remain unresolved.
+
+## 59. The pure-prime root exhausts the transported visibility of the outer private region
+
+Keep SC227 in its prime branch, SC271, and Section 53's convention
+that every safe top with nonempty pullback through the fixed tree
+is included. Use the actual retained family and the cylinder
+notation of SC296, including every retained top and the bought
+root. The argument for SC296 uses neither SC208 nor the
+empty-triple-intersection alternative of Section 57.
+
+Put
+$$
+W_j=U\setminus(V_j\cup V_c),\qquad j\in\{3,6\}.
+$$
+The existing cylinder identities immediately give
+$$
+D_p\cap E_j=\Lambda_a(W_j).
+\tag{SC309}
+$$
+This retains every higher $p$ digit. It does not identify the
+cylinder with the entire AP $[a]_p$.
+
+### The pure-prime root realizes the whole generator
+
+Write the output CRT coordinates as $(b,t,\xi)$, where the
+$p$-coordinate is $b+pt$, $t\in T$, and
+$\xi\in\mathbb Z/L\mathbb Z$. For $b\ne a$, let
+$B_b\subseteq T\times\mathbb Z/L\mathbb Z$ consist of the
+pairs whose point at first digit $b$ belongs to an actual
+$p$-bearing top of color $c$. Subtracting the $p$-free tops first
+in SC285 gives the exact equality
+$$
+R_{b,j}
+=\{b\}\times\bigl((T\times W_j)\setminus B_b\bigr).
+\tag{SC310}
+$$
+The $p$-bearing top condition may depend on all higher $p$ digits;
+none is discarded in $B_b$.
+
+Let $a_p$ be the phase of the original pure-$p$ class. No other
+$p$-bearing original can have first digit $a_p$, since its whole
+class would then be contained in that pure-$p$ class and be
+redundant. In particular $B_{a_p}=\varnothing$. Therefore SC288
+sharpens to
+$$
+\boxed{
+X_{a_p,j}=\phi_{a_p}(R_{a_p,j})
+=D_p\cap E_j
+=\bigcup_{b\ne a}X_{b,j}.}
+\tag{SC311}
+$$
+The union includes the original pure-$p$ root. Every other reset
+residual is a subset of the same complete cylinder; taking more
+first-digit roots cannot enlarge it. These equalities do not
+require a common point of $I$ and $D_p$.
+
+### Exactly which original-private points are seen
+
+Now impose full SC208. Write the original period as
+$Q=9p^G W$, where $(W,3p)=1$, and set
+$$
+Z_u=\{w\in\mathbb Z/W\mathbb Z:(u,w)\in X_p\},
+\qquad u\in\{3,6,c\}.
+$$
+Let $\Theta:\mathbb Z/L\mathbb Z\to\mathbb Z/W\mathbb Z$
+be the actual common non-$p$ source map: it sends the output
+ternary digits through the fixed original $5$-prefix tree and
+copies every other coordinate. The complete private product
+SC290 and the same-source owner check give
+$$
+\begin{aligned}
+W_j&=U\cap\Theta^{-1}(Z_j\cap Z_c),\\
+\Theta(W_3\cup W_6)
+&=\Theta(U)\cap Z_c\cap(Z_3\cup Z_6).
+\end{aligned}
+\tag{SC312}
+$$
+For the forward inclusion in the first line, each point of
+$\Lambda_a(W_j)$ lies in $E_j\cap D_p$: SC208 makes its inner
+image private to $3p$ and its outer image private to $9p$.
+Conversely, $\xi\in U$ supplies the actual hole condition.
+Membership of $\Theta(\xi)$ in both sections excludes every
+$p$-free original owner at the two indicated old words, while
+SC271 excludes every competing $p$-bearing top there. Thus the
+output point lies in $E_j\cap D_p$ for every higher $p$ tail.
+The second line is the image of the first for both inner words.
+
+Define the complete portion seen by all transported residuals as
+$$
+\mathcal V=
+\bigcup_{\substack{b\ne a\\j\in\{3,6\}}}
+F_c(X_{b,j}).
+$$
+In original coordinates ordered as first $p$ digit, higher $p$
+tail, old ternary word and remaining cofactor, SC311--SC312 and
+SC290 yield
+$$
+\begin{aligned}
+\mathcal V
+&=\{a\}\times T\times\{c\}\times
+  \bigl(Z_c\cap\Theta(U)\cap(Z_3\cup Z_6)\bigr),\\
+P_{9p}\setminus\mathcal V
+&=\{a\}\times T\times\{c\}\times
+  \bigl(Z_c\setminus[\Theta(U)\cap(Z_3\cup Z_6)]\bigr).
+\end{aligned}
+\tag{SC313}
+$$
+The missing cofactor set includes original $5$-prefixes absent
+from the image of $\Theta$, prefixes present in that image but
+excluded by the actual retained-hole mask $U$, and cofactors
+private at word $c$ but at neither inner word. These are three
+disjoint possibilities when tested in that order. Every such
+cofactor carries its full higher-$p$ tail.
+
+Consequently these residuals exhaust the complete original
+$P_{9p}$ exactly when
+$$
+Z_c\subseteq\Theta(U)\cap(Z_3\cup Z_6).
+\tag{SC314}
+$$
+No such inclusion follows from the residual hulls or their
+nonemptiness. The pure-$p$ root already realizes the entire
+visible set, so additional rootwise witnesses cannot fill the
+missing part of SC313. This identifies a complete outstanding
+liability; it supplies no repair of it, no released numerical
+labels and no new descent. The statements are ordinary
+same-source consequences of SC285, SC288, SC290 and SC296,
+without new enumeration or Lean verification.
