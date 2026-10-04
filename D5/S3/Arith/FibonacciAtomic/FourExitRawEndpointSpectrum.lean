@@ -102,7 +102,7 @@ def menu (k : Nat) : Set (Index k → Nat) :=
 
 
 /-- A zero-excess A row forces a second nonleaf report on a sibling row. -/
-private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
+theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
     (hz : cost pi (family k (.inr (j, 0))) = 8 * k + 16) :
     ∃ r : Fin 3, 8 * k + 18 ≤ cost pi (family k (.inr (j, r.succ))) := by
   classical
@@ -788,35 +788,5 @@ private theorem local_tail_attainment (k : Nat) (j : Fin k) :
       intro i
       fin_cases i <;> rfl
     exact ⟨rootAZ, hg, acquire 5 rootAZ hg⟩
-
-/--
-The currently formalized local part of the raw endpoint analysis.  The first
-conjunct is the zero-to-two obstruction for an exceptional slot; the second
-conjunct records the six finite tail recipes and their globally correct
-strategies on the five-row restriction.  The global scan and its Pareto
-domination argument are deliberately left for the next refinement.
--/
-theorem four_exit_raw_endpoint_local (k : Nat) (j : Fin k) :
-    (∀ pi : Strategy,
-      cost pi (family k (.inr (j, 0))) = 8 * k + 16 →
-        ∃ r : Fin 3, 8 * k + 18 ≤ cost pi (family k (.inr (j, r.succ)))) ∧
-    (let F := fun i : Fin 5 => match i.val with
-      | 0 => family k (.inl ())
-      | 1 => family k (.inr (j, 0))
-      | 2 => family k (.inr (j, 1))
-      | 3 => family k (.inr (j, 2))
-      | _ => family k (.inr (j, 3))
-     let V := fun m : Fin 6 => fun i : Fin 5 =>
-      (match m.val with
-        | 0 => [1, 1, 0, 1, 1]
-        | 1 => [1, 1, 1, 0, 1]
-        | 2 => [1, 1, 1, 1, 0]
-        | 3 => [1, 0, 1, 2, 1]
-        | 4 => [1, 0, 2, 1, 1]
-        | _ => [1, 0, 1, 1, 2]).getD i.val 0
-     ∀ m : Fin 6, ∃ r : Recipe F Finset.univ,
-       (∀ i, gain r i = V m i) ∧
-       ∃ pi : Strategy, ∀ i, cost pi (F i) = 8 * k + 16 + V m i) := by
-  exact ⟨local_two_excess k j, local_tail_attainment k j⟩
 
 end D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
