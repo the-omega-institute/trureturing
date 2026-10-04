@@ -1,0 +1,17 @@
+**Theorem 7.2 (unique affine recovery and graph inverse).** Every
+admissible triple $S$ has a unique nonzero slope $a\in F^\times$ and a
+unique intercept $b\in F$ for which $y=ax+b$ at every $(x,y)\in S$.
+With $X=\{x:(x,y)\in S\}$, the maps
+
+$$
+\begin{aligned}
+  \mathcal P_p&\longrightarrow\mathcal T_p,
+    &(a,b,X)&\longmapsto\Gamma(a,b,X),\\
+  \mathcal T_p&\longrightarrow\mathcal P_p,
+    &S&\longmapsto(a,b,\{x:(x,y)\in S\})
+\end{aligned}
+$$
+
+are mutually inverse. In particular, the recovered parameters describe
+the original point set exactly, rather than only a containing line.
+
