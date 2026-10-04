@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.SpinChains;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.SpinChains.HKNNBlockBlochLargestWeight;
 internal sealed class HKNNArcCoefficientsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/ArcCoefficients.";
