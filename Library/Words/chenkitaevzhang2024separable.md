@@ -12,6 +12,7 @@ strata_touched:
   - D5/S1/Words/Patterns/Separable/CutFactorization
   - D5/S1/Words/Patterns/Separable/ProperCut
   - D5/S1/Words/Patterns/Separable/RecordPeak
+  - D5/S1/Words/Patterns/Separable/RecordTransport
 license: citation-only
 triage: anchor
 ---
@@ -97,15 +98,31 @@ with no generating-function premise. Local finite-fiber and scalar
 generating-function derivations, together with a universal positive quotient
 and derivative composition argument, establish this adjacent comparison.
 
-Beyond this local actual right-maximum route, the complete four-distribution
-generating-function bridge, unmarked series identification and boundary
-corrections, and positivity for the full target remain incomplete. The
-remaining rising comparisons, all $k\ge3$ decreasing inequalities, and actual
-reverse/complement transports remain open. Full CKZ Conjecture 2 and C15
-remain OPEN; this adjacent comparison is not a full external resolution or a
-novelty or priority claim. The relevant scalar cut and cardinality
-results are in `ActualCardinality`, `MinimumCutKernel`, `CutFactorization`,
-and `ProperCut`; descent statistics in Fu–Lin–Zeng are a different question.
+[`RecordTransport.actual_four_record_transports_and_rising`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordTransport.md)
+gives the exact all-length actual transports. If $i_t$ and $d_t$ are the
+positive irreducible and proper-direct-cut record counts, then
+$i_{\mathrm{lmin}}=i_{\mathrm{rmax}}$ and
+$d_{\mathrm{lmax}}+\delta=d_{\mathrm{rmin}}+\delta=i_{\mathrm{rmax}}$,
+where $\delta(n,k)=1$ exactly at $n=k=1$. The theorem constructs actual
+reverse, complement and reverse-complement avoidance and cut transports,
+and restricts their record-position bijections to the exact record fibers.
+It excludes the empty permutation from irreducibility and treats the
+singleton separately. It also proves, for all four class/statistic pairs,
+zero counts at record zero for positive lengths, zero counts at record one
+for $n\ge2$, and every adjacent rising comparison $k<3$ for every $n\ge4$.
+The two-to-three right-maximum comparison uses the existing `RecordPeak`
+theorem directly.
+
+All $k\ge3$ declining inequalities and the global maximum at three remain
+open. The universal Motzkin/Newton argument, remaining quotient certificates
+and their actual-series applications are not established by these rising
+and transport results. The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
+keeps the complete target distinct from these partial conclusions. Full CKZ
+Conjecture 2 and C15 remain OPEN; neither partial theorem is a full external
+resolution, novelty or priority claim. The relevant scalar cut and
+cardinality results are in `ActualCardinality`, `MinimumCutKernel`,
+`CutFactorization` and `ProperCut`; descent statistics in Fu–Lin–Zeng are
+a different question.
 
 The supplied bounded literature screen reports examination of the primary
 and manuscript bodies, five known citing bodies, and related record, descent,
