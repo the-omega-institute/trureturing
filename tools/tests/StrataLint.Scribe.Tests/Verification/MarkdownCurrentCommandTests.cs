@@ -62,7 +62,7 @@ public sealed class MarkdownCurrentCommandTests
         TemporaryFileSystem.File.WriteAllText(temporary.Resolve(Definition().SourcePath), """
             using StrataLint.Scribe;
             using static StrataLint.Scribe.DefinitionDsl;
-            namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;
+            """ + "\nnamespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n" + """
             internal sealed class CurrentMarkdown : IScribeDocumentDefinition
             {
                 public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
