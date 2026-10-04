@@ -157,8 +157,9 @@ The [stable projected-ground application](stable-ground.md) combines the
 existing exact Schur kernel with the one-sided degree-94 tail to bound
 $\|E^*Pv_0\|$ away from zero without a new ground-moment integral. A
 restricted $E^*SE$ lower bound above $0.004660867160108$ would suffice
-for the second Schur elimination. Its actual direction, entries and
-restricted sign still need certification.
+for the second Schur elimination. The
+[actual low actions and exact direction](low-common-action.md) supply
+the inputs to the [restricted comparison](restricted-schur.md).
 
 The [continuous sinc projection supplier](continuous-projection.md)
 preserves the actual cutoff64 in a physical convolution. At the saved
@@ -187,5 +188,13 @@ high inputs and full-Gamma contour transport on the same family.
 The [actual four-column high action](high-full-action.md) consumes the
 saved source samples to enclose $Z^*CZ$ and $(CZ)^*(CZ)$ over the full
 real line, including the complete omitted-prime $L^2$ allowance. It
-gives $\|CZ\|<1.051588$. The95 low actions, mixed blocks, complete
-residual Gram and exact-ground restricted sign remain unresolved.
+gives $\|CZ\|<1.051588$. The
+[actual95 low actions](low-common-action.md) use the same basis and
+saved high columns to evaluate the low/mixed blocks and exact projected
+ground moments. The [common restricted comparison](restricted-schur.md)
+forms their joint residual Gram, pays complete omitted primes and
+transports ground-direction intervals into a94-dimensional LDL check.
+Under the paper supplier premises, its restricted lower matrix exceeds
+the required second-Schur allowance by more than $1/10$. This is a
+fixed-$c=3/8$ paper-model comparison, not Lean certification, cofinal
+positivity, RH or the full Robin inequality.
