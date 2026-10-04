@@ -223,6 +223,16 @@ public sealed partial class ProductionEnvironmentTests
         var snapshotEntries = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
+                EngineeringRegistrationFixture.Manifest()),
+            RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json", """
+                {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
+                 "scope":"scribe-content","projects":[]}
+                """),
+            RawRepositoryEntry.FromText("lean-report-inputs.json", """
+                {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+                 "lean-report":{"include":[],"exclude":[]},"scribe-content":{"include":[],"exclude":[]}}}
+                """),
         };
         snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
             RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));
@@ -236,7 +246,7 @@ public sealed partial class ProductionEnvironmentTests
                     static module => module.Key,
                     static module => new LeanFileReport(
                         [], module.Select(static item => item.Declaration).ToImmutableArray()),
-                    StringComparer.Ordinal)));
+                    StringComparer.Ordinal)), RawChangeSet.Create(fixtureFiles.Select(fixture => fixture.Path)));
 
         Assert.Same(verification, actual);
         Assert.Equal("captured bytes\n", observed);

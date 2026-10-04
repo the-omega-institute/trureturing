@@ -30,6 +30,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--canonical', type=Path, default=Path(__file__).resolve().parent)
 parser.add_argument('--output', type=Path, default=Path(__file__).resolve().with_name('threshold-transport-result.json'))
 parser.add_argument('--target-c', default='39/100')
+parser.add_argument('--high-gap-supplier', help='Saved stronger coercivity supplier for the same fixed base operator')
 parser.add_argument('--precision', type=int, default=192)
 args = parser.parse_args()
 if args.precision < 192:
@@ -74,6 +75,19 @@ if not a > 0:
     raise ValueError('Strict positive restricted center margin required')
 alpha = arb(fmpq(1, 8))
 delta = arb(fmpq(383682545007734, 10**16))
+if args.high_gap_supplier:
+    higher = load(args.high_gap_supplier)
+    if (higher['bandwidth_N'], higher['base_c'], fmpq(higher['exterior_radius'])) != (64, '3/8', fmpq(3, 2)):
+        raise ValueError('Stronger high gap must belong to the same base model')
+    if not higher['positive_high_gap_checked'] or not higher['exterior_above_saved_interior_checked']:
+        raise ValueError('Checked stronger exterior high gap required')
+    for name in ('joint-high-floor-result.json', 'derivative-bandwidth-result.json', 'strip-root.md'):
+        raw = (canonical/name).read_bytes()
+        if higher['input_sha256'][name] != hashlib.sha256(raw).hexdigest():
+            raise ValueError('Stronger high-gap supplier hash mismatch')
+    delta = exact(higher['base_high_gap_lower'])
+    if not delta.is_finite() or not delta > 0:
+        raise ValueError('Finite positive stronger high gap required')
 d = exact(stable['L_one_sided_polynomial_tail_upper'])
 gamma = alpha-d
 if not gamma > 0:
@@ -109,5 +123,8 @@ result = {
     'cofinal_positivity': 'Unverified', 'RH_and_full_Robin': 'Unresolved',
     'Lean_certification': False,
 }
+if args.high_gap_supplier:
+    result['high_gap_supplier'] = args.high_gap_supplier
+    result['base_high_gap_lower'] = endpoint(delta, lower=True)
 args.output.write_text(json.dumps(result, indent=2)+'\n')
 print(json.dumps(result, indent=2))

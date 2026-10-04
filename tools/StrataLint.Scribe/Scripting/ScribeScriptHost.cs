@@ -95,7 +95,7 @@ public static class ScribeScriptHost
         var root = Path.GetFullPath(repositoryRoot);
         if (parseOptions is null)
             return FailureResult(normalized, ScribeScriptFailureCode.HostConfiguration,
-                "Documents DefineConstants metadata is unavailable or invalid");
+                "Scribe DefineConstants metadata is unavailable or invalid");
         try
         {
             var sourceGraph = ReadSourceGraph(root, normalized, parseOptions);
@@ -413,7 +413,7 @@ public static class ScribeScriptHost
                 + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
                 + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
         return CSharpCompilation.Create(
-            "StrataLint.Scribe.Documents",
+            "StrataLint.Scribe.Script",
             trees,
             references,
             ScriptCompilationOptions);

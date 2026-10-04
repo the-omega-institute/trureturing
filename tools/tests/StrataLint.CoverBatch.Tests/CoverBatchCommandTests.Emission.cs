@@ -34,7 +34,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var sequential = new BatchWorld();
         WriteProblem(sequential.Root);
-        sequential.RunSingles(new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly));
+        sequential.RunSingles(new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })));
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
@@ -70,8 +70,7 @@ public sealed partial class CoverBatchCommandTests
             Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath,
-                     "tools/Generated/scribe-emissions.v1.json" })
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
@@ -83,7 +82,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal([1, 1, 1], ledger.CandidateSnapshotLoads);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
-        output.WriteLine("COMPLETE_PRODUCERS synthetic_assembly=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}] discoveries={5}",
+        output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}] discoveries={5}",
             reports.Loads, frozen.Catalogs, frozen.Indexes, ledger.BaselineLoads,
             string.Join(',', ledger.CandidateSnapshotLoads), discoveries);
         Assert.True(TemporaryFileSystem.File.Exists(reportPath));
@@ -108,7 +107,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Contains(diagnostic, result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
     }
 
@@ -192,6 +191,7 @@ public sealed partial class CoverBatchCommandTests
 
     private static void WriteEmissionInputs(string root)
     {
+        TemporaryFileSystem.File.Delete(Path.Combine(root, ScribeEmissionAttestation.RelativePath));
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
         WriteScribeFixture(root, ".gitignore",

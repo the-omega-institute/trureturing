@@ -39,7 +39,6 @@ public sealed class MarkdownCheckCommandTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             arguments,
             temporary.Path,
             TextWriter.Null,
@@ -47,7 +46,7 @@ public sealed class MarkdownCheckCommandTests
 
         Assert.Equal(2, exit);
         Assert.Contains(
-            "markdown-check --report <file> [--paths-from <file|->]",
+            "markdown-check --report <file> --paths-from <file|->",
             error.ToString(),
             StringComparison.Ordinal);
     }
