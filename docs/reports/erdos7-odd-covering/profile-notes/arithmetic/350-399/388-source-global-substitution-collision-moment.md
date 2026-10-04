@@ -8656,3 +8656,780 @@ hypotheses, and unrestricted odd distinct covering remain
 unresolved. These are ordinary mathematical deductions and
 reuse of the preceding packet constructions; no new Lean
 verification or enumeration is asserted.
+
+## 63. Occupied flat top slots leave residual witnesses at many prime roots
+
+Keep Section 62's one original cover, ternary height two, prime
+branch, complete group $J_a=\{3p,9p\}$ and fixed tree $\theta$.
+Retain its inventories $V_1,V_2$, the full safe-top index set
+$\mathscr T$ and $\tau=|\mathscr T|$. In particular, every safe
+top with nonempty pullback is included, even when inactive on
+the old $H$. The following choices and comparisons all concern
+this same original family. No absence of outer lowers on $H$
+is imposed until the final owner classification.
+
+### One compatible raw selection at each first-prime root
+
+For each $b\notin\{a,a_p\}$, consider actual $p$-bearing suppliers
+at first-$p$ phase $b$ with nonempty outputs
+$C_d=[\eta_d]_{n_d}$. An outer lower has original label
+$3\chi(n_d)$ and old first-3 root 2. A height-zero supplier has
+original label $\chi(n_d)$; height zero here means ternary height
+zero, with no restriction on its original 5-height.
+
+Let $n(\mathcal U)=\{n_d:d\in\mathcal U\}$ for a supplier
+family. Define $\mathcal L_b^\circ$ to contain all these outer
+lowers whose indices avoid $\mathscr T$, and let
+$\mathcal H_b^\circ$ contain all these height-zero suppliers
+whose indices lie in
+$V_1\setminus(\mathscr T\cup n(\mathcal L_b^\circ))$.
+Let $\mathcal O_b$ contain all these height-zero suppliers with
+indices outside $V_1$. Put
+
+$$
+\begin{gathered}
+f_b=|\mathcal L_b^\circ|+|\mathcal H_b^\circ|,\qquad
+e_b=v_1-\tau-f_b\ge0,\\
+\mathcal O_b^*\subseteq\mathcal O_b,\qquad
+o_b=|\mathcal O_b^*|\le z+e_b,\qquad
+\sigma_b=z+e_b-o_b\ge0,\\
+A_b=\bigcup_{d\in\mathcal L_b^\circ\cup
+                    \mathcal H_b^\circ\cup\mathcal O_b^*}C_d.
+\end{gathered}
+\tag{SC346}
+$$
+
+Choose $\mathcal O_b^*$ once at each root, for both inner colors.
+An empty choice always satisfies its budget. Original numerical
+uniqueness makes the indices distinct within each height role;
+the displayed exclusions separate the roles. Moreover
+$\mathscr T\subseteq V_1$, so the indices of $\mathcal O_b^*$
+also avoid $\mathscr T$. Thus SC339 installs all of $A_b$
+simultaneously at the deficient fresh root, with actual phases.
+
+For either $j\in\{3,6\}$, SC340--341 give the exact hole and
+count of this raw-installed family:
+
+$$
+\begin{aligned}
+\mathbb Z\setminus\bigcup\mathcal B_{{\rm raw},b,j}
+  &=[1]_5\cap\widehat R_{b,j},\qquad
+    \widehat R_{b,j}=R_{b,j}\setminus A_b,\\
+|\mathcal B_{{\rm raw},b,j}|
+  &=K-1-v_2-\sigma_b.
+\end{aligned}
+\tag{SC347}
+$$
+
+Only the selected output union is installed. A height-zero
+output whose numerical slot was assigned to a lower is not
+included unless another selected output covers it. Its complete
+remaining service stays in $\widehat R_{b,j}$.
+
+### The flat suppliers at occupied top slots
+
+Let $\mathcal G_b^\bullet$ consist of all actual outer lowers
+at first-$p$ phase $b$ with original labels $d=3n_d$, where
+$p\mid n_d$, $(n_d,15)=1$, and $n_d\in\mathscr T$. These have
+original 5-height zero. Their outputs are the actual cofactor
+classes $C_d=[\eta_d]_{n_d}$. Define
+
+$$
+\begin{gathered}
+r_b=|\mathcal G_b^\bullet|,\qquad
+G_b^\bullet=\bigcup_{d\in\mathcal G_b^\bullet}C_d,\\
+Y_{b,j}=R_{b,j}\setminus(A_b\cup G_b^\bullet)
+       =\widehat R_{b,j}\setminus G_b^\bullet.
+\end{gathered}
+\tag{SC348}
+$$
+
+The output indices of these flat suppliers are distinct across
+all roots, since $n_d$ identifies the original label $3n_d$.
+They differ from $1$ and $p$: all are $p$-bearing, and the unique
+original $3p$ is the designated inner lower at phase $a$.
+Every flat outer lower belongs either to $\mathcal L_b^\circ$
+or to $\mathcal G_b^\bullet$. Hence the service removed in
+SC348 contains all the flat outer-lower service of Section 58,
+and can additionally remove the other selected raw-slot service.
+
+If $Y_{b,j}=\varnothing$, the entire $\widehat R_{b,j}$ is
+covered by $\mathcal G_b^\bullet$. It lies in $[b]_p$ and avoids
+$S$. SC304 therefore completes this exact remaining liability
+with its common-$p$ menu and actual flat-supplier menu. For
+$r_b>0$, its cost and labels are
+
+$$
+c_b=6+3r_b,\qquad
+\{25,75,225\}\cdot
+   \bigl(\{1,p\}\cup n(\mathcal G_b^\bullet)\bigr).
+\tag{SC349}
+$$
+
+The cofactors within a row are distinct and 3-free; the three
+rows have different 3-valuations. Every packet label has
+5-valuation two, so it is fresh against every depth-one raw
+addition and base patch and every 5-free retained label.
+No flat source phase changes. If $r_b=0$ and $Y_{b,j}$ is
+empty, then $\widehat R_{b,j}$ is empty and SC347 already
+gives a strict descent without a packet.
+
+### Five actual top indices remain outside all these flat menus
+
+The partner index $p$ lies in $\mathscr T$ and belongs to none
+of the families $n(\mathcal G_b^\bullet)$, because its lower
+is inner. Four further unavailable indices come from the two
+nonpartner outer colors.
+
+By SC271--272, all tops in those two colors are $p$-free, and
+each color's full output union covers the transported hole
+$H'$. Each color has at least two tops. Indeed, if one consisted
+of a single output $[\eta]_n$, then it would contain the
+nonempty full $R_{b,j}\subseteq H'$. Its modulus divides the
+common output period, so SC286 would give
+$n\mid\Gamma(R_{b,j})=p$. This contradicts $n>1$ and
+$p\nmid n$. A color with no top cannot cover $R_{b,j}$ either.
+
+Global top-label uniqueness makes these four $p$-free indices
+distinct, including across the two colors. They differ from
+$p$, and no $p$-bearing flat supplier can use them. Different
+roots have disjoint flat-supplier indices because every
+original $3n$ has one first-$p$ phase. Consequently, for any
+four distinct roots outside $\{a,a_p\}$,
+
+$$
+\sum_b r_b\le\tau-5.
+\tag{SC350}
+$$
+
+This reserve uses the complete $R_{b,j}$ and its SC286 hull,
+not the smaller masks $\widehat R_{b,j}$ or $Y_{b,j}$. The top
+at an occupied supplier index is counted numerically; its phase
+is not identified with the lower's phase or with the point
+being repaired.
+
+### Four completed masks would pay one strict whole-cover repair
+
+Suppose four distinct roots each have $Y_{b,j}=\varnothing$
+for some inner color $j$, which may differ between roots.
+Select a root with smallest $r=r_b$. The case $r=0$ already
+contradicts SC347. For $r\ge1$, the one original top inventory
+gives
+
+$$
+4r\le\sum_b r_b\le\tau-5\le v_2-5,
+\qquad 6+3r\le4r+5\le v_2.
+\tag{SC351}
+$$
+
+Execute only this root's raw installation and SC349 packet.
+Its complete distinct odd output cover has
+$K'\le K-1-v_2-\sigma_b+(6+3r)\le K-1-\sigma_b<K$ classes,
+contrary to EB1. Therefore, for any choices in SC346,
+
+$$
+\boxed{
+\#\{b\notin\{a,a_p\}:
+       Y_{b,3}\ne\varnothing\ \text{and}\ Y_{b,6}\ne\varnothing\}
+\ge p-5.
+}
+\tag{SC352}
+$$
+
+The other three roots certify the selected repair's affordability
+through distinct actual flat lower labels and their occupied
+top indices. No $f_b$, $e_b$, $o_b$ or $\sigma_b$ values are
+summed across roots. The $v_2$ allowance is exactly the remainder
+in SC347 after the raw construction's $V_1$ charge.
+
+### The flat packet has one exact incomplete-service mask
+
+For any fixed $b,j$, one can also apply SC349 without assuming
+$Y_{b,j}$ empty. Use SC304's $\lambda_t=1+5t\pmod{25}$ and
+the two roots $\alpha,\beta$ outside $S$. After installing the
+raw classes and all these flat packet classes, the exact whole
+integer hole is
+
+$$
+\begin{aligned}
+&[\lambda_2]_{25}\cap Y_{b,j}\\
+{}\cup{}&[\lambda_4]_{25}\cap[\alpha]_3\cap Y_{b,j}\\
+{}\cup{}&[\lambda_4]_{25}\cap[\beta+6]_9\cap Y_{b,j}.
+\end{aligned}
+\tag{SC353}
+$$
+
+At a point of $\widehat R_{b,j}\cap G_b^\bullet$, both menus
+supply SC304's complete service. At a point of $Y_{b,j}$ every
+flat supplier entry fails, while the common-$p$ entries hold.
+The unconditional and common entries cover children
+$\lambda_0,\lambda_1,\lambda_3$. At $\lambda_4$ they cover
+the modulo-9 children $\beta$ and $\beta+3$, leaving precisely
+the last two terms of SC353. Child $\lambda_2$ has only the
+failed flat entries.
+
+The mask $Y_{b,j}$ is 5-free periodic. CRT makes its
+$[\lambda_2]_{25}$ intersection nonempty whenever the mask is
+nonempty. Thus this packet completes the raw residual exactly
+when $Y_{b,j}$ is empty. SC353 asserts a coverage identity for
+any packet size; a paid completion still needs the displayed
+budget inequality.
+
+### Actual owners of the surviving points
+
+Now additionally impose $H\cap L_2=\varnothing$. For each root
+counted in SC352 and each inner color, choose a point in
+$Y_{b,j}$. The unchanged original point $F_c(y)$ has an owner.
+SC287's same-source argument excludes top owners and $p$-free
+owners, leaving a $p$-bearing height-zero original or an outer
+lower at first-$p$ phase $b$.
+
+Every surviving outer-lower owner must have
+
+$$
+d=3\cdot5^h m,\qquad h>0,\qquad
+p\mid m,\quad(m,15)=1,\qquad 3^h m\in\mathscr T.
+\tag{SC354}
+$$
+
+All flat lowers were removed from the mask by $A_b$ or
+$G_b^\bullet$, and every positive-height lower whose index
+avoids $\mathscr T$ was removed by $A_b$. The original top
+$9\cdot5^h m$ in SC354 therefore exists and has a nonempty
+safe pullback through the same tree. Its actual phase is not
+asserted to match the lower or to own the surviving point.
+
+A surviving height-zero owner instead has an index in
+$\mathscr T$, an index assigned to a lower in
+$\mathcal L_b^\circ$, or belongs to
+$\mathcal O_b\setminus\mathcal O_b^*$. In the second case the
+two same-index output APs have different phases. An intersection
+would give one unchanged original source point belonging to
+both comparable original classes $\chi(n)$ and $3\chi(n)$,
+making the larger class redundant. Thus this is an actual phase
+collision whose omitted service was retained in the mask.
+
+SC352 and the packet comparison do not require the added
+no-$L_2$ premise; it is used only for this owner classification.
+The two inner witnesses need not coincide, and neither smaller
+mask is asserted to retain hull $p$. This flat packet and the
+positive-height packet of Section 62 are separate alternatives:
+their costs and $v_2$ credits are not added, and neither result
+pays an arbitrary mixture of the remaining roles. Original
+height-zero service, the coupled surviving columns, forcing the
+branch hypotheses, and unrestricted odd distinct covering remain
+unresolved. These are ordinary deductions from the existing
+raw-slot ledger, complete residuals and SC304 packet; no new
+Lean verification or enumeration is asserted.
+
+## 64. A fixed positive-height column pays both original source roles
+
+Keep the single original cover, prime branch, complete group
+$J_a=\{3p,9p\}$ and fixed tree of Sections 61--62. Fix
+$b\notin\{a,a_p\}$ and an inner color $j$, and write
+$R=R_{b,j}$. Every actual safe top with nonempty pullback is
+included. The SC285 family covers exactly the complement of
+$[1]_5\cap R$ and has size at most $K-1-v_1-z$. The full
+residual lies in $[b]_p$, avoids the bought root $S=[s]_3$,
+and is nonempty by SC286. Use the original inventories and
+map $\chi$ from SC338.
+
+Fix $k\ge1$ and $q>1$ with $(q,15p)=1$. Suppose a finite
+family $\mathcal W$ of actual height-zero or outer-lower sources
+provides complete service, with
+
+$$
+\begin{gathered}
+R\subseteq\bigcup_{d\in\mathcal W}C_d,\qquad
+d\in\{5^{h_d}p^kq,\ 3\cdot5^{h_d}p^kq\},\qquad h_d\ge1,\\
+C_d=[\eta_d]_{n_d},\qquad n_d=3^{h_d}p^kq,\qquad
+3\cdot5^{h_d}p^kq\in D\quad(d\in\mathcal W),\qquad
+r=|\mathcal W|\ge1.
+\end{gathered}
+\tag{SC355}
+$$
+
+The source phases are the actual output phases at first-$p$
+root $b$ in that same tree. The last membership in SC355
+requires an actual lower counterpart for each height-zero
+source; an outer lower supplies it itself. This qualification
+concerns numerical inventory, without requiring a live or
+phase-compatible counterpart.
+
+Original-label uniqueness allows at most two sources at each
+height, one of each role. Both actual sources remain separate
+when their numerical output moduli agree. Their output APs are
+disjoint: an intersection would put the same original point
+$F_c(y)$ in two comparable original classes, making the larger
+class redundant. The packet below only uses their separate
+actual phases and complete service; it does not need this
+disjointness as an additional premise.
+
+### Four nested divisor ladders serve both roles
+
+For a source of height $h$, use the divisor menu
+
+$$
+\begin{aligned}
+\mathcal N_h
+&=\{3^e u:0\le e\le h,\ u\in\{1,p^k,q,p^kq\}\}
+       \setminus\{1,p,3,3p\},\\
+|\mathcal N_h|
+&=\begin{cases}4h,&k=1,\\4h+2,&k\ge2.\end{cases}
+\end{aligned}
+\tag{SC356}
+$$
+
+Unique factorization separates the four ladders, and every
+entry divides the source's actual output modulus. The menus
+are nested as $h$ increases. Before exclusions they have
+$4(h+1)$ entries. For $k=1$ all four excluded slots occur;
+for $k\ge2$ only $1,3$ occur.
+
+For a nonempty source subset $X\subseteq\mathcal W$, let
+$H_X=\max_{d\in X}h_d$. Its neighbor union is exactly
+$\mathcal N_{H_X}$. At most two sources occur at each of the
+heights $1,\ldots,H_X$, so
+
+$$
+\left|\bigcup_{d\in X}\mathcal N_{h_d}\right|
+  =|\mathcal N_{H_X}|\ge4H_X\ge2|X|.
+\tag{SC357}
+$$
+
+Finite Hall applied to two demand copies of every source
+therefore supplies globally distinct slots
+$s_{d,3},s_{d,4}\in\mathcal N_{h_d}$. A subset of demand
+copies has the neighbor union of its underlying source set
+and at most twice as many demands, so SC357 checks all Hall
+inequalities, including the prefixes with both roles at every
+height.
+
+Apply SC317 with these slots, using Section 61's allowance
+for $p$-free divisors. Its four common labels are
+$25,25p,75,75p$. On each of the other two second-level fresh
+5-roots, source $d$ receives the patch with its own phase
+reduced to $s_{d,t}$ and numerical label $25s_{d,t}$. The
+four forbidden slots prevent common-label collisions, and
+Hall prevents all source-label collisions. Every new label
+has 5-valuation two, so it is fresh against the depth-one
+base and the 5-free retained family. Complete source service
+gives a repair of the entire integer liability at cost
+$4+2r$, including every higher prime-power tail.
+
+### The lower inventory pays the complete original residual
+
+For an assigned slot $s=3^e u$, use the original lower donor
+$3\chi(s)=3\cdot5^e u$. It divides the actual counterpart
+in SC355. The donor map is injective and every assigned
+$s>1$, giving $2r$ distinct nonpure labels counted in $v_1$.
+
+The existing support bound $P\ge29$, initial-segment support
+and Report 385 GHA10 supply the actual lower $3t$ for every
+$t\in\{17,19,23,29\}$. Choose one prime
+$t\in\{17,19,23,29\}\setminus\{p,q\}$. Its index lies
+outside all four ladders: $t$ differs from $1,p^k,q,p^kq$
+and is 3-free. This remains true when $q$ is composite and
+$t\mid q$, since each ladder retains the entire cofactor $q$.
+The four additional original donors are
+
+$$
+\{3p,15,15p,3t\}\cap
+\{3\chi(s_{d,i}):d\in\mathcal W,\ i=3,4\}
+=\varnothing.
+\tag{SC358}
+$$
+
+The first three divide every qualified counterpart and have
+the excluded indices $p,3,3p$; the fourth has the outside
+index $t$. They are pairwise distinct and nonpure. Thus
+
+$$
+\begin{aligned}
+v_1&\ge2r+4,\\
+K'&\le K-1-v_1-z+(4+2r)\le K-1-z<K.
+\end{aligned}
+\tag{SC359}
+$$
+
+Consequently no complete menu satisfying SC355 exists under
+EB1. Both phases in a repeated output slot have been covered
+with distinct fresh labels. No retained phase is changed,
+and donor phases are not used as patch phases.
+
+### An unspent lower index or an extra top pays the post-raw version
+
+Now use the raw construction SC339--341, with the same
+$p$-bearing raw-source restriction, distinct raw indices and
+avoidance of $\mathscr T$. Thus
+$e=v_1-\tau-f\ge0$, $\sigma=z+e-o$ and the exact remaining
+hole is $[1]_5\cap\widehat R$. Assume the stronger raw-budget
+condition and complete mixed menu
+
+$$
+\begin{gathered}
+o\le z,\qquad \sigma\ge e\ge0,\qquad
+|\mathcal B_{\rm raw}|=K-1-v_2-\sigma,\\
+\widehat R\subseteq\bigcup_{d\in\mathcal W}C_d,\qquad
+d\in\{5^{h_d}p^kq,\ 3\cdot5^{h_d}p^kq\},\qquad h_d\ge1,\\
+C_d=[\eta_d]_{3^{h_d}p^kq},\qquad
+9\cdot5^{h_d}p^kq\in D\quad(d\in\mathcal W).
+\end{gathered}
+\tag{SC360}
+$$
+
+Here $k,q$ are fixed as above. The numerical same-height top
+condition implies the lower qualification, but requires no
+live pullback or phase-compatible top. If $\widehat R$ is
+empty, the raw count already gives descent. Otherwise put
+$r=|\mathcal W|\ge1$ and apply the same four-ladder Hall
+allocation and $4+2r$ packet to this entire remaining mask.
+Only its containment in $[b]_p$ and avoidance of $S$ are used;
+no hull identity is needed for $\widehat R$.
+
+The actual top donors $9\chi(s_{d,i})$ divide the tops in
+SC360 and give $2r$ different $V_2$ entries. Three further
+top donors $9p,45,45p$ have the excluded indices $p,3,3p$,
+so
+
+$$
+v_2\ge2r+3.
+\tag{SC361}
+$$
+
+Use the same external support prime $t$ as in SC358. Its
+actual lower gives $t\in V_1$. Since all selected raw indices
+are $p$-bearing and $t\ne p$, none of the $f$ qualified raw
+indices equals $t$. There are two exhaustive cases:
+
+$$
+\begin{array}{ll}
+t\in\mathscr T:
+  &9t\in D\text{ is an additional top donor},\quad
+    v_2\ge2r+4,\\
+t\notin\mathscr T:
+  &e\ge1,\quad\sigma\ge e\ge1,\quad v_2\ge2r+3.
+\end{array}
+\tag{SC362}
+$$
+
+In the first case, the index $t$ is outside the four ladders
+and outside $\{p,3,3p\}$, so this top donor has not already
+been counted. In the second case, $t$ belongs to neither the
+occupied top indices nor the selected qualified raw indices,
+and hence contributes to the exact remainder $e$. In either
+case the same original inventories satisfy
+
+$$
+v_2+\sigma\ge2r+4,\qquad
+K'\le K-1-v_2-\sigma+(4+2r)\le K-1<K.
+\tag{SC363}
+$$
+
+The packet's labels have 5-valuation two and remain fresh
+against the entire raw/base family. The payment uses either
+an additional original top or an unspent lower index already
+present in SC340's exact remainder. It never spends an occupied
+or selected lower index again. In particular, it covers $k=1$
+with both roles present at every positive height.
+
+The stronger condition $o\le z$ is essential to this argument:
+SC341 alone permits the outside-$V_1$ raw additions to consume
+the full remainder $e$. The result requires one fixed $q,k$,
+positive original 5-heights, actual lower or top counterparts,
+and complete service for the stated full residual. It does
+not combine independently paid packets, force these source
+conditions, or pay arbitrary mixtures of different columns.
+Zero original 5-height, pure $p$-power cofactors, unqualified
+height-zero service and unrestricted odd distinct covering
+remain unresolved. These are ordinary deductions from the
+actual-source packet and original inventories; no Lean
+verification or new enumeration is asserted.
+
+## 65. A mixed cofactor downset pays positive-height service with pure powers
+
+Keep the same original EB1 cover of ternary height two, SC227 in
+its prime branch $p>5$, the complete group $J_a=\{3p,9p\}$,
+one fixed source tree, and all actual safe tops with nonempty
+pullback. The selected mask is either the complete SC285 residual
+$R=R_{b,j}$ or the exact post-absorption mask $\widehat R$ of
+SC340. In both cases it lies in $[b]_p$ and avoids the bought
+root $S$. Every containment below includes all integer lifts
+and every higher prime-power tail.
+
+Suppose one finite nonempty menu $\mathcal W$ of actual original
+suppliers covers the selected mask. Each supplier has original
+ternary height zero or is an outer lower, and its nonempty output
+has first-$p$ phase $b$. Require distinct numerical outputs:
+
+$$
+\begin{gathered}
+C_d=[\eta_d]_{n_d},\qquad n_d=3^hp^kq,\\
+h,k\ge1,\qquad q\ge1,\qquad(q,15p)=1,\\
+r=|\mathcal W|=|\{n_d:d\in\mathcal W\}|.
+\end{gathered}
+$$
+
+The phases are the actual output phases through that tree.
+The full numerical cofactor $q$ may equal 1 or be composite;
+different cofactors may overlap or divide one another.
+Distinct numerical outputs make the triples $(h,k,q)$ distinct.
+This is an explicit hypothesis: two original roles with the same
+output modulus and different phases cannot be counted as two
+such triples. The positive $h$ is the original 5-height, not the
+original ternary height.
+
+Assume the selected mask is nonempty, so $r\ge1$. SC286 already
+excludes an empty full residual; an empty post-absorption mask
+under SC341 already gives a strict descent.
+
+### Three pure-power labels are the complete numerical exception
+
+Reuse the 22 common classes and actual-source patches of
+SC331--SC335. Every source patch has numerical label $25n_d$.
+The common labels have $p$-exponent zero or one; those of
+5-height two have ternary exponents zero through three.
+Consequently the exact collision condition in the stated
+positive-height source range is
+
+$$
+25n_d\text{ is a common label}
+\quad\Longleftrightarrow\quad
+q=1,\ k=1,\ h\in\{1,2,3\}.
+\tag{SC364}
+$$
+
+The exceptional output indices are $3p,9p,27p$; their lower
+counterpart labels $3\chi(n)$ are $15p,75p,375p$.
+Pure outputs with $k\ge2$ or $h\ge4$ are fresh against the
+common labels. The explicit distinct-output hypothesis separates
+all source patches from one another. No additional phase
+condition is needed for numerical freshness.
+
+For menus consisting entirely of outer lowers, those three
+counterparts are the actual source labels. Each has one actual
+first-$p$ root, so at most three roots can have an outer-lower
+menu containing an exceptional label. This count is restricted
+to that role; numerical output indices can recur across different
+roles. It supplies no complete service at any other root.
+
+### Count the coordinate downsets in one original inventory
+
+Assume every $n_d$ avoids $\{3p,9p,27p\}$. Fix
+$i\in\{1,2\}$ and use SC338's inventories $V_i$,
+$v_i=|V_i|$. Explicitly require the original counterpart
+
+$$
+3^i\chi(n_d)=3^i5^hp^kq\in D
+\qquad(d\in\mathcal W).
+$$
+
+For $i=1$ this lower qualification is automatic for an actual
+outer lower, but is an additional hypothesis for an original
+height-zero supplier. For $i=2$ the top counterpart must exist,
+as in SC342. Its phase need not match the source's, and its
+pullback need not be live. The counterpart supplies only an
+original inventory entry; it never supplies a replacement phase.
+
+For each occurring numerical $q$, let $\mathcal S_q$ be the
+set of its source pairs $(h,k)$, and define the downset
+
+$$
+\mathcal D_q=
+\{(e,f)\in\mathbb N_0^2:
+  \exists(h,k)\in\mathcal S_q,\ e\le h,\ f\le k\}.
+$$
+
+Put $\mathcal S_1=\mathcal D_1=\varnothing$ and $r_0=0$ if no
+pure source occurs. Let $Q_+$ be the set of occurring cofactors
+$q>1$ and $\mathcal D_*=\bigcup_q\mathcal D_q$. Divisor closure supplies
+all the following original donor labels:
+
+$$
+\begin{array}{ll}
+3^i5^ep^fq,
+  &(q\in Q_+,\ (e,f)\in\mathcal D_q),\\
+3^i5^ep^f,
+  &((e,f)\in\mathcal D_*\setminus\{(0,0)\}).
+\end{array}
+$$
+
+For $q>1$, even $(e,f)=(0,0)$ gives a nonpure original counted
+in $v_i$. Different numerical $q$ give disjoint families:
+removing the factors $3,5,p$ recovers $q$, including when one
+cofactor divides another. The second family is disjoint from
+all of them. Its excluded unit-coordinate member is the pure
+original $3^i$, which does not belong to $V_i$. Therefore
+
+$$
+v_i\ge |\mathcal D_*|-1+
+                  \sum_{q\in Q_+}|\mathcal D_q|.
+\tag{SC365}
+$$
+
+Every donor divides the qualified original counterpart
+$3^i\chi(n_d)$ of a source.
+Other proper cofactor divisors can supply additional labels;
+SC365 does not count them. The bound uses one original $D$ and
+one fixed inventory $V_i$.
+
+Let $H_*,J_*$ be the maximum $h,k$ across $\mathcal W$, and
+let $H_q,J_q$ be the respective maxima within $\mathcal S_q$
+for $q\in Q_+$. Define
+
+$$
+\begin{gathered}
+t=\min(H_*,3),\qquad n=|Q_+|,\\
+\Delta=H_*+J_*+t+
+       \sum_{q\in Q_+}(H_q+J_q+1).
+\end{gathered}
+\tag{SC366}
+$$
+
+The axes of $\mathcal D_*$ contain $H_*+J_*+1$ points.
+Its positive quadrant contains all $r_0=|\mathcal S_1|$
+pure-source pairs, as well as the $t$ points
+$(1,1),\ldots,(t,1)$. These points are absent from
+$\mathcal S_1$ by SC364's exclusions and belong to
+$\mathcal D_*$ because a maximum-height source has $k\ge1$.
+Thus $|\mathcal D_*|-1\ge r_0+H_*+J_*+t$.
+For each $q\in Q_+$, its $H_q+J_q+1$ axis points are disjoint
+from its $r_q=|\mathcal S_q|$ positive source pairs, so
+$|\mathcal D_q|\ge r_q+H_q+J_q+1$. Since
+$r=r_0+\sum_{q\in Q_+}r_q$, SC365 gives
+
+$$
+v_i\ge r+\Delta.
+\tag{SC367}
+$$
+
+The heights, prime-power heights and cofactors can all repeat.
+No independent optimization of the coordinate sets or original
+inventories is used. This count adds no matching hypothesis
+to the complete actual service.
+
+### Seventy-nine sources automatically supply the required margin
+
+For every menu satisfying the exclusions above,
+
+$$
+r\ge79\quad\Longrightarrow\quad
+\Delta\ge22\quad\Longrightarrow\quad v_i\ge r+22.
+\tag{SC368}
+$$
+
+To prove the threshold, write
+$U=H_*+\sum_{q\in Q_+}H_q$ and
+$V=J_*+\sum_{q\in Q_+}J_q$. The pure-source pairs lie in
+the $H_*\times J_*$ rectangle with the $t$ excluded points
+removed. Each other layer has $r_q\le H_qJ_q$. Hence
+
+$$
+r\le H_*J_*-t+\sum_{q\in Q_+}H_qJ_q\le UV-t.
+\tag{SC369}
+$$
+
+If $H_*\ge3$ and $\Delta\le21$, then $t=3$ and
+$U+V=\Delta-3-n\le18$. AM--GM gives $UV\le81$, so $r\le78$.
+If $H_*=2$, every $H_q\le2$ and the direct count gives
+$r\le2V-2$. Now $U\ge2+n$ and
+$\Delta=U+V+2+n\le21$ imply $V\le17-2n$, hence $r\le32$.
+If $H_*=1$, every $H_q=1$, so $U=1+n$ and $r\le V-1$.
+The bound $\Delta=V+2+2n\le21$ gives $r\le18$.
+These cases prove SC368.
+
+The sufficient threshold uses only the displayed donors. For
+example, the pure $9\times9$ positive grid with $(1,1),(2,1),
+(3,1)$ removed has 78 source indices and 99 displayed nonunit
+donor indices, a margin of 21. This is an inventory example,
+not an actual EB1 realization or an optimality claim for
+repairs. In an actual source, at least three forced original
+labels $3\ell$, with
+$\ell\in\{17,19,23,29\}\setminus\{p\}$, lie outside that
+pure grid and give additional $V_1$ donors. SC368 does not use
+those labels or any unspent raw slack.
+
+### The same packet pays the complete selected mask
+
+Under SC364's exclusions, SC331--SC335 supplies one packet of
+$22+r$ classes. The common classes cover the first four fresh
+children of the entire selected mask, and
+$[21]_{25}\cap C_d$ for $d\in\mathcal W$ covers the last.
+All labels are distinct and have 5-height at least two, so
+are fresh against every depth-one raw/base class and the
+5-free retained family. Every source phase, integer lift and
+higher prime-power coordinate is preserved.
+
+On the full SC285 residual require the lower counterparts and
+use $i=1$. Whenever $\Delta\ge22$, SC367 gives
+
+$$
+\begin{aligned}
+K'&\le K-N_3-z+(1+v_2)+(22+r)\\
+  &=K+21+r-v_1-z\le K-1-z<K.
+\end{aligned}
+\tag{SC370}
+$$
+
+On the exact post-absorption mask, assume SC341, the
+qualified original top counterparts and $\Delta\ge22$, and use $i=2$. Then
+
+$$
+\begin{aligned}
+|\mathcal B_{\rm raw}|&=K-1-v_2-\sigma,
+   \qquad\sigma\ge0,\\
+K'&\le K-1-v_2-\sigma+(22+r)
+   \le K-1-\sigma<K.
+\end{aligned}
+\tag{SC371}
+$$
+
+These are two applications of one donor count; the two
+inventories are not added in either payment. SC368 excludes
+all the stipulated complete menus with $r\ge79$, and the
+explicit condition $\Delta\ge22$ can also pay smaller menus.
+The result allows pure $p^k$ outputs mixed with arbitrary
+extra-cofactor outputs and both stated original roles, while
+retaining distinct numerical outputs, qualified counterparts
+and the three numerical exceptions.
+
+### Small-menu interfaces still require more than the source count
+
+A universal packet of cost at most $4r+5$ using only new
+classes of 5-height at least two fails at $r=1$ for the
+abstract post-absorption mask interface. Let that mask be a
+complete class $C$ modulo $3p$, outside the bought root and
+at first-$p$ phase $b$, serviced by output $n=3p$. Its original
+lower counterpart label is $15p$, and the liability is
+$[1]_5\cap C$. Pulling back $x=1+5y$ divides every nonempty
+new numerical label by 5 injectively, giving a cover of a
+complete class modulo $3p$ by distinct 5-bearing labels.
+SC137 therefore requires at least eleven classes. The proposed
+allowance $4r+5$ would be nine.
+
+This does not realize the mask in an EB1 cover. SC286 rules
+out such one-source service for the full $R$, whose hull is
+$p$. The exact raw mask can have a different hull; SC341 gives
+no replacement hull identity. Additional actual geometry,
+original budget, a base exchange or an available depth-one
+slot remains outside this lower-bound interface.
+
+There is also a numerical obstruction to reducing all small
+mixed menus to SC317's two-request divisor test. For distinct
+primes $q_1,q_2\notin\{3,5,p\}$, the four flat outputs
+$pq_1,p^2q_1,pq_2,p^2q_2$ have just seven divisor slots after
+excluding $1,3,p,3p$. Adding the positive-height output
+$3pq_1$ supplies only two further slots, $3q_1,3pq_1$.
+The capacities eight and ten required for four and five
+sources therefore fail. These are allocation examples, not
+whole-cover counterexamples; SC304 already supplies a
+different packet for the entirely flat menu.
+
+SC370--SC371 leave open menus containing the output indices
+$3p,9p,27p$, smaller menus with insufficient $\Delta$,
+unqualified original height-zero ownership, repeated numerical
+outputs with different phases, zero original 5-height, forcing
+complete service or the branch hypotheses, and unrestricted
+odd distinct covering. These are ordinary mathematical deductions using
+the existing packets and original divisor closure; no new
+Lean verification is asserted.
