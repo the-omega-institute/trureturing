@@ -1,0 +1,10 @@
+**定理 63.2（完整均匀合法记录）。** 对 $n\ge4,0<a\le1,0<\delta<1$，理想精确来源下
+
+$$
+m_P=\left\lceil\frac{320}{a^2\gamma}
+\ln\frac{M_n-1}{\delta}\right\rceil
+\tag{63.13}
+$$
+
+个标签和记录足以使商恢复成功率至少 $1-\delta$，统一于全部教师与同一个未知 $\alpha\in[a,1]$。
+
