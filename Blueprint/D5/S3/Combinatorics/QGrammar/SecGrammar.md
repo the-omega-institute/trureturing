@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/QGrammar/SecGrammar.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/QGrammar/SecGrammar.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-ji-xiong-sec-grammar-support` (proved) by `D5/S3/Combinatorics/QGrammar/SecGrammar.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-ji-xiong-sec-grammar-support","declaration_gid":"D5/S3/Combinatorics/QGrammar/SecGrammar.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Guo-Niu Han, Kathy Q. Ji, Huan Xiong (2026). *q-Derivative Grammar*. DOI: [10.48550/arXiv.2604.23959](https://doi.org/10.48550/arXiv.2604.23959). URL: <https://arxiv.org/abs/2604.23959v2>.
