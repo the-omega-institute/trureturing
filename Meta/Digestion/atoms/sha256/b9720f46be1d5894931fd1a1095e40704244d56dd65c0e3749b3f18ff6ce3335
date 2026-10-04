@@ -1,0 +1,15 @@
+**证明。** 四个状态代表的右侧 $S^kA^e$ 指数偏移依次为
+$$
+(k_0,k_1,k_2)=(0,0,0),\ (0,1,1),\ (1,1,2),\ (-1,0,3)
+$$
+对应 $00,10,01,11$，而前两个坐标在状态 $11$ 还各有一个负号。将这些偏移与 $L(u,v,w)$ 相加，得到
+$$
+\begin{aligned}
+ k_0&=2u+q-2pq,& k_1&=2v+p+q-2pq,& k_2&=2w+p+2q,\\
+ \varepsilon_0&\equiv v+pq,&
+ \varepsilon_1&\equiv w+pq,&
+ \varepsilon_2&\equiv u\pmod2.
+\end{aligned}
+$$
+反解即为 (359.2)–(359.3)。 $\square$
+
