@@ -16,6 +16,11 @@ triage: anchor
 
 §§2–3 define evolution algebras over an algebraically closed field, pair-product span V² and idempotent subspaces. Remark 3.5 is the external question answered here. Example 2.1 is a published counterexample and is not a formalization target in this delivery.
 
+## Verified locator
+
+- URL: https://ai.meta.com/research/publications/on-solvable-evolution-algebras-and-a-conjecture-by-garcia-martinez-and-perez-rodriguez/ (publication page and its linked PDF retrieved 2026-10-04; Meta AI, published 2026-10-02; no DOI).
+- Location: §1 (Conjecture 1.1, cited to García-Martínez and Pérez-Rodríguez), §2 (definitions, Example 2.1), §3 (Lemma 3.1, Theorems 3.2–3.3, Corollary 3.4, Remark 3.5 on PDF page 4, Remark 3.6).
+
 ## Reading and scope
 
 Fresh source retrieval on 2026-10-04 returned HTTP 200. The relevant passages

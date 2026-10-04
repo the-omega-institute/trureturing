@@ -16,6 +16,12 @@ triage: anchor
 
 Theorems 2.1 and 3.5 supply embedding constructions. Proposition 3.8 transports perfectness and derived structure. Remark 3.9 starts from a known two-dimensional intrinsic algebra. Section 4 relates multiplication to its quadratic map by polarization. The explicit realization here is in this framework’s spirit; neither the framework nor its published counterexamples is claimed as new.
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2609.32784
+- URL: https://arxiv.org/abs/2609.32784v1 (v1 submitted 2026-09-26; PDF retrieved 2026-10-04).
+- Location: Theorems 2.1 and 3.5, Proposition 3.8, Remark 3.9 and §4 (Waring-rank framework).
+
 ## Reading and scope
 
 Fresh source retrieval on 2026-10-04 returned HTTP 200. The relevant passages

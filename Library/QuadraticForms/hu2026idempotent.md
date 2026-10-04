@@ -16,6 +16,12 @@ triage: anchor
 
 Theorem 2.1 and Corollary 2.2 give an exceptional parameter over fields of characteristic different from two. Zero-algebra direct sums extend ambient dimension without increasing the stable dimension. Proposition 2.8 addresses evolution stable terms. These results are credited literature, not newly claimed.
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2609.25023
+- URL: https://arxiv.org/abs/2609.25023v1 (v1 submitted 2026-08-12; abstract, HTML and PDF retrieved 2026-10-04).
+- Location: Theorem 2.1 and Corollary 2.2 (the exceptional parameter), the direct-sum remark, Proposition 2.8 and Question 2.11.
+
 ## Reading and scope
 
 Fresh source retrieval on 2026-10-04 returned HTTP 200. The relevant passages
