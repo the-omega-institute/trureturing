@@ -11,6 +11,8 @@ import unittest
 
 
 PROGRAM = Path(__file__).resolve().parents[1] / "reg-verdict-compare.py"
+REPORT_VERSION = json.loads((PROGRAM.parents[3] / "lean-report-inputs.json").read_text(
+    encoding="utf-8"))["report_cache_release_semantic_version"]
 H = "a" * 64
 J = "b" * 64
 ROOT = "Reg.Example"
@@ -47,7 +49,7 @@ def report(records=None):
     return dict(schema="stratalint-raw-lean-report-v2", modules=[dict(
         module=ROOT, source_path="Reg/Example.lean", source_sha256="sha256:" + H,
         imports=[], declarations=[declaration()], information_registration_errors=[],
-        information_templates=dict(schema_version=1, compatibility_version=17,
+        information_templates=dict(schema_version=1, compatibility_version=REPORT_VERSION,
                                    inventory=[copy.deepcopy(x["key"]) for x in records],
                                    registered=[copy.deepcopy(x["key"]) for x in records],
                                    records=records))])
@@ -178,7 +180,9 @@ class CompareTests(unittest.TestCase):
 
     def test_duplicate_json_members_and_nonfinite_numbers(self):
         self.assertEqual(self.run_compare(report(), report(), raw='{"schema":"a","schema":"b","modules":[]}')[0], 2)
-        raw = json.dumps(report()).replace('"compatibility_version": 18', '"compatibility_version": NaN')
+        raw = json.dumps(report()).replace(f'"compatibility_version": {REPORT_VERSION}',
+                                           '"compatibility_version": NaN')
+        self.assertIn('"compatibility_version": NaN', raw)
         self.assertEqual(self.run_compare(report(), report(), raw=raw)[0], 2)
 
     def test_duplicate_modules_and_declarations(self):
@@ -214,7 +218,7 @@ class CompareTests(unittest.TestCase):
 
     def test_compatibility_versions_are_independent(self):
         changed = report()
-        changed["modules"][0]["information_templates"]["compatibility_version"] = 18
+        changed["modules"][0]["information_templates"]["compatibility_version"] = REPORT_VERSION + 1
         self.assertEqual(self.run_compare(report(), changed)[0], 0)
 
     def test_arena_and_catalog_relocations_are_exact(self):
