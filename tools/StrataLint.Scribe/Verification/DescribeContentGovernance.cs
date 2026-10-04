@@ -15,17 +15,16 @@ internal static class DescribeContentGovernance
         "FormulaSpace",
     ];
 
-    internal static ImmutableArray<DescribeRedFinding> ValidateSources(string repositoryRoot)
+    internal static ImmutableArray<DescribeRedFinding> ValidateSources(string repositoryRoot, IEnumerable<string>? sourcePaths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
         if (!Directory.Exists(blueprintRoot)) return [];
 
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
-        foreach (var path in Directory.EnumerateFiles(
-                     blueprintRoot,
-                     "*.scribe.cs",
-                     SearchOption.AllDirectories).Order(StringComparer.Ordinal))
+        foreach (var path in (sourcePaths?.Select(path => Path.Combine(repositoryRoot, path))
+                     ?? Directory.EnumerateFiles(blueprintRoot, "*.scribe.cs", SearchOption.AllDirectories))
+                     .Order(StringComparer.Ordinal))
         {
             var relativePath = Path.GetRelativePath(repositoryRoot, path)
                 .Replace(Path.DirectorySeparatorChar, '/');
@@ -68,9 +67,10 @@ internal static class DescribeContentGovernance
         string repositoryRoot,
         ImmutableArray<ScribeDocument> documents,
         DescribeNodeStats reportStats,
-        LibraryNoteCatalogInspection libraryInspection)
+        LibraryNoteCatalogInspection libraryInspection,
+        IEnumerable<string>? sourcePaths = null)
     {
-        var findings = ValidateSources(repositoryRoot).ToBuilder();
+        var findings = ValidateSources(repositoryRoot, sourcePaths).ToBuilder();
         ValidateIndependentInventory(documents, reportStats, findings);
         ValidateReferencedNoteLocators(repositoryRoot, documents, libraryInspection, findings);
         return Order(findings);

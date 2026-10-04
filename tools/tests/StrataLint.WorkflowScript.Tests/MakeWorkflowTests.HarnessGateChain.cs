@@ -73,8 +73,8 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
         Assert.Contains(
             invocations,
-            line => line.EndsWith(
-                $" content-check --report {explicitReport}",
+            line => line.Contains(
+                $" content-check --report {explicitReport} --paths-from ",
                 StringComparison.Ordinal));
     }
 

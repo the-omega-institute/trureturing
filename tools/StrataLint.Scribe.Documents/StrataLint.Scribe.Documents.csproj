@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>StrataLint.Scribe.Documents</RootNamespace>
     <AssemblyName>StrataLint.Scribe.Documents</AssemblyName>
     <!-- The Blueprint definitions exceed the 2^24-byte user-string heap (CS8103); string literals
