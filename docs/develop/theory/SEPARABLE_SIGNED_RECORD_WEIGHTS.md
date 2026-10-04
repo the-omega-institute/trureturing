@@ -208,3 +208,58 @@ This argument is an unbounded coefficient proof and does not infer the
 comparison from a finite list of permutation rows.
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Actual record transports and the complete rising side
+
+**Definition 5.1 (The four positive record fibers).** Let $i_t(n,k)$ count
+the literal $2413/3142$ avoiders of positive length $n$ with no proper
+direct cut and exactly $k$ strict records of type $t$. Let $d_t(n,k)$ count
+the avoiders with a proper direct cut and exactly $k$ such records. The
+types are right maximum, left minimum, left maximum and right minimum,
+with their strict comparisons as in Section 1. Both positive classes are
+empty at length zero. Put $\delta(n,k)=1$ when $n=k=1$ and zero otherwise.
+
+**Theorem 5.2 (Actual transports and rising laws).** For all natural
+lengths $n$ and record indices $k$,
+
+$$
+\begin{aligned}
+i_{\mathrm{lmin}}(n,k)&=i_{\mathrm{rmax}}(n,k),\\
+d_{\mathrm{lmax}}(n,k)+\delta(n,k)&=i_{\mathrm{rmax}}(n,k),\\
+d_{\mathrm{rmin}}(n,k)+\delta(n,k)&=i_{\mathrm{rmax}}(n,k).
+\end{aligned}
+$$
+
+For each of these four class/statistic pairs, its count at zero records
+vanishes at every positive length; its count at one record vanishes for
+every $n\ge2$. For every $n\ge4$ and every $k<3$, its count at $k$ is at
+most its count at $k+1$.
+
+Proof. Reverse positions, complement values by $v\mapsto n-1-v$, and
+compose these involutions. Each operation preserves the actual avoidance
+class: complement interchanges the two forbidden patterns, position
+reversal also interchanges them, and both embeddings and strict value
+comparisons transport explicitly. Complement changes a cut's sign;
+reversal changes its sign and sends the cut position $c$ to $n-c$.
+Their composition preserves the sign. The pointwise separable cut
+dichotomy at $n\ge2$ identifies the opposite no-cut class with the
+proper-cut class. The transported record-position sets give exact
+record-fiber bijections: reverse sends right maxima to left maxima,
+complement sends right maxima to right minima, and their composition
+sends right maxima to left minima. At length one all record types have
+count one, while neither proper-cut class has a member; this gives the
+displayed singleton corrections. At length zero positivity excludes
+the empty permutation from both source classes.
+
+The last position of a nonempty permutation is a right maximum. If it
+is the only right maximum, the largest value must occur there, because
+the position of the largest value is itself a right maximum. At length
+at least two the last value then yields a proper direct cut at $n-1$.
+Thus an irreducible permutation of length at least two has neither zero
+nor one right maximum. The exact transports give the same zero fibers
+for the other three pairs. Nonnegative cardinalities give the first two
+adjacent rising comparisons; Theorem 4.1 gives the comparison from two
+to three, transported to the other pairs at every $n\ge4$. No declining
+comparison or full peak-three conclusion is asserted here.
+
+## 追加锚（本行以下为增补区）
