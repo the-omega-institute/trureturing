@@ -73,20 +73,40 @@ public static class ScribeSdkAdmission
     }
 
     internal static ImmutableArray<string> SelectPaths(string root, IEnumerable<string> executionPaths,
-        IEnumerable<string> changedPaths) =>
-        (changedPaths.Any(IsConfigurationPath)
-            ? Directory.EnumerateFiles(Path.Combine(root, "Blueprint"), "*.scribe.cs", SearchOption.AllDirectories)
-                .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
-            : executionPaths).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
+        IEnumerable<string> changedPaths)
+    {
+        var selected = new HashSet<string>(executionPaths, StringComparer.Ordinal);
+        foreach (var scope in changedPaths.Select(ConfigurationScope).OfType<string>())
+        {
+            var directory = Path.Combine(root, scope.Replace('/', Path.DirectorySeparatorChar));
+            if (!Directory.Exists(directory)) continue;
+            foreach (var path in Directory.EnumerateFiles(directory, "*.scribe.cs", SearchOption.AllDirectories))
+                selected.Add(Path.GetRelativePath(root, path).Replace('\\', '/'));
+        }
+        return selected.Order(StringComparer.Ordinal).ToImmutableArray();
+    }
 
-    private static bool IsConfigurationPath(string path)
+    /// <summary>
+    /// The Blueprint directory whose definitions a changed analyzer configuration file can affect:
+    /// all of Blueprint for repository-root configuration and the banned-symbol lists, the
+    /// containing directory for configuration inside Blueprint, and none otherwise.
+    /// </summary>
+    private static string? ConfigurationScope(string path)
     {
         var normalized = path.Replace('\\', '/');
         if (normalized.StartsWith("./", StringComparison.Ordinal)) normalized = normalized[2..];
-        return normalized is ".editorconfig" or "Directory.Build.props" or "Directory.Build.targets"
-            or "Directory.Packages.props" or "global.json"
-            || normalized.StartsWith("tools/Architecture/BannedSymbols", StringComparison.Ordinal)
-                && normalized.EndsWith(".txt", StringComparison.Ordinal);
+        if (normalized.StartsWith("tools/Architecture/BannedSymbols", StringComparison.Ordinal)
+            && normalized.EndsWith(".txt", StringComparison.Ordinal))
+            return "Blueprint";
+        var slash = normalized.LastIndexOf('/');
+        var name = slash < 0 ? normalized : normalized[(slash + 1)..];
+        if (name is not (".editorconfig" or "Directory.Build.props" or "Directory.Build.targets"
+            or "Directory.Packages.props" or "global.json"))
+            return null;
+        var directory = slash < 0 ? string.Empty : normalized[..slash];
+        return directory.Length == 0
+            ? "Blueprint"
+            : directory == "Blueprint" || directory.StartsWith("Blueprint/", StringComparison.Ordinal) ? directory : null;
     }
 
     private static string? ResolveDotnet()
