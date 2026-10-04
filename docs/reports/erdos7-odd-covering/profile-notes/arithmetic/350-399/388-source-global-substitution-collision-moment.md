@@ -12295,8 +12295,29 @@ or SC482 for the same actual family and the same code domain,
 or a complete-source exchange that also pays the repeated-digit
 obstructions. Four distinct residues within each group and the
 finite height envelope alone have not supplied either result.
-SC466--SC483 are ordinary mathematical deductions, without a
-claim of Lean verification. Their fresh shallow labels rely on
-$H_3=2$ and cannot be used unchanged at larger ternary height.
+The $q=113$ instance of SC468 has a complete cache-guarded Lean
+application. Its inputs are one actual whole integer cover with
+distinct odd nonunit labels, global count-then-modulus-sum minimality,
+the displayed finite factorization with ternary height at most two,
+and the actual original labels 3, 9, q, 3q and 9q. The application
+derives the donor phase separation, constructs the common initial
+forest and every later q-digit decoder, preserves the full old
+modulo-nine and W-coordinates before choosing an owner, and checks
+whole integer coverage, numerical distinctness and grouped payment.
+Its final statement permits every six-subset of V and every safe
+word assignment with the stated gamma/zeta exception. It does not
+assume a common cofactor phase or restrict the finite q-height.
+
+The application emits one enclosure for every deleted q-bearing
+original, including those with empty continuing inverse; their
+extra coverage is harmless. This gives equal class counts and the
+strict grouped modulus-sum decrease. It exits successfully with
+270 axiom-closure reports: 261 use only `propext`, `Classical.choice`
+and `Quot.sound`, and nine use no axioms, with no errors or `sorryAx`.
+This is transient reuse, without a new frozen declaration or coverage
+claim. The other q-instances and the downstream cell, probability
+and phase-separation deductions SC473--SC483 are outside this exact
+application. Their fresh shallow labels rely on $H_3=2$ and cannot
+be used unchanged at larger ternary height.
 The height-two branch and unrestricted odd distinct covering
 remain unresolved.

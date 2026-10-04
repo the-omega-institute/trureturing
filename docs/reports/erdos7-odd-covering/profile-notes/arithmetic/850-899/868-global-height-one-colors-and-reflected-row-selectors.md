@@ -345,6 +345,77 @@ all three ternary rows. Within one such color these originals need
 not share a cofactor or a cofactor phase. The conclusion does not
 supply a same-cofactor triple or a joint repair.
 
+## One pure replacement excludes colors supported only at the top row
+
+Assume, in addition to the actual pure 3 and 9 guards and q original,
+that the same family contains the original 3q. The argument in this
+section needs class-count minimality and at least 82 moving colors;
+it does not use modulus-sum minimality. Presence of 3q is an explicit
+input to the exact application. Under the full EB1 branch at q=113,
+its ordinary supplier is SC460 together with divisor closure.
+
+Every moving color then has an actual height-one owner below the top
+ternary row:
+
+$$
+\boxed{\forall c\in U,\quad
+\exists i:\ j_i=1,\ c_i=c,\ a_i\le1.}
+\tag{WR17}
+$$
+
+In the minimum-row notation of WR7 this says $N_2=0$. It asserts a
+witness separately for each color, with that owner's literal cofactor
+phase; it does not identify the cofactors or phases of different colors.
+
+Suppose instead that all height-one owners of one color c have row two.
+Use the same global reflected labels $3^{5-a_i}m_i$ as WR4, and retain
+the literal strips of selected deeper originals. Give c the selector
+whose third ternary digit is zero. It contains 45 of the 135 safe
+length-five words. Choose any safe old word w modulo 9 and add one pure
+class
+
+$$
+x\equiv w+9\pmod{27}.
+\tag{WR18}
+$$
+
+Its third digit is one, so its nine safe length-five words are disjoint
+from c's selector. Exactly 81 safe words remain. Assign these words to
+81 other moving colors, using a full length-five selector for each.
+This is possible when $|U|\ge82$. Additional moving colors may receive
+arbitrary seeds. All choices are fixed once for the whole replacement.
+
+For any output outside the retained q-free originals, the actual pure
+guards place its ternary word in this safe domain. The extra pure class
+covers its own cell. Every other word has at least one selected color; the
+complete literal-strip source for that color supplies an actual original
+owner. The reflected enclosure then covers the output. The distinguished
+color uses new height three because each of its height-one owners has old
+row two. Every singleton selector satisfies the enclosure condition for
+all three old rows. The whole old modulo-nine and cofactor coordinate
+is preserved before choosing an owner.
+
+WR4's global row assignment preserves numerical distinctness among
+selected owners. The extra modulus 27 is fresh: retained originals have
+ternary height at most two; reflected moving originals have nonunit
+cofactor and new ternary height at least three; deeper strips remain
+q-bearing. Every new modulus is an odd nonunit.
+
+Delete all q-bearing originals. Each selected original produces one
+class, even when its selector intersection is empty. The actual q and
+3q originals have unit cofactor, so neither has a moving color and
+neither is selected. There are therefore at least two deleted originals
+without selected replacements, while WR18 adds only one class:
+
+$$
+K'\le K-2+1<K.
+\tag{WR19}
+$$
+
+This contradicts class-count minimality and proves WR17. The argument
+uses the complete deletion hole; it does not claim that the extra pure
+class alone covers either charged original's former territory.
+
 ## Reuse and boundary
 
 This construction reuses complete-color stripping, CRT enclosure,
@@ -391,6 +462,16 @@ checking each against the same original family. The application
 exits successfully with 212 axiom-closure reports: 203 use only
 standard axioms and nine use no axioms, with no errors or `sorryAx`.
 
+The one-pure-replacement application additionally takes the actual
+original label 3q and uses only class-count minimality. With at least
+82 moving colors it constructs the 45-word selector, one fresh pure
+27-class and the remaining 81 singleton selectors, preserving whole
+coverage and distinct labels. Its final consumer proves WR17, with
+an actual height-one owner in row zero or one for every moving color.
+The application exits successfully with 218 axiom-closure reports:
+209 use only standard axioms and nine use no axioms, with no errors
+or `sorryAx`.
+
 For the stronger EB1 assumptions of the research branch, reuse
 [Report388, SC468](../350-399/388-source-global-substitution-collision-moment.md#74-grouped-shallow-slots-force-actual-divisor-triples-and-a-common-code-moment)
 before treating WR13 or WR16 as the best available bounds. At q=113,
@@ -405,9 +486,34 @@ is missing from at most five colors, giving $N_0\ge n-5\ge78$ and,
 by the union bound, at least $n-15\ge68$ colors containing all three
 rows. These consequences reuse SC468; they are not new inventory
 results. SC468 uses modulus-sum minimality as well as class-count
-minimality and remains an ordinary mathematical derivation without
-a complete local Lean replay. The 212-report application above
-verifies the stated weaker-premise bounds and does not verify SC468.
+minimality.
+
+The same argument also applies to the larger set V of all 113 digits
+except the actual q and 3q first digits. Those digits are distinct,
+so $|V|=111$. Choose one safe word different from the actual 9q
+word; using it for every selected color satisfies the final-donor
+exception even when its first digit lies in the six-set. Each row
+therefore occurs at height one in at least 106 colors of V, and at
+least 96 colors of V have owners in all three rows. These counts
+concern actual height-one owners; different rows at a fixed color
+need not have the same cofactor. V and the moving set U are
+different domains, so these counts are not added.
+
+A complete cache-guarded application verifies the q=113 SC468
+exchange and this full-V consequence. Its hypotheses are the actual
+whole integer cover, count-then-modulus-sum minimality, the displayed
+factorization with row at most two and arbitrary finite q-height,
+and the actual 3, 9, q, 3q and 9q original labels. The six-color
+consumer constructs one common source preserving the full old
+modulo-nine and W-coordinates, proves coverage by all replacements,
+and checks grouped payment and numerical distinctness. It retains
+the full permitted six-set and the exact 9q word exception. The
+final consumer derives $|V|=111$, the row bounds 106 and the
+three-row bound 96 directly from these original inputs. The
+application exits successfully with 271 axiom-closure reports:
+262 use only standard axioms and nine use no axioms, with no errors
+or `sorryAx`. This does not verify the other prime instances or
+the later probability and cell-count deductions in Report388.
 
 These are transient applications of existing coordinate, CRT and
 finite-cardinality machinery, with the three-row arithmetic checked
