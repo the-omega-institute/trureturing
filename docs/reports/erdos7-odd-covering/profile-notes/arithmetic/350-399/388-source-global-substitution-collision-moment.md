@@ -4136,3 +4136,418 @@ No assertion forces the general problem into SC161. This is an
 ordinary constructive deduction using the existing CRT, prefix
 and source-service primitives, not Lean verification or an
 unrestricted resolution of Erdős #7.
+
+## 40. Four coprime active columns admit a complete paid repair
+
+Use the complete-hole setup of Section 39, with original ternary
+height $A=2$, exactly one retained lower representative at every
+surviving slot other than $3$, and exactly four active output slots
+
+$$
+n_i=3^{b_i}m_i,\qquad 1\le i\le4,\qquad b_i\ge2,\qquad m_i>1,\quad m_i\mid M,
+\qquad (m_i,m_j)=1\quad(i\ne j).
+$$
+
+There is only one active height per cofactor. Keep the same actual
+retained family, bought root, common source tree, and all discarded
+lower service. Let $\ell\le4$ be the number of active discarded
+lowers and $t\le4$ the number of active tops. Let $G$ be the
+bipartite graph of actual nonempty cross-color top intersections;
+write $e=|E(G)|$. Isolated active tops are still counted in $t$
+and in the original inventory.
+
+The existing complete-service statement gives
+
+$$
+H\subseteq\bigcup L_i^*\ \cup\!\bigcup_{ij\in E(G)}I_{ij}^*,
+\qquad
+L_i^*=[\alpha_i]_{9m_i},\qquad
+I_{ij}^*=[\gamma_{ij}]_{9m_im_j}.
+\tag{SC172}
+$$
+
+These are reductions of actual lower classes and actual top
+intersections. All enclosures lie in the two unbought ternary roots.
+The cofactor labels occurring here are globally different: distinct
+singleton and edge subsets of the four pairwise coprime nonunits have
+different products. Reuse the three rows SC167 for every enclosure
+and add $[0]_5$. This costs $1+3\ell+3e$ and leaves only the
+new root $[1]_5$ of (SC172) to cover.
+
+### Count the second original ternary layer outside the largest prime
+
+Let $P$ be the largest original support prime. The existing
+seven-support-prime exclusion gives $P\ge23$. In the same original
+inventory put
+
+$$
+c_h=\#\{d\in D:P\nmid d,\ v_3(d)=h\}\quad(h=1,2),
+\qquad t_P=\#\{d\in D:3P\mid d\}.
+$$
+
+Since $A=2$, these are disjoint and exhaustive for the
+3-bearing original labels: $N_3=c_1+c_2+t_P$.
+Reuse [Report 385 NF66](385-private-congruence-hulls-and-crossed-modulus-closure.md#56-the-original-cover-needs-enough-small-prime-labels-to-block-compression) at $(p,q)=(P,3)$: its two alternatives are
+$c_1\ge P-1$ or $c_1+t_P\ge P$. In either case
+
+$$
+N_3\ge P-1+c_2.
+\tag{SC173}
+$$
+
+If $t\ge1$, each active top supplies its actual original label
+$9\cdot5^{b_i}m_i$, with $b_i\ge2$. Divisor closure supplies
+the pure labels $9,45,225$. It also supplies
+$9m_i,45m_i,225m_i$ for each top column. Because the $m_i$
+are pairwise coprime, at most one contains $P$. Thus at least
+$t-1$ of these nonunit columns are P-free. Their three labels
+and the three unit-column labels are all distinct and have exact
+original ternary height two. Therefore
+
+$$
+c_2\ge3+3(t-1)=3t,\qquad
+N_3\ge22+3t\quad(t\ge1).
+\tag{SC174}
+$$
+
+For $t=0$, SC173 still gives $N_3\ge22$. These bounds count
+one actual original inventory. They neither sum different
+prime-by-prime optima nor subtract any retained class.
+
+### A shared completion for at most two residual enclosures
+
+Suppose at most two still-unpaid enclosures are
+$[\delta_a]_{9h_a}$, with distinct $h_a>1$, all in a common
+ternary root $r$. Add
+
+$$
+[1]_{25},\qquad [6]_{25}\cap[r]_3,
+$$
+
+and, for each residual enclosure, add
+
+$$
+[11]_{25}\cap[\delta_a]_{h_a},\qquad
+[16]_{25}\cap[\delta_a]_{3h_a},\qquad
+[21]_{25}\cap[\delta_a]_{9h_a}.
+\tag{SC175}
+$$
+
+The five children of $[1]_5$ are exhausted. For $r_0\in\{1,2\}$
+residual enclosures the cost is $2+3r_0$, hence at most eight.
+For no residual enclosure add nothing. The numerical labels are
+$25,75$ and $25h_a,75h_a,225h_a$; they are distinct and have
+5-adic depth two, disjoint from all SC167 labels and from the pure
+labels $5,15,45$. This is a direct shared application of the
+existing complete-prefix construction, not a new general theorem.
+
+### Connected nonisolated top graph, including K2,2
+
+Along an edge, its two actual top phases agree modulo 9. If all
+nonisolated top vertices belong to one connected component, every
+edge enclosure therefore has one common modulo-9 phase $\gamma$.
+Let $R=\gamma\bmod3$, and let $R'$ be the other unbought root.
+Let $a$ and $b$ count the lower enclosures in $R$ and $R'$,
+respectively, so $a+b=\ell\le4$.
+
+There are two legal ways to use the available pure labels 15 and 45
+on the remaining root $[1]_5$:
+
+* Use $[1]_5\cap[R]_3$, covering every edge and all $a$ lower
+  enclosures in $R$. If $b>0$, use the pure label 45 for one
+  lower enclosure in $R'$. At most $\max(b-1,0)$ lower
+  enclosures remain. If $b=0$, nothing remains.
+* Use $[1]_5\cap[R']_3$, covering the $b$ lower enclosures,
+  and $[1]_5\cap[\gamma]_9$, covering every edge. At most
+  $a$ lower enclosures remain in $R$.
+
+If $b>0$, then
+
+$$
+\min(b-1,a)\le1\qquad(a+b\le4).
+\tag{SC176}
+$$
+
+Thus at most one residual lower needs SC175, at cost five. The complete
+repair has
+
+$$
+c\le1+3\ell+3e+2+5\le20+3e.
+\tag{SC177}
+$$
+
+With at most four top vertices, a bipartite graph has $e\le t$.
+The only cyclic possibility is the complete $K_{2,2}$, where
+$e=t=4$. SC174 now gives
+
+$$
+c\le20+3e\le20+3t\le N_3-2.
+\tag{SC178}
+$$
+
+This includes the four-edge K2,2 case, where $c\le32$ and
+$N_3\ge34$, as well as three-edge stars or paths, smaller
+connected components, and any isolated top vertices.
+
+### Two nontrivial components
+
+With at most four vertices, two nontrivial components consist of two
+disjoint edges. Consequently $t=4$, $e=2$, and $N_3\ge34$.
+The two edge enclosures may have different modulo-9 phases.
+
+If their first ternary roots differ, use the pure label 15 for the
+root containing at least half the lower enclosures. It covers that
+root's edge and lowers. Use the pure label 45 for the other edge.
+At most two lower enclosures remain, all in the other ternary root.
+
+If the two edges share a ternary root $R$, let $a$ and $b$
+again count the lowers in $R$ and its other unbought root.
+Using label 15 for $R$, then label 45 for one opposite-root
+lower, leaves at most $\max(b-1,0)$ enclosures; when $b=0$
+it leaves none. Alternatively, label 15 covers all $b$ opposite
+lowers and label 45 covers one edge, leaving at most $a+1$
+enclosures, all in $R$. For $b>0$,
+
+$$
+\min(b-1,a+1)\le2\qquad(a+b\le4).
+\tag{SC179}
+$$
+
+Thus in either case SC175 pays the residual at cost at most eight.
+The globally distinct repair satisfies
+
+$$
+c\le1+3\ell+3e+2+8\le29<N_3.
+\tag{SC180}
+$$
+
+No equality of the two components' reference phases was assumed.
+
+### No actual cross-color intersection
+
+Then SC172 contains only lowers. If there are no lowers, the hole is
+empty and no patch is required. Otherwise choose a largest ternary-root group
+for pure label 15, and use pure label 45 for one lower outside it,
+if any. At most one lower remains, because $\ell\le4$. The same
+completion gives $c\le20$. SC173 gives $N_3\ge22$, including
+when no active top exists. The no-top case does not follow just from
+the weaker local inventory bound $N_3\ge16$; its stated payment
+uses the existing global bound.
+
+### Complete payment and remaining scope
+
+All constructed moduli are odd, distinct, and contain 5. The original
+retained family is 5-free and unchanged. Each construction covers
+the full right side of SC172 and therefore the whole integer hole and
+all lifts. It follows that
+
+$$
+|\mathcal F_0\cup\mathcal P|=K-N_3-z+c<K.
+\tag{SC181}
+$$
+
+Thus the entire four-column profile is excluded for an EB1 whole
+cover under the existing support-prime bound. Together with Section
+39, this covers at most four active pairwise coprime nonunit
+cofactors, one active output height per cofactor, and all those
+heights at least two. It does not force an arbitrary whole cover
+to have this profile. Cases with five or more active columns,
+overlapping or unit cofactors, output heights zero or one, multiple
+active heights per cofactor, and original ternary height greater
+than two remain outside this construction. All arguments here are
+ordinary constructive mathematics reusing NF66, prefix splitting
+and complete source service; no new Lean verification or finite
+enumeration is claimed.
+
+## 41. Four safe menus pay every qualified single-height cofactor column
+
+The full original cover supplies more actual menus than the two
+selected terminal siblings. This section uses four of them to pay
+a complete repair with no bound on the number of cofactor columns.
+The hypotheses concern the actual active sources in those menus;
+they are not asserted to hold for every EB1 family.
+
+### Fixed source and complete liability
+
+Set original ternary height $A=2$. Normalize the original pure classes
+to $1\pmod3$ and $0\pmod9$. Fix one common substitution tree $\theta$.
+Choose height-zero originals as lower representatives wherever they
+survive, and absorb the original $5$ output in the bought root $S$
+when necessary. Thus the complete hole $H$ of the actual retained
+family $\mathcal F_0$ avoids every height-zero output. Keep the exact
+original inventory identity
+
+$$
+|\mathcal F_0|=K-N_3-z,\qquad z\ge0.
+$$
+
+Let $L_0,L_2$ be the actual outputs of original ternary height one
+on old first roots zero and two. Let $T_u$ contain actual original
+height-two outputs on old word $u$. Only sources whose full output
+AP intersects $H$ are called active; other sources may be omitted.
+The same-tree whole-cover hypothesis gives the complete containments
+
+$$
+\begin{aligned}
+H&\subseteq(L_0\cup T_3)\cap(L_0\cup T_6),\\
+H&\subseteq(L_2\cup T_2)\cap(L_2\cup T_5)\cap(L_2\cup T_8).
+\end{aligned}
+\tag{SC182}
+$$
+
+At the same output point $x\in H$, apply each actual source map
+$F_{u,\theta}$. The original whole cover supplies an owner of each
+image. None can have original ternary height zero, because its
+common output would then contain $x$, contrary to the retained
+choice. The owner therefore belongs to the displayed height-one
+or height-two menu for that safe word. Removing inactive sources
+does not change this service.
+
+These contain the entire lower-and-top liability at every integer
+lift. Outer sources need not be literal omitted members of the
+inner-sibling retained construction: the displayed containments,
+rather than that membership, supply their service.
+
+Choose any two of the three outer words. For definiteness use $2,5$
+and omit $8$. Let $\ell$ count all active sources in $L_0\sqcup L_2$,
+and let $t$ count active tops in $T_3\sqcup T_6\sqcup T_2\sqcup T_5$.
+
+### A concrete profile with no restriction on the number of columns
+
+Assume every source used by these four menus has output modulus
+$n_d=3^{b_m}m$, where $m\mid M$, $m\ge1$, $(m,15)=1$, and there is only one
+used output height $b_m$ per numerical cofactor $m$. Require
+$b_m\ge2$ for $m>1$ and, if the unit cofactor is used, $b_1\ge3$.
+The different cofactors need only be numerically different; they
+may overlap or divide one another. They need not be pairwise
+coprime. The unused outer color imposes no additional hypothesis.
+
+A fixed $m$ then has at most one used lower original
+$3\cdot5^{b_m}m$ and at most one used top original
+$9\cdot5^{b_m}m$. The lower belongs to just one of $L_0,L_2$;
+the top belongs to just one of the five old words. In the selected
+four menus, the lower is requested twice and a selected top once.
+
+Add $[0]_5$. Give the four other new roots to the four complete
+menus in the following order:
+
+| New root modulo $5$ | Complete actual source menu |
+|---|---|
+| $1$ | $L_0\cup T_3$ |
+| $2$ | $L_0\cup T_6$ |
+| $3$ | $L_2\cup T_2$ |
+| $4$ | $L_2\cup T_5$ |
+
+For an active lower with nonunit cofactor $m$, assign the slots $m$ and
+$3m$ to its two requested roots, in the displayed order. For a
+selected active top assign slot $9m$ to its one root. If no lower
+is present in that cofactor, assigning the top slot $m$ instead
+is also valid and leaves the count unchanged.
+
+For the unit cofactor, use slots $3,9$ for the lower's two roots
+and slot $27$ for the selected top's root. If there is no lower,
+the top may instead use slot $3$. These slots divide its output
+modulus under the stated height condition and are all nonunits.
+
+For every request by actual source $d$ on new root $r$, with its
+assigned slot $s$, add the CRT class
+
+$$
+P_{d,r}=[r]_5\cap[\eta_d]_s,
+\tag{SC183}
+$$
+
+where $C_d=[\eta_d]_{n_d}$ is that source's actual output. Since
+$s\mid n_d$, this patch contains all of $C_d$ on its assigned
+new root. The four displayed complete containments therefore
+cover every point of $H$ on roots $1,2,3,4$; the bought new class
+covers root zero. No agreement between different source phases
+is required, and no retained class is removed or rephased.
+
+### Global distinctness and original payment
+
+Within a nonunit cofactor, the requests use different slots among
+$m,3m,9m$; the unit cofactor uses different slots among $3,9,27$.
+Across different cofactors, the unique decomposition
+$3^jm$ with $(m,3)=1$ prevents every numerical collision, even
+when $m\mid m'$. All slots are greater than one, so their new
+labels $5s$ are distinct from the shared $5$. They are also
+distinct from all $5$-free labels in $\mathcal F_0$.
+
+Each request $s=3^jm$ has its original donor
+$3\cdot5^jm$. The actual lower or top source and divisor closure
+supply this label because $j\le b_m$. The donor map is injective
+across all assigned slots. A donor with $m>1$ has a nonunit cofactor;
+a donor with $m=1$ has $j\ge1$ and hence contains $5$. Thus the
+original pure labels $3,9$ remain separate. Those two originals
+have old ternary phases $1\pmod3$ and $0\pmod9$, respectively,
+so they are not themselves safe-menu suppliers. Hence
+
+$$
+c=1+2\ell+t,\qquad
+N_3\ge2+2\ell+t,\qquad
+|\mathcal F_0\cup\mathcal P|
+=K-N_3-z+c\le K-z-1<K.
+\tag{SC184}
+$$
+
+There is no dependence on the number of active cofactors and no
+need for an original product column $m_im_j$. The count pays the
+whole patch from the original inventory already present in the
+retained-family identity. If there are no requests, the complete
+containments make $H$ empty and no patch is needed.
+
+### Exact shallow boundary of this same construction
+
+With one used height $b_m$ per cofactor, put
+$$
+r_m=2\mathbf1_{\text{active lower}}+
+\mathbf1_{\text{selected active top}},\qquad
+r_m\le b_m+1\ (m>1),\qquad r_1\le b_1.
+\tag{SC185}
+$$
+These are the exact capacities for this explicit per-column
+assignment. For $m>1$, inject the requests into
+$m,3m,\ldots,3^{b_m}m$. Thus a nonunit lower-only column needs
+$b_m\ge1$, a nonunit top-only column permits $b_m=0$, and a
+nonunit column with both needs $b_m\ge2$.
+
+For $m=1$, the available nonunit slots are
+$3,9,\ldots,3^{b_1}$, so the same construction needs $r_1\le b_1$.
+A pure top alone therefore needs $b_1\ge1$, a pure lower alone
+needs $b_1\ge2$, and a pure lower together with a selected pure top
+needs $b_1\ge3$. The original donors still avoid both reserved pure
+ternary labels. These conditions include the complete unit-column
+liability rather than assuming that the bought root absorbs it.
+
+Selecting the omitted outer color may remove
+the top request from otherwise deficient columns; this does not
+change the original lower obligations.
+
+Multiple used heights at one cofactor are not automatically
+included. The argument does not make the
+Section 38 noncover into a whole cover: that construction lacks
+the outer complete-menu containments used here.
+
+### Reuse boundary
+
+SC125 supplies the actual-phase root patch; SC126 and SC145--SC146
+supply its original donor injection. [Report 385, Section 123](385-private-congruence-hulls-and-crossed-modulus-closure.md#123-whole-private-donor-obligations-can-be-reassigned-to-spare-original-labels)
+already assigns complete source menus to different new roots. The change is the complete liability
+assigned to each root: four different safe menus serve all of
+$H$, so a lower is copied twice and a selected top only once.
+SC124 and SC147 instead independently assign all four nonzero
+roots to every source in one complete family. Their failure does
+not test this four-menu construction.
+
+SC113--114 similarly consume complete menus, but flattening to
+$3$-free cofactors would discard the distinct slots $m,3m,9m$
+used here. SC136 need not be applied to separate intersections.
+The three-column restriction and pairwise-coprime hypothesis of
+SC161--171 are absent in this profile because no cofactor
+products or star-intersection graph is used.
+
+This is a concrete consumer of those existing primitives, not a
+new general Hall or CRT theorem or a literature-priority claim.
+It is ordinary constructive mathematics, without new Lean
+verification or a resolution of unrestricted Erdős #7.
