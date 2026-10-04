@@ -21,7 +21,7 @@ internal sealed class CanonicalProductRecoveryDocument : IScribeDocumentDefiniti
                     Text("The whole chain is a repository-derived composition of known mechanisms, "
                         + "with no novelty claim. The adapted Alex Meiburg Physlib sources and "
                         + "the paper's full-rank boundary are attributed in "),
-                    Ref("D5/L/Quantum/meiburg2026singulartensorrecovery"),
+                    Ref("D5/L/QuantumStates/meiburg2026singulartensorrecovery"),
                     Text(".")),
                 Paragraph(Text(
                 "In the statement c and d denote gammaA and gammaB; underlyingMatrix is "

@@ -14,7 +14,7 @@ $$\forall a: \operatorname{Type}, \forall b: \operatorname{Type}, [\operatorname
 
 *Commentary.*
 
-The whole chain is a repository-derived composition of known mechanisms, with no novelty claim. The adapted Alex Meiburg Physlib sources and the paper's full-rank boundary are attributed in `D5/L/Quantum/meiburg2026singulartensorrecovery`.
+The whole chain is a repository-derived composition of known mechanisms, with no novelty claim. The adapted Alex Meiburg Physlib sources and the paper's full-rank boundary are attributed in `D5/L/QuantumStates/meiburg2026singulartensorrecovery`.
 
 In the statement c and d denote gammaA and gammaB; underlyingMatrix is CStarMatrix.ofMatrix.symm applied to the state matrix, and infinity is WithTop top. The marginal and recovered state use the existing partial trace and product state. Only the reference factors are positive definite. The proof contracts actual marginal zero directions, retains support projections in the tensor logarithm, and cancels them under the same joint-state weighted trace. Every divergence in the displayed chain is in its supported finite branch. The finite statement does not establish oscillator operator domains or Gibbs traces.
 
