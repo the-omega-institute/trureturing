@@ -202,6 +202,42 @@ public sealed class ContentCheckCommandTests
         Assert.Contains("ScribePackDigestMismatch", error.ToString(), StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("emit")]
+    [InlineData("content-check")]
+    [InlineData("markdown-check")]
+    [InlineData("projections")]
+    [InlineData("describe-report")]
+    public void CommandsLoadFileReportWithoutGit(string command)
+    {
+        using var fixture = new Fixture();
+        fixture.WriteFileReport();
+        Assert.False(Directory.Exists(fixture.Root.Resolve(".git")));
+        var output = new StringWriter();
+        var error = new StringWriter();
+        Assert.True(fixture.RunCommand(command, output, error) == 0, error.ToString());
+        Assert.Empty(error.ToString());
+        if (command == "emit")
+            Assert.True(File.Exists(fixture.Root.Resolve(Markdown)));
+    }
+
+    [Theory]
+    [InlineData("emit")]
+    [InlineData("content-check")]
+    [InlineData("markdown-check")]
+    [InlineData("projections")]
+    [InlineData("describe-report")]
+    public void CommandsRejectFileReportSourceDriftWithoutGit(string command)
+    {
+        using var fixture = new Fixture();
+        fixture.WriteFileReport();
+        fixture.Write("D5/S0/Synthetic/CurrentMarkdown.lean", "namespace Changed\n");
+        var error = new StringWriter();
+        Assert.Equal(2, fixture.RunCommand(command, TextWriter.Null, error));
+        Assert.Contains("Raw Lean report source hash does not match D5/S0/Synthetic/CurrentMarkdown.lean",
+            error.ToString(), StringComparison.Ordinal);
+    }
+
     private const string Path = "Blueprint/D5/S0/Synthetic/CurrentMarkdown.scribe.cs";
     private const string Markdown = "Blueprint/D5/S0/Synthetic/CurrentMarkdown.md";
 
@@ -245,6 +281,32 @@ public sealed class ContentCheckCommandTests
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
                 GitRepositorySnapshotReader.ReadCurrent(Root.Path))).Snapshot;
             RawLeanReportArtifact.WriteFile(ReportPath, snapshot, Report);
+        }
+        internal void WriteFileReport()
+        {
+            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                RawRepositorySnapshot.Create(Directory.EnumerateFiles(Root.Path, "*.lean", SearchOption.AllDirectories)
+                    .Select(path => new RawRepositoryEntry(System.IO.Path.GetRelativePath(Root.Path, path).Replace('\\', '/'),
+                        System.Collections.Immutable.ImmutableArray.CreateRange(File.ReadAllBytes(path))))))).Snapshot;
+            RawLeanReportArtifact.WriteFile(ReportPath, snapshot, Report);
+            RawLeanReportArtifact.WriteFile(RawLeanReportArtifact.DefaultPath(Root.Path), snapshot, Report);
+        }
+        internal int RunCommand(string command, TextWriter output, TextWriter error)
+        {
+            IReadOnlyList<string> arguments;
+            if (command == "describe-report")
+            {
+                var packPath = Root.Resolve("pack.zip");
+                var manifest = ScribeResourcePack.Write(packPath, [MarkdownCurrentCommandTests.Definition()]);
+                arguments = [command, "--scribe-pack", packPath, "--scribe-pack-digest", manifest.TotalSha256, "--json", "--check"];
+            }
+            else if (command == "projections")
+                arguments = [command, "--check", "--report", ReportPath];
+            else if (command == "emit")
+                arguments = [command, "--paths-from", "-"];
+            else
+                arguments = [command, "--report", ReportPath, "--paths-from", "-"];
+            return ScribeCli.Run(arguments, Root.Path, output, error, leanReport: null, new StringReader(Path));
         }
         internal int RunWithReport(TextWriter error) => ScribeCli.Run(
             ["content-check", "--report", ReportPath, "--paths-from", "-"],

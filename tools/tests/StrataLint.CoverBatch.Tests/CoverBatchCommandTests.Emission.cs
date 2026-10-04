@@ -64,13 +64,14 @@ public sealed partial class CoverBatchCommandTests
         }
 
         output.WriteLine(result.Output + result.Error);
-        Assert.Equal(3, discoveries);
+        Assert.Equal(2, discoveries);
         Assert.Equal(partialFailure ? 1 : 0, result.ExitCode);
         Assert.Equal(partialFailure ? ["applied", "failed", "applied"] : ["applied", "applied"],
             Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
+        Assert.False(File.Exists(Path.Combine(batch.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
+        foreach (var path in new[] { CanonicalValuesWriter.RelativePath })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
