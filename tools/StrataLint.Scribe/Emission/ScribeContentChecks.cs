@@ -14,6 +14,12 @@ internal static class ScribeContentChecks
             error.WriteLine(selection.Failure);
             return 2;
         }
+        var admission = ScribeSdkAdmission.Check(root, selection.Paths);
+        if (admission.ExitCode != 0)
+        {
+            admission.WriteFailure(error);
+            return admission.ExitCode;
+        }
         return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(root, () =>
         {
             var results = ScribeScriptHost.ExecuteBatch(root, selection.Paths);
