@@ -122,6 +122,9 @@ domains:
   Ledger:
     stratum: S1
     definition: Prime-exponent generation ledgers, their length readings, and the monotonicity of legal generation.
+  LieTheory:
+    stratum: S3
+    definition: Finite-type root data and Cartan matrices, their Weyl-group and Gram-form normalizations, and the q-series attached to them such as specializations of Toda and Whittaker eigenfunctions.
   Midline:
     stratum: S3
     definition: Dual and multiple characterizations of the critical midline sigma equals one half.
