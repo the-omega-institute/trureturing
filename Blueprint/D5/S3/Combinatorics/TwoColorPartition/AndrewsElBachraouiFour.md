@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour.re
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/andrews-el-bachraoui-d23-sign-pattern` (proved) by `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"andrews-el-bachraoui-d23-sign-pattern","declaration_gid":"D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* George E. Andrews, Mohamed El Bachraoui (2025). *Certain positive q-series and inequalities for two-color partitions*. DOI: [10.48550/arXiv.2507.09276](https://doi.org/10.48550/arXiv.2507.09276). URL: <https://arxiv.org/abs/2507.09276v1>.
