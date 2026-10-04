@@ -116,7 +116,8 @@ theorem complementary_counterexample (a : ℕ) (ha : 3 ≤ a) :
     exact hh.trans_lt (by
       simpa only [mul_one_div] using (div_lt_one hB).mpr hpw)
   have head (d : ℕ) (hd : d < a) : residual p d / (2 : ℝ) ^ d = 1 := by
-    simp only [DyadicSupportLines.residual, head_floor d hd, Finset.sum_const_zero, Int.cast_zero, sub_zero]
+    simp only [DyadicSupportLines.residual, head_floor d hd,
+      Finset.sum_const_zero, Int.cast_zero, sub_zero]
     exact div_self (by positivity)
   have middle_floor (j : ℕ) (hj : j < a) (i : Fin (2 ^ a + 1)) :
       ⌊(2 : ℝ) ^ (a + j) * p i⌋ =
@@ -295,7 +296,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
       (hhigh : t0 < minimum P) :
       (∀ i, 0 < highSideMap a P i) ∧ (∑ i, highSideMap a P i = 1) := by
     have ht : B - 1 < B ^ 2 * minimum P := by
-      exact (div_lt_iff₀ hB2).mp hhigh
+      simpa only [mul_comm] using (div_lt_iff₀ hB2).mp hhigh
     constructor
     · intro i
       change 0 < B ^ 2 * P i - (B - 1)
@@ -304,7 +305,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
     · simp only [highSideMap, Finset.sum_sub_distrib, ← Finset.mul_sum,
         Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hS, mul_one]
       rw [hm]
-      change B ^ 2 - (B + 1) * (B - 1) = 1
+      change B ^ 2 - ((B + 1) * B - (B + 1)) = 1
       ring
   have hhigh : t0 < t := hh
   obtain ⟨hqpos, hqsum⟩ := step p hs hhigh
@@ -324,14 +325,15 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
     apply Summable.of_nonneg_of_le
       (fun d => div_nonneg (bound d).1 (by positivity))
       (fun d => div_le_div_of_nonneg_right (bound d).2 (by positivity))
-    simpa only [div_pow, div_eq_mul_inv] using
+    simpa [div_pow, div_eq_mul_inv] using
       (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left (B + 1)
   have hpupper (i : Fin (2 ^ a + 1)) : p i < 1 / B := by
     have hi := Finset.single_le_sum (f := fun j => p j - t)
       (fun j _ => sub_nonneg.mpr (min_le p j)) (Finset.mem_univ i)
     simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
       Fintype.card_fin, nsmul_eq_mul, hs, hm] at hi
-    have ht : B - 1 < B ^ 2 * t := (div_lt_iff₀ hB2).mp hhigh
+    have ht : B - 1 < B ^ 2 * t := by
+      simpa only [mul_comm] using (div_lt_iff₀ hB2).mp hhigh
     apply (lt_div_iff₀ hB).mpr
     nlinarith only [hi, ht, hB]
   have floors_head (d : ℕ) (hd : d < a) (i : Fin (2 ^ a + 1)) :
@@ -342,14 +344,16 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
     have hpow : (2 : ℝ) ^ d ≤ B :=
       pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) hd.le
     have hmul := mul_le_mul_of_nonneg_right hpow (hp i)
-    exact hmul.trans_lt ((lt_div_iff₀ hB).mp (hpupper i))
+    exact hmul.trans_lt (by
+      simpa only [mul_comm] using (lt_div_iff₀ hB).mp (hpupper i))
   have floors_middle (j : ℕ) (hj : j < a) (i : Fin (2 ^ a + 1)) :
       ⌊(2 : ℝ) ^ (a + j) * p i⌋ = (2 : ℤ) ^ j - 1 := by
     have hpow : (2 : ℝ) ^ j < B :=
       pow_lt_pow_right₀ (by norm_num : (1 : ℝ) < 2) hj
     have hlow : (2 : ℝ) ^ j - 1 < (2 : ℝ) ^ j * B * p i := by
-      have ht : B - 1 < B ^ 2 * p i :=
-        (div_lt_iff₀ hB2).mp (hhigh.trans_le (min_le p i))
+      have ht : B - 1 < B ^ 2 * p i := by
+        simpa only [mul_comm] using
+          ((div_lt_iff₀ hB2).mp (hhigh.trans_le (min_le p i)))
       have hh' := mul_lt_mul_of_pos_left ht (by positivity : 0 < (2 : ℝ) ^ j)
       have hid : (2 : ℝ) ^ j * B * p i * B = (2 : ℝ) ^ j * (B ^ 2 * p i) := by ring
       nlinarith only [hh', hpow, hB, hid]
@@ -381,7 +385,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
       simp only [DyadicSupportLines.residual, floors_tail, Finset.sum_add_distrib,
         Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, Int.cast_sum]
       push_cast
-      rw [hm, pow_add,
+      rw [pow_add,
         show (2 : ℝ) ^ (2 * a) = B ^ 2 by simp [B, pow_mul, Nat.mul_comm]]
       change B ^ 2 * (2 : ℝ) ^ e -
         ((∑ i, (⌊(2 : ℝ) ^ e * q i⌋ : ℝ)) + (B + 1) * ((B - 1) * (2 : ℝ) ^ e)) = _
@@ -411,7 +415,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
           simp only [DyadicSupportLines.residual, floors_middle j (Finset.mem_range.mp hj),
             Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
           push_cast
-          rw [hm, pow_add, one_div_pow]
+          rw [pow_add, one_div_pow]
           change (B * (2 : ℝ) ^ j - (B + 1) * ((2 : ℝ) ^ j - 1)) /
             (B * (2 : ℝ) ^ j) = (B + 1) / B * (1 / (2 : ℝ) ^ j) - 1 / B
           field_simp
@@ -460,7 +464,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
         Fintype.card_fin, nsmul_eq_mul, hs, hm] at hi
       have hu : (B + 1) * u = 1 := by dsimp only [u]; field_simp
       rw [heq, hu] at hi
-      have hlo := min_le p i
+      have hlo : t ≤ p i := min_le p i
       rw [heq] at hlo
       exact le_antisymm (by linarith only [hi]) hlo
     have formula (j : ℕ) : minimum ((highSideMap a)^[j] p) =
@@ -495,7 +499,7 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
       | zero =>
         simp only [Function.iterate_zero_apply]
         refine ⟨fun i => ?_, hs⟩
-        have htpos : 0 < t := lt_trans (by dsimp only [t0]; positivity) hhigh
+        have htpos : 0 < t := lt_trans (by exact div_pos (by linarith) hB2) hhigh
         exact htpos.trans_le (min_le p i)
       | succ j ih =>
         rw [Function.iterate_succ_apply']
@@ -519,7 +523,9 @@ theorem complementary_high_side_scaling (a : ℕ) (ha : 3 ≤ a)
       linarith
     apply (mul_left_cancel₀ he)
     have hce : (1 - 1 / B ^ 2) * cost p = (a : ℝ) + 2 - a / B - 2 / B ^ 2 := by
-      linarith only [hcost]
+      calc
+        _ = cost p - cost p / B ^ 2 := by ring
+        _ = _ := by linarith only [hcost]
     rw [hce]
     field_simp [hB.ne']
     ring
