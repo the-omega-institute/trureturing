@@ -1010,3 +1010,319 @@ $$
 上述紧完全截断情形对应 [Roberto Frigerio、Carlo Petronio, *Construction and Recognition of Hyperbolic 3-Manifolds with Geodesic Boundary*, arXiv:math/0109012v1](https://arxiv.org/abs/math/0109012v1) 的 Definitions 1.6–1.8（正文第 6–7 页）中 $I=Z=\varnothing$ 的几何实现：没有 ideal vertices 或 length-zero edges，截断面与侧面正交。Definition 1.10（正文第 8 页）在紧可定向流形去除规定的 tori 和 annuli 后，把 partially truncated triangulation 定义为各个 $\Delta^*$ 按指定侧面配对实现原流形；这里沿用其实际剖分语义，由已固定的 $r$ 和第 15 节的 $\overline h$ 保持同一个 marked 对应。Theorem 2.13 及 Remark 2.14（正文第 20 页）区分侧面一致性、实际内边角和 $2\pi$ 与两端 ideal 时的额外返回方程；Remark 2.14 的无 toric end 情形说明内边长度匹配和角和条件已足够处理相应匹配。该定理原文的全局陈述另有可定向、规定剖分及边界负 Euler 特征等前提；这里没有把那些前提从裸面配对中推断出来，而是在既有带标记截断实现上给出上述紧块的直接局部拼接证明。原文随后的 completeness discussion 也明确把有边界流形的完备性与双倍的完备性对应起来，并单独处理非紧端的方程。
 
 本节是标准双曲块拼接结论在原始出现、实际面映射和同一标记上的书面落实，不申报数学原创性或 Lean kernel 核验。它以真正紧块、实际兼容等距配对、边不反转、精确出现角和以及已有带标记实现为条件；不从较弱组合条件制造共同真长度或零缺陷，不将拓扑实现代替光滑度量证明，也不结算独立的实际体积、Schläfli、全局流收敛或预先指定 atlas 的相容性义务。
+## 17. 原始六参数块上的实际旧边领圈与参数恢复
+
+本节把第 16.2 节的标准 Fermi 领圈接回原始六参数的极面截断块，给出支撑不等式、逆参数及相对开集的具体公式。所有六个参数独立变化，不假设等边。沿用原始槽序 $12,13,14,34,24,23$，令 $x_{ij}>1$，并要求原始判别式 $D(x)>0$。在原始 Lorentz 模型中，记实际向量为 $V_1,\ldots,V_4$，其 Gram 矩阵为
+
+$$
+G_{ii}=1,\qquad G_{ij}=-x_{ij}\quad(i\ne j),\qquad
+L(X,Y)=-X_0Y_0+X_{\rm sp}\cdot Y_{\rm sp}.
+$$
+
+原始 Gram 构造给出 $\det G<0$、$V_{i,0}\ge0$，且任意两个不同向量的时间坐标之和严格正。每个三阶主子矩阵的行列式为
+
+$$
+1-a^2-b^2-c^2-2abc<0\qquad(a,b,c>1).
+$$
+
+因此 $H=G^{-1}$ 满足 $H_{ff}>0$。定义实际 Gram 对偶、正尺度及外法向
+
+$$
+W_f=\sum_a H_{af}V_a,\qquad
+\eta_f=\sqrt{H_{ff}},\qquad n_f=-W_f/\eta_f.
+$$
+
+它们满足 $L(V_a,W_f)=\delta_{af}$、$L(n_f,n_f)=1$ 和
+$L(V_a,n_f)=-\delta_{af}/\eta_f$。这里的负号固定原块的内侧方向。
+
+原始系数载体与实际块保持字面定义
+
+$$
+C_x=\{\lambda\in\mathbb R^4:\lambda_a\ge0,\ \sum_a\lambda_a=1,
+\ (G\lambda)_f\le0\ \text{对全部 }f\},
+$$
+
+$$
+\nu_x(\lambda)=\frac{\sum_a\lambda_aV_a}
+ {\sqrt{-L(\sum_a\lambda_aV_a,\sum_a\lambda_aV_a)}},
+\qquad P_x=\nu_x(C_x)\subset\mathbb H^3.
+$$
+
+对 $\lambda\in C_x$，分母严格正且分子为未来类时向量，这是原始极面截断构造的归一化性质。下面不以另一个半空间块替换 $P_x$。
+
+### 17.1 从实际端点得到完整闭轴和四个严格支撑
+
+固定不同的 $i,j$，令 $k,l$ 为另外两个顶点标签。记
+
+$$
+r=x_{ij},\quad s=\sqrt{r^2-1},\quad \ell=\operatorname{arcosh}r>0,
+\quad A=\frac{rV_i+V_j}{s},\quad B=\frac{V_i+rV_j}{s},\quad \tau=-V_i.
+$$
+
+这两个端点恰是原始系数点 $(re_i+e_j)/(r+1)$ 和 $(e_i+re_j)/(r+1)$ 的归一化。第一个点的 $i$-cut 为零、$j$-cut 为 $1-r<0$，另外两项 cut 严格负；第二个点交换 $i,j$。直接使用 Gram 等式得
+
+$$
+L(A,A)=L(B,B)=-1,\quad L(A,B)=-r,\quad
+L(\tau,\tau)=1,\quad L(A,\tau)=0,
+\quad B=rA+s\tau.
+$$
+
+两端点的时间坐标严格正。实际闭轴取
+
+$$
+\gamma(t)=\cosh t\,A+\sinh t\,\tau
+=\frac{\sinh(\ell-t)}s A+\frac{\sinh t}s B,
+\qquad 0\le t\le\ell.
+$$
+
+插值的两个系数非负且不同时为零，所以整条轴都在未来单位双曲面上。端点 cap 与相邻侧面的精确支撑为
+
+$$
+L(\gamma(t),V_i)=-\sinh t,\qquad
+L(\gamma(t),V_j)=\sinh(t-\ell),\qquad
+L(\gamma(t),n_k)=L(\gamma(t),n_l)=0.
+$$
+
+其余四个支撑在整个闭段上严格成立。对 $n_i$，两端的配对值分别为 $-r/(s\eta_i)$、$-1/(s\eta_i)$；对 $n_j$，分别为 $-1/(s\eta_j)$、$-r/(s\eta_j)$。对 $h\in\{k,l\}$，有
+
+$$
+L(A,V_h)=-\frac{r x_{ih}+x_{jh}}s<0,\qquad
+L(B,V_h)=-\frac{x_{ih}+r x_{jh}}s<0.
+$$
+
+以上非负插值保持这些严格负号。两个端点 cap 则只满足弱不等式，并分别在 $t=0,\ell$ 取零；领圈构造不能把这两个支撑误列为全程严格。
+
+### 17.2 实际二面角、统一半径与字面块成员
+
+令 $c=-L(n_k,n_l)=-H_{kl}/(\eta_k\eta_l)$。互补主子式恒等式给出
+
+$$
+H_{kk}H_{ll}-H_{kl}^2
+=\frac{\det G_{\{i,j\},\{i,j\}}}{\det G}
+=\frac{1-r^2}{\det G}>0,
+$$
+
+所以 $-1<c<1$。在旧边的任一实际点，$n_k,n_l$ 都是双曲切空间中的外单位法向；原始内二面角为它们夹角的补角，故 $\alpha=\arccos c\in(0,\pi)$。令
+
+$$
+d=\sqrt{1-c^2}=\sin\alpha>0,\qquad
+u=\frac{-n_l-cn_k}{d},\qquad v=-n_k.
+$$
+
+由实际 Gram 等式，$(A,\tau,u,v)$ 的 Gram 矩阵为 $\operatorname{diag}(-1,1,1,1)$；四个向量因此线性无关并构成原四维环境的基。定义
+
+$$
+F(t,\rho,\theta)=\cosh\rho\,\gamma(t)
++\sinh\rho(\cos\theta\,u+\sin\theta\,v).
+$$
+
+它满足 $L(F,F)=-1$，且四个 incident 支撑精确为
+
+$$
+\begin{aligned}
+L(F,V_i)&=-\cosh\rho\,\sinh t,&
+L(F,V_j)&=\cosh\rho\,\sinh(t-\ell),\\
+L(F,n_k)&=-\sinh\rho\,\sin\theta,&
+L(F,n_l)&=-\sinh\rho\,\sin(\alpha-\theta).
+\end{aligned}
+$$
+
+设 $S$ 为时间坐标严格正、$n_i,n_j$ 及 $V_k,V_l$ 四项支撑严格负的环境开集。第 17.1 节给出 $\gamma([0,\ell])\subset S$。该轴像紧；而 $F$ 连续，在 $\rho=0$ 时与 $\theta$ 无关。对紧参数集 $[0,\ell]\times[0,2\pi]$ 作有限开覆盖，得到 $\varepsilon>0$，使
+
+$$
+F(t,\rho,\theta)\in S\quad
+(0\le t\le\ell,\ 0\le\rho\le\varepsilon,\ 0\le\theta\le2\pi).
+$$
+
+具体地，每个 $(t,\theta)$ 的连续性给出参数邻域及一个正的 $\rho$ 宽度；有限子覆盖的宽度最小值再缩小一半，即同时包含所选闭径向区间。故 $0\le\theta\le\alpha$ 时，前述四项 incident 弱支撑与 $S$ 的四项严格支撑合起来给出全部八项原始支撑。
+
+为确认这些点属于字面 $P_x$，对这样的未来单位点 $w=F(t,\rho,\theta)$ 取实际齐次系数
+
+$$
+\beta_f=L(w,W_f),\qquad b_0=\sum_f\beta_f.
+$$
+
+实际侧面公式 $L(w,n_f)=-\beta_f/\eta_f$ 给出 $\beta_f\ge0$，且 $n_i$ 的严格支撑给出 $\beta_i>0$，所以 $b_0>0$。Gram 对偶重构给出 $w=\sum_f\beta_fV_f$。令 $\lambda_f=\beta_f/b_0$，则 $\lambda_f\ge0$、$\sum_f\lambda_f=1$，并且
+
+$$
+(G\lambda)_f=L(w,V_f)/b_0\le0,\qquad
+\sum_f\lambda_fV_f=w/b_0.
+$$
+
+因此 $\lambda\in C_x$，其归一化分母为 $1/b_0$，且 $\nu_x(\lambda)=w$。这直接证明实际 Fermi 闭扇区进入原归一化像；没有额外假设半空间刻画或提供成员见证。
+
+### 17.3 从字面块点恢复参数及实际相对开领圈
+
+对任意 $w\in P_x$，其定义立即给出全部八项弱支撑。用上述实际正交基写成
+
+$$
+w=aA+b\tau+Cu+Dv,\qquad
+a=-L(w,A),\ b=L(w,\tau),\ C=L(w,u),\ D=L(w,v).
+$$
+
+单位方程与两个端点 cap 支撑给出
+
+$$
+a^2-b^2=1+C^2+D^2,\qquad b\ge0,\qquad rb\le sa.
+$$
+
+故 $a\ge0$；单位方程排除 $a=0$，所以 $a>0$。取
+
+$$
+q(w)=\sqrt{C^2+D^2},\quad R=\sqrt{1+q(w)^2},\quad
+\rho=\operatorname{arsinh}q(w),\quad
+t=\operatorname{arsinh}(b/R).
+$$
+
+有 $\sinh\rho=q$、$\cosh\rho=R$、$\sinh t=b/R$、$\cosh t=a/R$。从 $b\ge0$ 得 $t\ge0$；第二个 cap 支撑化为 $R\sinh(t-\ell)\le0$，所以 $t\le\ell$。
+
+两个相邻侧面支撑等价于
+
+$$
+D\ge0,\qquad dC-cD\ge0.
+$$
+
+当 $q>0$ 时取 $\theta=\arccos(C/q)\in[0,\pi]$。由 $C^2+D^2=q^2$、$D\ge0$ 得 $\sin\theta=D/q$。第二项支撑于是给出 $\sin(\alpha-\theta)\ge0$。若 $\theta>\alpha$，则 $-\pi<\alpha-\theta<0$，其正弦严格负，矛盾。因此 $0\le\theta\le\alpha$，且 $w=F(t,\rho,\theta)$。当 $q=0$，取 $\theta=0$；此时 $C=D=0$，同样恢复 $w=\gamma(t)$。
+
+对第 17.2 节选出的同一个 $\varepsilon$，得到精确集合等式
+
+$$
+U_{ij}:=\{w\in P_x:q(w)<\sinh\varepsilon\}
+=\{F(t,\rho,\theta):0\le t\le\ell,\ 0\le\rho<\varepsilon,
+\ 0\le\theta\le\alpha\}.
+$$
+
+$q$ 是实际块上的连续函数，故 $U_{ij}$ 在 $P_x$ 中相对开，并包含整个闭旧边。这不声称带侧面和端点的闭扇区在环境 $\mathbb H^3$ 中开。
+
+当 $\rho>0$ 时，上述公式唯一恢复 $\rho,t,\theta$：$\operatorname{arsinh}$ 的严格单调性恢复前两者，而 $\cos$ 在 $[0,\alpha]\subset[0,\pi]$ 上单射，恢复最后一个参数。轴上仅合并角坐标，$t$ 仍唯一。还可确认 $\rho$ 是到实际闭轴的双曲距离：对任意轴参数 $z\in[0,\ell]$，
+
+$$
+-L(w,\gamma(z))=R\cosh(t-z)\ge R=\cosh\rho,
+$$
+
+且在已恢复的 $z=t$ 取等；$\operatorname{arcosh}$ 单调给出所述距离。
+
+本节给出一个实际块中一条完整闭旧边的书面证明。它补足第 16.2 节标准模型与原始六参数对象之间的支撑、成员和逆参数接口，不申报经 Lean kernel 验证、冻结或消化覆盖，也不申报文献原创性。把它用于原始全局商仍须同时检查有限全部出现的共同半径、同块不同旧边的分离、实际面映射的有序轴及半径运输，以及原始生成关系的饱和与精确纤维；本节没有结算这些全局义务。
+
+## 18. 全部实际旧边出现的共同领圈与原始商饱和
+
+固定第 15 节的有限原始面配对 $p$。每块的六个参数由同一个实际全局旧边函数拉回，满足第 17 节的 $x_{ij}>1$、$D(x)>0$；侧面等距映射保留原始顶点和边对应，反向使用其逆。仍取原始 $X=T\times K$、面生成关系的等价闭包 $R$、商映射 $q:X\to Q$，以及实际带标签不交并 $X_{\rm geom}=\coprod_t P_t$、几何生成关系的等价闭包 $R_{\rm geom}$ 和 $q_{\rm geom}:X_{\rm geom}\to Q_{\rm geom}$。第 15 节的同一个相容块同胚记为 $H(t,z)=(t,h_t(z))$，诱导商同胚 $\overline H$。
+
+令 $E$ 为原始局部旧边出现 $O=T\times\operatorname{Fin}6$ 在面端口运输下的商；记 $[o]\in E$，并保留整个出现集
+
+$$
+O_e=\{o\in O:[o]=e\}.
+$$
+
+同一块的不同局部边即使属于同一个 $e$，仍是 $O_e$ 中不同的元素。记出现 $o$ 的完整闭旧边为 $S_o$，第 17 节实际法向坐标的半径函数为 $q_o$。其中 $q_o$ 是非负实数函数，与商映射 $q$ 不同。
+
+**命题 18.1（实际共同半径及饱和开邻域）。** 若 $O$ 非空，可以选择一个 $\varepsilon>0$，使每个出现的
+
+$$
+U_o(\varepsilon)=\{w\in P_{o.1}:q_o(w)<\sinh\varepsilon\}
+$$
+
+都是第 17 节的完整闭旧边 Fermi collar。同块不同局部边的这些 collars 两两不交。对每个 $e\in E$，定义
+
+$$
+U_e^{\rm geom}=
+\{(t,w):\text{存在 }j,\ [(t,j)]=e,\ w\in U_{(t,j)}(\varepsilon)\},
+\qquad U_e=H^{-1}(U_e^{\rm geom}).
+$$
+
+这些集合开，包含对应的全部闭旧边出现，并满足精确饱和等式
+
+$$
+q_{\rm geom}^{-1}\bigl(q_{\rm geom}(U_e^{\rm geom})\bigr)
+=U_e^{\rm geom},\qquad q^{-1}\bigl(q(U_e)\bigr)=U_e.
+$$
+
+因此 $q_{\rm geom}(U_e^{\rm geom})$ 和 $q(U_e)$ 是相应商中的开邻域。不同全局旧边的这些商邻域两两不交，且
+
+$$
+\overline H\bigl(q(U_e)\bigr)=q_{\rm geom}(U_e^{\rm geom}).
+$$
+
+本命题不要求角和 $2\pi$ 或全局边不反转。后者用于统一有向纵坐标，前者用于闭合展开扇区；共同半径和饱和性只使用无向轴及原始面生成识别。若 $O$ 为空，则没有待构造的旧边邻域，结论为空族。
+
+### 18.1 整张实际配对面上的轴与半径运输
+
+设原始面配对的顶点排列为 $\sigma$，源面标签为 $f$，旧边的两个有序端标签 $i,j$ 均不同于 $f$。沿第 17 节的定义，源轴的端点为 $A,B$，目标有序端点为 $A',B'$；实际面等距映射 $I$ 把 $A$ 送到 $A'$、$B$ 送到 $B'$。这包括端点，且与面上点离轴多远无关。共同长度给出同一个 $\ell>0$，并有
+
+$$
+\tau=\frac{B-\cosh\ell\,A}{\sinh\ell},\qquad
+\tau'=\frac{B'-\cosh\ell\,A'}{\sinh\ell}.
+$$
+
+对该闭面上的任意 $w$，等距映射保留 $w$ 与两个 cap 端点的双曲距离，故保留相应 Lorentz 配对。由上述 $\tau$ 的公式得到
+
+$$
+a'=-L(Iw,A')=-L(w,A)=a,\qquad
+b'=L(Iw,\tau')=L(w,\tau)=b.
+$$
+
+第 17 节的实际四向量正交基及单位方程给出
+
+$$
+q_o(w)^2=a^2-b^2-1.
+$$
+
+目标同样满足此式；两边的半径均非负，因此
+
+$$
+q_{o'}(Iw)=q_o(w).
+$$
+
+在有序端点一致的约定下，还保留整个面的恢复纵坐标
+$t=\operatorname{arsinh}\bigl(b/\sqrt{1+q_o(w)^2}\bigr)$。这里没有添加 collar 半径限制，也没有把面映射的参数运输作为外加前提。
+
+若目标局部槽序颠倒端点，则 $A_{\rm rev}=B$、
+$\tau_{\rm rev}=-\sinh\ell\,A-\cosh\ell\,\tau$。于是
+
+$$
+a_{\rm rev}=\cosh\ell\,a-\sinh\ell\,b,\qquad
+b_{\rm rev}=\sinh\ell\,a-\cosh\ell\,b,
+$$
+
+从 $\cosh^2\ell-\sinh^2\ell=1$ 得
+$a_{\rm rev}^2-b_{\rm rev}^2=a^2-b^2$，所以半径仍不变。该计算允许每条局部边任选端点顺序；它不声称整个出现圈已有一致的有向 $t$。
+
+### 18.2 闭旧边分离及全部出现的共同缩小
+
+先对有限 $O$ 中每个出现取第 17 节给出的正半径，再取最小值。更小的正半径仍满足同一精确 Fermi 集合等式，而且保留两个非相邻主侧面上的严格内侧支撑。
+
+同一实际块的不同完整闭旧边是不交紧集。确实，$\nu_x$ 在 $C_x$ 上单射：若两个归一化像相同，原始向量 $V_a$ 构成基给出两个系数向量按归一化分母成比例；两者系数和都为 $1$，所以比例为 $1$。沿端标签 $\{i,j\}$ 的整个闭段，归一化前恰有 $i,j$ 两个严格正系数，其余系数为零。端点的两个系数也严格正。不同二元端标签集不能有相同的正系数支撑，故闭段不交。
+
+在原始有限维环境空间固定任意范数。每对不同闭旧边的距离函数在紧乘积上达到严格正的最小值。有限个块及局部边对因此有一个共同正分离常数 $\delta$。没有局部边对时无需此常数。
+
+对出现 $o$，令 $M_o=\max_{0\le t\le\ell_o}\|\gamma_o(t)\|$。实际 Fermi 公式给出统一于整个闭段和全部扇区角的估计
+
+$$
+\|F_o(t,\rho,\theta)-\gamma_o(t)\|
+\le(\cosh\rho-1)M_o
++\sinh\rho\bigl(\|u_o\|+\|v_o\|\bigr),\qquad \rho\ge0.
+$$
+
+右端随 $\rho\downarrow0$ 趋于零。对有限全部出现进一步共同缩小 $\varepsilon$，可使右端在 $0\le\rho<\varepsilon$ 时严格小于 $\delta/3$。若同块两条不同边的 collars 相交，该交点到两条闭段各有上述界；三角不等式使两段距离小于 $2\delta/3$，与分离界矛盾。因此同块不同局部出现的 collars 不交，即使它们在 $E$ 中具有同一个全局标签。本步骤只用环境范数、紧性和实际 Fermi 公式，不依赖内在距离的另一次校准。
+
+### 18.3 原始面生成关系与完整等价闭包的饱和
+
+设 $(t,w)\in U_e^{\rm geom}$，取其出现 $o=(t,\{i,j\})$。第 17 节的严格支撑给出 $L(w,n_i)<0$ 和 $L(w,n_j)<0$，所以该点不在这两个非相邻主侧面上。任何在该点实际可用的面生成识别，其源面必为另外两个相邻主侧面之一。两个端点 cap 上的等式不产生面配对识别。
+
+对于这样的实际生成识别，原始三槽面映射把边 $\{i,j\}$ 运输为目标边 $\{\sigma i,\sigma j\}$。这正是定义 $E$ 的一个面端口运输，故目标出现 $o'$ 仍属于 $O_e$。第 18.1 节给出目标半径等于源半径，而所有出现使用同一个 $\varepsilon$，因此识别后的点属于 $U_{o'}(\varepsilon)$。逆配对应用相同论证，得到生成关系两端的成员资格等价。这也处理两个不同面在同一块中的自配对。
+
+沿生成、反身、对称和传递逐步保持该成员资格，得到
+
+$$
+(t,w)\ R_{\rm geom}\ (u,v)
+\quad\Longrightarrow\quad
+\bigl((t,w)\in U_e^{\rm geom}\iff(u,v)\in U_e^{\rm geom}\bigr).
+$$
+
+这证明整个等价闭包的饱和等式。每个 $U_o(\varepsilon)$ 在实际块中相对开，故其带标签有限并 $U_e^{\rm geom}$ 开。商拓扑以商映射原像判开；对这个已证饱和的集合，原像恰为其自身，因此商像开。
+
+第 15.3 节的同一个 $H$ 在两个方向保持整个生成关系及其等价闭包。故 $U_e=H^{-1}(U_e^{\rm geom})$ 在原始 $X$ 中开且 $R$-饱和，商像仍是字面原始 $Q$ 中的开集。代表公式 $\overline H(q(t,z))=q_{\rm geom}(H(t,z))$ 给出命题中的精确商像对应。
+
+不同 $e$ 的实际带标签并不相交：若在同一块相交，则其两个局部出现不同，与第 18.2 节矛盾。若两个商像相交，两个代表属于同一个 $R_{\rm geom}$ 类；饱和性使其中一个代表同时属于两个实际并，再次矛盾。原始商经 $H$ 同样得到不交性。
+
+本节结算实际有限出现的共同半径、同块分离、面半径运输及原始商饱和的书面接口，不申报 Lean kernel 验证、冻结、消化覆盖或文献原创性。精确展开坐标的商纤维、出现角和闭合、全部图卡交叠的等距 germ、解析度量下降及同一带标记 $N$ 上的度量实现仍分别承担其证明义务。

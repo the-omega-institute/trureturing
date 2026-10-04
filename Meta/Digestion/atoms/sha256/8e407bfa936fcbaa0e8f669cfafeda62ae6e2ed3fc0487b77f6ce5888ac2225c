@@ -1,0 +1,6 @@
+**Definition 1.3 (incidence).** A door $(\tau,D)$ is incident to a room
+$(\sigma,C)$ when either there exists $x\notin\tau$ with
+$\sigma=\tau\cup\{x\}$ and $C=D$, or there exists $j\notin C$ with
+$\sigma=\tau$ and $D=C\cup\{j\}$. Both the room cell condition and
+the door condition are part of this relation.
+

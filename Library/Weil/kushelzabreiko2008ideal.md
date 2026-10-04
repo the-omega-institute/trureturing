@@ -3,6 +3,7 @@ bibkey: kushelzabreiko2008ideal
 authors: Olga Y. Kushel and Petr P. Zabreiko
 year: 2008
 title: Gantmakher–Krein theorem for 2-totally nonnegative operators in ideal spaces
+doi: null
 url: https://arxiv.org/abs/0812.0902v1
 claim: The source requires positivity preservation on an ideal function space, together with exterior-square positivity and further operator hypotheses. The inherited pointwise cone on the original theta remainder is trivial, so its nonzero compressed semigroup and resolvent cannot meet this interface in the original radial coordinates.
 strata_touched: []
