@@ -6,8 +6,7 @@ title: 246B, Notes 2 — Some connections with the Fourier transform
 doi: null
 url: https://terrytao.wordpress.com/2021/01/23/246b-notes-2-some-connections-with-the-fourier-transform/
 claim: Proposition 3(i)–(ii) transports horizontal holomorphic shifts to Fourier weights and gives exponential Fourier decay under uniform integrable polynomial decay on smaller closed strips.
-strata_touched:
-  - D5/S3/Analytic/Fourier
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
