@@ -4551,3 +4551,511 @@ This is a concrete consumer of those existing primitives, not a
 new general Hall or CRT theorem or a literature-priority claim.
 It is ordinary constructive mathematics, without new Lean
 verification or a resolution of unrestricted Erdős #7.
+
+## 42. Multiple output heights have an exact four-menu prefix-capacity test
+
+Keep the five actual same-tree menus and the height-zero-priority
+retained choice of Section 41. Reuse the nested initial-segment
+matching criterion of Report 385 DP12, and the actual-phase root
+patch and original donor injection of SC183--184. This gives a
+concrete extension of the four-menu construction to multiple output
+heights at the same cofactor. It is a test for this allocation,
+not a claim that all actual whole covers pass it.
+
+For each numerical cofactor $m\mid M$, let $L_m(h)$ count active
+lower sources in $L_0\sqcup L_2$ with cofactor $m$ and output
+height at most $h$. Let $T_m(h)$ count all active safe tops with
+those bounds, across the five colors. Let $T_{c,m}(h)$ count just
+the tops of outer color $c\in\{2,5,8\}$ with those bounds.
+All height thresholds $h$ are nonnegative integers. All counts refer
+to the same fixed tree and complete hole $H$.
+
+Choose one outer color $c$ to omit. Assign the two inner menus and
+the two remaining outer menus to the four fresh nonzero roots.
+Each lower then requests two root patches; every selected top
+requests one. A request at height $b$ uses a slot retaining the
+entire numerical cofactor:
+
+$$
+\{3^jm:0\le j\le b\}\quad(m>1),\qquad
+\{3^j:1\le j\le b\}\quad(m=1).
+\tag{SC186}
+$$
+
+The slot must be different for every request at this new 5-depth.
+No proper cofactor divisor or extra phase sharing is used in this
+particular construction. Put $\delta_m=\mathbf1_{m>1}$. The exact
+condition for these requests to admit an assignment is
+
+$$
+\exists c\in\{2,5,8\}\quad
+\forall m\mid M\quad\forall h\ge0,\qquad
+2L_m(h)+T_m(h)-T_{c,m}(h)\le h+\delta_m.
+\tag{SC187}
+$$
+
+For necessity, every request of height at most $h$ has to use one
+of the $h+\delta_m$ slots of that cofactor through height $h$.
+For sufficiency at a fixed $c$, process all requests in one
+cofactor in increasing height, breaking equal-height ties
+arbitrarily. Give each request the smallest unused eligible index
+$j$. At a request of height $b$, the prefix inequality at $h=b$
+says that all requests encountered through that height fit in the
+eligible initial segment. This is the existing DP12 matching rule.
+Different cofactors cannot collide because $3^jm$ has a unique
+3-free part. It is enough to test heights actually occurring in a
+request: the left side is constant between them and the right side
+increases.
+
+The single omitted color $c$ must work for every column and every
+height at once. Choosing a different omitted color separately for
+each inequality would fail to specify four complete source menus.
+For $m=1,h=0$ the right side is zero. This excludes every unit
+height-zero request, consistently with the fact that original
+pure $3$ and $9$ are not safe-menu sources.
+
+Give each assigned request its SC183 CRT patch at the designated
+fresh root. Its slot divides the actual source modulus, so each
+complete source keeps its service on that root. Divisor closure
+supplies the original donor $3\cdot5^jm$: the source is either
+$3\cdot5^bm$ or $9\cdot5^bm$ and $j\le b$. Donors are
+distinct across requests. Nonunit cofactors separate them from
+pure $3,9$, while unit cofactors use $j\ge1$ and contain $5$.
+With $R_c$ the total number of selected requests, SC184 becomes
+
+$$
+c_{\rm patch}=1+R_c,\qquad
+N_3\ge2+R_c,\qquad
+|\mathcal F_0\cup\mathcal P|\le K-z-1<K.
+\tag{SC188}
+$$
+
+Thus SC187 suffices for a complete paid repair at arbitrary used
+heights and arbitrarily many, possibly overlapping cofactors.
+The one-height capacities SC185 are its direct special case.
+
+Contrapositively, an EB1 whole cover must give, for each choice of
+omitted outer color $c$, at least one cofactor and height for which
+
+$$
+2L_m(h)+T_m(h)-T_{c,m}(h)>h+\delta_m.
+\tag{SC189}
+$$
+
+These witnesses may be different for the three choices. Such a
+violation obstructs only this allocation using full cofactor
+slots. Additional divisor slots, common phase enclosures, deeper
+fresh prefixes or different complete menus can still give a
+repair. No unproved implication from numerical congestion to an
+original whole-cover contradiction is used here.
+
+This reuses the existing nested Hall calculation and donor
+construction with the four-menu demand counts; it adds no new
+general matching theorem, finite enumeration or Lean verification.
+
+## 43. Three complete top colors admit a paid repair after two cofactor projections
+
+Keep original ternary height $A=2$, one common source tree $\theta$,
+the fixed retained family $\mathcal F_0$ and its bought root
+$S=[s]_3$. Its complete integer hole and exact inventory satisfy
+$$
+H=\mathbb Z\setminus\bigcup\mathcal F_0,\qquad
+|\mathcal F_0|=K-N_3-z,\qquad z\ge0.
+$$
+Every retained modulus is $5$-free. If $H$ is empty, the retained
+family itself gives strict descent, so suppose $H\ne\varnothing$.
+
+An actual safe top source has original label, output and cofactor
+$$
+d_t=9\cdot5^{b_t}m_t,\qquad
+C_t=[\eta_t]_{n_t},\qquad
+n_t=3^{b_t}m_t>1,\qquad m_t\mid M,\quad(m_t,15)=1.
+$$
+The output labels $n_t$ are globally distinct across all safe top
+colors. The excluded label $n_t=1$ would be original pure $9$,
+whose old word is not safe. Unit cofactors at positive output
+height remain allowed.
+
+Choose finite subfamilies $\mathcal P,\mathcal Q,\mathcal R$ from
+three different actual top colors, each serving the entire hole:
+$$
+H\subseteq\bigcup_{t\in\mathcal P}C_t,\qquad
+H\subseteq\bigcup_{t\in\mathcal Q}C_t,\qquad
+H\subseteq\bigcup_{t\in\mathcal R}C_t.
+\tag{SC190}
+$$
+Assume the cofactors in $\mathcal P\sqcup\mathcal Q$ are nonunit
+and numerically pairwise distinct. Put
+$$
+J=\{m_t:t\in\mathcal P\sqcup\mathcal Q\},
+\qquad n_r\notin J\cup3J\quad(r\in\mathcal R).
+\tag{SC191}
+$$
+The last condition excludes exactly a direct source in $\mathcal R$
+with cofactor in $J$ and output height zero or one. No coprimality
+between different cofactors is assumed. Within $\mathcal R$,
+cofactors may repeat at different heights, may be units, and may
+overlap all other cofactors. The required service is all of $H$,
+including any discarded lower liability; covering just its top-only
+part does not meet the premise.
+
+### Actual phases and complete coverage
+
+Let $\alpha,\beta$ be the two ternary roots other than $s$ and put
+$E_t=[\eta_t]_{m_t}$ for $t\in\mathcal P\sqcup\mathcal Q$.
+Each $E_t$ encloses the whole actual $C_t$. Add the following APs:
+
+| New condition | Actual suppliers or enclosures | Numerical labels |
+|---|---|---|
+| $[0]_5$ | none | $5$ |
+| $[1]_5$ | $E_t$, $t\in\mathcal P$ | $5m_t$ |
+| $[2]_5$ | $E_t$, $t\in\mathcal Q$ | $5m_t$ |
+| $[3]_5$ | $C_t$, $t\in\mathcal R$ | $5n_t$ |
+| $[4]_5\cap[\alpha]_3$ | $E_t$, $t\in\mathcal P$ | $15m_t$ |
+| $[4]_5\cap[\beta]_3$ | $E_t$, $t\in\mathcal Q$ | $15m_t$ |
+
+Each row means intersection with every listed source or enclosure.
+All intersections are single APs by CRT. Their cofactor phases are
+reductions of the actual source phases. Only the enlarged enclosures
+drop ternary information; no actual source or retained phase changes.
+
+For every $x\in H$, the three complete menus supply its new roots
+$1,2,3$, and the shared class supplies root zero. On root four,
+$x$ has ternary residue $\alpha$ or $\beta$ because it avoids the
+retained $S$. Use its $\mathcal P$ enclosure in the first case and
+its $\mathcal Q$ enclosure in the second. This covers every integer
+lift of the whole $H$. Points outside $H$ keep their old owner.
+
+The projected labels are distinct because the cofactors in $J$
+are distinct and the two rows have different ternary valuations.
+The direct labels $5n_r$ are distinct by original top-label
+uniqueness. Their only possible collisions with projected labels
+are $n_r=m\in J$ or $n_r=3m\in3J$, precisely the excluded cases.
+They cannot equal $5$ because $n_r>1$. In particular, a unit
+cofactor in $\mathcal R$ produces $5\cdot3^{b_r}$ with $b_r\ge1$,
+which does not collide with any nonunit-cofactor projected label.
+All new labels are odd nonunits divisible by $5$, hence fresh
+relative to $\mathcal F_0$.
+
+### Original inventory pays both projected rows
+
+Write
+$$
+\chi(3^bm)=5^bm,\qquad
+V_a=\{n>1:3^a\chi(n)\in D\}\quad(a=1,2).
+$$
+The exact original partition is $N_3=2+|V_1|+|V_2|$, reserving
+the original pure labels $3,9$. The set
+$$
+W=J\sqcup\{n_r:r\in\mathcal R\}
+$$
+is disjoint and has size $p+q+r$, where $p,q,r$ are the three
+family sizes. Divisor closure puts every $w\in W$ in both $V_1$
+and $V_2$. In particular, a projected cofactor $m_t$ is paid by
+the original pair $3m_t,9m_t$ even when its top source had higher
+output height. A direct source is paid from
+$3\chi(n_r),9\chi(n_r)$.
+
+The pairs for different $w$ are disjoint by unique factorization:
+$\chi$ is injective and its values are $3$-free. Since $w>1$,
+none is the reserved original $3$ or $9$. For a unit cofactor
+in $\mathcal R$, both labels contain a positive power of $5$.
+Thus
+$$
+\begin{aligned}
+c&=1+2p+2q+r,\\
+N_3&\ge2+2p+2q+2r,\\
+|\mathcal F_0\cup\mathcal B|
+&\le K-(1+r+z)<K.
+\end{aligned}
+\tag{SC192}
+$$
+No further retained class is deleted to pay this repair. This is
+a comparison against the original inventory already present in
+the exact count for $\mathcal F_0$.
+
+### Three complete colors cannot all use one common height
+
+Fix an output height $h\ge0$. Suppose three distinct safe colors
+each cover all $H$ using only their actual top sources at height
+$h$. Across those three families, cofactors are numerically
+distinct: equal cofactors would duplicate the original label
+$9\cdot5^h m$. If a unit-cofactor source occurs, it belongs to
+only one family; assign that family to the direct role
+$\mathcal R$. The other two families have nonunit cofactors,
+and the direct cofactors differ from theirs. All packet conditions
+then hold, giving strict descent.
+
+Writing $T_{u,h}$ for the union of safe color $u$'s actual top
+outputs at height $h$, this gives
+
+$$
+\#\{u\in\{2,3,5,6,8\}:H\subseteq T_{u,h}\}\le2
+\qquad(h\ge0).
+\tag{SC193}
+$$
+
+Consequently an EB1 family has at most two top colors capable of
+covering all $H$ at any one fixed output height. This includes
+heights zero and one, arbitrarily many cofactor columns, and
+arbitrary common prime factors among different cofactors. It does
+not assert that any color has such a fixed-height complete subcover.
+
+The five-safe relation supplies three complete outer top colors
+when $H\cap L_2=\varnothing$. Under that hypothesis, those three
+complete covers cannot all be supplied at one common height.
+
+### Four complete top colors cannot survive at arbitrary heights
+
+There is also a direct use of the existing complete-menu root
+allocation with no height or cofactor restriction. If four safe
+top colors each cover all $H$, assign them to the four nonzero
+fresh roots and add $[0]_5$. Each selected top uses its actual
+output slot once, giving globally distinct labels $5n_t>5$.
+The complete patch costs at most $1+|V_2|<N_3+z$, contradicting
+EB1. Therefore, for the full top-color unions and their deficits,
+
+$$
+E_u=H\setminus T_u,\qquad
+\#\{u\in\{2,3,5,6,8\}:E_u\ne\varnothing\}\ge2.
+\tag{SC194}
+$$
+
+The complete five-menu containments locate these deficits:
+$E_3,E_6\subseteq L_0$ and $E_2,E_5,E_8\subseteq L_2$.
+This is direct reuse of the complete-menu construction, with no
+new general patch theorem. It does not force three complete top
+colors or the cofactor conditions SC191.
+
+### Two complete flat colors force a third-color liability on the paired $45m$ family
+
+Suppose $\mathcal P,\mathcal Q$ are complete top subcovers of $H$
+in two different colors, both using output height zero. Let
+$\mathcal R$ be the entire actual top family of a third color,
+also covering all $H$. The cofactors in
+$J=\{m_t:t\in\mathcal P\sqcup\mathcal Q\}$ are nonunit and
+globally distinct because the corresponding originals are $9m_t$.
+
+Delete from $\mathcal R$ the subfamily
+$$
+\mathcal B_J
+=\{r\in\mathcal R:b_r=1,\ m_r\in J\},\qquad
+\mathcal R_{\rm good}=\mathcal R\setminus\mathcal B_J.
+$$
+No remaining source can have $b_r=0,m_r\in J$: its original $9m_r$
+would duplicate one already assigned to a different top color.
+All remaining sources therefore satisfy $n_r\notin J\cup3J$.
+If they still covered $H$, the paid packet would contradict EB1.
+Hence
+$$
+H\setminus\bigcup_{r\in\mathcal R_{\rm good}}C_r
+\ne\varnothing.
+\tag{SC195}
+$$
+At any point $x$ in this nonempty set, the complete third color
+has an owner, and every third-color owner belongs to
+$\mathcal B_J$. Each such owner is an actual original $45m$,
+with an actual original $9m$ in $\mathcal P$ or $\mathcal Q$.
+Thus this whole $45m$ subfamily cannot be deleted simultaneously
+without losing complete third-color service.
+
+The conclusion does not single out an individually indispensable
+$45m$ original: several members may serve the same residual
+liability. It also does not say that the paired $9m$ source owns
+$x$, or that the paired source phases agree. When
+$H\cap L_2=\varnothing$, the statement applies to any two flat
+complete subcovers among the three outer colors, taking the
+remaining outer color as $\mathcal R$.
+
+These are constructive uses of complete actual source service,
+CRT root splitting and the original inventory identity. They do
+not force the packet hypotheses in the remaining configurations,
+assert literature priority, supply Lean verification, or resolve
+unrestricted Erdős #7.
+
+## 44. A single inner-deficit lower forces an identical opposite-root top partner
+
+Keep the original height-two whole cover, one common substitution
+tree, the actual retained family $\mathcal F_0$, and its complete
+integer hole $H$ from the five-safe-menu construction. In
+particular, every retained modulus is 5-free and
+
+$$
+|\mathcal F_0|=K-N_3-z,\qquad
+N_3=2+|V_1|+|V_2|,\qquad z\ge0.
+\tag{SC196}
+$$
+
+Here $V_a=\{n>1:3^a\chi(n)\in D\}$, with
+$\chi(3^bm)=5^bm$ for $(m,15)=1$. The separately counted
+originals are the pure classes of moduli 3 and 9. Use the
+normalization $1\pmod3$ and $0\pmod9$ for these classes.
+The two inner safe words are 3 and 6, and the three outer safe
+words are 2, 5 and 8. Every safe top is an actual original
+$9\chi(n_t)$, with nonunit output modulus $n_t>1$.
+
+Write $T_u$ for the union of the actual active top outputs of
+safe color $u$. Outputs from different top suppliers have
+different numerical moduli, including across colors: equal
+$n_t$ would give the same original numerical label
+$9\chi(n_t)$. This uniqueness does not assert that a lower and
+a top cannot have the same output modulus.
+
+Assume the three outer colors each cover the entire hole, and one
+actual lower source from $L_0$ contains both inner deficits:
+
+$$
+H\subseteq T_2\cap T_5\cap T_8,\qquad
+E_u=H\setminus T_u,\qquad
+E_3\cup E_6\subseteq C_\ell=[\eta_\ell]_n,
+\quad n>1.
+\tag{SC197}
+$$
+
+The lower has actual original label $3\chi(n)$, so
+$n\in V_1$ and $|V_1|\ge1$. Other lower sources may meet
+$H$; SC197 does not say that $C_\ell$ covers all of $H$.
+For example, the five-menu containments imply SC197 if
+$H\cap L_2=\varnothing$ and this is the only active $L_0$
+source.
+
+Under EB1, there must be a unique active safe top supplier $t$
+with output modulus $n$. Its color $c$ lies in
+$\{2,5,8\}$, and its actual output equals the lower output:
+
+$$
+C_t=C_\ell.
+\tag{SC198}
+$$
+
+Furthermore, put
+
+$$
+D_c=H\setminus
+\bigcup_{\substack{v\text{ active top of color }c\\v\ne t}}C_v.
+\tag{SC199}
+$$
+
+Then both complete-liability intersections are nonempty:
+
+$$
+D_c\cap E_3\ne\varnothing,
+\qquad
+D_c\cap E_6\ne\varnothing.
+\tag{SC200}
+$$
+
+The two witnesses may coincide. SC199 credits all other actual
+same-color top service; it is not just a chosen private trace.
+
+### Omit either inner color before assigning the four fresh roots
+
+If $H$ is empty, the retained family already contradicts EB1,
+so assume $H\ne\varnothing$. Choose one inner color
+$j\in\{3,6\}$ to omit, and let $k$ be the other. The four
+menus
+
+$$
+T_2,\quad T_5,\quad T_8,\quad C_\ell\cup T_k
+\tag{SC201}
+$$
+
+all cover $H$. For the fourth menu, a point not in $T_k$
+belongs to $E_k\subseteq C_\ell$. Assign these menus to fresh
+5-roots 1, 2, 3 and 4 respectively; add $[0]_5$. As in the
+existing actual-phase root patch, a supplier $[\eta]_q$
+assigned to root $r$ contributes
+
+$$
+[r]_5\cap[\eta]_q
+$$
+
+with numerical modulus $5q$. All output moduli are coprime to
+5, so these are CRT classes. The four complete menus cover the
+whole hole at every lift; $\mathcal F_0$ remains unchanged.
+
+Top-output uniqueness leaves only one possible numerical collision:
+the lower's label $5n$ with a top at output modulus $n$.
+If no active safe top has this modulus, every label is distinct.
+If such a top belongs to inner color 3 or 6, choose that color as
+the omitted $j$. Again every added label is distinct. Tops on
+unsafe original words do not occur in these menus and cannot cause
+a collision. Since $n>1$ and every safe top has $n_t>1$, no
+supplier patch coincides with the shared label 5.
+
+In either collision-free case the cost is at most
+
+$$
+c\le2+|V_2|<2+|V_1|+|V_2|+z=N_3+z.
+\tag{SC202}
+$$
+
+Every new modulus contains 5 and is therefore fresh relative to
+$\mathcal F_0$. SC196 gives a distinct odd whole cover with fewer
+than $K$ classes, contradicting EB1. Hence the unique partner
+exists and has an outer color $c$.
+
+### Move the omitted inner color to the entire deleted liability
+
+Fix either $j=3$ or $j=6$, and start with the allocation SC201.
+Remove the outer partner $t$'s patch from its assigned new root
+$r_c$. Place every top supplier of the omitted color $j$ at
+that same root. The resulting menu at $r_c$ is exactly
+
+$$
+\left(\bigcup_{\substack{v\text{ active top of color }c\\v\ne t}}
+C_v\right)\cup T_j.
+\tag{SC203}
+$$
+
+All other fresh-root menus are unchanged. Every safe top is now
+used once, except for the deleted partner; the lower is used once.
+Thus all numerical labels are distinct and the cost is at most
+
+$$
+c\le1+1+(|V_2|-1)=1+|V_2|<N_3+z.
+\tag{SC204}
+$$
+
+The changed root covers the entire hole exactly when
+$D_c\subseteq T_j$, equivalently when
+$D_c\cap E_j=\varnothing$. To justify the converse on actual
+integers, choose a common 5-free period $N$ for
+$\mathcal F_0$ and all displayed outputs. If
+$x\in D_c\setminus T_j$, CRT gives an integer $y$ satisfying
+
+$$
+y\equiv x\pmod N,\qquad y\equiv r_c\pmod5.
+$$
+
+It remains in $H$ and outside SC203, and all patches on other fresh
+roots miss it. Conversely, if $D_c\subseteq T_j$, SC203 covers
+every point of $H$ at that root, while SC201 pays the other roots.
+This equivalence uses the whole liability after deleting the top,
+including points not private to that top before choosing a color.
+
+If either $D_c\cap E_3$ or $D_c\cap E_6$ were empty, choose
+the corresponding omitted inner color and use SC203. The paid repair
+would contradict EB1. This proves both nonemptiness statements in
+SC200; neither inner color's deficit was discarded.
+
+### The forced overlap determines the actual output phase
+
+The outer color $T_c$ covers $H$, so SC199 implies
+$D_c\subseteq C_t$. By SC197, $E_3\cup E_6\subseteq C_\ell$.
+Either witness from SC200 therefore lies in $C_t\cap C_\ell$.
+These two complete APs have the same numerical modulus $n$,
+so their residues modulo $n$ are equal and SC198 follows.
+
+The word "opposite" concerns the old ternary source root: the
+lower belongs to old first root zero, whereas its outer top partner
+belongs to old first root two. Equality of their output APs is
+compatible with original comparable-disjointness, because their
+original APs already disagree modulo 3. Thus SC198--SC200 identify a
+necessary remaining same-source structure; they do not themselves
+contradict EB1 or resolve arbitrary lower-deficit configurations.
+
+This is an ordinary constructive consequence of the existing
+five-menu service, actual-phase root patch and inventory identities.
+It uses no new enumeration, independent source optimization, or
+Lean verification.
