@@ -231,6 +231,94 @@ the second belongs to no original. Component membership and a
 complete component rectangle therefore do not supply service at
 every moving digit even on the component's own union of supports.
 
+## An expanded first-digit control
+
+The same numerical palette also admits a control with a height-one
+owner in **every ternary row at every first q-digit except zero**.
+It retains all 415 moving digit/word cells and satisfies SC468, yet
+still fails whole coverage and the common-base all-U service relation.
+Thus the 112-color inventory bounds and their combined 111-color
+three-row bounds do not by themselves supply that relation.
+
+Among the cyclically assigned triple supports, eight cells
+$(c,2)$ with $30\le c\le37$ have a second owner group. Change the
+assigned first q-digit of the following five complete cofactor groups;
+keep their old word equal to two and keep every primary-prime phase:
+
+| Cofactor support | Old first q-digit | New first q-digit |
+| --- | ---: | ---: |
+| $\{47,67,73\}$ | 30 | 1 |
+| $\{53,59,61\}$ | 31 | 2 |
+| $\{53,61,67\}$ | 32 | 27 |
+| $\{53,67,73\}$ | 33 | 28 |
+| $\{59,61,67\}$ | 34 | 29 |
+
+Only the fifteen q-bearing APs change their numerical residues: the
+three q-free rows in each group retain exactly their old APs. Every
+numerical modulus, every old ternary coordinate and every cofactor
+coordinate is unchanged. The new word two avoids the original 3q
+root one at first digit one, and the original 9q word four at first
+digit two. At first digits 27, 28 and 29, the private-point formula
+uses q-coordinate $c+q$, which misses the deeper unit original with
+second digit zero. Each old cell retains its first assigned group.
+
+Put $C=\{1,\ldots,112\}$ and $V=C\setminus\{1\}$. Directly from
+the numerical moduli and residues, all 112 colors of C have actual
+height-one owners in rows zero, one and two. In particular their
+minimum-row counts are $(112,0,0)$, and all 111 colors of V have all
+three rows. These owners need not have a common cofactor phase.
+
+The 107 colors $\{3,\ldots,26\}\cup U$ still have every safe word
+realized by a same-cofactor triple $qm,3qm,9qm$, with all three first
+q-digits equal and with compatible middle-root and top-word tests.
+Only $\{2,27,28,29\}\subset V$ lack a complete five-word inventory.
+Every six-subset of V therefore contains a complete color. Any safe
+word assignment on that six-set selects an actual SC468 triple at
+that color; the extra 9q word restriction only reduces the permitted
+assignments. This verifies the full q=113 SC468 condition for this
+control, not merely its row-count consequences.
+
+The delta checker reconstructs all 4530 literal top two-prime keys;
+their maximum multiplicity remains one. It also enumerates the
+17,150 nonzero top two-of-three phase queries at the five new colors,
+whose maximum is two. At other q-colors no matching q-incidence is
+added, so the saved global upper bound three remains valid. At a new
+color, an all-row four-of-five query can use only the one moved
+triple support. Its three row phase vectors are distinct, giving
+upper bound one there and preserving the saved global upper bound
+two. All non-q phase queries are unchanged, including the 315,028
+saved nonzero three-primary query classes.
+
+The checker verifies all 105,315 affected private-point/owner relations
+and all 450 affected comparable-modulus pairs. The other relations
+are identical to the original fixture. The numerical divisor palette
+is unchanged. There are now 1350 moving owners on 450 triple supports,
+including 450 moving top owners. For any two moving supports, at least
+$\binom{9}{3}-5=79$ available triple supports remain disjoint from
+both, so the same phase-band argument keeps the masked graph connected
+with diameter at most two. All 415 moving cells remain occupied.
+
+Both displayed uncovered integers are checked against the expanded
+family. The saved private integer still has its unique original owner,
+and changing its first digit from 30 to 31 still yields the displayed
+uncovered integer with exactly the same preserved base and higher
+q-suffix. Its base remains inside the actual component union. Hence
+the common-base service failure persists even after the expanded row
+inventories and SC468 hold together.
+
+The shared arithmetic constructor is
+[control_model.py](../../../frontier/cover-geometry/three-support-masked-control/control_model.py).
+The original checker retains its original default family and result.
+Run `python3 verify_expanded_colors.py` from the experiment directory
+to check the expanded variant; its exact data are in
+[expanded_result.json](../../../frontier/cover-geometry/three-support-masked-control/expanded_result.json).
+The checker pins the saved phase and result inputs and the full
+ordered sequences of original numerical APs and private witnesses. It
+reuses unchanged relations and verifies all affected relations and
+new q-phase query classes. These are finite arithmetic checks and the stated counting
+deductions; no complete Lean verification of either 3518-class
+fixture is asserted.
+
 This is an actual NONCOVER and is not EB1. It is not a counterexample
 to any result assuming whole coverage. It separates the listed
 inventory and phase constraints from that missing joint premise;

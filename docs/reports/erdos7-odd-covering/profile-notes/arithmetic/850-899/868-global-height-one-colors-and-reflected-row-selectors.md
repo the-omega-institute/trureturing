@@ -416,6 +416,114 @@ This contradicts class-count minimality and proves WR17. The argument
 uses the complete deletion hole; it does not claim that the extra pure
 class alone covers either charged original's former territory.
 
+## All first digits except the actual q class are available
+
+For the reflected exchange, excluding every unit-cofactor first digit
+is stronger than necessary. Put
+
+$$
+C=\mathbb F_{113}\setminus\{\rho_q\bmod113\},
+\qquad |C|=112.
+\tag{WR20}
+$$
+
+The complete literal-strip source works for any chosen first digit.
+The distinctness and enclosure arguments in WR4 also allow all colors.
+For a height-one original the new label is at least 27 even if its
+cofactor is one. For an original of q-height at least two, its literal
+strip remains divisible by q and is therefore nonunit. Thus the
+unit-cofactor exclusion used for the earlier moving set U is not a
+legality requirement of this reflected family.
+
+Delete all q-bearing originals and select owners only from C. The
+actual q original is deleted without replacement, so any complete
+safe-domain selector allocation still strictly lowers the class count.
+The actual 3q and 9q originals, if selected, have new reflected labels
+81 and 27 respectively; these are distinct and fresh against every
+retained q-free original. No additional pure repair is used here.
+
+Suppose some color c in C had no height-one owner in row zero or one.
+Give c the type-two selector and give every other color a singleton
+seed. This includes the case in which c has no height-one owner at
+all: the enclosure requirement on its height-one owners is then empty.
+The type-two selector covers 45 safe words, leaving 90 words for the
+other 111 colors. The resulting complete source exchange is impossible
+by count minimality. Hence
+
+$$
+\boxed{\forall c\in C,\quad
+\exists i:\ j_i=1,\ c_i=c,\ a_i\le1.}
+\tag{WR21}
+$$
+
+Let $M_a$ count colors of C whose least height-one row is a. These
+counts use C, rather than the smaller domain of $N_a$ in WR7.
+If five colors had minimum row one, assign them to five disjoint
+large type-one cells, of six safe words each. The other 107 colors
+can cover the remaining 105 safe words by singleton seeds. This
+again supplies a forbidden whole-cover exchange. Consequently
+
+$$
+\boxed{M_2=0,\qquad M_1\le4,\qquad M_0\ge108.}
+\tag{WR22}
+$$
+
+The conclusion needs only class-count minimality, the actual q, 3
+and 9 originals, ternary height at most two, and the displayed finite
+factorization at q=113. Neither modulus-sum minimality nor the actual
+3q and 9q labels is needed for this bound. The all-but-q domain and
+one common source reuse Report385 HPA3--HPA8 and GHA4--GHA5; WR4's
+height-one reflection and unchanged deeper strips supply the present
+row-sensitive application.
+
+## A pure class sharpens the all-but-q bottom-row bound
+
+If the actual original label 9q is also present, let
+$\delta=\rho_{9q}\bmod q$. Its first digit differs from that of q:
+otherwise the entire 9q class would be contained in the q class,
+contradicting class-count minimality. Put
+
+$$
+D=C\setminus\{\delta\},\qquad |D|=111.
+\tag{WR23}
+$$
+
+Use the same reflected labels for the selected colors in D and add
+one pure class of modulus 27. This label is fresh. A height-one
+reflected label could equal 27 only for cofactor one and old row two,
+which identifies the actual 9q original; its color is omitted.
+Retained labels have ternary height at most two, and deeper strips
+remain q-bearing.
+
+Choose the pure 27 class inside the small part of the safe-word
+partition. In WR9's notation, fix $d_1=\gamma$ and choose the unique
+$d_0$ different from both $\alpha$ and $\beta$; also fix $d_2=0$.
+The free digits $d_3,d_4$ give nine safe words. Every large type-one
+cell instead has $d_1\ne\gamma$, so all eighteen such cells are
+disjoint from this pure class.
+
+If D had three colors with minimum row one, give them three large
+cells. These cover eighteen words, the pure class covers nine, and
+the remaining 108 colors can receive singleton seeds for exactly
+108 remaining safe words. The complete-source enclosure argument
+then covers every integer. The actual q and 9q originals are both
+deleted and unselected, while only one extra class is inserted, so
+the class count strictly decreases.
+
+Therefore D has at most two colors without a bottom-row height-one
+owner. Together with WR21 this gives
+
+$$
+\boxed{M_1\le3,\qquad M_0\ge109,\qquad
+M_1=3\Longrightarrow b_\delta=1.}
+\tag{WR24}
+$$
+
+Here $b_\delta$ is the attained least height-one row at that color.
+The bound on D, as well as the displayed boundary case, retains the
+identity of the actual 9q digit. This remains a class-count argument;
+it does not use modulus-sum minimality or assume an actual 3q label.
+
 ## Reuse and boundary
 
 This construction reuses complete-color stripping, CRT enclosure,
@@ -514,6 +622,40 @@ application exits successfully with 271 axiom-closure reports:
 262 use only standard axioms and nine use no axioms, with no errors
 or `sorryAx`. This does not verify the other prime instances or
 the later probability and cell-count deductions in Report388.
+
+The all-but-q reflection is also checked directly from its weaker
+class-count-minimality inputs. The application proves WR20--WR22,
+including attained minimum rows and an actual lower-row height-one
+owner at every one of the 112 colors. It then combines the bottom-row
+bound with SC468 on the same original family: removing the actual
+3q digit leaves at least 107 bottom-serving colors in V; the middle
+and top rows each miss at most five colors. Thus at least 97 colors
+of V have all three rows. The combined application exits successfully
+with 285 axiom-closure reports: 276 use only standard axioms and nine
+use no axioms, with no errors or `sorryAx`. The count-only WR20--WR22
+consumer does not assume the additional EB1 inputs of this combination.
+
+The all-but-q one-pure-class extension verifies WR23--WR24 from
+class-count minimality and the actual q, 9q, 3 and 9 originals. Its
+final consumer retains the attained minima, the two-exception bound
+on D and the displayed equality case at the actual 9q digit. On the
+same EB1 family used for SC468, removing the actual 3q digit from C
+leaves at least 108 bottom-serving colors in V. The middle and top
+rows each miss at most five colors, so at least 98 colors of V have
+all three rows. This application exits successfully with 288
+axiom-closure reports: 279 use only standard axioms and nine use no
+axioms, with no errors or `sorryAx`. The WR23--WR24 consumer itself
+does not use modulus-sum minimality; the combined three-row bound
+does. The three owners at one color need not share a cofactor or
+cofactor phase.
+
+The expanded numerical control in
+[Report862](862-three-support-masked-rectangle-control.md#an-expanded-first-digit-control)
+satisfies SC468 and has all three height-one rows at every color of
+C, while still failing whole coverage and common-base all-U service.
+Thus even the stronger row inventories, together with that control's
+phase bounds, do not supply the missing service relation. This is a
+noncover separating those conditions, not an EB1 counterexample.
 
 These are transient applications of existing coordinate, CRT and
 finite-cardinality machinery, with the three-row arithmetic checked
