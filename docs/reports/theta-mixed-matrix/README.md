@@ -136,3 +136,10 @@ The [whole-line trial supplier](high-trials.md) defines those choices
 on the actual operator, imposes an exact symbolic ground lift and pays
 their own weighted derivative and omitted-action bounds. The retained
 integrals, complete residual Gram and lower matrix sign remain unpaid.
+
+The [ground normalization and residual-tail supplier](ground-residual.md)
+uses the same saved theta norms to bound the exact ground projection
+away from zero. It transports the low and high action allowances to
+one common residual map on the exact ground complement, with difference
+below $0.000662$. This is an action-tail difference, not a residual norm
+or a certificate of its retained Gram.
