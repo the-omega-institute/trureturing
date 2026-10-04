@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.QGrammar;
 internal sealed class SecGrammarWordsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/QGrammar/SecGrammarWords.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026qgrammar");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/han2026qgrammar");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Support words have two canonical blocks, and every such word is represented by one admissible tuple.",

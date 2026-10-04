@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.QGrammar;
 internal sealed class SecGrammarTransitionsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/QGrammar/SecGrammarTransitions.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026qgrammar");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/han2026qgrammar");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every canonical family has the stated transition multiplicities under one derivative step.",

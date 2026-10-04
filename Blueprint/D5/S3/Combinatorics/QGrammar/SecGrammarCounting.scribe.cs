@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.QGrammar;
 internal sealed class SecGrammarCountingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/QGrammar/SecGrammarCounting.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026qgrammar");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/han2026qgrammar");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Counting the finite support region gives the cubic formula in Conjecture III.7.",

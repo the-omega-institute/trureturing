@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.QGrammar;
 internal sealed class SecGrammarDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/QGrammar/SecGrammar.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026qgrammar");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/han2026qgrammar");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The number of distinct terms in every positive iterate of the Sec q-derivative is the formula of Conjecture III.7.",

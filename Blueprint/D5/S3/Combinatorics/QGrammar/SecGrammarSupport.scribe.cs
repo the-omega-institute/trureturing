@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.QGrammar;
 internal sealed class SecGrammarSupportDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/QGrammar/SecGrammarSupport.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026qgrammar");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/han2026qgrammar");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive coefficients make support evolution exactly the collection of normalized positional branches.",
