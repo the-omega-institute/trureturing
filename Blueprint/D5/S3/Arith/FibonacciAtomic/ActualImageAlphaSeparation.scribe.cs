@@ -19,8 +19,7 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
                 + "Its seven_leaf_separation theorem supplies the exact address semantics and Theorem 30.4. "
                 + "A is pair(E,beta), C is pair(A,E), and E is pair(beta,alpha).")),
             Def("B", "Smallest compatible compound", "B=(C,A), with eight leaves."),
-            Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets."),
-            Def("mu", "Alpha weight", "mu(P) is the cardinality of the original alpha-leaf address set."),
+            Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set."),
             Def("OneHole", "One source hole", "A context has one hole, and is built by attaching complete fixed source trees on its left or right. "
                 + "OneHole.fill(g,H,X) inserts X and applies g to each fixed source sibling. Using g=rho cubed makes all fixed siblings actual images; using the identity retains the preimage. "
                 + "OneHole.address records every ordered left or right choice from the root."),

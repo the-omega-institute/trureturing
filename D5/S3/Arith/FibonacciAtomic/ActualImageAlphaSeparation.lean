@@ -27,9 +27,6 @@ def B : Source := .mul C A
 /-- The directed alpha deficit uses the original alpha-address sets. -/
 def delta (P Q : Source) : ℕ := (alphaAddresses P \ alphaAddresses Q).card
 
-/-- The alpha weight is the cardinality of the original alpha-address set. -/
-def mu (P : Source) : ℕ := (alphaAddresses P).card
-
 /-- A source context with one occurrence of its hole and complete fixed siblings. -/
 inductive OneHole
   | hole
@@ -190,7 +187,7 @@ theorem result :
     injection h with _ hR
     cases hR
   have counts : FreeMagma.length A = 3 ∧ FreeMagma.length C = 5 ∧ FreeMagma.length E = 2 ∧ FreeMagma.length B = 8 := by decide
-  let m (X : Source) := mu X
+  let m (X : Source) := (alphaAddresses X).card
   let shared (X Y : Source) := (alphaAddresses X ∩ alphaAddresses Y).card
   have m_pair (X Y : Source) : m (.mul X Y) = m X + m Y := by
     exact Finset.card_union_of_disjoint (pref_disjoint _ _) |>.trans
@@ -206,7 +203,7 @@ theorem result :
     dsimp only [shared]; rw [hi, Finset.card_union_of_disjoint (pref_disjoint _ _)]
     simp only [Finset.card_image_of_injective _ List.cons_injective]
   have delta_eq (X Y : Source) : delta X Y = m X - shared X Y :=
-    by simpa only [delta, m, mu, shared, Finset.inter_comm] using
+    by simpa only [delta, m, shared, Finset.inter_comm] using
       (Finset.card_sdiff (s := alphaAddresses Y) (t := alphaAddresses X))
   have shared_le (X Y : Source) : shared X Y ≤ m X :=
     Finset.card_le_card Finset.inter_subset_left
