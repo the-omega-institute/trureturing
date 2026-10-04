@@ -1387,10 +1387,25 @@ so the two bounds combine as
 They cannot be added: the original ancestors counted in SC61 may
 already be among the rejected labels counted in SC64.
 
+The same report's [NF72--NF73](385-private-congruence-hulls-and-crossed-modulus-closure.md#58-reuse-the-height-one-source-before-resolving-individual-collision-phases)
+give stronger existing inputs. The height count NF72 yields
+\(N_s\ge P-s+1+B\). Thus in SC65 one may use
+\[
+ D(A,B,P)=\max\left\{3A-1,\
+ A+1+\left\lceil\frac{P+B-5}{2}\right\rceil\right\}
+ \le\Delta. \tag{SC65a}
+\]
+When \(A=1\), NF73 directly reuses report 708's ordinary
+thirteen-prime height-one noncoverage result and gives \(P\ge47\).
+Consequently \(\Delta\ge24\) in that branch, without repeating
+its retained exact arithmetic or asserting new Lean verification.
+
 Using the attributed nine-prime support theorem recorded in
 [Schroeder's source entry](../../../../../../Library/Arith/schroeder2026nine.md),
 report 385 NF68 gives \(P\ge29\). Under this source input,
-SC65 yields \(\Delta\ge A+14\ge15\). The source entry records
+SC65 yields \(\Delta\ge A+14\); for \(A\ge2\) this is at least
+sixteen. Together with the \(A=1\) bound above, the uniform lower
+bound is sixteen. The source entry records
 the pinned edition and its completed finite-geometry verification;
 no complete local kernel replay of the arbitrary-height source
 theorem is asserted. The parameter bound SC65 does not need this
@@ -1399,14 +1414,15 @@ additional numerical input.
 Consequently a complete legal one-root repair using this tree gives
 strict descent whenever
 \[
- c-b\le\max\{3A-1,\ A+(P-1)/2\}-2. \tag{SC66}
+ c-b\le D(A,B,P)-2. \tag{SC66}
 \]
-With the attributed \(P\ge29\), thirteen net additional classes
-are funded at every \(A\ge1\). All patch and rescue classes still
+With the source inputs above, fourteen net additional classes
+are funded at every \(A\ge1\), and twenty-two when \(A=1\).
+All patch and rescue classes still
 count in \(c\), and each removed old top counts once in \(b\).
 Coverage, numerical-slot uniqueness and the complete displaced
 service remain required. In particular SC66 supplies a budget,
-not a construction of thirteen compatible patches. This is ordinary
+not a construction of compatible patches. This is ordinary
 mathematical analysis without new Lean verification.
 
 ## 17. Changing retained representatives preserves the unbought pure-root obstruction
@@ -1491,3 +1507,102 @@ tree, removes the premise supplying SC69. Multiple patches may
 still cover the slice; neither their existence nor their exclusion
 is proved. SC67--SC69 reuse the existing contraction on a newly
 specified actual AP family and have no new Lean verification.
+
+## 18. A funded unbought-root repair needs more than one cofactor prime
+
+Fix \(r=3,s=5\), retain the pure \(5\) source root in the common
+tree, and buy \(\rho\ne j_5\). Allow any actual lower representatives
+as in Section 17. Consider a proposed complete repair, with all its
+numerical moduli distinct, and restrict its added patch moduli to
+divisors of \(N=3^BM\). Let \(c=c_0+c_+\) count respectively the
+added \(3\)-free and \(3\)-bearing classes, and let \(b\) count all
+actually omitted tops. Suppose its net count satisfies
+\(c-b\le\Delta-2\), as ensured by SC66's sufficient budget.
+
+Put every final \(3\)-free class, including all \(c_0\) added
+patches, into \(\mathcal F'_0\). Numerical uniqueness and the
+actual retained count give
+\[
+ |\mathcal F'_0|
+ \le K-\Delta-b+c_0
+ =K-\Delta+(c-b)-c_+
+ \le K-2-c_+<K. \tag{SC70}
+\]
+Its moduli divide \(M\). Reuse Section 17's DP4--DP7 application
+on this enlarged family. Its complete complement
+\(K_0=(\mathbb Z/M\mathbb Z)\setminus\bigcup\mathcal F'_0\)
+is nonempty, and for each fixed \(q\mid M\) it supports a
+probability \(\nu_q\) satisfying
+\[
+ \nu_q([a]\bmod q^f)\le(q-2)^{-f}
+ \qquad(0\le f\le v_q(M)). \tag{SC71}
+\]
+The probability is chosen after absorbing the new \(3\)-free
+patches. No positive mass of the old probability is presumed to
+remain after that change.
+
+Every retained old \(3\)-bearing output arises from a
+\(5\)-bearing original other than pure \(5\), and so avoids
+\(j_5\). The bought root also avoids it. The added
+\(3\)-bearing patches must therefore cover the entire slice
+\[
+ \{j_5\}\times\{\text{all higher }3\text{-digit tails}\}\times K_0.
+ \tag{SC72}
+\]
+Suppose all their cofactors are one or powers of a single fixed
+\(q\mid M\). Since \(\gcd(M,15)=1\), this prime is at least
+seven. The possible patch moduli are \(3^a\) and \(3^a q^f\).
+The pure slot \(3\) is already used by \(S_\rho\), so a pure
+power requires \(a\ge2\).
+
+On SC72 use Haar probability on the complete higher-digit tail,
+independent of \(\nu_q\). A patch whose first root is \(j_5\)
+has mass at most \(3^{1-a}(q-2)^{-f}\); a patch on another root
+has mass zero. Distinct numerical slots allow at most one patch
+for each \((a,f)\). Writing \(H_q=v_q(M)\), the union mass is
+bounded by
+\[
+ \begin{aligned}
+ \mu(U_{\rm patches})
+ &\le\sum_{a=2}^{B}3^{1-a}
+   +\left(\sum_{a=1}^{B}3^{1-a}\right)
+        \left(\sum_{f=1}^{H_q}(q-2)^{-f}\right)\\
+ &<\frac12+\frac{3}{2(q-3)}\le\frac78<1.
+ \end{aligned} \tag{SC73}
+\]
+The empty pure-power sum when \(B=1\) is allowed. The contradiction
+does not depend on an upper bound for the number of patches:
+even using every available slot in this single-prime palette fails.
+Thus any funded repair in this setting must use at least two primes
+of \(M\) among the cofactors of its added \(3\)-bearing classes.
+They need not occur together in one modulus. Added \(3\)-free
+patches may use arbitrary divisors of \(M\); they were already
+absorbed in SC70.
+
+A separate consequence allows arbitrary composite cofactors but
+assumes they all contain a fixed \(q\mid M\). The distinct pure
+\(3\)-power patches occupy less than half of the complete root
+tail. Choose one actual tail avoiding all of them. At that same
+tail the active nonpure patches must cover all of \(K_0\), and
+each has \(\nu_q\)-mass at most \(1/(q-2)\). Hence at least
+\(q-2\) nonpure \(3\)-bearing patches are required. If \(d\)
+counts the added pure \(3\)-powers, any chosen net budget \(F\)
+with \(c-b\le F\) consequently requires
+\[
+ b\ge c_0+d+q-2-F. \tag{SC74}
+\]
+For example, if all these nonpure cofactors contain the largest
+prime \(P\ge29\), at least twenty-seven are needed. Choosing
+the sufficient uniform budget \(F=14\) then requires
+\(b\ge13+c_0+d\). This is a necessary reservation count, not
+a contradiction: those tops can only be omitted if their entire
+lost service is covered elsewhere. The actual budget may exceed
+fourteen, and a lower bound for \(\Delta\) supplies no upper
+bound on what a repair can afford.
+
+SC70--SC74 reuse the existing single-prime supported law on the
+final actual \(3\)-free family. They exclude a specific repair
+palette and quantify a different common-factor condition. They
+neither provide a common probability for different primes nor
+exclude mixed-prime repair, purchase of \(j_5\), or source trees
+omitting that root. No new Lean verification is claimed.
