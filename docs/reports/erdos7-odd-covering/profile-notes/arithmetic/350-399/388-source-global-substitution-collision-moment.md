@@ -5441,3 +5441,430 @@ upper bound for this construction, not a lower bound for all
 repairs. The construction uses the existing source packets and
 inventory bounds; it adds no Lean verification or enumeration,
 and the unrestricted problem remains unresolved.
+
+## 47. Two different fresh roots share the common top phase
+
+Keep the same actual retained family and complete integer hole as
+Report 388 Section 46. In its remaining five-column branch, let
+
+$$
+L_i=[\alpha_i]_{9m_i}\quad(1\le i\le5)
+$$
+
+be the five complete lower enclosures. The $m_i>1$ are pairwise
+coprime and coprime to 15. Let the six actual cross-color top
+intersections in $K_{2,3}$ have complete enclosures
+
+$$
+I_{ij}=[\beta_{ij}]_{9m_im_j},
+\qquad \beta_{ij}\equiv\gamma\pmod9.
+$$
+
+The complete-service statement already gives
+
+$$
+H\subseteq\bigcup_{i=1}^5L_i\ \cup\!\bigcup_{ij\in E}I_{ij}.
+\tag{SC218}
+$$
+
+Write $R=\gamma\bmod3$, and write $R'$ for the other
+unbought ternary root. Exactly two lower enclosures lie in $R$
+and three lie in $R'$. No further restriction on their modulo-9
+phases or their cofactor phases is needed below. In particular,
+the construction covers the distinct phases in SC217 without
+identifying any lower phase with a top phase.
+
+Add these three shared classes:
+
+$$
+[0]_5,\qquad [2]_5\cap[R]_3,\qquad
+[1]_5\cap[\gamma]_9.
+\tag{SC219}
+$$
+
+Their numerical moduli are 5, 15 and 45. The last two classes
+occupy different fresh 5-roots. They jointly pay two roots of
+every top-intersection enclosure.
+
+### Three classes for each lower enclosure
+
+For a lower in root $R$, add
+
+$$
+[1]_5\cap[\alpha_i]_{m_i},\qquad
+[3]_5\cap[\alpha_i]_{3m_i},\qquad
+[4]_5\cap[\alpha_i]_{9m_i}.
+\tag{SC220}
+$$
+
+For a lower in root $R'$, add instead
+
+$$
+[2]_5\cap[\alpha_i]_{m_i},\qquad
+[3]_5\cap[\alpha_i]_{3m_i},\qquad
+[4]_5\cap[\alpha_i]_{9m_i}.
+\tag{SC221}
+$$
+
+Each lower uses the three distinct numerical labels
+$5m_i,15m_i,45m_i$. A root-$R$ lower is now entirely
+covered: SC219 pays roots zero and two, and SC220 pays the other
+three. A root-$R'$ lower has only its fresh root one left.
+
+### Two classes for each top-intersection enclosure
+
+For each of the six edges $ij$, add
+
+$$
+[3]_5\cap[\beta_{ij}]_{m_im_j},\qquad
+[4]_5\cap[\beta_{ij}]_{3m_im_j}.
+\tag{SC222}
+$$
+
+These have labels $5m_im_j$ and $15m_im_j$. Every point
+of $I_{ij}$ on fresh roots zero, one and two is already paid
+by SC219, because it has the actual phase $\gamma\pmod9$.
+SC222 pays roots three and four. This covers every edge enclosure
+completely, without replacing it by an independently chosen top
+phase or assuming an original product column exists.
+
+### The three residual lower enclosures share the depth-two prefix patch
+
+For the three lowers in $R'$, reuse the explicit shared prefix
+rows of SC175, with all three actual cofactors. Add the shared
+classes
+
+$$
+[1]_{25},\qquad[6]_{25}\cap[R']_3
+\tag{SC223}
+$$
+
+and, for each of those three lowers, add
+
+$$
+[11]_{25}\cap[\alpha_i]_{m_i},\qquad
+[16]_{25}\cap[\alpha_i]_{3m_i},\qquad
+[21]_{25}\cap[\alpha_i]_{9m_i}.
+\tag{SC224}
+$$
+
+The five children $1,6,11,16,21\pmod{25}$ exhaust the
+remaining fresh root one. SC223--SC224 therefore cover the complete
+residual portions of all three lower enclosures, at every higher
+integer lift. They cost $2+3\cdot3=11$ classes. SC175's
+displayed rows apply verbatim; only the number of cofactors in
+this application is three instead of at most two.
+
+### Global distinctness and strict payment
+
+At fresh 5-depth one, the cofactor parts are the unit, the five
+singletons $m_i$, and the six edge products $m_im_j$.
+Distinct subsets of pairwise coprime nonunits have different
+products, so these parts are all different. The 3-valuations
+separate the labels within each part. At fresh 5-depth two,
+the labels are $25,75$ and the nine labels
+$25m_i,75m_i,225m_i$ for the three residual lowers; these
+are likewise different. Different 5-depths cannot collide.
+
+All 41 labels are odd nonunits divisible by 5. Every retained
+modulus is 5-free, so they are fresh against the unchanged
+$\mathcal F_0$. All displayed phases are compatible CRT
+conditions taken from the same actual enclosures. The complete
+count is
+
+$$
+c=3+3\cdot5+2\cdot6+(2+3\cdot3)=41.
+\tag{SC225}
+$$
+
+By SC218 and the complete branch checks above, the construction
+covers all of $H$. SC212 gives $N_3\ge44$ in this five-top
+branch, so
+
+$$
+|\mathcal F_0\cup\mathcal P|
+=K-N_3-z+41\le K-z-3<K.
+\tag{SC226}
+$$
+
+Thus SC215--SC217 cannot occur in an EB1 whole cover. The repair
+already works at the earlier $(a,b)=(2,3)$, $K_{2,3}$ stage:
+it does not require the prime/power classification SC216 or the
+five distinct lower phases SC217. Together with Section 46's
+other graph branches, this closes the stated five-column profile.
+No claim forces an arbitrary cover into that profile. This is an
+ordinary explicit application of existing CRT, prefix, and
+complete-service constructions; no new enumeration or Lean
+verification is claimed.
+
+## 48. A single-deficit lower forces a small complete-deficit hull
+
+Keep precisely the same-source hypotheses of Section 44. Original
+ternary height is two; the retained family is 5-free, includes the
+bought root $S$, and leaves the complete integer hole $H$.
+With inactive sources omitted, assume
+
+$$
+H\subseteq T_2\cap T_5\cap T_8,\qquad
+E_j=H\setminus T_j\ (j=3,6),\qquad
+E=E_3\cup E_6\subseteq C_\ell=[\eta_\ell]_n,\quad n>1,
+\tag{SC227}
+$$
+
+where $\ell$ is an actual lower in $L_0$. Other lower sources
+may meet $H$. No uniqueness assumption on $\ell$ is added.
+Write $v_a=|V_a|$, so $N_3=2+v_1+v_2$, $v_2\le v_1$, and
+$v_1\ge1$ because of this actual lower. The exact count remains
+$|\mathcal F_0|=K-N_3-z$, $z\ge0$.
+
+Both $E_3$ and $E_6$ are nonempty. Otherwise one inner color and
+the three outer colors would be four complete top colors, contrary
+to SC194. Let $N$ be a common odd, 5-free period of the retained
+family and every displayed output. Choose $w\in E$ and define
+the complete congruence hull by
+
+$$
+\Gamma=\gcd\bigl(N,\{x-w:x\in E\bmod N\}\bigr),
+\qquad n\mid\Gamma.
+\tag{SC228}
+$$
+
+Reuse the existing congruence-hull equivalence: for $e\mid N$,
+$E\subseteq[w]_e$ exactly when $e\mid\Gamma$.
+
+### Every nonunit enclosure requires a different actual outer color
+
+Take any nonunit divisor $e$ of $\Gamma$ and put $B=[w]_e$.
+This is an enclosure of both deficits, even if it has not yet
+been identified with an actual source. Repeat Section 44's
+four-menu construction with $B$ in place of $C_\ell$:
+the three outer menus and $B\cup T_k$, where one inner color
+$j$ is omitted and $k$ is the other, all cover $H$.
+
+At distinct nonzero fresh roots, the top patches use labels $5q$
+for their actual output moduli $q$, while $B$ uses $5e$.
+The only possible collision is with the unique active safe top
+of output modulus $e$. If it is absent, there is no collision;
+if its color is inner, omit that color. Either case gives cost
+at most $2+v_2<N_3+z$, contradicting EB1. Thus this top exists
+in an outer color $c_e$.
+
+Delete that top's patch from its assigned root and put the omitted
+inner color $j$ there. Let
+
+$$
+D_e=H\setminus
+\bigcup_{\substack{v\text{ top of color }c_e\\v\ne t_e}}C_v.
+$$
+
+Every safe top is used at most once, except that $t_e$ is deleted;
+the enclosure is used once. The patch costs at most $1+v_2$.
+Its only uncovered part is the designated fresh-root restriction
+of $D_e\cap E_j$. The complete liability, including all other
+same-color service, is the one used in Section 44. If it were
+empty, the patch would be paid. Applying this for both inner
+colors forces
+
+$$
+D_e\cap E_3\ne\varnothing,\qquad
+D_e\cap E_6\ne\varnothing,\qquad
+C_{t_e}=B=[w]_e.
+\tag{SC229}
+$$
+
+For the last equality, $D_e\subseteq C_{t_e}$ because its outer
+color covers $H$. Either witness is also in $E\subseteq B$.
+Two APs of the same numerical modulus $e$ that meet are equal.
+The original actual lower is used for the count reserve $v_1\ge1$;
+there was no assumption that the virtual enclosure was already
+an independently available source. Since $e\mid N$, its label
+is odd and 5-free throughout this argument.
+
+If distinct divisors $e,f>1$ of $\Gamma$ had the same outer
+color, the union defining $D_e$ would still contain $C_{t_f}$.
+But $C_{t_f}$ contains all of $E$, contradicting SC229. Hence
+
+$$
+e\longmapsto c_e\text{ is injective on }
+\{e>1:e\mid\Gamma\},\qquad \tau(\Gamma)\le4.
+\tag{SC230}
+$$
+
+This applies to incomparable divisors as well as to comparable
+ones. It does not combine the two liability witnesses into one.
+
+### The original inventory pays a small packet at the deficient root
+
+NF66 and the existing $P\ge23$ bound give
+$N_3\ge P-1+c_2\ge23$: the original pure $9$ contributes
+one to $c_2$. Therefore
+
+$$
+23\le2+v_1+v_2\le2+2v_1,
+\qquad v_1\ge11.
+\tag{SC231}
+$$
+
+For any enclosure $B$ above, fix either omitted inner color $j$.
+After deleting its forced outer partner and transferring $T_j$,
+the only remaining responsibility is
+
+$$
+[r_e]_5\cap D_e\cap E_j,
+\qquad c_{\rm base}\le1+v_2.
+\tag{SC232}
+$$
+
+Suppose a packet of $q$ distinct 5-bearing APs covers a 5-free
+periodic enclosure of $D_e\cap E_j$ outside $S$. Move the whole packet one fresh
+5-digit deeper at root $r_e$. Explicitly, a class becomes
+
+$$
+[a]_{5^h}\cap[\beta]_s
+\longmapsto
+[r_e+5a]_{5^{h+1}}\cap[\beta]_s,
+\qquad (s,5)=1,\quad h\ge1.
+\tag{SC233}
+$$
+
+This keeps every 5-free phase fixed. To verify coverage, take
+a residual point $x$ on root $r_e$ and let $5^d$ be the largest
+5-depth in the packet. Use CRT to choose an auxiliary $y$ with
+$y\equiv(x-r_e)/5\pmod{5^d}$ and $y\equiv x$ modulo a
+common 5-free period of the enclosure, $S$, and all packet
+conditions. It belongs to the same enclosure outside $S$, so
+some original packet class covers $y$; its shifted class covers
+$x$. Integer division alone is not used to transport the 5-free
+coordinates.
+
+All shifted labels have 5-depth at least two. The menu labels
+have depth one and retained labels depth zero, so no collision
+is introduced. Whenever $q\le v_1$,
+
+$$
+c\le1+v_2+q\le N_3-1.
+\tag{SC234}
+$$
+
+The transferred inner menu already covers the entire part of
+$D_e$ outside $E_j$. Thus the packet pays the complete remaining
+liability, not just a chosen trace of the deleted top.
+
+Two existing packets apply immediately:
+
+| Enclosure of the residual | Existing complete packet | Cost $q$ |
+|---|---|---:|
+| $[w]_m\setminus S$, $(m,15)=1$, $m$ composite | SC136 | $9$ |
+| $[w]_{3p}$, $p>5$ prime | SC137 | $11$ |
+
+Both fit SC231. Consequently $\Gamma$ has no composite 3-free
+part and no divisor $3p$ for a prime $p>5$. Together with SC230,
+this leaves only
+
+$$
+\Gamma\in\{3,9,27\}\cup\{p:p>5\text{ prime}\}.
+\tag{SC235}
+$$
+
+### A fifteen-class complete-prefix packet excludes 27
+
+Suppose $E\subseteq[\eta]_{27}$, choosing $0\le\eta<27$.
+Instantiate the existing complete-prefix construction with three
+5-levels. Put $w_h=5^h-1$, including $w_0=0$, and take
+
+$$
+\begin{aligned}
+A_{h,j}&=[w_{h-1}+j5^{h-1}]_{5^h}\cap[\eta]_{3^j}
+&& (1\le h\le3,\ 0\le j\le3),\\
+B_h&=[w_h]_{5^h}\cap[\eta+27(h-1)]_{81}
+&& (1\le h\le3).
+\end{aligned}
+\tag{SC236}
+$$
+
+The modulus-one condition for $j=0$ is void. The fifteen
+numerical labels are exactly
+
+$$
+\{5^h3^j:1\le h\le3,\ 0\le j\le4\}.
+\tag{SC237}
+$$
+
+They are pairwise distinct. A point of $[\eta]_{27}$ whose
+first non-4 digit among its first three 5-digits is $j$ at
+depth $h$ is covered by $A_{h,j}$. If all three digits are
+4, its residue modulo $81$ is one of $\eta,\eta+27,\eta+54$,
+so one of $B_1,B_2,B_3$ covers it. This covers the entire AP
+and every higher lift, with no finite enumeration.
+
+For payment, SC229 forces an actual top of output modulus $27$,
+whose original label is $9\cdot125$. Divisor closure supplies
+the four $P$-free original height-two labels $9,45,225,1125$.
+Use the existing height-two support bound $P\ge29$ from Section
+46 and SC211. Then
+
+$$
+c_2\ge4,\qquad N_3\ge P+c_2\ge33,\qquad v_1\ge16.
+\tag{SC238}
+$$
+
+Apply SC233 to the fifteen-class packet at the deficient root
+for enclosure $[\eta]_{27}$. It is fresh against every base
+menu and gives $c\le v_2+16\le N_3-2$, a strict descent.
+This payment uses the existing stronger original support bound;
+it needs no special reuse of first-depth partner labels or
+assumption about the output-81 source.
+
+### Remaining complete-deficit hulls and their actual partners
+
+The combined conclusion is
+
+$$
+n\mid\Gamma,\qquad
+\Gamma\in\{3,9\}\cup\{p:p>5\text{ prime}\}.
+\tag{SC239}
+$$
+
+For every nonunit divisor of this hull, its actual outer partner
+and both complete-liability witnesses are still required by
+SC229. The possibilities for the original identical-output pair
+are therefore:
+
+| Actual lower output $n$ | Possible complete union hull $\Gamma$ | Original lower and top labels |
+|---|---|---|
+| $3$ | $3$ or $9$ | $15,45$ |
+| $9$ | $9$ | $75,225$ |
+| prime $p>5$ | $p$ | $3p,9p$ |
+
+If $\Gamma=9$, the forced top outputs $[w]_3$ and $[w]_9$
+have different outer colors and compatible actual phases.
+
+In the prime case there is a further restriction on each complete
+inner deficit:
+
+$$
+\Gamma(E_3)=\Gamma(E_6)=p.
+\tag{SC240}
+$$
+
+Each individual hull is divisible by $p$. If one were larger,
+it would have either a composite 3-free divisor or a divisor
+$3p$. Starting with the already forced union partner at $p$,
+transfer that particular inner color $j$. Its complete residual
+$D_p\cap E_j$ lies in the individual enclosure. Shift SC136's
+nine-class or SC137's eleven-class packet there and use SC234,
+contradicting EB1. No separate partner for an individual hull
+is needed.
+
+These statements concern complete congruence hulls. They do not
+say a deficit equals its enclosing AP, make its private witnesses
+coincide, or pay the original ancestor liability $P_{\chi(n)}$.
+Section 45's distinction between that full original region and
+the selected source images remains necessary. In particular,
+SC139 prevents covering the full flat-prime envelope outside $S$
+with only its one-prime palette; actual smaller deficits may
+still admit repairs. The three displayed hull alternatives, the
+forcing of SC227 in a general whole cover, and arbitrary original
+ternary height remain unresolved. These are ordinary constructive
+deductions using existing enclosure, prefix and inventory
+results, without a new Lean verification or a resolution of #7.
