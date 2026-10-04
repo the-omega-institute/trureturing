@@ -138,3 +138,4 @@ internal sealed class ToleranceNonGroupDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         []));
 }
+// Scribe data acceptance probe.
