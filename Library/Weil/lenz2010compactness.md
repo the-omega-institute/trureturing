@@ -657,3 +657,11 @@ exclusion from PSD at $c_\varepsilon=1/2-\varepsilon/2$, with its uniform
 form error chosen below $\varepsilon/8$; the matrix condition is not
 verified. RH and full Robin remain unresolved. These are paper-level model
 deductions, without new Lean certification or an originality claim.
+
+The [directed assembly interface](jarohsweth2020local.md) retains the
+same complete Gamma/prime matrix, regularizes the trial kernels' jumps,
+and supplies explicit positive-tail and full-mean correction bounds.
+Validated quadrature and a simultaneous coefficient-error allowance can
+produce a Loewner lower matrix. Its entries and sign remain uncomputed;
+this interface does not discharge the fixed-window matrix hypothesis or
+the cofinal-window requirement.
