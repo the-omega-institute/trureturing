@@ -140,6 +140,9 @@ domains:
   ObserverMemory:
     stratum: S3
     definition: Finite epistemic-state and forgetting-ledger certificate structures of the observer program.
+  PermutationPatterns:
+    stratum: S3
+    definition: Classical, vincular and mesh patterns in permutations, their occurrence statistics on all permutations and on subclasses such as involutions, and the Wilf- and distribution-equivalence of patterns.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
