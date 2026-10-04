@@ -461,3 +461,62 @@ transfer. The actual reconstruction and norm comparison after that
 projection remain unproved. No new generic Schur, variance or contraction
 theorem, numerical half-bound, RH/Robin result or Lean certification is
 claimed.
+
+### A common-source inverse for both critical edge projections
+
+This is a conditional paper application to the accepted original theta measures, not a half-bound or Lean-certified result. Classical two-step path comparison, closed-range projection and Neumann inversion are reused. The additional interface is the explicit coercivity of the actual negative-edge metric, yielding one bounded critical-source inverse for both edge projections.
+
+Retain the probability measure $
+u$, signed edge measures $K_\pm$, increment maps $C_\pm$ and mixed nullity from the [Schur application](../Fourier/teschl2009mathematical.md#equality-in-schurs-test-checks-the-unprojected-theta-edge-shortcut), equations (S1)–(S7). Write
+
+$$a(x,y)=\left[1-\frac{\psi_\Gamma(|x-y|)}{2\cosh(x/2)\cosh(y/2)}\right]_+,$$
+
+so $K_-=(a/2)\nu\otimes\nu$ off the diagonal. Put $t=1/2$, $a_t=1-\psi_\Gamma(t)/2>0$, and choose three anchor intervals
+
+$$I_-=[-3/2,-5/4],\quad I_0=[-1/8,1/8],\quad I_+=[5/4,3/2].$$
+
+Let $\eta=\min_j\nu(I_j)>0$ and $c=a_t\eta/8$. The gaps between anchors exceed $2t$. Each forbidden interval $(x-t,x+t)$ intersects at most one anchor; two forbidden intervals therefore leave at least one anchor entirely available. Hence for every $x,y$,
+
+$$\nu\{z:|z-x|\ge t,|z-y|\ge t\}\ge\eta.$$
+
+Apply $|h(y)-h(x)|^2\le2|h(z)-h(x)|^2+2|h(y)-h(z)|^2$ on these common neighbors, then integrate over the same product probability measure. With
+
+$$I_t(h)=\iint_{|x-y|\ge t}|h(y)-h(x)|^2d\nu(x)d\nu(y),$$
+
+this gives $2\eta\operatorname{Var}_\nu(h)\le4I_t(h)$. Monotonicity of the actual psi and cosh>=1 give $a(x,y)\ge a_t$ on those edges. Therefore for every ambient even $h\in L^2(\nu)$,
+
+$$c\operatorname{Var}_\nu(h)\le\|C_-h\|^2\le\operatorname{Var}_\nu(h)/2.\tag{G1}$$
+
+Here $\psi_\Gamma(1/2)<2$ follows from $e>2$ and $e^{-1/4}<1$. This is a positive symbolic constant for the negative-edge metric; it supplies no lower bound for the original positive energy or its half-slack.
+
+Set $B=C_-^*C_-$ on the actual ambient even Hilbert space. It is bounded positive and, in the weak L2 sense,
+
+$$(Bh)(x)=\frac12\int a(x,y)(h(x)-h(y))d\nu(y).\tag{G2}$$
+
+Let $P_N$ be the existing orthogonal projection onto the centered critical source space $N$. The common Gram operator on $N$ is
+
+$$G=P_NB|_N,\qquad cI_N\le G\le\tfrac12I_N.\tag{G3}$$
+
+It is independently invertible. The two maps $A_\pm=C_\pm|_N$ are bounded, have $A_\pm^*A_\pm=G$ by the accepted mixed nullity, and have closed ranges by G1. Thus the closure signs in the known critical edge image spaces can be removed.
+
+For every $h$ in the actual form domain, mixed nullity gives the same coefficient for both projections:
+
+$$A_+^*C_+h=A_-^*C_-h=P_NBh.$$
+
+Consequently with $n_h=G^{-1}P_NBh\in N$,
+
+$$P_\pm C_\pm h=C_\pm n_h,\qquad e_\pm h=C_\pm(h-n_h).\tag{G4}$$
+
+This is one simultaneous source correction, using a generally different projection from the ambient $P_Nh$. It does not assume that $B$ commutes with $P_N$, and $h-n_h$ need not belong to the ambient orthogonal remainder $\mathcal R$.
+
+The classical norm-convergent inverse series is explicit:
+
+$$G^{-1}=2\sum_{j\ge0}(I_N-2G)^j,\qquad\|I_N-2G\|\le1-2c.$$
+
+For $n_h^{(m)}=2\sum_{j=0}^m(I_N-2G)^jP_NBh$, the truncation has the certified bound
+
+$$\|n_h-n_h^{(m)}\|\le\frac{(1-2c)^{m+1}}{c}\|P_NBh\|\le\frac{(1-2c)^{m+1}}{2c}\|h-\nu(h)1\|.\tag{G5}$$
+
+Because its source error lies in $N$, each edge error is at most $\|n_h-n_h^{(m)}\|/\sqrt2$. Mixed nullity also keeps $q(h-n_h^{(m)})=q(h)$ exactly. Thus the two errors are paired through one source, not independently optimized.
+
+What is still missing: explicit acquisition or approximation of $P_N$ itself, a transfer between the actual projected increments, and its joint reconstruction/norm estimate. The anchors' positive mass can be very small and no useful numerical conditioning is claimed. The inverse series is an operator identity involving the exact $P_N$, not a finite algorithm or a spectral certificate for the original remainder. G1 bounds K_- only, not D, and does not prove RH, Robin, the half-bound or the cofinal comparison.
