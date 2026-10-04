@@ -1,0 +1,10 @@
+**命题 4.4（完整块词的合法性 Hankel 秩）。** 对每个 $m\ge1$、每个域 $K$，以 $\{0,1\}^m$ 为字母表、从原尾态 $0$ 出发、对每个完整块词输出最终合法性 $0$ 或 $1$，所得词响应的 Hankel 秩为 $k$。这里矩阵条目是 $\mathcal H(u,v)=o(T_{uv}0)$，行列均遍历完整块词，秩指残余行在 $K$ 上张成空间的维数。
+
+证明。$k$ 维活传递和读出 $\mathbf1^{\mathsf T}$ 给出上界。取一个满足 $M\ge k$ 且 $m\mid M$ 的整数。对 $0\le s,j<k$，选完整块前缀和后缀
+
+$$
+u_s=0^{M-s}1^s,\qquad v_j=1^j0^{M-j}.
+$$
+
+其拼接输出为 $\mathbf1_{s+j<k}$。这一 $k$ 阶矩阵沿反对角线具有单位三角形，行列式为 $\pm1$，给出每个域上的下界。最小线性实现与 Hankel 秩的解释使用 [FIB Continuation Geometry](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §6；这里只计算当前块词响应的单位子式。证毕。
+

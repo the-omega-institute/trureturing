@@ -1,0 +1,9 @@
+**定义 4.1（活传递与保留拒绝的传递）。** 采用列输入约定，以 $e_s$ 为活空间基向量，设
+
+$$
+L_0=e_0\mathbf1^{\mathsf T},\qquad
+L_1e_s=\begin{cases}e_{s+1},&s<k-1,\\0,&s=k-1.\end{cases}
+$$
+
+词 $w=b_0\cdots b_{m-1}$ 的活传递为 $L_w=L_{b_{m-1}}\cdots L_{b_0}$；非法路径被杀成零。另以 $\widehat L_w$ 表示 $k+1$ 维总化传递，每个输入基向量送往实际终态基向量，特别是 $e_\bot$ 始终送往 $e_\bot$。这两种传递都来自 [RRO 主卷](RECURSIVE_RELATIONAL_OBSERVATION.md) §132.2.1 的尾自动机，观察合同不同。
+

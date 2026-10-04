@@ -13,11 +13,17 @@ triage: "anchor"
 
 # Poisson Approximation and the Chen-Stein Method
 
+## Locator
+
+DOI: `10.1214/ss/1177012015`; canonical URL: <https://doi.org/10.1214/ss/1177012015>.
+
 Statistical Science 5(4), 403–424 (1990). The dependence quantities are defined
 in section 3; Theorem 1 on page 406 bounds the count distribution and its
 zero-count probability. Theorem 2 on the same page gives a process version.
 The exposition attributes the proofs to the authors' 1989 Annals of Probability
 paper, *Two Moments Suffice for Poisson Approximations: The Chen-Stein Method*.
+
+## Scope
 
 This is `literature-attested` background for locally dependent rare-event counts.
 The parity-kernel proof supplies its own event probabilities, separation rule,
