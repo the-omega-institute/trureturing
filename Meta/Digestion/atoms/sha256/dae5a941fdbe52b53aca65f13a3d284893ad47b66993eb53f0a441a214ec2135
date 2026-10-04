@@ -1,0 +1,4 @@
+- [Hauser–Bühlmann, *Characterization and Greedy Learning of Interventional Markov Equivalence Classes of Directed Acyclic Graphs*, 引言](https://arxiv.org/pdf/1104.2808v1)：可辨识性依赖允许的实验族，但其结构因果模型和干预前提没有在这里建立。
+
+以上对应是有界比较，不是穷尽新颖性或实际机器学习应用认证。有限状态来源采样、条件方差、补偿损失、集中与 Fano 均是供应方法；本章只承担精确合法 End 域上的信息／操作／费用接合。全部新增推导为普通理论文本，不具有新增 Lean kernel、冻结、物理因果或神经模型白盒保证。
+

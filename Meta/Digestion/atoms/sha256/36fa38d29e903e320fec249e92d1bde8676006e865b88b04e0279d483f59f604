@@ -1,0 +1,28 @@
+**定理 67.10（全实支持与取得的三段相变）。** 对所有这样的 $p$，包括零原子和二进有理边界，
+
+$$
+L_m(p)\ge at,\qquad L_m(p)\ge bt-2.
+$$
+
+令 $C_\pi(P)$ 为一次重置运行的实际地址费，$K$ 为输入前消费的位数。原始读出与将分支／不存在合并为 $\nu$ 的粗读出均有
+
+$$
+\begin{aligned}
+\Gamma_{h,N}(\lambda)
+&:=\inf_{\text{合格采样器}}\max_{(i_1,\ldots,i_N)}
+ \mathbb E\left[\lambda K+\sum_{r=1}^N C_\pi(P_{i_r})\right]\\
+&=\min\left\{(n+1)N,\;
+ \left(n+1-\frac1M\right)N+\lambda\left(h-\frac2M\right),\;
+ \left(n+1-\frac1m\right)N+\lambda\frac{hM}{m}\right\}.
+\end{aligned}
+$$
+
+三项分别在 $N\le a\lambda$、$a\lambda\le N\le b\lambda$、$N\ge b\lambda$ 取得最小值，相邻项在边界相等；所有下确界均由实际前缀采样器取得。另一个量词次序的值为
+
+$$
+\inf_{\text{合格采样器}}\mathbb E\left[
+ \lambda K+\max_{(i_1,\ldots,i_N)}\sum_{r=1}^N C_\pi(P_{i_r})\right]=(n+1)N.
+$$
+
+这是两个支持界及其优化结果，不是每个预定最小原子 $t$ 的最优位数公式。$h=2$ 复用第 66 章三树结果；以下证明同时覆盖 $h\ge3$ 的无限子序列。
+

@@ -1,0 +1,5 @@
+**Lemma 1.1 (one-unit image deficit).** For arbitrary types $A,B$ with decidable
+equality, a finite subset $s$ of $A$, and $f:A\to B$, if
+$|s|=|f(s)|+1$, then there are distinct $a,b\in s$ such that $f(a)=f(b)$
+and $f$ is injective on $s\setminus\{a,b\}$.
+
