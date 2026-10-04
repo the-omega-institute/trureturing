@@ -11600,3 +11600,186 @@ example. A uniform bound on all relevant mixed layers, or a forced
 missing product for every repeated prime, remains unavailable.
 These constructions and consumers are ordinary mathematical
 deductions. No Lean verification of SC449--SC459 is asserted.
+
+## 73. A terminal donor can use the local height profile and retained guards
+
+The terminal construction can combine the adjacent-layer code with
+a finer projection supplied by retained pure-power guards. In the
+original ternary-height-two branch this yields
+
+$$
+\boxed{q\ge43\ \Longrightarrow\ 9q^{H_q}\in D,}
+\qquad
+\boxed{q\ge13,\ H_q\ge2\ \Longrightarrow\ 9q^{H_q-1}\in D.}
+\tag{SC460}
+$$
+
+These improve the thresholds 47 in Report 385 GHA10 and 17 in
+SC258, respectively. They supply actual original numerical labels;
+their phases and joint cofactor service are separate questions.
+
+### A choice of projection resolution
+
+Use one original EB1 family with $Q=p^Hq^GM$ as in Section 72.
+Fix $0\le k<G$, put $A=h_{k+1}$, $B=h_k$, and take the actual
+pure $q^{k+1}$ donor. Its parent is $u\bmod q^k$. Delete exactly
+the originals of $q$-height above $k$ in that parent, retaining
+all others. Section 69's complete liability is
+
+$$
+E_u=[u]_{q^k}\times X_u,
+\qquad X_u\subseteq\mathbb Z/p^H\mathbb Z\times\mathbb Z/M\mathbb Z.
+$$
+
+Choose an integer resolution $\tau$ with
+$A\le\tau\le\min(H,B+1)$ and define
+
+$$
+\Lambda_\tau=\pi_{p^\tau}(X_u)
+ =\pi_{p^\tau}(P_{q^{k+1}}),\qquad s_\tau=|\Lambda_\tau|,
+\qquad
+1\le s_\tau\le T_p(\tau)
+ =p^\tau-\frac{p^\tau-1}{p-1}.
+\tag{SC461}
+$$
+
+The upper bound uses the retained original pure $p$-power guards
+through height $\tau$. Their progressions are disjoint by original
+irredundancy, and the donor's private region avoids all of them.
+At $\tau=0$, both the projection size and $T_p(0)$ equal one.
+
+Set $E_j=A+B+1+(j-1)(A+1)$. Above $\Lambda_\tau$ there are
+$p^{E_1-\tau}s_\tau$ prefixes of depth $E_1$. Choose one prefix
+of depth $B+1$ above a word of $\Lambda_\tau$ and replace all
+its $p^A$ fine descendants by that one terminal leaf. The resulting
+partition has
+
+$$
+N_\tau=p^{A+B+1-\tau}s_\tau-p^A+1
+\tag{SC462}
+$$
+
+leaves. Suppose $q>p^{B+1}$ and $q\ge N_\tau$. Inject these
+leaves into the next $q$ digits, assigning the short leaf the actual
+donor digit. Every later continuing leaf uses $p^{A+1}$ extensions,
+which fit because $A\le B$. No continuing leaf uses the initial
+donor digit.
+
+### The same complete source, with a shorter code
+
+Fix the code on the whole selected parent whose low $p^\tau$ word
+lies in $\Lambda_\tau$, without intersecting each inverse with
+$X_u$. Preserve the full old $p^H$ and $M$ coordinates at one
+source, together with parent $u$. Continuing source digits come
+from the code; the terminal source uses the donor's next digit.
+The common comparison carrier may be taken as
+
+$$
+p^{\max(H,E_{G-k})}q^GM.
+\tag{SC463}
+$$
+
+Here the full $q^G$ factor is retained: unlike the global deletion
+in Section 72, higher-$q$ originals in other parents remain
+unchanged. For an output in $E_u$, the complete preserved
+$(p^H,M)$ coordinate remains in $X_u$, so the source is again
+in the full deletion hole.
+
+A removed original $p^aq^{k+j}m$ has $a\le A<E_1$. Its literal
+$q$ prefix determines at most one continuing prefix of depth
+$E_j$. That prefix already lies above $\Lambda_\tau$; its old
+$p^a$ test is constant, and its literal $m$ phase is preserved.
+Thus each nonempty continuing inverse is one whole AP with no
+additional projection mask. Enclose it using the same exponent
+$\kappa_j(a)=B+1+(j-1)(A+1)+a$ as in SC454. The terminal
+donor uses modulus $p^{B+1}q^k$, exactly the slot $j=1,a=0,m=1$.
+Its digit has no continuing inverse, so it receives no second class.
+
+Every new modulus has $q$-height $k$ and $p$-height above global
+$B$. This excludes collisions with retained originals, including
+those outside the chosen parent. Quotient and remainder by $A+1$
+recover the original $j,a$; the prime-free cofactor recovers $m$.
+This gives distinct odd nonunit labels. The global numerical bound
+$B=h_k$ cannot be replaced by a maximum restricted to the chosen
+parent: a retained class in another parent can still have the same
+numerical modulus.
+
+Every continuing point in $E_u$ is covered through an original
+owner of its one source. The terminal class covers its full leaf,
+and unchanged retained originals cover outside $E_u$. At most one
+replacement is charged to each deleted original. Each charged
+modulus, including the donor's, has ratio
+
+$$
+\frac{p^{B+1}}q
+ \left(\frac{p^{A+1}}q\right)^{j-1}<1.
+$$
+
+Hence this one whole replacement has $K'\le K$ and
+$\Sigma'<\Sigma$, contradicting EB1. The exact necessary condition
+for every allowed projection resolution is therefore
+
+$$
+\boxed{q\le p^{B+1}\quad\text{or}\quad q<N_\tau.}
+\tag{SC464}
+$$
+
+The first alternative is the modulus-sum condition and cannot be
+dropped because the actual private projection happens to be small.
+Distinct primality excludes equality $q=p^{B+1}$. In particular,
+with
+
+$$
+C_\tau=p^{A+B+1-\tau}T_p(\tau)-p^A+1,
+\qquad
+\boxed{q<\max\{p^{B+1},C_\tau\},}
+\tag{SC465}
+$$
+
+one obtains a uniform bound from the retained guards. The strongest
+allowed guard resolution in this construction is
+$\tau_* =\min(H,B+1)$: the identity
+$T_p(t+1)=pT_p(t)-1$ makes the normalized guard count decrease.
+Actual normalized projection sizes also do not increase under
+refinement, since $s_{t+1}\le p s_t$.
+
+For $A\ge1$, $C_\tau>p^{B+1}$, so the maximum in SC465 can
+be removed. Indeed, putting $n=B+1$ and using $\tau\le n$ gives
+$C_\tau\ge p^A(T_p(n)-1)+1\ge(3p^n-1)/2>p^n$.
+For $A=0$ and $\tau>0$, instead $C_\tau<p^{B+1}$; SC465
+retains the maximum. The unrefined choice $\tau=A$ is valid
+in both cases and gives $q<p^{B+1}T_p(A)-p^A+1$.
+
+### Two strict ternary endpoints
+
+At $p=3,H=2$, all possible adjacent pairs have the following
+values at $\tau_* =\min(2,B+1)$:
+
+| $A$ | $B$ | $\tau_*$ | $C_{\tau_*}$ | $p^{B+1}$ |
+| ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 1 | 2 | 3 |
+| 0 | 1 | 2 | 5 | 9 |
+| 0 | 2 | 2 | 15 | 27 |
+| 1 | 1 | 2 | 13 | 9 |
+| 1 | 2 | 2 | 43 | 27 |
+| 2 | 2 | 2 | 127 | 27 |
+
+If $h_G\le1$, take $k=G-1$; all its rows have
+$\max(C_{\tau_*},p^{B+1})\le43$, so SC465 gives $q<43$.
+Consequently $q\ge43$ forces $h_G=2$ and the actual original
+$9q^G$. At the endpoint $q=43,A=1,B=2$, all 43 leaves fit,
+and $43>27$ still makes the modulus sum strictly smaller.
+
+If $G\ge2$ and $h_{G-1}\le1$, the same cut has
+$A\le B\le1$. Its three rows all have strict upper bound at
+most 13. Thus $q\ge13$ forces $h_{G-1}=2$ and the original
+$9q^{G-1}$. At $q=13,A=B=1$, the equal leaf count still gives
+strict sum descent because $13>9$. These prove SC460.
+
+The unrefined projection $\tau=A$ gives 52 for $A=1,B=2$;
+it does not produce the new prime endpoint 43. The finer retained
+guard information is essential to this improvement. The last row
+recovers Section 71's strict cutoff 127 and hence its largest-prime
+bound 113. No smaller uniform support cutoff or complete exclusion
+of the height-two branch follows here. SC460--SC465 are ordinary
+mathematical deductions, without a claim of Lean verification.
