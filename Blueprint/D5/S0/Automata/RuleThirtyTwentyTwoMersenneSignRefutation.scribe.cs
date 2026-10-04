@@ -7,7 +7,7 @@ internal sealed class RuleThirtyTwentyTwoMersenneSignRefutationDocument : IScrib
 {
     private const string Prefix = "D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Rewriting/chanlopezmartinruiz2026rule30");
+        LibraryNoteRef.Create("D5/L/Automata/chanlopezmartinruiz2026rule30");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Refutes the Rule 30/22 Mersenne sign pattern at row 767.",
