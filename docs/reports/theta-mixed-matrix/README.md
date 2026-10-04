@@ -152,3 +152,10 @@ $|\xi|=512$ is below $5.80\cdot10^{-18}$ in its five-generator coefficient
 norm. Finite-frequency integrals, exact projection and common residual
 Gram remain unpaid. This supplies paper-model inputs with directed
 coefficient bounds, without a matrix sign or new Lean certification.
+
+The [stable projected-ground application](stable-ground.md) combines the
+existing exact Schur kernel with the one-sided degree-94 tail to bound
+$\|E^*Pv_0\|$ away from zero without a new ground-moment integral. A
+restricted $E^*SE$ lower bound above $0.004660867160108$ would suffice
+for the second Schur elimination. Its actual direction, entries and
+restricted sign still need certification.
