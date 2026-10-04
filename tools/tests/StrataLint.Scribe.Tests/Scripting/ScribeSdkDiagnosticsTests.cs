@@ -139,6 +139,31 @@ public sealed class ScribeSdkDiagnosticsTests
     }
 
     [Theory]
+    [InlineData("Blueprint/D5/S0/Test/.editorconfig")]
+    [InlineData("Blueprint/D5/S0/Test/Directory.Build.props")]
+    public void NestedBlueprintConfigurationSelectsDefinitionsUnderItsDirectory(string change)
+    {
+        using var root = Root();
+        Write(root, Entry, Definition(""));
+        const string sibling = "Blueprint/D5/S0/Test/Other.scribe.cs";
+        const string outside = "Blueprint/D5/S1/Elsewhere.scribe.cs";
+        Write(root, sibling, "internal class Other { }");
+        Directory.CreateDirectory(Path.GetDirectoryName(root.Resolve(outside))!);
+        Write(root, outside, "internal class Elsewhere { }");
+
+        Assert.Equal(new[] { sibling, Entry }, ScribeSdkAdmission.SelectPaths(root.Path, [], [change]).ToArray());
+    }
+
+    [Fact]
+    public void ConfigurationOutsideBlueprintAncestorsSelectsNothing()
+    {
+        using var root = Root();
+        Write(root, Entry, Definition(""));
+
+        Assert.Empty(ScribeSdkAdmission.SelectPaths(root.Path, [], ["tools/tests/Directory.Build.props"]));
+    }
+
+    [Theory]
     [InlineData(".editorconfig")]
     [InlineData("Directory.Build.props")]
     [InlineData("Directory.Build.targets")]
