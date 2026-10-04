@@ -2,7 +2,7 @@ You are one independent search seat (nyxid-oracle, ChatGPT Pro). Your seat id is
 
 Repository: https://github.com/the-omega-institute/trureturing
 
-If github.com does not serve a file, read the same file from the same repository at `https://cdn.jsdelivr.net/gh/the-omega-institute/trureturing@__SHA__/<path>` (single files only; this mirror does not list directories). `Trureturing.lean` and `CLAUDE.md` are good entry points.
+Read single files at `https://raw.githubusercontent.com/the-omega-institute/trureturing/__SHA__/<path>`. Directory pages (`/tree/…`) and issue searches are not reachable from your browsing tool, so find files through `Trureturing.lean` (it imports the library modules), `CLAUDE.md` and the files they name.
 
 Read this repository first. Its Lean 4 library `D5/` holds results that are already proved and kernel-checked. `Library/` holds its literature notes, `docs/develop/theory/` its theory volumes, and `Problems/` the problems it has already settled. Using what the repository already contains, find published open problems that this repository is well placed to settle, by proof or by refutation: conjectures, questions or open problems explicitly stated in the literature. Choose the problems and how to look for them yourself. Skip anything already in `Problems/` or in an open issue whose title starts with "Preregister". If you cannot read `Problems/` or the issue list, propose your candidates anyway and say which exclusion checks you could not run; the orchestrator repeats every exclusion check before preregistering.
 
