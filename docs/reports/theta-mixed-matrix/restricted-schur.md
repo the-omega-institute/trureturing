@@ -125,6 +125,11 @@ paper-model implication is not a Lean-certified theorem. Positivity
 cofinally as $c\uparrow1/2$, RH and the full Robin inequality remain
 unresolved.
 
+The [quantified two-Schur transport](threshold-transport.md) consumes this
+same comparison to check a conditional positive parameter margin at
+$c=0.39$ without another action solve. Its bounded range supplies no
+cofinality, Lean, Robin or RH certification.
+
 ```sh
 uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/reports/theta-mixed-matrix/restricted_schur.py
 ```

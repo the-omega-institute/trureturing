@@ -198,3 +198,9 @@ Under the paper supplier premises, its restricted lower matrix exceeds
 the required second-Schur allowance by more than $1/10$. This is a
 fixed-$c=3/8$ paper-model comparison, not Lean certification, cofinal
 positivity, RH or the full Robin inequality.
+
+The [quantified two-Schur parameter transport](threshold-transport.md)
+uses these same saved data to check a conditional ground-orthogonal
+gap greater than $0.0005648$ at $c=0.39$, without another action solve.
+This bounded parameter range remains short of cofinal $c\uparrow1/2$
+positivity and supplies no Lean, RH or full Robin certification.
