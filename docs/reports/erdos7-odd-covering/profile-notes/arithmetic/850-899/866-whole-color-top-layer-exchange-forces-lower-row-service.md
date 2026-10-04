@@ -1,6 +1,6 @@
 [Index](../../../marked_head_profile.md) · [Complete component source](861-complementary-phase-repair-and-pair-anchor-rigidity.md#exact-deletion-hole-of-a-masked-component) · [Existing ternary transport](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#143-actual-joint-hole-sources-sharpen-the-low-row-inventory-and-first-q-prefix-repair) · [Component code](850-cofactor-dependent-protected-codes.md#one-component-contains-a-rectangular-top-inventory)
 
-# Three complete top-row colors admit one fresh whole-component exchange
+# Complete-color exchanges force lower-row and bottom-row service
 
 In the actual common-source component of Report861, at most two
 colors can have all their original classes in the top ternary row.
@@ -16,6 +16,11 @@ $6n-27$ component originals, hence 471 at n=83. This is a necessary
 condition for the specified branch of a globally minimal whole
 cover. It does not prove that the branch or an unrestricted odd
 cover is impossible.
+
+A second height-coded exchange allows both middle and top rows.
+It forces at least n−26 colors to use a bottom-row original, hence
+at least 57 bottom-serving colors when n=83. These originals already
+belong to the lower-row inventory; 57 is not added to 471.
 
 ## Keep the complete common source
 
@@ -211,9 +216,86 @@ the budget of an actual legal whole-cover exchange; it does not
 provide the required twenty repair groups or their simultaneous
 fresh labels and phase compatibility.
 
+## Twenty-seven colors without bottom originals also admit an exchange
+
+Call a color bottom-free when all its owners have $a_i\ge1$.
+Assume 27 distinct bottom-free colors $c_t$, indexed by
+$t\in\{0,\ldots,26\}$, are available. For each owner i of
+one of these colors, insert the CRT class
+
+$$
+\begin{aligned}
+\widehat d_i&=3^{a_i+2}q^{j_i-1}m_i,\\
+x&\equiv(\rho_i\bmod3)+3t\pmod{3^{a_i+2}},\\
+x&\equiv\rho_i\pmod{m_i},\\
+x&\equiv(\rho_i-c_t)/q\pmod{q^{j_i-1}}.
+\end{aligned}
+\tag{TC12}
+$$
+
+For an integer x in the complete component hole, choose
+
+$$
+t=\left\lfloor\frac{x\bmod81}{3}\right\rfloor.
+\tag{TC13}
+$$
+
+Keep its full $9W$ base and use the selected first q-digit $c_t$
+with the same stripped q-tail as before. Complete color service
+supplies an owner i, and $a_i\ge1$ gives
+$x\equiv\rho_i\pmod3$. Therefore
+
+$$
+(\rho_i\bmod3)+3t=x\bmod81.
+\tag{TC14}
+$$
+
+Since $a_i\le2$, the modulus $3^{a_i+2}$ divides 81.
+Projecting TC14 supplies the ternary condition in TC12; literal
+stripping supplies the cofactor and q-tail conditions. Every point
+of the complete hole is covered. For a middle-row owner the chosen
+modulo-27 AP encloses its inverse; for a top-row owner the full
+modulo-81 prefix is retained. Neither case splits an original into
+multiple replacement classes.
+
+The new heights are three and four, hence globally fresh. Moreover
+
+$$
+q\widehat d_i=9d_i,
+\tag{TC15}
+$$
+
+so all new numerical labels remain injective across both original
+rows, every q-height and all cofactors. They are odd nonunits. A
+common period for the old and new families is $9Q=81q^GW$.
+At $n>27$, at least one nonempty color lies outside the selected
+27 colors. Deleting C and inserting only the selected owners'
+one-AP replacements strictly reduces the class count.
+
+Global minimality therefore gives
+
+$$
+\#\{c\in U:\text{c is bottom-free}\}\le26,\qquad
+\#\{c\in U:\exists i\in C_c,\ a_i=0\}\ge n-26.
+\tag{TC16}
+$$
+
+At n=83 this supplies 57 distinct bottom-row owners. After excluding
+any one color, at least $n-27$ bottom-serving colors remain.
+These witnesses need not share one cofactor point or q-suffix.
+They are contained in the previously counted lower-row inventory,
+so TC16 gives its row composition without another additive gain
+in TC9 or TC10.
+
+The height encoding reuses Report385 HPA6--HPA8: retain a sufficiently
+long prefix, then choose a containing AP whose numerical height still
+recovers the old row. Here the q-tail is preserved and only one q-digit
+is replaced. Complete color service supplies the common source for
+all selected owners.
+
 ## Verification scope
 
-A scoped transient Lean check verifies the actual integer CRT
+A scoped transient Lean check for TC1--TC11 verifies the actual integer CRT
 replacement, its distinct odd nonunit labels, freshness against
 every original, complete integer coverage, and the strict count
 comparison against global minimality. It includes arbitrary original
@@ -231,6 +313,15 @@ hypothetical minimal cover.
 A separate scalar check verifies TC11 with the stated repair count,
 $L\le20$, $465\le M-k_c$ and $M+s\le N$. It proves the
 strict count inequality, without supplying a repair family.
+
+An additional exact Lean application verifies TC12--TC16, including
+the actual mixed-row CRT replacement, global numerical freshness
+and injectivity, whole integer coverage and strict count decrease.
+From global count minimality, private points, a nonempty component
+and at least 83 moving colors, it derives at least 57 bottom-serving
+colors and 57 bottom owners, with at least 56 bottom owners outside
+any chosen color. This conclusion applies to every such component
+and does not require CD21's rectangular inventory.
 
 The checked axiom closures contain only `propext`,
 `Classical.choice` and `Quot.sound`, or are empty. The application
