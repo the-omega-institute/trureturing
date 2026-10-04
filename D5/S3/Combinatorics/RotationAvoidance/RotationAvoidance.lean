@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/RotationAvoidance/RotationAvoidance
    mirror-E: none(waiver:external-open-question-resolution)
-   anchors: [mathlib/module/Mathlib.Data.List.Sort, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Data.List.Sort]
    utility: none
    digest: Complement and reversal are exactly the Wilf symmetries for four-letter rotations. -/
 
@@ -15,18 +15,116 @@ import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceAlternating
 import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceLayeredCount
 import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceLayeredEmpty
 import Mathlib.Data.List.Sort
-import Mathlib.Tactic
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Combinatorics.RotationAvoidance.RotationAvoidance
-
 open D5.S3.Combinatorics Nonnesting.NonnestingDefs
 open RotationAvoidanceDefs RotationAvoidanceCircular
-
-set_option maxHeartbeats 10000000 in
-set_option maxRecDepth 100000 in
+open Lean Meta Elab Tactic in private meta def countBlocks : TacticM Unit := do
+  let goal ← getMainGoal; goal.withContext do
+    let certify := fun (type proof : Expr) => withOptions (Elab.async.set · false) do
+      withDeclNameForAuxNaming (mkPrivateName (← getEnv) (← mkAuxDeclName)) do
+        mkAuxLemma [] type proof
+    let type ← zetaReduce (← instantiateMVars (← goal.getType))
+    let args := type.getAppArgs[1]!.headBeta.getAppArgs
+    let elemType := args[0]!; let originalPred := args[1]!; let pred := originalPred
+    let sizeExpr := args[2]!.getAppArgs[1]!.getAppArgs[1]!
+    let testArgs := pred.bindingBody!.getAppArgs
+    let some size ← getNatValue? (← whnf sizeExpr) | throwError "non-numeral size"
+    let some cuts ← getNatValue? (← whnf testArgs[1]!.getAppArgs[0]!) | throwError "non-numeral cut"
+    let some patternExpr := pred.find? (·.isAppOfArity ``List.cons 3)
+      | throwError "missing pattern"
+    let mut tail ← reduce patternExpr; let mut pattern := []
+    while tail.isAppOfArity ``List.cons 3 do
+      let some n ← getNatValue? tail.getAppArgs[1]! | throwError "non-numeral rank"
+      pattern := pattern ++ [n]; tail := tail.getAppArgs[2]!
+    -- Expand only list structure; certify equality for all lists before counting.
+    let nat := mkConst ``Nat; let bool := mkConst ``Bool
+    let compare ← elabTerm (← `(fun a b : Nat => decide (a < b))) none
+    let nil ← mkListLit nat []; let prepend := fun xs tail => xs.foldr (fun x tail =>
+      mkApp3 (mkConst ``List.cons [0]) nat x tail) tail
+    let compact := fun (xs : Array Expr) => Id.run do
+      let mut full := mkConst ``Bool.true
+      for cut in (List.range cuts).reverse do
+        let indices := ((List.range size).rotate cut).sublistsLen 4
+        let mut found := mkConst ``Bool.false
+        for positions in indices.reverse do
+          let valueAt := fun r => xs[positions[pattern.idxOf r]!]!
+          let comp := fun a b => mkApp2 compare (valueAt a) (valueAt b)
+          let chain := mkApp2 (mkConst ``Bool.and)
+            (mkApp2 (mkConst ``Bool.and) (comp 1 2) (comp 2 3)) (comp 3 4)
+          found := mkApp2 (mkConst ``Bool.or) chain found
+        full := mkApp2 (mkConst ``Bool.and) (mkApp (mkConst ``Bool.not) found) full
+      return full
+    let boolMotive ← withLocalDeclD `p elemType fun p => mkLambdaFVars #[p] bool
+    let rec expand (depth : Nat) (xs : Array Expr) (p : Expr) : MetaM (Expr × Expr) := do
+      let old := fun tail => mkApp originalPred (prepend xs tail)
+      let nilBody := if depth == 0 then compact xs else old nil; let nilProof ← mkEqRefl (old nil)
+      let (consBody, consProof) ← withLocalDeclD `a nat fun a =>
+        withLocalDeclD `tail elemType fun tail => do
+          let (body, proof) ← match depth with
+            | 0 => do
+              let body := old (mkApp3 (mkConst ``List.cons [0]) nat a tail)
+              pure (body, ← mkEqRefl body)
+            | d + 1 => expand d (xs.push a) tail
+          pure (← mkLambdaFVars #[a, tail] body, ← mkLambdaFVars #[a, tail] proof)
+      let newBody ← mkAppOptM ``List.casesOn
+        #[some nat, some boolMotive, some p, some nilBody, some consBody]
+      let motive ← withLocalDeclD `p elemType fun p => do
+        let newBody ← mkAppOptM ``List.casesOn
+          #[some nat, some boolMotive, some p, some nilBody, some consBody]
+        mkLambdaFVars #[p] (← mkEq (old p) newBody)
+      let proof ← mkAppOptM ``List.casesOn
+        #[some nat, some motive, some p, some nilProof, some consProof]
+      pure (newBody, proof)
+    let (pred, predProof) ← withLocalDeclD `p elemType fun p => do
+      let (body, proof) ← expand size #[] p
+      pure (← mkLambdaFVars #[p] body, ← mkAppM ``funext #[← mkLambdaFVars #[p] proof])
+    let predType ← mkEq originalPred pred; let predName ← certify predType predProof
+    -- Every block count and the complete permutation enumeration are kernel checked.
+    let words := (List.range' 1 size).permutations'.toArray
+    let atRank := fun (ys : List Nat) rank => ys.getD (pattern.idxOf rank) 0
+    let accept := fun p => (List.range cuts).all fun cut =>
+      !((p.rotate cut).sublistsLen 4).any fun ys =>
+        decide (atRank ys 1 < atRank ys 2) && decide (atRank ys 2 < atRank ys 3) &&
+          decide (atRank ys 3 < atRank ys 4)
+    let mut nodes : Array (Expr × Expr) := #[]
+    for i in [0:(words.size + 127) / 128] do
+      let node ← withFreshCache do
+        let chunk := (words.extract (i * 128) ((i + 1) * 128)).toList
+        let items ← chunk.mapM fun word => mkListLit (mkConst ``Nat) (word.map mkNatLit)
+        let list ← mkListLit elemType items
+        let value := mkApp3 (mkConst ``List.countP [0]) elemType pred list
+        let type ← mkEq value (mkNatLit (chunk.countP accept))
+        let proof ← mkEqRefl value; let name ← certify type proof
+        pure (list, mkConst name)
+      nodes := nodes.push node
+    while nodes.size > 1 do
+      let mut next := #[]
+      for i in [0:(nodes.size + 1) / 2] do
+        if 2 * i + 1 < nodes.size then
+          let (left, hl) := nodes[2 * i]!; let (right, hr) := nodes[2 * i + 1]!
+          let step ← mkAppOptM ``List.countP_append
+            #[some elemType, some pred, some left, some right]
+          let stepType ← inferType step; let append := stepType.getAppArgs[1]!.getAppArgs[2]!
+          let add := stepType.getAppArgs[2]!.appFn!.appFn!
+          let sum ← mkAppM ``congrArg₂ #[add, hl, hr]
+          next := next.push (append, ← mkAppM ``Eq.trans #[step, sum])
+        else next := next.push nodes[2 * i]!
+      nodes := next
+    let (list, proof) := nodes[0]!; let eqType ← mkEq args[2]! list
+    let name ← certify eqType (← mkEqRefl args[2]!)
+    let countFn := mkApp2 (mkConst ``List.countP [0]) elemType pred
+    let congr ← mkAppM ``congrArg #[countFn, mkConst name]
+    let predDomain ← mkArrow elemType (mkConst ``Bool)
+    let varyPred := mkLambda `p .default predDomain
+      (mkApp3 (mkConst ``List.countP [0]) elemType (mkBVar 0) args[2]!)
+    let predStep ← mkAppM ``congrArg #[varyPred, mkConst predName]
+    let proof ← mkAppM ``Eq.trans #[predStep, ← mkAppM ``Eq.trans #[congr, proof]]
+    let name ← certify type proof
+    goal.assign (mkConst name)
+  replaceMainGoal []
+set_option maxHeartbeats 10000000 in set_option maxRecDepth 100000 in
 theorem result : RotationAvoidanceDefs.claim := by
   classical
   have layered_single_bad_count (size : ℕ) (hsize : 5 ≤ size) :
@@ -36,8 +134,7 @@ theorem result : RotationAvoidanceDefs.claim := by
             if first = 1 then (last - 2) * Nat.fib (2 * (size - last) - 1)
             else Nat.fib (2 * (first - 1) - 1) * Nat.fib (2 * (size - last) - 1)
           else 0 := by
-    let q : List ℕ := [1, 4, 2, 3]
-    let words := {p : List ℕ | p.Perm (List.range' 1 size) ∧
+    let q : List ℕ := [1, 4, 2, 3]; let words := {p : List ℕ | p.Perm (List.range' 1 size) ∧
       ∀ cut < size, Occurs q (p.rotate cut) ↔ cut = 0}
     have lengthEq (p : List ℕ) (hp : p.Perm (List.range' 1 size)) : p.length = size := by
       simpa using hp.length_eq
@@ -49,8 +146,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       by_cases hs : a + b < size
       · rw [Nat.mod_eq_of_lt hs]; omega
       · have hh : size ≤ a + b := by omega
-        rw [Nat.mod_eq_sub_mod hh, Nat.mod_eq_of_lt (by omega : a + b - size < size)]
-        omega
+        rw [Nat.mod_eq_sub_mod hh, Nat.mod_eq_of_lt (by omega : a + b - size < size)]; omega
     let bad := fun (p : List ℕ) (hp : p ∈ singleBadCircles size q) =>
       Classical.choose hp.2.2
     have badSpec (p : List ℕ) (hp : p ∈ singleBadCircles size q) :
@@ -61,15 +157,12 @@ theorem result : RotationAvoidanceDefs.claim := by
       emit p hp ∈ words := by
       have hs := badSpec p hp
       refine ⟨(List.rotate_perm _ _).trans hp.1, ?_⟩
-      intro cut hc
-      change Occurs q ((p.rotate (bad p hp)).rotate cut) ↔ cut = 0
-      rw [rotateSum p hp.1, hs.2 _ (Nat.mod_lt _ (by omega))]
-      exact shiftZero _ _ hs.1 hc
+      intro cut hc; change Occurs q ((p.rotate (bad p hp)).rotate cut) ↔ cut = 0
+      rw [rotateSum p hp.1, hs.2 _ (Nat.mod_lt _ (by omega))]; exact shiftZero _ _ hs.1 hc
     have rootUnique (u v : List ℕ) (hu : u.Perm (List.range' 1 size))
         (headU : u.head? = some 1) (headV : v.head? = some 1)
         (hr : List.IsRotated u v) : u = v := by
-      obtain ⟨cut, he⟩ := hr
-      have hb : cut % u.length < u.length  := by
+      obtain ⟨cut, he⟩ := hr; have hb : cut % u.length < u.length  := by
         rw [lengthEq u hu]; exact Nat.mod_lt _ (by omega)
       have hz : 0 < u.length := by rw [lengthEq u hu]; omega
       have hg : u[cut % u.length]? = u[0]? := by
@@ -77,8 +170,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           headU, headV]
       rw [List.getElem?_eq_getElem hb, List.getElem?_eq_getElem hz, Option.some.injEq] at hg
       have hzero := (hu.nodup_iff.mpr List.nodup_range').getElem_inj_iff.mp hg
-      rw [← List.rotate_mod u cut, hzero, List.rotate_zero] at he
-      exact he
+      rw [← List.rotate_mod u cut, hzero, List.rotate_zero] at he; exact he
     have emitInjective (u v : List ℕ) (hu : u ∈ singleBadCircles size q)
         (hv : v ∈ singleBadCircles size q) (he : emit u hu = emit v hv) : u = v := by
       apply rootUnique u v hu.1 hu.2.1 hv.2.1
@@ -90,15 +182,11 @@ theorem result : RotationAvoidanceDefs.claim := by
           emit circle hc = p := by
       have hm : 1 ∈ p := hp.1.mem_iff.mpr (List.mem_range'_1.mpr (by omega))
       have hi : p.idxOf 1 < size := by
-        have hh := List.idxOf_lt_length_iff.mpr hm
-        rw [lengthEq p hp.1] at hh; exact hh
-      let root := p.rotate (p.idxOf 1)
-      let back := (size - p.idxOf 1) % size
+        have hh := List.idxOf_lt_length_iff.mpr hm; rw [lengthEq p hp.1] at hh; exact hh
+      let root := p.rotate (p.idxOf 1); let back := (size - p.idxOf 1) % size
       have reverseRoot : root.rotate back = p := by
-        rw [rotateSum p hp.1]
-        have he : (p.idxOf 1 + back) % size = 0 := by
-          dsimp [back]
-          rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod,
+        rw [rotateSum p hp.1]; have he : (p.idxOf 1 + back) % size = 0 := by
+          dsimp [back]; rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod,
             show p.idxOf 1 + (size - p.idxOf 1) = size by omega, Nat.mod_self]
         rw [he, List.rotate_zero]
       have rootMember : root ∈ singleBadCircles size q := by
@@ -148,31 +236,25 @@ theorem result : RotationAvoidanceDefs.claim := by
       have h34 : chosen 3 < chosen 4 := by simpa [q] using hi 3 (by omega) (by decide)
       have firstUsed : chosen 1 = first := by
         by_contra hn
-        apply criterion.2.2.1
-        have ht : (q.map chosen).Sublist p.tail := by
-          rw [splitP] at selected ⊢
-          exact List.Sublist.of_cons_of_ne hn selected
+        apply criterion.2.2.1; have ht : (q.map chosen).Sublist p.tail := by
+          rw [splitP] at selected ⊢; exact List.Sublist.of_cons_of_ne hn selected
         refine ⟨chosen, hi, ?_, ht, by simp⟩
-        intro rank hlo hhi
-        apply ht.subset
+        intro rank hlo hhi; apply ht.subset
         have hh : rank = 1 ∨ rank = 2 ∨ rank = 3 ∨ rank = 4  := by
           change rank ≤ 4 at hhi; omega
         rcases hh with rfl | rfl | rfl | rfl <;> simp [q]
       have lastUsed : chosen 3 = last := by
         by_contra hn
-        apply criterion.2.2.2
-        have selected' : [chosen 3, chosen 2, chosen 4, chosen 1].Sublist
+        apply criterion.2.2.2; have selected' : [chosen 3, chosen 2, chosen 4, chosen 1].Sublist
             (last :: (first :: interior).reverse) := by
           simpa [q, splitP, List.reverse_append] using selected.reverse
         have ht := List.Sublist.of_cons_of_ne hn selected'
         have dropP : p.dropLast = first :: interior := by
-          rw [splitP]
-          change ((first :: interior) ++ [last]).dropLast = _
+          rw [splitP]; change ((first :: interior) ++ [last]).dropLast = _
           rw [List.dropLast_append_cons]; simp
         have ht : (q.map chosen).Sublist p.dropLast := by simpa [q, dropP] using ht.reverse
         refine ⟨chosen, hi, ?_, ht, by simp⟩
-        intro rank hlo hhi
-        apply ht.subset
+        intro rank hlo hhi; apply ht.subset
         have hh : rank = 1 ∨ rank = 2 ∨ rank = 3 ∨ rank = 4  := by
           change rank ≤ 4 at hhi; omega
         rcases hh with rfl | rfl | rfl | rfl <;> simp [q]
@@ -190,8 +272,7 @@ theorem result : RotationAvoidanceDefs.claim := by
     have forgetMember (element : family) : forget element ∈ words := element.2.2.property.1
     have forgetInjective : Function.Injective forget := by
       rintro ⟨a, b, p, hp⟩ ⟨c, d, r, hr⟩ he
-      change p = r at he
-      subst r
+      change p = r at he; subst r
       have hab : a = c := Fin.ext (Option.some.inj (hp.2.1.symm.trans hr.2.1))
       have hbd : b = d := Fin.ext (Option.some.inj (hp.2.2.symm.trans hr.2.2))
       subst c; subst d; rfl
@@ -208,8 +289,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       constructor
       · intro a b he; exact forgetInjective (congrArg Subtype.val he)
       · rintro ⟨p, hp⟩
-        obtain ⟨element, he⟩ := forgetSurjective p hp
-        exact ⟨element, Subtype.ext he⟩
+        obtain ⟨element, he⟩ := forgetSurjective p hp; exact ⟨element, Subtype.ext he⟩
     have familyCard := Nat.card_congr (Equiv.ofBijective f fBijective)
     have sliceCounts (a b : Fin size) : (slice a b).ncard =
         if 1 ≤ a.val ∧ a.val + 1 < b.val then
@@ -234,8 +314,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           simpa only [q, Nat.mul_comm] using count
       · rw [if_neg hh]
         have he : slice a b = ∅ := by
-          apply Set.eq_empty_iff_forall_notMem.mpr
-          intro p hp
+          apply Set.eq_empty_iff_forall_notMem.mpr; intro p hp
           obtain ⟨first, last, interior, split, ha, hab, hb⟩ := endpoints p hp.1
           have head : first = a.val := by simpa [split] using hp.2.1
           have tail : last = b.val := by
@@ -245,11 +324,9 @@ theorem result : RotationAvoidanceDefs.claim := by
             exact Option.some.inj (he.symm.trans hp.2.2)
           exact hh (by omega)
         rw [he, Set.ncard_empty]
-    change (singleBadCircles size q).ncard = _
-    rw [rootCard, ← Nat.card_coe_set_eq, ← familyCard]
+    change (singleBadCircles size q).ncard = _; rw [rootCard, ← Nat.card_coe_set_eq, ← familyCard]
     change Nat.card (Σ a : Fin size, Σ b : Fin size, slice a b) = _
-    rw [Nat.card_sigma]
-    simp only [Nat.card_sigma, Nat.card_coe_set_eq, sliceCounts]
+    rw [Nat.card_sigma]; simp only [Nat.card_sigma, Nat.card_coe_set_eq, sliceCounts]
     let term := fun first last : ℕ =>
       if 1 ≤ first ∧ first + 1 < last then
         if first = 1 then (last - 2) * Nat.fib (2 * (size - last) - 1)
@@ -259,9 +336,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       ∑ a ∈ Finset.range size, ∑ b ∈ Finset.range size, term a b
     calc
       _ = ∑ a : Fin size, ∑ b ∈ Finset.range size, term a.val b := by
-        apply Finset.sum_congr rfl
-        intro a ha
-        exact Fin.sum_univ_eq_sum_range (term a.val) size
+        apply Finset.sum_congr rfl; intro a ha; exact Fin.sum_univ_eq_sum_range (term a.val) size
       _ = _ := Fin.sum_univ_eq_sum_range (fun a => ∑ b ∈ Finset.range size, term a b) size
   have alternating_single_bad_count (size : ℕ) (hsize : 5 ≤ size) :
       (singleBadCircles size [2, 4, 1, 3]).ncard =
@@ -271,8 +346,7 @@ theorem result : RotationAvoidanceDefs.claim := by
               Nat.fib (2 * (first - 1) - 1) * Nat.fib (2 * (size - last) - 1)
             else Nat.fib (2 * (first - 1) - 1) * Nat.fib (2 * (size - last) - 1)
           else 0 := by
-    let q : List ℕ := [2, 4, 1, 3]
-    let words := {p : List ℕ | p.Perm (List.range' 1 size) ∧
+    let q : List ℕ := [2, 4, 1, 3]; let words := {p : List ℕ | p.Perm (List.range' 1 size) ∧
       ∀ cut < size, Occurs q (p.rotate cut) ↔ cut = 0}
     have lengthEq (p : List ℕ) (hp : p.Perm (List.range' 1 size)) : p.length = size := by
       simpa using hp.length_eq
@@ -284,8 +358,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       by_cases hs : a + b < size
       · rw [Nat.mod_eq_of_lt hs]; omega
       · have hh : size ≤ a + b := by omega
-        rw [Nat.mod_eq_sub_mod hh, Nat.mod_eq_of_lt (by omega : a + b - size < size)]
-        omega
+        rw [Nat.mod_eq_sub_mod hh, Nat.mod_eq_of_lt (by omega : a + b - size < size)]; omega
     let bad := fun (p : List ℕ) (hp : p ∈ singleBadCircles size q) =>
       Classical.choose hp.2.2
     have badSpec (p : List ℕ) (hp : p ∈ singleBadCircles size q) :
@@ -296,15 +369,12 @@ theorem result : RotationAvoidanceDefs.claim := by
       emit p hp ∈ words := by
       have hs := badSpec p hp
       refine ⟨(List.rotate_perm _ _).trans hp.1, ?_⟩
-      intro cut hc
-      change Occurs q ((p.rotate (bad p hp)).rotate cut) ↔ cut = 0
-      rw [rotateSum p hp.1, hs.2 _ (Nat.mod_lt _ (by omega))]
-      exact shiftZero _ _ hs.1 hc
+      intro cut hc; change Occurs q ((p.rotate (bad p hp)).rotate cut) ↔ cut = 0
+      rw [rotateSum p hp.1, hs.2 _ (Nat.mod_lt _ (by omega))]; exact shiftZero _ _ hs.1 hc
     have rootUnique (u v : List ℕ) (hu : u.Perm (List.range' 1 size))
         (headU : u.head? = some 1) (headV : v.head? = some 1)
         (hr : List.IsRotated u v) : u = v := by
-      obtain ⟨cut, he⟩ := hr
-      have hb : cut % u.length < u.length  := by
+      obtain ⟨cut, he⟩ := hr; have hb : cut % u.length < u.length  := by
         rw [lengthEq u hu]; exact Nat.mod_lt _ (by omega)
       have hz : 0 < u.length := by rw [lengthEq u hu]; omega
       have hg : u[cut % u.length]? = u[0]? := by
@@ -312,8 +382,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           headU, headV]
       rw [List.getElem?_eq_getElem hb, List.getElem?_eq_getElem hz, Option.some.injEq] at hg
       have hzero := (hu.nodup_iff.mpr List.nodup_range').getElem_inj_iff.mp hg
-      rw [← List.rotate_mod u cut, hzero, List.rotate_zero] at he
-      exact he
+      rw [← List.rotate_mod u cut, hzero, List.rotate_zero] at he; exact he
     have emitInjective (u v : List ℕ) (hu : u ∈ singleBadCircles size q)
         (hv : v ∈ singleBadCircles size q) (he : emit u hu = emit v hv) : u = v := by
       apply rootUnique u v hu.1 hu.2.1 hv.2.1
@@ -325,15 +394,11 @@ theorem result : RotationAvoidanceDefs.claim := by
           emit circle hc = p := by
       have hm : 1 ∈ p := hp.1.mem_iff.mpr (List.mem_range'_1.mpr (by omega))
       have hi : p.idxOf 1 < size := by
-        have hh := List.idxOf_lt_length_iff.mpr hm
-        rw [lengthEq p hp.1] at hh; exact hh
-      let root := p.rotate (p.idxOf 1)
-      let back := (size - p.idxOf 1) % size
+        have hh := List.idxOf_lt_length_iff.mpr hm; rw [lengthEq p hp.1] at hh; exact hh
+      let root := p.rotate (p.idxOf 1); let back := (size - p.idxOf 1) % size
       have reverseRoot : root.rotate back = p := by
-        rw [rotateSum p hp.1]
-        have he : (p.idxOf 1 + back) % size = 0 := by
-          dsimp [back]
-          rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod,
+        rw [rotateSum p hp.1]; have he : (p.idxOf 1 + back) % size = 0 := by
+          dsimp [back]; rw [Nat.add_mod, Nat.mod_mod, ← Nat.add_mod,
             show p.idxOf 1 + (size - p.idxOf 1) = size by omega, Nat.mod_self]
         rw [he, List.rotate_zero]
       have rootMember : root ∈ singleBadCircles size q := by
@@ -383,31 +448,25 @@ theorem result : RotationAvoidanceDefs.claim := by
       have h34 : chosen 3 < chosen 4 := by simpa [q] using hi 3 (by omega) (by decide)
       have firstUsed : chosen 2 = first := by
         by_contra hn
-        apply criterion.2.2.1
-        have ht : (q.map chosen).Sublist p.tail := by
-          rw [splitP] at selected ⊢
-          exact List.Sublist.of_cons_of_ne hn selected
+        apply criterion.2.2.1; have ht : (q.map chosen).Sublist p.tail := by
+          rw [splitP] at selected ⊢; exact List.Sublist.of_cons_of_ne hn selected
         refine ⟨chosen, hi, ?_, ht, by simp⟩
-        intro rank hlo hhi
-        apply ht.subset
+        intro rank hlo hhi; apply ht.subset
         have hh : rank = 1 ∨ rank = 2 ∨ rank = 3 ∨ rank = 4  := by
           change rank ≤ 4 at hhi; omega
         rcases hh with rfl | rfl | rfl | rfl <;> simp [q]
       have lastUsed : chosen 3 = last := by
         by_contra hn
-        apply criterion.2.2.2
-        have selected' : [chosen 3, chosen 1, chosen 4, chosen 2].Sublist
+        apply criterion.2.2.2; have selected' : [chosen 3, chosen 1, chosen 4, chosen 2].Sublist
             (last :: (first :: interior).reverse) := by
           simpa [q, splitP, List.reverse_append] using selected.reverse
         have ht := List.Sublist.of_cons_of_ne hn selected'
         have dropP : p.dropLast = first :: interior := by
-          rw [splitP]
-          change ((first :: interior) ++ [last]).dropLast = _
+          rw [splitP]; change ((first :: interior) ++ [last]).dropLast = _
           rw [List.dropLast_append_cons]; simp
         have ht : (q.map chosen).Sublist p.dropLast := by simpa [q, dropP] using ht.reverse
         refine ⟨chosen, hi, ?_, ht, by simp⟩
-        intro rank hlo hhi
-        apply ht.subset
+        intro rank hlo hhi; apply ht.subset
         have hh : rank = 1 ∨ rank = 2 ∨ rank = 3 ∨ rank = 4  := by
           change rank ≤ 4 at hhi; omega
         rcases hh with rfl | rfl | rfl | rfl <;> simp [q]
@@ -425,8 +484,7 @@ theorem result : RotationAvoidanceDefs.claim := by
     have forgetMember (element : family) : forget element ∈ words := element.2.2.property.1
     have forgetInjective : Function.Injective forget := by
       rintro ⟨a, b, p, hp⟩ ⟨c, d, r, hr⟩ he
-      change p = r at he
-      subst r
+      change p = r at he; subst r
       have hab : a = c := Fin.ext (Option.some.inj (hp.2.1.symm.trans hr.2.1))
       have hbd : b = d := Fin.ext (Option.some.inj (hp.2.2.symm.trans hr.2.2))
       subst c; subst d; rfl
@@ -443,8 +501,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       constructor
       · intro a b he; exact forgetInjective (congrArg Subtype.val he)
       · rintro ⟨p, hp⟩
-        obtain ⟨element, he⟩ := forgetSurjective p hp
-        exact ⟨element, Subtype.ext he⟩
+        obtain ⟨element, he⟩ := forgetSurjective p hp; exact ⟨element, Subtype.ext he⟩
     have familyCard := Nat.card_congr (Equiv.ofBijective f fBijective)
     have sliceCounts (a b : Fin size) : (slice a b).ncard =
         if 2 ≤ a.val ∧ a.val < b.val then
@@ -474,8 +531,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           simpa only [q, Nat.mul_comm] using count
       · rw [if_neg hh]
         have he : slice a b = ∅ := by
-          apply Set.eq_empty_iff_forall_notMem.mpr
-          intro p hp
+          apply Set.eq_empty_iff_forall_notMem.mpr; intro p hp
           obtain ⟨first, last, interior, split, ha, hab, hb⟩ := endpoints p hp.1
           have head : first = a.val := by simpa [split] using hp.2.1
           have tail : last = b.val := by
@@ -485,11 +541,9 @@ theorem result : RotationAvoidanceDefs.claim := by
             exact Option.some.inj (he.symm.trans hp.2.2)
           exact hh (by omega)
         rw [he, Set.ncard_empty]
-    change (singleBadCircles size q).ncard = _
-    rw [rootCard, ← Nat.card_coe_set_eq, ← familyCard]
+    change (singleBadCircles size q).ncard = _; rw [rootCard, ← Nat.card_coe_set_eq, ← familyCard]
     change Nat.card (Σ a : Fin size, Σ b : Fin size, slice a b) = _
-    rw [Nat.card_sigma]
-    simp only [Nat.card_sigma, Nat.card_coe_set_eq, sliceCounts]
+    rw [Nat.card_sigma]; simp only [Nat.card_sigma, Nat.card_coe_set_eq, sliceCounts]
     let term := fun first last : ℕ =>
       if 2 ≤ first ∧ first < last then
         if last = first + 1 then Nat.fib (2 * (size - 2) - 1) -
@@ -500,9 +554,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       ∑ a ∈ Finset.range size, ∑ b ∈ Finset.range size, term a b
     calc
       _ = ∑ a : Fin size, ∑ b ∈ Finset.range size, term a.val b := by
-        apply Finset.sum_congr rfl
-        intro a ha
-        exact Fin.sum_univ_eq_sum_range (term a.val) size
+        apply Finset.sum_congr rfl; intro a ha; exact Fin.sum_univ_eq_sum_range (term a.val) size
       _ = _ := Fin.sum_univ_eq_sum_range (fun a => ∑ b ∈ Finset.range size, term a b) size
   let reps : List (List ℕ) :=
     [[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2],
@@ -515,17 +567,13 @@ theorem result : RotationAvoidanceDefs.claim := by
   have orbitTransfer (r q s : List ℕ) (hr : r.Perm [1, 2, 3, 4])
       (hq : q ∈ orbit r) (hs : s ∈ orbit r) : s ∈ orbit q := by
     have bound (v : ℕ) (hv : v ∈ r) : 1 ≤ v ∧ v ≤ 4 := by
-      have hh := hr.mem_iff.mp hv
-      simp only [List.mem_cons, List.not_mem_nil, or_false] at hh
+      have hh := hr.mem_iff.mp hv; simp only [List.mem_cons, List.not_mem_nil, or_false] at hh
       rcases hh with rfl | rfl | rfl | rfl <;> omega
     have involution : complement (complement r) = r := by
       unfold complement
       rw [List.map_map]
       conv_rhs => rw [← List.map_id r]
-      apply List.map_congr_left
-      intro v hv
-      have hh := bound v hv
-      dsimp; omega
+      apply List.map_congr_left; intro v hv; have hh := bound v hv; dsimp; omega
     have reverseComplement (t : List ℕ) : (complement t).reverse = complement t.reverse := by
       simp only [complement, List.map_reverse]
     have involutionRev : complement (complement r.reverse) = r.reverse := by
@@ -534,13 +582,15 @@ theorem result : RotationAvoidanceDefs.claim := by
     rcases hq with rfl | rfl | rfl | rfl <;>
       rcases hs with rfl | rfl | rfl | rfl <;>
       simp only [reverseComplement, List.reverse_reverse, involution, involutionRev] <;> tauto
-  let signature := fun ys : List ℕ => match ys with
-    | [a, b, c, d] => [decide (a < b), decide (a < c), decide (a < d),
-        decide (b < c), decide (b < d), decide (c < d)]
-    | _ => []
+  let matchesPattern := fun q ys : List ℕ => match q, ys with
+    | [qa, qb, qc, _], [a, b, c, d] =>
+      let atRank := fun rank => if qa = rank then a else if qb = rank then b
+        else if qc = rank then c else d
+      decide (atRank 1 < atRank 2) && decide (atRank 2 < atRank 3) &&
+        decide (atRank 3 < atRank 4)
+    | _, _ => false
   let tests := fun k : ℕ => fun q p : List ℕ =>
-    (List.range k).all fun i => !((p.rotate i).sublistsLen 4).any fun ys =>
-      signature ys == signature q
+    (List.range k).all fun i => !((p.rotate i).sublistsLen 4).any (matchesPattern q)
   let count := fun n k : ℕ => fun q : List ℕ =>
     (List.range' 1 n).permutations'.countP (tests k q)
   have boundedOccurs (n : ℕ) (hn : n ≤ 7) (q p : List ℕ) (hq : q.Perm [1, 2, 3, 4])
@@ -555,14 +605,10 @@ theorem result : RotationAvoidanceDefs.claim := by
     rw [lettersEq]
     constructor
     · rintro ⟨x, hi, hm, selected, _⟩
-      let xs := [x 1, x 2, x 3, x 4]
-      have h12 := hi 1 (by omega) (by omega)
-      have h23 := hi 2 (by omega) (by omega)
-      have h34 := hi 3 (by omega) (by omega)
-      change x 1 < x 2 at h12
-      change x 2 < x 3 at h23
-      change x 3 < x 4 at h34
-      have ordered : xs.Pairwise (· < ·) := by
+      let xs := [x 1, x 2, x 3, x 4]; have h12 := hi 1 (by omega) (by omega)
+      have h23 := hi 2 (by omega) (by omega); have h34 := hi 3 (by omega) (by omega)
+      change x 1 < x 2 at h12; change x 2 < x 3 at h23
+      change x 3 < x 4 at h34; have ordered : xs.Pairwise (· < ·) := by
         simp [xs, List.pairwise_cons]
         omega
       have intoRange (i : ℕ) (hlo : 1 ≤ i) (hhi : i ≤ 4) :
@@ -570,16 +616,14 @@ theorem result : RotationAvoidanceDefs.claim := by
         obtain ⟨j, hj, he⟩ := List.mem_range'.mp (hp.mem_iff.mp (hm i hlo hhi))
         exact List.mem_range'.mpr ⟨j, by omega, he⟩
       have subset : xs ⊆ List.range' 1 7 := by
-        intro v hv
-        simp only [xs, List.mem_cons, List.not_mem_nil, or_false] at hv
+        intro v hv; simp only [xs, List.mem_cons, List.not_mem_nil, or_false] at hv
         rcases hv with rfl | rfl | rfl | rfl <;>
           exact intoRange _ (by omega) (by omega)
       have sub := List.sublist_of_subperm_of_pairwise
         (ordered.nodup.subperm subset) ordered List.pairwise_lt_range'
       refine ⟨xs, List.mem_sublistsLen.mpr ⟨sub, by simp [xs]⟩, ?_⟩
       have he : q.map (fun rank => xs.getD (rank - 1) 0) = q.map x := by
-        apply List.map_congr_left
-        intro rank hrank
+        apply List.map_congr_left; intro rank hrank
         rcases ranks rank hrank with rfl | rfl | rfl | rfl <;> rfl
       rwa [he]
     · rintro ⟨xs, hxs, selected⟩
@@ -598,13 +642,10 @@ theorem result : RotationAvoidanceDefs.claim := by
               | nil => simp at len
               | cons e rest =>
                 have hz : rest = [] := by simpa using len
-                subst rest
-                exact ⟨a, b, c, e, rfl⟩
-      subst xs
-      have ordered := (List.pairwise_lt_range' (s := 1) (n := 7)).sublist sub
+                subst rest; exact ⟨a, b, c, e, rfl⟩
+      subst xs; have ordered := (List.pairwise_lt_range' (s := 1) (n := 7)).sublist sub
       have order : a < b ∧ b < c ∧ c < e := by
-        simp [List.pairwise_cons] at ordered
-        exact ⟨ordered.1.1, ordered.2.1.1, ordered.2.2⟩
+        simp [List.pairwise_cons] at ordered; exact ⟨ordered.1.1, ordered.2.1.1, ordered.2.2⟩
       refine ⟨fun rank => [a, b, c, e].getD (rank - 1) 0, ?_, ?_, selected, by simp⟩
       · intro i hlo hhi
         have casesI : i = 1 ∨ i = 2 ∨ i = 3 := by omega
@@ -617,18 +658,21 @@ theorem result : RotationAvoidanceDefs.claim := by
         have mappedPerm : (q.map (fun rank => [a, b, c, e].getD (rank - 1) 0)).Perm
             [a, b, c, e] := by
           simpa using hq.map (fun rank => [a, b, c, e].getD (rank - 1) 0)
-        apply selected.subset
-        apply mappedPerm.mem_iff.mpr
+        apply selected.subset; apply mappedPerm.mem_iff.mpr
         rcases casesI with rfl | rfl | rfl | rfl <;> simp
   have signatureMap : ∀ xs ∈ (List.range' 1 7).sublistsLen 4,
       ∀ q ∈ ([1, 2, 3, 4] : List ℕ).permutations',
-      signature (q.map (fun r => xs.getD (r - 1) 0)) = signature q := by decide
+      matchesPattern q (q.map (fun r => xs.getD (r - 1) 0)) = true := by
+    intro xs hxs
+    fin_cases hxs <;> decide +kernel
   have recoverSignature : ∀ xs ∈ (List.range' 1 7).sublistsLen 4,
       ∀ ys ∈ xs.permutations', ∀ q ∈ ([1, 2, 3, 4] : List ℕ).permutations',
-      signature ys = signature q → q.map (fun r => xs.getD (r - 1) 0) = ys := by decide
+      matchesPattern q ys = true → q.map (fun r => xs.getD (r - 1) 0) = ys := by
+    intro xs hxs
+    fin_cases hxs <;> decide +kernel
   have positionalOccurs (n : ℕ) (hn : n ≤ 7) (q p : List ℕ) (hq : q.Perm [1, 2, 3, 4])
       (hp : p.Perm (List.range' 1 n)) :
-      Occurs q p ↔ ∃ ys ∈ p.sublistsLen 4, signature ys = signature q := by
+      Occurs q p ↔ ∃ ys ∈ p.sublistsLen 4, matchesPattern q ys = true := by
     constructor
     · intro ho
       obtain ⟨xs, hxs, sub⟩ := (boundedOccurs n hn q p hq hp).mp ho
@@ -645,8 +689,7 @@ theorem result : RotationAvoidanceDefs.claim := by
       have sorted : xs.Pairwise (· ≤ ·) := List.pairwise_mergeSort' (· ≤ ·) ys
       have strict : xs.Pairwise (· < ·) := (sorted.and nd).imp fun {a b} h => by omega
       have subset : xs ⊆ List.range' 1 7 := by
-        intro v hv
-        obtain ⟨i, hi, he⟩ := List.mem_range'.mp
+        intro v hv; obtain ⟨i, hi, he⟩ := List.mem_range'.mp
           (hp.mem_iff.mp (sub.subset (perm.mem_iff.mp hv)))
         exact List.mem_range'.mpr ⟨i, by omega, he⟩
       have rangeSub := List.sublist_of_subperm_of_pairwise
@@ -657,15 +700,14 @@ theorem result : RotationAvoidanceDefs.claim := by
         q (List.mem_permutations'.mpr hq) hpattern
       apply (boundedOccurs n hn q p hq hp).mpr
       refine ⟨xs, hxs, ?_⟩
-      rw [recover]
-      exact sub
+      rw [recover]; exact sub
   have finiteCount (n : ℕ) (hn : n ≤ 7) (k : ℕ) (q : List ℕ) (hq : q.Perm [1, 2, 3, 4]) :
       (rotationAvoiders n k q).ncard = count n k q := by
     let accepted := (List.range' 1 n).permutations'.filter (tests k q)
     have testsEq (p : List ℕ) (hp : p.Perm (List.range' 1 n)) :
         tests k q p = true ↔ ∀ i < k, ¬ Occurs q (p.rotate i) := by
       simp only [tests, List.all_eq_true, List.mem_range, Bool.not_eq_true',
-        List.any_eq_false, beq_iff_eq]
+        List.any_eq_false]
       constructor
       · intro hh i hi ho
         obtain ⟨xs, hxs, hx⟩ := (positionalOccurs n hn q (p.rotate i) hq
@@ -681,58 +723,28 @@ theorem result : RotationAvoidanceDefs.claim := by
       constructor
       · intro hp; exact ⟨hp.1, (testsEq p hp.1).mpr hp.2⟩
       · intro hp; exact ⟨hp.1, (testsEq p hp.1).mp hp.2⟩
-    rw [setEq, Set.ncard_coe_finset]
-    dsimp only [count]
-    rw [List.countP_eq_length_filter]
-    have nd : (List.range' 1 n).permutations'.Nodup :=
+    rw [setEq, Set.ncard_coe_finset]; dsimp only [count]
+    rw [List.countP_eq_length_filter]; have nd : (List.range' 1 n).permutations'.Nodup :=
       (List.permutations_perm_permutations' _).nodup_iff.mp
         (List.nodup_permutations _ List.nodup_range')
     exact List.toFinset_card_of_nodup (nd.filter _)
   have table64 : reps.map (count 6 4) = [264, 233, 262, 239, 260, 268, 262, 286] := by
-    apply List.ext_getElem (by simp [reps])
-    intro i hi hj
-    norm_num only [reps, List.length_map, List.length_cons, List.length_nil] at hi
-    interval_cases i <;>
-      simp only [reps, List.map_cons, List.map_nil, List.getElem_cons_zero,
-        List.getElem_cons_succ]
-    all_goals run_tac do
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      let proof ← goal.withContext do Lean.Meta.mkDecideProof (← goal.getType)
-      goal.assign proof; Lean.Elab.Tactic.replaceMainGoal []
+    simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
+    repeat' apply And.intro
+    all_goals run_tac countBlocks
   have table65 : reps.map (count 6 5) = [221, 182, 221, 187, 221, 221, 214, 234] := by
-    apply List.ext_getElem (by simp [reps])
-    intro i hi hj
-    norm_num only [reps, List.length_map, List.length_cons, List.length_nil] at hi
-    interval_cases i <;>
-      simp only [reps, List.map_cons, List.map_nil, List.getElem_cons_zero,
-        List.getElem_cons_succ]
-    all_goals run_tac do
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      let proof ← goal.withContext do Lean.Meta.mkDecideProof (← goal.getType)
-      goal.assign proof; Lean.Elab.Tactic.replaceMainGoal []
+    simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
+    repeat' apply And.intro
+    all_goals run_tac countBlocks
   have table74 : [[1, 3, 2, 4], [2, 1, 4, 3]].map (count 7 4) = [1058, 1070] := by
-    apply List.ext_getElem (by simp [reps])
-    intro i hi hj
-    norm_num only [reps, List.length_map, List.length_cons, List.length_nil] at hi
-    interval_cases i <;>
-      simp only [reps, List.map_cons, List.map_nil, List.getElem_cons_zero,
-        List.getElem_cons_succ]
-    all_goals run_tac do
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      let proof ← goal.withContext do Lean.Meta.mkDecideProof (← goal.getType)
-      goal.assign proof; Lean.Elab.Tactic.replaceMainGoal []
+    simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
+    repeat' apply And.intro
+    all_goals run_tac countBlocks
   have table75 : [[1, 2, 3, 4], [1, 3, 2, 4], [1, 4, 2, 3], [1, 4, 3, 2]].map
       (count 7 5) = [782, 807, 798, 794] := by
-    apply List.ext_getElem (by simp [reps])
-    intro i hi hj
-    norm_num only [reps, List.length_map, List.length_cons, List.length_nil] at hi
-    interval_cases i <;>
-      simp only [reps, List.map_cons, List.map_nil, List.getElem_cons_zero,
-        List.getElem_cons_succ]
-    all_goals run_tac do
-      let goal ← Lean.Elab.Tactic.getMainGoal
-      let proof ← goal.withContext do Lean.Meta.mkDecideProof (← goal.getType)
-      goal.assign proof; Lean.Elab.Tactic.replaceMainGoal []
+    simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
+    repeat' apply And.intro
+    all_goals run_tac countBlocks
   have representativeSymmetries (size : ℕ) (hsize : 1 ≤ size) :
       (circularAvoiders (size + 1) [1, 4, 3, 2]).ncard =
           (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard ∧
@@ -761,8 +773,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           (word : List ℕ) (havoid : ∀ cut < 4, ¬ Occurs (pattern.rotate cut) word) :
           ∀ cut < 4, ¬ Occurs ((pattern.rotate offset).rotate cut) word := by
         intro cut hcut
-        rw [List.rotate_rotate, ← List.rotate_mod, hlen]
-        exact havoid _ (Nat.mod_lt _ (by omega))
+        rw [List.rotate_rotate, ← List.rotate_mod, hlen]; exact havoid _ (Nat.mod_lt _ (by omega))
       have restore : (q.rotate shift).rotate (4 - shift) = q := by
         rw [List.rotate_rotate, show shift + (4 - shift) = 4 by omega,
           ← qlength, List.rotate_length]
@@ -826,8 +837,7 @@ theorem result : RotationAvoidanceDefs.claim := by
     have ets := RotationAvoidanceSymmetry.orbit_wilfEquivalent k (by omega) t s
       (repsPerm t ht) hst
     have ert : WilfEquivalent k r t := by
-      intro n hn
-      exact (erq n hn).trans ((equivalence n hn).trans (ets n hn).symm)
+      intro n hn; exact (erq n hn).trans ((equivalence n hn).trans (ets n hn).symm)
     have representativeEq : r = t := by
       by_cases big : 6 ≤ k
       · have full := ert k le_rfl
@@ -843,8 +853,7 @@ theorem result : RotationAvoidanceDefs.claim := by
         rw [nearCounts r, nearCounts t] at near
         have groups := representativeSymmetries (k - 1) (by omega)
         rw [show k - 1 + 1 = k by omega] at groups
-        obtain ⟨cA1, cA2, cB1, cC1, cC2⟩ := groups
-        have separation :=
+        obtain ⟨cA1, cA2, cB1, cC1, cC2⟩ := groups; have separation :=
           RotationAvoidanceGroups.circular_representative_separations (k - 1) (by omega)
         rw [show k - 1 + 1 = k by omega] at separation
         obtain ⟨nA1, nA2, nB1, nC1, nC2⟩ := representativeSymmetries k (by omega)
@@ -853,8 +862,7 @@ theorem result : RotationAvoidanceDefs.claim := by
         have gapC1 := RotationAvoidanceFibonacciGap.fibonacci_lt_layered (k + 1) (by omega)
         have gapC2 : (singleBadCircles (k + 1) [1, 4, 2, 3]).ncard <
             (singleBadCircles (k + 1) [2, 4, 1, 3]).ncard := by
-          let size := k + 1
-          have hsize : 5 ≤ size := by dsimp [size]; omega
+          let size := k + 1; have hsize : 5 ≤ size := by dsimp [size]; omega
           have evenGrowth (l : ℕ) : l ≤ Nat.fib (2 * l) := by
             have supplied := Nat.le_fib_add_one (2 * l)
             omega
@@ -866,20 +874,19 @@ theorem result : RotationAvoidanceDefs.claim := by
             have addition := Nat.fib_add (2 * l) (2 * h - 2)
             have index : 2 * l + (2 * h - 2) + 1 = 2 * (l + h) - 1 := by omega
             have odd : 2 * h - 2 + 1 = 2 * h - 1 := by omega
-            rw [index, odd] at addition
-            have recur := Nat.fib_add_two (n := 2 * l - 1)
+            rw [index, odd] at addition; have recur := Nat.fib_add_two (n := 2 * l - 1)
             rw [show 2 * l - 1 + 2 = 2 * l + 1 by omega,
               show 2 * l - 1 + 1 = 2 * l by omega] at recur
             have bound : (Nat.fib (2 * l - 1) + l) * Nat.fib (2 * h - 1) ≤
                 Nat.fib (2 * (l + h) - 1) := by
-              have hg := evenGrowth l
-              nlinarith
+              have hg := evenGrowth l; have hm := Nat.mul_le_mul_right (Nat.fib (2 * h - 1))
+                (Nat.add_le_add_left hg (Nat.fib (2 * l - 1)))
+              rw [← recur] at hm; rw [addition]; exact hm.trans (Nat.le_add_left _ _)
             rw [Nat.add_mul] at bound
             constructor
             · omega
             · intro he
-              subst l
-              have pos : 0 < Nat.fib (2 * h - 1) := Nat.fib_pos.mpr (by omega)
+              subst l; have pos : 0 < Nat.fib (2 * h - 1) := Nat.fib_pos.mpr (by omega)
               norm_num at addition ⊢
               omega
           let C := fun t : ℕ => Nat.fib (2 * t - 1)
@@ -898,8 +905,7 @@ theorem result : RotationAvoidanceDefs.claim := by
                 have hl : ¬ (1 ≤ a ∧ a + 1 < b) := by omega
                 have ha : ¬ (2 ≤ a ∧ a < b) := by omega
                 simp [lay, asc, hl, ha]
-              simp only [zeros, Finset.sum_const_zero]
-              exact ⟨le_rfl, by intro he; omega⟩
+              simp only [zeros, Finset.sum_const_zero]; exact ⟨le_rfl, by intro he; omega⟩
             · have big : 3 ≤ b := by omega
               have oneMem : 1 ∈ Finset.range size := Finset.mem_range.mpr (by omega)
               have edgeMem : b - 1 ∈ (Finset.range size).erase 1 := by
@@ -907,8 +913,7 @@ theorem result : RotationAvoidanceDefs.claim := by
               let rest := ((Finset.range size).erase 1).erase (b - 1)
               have common (a : ℕ) (ha : a ∈ rest) : lay a b = asc a b := by
                 have ha' : a ≠ 1 ∧ a ≠ b - 1 := by
-                  have he := Finset.mem_erase.mp ha
-                  exact ⟨(Finset.mem_erase.mp he.2).1, he.1⟩
+                  have he := Finset.mem_erase.mp ha; exact ⟨(Finset.mem_erase.mp he.2).1, he.1⟩
                 have ia : (1 ≤ a ∧ a + 1 < b) ↔ (2 ≤ a ∧ a < b) := by omega
                 have notConsecutive : b ≠ a + 1 := by omega
                 simp only [lay, asc, ia, ha'.1, if_false, notConsecutive]
@@ -936,10 +941,8 @@ theorem result : RotationAvoidanceDefs.claim := by
               change (b - 2) * C (size - b) ≤ C (size - 2) - C (b - 2) * C (size - b) ∧
                 (b - 2 = 2 → (b - 2) * C (size - b) <
                   C (size - 2) - C (b - 2) * C (size - b)) at growth
-              have ls := split (fun a => lay a b)
-              have as := split (fun a => asc a b)
-              rw [commonSum, layEdge, layOne] at ls
-              rw [ascOne, ascEdge] at as
+              have ls := split (fun a => lay a b); have as := split (fun a => asc a b)
+              rw [commonSum, layEdge, layOne] at ls; rw [ascOne, ascEdge] at as
               constructor
               · omega
               · intro he
@@ -954,8 +957,7 @@ theorem result : RotationAvoidanceDefs.claim := by
             alternating_single_bad_count size hsize]
           change (∑ a ∈ Finset.range size, ∑ b ∈ Finset.range size, lay a b) <
             ∑ a ∈ Finset.range size, ∑ b ∈ Finset.range size, asc a b
-          rw [Finset.sum_comm, Finset.sum_comm (f := asc)]
-          exact strictSum
+          rw [Finset.sum_comm, Finset.sum_comm (f := asc)]; exact strictSum
         simp only [reps, List.mem_cons, List.not_mem_nil, or_false] at hr ht
         rcases hr with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
           rcases ht with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
@@ -976,8 +978,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           generalize hf7 : count 7 4 = f7 at values7 equal7
           simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
             at values6 values7
-          obtain ⟨v0, v1, v2, v3, v4, v5, v6, v7⟩ := values6
-          obtain ⟨w0, w1⟩ := values7
+          obtain ⟨v0, v1, v2, v3, v4, v5, v6, v7⟩ := values6; obtain ⟨w0, w1⟩ := values7
           rcases hr with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
             rcases ht with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
           all_goals first | rfl | {
@@ -988,8 +989,7 @@ theorem result : RotationAvoidanceDefs.claim := by
           generalize hf7 : count 7 5 = f7 at values7 equal7
           simp only [reps, List.map_cons, List.map_nil, List.cons.injEq, and_true]
             at values6 values7
-          obtain ⟨v0, v1, v2, v3, v4, v5, v6, v7⟩ := values6
-          obtain ⟨w0, w1, w2, w3⟩ := values7
+          obtain ⟨v0, v1, v2, v3, v4, v5, v6, v7⟩ := values6; obtain ⟨w0, w1, w2, w3⟩ := values7
           rcases hr with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
             rcases ht with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
           all_goals first | rfl | {
