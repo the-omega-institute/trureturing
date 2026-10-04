@@ -36,14 +36,16 @@ def CoarseObservable (p : Policy) : Prop :=
 /-- Distinct nonconflicting positive trees diverge at a fresh coarse query.
 If both have already paid a nonleaf on a shared prefix, one final excess is at least two. -/
 theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservable π.policy)
-    (U V : Source) (positiveU : Positive U) (positiveV : Positive V)
+    (U V : Source) (positiveU : Positive U) (_positiveV : Positive V)
     (different : U ≠ V) (nc : Nonconflict U V)
     (h : Hist (fun _ : Address => Option Bool))
     (prefixU : h.IsPrefix (κHist (terminal π U).1))
     (prefixV : h.IsPrefix (κHist (terminal π V).1)) :
     ∃ (s : Hist (fun _ : Address => Option Bool)) (q : Address),
-      (h ++ s ++ [(⟨q, leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist (terminal π U).1) ∧
-      (h ++ s ++ [(⟨q, leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist (terminal π V).1) ∧
+      (h ++ s ++ [(⟨q, leafLabel U q⟩ :
+        Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist (terminal π U).1) ∧
+      (h ++ s ++ [(⟨q, leafLabel V q⟩ :
+        Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist (terminal π V).1) ∧
       leafLabel U q ≠ leafLabel V q ∧
       q ∉ ((h ++ s).map Sigma.fst).toFinset ∧
       (q ∉ leafAddresses U ∨ q ∉ leafAddresses V) ∧
@@ -61,8 +63,10 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
       execute readout π.policy m b V = some (u,y) →
       g.IsPrefix (κHist t) → g.IsPrefix (κHist u) →
       κHist t = κHist u ∨ ∃ s q,
-        (g ++ s ++ [(⟨q, leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist t) ∧
-        (g ++ s ++ [(⟨q, leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist u) ∧
+        (g ++ s ++ [(⟨q, leafLabel U q⟩ :
+          Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist t) ∧
+        (g ++ s ++ [(⟨q, leafLabel V q⟩ :
+          Sigma (fun _ : Address => Option Bool))]).IsPrefix (κHist u) ∧
         leafLabel U q ≠ leafLabel V q := by
     intro n
     induction n with
@@ -108,19 +112,25 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
               · refine Or.inr ⟨⟨q,leafLabel U q⟩ :: s,r,?_,?_,hr⟩
                 · simpa only [List.nil_append, List.cons_append, κHist, List.map_cons, label]
                     using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ :
-                      (⟨q,leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool)) :: (_ ++ _) <+: _ :: _)
+                      (⟨q,leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool)) ::
+                        (_ ++ _) <+: _ :: _)
                 · simpa only [List.nil_append, List.cons_append, κHist, List.map_cons, label, equal]
                     using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ :
-                      (⟨q,leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool)) :: (_ ++ _) <+: _ :: _)
+                      (⟨q,leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool)) ::
+                        (_ ++ _) <+: _ :: _)
             | cons c g =>
               obtain ⟨headU,tailU⟩ := List.cons_prefix_cons.mp preU
               obtain ⟨headV,tailV⟩ := List.cons_prefix_cons.mp preV
               rcases ih m _ _ t' u' x' y' g extended runU runV tailU tailV with
                 joined | ⟨s,r,hs,ht,hr⟩
-              · exact Or.inl (by simp only [κHist, List.map_cons, label, equal]; exact congrArg _ joined)
+              · left
+                simp only [κHist, List.map_cons, label, equal]
+                exact congrArg _ joined
               · refine Or.inr ⟨s,r,?_,?_,hr⟩
-                · simpa only [List.cons_append, κHist, List.map_cons, ← headU] using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ : c :: _ <+: c :: _)
-                · simpa only [List.cons_append, κHist, List.map_cons, ← headV] using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ : c :: _ <+: c :: _)
+                · simpa only [List.cons_append, κHist, List.map_cons, ← headU]
+                    using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ : c :: _ <+: c :: _)
+                · simpa only [List.cons_append, κHist, List.map_cons, ← headV]
+                    using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ : c :: _ <+: c :: _)
           · have empty : g = [] := by
               cases g with
               | nil => rfl
@@ -166,9 +176,9 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
   have coarse_truth (W : Source) : ∀ r ∈ κHist (terminal π W).1,
       r.2 = leafLabel W r.1 := by
     intro r member
-    obtain ⟨a,member,rfl⟩ := List.mem_map.mp member
+    obtain ⟨a,rawMember,rfl⟩ := List.mem_map.mp member
     change κ a.2 = leafLabel W a.1
-    rw [truth _ _ _ _ _ (actual W) a member, label]
+    rw [truth _ _ _ _ _ (actual W) a rawMember, label]
   have address_map (t : Hist (fun _ : Address => Reply)) :
       (κHist t).map Sigma.fst = t.map Sigma.fst := by
     simp only [κHist, List.map_map, Function.comp_def]
@@ -179,6 +189,10 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
     change q ∈ ((terminal π W).1.map Sigma.fst).toFinset
     rw [← address_map]
     exact List.mem_toFinset.mpr ((pre.map Sigma.fst).subset (List.mem_toFinset.mp member))
+  have leaf_injective (r t : Reply) (b : Bool) (hr : κ r = some b)
+      (same : κ r = κ t) : r = t := by
+    cases r <;> cases t <;>
+      simp only [κ, Option.some.injEq, reduceCtorEq] at hr same ⊢
   have unequal : κHist (terminal π U).1 ≠ κHist (terminal π V).1 := by
     intro joined
     apply different
@@ -196,8 +210,8 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
         simpa only [addressA] using hu.symm.trans hv
       obtain ⟨b,hb⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q |>.mp
         (show q ∈ leafAddresses U from List.mem_toFinset.mpr member)
-      cases eU : readout q U <;> cases eV : readout q V <;>
-        simp_all [leafLabel])).symm
+      exact (leaf_injective (readout q U) (readout q V) b
+        (by simpa only [label] using hb) (by simpa only [label] using same_label)).symm)).symm
   rcases compare _ _ [] [] (terminal π U).1 (terminal π V).1
       (terminal π U).2 (terminal π V).2 h rfl (actual U) (actual V) prefixU prefixV with
     joined | ⟨s,q,preU,preV,distinct⟩
@@ -214,20 +228,23 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
       exact distinct (by simpa only [addressR] using hu.symm.trans hv)
     have nonleaf : q ∉ leafAddresses U ∨ q ∉ leafAddresses V := by
       by_contra both
-      push_neg at both
+      push Not at both
       obtain ⟨a,ha⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q |>.mp both.1
       obtain ⟨b,hb⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 V).2 q |>.mp both.2
-      have same := (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 U V).2.2.mp nc q a b ha hb
+      have same :=
+        (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 U V).2.2.mp nc q a b ha hb
       exact distinct (ha.trans (congrArg some same) |>.trans hb.symm)
     refine ⟨s,q,preU,preV,distinct,fresh,nonleaf,?_⟩
     intro saturated
-    have two (W : Source) (pre : (h ++ s ++ [(⟨q,leafLabel W q⟩ : Sigma (fun _ : Address => Option Bool))]).IsPrefix
+    have two (W : Source)
+        (pre : (h ++ s ++ [(⟨q,leafLabel W q⟩ :
+          Sigma (fun _ : Address => Option Bool))]).IsPrefix
         (κHist (terminal π W).1)) (notLeaf : q ∉ leafAddresses W)
         (old : ((h.map Sigma.fst).toFinset \ leafAddresses W).Nonempty) :
         2 ≤ (paid (terminal π W).1 \ leafAddresses W).card := by
       obtain ⟨r,memberR⟩ := old
       have prefixH : h.IsPrefix (κHist (terminal π W).1) :=
-        (List.prefix_append h _).trans pre
+        (List.prefix_append h s).trans ((List.prefix_append (h ++ s) _).trans pre)
       have oldPaid := prefix_paid W h prefixH (Finset.mem_sdiff.mp memberR).1
       have newPaid : q ∈ paid (terminal π W).1 := by
         apply prefix_paid W _ pre
@@ -236,8 +253,9 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
         intro eq
         apply fresh
         subst r
-        exact List.mem_toFinset.mpr (List.mem_append_left _ (List.mem_toFinset.mp
-          (Finset.mem_sdiff.mp memberR).1))
+        apply List.mem_toFinset.mpr
+        rw [List.map_append]
+        exact List.mem_append_left _ (List.mem_toFinset.mp (Finset.mem_sdiff.mp memberR).1)
       have bound := Finset.one_lt_card.mpr
         ⟨r,Finset.mem_sdiff.mpr ⟨oldPaid,(Finset.mem_sdiff.mp memberR).2⟩,
          q,Finset.mem_sdiff.mpr ⟨newPaid,notLeaf⟩,differentAddress⟩
