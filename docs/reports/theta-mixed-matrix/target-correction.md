@@ -180,9 +180,17 @@ The present exterior allowance requires $g<\delta_0<1/8$.
 It cannot reach cofinal $c\uparrow1/2$ at fixed $N=64$ by the
 lower bound $\delta_0-g$ alone. Losing this allowance is not losing
 actual positivity. Further numerical targets do not replace the
-bandwidth-dependent or [relative window estimate](weighted-window-metric.md#the-estimate-that-would-reach-one-half)
-needed for the endpoint. RH, the full Robin inequality and cofinal
-positivity remain unresolved.
+joint estimates needed for the endpoint. The existing
+[high-frequency supplier](../../../Library/Weil/fukushima2011dirichlet.md#high-frequency-coercivity-and-the-scalar-deficit),
+(WF6), already supplies $N_0(\varepsilon)$: for $0<\varepsilon\le1/2$,
+$c=1/2-\varepsilon$ and $N\ge N_0(\varepsilon)$, the same complete
+high restriction of $T_c$ is at least $\varepsilon I/4$.
+This paper supplier is reused, not a new result of the target computation.
+What remains unpaid is the low Schur center and its couplings on that
+same bandwidth sequence. The saved $N=64$ blocks are not data for those
+other bands. The [relative window estimate](weighted-window-metric.md#the-estimate-that-would-reach-one-half)
+is another sufficient route, and remains unproved. RH, the full Robin
+inequality and whole-form cofinal positivity remain unresolved.
 
 ```sh
 uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/reports/theta-mixed-matrix/target_correction.py
