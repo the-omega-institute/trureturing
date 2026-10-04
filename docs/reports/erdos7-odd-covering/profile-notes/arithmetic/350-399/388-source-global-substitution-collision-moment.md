@@ -1606,3 +1606,332 @@ palette and quantify a different common-factor condition. They
 neither provide a common probability for different primes nor
 exclude mixed-prime repair, purchase of \(j_5\), or source trees
 omitting that root. No new Lean verification is claimed.
+
+## 19. Successful repairs can normalize the bought root while freezing the sources
+
+Prime-class relocation is an existing covering-system operation:
+[Harrington--Sun--Wong, Lemma 3.1, pages 6--7](https://arxiv.org/pdf/2104.00602v1)
+attributes it to Hammer--Harrington--Marotta and preserves the numerical
+moduli and the other prime-modulus classes. The following extra avoidance
+condition identifies when all of a specified retained family can remain
+fixed. It is needed here because unrestricted relocation alone does not
+promise to preserve those source phases.
+
+Let $q$ be prime. Suppose a numerically distinct family
+$$
+ \mathcal B\cup\{[\beta]_q\}\cup\mathcal P
+ \quad\text{covers all integers},\qquad \alpha\ne\beta\pmod q,
+ \tag{SC75}
+$$
+and every $q$-bearing class in $\mathcal B$ avoids $[\alpha]_q$.
+Replace the pure class by $[\alpha]_q$. For a patch of modulus
+$q^e t$, $q\nmid t$, whose $q$-coordinate is
+$\alpha+qu\pmod{q^e}$, change that coordinate to
+$\beta+qu\pmod{q^e}$ and keep its $t$-coordinate. Leave all other
+patches and all of $\mathcal B$ fixed. The new family still covers,
+with exactly the same numerical moduli.
+
+To prove this, work on a common CRT period containing all patch primes
+and heights. The new pure class covers the $\alpha$-root; all roots
+other than $\alpha,\beta$ retain their old coverage. For a point $x$
+on the $\beta$-root, change only its first $q$-digit to $\alpha$,
+obtaining $y$. Old coverage of $y$ could not come from the old pure
+class or a $q$-bearing member of $\mathcal B$. A $q$-free owner of
+$y$ also covers $x$; a $q$-bearing patch owner has been moved to cover
+$x$. This pays the complete carrier, including every omitted top's
+service. No density approximation or restriction to divisors of $N$
+is used.
+
+If the original pure $s$ survives at output root $j_s$, all other
+$s$-bearing originals avoid its source root by comparable disjointness.
+Thus every $r$-bearing member of
+$\mathcal B=\mathcal R\cup(\mathcal T\setminus\mathcal T_0)$
+avoids $j_s$. The excluded slot $r$ ensures that the original pure
+$s$ is not already in this fixed family. Applying SC75 with $q=r$
+shows, for fixed $\theta,\mathcal R,\mathcal T_0$ and patch moduli,
+$$
+ \boxed{\text{a complete repair with some bought root exists}
+ \iff \text{one with bought root }j_s\text{ exists}.} \tag{SC76}
+$$
+The equivalence preserves $c,b,\Delta$, modulus sum, and every retained
+source identity and phase. In particular the heavy-root tree of
+Section 16 may use $S_{j_s}$ without losing any successful repair.
+Sections 17--18 constrain repairs which insist on a different root;
+those restrictions need not be overcome to prove repair existence.
+SC76 itself supplies no patch family.
+
+There is a second application at an occupied prime slot $q\mid M$.
+If $\mathcal R$ uses the surviving source $r^a q$ there instead of
+the original $q$, take $\alpha$ to be the original $q$-phase and
+$\beta$ the chosen representative's phase. The original $q$ is
+always an available lower source. Every other retained $q$-bearing
+source avoids $\alpha$. SC75 replaces this one representative by
+the original $q$ and changes only patch phases. Here that one source
+identity does change; the other retained source identities stay fixed.
+Successive operations at different primes alter different CRT
+coordinates, so all occupied prime $M$-slots can simultaneously use
+their original representatives without changing the counts or slots.
+Vacant slots are not filled for free. At $A=1$ each lower slot already
+has its unique source, so this representative choice adds no freedom.
+
+The same argument applies to a slot $q^e$ when the old and original
+phases have the same $(e-1)$-prefix: move only their last digit inside
+that parent. Source classes with smaller $q$-height are unchanged by
+the move, and those with height at least $e$ avoid the original cell.
+Different parent prefixes and general composite slots have no such
+invariance supplied here. Their normalization remains unproved.
+
+## 20. A private-point tree can remove every lower pure-cofactor column
+
+For this construction let $r<s$ and assume $A\le s-r$. Choose one
+actual private point $z$ of the original pure $r^A$ class. Fix its
+terminal prefix $v\pmod{r^{A-1}}$ and write $\zeta$ for its full
+$s$-coordinate. At depth $b\ge1$ forbid the prefixes
+$$
+ F_b=\{\alpha_{r^a s^b}\bmod s^b:
+    0\le a<A,\ r^a s^b\in D,
+    \ \alpha_{r^a s^b}\equiv v\pmod{r^a}\}.
+ \tag{SC77}
+$$
+There are at most $A$ of them at each depth, and none is the prefix
+of $\zeta$: otherwise its lower original would cover $z$.
+At every retained node select $r$ children avoiding these forbidden
+prefixes, and at a node on $\zeta$ retain its next child. The inequality
+$A\le s-r$ guarantees that both requirements can be met. Continuing
+to depth $B$ constructs one compatible tree for all original labels.
+
+Every lower pure-cofactor original $r^a s^b$, $a<A$, is now absent:
+it either misses the old $r$-prefix or its $s$-prefix is forbidden.
+The source restrictions on the safe siblings still give the whole-cover
+identities SC15. The private point and its complete actual terminal fan
+survive together, since every supplier at a sibling of $z$ has an
+$s$-prefix on the retained path $\zeta$. This is one common-source
+construction, not separate choices for different suppliers.
+
+Divisor closure supplies the $B$ original pure-$s$ columns. Their
+output slots are all absent from $\mathcal L$, hence
+$|\mathcal R|\le n_0-B$ in the notation of SC61. Reuse its complete
+column inventory $L_{<A}\ge(A-1)m$ and $m\ge r-1$ to obtain
+$$
+ \begin{aligned}
+ \Delta&=A+L_{<A}+(n_0-|\mathcal R|)+(m-|\mathcal T|)\\
+ &\ge A+(A-1)m+B\ge r(A-1)+B+1.
+ \end{aligned} \tag{SC78}
+$$
+A complete one-root repair therefore strictly descends whenever
+$c-b\le r(A-1)+B-1$. In particular $r=3,A=2$ allows $B+2$ net
+patches; $A=1$ allows $B-1$. The construction omits the original
+pure-$s$ root, so SC76's retained-root premise does not apply to this
+tree. Nor is this necessarily the load-minimizing tree of Section 16:
+its bound cannot be added to that tree's budget without proving a
+single tree realizes both choices. Mixed-cofactor collisions and their
+complete repair remain unresolved.
+
+## 21. Height-one source inventory forces at least three permanent occupied tops
+
+Let $r=3,s=5,A=1$, and define the actual divisor ideal
+$$
+ \mathcal C_M=\{m\mid M:\ 3\cdot5^b m\in D
+                      \text{ for some }0\le b\le B\},\qquad
+ n_b=\#\{m\mid M:3\cdot5^b m\in D\}.
+ \tag{SC79}
+$$
+It contains one, $n_0=|\mathcal C_M|$, and $n_{b+1}\le n_b$.
+These are counts in the original family, before choosing a tree.
+
+Directly reuse the common-chain inventory
+[report 378 SF7--SF9](378-saturated-prime-fibres-and-mixed-tail-incidence.md#3-chain-prices-for-the-actual-3-bearing-originals).
+At height one its mixed-source bound is two. Including the pure
+original $3$, of price one, gives
+$$
+ \sum_{3\cdot5^b m\in D}\gamma_{\mathscr P}(5^b m)\ge3,
+ \qquad
+ \sum_{b=0}^{B}n_b3^{-b}\ge3
+       \quad\text{for the chain }\mathscr P=(5).
+ \tag{SC80}
+$$
+Each selected chain uses one probability on the actual residual.
+A multiple-coordinate class is bounded by the minimum of its caps,
+never their product. Since the last sum is strictly less than
+$3n_0/2$, it already requires $n_0\ge3$.
+
+In fact $n_0=3$ is impossible. A three-element divisor ideal is
+either $\{1,q,q^2\}$ or $\{1,q,q'\}$, with primes
+$7\le q<q'$ in the second case. Put
+$S(t)=\sum_{b\ge0}\min\{3^{-b},t\}$.
+For the first shape take the common chain $5<q$. Its second cap
+base is $q-4\ge3$, so the total original price is at most
+$$
+ S(1)+S(1/3)+S(1/9)
+ =\frac32+\frac56+\frac7{18}=\frac{49}{18}<3.
+$$
+For the second shape use $5<q<q'$. If $q=7$, its last two bases
+are at least $3,5$; if $q\ge11$, they are at least $7,3$.
+Monotonicity of $S$ bounds both cases by
+$$
+ S(1)+S(1/3)+S(1/5)
+ =\frac32+\frac56+\frac{17}{30}=\frac{29}{10}<3.
+$$
+Both contradict SC80. These upper bounds only enlarge the finite
+original inventory to geometric tails; no simultaneous attainability
+of the caps is required.
+
+Every nonunit $m\in\mathcal C_M$ forces originals $3m$ and $m$
+by divisor closure. The former lies on a safe ternary root, and both
+are $5$-free. They survive every common tree and occupy the same
+output slot $m$ in $\mathcal T$ and $\mathcal L$. Hence, writing
+$b_0=\#\{t\in\mathcal T:n_t\in\operatorname{slots}(\mathcal L)\}$,
+$$
+ \boxed{|\mathcal C_M|\ge4,\qquad b_0\ge|\mathcal C_M|-1\ge3.}
+ \tag{SC81}
+$$
+The permanent occupied slots here are all $3$-free. In particular
+the $b_0=2$ branch is absent under the actual whole-cover hypothesis.
+
+The same existing price inequality also excludes a single-prime
+$M$-palette of any height. If every $m\in\mathcal C_M$ is a power
+of one $q\ge7$, the chain $5<q$ bounds the total finite inventory
+strictly below
+$$
+ \sum_{a,b\ge0}3^{-\max(a,b)}
+ =\sum_{j\ge0}(2j+1)3^{-j}=3,
+$$
+again contradicting SC80. Thus at least two primes of $M$ occur in
+the cofactors of the actual $3$-bearing originals. They need not
+occur together in a single modulus.
+
+Finally reuse the original count $N_3\ge P-1$ and the height-one
+support bound $P\ge47$ from
+[report 385 NF73](385-private-congruence-hulls-and-crossed-modulus-closure.md#58-reuse-the-height-one-source-before-resolving-individual-collision-phases).
+Together with SC79--SC81 they give
+$$
+ P-1\le N_3=\sum_{b=0}^{B}n_b
+ \le(B+1)|\mathcal C_M|\le(B+1)(b_0+1),
+ \qquad
+ b_0\ge\max\left\{3,
+       \left\lceil\frac{P-1}{B+1}\right\rceil-1\right\}.
+ \tag{SC82}
+$$
+Consequently $b_0=3,4,5$ requires $B\ge11,9,7$, respectively.
+This does not exclude larger finite heights. The result reuses SF9's
+common probability and NF73's source inventory; it does not introduce
+a stronger joint cap or settle the remaining height-one covers.
+
+## 22. A small occupied seed forces an actual phase stop in finite lcm repair
+
+Keep $A=1,r=3,s=5$ and choose the heavy-root tree of Section 16.
+Set $\mathcal R=\mathcal L\setminus\{5\}$ and buy $S_{j_5}$,
+so that the retained lower family together with that root is exactly
+$\mathcal L$. Let
+$$
+ \mathcal B_0=\{t\in\mathcal T:
+                 n_t\in\operatorname{slots}(\mathcal L)\},
+ \qquad b_0=|\mathcal B_0|.
+ \tag{SC83}
+$$
+Start from $\mathcal L\cup(\mathcal T\setminus\mathcal B_0)$.
+Its moduli are distinct and its count is below $K$, so EB1 gives an
+actual hole. At every stage keep all of $\mathcal L$ and all patches
+already added. An actual current hole $x$ is in $E$. Each top color
+has a supplier at $x$ by SC15, and every such supplier must be among
+the tops already removed. Choose one $d,e$ of opposite colors.
+Their actual intersection is the CRT class
+$$
+ I=C_d\cap C_e=[x]_{\ell},\qquad
+ \ell=\operatorname{lcm}(n_d,n_e).
+ \tag{SC84}
+$$
+The phase is forced by the common hole. This uses the same elementary
+intersection mechanism as
+[report 385 OL1--OL3](385-private-congruence-hulls-and-crossed-modulus-closure.md#177-an-occupied-lcm-transfers-a-reciprocal-swap-to-complete-private-liability);
+that report's reciprocal-private-hull hypotheses are not presumed here.
+
+If $\ell$ is occupied by a lower class or a previous patch, its
+phase differs from $x\pmod\ell$, since otherwise $x$ was covered.
+This is an actual occupied-phase stop. If the slot is occupied by
+an unremoved top, replace that top by $I$ and record its removal.
+If it is unused, add $I$. In each successful step the numerical
+moduli remain distinct. Replacing a top can expose other points;
+they remain part of the next complete hole set and are never treated
+as already paid.
+
+Let $k$ count successful steps and $f$ those whose slot was not an
+unremoved top slot. There are $c=k$ patches and
+$b=b_0+k-f$ removed tops, so
+$$
+ c-b=f-b_0.
+$$
+Every newly used modulus is an lcm of some nonempty subset of the
+initial $b_0$ top moduli. Indeed this holds for the initial removed
+tops, and each replacement adds exactly the join of two already
+removed moduli. A successful slot is new among the patches and is
+not any singleton seed slot, because those remain occupied by
+$\mathcal L$. Thus
+$$
+ k\le2^{b_0}-b_0-1,
+ \qquad c-b=f-b_0\le2^{b_0}-2b_0-1.
+ \tag{SC85}
+$$
+Coincident subset lcms only reduce these upper bounds. A return to
+an earlier patch slot is a phase stop, not another successful step;
+no strict-increase assertion for every dependency edge is needed.
+
+The two initial colors sharpen this count. Write $u,v\ge1$ for
+their seed counts, $u+v=b_0$. Every generated modulus has a seed
+subset representation containing both initial colors. The first
+generation joins opposite-color seeds; any later generated parent
+already carries both initial colors, whatever its actual top color.
+Thus
+$$
+ k\le(2^u-1)(2^v-1),\qquad
+ c-b\le(2^u-1)(2^v-1)-b_0.
+ \tag{SC86}
+$$
+These representations track numerical lcms only. A newly removed
+top keeps its own original phase; its class is not presumed to equal
+the intersection of the seed classes in its numerical representation.
+
+For $b_0=3,4,5$, SC86 gives at most $3,9,21$ successful steps and
+net costs at most $0,5,16$. Each lies within the twenty-two net
+patches funded at height one by Section 16. Every intermediate
+family therefore still has fewer than $K$ classes, so it has another
+actual hole. The process cannot stop with coverage or continue
+indefinitely: it must encounter an occupied-phase stop within the
+stated number of successful steps. Every queried hole lifts through
+SC17 to an actual private point of the original pure $3$ class.
+
+There is a stronger bound when every initial seed slot is $3$-free.
+All generated lcms then divide $M$. If such a slot $n$ is a top
+slot, its original label is $3n$, so divisor closure supplies its
+$5$-free lower parent $n$. That parent always lies in $\mathcal L$.
+Consequently this top was already in $\mathcal B_0$; no successful
+step can replace an unremoved top. The removed set remains exactly
+$\mathcal B_0$, and every successful slot is the lcm of one of the
+$uv$ initial opposite-color pairs. Hence
+$$
+ k=f\le uv,\qquad
+ c-b\le uv-b_0\le\left\lfloor\frac{b_0^2}{4}\right\rfloor-b_0.
+ \tag{SC87}
+$$
+For $3\le b_0\le11$ the last bound is at most nineteen, so the
+same funded phase-stop conclusion follows, after at most $uv$
+successes. This requires all seeds to be $3$-free; SC81 alone only
+supplies three permanent $3$-free seeds.
+
+The inventory sometimes forces this extra hypothesis: if
+$P-1>(B+1)b_0$, SC82 gives $|\mathcal C_M|=b_0+1$, whose
+nonunit members already account for every seed. For example this
+also settles the budget for six seeds split $1+5$. SC86 gives net
+cost at most twenty-five, funded by Section 16 whenever $P+B\ge54$.
+SC82 requires $B\ge6$. The only remaining parameters are
+$P=47,B=6$, and then $46\le7|\mathcal C_M|$ forces
+$|\mathcal C_M|=7$. All six seeds are $3$-free, so SC87 instead
+gives at most five successes and net cost at most minus one.
+
+In these branches finite lcm expansion cannot exhaust the proven
+budget before it meets an incompatible occupied slot. Repairing
+that stop would require changing an occupied lower or patch class
+and paying its complete old service. SC76 does not provide that
+composite-slot exchange. Other seed counts and color distributions,
+and the all-height repair, remain unresolved. No new Lean verification
+is claimed for Sections 19--22.
