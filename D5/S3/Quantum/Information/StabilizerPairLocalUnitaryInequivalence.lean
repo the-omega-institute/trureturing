@@ -137,7 +137,7 @@ noncomputable def localOp {n : ℕ} (j : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
   tensorOp (Function.update (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) j A)
 
 /-- The bit flipped by a Pauli. -/
-private def flipBit : Pauli → Fin 2
+def flipBit : Pauli → Fin 2
   | .I => 0
   | .X => 1
   | .Y => 1
