@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.CylindricPartition;
 internal sealed class LiUncuDeletionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CylindricPartition/LiUncuDeletion.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/li2025macmahon");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QSeries/li2025macmahon");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Deleting up-down pairs gives a bijection between words and insertion data and lowers the height bound of paths.",
