@@ -53248,7 +53248,7 @@ $$
 
 $K$ 有限、含 $2,3,5$ 且秩支撑稳定，所以前引《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》[定理 10.3 的秩预算](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#104-a-divisibility-bound-replacing-an-unspecified-height-cutoff) 给 $n\mid5\operatorname{lcm}_{p\in K}z(p)=N_H$。各秩为正，$N_H>0$，其正约数有限。于是 $E_H$ 有限，（364.7）的第一个等号正是将这些正约数再按完整支撑筛选。这里完整正赋值支撑蕴涵奇赋值支撑受限，反向一般不成立；预算并没有把两个支撑概念等同。
 
-第二个筛选式使用经典原始素因子供给：Minora Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。该文第 439 页的 primitive divisor 是素数 $p$，满足 $p\mid F_n$ 且不整除任何 $F_j$（$1\le j<n$）；Theorem 3 在第 441–442 页给出：每个 $n\notin\{1,2,6,12\}$ 的 $F_n$ 有这样的原始素因子。若 $n\in E_H$ 且不在例外集中，取该素数，便有 $p\in H$ 且 $z(p)=n$。所以 $E_H\subseteq C_H$；保留 $C_H$ 中实际支撑包含于 $H$ 的成员，恰好得到 $E_H$。例如 $H=\varnothing$ 时，$C_H$ 仍含六和十二，但 $F_6=8,F_{12}=144$ 不能通过空支撑筛选。因 $F_1=F_2=1$，而 $F_n\ge2$ 对 $n\ge3$ 成立，得到 $E_{\varnothing}=\{1,2\}$。原始素因子定理在这里是缩短候选集的经典中间步骤。
+第二个筛选式使用经典原始素因子供给：Minoru Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。该文第 439 页的 primitive divisor 是素数 $p$，满足 $p\mid F_n$ 且不整除任何 $F_j$（$1\le j<n$）；Theorem 3 在第 441–442 页给出：每个 $n\notin\{1,2,6,12\}$ 的 $F_n$ 有这样的原始素因子。若 $n\in E_H$ 且不在例外集中，取该素数，便有 $p\in H$ 且 $z(p)=n$。所以 $E_H\subseteq C_H$；保留 $C_H$ 中实际支撑包含于 $H$ 的成员，恰好得到 $E_H$。例如 $H=\varnothing$ 时，$C_H$ 仍含六和十二，但 $F_6=8,F_{12}=144$ 不能通过空支撑筛选。因 $F_1=F_2=1$，而 $F_n\ge2$ 对 $n\ge3$ 成立，得到 $E_{\varnothing}=\{1,2\}$。原始素因子定理在这里是缩短候选集的经典中间步骤。
 
 现在假设 $\mathsf V(H)=H$。对每个 $p\in H$，$\operatorname{Supp}(F_{z(p)})\subseteq H$，所以 $z(p)\in E_H$，从而 $A_H\mid B_H$。有限集合 $E_H$ 本身实现 $B_H$，其所有项的支撑都包含于 $H$；$A_H\mid B_H$ 又迫使每个 $p\in H$ 出现，所以两端点都是满支撑 $H$ 的实际值。
 
