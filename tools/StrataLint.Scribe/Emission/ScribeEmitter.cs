@@ -229,7 +229,8 @@ public static class ScribeEmitter
                     leanReport,
                     declarationCatalog: declarationCatalog,
                     frozenState: frozenState,
-                    frozenStatements: frozenStatements);
+                    frozenStatements: frozenStatements,
+                    singleDocument: !validateDocumentGraph);
                 if (!findings.IsEmpty)
                 {
                     foreach (var finding in findings)
