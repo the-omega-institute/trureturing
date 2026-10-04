@@ -8,6 +8,7 @@ url: https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454
 claim: The two-sided power difference quotient converges uniformly to x log x on every bounded nonnegative spectral interval, including zero.
 strata_touched:
   - D5/S3/Quantum/Divergence/RenyiDivergence/UniformPowerSlope
+  - D5/S3/Quantum/Divergence/CanonicalChannelDPI
 license: Apache-2.0
 triage: anchor
 ---
