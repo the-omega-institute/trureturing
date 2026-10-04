@@ -73,8 +73,9 @@ internal sealed class CommonTreeEmbeddingDocument : IScribeDocumentDefinition
                         + "length B by filling the remaining digits with zero. "
                         + "Exactness and truncation compatibility then give a "
                         + "selected leaf extending its encoded prefix. Thus "
-                        + "reached nodes have successors and the empty-prefix "
-                        + "event is the whole sample space. All heights here "
+                        + "reached nodes at depths strictly less than B have r "
+                        + "selected successors, while the empty-prefix event "
+                        + "is the whole sample space. All heights here "
                         + "are finite; no coupling across different heights "
                         + "or infinite-branch assertion is made."))),
                 DescribeRole.Theorem))));
