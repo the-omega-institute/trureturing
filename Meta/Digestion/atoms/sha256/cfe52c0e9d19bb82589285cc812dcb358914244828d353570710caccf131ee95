@@ -1,0 +1,16 @@
+**定理 33.3（十四叶的全部非冲突边与评价族）。** 在顶点集 $\mathcal I_3(14)$ 上，以不同顶点的无序对 $\{P,Q\}$ 满足 $\operatorname{NC}(P,Q)$ 为边。全部边恰为以下互不重复的二十七条：
+
+$$
+\boxed{\begin{aligned}
+\mathscr E_{14}={}&
+ \bigl\{\{\langle A,D\rangle,\langle D',A\rangle\}:D,D'\in\mathcal V\bigr\}\\
+&\ \cup\bigl\{\{\langle A,D_j\rangle,\langle R,C\rangle\},
+              \{\langle D_j,A\rangle,\langle C,R\rangle\}:j=0,1\bigr\}\\
+&\ \cup\bigl\{\{\langle C,S\rangle,\langle S,C\rangle\}\bigr\}\\
+&\ \cup\binom{F_{\mathrm R}}2\ \cup\binom{F_{\mathrm L}}2.
+\end{aligned}}
+\tag{33.8}
+$$
+
+其中 $\binom F2$ 指 $F$ 的全部二元素子集。全部两两非冲突评价族恰为空族、单元素族、式（33.8）的边，以及 $F_{\mathrm R},F_{\mathrm L}$。这两个族是仅有的三元素族，不存在四元素两两非冲突族。
+
