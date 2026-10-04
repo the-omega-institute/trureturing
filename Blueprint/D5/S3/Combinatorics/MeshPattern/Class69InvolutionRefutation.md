@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MeshPattern/Class69InvolutionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fang-fu-kitaev-li-su-sun-2026-class69-involutions` (refuted) by `D5/S3/Combinatorics/MeshPattern/Class69InvolutionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fang-fu-kitaev-li-su-sun-2026-class69-involutions","declaration_gid":"D5/S3/Combinatorics/MeshPattern/Class69InvolutionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Q. Fang, S. Fu, S. Kitaev, H. Li, X. Su, Z. Sun (2026). *On mesh patterns of short length: Equidistribution and enumeration*. DOI: [10.48550/arXiv.2606.14367](https://doi.org/10.48550/arXiv.2606.14367). URL: <https://arxiv.org/abs/2606.14367v1>.

@@ -31,15 +31,19 @@ internal sealed class Class69InvolutionRefutationDocument : IScribeDocumentDefin
                 DescribeRole.Definition),
             Node("class69-result", "The conjecture is refuted", "result", ResultFormula(),
                 "At n = 3 and k = 0, the involutions 132 and 321 avoid R 0 while only 321 avoids R 2. The two filtered cardinalities are therefore 2 and 1, contradicting equidistribution.",
-                DescribeRole.Theorem, repositoryDerived: true)),
+                DescribeRole.Theorem, repositoryDerived: true,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fang-fu-kitaev-li-su-sun-2026-class69-involutions"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, bool repositoryDerived = false) =>
+        string prose, DescribeRole role, bool repositoryDerived = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             repositoryDerived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula RFormula()
     {
