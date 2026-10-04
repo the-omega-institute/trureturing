@@ -1,0 +1,10 @@
+**定义 32.1（定向 $\alpha$ 缺额与实际像双孔上下文）。** 沿用[定义 30.1](#30-实际三步像的分歧前沿七叶分离与有限容量)、[定义 31.1—31.3](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的全有限树只读合同、$\mathcal I_3$、$n$、$\operatorname{NC}$、$A,C$、$\Lambda_\alpha$、$\mathcal E_H$ 和 $\Gamma_H$。对 $T\in\mathcal I_3$ 及 $P,Q\in\mathcal I_3$，记
+
+$$
+\mu(T)=|\Lambda_\alpha(T)|,\qquad
+\delta(P,Q)=|\Lambda_\alpha(P)\setminus\Lambda_\alpha(Q)|.
+\tag{32.1}
+$$
+
+不同、非冲突的 $P,Q$ 的规范分歧前沿是[引理 30.3](#30-实际三步像的分歧前沿七叶分离与有限容量)在其唯一前像上递归比较所得的前缀自由孔集；相同前像子树处停止，两侧均为分支时进入左右孩子，恰一侧为原子时记录孔。实际像双孔上下文 $J[\square_1,\square_2]$ 由有序二叉配对、固定的 $\mathcal I_3$ 子树及两个各出现一次的不同孔构成，保留每条固定旁支和每个孔的地址。它的固定旁支有实际前像，配对使用[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)的原有构造；唯一前像沿用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。这里的上下文不取交换或结合商，也不允许用组成相等替代完整树相等。
+

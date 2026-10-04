@@ -1,0 +1,40 @@
+**定义 31.1（正评价族、实际历史与叶报告队列）。** 沿用[定义 29.1](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的全有限树只读合同，固定 $d=3$。原始语法与替换仍为[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)的
+
+$$
+\mathcal T:\quad U::=\alpha\mid\beta\mid\langle U,U\rangle,\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho(\langle X,Y\rangle)=\langle\rho(X),\rho(Y)\rangle .
+\tag{31.1}
+$$
+
+相等保持左右次序、括号与叶标签。记 $\mathcal I_3=\rho^3(\mathcal T)$、$\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N}$；所有 $u\in\Sigma$，包括 $\varepsilon$，均可直接查询同一不变输入的原始四值 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。未知输入始终遍历整个 $\mathcal T$。确定性策略属于 $\mathfrak D_3$，在全域正确且有限终止；费用只计真实缓存后的不同实际地址，计算、定位与地址长度不收费。
+
+取整数 $m\ge1$ 及两两不同的评价对象 $F=(P_i)_{i\in[m]}$，其中每个 $P_i\in\mathcal I_3$ 有 $n$ 片叶。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的替换单射性复合三次，记其唯一前像为 $Q_i$，写 $c(Q_i)=(a_i,b_i)^{\mathsf T}$。令
+
+$$
+\Lambda_\alpha(P)=\{u\in\Sigma:\operatorname{out}_P(u)=\mathsf{leaf}_\alpha\},
+\qquad
+n=3a_i+5b_i,\qquad
+s_i=|\Lambda_\alpha(P_i)|=a_i+2b_i,\qquad
+s=\max_{i\in[m]}s_i .
+\tag{31.2}
+$$
+
+式（31.2）的组成关系直接取自[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)。$s$ 数的是像树的 $\alpha$ 叶，不是前像的 $\alpha$ 叶。
+
+有限实际请求—响应历史写为 $H=((u_j,y_j))_{j=1}^{\ell}$，允许一般历史含缓存重复请求。记 $H^{\mathrm{leaf}}$ 为其中报告叶的子列。定义
+
+$$
+\begin{aligned}
+S_H&=\{i\in[m]:\forall j,\ \operatorname{out}_{P_i}(u_j)=y_j\},\\
+\mathcal E_H&=\{P\in\mathcal I_3:
+ \forall (u,y)\in H^{\mathrm{leaf}},\ \operatorname{out}_P(u)=y\},\\
+f(H)&=|\{u_j:y_j\in\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta\}\}|,\\
+c(H)&=|\{u_j:y_j\in\{\mathsf{branch},\mathsf{absent}\}\}|.
+\end{aligned}
+\tag{31.3}
+$$
+
+以下只在 $S_H\ne\varnothing$ 时使用评价历史，故 $\mathcal E_H$ 非空。$\mathcal E_H$ 是只保留先前叶报告的正来源比较集合，不要求成员匹配非叶报告；$P_i$ 在 $i\in S_H$ 时属于它。严格路由节点在当前 $S_H$ 上选择至少有两个非空四值响应孩子的实际地址。历史、队列及后面的块强制仅描述同一次实际路由；逻辑推论不增加缓存条目，也不使未知输入取得正性、同叶数或候选身份承诺。
+
