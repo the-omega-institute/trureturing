@@ -90,11 +90,16 @@ reuses the derivative pairing of Suzuki,
 [arXiv:2206.03682v4](https://arxiv.org/html/2206.03682v4), Proposition 3.1,
 equation (3.8), and the existing theta ground-transform identity.
 It transports the original variance to an explicit rank-one-corrected
-operator $B_L$. The required window estimate is
+operator $B_L$. A sufficient relative window estimate is
 $\mathcal G_{L_j}+\varepsilon_jB_{L_j}\succeq0$ with
 $L_j\to\infty$ and $\varepsilon_j\to0$, not positivity in a substituted
-unweighted metric. Its scalar comparison has a vanishing denominator
-and requires a relative error rate. That estimate remains unproved.
+unweighted metric. Its scalar conversion has a vanishing denominator
+and requires a relative error rate for the converted window allowance.
+The [fixed-test and centered-window interface](../../docs/reports/theta-mixed-matrix/centered-window.md)
+separately gives the sufficient absolute-error limit on fixed tests and
+the original-mean parameter map for the published pole constraint.
+These are applications of existing criteria and domain suppliers;
+the actual arithmetic estimates remain unproved.
 The [finite-pencil source](shi2026finitepencils.md) has a related
 relative-control problem with a different contrast space and metric;
 no identification of the two metrics is asserted.
