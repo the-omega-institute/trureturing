@@ -1,0 +1,1481 @@
+{
+  "scope": "NONCOVER: full every-color service is false",
+  "q": 113,
+  "q_height": 10,
+  "unprotected_colors": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112
+  ],
+  "canonical_palette": "3^k e with k>=3 and e a positive divisor of the chosen cofactor n; one AP per numerical label",
+  "canonical_palette_allows_retained_and_stripped_assistance": true,
+  "classes": 2699,
+  "primary_primes": [
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73,
+    79,
+    83,
+    89,
+    97,
+    101,
+    103,
+    107,
+    109
+  ],
+  "auxiliary_primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31
+  ],
+  "support_primes_including_q_and_3": 29,
+  "palette_cofactors": 443,
+  "private_points_checked": 2699,
+  "comparable_pairs_checked": 56323,
+  "moving_owners": 166,
+  "colors": 83,
+  "owners_per_color": 2,
+  "numeric_cofactor_preimages_max": 2,
+  "all_parent_divisor_counts": 12,
+  "hall_failed_colors": 83,
+  "nonunit_menu_union_per_color": 11,
+  "tag_demand_per_color": 20,
+  "masked_component_count": 1,
+  "masked_graph_diameter_upper": 2,
+  "checked_E0_edge_witnesses": 951,
+  "retained_and_stripped_residual_hole_checks": 581,
+  "canonical_palette_target_mass": "7/18",
+  "canonical_palette_mass_upper": "13/36",
+  "canonical_palette_repair_possible": false,
+  "inside_component_original_color": 30,
+  "inside_component_missing_color": 66,
+  "inside_component_private_integer": 77779066616826342881186887604102914710321555102203694138223085888649782507009944877527572641314426,
+  "uncovered_integer": 95097160355723974587805009069862873350365318173023531751807994516255419682025231108511746706694301,
+  "period": 99296411243197460596522001647502846086223840284987198158502589698639405214958853405278018404954805,
+  "whole_cover": false,
+  "all_color_full_service": false,
+  "EB1": false,
+  "hall_rows": [
+    {
+      "color": 30,
+      "owners": [
+        321270552781,
+        963811658343
+      ],
+      "parents": [
+        2843102237,
+        8529306711
+      ],
+      "cofactor": 2843102237,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 31,
+      "owners": [
+        336942287063,
+        1010826861189
+      ],
+      "parents": [
+        2981790151,
+        8945370453
+      ],
+      "cofactor": 2981790151,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 32,
+      "owners": [
+        368285755627,
+        1104857266881
+      ],
+      "parents": [
+        3259165979,
+        9777497937
+      ],
+      "cofactor": 3259165979,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 33,
+      "owners": [
+        415300958473,
+        1245902875419
+      ],
+      "parents": [
+        3675229721,
+        11025689163
+      ],
+      "cofactor": 3675229721,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 34,
+      "owners": [
+        462316161319,
+        1386948483957
+      ],
+      "parents": [
+        4091293463,
+        12273880389
+      ],
+      "cofactor": 4091293463,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 35,
+      "owners": [
+        477987895601,
+        1433963686803
+      ],
+      "parents": [
+        4229981377,
+        12689944131
+      ],
+      "cofactor": 4229981377,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 36,
+      "owners": [
+        525003098447,
+        1575009295341
+      ],
+      "parents": [
+        4646045119,
+        13938135357
+      ],
+      "cofactor": 4646045119,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 37,
+      "owners": [
+        556346567011,
+        1669039701033
+      ],
+      "parents": [
+        4923420947,
+        14770262841
+      ],
+      "cofactor": 4923420947,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 38,
+      "owners": [
+        572018301293,
+        1716054903879
+      ],
+      "parents": [
+        5062108861,
+        15186326583
+      ],
+      "cofactor": 5062108861,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 39,
+      "owners": [
+        619033504139,
+        1857100512417
+      ],
+      "parents": [
+        5478172603,
+        16434517809
+      ],
+      "cofactor": 5478172603,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 40,
+      "owners": [
+        650376972703,
+        1951130918109
+      ],
+      "parents": [
+        5755548431,
+        17266645293
+      ],
+      "cofactor": 5755548431,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 41,
+      "owners": [
+        697392175549,
+        2092176526647
+      ],
+      "parents": [
+        6171612173,
+        18514836519
+      ],
+      "cofactor": 6171612173,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 42,
+      "owners": [
+        760079112677,
+        2280237338031
+      ],
+      "parents": [
+        6726363829,
+        20179091487
+      ],
+      "cofactor": 6726363829,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 43,
+      "owners": [
+        791422581241,
+        2374267743723
+      ],
+      "parents": [
+        7003739657,
+        21011218971
+      ],
+      "cofactor": 7003739657,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 44,
+      "owners": [
+        807094315523,
+        2421282946569
+      ],
+      "parents": [
+        7142427571,
+        21427282713
+      ],
+      "cofactor": 7142427571,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 45,
+      "owners": [
+        838437784087,
+        2515313352261
+      ],
+      "parents": [
+        7419803399,
+        22259410197
+      ],
+      "cofactor": 7419803399,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 46,
+      "owners": [
+        854109518369,
+        2562328555107
+      ],
+      "parents": [
+        7558491313,
+        22675473939
+      ],
+      "cofactor": 7558491313,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 47,
+      "owners": [
+        484394776381,
+        1453184329143
+      ],
+      "parents": [
+        4286679437,
+        12860038311
+      ],
+      "cofactor": 4286679437,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 48,
+      "owners": [
+        562945280659,
+        1688835841977
+      ],
+      "parents": [
+        4981816643,
+        14945449929
+      ],
+      "cofactor": 4981816643,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 49,
+      "owners": [
+        615312283511,
+        1845936850533
+      ],
+      "parents": [
+        5445241447,
+        16335724341
+      ],
+      "cofactor": 5445241447,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 50,
+      "owners": [
+        693862787789,
+        2081588363367
+      ],
+      "parents": [
+        6140378653,
+        18421135959
+      ],
+      "cofactor": 6140378653,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 51,
+      "owners": [
+        772413292067,
+        2317239876201
+      ],
+      "parents": [
+        6835515859,
+        20506547577
+      ],
+      "cofactor": 6835515859,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 52,
+      "owners": [
+        798596793493,
+        2395790380479
+      ],
+      "parents": [
+        7067228261,
+        21201684783
+      ],
+      "cofactor": 7067228261,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 53,
+      "owners": [
+        877147297771,
+        2631441893313
+      ],
+      "parents": [
+        7762365467,
+        23287096401
+      ],
+      "cofactor": 7762365467,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 54,
+      "owners": [
+        929514300623,
+        2788542901869
+      ],
+      "parents": [
+        8225790271,
+        24677370813
+      ],
+      "cofactor": 8225790271,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 55,
+      "owners": [
+        955697802049,
+        2867093406147
+      ],
+      "parents": [
+        8457502673,
+        25372508019
+      ],
+      "cofactor": 8457502673,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 56,
+      "owners": [
+        1034248306327,
+        3102744918981
+      ],
+      "parents": [
+        9152639879,
+        27457919637
+      ],
+      "cofactor": 9152639879,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 57,
+      "owners": [
+        1086615309179,
+        3259845927537
+      ],
+      "parents": [
+        9616064683,
+        28848194049
+      ],
+      "cofactor": 9616064683,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 58,
+      "owners": [
+        1165165813457,
+        3495497440371
+      ],
+      "parents": [
+        10311201889,
+        30933605667
+      ],
+      "cofactor": 10311201889,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 59,
+      "owners": [
+        1269899819161,
+        3809699457483
+      ],
+      "parents": [
+        11238051497,
+        33714154491
+      ],
+      "cofactor": 11238051497,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 60,
+      "owners": [
+        1322266822013,
+        3966800466039
+      ],
+      "parents": [
+        11701476301,
+        35104428903
+      ],
+      "cofactor": 11701476301,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 61,
+      "owners": [
+        1348450323439,
+        4045350970317
+      ],
+      "parents": [
+        11933188703,
+        35799566109
+      ],
+      "cofactor": 11933188703,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 62,
+      "owners": [
+        1400817326291,
+        4202451978873
+      ],
+      "parents": [
+        12396613507,
+        37189840521
+      ],
+      "cofactor": 12396613507,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 63,
+      "owners": [
+        1427000827717,
+        4281002483151
+      ],
+      "parents": [
+        12628325909,
+        37884977727
+      ],
+      "cofactor": 12628325909,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 64,
+      "owners": [
+        614642300183,
+        1843926900549
+      ],
+      "parents": [
+        5439312391,
+        16317937173
+      ],
+      "cofactor": 5439312391,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 65,
+      "owners": [
+        681090116419,
+        2043270349257
+      ],
+      "parents": [
+        6027346163,
+        18082038489
+      ],
+      "cofactor": 6027346163,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 66,
+      "owners": [
+        780761840773,
+        2342285522319
+      ],
+      "parents": [
+        6909396821,
+        20728190463
+      ],
+      "cofactor": 6909396821,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 67,
+      "owners": [
+        880433565127,
+        2641300695381
+      ],
+      "parents": [
+        7791447479,
+        23374342437
+      ],
+      "cofactor": 7791447479,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 68,
+      "owners": [
+        980105289481,
+        2940315868443
+      ],
+      "parents": [
+        8673498137,
+        26020494411
+      ],
+      "cofactor": 8673498137,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 69,
+      "owners": [
+        1013329197599,
+        3039987592797
+      ],
+      "parents": [
+        8967515023,
+        26902545069
+      ],
+      "cofactor": 8967515023,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 70,
+      "owners": [
+        1113000921953,
+        3339002765859
+      ],
+      "parents": [
+        9849565681,
+        29548697043
+      ],
+      "cofactor": 9849565681,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 71,
+      "owners": [
+        1179448738189,
+        3538346214567
+      ],
+      "parents": [
+        10437599453,
+        31312798359
+      ],
+      "cofactor": 10437599453,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 72,
+      "owners": [
+        1212672646307,
+        3638017938921
+      ],
+      "parents": [
+        10731616339,
+        32194849017
+      ],
+      "cofactor": 10731616339,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 73,
+      "owners": [
+        1312344370661,
+        3937033111983
+      ],
+      "parents": [
+        11613666997,
+        34841000991
+      ],
+      "cofactor": 11613666997,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 74,
+      "owners": [
+        1378792186897,
+        4136376560691
+      ],
+      "parents": [
+        12201700769,
+        36605102307
+      ],
+      "cofactor": 12201700769,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 75,
+      "owners": [
+        1478463911251,
+        4435391733753
+      ],
+      "parents": [
+        13083751427,
+        39251254281
+      ],
+      "cofactor": 13083751427,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 76,
+      "owners": [
+        1611359543723,
+        4834078631169
+      ],
+      "parents": [
+        14259818971,
+        42779456913
+      ],
+      "cofactor": 14259818971,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 77,
+      "owners": [
+        1677807359959,
+        5033422079877
+      ],
+      "parents": [
+        14847852743,
+        44543558229
+      ],
+      "cofactor": 14847852743,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 78,
+      "owners": [
+        1711031268077,
+        5133093804231
+      ],
+      "parents": [
+        15141869629,
+        45425608887
+      ],
+      "cofactor": 15141869629,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 79,
+      "owners": [
+        1777479084313,
+        5332437252939
+      ],
+      "parents": [
+        15729903401,
+        47189710203
+      ],
+      "cofactor": 15729903401,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 80,
+      "owners": [
+        1810702992431,
+        5432108977293
+      ],
+      "parents": [
+        16023920287,
+        48071760861
+      ],
+      "cofactor": 16023920287,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 81,
+      "owners": [
+        958891474267,
+        2876674422801
+      ],
+      "parents": [
+        8485765259,
+        25457295777
+      ],
+      "cofactor": 8485765259,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 82,
+      "owners": [
+        1062555417431,
+        3187666252293
+      ],
+      "parents": [
+        9403145287,
+        28209435861
+      ],
+      "cofactor": 9403145287,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 83,
+      "owners": [
+        1114387389013,
+        3343162167039
+      ],
+      "parents": [
+        9861835301,
+        29585505903
+      ],
+      "cofactor": 9861835301,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 84,
+      "owners": [
+        1373547246923,
+        4120641740769
+      ],
+      "parents": [
+        12155285371,
+        36465856113
+      ],
+      "cofactor": 12155285371,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 85,
+      "owners": [
+        1529043161669,
+        4587129485007
+      ],
+      "parents": [
+        13531355413,
+        40594066239
+      ],
+      "cofactor": 13531355413,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 86,
+      "owners": [
+        1580875133251,
+        4742625399753
+      ],
+      "parents": [
+        13990045427,
+        41970136281
+      ],
+      "cofactor": 13990045427,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 87,
+      "owners": [
+        1736371047997,
+        5209113143991
+      ],
+      "parents": [
+        15366115469,
+        46098346407
+      ],
+      "cofactor": 15366115469,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 88,
+      "owners": [
+        1840034991161,
+        5520104973483
+      ],
+      "parents": [
+        16283495497,
+        48850486491
+      ],
+      "cofactor": 16283495497,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 89,
+      "owners": [
+        1891866962743,
+        5675600888229
+      ],
+      "parents": [
+        16742185511,
+        50226556533
+      ],
+      "cofactor": 16742185511,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 90,
+      "owners": [
+        2047362877489,
+        6142088632467
+      ],
+      "parents": [
+        18118255553,
+        54354766659
+      ],
+      "cofactor": 18118255553,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 91,
+      "owners": [
+        2151026820653,
+        6453080461959
+      ],
+      "parents": [
+        19035635581,
+        57106906743
+      ],
+      "cofactor": 19035635581,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 92,
+      "owners": [
+        2306522735399,
+        6919568206197
+      ],
+      "parents": [
+        20411705623,
+        61235116869
+      ],
+      "cofactor": 20411705623,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 93,
+      "owners": [
+        2513850621727,
+        7541551865181
+      ],
+      "parents": [
+        22246465679,
+        66739397037
+      ],
+      "cofactor": 22246465679,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 94,
+      "owners": [
+        2617514564891,
+        7852543694673
+      ],
+      "parents": [
+        23163845707,
+        69491537121
+      ],
+      "cofactor": 23163845707,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 95,
+      "owners": [
+        2669346536473,
+        8008039609419
+      ],
+      "parents": [
+        23622535721,
+        70867607163
+      ],
+      "cofactor": 23622535721,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 96,
+      "owners": [
+        2773010479637,
+        8319031438911
+      ],
+      "parents": [
+        24539915749,
+        73619747247
+      ],
+      "cofactor": 24539915749,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 97,
+      "owners": [
+        2824842451219,
+        8474527353657
+      ],
+      "parents": [
+        24998605763,
+        74995817289
+      ],
+      "cofactor": 24998605763,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 98,
+      "owners": [
+        1748475356233,
+        5245426068699
+      ],
+      "parents": [
+        15473233241,
+        46419699723
+      ],
+      "cofactor": 15473233241,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 99,
+      "owners": [
+        1937499719069,
+        5812499157207
+      ],
+      "parents": [
+        17146015213,
+        51438045639
+      ],
+      "cofactor": 17146015213,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 100,
+      "owners": [
+        2032011900487,
+        6096035701461
+      ],
+      "parents": [
+        17982406199,
+        53947218597
+      ],
+      "cofactor": 17982406199,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 101,
+      "owners": [
+        2221036263323,
+        6663108789969
+      ],
+      "parents": [
+        19655188171,
+        58965564513
+      ],
+      "cofactor": 19655188171,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 102,
+      "owners": [
+        2788109351831,
+        8364328055493
+      ],
+      "parents": [
+        24673534087,
+        74020602261
+      ],
+      "cofactor": 24673534087,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 103,
+      "owners": [
+        2882621533249,
+        8647864599747
+      ],
+      "parents": [
+        25509925073,
+        76529775219
+      ],
+      "cofactor": 25509925073,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 104,
+      "owners": [
+        3166158077503,
+        9498474232509
+      ],
+      "parents": [
+        28019098031,
+        84057294093
+      ],
+      "cofactor": 28019098031,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 105,
+      "owners": [
+        3355182440339,
+        10065547321017
+      ],
+      "parents": [
+        29691880003,
+        89075640009
+      ],
+      "cofactor": 29691880003,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 106,
+      "owners": [
+        3449694621757,
+        10349083865271
+      ],
+      "parents": [
+        30528270989,
+        91584812967
+      ],
+      "cofactor": 30528270989,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 107,
+      "owners": [
+        3733231166011,
+        11199693498033
+      ],
+      "parents": [
+        33037443947,
+        99112331841
+      ],
+      "cofactor": 33037443947,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 108,
+      "owners": [
+        3922255528847,
+        11766766586541
+      ],
+      "parents": [
+        34710225919,
+        104130677757
+      ],
+      "cofactor": 34710225919,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 109,
+      "owners": [
+        4205792073101,
+        12617376219303
+      ],
+      "parents": [
+        37219398877,
+        111658196631
+      ],
+      "cofactor": 37219398877,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 110,
+      "owners": [
+        4583840798773,
+        13751522396319
+      ],
+      "parents": [
+        40564962821,
+        121694888463
+      ],
+      "cofactor": 40564962821,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 111,
+      "owners": [
+        4772865161609,
+        14318595484827
+      ],
+      "parents": [
+        42237744793,
+        126713234379
+      ],
+      "cofactor": 42237744793,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    },
+    {
+      "color": 112,
+      "owners": [
+        4867377343027,
+        14602132029081
+      ],
+      "parents": [
+        43074135779,
+        129222407337
+      ],
+      "cofactor": 43074135779,
+      "divisor_count": 12,
+      "menu_union": 11,
+      "tag_demand": 20,
+      "tag_deficit": 9
+    }
+  ]
+}
