@@ -1,0 +1,8 @@
+Thus larger fixed-order geometric memories converge in growth rate to the
+complete ordered-deletion process. This establishes mathematical completeness
+of this approximation hierarchy. It supplies neither a convergence rate nor a
+particular finite radius attaining 2.429 or 2.42. It also makes no assertion that
+optimizing over arbitrary controllers commutes with either limit. The limsup,
+infimum and epsilon argument are proved here on paper; no separate Lean limit
+declaration is claimed.
+
