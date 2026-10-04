@@ -199252,3 +199252,33 @@ $$
 [Matsuo–Nagatomo, *A Note on Free Bosonic Vertex Algebra and its Conformal Vectors*, §2.2, 印刷第 20–21 页](https://arxiv.org/abs/hep-th/9704060v1) [文献注](../../../Library/VertexAlgebra/matsuo1997freeboson.md) 在 $\mathbb C[x_1,x_2,\ldots]$ 上定义这些电荷为 $r$ 的模式，并明确称其为不可约 Fock 表示；此处对应为 $x_{j+1}=X_j$。本问题要求实际表示的严格构造证明，无新颖性主张；电荷 $r$ 不同于共形向量的背景电荷参数。本结论只涉及 Heisenberg 模式，不声称 Virasoro 不可约性、带电全态场模块构造、交织算子或融合、Monster 实现、弦论或 AdS/CFT 几何动力学桥梁。
 
 ## 2147 后续追加锚
+
+## 2147.6 实际零电荷多项式 Fock 的 C₂ 商与非正模式
+
+**问题 2147.6（实际零电荷多项式 Fock 的 C₂ 商与非正模式）。** 在复多项式空间 $F=\mathbb C[X_0,X_1,\ldots]$ 上，取已经由单项式基底和右嵌套正规乘积构造的零电荷全态场 $Y$，并令 $\mu(u,n,v)=((Yu)[[n]])v$。具体电流模式为 $\alpha_{-j-1}v=X_jv$、$\alpha_0v=0$、$\alpha_{j+1}v=(j+1)\partial_{X_j}v$（$j\in\mathbb N$）。令
+
+$$
+\begin{aligned}
+C_2(F)&=\operatorname{span}_{\mathbb C}\{\mu(u,-2,v):u,v\in F\},\\
+\pi &:F\longrightarrow\mathbb C[x],\qquad
+ \pi(X_0)=x,\quad \pi(X_j)=0\ (j\geq1),\\
+I&=(X_1,X_2,\ldots)\subset F.
+\end{aligned}
+$$
+
+这里 $\pi$ 是复代数同态，$I$ 在比较中视为复线性子空间。能否无附加假设地证明
+
+$$
+C_2(F)=I=\ker\pi,
+\qquad
+\forall u,v\in F\ \forall n\in\mathbb Z,\ n\leq0
+\Longrightarrow
+\pi(\mu(u,n,v))=
+\begin{cases}\pi(u)\pi(v),&n=-1,\\0,&n\ne-1.\end{cases}
+$$
+
+所求是现有实际态场的全部多项式态和全部输入态的系数结论，不能仅验证单变量幂态，不能把多项式消元或抽象商定理当作实际 $Y$ 的计算。正规乘积的两条逐态和在移动 $\pi$ 之前须证明原始被加项具有有限支撑；投影后的有限性不足以替代这一条件。反向包含须由实际 $-2$ 系数产生高变量的任意多项式倍数，不能预设 $C_2(F)$ 是理想。$n=-1$ 和 $n=0$ 两式描述商上的乘法与零括号，但不声称正模式也下降到该商，亦不预设顶点代数商结构。
+
+经典背景见 [Arakawa, arXiv:1605.00138v2, §3.8, 印刷第23–24页, (3.19)](https://arxiv.org/abs/1605.00138v2) [文献注](../../../Library/VertexAlgebra/arakawa2016walgebras.md)，以及 [Li, arXiv:math/0409140v1, 印刷第15页, Corollary3.6、Proposition3.7与(3.15)](https://arxiv.org/abs/math/0409140v1) [文献注](../../../Library/VertexAlgebra/li2004abelianizing.md)。前者给出泛仿射真空代数的 $C_2$ 经典极限，后者给出一般顶点代数 $C_2$ 商的 $-1$ 乘法和 $0$ 括号；它们不替代指定实际 $Y$ 的系数证明。多项式自由玻色子的模式与除幂导数归一化见 [Matsuo–Nagatomo, hep-th/9704060v1, §§2.1–2.3](https://arxiv.org/abs/hep-th/9704060v1) [文献注](../../../Library/VertexAlgebra/matsuo1997freeboson.md)。本问题无数学新颖性主张，不推出有理性或 $C_2$ 余有限性，也不证明带电模 Jacobi、融合、Monster 实现、弦论或 AdS/CFT 时空动力学。
+
+## 2147 后续追加锚

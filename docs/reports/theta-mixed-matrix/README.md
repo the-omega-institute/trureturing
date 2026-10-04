@@ -238,3 +238,11 @@ theta mean. It retains the unproved signed arithmetic estimate.
 A new four-bump example shows why pole cancellation alone does not turn
 a generic pointwise exponential error envelope into that estimate.
 The example kernel is not the actual arithmetic kernel.
+
+The [signed arithmetic head and fixed-row tail](signed-discrepancy-window.md)
+retain the prime-minus-continuum realization. Published cumulative-error
+and weighted smoothing suppliers give explicit coupling inputs in the
+original centered metric. Three new Fibonacci-plus-half cutoffs retain
+all prime powers and certify smaller band allowances than the same
+measure's total-variation envelope. The out-of-band allowance, low-block
+sign and common cofinal parameter sequence remain unpaid.

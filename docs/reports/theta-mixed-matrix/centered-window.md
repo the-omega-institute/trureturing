@@ -238,3 +238,9 @@ precision or phases, nonfinite enclosures and uncertified example signs
 reject. The actual signed arithmetic estimate, cofinal original-form
 positivity, RH and full Robin remain unresolved. The known criteria and
 Fourier-mode methods are reused; no literature priority is claimed.
+
+The [signed arithmetic application](signed-discrepancy-window.md) keeps
+the actual prime-minus-continuum measure and its cross terms. Its
+fixed-row tail and finite-head band allowances are more specific inputs
+to a coupling budget, with the original all-test sign and common
+cofinal estimate still unproved.

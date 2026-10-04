@@ -55259,3 +55259,414 @@ $$
 （365.9）的量词域始终是 $\mathcal M$，没有将其等同于全部正整数，也没有据此将该归约说成 RH 的等价命题。纤维内的严格比较（365.6）本身不推出 $\mathcal R(B_H)<1$；非单元素纤维的上端点小于一由本段的已发表低赋值条件另行给出，单元素纤维则保留在（365.9）的右侧。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 366. 全指标实际 Fibonacci 最小公倍数的下集正规形与完整呈现
+
+**定义 366.1（无界指标偏序、有限下集与呈现）。** 取 $F_0=0$、$F_1=F_2=1$、$F_{n+2}=F_{n+1}+F_n$。所有生成指标集合 $S$ 都是 $\mathbb N_{>0}$ 的有限子集，不是多重集，也不包含零。记
+
+$$
+M(S)=\operatorname{lcm}_{s\in S}F_s,\qquad M(\varnothing)=1,\qquad
+\mathcal M=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\},\qquad
+P=\{n\in\mathbb N:n\ge3\}.
+\tag{366.1}
+$$
+
+$P$ 按指标整除排序，没有全局指标上界。令 $\mathcal J_{\mathrm{fin}}(P)$ 为它的有限下集族：$I\subseteq P$ 有限，且 $n\in I$、$d\in P$、$d\mid n$ 蕴涵 $d\in I$。这里允许空下集，不要求非空或有向。对 $M\in\mathcal M$，定义
+
+$$
+\begin{aligned}
+I(M)&=\{n\in P:F_n\mid M\},&
+G(M)&=\operatorname{Max}_{\mid}I(M),\\
+U(M)&=\{1,2\}\cup I(M),&
+\Pi(M)&=\{S\subseteq\mathbb N_{>0}:S\text{ 有限且 }M(S)=M\}.
+\end{aligned}
+\tag{366.2}
+$$
+
+$\operatorname{Max}_{\mid}I$ 指 $I$ 中的整除极大元：$g\in I$ 且 $g\mid j$、$j\in I$ 时必有 $j=g$。空集的极大元集为空。完整素支撑 $\operatorname{Supp}$、入口秩 $z(q)$ 和 $A_H$ 沿用定义 364.1、365.1。
+
+**定理 366.2（实际族的下集字典、强制反链与支撑投影）。** 以下结论对整个 $\mathcal M$ 成立。
+
+（一）对任意有限正指标集合 $S$ 与任意 $n\ge3$，
+
+$$
+F_n\mid M(S)\quad\Longleftrightarrow\quad\exists s\in S,\ n\mid s,
+\qquad
+I(M(S))=\{d\in P:\exists s\in S,\ d\mid s\}.
+\tag{366.3}
+$$
+
+每个 $I(M)$ 都是有限下集，映射 $M\mapsto I(M)$ 与 $I\mapsto M(I)$ 互逆，并满足 $M\mid N\Longleftrightarrow I(M)\subseteq I(N)$。它们给出整个实际族与 $\mathcal J_{\mathrm{fin}}(P)$ 的序同构；最小元一对应空下集。整数的通常 gcd 与 lcm 都留在实际族内，且
+
+$$
+I(\gcd(M,N))=I(M)\cap I(N),\qquad
+I(\operatorname{lcm}(M,N))=I(M)\cup I(N).
+\tag{366.4}
+$$
+
+因此实际族是无限分配格，而不是有限格或完备格。
+
+（二）$G(M)$ 是实现 $M$ 的唯一包含极小指标集合，也是 $P$ 中实现 $M$ 的唯一有限反链。所有冗余指标和两个单位指标的自由度恰由以下区间给出：
+
+$$
+\Pi(M)=\{S:G(M)\subseteq S\subseteq U(M)\},\qquad
+\#\Pi(M)=2^{\,|I(M)|+2-|G(M)|}.
+\tag{366.5}
+$$
+
+右侧区间中的集合自动是有限正指标集合。不同有限反链实现不同实际整数。对 $M=1$，有 $I(M)=G(M)=\varnothing$，全部呈现恰为 $\varnothing,\{1\},\{2\},\{1,2\}$。
+
+（三）对任意 $I,J\in\mathcal J_{\mathrm{fin}}(P)$，完整素支撑的等价关系恰为
+
+$$
+\operatorname{Supp}(M(I))=\operatorname{Supp}(M(J))
+\quad\Longleftrightarrow\quad
+I\setminus\{6,12\}=J\setminus\{6,12\}.
+\tag{366.6}
+$$
+
+删去六、十二描述的是支撑所遗忘的指标，而不是两个可以独立选择的位；下集条件仍要求十二的出现强迫六的出现。
+
+**证明。** （一）先在同一实际呈现中提取指标。所用经典强整除律 $\gcd(F_r,F_s)=F_{\gcd(r,s)}$ 及 $r\mid s\Rightarrow F_r\mid F_s$ 沿用 §358 的证明；Fibonacci 的强整除性质亦见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1](https://arxiv.org/html/1310.2416v1)，Introduction。入口判据沿用（361.8）：对每个整数 $q\ge2$ 和正指标 $s$，$q\mid F_s\Longleftrightarrow z(q)\mid s$。此外，有限最小公倍数按素数赋值取最大值，所以对素数 $p$ 和整数 $e\ge1$，
+
+$$
+v_p(M(S))=\max\bigl(\{v_p(F_s):s\in S\}\cup\{0\}\bigr),\qquad
+p^e\mid M(S)\quad\Longleftrightarrow\quad\exists s\in S,\ p^e\mid F_s.
+\tag{366.7}
+$$
+
+非空集合的最大值由某个成员达到；空集合给最大值零，两侧整除条件均假。这是逐素幂的达到，不是任意合数的达到。例如 $M(\{3,4\})=6$，但六不整除 $F_3=2$ 或 $F_4=3$；指标六的 Fibonacci 值则是八。
+
+对 $n\notin\{6,12\}$、$n\ge3$，使用 Minoru Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)，Theorem 3（441–442 页）。该文 439 页的原始因子是素数 $p$，满足 $p\mid F_n$ 且不整除任何更早的正指标项；定理的例外恰为 $1,2,6,12$，包括指标三的素数二与指标五的素数五，不采用排除判别式素因子的另一种 Lucas 约定。因此可选 $p$ 使 $z(p)=n$。若 $F_n\mid M(S)$，则 $p\mid M(S)$；（366.7）选出 $s\in S$ 使 $p\mid F_s$，入口判据给 $n\mid s$。对另外两个非单位指标，沿用（363.14）的 $F_6=8,z(8)=6$ 与 $F_{12}=144,z(9)=12$，分别对素幂八和九作同一个达到论证，也得到 $n\mid s$。
+
+反向，$n\mid s$ 给 $F_n\mid F_s\mid M(S)$。空呈现时右侧假，左侧也因 $F_n\ge2$ 而假；$F_n\ge2$（$n\ge3$）由正项递推及 $F_3=2$ 得到。故（366.3）对全部指标与全部有限呈现成立。由于 $\operatorname{lcm}(M(S),M(T))=M(S\cup T)$，它还在实际族中给出
+
+$$
+F_n\mid\operatorname{lcm}(M,N)
+\quad\Longleftrightarrow\quad F_n\mid M\ \text{或}\ F_n\mid N
+\qquad(n\ge3,\ M,N\in\mathcal M).
+\tag{366.8}
+$$
+
+这正是每个 $F_n$ 相对于实际族的并素性，不是相对于所有正整数的素性。例如（364.18）的 $F_{19}=4181=37\cdot113$ 仍满足（366.8）；素指标并不意味着 Fibonacci 值为素数。
+
+（二）建立无界字典及格运算。由（366.3），$I(M(S))$ 是有限个正指标的约数集在 $P$ 中的并，因而有限且向下封闭。非空 $S$ 时其中每个指标不超过 $\max S$；若 $S\subseteq\{1,2\}$，该下集为空。这是对各个任意有限呈现证明有限性，没有先施加共同指标截断。
+
+取任意 $I\in\mathcal J_{\mathrm{fin}}(P)$。（366.3）给 $n\in I(M(I))$ 当且仅当 $n\mid s$ 对某个 $s\in I$ 成立，而下集条件将它等同于 $n\in I$；反向也可取 $s=n$。故 $I(M(I))=I$。对实际 $M=M(S)$，每个非单位生成指标 $s\in S$ 属于 $I(M)$，单位项为一，故 $M\mid M(I(M))$；另一方面定义使每个 $n\in I(M)$ 的 $F_n$ 整除 $M$，所以 $M(I(M))\mid M$。两者相等，包括 $M=1$。若 $M\mid N$，定义给 $I(M)\subseteq I(N)$；若下集包含成立，取相应 Fibonacci 项的 lcm 并用刚才的逆关系，得到 $M\mid N$。这证明双向保序，而不只证明集合双射。
+
+并运算由呈现的并留在实际族。对交运算，强整除律与正整数素指数上的有限最大、最小分配给
+
+$$
+\gcd(M(S),M(T))
+=\operatorname{lcm}_{(s,t)\in S\times T}\gcd(F_s,F_t)
+=\operatorname{lcm}_{(s,t)\in S\times T}F_{\gcd(s,t)}.
+\tag{366.9}
+$$
+
+具体地，两呈现非空时，对每个素数取 $a_s=v_p(F_s)$、$b_t=v_p(F_t)$，有 $\min(\max_s a_s,\max_t b_t)=\max_{s,t}\min(a_s,b_t)$：每个右侧项不超过左侧，而选择分别达到两个最大值的成员就达到左侧。若任一呈现为空，两端都为一。右侧的指标组成有限正集合，重复项不影响 lcm，指标一、二只贡献一，所以 gcd 确实实际。定义直接给 $F_n\mid\gcd(M,N)$ 当且仅当 $F_n$ 同时整除两者；并运算使用（366.8），便得（366.4）。集合交、并的标准分配律传到实际整数上。有限下集族有无限多个不同的主下集 $\{d\in P:d\mid n\}$；对任何有限下集，可选更大的指标加入其主下集而严格扩大。因此该格无限且没有最大元，不能是完备格。
+
+（三）求出全部呈现。这里使用有限偏序的标准极大元覆盖事实：对 $i\in I(M)$，有限非空集合 $\{j\in I(M):i\mid j\}$ 有极大元 $g$，且它也在整个 $I(M)$ 中极大。于是每个 $i$ 都整除某个 $g\in G(M)$，不同极大元互不可比。强整除性给 $F_i\mid F_g$，而 $G(M)\subseteq I(M)$，所以 $M(G(M))=M(I(M))=M$。
+
+若 $M(S)=M$，每个 $s\in S$ 或者是一、二，或者满足 $F_s\mid M$ 并属于 $I(M)$，故 $S\subseteq U(M)$。对每个 $g\in G(M)$，因 $F_g\mid M(S)$，（366.3）给 $s\in S$ 使 $g\mid s$。该 $s\ge g\ge3$，属于 $I(M)$，而 $g$ 的极大性迫使 $s=g$。所以 $G(M)\subseteq S$，这证明（366.5）区间的必要性。反之，若 $G(M)\subseteq S\subseteq U(M)$，所有非单位生成项都整除 $M$，故 $M(S)\mid M$；又 $M=M(G(M))\mid M(S)$，得到相等，证明充分性。
+
+每个呈现都包含本身可实现的 $G(M)$，故它是唯一包含极小呈现。若反链 $A\subseteq P$ 实现 $M$，则 $G(M)\subseteq A\subseteq I(M)$；每个 $a\in A$ 整除某个 $g\in G(M)\subseteq A$，反链条件迫使 $a=g$，故 $A=G(M)$。这也证明不同有限反链不能实现同一个整数。
+
+最后使用标准有限幂集计数：$T\mapsto G(M)\cup T$ 是 $U(M)\setminus G(M)$ 的幂集到 $\Pi(M)$ 的双射，逆映射为 $S\mapsto S\setminus G(M)$。$I(M)$ 与 $\{1,2\}$ 不交，所以自由指标数为 $|I(M)|+2-|G(M)|$，得到（366.5）的幂次。$F_n\ge2$ 对 $n\ge3$ 成立，而 $F_1=F_2=1$，因而单位值没有另外的正指标生成项，四种单位呈现完整。
+
+（四）将字典用于既有完整支撑纤维。给可实现的有限素数调色板 $H$，置 $K=I(A_H)$。由（366.3），它恰为 $\{z(p):p\in H\}$ 在 $P$ 中的向下闭包。每个素数入口秩都不小于三，也不等于六或十二，因为 $F_6$、$F_{12}$ 的素因子二、三分别已在指标三、四出现。对任何支撑为 $H$ 的实际 $M$，定理 364.2 给 $A_H\mid M$，故 $K\subseteq I(M)$；若 $n\in I(M)\setminus\{6,12\}$，Yabuta 的原始素数 $p$ 属于 $H$ 且 $z(p)=n$，使 $F_n$ 成为 $A_H$ 的生成项，故 $n\in K$。于是所有同支撑下集在删去六、十二后相同，这证明（366.6）的正向。
+
+反向，设 $I\setminus\{6,12\}=J\setminus\{6,12\}$。各非例外生成项已共同存在。如果 $6\in I$，下集性迫使 $3\in I$，所以 $3\in J$，而 $F_6=8$ 的唯一素因子二已由 $F_3=2$ 提供。如果 $12\in I$，则 $3,4\in I\cap J$，$F_{12}=144$ 的素因子二、三已由 $F_3=2,F_4=3$ 提供。逐个生成项取支撑的并便得 $\operatorname{Supp}(M(I))\subseteq\operatorname{Supp}(M(J))$；交换两下集得到相等，证明完整反向。
+
+更精确的纤维无需另作算术分类：将（365.3）经（366.4）映到下集，并用 $I(8)=\{3,6\}$、$I(144)=\{3,4,6,12\}$，得到
+
+$$
+\{I(M):M\in\mathcal M,\ \operatorname{Supp}(M)=H\}
+=\{K\}\cup\{K\cup\{6\}:2\in H\}
+\cup\{K\cup\{6,12\}:\{2,3\}\subseteq H\}.
+\tag{366.10}
+$$
+
+条件成立时所需的三或三、四已经属于 $K$。右侧按不同集合计数，正是既有三态纤维的像，故包含关系两向成立。六已被吸收当且仅当某个 $p\in H$ 满足 $6\mid z(p)$；十二已被吸收当且仅当某个 $p\in H$ 满足 $12\mid z(p)$。若 $12\in K$，下集性又给 $6\in K$，所有允许扩张都重合；否则也可能只有部分扩张重合。每个纤维是至多三点的受约束链，而不是四点 Boolean 方形；这些吸收判据都针对同一个秩生成实现 $A_H$。
+
+在定理 363.2 的既有七光滑格中，可用的非单位指标为 $P_{H_7}=\{3,4,5,6,8,12\}$，其中 $H_7=\{2,3,5,7\}$。去掉独立指标五后，十二不出现时是两条链 $3\prec6$、$4\prec8$ 的九个下集；十二出现时三、六、四强制出现，八可选，给两个下集。恢复五的选择得 $2(9+2)=22$，对应既有二十二个实际值，而不是（363.21）的六十个整数约数。完整支撑纤维已有 $A_{H_7}=210$ 与 $K=\{3,4,5,8\}$；（366.10）在同一个 $K$ 上依次加入六、再加入十二。其全部呈现数由（366.5）直接读出：
+
+$$
+\begin{array}{c|c|c|c}
+M&I(M)&G(M)&\#\Pi(M)\\ \hline
+210&\{3,4,5,8\}&\{3,5,8\}&8\\
+840&\{3,4,5,6,8\}&\{5,6,8\}&16\\
+5040&\{3,4,5,6,8,12\}&\{5,8,12\}&32
+\end{array}
+\tag{366.11}
+$$
+
+这些呈现包含两个可选单位指标；十二的选择仍强迫六，并没有额外独立的第四个满支撑状态。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 366. FIB 路径支撑上的渗流、首达输运与反应权重
+
+对 FIB 原生状态集合 `V_F`，令 `\mathcal P_F(x,y)` 表示从 `x` 到 `y` 的合法路径族。原生可达性是
+
+$$
+x\rightsquigarrow_F y
+\quad\Longleftrightarrow\quad
+\mathcal P_F(x,y)\ne\varnothing .
+\tag{366.1}
+$$
+
+它只说明路径是否存在，不说明边是否开放、传播需要多久或观测是否成功。
+
+给每条原生边附加外部开放变量 `\omega_e\in\{0,1\}`，随机开放路径为
+
+$$
+\mathcal P_\omega(x,y)
+=\{\gamma\in\mathcal P_F(x,y):
+\omega_e=1\text{ 对所有 }e\in\gamma\}.
+\tag{366.2}
+$$
+
+外部增边形成的连接不属于 FIB 原生可达性，除非这些边已被登记为新的 FIB 原语。若 `\omega_e=\mathbf1_{\{U_e\le p\}}`，其中 `U_e` 在同一实际实现上固定，则 `p_1\le p_2` 给出单调耦合
+
+$$
+\mathcal P_{\omega^{(p_1)}}(x,y)
+\subseteq
+\mathcal P_{\omega^{(p_2)}}(x,y).
+\tag{366.3}
+$$
+
+在具有无穷体积极限和足够平移一致性的模型中，可以定义拓扑贯通概率
+
+$$
+\Theta_x(p)=\Pr_p(x\text{ 属于无穷开放分支}),
+\qquad
+p_c=\inf\{p:\sup_x\Theta_x(p)>0\}.
+\tag{366.4}
+$$
+
+有限 FIB ATOM 或有限实验窗口不自动具有奇异阈值；此时应使用有限尺寸贯通概率或给定误差 `\varepsilon` 的阈值。
+
+若边带非负传播代价 `w_e`，首达代价为
+
+$$
+R_\omega(x,y)=
+\inf_{\gamma\in\mathcal P_\omega(x,y)}
+\sum_{e\in\gamma}w_e,
+\tag{366.5}
+$$
+
+空路径族时取 `R_\omega=+\infty`。首达时间分布还需指定 `w_e` 的联合律、边相关性和时间单位；FIB 只给出取下确界的路径族。
+
+给路径附加非负反应或杀灭率 `\kappa_e\ge0`。令 `\Gamma_B` 表示按外加 Markov 传播核 `Q` 运行、直到首次到达 `B` 或按终止规则停止的带停留时间路径；第 `k` 次经过边 `e` 的停留时间记为 `\tau_e^{(k)}`。Feynman–Kac 型响应可写成
+
+$$
+u(x)=\mathbb E_x\left[
+\exp\left(-\sum_{(e,k)\in\Gamma_B}\kappa_e\tau_e^{(k)}\right)
+\mathbf1_{\{\Gamma_B\text{ 在有限时间到达 }B\}}
+\right].
+\tag{366.6}
+$$
+
+这要求 `Q`、路径终止规则、率的可积性和目标边界 `B` 已给定。若存在共享环境，式（366.6）必须在同一联合概率空间中计算，不能把各边的边缘到达率相乘。
+
+相同 FIB 支撑可以取恒定 `w_e=1`、重尾 `w_e` 或状态依赖 `w_e`，从而产生不同的首达尾和动态临界。也可以保持同一 `p_c` 而改变路径重叠，得到不同的簇极值与响应方差。因此渗流阈值、最短路指数和反应输运律都是外加模型在 FIB 路径支撑上的条件结论。
+
+## 367. FIB 路径生成函数、谱行列式与量子配分接口
+
+令 `T_0=\alpha,T_1=\beta`，并把有序树的路径多项式定义为
+
+$$
+P_\alpha=\alpha,
+\qquad
+P_\beta=\beta,
+\qquad
+P_{\langle s,t\rangle}=xP_s+yP_t.
+\tag{367.1}
+$$
+
+对递归序列 `T_{j+2}=\langle T_{j+1},T_j\rangle`，有形式级数递推
+
+$$
+P_{j+2}=xP_{j+1}+yP_j,
+\qquad
+\sum_{j\ge0}P_jz^j
+=\frac{P_0+z(P_1-xP_0)}{1-xz-yz^2}.
+\tag{367.2}
+$$
+
+这是形式幂级数恒等式，不需要解析收敛。取 `x=y=1` 后，非负路径数的解析收敛半径还需由 `|z|<\varphi^{-1}` 等条件说明；解析延拓的数值不能冒充收敛路径总和。
+
+在另加的有限有向多重图上，给边赋复振幅 `a_e`，定义转移矩阵
+
+$$
+W_{vu}=\sum_{e:u\to v}a_e.
+\tag{367.3}
+$$
+
+若 `|z|\rho(W)<1`，则振幅解析核为
+
+$$
+R(z)=\sum_{n\ge0}z^nW^n=(I-zW)^{-1}.
+\tag{367.4}
+$$
+
+若要求逐路径绝对收敛，应改用 `A_{vu}=\sum_{e:u\to v}|a_e|` 并要求 `|z|\rho(A)<1`。振幅相消只保证条件收敛时，不能使用绝对收敛结论。
+
+在零点附近可定义闭路谱行列式
+
+$$
+\mathcal Z_W(z)=\det(I-zW)^{-1}
+=\exp\left(\sum_{n\ge1}\frac{z^n}{n}\operatorname{tr}W^n\right).
+\tag{367.5}
+$$
+
+原始 FIB 父到子展开树若没有反向边，其有限传播矩阵幂零，因而 `\mathcal Z_W=1`；丰富的开放路径不自动产生非平凡闭路 ζ 函数。组成矩阵的闭路属于另加的类型转移图，不能直接当作原始树的物理周期。
+
+若在每个树节点另加有限维自伴算子 `H_t`，且块间耦合为外部模型指定的有限秩算子（下式按标量或秩一耦合写），根行列式与删根行列式可写为
+
+$$
+D_t(E)=\det(H_t-EI),
+\qquad
+N_t(E)=\det(H_t-EI)_{\widehat r}.
+\tag{367.6}
+$$
+
+Schur 补给出二块拼接的条件递推
+
+$$
+N_{\langle s,u\rangle}=D_sD_u,
+$$
+
+$$
+D_{\langle s,u\rangle}
+=(v_0-E)D_sD_u-b_L^2N_sD_u-b_R^2N_uD_s.
+\tag{367.7}
+$$
+
+根 Green 函数 `N_t/D_t` 只在分母非零处是有理表示；多项式恒等式本身在本征值处仍成立。改变端点边界或 Laplacian 约定会改变对角边界项，不能沿用同一递推而不登记边界。若 `H_t` 是无限维块，普通行列式须改成已登记定义域下的 Fredholm 或正则化行列式，并另行给出迹类或闭算子条件。
+
+无限层极限还需共同 Hilbert 空间、嵌入和收敛拓扑。局部强预解式收敛不保证全局热迹、全部本征值或行列式收敛；Fredholm 行列式通常需要迹类控制 `\|K_j-K\|_1\to0`。因此量子振幅、概率配分和谱 ζ 正则化共享路径接口，却具有不同的收敛门槛和物理解释。
+
+## 368. FIB 隐藏状态、非马尔可夫记忆与分数阶耗散
+
+FIB 组成递归的完整状态可以是有限维的，而某个标量观察可能表现为长记忆。令
+
+$$
+\binom{y_{n+1}}{z_{n+1}}
+=
+\begin{pmatrix}A&B\\C&D\end{pmatrix}
+\binom{y_n}{z_n}.
+\tag{368.1}
+$$
+
+消去隐藏坐标得到
+
+$$
+y_{n+1}=Ay_n+BD^nz_0
++\sum_{j=0}^{n-1}BD^{n-1-j}C\,y_j.
+\tag{368.2}
+$$
+
+于是离散记忆核为 `K_r=BD^rC`。它只使用过去观察，满足组合因果性；完整向量 `(y_n,z_n)` 仍是一步 Markov 状态。把隐藏状态删除并不等于在 FIB 中创造了新的原子。
+
+若另加等间隔物理时钟 `\tau_n=n\Delta`，并有相应尺度极限，可得到 Volterra 核
+
+$$
+(\gamma*y)(t)=\int_0^t\gamma(t-s)y(s)\,ds.
+\tag{368.3}
+$$
+
+不等间隔时钟一般产生依赖绝对时间的非平稳核，不能只用 `t-s` 表示。
+
+广义 Langevin 接口写为
+
+$$
+m\dot v(t)
+=-\int_{[0,t)}\gamma(du)v(t-u)+F(t)+\eta(t).
+\tag{368.4}
+$$
+
+因果性要求 `\gamma` 支撑在非负滞后；耗散性通常还要求其 Laplace 变换满足适当的正实性或核的正定性。对 `0<\alpha<1`，幂律记忆核
+
+$$
+\gamma(t)=\frac{\lambda}{\Gamma(1-\alpha)}t^{-\alpha}
+\tag{368.5}
+$$
+
+当卷积对象改为 `\dot v` 或相应状态变量的导数时，才在共同时钟、归一化和初值空间满足极限假设的条件下得到 Caputo 型分数阶项；直接对 `v` 的卷积首先只是分数阶积分型记忆。
+
+若外加噪声与耗散满足同一温度下的涨落—耗散关系，才可把平稳协方差与 `\gamma` 联系；FIB 递归不提供温度、噪声测度或热平衡。相同 FIB 路径可以配上有限记忆 Markov 核、幂律重尾核或主动非平衡核，分别产生指数衰减、Mittag–Leffler 衰减和无平衡响应。
+
+## 369. FIB 反问题、可观测性与主动实验设计
+
+令 `X` 为 FIB 状态，传感器配置或主动查询为 `\xi`，观测模型为
+
+$$
+Y_\xi=O_\xi(X)+\varepsilon_\xi,
+\tag{369.1}
+$$
+
+其中噪声分布、参数先验和代价函数均属外加实验模型。FIB 提供 `O_\xi` 可访问的路径和状态支撑，不直接给出噪声或测量精度。
+
+给参数族 `P_\theta`，配置 `\xi` 对目标 `T(\theta)` 可识别，当且仅当
+
+$$
+\mathcal L_\theta(Y_\xi)=\mathcal L_{\theta'}(Y_\xi)
+\Longrightarrow
+T(\theta)=T(\theta').
+\tag{369.2}
+$$
+
+若存在同一观测律却有不同目标值，则任何仅使用该配置的估计器都无法无偏区分这两个模型。
+
+在参数可微、所有 `\theta` 共享观测支撑、score 平方可积，并且允许参数微分与积分交换的模型中，Fisher 信息矩阵为
+
+$$
+I_\xi(\theta)
+=\mathbb E_\theta\left[
+\nabla_\theta\log p_\theta(Y_\xi)
+\nabla_\theta\log p_\theta(Y_\xi)^{\mathsf T}
+\right].
+\tag{369.3}
+$$
+
+它依赖观测似然；FIB 结构最多限制哪些观测事件概率为零。若主动查询序列 `\xi_1,\ldots,\xi_k` 共享同一实际历史，联合 Fisher 信息和互信息必须在联合分布下计算，不能把分别可达的单次最优值相加。
+
+一个实验设计可以最大化 `\log\det(I_\xi+\Lambda)`、互信息或最坏情形 KL 分离，但目标函数、资源成本和噪声约束必须预先登记。结构上可逆的双读数仍可能因观测矩阵病态而统计不稳定：对无正则化线性逆或伪逆，若最小奇异值为 `\sigma_{\min}>0`，其算子范数在最坏方向上为 `\sigma_{\min}^{-1}`；这不构成所有估计器或所有参数方向的统一下界。
+
+例如两个 FIB 树的组成和全部数量轨迹相同，但叶次序不同；数量传感器的 Fisher 信息为零，加入路径方向传感器后才得到正信息。反过来，单次路径传感器各自不能识别公共环境，联合同时观测才可通过滞后协方差切开模型纤维。故可观测性、实验成本和后验收缩是外加统计层，而不是 FIB 计数递归的自动结果。
+
+## 370. FIB 范畴语义、函子装饰与跨物理迁移
+
+把端口作为对象、合法路径的等价类作为态射、首尾匹配作为复合，得到 FIB 路径范畴 `\mathcal C_F`。其结合律来自路径拼接；若另有并列接缝，可再给出张量或有界共积结构，但这些结构必须满足明确的交换方图。
+
+一个物理实现是外加函子
+
+$$
+D:\mathcal C_F\to\mathcal D,
+\tag{370.1}
+$$
+
+它把端口映射为状态空间，把路径映射为传播算子、概率核、群值运输或量子通道。函子性要求
+
+$$
+D(\rho\circ\pi)=D(\rho)\circ D(\pi),
+\qquad
+D(\operatorname{id})=\operatorname{id}.
+\tag{370.2}
+$$
+
+若存在观测自然变换 `\eta:D\Rightarrow D'`，则每个路径图满足
+
+$$
+\eta_b\circ D(\pi)=D'(\pi)\circ\eta_a.
+\tag{370.3}
+$$
+
+这才给出跨表示的结构对应；共享零元支撑或相同路径计数不足以构成自然变换。
+
+粗粒化可由函子 `R:\mathcal C_{F,j}\to\mathcal C_{F,j-1}` 和语义推前 `D_j\to D_{j-1}\circ R` 表达。若还存在左伴随 `L\dashv R`，伴随单位和余单位描述了细化与粗化之间的最佳近似；但伴随只保证范畴中的泛性质，不自动保证概率测度、作用量或物理观测守恒。
+
+两个模型可以具有同一 FIB 语法，却分别落入集合、概率核、Hilbert 空间或群表示范畴。布尔可达性用并集/存在量词，概率传播用加权和，量子振幅用复数相加后再取模方；逐项替换矩阵不自动成为保持这些运算的函子。
+
+跨物理迁移至少需要对象对应、态射复合、观测、初态测度和允许操作同时保持自然性；若目标只保持一部分关系，应明确其余关系的开放状态。因而 FIB ATOM 的范畴化价值在于提供可复合的语法骨架和可审计的交换方图，而不是把不同物理理论强行识别为同一语义模型。
