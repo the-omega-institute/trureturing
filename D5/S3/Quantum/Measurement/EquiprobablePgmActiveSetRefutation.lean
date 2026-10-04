@@ -148,8 +148,19 @@ theorem result : ¬ claim := by
     · exact (hrank _).smul (by norm_num [Complex.nonneg_iff])
     · exact (hrank _).smul (by norm_num [Complex.nonneg_iff])
     · exact PosSemidef.zero
+  have hQ0 : Q 0 = !![(1 / 2 : ℂ), 1 / 2; 1 / 2, 1 / 2] := by
+    ext a b
+    fin_cases a <;> fin_cases b <;> simp [hQdef, vecMulVec]
+  have hQ1 : Q 1 = !![(1 / 2 : ℂ), -1 / 2; -1 / 2, 1 / 2] := by
+    ext a b
+    fin_cases a <;> fin_cases b <;> simp [hQdef, vecMulVec] <;> norm_num
+  have hQ2 : Q 2 = 0 := rfl
+  have hr0 : rho 0 = !![(400 / 401 : ℂ), 18 / 401; 18 / 401, 1 / 401] := rfl
+  have hr1 : rho 1 = !![(400 / 401 : ℂ), -18 / 401; -18 / 401, 1 / 401] := rfl
   have hQval : success rho Q = 437 / 1203 := by
-    simp [success, hQdef, rho, Fin.sum_univ_three, trace, Fin.sum_univ_two, mul_apply, vecMulVec]
+    rw [success, Fin.sum_univ_three, hQ0, hQ1, hQ2, hr0, hr1]
+    simp only [mul_zero, trace_zero, Complex.zero_re, add_zero, Matrix.smul_of,
+      Matrix.mul_fin_two, Matrix.trace_fin_two, Matrix.smul_cons, Matrix.smul_empty]
     norm_num
   have hnn : ∀ i, 0 ≤ (trace ((Γ - (1 / 3 : ℂ) • rho i) * E i)).re := fun i =>
     RHLinalg.trace_mul_nonneg_of_posSemidef (hslack i) (hE.1 i)
