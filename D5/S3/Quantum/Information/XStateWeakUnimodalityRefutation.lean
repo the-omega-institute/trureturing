@@ -11,8 +11,8 @@ proof_shape: h2, h4, wParam, r1, r2, f1, ArgsNonneg, WeaklyUnimodal:
   definition (Shannon entropies in bits through the frozen shannonEntropy, Eq. (A1) with r_{1,2}
   and w, nonnegativity of every Shannon argument, and the Appendix definition of weak
   unimodality with its minimum form)
-proof_shape: claim: definition (published unimodality hypothesis, arXiv:1702.03728, Section 2
-  and Appendix, for f1 on [0, 1])
+proof_shape: claim: definition (published unimodality hypothesis, arXiv:1702.03728,
+  Introduction and Appendix, for f1 on [0, 1])
 proof_shape: result: bind-only (as local steps: nonnegativity of the Shannon arguments on
   [0, 1] by quadratic bounds, square roots bracketed by rationals, Real.negMulLog bracketed
   through monotonicity of Real.log, logarithms of rationals bounded by

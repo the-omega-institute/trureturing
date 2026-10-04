@@ -16,7 +16,7 @@ M. A. Yurischev, *Extremal properties of conditional entropy and quantum
 discord for XXZ, symmetric quantum states*, Quantum Inf. Process. 16, 249
 (2017), arXiv:1702.03728v3.
 
-Section 2:
+Introduction:
 
 > we suppose the unimodal property for the function $S_{cond}(\theta)$ (see
 > Appendix). So, if the unimodality hypothesis is valid the only possibility
@@ -109,7 +109,7 @@ result also refutes the strong form.
 
 The conjecture's wording counts local extrema. Read with non-strict local
 extrema, it is false already for constant $f_1$: take $p_2=p_3=p_4=p_5=0$,
-$|p_1|\le1$. Section 2 excludes that trivial case. A weakly unimodal function
+$|p_1|\le1$. The Introduction excludes that trivial case. A weakly unimodal function
 has no strict local extremum in $(0,1)$ other than $x_m$. The Lean result
 does not by itself produce two strict local extrema (see Triage).
 
@@ -121,7 +121,9 @@ does not by itself produce two strict local extrema (see Triage).
   - $f_1(177/200)=0.0483282133$;
   - $f_1(1)=0.0483099449$.
 - The certified intervals for $f_1\log2$ have widths at most $4.002\cdot10^{-8}$. The
-  separations between them are at least $8.0\cdot10^{-6}$.
+  three separations used by the contradiction, for $f_1(0)>f_1(27/50)$,
+  $f_1(177/200)>f_1(27/50)$ and $f_1(177/200)>f_1(1)$, are at least
+  $8.0\cdot10^{-6}$.
 
 The canonical source is
 `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.lean`.
@@ -178,7 +180,7 @@ Tier 1 hypothesis of a 2017 journal article. Resolution: `Refuted`, by
   - Two statements do not hold for general X states:
     - the abstract's statement (l. 42–45) that $S_{cond}(\theta)$ "for X
       states can have at most one local extremum in the open interval";
-    - the bifurcation argument of Section 2 (l. 169–175), by which interior
+    - the bifurcation argument of the Introduction (l. 169–175), by which interior
       extrema appear only by doubling at the end points.
   - The hypothesis is a statement about general X states (Appendix,
     l. 1300–1306). The witness's density matrix has unequal middle diagonal
@@ -187,7 +189,7 @@ Tier 1 hypothesis of a 2017 journal article. Resolution: `Refuted`, by
     computation through the parametrization of [Y15]).
   - The numerical phase diagrams and the region boundaries found for that
     subclass are not contradicted by this example.
-  - The boundary equations (SII1) of Section 2 capture regime changes that
+  - The boundary equations (SII1) of the Introduction (l. 151) capture regime changes that
     pass through the end points. For general X states they need not
     capture all of them.
   - arXiv:1903.08342 bases its equations on the same hypothesis for

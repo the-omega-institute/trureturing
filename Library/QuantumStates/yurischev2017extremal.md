@@ -5,7 +5,7 @@ year: 2017
 title: "Extremal properties of conditional entropy and quantum discord for XXZ, symmetric quantum states"
 doi: 10.1007/s11128-017-1701-0
 url: https://arxiv.org/abs/1702.03728v3
-claim: "For two-qubit X states the conditional entropy is written through f_1(x) = -h_2((1+p_2 x)/2, (1-p_2 x)/2) + h_4((1+p_2 x + sqrt(r_1))/4, (1+p_2 x - sqrt(r_1))/4, (1-p_2 x + sqrt(r_2))/4, (1-p_2 x - sqrt(r_2))/4) on x in [0,1] (Eq. (A1)), with r_1 = (p_1 + p_5 x)^2 + 4 w^2 (1 - x^2), r_2 = (p_1 - p_5 x)^2 + 4 w^2 (1 - x^2), w = (|p_3+p_4| + |p_3-p_4|)/4 and Shannon entropies in bits. Section 2 supposes the unimodal property of the conditional entropy, and the Appendix conjectures that f_1 and f_2 have at most one local extremum in (0,1) for every choice of parameters with nonnegative Shannon arguments. Weak unimodality on [a,b] means weak increase up to some x_m in [a,b] and weak decrease after it, with the analogous form for the minimum."
+claim: "For two-qubit X states the conditional entropy is written through f_1(x) = -h_2((1+p_2 x)/2, (1-p_2 x)/2) + h_4((1+p_2 x + sqrt(r_1))/4, (1+p_2 x - sqrt(r_1))/4, (1-p_2 x + sqrt(r_2))/4, (1-p_2 x - sqrt(r_2))/4) on x in [0,1] (Eq. (A1)), with r_1 = (p_1 + p_5 x)^2 + 4 w^2 (1 - x^2), r_2 = (p_1 - p_5 x)^2 + 4 w^2 (1 - x^2), w = (|p_3+p_4| + |p_3-p_4|)/4 and Shannon entropies in bits. The Introduction supposes the unimodal property of the conditional entropy, and the Appendix conjectures that f_1 and f_2 have at most one local extremum in (0,1) for every choice of parameters with nonnegative Shannon arguments. Weak unimodality on [a,b] means weak increase up to some x_m in [a,b] and weak decrease after it, with the analogous form for the minimum."
 strata_touched:
   - D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation
 license: citation-only
@@ -31,7 +31,7 @@ The definition of weak unimodality (Appendix):
 
 > A function $f(x)$ is a weakly unimodal function in the interval $[a,b]$ if there exists a value $x_m\in[a,b]$ for which it is weakly monotonically increasing for $x\le x_m$ and weakly monotonically decreasing for $x\ge x_m$. […] Analogous definitions are given for the minimum.
 
-The hypothesis (Section 2):
+The hypothesis (Introduction):
 
 > On the other hand, we suppose the unimodal property for the function $S_{cond}(\theta)$ (see Appendix). So, if the unimodality hypothesis is valid the only possibility (except the trivial case $S_{cond}(\theta)=const$) for a single local extremum (minimum or maximum) to appear or disappear inside the open interval by continuous varying the parameters defining the X state is the doubling the extremun at the ends of interval $[0,\pi/2]$.
 
