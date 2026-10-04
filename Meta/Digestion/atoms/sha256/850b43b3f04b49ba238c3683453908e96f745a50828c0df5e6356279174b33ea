@@ -1,0 +1,33 @@
+**定义 364.1（有限素数调色板与两种支撑操作）。** 取标准 Fibonacci 序列 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，令
+
+$$
+M(S)=\operatorname{lcm}_{s\in S}F_s,\qquad M(\varnothing)=1,
+\qquad
+\mathcal M=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\}.
+\tag{364.1}
+$$
+
+对正整数 $m$，记 $\operatorname{Supp}(m)=\{p:p\text{ 为素数且 }p\mid m\}$，故 $\operatorname{Supp}(1)=\varnothing$。对素数 $p$，记 $z(p)=\min\{n>0:p\mid F_n\}$。有限素数集合 $H$ 称为调色板，允许 $H=\varnothing$；定义
+
+$$
+\begin{aligned}
+\mathsf V(H)&=\bigcup_{p\in H}\operatorname{Supp}(F_{z(p)}),\\
+A_H&=\operatorname{lcm}_{p\in H}F_{z(p)},\qquad A_{\varnothing}=1,\\
+E_H&=\{n>0:\operatorname{Supp}(F_n)\subseteq H\}.
+\end{aligned}
+\tag{364.2}
+$$
+
+沿用 [《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》§5](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#5-finite-fibonacci-rank-closure) 的带种子秩支撑闭包。具体地，置 $H_{>5}=\{p\in H:p>5\}$、$B=\max(5,\max H)$，其中 $\max\varnothing=0$，并令
+
+$$
+\begin{aligned}
+U_B&=\{p\le B:p\text{ 为素数}\},\\
+\mathsf T(K)&=K\cup\bigcup_{p\in K}\operatorname{Supp}(z(p)),\\
+\mathsf R(H)&=\mathsf T^{|U_B|}\bigl(\{2,3,5\}\cup H_{>5}\bigr).
+\end{aligned}
+\tag{364.3}
+$$
+
+这里 $\mathsf T^j$ 表示迭代 $j$ 次；$\mathsf R$ 加入的是 $z(p)$ 的素因子，$\mathsf V$ 加入的是 $F_{z(p)}$ 的素因子。称有限调色板 $K$ 为共同不动点，若 $\mathsf R(K)=K=\mathsf V(K)$。沿用定义 363.1 的整数闭包 $\mathscr C$，并记 $H_Q=\{p\le Q:p\text{ 为素数}\}$。
+
