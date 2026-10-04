@@ -38,6 +38,10 @@ Lean statement: `D5/S3/Combinatorics/CatalanPowerHankel/CiglerEleven.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CatalanPowerHankel/CiglerEleven.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cigler-catalan-power-shifted-hankel` (proved) by `D5/S3/Combinatorics/CatalanPowerHankel/CiglerEleven.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cigler-catalan-power-shifted-hankel","declaration_gid":"D5/S3/Combinatorics/CatalanPowerHankel/CiglerEleven.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johann Cigler (2023). *Some experimental observations about Hankel determinants of convolution powers of Catalan numbers*. DOI: [10.48550/arXiv.2308.07642](https://doi.org/10.48550/arXiv.2308.07642). URL: <https://arxiv.org/abs/2308.07642v2>.
