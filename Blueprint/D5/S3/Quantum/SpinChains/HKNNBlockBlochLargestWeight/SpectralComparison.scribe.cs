@@ -10,7 +10,7 @@ internal sealed class HKNNSpectralComparisonDocument : IScribeDocumentDefinition
         "Normalized Bloch weights and finite orbit support", H("Normalized Bloch weights and finite orbit support"), Blocks(
             Node("State", "The computational spin basis carries the Hilbert L2 norm; it is not the pointwise supremum norm.", StateFormula(), DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("psiVector", "The integer coefficients of Eq. (6) are embedded in the complex Hilbert state.", psiVectorFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("phase", "The phase is exp(2 pi i t j/(2m)). CastComplex embeds every natural or real factor in the complex field; division here is complex division. Momentum t=m is pi, equivalent to -pi.", phaseFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("phase", "The phase is exp(2 pi i t j/(2m)). Parenthesized type annotations denote numeric coercions into the real or complex field; division here is complex division. Momentum t=m is pi, equivalent to -pi.", phaseFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bloch", "Li and Wu, p. 4, Eq. (7): \"|ξ1(k)⟩ = e^{ik/2}/√6 Σ_{j=0}^{5} e^{ikj} T^j |1, 2⟩, |ξ2(k)⟩ = e^{ik}/√6 Σ_{j=0}^{5} e^{ikj} T^j |1, 3⟩, |ξ3(k)⟩ = e^{i3k/2}/√3 Σ_{j=0}^{2} e^{ikj} T^j |1, 4⟩, (7)\". The general vector sums all 2m translations before normalization; repeated orbit points add as amplitudes. The full-period and orbit-period sums give the same normalized ray when nonzero. The paper excludes momenta where the Bloch sum vanishes.", blochFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("weight", "The squared overlap is divided by the squared Hilbert norms of both vectors. This is the weight in the normalized Bloch basis; the inner product conjugates its first argument.", weightFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("spectral_comparison", "The block translations are distinct and its Bloch norm squared is 2m. The translation eigenvalue gives zero overlap at every other momentum. A non-arc Bloch vector is supported on at most 2m configurations with strict coefficient deficits; Cauchy-Schwarz on that support gives the strict normalized weight deficit.", spectralcomparisonFormula(), DescribeRole.Theorem, AssessedProvenance.FromRepo())
@@ -19,7 +19,16 @@ internal sealed class HKNNSpectralComparisonDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("hknn-spectralcomparison-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role);
-    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Named(string name)
+    {
+        var parts = new List<Formula>();
+        foreach (var part in name.Split('.'))
+        {
+            if (parts.Count > 0) parts.Add(Dot);
+            parts.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp([.. parts]));
+    }
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
@@ -38,12 +47,13 @@ internal sealed class HKNNSpectralComparisonDocument : IScribeDocumentDefinition
     private static Formula BigSum(string v, Formula type, Formula body) => Seq(Sum, Underscore, Grp(Seq(F.Id(v), Colon, type)), Sp, body);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula C() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Sites(Formula m) => Call("Fin", Mul(D(2), m));
     private static Formula Config(Formula m) => Call("Stationing", Mul(D(2), m));
     private static Formula Val(Formula x) => Call("val", x);
     private static Formula Iterate(Formula m, Formula j, Formula x) => Call("iterate", Call("shift",m), j, x);
-    private static Formula CastC(Formula x) => Call("castComplex",x);
-    private static Formula CastR(Formula x) => Call("castReal",x);
+    private static Formula CastC(Formula x) => Parenthesized(Seq(x,Colon,Sp,C()));
+    private static Formula CastR(Formula x) => Parenthesized(Seq(x,Colon,Sp,R()));
     private static Formula BoundWeight(Formula m) => Frac(Mul(CastR(Mul(D(2),m)),Pow(CastR(Call("K",m)),D(2))),Pow(Norm(Call("psiVector",m)),D(2)));
     private static Formula StateFormula()
     {
@@ -58,7 +68,7 @@ internal sealed class HKNNSpectralComparisonDocument : IScribeDocumentDefinition
     private static Formula phaseFormula()
     {
         Formula m=F.Id("m"), t=F.Id("t"), j=F.Id("j");
-        return All("m",N(),All("t",Sites(m),All("j",Sites(m),Eq(Call("phase",m,t,j),Call("ComplexExp",Frac(Mul(Mul(Mul(Mul(CastC(D(2)),CastC(Pi)),Named("I")),CastC(Val(t))),CastC(Val(j))),CastC(Mul(D(2),m))))))));
+        return All("m",N(),All("t",Sites(m),All("j",Sites(m),Eq(Call("phase",m,t,j),Call("Complex.exp",Frac(Mul(Mul(Mul(Mul(CastC(D(2)),CastC(Pi)),Named("I")),CastC(Val(t))),CastC(Val(j))),CastC(Mul(D(2),m))))))));
     }
     private static Formula blochFormula()
     {

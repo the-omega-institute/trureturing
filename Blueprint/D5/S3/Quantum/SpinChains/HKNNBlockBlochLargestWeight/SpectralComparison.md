@@ -18,7 +18,7 @@ The computational spin basis carries the Hilbert L2 norm; it is not the pointwis
 
 **Definition 1.2 (psiVector).**
 
-$$\forall m \in \mathbb{N},\; \operatorname{psiVector}\left(m\right) = \operatorname{toLp}\left(2, x:\operatorname{Stationing}\left(2 \cdot m\right) \mapsto \operatorname{castComplex}\left(\operatorname{psi}\left(m, x\right)\right)\right)$$
+$$\forall m \in \mathbb{N},\; \operatorname{psiVector}\left(m\right) = \operatorname{toLp}\left(2, x:\operatorname{Stationing}\left(2 \cdot m\right) \mapsto (\operatorname{psi}\left(m, x\right): \mathbb{C})\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/SpectralComparison.psiVector` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The integer coefficients of Eq. (6) are embedded in the complex Hilbert state.
 
 **Definition 1.3 (phase).**
 
-$$\forall m \in \mathbb{N},\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; \forall j \in \operatorname{Fin}\left(2 \cdot m\right),\; \operatorname{phase}\left(m, t, j\right) = \operatorname{ComplexExp}\left(\frac{\operatorname{castComplex}\left(2\right) \cdot \operatorname{castComplex}\left(\pi\right) \cdot \operatorname{I} \cdot \operatorname{castComplex}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{castComplex}\left(\operatorname{val}\left(j\right)\right)}{\operatorname{castComplex}\left(2 \cdot m\right)}\right)$$
+$$\forall m \in \mathbb{N},\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; \forall j \in \operatorname{Fin}\left(2 \cdot m\right),\; \operatorname{phase}\left(m, t, j\right) = \operatorname{Complex.exp}\left(\frac{(2: \mathbb{C}) \cdot (\pi: \mathbb{C}) \cdot \operatorname{I} \cdot (\operatorname{val}\left(t\right): \mathbb{C}) \cdot (\operatorname{val}\left(j\right): \mathbb{C})}{(2 \cdot m: \mathbb{C})}\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/SpectralComparison.phase` (`✓ std3`).
 
@@ -38,11 +38,11 @@ $$\forall m \in \mathbb{N},\; \forall t \in \operatorname{Fin}\left(2 \cdot m\ri
 
 *Commentary.*
 
-The phase is exp(2 pi i t j/(2m)). CastComplex embeds every natural or real factor in the complex field; division here is complex division. Momentum t=m is pi, equivalent to -pi.
+The phase is exp(2 pi i t j/(2m)). Parenthesized type annotations denote numeric coercions into the real or complex field; division here is complex division. Momentum t=m is pi, equivalent to -pi.
 
 **Definition 1.4 (bloch).**
 
-$$\forall m \in \mathbb{N},\; \forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; \operatorname{bloch}\left(m, x, t\right) = \sum_{j:\operatorname{Fin}\left(2 \cdot m\right)} \operatorname{smul}\left(\operatorname{phase}\left(m, t, j\right), \operatorname{single}\left(\operatorname{iterate}\left(\operatorname{shift}\left(m\right), \operatorname{val}\left(j\right), x\right), \operatorname{castComplex}\left(1\right)\right)\right)$$
+$$\forall m \in \mathbb{N},\; \forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; \operatorname{bloch}\left(m, x, t\right) = \sum_{j:\operatorname{Fin}\left(2 \cdot m\right)} \operatorname{smul}\left(\operatorname{phase}\left(m, t, j\right), \operatorname{single}\left(\operatorname{iterate}\left(\operatorname{shift}\left(m\right), \operatorname{val}\left(j\right), x\right), (1: \mathbb{C})\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/SpectralComparison.bloch` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The squared overlap is divided by the squared Hilbert norms of both vectors. Thi
 
 **Theorem 1.6 (spectral_comparison).**
 
-$$\forall m \in \mathbb{N},\; [\operatorname{NeZero}\left(2 \cdot m\right)] (1 \le m) \Rightarrow ((\forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\Vert \operatorname{bloch}\left(m, \operatorname{block}\left(m\right), t\right)\Vert)^{2} = \operatorname{castReal}\left(2 \cdot m\right)) \land ((\forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{val}\left(t\right) = m) \Rightarrow (\operatorname{weight}\left(m, \operatorname{block}\left(m\right), t\right) = \frac{\operatorname{castReal}\left(2 \cdot m\right) \cdot (\operatorname{castReal}\left(\operatorname{K}\left(m\right)\right))^{2}}{(\Vert \operatorname{psiVector}\left(m\right)\Vert)^{2}})) \land ((\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{bloch}\left(m, x, t\right) \ne 0) \Rightarrow ((\neg (\operatorname{isArc}\left(m, x\right))) \Rightarrow (\operatorname{weight}\left(m, x, t\right) < \frac{\operatorname{castReal}\left(2 \cdot m\right) \cdot (\operatorname{castReal}\left(\operatorname{K}\left(m\right)\right))^{2}}{(\Vert \operatorname{psiVector}\left(m\right)\Vert)^{2}}))) \land (\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{val}\left(t\right) \ne m) \Rightarrow (\operatorname{weight}\left(m, x, t\right) = 0)))))$$
+$$\forall m \in \mathbb{N},\; [\operatorname{NeZero}\left(2 \cdot m\right)] (1 \le m) \Rightarrow ((\forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\Vert \operatorname{bloch}\left(m, \operatorname{block}\left(m\right), t\right)\Vert)^{2} = (2 \cdot m: \mathbb{R})) \land ((\forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{val}\left(t\right) = m) \Rightarrow (\operatorname{weight}\left(m, \operatorname{block}\left(m\right), t\right) = \frac{(2 \cdot m: \mathbb{R}) \cdot ((\operatorname{K}\left(m\right): \mathbb{R}))^{2}}{(\Vert \operatorname{psiVector}\left(m\right)\Vert)^{2}})) \land ((\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{bloch}\left(m, x, t\right) \ne 0) \Rightarrow ((\neg (\operatorname{isArc}\left(m, x\right))) \Rightarrow (\operatorname{weight}\left(m, x, t\right) < \frac{(2 \cdot m: \mathbb{R}) \cdot ((\operatorname{K}\left(m\right): \mathbb{R}))^{2}}{(\Vert \operatorname{psiVector}\left(m\right)\Vert)^{2}}))) \land (\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; \forall t \in \operatorname{Fin}\left(2 \cdot m\right),\; (\operatorname{val}\left(t\right) \ne m) \Rightarrow (\operatorname{weight}\left(m, x, t\right) = 0)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/SpectralComparison.spectral_comparison` (`✓ std3`). ∎
 

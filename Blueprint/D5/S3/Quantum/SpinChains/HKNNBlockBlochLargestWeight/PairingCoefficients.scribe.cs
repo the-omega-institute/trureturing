@@ -18,7 +18,7 @@ internal sealed class HKNNPairingCoefficientsDocument : IScribeDocumentDefinitio
             Node("Up", "The complementary subtype of up sites retains its site index.", UpFormula(), DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("CrossPairings", "Crossing pairings are precisely the opposite-spin pair partitions.", CrossPairingsFormula(), DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("K", "K is the number of crossing pair partitions for the block configuration. Its positivity and the equality of balanced-sector counts follow from explicit equivalences.", KFormula(), DescribeRole.Definition, AssessedProvenance.FromRepo()),
-            Node("shift", "The translation acts on coefficients by the predecessor site modulo 2m. NatMod is natural-number remainder; subtraction on naturals is truncated. Li and Wu define translation by T S_j^- T^{-1} = S_{j+1}^- (p. 2).", shiftFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("shift", "The translation acts on coefficients by the predecessor site modulo 2m. NatMod is natural-number remainder; subtraction on naturals is truncated. fin(k,n) denotes the Fin n constructor with value k and its bound k<n; parenthesized type annotations denote numeric coercions. Li and Wu define translation by T S_j^- T^{-1} = S_{j+1}^- (p. 2).", shiftFormula(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("isArc", "An arc is any cyclic translate of the block configuration.", isArcFormula(), DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("pairing_data", "Crossing involutions give a bijection between down and up sites. The block has one sign on every supported term and K is positive. Transporting down-to-up bijections gives a uniform count. Prescribing two interleaving edges and swapping their partners yields opposite signs and a strict coefficient deficit. Under rotation exactly one pair crosses the cyclic cut, giving a global minus sign. The last two clauses state the site formula for iterated translation.", pairingdataFormula(), DescribeRole.Theorem, AssessedProvenance.FromRepo())
         ), []));
@@ -47,6 +47,8 @@ internal sealed class HKNNPairingCoefficientsDocument : IScribeDocumentDefinitio
     private static Formula BigSum(string v, Formula type, Formula body) => Seq(Sum, Underscore, Grp(Seq(F.Id(v), Colon, type)), Sp, body);
     private static Formula BigProd(string v, Formula type, Formula body) => Seq(Prod, Underscore, Grp(Seq(F.Id(v), InMacro, Sp, type)), Sp, body);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
+    private static Formula CastZ(Formula x) => Parenthesized(Seq(x,Colon,Sp,Z()));
     private static Formula B() => Named("Bool");
     private static Formula Sites(Formula m) => Call("Fin", Mul(D(2), m));
     private static Formula Config(Formula m) => Call("Stationing", Mul(D(2), m));
@@ -59,17 +61,17 @@ internal sealed class HKNNPairingCoefficientsDocument : IScribeDocumentDefinitio
     {
         Formula m=F.Id("m"), x=F.Id("x"), f=F.Id("f"), d=F.Id("d"), e=F.Id("e"), u=F.Id("u"), v=F.Id("v"), j=F.Id("j"), i=F.Id("i");
         Formula support=All("x",Config(m),All("f",Pairings(m),Imp(Call("crossing",x,f),Call("balanced",m,x))));
-        Formula bounds=And(Lt(D(0),Call("K",m)),And(Eq(Abs(Call("psi",m,Call("block",m))),Call("castInt",Call("K",m))),
+        Formula bounds=And(Lt(D(0),Call("K",m)),And(Eq(Abs(Call("psi",m,Call("block",m))),CastZ(Call("K",m))),
             And(All("x",Config(m),Imp(Negate(Call("balanced",m,x)),Eq(Call("psi",m,x),D(0)))),
-                All("x",Config(m),Le(Abs(Call("psi",m,x)),Call("castInt",Call("K",m)))))));
+                All("x",Config(m),Le(Abs(Call("psi",m,x)),CastZ(Call("K",m)))))));
         Formula interleave=All("x",Config(m),Imp(Call("balanced",m,x),All("d",Call("Down",m,x),All("e",Call("Down",m,x),
             All("u",Call("Up",m,x),All("v",Call("Up",m,x),Imp(Lt(Val(d),Val(u)),Imp(Lt(Val(u),Val(e)),
-                Imp(Lt(Val(e),Val(v)),Lt(Abs(Call("psi",m,x)),Call("castInt",Call("K",m))))))))))));
+                Imp(Lt(Val(e),Val(v)),Lt(Abs(Call("psi",m,x)),CastZ(Call("K",m))))))))))));
         Formula rotation=WithInstance(m,Imp(Le(D(1),m),All("x",Config(m),Eq(Call("psi",m,Call("shift",m,x)),new Formula.Negate(Call("psi",m,x))))));
-        Formula index=Call("FinIndex",Call("NatMod",Add(Val(i),Mul(Sub(Mul(D(2),m),D(1)),j)),Mul(D(2),m)),Sites(m));
+        Formula index=Call("fin",Call("NatMod",Add(Val(i),Mul(Sub(Mul(D(2),m),D(1)),j)),Mul(D(2),m)),Mul(D(2),m));
         Formula coordinate=All("x",Config(m),All("j",N(),All("i",Sites(m),Eq(Call("apply",Iterate(m,j,x),i),Call("apply",x,index)))));
         Formula subtraction=WithInstance(m,Imp(Le(D(1),m),All("x",Config(m),All("j",N(),All("i",Sites(m),
-            Eq(Call("apply",Iterate(m,j,x),i),Call("apply",x,Sub(i,Call("castFin",j,Sites(m))))))))));
+            Eq(Call("apply",Iterate(m,j,x),i),Call("apply",x,Sub(i,Parenthesized(Seq(j,Colon,Sp,Sites(m)))))))))));
         return All("m",N(),Conjunction(support,bounds,interleave,rotation,coordinate,subtraction));
     }
     private static Formula sFormula()
@@ -125,7 +127,7 @@ internal sealed class HKNNPairingCoefficientsDocument : IScribeDocumentDefinitio
     private static Formula shiftFormula()
     {
         Formula m=F.Id("m"), x=F.Id("x"), i=F.Id("i");
-        return All("m",N(),All("x",Config(m),Eq(Call("shift",m,x),Lambda("i",Sites(m),Call("apply",x,Call("FinIndex",Call("NatMod",Add(Val(i),Parenthesized(Sub(Mul(D(2),m),D(1)))),Mul(D(2),m)),Sites(m)))))));
+        return All("m",N(),All("x",Config(m),Eq(Call("shift",m,x),Lambda("i",Sites(m),Call("apply",x,Call("fin",Call("NatMod",Add(Val(i),Parenthesized(Sub(Mul(D(2),m),D(1)))),Mul(D(2),m)),Mul(D(2),m)))))));
     }
     private static Formula isArcFormula()
     {

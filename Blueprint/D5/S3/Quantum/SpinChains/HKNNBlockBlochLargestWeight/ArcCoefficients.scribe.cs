@@ -23,11 +23,12 @@ internal sealed class HKNNArcCoefficientsDocument : IScribeDocumentDefinition
     private static Formula Negate(Formula x) => Seq(Neg, Sp, Parenthesized(x));
     private static Formula Abs(Formula x) => Seq(Lvert, Sp, x, Rvert);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula Config(Formula m) => Call("Stationing", Mul(D(2), m));
     private static Formula strictcoefficientnonarcFormula()
     {
         Formula m=F.Id("m"), x=F.Id("x");
-        return All("m",N(),Imp(Le(D(1),m),All("x",Config(m),Imp(Negate(Call("isArc",m,x)),Lt(Abs(Call("psi",m,x)),Call("castInt",Call("K",m)))))));
+        return All("m",N(),Imp(Le(D(1),m),All("x",Config(m),Imp(Negate(Call("isArc",m,x)),Lt(Abs(Call("psi",m,x)),Parenthesized(Seq(Call("K",m),Colon,Sp,Z())))))));
     }
 }

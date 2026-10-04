@@ -6,7 +6,7 @@ The strict coefficient deficit outside cyclic arcs
 
 **Theorem 1.1 (strict_coefficient_non_arc).**
 
-$$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; (\neg (\operatorname{isArc}\left(m, x\right))) \Rightarrow (\lvert \operatorname{psi}\left(m, x\right)\rvert < \operatorname{castInt}\left(\operatorname{K}\left(m\right)\right)))$$
+$$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\forall x \in \operatorname{Stationing}\left(2 \cdot m\right),\; (\neg (\operatorname{isArc}\left(m, x\right))) \Rightarrow (\lvert \operatorname{psi}\left(m, x\right)\rvert < (\operatorname{K}\left(m\right): \mathbb{Z})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight/ArcCoefficients.strict_coefficient_non_arc` (`✓ std3`). ∎
 
