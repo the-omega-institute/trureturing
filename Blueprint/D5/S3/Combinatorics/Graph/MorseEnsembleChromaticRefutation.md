@@ -166,6 +166,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/MorseEnsembleChromaticRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zheng-2026-morse-ensemble-chromatic-recovery-refutation` (refuted) by `D5/S3/Combinatorics/Graph/MorseEnsembleChromaticRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zheng-2026-morse-ensemble-chromatic-recovery-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/MorseEnsembleChromaticRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chong Zheng (2026). *On the Morse Ensemble Polynomial of Simplicial Complexes*. DOI: [10.48550/arXiv.2605.24689](https://doi.org/10.48550/arXiv.2605.24689). URL: <https://arxiv.org/abs/2605.24689v3>.

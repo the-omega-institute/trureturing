@@ -44,7 +44,10 @@ internal sealed class MorseEnsembleChromaticRefutationDocument : IScribeDocument
                 H("A negative answer"), StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Let Hone have edges 01, 07, 12, 23, 27, 34, 47, 56, and Htwo have edges 03, 04, 12, 17, 25, 26, 57, 67, on vertices 0 through 7. Take their complements Gone and Gtwo. Their nonempty independence complexes consist of the eight vertices and eight edges of Hone and Htwo. Each has acyclic-matching size counts [1,16,102,332,581,516,180,0,0]; a matching of size r has Morse vector [8−r,8−r], so Phi Gone = Phi Gtwo. The colouring [0,0,1,1,2,3,3,2] proves Gone is four-colourable. The vertices {1,3,4,5,6} form a five-clique in Gtwo, so chromaticCount Gtwo 4 = 0. Thus the common Phi does not determine the chromatic polynomial. Private certificate lists assign a natural-valued rank or directed cycle to each candidate; every code is checked against its matching, and exhaustive enumeration and uniqueness are proved. The count 72 and the full chromatic polynomials are not asserted by this theorem."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zheng-2026-morse-ensemble-chromatic-recovery-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("morse-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
