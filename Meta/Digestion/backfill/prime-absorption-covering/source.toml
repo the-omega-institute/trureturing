@@ -1,0 +1,5 @@
+source_id = "prime-absorption-covering"
+path = "docs/develop/theory/PRIME_ABSORPTION_COVERING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

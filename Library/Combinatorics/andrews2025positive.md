@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/2507.09276v1
 claim: "Positivity questions for two families of q-series C'(k,m,n) and D'(k,m,n) generating weighted two-color partitions; positivity proofs for small parameters and Conjectures 1–5 on positivity, sign patterns and eventual positivity."
 strata_touched:
   - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiThree
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiTwo
 license: citation-only
 triage: anchor
 ---

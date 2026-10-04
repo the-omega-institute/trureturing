@@ -1,0 +1,15 @@
+**推论 33.5（十四叶容量的锐值与全部最大族）。** 对每个非负整数 $t$，定义 30.6 的容量满足
+
+$$
+\boxed{\qquad
+\mathsf{Cap}(14,t)=
+\begin{cases}
+1,&t=0,\\
+3,&t\ge1.
+\end{cases}
+\qquad}
+\tag{33.14}
+$$
+
+$t\ge1$ 时，达到三元素容量的评价族恰为 $F_{\mathrm R}$、$F_{\mathrm L}$；两者均满足 $K(F_\eta)=K_\circ(F_\eta)$，其原全域确定性最坏费用恰为 $D(F_\eta)=15$。
+
