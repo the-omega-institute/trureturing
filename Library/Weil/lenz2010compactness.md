@@ -835,24 +835,24 @@ $$
 $$
 
 For every unit $h$ in that entire spectral subspace, write
-$s_R=k_R/(\varepsilon-d_R)$. The full operator identity also gives
+$s_R=k_R/(\varepsilon-d_R)$. Since $Ah$ remains in that same subspace,
+(JLP) gives $\|\eta_RAh\|_\nu\le a s_R$. The full operator identity gives
 
 $$
-D(\eta_Rh)\le a\|\eta_R^2h\|_\nu+k_R\|\eta_Rh\|_\nu
-\le(a+k_R)s_R,
-\quad\|\eta_Rh\|_{\mathcal F}^2\le s_R^2+(a+k_R)s_R. \tag{JF}
+D(\eta_Rh)\le a s_R^2+k_Rs_R,
+\qquad\|\eta_Rh\|_{\mathcal F}^2\le(1+a)s_R^2+k_Rs_R. \tag{JF}
 $$
 
 For $0<\tau\le1$, a single explicit sufficient radius condition is
 
 $$
 R\ge2,\qquad e^{2R}\ge\frac83
- \log\frac{728}{\varepsilon\tau^2}. \tag{JR}
+ \log\frac{728}{\varepsilon\tau}. \tag{JR}
 $$
 
-It gives $d_R<\varepsilon/2$, $k_R\le\varepsilon\tau^2/8$,
-$s_R\le\tau^2/4$ and $a+k_R<1$. Consequently
-$\|\eta_Rh\|_{\mathcal F}^2\le5\tau^2/16<\tau^2$ uniformly, so
+It gives $d_R<\varepsilon/2$, $k_R\le\varepsilon\tau/8$
+and $s_R\le\tau/4$. Since $a\le1/2$ and $\varepsilon\le1/2$,
+$\|\eta_Rh\|_{\mathcal F}^2\le7\tau^2/64<\tau^2$ uniformly, so
 $(1-\eta_R)P_\varepsilon$ is the required compact-support form
 approximation to the whole fixed-gap subspace.
 
