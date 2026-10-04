@@ -415,3 +415,161 @@ $$
 第 5–10 节给出同一原始面配对上的书面拓扑构造，使用有限闭关系、显式扇坐标和紧到 Hausdorff 的同胚判据。环、重边、同一四面体的不同配对面，以及两个端点具有相同全局角点标签的情形都保留原始出现身份。结论不要求可定向性、角结构或双曲度量，也没有文献原创性声明。
 
 同一个原始流形 $N$ 的边界对应仍须连接其原始理想剖分的实际实现。若该实现已给出 $Q\cong N$，可通过边界不变性传递上述标记；若只给出内部或删点空间的同胚，还需 collar 或端部延拓论证。任意内部同胚不能直接宣称延拓到 cap。上述拓扑坐标也不提供共同六边长度或全局双曲能量的物理识别。
+
+## 12. 实际三槽面映射的四坐标扩展
+
+本节把第 1–10 节使用的四坐标排列直接连接到 `RawFacePairing` 的实际三槽数据。输入只是原始配对 $p$，不另要求调用者提供 $\sigma$ 或断言其与边槽相容。这里是有限排列及既有等价接口的普通应用，不提出新的通用数学定理或原创性主张。
+
+原始数据的参考源码为 `D5/S3/Geometry/Hyperideal/EdgeStarTransitions.lean`，修订 `2a2c0ee5482b2fe7d2e988a5b39bf76d934372d9`，文件 SHA256 为 `bebd11bec484fbf269f9089b9dd88196e0aa4034c329297ef36c7175a0fcd976`。本节独立使用下面五字段数据及第 12.1 节的有限 incidence 表，不要求该模块已成为可导入的供应者：
+
+```lean
+facePair : Equiv.Perm (T × Fin 4)
+faceMap : T × Fin 4 → Fin 3 ≃ Fin 3
+pairInvolutive : facePair * facePair = 1
+pairFixedFree : ∀ x, facePair x ≠ x
+mapInverse : ∀ x n, faceMap (facePair x) (faceMap x n) = n
+```
+
+边编号依次为 $(01,02,03,23,13,12)$；面编号是省去的顶点 $f$。`faceMap x` 作用于 `faceEdge x.2` 的三个**边槽**，不能未经转换直接当作递增面顶点的排列。
+
+### 12.1 原始边槽的对顶点坐标
+
+令 $\nu_f(n)$ 为面 $f$ 中与边槽 $n$ 对应边相对的顶点。由原始 `faceEdge` 和 `edgeVertices` 两张表得到：
+
+| 省去的顶点 $f$ | 边槽 0 的端点 | 边槽 1 的端点 | 边槽 2 的端点 | $(\nu_f(0),\nu_f(1),\nu_f(2))$ |
+|---|---|---|---|---|
+| 0 | $(2,3)$ | $(1,3)$ | $(1,2)$ | $(1,2,3)$ |
+| 1 | $(0,2)$ | $(0,3)$ | $(2,3)$ | $(3,2,0)$ |
+| 2 | $(0,1)$ | $(0,3)$ | $(1,3)$ | $(3,1,0)$ |
+| 3 | $(0,1)$ | $(0,2)$ | $(1,2)$ | $(2,1,0)$ |
+
+每行的三个顶点互不相同且均不等于 $f$。对任何 $v$，原始边槽的端点关系正好是
+
+$$
+v\in\operatorname{endpoints}(\operatorname{faceEdge}(f,n))
+\quad\Longleftrightarrow\quad
+\exists r\ne n:\ \nu_f(r)=v.
+$$
+
+这条有限表关系同时确定端点所属的原始边槽，保留原始四面体、面及槽身份。
+
+### 12.2 从实际配对唯一得到 $\sigma$
+
+令 $\chi_0$ 为三槽恒等排列，$\chi_f=(0\ 2)$ 对所有 $f\ne0$。用 `Equiv.finSuccEquiv' f` 把省去的顶点送到 `none`，并按递增顺序把其余顶点送到 `some n`；再用 $\chi_f$ 修正为上述原始边槽顺序。记此复合为
+
+$$
+F_f:\operatorname{Fin}4\simeq\operatorname{Option}(\operatorname{Fin}3),
+\qquad
+F_f=\operatorname{optionCongr}(\chi_f)\circ
+\operatorname{finSuccEquiv}'(f).
+$$
+
+因此 $F_f(f)=\mathrm{none}$ 且 $\nu_f(n)=F_f^{-1}(\mathrm{some}\ n)$。若 $x=(t,f)$、$p.\mathrm{facePair}(x)=(t',g)$、$m_x=p.\mathrm{faceMap}(x)$，定义
+
+$$
+\sigma_x=F_g^{-1}\circ\operatorname{optionCongr}(m_x)\circ F_f.
+$$
+
+相应的局部 Lean 定义为：
+
+```lean
+let chi : Fin 4 → Equiv.Perm (Fin 3) :=
+  fun f => if f = 0 then 1 else Equiv.swap 0 2
+let frame : Fin 4 → (Fin 4 ≃ Option (Fin 3)) :=
+  fun f => (Equiv.finSuccEquiv' f).trans (Equiv.optionCongr (chi f))
+let vertex : Fin 4 → Fin 3 → Fin 4 :=
+  fun f n => (frame f).symm (some n)
+let sigma : T × Fin 4 → Equiv.Perm (Fin 4) :=
+  fun x => (frame x.2).trans
+    ((Equiv.optionCongr (p.faceMap x)).trans
+      (frame (p.facePair x).2).symm)
+```
+
+既有等价的正反复合恒等式立即给出
+
+$$
+\sigma_x(f)=g,\qquad
+\sigma_x(\nu_f(n))=\nu_g(m_x(n)).
+$$
+
+`pairInvolutive` 给出 $p.\mathrm{facePair}(p.\mathrm{facePair}(x))=x$。对 `mapInverse` 在 $m_x^{-1}(n)$ 处代入，得到
+
+$$
+m_{p.\mathrm{facePair}(x)}=m_x^{-1}.
+$$
+
+代回定义即得 $\sigma_{p.\mathrm{facePair}(x)}=\sigma_x^{-1}$。此处不需要 `pairFixedFree`，也不需要 $T$ 有限或非空。
+
+结合第 12.1 节的端点关系和 $m_x$ 的单射性，得到实际边槽的双向相容性：
+
+$$
+v\in\operatorname{endpoints}(\operatorname{faceEdge}(f,n))
+\quad\Longleftrightarrow\quad
+\sigma_x(v)\in
+\operatorname{endpoints}(\operatorname{faceEdge}(g,m_x(n))).
+$$
+
+因此端点的运输与 `RawFacePairing.edgeStep` 使用的是同一实际边槽配对。
+
+### 12.3 递增顶点索引不能直接代替原始槽索引
+
+取两个不同原始四面体，将其省去顶点 1 的面配对，且 `faceMap` 交换边槽 0 和 1。这两个槽的原始边分别是 $02$ 和 $03$。
+
+若错误地把面顶点的递增排列 $(0,2,3)$ 当作边槽排列，交换槽 0 和 1 会交换顶点 0 与 2，因而把边 $02$ 送回边 $02$，没有送到规定的目标边 $03$。正确的对顶点次序是 $(3,2,0)$；同一槽交换应交换顶点 3 与 2、固定顶点 0，恰把 $02$ 送到 $03$。这是原始配对上的具体索引反例，并非来自全局边标签的退化。
+
+### 12.4 在实际截断载体上的运输
+
+使用第 1 节的同一截断载体
+
+$$
+K=\left\{z:\operatorname{Fin}4\to\mathbb R\ \middle|
+\bigl(\forall i,\ 0\le z_i\le3/4\bigr)\land\sum_i z_i=1\right\}.
+$$
+
+由实际配对导出的局部移动为
+
+$$
+P_x(z)_i=z_{\sigma_x^{-1}(i)}.
+$$
+
+每个目标坐标的非负性和截断上界由相应源坐标继承。既有 `Equiv.sum_comp` 用于 $\sigma_x^{-1}$ 给出
+
+$$
+\sum_iP_x(z)_i=\sum_i z_i=1,
+$$
+
+所以 $P_x$ 确实把 $K$ 送入 $K$。由逆相容性还有 $P_{p.\mathrm{facePair}(x)}\circ P_x=\mathrm{id}_K$。对任何原始坐标 $v$，
+
+$$
+P_x(z)_{\sigma_x(v)}=z_v.
+$$
+
+特别地，省去顶点 $f$ 的原始面被送到配对面 $g$，且有精确等式及零坐标等价
+
+$$
+P_x(z)_g=z_f,\qquad
+z_f=0\ \Longleftrightarrow\ P_x(z)_g=0.
+$$
+
+cap 条件同样保留：
+
+$$
+\bigl(\exists v,\ z_v=3/4\bigr)
+\quad\Longleftrightarrow\quad
+\bigl(\exists i,\ P_x(z)_i=3/4\bigr).
+$$
+
+正向见证为 $i=\sigma_x(v)$，反向见证为 $v=\sigma_x^{-1}(i)$。这给出原始截断坐标上的运输，而不是任意外加的 cap 标记。第 8–10 节的配对面、原始边和 cap 公式须使用这一导出的 $\sigma_x$。
+
+### 12.5 来源、复用与核验范围
+
+上述扩展只使用原始两张有限表、`RawFacePairing` 的逆相容字段和既有 `Equiv` 接口。Mathlib 修订为 `db584cd6d46c92f209a44c0f1c829460d327499d`；直接复用 `Mathlib/Logic/Equiv/Fin/Basic.lean` 中的 `Equiv.finSuccEquiv'`，`Mathlib/Logic/Equiv/Option.lean` 中的 `Equiv.optionCongr`，以及 `Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean` 中由 `Equiv.prod_comp` 生成的 `Equiv.sum_comp`。其加法接口是
+
+```lean
+Equiv.sum_comp (e : ι ≃ κ) (g : κ → M) :
+  (∑ i, g (e i)) = ∑ i, g i
+```
+
+其中两端索引类型有限，$M$ 为加法交换幺半群。本节给出这些既有等价与有限重排的参数对应。
+
+本节给出书面坐标对应，尚未提供其经 Lean kernel 核验的应用。实际有序端点关系、端点不反转条件、商拓扑以及边和 cap 图卡仍需连接到原始配对上的证明项。有限坐标适配不替代这些拓扑义务，也不提供原始流形 $N$ 的端部延拓。
