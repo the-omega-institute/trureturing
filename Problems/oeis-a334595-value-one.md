@@ -96,6 +96,23 @@ The Scribe result carries
 No claim is made about the other A334595 conjectures, a least counterexample,
 record positions, or rotational fixed-point counts.
 
+**Proved mechanism.** Fixed-width edge reconstruction makes the edge map
+injective. The edge word representing one has only its final bit set, and its
+unique source row has only its first bit set. With the accepted unpadded input
+and edge orientation, this gives the power-of-two characterization for every
+positive input, including `n = 1`.
+
+**Extension limits (unresolved here).** Classification of other edge values,
+padded inputs, changed edge orientation, and the zero input are outside this
+settlement. Reconstruction at a fixed width does not by itself settle these
+separate questions; each needs its own statement and proof.
+
+**Consequences and source followups.** The proved positive-index equivalence
+can be cited in place of the OEIS value-one conjecture, retaining its input
+and edge conventions. The record-position and rotational fixed-point
+conjectures remain unresolved here: this settlement supplies no proof of
+either and establishes no further dependent claim in the source.
+
 ## ASSUMED-UNVERIFIED
 
 The bounded literature search does not establish nonexistence of a prior
