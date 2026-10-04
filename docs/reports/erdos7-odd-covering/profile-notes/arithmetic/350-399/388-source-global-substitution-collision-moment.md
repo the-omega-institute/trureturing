@@ -6211,3 +6211,147 @@ All arguments are consumers of the existing original-cover
 transport, Hall charge and forced-label results. They use no
 independently optimized source, new enumeration or Lean
 verification, and leave arbitrary-height noncoverage unresolved.
+
+## 51. The full height-two first-root inventory equality is impossible
+
+Keep one original EB1 whole cover of ternary height two. Let $P$ be
+its largest support prime, $G=H_P$, and define
+
+$$
+\begin{aligned}
+c_1&=\#\{d\in D:P\nmid d,\ v_3(d)=1\},\\
+c_2&=\#\{d\in D:P\nmid d,\ v_3(d)=2\},\\
+u&=\#\{d\in D:P\mid d,\ v_3(d)=1\},\\
+v&=\#\{d\in D:P\mid d,\ v_3(d)=2\},\qquad t=u+v.
+\end{aligned}
+$$
+
+The existing height-two support restriction gives $P\ge29$ and
+at least nine support primes. No single-deficit or cofactor-profile
+hypothesis is imposed. The complete inventory satisfies
+
+$$
+\boxed{c_1+t\ge P+1,\qquad N_3\ge P+c_2+1.}
+\tag{SC257}
+$$
+
+The $P\ge47$ branch retains the stronger SC253. The new step is
+to exclude the equality throughout the remaining support range,
+using the original highest $P$-levels and actual phase structure.
+
+### The next-to-last prime level has an actual height-two label
+
+First reuse the qualified profile bound
+[Report 385 GHA9](385-private-congruence-hulls-and-crossed-modulus-closure.md#250-pure-power-guards-sharpen-the-single-prime-absorption-and-full-height-tail-bounds).
+For any actual support prime $q\ge17$, write $G_q=H_q$.
+GHA10 supplies the original label $3q^{G_q}$. If $G_q\ge2$
+and $9q^{G_q-1}$ were absent, divisor closure and the full-height
+label would force the two profile heights
+$h_{G_q-1}=h_{G_q}=1$. Apply GHA9 with its base prime 3,
+other prime $q$, original ternary height 2, and $k=G_q-1$.
+It would give
+
+$$
+q\le\max\{3^{\max(2,1+1+1)-2}\cdot5,\ 3^2\}
+ =15,
+$$
+
+a contradiction. Therefore
+
+$$
+q\ge17,\ G_q\ge2\ \Longrightarrow\ 9q^{G_q-1}\in D.
+\tag{SC258}
+$$
+
+For $q=P$, all $G-1$ distinct labels
+$9P,\ldots,9P^{G-1}$ are then present. If $G=1$, the empty
+list gives the same bound. Hence
+
+$$
+v\ge G-1,\qquad G\le v+1.
+\tag{SC259}
+$$
+
+This does not prescribe any phase or infer a product of separately
+forced labels.
+
+There is also an exact original-label counting bound. Every
+height-one mixed label is uniquely $3P^a w$ with
+$1\le a\le G$ and $(w,3P)=1$. Divisor closure supplies its
+original label $3w$, counted in $c_1$. The map
+$3P^a w\mapsto(a,3w)$ is injective, including $w=1$ and all
+higher $P$-tails. Thus
+
+$$
+u\le c_1G.
+\tag{SC260}
+$$
+
+### Equality forces a small combined shallow and top inventory
+
+Suppose $c_1+t=P$. NF79 gives $t\ge P-15\ge14$, and
+NF83 with at least nine support primes gives $c_1\ge4$.
+SC254--SC255 therefore apply: the original mixed labels have
+pairwise different first-$P$ roots, exactly the complement $D_0$
+of the collision set $T$, and they all have one first-3 root $b$.
+Moreover $|T|=c_1$.
+
+Use the same fresh height-three all-root graph as SC250. A live
+prefix in the opposite first-3 branch has every $P$-root as a
+neighbor, because no mixed original has that first-3 root. A
+Hall-deficient set $I$ therefore cannot contain such a prefix:
+its whole left side has only 15 vertices, fewer than $P$.
+It must lie in branch $b$, which has at most nine live prefixes.
+
+If $I$ lies in a single old modulo-9 word, then $|I|\le3$,
+whereas all $c_1\ge4$ roots of $T$ are neighbors. This also
+cannot be deficient. Thus $I$ meets at least two old words.
+At the unique first-$P$ root of any height-two mixed label, that
+label forbids at most one of those words; some other member of
+$I$ is allowed there. Every one of the $v$ height-two roots is
+therefore a neighbor. At a height-one mixed root the unique label
+forbids the entire branch, so it supplies no neighbor of $I$.
+The root sets are disjoint and exhaust all $P$ roots, giving the
+exact neighborhood and its necessary bound
+
+$$
+|\mathcal N(I)|=c_1+v<|I|\le9,
+\qquad c_1+v\le8.
+\tag{SC261}
+$$
+
+This uses the unique actual mixed-root structure forced by the
+assumed equality. It is not a bound imposed on general
+nonequality configurations.
+
+### Complete prime heights make that equality numerically impossible
+
+Combine the same inventory constraints SC259--SC261:
+
+$$
+\begin{aligned}
+P=c_1+u+v
+ &\le c_1+c_1G+v\\
+ &\le c_1(v+2)+v\\
+ &\le c_1(9-c_1)+8
+ \le28.
+\end{aligned}
+\tag{SC262}
+$$
+
+For the last inequality, the integer $c_1$ satisfies
+$(c_1-4)(c_1-5)\ge0$, so $c_1(9-c_1)\le20$.
+The contradiction with $P\ge29$ excludes every instance of the
+equality, not just the cases with $P\ge47$.
+
+Finally NF66 says $c_1\ge P-1$ or $c_1+t\ge P$.
+In its first case NF79 gives
+$c_1+t\ge(P-1)+(P-15)>P$. In the second case SC262 excludes
+equality. Integrality proves $c_1+t\ge P+1$, and adding the
+disjoint $c_2$ inventory proves SC257.
+
+The result strengthens the same-source joint inventory restriction.
+It does not provide an upper bound on $N_3$ or eliminate the
+whole height-two branch. The proof reuses the existing profile
+transport and all-root Hall interface, with no new enumeration or
+Lean verification.
