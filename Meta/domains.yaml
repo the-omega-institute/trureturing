@@ -110,6 +110,9 @@ domains:
   Geometry:
     stratum: S3
     definition: Finite point configurations in metric and Euclidean spaces, and the distance sets they determine.
+  GraphInvariants:
+    stratum: S3
+    definition: Polynomial and simplicial invariants of finite simple graphs, such as chromatic polynomials, independence complexes and their acyclic Morse matchings, and whether these invariants distinguish graphs.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
