@@ -51,19 +51,18 @@ internal sealed class NamedTreePhaseTransportDocument : IScribeDocumentDefinitio
     {
         foreach (var group in binder.Split(';').Reverse())
         {
-            var pair = group.Trim().Split(':');
-            var typeName = pair[1].Trim();
-            Formula type;
-            if (typeName.Contains(" to ", System.StringComparison.Ordinal))
+            var pair = group.Split(':');
+            var typeName = pair[1];
+            Formula type = typeName switch
             {
-                var arrow = typeName.Split(" to ");
-                type = new Formula.TypeArrow(F.Id(arrow[0]), F.Id(arrow[1]));
-            }
-            else if (typeName.StartsWith("subset ", System.StringComparison.Ordinal))
-                type = Call("Set", F.Id(typeName[7..]));
-            else type = F.Id(typeName);
+                "E to V" => new Formula.TypeArrow(F.Id("E"), F.Id("V")),
+                "E to Circle" => new Formula.TypeArrow(F.Id("E"), F.Id("Circle")),
+                "V to Circle" => new Formula.TypeArrow(F.Id("V"), F.Id("Circle")),
+                "subset E" => Call("Set", F.Id("E")),
+                _ => F.Id(typeName),
+            };
             foreach (var name in pair[0].Split(',').Reverse())
-                body = Seq(Forall, Sp, F.Id(name.Trim()), Colon, Sp, type, Comma, Sp, body);
+                body = Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
         }
         return body;
     }
@@ -90,16 +89,16 @@ internal sealed class NamedTreePhaseTransportDocument : IScribeDocumentDefinitio
         Formula e = F.Id("e");
         Formula r = F.Id("r");
         Formula root = All("u:E to Circle", Eqn(HPhase(u, r), D(1)));
-        Formula edge = All("e:T; u:E to Circle",
+        Formula edge = All("e:T;u:E to Circle",
             Eqn(HPhase(u, Call("t", e)), Mul(Call("u", e), HPhase(u, Call("s", e)))));
-        Formula covariance = All("g:V to Circle; u:E to Circle; v:V",
+        Formula covariance = All("g:V to Circle;u:E to Circle;v:V",
             Eqn(HPhase(Call("gauge", g, u), v),
                 Mul(Mul(Call("g", v), HPhase(u, v)), Inv(Call("g", r)))));
         Formula continuity = All("v:V", Call("Continuous", Call("hAt", v)));
-        Formula multiplicativity = All("u,w:E to Circle; v:V",
+        Formula multiplicativity = All("u,w:E to Circle;v:V",
             Eqn(HPhase(Mul(u, w), v), Mul(HPhase(u, v), HPhase(w, v))));
         Formula unit = All("v:V", Eqn(HPhase(F.Id("unitField"), v), D(1)));
-        return Disp(All("V,E:Type; s,t:E to V; T:subset E; r:V", Seq(
+        return Disp(All("V,E:Type;s,t:E to V;T:subset E;r:V", Seq(
             Call("NamedSpanningTree", F.Id("s"), F.Id("t"), F.Id("T")),
             Sp, Rightarrow, Sp, And(root, edge, covariance, continuity, multiplicativity, unit))));
     }

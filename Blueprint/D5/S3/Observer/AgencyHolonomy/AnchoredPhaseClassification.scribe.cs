@@ -78,19 +78,19 @@ internal sealed class AnchoredPhaseClassificationDocument : IScribeDocumentDefin
     {
         foreach (var group in binder.Split(';').Reverse())
         {
-            var pair = group.Trim().Split(':');
-            var typeName = pair[1].Trim();
-            Formula type;
-            if (typeName.Contains(" to ", System.StringComparison.Ordinal))
+            var pair = group.Split(':');
+            var typeName = pair[1];
+            Formula type = typeName switch
             {
-                var arrow = typeName.Split(" to ");
-                type = new Formula.TypeArrow(F.Id(arrow[0]), F.Id(arrow[1]));
-            }
-            else if (typeName.StartsWith("subset ", System.StringComparison.Ordinal))
-                type = Call("Set", F.Id(typeName[7..]));
-            else type = F.Id(typeName);
+                "E to V" => new Formula.TypeArrow(F.Id("E"), F.Id("V")),
+                "E to Circle" => new Formula.TypeArrow(F.Id("E"), F.Id("Circle")),
+                "V to Circle" => new Formula.TypeArrow(F.Id("V"), F.Id("Circle")),
+                "subset E" => Call("Set", F.Id("E")),
+                "subset V" => Call("Set", F.Id("V")),
+                _ => F.Id(typeName),
+            };
             foreach (var name in pair[0].Split(',').Reverse())
-                body = Seq(Forall, Sp, F.Id(name.Trim()), Colon, Sp, type, Comma, Sp, body);
+                body = Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
         }
         return body;
     }
@@ -117,7 +117,7 @@ internal sealed class AnchoredPhaseClassificationDocument : IScribeDocumentDefin
         Formula coset(Formula x) => Call("cosetN", x);
         Formula orbit = Seq(Exists, Sp, F.Id("g"), Colon, Sp, F.Id("H"), Comma, Sp,
             Eqn(Call("gauge", g, u), w));
-        Formula invariant = All("g:H; u:E to Circle", Eqn(chi(Call("gauge", g, u)), chi(u)));
+        Formula invariant = All("g:H;u:E to Circle", Eqn(chi(Call("gauge", g, u)), chi(u)));
         Formula fibers = All("u,w:E to Circle", Seq(Eqn(chi(u), chi(w)), Sp, Iff, Sp, orbit));
         Formula realization = All("z:C", Eqn(chi(sigma(z)), z));
         Formula sectionMul = All("z,zPrime:C", Eqn(sigma(Call("mul", z, F.Id("zPrime"))),
@@ -148,7 +148,7 @@ internal sealed class AnchoredPhaseClassificationDocument : IScribeDocumentDefin
             Eqn(d, Seq(sum(c, k), Sp, Minus, Sp, D(1))),
             Call("Nonempty", Call("ContinuousMulEquiv", F.Id("C"),
                 Call("CirclePower", exponent))));
-        return Disp(All("V,E:Type; s,t:E to V; T:subset E; R:subset V; r:V",
+        return Disp(All("V,E:Type;s,t:E to V;T:subset E;R:subset V;r:V",
             Seq(Call("Fintype", F.Id("V")), Sp, Land, Sp,
                 Call("Fintype", F.Id("E")), Sp, Land, Sp,
                 Call("NamedSpanningTree", F.Id("s"), F.Id("t"), F.Id("T")), Sp, Land, Sp,
