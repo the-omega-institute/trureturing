@@ -7,11 +7,12 @@
    digest: For equal priors, the pretty good measurement on the active set can score too high. -/
 
 /-
-proof_shape: IsPOVM, success, pgmScore: definition (POVMs, the success probability
+proof_shape: success, pgmScore: definition (the success probability
   Σ_i tr(σ̃_i E_i) with σ̃_i = ρ_i / N, and the pretty-good-measurement score Σ_{i ∈ A}
   tr(σ̃_i S_A^{-1/2} σ̃_i S_A^{-1/2}) with S_A = Σ_{i ∈ A} σ̃_i)
 proof_shape: claim: definition (published conjecture, arXiv:2507.05778v2, journal Eq. (18), read
-  for positive definite states, with the active set of some optimal POVM)
+  for N ≥ 1 positive definite states of dimension k + 1, with the frozen finitePOVM and the active
+  set of some optimal POVM)
 proof_shape: rho: definition (the counterexample)
 proof_shape: result: bind-only (as local steps: positive definiteness of the three states; a dual
   certificate Γ with Γ − σ̃_i ⪰ 0; complementary slackness forcing the active set {0, 1};
@@ -20,10 +21,13 @@ proof_shape: result: bind-only (as local steps: positive definiteness of the thr
 escape_witness: none (the settlement of the external named conjecture is the new content)
 admission_basis: open-problem-resolution (issue #12997; Refuted)
 Direct frozen dependencies (GID, statement_id):
+  D5/S3/Estimation/TransmissivityTwoPointProbeRefutation.finitePOVM
+    sha256:0b88a0915c1837bdeb3bfc687e64c00b7e396fa7146ab78e6d9d731f378c3cae
   D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef (namespace RHLinalg)
     sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
 -/
 
+import D5.S3.Estimation.TransmissivityTwoPointProbeRefutation
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Matrix.Order
@@ -34,10 +38,7 @@ open scoped BigOperators Matrix MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation
 
 open Matrix
-
-/-- A POVM: positive semidefinite effects summing to the identity. -/
-def IsPOVM {d N : ℕ} (E : Fin N → Matrix (Fin d) (Fin d) ℂ) : Prop :=
-  (∀ i, (E i).PosSemidef) ∧ ∑ i, E i = 1
+open D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
 
 /-- The success probability `∑_i tr(σ̃_i E_i)` of the equiprobable ensemble `σ̃_i = ρ_i / N`. -/
 noncomputable def success {d N : ℕ} (ρ E : Fin N → Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -51,13 +52,13 @@ noncomputable def pgmScore {d N : ℕ} (ρ : Fin N → Matrix (Fin d) (Fin d) �
     ((∑ j ∈ A, (1 / (N : ℂ)) • ρ j) ^ (-(1 / 2) : ℝ) * ((1 / (N : ℂ)) • ρ i) *
       (∑ j ∈ A, (1 / (N : ℂ)) • ρ j) ^ (-(1 / 2) : ℝ)))).re
 
-/-- The conjecture: for equiprobable positive definite states, some optimal POVM has active set
-`A = {i | E_i ≠ 0}` with `(|A| - 1)(P^PGM_A - 1/N) ≤ (N - 1)(P^PGM - 1/N)`. -/
+/-- The conjecture: for `N ≥ 1` equiprobable positive definite states, some optimal POVM has
+active set `A = {i | E_i ≠ 0}` with `(|A| - 1)(P^PGM_A - 1/N) ≤ (N - 1)(P^PGM - 1/N)`. -/
 def claim : Prop :=
-  ∀ (d N : ℕ) (ρ : Fin N → Matrix (Fin d) (Fin d) ℂ), (∀ i, (ρ i).PosDef) →
-    (∀ i, trace (ρ i) = 1) →
-      ∃ E : Fin N → Matrix (Fin d) (Fin d) ℂ, IsPOVM E ∧
-        (∀ F, IsPOVM F → success ρ F ≤ success ρ E) ∧
+  ∀ (k N : ℕ) (ρ : Fin N → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ), 0 < N →
+    (∀ i, (ρ i).PosDef) → (∀ i, trace (ρ i) = 1) →
+      ∃ E : Fin N → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ, finitePOVM E ∧
+        (∀ F, finitePOVM F → success ρ F ≤ success ρ E) ∧
         (((Finset.univ.filter fun i => E i ≠ 0).card : ℝ) - 1) *
             (pgmScore ρ (Finset.univ.filter fun i => E i ≠ 0) - 1 / N) ≤
           ((N : ℝ) - 1) * (pgmScore ρ Finset.univ - 1 / N)
@@ -102,7 +103,7 @@ theorem result : ¬ claim := by
   have htr : ∀ i, trace (rho i) = 1 := by
     intro i
     fin_cases i <;> simp [rho, trace, Fin.sum_univ_two] <;> norm_num
-  obtain ⟨E, hE, hopt, hineq⟩ := h 2 3 rho hPD htr
+  obtain ⟨E, hE, hopt, hineq⟩ := h 1 3 rho (by norm_num) hPD htr
   set Γ : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![(418 / 1203 : ℂ), 19 / 1203] with hΓ
   have hslack : ∀ i, (Γ - (1 / 3 : ℂ) • rho i).PosSemidef := by
     intro i
@@ -141,7 +142,7 @@ theorem result : ¬ claim := by
     ext a b
     fin_cases a <;> fin_cases b <;>
       simp [hQdef, Fin.sum_univ_three, vecMulVec] <;> norm_num
-  have hQ : IsPOVM Q := by
+  have hQ : finitePOVM Q := by
     refine ⟨fun i => ?_, hQsum⟩
     fin_cases i
     · exact (hrank _).smul (by norm_num [Complex.nonneg_iff])
