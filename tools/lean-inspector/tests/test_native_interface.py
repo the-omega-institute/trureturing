@@ -154,8 +154,8 @@ run_cmd do
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         (package / 'TypedInputs.lean').write_text('''import LeanInformationAuditInterface.Contract.Catalog
 open LeanInformationAudit
-def seal : Contract.Seal := { rootId := `TypedInputs, options := #[] }
-def template : Contract.TemplateEnrollment Nat := {
+def sealInput : Contract.Seal := { rootId := `TypedInputs, options := #[] }
+def templateInput : Contract.TemplateEnrollment Nat := {
   name := `Nat, version := 1, constructors := #[], options := #[] }
 ''')
         result = self.guarded_command([self.lake, 'env', 'lean', 'TypedInputs.lean'], cwd=package, env=env)
