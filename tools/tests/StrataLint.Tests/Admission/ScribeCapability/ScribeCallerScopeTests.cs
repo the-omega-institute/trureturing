@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomScopeIncludesTheRequestedGidEvenWhenItsInputsAreUnchanged()
+    public void CoverAtomScopeRetainsChangedInputsWithoutAppendingTargetDefinition()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
         using var temporary = new TemporaryDirectory();
@@ -20,7 +20,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         var scope = Assert.Single(verifier.Scopes);
-        Assert.Contains("Blueprint/D5/S0/Carrier/Probe.scribe.cs", scope.Paths.Select(path => path.Value));
+        Assert.Contains("D5/S0/Carrier/Probe.lean", scope.Paths.Select(path => path.Value));
+        Assert.DoesNotContain("Blueprint/D5/S0/Carrier/Probe.scribe.cs", scope.Paths.Select(path => path.Value));
         Assert.DoesNotContain("Blueprint/D5/S0/Test/Unrelated.scribe.cs", scope.Paths.Select(path => path.Value));
     }
 
