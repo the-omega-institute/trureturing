@@ -1,6 +1,6 @@
 [Index](../../../marked_head_profile.md) · [Complete color source](861-complementary-phase-repair-and-pair-anchor-rigidity.md) · [Component exchanges](866-whole-color-top-layer-exchange-forces-lower-row-service.md) · [Column carries](867-literal-column-carries-and-phase-hull-repair.md)
 
-# Retaining all q-free originals permits weighted row selectors
+# Retained q-free originals and pure guards constrain height-one colors
 
 Work with one globally count-then-modulus-sum minimal distinct odd
 whole cover, including its original numerical divisor closure, in the
@@ -188,11 +188,93 @@ parents are actual q-free originals. These are global counts, not
 additional terms to add to the 471-owner inventory of one specified
 masked component.
 
+## The actual pure guards reduce the selector domain to 135 words
+
+The original numerical labels 3 and 9 are present. Their actual
+classes are disjoint: if the phase of the 9-class agreed with the
+phase of the 3-class modulo 3, deleting the 9-class would preserve
+whole coverage and contradict count-minimality. Write their forbidden
+digits as $d_0=\alpha$ and $(d_0,d_1)=(\beta,\gamma)$, respectively,
+where $\beta\ne\alpha$.
+
+Both classes are retained among the q-free originals. An integer
+uncovered by that retained family therefore has a word in
+
+$$
+\mathcal S=\{(d_0,\ldots,d_4):d_0\ne\alpha,
+                    \ (d_0,d_1)\ne(\beta,\gamma)\},
+\qquad |\mathcal S|=5\cdot27=135.
+\tag{WR9}
+$$
+
+The set $\mathcal S$ is an enclosing domain for the actual residual;
+it need not equal that residual. Coverage by selectors is needed
+only on this domain. All other integers are already covered by the
+retained guards.
+
+A type-2 selector fixes $d_2$ and contains 45 safe words. There are
+three disjoint such cells. Within one of these cells, a type-1
+selector fixes $(d_1,d_3)$. The six choices with $d_1\ne\gamma$
+each contain six safe words, and the three choices with
+$d_1=\gamma$ each contain three. This accounts for all 45 words.
+
+Let $t=N_2\le1$, using WR8, and choose all t type-2 colors on
+different top cells. Among the remaining cells there are
+$18-6t$ type-1 cells of size six. Assign
+
+$$
+k=\min(N_1,18-6t)
+\tag{WR10}
+$$
+
+distinct type-1 colors to that many cells. These selections cover
+$45t+6k$ safe words. If there are at least $135-45t-6k$ remaining
+colors, assign one distinct remaining color to each uncovered word,
+using that word as its seed. Every selector matches its own seed,
+regardless of its type. Its actual selector may also cover other
+words; no claim that it has been reduced to a singleton is needed.
+
+Consequently, complete safe-domain selectors exist whenever
+
+$$
+n+44t+5\min(N_1,18-6t)\ge135.
+\tag{WR11}
+$$
+
+Use the same original strips and reflected output labels as WR4.
+For every integer, first test the retained q-free family. Only an
+uncovered integer needs the safe-domain selector and the complete
+color source. Numerical distinctness, legality and the strict count
+decrease are unchanged. Count-minimality rules out WR11, so its
+left side is at most 134.
+
+Because $n\ge83$ and $t\le1$, the truncated case
+$N_1\ge18-6t$ would already violate this upper bound. Hence the
+minimum in WR11 equals $N_1$, giving the joint necessary inequality
+
+$$
+\boxed{N_0+6N_1+45N_2\le134.}
+\tag{WR12}
+$$
+
+Together with $N_0+N_1+N_2=n\ge83$, this implies
+
+$$
+\boxed{N_0\ge73,\qquad
+N_2=1\Longrightarrow (N_0\ge81\ \text{and}\ n\le90).}
+\tag{WR13}
+$$
+
+These are restrictions on actual height-one owners in the same
+global cover. They do not assert that their cofactor phases coincide
+or that they admit one common repair.
+
 ## Reuse and boundary
 
 This construction reuses complete-color stripping, CRT enclosure,
-and the numerical height recovery of Report385 HPA6--HPA8. The
-selector allocation is a finite prefix packing. The interface to
+and the numerical height recovery of Report385 HPA6--HPA8. Restricting
+the coding domain by retained pure guards reuses Report385 GHA1--GHA5.
+The selector allocation is a finite prefix packing. The interface to
 check is the common reflection WR4 on height-one originals together
 with unchanged strips of all deeper originals; the existing component
 exchanges do not already check that combination.
@@ -213,6 +295,16 @@ height-one witnesses at each counted minimum row. The application
 exits successfully with 169 axiom-closure reports, each using only
 `propext`, `Classical.choice`, `Quot.sound`, or no axioms; there are
 no errors or `sorryAx`.
+
+The safe-domain extension additionally takes the actual original
+labels 3 and 9. It derives their phase incompatibility from the same
+count-minimality assumption, constructs the 135-word allocation, and
+checks the retained-family-first whole-coverage argument. Its final
+consumer derives WR12--WR13 together with the actual minimum-row
+witnesses and WR7. This extended application exits successfully with
+183 axiom-closure reports: 177 use only the same three standard axioms
+and six use no axioms. It has no errors or `sorryAx`. The general-p
+statement WR6 remains outside this ternary application.
 
 These are transient applications of existing coordinate, CRT and
 finite-cardinality machinery, with the three-row arithmetic checked
