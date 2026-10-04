@@ -1010,3 +1010,196 @@ $$
 上述紧完全截断情形对应 [Roberto Frigerio、Carlo Petronio, *Construction and Recognition of Hyperbolic 3-Manifolds with Geodesic Boundary*, arXiv:math/0109012v1](https://arxiv.org/abs/math/0109012v1) 的 Definitions 1.6–1.8（正文第 6–7 页）中 $I=Z=\varnothing$ 的几何实现：没有 ideal vertices 或 length-zero edges，截断面与侧面正交。Definition 1.10（正文第 8 页）在紧可定向流形去除规定的 tori 和 annuli 后，把 partially truncated triangulation 定义为各个 $\Delta^*$ 按指定侧面配对实现原流形；这里沿用其实际剖分语义，由已固定的 $r$ 和第 15 节的 $\overline h$ 保持同一个 marked 对应。Theorem 2.13 及 Remark 2.14（正文第 20 页）区分侧面一致性、实际内边角和 $2\pi$ 与两端 ideal 时的额外返回方程；Remark 2.14 的无 toric end 情形说明内边长度匹配和角和条件已足够处理相应匹配。该定理原文的全局陈述另有可定向、规定剖分及边界负 Euler 特征等前提；这里没有把那些前提从裸面配对中推断出来，而是在既有带标记截断实现上给出上述紧块的直接局部拼接证明。原文随后的 completeness discussion 也明确把有边界流形的完备性与双倍的完备性对应起来，并单独处理非紧端的方程。
 
 本节是标准双曲块拼接结论在原始出现、实际面映射和同一标记上的书面落实，不申报数学原创性或 Lean kernel 核验。它以真正紧块、实际兼容等距配对、边不反转、精确出现角和以及已有带标记实现为条件；不从较弱组合条件制造共同真长度或零缺陷，不将拓扑实现代替光滑度量证明，也不结算独立的实际体积、Schläfli、全局流收敛或预先指定 atlas 的相容性义务。
+## 17. 原始六参数块上的实际旧边领圈与参数恢复
+
+本节把第 16.2 节的标准 Fermi 领圈接回原始六参数的极面截断块，给出支撑不等式、逆参数及相对开集的具体公式。所有六个参数独立变化，不假设等边。沿用原始槽序 $12,13,14,34,24,23$，令 $x_{ij}>1$，并要求原始判别式 $D(x)>0$。在原始 Lorentz 模型中，记实际向量为 $V_1,\ldots,V_4$，其 Gram 矩阵为
+
+$$
+G_{ii}=1,\qquad G_{ij}=-x_{ij}\quad(i\ne j),\qquad
+L(X,Y)=-X_0Y_0+X_{\rm sp}\cdot Y_{\rm sp}.
+$$
+
+原始 Gram 构造给出 $\det G<0$、$V_{i,0}\ge0$，且任意两个不同向量的时间坐标之和严格正。每个三阶主子矩阵的行列式为
+
+$$
+1-a^2-b^2-c^2-2abc<0\qquad(a,b,c>1).
+$$
+
+因此 $H=G^{-1}$ 满足 $H_{ff}>0$。定义实际 Gram 对偶、正尺度及外法向
+
+$$
+W_f=\sum_a H_{af}V_a,\qquad
+\eta_f=\sqrt{H_{ff}},\qquad n_f=-W_f/\eta_f.
+$$
+
+它们满足 $L(V_a,W_f)=\delta_{af}$、$L(n_f,n_f)=1$ 和
+$L(V_a,n_f)=-\delta_{af}/\eta_f$。这里的负号固定原块的内侧方向。
+
+原始系数载体与实际块保持字面定义
+
+$$
+C_x=\{\lambda\in\mathbb R^4:\lambda_a\ge0,\ \sum_a\lambda_a=1,
+\ (G\lambda)_f\le0\ \text{对全部 }f\},
+$$
+
+$$
+\nu_x(\lambda)=\frac{\sum_a\lambda_aV_a}
+ {\sqrt{-L(\sum_a\lambda_aV_a,\sum_a\lambda_aV_a)}},
+\qquad P_x=\nu_x(C_x)\subset\mathbb H^3.
+$$
+
+对 $\lambda\in C_x$，分母严格正且分子为未来类时向量，这是原始极面截断构造的归一化性质。下面不以另一个半空间块替换 $P_x$。
+
+### 17.1 从实际端点得到完整闭轴和四个严格支撑
+
+固定不同的 $i,j$，令 $k,l$ 为另外两个顶点标签。记
+
+$$
+r=x_{ij},\quad s=\sqrt{r^2-1},\quad \ell=\operatorname{arcosh}r>0,
+\quad A=\frac{rV_i+V_j}{s},\quad B=\frac{V_i+rV_j}{s},\quad \tau=-V_i.
+$$
+
+这两个端点恰是原始系数点 $(re_i+e_j)/(r+1)$ 和 $(e_i+re_j)/(r+1)$ 的归一化。第一个点的 $i$-cut 为零、$j$-cut 为 $1-r<0$，另外两项 cut 严格负；第二个点交换 $i,j$。直接使用 Gram 等式得
+
+$$
+L(A,A)=L(B,B)=-1,\quad L(A,B)=-r,\quad
+L(\tau,\tau)=1,\quad L(A,\tau)=0,
+\quad B=rA+s\tau.
+$$
+
+两端点的时间坐标严格正。实际闭轴取
+
+$$
+\gamma(t)=\cosh t\,A+\sinh t\,\tau
+=\frac{\sinh(\ell-t)}s A+\frac{\sinh t}s B,
+\qquad 0\le t\le\ell.
+$$
+
+插值的两个系数非负且不同时为零，所以整条轴都在未来单位双曲面上。端点 cap 与相邻侧面的精确支撑为
+
+$$
+L(\gamma(t),V_i)=-\sinh t,\qquad
+L(\gamma(t),V_j)=\sinh(t-\ell),\qquad
+L(\gamma(t),n_k)=L(\gamma(t),n_l)=0.
+$$
+
+其余四个支撑在整个闭段上严格成立。对 $n_i$，两端的配对值分别为 $-r/(s\eta_i)$、$-1/(s\eta_i)$；对 $n_j$，分别为 $-1/(s\eta_j)$、$-r/(s\eta_j)$。对 $h\in\{k,l\}$，有
+
+$$
+L(A,V_h)=-\frac{r x_{ih}+x_{jh}}s<0,\qquad
+L(B,V_h)=-\frac{x_{ih}+r x_{jh}}s<0.
+$$
+
+以上非负插值保持这些严格负号。两个端点 cap 则只满足弱不等式，并分别在 $t=0,\ell$ 取零；领圈构造不能把这两个支撑误列为全程严格。
+
+### 17.2 实际二面角、统一半径与字面块成员
+
+令 $c=-L(n_k,n_l)=-H_{kl}/(\eta_k\eta_l)$。互补主子式恒等式给出
+
+$$
+H_{kk}H_{ll}-H_{kl}^2
+=\frac{\det G_{\{i,j\},\{i,j\}}}{\det G}
+=\frac{1-r^2}{\det G}>0,
+$$
+
+所以 $-1<c<1$。在旧边的任一实际点，$n_k,n_l$ 都是双曲切空间中的外单位法向；原始内二面角为它们夹角的补角，故 $\alpha=\arccos c\in(0,\pi)$。令
+
+$$
+d=\sqrt{1-c^2}=\sin\alpha>0,\qquad
+u=\frac{-n_l-cn_k}{d},\qquad v=-n_k.
+$$
+
+由实际 Gram 等式，$(A,\tau,u,v)$ 的 Gram 矩阵为 $\operatorname{diag}(-1,1,1,1)$；四个向量因此线性无关并构成原四维环境的基。定义
+
+$$
+F(t,\rho,\theta)=\cosh\rho\,\gamma(t)
++\sinh\rho(\cos\theta\,u+\sin\theta\,v).
+$$
+
+它满足 $L(F,F)=-1$，且四个 incident 支撑精确为
+
+$$
+\begin{aligned}
+L(F,V_i)&=-\cosh\rho\,\sinh t,&
+L(F,V_j)&=\cosh\rho\,\sinh(t-\ell),\\
+L(F,n_k)&=-\sinh\rho\,\sin\theta,&
+L(F,n_l)&=-\sinh\rho\,\sin(\alpha-\theta).
+\end{aligned}
+$$
+
+设 $S$ 为时间坐标严格正、$n_i,n_j$ 及 $V_k,V_l$ 四项支撑严格负的环境开集。第 17.1 节给出 $\gamma([0,\ell])\subset S$。该轴像紧；而 $F$ 连续，在 $\rho=0$ 时与 $\theta$ 无关。对紧参数集 $[0,\ell]\times[0,2\pi]$ 作有限开覆盖，得到 $\varepsilon>0$，使
+
+$$
+F(t,\rho,\theta)\in S\quad
+(0\le t\le\ell,\ 0\le\rho\le\varepsilon,\ 0\le\theta\le2\pi).
+$$
+
+具体地，每个 $(t,\theta)$ 的连续性给出参数邻域及一个正的 $\rho$ 宽度；有限子覆盖的宽度最小值再缩小一半，即同时包含所选闭径向区间。故 $0\le\theta\le\alpha$ 时，前述四项 incident 弱支撑与 $S$ 的四项严格支撑合起来给出全部八项原始支撑。
+
+为确认这些点属于字面 $P_x$，对这样的未来单位点 $w=F(t,\rho,\theta)$ 取实际齐次系数
+
+$$
+\beta_f=L(w,W_f),\qquad b_0=\sum_f\beta_f.
+$$
+
+实际侧面公式 $L(w,n_f)=-\beta_f/\eta_f$ 给出 $\beta_f\ge0$，且 $n_i$ 的严格支撑给出 $\beta_i>0$，所以 $b_0>0$。Gram 对偶重构给出 $w=\sum_f\beta_fV_f$。令 $\lambda_f=\beta_f/b_0$，则 $\lambda_f\ge0$、$\sum_f\lambda_f=1$，并且
+
+$$
+(G\lambda)_f=L(w,V_f)/b_0\le0,\qquad
+\sum_f\lambda_fV_f=w/b_0.
+$$
+
+因此 $\lambda\in C_x$，其归一化分母为 $1/b_0$，且 $\nu_x(\lambda)=w$。这直接证明实际 Fermi 闭扇区进入原归一化像；没有额外假设半空间刻画或提供成员见证。
+
+### 17.3 从字面块点恢复参数及实际相对开领圈
+
+对任意 $w\in P_x$，其定义立即给出全部八项弱支撑。用上述实际正交基写成
+
+$$
+w=aA+b\tau+Cu+Dv,\qquad
+a=-L(w,A),\ b=L(w,\tau),\ C=L(w,u),\ D=L(w,v).
+$$
+
+单位方程与两个端点 cap 支撑给出
+
+$$
+a^2-b^2=1+C^2+D^2,\qquad b\ge0,\qquad rb\le sa.
+$$
+
+故 $a\ge0$；单位方程排除 $a=0$，所以 $a>0$。取
+
+$$
+q(w)=\sqrt{C^2+D^2},\quad R=\sqrt{1+q(w)^2},\quad
+\rho=\operatorname{arsinh}q(w),\quad
+t=\operatorname{arsinh}(b/R).
+$$
+
+有 $\sinh\rho=q$、$\cosh\rho=R$、$\sinh t=b/R$、$\cosh t=a/R$。从 $b\ge0$ 得 $t\ge0$；第二个 cap 支撑化为 $R\sinh(t-\ell)\le0$，所以 $t\le\ell$。
+
+两个相邻侧面支撑等价于
+
+$$
+D\ge0,\qquad dC-cD\ge0.
+$$
+
+当 $q>0$ 时取 $\theta=\arccos(C/q)\in[0,\pi]$。由 $C^2+D^2=q^2$、$D\ge0$ 得 $\sin\theta=D/q$。第二项支撑于是给出 $\sin(\alpha-\theta)\ge0$。若 $\theta>\alpha$，则 $-\pi<\alpha-\theta<0$，其正弦严格负，矛盾。因此 $0\le\theta\le\alpha$，且 $w=F(t,\rho,\theta)$。当 $q=0$，取 $\theta=0$；此时 $C=D=0$，同样恢复 $w=\gamma(t)$。
+
+对第 17.2 节选出的同一个 $\varepsilon$，得到精确集合等式
+
+$$
+U_{ij}:=\{w\in P_x:q(w)<\sinh\varepsilon\}
+=\{F(t,\rho,\theta):0\le t\le\ell,\ 0\le\rho<\varepsilon,
+\ 0\le\theta\le\alpha\}.
+$$
+
+$q$ 是实际块上的连续函数，故 $U_{ij}$ 在 $P_x$ 中相对开，并包含整个闭旧边。这不声称带侧面和端点的闭扇区在环境 $\mathbb H^3$ 中开。
+
+当 $\rho>0$ 时，上述公式唯一恢复 $\rho,t,\theta$：$\operatorname{arsinh}$ 的严格单调性恢复前两者，而 $\cos$ 在 $[0,\alpha]\subset[0,\pi]$ 上单射，恢复最后一个参数。轴上仅合并角坐标，$t$ 仍唯一。还可确认 $\rho$ 是到实际闭轴的双曲距离：对任意轴参数 $z\in[0,\ell]$，
+
+$$
+-L(w,\gamma(z))=R\cosh(t-z)\ge R=\cosh\rho,
+$$
+
+且在已恢复的 $z=t$ 取等；$\operatorname{arcosh}$ 单调给出所述距离。
+
+本节给出一个实际块中一条完整闭旧边的书面证明。它补足第 16.2 节标准模型与原始六参数对象之间的支撑、成员和逆参数接口，不申报经 Lean kernel 验证、冻结或消化覆盖，也不申报文献原创性。把它用于原始全局商仍须同时检查有限全部出现的共同半径、同块不同旧边的分离、实际面映射的有序轴及半径运输，以及原始生成关系的饱和与精确纤维；本节没有结算这些全局义务。

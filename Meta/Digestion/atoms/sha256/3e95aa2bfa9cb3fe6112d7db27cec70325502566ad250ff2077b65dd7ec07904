@@ -1,0 +1,29 @@
+**定义 70.50（原 Scale36 完整族）。** 取全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$，替换为 $\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$，并保留每个二叉构造。目标为 $\mathbf1_{\{U\in\rho^3(\mathcal T)\}}$，未知 $U$ 不带大小、组成、正性或候选承诺。任意有限左右地址，包括根，均可直接请求不变 $U$ 的原始四值报告；粗读出将分支与不存在合为 $\nu$，两种叶标签保持不同。费用只计本次真实同址缓存后的不同请求地址。
+
+用下标区分树块与式（70.1）的数值，置
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad A_b=\langle E,\beta\rangle,\quad
+C_b=\langle A_b,E\rangle,\quad B_b=\langle C_b,A_b\rangle,\\
+T_b=\langle A_b,C_b\rangle,\quad W_b=\langle B_b,C_b\rangle,\quad
+K_b=\langle T_b,A_b\rangle.
+\end{gathered}
+\tag{70.19}
+$$
+
+令 $\mathcal R(z_1,\ldots,z_k;z)=\langle z_1,\langle z_2,\ldots,\langle z_k,z\rangle\ldots\rangle\rangle$ 为完整右梳。取 $k=B/2$，$\eta_j=\mathtt R^{j-1}\mathtt L$、末槽根 $\mathtt R^k$，定义
+
+$$
+\begin{aligned}
+P_0&=\mathcal R(C_b,\ldots,C_b;K_b),\\
+U_j&=\mathcal R(C_b,\ldots,\underset{j}{T_b},\ldots,C_b;B_b),\\
+V_j&=\mathcal R(C_b,\ldots,\underset{j}{W_b},\ldots,C_b;A_b)
+\quad(1\le j\le k),\\
+F_k&=\{P_0,U_1,\ldots,U_k,V_1,\ldots,V_k\},\qquad n=5k+11.
+\end{aligned}
+\tag{70.20}
+$$
+
+$F_k$ 只是费用评价族。它是[Scale36定义36.1](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#36-任意规模的二重条件退出共同补偿与一次超额增长)的原独立槽族；全端点供应直接采用[命题67.11](#67-mersenne-端点族的付费选模与全实数相变)，以下保留其完整执行与费用条件。
+
