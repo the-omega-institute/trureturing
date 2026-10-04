@@ -1,0 +1,27 @@
+## 287. FIB 复形上的外加光合作用、激子转移与量子产率统计
+
+令第 `j` 层 FIB 复形写成
+
+$$
+C_j=(V_j,E_j,F_j,\partial C_j),
+$$
+
+其中节点表示色素、反应中心或局部振动单元，边和高阶面表示允许的近邻耦合与闭合回路。FIB ATOM 递归确定组合邻接、接缝和合法跃迁路径，但不指定分子坐标、偶极矩、能级、溶剂环境、振动谱密度、退相干时间或反应中心捕获率。给每个节点外加激发能 `\epsilon_v`，给每条边外加复耦合 `J_{uv}`，单激子哈密顿量可写成
+
+$$
+H_j=\sum_{v\in V_j}\epsilon_v\lvert v\rangle\langle v\rvert
++\sum_{(u,v)\in E_j}
+\left(J_{uv}\lvert u\rangle\langle v\rvert
++\overline{J_{uv}}\lvert v\rangle\langle u\rvert\right).
+$$
+
+开放系统中的密度矩阵 `\rho_j` 可由外加 Lindblad 型方程描述：
+
+$$
+\dot\rho_j=-\mathrm i[H_j,\rho_j]
++\sum_{k}\left(L_k\rho_jL_k^\dagger
+-\frac12\{L_k^\dagger L_k,\rho_j\}\right).
+$$
+
+算子 `L_k` 可表示声子退相干、辐射衰减、内部转换、陷阱捕获和电荷分离；它们的速率、温度依赖及相关噪声均属外加数据。
+
