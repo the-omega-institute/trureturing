@@ -12,7 +12,7 @@ internal sealed class ComplementaryDyadicSupportLinesDocument : IScribeDocumentD
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula All(Formula x, Formula type, Formula body) =>
-        Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body);
+        Par(Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body));
     private static Formula And(params Formula[] f)
     {
         var r = f[^1];
@@ -113,7 +113,7 @@ internal sealed class ComplementaryDyadicSupportLinesDocument : IScribeDocumentD
         var h = Lt(Call("val", i), cut);
         return Disp(All(a, Nat, All(i, Indices(a), And(
             Imp(h, Equal(Call("eval", p, i), Div(D(1), B(a)))),
-            Imp(Seq(Neg, h), Equal(Call("eval", p, i), Div(Sub(B(a), D(2)), Pow(B(a), D(2)))))))));
+            Imp(Seq(Neg, Par(h)), Equal(Call("eval", p, i), Div(Sub(B(a), D(2)), Pow(B(a), D(2)))))))));
     }
 
     private static Formula MapFormula()
@@ -156,6 +156,6 @@ internal sealed class ComplementaryDyadicSupportLinesDocument : IScribeDocumentD
                 Positive(a, q), Equal(Sum(a, q), D(1)), Equal(s, Sub(Mul(Pow(b, D(2)), t), Sub(b, D(1)))),
                 SummableCost(q), Equal(Cost(p), Add(H0, Div(Cost(q), Pow(b, D(2))))),
                 Equal(Defect(p), Div(Defect(q), Pow(b, D(2)))),
-                Imp(Seq(Neg, Par(Uniform(a, p))), exit), fixedPoint)))))));
+                Imp(Seq(Neg, Par(Uniform(a, p))), exit), fixedPoint))))));
     }
 }
