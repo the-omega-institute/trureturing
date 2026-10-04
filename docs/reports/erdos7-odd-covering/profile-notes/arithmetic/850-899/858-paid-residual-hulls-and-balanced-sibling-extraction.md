@@ -712,7 +712,110 @@ construction of a supported law. A diffuse proposed query envelope
 must pay this cost as well as establish its support. The pointwise
 tail bound in section 8 constructs no cofactor law and remains valid.
 
-## 11. Remaining estimate and verification scope
+## 11. Different ternary rows admit different tail bounds
+
+Continue in the same support-through-113 envelope and original q-tail
+experiment. Let $T^q_{m,a,\ge J}(w)$ be the total supplier load from
+originals $3^a113^js$ with $j\ge J$, across the same six distinct first
+digits, at the same literal old word and cofactor point. The three rows
+have the following uniform bounds for $J\ge2$:
+
+$$
+T^q_{m,a,\ge J}(w)\le C_a113^{1-J},
+\qquad
+(C_0,C_1,C_2)=
+\left(\frac{9342035}{28},\frac{2546375}{112},
+      \frac{18929}{112}\right).
+\tag{SF35}
+$$
+
+These are consumers of existing phase capacities, rather than new
+arithmetic exchange principles. For $a=0$, section 8's rich-cofactor
+count remains 333180 after restricting to this row. Each of its 460
+small cofactors, including the unit, has at most one numerical label
+per q-height, so its remaining coefficient is $460\cdot113/112$.
+
+For $a=1$, use [Report385, section 13](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md).
+At a parent $h=3qr$ with $\tau(r)=4$, there are nine first fresh roots
+and eight divisor labels per layer. The existing fresh repair has
+layers $(8,3)$, hence eleven classes and strictly lower cost than
+eleven proper descendants. One actual phase therefore contains at
+most ten proper descendants. If a counted original is the parent
+itself, comparable-original disjointness excludes every other counted
+label, so the same bound holds for all incident originals.
+
+Every cofactor with at least four divisors contains a witness $p^3$
+or $pt$ with distinct primes. Fix one witness per cofactor. There are
+at most $27+\binom{27}{2}=378$ such witnesses. At the actual phase
+modulo $3qr$, each supplies at most ten labels over all q-heights.
+Across the six digits this gives $6\cdot10\cdot378=22680$. The small
+cofactors are the unit, $p$ and $p^2$, at most 55 choices, each costing
+at most one numerical label per height. The coefficient is therefore
+$22680+55\cdot113/112=2546375/112$.
+
+For $a=2$, [Report385, section 167, SNC1](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+already bounds the number of incident nonunit top originals by
+$\omega(W)+1\le28$ at one complete ternary word, first q-digit and
+cofactor point. It includes all q-heights. Its proof uses the actual
+prime-root capacity of two and the star-or-triangle collision graph;
+no agreement of higher q-prefixes is required. The six cells thus
+cost at most $168\cdot113^{1-J}$. For the unit cofactor there is just
+one numerical label $9\cdot113^j$ at each height, globally across the
+six cells. Its entire tail costs at most $113^{2-J}/112$, with no
+extra factor six. This proves the stated $C_2$.
+
+If the old word also satisfies $z_m\equiv a_9\pmod3$, where $a_9$
+is the retained original 9-phase, RP1--RP4 leave six fresh roots at
+$3qr$. A witness with at least three divisors then has a six-class
+repair, giving a phase cap of five. Here one directly deletes the
+originals in the tested phase and repairs that same phase; one does
+not move a parent and replace its possibly different old phase.
+The six fresh $27e$ labels, $e\mid qr$, together with the retained
+9-class cover the whole tested phase, with cost below $36h$.
+Witnesses $p^2$ or $pt$ still
+number at most 378; the small inventory becomes the unit and the
+27 primes. Under this extra literal phase condition,
+
+$$
+T^q_{m,1,\ge J}(w)
+\le\frac{45473}{4}\,113^{1-J}.
+\tag{SF36}
+$$
+
+The retained 9-class is never moved or deleted in this repair, since
+every selected original contains $q$. Without the stated phase agreement,
+the uniform $C_1$ in SF35 remains the valid bound.
+
+For an unconditional consequence within the envelope, retain only
+the nine bands
+
+$$
+(a,j)\in\{(a,j):0\le a\le2,\ 1\le j\le4-a\},
+$$
+
+and call their total load $L_m^{\triangle}(w)$. Apply SF35 at
+$J=5,4,3$ for $a=0,1,2$, respectively. The omitted total is at most
+
+$$
+\varepsilon_{\triangle}
+=\frac{141703229}{4565326108}<0.03104.
+$$
+
+Whole coverage on the same six cells therefore forces, for every
+$w\in Z_m$,
+
+$$
+L_m^{\triangle}(w)\ge6-\varepsilon_{\triangle}>5.96896.
+\tag{SF37}
+$$
+
+For this necessary load estimate, the unbounded q-height tail is confined
+to the explicit error. The retained part has four q-heights in the bottom
+row, three in the middle row and two in the top row. This is not an upper bound
+on those nine bands, a supported-law construction or a compatible
+owner selection.
+
+## 12. Remaining estimate and verification scope
 
 The unresolved step is to control the actual nondivisor load on the
 nonempty q-free-uncovered sets $Z_m$, together with the capacities,
@@ -722,7 +825,7 @@ Section 8 controls the entire tail above a fixed q-height, including
 its nondivisor portion, with explicit truncation error. Any probability
 law supported on $Z_m$ bounds the minimum by its
 expected load, but it still needs quantitative congruence-query bounds.
-An unconditioned uniform or distortion law cannot be used if it charges
+The local AP construction in [Report860](860-local-paid-mask-and-permanent-owner-obstruction.md) has an exact paid residual with query norm at least 90, unchanged congruence hull and incompatible permanent choices. Its explicit uncovered point and missing divisor label exclude it from the whole-cover and EB1 setting. An unconditioned uniform or distortion law cannot be used if it charges
 points outside $Z_m$. Report385's survivor-support analysis already
 identifies this missing conditional reserve.
 
@@ -759,6 +862,14 @@ exact constants. The actual-cover translation and the corrected
 uniform permutation's marginal identities remain explicit ordinary
 mathematical premises of those checks. No independent-parent law or
 new support reserve is inferred.
+
+For section 11, transient Lean checks verify the finite support-cardinality
+interface underlying SNC1, the six-cell weighted sum, the unit geometric
+sum with one label per height, the finite witness charging and all three
+row coefficients. The combined truncation error and its necessary
+nine-band load implication also compile with only standard axioms.
+The original-family phase capacities, cofactor classification and
+whole-cover translation retain their stated ordinary-proof scope.
 
 No new frozen mathematical declaration, atom coverage or resolution of
 the unrestricted problem is claimed by this report.
