@@ -1,0 +1,21 @@
+**定义 361.1（选定指标、实际整数与比值）。** 沿用实际递推 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi$。对整数 $m\ge1$ 和集合 $S\subseteq\{1,\ldots,m\}$，定义
+
+$$
+\begin{aligned}
+K&=|S|,& H_m&=\sum_{j=1}^m\frac1j,\\
+D(S)&=\{d\in\mathbb N_{>0}:\exists n\in S,\ d\mid n\},&
+M(S)&=\operatorname{lcm}\{F_n:n\in S\},\qquad b(S)=\log M(S).
+\end{aligned}
+\tag{361.1}
+$$
+
+空集的最小公倍数取一。所有对数均为自然对数；对实数 $a$ 和 $t>0$，实幂的约定是 $t^a=\exp(a\log t)$。对 $M>5040$，定义归一化 Robin 比值
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},\qquad
+\sigma(M)=\sum_{d\mid M}d,
+\tag{361.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。此定义只在所示整数尾部使用。
+
