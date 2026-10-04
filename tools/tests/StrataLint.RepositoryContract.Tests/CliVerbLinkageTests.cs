@@ -162,7 +162,7 @@ public sealed class CliVerbLinkageTests
             var arrays = ArrayLiteralVerbs(physicalLines);
             var scribeVariables = ScribeForwardedVariables(relative, physicalLines);
             var projectIsScribe = physicalLines.Any(line => line.StartsWith("PROJECT=", StringComparison.Ordinal)
-                && line.Contains("StrataLint.Scribe.Documents.csproj", StringComparison.Ordinal));
+                && line.Contains("StrataLint.Scribe.csproj", StringComparison.Ordinal));
             foreach (var (line, text) in LogicalLines(physicalLines))
             {
                 if (text.TrimStart().StartsWith('#'))
@@ -177,7 +177,6 @@ public sealed class CliVerbLinkageTests
                     || text.Contains("$CLI_PROJECT", StringComparison.Ordinal)
                     || text.Contains("$JUDGE_DLL", StringComparison.Ordinal);
                 var namesScribe = text.Contains("StrataLint.Scribe.csproj", StringComparison.Ordinal)
-                    || text.Contains("StrataLint.Scribe.Documents.csproj", StringComparison.Ordinal)
                     || (projectIsScribe
                         && text.Contains("$PROJECT", StringComparison.Ordinal));
 

@@ -72,20 +72,19 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void DagResourcePackMatchesAssemblyArtifactsByteForByteAndSupportsCheck()
+    public void DagResourcePackMatchesDefinitionArtifactsByteForByteAndSupportsCheck()
     {
         using var world = new BatchWorld { UseGitReader = true };
         using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
         var truth = DagLedgerCommandPreparation.BuildTruth(world.Repository, new PrecomputedLeanReportSource(world.Root));
-        var assembly = typeof(BatchClaimDefinition).Assembly;
-        var reference = DagRenderCommand.Run(world.Root, truth, false, DocumentDefinitions.Discover(assembly, world.Root));
+        var reference = DagRenderCommand.Run(world.Root, truth, false, StatementProjectionFixtureLoader.WithRepositoryRoot(world.Root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         Assert.True(reference.Success, reference.Error);
         var paths = new[] { "Generated/DAG.md", "Generated/truth-graph.v1.json" };
         var expected = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(world.Root, path)));
         var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, DocumentDefinitions.Discover(assembly, world.Root)).TotalSha256;
+        var digest = ScribeResourcePack.Write(packPath, StatementProjectionFixtureLoader.WithRepositoryRoot(world.Root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })).TotalSha256;
         foreach (var path in paths) File.Delete(Path.Combine(world.Root, path));
         string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest.ToUpperInvariant()];
 

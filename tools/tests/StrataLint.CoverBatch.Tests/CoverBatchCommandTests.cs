@@ -531,14 +531,17 @@ public sealed partial class CoverBatchCommandTests
             return reportPath;
         }
 
-        internal CommandResult RunProducers(string input)
+        internal CommandResult RunProducers(string input, bool scripts = false)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly),
+                scripts ? new ProductionScribeEmissionVerifier() :
+                    new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
+                        () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })),
                 CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"],
-                documentsAssembly: typeof(BatchClaimDefinition).Assembly);
+                emissionDefinitions: scripts ? null : root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
+                    () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(
@@ -568,7 +571,7 @@ public sealed partial class CoverBatchCommandTests
     private sealed class CallbackVerifier(Action callback) : IScribeEmissionVerifier
     {
         public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report,
-            RawChangeSet? changes = null, FrozenStateCatalog? frozenState = null,
+            RawChangeSet? changes, FrozenStateCatalog? frozenState = null,
             FrozenStatementIndex? frozenStatements = null)
         {
             callback();

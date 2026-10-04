@@ -15,7 +15,8 @@ internal static class DescribeRepositoryValidator
         DeclarationCatalog? declarationCatalog = null,
         ProblemCandidateCatalogInspection? problemInspection = null,
         FrozenStateCatalog? frozenState = null,
-        FrozenStatementIndex? frozenStatements = null)
+        FrozenStatementIndex? frozenStatements = null,
+        bool singleDocument = false)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
@@ -37,7 +38,7 @@ internal static class DescribeRepositoryValidator
             ?? (leanReport is null ? null : DeclarationCatalog.Create(leanReport));
         var graph = DocumentGraphAssembler.Assemble(
             material,
-            resolvedDeclarationCatalog);
+            resolvedDeclarationCatalog, singleDocument ? repositoryRoot : null, validateTargets: !singleDocument);
         findings.AddRange(graph.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
 
@@ -82,7 +83,7 @@ internal static class DescribeRepositoryValidator
                 findings);
         }
 
-        foreach (var note in inspectedLibrary.Notes)
+        foreach (var note in singleDocument ? [] : inspectedLibrary.Notes)
         {
             foreach (var reference in note.StrataTouched)
             {
@@ -113,11 +114,11 @@ internal static class DescribeRepositoryValidator
         findings.AddRange(inspectedProblems.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
         var resolutionClaims = EnumerateResolutionClaims(material).ToImmutableArray();
-        if (!inspectedProblems.Candidates.IsEmpty || !resolutionClaims.IsEmpty)
+        if ((!singleDocument && !inspectedProblems.Candidates.IsEmpty) || !resolutionClaims.IsEmpty)
         {
             frozenState ??= LoadFrozenStateCatalog(repositoryRoot);
         }
-        foreach (var candidate in inspectedProblems.Candidates)
+        foreach (var candidate in singleDocument ? [] : inspectedProblems.Candidates)
         {
             foreach (var reference in candidate.MotivationGids)
             {
@@ -142,7 +143,8 @@ internal static class DescribeRepositoryValidator
             resolvedDeclarationCatalog,
             frozenState,
             frozenStatements,
-            findings);
+            findings,
+            singleDocument);
 
         return findings
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
@@ -159,7 +161,8 @@ internal static class DescribeRepositoryValidator
         DeclarationCatalog? declarationCatalog,
         FrozenStateCatalog? frozenState,
         FrozenStatementIndex? frozenStatements,
-        ImmutableArray<DescribeRedFinding>.Builder findings)
+        ImmutableArray<DescribeRedFinding>.Builder findings,
+        bool singleDocument)
     {
         if (sources.IsEmpty)
         {
@@ -212,7 +215,8 @@ internal static class DescribeRepositoryValidator
                 declarationCatalog,
                 frozenStatements,
                 describesByGid,
-                findings);
+                findings,
+                singleDocument);
         }
     }
 
@@ -222,7 +226,8 @@ internal static class DescribeRepositoryValidator
         DeclarationCatalog? declarationCatalog,
         FrozenStatementIndex? frozenStatements,
         Dictionary<string, ImmutableArray<DocumentBlock.Describe>> describesByGid,
-        ImmutableArray<DescribeRedFinding>.Builder findings)
+        ImmutableArray<DescribeRedFinding>.Builder findings,
+        bool singleDocument)
     {
         if (source.Describe.Statement is not DescribeStatement.LeanDeclaration lean)
         {
@@ -280,6 +285,14 @@ internal static class DescribeRepositoryValidator
                         "Resolution claim validation requires the declaration catalog.");
                 describesByGid.TryGetValue(member, out var matches);
                 var matchCount = matches.IsDefault ? 0 : matches.Length;
+                var documentGid = source.Path[..source.Path.IndexOf("#describe/", StringComparison.Ordinal)];
+                var foreignMember = !member.StartsWith(documentGid + ".", StringComparison.Ordinal);
+                if (singleDocument && foreignMember && matchCount == 0)
+                {
+                    if (catalog.Resolve(DeclarationHandle.Create(member)).FormalKind != LeanDeclarationKind.Theorem)
+                        throw new InvalidOperationException("foreign resolution source must be theorem-like in Lean");
+                    continue;
+                }
                 if (matchCount != 1)
                 {
                     throw new InvalidOperationException(
