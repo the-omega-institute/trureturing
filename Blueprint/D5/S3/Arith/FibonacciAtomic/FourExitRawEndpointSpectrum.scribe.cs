@@ -49,8 +49,8 @@ internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefin
                     + "Each recipe has an original globally correct Strategy with costs 8k+16 plus "
                     + "these gains on the five rows."))), DescribeRole.Theorem),
             Paragraph(Text(
-                "These local recipes do not establish attainment on the entire family. "
-                + "The scan of other slots, its composition with each tail, "
-                + "and the full Pareto classification remain unproved.")))));
+                "This module supplies the local obstruction and the six local tails. "
+                + "FourExitScanExtension extends the tails by scanning the other slots, "
+                + "and FourExitRawParetoSpectrum gives the full-family attainment and Pareto classification.")))));
 
 }

@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_t
 
 At every selected slot, on the five rows baseline, A, Y, H, Z, six actual response recipes attain gains (1,1,0,1,1), (1,1,1,0,1), (1,1,1,1,0), (1,0,1,2,1), (1,0,2,1,1), and (1,0,1,1,2). Each recipe has an original globally correct Strategy with costs 8k+16 plus these gains on the five rows.
 
-These local recipes do not establish attainment on the entire family. The scan of other slots, its composition with each tail, and the full Pareto classification remain unproved.
+This module supplies the local obstruction and the six local tails. FourExitScanExtension extends the tails by scanning the other slots, and FourExitRawParetoSpectrum gives the full-family attainment and Pareto classification.
 
 ## References
 
