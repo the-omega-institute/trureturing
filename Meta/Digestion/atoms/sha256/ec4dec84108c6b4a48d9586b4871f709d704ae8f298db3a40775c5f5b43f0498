@@ -1,0 +1,8 @@
+**定理 5.1（正秩一分解的尺度自由度）。** 对正实向量，$c\ell=c'\ell'$ 当且仅当存在 $\lambda>0$ 使
+
+$$
+c'=\lambda c,
+\qquad
+\ell'=\lambda^{-1}\ell.
+$$
+

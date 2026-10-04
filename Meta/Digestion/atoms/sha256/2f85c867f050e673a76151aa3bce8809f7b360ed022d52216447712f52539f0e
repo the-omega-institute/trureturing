@@ -1,0 +1,10 @@
+**定理 12.2（三读数的模型相容性）。** 按定理 12.1 的规则选择后续词。一个实数三元组 $(x,b,t)$ 来自某个 $R\in\mathcal R_+$，当且仅当
+
+$$
+x>0,\qquad b>x,\qquad
+0<t-r<(N+1)x,
+\qquad r=b-x,\quad N=\left\lceil\frac xr\right\rceil.
+$$
+
+其中后两项参数只在 $x>0,b>x$ 时定义。相容时来源矩阵唯一，并由定理 12.1 的公式给出。
+

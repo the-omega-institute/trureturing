@@ -1,0 +1,17 @@
+**引理 25.1（原始词的绝对与有符号 Fibonacci 界）。** 对任意原始长度为 $n\ge0$ 的合法词，写
+
+$$
+W=\begin{pmatrix}a&b\\c&d\end{pmatrix},\qquad \delta=d-a,
+\qquad
+K_n=\begin{cases}0,&0\le n\le2,\\F_{n-2},&n\ge3.\end{cases}
+$$
+
+则
+
+$$
+b,c\le F_n,\qquad |\delta|\le F_n,\qquad
+-\delta\le K_n,\qquad \delta-2b\le K_n.
+$$
+
+$K_n$ 与定理 20.1 的 $H_n$ 是不同的界。对 $n\ge1$，$b,c,|\delta|$ 的 $F_n$ 界均由 $M^n$ 同时达到；对 $n\ge3$，$-\delta$ 的 $K_n$ 界由 $JM^{n-2}J$ 达到。
+

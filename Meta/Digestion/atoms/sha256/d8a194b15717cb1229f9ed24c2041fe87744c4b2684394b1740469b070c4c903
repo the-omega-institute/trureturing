@@ -1,0 +1,35 @@
+**定理 27.3（几何分支、直径与最早饱和）。** 定义 27.1 的 $G$ 连续、非减，且其完整分支为
+
+$$
+G(w)=
+\begin{cases}
+w,&0<\rho\le1,\quad 0\le w\le x;\\
+w(x-w)/\zeta,&1<\rho\le2,\quad 0\le w\le x-\zeta;\\
+w,&1<\rho\le2,\quad x-\zeta\le w\le x;\\
+w(x-w)/\zeta,&2<\rho<4,\quad 0\le w\le x/2;\\
+H,&2<\rho<4,\quad x/2\le w\le H;\\
+w,&2<\rho<4,\quad H\le w\le x;\\
+w(x-w)/\zeta,&\rho\ge4,\quad 0\le w\le x/2;\\
+H,&\rho\ge4,\quad x/2\le w\le x.
+\end{cases}
+$$
+
+重复端点处的公式相等。纤维的最大元素范数直径，即全部来源对距离的上确界，是 $\max(x,H)$。对定理 27.2 的注入词，矩阵模量首次达到这个直径的容差为
+
+$$
+\tau_R^{\mathrm{sat}}=
+\begin{cases}
+\phi(x)=|D|x,&\rho<4,\\
+\phi(x/2),&\rho\ge4.
+\end{cases}
+$$
+
+若合法词满足 $e=0$，则定理 23.1 给出 $D=0$、读数恒定；此时对所有 $\tau\ge0$，成对模量为
+
+$$
+\Omega_B(\tau)=x,\qquad
+\mathcal M_B(\tau)=\max(x,H),
+$$
+
+包括零容差。这些是恒定读取的成对模量，不是逆映射的模量。$e>0,\mu<0$ 的非注入词不适用定理 27.2。
+

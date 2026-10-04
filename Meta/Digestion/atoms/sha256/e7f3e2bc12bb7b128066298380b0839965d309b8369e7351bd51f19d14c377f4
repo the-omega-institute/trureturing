@@ -1,0 +1,77 @@
+**证明。** 取同一个来源对 $0<u<v<x$，令 $\ell=v-u$、$z=x-u-v$。由 $u>0,v<x$，有
+
+$$
+0<\ell<x,\qquad |z|<x-\ell.
+$$
+
+复用定理 19.2 的矩阵差分及 §23 的读数差分，得到
+
+$$
+\|R(v)-R(u)\|_{\max}
+=\ell\max\left(1,\frac{|z|}{\zeta}\right),\qquad
+|T_B(v)-T_B(u)|=\ell|D+\alpha z|.
+$$
+
+因为 $|D|=\mu+\alpha x$，括号在整个开区间内与 $D$ 同号。由此
+
+$$
+\ell|D+\alpha z|
+\ge\ell(|D|-\alpha|z|)
+>\ell\bigl(\mu+\alpha\ell\bigr)=\phi(\ell).
+$$
+
+特别地，读数差不超过 $\tau$ 的不同来源对满足 $\ell\le w$。与此同时，矩阵差不超过
+
+$$
+g(\ell)=\max\left(\ell,\frac{\ell(x-\ell)}{\zeta}\right).
+$$
+
+在 $[0,w]$ 上，第一项的最大值是 $w$，第二项的最大值在 $b_w=\min(w,x/2)$ 处，值为 $b_w(x-b_w)/\zeta$。所以 $\sup_{0\le\ell\le w}g(\ell)=G(w)$，给出矩阵模量的上界。这里对分子和分母的比较始终使用同一个 $u,v$。
+
+现证下界。设 $\tau>0$，则 $w>0$。连续函数 $g$ 在紧区间 $[0,w]$ 上取到最大值；任选最大点 $\ell_0$。由于 $g(0)=0<G(w)$，有 $0<\ell_0\le w\le x$。取 $0<\ell_j<\ell_0$、$\ell_j\to\ell_0$。$\phi$ 在 $[0,\infty)$ 上严格递增，因此
+
+$$
+\phi(\ell_j)<\phi(\ell_0)\le\phi(w)\le\tau.
+$$
+
+最后一个不等式包括封顶 $w=x$ 的情形。对每个 $j$，选取
+
+$$
+0<\varepsilon_j<\min\left(\frac{x-\ell_j}{2},\frac1j,
+\frac{\tau-\phi(\ell_j)}{2\alpha\ell_j}\right).
+$$
+
+若 $D>0$，取 $v_j=x-\varepsilon_j,u_j=v_j-\ell_j$；若 $D<0$，取 $u_j=\varepsilon_j,v_j=u_j+\ell_j$。两种构造都在开纤维内，且分别有
+
+$$
+z_j=-(x-\ell_j)+2\varepsilon_j,\qquad
+z_j=(x-\ell_j)-2\varepsilon_j.
+$$
+
+弱端点既使 $|z_j|$ 趋向其允许上界，又使读数差趋向其允许下界。具体地，两个符号下都有
+
+$$
+|T_B(v_j)-T_B(u_j)|
+=\phi(\ell_j)+2\alpha\varepsilon_j\ell_j<\tau,
+$$
+
+而
+
+$$
+\|R(v_j)-R(u_j)\|_{\max}
+=\ell_j\max\left(1,\frac{x-\ell_j-2\varepsilon_j}{\zeta}\right)
+\longrightarrow g(\ell_0)=G(w).
+$$
+
+这证明下界，同时处理最大点为 $x$、容差恰为 $\phi(x)$ 以及 $\mu=0$ 的情形；无需把任何来源端点加入域。
+
+还须核对不取到性。对任意允许的不同来源对，若 $w<x$，由 $\phi(\ell)<\tau=\phi(w)$ 得 $\ell<w$；若 $w=x$，仍有 $\ell<x=w$。因此矩阵差中的第一项 $\ell$ 严格小于 $w\le G(w)$，第二项满足
+
+$$
+\frac{\ell|z|}{\zeta}
+<\frac{\ell(x-\ell)}{\zeta}
+\le\frac{b_w(x-b_w)}{\zeta}\le G(w).
+$$
+
+两项都严格小于 $G(w)$，所以正上确界不能由内部来源对取到。最后，$\tau=0$ 时注入性强制 $u=v$，矩阵差也为零，给出陈述的零容差结论。∎
+
