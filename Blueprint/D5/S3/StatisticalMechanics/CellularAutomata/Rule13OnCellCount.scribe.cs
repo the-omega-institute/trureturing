@@ -11,17 +11,14 @@ internal sealed class Rule13OnCellCountDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/price2015rule13oncells");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The elementary cellular automaton with Wolfram rule 13, started from a single ON cell at the origin and updated at every cell of the integers, has n + 1 ON cells among the cells -n, ..., n of row 2n and 3n + 1 of them in row 2n + 1, as conjectured by Ctibor O. Zizka for OEIS A266285; the counts therefore satisfy Colin Barker's closed form ((-1)^n (3 - 2n) + 4n + 1) / 4, his recurrence a(n) = 2 a(n - 2) - a(n - 4) for n > 3 and his generating function (1 + x + 2x^3) / ((1 - x)^2 (1 + x)^2).",
+        "The elementary cellular automaton with Wolfram rule 13, started from a single ON cell at the origin and updated at every cell of the integers, has n + 1 ON cells among the cells -2n, ..., 2n of row 2n and 3n + 1 ON cells among the cells -(2n + 1), ..., 2n + 1 of row 2n + 1, as conjectured by Ctibor O. Zizka for OEIS A266285; the counts therefore satisfy Colin Barker's closed form ((-1)^n (3 - 2n) + 4n + 1) / 4, his recurrence a(n) = 2 a(n - 2) - a(n - 4) for n > 3 and his generating function (1 + x + 2x^3) / ((1 - x)^2 (1 + x)^2).",
         H("ON cells of the Rule 13 cellular automaton"),
         Blocks(
             Node("rule", "Rule 13", RuleFormula(),
                 "The new state of a cell whose left neighbour, own state and right neighbour are l, c, r is bit 4l + 2c + r of 13, the Wolfram numbering; toNat sends false and true to 0 and 1.",
                 "rule13", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("cell", "Rows from a single ON cell", CellFormula(),
-                "Row 0 has exactly the cell at the origin ON, and every cell of the integers is updated from its three neighbours at every step, so cells far from the origin follow the background, which alternates because 000 goes to 1 and 111 goes to 0 under rule 13.",
-                "cell", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("count", "The sequence A266285", CountFormula(),
-                "A266285, the number of ON (black) cells in the n-th iteration: the cells x of row n with -n ≤ x ≤ n that are ON, with n cast to the integers.",
+                "A266285, the number of ON (black) cells in the n-th iteration: the cells x of row n with -n ≤ x ≤ n that are ON, with n cast to the integers. The rows are the frozen single-seed evolution row g of RuleThirtyTwentyTwoMersenneSignRefutation with g = rule13: row g 0 x is true exactly for x = 0, and row g (m + 1) x = g (row g m (x - 1)) (row g m x) (row g m (x + 1)) for every integer x, so every cell of the integers is updated at every step and cells far from the origin follow the background, which alternates because 000 goes to 1 and 111 goes to 0 under rule 13.",
                 "onCount", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjectures of Barker and Zizka", ClaimFormula(),
                 "Barker's closed form, read in the rationals; his recurrence for n > 3 and his generating function, read in the integers, with the generating function stated as the product of the series with its denominator, which has constant term 1; and Zizka's formulas for even and odd indices.",
@@ -79,21 +76,11 @@ internal sealed class Rule13OnCellCountDocument : IScribeDocumentDefinition
         return Disp(Equal(Call("rule13", l, c, r), Call("testBit", D(1, 3), index)));
     }
 
-    private static Formula CellFormula()
-    {
-        Formula n = F.Id("n"), x = F.Id("x");
-        Formula start = Equal(Call("cell", D(0), x), Call("decide", Equal(x, D(0))));
-        Formula step = Equal(Call("cell", Add(n, D(1)), x),
-            Call("rule13", Call("cell", n, Subtract(x, D(1))), Call("cell", n, x),
-                Call("cell", n, Add(x, D(1)))));
-        return Disp(All("n", Naturals(), All("x", Integers(), And(start, step))));
-    }
-
     private static Formula CountFormula()
     {
         Formula n = F.Id("n"), x = F.Id("x");
         Formula window = Call("Icc", new Formula.Negate(As(n, Integers())), As(n, Integers()));
-        Formula on = Seq(x, Sp, Mapsto, Sp, Equal(Call("cell", n, x), Named("true")));
+        Formula on = Seq(x, Sp, Mapsto, Sp, Equal(Call("row", Named("rule13"), n, x), Named("true")));
         return Disp(Equal(Call("onCount", n), Call("card", Call("filter", on, window))));
     }
 
