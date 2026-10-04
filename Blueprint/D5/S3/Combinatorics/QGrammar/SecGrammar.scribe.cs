@@ -11,7 +11,7 @@ internal sealed class SecGrammarDocument : IScribeDocumentDefinition
         "The number of distinct terms in every positive iterate of the Sec q-derivative is the formula of Conjecture III.7.",
         H("Han, Ji and Xiong's Sec Grammar Conjecture"),
         Blocks(
-            Node("sec-grammar-result", "Conjecture III.7 resolved", "result", "For every positive natural n, the support of the n-fold q-derivative of y at index zero has cardinality omegaFormula n. This proves Conjecture III.7 for the Sec grammar.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("han-ji-xiong-sec-grammar-support"), ResolutionKind.Proved))
+            Node("sec-grammar-result", "Conjecture III.7 resolved", "result", "For every positive natural n, the support of the n-fold q-derivative of y at index zero has cardinality omegaFormula n. This proves Conjecture III.7 for the Sec grammar.", DescribeRole.Theorem)
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
