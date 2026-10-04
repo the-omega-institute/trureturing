@@ -26,7 +26,7 @@ Page 2, equation (13):
 
 Page 3, footnote 1:
 
-> We use the convention Y^0_0 = 1, so that the spherical harmonics are orthonormal with respect to the uniform probability measure dµ^0_{θ,ϕ} = (4π)^{−1} sin θ dθ dϕ. This differs from the Condon–Shortley convention by a factor of √4π: Y_{Lm} = √4π Y_{Lm,CS}
+> We use the convention Y^0_0 = 1, so that the spherical harmonics are orthonormal with respect to the uniform probability measure dµ^0_{θ,ϕ} = (4π)^{−1} sin θ dθ dϕ. This differs from the Condon–Shortley convention by a factor of √4π: Y^m_L = √4π Y^{m,CS}_L, or equivalently Y^m_L = √(2L+1) Y^{m,Racah}_L, where Y^{m,Racah}_L = (−1)^m √((L−m)!/(L+m)!) P^m_L(cos θ) e^{imϕ} for m ≥ 0.
 
 Equations (35)–(36) fix $a_J=(2J+1)^{-1/2}$. Page 5, equation (44):
 
