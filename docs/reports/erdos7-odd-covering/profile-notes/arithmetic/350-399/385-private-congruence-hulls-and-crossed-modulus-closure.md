@@ -19,6 +19,15 @@ separate reductions fail. The ordinary proofs and exact finite
 controls below do not establish unrestricted Erdős #7, literature
 priority, or new Lean verification.
 
+[Report 388, Section 71](388-source-global-substitution-collision-moment.md#71-terminal-donors-sharpen-the-support-cutoff-and-force-shallow-five-word-occupancy)
+uses actual terminal donors and EB1's modulus-sum tie-break to sharpen
+the whole-support cutoff to $P^+(Q)<p^{H_p+1}T_p(H_p)-p^{H_p}+1$.
+At original ternary height two this gives $29\le P^+(Q)\le113$.
+For $q=107,109,113$, exact-height-one phase occupancy also forces at
+least $200,215,245$ original labels $9qm$ with two distinct cofactor
+primes, respectively. Complete common cofactor service and arbitrary
+ternary height remain unresolved; these deductions are not Lean claims.
+
 Section10 raises the private-hull closure threshold from the original
 label to its largest original multiple. Moving the parent to one actual
 descendant phase converts that group's joint replacement obligation

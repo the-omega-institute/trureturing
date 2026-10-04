@@ -10982,3 +10982,409 @@ The Section 66 entrance SC372 remains a separate joint
 condition. These are ordinary deductions from the
 stated EB1 hypotheses; no Lean verification of the
 absorption or child-count conclusions is asserted.
+
+## 71. Terminal donors sharpen the support cutoff and force shallow five-word occupancy
+
+In the original ternary-height-two EB1 branch, the support range is
+
+$$
+29\le P^+(Q)\le113.
+\tag{SC434}
+$$
+
+The exchange retains the actual pure prime-power original as a donor
+for one short terminal prefix. Every replacement modulus decreases,
+so EB1's modulus-sum tie-break applies even when the number of classes
+is unchanged. The same construction sharpens each pure-power private
+projection and forces exact-height-one phase occupancy at the largest
+surviving primes. Every exchange uses one original cover and one
+complete joint liability.
+
+### One pure original terminates a short prefix
+
+First allow arbitrary original height at the coding prime. Fix distinct
+odd support primes $\ell,q$ and write
+$Q=\ell^Hq^GW$, where $(W,\ell q)=1$ and $H,G\ge1$.
+For $1\le t\le G$, put $k=t-1$ and use Section 69's actual
+pure-parent data
+
+$$
+\begin{gathered}
+u=\rho_{q^t}\pmod{q^k},\qquad
+J=\{d\in D:v_q(d)>k,\ \rho_d\equiv u\pmod{q^k}\},\\
+E=(\mathbb Z/Q\mathbb Z)\setminus\bigcup_{d\notin J}A_d
+ =\{(v,z,w):z\equiv u\pmod{q^k},\ (v,w)\in X_t\},\\
+\Lambda_t=\pi_{\ell^H}(X_t)
+ =\pi_{\ell^H}(P_{q^t}),\qquad
+s_t=|\Lambda_t|,\qquad1\le s_t\le T_\ell(H).
+\end{gathered}
+\tag{SC435}
+$$
+
+The exact set $X_t$ includes the entire $W$ coordinate and the
+complement of all compatible retained lower-$q$ originals. All
+originals outside $J$ remain unchanged. Set
+
+$$
+B=\ell^{H+1},\qquad N_t=Bs_t-\ell^H+1,
+\qquad q>B.
+\tag{SC436}
+$$
+
+Suppose $q\ge N_t$. Over the $s_t$ old words, the initial
+prefixes of length $2H+1$ number $Bs_t$. Choose one prefix
+$c\pmod{\ell^{H+1}}$ above an old word in $\Lambda_t$.
+Replace all its $\ell^H$ fine extensions by this one short
+leaf. The resulting prefix partition has exactly $N_t$ leaves.
+Assign the short leaf to the actual next $q$-digit of $q^t$,
+and assign the other leaves injectively to different next digits.
+
+The short leaf terminates and is covered directly by
+$[u]_{q^k}\cap[c]_{\ell^{H+1}}$. The actual donor $q^t$
+has no coding-prime or $W$ condition, so it supplies the entire
+leaf. On each other initial leaf use the existing continuing
+prefix code, with $B$ extensions for every later $q$-digit.
+The condition $q>B$ supplies all these injections. If $t=G$,
+there are no later digits.
+
+Fix this single code on the entire parent cylinder whose
+$\ell^H$ word lies in $\Lambda_t$, without intersecting each
+inverse with $X_t$. Preserve the old $\ell^H$ coordinate,
+the whole $W$ coordinate and the parent $u$. A common comparison
+carrier is $\ell^{L_{G-k}}q^GW$, where
+$L_j=H+(H+1)j$. On a terminal leaf any remaining source
+$q$-digits can be fixed arbitrarily; the donor covers every
+such source. On the continuing part every digit is given by
+the fixed prefix code.
+
+Write a removed original as $d=\ell^a q^{k+j}m$, with
+$0\le a\le H$, $1\le j\le G-k$ and $m\mid W$.
+Its continuing inverse is empty or one AP with a prefix
+$c_d\pmod{\ell^{L_j}}$, the parent $u$ and the actual
+$m$-phase. The initial leaf already specifies an old word in
+$\Lambda_t$, so this inverse needs no additional mask.
+Enclose each nonempty inverse using
+
+$$
+\begin{gathered}
+\kappa_j(a)=(H+1)j+a,\qquad
+M(d)=\ell^{\kappa_j(a)}q^km,\\
+B_d=[u]_{q^k}\cap[c_d]_{\ell^{\kappa_j(a)}}
+                         \cap[\rho_d]_m,\qquad
+H<\kappa_j(a)\le L_j,\\
+\frac{M(d)}d=\left(\frac{B}{q}\right)^j<1.
+\end{gathered}
+\tag{SC437}
+$$
+
+The terminal donor has exactly the slot $j=1,a=0,m=1$,
+so its replacement is $M(q^t)=Bq^k$. Its next digit is
+used only by the terminal leaf, and it produces no continuing
+replacement. Every other removed original contributes at most
+one replacement. Every new modulus has coding-prime height
+strictly above $H$, so it is fresh against every retained
+original. Division of the exponent by $H+1$ recovers $j,a$;
+the remaining cofactor recovers $m$. Thus all new numerical
+moduli are pairwise distinct odd nonunits.
+
+For every point of the full $E$, the source still has its
+complete old $(\ell^H,W)$ coordinate in $X_t$. Retained
+lower-$q$ membership is unchanged, and retained higher-$q$
+originals miss the parent. Original whole coverage therefore
+supplies an owner in $J$. A terminal output is directly
+covered by its donor's replacement. A continuing output is
+covered by the enclosure of its original owner's inverse.
+Outside $E$, the unchanged retained family already covers.
+This proves coverage of all integers.
+
+Let $I\subseteq J$ be the originals that produce replacements,
+including the terminal donor, and put $\Sigma=\sum_{d\in D}d$.
+The one replacement family satisfies
+
+$$
+\begin{aligned}
+K'&=K-|J|+|I|\le K,\\
+\Sigma'
+ &=\Sigma-\sum_{d\in J\setminus I}d
+   -\sum_{d\in I}d\left[1-
+       \left(\frac Bq\right)^{v_q(d)-k}\right]
+ <\Sigma.
+\end{aligned}
+\tag{SC438}
+$$
+
+If $K'<K$, count minimality fails; if $K'=K$, modulus-sum
+minimality fails. Thus EB1 excludes $q\ge N_t$, proving
+
+$$
+\boxed{q>\ell^{H+1}\quad\Longrightarrow\quad
+q<\ell^{H+1}s_t-\ell^H+1\quad(1\le t\le G).}
+\qquad
+\boxed{P^+(Q)<\ell^{H+1}T_\ell(H)-\ell^H+1.}
+\tag{SC439}
+$$
+
+For the second conclusion, any prime at most $\ell^{H+1}$
+is already below the displayed threshold: $T_\ell(H)\ge2$
+and $\ell^{H+1}>\ell^H$. The coding prime itself also lies
+below it. The local hypothesis $q>\ell^{H+1}$ remains
+essential to the stated strict modulus comparison. The
+all-height cutoff still grows with $H$.
+
+### Height two gives a strict endpoint and stronger private projections
+
+Take $\ell=3$, $H=2$ and an original support prime $q\ge29$.
+Then $B=27$ and $T_3(2)=5$. SC439 gives, for every pure
+power in the same original cover,
+
+$$
+q<27s_t-8,\qquad
+s_t\ge\left\lfloor\frac{q+8}{27}\right\rfloor+1,
+\qquad1\le t\le G.
+\tag{SC440}
+$$
+
+At $s_t=5,q=127$, the initial partition has exactly 127
+leaves. No omitted original is required: every charged
+modulus decreases strictly. Thus $127$ and $131$ are both
+excluded. Combining the resulting prime cutoff with the
+existing lower bound from Report 385 GHA10 gives SC434.
+
+The complete private projections consequently satisfy
+
+| Original support prime | Required safe words in every $\pi_9(P_{q^t})$ |
+| --- | --- |
+| $q\ge29$ | at least 2 |
+| $q\ge47$ | at least 3 |
+| $q\ge73$ | at least 4 |
+| $q\ge101$ | all 5 |
+
+Reuse Section 69's actual cofactor-free guard argument. A
+compatible lower-$q$-height $3q^h$ removes at least two
+safe words, and a compatible $9q^h$ removes its one safe
+word. For $h\ge t$, compatibility is already excluded by
+containment in the actual pure $q^t$ class. Hence the literal
+phase restrictions sharpen to
+
+$$
+\begin{aligned}
+q\ge73&\quad\Longrightarrow\quad
+\rho_{q^t}\not\equiv\rho_{3q^h}\pmod{q^{\min(t,h)}},\\
+q\ge101&\quad\Longrightarrow\quad
+\rho_{q^t}\not\equiv\rho_{9q^h}\pmod{q^{\min(t,h)}}
+\qquad(1\le t,h\le G).
+\end{aligned}
+\tag{SC441}
+$$
+
+The mixed numerical labels exist by GHA10 and divisor closure.
+The cofactor points realizing different safe words may still
+be different. The larger projection does not supply one common
+cofactor cylinder.
+
+### Two actual terminal donors at the first q-level
+
+At $k=0$, actual $3q$ exists for $q\ge29$. Write
+$c_0=\rho_q\pmod q$ and $c_1=\rho_{3q}\pmod q$.
+These two digits differ by comparable-original disjointness.
+A private point of $3q$ supplies a word of $\Lambda_1$ in
+its actual first-3 root. Choose a depth-four prefix over this
+word for the $3q$ terminal, and a disjoint depth-three prefix
+for the $q$ terminal. Such a choice is possible even within
+one old word, by using different depth-three subprefixes.
+
+The two terminal leaves replace nine and three depth-five
+leaves, saving eight and two, respectively. Their whole APs
+have numerical labels $27$ and $81$, exactly the $q$ and
+$3q$ donor slots in SC437. On the second leaf the preserved
+first-3 root satisfies the actual $3q$ guard. The remaining
+initial leaves continue as before, with neither terminal digit
+assigned to a continuing leaf. The same source, decoder
+and comparison SC438 therefore give
+
+$$
+q<27s_1-10.
+\tag{SC442}
+$$
+
+In particular, $q=71$ forces $s_1\ge4$. This two-donor
+statement uses the common root $k=0$. At deeper levels it
+requires the two actual donors to share the chosen parent;
+numerical presence alone does not provide that alignment.
+
+### Almost every large-prime child has all five words at exact height one
+
+Let $\mathcal A$ be the five actual safe words modulo 9
+left by the original pure 3 and 9 guards. For a first-$q$
+digit $c$, define
+
+$$
+\begin{gathered}
+B(c)=\{z\in\mathcal A:\exists m\mid W,\ 9qm\in D,\
+\rho_{9qm}\equiv c\pmod q,\
+\rho_{9qm}\equiv z\pmod9\},\\
+V_q=\{c\notin\{c_0,c_1\}:B(c)\ne\mathcal A\},
+\qquad q\in\{107,109,113\}.
+\end{gathered}
+\tag{SC443}
+$$
+
+These are actual originals of exact $q$-height one; higher
+$q$-height descendants are not counted. SC440 gives
+$\Lambda_1=\mathcal A$ for these three primes. The necessary
+bound is
+
+$$
+|V_q|\le\frac{123-q}{2}.
+\tag{SC444}
+$$
+
+To prove it, put $r=(125-q)/2$, so $r$ is respectively
+$9,8,6$. Suppose there are $r$ distinct defective digits
+outside $\{c_0,c_1\}$. For each selected digit choose a
+missing word $z(c)\in\mathcal A\setminus B(c)$, and let
+$n_z$ count how many choices use word $z$. Then
+$\sum_z n_z=r\le9$.
+
+Each safe word has nine depth-four subprefixes. The actual
+first-3 root of $3q$ contains at least two safe words.
+Choose its terminal word $v$ avoiding any word with $n_z=9$;
+there is at most one such word. Thus $n_v\le8$, and the
+$3q$ terminal leaves room for all its requested depth-four
+prefixes. Choose a different word for the $q$ terminal,
+avoiding any word with $n_z\ge7$. There is at most one such
+word, so this choice is possible among the other four safe
+words. Its depth-three terminal consumes three depth-four
+slots, leaving at least the six needed there. All other
+words have nine slots. Hence all selected depth-four leaves
+can be chosen disjointly from each other and both terminals.
+
+The two terminals save ten initial leaves, and each selected
+short continuing leaf saves two. The complete initial
+partition therefore has
+
+$$
+135-8-2-2r=125-2r=q
+\tag{SC445}
+$$
+
+leaves. Assign the prescribed leaves to their two donor digits
+and their $r$ defective digits, and assign the remaining
+ordinary depth-five leaves bijectively to the other digits.
+
+At a short continuing leaf, the missing-word condition makes
+every exact-$q$-height-one original of ternary height two
+incompatible with the source. Thus its nonempty height-one
+inverses have $a\le1$ and fit their SC437 labels in the
+depth-four prefix. If $G\ge2$, give that short leaf 81
+ternary extensions for the next $q$-digit; this is possible
+because $q>81$. The resulting depth is $4+4=8$, exactly
+the usual $3\cdot2+2$ depth. Use ordinary width three
+thereafter. If $G=1$, no continuation is needed. Ordinary
+initial depth-five leaves use the usual continuation throughout.
+
+Consequently every deeper original still has at most one
+continuing inverse at depth $3j+2$ and receives the same
+numerical label $3^{3j+a}m$. The absence condition concerns
+only exact height one; deeper descendants retain all their
+original phases and heights. The terminals directly cover
+their whole leaves. The common source preserves the entire
+modulo-9 and $W$ coordinates, so SC435--SC438 again cover
+the complete joint hole and give a forbidden EB1 descent.
+Therefore $|V_q|<r$, proving SC444.
+
+One original $9qm$ occupies only one child and one modulo-9
+word. The corresponding actual inventories are therefore
+
+| $q$ | Maximum defective nonterminal children | Minimum children with all five words | Minimum distinct originals $9qm$ |
+| --- | --- | --- | --- |
+| 107 | 8 | 97 | 485 |
+| 109 | 7 | 100 | 500 |
+| 113 | 5 | 106 | 530 |
+
+The cofactors may depend on both the child and the word.
+Neither their common incidence nor complete top-menu service
+is asserted.
+
+### Mixed terminal capacities constrain every occupied parent
+
+There is also a branchwise version at an arbitrary occupied
+terminal parent $u\bmod q^{G-1}$, for $q\ge29$. Keep
+SC419--SC420's complete $E_u,X_u,\Lambda_u$ and put
+$s_u=|\Lambda_u|$. Let $n_a$ count next children whose
+maximum actual ternary height in $J_u$ is $a\in\{0,1,2\}$.
+Every child is occupied, and
+$n_0=q-c_1(u)$, $n_1=c_1(u)-c_2(u)$, $n_2=c_2(u)$.
+Then
+
+$$
+\boxed{9n_0+3n_1+n_2
+ =9q-6c_1(u)-2c_2(u)<27s_u.}
+\tag{SC446}
+$$
+
+Indeed, if the capacity is at least $27s_u$, tile the whole
+forest of $s_u$ old words by leaves of depths $3,4,5$.
+Take $x_0=\min(n_0,3s_u)$ depth-three leaves, then
+$x_1=\min(n_1,9s_u-3x_0)$ depth-four leaves, and use the
+remaining $x_2=27s_u-9x_0-3x_1\le n_2$ depth-five leaves.
+Choose the latter nodes below the unfilled earlier nodes,
+so this is one prefix partition. Assign each leaf to a
+different child of its type.
+
+A used child has exactly one prefix. Every compatible
+original $3^a q^Gm$ in it has $a$ at most that child's
+maximum, so its inverse fits the fresh enclosure
+$3^{3+a}q^{G-1}m$. The exponent and cofactor recover the
+original numerical label. The same one-source argument
+covers all of $E_u$; at most one replacement is charged to
+each deleted original, and each charged modulus decreases
+by the factor $27/q<1$. Thus SC438 applies even if every
+child and every original is used. This proves the strict
+inequality SC446 without an omitted-child requirement.
+
+### The shallow phase inventory forces many mixed cofactors
+
+Fix one of $q=107,109,113$. Distinct original numerical
+labels $9qm$ have distinct cofactors $m$. By SC434 and
+Report 385 GHA11, a $q$-free, 3-free cofactor with at most
+one distinct prime factor has at most the following number
+of available numerical values:
+
+$$
+\begin{aligned}
+1+\sum_{\substack{5\le p\le113\text{ prime}\\p\ne q}}
+ \left(10+\left\lfloor\frac{23}{p-1}\right\rfloor\right)
+ &=1+15+13+12+4\cdot11+20\cdot10\\
+ &=285.
+\end{aligned}
+\tag{SC447}
+$$
+
+This is an upper envelope allowing every prime through 113;
+an absent support prime only reduces it. Subtracting it from
+the distinct actual cofactors required by SC444 gives
+
+$$
+\begin{array}{c|ccc}
+q&107&109&113\\ \hline
+\#\{m:9qm\in D,\ (m,3q)=1,\ \omega(m)\ge2\}
+ &\ge200&\ge215&\ge245.
+\end{array}
+\tag{SC448}
+$$
+
+Here $\omega(m)$ counts distinct prime factors. Every counted
+original has at least four distinct prime factors including
+3 and $q$. The bounds concern one fixed $q$ at a time;
+the same original can occur in the inventories for different
+$q$, and no common pair of cofactor primes is forced.
+
+These phase and numerical conclusions do not supply a common
+cofactor point or coverage of a complete residual. The
+qualified whole-menu entrances of the earlier exchanges
+remain separate obligations. SC439 applies at every finite
+coding-prime height but still grows with that height;
+unrestricted odd distinct covering remains open. These are
+ordinary mathematical deductions, with no Lean verification
+of the exchanges or their consequences asserted here.
