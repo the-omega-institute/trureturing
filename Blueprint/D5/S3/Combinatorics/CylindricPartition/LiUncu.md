@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/CylindricPartition/LiUncu.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CylindricPartition/LiUncu.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-uncu-finite-andrews-gordon-companion` (proved) by `D5/S3/Combinatorics/CylindricPartition/LiUncu.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-uncu-finite-andrews-gordon-companion","declaration_gid":"D5/S3/Combinatorics/CylindricPartition/LiUncu.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Runqiao Li, Ali K. Uncu (2025). *A MacMahon Analysis View of Cylindric Partitions*. DOI: [10.48550/arXiv.2501.19272](https://doi.org/10.48550/arXiv.2501.19272). URL: <https://arxiv.org/abs/2501.19272v1>.
