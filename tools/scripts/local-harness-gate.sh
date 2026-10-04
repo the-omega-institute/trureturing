@@ -12,10 +12,14 @@ while [[ $# -gt 0 ]]; do
 done
 cd "$CANDIDATE_ROOT"
 BASE_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")"
+PATHS_FILE="$(mktemp "${TMPDIR:-/tmp}/gate-paths.XXXXXXXX")"
+trap 'rm -f -- "$PATHS_FILE"' EXIT
+git diff --name-only -z "$BASE_SHA" -- > "$PATHS_FILE"
+git ls-files --others --exclude-standard -z >> "$PATHS_FILE"
 make lean-report
 dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo
 CLI=tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-dotnet "$CLI" check-current --candidate-lean-report .lake/build/stratalint/raw-lean-report.json
-bash tools/scripts/workflow/scribe-content-checks.sh .lake/build/stratalint/raw-lean-report.json
+dotnet "$CLI" check-current --candidate-lean-report .lake/build/stratalint/raw-lean-report.json --scribe-paths-from "$PATHS_FILE"
+bash tools/scripts/workflow/scribe-content-checks.sh .lake/build/stratalint/raw-lean-report.json tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$PATHS_FILE"
 dotnet "$CLI" filemap-conform
 dotnet "$CLI" check-delta --protected-base "$BASE_SHA" --candidate-lean-report .lake/build/stratalint/raw-lean-report.json

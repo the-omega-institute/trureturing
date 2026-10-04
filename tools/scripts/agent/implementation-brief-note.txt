@@ -36,48 +36,11 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 `make lean` EXIT=2,而该定理的 axiom 闭包里带 `sorryAx`。
 判绿只认构建退出码;`make lean-report` 会打印 axiom 闭包,出现 `sorryAx` 即未证完。
 
-## 开 PR 前必须本地跑 CI 那一层(`make emit` red=0 抓不到它)
+## 开 PR 前核验变更范围的 Scribe 内容
 
-    B=$(git merge-base HEAD origin/dev)
+    make emit
     bash tools/scripts/workflow/scribe-content-checks.sh \
       .lake/build/stratalint/raw-lean-report.json \
-      tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll "$B"
+      tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$PATHS_FILE"
 
-判绿看 `DESCRIBE_STATUS … status=classified … red=0`。
-输出里有数千条 `OPEN projection` 与 `OBSERVE`,**都不是判词**,直接 `grep '^RED'`。
-第三参数必须是**精确 merge-base SHA**,传 `origin/dev` 会被拒(`an exact merge-base is required`)。
-2026-09-11 判例:本地 `make emit` red=0 的 PR 被 CI 这一层判红。
-
-## Library note:照抄同桶现成的,别按描述写
-
-三个校验层各有一类红:DOI 或 URL 非规范(`invalid-doi` / `invalid-library-note`)
-→ `doi` 键整个缺失(`missing or unknown metadata fields`)
-→ 正文 `## Verified locator` 段里没有出现被绑定的定位符原文(`incomplete-library-locator`)。
-契约是:**`doi` 键必须在(无 DOI 写 `null`),`url` 键可选,至少一个非 null,DOI 与 URL 可并存**;
-仓内推导用 `doi: null` + `url: <仓库地址>`;
-**正文 locator 段必须出现每个已声明的定位符**(DOI 大小写无关,URL 逐字节;两者都给就两者都出现)。第三层 `make emit` 抓不到,只有上面那条命令会红。
-派席时点名一个同桶现成 note 让它逐字抄 frontmatter 与 locator 段结构,只改值。
-**派生判词会淹没根判词**:第二次那回有 7 条 `dangling-literature-reference` 排在根判词前面,
-先 `grep 'invalid-'`,别从第一条读起。
-
-## 交付形状的三条禁令
-
-- **禁 `rfl` 同义反复冒充定理**:`theorem f_formula : f x = <f 的定义体> := by rfl` 零内容。
-- **禁两半不接的「基础设施」**:定义了 A 与 B,交付里必须有定理**把它们连起来**;
-  三个独立参数并列、彼此无约束等于什么都没建(2026-09-11 判例:互信息收三个独立参数,
-  与同模块的偏迹毫无连接,被打回重做)。
-- **`utility:` 的 `kind` 只有四类计算性内容或 `none`**,没有 `bridge` 之类自造值;
-  文法去仓里抄真实例子。
-
-## 长门命令的输出不进对话:重定向到文件,只回显退出码
-
-    make gate BASE="$B" > "$LOG" 2>&1; echo "GATE_EXIT=$?"; tail -5 "$LOG"
-
-`make gate` / `make lean-report` / `make deposit-uncovered` / `scribe-content-checks.sh`
-会打印数千行 `OPEN` / `OBSERVE`,不得把整条流回显进对话。**长门命令一律重定向到文件**,
-只回显退出码与 `tail -5`;判词用 `grep` 在文件里找(`^RED`、`DESCRIBE_STATUS`、`GATE_EXIT=`)。
-
-## 每个可编译单元即时 commit
-
-席位常在约 40 分钟处被载体收走,作业也可能被宿主低内存守卫杀掉。
-2026-09-11 一日内三次靠增量提交保住了全部数学:被杀时 commit 已在,重来的只是门链。
+第三参数为本次变更路径清单，支持换行或 NUL 分隔。判绿只认命令退出码。

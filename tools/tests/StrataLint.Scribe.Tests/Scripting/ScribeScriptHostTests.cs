@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using System.Reflection;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using StrataLint.Engine;
@@ -350,7 +350,7 @@ public sealed class ScribeScriptHostTests
                     ScribeNode.Create("digest", H("Probe"), Blocks(statement)));
             }
             """);
-        var discovered = Assert.Single(DocumentDefinitions.Discover(new FieldDefinitionAssembly(), repository.Path));
+        var discovered = StatementProjectionFixtureLoader.WithRepositoryRoot(repository.Path, () => new FieldDefinition().Create());
 
         var result = ScribeScriptHost.Execute(repository.Path, path);
 
@@ -476,7 +476,7 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
-    public void ScriptsVerifyReturnsZeroForAnEquivalentSyntheticSet()
+    public void ScriptsVerifyExecutesTheSelectedSyntheticDefinition()
     {
         using var root = PrepareCommandRoot();
         const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
@@ -484,27 +484,19 @@ public sealed class ScribeScriptHostTests
         var output = new StringWriter();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
+        var exit = ScribeCli.Run(["scripts", "verify", "--paths-from", "-"],
             root.Path, output, error, new StringReader(path));
 
         Assert.Equal(0, exit);
-        Assert.Contains("paths=1 hostFailures=0 mismatches=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("paths=1 hostFailures=0", output.ToString(), StringComparison.Ordinal);
         Assert.Empty(error.ToString());
     }
 
     [Fact]
-    public void ScriptsVerifyNamesCanonicalMismatchAndInvalidArguments()
+    public void ScriptsVerifyRejectsInvalidArguments()
     {
         using var root = PrepareCommandRoot();
-        const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
-        WriteDefinition(root.Path, path, "Changed");
-        var output = new StringWriter();
-        var error = new StringWriter();
-
-        Assert.Equal(1, ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
-            root.Path, output, error, new StringReader(path)));
-        Assert.Contains("CanonicalContentMismatch", error.ToString(), StringComparison.Ordinal);
-        Assert.Equal(2, ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--bad"],
+        Assert.Equal(2, ScribeCli.Run(["scripts", "verify", "--bad"],
             root.Path, TextWriter.Null, new StringWriter(), TextReader.Null));
     }
 
@@ -515,7 +507,7 @@ public sealed class ScribeScriptHostTests
         var output = new StringWriter();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
+        var exit = ScribeCli.Run(["scripts", "verify", "--paths-from", "-"],
             root.Path, output, error, new StringReader(string.Empty));
 
         Assert.Equal(1, exit);
@@ -550,18 +542,6 @@ public sealed class ScribeScriptHostTests
             """);
     }
 
-    private sealed class FixtureAssembly : Assembly
-    {
-        internal static Assembly Value { get; } = new FixtureAssembly();
-
-        public override Type[] GetTypes() => [typeof(FirstDefinition)];
-    }
-
-    private sealed class FieldDefinitionAssembly : Assembly
-    {
-        public override Type[] GetTypes() => [typeof(FieldDefinition)];
-    }
-
     private sealed class FieldDefinition : IScribeDocumentDefinition
     {
         private readonly DocumentBlock.Describe statement = Describe.Lean(
@@ -578,16 +558,4 @@ public sealed class ScribeScriptHostTests
         }
     }
 
-    private sealed class FirstDefinition : IScribeDocumentDefinition
-    {
-        public DocumentDefinition Create()
-        {
-            const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
-            return DocumentDefinition.Create(
-                ScribeNode.Create("digest", DefinitionDsl.H("First"),
-                    DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("content"))),
-                    sourcePath: path),
-                sourcePath: path);
-        }
-    }
 }

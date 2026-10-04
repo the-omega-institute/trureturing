@@ -1,7 +1,5 @@
-using System.Reflection;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Documents;
 
 namespace StrataLint.Cli;
 
@@ -54,87 +52,77 @@ internal interface IScribeEmissionVerifier
     VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null,
+        RawChangeSet? changes,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null);
 }
 
 internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
 {
-    private readonly Func<string, LeanAxiomReport, FrozenStateCatalog?, FrozenStatementIndex?, VerifiedScribeEmissions> verifyMaterialized;
+    private readonly Func<string, IReadOnlyList<DocumentDefinition>>? definitions;
+    private readonly Func<string, LeanAxiomReport, FrozenStateCatalog?, FrozenStatementIndex?, VerifiedScribeEmissions>? verifyMaterialized;
 
-    internal ProductionScribeEmissionVerifier()
-        : this(typeof(DocumentAssembly).Assembly)
-    {
-    }
+    internal ProductionScribeEmissionVerifier() { }
 
-    internal ProductionScribeEmissionVerifier(Assembly documentsAssembly)
-        : this((root, report, frozenState, frozenStatements) =>
-            VerifyMaterialized(documentsAssembly, root, report, frozenState, frozenStatements))
-    {
-    }
-
-    internal ProductionScribeEmissionVerifier(IReadOnlyList<DocumentDefinition> definitions)
-        : this((root, report, frozenState, frozenStatements) =>
-            VerifyMaterialized(definitions, root, report, frozenState, frozenStatements))
-    {
-        ArgumentNullException.ThrowIfNull(definitions);
-    }
+    internal ProductionScribeEmissionVerifier(Func<string, IReadOnlyList<DocumentDefinition>> definitions) =>
+        this.definitions = definitions ?? throw new ArgumentNullException(nameof(definitions));
 
     internal ProductionScribeEmissionVerifier(
         Func<string, LeanAxiomReport, FrozenStateCatalog?, FrozenStatementIndex?, VerifiedScribeEmissions> verifyMaterialized) =>
-        this.verifyMaterialized = verifyMaterialized
-            ?? throw new ArgumentNullException(nameof(verifyMaterialized));
+        this.verifyMaterialized = verifyMaterialized ?? throw new ArgumentNullException(nameof(verifyMaterialized));
+
+    public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report,
+        IReadOnlyList<DocumentDefinition> definitions)
+    {
+        ArgumentNullException.ThrowIfNull(definitions);
+        using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
+        return VerifyMaterialized(definitions, materialized.Root, report, null, null, scoped: false);
+    }
 
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        IReadOnlyList<DocumentDefinition> definitions) =>
-        new ProductionScribeEmissionVerifier(definitions).Verify(snapshot, report);
-
-    public VerifiedScribeEmissions Verify(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report,
-        RawChangeSet? changes = null,
+        RawChangeSet? changes,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
+        if (changes is null)
+            throw new InvalidOperationException("SCRIBE_SCOPE_REQUIRED: supply an explicit definition scope.");
         using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
         if (StatementProjectionReconciliation.IsAffectedBy(snapshot, changes))
+            StatementProjectionReconciliation.Verify(materialized.Root, DeclarationCatalog.Create(report));
+        if (verifyMaterialized is not null)
+            return verifyMaterialized(materialized.Root, report, frozenState, frozenStatements);
+        var selection = ScribeDefinitionSelector.Select(materialized.Root, changes.Paths.Select(path => path.Value));
+        if (!selection.IsSuccess)
+            throw new InvalidOperationException("SCRIBE_SCOPE_INVALID: " + selection.Failure);
+        IReadOnlyList<DocumentDefinition> selected;
+        if (definitions is not null)
+            selected = definitions(materialized.Root).Where(definition => selection.Paths.Contains(
+                ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))).ToArray();
+        else
         {
-            StatementProjectionReconciliation.Verify(
-                materialized.Root,
-                DeclarationCatalog.Create(report));
+            var results = ScribeScriptHost.ExecuteBatch(materialized.Root, selection.Paths);
+            var failures = results.Where(result => !result.IsSuccess).ToArray();
+            if (failures.Length != 0)
+                throw new InvalidOperationException("Scribe emission verification failed: "
+                    + string.Join("; ", failures.Select(result => result.Failure)));
+            selected = results.Select(result => ScribeResourceCodec.Decode(
+                ScribeResourceCodec.Encode(result.Definition!), result.Definition!.Document.Header.Gid.Value,
+                result.RelativePath)).ToArray();
         }
-        return verifyMaterialized(materialized.Root, report, frozenState, frozenStatements);
-    }
-
-    internal static VerifiedScribeEmissions VerifyMaterialized(
-        Assembly documentsAssembly,
-        string repositoryRoot,
-        LeanAxiomReport report,
-        FrozenStateCatalog? frozenState,
-        FrozenStatementIndex? frozenStatements)
-    {
-        var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        return ScribeEmitter.Verify(documentsAssembly, repositoryRoot, error, report,
-                frozenState, frozenStatements)
-            ?? throw new InvalidOperationException(
-                "Scribe emission verification failed: " + error.ToString().Trim());
+        return VerifyMaterialized(selected, materialized.Root, report, frozenState, frozenStatements);
     }
 
     private static VerifiedScribeEmissions VerifyMaterialized(
-        IReadOnlyList<DocumentDefinition> definitions,
-        string repositoryRoot,
-        LeanAxiomReport report,
-        FrozenStateCatalog? frozenState,
-        FrozenStatementIndex? frozenStatements)
+        IReadOnlyList<DocumentDefinition> definitions, string root, LeanAxiomReport report,
+        FrozenStateCatalog? frozenState, FrozenStatementIndex? frozenStatements, bool scoped = true)
     {
+        if (definitions.Count == 0) return VerifiedScribeEmissions.Empty;
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        return ScribeEmitter.Verify(repositoryRoot, error, report, definitions, frozenState, frozenStatements)
-            ?? throw new InvalidOperationException(
-                "Scribe emission verification failed: " + error.ToString().Trim());
+        return ScribeEmitter.Verify(root, error, report, definitions, frozenState, frozenStatements, scoped)
+            ?? throw new InvalidOperationException("Scribe emission verification failed: " + error.ToString().Trim());
     }
 }

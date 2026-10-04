@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
@@ -163,9 +162,7 @@ public sealed partial class TruthReleaseCommandTests
         ["--scribe-pack", path, "--scribe-pack-digest", digest];
 
     private static DocumentDefinition[] PackDefinitions(Fixture fixture) =>
-        DocumentDefinitions.Discover(Assembly.Load("StrataLint.Scribe.Documents"),
-            Path.Combine(Path.GetDirectoryName(fixture.ReportPath)!, "repository"))
-            .Where(definition => definition.Document.Header.Gid.Value == BlueprintGid).ToArray();
+        [SimpleDefinition(BlueprintGid)];
 
     private static DocumentDefinition SimpleDefinition(string gid) => DocumentDefinition.Create(
         ScribeDocument.Create(DefinitionDsl.Header(gid, "Resource fixture"), Heading.Create("Resource fixture"),

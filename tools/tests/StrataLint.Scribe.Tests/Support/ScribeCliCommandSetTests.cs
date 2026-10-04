@@ -8,6 +8,15 @@ public sealed class ScribeCliCommandSetTests
     // (它不得引用本程序集,依赖方向 Tests→Cli+Engine)。此处钉真源与该表一致;
     // 新增/删除 Scribe 动词时两侧必有一红,防表漂移成孤立手抄。
     [Fact]
+    public void ScribeAssemblyHasAnExecutableEntryPoint()
+    {
+        var assembly = typeof(ScribeCli).Assembly;
+        Assert.NotNull(assembly.EntryPoint);
+        using var error = new StringWriter();
+        Assert.Equal("StrataLint.Scribe.ScribeProgram", assembly.EntryPoint.DeclaringType!.FullName);
+    }
+
+    [Fact]
     public void ImplementedCommandsMatchTheLinkagePinnedSet()
     {
         var pinned = new[]
