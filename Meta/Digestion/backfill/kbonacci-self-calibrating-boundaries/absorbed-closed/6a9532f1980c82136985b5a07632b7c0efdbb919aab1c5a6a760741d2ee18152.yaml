@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6a9532f1980c82136985b5a07632b7c0efdbb919aab1c5a6a760741d2ee18152
+  normalized_sha256: sha256:6a9532f1980c82136985b5a07632b7c0efdbb919aab1c5a6a760741d2ee18152
+cas_ref: sha256:6a9532f1980c82136985b5a07632b7c0efdbb919aab1c5a6a760741d2ee18152
+coverage_gids:
+  - gid: D5/S1/Words/ClosedRunPoisson.closed_word_poisson_bounds
+    target_statement_id: sha256:57770d8ad66ab5daca648062cf6a5c6b32289a1577b93154bc3ffda186a0eeca
+receipts:
+  unresolved_subitems: []
