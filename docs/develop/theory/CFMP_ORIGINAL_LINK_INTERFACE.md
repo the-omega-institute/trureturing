@@ -124,3 +124,109 @@ $$
 本卷是理论参考正文；这些结论尚未取得 Lean 内核认证，未进入消化覆盖或冻结链。后续原问题的形式化仍须建立原始链接商与同一个流形边界的对应。原目标中的加权配对角点运输和群模型的原始曲面接口保留各自的量词和证明义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 5. 有限坐标运输的统一零条件与原始截断商
+
+令 $T,I$ 为有限集合，$T$ 取离散拓扑。令 $S\subseteq\mathbb R^I$ 为任意在坐标排列下不变的集合，取子空间拓扑，记 $K=S$。对 $\rho\in\mathfrak S_I$ 定义
+
+$$
+(P_\rho z)_i=z_{\rho^{-1}(i)}.
+$$
+
+给定任意函数 $n:T\times I\to T$ 和 $\sigma:T\times I\to\mathfrak S_I$。在 $X=T\times K$ 上定义实际生成关系
+
+$$
+(t,z)\leadsto(u,w)
+\quad\Longleftrightarrow\quad
+\exists f\in I:\ z_f=0,\quad u=n(t,f),\quad
+w=P_{\sigma(t,f)}z.
+$$
+
+令 $R$ 为此关系的等价闭包。对 $t,u\in T$、$\rho\in\mathfrak S_I$、$Z\subseteq I$ 定义
+
+$$
+G(t,u,\rho,Z)\quad\Longleftrightarrow\quad
+\forall z\in K:\
+\left(\forall i\in Z,\ z_i=0\right)
+\Longrightarrow R((t,z),(u,P_\rho z)).
+$$
+
+**命题 5.1（有限零条件运输的闭等价关系）。** 在上述条件下，实际等价关系 $R$ 是 $X\times X$ 中的闭集。此结论允许空标签、空坐标集合和空载体；$S$ 无须闭或紧，生成关系无须对称，$n$ 和 $\sigma$ 无须满足逆配对条件。
+
+证明。先在证明内部建立如下统一零条件刻画：对任意 $(t,z),(u,w)\in X$，
+
+$$
+R((t,z),(u,w))\quad\Longleftrightarrow\quad
+\exists\rho\in\mathfrak S_I\ \exists Z\subseteq I:\
+G(t,u,\rho,Z),\quad (\forall i\in Z,\ z_i=0),\quad
+w=P_\rho z.
+$$
+
+对实际等价闭包的生成、反身、对称和传递四种构造归纳。生成一步选取 $\rho=\sigma(t,f)$、$Z=\{f\}$，反身一步取 $\rho=1$、$Z=\varnothing$。所有零条件都在同一个源点上记录。
+
+对称一步将正向见证 $(\rho,Z)$ 改为 $(\rho^{-1},\rho(Z))$。任意满足新零条件的 $w$ 使 $P_{\rho^{-1}}w$ 满足原零条件；在此点应用原统一断言，再使用 $R$ 的对称性。坐标排列保留 $S$，故这个逆向代表始终位于同一载体。
+
+若前后两段见证为 $(\rho,Z)$ 和 $(\tau,W)$，传递一步取
+
+$$
+(\tau\rho,\ Z\cup\rho^{-1}(W)).
+$$
+
+任意满足并集零条件的 $z$ 同时使 $z$ 满足 $Z$，且使同一个中间代表 $P_\rho z$ 满足 $W$。两个统一断言依次应用于这些代表，给出完整复合。给定实际源点也满足这组条件；终点由 $P_\tau P_\rho=P_{\tau\rho}$ 恢复。反向蕴含直接把统一断言应用于实际 $z$。
+
+固定 $t,u,\rho,Z$，若 $G$ 成立，取
+
+$$
+E_{t,u,\rho,Z}=\{((t,z),(u,P_\rho z)):
+z\in K,\ \forall i\in Z,\ z_i=0\};
+$$
+
+若 $G$ 不成立则取空集。坐标函数在 $K$ 上连续，零条件闭，$P_\rho$ 连续，且 $K$ 是 Hausdorff 空间，故这些集合都是 $X\times X$ 中的闭受限图。这里闭性是相对于 $K$，不要求 $S$ 在环境坐标空间中闭。上式恰把实际 $R$ 表达为这些闭集的有限并；全部索引数至多 $|T|^2|I|!2^{|I|}$。因而 $R$ 闭。
+
+### 5.1 原始四顶点面商的参数对应
+
+在同一个有限原始面配对 $p$ 上取 $I=\operatorname{Fin}4$ 和截断参数 $\delta=1/4$，所以 cap 上界为 $1-\delta=3/4$。
+
+$$
+S=\left\{z:I\to\mathbb R:
+0\le z_i\le\frac34\ (i\in I),\quad\sum_i z_i=1\right\},
+\qquad n(t,f)=(p.\mathrm{facePair}(t,f)).1.
+$$
+
+令 $m_{t,f}=p.\mathrm{faceMap}(t,f)$ 为实际三边槽排列。记槽 $j$ 的对顶点为 $\nu_f(j)$，即它是面 $f$ 内不属于该槽所对应边的唯一顶点：
+
+$$
+\nu_0=(1,2,3),\quad\nu_1=(3,2,0),\quad
+\nu_2=(3,1,0),\quad\nu_3=(2,1,0).
+$$
+
+当 $p(t,f)=(u,g)$ 时，$\sigma_{t,f}$ 由
+
+$$
+\sigma_{t,f}(f)=g,\qquad
+\sigma_{t,f}(\nu_f(j))=\nu_g(m_{t,f}(j))
+\quad(j\in\operatorname{Fin}3)
+$$
+
+确定。令 $F_f(f)=\mathrm{none}$，$F_f(\nu_f(j))=\mathrm{some}(j)$。当 $p(t,f)=(u,g)$ 时，
+
+$$
+\sigma_{t,f}=F_g^{-1}\circ\operatorname{optionCongr}(m_{t,f})\circ F_f.
+$$
+
+$F_f$ 正是 $\operatorname{optionCongr}(\chi_f)\circ\operatorname{finSuccEquiv}'(f)$，其中 $\chi_0=1$，$\chi_f=(0\ 2)$ 当 $f\ne0$。这是实际 frame 复合；三边槽排列不直接作用于递增面顶点表。坐标界和坐标和在排列下保持，故上述 $S$ 满足命题 5.1 的不变性。所得 $R$ 正是原始零面识别的完整等价闭包。
+
+**推论 5.2（既有闭关系商定理在同一原始截断商上的应用）。** 令 $Q=X/R$ 并取商拓扑，$q:X\to Q$ 为实际商映射，
+
+$$
+U=\{(t,z)\in X:\exists i\in I,\ z_i=3/4\},
+\qquad B=q(U).
+$$
+
+则 $Q$ 紧且 Hausdorff，$q$ 连续、为闭商映射，$U$ 饱和，$q^{-1}(B)=U$，且 $U,B$ 闭。
+
+证明。此处的 $K$ 是有限维紧 Hausdorff 多面体，故 $X$ 紧 Hausdorff。命题 5.1 给出闭等价关系，标准闭关系商定理给出紧 Hausdorff 商与闭商映射。每个坐标排列保持“某个坐标等于 $3/4$”，对实际等价闭包归纳便得 $U$ 饱和；$U$ 是有限闭 cap 面的并，闭商映射给出 $B$ 闭。
+
+命题 5.1 的统一量词是从实际等价闭包构造的结论。一般有限运输群与闭门条件的更一般书面证明见 `Library/notes/zhao2026cfmpincidence.md` 第 14 节；该书面结果尚未经过 Lean kernel 核验。局部图卡、端点不反转以及与同一原始流形的带标记截断实现仍是各自的证明义务。
+
+## 追加锚（本行以下为增补区）

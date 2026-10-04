@@ -230,3 +230,33 @@ it gives a whole-form ground-orthogonal gap greater than $0.00186736$
 at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
 requested joint gap $1/1000$ fails its sufficient comparison. Neither
 result closes the cofinal, RH, full Robin or Lean obligations.
+
+The [fixed-test and centered-window interface](centered-window.md)
+distinguishes the relative scalar conversion from a sufficient absolute
+fixed-test limit, and maps the published pole constraint to the original
+theta mean. It retains the unproved signed arithmetic estimate.
+A new four-bump example shows why pole cancellation alone does not turn
+a generic pointwise exponential error envelope into that estimate.
+The example kernel is not the actual arithmetic kernel.
+
+The [signed arithmetic head and fixed-row tail](signed-discrepancy-window.md)
+retain the prime-minus-continuum realization. Published cumulative-error
+and weighted smoothing suppliers give explicit coupling inputs in the
+original centered metric. Three new Fibonacci-plus-half cutoffs retain
+all prime powers and certify smaller band allowances than the same
+measure's total-variation envelope. The out-of-band allowance, low-block
+sign and common cofinal parameter sequence are separate obligations.
+The [complete fixed-band row allowance](signed-low-row.md) pays the
+Fourier and full arithmetic tails at the actual $N=64$ low unit ball,
+using new smoothing and frequency parameters and the saved theta
+derivatives. It improves the same weighted total-variation allowance;
+the low sign and common cofinal parameter sequence remain unpaid.
+
+The [local signed-frequency allowance](local-signed-frequency.md)
+instead applies the retained Schur criterion to the actual Fourier
+kernel. It reuses theta $H^1$ caps and the complete arithmetic tail,
+retains all signed cross terms, and covers the original $N=64$ low
+unit ball by 512 closed frequency cells. Its complete upper allowance
+is below $5.45645802$, compared to the same operator's prior $T=128$
+allowance above $14.70575975$. No old producer is replayed; the
+low sign, common cofinal comparison, RH and full Robin remain open.

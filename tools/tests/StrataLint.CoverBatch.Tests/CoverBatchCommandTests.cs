@@ -406,14 +406,15 @@ public sealed partial class CoverBatchCommandTests
         internal int VerificationCount { get; private set; }
         internal bool EmitFailure { get; init; }
         internal bool UseGitReader { get; init; }
+        internal IReadOnlyList<string> ChangedPaths { get; init; } = [];
         internal Action? DuringVerification { get; set; }
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
-        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false)
+        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false, bool targetUnchanged = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
+            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"], BaselineTargetIdentical = targetUnchanged }.Materialize();
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -482,9 +483,10 @@ public sealed partial class CoverBatchCommandTests
             }
             foreach (var path in ProducerInputFixture.CopyBatchProducerInputs(Root))
                 inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
-            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null,
-                CoverWorld.Raw(inputs.Baseline), currentReader: () => UseGitReader
-                    ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles());
+            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null, null,
+                changesForBase: _ => RawChangeSet.Create(ChangedPaths),
+                currentReader: () => UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles(),
+                revisionReader: _ => CoverWorld.Raw(inputs.Baseline));
             Report = new FakeLeanReportSource(inputs.Report);
         }
 
@@ -513,6 +515,12 @@ public sealed partial class CoverBatchCommandTests
                     ["--cover-atom", atom, "--gid", gid, "--base", "baseline"]);
                 Assert.True(result.Success, result.Error);
             }
+        }
+
+        internal void KeepAtBaseline(params string[] paths)
+        {
+            foreach (var path in paths)
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
         }
 
         internal string WriteReportBundle()

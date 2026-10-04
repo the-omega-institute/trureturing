@@ -21,21 +21,40 @@ public sealed class ScribeScopePathsScriptTests
     }
 
     [Fact]
-    public void MissingChangedPathsReturnAllTrackedCandidatePaths()
+    public void MissingChangedPathsReturnFirstParentChanges()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ScopeFixture();
-        fixture.Track("Blueprint/D5/with spaces.scribe.cs");
-        fixture.Track("Blueprint/D5/with spaces.md");
+        fixture.Track("Blueprint/D5/changed.scribe.cs");
+        fixture.Track("Blueprint/D5/unchanged.scribe.cs");
         fixture.Track("other tracked file.txt");
+        fixture.Commit("Initial files");
+        fixture.Track("Blueprint/D5/changed.scribe.cs", "changed fixture\n");
+        fixture.Track("Blueprint/D5/new with spaces.scribe.cs");
+        fixture.Commit("Changed and added files");
         fixture.WriteUntracked("Blueprint/D5/untracked.scribe.cs");
 
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(Encoding.UTF8.GetBytes(
-            "Blueprint/D5/with spaces.md\0Blueprint/D5/with spaces.scribe.cs\0other tracked file.txt\0"),
+            "Blueprint/D5/changed.scribe.cs\0Blueprint/D5/new with spaces.scribe.cs\0"),
             result.StandardOutput);
+    }
+
+    [Fact]
+    public void RootCommitWithoutChangedPathsFailsWithNamedDiagnostic()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScopeFixture();
+        fixture.Track("root.txt");
+        fixture.Commit("Root commit");
+
+        var result = fixture.Run();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("SCRIBE_SCOPE_FIRST_PARENT_MISSING", Encoding.UTF8.GetString(result.StandardError));
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -57,18 +76,22 @@ public sealed class ScribeScopePathsScriptTests
 
         internal void WriteChangedPaths(string paths) => ScriptHarnessScratch.WriteScratchText(changedPaths, paths);
 
-        internal void WriteUntracked(string path)
+        internal void WriteUntracked(string path, string contents = "fixture\n")
         {
             var absolutePath = Path.Combine(repository, path);
             ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(absolutePath)!);
-            ScriptHarnessScratch.WriteScratchText(absolutePath, "fixture\n");
+            ScriptHarnessScratch.WriteScratchText(absolutePath, contents);
         }
 
-        internal void Track(string path)
+        internal void Track(string path, string contents = "fixture\n")
         {
-            WriteUntracked(path);
+            WriteUntracked(path, contents);
             Assert.Equal(0, Git("add", "--", path).ExitCode);
         }
+
+        internal void Commit(string message) => Assert.Equal(0, Git(
+            "-c", "user.name=Scope Fixture", "-c", "user.email=scope-fixture@example.test",
+            "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", message).ExitCode);
 
         internal ProcessOutput Run() => TestProcessRunner.Run(
             "/bin/bash", ["--noprofile", "--norc", Path.Combine(repository, ScriptPath), changedPaths],

@@ -175,7 +175,7 @@ private theorem charpoly_conj_unitary {ρ U : Matrix n n ℂ} (hU : star U * U =
   rw [Matrix.charpoly_mul_comm (U * ρ) (star U), ← Matrix.mul_assoc, hU, Matrix.one_mul]
 
 omit [Fintype n] [DecidableEq n] in
-private theorem isHermitian_kronecker {m : Type*} {ρ : Matrix n n ℂ}
+theorem isHermitian_kronecker {m : Type*} {ρ : Matrix n n ℂ}
     {σ : Matrix m m ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
     (ρ ⊗ₖ σ).IsHermitian := by
   unfold Matrix.IsHermitian
@@ -204,7 +204,7 @@ theorem spectral_sum_eq_of_charpoly_prod
   rw [Finset.sum, Finset.sum]
   exact hcongr
 
-private theorem kronecker_eq_conj_diagonal_eigenvalues {m : Type*} [Fintype m] [DecidableEq m]
+theorem kronecker_eq_conj_diagonal_eigenvalues {m : Type*} [Fintype m] [DecidableEq m]
     {ρ : Matrix n n ℂ} {σ : Matrix m m ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
     (ρ ⊗ₖ σ)
       = ((hρ.eigenvectorUnitary : Matrix n n ℂ) ⊗ₖ (hσ.eigenvectorUnitary : Matrix m m ℂ))

@@ -43,3 +43,49 @@ Conversely, a strong derivative v makes the quotient classes at t_n = 1/(n+1) co
 https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
 
 Equation (2.21), printed pages 59-60; Theorem 5.1(ii), printed pages 123-124. The author-hosted file identifies the 2009 first edition, Graduate Studies in Mathematics volume 99. The online-use permission appears on its title page; this note cites the source and paraphrases the argument.
+## Finite-measure Fourier mean squares
+
+In the same retained first-edition PDF, Theorem 5.4, Section 5.2,
+printed pp.126–127, equations (5.8)–(5.9), states Wiener's theorem for
+every finite complex Borel measure $\mu$ on $\mathbb R$:
+
+$$
+\widehat\mu(t)=\int e^{-it\lambda}d\mu(\lambda),\qquad
+\lim_{T\to\infty}\frac1T\int_0^T|\widehat\mu(t)|^2dt
+=\sum_{\lambda\in\mathbb R}|\mu(\{\lambda\})|^2.
+$$
+
+The source uses the unnormalized angular transform, and the atomic sum
+is finite. The inspected PDF SHA-256 is
+`8dc8de0b58aa0a3fedfe594a345f9b5875322e5526ea581cb640a98d55b82818`;
+its author-hosted title page dates the online text to 12 February 2009.
+The source theorem is reused, without a new proof or priority claim.
+
+For the project's real even finite signed prime-minus-continuum head,
+the atoms are exactly $\pm\log n$, with masses $\Lambda(n)/\sqrt n$.
+The negative continuous component has no atomic mass. The
+[fixed-head scalar-budget application](../../docs/reports/theta-mixed-matrix/signed-low-row.md#fixed-head-band-expansion-has-a-classical-obstruction)
+uses this same theorem to diagnose a frequency-envelope loss. It does
+not assert growth of the actual weighted operator norm, an obstruction
+to a growing arithmetic cutoff, or an RH/Robin conclusion. No compiled
+project application is claimed.
+
+## Schur criterion for the local frequency kernel
+
+The same retained first-edition PDF gives Lemma 0.32, printed pp.28--29,
+the Schur criterion for a measurable integral kernel dominated by
+$K_1(x,y)K_2(x,y)$. For conjugate exponents, its separate row and column
+norm bounds $C_1,C_2$ give operator norm at most $C_1C_2$. The
+[local signed-frequency note](../../docs/reports/theta-mixed-matrix/local-signed-frequency.md)
+uses the $L^2$ case with a Lorentzian factorization of the actual Fourier
+kernel. It is a direct source-criterion application, with no new theorem
+or compiled specialization claimed.
+
+In Section 7.2, equation (7.47), printed p.172, the one-dimensional
+free resolvent has kernel $e^{-\sqrt{-z}|x-y|}/(2\sqrt{-z})$.
+For $z=-q^2$, $q>0$, this is the inverse angular transform of
+$(\xi^2+q^2)^{-1}$ with its $1/(2\pi)$ factor. The local note uses
+the resulting classical identity
+$\int q^2/(q^2+\xi^2)e^{-i\xi t}d\xi=\pi q e^{-q|t|}$.
+The source supplies the transform and generic kernel estimate; it
+supplies no value or sign for the project's arithmetic form.
