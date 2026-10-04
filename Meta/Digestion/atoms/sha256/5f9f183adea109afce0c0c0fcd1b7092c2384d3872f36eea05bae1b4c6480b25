@@ -1,0 +1,38 @@
+## Standard product-L2 construction
+
+Let μ and ν be arbitrary sigma-finite measures on measurable spaces X and Y.
+Write Hμ = L²(X,μ;ℂ), Hν = L²(Y,ν;ℂ), and Hμν = L²(X×Y,μ×ν;ℂ).
+The tensor is the metric completion of the algebraic complex tensor equipped
+with its inner-product tensor norm.
+
+For f in Hμ and g in Hν, multiplication of AE representatives defines
+p(f,g)(x,y)=f(x)g(y). The squared absolute value is the product of the two
+integrable squared norms, so Fubini proves square integrability. Projection
+pullbacks of factor null sets prove independence of representatives and the
+two complex linearity laws. With the inner product conjugate-linear in its
+first argument, Fubini also gives
+
+    ⟪p(f,g),p(h,k)⟫ = ⟪f,h⟫ ⟪g,k⟫.
+
+Double algebraic tensor induction applies this identity to all finite sums,
+including every cross term. Thus the tensor lift is an isometry. Its
+continuous-linear extension to the actual completion remains an isometry.
+
+Its range M is closed because its domain is complete. Suppose u is orthogonal
+to M. Products of the indicators of finite measurable A⊆X and B⊆Y are in M,
+and orthogonality gives the vanishing integral of u over A×B. Choose finite
+measurable exhaustive sequences Aₙ and Bₘ. The restriction of u to each
+Aₙ×Bₘ is integrable by the finite-measure L2-to-L1 inclusion. Its integral on
+an arbitrary measurable rectangle S×T is the integral of u on
+(S∩Aₙ)×(T∩Bₘ), hence zero. Rectangles form a pi-system generating the product
+sigma-algebra. Complementation and countable disjoint unions preserve the
+zero-integral predicate for this integrable restriction, so pi-system
+induction gives zero integral on every measurable set. Uniqueness from set
+integrals gives zero AE on the restriction. Taking the countable intersection
+of these AE conclusions and using the exhaustive covers gives u=0.
+Orthogonal projection onto the closed range therefore proves surjectivity.
+
+The resulting completed unitary has the AE product law for every pair f,g.
+No factor is required to have finite measure, finite Hilbert dimension, a
+chosen basis, or positive coordinate dimension.
+
