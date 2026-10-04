@@ -25,12 +25,10 @@ def productionEntries (expected : Array SnapshotOccurrence) : CoreM (Array Infor
     unless (entries.filter (sameOccurrence · row)).size == 1 do
       throwError "production occurrence not uniquely realized: {row.theoremName}"
   for entry in entries do
-    -- The unit is generated in the registration producer. A mathematical
-    -- realization can come from that producer's import closure; the existing
-    -- checkImportedOwners controls exercise TemplateBinding.validateEvent for it.
-    unless (env.getModuleIdxFor? entry.unitName).map (env.header.moduleNames[·.toNat]!) ==
-        some entry.registrationModuleName do
-      throwError "production occurrence has wrong native unit owner: {entry.unitName}"
+    -- Report companions retain the original registration owner. Mathematical
+    -- realizations can come from that owner's import closure.
+    unless GeneratedDeclarations.ownerOf env entry.unitName == entry.registrationModuleName do
+      throwError "production occurrence has wrong unit owner: {entry.unitName}"
   return entries
 
 end LeanInformationAuditRegTests

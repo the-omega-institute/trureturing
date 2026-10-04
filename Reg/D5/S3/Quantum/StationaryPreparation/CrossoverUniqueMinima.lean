@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum.RealSqrt
@@ -79,18 +80,27 @@ def registration : Registration arena (∀ (c h γ : ℝ) (_hc : 12/5 < c)
     rw [heq] at hs
     norm_num at hs
 
-register_information_theorem _root_.D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima.result
-  in arena
-  readout via (realize signature
-    (fun _ _ (z : ℝ) => 1 + (z^2 - Real.sqrt (z^4 + 4))/2) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value", "body"]
-      stateBinder := 7 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima.result) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ (z : ℝ) => 1 + (z^2 - Real.sqrt (z^4 + 4))/2) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "StationaryPreparation") "CrossoverUniqueMinima") "result") "Reg.D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima/Reg.D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ (z : ℝ) => 1 + (z^2 - Real.sqrt (z^4 + 4))/2) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.StationaryPreparation.CrossoverUniqueMinima, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "value", "body"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end
 

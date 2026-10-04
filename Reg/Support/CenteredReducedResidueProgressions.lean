@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -14,5 +14,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 open LeanInformationAudit
 set_option backward.isDefEq.respectTransparency.types false
-register_information_template sourceCorrectionRealization
+noncomputable def _root_.Reg.Support.CenteredReducedResidueProgressions.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{1, 0} (@_root_.D5.S3.ArithUnits.CenteredReducedResidueProgressions.sourceCorrectionRealization) := {
+  name := `D5.S3.ArithUnits.CenteredReducedResidueProgressions.sourceCorrectionRealization, version := 1, constructors := #[],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end

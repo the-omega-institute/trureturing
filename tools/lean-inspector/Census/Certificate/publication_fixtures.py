@@ -38,14 +38,14 @@ def prepare_publication(repository, directory):
     from Certificate.handoff import file_digest
     identity = truth_export_identity(repository, directory)
     source = "LeanInformationAudit.Tests.Census.Query.Observed"
-    finite = "LeanInformationAudit.Tests.SealSuccess"
+    certified = "LeanInformationAudit.Tests.Census.StructuralTrivial"
     report = dict(identity, source_commit="fixture-head", nodes=[])
     for module, declaration, number in [(source, source + ".independent", 1),
-                                        (finite, finite + ".idTheorem", 0)]:
+                                        (certified, certified + ".member", 0)]:
         report["nodes"].append({"repo_path": module.replace(".", "/") + ".lean",
             "freeze_status": "frozen", "declarations": [{"kind": "theorem",
             "declaration_name_key": name_key(declaration), "statement_id": "sha256:" + format(number, "064x")}]})
-    report["nodes"].append({"repo_path": "LeanInformationAudit/Tests/Census/Evidence.lean",
+    report["nodes"].append({"repo_path": "LeanInformationAudit/Tests/Census/Coverage.lean",
                             "freeze_status": "frozen", "declarations": []})
     report_path = directory / "report.json"
     report_path.write_text(json.dumps(report) + "\n")
@@ -89,7 +89,7 @@ def prepare_publication(repository, directory):
     partial = directory / "partial-certified"
     assert execute(argparse.Namespace(output=str(partial), fixture_truth_export=str(report_path),
         lean_report=str(repository / ".lake/build/stratalint/raw-lean-report.json"),
-        prefix=finite, replay_of=None, no_structure=True)) == 2
+        prefix=certified, replay_of=None, no_structure=True)) == 2
     summary = json.loads((partial / "census.json.summary.json").read_bytes())
     assert summary["status"] == "partial" and summary["requested_keys"] == 2
     assert summary["counts"]["accounted"] == summary["counts"]["certified"] == 1

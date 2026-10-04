@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap
 import Reg.Support.DependentFamily
 
@@ -52,18 +53,27 @@ def registration : Registration arena (arena.Law actual) where
     have := congrArg Fin.val h
     norm_num [actual, realize, staticEncode] at this
 
-register_information_theorem delayed_pulse_memory_gap in arena
-  readout via (realize signature
-    (fun _ p n => staticEncode p.1 p.2 n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.delayed_pulse_memory_gap) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p n => staticEncode p.1 p.2 n) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Prediction") "DelayedPulseMemoryGap") "delayed_pulse_memory_gap") "Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap/Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap.StaticAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p n => staticEncode p.1 p.2 n) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Prediction.DelayedPulseMemoryGap, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

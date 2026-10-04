@@ -3,6 +3,7 @@ import codecs
 import hashlib
 import io
 import json
+import re
 import math
 import os
 import signal
@@ -18,6 +19,17 @@ import unittest
 from unittest.mock import patch
 import zipfile
 import zlib
+
+def copy_contract_interface(source, target):
+    """Copy the core and catalog contracts used by these isolated fixtures."""
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
+    config = target / 'lakefile.toml'
+    config.write_text(re.sub(r'\n\[\[require\]\]\nname = "trureturing"\npath = "../.."\n', '', config.read_text()))
+    manifest = target / 'lake-manifest.json'
+    policy = json.loads(manifest.read_text())
+    policy['packages'] = []
+    manifest.write_text(json.dumps(policy))
+
 
 try:
     import resource
@@ -123,8 +135,8 @@ defaultFacets = ["static"]
         host = json.loads((ROOT / 'tools/lean-inspector-reg/lake-manifest.json').read_text())
         host['packages'] = [p for p in host['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('tools/lean-inspector-reg/lake-manifest.json', json.dumps(host))
-        shutil.copytree(ROOT / 'tools/lean-inspector-interface',
-                        self.root / 'tools/lean-inspector-interface', ignore=shutil.ignore_patterns('.lake'))
+        copy_contract_interface(ROOT / 'tools/lean-inspector-interface',
+                                self.root / 'tools/lean-inspector-interface')
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')

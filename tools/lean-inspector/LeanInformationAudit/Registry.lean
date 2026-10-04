@@ -1,5 +1,5 @@
 import LeanInformationAudit.Registry.Assessment
-import LeanInformationAuditInterface.Store
+import LeanInformationAudit.RuntimeInputs
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
@@ -107,11 +107,10 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
       info.type.equal event.statement do
     throwError "incomplete_closure:dtr.event_statement"
   unless env.contains event.unitName &&
-      (RegistrationReifier.declaringModuleOf env event.unitName).getD env.header.mainModule ==
+      GeneratedDeclarations.ownerOf env event.unitName ==
         event.key.registrationModule do
     throwError "incomplete_closure:dtr.event_unit_owner"
-  let realizationOwner := (RegistrationReifier.declaringModuleOf env event.realizationName).getD
-    env.header.mainModule
+  let realizationOwner := GeneratedDeclarations.ownerOf env event.realizationName
   unless env.contains event.realizationName &&
       moduleReachable env event.key.registrationModule realizationOwner do
     throwError "incomplete_closure:dtr.event_unit_owner"
@@ -371,8 +370,8 @@ def assessRecordedEnrollment (owner : Name) (input : TemplateEnrollmentInput) :
   | .error message =>
     logWarning m!"IE-C050 ClosedTruthReadout template={input.name} {TemplateAudit.diagnosticFields message}"
 
-/-- No source syntax is re-elaborated. The recorder already chose all instances,
-bridges and readouts; the judge reconstructs only its own proofs and assessments. -/
+/-- No source syntax is re-elaborated. Compiled typed fields supply all instances,
+bridges and readouts; the judge reconstructs its own proofs and assessments. -/
 def assessRecordedEntry (owner : Name) (input : RegistrationInput) : CommandElabM Unit :=
     withScope (fun scope => { scope with opts := input.options }) do
   unless input.entry.registrationModuleName == owner && input.entry.derivedCertificate.isNone do
@@ -400,52 +399,6 @@ def assessRecordedEntry (owner : Name) (input : RegistrationInput) : CommandElab
     TemplateBinding.withDeclaration { declaration with arena } do
       registerValidatedEntry owner entry
 
-
-private def validateRecordedSource (owner : Name) (text : String) : CoreM Unit := do
-  let current ← IO.FS.readFile (← Repository.source (TemplateAudit.sourcePath owner))
-  unless current.crlfToLf == text.crlfToLf do throwError "incomplete_closure:dtr.input_source"
-
-/-- Rebuild all judge state from the native raw-input containers. Both their
-actual owners and their retained source bytes are checked before assessment. -/
-def replayRegistrationInputs (input : RegistrationAssessmentInput) : CoreM Unit := do
-  let saved ← getEnv
-  tryCatchRuntimeEx (do
-    let reachable := reachableModules saved input.rootId
-    let selected (owner : Name) := reachable.contains owner
-    let enrollments := (TemplateEnrollmentInputs.owned saved).filter (selected ∘ Prod.fst)
-    let registrations := (RegistrationInputs.owned saved).filter (selected ∘ Prod.fst)
-    let contracts := (RootCatalogs.owned saved).filter (selected ∘ Prod.fst)
-    let mut roots : NameSet := {}
-    for (owner, contract) in contracts do
-      unless owner == contract.rootId do throwError "IE-C028 RootContractOwnerMismatch: {contract.rootId}"
-      if roots.contains owner then throwError "IE-C028 DuplicateRootContract: {owner}"
-      roots := roots.insert owner
-    for (owner, expected) in ExpectedOccurrenceManifest.owned saved do
-      if selected owner && owner != expected.rootId then
-        throwError "incomplete_closure:dtr.expected_owner"
-    for (owner, enrollment) in enrollments do
-      unless owner == enrollment.owner do throwError "incomplete_closure:E7.import_owner"
-      validateRecordedSource owner enrollment.sourceText
-    for (owner, registration) in registrations do
-      unless owner == registration.entry.registrationModuleName do
-        throwError "incomplete_closure:dtr.input_owner"
-      validateRecordedSource owner registration.sourceText
-    modifyEnv fun env => TemplateAudit.resetTemplatePlans <|
-      TemplateBinding.resetAssessmentRecords <| InformationRegistry.reset env
-    liftCommandElabM do
-      for (_, contract) in contracts do
-        liftTermElabM <| RootCatalogs.acquireProvenance contract
-      -- An independent expectation acquires its object arena's source evidence,
-      -- rejecting live forwarding sources, before any registration is assessed.
-      for (owner, expected) in ExpectedOccurrenceManifest.owned saved do
-        if selected owner then
-          discard <| liftTermElabM <| resolveCanonicalArenaName expected.objectArenaName
-      for (owner, enrollment) in enrollments do assessRecordedEnrollment owner enrollment
-      for (owner, registration) in registrations do
-        GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner registration
-  ) fun error => do
-    setEnv saved
-    throw error
 
 end LeanInformationAudit
 

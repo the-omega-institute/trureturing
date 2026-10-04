@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.PrimePowers.AffineGcdBehavior
 import Reg.Support.DependentFamily
 
@@ -63,19 +64,29 @@ def registration : Registration arena (arena.Law actual) where
     change (1 : Nat) ≠ 2
     decide
 
-register_information_theorem affine_word_translation in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.affine_word_translation) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p x => (runWord (update p.2.1) p.2.2 x).val)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "body", "fn", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "PrimePowers") "AffineGcdBehavior") "affine_word_translation") "Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior/Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Word.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p x => (runWord (update p.2.1) p.2.2 x).val)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Word
 
@@ -135,19 +146,29 @@ def registration : Registration arena (arena.Law actual) where
     change (1 : Nat) ≠ 2
     decide
 
-register_information_theorem affine_action_realization in arena
-  readout via (realize signature (fun _ p x =>
-    (runWord (update p.2.1) (Sum.inl p.2.2.1 :: p.2.2.2.map Sum.inr) x).val)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior
-    coordinates := #[0, 2, 3, 6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg",
-        "body", "body", "fn", "arg", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.affine_action_realization) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p x =>
+    (runWord (update p.2.1) (Sum.inl.{0, 0} p.2.2.1 :: p.2.2.2.map Sum.inr.{0, 0}) x).val)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "PrimePowers") "AffineGcdBehavior") "affine_action_realization") "Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior/Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Action.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p x =>
+    (runWord (update p.2.1) (Sum.inl.{0, 0} p.2.2.1 :: p.2.2.2.map Sum.inr.{0, 0}) x).val)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, definition := none, coordinates := #[0, 2, 3, 6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "body", "fn", "arg", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Action
 
@@ -229,18 +250,27 @@ def registration : Registration arena (arena.Law actual) where
       exact nomatch i
   dependence := Local.dependence
 
-register_information_theorem local_encoding_complete in arena
-  readout via (realize signature (fun _ q z => depth q.1 q.2 0 z)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "fn", "arg", "body", "body", "arg", "body", "body", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.local_encoding_complete) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ q z => depth q.1 q.2 0 z)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "PrimePowers") "AffineGcdBehavior") "local_encoding_complete") "Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior/Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.PrimePowers.AffineGcdBehavior.Local.Complete.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ q z => depth q.1 q.2 0 z)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.PrimePowers.AffineGcdBehavior, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Complete
 

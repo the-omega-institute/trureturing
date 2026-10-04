@@ -1,4 +1,4 @@
-import Reg.Catalogs.ExistentialWitnessRegistrations
+import Reg.Catalogs.ExistentialWitnessRegistrations.SealedCatalog
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Assessment

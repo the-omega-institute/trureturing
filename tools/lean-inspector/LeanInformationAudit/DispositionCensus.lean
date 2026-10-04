@@ -63,7 +63,7 @@ the full key certificate after checking the inventory and its semantic evidence.
 The resulting JSON is output, never seal input. -/
 elab "#disposition_census" &"root" root:ident &"report" reportPath:str
     &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryName:ident
-    &"certificate" certificate:ident " output " outputPath:str : command => do
+    &"certificate" certificate:ident &" output " outputPath:str : command => do
   -- realPath resolves relative components and symlinks before any declaration is staged.
   let inputResolved ← IO.FS.realPath reportPath.getString
   let destination : System.FilePath := outputPath.getString

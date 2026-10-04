@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational
 import Reg.Support.DependentFamily
 
@@ -76,16 +77,25 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem re_sum_inner_map_le_ky_fan_sum in arena
-  readout via (realize signature.{u} (fun _ _ k => k) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational
-    coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body",
-      "body", "body", "body", "body", "body", "body", "body", "body", "body",
-      "arg", "fn", "arg"], stateBinder := 11}] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 2, u + 2, u, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, u, 0, 0, 0} (@_root_.D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.re_sum_inner_map_le_ky_fan_sum.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ k => k) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Entanglement") "FiniteSectorChannelOptimality") "re_sum_inner_map_le_ky_fan_sum") "Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational/Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u})⟩,
+  objectArena := ⟨(arena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  readout := some (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ k => k) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Quantum.Entanglement.FiniteSectorRectangularVariational

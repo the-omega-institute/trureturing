@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.IntegerCharacterCoercivity
 import Reg.Support.DependentFamily
 
@@ -88,20 +89,31 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.Fourier.IntegerCharacterCoercivity.integer_character_global_coercivity in arena
-  readout via (realize signature.{u} (fun _ p x =>
-    (infDist x {y : EuclideanSpace ℝ (Fin p.1) |
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.IntegerCharacterCoercivity.integer_character_global_coercivity.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, 0, 0, 0, 0} signature.{u_1} (fun _ p x =>
+    (infDist.{0} x {y : EuclideanSpace.{0, 0} ℝ (Fin p.1) |
       ∀ a, ∃ k : ℤ, (∑ i, (p.2.2 a i : ℝ) * y i) = 2 * Real.pi * k}) ^ 2)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.IntegerCharacterCoercivity
-    coordinates := #[0, 1, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "IntegerCharacterCoercivity") "integer_character_global_coercivity") "Reg.D5.S3.Fourier.IntegerCharacterCoercivity/Reg.D5.S3.Fourier.IntegerCharacterCoercivity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.IntegerCharacterCoercivity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{u_1 + 1, 0, 0, 0, 0} signature.{u_1} (fun _ p x =>
+    (infDist.{0} x {y : EuclideanSpace.{0, 0} ℝ (Fin p.1) |
+      ∀ a, ∃ k : ℤ, (∑ i, (p.2.2 a i : ℝ) * y i) = 2 * Real.pi * k}) ^ 2)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.IntegerCharacterCoercivity, definition := none, coordinates := #[0, 1, 3], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Fourier.IntegerCharacterCoercivity

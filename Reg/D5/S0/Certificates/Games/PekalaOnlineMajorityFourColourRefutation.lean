@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Certificates.Games.PekalaOnlineMajorityFourColourRefutation
 import Reg.Support.CounterexampleRecord
 
@@ -79,11 +80,24 @@ private theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue 
 private theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena :=
   arena.sensitivity law
 
-register_information_theorem
-  _root_.D5.S0.Certificates.Games.PekalaOnlineMajorityFourColourRefutation.result in arena
-  readout via (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))
-  primitives reads.toPrimitiveBundle realization bridge
-  variation variation sensitivity sensitivity
-  escape from (Nat) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S0.Certificates.Games.PekalaOnlineMajorityFourColourRefutation.result) (type_of% (arena)) (type_of% (arena)) (type_of% (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Nat)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Certificates") "Games") "PekalaOnlineMajorityFourColourRefutation") 0) "D5") "S0") "Certificates") "Games") "PekalaOnlineMajorityFourColourRefutation") "result") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Certificates") "Games") "PekalaOnlineMajorityFourColourRefutation") 0) "Reg") "D5") "S0") "Certificates") "Games") "PekalaOnlineMajorityFourColourRefutation") "bridge"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .witness (arena) (Reg.D5.S0.Certificates.Games.PekalaOnlineMajorityFourColourRefutation.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)),
+  readout := some (@counterexampleRealization (Fin 1) (fun _ : Fin 1 => false)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (Nat),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxRecDepth, value := .nat 100000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Certificates.Games.PekalaOnlineMajorityFourColourRefutation

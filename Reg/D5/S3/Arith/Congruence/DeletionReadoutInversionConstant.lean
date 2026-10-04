@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Congruence.DeletionReadoutInversionConstant
 import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -89,32 +89,27 @@ def registration : Registration arena
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-run_cmd do
-  let root := `Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant
-  let sourceName :=
-    `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant ++
-      `deletion_readout_inversion_constant
-  let identity :=
-    "sha256:e966c7ce23573134dc68ddf3e326660ce55e57c5de082808fe605407e9440a1d"
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    statementIdentity := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
 
-register_information_theorem deletion_readout_inversion_constant in arena
-  readout via (realize signature (fun _ _ z ↦ z) (fun e ↦ nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "body",
-        "fn", "arg", "arg", "fn"]
-      stateBinder := 3 }] })
-  escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.deletion_readout_inversion_constant) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ z ↦ z) (fun e ↦ nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Congruence") "DeletionReadoutInversionConstant") "deletion_readout_inversion_constant") "Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant/Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Congruence.DeletionReadoutInversionConstant.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ z ↦ z) (fun e ↦ nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "arg", "fn"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

@@ -62,7 +62,10 @@ elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
   let observe (label : String) (expected : Option String) : CommandElabM Unit := do
     let saved ← get
     let actual ← try
-      let values := (← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]).map (·.1)
+      let rows ← IO.mkRef (#[] : Array Json)
+      liftTermElabM <| finiteInformationTemplateReportDriver #[requested]
+        (fun _ row _ _ => rows.modify (·.push row))
+      let values ← rows.get
       unless values.size == 1 &&
           (values[0]!.getObjValAs? (Array Json) "inventory").toOption.any (·.isEmpty) do
         throwError "setup: expected exactly one empty inventory"
@@ -84,7 +87,7 @@ elab "observe_report_batch_coherence" : command => withPrivateSources do
   let owner := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Owner
   let plain := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
   let requested := #[owner, plain]
-  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested (fun _ _ _ _ => pure ())
   let observed := NativeCoherence.lastInputs (← getEnv)
   let complete := #[owner, plain, `LeanInformationAudit.Registry,
     `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Helper].all
@@ -94,12 +97,12 @@ elab "observe_report_batch_coherence" : command => withPrivateSources do
   let bytes ← IO.FS.readBinFile path
   withFile path (bytes ++ "\n-- changed between report batches\n".toUTF8) do
     let reason ← try
-      discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+      discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested (fun _ _ _ _ => pure ())
       pure ""
     catch error => pure (← error.toMessageData.toString)
     let ok := reason == "incomplete_closure:E7.native_input_changed"
     (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] native_report_batch_cached_source_rejected reason={reason}"
-  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested (fun _ _ _ _ => pure ())
   logInfo "[PASS] native_report_batch_restored_source_accepted"
 
 observe_report_batch_coherence

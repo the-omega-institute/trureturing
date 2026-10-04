@@ -383,7 +383,7 @@ public sealed class InformationTemplateEvidenceTests
         var snapshot = Snapshot((PathA, TextA));
         var module = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot));
         // Sealing imports creates root-qualified abbreviations of retained
-        // units without executing register_information_theorem again.
+        // units without executing registration code again.
         module = module with { Declarations = module.Declarations.Add(
             new(ModuleA + ".sealed.__information_unit", "def", "fixture sealed unit", [])) };
         var error = Record.Exception(() =>

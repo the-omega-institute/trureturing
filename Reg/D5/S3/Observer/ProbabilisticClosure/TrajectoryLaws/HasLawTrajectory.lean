@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory
 import Reg.Support.DependentFamily
 
@@ -98,19 +99,31 @@ def registration : Registration arena.{u,v} (arena.Law actual) where
     have hh := congrArg (fun f => (f 0).down) h
     cases hh
 
-register_information_theorem has_law_traj_measure in arena
-  readout via (realize signature.{u,v}
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{max (max (u + 2) (v + 2)) ((max (u + 1) (v + 1)) + 2), max (max (u + 2) (v + 2)) ((max (u + 1) (v + 1)) + 2), max (u + 1) (v + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u + 1) (v + 1), v, 0, u, 0, 0} (@_root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure.{u, v}) (type_of% (arena.{u, v})) (type_of% (arena.{u, v})) (type_of% (realize.{max (u + 1) (v + 1), v, 0, u, 0} signature.{u, v}
     (fun (_ : Unit)
       (p : (Ω : Type v) × (X : ℕ → Type u) × ((n : ℕ) → Ω → X n))
-      (ω : p.1) (n : ℕ) => p.2.2 n ω) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory
-    coordinates := #[0, 3, 10]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body",
-        "fn", "fn", "arg", "body"], stateBinder := 14 }] })
-  escape continues (open)
+      (ω : p.1) (n : ℕ) => p.2.2 n ω) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "ProbabilisticClosure") "TrajectoryLaws") "HasLawTrajectory") "has_law_traj_measure") "Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory/Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u, v})⟩,
+  objectArena := ⟨(arena.{u, v})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u, v}) ⟨(registration.{u, v})⟩,
+  readout := some (realize.{max (u + 1) (v + 1), v, 0, u, 0} signature.{u, v}
+    (fun (_ : Unit)
+      (p : (Ω : Type v) × (X : ℕ → Type u) × ((n : ℕ) → Ω → X n))
+      (ω : p.1) (n : ℕ) => p.2.2 n ω) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, definition := none, coordinates := #[0, 3, 10], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "body"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity
 import Reg.Support.DependentFamily
 
@@ -73,20 +74,29 @@ def registration : Registration arena.{u,v,z} (arena.{u,v,z}.Law actual) where
     intro h
     exact Bool.noConfusion (congrArg ULift.down h)
 
-register_information_theorem free_window_realization_capacity in arena
-  readout via (realize signature.{u,v}
-    (fun _ p w => @firstLetter p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 w)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity
-    coordinates := #[0, 1, 3, 4, 5]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg",
-        "fn", "arg", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := true }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{max (v + 2) ((max (u + 1) (v + 1)) + 2), max (v + 2) ((max (u + 1) (v + 1)) + 2), max (u + 1) (v + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u + 1) (v + 1), v, 0, v, 0, 0} (@_root_.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.free_window_realization_capacity.{u, v, z}) (type_of% (arena.{u, v, z})) (type_of% (arena.{u, v, z})) (type_of% (realize.{max (u + 1) (v + 1), v, 0, v, 0} signature.{u, v}
+    (fun _ p w => @firstLetter.{u, v} p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 w)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Realization") "FreeWindowRealizationCapacity") "free_window_realization_capacity") "Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity/Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u, v, z})⟩,
+  objectArena := ⟨(arena.{u, v, z})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u, v, z}) ⟨(registration.{u, v, z})⟩,
+  readout := some (realize.{max (u + 1) (v + 1), v, 0, v, 0} signature.{u, v}
+    (fun _ p w => @firstLetter.{u, v} p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 w)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, definition := none, coordinates := #[0, 1, 3, 4, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -143,19 +153,27 @@ def registration : Registration arena.{u,v} (arena.{u,v}.Law actual) where
     intro h
     exact Bool.noConfusion (congrArg ULift.down h)
 
-register_information_theorem overlap_output_window in arena
-  readout via (realize signature.{u,v}
-    (fun _ p x => p.2.2.2.2 x 0) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity
-    coordinates := #[0, 1, 2, 3, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg"]
-      stateBinder := 0
-      stateOperand := some #["fn", "arg"] }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{max (max (v + 2) (u + 2)) ((max (u + 1) (v + 1)) + 2), max (max (v + 2) (u + 2)) ((max (u + 1) (v + 1)) + 2), max (u + 1) (v + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (u + 1) (v + 1), u, 0, v, 0, 0} (@_root_.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.overlap_output_window.{u, v}) (type_of% (arena.{u, v})) (type_of% (arena.{u, v})) (type_of% (realize.{max (u + 1) (v + 1), u, 0, v, 0} signature.{u, v}
+    (fun _ p x => p.2.2.2.2 x 0) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Realization") "FreeWindowRealizationCapacity") "overlap_output_window") "Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity/Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity.Overlap.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u, v})⟩,
+  objectArena := ⟨(arena.{u, v})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u, v}) ⟨(registration.{u, v})⟩,
+  readout := some (realize.{max (u + 1) (v + 1), u, 0, v, 0} signature.{u, v}
+    (fun _ p x => p.2.2.2.2 x 0) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Realization.FreeWindowRealizationCapacity, definition := none, coordinates := #[0, 1, 2, 3, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

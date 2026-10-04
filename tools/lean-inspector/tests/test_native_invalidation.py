@@ -27,113 +27,6 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
-    def test_declared_helper_comment_preserves_report_and_plan_identity(self):
-        # Exercise the production enrollment/assessment/export path, including a
-        # nonempty certificate. The ordinary native fixtures use statement mode.
-        # On-demand probe: it needs a complete warm Lean build of this checkout and
-        # copies its build outputs, so it is not in the registered engineering set.
-        # The registered pins of the same contract are the compile-time assertions
-        # imported_line_endings_preserve_verdict and
-        # enrollment_encoding_omits_source_hashes in Tests/RegistrationGates.
-        prepared = self.guarded_command(['make', 'lean',
-            'LEAN_TARGETS=D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates '
-            'LeanInformationAudit.SealCommand'], cwd=ROOT, env=os.environ,
-            capture_output=True, text=True, timeout=120)
-        self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
-        paths = subprocess.check_output(['git', 'ls-files', '-z', '.gitignore', 'D5',
-            'tools', 'Trureturing.lean', 'lakefile.toml',
-            'lake-manifest.json', 'lean-report-inputs.json', 'Directory.*',
-            'global.json', '.editorconfig'], cwd=ROOT).decode().split('\0')
-        for name in filter(None, paths):
-            self.copy(name)
-        # Private compiler outputs preserve native trace ownership. Clonefile
-        # is optional transport; the portable path copies the same bytes.
-        if sys.platform == 'darwin':
-            subprocess.run(['cp', '-cR', str(ROOT / '.lake'), str(self.root / '.lake')], check=True)
-        else:
-            shutil.copytree(ROOT / '.lake', self.root / '.lake')
-        self.compiler_seed = None
-        self.env['LAKE_ARTIFACT_CACHE'] = 'false'
-        self.env['LAKE_RESTORE_ARTIFACTS'] = 'false'
-        self.write('utility.json', '[]')
-        self.write('D5/CommentSupport.lean', 'namespace D5.CommentSupport\n'
-            'def helper (b : Bool) : Bool := b\nend D5.CommentSupport\n')
-        self.write('D5/CommentOwner.lean', '''import D5.CommentSupport
-import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAuditInterface.Syntax
-namespace D5.CommentOwner
-open D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates
-def template {X : Type} (f : X → Bool) : PrimitiveRealization (cutSignature X Bool) :=
-  cutRealization (fun x => D5.CommentSupport.helper (f x))
-register_information_template template
-def arena : PrimitiveLawArena where
-  toArena := Arena.ofFintype Bool
-  signature := cutSignature Bool Bool
-  Law r := ∀ x : Bool, r.readout () x = x.not.not
-instance : DecidableEq arena.State := instDecidableEqBool
-information_theorem validated in arena
-  readout via (@template Bool (fun x : Bool => x))
-  primitives (@template Bool (fun x : Bool => x))
-  : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
-end D5.CommentOwner
-''')
-        subprocess.run(['git', 'add', '.'], cwd=self.root, check=True, capture_output=True)
-        artifact = self.root / '.lake/build/lean-inspector/modules/D5.CommentOwner.zip'
-        compiler = self.root / '.lake/build/lib/lean/D5'
-
-        def build():
-            result = self.guarded_command(['make', 'lean', 'LEAN_TARGETS=D5.CommentOwner:report'],
-                cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
-            print('DECLARED_COMMENT_BUILD exit_code=' + str(result.returncode), flush=True)
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            with zipfile.ZipFile(artifact) as archive:
-                raw = archive.read(publication.RAW)
-            records = json.loads(raw)['modules'][0]['information_templates']['records']
-            self.assertEqual(len(records), 1)
-            return raw, records[0]
-
-        def compiled():
-            return {p.name: p.read_bytes() for name in ['CommentOwner', 'CommentSupport']
-                    for p in compiler.glob(name + '.*')
-                    if p.suffix in ['.olean', '.private', '.server', '.ir']}
-
-        before, initial = build()
-        self.assertEqual(initial['state'], 'declared_validated')
-        original_compiler = compiled()
-        self.assertTrue(original_compiler)
-        helper = self.root / 'D5/CommentSupport.lean'
-        helper.write_bytes(helper.read_bytes() + b'\n-- imported comment only\n')
-        warm, warm_record = build()
-        self.assertEqual(compiled(), original_compiler, 'comment changed compiler inputs')
-        self.assertEqual(warm, before)
-        # Remove only this owner's report artifact and its Lake trace/hash.
-        for path in artifact.parent.glob(artifact.name + '*'):
-            path.unlink()
-        fresh, fresh_record = build()
-        self.assertEqual(compiled(), original_compiler)
-        print('DECLARED_COMMENT_ROWS ' + json.dumps({label: dict(
-            raw_sha256=hashlib.sha256(raw).hexdigest(), state=record['state'],
-            plan_identity=(record['certificate'] or {}).get('plan_identity'),
-            diagnostic=record['diagnostic'])
-            for label, raw, record in [('before', before, initial),
-                ('warm', warm, warm_record), ('fresh', fresh, fresh_record)]}), flush=True)
-        self.assertEqual(warm_record['state'], 'declared_validated')
-        self.assertEqual(fresh_record['state'], 'declared_validated',
-                         '[FAIL] declared_helper_comment_fresh_verdict')
-        self.assertEqual(warm, fresh, '[FAIL] declared_helper_comment_warm_equals_fresh')
-        # Recompile the unchanged owner under the edited helper source. A plan
-        # carrying that source's hash would change its identity and owner olean.
-        (compiler / 'CommentOwner.olean').unlink()
-        recompiled, recompiled_record = build()
-        print('DECLARED_COMMENT_RECOMPILED ' + json.dumps(dict(
-            raw_sha256=hashlib.sha256(recompiled).hexdigest(),
-            plan_identity=recompiled_record['certificate']['plan_identity'])), flush=True)
-        self.assertEqual(initial['certificate']['plan_identity'],
-                         recompiled_record['certificate']['plan_identity'],
-                         '[FAIL] declared_helper_comment_plan_identity')
-        self.assertEqual(compiled(), original_compiler, 'owner embeds untraced source bytes')
-        self.assertEqual(fresh, recompiled)
-
     def test_native_compatibility_preimage(self):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         for version in [9, 10]:
@@ -193,12 +86,12 @@ end D5.CommentOwner
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
+abbrev InformationTemplateReportDriver := Array Lean.Name → (Lean.Name → Lean.Json → Array Lean.Name → Lean.Environment → Lean.MetaM Unit) → Lean.MetaM Unit
 ''')
         self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
-def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names consume => do
   let rows ← names.mapM fun _ => do
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
       "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
@@ -206,7 +99,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
       "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
   let env ← getEnv
-  return rows.map fun row => (row, #[], env)
+  for (name, row) in names.zip rows do consume name row #[] env
 ''')
 
         def build():

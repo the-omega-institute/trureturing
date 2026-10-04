@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.SingularRightGrid
 import Reg.Support.DependentFamily
 
@@ -79,19 +80,31 @@ def registration : Registration arena (arena.Law actual) where
     · intro i; exact nomatch i
   dependence := dependence
 
-register_information_theorem _root_.D5.S3.Fourier.Asymptotics.SingularRightGrid.result in arena
-  readout via (realize signature (fun _ p b =>
-    |(∑ k ∈ Finset.range (Nat.floor (b/p.2.2)),
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.Asymptotics.SingularRightGrid.result) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p b =>
+    |(∑ k ∈ Finset.range (Nat.floor.{0} (b/p.2.2)),
         (‖p.2.1 (((k:ℝ)+1)*p.2.2)‖^2-‖p.2.1 0‖^2) / ((k:ℝ)+1)) -
-      ∫ x in 0..b, (‖p.2.1 x‖^2-‖p.2.1 0‖^2)/x|) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.Asymptotics.SingularRightGrid
-    coordinates := #[0,2,5]
-    readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","body","body","fn","arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+      ∫ x in 0..b, (‖p.2.1 x‖^2-‖p.2.1 0‖^2)/x|) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "Asymptotics") "SingularRightGrid") "result") "Reg.D5.S3.Fourier.Asymptotics.SingularRightGrid/Reg.D5.S3.Fourier.Asymptotics.SingularRightGrid.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.SingularRightGrid.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p b =>
+    |(∑ k ∈ Finset.range (Nat.floor.{0} (b/p.2.2)),
+        (‖p.2.1 (((k:ℝ)+1)*p.2.2)‖^2-‖p.2.1 0‖^2) / ((k:ℝ)+1)) -
+      ∫ x in 0..b, (‖p.2.1 x‖^2-‖p.2.1 0‖^2)/x|) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.SingularRightGrid, definition := none, coordinates := #[0, 2, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.Fourier.Asymptotics.SingularRightGrid

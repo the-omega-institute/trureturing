@@ -10,8 +10,7 @@ the environment. Destination strings are confined to the terminal IO writer.
 
 The direct capability sets are pinned here. The seal may log, but cannot read
 ambient syntax or files. The export may prepare bytes, but cannot publish or stage
-declarations. RealSeal.lean exercises both audited closures against the production
-commands and verifies rejection before any declaration or artifact escapes.
+declarations.
 -/
 
 open Lean Lean.Elab.Command LeanInformationAudit

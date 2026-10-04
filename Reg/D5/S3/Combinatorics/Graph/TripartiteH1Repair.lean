@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.TripartiteH1Repair
 import Reg.Support.DependentFamily
 
@@ -75,18 +76,25 @@ def aRegistration : Registration aArena.{u, v, w} (aArena.{u, v, w}.Law aActual.
       exact nomatch i
   dependence := aDependence
 
-register_information_theorem _root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.ker_d1_eq_im_d0 in aArena
-  readout via (realize ASig.{u, v, w} (fun _ _ g => d0 g) (fun e => nomatch e))
-  realizes aRegistration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "body", "fn", "arg", "fn"]
-      functionOperand := true }]
-  })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{max ((max (max u_1 u_2) u_3) + 2) ((max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1)) + 2), max ((max (max u_1 u_2) u_3) + 2) ((max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1)) + 2), max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.ker_d1_eq_im_d0.{u_1, u_2, u_3}) (type_of% (aArena.{u_1, u_2, u_3})) (type_of% (aArena.{u_1, u_2, u_3})) (type_of% (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} ASig.{u_1, u_2, u_3} (fun _ _ g => d0.{u_1, u_2, u_3} g) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "Graph") "TripartiteH1Repair") "ker_d1_eq_im_d0") "Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair/Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.aRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(aArena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(aArena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (aArena.{u_1, u_2, u_3}) ⟨(aRegistration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} ASig.{u_1, u_2, u_3} (fun _ _ g => d0.{u_1, u_2, u_3} g) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev BSig : Signature where
   Params := Unit
@@ -155,15 +163,25 @@ def bRegistration : Registration bArena (bArena.Law bActual) where
       exact nomatch i
   dependence := bDependence
 
-register_information_theorem _root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.sharp_three_edge_witness in bArena
-  readout via (realize BSig (fun _ _ f => weight f) (fun e => nomatch e))
-  realizes bRegistration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair
-    coordinates := #[]
-    readouts := #[{path := #["arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg"], stateOperand := some #["arg"]}]
-  })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.sharp_three_edge_witness) (type_of% (bArena)) (type_of% (bArena)) (type_of% (realize.{0, 0, 0, 0, 0} BSig (fun _ _ f => weight f) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "Graph") "TripartiteH1Repair") "sharp_three_edge_witness") "Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair/Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.bRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(bArena)⟩,
+  objectArena := ⟨(bArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (bArena) ⟨(bRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} BSig (fun _ _ f => weight f) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev CSig : Signature where
   Params := Unit
@@ -212,15 +230,25 @@ def cRegistration : Registration cArena (cArena.Law cActual) where
       exact nomatch i
   dependence := cDependence
 
-register_information_theorem _root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.universal_repair in cArena
-  readout via (realize CSig (fun _ _ n => 3 * n) (fun e => nomatch e))
-  realizes cRegistration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair
-    coordinates := #[]
-    readouts := #[{path := #["body", "body", "arg", "fn", "arg"], stateOperand := some #["arg"]}]
-  })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Combinatorics.Graph.TripartiteH1Repair.universal_repair) (type_of% (cArena)) (type_of% (cArena)) (type_of% (realize.{0, 0, 0, 0, 0} CSig (fun _ _ n => 3 * n) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "Graph") "TripartiteH1Repair") "universal_repair") "Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair/Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.TripartiteH1Repair.cRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(cArena)⟩,
+  objectArena := ⟨(cArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (cArena) ⟨(cRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} CSig (fun _ _ n => 3 * n) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.TripartiteH1Repair, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms aRegistration
 #print axioms bRegistration

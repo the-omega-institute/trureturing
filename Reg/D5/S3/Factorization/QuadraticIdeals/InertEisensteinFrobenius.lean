@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius
 import Reg.Support.DependentFamily
 
@@ -78,18 +79,25 @@ def registration : Registration arena (arena.Law actual) where
     have hcontr : (2 : ℕ) ^ 2 = 5 ^ 2 := htwo.symm.trans (h.trans hfive)
     norm_num at hcontr
 
-register_information_theorem
-  _root_.D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius.inert_eisenstein_quotient_frobenius
-  in arena
-  readout via (realize signature (fun _ _ ell => quotientCard ell) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius.inert_eisenstein_quotient_frobenius) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ ell => quotientCard ell) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "QuadraticIdeals") "InertEisensteinFrobenius") "inert_eisenstein_quotient_frobenius") "Reg.D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius/Reg.D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ ell => quotientCard ell) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.QuadraticIdeals.InertEisensteinFrobenius, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

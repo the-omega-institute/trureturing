@@ -1,5 +1,5 @@
 import LeanInformationAudit.Registry.Reifier
-import LeanInformationAuditInterface.Store
+import LeanInformationAudit.RuntimeInputs
 import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
@@ -19,8 +19,8 @@ private def primitiveRealizationName : Name :=
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
 
-/-- Judge-owned output names. The recorder admits any resolvable theorem; the
-report rejects a registration of one of these companions (IE-C011). -/
+/-- Judge-owned output names. The report rejects a registration of one of
+these companions (IE-C011). -/
 def generatedCompanionSuffixes : Array String := #[
   theoremUnitSuffix,
   primitiveRealizationSuffix,
@@ -248,7 +248,7 @@ def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
   let rows := match RootCatalogs.find? env rootId with
     | some contract => snapshotExpectations rootId contract.expected
-    | none => ExpectedOccurrenceManifest.declaredEntries env rootId
+    | none => #[]
   rows.map fun row =>
     let identity := if !row.statementIdentity.isEmpty then row.statementIdentity
       else row.capturedStatement.map
@@ -282,7 +282,7 @@ def prepareRegistrationEntry (rootId : Name) (env : Environment)
 private def statementMismatchError (name : Name) : String :=
   s!"IE-C006 StatementProofMismatch: {name}"
 
-/-- The report checks the supplied bridge, including before a recorder alias. -/
+/-- The report checks the supplied bridge, including before a generated alias. -/
 def isTheoremBridge (env : Environment) (name : Name) : Bool :=
   match env.find? name with
   | some (.thmInfo _) => true

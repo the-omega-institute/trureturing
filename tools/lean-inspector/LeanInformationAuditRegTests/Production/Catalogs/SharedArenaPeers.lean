@@ -1,3 +1,4 @@
+import Reg.Catalogs.SharedArenaPeers.SealedCatalog
 import Reg.Catalogs.SharedArenaPeers
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
@@ -172,7 +173,7 @@ open _root_.D5.S3.ConceptDynamics.CIRPT
 open Lean Meta LeanInformationAudit in
 run_meta do
   let env ← getEnv
-  let records := SealRecords.forRoot env `Reg.Catalogs.SharedArenaPeers
+  let records := SealRecords.forRoot env `Reg.Catalogs.SharedArenaPeers.SealedCatalog
   unless records.map (·.theorems.size) == #[5, 2] &&
       records.map (·.fullEscapeCount) == #[0, 24] do
     throwError "expected both complete maximal catalogs with unchanged escape counts"
@@ -188,9 +189,9 @@ run_meta do
           | .trivial certificate => env.contains certificate
           | .positive _ => false) do
         throwError "every peer requires a zero-capture triviality certificate"
-  if SealRecords.systemCatalogIrredundant env `Reg.Catalogs.SharedArenaPeers then
+  if SealRecords.systemCatalogIrredundant env `Reg.Catalogs.SharedArenaPeers.SealedCatalog then
     throwError "redundant maximal catalogs cannot certify system irredundancy"
-  let index ← CensusQuery.indexScope `Reg.Catalogs.SharedArenaPeers
+  let index ← CensusQuery.indexScope `Reg.Catalogs.SharedArenaPeers.SealedCatalog
   let head ← IO.Process.output { cmd := "git", args := #["rev-parse", "HEAD"] }
   unless head.exitCode == 0 do throwError "cannot read checkout identity"
   let entries := InformationRegistry.entries env
@@ -199,7 +200,7 @@ run_meta do
     let key : StatementKey := ⟨entry.theoremName, theoremStatementIdentity env entry.theoremName⟩
     match ← CensusQuery.assess index head.stdout.trimAscii.toString key with
     | .certified (.trivialInCatalog payload) =>
-        unless payload.root == `Reg.Catalogs.SharedArenaPeers do
+        unless payload.root == `Reg.Catalogs.SharedArenaPeers.SealedCatalog do
           throwError "triviality certificate belongs to a different root"
         logInfo m!"CENSUS_QUERY_TRIVIAL: {entry.theoremName}; registered=true; positive=false"
     | _ => throwError "maximal catalog lacks certified triviality for {entry.theoremName}"
@@ -254,7 +255,7 @@ open _root_.D5.S3.ConceptDynamics.CIRPT
 
 open Lean Meta LeanInformationAudit in
 run_cmd do
-  let catalogs ← prepareCatalogs `Reg.Catalogs.SharedArenaPeers
+  let catalogs ← prepareCatalogs `Reg.Catalogs.SharedArenaPeers.SealedCatalog
   unless catalogs.size == 2 do throwError "expected two maximal canonical catalogs"
   for (prepared, expected) in catalogs.zip #[``interventionCatalog, ``observationCatalog] do
     Lean.Elab.Command.liftTermElabM do

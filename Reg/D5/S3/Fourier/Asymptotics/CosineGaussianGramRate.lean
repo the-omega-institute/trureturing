@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.CosineGaussianGramRate
 import Reg.Support.DependentFamily
 
@@ -85,18 +86,26 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem
-  _root_.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate.result in arena
-  readout via (realize signature
-    (fun _ p (z : ℝ) => Real.exp (-p.2.2.1 * (z / p.2.2.2) ^ 2)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.Asymptotics.CosineGaussianGramRate
-    coordinates := #[0, 1, 2, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "body", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate.result) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p (z : ℝ) => Real.exp (-p.2.2.1 * (z / p.2.2.2) ^ 2)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "Asymptotics") "CosineGaussianGramRate") "result") "Reg.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate/Reg.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p (z : ℝ) => Real.exp (-p.2.2.1 * (z / p.2.2.2) ^ 2)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.CosineGaussianGramRate, definition := none, coordinates := #[0, 1, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Fourier.Asymptotics.CosineGaussianGramRate

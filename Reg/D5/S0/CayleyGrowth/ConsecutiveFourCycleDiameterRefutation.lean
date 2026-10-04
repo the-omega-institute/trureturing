@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
 import Reg.Support.CounterexampleRecord
 
@@ -38,12 +39,25 @@ private theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue 
 private theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena :=
   arena.sensitivity law
 
-register_information_theorem
-  _root_.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.result in arena
-  readout via (@counterexampleRealization (Fin 1) arena.check)
-  primitives reads.toPrimitiveBundle realization bridge
-  variation variation sensitivity sensitivity
-  escape from (Nat) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.result) (type_of% (arena)) (type_of% (arena)) (type_of% (@counterexampleRealization (Fin 1) arena.check)) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (Nat)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "CayleyGrowth") "ConsecutiveFourCycleDiameterRefutation") 0) "CayleyGrowth") "ConsecutiveFourCycleDiameterRefutation") "result") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "CayleyGrowth") "ConsecutiveFourCycleDiameterRefutation") 0) "Reg") "D5") "S0") "CayleyGrowth") "ConsecutiveFourCycleDiameterRefutation") "bridge"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .witness (arena) (Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)),
+  readout := some (@counterexampleRealization (Fin 1) arena.check),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (Nat),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end
 end Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation

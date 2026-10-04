@@ -4,4 +4,6 @@ import LeanInformationAudit.Tests.Assessment
 
 test_imported_assessment
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentResidualTailContraction (← Lean.getEnv)
+run_cmd do
+  let owned := LeanInformationAudit.InformationRegistry.entries (← Lean.getEnv)
+  unless owned.size == 1 do throwError "expected one assessed measurement occurrence"

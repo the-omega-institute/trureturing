@@ -1,3 +1,5 @@
+import Reg.Support.SourceSelection
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Resource.MinimumRetrievalTime
 import Reg.Support.CounterexampleRecord
 import Reg.Support.DependentFamily
@@ -74,11 +76,25 @@ private theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue 
 private theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena :=
   arena.sensitivity law
 
-register_information_theorem _root_.D5.S3.Resource.MinimumRetrievalTime.result in arena
-  readout via (@counterexampleRealization (Fin 1) arena.check)
-  primitives reads.toPrimitiveBundle realization bridge
-  variation variation sensitivity sensitivity
-  escape from (FiniteFieldModel) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1} (@_root_.D5.S3.Resource.MinimumRetrievalTime.result) (type_of% (arena)) (type_of% (arena)) (type_of% (@counterexampleRealization (Fin 1) arena.check)) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (FiniteFieldModel)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "D5") "S3") "Resource") "MinimumRetrievalTime") "result") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "bridge"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .witness (arena) (Reg.D5.S3.Resource.MinimumRetrievalTime.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)),
+  readout := some (@counterexampleRealization (Fin 1) arena.check),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (FiniteFieldModel),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end
 end Reg.D5.S3.Resource.MinimumRetrievalTime
@@ -201,18 +217,27 @@ private def registration : Registration arena.{u,v,w} (arena.Law actual) where
       exact nomatch anchor
   dependence := dependence
 
-register_information_theorem retrieval_time_probability_bridge in arena
-  readout via (realize signature (fun _ _ value => value.toReal)
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.MinimumRetrievalTime
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value.toReal)
+    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "MinimumRetrievalTime") "retrieval_time_probability_bridge") "Reg.D5.S3.Resource.MinimumRetrievalTime/_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "Auxiliary") "ProbabilityBridge") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value.toReal)
+    (fun impossible => nomatch impossible)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -251,18 +276,29 @@ private def registration : Registration arena.{u,v} (arena.Law (integralActual 4
       exact nomatch anchor
   dependence := integralDependence 4
 
-register_information_theorem old_code_actual_expectations in arena
-  readout via (realize (integralSignature 4)
-    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples (Fin 4))
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.MinimumRetrievalTime
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_3.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{0, 0, 0, 0, 0} (integralSignature 4)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 4))
+    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "MinimumRetrievalTime") "old_code_actual_expectations") "Reg.D5.S3.Resource.MinimumRetrievalTime/_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "Auxiliary") "OldCode") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2})⟩,
+  objectArena := ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} (integralSignature 4)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 4))
+    (fun impossible => nomatch impossible)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end OldCode
@@ -330,20 +366,29 @@ private def registration : Registration arena.{u,v,w} (arena.Law (integralActual
       exact nomatch anchor
   dependence := integralDependence 5
 
-register_information_theorem five_column_three_kernel_obstruction in arena
-  readout via (realize (integralSignature 5)
-    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples (Fin 5))
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.MinimumRetrievalTime
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_4.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "MinimumRetrievalTime") "five_column_three_kernel_obstruction") "Reg.D5.S3.Resource.MinimumRetrievalTime/_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "Auxiliary") "ThreeKernel") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end ThreeKernel
@@ -404,19 +449,29 @@ private def registration : Registration arena.{u,v} (arena.Law (integralActual 5
       exact nomatch anchor
   dependence := integralDependence 5
 
-register_information_theorem five_column_bad_pairs_obstruction in arena
-  readout via (realize (integralSignature 5)
-    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples (Fin 5))
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.MinimumRetrievalTime
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_5.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction.{u_1, u_2}) (type_of% (arena.{u_1, u_2})) (type_of% (arena.{u_1, u_2})) (type_of% (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "MinimumRetrievalTime") "five_column_bad_pairs_obstruction") "Reg.D5.S3.Resource.MinimumRetrievalTime/_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "Auxiliary") "BadPairs") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2})⟩,
+  objectArena := ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end BadPairs
@@ -483,20 +538,29 @@ private def registration : Registration arena.{u,v,w} (arena.Law (integralActual
       exact nomatch anchor
   dependence := integralDependence 5
 
-register_information_theorem five_column_projected_obstruction in arena
-  readout via (realize (integralSignature 5)
-    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples (Fin 5))
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.MinimumRetrievalTime
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_6.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "MinimumRetrievalTime") "five_column_projected_obstruction") "Reg.D5.S3.Resource.MinimumRetrievalTime/_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") 0) "Reg") "D5") "S3") "Resource") "MinimumRetrievalTime") "Auxiliary") "Projected") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} (integralSignature 5)
+    (fun _ _ observation => ∫ sample, observation sample ∂uniformSamples.{0} (Fin 5))
+    (fun impossible => nomatch impossible)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Projected
@@ -568,7 +632,7 @@ private theorem rejectedChangesEveryRole (role : Fin 2) :
   have impossible := congrFun (congrFun equality ()) (fun _ => (1 : ℝ))
   norm_num [actual, rejected, realize, integral_const] at impossible
 
-private def selection : SourceSelection := {
+private def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.Resource.MinimumRetrievalTime
   coordinates := #[]
   readouts := #[

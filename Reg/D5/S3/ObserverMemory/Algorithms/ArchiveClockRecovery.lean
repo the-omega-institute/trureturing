@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery
 import Reg.Support.DependentFamily
 
@@ -108,20 +109,25 @@ def registration : Registration arena.{uX, uA, uY}
     change (0 : Nat) ^ 2 ≠ (1 : Nat) ^ 2
     exact Nat.zero_ne_one
 
-register_information_theorem archive_clock_recovery_and_finite_ambiguity
-  in arena
-  readout via (realize signature (fun _ _ (n : Nat) => n ^ 2) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "body", "arg", "arg", "body", "arg", "arg", "arg",
-        "arg", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ (n : Nat) => n ^ 2) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Algorithms") "ArchiveClockRecovery") "archive_clock_recovery_and_finite_ambiguity") "Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery/Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ (n : Nat) => n ^ 2) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "arg", "arg", "body", "arg", "arg", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms ambiguity_not_recoverable
 #print axioms rejected_law

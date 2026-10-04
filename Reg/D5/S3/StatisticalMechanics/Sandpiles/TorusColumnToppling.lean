@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling
 import Reg.Support.DependentFamily
 
@@ -61,20 +62,25 @@ def registration : Registration arena (_root_.D5.S3.StatisticalMechanics.Sandpil
       exact nomatch i
   dependence := dependence_proof
 
-register_information_theorem
-  _root_.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.result in arena
-  readout via (realize signature (fun _ _ n => a023855 (n - 1)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling
-    «definition» := some {
-      owner := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling
-      name := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.claim }
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "body", "body", "body", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.result) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => a023855 (n - 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "StatisticalMechanics") "Sandpiles") "TorusColumnToppling") "result") "Reg.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling/Reg.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => a023855 (n - 1)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling, definition := some { owner := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling, name := `D5.S3.StatisticalMechanics.Sandpiles.TorusColumnToppling.claim, path := #[] }, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
