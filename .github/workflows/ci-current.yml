@@ -996,6 +996,131 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          python3 -u - <<'PY_PROBE' &
+          import datetime
+          import json
+          import os
+          from pathlib import Path
+          import time
+
+          root = Path(os.environ['GITHUB_WORKSPACE'])
+          report = Path(os.environ.get('LEAN_REPORT', root / '.lake/build/stratalint/raw-lean-report.json'))
+          logs = Path(os.environ.get('STRATALINT_LEAN_REPORT_LOG_DIR', str(report) + '.logs'))
+          ticks = os.sysconf('SC_CLK_TCK')
+
+          def read(path):
+              try:
+                  return Path(path).read_text()
+              except (OSError, UnicodeError):
+                  return None
+
+          def keyed(path):
+              value = read(path)
+              return dict(line.split(maxsplit=1) for line in value.splitlines() if ' ' in line) if value else None
+
+          def modules(arguments):
+              return arguments[6::3] if isinstance(arguments, list) else None
+
+          def sample():
+              memory = keyed('/proc/meminfo') or {}
+              record = {'timestamp': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                        'monotonic_s': time.monotonic(), 'MemTotal': memory.get('MemTotal:'),
+                        'MemAvailable': memory.get('MemAvailable:'),
+                        'memory_pressure': read('/proc/pressure/memory'),
+                        'cpu': (read('/proc/stat') or '').splitlines()[:1]}
+              group = Path('/sys/fs/cgroup')
+              for line in (read('/proc/self/cgroup') or '').splitlines():
+                  if line.startswith('0::'):
+                      candidate = group / line[3:].lstrip('/')
+                      if candidate.is_dir():
+                          group = candidate
+                      break
+              record['cgroup'] = {'path': str(group), **{name: read(group / name) for name in
+                  ('memory.current', 'memory.peak', 'memory.max', 'memory.events')}}
+              processes = []
+              uptime = float((read('/proc/uptime') or '0').split()[0])
+              for folder in Path('/proc').iterdir():
+                  if not folder.name.isdigit():
+                      continue
+                  try:
+                      status = keyed(folder / 'status') or {}
+                      stat = (folder / 'stat').read_text().rsplit(')', 1)[1].split()
+                      argv = (folder / 'cmdline').read_bytes().decode(errors='replace').strip('\0').split('\0')
+                      command = ' '.join(argv)
+                      rss = int(status.get('VmRSS:', '0 kB').split()[0])
+                      name = status.get('Name:', '')
+                      role = ('lake' if name == 'lake' else 'lean' if name == 'lean' else
+                              'native_inspector' if name == 'reportInspector' else
+                              'native_driver' if any(arg.endswith('/native.py') for arg in argv) else None)
+                      item = {'pid': int(folder.name), 'ppid': int(stat[1]), 'name': name,
+                              'role': role, 'state': stat[0], 'rss_kib': rss,
+                              'etime_s': round(uptime - int(stat[19]) / ticks, 2),
+                              'cpu_s': round((int(stat[11]) + int(stat[12])) / ticks, 2),
+                              'command': command[:160]}
+                      if '--request-file' in argv:
+                          request = Path(argv[argv.index('--request-file') + 1])
+                          item['request_file'] = str(request)
+                          try:
+                              item['modules'] = modules(json.loads(request.read_text()))
+                          except (OSError, ValueError):
+                              item['modules'] = None
+                      processes.append(item)
+                  except (OSError, ValueError, IndexError):
+                      continue
+              processes.sort(key=lambda item: (-item['rss_kib'], item['pid']))
+              relevant = [item for item in processes if item['role']]
+              selected = {item['pid']: item for item in processes[:8] + relevant}
+              for pid, item in selected.items():
+                  rollup = keyed(Path('/proc') / str(pid) / 'smaps_rollup') or {}
+                  pss = rollup.get('Pss:')
+                  item['pss_kib'] = int(pss.split()[0]) if pss else None
+              record['top8_rss'] = processes[:8]
+              record['report_processes'] = relevant
+              record['process_counts'] = {role: sum(item['role'] == role for item in processes)
+                  for role in ('lake', 'lean', 'native_inspector', 'native_driver')}
+              active = []
+              for line in (read(logs / 'native-phases.jsonl') or '').splitlines():
+                  try:
+                      event = json.loads(line)
+                  except ValueError:
+                      continue
+                  if event.get('phase') != 'native-inspect':
+                      continue
+                  if event.get('boundary') == 'start':
+                      active.append(event.get('request_capture'))
+                  elif event.get('boundary') == 'finish' and event.get('request_capture') in active:
+                      active.remove(event['request_capture'])
+              record['active_requests_in_report_logs'] = []
+              for capture in active:
+                  entry = {'request_capture': capture}
+                  try:
+                      payload = json.loads(Path(capture).read_text())
+                      entry['modules'] = modules(payload.get('arguments'))
+                  except (OSError, ValueError, TypeError):
+                      entry['modules'] = None
+                  record['active_requests_in_report_logs'].append(entry)
+              record['report_log_directory'] = str(logs)
+              record['report_stdout_tail'] = [(line[:160]) for line in
+                  (read(logs / 'report.stdout.log') or '').splitlines()[-4:]]
+              return record
+
+          while True:
+              started = time.monotonic()
+              try:
+                  print('CI_MEMORY_PROBE ' + json.dumps(sample(), separators=(',', ':')), flush=True)
+              except Exception as error:
+                  print('CI_MEMORY_PROBE ' + json.dumps({'timestamp': datetime.datetime.now(
+                      datetime.timezone.utc).isoformat(), 'diagnostic_error': str(error)}), flush=True)
+              time.sleep(max(0, 15 - (time.monotonic() - started)))
+          PY_PROBE
+          probe_pid=$!
+          cleanup_probe() {
+            kill "$probe_pid" 2>/dev/null || true
+            wait "$probe_pid" 2>/dev/null || true
+          }
+          trap cleanup_probe EXIT
+          trap 'exit 143' TERM
+          trap 'exit 130' INT
           make lean-report
       - id: project_snapshot_push
         name: Prepare the project seed
