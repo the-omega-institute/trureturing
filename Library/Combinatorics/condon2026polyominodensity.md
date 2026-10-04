@@ -25,9 +25,11 @@ The source is arXiv:2608.29231v1. Its Section 6.3, p. 28, says:
 
 The bracketed label denotes the source's inline L pentomino diagram.
 
-Section 1, p. 3:
+Section 1, printed p. 1:
 
 > A polyomino is a connected shape made from unit squares, called cells, glued together edge-to-edge.
+
+Section 1, printed p. 3:
 
 > For N any positive integer, if P is a polyomino of minimum size among those polyominoes containing at least N instances (translated copies) of some polyomino p, we say that P is (p, N)-dense
 

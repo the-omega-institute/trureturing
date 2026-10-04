@@ -50,7 +50,7 @@ $$\forall (c : Cell), \forall (b : Cell), (\operatorname{Adj}\left(c, b\right)) 
 
 *Commentary.*
 
-Section 1, p. 3: “A polyomino is a connected shape made from unit squares, called cells, glued together edge-to-edge.” The two alternatives describe vertical and horizontal unit edges. All coordinate arithmetic is in the integers.
+Section 1, printed p. 1: “A polyomino is a connected shape made from unit squares, called cells, glued together edge-to-edge.” The two alternatives describe vertical and horizontal unit edges. All coordinate arithmetic is in the integers.
 
 **Definition 1.5 (Nonempty connected cell sets).**
 
@@ -62,7 +62,7 @@ $$\forall (P : \operatorname{Finset}\left(Cell\right)), (\operatorname{IsPolyomi
 
 *Commentary.*
 
-Section 1, p. 3: “A polyomino is a connected shape made from unit squares, called cells, glued together edge-to-edge.” ReflTransGen means a finite path, including the length-zero path. Every vertex of each edge is required to belong to P.
+Section 1, printed p. 1: “A polyomino is a connected shape made from unit squares, called cells, glued together edge-to-edge.” ReflTransGen means a finite path, including the length-zero path. Every vertex of each edge is required to belong to P.
 
 **Definition 1.6 (The instance minimum).**
 
