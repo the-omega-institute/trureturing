@@ -10582,7 +10582,7 @@ words removed by compatible lower-$q$ mixed pure labels:
 $$
 \mathcal B_t=
 \bigcup_{\substack{a\in\{1,2\},\ 1\le j<t\\
-  3^aq^j\in D,\ 
+  3^aq^j\in D,\,
   \rho_{3^aq^j}\equiv\gamma_t\ (\mathrm{mod}\ q^j)}}
 \{v\in\mathcal U:v\equiv\rho_{3^aq^j}\pmod{3^a}\}.
 $$
@@ -10680,3 +10680,305 @@ unrestricted odd distinct covering remain unresolved.
 These are ordinary deductions using the existing height
 code and complete original liabilities; no Lean verification
 or new enumeration is asserted.
+
+## 70. Every occupied parent needs high originals in many different children
+
+Keep the one original EB1 cover, its actual phases and the
+factorization $Q=\ell^Hq^GW$ from Section 69. The source and
+shifted height code of that section also apply to a literal
+parent that contains no pure-power original. Excluding every
+child containing a high-$\ell$ original then gives a count of
+actual occupied children, with a simultaneous saving for all
+excluded originals.
+
+### The complete responsibility of an arbitrary occupied parent
+
+Fix $0\le k<G$ and $u\bmod q^k$. Define
+
+$$
+\begin{gathered}
+J_u=\{d\in D:v_q(d)>k,\ \rho_d\equiv u\pmod{q^k}\},\\
+E_u=(\mathbb Z/Q\mathbb Z)
+              \setminus\bigcup_{d\notin J_u}A_d.
+\end{gathered}
+\tag{SC419}
+$$
+
+Call $u$ occupied when $J_u\ne\varnothing$, and assume this
+throughout. Irredundancy supplies a private point of any
+chosen member of $J_u$, so $E_u\ne\varnothing$.
+
+Let $I_u$ consist of the retained originals
+$d=\ell^a q^j m$ with $j\le k$ and
+$\rho_d\equiv u\pmod{q^j}$. Set
+
+$$
+\begin{gathered}
+X_u=(\mathbb Z/\ell^H\mathbb Z\times\mathbb Z/W\mathbb Z)
+ \setminus\bigcup_{\ell^a q^j m\in I_u}
+       ([\rho_d]_{\ell^a}\times[\rho_d]_m),\\
+E_u=\{(v,z,w):z\equiv u\pmod{q^k},\ (v,w)\in X_u\},\\
+\Lambda_u=\pi_{\ell^H}(X_u),\qquad s_u=|\Lambda_u|,\\
+1\le s_u\le T_\ell(H)
+ =\ell^H-\frac{\ell^H-1}{\ell-1},\qquad
+b_k=\max_{\substack{d\in D\\v_q(d)=k}}v_\ell(d)\le H.
+\end{gathered}
+\tag{SC420}
+$$
+
+The equality is the complete joint-hole identity SC406:
+retained lower-$q$ membership is independent of the tail
+above $k$, retained higher-$q$ classes miss this parent,
+and outside the parent no removed original was present.
+All pure-$\ell$ guards remain, giving the displayed bound
+on $s_u$. The maximum defining $b_k$ exists by divisor
+closure, using $q^k$ for $k>0$ and $\ell^H$ for $k=0$.
+It is global at numerical $q$-height $k$, without a phase
+restriction. No private region of a composite original is
+substituted for $X_u$ or its projection.
+
+Every one of the $q$ next children of $u$ contains an
+actual member of $J_u$. To see this, fix $(v,w)\in X_u$,
+choose any next $q$-digit and any remaining tail, and apply
+original whole coverage to the resulting point of $E_u$.
+Its owner belongs to $J_u$ and has that next digit. Hence
+omitting any one child eliminates at least one original.
+
+In particular, put $a_u=\max_{d\in J_u}v_\ell(d)$ and
+reuse SC408--SC412 with $a_t,b_t,s_t$ replaced by
+$a_u,b_k,s_u$. Divisor closure gives $a_u\le b_k$ exactly
+as in SC407. With
+$S_u=s_u\ell^{\max(0,a_u+b_k+1-H)}$, the same code gives
+
+$$
+\begin{array}{ll}
+k=G-1:&q\le S_u,\\
+k<G-1:&q\le\max\{S_u,\ell^{a_u+1}-1\}.
+\end{array}
+\tag{SC421}
+$$
+
+The pure-power hypothesis in Section 69 was needed for
+the private-projection identity, not for this branchwise
+absorption.
+
+### Excluding every child containing a high original
+
+For $d\in J_u$, let $\delta_u(d)$ be its actual next
+$q$-digit after $u$. Fix $1\le r\le H$ and define
+
+$$
+\begin{gathered}
+C_r(u)=\{\delta_u(d):d\in J_u,\ v_\ell(d)\ge r\},
+\qquad c_r(u)=|C_r(u)|,\\
+F=\begin{cases}
+C_r(u),&c_r(u)>0,\\
+\{\delta_0\},&c_r(u)=0,
+\end{cases}
+\qquad |F|=\max(1,c_r(u)),\\
+n_{\rm ex}=|\{d\in J_u:\delta_u(d)\in F\}|
+             \ge |F|\ge1.
+\end{gathered}
+\tag{SC422}
+$$
+
+Here $\delta_0$ is any next digit; every such child is
+occupied by the preceding argument. Exclude exactly $F$
+from the first coding step. All $n_{\rm ex}$ originals
+in these children have empty inverse. Every original
+that can have nonempty inverse has $\ell$-height $a<r$.
+
+Use the same fixed prefix code with width $r$ and parameters
+
+$$
+\begin{gathered}
+L_0=\max(H,b_k+r),\qquad
+L_j=L_0+(j-1)r\quad(1\le j\le G-k),\\
+\mathcal D_1=
+ \{c\bmod\ell^{L_0}:c\bmod\ell^H\in\Lambda_u\},\\
+S_r(u)=|\mathcal D_1|
+ =s_u\ell^{\max(0,b_k+r-H)},\qquad U_r=\ell^r.
+\end{gathered}
+\tag{SC423}
+$$
+
+Inject $\mathcal D_1$ into the next digits outside $F$.
+Each subsequent coded prefix has $\ell^r$ extensions,
+injected into the $q$ next digits. Thus the sufficient
+condition for this one replacement is
+
+$$
+q-\max(1,c_r(u))\ge S_r(u)
+\quad\text{and}\quad
+\bigl(k=G-1\ \text{or}\ q\ge\ell^r\bigr).
+\tag{SC424}
+$$
+
+At $k=G-1$ only the initial alphabet is used. No bound
+on a later alphabet is imposed at that level. Fix all
+injections independently of original labels and of the
+complete $W$-coordinate, as in Section 69. The source
+preserves the $\ell^H$ word, the entire $W$ coordinate
+and the parent $u$, and the full comparison carrier is
+$\ell^{L_{G-k}}q^GW$.
+
+For a removed original
+$d=\ell^a q^{k+j}m$ with a nonempty inverse, one has
+$0\le a<r$ and $1\le j\le G-k$. The inverse fixes one
+prefix $c_d\bmod\ell^{L_j}$, already lying above
+$\Lambda_u$ and compatible with the actual original
+$\ell^a$ phase. Enclose it by the whole AP
+
+$$
+\begin{gathered}
+\kappa_j(a)=b_k+1+(j-1)r+a,\qquad
+d'=\ell^{\kappa_j(a)}q^km,\\
+B_d=[u]_{q^k}\cap[c_d]_{\ell^{\kappa_j(a)}}
+                      \cap[\rho_d]_m,\\
+b_k<\kappa_j(a)\le b_k+r+(j-1)r\le L_j.
+\end{gathered}
+\tag{SC425}
+$$
+
+This is SC410 with the padded height bound $r-1$.
+The global $b_k$ excludes collision with every retained
+label. Division of $\kappa_j(a)-(b_k+1)$ by $r$ recovers
+$j-1$ and $a$; together with $m$ this recovers the
+original numerical label. Consequently the candidates
+have pairwise distinct odd nonunit moduli, also distinct
+from all retained originals.
+
+For every integer missed by the retained family, SC420
+places its complete $(\ell^H,W)$ coordinate in $X_u$,
+so this one common source is defined. Retained membership
+is unchanged at the source. Original whole coverage
+supplies a removed owner outside the forbidden children,
+whose exact inverse contains the integer and is enclosed
+by SC425. Thus all of $E_u$, and every integer lift, is
+covered. Each nonexcluded removed original supplies at
+most one candidate, while all $n_{\rm ex}$ excluded
+originals supply none. The exact class-count estimate is
+
+$$
+K'\le K-|J_u|+(|J_u|-n_{\rm ex})
+       =K-n_{\rm ex}<K.
+\tag{SC426}
+$$
+
+This is one simultaneous deletion and replacement in the
+original cover. EB1 therefore rules out SC424.
+
+### Necessary child counts at every height
+
+Whenever $k=G-1$ or $q\ge\ell^r$, failure of SC424 gives
+the exact integer obstruction
+
+$$
+q-\max(1,c_r(u))<S_r(u).
+\tag{SC427}
+$$
+
+If also $q>S_r(u)$, the case $c_r(u)=0$ would have
+$q-1\ge S_r(u)$ and is impossible. Hence
+
+$$
+\boxed{
+\bigl(k=G-1\ \text{or}\ q\ge\ell^r\bigr)
+\ \text{and}\ q>S_r(u)
+\quad\Longrightarrow\quad
+c_r(u)\ge q-S_r(u)+1.}
+\tag{SC428}
+$$
+
+The strict condition $q>S_r(u)$ is retained: the local
+alphabet size can be prime. A uniform all-height version
+follows from $b_k\le H$ and $s_u\le T_\ell(H)$:
+
+$$
+S_r(u)\le\ell^rT_\ell(H),\qquad
+q\ge\ell^rT_\ell(H)
+\quad\Longrightarrow\quad
+c_r(u)\ge q-\ell^rT_\ell(H)+1.
+\tag{SC429}
+$$
+
+Here $\ell$ is odd, $H\ge1$ and $r\ge1$, so
+$T_\ell(H)\ge2$. The threshold $\ell^rT_\ell(H)$ is
+composite; equality with the support prime $q$ is
+impossible. Thus the hypothesis implies both
+$q>S_r(u)$ and $q\ge\ell^r$, including at nonterminal
+levels. The sharper local statement SC428 also applies
+at the last level when no later-alphabet bound is known.
+
+For $\ell=3$ and $H=2$, every occupied parent has
+$s_u\le5$ and $b_k\le2$. In particular,
+
+$$
+\begin{aligned}
+S_1(u)&=s_u3^{\max(0,b_k-1)}\le3s_u\le15,\\
+q\ge17&\quad\Longrightarrow\quad
+c_1(u)\ge q-S_1(u)+1\ge q-3s_u+1\ge q-14.
+\end{aligned}
+\tag{SC430}
+$$
+
+This counts distinct next children containing an actual
+original divisible by 3, including either allowed
+ternary height. For the height-two originals,
+
+$$
+\begin{aligned}
+S_2(u)&=s_u3^{b_k}\le9s_u\le45,\\
+q\ge47&\quad\Longrightarrow\quad
+c_2(u)\ge q-S_2(u)+1\ge q-9s_u+1\ge q-44.
+\end{aligned}
+\tag{SC431}
+$$
+
+Both conclusions hold for every occupied literal parent
+at every $0\le k<G$. For example, $q=47$ requires
+height-two originals in at least three children of each
+occupied parent, and $q=131$ requires at least 87.
+Using the exact $b_k$ in SC423 can strengthen these
+bounds without any additional phase hypothesis.
+
+### The counts add only within one prime and one level
+
+Fix $q$ and $k$, and let $U_{q,k}$ be the occupied
+parents modulo $q^k$. Distinct parents have disjoint
+children, and one original of $q$-height greater than
+$k$ specifies exactly one such parent and child. Choosing
+one high original for each counted child therefore gives
+the single-inventory inequality
+
+$$
+\#\{d\in D:v_\ell(d)\ge r,\ v_q(d)>k\}
+ \ge\sum_{u\in U_{q,k}}c_r(u).
+\tag{SC432}
+$$
+
+In particular, at ternary height two,
+
+$$
+\begin{aligned}
+q\ge17:\qquad
+\#\{d\in D:v_3(d)\ge1,\ v_q(d)>k\}
+ &\ge\sum_{u\in U_{q,k}}(q-3s_u+1),\\
+q\ge47:\qquad
+\#\{d\in D:v_3(d)=2,\ v_q(d)>k\}
+ &\ge\sum_{u\in U_{q,k}}(q-9s_u+1).
+\end{aligned}
+\tag{SC433}
+$$
+
+These sums use actual disjoint parent-child incidences
+in one original inventory. They are not added across
+different primes or different levels: the same original
+can satisfy several prime-coordinate demands and can
+witness nested parents. Nor do these child counts give
+a common cofactor for different words, an aligned actual
+$3p/9p$ pair, or coverage of the full five-menu residual.
+The Section 66 entrance SC372 remains a separate joint
+condition. These are ordinary deductions from the
+stated EB1 hypotheses; no Lean verification of the
+absorption or child-count conclusions is asserted.
