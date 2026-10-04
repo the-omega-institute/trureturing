@@ -16,9 +16,11 @@ $$\left(\forall s \in Source,\; \left(\forall h \in History,\; \operatorname{Con
 
 *Commentary.*
 
-Source is the closed unit interval times Bool. The coordinate and label of s are its first and second projections. Querying a returns the label except at the coordinate, where it flips the bit. History uses the dependent passive history carrier and retains each exact parameter and its response; queryCount counts different parameters. Consistent(h,s) checks every response, and Sound(h,b) requires label b on the entire compatibility fiber.
+The target is definition and theorem 22.3 of FIB_SCALE_READOUT_PERMISSION_GEOMETRY. Source is the closed unit interval times Bool. The coordinate and label of s are its first and second projections. Querying a returns the label except at the coordinate, where it flips the bit. History uses the dependent passive history carrier and retains each exact parameter and its response; queryCount counts different parameters. Consistent(h,s) checks every response, and Sound(h,b) requires label b on the entire compatibility fiber.
 
-The Controller, Consistent, distinct-parameter set, queryCount, Run, Correct, and cost are supplied directly by the shared read-only execution core. A Controller maps a finite history to a query, a finite return, or a stall. Run(pi,s,emptyHistory,h,b) is finite execution from the empty history with additional record h and output b. Correct(pi) requires a finite correct run on every source. Runs have no uniform depth bound. Repetition is allowed and charged once; cost is infinite when there is no finite run. worstCost(pi) is the supremum over sources. deterministicValue minimizes it over measurable correct controllers.
+Controller is a local notation for a history-to-Sum policy: each action queries an exact parameter or returns a Boolean label. Finite Run(pi,s,prefix,h,b) means that some fuel makes the frozen PassivePolicyNormalization.execute return the additional history h and label b. Correct(pi) requires such a correct return on every source. There is no uniform fuel bound. Repetition is allowed and charged once; the local cost definition counts distinct exact parameters in the terminal history and is infinite when no fuel returns. worstCost(pi) is the supremum over sources. deterministicValue minimizes it over measurable correct policies.
+
+Internal stalls can be represented by endless queries after the first stalled prefix. This preserves all finite returns, costs, and error events; conversely every Sum policy embeds as an Option controller using some. Thus certificates and all three optimal values agree. The attaining policies terminate at every declared seed and source. The executor is reused from the frozen normalization module; this module supplies the exact-probe response and distinct-parameter cost.
 
 The midpoint is 1/2. threeProbe(a,c,d) queries a and c, returns the first response when they agree, and otherwise queries d and returns that response. Every sound certificate needs two distinct parameters. Two parameters avoiding the coordinate certify its label. For a correct controller with first parameter a, a terminal record at (a,true) using only a and c would also match (c,false). This forces a third parameter. The fixed controller at 0,1/2,1 attains the bound.
 
@@ -34,4 +36,4 @@ ErrorSeeds(pi,s) is the set of seeds with a finite erroneous return. MeasurableS
 
 - Truth anchor: `D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.result`
 - Dependency: [D5/S3/ConceptDynamics/EscapeSpectrum/UncountableSingletonCutCountermodel](../EscapeSpectrum/UncountableSingletonCutCountermodel.md)
-- Dependency: [D5/S3/ConceptDynamics/Experiment/AdaptiveReadOnlyExecution](../Experiment/AdaptiveReadOnlyExecution.md)
+- Dependency: [D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization](../Experiment/PassivePolicyNormalization.md)
