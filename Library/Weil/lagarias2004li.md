@@ -520,3 +520,62 @@ $$\|n_h-n_h^{(m)}\|\le\frac{(1-2c)^{m+1}}{c}\|P_NBh\|\le\frac{(1-2c)^{m+1}}{2c}\
 Because its source error lies in $N$, each edge error is at most $\|n_h-n_h^{(m)}\|/\sqrt2$. Mixed nullity also keeps $q(h-n_h^{(m)})=q(h)$ exactly. Thus the two errors are paired through one source, not independently optimized.
 
 What is still missing: explicit acquisition or approximation of $P_N$ itself, a transfer between the actual projected increments, and its joint reconstruction/norm estimate. The anchors' positive mass can be very small and no useful numerical conditioning is claimed. The inverse series is an operator identity involving the exact $P_N$, not a finite algorithm or a spectral certificate for the original remainder. G1 bounds K_- only, not D, and does not prove RH, Robin, the half-bound or the cofinal comparison.
+
+
+### Even geometry gives a stronger negative-edge inverse constant
+
+Retain the same $a(x,y)$, $B=C_-^*C_-$ and $G$ from (G1)–(G5).
+Let $\mu$ be the law of $|X|$ for $X\sim\nu$, and write an even input
+as $h(x)=f(|x|)$. Folding the two signs gives
+
+$$\|C_-h\|^2=\frac18\iint
+[a(r,s)+a(r,-s)]|f(r)-f(s)|^2\,d\mu(r)d\mu(s).$$
+
+Choose $t>0$ with $\psi_\Gamma(t)<2$ and put
+$p_t=\mu([t,\infty))$, $a_t=1-\psi_\Gamma(t)/2>0$.
+On $\max(r,s)\ge t$, the opposite-sign edge has $a(r,-s)\ge a_t$.
+For $u=f-\mu(f)$, $A=[0,t)$ and $T=[t,\infty)$, direct expansion gives
+
+$$\begin{aligned}
+J_T&=\iint_{\max(r,s)\ge t}|u(r)-u(s)|^2\,d\mu(r)d\mu(s)\\
+&=2p_t\int_A|u|^2d\mu+2\int_T|u|^2d\mu
+  +2\left|\int_Tu\,d\mu\right|^2
+\ge2p_t\operatorname{Var}_\mu(f).
+\end{aligned}$$
+
+Consequently $\|C_-h\|^2\ge a_tp_t\operatorname{Var}_\nu(h)/4$.
+The positive first term of the original theta series has the exact
+integrated lower bound
+
+$$p_t\ge[4u(1+e^t)-2]e^{-u},\qquad u=\pi e^{2t}.$$
+
+Its derivative in $t$ is minus twice the first-term $\nu$ density, and
+it tends to zero at infinity. At $t=7/20$, outward interval evaluation
+with python-flint 0.9.0 at 256 bits gives
+$a_t>1662/10000$ and the displayed mass bound $>1059/10000$.
+Their product divided by four exceeds $11/2500$. Thus, on the actual
+centered even space and in its inherited $L^2(\nu)$ norm,
+
+$$\begin{gathered}
+c_*:=\frac{11}{2500},\qquad
+c_*\operatorname{Var}_\nu(h)\le\|C_-h\|^2
+\le\tfrac12\operatorname{Var}_\nu(h),\\
+\|G^{-1}\|\le\frac{2500}{11},\qquad
+\kappa(G)\le\frac{1250}{11}<114,\qquad
+\|I_N-2G\|\le1-\frac{22}{2500}.
+\end{gathered}$$
+
+This controls the negative-edge metric and its critical compression.
+It does not bound $D$ or the half-slack. Matrices in an unnormalized
+derivative basis need not have this condition number. The comparison
+is a paper application of the actual even product measure; the scalar
+interval evaluation is numerical evidence, not new Lean certification.
+
+The [theta-translation Fredholm interface](../Dynamics/clason2021regularization.md#actual-theta-translations-generate-the-critical-source)
+represents the common correction by a small-window integral kernel and
+Tikhonov normal equation, without an exact $P_N$ in its construction.
+Its fitted sources converge strongly, with a separate fixed-parameter
+discretization bound. The required input's small-spectral-value error
+and the projected transfer estimate remain unproved. Positive finite
+regularization does not remove the existing exact raw Schur-certificate
+obstruction.
