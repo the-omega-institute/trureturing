@@ -177,3 +177,18 @@ integration grid is repeated. Outputs include exact upper dyadics,
 trial and source hashes, the selected sufficient $J'$ and the unpaid
 matrix obligations. The program is project-authored; directed arithmetic
 and dependency licensing come from python-flint/FLINT.
+
+
+The [stable projected-ground application](stable-ground.md) gives a
+nonzero $e=E^*Pv_0$ directly from the existing one-sided operator tail
+and exact ground relation. On $u\perp e$, the lift (HT2) becomes
+$YEu=ZAu$. Its classical second Schur allowance is less than
+$0.004660867160108$; the actual direction and restricted matrix remain
+uncomputed.
+
+The [continuous sinc projection supplier](continuous-projection.md)
+applies to the localized forward map $H_{1024,64}EB$ before sharp-$Q$,
+which can create spatial tails. It pays the infinite physical-lattice
+quadrature and omitted input samples for the true cutoff64. Actual
+forward sample errors, off-lattice high prime evaluations, common Grams
+and the restricted matrix sign are separate obligations.

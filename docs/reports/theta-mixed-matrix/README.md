@@ -159,3 +159,11 @@ $\|E^*Pv_0\|$ away from zero without a new ground-moment integral. A
 restricted $E^*SE$ lower bound above $0.004660867160108$ would suffice
 for the second Schur elimination. Its actual direction, entries and
 restricted sign still need certification.
+
+The [continuous sinc projection supplier](continuous-projection.md)
+preserves the actual cutoff64 in a physical convolution. At the saved
+spacing it pays infinite-lattice projection quadrature and the finite
+physical input tail, while explicitly separating sample and kernel
+errors. Its DFT identity applies at lattice outputs; off-lattice prime
+shifts require an additional evaluation interface. The actual common
+Gram and restricted sign remain unpaid.
