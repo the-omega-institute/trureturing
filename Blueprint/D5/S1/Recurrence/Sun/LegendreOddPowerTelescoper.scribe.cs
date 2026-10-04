@@ -38,8 +38,9 @@ internal sealed class LegendreOddPowerTelescoperDocument : IScribeDocumentDefini
                 + "n starting at zero. The fraction is rational division, and its denominator is nonzero.", true),
             Node("L", "The source polynomial L", LFormula(),
                 "Conjecture 2.1, page 10: \"" + ConjectureQuote + "\" L(m,f,p,t) is the displayed "
-                + "L_m(p,t) with the coefficient family f made explicit. The constant coefficient "
-                + "is f(0), an integer constant polynomial. The sum uses the attached range below m "
+                + "L_m(p,t) with the coefficient family f made explicit. For a positive m and a "
+                + "family satisfying claim, f at index zero is a nonzero integer constant polynomial; "
+                + "its evaluation supplies the lower t^0 term. The sum uses the attached range below m "
                 + "and evaluates every lower coefficient at the same square (2p+1)^2. The parameter "
                 + "p is an integer, so the negative endpoint is part of the same definition.", true),
             Node("claim", "Cui-Sun Conjecture 2.1", IffF(F.Id("claim"), ClaimFormula()),
@@ -55,14 +56,18 @@ internal sealed class LegendreOddPowerTelescoperDocument : IScribeDocumentDefini
                 + "m,m-1,...,0 and then vanish. Alternating these iterates gives a finite inverse "
                 + "for multiplication by t plus the operator. The Legendre recurrence turns this "
                 + "inverse identity into a boundary difference, and induction sums the differences "
-                + "over all indices below p.", false, DescribeRole.Theorem))));
+                + "over all indices below p.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cui-sun-2026-legendre-odd-power-telescoper"),
+                    ResolutionKind.Proved, [])))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) =>
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("cui-sun-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolutionClaim);
 
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
     private static Formula Apply(Formula fun, Formula arg) => new Formula.Apply(fun, [arg]);

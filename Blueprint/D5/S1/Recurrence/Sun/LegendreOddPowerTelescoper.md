@@ -28,7 +28,7 @@ $$\forall m \in \mathbb{N},\; \forall f \in Fin\left(m\right) \to Polynomial\lef
 
 *Commentary.*
 
-Conjecture 2.1, page 10: "Suppose that m, p ∈ Z^+. Then there are integral polynomials f_i(t) with degree i (i = 0, 1, …, m − 1) such that (1 − x)^{m+1} Σ_{n=0}^{p−1} (2n + 1)^{2m+1} P_n(x) = pL_m(p, 1 − x)P_{p−1}(x) − pL_m(−p, 1 − x)P_p(x), where L_m(p, t) = (2p + 1)^{2m} t^m + f_{m−1}((2p + 1)^2) t^{m−1} + · · · + f_1((2p + 1)^2) t + f_0." L(m,f,p,t) is the displayed L_m(p,t) with the coefficient family f made explicit. The constant coefficient is f(0), an integer constant polynomial. The sum uses the attached range below m and evaluates every lower coefficient at the same square (2p+1)^2. The parameter p is an integer, so the negative endpoint is part of the same definition.
+Conjecture 2.1, page 10: "Suppose that m, p ∈ Z^+. Then there are integral polynomials f_i(t) with degree i (i = 0, 1, …, m − 1) such that (1 − x)^{m+1} Σ_{n=0}^{p−1} (2n + 1)^{2m+1} P_n(x) = pL_m(p, 1 − x)P_{p−1}(x) − pL_m(−p, 1 − x)P_p(x), where L_m(p, t) = (2p + 1)^{2m} t^m + f_{m−1}((2p + 1)^2) t^{m−1} + · · · + f_1((2p + 1)^2) t + f_0." L(m,f,p,t) is the displayed L_m(p,t) with the coefficient family f made explicit. For a positive m and a family satisfying claim, f at index zero is a nonzero integer constant polynomial; its evaluation supplies the lower t^0 term. The sum uses the attached range below m and evaluates every lower coefficient at the same square (2p+1)^2. The parameter p is an integer, so the negative endpoint is part of the same definition.
 
 **Definition 1.3 (Cui-Sun Conjecture 2.1).**
 
@@ -47,6 +47,10 @@ Conjecture 2.1, page 10: "Suppose that m, p ∈ Z^+. Then there are integral pol
 $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\exists f \in Fin\left(m\right) \to Polynomial\left(\mathbb{Z}\right),\; (\forall i \in Fin\left(m\right),\; (natDegree\left(f\left(i\right)\right) = val\left(i\right)) \land (f\left(i\right) \ne 0)) \land (\forall p \in \mathbb{N},\; (1 \le p) \Rightarrow (\left(1 - X\right)^{m + 1} \cdot \sum_{n \in range\left(p\right)} (C\left(rat\left(2 \cdot n + 1\right)\right)^{2 \cdot m + 1} \cdot P\left(n\right)) = C\left(rat\left(p\right)\right) \cdot L\left(m, f, int\left(p\right), 1 - X\right) \cdot P\left(natSub\left(p, 1\right)\right) - C\left(rat\left(p\right)\right) \cdot L\left(m, f, -int\left(p\right), 1 - X\right) \cdot P\left(p\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/cui-sun-2026-legendre-odd-power-telescoper` (proved) by `D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cui-sun-2026-legendre-odd-power-telescoper","declaration_gid":"D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
