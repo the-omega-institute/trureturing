@@ -22,6 +22,10 @@ $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow ((\operatorname{bloch}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-wu-2026-hknn-block-bloch-largest-weight` (proved) by `D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-wu-2026-hknn-block-bloch-largest-weight","declaration_gid":"D5/S3/Quantum/SpinChains/HKNNBlockBlochLargestWeight.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
