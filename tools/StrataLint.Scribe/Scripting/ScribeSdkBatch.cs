@@ -63,6 +63,7 @@ internal sealed class ScribeSdkBatch : IDisposable
                         Property("Configuration", configuration), Property("DefineConstants", constants),
                         Property("DisableImplicitFrameworkDefines", "true"), Property("DisableImplicitConfigurationDefines", "true"),
                         Property("Features", "$(Features);experimental-data-section-string-literals=100"),
+                        Property("DeterministicSourcePaths", "false"),
                         Property("RestoreLockedMode", "true"), Property("NuGetAudit", "false"),
                         Property("RestoreConfigFile", nuget), Property("ErrorLog", errorLog + ",version=2.1")),
                     new XElement("ItemGroup",
