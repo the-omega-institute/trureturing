@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/IntervalClosedSignedCardinalityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/elder-lafreniere-conjecture-4-12-signed-cardinality-refutation` (refuted) by `D5/S3/Combinatorics/Geometry/IntervalClosedSignedCardinalityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"elder-lafreniere-conjecture-4-12-signed-cardinality-refutation","declaration_gid":"D5/S3/Combinatorics/Geometry/IntervalClosedSignedCardinalityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jennifer Elder, Nadia Lafrenière, Erin McNicholas, Jessica Striker, Amanda Welch (2024). *Toggling, rowmotion, and homomesy on interval-closed sets*. DOI: [10.48550/arXiv.2307.08520](https://doi.org/10.48550/arXiv.2307.08520). URL: <https://arxiv.org/abs/2307.08520v2>.

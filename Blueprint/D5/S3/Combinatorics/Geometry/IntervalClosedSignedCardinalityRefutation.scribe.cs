@@ -29,12 +29,16 @@ internal sealed class IntervalClosedSignedCardinalityRefutationDocument : IScrib
             Node("signed-cardinality-result", "The conjecture is refuted", "result",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Take m = 3, n = 12 and the row-major linear extension. In one-based coordinates the initial set is {(1,7),(3,2),(3,3),(3,4),(3,5)}. Its literal rowmotion orbit has 73 distinct states and signed-cardinality sum −1, giving average −1/73. A bitmask uses bit j + 12i for the zero-based point (i,j). Lower- and upper-set masks certify order-convexity: a missing point cannot have both an included point below it and an included point above it. The encoding commutes with every actual toggle and every trace step. All 73 transitions, including the return to the seed, and the sum are checked; injectivity of the decoded cycle and induction identify it with the full distinct-state orbit. The even number of ranks does not force cancellation within an orbit.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Followup)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Followup),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("elder-lafreniere-conjecture-4-12-signed-cardinality-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
