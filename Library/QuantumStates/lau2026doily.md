@@ -14,6 +14,13 @@ triage: anchor
 
 # Beyond the Magic Square Game: Widening the Gap for Two Bell States
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2603.20748
+- Source: https://arxiv.org/abs/2603.20748v2
+
+## Source statement
+
 Section 5, p. 20:
 
 > However, it is possible that for p < 1/7, the value of the p-synchronous doily game is less than 31/35. In particular, if Lemma 4.3 can be improved to state that an optimal asymmetric strategy for the doily game wins on at most 12 of 15 synchronous questions, the 1/10-synchronous doily game would have a classical value of 22/25 < 31/35. The author estimates that this could be checked exhaustively using about three years of continuous work on an RTX 4090 graphics card.

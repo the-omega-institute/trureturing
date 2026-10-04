@@ -35,14 +35,18 @@ internal sealed class SynchronousDoilyClassicalValueDocument : IScribeDocumentDe
             Node("claim", "Lau's candidate value", ClaimFormula(),
                 "Section 5, p. 20: “" + Question + "” Table 3, p. 6: “" + Equations + "” Definition 4.1, p. 15: “" + Game + "” Section 2, pp. 2–3: “" + Strategies + "” “" + Value + "” The equality selects the explicitly named candidate p = 1/10. All fifteen equations, all eight local answers per equation, both independent deterministic strategies, and the ordered-question convention are retained.", DescribeRole.Definition),
             Node("result", "The exact value", Disp(Equal(Call("classicalValue", Fraction(1, 10)), Fraction(22, 25))),
-                "Answer 000 at equations 0 through 11 and 100 at equations 12 through 14, for both players. This wins 78 of the 90 intersecting ordered pairs and every diagonal question, attaining 22/25. For the upper bound, repair invalid parities without losing a won question. Each of the ten odd grids forces a loss in each orientation, and every ordered intersecting pair lies in two grids, so the total intersecting loss L is at least 10. If the players disagree on at most two equations, minority-event counting and parity-valid local flips give L ≥ 12. Writing r for their number of differing equation answers yields 3L + 2r ≥ 36, while 300(1 − winProb) = 3L + 2r. Consequently every strategy has winProb ≤ 22/25, and the explicit strategy attains the finite maximum. The conclusion is at the single parameter 1/10; the full parameter dependence and higher-dimensional games require further results.", DescribeRole.Theorem)),
+                "Answer 000 at equations 0 through 11 and 100 at equations 12 through 14, for both players. This wins 78 of the 90 intersecting ordered pairs and every diagonal question, attaining 22/25. For the upper bound, repair invalid parities without losing a won question. Each of the ten odd grids forces a loss in each orientation, and every ordered intersecting pair lies in two grids, so the total intersecting loss L is at least 10. If the players disagree on at most two equations, minority-event counting and parity-valid local flips give L ≥ 12. Writing r for their number of differing equation answers yields 3L + 2r ≥ 36, while 300(1 − winProb) = 3L + 2r. Consequently every strategy has winProb ≤ 22/25, and the explicit strategy attains the finite maximum. The conclusion is at the single parameter 1/10; the full parameter dependence and higher-dimensional games require further results.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lau-2026-synchronous-doily-one-tenth"),
+                    ResolutionKind.Proved))),
         []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("doily-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>

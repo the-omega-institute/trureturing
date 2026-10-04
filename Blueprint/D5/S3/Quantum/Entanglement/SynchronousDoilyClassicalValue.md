@@ -106,6 +106,10 @@ $$\operatorname{classicalValue}\left(\frac{1}{10}\right) = \frac{22}{25}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SynchronousDoilyClassicalValue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lau-2026-synchronous-doily-one-tenth` (proved) by `D5/S3/Quantum/Entanglement/SynchronousDoilyClassicalValue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lau-2026-synchronous-doily-one-tenth","declaration_gid":"D5/S3/Quantum/Entanglement/SynchronousDoilyClassicalValue.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tony Lau (2026). *Beyond the Magic Square Game: Widening the Gap for Two Bell States*. DOI: [10.48550/arXiv.2603.20748](https://doi.org/10.48550/arXiv.2603.20748). URL: <https://arxiv.org/abs/2603.20748v2>.
