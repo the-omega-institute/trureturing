@@ -117,6 +117,7 @@ jobs:
             tools/scripts/agent/openproblem/TARGET-GATES.md
             tools/scripts/dotnet-test.sh
             tools/scripts/workflow/ci-entry.sh
+            tools/scripts/workflow/scribe-scope-paths.sh
             tools/tests/StrataLint.ScriptTests/*
             [banned-api-proof]
             tools/StrataLint.Cli/*
@@ -996,20 +997,15 @@ jobs:
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
+      - name: Prepare the Scribe scope
+        run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/changed-paths"
+        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
       - name: Scribe content
         if: ${{ !cancelled() }}
         env:
-          CHANGED_PATHS: ${{ runner.temp }}/changed-paths
-        # Each selected definition runs independently; without a baseline the
-        # script supplies a manifest of all definitions and markdown paths.
-        run: |
-          if [[ -f "$CHANGED_PATHS" ]]; then
-            tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$CHANGED_PATHS"
-          else
-            tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE"
-          fi
+          SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
+        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
         run: |
