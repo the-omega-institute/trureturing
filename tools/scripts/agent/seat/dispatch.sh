@@ -233,18 +233,20 @@ echo "RUNNER $RUNNER"
 # 负载门。等的是宿主负载,没有自带同步原语,故轮询合法(第 8.7 条辨析);
 # 但按该条要求:间隔与被等事件节奏对齐、有上限、每轮带读数,且**判据写在开跑之前**。
 GATE_ROUNDS="${DISPATCH_GATE_ROUNDS:-240}"; gate_ok=0
+# `make lean` 经 `lean-cache-run.sh --build` 在全部 linked worktree 间持排他锁、自行串行,
+# 故宿主 CPU 负载不是派席条件:需要构建的席位在该锁上排队。门只保留该锁覆盖不到的两项:
+# 并发的 Lean 报告(`report-supervisor.sh`)与席位数。
 for _ in $(seq 1 "$GATE_ROUNDS"); do
-  idle=$(top -l 2 -s 2 -n 0 | grep 'CPU usage' | tail -1 | grep -o '[0-9.]*% idle' | tr -d '% idle')
   lean=$(pgrep -f '^(/bin/)?bash [^ ]*report-supervisor\.sh' | wc -l | tr -d ' ')
   cdx=$(seat_count)
-  if python3 -c "import sys; sys.exit(0 if float('${idle:-0}')>=20 and $lean<=4 and $cdx<$MAXC else 1)" 2>/dev/null; then
-    echo "GATE_PASS idle=$idle lean=$lean seats=$cdx brief=$BRIEF"; gate_ok=1; break
+  if [ "$lean" -le 4 ] && [ "$cdx" -lt "$MAXC" ]; then
+    echo "GATE_PASS lean=$lean seats=$cdx brief=$BRIEF"; gate_ok=1; break
   fi
   sleep "${DISPATCH_GATE_SLEEP:-30}"
 done
 # 门不过就不派 —— 静默放行会让「等了两小时」与「门通过」在输出上无法区分(第 2.1 条)。
 [ "$gate_ok" = "1" ] || {
-  echo "GATE_TIMEOUT rounds=$GATE_ROUNDS idle=${idle:-?} lean=${lean:-?} codex=${cdx:-?}"; exit 4; }
+  echo "GATE_TIMEOUT rounds=$GATE_ROUNDS lean=${lean:-?} codex=${cdx:-?}"; exit 4; }
 
 RUNROOT="${TMPDIR:-/tmp}/consensus-rnd/sshx"
 while [ -e "$RUNROOT/$FLIGHT/attempt-$ATT" ]; do
