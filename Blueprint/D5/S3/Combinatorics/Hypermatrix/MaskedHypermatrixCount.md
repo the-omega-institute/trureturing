@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/Hypermatrix/MaskedHypermatrixCount.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hypermatrix/MaskedHypermatrixCount.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/koprowski-lewis-2026-conjecture-3-1-hypermatrix-count` (proved) by `D5/S3/Combinatorics/Hypermatrix/MaskedHypermatrixCount.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"koprowski-lewis-2026-conjecture-3-1-hypermatrix-count","declaration_gid":"D5/S3/Combinatorics/Hypermatrix/MaskedHypermatrixCount.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Brandon Koprowski, Joel Brewster Lewis (2026). *Enumeration of Nondegenerate 2 x (k+1) x k Hypermatrices*. DOI: [10.48550/arXiv.2602.22129](https://doi.org/10.48550/arXiv.2602.22129). URL: <https://arxiv.org/abs/2602.22129v1>.
