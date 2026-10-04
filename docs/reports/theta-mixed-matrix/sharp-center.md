@@ -1,0 +1,312 @@
+# Actual sharp-band center and residual interface
+
+This paper interface reuses the [inverse-residual comparison and polynomial
+approximation source](../../../Library/Weil/liu2026tailcompensation.md),
+the [actual transformed form](../../../Library/Weil/fukushima2011dirichlet.md)
+(WF1)–(WF3), and the [original-series bounds](../../../Library/Analytic/romik2021orthogonal.md)
+(WC1)–(WC5). These general methods are existing tools. The new question is whether the actual
+sharp-band center has a prescribed finite approximation with a payable
+complete remainder, on the even minimal realization.
+
+## Operator domain and complete block
+
+Fix $c=3/8$, $N=64$, $\alpha=1/2-c=1/8$ and
+$T=\widetilde A-cI+c|v_0\rangle\langle v_0|$, where
+$v_0=\sqrt\rho$ and $\|v_0\|_2=1$.
+Let $P=\mathbf1_{|\mathsf D|<N}$ on the even space and $Q=I-P$.
+For even $u\in H^1$, bounded $s,s'$ put $su\in H^1$; (WF3) puts
+$m(\mathsf D)su\in L^2$. Consequently
+
+$$
+Tu=\alpha u+s\,m(\mathsf D)(su)+c_\Gamma s^2u-Bu
+       +c\langle v_0,u\rangle v_0. \tag{SC1}
+$$
+
+Every term is $L^2$. First (WF2) and its compact-core approximation
+place every even $H^1$ vector in the actual minimal form domain.
+Pairing (SC1) with the compact smooth even core gives the existing closed
+form (WF1); form continuity extends that pairing to the form domain.
+Its representation theorem therefore gives $H^1_{\rm even}\subset D(T)$
+and (SC1), without a maximal-domain identification. In particular $P$ maps all even $L^2$
+into $D(T)$ and $TP$ is bounded.
+
+The [complete high restriction](joint-high-floor.md) has associated operator $C\ge\delta I$,
+where the approved joint bound permits
+$\delta=0.0383682545007734$. Put $K=QTP$ and
+
+$$
+S=PTP-K^*C^{-1}K. \tag{SC2}
+$$
+
+$K$ is bounded. This is a bounded Schur operator on the entire
+infinite-dimensional center $PL^2_{\rm even}$, rather than a finite
+compression. Completing the high-form square gives $T\succeq0$
+if and only if $S\succeq0$. The high minimizer is $-C^{-1}Kp$
+in the high operator domain. This invokes the standard positive
+block elimination, retaining the original domain and all terms.
+
+## Explicit cosine columns and localized prime tails
+
+Use the isometric even Fourier coordinates $z(\eta)=\sqrt2\widehat p(\eta)$
+on $[0,N]$, so
+
+$$
+p(x)=\frac1{\sqrt\pi}\int_0^N\cos(\eta x)z(\eta)d\eta.
+$$
+
+Define $H=T-\alpha I$ only on its domain. Its center-input map has
+$L^2(dx)$-valued columns
+
+$$
+\begin{aligned}
+h_\eta(x)=\frac1{\sqrt\pi}\bigg[&
+s(x)m(\mathsf D)(s\cos(\eta\,\cdot))(x)
++c_\Gamma s(x)^2\cos(\eta x)\\
+&-\sum_{n\ge2}w_ns(x)\{
+s(x+t_n)\cos(\eta(x+t_n))
++s(x-t_n)\cos(\eta(x-t_n))\}\\
+&+c\,v_0(x)\int_{\mathbb R}v_0(y)\cos(\eta y)dy\bigg],
+\quad t_n=\log n,\quad w_n=\Lambda(n)/\sqrt n.
+\end{aligned} \tag{SC3}
+$$
+
+The bare cosine is not asserted to belong to $D(T)$; (SC3) defines
+columns after cancellation of the nonlocalized $\alpha$ term.
+Both shifted directions and every prime power occur. Differentiation
+in $\eta$ replaces each cosine by minus its own physical argument
+times the sine, including $x+t_n$, $x-t_n$ and the mean integral.
+
+Here are explicit, finite complete majorants. Write
+$a_j=\|s^{(j)}\|_2$ for $j=0,1$, $X_j=\|x s^{(j)}\|_2$,
+$s_\infty=\|s\|_\infty$, $V_j=\||x|^jv_0\|_1$ for $j=0,1$.
+All exist by (WC2), $v_0=2\cosh(x/2)s$, and its superexponential tails.
+The existing derivative data can supply $a_j$ without rerunning its grid.
+
+Termwise differentiation of the positive symbol series gives
+$|m'|\le(9/(4\sqrt3))\sum_{k\ge0}a_k^{-2}<7$,
+where here $a_k=2k+1/2$; the sum is at most $4+1=5$.
+Thus a modulation of $f\in H^1$ by any $|\eta|\le N$ satisfies
+$\|m(\mathsf D)(fe^{i\eta x})\|_2
+\le m(N)\|f\|_2+7\|f'\|_2$.
+
+Let $b=3/8$, $r=e^{-b}$ and use the existing $K_0$ from (WC2).
+Since $|t|\le e^{2|t|}/2$ and $8/(3e)<1$,
+$|t|s(t)\le K_0e^{-(b/2)e^{2|t|}}$.
+Also $e^{2|x|}+e^{2|x\pm\log n|}\ge2n$.
+Allocate half the exponential to the pair and half to the $x$ tail.
+With $q(x)=e^{-(b/2)e^{2|x|}}$, every unweighted or argument-weighted
+shifted product is bounded by $K_0^2e^{-bn}q(x)$.
+Consequently the two-direction prime column and its $\eta$ derivative
+have $L^2$ norm at most
+
+$$
+J=2K_0^2\sqrt{e^{-b}/b}\left(\frac r{(1-r)^2}-r\right). \tag{SC4}
+$$
+
+This uses $w_n\le n$ and all integers $n\ge2$, hence pays every prime
+power. The tail beyond an integer $L\ge1$ has the same prefactor times
+$r^{L+1}((L+1)-Lr)/(1-r)^2$. This is an actual full-column error bound,
+not just an energy tail or a bound at the retained modes.
+
+Triangle and modulation bounds give
+
+$$
+\begin{aligned}
+\sup_{0\le\eta\le N}\|h_\eta\|_2&\le M_0
+:=\frac{s_\infty[(m(N)+|c_\Gamma|)a_0+7a_1]+J+cV_0}{\sqrt\pi},\\
+\sup_{0\le\eta\le N}\|\partial_\eta h_\eta\|_2&\le M_1
+:=\frac{s_\infty[(m(N)+|c_\Gamma|)X_0+7(a_0+X_1)]+J+cV_1}{\sqrt\pi}.
+\end{aligned} \tag{SC5}
+$$
+
+Dominated differentiation gives $h\in H^1([0,N];L^2(dx))$.
+Bochner integration of (SC3), followed by the existing form identity,
+establishes $Hp=\int h_\eta z(\eta)d\eta$. Therefore $HP$ is
+Hilbert–Schmidt and $\|K\|\le\|HP\|\le\sqrt N M_0$.
+
+## Prescribed center remainder and exact ground-state removal
+
+Let $E_M$ be the Fourier-side orthogonal projection onto constants on
+the $M$ equal cells of $[0,N]$. The standard mean-zero interval Poincare
+bound, applied to the Hilbert-space-valued columns, gives
+
+$$
+\|HP(I-E_M)\|\le\|HP(I-E_M)\|_{\rm HS}
+\le\varepsilon_M:=\frac{N\sqrt N}{\pi M}M_1. \tag{SC6}
+$$
+
+All projections in this display act inside the sharp even center.
+The compact remainder $L=S-\alpha I$ therefore satisfies
+
+$$
+\|L(I-E_M)\|\le d_M:=(1+\delta^{-1}\sqrt N M_0)\varepsilon_M.
+\tag{SC7}
+$$
+
+This proves $S=\alpha I+\text{compact}$ by a prescribed approximation,
+and bounds the discarded center. No unknown eigenbasis is involved.
+The constants are deliberately coarse; no practical rank is asserted.
+
+Let $p_0=Pv_0\ne0$. From the exact known $Tv_0=0$,
+$Qv_0=-C^{-1}Kp_0$ and $Sp_0=0$.
+Augment the cell space by this exact vector, writing $F_M$ for the
+orthogonal projection onto $\operatorname{ran}E_M+\mathbb Cp_0$.
+The (SC6) bound remains valid for $I-F_M$ since its range is contained
+in $\ker E_M$. Self-adjointness then gives
+
+$$
+\|L-F_MLF_M\|\le2d_M. \tag{SC8}
+$$
+
+The approximant $\alpha I+F_MLF_M$ has the same exact ground nullvector.
+On $p_0^\perp$, its finite retained block is $F_MSF_M$ and its remaining
+block is $\alpha I$. A directed generalized-eigenvalue lower bound
+$\lambda_M$ for the retained block on
+$\operatorname{ran}F_M\cap p_0^\perp$ proves the sufficient condition
+
+$$
+2d_M<\min\{\alpha,\lambda_M\}\quad\Longrightarrow\quad S\succeq0.
+\tag{SC9}
+$$
+
+Basis vectors may be defined by exact subtraction of their $p_0$ component.
+Their Gram, overlaps and enclosure errors must be paid in $\lambda_M$;
+a floating-point zero eigenvalue is not nullspace removal.
+
+## Analytic columns give a smaller prescribed rank
+
+The cell rate is a baseline, not a computational requirement. On the
+Bernstein ellipse for $[0,N]$ of radius $\varrho=3/2$, put
+
+$$
+t=\frac N4(\varrho-\varrho^{-1})=40/3,
+\qquad R_\eta=\frac N2+\frac N4(\varrho+\varrho^{-1})=200/3.
+$$
+
+The real-theta (WC2) bound gives, for $j=0,1$,
+
+$$
+A_j(t):=\|e^{t|x|}s^{(j)}\|_2
+\le K_j\sqrt{\Gamma(t)/(2b)^t},\qquad
+V(t):=\|e^{t|x|}v_0\|_1
+\le2K_0\Gamma((t+1/2)/2)b^{-(t+1/2)/2}.
+$$
+
+These follow by $u=e^{2|x|}$ and enlarging the positive integrals from
+$[1,\infty)$ to $[0,\infty)$. The Euler Gamma function here bounds
+coefficient moments; it does not replace the original Gamma jump term.
+For complex $\eta$ in that ellipse, $|\cos(\eta x)|,|\sin(\eta x)|
+\le e^{t|x|}$. The original multiplier satisfies
+$\|m(\mathsf D)f\|_2\le16(\|f\|_2+\|f'\|_2)$ by (WF3).
+For shifted prime columns maximize
+$u^{t/2}e^{-(b/2)u}$ over $u\ge1$; its upper bound is
+$L(t)=(t/b)^{t/2}e^{-t/2}$. The same pair allocation as (SC4)
+therefore bounds the entire complex prime column by $JL(t)$.
+Thus the even cosine columns are entire as $L^2$-valued functions and
+on this ellipse have the explicit norm bound
+
+$$
+M_\varrho=\frac{
+16s_\infty[(1+R_\eta)A_0(t)+A_1(t)]
++|c_\Gamma|s_\infty A_0(t)+JL(t)+cV(t)}{\sqrt\pi}. \tag{SC11}
+$$
+
+Uniform exponential moments on a neighborhood justify the claimed
+analyticity of the kinetic, full prime and mean terms. No complex
+evaluation of the theta square root is required.
+
+Let $E_d$ be the orthogonal projection onto polynomials in $\eta$ of
+degree at most $d$ on $[0,N]$. Reuse the standard Bernstein-ellipse
+Chebyshev tail bound, extending the scalar statement by Hilbert-space
+duality. A degree-$d$ column polynomial has uniform error at most
+$2M_\varrho\varrho^{-d}/(\varrho-1)$, so best $L^2$ approximation gives
+
+$$
+\|HP(I-E_d)\|\le\varepsilon_d
+:=\sqrt N\frac{2M_\varrho}{\varrho-1}\varrho^{-d}.
+$$
+
+Augment the polynomial space by the exact $p_0$ as before. Its rank is
+at most $d+2$, and the complete Schur remainder obeys
+
+$$
+e_d:=2(1+\delta^{-1}\sqrt N M_0)\varepsilon_d,
+\qquad\|L-F_dLF_d\|\le e_d. \tag{SC12}
+$$
+
+Only the actual column bound is new model input; polynomial approximation,
+Schur elimination and residual identities are reused tools.
+The directed coefficient supplier, reusing the original derivative data
+without its grid, gives $M_\varrho<1.910085\cdot10^9$ and
+$e_{94}<0.04383817677622261<1/16$.
+Hence a prescribed center of rank at most 96 suffices for this tail
+accuracy. The uniform-cell baseline supplies the chosen sufficient count
+5,206,493,707 for the same accuracy under its coarse first-derivative
+majorants. This count is not claimed minimal.
+Neither rank statement supplies the retained matrix sign, high residuals
+or a total runtime estimate. A sufficient finite lower bound remains
+$\lambda_{94}>e_{94}$ in addition to the already satisfied
+$\alpha>e_{94}$.
+
+## Complete inverse-coupling residuals
+
+For one common retained family $p_i$, put $k_i=Kp_i$ and choose one common
+high trial family $q_i=Q\psi_i$ with even $\psi_i\in H^1$.
+(SC1) gives $q_i\in D(C)$ and $Cq_i=QTq_i$.
+Thus the full $L^2$ residual is
+$r_i=k_i-Cq_i=QT(p_i-q_i)$, evaluable through (SC1) and the original
+theta callbacks. It includes the Gamma multiplier, all prime powers
+and the full rank-one term, rather than a finite energy residual.
+Reuse the positive inverse-residual comparison to obtain the Loewner
+upper matrix $U$ defined, with common coefficients, by
+
+$$
+z^*Uz=2\Re\langle k(z),q(z)\rangle
+-\langle Cq(z),q(z)\rangle+\delta^{-1}\|r(z)\|_2^2
+\ge\langle k(z),C^{-1}k(z)\rangle. \tag{SC10}
+$$
+
+The finite lower Schur matrix is $[T(p_i,p_j)]-U$.
+All cross terms and the residual Gram must use the same trials.
+Complete numerical operator residuals, useful evaluated constants,
+the retained matrix sign and cofinal $c\uparrow1/2$ remain missing.
+These are paper model interfaces, with no new Lean or RH/Robin certificate.
+
+
+## Directed suppliers and reproduction
+
+The [coefficient program](sharp_center.py) reuses the
+[approved derivative data](derivative-bandwidth-result.json) and loads the
+canonical derivative program's AST prefix, stopping before its grid.
+The [saved result](sharp-center-result.json) includes exact dyadic upper
+endpoints, the input data hash, and both sufficient approximation sizes.
+No derivative, deficit, joint-row or scalar grid is rerun.
+
+For $u_R=e^6$ the supplied whole-line moments use
+
+$$
+X_j^2\le9a_j^2+\frac{K_j^2e^{-2bu_R}}{8b},\quad
+s_\infty\le\sqrt{a_0a_1},\quad
+V_0\le\sqrt6+\frac{2K_0u_R^{-3/4}e^{-bu_R}}b,\quad
+V_1\le\sqrt{18}+\frac{K_0u_R^{-1/4}e^{-bu_R}}b.
+$$
+
+The first inequality uses $x^2\le e^{2|x|}/4$ on the two exterior tails;
+the interior uses $|x|\le3$. The infinity bound is the standard
+one-dimensional $H^1$ inequality. Interior mean moments use
+$\|v_0\|_2=1$ and Cauchy–Schwarz; exterior moments use
+$v_0=2\cosh(x/2)s$ and (WC2). The program uses $|c_\Gamma|<8$
+and the 1024-term symbol sum with its decreasing integral tail.
+
+The declared runtime is Python 3.13.12, python-flint 0.9.0 and 128-bit
+ball arithmetic. From the repository root run
+
+```sh
+uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/reports/theta-mixed-matrix/sharp_center.py
+```
+
+This project-authored coefficient program uses the existing FLINT arithmetic;
+dependency licensing is supplied by python-flint/FLINT. Its successful
+coefficient comparisons supply the displayed remainder bounds. They do
+not compute the retained Schur matrix or high correctors, provide a total
+runtime bound, establish cofinal positivity, or certify RH/Robin in Lean.

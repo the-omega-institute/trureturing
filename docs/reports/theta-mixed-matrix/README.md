@@ -115,3 +115,10 @@ symbol and derivative supplier with the full symmetric prime row. It
 puts the complete even high-frequency restriction above $c=3/8$ and
 retains a positive variance gap. The low block and its coupling remain
 unestimated.
+
+The [sharp-band center interface](sharp-center.md) retains the complete
+operator and bounds a prescribed finite approximation to its full Schur
+center. Original-theta exponential moments and existing Bernstein-ellipse
+approximation give a center of rank at most 96 with remainder below
+1/16 at the same threshold. The retained matrix sign, high correctors
+and their complete operator residuals remain uncomputed.
