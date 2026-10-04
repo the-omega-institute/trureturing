@@ -20253,3 +20253,474 @@ $$
 闪烁淬灭、饱和、阈值、死时间和脉冲堆积会改变计数极值；同一真实沉积可以产生不同读数，不能把探测器最大脉冲直接当作物理最大沉积。级联纵向极大位置的对数近似也只有在给定分枝、能损、均匀介质和阈值后成立。
 
 因此，FIB ATOM 递归在宇宙线和高能粒子问题中只提供组合节点、接缝、候选路径、端口和层级骨架；源谱、截面、分枝核、介质、磁场、边界、能量阈值、探测器响应和极限次序均须外加。粒子级联的临界性、输运首达、大偏差、局部沉积尾以及 Gumbel、Weibull 或 Fréchet 极值类，只有在这些条件和共同实现明确后才是统计结论，不能由 FIB 递归单独推出。
+
+
+## 268. FIB 网络上的外加中子输运、裂变分枝与核临界涨落统计
+
+设第 (j) 层 FIB 递归给出有限组合骨架
+
+$$
+\mathcal G_j=(V_j,E_j,\partial V_j,\mathsf P_j),
+$$
+
+其中 (V_j) 是原子或端口状态，(E_j) 是允许的邻接，(\partial V_j) 是边界，(\mathsf P_j) 记录接缝和跨层端口。FIB 递归决定哪些路径、拼接和层级投影存在，却不指定嵌入距离、时间、能量、方向或反应概率。为此把能量分箱、方向和材料标签并入外加类型集
+
+$$
+\mathsf X_j=V_j\times\mathcal E_j\times\Omega_j\times\mathcal M_j.
+$$
+
+由截面、材料密度、能损、散射角核、边界泄漏和源谱构造下一次裂变前的输运核 (P_j(x,y))。它是次随机核；离开 (\mathsf X_j) 的概率记作 (p_j^{\mathrm{esc}}(x))。在类型 (x) 的反应处，令 (\boldsymbol\eta_x=(\eta_x(y))_y) 为裂变产生的各类型中子数向量，概率母函数为
+
+$$
+\Phi_{j,x}(z)
+=\mathbb E\!\left[
+\prod_{y\in\mathsf X_j}
+\left(p_j^{\mathrm{esc}}(y)+\sum_{z\in\mathsf X_j}P_j(y,z)z_z\right)^{\eta_x(y)}
+\right].
+$$
+
+于是 (\Phi_{j,x}) 是“裂变产生—输运到下一反应—边界泄漏”的合成母函数。其均值矩阵（按列向量约定）为
+
+$$
+M_j(x,z)=\sum_{y\in\mathsf X_j}
+\mathbb E[\eta_x(y)]P_j(y,z).
+$$
+
+只要 FIB 路径不允许从 (x) 到 (z)，对应项必为零；允许路径上的数值则完全由截面、反应核、能谱、边界和输运时间决定。给定初始中子类型 (x)，第 (n) 代裂变后代向量的母函数满足
+
+$$
+G_{0,x}(z)=z_x,
+\qquad
+G_{n+1,x}(z)=\Phi_{j,x}\bigl(G_n(z)\bigr).
+$$
+
+因此均值递推为
+
+$$
+\mathbb E_x Z_{n+1}=M_j\mathbb E_x Z_n,
+\qquad
+\mathbb E_x Z_n=M_j^n e_x.
+$$
+
+### 临界判据与有限尺寸窗口
+
+令
+
+$$
+ k_{\mathrm{eff},j}=\rho(M_j),
+$$
+
+其中 (\rho) 是谱半径。若 (M_j) 不可约且二阶矩有限，则 (k_{\mathrm{eff},j}<1) 给出次临界平均衰减，(k_{\mathrm{eff},j}>1) 给出超临界平均增长，(k_{\mathrm{eff},j}=1) 是临界面。对有源但有限的系统，(q_j) 为每代外源，期望总裂变向量为
+
+$$
+ h_j=(I-M_j)^{-1}q_j
+$$
+
+（仅在 (\rho(M_j)<1) 时有限）。若 (\rho(M_j)=1-\Delta_j) 且 (0<\Delta_j\ll1)，则主模态的衰减时间为 (\Delta_j^{-1})；当 (n\Delta_j\ll1) 时观测呈临界样涨落，当 (n\Delta_j\gg1) 时转入次临界指数尾。若 (L_j=|V_j|) 且外加参数调成 (\Delta_j\asymp cL_j^{-\alpha})，临界窗口的代数尺度为 (n\asymp L_j^{\alpha}/c)。指数 (\alpha) 不是 FIB 递归给出的量，而是泄漏、截面和源边界共同决定的调参结果。
+
+若以 (r_j,l_j) 归一化为
+
+$$
+M_jr_j=r_j,
+\qquad
+l_j^{\mathsf T}M_j=l_j^{\mathsf T},
+\qquad
+l_j^{\mathsf T}r_j=1,
+$$
+
+并把裂变向量的条件协方差投影到 Perron 模态，记所得有效二阶系数为 (\sigma_{\mathrm{eff},j}^2>0)，则有限类型临界分枝过程的标准临界标度为
+
+$$
+\Pr_x(Z_n\ne0)\sim\frac{c_x}{n},
+\qquad
+\mathcal L\!\left(\frac{l_j^{\mathsf T}Z_n}{n}\,\middle|\,Z_n\ne0\right)
+\Longrightarrow \operatorname{Exp}(\theta_j).
+$$
+
+常数 (c_x) 与 (\theta_j) 由初始类型、左右 Perron 向量及 (\sigma_{\mathrm{eff},j}^2) 决定。对有限方差、非退化、不可约且非周期的单一临界分支，累计裂变数
+
+$$
+T=\sum_{n\ge0}\langle\mathbf 1,Z_n\rangle
+$$
+
+具有
+
+$$
+\Pr(T>t)\asymp t^{-1/2},
+\qquad
+\Pr(T=t)\asymp t^{-3/2},
+$$
+
+其截断、指数因子和常数在多类型、泄漏或能量依赖情形中由相应的二阶矩和主模态修正。因而临界涨落的幂指数来自分枝极限条件，而不是来自“Fibonacci”这一名称本身。
+
+### 空间沉积、探测统计与方差递推
+
+给定每类反应的能量沉积向量 (d_j)，平均沉积为
+
+$$
+\bar e_j=d_j^{\mathsf T}(I-M_j)^{-1}q_j.
+$$
+
+若 (B_j(u)) 表示单个个体裂变后代向量的协方差算子，按同一列向量约定，总代际协方差满足一个离散 Lyapunov 型递推
+
+$$
+C_{n+1}=M_jC_nM_j^{\mathsf T}+B_j(\mathbb E Z_n).
+$$
+
+因此计数器、剂量计和时间门内探测器得到的 Fano 因子、二阶相关和全计数母函数，均由均值矩阵、裂变母函数、源过程和探测响应的联合选择决定。相同的期望向量不保证相同的方差；改变裂变多重性方差或探测时间门即可保持均值而改变尾部。
+
+### FIB 支撑的可识别边界
+
+固定同一 (\mathcal G_j) 和同一允许路径支撑，取一个次随机输运核 (P_j)，并令外加裂变产额为常数 (a>0)，则
+
+$$
+M_j^{(a)}=aP_j.
+$$
+
+若 (\rho(P_j)>0)，选择 (a_-<\rho(P_j)^{-1}<a_+)，便得到同一 FIB 支撑上的次临界、临界和超临界三种模型；再改变 (\boldsymbol\eta_x) 的二阶矩，还可在同一 (k_{\mathrm{eff}}) 下改变临界峰、Fano 因子和总裂变数尾部。故由 FIB 路径计数、接缝数量或 Fibonacci 长度比，不能单独推出 (k_{\mathrm{eff}})、临界指数、剂量分布或探测计数律。
+
+本节只建立一个外加核输运模型如何把 FIB 组合支撑送入多类型分枝统计的接口。截面、能损、散射与裂变核、材料和几何尺度、源谱、边界泄漏、时间标度、初始分布、探测器响应及所需极限均为外加假设。没有这些假设时，FIB 仅给出零模式与路径支撑，不能宣称中子输运定律、核临界性或任何普适涨落统计。
+
+## 269. FIB 图族上的外加随机矩阵、自由概率谱极限与线性统计涨落
+
+固定由 FIB ATOM 递归生成的有限图族 (G_n=(V_n,E_n))，令 (A_n(u,v)=1_{\{u,v\}\in E_n}) 为邻接掩码。递归只给出矩阵元允许非零的位置、端口连接和闭合游走的组合类型；边权分布、独立性、对称类、归一化、边界及观测协议均须外加。一个外加厄米随机矩阵系综可写为
+
+$$
+(H_n)_{uv}=B_n(u,v)+A_n(u,v)w_{uv}/\sqrt{s_n},
+\\
+H_n=H_n^†.
+\\
+(269.1)
+$$
+
+其中 (B_n,w_{uv},s_n) 都不由 FIB 决定。若 (\lambda_j) 是 (H_n) 的特征值，经验谱测度和 Stieltjes 变换为
+
+$$
+\mu_n=N_n^{-1}\sum_{j=1}^{N_n}\delta_{\lambda_j},
+\\
+m_n(z)=\int(z-x)^{-1}\mu_n(dx)=N_n^{-1}\operatorname{Tr}(zI-H_n)^{-1}.
+\\
+(269.2)
+$$
+
+归一化迹矩是合法闭合 FIB 游走的加权和：
+
+$$
+N_n^{-1}\operatorname{Tr}H_n^k
+=N_n^{-1}\sum_{v_0,\ldots,v_{k-1}\atop (v_r,v_{r+1})\in E_n,\;v_k=v_0}
+\prod_{r=0}^{k-1}(H_n)_{v_rv_{r+1}}.
+\\
+(269.3)
+$$
+
+FIB 决定求和的支撑；游走在平均后是否存活、矩是否紧和极限是否自平均，则由权重中心化、独立性、尾部与归一化决定。
+
+在致密 Wigner 型权重、矩条件和与确定性 (B_n) 渐近自由的附加假设下，可得到自由加法卷积
+
+$$
+\mu_n\Rightarrow\mu_B\boxplus\mu_{\mathrm{sc},\sigma^2},
+\\
+m(z)=m_B\bigl(z-\sigma^2m(z)\bigr),\qquad m(z)\sim z^{-1}.
+\\
+(269.4)
+$$
+
+极限密度若存在，则
+
+$$
+\rho(x)=-\pi^{-1}\lim_{\eta\downarrow0}\operatorname{Im}m(x+\mathrm{i}\eta).
+\\
+(269.5)
+$$
+
+自由独立性不是 FIB 递归的结果。非均匀方差剖面要改用外加 Dyson 方程，例如
+
+$$
+m_i(z)=\left(z-b_i-\sum_j s_{ij}m_j(z)\right)^{-1},
+\\
+m_n(z)=N_n^{-1}\sum_i m_i(z).
+\\
+(269.6)
+$$
+
+若图稀疏、度数有界或局部极限是随机树，自由卷积通常失效；外加腔递归可写成
+
+$$
+q_{u\to v}(z)=\left(z-\xi_u-\sum_{w\in N(u)\setminus\{v\}}|w_{uw}|^2q_{w\to u}(z)\right)^{-1}.
+\\
+(269.7)
+$$
+
+局部图极限和边权系综共同决定腔谱。相同 FIB 支撑在独立、相关、确定性或重尾边权下可分别出现树谱、带隙、局域化峰或非自平均涨落。
+
+对解析或足够光滑的 (f)，线性统计
+
+$$
+L_n(f)=\sum_jf(\lambda_j)-N_n\int f\,d\mu
+=\frac{1}{2\pi\mathrm{i}}\oint f(z)\left[\operatorname{Tr}(zI-H_n)^{-1}-N_nm(z)\right]dz.
+\\
+(269.8)
+$$
+
+在模型特定的矩和相关条件下可有高斯极限
+
+$$
+\bigl(L_n(f_1),\ldots,L_n(f_r)\bigr)\Rightarrow
+\mathcal N\bigl(\mathfrak m(f_a),\mathcal V(f_a,f_b)\bigr)_{a,b\le r}.
+\\
+(269.9)
+$$
+
+其均值和协方差依赖对称类、四阶累积量、方差剖面、确定性扰动、边界和有限秩缺陷；重尾或强相关时可以改为非高斯极限。有限秩缺陷的离群特征值由外加缺陷强度和未扰动预解式的极点方程决定，缺陷所在 FIB 接缝只提供候选位置。
+
+经验谱测度的大偏差只能在给定系综后陈述：
+
+$$
+\mathbb P(\mu_n\in F)\asymp
+\exp\left[-a_n\inf_{\nu\in F}I(\nu)\right].
+\\
+(269.10)
+$$
+
+致密轻尾模型中 (a_n) 有时为 (N_n^2)，稀疏图、重尾权重和随机环境会改变速度与速率函数；先固定图取极限的 quenched 律也可能不同于先平均图的 annealed 律。有限分辨率谱仪只观测 (Y_\ell=\int h_\ell(x)\mu_n(dx)+\eta_\ell)，所以端口谱和少数迹矩通常只能确定观测等价类。
+
+因此，FIB ATOM 递归在随机矩阵问题中只提供稀疏位置、合法闭合游走、端口和层级骨架；谱系综、自由独立性、归一化、局部图极限、线性统计涨落、大偏差速度及观测规则都须外加。自由卷积、Dyson 方程、腔谱、线性统计中心极限定理和大偏差均是给定外加假设与极限次序后的条件结论，不能由 FIB 递归单独推出普适谱律。
+
+## 270. FIB 复形上的外加光声/热弹耦合、脉冲响应与能量涨落统计
+
+取第 (j) 层 FIB 复形 (K_j)。节点、胞腔、入射关系、接缝、端口和父子递归只给出组合支撑；嵌入空间、度量、时间、材料系数、边界和观测协议均另行外加。令 (I(x,t)) 为光能通量，(\vartheta(x,t)) 为温升，(u(x,t)) 为位移，(\varepsilon(u)) 为小应变。吸收系数 (\mu_a)、密度 (\rho)、比热 (c)、热导率 (\kappa)、弹性张量 (\mathsf C)、热膨胀张量 (\boldsymbol\alpha)、阻尼和接触参数都不是 FIB 递归的内生量。
+
+在线性小应变近似下，可取外加热弹系统
+
+$$
+\rho c\,\partial_t\vartheta
+=\nabla\!\cdot(\kappa\nabla\vartheta)+\mu_a I-h_b(\vartheta-\vartheta_b)+\xi_T,
+\qquad
+\rho\,\partial_t^2u+\mathsf D\partial_tu
+-\nabla\!\cdot\!\left[\mathsf C:\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr)\right]
+=f+\xi_u .
+\tag{270.1}
+$$
+
+若以声压 (p) 观测，快速吸收的光声源可写为
+
+$$
+\mathcal L_a p=\partial_t\!\left(\Gamma\mu_a I\right)+\xi_a,
+\tag{270.2}
+$$
+
+其中波速、衰减、色散和辐射边界包含在外加算子 (\mathcal L_a) 中。FIB 只能为离散化提供组合节点、邻接块、候选路径与端口编号，不能决定上述算子。
+
+把温度、位移和速度并入状态 (z)，给定材料和边界后写成
+
+$$
+\dot z=\mathsf A z+\mathsf Bq+\xi,
+\qquad
+ y_r=\mathsf C_rz+\eta_r .
+\tag{270.3}
+$$
+
+端口 (\ell) 到观测端口 (r) 的因果脉冲响应为
+
+$$
+ h_{r\ell}(t)=\mathbf 1_{t\ge0}\,\mathsf C_r e^{t\mathsf A}\mathsf B_\ell,
+ \qquad H_{r\ell}(\omega)=\mathsf C_r(i\omega-\mathsf A)^{-1}\mathsf B_\ell .
+\tag{270.4}
+$$
+
+因此存在一条 FIB 组合路径只表示可能的连接；非零声压、到达时间、共振峰和衰减率还需要 (\mathsf A,\mathsf B,\mathsf C) 及边界共同决定。相同组合图赋予不同材料或边界即可得到不同的传递核。
+
+吸收和热弹能量可记为
+
+$$
+E_{\mathrm{abs}}=\int\!\!\int\mu_a(x)I(x,t)\,dx\,dt,
+\qquad
+E_{\mathrm{th}}=\int\rho c\,\vartheta\,dx,
+\tag{270.5}
+$$
+
+$$
+E_{\mathrm{mech}}(t)=\frac12\int\rho|\partial_tu|^2dx
++\frac12\int\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr):\mathsf C:
+\bigl(\varepsilon(u)-\boldsymbol\alpha\vartheta\bigr)dx .
+\tag{270.6}
+$$
+
+能量交换和耗散还取决于边界通量、接触功、阻尼与本构；FIB 节点数、递归深度和路径数不能给出能量分配比例。脉冲宽度 (\tau_p)、热扩散时标 (\tau_{\mathrm{th}}=L^2\rho c/\kappa) 与弹性时标 (\tau_{\mathrm{el}}=L/c_s) 的相对次序决定冲激、准静态或中间响应；长度 (L) 和声速 (c_s) 也是外加量。
+
+若冲激事件在端口 (\ell) 带随机能量 (Q_\ell)，则单次读数满足
+
+$$
+Y_r(t)=\sum_\ell h_{r\ell}(t)Q_\ell+\eta_r(t),
+$$
+
+$$
+\mathbb E Y_r(t)=\sum_\ell h_{r\ell}(t)\mathbb E Q_\ell,
+\qquad
+\operatorname{Cov}(Y_r(t),Y_s(t'))
+=\sum_{\ell,m}h_{r\ell}(t)h_{sm}(t')\operatorname{Cov}(Q_\ell,Q_m)
++\operatorname{Cov}(\eta_r(t),\eta_s(t')).
+\tag{270.8}
+$$
+
+独立复合 Poisson 事件、单事件向量 (Q) 和强度 (\Lambda) 给出
+
+$$
+K_Y(\boldsymbol s;t)
+=\Lambda\left[\mathbb E\exp\!\left(\sum_r s_r\sum_\ell h_{r\ell}(t)Q_\ell\right)-1\right]+K_\eta(\boldsymbol s;t).
+\tag{270.9}
+$$
+
+随机强度导致 Cox 混合，脉冲间共享热源或机械模态则破坏独立复合形式。只有在线性、平衡、被动阻尼和给定温度下，才可使用外加涨落耗散关系，例如
+
+$$
+\mathbb E[\xi(t)\xi(t')^{\mathsf T}]=2k_{\mathrm B}T\,\mathsf D\,\delta(t-t').
+\tag{270.10}
+$$
+
+非平衡泵浦、温度梯度和记忆耗散不满足这一白噪声式。峰值、首达时间和极值还依赖振铃、脉冲重叠、带宽、饱和与死时间；同一沉积过程经不同探测协议可产生不同尾部。
+
+有限端口传递矩阵一般只识别输入输出等价类。不可观测或不可控的内部热弹模态可以改变材料参数而保持测量频带内的 (H(\omega)) 不变，所以端口脉冲不能唯一反演内部吸收分布或本构。取 (j\to\infty) 时还须共同指定嵌入、系数收敛、端口缩放、噪声和边界；有限方差独立脉冲可能给出中心极限，长程相关或重尾能量则可能给出非高斯稳定极限。
+
+因此，光声脉冲、热弹能量分配、涨落耗散、协方差、复合 Poisson 或稳定极限都依赖外加吸收、扩散、弹性、阻尼、边界、噪声、源统计、探测器和尺度条件。FIB ATOM 递归只提供组合节点、邻接、接缝、候选路径、端口和层级骨架，不能单独推出任何上述物理统计律。
+
+## 271. FIB 网络上的外加蒸发液滴、咖啡环沉积与随机干燥统计
+
+固定第 (j) 层 FIB 网络 (G_j=(V_j,E_j))，把顶点和边映射到一个外加的基底或微流道支撑。FIB 只给出接触邻接、端口、候选流路和层级拼接；液滴的几何嵌入、接触角、表面张力、黏度、挥发通量、溶质扩散、基底粗糙度和环境湿度都必须另行指定。令 (c_e(s,t)) 表示边 (e) 上的溶质浓度，(h_e(s,t)) 为液膜厚度，(u_e(s,t)) 为沿边平均速度，则一个外加的一维润湿—蒸发模型可写成
+
+$$
+\partial_t(h_ec_e)+\partial_s(h_eu_ec_e)
+=\partial_s\!\left(h_eD_e\partial_sc_e\right)-J_e^{\mathrm{evap}}c_e+R_e,
+$$
+
+$$
+\partial_t h_e+\partial_s(h_eu_e)=-J_e^{\mathrm{evap}}.
+\tag{271.1}
+$$
+
+其中 (D_e) 是扩散系数，(R_e) 可表示结晶、吸附或反应源项。节点处的质量守恒和接触角条件由外加耦合给出；FIB 的端口只规定哪些通量可以相互连接，并不规定通量大小。
+
+在接触线钉扎且蒸发通量具有边缘奇异性时，可取
+
+$$
+J_e^{\mathrm{evap}}(s,t)=J_{0,e}(t)\left[1-\left(\frac{s}{a_e(t)}\right)^2\right]^{-\lambda_e},
+\qquad 0<\lambda_e<1,
+\tag{271.2}
+$$
+
+其中 (a_e(t)) 是外加接触半径。若蒸发诱导的径向流把溶质输向边缘，则沉积密度的准静态近似满足
+
+$$
+\sigma_e(s)\propto\int_0^{t_f}
+J_e^{\mathrm{evap}}(s,t)c_e(s,t)\,dt,
+\tag{271.3}
+$$
+
+并在接触线附近出现由 (\lambda_e)、扩散和钉扎历史共同决定的增强。若接触线持续回缩或扩散足够快，边缘增强可以消失，沉积可趋于中心均匀；因此“咖啡环”不是由某个组合图的边数自动推出的结论。
+
+把沉积视为随机事件，令 (N_e(ds,dt)) 是沿边的点过程，强度取
+
+$$
+\Lambda_e(s,t)=\kappa_e h_e(s,t)c_e(s,t)\,\mathbf 1_{\{h_e>h_{\min}\}},
+$$
+
+其中 (\kappa_e)、阈值和事件大小分布均为外加。对单个颗粒质量 (W) 的复合点过程，总沉积质量为
+
+$$
+M_e(A)=\int_{A\times[0,t_f]}W_e(s,t)\,N_e(ds,dt).
+$$
+
+若条件于液滴轨道后 (N_e) 为 Poisson，累积量满足
+
+$$
+\operatorname{cum}_r\bigl(M_e(A)\mid h,c\bigr)
+=\int_{A\times[0,t_f]}\Lambda_e(s,t)\,\mathbb E[W_e(s,t)^r],ds\,dt.
+\tag{271.4}
+$$
+
+随机接触线、环境湿度或颗粒团聚使强度成为随机场，边缘沉积便是 Cox 混合；长程流动、相分离或重尾团聚会把高斯极限替换为稳定或极值极限。相同平均沉积量可以对应不同的粒子数方差和最大团簇尾部。
+
+在薄膜尺度 (a) 与扩散系数 (D) 给定时，
+
+$$
+\mathrm{Pe}=Ua/D,
+\qquad
+\mathrm{Da}=k a/U,
+\qquad
+\mathrm{Oh}=\mu/\sqrt{\rho\gamma a}
+$$
+
+分别衡量对流—扩散、反应—输运和黏性—毛细竞争。干燥时间、接触线速度和颗粒沉积律取决于这些无量纲数以及蒸发边界；FIB 递归只提供可拼接的边—节点骨架，不能固定它们的数值或极限次序。
+
+有限观测通常只给出若干端口的剩余质量、边缘—中心比和少数时间点。改变 (J_e^{\mathrm{evap}})、(D_e) 与颗粒事件强度，可以保持这些读数不变而改变内部浓度场和沉积尾部。因此由 FIB 路径数、接缝数或 Fibonacci 长度比，不能唯一反演挥发通量、咖啡环指数、干燥时间分布或团簇极值律。
+
+本节的结论是一个外加蒸发—输运—沉积模型在 FIB 组合支撑上的条件统计接口。接触角、表面张力、蒸发和扩散系数、流变本构、边界湿度、颗粒大小和相互作用、随机事件律、观测带宽以及 (j\to\infty) 的尺度耦合都必须明确；缺少这些假设时，FIB 只能给出零模式、邻接和候选流路，不能单独推出咖啡环沉积或任何干燥统计普适律。
+
+## 272. FIB 网络上的外加中微子输运、味振荡与探测计数统计
+
+设 FIB 第 (j) 层给出带端口的有向骨架 (\mathcal G_j=(V_j,E_j,\partial V_j,\mathsf P_j))。其中路径只表示粒子可能经过的组合序列；中微子能量、传播距离、质量平方差、混合矩阵、介质电子密度、相干长度、源谱和探测器截面均须外加。沿一条给定嵌入路径 (x\mapsto r(x))，用味空间密度矩阵 (\varrho(x,E)) 描述传播，可写成带外加哈密顿量和退相干的方程
+
+$$
+\frac{d\varrho}{dx}
+=-\mathrm i[H(E,x),\varrho]
++\mathcal D_x(\varrho),
+$$
+
+$$
+H(E,x)=\frac{1}{2E}U\,\operatorname{diag}(m_1^2,m_2^2,m_3^2)U^\dagger+V_{\mathrm m}(E,x)+H_{\mathrm{new}}(E,x).
+\tag{272.1}
+$$
+
+矩阵 (U)、质量平方差 (m_a^2-m_b^2)、物质势 (V_{\mathrm m})、可能的非标准项 (H_{\mathrm{new}}) 与耗散算子 (\mathcal D_x) 都不由 FIB 递归决定。无退相干、均匀真空和两味近似下，转化概率才可化为
+
+$$
+P_{\alpha\to\beta}(L,E)
+=\sin^2(2\theta)\sin^2\!\left(\frac{\Delta m^2L}{4E}\right),
+\qquad \alpha\ne\beta,
+\tag{272.2}
+$$
+
+这只是给定外加参数后的特例。若路径穿过分段介质，传播算子是有序乘积
+
+$$
+S_j(E)=\mathcal T\exp\!\left[-\mathrm i\int H(E,x)\,dx\right],
+\qquad
+P_{\alpha\to\beta}=|S_{j,\beta\alpha}|^2,
+\tag{272.3}
+$$
+
+节点和接缝只决定哪些段可以连接；每段长度、密度和界面匹配决定乘积中的相位与振幅。
+
+若 FIB 分支给出多条未分辨路径 (\pi)，源的相位或生产时刻使其相干，则振幅先相加
+
+$$
+\mathcal A_{\alpha\to\beta}(E)=\sum_{\pi}a_\pi(E)\,[S_\pi(E)]_{\beta\alpha},
+\qquad
+P_{\alpha\to\beta}=|\mathcal A_{\alpha\to\beta}|^2.
+\tag{272.4}
+$$
+
+若路径长度涨落超过相干长度，则应先按外加路径分布平均概率而非振幅；两种极限一般不同。FIB 的路径计数本身不决定相干还是非相干的取法。
+
+给定源强度 (\Phi_\alpha(E,t))、截面 (\sigma_\beta(E))、几何接受率 (A_d(E,\Omega)) 和效率 (\epsilon_d(E))，探测器计数强度可写成
+
+$$
+\lambda_d(t)=\sum_\alpha\int
+\Phi_\alpha(E,t)P_{\alpha\to\beta}(E)\sigma_\beta(E)A_d(E,\Omega)\epsilon_d(E)\,dE\,d\Omega.
+\tag{272.5}
+$$
+
+在给定强度且事件独立时，时间窗计数 (N_d(T)) 为 Poisson，
+
+$$
+\Pr\{N_d(T)=n\}=e^{-\Lambda_d(T)}\frac{\Lambda_d(T)^n}{n!},
+\qquad
+\Lambda_d(T)=\int_0^T\lambda_d(t)\,dt.
+\tag{272.6}
+$$
+
+源闪烁、束流漂移、共同介质扰动或未建模背景会令强度随机化，产生 Cox 混合、过度离散和跨探测器协方差。能谱重建还受能量分辨率核、阈值、死时间和误识别矩阵影响；同一振荡概率在不同响应协议下可得到不同计数尾部。
+
+在恒定真空两味模型中，固定一个 FIB 路径长度 (L)，调节 (\Delta m^2L/E) 可以让转化概率接近零、接近一或处于中间值，而不改变任何 FIB 邻接和接缝。再调节退相干率可在相同平均概率下改变基线相关和方差；调节源谱与探测截面还可保持总计数均值而改变能谱形状。因此仅由 FIB 路径长度比、端口数量或 Fibonacci 层数，不能识别混合角、质量平方差、物质势、相干长度或计数统计律。
+
+当 (j\to\infty) 时，必须同时规定嵌入路径的长度测度、介质剖面收敛、能量和角度的缩放、相干与退相干的次序以及探测器分辨率。有限事件数的中心极限、稀有转换的 Poisson 极限和随机介质下的非高斯极限对应不同外加假设。故 FIB ATOM 递归在中微子问题中只提供组合路径、端口和层级连接；振荡相位、介质效应、首达输运、源—探测联合律及其极限均须由外加物理模型给出，不能从 FIB 递归单独推出。
