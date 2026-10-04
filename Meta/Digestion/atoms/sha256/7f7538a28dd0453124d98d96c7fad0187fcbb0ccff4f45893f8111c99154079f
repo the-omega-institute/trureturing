@@ -1,0 +1,54 @@
+**Proof.** Translation preserves cardinality, and
+$f(t+x)=f(t)+f(x)$ shows by cancellation that injectivity on $X$
+implies injectivity on $t+X$. If $t+X=X$ with $|X|=3$, summing
+gives $3t=0$. If $f(t)=0$, then $x$ and $x+t$ are distinct members
+with equal images, so no such $X$ is in $\mathcal V_f$.
+
+When $3t=0$ and $f(t)\ne0$, both $t$ and $f(t)$ have order three.
+The subgroup $C_t=\{0,t,2t\}$ therefore belongs to $\mathcal V_f$.
+Every translate of it is admissible and fixed by $t$. Conversely, any
+fixed three-element set contains the three distinct points
+$x,x+t,x+2t$ for each $x$ in it, so it is exactly $x+C_t$. Thus the
+fixed family is one translation orbit of $C_t$. Its stabilizer is
+exactly $C_t$, since a stabilizing $h$ must satisfy
+$h=h+0\in h+C_t=C_t$. Orbit-stabilizer gives $|G|/3$ members.
+Neither classification nor counting uses finiteness of $A$. $\square$
+
+Theorem 10.1 is the case $G=A=\mathbb Z/n\mathbb Z$ and $f(x)=ax$.
+An infinite-codomain example is $G=\mathbb Z/3\mathbb Z$,
+$A=(\mathbb Z/3\mathbb Z)\times\mathbb Z$, and $f(x)=(x,0)$.
+For $t=1$, the sole three-element subset is all of $G$, it is
+$f$-injective, and it is fixed, giving count one.
+
+For $G=(\mathbb Z/3\mathbb Z)^2$ and $f(x,y)=x$, all eight nonzero
+directions have order three. Exactly six survive the kernel condition:
+
+$$
+  D=\{(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)\}.
+$$
+
+Each direction in $D$ fixes three admissible triples. The two nonzero
+kernel directions $(0,1)$ and $(0,2)$ each fix none. The survivors pair
+into the three distinct order-three subgroups
+
+$$
+\begin{aligned}
+  H_0&=\{0,(1,0),(2,0)\},\\
+  H_1&=\{0,(1,1),(2,2)\},\\
+  H_2&=\{0,(1,2),(2,1)\}.
+\end{aligned}
+$$
+
+The directions $(1,0),(2,0)$ have fixed family equal to the cosets of
+$H_0$; $(1,1),(2,2)$ have the cosets of $H_1$; and $(1,2),(2,1)$
+have the cosets of $H_2$. For each $i\in\{0,1,2\}$ those cosets are
+exactly
+
+$$
+  \{H_i,\ (0,1)+H_i,\ (0,2)+H_i\}.
+$$
+
+They form one translation orbit of size three. The three orbits are
+pairwise disjoint, since the stabilizer of a coset is its corresponding
+subgroup and $H_0,H_1,H_2$ are distinct.
+

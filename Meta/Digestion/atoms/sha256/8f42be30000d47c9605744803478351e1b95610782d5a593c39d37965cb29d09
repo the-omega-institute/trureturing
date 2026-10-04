@@ -1,0 +1,83 @@
+**Theorem 10.1 (slope-filtered fixed-point census).** For each
+nonnegative integer $n$ and each $a\in\mathbb Z/n\mathbb Z$, let
+
+$$
+  \mathcal V_a=
+    \{X\subset\mathbb Z/n\mathbb Z:|X|=3,
+      \ x\mapsto ax\text{ is injective on }X\}.
+$$
+
+Translation by any $t\in\mathbb Z/n\mathbb Z$ preserves
+$\mathcal V_a$, without a positivity assumption on $n$. If $n>0$
+and $t\ne0$, the exact fixed-point count is
+
+$$
+  |\operatorname{Fix}_t(\mathcal V_a)|=
+  \begin{cases}
+    n/3,&3t=0\text{ and }at\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+$$
+
+Only injectivity on the individual set $X$ is required; multiplication
+by $a$ need not be injective on the whole ring, and $a$ need not be a unit.
+
+**Proof.** Translation is a bijection and hence preserves cardinality.
+If $a(t+x)=a(t+y)$ with $x,y\in X$, cancellation of $at$ gives
+$ax=ay$, and injectivity on $X$ gives $x=y$. Thus it also preserves
+the injectivity condition for every $n$.
+
+Suppose $t+X=X$ and $|X|=3$. Summing the elements on both sides and
+cancelling their sum gives $3t=0$. If $at=0$, each $x\in X$ and its
+distinct translate $x+t\in X$ have equal images, which excludes
+$X\in\mathcal V_a$. This proves the zero cases for nonzero $t$.
+
+Now assume $3t=0$ and $at\ne0$. Both $t$ and $at$ have additive
+order three: their orders divide the prime three and neither is zero.
+Consequently
+
+$$
+  C_t=\{0,t,2t\}
+$$
+
+has three elements, its image under multiplication by $a$ has three
+elements, and $t+C_t=C_t$. For any fixed $X$, choose $x\in X$.
+Invariance puts $x,x+t,x+2t$ in $X$; these are distinct and exhaust
+its three elements. Therefore the fixed members are precisely the
+translates of $C_t$. Its translation stabilizer is $C_t$: every element
+of this subgroup fixes it, and a stabilizing $h$ lies in $C_t$ because
+$h=h+0\in h+C_t=C_t$. Ordinary orbit-stabilizer now counts its
+translates as $n/3$. $\square$
+
+For $n=6$, $a=2$, and $t=2$, the fixed family is exactly
+
+$$
+  \operatorname{Fix}_2(\mathcal V_2)
+    =\bigl\{\{0,2,4\},\{1,3,5\}\bigr\}.
+$$
+
+These are distinct even and odd cosets, so the count is two despite the
+nonunit slope. For $n=3$, $a=1$, and $t=1$, the only fixed member is
+$\{0,1,2\}$, giving count one. Further boundary values are
+
+$$
+\begin{aligned}
+  n=6:&\quad |\operatorname{Fix}_2(\mathcal V_3)|=0,
+    \qquad |\operatorname{Fix}_1(\mathcal V_2)|=0,\\
+  n=9:&\quad |\operatorname{Fix}_3(\mathcal V_2)|=3,
+    \qquad |\operatorname{Fix}_3(\mathcal V_3)|=0,\\
+  n=3:&\quad |\operatorname{Fix}_1(\mathcal V_0)|=0,
+    \qquad |\operatorname{Fix}_0(\mathcal V_1)|=1,\\
+  n=2:&\quad |\operatorname{Fix}_1(\mathcal V_1)|=0.
+\end{aligned}
+$$
+
+In each row, $\mathcal V_a$ is taken in the indicated modulus. The
+zero-translation value for $n=3$ shows why $t\ne0$ belongs in the
+counting statement: identity translation fixes the whole class. For
+$n=1$, there is no nonzero $t$.
+
+This census keeps the slope fixed and counts admissible abscissa sets.
+Enumeration across different slopes requires an overlap analysis before
+their counts can be combined.
+
