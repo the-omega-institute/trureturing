@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f4b335e56936d42c7fc92234299f97cf6b7fc065c3e19ff55a242a59dc53f69e
   normalized_sha256: sha256:f4b335e56936d42c7fc92234299f97cf6b7fc065c3e19ff55a242a59dc53f69e
 cas_ref: sha256:f4b335e56936d42c7fc92234299f97cf6b7fc065c3e19ff55a242a59dc53f69e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/ExponentExchange/ForcedCoreNormalization.forced_core_normalization
+    target_statement_id: sha256:cccb94ed994ad03f11b2d53ab3335aa8a673473d4183d082fb93ad304385fd3e
 receipts:
   unresolved_subitems: []
