@@ -579,3 +579,28 @@ discretization bound. The required input's small-spectral-value error
 and the projected transfer estimate remain unproved. Positive finite
 regularization does not remove the existing exact raw Schur-certificate
 obstruction.
+
+### A complete block minorant improves the inverse constant
+
+The [whole-space negative-edge block estimate](../../docs/reports/theta-mixed-matrix/theta-negative-block-gap.md)
+reuses the existing depth-two five-mode FIB tiling of $[0,3/2]$, adds
+the whole outside cell and integrates the actual folded theta masses.
+A nonnegative block conductance minorant separates within-cell
+conditional variance from block means. Directed congruence and
+Gershgorin margins verify both sufficient conditions at $c_{**}=1/100$.
+Under the inherited actual-model and numerical-supplier premises this
+gives, for every ambient even $h\in L^2(\nu)$,
+
+$$
+\frac1{100}\operatorname{Var}_\nu(h)\le\|C_-h\|^2
+\le\frac12\operatorname{Var}_\nu(h),\qquad
+\|G^{-1}\|\le100,\quad\kappa(G)\le50,\quad
+\|I_N-2G\|\le\frac{49}{50}.
+$$
+
+The outside cell retains its conditional variance, so the assertion
+does not restrict $h$ to block-constant functions. It is a conditional
+paper estimate with directed numerical evidence, not a new generic
+Poincare theorem or Lean result. It improves common-source inverse
+conditioning; the original energy's half-bound, cofinal projected
+comparison, Robin and RH remain unproved.
