@@ -13424,3 +13424,324 @@ Knuth–Yao 的 DDG、经典源编码熵下界与熵凹性是成熟理论。参�
 在 $a\lambda<N<b\lambda$，偏置选模严格优于只选固定端点或只用均匀律。这个关系比较输入前一次付费选模与重置下反复实际地址取得，适用于声明的资源模型。族外仅保证逐输入正确和有限终止，不给统一费用或运行时间上界；一般实律的抽象 DDG 存在性不保证非可计算概率的有效有限程序，所需取得律与有限阶梯则均有明确有理实现。位价不换算成物理时间、内存或能量。迁移到训练网络还须证明可达状态、合法操作、读出与费用的实际对应；这里没有神经精度、泛化、Bayes 风险、因果、训练进步或物理效率结论。
 
 ## 67.99 追加锚
+
+## 68 原 Scale37 全参数实际查询族：免费整控制器律与共同种子前沿
+
+### 68.1 精确结论、全域任务与完整实际族
+
+本章固定 [Scale 卷第 37 章](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md) 的原族，取 $k\ge1$、$m=4k+1$、$n=8k+16$。区别在于输入前免费选择一整个控制器，粗读出还须保留实际地址上的非叶歧义。
+
+**定理 68.10（精确费用）。** 在下述全域正确、逐输入有限终止的控制器模型中，原始读出满足
+
+$$
+R_{\rm raw}=n+1-\frac1{5k+1},\qquad D_{\rm raw}=W_{\rm raw}=n+1,
+$$
+
+且同一个输入前控制器律的全部非支配 $(r,w)$ 对为
+
+$$
+\left(n+1-t,\ n+1+kt\right),\qquad 0\le t\le\frac1{5k+1}.
+$$
+
+粗读出满足
+
+$$
+R_{\rm coarse}=n+\max\left\{\frac{5k-1}{4k},\frac{4k-2}{3k}\right\},
+\qquad D_{\rm coarse}=W_{\rm coarse}=n+2.
+$$
+
+两个分式之差为 $(5-k)/(12k)$；在 $k=5$ 交叉。一个实际有限混合同时取得粗读出的 $R,W$，故其唯一非支配对为 $(R_{\rm coarse},n+2)$。例如 $k=1,n=24$ 时原始 $R=149/6$，粗 $R=25$、$D=W=26$；$k=2,n=32$ 时粗 $R=265/8>n+1$。因此粗读出的全参数值不能写成 $n+1$。
+
+未知输入仍是所有非空有限有序满二叉 $\alpha/\beta$ 树。变换 $\rho$ 在叶上为 $\rho(\alpha)=\beta$、$\rho(\beta)=(\beta,\alpha)$，在二叉结点上逐子树作用；任务是判定输入是否属于 $\rho^3$ 的像。评价族只决定费用坐标，不给大小、原型或肯定输入承诺。每个有限地址（含根 $\varepsilon$）都可查询。原始回复为 $\alpha,\beta,\mathrm{br},\bot$，其中后两者分别为分叉与地址不存在；粗回复只将它们合并为 $\nu$。费用是本次运行实际请求的不同地址数。
+
+一个种子指定一整个确定性控制器，其在上述全部输入上正确且有限终止。允许在输入前免费取与输入独立的这种控制器的分布 $\mu$；同一种子在所有反事实评价输入上指定同一个控制器。令 $C_i(c)$ 为控制器 $c$ 在第 $i$ 棵评价树上的费用，要求这些费用函数可测，定义
+
+$$
+r(\mu)=\max_i\mathbb E_\mu C_i(c),\qquad
+w(\mu)=\mathbb E_\mu\max_i C_i(c),\qquad
+D=\inf_c\max_i C_i(c),\quad R=\inf_\mu r(\mu),\quad W=\inf_\mu w(\mu).
+$$
+
+允许无限期望；定理中的最优值均由有限有理混合取得。本章不收取种子位费用，不引入输入先验、在线学习或跨次缓存；第 66、67 章的付费选模目标不代入这里。
+
+为明确原型，记
+
+$$
+\begin{gathered}
+E=(\beta,\alpha),\quad A=(E,\beta),\quad C=(A,E),\quad
+B=(C,A),\quad T=(A,C),\\
+W_1=(B,C),\quad H=K_T=(T,A),\quad Y=(W_1,A),\quad Z=(C,B),\quad
+R_0=(T,B),\quad R_a=(T,Z).
+\end{gathered}
+$$
+
+用有 $k+1$ 个槽的右梳连接这些块：活动槽根 $p_j=R^{j-1}L$，$1\le j\le k$，补偿槽根 $q=R^k$。这些根互不为前缀。族指标为
+$\mathcal F=\{0\}\cup\{a_j,y_j,h_j,z_j:1\le j\le k\}$。基线 $0$ 的活动块全为 $B$、补偿块为 $R_0$；其余四行仅在槽 $j$ 改动：
+
+| 行 | 活动槽 $j$ | 补偿槽 |
+|---|---|---|
+| $a_j$ | $A$ | $R_a$ |
+| $y_j$ | $Y$ | $B$ |
+| $h_j$ | $H$ | $Z$ |
+| $z_j$ | $Z$ | $H$ |
+
+所有其他活动槽仍为 $B$。完整前像也在同一右梳中逐槽给出：置 $b=(\beta,\alpha)$、$t=(\alpha,\beta)$、$w=(b,\beta)$、$h=(t,\alpha)$、$y=(w,\alpha)$、$z=(\beta,b)$、$r_0=(t,b)$、$r_a=(t,z)$，则 $A,C,B,T,W_1,H,Y,Z,R_0,R_a$ 的 $\rho^3$ 前像分别为 $\alpha,\beta,b,t,w,h,y,z,r_0,r_a$。每个前像的叶组成是 $(k+2,k+2)$，像的叶组成是 $(3k+6,5k+10)$，合计 $n$；$\rho$ 的既有单射性给出唯一前像。
+
+下表是完整局部带标签叶前沿。行名 $0,a,y,h,z$ 在活动槽表示 $B,A,Y,H,Z$，在补偿槽表示 $R_0,R_a,B,Z,H$。一格列出的地址依次带所列标签；“支持”列恰列出在这些地址具有该叶的全部行。
+
+| 活动槽支持 | 完整地址组 | 标签组 |
+|---|---|---|
+| $\{a\}$ | $LL,LR,R$ | $\beta,\alpha,\beta$ |
+| $\{0,h,z\}$ | $LLLL,LLLR,LLR$ | $\beta,\alpha,\beta$ |
+| $\{0,z\}$ | $LRL,LRR$ | $\beta,\alpha$ |
+| $\{0,y,h\}$ | $RLL,RLR,RR$ | $\beta,\alpha,\beta$ |
+| $\{y,h\}$ | $LRLLL,LRLLR,LRLR,LRRL,LRRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{y\}$ | $LLLLLL,LLLLLR,LLLLR,LLLRL,LLLRR,LLRLL,LLRLR,LLRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+| $\{z\}$ | $RLLLL,RLLLR,RLLR,RLRL,RLRR,RRLL,RRLR,RRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+
+| 补偿槽支持 | 完整地址组 | 标签组 |
+|---|---|---|
+| 全部五行 | $LLLL,LLLR,LLR$ | $\beta,\alpha,\beta$ |
+| $\{y,h\}$ | $LRL,LRR$ | $\beta,\alpha$ |
+| $\{0,a,z\}$ | $LRLLL,LRLLR,LRLR,LRRL,LRRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{y,z\}$ | $RLL,RLR,RR$ | $\beta,\alpha,\beta$ |
+| $\{0,a,h\}$ | $RLLLL,RLLLR,RLLR,RLRL,RLRR$ | $\beta,\alpha,\beta,\beta,\alpha$ |
+| $\{0,h\}$ | $RRLL,RRLR,RRR$ | $\beta,\alpha,\beta$ |
+| $\{a\}$ | $RRLLLL,RRLLLR,RRLLR,RRLRL,RRLRR,RRRLL,RRRLR,RRRR$ | $\beta,\alpha,\beta,\beta,\alpha,\beta,\alpha,\beta$ |
+
+活动块叶数依次为 $8,3,16,11,13$，补偿块为 $16,21,8,13,11$；每个异常对合计 $24$，再加其余 $8(k-1)$ 叶即 $n$。表中每个叶的严格前缀回复 $\mathrm{br}$，其余非叶地址回复 $\bot$；粗读出统一为 $\nu$。全局地址在活动表前加 $p_j$、补偿表前加 $q$，梳的其他祖先均为分叉。这同时穷尽所有叶、分叉和不存在地址。任意两行的共同叶地址标签相同，记此局部及全局非冲突性质为 NC。
+
+令 $A_* =\{a_i\}$、$Y_* =\{y_i\}$、$H_* =\{h_i\}$、$Z_* =\{z_i\}$。所有非空、非常量全局叶支持恰为：
+
+$$
+\begin{array}{ll}
+\text{活动槽 }j:&\{a_j\},\ \mathcal F\setminus\{a_j,y_j\},\ \mathcal F\setminus\{a_j,y_j,h_j\},\\
+&\mathcal F\setminus\{a_j,z_j\},\ \{y_j,h_j\},\ \{y_j\},\ \{z_j\};\\
+\text{补偿槽}:&Y_*\cup H_*,\ \{0\}\cup A_*\cup Z_*,\ Y_*\cup Z_*,\\
+&\{0\}\cup A_*\cup H_*,\ \{0\}\cup H_*,\ A_*.
+\end{array}
+$$
+
+补偿表首组的三个地址支持为全 $\mathcal F$，未在两张前沿表出现的地址叶支持为空。特别地，在嵌入的 $S_j=\{0,a_j,y_j,h_j,z_j\}$ 上，叶支持大小仅为 $1,2,3,5$，没有四行支持。
+
+### 68.2 必查证书、静态剪枝与共同全域补全
+
+**引理 68.11（认证与费用正规化）。** 每条接受评价树的实际运行都须查询它的全部 $n$ 个带标签叶。因此 $e_i(c)=C_i(c)-n\ge0$。NC 又使一个控制器至多有一个零超额坐标。下面所有端点共用一个完整叶核验器和一个全域回退，且适用于任意自适应、重复查询的原控制器。
+
+**证明。** 复用 Scale 第 18、23 章的单叶翻转证书：在这些 $\rho^3$ 像中，翻转一个叶标签得到否定输入，两类翻转分别破坏末端樱桃或一次像的 $\alpha$ 同胞约束。任意其他地址的原始及粗回复均不变。遗漏该叶便可在否定输入上重放同一接受运行，矛盾。反之，匹配一棵满树的全部带标签叶就确定整棵树。若两行都无非叶查询，它们在共同运行首次分歧处须给不同回复；NC 排除了两种不同叶标签，故至少一行在该地址不是叶，矛盾。
+
+对任意给定正确总控制器，取它在有限族上的有限接受运行，组成有限响应前缀树。每个终点只含一个原型，否则完整叶证书无法同时匹配两个不同原型。静态删去在当前存活原型上常量的查询，仅保留真正分裂的结点；每条保留路径是原运行查询的子序列。重复地址在存活集上已为常量，故不再保留。这是对控制器的静态重设计，不是假造一个实际查询历史；每行保留的不同非叶地址数不超过原超额。原型唯一后再接完整核验器，表外回复则进入回退。由此有限响应树下界也约束任意原自适应控制器。
+
+完整核验器从自身初态与空逻辑历史开始，依固定次序请求所选原型的全部 $n$ 个叶，全部匹配才接受；任一不符均回退。它没有预填路线历史。唯一外层缓存只保存本次运行真实请求过的精确地址及真实回复；各阶段仍在自己的逻辑历史中记录每次请求。缓存命中不另收费，推断出的回复不入缓存，无跨次共享。
+
+回退也从新的逻辑状态开始。根已知存在；只遍历已由祖先遍历证明存在的结点，叶回复闭合，原始分叉或在已知存在结点的 $\nu$ 才证明两个孩子存在。先前缓存的 $\nu$ 只有在该存在性已经成立时才能如此解释。有限满树因而被完整恢复；即使路线曾询问不存在地址，也不影响这条存在性纪律。设恢复树有 $\ell$ 叶，有限枚举叶数不超过 $\ell$ 的全部有序带标签满树，逐棵正向计算 $\rho^3$ 并比较。$\rho$ 不减叶数，故该有限枚举穷尽可能前像；根为单叶时直接否定。这里没有逆像执行许可或无限搜索。全体构造因而在所有输入上正确且有限终止，族外不承诺统一费用或时间上界。$\square$
+
+下面用 $L_i$ 表示第 $i$ 行的完整叶地址集，用 $J_i$ 表示构造实际请求的不同地址集。每个端点的评价费用都将由 $J_i=L_i\cup X_i$ 给出，其中 $X_i$ 是明确列出的实际非叶地址；路线中的其他请求均为本行自己的叶。
+
+### 68.3 原始读出的完整端点菜单与共同种子前沿
+
+先列实际查询列，活动列须前加相应 $p_j$，补偿列须前加 $q$：
+
+$$
+v=LLLL,\ u=LRL,\ t=RLL,\ d=LRLLL,\ e=LLLLLL,\ f=RLLLL,\ s_0=LL;
+\qquad x_q=qLRLLR,\ g_q=qRLLLL,\ r_q=qRRLLLL.
+$$
+
+下表是这些地址在 $S_j$ 上的原始真实回复，活动列仍写相对地址：
+
+| 列 | $0$ | $a_j$ | $y_j$ | $h_j$ | $z_j$ |
+|---|---|---|---|---|---|
+| $v$ | $\beta$ | $\bot$ | $\mathrm{br}$ | $\beta$ | $\beta$ |
+| $u$ | $\beta$ | $\bot$ | $\mathrm{br}$ | $\mathrm{br}$ | $\beta$ |
+| $t$ | $\beta$ | $\bot$ | $\beta$ | $\beta$ | $\mathrm{br}$ |
+| $d$ | $\bot$ | $\bot$ | $\beta$ | $\beta$ | $\bot$ |
+| $e$ | $\bot$ | $\bot$ | $\beta$ | $\bot$ | $\bot$ |
+| $f$ | $\bot$ | $\bot$ | $\bot$ | $\bot$ | $\beta$ |
+| $s_0$ | $\mathrm{br}$ | $\beta$ | $\mathrm{br}$ | $\mathrm{br}$ | $\mathrm{br}$ |
+| $x_q$ | $\alpha$ | $\alpha$ | $\bot$ | $\bot$ | $\alpha$ |
+| $g_q$ | $\beta$ | $\beta$ | $\bot$ | $\beta$ | $\bot$ |
+| $r_q$ | $\bot$ | $\beta$ | $\bot$ | $\bot$ | $\bot$ |
+
+**命题 68.12（$6k+1$ 个实际 Pareto 端点）。** 原始超额向量的全部最小元恰为
+
+$$
+\mathbf1-\mathbf e_i\quad(i=0,y_j,h_j,z_j),\qquad
+\mathbf1-\mathbf e_{a_j}+\mathbf e_b\quad(b=y_j,h_j,z_j).
+$$
+
+这里 $\mathbf e_i$ 是坐标单位向量；第一类有 $3k+1$ 个，第二类有 $3k$ 个。任何正确总控制器的向量都被其中一个端点逐坐标弱支配；这不宣称所有向上向量均可实现。
+
+**下界证明。** 若 $a_j$ 零超额，限制到 $S_j$ 后首次信息查询必须是它的叶。活动 $A$ 的三个叶在其余四行全为分叉；补偿 $R_a$ 的叶中，三个全共同，五个支持 $\{0,a,z\}$、排除的 $y,h$ 同为不存在，五个支持 $\{0,a,h\}$、排除的 $y,z$ 同为不存在，另八个仅支持 $a$、其余四行同为不存在。因此首次分裂必有至少两行同获非叶回复，且可取两行于 $\{y_j,h_j,z_j\}$；四行子情形中这三行至多一行能避免后续非叶。NC 迫使这些尚未区分的行在后来某个新地址再分裂，至少一行再付一次非叶费。故 $a_j$ 零超额必伴随某个 $y_j,h_j,z_j$ 超额至少二。
+
+若没有零坐标，每行至少一，被第一类任一端点支配；若零坐标不是 $a_j$，被对应第一类支配；若是 $a_j$，由刚证的局部二超额被第二类支配。每个列出的端点又因唯一零坐标及该障碍不能严格改进。这也适用于 68.11 静态剪枝以前的任意重复、自适应运行。
+
+给 $a_j$ 权重二、其余行权重一，总权重 $s=5k+1$。无零时加权超额至少 $s$；非 $a$ 零时至少 $s-1$；$a$ 零时先有 $s-2$，局部二超额再补一。故逐控制器恒有
+
+$$
+2\sum_j e_{a_j}+e_0+\sum_j(e_{y_j}+e_{h_j}+e_{z_j})\ge5k.
+$$
+
+归一化权重 $\lambda_{a_j}=2/s$、其余 $\lambda_i=1/s$ 给出这个费用比较的加权对偶见证，不改变控制器模型或引入输入先验。对任意控制器律积分给出 $R\ge n+5k/s$，NC 给出逐种子最大超额至少一，从而 $D,W\ge n+1$。
+
+**全部端点的实际路线。** 普通槽扫描依次查询 $p_iLLLR$：$\bot$ 选 $a_i$，$\mathrm{br}$ 选 $y_i$，$\alpha$ 则查 $p_iLRR$；后者 $\mathrm{br}$ 选 $h_i$，$\alpha$ 则查 $p_iRLR$，其 $\mathrm{br}$ 选 $z_i$、$\alpha$ 继续下一槽。每次选择只启动 68.11 的完整核验器，所有未列回复都回退。扫描全部槽并在全部继续时选基线，取得 $0$ 零端点。其各异常行的非叶集为
+
+$$
+X_{a_i}=X_{y_i}=\{p_iLLLR\},\qquad X_{h_i}=\{p_iLRR\},\qquad X_{z_i}=\{p_iRLR\},\qquad X_0=\varnothing.
+$$
+
+要取得其余端点，先按固定递增次序扫描除 $j$ 外的所有槽；若未退出，余下是 $S_j$。在下表中 $Q:\eta\mapsto P$ 表示查询 $Q$，回复 $\eta$ 后选原型 $P$；指向另一列即继续查询。活动地址全部位于槽 $j$，所有未列回复均回退。
+
+| 目标零／二超额 | 剩余五行上的完整尾段 |
+|---|---|
+| $y_j$ 零 | $t:\bot\mapsto a,\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto e$；$e:\beta\mapsto y,\bot\mapsto h$ |
+| $h_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto t$；$t:\mathrm{br}\mapsto z,\beta\mapsto d$；$d:\bot\mapsto0,\beta\mapsto h$ |
+| $z_j$ 零 | $v:\bot\mapsto a,\mathrm{br}\mapsto y,\beta\mapsto u$；$u:\mathrm{br}\mapsto h,\beta\mapsto f$；$f:\bot\mapsto0,\beta\mapsto z$ |
+| $a_j$ 零、$h_j$ 二 | $x_q:\bot\mapsto e,\alpha\mapsto g_q$；$e:\beta\mapsto y,\bot\mapsto h$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$y_j$ 二 | $x_q:\bot\mapsto v,\alpha\mapsto g_q$；$v:\beta\mapsto h,\mathrm{br}\mapsto y$；$g_q:\bot\mapsto z,\beta\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+| $a_j$ 零、$z_j$ 二 | $g_q:\bot\mapsto t,\beta\mapsto x_q$；$t:\beta\mapsto y,\mathrm{br}\mapsto z$；$x_q:\bot\mapsto h,\alpha\mapsto r_q$；$r_q:\bot\mapsto0,\beta\mapsto a$ |
+
+确切的 $X$ 如下，行中活动字母均带 $p_j$：
+
+| 尾段 | $X_0$ | $X_{a_j}$ | $X_{y_j}$ | $X_{h_j}$ | $X_{z_j}$ |
+|---|---|---|---|---|---|
+| $y_j$ 零 | $\{d\}$ | $\{t\}$ | $\varnothing$ | $\{e\}$ | $\{t\}$ |
+| $h_j$ 零 | $\{d\}$ | $\{v\}$ | $\{v\}$ | $\varnothing$ | $\{t\}$ |
+| $z_j$ 零 | $\{f\}$ | $\{v\}$ | $\{v\}$ | $\{u\}$ | $\varnothing$ |
+| $a_j$ 零、$h_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q\}$ | $\{x_q,e\}$ | $\{g_q\}$ |
+| $a_j$ 零、$y_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{x_q,v\}$ | $\{x_q\}$ | $\{g_q\}$ |
+| $a_j$ 零、$z_j$ 二 | $\{r_q\}$ | $\varnothing$ | $\{g_q\}$ | $\{x_q\}$ | $\{g_q,t\}$ |
+
+余下五行在此前扫描中只请求自己的 $B$ 叶；其他槽的异常行退出时仍只付普通扫描的一个非叶地址。每条尾段路径地址互异，核验器再请求完整 $L_i$，故实际并集正是 $L_i\cup X_i$。这实现全部 $6k+1$ 个最小元并完成族外语义。$\square$
+
+**命题 68.13（共同种子完整前沿）。** 给每个 $a_j$ 零、$h_j$ 二端点质量 $1/s$，每个 $h_j$ 零端点质量 $2/s$，每个 $y_j,z_j$ 零及 $0$ 零端点质量 $1/s$。每行平均超额都是 $1-1/s$，取得原始 $R$；其共同种子最大费用期望为 $n+1+k/s$。单独的 $0$ 零端点则取得 $D=W=n+1$。
+
+为证明全部前沿，对任意控制器费用向量选择菜单中按固定顺序第一个支配它的端点；选择条件只是有限个可测费用不等式。这同时降低全部坐标和逐种子最大费用，所用端点都是完整全域控制器。令投影后第二类端点的总质量为 $q$，第一类最大超额一、第二类为二，故 $w=n+1+q$。所有 $a$ 坐标的平均给出
+
+$$
+r\ge n+1-\frac qk.
+$$
+
+非 $a$ 坐标共有 $b=3k+1$ 个；第一类在它们上的超额和为 $b-1$，第二类为 $b+1$，所以还须
+
+$$
+r\ge n+1-\frac{1-2q}{b}.
+$$
+
+交点是 $q_*=k/s$。在 $0\le q\le q_*$，给各 $a_j$ 零、$h_j$ 二端点质量 $q/k$，各 $h_j$ 零端点 $2q/k$，各 $y_j,z_j$ 零端点 $q/k$，$0$ 零端点 $1-5q$。质量非负且和为一；非基线每行平均超额 $1-q/k$，基线为 $5q\le1-q/k$，故取得 $(n+1-q/k,n+1+q)$。$q>q_*$ 时第二个下界增大而 $w$ 增大，被交点支配；$q\le q_*$ 时第一个下界及实现在相反方向严格变化。原控制器律也被其菜单投影支配，故不存在菜单以外的非支配对。置 $t=q/k$ 即得 68.10 的完整原始前沿。$\square$
+
+### 68.4 粗读出的两个子集势与普适二超额障碍
+
+**命题 68.14（任意控制器律的粗下界）。** 粗读出满足
+
+$$
+r\ge n+\frac{5k-1}{4k},\qquad r\ge n+\frac{4k-2}{3k},\qquad
+D,W\ge n+2.
+$$
+
+**证明。** 在 68.11 的有限剪枝树中，NC 使每个有效查询只有同一带标签叶回复与 $\nu$ 两个孩子。一直沿叶孩子到最终行 $\zeta$。沿途的 $\nu$ 孩子集合 $T_\ell$ 分割 $\mathcal F\setminus\{\zeta\}$。每个落入 $T_\ell$ 的行在此首次付一个非叶地址；在该孩子内，NC 使至多一行避免后续非叶。因此对任意计数子集 $H$，若 $h=|T_\ell\cap H|>0$，这些行的超额和至少 $2h-1$。令 $\epsilon=\mathbf1_{\zeta\in H}$，$b_H$ 为遇到 $H$ 的这种孩子数，则
+
+$$
+\sum_{i\in H}e_i\ge2(|H|-\epsilon)-b_H.
+$$
+
+先取 $H_1=\mathcal F\setminus\{0\}$、$G_i=\{a_i,y_i,h_i,z_i\}$，定义第一个子集势
+
+$$
+\Phi_1(S)=\sum_{i=1}^k\min\{|S\cap G_i|,3\}.
+$$
+
+叶脊初值 $3k$、终值 $\epsilon$。每次删除遇到 $H_1$ 的 $\nu$ 孩子，势至少降一：当前组若至多三行，删行即降；若四行齐全，68.1 的完整实际支持表说明任何删行的叶支持至多保留该组两行。活动槽的大支持删除成对或三行，小支持至多二行；补偿支持也至多二行。故 $b_{H_1}\le3k-\epsilon$，从而
+
+$$
+\sum_{i\in H_1}e_i\ge5k-\epsilon\ge5k-1.
+$$
+
+再取 $H_2=A_*\cup Y_*\cup Z_*$、$\mathcal J_i=\{a_i,y_i,z_i\}$，定义第二个子集势
+
+$$
+\Phi_2(S)=\sum_{i=1}^k\min\{|S\cap\mathcal J_i|,2\}.
+$$
+
+初值 $2k$、终值 $\epsilon$。活动槽对齐全三行若删行，至少删除二行或仅保留一行；对至多二行的组，删行即降势。补偿支持只有 $\{0\}\cup A_*\cup Z_*$ 与 $Y_*\cup Z_*$ 能在齐全三行中只删除一个而不降势，分别全局删除 $y$ 或 $a$。这种遇到 $H_2$ 却不降势的删除至多一次：首次之后所有剩余组都至多二行，后来每次正删除都会降势。因此
+
+$$
+b_{H_2}\le2k-\epsilon+1,\qquad
+\sum_{i\in H_2}e_i\ge4k-\epsilon-1\ge4k-2.
+$$
+
+这两项是逐控制器的子集不等式，分别除以 $|H_1|=4k$、$|H_2|=3k$ 再积分即得两个 $r$ 下界；没有把分别可达值当作同时可达值。无限期望不妨碍下界。
+
+最后限制到任一 $S_j$ 并剪枝。它没有四行叶支持，故首次信息查询的 $\nu$ 孩子至少含两行。两行同得一个非叶回复后，后来首次分歧必发生在另一实际地址，NC 使至少一行再获非叶。这证明每个种子上有某行超额至少二，因而 $D,W\ge n+2$。此论证排除粗读出的所有 $\mathbf1-\mathbf e_i$ 端点；它并未排除零坐标伴随二超额的端点。$\square$
+
+### 68.5 三种付费扫描、三种尾段与有理取得律
+
+**命题 68.15（同时取得粗 $R,W$ 的实际控制器）。** 以下只使用 68.3 的真实地址列，将 $\mathrm{br},\bot$ 都改为 $\nu$。三种其他槽扫描的所有未列回复均回退：
+
+| 扫描 | 当前槽的完整规则 |
+|---|---|
+| $a$ 二超额 | $v:\nu\mapsto e,\beta\mapsto u$；$e:\beta\mapsto y,\nu\mapsto a$；$u:\nu\mapsto h,\beta\mapsto t$；$t:\nu\mapsto z,\beta\mapsto$ 下一槽 |
+| $y$ 二超额 | $v:\nu\mapsto s_0,\beta\mapsto u$；$s_0:\beta\mapsto a,\nu\mapsto y$；$u:\nu\mapsto h,\beta\mapsto t$；$t:\nu\mapsto z,\beta\mapsto$ 下一槽 |
+| $z$ 二超额 | $t:\nu\mapsto s_0,\beta\mapsto v$；$s_0:\beta\mapsto a,\nu\mapsto z$；$v:\nu\mapsto y,\beta\mapsto u$；$u:\nu\mapsto h,\beta\mapsto$ 下一槽 |
+
+各列地址在本槽均带 $p_i$，对应的实际非叶集为：
+
+| 扫描 | $X_{a_i}$ | $X_{y_i}$ | $X_{h_i}$ | $X_{z_i}$ |
+|---|---|---|---|---|
+| $a$ 二 | $\{v,e\}$ | $\{v\}$ | $\{u\}$ | $\{t\}$ |
+| $y$ 二 | $\{v\}$ | $\{v,s_0\}$ | $\{u\}$ | $\{t\}$ |
+| $z$ 二 | $\{t\}$ | $\{v\}$ | $\{u\}$ | $\{t,s_0\}$ |
+
+输入前选一个槽 $j$，按固定次序用这些扫描遍历其他槽；继续的行在这些槽全是 $B$，只请求自己的叶。未退出时，剩余五行用下述尾段之一；活动字母带 $p_j$：
+
+| 尾段 | 完整规则 | 超额 $(0,a_j,y_j,h_j,z_j)$ |
+|---|---|---|
+| $A$ | $x_q:\nu\mapsto e,\alpha\mapsto g_q$；$e:\beta\mapsto y,\nu\mapsto h$；$g_q:\nu\mapsto z,\beta\mapsto r_q$；$r_q:\nu\mapsto0,\beta\mapsto a$ | $(1,0,1,2,1)$ |
+| $B$ | $v:\nu\mapsto s_0,\beta\mapsto t$；$s_0:\beta\mapsto a,\nu\mapsto y$；$t:\nu\mapsto z,\beta\mapsto d$；$d:\nu\mapsto0,\beta\mapsto h$ | $(1,1,2,0,1)$ |
+| $C$ | $t:\nu\mapsto f,\beta\mapsto d$；$f:\beta\mapsto z,\nu\mapsto a$；$d:\nu\mapsto0,\beta\mapsto e$；$e:\nu\mapsto h,\beta\mapsto y$ | $(1,2,0,1,1)$ |
+
+它们的确切非叶集为：
+
+| 尾段 | $X_0$ | $X_{a_j}$ | $X_{y_j}$ | $X_{h_j}$ | $X_{z_j}$ |
+|---|---|---|---|---|---|
+| $A$ | $\{r_q\}$ | $\varnothing$ | $\{x_q\}$ | $\{x_q,e\}$ | $\{g_q\}$ |
+| $B$ | $\{d\}$ | $\{v\}$ | $\{v,s_0\}$ | $\varnothing$ | $\{t\}$ |
+| $C$ | $\{d\}$ | $\{t,f\}$ | $\varnothing$ | $\{e\}$ | $\{t\}$ |
+
+每个叶选择都接同一个完整叶核验器，每个未列回复都接同一个已知存在根回退。每条路径地址互异，真实缓存只合并路线与核验器实际重复请求的叶。因此每个评价行确有 $J_i=L_i\cup X_i$；没有以抽象分裂次数代替实际地址收费。每个这样补全的端点基线超额一，最大超额二，全部行超额之和 $5k$。
+
+现输入前均匀选 $j$，以概率 $(\alpha,\beta,\gamma)$ 选尾段 $A,B,C$；条件于 $j$，每个其他槽的扫描种类也在输入前以 $(d_A,d_Y,d_Z)$ 独立选定。这个有限选择指定整个总控制器，运行中不再学习或改选。实际地址表直接给出
+
+$$
+\begin{aligned}
+\mathbb E e_0&=1,\\
+\mathbb E e_{a_i}&=1+\frac{-\alpha+\gamma+(k-1)d_A}{k},&
+\mathbb E e_{h_i}&=1+\frac{\alpha-\beta}{k},\\
+\mathbb E e_{y_i}&=1+\frac{\beta-\gamma+(k-1)d_Y}{k},&
+\mathbb E e_{z_i}&=1+\frac{(k-1)d_Z}{k}.
+\end{aligned}
+$$
+
+采用下面非负、各自和为一的有理概率：
+
+| 参数 | $(\alpha,\beta,\gamma)$ | $(d_A,d_Y,d_Z)$ |
+|---|---|---|
+| $k=1$ | $(1/3,1/3,1/3)$ | 无其他槽 |
+| $k=2$ | $(11/24,5/24,1/3)$ | $(3/8,3/8,1/4)$ |
+| $3\le k\le5$ | $((k+3)/8,(5-k)/8,0)$ | $((3k+1)/(8(k-1)),(3k-7)/(8(k-1)),1/4)$ |
+| $k\ge5$ | $(1,0,0)$ | $((k+1)/(3(k-1)),(k-2)/(3(k-1)),(k-2)/(3(k-1)))$ |
+
+在 $k=1$ 全部行的平均超额为一；$k=2$ 非基线为 $1+1/8$；$3\le k\le5$ 非基线为 $1+(k-1)/(4k)$。$k\ge5$ 时 $a,y,z$ 为 $1+(k-2)/(3k)$，$h$ 为 $1+1/k\le1+(k-2)/(3k)$。两张在 $k=5$ 的概率相同，基线始终为一。故取得 68.14 两项下界的最大值。每个种子指定的实际端点最大超额都恰为二，故同一混合还有 $w=n+2$；任取其一个确定性端点也取得 $D=n+2$。任何其他粗控制器律同时受 $r\ge R$、$w\ge n+2$ 约束，被此共同取得对支配。这证明粗读出的唯一非支配对，且无需分类全部粗确定性 Pareto 端点。$\square$
+
+### 68.6 整控制器实现、来源与白盒解释边界
+
+上述所有混合均可在固定种子空间 $[0,1]$ 上实现：把它按有限菜单的相应质量划为半开区间，每个区间指定一个已经全域补全的确定性控制器；零质量区间为空，点 $1$ 另指定任一固定总控制器。对每棵固定输入树，费用是有限分段常数函数；每个种子均给正确、有限终止的整控制器。所列 $R,W$ 取得律的质量均有理；原始前沿的一般实参数只要求声明的可测选取，不另断言非可计算概率的有效采样。因而可测性、同种子反事实费用及所有最优值的取得均由这些实际控制器支持，不需要输入分布或逐输入例外种子集假设。
+
+原始读出的随机平均改善须交换共同种子最大费用：在 $r=R_{\rm raw}$ 时最小 $w$ 为 $n+1+k/(5k+1)$；单独最小 $W$ 为 $n+1$。粗读出则可用同一有限混合同时取得两个最小值，但其逐种子最大费用至少 $n+2$。这个差异来自原族的完整叶支持及不存在／分叉的实际回复关系，家族只用于评价，全部控制器仍判定全域 $\rho^3$ 成员任务。
+
+原块、共同补偿、完整前像和 NC 来自 [Scale 第 37 章](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)；完整叶认证、实际取得、阶段独立逻辑历史、地址并集收费和静态剪枝分别复用同卷第 18、23、25、27、29、34 章。本卷第 66、67 章的付费种子模型与其原族另有参数，不能替换本章的免费整控制器律。Scale 第 39 章的原始确定性一次超额容量密度 $2/3$、第 40 章的原始确定性二次超额容量二次项 $2/9$ 属于其各自容量接口；它们没有供应本章的粗读出或随机前沿。
+
+相关基础正文包括 [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)、[ActualJointResponseCostCore](../../../D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.lean)、[ActualLeafHistoryRigidity](../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean)、[ActualImageSevenLeafSeparation](../../../D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.lean)、[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)、[ActualHistorySingleHoleRecovery](../../../D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.lean)。这里复用它们各自的取得、费用、叶历史和同胞／纤维接口，不把这些模块的既有结论扩称为本章全参数随机结论。本章给出普通定义与证明，有限决策树、证书与有限混合等成熟方法不计作新机制；来源对照限于上述指定正文，不作全球原创性或结果不存在的断言。
+
+主结论不依赖付费位扩展、通用优化框架或数值实验。迁移到机器学习模型，须另证对象、可达状态、合法操作、读出及费用的保持对应，尤其不得把可表达或可逆自动当作可取得。这里没有神经精度、训练改善、泛化、Bayes 风险、因果、物理时间／能量或统一族外复杂度保证。
+
+## 68.99 追加锚
