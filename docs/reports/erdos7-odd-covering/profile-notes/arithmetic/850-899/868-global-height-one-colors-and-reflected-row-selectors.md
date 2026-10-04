@@ -14,6 +14,12 @@ residual and every remaining q-coordinate. The conclusion below uses
 this whole source, without choosing one masked component or imposing
 a common cofactor witness.
 
+The comparisons in this note need only global class-count minimality
+once the stated original labels are supplied. The stronger EB1
+assumption also minimizes the modulus sum. Under that stronger
+assumption, the existing SC468 exchange already gives stronger row
+inventories; its different verification boundary is stated below.
+
 ## Only height-one originals can collide with retained q-free labels
 
 Let $\mathcal F$ be all original q-free classes, let $\mathcal A_q$
@@ -269,13 +275,83 @@ These are restrictions on actual height-one owners in the same
 global cover. They do not assert that their cofactor phases coincide
 or that they admit one common repair.
 
+## Two height permutations retain the full height-one row mask
+
+For each bottom-serving color c, let $R_c$ be the set of ternary
+rows of **all** its actual q-height-one originals. This set contains
+zero. Write $B_0,B_{01},B_{02},B_{012}$ for the numbers of colors
+whose exact sets are respectively $\{0\},\{0,1\},\{0,2\},\{0,1,2\}$.
+Then
+
+$$
+B_0+B_{01}+B_{02}+B_{012}=N_0.
+\tag{WR14}
+$$
+
+The deeper originals do not enter this classification and continue
+using their literal strips.
+
+The numerical height assignment need not be the reflection $5-a$.
+Choose one permutation $\pi$ of the output heights $3,4,5$, indexed
+by original rows $a=0,1,2$. A selected height-one original with
+cofactor m now receives the label $3^{\pi(a)}m$. Preserve its old
+low a digits and fill digits a through $\pi(a)-1$ from its color's
+seed. This is the same CRT enclosure construction. The new height
+recovers a because $\pi$ is injective; all new heights exceed two,
+and unchanged deeper strips remain q-bearing. Thus the whole output
+family still has distinct odd nonunit labels.
+
+For a bottom-serving color, use the prefix depth
+$E_c=\max\{\pi(a):a\in R_c\}$. For every other moving color use
+$E_c=5$. A selector fixing the first $E_c$ digits supplies every
+required block for that color's height-one originals. A conflicting
+old low-digit condition only makes the inverse empty; it does not
+invalidate its enclosure.
+
+Within the safe domain WR9 there are five complete low-two-digit
+roots, with 27 extensions each. Prefix depths 3, 4 and 5 therefore
+have respectively 9, 3 and 1 safe leaves. Process the colors by
+increasing depth, assigning disjoint cells. At each stage the
+unfilled cells subdivide into three cells at the next depth. Hence
+weight at least 135 supplies complete selectors, using each selected
+color once. The same retained-family-first argument and the omitted
+original q give a strictly smaller whole cover, which is forbidden.
+
+For $\pi=(3,4,5)$ the four bottom-mask weights are $9,3,1,1$;
+for $\pi=(3,5,4)$ they are $9,1,3,1$. Every nonbottom color contributes
+an available singleton prefix in both constructions. Applying
+count-minimality to these two comparison covers separately gives
+
+$$
+\boxed{n+8B_0+2B_{01}\le134,\qquad
+       n+8B_0+2B_{02}\le134.}
+\tag{WR15}
+$$
+
+Both inequalities constrain the same original counts. Their proof
+does not require simultaneously executing the two comparisons.
+
+Since $n\ge83$, each inequality implies
+$4B_0+B_{0j}\le25$. Combining them with WR14 gives
+$B_{012}\ge N_0+7B_0-50$. In particular WR13 yields
+
+$$
+\boxed{B_0\le6,\qquad B_{012}\ge23+7B_0.}
+\tag{WR16}
+$$
+
+Thus at least 23 actual colors each contain height-one originals in
+all three ternary rows. Within one such color these originals need
+not share a cofactor or a cofactor phase. The conclusion does not
+supply a same-cofactor triple or a joint repair.
+
 ## Reuse and boundary
 
 This construction reuses complete-color stripping, CRT enclosure,
 and the numerical height recovery of Report385 HPA6--HPA8. Restricting
 the coding domain by retained pure guards reuses Report385 GHA1--GHA5.
-The selector allocation is a finite prefix packing. The interface to
-check is the common reflection WR4 on height-one originals together
+The selector allocation is a finite prefix packing. The additional
+interface is the common reflection WR4 on height-one originals together
 with unchanged strips of all deeper originals; the existing component
 exchanges do not already check that combination.
 
@@ -305,6 +381,33 @@ witnesses and WR7. This extended application exits successfully with
 183 axiom-closure reports: 177 use only the same three standard axioms
 and six use no axioms. It has no errors or `sorryAx`. The general-p
 statement WR6 remains outside this ternary application.
+
+The two height permutations and exact row-mask consumer also have a
+complete cache-guarded application. It starts with the same actual
+cover, q, 3 and 9 originals, class-count minimality and $n\ge83$.
+The row masks are extracted from all actual height-one owners. It
+derives WR15--WR16 after constructing both comparison families and
+checking each against the same original family. The application
+exits successfully with 212 axiom-closure reports: 203 use only
+standard axioms and nine use no axioms, with no errors or `sorryAx`.
+
+For the stronger EB1 assumptions of the research branch, reuse
+[Report388, SC468](../350-399/388-source-global-substitution-collision-moment.md#74-grouped-shallow-slots-force-actual-divisor-triples-and-a-common-code-moment)
+before treating WR13 or WR16 as the best available bounds. At q=113,
+SC440 and SC460 supply the full five-word projection and, with divisor
+closure, the actual q, 3q and 9q donors. SC468 supplies an actual
+height-one divisor triple in every admissible six-color selection,
+with specified ternary tests. The full moving set
+U avoids all three unit-cofactor donor digits, so any six of its
+colors are admissible, using a fixed safe word. Six colors missing
+any one height-one row would contradict that result. Thus each row
+is missing from at most five colors, giving $N_0\ge n-5\ge78$ and,
+by the union bound, at least $n-15\ge68$ colors containing all three
+rows. These consequences reuse SC468; they are not new inventory
+results. SC468 uses modulus-sum minimality as well as class-count
+minimality and remains an ordinary mathematical derivation without
+a complete local Lean replay. The 212-report application above
+verifies the stated weaker-premise bounds and does not verify SC468.
 
 These are transient applications of existing coordinate, CRT and
 finite-cardinality machinery, with the three-row arithmetic checked
