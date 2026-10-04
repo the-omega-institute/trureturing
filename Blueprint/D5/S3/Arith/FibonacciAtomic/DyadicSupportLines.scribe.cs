@@ -4,13 +4,15 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 
-internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDefinition
+internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.";
     private static Formula V(string name) => F.Id(name);
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Indices => Call("Fin", D(5));
+    private static Formula Finite(Formula type, Formula body) =>
+        All(type, V("Type"), Seq(OpenBracket, Call("Fintype", type), CloseBracket, Comma, Sp, body));
     private static Formula Laws => Seq(Indices, Sp, To, Sp, Real);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula All(Formula x, Formula type, Formula body) =>
@@ -32,17 +34,19 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                 Blocks(Paragraph(Text("R(p,d) counts unassigned dyadic cylinders algebraically. "
                     + "The floor is the integer floor. For a nonnegative real probability vector "
-                    + "with five coordinates summing to one, R(p,d) is an integer between zero "
-                    + "and four. Zero coordinates and terminating dyadic expansions are included."))),
+                    + "with m coordinates summing to one, R(p,d) is an integer between zero "
+                    + "and m-1. Zero coordinates and terminating dyadic expansions are included."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("cost"), DeclarationHandle.Create(Prefix + "cost"),
                 H("Classical dyadic tail cost"), StatementSource.FromAuthor(CostFormula()),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
                 Blocks(Paragraph(Text("L(p) is the real infinite sum of these normalized residuals. "
-                    + "The geometric bound four divided by 2 to the power d gives summability "
-                    + "on the entire five-outcome simplex. The series expression is the classical "
+                    + "The geometric bound (m-1) divided by 2 to the power d gives summability "
+                    + "on each finite simplex. The series expression is the classical "
                     + "Knuth-Yao DDG cost recalled by Lumbroso, Section 2.1. The support theorem "
-                    + "below concerns this numerical series."))), DescribeRole.Definition),
+                    + "below concerns this numerical series. Both definitions accept arbitrary finite "
+                    + "real vectors. Lean takes an unsummable real tsum to be zero; values outside "
+                    + "the probability simplex do not represent sampling costs."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("support-bounds"), DeclarationHandle.Create(Prefix + "result"),
                 H("Two affine supporting inequalities"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(),
@@ -60,16 +64,18 @@ internal sealed class FiveOutcomeDyadicSupportBoundDocument : IScribeDocumentDef
 
     private static Formula ResidualFormula()
     {
-        var p = V("p"); var i = V("i"); var d = V("d");
-        return Disp(All(p, Laws, All(d, Nat, Equal(Call("R", p, d),
-            Seq(Power(d), Sp, Minus, Sp, IndexedSum(i, Indices,
-                new Formula.Floor(Seq(Power(d), Sp, Call("p", i)))))))));
+        var p = V("p"); var i = V("i"); var d = V("d"); var type = V("I");
+        var laws = Seq(type, Sp, To, Sp, Real);
+        return Disp(Finite(type, All(p, laws, All(d, Nat, Equal(Call("R", p, d),
+            Seq(Power(d), Sp, Minus, Sp, IndexedSum(i, type,
+                new Formula.Floor(Seq(Power(d), Sp, Call("p", i))))))))));
     }
 
     private static Formula CostFormula()
     {
-        var p = V("p"); var d = V("d");
-        return Disp(All(p, Laws, Equal(Call("L", p), IndexedSum(d, Nat, Term(p, d)))));
+        var p = V("p"); var d = V("d"); var type = V("I");
+        var laws = Seq(type, Sp, To, Sp, Real);
+        return Disp(Finite(type, All(p, laws, Equal(Call("L", p), IndexedSum(d, Nat, Term(p, d))))));
     }
 
     private static Formula ResultFormula()

@@ -6,33 +6,33 @@ Two supporting lines for the classical dyadic cost of every five-outcome real la
 
 **Definition 1.1 (Dyadic residual).**
 
-$$\forall p: \operatorname{Fin}\left(5\right) \to \mathbb{R}, \forall d: \mathbb{N}, \operatorname{R}\left(p, d\right) = 2^{d} - \sum_{i \in \operatorname{Fin}\left(5\right)}\left\lfloor2^{d} \operatorname{p}\left(i\right)\right\rfloor$$
+$$\forall I: Type, [\operatorname{Fintype}\left(I\right)], \forall p: I \to \mathbb{R}, \forall d: \mathbb{N}, \operatorname{R}\left(p, d\right) = 2^{d} - \sum_{i \in I}\left\lfloor2^{d} \operatorname{p}\left(i\right)\right\rfloor$$
 
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.residual` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.residual` (`✓ std3`).
 
 *Citation.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
 
 *Commentary.*
 
-R(p,d) counts unassigned dyadic cylinders algebraically. The floor is the integer floor. For a nonnegative real probability vector with five coordinates summing to one, R(p,d) is an integer between zero and four. Zero coordinates and terminating dyadic expansions are included.
+R(p,d) counts unassigned dyadic cylinders algebraically. The floor is the integer floor. For a nonnegative real probability vector with m coordinates summing to one, R(p,d) is an integer between zero and m-1. Zero coordinates and terminating dyadic expansions are included.
 
 **Definition 1.2 (Classical dyadic tail cost).**
 
-$$\forall p: \operatorname{Fin}\left(5\right) \to \mathbb{R}, \operatorname{L}\left(p\right) = \sum_{d \in \mathbb{N}}\frac{\operatorname{R}\left(p, d\right)}{2^{d}}$$
+$$\forall I: Type, [\operatorname{Fintype}\left(I\right)], \forall p: I \to \mathbb{R}, \operatorname{L}\left(p\right) = \sum_{d \in \mathbb{N}}\frac{\operatorname{R}\left(p, d\right)}{2^{d}}$$
 
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.cost` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.cost` (`✓ std3`).
 
 *Citation.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
 
 *Commentary.*
 
-L(p) is the real infinite sum of these normalized residuals. The geometric bound four divided by 2 to the power d gives summability on the entire five-outcome simplex. The series expression is the classical Knuth-Yao DDG cost recalled by Lumbroso, Section 2.1. The support theorem below concerns this numerical series.
+L(p) is the real infinite sum of these normalized residuals. The geometric bound (m-1) divided by 2 to the power d gives summability on each finite simplex. The series expression is the classical Knuth-Yao DDG cost recalled by Lumbroso, Section 2.1. The support theorem below concerns this numerical series. Both definitions accept arbitrary finite real vectors. Lean takes an unsummable real tsum to be zero; values outside the probability simplex do not represent sampling costs.
 
 **Theorem 1.3 (Two affine supporting inequalities).**
 
 $$\forall p: \operatorname{Fin}\left(5\right) \to \mathbb{R}, ((\forall i: \operatorname{Fin}\left(5\right), 0 \le \operatorname{p}\left(i\right) \land \sum_{i \in \operatorname{Fin}\left(5\right)}\operatorname{p}\left(i\right) = 1) \Rightarrow (\operatorname{Summable}\left(d: \mathbb{N} \mapsto \frac{\operatorname{R}\left(p, d\right)}{2^{d}}\right) \land \forall t: \mathbb{R}, (t = \operatorname{min}\left(p\right) \Rightarrow (0 \le t \land (t \le \frac{1}{5} \land (16 t \le \operatorname{L}\left(p\right) \land 48 t - 6 \le \operatorname{L}\left(p\right)))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,6 +42,6 @@ For every real probability vector on Fin(5), let t be its smallest coordinate. T
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.cost`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.residual`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound.result`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.cost`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.residual`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.result`

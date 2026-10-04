@@ -1,10 +1,10 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound
+/- GID: D5/S3/Arith/FibonacciAtomic/DyadicSupportLines
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/FiveOutcomeDyadicSupportBound
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/DyadicSupportLines
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Two dyadic-cost support bounds for five-outcome real probability laws. -/
+   digest: Dyadic-cost support lines for three- and five-outcome real probability laws. -/
 
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Algebra.Order.Floor.Ring
@@ -14,16 +14,17 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.FibonacciAtomic.FiveOutcomeDyadicSupportBound
+namespace D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
 
 open scoped BigOperators
 
 /-- Unassigned dyadic mass, in units of depth-d cylinders. -/
-noncomputable def residual (p : Fin 5 → ℝ) (d : ℕ) : ℝ :=
+noncomputable def residual {ι : Type*} [Fintype ι] (p : ι → ℝ) (d : ℕ) : ℝ :=
   (2 : ℝ) ^ d - ∑ i, (⌊(2 : ℝ) ^ d * p i⌋ : ℤ)
 
-/-- The classical DDG tail cost, expressed as a real series. -/
-noncomputable def cost (p : Fin 5 → ℝ) : ℝ :=
+/-- The classical DDG tail cost on probability vectors. The real `tsum` is zero
+when the series is not summable; other vectors have no sampling-cost interpretation. -/
+noncomputable def cost {ι : Type*} [Fintype ι] (p : ι → ℝ) : ℝ :=
   ∑' d : ℕ, residual p d / (2 : ℝ) ^ d
 
 /-- Both supporting lines hold on the full real simplex, and the defining
@@ -469,4 +470,4 @@ theorem result (p : Fin 5 → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
   · exact low p hp hs _ min_datum.1 lower hlow
   · linarith only [line2, hlow]
 
-end D5.S3.Arith.FibonacciAtomic.FiveOutcomeDyadicSupportBound
+end D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
