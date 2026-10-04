@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2607.09376v1
 claim: "Recursions and closed forms for Hankel determinants of weighted binary digit sums; vanishing of the determinants at t = 2ζ on a structured index set and a conjectured exact description of the nonvanishing indices (Conjecture 5.7)."
 strata_touched:
   - D5/S3/Combinatorics/DigitHankel/BinaryDigitHankel
+  - D5/S3/Combinatorics/DigitHankel/CyclotomicDigitHankel
 license: citation-only
 triage: anchor
 ---
