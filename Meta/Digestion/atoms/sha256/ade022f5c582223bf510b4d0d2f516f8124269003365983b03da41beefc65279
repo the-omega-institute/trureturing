@@ -1,0 +1,8 @@
+**定义 3.1（标签交换操作）。** 令
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+在线性层，沿一条不可重置路径读取 $R\mapsto MR\mapsto JMR\mapsto MJMR$。
+

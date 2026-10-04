@@ -1,0 +1,23 @@
+**定理 27.2（同一来源对产生的精确矩阵模量）。** 选定一个合法第三词，累计矩阵为 $B$。按定理 23.1 取 $e>0$、$D=B_{22}-B_{11}$，并要求整个纤维上注入，即
+
+$$
+\alpha=\frac e\zeta>0,\qquad
+\mu=|D|-\alpha x\ge0.
+$$
+
+复用该定理的精确标量公式，记
+
+$$
+w=\Omega_B(\tau)
+=\min\left(x,\frac{\sqrt{\mu^2+4\alpha\tau}-\mu}{2\alpha}\right),
+\qquad \phi(\ell)=\mu\ell+\alpha\ell^2.
+$$
+
+则对每个 $\tau\ge0$，包括 $\mu=0$ 和 $D$ 的两个符号，均有
+
+$$
+\boxed{\mathcal M_B(\tau)=G(w).}
+$$
+
+当 $\tau>0$ 时，这个正上确界在开纤维的来源对中不取到；当 $\tau=0$ 时，两种模量均为零，并由相同来源取到。
+

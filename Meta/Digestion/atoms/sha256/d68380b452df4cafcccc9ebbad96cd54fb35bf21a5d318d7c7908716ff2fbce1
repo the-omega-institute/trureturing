@@ -1,0 +1,85 @@
+**定理 23.1（合法第三矩阵的有符号二次接口与尖锐逆界）。** 写 $D=B_{22}-B_{11}$；上剪切分支取 $e=B_{21}$，下剪切分支取 $e=B_{12}$。若合法词有 $e=0$，则必有 $D=0$，第三读数恒定，不能恢复整个纤维。若 $e>0$，令
+
+$$
+\alpha=\frac e\zeta>0,\qquad
+\mu=|D|-\rho e,\qquad
+\kappa=\max(1,\rho).
+$$
+
+读数在整个相容纤维上注入，当且仅当 $\mu\ge0$。在此条件下，对每个 $\tau\ge0$，精确标量逆模量为
+
+$$
+\Omega_B(\tau)
+=\min\left(x,\frac{\sqrt{\mu^2+4\alpha\tau}-\mu}{2\alpha}\right).
+$$
+
+上剪切时设 $t_0=B_{11}x+B_{12}r$，下剪切时设 $t_0=B_{11}x+B_{21}q$。相容读数域恰为两端点 $t_0,t_0+Dx$ 之间的开区间，其长度为
+
+$$
+T=|D|x=\mu x+\alpha x^2.
+$$
+
+若 $\mu>0$，标量逆与最大元素范数下矩阵逆的最小全局 Lipschitz 常数分别为
+
+$$
+L_s=\frac1\mu,\qquad L_R=\frac\kappa\mu.
+$$
+
+若 $\mu=0$，两者的尖锐全局 Hölder $1/2$ 系数分别为
+
+$$
+H_s=\sqrt{\frac\zeta e},\qquad
+H_R=\kappa\sqrt{\frac\zeta e},
+$$
+
+且两种逆都不存在指数大于 $1/2$、系数有限的全局 Hölder 界。矩阵的系数界以及 $\mathcal M_B(\tau)\le\kappa\Omega_B(\tau)$ 不宣称后一个右侧就是一般有限容差下的精确矩阵模量。
+
+**证明。** 由 §17 的迹展开，在两个分支中都有
+
+$$
+T_B(s)=t_0+g(s),\qquad g(s)=Ds+\alpha s(x-s).
+$$
+
+合法累计矩阵自身也是 $M/J$ 词矩阵，定理 20.1 对相应非对角元给出 $e=0\Rightarrow D=0$；此时 $g=0$。纤维含有不同来源，故恒定读数不能恢复。以下只考虑 $e>0$。
+
+§17 已给出注入充要条件 $|D|\ge\alpha x$，即 $\mu\ge0$：不满足时，顶点 $(x+D/\alpha)/2$ 在 $(0,x)$ 内，顶点两侧等距的不同内部来源有相同读数。满足时 $D\ne0$，并且对 $0<u<v<x$、$d=v-u>0$，直接差分得
+
+$$
+|T_B(v)-T_B(u)|=
+\begin{cases}
+d\bigl(\mu+\alpha(d+2(x-v))\bigr),&D>0,\\
+d\bigl(\mu+\alpha(d+2u)\bigr),&D<0.
+\end{cases}
+$$
+
+两式均严格为正，分别说明 $T_B$ 严格递增和严格递减；$\mu=0$ 时也成立。由连续性及 $g(0)=0,g(x)=Dx$，相容读数域恰为所列开区间。其长度为 $|D|x=(\mu+\alpha x)x=T$。
+
+两种差分都严格大于 $\mu d+\alpha d^2$。若读数差不超过 $\tau$，解非负变量 $d$ 的二次不等式，得到所列根式上界；又 $d<x$，所以还须取封顶 $x$。当 $\tau=0$ 时，注入性使所有允许对满足 $u=v$，模量为零，与公式一致。
+
+若 $0<\tau<T$，设 $d_*$ 为 $\mu d_*+\alpha d_*^2=\tau$ 的唯一正根，则 $0<d_*<x$。取 $\varepsilon>0$，令 $d_\varepsilon$ 为
+
+$$
+d_\varepsilon\bigl(\mu+2\alpha\varepsilon+\alpha d_\varepsilon\bigr)=\tau
+$$
+
+的唯一正根。根式连续，故 $d_\varepsilon\to d_*$；充分小的 $\varepsilon$ 满足 $\varepsilon+d_\varepsilon<x$。当 $D>0$ 时取 $v=x-\varepsilon,u=v-d_\varepsilon$；当 $D<0$ 时取 $u=\varepsilon,v=u+d_\varepsilon$。这些都是合法内部来源对，且读数差恰为 $\tau$、间距趋向 $d_*$。因此根式确为上确界。若 $\tau\ge T$，任何两内部读数的差均小于 $T$，所有内部来源对都符合 $\le\tau$；取 $u\to0,v\to x$ 得间距上确界为 $x$。这包括 $\tau=T$：虽无两个内部读数相差恰为 $T$，封顶仍成立。
+
+由定理 19.2 的来源矩阵差分，在两个纤维中均有
+
+$$
+\|R(v)-R(u)\|_{\max}
+=d\max\left(1,\frac{|x-u-v|}{\zeta}\right)
+\le\kappa d.
+$$
+
+当 $\mu>0$，上述读数差至少为 $\mu d$，所以得到 $L_s,L_R$ 的上界。令 $D>0$ 时 $u=x-2\varepsilon,v=x-\varepsilon$；$D<0$ 时 $u=\varepsilon,v=2\varepsilon$，其中 $0<2\varepsilon<x$。此时读数差为 $\varepsilon(\mu+3\alpha\varepsilon)$，标量差与读数差之比趋向 $1/\mu$，矩阵差中的乘数趋向 $\kappa$。因此两常数都不能减小。
+
+当 $\mu=0$，差分界给出 $d\le\alpha^{-1/2}|\Delta T|^{1/2}$，矩阵界随之得到 $\kappa\alpha^{-1/2}$。沿用 §19 的边界序列：取 $0<\eta<x$，$D>0$ 时用 $u=x-\eta,v=x-\eta^2/x$，$D<0$ 时用 $u=\eta^2/x,v=\eta$。都有
+
+$$
+d=\eta\left(1-\frac\eta x\right),\qquad
+|\Delta T|=\alpha\eta^2\left(1-\frac{\eta^2}{x^2}\right).
+$$
+
+当 $\eta\to0$，$d/|\Delta T|^{1/2}\to\alpha^{-1/2}$，矩阵乘数趋向 $\kappa$，证明系数尖锐。对任意指数 $a>1/2$，$d/|\Delta T|^a$ 按正的常数倍 $\eta^{1-2a}$ 发散；矩阵范数至少为 $d$，故两种逆都排除该指数的有限全局系数。矩阵有限容差的精确上确界还涉及随来源对改变的乘数，不能只由这两个全局系数确定。∎
+
