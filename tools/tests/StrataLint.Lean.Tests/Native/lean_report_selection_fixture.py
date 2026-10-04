@@ -26,7 +26,7 @@ def paths(*patterns):
 
 
 def declaration():
-    return dict(schema_version=1, report_cache_release_semantic_version=1,
+    return dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1,
         report_modules=dict(include=[spec('Trureturing.lean'), spec('D5/**/*.lean', True)], exclude=[]),
         inspector_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True),
             spec('tools/lean-inspector-interface/**/*.lean', True)], exclude=[]),

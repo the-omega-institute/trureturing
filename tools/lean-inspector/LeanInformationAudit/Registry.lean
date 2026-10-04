@@ -253,9 +253,8 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
   let env ← getEnv
   let rows ← (snapshot.selected.filter
     (·.occurrence.key.registrationModule == moduleName)).mapM recordJson
-  let version ← TemplateAudit.readReportCacheReleaseVersion
   return Json.mkObj [
-    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
+    ("schema_version", toJson (1 : Nat)),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows)]

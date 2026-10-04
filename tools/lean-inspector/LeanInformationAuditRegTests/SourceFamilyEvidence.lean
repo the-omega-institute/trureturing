@@ -55,7 +55,6 @@ run_meta do
     let records ← IO.ofExcept (owner.getObjValAs? (Array Json) "records")
     return Json.mkObj [
       ("schema_version", ← IO.ofExcept (owner.getObjVal? "schema_version")),
-      ("compatibility_version", ← IO.ofExcept (owner.getObjVal? "compatibility_version")),
       ("inventory", Json.arr (inventory.filter keySelected)),
       ("registered", Json.arr (registered.filter keySelected)),
       ("records", Json.arr (records.filter fun row =>

@@ -13,25 +13,27 @@ internal sealed record InformationTemplateModuleEvidence(
 
 internal static class InformationTemplateEvidence
 {
-    private static string ManifestVersion(RepositorySnapshot snapshot)
+    private static void ValidateManifestVersions(RepositorySnapshot snapshot)
     {
-        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_cache_release_semantic_version";
+        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version and report_extraction_semantic_version";
         if (!snapshot.Files.TryGetValue(RepoPath.CreateKnown("lean-report-inputs.json"), out var manifest))
             throw new FormatException(error);
         try
         {
             using var document = JsonDocument.Parse(manifest.RawBytes.AsMemory());
             var root = document.RootElement;
-            if (root.ValueKind != JsonValueKind.Object
-                || root.EnumerateObject().Count(p => p.Name == "report_cache_release_semantic_version") != 1
-                || !root.TryGetProperty("report_cache_release_semantic_version", out var value)
-                || value.ValueKind != JsonValueKind.Number)
-                throw new FormatException(error);
-            var version = value.GetRawText();
-            if (version.Length == 0 || version[0] is < '1' or > '9'
-                || version.Any(c => c is < '0' or > '9'))
-                throw new FormatException(error);
-            return version;
+            if (root.ValueKind != JsonValueKind.Object) throw new FormatException(error);
+            foreach (var field in new[] { "report_cache_release_semantic_version", "report_extraction_semantic_version" })
+            {
+                if (root.EnumerateObject().Count(p => p.Name == field) != 1
+                    || !root.TryGetProperty(field, out var value)
+                    || value.ValueKind != JsonValueKind.Number)
+                    throw new FormatException(error);
+                var version = value.GetRawText();
+                if (version.Length == 0 || version[0] is < '1' or > '9'
+                    || version.Any(c => c is < '0' or > '9'))
+                    throw new FormatException(error);
+            }
         }
         catch (JsonException ex)
         {
@@ -42,15 +44,9 @@ internal static class InformationTemplateEvidence
     internal static InformationTemplateModuleEvidence Read(
         JsonElement value, string sourcePath, RepositorySnapshot snapshot)
     {
-        if (value.ValueKind == JsonValueKind.Object
-            && (!value.TryGetProperty("compatibility_version", out var compatibility)
-                || compatibility.ValueKind != JsonValueKind.Number))
-            throw new FormatException("DTR-EvidenceVersion: compatibility_version requires a positive integer");
-        InformationTemplateJson.Fields(value, "schema_version", "compatibility_version", "inventory",
-            "records", "registered");
+        ValidateManifestVersions(snapshot);
+        InformationTemplateJson.Fields(value, "schema_version", "inventory", "records", "registered");
         InformationTemplateJson.Version(value);
-        if (value.GetProperty("compatibility_version").GetRawText() != ManifestVersion(snapshot))
-            throw new FormatException("DTR-EvidenceVersion: compatibility_version differs from report_cache_release_semantic_version");
         var inventory = ReadKeys(value.GetProperty("inventory"));
         var registered = ReadKeys(value.GetProperty("registered"));
         var records = ImmutableArray.CreateBuilder<InformationTemplateOccurrence>();

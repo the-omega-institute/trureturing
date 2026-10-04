@@ -22,7 +22,7 @@ import zlib
 import materials
 import publication
 
-SCHEMA = 'stratalint-lean-report-reuse-v2'
+SCHEMA = 'stratalint-lean-report-reuse-v3'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
@@ -42,6 +42,8 @@ class InputMismatch(ValueError):
         self.mismatch = dict(
             cached_semantic_version=old_version if type(old_version) is int else None,
             current_semantic_version=current['semantic_version'],
+            cached_extraction_version=previous.get('extraction_version'),
+            current_extraction_version=current['extraction_version'],
             added_inputs=len(new_files.keys() - old_files.keys()),
             removed_inputs=len(old_files.keys() - new_files.keys()),
             changed_inputs=sum(old_files[path] != new_files[path]
@@ -56,11 +58,11 @@ def warn_mismatch(result, stream):
         return
     old = mismatch['cached_semantic_version']
     new = mismatch['current_semantic_version']
-    impact = ('Previous-version module reports are incompatible; a large native audit batch may be required.'
-              if old is not None and old != new else
-              'Lake will determine which module reports can be reused and which require regeneration.')
+    impact = ('Extraction-version changes invalidate all module reports; registration-version changes invalidate only typed input owners. '
+              'Lake determines the module work from compiler traces.')
     message = (f"LEAN_REPORT_CACHE_MISMATCH cached_version={old if old is not None else 'unknown'} "
-               f"current_version={new} added_inputs={mismatch['added_inputs']} "
+               f"current_version={new} cached_extraction_version={mismatch['cached_extraction_version']} "
+               f"current_extraction_version={mismatch['current_extraction_version']} added_inputs={mismatch['added_inputs']} "
                f"removed_inputs={mismatch['removed_inputs']} changed_inputs={mismatch['changed_inputs']} "
                f"execution_changed={str(mismatch['execution_changed']).lower()}. {impact} "
                'Lean compilation has independent incremental reuse. Agents: use LEAN_CACHE and LEAN_INSPECTOR_WORK '
@@ -96,7 +98,8 @@ def capture(repository):
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, semantic_version=inputs.data['report_cache_release_semantic_version'], files=files,
+    return dict(eligible=True, semantic_version=inputs.data['report_cache_release_semantic_version'],
+        extraction_version=inputs.data['report_extraction_semantic_version'], files=files,
         execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
                        platform={name: getattr(platform, name)() for name in execution['platform']},
                        environment=environment))

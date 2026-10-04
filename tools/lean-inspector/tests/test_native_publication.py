@@ -84,7 +84,7 @@ class NativePublicationConsumerTests:
                                    if not key.endswith('.materials.zip')}, 'invalid native artifact members'),
             'other_module': (entries(artifacts[1]), 'membership mismatch'),
             'compatibility': (dict(original, **{provenance: materials.canonical_json(
-                dict(origin, compatibility_sha256='0' * 64))}), 'compatibility mismatch')}
+                dict(origin, semantic_versions=dict(origin['semantic_versions'], report_extraction_semantic_version=999)))}), 'compatibility mismatch')}
         for damage, (members, message) in cases.items():
             with self.subTest(damage=damage):
                 candidate = self.root / (damage + '.zip')
@@ -179,7 +179,8 @@ class NativePublicationConsumerTests:
         origins = {row['module']: dict(module=row['module'],
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
-            compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
+            semantic_versions=inputs.semantic_versions(),
+            input_projection=dict(schema='stratalint-judge-input-projection-v1', module=row['module'], inputs=[]), producer_sources_sha256='a' * 64,
             inspector_executable_sha256='b' * 64) for row in rows}
         coordinates = publication.coordinates(self.root)
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
@@ -187,7 +188,7 @@ class NativePublicationConsumerTests:
             report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
             with zipfile.ZipFile(publication.member(report, '.materials.zip'), 'w'):
                 pass
-            publication.write_sidecars(report, coordinates, origins)
+            publication.write_sidecars(report, coordinates, origins, semantic_versions=inputs.semantic_versions())
             for verify in [lambda: publication.validate_bundle(report, coordinates, self.root),
                            lambda: publication.verify_inputs(report, self.root)]:
                 with patch.object(publication.selection, 'Selection', wraps=publication.selection.Selection) as selected, \
@@ -348,7 +349,7 @@ class NativePublicationConsumerTests:
         original = self.report()[1:]
         origins = self.origins()
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] = 2
+        policy['report_extraction_semantic_version'] = 2
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
@@ -357,7 +358,7 @@ class NativePublicationConsumerTests:
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
         self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
         self.assertEqual(original, self.report()[1:])
-        self.assertNotEqual(origins['Fixture']['compatibility_sha256'], self.origins()['Fixture']['compatibility_sha256'])
+        self.assertNotEqual(origins['Fixture']['semantic_versions'], self.origins()['Fixture']['semantic_versions'])
         self.publish()
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

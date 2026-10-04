@@ -58,42 +58,12 @@ public sealed class DeclaredTemplateReviewTests
             RawLeanReportArtifact.Read(bytes.AsSpan(), snapshot), [RepoPath.CreateKnown(Registration)]));
     }
 
-    [Theory]
-    [InlineData(null)]
-    [InlineData("null")]
-    [InlineData("true")]
-    [InlineData("\"7\"")]
-    [InlineData("0")]
-    [InlineData("-1")]
-    [InlineData("7.0")]
-    [InlineData("7.5")]
-    public void invalid_evidence_version_uses_named_diagnostic(string? version)
-    {
-        var files = Files();
-        var wire = System.Text.Json.Nodes.JsonNode.Parse(RawLeanReportArtifact.Write(Tree(files), Report(files)).AsSpan())!;
-        foreach (var module in wire["modules"]!.AsArray())
-        {
-            var evidence = module!["information_templates"]!.AsObject();
-            if (version is null) evidence.Remove("compatibility_version");
-            else evidence["compatibility_version"] = System.Text.Json.Nodes.JsonNode.Parse(version);
-            // Preserve the version token: the canonical writer normalizes 7.0 to 7.
-            using var document = JsonDocument.Parse(evidence.ToJsonString());
-            if (version is not null)
-                Assert.Equal(version, document.RootElement.GetProperty("compatibility_version").GetRawText());
-            var error = Record.Exception(() => InformationTemplateEvidence.Read(document.RootElement,
-                module["source_path"]!.GetValue<string>(), Tree(files)));
-            Assert.True(error is FormatException && error.Message.StartsWith("DTR-EvidenceVersion:", StringComparison.Ordinal),
-                "[FAIL] invalid_evidence_version_uses_named_diagnostic: " + error?.Message);
-        }
-    }
-
     [Fact]
-    public void current_manifest_rejects_immediate_predecessor_nine()
+    public void retired_module_version_field_is_rejected()
     {
-        var manifest = InformationTemplateFixture.PolicyFiles()["lean-report-inputs.json"];
-        var error = ReadChangedManifest(manifest, 9);
-        Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
-            "[FAIL] current_manifest_rejects_immediate_predecessor_nine: " + error?.Message);
+        var error = ReadChangedManifest(InformationTemplateFixture.PolicyFiles()["lean-report-inputs.json"], 9);
+        Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
+            "[FAIL] retired_module_version_field_is_rejected: " + error?.Message);
     }
 
     [Theory]

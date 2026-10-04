@@ -513,7 +513,7 @@ public sealed partial class LeanReportInputScriptTests
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var address = addressParts[0];
             var producer = addressParts[1];
-            WriteFixtureOrigins(report, producer);
+            WriteFixtureOrigins(repository, report);
             var reportSha = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
                 report + ".input.attestation",

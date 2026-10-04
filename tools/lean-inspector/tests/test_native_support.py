@@ -145,6 +145,9 @@ defaultFacets = ["static"]
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 1\n')
+        for name in ['SourceAudit', 'Literal']:
+            self.write('LeanInformationAudit/Contract/' + name + '.lean',
+                       (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
@@ -193,7 +196,7 @@ defaultFacets = ["static"]
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_extraction_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/SealCommand.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',

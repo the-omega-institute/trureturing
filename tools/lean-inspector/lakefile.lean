@@ -107,7 +107,28 @@ Raw configuration identity belongs to the aggregate; module exports carry
 Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
-  return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "compatibility"))
+  return Job.nil.mix (← inputBinFile ((← repositoryDir pkg) / ".lake/build/lean-inspector" / "extraction-version"))
+
+/-- Input classification is a compiler fact. Registration versions and producer
+program traces do not invalidate it. Read only the target's own olean parts. -/
+module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
+  let pkg := (← getWorkspace).root
+  discard <| (← fetch <| pkg.facet `reportInputs).await
+  let root ← repositoryDir pkg
+  let deps ← fetch <| pkg.facet `reportProducer
+  let exportJob ← mod.exportInfo.fetch
+  let inspector ← reportInspector.fetch
+  (deps.add exportJob |>.add inspector).mapM fun _ => do
+    let info ← exportJob.await
+    addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
+    buildFileUnlessUpToDate' file do
+      IO.FS.createDirAll file.parent.get!
+      proc { (← nativeCommand pkg #["discover", root.toString, mod.name.toString,
+        (← inspector.await).toString, file.toString, mod.oleanFile.toString]) with
+        env := (← getWorkspace).augmentedEnvVars }
+      pure PUnit.unit
+    return file
 
 /-- A native report artifact. Production validates it completely before it is
 written; like an olean, a traced artifact is afterwards reused as is. -/
@@ -154,6 +175,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let record ← readJson utility
   let claims ← strings record "claims"
   let mut deps ← fetch <| pkg.facet `reportProducer
+  let projection ← fetch <| mod.facet `judgeInputs
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
   let mut exports := #[(← mod.exportInfo.fetch)]
@@ -192,7 +214,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
   let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
+  (deps.add (Job.mixArray exports) |>.add projection |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
@@ -200,6 +222,12 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     for exportJob in exports do
       let info ← exportJob.await
       addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    let inputs ← readJson (← projection.await)
+    let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
+    unless ownInputs.isEmpty do
+      let version ← inputBinFile (root / ".lake/build/lean-inspector" / "registration-version")
+      discard <| version.await
+      addTrace version.getTrace
     let executable ← inspector.await
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]

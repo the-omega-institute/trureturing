@@ -209,7 +209,7 @@ def stream_spool(spool: pathlib.Path) -> None:
         print("ok", flush=True)
 
 
-def read_manifest_version(manifest: pathlib.Path) -> int:
+def read_manifest_versions(manifest: pathlib.Path) -> dict[str, int]:
     def unique_fields(pairs):
         fields = {}
         for key, value in pairs:
@@ -219,33 +219,33 @@ def read_manifest_version(manifest: pathlib.Path) -> int:
         return fields
     try:
         data = json.loads(pathlib.Path(manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_fields)
-        version = data["report_cache_release_semantic_version"]
-        if type(version) is not int or version <= 0:
-            raise ValueError("positive integer required")
-        return version
+        if not isinstance(data, dict):
+            raise ValueError("manifest must be an object")
+        versions = {}
+        for field in ('report_cache_release_semantic_version', 'report_extraction_semantic_version'):
+            if type(data.get(field)) is not int or data[field] <= 0:
+                raise ValueError(field + " requires a positive integer")
+            versions[field] = data[field]
+        return versions
     except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
-        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_cache_release_semantic_version") from error
+        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version and report_extraction_semantic_version") from error
 
 
 def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
-    version = read_manifest_version(manifest)
-    if isinstance(value, dict) and type(value.get("compatibility_version")) is not int:
-        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version requires a positive integer")
+    read_manifest_versions(manifest)
     evidence = require_keys(value,
-        {"schema_version", "compatibility_version", "inventory", "registered", "records"},
+        {"schema_version", "inventory", "registered", "records"},
         "Inspector declared-template evidence")
     if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
             or any(not isinstance(evidence[field], list)
                    for field in ("inventory", "registered", "records"))):
         raise ValueError("Inspector declared-template evidence is malformed")
-    if evidence["compatibility_version"] != version:
-        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version differs from report_cache_release_semantic_version")
 
 
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path,
             manifest: pathlib.Path) -> None:
     started = time.perf_counter_ns()
-    read_manifest_version(manifest)
+    read_manifest_versions(manifest)
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
     if root["schema"] != SPOOL_SCHEMA or not isinstance(root["modules"], list):
