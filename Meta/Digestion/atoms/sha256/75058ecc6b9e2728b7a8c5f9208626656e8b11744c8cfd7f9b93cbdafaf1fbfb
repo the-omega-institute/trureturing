@@ -1,0 +1,4 @@
+- [S4] [初始目标精确宽块费用](https://github.com/the-omega-institute/trureturing/blob/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md)，定理3.1及开放问题7.3；正文 SHA256 为 `94e8277bc784b97d8b8539453fb4c615bd4204b64ba9bb97fe5fb8521e36c91c`。
+
+[S4] 的任意目标宽块法则要求某个可用首零位置 $a$ 满足 $a+T+1\le m$，其相位目标结论适用 $m\ge k+2$。本卷的 $m=k$ 不满足那个查询空间条件。
+

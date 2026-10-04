@@ -1,0 +1,20 @@
+**约定 1.1（原阶读者与证明范围）。** 固定整数 $k\ge2$，本卷只取完整块宽 $m=k$。词按低位先读，合法词避免连续子词 $1^k$。原阶权重与匹配输出为
+
+$$
+G_j=2^j\quad(0\le j<k),\qquad
+G_j=\sum_{h=1}^kG_{j-h}\quad(j\ge k),\qquad
+V_k(w)=\sum_{j<|w|}w_jG_j.
+\tag{1.1}
+$$
+
+合法输出是 $V_k(w)\bmod2$；非法输出是独立符号 $\bot\notin\mathbb F_2$，且拒绝吸收。令 $T=k+1$。固定版本 [S2] 定理14.1供应
+
+$$
+c_j=G_j\bmod2=\mathbf1_{\{0,-1\}}(j\bmod T),
+\qquad c_{j+T}=c_j.
+\tag{1.2}
+$$
+
+这里使用规范多项式 $X^k-\sum_{j<k}X^j$ 的匹配读口，不能换成 $X^k-X-1$ 或任意标量泛函。因为 $\gcd(k,T)=1$，实际端点相位集是整个 $P=\mathbb Z/T\mathbb Z$，不是一个单相位先验。本卷给出普通数学证明，未经 Lean kernel 验证。首零正规形、实际联合来源及两种字母表等价均按下列固定来源复用：
+
+- [S1] [不可逆目标取得](https://github.com/the-omega-institute/trureturing/blob/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md)，第1–2节、引理4.3、定理5.2及6.2；正文 SHA256 为 `97791e0a4806b27403f6b1faefc43ed75190ead6a076a78a2674ee9b0d650685`。
