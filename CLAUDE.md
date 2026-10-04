@@ -23,7 +23,7 @@
 | 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
 | .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
 | 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
-| 建 PR 并等 required CI | `make pr-open HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；自动合并须显式加 `AUTO_MERGE=1`） |
+| 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
 | 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除，含未提交改动） |
 
@@ -492,7 +492,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **目录名与分支名分别命名**:session ID 只决定 worktree 目录;分支继续按第 7.4 条 `<creation-namespace>/<kind>/<任务码>` 命名,`KIND`/`NAME` 表达任务分类与任务码,不以 session ID 代替分支命名规则。
 - **主检出只同步与看 dev**:不建分支、不改文件、不 checkout 他支;开工前、合并后、派席前各 `git pull --ff-only origin dev`。它是移动基线,读数/修改/报告在钉住的 worktree 做。
 - **清理或复用树**:`make -C tools clean-lanes` 列出/回收可回收 worktree,以 `make -C tools help` 为准。已注册关联 worktree 满 24 小时无 Git 更新且落后 dev 至少 300 个提交即强制回收,不以未提交改动、PR 合并状态或进程占用为保留条件;主检出、当前树和锁定树保留。更新时间取自身 HEAD reflog 的最大时间戳与 HEAD commit 的 committer 时间戳之最大值,不取源码文件 mtime。删除前重验身份、锁和时间条件。
-- **完成链**:push → `make pr-open [AUTO_MERGE=1]` → 全部 required checks 绿 → 显式选 auto-merge 时自动合 dev(缺省不 arm,须后续显式合并) → 同步主检出。同一 session 后续工作继续复用原树,不因单个 PR 合并就回收;回收按本条清理规则执行。完成唯一判据为 PR `MERGED`;开 PR/CI 绿/只差合并仍 open,不得报完成。`CLOSED ≠ MERGED`,须复查 dev 实态,既不能当已合也不能当未修。
+- **完成链**:push → `make pr [AUTO_MERGE=0]` → 全部 required checks 绿 → 默认自动合 dev(`AUTO_MERGE=0` 时须后续显式合并;`DRAFT=1` 只创建草稿,不自动合并、不等待 CI) → 同步主检出。同一 session 后续工作继续复用原树,不因单个 PR 合并就回收;回收按本条清理规则执行。完成唯一判据为 PR `MERGED`;开 PR/CI 绿/只差合并仍 open,不得报完成。`CLOSED ≠ MERGED`,须复查 dev 实态,既不能当已合也不能当未修。
 *成熟锚*:worktree 隔离、可发布主干、small commits/push early、内容寻址、definition of done。〔守护:**半硬**·地址与 checks 守并行;独立树/提交推送/主检出常驻/merge 完成靠纪律与评审;完成声明须引用 MERGED 与合入 dev SHA〕
 
 ### 6.2 PR 层序、delta 门与债务收缩
@@ -547,7 +547,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
 - CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按写在该 workflow 里的单元白名单判定命中哪些单元;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。改动超过 3000 个路径时检测失败,须拆 PR。current 作业串行运行 Lean report、check-current、Scribe,PR 事件按 delta 白名单运行 check-delta。检查只执行候选代码,base 只作为固定数据。
-- required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。绿且显式选择 auto-merge 才自动合;缺省不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
+- required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。`make pr`/`make pr-open` 默认 arm auto-merge,required checks 绿后自动合;`AUTO_MERGE=0` 或 `DRAFT=1` 不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
 〔守护:**机器检查+部署核验**·ruleset 的实际 required set 由远端配置承担,不由本文合成;候选自审、保护面标注和独立评审的边界不变。〕
@@ -654,7 +654,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 8.1 分层 make 入口与器谱
 
 **一器一门,门随层设**:构建/发射/校验/开工走所属层唯一 make 入口。根 `Makefile` 管内容(`make test` 数学门,`make help` 活器谱);`tools/Makefile` 管工具(`make -C tools test` 及 build/selftest 目标,器谱 `make -C tools help`)。层内只委托 canonical 实现,跨层零配方复制,哪层坏修哪层。
-**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`make -C tools check-fast`(快速结构测试)、`gate`、`test`、`worktree KIND=x NAME=y DEST=<主检出父目录>/trureturing-<session-id>`、`worktree-clean`、`pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr-open 以消息首行为标题,建 PR、隔离 App token、按显式选项 arm 并同步等 required CI,缺省不 arm auto-merge;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
+**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`make -C tools check-fast`(快速结构测试)、`gate`、`test`、`worktree KIND=x NAME=y DEST=<主检出父目录>/trureturing-<session-id>`、`worktree-clean`、`pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr 与 pr-open 同义,以消息首行为标题,建 PR、隔离 App token、默认 arm auto-merge 并同步等 required CI;`AUTO_MERGE=0` 关闭自动合并,`DRAFT=1` 创建草稿后直接返回、不 arm、不等 CI;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
 
 ### 8.2 本地早反馈与远端 CI 并行
 
@@ -711,7 +711,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 
 ### 8.11 PR open/watch 的消息与退出契约
 
-**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr-open HEAD=b MESSAGE=file [AUTO_MERGE=1]` 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 按显式 `--auto-merge` 决定 arm(缺省不 arm auto-merge) → 等 required CI,可辨退出码返回;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
+**PR 器**:`pr.sh` 为 `open`/`watch` 双动词;`make pr HEAD=b MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]`(pr-open 同义) 用一个消息文件(首行标题,其余正文)传全部调用方字节,标题/正文都不经 make/shell 展开。先按显式 HEAD 解析远端分支并冻结其 SHA,再在同一有界前台进程内 create → App-token 隔离 → 默认 arm auto-merge → 等 required CI,可辨退出码返回。`AUTO_MERGE=0` 不 arm 但仍等 CI;`DRAFT=1` 传 `--draft`,创建成功输出 PR 号后返回,不 arm、不等 CI,优先于 `AUTO_MERGE=1`。直调 `pr.sh open` 仍由显式 `--auto-merge` 开启自动合并,`--draft` 同样优先;`make pr-watch PR=n HEAD_SHA=<40-hex-sha>` 复用同能力,直调须给 `--head-sha`。缺值即 usage 错误,不得用调用工作树 HEAD 或首次 PR 快照补值。每次查询同时核对 PR head 与固定 commit 的检查归属;旧 head 快照只等,不得判红绿或 CLOSED,超时仍返回 124。身份缺失/矛盾、GraphQL 部分错误或上下文分页未完整取得均属查询不可用;判词携带固定 head 与实际 check/run 身份。调用方用一个宿主后台作业同步调用,认退出码;无常驻进程/租约/重算链/冲突分类器。
 **make 门只保真绿/不绿**:配方失败统一返回 make 2。`1` 红、`4` CLOSED 未合、`69` 查询不可用、`124` 超时只在直调 canonical `tools/scripts/pr.sh watch` 可辨;经 make 判原因读 stdout 末行 `PR_WATCH_RESULT ... outcome=`。
 
 ### 8.12 CI 分类、持续集成与真实事件验证
@@ -737,7 +737,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 **取源差异下继续可达验证**:可用明确事件(如 pull_request 调钉版 reusable)验证候选程序/复用流程,只证明该事件/版本/权限;逐项披露相对拟上线原生事件的语义/权限/其他缺口。未证可达的原生路线不报已存在,旧绿不抵新资格,同 PR 另有旧 run 不使候选 wrapper 成为重复项可取消。继续可达的逐原 PR 覆盖,但 Ready/merge 仍须全部覆盖/性能/条数/真实事件资格;条数不抵原生缺口,不得先搬未达标 CI 到默认分支以使其可选。本款是事实校正,不创验证豁免。
 **清理与最终对应**:专用探针载荷放触发 PR,验后关闭不合;合法镜像改动/历史留 integration,不为整理交付 diff 撤镜像。清理只删已有实验载荷/临时 wrapper,独立 PR 全部 required checks正常合入并分析 push,保留新 CI;复验与重计统一依上述依据及范围。交付前钉原 lane head、已验 integration head/各自基线,列全层候选/修复/优化/安装映射;交付分支改动的每个文件须与已验 integration tip 逐字节相同,或差异仅来自 integration 起点之后的 dev 提交(逐个点名),否则回流补验。不能仅靠标题/数量/patch-id,不要求整树同一,不重放已验历史替代对应核对。基线差异/冲突适配须说明,遗漏或未经验证差异先回流修复并补验影响面,不因清理或对应核对本身重计。
 **交付收尾**:候选对应与最终覆盖/性能/条数均达标后,按「单一交付分支」款以一个普通 PR 合 dev;只带本次候选及必要修复,SL-029 按第 7.5 条警告并继续验证,不并入 integration/镜像历史、不把跟踪 Draft 当交付。记录最后镜像 dev SHA,无追平/固定等待要求;交付 PR merge-tree 独立验当时并集并给 M/B,integration 绿不替代。dev 前移不自动重计或逼追平;实际冲突/失败须诊断,依上述依据补验影响面或重计,不重放有效集成单位。M1→M2 残余依第 7.7 条检测恢复,不冒领同树、不启 strict。
-CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成最终评审,显式 AUTO_MERGE=1 前亦归位,缺省不 arm。交付 PR MERGED 且首个 dev push/适用新 PR 入口核验成功后,关闭跟踪 Draft 与各原 lane Draft、保留必要验证证据链接,回收测试分支,worktree 按第 6.1 条复用或回收;跟踪 CLOSED 只表验证结束,不等于交付完成。**纯政策文档可独立普通 PR 到 dev**,保留其 required checks,不为验证本条防重复政策另造 4/8 个集成 PR,不声称已部署重构或验稳定。
+CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成最终评审,默认 arm auto-merge 前亦归位;未完成评审时显式用 `AUTO_MERGE=0` 或 `DRAFT=1`。交付 PR MERGED 且首个 dev push/适用新 PR 入口核验成功后,关闭跟踪 Draft 与各原 lane Draft、保留必要验证证据链接,回收测试分支,worktree 按第 6.1 条复用或回收;跟踪 CLOSED 只表验证结束,不等于交付完成。**纯政策文档可独立普通 PR 到 dev**,保留其 required checks,不为验证本条防重复政策另造 4/8 个集成 PR,不声称已部署重构或验稳定。
 **验证边界**:本地检查 不验事件过滤/拓扑/权限/artifact/CI 目录布局。真实 CWD、旧调用者/新接口错配须靠真实事件暴露;集成目标过滤与 B 取 integration tip 不证明 workflow 文本来自 integration(#4201、#6650→#6658)。旧“只能合 dev 后测/其他 PR 永无窗口/装好 integration 即选其 workflow”推论 inactive;历史 run 只证明实际版本/行为,不同基线一绿一红也不证明无缺陷或持续稳定。
 〔守护:**评审纪律**·feature/重构 Ready 前正文须引原 lane/已验候选对应、逐功能覆盖、逐原 PR 结果、实际 workflow、稳定各 PR/run、异常处置结论、可比性能/缓存证据。hotfix 引回归/全部 required checks/真实触发,注明待补落地触发。缺证不报达标,正文可改不冒充新增硬门,required checks 照常〕
 

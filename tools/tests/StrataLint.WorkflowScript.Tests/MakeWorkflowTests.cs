@@ -76,6 +76,7 @@ public sealed partial class MakeWorkflowTests
         "worktree",
         "worktree-clean",
         "worktree-remove",
+        "pr",
         "pr-open",
         "pr-watch",
         "gate",
