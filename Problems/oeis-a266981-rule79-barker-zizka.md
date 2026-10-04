@@ -72,16 +72,20 @@ the cells `-n - 1, …, n + 1` and Barker's closed form holds.
 
 The canonical source is
 `D5/S3/StatisticalMechanics/CellularAutomata/Rule79OnCellCount.lean`. Its
-public declarations are `rule79`, `cell`, `onCount`, `claim`, and `result`.
+public declarations are `rule79`, `onCount`, `claim`, and `result`; the rows are
+the frozen single-seed evolution `row` of
+`D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation` applied to `rule79`.
 The frozen module state has statement identity
-`sha256:c012fc57a0bb5f82fcfe47ee0b46d75e7e1a30be8bc8b0d9af8e565ca1e5f860`.
+`sha256:e4501045d3868250bcf5634b00c3838eea74279c76c6a3f0b651ea36c4744b30`.
 The result declaration has statement identity
 `sha256:3b8189feb62b48a5a6259b878259df3e8acd8bae4de8a739e64af3ce10172499`.
 The Freeze event is
-`sha256:80c29bc060cbad0866f3ca54c06add0e41044f7020f8f4d18b46ff5742b6ffc8`.
-It has no project-level frozen prerequisite. The proof uses only the standard
-axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
-`native_decide`, or new axiom.
+`sha256:0c0b73ab00743d3d0790bf9e4bdf76a694e9b94ffc9b39f2ade4198f46f48806`.
+Its project-level frozen prerequisite is the Freeze event of
+`D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation`
+(`sha256:0ac64d9044734ddcb1c55bdba77086423f83617cfff4772da4a64279f49770ee`).
+The proof uses only the standard axioms `propext`, `Classical.choice` and
+`Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
 ## Triage
 
