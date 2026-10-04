@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/QuadraticForms/EvolutionAlgebras/BareiRemarkThreeFive
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: A complex evolution algebra contains a three-dimensional minimal idempotent subspace. -/
 
 /-
