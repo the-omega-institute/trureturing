@@ -1,0 +1,122 @@
+{
+  "scope": "Actual divisor-closed comparable-disjoint NONCOVER, with both fixed safe sources completely covered and nonempty shared top liability",
+  "A": 2,
+  "B": 3,
+  "p": 7,
+  "period": 7875,
+  "original_count": 23,
+  "original_classes": {
+    "3": 1,
+    "9": 0,
+    "5": 1,
+    "15": 12,
+    "45": 29,
+    "25": 5,
+    "75": 60,
+    "225": 128,
+    "125": 25,
+    "375": 300,
+    "1125": 2,
+    "7": 0,
+    "35": 30,
+    "175": 150,
+    "875": 375,
+    "21": 15,
+    "105": 45,
+    "525": 375,
+    "2625": 1125,
+    "63": 23,
+    "315": 185,
+    "1575": 300,
+    "7875": 7125
+  },
+  "original_uncovered_count": 1910,
+  "outside_selected_ternary_root_witness": 125,
+  "outside_witness_mod_9": 8,
+  "original_private_counts": {
+    "3": 1620,
+    "5": 675,
+    "7": 377,
+    "9": 285,
+    "15": 250,
+    "21": 126,
+    "25": 100,
+    "35": 64,
+    "45": 150,
+    "63": 75,
+    "75": 30,
+    "105": 20,
+    "125": 15,
+    "175": 8,
+    "225": 30,
+    "315": 15,
+    "375": 3,
+    "525": 4,
+    "875": 3,
+    "1125": 6,
+    "1575": 3,
+    "2625": 2,
+    "7875": 1
+  },
+  "original_private_witnesses": {
+    "3": 4,
+    "5": 6,
+    "7": 14,
+    "9": 9,
+    "15": 12,
+    "21": 15,
+    "25": 5,
+    "35": 65,
+    "45": 29,
+    "63": 23,
+    "75": 60,
+    "105": 465,
+    "125": 650,
+    "175": 1550,
+    "225": 128,
+    "315": 185,
+    "375": 2175,
+    "525": 1950,
+    "875": 1250,
+    "1125": 2,
+    "1575": 1875,
+    "2625": 3750,
+    "7875": 7125
+  },
+  "source_period": 189,
+  "source_covered_counts": {
+    "3": 189,
+    "6": 189
+  },
+  "shared_top_liability": [
+    27
+  ],
+  "actual_tops": {
+    "3": {
+      "1575": [
+        27,
+        90,
+        153
+      ]
+    },
+    "6": {
+      "7875": [
+        27
+      ]
+    }
+  },
+  "flat_lower_private_traces": {
+    "7": [
+      0
+    ],
+    "21": [
+      162
+    ]
+  },
+  "all_lower_rep_root_cases": 192,
+  "cases_with_unavoidable_singleton_menu_3_source": 192,
+  "cases_with_unavoidable_flat_prime_lower_trace": 128,
+  "N3": 16,
+  "n0": 7,
+  "z": 0
+}

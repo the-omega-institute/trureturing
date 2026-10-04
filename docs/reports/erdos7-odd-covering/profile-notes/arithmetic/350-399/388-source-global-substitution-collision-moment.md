@@ -3063,7 +3063,7 @@ for this actual $H$.
 
 Suppose $\alpha\ne j\pmod3$, and let
 $C_i=[\eta_i]_{m_i}$ for $1\le i\le t$, where the numerical
-$m_i>1$ are distinct and coprime to $15$. Assume
+$m_i>1$ are odd, distinct and coprime to $15$. Assume
 $$
  H\subseteq[\alpha]_3\cap\bigcup_{i=1}^t C_i.
  \tag{SC133}
@@ -3140,7 +3140,7 @@ cannot be combined by simply adding their separate packet costs.
 ### A flat composite source uses the existing nine-class packet
 
 Suppose the entire hole lies in $C=[\eta]_m$, where
-$(m,15)=1$ and $m$ is composite. Choose two distinct nonunit
+$(m,15)=1$ and $m$ is odd and composite. Choose two distinct nonunit
 divisors $h_1,h_2\mid m$. The same actual source supplies both
 enclosures $[\eta]_{h_1}$ and $[\eta]_{h_2}$. Hence
 $$
@@ -3585,3 +3585,554 @@ combined into a different source. These are ordinary mathematical
 deductions using the cited matching, prefix and divisor methods;
 they are not Lean verification or an unrestricted resolution of
 Erdős #7.
+
+## 37. A nonunit common hull pays two equal-cofactor sources at output height two
+
+Keep the actual retained family $\mathcal F_0$ and its complete
+integer hole $H$, with $|\mathcal F_0|=K-N_3-z$ and $z\ge0$.
+Every retained numerical modulus is $5$-free. Let $m>1$ be odd
+and coprime to $15$. Suppose two complete output enclosures satisfy
+$$
+ C_1=[u]_{9m},\qquad C_2=[v]_{9m},\qquad
+ H\subseteq C_1\cup C_2,\qquad \gcd(9m,u-v)>1.
+ \tag{SC152}
+$$
+Then sixteen distinct fresh $5$-bearing classes cover this entire
+union. Under the existing $N_3\ge22$ bound they give strict descent.
+The containment is for all of $H$, with the actual source phases;
+it is not a claim about two chosen private points or only omitted
+top service.
+
+If $u\equiv v\pmod{3m}$, both classes already lie in one complete
+$3m$ enclosure, and SC134 with $t=1$ gives eleven classes. For
+prime $m$, SC137 gives its exact complete-enclosure minimum. The
+consumer below covers the remaining nonunit-hull pairs. Distinct
+cofactors in a common first ternary root are already handled by
+SC134 with $t=2$; they are not treated as a new packet here.
+
+### A common first ternary root has an explicit sixteen-class repair
+
+First assume $u\equiv v\pmod3$. Write $\alpha$ for their common
+residue modulo $3$, $\rho_i$ for their respective residues modulo
+$9$, and $r_i$ for their respective residues modulo $m$. Choose
+$0\le\beta<9$ representing $\rho_2$. Add the CRT classes in
+the following table. A condition marked none is unrestricted.
+
+| Numerical label | $5$-condition | $3$-condition | $m$-condition |
+| --- | --- | --- | --- |
+| $5$ | $0\pmod5$ | none | none |
+| $15$ | $3\pmod5$ | $\alpha\pmod3$ | none |
+| $5m$ | $2\pmod5$ | none | $r_1\pmod m$ |
+| $45$ | $2\pmod5$ | $\rho_2\pmod9$ | none |
+| $15m$ | $4\pmod5$ | $\alpha\pmod3$ | $r_2\pmod m$ |
+| $45m$ | $4\pmod5$ | $\rho_1\pmod9$ | $r_1\pmod m$ |
+| $25$ | $1\pmod{25}$ | none | none |
+| $75$ | $11\pmod{25}$ | $\alpha\pmod3$ | none |
+| $25m$ | $6\pmod{25}$ | none | $r_1\pmod m$ |
+| $225$ | $16\pmod{25}$ | $\rho_1\pmod9$ | none |
+| $225m$ | $21\pmod{25}$ | $\rho_1\pmod9$ | $r_1\pmod m$ |
+| $75m$ | $21\pmod{25}$ | $\alpha\pmod3$ | $r_2\pmod m$ |
+| $135$ | $1\pmod5$ | $\beta+9\pmod{27}$ | none |
+| $135m$ | $1\pmod5$ | $\beta+18\pmod{27}$ | $r_2\pmod m$ |
+| $675$ | $6\pmod{25}$ | $\beta\pmod{27}$ | none |
+| $675m$ | $16\pmod{25}$ | $\beta\pmod{27}$ | $r_2\pmod m$ |
+
+First roots $0$ and $3$ modulo $5$ are paid on both sources by
+labels $5$ and $15$. On root $2$, labels $5m$ and $45$ pay
+$C_1$ and $C_2$ respectively. On root $4$, labels $45m$ and
+$15m$ do the same. Only root $1\pmod5$ remains.
+
+For $C_1$ in that root, its five residues $1,6,11,16,21$ modulo
+$25$ are paid respectively by $25,25m,75,225,225m$. For $C_2$,
+residues $1,11,21$ are paid by $25,75,75m$. At its remaining
+residues $6,16$, split its complete ternary prefix $\rho_2$ into
+the three children $\beta,\beta+9,\beta+18\pmod{27}$.
+Labels $135,135m$ pay the latter two children throughout root
+$1\pmod5$. At child $\beta$, labels $675,675m$ pay residues
+$6,16\pmod{25}$ respectively. Thus every point of both complete
+APs is covered, including all higher-digit lifts.
+
+The numerical label set is exactly
+$$
+ \{5,25\}\cdot\{1,3,9,27\}\cdot\{1,m\}.
+ \tag{SC153}
+$$
+Its sixteen labels are distinct because $m>1$ and $(m,15)=1$;
+they are odd nonunits because $m$ is odd. They all contain $5$,
+so none collides with $\mathcal F_0$. Their phases exist by CRT.
+The common comparison period may be enlarged to
+$\operatorname{lcm}(N,675m)$. This adds a third output ternary
+digit even when the old output height was two; it does not require
+an original label of $5$-height three or an extra original donor.
+
+### A common cofactor phase uses the same numerical labels
+
+Alternatively assume $u\equiv v\pmod m$, with no requirement
+on their ternary roots. Let $r$ be that common phase and put
+$\alpha_i=\rho_i\bmod3$. Replace four rows in the preceding
+table as follows:
+
+| Old label and role | Replacement label | $5$-condition | $3$-condition | $m$-condition |
+| --- | --- | --- | --- | --- |
+| $15$, shared root $3$ | $5m$ | $3\pmod5$ | none | $r\pmod m$ |
+| $5m$, source $1$ root $2$ | $15$ | $2\pmod5$ | $\alpha_1\pmod3$ | none |
+| $75$, shared residue $11$ | $25m$ | $11\pmod{25}$ | none | $r\pmod m$ |
+| $25m$, source $1$ residue $6$ | $75$ | $6\pmod{25}$ | $\alpha_1\pmod3$ | none |
+
+In the unchanged $15m$ and $75m$ rows use $\alpha_2$ as their
+ternary phase. Every $m$-bearing row now uses $r$. The other
+source-specific phases and the three children of $\rho_2$ stay
+as displayed.
+
+The shared root $3$ and shared residue $11$ now use the common
+$m$-phase. In root $1\pmod5$, source $1$ is paid on residues
+$1,6,11,16,21\pmod{25}$ by $25,75,25m,225,225m$.
+Source $2$ is paid on $1,11,21$ by $25,25m,75m$, and its
+remaining $6,16$ residues have exactly the same three-child
+coverage as before. Roots $0,2,4$ are also covered by their
+displayed rows. Thus the same sixteen distinct labels cover the
+complete union without a common ternary root.
+
+### A proper common divisor suffices, and the original inventory pays
+
+Under SC152, if $3\mid u-v$, use the first table at $m$.
+Otherwise take $h=\gcd(m,u-v)>1$, enclose both original classes
+in their actual reductions modulo $9h$, and use the second table
+at $h$. The enlarged union still contains every point of $H$,
+and $h$ is odd and coprime to $15$. This proves the stated
+nonunit-hull case also for composite $m$.
+
+No retained class is deleted or changed. Therefore
+$$
+ c=16,\qquad K-|\mathcal F_{\rm new}|=N_3+z-16,
+ \qquad N_3+z\ge17\ \Longrightarrow\ |\mathcal F_{\rm new}|<K.
+ \tag{SC154}
+$$
+NF67 and the existing seven-support-prime exclusion, already
+applied in SC135, give $N_3\ge22$ and saving at least $6+z$.
+This pays from the whole original inventory in SC111, not from
+a new divisor assignment for each shadow label. Actual suppliers
+of moduli $3^{b_i}m$ with $b_i\ge2$ may be enclosed in their
+actual reductions modulo $9m$ before this argument, provided
+SC152's full-hole containment and nonunit hull are established.
+
+The upper bound sixteen is not asserted to be optimal. Within
+the two equal-cofactor enclosures of SC152, the remaining case
+has unit common hull. This does not force an arbitrary whole
+cover to have only two suppliers or a nonunit hull, and it does
+not make several separately paid packets numerically compatible.
+The construction is a specific consumer of the complete CRT and
+prefix splits in Sections 12 and 26; it asserts no new general
+covering theorem, Lean verification or unrestricted resolution
+of Erdős #7.
+
+## 38. Two complete actual sources do not force the height-two prefix allocation
+
+Consider the following finite original family:
+$$
+ A=2,\qquad B=3,\qquad M=7,\qquad
+ D=\{d>1:d\mid7875\},\qquad |D|=23.
+ \tag{SC155}
+$$
+The notation $a(d)$ denotes the original AP $[a]_d$. Each table
+cell gives its class followed by an actual private point. The two
+pure ternary classes are $1(3)$ with private point $4$, and
+$0(9)$ with private point $9$; the remaining classes are:
+
+| $b$ | $5^b$ column | $3\cdot5^b$ column | $9\cdot5^b$ column |
+| --- | --- | --- | --- |
+| 1 | $1(5);\ 6$ | $12(15);\ 12$ | $29(45);\ 29$ |
+| 2 | $5(25);\ 5$ | $60(75);\ 60$ | $128(225);\ 128$ |
+| 3 | $25(125);\ 650$ | $300(375);\ 2175$ | $2(1125);\ 2$ |
+
+| $b$ | $5^b7$ column | $3\cdot5^b7$ column | $9\cdot5^b7$ column |
+| --- | --- | --- | --- |
+| 0 | $0(7);\ 14$ | $15(21);\ 15$ | $23(63);\ 23$ |
+| 1 | $30(35);\ 65$ | $45(105);\ 465$ | $185(315);\ 185$ |
+| 2 | $150(175);\ 1550$ | $375(525);\ 1950$ | $300(1575);\ 1875$ |
+| 3 | $375(875);\ 1250$ | $1125(2625);\ 3750$ | $7125(7875);\ 7125$ |
+
+For every comparable pair $d\mid e$, the displayed phases disagree
+modulo $d$. Every listed private point $x_d$ satisfies
+$x_d\equiv\alpha_d\pmod d$ and
+$x_d\not\equiv\alpha_e\pmod e$ for all $e\ne d$.
+Thus the family is irredundant as a representation of its union.
+It is a **noncover**: 1910 residues remain uncovered.
+In particular $125$ is uncovered and lies in $2\pmod3$, with
+$125\equiv8\pmod9$. Irredundancy here does not mean minimality
+among whole covering systems.
+
+### The same actual tree gives two complete source covers
+
+Use the ternary-to-quinary digit inclusion
+$$
+ \theta_3(z)=z_0+5z_1+25z_2,
+ \qquad z=z_0+3z_1+9z_2,\quad z_i\in\{0,1,2\},
+$$
+and the two actual source maps
+$$
+ F_u(z)\equiv u\pmod9,\qquad
+ F_u(z)\equiv\theta_3(z\bmod27)\pmod{125},\qquad
+ F_u(z)\equiv z\pmod7,
+ \qquad u\in\{3,6\}.
+ \tag{SC156}
+$$
+These are precisely the two safe terminal siblings of the original
+pure $9$ class $0(9)$; the pure $3$ class is $1(3)$.
+
+The common lower family consists of the six pure-cofactor outputs
+$$
+ 1(3),2(3),\quad3(9),6(9),\quad9(27),18(27).
+$$
+They cover exactly the complement of $0(27)$. The eight remaining
+lower outputs have ternary phase zero and the following $7$-phases,
+listed for $b=0,1,2,3$:
+$$
+ a=0:\ (0,2,3,4),\qquad a=1:\ (1,3,4,5).
+$$
+On $0(27)$ these cover exactly the $7$-phases $0,1,2,3,4,5$.
+Consequently the complete shared lower complement is
+$$
+ E=[27]_{189},\qquad
+ C_{1575}=[27]_{63},\qquad C_{7875}=[27]_{189}.
+ \tag{SC157}
+$$
+The $u=3$ source has the surviving top $300(1575)$, whose output
+is $[27]_{63}$. The $u=6$ source has the surviving top
+$7125(7875)$, whose output is $[27]_{189}$. Each contains $E$.
+Thus SC15 holds with nonempty $E$, and both actual source families
+cover all 189 source residues and all their integer lifts.
+
+### Complete suppliers exist, but SC147 fails for every retained choice
+
+The two flat lower outputs, from originals $7$ and $21$, have
+private traces $[0]_{189}$ and $[162]_{189}$ relative to the
+entire pooled source family. Each trace lies in the ternary root
+zero. There are two lower outputs in each of the seven slots
+$3,9,27,7,21,63,189$. Retaining one at each slot other than $3$
+and buying $S$ gives $2^6\cdot3=192$ choices.
+
+At least one of the output-$3$ lower sources is necessary in any
+complete supplier family for every one of these choices, even if
+the suppliers may use both top colors. The following two source
+points are private relative to the entire pooled output family:
+
+| Original | Complete output | Private source point | Its $3,7$ coordinates |
+| --- | --- | --- | --- |
+| $5$ | $[1]_3$ | $13$ | $(1,6)$ |
+| $15$ | $[2]_3$ | $20$ | $(2,6)$ |
+
+All other pure lower outputs and both tops have ternary root zero.
+The flat lower outputs have $7$-phases zero and one; all remaining
+lower outputs also have ternary root zero. Thus the table directly
+certifies privacy. Slot $3$ is absent from the retained lower
+family, and a single bought root can absorb at most one of the
+two private points. The other stays in $H$ and forces its unique
+source into every complete supplier family. Its singleton menu is
+$\{3\}$ at both donor depths, whereas SC147 requires
+$$
+ 4-k_d\le1,\qquad5k_d\le1,\qquad
+ k_d\in\{0,1,2,3,4\},
+ \tag{SC158}
+$$
+which is impossible. This proves the failure for all retained choices
+without an enumeration of their combinations.
+
+For $S=[1]_3$ or $[2]_3$, whichever of
+the flat $7$-column lower sources is discarded also retains a
+private trace in the hole and is necessary. These are 128 of the
+192 choices. For $S=[0]_3$, those two particular flat traces are
+absorbed, but the output-$3$ obstruction remains.
+
+All surviving tops occupy slots already held by lower representatives.
+Thus $|\mathcal F_0|=7$, $N_3=16$, $n_0=7$ and $z=0$, exactly
+as in SC111. The discarded lower sources and either safe top color
+do form a complete qualified supplier family as in SC122. The
+failure is specific to forcing SC147 on this fixed common tree;
+it does not exclude another repair or another tree.
+
+### The total inventory and support can grow arbitrarily
+
+For any finite set of new primes $q>7$, add exactly three labels
+per prime, with phases specified by
+$$
+ [0]_q,\qquad [2]_3\cap[1]_q,\qquad [8]_9\cap[2]_q.
+ \tag{SC159}
+$$
+Their moduli are $q,3q,9q$. The enlarged label set remains
+divisor-closed. Within a new column the distinct $q$-phases give
+comparable disjointness; the only old comparable labels are $3$
+and $9$, whose phases disagree with these new classes. Distinct
+new prime columns have no other comparability.
+
+In both selected source maps, the new $3q$ and $9q$ classes vanish
+because the old ternary coordinate has first digit zero. The new
+$q$ class is a unique lower representative and is retained. Both
+complete source covers therefore persist. CRT lifts of old private
+points and of the old uncovered point $125$ with every new
+$q$-coordinate equal to $3$ avoid all added classes. For a new
+class at one prime $q$, lift the old hole $125$ with that coordinate
+equal to $0$, $1$ or $2$ respectively, and every other new prime
+coordinate equal to $3$. These are private points of the three
+new classes, because $125\equiv8\pmod9$.
+
+Thus the enlarged family remains globally irredundant and a
+noncover. The old source-private lower traces persist with all new
+coordinates equal to $3$, so the same failure of SC147 remains.
+With $r$ added primes, the exact counts are
+$$
+ K=23+3r,\qquad N_3=16+2r,\qquad n_0=7+r,\qquad z=0.
+ \tag{SC160}
+$$
+Both inventory and support grow without bound. The extra donor slots do not
+belong to the necessary old source's menu $\{3\}$.
+
+The inventory can also grow while fixing the support. For each new prime
+$q$, choose a finite height $T_q\ge1$. For $1\le t\le T_q$ set
+$$
+ \alpha_{a,t}=3\sum_{i=0}^{t-2}q^i+a q^{t-1},\qquad a=0,1,2,
+$$
+where the sum is empty at $t=1$. At level $t$ add
+$[\alpha_{0,t}]_{q^t}$,
+$[2]_3\cap[\alpha_{1,t}]_{q^t}$ and
+$[8]_9\cap[\alpha_{2,t}]_{q^t}$.
+All earlier $q$-digits are $3$ and the last digit is $a$.
+Two different depths disagree at the earlier leaf digit, and the
+three classes at one depth have different last digits. Including
+every depth up to $T_q$ preserves divisor closure. All old private
+points and the old hole lift with every new $q$-digit equal to $3$.
+A new private point uses the old hole $125$, its specified leaf,
+and all other new digits $3$. This proves the same privacy and
+noncoverage conclusions as above.
+
+On the two selected safe sources, only the $q^t$ classes survive;
+each has its own unique retained lower slot. The source-private
+points forcing the old menu $\{3\}$ persist on the all-$3$ new
+coordinates. Writing $R=\sum_q T_q$, the counts become
+$$
+ K=23+3R,\qquad N_3=16+2R,\qquad n_0=7+R,\qquad z=0.
+$$
+For example take the eight new primes
+$11,13,17,19,23,29,31,37$, with $T_{11}=6$ and all other
+$T_q=1$. Then $R=13$, $K=62$, $N_3=42$, the largest support
+prime is $P=37$, and the support size is $s=11$. This particular
+noncover meets the numerical bounds NF67, $N_3\ge36$, and NF82,
+$N_3\ge41$. It also meets the coarse range, support, forced-label
+and height conditions displayed in GHA10--GHA11: the highest
+nonternary exponent is $H_{11}=6\le12$, and every required
+$3q^{H_q}$ is present. None of these scalar or coarse label
+conditions removes its fixed-source allocation obstruction.
+
+This does not assert every necessary EB1 condition. In the same
+example, relative to $p=37,q=3$, NF66 has $h_0=20,h_1=2$,
+so both alternatives $h_0\ge36$ and $h_0+h_1\ge37$ fail.
+The example therefore leaves the stronger whole-cover column
+constraints available; it does not refute them.
+
+This construction separates SC15, SC111, SC122, actual common-source
+geometry, divisor closure, comparable disjointness and global
+irredundancy from the full original-cover hypothesis. It does not
+satisfy global EB1 and does not establish an obstruction to an
+unrestricted paid repair. The missing forcing argument must use
+more than these fixed-source conditions and a total inventory bound.
+
+The [finite checker](../../../frontier/source-budgets/a2_two_complete_sources.py)
+constructs the original phases, verifies divisor closure, comparable
+disjointness, private points, both complete pullbacks, and all 192
+representative/root choices. Its [exact result](../../../frontier/source-budgets/a2_two_complete_sources.json)
+records the counts used above. The unbounded prime extension is
+the displayed CRT argument, not an enlarged-period enumeration.
+These are ordinary mathematical deductions and finite checks, not
+Lean verification.
+
+## 39. Three coprime active columns admit a complete paid repair at original height two
+
+Keep one actual common tree, the retained family $\mathcal F_0$,
+its bought root $S=[j]_3$, and the whole hole $H$ of SC111.
+Assume $A=2$ and choose exactly one actual lower representative
+at each surviving numerical slot other than $3$, as in SC122.
+Call an omitted top or discarded lower active if
+its actual output AP intersects $H$. Suppose every active output
+has one of the numerical labels
+$$
+ n_i=3^{b_i}m_i,\qquad 1\le i\le k\le3,\qquad
+ b_i\ge2,\quad m_i>1,\quad m_i\mid M,\quad
+ \gcd(m_i,m_j)=1\ (i\ne j).
+ \tag{SC161}
+$$
+Each listed slot has an active supplier; unused slots are removed.
+There is only one listed output height per cofactor. In particular,
+all $m_i$ are odd and coprime to $15$. This condition concerns all
+active discarded lower service as well as both omitted top colors.
+It makes no claim that an arbitrary minimal cover admits this
+profile.
+
+Under SC161 there is a family of distinct fresh odd $5$-bearing
+classes covering all $H$, of size at most $N_3-1$. Thus an EB1
+whole cover cannot have this profile for any such fixed choice.
+The construction below uses cross-color intersections to reduce
+what must be repaired; it does not assume the independent allocation
+SC147.
+
+### Actual intersections, rather than both full top unions, suffice
+
+Let $U$ be the union of the active discarded lowers, and let
+$B_c$ be the union of the active omitted tops of color $c$.
+The already established full-service decomposition SC112 gives
+$$
+ H\subseteq U\cup(B_1\cap B_2).
+ \tag{SC162}
+$$
+Indeed, a point of $H$ belonging to a lower output must belong
+to a discarded one. Every other point has an actual top owner
+in each color by SC15. Neither owner can be retained, because
+the point lies in $H$. This argument includes the discarded lower
+liability; it does not replace $H$ by the top-only complement.
+
+A fixed output slot has at most two lower originals, at heights
+$a=0,1$. Keeping one representative leaves at most one discarded
+lower there. It has at most one top original, at height $a=2$,
+which belongs to at most one color. Hence, writing $\ell$ for the
+number of active lowers and $t$ for the number of active tops,
+$$
+ \ell\le k,\qquad t\le k.
+ \tag{SC163}
+$$
+Every active slot has the original qualification
+$3\cdot5^{b_i}m_i\in D$: for a discarded $a=0$ supplier use
+its retained positive-height peer as in Section 32, and for an
+$a=1$ supplier or top use its own divisor. Divisor closure gives
+three different labels $3m_i,15m_i,75m_i$ per column, as well as
+$3,15,75$ and the original pure label $9$. Therefore
+$$
+ N_3\ge3k+4.
+ \tag{SC164}
+$$
+If $t\ge1$, each top additionally supplies $9m_i,45m_i,225m_i$
+in its own column, and any one top supplies the two remaining
+unit-column labels $45,225$. Thus
+$$
+ N_3\ge3k+3t+6\qquad(t\ge1).
+ \tag{SC165}
+$$
+All labels counted here are original and distinct. No original
+product column $m_im_j$ is assumed.
+
+### Three root classes per nonunit cofactor
+
+Enclose each active lower in its actual reduction
+$L_i^*=[\alpha_i]_{9m_i}$. It stays in an unbought ternary root,
+since its original output intersects $H$ and $b_i\ge2$.
+Among the at most three lowers, choose a largest group $G$ sharing
+one ternary root $g$. If there are no lowers, take $G$ empty and
+omit every class whose phase uses $g$. Otherwise
+$$
+ \ell-|G|\le1.
+ \tag{SC166}
+$$
+For any enclosure $[a]_{9h}$ used below, with odd $h>1$ and
+$(h,15)=1$, cover its new $5$-roots $2,3,4$ by the three classes
+$$
+ [2]_5\cap[a]_h,\qquad
+ [3]_5\cap[a]_{3h},\qquad
+ [4]_5\cap[a]_{9h}.
+ \tag{SC167}
+$$
+Their numerical labels are $5h,15h,45h$. Buy the single shared
+class $[0]_5$ as well. Only root $1\pmod5$ then remains on each
+enclosure. All phases in this construction are actual reductions
+or CRT combinations of the displayed source phases.
+
+If either active top color is empty, SC162 says the lower
+enclosures cover $H$. Cover root $1$ of the group $G$ by
+$[1]_5\cap[g]_3$, of label $15$. If the one possible leftover
+lower exists, cover its root $1$ by
+$[1]_5\cap[\alpha_i]_9$, of label $45$. The cost is at most
+$1+3\ell+2\le3k+3<N_3$ by SC164. If there are no lowers either,
+$H$ is empty and no patch is needed. The same lower-only repair
+applies whenever $B_1\cap B_2$ is empty.
+
+### Two top colors force a shared intersection phase
+
+Now assume both colors are present and have a nonempty intersection.
+Form the bipartite graph of active tops, with an edge for every
+nonempty actual intersection across the colors. It has
+$2\le t\le3$ vertices, so all its edges share a vertex and
+$$
+ 1\le e\le t-1\le2.
+ \tag{SC168}
+$$
+For an edge between distinct slots $i,j$, the true intersection
+has modulus $3^{\max(b_i,b_j)}m_im_j$. Enclose it in its actual
+reduction $I_{ij}^*=[\gamma_{ij}]_{9m_im_j}$.
+Every edge shares one top vertex, whose output fixes a residue
+modulo $9$. Consequently all $\gamma_{ij}$ have the same residue
+$\gamma\pmod9$. SC162 yields
+$$
+ H\subseteq\bigcup L_i^*\ \cup\!\bigcup I_{ij}^*.
+ \tag{SC169}
+$$
+Apply SC167 both to each lower enclosure and to each edge enclosure,
+using respectively $h=m_i$ and $h=m_im_j$. On root $1\pmod5$,
+use $[1]_5\cap[g]_3$ for $G$ and
+$[1]_5\cap[\gamma]_9$ for every edge enclosure. These are the
+pure labels $15$ and $45$.
+
+There is at most one leftover lower $L_j^*$. For that lower,
+partition root $1$ into its five children modulo $25$. Enumerate
+$s_u$, $0\le u\le4$, as the five distinct divisors
+$3,9,m_j,3m_j,9m_j$ of $9m_j$, and add
+$$
+ [1+5u]_{25}\cap[\alpha_j]_{s_u}\qquad(0\le u\le4).
+ \tag{SC170}
+$$
+Every point of $L_j^*$ in root $1$ lies in one of these children
+and satisfies its divisor condition. These five numerical labels
+are $75,225,25m_j,75m_j,225m_j$.
+
+### Global distinctness and payment
+
+At $5$-depth one the cofactor parts are $1$, the singletons $m_i$,
+and the edge products $m_im_j$. Pairwise coprimality and $m_i>1$
+make all distinct subsets in this list have different products.
+The $3$-powers distinguish the three rows for each cofactor.
+The shared labels $5,15,45$ are also distinct. The five possible
+extra labels in SC170 have $5$-depth two, so are fresh relative
+to all those labels and distinct from each other.
+
+Every new modulus is odd, greater than one and divisible by $5$;
+none collides with the unchanged $5$-free $\mathcal F_0$.
+SC169 and the exhaustive $5$-digit partitions cover all of $H$
+at every integer lift. No old class is deleted to pay for this
+repair. Its cost satisfies
+$$
+ \begin{aligned}
+ c&\le1+3\ell+3e+2+5\\
+  &\le3k+3t+5<N_3,\\
+ |\mathcal F_0\cup\mathcal P|
+  &=K-N_3-z+c\le K-z-1<K.
+ \end{aligned}
+ \tag{SC171}
+$$
+The second inequality uses SC168 and SC165. Omitting unused shared
+or leftover classes only lowers the cost. The product-cofactor
+labels require no invented donor columns: their payment is this
+whole original-count comparison, not a separate donor assignment.
+
+The conservative bounds for $(k,t)=(2,2),(3,2),(3,3)$ are
+respectively $c\le17,20,23$ against $N_3\ge18,21,24$.
+No external support-size lower bound is needed here. This removes
+a residual branch with both unbought ternary roots and arbitrary
+actual cofactor phases, using SC112's two-color service rather
+than repairing both top unions in full.
+
+For four active columns the two combinatorial savings used above
+need not hold: two lowers may lie outside the largest root group,
+and the top graph may be a $K_{2,2}$ or have separated components
+with different modulo-$9$ phases. Other unhandled profiles include
+$b=0,1$, unit or overlapping cofactors, multiple active heights
+in one cofactor, and $A>2$ with several discarded lowers at a slot.
+No assertion forces the general problem into SC161. This is an
+ordinary constructive deduction using the existing CRT, prefix
+and source-service primitives, not Lean verification or an
+unrestricted resolution of Erdős #7.
