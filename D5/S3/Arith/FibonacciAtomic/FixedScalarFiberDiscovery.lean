@@ -712,7 +712,7 @@ theorem result (L h : ℕ) :
               List.nil_append,List.cons_append,List.append_nil,
               Bool.false_eq_true,Bool.true_eq_false,not_false_eq_true,not_true_eq_false,
               List.cons.injEq,List.cons_ne_nil,and_true,true_and,Option.map_some,
-              eq_self_iff_true]
+              eq_self_iff_true,ne_eq]
         | split_ifs
         | rw [execute]
       all_goals
@@ -726,37 +726,24 @@ theorem result (L h : ℕ) :
           decide
         · intro hb
           first
-            | solve | cases hb
+            | (cases hb; done)
             | (simp only [certificate,hL,ite_true,ite_false]
                first
-                 | (solve
-                   | left
-                     intro u hu
-                     first
-                       | change u ∈ ({[false,false,false],[false,true],[true,false,false,false],
-                           [true,false,true],[true,true,false]} : Finset Address) at hu
-                       | change u ∈ ({[false,false,true],[true,false,false,true],
-                           [true,true,true]} : Finset Address) at hu
-                     simp only [Finset.mem_insert,Finset.mem_singleton] at hu
-                     first
-                       | (rcases hu with rfl | rfl | rfl)
-                       | (rcases hu with rfl | rfl | rfl | rfl | rfl)
-                     all_goals simp_all [readout,P,Q,ActualImageSevenLeafSeparation.A,
-                       ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E])
-                 | (solve
-                   | right
-                     intro u hu
-                     first
-                       | change u ∈ ({[false,false,false,false],[false,false,true],[false,true,false],
-                           [true,false,false],[true,true]} : Finset Address) at hu
-                       | change u ∈ ({[false,false,false,true],[false,true,true],
-                           [true,false,true]} : Finset Address) at hu
-                     simp only [Finset.mem_insert,Finset.mem_singleton] at hu
-                     first
-                       | (rcases hu with rfl | rfl | rfl)
-                       | (rcases hu with rfl | rfl | rfl | rfl | rfl)
-                     all_goals simp_all [readout,P,Q,ActualImageSevenLeafSeparation.A,
-                       ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E]))
+                 | change
+                     ((∀ u ∈ ({[false,false,false],[false,true],[true,false,false,false],
+                         [true,false,true],[true,true,false]} : Finset Address),
+                       readout u U = readout u P) ∨
+                      (∀ u ∈ ({[false,false,false,false],[false,false,true],[false,true,false],
+                         [true,false,false],[true,true]} : Finset Address),
+                       readout u U = readout u Q))
+                 | change
+                     ((∀ u ∈ ({[false,false,true],[true,false,false,true],
+                         [true,true,true]} : Finset Address), readout u U = readout u P) ∨
+                      (∀ u ∈ ({[false,false,false,true],[false,true,true],
+                         [true,false,true]} : Finset Address), readout u U = readout u Q))
+               simp only [Finset.forall_mem_insert,Finset.forall_mem_singleton]
+               simp_all only [readout,P,Q,ActualImageSevenLeafSeparation.A,
+                 ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E])
   have positive_details (favorP : Bool) :
       ∃ x y : Hist (fun _ : Address => Reply) × Bool,
         execute readout (strategy L favorP) 7 [] P = some x ∧
