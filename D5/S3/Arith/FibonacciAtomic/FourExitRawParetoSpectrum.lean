@@ -35,13 +35,14 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     Nat.card (menu k) = 6 * k + 1 := by
   classical
   have facts := FourExitRawDomination.result k hk
+  have cast_gain {m : Nat} {G : Fin m → Source} {U V : Finset (Fin m)}
+      (h : U = V) (r : Recipe G U) (i : Fin m) :
+      gain (h ▸ r) i = gain r i := by cases h; rfl
   have lift {l m : Nat} (F : Fin l → Source) (G : Fin m → Source)
-      (f : Fin l → Fin m) (hf : Function.Injective f) (hFG : ∀ i, G (f i) = F i) :
+      (f : Fin l → Fin m) (hFG : ∀ i, G (f i) = F i) :
       ∀ {S : Finset (Fin l)} (r : Recipe F S),
         ∃ R : Recipe G (S.image f), ∀ i ∈ S, gain R (f i) = gain r i := by
     classical
-    have cast_gain {U V : Finset (Fin m)} (h : U = V) (r : Recipe G U) (i : Fin m) :
-        gain (h ▸ r) i = gain r i := by cases h; rfl
     intro S r
     have same_child (U : Finset (Fin l)) (a : Fin l → Reply)
         (next : ∀ y, (survivors U a y).Nonempty → Recipe F (survivors U a y))
@@ -131,9 +132,11 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       · simp [zero] at hz
     · rcases y with v | (⟨l,c⟩ | ⟨l,c⟩)
       · simp [zero] at hz
-      · simp [zero] at hz
-        have h := congrArg Fin.val hz.2
-        simp at h
+      · have hc : j = l ∧ (0 : Fin 4) = c.succ := by
+          simpa only [zero, Sum.inr.injEq, Prod.mk.injEq] using hz
+        have h := congrArg Fin.val hc.2
+        simp only [Fin.val_zero, Fin.val_succ] at h
+        omega
       · have hj : j = l := by simpa [zero] using hz
         subst l
         have h := hxy (.inr (j,b.succ))
@@ -175,9 +178,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   let S := fun J : Finset (Fin k) => Finset.univ.filter (fun i => match e i with
     | .inl _ => True
     | .inr p => p.1 ∈ J)
-  have cast_gain {U V : Finset (Fin (4 * k + 1))} (h : U = V)
-      (r : Recipe F U) (i : Fin (4 * k + 1)) :
-      gain (h ▸ r) i = gain r i := by cases h; rfl
   have actualize (r : Recipe F Finset.univ) (v : Index k → Nat)
       (hr : ∀ i, gain r (e.symm i) = v i) :
       ∃ pi : Strategy, ∀ i, cost pi (family k i) = 8 * k + 16 + v i := by
@@ -245,10 +245,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       | 3 => family k (.inr (j,2))
       | _ => family k (.inr (j,3))
     let f := fun i => e.symm (small j i)
-    have hf : Function.Injective f := by
-      intro i l h
-      have hsmall : small j i = small j l := e.symm.injective h
-      fin_cases i <;> fin_cases l <;> simp [small] at hsmall ⊢
     have hFL : ∀ i, F (f i) = L i := by
       intro i
       fin_cases i <;> simp [F,f,small,L]
@@ -280,7 +276,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           apply e.injective
           simp [f,small_succ,he]
     obtain ⟨r,hr,_⟩ := local_tail_attainment k j m
-    obtain ⟨R,hR⟩ := lift L F f hf hFL r
+    obtain ⟨R,hR⟩ := lift L F f hFL r
     refine ⟨image_full ▸ R, ?_⟩
     intro i
     exact (cast_gain image_full R _).trans ((hR i (Finset.mem_univ i)).trans (hr i))
