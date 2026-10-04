@@ -187,7 +187,7 @@ envelopes, not measured line norms.
 
 Use the unitary angular-frequency convention
 $\widehat f(\xi)=(2\pi)^{-1/2}\int f(x)e^{-ix\xi}\,dx$. The contour
-transport in [Tao's Proposition 3](https://terrytao.wordpress.com/2021/01/23/246b-notes-2-some-connections-with-the-fourier-transform/)
+transport in [Tao's Proposition 3](../../../Library/Analytic/tao2021stripfourier.md)
 uses cycles rather than angular frequency; changing normalization gives
 
 $$
