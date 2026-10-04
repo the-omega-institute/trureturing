@@ -1,0 +1,1 @@
+| [C2] Natalia Kushik and Nina Yevtushenko, *Adaptive Homing is in P*, EPTCS 180 (2015), pp.73–78, DOI [10.4204/EPTCS.180.5](https://doi.org/10.4204/EPTCS.180.5)，[原文](https://arxiv.org/pdf/1504.02444)。 | §2（pp.74–75）定义完整、可观察的非确定 FSM 和无环自适应测试；homing 要求同一完整观测支的末端后继为单点，不要求初始来源为单点。本卷使用此任务区别；命题9.2的安全协议由本卷直接给出，不借非确定机器的算法复杂度作其费用证明。 
