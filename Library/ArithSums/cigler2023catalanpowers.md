@@ -20,3 +20,11 @@ negative j and D_{r,s}(0) = 1. It records computer experiments and states severa
 Section 2.2, Conjecture 11 asserts that for k ≥ 1, 0 ≤ m ≤ k+1 and n ≥ 0,
 D_{2k+1,m−k+1}((2k+1)n+k) = (−1)^{kn+binom(k,2)} (2k+1)^m (n+1)^m. The case m = 0 was proved in Cigler,
 arXiv:2403.11244, equation (22); the remaining cases were open.
+
+## Verified locator
+
+DOI: 10.48550/arXiv.2308.07642
+
+URL: https://arxiv.org/abs/2308.07642v2
+
+- Locator: Section 2.2, Conjecture 11, with definitions (1) and (2).
