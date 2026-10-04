@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankel.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MetallicHankel/MetallicHankel.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-pedon-metallic-hankel-shift` (proved) by `D5/S3/Combinatorics/MetallicHankel/MetallicHankel.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-pedon-metallic-hankel-shift","declaration_gid":"D5/S3/Combinatorics/MetallicHankel/MetallicHankel.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2025). *Hankel continued fractions and Hankel determinants for q-deformed metallic numbers*. DOI: [10.48550/arXiv.2502.05993](https://doi.org/10.48550/arXiv.2502.05993). URL: <https://arxiv.org/abs/2502.05993v2>.
