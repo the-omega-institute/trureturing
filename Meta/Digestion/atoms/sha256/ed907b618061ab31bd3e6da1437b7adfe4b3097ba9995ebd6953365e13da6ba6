@@ -1,0 +1,7 @@
+**定理 1.2（结构 Fibonacci 递归）。** 令 $T_j=\rho^j(\alpha)$，$j\geq0$，则
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{j+2}=\langle T_{j+1},T_j\rangle.
+$$
+
