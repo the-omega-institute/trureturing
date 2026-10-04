@@ -26,6 +26,24 @@ public sealed class ContentCheckCommandTests
         Assert.Contains("MissingPathsManifest", error.ToString(), StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("content-check")]
+    [InlineData("content-check", "--report")]
+    [InlineData("content-check", "--report", "report.json", "--paths-from")]
+    [InlineData("content-check", "--report", "report.json", "--bad", "paths.txt")]
+    [InlineData("content-check", "--paths-from", "paths.txt", "--report", "report.json")]
+    [InlineData("content-check", "--report", "report.json", "extra")]
+    [InlineData("content-check", "--report", "", "--paths-from", "paths.txt")]
+    [InlineData("content-check", "--report", "report.json", "--paths-from", " ")]
+    public void RejectsBadArgumentsBeforeResolvingARepository(params string[] arguments)
+    {
+        using var root = new TemporaryRoot();
+        var error = new StringWriter();
+        Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
+        Assert.Contains("usage:", error.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("Repository", error.ToString(), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void ChecksOnlySelectedDefinitionAndDoesNotExecuteUnselectedDefinitions()
     {
@@ -106,7 +124,9 @@ public sealed class ContentCheckCommandTests
 
     [Theory]
     [InlineData("missing")]
+    [InlineData("report-directory")]
     [InlineData("invalid-json")]
+    [InlineData("noncanonical-json")]
     [InlineData("wrong-schema")]
     [InlineData("stale-source")]
     public void ExplicitReportValidationPrecedesDefinitionExecution(string mutation)
@@ -116,11 +136,31 @@ public sealed class ContentCheckCommandTests
         switch (mutation)
         {
             case "missing": File.Delete(fixture.ReportPath); break;
+            case "report-directory":
+                File.Delete(fixture.ReportPath);
+                Directory.CreateDirectory(fixture.ReportPath);
+                break;
             case "invalid-json": fixture.Write("report.json", "{"); break;
+            case "noncanonical-json":
+                fixture.Write("report.json", "{ \"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\" }\n");
+                break;
             case "wrong-schema": fixture.Write("report.json", "{\"modules\":[],\"schema\":\"invalid\"}\n"); break;
             case "stale-source": fixture.Write("D5/S0/Synthetic/CurrentMarkdown.lean", "namespace Changed\n"); break;
         }
         fixture.Write(Path, "invalid C#");
+        var error = new StringWriter();
+        Assert.Equal(2, fixture.RunWithReport(error));
+        Assert.NotEmpty(error.ToString());
+        Assert.DoesNotContain("Compilation:", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReportCannotBeOpenedFailsBeforeDefinitionExecution()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteReport();
+        fixture.Write(Path, "invalid C#");
+        using var locked = new FileStream(fixture.ReportPath, FileMode.Open, FileAccess.Read, FileShare.None);
         var error = new StringWriter();
         Assert.Equal(2, fixture.RunWithReport(error));
         Assert.NotEmpty(error.ToString());
