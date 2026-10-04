@@ -1,0 +1,5 @@
+source_id = "pure-state-ecqc-family"
+path = "docs/develop/theory/PURE_STATE_ECQC_FAMILY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
