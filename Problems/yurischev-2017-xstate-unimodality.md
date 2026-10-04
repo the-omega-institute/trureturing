@@ -129,6 +129,12 @@ The canonical source is
   `WeaklyUnimodal`, `claim` and `result`.
 - Reuse: `h2` and `h4` are the frozen `shannonEntropy` of
   `D5/S3/Entropy/MaxEntropy`, divided by `log 2`.
+- Freeze identities:
+  - module statement `sha256:cf25406f7afc7905d874ae45a0a4a947f2268004635fdb3f00f8354ce23fead6`;
+  - `result` statement `sha256:97c57bb87c02426bbb21f1c24030917248ee275602295296c0e326aa5383471e`;
+  - Freeze event `sha256:5ff336716a0de0e9df6e7731e14dfef554ec43b32510e2ce8ed981680d619d8c`.
+    Its project-level frozen prerequisite is the Freeze event of
+    `D5/S3/Entropy/MaxEntropy`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 
