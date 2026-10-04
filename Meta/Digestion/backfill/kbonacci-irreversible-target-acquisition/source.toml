@@ -1,0 +1,5 @@
+source_id = "kbonacci-irreversible-target-acquisition"
+path = "docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
