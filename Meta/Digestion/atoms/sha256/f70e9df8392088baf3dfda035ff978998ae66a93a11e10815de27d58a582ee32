@@ -1,0 +1,8 @@
+**Definition 5.1 (The four positive record fibers).** Let $i_t(n,k)$ count
+the literal $2413/3142$ avoiders of positive length $n$ with no proper
+direct cut and exactly $k$ strict records of type $t$. Let $d_t(n,k)$ count
+the avoiders with a proper direct cut and exactly $k$ such records. The
+types are right maximum, left minimum, left maximum and right minimum,
+with their strict comparisons as in Section 1. Both positive classes are
+empty at length zero. Put $\delta(n,k)=1$ when $n=k=1$ and zero otherwise.
+

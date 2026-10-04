@@ -1,0 +1,8 @@
+**定理 15.1（非负整数幺模矩阵的同迹碰撞）。** 任取两个非负整数矩阵 $A,B$，满足 $\det A,\det B\in\{1,-1\}$。对每个预先指定的 $x>0$，存在不同的 $R_0,R_1\in\mathcal R_+$，使
+
+$$
+\operatorname{tr}(R_0)=\operatorname{tr}(R_1)=x,\qquad
+\operatorname{tr}(AR_0)=\operatorname{tr}(AR_1),\qquad
+\operatorname{tr}(BR_0)=\operatorname{tr}(BR_1).
+$$
+

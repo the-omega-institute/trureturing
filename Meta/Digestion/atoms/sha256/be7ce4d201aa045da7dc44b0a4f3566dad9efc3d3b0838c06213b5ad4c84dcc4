@@ -1,0 +1,17 @@
+**定义 28.1（先准入的实际词集）。** 固定定义 27.1 的同一个前缀、纤维和整数追加预算 $C\ge0$。令 $\mathscr A_C$ 为原始 $M/J$ 字母数不超过 $C$、且整个纤维上第三读取注入的实际词集合。词矩阵的多种表示仍按各自实际字母数计费，不返还 $L_2$。若 $\mathscr A_C$ 非空，定义
+
+$$
+O_C(\tau)=\min_{W\in\mathscr A_C}\Omega_W(\tau),\qquad
+\mathcal M_C(\tau)=\min_{W\in\mathscr A_C}\mathcal M_W(\tau).
+$$
+
+这里下标 $W$ 表示相应累计矩阵 $WU^k$ 或 $WV^k$；对每个 $W$ 记
+
+$$
+e_W>0,\quad A_W=|D_W|,\quad
+\mu_W=A_W-\frac{x e_W}{\zeta}\ge0,\quad
+\phi_W(\ell)=\mu_W\ell+\frac{e_W}{\zeta}\ell^2.
+$$
+
+若 $\mathscr A_C=\varnothing$，该注入设计问题记为 INFEASIBLE，两种最优模量均不定义，不能赋值为零。
+

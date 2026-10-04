@@ -8,6 +8,26 @@ public sealed class EmissionTests
 {
 
     [Fact]
+    public void FullEmitCheckStillRejectsLocalSourceOutsideDefinitions()
+    {
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-bijection-").FullName;
+        try
+        {
+            var definition = SyntheticDefinition();
+            WriteSyntheticScribeInputs(root, definition);
+            File.WriteAllText(Path.Combine(root, "Blueprint/D5/S0/Synthetic/LocalOnly.scribe.cs"), "local source\n");
+            var error = new StringWriter();
+
+            var exit = ScribeEmitter.Emit(root, check: true, TextWriter.Null, error,
+                LeanReportFixture.ForDocuments([definition.Document]), [definition]);
+
+            Assert.NotEqual(0, exit);
+            Assert.Contains("LocalOnly.scribe.cs", error.ToString(), StringComparison.Ordinal);
+        }
+        finally { TemporaryFileSystem.Directory.Delete(root, true); }
+    }
+
+    [Fact]
     public void ActualProducerCapabilityMaterialRoundTripsWithoutReemissionAndBindsSource()
     {
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-material-").FullName;
