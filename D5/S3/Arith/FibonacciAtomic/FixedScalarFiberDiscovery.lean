@@ -270,8 +270,8 @@ theorem result (L h : ℕ) :
     cases b <;> simp_all [composition]
   have beta_root (t : Source) (ht : readout [] t = .beta) : t = .of false := by
     cases t with
-    | of b => cases b <;> simp_all [readout]
-    | mul s t => simp [readout] at ht
+    | of b => cases b <;> cases ht <;> rfl
+    | mul s t => cases ht
   have beta_P : ∀ U ∈ scalarFiber 0,
       (∀ u ∈ certificate 0 P, readout u U = readout u P) → U = P := by
     intro U hU hm
@@ -666,6 +666,56 @@ theorem result (L h : ℕ) :
       same_composition_member run_transfer run_cost beta_minimum obstruct graft_read literal_data
       beta_Q beta_P weight_two weight_min beta_root finite finite_fiber classification memQ memP
       pq pp cq cp two single positive_count scalar block
+    have test_run (label : Reply) (qs : List Address) :
+        ∀ (policy : Policy) (U : Source) (baseHist : Hist (fun _ : Address => Reply)) (fuel : ℕ),
+        qs.length + 1 ≤ fuel →
+        (∀ hist, policy (baseHist ++ hist) = testNext label qs hist) →
+        ∃ hb : Hist (fun _ : Address => Reply) × Bool,
+          execute readout policy fuel baseHist U = some hb ∧
+          hb.1.map Sigma.fst <+: qs ∧
+          (hb.2 = true → ∀ u ∈ qs, readout u U = label) := by
+      induction qs with
+      | nil =>
+        intro policy U baseHist fuel hf hp
+        cases fuel with
+        | zero => simp at hf
+        | succ n =>
+          have hp0 : policy baseHist = .inr true := by
+            simpa only [List.append_nil, testNext] using hp []
+          refine ⟨([],true), ?_, ⟨[],rfl⟩, ?_⟩
+          · simp only [execute,hp0]
+          · simp only [List.not_mem_nil,IsEmpty.forall_iff,implies_true]
+      | cons u qs ih =>
+        intro policy U baseHist fuel hf hp
+        cases fuel with
+        | zero => simp at hf
+        | succ n =>
+          have hp0 : policy baseHist = .inl u := by
+            simpa only [List.append_nil,testNext] using hp []
+          by_cases hr : readout u U = label
+          · have hp1 : ∀ hist,
+                policy ((baseHist ++ [⟨u,readout u U⟩]) ++ hist) = testNext label qs hist := by
+              intro hist
+              rw [List.append_assoc,hp]
+              simp only [List.singleton_append,testNext,hr,eq_self_iff_true,ite_true,and_self]
+            obtain ⟨hb,he,hpre,hacc⟩ := ih policy U (baseHist ++ [⟨u,readout u U⟩]) n
+              (by simp only [List.length_cons] at hf; omega) hp1
+            refine ⟨(⟨u,readout u U⟩ :: hb.1,hb.2), ?_, ?_, ?_⟩
+            · simp only [execute,hp0,he,Option.map_some]
+            · simpa only [List.map_cons] using List.cons_prefix_cons.mpr ⟨rfl,hpre⟩
+            · intro ht v hv
+              rcases List.mem_cons.mp hv with rfl | hv
+              · exact hr
+              · exact hacc ht v hv
+          · have hp1 : policy (baseHist ++ [⟨u,readout u U⟩]) = .inr false := by
+              rw [hp]
+              simp only [testNext,hr,and_false,ite_false]
+            cases n with
+            | zero => simp at hf
+            | succ n =>
+              refine ⟨([⟨u,readout u U⟩],false), ?_, ⟨qs,rfl⟩, ?_⟩
+              · simp only [execute,hp0,hp1,Option.map_some]
+              · simp only [Bool.false_eq_true,IsEmpty.forall_iff]
     let first : Address := if L = 0 then
       (if favorP then [false,true] else [true,true])
       else (if favorP then [false,false,true] else [true,false,true])
@@ -699,52 +749,98 @@ theorem result (L h : ℕ) :
           | .alpha => testNext .alpha [[false,false,false,true],[false,true,true]] rest
           | .beta => testNext .alpha [[false,false,true],[true,false,false,true],[true,true,true]] rest
           | .branch | .absent => .inr false := rfl
+    have branch (label : Reply) (qs : List Address)
+        (hp : ∀ hist, strategy L favorP ([⟨first,readout first U⟩] ++ hist) =
+          testNext label qs hist)
+        (hf : qs.length + 1 ≤ 6)
+        (hw : ∀ u ∈ first :: qs, u.length ≤ 4)
+        (hn : (first :: qs).Nodup)
+        (hc : (first :: qs).length ≤ certificateSize L + 1)
+        (hs : (∀ u ∈ qs, readout u U = label) →
+          (∀ u ∈ certificate L P, readout u U = readout u P) ∨
+          (∀ u ∈ certificate L Q, readout u U = readout u Q)) :
+        ∃ hb : Hist (fun _ : Address => Reply) × Bool,
+          execute readout (strategy L favorP) 7 [] U = some hb ∧
+          Within 4 (paid hb.1) ∧ (hb.1.map Sigma.fst).Nodup ∧
+          (paid hb.1).card ≤ certificateSize L + 1 ∧
+          (hb.2 = true →
+            (∀ u ∈ certificate L P, readout u U = readout u P) ∨
+            (∀ u ∈ certificate L Q, readout u U = readout u Q)) := by
+      obtain ⟨hb,he,hpre,hacc⟩ := test_run label qs (strategy L favorP) U
+        [⟨first,readout first U⟩] 6 hf hp
+      have hpre' : first :: hb.1.map Sigma.fst <+: first :: qs :=
+        List.cons_prefix_cons.mpr ⟨rfl,hpre⟩
+      refine ⟨(⟨first,readout first U⟩ :: hb.1,hb.2), ?_, ?_, ?_, ?_, ?_⟩
+      · rw [execute,at_nil]
+        simp only [List.nil_append]
+        rw [he]
+        rfl
+      · intro u hu
+        exact hw u (hpre'.subset (List.mem_toFinset.mp hu))
+      · exact hpre'.nodup hn
+      · exact (List.toFinset_card_le _).trans (hpre'.length_le.trans hc)
+      · exact fun ht => hs (hacc ht)
+    have reject (hp : strategy L favorP [⟨first,readout first U⟩] = .inr false)
+        (hf : first.length ≤ 4) :
+        ∃ hb : Hist (fun _ : Address => Reply) × Bool,
+          execute readout (strategy L favorP) 7 [] U = some hb ∧
+          Within 4 (paid hb.1) ∧ (hb.1.map Sigma.fst).Nodup ∧
+          (paid hb.1).card ≤ certificateSize L + 1 ∧
+          (hb.2 = true →
+            (∀ u ∈ certificate L P, readout u U = readout u P) ∨
+            (∀ u ∈ certificate L Q, readout u U = readout u Q)) := by
+      refine ⟨([⟨first,readout first U⟩],false), ?_, ?_, ?_, ?_, ?_⟩
+      · simp only [execute,at_nil,List.nil_append,hp,Option.map_some]
+      · simpa only [Within,paid,List.map_cons,List.map_nil,List.toFinset_cons,
+          List.toFinset_nil,Finset.mem_insert,Finset.notMem_empty,or_false,forall_eq] using hf
+      · simp only [List.map_cons,List.map_nil,List.nodup_singleton]
+      · simp only [paid,List.map_cons,List.map_nil,List.toFinset_cons,List.toFinset_nil,
+          Finset.insert_empty,Finset.card_singleton]; omega
+      · simp only [Bool.false_eq_true,IsEmpty.forall_iff]
+    clear test_run at_nil
     cases hr : readout first U
     all_goals by_cases hL : L = 0
     all_goals cases favorP
-    all_goals simp only [hL] at at_nil at_cons
-    all_goals simp only [first,hL,ite_true,ite_false,Bool.false_eq_true,
-      not_false_eq_true] at hr
     all_goals
-      repeat' first
-        | simp (config := { failIfUnchanged := true }) only
-            [at_nil,at_cons,testNext,first,hL,hr,ite_true,ite_false,
-              List.nil_append,List.cons_append,List.append_nil,
-              Bool.false_eq_true,Bool.true_eq_false,not_false_eq_true,not_true_eq_false,
-              List.cons.injEq,List.cons_ne_nil,and_true,true_and,Option.map_some,
-              eq_self_iff_true,ne_eq]
-        | split_ifs
-        | rw [execute]
-      all_goals
-        clear at_nil at_cons first
-        try simp only [Option.map_some]
-        refine ⟨_,rfl,?_,?_,?_,?_⟩
-        · simp only [Within,paid,List.map_cons,List.map_nil]; decide
-        · simp only [List.map_cons,List.map_nil]; decide
-        · simp only [certificateSize,hL,ite_true,ite_false]
-          simp only [paid,List.map_cons,List.map_nil]
-          decide
-        · intro hb
-          first
-            | (cases hb; done)
-            | (simp only [certificate,hL,ite_true,ite_false]
-               first
-                 | change
-                     ((∀ u ∈ ({[false,false,false],[false,true],[true,false,false,false],
-                         [true,false,true],[true,true,false]} : Finset Address),
-                       readout u U = readout u P) ∨
-                      (∀ u ∈ ({[false,false,false,false],[false,false,true],[false,true,false],
-                         [true,false,false],[true,true]} : Finset Address),
-                       readout u U = readout u Q))
-                 | change
-                     ((∀ u ∈ ({[false,false,true],[true,false,false,true],
-                         [true,true,true]} : Finset Address), readout u U = readout u P) ∨
-                      (∀ u ∈ ({[false,false,false,true],[false,true,true],
-                         [true,false,true]} : Finset Address), readout u U = readout u Q))
-               simp only [Finset.forall_mem_insert,Finset.mem_singleton,forall_eq]
-               simp_all only [readout,P,Q,ActualImageSevenLeafSeparation.A,
-                 ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E,
-                 and_true,true_and,true_or,or_true,eq_self_iff_true])
+      have tail := at_cons ⟨first,readout first U⟩
+      conv at tail =>
+        intro rest
+        rhs
+        simp only [hL,hr,ne_eq,eq_self_iff_true,not_true_eq_false,
+          ite_false,ite_true,Bool.false_eq_true]
+    all_goals first
+      | (apply reject
+         · exact tail []
+         · simp only [first,hL,ite_true,ite_false,Bool.false_eq_true]; decide)
+      | (refine branch _ _ tail ?_ ?_ ?_ ?_ ?_
+         · decide
+         · simp only [first,hL,ite_true,ite_false,Bool.false_eq_true]; decide
+         · simp only [first,hL,ite_true,ite_false,Bool.false_eq_true]; decide
+         · simp only [first,hL,certificateSize,ite_true,ite_false,Bool.false_eq_true]; decide
+         · intro hm
+           simp only [first,hL,ite_true,ite_false,Bool.false_eq_true] at hr
+           clear at_cons tail branch reject
+           simp only [certificate,hL,ite_true,ite_false]
+           clear first
+           simp only [List.forall_mem_cons,List.forall_mem_nil,and_true] at hm
+           first
+             | change
+                 ((∀ u ∈ ({[false,false,false],[false,true],[true,false,false,false],
+                     [true,false,true],[true,true,false]} : Finset Address),
+                   readout u U = readout u P) ∨
+                  (∀ u ∈ ({[false,false,false,false],[false,false,true],[false,true,false],
+                     [true,false,false],[true,true]} : Finset Address),
+                   readout u U = readout u Q))
+             | change
+                 ((∀ u ∈ ({[false,false,true],[true,false,false,true],
+                     [true,true,true]} : Finset Address), readout u U = readout u P) ∨
+                  (∀ u ∈ ({[false,false,false,true],[false,true,true],
+                     [true,false,true]} : Finset Address), readout u U = readout u Q))
+           simp only [Finset.forall_mem_insert,Finset.mem_singleton,forall_eq,
+             readout,P,Q,ActualImageSevenLeafSeparation.A,
+             ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E]
+           simp only [hr]
+           tauto)
   have positive_details (favorP : Bool) :
       ∃ x y : Hist (fun _ : Address => Reply) × Bool,
         execute readout (strategy L favorP) 7 [] P = some x ∧
@@ -873,8 +969,10 @@ theorem result (L h : ℕ) :
     · simpa using upP.2.2.2.2.2
     · simpa using upQ.2.2.2.2.1
     · simpa using upQ.2.2.2.2.2
-  · by_cases hh : h < 4 <;> by_cases hL : L = 0 <;>
-      simp [exact_discovery h,hh,certificateSize,hL]
+  · rw [exact_discovery h]
+    by_cases hh : h < 4 <;> by_cases hL : L = 0 <;>
+      simp only [hh,certificateSize,hL,ite_true,ite_false]
+    all_goals norm_num
 
 
 
