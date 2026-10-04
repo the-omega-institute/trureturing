@@ -181,3 +181,11 @@ preserves paired-jump cancellation for the unbounded full symbol on
 those same fixed high vectors. It pays analytic local replacement
 errors; numerical actions, the complete residual Gram and restricted
 Schur sign remain separate obligations.
+
+The [off-grid action interface](off-grid-action.md) pays the shifted
+high inputs and full-Gamma contour transport on the same family.
+The [actual four-column high action](high-full-action.md) consumes the
+saved source samples to enclose $Z^*CZ$ and $(CZ)^*(CZ)$ over the full
+real line, including the complete omitted-prime $L^2$ allowance. It
+gives $\|CZ\|<1.051588$. The95 low actions, mixed blocks, complete
+residual Gram and exact-ground restricted sign remain unresolved.

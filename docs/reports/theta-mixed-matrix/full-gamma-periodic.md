@@ -123,9 +123,10 @@ errors remain separate; this constant does not enclose them.
 The [directed program](full_gamma_periodic_bounds.py) records the
 suppliers and exact upper dyadics in
 [full-gamma-periodic-result.json](full-gamma-periodic-result.json).
-The full action, off-lattice $g/Z$ values, mean/prime transport,
-whole-line output tails, action/cross blocks, complete common residual
-Gram, projected-ground direction and restricted sign remain unpaid.
+This coefficient supplier alone does not supply numerical full actions,
+off-lattice $g/Z$ values, mean/prime transport, whole-line output tails
+or action/cross blocks. The complete common residual Gram,
+projected-ground direction and restricted sign remain unpaid.
 No cofinal, Robin, RH or Lean conclusion follows.
 
 ```sh
@@ -134,3 +135,10 @@ uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/repo
 
 The program is project-authored, uses python-flint/FLINT and copies no
 third-party implementation code.
+
+The [off-grid/action interface](off-grid-action.md) transports the
+additional prime, mean and continuous projection inputs. The
+[actual high-action producer](high-full-action.md) then applies this
+full-Gamma allowance to the four saved $Z$ columns and encloses their
+whole-line action matrices. It does not supply the low/mixed/common
+residual blocks or restricted Schur sign.
