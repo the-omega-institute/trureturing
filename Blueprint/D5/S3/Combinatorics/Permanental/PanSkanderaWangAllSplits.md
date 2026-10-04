@@ -22,6 +22,10 @@ $$\forall n \in \mathbb {N},\; (2 \le n) \Rightarrow (\forall A \in \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/PanSkanderaWangAllSplits.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/psw-all-split-permanental-inequality` (proved) by `D5/S3/Combinatorics/Permanental/PanSkanderaWangAllSplits.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"psw-all-split-permanental-inequality","declaration_gid":"D5/S3/Combinatorics/Permanental/PanSkanderaWangAllSplits.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sihong Pan, Mark Skandera, Jiayuan Wang (2026). *Permanental Inequalities and Unit Interval Orders*. DOI: [10.4204/EPTCS.445.17](https://doi.org/10.4204/EPTCS.445.17). URL: <https://arxiv.org/abs/2606.13162v1>.

@@ -21,14 +21,17 @@ internal sealed class PanSkanderaWangAllSplitsDocument : IScribeDocumentDefiniti
             Node("result", "result", "result",
                 resultFormula(),
                 "Every real TNN matrix of order at least two satisfies the quoted inequality at each split between one and n-1. The balanced pairing argument, left identity padding and simultaneous reversal give the full range.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("psw-all-split-permanental-inequality"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula claimFormula() => Disp(
         Equal(F.Id("claim"), All("n", Naturals(), Implies(LessEqual(D(2), F.Id("n")), All("A", Call("Matrix", Call("Fin", F.Id("n")), Call("Fin", F.Id("n")), Reals()), Implies(Call("TNN", F.Id("A")), All("h", Naturals(), Implies(LessEqual(D(1), F.Id("h")), Implies(LessEqual(F.Id("h"), Subtract(F.Id("n"), D(1))), LessEqual(Multiply(Call("principalPermanent", F.Id("A"), Call("evenIndices", F.Id("n"))), Call("principalPermanent", F.Id("A"), Seq(Call("univ", Call("Fin", F.Id("n"))), Sp, Setminus, Sp, Call("evenIndices", F.Id("n"))))), Multiply(Call("principalPermanent", F.Id("A"), Call("prefixIndices", F.Id("n"), F.Id("h"))), Call("principalPermanent", F.Id("A"), Seq(Call("univ", Call("Fin", F.Id("n"))), Sp, Setminus, Sp, Call("prefixIndices", F.Id("n"), F.Id("h")))))))))))))));
