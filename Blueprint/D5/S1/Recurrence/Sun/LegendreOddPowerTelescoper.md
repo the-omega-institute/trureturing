@@ -48,6 +48,10 @@ $$\forall m \in \mathbb{N},\; (1 \le m) \Rightarrow (\exists f \in Fin\left(m\ri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cui-sun-2026-legendre-odd-power-telescoper` (proved) by `D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cui-sun-2026-legendre-odd-power-telescoper","declaration_gid":"D5/S1/Recurrence/Sun/LegendreOddPowerTelescoper.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

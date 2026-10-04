@@ -56,7 +56,10 @@ internal sealed class LegendreOddPowerTelescoperDocument : IScribeDocumentDefini
                 + "m,m-1,...,0 and then vanish. Alternating these iterates gives a finite inverse "
                 + "for multiplication by t plus the operator. The Legendre recurrence turns this "
                 + "inverse identity into a boundary difference, and induction sums the differences "
-                + "over all indices below p.", false, DescribeRole.Theorem))));
+                + "over all indices below p.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cui-sun-2026-legendre-odd-power-telescoper"),
+                    ResolutionKind.Proved, [])))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         bool literature, DescribeRole role = DescribeRole.Definition,
