@@ -97,6 +97,30 @@ declaration is a bounded enumeration, checker, numeric reduction or certified in
   preserves the parity product even when its two parity classes exchange.
 - **Proved:** the order-two case is equality, as shown by the order-two branch of `result`.
   The inequality requires no strictly positive minor or nonsingular-matrix assumption.
+- **Computed:** exact rational checks at each order `n = 2,…,6`, using Python's
+  `random.Random(13069)` and `Fraction` arithmetic. At each order, twelve matrices were
+  products of `n` alternating lower/upper unit bidiagonal pairs. Adjacent coefficients
+  were sampled uniformly from `{0, 1/2, 1, 3/2, 2}` for six matrices and
+  `{1/2, 1, 3/2, 2}` for six matrices; the identity and all-ones matrices supplied two
+  boundary cases. Gaussian elimination checked every increasing square minor, and
+  direct permutation sums computed both principal-permanent products for every
+  `h = 1,…,n−1`. All 17,738 minors were nonnegative; all 210 split gaps
+  (split product minus parity product) were nonnegative. These finite samples do not
+  establish the universal inequality or its strictness.
+
+  | Order | Matrices | Square minors | Split checks | Zero gaps | Positive gaps | Totally positive matrices |
+  | --- | --- | --- | --- | --- | --- | --- |
+  | 2 | 14 | 70 | 14 | 14 | 0 | 12 |
+  | 3 | 14 | 266 | 28 | 5 | 23 | 10 |
+  | 4 | 14 | 966 | 42 | 4 | 38 | 9 |
+  | 5 | 14 | 3,514 | 56 | 6 | 50 | 7 |
+  | 6 | 14 | 12,922 | 70 | 6 | 64 | 6 |
+
+- **Open:** is the inequality strict for every totally positive matrix of order
+  `n ≥ 3` and every `1 ≤ h ≤ n−1`? Total positivity here means that every increasing
+  square minor is strictly positive. All 105 split gaps in the sampled totally
+  positive matrices of orders 3–6 were positive. Order two is excluded: its inequality
+  is always an equality, as proved by the order-two branch of `result`.
 - **Source consequence:** the extension of the paper's Theorem 5.1 to all TNN matrices is
   available at every initial split. The paper's negative conclusion for general subsets `I`
   is outside this theorem, whose subsets are specifically `[h]` and its complement.
