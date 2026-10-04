@@ -86,6 +86,10 @@ $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow (\operatorname{a}\left(n\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/XorTriangle/ValueOne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a334595-value-one` (proved) by `D5/S3/Combinatorics/XorTriangle/ValueOne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a334595-value-one","declaration_gid":"D5/S3/Combinatorics/XorTriangle/ValueOne.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey (2020). *OEIS A334595: the right edge of a binary XOR triangle*. URL: <https://oeis.org/A334595>.

@@ -40,7 +40,10 @@ internal sealed class ValueOneDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source, Reconstruction),
                 Blocks(Paragraph(Text(
                     "The fourth %C comment of OEIS A334595, revision 18, is the second conjecture: \"Conjecture: a(n) = 1 if and only if n is a power of two.\" For every natural n at least one, with the unpadded most-significant-first input and all right-edge positions retained, a(n) equals one if and only if there exists a natural k such that n equals 2 to the power k. The exponent may be zero, so n equal to one is included. The proof reconstructs a fixed-width row from its edge and establishes injectivity. At that same width, the word with only its final bit equal to one decodes to one; its unique source row has only its first bit equal to one and decodes to a power of two. The finite-XOR reconstruction uses the reversible-triangle relation also used by Ilya Bogdanov in MathOverflow answer 359278, revision 5. The quoted OEIS text and adapted reversible-triangle argument are attributed to Peter Kagey, the OEIS Foundation and Ilya Bogdanov under CC BY-SA 4.0; the Library notes identify the sources and adaptations. The result is proved within Lean without an invertibility premise or a literature axiom. The record-position conjecture and rotational fixed-point counting are separate assertions."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a334595-value-one"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Definition(string declaration, string title,
