@@ -7,7 +7,7 @@
   },
   "supplier": "derivative_bandwidth.py",
   "supplier_sha256": "a74b0d95fdc546c240b605df15ed69fe7c50f4963deeff2a4ad6498fb687bb40",
-  "producer_sha256": "c9ad6ebc41c6e5f3cdd063e47d0d845a45d14a14f29c3ce835a14ea0a3e12324",
+  "producer_sha256": "c12fdb84aef3842503b8fbd475be38cd3ccbcfce0bbcea34cba8b7d37ad8b7f3",
   "window_radius_exact": "1/16",
   "spatial_radius_exact": "2",
   "radial_boxes": 2048,

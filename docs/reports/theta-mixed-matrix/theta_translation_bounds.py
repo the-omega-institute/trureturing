@@ -52,7 +52,10 @@ def exponential_integral_upper(power, rate, start):
 def second_envelope(derivative, left, right, depth=0):
     x = arb((left+right)/2, arb((right-left)/2).upper())
     try:
-        return abs(derivative(x)[2]).upper(), 1
+        bound = abs(derivative(x)[2])
+        if not bound.is_finite():
+            raise ValueError('Nonfinite shifted second-derivative enclosure')
+        return bound.upper(), 1
     except RuntimeError as error:
         if str(error) != 'Uncertified actual original-theta denominator' or depth >= 12:
             raise
