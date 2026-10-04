@@ -3,7 +3,7 @@ import LeanInformationAuditInterface.Contract.Core
 namespace LeanInformationAudit.Contract.Literal
 open Lean
 
-/-- No reduction, user constants, metavariable instantiation or native execution. -/
+/-- No user constant unfolding, metavariable instantiation or native execution. -/
 def closed (e : Expr) : Bool :=
   !e.hasFVar && !e.hasMVar && !e.hasLooseBVars && !e.hasLevelMVar
 
@@ -62,12 +62,28 @@ def optional (field : String) (e : Expr) : Except String (Option Expr) := do
   if e.isAppOfArity ``Option.some 2 then return some e.getAppArgs[1]!
   reject field e
 
-partial def list (field : String) (e : Expr) : Except String (Array Expr) := do
+private partial def listWithTails (field : String) (e : Expr)
+    (tails : Array (Array Expr)) : Except String (Array Expr) := do
   let e := e.consumeMData
+  match e with
+  | .letE _ type value body _ =>
+    unless type.isAppOfArity ``List 1 && closed type do reject field e
+    let tail ← listWithTails field value tails
+    return ← listWithTails field body (tails.push tail)
+  | .bvar index =>
+    if index < tails.size then return tails[tails.size - 1 - index]!
+    reject field e
+  | _ => pure ()
   if e.isAppOfArity ``List.nil 1 then return #[]
   if e.isAppOfArity ``List.cons 3 then
-    return #[e.getAppArgs[1]!] ++ (← list field e.getAppArgs[2]!)
+    unless closed e.getAppArgs[1]! do reject field e
+    return #[e.getAppArgs[1]!] ++ (← listWithTails field e.getAppArgs[2]! tails)
   reject field e
+
+/-- Decode the pinned compiler's literal list constructors and shared tails
+without substituting, reducing or evaluating expressions. -/
+def list (field : String) (e : Expr) : Except String (Array Expr) :=
+  listWithTails field e #[]
 
 def array (field : String) (e : Expr) : Except String (Array Expr) := do
   let e := e.consumeMData

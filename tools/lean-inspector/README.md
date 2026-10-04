@@ -39,14 +39,16 @@ user code.
 | Nat | numerals; `Nat.zero`, nested `Nat.succ`, including dot constructors | Nat literals/constructors and the fixed core OfNat instance |
 | Int | numerals, unary minus; `Int.ofNat`, `Int.negSucc`; `OfNat.ofNat n`, `Neg.neg i` | Int constructors and the fixed core OfNat/Neg instances |
 | Bool/String | true/false constructors and string literals | Bool constructors and string literals |
-| Optional/array | `none`, `some literal`, `#[literal, …]` | Option constructors and core List.toArray/Array.mk constructor trees |
+| Optional/array | `none`, `some literal`, `#[literal, …]` | Option constructors and core List.toArray/Array.mk constructor trees, including the pinned compiler's literal list-tail bindings |
 | Contract records | complete structure literals, anonymous constructors, fixed named constructors | exact schema constructors |
 | Parentheses/ascriptions | parentheses on literal terms; `(literal : T)` for the exact literal or record type, with qualified or opened short spelling | the corresponding literal/constructor expression |
 
 Array and Option type ascriptions, user aliases, references, updates and
 computations are outside this grammar and receive
 `contract.source_literal:nonliteral`. The expression decoder separately verifies
-constructor arities and exact core numeric instances.
+constructor arities and exact core numeric instances. Literal list-tail bindings
+are decoded structurally with closed elements, without expression substitution
+or evaluation.
 
 For metadata syntax, discovery reads macro and term elaborator registration keys
 from the entry module’s compiler import DAG, plus source patterns for local
