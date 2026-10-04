@@ -1,5 +1,4 @@
 import LeanInformationAudit.Contract.Literal
-import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.Catalog
 import LeanInformationAudit.NameWire
 import LeanInformationAudit.Census.Ownership
@@ -100,10 +99,11 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Except St
   let mut bindings := #[]
   for info in data.constants do
     let .defnInfo info := info | continue
-    if info.type.getAppFn.constName? == some ``Contract.Registration then
+    -- Match the compiled contract names without importing its domain mathematics.
+    if info.type.getAppFn.constName? == some `LeanInformationAudit.Contract.Registration then
       let typeArgs := info.type.getAppArgs
       unless typeArgs.size == 10 do throw "contract.registration:target_arity"
-      let all ← Contract.Literal.constructor ``Contract.Registration.mk
+      let all ← Contract.Literal.constructor `LeanInformationAudit.Contract.Registration.mk
         (typeArgs.size + 17) "registration" info.value
       let fields := all.extract typeArgs.size all.size
       let some theoremName := typeArgs[1]!.consumeMData.constName?

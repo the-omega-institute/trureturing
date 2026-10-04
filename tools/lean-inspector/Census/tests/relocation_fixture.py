@@ -5,7 +5,6 @@ import pathlib
 import re
 import shutil
 import sys
-import tomllib
 import unittest
 
 INSPECTOR = pathlib.Path(__file__).resolve().parents[2]
@@ -45,25 +44,6 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
                 if not target.is_file():
                     self.copy(str(relative))
                 pending.append(target)
-        # The typed contract imports real mathematics, so use its pinned
-        # upstream packages rather than the support fixture's Cache-only provider.
-        upstream = json.loads((ROOT / "lake-manifest.json").read_text())["packages"]
-        mathlib = next(package for package in upstream if package["name"] == "mathlib")
-        config = self.root / "lakefile.toml"
-        text = config.read_text()
-        requirement = next(requirement for requirement in tomllib.loads(text)["require"]
-                           if requirement["name"] == "mathlib")
-        text = text.replace(f'git = "{requirement["git"]}"\nrev = "{requirement["rev"]}"',
-                            f'git = "{mathlib["url"]}"\nrev = "{mathlib["inputRev"]}"')
-        config.write_text(text)
-        for relative in ("lake-manifest.json", "Reg/lake-manifest.json",
-                         "tools/lean-inspector-reg/lake-manifest.json"):
-            manifest = json.loads((self.root / relative).read_text())
-            manifest["packages"] = [package for package in manifest["packages"]
-                                    if package["type"] != "git"] + [
-                dict(package, inherited=relative != "lake-manifest.json" or package["inherited"])
-                for package in upstream]
-            self.write(relative, json.dumps(manifest))
         # Keep the support fixture's synthetic driver in this library's source root.
         (self.root / "LeanInformationAudit/SealCommand.lean").rename(
             self.root / "tools/lean-inspector/LeanInformationAudit/SealCommand.lean")
@@ -90,30 +70,6 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
             manifestFile="lake-manifest.json", inherited=False, dir="declaration package",
             configFile="lakefile.toml"))
         self.write("lake-manifest.json", json.dumps(manifest))
-        # Fetch the exact pinned snapshots, without unrelated upstream history.
-        # The canonical cache owner still supplies and validates their build cache.
-        for package in upstream:
-            directory = self.root / ".lake/packages" / package["name"]
-            directory.mkdir(parents=True)
-            for arguments in (("init", "--quiet"),
-                              ("remote", "add", "origin", package["url"]),
-                              ("fetch", "--quiet", "--depth=1", "origin", package["rev"]),
-                              ("checkout", "--quiet", "--detach", package["rev"])):
-                result = self.guarded_command(["git", "-C", str(directory), *arguments])
-                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        # The cache producer receives precisely the external import roots of
-        # this bounded fixture. Lake still checks every compiled dependency.
-        imports = {module for source in seen for module in
-                   re.findall(r"(?m)^(?:public )?import (\S+)", source.read_text())
-                   if module.split(".")[0] not in
-                   {"D5", "LeanInformationAudit", "LeanInformationAuditInterface", "Lean", "Init", "Std"}}
-        self.write("bin/lake", "#!/usr/bin/env python3\nimport os, sys\n"
-                   + f"lake, roots = {self.lake!r}, {sorted(imports)!r}\n"
-                   + "args = sys.argv[1:]\n"
-                   + "if args == ['exe', 'cache', 'get']: args += roots\n"
-                   + "os.execv(lake, [lake, *args])\n")
-        (self.root / "bin/lake").chmod(0o755)
-        self.env["LAKE_BIN"] = str(self.root / "bin/lake")
         self.ensure()
         command = ["make", "lean", "LEAN_TARGETS=@trureturing/LeanInformationAudit.Census.Stream "
                    "@trureturing/LeanInformationAudit.Census.Membership"]
