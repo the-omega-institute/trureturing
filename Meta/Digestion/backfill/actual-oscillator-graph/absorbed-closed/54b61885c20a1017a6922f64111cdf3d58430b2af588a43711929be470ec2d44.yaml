@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:54b61885c20a1017a6922f64111cdf3d58430b2af588a43711929be470ec2d44
+  normalized_sha256: sha256:54b61885c20a1017a6922f64111cdf3d58430b2af588a43711929be470ec2d44
+cas_ref: sha256:54b61885c20a1017a6922f64111cdf3d58430b2af588a43711929be470ec2d44
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/SchwartzCutoffGraph.scaled_cutoff_graph
+    target_statement_id: sha256:22aa33cd0acd5e1a051fbed6328c7c48aa91ddfcf1f69226ac9ac95c0196cf44
+receipts:
+  unresolved_subitems: []

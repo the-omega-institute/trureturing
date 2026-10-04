@@ -1,0 +1,10 @@
+证明。$j=0$ 时等式就是 $\rho(\beta)=\langle\beta,\alpha\rangle$。若第 $j$ 阶成立，施加保持有序括号的 $\rho$，得到
+
+$$
+T_{j+3}=\rho(T_{j+2})
+=\langle\rho(T_{j+1}),\rho(T_j)\rangle
+=\langle T_{j+2},T_{j+1}\rangle.
+$$
+
+归纳即得结论。此证明未使用交换律，也未把组成相同的树认作同一个来源。
+
