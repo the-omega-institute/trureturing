@@ -4898,3 +4898,13 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 本批整版串行 Lean 核验零错误、零警告，默认 heartbeats 200000 与递归限制不变；无新显式具名声明、application olean、sorry 或私有公理。两条打印闭包仅为既有依赖且属于标准三公理子集，匿名应用没有具名闭包报告。本批是商同胚组件与同一原生对象的精确组合应用，不主张新的经典数学定理、具名库声明或已完成登记。
 
 本批闭合的是已验原生对象之间的剩余作用同胚共轭；有限自由剩余作用的覆盖构造、克莱因瓶与光滑尖点流形分类、实际尖点及非平凡稳定子存在、full-Γ 控制与粗稠密、原 M 上到同一个给定 h 的全局同伦、原边界交比和两侧原度量的最终唯一等距代表仍未闭合。完整 Mostow–Prasad 刚性仍 ACTIVE/INCOMPLETE，保留紧／非紧尖点、非可定向、两侧原度量和同一个给定 h 的原范围。逃逸审计未完成，登记依 CLAUDE §3.9 暂缓：https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549。
+
+### 局部紧 Hausdorff 空间上的有限自由同胚作用及其实际轨道关系已给定时，原商映射的有限覆盖与纤维点数
+
+对有限群 C、局部紧 Hausdorff 空间 Y、同一同胚作用 B 及同一 setoid s，若 B 逐点自由且 s.r(y,y′) 当且仅当存在 c 使 B(c)(y)=y′，本次匿名 Lean 应用内部构造逐点满足 c • y=B(c)(y) 的 MulAction，由 B 的连续性和自由性得到连续及可消去作用；用 s 的对称性证明实际 Quotient.mk s 的纤维正是该作用轨道，直接应用 Mathlib 的有限真不连续作用覆盖接口，返回该实际商映射的 IsQuotientCoveringMap、IsCoveringMap 及每条纤维的点数等于 Nat.card C。纤维点数通过商映射满射取原像，再应用实际 fiberEquivGroup 与 Nat.card_congr 得到。
+
+在既有原 FM/FN 全 deck 商覆盖、ρ/ρ′ 逐点 deck 求值、源原 gH/gM 各自距离恒等式、FM 局部微分同胚与逐点内积相容、源原 gM 有限体积、仍假设的原 unit-infinity 子群非平凡及同一给定同伦等价 h:M≃ₕN 条件下，应用叶使用此前实际返回的两侧正规核 K/K′、Finite(P/K)/Finite(P′/K′)、核指数各至多 2、同一剩余作用 B/B′ 的逐点自由性及实际 s/s′ 的轨道公式；在两侧同一坐标载体 (UnitAddCircle × UnitAddCircle) × 正实高度上，内部从 isOpen_Ioi 得到高度子型局部紧性，返回两侧实际 Quotient.mk s 与 Quotient.mk s′ 的覆盖，以及每条纤维点数分别等于原剩余群基数、等于原核指数，因而各至多 2。自由性使用此前完整原 deck 自由性所得结果，不以仅核自由性代替；这些叶输入是已有输出，不是原几何问题的新存在假设。本次没有换成另一个标准轨道商，也没有重编译原 native 构造；原 M/N 独立宇宙、同一 h 和两侧原度量保留在历史已验构造中。
+
+本批完整成功源码为一份匿名 example，零错误、零警告，默认 200000 heartbeats 及递归限制未改；首版 6 错误、3 未抑制警告的候选整份排除。只打印两条既有依赖的标准三公理子集闭包，匿名应用没有具名闭包报告；零新显式具名声明、零 application olean，不主张新定理准入、新颖性或冻结。复用 Mathlib 的 isQuotientCoveringMap_of_properlyDiscontinuousSMul、Finite.to_properlyDiscontinuousSMul、fiberEquivGroup、Nat.card_congr 和 Subgroup.index_eq_card。此有限剩余覆盖不证明原 M 尖点存在、非平凡稳定子存在、光滑 torus/Klein 尖点分类、full-Γ 控制／粗稠密性、原 M 上同一 h 的全局同伦、边界 crossratio 或最终唯一等距映射；完整紧／非紧尖点／非可定向 Mostow–Prasad 目标仍未完成。
+
+信息逃逸审计未完成；登记按 CLAUDE §3.9 暂缓：[既有案号](https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549)。
