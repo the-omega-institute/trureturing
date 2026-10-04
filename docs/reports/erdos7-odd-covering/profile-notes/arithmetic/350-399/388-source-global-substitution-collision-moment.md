@@ -1935,3 +1935,417 @@ and paying its complete old service. SC76 does not provide that
 composite-slot exchange. Other seed counts and color distributions,
 and the all-height repair, remain unresolved. No new Lean verification
 is claimed for Sections 19--22.
+
+## 23. Three fresh-five layers repair the whole hole set of flat seeds
+
+Keep $A=1,r=3,s=5$, but let $\theta$ be any common tree retaining
+the original pure $5$ root. It need not minimize the surviving load.
+Keep all of $\mathcal L$, put $\mathcal R=\mathcal L\setminus\{5\}$,
+and use the original pure $5$ output as the bought root $[j_5]_3$.
+Write $\mathcal B_0,b_0$ as in SC83 and define the complete hole set
+on the integers by
+$$
+ \mathcal F_0=\mathcal L\cup(\mathcal T\setminus\mathcal B_0),
+ \qquad H_0=\mathbb Z\setminus\bigcup\mathcal F_0.
+$$
+These are periodic pullbacks of the corresponding subsets of $X$.
+If $\mathcal U,\mathcal V$ are the two colors of $\mathcal B_0$,
+SC15 gives
+$$
+ H_0\subseteq\left(\bigcup\mathcal U\right)
+                   \cap\left(\bigcup\mathcal V\right),
+ \qquad H_0\cap[j_5]_3=\varnothing. \tag{SC88}
+$$
+This is the full liability of deleting $\mathcal B_0$, not just a
+chosen opposite-color intersection or the larger set $E$.
+
+Suppose every seed modulus divides $M$. Its actual class therefore
+has no $3$- or $5$-condition. Let $\alpha,\beta\in\{0,1,2\}$ be
+the two roots other than $j_5$. Add the following classes. In a
+supplier column, intersect the displayed cell with every actual
+class of that color, preserving its cofactor phase.
+
+| New modulus factor | Unconditional class | Copies of $\mathcal U$ | Copies of $\mathcal V$ |
+|---|---|---|---|
+| $5$ | $[0]_5$ | $[1]_5\cap C$ | $[2]_5\cap C$ |
+| $15$ | $[3]_5\cap[\alpha]_3$ | $[3]_5\cap[\beta]_3\cap C$ | $[4]_5\cap[\alpha]_3\cap C$ |
+| $45$ | $[4]_5\cap[\beta]_9$ | $[4]_5\cap[\beta+3]_9\cap C$ | $[4]_5\cap[\beta+6]_9\cap C$ |
+
+Every point of $H_0$ satisfies both supplier unions. New $5$-roots
+$0,1,2$ are covered by the first row. Root $3$ is covered on its
+$\alpha,\beta$ branches by the second row. On root $4$ the second
+row covers the $\alpha$ branch, and the third row covers the three
+modulo-$9$ children of its $\beta$ branch. The already retained
+pure output $3$ class covers the remaining ternary root.
+
+The patch moduli are exactly
+$$
+ \{5,15,45\}\cdot
+ \bigl(\{1\}\cup\{n_t:t\in\mathcal B_0\}\bigr). \tag{SC89}
+$$
+All are distinct: within one row the cofactor moduli are distinct,
+and the rows have different $3$-valuations. Every patch contains
+$5$, whereas every old output modulus is $5$-free. Thus there is
+no collision with a retained class. CRT supplies each displayed
+phase. One can work on $\operatorname{lcm}(N,45)$; this new
+$5$-coordinate is not the old coordinate already transported by
+$\theta$.
+
+The construction reuses the digit splitting and complete-service
+mechanism of [report 385 DR7](385-private-congruence-hulls-and-crossed-modulus-closure.md#10-descendant-assisted-private-hull-closure-and-phase-group-repair-budgets)
+and its explicit CRT realization LP3--LP4 in Section 200. Here the
+three available service menus are the unconditional class and the
+two actual seed unions. The additional conclusion is one simultaneous
+repair with distinct labels, rather than separately priced repairs
+whose labels might collide. No lower class or unremoved top changes.
+The exact count is
+$$
+ c=3(b_0+1),\qquad b=b_0,\qquad c-b=2b_0+3,
+ \qquad
+ |\mathcal F_{\rm new}|=K-\Delta+2b_0+4. \tag{SC90}
+$$
+Consequently $\Delta\ge2b_0+5$ contradicts EB1 in this flat-seed
+case. Unlike SC87, this repairs all holes; it does not end at an
+occupied-phase stop.
+
+There is a stronger omission budget on this same tree, even when
+some seed moduli contain $3$. For every nonpure original top $3k$,
+divisor closure supplies the original lower parent $k>1$. Its
+original ternary root is safe, so a retained $5$-prefix puts it in
+$\mathcal T$. Both members of the pair $(k,3k)$ survive exactly
+when that top belongs to $\mathcal B_0$: at height one there is
+no other original lower representative of its numerical slot.
+There are $N_3-1$ such pairs and $b_0$ surviving pairs. Each other
+pair contributes at least one rejected original to $z_\theta$.
+Different pairs are disjoint, since their parents are $3$-free and
+their tops have original $3$-height one. A $5$-free pair always
+survives, so every charged rejection is indeed counted by
+$z_\theta$. SC64 therefore gives
+$$
+ z_\theta\ge N_3-1-b_0,
+ \qquad \Delta=2+z_\theta\ge N_3-b_0+1. \tag{SC91}
+$$
+No independently optimized tree or root count has been added.
+Combining SC90--SC91, a flat-seed family is impossible whenever
+$$
+ N_3\ge3b_0+4. \tag{SC92}
+$$
+In fact its repaired cover would have at most
+$K-N_3+3b_0+3<K$ classes, all distinct, odd and greater than one.
+
+## 24. Existing joint source counts sharpen the flat-seed obstruction
+
+Let $\nu$ denote the number of actual support primes; the substitution
+prime $s$ remains $5$. Directly reuse
+[report 385 NF79 and NF82](385-private-congruence-hulls-and-crossed-modulus-closure.md#60-the-two-first-root-branches-share-one-original-label-inventory).
+At original height one these supply
+$$
+ \nu\ge14,\quad P\ge47,\quad N_3\ge P+\nu-5\ge56,
+ \quad
+ t_p:=\#\{d\in D:3p\mid d\}\ge p-6\quad(p\mid M),
+ \quad t_P\ge P-3. \tag{SC93}
+$$
+The last, stronger largest-prime count is established by the two
+first-root groups in NF82's height-one proof. These are counts in
+one actual original family. Their scalar values must not in general
+be added, because a label may contain several support primes.
+The inherited height-one support input has the ordinary proof and
+verification scope recorded at NF73; no new kernel replay is supplied.
+
+Since $p\ge7$, every $t_p$ is positive and divisor closure forces
+original $3p$. Consequently $\mathcal C_M$ contains one and every
+support prime of $M$. More precisely, if $d_+$ counts seeds with
+positive output $3$-height, then
+$$
+ \{n_t:t\in\mathcal B_0,\ 3\nmid n_t\}
+       =\mathcal C_M\setminus\{1\},
+ \qquad b_0=|\mathcal C_M|-1+d_+\ge\nu-2+d_+.
+ \tag{SC94}
+$$
+The forward inclusion uses the original $3m$ behind a flat top;
+the reverse inclusion is SC81's permanent parent/top pair. This
+improves the small-ideal inventory in Section 21 by reusing the
+already established mixed-prime count.
+
+SC92--SC93 immediately exclude all-flat seed families with
+$b_0\le17$, for every tree retaining the pure $5$ root. The parameter
+form is
+$$
+ d_+=0\quad\Longrightarrow\quad
+ b_0\ge\left\lceil\frac{N_3-3}{3}\right\rceil
+ \ge\left\lceil\frac{P+\nu-8}{3}\right\rceil. \tag{SC95}
+$$
+For comparison with the support count, $P\ge3\nu+4$. Indeed,
+count $3$ and all candidates $6j\pm1$ from $5$ through $P$, and
+remove the composites $25,35$. For $P=6k+1$ this leaves at most
+$2k-1$ odd primes, and for $P=6k-1$ at most $2k-2$.
+Both yield the displayed inequality. Thus $N_3\ge4\nu-1$.
+
+If $b_0=\nu-2$, SC94 forces $d_+=0$ and SC92 excludes it.
+If $b_0=\nu-1$ and $d_+=0$, SC92 again excludes it. Therefore
+$$
+ \boxed{b_0\ge\nu-1\ge13,\qquad
+ b_0=\nu-1\ \Longrightarrow\
+ d_+=1,\quad
+ \mathcal C_M=\{1\}\cup\{p:p\mid M\}.} \tag{SC96}
+$$
+These conclusions do not require the heavy-root optimization.
+The old scalar lower bound three is not the active minimum under
+these reused source premises.
+
+The same inventory also controls the original $5$-height. Write
+$\mathcal C_P=\{m\in\mathcal C_M:P\mid m\}$. Each member
+contributes at most $B+1$ original labels counted by $t_P$. The
+unit and the $\nu-3$ other support primes are distinct $P$-free
+members of $\mathcal C_M$. Hence
+$$
+ P-3\le t_P\le(B+1)|\mathcal C_P|
+ \le(B+1)(b_0-d_+-\nu+3). \tag{SC97}
+$$
+At equality in SC96, $\mathcal C_P=\{P\}$, so $B\ge P-4$.
+This uses original columns, not independently realizable marginal
+inventories. It is compatible with arbitrary finite larger heights.
+
+## 25. One nonflat seed of height at least two has a complete paid repair
+
+Suppose $d_+=1$ and write $b=b_0$. Let the exceptional seed class
+be $D_*=[a]_{3^h m}$, $h\ge1$, with $m\mid M$. Divisor closure
+puts $m$ in $\mathcal C_M$; if $m>1$, its flat top is a seed.
+Put $D_*$ in the first top color and let $\mathcal U,\mathcal V$
+be the remaining flat classes in the two colors. There are $b-1$
+flat classes. Orient $\alpha$ in Section 23 to the first output
+$3$-root of $D_*$ and let $\beta$ be the other unbought root.
+The first root is not $j_5$, because every original $5$-bearing
+class other than pure $5$ avoids that pure class's root.
+
+Run the same table on these flat classes. It uses $3b$ patches.
+The full original hole set obeys
+$$
+ H_0\subseteq\left(\bigcup\mathcal U\cup D_*\right)
+                    \cap\bigcup\mathcal V.
+$$
+On root $\beta$, both flat menus still cover $H_0$. On root
+$\alpha$, the table covers new $5$-roots $0,2,3,4$ using the
+unconditional or second-color menu. Thus every remaining hole lies in
+$$
+ H_0\cap D_*\cap[1]_5. \tag{SC98}
+$$
+This conclusion remains valid when $\mathcal U$ is empty.
+
+If $h\ge3$, add $D_*\cap[1]_5$, of modulus $5\cdot3^h m$.
+Its $3$-height differs from every table slot. This gives $c=3b+1$
+and net cost $2b+1$, with no displaced patch service.
+
+If $h=2$, the needed modulus $45m$ is occupied by a table patch.
+Replace that patch by $D_*\cap[1]_5$. The displaced patch lies
+in a cell $[4]_5\cap[w]_9$ with $w\equiv\beta\pmod3$.
+On that cell $D_*$ is absent, so both flat menus cover every point
+of $H_0$. Add
+$$
+ [4]_5\cap[w]_{27},\qquad
+ [4]_5\cap[w+9]_{27}\cap C\ (C\in\mathcal U),\qquad
+ [4]_5\cap[w+18]_{27}\cap C\ (C\in\mathcal V).
+ \tag{SC99}
+$$
+These $b$ patches cover all newly exposed points of $H_0$. Their
+moduli $135$ and $135n_C$ are distinct and fresh. Points outside
+$H_0$ retain their owner in $\mathcal F_0$, so no other service
+is lost. The replacement has zero net count and the final patch
+count is $c=4b$. Work on $\operatorname{lcm}(N,135)$ if the new
+third ternary digit exceeds the old output height.
+
+Together with SC91, these give the complete-cover contradictions
+$$
+ \boxed{
+ \begin{aligned}
+ d_+=1,\ h\ge3,\ N_3\ge3b_0+2&\quad\Longrightarrow\quad\bot,\\
+ d_+=1,\ h=2,\ N_3\ge4b_0+1&\quad\Longrightarrow\quad\bot.
+ \end{aligned}} \tag{SC100}
+$$
+The count $N_3\ge56$ excludes respectively $b_0\le18$ and
+$b_0\le13$ in these two cases. The construction does not require
+prime flat cofactors. At $b_0=\nu-1$, the stronger parameter count
+$N_3\ge4\nu-1$ funds both repairs. Thus the unique nonflat seed
+in SC96 has $h=1$, and its modulus is either $3$ or $3p$ for a
+support prime $p\mid M$.
+
+The next construction handles a single nonflat seed of any height at
+a larger cost, without requiring its cofactor to be prime or its
+phase to match a flat supplier. It uses additional $5$-digits so
+its labels cannot collide with this section's initial table.
+
+## 26. A deeper fresh-five packet excludes the minimum collision inventory
+
+The remaining single-seed liability in SC98 has a second complete
+repair. Keep $d_+=1$, write $b=b_0$ and $v=|\mathcal V|$, and
+use the first output root $\alpha$ of $D_*$. After the $3b$-patch
+table, all remaining holes belong to
+$$
+ R=[1]_5\cap[\alpha]_3\cap\bigcup\mathcal V. \tag{SC101}
+$$
+It is enough to cover this entire set. This does not require the
+exceptional cofactor $m$ to be nonunit or prime, nor any agreement
+between its phase and a flat supplier's phase.
+
+Add the following classes. A row with $\mathcal V$ means one
+intersection with each actual $C\in\mathcal V$; rows labelled
+one have no cofactor constraint. Take $\alpha\in\{0,1,2\}$.
+
+| New $5$-condition | New $3$-condition | Cofactor menu | Numerical moduli |
+|---|---|---|---|
+| $[1]_{25}$ | none | one | $25$ |
+| $[6]_{25}$ | none | $\mathcal V$ | $25n_C$ |
+| $[11]_{25}$ | $[\alpha]_3$ | one | $75$ |
+| $[16]_{25}$ | $[\alpha]_3$ | $\mathcal V$ | $75n_C$ |
+| $[21]_{25}$ | $[\alpha]_9$ | one | $225$ |
+| $[21]_{25}$ | $[\alpha+3]_9$ | $\mathcal V$ | $225n_C$ |
+| $[21]_{125}$ | none | one | $125$ |
+| $[46]_{125}$ | none | $\mathcal V$ | $125n_C$ |
+| $[71]_{125}$ | $[\alpha]_3$ | one | $375$ |
+| $[96]_{125}$ | $[\alpha]_3$ | $\mathcal V$ | $375n_C$ |
+| $[121]_{125}$ | $[\alpha+6]_9$ | one | $1125$ |
+
+For a point of $R$, its second $5$-digit gives one of the five
+residues $1,6,11,16,21$ modulo $25$. The first four are covered
+by the first four rows, since the point has root $\alpha$ and an
+actual $\mathcal V$ supplier. At residue $21$, the next two rows
+cover two of the three modulo-$9$ children of $\alpha$. If its
+child is $\alpha+6$, the five possible residues modulo $125$ are
+$21,46,71,96,121$, covered by the last five rows. Thus the whole
+set $R$ is covered.
+
+There are six unconditional classes and five copies of the second
+color, for a total of $6+5v$ new patches. All their moduli have
+$5$-valuation two or three. They avoid every old output, whose
+$5$-valuation is zero, and every patch of the first table, whose
+$5$-valuation is one. Within this new packet, the pair of $3$- and
+$5$-valuations and the distinct cofactor $1$ or $n_C\mid M$
+determine each numerical modulus uniquely. CRT supplies each
+phase, on $\operatorname{lcm}(N,1125)$ if necessary. No old
+class or provisional patch is removed.
+
+Consequently one nonflat seed of any height admits a complete
+repair with
+$$
+ c=3b_0+6+5v,\qquad 1\le v\le b_0-1. \tag{SC102}
+$$
+The lower bound on $v$ follows from SC88 and EB1's actual initial
+hole. More generally SC91 gives a simple comparison for any full
+repair keeping $\mathcal F_0$ and adding $c$ classes:
+$$
+ |\mathcal F_{\rm new}|=K-\Delta+1+c-b_0\le K-N_3+c.
+ \tag{SC103}
+$$
+Thus SC102 contradicts EB1 whenever
+$$
+ N_3\ge3b_0+7+5v.
+ \quad\text{In particular }N_3\ge8b_0+2\text{ is sufficient.}
+ \tag{SC104}
+$$
+This packet reuses the same actual-supplier CRT splitting as
+Section 23, but places the second packet in a disjoint range of
+$5$-valuations. Its coverage is a whole-set assertion on $R$,
+not just a pointwise selection of a convenient supplier.
+
+At the minimum inventory $b_0=\nu-1$, SC96 gives
+$\mathcal C_M=\{1\}\cup\{p:p\mid M\}$. Under this specific
+condition, the original inventories counted by distinct $t_p$
+in SC93 are disjoint. A label divisible by $3p$ and $3q$ for
+$p\ne q$ would force $pq\in\mathcal C_M$, a contradiction.
+The original pure $3$ is outside all of them. It is therefore
+legitimate here to add the lower bounds, using $P-3$ instead of
+$P-6$ for the largest prime:
+$$
+ N_3\ge 1+\sum_{p\mid M}(p-6)+3. \tag{SC105}
+$$
+This is disjoint counting in the same original family. It does
+not assert the inequality for general composite cofactor ideals.
+
+There are $\nu-2$ different odd primes of $M$, all at least seven.
+In increasing order $p_j\ge2j+5$, so SC105 implies
+$$
+ N_3\ge(\nu-2)^2+4\ge8\nu-6=8b_0+2
+ \qquad(\nu\ge14). \tag{SC106}
+$$
+For the middle inequality the difference is
+$\nu^2-12\nu+14$, which is positive at fourteen and increasing
+thereafter. In the smallest support case, the primes from seven
+through forty-seven sum to $318$, so the actual prime list gives
+$N_3\ge250$, stronger than the elementary bound used in SC106.
+Every finite larger original $5$-height remains allowed.
+
+SC96 supplies exactly one nonflat seed in this minimum branch,
+and SC104--SC106 pay its entire repair. Hence the branch is
+impossible, regardless of the exceptional seed's height or phase:
+$$
+ \boxed{A=1\quad\Longrightarrow\quad
+ b_0\ge\nu\ge14
+ \quad\text{for every common tree retaining pure }5.} \tag{SC107}
+$$
+This pays the exceptional seed without changing any occupied lower
+phase. Larger collision inventories
+can contain composite cofactors, so the disjointness behind SC105
+then fails; multiple nonflat seeds can also impose different
+ternary roots on the remaining liability. Those cases and original
+heights above one remain unresolved. This is ordinary mathematical
+progress on a necessary structure of a hypothetical whole cover,
+not a Lean-verified proof or refutation of unrestricted Erdős #7.
+
+## 27. Equality with the support count requires two separated nonflat seeds
+
+Suppose $b_0=\nu$. SC94 gives $d_+\le2$. If $d_+=0$, the
+flat packet has $c=3\nu+3<N_3$, since SC93 and $P\ge3\nu+4$
+give $N_3\ge4\nu-1$. SC103 therefore excludes this case.
+
+If $d_+=1$, then $\mathcal C_M$ consists of one, all $\nu-2$
+support primes of $M$, and exactly one additional member. Divisor
+closure forces this additional member to be $p^2$ or $pq$ for
+different support primes $p,q$. In the square case the inventories
+$t_r$ for different primes remain disjoint. In the product case
+only the $p$ and $q$ inventories can intersect: any other overlap
+would force a second composite member of $\mathcal C_M$. Remove
+the smaller of $p,q$ from the count. At least $\nu-3$ mutually
+disjoint prime inventories remain, still including $P$. Reusing
+the same counts as SC105--SC106 yields
+$$
+ N_3\ge(\nu-3)^2+4\ge8\nu+2
+ \qquad(\nu\ge14). \tag{SC108}
+$$
+The difference for the last inequality is
+$\nu^2-14\nu+11$, positive at fourteen and increasing thereafter.
+SC102 uses at most $8b_0+1=8\nu+1$ patches, so this case also
+contradicts SC103. Consequently
+$$
+ \boxed{b_0=\nu\quad\Longrightarrow\quad
+ d_+=2,\qquad
+ \mathcal C_M=\{1\}\cup\{p:p\mid M\}.} \tag{SC109}
+$$
+The original cofactor inventory is again prime-only, so SC105
+applies without deleting any prime inventory.
+
+The two nonflat seeds cannot both have the same original top
+color and the same first output $3$-root. If they did, put them
+in the first color, orient that root as $\alpha$, and run the
+Section 23 table on the $\nu-2$ flat seeds. Its cost is
+$3(\nu-1)$. On root $\beta$ the first color's flat menu covers
+all of $H_0$; on root $\alpha$ the second color is entirely flat.
+Exactly the argument for SC98 leaves all holes in SC101's set
+$R$. One copy of Section 26's packet repairs that entire set,
+including the service of both exceptional seeds. The total is
+$$
+ c=3(\nu-1)+6+5|\mathcal V|
+ \le8\nu-7<(\nu-2)^2+4\le N_3. \tag{SC110}
+$$
+All labels remain distinct by their separate $5$-valuations.
+SC103 gives the contradiction.
+
+Thus at equality $b_0=\nu$ the two exceptional seeds must differ
+in original top color or in their first output $3$-root. These
+are different coordinates: the first is an original safe sibling,
+the second encodes an original $5$-root through $\theta$. No
+contradiction for the remaining two-seed configurations is supplied.
+For more composite cofactors, shared original inventories must be
+counted with their actual overlaps. Higher original ternary heights
+also retain their additional lower-source liabilities. Those are
+the remaining whole-cover obligations; no finite local configuration
+has been substituted for an unrestricted cover or noncoverage proof.
