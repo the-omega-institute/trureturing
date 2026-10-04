@@ -7075,3 +7075,457 @@ inventory. Eliminating $J_a=\{3p,9p\}$, the branch $|J_a|\ge3$,
 and unrestricted odd distinct covering remains open. The deductions
 use existing complete packets, private reset and hull interfaces;
 there is no new enumeration or Lean verification.
+
+
+## 56. The complete parent liability has only three strict two-class quotient types
+
+Keep SC227 in the prime branch $\Gamma=p>5$, full SC208, and
+$J_a=\{3p,9p\}$. Fix the same original cover, period $Q$, numerical
+label set $D$, actual phases and substitution tree. The original
+$p$-class has phase $a_p\ne a$, and the original $9p$-class has
+old ternary word $c\in\{2,5,8\}$.
+[Report 385 DR1](385-private-congruence-hulls-and-crossed-modulus-closure.md)
+moves the original $p$-class to phase $a$ and deletes the whole
+$J_a$. Its complete hole is exactly the original private set $P_p$.
+At most two added classes preserve the class-count budget; with
+two classes, strict modulus-sum improvement requires their sum
+to be less than $3p+9p=12p$. The legal numerical palette is exactly
+
+$$
+\{m\in\mathbb Z:m>1,\ m\text{ odd}\}
+ \setminus\bigl(D\setminus\{3p,9p\}\bigr).
+$$
+
+The moved $p$-class remains retained, so $p$ is unavailable. The
+released labels $3p,9p$ are available. The classification below
+allows every legal odd repair modulus, without initially assuming
+that it divides $Q$.
+
+### Three complete original-private pieces and their exact hulls
+
+Using the first-$p$ reset $\rho$ from SC290, define
+
+$$
+\begin{aligned}
+K_j&=\rho\bigl(P_{3p}\cap[j]_9\bigr),\qquad j\in\{3,6\},\\
+K_c&=\rho(P_{9p}),\\
+P_p&=K_3\sqcup K_6\sqcup K_c,\\
+\Gamma_Q(K_3)&=\Gamma_Q(K_6)=\Gamma_Q(K_c)=9p,\\
+\Gamma_Q(K_3\cup K_6)&=3p,\qquad
+\Gamma_Q(P_p)=p.
+\end{aligned}
+\tag{SC291}
+$$
+
+These are nonempty complete original pieces. For $j=3,6$, the
+original AP puts $P_{3p}\cap[j]_9$ inside a single $9p$-class,
+while SC289 supplies a nonempty contained image of exact hull
+$9p$. The subset-hull divisibility therefore makes the complete
+section's hull exactly $9p$. On the fixed first-$p$ slice, $\rho$
+is one constant CRT translation and preserves that hull. SC270
+gives the same conclusion for the outer piece. The two inner
+words differ by $3\pmod9$, so their union has hull $3p$; adding
+the outer piece gives hull $p$, as in SC270. Likewise
+$K_3\cup K_c$ and $K_6\cup K_c$ both have hull $p$. No selected
+SC289 image is identified with the complete $P_p$.
+
+For any nonempty $Q$-periodic integer set $W$, containment
+$W\subseteq[\eta]_m$ makes $m$ divide every integer difference
+of points of $W$. In particular, $x,x+Q\in W$ gives $m\mid Q$,
+and then $m\mid\Gamma_Q(W)$. Thus these complete-hull restrictions
+also apply to arbitrary proposed moduli not already known to divide $Q$.
+
+### The full strict two-class palette and its joint phase condition
+
+Let $\omega(n)$ count the distinct prime factors of $n$. Define
+the set of actual numerical vacancy pairs by
+
+$$
+\mathcal P_p=
+\left\{(q,n):
+\begin{array}{l}
+q\in\{5,7,11\},\quad q\ne p,\quad pq\notin D,\\
+n>1,\quad n\mid Q,\quad n\notin D,\quad(n,3p)=1,\\
+\omega(n)\ge2,\quad n<(12-q)p
+\end{array}
+\right\}.
+\tag{SC292}
+$$
+
+A strict repair of this direct parent move by at most two classes
+must use exactly two classes, with moduli $pq,n$ for some
+$(q,n)\in\mathcal P_p$. Their actual APs and complete coverage
+condition are
+
+$$
+B_{pq}=[a_p]_p\cap[\beta]_q,\qquad
+B_n=[\gamma]_n,\qquad
+P_p\subseteq[\beta]_q\cup[\gamma]_n.
+\tag{SC293}
+$$
+
+The last containment is tested on all of $P_p$, where the first
+term already has first-$p$ phase $a_p$. Both cofactors are $3$-free
+and $p$-free. All three complete old-word pieces must therefore
+use the same pair of cofactor phases; the condition cannot be
+optimized separately at each word or checked on just one $R_{b,j}$.
+
+Conversely, actual vacancies and phases satisfying SC292--SC293
+would cover the entire DR1 hole. The moved $p$-class covers every
+old point of the deleted $3p,9p$ classes, and every other original
+class stays fixed. The repair labels are legal and distinct, the
+class count is unchanged, and the modulus sum strictly decreases.
+Thus any EB1 configuration under these hypotheses must satisfy
+the joint escape condition
+
+$$
+\forall(q,n)\in\mathcal P_p,\quad\forall\beta\bmod q,\quad
+\forall\gamma\bmod n,\qquad
+P_p\setminus\bigl([\beta]_q\cup[\gamma]_n\bigr)
+\ne\varnothing.
+\tag{SC294}
+$$
+
+### Why no other at-most-two-class strict repair is possible
+
+Zero classes cannot cover nonempty $P_p$. A single covering class
+would have nonunit modulus dividing $\Gamma_Q(P_p)=p$, so its
+label would have to be the retained $p$. Hence one class is impossible.
+
+First consider a two-class repair containing $3p$. A $3p$-class
+meeting $P_p$ must have first-$p$ phase $a_p$. At first ternary
+root zero it covers all of $K_3\cup K_6$, leaving complete $K_c$;
+the other modulus must divide $9p$. Among those nonunit divisors,
+$3,9,p$ remain occupied and $3p$ is the first repair label, so
+only the released $9p$ is legal, with phase forced by $K_c$.
+At first ternary root two, the other class must cover the whole
+inner union of hull $3p$, leaving no different legal divisor label.
+At root one, or with a wrong first-$p$ phase, the $3p$-class
+misses $P_p$ and reduces the proposal to an impossible one-class
+repair. Thus the only legal two-class repair containing $3p$
+is the neutral $\{3p,9p\}$ reset, still of sum $12p$.
+
+If both repair moduli contain $p$ and neither is $3p$, their
+quotients by $p$ are distinct odd integers at least $5$. Their
+sum is at least $(5+7)p=12p$, precluding strict improvement.
+
+If neither repair modulus contains $p$, retain all original
+$p$-free classes and add the two repairs. Their numerical labels
+are fresh against $D$, since both released labels contain $p$.
+The complete prime-private product SC290 shows that every point
+outside the original $p$-free classes has its $p$-free coordinate
+in $X_p$. On the full first-$p$ slice $a_p$, the two repairs cover
+this coordinate set. Since both repairs are $p$-free, their
+coverage extends to every $p$ coordinate. If their labels use
+new primes or larger exponents, use a common CRT carrier containing
+those labels as well. The resulting cover is a distinct odd whole
+cover with at most $K-N_p+2<K$ classes, where $N_p\ge3$ counts
+the original $p$-bearing classes and includes the actual labels
+$p,3p,9p$. This contradicts EB1. The argument uses the complete
+$P_p$ and does not apply to a selected private residual.
+
+Exactly one repair modulus therefore contains $p$. Write it as
+$m=p^h r$, with $(p,r)=1$, and write the other repair as $B_n$,
+where $p\nmid n$. The set $P_p\setminus B_n$ is nonempty:
+otherwise $n\mid\Gamma_Q(P_p)=p$, contradicting $n>1$ and
+$p\nmid n$. Take $x$ in this set and a $p$-free common multiple
+$L_*$ of $Q/p^{v_p(Q)}$, $n$ and $r$. Along all integers
+
+$$
+x+pL_*k,\qquad k\in\mathbb Z,
+$$
+
+all non-$p$ coordinates and the first $p$ digit stay fixed. The
+complete private product keeps every such point in $P_p$ and
+outside $B_n$, while $k$ ranges through every later $p$ digit.
+If $h\ge2$, one $p^h r$-class contains only a proper subfamily
+of this entire tail, so it cannot cover all these points. Hence
+$h=1$. This also excludes repair heights above the original
+$p$-height: the complete integer private set retains all higher
+integer lifts.
+
+Thus $m=pu$ for an odd $u>1$ with $(p,u)=1$. The strict sum
+budget gives $u<12$, so $u\in\{3,5,7,9,11\}$. The case
+$u=3$ is already excluded. If $u=9$, a $9p$-repair at old word
+$c$ leaves the full inner union of hull $3p$; its only nonunit
+$p$-free divisor $3$ is still occupied. At word $3$ or $6$, the
+repair leaves respectively $K_6\cup K_c$ or $K_3\cup K_c$,
+each of hull $p$, with no nonunit $p$-free divisor. Other old
+words or a wrong $p$ phase miss $P_p$. Hence $u=9$ cannot work
+with a $p$-free second class either.
+
+Only $u=q\in\{5,7,11\}$ with $q\ne p$ remains. Initial-segment
+prime support and $P\ge29$ put every such $q$ in the actual
+support, so $pq\mid Q$. The nonempty set $P_p\setminus B_{pq}$
+is $Q$-periodic. If a single $n$-class covers it, any point and
+its $Q$-translate belong to that class, forcing $n\mid Q$.
+This excludes both new prime factors and excessive exponents;
+it is not an initial restriction of the repair search.
+
+The modulus $n$ cannot contain $3$. If its first ternary root is
+zero, $B_{pq}$ alone must cover complete $K_c$; if it is two,
+$B_{pq}$ must cover the whole inner union; if it is one,
+$B_{pq}$ must cover all of $P_p$. These targets have hulls
+$9p,3p,p$ respectively, none divisible by $pq$ because $q>3$.
+This excludes every positive ternary height of $n$ and gives
+$(n,3p)=1$.
+
+Neither remaining label $pq,n$ is a released $3p$ or $9p$, so
+both must be absent from $D$. Divisor closure puts every prime-power
+divisor of $Q$ in the original inventory. A missing divisor
+$n\mid Q$ must therefore have $\omega(n)\ge2$. Finally, the
+strict sum budget gives $n<(12-q)p$, completing all necessary
+conditions of SC292.
+
+Actual original pure-prime phases impose further necessary tests.
+The phase $\beta$ must differ from the original pure-$q$ phase.
+For each prime $\ell\mid n$, the phase $\gamma\bmod\ell$
+must differ from the original pure-$\ell$ phase; otherwise that
+repair is contained in an unchanged original class and misses
+all of $P_p$. If $q\mid n$, one also needs
+$\beta\ne\gamma\pmod q$, since equal phases in SC293 would
+enclose all of $P_p$ in one $q$-class, contradicting its hull $p$.
+These local tests do not replace the full joint containment SC293.
+
+### The prime-seven mechanism boundary
+
+For $p=7$, the modulus $n$ is coprime to $3,7$ and has at least
+two distinct prime factors, so $n\ge5\cdot11=55$. The option
+$q=5$ requires $n<49$, the option $q=11$ requires $n<7$, and
+$q=7$ is excluded by $q\ne p$. Therefore
+
+$$
+\mathcal P_7=\varnothing.
+\tag{SC295}
+$$
+
+This excludes strict repair of this direct parent move within its
+at-most-two-class budget. It does not exclude $J_a=\{21,63\}$
+or the original whole cover. For general $p$, the remaining test
+is the actual simultaneous vacancies $pq,n$ and the full joint
+phase condition SC293. Existing role-supplier counts and the
+forced labels $3d/p$ do not supply that containment. Larger
+exchanges can release additional labels, but must pay the complete
+joint hole of all moved parents and suppliers; this two-class
+classification does not rule them out.
+
+## 57. A missing common inner-outer point forces three full cylinders and a quotient collision
+
+Keep the same original cover and tree, SC227, $\Gamma=p>5$,
+full SC208, and $J_a=\{3p,9p\}$. Let $c$ again be the actual
+old word of the original $9p$-class, $t_p$ its output supplier,
+$I=E_3\cap E_6$, and $R_j=D_p\cap E_j$. The following are
+complete-source consequences of $I\cap D_p=\varnothing$;
+nonemptiness of that intersection is not assumed.
+
+The retained family is the actual $\mathcal F_0$ of Sections 29,
+32 and 41. It may contain retained lowers, retained tops and the
+bought root $S$. Every member other than $S$ is an actual output
+from this original family and tree. No additional identity
+$\mathcal F_0=\mathcal R\cup\{S\}$ is imposed.
+
+### Every higher-p tail is retained on the first-digit root
+
+Write the common output period as $N_0=p^G L$, with $(p,L)=1$,
+and put $T=\mathbb Z/p^{G-1}\mathbb Z$. On the first-digit root
+$[a]_p$, use the actual CRT coordinates $x_p=a+pt$ and $x_L=\xi$,
+where $t\in T$. For $W\subseteq\mathbb Z/L\mathbb Z$, write
+its full lift as
+
+$$
+\Lambda_a(W)=
+\{x\bmod N_0:x_p=a+pt,\ t\in T,\ x_L\in W\}.
+$$
+
+Any original $p$-bearing class occurring at first-digit root $a$
+belongs to $J_a$, hence is $3p$ or $9p$. Because $p>5$, the
+same-tree outputs retain this first digit. Both of these classes
+have output $[a]_p$ and neither can be retained in $\mathcal F_0$,
+since nonempty $E\subseteq H\cap[a]_p$ would then be covered.
+The bought root $S$ has modulus $3$ and is $p$-free. Consequently
+all retained $p$-bearing outputs miss the entire $[a]_p$ cylinder,
+not only one residual inside it.
+
+Likewise, all $p$-bearing tops of the two inner words miss
+$[a]_p$; the only $p$-bearing top at this root in outer color
+$c$ is the partner $t_p$. Let $U$ be the complement on
+$\mathbb Z/L\mathbb Z$ of all retained $p$-free classes. Let
+$V_3,V_6$ be the unions of the respective actual $p$-free top
+outputs, and let $V_c$ be the union of the actual $p$-free tops
+of color $c$ other than the partner. Then
+
+$$
+\begin{aligned}
+H\cap[a]_p&=\Lambda_a(U),\\
+E_j&=\Lambda_a(U\setminus V_j),\qquad j\in\{3,6\},\\
+D_p&=\Lambda_a(U\setminus V_c).
+\end{aligned}
+\tag{SC296}
+$$
+
+Here $E_j\subseteq[a]_p$ follows from SC227. For the last
+identity, first use complete coverage of $H$ by $T_c$ to obtain
+$D_p\subseteq C_{t_p}=[a]_p$, and then use the absence of every
+other $p$-bearing top of that color. Tops active on $H$ suffice;
+including all actual tops preserves their service on these
+targets. Each identity retains every higher $p$ tail.
+
+### Three disjoint complete bases when the triple intersection is empty
+
+Assume $I\cap D_p=\varnothing$ and define, in the same quotient,
+
+$$
+\begin{aligned}
+A&=U\setminus(V_3\cup V_6),\\
+B&=U\setminus(V_3\cup V_c),\\
+C&=U\setminus(V_6\cup V_c).
+\end{aligned}
+$$
+
+Every pairwise intersection equals
+$U\setminus(V_3\cup V_6\cup V_c)$, so the bases are pairwise
+disjoint. SC280 and SC243 give
+
+$$
+\begin{aligned}
+\Lambda_a(A)&=I,\qquad
+\Lambda_a(B)=R_3,\qquad
+\Lambda_a(C)=R_6,\\
+A,B,C&\ne\varnothing,\qquad
+\Gamma_L(A)=\Gamma_L(B)=\Gamma_L(C)=1.
+\end{aligned}
+\tag{SC297}
+$$
+
+The hull identity uses the whole tail: for every nonempty $W$,
+independent CRT coordinates give
+$\Gamma_{N_0}(\Lambda_a(W))=p\Gamma_L(W)$, including when $G=1$.
+Each of the three full lifts has hull $p$, hence each base has hull one.
+
+For every indicated base point $\xi$ and every $t\in T$, the
+three actual source maps applied to the same output point give
+the following complete incidences.
+
+| Base | Old word $3$ | Old word $6$ | Old word $c$ |
+|---|---|---|---|
+| $A$ | Private to original $3p$ | Private to original $3p$ | Covered by an actual $p$-free top |
+| $B$ | Private to original $3p$ | Covered by an actual $p$-free top | Private to original $9p$ |
+| $C$ | Covered by an actual $p$-free top | Private to original $3p$ | Private to original $9p$ |
+
+Privacy uses full SC208: the sole active inner lower is $3p$,
+$H\cap L_2=\varnothing$, and the retained convention excludes
+height-zero owners. Once the corresponding top menu is absent,
+only the displayed original owner remains. The covering assertions
+come from service of $I$ by color $c$ without $t_p$, of $R_3$
+by $T_6$, and of $R_6$ by $T_3$. The condition on $J_a$ forces
+all these actual suppliers to be $p$-free. Consequently each
+serving menu also covers its target's saturation through every
+first-$p$ root and every higher tail, with all other coordinates
+fixed. This does not identify any one cylinder with the whole
+$P_p$ or the whole $X_p$ of SC290.
+
+Each serving menu requires at least two distinct actual top
+suppliers. If one nonunit $p$-free output modulus $q$ enclosed
+its whole target, the target's complete hull $p$ would force
+$q\mid p$, a contradiction. Top originals at the three different
+old words have disjoint identities, giving at least six different
+actual $p$-free top suppliers in total. SC288 also retains the
+exact cross service
+
+$$
+\begin{aligned}
+X_{b,3}&\subseteq R_3\subseteq T_6^{p\text{-free}},\\
+X_{b,6}&\subseteq R_6\subseteq T_3^{p\text{-free}},
+\qquad b\ne a.
+\end{aligned}
+\tag{SC298}
+$$
+
+Six is one count on the common original family, not a count
+multiplied by $p-1$. The same two suppliers of one color may
+serve several $b$-dependent sets. These containments do not
+identify points belonging to different sets.
+
+### The whole quotient cover retains a different-phase numerical collision
+
+By SC296, the empty triple intersection is equivalent to
+$U\subseteq V_3\cup V_6\cup V_c$. Thus the following family
+of full actual APs covers all of $\mathbb Z/L\mathbb Z$, and
+therefore all integers:
+
+$$
+\mathcal G=
+\mathcal F_0^{p\text{-free}}
+\cup\mathcal T_3^{p\text{-free}}
+\cup\mathcal T_6^{p\text{-free}}
+\cup\bigl(\mathcal T_c\setminus\{t_p\}\bigr)^{p\text{-free}}.
+\tag{SC299}
+$$
+
+Here $\mathcal T_u$ denotes the actual supplier family, while
+$T_u$ denotes its union of APs. Lift any quotient point $\xi$
+to first-$p$ root $a$. If the lift is outside $H$, a retained
+$p$-free class covers it. If it is in $H$, the empty triple
+intersection supplies one of the three top menus. Every member
+modulus divides $L$ and its membership is independent of the
+$p$ tail, so this proves coverage of the whole quotient, not a
+selected trace.
+
+Retained moduli are internally distinct, and top output moduli
+are globally distinct across colors: equal top output moduli
+would repeat the original numerical label $9\chi(q)$. Counting
+supplier occurrences gives
+
+$$
+|\mathcal G|\le|\mathcal F_0|+v_2
+=K-N_3-z+v_2=K-2-v_1-z<K.
+\tag{SC300}
+$$
+
+This upper bound may count an AP appearing both as retained and
+as a menu member twice; that only weakens the bound and loses
+no liability. Every numerical repetition crosses the retained/top
+partition. If every repetition had equal actual phase, merging
+identical APs would produce a distinct odd whole cover with fewer
+than $K$ classes, contrary to EB1. Hence at least one pair satisfies
+
+$$
+\begin{gathered}
+q>1,\qquad p\nmid q,\qquad
+[\alpha]_q\in\mathcal F_0,\\
+[\beta]_q\in
+\mathcal T_3\cup\mathcal T_6\cup
+\bigl(\mathcal T_c\setminus\{t_p\}\bigr),\qquad
+\alpha\not\equiv\beta\pmod q.
+\end{gathered}
+\tag{SC301}
+$$
+
+The retained end may be the bought root $S$, in which case
+$q=3$. Otherwise it has an actual original source, potentially
+a lower or a retained top. Thus SC301 is not universally a
+collision between two original suppliers, and its repeated label
+has not been released or paid for.
+
+The common data here are the original cover and substitution
+tree. The family $\mathcal G$ mixes old words $3,6,c$; no single
+map $F_{u,\theta}$ has been shown to realize all its members.
+SC6 concerns two original sources surviving at the same old word,
+where different phases follow directly from original irredundancy.
+It therefore cannot be applied directly as the source of SC299.
+The conditional conclusion here is the specified three-color
+$p$-free whole cover. The final inference from a smaller whole
+cover to a different-phase collision reuses the same EB1
+minimality principle.
+
+This branch still requires either an exclusion of the three
+complete bases under the actual AP geometry or a repair paying
+the full liability of a specified SC301 collision. Hull-one bases,
+six suppliers and the count bound alone do not provide either
+step or imply $I\cap D_p\ne\varnothing$. A finite model of
+only the local three-color membership table, without the actual
+retained family and the full parent-private partition SC290,
+would not refute the desired common-point implication. These
+two sections give ordinary mathematical deductions without Lean
+verification. Eliminating $J_a=\{3p,9p\}$ and unrestricted odd
+distinct covering remain unresolved.
