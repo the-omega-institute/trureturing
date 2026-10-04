@@ -17,6 +17,12 @@ remaining proof. It is not itself a contradiction: an upper bound below
 one for the same collision moment, or a complete-liability repair for the
 collisions, is still required.
 
+For the original ternary height, the active EB1 scope is $A\ge2$.
+Report 385 HPA1 and NF73 already exclude $A=1$; Section 28 records
+their joint scope. The height-one deductions in Sections 21--27
+therefore describe an excluded premise, while their explicit patch
+constructions remain available under their stated set-cover conditions.
+
 ## 1. Safe source coordinate and one common embedding
 
 Assume a distinct odd whole cover exists and choose an EB1-minimal one,
@@ -1325,7 +1331,8 @@ counted once in \(b\). Neither count grants free service.
 SC59--SC62 are consumers of the existing single-prime law and actual
 terminal fan. They exclude the \(p_0=0,A\ge2\) branch and enlarge
 the available repair budget, but do not provide the simultaneous
-patches or close the \(A=1\) case. This is ordinary mathematical
+patches. The original \(A=1\) branch is excluded by the independent
+results cited in Section 28. This is ordinary mathematical
 analysis without new Lean verification or unrestricted noncoverage.
 
 ## 16. Omitting heavily occupied source roots funds more patches at every height
@@ -1813,9 +1820,9 @@ $$
  \tag{SC82}
 $$
 Consequently $b_0=3,4,5$ requires $B\ge11,9,7$, respectively.
-This does not exclude larger finite heights. The result reuses SF9's
-common probability and NF73's source inventory; it does not introduce
-a stronger joint cap or settle the remaining height-one covers.
+This estimate alone does not exclude larger finite $B$. It reuses
+SF9's common probability and NF73's source inventory. Section 28's
+independent exclusion of original $A=1$ applies at every finite $B$.
 
 ## 22. A small occupied seed forces an actual phase stop in finite lcm repair
 
@@ -1932,9 +1939,10 @@ In these branches finite lcm expansion cannot exhaust the proven
 budget before it meets an incompatible occupied slot. Repairing
 that stop would require changing an occupied lower or patch class
 and paying its complete old service. SC76 does not provide that
-composite-slot exchange. Other seed counts and color distributions,
-and the all-height repair, remain unresolved. No new Lean verification
-is claimed for Sections 19--22.
+composite-slot exchange. The complete repair at original $A\ge2$
+remains unresolved; the height-one cases are already excluded by
+Section 28's reused results. No new Lean verification is claimed for
+Sections 19--22.
 
 ## 23. Three fresh-five layers repair the whole hole set of flat seeds
 
@@ -2286,10 +2294,11 @@ This pays the exceptional seed without changing any occupied lower
 phase. Larger collision inventories
 can contain composite cofactors, so the disjointness behind SC105
 then fails; multiple nonflat seeds can also impose different
-ternary roots on the remaining liability. Those cases and original
-heights above one remain unresolved. This is ordinary mathematical
-progress on a necessary structure of a hypothetical whole cover,
-not a Lean-verified proof or refutation of unrestricted Erdős #7.
+ternary roots on the remaining liability. These are limitations of
+this packet argument, not remaining EB1 height-one cases: Section 28
+excludes that entire premise. The generic repair construction is
+ordinary mathematics, without new Lean verification or a proof or
+refutation of unrestricted Erdős #7.
 
 ## 27. Equality with the support count requires two separated nonflat seeds
 
@@ -2342,10 +2351,54 @@ SC103 gives the contradiction.
 Thus at equality $b_0=\nu$ the two exceptional seeds must differ
 in original top color or in their first output $3$-root. These
 are different coordinates: the first is an original safe sibling,
-the second encodes an original $5$-root through $\theta$. No
-contradiction for the remaining two-seed configurations is supplied.
+the second encodes an original $5$-root through $\theta$. This packet
+argument alone does not exclude the other two-seed configurations,
+but its EB1 height-one premise is already excluded by Section 28.
 For more composite cofactors, shared original inventories must be
-counted with their actual overlaps. Higher original ternary heights
-also retain their additional lower-source liabilities. Those are
-the remaining whole-cover obligations; no finite local configuration
-has been substituted for an unrestricted cover or noncoverage proof.
+counted with their actual overlaps. At original $A\ge2$, the
+additional lower-source liabilities remain part of the whole-cover
+obligation; no finite local configuration has been substituted for
+an unrestricted cover or noncoverage proof.
+
+## 28. The existing support bound excludes original ternary height one
+
+For the same globally EB1-minimal original whole cover, write
+$P=P^+(Q)$ and $H_p=v_p(Q)$. Reuse
+[report 385 HPA1](385-private-congruence-hulls-and-crossed-modulus-closure.md#151-height-coded-prime-absorption-bounds-the-entire-original-support):
+$$
+ P<p^{2H_p+1}\qquad(p\text{ prime},\ p\mid Q).
+$$
+HPA1 applies before any concentration or small-shared-support
+hypothesis. Its one-source transport retains every original cofactor
+and lower mixed height. Its complete AP enclosures have distinct
+numerical labels and omit the original pure larger-prime class.
+EB1 compares against all distinct odd whole covers, so larger output
+heights and a changed output period are permitted.
+
+If $A=H_3=1$, this bound gives $P<27$. For that same original
+family, [report 385 NF73](385-private-congruence-hulls-and-crossed-modulus-closure.md#58-reuse-the-height-one-source-before-resolving-individual-collision-phases)
+reuses report 708 TH3 and gives $P\ge47$. The two existing bounds
+exclude $A=1$ at every finite original $5$-height and every choice
+of original phases. This uses their ordinary mathematical evidence;
+no additional Lean verification is claimed. HPA12 states the same
+height exclusion using the separately attributed nine-prime theorem;
+that external reduction is not needed for the HPA1--NF73 route here.
+
+Consequently the EB1 height-one inventory bounds in Sections 21--27
+are conditional consequences on an already excluded branch, not
+further restrictions on a remaining class of minimal counterexamples.
+The explicit set-cover packets in Sections 23, 25 and 26 retain
+their constructive content whenever their actual supplier menus,
+hole containment and numerical-slot conditions hold. Those conditions
+must be checked anew in an application at larger original height.
+
+For this transport-and-repair approach, the live original scope is
+$A\ge2$. Reuse report 385 HPA/HPM together with SC61--SC62, the
+same-tree heavy-root bound, and the $A=2$ private-point construction
+SC77--SC78. Budgets from different common trees are not additive.
+The missing bridge is a complete repair, or a stronger one-source
+transport, that preserves all service of discarded lower originals
+as well as omitted tops. In particular, the height-one containment
+of the entire hole in both top-color unions cannot be assumed for
+lower-representative losses at $A\ge2$. Unrestricted Erdős #7
+remains unresolved.
