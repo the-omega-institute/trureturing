@@ -122,3 +122,33 @@ center. Original-theta exponential moments and existing Bernstein-ellipse
 approximation give a center of rank at most 96 with remainder below
 1/16 at the same threshold. The retained matrix sign, high correctors
 and their complete operator residuals remain uncomputed.
+
+The [complete low-band forward-action supplier](forward-action.md) pays
+every omitted Gamma index and both omitted prime directions at this same
+band. Its uniform action error is below $1/1000$, with the multiplication
+and full mean terms kept exact. High trials require separate weighted
+derivative estimates; this low-band allowance cannot certify their
+residuals or the retained matrix sign.
+
+The [common matrix screen](common-matrix-screen.md) saves uncertified
+numerical diagnostics and exact dyadic choices for four high trials.
+The [whole-line trial supplier](high-trials.md) defines those choices
+on the actual operator, imposes an exact symbolic ground lift and pays
+their own weighted derivative and omitted-action bounds. The retained
+integrals, complete residual Gram and lower matrix sign remain unpaid.
+
+The [ground normalization and residual-tail supplier](ground-residual.md)
+uses the same saved theta norms to bound the exact ground projection
+away from zero. It transports the low and high action allowances to
+one common residual map on the exact ground complement, with difference
+below $0.000662$. This is an action-tail difference, not a residual norm
+or a certificate of its retained Gram.
+
+The [original-kernel strip and coherent-root supplier](strip-root.md)
+applies an explicit relative original-series bound before transporting
+the square root. It supplies exponential Fourier-action tails on the
+same fixed whole-line high family: the full Gamma action beyond
+$|\xi|=512$ is below $5.80\cdot10^{-18}$ in its five-generator coefficient
+norm. Finite-frequency integrals, exact projection and common residual
+Gram remain unpaid. This supplies paper-model inputs with directed
+coefficient bounds, without a matrix sign or new Lean certification.

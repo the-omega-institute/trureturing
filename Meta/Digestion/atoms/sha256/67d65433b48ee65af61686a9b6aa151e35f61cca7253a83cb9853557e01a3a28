@@ -1,0 +1,20 @@
+**推论 31.8（可行规模的组成最大值与一次超额界）。** 仅对[式（30.15）](#30-实际三步像的分歧前沿七叶分离与有限容量)中的可行叶数 $n\in\mathcal N=\{3,5,6\}\cup\{n\ge8\}$，定义
+
+$$
+q(n)=\max\{a+2b:a,b\in\mathbb N_0,\ 3a+5b=n,\ a+b>0\}.
+\tag{31.13}
+$$
+
+对定理 31.7 的全部评价族及 $t\ge0$，有
+
+$$
+\boxed{\quad
+|F|\le M(s-1,t)\le M(q(n)-1,t),\qquad
+q(n)\le\left\lfloor\frac{2n}{5}\right\rfloor,\qquad
+\mathsf{Cap}(n,t)\le\min\{N_n,M(q(n)-1,t)\}.
+\quad}
+\tag{31.14}
+$$
+
+特别地，$t=1$ 时 $|F|\le2s-1\le2q(n)-1$。不可行叶数不定义 $q(n)$，其容量零结论仍直接取自推论 30.8。
+
