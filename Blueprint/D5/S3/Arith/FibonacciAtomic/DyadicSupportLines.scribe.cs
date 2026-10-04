@@ -26,7 +26,7 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, domain)), body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Affine supporting inequalities for the classical dyadic cost on the three- and five-outcome real simplexes.",
+        "Affine supporting inequalities for the classical dyadic cost on the five-outcome real simplex.",
         H("Dyadic Cost Support Lines"),
         Blocks(
             Describe.Lean(DescribeId.Create("residual"), DeclarationHandle.Create(Prefix + "residual"),
@@ -60,23 +60,7 @@ internal sealed class DyadicSupportLinesDocument : IScribeDocumentDefinition
                     + "L(p)=27/8+L(q)/16. Iterating an error bound of size 4/16^n and taking "
                     + "its zero limit proves the second supporting line, including the uniform "
                     + "law. The two bounds supply necessary inequalities and assert no "
-                    + "attainment claim for each prescribed smallest coordinate."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("three-support-bounds"),
-                DeclarationHandle.Create(Prefix + "three_outcome"),
-                H("Three-outcome support lines"),
-                StatementSource.FromAuthor(ResultFormula(3, D(6), D(1, 4), D(2))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real probability vector on Fin(3), its smallest "
-                    + "coordinate t lies between zero and 1/3, the dyadic series is summable, and "
-                    + "6t <= L(p) and 14t-2 <= L(p). At t=0 nonnegativity suffices. When "
-                    + "0<t<=1/4, the first two terms total at least 3/2. Above 1/4 all "
-                    + "coordinates are below 1/2, those terms total two, and "
-                    + "q(i)=4p(i)-1 is a probability vector with L(p)=2+L(q)/4. "
-                    + "An error bound of size 3/4^n tends to zero and supplies the second "
-                    + "line on the entire real simplex, including the uniform vector. "
-                    + "For the uniform three-outcome law the same exact tail identity gives "
-                    + "L(p)=8/3. These are support inequalities for the numerical series; "
-                    + "no optimization or phase-transition statement is asserted."))), DescribeRole.Theorem))));
+                    + "attainment claim for each prescribed smallest coordinate."))), DescribeRole.Theorem))));
 
     private static Formula ResidualFormula()
     {
