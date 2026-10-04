@@ -431,3 +431,33 @@ remaining half-bound after (10), not an improved estimate. The critical
 vectors in $N$ are excluded from $\mathcal R$, so they cannot be used
 as its first or second eigenvectors. RH and Robin remain unresolved;
 no new Lean certification is asserted.
+
+### A raw absolute Schur certificate must also preserve the critical family
+
+The [Schur equality application](../Fourier/teschl2009mathematical.md#equality-in-schurs-test-checks-the-unprojected-theta-edge-shortcut)
+tests a signed-kernel proposal for the same half-slack. With the actual
+positive and negative parts of $J-(\nu\otimes\nu)/2$ and their raw
+increment maps $C_\pm$, it excludes simultaneous exact reconstruction
+$SC_+h=C_-h$ on the entire original even core and an ordinary measurable
+kernel's finite-positive-weight absolute Schur product at most one.
+The known critical vectors would attain equality in that certificate.
+Their theta jets distinguish the unordered radial endpoint pair, forcing
+each nonzero row onto a finite fiber of zero input edge measure. Prime
+jump lengths are atomic, but the original prime edge graphs still have
+zero point mass because their source position is integrated against $dx$.
+
+This is a conditional paper application of the classical equality
+mechanism to the original theta family. It excludes neither a better
+actual norm estimate than the absolute certificate nor products above
+one approaching one, controlled approximate reconstruction, measure
+kernels, or a transfer defined only on $\mathcal R$.
+
+The same mixed nullity removes the closed critical edge images jointly:
+for $e_\pm=(I-P_\pm)C_\pm$, where $P_\pm$ project onto
+$\overline{C_\pm N}$, the slack is
+$q(h)=\|e_+h\|^2-\|e_-h\|^2$. Since $e_\pm v_k=0$, the preceding
+raw norm-attainment argument has no stated conclusion for this projected
+transfer. The actual reconstruction and norm comparison after that
+projection remain unproved. No new generic Schur, variance or contraction
+theorem, numerical half-bound, RH/Robin result or Lean certification is
+claimed.
