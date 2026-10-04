@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b41d836d4f21e3464fe4eb09e7a415f9c5013e9d9687d9fd63076bc282e5ebb8
   normalized_sha256: sha256:b41d836d4f21e3464fe4eb09e7a415f9c5013e9d9687d9fd63076bc282e5ebb8
 cas_ref: sha256:b41d836d4f21e3464fe4eb09e7a415f9c5013e9d9687d9fd63076bc282e5ebb8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/SelfCalibratingRulings.second_query_shear
+    target_statement_id: sha256:556b0f556ff14614833061b2f2e908591b0532675c6fedb598843592437c98ac
 receipts:
   unresolved_subitems: []
