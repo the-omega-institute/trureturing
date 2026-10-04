@@ -398,3 +398,12 @@ full killed exterior energy and cutoff of the whole fixed-gap subspace.
 This paper-level transfer replaces the quantitative prime-counting
 remainder only in that exterior estimate. It does not establish the
 remaining spectral lower bound in (5), RH, Robin or Lean certification.
+
+
+The [ordered-semigroup source check](karlinmcgregor1959coincidence.md)
+separately tests a proposed oscillation route from the critical family.
+The actual even theta semigroup fails all-times order-two positivity
+under radial ordering. Its ordinary positivity preservation cannot
+therefore locate the known half eigenvectors as the first nonzero
+spectral level by that route. Weaker justified spectral-ordering
+methods and the remainder lower bound are still unresolved.

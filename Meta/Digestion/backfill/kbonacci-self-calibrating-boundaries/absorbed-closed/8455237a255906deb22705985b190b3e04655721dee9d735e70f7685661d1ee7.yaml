@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8455237a255906deb22705985b190b3e04655721dee9d735e70f7685661d1ee7
   normalized_sha256: sha256:8455237a255906deb22705985b190b3e04655721dee9d735e70f7685661d1ee7
 cas_ref: sha256:8455237a255906deb22705985b190b3e04655721dee9d735e70f7685661d1ee7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciActualEndpointOperators.actual_endpoint_operators
+    target_statement_id: sha256:d5d513125a31ac09acd9e43d79289a1c93594d2600f5f8a0506679991d2c7605
 receipts:
   unresolved_subitems: []
