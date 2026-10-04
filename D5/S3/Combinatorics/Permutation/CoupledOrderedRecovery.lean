@@ -7,6 +7,8 @@
    digest: Increasing slot order recovers low-subword deletion and replacement. -/
 
 import Mathlib
+import Mathlib.Data.Finset.Sort
+import Mathlib.Logic.Equiv.Fin.Basic
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Permutation.CoupledOrderedRecovery

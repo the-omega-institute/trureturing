@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.Permutation.CoupledOrderedRecovery
 import D5.S1.Digit.Carry.ListInversions
 import D5.S3.Combinatorics.Permutation.OrdinaryForbiddenCountContraction
 import Mathlib
+import Mathlib.Data.List.OfFn
 open D5.S1.Digit.Carry.ListInversions
 open D5.S3.Combinatorics.Permutation.CoupledRepairedLeftInverse
 open D5.S3.Combinatorics.Permutation.OrdinaryForbiddenCountContraction
