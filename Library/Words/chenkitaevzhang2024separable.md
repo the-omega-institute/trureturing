@@ -113,16 +113,31 @@ for $n\ge2$, and every adjacent rising comparison $k<3$ for every $n\ge4$.
 The two-to-three right-maximum comparison uses the existing `RecordPeak`
 theorem directly.
 
-All $k\ge3$ declining inequalities and the global maximum at three remain
-open. The universal Motzkin/Newton argument, remaining quotient certificates
-and their actual-series applications are not established by these rising
-and transport results. The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
-keeps the complete target distinct from these partial conclusions. Full CKZ
-Conjecture 2 and C15 remain OPEN; neither partial theorem is a full external
-resolution, novelty or priority claim. The relevant scalar cut and
-cardinality results are in `ActualCardinality`, `MinimumCutKernel`,
-`CutFactorization` and `ProperCut`; descent statistics in Fu–Lin–Zeng are
-a different question.
+[`RecordFirstDecline.actual_four_record_first_decline`](../../Blueprint/D5/S1/Words/Patterns/Separable/RecordFirstDecline.md)
+gives the actual comparison $a(n,4)\le a(n,3)$ at every natural length,
+and the strict comparison $a(n,4)<a(n,3)$ for every $n\ge3$, for all four
+class/statistic pairs. Its actual weighted difference is $t^3F(q(t))$,
+where $F(x)=1+4x+2x^2-8x^3-6x^4+11x^5+15x^6+5x^7$.
+The exact quotient $(1+x)^2F'(x)/(1-2x-x^2)$ has coefficients
+$4,20,32,16,47,286,889,2224,5372$ through index eight and an unbounded
+nonnegative tail satisfying $v_m=2v_{m-1}+v_{m-2}$. Its positive-index
+composition coefficients dominate those of $20q(t)$; the scalar Schröder
+recurrence gives positivity of the actual $q$ at every positive index.
+The derivative identity and $F(0)=1$ therefore establish strict positivity
+of every coefficient of $F(q(t))$. The theorem applies the existing
+record transports directly. It has no conditional generating-function
+premise and uses no finite length cutoff.
+
+The declining inequalities at arbitrary $k\ge4$ and the global maximum
+at three remain open. The universal Motzkin differential recurrence,
+support and Newton identity, the other quotient certificates, and their
+actual-series applications are not established by these partial results.
+The [problem dossier](../../Problems/chenkitaevzhang-2024-separable-record-peak-three.md)
+keeps the complete target distinct from them. Full CKZ Conjecture 2 and C15
+remain OPEN; no partial theorem is a full external resolution, novelty or
+priority claim. The relevant scalar cut and cardinality results are in
+`ActualCardinality`, `MinimumCutKernel`, `CutFactorization` and `ProperCut`;
+descent statistics in Fu–Lin–Zeng are a different question.
 
 The supplied bounded literature screen reports examination of the primary
 and manuscript bodies, five known citing bodies, and related record, descent,
@@ -137,4 +152,4 @@ Han–Kitaev–Zhang, arXiv:2408.12865v1. The screen found no equivalent proof
 or refutation of Conjecture 2 within that corpus. This scope does not establish
 global priority, exhaustive citation coverage, exclusive ownership, or the
 unavailable journal body's contents. No originality or open-problem resolution
-is attributed to the two helper identities.
+is attributed to these partial conclusions.
