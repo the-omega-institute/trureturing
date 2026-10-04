@@ -168,7 +168,8 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
+        bool additionalLocalSource = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -219,6 +220,11 @@ public sealed partial class TruthReleaseCommandTests
         if (receiptIntegrityMismatch)
         {
             AddReceiptIntegrityMismatch(files);
+        }
+        if (additionalLocalSource)
+        {
+            files["Blueprint/D5/S0/Carrier/LocalOnly.scribe.cs"] = "local definition outside the resource pack\n";
+            files["Blueprint/D5/S0/Carrier/LocalOnly.md"] = "# Local projection\n";
         }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);

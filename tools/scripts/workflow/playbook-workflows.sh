@@ -22,7 +22,7 @@ run_digest_status() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module truth_export_dir truth_export_output
+  local accepted_modules='[]' closed_modules module closed_query_output
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
@@ -44,26 +44,19 @@ align_delivery_ledger() {
     echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
     return 2
   fi
-  truth_export_dir="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-truth-export.XXXXXXXX")" || {
-    echo "PLAYBOOK_INVALID could not allocate a truth export directory" >&2
-    return 2
-  }
-  if ! truth_export_output="$(run_cli truth-export --out "$truth_export_dir" --candidate-lean-report "$REPORT" 2>&1)"; then
-    rm -rf -- "$truth_export_dir"
-    echo "PLAYBOOK_INVALID Lean truth export failed: $truth_export_output" >&2
+  if ! closed_query_output="$(run_cli ledger-align --list-closed --candidate-lean-report "$REPORT")"; then
+    echo "PLAYBOOK_INVALID current Closed module query failed" >&2
     return 2
   fi
   if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .nodes[]
-      | .repo_path as $path
+      .[]
+      | . as $path
       | select(($accepted | index($path)) == null)
       | $path
-    ' "$truth_export_dir/truth-export.v1.json" 2>&1)"; then
-    rm -rf -- "$truth_export_dir"
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from Lean truth export: $closed_modules" >&2
+    ' <<< "$closed_query_output" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to derive Closed modules from current Lean report: $closed_modules" >&2
     return 2
   fi
-  rm -rf -- "$truth_export_dir"
 
   while IFS= read -r module; do
     [[ -z "$module" ]] || align_args+=(--add "$module")

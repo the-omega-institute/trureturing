@@ -142,6 +142,23 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
+    [Fact]
+    public void ResourcePackProductionVerifierIgnoresAdditionalLocalScribeSources()
+    {
+        using var fixture = CreateFixture(productionVerifier: true, additionalLocalSource: true);
+        using var resources = new TemporaryDirectory();
+        using var output = new TemporaryDirectory();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
+
+        Assert.True(exitCode == 0, console.Error);
+        Assert.Single(TruthReleaseVerification.Verify(output.Path,
+            console.Output.Split(' ').Single(part => part.StartsWith("release_digest=", StringComparison.Ordinal))
+                ["release_digest=".Length..]).ReadTruthGraph().Documents.Nodes);
+    }
+
     private static string[] PackArguments(string path, string digest) =>
         ["--scribe-pack", path, "--scribe-pack-digest", digest];
 

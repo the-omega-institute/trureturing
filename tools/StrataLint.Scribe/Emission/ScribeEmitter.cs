@@ -234,7 +234,8 @@ public static class ScribeEmitter
         FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null) =>
         Run(repositoryRoot, check: true, TextWriter.Null, error, _ => report,
             validateRepository: true, tolerateAbsentDocuments: false, suppliedDefinitions: definitions,
-            frozenState: frozenState, frozenStatements: frozenStatements).Verification;
+            frozenState: frozenState, frozenStatements: frozenStatements,
+            validateSourceBijection: false).Verification;
 
     private static ScribeEmissionRun Run(
         string repositoryRoot,

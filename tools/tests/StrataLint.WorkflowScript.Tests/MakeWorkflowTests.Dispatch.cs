@@ -456,7 +456,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
-        Assert.Contains("make filemap DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render FILEMAP on demand", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
@@ -467,7 +467,8 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         Assert.Contains("make scribe-release-fetch DIGEST=\"$(DIGEST)\" PREFIX=\"$(PREFIX)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
         Assert.Contains("--scribe-pack \"$(SCRIBE_PACK)\" --scribe-pack-digest \"$(DIGEST)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
-        Assert.Contains("make scribe-release-fetch DIGEST=\"$(DIGEST)\" PREFIX=\"$(PREFIX)\"", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.DoesNotContain("DIGEST", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-release-fetch", Recipe(makefile, "filemap"), StringComparison.Ordinal);
         Assert.Contains("-- filemap", Recipe(makefile, "filemap"), StringComparison.Ordinal);
 
         Assert.Equal(0, toolsResult.ExitCode);
