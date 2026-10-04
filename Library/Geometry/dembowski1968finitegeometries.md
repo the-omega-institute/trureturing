@@ -3,7 +3,6 @@ bibkey: dembowski1968finitegeometries
 authors: Peter Dembowski
 year: 1968
 title: Finite Geometries
-publisher: Springer-Verlag
 doi: null
 url: null
 claim: Chapter I presents the coordinate model of finite affine and projective geometries, including lines over finite fields and their elementary incidence properties.
