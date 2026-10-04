@@ -38,7 +38,10 @@ internal sealed class GHZMeasureBiseparableBoundDocument : IScribeDocumentDefini
                 H("The exact constant is one half"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For a product density, the functional factors as u f11 − u uprime² f22 f12 f21. Variance of a real linear combination of anticommuting Hermitian involutions bounds the sum of their squared expectations by one. Applying this to the two overlapping pairs on the same BC state bounds |f12 f21| by 1−|f11|². Consequently the absolute functional is at most q [x+(1−q²)(1−x²)], where q=|u| and x=|f11|. If 1−q² is at most one half, the bracket is at most one. Otherwise q≤3/4 and the bracket≤5/4, giving at most 15/16. The product |0⟩⟨0| tensor |Φ⁺⟩⟨Φ⁺| attains one half using direction pairs (z,x),(x,z),(x,z). No convexity or bound for mixtures across partitions follows from this conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-zhong-wu-2026-ghz-measure-biseparable-half"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("ghz-half-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

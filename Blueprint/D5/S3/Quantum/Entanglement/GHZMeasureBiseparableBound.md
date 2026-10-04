@@ -108,6 +108,10 @@ $$(\forall rhoA \in \mathit{QubitMatrix},\; \forall rhoBC \in \mathit{TwoQubitMa
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu-zhong-wu-2026-ghz-measure-biseparable-half` (proved) by `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu-zhong-wu-2026-ghz-measure-biseparable-half","declaration_gid":"D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shengjun Wu; Kaichen Zhong; Jeffery Wu (2026). *A measure for genuine tripartite entanglement*. DOI: [10.48550/arXiv.2605.02876](https://doi.org/10.48550/arXiv.2605.02876). URL: <https://arxiv.org/abs/2605.02876v3>.
