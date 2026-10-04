@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
 import Mathlib.Data.Finset.Max
 import Mathlib.Order.Preorder.Finite
+import Mathlib.Order.UpperLower.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,9 +18,10 @@ noncomputable section
 
 namespace D5.S3.Arith.FibonacciAtomic.FiniteHereditaryPatternRealization
 
-open GenealogicalFiberTransport (Source substitution composition Fiber fiberMap)
-open ActualImageAddressCertificate (Output out ActualImage)
-open D5.S0.History.FiniteDescriptionSelfCode (FiniteDescription)
+open GenealogicalFiberTransport (Source substitution composition)
+open ActualImageAddressCertificate (ActualImage)
+open ActualTreeReadoutAcquisition (Address Reply readout leaves)
+open ActualImageSevenLeafSeparation (leafAddresses leafLabel)
 open scoped BigOperators
 
 /-- The three blocks in a column. -/
@@ -31,16 +33,15 @@ def preimage : Block → Source
   | .u => .mul (.mul (.of true) (.of true)) (.of false)
   | .v => .mul (.mul (.of true) (.of false)) (.of true)
 
-/-- Actual third-substitution blocks A, U and V. -/
-def block (b : Block) : Source := substitution^[3] (preimage b)
+local notation "block" => (fun b : Block => ActualImageSevenLeafSeparation.thirdImage (preimage b))
 
 /-- Information leaves are shared leaves bearing both labels among the indices. -/
-def Delta {ι : Type*} (P : ι → Source) (S : Finset ι) : Set FiniteDescription :=
-  {w | (∀ i ∈ S, out (P i) w = .leafAlpha ∨ out (P i) w = .leafBeta) ∧
-    (∃ i ∈ S, out (P i) w = .leafAlpha) ∧ ∃ i ∈ S, out (P i) w = .leafBeta}
+def Delta {ι : Type*} (P : ι → Source) (S : Finset ι) : Set Address :=
+  {w | (∀ i ∈ S, readout w (P i) = .alpha ∨ readout w (P i) = .beta) ∧
+    (∃ i ∈ S, readout w (P i) = .alpha) ∧ ∃ i ∈ S, readout w (P i) = .beta}
 
 /-- Residual information leaves shared by U and V. -/
-def D : Set FiniteDescription := Delta (fun b : Bool => if b then block .u else block .v) Finset.univ
+def D : Set Address := Delta (fun b : Bool => if b then block .u else block .v) Finset.univ
 
 /-- A column contributes precisely when it contains U and V and contains no A. -/
 def Mixed {ι : Type*} (X : ι → Block) (S : Finset ι) : Prop :=
@@ -52,20 +53,16 @@ def B_T : (n : ℕ) → (Fin (n + 1) → Source) → Source
   | n + 1, X => .mul (X 0) (B_T n (fun j => X j.succ))
 
 /-- Root-first hole addresses in the right-comb context. -/
-def hole : (n : ℕ) → Fin (n + 1) → FiniteDescription
+def hole : (n : ℕ) → Fin (n + 1) → Address
   | 0, _ => []
   | n + 1, j => Fin.cases [false] (fun k => true :: hole n k) j
 
 /-- None denotes an internal context node; some records the unique hole and suffix. -/
-def locate : (n : ℕ) → FiniteDescription → Option (Fin (n + 1) × FiniteDescription)
+def locate : (n : ℕ) → Address → Option (Fin (n + 1) × Address)
   | 0, w => some (0, w)
   | n + 1, [] => none
   | n + 1, false :: v => some (0, v)
   | n + 1, true :: v => (locate n v).map (fun p => (p.1.succ, p.2))
-
-/-- Downward closure of a finite family of subsets. -/
-def Hereditary {m : ℕ} (K : Finset (Finset (Fin m))) : Prop :=
-  ∀ S ∈ K, ∀ R ⊆ S, R ∈ K
 
 /-- The complete set of inclusion-maximal faces. -/
 noncomputable def maximalFaces {m : ℕ} (K : Finset (Finset (Fin m))) : Finset (Finset (Fin m)) :=
@@ -106,18 +103,18 @@ set_option maxHeartbeats 2000000 in -- Full address decomposition and finite fac
 /-- Right-comb block reports and the equal-composition actual realization of every
 finite hereditary family containing the singleton faces. -/
 theorem result :
-    (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : FiniteDescription,
-      out (B_T n X) w = match locate n w with
+    (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : Address,
+      readout w (B_T n X) = match locate n w with
         | none => .branch
-        | some p => out (X p.1) p.2) ∧
-    (∀ n : ℕ, ∀ w : FiniteDescription, locate n w = none ↔
-      ∃ j : Fin (n + 1), ∃ r : FiniteDescription, r ≠ [] ∧ hole n j = w ++ r) ∧
-    (∀ m n : ℕ, ∀ X : Fin m → Fin (n + 1) → Block, ∀ S : Finset (Fin m), ∀ w : FiniteDescription,
+        | some p => readout p.2 (X p.1)) ∧
+    (∀ n : ℕ, ∀ w : Address, locate n w = none ↔
+      ∃ j : Fin (n + 1), ∃ r : Address, r ≠ [] ∧ hole n j = w ++ r) ∧
+    (∀ m n : ℕ, ∀ X : Fin m → Fin (n + 1) → Block, ∀ S : Finset (Fin m), ∀ w : Address,
       w ∈ Delta (fun i => B_T n (fun j => block (X i j))) S ↔
         ∃ j v, w = hole n j ++ v ∧ Mixed (fun i => X i j) S ∧ v ∈ D) ∧
-    (∀ n : ℕ, ∀ j k : Fin (n + 1), ∀ v u : FiniteDescription,
+    (∀ n : ℕ, ∀ j k : Fin (n + 1), ∀ v u : Address,
       hole n j ++ v = hole n k ++ u → j = k ∧ v = u) ∧
-    (∀ m : ℕ, 2 ≤ m → ∀ K : Finset (Finset (Fin m)), Hereditary K →
+    (∀ m : ℕ, 2 ≤ m → ∀ K : Finset (Finset (Fin m)), IsLowerSet (K : Set (Finset (Fin m))) →
       (∀ i : Fin m, {i} ∈ K) →
         let T := Nat.card (Column K)
         let N := M K
@@ -145,19 +142,19 @@ theorem result :
     · simp [faceEntry, hi]
 
   have address_facts :
-      (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : FiniteDescription,
-        out (B_T n X) w = match locate n w with
+      (∀ n : ℕ, ∀ X : Fin (n + 1) → Source, ∀ w : Address,
+        readout w (B_T n X) = match locate n w with
           | none => .branch
-          | some p => out (X p.1) p.2) ∧
-      (∀ n : ℕ, ∀ j : Fin (n + 1), ∀ v : FiniteDescription,
+          | some p => readout p.2 (X p.1)) ∧
+      (∀ n : ℕ, ∀ j : Fin (n + 1), ∀ v : Address,
         locate n (hole n j ++ v) = some (j, v)) ∧
-      (∀ n : ℕ, ∀ w : FiniteDescription, ∀ j : Fin (n + 1), ∀ v : FiniteDescription,
+      (∀ n : ℕ, ∀ w : Address, ∀ j : Fin (n + 1), ∀ v : Address,
         locate n w = some (j, v) ↔ w = hole n j ++ v) := by
     classical
-    have read (n : ℕ) (X : Fin (n + 1) → Source) (w : FiniteDescription) :
-        out (B_T n X) w = match locate n w with
+    have read (n : ℕ) (X : Fin (n + 1) → Source) (w : Address) :
+        readout w (B_T n X) = match locate n w with
           | none => .branch
-          | some p => out (X p.1) p.2 := by
+          | some p => readout p.2 (X p.1) := by
       induction n generalizing w with
       | zero => rfl
       | succ n hn =>
@@ -168,8 +165,8 @@ theorem result :
           | false => rfl
           | true =>
             have h := hn (fun j => X j.succ) w
-            cases hl : locate n w <;> simpa [B_T, locate, out, hl] using h
-    have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : FiniteDescription) :
+            cases hl : locate n w <;> simpa [B_T, locate, readout, hl] using h
+    have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : Address) :
         locate n (hole n j ++ v) = some (j, v) := by
       induction n with
       | zero => have hj : j = 0 := Fin.ext (by omega); subst j; rfl
@@ -177,9 +174,9 @@ theorem result :
         refine Fin.cases ?_ (fun k => ?_) j
         · rfl
         · simpa [hole, locate] using congrArg
-            (fun p : Option (Fin (n + 1) × FiniteDescription) => p.map (fun q => (q.1.succ, q.2)))
+            (fun p : Option (Fin (n + 1) × Address) => p.map (fun q => (q.1.succ, q.2)))
             (hn k)
-    have locate_eq (n : ℕ) (w : FiniteDescription) (j : Fin (n + 1)) (v : FiniteDescription) :
+    have locate_eq (n : ℕ) (w : Address) (j : Fin (n + 1)) (v : Address) :
         locate n w = some (j, v) ↔ w = hole n j ++ v := by
       induction n generalizing w with
       | zero =>
@@ -212,7 +209,7 @@ theorem result :
     exact ⟨read, hole_locate, locate_eq⟩
 
   have face_facts (m : ℕ) (hm : 2 ≤ m) (K : Finset (Finset (Fin m)))
-      (hK : Hereditary K) (hsingle : ∀ i : Fin m, {i} ∈ K) :
+      (hK : IsLowerSet (K : Set (Finset (Fin m)))) (hsingle : ∀ i : Fin m, {i} ∈ K) :
       ∀ S : Finset (Fin m), 2 ≤ S.card →
         ((∃ c : Column K, Mixed (fun i => entry i c) S) ↔ S ∈ K) := by
     classical
@@ -221,7 +218,7 @@ theorem result :
     · rintro ⟨c, hc⟩
       cases c with
       | inl c =>
-        apply hK c.val.1 (Finset.mem_filter.mp c.property.1).1 S
+        apply hK _ (Finset.mem_filter.mp c.property.1).1
         intro i hi
         exact (face_non_a i c).mp (hc.1 i hi)
       | inr c =>
@@ -241,28 +238,28 @@ theorem result :
 
   have block_facts :
       [false, true, false, true] ∈ D ∧
-      (∀ {ι : Type} (X : ι → Block) (S : Finset ι) (w : FiniteDescription),
+      (∀ {ι : Type} (X : ι → Block) (S : Finset ι) (w : Address),
         w ∈ Delta (fun i => block (X i)) S ↔ Mixed X S ∧ w ∈ D) := by
     classical
-    have a_leaf (w : FiniteDescription) :
-        (out (block .a) w = .leafAlpha ∨ out (block .a) w = .leafBeta) ↔
+    have a_leaf (w : Address) :
+        (readout w (block .a) = .alpha ∨ readout w (block .a) = .beta) ↔
         w = [false, false] ∨ w = [false, true] ∨ w = [true] := by
-      cases w with
-      | nil => simp [block, preimage, out, Function.iterate_succ_apply', substitution]
-      | cons b w =>
-        cases b <;> cases w with
-        | nil => simp [block, preimage, out, Function.iterate_succ_apply', substitution]
-        | cons c w =>
-          cases c <;> cases w <;>
-            simp [block, preimage, out, Function.iterate_succ_apply', substitution]
-    have incompatible (b : Block) (hb : b ≠ .a) (w : FiniteDescription)
-        (ha : out (block .a) w = .leafAlpha ∨ out (block .a) w = .leafBeta) :
-        ¬ (out (block b) w = .leafAlpha ∨ out (block b) w = .leafBeta) := by
+      have semantics := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 (block .a)).2 w
+      have labelled : (∃ b, leafLabel (block .a) w = some b) ↔
+          readout w (block .a) = .alpha ∨ readout w (block .a) = .beta := by
+        cases hr : readout w (block .a) <;> simp [leafLabel, hr]
+      rw [← labelled, ← semantics]
+      simp [leafAddresses, leaves, ActualImageSevenLeafSeparation.thirdImage, preimage,
+        Function.iterate_succ_apply', substitution]
+    have incompatible (b : Block) (hb : b ≠ .a) (w : Address)
+        (ha : readout w (block .a) = .alpha ∨ readout w (block .a) = .beta) :
+        ¬ (readout w (block b) = .alpha ∨ readout w (block b) = .beta) := by
       rcases (a_leaf w).mp ha with rfl | rfl | rfl <;>
-        cases b <;> simp_all [block, preimage, out, Function.iterate_succ_apply', substitution]
-    have D_spec (w : FiniteDescription) : w ∈ D ↔
-        (out (block .u) w = .leafAlpha ∧ out (block .v) w = .leafBeta) ∨
-        (out (block .u) w = .leafBeta ∧ out (block .v) w = .leafAlpha) := by
+        cases b <;> simp_all [ActualImageSevenLeafSeparation.thirdImage, preimage, readout,
+          Function.iterate_succ_apply', substitution]
+    have D_spec (w : Address) : w ∈ D ↔
+        (readout w (block .u) = .alpha ∧ readout w (block .v) = .beta) ∨
+        (readout w (block .u) = .beta ∧ readout w (block .v) = .alpha) := by
       simp only [D, Delta, Set.mem_setOf_eq, Finset.mem_univ, forall_true_left,
         Bool.forall_bool, Bool.exists_bool, Bool.false_eq_true, ↓reduceIte]
       constructor
@@ -276,13 +273,13 @@ theorem result :
     · intro ι X S w
       constructor
       · rintro ⟨hleaf, ⟨a, ha, hα⟩, ⟨b, hb, hβ⟩⟩
-        change out (block (X a)) w = .leafAlpha at hα
-        change out (block (X b)) w = .leafBeta at hβ
+        change readout w (block (X a)) = .alpha at hα
+        change readout w (block (X b)) = .beta at hβ
         have hab : X a ≠ X b := by intro h; rw [h, hβ] at hα; cases hα
         have hno (i : ι) (hi : i ∈ S) : X i ≠ .a := by
           intro hia
           have hli := hleaf i hi
-          change out (block (X i)) w = .leafAlpha ∨ out (block (X i)) w = .leafBeta at hli
+          change readout w (block (X i)) = .alpha ∨ readout w (block (X i)) = .beta at hli
           rw [hia] at hli
           by_cases haa : X a = .a
           · have hba : X b ≠ .a := by intro hba; exact hab (haa.trans hba.symm)
@@ -352,8 +349,8 @@ theorem result :
     rw [face_count, padding_count, Nat.add_sub_of_le]
     exact Finset.le_sup (Finset.mem_univ i)
 
-  have context_prefix (n : ℕ) (w : FiniteDescription) :
-      locate n w = none ↔ ∃ j : Fin (n + 1), ∃ r : FiniteDescription,
+  have context_prefix (n : ℕ) (w : Address) :
+      locate n w = none ↔ ∃ j : Fin (n + 1), ∃ r : Address,
         r ≠ [] ∧ hole n j = w ++ r := by
     induction n generalizing w with
     | zero =>
@@ -405,14 +402,14 @@ theorem result :
                 exact ⟨k, r, hr, by simpa [hole] using hp⟩
             simp [locate, htail]
   have delta_comb {ι : Type} (n : ℕ) (X : ι → Fin (n + 1) → Block)
-      (S : Finset ι) (w : FiniteDescription) :
+      (S : Finset ι) (w : Address) :
       w ∈ Delta (fun i => B_T n (fun j => block (X i j))) S ↔
         ∃ j v, w = hole n j ++ v ∧ Mixed (fun i => X i j) S ∧ v ∈ D := by
     cases hl : locate n w with
     | none =>
       constructor
       · rintro ⟨_, ⟨i, hi, ha⟩, _⟩
-        change out (B_T n (fun j => block (X i j))) w = .leafAlpha at ha
+        change readout w (B_T n (fun j => block (X i j))) = .alpha at ha
         rw [address_facts.1, hl] at ha
         cases ha
       · rintro ⟨j, v, rfl, _, _⟩
@@ -464,28 +461,6 @@ theorem result :
       composition (block b) =
         (1 + 3 * (if b = .a then 0 else 1), 2 + 5 * (if b = .a then 0 else 1)) := by
     cases b <;> rfl
-  have unique_in_fiber (a b : ℕ) (hv : 1 ≤ a + b) (Q R : Source)
-      (hQ : composition Q = (a, b)) (himage : substitution^[3] R = substitution^[3] Q) :
-      R = Q := by
-    have hRtransport := (fiberMap (composition R) 3 ⟨R, rfl⟩).property
-    have hQtransport := (fiberMap (composition Q) 3 ⟨Q, rfl⟩).property
-    change composition (substitution^[3] R) =
-      GraftAffineClosure.step^[3] (composition R) at hRtransport
-    change composition (substitution^[3] Q) =
-      GraftAffineClosure.step^[3] (composition Q) at hQtransport
-    have he := hRtransport.symm.trans ((congrArg composition himage).trans hQtransport)
-    have h1 := congrArg Prod.fst he
-    have h2 := congrArg Prod.snd he
-    simp only [Function.iterate_succ_apply', Function.iterate_zero_apply,
-      GraftAffineClosure.step] at h1 h2
-    have hc : composition R = (a, b) := by
-      have hQa := congrArg Prod.fst hQ
-      have hQb := congrArg Prod.snd hQ
-      apply Prod.ext <;> dsimp only <;> omega
-    have hinj := ((GenealogicalFiberTransport.result.1 a b hv).2.2.2.2.1 3).1
-    have heq : fiberMap (a, b) 3 ⟨R, hc⟩ = fiberMap (a, b) 3 ⟨Q, hQ⟩ :=
-      Subtype.ext himage
-    exact congrArg Subtype.val (hinj heq)
   refine ⟨address_facts.1, context_prefix, ?_, ?_, ?_⟩
   · intro m n X S w
     exact delta_comb n X S w
@@ -537,17 +512,17 @@ theorem result :
       let c : FaceColumn K := ⟨(F, i), hF, hiF (by simp)⟩
       let k := e.symm (.inl c)
       let w := hole n k ++ [false, true, false, true]
-      have hr (r : Fin m) : out (P r) w = out (block (entry r (.inl c)))
-          [false, true, false, true] := by
-        change out (B_T n (fun k => block (entry r (e k)))) w = _
+      have hr (r : Fin m) : readout w (P r) =
+          readout [false, true, false, true] (block (entry r (.inl c))) := by
+        change readout w (B_T n (fun k => block (entry r (e k)))) = _
         rw [address_facts.1]
         simp [w, address_facts.2.1, k]
-      have h := congrArg (fun t => out t w) hij
+      have h := congrArg (fun t => readout w t) hij
       rw [hr i, hr j] at h
       have hji : j ≠ i := Ne.symm hne
       by_cases hjF : j ∈ F <;>
-        simp [entry, faceEntry, c, hji, hjF, block, preimage,
-          Function.iterate_succ_apply', substitution, out] at h
+        simp [entry, faceEntry, c, hji, hjF, ActualImageSevenLeafSeparation.thirdImage, preimage,
+          Function.iterate_succ_apply', substitution, readout] at h
     have hQ_inj : Function.Injective Q := by
       intro i j hij
       apply hP_inj
@@ -561,7 +536,8 @@ theorem result :
     · intro i R
       constructor
       · intro hR
-        exact unique_in_fiber (T + M K) (M K) (by omega) (Q i) R (hQc i)
+        exact ((SourceTransportCentralizer.source_transport_centralizer.2.2.1 substitution
+          ⟨fun s t => substitution.map_mul s t, fun t => rfl⟩).iterate 3)
           (hR.trans (hPQ i).symm)
       · rintro rfl
         exact hPQ i

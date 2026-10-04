@@ -14,11 +14,11 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
             Paragraph(Text("Sources are complete nonempty ordered binary trees with alpha and beta leaves. "
                 + "The native substitution rho sends alpha to beta and beta to (beta,alpha), preserving every pairing. "
                 + "Addresses are finite root-first Boolean lists: false denotes left, true denotes right. "
-                + "The original endpoint observation reports leafAlpha, leafBeta, branch or absent, including at the root "
+                + "The original endpoint observation reports alpha, beta, branch or absent, including at the root "
                 + "and after a path has passed a leaf. Composition c records the two leaf counts.")),
             Def("Block", "Three column entries", "The entries a, u and v name the complete blocks A, U and V."),
             Def("preimage", "Literal block preimages", "The preimages are alpha, ((alpha,alpha),beta) and ((alpha,beta),alpha), respectively."),
-            Def("block", "Actual image blocks", "Each block is rho applied three times to its literal preimage. Their compositions are (1,2), (4,7) and (4,7)."),
+            Paragraph(Text("The blocks use the thirdImage operation on these preimages. Their compositions are (1,2), (4,7) and (4,7).")),
             Def("Delta", "Indexed information leaves", "Delta(P,S) consists of addresses that are leaves of every indexed source in S "
                 + "and carry alpha in at least one row and beta in at least one row. Distinct indices may name the same tree."),
             Def("D", "Residual two-block information", "D is Delta for U and V. It contains the address LRLR."),
@@ -30,7 +30,6 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
                 + "and the last is reached entirely by right steps."),
             Def("locate", "Full address decomposition", "locate(n,w) is none when w ends at an internal context node. "
                 + "Otherwise it is some(j,v), where w=hole(n,j)++v. The suffix may be empty or continue beyond a block leaf."),
-            Def("Hereditary", "Downward closure", "Hereditary(K) means every subset of every member of K is itself a member."),
             Def("maximalFaces", "Maximal faces", "This is the set of all inclusion-maximal members of K."),
             Def("FaceColumn", "Face columns", "An original column is a pair (F,k), with F a maximal face and k in F."),
             Def("faceEntry", "Face table", "The entry in row i and column (F,k) is V for i=k, U for i in F other than k, and A outside F."),
@@ -46,8 +45,8 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
                         + "w,v,u,r are finite addresses, and X in the report clause maps Fin(n+1) to Source. "
                         + "In the information clause X maps Fin(m) times Fin(n+1) to Block, S is a finite subset of Fin(m), "
                         + "and Xj denotes its j-th column. Bblocks(n,X)(i) means B(n,j maps to block(X(i,j))). A concatenation is written concat. Empty denotes the empty address. "
-                        + "read(n,X,w) is branch when locate(n,w)=none and is out(X(j),v) when locate(n,w)=some(j,v). "
-                        + "K is a finite family of subsets of Fin(m); Singletons(K) means every singleton belongs to K. "
+                        + "read(n,X,w) is branch when locate(n,w)=none and is readout(v,X(j)) when locate(n,w)=some(j,v). "
+                        + "K is a finite family of subsets of Fin(m); Hereditary(K) is the lower-set property on finite subsets, and Singletons(K) means every singleton belongs to K. "
                         + "T=card(Column(K)) and N=M(K) are fixed by the complete padded table. "
                         + "The result holds for every column enumeration e: Fin(T-1+1) equivalent to Column(K). "
                         + "Qtable(K,e)(i) is B(T-1,j maps to preimage(entry(i,e(j)))); "
@@ -100,7 +99,7 @@ internal sealed class FiniteHereditaryPatternRealizationDocument : IScribeDocume
     {
         Formula n=V("n"), m=V("m"), x=V("X"), w=V("w"), j=V("j"), k=V("k"), v=V("v"), u=V("u"), r=V("r");
         Formula t=V("T"), z=V("N"), q=V("Q"), p=V("P"), family=V("K"), s=V("S"), i=V("i"), a=V("R");
-        Formula report=All("n,X,w",EqOf(Call("out",Call("B",n,x),w),Call("read",n,x,w)));
+        Formula report=All("n,X,w",EqOf(Call("readout",w,Call("B",n,x)),Call("read",n,x,w)));
         Formula prefix=All("n,w",IffOf(EqOf(Call("locate",n,w),V("none")),Exists("j,r",And(
             Not(EqOf(r,V("empty"))),EqOf(Call("hole",n,j),Call("concat",w,r))))));
         Formula leaves=All("m,n,X,S,w",IffOf(InOf(w,Call("Delta",Call("Bblocks",n,x),s)),Exists("j,v",And(
