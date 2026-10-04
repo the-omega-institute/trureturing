@@ -131,6 +131,12 @@ $c=0.39$. The zero ground direction remains exact. This bounded
 parameter interval is not cofinal as $c\uparrow1/2$; RH and the full
 Robin inequality remain unresolved. No Lean certification is claimed.
 
+The [sharper exterior supplier](sharper-exterior.md) improves the high
+coercivity input for this same operator. The optional
+`--high-gap-supplier` argument transports with that explicitly supplied
+bound while retaining the existing conservative low and residual
+allowances. It does not change the default $c=0.39$ calculation.
+
 ```sh
 uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/reports/theta-mixed-matrix/threshold_transport.py
 ```

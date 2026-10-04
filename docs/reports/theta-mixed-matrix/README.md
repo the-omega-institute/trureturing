@@ -204,3 +204,9 @@ uses these same saved data to check a conditional ground-orthogonal
 gap greater than $0.0005648$ at $c=0.39$, without another action solve.
 This bounded parameter range remains short of cofinal $c\uparrow1/2$
 positivity and supplies no Lean, RH or full Robin certification.
+
+The [sharper exterior envelope](sharper-exterior.md) reuses the same
+interior, actions and restricted comparison. Under the same paper
+premises, it improves the high coercivity input and yields a
+ground-orthogonal margin greater than $0.00169425$ at $c=0.41$.
+This is still a bounded parameter range, without cofinal or RH closure.
