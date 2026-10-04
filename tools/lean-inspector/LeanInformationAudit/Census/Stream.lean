@@ -1,4 +1,5 @@
-import LeanInformationAuditInterface.Store
+import LeanInformationAudit.Contract.Literal
+import LeanInformationAuditInterface.Contract.Catalog
 import LeanInformationAudit.NameWire
 import LeanInformationAudit.Census.Ownership
 
@@ -89,35 +90,47 @@ private def namedRecord (info : ConstantInfo) (head : Name) : Json := Id.run do
   return Json.mkObj [("name", nameJson info.name), ("head", toJson head.toString),
     ("mode", toJson mode), ("key", key), ("identity", identity), ("statement", statement)]
 
-/-- Entry layouts come from their producer's actual types, not probe copies.
-The casts have the same trusted olean boundary as Lean's extension importer. -/
-unsafe def registryRecords (moduleName : String) (data : ModuleData) : Json := Id.run do
+/-- Typed inputs are read from compiled constructor fields without evaluation.
+Structural extension casts retain Lean's trusted olean importer boundary. -/
+unsafe def registryRecords (moduleName : String) (data : ModuleData) : Except String Json := do
   let mut finite := #[]
   let mut structural := #[]
   let mut seals := #[]
   let mut bindings := #[]
-  for (name, entries) in data.entries do
-    let name := privateToUserName name
-    if name == `LeanInformationAudit.registrationInputs then
-      for raw in entries do
-        let input : RegistrationInput := unsafeCast raw
-        let entry := input.entry
-        finite := finite.push <| Json.mkObj [
-          ("key", nameJson entry.theoremName), ("module", toJson moduleName),
-          ("names", Json.arr #[nameJson entry.unitName, nameJson entry.realizationName])]
-        let row := Json.mkObj [("key", nameJson entry.theoremName), ("module", toJson moduleName)]
+  for info in data.constants do
+    let .defnInfo info := info | continue
+    -- Match the compiled contract names without importing its domain mathematics.
+    if info.type.getAppFn.constName? == some `LeanInformationAudit.Contract.Registration then
+      let typeArgs := info.type.getAppArgs
+      unless typeArgs.size == 10 do throw "contract.registration:target_arity"
+      let all ← Contract.Literal.constructor `LeanInformationAudit.Contract.Registration.mk
+        (typeArgs.size + 17) "registration" info.value
+      let fields := all.extract typeArgs.size all.size
+      let some theoremName := typeArgs[1]!.consumeMData.constName?
+        | throw "unclassified_form:contract.target_identity"
+      let unitName ← Contract.Literal.name "unit_name" fields[0]!
+      let realizationName ← Contract.Literal.name "realization_name" fields[1]!
+      finite := finite.push <| Json.mkObj [
+        ("key", nameJson theoremName), ("module", toJson moduleName),
+        ("names", Json.arr #[nameJson unitName, nameJson realizationName])]
+      let row := Json.mkObj [("key", nameJson theoremName), ("module", toJson moduleName)]
+      bindings := bindings.push row
+      let readout ← Contract.Literal.optional "readout" fields[9]!
+      let origin ← Contract.Literal.optional "escape_from" fields[12]!
+      let selection ← Contract.Literal.optional "source_selection" fields[13]!
+      if readout.isSome || origin.isSome || selection.isSome ||
+          fields[14]!.consumeMData.getAppFn.constName? != some ``Contract.Continuation.absent then
         bindings := bindings.push row
-        if input.declaration.isSome then bindings := bindings.push row
-    else if name == `LeanInformationAudit.DispositionCensus.structuralRegistry then
+    else if info.type.getAppFn.constName? == some ``Contract.Seal then
+      let fields ← Contract.Literal.constructor ``Contract.Seal.mk 2 "seal" info.value
+      seals := seals.push (toJson (← Contract.Literal.name "seal.root" fields[0]!).toString)
+  for (name, entries) in data.entries do
+    if privateToUserName name == `LeanInformationAudit.DispositionCensus.structuralRegistry then
       for raw in entries do
         let entry : StructuralProvenanceEntry := unsafeCast raw
         structural := structural.push <| Json.mkObj [
           ("key", nameJson entry.theoremName), ("module", toJson entry.registrationModule.toString),
           ("names", Json.arr #[nameJson entry.unitConst, nameJson entry.realizationConst])]
-    else if name == `LeanInformationAudit.sealInputs then
-      for raw in entries do
-        let entry : SealInput := unsafeCast raw
-        seals := seals.push (toJson entry.rootId.toString)
   return Json.mkObj [("finite", Json.arr finite), ("structural", Json.arr structural),
     ("seals", Json.arr seals), ("bindings", Json.arr bindings)]
 
@@ -132,7 +145,7 @@ unsafe def registryRecords (moduleName : String) (data : ModuleData) : Json := I
   out.putStrLn (Json.mkObj [("module", toJson moduleName), ("part", toJson part),
     ("is_module", toJson data.isModule), ("imports", Json.arr imports),
     ("owners", Json.arr #[]), ("named", Json.arr named),
-    ("registries", registryRecords moduleName data)]).compress
+    ("registries", ← IO.ofExcept <| registryRecords moduleName data)]).compress
 
   -- Statement identities for collisions are supplied by the standalone producer.
   for info in data.constants do

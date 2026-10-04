@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.PhysicalProtocol.PhysicalRationalResponse
 import Reg.D5.S0.Computability.RationalPostprocessor
 
@@ -84,14 +85,30 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : ResponseSymbol, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨.zero, .one, by change ResponseSymbol.zero ≠ ResponseSymbol.one; decide⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.physical_reply_run in arena
-  readout via (@cutRealization ResponseSymbol ResponseSymbol
-    (fun a b => instDecidableEqResponseSymbol a b) (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+private theorem _root_.PredictiveThermodynamic.physical_reply_run.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.PhysicalRationalResponse.arena (∀ {n : Nat} (F : PredictiveThermodynamic.Physical.Formula n), @Exists.{1} (List.{0} PredictiveThermodynamic.ResponseSymbol) fun (w : List.{0} PredictiveThermodynamic.ResponseSymbol) => And (@PredictiveThermodynamic.PhysicalReply n F w) (And (∀ (w' : List.{0} PredictiveThermodynamic.ResponseSymbol), @PredictiveThermodynamic.PhysicalReply n F w' → @Eq.{1} (List.{0} PredictiveThermodynamic.ResponseSymbol) w' w) (And (@LE.le.{0} Nat instLENat (@List.length.{0} PredictiveThermodynamic.ResponseSymbol w) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (@List.length.{0} (Std.Sat.CNF.Clause.{0} (Fin n)) F)))) (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))) (And (PredictiveThermodynamic.suitableResponse w) (And (Nonempty.{1} (Turing.TM2OutputsInTime PredictiveThermodynamic.postMachine w (@Option.some.{0} (List.{0} (Turing.FinTM2.Γ PredictiveThermodynamic.postMachine (Turing.FinTM2.k₁ PredictiveThermodynamic.postMachine))) (PredictiveThermodynamic.binaryWord (PredictiveThermodynamic.totalPostOutput w))) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (@List.length.{0} PredictiveThermodynamic.ResponseSymbol w)) (@OfNat.ofNat.{0} Nat (nat_lit 10) (instOfNatNat (nat_lit 10)))))) (@Eq.{1} Nat (Lax51Proofs.RamToTM.msbValue (PredictiveThermodynamic.totalPostOutput w)) (@PredictiveThermodynamic.Physical.satisfyingCount n F))))))) Reg.D5.S0.Computability.PhysicalRationalResponse.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => @physical_reply_run⟩
-  variation variation sensitivity sensitivity
-  escape from (ResponseSymbol) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.PredictiveThermodynamic.physical_reply_run) (type_of% (arena)) (type_of% (arena)) (type_of% (@cutRealization ResponseSymbol ResponseSymbol
+    (fun a b => instDecidableEqResponseSymbol a b) (fun b => b))) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (ResponseSymbol)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Quantum") "Dynamics") "PhysicalProtocol") "PhysicalRationalResponse") 0) "PredictiveThermodynamic") "physical_reply_run") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Quantum") "Dynamics") "PhysicalProtocol") "PhysicalRationalResponse") 0) "PredictiveThermodynamic") "physical_reply_run") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.physical_reply_run.__primitive_realization)⟩,
+  readout := some (@cutRealization ResponseSymbol ResponseSymbol
+    (fun a b => instDecidableEqResponseSymbol a b) (fun b => b)),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (ResponseSymbol),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.PhysicalRationalResponse

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.MordellTwoAdicNonTorsion
 import Reg.Support.DependentFamily
 
@@ -80,18 +81,25 @@ def xRegistration : Registration xArena (xArena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x
-  in xArena
-  readout via (realize signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))
-  realizes xRegistration
-  escape from source ({
-    owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "domain", "fn", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x) (type_of% (xArena)) (type_of% (xArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "MordellTwoAdicNonTorsion") "infinite_add_order_of_negative_two_adic_x") "Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion/Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(xArena)⟩,
+  objectArena := ⟨(xArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (xArena) ⟨(xRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "domain", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 def yArena : Arena where
   signature := signature
@@ -121,18 +129,25 @@ def yRegistration : Registration yArena (yArena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y
-  in yArena
-  readout via (realize signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))
-  realizes yRegistration
-  escape from source ({
-    owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "domain", "arg"]
-      stateBinder := 2 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y) (type_of% (yArena)) (type_of% (yArena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "MordellTwoAdicNonTorsion") "infinite_add_order_of_unit_x_positive_two_adic_y") "Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion/Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(yArena)⟩,
+  objectArena := ⟨(yArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (yArena) ⟨(yRegistration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ q => padicValRat 2 q) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "domain", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms xRegistration
 #print axioms yRegistration

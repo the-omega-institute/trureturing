@@ -16,7 +16,7 @@ from packages.reg import NativeRegTests, NativeRegConsumerTests, NativeRegSuppor
 from Census.tests.relocation_fixture import NativeRelocationTests
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativeColdPublicationTests,
-                  NativePackagingTests, NativeInterfaceTests, NativeRecordTests,
+                  NativePackagingTests, NativeInterfaceTests,
                   NativeRegTests, unittest.TestCase):
     pass
 

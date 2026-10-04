@@ -7473,16 +7473,11 @@ private def catalogQualifiedUnitName :
 
 ### 24.2 legacy theorem 登记
 
-```lean
-register_information_theorem existingTheorem
-  in PrimitiveLawArenaName
-  object_arena CanonicalArenaName
-  catalog CatalogId
-  primitives primitiveBundleExpression
-  realization existingTheoremPrimitiveRealization
-```
+登记使用 `def x : Contract.Registration … := {…}` 的带类型数据声明，完整字段与
+契约参数遵守 spec A5.5／A5.6。`arena`、`objectArena`、`catalog` 指明舞台与目录，
+`realization := .legacy …` 携带实现、primitive bundle 与具名等价桥。
 
-其中 `realization` 必须是 Lean theorem：
+其中等价桥必须是 Lean theorem：
 
 ```lean
 existingTheoremStatement ↔
@@ -9266,12 +9261,9 @@ Catalog
 
 ### Phase 4　registry
 
-实现 persistent environment extension 与：
-
-```lean
-information_theorem
-register_information_theorem
-```
+登记以 `def x : Contract.Registration … := {…}` 实现接口契约类型。
+模板 enrollment 使用 `def x : Contract.TemplateEnrollment … := {…}`。
+判官实现从编译后的带类型声明发现输入并重建评定；登记不含也不调用判官代码。
 
 ### Phase 5　单次 seal
 

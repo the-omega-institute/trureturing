@@ -1,6 +1,0 @@
-import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Observer
-import LeanInformationAudit.Tests.Assessment
-
-test_imported_assessment
-
-measure_imported_template_query 1 1

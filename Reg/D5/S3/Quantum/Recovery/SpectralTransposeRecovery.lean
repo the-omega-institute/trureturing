@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 import Reg.Support.DependentFamily
 
@@ -67,17 +68,25 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     exact zero_ne_one (congrFun (congrFun (congrFun h (ULift.up 0))
       (ULift.up 0)) (ULift.up 0))
 
-register_information_theorem spectral_support_on_kraus in arena
-  readout via (realize signature.{u,v,w} (fun _ _ x => x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg", "fn"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{max ((max (max u_1 u_2) u_3) + 2) ((max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1)) + 2), max ((max (max u_1 u_2) u_3) + 2) ((max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1)) + 2), max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), 1, 1, 0, 1, 1, 0, 0, 0, max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0, 0} (@_root_.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} signature.{u_1, u_2, u_3} (fun _ _ x => x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "SpectralTransposeRecovery") "spectral_support_on_kraus") "Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery/Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} signature.{u_1, u_2, u_3} (fun _ _ x => x) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Support
@@ -146,19 +155,27 @@ def registration : Registration arena.{u,v,w} (arena.Law actual) where
     intro h
     exact zero_ne_one (congrFun (congrFun h (ULift.up 0)) (ULift.up 0))
 
-register_information_theorem spectral_transpose_candidate in arena
-  readout via (realize signature.{v}
-    (fun _ _ x => CStarMatrix.ofMatrix.symm x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery
-    coordinates := #[1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "arg", "body", "body",
-        "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{u_2 + 3, u_2 + 3, u_2 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_2 + 1, u_2, 0, u_2, 0, 0} (@_root_.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate.{u_1, u_2, u_3}) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (arena.{u_1, u_2, u_3})) (type_of% (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2}
+    (fun _ _ x => CStarMatrix.ofMatrix.symm x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "SpectralTransposeRecovery") "spectral_transpose_candidate") "Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery/Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  readout := some (realize.{u_2 + 1, u_2, 0, u_2, 0} signature.{u_2}
+    (fun _ _ x => CStarMatrix.ofMatrix.symm x) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Candidate

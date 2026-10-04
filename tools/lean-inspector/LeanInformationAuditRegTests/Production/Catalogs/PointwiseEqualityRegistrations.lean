@@ -1,4 +1,4 @@
-import Reg.Catalogs.PointwiseEqualityRegistrations
+import Reg.Catalogs.PointwiseEqualityRegistrations.SealedCatalog
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Assessment

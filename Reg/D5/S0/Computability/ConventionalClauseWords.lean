@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.ConventionalClauseWords
 import Reg.Support.PhysicalParserCells
 
@@ -75,13 +76,27 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false, true, Bool.false_ne_true⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.Conventional.conventional_word_run in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+private theorem sourceBridge : LegacyPrimitiveRealization arena
+    (type_of% (@_root_.PredictiveThermodynamic.Conventional.conventional_word_run)) symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => conventional_word_run⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@_root_.PredictiveThermodynamic.Conventional.conventional_word_run)
+    (type_of% arena) (type_of% arena)
+    (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b)))
+    (type_of% variation) (type_of% sensitivity) (type_of% Bool) Unit Unit := {
+  unitName := `Reg.D5.S0.Computability.ConventionalClauseWords.informationUnit,
+  realizationName := `Reg.D5.S0.Computability.ConventionalClauseWords.sourceBridge,
+  realizationSource := none, generated := false,
+  arena := ⟨arena⟩, objectArena := ⟨arena⟩, catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy arena symbols symbols.toPrimitiveBundle ⟨sourceBridge⟩,
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := some ⟨variation⟩, sensitivity := some ⟨sensitivity⟩,
+  escapeFrom := some Bool, sourceSelection := none,
+  continuation := .unknown, familyRecord := none,
+  options := #[{ name := `autoImplicit, value := .bool false },
+    { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 
 end Reg.D5.S0.Computability.ConventionalClauseWords

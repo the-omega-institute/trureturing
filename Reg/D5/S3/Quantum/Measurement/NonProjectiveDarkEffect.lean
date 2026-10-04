@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.NonProjectiveDarkEffect
 import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -55,17 +55,7 @@ def arena : Arena where
       (basisProjector (1 : Fin 2) * ((L 0)ᴴ * L 0)).trace = ((1 - a : ℝ) : ℂ) ∧
       (basisProjector (1 : Fin 2) * basisProjector (0 : Fin 2)).trace = 0
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect
-  let sourceName := `D5.S3.Quantum.Measurement.NonProjectiveDarkEffect ++
-    `non_projective_dark_effect
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    capturedStatement := captureStatement (← getEnv) sourceName
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem actual_law : arena.Law actual := by
   simpa only [arena, actual, realize] using non_projective_dark_effect
@@ -109,17 +99,25 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem non_projective_dark_effect in arena
-  readout via (realize signature (fun _ _ F => F) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.NonProjectiveDarkEffect
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect.non_projective_dark_effect) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ F => F) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "NonProjectiveDarkEffect") "non_projective_dark_effect") "Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect/Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.NonProjectiveDarkEffect.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ F => F) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.NonProjectiveDarkEffect, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

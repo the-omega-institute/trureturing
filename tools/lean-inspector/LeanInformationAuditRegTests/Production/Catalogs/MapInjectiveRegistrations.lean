@@ -1,4 +1,4 @@
-import Reg.Catalogs.MapInjectiveRegistrations
+import Reg.Catalogs.MapInjectiveRegistrations.SealedCatalog
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Assessment

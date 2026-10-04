@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
 import Reg.Support.DependentFamily
 import Reg.Support.GeneralInstrumentModels
@@ -83,17 +84,25 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem no_dark_direction_tfae in arena
-  readout via (realize signature (fun _ d X => (1 : Matrix (Fin d) (Fin d) ℂ) - X) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.no_dark_direction_tfae) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ d X => (1 : Matrix.{0, 0, 0} (Fin d) (Fin d) ℂ) - X) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "GeneralInstrumentNoDarkDirection") "no_dark_direction_tfae") "Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection/Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ d X => (1 : Matrix.{0, 0, 0} (Fin d) (Fin d) ℂ) - X) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.GeneralInstrumentNoDarkDirection, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

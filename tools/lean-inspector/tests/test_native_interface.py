@@ -1,11 +1,11 @@
-"""The declaration package must build with only the installed core toolchain."""
+"""Legacy recorder declarations build with only the installed core toolchain."""
 import json
 import os
 import re
 import shutil
 import tomllib
 
-from test_native_support import ROOT, publication
+from test_native_support import ROOT, publication, copy_contract_interface
 
 
 class NativeInterfaceTests:
@@ -16,6 +16,11 @@ class NativeInterfaceTests:
             target = package / 'LeanInformationAudit' / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
+        for relative in ('BindingRecords.lean', 'EscapeEvidence.lean', 'RuntimeInputs.lean',
+                         'InputTypes.lean', 'SnapshotTypes.lean', 'SourceSelection.lean', 'OutputSyntax.lean'):
+            source = ROOT / 'tools/lean-inspector/LeanInformationAudit' / relative
+            target = package / 'LeanInformationAudit' / relative
+            shutil.copyfile(source, target)
         # This core-only audit fixture needs the real capability type, but does
         # not execute catalog construction. Copy its exact declaration; private
         # construction and all field types stay identical to the producer.
@@ -23,7 +28,7 @@ class NativeInterfaceTests:
         start = catalog.index('structure ValidatedSourceSnapshot where\n')
         stop = catalog.index('\ndef ValidatedSourceSnapshot.sourceEntries', start)
         (package / 'LeanInformationAudit/CatalogBuilder.lean').write_text(
-            'import LeanInformationAuditInterface.Records\n'
+            'import LeanInformationAudit.BindingRecords\n'
             'import LeanInformationAudit.Registry.Repository\n'
             'namespace LeanInformationAudit\nopen Lean\n' +
             catalog[start:stop] + '\nend LeanInformationAudit\n')
@@ -99,6 +104,9 @@ run_cmd do
         package = ROOT / 'tools/lean-inspector-interface'
         sources = {str(path.relative_to(ROOT)) for path in package.rglob('*.lean')
                    if '.lake' not in path.parts}
+        contract = package / 'LeanInformationAuditInterface/Contract'
+        sources.update(str(path.relative_to(ROOT)) for path in contract.glob('*.lean'))
+        self.assertTrue(any(path.startswith(str(contract.relative_to(ROOT))) for path in sources))
         self.assertTrue(sources)
         self.assertTrue(sources <= set(selection.expand('inspector_sources')))
         self.assertTrue(sources <= set(selection.dependency_sources()))
@@ -113,11 +121,13 @@ run_cmd do
         source = ROOT / 'tools/lean-inspector-interface'
         self.assertTrue(source.is_dir(), 'missing standalone declaration Interface package')
         package = self.root / 'interface package'
-        shutil.copytree(source, package, ignore=shutil.ignore_patterns('.lake'))
+        policy = tomllib.loads((source / 'lakefile.toml').read_text())
+        self.assertEqual(policy.get('require', []), [{'name': 'trureturing', 'path': '../..'}])
+        copy_contract_interface(source, package)
         shutil.copyfile(ROOT / 'lean-toolchain', package / 'lean-toolchain')
         config = package / 'lakefile.toml'
         policy = tomllib.loads(config.read_text())
-        self.assertEqual(policy.get('require', []), [], 'Interface must have zero requires')
+        self.assertEqual(policy.get('require', []), [], 'Recorder fixture must have zero requires')
         self.assertEqual(json.loads((package / 'lake-manifest.json').read_text())['packages'], [])
         self.assertEqual(len(policy['lean_lib']), 1)
         # The production output is transported under the repository buildDir.
@@ -138,121 +148,16 @@ run_cmd do
         result = self.guarded_command([self.lake, 'build'], cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-    def test_interface_only_records_unassessed_inputs(self):
+    def test_interface_typed_inputs_compile_without_judge(self):
         package, env = self.interface_package()
         built = self.guarded_command([self.lake, 'build'], cwd=package, env=env)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
-        (package / 'MissingHandler.lean').write_text(
-            'import LeanInformationAuditInterface.Syntax\n'
-            'def output := 1\ndef analysis_output := 2\ndef ascii_output := 3\n'
-            'register_information_template Nat\n')
-        result = self.guarded_command([self.lake, 'env', 'lean', 'MissingHandler.lean'],
-                                      cwd=package, env=env)
+        (package / 'TypedInputs.lean').write_text('''import LeanInformationAuditInterface.Contract.Catalog
+open LeanInformationAudit
+def sealInput : Contract.Seal := { rootId := `TypedInputs, options := #[] }
+def templateInput : Contract.TemplateEnrollment Nat := {
+  name := `Nat, version := 1, constructors := #[], options := #[] }
+''')
+        result = self.guarded_command([self.lake, 'env', 'lean', 'TypedInputs.lean'], cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotIn('IE-C050', result.stdout + result.stderr)
-
-    def test_interface_grammar_has_single_owner(self):
-        implementation = ROOT / 'tools/lean-inspector/LeanInformationAudit/Syntax.lean'
-        self.assertFalse(implementation.exists(), 'retired implementation elaborator remains')
-        source = (ROOT / 'tools/lean-inspector/LeanInformationAudit/Registry.lean').read_text()
-        grammar = r'(?m)^\s*(syntax\b|declare_syntax_cat\b|elab\s)'
-        self.assertFalse(re.search(grammar, source), 'implementation still declares registration grammar')
-        self.assertNotRegex(source, r'(?m)^\s*def\s+(registrationTerm|\w+Keyword)\b')
-        self.assertIn('run_cmd LeanInformationAudit.TemplateAudit.initializeGrammarPins', source)
-        output_audit = implementation.parent / 'Projection/OutputOnlyAudit.lean'
-        self.assertFalse(re.search(grammar, output_audit.read_text()),
-                         'output-only audit still declares command grammar')
-
-    def test_interface_recorder_holds_no_admission_policy(self):
-        # Reg compiles against the interface only; an admission rule held there
-        # would make a judge-policy change rebuild every Reg module. The two
-        # rules once duplicated in the recorder are owned by the report.
-        interface = ROOT / 'tools/lean-inspector-interface/LeanInformationAuditInterface'
-        recorder = '\n'.join(path.read_text() for path in sorted(interface.rglob('*.lean')))
-        for policy in ('IE-C011', 'isCompanionName', 'generatedCompanionSuffixes',
-                       '__lowers_escape', '__catalog_irredundant', 'RigidUniverseMismatch',
-                       'P1.ArenaMismatch'):
-            self.assertNotIn(policy, recorder, f'[FAIL] recorder_holds_policy:{policy}')
-        judge = ROOT / 'tools/lean-inspector/LeanInformationAudit'
-        entries = (judge / 'Registry/Entries.lean').read_text()
-        self.assertIn('def generatedCompanionSuffixes', entries)
-        self.assertIn('IE-C011 GeneratedCertificateRegistered', entries)
-        self.assertIn('P1.RigidUniverseMismatch: arena must have three zero universe levels',
-                      (judge / 'Registry/Reifier.lean').read_text())
-
-    def test_interface_records_definition_bridge_before_assessment(self):
-        # Exercise the production recorder, without importing any judge module.
-        # These core-only types supply its companion ABI; the full D5/report
-        # service pair is exercised by RecorderPolicyInputs/Boundary in Lean.
-        package, env = self.interface_package()
-        with (package / 'lakefile.toml').open('a') as config:
-            config.write('\n[[lean_lib]]\nname = "RecorderInputs"\n'
-                         '\n[[lean_lib]]\nname = "RecorderConsumer"\n')
-        (package / 'RecorderInputs.lean').write_text('''import LeanInformationAuditInterface.Syntax
-namespace D5.S3.ConceptDynamics.InformationEscape
-structure Arena where
-  State : Type
-  stateDecidableEq : DecidableEq State
-structure PrimitiveSignature where
-  marker : Bool
-structure PrimitiveBundle (State : Type) where
-  marker : Bool
-structure PrimitiveRealization (State : Type) (signature : PrimitiveSignature) where
-  marker : Bool
-def PrimitiveRealization.toPrimitiveBundle {State : Type} {signature : PrimitiveSignature}
-    [DecidableEq State] (r : PrimitiveRealization State signature) : PrimitiveBundle State :=
-  ⟨r.marker⟩
-structure PrimitiveLawArena where
-  toArena : Arena
-  signature : PrimitiveSignature
-structure LegacyPrimitiveRealization (arena : PrimitiveLawArena) (Statement : Prop)
-    (r : PrimitiveRealization arena.toArena.State arena.signature) : Prop where
-  proof : Statement
-structure TheoremUnit (arena : Arena) where
-  primitives : PrimitiveBundle arena.State
-  Statement : Prop
-  proof : Statement
-def LegacyPrimitiveRealization.toTheoremUnit {arena : PrimitiveLawArena} {Statement : Prop}
-    {r : PrimitiveRealization arena.toArena.State arena.signature}
-    (_bridge : LegacyPrimitiveRealization arena Statement r) (proof : Statement) :
-    TheoremUnit arena.toArena := ⟨⟨r.marker⟩, Statement, proof⟩
-end D5.S3.ConceptDynamics.InformationEscape
-open D5.S3.ConceptDynamics.InformationEscape
-def arena : PrimitiveLawArena := ⟨⟨Bool, inferInstance⟩, ⟨false⟩⟩
-def reads : PrimitiveRealization Bool arena.signature := ⟨false⟩
-theorem target : True := trivial
-theorem occurrenceTarget : True := trivial
-set_option linter.defProp false in
-def bridge : LegacyPrimitiveRealization arena True reads := ⟨trivial⟩
-register_information_theorem target in arena
-  primitives reads.toPrimitiveBundle realization bridge
-def objectArena := arena.toArena
-register_information_theorem occurrenceTarget in arena
-  object_arena objectArena catalog definitionBridge
-  primitives reads.toPrimitiveBundle realization bridge
-''')
-        recorded = self.guarded_command([self.lake, 'build', 'RecorderInputs'],
-                                        cwd=package, env=env)
-        self.assertEqual(recorded.returncode, 0,
-                         '[FAIL] recorder_rejected_typed_definition_bridge\n' +
-                         recorded.stdout + recorded.stderr)
-        # A fresh consumer reads the persisted inputs, after recording completed.
-        # No test_assess wrapper can turn a recording error into a passing guard.
-        (package / 'RecorderConsumer.lean').write_text('''import RecorderInputs
-open Lean Elab Command LeanInformationAudit
-run_cmd do
-  let env ← getEnv
-  let inputs := (RegistrationInputs.owned env).filter (·.1 == `RecorderInputs)
-  unless inputs.size == 2 do throwError "[FAIL] definition_bridge_inputs_not_persisted"
-  let .defnInfo _ ← getConstInfo ``bridge | throwError "[FAIL] bridge_kind_changed"
-  for (_, input) in inputs do
-    let unit ← getConstInfo input.entry.unitName
-    unless !unit.type.hasMVar && !unit.type.hasFVar do
-      throwError "[FAIL] definition_bridge_companion_not_closed"
-    discard <| getConstInfo input.entry.realizationName
-  logInfo "[PASS] typed_definition_bridge_recorded_and_imported count=2"
-''')
-        consumed = self.guarded_command([self.lake, 'build', 'RecorderConsumer'],
-                                        cwd=package, env=env)
-        self.assertEqual(consumed.returncode, 0, consumed.stdout + consumed.stderr)
-        self.assertIn('[PASS] typed_definition_bridge_recorded_and_imported count=2', consumed.stdout)

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment
 import Reg.Support.DependentFamily
 
@@ -131,15 +132,24 @@ def registration : Registration arena sourceStatement where
     change failureDefect T (fun _ => false) ≠ failureDefect T (fun _ => true)
     norm_num [failureDefect,T,D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.expect,D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.endpoint,d,defect,z,zero]
 
-register_information_theorem same_tree_stopped_moment_certificate in arena
-  readout via (realize signature (fun _ p m => failureDefect p.2 m) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment
-    coordinates := #[4,5]
-    readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","fn","arg","fn","arg","arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p m => failureDefect p.2 m) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "FiniteLocalBellmanEnvelope") "same_tree_stopped_moment_certificate") "Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment/Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p m => failureDefect p.2 m) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, definition := none, coordinates := #[4, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment

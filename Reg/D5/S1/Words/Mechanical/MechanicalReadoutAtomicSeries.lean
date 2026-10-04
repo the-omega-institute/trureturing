@@ -1,23 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass,
-      statementIdentity := "sha256:fd1a4e1caf3744647b114425eeaf3607fbbc885af074c2b36fda2f72411e9fd8",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass,
-      statementIdentity := "sha256:fd1a4e1caf3744647b114425eeaf3607fbbc885af074c2b36fda2f72411e9fd8",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
@@ -88,14 +76,26 @@ theorem seriesSensitivity : FiniteSlotSensitivity seriesArena.toPrimitiveLawAren
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass
-  in seriesArena
-  readout via (@mechanicalReadoutRealization SeriesOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.seriesReadout))
-  primitives seriesRealization.toPrimitiveBundle
-  realization seriesBridge
-  variation seriesVariation sensitivity seriesSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass) (type_of% (seriesArena)) (type_of% (seriesArena)) (type_of% (@mechanicalReadoutRealization SeriesOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.seriesReadout))) (type_of% (seriesVariation)) (type_of% (seriesSensitivity)) (type_of% (ℝ)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.seriesBridge,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(seriesArena)⟩,
+  objectArena := ⟨(seriesArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration.seriesRealization) (seriesRealization.toPrimitiveBundle) ⟨(seriesBridge)⟩,
+  readout := some (@mechanicalReadoutRealization SeriesOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.seriesReadout)),
+  variation := some ⟨(seriesVariation)⟩,
+  sensitivity := some ⟨(seriesSensitivity)⟩,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries

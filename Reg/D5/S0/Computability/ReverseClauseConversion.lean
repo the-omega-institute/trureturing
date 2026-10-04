@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.ReverseClauseConversion
 import Reg.Support.DependentFamily
 
@@ -68,19 +69,26 @@ def registration : Registration arena (arena.Law actual) where
     change unaryCount ([] : UnaryFormula 0) ≠ 0
     simp [unaryCount,unaryStandard,Std.Sat.CNF.eval]
 
-def selection : SourceSelection := {
-  owner := `D5.S0.Computability.ReverseClauseConversion
-  coordinates := #[0]
-  readouts := #[
-    { path := #["body","arg","arg","arg","arg"]
-      stateOperand := some #["arg"] }
-  ] }
-
-
-register_information_theorem _root_.PredictiveThermodynamic.ConventionalReverse.reverse_word_run in arena
-  readout via (realize signature (fun _ _ w => explicitRawCount w) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@_root_.PredictiveThermodynamic.ConventionalReverse.reverse_word_run)
+    (type_of% arena) (type_of% arena)
+    (type_of% (realize signature (fun _ _ w => explicitRawCount w) (fun e => nomatch e)))
+    Unit Unit Unit Unit Unit := {
+  unitName := `Reg.D5.S0.Computability.ReverseClauseConversion.informationUnit,
+  realizationName := `Reg.D5.S0.Computability.ReverseClauseConversion.registration,
+  realizationSource := none, generated := false,
+  arena := ⟨arena⟩, objectArena := ⟨arena⟩, catalog := Lean.Name.anonymous,
+  localNames := false, realization := .source arena ⟨registration⟩,
+  readout := some (realize signature (fun _ _ w => explicitRawCount w) (fun e => nomatch e)),
+  variation := none, sensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S0.Computability.ReverseClauseConversion, definition := none,
+    coordinates := #[0], readouts := #[{
+      path := #["body","arg","arg","arg","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none,
+  options := #[{ name := `autoImplicit, value := .bool false },
+    { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 
 end Reg.D5.S0.Computability.ReverseClauseConversion

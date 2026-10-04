@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Enrollment
+import LeanInformationAudit.Registry.SourceBinder
 
 namespace LeanInformationAudit.SourceScope
 open Lean Meta TemplateAudit

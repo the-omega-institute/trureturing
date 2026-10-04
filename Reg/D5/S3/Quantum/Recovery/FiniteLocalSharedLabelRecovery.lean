@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery
 import Reg.Support.DependentFamily
 
@@ -230,16 +231,25 @@ def registration : Registration arena sourceStatement where
     exact zero_ne_one
 
 set_option maxHeartbeats 1000000 in
-register_information_theorem actual_shared_label_support_rigidity in arena
-  readout via (realize signature (fun _ p w => leafEffect p.2.1 w.val) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery
-    coordinates := #[0,1,4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg", "body", "fn", "arg"]
-      stateBinder := 9 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{1, 0, 0, 0, 0} signature (fun _ p w => leafEffect p.2.1 w.val) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "FiniteLocalSharedLabelRecovery") "actual_shared_label_support_rigidity") "Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery/Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{1, 0, 0, 0, 0} signature (fun _ p w => leafEffect p.2.1 w.val) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg", "body", "fn", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 1000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms source_bridge

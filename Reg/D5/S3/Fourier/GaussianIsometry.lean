@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.GaussianIsometry
 import Reg.Support.DependentFamily
 
@@ -97,17 +98,24 @@ def registration : Registration arena.{u} (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem _root_.D5.S3.Fourier.GaussianIsometry.exists_gaussian_isometry in arena
-  readout via (realize signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor)
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.GaussianIsometry
-    coordinates := #[]
-    readouts := #[{
-      path := #[
-        "body", "body", "body", "body", "arg", "body", "arg",
-        "body", "fn", "arg", "body", "fn", "arg" ]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 2, u + 2, u, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, u, 0, 0, 0} (@_root_.D5.S3.Fourier.GaussianIsometry.exists_gaussian_isometry.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor)) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "GaussianIsometry") "exists_gaussian_isometry") "Reg.D5.S3.Fourier.GaussianIsometry/Reg.D5.S3.Fourier.GaussianIsometry.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.GaussianIsometry.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u})⟩,
+  objectArena := ⟨(arena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  readout := some (realize.{0, 0, u, 0, 0} signature.{u} (fun _ _ x => gaussianReal 0 x) emptyAnchor),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.GaussianIsometry, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Fourier.GaussianIsometry

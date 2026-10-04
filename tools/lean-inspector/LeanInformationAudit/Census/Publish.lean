@@ -171,7 +171,7 @@ elab "#disposition_census" &"projection" &"root" root:ident &"source" sourcePath
     &"manifest" manifestName:ident &"report_keys" reportKeysName:ident &"rows" rowsPath:str
     &"receipt" receiptPath:str &"receipt_digest" receiptDigest:str
     generate:(" generate")?
-    &"certificate" certificate:ident " output " outputPath:str : command => do
+    &"certificate" certificate:ident &" output " outputPath:str : command => do
   let destination := outputPath.getString
   phase destination "report_binding"
   let bytes ← IO.FS.readFile reportPath.getString

@@ -16,6 +16,172 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+Typed contract discovery inspects the five direct Contract heads. Admitted entries
+are safe, closed `def` declarations with a structure literal body; standalone
+ExpectedDeclaration is rejected by the root structure rule. Rigid universes remain
+unchanged. Parentheses around the result head are accepted. Term parameters and
+used section variables cannot supply a closed entry.
+
+`Contract.Ref` stores only `value`. The decoder reads its compiled constant head
+by stripping Expr metadata and following application functions. Lambda, let,
+projection, open and unknown-constant payloads receive a field-role diagnostic;
+the decoder never reduces them. Registration target identity comes from the
+target constant in the contract type, with theorem, closure, arity and rigid
+universe checks. `Registration.targetName` is absent.
+
+Metadata uses the following closed grammar. Mathematical payload fields keep
+ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
+user code.
+
+| Metadata shape | Accepted source forms | Compiled forms |
+| --- | --- | --- |
+| Name | quoted names; `Lean.Name.anonymous`, `str`, `num`; qualified, opened namespace and dot constructors | Name constructors and core quotation shorthands |
+| Nat | numerals; `Nat.zero`, nested `Nat.succ`, including dot constructors | Nat literals/constructors and the fixed core OfNat instance |
+| Int | numerals, unary minus; `Int.ofNat`, `Int.negSucc`; `OfNat.ofNat n`, `Neg.neg i` | Int constructors and the fixed core OfNat/Neg instances |
+| Bool/String | true/false constructors and string literals | Bool constructors and string literals |
+| Optional/array | `none`, `some literal`, `#[literal, …]` | Option constructors and core List.toArray/Array.mk constructor trees, including the pinned compiler's literal list-tail bindings |
+| Contract records | complete structure literals, anonymous constructors, fixed named constructors | exact schema constructors |
+| Parentheses/ascriptions | parentheses on literal terms; `(literal : T)` for the exact literal or record type, with qualified or opened short spelling | the corresponding literal/constructor expression |
+
+Array and Option type ascriptions, user aliases, references, updates and
+computations are outside this grammar and receive
+`contract.source_literal:nonliteral`. The expression decoder separately verifies
+constructor arities and exact core numeric instances. Literal list-tail bindings
+are decoded structurally with closed elements, without expression substitution
+or evaluation.
+
+For metadata syntax, discovery reads macro and term elaborator registration keys
+from the entry module’s compiler import DAG, plus source patterns for local
+rules. A repository extension capable of processing a metadata node receives
+`contract.source_literal:term_expander`; the audit never invokes it. Parser
+choices are checked across alternatives. Unrelated mathematical notation and
+mathematical payload expansion remain available. Core numeric instances are
+verified separately by the expression decoder.
+
+The four `Contract` interface modules accept imports, namespace/section
+scaffolding, `open`, `universe`, documentation comments, and bare
+`structure`/`inductive` declarations. Declaration syntax has a finite node
+table in `Contract.InterfaceGuard.typeSyntaxKinds`: identifiers, numeric
+literals, application, arrows/Pi binders, Sort/Type/Prop, parentheses, type
+ascription, explicit/implicit/strict implicit/instance binders, explicit universe
+arguments, universe max/imax/addition/parentheses, and the listed declaration,
+field, constructor and documentation containers. Unknown nodes, defaults,
+attributes, deriving, tactics, do, quotations and every elaboration node
+(including `Lean.byElab`) receive
+`contract.interface:command_not_allowed`; unknown node kinds include the
+`type_syntax_not_allowed` suffix.
+The lexical gate precedes the compiled companion inventory; names cannot grant
+permission to rejected source commands.
+
+Reg commands also have a complete finite command-kind table in
+`Contract.SourceAudit.ordinaryRegCommands`. Only listed ordinary mathematical
+scaffolding, bare `set_option` and allowed attributes
+pass. The ordinary parser kinds are `declaration`, `end`, `moduleDoc`,
+`namespace`, `open`, `printAxioms`, `section`, `universe` and `variable` in
+`Lean.Parser.Command`.
+`in` and `mutual` recursively audit their inner commands. Unknown commands,
+`run_meta`, `run_elab`, macros, syntax, elaborators, initialization and evaluation
+commands receive `contract.reg:metaprogramming_not_allowed`.
+`run_cmd` and `notation`, including local notation, receive the same
+metaprogramming rejection for every Reg module and command body. Catalogs use
+typed RootCatalog entries; seals use typed Seal entries in SealedCatalog modules.
+No audit executes a source command or macro.
+
+Standalone `attribute` and `@[…]` accept
+only `instance` and `reducible`, with no priority or other attribute arguments.
+Local/scoped markers do not expand the attribute-name table. Unlisted names
+receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
+
+Source `set_option` accepts exactly `autoImplicit`, `relaxedAutoImplicit`,
+`backward.isDefEq.respectTransparency`,
+`backward.isDefEq.respectTransparency.types`, `maxHeartbeats`, `maxRecDepth`,
+`trace.InformationRegistration.check`, and `maxSynthPendingDepth`. Values are
+literals of the option type: Boolean for the implicit/transparency/trace options,
+Nat for the resource bounds. Name prefixes grant no permission. Other names
+receive `contract.reg:option_not_allowed`; mistyped literals receive
+`contract.reg:option_literal_type`.
+
+Every Reg declaration rejects `unsafe` and `partial` with
+`contract.reg:declaration_modifier_not_allowed`; `noncomputable`, `private`, and
+`protected` remain permitted. These checks traverse the complete source trees,
+including `in`, `mutual`, and command/term/tactic `set_option`. Unrecognized command
+wrappers fail by name. Authored elaboration reads deduplicated origin commands,
+including their wrappers.
+
+Every audited Reg constant outside a validated contract entry is forbidden to
+directly reference any constant owned by an imported
+`LeanInformationAuditInterface.Contract.*` module in its compiled type or body.
+The check uses `ConstantInfo.getUsedConstantsAsSet`, including opaque bodies,
+and reads the explicit structure names of primitive `Expr.proj` nodes that Lean
+`foldConsts` omits. Constructors, projections, Ref, readout and option types all
+participate. It emits
+`contract.reg:contract_reference_outside_entry`. No dependency closure, reduction,
+carrier projection table, result-type shape gate or type-alias tracker is used.
+Ordinary mathematical definitions and theorems obey the same rule without shape
+restrictions. Entry heads, closed terms, literal metadata, Reg command permissions,
+interface command permissions and source/compiled inventory reconciliation remain
+checked.
+
+Contract entries have no declaration suffix: `where`, termination hints,
+`decreasing_by` and `deriving` receive
+`contract.entry:declaration_suffix_not_allowed`.
+
+Only `eq_1` and `eq_def` have entry auxiliary permission. Both must be
+same-module theorem constants at Lean v4.33.0 reserved equation identities, with
+the simple reflexive equation shape with the validated entry body as its right
+hand side. Source
+where/let-rec declarations retain their own authored inventory. Authored term
+elaboration in the entry command tree, including imported repository
+term/tactic/command expanders, grants no equation permission. Enclosing wrappers
+remain in that tree; sibling declarations in a mutual block do not. Unrelated
+mathematical declarations retain their ordinary syntax permissions. The import syntax keys are checked against the complete
+source command trees. All other compiled constants,
+including named elaboration children, obey the ordinary direct-reference rule.
+Private compiler identities and source user spellings remain distinct.
+
+Reg module kinds come from the `Reg/Catalogs/**` subtree: its exact
+`RootCatalog.lean` leaf is a catalog and `SealedCatalog.lean` is a sealed catalog.
+Every other file is ordinary, including D5 mirrors with either reserved leaf
+name. The loaded Reg import closure and canonical source paths construct these
+obligations before entry discovery, without an instance table. Every required
+source must exist; omitting a loaded Reg module from discovery receives
+`contract.root_structure:required_module_missing`.
+
+Ordinary modules contain no RootCatalog or Seal; catalog modules contain exactly
+one RootCatalog and no Seal; sealed catalogs contain exactly one of each. Root
+IDs equal their owning module. Missing, extra, duplicate entries and wrong root
+IDs receive `contract.root_structure:*` failures. Expected/source/baseline arrays
+and contributor identities retain the existing snapshot checks. Typed catalog and seal
+entries belong in reserved leaves within Reg/Catalogs; D5 registration mirrors
+retain their original addresses.
+
+Typed expected occurrences come only from RootCatalog. An entry of type
+`ExpectedDeclaration` always receives
+`contract.root_structure:independent_expected_not_allowed`.
+Its decoder and snapshot output are absent; there is no independent-expected
+fallback.
+
+The production report uses Contract.Discovery/Decoder as its sole input path.
+Typed discovery enforces the
+source command and reference rules above. Catalogs and seals from D5 mirrors
+use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
+`SealedCatalog.lean`. Mirrors retain their registrations at their original paths;
+catalogs import those leaves, and leaves do not import catalogs. Catalog root IDs
+use the catalog module; registrationModuleName retains the leaf owner.
+Catalogs and seals are optional analysis groups: registration assessment does
+not require catalog membership. Missing seals remain visible as absent report
+artifacts; migration correspondence is checked separately.
+
+The compiled interface inventory admits only source types, kernel constructors,
+recorded projections and the pinned compiler's explicitly listed recursor,
+noConfusion, constructor and sizeOf companions. Unknown compiler products
+receive `contract.interface:compiled_non_type`.
+
+Reg sources use the fixed typed declaration grammar. Catalogs use RootCatalog
+entries and seals use Seal entries; local notation is not admitted.
+Mathematical attributes obey the finite attribute grammar above.
+Typed discovery has no evaluation fallback.
+
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
 `STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
@@ -113,7 +279,7 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-`InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新其中的 `compatibility_version`。
+`LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新当前 wire 的 `compatibility_version`。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
@@ -170,3 +336,19 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
+
+The interface consists of typed contract structures and inductives. Every Reg
+entry uses `def x.{u…} : Contract.<type> := {…}` with literal metadata and typed
+mathematical fields. The report reconstructs companions, E1–E8 assessments and
+seal proofs inside its kernel environment. Runtime DTOs live in Impl; no recorder
+or registration command runs during Reg compilation. Implementation edits rebuild
+no Reg modules; report reuse depends on Lake inputs and the manual semantic
+version. Interface edits atomically migrate every use, remove the old path and
+bump that version. Historical compatibility is not supported. Existing
+representation upgrades preserving mathematical evidence and registration
+semantics are outside the registration pause.
+
+The report driver calls the Inspector once per completed target. The consumer
+serializes that target before the driver releases its Environment and proof
+objects. Cross-target collision checks retain only names and digest strings;
+there is no array of target environments or constant bodies.

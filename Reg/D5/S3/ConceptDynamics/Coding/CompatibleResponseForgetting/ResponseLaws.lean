@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 import Reg.Support.DependentFamily
 import Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ScalarCountMatrices
@@ -77,17 +78,25 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨(0 : ℕ), (0 : ℕ), (1 : ℕ), Nat.zero_ne_one⟩
 
-register_information_theorem exchange_chain_trans in arena
-  readout via (realize signature (fun _ l₁ l₂ => l₁ + l₂) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_trans) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ l₁ l₂ => l₁ + l₂) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "exchange_chain_trans") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTrans.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ l₁ l₂ => l₁ + l₂) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -152,17 +161,25 @@ def registration : Registration arena (arena.Law numberActual) where
     intro h
     exact Nat.zero_ne_one (congrArg Fin.val h)
 
-register_information_theorem unsweep_sweep in arena
-  readout via (realize numberSignature (fun _ _ r => r) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[0, 1, 4, 8, 9]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "arg", "arg"]
-      stateBinder := 11 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.unsweep_sweep) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} numberSignature (fun _ _ r => r) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "unsweep_sweep") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepSweep.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} numberSignature (fun _ _ r => r) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 4, 8, 9], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -209,18 +226,25 @@ def registration : Registration arena (arena.Law numberActual) where
     intro h
     exact Nat.zero_ne_one (congrArg Fin.val h)
 
-register_information_theorem unsweep_append in arena
-  readout via (realize numberSignature (fun _ _ r => r) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[0, 1, 4, 7, 8]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "fn", "arg",
-        "fn", "arg"]
-      stateBinder := 11 }] })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.unsweep_append) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} numberSignature (fun _ _ r => r) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "unsweep_append") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.UnsweepAppend.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} numberSignature (fun _ _ r => r) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 4, 7, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -274,16 +298,25 @@ def registration : Registration arena (arena.Law depthActual) where
     intro i
     exact ⟨(), (0 : ℕ), (1 : ℕ), Nat.zero_ne_one⟩
 
-register_information_theorem exchange_chain_reverse in arena
-  readout via (realize depthSignature (fun _ _ d => d) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_reverse) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "exchange_chain_reverse") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainReverse.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -322,16 +355,25 @@ def registration : Registration arena (arena.Law depthActual) where
     intro i
     exact ⟨(), (0 : ℕ), (1 : ℕ), Nat.zero_ne_one⟩
 
-register_information_theorem exchange_chain_transpose in arena
-  readout via (realize depthSignature (fun _ _ d => d) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.exchange_chain_transpose) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "exchange_chain_transpose") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ChainTranspose.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -482,17 +524,25 @@ def registration : Registration arena (arena.Law depthActual) where
     intro i
     exact ⟨(), (0 : ℕ), (1 : ℕ), Nat.zero_ne_one⟩
 
-register_information_theorem incoming_response_step in arena
-  readout via (realize depthSignature (fun _ _ d => d) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "fn", "fn", "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.incoming_response_step) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "incoming_response_step") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.IncomingStep.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -548,17 +598,25 @@ def registration : Registration arena (arena.Law actual) where
     intro i
     exact ⟨(), (0 : ℕ), (1 : ℕ), (by decide : (1 : ℕ) ≠ 2)⟩
 
-register_information_theorem finite_response_chain_to in arena
-  readout via (realize depthSignature (fun _ _ d => d + 1) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.finite_response_chain_to) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d + 1) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "finite_response_chain_to") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiniteChainTo.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} depthSignature (fun _ _ d => d + 1) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -627,18 +685,27 @@ def registration : Registration arena (arena.Law actual) where
         (Quotient.mk _ false) true) = 0 := identityFiber_card false 0 false true
     exact Nat.zero_ne_one (htrue.symm.trans (h.symm.trans hfalse))
 
-register_information_theorem incoming_response_fiber_card_step in arena
-  readout via (realize signature (fun _ p w => Nat.card
-    (incomingResponseFiber p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 w)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[0, 1, 2, 3, 4, 5]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.incoming_response_fiber_card_step) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{1, 0, 0, 0, 0} signature (fun _ p w => Nat.card.{0}
+    (incomingResponseFiber p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 w)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "incoming_response_fiber_card_step") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.FiberCard.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{1, 0, 0, 0, 0} signature (fun _ p w => Nat.card.{0}
+    (incomingResponseFiber p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 w)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 2, 3, 4, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -717,17 +784,25 @@ def registration : Registration arena (arena.Law actual) where
     intro h
     exact (by decide : (1 : ℕ) ≠ 2) (congrArg (fun M : CountMat 1 1 => M 0 0) h)
 
-register_information_theorem response_matrix_forgetting_reindexed in arena
-  readout via (realize signature (fun _ _ M => M) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg",
-        "body", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+noncomputable def registration_9 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.response_matrix_forgetting_reindexed) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ M => M) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "response_matrix_forgetting_reindexed") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ForgettingReindexed.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ M => M) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -799,20 +874,27 @@ def registration : Registration arena (arena.Law actual) where
     let q : Quotient (liftUnit.response 1) := Quotient.mk _ ()
     exact Nat.zero_ne_one (congrArg (fun A => A q q) h)
 
-register_information_theorem incoming_response_matrix_factor_step in arena
-  readout via (realize signature (fun _ theta F => F (theta.2.2.2.2 + 1))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
-    coordinates := #[0, 1, 2, 3, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateOperand := some #["fn"]
-      stateBinder := 0
-      functionOperand := false
-      booleanPredicate := false }] })
-  escape continues (open)
+noncomputable def registration_10 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.incoming_response_matrix_factor_step) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{1, 0, 0, 0, 0} signature (fun _ theta F => F (theta.2.2.2.2 + 1))
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "CompatibleResponseForgetting") "CompatibleCertificate") "incoming_response_matrix_factor_step") "Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws/Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.MatrixFactorStep.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{1, 0, 0, 0, 0} signature (fun _ theta F => F (theta.2.2.2.2 + 1))
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 2, 3, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

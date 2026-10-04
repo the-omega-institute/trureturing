@@ -145,55 +145,10 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void actual_inline_report_omits_untraced_source_hashes()
-    {
-        const string prefix = "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/";
-        const string registration = prefix + "InlineRealization.lean";
-        const string source = prefix + "InlineRealizationSource.lean";
-        const string helper = prefix + "InlineProofHelper.lean";
-        var root = TestRepositoryLayout.FindRoot();
-        // InlineRealization.lean fails to compile unless the real exporter emits exactly this literal.
-        var literal = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProvenanceWire.lean"));
-        const string open = "r##\"", close = "\"##";
-        var first = literal.IndexOf(open, StringComparison.Ordinal);
-        var last = literal.LastIndexOf(close, StringComparison.Ordinal);
-        Assert.True(first >= 0 && last > first, "canonical wire literal not found");
-        // One literal only: a second delimiter would put Lean syntax inside the slice.
-        Assert.Equal(first, literal.LastIndexOf(open, StringComparison.Ordinal));
-        Assert.Equal(last, literal.IndexOf(close, first + open.Length, StringComparison.Ordinal));
-        var wire = System.Text.Json.Nodes.JsonNode.Parse(literal[(first + open.Length)..last])!;
-        Assert.Null(wire["inputs"]);
-        Assert.All(wire["records"]!.AsArray(), record => Assert.Null(record!["content_inputs"]));
-        var entries = new[] { registration, source, helper }.Select(path =>
-            new RawRepositoryEntry(path, ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path)))));
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create(entries.Append(RawRepositoryEntry.FromText("lean-report-inputs.json",
-                File.ReadAllText(Path.Combine(root, "lean-report-inputs.json"))))))).Snapshot;
-        var declarations = wire["records"]!.AsArray().SelectMany(record => new[]
-        {
-            new LeanDeclaration(record!["unit_name"]!.GetValue<string>(), "def", "True", []),
-            new LeanDeclaration(record["realization_name"]!.GetValue<string>(), "theorem", "True", []),
-        }).DistinctBy(declaration => declaration.Name).ToImmutableArray();
-        LeanAxiomReport WithWire(System.Text.Json.Nodes.JsonNode evidence) =>
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
-            {
-                [registration] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource"], declarations)
-                { InformationTemplates = JsonSerializer.SerializeToElement(evidence) },
-                [source] = new(["LeanInformationAudit.Tests.RegistrationGates.InlineProofHelper"], []),
-                [helper] = new([], []),
-            });
-        var selected = new[] { RepoPath.CreateKnown(registration) };
-        Assert.Null(Record.Exception(() => InformationTemplateEvidence.Collect(
-            snapshot, WithWire(wire), selected)));
-    }
-
-    [Fact]
     public void indirect_judge_import_closure_keeps_ownership_without_hash_lists()
     {
         var files = Files();
-        const string syntax = "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean";
+        const string syntax = "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean";
         files[syntax] = "-- indirect judge fixture\n";
         var loaded = Report(files, indirectJudgePath: true);
         // The raw artifact is the strict reader boundary. The synthetic judge
@@ -204,7 +159,7 @@ public sealed class DeclaredTemplateReviewTests
         reportFiles[syntax] = new([TargetModule], []);
         var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
-        Assert.Equal("LeanInformationAuditInterface.Syntax",
+        Assert.Equal("LeanInformationAuditInterface.Contract.Core",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
         var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
         Assert.Contains(RepoPath.CreateKnown(DeclaredTemplateFixture.Target), closure);

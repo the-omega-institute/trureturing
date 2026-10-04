@@ -1,6 +1,6 @@
-import Reg.Catalogs.InformationRoot
-import Reg.Catalogs.TemplateShadow
-import Reg.Catalogs.SharedInformationRoot
+import Reg.Catalogs.InformationRoot.SealedCatalog
+import Reg.Catalogs.TemplateShadow.SealedCatalog
+import Reg.Catalogs.SharedInformationRoot.SealedCatalog
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.InformationRoot
@@ -41,8 +41,8 @@ run_meta do
   logInfo "[PASS] six distinct historical occurrences: two contexts and four causal bindings validated"
 
 run_cmd do
-  for root in #[`Reg.Catalogs.InformationRoot, `Reg.Catalogs.TemplateShadow,
-      `Reg.Catalogs.SharedInformationRoot] do
+  for root in #[`Reg.Catalogs.InformationRoot.SealedCatalog, `Reg.Catalogs.TemplateShadow.SealedCatalog,
+      `Reg.Catalogs.SharedInformationRoot.SealedCatalog] do
     let records := SealRecords.forRoot (← getEnv) root
     let artifact ← Elab.Command.liftTermElabM <| serializeSealArtifact records
     logInfo m!"LEGACY_CURRENT_SEAL {root} {Sha256.hex artifact.toUTF8}"

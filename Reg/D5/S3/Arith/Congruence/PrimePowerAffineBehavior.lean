@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Congruence.PrimePowerAffineBehavior
 import Reg.Support.DependentFamily
 
@@ -79,19 +80,27 @@ def registration : Registration arena (arena.Law actual) where
     change eta 2 1 0 (2 : ℤ) ≠ eta 2 1 0 (1 : ℤ)
     decide
 
-register_information_theorem local_classification in arena
-  readout via (realize signature
-    (fun _ q x => eta q.1 q.2.1 q.2.2 x) (fun z => nomatch z))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Congruence.PrimePowerAffineBehavior
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "arg",
-        "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "fn",
-        "arg", "fn", "arg"]
-      stateBinder := 5 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.local_classification) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ q x => eta q.1 q.2.1 q.2.2 x) (fun z => nomatch z))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Congruence") "PrimePowerAffineBehavior") "local_classification") "Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior/Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Congruence.PrimePowerAffineBehavior.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ q x => eta q.1 q.2.1 q.2.2 x) (fun z => nomatch z)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Congruence.PrimePowerAffineBehavior, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

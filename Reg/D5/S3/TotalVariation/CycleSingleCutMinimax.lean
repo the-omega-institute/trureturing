@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.TotalVariation.CycleSingleCutMinimax
 import Reg.Support.DependentFamily
 
@@ -97,18 +98,25 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.TotalVariation.CycleSingleCutMinimax.cycle_single_cut_minimax in arena
-  readout via (realize signature.{u} (fun _ _ μ => μ) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.TotalVariation.CycleSingleCutMinimax
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{u + 3, u + 3, u + 1, 1, 1, 0, 1, 1, 0, 0, 0, u + 1, u, 0, u, 0, 0} (@_root_.D5.S3.TotalVariation.CycleSingleCutMinimax.cycle_single_cut_minimax.{u}) (type_of% (arena.{u})) (type_of% (arena.{u})) (type_of% (realize.{u + 1, u, 0, u, 0} signature.{u} (fun _ _ μ => μ) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "TotalVariation") "CycleSingleCutMinimax") "cycle_single_cut_minimax") "Reg.D5.S3.TotalVariation.CycleSingleCutMinimax/Reg.D5.S3.TotalVariation.CycleSingleCutMinimax.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.TotalVariation.CycleSingleCutMinimax.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u})⟩,
+  objectArena := ⟨(arena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u}) ⟨(registration.{u})⟩,
+  readout := some (realize.{u + 1, u, 0, u, 0} signature.{u} (fun _ _ μ => μ) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.TotalVariation.CycleSingleCutMinimax, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.TotalVariation.CycleSingleCutMinimax

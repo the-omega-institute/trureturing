@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily
 import Reg.Support.CyclicStackFamily
 
@@ -34,16 +35,25 @@ def registration : Registration FibreCount.arena (∀ (m : ℕ) (hm : 2 ≤ m),
   sensitivity := _root_.Reg.Support.CyclicStackFamily.singleSensitivity _ _ _ rejected_law
   dependence := dependence
 
-register_information_theorem zhan_bie_conjectures_3_4 in FibreCount.arena
-  readout via (realize EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Words.Patterns.CyclicStackPreimages
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S1.Words.Patterns.CyclicStackPreimages.zhan_bie_conjectures_3_4) (type_of% (FibreCount.arena)) (type_of% (FibreCount.arena)) (type_of% (realize.{0, 0, 0, 0, 0} EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Words") "Patterns") "CyclicStackPreimages") "zhan_bie_conjectures_3_4") "Reg.D5.S1.Words.Patterns.CyclicStackPreimages/D5.S3.ConceptDynamics.InformationEscape.CyclicStackFamily.FibreCount.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Words.Patterns.CyclicStackPreimages.FibreCountAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(FibreCount.arena)⟩,
+  objectArena := ⟨(FibreCount.arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (FibreCount.arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} EvenFibre.signature (fun _ _ (m : ℕ) => fibre (2 * m)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Words.Patterns.CyclicStackPreimages, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end FibreCountAudit
 

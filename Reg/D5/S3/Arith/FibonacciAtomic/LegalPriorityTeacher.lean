@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher
 import Reg.Support.DependentFamily
 
@@ -71,20 +72,31 @@ def registration : Registration arena
       change teacher t (fun _ => Window.zero) ≠ teacher t (probe 0 2) <;>
       decide +kernel
 
-register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.result
-  in arena
-  readout via (realize auditSignature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.result)
+    (type_of% arena) (type_of% arena)
+    (type_of% (realize auditSignature
+      (fun i p x => Fin.cases (teacher p.2.1 x) (fun _ => teacher p.2.2 x) i)
+      (fun e => nomatch e))) Unit Unit Unit Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.informationUnit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher.registration,
+  realizationSource := none, generated := false,
+  arena := ⟨arena⟩, objectArena := ⟨arena⟩, catalog := Lean.Name.anonymous,
+  localNames := false, realization := .source arena ⟨registration⟩,
+  readout := some (realize auditSignature
     (fun i p x => Fin.cases (teacher p.2.1 x) (fun _ => teacher p.2.2 x) i)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher
-    coordinates := #[0, 1, 2]
+    (fun e => nomatch e)),
+  variation := none, sensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher, definition := none,
+    coordinates := #[0, 1, 2],
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 3 }, {
-      path := #["body", "body", "body", "fn", "arg", "body", "body", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+      path := #["body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"],
+      stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }, {
+      path := #["body", "body", "body", "fn", "arg", "body", "body", "arg"],
+      stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none,
+  options := #[{ name := `autoImplicit, value := .bool false },
+    { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
 
 end Reg.D5.S3.Arith.FibonacciAtomic.LegalPriorityTeacher

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.QuadraticForms.PolynomialSignature
 import Reg.Support.DependentFamily
 
@@ -76,19 +77,29 @@ def registration : Registration arena.{u} (arena.Law actual) where
     rw [hz, ho]
     norm_num
 
-register_information_theorem _root_.D5.S3.QuadraticForms.PolynomialSignature.compile_iff_signature
-  in arena
-  readout via (realize signature_family.{u}
-    (fun _ p x => signature (Matrix.toQuadraticForm'
-      (fun i j => MvPolynomial.eval x (p.2.2 i j)))) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.QuadraticForms.PolynomialSignature
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{u_1 + 3, u_1 + 3, u_1 + 1, 1, 1, 0, 1, 1, 0, 0, 0, u_1 + 1, u_1, 0, 0, 0, 0} (@_root_.D5.S3.QuadraticForms.PolynomialSignature.compile_iff_signature.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{u_1 + 1, u_1, 0, 0, 0} signature_family.{u_1}
+    (fun _ p x => signature.{0} (Matrix.toQuadraticForm'.{0, 0}
+      (fun i j => MvPolynomial.eval.{0, u_1} x (p.2.2 i j)))) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "QuadraticForms") "PolynomialSignature") "compile_iff_signature") "Reg.D5.S3.QuadraticForms.PolynomialSignature/Reg.D5.S3.QuadraticForms.PolynomialSignature.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.QuadraticForms.PolynomialSignature.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{u_1 + 1, u_1, 0, 0, 0} signature_family.{u_1}
+    (fun _ p x => signature.{0} (Matrix.toQuadraticForm'.{0, 0}
+      (fun i j => MvPolynomial.eval.{0, u_1} x (p.2.2 i j)))) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.QuadraticForms.PolynomialSignature, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end
 end Reg.D5.S3.QuadraticForms.PolynomialSignature

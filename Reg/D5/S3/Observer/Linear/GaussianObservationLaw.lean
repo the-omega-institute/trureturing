@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.GaussianObservationLaw
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
@@ -161,20 +162,35 @@ def registration : Registration arena (arena.Law actual) where
       exact (hne (by cases role; cases other; rfl)).elim
     · intro e; exact nomatch e
   dependence := dependence_proof
-register_information_theorem _root_.D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0} (@_root_.D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{1, 0, 0, 0, 0} signature
     (fun _ q z => by
       letI := q.finiteN
       letI := q.decN
       letI := q.finiteP
       letI := q.decP
-      exact (action (observation q.matrix) z, action (signal (n := q.n) (p := q.p)) z)) emptyAnchor)
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Linear.GaussianObservationLaw,
-    coordinates := #[0,1,6,7,8],
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "body"],
-      stateOperand := some #["arg","arg"] }] })
-  escape continues (open)
+      exact (action (observation q.matrix) z, action (signal (n := q.n) (p := q.p)) z)) emptyAnchor)) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Linear") "GaussianObservationLaw") "gaussian_observation_law") "Reg.D5.S3.Observer.Linear.GaussianObservationLaw/Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{1, 0, 0, 0, 0} signature
+    (fun _ q z => by
+      letI := q.finiteN
+      letI := q.decN
+      letI := q.finiteP
+      letI := q.decP
+      exact (action (observation q.matrix) z, action (signal (n := q.n) (p := q.p)) z)) emptyAnchor),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, definition := none, coordinates := #[0, 1, 6, 7, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end Reg.D5.S3.Observer.Linear.GaussianObservationLaw

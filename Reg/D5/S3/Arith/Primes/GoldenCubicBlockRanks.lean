@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Primes.GoldenCubicBlockRanks
 import Reg.Support.DependentFamily
 
@@ -70,18 +71,25 @@ def registration : Registration arena
     change 3 ^ (1 + 1) ≠ 3 ^ (2 + 1)
     norm_num
 
-register_information_theorem
-  _root_.D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_c_prime_rank
-  in arena
-  readout via (realize signature (fun _ _ j => 3 ^ (j + 1)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_c_prime_rank) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenCubicBlockRanks") "cubic_block_c_prime_rank") "Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks/Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.C.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 3 ^ (j + 1)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end C
 
@@ -147,18 +155,25 @@ def registration : Registration arena
     change 2 * 3 ^ (1 + 1) ≠ 2 * 3 ^ (2 + 1)
     norm_num
 
-register_information_theorem
-  _root_.D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_b_prime_rank
-  in arena
-  readout via (realize signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Arith.Primes.GoldenCubicBlockRanks.cubic_block_b_prime_rank) (type_of% (arena)) (type_of% (arena)) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "GoldenCubicBlockRanks") "cubic_block_b_prime_rank") "Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks/Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Primes.GoldenCubicBlockRanks.B.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ j => 2 * 3 ^ (j + 1)) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Primes.GoldenCubicBlockRanks, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end B
 

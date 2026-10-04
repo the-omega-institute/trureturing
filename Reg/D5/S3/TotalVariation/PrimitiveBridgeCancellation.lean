@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.TotalVariation.PrimitiveBridgeCancellation
 import Reg.Support.DependentFamily
 
@@ -90,19 +91,25 @@ def registration : Registration arena.{u} (arena.Law actual) where
       exact nomatch i
   dependence := dependence
 
-register_information_theorem
-  _root_.D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation in arena
-  readout via (realize signature (fun _ p x => energy p.2 x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation
-    coordinates := #[7, 12]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "arg", "fn", "arg", "body", "fn", "arg", "arg"]
-      stateBinder := 14 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p x => energy p.2 x) (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "TotalVariation") "PrimitiveBridgeCancellation") "primitive_bridge_cancellation") "Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation/Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p x => energy p.2 x) (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, definition := none, coordinates := #[7, 12], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body", "fn", "arg", "arg"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 end Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation

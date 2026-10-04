@@ -2,6 +2,7 @@
 
 import json
 import pathlib
+import re
 import shutil
 import sys
 import unittest
@@ -17,8 +18,32 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
                         ignore=shutil.ignore_patterns(".lake", "__pycache__"))
         shutil.copytree(INSPECTOR / "Census", self.root / "tools/lean-inspector/Census",
                         ignore=shutil.ignore_patterns("__pycache__"))
-        for name in ("NameWire", "RegistryTypes", "Census/Ownership", "Census/Stream", "Census/Membership"):
+        for name in ("NameWire", "RegistryTypes", "BindingRecords", "CatalogRecords",
+                     "EscapeEvidence", "StructuralProvenance", "Census/Ownership",
+                     "Census/Stream", "Census/Membership"):
             self.copy("tools/lean-inspector/LeanInformationAudit/" + name + ".lean")
+        # Follow the copied packages' actual imports, including the contract's
+        # mathematical types. Keep compiler/toolchain imports external.
+        pending = list((self.root / "declaration package").rglob("*.lean")) + list(
+            (self.root / "tools/lean-inspector/LeanInformationAudit").rglob("*.lean"))
+        seen = set()
+        while pending:
+            source = pending.pop()
+            if source in seen:
+                continue
+            seen.add(source)
+            for module in re.findall(r"(?m)^(?:public )?import (\S+)", source.read_text()):
+                relative = module.replace(".", "/") + ".lean"
+                if module.startswith("D5."):
+                    relative = pathlib.Path(relative)
+                elif module.startswith("LeanInformationAudit."):
+                    relative = pathlib.Path("tools/lean-inspector") / relative
+                else:
+                    continue
+                target = self.root / relative
+                if not target.is_file():
+                    self.copy(str(relative))
+                pending.append(target)
         # Keep the support fixture's synthetic driver in this library's source root.
         (self.root / "LeanInformationAudit/SealCommand.lean").rename(
             self.root / "tools/lean-inspector/LeanInformationAudit/SealCommand.lean")
@@ -29,7 +54,13 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
         # This fixture puts the same dependency under a different source root.
         # Only Lake knows that location; Census cannot name it as a special case.
         config = self.root / "declaration package/lakefile.toml"
-        config.write_text(config.read_text().replace('"../../.lake/', '"../.lake/'))
+        config.write_text(config.read_text().replace('"../../.lake/', '"../.lake/').replace(
+            'path = "../.."', 'path = ".."'))
+        manifest = json.loads((config.parent / "lake-manifest.json").read_text())
+        manifest["packagesDir"] = "../.lake/packages"
+        next(package for package in manifest["packages"]
+             if package["name"] == "trureturing")["dir"] = ".."
+        self.write("declaration package/lake-manifest.json", json.dumps(manifest))
         config = self.root / "lakefile.toml"
         config.write_text(config.read_text().replace('name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nsrcDir = "tools/lean-inspector"\n') +

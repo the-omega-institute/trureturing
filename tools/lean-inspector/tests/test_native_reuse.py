@@ -36,7 +36,7 @@ class NativeReportConsumerTests:
         driver = self.root / registry_owner
         driver.write_text('import LeanInformationAudit.Registry\n'
                           'import LeanInformationAudit.ProofBuilder\n' + driver.read_text())
-        self.write('Reg/ProductionOnly.lean', 'import LeanInformationAuditInterface.Records\n'
+        self.write('Reg/ProductionOnly.lean', 'import LeanInformationAuditInterface.Contract.Core\n'
                    'import D5.A\ndef productionValue : Nat := value\n')
         # Required.lean deliberately imports no production Reg module.
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.FiniteDetectionTailBound
 import Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
 
@@ -74,20 +75,29 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem finite_detection_tail_bound in arena
-  readout via (realize signature
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{2, 2, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0} (@_root_.D5.S3.Quantum.Measurement.FiniteDetectionTailBound.finite_detection_tail_bound.{u_1}) (type_of% (arena.{u_1})) (type_of% (arena.{u_1})) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.FiniteDetectionTailBound
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
-        "arg", "arg", "arg", "body", "body", "body", "body", "fn", "arg", "fn",
-        "arg", "body", "arg", "arg", "arg"]
-      stateBinder := 11 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) (Unit) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "FiniteDetectionTailBound") "finite_detection_tail_bound") "Reg.D5.S3.Quantum.Measurement.FiniteDetectionTailBound/Reg.D5.S3.Quantum.Measurement.FiniteDetectionTailBound.Survival.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionTailBound.Survival.registration,
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena.{u_1})⟩,
+  objectArena := ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
+    (fun e => nomatch e)),
+  variation := none,
+  sensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.FiniteDetectionTailBound, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "arg", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

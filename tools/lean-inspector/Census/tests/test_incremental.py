@@ -10,7 +10,7 @@ class IncrementalTests(unittest.TestCase):
         from extraction import source_digest
         from unittest.mock import patch
         repository = pathlib.Path("/synthetic-repository")
-        changed = repository / "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean"
+        changed = repository / "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean"
         def contents(path):
             return b"changed" if path == changed else b"source"
         with patch.object(pathlib.Path, "read_bytes", return_value=b"source"):

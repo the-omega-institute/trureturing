@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Resource.VandermondeHyperbolicRefutation
 import Reg.Support.CounterexampleRecord
 
@@ -43,11 +44,25 @@ private theorem variation : arena.Law reads ∧ ¬ arena.Law arena.constantTrue 
 private theorem sensitivity : FiniteSlotSensitivity arena.toPrimitiveLawArena :=
   arena.sensitivity law
 
-register_information_theorem _root_.D5.S3.Resource.VandermondeHyperbolicRefutation.result
-  in arena readout via (@counterexampleRealization (Fin 1) arena.check)
-  primitives reads.toPrimitiveBundle realization bridge
-  variation variation sensitivity sensitivity
-  escape from (FiniteFieldModel) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{3, 3, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1} (@_root_.D5.S3.Resource.VandermondeHyperbolicRefutation.result) (type_of% (arena)) (type_of% (arena)) (type_of% (@counterexampleRealization (Fin 1) arena.check)) (type_of% (variation)) (type_of% (sensitivity)) (type_of% (FiniteFieldModel)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "VandermondeHyperbolicRefutation") 0) "D5") "S3") "Resource") "VandermondeHyperbolicRefutation") "result") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "VandermondeHyperbolicRefutation") 0) "Reg") "D5") "S3") "Resource") "VandermondeHyperbolicRefutation") "bridge"),
+  realizationSource := none,
+  generated := false,
+  arena := ⟨(arena)⟩,
+  objectArena := ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .witness (arena) (Reg.D5.S3.Resource.VandermondeHyperbolicRefutation.reads) (reads.toPrimitiveBundle) ⟨(bridge)⟩ (And.left (variation)),
+  readout := some (@counterexampleRealization (Fin 1) arena.check),
+  variation := some ⟨(variation)⟩,
+  sensitivity := some ⟨(sensitivity)⟩,
+  escapeFrom := some (FiniteFieldModel),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end
 end Reg.D5.S3.Resource.VandermondeHyperbolicRefutation
