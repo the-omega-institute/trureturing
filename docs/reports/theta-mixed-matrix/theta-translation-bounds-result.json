@@ -1,0 +1,69 @@
+{
+  "scope": "Actual theta translation derivative and Hilbert-Schmidt upper bounds; no regularization error, finite matrix, transfer sign, Lean or RH certificate",
+  "runtime": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "precision_bits": 192
+  },
+  "supplier": "derivative_bandwidth.py",
+  "supplier_sha256": "a74b0d95fdc546c240b605df15ed69fe7c50f4963deeff2a4ad6498fb687bb40",
+  "producer_sha256": "c12fdb84aef3842503b8fbd475be38cd3ccbcfce0bbcea34cba8b7d37ad8b7f3",
+  "window_radius_exact": "1/16",
+  "spatial_radius_exact": "2",
+  "radial_boxes": 2048,
+  "theta_derivative_terms": 6,
+  "shifted_envelope_subcells": 8,
+  "shifted_envelope_certified_leaves": 18380,
+  "old_derivative_grid_executed": false,
+  "interior_squared_Lw_upper": {
+    "display": "[20.2248685784530489279768791101444348667747727820806694079 +/- 2.39e-56]",
+    "dyadic": [
+      "1983649338308987260503722491639928903647326257119466223651",
+      "-186"
+    ]
+  },
+  "exterior_squared_Lw_second_upper": {
+    "display": "[4.66678659632682196335636896747616776303923713395491190757e-43 +/- 1.53e-100]",
+    "dyadic": [
+      "4082972946089394653358393637228365347114012157088012000797",
+      "-332"
+    ]
+  },
+  "exterior_squared_Lw_scalar_upper": {
+    "display": "[2.38450857515773419575128467456382221271112260218239724671e-74 +/- 8.54e-132]",
+    "dyadic": [
+      "4231330983495075163480484301075827320926928794545324718509",
+      "-436"
+    ]
+  },
+  "whole_squared_Lw_upper": {
+    "display": "[20.2248685784530489279768791101444348667747732487593290406 +/- 3.40e-56]",
+    "dyadic": [
+      "3967298676617974521007444983279857807294652605782351955061",
+      "-187"
+    ]
+  },
+  "Lw_upper": {
+    "display": "[4.49720675291375156584550298056424850551927711869205161293 +/- 4.65e-57]",
+    "dyadic": [
+      "3528678039138451200208991658498063275555229830553590433053",
+      "-189"
+    ]
+  },
+  "MF_upper": {
+    "display": "[0.0573742802731118588709477723443522431598269052512531099547 +/- 2.59e-59]",
+    "dyadic": [
+      "2881153554151298029507495691728832321871454834767459255139",
+      "-195"
+    ]
+  },
+  "midpoint_delta_bound": "Lw * sqrt(2*r^3/3) / m",
+  "unpaid": [
+    "actual Fredholm kernel entries",
+    "regularization low-spectral error on required inputs",
+    "whole-space complementary residual",
+    "projected reconstruction/norm comparison",
+    "original half-bound",
+    "Robin and RH"
+  ]
+}

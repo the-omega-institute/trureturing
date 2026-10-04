@@ -1,0 +1,21 @@
+### 63.2 正值 End 不增加教师碰撞
+
+按整个共同定义域取
+
+$$
+\theta\equiv_+\tau\quad\Longleftrightarrow\quad
+\forall x\in L_n^+,\ C_\theta(x)=C_\tau(x).
+\tag{63.4}
+$$
+
+复用“接缝合法域上的优先教师等价与可辨识对象”及其“教师身份补充：单门关闭与严格索引约束”的有效彩边分类；这两个标题定位的是不含 End 条件的结果。令
+
+$$
+e_A(\theta)=\begin{cases}(p,q),&q\ge p+2,\\\varnothing,&q=p+1,\end{cases}\qquad
+e_B(\theta)=\begin{cases}(q,r),&r\ge q+2,\\\varnothing,&r=q+1.\end{cases}
+$$
+
+相邻门由实际接缝恒等式消失。正值 End 版本的类恰为下表：
+
+| 间隔 | 合法域响应 | 商类数 | 每类原始参数数 |
+|---|---|---:|---:|

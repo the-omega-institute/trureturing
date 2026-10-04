@@ -123,27 +123,6 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
-    public void SharedSourceExternalChannelsAreRejected()
-    {
-        using var root = new TemporaryRoot();
-        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
-        Write(root, shared, "internal static class Shared { internal static string Value => Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\") ?? \"\"; }");
-        Write(root, path, $$"""
-            [ScribeSharedSource("{{shared}}")]
-            internal sealed class Probe : IScribeDocumentDefinition
-            {
-                public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H(Shared.Value), Blocks(Paragraph(Text("content")))));
-            }
-            """);
-
-        var result = ScribeScriptHost.Execute(root.Path, path);
-
-        ScribeScriptAdmissionTests.Reject(result, "M:System.Environment.GetEnvironmentVariable(System.String)");
-    }
-
-    [Fact]
     public void AllowlistedEnumerableDefinitionExecutes()
     {
         using var root = new TemporaryRoot();
@@ -358,121 +337,30 @@ public sealed class ScribeScriptHostTests
         Assert.Equal(ScribeResourceCodec.Encode(discovered), ScribeResourceCodec.Encode(result.Definition!));
     }
 
-    [Theory]
-    [InlineData("\"Blueprint/D5/S0/Test/Missing.scribe.cs\"", ScribeScriptFailureCode.SharedSourceMissing)]
-    [InlineData("\"Outside/Shared.scribe.cs\"", ScribeScriptFailureCode.SharedSourceOutsideBlueprint)]
-    [InlineData("\"Blueprint/../Outside/Shared.scribe.cs\"", ScribeScriptFailureCode.SharedSourceOutsideBlueprint)]
-    [InlineData("\"Blueprint/D5/S0/Test/Probe.scribe.cs\"", ScribeScriptFailureCode.SharedSourceCycle)]
-    [InlineData("nameof(Probe)", ScribeScriptFailureCode.SharedSourceArgument)]
-    [InlineData("\"one\", \"two\"", ScribeScriptFailureCode.SharedSourceArgument)]
-    public void SharedSourceDeclarationsFailClosed(string argument, ScribeScriptFailureCode expected)
-    {
-        using var root = new TemporaryRoot();
-        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        Write(root, "Outside/Shared.scribe.cs", "internal sealed class Shared { }");
-        Write(root, path, $"[ScribeSharedSource({argument})] internal sealed class Probe : IScribeDocumentDefinition {{ public DocumentDefinition Create() => throw new InvalidOperationException(); }}");
-        Assert.Equal(expected, ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
-    }
-
-    [Theory]
-    [InlineData(false, false)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void SharedSourcesRequireDeclarationsAndSupportTransitiveDependencies(bool declared, bool transitive)
-    {
-        using var root = new TemporaryRoot();
-        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
-        Write(root, "Blueprint/D5/S0/Test/Leaf.scribe.cs", "internal static class Leaf { internal const string Value = \"content\"; }");
-        Write(root, shared, (transitive ? "[ScribeSharedSource(\"Blueprint/D5/S0/Test/Leaf.scribe.cs\")] " : "") + "internal sealed class Shared : IScribeDocumentDefinition { internal static string Value => " + (transitive ? "Leaf.Value" : "\"content\"") + "; public DocumentDefinition Create() => throw new InvalidOperationException(\"shared definition must not execute\"); }");
-        Write(root, path, (declared ? $"[ScribeSharedSource(\"{shared}\")] " : "") + "internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(Shared.Value))))); }");
-        var result = ScribeScriptHost.Execute(root.Path, path);
-        if (declared) Assert.True(result.IsSuccess, result.Failure?.ToString());
-        else Assert.Equal(ScribeScriptFailureCode.Compilation, result.Failure?.Code);
-    }
-
     [Fact]
-    public void RecordClassSharedSourceDeclarationIsUsed()
+    public void ReferenceToAnotherDefinitionFileFailsToCompile()
     {
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
-        Write(root, shared, """
-            internal sealed class Shared : IScribeDocumentDefinition
-            {
-                internal const string Value = "shared content";
-                public DocumentDefinition Create() => throw new InvalidOperationException();
-            }
-            """);
-        Write(root, path, $$"""
-            [ScribeSharedSource("{{shared}}")]
-            internal sealed record class Probe : IScribeDocumentDefinition
-            {
-                public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text(Shared.Value)))));
-            }
-            """);
+        Write(root, "Blueprint/D5/S0/Test/Other.scribe.cs",
+            "internal static class Other { internal const string Value = \"content\"; }");
+        Write(root, path, "internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(Other.Value))))); }");
 
         var result = ScribeScriptHost.Execute(root.Path, path);
 
-        Assert.True(result.IsSuccess, result.Failure?.ToString());
-        Assert.Equal(path, result.Definition!.SourcePath);
-        Assert.Equal(ScribeResourceCodec.Encode(DocumentDefinition.Create(
-            ScribeNode.Create("digest", DefinitionDsl.H("title"),
-                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("shared content"))),
-                sourcePath: path), sourcePath: path)), ScribeResourceCodec.Encode(result.Definition));
+        Assert.Equal(ScribeScriptFailureCode.Compilation, result.Failure?.Code);
+        Assert.Contains("Other", result.Failure!.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void UnrelatedAttributeSuffixDoesNotDeclareSharedSource()
+    public void SharedSourceDeclarationDoesNotCompile()
     {
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        Write(root, path, """
-            internal sealed class OtherScribeSharedSourceAttribute(string path) : Attribute
-            {
-                public string Path { get; } = path;
-            }
-            [OtherScribeSharedSource("Outside/Shared.scribe.cs")]
-            internal sealed class Probe : IScribeDocumentDefinition
-            {
-                public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
-            }
-            """);
+        Write(root, "Blueprint/D5/S0/Test/Other.scribe.cs", "internal static class Other { }");
+        Write(root, path, "[ScribeSharedSource(\"Blueprint/D5/S0/Test/Other.scribe.cs\")] internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); }");
 
-        var result = ScribeScriptHost.Execute(root.Path, path);
-
-        Assert.True(result.IsSuccess, result.Failure?.ToString());
-    }
-
-    [Theory]
-    [InlineData("ScribeSharedSource")]
-    [InlineData("ScribeSharedSourceAttribute")]
-    [InlineData("StrataLint.Scribe.ScribeSharedSource")]
-    [InlineData("StrataLint.Scribe.ScribeSharedSourceAttribute")]
-    [InlineData("global::StrataLint.Scribe.ScribeSharedSource")]
-    [InlineData("global::StrataLint.Scribe.ScribeSharedSourceAttribute")]
-    public void ExactSharedSourceAttributeNamesAreRecognized(string name)
-    {
-        using var root = new TemporaryRoot();
-        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        Write(root, path, $"[{name}(\"Blueprint/D5/S0/Test/Missing.scribe.cs\")] internal sealed class Probe {{ }}");
-
-        Assert.Equal(ScribeScriptFailureCode.SharedSourceMissing,
-            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
-    }
-
-    [Fact]
-    public void GenericAliasQualifierDoesNotDeclareSharedSource()
-    {
-        using var root = new TemporaryRoot();
-        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-        Write(root, path,
-            "[global::StrataLint<int>.Scribe.ScribeSharedSource(\"Outside/Shared.scribe.cs\")] internal sealed class Probe { }");
-
-        Assert.Equal(ScribeScriptFailureCode.Compilation,
-            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+        Assert.Equal(ScribeScriptFailureCode.Compilation, ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
     }
 
     [Fact]

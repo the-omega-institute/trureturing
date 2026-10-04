@@ -1,0 +1,1 @@
+- Kaufmann–Cappé–Garivier，*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*，[JMLR 17(1)](https://jmlr.org/papers/v17/kaufman16a.html)，引理1。它在相互绝对连续的臂律与几乎必然有限停止下给事件 KL 换测度界；本节完整输入选择核的相消及有界次数由式（62.19）自足证明。

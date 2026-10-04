@@ -1,0 +1,16 @@
+**定理 70.53（单次付费抽签的实际树上界）。** 固定标签 $0\mapsto P_0$、$j\mapsto U_j$、$k+j\mapsto V_j$。用命题70.20的有限码发出对应完整 $\sigma_I$，然后才接收输入；同一停止词、$K$ 和控制器反事实地用于全部固定 $N$ 元组，每次运行逻辑重置并使用空的本次真实缓存。则
+
+$$
+\max_{(J_1,\ldots,J_N)\in F_k^N}
+\mathbb E\left[\lambda K+\sum_{h=1}^N C_{\sigma_I}(P_{J_h})\right]
+=(n+1)N-Nt(p^\ast)+\lambda L_m(p^\ast).
+\tag{70.25}
+$$
+
+特别地，$a=3,k=4,n=31,N=40,\lambda=1$ 给实际可行费用
+
+$$
+1280-40\frac3{32}+\frac72=\frac{5119}4<1280.
+\tag{70.26}
+$$
+
