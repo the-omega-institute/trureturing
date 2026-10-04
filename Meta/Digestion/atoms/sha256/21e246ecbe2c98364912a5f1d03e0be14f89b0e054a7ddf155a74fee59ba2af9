@@ -1,0 +1,27 @@
+**定理 33.4（两个三槽族的实际全域控制器及收费账）。** 对每个 $\eta\in\{\mathrm R,\mathrm L\}$，存在一个输入无关初始化的确定性控制器 $\pi_\eta\in\mathfrak D_3$，在全部非空有限有序满二叉 $\alpha/\beta$ 树上正确判定 $\iota_3$ 且有限终止。它在式（33.3）的三槽族上的路由只使用以下两个实际地址：
+
+$$
+\begin{aligned}
+(q_1,q_2)_{\mathrm R}
+ &=(p_1\mathtt{LR},p_2\mathtt{LR})_{\mathrm R}
+   =(\mathtt{LLR},\mathtt{RLLR}),\\
+(q_1,q_2)_{\mathrm L}
+ &=(p_1\mathtt{LR},p_2\mathtt{LR})_{\mathrm L}
+   =(\mathtt{LLLR},\mathtt{LRLR}).
+\end{aligned}
+\tag{33.11}
+$$
+
+按槽编号 $j=1,2,3$，评价输入 $P_j^\eta$ 的路由叶报告数 $f_j$、非叶报告数 $c_j$ 及总费用分别为
+
+$$
+\boxed{\quad
+(f_1,c_1)=(0,1),\qquad(f_2,c_2)=(1,1),\qquad
+(f_3,c_3)=(2,0),\qquad
+\bigl(C_{\pi_\eta}(P_j^\eta)\bigr)_{j=1}^3=(15,15,14).
+\quad}
+\tag{33.12}
+$$
+
+此费用陈述只评价 $F_\eta$；对族外输入仍要求正确及有限终止，不给统一十五次地址上界。
+

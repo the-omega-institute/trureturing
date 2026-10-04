@@ -1,0 +1,58 @@
+**命题 10.4（由既有根包络运输的对数范围）。** 对所有 $n\ge0,k\ge2$，
+
+$$
+\left|\log p_{n,k}+\frac{n}{2^{k+1}}\right|
+\le2nk4^{-k}+2k2^{-k}.
+$$
+
+因此，当 $k\to\infty$ 且 $nk4^{-k}\to0$ 时，
+
+$$
+\frac{p_{n,k}}{\exp(-n/2^{k+1})}\longrightarrow1.
+$$
+
+更一般地，当 $k\to\infty$ 且 $n/k\to\infty$ 时，
+
+$$
+\frac{\log p_{n,k}}{n/2^{k+1}}\longrightarrow-1.
+$$
+
+证明。这里直接使用 TM.382–383 的根和全长包络，不另证一个计数或根定理。置
+
+$$
+\varepsilon=2^{-k},\qquad \alpha=\varepsilon/2,
+\qquad \delta=1-\lambda_k/2,\qquad t=-\log(1-\delta).
+$$
+
+根方程给 $\delta(1-\delta)^k=\alpha$，所以 $\delta\ge\alpha$。又 $k\varepsilon\le1/2$，严格 Bernoulli 不等式给 $(1-\varepsilon)^k>1/2$。在 $z=2(1-\varepsilon)>1$ 处，
+
+$$
+\sum_{\ell=1}^kz^{-\ell}-1
+=\frac{2-z-z^{-k}}{z-1}
+=\frac{2\varepsilon-\varepsilon(1-\varepsilon)^{-k}}{z-1}>0.
+$$
+
+所引倒数幂和严格递减，故 $\lambda_k>z$，从而 $\delta\le\varepsilon\le1/4$。于是
+
+$$
+\begin{aligned}
+0\le\delta-\alpha
+&=\delta\bigl[1-(1-\delta)^k\bigr]
+\le k\delta^2\le k\varepsilon^2,\\
+0\le t-\delta
+&=\sum_{j\ge2}\frac{\delta^j}{j}
+\le\frac{\delta^2}{2(1-\delta)}
+\le\frac23\varepsilon^2.
+\end{aligned}
+$$
+
+因此 $0\le t-\alpha\le2k\varepsilon^2$，且 $t\le\delta/(1-\delta)\le2\varepsilon$。既有根包络除以 $2^n$ 后给
+
+$$
+-nt\le\log p_{n,k}\le-nt+(k-1)t.
+$$
+
+加入 $n\alpha$ 并应用刚得的两界，即得命题的对数误差。第一种极限中右侧趋零，指数化得相对概率极限。第二种极限将误差除以 $n\alpha$，界为 $4k2^{-k}+4k/n\to0$，得对数比极限。证毕。
+
+后一对数比即使成立，也不自动给概率比趋一；相对概率需要前一个更小的范围。无限制稠密区间中的绝对 Poisson 误差，更不能据此宣称相对概率或期望采样成本的精确渐近。
+

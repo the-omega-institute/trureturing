@@ -1,0 +1,38 @@
+**引理 31.2（任意地址的完整位置分类与小子树唯一性）。** 采用[式（30.2）](#30-实际三步像的分歧前沿七叶分离与有限容量)的字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta).
+\tag{31.4}
+$$
+
+对任意 $P=\rho^3(Q)\in\mathcal I_3$，$Q$ 的每片叶地址 $v$ 对应一个规范块：该叶标记 $\alpha$ 时 $P|_v=A$，标记 $\beta$ 时 $P|_v=C$。这些规范块的根前缀自由。每个任意地址 $u\in\Sigma$ 恰属于以下位置之一：
+
+1. $u$ 是 $Q$ 的内部节点地址；此时 $P|_u=\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。
+2. $u$ 是 $Q$ 的叶地址；此时它是一个规范 $A$ 或 $C$ 块的根。
+3. $u=vz$，其中 $v$ 是 $Q$ 的叶地址，$z$ 非空，且它位于该规范块内。全部存在的真偏移及子树为
+
+$$
+\begin{array}{c|c|c}
+\text{规范块}&z&P|_{vz}\\ \hline
+A&\mathtt L&E\\
+A&\mathtt{LL}&\beta\\
+A&\mathtt{LR}&\alpha\\
+A&\mathtt R&\beta\\ \hline
+C&\mathtt L&A\\
+C&\mathtt{LL}&E\\
+C&\mathtt{LLL}&\beta\\
+C&\mathtt{LLR}&\alpha\\
+C&\mathtt{LR}&\beta\\
+C&\mathtt R&E\\
+C&\mathtt{RL}&\beta\\
+C&\mathtt{RR}&\alpha
+\end{array}
+\tag{31.5}
+$$
+
+4. $u$ 严格延伸某片输出叶地址；此时报告 $\mathsf{absent}$。
+
+因此每个 $A$ 子树出现位置恰为规范 $A$ 根或规范 $C$ 的立即左孩子，每个 $C$ 子树出现位置恰为规范 $C$ 根；每个 $E$ 出现位置恰为某个 $A$ 出现位置的立即左孩子，或某个规范 $C$ 的立即右孩子。在任何正来源的任意存在地址，二叶子树唯一为 $E$，三叶子树唯一为 $A$。根地址也在分类内；正来源的根总是分支，原子根只可能是未知输入的情形。
+
