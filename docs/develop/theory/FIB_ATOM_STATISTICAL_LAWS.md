@@ -13675,3 +13675,369 @@ $$
 量子通道的时间反演或恢复还需指定参考态、伴随通道或 Petz 型恢复条件。一般通道不可逆；FIB 路径倒序也不自动给出物理逆通道。若不同路径共享环境，路径混合会留下相干交叉项；若环境记录完全区分路径，交叉项被压制。两种极限的次序和环境记忆时间都属于外加参数。
 
 本节结论是：FIB 提供量子操作的组合语法和路径组织；完全正性、测量概率、退相干、互信息、纠缠和恢复条件由 Hilbert 分解、Kraus 算子、环境、记录及时间反演实现决定。
+
+## 173. FIB 图上的外加自旋系统、Gibbs 测度与相变
+
+将 FIB 图记为
+$$
+G_{\rm FIB}=(V,E_{\rm FIB}).
+$$
+FIB 邻接只规定组合关系；自旋相互作用、温度、外场、边界和热力学极限均需外加。可选物理耦合图 \(G_J\) 与对称耦合
+$$
+J_{ij}=J_{ji},\qquad J_{ii}=0,
+$$
+即使取 \(J_{ij}=J_0\mathbf1_{\{\{i,j\}\in E_{\rm FIB}\}}\)，也仍是一项模型假设。行归一化、度归一化和原始边权对应不同 Hamiltonian，不能在未固定归一化时比较临界温度。
+
+有限区域 \(\Lambda\) 上的 Ising Hamiltonian 为
+$$
+H_\Lambda^\tau(s)
+=-\sum_{\substack{\{i,j\}\in E_J\\i,j\in\Lambda}}J_{ij}s_is_j
+-\sum_{\substack{i\in\Lambda,j\notin\Lambda\\\{i,j\}\in E_J}}
+J_{ij}s_i\tau_j
+-\sum_{i\in\Lambda}h_is_i,
+\qquad s_i\in\{-1,+1\}.
+\tag{173.1}
+$$
+配分函数与 Gibbs 测度为
+$$
+Z_\Lambda^\tau
+=\sum_s e^{-\beta H_\Lambda^\tau(s)},
+\qquad
+\mu_\Lambda^\tau(s)=\frac{e^{-\beta H_\Lambda^\tau(s)}}{Z_\Lambda^\tau},
+\qquad
+\beta=(k_BT)^{-1}.
+\tag{173.2}
+$$
+Potts 模型只需把 \(s_i\) 换成 \(q\) 种颜色并将耦合项换成 \(\mathbf1_{\{\sigma_i=\sigma_j\}}\)，但 \(q=2\) 时的耦合归一化与 Ising 约定仍须区分。
+
+磁化与连通相关为
+$$
+m_i=\langle s_i\rangle,\qquad
+C_{ij}=\langle s_is_j\rangle-\langle s_i\rangle\langle s_j\rangle.
+$$
+有限体积恒等式
+$$
+\frac{\partial\log Z_\Lambda}{\partial h_i}=\beta m_i,
+\qquad
+\frac{\partial m_i}{\partial h_j}=\beta C_{ij}
+\tag{173.3}
+$$
+把静态响应与平衡涨落联系起来。单位顶点磁化率为
+$$
+\chi_\Lambda=\frac{\beta}{|\Lambda|}
+\sum_{i,j\in\Lambda}C_{ij}.
+\tag{173.4}
+$$
+它不决定自旋翻转动力学或弛豫时间；后者还需指定 Glauber、Metropolis 或其他更新核。
+
+相变须先规定系统增长：固定无限 FIB 图上的 \(\Lambda_n\uparrow V\)，或一列有限 FIB 图 \(G_n\) 及其局部极限、边界和耦合缩放。无限体积 Gibbs 测度应满足 DLR 条件，而不是把有限配分函数直接外推到无限图。跨边界耦合量
+$$
+B_J(\Lambda)
+=\sum_{\substack{i\in\Lambda\\j\notin\Lambda}}|J_{ij}|
+$$
+若满足 \(B_J(\Lambda_n)/|\Lambda_n|\to0\)，则不同边界对单位体积自由能的影响可消失，但仍可能存在多个 Gibbs 态、边界依赖的磁化和自发对称性破缺。
+
+平均场近似可由耦合矩阵最大特征值给出候选阈值。例如在均匀 Ising 线性化中，若 \(J\) 为对称耦合矩阵，则无外场高温态的候选失稳满足
+$$
+\beta_c\,\lambda_{\max}(J)\approx1.
+\tag{173.5}
+$$
+这只是平均场或高连通近似；短环、低维涨落、无序和 FIB 接缝可能改变真实临界行为。有限图上的磁化尖峰、基态交叉或稳定有限尺寸相关长度不能单独证明无限体积相变。
+
+本节结论是：FIB 提供自旋相互作用的组合候选图；Gibbs 测度、相关函数、相变阈值、临界指数和边界依赖由 Hamiltonian、温度、更新核及热力学极限共同决定。
+
+## 174. FIB 路径上的黏弹性、记忆核、蠕变与耗散标度
+
+FIB 只提供路径连接、方向和层级索引。应变、应力、长度、截面积、材料参数、温度、噪声和边界必须外加。对有限路径
+$$
+P=(v_0,e_1,v_1,\ldots,e_N,v_N),
+$$
+令边长为 \(a_j\)、节点位移为 \(u_j(t)\)，则
+$$
+x_j=\sum_{r=1}^ja_r,\qquad
+\varepsilon_j(t)=\frac{u_j(t)-u_{j-1}(t)}{a_j}.
+\tag{174.1}
+$$
+关联矩阵 \(B\) 下的动力学平衡可写为
+$$
+B^{\mathsf T}\boldsymbol\sigma+\boldsymbol f_{\rm ext}
+=M\ddot{\boldsymbol u}.
+$$
+
+在线性小应变和时间平移不变近似下，因果本构关系为
+$$
+\sigma(x,t)
+=\int_{-\infty}^tK(x,x';t-t')\dot\varepsilon(x',t')\,dx'
++\sigma_{\rm th}(x,t).
+\tag{174.2}
+$$
+记局部松弛核为 \(G(t)\)。恒定应变阶跃 \(\varepsilon(t)=\varepsilon_0H(t)\) 产生
+$$
+\sigma(t)=\varepsilon_0G(t).
+$$
+单 Maxwell 元件满足
+$$
+\dot\sigma+\frac{\sigma}{\tau}=E\dot\varepsilon,
+\qquad \tau=\frac{\eta}{E},
+\tag{174.3}
+$$
+其松弛模量和蠕变柔量分别为
+$$
+G(t)=Ee^{-t/\tau},
+\qquad
+J(t)=\frac1E+\frac{t}{\eta}.
+$$
+
+广义 Maxwell 模型可写为
+$$
+\sigma=G_\infty\varepsilon+\eta_0\dot\varepsilon+\sum_mq_m,
+\qquad
+\dot q_m+\frac{q_m}{\tau_m}=G_m\dot\varepsilon,
+\tag{174.4}
+$$
+因此
+$$
+G(t)=G_\infty+\sum_mG_me^{-t/\tau_m}.
+$$
+在频域中，
+$$
+G^*(\omega)
+=G_\infty+i\omega\eta_0
++\sum_mG_m\frac{i\omega\tau_m}{1+i\omega\tau_m},
+$$
+其实部 \(G'\) 储存能量，虚部 \(G''\) 耗散能量。周期应变的耗散能密度为
+$$
+W_{\rm cyc}=\pi\varepsilon_0^2G''(\omega).
+\tag{174.5}
+$$
+
+若松弛时间具有连续谱
+$$
+G(t)-G_\infty
+=\int\rho(\tau)e^{-t/\tau}\,d\tau,
+$$
+且中间尺度满足 \(\rho(\tau)\propto\tau^{-1-\alpha}\)、\(0<\alpha<1\)，则有限窗口内可见
+$$
+G(t)-G_\infty\propto t^{-\alpha},
+\qquad
+G'(\omega)\sim G''(\omega)\sim\omega^\alpha.
+\tag{174.6}
+$$
+这只是记忆谱造成的有效标度；递归层级不自动生成幂律松弛谱。
+
+被动性要求自由能 \(\psi\) 的机械功率满足
+$$
+\sigma\dot\varepsilon-\dot\psi
+=\eta_0\dot\varepsilon^2+\sum_m\frac{q_m^2}{G_m\tau_m}\ge0,
+\tag{174.7}
+$$
+因此 \(G_m\ge0,\tau_m>0,\eta_0\ge0\) 是该线性模型的耗散条件。热噪声若来自局部平衡，还需满足与耗散核相容的涨落耗散关系；非平衡主动应力不能直接使用同一噪声强度。
+
+有限路径的端点位移、牵引、接触或储库条件会改变松弛谱与长期蠕变。路径层级只提供可能的非局部记忆连接；是否存在跨层材料耦合，必须在 \(K(x,x';t)\) 中明确给出。
+
+本节结论是：FIB 提供黏弹材料的连接与多尺度索引；记忆核、蠕变、耗散谱、热噪声和边界响应由外加本构模型与时间尺度决定。
+
+## 175. FIB 网络上的 SIS/SIR/SEIR 传播、阈值与最终规模
+
+FIB 图可提供传播关系，但传播率、恢复率、潜伏期、免疫、接触频率、检测和边界输入均需外加。静态渗流只研究占据配置，SIS、SIR 与 SEIR 研究时间演化，三者不能混为同一阈值。
+
+令 \(A\) 为传播接触矩阵，节点感染概率或状态由外加随机过程更新。连续时间 SIS 模型的感染率和恢复率分别为 \(\beta A_{ij}\) 与 \(\gamma_i\)。在独立近似下，感染概率 \(p_i\) 满足
+$$
+\dot p_i
+=-\gamma_i p_i
++\beta(1-p_i)\sum_jA_{ij}p_j.
+\tag{175.1}
+$$
+无感染态线性化为
+$$
+\dot{\boldsymbol p}
+=(\beta A-\Gamma)\boldsymbol p,
+\qquad
+\Gamma=\operatorname{diag}(\gamma_i).
+\tag{175.2}
+$$
+候选入侵阈值是
+$$
+\rho(\Gamma^{-1}\beta A)=1.
+\tag{175.3}
+$$
+它是均场或低相关近似下的阈值；短环、相关感染、同时接触和 FIB 接口共享都会修正该条件。
+
+SIR 模型加入不可再感染的移除状态。若感染者 \(i\) 向易感者 \(j\) 的边传播概率为 \(T_{ij}\)，则在局部树状近似下，下一代矩阵可写为
+$$
+K_{ij}=T_{ij}C_{ij},
+\tag{175.4}
+$$
+其中 \(C_{ij}\) 是接触次数或外加接触权重。基本再生数为
+$$
+R_0=\rho(K).
+$$
+\(R_0>1\) 只表示低密度入侵具有增长方向，并不保证有限图出现大规模流行；最终规模还依赖初始感染、边界、饱和和随机灭绝。
+
+SEIR 模型增加潜伏状态，若潜伏率为 \(\sigma_i\)，则
+$$
+\dot S_i=-\beta S_i\sum_jA_{ij}I_j,\qquad
+\dot E_i=\beta S_i\sum_jA_{ij}I_j-\sigma_iE_i,
+$$
+$$
+\dot I_i=\sigma_iE_i-\gamma_iI_i,\qquad
+\dot R_i=\gamma_iI_i.
+\tag{175.5}
+$$
+潜伏期改变时间尺度和波形，但是否改变入侵阈值取决于感染性阶段的下一代算子，而非单纯由 FIB 层数决定。
+
+有限图、无外部输入且恢复率严格为正时，长期感染通常消失；持续流行相需要无限系统极限、持续输入或免疫结构的特殊缩放。检测概率 \(p_{\rm det}\) 产生观测变量
+$$
+I_i^{\rm obs}\mid I_i\sim\operatorname{Binomial}(I_i,p_{\rm det}),
+$$
+观测峰值和真实感染峰值不能直接等同。边界隔离、旅行输入和分区策略也会改变传播算子。
+
+若 FIB 图的度数、层级或边权存在强异质性，最大特征模态可能集中在少数枢纽；此时全局平均感染率会掩盖局部传播。相关网络、时间变化接触和行为反馈还需要时变矩阵 \(A(t)\) 或状态依赖速率，不能继续使用固定矩阵阈值。
+
+本节结论是：FIB 提供疾病或信息传播的组合接触图；\(R_0\)、SIS 阈值、最终规模和观测统计由传播核、恢复/免疫、时间结构、检测和边界输入决定。
+
+## 176. FIB 网络上的 XY 模型、涡旋与 BKT 型转变
+
+FIB 在本节仅提供图 \(G=(V,E)\) 及其回路结构。相位变量、耦合、温度、二维几何、胞腔填充和边界均需外加。图中存在回路不能单独推出二维涡旋或 BKT 转变。
+
+对每个顶点取紧致相位
+$$
+\theta_v\in\mathbb R/2\pi\mathbb Z,
+$$
+并赋予无挫折耦合 \(J_{uv}>0\)。XY Hamiltonian 为
+$$
+H_G(\theta)
+=-\sum_{\{u,v\}\in E}J_{uv}\cos(\theta_v-\theta_u),
+\tag{176.1}
+$$
+配分函数为
+$$
+Z_G(T)=
+\int\prod_{v\in V}\frac{d\theta_v}{2\pi}\,
+e^{-\beta H_G(\theta)}.
+\tag{176.2}
+$$
+有限图在 \(T>0\) 时没有真正非解析相变；相变必须由指定增长图族 \(G_L\) 和长度尺度极限定义。
+
+相位相关函数为
+$$
+G_{uv}=\left\langle e^{i(\theta_u-\theta_v)}\right\rangle.
+$$
+在具有二维短程几何、连续旋转对称性和适当均匀性的模型中，低温相可呈准长程序
+$$
+G(r)\sim r^{-\eta(T)},
+\qquad 0<\eta(T)\le\frac14,
+\tag{176.3}
+$$
+高温相则具有有限相关长度。图距离只有在嵌入与二维物理距离相容时才可代替 \(r\)；一般 FIB 图并不满足这一条件。
+
+固定边方向并取主值相位差
+$$
+\Delta_{uv}=\operatorname{Arg}e^{i(\theta_v-\theta_u)}
+$$
+后，对闭合回路 \(C\) 定义绕数
+$$
+Q(C)=\frac1{2\pi}\sum_{(u,v)\in C}\Delta_{uv}\in\mathbb Z.
+\tag{176.4}
+$$
+只有另行指定二维面集 \(P\)，才能把
+$$
+q_p=Q(\partial p)
+$$
+解释为局部涡旋电荷。区域边界满足
+$$
+Q(\partial R)=\sum_{p\subset R}q_p.
+\tag{176.5}
+$$
+周期无边界分解通常要求总涡旋电荷为零，但仍可存在涡旋—反涡旋对和全局非收缩回路绕数。分支穿越、缺陷生成和边界孔洞会改变这些约束。
+
+相位变化缓慢时，XY 能量的长波近似为
+$$
+H_{\rm sw}
+=\frac12\sum_{\{u,v\}\in E}
+J_{uv}(\theta_v-\theta_u)^2.
+\tag{176.6}
+$$
+若进一步收敛到二维均匀连续几何，才可写
+$$
+H_{\rm sw}
+=\frac{\rho_s^{(0)}}2\int|\nabla\theta|^2\,d^2x.
+$$
+相位刚度可由周期边界扭转 \(\Phi\) 的自由能二阶导数定义。BKT 型转变还需要涡旋对的能量—熵竞争、二维短程相互作用和无长程相关障碍；FIB 回路数量本身不足以证明其存在。
+
+本节结论是：FIB 提供相位耦合的图与回路；XY 相关、涡旋电荷、相位刚度和 BKT 标度由二维几何、耦合、温度、边界及热力学极限决定。
+
+## 177. FIB 通道网络上的外加热电输运、Onsager 矩阵与热噪声
+
+FIB 通道只提供组合连接。电荷、能量、化学势、温度、接触库和时间反演规则均须另行赋予。路径数不等于电导；相干路径需先叠加振幅，非相干路径则需给出跃迁率或局域输运系数。电荷通道和热通道也可能由不同激发承载。
+
+接触库 \(\alpha\) 由 \(T_\alpha\) 与电化学势 \(\mu_\alpha\) 描述。统一规定端口流入网络为正，稳态下满足
+$$
+\sum_\alpha I_\alpha=0,
+\qquad
+\sum_\alpha J_{E,\alpha}+P_{\rm ext}=0.
+\tag{177.1}
+$$
+热流是
+$$
+J_{Q,\alpha}=J_{E,\alpha}-\mu_\alpha J_{N,\alpha},
+\tag{177.2}
+$$
+不能直接把能量流当作热流。局部平衡、接触温度和化学势只有在指定耗散或库模型后才有意义。
+
+在线性响应中，以共同参考态 \((\mu_0,T_0)\) 定义力
+$$
+X_I=\frac{\Delta V}{T_0},
+\qquad
+X_Q=\frac{\Delta T}{T_0^2},
+$$
+并写
+$$
+\begin{pmatrix}I\\J_Q^{(0)}\end{pmatrix}
+=
+\begin{pmatrix}L_{11}&L_{12}\\L_{21}&L_{22}\end{pmatrix}
+\begin{pmatrix}X_I\\X_Q\end{pmatrix}.
+\tag{177.3}
+$$
+熵产生的二次项为
+$$
+\dot S=X^{\mathsf T}LX,
+$$
+因此对被动稳定系统，\(L\) 的对称部分必须半正定。时间反演和微观可逆性还需额外给出，才能得到 Onsager–Casimir 关系
+$$
+L_{\alpha\beta}(B)
+=L_{\beta\alpha}(-B).
+\tag{177.4}
+$$
+无磁场或其他奇变量时才简化为对称矩阵。
+
+若 \(L_{11}>0\)，电导、Seebeck 系数、Peltier 系数和开路热导可定义为
+$$
+G=\frac{L_{11}}{T_0},
+\qquad
+S=\frac{L_{12}}{T_0L_{11}},
+\qquad
+\Pi=\frac{L_{21}}{L_{11}},
+$$
+$$
+\kappa_{\rm oc}
+=\frac1{T_0^2}
+\left(L_{22}-\frac{L_{21}L_{12}}{L_{11}}\right).
+\tag{177.5}
+$$
+固定电压差为零得到的热导 \(L_{22}/T_0^2\) 与开路热导不是同一边界条件。由热导换算热导率还需长度和截面积。
+
+若通道增量 \(d_\alpha(c)\) 在反向边上变号，累计流为
+$$
+Q_\alpha(T)=\sum_{\text{区间内发生的 }c}d_\alpha(c).
+$$
+在平衡、时间平移不变、相关可积和边界项消失时，Green–Kubo 型输运系数为
+$$
+L_{\alpha\beta}
+=\frac1{k_BT}\int_0^\infty
+\langle J_\alpha(t)J_\beta(0)\rangle\,dt.
+\tag{177.6}
+$$
+开放储库、非平衡驱动、长时相关和主动通道会产生边界或熵流修正，不能无条件使用平衡公式。
+
+本节结论是：FIB 提供热电通道的组合网络；电导、热导、Seebeck/Peltier 系数、Onsager 对称与噪声谱由载流子、接触库、时间反演、局部守恒和线性响应条件决定。
