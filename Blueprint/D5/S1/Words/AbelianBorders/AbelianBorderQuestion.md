@@ -10,6 +10,10 @@ $$\neg (claim)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/AbelianBorders/AbelianBorderQuestion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/charlier-harju-puzynina-zamboni-question-two` (refuted) by `D5/S1/Words/AbelianBorders/AbelianBorderQuestion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"charlier-harju-puzynina-zamboni-question-two","declaration_gid":"D5/S1/Words/AbelianBorders/AbelianBorderQuestion.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Émilie Charlier, Tero Harju, Svetlana Puzynina, Luca Q. Zamboni (2015). *Abelian bordered factors and periodicity*. DOI: [10.48550/arXiv.1501.07464](https://doi.org/10.48550/arXiv.1501.07464). URL: <https://arxiv.org/abs/1501.07464v1>.
