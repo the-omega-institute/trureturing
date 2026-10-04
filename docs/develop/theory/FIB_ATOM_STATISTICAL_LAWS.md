@@ -12835,3 +12835,428 @@ $$
 短环、共享接口和长程相关会破坏该近似。簇大小生成函数还需追踪接口分割与共享簇，单个平均簇大小不能在一般拼接下闭合。
 
 本节结论是：FIB 提供图族与接口递归；渗流阈值、无限簇、有限尺寸指数和临界标度由占据联合律、拼接规则、边界、相关性及所选无限极限共同决定，不能由 Fibonacci 数列单独推出。
+
+## 163. FIB 图上的外加随机游走、异常扩散与首次到达
+
+设第 \(n\) 层 FIB 结构实现为有限图
+$$
+G_n=(V_n,E_n,\Sigma_n),
+$$
+其中 \(\Sigma_n\) 记录递归拼接和接缝。FIB 只提供图、合法路径和图距离 \(d_F\)；跳转概率、连续时间尺度、随机环境、陷阱、障碍、边界以及图到物理空间的嵌入都必须外加。
+
+给定环境 \(\omega\)，连续时间游走的跳转核 \(J_\omega(x,y)\ge0\) 定义生成元
+$$
+(\mathcal L_\omega f)(x)
+=\sum_{y\ne x}J_\omega(x,y)[f(y)-f(x)].
+\tag{163.1}
+$$
+若只允许沿 FIB 边跳转，则非边关系上的 \(J_\omega\) 为零；允许长程跳转时，核的支撑和尾部属于外加模型。总离开率
+$$
+\lambda_\omega(x)=\sum_{y\ne x}J_\omega(x,y)
+$$
+还决定停留时间。非指数或重尾停留时间需另加年龄变量或时间改变过程，不能仍按普通连续时间马尔可夫链处理。淬火环境先固定 \(\omega\) 再取游走平均，退火环境还对 \(\omega\) 平均；两者的扩散指数不必相同。
+
+热核为
+$$
+p_t^\omega(x,y)=\bigl(e^{t\mathcal L_\omega}\bigr)(x,y).
+$$
+图距离下的位移可取
+$$
+R_F^2(t)=\mathbb E[d_F(X_t,X_0)^2].
+\tag{163.2}
+$$
+若另有嵌入 \(\iota:V_\infty\to\mathbb R^m\)，还可取物理位移
+$$
+R_\iota^2(t)
+=\mathbb E[\|\iota(X_t)-\iota(X_0)\|^2].
+$$
+这两个量只有在嵌入保持相应尺度关系时才可互相替代；长程跳转导致二阶矩发散时，应改用分位数或尾概率。
+
+若球体积满足
+$$
+|B_F(x,r)|\asymp r^{d_f}
+$$
+且典型半径为 \(r(t)\asymp t^{1/d_w}\)，则热核可具有次高斯尺度
+$$
+p_t(x,y)\asymp
+t^{-d_f/d_w}
+\Phi\!\left(\frac{d_F(x,y)}{t^{1/d_w}}\right),
+\tag{163.3}
+$$
+返回概率的谱维数为
+$$
+p_t(x,x)\asymp t^{-d_s/2},
+\qquad d_s=\frac{2d_f}{d_w}.
+$$
+若 FIB 替换矩阵的谱半径 \(\rho(M)\) 和空间尺度因子 \(b\) 控制体积增长，在重叠受控等条件下可有
+$$
+d_f=\frac{\log\rho(M)}{\log b}.
+$$
+但 \(d_w\) 还取决于外加跳转权重和瓶颈。若有效电阻满足 \(\mathcal R_{\rm eff}(r)\asymp r^\zeta\)，并且电阻网络估计适用，则
+$$
+d_w=d_f+\zeta.
+\tag{163.4}
+$$
+
+有限二阶矩、有限均值停留时间、遍历环境、均匀导通率、无尺度增长瓶颈以及体积加倍和 Poincaré 估计共同支持正常扩散
+$$
+d_w=2,\qquad R_F^2(t)\asymp t.
+$$
+接缝瓶颈、深陷阱、重尾等待或快速增长的有效电阻可导致次扩散
+$$
+R_F^2(t)\asymp t^{2/d_w},\qquad d_w>2.
+$$
+稳定型长程核
+$$
+J_\omega(x,y)\asymp d_F(x,y)^{-d_f-\alpha},
+\qquad 0<\alpha<2
+$$
+则可能产生超扩散，典型半径为 \(t^{1/\alpha}\)，此时均方位移不再是唯一判据。FIB 多层结构还可能产生时间交叉区间；有限层数据只能给出有效指数，不能自动推出单一全局指数。
+
+给定目标集合 \(A\subseteq V\)，首次到达时间为
+$$
+T_A=\inf\{t\ge0:X_t\in A\}.
+$$
+其拉普拉斯变换
+$$
+u_s(x)=\mathbb E_x[e^{-sT_A}]
+$$
+在 \(A^c\) 上满足
+$$
+(s-\mathcal L_\omega)u_s(x)=0,\qquad u_s|_A=1.
+\tag{163.5}
+$$
+若平均首次到达时间有限，则
+$$
+-\mathcal L_\omega m_A(x)=1,\qquad m_A|_A=0.
+\tag{163.6}
+$$
+有限层图还需指定外边界的吸收、反射、储库或周期条件；吸收生成元的最小 Dirichlet 特征值只在这些边界合同固定后才控制长时生存尾部。
+
+本节结论是：FIB 提供游走的组合支撑；正常或异常扩散、谱维数、首次到达率和长时尾部由跳转核、随机环境、边界和尺度极限决定。
+
+## 164. FIB 网络上的外加 Kuramoto 同步、相位转变与有限尺寸标度
+
+FIB 递归规定网络生成，Kuramoto 动力学规定相位随物理时间演化。设第 \(n\) 层组合图为
+$$
+G_n=(V_n,E_n),\qquad N_n=|V_n|,
+$$
+邻接矩阵为 \(A_n\)。若接口识别 \(m_n\) 个顶点，则数量递归是
+$$
+N_{n+1}=N_n+N_{n-1}-m_n,
+$$
+而跨块接口矩阵 \(C_n\) 仍需单独给出。物理耦合矩阵 \(W_n\) 可取 \(A_n\)、按平均度归一化的矩阵、随机权重矩阵或其他外加形式。不同归一化会改变同步阈值，不能在未固定 \(W_n\) 时比较耦合常数。
+
+考虑含噪、相移和时延的相位模型
+$$
+d\theta_i=
+\left[
+\omega_i+
+K\sum_j(W_n)_{ij}
+\sin\bigl(\theta_j(t-\tau_{ij})-\theta_i-\alpha_{ij}\bigr)
+\right]dt
++\sqrt{2D_i}\,dB_i.
+\tag{164.1}
+$$
+自然频率分布 \(g\)、频率与节点度或递归层级的相关性、时延历史和边界驱动均需外加。递归层数不是物理时间，组合边方向也不自动成为相位驱动力。
+
+全局序参量与边相干度分别为
+$$
+r_n e^{i\psi_n}
+=\frac1{N_n}\sum_{i=1}^{N_n}e^{i\theta_i},
+$$
+$$
+q_n=
+\frac{\sum_{i,j}(W_n)_{ij}\cos(\theta_i-\theta_j)}
+{\sum_{i,j}(W_n)_{ij}}.
+\tag{164.2}
+$$
+\(r_n\) 低而 \(q_n\) 高的状态可能表示局部相干而非全网同步。还需区分相位一致、频率锁定、部分同步和有噪统计同步。
+
+在无时延、无相移、对称非负耦合及单峰对称频率分布下，非相干态沿 \(W_n\) 最大特征值的第一谐波首先失稳。设噪声强度统一为 \(D\)，则线性阈值可写为
+$$
+K_{c,n}^{\rm lin}
+=
+\frac{2}{
+\lambda_{\max}(W_n)
+\displaystyle\int_{\mathbb R}
+\frac{D}{D^2+\nu^2}g(\nu)\,d\nu
+}.
+\tag{164.3}
+$$
+零噪声且 \(g(0)>0\) 时化为
+$$
+K_{c,n}^{\rm lin}
+=\frac{2}{\pi g(0)\lambda_{\max}(W_n)}.
+$$
+Lorentz 频率分布半宽为 \(\Delta\) 时，
+$$
+K_{c,n}^{\rm lin}
+=\frac{2(D+\Delta)}{\lambda_{\max}(W_n)}.
+$$
+这些是非相干态的线性失稳条件，不自动证明稳定锁频分支或非零无限体序参量。稀疏有限网络还需核对失稳模态是否局限在接口或高连接节点。
+
+在无噪、无时延、无相移的对称吸引模型中，锁定态
+$$
+\theta_i(t)=\Omega t+\phi_i
+$$
+满足 \(\Omega=\bar\omega_n\) 和
+$$
+\delta\omega_i
+=K\sum_j(W_n)_{ij}\sin(\phi_i-\phi_j).
+$$
+对任意非空真子集 \(S\subset V_n\)，必要割条件为
+$$
+\left|\sum_{i\in S}\delta\omega_i\right|
+\le
+K\sum_{\substack{i\in S\\j\notin S}}(W_n)_{ij}.
+\tag{164.4}
+$$
+因此
+$$
+K\ge
+\max_{\varnothing\ne S\subsetneq V_n}
+\frac{\left|\sum_{i\in S}\delta\omega_i\right|}
+{\sum_{i\in S,j\notin S}(W_n)_{ij}}
+$$
+是锁频的必要下界。充分条件还需相位差范围、图连通性和非线性固定点的具体估计。拉普拉斯谱隙只能控制某些线性扰动衰减，不能替代割条件或证明全局锁频。
+
+有限尺寸标度必须固定 \(W_n\)、频率抽样、边界和观测量。若 \(\lambda_{\max}(W_n)\) 或谱隙随 FIB 层级变化，阈值变化可能只是归一化效应；\(r_n\) 的有限尺寸非零也可能来自有限粒子涨落。存在时延、相移、多峰频率或非对称耦合时，分岔可能是振荡、簇同步或迟滞，而非简单的连续全局同步。
+
+本节结论是：FIB 提供网络层级和接口谱；同步阈值、锁频、簇相干及有限尺寸临界行为由物理耦合矩阵、频率分布、噪声、时延和边界决定。
+
+## 165. FIB 细胞复形上的外加离散规范场、环流与拓扑缺陷
+
+FIB 递归在本节只承担胞腔和接缝的组合组织。设第 \(n\) 层实现为有限细胞复形 \(K_n\)，并明确每个二维胞腔的有序边界路径。胞腔计数或邻接关系不能替代非阿贝尔边界中的输运次序。规范群、边变量、作用量、边界和连续极限均需外加。
+
+选紧李群 \(G\)，对每条有向边 \(e:v\to w\) 赋予
+$$
+U_e\in G,\qquad U_{\bar e}=U_e^{-1}.
+$$
+顶点规范变换 \(g_v\in G\) 作用为
+$$
+U_e\longmapsto g_wU_eg_v^{-1}.
+\tag{165.1}
+$$
+沿有向路径 \(p=e_1\cdots e_m\) 的有序输运为
+$$
+H_p=U_{e_m}\cdots U_{e_1}.
+$$
+闭合路径的输运只按共轭变换；在有限维酉表示 \(\rho\) 下，Wilson 回路
+$$
+W_\rho(p)=\frac1{\dim\rho}\operatorname{tr}\rho(H_p)
+\tag{165.2}
+$$
+是规范不变量。
+
+对二维胞腔 \(f\)，令
+$$
+H_f=H_{\partial f}.
+$$
+它是群值离散曲率。平坦连接满足 \(H_f=1_G\) 对所有 \(f\) 成立；但局部平坦不等于所有全局回路平凡。对连通复形，在适当边界和规范等价条件下，平坦连接的模空间可由
+$$
+\operatorname{Hom}(\pi_1(K_n),G)/G
+$$
+描述。因而 FIB 的局部接缝结构不能单独决定全局 holonomy。
+
+可选 Wilson 型作用量
+$$
+S[U]=
+\sum_{f\in K_n^{(2)}}\beta_f
+\left(
+1-\frac1{\dim\rho}\operatorname{Re}\operatorname{tr}\rho(H_f)
+\right)
+\tag{165.3}
+$$
+具有规范不变性，但 \(\beta_f\)、边界标架和动力学积分均属于外加模型。开放路径只有在端点标架或端点物质场也被指定时才可成为规范不变量。
+
+在 \(G=U(1)\) 时写 \(U_e=e^{ia_e}\)，对主值面通量
+$$
+\phi_f=\operatorname{Arg}H_f\in(-\pi,\pi],
+\qquad
+(\delta a)_f=\phi_f+2\pi m_f,
+\qquad m_f\in\mathbb Z.
+\tag{165.4}
+$$
+对闭合二维胞腔链 \(\Sigma\)，离散 Stokes 关系给出
+$$
+Q(\Sigma)
+=\frac1{2\pi}\langle\phi,\Sigma\rangle
+=-\langle m,\Sigma\rangle\in\mathbb Z.
+\tag{165.5}
+$$
+整数性来自紧致 \(U(1)\) 与闭合条件，不来自 FIB 计数。若复形具有三维胞腔，可定义
+$$
+q_c=\frac1{2\pi}(\delta\phi)_c=-(\delta m)_c\in\mathbb Z.
+$$
+闭合三维链上的总电荷满足相应边界平衡；若原有 FIB 结构没有三胞腔，就不存在这类电荷而无需强行引入。
+
+环流、局部曲率和拓扑缺陷需分别定义。非零面通量不自动是涡旋，非阿贝尔曲率的迹也不自动是量子化电荷。若再加入带电复标量场和相位单值性，才能用相位绕数定义缺陷；保持整数拓扑数还需避免穿越主值分支或规定缺陷穿越规则。连续主丛、陈类或连续规范场的解释还需给出相容的几何重建。
+
+本节结论是：FIB 提供细胞复形与有序边界的组合骨架；规范不变量、曲率、Wilson 环、拓扑电荷和缺陷统计由外加群、边变量、作用量、边界和几何极限决定。
+
+## 166. FIB 路径上的外加随机输运、主方程与 Boltzmann—流体极限
+
+设 FIB 原子序列的递归更新为
+$$
+a_{n+1}=\mathsf R(a_n,a_{n-1}),
+$$
+并令单粒子状态为 \(z=(n,\xi)\)，其中 \(\xi=(v,\alpha)\) 包含速度和内部类型。递归可以作为状态的一部分，但它本身不规定概率守恒、质量、动量或能量守恒。
+
+连续时间微观跳转核 \(K_{nm}^{\varepsilon}(\xi,d\eta)\) 满足有限逃逸率
+$$
+\Lambda_n^\varepsilon(\xi)
+=\sum_{m\ne n}\int K_{nm}^{\varepsilon}(\xi,d\eta)<\infty.
+$$
+单粒子分布的主方程可写为
+$$
+\partial_t p_n(t,\xi)
+=
+\sum_m\int p_m(t,\eta)K_{mn}^{\varepsilon}(\eta,d\xi)
+-\Lambda_n^\varepsilon(\xi)p_n(t,\xi)
++\mathcal C_n[p](\xi)+S_n-R_n.
+\tag{166.1}
+$$
+其中 \(\mathcal C_n\) 是碰撞项，\(S_n,R_n\) 是外部注入和移除。最近邻核、长程核、边界反射与吸收均需单独指定。
+
+对二体碰撞的 Boltzmann—Grad 标度
+$$
+N\sigma^{d-1}\to\lambda,
+$$
+若初始传播混沌、碰撞率有限且三体同时碰撞可忽略，则单粒子极限可具有
+$$
+(\partial_t+v\cdot\nabla_x)f
+=\mathcal L_{\rm ext}^*f+Q(f,f)+S.
+\tag{166.2}
+$$
+若外部跳转依赖多粒子联合状态，上述闭合不再自动成立，必须保留 BBGKY 层级。
+
+碰撞不变量 \(\phi_\alpha(v)\) 满足
+$$
+\phi_\alpha(v)+\phi_\beta(v_*)
+=\phi_\gamma(v')+\phi_\delta(v_*')
+$$
+在所有允许反应上成立时，碰撞项满足
+$$
+\sum_\alpha\int\phi_\alpha(v)Q_\alpha(f,f)(v)\,dv=0.
+\tag{166.3}
+$$
+质量、动量和能量只有在外部跳转核也保持相应量或显式记录外力通量时才是全系统守恒量；FIB 标签不是自动守恒量。
+
+对任意观测量 \(\phi_n(\xi)\)，外部跳转贡献为
+$$
+\mathcal I_\phi^{\rm ext}
+=
+\sum_{n,m}\iint
+f_n(\xi)K_{nm}^{\varepsilon}(\xi,d\eta)
+[\phi_m(\eta)-\phi_n(\xi)].
+\tag{166.4}
+$$
+因此矩方程还包含边界通量、碰撞矩、源汇和外部输运矩。若存在平衡测度 \(\pi\) 并满足详细平衡，则相对熵具有耗散形式
+$$
+\frac{d}{dt}H(f\mid\pi)
+=-D_{\rm jump}-D_{\rm coll}
++\mathcal W_{\rm source}
++\mathcal W_{\rm boundary},
+\tag{166.5}
+$$
+其中两项耗散非负；没有详细平衡时，驱动输运会贡献熵流，不能直接宣称熵单调下降。
+
+设碰撞时间、外部跳转时间和宏观输运时间分别为 \(\tau_c,\tau_j,\tau_s\)，可用
+$$
+\mathrm{Kn}=\frac{\tau_c}{\tau_s},
+\qquad
+\mathrm{Da}_j=\frac{\tau_s}{\tau_j}
+$$
+描述尺度分离。典型缩放为
+$$
+\partial_t f^\varepsilon+v\cdot\nabla_x f^\varepsilon
+=
+\varepsilon^{-1}Q(f^\varepsilon,f^\varepsilon)
++\varepsilon^{-\gamma}\mathcal L_{\rm ext}^{*,\varepsilon}f^\varepsilon
++S^\varepsilon.
+\tag{166.6}
+$$
+不同 \(\gamma\) 产生不同极限：快速碰撞可先导向局部平衡，外部跳转与碰撞同阶时会改变局部平衡，长程重尾核则可能产生分数阶输运。要得到扩散、漂移—扩散或 Euler/Navier–Stokes 型方程，还需紧性、矩界、边界层和初始层的证明。
+
+本节结论是：FIB 提供微观可达路径与内部标签；主方程、碰撞守恒、熵耗散以及 Boltzmann—流体极限由跳转核、碰撞律、尺度分离、边界和源汇决定。
+
+## 167. FIB 关系网络上的外加主动物质、定向运动与集体相变
+
+FIB 递归生成关系网络
+$$
+G_n=(V_n,E_n),
+$$
+但组合路径只描述可达次序。主动速度、空间嵌入、极性记忆、排斥、容量、对齐作用、噪声和物理时间均需外加。递归层数不是时间，组合边方向也不自动成为主动驱动力。
+
+若指定嵌入 \(\mathbf r:V_n\to\mathbb R^d\)，二维主动布朗粒子的外加模型可写为
+$$
+d\mathbf x_i=
+\left[
+v_0\mathbf p_i-\mu\nabla W_{G_n}(\mathbf x_i)
+-\mu\sum_{j\ne i}\nabla U(\mathbf x_i-\mathbf x_j)
++\mu\mathbf f_i^{\rm ext}
+\right]dt
++\sqrt{2D_t}\,d\mathbf B_i,
+$$
+$$
+d\theta_i=
+\left[
+\kappa\sum_{j\ne i}K_{ij}\sin(\theta_j-\theta_i)
++h_i\sin(\theta_i^{\rm ext}-\theta_i)
++\omega_i^{\rm wall}
+\right]dt
++\sqrt{2D_r}\,dB_i^\theta,
+\tag{167.1}
+$$
+其中 \(\mathbf p_i=(\cos\theta_i,\sin\theta_i)\)。持续长度 \(\ell_p=v_0/D_r\) 只在无弯道、阻塞和交汇修正时具有直接意义；网络中的净漂移和长期扩散率还取决于通道几何和节点规则。
+
+在抽象图上，也可令粒子占据节点 \(v\)，容量为 \(m_v\)，并用有向跃迁率
+$$
+r_i(v\to w)
+=
+\frac{c_{vw}}{a_v}\mathbf1_{\{n_w<m_w\}}
+\exp\left[
+-\frac{\beta\Delta U_i}{2}
++\frac{\chi}{2}\mathbf p_i\cdot
+\frac{\mathbf r_w-\mathbf r_v}{\ell_0}
++\frac{A_{vw}}2
+\right]
+\tag{167.2}
+$$
+描述排斥、主动偏置和非保守驱动。对齐权重、主动偏置、排斥能和角噪声必须分开登记；若改变更新顺序或冲突消解规则，得到的是不同动力学。
+
+极化序参量与网络边净流可定义为
+$$
+P_N=\left|\frac1N\sum_{i=1}^N\mathbf p_i\right|,
+\qquad
+J_{vw}=\frac{N_{v\to w}-N_{w\to v}}{NT}.
+\tag{167.3}
+$$
+极化、净输运和局部密度聚集是不同观测量；高极化不必产生宏观净流，局部流也不必产生全网极化。
+
+在均匀、各向同性、充分混合的近似下，连续极化场可写成
+$$
+\partial_t\mathbf P
+=a(\rho)\mathbf P-b|\mathbf P|^2\mathbf P
+-D_P\nabla^2\mathbf P+\boldsymbol\xi,
+\tag{167.4}
+$$
+其中 \(a(\rho)\) 的符号变化给出平均场极化失稳，\(b>0\) 控制饱和。FIB 网络上的实际线性模态应由外加耦合矩阵和边界谱替代连续 Laplacian；高层接口瓶颈可能使局部群先同步而全网仍无序。有限尺寸下 \(P_N>0\) 还可能只是涨落偏置，需比较 \(N_n\)、边界和时间窗口。
+
+主动物质相分离（MIPS）需要持续推进、排斥、密度依赖有效速度或等价的聚集机制。一个标量密度近似可写为
+$$
+\partial_t\rho
+=-\nabla\cdot\bigl[v(\rho)\rho\,\mathbf p\bigr]
++D_\rho\nabla^2\rho+\zeta,
+$$
+或在消去极性后得到有效通量
+$$
+\mathbf J
+=-D_{\rm eff}(\rho)\nabla\rho+\cdots .
+$$
+只有在 \(D_{\rm eff}\) 变号、有效化学势满足相容性以及噪声和边界条件合适时，才可讨论密度相分离。FIB 的节点度或递归层级不自动提供密度依赖速度。
+
+主动物质通常破坏详细平衡。若跃迁存在有向亲和力 \(A_{vw}\)，稳态边流可非零；若所有主动偏置、对齐和外场消失，才可能退化为与容量权重相容的被动平衡。因而 flocking、MIPS、堵塞和普通渗流需要分别报告极性、密度、接触和连通观测。
+
+本节结论是：FIB 提供主动物质的关系网络和路径约束；主动输运、极化、集体同步、MIPS 及有限尺寸相变由空间嵌入、驱动、相互作用、噪声、边界和更新规则决定。
