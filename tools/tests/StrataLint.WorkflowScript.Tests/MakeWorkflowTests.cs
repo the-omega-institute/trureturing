@@ -96,6 +96,7 @@ public sealed partial class MakeWorkflowTests
         "capacity-audit",
         "update-renderer-contract",
         "clean-lanes",
+        "clean-all",
         "xi-quantization",
         "xi-quantization-test",
         "prime-slab-search",
