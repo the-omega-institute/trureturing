@@ -101,7 +101,7 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
           by_cases equal : leafLabel U q = leafLabel V q
           · have extended : κHist (a ++ [⟨q,readout q U⟩]) =
                 κHist (b ++ [⟨q,readout q V⟩]) := by
-              simp only [κHist, List.map_append, List.map_cons, List.map_nil]
+              simp only [kappa_hist, List.map_append, List.map_cons, List.map_nil]
               change κHist a ++ [⟨q,κ (readout q U)⟩] =
                 κHist b ++ [⟨q,κ (readout q V)⟩]
               rw [same, label, label, equal]
@@ -114,11 +114,11 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
                   (⟨q,κ (readout q V)⟩ :: κHist u')
                 rw [label, label, equal, joined]
               · refine Or.inr ⟨⟨q,leafLabel U q⟩ :: s,r,?_,?_,hr⟩
-                · simpa only [List.nil_append, List.cons_append, κHist, List.map_cons, label]
+                · simpa only [List.nil_append, List.cons_append, kappa_hist, List.map_cons, label]
                     using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ :
                       (⟨q,leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool)) ::
                         (_ ++ _) <+: _ :: _)
-                · simpa only [List.nil_append, List.cons_append, κHist, List.map_cons, label, equal]
+                · simpa only [List.nil_append, List.cons_append, kappa_hist, List.map_cons, label, equal]
                     using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ :
                       (⟨q,leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool)) ::
                         (_ ++ _) <+: _ :: _)
@@ -128,12 +128,12 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
               rcases ih m _ _ t' u' x' y' g extended runU runV tailU tailV with
                 joined | ⟨s,r,hs,ht,hr⟩
               · left
-                simp only [κHist, List.map_cons, label, equal]
+                simp only [kappa_hist, List.map_cons, label, equal]
                 exact congrArg _ joined
               · refine Or.inr ⟨s,r,?_,?_,hr⟩
-                · simpa only [List.cons_append, κHist, List.map_cons, ← headU]
+                · simpa only [List.cons_append, kappa_hist, List.map_cons, ← headU]
                     using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ : c :: _ <+: c :: _)
-                · simpa only [List.cons_append, κHist, List.map_cons, ← headV]
+                · simpa only [List.cons_append, kappa_hist, List.map_cons, ← headV]
                     using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ : c :: _ <+: c :: _)
           · have empty : g = [] := by
               cases g with
@@ -185,7 +185,7 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
     rw [truth _ _ _ _ _ (actual W) a rawMember, label]
   have address_map (t : Hist (fun _ : Address => Reply)) :
       (κHist t).map Sigma.fst = t.map Sigma.fst := by
-    simp only [κHist, List.map_map, Function.comp_def]
+    simp only [kappa_hist, List.map_map, Function.comp_def]
   have prefix_paid (W : Source) (g : Hist (fun _ : Address => Option Bool))
       (pre : g.IsPrefix (κHist (terminal π W).1)) :
       (g.map Sigma.fst).toFinset ⊆ paid (terminal π W).1 := by
@@ -196,7 +196,7 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
   have leaf_injective (r t : Reply) (b : Bool) (hr : κ r = some b)
       (same : κ r = κ t) : r = t := by
     cases r <;> cases t <;>
-      simp only [κ, Option.some.injEq, reduceCtorEq] at hr same ⊢
+      simp only [kappa, Option.some.injEq, reduceCtorEq] at hr same ⊢
   have unequal : κHist (terminal π U).1 ≠ κHist (terminal π V).1 := by
     intro joined
     apply different
