@@ -82,6 +82,10 @@ $$\forall n \in \mathbb{N},\; \forall G \in \operatorname{SimpleGraph}\left(\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/DissipativeFreeFermionRootLocation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fukai-yoshida-katsura-2026-dissipative-ffd-upper-half-plane` (proved) by `D5/S3/Quantum/SpinChains/DissipativeFreeFermionRootLocation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fukai-yoshida-katsura-2026-dissipative-ffd-upper-half-plane","declaration_gid":"D5/S3/Quantum/SpinChains/DissipativeFreeFermionRootLocation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

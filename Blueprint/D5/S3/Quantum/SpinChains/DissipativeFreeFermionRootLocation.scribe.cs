@@ -33,7 +33,10 @@ internal sealed class DissipativeFreeFermionRootLocationDocument : IScribeDocume
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Clique deletion splits the independent configurations according to their unique vertex in K, when present. Claw exclusion makes the neighbors of each deleted clique vertex into a simplicial clique in the remaining domain. For Im z < 0, induction on that domain constructs a multiplier r with Im r > 0 and P_U(z²) = z P_(U\\K)(z²) r. Its recursive expression is r = 1/z − Σ_(j∈K) b_j²/r_j, with every Im r_j > 0. Only nonzero recursive multipliers are divided by. A lower-half-plane root would force both independence polynomials to vanish; real roots are excluded by their real and imaginary parts, using P_U(0) = 1. The proof retains EvenHoleFree in the displayed statement but does not use it: the same root argument applies to every claw-free graph with a simplicial clique and the remaining hypotheses."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fukai-yoshida-katsura-2026-dissipative-ffd-upper-half-plane"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock.Describe Definition(string id, string name, string title,
