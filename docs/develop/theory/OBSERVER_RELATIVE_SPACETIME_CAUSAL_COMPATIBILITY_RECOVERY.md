@@ -2374,4 +2374,3 @@ $$
 执行与轨迹的中间语义可参见 Lynch–Tuttle，[An Introduction to Input/Output Automata，第 2、3 节](https://groups.csail.mit.edu/tds/papers/Lynch/CWI89.pdf)；其输入全启用及即时共享动作不替代这里的部分域、有费用传递、资源令牌和期限。过程几何卷的[定义 3.1、定理 3.2 及定义 9.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 提供实际像上的部分同余与同路径档案，作为上述逐步认证和费用保留的中间接口；本卷定理 44.2 已处理不隐藏字段的重分组。这里新增的接合限于真实同源与局部原操作下，保留上下文相位的私有时间投影、共同期限及其局部执行构造，以及它们与可用证据和模型证书的相容性。
 
 ## 追加锚（本行以下为增补区）
-
