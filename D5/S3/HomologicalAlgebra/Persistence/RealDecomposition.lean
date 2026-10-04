@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/HomologicalAlgebra/Persistence/RealDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition,
-     D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
+   anchors: [D5/S3/HomologicalAlgebra/Persistence/FiniteIntervalDecomposition, D5/S3/HomologicalAlgebra/Persistence/RealIntervalUniqueness]
    utility: none
    digest: Natural classification and exact interleaving-matching equivalence with extended isometry. -/
 
