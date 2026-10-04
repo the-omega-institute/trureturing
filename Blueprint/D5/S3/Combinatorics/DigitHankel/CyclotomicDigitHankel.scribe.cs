@@ -11,7 +11,7 @@ internal sealed class CyclotomicDigitHankelDocument : IScribeDocumentDefinition
         "Cyclotomic Binary Digit Hankel Zeros",
         H("Cyclotomic Binary Digit Hankel Zeros"),
         Blocks(
-            Node("cyclotomic-digit-hankel-result", "Cyclotomic Hankel zero characterization", "result", "For every d at least two, every primitive d-th root of unity zeta, and every n at least two, the binary digit Hankel determinant at 2 times zeta is zero if and only if n lies in the cyclotomic zero intervals described by InZeroSet.", DescribeRole.Theorem)
+            Node("cyclotomic-digit-hankel-result", "Cyclotomic Hankel zero characterization", "result", "For every d at least two, every primitive d-th root of unity zeta, and every n at least two, the binary digit Hankel determinant at 2 times zeta is zero if and only if n lies in the cyclotomic zero intervals described by InZeroSet.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sobolewski-ulas-cyclotomic-hankel-zeros"), ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,

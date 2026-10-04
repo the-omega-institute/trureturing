@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/DigitHankel/CyclotomicDigitHankel.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/DigitHankel/CyclotomicDigitHankel.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sobolewski-ulas-cyclotomic-hankel-zeros` (proved) by `D5/S3/Combinatorics/DigitHankel/CyclotomicDigitHankel.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sobolewski-ulas-cyclotomic-hankel-zeros","declaration_gid":"D5/S3/Combinatorics/DigitHankel/CyclotomicDigitHankel.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bartosz Sobolewski, Maciej Ulas (2026). *Hankel determinants of weighted binary sums of digits*. DOI: [10.48550/arXiv.2607.09376](https://doi.org/10.48550/arXiv.2607.09376). URL: <https://arxiv.org/abs/2607.09376v1>.
