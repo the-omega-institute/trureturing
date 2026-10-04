@@ -1,0 +1,17 @@
+**定义 2.2（同一个多项式的实际共同像）。** 主合同固定 $R=\mathbb Z/d\mathbb Z$、$d\ge2$，和非空有限互异探针库 $a_1,\ldots,a_r\ge2$。令
+
+$$
+\Phi_a=X^a-\sum_{j=0}^{a-1}X^j,\qquad
+F=\prod_{i=1}^r\Phi_{a_i},\qquad D=\sum_{i=1}^ra_i,
+$$
+
+$$
+\mathcal O_R(P)=\bigl(\operatorname{rem}_{\Phi_{a_i}}P\bigr)_{i=1}^r,
+\qquad J=\bigcap_{i=1}^r(\Phi_{a_i}),
+\qquad H=\mathcal O_R(R[X])\cong R[X]/J.
+$$
+
+每个坐标取首一除法给出的次数小于 $a_i$ 的代表，系数按常数项在前排列。$H$ 是坐标积中的子环，而非任意写出的坐标积。称 $y$ 多项式相容，就是 $y\in H$。记 $x=\mathcal O_R(X)$，$1=\mathcal O_R(1)$，$M=|H|$。乘积商 $A=R[X]/(F)$ 满射到 $H$；它不必与 $H$ 相同，尤其不能在合数模数下把 $J$ 无条件写成 $(F)$。
+
+$F$ 首一，故 $A$ 有 $d^D$ 个元素；其常数项为单位 $(-1)^r$，从关系 $F(X)=0$ 可把该常数项移到另一侧，写成 $X$ 乘一个多项式为单位。因此 $X$ 在 $A$ 中为单位，$x$ 在 $H$ 中也为单位。各坐标的投影满射，所以 $M\ge d^{\max_i a_i}\ge4$。记 $L$ 为 $x$ 在 $H^\times$ 中的精确阶；$L_A$ 为 $X$ 在 $A^\times$ 中的精确阶。二者有限，且 $L\mid L_A$。
+

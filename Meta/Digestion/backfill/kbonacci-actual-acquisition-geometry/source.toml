@@ -1,0 +1,5 @@
+source_id = "kbonacci-actual-acquisition-geometry"
+path = "docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
