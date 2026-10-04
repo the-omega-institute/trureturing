@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.QuadraticForms.EvolutionAlgebras;
 
@@ -20,20 +22,20 @@ internal sealed class BareiRemarkThreeFiveDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("ambient-space"),
                 DeclarationHandle.Create(Prefix + "E"), H("The ambient complex vector space"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(AmbientFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The ambient vector space has five complex coordinates. "
                     + "The product used in the theorem is bilinear and has an actual natural basis; "
                     + "associativity and a unit are not imposed."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("pair-product-square"),
                 DeclarationHandle.Create(Prefix + "Square"), H("The square of a subspace"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Question),
+                StatementSource.FromAuthor(SquareFormula()), AssessedProvenance.FromLiterature(Question),
                 Blocks(Paragraph(Text("The square is the complex linear span of every product "
                     + "of two vectors from the subspace. Idempotence means equality to the subspace. "
                     + "This is a property of subspaces, rather than a restriction to coordinate spans "
                     + "or to idempotent elements."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("minimal-idempotent-existence"),
                 DeclarationHandle.Create(Prefix + "result"),
-                H("Affirmative answer to Remark 3.5"), StatementSource.FromLean(),
+                H("Affirmative answer to Remark 3.5"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(Question, Related, Embedding),
                 Blocks(
                     Paragraph(Text("Choose natural basis e1 through e5. Put u equal to their sum, "
@@ -61,4 +63,60 @@ internal sealed class BareiRemarkThreeFiveDocument : IScribeDocumentDefinition
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("barei-2026-remark-3-5-minimal-idempotent"),
                     ResolutionKind.Proved))), []));
+
+    private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Call(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula FinFive() => Call(Named("Fin"), D(5));
+    private static Formula Subspaces() => Call(Named("Submodule"), Complexes(), F.Id("E"));
+    private static Formula BilinearMaps() => Seq(F.Id("E"), Sp,
+        new Formula.Subscript(To, Complexes()), Sp, F.Id("E"), Sp,
+        new Formula.Subscript(To, Complexes()), Sp, F.Id("E"));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, right);
+    private static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+    private static Formula Some(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
+    private static Formula SquareOf(Formula subspace) => Call(Named("Square"), Mu, subspace);
+    private static Formula Dimension(Formula space) =>
+        Call(new Formula.Subscript(Named("finrank"), Complexes()), space);
+
+    private static Formula AmbientFormula() =>
+        Disp(Equal(F.Id("E"), Parenthesized(Seq(FinFive(), Sp, To, Sp, Complexes()))));
+
+    private static Formula SquareFormula()
+    {
+        Formula x = F.Id("x"), y = F.Id("y"), z = F.Id("z"), subspace = F.Id("U");
+        Formula products = Seq(OpenBrace, z, Sp, InMacro, Sp, F.Id("E"), Sp, Mid, Sp,
+            Some("x", subspace, Some("y", subspace, Equal(Call(Mu, x, y), z))), CloseBrace);
+        Formula span = Call(new Formula.Subscript(Named("span"), Complexes()), products);
+        return Disp(Seq(Forall, Sp, Mu, Sp, Colon, Sp, BilinearMaps(), Comma, Sp,
+            All("U", Subspaces(), Equal(SquareOf(subspace), span))));
+    }
+
+    private static Formula ResultFormula()
+    {
+        Formula basis = F.Id("b"), subspace = F.Id("V"), candidate = F.Id("U");
+        Formula naturalBasis = All("i", FinFive(), All("j", FinFive(),
+            Implies(new Formula.Relation(F.Id("i"), FormulaRelationOperator.NotEqual, F.Id("j")),
+                Equal(Call(Mu, Call(basis, F.Id("i")), Call(basis, F.Id("j"))), D(0)))));
+        Formula minimality = All("U", Subspaces(),
+            Implies(Seq(candidate, Sp, Leq, Sp, subspace),
+                Implies(new Formula.Relation(candidate, FormulaRelationOperator.NotEqual,
+                    new Formula.SetLiteral([D(0)])),
+                    Implies(Equal(SquareOf(candidate), candidate), Equal(candidate, subspace)))));
+        Formula conditions = And(Equal(Dimension(F.Id("E")), D(5)),
+            And(naturalBasis, And(Equal(Dimension(subspace), D(3)),
+                And(Equal(SquareOf(subspace), subspace), minimality))));
+        Formula basisType = Call(new Formula.Subscript(Named("Basis"), Complexes()), FinFive(), F.Id("E"));
+        return Disp(Seq(Exists, Sp, Mu, Sp, Colon, Sp, BilinearMaps(), Comma, Sp,
+            Some("b", basisType, Some("V", Subspaces(), conditions))));
+    }
 }
