@@ -24,6 +24,10 @@ Lean statement: `D5/S3/Combinatorics/Apwenian/GuoHan.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Apwenian/GuoHan.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-han-automatic-apwenian-one-odd-letter` (proved) by `D5/S3/Combinatorics/Apwenian/GuoHan.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-han-automatic-apwenian-one-odd-letter","declaration_gid":"D5/S3/Combinatorics/Apwenian/GuoHan.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ying-Jun Guo, Guo-Niu Han (2025). *On a family of automatic apwenian sequences*. DOI: [10.1016/j.disc.2025.114399](https://doi.org/10.1016/j.disc.2025.114399). URL: <https://irma.math.unistra.fr/~guoniu/papers/p120autoapw.pdf>.
