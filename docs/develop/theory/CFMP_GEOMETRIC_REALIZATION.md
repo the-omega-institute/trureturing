@@ -1136,3 +1136,241 @@ $$\delta_{25}=\min\{1/8,(1-\cos(\pi/27))/(2+\cos(\pi/27))\}.$$
 **说明。** 这个循环字只读取两个面签名，未记录 $M$ 中对边是否也为六度临界边。有利出现的正对边下界仍须单独读取实际全局度数类。由黄金字计数本身不能推出定理 31.3 的改进角度界。六位循环字与四面体六个任意排序边标签仍是不同对象。
 
 **范围。** 定理 31.3 只给出六次出现的连续解析余量；从该余量得到定理 32.1 仍需要共同全局盒、面粘合一致性与共体积极小值论证，第 33 节的实例还需要全部链接条件。完整 CFMP、一般最低八度及无附加条件的六度实现仍需额外证明。第 29 节的独立对边端点一障碍保持成立；有利出现处的共同正下界只克服其中一个明确受限情形。
+
+## Local polar edge sectors in an algebraic Lorentz frame
+
+**定理（局部极性边扇区）。** Let $E=\mathbb R\times\mathbb R^3$ and
+$B((t,X),(u,Y))=-tu+\langle X,Y\rangle$. For a future unit timelike
+point $p$, the restriction of $B$ to $p^\perp$ is positive definite.
+More precisely, if $B(p,p)=-1$, $B(p,u)=0$, and $u=(u_0,U)$, then
+\[
+ B(u,u)\,p_0^2\ge\langle U,U\rangle,
+ \qquad B(u,u)=0\ \Longleftrightarrow\ u=0.
+\]
+Indeed $p_0^2=1+\langle X,X\rangle>0$ and
+$p_0u_0=\langle X,U\rangle$. Spatial Cauchy--Schwarz gives
+$p_0^2u_0^2\le\langle X,X\rangle\langle U,U\rangle$, which proves
+the estimate. Equality $B(u,u)=0$ forces $U=0$, and orthogonality
+then forces $u_0=0$. The norm on the tangent space is the norm induced
+by this positive form.
+
+Let $v_1,\ldots,v_4$ be a basis with $B(v_a,v_a)=1$ and
+$B(v_a,v_b)=-x_{ab}$ for $a\ne b$, where $1<x_{ab}\le2$.
+Let $w^a$ be its actual $B$-dual basis. Put $z=\sum_a v_a$.
+Since $B(z,z)=4-2\sum_{a<b}x_{ab}<-8$, $z_0\ne0$.
+Apply the common reflection $(t,X)\mapsto(-t,X)$ to both bases if
+$z_0<0$, and use the resulting bases in all subsequent definitions.
+This preserves Gram entries and duality and makes $z_0>0$.
+Define the literal polar set
+\[
+ K=\{q:B(q,q)=-1,\ q_0>0,\ B(q,w^a)\ge0,\ B(q,v_a)\le0
+       \text{ for all }a\}.
+\]
+For distinct $i,j$, write $k,h$ for the complementary indices,
+$L=\operatorname{arcosh}x_{ij}$, and $d=\sinh L$.
+For $0<s<L$, define
+\[
+ p(s)=\frac{\cosh(L-s)v_i+\cosh(s)v_j}{d},\qquad
+ v(s)=\frac{-\sinh(L-s)v_i+\sinh(s)v_j}{d}.
+\]
+These satisfy $B(p,p)=-1$, $p_0>0$, $B(p,v)=0$, and $B(v,v)=1$.
+The actual vector derivative is $p′(s)=v(s)$ for every $0<s<L$.
+Only the lateral planes $k,h$ are active. The remaining literal
+constraints have the values
+\[
+ B(p,w^i)=\cosh(L-s)/d>0,\quad B(p,w^j)=\cosh(s)/d>0,
+\]
+\[
+ B(p,v_i)=-\sinh s<0,\quad B(p,v_j)=-\sinh(L-s)<0,
+\]
+\[
+ B(p,v_a)=-(x_{ia}\cosh(L-s)+x_{ja}\cosh s)/d<0
+ \quad(a=k,h).
+\]
+The normal plane $N=p^\perp\cap v^\perp$ is exactly
+\(\operatorname{span}\{w^k,w^h\}\) and has dimension two.
+Set $n_a=-w^a/\sqrt{B(w^a,w^a)}$ for $a=k,h$,
+$c=B(n_k,n_h)$, and $\eta=\sqrt{1-c^2}>0$.
+The inward unit rays are
+\[
+ r_k=(-n_h+c n_k)/\eta,\qquad r_h=(-n_k+c n_h)/\eta.
+\]
+With the tangent norm induced by $B$, define
+\[
+ \gamma_u(t)=\begin{cases}p,&u=0,\\
+ \cosh(t\|u\|)p+\dfrac{\sinh(t\|u\|)}{\|u\|}u,&u\ne0.
+ \end{cases}
+\]
+Then the actual forward normal set is
+\[
+ \{u\in N:\exists\epsilon>0\ \forall t\in(0,\epsilon),\
+                 \gamma_u(t)\in K\}
+ =\{\alpha r_k+\beta r_h:\alpha,\beta\ge0\}.
+\]
+The six strict inequalities persist locally by continuity. The active
+inequalities reduce exactly to $B(u,n_k)\le0$ and $B(u,n_h)\le0$,
+because their geodesic coefficient is positive for every $t>0$ and
+$u\ne0$. Solving these two inequalities in the actual normal plane
+gives the displayed nonnegative span, including its zero vector.
+
+For the original ordered edge $12$, the six arguments are
+$(x_{12},x_{13},x_{14},x_{34},x_{24},x_{23})$. With the radicands
+$A,B$ and numerator $P_1$ of Section 1, let $G$ be the actual
+Gram matrix in the ordered frame $v_i,v_j,v_k,v_h$, and let $V$ have
+rows consisting of their time coordinate followed by the three spatial
+coordinates. Then $G=V\operatorname{diag}(-1,1,1,1)V^T$ and
+$D=-\det G=(\det V)^2>0$. The dual Gram entries are $B/D,A/D,-P_1/D$, in that order.
+The identity $AB-P_1^2=(x_{12}^2-1)D$ proves $|c|<1$.
+Thus $B(r_k,r_h)=-c=\varphi_1$, and the angle between the actual
+inward tangent rays is $\arccos\varphi_1$. For another ordered edge
+$ij$, the arguments are $(x_{ij},x_{ik},x_{ih},x_{kh},x_{jh},x_{jk})$.
+An algebraic Gram basis is the domain of this local statement; existence
+of such a basis for every six-length input and its connection to a
+canonical marked hyperideal block remain separate construction obligations.
+The local statement supplies no global cell, face-gluing, manifold,
+curvature, or completeness conclusion.
+
+## Marked coefficient polytopes and all supporting intersections
+
+Let $G$ be a symmetric real $4\times4$ matrix with $G_{ii}=1$ and
+$G_{ij}<-1$ for $i\ne j$. Define
+\[
+ R_i(a)=\sum_jG_{ij}a_j,\qquad
+ P_G=\{a\in\mathbb R^4:a_j\ge0,\ \sum_ja_j=1,\ R_i(a)\le0\ \forall i\}.
+\]
+For ordered distinct indices $i,j$, let $b_{ij}$ have coordinates
+\[
+ (b_{ij})_i=\frac{-G_{ij}}{1-G_{ij}},\qquad
+ (b_{ij})_j=\frac1{1-G_{ij}},\qquad
+ (b_{ij})_h=0\quad(h\notin\{i,j\}).
+\]
+The extreme points of $P_G$ are exactly these twelve ordered endpoints.
+Every $b_{ij}$ belongs to $P_G$, its only active row is $R_i=0$, all other
+rows are strictly negative, and its zero coordinates are exactly the
+indices outside $\{i,j\}$. Equality $b_{ij}=b_{kl}$ for distinct pairs
+implies $i=k$ and $j=l$, including when some or all edge lengths agree.
+For arbitrary subsets $S,T\subseteq\{1,2,3,4\}$, put
+\[
+ F_{S,T}=\{a\in P_G:a_h=0\ (h\in S),\ R_k(a)=0\ (k\in T)\}.
+\]
+Then
+\[
+ F_{S,T}=\operatorname{conv}\{b_{ij}:i\ne j,\
+ S\cap\{i,j\}=\varnothing,\ T\subseteq\{i\}\}.
+\]
+This includes the whole-polytope hull when $S=T=\varnothing$, the three
+vertices of each row-zero face when $S=\varnothing,T=\{i\}$, the six
+vertices of each coordinate-zero face when $S=\{h\},T=\varnothing$, and
+empty intersections when two distinct row labels are prescribed.
+
+The endpoint completeness argument uses actual feasible perturbations.
+If no row is active, a direction supported on two positive coordinates
+preserves total mass, and both sufficiently small signs remain feasible.
+If row $i$ is active and $i,j,k$ are positive coordinates, the direction
+\[
+ d=(G_{ij}-G_{ik})e_i+(G_{ik}-1)e_j+(1-G_{ij})e_k
+\]
+has zero mass and zero $i$-row, is nonzero, and preserves all strict
+inactive inequalities and positive coordinates for sufficiently small
+parameters of both signs. Extremality excludes both cases. An extreme
+point therefore has one active row and exactly two positive coordinates;
+the mass and active-row equations give the displayed ordered endpoint.
+Generic compact convex hull and supporting-face results then give all
+labeled intersection hulls.
+
+Taking $G_{ij}=-x_{ij}$ covers all six independent $1<x_{ij}\le2$ in the
+original order $(x_{12},x_{13},x_{14},x_{34},x_{24},x_{23})$. This is a
+coefficient-polytope classification. It does not assert affine facet
+dimensions, an oriented hexagon parametrization, a Lorentz/Klein
+identification, a marked-cell homeomorphism, or any gluing, manifold,
+curvature or completeness conclusion.
+
+
+**定理 34.1（配对面内部双侧坐标图）。**
+
+Let
+\[
+ X=\{a\in\mathbb R^{\{0,1,2,3\}}:a_j\ge0,\ \sum_ja_j=1,
+                   \ a_j\le3/4\text{ for every }j\},
+\]
+and let $T$ be any type with the discrete topology. A face occurrence is
+$f=(t,i)\in T\times\{0,1,2,3\}$. Suppose $m$ is an involution on face
+occurrences with $m(f)\ne f$ for every $f$. Let $\sigma_f$ be a permutation
+of all four vertex labels satisfying
+\[
+ \sigma_f(i)=m(f)_2,\qquad \sigma_{m(f)}=\sigma_f^{-1}.
+\]
+For $a\in X$ define $(\sigma_fa)_k=a_{\sigma_f^{-1}(k)}$. On $T\times X$
+use the generating relation
+\[
+ (t,a)\mathrel{R}(t',a')\quad\Longleftrightarrow\quad
+ \exists i:\ a_i=0,\quad t'=m(t,i)_1,\quad a'=\sigma_{(t,i)}a.
+\]
+Let $Q$ be the raw quotient by this relation, endowed with the quotient
+topology, and write $q:T\times X\to Q$ for its projection. Thus equality
+in $Q$ is the equivalence closure of the displayed generating relation.
+
+For every occurrence $(t,a)$ and label $i$ with
+\[
+ a_i=0,\qquad a_j>0\ (j\ne i),\qquad a_j<3/4\text{ for every }j,
+\]
+there exist an open $U\subseteq Q$ containing $q(t,a)$ and an open
+$B\subseteq\mathbb R^3$ such that $U$ is homeomorphic to $B$.
+The assertion allows two distinct paired faces of the same tetrahedron
+label; it excludes a fixed face occurrence by its stated pairing law.
+
+Choose positive $\delta$ smaller than the three positive coefficients.
+The source collar has $a_i<\delta$, $a_j>\delta$ for $j\ne i$, and all
+caps strict. The mate collar uses the transported labels. These collars
+are disjoint, and every zero-coordinate crossing in either collar uses
+its distinguished face. The actual involution and inverse permutation
+prove saturation under the equivalence closure. The quotient image is
+therefore open. Signed face depth, together with two other coefficients,
+gives the chart. The inverse uses absolute signed depth and the sum-one
+equation; its two branches agree on the seam by the generating relation.
+Restricted quotient descent and continuous pasting give continuity in
+both directions.
+
+**定理 34.2（配对截面半空间坐标图）。**
+
+Retain $X,T,m,\sigma,R,Q,q$ from the preceding statement. The predicates
+\[
+ \operatorname{Cap}(q(t,a))\Longleftrightarrow\exists j:\ a_j=3/4,
+ \qquad
+ \operatorname{Seam}(q(t,a))\Longleftrightarrow\exists j:\ a_j=0
+\]
+are well defined on $Q$: each generating identification permutes all
+four coefficients.
+
+For every occurrence $(t,a)$ and labels $i,c$ with
+\[
+ a_i=0,\qquad a_c=3/4,\qquad a_j>0\ (j\ne i),
+\]
+there exist an open $U\subseteq Q$ containing $q(t,a)$, an open subset
+$B$ of the half-space $H=\{w\in\mathbb R^3:w_0\ge0\}$, and a
+homeomorphism $h:U\to B$ such that, for every $z\in U$,
+\[
+ \operatorname{Cap}(z)\Longleftrightarrow h(z)_0=0,
+ \qquad
+ \operatorname{Seam}(z)\Longleftrightarrow h(z)_2=0.
+\]
+Openness of $B$ is relative to $H$. The zero and cap labels are distinct
+by their two displayed equations. All other caps are strict by
+nonnegativity and the sum-one equation.
+
+Order the zero and cap coordinates first. On the source side use
+$(b,u,s)=(3/4-a_c,a_j,a_i)$ and on the mate use the same transported
+coefficients with negative face depth. In this order the inverse vector
+is $(|s|,3/4-b,u,1/4+b-|s|-u)$. Positive collar depth is obtained from
+the three positive coordinates. Each collar additionally keeps the
+cap coordinate greater than $3/4-\delta$ and every other cap strict.
+The same actual saturation and quotient restriction give an open
+neighborhood. Continuous pasting, coordinate reconstruction, and the
+transported vertex labels give both inverse identities and the exact
+cap and seam equations.
+
+These assertions concern the literal uniformly truncated coefficient
+quotient. A marked identification with actual row-zero polar faces is
+needed for the physical hyperideal block. Points on two zero-coordinate
+faces, metric and orientation relations, and global geometric properties
+are separate assertions.
