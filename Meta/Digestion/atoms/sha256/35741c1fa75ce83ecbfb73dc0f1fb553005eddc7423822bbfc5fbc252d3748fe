@@ -1,0 +1,17 @@
+**Lemma 3.2 (two nearly colorful doors).** Every nearly colorful room
+$(\sigma,C)$ has distinct doors $d_1,d_2$ with
+$\mathrm{NCdoors}(\sigma,C)=\{d_1,d_2\}$.
+
+**Proof.** Cardinality gives either $|\sigma|=|c(\sigma)|$ or
+$|\sigma|=|c(\sigma)|+1$. In the first case coloring is injective on
+$\sigma$ and there is a unique point $y$ whose color lies outside $C$.
+The doors are $(\sigma\setminus\{y\},C)$ and
+$(\sigma,C\cup\{c(y)\})$. Deleting any other point or inserting any
+other color creates two missing colors. In the second case
+$c(\sigma)\subseteq C$. Lemma 1.1 supplies a collision pair $x,y$;
+the doors are $(\sigma\setminus\{x\},C)$ and
+$(\sigma\setminus\{y\},C)$. A third point in that fiber violates the
+one-unit deficit, while deletion of any uniquely colored point creates a
+second missing color. An inserted color outside $C$ also creates two
+missing colors. These statements prove both construction and exhaustion.
+
