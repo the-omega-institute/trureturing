@@ -94,6 +94,10 @@ $$\forall (n : \mathbb{N}), \forall (N : \mathbb{N}), (3 \le n) \Rightarrow ((1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Polyomino/LPolyominoSkippedSequence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/condon-dugan-goldman-williams-2026-l-polyomino-skipped-sequence` (proved) by `D5/S3/Combinatorics/Polyomino/LPolyominoSkippedSequence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"condon-dugan-goldman-williams-2026-l-polyomino-skipped-sequence","declaration_gid":"D5/S3/Combinatorics/Polyomino/LPolyominoSkippedSequence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. M. Condon, E. B. Dugan, L. M. Goldman, E. R. Williams (2026). *Polyomino Density*. DOI: [10.48550/arXiv.2608.29231](https://doi.org/10.48550/arXiv.2608.29231). URL: <https://arxiv.org/abs/2608.29231v1>.
