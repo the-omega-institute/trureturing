@@ -398,3 +398,36 @@ full killed exterior energy and cutoff of the whole fixed-gap subspace.
 This paper-level transfer replaces the quantitative prime-counting
 remainder only in that exterior estimate. It does not establish the
 remaining spectral lower bound in (5), RH, Robin or Lean certification.
+
+
+The [ordered-semigroup source check](karlinmcgregor1959coincidence.md)
+separately tests a proposed oscillation route from the critical family.
+The actual even theta semigroup fails all-times order-two positivity
+under radial ordering. Its ordinary positivity preservation cannot
+therefore locate the known half eigenvectors as the first nonzero
+spectral level by that route. Weaker justified spectral-ordering
+methods and the remainder lower bound are still unresolved.
+
+### The compressed remainder has no inherited positive cone
+
+The [ideal-space exterior-square source check](kushelzabreiko2008ideal.md)
+addresses the separate proposal to apply positive-operator theory after
+compressing to $\mathcal R$. Because $\mathcal R\subset1^\perp$ and
+$\nu$ is finite, its inherited cone of nonnegative functions is
+$\{0\}$. It is not an ideal function space in the original radial
+coordinates. Any ambient positivity-preserving linear operator with
+range in $\mathcal R$ must therefore vanish, whereas
+$Q_{\mathcal R}e^{-tA}Q_{\mathcal R}$ and
+$Q_{\mathcal R}(A+\alpha)^{-1}Q_{\mathcal R}$ are nonzero for
+$t,\alpha>0$. Thus neither compression can supply the source's ordinary
+nonnegative-kernel interface in those coordinates. This paper-level
+check does not exclude a separately justified transported order and does
+not assert compactness of the restriction.
+
+The actual numerical obligation can still be written as
+$\|(A|_{\mathcal R}+\alpha)^{-1}\|\le(\alpha+1/2)^{-1}$ for any fixed
+$\alpha>0$, by the standard spectral theorem. This is exactly the
+remaining half-bound after (10), not an improved estimate. The critical
+vectors in $N$ are excluded from $\mathcal R$, so they cannot be used
+as its first or second eigenvectors. RH and Robin remain unresolved;
+no new Lean certification is asserted.
