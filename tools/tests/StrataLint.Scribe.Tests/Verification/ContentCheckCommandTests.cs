@@ -215,10 +215,10 @@ public sealed class ContentCheckCommandTests
             SyntheticScribeRepository.WriteInputs(Root.Path, MarkdownCurrentCommandTests.Definition());
             Write("global.json", "{}\n");
             Write("D5/S0/Synthetic/CurrentMarkdown.lean", "namespace D5.S0.Synthetic.CurrentMarkdown\n");
-            Write(Path, """
+            Write(Path, $$"""
                 using StrataLint.Scribe;
                 using static StrataLint.Scribe.DefinitionDsl;
-                """ + "\nnamespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n" + """
+                {{"namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;"}}
                 internal sealed class CurrentMarkdown : IScribeDocumentDefinition
                 {
                     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(

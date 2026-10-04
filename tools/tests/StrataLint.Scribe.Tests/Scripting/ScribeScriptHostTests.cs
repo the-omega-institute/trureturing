@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using System.Reflection;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using StrataLint.Engine;
@@ -350,7 +350,7 @@ public sealed class ScribeScriptHostTests
                     ScribeNode.Create("digest", H("Probe"), Blocks(statement)));
             }
             """);
-        var discovered = Assert.Single(DocumentDefinitions.Discover(new FieldDefinitionAssembly(), repository.Path));
+        var discovered = StatementProjectionFixtureLoader.WithRepositoryRoot(repository.Path, () => new FieldDefinition().Create());
 
         var result = ScribeScriptHost.Execute(repository.Path, path);
 
@@ -542,18 +542,6 @@ public sealed class ScribeScriptHostTests
             """);
     }
 
-    private sealed class FixtureAssembly : Assembly
-    {
-        internal static Assembly Value { get; } = new FixtureAssembly();
-
-        public override Type[] GetTypes() => [typeof(FirstDefinition)];
-    }
-
-    private sealed class FieldDefinitionAssembly : Assembly
-    {
-        public override Type[] GetTypes() => [typeof(FieldDefinition)];
-    }
-
     private sealed class FieldDefinition : IScribeDocumentDefinition
     {
         private readonly DocumentBlock.Describe statement = Describe.Lean(
@@ -570,16 +558,4 @@ public sealed class ScribeScriptHostTests
         }
     }
 
-    private sealed class FirstDefinition : IScribeDocumentDefinition
-    {
-        public DocumentDefinition Create()
-        {
-            const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
-            return DocumentDefinition.Create(
-                ScribeNode.Create("digest", DefinitionDsl.H("First"),
-                    DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("content"))),
-                    sourcePath: path),
-                sourcePath: path);
-        }
-    }
 }

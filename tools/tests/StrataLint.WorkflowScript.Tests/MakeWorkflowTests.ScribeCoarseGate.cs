@@ -84,14 +84,16 @@ public sealed partial class MakeWorkflowTests
         var log = Path.Combine(root, "calls");
         var report = Path.Combine(root, "report.json");
         var dll = Path.Combine(root, "scribe.dll");
+        var paths = Path.Combine(root, "selected paths.txt");
         File.WriteAllText(report, "candidate report");
         File.WriteAllText(dll, "candidate binary");
+        File.WriteAllText(paths, changedPath.Length > 0 ? changedPath + "\0" : string.Empty);
         WriteExecutable(Path.Combine(bin, "git"), "#!/bin/bash\nexit 93\n");
         WriteExecutable(Path.Combine(bin, "dotnet"), "#!/bin/bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
         ProcessOutput Run(params string[] selection) => TestProcessRunner.Run("/usr/bin/env",
             [$"PATH={bin}:/usr/bin:/bin", $"SCRIBE_LOG={log}", "BASE=unavailable",
              "/bin/bash", script, report, dll, .. selection], root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
-        var result = Run();
+        var result = Run(paths);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.StartsWith($"{dll} content-check --report {report} --paths-from ", Assert.Single(File.ReadAllLines(log)));
         foreach (var invalid in new[] { new string('a', 40), root, "" })
@@ -101,8 +103,7 @@ public sealed partial class MakeWorkflowTests
             Assert.Contains("PATHS_FILE must be a readable regular file", Encoding.UTF8.GetString(rejected.StandardError), StringComparison.Ordinal);
             Assert.Single(File.ReadAllLines(log));
         }
-        var paths = Path.Combine(root, "selected paths.txt");
-        File.WriteAllText(paths, "Blueprint/D5/Probe.md\n");
+        File.WriteAllText(paths, "Blueprint/D5/Probe.md\0");
         var selected = Run(paths);
         Assert.True(selected.ExitCode == 0, Encoding.UTF8.GetString(selected.StandardError));
         Assert.Equal(new[]
@@ -123,13 +124,15 @@ public sealed partial class MakeWorkflowTests
         var bin = Path.Combine(root.Path, "bin");
         var report = Path.Combine(root.Path, "report.json");
         var dll = Path.Combine(root.Path, "scribe.dll");
+        var paths = Path.Combine(root.Path, "selected paths");
         File.WriteAllText(report, "candidate report");
         File.WriteAllText(dll, "candidate binary");
+        File.WriteAllText(paths, string.Empty);
         WriteExecutable(Path.Combine(bin, "dotnet"),
             "#!/bin/bash\nprintf 'check output\\n'\nprintf 'check error\\n' >&2\nexit \"$CHILD_EXIT\"\n");
         var result = TestProcessRunner.Run("/usr/bin/env",
             [$"PATH={bin}:/usr/bin:/bin", $"CHILD_EXIT={childExit}", "/bin/bash",
-             Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath), report, dll],
+             Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath), report, dll, paths],
             root.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
         Assert.Equal(childExit, result.ExitCode);
         Assert.Equal("check output\n", Encoding.UTF8.GetString(result.StandardOutput));
