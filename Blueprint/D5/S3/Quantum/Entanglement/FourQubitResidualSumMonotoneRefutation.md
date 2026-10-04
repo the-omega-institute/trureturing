@@ -54,7 +54,7 @@ An entanglement monotone does not increase on average under LOCC. A complete ins
 
 **Definition 1.5 (Coordinates of a pair).**
 
-$$\forall p, q : \operatorname{Fin}\left(4\right), \forall x : (\ \{p, q\ \} \to \operatorname{Fin}\left(2\right)), \operatorname{pairEquiv}\left(p, q, x\right) = (x\left(p\right), x\left(q\right))$$
+$$\forall p, q : \operatorname{Fin}\left(4\right), (p \ne q) \Rightarrow (\forall x : (\ \{p, q\ \} \to \operatorname{Fin}\left(2\right)), \operatorname{pairEquiv}\left(p, q, x\right) = (x\left(p\right), x\left(q\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.pairEquiv` (`✓ std3`).
 
@@ -68,7 +68,7 @@ For distinct qubits p and q, pairEquiv reads a configuration x of the pair {p, q
 
 **Definition 1.6 (Coordinates outside a pair).**
 
-$$\forall p, q, r, s : \operatorname{Fin}\left(4\right), \forall z : (\operatorname{Outside}\left(\ \{p, q\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{outEquiv}\left(p, q, r, s, z\right) = (z\left(r\right), z\left(s\right))$$
+$$\forall p, q, r, s : \operatorname{Fin}\left(4\right), (((\neg (r \in \ \{p, q\ \})) \land (\neg (s \in \ \{p, q\ \}))) \land ((r \ne s) \land (\forall i : \operatorname{Fin}\left(4\right), (\neg (i \in \ \{p, q\ \})) \Rightarrow (i = r \lor i = s)))) \Rightarrow (\forall z : (\operatorname{Outside}\left(\ \{p, q\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{outEquiv}\left(p, q, r, s, z\right) = (z\left(r\right), z\left(s\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.outEquiv` (`✓ std3`).
 
@@ -96,7 +96,7 @@ singleEquiv reads a configuration x of the single qubit k as its value x(k) in F
 
 **Definition 1.8 (Coordinates outside one qubit).**
 
-$$\forall k, r, s, t : \operatorname{Fin}\left(4\right), \forall z : (\operatorname{Outside}\left(\ \{k\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{out3Equiv}\left(k, r, s, t, z\right) = (z\left(r\right), z\left(s\right), z\left(t\right))$$
+$$\forall k, r, s, t : \operatorname{Fin}\left(4\right), (((((\neg (r \in \ \{k\ \})) \land (\neg (s \in \ \{k\ \}))) \land (\neg (t \in \ \{k\ \}))) \land (((r \ne s) \land (r \ne t)) \land (s \ne t))) \land (\forall i : \operatorname{Fin}\left(4\right), (\neg (i \in \ \{k\ \})) \Rightarrow (\left(i = r \lor i = s\right) \lor i = t))) \Rightarrow (\forall z : (\operatorname{Outside}\left(\ \{k\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{out3Equiv}\left(k, r, s, t, z\right) = (z\left(r\right), z\left(s\right), z\left(t\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.out3Equiv` (`✓ std3`).
 

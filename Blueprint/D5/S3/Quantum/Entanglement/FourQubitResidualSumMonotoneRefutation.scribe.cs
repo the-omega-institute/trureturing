@@ -126,18 +126,37 @@ internal sealed class FourQubitResidualSumMonotoneRefutationDocument : IScribeDo
 
     private static Formula Outside(Formula set) => Call(F.Id("Outside"), set);
 
+    private static Formula NotIn(Formula x, Formula set) =>
+        new Formula.Not(Parenthesized(Rel(x, FormulaRelationOperator.MemberOf, set)));
+
+    private static Formula Covered(Formula set, params Formula[] names)
+    {
+        Formula i = F.Id("i");
+        Formula cover = Rel(i, FormulaRelationOperator.Equal, names[0]);
+        for (var n = 1; n < names.Length; n++)
+        {
+            cover = new Formula.Logic(cover, FormulaLogicOperator.Or, Rel(i, FormulaRelationOperator.Equal, names[n]));
+        }
+        return All(i, Fin(4), Imp(NotIn(i, set), cover));
+    }
+
     private static Formula PairEquivFormula()
     {
         Formula p = F.Id("p"), q = F.Id("q"), x = F.Id("x");
-        return Disp(All(Vars(p, q), Fin(4), All(x, Configs(PairSet(p, q)),
-            EqTo(Call(F.Id("pairEquiv"), p, q, x), Parenthesized(Vars(Of(x, p), Of(x, q)))))));
+        return Disp(All(Vars(p, q), Fin(4), Imp(Rel(p, FormulaRelationOperator.NotEqual, q),
+            All(x, Configs(PairSet(p, q)),
+                EqTo(Call(F.Id("pairEquiv"), p, q, x), Parenthesized(Vars(Of(x, p), Of(x, q))))))));
     }
 
     private static Formula OutEquivFormula()
     {
         Formula p = F.Id("p"), q = F.Id("q"), r = F.Id("r"), s = F.Id("s"), z = F.Id("z");
-        return Disp(All(Vars(p, q, r, s), Fin(4), All(z, Configs(Outside(PairSet(p, q))),
-            EqTo(Call(F.Id("outEquiv"), p, q, r, s, z), Parenthesized(Vars(Of(z, r), Of(z, s)))))));
+        Formula pair = PairSet(p, q);
+        Formula premises = Logic(Logic(NotIn(r, pair), FormulaLogicOperator.And, NotIn(s, pair)),
+            FormulaLogicOperator.And,
+            Logic(Rel(r, FormulaRelationOperator.NotEqual, s), FormulaLogicOperator.And, Covered(pair, r, s)));
+        return Disp(All(Vars(p, q, r, s), Fin(4), Imp(premises, All(z, Configs(Outside(pair)),
+            EqTo(Call(F.Id("outEquiv"), p, q, r, s, z), Parenthesized(Vars(Of(z, r), Of(z, s))))))));
     }
 
     private static Formula SingleEquivFormula()
@@ -150,9 +169,17 @@ internal sealed class FourQubitResidualSumMonotoneRefutationDocument : IScribeDo
     private static Formula Out3EquivFormula()
     {
         Formula k = F.Id("k"), r = F.Id("r"), s = F.Id("s"), t = F.Id("t"), z = F.Id("z");
-        return Disp(All(Vars(k, r, s, t), Fin(4), All(z, Configs(Outside(Singleton(k))),
+        Formula single = Singleton(k);
+        Formula outside = Logic(Logic(NotIn(r, single), FormulaLogicOperator.And, NotIn(s, single)),
+            FormulaLogicOperator.And, NotIn(t, single));
+        Formula distinct = Logic(Logic(Rel(r, FormulaRelationOperator.NotEqual, s), FormulaLogicOperator.And,
+            Rel(r, FormulaRelationOperator.NotEqual, t)), FormulaLogicOperator.And,
+            Rel(s, FormulaRelationOperator.NotEqual, t));
+        Formula premises = Logic(Logic(outside, FormulaLogicOperator.And, distinct),
+            FormulaLogicOperator.And, Covered(single, r, s, t));
+        return Disp(All(Vars(k, r, s, t), Fin(4), Imp(premises, All(z, Configs(Outside(single)),
             EqTo(Call(F.Id("out3Equiv"), k, r, s, t, z),
-                Parenthesized(Vars(Of(z, r), Of(z, s), Of(z, t)))))));
+                Parenthesized(Vars(Of(z, r), Of(z, s), Of(z, t))))))));
     }
 
     private static Formula FourEquivFormula()
