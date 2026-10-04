@@ -2736,7 +2736,7 @@ These are ordinary mathematical sufficient conditions; they do not
 constitute a Lean verification or an unrestricted resolution of
 Erdős #7.
 
-## 32. Four requests per source pay a complete repair with repeated cofactors
+## 32. Four nonunit output divisors per source pay a complete repair
 
 Keep Section 29's one actual source tree, retained family
 $\mathcal F_0$, complete integer hole $H$, and exact count SC111.
@@ -2747,7 +2747,7 @@ omitted top sources such that
 $$
  \begin{gathered}
  H\subseteq\bigcup_{d\in\mathcal W_*}C_d,\qquad
- d=3^{a_d}5^{b_d}m_d,\quad a_d\ge1,\quad m_d>1,\\
+ d=3^{a_d}5^{b_d}m_d,\quad a_d\ge1,\quad m_d\ge1,\\
  C_d=[\eta_d]_{3^{b_d}m_d},\qquad m_d\mid M.
  \end{gathered} \tag{SC122}
 $$
@@ -2757,29 +2757,52 @@ the original phase of an unrelated divisor. The containment concerns
 all of $H$, including every integer lift and all discarded lower
 service; it is not a condition only on individual private points.
 
-In the anchored height-two setup of Section 31, a source choice with
-these properties is available before imposing the matching below.
-Take the discarded lower suppliers of $H_{\rm low}$ together with
-the remaining mandatory tops of either one fixed color supplying
-$H_{\rm top}$. The height-zero representative preference gives
-$a_d=1,m_d>1$ for the lower suppliers. The selected nonpure tops
-have $a_d=2,m_d>1$. Any omitted pure output-$3$ top is already
-contained in the bought root $S$ and supplies no point of $H$.
-At other heights, SC122 remains an explicit source hypothesis.
+For every fixed common tree, the following retained-family choice
+supplies SC122 before imposing the matching below. Choose exactly
+one actual lower representative in every surviving numerical slot
+except $3$, preferring its original height-zero member whenever
+that member survives. If original $5$ survives, choose the bought
+root $S$ to be its exact output class $C_5$; otherwise choose any
+root. Form the full mandatory top set and $\mathcal F_0$ as in
+Section 29 using these choices.
+
+A point of $H_{\rm low}$ has a lower owner outside
+$\mathcal R$. Such an owner cannot have $a_d=0$: height-zero
+output slots are injective, so the preference retains every one
+except possibly slot $3$. The unique height-zero source of slot
+$3$ is original $5$, whose entire output is now $S$ and hence is
+disjoint from $H$. Therefore $H_{\rm low}$ is covered by actual
+discarded lower sources with $a_d\ge1$. For a point of
+$H_{\rm top}$, SC15 supplies a top owner in either fixed safe
+color. That owner is mandatory, since a retained top would cover
+a point of $H$; its original height is $a_d=A\ge1$.
+
+Take these positive-height discarded lower suppliers together with
+the mandatory tops of one fixed color, omitting any source already
+contained in $S$. This finite family covers all of $H$, including
+every integer lift, and satisfies SC122 for every $A\ge2$.
+Pure-cofactor sources are permitted. The retained phases, all
+supplier phases and both terminal-color cover identities come
+from the same original family and the same $\theta$; no
+private-point anchoring or second optimized tree is required.
 
 ### Match complete numerical slots, allowing the cofactor to repeat
 
 For each supplier define its finite slot menu
 $$
  \mathcal N_d
- =\{3^j h:0\le j\le b_d,\quad 1<h\mid m_d\}.
+ =\{3^j h:0\le j\le b_d,\quad h\mid m_d,\quad 3^jh>1\}
+ =\{n>1:n\mid3^{b_d}m_d\}.
  \tag{SC123}
 $$
 Request four slots $n_{d,r}=3^{j_{d,r}}h_{d,r}\in\mathcal N_d$,
 one for each $r=1,2,3,4$, with all requested numerical slots
 globally distinct. The same $h$ may occur in different requests
-provided their $j$ values differ. This is a larger menu than the
-globally distinct $M$-divisor assignment in Section 29.
+provided their $j$ values differ. In particular $h=1$ is allowed
+when $j\ge1$; only the unit slot $j=0,h=1$ is excluded. This is
+a larger menu than the globally distinct $M$-divisor assignment in
+Section 29, and it remains meaningful for a pure-cofactor source
+$m_d=1$.
 
 The finite Hall theorem, applied to four copies of each supplier,
 gives exactly the condition
@@ -2835,9 +2858,10 @@ deleted from $\mathcal F_0$.
 Because $(h,15)=1$, the correspondence
 $3^jh\longmapsto3\cdot5^jh$ is injective. Hence the globally
 distinct requests give $4|\mathcal W_*|$ different original
-$3$-bearing labels, even when their cofactors repeat. Since
-$h>1$, none is one of the original pure labels
-$3,\ldots,3^A$. Thus
+$3$-bearing labels, even when their cofactors repeat. If $h>1$,
+the donor has a nonunit $3,5$-free factor. If $h=1$, then $j\ge1$
+and the donor contains $5$. In either case it is not one of the
+original pure labels $3,\ldots,3^A$. Thus
 $$
  N_3\ge4|\mathcal W_*|+A,\qquad
  K-|\mathcal F_{\rm new}|
@@ -2852,42 +2876,153 @@ If $\mathcal W_*=\varnothing$, SC122 gives $H=\varnothing$;
 then $\mathcal F_0$ itself covers and SC111 gives strict descent
 without adding any patch.
 
-### A single cofactor can provide all four requests
+### The full common-cofactor menu has an exact height threshold
 
-Suppose all chosen sources have the same nonunit cofactor $m$,
-and restrict every request to $h=m$. Order the suppliers so that
-$b_1\le\cdots\le b_s$. Their menus are nested initial segments
-of the slots $3^jm$. The existing nested-slot matching criterion
-specializes to
+Suppose all chosen sources have the same cofactor $m\ge1$ and
+order them so that $b_1\le\cdots\le b_t$. Write $\tau(m)$ for
+the number of positive divisors of $m$. Because $(m,3)=1$, the
+full menu of supplier $i$ has exactly
+$(b_i+1)\tau(m)-1$ slots: every pair $(j,h)$ gives a different
+divisor, and only $(0,1)$ is removed. These menus are nested.
+The existing nested-slot matching criterion DP12 therefore gives
+exactly
 $$
- b_i+1\ge4i\qquad(1\le i\le s).
+ \boxed{(b_i+1)\tau(m)-1\ge4i\qquad(1\le i\le t).}
  \tag{SC127}
 $$
-These inequalities are necessary from the first $i$ suppliers and
-sufficient by assigning supplier $i$ the four exponents
-$4(i-1),\ldots,4i-1$. Repeated cofactors therefore require neither
-two different nonunit divisors per lower source nor an independently
-chosen phase for each request.
+This is necessary and sufficient for the four-request assignment
+within this full common-cofactor menu, not for every possible
+repair. It allows different actual phases for all sources; only
+the numerical slots are assigned injectively. In particular:
 
-For example, suppose one actual source with prime cofactor $m$
-and $b_d\ge3$ supplies the entire hole, and $a_d\ge1$.
-Choose $h=m$ and $j=0,1,2,3$. The five added labels are
-$$
- 5,\quad5m,\quad15m,\quad45m,\quad135m.
-$$
-Their phases are exactly those of SC125, reducing the same actual
-$C_d$ phase at each requested modulus. Their four distinct original
-donors are $3m,15m,75m,375m$, and the pure $3$-powers give the
-remaining strict saving in SC126.
+- If $m$ is prime, SC127 is equivalent to $b_i\ge2i$.
+- If $m=1$, SC127 is equivalent to $b_i\ge4i$.
 
-The positive original ternary height and the nonunit cofactor are
-part of the scope: a discarded height-zero source does not supply
-these $3$-bearing donors. Requests with $h=1$ would require a
-separate overlap count against the pure labels; SC126 uses $h>1$.
-Such service must be retained or paid by a separately
-justified construction. Nor has SC124 been forced for some complete
-source choice in every hypothetical cover; sources may still compete
-for too few slots. This is a conditional ordinary-mathematical
-consumer of existing whole-class splitting, Hall matching and the
-original divisor inventory, without new Lean verification or a
-literature-priority claim.
+If the entire hole lies in one actual source with prime cofactor
+$m$, output height $b_d\ge2$ and original height $a_d\ge1$,
+use slots $3,m,3m,9m$. The five added labels are
+$$
+ 5,\quad15,\quad5m,\quad15m,\quad45m.
+$$
+The four distinct original donors are
+$15,3m,15m,75m$. None is a pure power of $3$. Each added phase
+is given by SC125, using the same actual source residue reduced
+at the chosen divisor. The pure $3$-powers provide the strict
+saving in SC126. A prime cofactor at $b_d=2$ has five nonunit
+output divisors, even though it has only one nonunit $M$-divisor.
+
+Likewise a single actual pure-cofactor source with $b_d\ge4$
+uses slots $3,9,27,81$, added labels $5,15,45,135,405$, and original
+donors $15,75,375,1875$. This application still requires
+$a_d\ge1$ and complete hole containment. No positive lower bound
+for $m_d-1$ enters the service or donor argument.
+
+The positive original ternary height is essential to the stated
+payment and is ensured by the representative choice above. An
+arbitrarily discarded height-zero source need not supply these
+$3$-bearing donors. The remaining unproved step is SC124 for some
+complete source choice on one common tree: sources may still
+compete for too few nonunit output divisors. The result reuses
+whole-class splitting, Hall matching and the original divisor
+inventory. It does not provide a new general matching theorem,
+a Lean verification or a literature-priority claim.
+
+## 33. A common liability hull can replace several source requests
+
+Keep Section 32's complete supplier family and its retained phases.
+If $H=\varnothing$, the existing count already gives a descent.
+Otherwise put $N=3^BM$, the common $5$-free period, choose $w\in H$,
+and define
+$$
+ V=\bigcup_{d\in\mathcal W_*}\mathcal N_d,
+ \qquad
+ \Gamma_H=\gcd\bigl(N,\{x-w:x\in H\}\bigr).
+ \tag{SC128}
+$$
+The hull can be computed in one complete $N$-period. Reuse
+[report 385, PH3--PH4](385-private-congruence-hulls-and-crossed-modulus-closure.md#2-the-complete-private-region-supplies-more-than-divisor-closure),
+as already applied to complete liabilities in SC49: for $n\mid N$,
+$H\subseteq[w]_n$ exactly when $n\mid\Gamma_H$. The set here is
+the entire $H_{\rm low}\cup H_{\rm top}$, not a union of separately
+chosen private regions.
+
+Suppose there are four distinct nonunit slots
+$n_1,\ldots,n_4\in V$ dividing $\Gamma_H$. Add $[0]_5$ and
+the four classes $[r]_5\cap[w]_{n_r}$, $r=1,2,3,4$.
+They cover all of $H$ and have distinct fresh labels $5,5n_1,\ldots,5n_4$.
+Membership in $V$ supplies an actual original donor for each slot,
+even if different slots use different suppliers. Section 32's donor
+injection and pure-power count therefore give
+$$
+ \left|\{n\in V:n\mid\Gamma_H\}\right|\ge4
+ \quad\Longrightarrow\quad
+ |\mathcal F_{\rm new}|=|\mathcal F_0|+5
+       \le K-(A+z-1)<K.
+ \tag{SC129}
+$$
+The patch phase is fixed by the actual hole point $w$; agreement
+with an original donor phase is not assumed. A divisor of $\Gamma_H$ outside $V$ does
+not receive this automatic donor payment.
+
+### Group sources only when their actual phases admit a common enclosure
+
+More generally, partition $\mathcal W_*$ into nonempty groups $X$.
+Writing $n_d=3^{b_d}m_d$, choose $d_X\in X$ and put
+$$
+ \Gamma_X
+ =\gcd\bigl(\{n_d:d\in X\},
+             \{\eta_d-\eta_{d_X}:d\in X\}\bigr).
+ \tag{SC130}
+$$
+The existing union-hull rule in
+[report 385, Section 85](385-private-congruence-hulls-and-crossed-modulus-closure.md#85-the-three-actual-square-residuals-have-no-further-congruence-concentration)
+identifies this as the common congruence hull of the whole union
+$\bigcup_{d\in X}C_d$. For every $n\mid\Gamma_X$, that union
+lies in $[\eta_{d_X}]_n$; the numerical divisibility alone would
+not establish the phase agreement.
+
+Assume each group has four nonunit divisors $n_{X,r}\mid\Gamma_X$,
+with all these slots globally distinct. Use one shared class
+$[0]_5$ and the classes $[r]_5\cap[\eta_{d_X}]_{n_{X,r}}$.
+Each group is covered on every $5$-root, so SC122 pays the entire
+hole. Every selected slot divides the output modulus of each source
+in its group and therefore belongs to $V$. If there are $g$ groups,
+the same donor injection gives
+$$
+ N_3\ge4g+A,\qquad
+ |\mathcal F_{\rm new}|=K-N_3-z+1+4g
+       \le K-(A+z-1)<K.
+ \tag{SC131}
+$$
+Singleton groups recover Section 32's four-request assignment.
+Allowing larger groups is a weaker sufficient condition: it can use
+one packet for several sources whose actual phases agree on enough
+common divisors. It does not assume that Hall failure supplies such
+agreement.
+
+### Equal numerical menus can have different common hulls
+
+For a prime $m>5$, compare the two pairs of actual APs
+$$
+ \begin{array}{c|c|c}
+ C_1&C_2&\text{common hull}\\\hline
+ [0]_{27m}&[9m]_{27m}&9m\\
+ [0]_{27m}&[1]_{27m}&1.
+ \end{array}
+ \tag{SC132}
+$$
+Both pairs have $b_1=b_2=3$ and the same seven nonunit output
+divisors, so the eight individual requests fail SC124. In the first
+pair the two APs are distinct, but their common hull has the four
+different divisors $3,m,3m,9m$. One group therefore has the packet
+above. In the second pair no nonunit AP contains their whole union.
+Both pairs avoid $[2]_3$.
+
+These are interface examples of periodic APs, not asserted realizations
+of a complete EB1 original cover. They separate numerical menu data
+from the actual phase relation needed by a common packet. Neither
+SC129 nor the grouped condition has been forced for some common tree
+and retained family in every hypothetical cover. The result reuses
+the existing congruence hull and the complete service and donor checks
+of Section 32; it asserts no new Lean verification or unrestricted
+noncoverage theorem.
