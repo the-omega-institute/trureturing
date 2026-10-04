@@ -12,7 +12,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_creatio
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_creation` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_transla
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_translation` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_localit
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_locality` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 

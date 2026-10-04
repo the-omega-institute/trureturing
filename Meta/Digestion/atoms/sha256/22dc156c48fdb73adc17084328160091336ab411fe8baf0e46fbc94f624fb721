@@ -1,0 +1,62 @@
+**定义 26.1（全域合同、指标信息叶与全孔上下文）。** 固定[定义 25.1](#25-有限正来源族的遗传共享叶分离与四元共同费用)的全部合同：未知输入为所有非空有限自由有序满二叉 $\alpha/\beta$ 树组成的 $\mathcal T$，$d=3$，$\mathcal I_3=\rho^3(\mathcal T)$，目标为 $\iota_3(T)=\mathbf1_{\{T\in\mathcal I_3\}}$。树的次序、括号和标签均保留。所有有限左右地址，包括空地址 $\varepsilon$，均合法；查询只报告同一不变来源的原始 $\mathsf{leaf}_\alpha$、$\mathsf{leaf}_\beta$、$\mathsf{branch}$ 或 $\mathsf{absent}$。费用只计缓存后的不同地址，未有限终止时为 $+\infty$。地址长度、定位、计算和种子取得沿用原费用约定；地址查询无须先查询其前缀。
+
+$\mathfrak D_3$ 中每个策略在整个 $\mathcal T$ 上正确且有限终止。$\mathfrak R_3$ 中每个策略带有一个输入无关的可测种子律，满足同种子重放、逐来源几乎处处正确且有限终止，以及非负扩展费用可测。每个策略的完整初始化与实际输入无关，可包含固定的完整评价原型，作为取得费用的设计资料；这不承诺输入的正性、身份、组成、叶数、深度或所属子族，也不产生额外免费来源报告。对子族共同取得费用，必须使用同一个全域策略；随机情形同时固定它的同一个种子律，分别计算每个实际来源上的期望，不给来源先验，也不把这些期望换成期望最大费用。接受仍须完成[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的全部带标签叶证书，原型不匹配仍由[定理 23.2](#23-全有限来源上两个指定正例的共同最优地址费用)已有的全域有限后备处理。
+
+设 $\boldsymbol P=(P_1,\ldots,P_m)$ 是一个有限指标树族。对非空 $S\subseteq[m]=\{1,\ldots,m\}$，定义
+
+$$
+\Delta_{\boldsymbol P}(S)=
+\left\{w\in\bigcap_{i\in S}L(P_i):
+\{\lambda_{P_i}(w):i\in S\}=\{\alpha,\beta\}\right\}.
+\tag{26.1}
+$$
+
+该式允许不同指标对应同一棵树。若 $P_i$ 两两不同且 $|S|\ge2$，它就是定义 25.1 的 $\Delta(P_S)$，其中 $P_S=\{P_i:i\in S\}$；单元素指标集的信息叶集为空。
+
+直接沿用[命题 23.3 的式（23.9）、（23.10）、（23.15）](#23-全有限来源上两个指定正例的共同最优地址费用)及[定义 25.4](#25-有限正来源族的遗传共享叶分离与四元共同费用)的完整块和前像：
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\quad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle,
+\qquad v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle,\\
+U=\langle\langle A,A\rangle,C\rangle=\rho^3(u_0),
+\qquad V=\langle\langle A,C\rangle,A\rangle=\rho^3(v_0),\\
+c(A)=(1,2)^{\mathsf T},\qquad c(U)=c(V)=(4,7)^{\mathsf T}.
+\end{gathered}
+\tag{26.2}
+$$
+
+[定理 25.5 的完整前沿式（25.16）](#25-有限正来源族的遗传共享叶分离与四元共同费用)供应
+
+$$
+L(A)\cap L(U)=L(A)\cap L(V)=\varnothing,
+\qquad
+D:=\Delta(\{U,V\})\ni t:=\mathtt{LRLR}.
+\tag{26.3}
+$$
+
+同一既有前沿给 $U,V$ 在 $A$ 的三个叶地址 $\mathtt{LL},\mathtt{LR},\mathtt R$ 上均为分支，且
+
+$$
+\bigl(\operatorname{out}_A(t),\operatorname{out}_U(t),
+\operatorname{out}_V(t)\bigr)
+=(\mathsf{absent},\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta).
+\tag{26.4}
+$$
+
+对整数 $T\ge1$，定义每片叶都是孔的有序满二叉上下文
+
+$$
+\begin{aligned}
+B_1(x_1)&=x_1,\\
+B_T(x_1,\ldots,x_T)&=
+\langle x_1,B_{T-1}(x_2,\ldots,x_T)\rangle\quad(T\ge2).
+\end{aligned}
+\tag{26.5}
+$$
+
+孔按叶序编号，地址记为 $p_1,\ldots,p_T$。$T=1$ 时 $p_1=\varepsilon$；$T\ge2$ 时 $p_j=\mathtt R^{j-1}\mathtt L$（$j<T$），$p_T=\mathtt R^{T-1}$。上下文没有孔以外的字面叶。记 $pD=\{pw:w\in D\}$，$p\prec w$ 表示 $p$ 是 $w$ 的真前缀。
+

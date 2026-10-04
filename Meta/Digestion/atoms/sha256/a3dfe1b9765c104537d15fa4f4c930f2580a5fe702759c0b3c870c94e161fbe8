@@ -1,0 +1,31 @@
+**定理 27.10（确定性最坏费用与期望最大费用的分离）。** 对同一最终族，分别定义
+
+$$
+D(K)=\inf_{\pi\in\mathfrak D_3}\max_{i\in[m]}C_\pi(P_i),
+\qquad
+W(K)=\inf_{\Pi\in\mathfrak R_3}
+\mathbb E_\mu\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right].
+\tag{27.23}
+$$
+
+二者均取得，且
+
+$$
+D(K)=W(K)=
+\begin{cases}
+n,&[m]\in K,\\
+n+1,&[m]\notin K.
+\end{cases}
+\tag{27.24}
+$$
+
+将 $W(K)$ 限制到 $\mathfrak R_3^{\mathrm u}$ 后值仍相同且取得。若 $[m]\notin K$，则
+
+$$
+1<\tau(K)\le m,\qquad 0<t(K)<1,\qquad
+n<n+1-\frac1{\tau(K)}<n+1.
+\tag{27.25}
+$$
+
+因而式（27.19）的 $\inf_\Pi\max_i\mathbb E C_\Pi(P_i)$ 严格小于 $W(K)$。
+

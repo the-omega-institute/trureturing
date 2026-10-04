@@ -1,0 +1,44 @@
+**命题 356.8（固定组成下的叶序与固定叶序下的括号仍不可恢复）。** 令
+
+$$
+ s=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+ \qquad
+ u=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+则 $c(s)=c(u)=(2,2)$，且
+
+$$
+W_3(s)=W_3(u)=(-1,-S^2,S^2).
+\tag{356.9}
+$$
+
+因此二者的完整历史相同，而 $s\ne u$ 仍是自由有序树中的不同叶序。另令
+
+$$
+ p_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad
+ q_3=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+它们具有同一叶序和组成 $(3,0)$，但括号不同；对每个 $n\ge0$，
+
+$$
+E(\rho^n p_3)=X_n^3=E(\rho^n q_3).
+\tag{356.10}
+$$
+
+**证明。** 记 $X_n=E(T_n)$。对 $s$，前三个读数依次为
+
+$$
+A^2B^2=-1,
+\qquad
+B^2(BA)^2=-S^2,
+\qquad
+(BA)^2(A+B)^2=S^2,
+$$
+
+其中 $(A+B)^2=1$；对 $u$ 只是交换两个平方因子的次序，三式分别仍为 $-1,-S^2,S^2$。因此（356.9）成立，完整历史相同则由推论 356.6 得到。$s\ne u$ 是因为自由构造保留左右次序。
+
+对 $p_3,q_3$，替换 $\rho^n$ 保持两种括号而把三个 $\alpha$ 叶子都解释为 $T_n$，故两式的观察分别为 $(X_nX_n)X_n$ 与 $X_n(X_nX_n)$；结合律使它们都等于 $X_n^3$。原始语法不采用结合律。两棵替换后树的左子树分别是 $\langle T_n,T_n\rangle$ 和 $T_n$；前者叶数是后者的两倍，而 $T_n$ 的叶数为正，所以对每个 $n$ 两棵实际树仍不同。$\square$
+

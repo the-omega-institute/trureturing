@@ -1,0 +1,46 @@
+**证明。** §355 的实线性无关性也排除了非零整数线性关系，因此四系数表示唯一。由 $BA=1-AB$ 得 $ABA=A-B$；对 $x=s+tA+uB+vAB$，保持乘法次序计算
+
+$$
+\begin{aligned}
+xA&=(t+u)+(s+v)A-vB-uAB,\\
+xB&=-u-vA+sB+tAB.
+\end{aligned}
+\tag{357.6}
+$$
+
+两式证明 $\mathcal O$ 对右乘 $A,B$ 封闭，故也对右乘 $AB$ 封闭。对任意 $y=s'+t'A+u'B+v'AB\in\mathcal O$，展开
+
+$$
+xy=s'x+t'xA+u'xB+v'xAB\in\mathcal O.
+$$
+
+整数线性组合的加法与负号仍在 $\mathcal O$ 中，且 $1\in\mathcal O$，所以它是含单位子环。叶像 $A,B$ 在其中；按原树结构归纳得到 $E(t)\in\mathcal O$，再将结论应用于实际树 $\rho^n(t)$。
+
+$\eta$ 的定义与系数唯一性给出良定义和加法性，且 $\eta(1)=1$。将（357.6）代入（357.4），在 $\mathbb F_5$ 中得到
+
+$$
+\begin{aligned}
+\eta(xA)&=[s+t-2u-2v]_5=\eta(x),\\
+\eta(xB)&=[3s+3t-u-v]_5=3\eta(x),\\
+\eta(xAB)&=3\eta(xA)=3\eta(x).
+\end{aligned}
+$$
+
+因此对上述任意 $y$，
+
+$$
+\eta(xy)
+=[s'+t'+3u'+3v']_5\,\eta(x)
+=\eta(x)\eta(y).
+$$
+
+特别地，$\eta(A)=1$、$\eta(B)=3$。在两类原子处，（357.5）分别为 $1=3^0$ 和 $3=3^1$；在有序构造处，乘法性与 $\beta$ 叶数相加给出 $3^{b_s}3^{b_u}=3^{b_s+b_u}$，完成结构归纳。$3$ 在 $\mathbb F_5$ 中非零，故实际叶积的 $\eta$ 值始终非零。证明覆盖纯 $\alpha$、纯 $\beta$ 及任意混合来源。
+
+对任意整数 $a,b$，这个有限字符与原二次型的几何关系是
+
+$$
+[Q(a,b)]_5=[a^2+ab-b^2]_5=[(a+3b)^2]_5,
+$$
+
+因为 $6\equiv1$、$9\equiv-1\pmod5$；即向量方向 $aA+bB$ 的标量像 $[a+3b]_5$ 保留了平方关系。此对应不能扩张成含单位环同态 $C\to\mathbb F_5$：$5\cdot1$ 在 $C$ 中有逆 $(1/5)\cdot1$，却会被任何这样的同态送到零，从而将 $1$ 也送到零，矛盾。上述构造只使用 $\mathcal O$ 的整数乘法封闭性。$\square$
+

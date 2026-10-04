@@ -1,0 +1,5 @@
+**推论 58.2（六、六、八度的显式长度）。** 若 $(d_R,d_G,d_B)=(6,6,8)$，则可直接取
+
+$$X=\cosh L_R=\cosh L_G=2+\frac32\sqrt2,\qquad
+Z=\cosh L_B=2+\sqrt2.$$
+

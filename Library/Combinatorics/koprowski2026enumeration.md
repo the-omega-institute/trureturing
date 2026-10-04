@@ -13,7 +13,7 @@ triage: anchor
 
 # Nondegenerate hypermatrices and the published permutation-weight bridge
 
-## Source and exact locators
+## Verified locator
 
 DOI: 10.48550/arXiv.2602.22129
 

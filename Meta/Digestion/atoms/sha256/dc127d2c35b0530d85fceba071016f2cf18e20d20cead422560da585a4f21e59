@@ -1,0 +1,32 @@
+**theorem 8.2 (Complete dense execution with the explicit phase clock).**
+For every raw conventional word $w$, the fixed eighteen-stack dense machine
+reaches its clean halt with output $u(w)$ defined in Theorem 6.1. Write $L=|w|$.
+On decoder rejection its clock is $5L+15$. On acceptance of $F$, put
+$d=\operatorname{dedup}(\operatorname{occurrences}F)$ and
+$s=|S(\operatorname{occurrences}F)|$. Define the literal and clause clocks by
+
+$$
+\begin{aligned}
+t_d(a,\epsilon)
+ &= (2|a|+12)|d|+4|S(d)|+3+4|a|
+    +\operatorname{idxOf}(a,d)+8,\\
+t_d(c)&=\sum_{\ell\in c}t_d(\ell)+4.
+\end{aligned}
+$$
+
+The complete accepted execution is bounded by
+
+$$
+4L+5+1+20(s+1)^2+(|d|+1)
+ +\left(\sum_{c\in F}t_d(c)+2\right)
+ +(|S(d)|+1)+(|u(w)|+1).
+$$
+
+The accepted decoder also implies $w$ is exactly the conventional encoding
+of $F$ and every clause of $F$ has length at most three. The clock includes
+the actual parser return, rightmost dictionary construction, dimension output,
+restored name lookup, index writing, dictionary draining and output reversal.
+Rejection drains its actual remaining source and emits the valid zero-variable
+one-empty-clause unary source. This execution statement does not by itself
+assert the assignment-count correspondence of Theorem 6.1.
+

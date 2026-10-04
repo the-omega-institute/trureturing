@@ -1,0 +1,28 @@
+**命题 358.3（秩预算的实际占位与 Euler 目标不同）。** 令 $c_n=\log\Psi_n$，则 $c_1=c_2=0$、$0\le c_n\le Ln$，并且对 $m\ge1$，
+
+$$
+J_m:=\sum_{n\le m}\frac{c_n}{n}
+=\sum_{\substack{p\ \mathrm{prime},\ k\ge1\\z(p^k)\le m}}
+\frac{\log p}{z(p^k)},\qquad
+|J_m-\kappa m|\le L(H_m+1)+H_m.
+\tag{358.14}
+$$
+
+若仅保留整数秩盒约束和实际总预算，定义放松目标
+
+$$
+\mathcal J(B)=\sup\left\{\sum_{n\ge3}x_n:
+0\le x_n\le L,\quad \sum_{n\ge3}nx_n\le B\right\},
+$$
+
+其中各和按非负级数理解，则
+
+$$
+\mathcal J(b_m)\sim\frac{L}{\sqrt{\zeta(2)}}m,
+\qquad
+\frac{J_m}{\mathcal J(b_m)}\longrightarrow\frac1{\sqrt{\zeta(2)}}<1.
+\tag{358.15}
+$$
+
+所以即使以固定比例接近这种放松的秩预算最大值，也不能据此认定实际 Fibonacci 占位最优，更不能认定 Robin Euler 乘积最优。
+

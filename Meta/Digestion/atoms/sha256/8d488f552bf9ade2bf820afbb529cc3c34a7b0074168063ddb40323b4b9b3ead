@@ -1,0 +1,23 @@
+**推论 30.8（可行叶数与十一叶容量的锐值）。** 定义 30.6 的可行叶数恰为
+
+$$
+\mathcal N=\{3,5,6\}\cup\{n\in\mathbb N:n\ge8\}.
+\tag{30.15}
+$$
+
+若 $n\notin\mathcal N$，则对每个 $t\ge0$ 有 $\mathsf{Cap}(n,t)=0$，特别地 $\mathsf{Cap}(0,t)=0$。若 $n\in\mathcal N$ 且 $n<11$，则对每个 $t\ge0$ 有 $\mathsf{Cap}(n,t)=1$。对所有可行 $n$，还有 $\mathsf{Cap}(n,0)=1$。在最小非平凡规模，
+
+$$
+\boxed{\qquad
+N_{11}=6,\qquad
+\mathsf{Cap}(11,t)=
+\begin{cases}
+1,&t=0,\\
+2,&t\ge1.
+\end{cases}
+\qquad}
+\tag{30.16}
+$$
+
+$t\ge1$ 时取得二元素容量的族唯一为式（30.8）的旧来源对，其全域确定性最坏费用为 $12$。
+
