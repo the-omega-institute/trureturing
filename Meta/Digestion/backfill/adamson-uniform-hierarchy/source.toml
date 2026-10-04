@@ -1,0 +1,5 @@
+source_id = "adamson-uniform-hierarchy"
+path = "docs/develop/theory/adamson-uniform-hierarchy.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
