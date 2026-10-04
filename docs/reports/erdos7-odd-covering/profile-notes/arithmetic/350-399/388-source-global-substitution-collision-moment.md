@@ -11783,3 +11783,520 @@ recovers Section 71's strict cutoff 127 and hence its largest-prime
 bound 113. No smaller uniform support cutoff or complete exclusion
 of the height-two branch follows here. SC460--SC465 are ordinary
 mathematical deductions, without a claim of Lean verification.
+
+## 74. Grouped shallow slots force actual divisor triples and a common-code moment
+
+Assume the same original EB1 family has $H_3=2$. Fix
+
+$$
+q\in\{101,103,107,109,113\},\qquad
+r=\frac{125-q}{2}\in\{12,11,9,8,6\},\qquad
+Q=9q^GW,\quad (W,3q)=1.
+$$
+
+Let $\mathcal A$ be the five actual safe words modulo 9.
+Section 71 gives $\Lambda_1=\mathcal A$ for each of these
+primes. Divisor closure and SC460 supply actual $q,3q,9q$.
+Use their literal phases
+
+$$
+\begin{gathered}
+\alpha=\rho_q\pmod q,\qquad
+\beta=\rho_{3q}\pmod q,\qquad
+\gamma=\rho_{9q}\pmod q,\qquad
+\zeta=\rho_{9q}\pmod9,\\
+V=\mathbb F_q\setminus\{\alpha,\beta\},\qquad
+\mathcal A_c=
+\begin{cases}
+\mathcal A\setminus\{\zeta\},&c=\gamma\in V,\\
+\mathcal A,&\text{otherwise}.
+\end{cases}
+\end{gathered}
+\tag{SC466}
+$$
+
+Comparable-original disjointness gives $\alpha\ne\beta$
+and $\gamma\ne\alpha$. The equality $\gamma=\beta$ remains
+possible when the actual first-3 roots are incompatible. The
+actual $9q$ word $\zeta$ lies in $\mathcal A$: otherwise its
+class would be contained in an original pure 3 or 9 guard.
+
+For an actual $9qm\in D$ with $m>1$ and $(m,3q)=1$,
+its original divisor counterparts $qm,3qm$ are present. Write
+
+$$
+c_a(m)=\rho_{3^aqm}\pmod q\quad(a=0,1,2),\qquad
+b_m=\rho_{3qm}\pmod3,\qquad
+z_m=\rho_{9qm}\pmod9.
+$$
+
+Every $R\subseteq V$ with $|R|=r$, and every assignment
+$f(c)\in\mathcal A_c$ satisfying
+
+$$
+\#\{c\in R:f(c)=z\}\le9\qquad(z\in\mathcal A),
+\tag{SC467}
+$$
+
+must contain an actual nonunit cofactor with
+
+$$
+\boxed{
+\begin{gathered}
+9qm\in D,\quad (m,3q)=1,\quad m>1,\\
+c_0(m),c_1(m),c_2(m)\in R,\\
+f(c_1(m))\equiv b_m\pmod3,\qquad
+f(c_2(m))=z_m.
+\end{gathered}}
+\tag{SC468}
+$$
+
+At $q=107,109,113$, SC467 is automatic because $r\le9$.
+SC468 constrains all three actual divisor phases in one
+selection. It does not require their residues modulo $m$
+to agree or their cofactor sections to intersect.
+
+### The prescribed initial leaves fit
+
+Use one actual $q$ terminal at depth 3, one actual $3q$
+terminal at depth 4, one continuing leaf at depth 4 for each
+$c\in R$, and ordinary continuing leaves at depth 5.
+The old word of the selected leaf is prescribed to be $f(c)$.
+Put $n_z=\#f^{-1}(z)$, so each $n_z\le9$ and
+$\sum_z n_z=r\le12$.
+
+The actual first-3 root of $3q$ has at least two safe words:
+it differs from the actual pure 3 root, and the pure 9 guard
+removes at most one of its three words. Choose a terminal
+word $v$ in this root with $n_v\le\lfloor r/2\rfloor\le6$.
+Choose a different word $w$ with $n_w\le6$ for the $q$
+terminal. There is at most one word with demand at least seven,
+so such a $w$ exists among the other four words.
+
+Each old word has nine depth-four slots. The $3q$ terminal
+uses one above $v$, and the $q$ terminal uses three above $w$.
+All selected leaves therefore fit disjointly from the terminals
+and one another. Replacing the corresponding depth-five leaves
+by these short leaves gives exactly
+
+$$
+135-8-2-2r=125-2r=q
+\tag{SC469}
+$$
+
+initial leaves. Assign the actual donor digits $\alpha,\beta$
+to their terminals, each selected digit to its prescribed leaf,
+and the remaining digits bijectively to the remaining leaves.
+
+If $G\ge2$, a short continuing leaf uses 81 extensions to
+reach depth 8 at the second $q$ level; an ordinary depth-five
+leaf uses 27 extensions to the same depth. All five values of
+$q$ exceed 81. Use the ordinary 27-way continuation thereafter.
+Thus every deeper continuing inverse still fixes a prefix of
+depth $L_j=3j+2$. If $G=1$, there is no continuation to pay.
+
+### Reassign the shallow labels within each available cofactor group
+
+For each $(3q)$-free $m>1$ with a shallow original, consider
+all the available originals among
+
+$$
+qm,\qquad3qm,\qquad9qm.
+$$
+
+Let $I_m\subseteq\{0,1,2\}$ consist of the exponents whose
+original has a nonempty continuing inverse, and put $k_m=|I_m|$.
+When $9qm$ is absent there are at most two available originals;
+these groups are included in the replacement as well.
+Each nonempty inverse fixes one ternary prefix of depth 4 or 5
+and its own actual residue modulo $m$.
+
+Assign the lowest $k_m$ numerical labels from
+
+$$
+27m,\qquad81m,\qquad243m.
+\tag{SC470}
+$$
+
+For one or two nonempty inverses, their depth-four prefixes
+fit $27m$ and $81m$. For three inverses, if any has depth five,
+assign $243m$ to that inverse and the other two labels to the
+remaining inverses. A shorter ternary exponent enlarges the
+enclosure and preserves its actual $m$ phase. The allocation
+fails only if all three originals exist and all three nonempty
+inverses lie on selected depth-four leaves. That pattern is
+exactly SC468, including the middle-root and final-word tests.
+
+At $m=1$, labels 27 and 81 remain reserved for the actual $q$
+and $3q$ terminals. Neither original has a continuing inverse.
+Any nonempty continuing inverse of $9q$ is on an ordinary
+leaf, because SC466 excludes its cell $(\gamma,\zeta)$ from
+the selected leaves. It can therefore use 243. If
+$\gamma=\beta$, its digit is terminal and it has no continuing
+inverse at all.
+
+Shallow new ternary exponents are 3,4,5, with distinct labels
+inside each group. Distinct $(3q)$-free cofactors give distinct
+numerical moduli. Deeper originals retain the labels
+$3^{3j+a}m$ for $j\ge2$ and $a\in\{0,1,2\}$; their
+exponents are at least six, and their old decoder still recovers
+$j,a,m$. Every retained q-free original has ternary height at
+most two. Hence there is no shallow/shallow, shallow/deep,
+deep/deep or new/retained collision. All new moduli are odd
+nonunits, and each deleted original produces at most one class.
+
+The valid cost comparison is for one complete cofactor group.
+For $k=k_m>0$,
+
+$$
+\begin{aligned}
+\sum_{\text{new shallow group}}M
+ &=27m\frac{3^k-1}{2}\\
+ &\le\frac{27}{q}\sum_{a\in I_m}3^aqm
+ <\sum_{a\in I_m}3^aqm.
+\end{aligned}
+\tag{SC471}
+$$
+
+The sum of $k$ distinct powers from $\{1,3,9\}$ is at least
+$(3^k-1)/2$. This proves the first inequality regardless of
+which owner receives which fresh label. An individual assignment
+such as $qm\mapsto243m$ can increase that owner's modulus;
+SC471 is the required joint comparison. Empty inverses delete
+originals without replacement. The unit donors and all deeper
+classes retain their strict numerical savings from SC438.
+
+### One complete source pays the whole deletion hole
+
+Delete every q-bearing original, retaining every q-free one,
+as in the $k=0$ instance of SC435. The complete liability is
+$E=\mathbb Z/q^G\mathbb Z\times X_1$, where $X_1$ retains the
+full old $(\bmod9,W)$ coordinate. Fix the code on the whole
+corridor $\mathcal A\times\mathbb Z/W\mathbb Z$, not just
+on $X_1$. The code is fixed once for all original owners and
+cofactors. On terminals use the actual donor digit; on
+continuing leaves use the common prefix map. Complete every
+terminal path to a full q-word of length $G$ by a fixed suffix.
+For each output in the corridor, first define the full source
+modulo $Q$ by CRT from that q-word and the preserved modulo-nine
+and W-coordinates, and only then select an original owner.
+
+For example, a common output carrier is
+$N=3^{3G+2}W$. Its low modulo-nine and $W$ coordinates determine
+the retained-original tests. For an output outside those tests,
+its preserved coordinate lies in $X_1$, and its one original
+source remains in the complete deletion hole. Whole coverage
+supplies a deleted original owner. If the output is terminal,
+the corresponding donor class covers it outright. Otherwise the
+output belongs to its owner's continuing inverse and then to
+that owner's assigned enclosure. Outside the hole the retained
+q-free originals already cover. Integer lifts follow from the
+same congruences.
+
+The nonempty inverse of a shallow original is one whole AP
+before enclosure: the full corridor supplies no extra cofactor
+mask, and its old ternary test is constant on the chosen prefix.
+Assigning an exponent within its group does not change that
+owner's literal $m$ phase. No common point in the cofactor
+sections of different owners is assumed.
+
+If SC468 failed for the chosen $R,f$, every available group
+would therefore be assigned. The one resulting whole family has
+
+$$
+K'\le K,\qquad \Sigma'<\Sigma.
+\tag{SC472}
+$$
+
+The inequalities use SC471 together with all actual terminal,
+deep and empty-inverse charges in this same deletion. EB1
+prohibits SC472, proving the universal statement SC468.
+
+### Eligible final cells and capacity-nine Hall matching
+
+Call an actual cofactor $m>1$ eligible when $9qm\in D$,
+$(m,3q)=1$, all three $c_a(m)$ lie in $V$, and
+$z_m\in\mathcal A_{c_2(m)}$. If $c_1(m)=c_2(m)$,
+require also $b_m\equiv z_m\pmod3$. When these two digits
+differ, the actual middle root has at least two safe words;
+removing the possible single forbidden word still leaves a
+permitted middle choice. Define
+
+$$
+\begin{gathered}
+B^*(c)=\{z_m:m\text{ eligible},\ c_2(m)=c\},\\
+M(c)=\mathcal A_c\setminus B^*(c).
+\end{gathered}
+\tag{SC473}
+$$
+
+For $q=107,109,113$, if $r$ rows had a missing word, choose
+those rows and such words. SC467 is automatic, while SC468
+would produce an eligible original in a chosen missing cell.
+Therefore
+
+$$
+\#\{c\in V:M(c)\ne\varnothing\}\le r-1.
+\tag{SC474}
+$$
+
+The respective numbers of complete permitted rows are at least
+97,100,106. At most one row has four rather than five allowed
+words, giving at least 484,499,529 eligible nonunit cofactors.
+Each actual $m$ occupies only its own final cell $(c_2(m),z_m)$,
+so the cell count is a count of distinct numerical cofactors.
+
+For $q=101,103$, form a bipartite matching from rows $c\in V$
+to missing words $M(c)$, with capacity nine at each word. A
+matching of size $r$ would contradict SC468. Its maximum size
+$\nu$ thus satisfies
+
+$$
+\nu\le r-1,\qquad
+\nu=\min_{S\subseteq\mathcal A}
+\left(9|S|+\#\{c\in V:M(c)\not\subseteq S\}\right).
+\tag{SC475}
+$$
+
+Here is the finite Hall derivation, including deficient and empty
+rows. Replace each word by nine distinct clones and put
+
+$$
+\delta=\max_{T\subseteq V}
+\left(|T|-9\left|\bigcup_{c\in T}M(c)\right|\right).
+$$
+
+Every matching leaves at least $\delta$ rows unmatched. Add
+$\delta$ universally adjacent dummy slots. Every row subset then
+satisfies Hall's neighborhood inequality, so there is a matching
+covering all rows in the enlarged graph. Removing the dummy
+assignments gives $\nu=|V|-\delta$.
+For a fixed word set $S$, include all rows with $M(c)\subseteq S$.
+Conversely, for a row set $T$, take $S=\bigcup_{c\in T}M(c)$.
+These two choices show that
+
+$$
+\begin{aligned}
+&\min_{T\subseteq V}
+\left(|V|-|T|+9\left|\bigcup_{c\in T}M(c)\right|\right)\\
+&\qquad=\min_{S\subseteq\mathcal A}
+\left(9|S|+\#\{c:M(c)\not\subseteq S\}\right),
+\end{aligned}
+$$
+
+which proves SC475. The only external matching input is finite
+Hall existence; overlap and repetitions among the indexed
+neighborhoods are allowed. Its primary source is P. Hall,
+[*On Representatives of Subsets*](https://doi.org/10.1112/jlms/s1-10.37.26),
+Journal of the London Mathematical Society s1-10(1), 26--30
+(1935). SC475 is the derived finite-capacity specialization,
+not an attribution of this formula to a numbered statement in
+that paper.
+
+Since $r-1\le11$, a minimizing $S$ has size at most one.
+If $S=\varnothing$, at most $r-1$ rows have any missing word.
+If $S=\{z_*\}$, at most $r-10$ rows miss a permitted word
+other than $z_*$. The latter case leaves at least $99-2=97$
+rows at $q=101$ and $101-1=100$ rows at $q=103$, each complete
+on the other four words subject to the single possible forbidden
+cell. The former case gives a stronger count. Thus
+
+$$
+\begin{aligned}
+q=101&:\quad\#\{m>1:m\text{ eligible}\}\ge4\cdot97-1=387,\\
+q=103&:\quad\#\{m>1:m\text{ eligible}\}\ge4\cdot100-1=399.
+\end{aligned}
+\tag{SC476}
+$$
+
+The SC447 envelope has 284 nonunit prime-power cofactors;
+the additional unit in its value 285 is absent here. Subtracting
+284 gives
+
+| Fixed original prime $q$ | $r$ | Distinct eligible nonunit cofactors | Eligible cofactors with $\omega(m)\ge2$ |
+| ---: | ---: | ---: | ---: |
+| 101 | 12 | at least 387 | at least 103 |
+| 103 | 11 | at least 399 | at least 115 |
+| 107 | 9 | at least 484 | at least 200 |
+| 109 | 8 | at least 499 | at least 215 |
+| 113 | 6 | at least 529 | at least 245 |
+
+The last three numerical bounds agree with SC448 but concern
+eligible actual divisor triples, which have additional restrictions
+on their two lower counterparts. If $\gamma=\beta$, the forbidden
+cell is outside $V$, and every lower bound in the last two columns
+increases by one. These are separate per-q inventories and are
+not added across different primes.
+
+### Exact probabilities under one common code law
+
+For $q=107,109,113$, choose $R$ uniformly among the r-subsets
+of $V$, then choose each $f(c)$ independently and uniformly in
+$\mathcal A_c$. All outcomes satisfy SC467. For each actual
+$9qm\in D$ with $m>1$ and $(m,3q)=1$, let $E_m$ be its
+event in SC468. The universal theorem gives, pointwise,
+
+$$
+Z(R,f)=\sum_m\mathbf1_{E_m}(R,f)\ge1.
+\tag{SC477}
+$$
+
+Let $S_m=\{c_0(m),c_1(m),c_2(m)\}$ and $h_m=|S_m|$.
+For $c\in S_m$, let $T_{m,c}\subseteq\mathcal A_c$ impose
+the middle-root condition if $c=c_1(m)$ and the final-word
+condition if $c=c_2(m)$. Both apply together when those digits
+coincide. The first digit has no further word restriction. Then
+
+$$
+\begin{gathered}
+p_m=\Pr(E_m)=
+\begin{cases}
+\displaystyle\frac{(r)_{h_m}}{(q-2)_{h_m}}
+\prod_{c\in S_m}\frac{|T_{m,c}|}{|\mathcal A_c|},&S_m\subseteq V,\\[2ex]
+0,&\text{otherwise},
+\end{cases}\\
+\boxed{\sum_m p_m=\mathbb E Z\ge1,}
+\qquad (x)_h=x(x-1)\cdots(x-h+1).
+\end{gathered}
+\tag{SC478}
+$$
+
+The probability space is the one global code choice shared by
+all originals. At a repeated digit the sampled word is the same,
+so its restrictions must be intersected before taking a probability.
+Different cofactors' events need not be independent. W is preserved
+by the common source; SC478 asserts no positive intersection of
+cofactor sections under a law on W.
+
+At $q=101,103$, pointwise SC477 still holds on the assignments
+satisfying SC467. A probability version may use any law supported
+there, but unrestricted independent uniform word choices can exceed
+capacity nine and do not justify the displayed product formula.
+
+### A weighted finite-height alternative at q equal to 113
+
+Choose any
+
+$$
+U\subseteq\mathbb F_{113}\setminus\{\alpha,\beta,\gamma\},
+\qquad |U|=110.
+$$
+
+This is possible even when $\gamma=\beta$, in which case there
+are 111 available digits. Every row in $U$ permits all five safe
+words. Choose six digits uniformly from $U$, with independent
+uniform words. Count only potentially active actual nonunit
+cofactors, meaning their triple event has positive probability in
+this domain. Classify their actual digit patterns by
+
+| Count | Actual digit pattern |
+| --- | --- |
+| $C_1$ | $c_0(m)=c_1(m)=c_2(m)$ |
+| $C_{2A}$ | $c_1(m)=c_2(m)\ne c_0(m)$ |
+| $C_{2B}$ | either other pattern with exactly two distinct digits |
+| $C_3$ | three distinct digits |
+
+Potential activity includes all three digits in $U$, the final
+word in $\mathcal A$, and the middle/final compatibility when
+those two digits agree. Let $t_m\in\{2,3\}$ be the number of
+safe words in the actual $3qm$ first-3 root. Its word factor is
+$1/5$ when middle and final digits agree compatibly, and
+$t_m/25$ otherwise. Hence
+
+$$
+\begin{array}{c|c}
+\text{pattern}&\text{event probability or upper bound}\\ \hline
+C_1&(6/110)(1/5)=981/89925\\
+C_{2A}&(6\cdot5/(110\cdot109))(1/5)=45/89925\\
+C_{2B}&(6\cdot5/(110\cdot109))(t_m/25)\le27/89925\\
+C_3&(6\cdot5\cdot4/(110\cdot109\cdot108))(t_m/25)
+ \le1/89925.
+\end{array}
+\tag{SC479}
+$$
+
+Applying SC477 and linearity of expectation yields
+
+$$
+\boxed{89925\le981C_1+45C_{2A}+27C_{2B}+C_3.}
+\tag{SC480}
+$$
+
+For the original height envelope of Report 385 GHA11, put
+
+$$
+h_p=10+\left\lfloor\frac{23}{p-1}\right\rfloor
+\quad(5\le p\le113\text{ prime},\ p\ne113).
+$$
+
+The values consist of $15,13,12$, four copies of 11, and
+twenty copies of 10. Thus $\sum_p h_p=284$ and
+$\sum_p h_p^2=3022$. Even allowing every such prime in the
+original support, the possible nonunit numerical cofactors with
+one or two distinct prime factors are at most
+
+$$
+\sum_p h_p+\sum_{p<s}h_ph_s
+=284+\frac{284^2-3022}{2}=39101.
+\tag{SC481}
+$$
+
+An absent prime or a smaller actual height only reduces this
+upper bound. Let $N_{\ge3}$ count the potentially active actual
+cofactors in $U$ with at least three distinct cofactor primes.
+Then $C_1+C_{2A}+C_{2B}+C_3\le39101+N_{\ge3}$, so SC480
+gives the necessary alternative
+
+$$
+\boxed{N_{\ge3}+980C_1+44C_{2A}+26C_{2B}\ge50824.}
+\tag{SC482}
+$$
+
+If every potentially active triple has three distinct q-digits,
+then $C_3\ge89925$ and $N_{\ge3}\ge50824$. Those 50,824
+actual originals $9qm$ each have at least five distinct prime
+factors after including 3 and q. Without that additional
+hypothesis, SC482 does not give $N_{\ge3}\ge50824$ alone.
+
+### Repeated digits force phase separation, not common service
+
+For every potentially active $C_1$ cofactor, original divisor
+closure supplies the actual class with label $m$, and
+comparable-original disjointness forces
+
+$$
+\boxed{\rho_m,\ \rho_{qm},\ \rho_{3qm},\ \rho_{9qm}
+\text{ are pairwise distinct modulo }m.}
+\tag{SC483}
+$$
+
+Equality with $\rho_m$ would contain the descendant class in
+the actual m-class. Among the three descendants, their q-digits
+agree; potential activity also makes the middle first-3 root
+compatible with the final modulo-nine word. Equality of two
+m-phases would therefore contain the higher class in the lower
+one. Both kinds of containment contradict original irredundancy.
+Bare equality of the q-digits without potential activity does not
+supply the middle/final ternary compatibility used here.
+
+SC483 separates four cofactor sections inside one actual group.
+It gives no disjointness between the sections of different m-groups,
+no uniform bound on how many groups can use one W-point, and
+no bound on their contribution to the code moment SC480. That
+moment samples codes; its events do not require the separated
+cofactor sections to contain a common point. Reweighting it by
+cofactor incidences would require a new pointwise statement on
+one common joint law, preserving SC477's guaranteed obstruction.
+Separate laws for different groups or different source maps do not
+supply that statement.
+
+The remaining requirement is an upper bound contradicting SC480
+or SC482 for the same actual family and the same code domain,
+or a complete-source exchange that also pays the repeated-digit
+obstructions. Four distinct residues within each group and the
+finite height envelope alone have not supplied either result.
+SC466--SC483 are ordinary mathematical deductions, without a
+claim of Lean verification. Their fresh shallow labels rely on
+$H_3=2$ and cannot be used unchanged at larger ternary height.
+The height-two branch and unrestricted odd distinct covering
+remain unresolved.
