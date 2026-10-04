@@ -120,7 +120,7 @@ does not by itself produce two strict local extrema (see Triage).
   - $f_1(27/50)=0.0483145773$;
   - $f_1(177/200)=0.0483282133$;
   - $f_1(1)=0.0483099449$.
-- The certified intervals for $f_1\log2$ have width $4\cdot10^{-8}$. The
+- The certified intervals for $f_1\log2$ have widths at most $4.002\cdot10^{-8}$. The
   separations between them are at least $8.0\cdot10^{-6}$.
 
 The canonical source is
@@ -168,11 +168,11 @@ Tier 1 hypothesis of a 2017 journal article. Resolution: `Refuted`, by
   - $|p_1|=0.9864$ is close to $1$.
   - At the four points, the arguments $\frac{1+p_2x-\sqrt{r_1}}4$ and
     $\frac{1-p_2x-\sqrt{r_2}}4$ lie between $3\cdot10^{-4}$ and
-    $2.7\cdot10^{-3}$, and the four values of $f_1$ differ by about
+    $6.5\cdot10^{-3}$, and the four values of $f_1$ differ by about
     $10^{-5}$ bits.
-  - Convexity of $h_2$ and $h_4$ does not decide the shape, because $f_1$ is
-    a difference of entropies. The paper notes this itself: "the difference
-    is not in general" convex.
+  - $h_2$ and $h_4$ are concave on their probability simplices (the paper
+    calls them convex, l. 1395). Their curvature does not decide the shape,
+    because $f_1$ is a difference of entropies.
 - **Effect on the paper's other conclusions (checked by reading the v3
   source):**
   - Two statements do not hold for general X states:
