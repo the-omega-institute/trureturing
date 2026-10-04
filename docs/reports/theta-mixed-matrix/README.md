@@ -98,3 +98,8 @@ conditions and the declared box limit reject the computation. The
 implementation uses existing FLINT directed arithmetic and integration;
 no third-party implementation code is copied here. The program is
 project-authored; dependency licensing is supplied by python-flint/FLINT.
+
+The separate [directed weighted Fourier deficit](deficit.md) reuses these
+theta callbacks to enclose the full symmetric-row scalar deficit at
+$\varepsilon=1/4$. It supplies a coefficient for the Fourier construction,
+without computing the finite trial matrix or repeating this scalar trial.
