@@ -334,6 +334,15 @@ Formula (WF3) supplies the first condition. For the second, use
 $m(N/2)\le16N$ for $N\ge2$ in (WF5). This threshold is sufficient;
 direct symbol and leakage bounds can permit smaller bandwidths.
 
+The [direct actual-theta supplier](../../docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
+verifies both conditions at $\varepsilon=1/4$, $N=64$, without claiming
+that this meets the coarse displayed $N_0$ formula. The
+[joint full-row floor](../../docs/reports/theta-mixed-matrix/joint-high-floor.md)
+further gives $\widetilde D\ge0.4133682545007734\|v\|_2^2$ on the
+even high-frequency restriction, above $c=3/8$. Its positive variance
+gap retains the complete operator and mean term. The low-frequency block
+and its coupling still require estimation.
+
 ### The full Fourier commutator and the whole projector
 
 Fix a real even $p\in C_c^\infty(\mathbb R)$ with $0\le p\le1$,
