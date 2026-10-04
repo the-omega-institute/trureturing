@@ -60,7 +60,7 @@ noncomputable instance (n : ℕ) : AddAction (Point n) (Triple n) where
   add_vadd t u s := Subtype.ext (add_vadd t u s.val)
 
 -- Summing the translated set avoids choosing or ordering its three elements.
-private theorem stabilizing_translation_three_torsion {n : ℕ}
+theorem stabilizing_translation_three_torsion {n : ℕ}
     (s : Triple n) (t : Point n) (ht : t +ᵥ s = s) : 3 • t = 0 := by
   classical
   have hset : t +ᵥ s.val = s.val := congrArg Subtype.val ht
