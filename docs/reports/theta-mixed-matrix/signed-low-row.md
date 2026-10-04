@@ -182,6 +182,12 @@ For the cofinal problem, the needed next interface should preserve
 theta localization and the actual same-row frequency information,
 rather than assign its band supremum to every frequency separately.
 
+The [local frequency application](local-signed-frequency.md) reuses
+Schur's criterion to retain a Lorentzian energy around each input
+frequency. At the same $N=64$ and arithmetic cutoff, it supplies a
+smaller complete upper allowance without replaying these computations.
+It supplies neither the low sign nor a growing-cutoff comparison.
+
 ## The remaining signed comparison
 
 These values are not a small residual certificate for the existing
