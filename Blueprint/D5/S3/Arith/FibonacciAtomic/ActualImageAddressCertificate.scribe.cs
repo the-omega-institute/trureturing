@@ -13,7 +13,8 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
         H("Exact Address Certificates for Actual Tree Images"), Blocks(
             Paragraph(Text("Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. "
                 + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
-                + "Composition c counts alpha and beta leaves. Paths reuse the existing FiniteDescription type of finite Boolean lists, including the empty root address. "
+                + "Composition c counts alpha and beta leaves. Paths reuse the frozen ActualTreeReadoutAcquisition.Address type of finite Boolean lists, including the empty root address. "
+                + "Endpoint observations use its Reply and address-first readout; complete leaf sets use ActualImageSevenLeafSeparation.leafAddresses. "
                 + "Leaf labels use true for alpha and false for beta.")),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
@@ -44,10 +45,10 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                         + "omits an alpha leaf, it also omits a beta leaf. Exchanging those labels preserves composition and all queried results. "
                         + "If the chosen beta is the alpha leaf's left sibling, the exchange puts an alpha on the left. Otherwise the old "
                         + "terminal pair becomes (beta,beta). Both possibilities violate the structure of a twice-substituted tree.")),
-                    Paragraph(Text("Without a composition promise, omitting any leaf permits a single label flip. An alpha-to-beta flip creates "
-                        + "a terminal (beta,beta) pair. A beta-to-alpha flip cannot obey the rule that every alpha is the right leaf of a "
-                        + "terminal (beta,alpha) pair. Conversely, matching the labeled complete leaf frontier forces equality of the "
-                        + "ordered source trees, by recursively matching the two child frontiers.")),
+                    Paragraph(Text("Without a composition promise, omitting any leaf permits the frozen flip operation. The source_foundation theorem "
+                        + "excludes that flipped tree from the third image and supplies unchanged readouts at every other address. "
+                        + "Every image at depth 3k is a third image. Conversely, the same frozen theorem reconstructs a complete "
+                        + "ordered tree from its labeled leaf frontier.")),
                     Paragraph(Text("The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, "
                         + "all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. "
                         + "The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general "
@@ -94,7 +95,7 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
     private static Formula ResultFormula()
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
-        Formula a=Call("a",t), depth=Call("D",t), queries=Call("Finset",V("FiniteDescription"));
+        Formula a=Call("a",t), depth=Call("D",t), queries=Call("Finset",V("Address"));
         Formula sound=Call("S",d,t,h,q);
         Formula small=Imp(Seq(h,Sp,Lt,Sp,depth),Seq(Neg,Exists("R",queries,Call("S",d,t,h,V("R")))));
         Formula attained=Imp(LeOf(depth,h),Exists("R",queries,And(Call("S",d,t,h,V("R")),EqOf(Call("card",V("R")),a))));
@@ -107,7 +108,7 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
         Formula a=Call("a",t), n=Call("n",t), depth=Call("D",t);
-        Formula alpha=Call("A",t), leaves=Call("L",t), queries=Call("Finset",V("FiniteDescription"));
+        Formula alpha=Call("A",t), leaves=Call("L",t), queries=Call("Finset",V("Address"));
         Formula within=Call("W",h,q), sound=Call("S",d,t,h,q), un=Call("U",d,t,q);
         Formula unique=All("h",V("Nat"),Imp(LeOf(depth,h),All("Q",queries,
             Imp(within,IffOf(And(sound,EqOf(Call("card",q),a)),EqOf(q,alpha))))));
@@ -137,8 +138,8 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             EqOf(b,Seq(a,Sp,Plus,Sp,curr)),Seq(b,Sp,Lt,Sp,D(2),Sp,Cdot,Sp,a));
         Formula lower=All("X",V("Source"),Imp(InOf(V("X"),Call("I",d)),
             Imp(Seq(h,Sp,Lt,Sp,Call("D",V("X"))),LeOf(budget,Call("n",V("X"))))));
-        Formula observe=All("u",V("FiniteDescription"),Imp(LeOf(Call("length",V("u")),h),
-            EqOf(Call("out",w,V("u")),Call("out",t,V("u")))));
+        Formula observe=All("u",V("Address"),Imp(LeOf(Call("length",V("u")),h),
+            EqOf(Call("readout",V("u"),w),Call("readout",V("u"),t))));
         Formula high=Imp(LeOf(Seq(d,Sp,Minus,Sp,D(1)),h),And(
             EqOf(Call("c",t),pair(Seq(prev,Sp,Cdot,Sp,m,Sp,Plus,Sp,curr),
                 Seq(curr,Sp,Cdot,Sp,m,Sp,Plus,Sp,a))),
