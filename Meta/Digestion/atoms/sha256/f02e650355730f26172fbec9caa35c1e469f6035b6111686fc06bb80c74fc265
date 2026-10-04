@@ -1,0 +1,12 @@
+**定理 14.1（同迹正秩一割线的充要条件）。** 对任意非零实矩阵
+
+$$
+D=\begin{pmatrix}a&b\\c&-a\end{pmatrix},
+$$
+
+存在 $R_0,R_1\in\mathcal R_+$ 满足 $D=R_1-R_0$，当且仅当
+
+$$
+a\ne0\quad\text{或}\quad bc<0.
+$$
+

@@ -1,0 +1,36 @@
+**定理 12.1（三读数构造与显式逆）。** 对每个 $R\in\mathcal R_+$，以下有限合成词协议恰读取三次并恢复初始 $R$。先读
+
+$$
+x=\operatorname{tr}(R)=p+s.
+$$
+
+令
+
+$$
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+依次执行 $M,J$，中途不读，在累计矩阵 $U$ 处读第二次，记为 $b$。由已有读数设
+
+$$
+r=b-x,\qquad N=\left\lceil\frac xr\right\rceil\ge1.
+$$
+
+从当前 $U$ 状态再执行 $U^{N-1}$，即执行 $N-1$ 组先 $M$ 后 $J$ 的操作，然后执行一次 $M$；其间均不读取。在最终累计矩阵 $MU^N$ 处读第三次，记为 $t$。设
+
+$$
+K=x+(N+1)r.
+$$
+
+恢复公式为
+
+$$
+\begin{aligned}
+s&=\frac{2r(t-r)}{K+\sqrt{K^2-4r(t-r)}},\\
+p&=x-s,\qquad q=\frac{s(x-s)}r,\qquad
+R=\begin{pmatrix}p&q\\r&s\end{pmatrix}.
+\end{aligned}
+$$
+
+该协议执行的原子操作总数恰为 $2N+1$，对每个来源都有限，但此构造在整个 $\mathcal R_+$ 上没有统一原子操作上界。
+
