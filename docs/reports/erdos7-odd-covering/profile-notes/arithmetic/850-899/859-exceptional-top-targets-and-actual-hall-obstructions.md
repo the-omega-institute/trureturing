@@ -229,7 +229,65 @@ $$
 Dropping this committed-group cost would mix raw coverage with the
 restricted choice interface.
 
-## 6. What this reduction leaves to prove
+## 6. Weighted capacities do not replace the exception plan
+
+The exception-plan quantifier in ET6 cannot be removed using only
+capacities of target subsets, even when each parent has a double-hit
+graph consisting of one edge. Consider this abstract incidence system,
+with targets $a_0,a_1$ at one parent and $b_0,b_1$ at another:
+
+| Group | First owner hits | Second owner hits |
+| --- | --- | --- |
+| $s_0$ | $\{a_0\}$ | $\{a_1\}$ |
+| $s_1$ | $\{a_0,a_1\}$ | $\{b_0,b_1\}$ |
+| $s_2$ | $\{b_0\}$ | $\{b_1\}$ |
+
+Each owner hits at most two targets, the options of each group are
+disjoint, and each two-target output lies within one parent. Thus the
+double-hit graph has matching number one at each parent. In particular,
+this is different from the forbidden crossing square in section 3,
+whose two disjoint collision edges lie at the same parent.
+
+No common owner assignment covers all four targets. If $s_1$ chooses
+its first output, the two $b$-targets must both be covered by $s_2$,
+which can cover only one. Its second output leaves the same obstruction
+at the two $a$-targets. This argument exhausts the middle group's
+two choices.
+
+Nevertheless every nonnegative real weighted capacity test succeeds. For
+real weights $w_m\ge0$, write $w(A)=\sum_{m\in A}w_m$ and let $H_{s,i}$
+be the table's hit sets. Every target belongs to exactly two of its
+six options, so
+
+$$
+\sum_{s=0}^2\max_{i\in\{0,1\}}w(H_{s,i})
+\ge\frac12\sum_{s=0}^2\sum_{i=0}^1w(H_{s,i})
+=\sum_m w_m.
+\tag{ET10}
+$$
+
+Taking $w=\mathbf1_T$ proves every target-subset capacity inequality.
+Equivalently, choose each option with probability one half: every
+target has expected coverage multiplicity one. That fractional
+statement does not supply a single assignment covering all targets.
+
+The choice $\mathcal E=\{a_0,b_0\}$ meets both double edges. The
+ordinary targets $a_1,b_1$ have a Hall matching before any exception
+plan is fixed. But every plan covering $\mathcal E$ leaves a Hall
+deficit among its still-unhit ordinary targets and unused groups, by
+the exact equivalence in ET6 and the preceding impossibility. Thus
+Hall for the original ordinary graph and weighted capacities for all
+targets together still miss the required compatibility.
+
+This reuses the distinction between fractional coverage and integral
+group choices. It supplies an obstruction to an abstract inference,
+not an arithmetic covering system: no literal CRT realization, complete
+original cover, divisor-closed source or EB1-minimality is asserted.
+Those additional hypotheses could exclude this incidence pattern;
+that requires an actual arithmetic argument. The example supplies no
+upper bound for the actual nondivisor loads in ET8--ET9.
+
+## 7. What this reduction leaves to prove
 
 The actual problem is now sharper for the single-output top route:
 find one compatible plan for at most twelve exceptions and establish
@@ -247,5 +305,9 @@ geometry and payment. The exact Hall equivalence and deficient-set
 arithmetic compile as transient Lean applications using only standard
 axioms. They assume the single-output uniqueness premise on ordinary
 targets; the arithmetic twelve-exception theorem is not formalized by
-those checks. No retained wrapper declaration is introduced.
+those checks. The four-target example is also checked transiently:
+no common assignment, disjoint same-group options, the half-mixture
+identity and ET10 for every real weight vector, and the Hall deficit
+after every exception-covering partial plan. These checks likewise
+use only standard axioms. No retained wrapper declaration is introduced.
 No new frozen declaration or unrestricted resolution is claimed.
