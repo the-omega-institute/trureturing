@@ -592,7 +592,127 @@ tail has a uniform small cost. The remaining low-height incidence,
 its actual support and permanent owner choices are still needed;
 a small tail does not make that low-height load small.
 
-## 9. Remaining estimate and verification scope
+## 9. Uniform long-digit permutations do not give the coarse small-load test
+
+This section uses an additional restriction on the common completion.
+After fixing the two terminal digits and six selected short digits,
+there are 105 digits assigned to long leaves. Fix one digit $\delta$
+at a long position outside all 36 sibling positions, then uniformly
+permute the remaining 104 digits over the remaining long positions.
+If the actual $9q$ digit $\gamma$ is nonterminal, take $\delta=\gamma$.
+If it is terminal, choose another long digit for $\delta$; the earlier
+condition on $\gamma$ alone would not exclude this additional digit.
+There are 69 outside long positions, so this restriction is possible.
+
+Write $V$ for the resulting fixed 104-digit pool. Each selected parent's
+six-digit set $\mathcal D_m$ is marginally a uniform six-subset of $V$.
+The parents share one permutation; their digit sets are not independent.
+The uniform tail bounds in section 8 need none of this extra contract.
+
+For a semiprime bad target $m=pr$, with distinct primes $p,r$, let
+$A_m\subseteq V$ consist of the first q-digits of actual shallow
+originals $3^aqs$ with $1<s<m$, $s\mid m$, whose ternary test agrees
+with $z_m$ and whose cofactor phase agrees with $r_m\bmod s$.
+This eligible set is fixed before the long-digit permutation. There
+are at most six such labels, three for each of $p$ and $r$, so
+$|A_m|\le6$; several labels may have the same digit.
+
+Let $h_m(d)$ be the original-tail mass of all deep divisor originals
+at first digit $d$, with their literal ternary and cofactor phases
+compatible with $z_m,r_m$. Include the unit and $m$ cofactors. The
+numerical-distinctness count used in SF22 gives
+$\sum_{d\in V}h_m(d)\le3/28$: at each $j\ge2$ there are at most
+twelve compatible divisor originals, each contributing $113^{1-j}$
+to one first-digit cell.
+For $d\in\mathcal D_m\setminus A_m$, a point with $w\in Z_m$ has
+no q-free, shallow unit, shallow own-$m$, or shallow proper-divisor
+supplier in that first-digit cell. Coverage of its full original tail
+therefore requires nondivisor union mass at least $(1-h_m(d))_+$.
+Summing the six disjoint cells bounds the load sum, and does so before
+minimizing over $w$:
+
+$$
+N_m^{q,*}(\mathcal D_m)
+\ge\sum_{d\in\mathcal D_m\setminus A_m}(1-h_m(d))_+
+\ge6-|\mathcal D_m\cap A_m|-\sum_{d\in\mathcal D_m}h_m(d).
+\tag{SF30}
+$$
+
+In particular,
+
+$$
+N_m^{q,*}<53/28
+\quad\Longrightarrow\quad |\mathcal D_m\cap A_m|\ge5.
+\tag{SF31}
+$$
+
+The ternary trace criterion $N_m^*<20/13$ also requires five eligible
+digits, using its deep divisor cap $6/13$ in place of $3/28$.
+Five distinct eligible digits force one prime group to supply all
+three of its shallow labels, as long inverses in the same parent and
+same literal cofactor phase. Thus the coarse test demands that strong
+coherent incidence; it is not necessary for every possible paid packet.
+
+The marginal inclusion probability of every $d\in V$ is $6/104$.
+Taking expectations in SF30, still permitting a different minimizing
+cofactor point for each completion, gives
+
+$$
+\mathbb E[N_m^{q,*}]
+\ge6-\frac6{104}\left(6+\frac3{28}\right)
+=\frac{8223}{1456}>5.6476.
+\tag{SF32}
+$$
+
+Enlarging $A_m$ to six digits if needed, the same necessary condition
+gives the exact hypergeometric bound
+
+$$
+\Pr(N_m^{q,*}<53/28)
+\le\frac{\binom65\binom{98}1+\binom66}{\binom{104}6}
+=\frac{589}{1517381580}<3.882\cdot10^{-7}.
+\tag{SF33}
+$$
+
+This excludes a low-expectation justification under this uniform
+permutation law. It does not assert zero success probability, exclude
+optimized common permutations, or limit the more permissive bucket,
+masked or cooperative packet criteria.
+
+## 10. Supported cofactor query laws have a necessary cost
+
+For any probability law $\mu$ supported on the actual nonempty $Z_m$,
+including the unit modulus in the sum, put
+
+$$
+\mathcal Q(\mu)=\sum_{s\mid W}\max_{\rho\bmod s}\mu([\rho]_s).
+$$
+
+Fix $z_m$, draw $w$ from this same $\mu$, and independently draw the
+complete original q-coordinate uniformly. Every q-free original has
+probability zero. Whole coverage and distinct numerical labels imply
+
+$$
+1\le\frac{3(1-113^{-G})}{112}\,\mathcal Q(\mu),
+\qquad
+\mathcal Q(\mu)\ge\frac{112}{3(1-113^{-G})}>\frac{112}{3}.
+\tag{SF34}
+$$
+
+Indeed, an original $3^a113^js$ costs at most
+$113^{-j}\mu([\rho_n]_s)$; sum over at most three ternary heights
+and the finite positive heights $1\le j\le G$. For semiprime $m$,
+the four divisors of $m$ each contribute exactly one to the query
+norm because $\mu$ is supported on $[r_m]_m$. Thus its nondivisor
+part exceeds $100/3$.
+
+This is a necessary cost for phase maxima over all q-digits. It is
+neither a lower bound on the actual six-digit nondivisor load nor a
+construction of a supported law. A diffuse proposed query envelope
+must pay this cost as well as establish its support. The pointwise
+tail bound in section 8 constructs no cofactor law and remains valid.
+
+## 11. Remaining estimate and verification scope
 
 The unresolved step is to control the actual nondivisor load on the
 nonempty q-free-uncovered sets $Z_m$, together with the capacities,
@@ -631,6 +751,14 @@ nonempty set. The actual phase capacities reuse Report385; their
 connection to the whole-cover source and the complete divisor-witness
 classification are ordinary independently reviewed deductions here,
 not a full kernel replay of SF23--SF29.
+
+For sections 9--10, transient Lean checks verify the expected-minimum
+implication from the stated pointwise and marginal premises, both
+five-digit thresholds, the query-cost consequence and the displayed
+exact constants. The actual-cover translation and the corrected
+uniform permutation's marginal identities remain explicit ordinary
+mathematical premises of those checks. No independent-parent law or
+new support reserve is inferred.
 
 No new frozen mathematical declaration, atom coverage or resolution of
 the unrestricted problem is claimed by this report.
