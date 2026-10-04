@@ -20,8 +20,7 @@ internal sealed class AbelianBorderQuestionDocument : IScribeDocumentDefinition
                     + "the cylinder and tangential-line conditions, yet it has infinitely many nonempty weakly "
                     + "abelian unbordered factors. This answers Question 2 negatively even when the suffix of a "
                     + "border may be the entire word.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("charlier-harju-puzynina-zamboni-question-two"), ResolutionKind.Refuted)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(
         string id,
