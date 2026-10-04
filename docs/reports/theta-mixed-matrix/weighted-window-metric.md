@@ -152,12 +152,21 @@ $$
 \mathcal G_L+(r_L/\beta_L)B_L\succeq0. \tag{WM8}
 $$
 
-This route requires $r_{L_j}/\beta_{L_j}\to0$. Absolute convergence
-$r_{L_j}\to0$ alone is insufficient: since
-$\beta_L\le(1-m_L)w(0)$, the denominator itself tends to zero.
+This scalar construction of a uniform relative window allowance requires
+$r_{L_j}/\beta_{L_j}\to0$. Absolute $r_{L_j}\to0$ alone does not
+guarantee that converted allowance tends to zero, since
+$\beta_L\le(1-m_L)w(0)$ and the denominator itself tends to zero.
 Failure of this scalar sufficient bound does not refute (WM6).
 Keeping the exact rank-one-corrected $B_L$ leaves room for a stronger
 relative comparison without that scalar loss.
+
+This ratio is not necessary for the RH target. The
+[fixed-test limit and pole-cancelled window](centered-window.md) explain
+why an actual absolute lower comparison with $r_{L_j}\to0$ already
+suffices on every fixed compact test, without the scalar conversion.
+The same note transports the published pole-pair constraint to the
+original theta mean; its constrained metric has a uniform scalar floor.
+Neither argument supplies the outstanding arithmetic lower comparison.
 
 ## Even the optimal scalar transfer vanishes
 
