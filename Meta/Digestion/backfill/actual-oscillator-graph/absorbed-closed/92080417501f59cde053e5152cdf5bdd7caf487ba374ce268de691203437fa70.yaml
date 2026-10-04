@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:92080417501f59cde053e5152cdf5bdd7caf487ba374ce268de691203437fa70
+  normalized_sha256: sha256:92080417501f59cde053e5152cdf5bdd7caf487ba374ce268de691203437fa70
+cas_ref: sha256:92080417501f59cde053e5152cdf5bdd7caf487ba374ce268de691203437fa70
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/GaussianSchwartz.exists_gaussian_schwartz
+    target_statement_id: sha256:8738e25c22cf0d5737930316f708ca4b0c1903ee4f824c8f6f4263c77b06266c
+receipts:
+  unresolved_subitems: []

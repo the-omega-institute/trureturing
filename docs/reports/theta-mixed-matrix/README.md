@@ -210,3 +210,15 @@ interior, actions and restricted comparison. Under the same paper
 premises, it improves the high coercivity input and yields a
 ground-orthogonal margin greater than $0.00169425$ at $c=0.41$.
 This is still a bounded parameter range, without cofinal or RH closure.
+
+The [actual coupling norm and joint three-block comparison](actual-coupling.md)
+uses the saved Grams to sharpen the low-tail allowance and the actual
+$ZA$ norm. Under the same paper premises its ground-orthogonal margin
+is greater than $0.00112575$ at $c=0.42$, without new action columns.
+The remaining cofinal, RH, full Robin and Lean obligations are retained.
+
+The [weighted window metric](weighted-window-metric.md) reuses Suzuki's
+derivative pairing and transports the original theta variance to its
+exact rank-one-corrected metric. It states the outstanding cofinal
+relative estimate, including the loss in a scalar unweighted transfer.
+It does not supply that estimate or a further numerical margin.
