@@ -1,0 +1,40 @@
+**Theorem 8.1 (actual physical graph, conditional on the physical basis).**
+For every natural dimension $d$, positive $\hbar$, positive coordinate masses
+$m_j$ and frequencies $\omega_j$, suppose that $e$ is a complex Hilbert basis
+of the actual Lebesgue $L^2(V,\mathbb C)$ and that each $e_\alpha$ is exactly
+the $L^2$ class of a Schwartz function $\varphi_\alpha$ whose pointwise
+value is the physical function $\Phi_\alpha$ of Definition 1.3.
+Let $S$ be the actual differential operator on all Schwartz classes from
+Theorem 5.1, $C=\operatorname{span}_{\mathbb C}e(I)$, $T=S|_C$, and
+$K=\overline T$ the genuine operator closure. Then $S\le K$, $S$ is
+closable, $\overline S=K=S^*$, $K$ is self-adjoint and closed, and $C$
+is a core of $K$. For every $f,g$ in the actual Hilbert space,
+$$
+\mathrm{Weak}(f,g)\iff(f,g)\in\operatorname{graph}K
+\iff\forall\alpha,\ \langle e_\alpha,g\rangle
+=E_\alpha\langle e_\alpha,f\rangle.
+$$
+The domain of $K$ is exactly the set of vectors whose weighted coefficients
+$(E_\alpha\langle e_\alpha,f\rangle)_\alpha$ belong to $\ell^2$.
+For each graph pair $(f,g)$, finite physical Hermite sums indexed by the
+same finite set converge simultaneously to $f$ and, under $T$, to $g$.
+For every $u\in\operatorname{dom}K$,
+$\operatorname{Re}\langle u,Ku\rangle\ge0$.
+The empty coordinate sum gives $E_\alpha=0$ in dimension zero; no energy
+division and no separate nonsmooth derivative or potential $L^2$ hypothesis
+is used. The assertion remains conditional on the exact physical Hilbert
+basis input; it does not prove physical orthonormality or totality.
+
+*Proof.* Theorem 7.1 supplies the actual differential eigenaction of the
+pointwise-identical Schwartz representatives. The finite physical restriction
+therefore satisfies Theorems 3.1 and 6.1. Schwartz symmetry pairs every
+vector in $S^*$ with each physical eigenfunction and gives the weighted
+coefficient identity, hence $S^*\le K$. The closed adjoint contains $S$
+and $T$, so it contains $K$ as well. Closure monotonicity then identifies
+the Schwartz closure with $K$. The compact-test equivalence follows from
+Theorem 5.1, and the finite core and domain characterization from Theorem 6.1.
+On each simultaneous finite graph approximant, orthonormality expresses the
+real quadratic form as $\sum_{\alpha\in F} E_\alpha
+|\langle e_\alpha,u\rangle|^2\ge0$. Continuity of the inner product
+and closedness of the nonnegative real half-line pass this inequality to
+the genuine graph limit.

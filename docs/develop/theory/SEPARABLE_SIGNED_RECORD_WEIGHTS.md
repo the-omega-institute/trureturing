@@ -208,3 +208,226 @@ This argument is an unbounded coefficient proof and does not infer the
 comparison from a finite list of permutation rows.
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Actual record transports and the complete rising side
+
+**Definition 5.1 (The four positive record fibers).** Let $i_t(n,k)$ count
+the literal $2413/3142$ avoiders of positive length $n$ with no proper
+direct cut and exactly $k$ strict records of type $t$. Let $d_t(n,k)$ count
+the avoiders with a proper direct cut and exactly $k$ such records. The
+types are right maximum, left minimum, left maximum and right minimum,
+with their strict comparisons as in Section 1. Both positive classes are
+empty at length zero. Put $\delta(n,k)=1$ when $n=k=1$ and zero otherwise.
+
+**Theorem 5.2 (Actual transports and rising laws).** For all natural
+lengths $n$ and record indices $k$,
+
+$$
+\begin{aligned}
+i_{\mathrm{lmin}}(n,k)&=i_{\mathrm{rmax}}(n,k),\\
+d_{\mathrm{lmax}}(n,k)+\delta(n,k)&=i_{\mathrm{rmax}}(n,k),\\
+d_{\mathrm{rmin}}(n,k)+\delta(n,k)&=i_{\mathrm{rmax}}(n,k).
+\end{aligned}
+$$
+
+For each of these four class/statistic pairs, its count at zero records
+vanishes at every positive length; its count at one record vanishes for
+every $n\ge2$. For every $n\ge4$ and every $k<3$, its count at $k$ is at
+most its count at $k+1$.
+
+Proof. Reverse positions, complement values by $v\mapsto n-1-v$, and
+compose these involutions. Each operation preserves the actual avoidance
+class: complement interchanges the two forbidden patterns, position
+reversal also interchanges them, and both embeddings and strict value
+comparisons transport explicitly. Complement changes a cut's sign;
+reversal changes its sign and sends the cut position $c$ to $n-c$.
+Their composition preserves the sign. The pointwise separable cut
+dichotomy at $n\ge2$ identifies the opposite no-cut class with the
+proper-cut class. The transported record-position sets give exact
+record-fiber bijections: reverse sends right maxima to left maxima,
+complement sends right maxima to right minima, and their composition
+sends right maxima to left minima. At length one all record types have
+count one, while neither proper-cut class has a member; this gives the
+displayed singleton corrections. At length zero positivity excludes
+the empty permutation from both source classes.
+
+The last position of a nonempty permutation is a right maximum. If it
+is the only right maximum, the largest value must occur there, because
+the position of the largest value is itself a right maximum. At length
+at least two the last value then yields a proper direct cut at $n-1$.
+Thus an irreducible permutation of length at least two has neither zero
+nor one right maximum. The exact transports give the same zero fibers
+for the other three pairs. Nonnegative cardinalities give the first two
+adjacent rising comparisons; Theorem 4.1 gives the comparison from two
+to three, transported to the other pairs at every $n\ge4$. No declining
+comparison or full peak-three conclusion is asserted here.
+
+## 追加锚（本行以下为增补区）
+
+## 6. The first declining comparison
+
+**Definition 6.1 (Strict comparisons in Definition 5.1).** A left maximum at
+position $i$ exceeds every value at positions $j<i$; a left minimum is
+below every value at positions $j<i$; a right minimum is below every value
+at positions $j>i$. The right-maximum comparison is Definition 1.1.
+These four counts are strict and unshifted, including the empty and
+singleton conventions of Definition 5.1.
+
+**Theorem 6.2 (Actual decline from three to four).** For each of
+$(\mathrm{irreducible},\mathrm{rmax})$,
+$(\mathrm{irreducible},\mathrm{lmin})$,
+$(\mathrm{reducible},\mathrm{lmax})$ and
+$(\mathrm{reducible},\mathrm{rmin})$, its actual record-fiber cardinality
+satisfies $a(n,4)\le a(n,3)$ for every natural length $n$, and
+$a(n,4)<a(n,3)$ for every $n\ge3$.
+
+Proof. The actual quadratic of Theorem 3.2 gives
+
+$$
+J_4=t^4(1+q)^4(1+5q+5q^2).
+$$
+
+Together with $J_3=t^3(1+q)^3(1+2q)$ and
+$t(1+q)=q(1-q)$, this yields $J_3-J_4=t^3F(q)$, where
+
+$$
+F(x)=1+4x+2x^2-8x^3-6x^4+11x^5+15x^6+5x^7.
+$$
+
+Put $K(x)=1-2x-x^2$. The numerator of $(1+x)^2F'(x)/K(x)$ is
+
+$$
+N(x)=4+12x-12x^2-68x^3-17x^4+176x^5+270x^6+160x^7+35x^8.
+$$
+
+The quotient has exact coefficients
+$4,20,32,16,47,286,889,2224,5372$ through index eight. At every
+index $m\ge9$ its coefficient is twice the preceding coefficient plus
+the coefficient two places earlier. Matching coefficients proves the
+quotient identity and its nonnegative infinite tail. In particular,
+$N/K-20x$ has nonnegative coefficients.
+
+The actual scalar series $q=tL(t)$ has zero constant term and positive
+coefficients at every positive index: the large Schröder recurrence,
+with initial value one and nonnegative summands, gives positivity.
+Differentiation of its quadratic gives $K(q)q'=(1+q)^2$.
+Thus $\frac{d}{dt}F(q(t))=(N/K)(q(t))$, whose constant coefficient is
+four and whose positive-index coefficients dominate those of $20q(t)$.
+All derivative coefficients are strictly positive. Since $F(q(0))=1$,
+formal integration over $\mathbb Q$ shows that every coefficient of
+$F(q(t))$ is strictly positive. Multiplication by $t^3$ proves the weak
+comparison at every length and the strict comparison at every $n\ge3$.
+The transports of Theorem 5.2 give the other three comparisons. Their
+singleton corrections vanish at record indices three and four.
+
+## 追加锚（本行以下为增补区）
+
+## 7. An unbounded sign law for the record kernels
+
+Definition 5.1 uses this volume's local numbering. Its source-class and
+statistic locators are Chen–Kitaev–Zhang, arXiv:2404.18517v1, Sections 1
+and 1.2; the full peak-three question is Section 3, Conjecture 2, page 17.
+The positive classes, proper cuts and strict unshifted comparisons are
+those of Definitions 1.1, 5.1 and 6.1 in this volume.
+
+**Definition 7.1 (Motzkin record kernels).** Work in $\mathbb Q[[u]][[z]]$.
+Let $C(w)$ be the Catalan series supplied by Mathlib, with
+$C(w)=1+wC(w)^2$. Put
+
+$$
+\begin{aligned}
+a(u)&=u(3+2u),& b(u)&=u(1+u)^3,& c(u)&=u(4+3u)=4b(u)-a(u)^2,\\
+M(z)&=\frac{1}{1-az}C\left(\frac{bz^2}{(1-az)^2}\right),&
+T_r(u)&=[z^r]M(z).
+\end{aligned}
+$$
+
+Every denominator here has constant one. Define
+
+$$
+G_r(u)=(1+u)^2(T_r+T_{r+1})
+-u(1-u)(1+u)(T_r+2T_{r+1}+T_{r+2}).
+$$
+
+The name record Newton kernel denotes this exact expression. Its
+correspondence with the normalized actual record coefficients is a
+separate obligation. The actual scalar $q(t)$ is the positive avoider
+series of Theorem 3.2, with $q=tL(t)$ for the large Schröder series $L$.
+
+**Theorem 7.2 (Every kernel is nonnegative after actual substitution).**
+For every natural $r$ and $n$,
+
+$$
+[t^n]G_r(q(t))\ge0.
+$$
+
+Proof. Catalan substitution gives $M=1+azM+bz^2M^2$. Differentiating
+this quadratic and eliminating the quadratic term gives
+
+$$
+z(1-2az-cz^2)M'+(2-3az-cz^2)M=2.
+$$
+
+The eliminated factor $2bz^2M+az-1$ has constant $-1$ and is nonzero.
+Coefficient extraction gives $T_0=1$, $T_1=a$, and for every $r\ge0$,
+
+$$
+(r+4)T_{r+2}=(2r+5)aT_{r+1}+(r+1)cT_r.
+$$
+
+The actual scalar has nonnegative coefficients and satisfies
+$q=t+tq+q^2$. Thus $t(1+q)=q(1-q)$ and
+$(1-2q-q^2)q'=(1+q)^2$. For any polynomial $f(u)$ with $f(0)\ge0$,
+an exact nonnegative series $V(u)$ satisfying
+
+$$
+(1-2u-u^2)V(u)=(1+u)^2f'(u)
+$$
+
+proves $f(q(t))$ is nonnegative: the chain rule gives
+$(f(q(t)))'=V(q(t))$, and formal integration divides each positive-index
+coefficient by its positive index. To construct $V$, match its initial
+coefficients through one index past the numerator's degree. Beyond that
+degree the coefficient identity is the universal recurrence
+$v_{m+2}=2v_{m+1}+v_m$. Nonnegative consecutive initial values therefore
+prove all later coefficients nonnegative. This is an exact polynomial
+certificate followed by induction, rather than a finite-length test.
+
+Apply this certificate rule to $G_0,\ldots,G_{11}$ and to the four
+polynomials $E_1T_1,E_1T_2,E_2T_{13},E_2T_{14}$, where
+
+$$
+\begin{aligned}
+E_1&=(1+u)^2(1-u-2u^2+3u^3),\\
+E_2&=(1+u)^2(1-2u-2u^2+4u^3).
+\end{aligned}
+$$
+
+The exact coefficient vectors are part of the Lean theorem's local
+certificates. For any fixed $E$, multiplying the universal recurrence
+by $E$ shows that nonnegativity of $(ET_s)(q(t))$ and
+$(ET_{s+1})(q(t))$ propagates to every index at least $s$: both $a(q(t))$
+and $c(q(t))$ are nonnegative, and division by $r+4$ preserves the sign.
+Consequently $(E_1T_r)(q(t))$ is nonnegative for every $r\ge1$, and
+$(E_2T_r)(q(t))$ is nonnegative for every $r\ge13$.
+
+For every $r$, the same recurrence gives the exact reduction
+
+$$
+(r+4)G_r=(r+4)(E_1T_r+E_2T_{r+1})
++3u(1-u)(1+u)(cT_r+aT_{r+1}).
+$$
+
+The $T_r$ themselves are nonnegative by the recurrence and $T_0=1$,
+$T_1=a$. After actual substitution the last summand is
+$3t(1+q)^2(c(q)T_r(q)+a(q)T_{r+1}(q))$, so it is nonnegative.
+For $r\ge12$ both other summands are nonnegative by the propagated
+laws. Division by $r+4$ proves the remaining indices, and the twelve
+base certificates finish the result.
+
+The normalized actual $J_k$ formula and its Newton transform remain
+separate obligations. The sign law alone does not prove the actual
+comparison $a(n,k+1)\le a(n,k)$ for arbitrary $k\ge4$, the global maximum
+at three, or the full conjecture.
+
+## 追加锚（本行以下为增补区）

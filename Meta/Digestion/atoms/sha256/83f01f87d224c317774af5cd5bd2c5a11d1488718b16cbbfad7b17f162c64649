@@ -1,0 +1,24 @@
+**损伤产生与修复 285.1。** 令 `N_v^{\mathrm{ss}}`、`N_v^{\mathrm{ds}}` 和 `N_v^{\mathrm{cl}}` 分别表示单链断裂、双链断裂和复杂损伤的计数。给定外加辐射质量参数 `\alpha_k`，一种局部随机强度模型为
+
+$$
+\lambda_{v,k}(t)=\alpha_k\,\dot D_v(t),
+\qquad
+N_v^{k}(t+dt)-N_v^{k}(t)\sim\operatorname{Poisson}(\lambda_{v,k}(t)dt).
+$$
+
+若损伤会重叠或发生簇集，可改用复合 Poisson、簇过程或相关点过程。修复状态 `X_v(t)` 可由
+
+$$
+\dot X_v(t)=I_v(t)-\Gamma_v(X_v,t)-\Delta_v(X_v,t)+\nu_v(t)
+$$
+
+描述，其中 `I_v` 是新损伤输入，`\Gamma_v` 是正确修复，`\Delta_v` 是错误修复、细胞清除或凋亡，`\nu_v` 是外加噪声。修复速率、细胞间通讯和旁观者效应都不由 FIB 接缝确定。
+
+在给定动力学状态后，若双链断裂事件沿合法路径近似独立，定义有效损伤图的边指标 `\chi_e(t)`，则从照射端口集合 `B_j^{\mathrm{rad}}` 到核端口集合 `B_j^{\mathrm{nuc}}` 的可达损伤簇为
+
+$$
+\mathcal D_j(t)=\left\{v\in V_j:\exists\gamma\in\mathcal P_j(B_j^{\mathrm{rad}},v),\ \prod_{e\in\gamma}\chi_e(t)=1\right\}.
+$$
+
+但簇内相关性、染色质空间折叠和修复竞争会使可达性概率不等于独立路径概率的并集近似。
+

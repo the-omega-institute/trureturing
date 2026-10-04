@@ -1,0 +1,54 @@
+**Theorem 7.2 (unique affine recovery and graph inverse).** Every
+admissible triple $S$ has a unique nonzero slope $a\in F^\times$ and a
+unique intercept $b\in F$ for which $y=ax+b$ at every $(x,y)\in S$.
+With $X=\{x:(x,y)\in S\}$, the maps
+
+$$
+\begin{aligned}
+  \mathcal P_p&\longrightarrow\mathcal T_p,
+    &(a,b,X)&\longmapsto\Gamma(a,b,X),\\
+  \mathcal T_p&\longrightarrow\mathcal P_p,
+    &S&\longmapsto(a,b,\{x:(x,y)\in S\})
+\end{aligned}
+$$
+
+are mutually inverse. In particular, the recovered parameters describe
+the original point set exactly, rather than only a containing line.
+
+**Proof.** Choose distinct points $u,v\in S$. The two coordinate
+injectivity assumptions give $v_x-u_x\ne0$ and $v_y-u_y\ne0$.
+Since $F$ is a field, set
+
+$$
+  a=\frac{v_y-u_y}{v_x-u_x},\qquad b=u_y-au_x.
+$$
+
+The numerator is nonzero, so $a\ne0$. For each $w\in S$, the
+determinant equation for $u,v,w$, after division by $v_x-u_x$, gives
+$w_y-u_y=a(w_x-u_x)$, hence $w_y=aw_x+b$. If another pair
+$(a',b')$ fits every point of $S$, subtraction of its equations at $u$
+and $v$ gives $a'(v_x-u_x)=v_y-u_y$. Division forces $a'=a$, and
+its equation at $u$ then gives $b'=b$. Thus recovery is independent of
+the chosen pair of points.
+
+The first-coordinate projection is injective on $S$, so its image $X$
+has exactly three elements. Each point of $S$ lies in
+$\Gamma(a,b,X)$. Conversely, each $x\in X$ is the first coordinate
+of a point of $S$, whose second coordinate must be $ax+b$. This proves
+$S=\Gamma(a,b,X)$.
+
+For any parameters $(a,b,X)$, the graph map is injective because its
+first coordinate is $x$, so its image has three elements. Its second
+coordinate is injective because $a\ne0$: equality $ax+b=ax'+b$
+forces $x=x'$. For graph points indexed by $x,z,t$, their difference
+determinant vanishes since
+
+$$
+  (z-x)\bigl(a(t-x)\bigr)=(t-x)\bigl(a(z-x)\bigr).
+$$
+
+The graph triple is therefore admissible. Its first-coordinate image
+is $X$, and uniqueness of affine recovery returns its original $a$
+and $b$. Both compositions are the identity, proving the claimed
+bijection. $\square$
+

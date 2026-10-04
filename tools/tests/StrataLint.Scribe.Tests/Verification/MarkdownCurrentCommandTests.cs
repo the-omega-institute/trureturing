@@ -1,10 +1,8 @@
-using System.Reflection;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class MarkdownCurrentCommandTests
 {
-    private static readonly Assembly Documents = new FixtureAssembly();
 
     [Fact]
     public void CurrentChecksEveryDefinitionWithoutGitOrPublishedMarkdown()
@@ -61,20 +59,28 @@ public sealed class MarkdownCurrentCommandTests
         var temporary = new TemporaryRoot();
         SyntheticScribeRepository.WriteInputs(temporary.Path, Definition());
         TemporaryFileSystem.File.WriteAllText(temporary.Resolve("global.json"), "{}\n");
+        TemporaryFileSystem.File.WriteAllText(temporary.Resolve(Definition().SourcePath), $$"""
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            {{"namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;"}}
+            internal sealed class CurrentMarkdown : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
+                    Header("D5/S0/Synthetic/CurrentMarkdown", "Current Markdown command fixture."), H("Current Markdown"),
+                    Blocks(Paragraph(Text("A current formula "), Math(FormulaDsl.Id("x")), Text(".")))));
+            }
+            """);
         return temporary;
     }
 
-    private static int Run(TemporaryRoot temporary, TextWriter output, TextWriter error, params string[] options) =>
-        ScribeCli.Run(Documents, ["markdown-check", "--report", "fixture.json", .. options],
-            temporary.Path, output, error, LeanReportFixture.ForDocuments([Definition().Document]), TextReader.Null);
-
-    private sealed class FixtureAssembly : Assembly
+    private static int Run(TemporaryRoot temporary, TextWriter output, TextWriter error, params string[] options)
     {
-        public override Type[] GetTypes() => [typeof(CurrentMarkdownDocument)];
+        var paths = options.Length == 0
+            ? string.Join('\0', Directory.EnumerateFiles(temporary.Resolve("Blueprint"), "*", SearchOption.AllDirectories)
+                .Select(path => System.IO.Path.GetRelativePath(temporary.Path, path).Replace('\\', '/')))
+            : string.Empty;
+        return ScribeCli.Run(["markdown-check", "--report", "fixture.json", "--paths-from", "-"],
+            temporary.Path, output, error, LeanReportFixture.ForDocuments([Definition().Document]), new StringReader(paths));
     }
 
-    private sealed class CurrentMarkdownDocument : IScribeDocumentDefinition
-    {
-        public DocumentDefinition Create() => Definition();
-    }
 }

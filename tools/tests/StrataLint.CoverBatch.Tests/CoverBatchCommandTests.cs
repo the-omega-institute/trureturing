@@ -406,14 +406,15 @@ public sealed partial class CoverBatchCommandTests
         internal int VerificationCount { get; private set; }
         internal bool EmitFailure { get; init; }
         internal bool UseGitReader { get; init; }
+        internal IReadOnlyList<string> ChangedPaths { get; init; } = [];
         internal Action? DuringVerification { get; set; }
         internal string? ParentId { get; }
         internal ImmutableArray<string> ChildIds { get; } = [];
 
-        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false)
+        internal BatchWorld(Func<DigestionLedgerEntry, DigestionLedgerEntry>? edit = null, bool chain = false, bool targetUnchanged = false)
         {
             Root = Path.Combine(temporary.Path, "repo");
-            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"] }.Materialize();
+            inputs = new CoverSpec { OtherAtomGid = Gid, ReportDeclarations = ["probe", "other"], BaselineTargetIdentical = targetUnchanged }.Materialize();
             var document = inputs.Document.WithDigestionSources(inputs.Document.RequireDigestionSources()
                 .Select(source => source with
                 {
@@ -482,9 +483,10 @@ public sealed partial class CoverBatchCommandTests
             }
             foreach (var path in ProducerInputFixture.CopyBatchProducerInputs(Root))
                 inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
-            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null,
-                CoverWorld.Raw(inputs.Baseline), currentReader: () => UseGitReader
-                    ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles());
+            Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null, null,
+                changesForBase: _ => RawChangeSet.Create(ChangedPaths),
+                currentReader: () => UseGitReader ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles(),
+                revisionReader: _ => CoverWorld.Raw(inputs.Baseline));
             Report = new FakeLeanReportSource(inputs.Report);
         }
 
@@ -515,6 +517,12 @@ public sealed partial class CoverBatchCommandTests
             }
         }
 
+        internal void KeepAtBaseline(params string[] paths)
+        {
+            foreach (var path in paths)
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
+        }
+
         internal string WriteReportBundle()
         {
             TestGit.Run(Root, "init", "--quiet");
@@ -531,14 +539,17 @@ public sealed partial class CoverBatchCommandTests
             return reportPath;
         }
 
-        internal CommandResult RunProducers(string input)
+        internal CommandResult RunProducers(string input, bool scripts = false)
         {
             var path = Path.Combine(temporary.Path, "atoms.tsv");
             TemporaryFileSystem.File.WriteAllText(path, input);
             return CoverBatchCommand.Run(Root, Repository, new PrecomputedLeanReportSource(Root),
-                new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly),
+                scripts ? new ProductionScribeEmissionVerifier() :
+                    new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
+                        () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })),
                 CoverWorld.FixtureUtc, ["--atoms", path, "--base", "baseline"],
-                documentsAssembly: typeof(BatchClaimDefinition).Assembly);
+                emissionDefinitions: scripts ? null : root => StatementProjectionFixtureLoader.WithRepositoryRoot(root,
+                    () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         }
 
         private RawRepositorySnapshot ReadFiles() => RawRepositorySnapshot.Create(
@@ -568,7 +579,7 @@ public sealed partial class CoverBatchCommandTests
     private sealed class CallbackVerifier(Action callback) : IScribeEmissionVerifier
     {
         public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report,
-            RawChangeSet? changes = null, FrozenStateCatalog? frozenState = null,
+            RawChangeSet? changes, FrozenStateCatalog? frozenState = null,
             FrozenStatementIndex? frozenStatements = null)
         {
             callback();

@@ -13,7 +13,7 @@ internal static class ResidualFrontierAssembler
         LeanAxiomReport report,
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyDictionary<RepoPath, TruthState> truthStates,
-        IReadOnlyList<DocumentDefinition>? definitions = null)
+        IReadOnlyList<DocumentDefinition> definitions)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
@@ -21,10 +21,8 @@ internal static class ResidualFrontierAssembler
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(truthStates);
 
-        if (definitions is null)
-            scribeEmissionVerifier.Verify(snapshot, report);
-        else
-            scribeEmissionVerifier.Verify(snapshot, report, definitions);
+        ArgumentNullException.ThrowIfNull(definitions);
+        scribeEmissionVerifier.Verify(snapshot, report, definitions);
         var document = BackfillInventoryLoader.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,

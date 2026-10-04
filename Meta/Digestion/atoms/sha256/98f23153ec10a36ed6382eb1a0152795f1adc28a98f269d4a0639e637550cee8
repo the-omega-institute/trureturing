@@ -1,0 +1,2 @@
+**命题 4.2（The exact scope of the recurrence）。** The seed recurrence holds for every $j\ge0$. For every tree, $c(\rho_{\mathcal T}(t))=Mc(t)$; every element of $X$ is realized by a tree. For every $x\in X$, the scalar sequence $s_j=q(M^jx)$ satisfies $s_{j+2}=s_{j+1}+s_j$. The corresponding ordered-tree equation need not hold away from the seed orbit.
+

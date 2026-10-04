@@ -1,0 +1,31 @@
+**Theorem 6.1 (actual eigenbasis graph and core).** Let $\mathcal H$ be a
+complete complex inner product space, let $e:I\to\mathcal H$ be a Hilbert
+basis with arbitrary index type $I$, and let $T$ be a complex linear partial
+operator with domain exactly $\operatorname{span}_{\mathbb C}e(I)$.
+For arbitrary real $\lambda:I\to\mathbb R$, assume $Te_i=\lambda_i e_i$
+for every $i$. Write $K=\overline T$ for the genuine operator closure and
+$c_i(x)=\langle e_i,x\rangle$. For every $x,y\in\mathcal H$,
+$$
+(x,y)\in\operatorname{graph}K
+\quad\Longleftrightarrow\quad
+\forall i\in I,\ c_i(y)=\lambda_i c_i(x).
+$$
+Whenever these equivalent conditions hold, the finite sums
+$x_F=\sum_{i\in F}c_i(x)e_i$, directed by inclusion of finite subsets of $I$,
+belong to the actual domain of $T$ and satisfy
+$$
+x_F\longrightarrow x,\qquad
+Tx_F=\sum_{i\in F}\lambda_i c_i(x)e_i\longrightarrow y.
+$$
+In particular, $x\in\operatorname{dom}K$ if and only if
+$(\lambda_i c_i(x))_{i\in I}\in\ell^2(I,\mathbb C)$.
+Zero and repeated eigenvalues are included; no division by $\lambda_i$ occurs.
+
+*Proof.* Theorem 3.1 supplies closability and the self-adjoint genuine closure.
+Symmetry paired with each eigenvector gives the coefficient identity on its
+graph. Conversely, the Hilbert expansions of $x$ and $y$ converge along the
+same finite subsets. The coefficient identity places each pair of finite
+sums in the actual graph of $T$, hence their limit in its graph closure.
+The Hilbert-basis isometry identifies square-summable weighted coefficients
+with a unique image vector and proves the domain characterization.
+

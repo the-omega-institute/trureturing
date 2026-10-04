@@ -1,0 +1,21 @@
+**Definition 1.3 (physical differential expression).** Let $d\in\mathbb N$,
+$V=\mathbb R^d$ with its Euclidean norm and Lebesgue volume, and let
+$\hbar>0$, $m_j>0$, $\omega_j>0$ for every $j<d$. Write
+$\ell_j=\sqrt{\hbar/(m_j\omega_j)}$ and
+$$
+H_0\varphi=\sum_{j<d}\left[-\frac{\hbar^2}{2m_j}\partial_j^2\varphi
++\frac{m_j\omega_j^2}{2}x_j^2\varphi\right].
+$$
+The normalized physical Hermite functions are
+$$
+\Phi_\alpha(x)=\prod_{j<d}
+\frac{\operatorname{He}_{\alpha_j}(\sqrt2 x_j/\ell_j)
+\exp(-x_j^2/(2\ell_j^2))}
+{\sqrt{\sqrt\pi\,\ell_j\,\alpha_j!}},\qquad
+E_\alpha=\sum_{j<d}\hbar\omega_j(\alpha_j+1/2).
+$$
+Here $\operatorname{He}_n$ is the probabilists' Hermite polynomial,
+$\operatorname{He}_0=1$ and
+$\operatorname{He}_{n+1}=X\operatorname{He}_n-\operatorname{He}'_n$.
+Empty sums and products have their usual values, including $d=0$.
+

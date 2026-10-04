@@ -11,7 +11,8 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport);
+    string? CandidateLeanReport,
+    string? ScribePaths = null);
 
 internal interface IRepositoryGateway
 {
@@ -258,7 +259,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IScribeEmissionVerifier? verifier,
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes)
     {
         if (verifier is null)
         {
@@ -328,6 +329,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
+        string? scribePaths = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -339,6 +341,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
+                "--scribe-paths-from" when scribePaths is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -349,15 +352,18 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
+                case 2:
+                    scribePaths = arguments[index + 1];
+                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport);
+        return new CheckArguments(protectedBase, candidateLeanReport, scribePaths);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE");
+        + "--candidate-lean-report FILE [--scribe-paths-from FILE]");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

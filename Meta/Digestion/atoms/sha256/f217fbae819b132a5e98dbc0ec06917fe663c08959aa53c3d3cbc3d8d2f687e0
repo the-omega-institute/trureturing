@@ -1,0 +1,4 @@
+**Definition 1.1 (Schwartz Gaussian).** For a real inner product space $V$,
+put $G_V(x)=\exp(-\|x\|^2/2)$. A Schwartz map is a smooth function whose
+iterated real Fréchet derivatives decay faster than every inverse polynomial.
+

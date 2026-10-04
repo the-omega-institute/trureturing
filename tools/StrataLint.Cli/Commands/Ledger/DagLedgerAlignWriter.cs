@@ -33,7 +33,9 @@ internal static class DagLedgerAlignWriter
         try
         {
             var options = ParseArguments(arguments, appendAlias);
-            var result = options.FromAccepted
+            var result = options.ListClosed
+                ? ListClosed(repository, options.ReportPath!)
+                : options.FromAccepted
                 ? MaterializeAccepted(repositoryRoot)
                 : AlignFromReport(repositoryRoot, repository, options, appendAlias);
             return result with { Output = prefix + result.Output };
@@ -54,6 +56,17 @@ internal static class DagLedgerAlignWriter
                 prefix + RenderSummary(0, 0, 0, 0, 1),
                 DagLedgerAppendWriter.RenderFailure("LEDGER_ALIGN_FAILED", exception));
         }
+    }
+
+    private static CommandResult ListClosed(IRepositoryGateway repository, string reportPath)
+    {
+        var truth = DagLedgerCommandPreparation.BuildTruth(repository,
+            new DagLedgerCommandPreparation.FileLeanReportSource(reportPath));
+        var paths = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean)
+            .Where(static item => item.Value is TruthState.Closed)
+            .Select(static item => item.Key.Value)
+            .Order(StringComparer.Ordinal);
+        return new CommandResult(true, JsonSerializer.Serialize(paths) + "\n", string.Empty);
     }
 
     private static CommandResult MaterializeAccepted(string repositoryRoot)
@@ -592,6 +605,7 @@ internal static class DagLedgerAlignWriter
         var adds = ImmutableArray.CreateBuilder<RepoPath>();
         var retirements = ImmutableArray.CreateBuilder<RepoPath>();
         var fromAccepted = false;
+        var listClosed = false;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -611,6 +625,9 @@ internal static class DagLedgerAlignWriter
                 case "--from-accepted" when !appendAlias && !fromAccepted:
                     fromAccepted = true;
                     break;
+                case "--list-closed" when !appendAlias && !listClosed:
+                    listClosed = true;
+                    break;
                 default:
                     throw Usage(appendAlias);
             }
@@ -618,7 +635,7 @@ internal static class DagLedgerAlignWriter
 
         if (fromAccepted)
         {
-            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0)
+            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || listClosed)
             {
                 throw Usage(appendAlias);
             }
@@ -627,6 +644,8 @@ internal static class DagLedgerAlignWriter
         {
             throw Usage(appendAlias);
         }
+        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0))
+            throw Usage(appendAlias);
 
         foreach (var group in selectors.Concat(adds).Concat(retirements).GroupBy(static path => path))
         {
@@ -639,7 +658,8 @@ internal static class DagLedgerAlignWriter
             selectors.ToImmutable(),
             adds.ToImmutable(),
             retirements.ToImmutable(),
-            fromAccepted);
+            fromAccepted,
+            listClosed);
     }
 
     private static RepoPath ParseModulePath(string value)
@@ -659,7 +679,8 @@ internal static class DagLedgerAlignWriter
             : "USAGE: StrataLint ledger-align --candidate-lean-report FILE "
                 + "[--selector D5/.../X.lean]... [--add D5/.../X.lean]... "
                 + "[--retire-registration D5/.../Missing.lean]... "
-                + "| ledger-align --from-accepted");
+                + "| ledger-align --from-accepted "
+                + "| ledger-align --list-closed --candidate-lean-report FILE");
 
     private static CommandResult ConflictResult(
         int considered,
@@ -698,5 +719,6 @@ internal static class DagLedgerAlignWriter
         ImmutableArray<RepoPath> Selectors,
         ImmutableArray<RepoPath> Adds,
         ImmutableArray<RepoPath> Retirements,
-        bool FromAccepted);
+        bool FromAccepted,
+        bool ListClosed);
 }

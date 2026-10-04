@@ -1,0 +1,16 @@
+**定理 19.4（族内动作与标量稳定性的尖锐取舍）。** 固定 $x,r>0$。在指定端点族 $I,U,MU^N$ 内，要求整个纤维可识别时，最少动作数为
+
+$$
+2N_{\mathrm{id}}+1,\qquad
+N_{\mathrm{id}}=\max(1,\lceil\rho\rceil-1).
+$$
+
+若另要求标量逆的全局 Lipschitz 常数不超过指定的 $L>0$，最小指数与最少动作数分别为
+
+$$
+N_L=\max\left(1,\left\lceil\rho-1+\frac1L\right\rceil\right),\qquad
+2N_L+1.
+$$
+
+每把 $N$ 增加 $1$，最少动作数增加 $2$，稳定性余量 $m=N+1-\rho$ 增加 $1$。
+

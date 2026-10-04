@@ -1,0 +1,17 @@
+**定理 28.4（全容差支配的精确端点判据）。** 固定同一个纤维，比较两个准入实际词 $W_A,W_B$，并用下标 $A,B$ 标记参数。称 $A$ 标量支配 $B$，若对所有 $\tau\ge0$ 都有 $\Omega_A(\tau)\le\Omega_B(\tau)$；矩阵支配类似定义。则
+
+$$
+A\text{ 标量支配 }B
+\quad\Longleftrightarrow\quad
+\mu_A\ge\mu_B\ \text{且}\ A_A\ge A_B.
+$$
+
+当 $\rho<4$ 时，矩阵支配具有同一充要条件；当 $\rho\ge4$ 时，矩阵支配的充要条件变为
+
+$$
+\mu_A\ge\mu_B\quad\text{且}\quad
+\mu_A+A_A\ge\mu_B+A_B.
+$$
+
+这些条件只比较已经完成的第三词，不授权对尚待继续的中间词状态作剪枝。
+

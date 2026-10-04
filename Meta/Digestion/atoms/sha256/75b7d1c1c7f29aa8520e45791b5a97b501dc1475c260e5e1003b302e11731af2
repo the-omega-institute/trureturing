@@ -1,0 +1,27 @@
+**约定 2.3（计数和值的供应接口）。** 使用 [RRO Effective Resolution](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md) §1.2.1–1.2.4 的 TM.374–376、TM.382–383：
+
+$$
+G_j^{(k)}=2^j\quad(0\le j<k),\qquad
+G_j^{(k)}=\sum_{\ell=1}^kG_{j-\ell}^{(k)}\quad(j\ge k),
+\qquad
+V_k(w)=\sum_{j<n}b_jG_j^{(k)}.
+$$
+
+固定 $k$ 时省略 $G_j$ 的上标。所引供应成果给出
+
+$$
+|\mathcal W_n^{(k)}|=G_n,
+\qquad
+V_k:\mathcal W_n^{(k)}\overset{\sim}{\longrightarrow}
+\{0,\ldots,G_n-1\},
+\qquad G_{j+1}>G_j.
+$$
+
+其正根 $\lambda_k\in(1,2)$ 满足 $\sum_{\ell=1}^k\lambda_k^{-\ell}=1$，并有全长包络
+
+$$
+\lambda_k^n\le G_n\le(2/\lambda_k)^{k-1}\lambda_k^n.
+$$
+
+这些是后文使用的既有结论。数值双射涉及指定的整数位权，不只是词数相等。
+

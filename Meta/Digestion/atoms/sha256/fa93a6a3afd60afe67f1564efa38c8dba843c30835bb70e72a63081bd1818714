@@ -1,0 +1,23 @@
+**量子产率 287.2。** 设 `B_j^{\mathrm{trap}}` 为反应中心捕获端口，`B_j^{\mathrm{loss}}` 为辐射与非辐射损失端口。对初始态 `\rho_0`，反应中心量子产率可定义为
+
+$$
+\Phi_j
+=\int_0^\infty
+k^{\mathrm{trap}}\operatorname{Tr}
+\bigl(\Pi_{\mathrm{trap}}\rho_j(t)\bigr)\,dt,
+$$
+
+在总概率守恒且仅有捕获和损失出口时，也可写为
+
+$$
+\Phi_j=\frac{\text{捕获事件数}}{\text{吸收光子数}}.
+$$
+
+当激发生成、捕获和损失都近似独立同分布，且有效路径数 `M_j` 增大时，才可能在外加正则条件下得到
+
+$$
+\sqrt{M_j}(\Phi_j-\Phi)\Rightarrow\mathcal N(0,\Sigma_\Phi).
+$$
+
+但 `M_j` 与 Fibonacci 数列同阶只表示组合规模增长；它不保证各路径独立、等权或具有共同的能量缺陷。
+

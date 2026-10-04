@@ -103,3 +103,160 @@ The separate [directed weighted Fourier deficit](deficit.md) reuses these
 theta callbacks to enclose the full symmetric-row scalar deficit at
 $\varepsilon=1/4$. It supplies a coefficient for the Fourier construction,
 without computing the finite trial matrix or repeating this scalar trial.
+
+The [direct derivative and bandwidth supplier](derivative-bandwidth.md)
+encloses the original-theta derivatives and checks the two direct
+high-frequency conditions at $\varepsilon=1/4$, $N=64$. It retains the
+even minimal form and leaves independent finite-family accuracy and
+matrix-sign requirements unresolved.
+
+The [joint high-frequency floor](joint-high-floor.md) combines the same
+symbol and derivative supplier with the full symmetric prime row. It
+puts the complete even high-frequency restriction above $c=3/8$ and
+retains a positive variance gap. The low block and its coupling remain
+unestimated.
+
+The [sharp-band center interface](sharp-center.md) retains the complete
+operator and bounds a prescribed finite approximation to its full Schur
+center. Original-theta exponential moments and existing Bernstein-ellipse
+approximation give a center of rank at most 96 with remainder below
+1/16 at the same threshold. The retained matrix sign, high correctors
+and their complete operator residuals remain uncomputed.
+
+The [complete low-band forward-action supplier](forward-action.md) pays
+every omitted Gamma index and both omitted prime directions at this same
+band. Its uniform action error is below $1/1000$, with the multiplication
+and full mean terms kept exact. High trials require separate weighted
+derivative estimates; this low-band allowance cannot certify their
+residuals or the retained matrix sign.
+
+The [common matrix screen](common-matrix-screen.md) saves uncertified
+numerical diagnostics and exact dyadic choices for four high trials.
+The [whole-line trial supplier](high-trials.md) defines those choices
+on the actual operator, imposes an exact symbolic ground lift and pays
+their own weighted derivative and omitted-action bounds. The retained
+integrals, complete residual Gram and lower matrix sign remain unpaid.
+
+The [ground normalization and residual-tail supplier](ground-residual.md)
+uses the same saved theta norms to bound the exact ground projection
+away from zero. It transports the low and high action allowances to
+one common residual map on the exact ground complement, with difference
+below $0.000662$. This is an action-tail difference, not a residual norm
+or a certificate of its retained Gram.
+
+The [original-kernel strip and coherent-root supplier](strip-root.md)
+applies an explicit relative original-series bound before transporting
+the square root. It supplies exponential Fourier-action tails on the
+same fixed whole-line high family: the full Gamma action beyond
+$|\xi|=512$ is below $5.80\cdot10^{-18}$ in its five-generator coefficient
+norm. Finite-frequency integrals, exact projection and common residual
+Gram remain unpaid. This supplies paper-model inputs with directed
+coefficient bounds, without a matrix sign or new Lean certification.
+
+The [stable projected-ground application](stable-ground.md) combines the
+existing exact Schur kernel with the one-sided degree-94 tail to bound
+$\|E^*Pv_0\|$ away from zero without a new ground-moment integral. A
+restricted $E^*SE$ lower bound above $0.004660867160108$ would suffice
+for the second Schur elimination. The
+[actual low actions and exact direction](low-common-action.md) supply
+the inputs to the [restricted comparison](restricted-schur.md).
+
+The [continuous sinc projection supplier](continuous-projection.md)
+preserves the actual cutoff64 in a physical convolution. At the saved
+spacing it pays infinite-lattice projection quadrature and the finite
+physical input tail, while explicitly separating sample and kernel
+errors. Its DFT identity applies at lattice outputs; off-lattice prime
+shifts require an additional evaluation interface. The actual common
+Gram and restricted sign remain unpaid.
+
+The [local high samples](local-high.md) enclose the four actual
+$Z=QH_{1024,64}EB$ columns using exact low inputs, continuous sinc
+projection and paid local replacement errors. The retained $H,PH$
+intervals feed the [localized whole-line Gram](local-z-gram.md) without
+another forward solve. This gives $\|Z\|<1.0090$ and the same
+five-generator real norm below $1.00904$, while retaining the independent
+strip and derivative bounds.
+
+The [full-Gamma periodization allowance](full-gamma-periodic.md)
+preserves paired-jump cancellation for the unbounded full symbol on
+those same fixed high vectors. It pays analytic local replacement
+errors; numerical actions, the complete residual Gram and restricted
+Schur sign remain separate obligations.
+
+The [off-grid action interface](off-grid-action.md) pays the shifted
+high inputs and full-Gamma contour transport on the same family.
+The [actual four-column high action](high-full-action.md) consumes the
+saved source samples to enclose $Z^*CZ$ and $(CZ)^*(CZ)$ over the full
+real line, including the complete omitted-prime $L^2$ allowance. It
+gives $\|CZ\|<1.051588$. The
+[actual95 low actions](low-common-action.md) use the same basis and
+saved high columns to evaluate the low/mixed blocks and exact projected
+ground moments. The [common restricted comparison](restricted-schur.md)
+forms their joint residual Gram, pays complete omitted primes and
+transports ground-direction intervals into a94-dimensional LDL check.
+Under the paper supplier premises, its restricted lower matrix exceeds
+the required second-Schur allowance by more than $1/10$. This is a
+fixed-$c=3/8$ paper-model comparison, not Lean certification, cofinal
+positivity, RH or the full Robin inequality.
+
+The [quantified two-Schur parameter transport](threshold-transport.md)
+uses these same saved data to check a conditional ground-orthogonal
+gap greater than $0.0005648$ at $c=0.39$, without another action solve.
+This bounded parameter range remains short of cofinal $c\uparrow1/2$
+positivity and supplies no Lean, RH or full Robin certification.
+
+The [sharper exterior envelope](sharper-exterior.md) reuses the same
+interior, actions and restricted comparison. Under the same paper
+premises, it improves the high coercivity input and yields a
+ground-orthogonal margin greater than $0.00169425$ at $c=0.41$.
+This is still a bounded parameter range, without cofinal or RH closure.
+
+The [actual coupling norm and joint three-block comparison](actual-coupling.md)
+uses the saved Grams to sharpen the low-tail allowance and the actual
+$ZA$ norm. Under the same paper premises its ground-orthogonal margin
+is greater than $0.00112575$ at $c=0.42$, without new action columns.
+The remaining cofinal, RH, full Robin and Lean obligations are retained.
+
+The [weighted window metric](weighted-window-metric.md) reuses Suzuki's
+derivative pairing and transports the original theta variance to its
+exact rank-one-corrected metric. It states the outstanding cofinal
+relative estimate, including the loss in a scalar unweighted transfer.
+It does not supply that estimate or a further numerical margin.
+
+The [target-dependent correction](target-correction.md) chooses new exact
+correction maps from those saved actions and reuses the ground moments
+to control both complementary ground tails. Under the same paper premises
+it gives a whole-form ground-orthogonal gap greater than $0.00186736$
+at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
+requested joint gap $1/1000$ fails its sufficient comparison. Neither
+result closes the cofinal, RH, full Robin or Lean obligations.
+
+The [fixed-test and centered-window interface](centered-window.md)
+distinguishes the relative scalar conversion from a sufficient absolute
+fixed-test limit, and maps the published pole constraint to the original
+theta mean. It retains the unproved signed arithmetic estimate.
+A new four-bump example shows why pole cancellation alone does not turn
+a generic pointwise exponential error envelope into that estimate.
+The example kernel is not the actual arithmetic kernel.
+
+The [signed arithmetic head and fixed-row tail](signed-discrepancy-window.md)
+retain the prime-minus-continuum realization. Published cumulative-error
+and weighted smoothing suppliers give explicit coupling inputs in the
+original centered metric. Three new Fibonacci-plus-half cutoffs retain
+all prime powers and certify smaller band allowances than the same
+measure's total-variation envelope. The out-of-band allowance, low-block
+sign and common cofinal parameter sequence are separate obligations.
+The [complete fixed-band row allowance](signed-low-row.md) pays the
+Fourier and full arithmetic tails at the actual $N=64$ low unit ball,
+using new smoothing and frequency parameters and the saved theta
+derivatives. It improves the same weighted total-variation allowance;
+the low sign and common cofinal parameter sequence remain unpaid.
+
+The [local signed-frequency allowance](local-signed-frequency.md)
+instead applies the retained Schur criterion to the actual Fourier
+kernel. It reuses theta $H^1$ caps and the complete arithmetic tail,
+retains all signed cross terms, and covers the original $N=64$ low
+unit ball by 512 closed frequency cells. Its complete upper allowance
+is below $5.45645802$, compared to the same operator's prior $T=128$
+allowance above $14.70575975$. No old producer is replayed; the
+low sign, common cofinal comparison, RH and full Robin remain open.

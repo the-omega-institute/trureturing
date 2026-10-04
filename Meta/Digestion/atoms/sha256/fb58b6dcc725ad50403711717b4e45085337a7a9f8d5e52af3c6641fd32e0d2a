@@ -1,0 +1,13 @@
+**Theorem 7.3 (complete prime census).** For every prime $p$,
+
+$$
+  A(p)=p(p-1)\binom p3.
+$$
+
+**Proof.** The bijection of Theorem 7.2 reduces the count to independent
+choices of $a\in F^\times$, $b\in F$, and $X\in\mathcal X_p$.
+These sets have cardinalities $p-1$, $p$, and $\binom p3$,
+respectively. Multiplying gives the formula. The sets $X$ are unordered,
+so no further division by a permutation factor is needed. No lower
+bound $p>3$ was used. $\square$
+

@@ -200,6 +200,13 @@ no stronger maximal-domain core equality is a prerequisite.
 
 ## Weighted Fourier cutoff and a complete finite cosine family
 
+The [sharp-band center interface](../../docs/reports/theta-mixed-matrix/sharp-center.md)
+uses the same even minimal realization and full operator with the later
+high-block gap. It supplies actual operator-domain cosine columns and
+an analytic approximation of their complete Schur center. A prescribed
+rank at most 96 pays a 1/16 center remainder at $c=3/8$; retained matrix
+positivity, high residuals and cofinal control remain unresolved.
+
 Use (JE), (BT), (JF) and (JR) from the
 [same-form exterior analysis](lenz2010compactness.md). This alternative
 to the translated-kernel mesh retains the original minimal realization,
@@ -333,6 +340,15 @@ $$
 Formula (WF3) supplies the first condition. For the second, use
 $m(N/2)\le16N$ for $N\ge2$ in (WF5). This threshold is sufficient;
 direct symbol and leakage bounds can permit smaller bandwidths.
+
+The [direct actual-theta supplier](../../docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
+verifies both conditions at $\varepsilon=1/4$, $N=64$, without claiming
+that this meets the coarse displayed $N_0$ formula. The
+[joint full-row floor](../../docs/reports/theta-mixed-matrix/joint-high-floor.md)
+further gives $\widetilde D\ge0.4133682545007734\|v\|_2^2$ on the
+even high-frequency restriction, above $c=3/8$. Its positive variance
+gap retains the complete operator and mean term. The low-frequency block
+and its coupling still require estimation.
 
 ### The full Fourier commutator and the whole projector
 
@@ -561,3 +577,15 @@ Its entries, signs and cofinal $\varepsilon\downarrow0$ certificates
 remain uncomputed. The translated-kernel/FIB construction retains its
 own margin and floor conditions. This cosine construction supplies no
 arithmetic advantage from relabeling frequency cells by FIB addresses.
+
+
+## Ordered-transition hypotheses must be checked separately
+
+The [Karlin–McGregor source application](karlinmcgregor1959coincidence.md)
+tests the unchanged minimal even semigroup in radial order. Three
+separated nonnegative core functions give a strictly negative ordered
+two-by-two bilinear minor for all sufficiently small positive times.
+The Gamma conductance alone supplies the crossing. Thus the inherited
+positivity preservation does not supply all-times order-two positivity
+for a spectral-ordering argument. This paper application retains every
+prime power and supplies no sharp Poincare or RH conclusion.

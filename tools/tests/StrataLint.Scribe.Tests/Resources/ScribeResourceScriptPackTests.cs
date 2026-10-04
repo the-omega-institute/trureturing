@@ -164,7 +164,7 @@ public sealed class ScribeResourceScriptPackTests
     }
 
     private static int Cli(string root, string[] arguments, TextWriter output, TextWriter error) =>
-        ScribeCli.Run(typeof(ScribeResourcePack).Assembly, arguments, root, output, error);
+        ScribeCli.Run(arguments, root, output, error);
 
     private static void AssertHostFailures(StringWriter error)
     {
