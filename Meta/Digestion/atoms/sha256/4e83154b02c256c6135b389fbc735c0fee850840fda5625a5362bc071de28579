@@ -1,0 +1,41 @@
+### 62.5. 全部实际通道行的定向信息
+
+以下用自然对数计算完整三标签 KL，不只读取 $Z$。在共同参数 $\alpha$ 下令
+
+$$
+\begin{aligned}
+K_\alpha&=\frac{\alpha}{4}\ln\frac{U_\alpha}{V_\alpha},\\
+f_\alpha&=U_\alpha\ln\frac{U_\alpha}{M_\alpha}
+             +V_\alpha\ln\frac{V_\alpha}{M_\alpha},\\
+g_\alpha&=M_\alpha\ln\frac{M_\alpha^2}{U_\alpha V_\alpha}.
+\end{aligned}
+$$
+
+由式（62.7）逐项相除，得到完整定向表
+
+$$
+\bigl(D_{\mathrm{KL}}(P_c\Vert P_e)\bigr)_{c,e=0}^2
+ =
+\begin{pmatrix}
+0&f_\alpha&K_\alpha\\
+g_\alpha&0&g_\alpha\\
+K_\alpha&f_\alpha&0
+\end{pmatrix},
+\qquad
+f_\alpha+g_\alpha=K_\alpha/2.
+\tag{62.17}
+$$
+
+最后一个恒等式来自
+$(U_\alpha-M_\alpha)\ln U_\alpha+
+(V_\alpha-M_\alpha)\ln V_\alpha
+=(U_\alpha-V_\alpha)\ln(U_\alpha/V_\alpha)/2$。
+$f_\alpha,g_\alpha$ 是 KL，均非负；因而每个表项不超过 $K_\alpha$。对 $0\leq\alpha\leq1$，$V_\alpha\geq1/4$ 及 $\ln t\leq t-1$ 给出
+
+$$
+K_\alpha\leq\frac{\alpha^2}{4}.
+\tag{62.18}
+$$
+
+这是充分的保守常数，不声称精确查询容量或最优输入先验。相邻行与端点行的定向差别不能忽略，也不能把 $P_1$ 的混合身份当作额外读出能力。
+
