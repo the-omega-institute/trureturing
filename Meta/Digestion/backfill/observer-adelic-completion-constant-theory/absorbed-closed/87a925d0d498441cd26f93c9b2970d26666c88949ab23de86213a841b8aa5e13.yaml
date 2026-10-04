@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:87a925d0d498441cd26f93c9b2970d26666c88949ab23de86213a841b8aa5e13
+  normalized_sha256: sha256:87a925d0d498441cd26f93c9b2970d26666c88949ab23de86213a841b8aa5e13
+cas_ref: sha256:87a925d0d498441cd26f93c9b2970d26666c88949ab23de86213a841b8aa5e13
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockChargedIrreducibility.charged_modes_irreducible
+    target_statement_id: sha256:5c9cbec40157a40b3cb94c8dd0c64070fecfe6894eb8420665d94a530d7baf8f
+receipts:
+  unresolved_subitems: []
