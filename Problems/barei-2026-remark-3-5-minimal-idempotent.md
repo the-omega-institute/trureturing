@@ -153,7 +153,7 @@ Its live algebraic generation argument establishes a classification of
 all subalgebras of V beyond basis/span/dimension library normalization.
 Direct project-frozen prerequisites: none, pinned Mathlib only.
 
-Utility `kind=none`: the proof quantifies over arbitrary complex vectors and
+Utility `none`: the proof quantifies over arbitrary complex vectors and
 all complex subspaces. It is structural algebra, not bounded enumeration,
 a reflection checker, a numerical-estimate reduction or a finite computation
 certifying one searched instance. Coordinate arithmetic does not supply
