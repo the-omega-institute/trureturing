@@ -98,8 +98,9 @@ they concern different scopes or statistics. Whether any replacement
 hypothesis yields signed-cardinality homomesy for the remaining m = 3 cases
 is open.
 
-The following readings are computed by exhaustive enumeration of all
-interval-closed sets of [3] × [n] and their literal rowmotion orbits:
+The first three readings below are computed by exhaustive enumeration of
+all interval-closed sets of [3] × [n] and their literal rowmotion orbits;
+the fourth follows one seed orbit for each listed n:
 
 - Exceptional orbits at n = 12 (computed). IC([3] × [12]) has 47,373
   members in 1,615 rowmotion orbits. Exactly two orbits have a nonzero
