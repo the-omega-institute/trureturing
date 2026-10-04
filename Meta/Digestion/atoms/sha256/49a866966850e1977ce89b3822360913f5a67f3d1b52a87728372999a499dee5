@@ -1,0 +1,154 @@
+**定理 362.2（实际有限支撑的 Euler 对数收费）。** 存在一个常数 $A>0$，使任意有限 $S\subseteq\mathbb N_{>0}$、任意整数 $N\ge2$ 与任意实数 $R>5$ 都满足以下蕴涵。令
+
+$$
+\Delta=\frac{LR}{A\log N}-1,
+\qquad
+U=\{p\text{ 为素数}:5<p\le N-1,\ p\mid M(S),\ z(p)\ge R\}.
+\tag{362.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\sum_{p\in U}w(p)
+\le\frac{6H_N\log M(S)}{R\Delta}.
+\tag{362.4}
+$$
+
+量词顺序是 $\exists A>0\ \forall S\ \forall N\ge2\ \forall R>5$；$A$ 不依赖集合、截止或秩阈值。结论包括 $S=\varnothing$、$M(S)=1$ 与 $R>N$，不要求指标的基数、最大值或相互包含关系。
+
+**证明。** 先固定经典解析供给。Mertens 第三定理的标准对数误差形式给一个固定 $C\ge0$，使
+
+$$
+\prod_{p\le x}(1-1/p)=\frac{\exp(-\gamma+E_3(x))}{\log x},
+\qquad |E_3(x)|\le\frac C{\log x}\quad(x\ge2).
+\tag{362.5}
+$$
+
+原始出处为 Franz Mertens，*Ein Beitrag zur analytischen Zahlentheorie*，Journal für die reine und angewandte Mathematik **78**，46–62，[doi:10.1515/crll.1874.78.46](https://doi.org/10.1515/crll.1874.78.46)；素数倒数和的 $O(1/\log x)$ 误差参见 Leo Goldmakher，[*A quick proof of Mertens' theorem*](https://web.williams.edu/Mathematics/lg5/mertens.pdf) 的 Proposition。将其常数记为 $B_1$，经典常数恒等式 $B_1=\gamma+\sum_p(\log(1-1/p)+1/p)$ 及绝对可和修正的尾界 $\sum_{p>x}|\log(1-1/p)+1/p|=O(1/x)$ 给上述对数误差。从尾部 $E_3(x)=O(1/\log x)$ 到（362.5）的整个区间，只须扩大常数：在任意固定紧区间 $[2,X]$ 上，有限素数乘积严格为正，$E_3(x)\log x$ 有界。现在在任何 $S,N,R$ 之前选定
+
+$$
+A=\exp\left(\gamma+\frac{|C|}{\log2}\right)>0.
+\tag{362.6}
+$$
+
+由（362.5）取倒数，$\prod_{p\le N}(1-1/p)^{-1}\le A\log N$。对每个整数 $1\le n\le N$，经典有限 Euler 乘积给
+
+$$
+\frac n{\varphi(n)}
+=\prod_{p\mid n}(1-1/p)^{-1}
+\le\prod_{p\le N}(1-1/p)^{-1}\le A\log N,
+\qquad \varphi(n)\ge\frac n{A\log N}.
+\tag{362.7}
+$$
+
+$n=1$ 的左侧为空乘积一；以上经典事实只用于本证明的实际收费。
+
+其次核对支撑和收费确属同一个实际整数。由（361.8），$a\mid F_s$ 当且仅当 $z(a)\mid s$。固定素数 $p$，令 $r_j=z(p^j)$；这些秩满足 $r_j\mid r_{j+1}$，但允许相等。对任意正指标 $d$，Möbius 反演逐个保留素幂重数，给
+
+$$
+\begin{aligned}
+v_p(F_e)&=\sum_{j\ge1}\mathbf1_{r_j\mid e},\\
+v_p(\Psi_d)
+&=\sum_{e\mid d}\mu(d/e)\sum_{j\ge1}\mathbf1_{r_j\mid e}
+=\sum_{\substack{j\ge1\\r_j\mid d}}\ \sum_{r_j\mid e\mid d}\mu(d/e)
+=\#\{j\ge1:r_j=d\}.
+\end{aligned}
+\tag{362.8}
+$$
+
+内层和是 $\sum_{h\mid d/r_j}\mu(h)$。非零项都满足 $p^j\mid F_d$，所以交换只有有限个非零项。每个素数赋值非负，故 $\Psi_d$ 为正整数、$c_d\ge0$。同一个 $S$ 的 lcm 赋值为 $\max(\{v_p(F_s):s\in S\}\cup\{0\})$；而 $r_j\in D(S)$ 当且仅当某个 $s\in S$ 满足 $p^j\mid F_s$。这些 $j$ 恰为 $1,\ldots,v_p(M(S))$，因此
+
+$$
+\begin{gathered}
+v_p(M(S))=\#\{j\ge1:z(p^j)\in D(S)\}
+=\sum_{d\in D(S)}v_p(\Psi_d),\\
+M(S)=\prod_{d\in D(S)}\Psi_d,
+\qquad b(S)=\sum_{d\in D(S)}c_d.
+\end{gathered}
+\tag{362.9}
+$$
+
+等式由唯一素分解得出，空集也成立。这正是（361.9）–（361.10）的任意有限版本；它不假设原子两两互素。例如 $z(2)=3$、$z(4)=z(8)=6$，从而 $\Psi_3=2$、$\Psi_6=4$，同一素数的重复秩在（362.8）中计两次。经典强整除序列的重构供给见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；此处的逐素幂计算明确保留了消费者所需的实际共同实现。
+
+同样沿用 §361 的 Binet 误差计算：置 $q=\Phi^{-2}$，则
+
+$$
+\log F_e=eL-\tfrac12\log5+\epsilon_e,
+\quad \epsilon_e=\log(1-(-q)^e),
+\quad \sum_{e\ge1}|\epsilon_e|
+\le\frac{q}{(1-q)^2}=1.
+$$
+
+$d>1$ 时 Möbius 和消去常数项，$\sum_{e\mid d}e\mu(d/e)=\varphi(d)$；$d=1$ 时 $\Psi_1=1$、$L<1$。于是对每个 $d\ge1$ 都有
+
+$$
+|c_d-L\varphi(d)|\le1.
+\tag{362.10}
+$$
+
+Fibonacci 原子的经典因式分解与该对数主项见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（3）–（4）与 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)。该文原子与 $\Psi_d$ 由 Möbius 反演对应；误差一由这里的计算承担，不由文献的 $O(1)$ 冒充。
+
+实际族为何必须支付完整原子，还可在本步用 divisibility 闭包说明。对任意正整数 $n$，在本证明内记
+
+$$
+\mathscr C(n)=\operatorname{lcm}_{p^a\parallel n}F_{z(p^a)},
+\qquad \mathscr C(1)=1.
+\tag{362.11}
+$$
+
+每个 $p^a\parallel n$ 整除它所对应的项，所以 $n\mid\mathscr C(n)$，且 $\mathscr C(n)$ 本身属于实际有限 Fibonacci lcm 族。若 $n\mid M(S)$，每个这样的 $p^a$ 都整除某个 $F_s$，故 $z(p^a)\mid s$、$F_{z(p^a)}\mid F_s$，进而 $\mathscr C(n)\mid M(S)$。因此 $\mathscr C(n)$ 是 divisibility 意义下最小的实际族上界，且 $\mathscr C(n)=n$ 当且仅当 $n$ 属于实际族。这解释了（362.9）的完整原子费用，而没有赋予任意约数同样的预算。
+
+例如 $F_{19}=4181=37\cdot113$、$19$ 为素数，（361.8）给 $z(37)=19$，所以 $\mathscr C(37)=F_{19}=4181$、$\Psi_{19}=4181$。任意约数 $37$ 只有 $\log37$ 的预算，不能支付整层 $c_{19}=\log4181$。若要从闭包整数比较归一化 Robin 量，有限约数和的各局部因子 $1+1/p+\cdots+1/p^a$ 随指数增加，故对 $n>5040$ 只能先得到
+
+$$
+\mathcal R(n)\le\mathcal R(\mathscr C(n))
+\frac{\log\log\mathscr C(n)}{\log\log n}.
+\tag{362.12}
+$$
+
+这个分母膨胀不能删去，因而闭包的上界不自动成为任意约数的同一 Robin 上界。另一个有限例子是 $z(16)=12$、$z(9)=12$、$z(5)=5$、$z(7)=8$：$F_{12}=144$、$F_5=5$、$F_8=21$，用（361.8）检查相应指标的真约数便得所列最小秩。因此
+
+$$
+\mathscr C(5040)=\operatorname{lcm}(144,5,21)=5040.
+$$
+
+这里仅说明实际族的一个成员；Robin 阈值在定理中仍是所用整数阈值。
+
+现在令 $Z=\{z(p):p\in U\}$，按不同秩合并。$p\mid M(S)$ 使 $z(p)\in D(S)$。对 $p>5$，经典秩界 $z(p)\mid p-1$ 或 $z(p)\mid p+1$ 给 $z(p)\le p+1$；可直接在有限域中核对：多项式 $t^2-t-1$ 的两个不同非零根之比的阶为 $z(p)$，分裂时该比的 $(p-1)$ 次幂为一，非分裂时 Frobenius 交换两根，该比的 $(p+1)$ 次幂为一。因此
+
+$$
+Z\subseteq D(S)\cap\{1,\ldots,N\},
+\qquad r\in Z\Longrightarrow r\ge R>5.
+\tag{362.13}
+$$
+
+由（362.7）、（362.10），每个不同的实际秩至少支付
+
+$$
+c_r\ge L\varphi(r)-1\ge\frac{Lr}{A\log N}-1\ge\Delta.
+\qquad
+|Z|\Delta\le\sum_{r\in Z}c_r\le b(S).
+\tag{362.14}
+$$
+
+最后复用本卷引理 163.1 的完整实际秩桶估计
+
+$$
+\sum_{\substack{p\ \mathrm{prime}\\z(p)=r}}w(p)\le\frac{6H_r}{r}\quad(r>5).
+$$
+
+这是已有的内部估计，系数六不归因于任何已发表的素数分布定理。按不同秩分拆 $U$，每个桶只使用一次，并用 $H_r\le H_N$，得到
+
+$$
+\begin{aligned}
+\sum_{p\in U}w(p)
+&=\sum_{r\in Z}\ \sum_{\substack{p\in U\\z(p)=r}}w(p)
+\le\sum_{r\in Z}\frac{6H_r}{r}
+\le\frac{6H_N}{R}|Z|
+\le\frac{6H_N b(S)}{R\Delta}.
+\end{aligned}
+$$
+
+若 $S=\varnothing$ 或 $M(S)=1$，则 $U=Z=\varnothing$、$b(S)=0$；若 $R>N$，则（362.13）使 $U=Z=\varnothing$。这些情形在 $\Delta>0$ 时同样满足结论。由于 $1/p\le w(p)$，同一估计也在证明内部控制 $\sum_{p\in U}1/p$，无需另取常数或改变支撑。$\square$
+
