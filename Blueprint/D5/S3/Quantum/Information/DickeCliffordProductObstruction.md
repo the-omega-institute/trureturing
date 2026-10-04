@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; ((2 < n) \land ((0 < k
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/DickeCliffordProductObstruction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/borda-kuhlmann-rincon-2026-dicke-clifford-product-obstruction` (proved) by `D5/S3/Quantum/Information/DickeCliffordProductObstruction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"borda-kuhlmann-rincon-2026-dicke-clifford-product-obstruction","declaration_gid":"D5/S3/Quantum/Information/DickeCliffordProductObstruction.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Borda Kuhlmann; J. Rincón (2026). *Magic-protected entanglement and Clifford-irreducible structure in magic state space*. DOI: [10.48550/arXiv.2607.18400](https://doi.org/10.48550/arXiv.2607.18400). URL: <https://arxiv.org/abs/2607.18400v1>.
