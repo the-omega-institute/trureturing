@@ -52,7 +52,7 @@ def prepareCompanions (owner : Name) (row : Decoder.CompanionInput) : MetaM Unit
   let unit ← if head == RegistrationElaboration.witnessBridgeName then do
       let some positive := row.positive | throwError "contract.witness:positive_missing"
       mkAppM (RegistrationElaboration.witnessBridgeName.str "toTheoremUnit")
-        #[realization, row.target, positive]
+        #[realization, positive]
     else if head == TemplateAudit.escapeForwardBridge then
       mkAppM (TemplateAudit.escapeForwardBridge.str "toTheoremUnit") #[realization, row.target]
     else
