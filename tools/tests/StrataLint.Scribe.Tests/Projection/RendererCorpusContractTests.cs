@@ -34,11 +34,7 @@ public sealed partial class FormulaCorpusInventoryTests
             "formula-children:Power(Base=Power,Exponent=Number)",
             vocabulary);
 
-        // 闭字母表覆盖:Formula 的每个公开节点类型都必须出现在**完整**固定语料里
-        // (这里要的是完整语料,不是上面那个只含一个 Power 的探针词汇表 —— 第一次
-        // 改接就接错了对象,当场红)。这条原先与「固定语料是否覆盖真仓库的组合」同处
-        // AssertRendererVocabularyCoverage;后者需要真语料、随文档迁出本程序集而失去
-        // 主体并已退役,这一条不依赖仓库,故保留。
+        // Formula 的每个公开节点类型都必须出现在完整固定语料里。
         AssertClosedFormulaVocabularyIsCovered(
             RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus()));
     }

@@ -54,7 +54,7 @@ private def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
       simp [Matrix.star_apply]
     · simp [Matrix.star_apply, hij, Ne.symm hij]
 
-private lemma cfc_log_diagonal (a : n -> ℝ) :
+lemma cfc_log_diagonal (a : n -> ℝ) :
     CFC.log (Matrix.diagonal fun i => (a i : ℂ)) =
       Matrix.diagonal fun i => (Real.log (a i) : ℂ) := by
   letI : ContinuousFunctionalCalculus ℝ (n -> ℂ) IsSelfAdjoint :=
