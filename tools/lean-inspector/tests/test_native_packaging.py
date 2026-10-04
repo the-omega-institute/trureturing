@@ -342,12 +342,14 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                     '--material-spool', str(self.root / (mode + '.materials')),
                     'D5.Alone', 'D5/Alone.lean',
                     'sha256:' + publication.digest(self.root / 'D5/Alone.lean'), success=None)
-                message = result.stdout + result.stderr
+                message = (f'[FAIL] binding_driver_errors_keep_context_and_budget mode={mode}\n'
+                           + result.stdout + result.stderr)
                 self.assertEqual(result.returncode, 0 if mode == 'success' else 1, message)
                 self.assertEqual(output.exists(), mode == 'success', message)
                 if mode != 'success':
                     self.assertIn('information-template-join:', message)
                     self.assertNotIn('invalid MessageData.lazy', message)
+                    self.assertNotIn('uncaught exception:', message)
                 if mode == 'ordinary':
                     self.assertIn('ordinary fixture failure', message)
                 if mode == 'heartbeat':

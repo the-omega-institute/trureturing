@@ -702,10 +702,16 @@ unsafe def main (args : List String) : IO Unit := do
     catch error =>
       try writer.kill catch _ => pure ()
       try discard <| writer.wait catch _ => pure ()
+      try IO.FS.removeFile reportOutput catch _ => pure ()
       throw error
   produce
 
 end LeanInformationAudit.InspectorProducer
 
-unsafe def main (args : List String) : IO Unit :=
-  LeanInformationAudit.InspectorProducer.main args
+unsafe def main (args : List String) : IO UInt32 := do
+  try
+    LeanInformationAudit.InspectorProducer.main args
+    return 0
+  catch error =>
+    (← IO.getStderr).putStrLn s!"lean-inspector: {error}"
+    return 1
