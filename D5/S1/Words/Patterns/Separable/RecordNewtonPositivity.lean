@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Catalan]
    utility: none
-   digest: Every Newton kernel composed with the actual separable counting series
-     is coefficientwise nonnegative. -/
+   digest: Every Newton kernel composed with the actual separable counting series is coefficientwise nonnegative. -/
 
 import D5.S1.Words.Patterns.Separable.RecordPeak
 import Mathlib.RingTheory.PowerSeries.Catalan
