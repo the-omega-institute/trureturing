@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:21c31dc01ce5d2a92d78bbba81584c5981d2c4796e4d875b07624a963d085da6
+  normalized_sha256: sha256:21c31dc01ce5d2a92d78bbba81584c5981d2c4796e4d875b07624a963d085da6
+cas_ref: sha256:21c31dc01ce5d2a92d78bbba81584c5981d2c4796e4d875b07624a963d085da6
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/PositiveDefiniteWilliamson.positive_definite_williamson
+    target_statement_id: sha256:7e99011f47389e80c46c24ea94220bcebf81010571c0adfa183b7051f0e78091
+receipts:
+  unresolved_subitems: []
