@@ -17538,3 +17538,543 @@ $$
 若先对固定无序的 FIB 嵌入、初始场和观测窗口取大尺度极限，再对这些量平均，所得 quenched 统计一般不同于先平均再取极限的 annealed 统计。有限图的最大路径、边界和节点体积会造成红外截断、窗口泄漏与伪峰；周期边界、开放边界和光锥截面也会改变大尺度方差。须明确图族增长、物理体积增长、采样红移窗以及误差协方差，才能把有限样本读数外推到宇宙学极限。
 
 因此，FIB 递归只提供邻接、候选合并和路径骨架；尺度因子、度规、引力与流体方程、初始谱、转移函数、暗物质和重子参数、嵌入、边界、观测投影及极限程序均须外加。密度扰动增长、暗物质晕质量函数、BAO 尺度、弱透镜相关和大尺度幂律等，都是指定这些宇宙学动力学与观测条件后的模型结论；它们不能由 FIB ATOM 递归单独推出。
+
+
+## 243. FIB 网络/细胞复形上的外加活性向列相、取向缺陷与拓扑湍流统计
+
+固定一族带面接缝的 FIB 细胞复形 \(C_j=(V_j,E_j,F_j)\)，记定向关联算子为 \(\partial_{1,j}:C_1\to C_0\)、\(\partial_{2,j}:C_2\to C_1\)，于是 \(\partial_{1,j}\partial_{2,j}=0\)。FIB ATOM 递归只给出顶点、边、面之间的组合关系、可行路径、闭合边界与递归层级；节点的连续位置、度量、面积、法向、时间尺度、取向场、流体、材料系数、噪声、边界和极限过程均须外加。不能把 FIB 的边方向直接当作向列分子的物理取向，也不能把面数或回路数直接当作缺陷数。
+
+在外加二维嵌入 \(\iota_j:V_j\to\mathbb R^2\) 上，向列取向是头尾等价的线场
+
+$$
+n(x)\equiv-n(x),\qquad n=(\cos\theta,\sin\theta),qquad \theta\in\mathbb R/\pi\mathbb Z .
+\tag{243.1}
+$$
+
+可用无迹对称张量表示局部取向和标量序参量：
+
+$$
+Q=S\left(nn^{\mathsf T}-\frac12I\right)
+=\frac S2\begin{pmatrix}\cos 2\theta&\sin 2\theta\\
+\sin 2\theta&-\cos 2\theta\end{pmatrix}.
+\tag{243.2}
+$$
+
+把 \(Q\) 放在顶点、面或经外加插值放在连续区域，得到的是不同模型；FIB 复形本身不能选择这一放置规则。一个外加 Landau–de Gennes 型自由能可以写成
+
+$$
+F[Q]=\int_\Omega\left[\frac A2\operatorname{tr}(Q^2)
++\frac C4\bigl(\operatorname{tr}(Q^2)\bigr)^2
++\frac L2\,\partial_kQ_{\alpha\beta}\partial_kQ_{\alpha\beta}\right]{\rm d}^2x
++F_{\rm anch}+F_{\rm core},
+\tag{243.3}
+$$
+
+其中 \(A,C,L\)、边界锚定和缺陷核正则化都是外加参数。图上离散能量例如为
+
+$$
+F_j^{\rm disc}(Q)=\frac12\sum_{e=(u,v)\in E_j}w_e\lVert Q_v-Q_u\rVert_F^2
++\sum_{c\in F_j}a_c f_b(Q_c),
+\tag{243.4}
+$$
+
+但边权 \(w_e\)、胞面面积 \(a_c\)、邻接端点取值和 \(f_b\) 并不由递归关系确定。不同连续嵌入可以把同一 FIB 图实现为各向同性、各向异性或随机弹性介质。
+
+活性向列的流场与取向场通常需要同时指定。一个不可压缩的外加模型可写为
+
+$$
+\rho(\partial_t+u\!\cdot\!\nabla)u
+=-\nabla p+\eta\Delta u-\chi u+\nabla\!\cdot\sigma^{\rm el}
+-\zeta\,\nabla\!\cdot Q+\xi_u,
+\qquad \nabla\!\cdot u=0,
+\tag{243.5}
+$$
+
+$$
+(\partial_t+u\!\cdot\!\nabla)Q-\mathcal S(\nabla u,Q)
+=\Gamma H+\xi_Q,
+\qquad H=-\frac{\delta F}{\delta Q}.
+\tag{243.6}
+$$
+
+黏度 \(\eta\)、基底摩擦 \(\chi\)、转动耗散 \(\Gamma\)、流动取向参数、被动弹性应力和活性应力系数 \(\zeta\) 均须外加；噪声 \(\xi_u,\xi_Q\) 的时空相关也须给定。式 (243.5)–(243.6) 的主变量是头尾对称的取向应力及其与流场的反馈，不能从第219节的极性主动粒子或标量密度方程自动得到。
+
+取向缺陷必须在连续嵌入和线场的头尾等价性确定后才有定义。令 \(\varphi=2\theta\in\mathbb R/2\pi\mathbb Z\)，对不穿过缺陷核的定向边取
+
+$$
+\Delta_e\varphi=\operatorname{Arg}\exp\!\bigl({\rm i}(\varphi_v-\varphi_u)\bigr).
+$$
+
+若面 \(f\) 的边界按一致方向排列，离散绕数和向列电荷为
+
+$$
+w_f=\frac1{2\pi}\sum_{e\in\partial f}\Delta_e\varphi\in\mathbb Z,
+\qquad q_f=\frac{w_f}{2}\in\tfrac12\mathbb Z .
+\tag{243.7}
+$$
+
+在光滑插值和分支选择一致时，\(q_f=+1/2\) 或 \(-1/2\) 是常见的孤立缺陷；这使用的是 \(2\theta\) 的绕数，不能把普通 XY 向量场的整数涡旋电荷直接套用到向列场，也不能把 FIB 面的组合边界本身解释成物理奇点。
+
+对没有孔洞且内部插值正则的区域 \(R\)，拓扑守恒可写成
+
+$$
+\sum_{f\subset R}q_f
+=\frac1{2\pi}\oint_{\partial R}{\rm d}\theta
+=\frac1{4\pi}\oint_{\partial R}{\rm d}\varphi,
+\tag{243.8}
+$$
+
+但边界锚定、非平凡周期、被移除的缺陷核和复形孔洞会增加边界或全局绕数项。周期二维环面通常要求总电荷为零；开放边界时，总电荷由外加锚定条件决定。因此 FIB 闭合回路只能给出可计算的组合边界，不能单独推出净电荷约束或缺陷密度。
+
+在给定核心结构、摩擦和活性应力后，可用缺陷位置 \(R_a\)、电荷 \(q_a\) 以及取向 \(p_a\) 写一个有效随机动力学例子：
+
+$$
+\dot R_a=u(R_a)+\mu_{q_a}F_a
++v_{q_a}^{\rm self}p_a+\sqrt{2D_{q_a}}\,\eta_a(t),
+\qquad F_a=-\nabla_{R_a}F_{\rm def}.
+\tag{243.9}
+$$
+
+在常见的各向同性近似下，\(+1/2\) 缺陷可有彗星轴并被活性应力推进，而 \(-1/2\) 缺陷的最低阶自推进项可能因三重对称性消失；改变边界、极性耦合、外场或近核耗散后该结论会改变。成对产生和湮灭的粗粒记账可写为
+
+$$
+\frac{{\rm d}}{{\rm d}t}\langle n_d\rangle
+=2r_{\rm cr}-2r_{\rm an}-J_{\partial},
+\tag{243.10}
+$$
+
+其中产生率、湮灭率和边界净通量都由外加材料、噪声、核半径、锚定和外部驱动决定，复形中的面数不能替代这些率。
+
+对外加物理距离定义缺陷相关函数和电荷结构因子：
+
+$$
+g_{qq'}(r)=\frac{1}{2\pi r\,n_qn_{q'}}
+\left\langle\sum_{a\ne b}{\mathbf 1}_{\{q_a=q\}}{\mathbf 1}_{\{q_b=q'\}}
+\delta\bigl(r-|R_a-R_b|\bigr)\right\rangle,
+\tag{243.11}
+$$
+
+$$
+S_q(k)=\frac1{A_\Omega}
+\left\langle\left|\sum_a q_a e^{-\mathrm i k\cdot R_a}\right|^2\right\rangle .
+\tag{243.12}
+$$
+
+取向相关可用 \(C_2(r)=\langle\cos 2[\theta(x+r)-\theta(x)]\rangle\) 定义，这里的因子二再次体现向列而非极性序。流场能谱、缺陷间歇性和寿命尾部可能呈指数、拉伸指数、幂律或有限尺寸截断；没有共同的尺度分离和系综假设时，不能把某个谱指数称为 FIB 普适值。
+
+若取一族复形的网格尺度 \(h_j\to0\)，必须同时给出嵌入、度量与面积收敛、边权缩放、缺陷核心半径与 \(h_j\) 的比例、活性系数缩放以及边界和初始条件。先对固定无序图求统计再取极限，与先做 annealed 平均再取极限一般不同。实际图像还要指定平滑尺度、分支解包、核心阈值、时间采样和边界裁剪；单帧取向图不能识别活性应力符号、缺陷产生率和噪声联合实现。
+
+因此，FIB ATOM 递归在活性向列问题中只提供组合邻接、合法路径、面接缝、闭合边界和层级骨架；向列序参量、连续嵌入和度量、弹性、活性应力、流动取向、噪声、缺陷核心、边界锚定、观测协议以及连续或统计极限均须外加。\(\pm1/2\) 缺陷的电荷守恒、成对产生与湮灭、拓扑湍流的速度/取向谱、缺陷相关和寿命尾部，都是这些外加条件明确后的模型统计结论。
+
+## 244. FIB 图族上的玻色—爱因斯坦凝聚、量子涡旋与 Kibble–Zurek 缺陷统计
+
+本节研究外加玻色场在 FIB 图族上经过凝聚相变和有限速率淬火时的缺陷统计。设第 \(N\) 层 FIB 原子关系给出有限图 \(G_N=(V_N,E_N)\)，闭合路径选集记为外加的 \(\mathscr C_N\)。FIB 只提供组合对象及层级映射，不自动给出物理距离、嵌入维数、面元、相位、玻色子算符或时间演化。
+
+给定外加边权 \(J_{uv}>0\)、规范边相位 \(A_{uv}=-A_{vu}\)、局部质量项 \(r_N(t)\) 和相互作用 \(g_N>0\)，在图上定义复场 \(\psi_u=\sqrt{\rho_u}e^{{\rm i}\theta_u}\) 的能量
+
+$$
+H_N(t,\psi)=\sum_{(u,v)\in E_N}J_{uv}
+\left|\psi_v-e^{{\rm i}A_{uv}}\psi_u\right|^2
++\sum_{u\in V_N}\left(r_N(t)|\psi_u|^2+\frac{g_N}{2}|\psi_u|^4\right).
+\tag{244.1}
+$$
+
+可以选择耗散随机动力学
+
+$$
+\partial_t\psi_u=-(\gamma+{\rm i})\frac{\partial H_N}{\partial\overline\psi_u}+\eta_u(t),
+\tag{244.2}
+$$
+
+也可以选择守恒或近似哈密顿动力学；\(\gamma\)、噪声协方差及粒子数约束均属外加数据。令临界窗口内 \(\epsilon(t)=(r_N(t)-r_c)/r_0=t/\tau_Q\)，并假定外加连续极限具有
+
+$$
+\xi(\epsilon)\asymp \xi_0|\epsilon|^{-\nu},
+\qquad
+\tau_{\rm rel}(\epsilon)\asymp \tau_0|\epsilon|^{-\nu z},
+\tag{244.3}
+$$
+
+其中 \(\nu,z>0\) 是动力学普适类的指数，不是 FIB 递归的结论。绝热—非绝热交界由
+
+$$
+\tau_{\rm rel}(\hat\epsilon)=\tau_Q|\hat\epsilon|
+\tag{244.4}
+$$
+
+给出，从而
+
+$$
+|\hat\epsilon|\asymp \tau_Q^{-1/(1+\nu z)},
+\qquad
+\hat\xi\asymp \tau_Q^{\nu/(1+\nu z)}.
+\tag{244.5}
+$$
+
+现在才引入图的外加几何。若物理球满足 \(\operatorname{Vol}_N(B(u,\ell))\asymp c(u)\ell^d\)，且 \(\hat\xi\) 位于该尺度区间，则在有限程混合模型中
+
+$$
+\mathbb E[n_{\rm def}]\asymp C_{\rm def}\hat\xi^{-d}
+\asymp C_{\rm def}\tau_Q^{-d\nu/(1+\nu z)}.
+\tag{244.6}
+$$
+
+若球增长是一般函数 \(V_u(\ell)\)，正确的组合表达应为
+
+$$
+\mathbb E N_{\rm def}\asymp\sum_{c\in\mathcal D_N}\kappa_c/V_c(\hat\xi),
+\tag{244.7}
+$$
+
+而不是强行使用幂律；例如指数球增长会给出不同于幂律的淬火律。FIB 只给出 \(V_N,E_N\) 及递归关系，不能保证连续体积增长或混合条件。
+
+对有定向的闭合 FIB 路径 \(C=(u_0,\ldots,u_m=u_0)\)，取
+
+$$
+\delta_{uv}=\operatorname{Arg}\!\left(e^{{\rm i}(\theta_v-\theta_u-A_{uv})}\right)\in(-\pi,\pi].
+$$
+
+在没有相位幅度零点且规范通量外加给定时，绕数为
+
+$$
+q_C=\frac1{2\pi}\left(\sum_{j=0}^{m-1}\delta_{u_ju_{j+1}}+\Phi_C\right)\in\mathbb Z,
+\qquad
+\Phi_C=\sum_{j=0}^{m-1}A_{u_ju_{j+1}}.
+\tag{244.8}
+$$
+
+这里整数性、规范通量、路径是否代表物理小面以及零幅度核心的定义均来自外加相位场和嵌入。若某层 FIB 关系图是树或闭路选集为空，内部没有非平凡闭路，必须另加周期识别、面元嵌入或边界闭合后才可谈涡旋数。
+
+淬火冻结时，相邻域的相位在各自相关域内近似一致，而域间相位由外加初态和噪声抽样。因此，对电荷 \(q\) 的期望数为
+
+$$
+\mathbb E N_q=\sum_{C\in\mathscr C_N}\Pr(q_C=q),
+\tag{244.9}
+$$
+
+其概率由相位分布、规范通量和域间联合律决定，不能从 FIB 路径数单独推出。若变量在距离 \(O(\hat\xi)\) 后混合，则可能有 \(\mathbb E N_q/|V_N|\sim\kappa_q\hat\xi^{-d}\) 和相应中心极限定性，但这仍是外加随机动力学的结果。
+
+若外加区域无边界、规范通量总和为零且相位全局单值，离散 Stokes 关系给出总涡旋电荷为零；开放边界或非零通量会改变这一约束。若 \(\hat\xi\) 大于图的物理直径，独立域数至多为常数；若小于边长或噪声相关长度，连续 Kibble–Zurek 近似失效。非均匀图必须使用局部冻结尺度和局部球体积。
+
+若外加相变是二维 XY 型的 BKT 转变，相关长度可具有
+
+$$
+\xi(\epsilon)\asymp\xi_0\exp\!\left(\frac b{\sqrt{|\epsilon|}}\right),
+\qquad
+\tau_0\xi(\hat\epsilon)^z=\tau_Q|\hat\epsilon|,
+\tag{244.10}
+$$
+
+此时冻结尺度含对数修正，不能照搬式 (244.6) 的幂指数。因而在给定临界标度、淬火协议、物理度量和相位随机过程后，FIB 只把邻接与闭路交给外加模型，外加动力学给出 \(\hat\xi\)，外加几何把它转为域体积，外加相位接缝再转为绕数统计；凝聚温度、临界指数、涡旋概率、中和律和普适类仍不由 FIB 单独决定。
+
+## 245. FIB 网络上的外加 DNA/高分子拓扑、超螺旋松弛与随机构象统计
+
+固定一族 FIB 图 \(G_j=(V_j,E_j)\)。顶点和边可承载一条有序 DNA 链的序列位置、接头或粗粒化路径；FIB 递归只给出组合支撑、邻接、路径和层级。把抽象路径变成有厚度的三维链还需要外加嵌入
+
+$$
+\iota_j:|G_j|\longrightarrow\mathbb R^3,
+\qquad \mathbf r:[0,L_j]\longrightarrow\mathbb R^3,
+\tag{245.1}
+$$
+
+以及边长、节点体积、链的闭合/开口边界、双链材料标架、自避让规则、溶剂、盐浓度、温度和外力。递归层数或路径长度本身不定义欧氏距离、曲率、扭转、交叉的上/下关系，也不决定一条闭合路径属于哪个结或链环拓扑扇区。
+
+对闭合双链，令 \(\mathbf d_1,\mathbf d_2,\mathbf d_3=\mathbf t\) 为材料标架，\(\boldsymbol\Omega=(\Omega_1,\Omega_2,\Omega_3)\) 为 Darboux 应变。拓扑扇区可记为 \(\mathcal T=(K,Lk,\text{边界配对})\)，其中 \(K\) 是结型或链环型，\(Lk\) 是链接数。扭转数和弯曲绕数满足
+
+$$
+\operatorname{Tw}=\frac1{2\pi}\int_0^{L_j}\Omega_3(s)\,\mathrm ds,
+\qquad
+Lk=\operatorname{Tw}+\operatorname{Wr}(\mathbf r).
+\tag{245.2}
+$$
+
+无链穿越的连续变形保持 \(K\) 与 \(Lk\)；固定 \(Lk\) 时扭转可以转化为弯曲绕数，因而机械超螺旋能够松弛而拓扑整数不变。端点可旋转的线性链没有给定的 \(Lk\)，必须另加端点约束或参考帧。FIB 抽象边不声明自交是否允许，故既不能推出拓扑整数守恒，也不能推出链穿越必然发生。
+
+在给定拓扑扇区内，一个外加粗粒化弹性能量可以写成
+
+$$
+E_{j,\mathcal T}[\mathbf r,\boldsymbol\Omega]
+=\frac12\int_0^{L_j}\mathbf u(s)^{\mathsf T}\mathsf K_j(s)\mathbf u(s)\,\mathrm ds
++E_{\rm ev}+E_{\rm el}+E_{\rm conf},
+\qquad
+\mathbf u=(\Omega_1,\Omega_2,\Omega_3-\Omega_0)^{\mathsf T}.
+\tag{245.3}
+$$
+
+为显出扭转—弯曲耦合，可在各向同性近似下取
+
+$$
+E_{\rm tb}=\frac12\int_0^{L_j}
+\left[A(\Omega_1^2+\Omega_2^2)+C\,\delta\Omega_3^2
++2G\,\Omega_2\delta\Omega_3\right]\mathrm ds,
+\qquad \delta\Omega_3=\Omega_3-\Omega_0.
+\tag{245.4}
+$$
+
+若 \(A,C>0\) 且 \(AC>G^2\)，消去弯曲变量得到有效扭转刚度 \(C_{\rm eff}=C-G^2/A\)。各向异性、非均匀序列、接触和有限边界会使这一消元变成非局部响应，不能把 \(C_{\rm eff}\) 当作 FIB 递归的普适常数。
+
+在外加温度、轴向力 \(\mathbf F\) 和扭矩 \(\tau\) 下，固定扇区的配分函数为
+
+$$
+Z_{j,\mathcal T}(\beta,\mathbf F,\tau)
+=\int_{\mathcal C_{j,\mathcal T}}\!\mathcal Dq\,
+\exp\!\left[-\beta\left(E_{j,\mathcal T}[q]
+-\mathbf F\!\cdot\!\mathbf R[q]-2\pi\tau Lk[q]\right)\right],
+\qquad \beta=(k_{\rm B}T)^{-1}.
+\tag{245.5}
+$$
+
+闭环固定 \(Lk\) 时应在单一拓扑扇区内取条件配分；允许链环交换或拓扑酶作用时，才可对不同 \(Lk\) 求和。超螺旋密度 \(\sigma=(Lk-Lk_0)/Lk_0\) 需要外加参考数 \(Lk_0\)。plectoneme、扭矩平台或屈曲转变取决于刚度、力、盐、链长、排斥势及扇区熵的联合竞争。
+
+拓扑保持的过阻尼构象动力学可抽象为
+
+$$
+\mathrm dq_t=\left[-\mathsf M(q_t)\nabla E_{j,\mathcal T}(q_t)
++k_{\rm B}T\,\nabla\!\cdot\!\mathsf M(q_t)\right]\mathrm dt
++\sqrt{2k_{\rm B}T\mathsf M(q_t)}\,\mathrm dW_t,
+\tag{245.6}
+$$
+
+其中摩擦/水动力迁移率、噪声解释和碰撞反射规则须外加；该扩散只能在同一 \(\mathcal T\) 内移动。若拓扑酶或受控断链允许链穿越，则扇区概率满足
+
+$$
+\dot p_{\mathcal T}=\sum_{\mathcal T'}\left(\lambda_{\mathcal T'\to\mathcal T}p_{\mathcal T'}
+-\lambda_{\mathcal T\to\mathcal T'}p_{\mathcal T}\right).
+\tag{245.7}
+$$
+
+在给定扭矩且满足详细平衡时，跃迁率还需满足
+
+$$
+\frac{\lambda_{\mathcal T\to\mathcal T'}}{\lambda_{\mathcal T'\to\mathcal T}}
+=\exp\!\left[-\beta\left(\Delta E-2\pi\tau\Delta Lk\right)\right],
+\tag{245.8}
+$$
+
+但势垒、催化位点、断链重接顺序和速率前因子均不由该比值或 FIB 图确定。扭矩释放后的松弛既可能是固定 \(Lk\) 下 \(\operatorname{Tw}\) 与 \(\operatorname{Wr}\) 的连续重分配，也可能是拓扑酶导致的离散跳跃。松弛时间的分布依赖水动力阻力、构象能垒、扇区速率、初始扇区及观测时间窗。
+
+若 \(O(q)\) 是端到端距离、回转半径、延伸量、绕数、结型或接触数，则在外加扇区权重 \(w_{j,\mathcal T}\) 下
+
+$$
+\Pr_j\{O\in B\}
+=\frac{\displaystyle\sum_{\mathcal T}w_{j,\mathcal T}
+\int_{\mathcal C_{j,\mathcal T}}\!\mathbf 1_{\{O(q)\in B\}}
+ e^{-\beta E_{j,\mathcal T}[q]}\,\mathcal Dq}
+{\displaystyle\sum_{\mathcal T}w_{j,\mathcal T}Z_{j,\mathcal T}}.
+\tag{245.9}
+$$
+
+同一 \(Lk\) 可对应多种 \(K\)、\(\operatorname{Tw}\) 与 \(\operatorname{Wr}\) 分配，同一延伸量也可来自不同结型和扭曲链。若只记录二维投影、总延伸和单个扭矩读数，隐藏的过/下关系与材料扭转会被观测映射合并；不同三维嵌入、刚度和扇区权重可以给出相同边缘分布而具有不同结型和链穿越率。
+
+因此，FIB ATOM 递归在 DNA/高分子拓扑问题中只提供组合骨架、合法路径、接缝和层级候选；三维嵌入、闭合与端点边界、自避让和链穿越规则、材料刚度、扭转—弯曲耦合、温度、盐、力矩、水动力、拓扑酶速率、初态、系综、观测投影和极限次序均须外加。链接数守恒、扭转—绕数转换、超螺旋松弛时间、结型概率、plectoneme 统计和随机形态联合律，只有在这些外加条件明确后才是模型结论。
+
+## 246. FIB 图上的外加非厄米波导、异常点与皮肤效应统计
+
+固定一族有限 FIB 合法图 \(G_n=(V_n,E_n)\)，把顶点解释为波导、谐振腔或离散场幅的载体，把有向边解释为允许的耦合候选。FIB ATOM 递归只提供组合支撑、合法路径、分支与切口；边方向、复耦合、增益/损耗、频率、边界、无序系综、激励与探测协议均须外加。本节固定非厄米与非正规演化，不把拓扑指标或材料参数当作 FIB 量。
+
+在节点基底中令波幅满足
+
+$$
+{\rm i}\,\dot\psi=H_n\psi,
+\qquad
+H_n=\sum_{(u\to v)\in E_n}t_{vu}|v\rangle\langle u|
++\sum_{v\in V_n}(\omega_v-{\rm i}\kappa_v)|v\rangle\langle v| .
+\tag{246.1}
+$$
+
+其中 \(t_{vu}\) 可与反向耦合不同，\(\kappa_v\) 可表示损耗或增益；FIB 只限制哪些矩阵元可非零，不决定大小、相位、方向或统计相关。即使所有本征值实部都为负，\(H_n\) 也可能非正规，因而短时场强先放大再衰减。
+
+右、左本征向量满足
+
+$$
+H_n|R_a\rangle=E_a|R_a\rangle,
+\qquad
+\langle L_a|H_n=E_a\langle L_a|,
+\qquad
+\langle L_a|R_b\rangle=\delta_{ab}.
+\tag{246.2}
+$$
+
+右向量强度、左向量强度与双正交权重是三个不同的观测对象。谱点条件数 \(\kappa_a=\|L_a\|\,\|R_a\|\) 控制小扰动下的特征值敏感度；左、右向量近乎正交时，极小的频率、边界或无序误差也可造成巨大响应，普通谱隙不能替代伪谱检验。
+
+沿一条长 FIB 路径，另加非互易耦合 \(t_R,t_L\) 和均匀现场 \(\omega\)，有
+
+$$
+H_{\rm path}=\sum_{j=1}^{m-1}
+\left(t_R|v_{j+1}\rangle\langle v_j|+t_L|v_j\rangle\langle v_{j+1}|\right)
++\omega\sum_{j=1}^{m}|v_j\rangle\langle v_j|.
+\tag{246.3}
+$$
+
+周期边界与开放边界分别给出
+
+$$
+E_{\rm PBC}(k)=\omega+t_R e^{-\mathrm i k}+t_L e^{\mathrm i k},
+\tag{246.4}
+$$
+
+$$
+E_{\rm OBC}(q)=\omega+2\sqrt{t_Rt_L}\cos q,
+\qquad
+\frac{R(q)_{j+1}}{R(q)_j}\sim\sqrt{\left|\frac{t_R}{t_L}\right|}.
+\tag{246.5}
+$$
+
+当 \(|t_R|\ne|t_L|\) 时，右模态向一端集中，其理想化皮肤长度满足
+
+$$
+\xi_{\rm skin}^{-1}=\frac12\left|\log\left|\frac{t_R}{t_L}\right|\right|.
+\tag{246.6}
+$$
+
+这个式子只属于该路径和边界条件；同一 FIB 路径取 \(t_R=t_L\) 时没有非互易皮肤漂移，取 \(|t_R|\ne|t_L|\) 时却有有限长度尺度。一般图上的皮肤效应必须改用边界质量、参与比和图列定义，不能把一条路径的波数当作一般 FIB 图的动量。
+
+给定边界层 \(\partial_rV_n\)，可定义
+
+$$
+B^R_{n,r}(a)=\frac{\sum_{v\in\partial_rV_n}|R_a(v)|^2}{\sum_{v\in V_n}|R_a(v)|^2},
+\qquad
+P_2^R(a)=\frac{\sum_v|R_a(v)|^4}{(\sum_v|R_a(v)|^2)^2}.
+\tag{246.7}
+$$
+
+只有当边界质量在图列极限中保持非消失并相对于体相基线稳定时，才可称为统计皮肤效应；若边界顶点比例趋于一，必须另作归一化。右强度、左强度和双正交权重的边界质量可能给出不同结论，实际读出取决于端口耦合。
+
+若耦合随机，令允许边上的对数非互易比为 \(g_e=\log|t_e^+/t_e^-|\)，一条增长路径的平均漂移由 \(\overline g_\gamma=|\gamma|^{-1}\sum_{e\in\gamma}\sigma_e g_e\) 给出。随机传输矩阵的 Lyapunov 指数为
+
+$$
+\Lambda_i(E)=\lim_{m\to\infty}\frac1m
+\log s_i\!\left(T_{e_m}(E)\cdots T_{e_1}(E)\right),
+\tag{246.8}
+$$
+
+它依赖无序分布、方向相关、闭环通量和图列。先平均耦合再求指数一般不等于先求样本指数再平均；宽尾瓶颈可产生宽分布和有限尺寸截断。
+
+异常点要求本征向量真正合并，而不只是本征值相等。对参数族 \(H_n(\lambda)\)，若二阶 Jordan 块存在，局部本征值可有
+
+$$
+E_\pm(\lambda)=E_*\pm c(\lambda-\lambda_*)^{1/2}+O(\lambda-\lambda_*),
+\tag{246.9}
+$$
+
+\(c\)、参数路径、扰动方向和无序样本均外加。异常点附近的预解式
+
+$$
+\Psi_n(z)=\|(zI-H_n)^{-1}\|,
+\qquad
+\omega(H_n)=\lambda_{\max}\!\left(\frac{H_n+H_n^*}{2}\right)
+\tag{246.10}
+$$
+
+控制瞬态放大；即使谱实部全负，数值域为正或预解式很大也可能出现有限时增益。端口读数可写为
+
+$$
+S_n(\nu)=D+C(\nu I-H_n)^{-1}B,
+\tag{246.11}
+$$
+
+零点、相消、端口选择和频率依赖均由 \(B,C,D\) 外加决定。单端强度或单一频率谱通常不能区分真正的皮肤漂移、普通边界共振、局部损耗和端口滤波；固定无序样本先求散射再平均，与先平均矩阵或强度一般不同。
+
+因此，FIB ATOM 递归在非厄米波导问题中只提供允许耦合的组合骨架、路径方向、分支和边界候选；非正规矩阵、左/右模态、增益损耗、异常点参数族、随机传输、端口、观测和极限均须外加。开闭边界谱差、皮肤长度、Lyapunov 尾、异常点出现率、瞬态放大和散射峰统计，只有在这些外加结构全部指定后才成立。
+
+## 247. FIB 网络上的外加基因随机开关、表观遗传记忆与细胞命运首达统计
+
+固定 FIB 图族 \(G_j=(V_j,E_j)\)。顶点可以被外加模型解释为调控位点、细胞区室、谱系标签或观测索引，边可以被解释为候选调控联系；这些解释不是 FIB ATOM 递归的内含语义。FIB 只提供组合支撑、可行路径、接缝和层级索引。基因身份、启动子结构、染色质状态、分子数、时间尺度、调控方向和强度、细胞分裂规则、噪声以及观测通道均须另行给定。
+
+对每个顶点引入转录开关 \(X_v(t)\in\{0,1\}\) 和较慢的表观状态 \(E_v(t)\in\{0,1,\ldots,r_v\}\)。令 \(z=(x,e)\) 为全体状态，外加连续时间跳变核为 \(q_j(z,z')\)。若只允许 FIB 边支持的局部调控，可写成
+
+$$
+q_j(z,z')=\sum_{v\in V_j}q_{v,j}^{x}(z)\mathbf 1_{\{z'=z^{v,x}\}}
++\sum_{v\in V_j}q_{v,j}^{e}(z)\mathbf 1_{\{z'=z^{v,e}\}},
+\tag{247.1}
+$$
+
+一个示例参数化是
+
+$$
+q_{v,j}^{x,+}(z)=a_{v,j}^{+}(e_v,t)\exp\!\left(\sum_{u:(u,v)\in E_j}R_{uv,j}x_u\right),
+\qquad
+q_{v,j}^{x,-}(z)=a_{v,j}^{-}(e_v,t)\exp\!\left(-\sum_{u:(u,v)\in E_j}\widetilde R_{uv,j}x_u\right).
+\tag{247.2}
+$$
+
+调控矩阵的符号、稀疏性、时变性、非局部作用和多状态跃迁不能由 FIB 边自动确定。状态概率向量满足外加主方程
+
+$$
+\frac{{\rm d}}{{\rm d}t}\pi_j(t)=\pi_j(t)Q_j(t),
+\qquad
+(Q_j)_{zz'}=q_j(z,z')\ (z\ne z'),
+\qquad
+(Q_j)_{zz}=-\sum_{z'\ne z}q_j(z,z').
+\tag{247.3}
+$$
+
+若核恒定且有限状态不可约，稳态由 \(\pi_j^*Q_j=0\) 及归一化确定。单个快速开关在固定表观状态下的平衡活跃率和相关时间为
+
+$$
+\bar x_v(e)=\frac{k_{v,e}^{+}}{k_{v,e}^{+}+k_{v,e}^{-}},
+\qquad
+\tau_{v,e}=\bigl(k_{v,e}^{+}+k_{v,e}^{-}\bigr)^{-1}.
+\tag{247.4}
+$$
+
+若表观状态慢于转录开关，观测到的自相关是条件相关的混合，常含
+
+$$
+C_v(s)\simeq A_{v,1}e^{-s/\tau_{v,1}}+A_{v,2}e^{-s/\tau_{v,2}}.
+\tag{247.5}
+$$
+
+随机表观环境、分裂稀释和速率异质性可把有限指数混合变成长尾或非指数记忆；从稳态均值不能反推出开关速率。
+
+把外加细胞命运定义为状态空间中的吸收集合 \(A_{j,1},\ldots,A_{j,m}\)，命运 \(f\) 的首达时间和首达概率为
+
+$$
+T_{j,f}=\inf\{t\ge0:Z_j(t)\in A_{j,f}\},
+\qquad
+h_{j,f}(z)=\Pr_z\{T_{j,f}<T_{j,g}\ \forall g\ne f\}.
+\tag{247.6}
+$$
+
+在时间齐次有限链且最终吸收时，令 \(Q_{TT}\) 为暂态子矩阵、\(b_f=Q_{T A_{j,f}}\mathbf 1\)，则
+
+$$
+-Q_{TT}h_{j,f}=b_f,
+\qquad
+-Q_{TT}m_j=\mathbf 1,
+\tag{247.7}
+$$
+
+其中 \(m_j\) 是吸收时间均值。时间依赖调控、外部脉冲或非马尔可夫表观记忆时，首达分布可能多峰、长尾或出现等待平台。所谓临界开关只有在参数族、吸收集合和观测窗口固定后才有定义。
+
+若每个细胞的有效拷贝数为 \(N\)，噪声尺度为 \(N^{-1/2}\)，外加扩散近似可给出稀有命运跃迁律
+
+$$
+\Pr(T_{j,f}\le t)\asymp\exp[-N I_{j,f}(t)],
+\tag{247.8}
+$$
+
+作用量由漂移、扩散张量、脉冲协议和吸收边界共同决定；FIB 路径长度、分支数或递归深度不提供该作用量。
+
+细胞群体异质性可用细胞参数 \(\theta_\ell\) 表示。若细胞条件独立而 \(\theta_\ell\) 独立同分布，命运计数 \(N_f\) 满足
+
+$$
+\mathbb E[N_f]=M\bar p_f,
+\qquad
+\operatorname{Var}(N_f)=M\bar p_f(1-\bar p_f)
++M(M-1)\operatorname{Var}_{\theta}[p_f(\theta)],
+\tag{247.9}
+$$
+
+第二项是参数异质性导致的过度离散；共享环境、母细胞状态或旁分泌输入还会加入联合协方差。姐妹细胞继承相关表观状态时，继承核直接决定姐妹命运相关；这些量不能由亲缘标签或 FIB 路径关系单独给出。固定环境后再对参数平均属于淬火统计，把参数并入快速转移核属于退火统计，二者在长记忆或稀有事件下通常不同。
+
+荧光报告、单细胞测序和表观标记实验只给出隐藏状态的投影。例如带延迟和积分的观测可写为
+
+$$
+Y_a(t)=\sum_{v\in V_j}H_{av}\int_0^\infty D_v(s)X_v(t-s)\,\mathrm ds+\varepsilon_a(t),
+\tag{247.10}
+$$
+
+其中 \(H\) 是报告通道，\(D_v\) 是成熟、降解和曝光响应核，\(\varepsilon\) 是测量噪声。只用稳态均值、单次命运比例或终点测序，无法唯一区分快速开关、慢表观记忆、细胞异质性和检测延迟；需要时间分辨的谱系追踪、脉冲—追踪、同时测量表观标记或登记的调控干预。
+
+因此，FIB ATOM 递归在基因调控问题中只提供候选调控关系、组合路径、接缝和层级骨架；开关速率、调控符号、染色质写入/擦除、分裂继承、参数分布、噪声联合实现、命运吸收集合、首达极限和观测响应均须外加。开关稳态、记忆时间、细胞命运比例、首达时间尾部、姐妹相关和群体过度离散，只有在这些生物动力学与观测条件明确后才是条件统计规律。
