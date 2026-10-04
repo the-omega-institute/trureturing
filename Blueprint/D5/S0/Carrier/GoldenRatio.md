@@ -20,3 +20,5 @@ One kernel-checked conjunction records the radical definition, the quadratic fix
 
 - Truth anchor: `D5/S0/Carrier/GoldenRatio.golden_ratio_spec`
 - Narrative reference: [D5/S0/Conventions/Notation](../Conventions/Notation.md)
+
+Trigger probe paragraph without formulas.
