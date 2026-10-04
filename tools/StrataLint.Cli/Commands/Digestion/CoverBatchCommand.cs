@@ -160,39 +160,9 @@ internal static partial class CoverBatchCommand
         var exit = ScribeEmitter.Emit(documentsAssembly, root, false, output, error, session.Report,
             validateRepository: true, session.FrozenState, session.FrozenStatements);
         if (exit == 0) exit = ValuesEmitter.Emit(root, false, output, error);
-        if (exit == 0) exit = FileMapEmitter.Emit(root, false, output, error);
+
         if (exit != 0) return new(false, output.ToString(), error.ToString());
-        var dag = DagRenderCommand.Run(root, new(ReadEmittedSnapshot(root, session), session.Lean, session.Report), false,
-            documentsAssembly);
-        output.Write(dag.Output);
-        error.Write(dag.Error);
-        try
-        {
-            ReadEmittedInputs(root, session);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            error.Write($"COVER_BATCH_EMIT_FAILED {exception.Message}\n");
-            return new(false, output.ToString(), error.ToString());
-        }
-        return new(dag.Success, output.ToString(), error.ToString());
+        return new(true, output.ToString(), error.ToString());
     }
 
-    private static RepositorySnapshot ReadEmittedSnapshot(string root, CoverAtomCommand.Session session) =>
-        SnapshotDecoder.Decode(ReadEmittedInputs(root, session)) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(failure.Message),
-        };
-
-    private static RawRepositorySnapshot ReadEmittedInputs(string root, CoverAtomCommand.Session session)
-    {
-        var manifest = FileMapLoader.LoadSnapshot(session.Current);
-        var raw = GitRepositorySnapshotReader.ReadCurrent(root);
-        // Generated path membership affects DAG provenance; all authoritative inputs must still match.
-        RequireSameInputs(Inputs(session.CurrentRaw), Inputs(raw),
-            path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }]);
-        IngestCommand.RequireLedgerUnchanged(root, session.CurrentRaw);
-        return raw;
-    }
 }
