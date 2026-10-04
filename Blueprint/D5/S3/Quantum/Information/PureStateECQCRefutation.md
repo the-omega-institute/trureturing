@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PureStateECQCRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/iqbal-2025-pure-state-ecqc` (refuted) by `D5/S3/Quantum/Information/PureStateECQCRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"iqbal-2025-pure-state-ecqc","declaration_gid":"D5/S3/Quantum/Information/PureStateECQCRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. Iqbal (2025). *On the CQC Conjecture: A sufficient condition and an extension*. DOI: [10.1007/s11128-026-05258-2](https://doi.org/10.1007/s11128-026-05258-2). URL: <https://arxiv.org/abs/2509.08286v2>.

@@ -29,12 +29,16 @@ internal sealed class PureStateECQCRefutationDocument : IScribeDocumentDefinitio
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A maximally entangled counterexample", Disp(new Formula.Not(F.Id("claim"))),
                 "Take ψ(x,y) = 1/sqrt(5) when y = 2x, and 0 otherwise, with arithmetic modulo 5. In every quadratic-phase basis, 1 + 2² = 0 cancels the quadratic phase; additive-character orthogonality gives amplitude 1/sqrt(5) precisely when a + 2b = 0. This is the same graph b = 2a as for the computational basis. Thus each joint law is uniform on a bijection graph and each classical mutual information is log₂ 5. Both reduced density matrices are I/5. The global rank-one projector has zero entropy, so its quantum mutual information is 2 log₂ 5. Every five-element measurement sum is 5 log₂ 5, which is strictly larger.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("iqbal-2025-pure-state-ecqc"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("ecqc-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(QuotedProse(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(QuotedProse(prose))), role, resolution);
 
     private static Inline[] QuotedProse(string prose) => prose.Split('$')
         .SelectMany((part, index) => index % 2 == 0 ? new[] { Text(part) } : SourceInlines(part))
