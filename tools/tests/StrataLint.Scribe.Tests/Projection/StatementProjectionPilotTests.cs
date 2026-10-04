@@ -355,7 +355,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             output,
@@ -377,7 +376,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             TextWriter.Null,
@@ -404,7 +402,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             arguments,
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,

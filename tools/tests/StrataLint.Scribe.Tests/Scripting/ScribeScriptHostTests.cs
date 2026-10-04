@@ -476,7 +476,7 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
-    public void ScriptsVerifyReturnsZeroForAnEquivalentSyntheticSet()
+    public void ScriptsVerifyExecutesTheSelectedSyntheticDefinition()
     {
         using var root = PrepareCommandRoot();
         const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
@@ -484,27 +484,19 @@ public sealed class ScribeScriptHostTests
         var output = new StringWriter();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
+        var exit = ScribeCli.Run(["scripts", "verify", "--paths-from", "-"],
             root.Path, output, error, new StringReader(path));
 
         Assert.Equal(0, exit);
-        Assert.Contains("paths=1 hostFailures=0 mismatches=0", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("paths=1 hostFailures=0", output.ToString(), StringComparison.Ordinal);
         Assert.Empty(error.ToString());
     }
 
     [Fact]
-    public void ScriptsVerifyNamesCanonicalMismatchAndInvalidArguments()
+    public void ScriptsVerifyRejectsInvalidArguments()
     {
         using var root = PrepareCommandRoot();
-        const string path = "Blueprint/D5/S0/Test/First.scribe.cs";
-        WriteDefinition(root.Path, path, "Changed");
-        var output = new StringWriter();
-        var error = new StringWriter();
-
-        Assert.Equal(1, ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
-            root.Path, output, error, new StringReader(path)));
-        Assert.Contains("CanonicalContentMismatch", error.ToString(), StringComparison.Ordinal);
-        Assert.Equal(2, ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--bad"],
+        Assert.Equal(2, ScribeCli.Run(["scripts", "verify", "--bad"],
             root.Path, TextWriter.Null, new StringWriter(), TextReader.Null));
     }
 
@@ -515,7 +507,7 @@ public sealed class ScribeScriptHostTests
         var output = new StringWriter();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(FixtureAssembly.Value, ["scripts", "verify", "--paths-from", "-"],
+        var exit = ScribeCli.Run(["scripts", "verify", "--paths-from", "-"],
             root.Path, output, error, new StringReader(string.Empty));
 
         Assert.Equal(1, exit);

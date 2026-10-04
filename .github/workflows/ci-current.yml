@@ -677,6 +677,7 @@ jobs:
             tools/scripts/report/lean-report.sh
             tools/scripts/report/report-consumer.sh
             tools/scripts/report/report-supervisor.sh
+            tools/scripts/scribe-release.sh
             tools/scripts/scribe.sh
             tools/scripts/stratalint-selftest.sh
             tools/scripts/update-renderer-contract.sh
@@ -834,7 +835,7 @@ jobs:
       CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-      SCRIBE: tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll
+      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
       # The judge build recipe: the build step runs it and the judge cache key hashes it.
       JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
     steps:
@@ -930,6 +931,7 @@ jobs:
         with:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
             tools/StrataLint.Scribe.Documents/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
       - id: keys
@@ -981,6 +983,7 @@ jobs:
         with:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
             tools/StrataLint.Scribe.Documents/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
       - id: lean_report
@@ -1018,14 +1021,13 @@ jobs:
         if: ${{ !cancelled() }}
         env:
           CHANGED_PATHS: ${{ runner.temp }}/changed-paths
-        # Markdown formulas are judged for the documents this change touches;
-        # without a base commit the entry writes no path list and every document
-        # is judged.
+        # Each selected definition runs independently; without a baseline the
+        # script supplies a manifest of all definitions and markdown paths.
         run: |
           if [[ -f "$CHANGED_PATHS" ]]; then
             tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$CHANGED_PATHS"
           else
-            tools/scripts/workflow/scribe-content-checks.sh "$REPORT"
+            tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE"
           fi
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}

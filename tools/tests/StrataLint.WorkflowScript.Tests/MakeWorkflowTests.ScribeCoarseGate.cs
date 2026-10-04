@@ -8,6 +8,59 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    [UnsupportedOSPlatform("windows")]
+    public void ScribeEmitPassesCallerChangesOrExplicitManifestToItsOwnHost(bool explicitPaths)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var root = Path.Combine(temporary.Path, "repository with spaces");
+        Directory.CreateDirectory(root);
+        var script = Path.Combine(root, ScribeScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), ScribeScriptPath), script);
+        WriteExecutable(Path.Combine(root, "tools/scripts/report/report-consumer.sh"),
+            "#!/bin/bash\nwhile [[ \"$1\" != -- ]]; do shift; done\nshift\nexec \"$@\"\n");
+        var bin = Path.Combine(root, "bin");
+        var calls = Path.Combine(root, "calls");
+        var selected = Path.Combine(root, "selected");
+        WriteExecutable(Path.Combine(bin, "git"), """
+            #!/bin/bash
+            if [[ "$1" == diff ]]; then
+              printf 'Blueprint/D5/Changed.scribe.cs\0'
+            elif [[ "$1" == ls-files ]]; then
+              printf 'Blueprint/D5/New file.scribe.cs\0'
+            else
+              exit 93
+            fi
+            """);
+        WriteExecutable(Path.Combine(bin, "dotnet"), """
+            #!/bin/bash
+            printf '%s\n' "$*" >> "$SCRIBE_LOG"
+            while [[ "$#" -gt 0 ]]; do
+              if [[ "$1" == --paths-from ]]; then cat "$2" > "$SELECTED_LOG"; break; fi
+              shift
+            done
+            """);
+        var manifest = Path.Combine(root, "caller paths");
+        File.WriteAllText(manifest, "Blueprint/D5/Explicit.scribe.cs\0");
+        var result = TestProcessRunner.Run("/usr/bin/env",
+            [$"PATH={bin}:/usr/bin:/bin", $"SCRIBE_LOG={calls}", $"SELECTED_LOG={selected}",
+             "BASE=fixed-base", $"PATHS={(explicitPaths ? manifest : "")}",
+             "/bin/bash", script, "emit"], temporary.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        var invocations = File.ReadAllLines(calls);
+        Assert.Equal(2, invocations.Length);
+        Assert.All(invocations, call => Assert.Contains("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", call, StringComparison.Ordinal));
+        Assert.Contains("emit --paths-from", invocations[0], StringComparison.Ordinal);
+        Assert.Contains("-- emit-values", invocations[1], StringComparison.Ordinal);
+        Assert.Equal(explicitPaths ? new[] { "Blueprint/D5/Explicit.scribe.cs" }
+            : new[] { "Blueprint/D5/Changed.scribe.cs", "Blueprint/D5/New file.scribe.cs" },
+            File.ReadAllText(selected).Split('\0', StringSplitOptions.RemoveEmptyEntries));
+    }
+
+    [Theory]
     [InlineData("")]
     [InlineData("Blueprint/D5/Probe.md")]
     [InlineData("docs/develop/notes.md")]
@@ -40,10 +93,7 @@ public sealed partial class MakeWorkflowTests
              "/bin/bash", script, report, dll, .. selection], root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
         var result = Run();
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal(new[]
-        {
-            $"{dll} content-check --report {report}",
-        }, File.ReadAllLines(log));
+        Assert.StartsWith($"{dll} content-check --report {report} --paths-from ", Assert.Single(File.ReadAllLines(log)));
         foreach (var invalid in new[] { new string('a', 40), root, "" })
         {
             var rejected = Run(invalid);

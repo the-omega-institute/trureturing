@@ -141,7 +141,6 @@ jobs:
             tools/Architecture/*
             tools/StrataLint.Engine/*
             tools/StrataLint.Scribe/*
-            tools/StrataLint.Scribe.Documents/*
             tools/Trureturing.Truth/*
             tools/scripts/scribe-release.sh
             tools/scripts/workflow/ci-entry.sh
