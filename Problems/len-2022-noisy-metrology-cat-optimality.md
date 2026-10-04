@@ -120,10 +120,17 @@ The canonical source is
 - Public declarations: `probeOp`, `multiProbeOp`, `gamma`, `basisPower`,
   `catState`, `catPerp`, `claim`, `detector`, `witness`, `witnessPerp` and
   `result`.
+- Reuse: `multiProbeOp` applies the frozen `piKroneckerLinearEquiv` of
+  `PrimePowerTensorTower` to the tensor product of the single-probe
+  matrices; the proof reads its entries through the frozen
+  `pi_kronecker_linear_equiv_tprod_single`.
 - Freeze identities:
-  - module statement `sha256:1ee13a5291b015024e4111c47a75b5883a73699dab5ae04df0b574bc2e20f085`;
+  - module statement `sha256:1813e7c39fe2a203ddc3ae4017060513573094dcfe5c615d808cbfeb254ceae8`;
   - `result` statement `sha256:776162f0773ebb482186286dec12dab90a961361f14c4ded6b203265e197a2d4`;
-  - Freeze event `sha256:fb0919ca0050f4afdc48df2cf72b4162c040c0d135d26bea69781c6bc11f7826`.
+  - Freeze event `sha256:e9a83ae15dc54838881c4bbea6e3f6511547f4ec9af1deb44dacc56b37652895`.
+    Its project-level frozen prerequisite is the Freeze event of
+    `PrimePowerTensorTower`,
+    `sha256:a719804d007bf8a687cc502c902f7437de1d8a2e8bb55f372b057e9c0afbec3a`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 
@@ -161,11 +168,14 @@ Tier 1 conjecture of a 2022 journal article. Resolution: `Refuted`, by
     repeated pair of the best single-probe labels minimizes them
     (orchestrator reasoning, not in Lean).
   - At $N=1$, for detectors with all $p(x|i)>0$, Zhou–Michalakis–Gefen
-    Theorem 6 gives an optimal pair of the form
+    Theorem 6 gives an optimal pair $\xi,\xi_\perp$ of the form
     $\sqrt q\,|k\rangle+\sqrt{1-q}\,|l\rangle$,
-    $\sqrt{1-q}\,|k\rangle-\sqrt q\,|l\rangle$ on two basis states, which
-    is a cat pair; so the conjecture holds for one probe under that
-    assumption (seat-reported reading of the theorem statement).
+    $\sqrt{1-q}\,|k\rangle-\sqrt q\,|l\rangle$ on two basis states. The
+    inverse change of variables $\zeta=(\xi+\xi_\perp)/\sqrt2$,
+    $\zeta_\perp=(\xi-\xi_\perp)/\sqrt2$ turns it into a real rotation of
+    $|k\rangle,|l\rangle$, which is a cat pair; so the conjecture holds for
+    one probe under that assumption (seat-reported reading of the theorem
+    statement).
 - **Open here:**
   - the qubit specialization of the paper ($d=2$, labels $0,1$);
   - for which detectors and which $N\ge2$ cat pairs fail;

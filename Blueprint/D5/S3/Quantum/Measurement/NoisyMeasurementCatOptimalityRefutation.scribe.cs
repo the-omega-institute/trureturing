@@ -18,7 +18,7 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
                 "M_x = sum_i p(x|i) Pi_i, with Pi_i = |i><i| the matrix with a single 1 in position (i, i).",
                 "probeOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("multi-probe-op", "Independent measurement of N probes", MultiProbeOpFormula(),
-                "Eq. (AMxvec): M_x = M_{x_1} (x) ... (x) M_{x_N}, written entrywise on the product basis indexed by the words s : Fin N -> Fin d.",
+                "Eq. (AMxvec): M_x = M_{x_1} (x) ... (x) M_{x_N}. The frozen finite-family Kronecker equivalence piKroneckerLinearEquiv sends the tensor product of the single-probe matrices to a matrix on the words s : Fin N -> Fin d; its entry at (s, s') is the product over l of the entries of M_{x_l} at (s(l), s'(l)).",
                 "multiProbeOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("gamma", "The noisy Fisher coefficient", GammaFormula(),
                 "Eq. (AgammaN): gamma = (1/4) sum over outcome words of [<psi_perp|V^dagger M_x V|psi> + c.c.]^2 / <psi|V^dagger M_x V|psi>, where V psi = (zeta + zeta_perp)/sqrt(2) and V psi_perp = (zeta - zeta_perp)/sqrt(2) invert the relations V (psi +- psi_perp)/sqrt(2) = zeta, zeta_perp of Eq. (AVPhichoice). Here <a, b> = sum_s conj(a(s)) b(s) and M psi is the matrix-vector product. The real part reads the source quotient, whose numerator and denominator are real.",
@@ -138,6 +138,12 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
         Seq(Forall, Sp, x, Sp, Colon, Sp, F.Id("Type"), Comma, Sp,
             OpenBracket, Call(F.Id("Fintype"), x), CloseBracket, Comma, Sp, body);
 
+    private static Formula AnyPrelude(Formula body)
+    {
+        Formula d = F.Id("d"), x = F.Id("X"), p = F.Id("p");
+        return All(d, Nat(), All(x, F.Id("Type"), All(p, Channels(x, d), body)));
+    }
+
     private static Formula Prelude(Formula body)
     {
         Formula d = F.Id("d"), x = F.Id("X"), p = F.Id("p");
@@ -149,18 +155,16 @@ internal sealed class NoisyMeasurementCatOptimalityRefutationDocument : IScribeD
         Formula xo = F.Id("x"), i = F.Id("i"), x = F.Id("X"), p = F.Id("p");
         Formula value = SumOver(Seq(i, Sp, InMacro, Sp, Fin(F.Id("d"))),
             Mul(Of(p, xo, i), Call(F.Id("single"), i, i, D(1))));
-        return Disp(Prelude(All(xo, x, EqTo(Call(F.Id("probeOp"), p, xo), value))));
+        return Disp(AnyPrelude(All(xo, x, EqTo(Call(F.Id("probeOp"), p, xo), value))));
     }
 
     private static Formula MultiProbeOpFormula()
     {
-        Formula n = F.Id("N"), d = F.Id("d"), xs = F.Id("xs"), s = F.Id("s"), t = F.Id("t"),
-            l = F.Id("l"), p = F.Id("p");
-        Formula entry = ProdOver(Seq(l, Sp, InMacro, Sp, Fin(n)),
-            Of(Call(F.Id("probeOp"), p, Of(xs, l)), Of(s, l), Of(t, l)));
-        return Disp(Prelude(All(n, Nat(), All(xs, Arrow(Fin(n), F.Id("X")),
-            All(Vars(s, t), Words(n, d),
-                EqTo(Of(Call(F.Id("multiProbeOp"), p, xs), s, t), entry))))));
+        Formula n = F.Id("N"), xs = F.Id("xs"), l = F.Id("l"), p = F.Id("p");
+        Formula factors = Parenthesized(Seq(l, Sp, Mapsto, Sp, Call(F.Id("probeOp"), p, Of(xs, l))));
+        Formula value = Call(F.Id("piKroneckerLinearEquiv"), Call(F.Id("tprod"), factors));
+        return Disp(AnyPrelude(All(n, Nat(), All(xs, Arrow(Fin(n), F.Id("X")),
+            EqTo(Call(F.Id("multiProbeOp"), p, xs), value)))));
     }
 
     private static Formula GammaFormula()

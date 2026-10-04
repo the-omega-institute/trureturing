@@ -6,7 +6,7 @@ Len, Gefen, Retzker and Kołodyński (arXiv:2109.01160, Nature Communications 13
 
 **Definition 1.1 (The single-probe noisy measurement).**
 
-$$\forall d : \mathbb{N}, \forall X : Type, [\operatorname{Fintype}\left(X\right)], \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, \forall x : X, \operatorname{probeOp}\left(p, x\right) = \sum_{i \in \operatorname{Fin}\left(d\right)} p\left(x, i\right) \cdot \operatorname{single}\left(i, i, 1\right)$$
+$$\forall d : \mathbb{N}, \forall X : Type, \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, \forall x : X, \operatorname{probeOp}\left(p, x\right) = \sum_{i \in \operatorname{Fin}\left(d\right)} p\left(x, i\right) \cdot \operatorname{single}\left(i, i, 1\right)$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.probeOp` (`✓ std3`).
 
@@ -18,7 +18,7 @@ M_x = sum_i p(x|i) Pi_i, with Pi_i = |i><i| the matrix with a single 1 in positi
 
 **Definition 1.2 (Independent measurement of N probes).**
 
-$$\forall d : \mathbb{N}, \forall X : Type, [\operatorname{Fintype}\left(X\right)], \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, \forall N : \mathbb{N}, \forall xs : \operatorname{Fin}\left(N\right) \to X, \forall s, t : (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(d\right)), \operatorname{multiProbeOp}\left(p, xs\right)\left(s, t\right) = \prod_{l \in \operatorname{Fin}\left(N\right)} \operatorname{probeOp}\left(p, xs\left(l\right)\right)\left(s\left(l\right), t\left(l\right)\right)$$
+$$\forall d : \mathbb{N}, \forall X : Type, \forall p : X \to \operatorname{Fin}\left(d\right) \to \mathbb{R}, \forall N : \mathbb{N}, \forall xs : \operatorname{Fin}\left(N\right) \to X, \operatorname{multiProbeOp}\left(p, xs\right) = \operatorname{piKroneckerLinearEquiv}\left(\operatorname{tprod}\left((l \mapsto \operatorname{probeOp}\left(p, xs\left(l\right)\right))\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.multiProbeOp` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall d : \mathbb{N}, \forall X : Type, [\operatorname{Fintype}\left(X\right
 
 *Commentary.*
 
-Eq. (AMxvec): M_x = M_{x_1} (x) ... (x) M_{x_N}, written entrywise on the product basis indexed by the words s : Fin N -> Fin d.
+Eq. (AMxvec): M_x = M_{x_1} (x) ... (x) M_{x_N}. The frozen finite-family Kronecker equivalence piKroneckerLinearEquiv sends the tensor product of the single-probe matrices to a matrix on the words s : Fin N -> Fin d; its entry at (s, s') is the product over l of the entries of M_{x_l} at (s(l), s'(l)).
 
 **Definition 1.3 (The noisy Fisher coefficient).**
 
@@ -161,3 +161,4 @@ Take d = 3, X = Fin 3, the detector above and N = 2. Write m_x(s) = p(x_1|s_1) p
 - Truth anchor: `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.witness`
 - Truth anchor: `D5/S3/Quantum/Measurement/NoisyMeasurementCatOptimalityRefutation.witnessPerp`
+- Dependency: [D5/S3/ObserverMemory/PrimePowerTensorTower](../../ObserverMemory/PrimePowerTensorTower.md)
