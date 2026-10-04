@@ -263,3 +263,61 @@ to three, transported to the other pairs at every $n\ge4$. No declining
 comparison or full peak-three conclusion is asserted here.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. The first declining comparison
+
+**Definition 6.1 (Strict comparisons in Definition 5.1).** A left maximum at
+position $i$ exceeds every value at positions $j<i$; a left minimum is
+below every value at positions $j<i$; a right minimum is below every value
+at positions $j>i$. The right-maximum comparison is Definition 1.1.
+These four counts are strict and unshifted, including the empty and
+singleton conventions of Definition 5.1.
+
+**Theorem 6.2 (Actual decline from three to four).** For each of
+$(\mathrm{irreducible},\mathrm{rmax})$,
+$(\mathrm{irreducible},\mathrm{lmin})$,
+$(\mathrm{reducible},\mathrm{lmax})$ and
+$(\mathrm{reducible},\mathrm{rmin})$, its actual record-fiber cardinality
+satisfies $a(n,4)\le a(n,3)$ for every natural length $n$, and
+$a(n,4)<a(n,3)$ for every $n\ge3$.
+
+Proof. The actual quadratic of Theorem 3.2 gives
+
+$$
+J_4=t^4(1+q)^4(1+5q+5q^2).
+$$
+
+Together with $J_3=t^3(1+q)^3(1+2q)$ and
+$t(1+q)=q(1-q)$, this yields $J_3-J_4=t^3F(q)$, where
+
+$$
+F(x)=1+4x+2x^2-8x^3-6x^4+11x^5+15x^6+5x^7.
+$$
+
+Put $K(x)=1-2x-x^2$. The numerator of $(1+x)^2F'(x)/K(x)$ is
+
+$$
+N(x)=4+12x-12x^2-68x^3-17x^4+176x^5+270x^6+160x^7+35x^8.
+$$
+
+The quotient has exact coefficients
+$4,20,32,16,47,286,889,2224,5372$ through index eight. At every
+index $m\ge9$ its coefficient is twice the preceding coefficient plus
+the coefficient two places earlier. Matching coefficients proves the
+quotient identity and its nonnegative infinite tail. In particular,
+$N/K-20x$ has nonnegative coefficients.
+
+The actual scalar series $q=tL(t)$ has zero constant term and positive
+coefficients at every positive index: the large Schröder recurrence,
+with initial value one and nonnegative summands, gives positivity.
+Differentiation of its quadratic gives $K(q)q'=(1+q)^2$.
+Thus $\frac{d}{dt}F(q(t))=(N/K)(q(t))$, whose constant coefficient is
+four and whose positive-index coefficients dominate those of $20q(t)$.
+All derivative coefficients are strictly positive. Since $F(q(0))=1$,
+formal integration over $\mathbb Q$ shows that every coefficient of
+$F(q(t))$ is strictly positive. Multiplication by $t^3$ proves the weak
+comparison at every length and the strict comparison at every $n\ge3$.
+The transports of Theorem 5.2 give the other three comparisons. Their
+singleton corrections vanish at record indices three and four.
+
+## 追加锚（本行以下为增补区）
