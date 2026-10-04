@@ -137,7 +137,8 @@ uv run --no-project --python 3.13.12 --with python-flint==0.9.0 python docs/repo
 ```
 
 The producer is project-authored and uses python-flint/FLINT. It does
-not rerun the original high-vector generation. The95 low actions,
-mixed blocks, complete common residual Gram, actual projected-ground
-direction and restricted Schur sign remain unresolved. These four
-high action blocks prove no cofinal, Robin or RH conclusion.
+not rerun the original high-vector generation. The
+[95 low actions and exact projected-ground direction](low-common-action.md)
+and [common restricted comparison](restricted-schur.md) consume these
+saved blocks. These four high action blocks alone prove no matrix sign,
+cofinal, Robin or RH conclusion.

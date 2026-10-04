@@ -67,8 +67,10 @@ Schur elimination, not a new inverse-residual theorem.
 At $\alpha=1/8$ and the saved $e_{94}$, the allowance is about
 $0.00466$. It is not $0.000466$. Its value and the projected-ground
 lower bound are computed from the already supplied exact dyadic
-endpoints. The actual direction $e$, its matrix entries, all retained
-integrals and the restricted lower sign still need certified enclosures.
+endpoints. The [actual low/mixed computation](low-common-action.md) encloses
+the exact direction and retained entries; the
+[restricted comparison](restricted-schur.md) transports them into the
+joint matrix check under its paper supplier premises.
 Floating Householder deflation or a numerical near-zero eigenvalue does
 not provide that certificate.
 
