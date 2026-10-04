@@ -11,8 +11,8 @@ proof_shape: probeOp, multiProbeOp, gamma: definition (M_x = Σ_i p(x|i) Π_i, t
   M_𝐱 = M_{x_1} ⊗ ⋯ ⊗ M_{x_N}, and Eq. (AgammaN) with V_Φ ψ = (ζ + ζ⊥)/√2, V_Φ ψ⊥ = (ζ − ζ⊥)/√2)
 proof_shape: basisPower, catState, catPerp: definition (|j⟩^{⊗N} and the cat pair)
 proof_shape: claim: definition (published conjecture, arXiv:2109.01160v2, Supplementary Note 5,
-  "A note on optimality", read for every d ≥ 2, finite outcome set, classical noise channel and
-  N ≥ 1)
+  "A note on optimality", read for every d ≥ 2, finite outcome set, classical noise channel with
+  all p(x|i) > 0, so that an optimal pair exists, and N ≥ 1)
 proof_shape: detector, witness, witnessPerp: definition (the counterexample)
 proof_shape: result: bind-only (as local steps: the entries of the noisy operators; γ of a pair
   supported on two basis words; the reduction of every cat pair to that form; tangent-line upper
@@ -65,11 +65,11 @@ noncomputable def catState {d N : ℕ} (j k : Fin d) (θ : ℝ) : (Fin N → Fin
 noncomputable def catPerp {d N : ℕ} (j k : Fin d) (θ : ℝ) : (Fin N → Fin d) → ℂ :=
   (-Real.sin θ : ℂ) • basisPower j + (Real.cos θ : ℂ) • basisPower k
 
-/-- The conjecture: for every classical noise channel applied independently to `N` probes, some
-cat pair maximizes `γ` over all orthonormal pairs. -/
+/-- The conjecture: for every classical noise channel with all entries positive, applied
+independently to `N` probes, some cat pair maximizes `γ` over all orthonormal pairs. -/
 def claim : Prop :=
   ∀ d : ℕ, 2 ≤ d → ∀ (X : Type) [Fintype X] (p : X → Fin d → ℝ),
-    (∀ x i, 0 ≤ p x i) → (∀ i, ∑ x, p x i = 1) → ∀ N : ℕ, 1 ≤ N →
+    (∀ x i, 0 < p x i) → (∀ i, ∑ x, p x i = 1) → ∀ N : ℕ, 1 ≤ N →
       ∃ j k : Fin d, j ≠ k ∧ ∃ θ : ℝ, ∀ ζ ζp : (Fin N → Fin d) → ℂ,
         star ζ ⬝ᵥ ζ = 1 → star ζp ⬝ᵥ ζp = 1 → star ζp ⬝ᵥ ζ = 0 →
           gamma p ζ ζp ≤ gamma p (catState (N := N) j k θ) (catPerp j k θ)
@@ -98,7 +98,7 @@ theorem result : ¬ claim := by
     intro i
     fin_cases i <;> norm_num [detector, Fin.sum_univ_three, Matrix.cons_val_two]
   obtain ⟨j, k, hjk, θ, hmax⟩ :=
-    h 3 (by norm_num) (Fin 3) detector (fun x i => (hP x i).le) hcol 2 (by norm_num)
+    h 3 (by norm_num) (Fin 3) detector hP hcol 2 (by norm_num)
   have hop : ∀ x a b : Fin 3,
       probeOp detector x a b = if a = b then (detector x a : ℂ) else 0 := by
     intro x a b
