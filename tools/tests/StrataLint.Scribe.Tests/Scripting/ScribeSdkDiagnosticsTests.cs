@@ -110,7 +110,7 @@ public sealed class ScribeSdkDiagnosticsTests
     public void EmptySelectionDoesNotStartOrRequireSdk()
     {
         using var root = new TemporaryRoot();
-        var result = ScribeSdkAdmission.Check(root.Path, [], [], dotnetPath: "missing-dotnet");
+        var result = ScribeSdkAdmission.Check(root.Path, [], dotnetPath: "missing-dotnet");
         Assert.Equal(0, result.ExitCode);
         Assert.Empty(result.Paths);
         Assert.False(Directory.Exists(root.Resolve("build/scribe-sdk")));
@@ -121,7 +121,7 @@ public sealed class ScribeSdkDiagnosticsTests
     {
         using var root = Root();
         Write(root, Entry, Definition(""));
-        var result = ScribeSdkAdmission.Check(root.Path, [Entry], [Entry], root.Resolve("missing-dotnet"));
+        var result = ScribeSdkAdmission.Check(root.Path, [Entry], root.Resolve("missing-dotnet"));
         Assert.Equal(2, result.ExitCode);
         Assert.NotNull(result.InfrastructureFailure);
         Assert.Empty(result.Diagnostics);
@@ -133,56 +133,9 @@ public sealed class ScribeSdkDiagnosticsTests
         using var root = Root();
         Write(root, Entry, Definition(""));
         Write(root, "global.json", "{invalid json}");
-        var result = ScribeSdkAdmission.Check(root.Path, [Entry], [Entry]);
+        var result = ScribeSdkAdmission.Check(root.Path, [Entry]);
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("SDK invocation", result.InfrastructureFailure, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("Blueprint/D5/S0/Test/.editorconfig")]
-    [InlineData("Blueprint/D5/S0/Test/Directory.Build.props")]
-    public void NestedBlueprintConfigurationSelectsDefinitionsUnderItsDirectory(string change)
-    {
-        using var root = Root();
-        Write(root, Entry, Definition(""));
-        const string sibling = "Blueprint/D5/S0/Test/Other.scribe.cs";
-        const string outside = "Blueprint/D5/S1/Elsewhere.scribe.cs";
-        Write(root, sibling, "internal class Other { }");
-        Directory.CreateDirectory(Path.GetDirectoryName(root.Resolve(outside))!);
-        Write(root, outside, "internal class Elsewhere { }");
-
-        Assert.Equal(new[] { sibling, Entry }, ScribeSdkAdmission.SelectPaths(root.Path, [], [change]).ToArray());
-    }
-
-    [Fact]
-    public void ConfigurationOutsideBlueprintAncestorsSelectsNothing()
-    {
-        using var root = Root();
-        Write(root, Entry, Definition(""));
-
-        Assert.Empty(ScribeSdkAdmission.SelectPaths(root.Path, [], ["tools/tests/Directory.Build.props"]));
-    }
-
-    [Theory]
-    [InlineData(".editorconfig")]
-    [InlineData("Directory.Build.props")]
-    [InlineData("Directory.Build.targets")]
-    [InlineData("Directory.Packages.props")]
-    [InlineData("global.json")]
-    [InlineData("tools/Architecture/BannedSymbols.txt")]
-    [InlineData("tools/Architecture/BannedSymbols.Determinism.txt")]
-    [InlineData("tools/Architecture/BannedSymbols.Guid.txt")]
-    public void ConfigurationChangesSelectAllDiagnosticsWithoutScriptExecution(string change)
-    {
-        using var root = Root();
-        Write(root, Entry, Definition(""));
-        const string other = "Blueprint/D5/S0/Test/Other.scribe.cs";
-        Write(root, other, "using StrataLint.Scribe; internal class Other : IScribeDocumentDefinition { public DocumentDefinition Create() => null!; }");
-        Assert.Equal(new[] { other, Entry }, ScribeSdkAdmission.SelectPaths(root.Path, [], [change]).ToArray());
-        var (exit, output, error) = Verify(root, change);
-        Assert.Equal(0, exit);
-        Assert.Contains("paths=0 hostFailures=0", output, StringComparison.Ordinal);
-        Assert.Empty(error);
     }
 
     [Fact]
@@ -219,7 +172,7 @@ public sealed class ScribeSdkDiagnosticsTests
         var source = Path.Combine(root, Entry);
         Directory.CreateDirectory(Path.GetDirectoryName(source)!);
         File.WriteAllText(source, Definition(""));
-        var result = ScribeSdkAdmission.Check(root, [Entry], [Entry]);
+        var result = ScribeSdkAdmission.Check(root, [Entry]);
         Assert.True(result.ExitCode == 0, result.InfrastructureFailure ?? string.Join("\n", result.Diagnostics));
     }
 
@@ -229,7 +182,7 @@ public sealed class ScribeSdkDiagnosticsTests
         using var root = Root();
         Write(root, Entry, Definition("private static int Unused() => 1;"));
         Write(root, "Blueprint/D5/S0/Test/.editorconfig", "[*.cs]\ndotnet_diagnostic.IDE0051.severity = none\n");
-        var result = ScribeSdkAdmission.Check(root.Path, [Entry], [Entry]);
+        var result = ScribeSdkAdmission.Check(root.Path, [Entry]);
         Assert.True(result.ExitCode == 0, result.InfrastructureFailure ?? string.Join("\n", result.Diagnostics));
     }
 

@@ -31,12 +31,12 @@ public static class ScribeSdkAdmission
 {
     /// <summary>
     /// The SDK host is an explicit argument, SCRIBE_DOTNET, DOTNET_HOST_PATH, or DOTNET_ROOT.
-    /// Empty selections do not need an SDK. Configuration changes expand diagnostics only.
+    /// Empty selections do not need an SDK.
     /// </summary>
     public static ScribeSdkAdmissionResult Check(string repositoryRoot, IEnumerable<string> executionPaths,
-        IEnumerable<string> changedPaths, string? dotnetPath = null)
+        string? dotnetPath = null)
     {
-        var paths = SelectPaths(repositoryRoot, executionPaths, changedPaths);
+        var paths = executionPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
         if (paths.IsEmpty) return new(0, paths, [], null);
         try
         {
@@ -70,43 +70,6 @@ public static class ScribeSdkAdmission
         {
             return new(2, paths, [], exception.Message);
         }
-    }
-
-    internal static ImmutableArray<string> SelectPaths(string root, IEnumerable<string> executionPaths,
-        IEnumerable<string> changedPaths)
-    {
-        var selected = new HashSet<string>(executionPaths, StringComparer.Ordinal);
-        foreach (var scope in changedPaths.Select(ConfigurationScope).OfType<string>())
-        {
-            var directory = Path.Combine(root, scope.Replace('/', Path.DirectorySeparatorChar));
-            if (!Directory.Exists(directory)) continue;
-            foreach (var path in Directory.EnumerateFiles(directory, "*.scribe.cs", SearchOption.AllDirectories))
-                selected.Add(Path.GetRelativePath(root, path).Replace('\\', '/'));
-        }
-        return selected.Order(StringComparer.Ordinal).ToImmutableArray();
-    }
-
-    /// <summary>
-    /// The Blueprint directory whose definitions a changed analyzer configuration file can affect:
-    /// all of Blueprint for repository-root configuration and the banned-symbol lists, the
-    /// containing directory for configuration inside Blueprint, and none otherwise.
-    /// </summary>
-    private static string? ConfigurationScope(string path)
-    {
-        var normalized = path.Replace('\\', '/');
-        if (normalized.StartsWith("./", StringComparison.Ordinal)) normalized = normalized[2..];
-        if (normalized.StartsWith("tools/Architecture/BannedSymbols", StringComparison.Ordinal)
-            && normalized.EndsWith(".txt", StringComparison.Ordinal))
-            return "Blueprint";
-        var slash = normalized.LastIndexOf('/');
-        var name = slash < 0 ? normalized : normalized[(slash + 1)..];
-        if (name is not (".editorconfig" or "Directory.Build.props" or "Directory.Build.targets"
-            or "Directory.Packages.props" or "global.json"))
-            return null;
-        var directory = slash < 0 ? string.Empty : normalized[..slash];
-        return directory.Length == 0
-            ? "Blueprint"
-            : directory == "Blueprint" || directory.StartsWith("Blueprint/", StringComparison.Ordinal) ? directory : null;
     }
 
     private static string? ResolveDotnet()

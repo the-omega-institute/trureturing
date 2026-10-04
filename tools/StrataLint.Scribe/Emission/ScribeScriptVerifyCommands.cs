@@ -30,7 +30,7 @@ internal static class ScribeScriptVerifyCommands
                 error.WriteLine(selection.Failure);
                 return 2;
             }
-            var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths, paths);
+            var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths);
             if (admission.ExitCode != 0)
             {
                 admission.WriteFailure(error);

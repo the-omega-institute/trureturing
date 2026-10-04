@@ -225,10 +225,8 @@ SDK is an infrastructure failure. Each definition compiles in a separate tempora
 project under the ignored `build/scribe-sdk/`.
 Projects inherit repository SDK, nullable, warning and analyzer configuration,
 reference the already built Scribe API, and restore package-free locked inputs
-offline. Package analyzers come from the API's locked build. Changes to SDK,
-build, editor or banned-symbol configuration diagnose every definition while
-script execution keeps its explicit file scope. Release resource generation uses
-its separate full-corpus path.
+offline. Package analyzers come from the API's locked build. Release resource
+generation uses its separate full-corpus path.
 
 Keep each PR focused. [Current policy](../CLAUDE.md#75-base-判官永久禁令与-sl-030-边界)
 permits a coherent PR to include both content and its checking rules. FILEMAP
