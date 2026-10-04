@@ -202,5 +202,13 @@ $U$ or the strip norms required for unbounded actions.
 
 The [full-Gamma periodization supplier](full-gamma-periodic.md) gives
 a local analytic replacement allowance on this same high family,
-without changing the finite-$J$ definition of $Z$. Actual full actions,
-other Gram blocks and the exact-ground restricted sign remain unpaid.
+without changing the finite-$J$ definition of $Z$. This allowance alone
+does not evaluate actions or other Gram blocks and does not settle the
+exact-ground restricted sign.
+
+The [off-grid/full-action interface](off-grid-action.md) and
+[four-column high action](high-full-action.md) supply the actual
+full-Gamma $Z$ actions and whole-line $Z^*CZ,(CZ)^*(CZ)$ blocks with
+complete prime-tail transport. They retain the original trial
+definition and give $\|CZ\|<1.051588$. The95 low actions, mixed blocks,
+common residual Gram and restricted sign remain separate obligations.
