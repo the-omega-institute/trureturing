@@ -61,6 +61,7 @@ cd "$ROOT"
 dotnet --version >/dev/null || fail 2 'SdkUnavailable: install the SDK selected by global.json'
 DIRECTORY="$ROOT/Generated/scribe-release"
 ASSET=scribe-resources.zip
+CARRIER=StrataLint.Scribe.ResourceBundle.dll
 TEMP_DIRECTORY= DRAFT_TAG=
 cleanup() {
   local rc="$?"
@@ -135,6 +136,21 @@ download_pack() {
   verify_pack "$TEMP_DIRECTORY/$ASSET"
 }
 
+download_release_assets() {
+  local asset result
+  TEMP_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/scribe-resources.XXXXXXXX")" || fail "$?" 'TemporaryDirectoryFailed'
+  for asset in "$ASSET" "$CARRIER"; do
+    gh release download "$TAG" --repo "$REPO" --pattern "$asset" --dir "$TEMP_DIRECTORY" \
+      || fail "$?" "AssetDownloadFailed: tag=$TAG asset=$asset"
+  done
+  result="$(run_scribe resources verify-release --dir "$TEMP_DIRECTORY")" \
+    || fail "$?" "ReleaseVerificationFailed: tag=$TAG"
+  printf '%s\n' "$result"
+  [[ "$result" =~ totalSha256=([0-9a-f]{64})([[:space:]]|$) ]] \
+    || fail 1 'MissingTotalSha256: resources verify-release must report the verified manifest digest'
+  [[ "${BASH_REMATCH[1]}" == "$DIGEST" ]] || fail 1 "DigestMismatch: expected=$DIGEST"
+}
+
 if [[ "$MODE" == fetch ]]; then
   TAG="$PREFIX-$DIGEST"
   OUTPUT="${OUTPUT:-$ROOT/Generated/scribe-resources/$DIGEST}"
@@ -170,7 +186,7 @@ DIGEST="${BASH_REMATCH[1]}"
 TAG="$PREFIX-$DIGEST"
 release_state
 if [[ "$STATE" == false ]]; then
-  download_pack
+  download_release_assets
   printf 'SCRIBE_RELEASE reused tag=%s digest=%s\n' "$TAG" "$DIGEST"
   exit 0
 fi
@@ -182,8 +198,9 @@ printf 'SCRIBE_RELEASE draft-requested tag=%s digest=%s\n' "$TAG" "$DIGEST"
 gh release create "$TAG" --repo "$REPO" --draft --target "$TARGET" --title "$TAG" \
   --notes 'Verified Scribe resource pack.' --latest=false || fail "$?" "DraftCreateFailed: tag=$TAG"
 printf 'SCRIBE_RELEASE draft-created tag=%s digest=%s\n' "$TAG" "$DIGEST"
-gh release upload "$TAG" "$DIRECTORY/$ASSET" --repo "$REPO" || fail "$?" "UploadFailed: tag=$TAG"
-download_pack
+gh release upload "$TAG" "$DIRECTORY/$ASSET" "$DIRECTORY/$CARRIER" --repo "$REPO" \
+  || fail "$?" "UploadFailed: tag=$TAG"
+download_release_assets
 gh release edit "$TAG" --repo "$REPO" --draft=false --latest=false || fail "$?" "PublicationFailed: tag=$TAG"
 DRAFT_TAG=
 printf 'SCRIBE_RELEASE published tag=%s digest=%s\n' "$TAG" "$DIGEST"

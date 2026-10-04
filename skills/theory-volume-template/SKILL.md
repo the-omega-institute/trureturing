@@ -11,7 +11,8 @@ description: 新建或追加 docs/develop/theory/ 下的理论卷时使用:给�
 ①被 canonical 消化器正确切分成 atom,②不改判任何既有 atom。
 
 **不用**:消化**外部作者**已写好的卷(那是 `skills/codex-theory-ingest/SKILL.md`);
-把 atom 形式化成 Lean(那是 `skills/codex-formalize/SKILL.md`)。
+把 atom 形式化成 Lean(那是 `skills/codex-formalize/SKILL.md`)。形式化不以理论卷为前置:
+无 atom 的内容直接写 D5 Lean 与 Blueprint Scribe,经 `make deposit-uncovered` 冻结(`CLAUDE.md` 第 1.2 条)。
 
 **本文件没有独立权威。** `docs/develop/spec/golden-ledger-repo-spec.md` 是唯一规范,
 `CLAUDE.md` 是不动标架,活的 harness 输出是关于当前树的事实裁判。三者与本文件冲突时,本文件是 bug。
