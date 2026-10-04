@@ -89,10 +89,7 @@ class Action:
                 v = pi*n*n*U
                 ps = []
                 for a in (fmpq(9, 2), fmpq(5, 2)):
-                    p = arb(0)
-                    for coefficient in reversed(polynomials[a]):
-                        p = p*v+arb(coefficient)
-                    ps.append(p)
+                    ps.append(support.horner(polynomials[a], acb(v)).real)
                 value += (4*pi*pi*n**4*U*ps[0]-6*pi*n*n*ps[1])*(-pi*(n*n-1)*U).exp()
             error = arb(0)
             for a, prefactor, degree in ((fmpq(9, 2), 4*pi*pi*upperU, 4),

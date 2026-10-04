@@ -58,13 +58,36 @@ def exterior_residual_squared(action, radius, l1):
     return total.upper()
 
 
-def produce(candidate_path, boxes=512, l1_cells=1024):
+def read_point_rows(path, candidate_path, boxes, radius):
+    rows = json.loads(path.read_text())
+    if (rows['candidate_source_sha256'] != hashlib.sha256(candidate_path.read_bytes()).hexdigest()
+            or rows['radial_boxes'] != boxes or fmpq(rows['radius_exact']) != radius
+            or rows['runtime']['precision_bits'] != ctx.prec
+            or len(rows['cells']) != boxes):
+        raise ValueError('Supplied point rows must match the exact candidate and grid')
+    result = []
+    for i, cell in enumerate(rows['cells']):
+        midpoint = radius*fmpq(2*i+1, 2*boxes)
+        if cell['index'] != i or fmpq(cell['midpoint_exact']) != midpoint:
+            raise ValueError('Complete ordered midpoint row set required')
+        def decode(name):
+            man, exponent = map(int, cell[name]['upper_dyadic'])
+            value = arb(man)*arb(2)**exponent
+            if not value.is_finite() or not value >= 0:
+                raise ValueError('Finite nonnegative supplied row bound required')
+            return value
+        result.append((decode('point_residual_abs_upper'), decode('full_action_tail_upper')))
+    return result
+
+
+def produce(candidate_path, boxes=512, l1_cells=1024, row_path=None):
     ctx.prec = 192
     if boxes < 16 or boxes & (boxes-1) or l1_cells < 16 or l1_cells & (l1_cells-1):
         raise ValueError('Power-of-two box counts at least sixteen required')
     data = json.loads(candidate_path.read_text())
     action = module.Action(data)
     radius = fmpq(5, 2)
+    point_rows = read_point_rows(row_path, candidate_path, boxes, radius) if row_path else None
     l1 = source_l1(action, radius, l1_cells)
     exterior = exterior_residual_squared(action, radius, l1)
     total = arb(0)
@@ -74,8 +97,11 @@ def produce(candidate_path, boxes=512, l1_cells=1024):
         midpoint, half_width = (lo+hi)/2, (hi-lo)/2
         r = arb(midpoint, arb(half_width))
         started = time.monotonic()
-        value, action_tail = action.value(acb(arb(midpoint)))
-        point_error = abs(value-action.witness(acb(arb(midpoint))).real).upper()
+        if point_rows is None:
+            value, action_tail = action.value(acb(arb(midpoint)))
+            point_error = abs(value-action.witness(acb(arb(midpoint))).real).upper()
+        else:
+            point_error, action_tail = point_rows[i]
         gaps = [module.support.positive_gap((sign*acb(r)).exp()) for sign in (1, -1)]
         gap_lower = min(g.real.lower() for g in gaps)
         if not gap_lower > 0:
@@ -108,10 +134,14 @@ def produce(candidate_path, boxes=512, l1_cells=1024):
                               'partial_squared_upper': str(total.upper()),
                               'cell_duration_seconds': time.monotonic()-started}), flush=True)
     norm = (total+exterior).sqrt().upper()
-    return {'scope': 'Directed whole-space common-source residual upper enclosure, pending independent mathematical review; no original-form sign, Lean, Robin or RH certificate',
+    return {'scope': 'Directed whole-space common-source residual upper enclosure under the numerical-supplier and certified-input-row premises; no original-form sign, Lean, Robin or RH certificate',
             'target': data['target'],
             'candidate_source_sha256': hashlib.sha256(candidate_path.read_bytes()).hexdigest(),
+            'supplied_point_rows_sha256': hashlib.sha256(row_path.read_bytes()).hexdigest() if row_path else None,
+            'supplied_point_rows_are_input_premises': row_path is not None,
             'producer_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            'action_source_sha256': hashlib.sha256((HERE/'theta_action_integral.py').read_bytes()).hexdigest(),
+            'support_source_sha256': hashlib.sha256((HERE/'theta_direct_action.py').read_bytes()).hexdigest(),
             'runtime': {'python': sys.version.split()[0], 'python_flint': flint.__version__, 'precision_bits': ctx.prec},
             'radius_exact': str(radius), 'radial_boxes': boxes, 'source_l1_boxes': l1_cells,
             'quadrature_callbacks': action.calls,
@@ -125,8 +155,7 @@ def produce(candidate_path, boxes=512, l1_cells=1024):
             'fixed_w_coefficients_exact': data['w_coefficients_exact_dyadic_rationals'],
             'individually_certified_zero_balls': [str(g) for g in action.gammas],
             'cells': cells,
-            'unpaid': ['independent direct-action and whole-space residual mathematical review',
-                       'original half-bound and cofinal projected comparison', 'RH and Robin']}
+            'unpaid': ['original half-bound and cofinal projected comparison', 'RH and Robin']}
 
 
 def main():
@@ -134,9 +163,10 @@ def main():
     parser.add_argument('--candidate', type=Path, required=True)
     parser.add_argument('--boxes', type=int, default=512)
     parser.add_argument('--l1-cells', type=int, default=1024)
+    parser.add_argument('--rows', type=Path, help='Reuse certified point bounds; structural checks do not prove their values')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    result = produce(args.candidate, args.boxes, args.l1_cells)
+    result = produce(args.candidate, args.boxes, args.l1_cells, args.rows)
     args.output.write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps({k: result[k] for k in ('whole_residual_norm_upper', 'exterior_residual_squared_upper', 'passes_one_over_ten_thousand_upper_target')}, indent=2))
 

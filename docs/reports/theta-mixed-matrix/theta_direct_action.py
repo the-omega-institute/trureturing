@@ -1,9 +1,8 @@
-"""Prototype complex theta jets and isolated positive support gap."""
+"""Scaled theta jets and isolated positive support gaps for the actual operator."""
 import ast
-import json
 from pathlib import Path
 
-from flint import acb, arb, ctx, fmpq
+from flint import acb, acb_poly, arb, ctx, fmpq
 
 
 CANONICAL = Path.cwd()/'docs/reports/theta-mixed-matrix'
@@ -17,10 +16,11 @@ POLYS = namespace['polys']
 
 
 def horner(coefficients, z):
-    value = acb(0)
-    for c in reversed(coefficients):
-        value = value*z+acb(c)
-    return value
+    """Evaluate the same polynomial after a certified midpoint translation."""
+    z = acb(z)
+    center = z.mid()
+    shifted = acb_poly(coefficients)(acb_poly([center, 1]))
+    return shifted(z-center)
 
 
 def theta_jets(z, order=14, terms=8):
@@ -98,26 +98,3 @@ def positive_gap(u):
         radius = 2*radius
     raise ValueError('Positive support branch not isolated; subdivide parameter box')
 
-
-def main():
-    ctx.prec = 192
-    data = []
-    for r in (fmpq(0), fmpq(1, 4), fmpq(3, 4), fmpq(3, 2), fmpq(5, 2)):
-        z = acb(arb(r, arb(fmpq(1, 1024))), arb(0, arb(fmpq(1, 1024))))
-        right = positive_gap(z.exp())
-        left = positive_gap((-z).exp())
-        jets, prefactor = theta_jets(z)
-        ratios = [str(v/jets[0]-acb(fmpq(1, 4**k))) for k, v in enumerate(jets[1:], 1)]
-        data.append({'r_exact': str(r), 'real_and_imaginary_radius': '1/1024',
-                     'right_gap_box': str(right), 'left_gap_box': str(left),
-                     'v1_through_v7_boxes': ratios, 'Phi_box': str(prefactor*jets[0])})
-    result = {'scope': 'Unreviewed analytic-support and theta-jet acquisition prototype; no action integral or residual certificate',
-              'precision_bits': ctx.prec, 'boxes': data,
-              'unpaid': ['independent support/jet proof review', 'actual B action quadrature', 'whole-space residual and all spatial tails', 'RH and Robin']}
-    output = Path(__file__).with_name('theta-direct-action-probe-result.json')
-    output.write_text(json.dumps(result, indent=2)+'\n')
-    print(json.dumps(result, indent=2))
-
-
-if __name__ == '__main__':
-    main()
