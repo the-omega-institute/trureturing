@@ -1,0 +1,3 @@
+The complete all-straight path ensures c_k>=1, and all
+counts are bounded by 3^k, so no infinite or zero-root pathology is used.
+
