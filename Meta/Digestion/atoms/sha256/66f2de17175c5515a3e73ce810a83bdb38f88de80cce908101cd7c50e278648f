@@ -1,0 +1,31 @@
+**定义 31.3（由实际叶报告强制的块与被覆盖 $\alpha$）。** 对每个正来源兼容的叶报告，按下表定义唯一的强制块 $(w,T)$，其中 $T\in\{A,C\}$。$w$ 可以是空地址；表中的根不是预先给定的前像地址。
+
+$$
+\begin{array}{c|c|c}
+\text{实际报告}&\text{强制块}&\text{该块的 }\alpha\text{ 地址}\\ \hline
+\operatorname{out}(w\mathtt R)=\mathsf{leaf}_\beta
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{LL})=\mathsf{leaf}_\beta
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{LR})=\mathsf{leaf}_\alpha
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{RL})=\mathsf{leaf}_\beta
+ &(w,C)&\{w\mathtt{LLR},w\mathtt{RR}\}\\
+\operatorname{out}(w\mathtt{RR})=\mathsf{leaf}_\alpha
+ &(w,C)&\{w\mathtt{LLR},w\mathtt{RR}\}
+\end{array}
+\tag{31.6}
+$$
+
+令 $\mathcal B_H$ 为仅对 $H^{\mathrm{leaf}}$ 中实际叶报告应用式（31.6）所得的有限块集合，重复的块只保留一次；令
+
+$$
+\Gamma_H=
+ \bigcup_{(w,T)\in\mathcal B_H}
+ \{wv:v\in\Lambda_\alpha(T)\},
+\qquad g(H)=|\Gamma_H|.
+\tag{31.7}
+$$
+
+$\Gamma_H$ 是由先前叶报告固定的 $\alpha$ 地址并集；不将分支或不存在报告产生的推论加入此集合。它是集合并，不把重叠块重复计数。凡 $P\in\mathcal E_H$，均有 $P|_w=T$ 对所有 $(w,T)\in\mathcal B_H$ 成立，特别地 $\Gamma_H\subseteq\Lambda_\alpha(P)$。块中的其余带标签叶及分支也因此在正比较集合内固定，但仍不是实际缓存报告。
+

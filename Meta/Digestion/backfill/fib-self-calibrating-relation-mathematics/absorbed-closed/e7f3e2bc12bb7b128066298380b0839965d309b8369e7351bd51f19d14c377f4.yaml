@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e7f3e2bc12bb7b128066298380b0839965d309b8369e7351bd51f19d14c377f4
   normalized_sha256: sha256:e7f3e2bc12bb7b128066298380b0839965d309b8369e7351bd51f19d14c377f4
 cas_ref: sha256:e7f3e2bc12bb7b128066298380b0839965d309b8369e7351bd51f19d14c377f4
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/TraceFibers/FixedFiberPairModulus.result
+    target_statement_id: sha256:7d83c53e9a908526eeb67125c52d1a8ea1ce98afe547aafeb9cc52ba3ef8eb79
 receipts:
   unresolved_subitems: []
