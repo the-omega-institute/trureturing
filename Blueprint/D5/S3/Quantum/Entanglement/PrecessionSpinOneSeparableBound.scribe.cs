@@ -46,7 +46,10 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
                 DescribeRole.Definition),
             Node("result", "Proof of the separable bound", Disp(F.Id("claim")),
                 "The proof diagonalizes the spin-K/2 Jx operator with the binomial eigenbasis, evaluates the rotation average by the K-th root-of-unity filter, decomposes the half-integer sign spectrum, and compresses the product quadratic form to a six-index off-diagonal block. The squared Frobenius estimate is convex in |a₁|² for K ≥ 7 and is attained by the spin-1 middle state and an endpoint singular vector.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("huynh-vu-zaw-scarani-2023-precession-separable-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
