@@ -3,7 +3,8 @@
 The exact lift in [high-trials.md](high-trials.md) divides by
 $\|p_0\|^2$, where $p_0=Pv_0$. This supplier pays that normalization and
 transports the two complete action-tail allowances to the common
-residual on $p_0^\perp$. It reuses the saved original-theta norms,+(WC2) and standard Plancherel/triangle inequalities. It does not supply
+residual on $p_0^\perp$. It reuses the saved original-theta norms,
+(WC2) and standard Plancherel/triangle inequalities. It does not supply
 the retained residual Gram or a new residual-comparison theorem.
 
 ## Quantitative ground projection
