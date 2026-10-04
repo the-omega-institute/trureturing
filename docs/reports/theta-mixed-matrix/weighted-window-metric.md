@@ -159,6 +159,89 @@ Failure of this scalar sufficient bound does not refute (WM6).
 Keeping the exact rank-one-corrected $B_L$ leaves room for a stronger
 relative comparison without that scalar loss.
 
+## Even the optimal scalar transfer vanishes
+
+The loss in (WM7) is structural. For actual compact primitives $f=R_Lu$,
+the best scalar comparison $B_L\succeq\beta K_L$ is the infimum of
+
+$$
+\frac{\displaystyle\int_{-L}^Lw|f|^2
+-\left|\int_{-L}^L\ell f\right|^2}
+{\displaystyle\int_{-L}^L|f|^2}. \tag{WM9}
+$$
+
+Every even compact smooth $f$ is an actual test $f=\Phi h$, since
+$\Phi$ is smooth and positive. These primitives are dense in even
+$L^2(-L,L)$, and the numerator is a bounded form on each fixed window.
+Thus (WM9) has the same infimum as $M_w-|\ell\rangle\langle\ell|$
+on that even space. Density suffices; the primitive map need not be
+onto all of $L^2$.
+
+Apply the standard rank-one multiplication secular formula to these
+specific weights. With $w_{\min}=\min_{[-L,L]}w>0$, the optimal
+constant is the unique $\beta_L^*\in(0,w_{\min})$ satisfying
+
+$$
+\int_{-L}^L\frac{\ell(x)^2}{w(x)-\beta_L^*}\,dx=1. \tag{WM10}
+$$
+
+The left side at zero is the original mass $m_L<1$. It increases
+strictly and diverges as $\beta\uparrow w_{\min}$: positivity of
+$\ell$ and smoothness of $w$ give a logarithmically divergent lower
+integral near a minimum, including a minimum at an endpoint.
+The minimizing $L^2$ eigenfunction is proportional to
+$\ell/(w-\beta_L^*)$. Its nonzero endpoint traces prevent compact
+attainment, but compact smooth $L^2$ approximation preserves the
+infimum. No new general spectral theorem is claimed here.
+
+Put $\Delta_L=1-m_L$ and $I_L=\int_{-L}^L\Phi(x)^2\,dx$.
+Subtracting the zero-parameter integral in (WM10) gives the exact
+parameter identity
+
+$$
+\Delta_L=\beta_L^*
+\int_{-L}^L\frac{\Phi(x)^2}{1-\beta_L^*/w(x)}\,dx.
+$$
+
+Since $w\ge w_{\min}$, it follows that
+
+$$
+\frac{\Delta_L}{I_L+\Delta_L/w_{\min}}
+\le\beta_L^*\le\frac{\Delta_L}{I_L}. \tag{WM11}
+$$
+
+The independent root characterization gives $\beta_L^*<w_{\min}$
+even if the displayed upper estimate exceeds that minimum. Original
+theta boundedness and decay give
+$I_L\to\|\Phi\|_2^2\in(0,\infty)$ and
+$w_{\min}\ge2/\sup_{\mathbb R}\Phi>0$, while $\Delta_L\to0$.
+Hence
+
+$$
+\frac{\beta_L^*}{\Delta_L}\longrightarrow\frac1{\|\Phi\|_2^2},
+\qquad\beta_L^*\longrightarrow0. \tag{WM12}
+$$
+
+There is also an actual-test witness: choose the existing admissible
+even compact cutoffs $\chi_L$ supported inside exhausting windows,
+with $0\le\chi_L\le1$ and $\chi_L\to1$. For
+$f_L=\chi_L\Phi$, $u_L=f_L'$,
+
+$$
+b_L(u_L)=\operatorname{Var}_\nu(\chi_L)\longrightarrow0,
+\qquad
+\langle K_Lu_L,u_L\rangle
+=\|\chi_L\Phi\|_2^2\longrightarrow\|\Phi\|_2^2>0.
+$$
+
+Thus a uniform positive scalar $B_L\succeq\beta K_L$ over unbounded
+windows is unavailable even with the optimal constant. This does not
+disprove the joint relative estimate (WM6). It supplies no arithmetic
+rate for $\mathcal G_L$, cofinal positivity, RH or Robin conclusion.
+The derivation reuses the original metric and the standard rank-one
+framework; literature priority is not established, and no numerical
+theta integral or new Lean declaration is supplied.
+
 The [Suzuki source note](../../../Library/Weil/suzuki2026screw.md) retains
 the existing small-window and spectral-limit boundaries. The
 [Shi finite-pencil note](../../../Library/Weil/shi2026finitepencils.md)
