@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:b2ab4684429f4817b3181a17e845e555d3df6fa99710c79bdd19369e994e011b
   normalized_sha256: sha256:b2ab4684429f4817b3181a17e845e555d3df6fa99710c79bdd19369e994e011b
 cas_ref: sha256:b2ab4684429f4817b3181a17e845e555d3df6fa99710c79bdd19369e994e011b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/FiniteSamplingSmithDefect.finite_sampling_smith_defect
+    target_statement_id: sha256:9f6657ad26c6b975f7b0a054d13ec3f7eece2d9a61ae1c167afb2afdfb904bd2
+  - gid: D5/S1/Scale/Fibonacci.fib_cassini_from_golden_norm
+    target_statement_id: sha256:705efb41c8ed2d7be8efa40e9fd10e4fde55225d9335e386144b0f6c5c0d04d2
 receipts:
   unresolved_subitems: []
   chain_atoms:
