@@ -210,3 +210,39 @@ interior, actions and restricted comparison. Under the same paper
 premises, it improves the high coercivity input and yields a
 ground-orthogonal margin greater than $0.00169425$ at $c=0.41$.
 This is still a bounded parameter range, without cofinal or RH closure.
+
+The [actual coupling norm and joint three-block comparison](actual-coupling.md)
+uses the saved Grams to sharpen the low-tail allowance and the actual
+$ZA$ norm. Under the same paper premises its ground-orthogonal margin
+is greater than $0.00112575$ at $c=0.42$, without new action columns.
+The remaining cofinal, RH, full Robin and Lean obligations are retained.
+
+The [weighted window metric](weighted-window-metric.md) reuses Suzuki's
+derivative pairing and transports the original theta variance to its
+exact rank-one-corrected metric. It states the outstanding cofinal
+relative estimate, including the loss in a scalar unweighted transfer.
+It does not supply that estimate or a further numerical margin.
+
+The [target-dependent correction](target-correction.md) chooses new exact
+correction maps from those saved actions and reuses the ground moments
+to control both complementary ground tails. Under the same paper premises
+it gives a whole-form ground-orthogonal gap greater than $0.00186736$
+at $c=0.45$. At $c=0.46$ the finite restriction passes, while the
+requested joint gap $1/1000$ fails its sufficient comparison. Neither
+result closes the cofinal, RH, full Robin or Lean obligations.
+
+The [fixed-test and centered-window interface](centered-window.md)
+distinguishes the relative scalar conversion from a sufficient absolute
+fixed-test limit, and maps the published pole constraint to the original
+theta mean. It retains the unproved signed arithmetic estimate.
+A new four-bump example shows why pole cancellation alone does not turn
+a generic pointwise exponential error envelope into that estimate.
+The example kernel is not the actual arithmetic kernel.
+
+The [signed arithmetic head and fixed-row tail](signed-discrepancy-window.md)
+retain the prime-minus-continuum realization. Published cumulative-error
+and weighted smoothing suppliers give explicit coupling inputs in the
+original centered metric. Three new Fibonacci-plus-half cutoffs retain
+all prime powers and certify smaller band allowances than the same
+measure's total-variation envelope. The out-of-band allowance, low-block
+sign and common cofinal parameter sequence remain unpaid.
