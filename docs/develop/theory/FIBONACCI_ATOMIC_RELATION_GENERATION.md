@@ -56789,7 +56789,7 @@ U(e)\longmapsto U^h(e)=h(t(e))\,U(e)\,h(s(e))^{-1}
 
 曲率的上述定义有三个必要的外加条件：一是 FIB 接缝必须明确哪些闭合边界构成同一二维胞腔；二是每个胞腔边界必须有一致的方向和基点；三是边赋值必须满足反向取逆。若没有 \(\mathcal P_{\mathrm{FIB}}\)，可以定义任意闭合路径的 Holonomy，却不能把某个回路缺陷命名为局部曲率二形式。即使所有胞腔曲率为单位元，非单连通的 FIB 图仍可有非平凡全局 Holonomy；局部平坦不推出全局纯规范。
 
-在阿贝尔 \(G\) 中，边变量可写成 \(U(e)=\exp(A_e)\)，胞腔曲率成为离散外微分
+若 \(G\) 是连通阿贝尔李群，并在所用邻域选定局部对数 \(A_e\)，则边变量可写成 \(U(e)=\exp(A_e)\)，胞腔曲率在该局部坐标中成为离散外微分
 \[
 F_p=(dA)_p=\sum_{e\subset\partial p}\varepsilon_{p,e}A_e
 \quad\text{（模 }2\pi\text{）}.
@@ -57122,8 +57122,8 @@ $$
 
 且动作保持 FIB 合法边和接缝复合，则因果支撑与路径测度在 \(L\) 下协变。若还要求观测 \(O\) 满足 \(O(\ell\cdot\gamma)=\rho(\ell)O(\gamma)\)，才得到观测表示的协变性。FIB 的 Fibonacci 递推本身没有给出 Lorentz 群、度规或表示 \(\rho\)。
 
-给每条因果边附加速度 \(u_e\)、边选择权 \(q_e(x,u)\ge0\) 和条件转移核 \(K_e(dy,dv)\)。要求同一实际环境中
-\(\sum_{e:s(e)=(x,u)}q_e(x,u)\le1\)，等号情形给出守恒核；严格小于一时表示外加吸收。若接缝上下文 \(X_n\) 足以决定下一步的联合位置—速度律，则离散输运算子为
+给每条因果边附加速度 \(u_e\)、边选择权 \(q_e(x,u)\ge0\) 和条件转移核 \(K_e(dy,dv)\)。本节的守恒输运接口要求同一实际环境中
+\(\sum_{e:s(e)=(x,u)}q_e(x,u)=1\)。若模型允许严格小于一的吸收概率，缺失质量必须显式并入前向生成元的 killing 项，不能仍使用下面的无杀死项方程。若接缝上下文 \(X_n\) 足以决定下一步的联合位置—速度律，则离散输运算子为
 
 $$
 (\mathsf Kf)(x,u)
@@ -57186,26 +57186,29 @@ $$
 沿用第377节已给出的群值连接 \(U\)、Holonomy 与面曲率。对一般结构群必须先选有限维表示 \(\rho\)，拓扑回路量才写成
 \(\operatorname{tr}\rho(\operatorname{Hol}(\gamma))\)。本节关注这些局部数据在外加胞腔粘合和参数空间上的全局不变量；FIB 本身只提供可被提升的路径词。
 
-**条件接口 380.2（拓扑泵与谱隙）。** 设外加参数环 \(\lambda\in S^1\)，每个参数给出同一 Hilbert 空间上的有限范围算子 \(H(\lambda)\)，并存在统一谱隙
+**条件接口 380.2（拓扑泵与谱隙）。** 设外加准动量 \(k\in\mathbb T^1\) 与驱动参数 \(\lambda\in S^1\)，每个 \((k,\lambda)\in\mathbb T^2\) 给出同一 Hilbert 空间上的有限范围自伴算子 \(H(k,\lambda)\)，并存在统一谱隙
 
 $$
-\operatorname{dist}\bigl(0,\operatorname{spec}H(\lambda)\bigr)\ge\delta>0.
+\operatorname{dist}\bigl(0,\operatorname{spec}H(k,\lambda)\bigr)\ge\delta>0.
 \tag{380.4}
 $$
 
-若占据投影 \(P(\lambda)=\mathbf1_{(-\infty,0)}(H(\lambda))\) 随参数连续可微，并在一个参数图上取局部正交框架 \(U(\lambda)\) 满足 \(P=UU^\dagger\)，则可定义
+若占据投影 \(P(k,\lambda)=\mathbf1_{(-\infty,0)}(H(k,\lambda))\) 随 \((k,\lambda)\) 连续可微，并在一个参数图上取有限秩局部正交框架 \(U(k,\lambda)\) 满足 \(P=UU^\dagger\)，则以反厄米 Chern–Weil 约定定义
 
 $$
-\mathcal A=i\,\operatorname{tr}\bigl(U^\dagger dU\bigr),
+\mathcal A=U^\dagger dU,
 \qquad
-\mathcal F=\operatorname{tr}\bigl(P\,dP\wedge dP\bigr).
+\mathcal F=d\mathcal A+\mathcal A\wedge\mathcal A,
+\qquad
+\operatorname{tr}\mathcal F
+=\operatorname{tr}\bigl(P\,dP\wedge dP\bigr).
 \tag{380.5}
 $$
 
-在二维参数环面 \(\mathbb T^2\) 上，若相应丛满足正则性，第一 Chern 数
+若无限维情形不具有限秩，则另须声明 \(\operatorname{tr}(P\,dP\wedge dP)\) 的迹类或每单位体积迹条件。在二维参数环面 \(\mathbb T^2\) 上，若相应丛满足这些正则性，第一 Chern 数
 
 $$
-\operatorname{Ch}_1(P)=\frac{1}{2\pi i}\int_{\mathbb T^2}\mathcal F
+\operatorname{Ch}_1(P)=\frac{1}{2\pi i}\int_{\mathbb T^2}\operatorname{tr}\mathcal F
 \in\mathbb Z
 \tag{380.6}
 $$
@@ -57221,7 +57224,7 @@ $$
 
 但这需要给出上述体—边界对应、取向和 Fredholm 性；有限 FIB 树上的叶数差不自动是指数，也不自动代表边界电流。
 
-**条件接口 380.3（Kubo 型拓扑响应）。** 设有限体积 \(\Lambda\) 上有外加电流算子 \(J_a\)、基态投影 \(P_\Lambda\)、归一化状态或迹态，以及绝热线性响应的接触项。若相关函数在统一体积界下可积、体极限存在且谱隙在极限中保持，则反对称响应系数可写为
+**条件接口 380.3（Kubo 型拓扑响应）。** 设有限体积 \(\Lambda\) 上有外加电流算子 \(J_a\)、基态投影 \(P_\Lambda\)，并明确采用一体 Fermi 投影的迹态；于是 \(\operatorname{Tr}_\Lambda/|\Lambda|\) 是迹密度，接触项也按同一体积归一化。若相关函数在统一体积界下可积、体极限存在且谱隙在极限中保持，则反对称响应系数可写为
 
 $$
 \sigma_{ab}^{\mathrm{top}}
