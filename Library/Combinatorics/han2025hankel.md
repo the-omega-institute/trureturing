@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2502.05993v2
 claim: "H-fraction expansions of the q-metallic numbers and their shifts up to n+1, periodicity, values, Gale-Robinson recurrences and contiguity relations of their shifted Hankel determinants; Conjecture E on the shifts n+2 and beyond."
 strata_touched:
   - D5/S3/Combinatorics/MetallicHankel/MetallicHankel
+  - D5/S3/Combinatorics/MetallicHankel/MetallicHankelUnbounded
 license: citation-only
 triage: anchor
 ---
