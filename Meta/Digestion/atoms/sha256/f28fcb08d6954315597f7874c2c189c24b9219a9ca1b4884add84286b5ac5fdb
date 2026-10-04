@@ -1,0 +1,44 @@
+### 38.6 命题：未来记忆恢复地址，但不使删除可逆
+
+定义
+
+$$
+Z_h(\omega)=(\kappa_0\omega,\ldots,\kappa_0T^h\omega),\qquad
+\mathcal B(\omega)=(\kappa_0(T^j\omega))_{j\geq0}.
+$$
+
+若 $z_j=\kappa_0(T^j\omega)$，则
+
+$$
+z_j-\gamma z_{j+1}=\Delta_{a_j(\omega)}.
+$$
+
+五个增量两两不同，所以完整未来 $\mathcal B$ 单射。它的实际像上的首坐标删除满足
+
+$$
+A_{\mathcal B}\mathcal B=\mathcal BT.
+$$
+
+证明。差分是38.3的前缀式。相同未来逐项给出相同窗口，故给出相同全部位。$\kappa_0$ 连续，$\mathcal B$ 连续；$\Omega$ 紧，实数乘积 Hausdorff，所以它是到实际像的同胚。删除首坐标就是 $T$ 的共轭，而 $T(\mathrm{null}\,\omega)=T([3]\omega)=\omega$，故 $A_{\mathcal B}$ 仍非单射。$\square$
+
+任何同时满足 $\kappa_0=f\eta$ 与 $\eta T=A\eta$ 的边界都必须对 $\Omega$ 地址单射：同一摘要经 $A^j$ 给出相同全部未来，再用差分恢复来源。这里要求的是 $\eta$ 单射，不能倒置为 $A$ 单射。此结论沿用源卷命题14.14。
+
+每个固定有限 $Z_h$ 却不能永久自主更新。把38.3的碰撞地址 $\alpha=[3]L$、$\beta=\mathrm{null}R$ 前接 $h$ 个空窗，所得两来源的 $Z_h$ 相同；其 $Z_hT$ 的末坐标分别是 $-1$ 与 $\phi$。因此同层更新不存在。当前 $Z_h$ 与下一步 $Z_hT$ 的联合列表恰能与 $Z_{h+1}$ 互相恢复，这只是该配对任务的充分响应；源卷定理14.11–14.13给出完整线段与逆极限证明。
+
+在联合完成域上，更新是
+
+$$
+T_K(\omega,z)=\left(T\omega,S_c^{-1}(z-d_{\operatorname{head}\omega})\right),
+\qquad\kappa_K(\omega,z)=\kappa_0(\omega).
+$$
+
+其完整未来纤维恰为 $\{\omega\}\times G$：算术坐标不进入任何未来 $\kappa_K$，窗口差分只恢复 $\omega$。在实际图 $\Gamma$ 上地址已决定算术坐标，且 $\kappa_0|_D$ 单射，故精确当前 $\kappa_K$ 已恢复该图上的来源。恢复 $\Omega$、恢复 $\Gamma$ 和恢复 $K$ 是不同任务，正如源卷命题14.15所区分的那样。
+
+一般地，若共同保留读数 $r,rU,\ldots,rU^h$，其核为
+
+$$
+E_h=\bigcap_{j=0}^h\ker(rU^j),\qquad E_{h+1}\subseteq E_h.
+$$
+
+新增记录使知识细化。相反，只保留 $T^h\omega$ 的来源核 $\ker T^h$ 随 $h$ 增大而粗化，因为 $T^{h+1}$ 是 $T^h$ 的确定后处理。两种方向不应互换；单次读数 $rU^h$ 的核则未必单调。
+

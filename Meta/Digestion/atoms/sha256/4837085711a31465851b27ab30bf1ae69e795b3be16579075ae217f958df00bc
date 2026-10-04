@@ -1,0 +1,32 @@
+**约定 37.1（来源公式与原共同长度的两轨余数图）。** 使用定义 15.1 的 Campbell 初值 $b(1)=1$，并只以假设 17.1 的尺度公式为来源前提；其固定版本为 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex)。准确使用该公式本身：对 $n\ge2$，在相应半开区间中取唯一的 $s=3^k$、$k\ge0$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\le n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\le n<9s.
+\end{aligned}
+\tag{37.1}
+$$
+
+本节不加入实际 Cloitre 的前提。固定外部整数 $M\ge1$，令 $R_M(n)=b(n)\bmod M$ 为最小非负余数。沿用定义 17.2、20.1 的 $W_H$、规范窗口数 $L$、五窗字母表 $\Sigma$ 和实际单位末字母表 $\mathcal U$，定义
+
+$$
+\begin{aligned}
+\Gamma_M^{\mathrm{can}}
+&=\left\{\bigl(W_{L(n)}(n),W_{L(n)}(R_M(n))\bigr)_{\mathrm{sync}}:n\ge1\right\},\\
+\Gamma_M^{\mathrm{all}}
+&=\left\{\bigl(W_H(n),W_H(R_M(n))\bigr)_{\mathrm{sync}}:
+n\ge1,\ H\ge L(n)\right\}.
+\end{aligned}
+\tag{37.2}
+$$
+
+每个词恰有 $H$ 个 $\Sigma^2$ 窗口字母，随后恰有一个 $\mathcal U^2$ 单位末字母；每轨满足全部窗口内、窗口间及最低窗口到单位位的原接缝守卫，数值仍是 $e+qc$，$q=(2,3)$。输出是整数余数的合法数值行，不是替换标签。由初值及 (37.1)，$0\le R_M(n)\le b(n)\le n$，故容量式 (20.7)
+
+$$
+L(z)\le H\quad\Longleftrightarrow\quad0\le z<F_{3H+3}
+\tag{37.3}
+$$
+
+保证输出能使用每个原输入长度；不要求 $H\ge L(M)$。零行是 $\mathrm{null}^H\underline0$；$L(0)=L(1)=0$，而输入域仍是全部 $n\ge1$。
+
