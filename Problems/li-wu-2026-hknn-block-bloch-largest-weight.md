@@ -122,7 +122,7 @@ Information-escape registration is paused under CLAUDE.md §3.9.
   The strict comparison includes every nonzero full-period Bloch sum,
   without a full-orbit-length or balanced-sector assumption on the rival.
 - **Open here (not separately kernel-checked):** the sharper integer
-  estimate |c_D|≤K−2 for non-arcs and the explicit identity K=m!. The
+  estimate |c_D|≤K−2 for balanced non-arc down sets and the explicit identity K=m!. The
   chain states |c_D|<K and defines K as a crossing-pairing cardinality.
   Neither stronger formula is an additional theorem of this delivery.
 - **Computed:** the table above gives the block and runner-up weights and
