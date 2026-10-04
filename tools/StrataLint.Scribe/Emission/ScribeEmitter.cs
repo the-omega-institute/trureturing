@@ -163,25 +163,21 @@ public static class ScribeEmitter
             suppliedDefinitions: definitions).ExitCode;
     }
 
-    /// <summary>
-    /// Puts the formulas of the markdown a change touches in front of the pinned KaTeX,
-    /// on both the committed bytes and the current render. The corpus is still rendered —
-    /// a document's bytes depend on the whole document graph — but only the named
-    /// projections are judged and reported, and freshness stays ungated.
-    /// </summary>
+    /// <summary>Checks rendered and tracked markdown formulas in the caller's scope.</summary>
     internal static int CheckMarkdown(
         string repositoryRoot,
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
         MarkdownFormulaScope scope,
-        IReadOnlyList<DocumentDefinition> definitions)
+        IReadOnlyList<DocumentDefinition> definitions,
+        bool scoped = false)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
-        var run = Run(
+        var run = scoped && definitions.Count == 0 ? new ScribeEmissionRun(0, null) : Run(
             repositoryRoot,
             check: true,
             TextWriter.Null,
@@ -190,11 +186,17 @@ public static class ScribeEmitter
             validateRepository: false,
             tolerateAbsentDocuments: false,
             suppliedDefinitions: definitions,
-            markdownScope: scope);
+            markdownScope: scope,
+            writeAttestation: !scoped,
+            graphRepositoryRoot: scoped ? repositoryRoot : null,
+            validateDocumentGraph: !scoped,
+            validateSourceBijection: !scoped);
         if (run.ExitCode != 0)
         {
             return run.ExitCode;
         }
+
+        if (scoped && definitions.Count == 0) scope.Close();
 
         foreach (var finding in scope.Findings)
         {

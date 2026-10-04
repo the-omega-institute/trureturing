@@ -54,9 +54,9 @@ if [[ "$MODE" != local ]]; then
   command -v gh >/dev/null 2>&1 || fail 2 'MissingTool: gh'
 fi
 ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
-PROJECT="$ROOT/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
 [[ -f "$ROOT/global.json" && -f "$PROJECT" && -d "$ROOT/Blueprint" ]] \
-  || fail 2 'InvalidRepository: global.json, Blueprint and the documents host are required'
+  || fail 2 'InvalidRepository: global.json, Blueprint and the Scribe host are required'
 cd "$ROOT"
 dotnet --version >/dev/null || fail 2 'SdkUnavailable: install the SDK selected by global.json'
 DIRECTORY="$ROOT/Generated/scribe-release"

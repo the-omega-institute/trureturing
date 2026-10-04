@@ -157,14 +157,13 @@ public sealed class EmissionTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["emit", "--write-somewhere"],
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,
             error);
 
         Assert.Equal(2, exit);
-        Assert.Contains("emit|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
     }
 
     private static DocumentDefinition SyntheticDefinition()

@@ -6,9 +6,10 @@ namespace StrataLint.Scribe.Documents.Tests;
 public sealed class DependencyDirectionTests
 {
     [Fact]
-    public void DocumentsOwnsANamespacedEntryPointAndCanReachScribeCommands()
+    public void DocumentsIsALibraryAndScribeOwnsTheCommandEntryPoint()
     {
-        Assert.Equal("StrataLint.Scribe.Documents.Program", typeof(Program).FullName);
+        Assert.Null(DocumentAssembly.Value.EntryPoint);
+        Assert.Equal("StrataLint.Scribe.ScribeProgram", typeof(ScribeProgram).FullName);
         Assert.Contains("emit", ScribeCli.ImplementedCommands);
     }
 }

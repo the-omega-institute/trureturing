@@ -12,7 +12,6 @@ public sealed class ScribeDefinitionSelectionTests
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-"],
             root.Path,
             new StringWriter(),
@@ -69,7 +68,6 @@ public sealed class ScribeDefinitionSelectionTests
             """);
         var error = new StringWriter();
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-"],
             root.Path,
             TextWriter.Null,
@@ -169,7 +167,6 @@ public sealed class ScribeDefinitionSelectionTests
         if (scoped)
         {
             exit = ScribeCli.Run(
-                () => throw new InvalidOperationException("documents assembly must not be loaded"),
                 check ? ["emit", "--paths-from", "-", "--check"] : ["emit", "--paths-from", "-"],
                 root.Path, TextWriter.Null, error, report, new StringReader(path));
         }
@@ -238,7 +235,6 @@ public sealed class ScribeDefinitionSelectionTests
         var output = new StringWriter();
 
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-", "--check"],
             root.Path, output, error, leanReport: null, new StringReader(path));
 
@@ -256,7 +252,6 @@ public sealed class ScribeDefinitionSelectionTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "missing.paths"],
             root.Path,
             TextWriter.Null,
