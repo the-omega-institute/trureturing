@@ -260,3 +260,10 @@ constants must be paid on one common parameter sequence. Fixed-row
 convergence in (SD5) and three finite heads do not supply that sequence.
 The original arithmetic lower comparison, RH and full Robin remain
 unresolved.
+
+The [complete fixed-band row allowance](signed-low-row.md) supplies
+the row Fourier budget and full arithmetic tail for the original
+$p=sv$ low unit ball at $N=64$, with new $T=128,192$ and $\delta=1/64$.
+It retains both Fourier expenses and improves only the stated
+same-measure weighted total-variation reference. The low sign and
+growing-band common comparison remain unproved.

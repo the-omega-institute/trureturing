@@ -43,3 +43,29 @@ Conversely, a strong derivative v makes the quotient classes at t_n = 1/(n+1) co
 https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
 
 Equation (2.21), printed pages 59-60; Theorem 5.1(ii), printed pages 123-124. The author-hosted file identifies the 2009 first edition, Graduate Studies in Mathematics volume 99. The online-use permission appears on its title page; this note cites the source and paraphrases the argument.
+## Finite-measure Fourier mean squares
+
+In the same retained first-edition PDF, Theorem 5.4, Section 5.2,
+printed pp.126–127, equations (5.8)–(5.9), states Wiener's theorem for
+every finite complex Borel measure $\mu$ on $\mathbb R$:
+
+$$
+\widehat\mu(t)=\int e^{-it\lambda}d\mu(\lambda),\qquad
+\lim_{T\to\infty}\frac1T\int_0^T|\widehat\mu(t)|^2dt
+=\sum_{\lambda\in\mathbb R}|\mu(\{\lambda\})|^2.
+$$
+
+The source uses the unnormalized angular transform, and the atomic sum
+is finite. The inspected PDF SHA-256 is
+`8dc8de0b58aa0a3fedfe594a345f9b5875322e5526ea581cb640a98d55b82818`;
+its author-hosted title page dates the online text to 12 February 2009.
+The source theorem is reused, without a new proof or priority claim.
+
+For the project's real even finite signed prime-minus-continuum head,
+the atoms are exactly $\pm\log n$, with masses $\Lambda(n)/\sqrt n$.
+The negative continuous component has no atomic mass. The
+[fixed-head scalar-budget application](../../docs/reports/theta-mixed-matrix/signed-low-row.md#fixed-head-band-expansion-has-a-classical-obstruction)
+uses this same theorem to diagnose a frequency-envelope loss. It does
+not assert growth of the actual weighted operator norm, an obstruction
+to a growing arithmetic cutoff, or an RH/Robin conclusion. No compiled
+project application is claimed.

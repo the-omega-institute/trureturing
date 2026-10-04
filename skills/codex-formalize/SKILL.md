@@ -1,6 +1,6 @@
 ---
 name: codex-formalize
-description: Use when asked to formalize and close an open digestion atom in this repository.
+description: Use when asked to formalize mathematics in this repository, either closing an open digestion atom or writing new D5 Lean and its Blueprint Scribe directly when the content has no atom.
 ---
 
 # Codex Formalization Workflow
@@ -56,9 +56,11 @@ Before any deposit, require `git status --short` to print nothing except the int
 
 Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
-### 1. Choose exactly one open atom
+### 1. Choose exactly one target
 
-Inspect candidate snapshots in `Generated/echo-residuals/<source_id>.md`. Treat them only as candidate listings. Obtain the authoritative atom text with:
+The target is either an open atom or, when the content has no atom, a statement source: a preregistered issue, a published source, or the dispatcher's brief, quoted verbatim.
+
+For an atom target, inspect candidate snapshots in `Generated/echo-residuals/<source_id>.md`. Treat them only as candidate listings. Obtain the authoritative atom text with:
 
 ```sh
 make show-atom ATOM_ID=<id>
@@ -66,7 +68,7 @@ make show-atom ATOM_ID=<id>
 
 Never quote the projection as authoritative. Prefer an atom with few unresolved subitems and an elementary, self-contained statement.
 
-Formalization always runs through the digestion chain (`CLAUDE.md` §1.2). If the content you intend to formalize has no atom yet, atomize that part first: add any missing theory text under §3.8, run `make ingest SOURCE="<id> <path>"`, then select the resulting atom and deposit and cover it in the same delivery. Only an external open-problem resolution admitted under §3.2 may freeze through `make deposit-uncovered`.
+The required delivery surfaces are the D5 Lean module and its Blueprint Scribe (`CLAUDE.md` §1.2). Before starting, check with `make show-atom`/`make atom-context` whether the content already has an atom: if it does, deposit and cover that atom in the same delivery; if it does not, write the D5 Lean and Scribe directly and freeze through `make deposit-uncovered`. Do not add a theory volume or run `make ingest` as a precondition for formalization. A target with no atom is still judged by §3.2 proof shape and admission basis, §3.3 utility and §3.7 literature status.
 
 Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
 
@@ -77,11 +79,11 @@ Triage the claim class before committing to it; each class below is named by lan
 - **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
 - **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
 
-Postcondition: one atom ID is selected, its claim class is named in the report, and its verified `make show-atom` output is retained as the statement source.
+Postcondition: one target is selected and its claim class is named in the report; the statement source is retained, either the verified `make show-atom` output of the atom or the verbatim statement source of a target with no atom.
 
 ### 2. Echo the statement before proving it
 
-Follow `agents/echo-template.md`. Write a clause-level mapping from every quantifier, domain, hypothesis, conclusion, and generality claim in the authoritative atom text to the intended Lean declaration. Account for every unresolved subitem.
+Follow `agents/echo-template.md`. Write a clause-level mapping from every quantifier, domain, hypothesis, conclusion, and generality claim in the authoritative statement source (the atom text, or the verbatim statement source of a target with no atom) to the intended Lean declaration. Account for every unresolved subitem.
 
 If an ambiguity cannot be resolved without weakening the claim, stop and report the result as `open`.
 
@@ -226,14 +228,20 @@ make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make cover ATOM_ID=<id> GID=<gid>
 ```
 
+For a target with no atom, freeze without coverage:
+
+```sh
+make deposit-uncovered GID=<D5/Path/Module.theorem_name>
+```
+
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
 command creates an intermediate commit.
 
-`make deposit` and `make cover` must exit 0. Judge commands by their raw exit code, never elapsed time
+`make deposit`, `make deposit-uncovered` and `make cover` must exit 0. Judge commands by their raw exit code, never elapsed time
 or quiet output. Do not pipe a judgment command through formatting that hides its exit; run it bare,
 or capture `$?` immediately before formatting.
 
-If `make deposit` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
+If `make deposit`, `make deposit-uncovered` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
 **Publication boundary, including early review drafts.** Before committing or pushing a logical
 formalization unit, finish every intended source and its canonical committed projections. Complete
