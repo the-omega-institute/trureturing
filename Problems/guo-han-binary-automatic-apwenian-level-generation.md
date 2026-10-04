@@ -5,7 +5,7 @@ doi: 10.1016/j.disc.2025.114399
 url: https://irma.math.unistra.fr/~guoniu/papers/p120autoapw.pdf
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/Apwenian/GuoHanDefs.IsApwenian
+  - D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result
 ---
 
 # Binary automatic apwenian sequences have finite level generators

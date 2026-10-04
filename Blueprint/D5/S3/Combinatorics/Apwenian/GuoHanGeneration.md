@@ -108,6 +108,10 @@ Lean statement: `D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-han-binary-automatic-apwenian-level-generation` (proved) by `D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-han-binary-automatic-apwenian-level-generation","declaration_gid":"D5/S3/Combinatorics/Apwenian/GuoHanGeneration.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ying-Jun Guo, Guo-Niu Han (2025). *On a family of automatic apwenian sequences*. DOI: [10.1016/j.disc.2025.114399](https://doi.org/10.1016/j.disc.2025.114399). URL: <https://irma.math.unistra.fr/~guoniu/papers/p120autoapw.pdf>.
