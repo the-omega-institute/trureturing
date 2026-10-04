@@ -12,7 +12,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_nonnegative_lo
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_nonnegative_locality` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockJacobi.relative_vacuum_unique
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockJacobi.relative_vacuum_uniqueness` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_closure`
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockJacobi.residue_closure` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ Lean statement: `D5/S3/VertexAlgebra/PolynomialFockJacobi.borcherds`
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/PolynomialFockJacobi.borcherds` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 

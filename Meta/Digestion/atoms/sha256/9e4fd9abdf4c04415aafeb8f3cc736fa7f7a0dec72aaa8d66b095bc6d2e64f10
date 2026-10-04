@@ -1,0 +1,75 @@
+**定理 24.2（同组成实际三正例的两两叶最优与确定性、随机锐值）。** 复用[命题 23.3](#23-全有限来源上两个指定正例的共同最优地址费用)在 $d=3$ 的字面树，置
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+U=\langle\langle A,A\rangle,C\rangle=P_{\mathrm{con}},\qquad
+V=\langle\langle A,C\rangle,A\rangle=Q_{\mathrm{con}},\qquad W=A,
+\end{gathered}
+\tag{24.4}
+$$
+
+并定义三个固定评价来源
+
+$$
+\begin{aligned}
+P_1&=\langle\langle U,U\rangle,A\rangle,\\
+P_2&=\langle\langle V,A\rangle,U\rangle,\\
+P_3&=\langle\langle A,V\rangle,V\rangle.
+\end{aligned}
+\tag{24.5}
+$$
+
+令 $u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle$、$v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle$。这些来源的完整前像为
+
+$$
+\begin{aligned}
+U&=\rho^3(u_0),& V&=\rho^3(v_0),\\
+P_1&=\rho^3\bigl(\langle\langle u_0,u_0\rangle,\alpha\rangle\bigr),\\
+P_2&=\rho^3\bigl(\langle\langle v_0,\alpha\rangle,u_0\rangle\bigr),\\
+P_3&=\rho^3\bigl(\langle\langle\alpha,v_0\rangle,v_0\rangle\bigr).
+\end{aligned}
+\tag{24.6}
+$$
+
+三者两两不同，且
+
+$$
+P_i\in\mathcal I_3,\qquad
+c(P_i)=(9,16)^{\mathsf T},\qquad
+|L(P_i)|=25,\qquad q(P_i)=66
+\quad(1\le i\le3).
+\tag{24.7}
+$$
+
+在定义 24.1 的全来源合同下，每个两元素评价对可由一个共同策略同时取得两个个体最小费用 $25$，即
+
+$$
+D_3^+(P_i,P_j)=R_3^+(P_i,P_j)=25
+\quad(1\le i<j\le3).
+\tag{24.8}
+$$
+
+三个对允许选择不同策略。对三元素评价集合，存在三个全域正确且有限终止的确定性策略，其费用向量依次为
+
+$$
+(25,25,26),\qquad(25,26,25),\qquad(26,25,25).
+\tag{24.9}
+$$
+
+每个 $\pi\in\mathfrak D_3$ 及每个 $\Pi\in\mathfrak R_3$ 均满足
+
+$$
+\begin{gathered}
+\sum_{i=1}^3 C_\pi(P_i)\ge76,\qquad
+\sum_{i=1}^3\mathbb E_\mu C_\Pi(\cdot,P_i)\ge76,\\
+\boxed{\quad D_3^+(P_1,P_2,P_3)=26,\qquad
+R_3^+(P_1,P_2,P_3)=\frac{76}{3}.\quad}
+\end{gathered}
+\tag{24.10}
+$$
+
+两个下确界均达到。随机锐值由一次共同、输入无关的均匀三元种子选择式（24.9）的三个策略取得；在这一混合上，三个固定来源的期望各为 $76/3$，而 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=26$。因此两两共同取得叶数个体最小值，不足以使同一个策略对这三个指定实际正来源共同取得。
+

@@ -1,0 +1,25 @@
+**定义 27.7（顶点的分数面边覆盖与最小覆盖概率）。** 将 $[m]$ 作为有限超图的顶点，将 $\mathcal M(K)$ 的非空极大面作为边。定义分数边覆盖数
+
+$$
+\tau(K)=
+\min\left\{
+\sum_{M\in\mathcal M(K)}w_M:
+w_M\ge0,\quad
+\sum_{\substack{M\in\mathcal M(K)\\i\in M}}w_M\ge1
+\ \ (i\in[m])\right\}.
+\tag{27.15}
+$$
+
+这是用面边分数覆盖顶点，不是分数顶点覆盖边。每个顶点在某个极大面中，故存在有限覆盖。若改用 $K$ 的全部非空面作为边，给每个面选一个包含它的极大面并合并权重，不增加总权重而不减少任何顶点覆盖量；反向极大面本就在 $K$ 中，所以最小值不变。空面不覆盖任何顶点，可以直接删去其权重。
+
+以 $\mathcal P(K)$ 记 $K$ 上的全部概率律，定义
+
+$$
+t(K)=\max_{p\in\mathcal P(K)}\min_{i\in[m]}q_i(p),
+\qquad
+q_i(p)=\sum_{\substack{F\in K\\i\in F}}p_F.
+\tag{27.16}
+$$
+
+把任一面的概率质量转移到一个包含它的极大面，不减少全部 $q_i$；因此此最大值也可只在极大面概率律上取。面律是随机选择全域策略的律，没有在实际来源上设置概率先验。标准分数边覆盖定义及有限最优有理权重参见 [Martin Grohe、Dániel Marx，*Constraint Solving via Fractional Edge Covers*，arXiv:1711.04506v1，第 1 节和引理 3.2 的证明](https://arxiv.org/pdf/1711.04506v1#page=2)；这里只复用它们的有限超图覆盖对象与有理最优取得，不使用该文的 CSP 输入承诺或其复杂度结论。
+

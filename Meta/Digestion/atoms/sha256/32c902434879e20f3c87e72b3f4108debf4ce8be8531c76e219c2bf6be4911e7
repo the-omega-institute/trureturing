@@ -1,0 +1,21 @@
+**定义 1.2（Admissible board）。** An admissible board of size $k\geq0$ is a
+pair $P=(\lambda,\mu)$ of nonincreasing lists of nonnegative integers of
+length $k$, satisfying, for every $i\in[k]$,
+
+$$
+\mu_i\leq\lambda_i,\qquad
+\lambda_i\leq k+1-i,\qquad
+\mu_i\leq k-i.
+$$
+
+Put $n=k+1$ and define the front and back thresholds
+
+$$
+f_i=n-\lambda_i,\qquad g_i=n-\mu_i\qquad(i\in[k]).
+$$
+
+The corresponding allowed cells are $(r,i)$ with $r\leq f_i$ in the front
+layer and $r\leq g_i$ in the back layer. Thus the forbidden cells are those
+with $f_i<r\leq n$ and $g_i<r\leq n$, respectively. Both threshold lists are
+nondecreasing, and $f_i\leq g_i$. At size zero both lists are empty.
+

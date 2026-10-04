@@ -40,6 +40,121 @@ compact convergence estimates are separate obligations; the theta transform
 alone does not establish those expansions or Cardon's equivalence involving
 simple zeros and its specific measure and orthogonal polynomials.
 
+## Reusable theta tail and its local scale
+
+Lemma 2.3, printed p.10, equations (2.8)–(2.9), directly supplies
+
+$$
+\Phi(r)=O\!\left(e^{9r/2-\pi e^{2r}}\right),
+$$
+
+$$
+\Phi(r)-2(2\pi^2e^{9r/2}-3\pi e^{5r/2})e^{-\pi e^{2r}}
+=O\!\left(e^{9r/2-4\pi e^{2r}}\right)
+\qquad(r\to+\infty).
+$$
+
+Thus, with $g(r)=e^{9r/2-\pi e^{2r}}$, positivity and continuity on the
+remaining compact interval give $cg(r)\le\Phi(r)\le Cg(r)$ for $r\ge1$.
+For $\delta_R=e^{-2R}$ the identity
+
+$$
+\log\frac{g(R+s)}{g(R)}
+=\frac92s-\pi e^{2R}(e^{2s}-1)
+$$
+
+gives $\Phi(R+s)\asymp\Phi(R)$ uniformly for
+$-\delta_R\le s\le2\delta_R$. This is comparison by constants,
+not a ratio tending to one.
+
+A derivative estimate must use the normally convergent original series
+(1.8), rather than differentiate the displayed remainder. Its differentiated
+summands are bounded by $Ce^{13r/2}n^6e^{-\pi n^2e^{2r}}$ for $r\ge1$.
+The uniformly summable series after removing its first exponential gives
+$|\Phi'(r)|\le Ce^{2r}g(r)$, hence
+$|\Phi'(r)/\Phi(r)|\le Ce^{2r}$.
+These are paper-level applications of the source series and Lemma 2.3,
+used by the [Gamma tail and same-test compensation estimates](../Weil/chenwang2012weighted.md).
+They are not additional tail theorems attributed to Romik or new Lean proofs.
+
+## Explicit original-series majorants
+
+The normally convergent source series also supplies coarse constants for
+the [prime-diagonal error transfer](../Weil/trudgian2014pnt.md) and the
+[full mixed-operator cutoff estimates](../Weil/lenz2010compactness.md).
+These are analytic upper bounds, not fitted numerical values or new
+theta representation theorems.
+
+For $x\ge0$, put $u=e^{2x}\ge1$ and $v_n=\pi n^2u$. Differentiating
+the original series gives
+
+$$
+\begin{aligned}
+\Phi(x)&=2u^{1/4}\sum_{n\ge1}(2v_n^2-3v_n)e^{-v_n},\\
+\Phi'(x)&=u^{1/4}\sum_{n\ge1}
+             (-8v_n^3+30v_n^2-15v_n)e^{-v_n}.
+\end{aligned} \tag{TS}
+$$
+
+For $H=\Phi/2+|\Phi'|$, positivity of $\Phi$ and the triangle inequality
+therefore give
+
+$$
+H(x)\le u^{1/4}\sum_{n\ge1}
+                   (8v_n^3+32v_n^2+15v_n)e^{-v_n}. \tag{HM}
+$$
+
+Use $u^{1/4}\le u=v_n/(\pi n^2)$, $\pi>3$,
+$\sum_{n\ge1}n^{-2}\le2$, and the standard maximum
+$v^ke^{-v}\le k^ke^{-k}$. The elementary lower bounds
+$e^4>54$, $e^3>20$ and $e^2>7$ yield
+
+$$
+\begin{aligned}
+\|\Phi\|_\infty&\le\frac83\frac{27}{e^3}<\frac{18}{5},\\
+H_\infty&\le\frac23\left(
+             \frac{1024}{27}+\frac{216}{5}+\frac{60}{7}\right)<60.
+\end{aligned} \tag{SC}
+$$
+
+Evenness extends these bounds to the whole real line. For the weighted
+integral, use evenness of $H$, $\cosh(x/2)\le e^{x/2}$ for $x\ge0$,
+and $u^{1/2}\le u$. Substitution $dx=du/(2u)$ gives
+
+$$
+\begin{aligned}
+M_H:=\int H(x)e^{x/2}\,dx
+&=2\int_0^\infty H(x)\cosh(x/2)\,dx\\
+&\le\sum_{n\ge1}\frac1{\pi n^2}
+           \int_0^\infty(8v^3+32v^2+15v)e^{-v}\,dv\\
+&\le\frac{254}{3}<85.
+\end{aligned} \tag{MC}
+$$
+
+The polynomial integral is $8\cdot6+32\cdot2+15=127$.
+Its extension from $v\ge\pi n^2$ to $v\ge0$ only increases the bound.
+
+For a spatial tail majorant, split the exponential in (TS) and use
+$v^3e^{-v/2}\le216e^{-3}<216/20$. Since $v_n\ge3u$,
+
+$$
+\Phi(x)\le\frac{144}{5}\exp\left(-\frac32e^{2|x|}\right). \tag{ST}
+$$
+
+Consequently, for $r\ge0$,
+
+$$
+T(r):=\int_{|x|>r}\Phi(x)\,dx
+\le\frac{96}{5}e^{-2r}\exp\left(-\frac32e^{2r}\right). \tag{IT}
+$$
+
+Indeed, the substitution $u=e^{2x}$ on each even tail gives
+$(144/5)\int_{e^{2r}}^\infty e^{-3u/2}\,du/u$;
+bound $1/u$ by $e^{-2r}$ and integrate the remaining exponential.
+All constants are deliberately loose and keep the original kernel and
+normalization. These model applications have no new Lean certification
+or originality claim.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the

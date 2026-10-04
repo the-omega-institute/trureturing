@@ -1,0 +1,118 @@
+**定理 357.5（四个目标的全参数尖锐分类）。** 在全部自由有序非空原树域 $\mathcal T$ 上，对每个 $D,d,e\ge1$，以下条件分别等价于指定目标可由完整历史恢复，也分别等价于可由 $W_3$ 或 $W_2$ 恢复：
+
+| 目标 | 恢复的充要条件 |
+| --- | --- |
+| $R_D$ | $D\mid4$ |
+| $K_{d,e}$ | $e=1$ 或 $d\mid4$ |
+| $H_{d,e}$ | $e=1$ 或 $de\mid4$ |
+| $L_{d,e}$ | $de\mid4$ |
+
+所有允许参数都有来源无关的显式恢复函数；所有不允许参数都有命题 357.4 的实际历史碰撞作为反例。
+
+**证明。** 先给充分性的函数。令 $x=(x_0,x_1)\in W_2(\mathcal T)$，采用定理 357.3 的 $v_m(x)$。
+
+当 $D\mid4$ 时，定义
+
+$$
+\mathcal R_D(x)=v_D(x)\bmod D.
+$$
+
+则 $\mathcal R_D(W_2(t))=R_D(t)$。模 $1$ 的向量只有零，因此包括 $D=1$。
+
+当 $e=1$ 时，对任意 $d$ 定义 $\mathcal K_{d,1}(x)=0$、$\mathcal H_{d,1}(x)=0$。当 $d\mid4$ 时，对任意 $e\ge1$ 令 $r=v_d(x)$，定义
+
+$$
+\mathcal K_{d,e}(x)
+=\left(0,\left\lfloor\frac{r_0+r_1}{d}\right\rfloor\right)\bmod e.
+\tag{357.13}
+$$
+
+由于 $r_d(t)=v_d(W_2(t))$，这正是下一次进位。特别地，$d=1$ 时 $r=(0,0)$，所以 $K_{1,e}$ 对所有 $e$ 恒为零。
+
+当 $de\mid4$ 时，令 $v=v_{de}(x)$，并定义
+
+$$
+\begin{aligned}
+\mathcal H_{d,e}(x)&=\left\lfloor\frac vd\right\rfloor\bmod e,\\
+\mathcal L_{d,e}(x)&=
+\left([v]_d,\left\lfloor\frac vd\right\rfloor\bmod e\right).
+\end{aligned}
+\tag{357.14}
+$$
+
+对实际来源 $t$，有 $c(t)=v_{de}(W_2(t))+de\,z$，其中 $z\in\mathbb N^2$。因此逐坐标
+
+$$
+\left\lfloor\frac{c(t)}d\right\rfloor
+=\left\lfloor\frac{v_{de}(W_2(t))}d\right\rfloor+e\,z,
+\qquad
+[c(t)]_d=[v_{de}(W_2(t))]_d.
+$$
+
+约化模 $e$ 后，得到（357.14）的两个恢复等式。以上函数只读 $x_0,x_1$；对 $W_3$ 与完整历史，先取前两项即可。它们没有使用第三项或来源代表。
+
+下面用同一实际碰撞族证明所有必要性。由于完整历史相同的两棵树也有相同 $W_3$ 与 $W_2$，以下否定结论同时排除三种观察。
+
+对 $R_D$，若 $D\nmid4$，取 $P,Q$。它们第一组成坐标相差 $4$，所以 $R_D(P)\ne R_D(Q)$；完整历史却相同，违背（357.3）。因此必须 $D\mid4$。
+
+对 $K_{d,e}$，只需处理 $e\ge2$ 且 $d\nmid4$。置
+
+$$
+r=[4]_d\in\{1,\ldots,d-1\},
+\qquad
+p=[-15]_d,
+\qquad
+q=[d-r-26]_d.
+\tag{357.15}
+$$
+
+这些是非负整数，共同后缀（357.10）合法。由（357.11），两棵树的标准低位分别为
+
+$$
+r_d(P_{p,q})=(0,d-r),
+\qquad
+r_d(Q_{p,q})=(r,d-r).
+$$
+
+前者两坐标和为 $d-r<d$，后者两坐标和为 $d$，所以整数进位恰为 $0$ 与 $1$。$e\ge2$ 时它们的模 $e$ 剩余类不同，故 $K_{d,e}$ 不可恢复。这排除了所有不满足 $e=1$ 或 $d\mid4$ 的参数。
+
+对当前高位 $H_{d,e}$，设 $e\ge2$ 且 $de\nmid4$。对任意这样的 $d$ 作整数除法
+
+$$
+4=jd+r,\qquad j\ge0,\quad0\le r<d.
+$$
+
+如果 $e\nmid j$，取 $s=0$。如果 $e\mid j$，则必有 $r>0$，否则 $4=dj$ 会推出 $de\mid4$；此时取 $s=d-r$。统一置
+
+$$
+p=[s-15]_d\ge0,
+\qquad a=15+p,
+\qquad [a]_d=s,
+$$
+
+并使用同历史的实际树 $P_{p,0},Q_{p,0}$。第一组成坐标为 $a,a+4$，第二组成坐标相同，第一当前高位的整数差为
+
+$$
+\left\lfloor\frac{a+4}{d}\right\rfloor
+-\left\lfloor\frac ad\right\rfloor
+=j+\left\lfloor\frac{s+r}{d}\right\rfloor.
+\tag{357.16}
+$$
+
+在 $e\nmid j$ 的分支，$s=0$ 且 $r<d$，该差等于 $j$，模 $e$ 非零。在 $e\mid j$ 的分支，$s=d-r$，该差等于 $j+1\equiv1\pmod e$，仍非零。因而 $H_{d,e}$ 在同一历史纤维中取不同值。这一必要性证明没有预设 $d\mid4$，也没有预设低位可恢复；它覆盖全部 $d\ge1$。$e=1$ 时高位值域为单元素集合，已由恒零函数处理。
+
+最后，对任意 $d,e\ge1$，定义 25.1 的逐坐标标准数字双射为
+
+$$
+\mathbb Z/de\mathbb Z
+\longleftrightarrow
+\{0,\ldots,d-1\}\times\mathbb Z/e\mathbb Z,
+\qquad
+w\longmapsto\left([w]_d,\left\lfloor\frac wd\right\rfloor\bmod e\right),
+\tag{357.17}
+$$
+
+其中右侧用整数代表计算，逆为 $(r,h)\mapsto r+dh\bmod de$。换代表 $w\mapsto w+de\,k$ 不改 $[w]_d$，并使商增加 $e\,k$，所以正向映射也良定义。逐坐标使用这套数字分解，$L_{d,e}(t)$ 与 $R_{de}(t)$ 相互决定。若 $de\nmid4$，取 $P,Q$，其第一组成坐标相差 $4$，故 $R_{de}$ 不同；若 $L_{d,e}$ 相同，经逆映射便得到 $R_{de}$ 相同，矛盾。这同时覆盖 $e=1$ 与 $d=1$ 的否定参数。
+
+充分性函数与上述全部参数反例给出表中的四个充要条件。$e=1$ 时 $K,H$ 对任意 $d$ 恒零，但 $L$ 仍要求 $d\mid4$；$d=1$ 时 $K$ 恒零，而 $H,L$ 的恢复条件为 $e\mid4$。例如 $(d,e)=(4,2)$ 时，下一次进位可恢复，当前高位与完整低高位不可恢复。上述结论均包含零组成坐标与模 $1$，并且每个否定见证保持非空实际来源。$\square$
+

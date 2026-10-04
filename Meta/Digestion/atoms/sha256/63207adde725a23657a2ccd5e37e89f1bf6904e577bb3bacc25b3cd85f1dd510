@@ -1,0 +1,19 @@
+**定理 27.4（每个面的实际精确额外费用）。** 对定义 27.1 的最终族，每个 $F\in K$ 都有一个全域正确且有限终止的确定性策略 $\pi_F\in\mathfrak D_3$，使所有评价来源同时满足
+
+$$
+C_{\pi_F}(P_i)=b_F(i),\qquad
+b_F(i):=n+\mathbf1_{\{i\notin F\}}\quad(i\in[m]).
+\tag{27.8}
+$$
+
+更精确地，以 $J_{\pi_F}(P_i)$ 记接受前实际付费的不同地址集合，有
+
+$$
+J_{\pi_F}(P_i)=
+\begin{cases}
+L(P_i),&i\in F,\\
+L(P_i)\cup\{a_i\},&i\notin F.
+\end{cases}
+\tag{27.9}
+$$
+

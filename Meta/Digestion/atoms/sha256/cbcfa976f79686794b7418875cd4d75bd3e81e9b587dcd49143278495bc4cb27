@@ -1,0 +1,119 @@
+**定理 3.1（Arbitrary-board factorization）。** Let $k\geq0$ and let $P$ be
+any admissible board of size $k$. For $i\in[k]$ put
+
+$$
+\alpha_i=k+2-i-\lambda_i,\qquad
+\beta_i=k+1-i-\mu_i.
+$$
+
+Both are positive integers. Repeated application of $\Phi$ defines a
+bijection of the actual eligible set with the full digit box
+
+$$
+\mathcal E(P)\longrightarrow
+\prod_{i=1}^k
+\bigl(\{0,\ldots,\alpha_i-1\}\times
+      \{0,\ldots,\beta_i-1\}\bigr),
+\qquad
+(\sigma,\pi)\longmapsto((d_i,b_i))_{i=1}^k,
+$$
+
+whose inverse reconstructs the pairs in reverse order from the unique
+size-zero pair using the explicit maps $\Psi$. Moreover,
+
+$$
+E_P(\sigma,\pi)=\sum_{i=1}^k(d_i+b_i)\geq0.
+$$
+
+For an indeterminate $q$ and a positive integer $r$, let
+$[r]_q=\sum_{e=0}^{r-1}q^e$. Define, now using the proved nonnegative
+integer exponents,
+
+$$
+F_P(q)=\sum_{(\sigma,\pi)\in\mathcal E(P)}q^{E_P(\sigma,\pi)}
+\in\mathbb Z[q].
+$$
+
+Then the factorization is
+
+$$
+F_P(q)=\prod_{i=1}^k
+[k+2-i-\lambda_i]_q\,[k+1-i-\mu_i]_q.
+$$
+
+**证明。** After $i-1$ deletions the board has size $k-i+1$ and consists
+of the suffixes beginning at $\lambda_i,\mu_i$. Every suffix is admissible
+by the calculation in Theorem 2.2. Its first front digit interval has
+length $(k-i+1)+1-\lambda_i=\alpha_i$, and its first back digit interval
+has length $(k-i+1)-\mu_i=\beta_i$. The original bounds make each length
+at least one. Each local map is a bijection onto every eligible next tail
+and every pair of digits, so their composition is a bijection onto the
+entire displayed box. More explicitly, starting with arbitrary digits and
+$((1),())$, apply $\Psi$ for the last suffix, then the penultimate suffix,
+and so on. Each step gives an eligible pair, and the two local composition
+identities prove both global composition identities by induction.
+
+Let $E^{(i)}$ be the integer weight after $i$ repaired deletions, with
+$E^{(0)}=E_P(\sigma,\pi)$. The local identity is
+$E^{(i-1)}=E^{(i)}+d_i+b_i$. After $k$ steps the weight is zero, because
+the terminal pair has no inversions and no forbidden targets. Summing the
+identities telescopes to the claimed digit sum. Each digit is nonnegative,
+so this also proves nonnegativity of the originally integer-defined $E_P$.
+
+Reindex the finite sum defining $F_P$ by this bijection. It gives
+
+$$
+\begin{aligned}
+F_P(q)
+ &=\sum_{\substack{0\leq d_i<\alpha_i\\0\leq b_i<\beta_i\ (i\in[k])}}
+       q^{\sum_{i=1}^k(d_i+b_i)}\\
+ &=\prod_{i=1}^k
+     \left(\sum_{d=0}^{\alpha_i-1}q^d\right)
+     \left(\sum_{b=0}^{\beta_i-1}q^b\right).
+\end{aligned}
+$$
+
+The second equality is finite distributivity in $\mathbb Z[q]$. The sum
+is over the original eligible permutation pairs, not a function specified
+by a recurrence. In particular, its local recurrence
+$F_P(q)=[A]_q[B]_qF_{P'}(q)$ follows from the constructed bijection and
+does not supply the definition of $F_P$.
+
+The terminal case $k=0$ has one empty digit tuple and one pair, weight zero,
+and empty product $F_P(q)=1$. It asserts only this combinatorial terminal
+case. At $k=1$, admissibility forces $\mu_1=0$ and
+$\lambda_1\in\{0,1\}$. Here $\pi=(1)$ and $H_f=H_b=0$: the only possible
+back target has threshold $g_1=2$ and cannot be forbidden.
+For $\lambda_1=0$ the two row words are $(1,2),(2,1)$ with weights $0,1$;
+for $\lambda_1=1$ only $(1,2)$ is eligible. The code has $b=0$, $d=E_P$,
+and the unique size-zero tail, giving $[2-\lambda_1]_q$.
+
+When $A=1$, $L=0$, both low subwords are empty and $\theta=(1)$.
+The forward digit is $d=0$, and the inverse always has $j=0$, $a=1$;
+it still selects $t$ by the $B$-digit. Thus a maximal first front column
+with a nonmaximal back column does not remove the back choices.
+When $B=1$, the back digit is zero and exactly one tail row has label at
+most $B$, so its selection is still well-defined. When $B=L$ (equivalently
+$\lambda_1=\mu_1$), all selectable rows are low rows and relabeling keeps
+their positions fixed. In this case the interval $(A,B+1]$ is empty,
+$m=0$ and $b=j$, consistently with the weight proof. The possibilities
+$t=1$ and $t=k$ were included in both ordinary maps and the endpoint
+calculation (2.4), and no insertion after the final tail position is needed.
+
+For the empty board $\lambda=\mu=(0,\ldots,0)$, all pairs are eligible,
+$H_f=H_b=0$, and the factors give
+$F_P(q)=[k+1]!_q[k]!_q$, where $[r]!_q=\prod_{a=1}^r[a]_q$ and
+$[0]!_q=1$. For the fully maximal board
+$\lambda_i=k+1-i$, $\mu_i=k-i$, all digit intervals have length one.
+Hence there is exactly one eligible pair with weight zero; it is
+$(\sigma,\pi)=((1,\ldots,k+1),(1,\ldots,k))$, which directly meets
+$w_i=i$, $v_i=i+1$ and the thresholds $f_i=i$, $g_i=i+1$.
+If only the front board is fully maximal, all $d_i=0$ but the independent
+digits $b_i$ still range over their displayed intervals.
+
+Finally, the polynomial identity can be specialized at any scalar in any
+commutative ring. At $q=1$ it gives
+$|\mathcal E(P)|=\prod_i\alpha_i\beta_i$. At $q=0$ every factor is one;
+the zero digit tuple corresponds to the unique pair of weight zero.
+These statements also hold for empty products. This completes the proof.
+
