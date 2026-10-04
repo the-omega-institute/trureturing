@@ -15,9 +15,10 @@ parents. Each then has six long sibling leaves. In this geometry short
 owners contribute nothing outside the fixed covered base. Whole coverage
 on the siblings yields an actual supplier inequality and a sufficient
 condition for donors that work under every choice from fixed owner
-domains. The required uniform bound on nondivisor suppliers is still
-missing. Neither the height-two branch nor unrestricted Erdős #7 is
-resolved.
+domains. Within the support-through-113 envelope, a small-divisor
+partition gives a uniform bound for all high-q suppliers. The required
+bound on the remaining low-height nondivisor incidences is still missing.
+Neither the height-two branch nor unrestricted Erdős #7 is resolved.
 
 ## 1. Fixed base and exact short-region restriction
 
@@ -448,13 +449,158 @@ Both the divisor and nondivisor loads must be calculated in the same
 measure. No separate optimized source or owner choice is combined
 across targets in this argument.
 
-## 8. Remaining estimate and verification scope
+## 8. A uniform tail bound from small divisor witnesses
+
+In the existing support-through-113 envelope, $W$ has at most 27
+distinct prime factors. This additional premise is used throughout
+this section; selecting $q=113$ alone would not imply it. No bound
+on the exponents of those primes is needed here.
+
+Two existing retained-pure repair capacities control all original
+labels in one phase. For $r\mid W$ and $h=113r$, they are
+
+$$
+\begin{array}{c|c|c}
+\tau(r)&\tau(h)&
+\#\{n\text{ actual}:h\mid n,\ \rho_n\equiv c\pmod h\}\\ \hline
+6&12&\le20\\
+8&16&\le14.
+\end{array}
+\tag{SF23}
+$$
+
+These reuse Report385's
+[retained-pure repair forest](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#15-retained-pure-powers-reduce-the-fresh-repair-forest),
+whose layer counts also appear in its
+[third-row table](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#24-separating-the-exact-cofactor3-controls-a-vacant-third-row).
+The retained original 3- and 9-classes leave fifteen cells modulo 27.
+With twelve cofactor divisors, repair twelve cells and then nine children
+of the remaining three cells, using layers of sizes $(12,9)$. With
+sixteen divisors, repair all fifteen cells at the first layer.
+Every new modulus has ternary height greater than two and is fresh.
+The repairs cover the entire phase $c\bmod h$ together with the retained
+pure guards, including all integer lifts.
+
+The respective repair counts are 21 and 15. Their modulus sums are
+less than $324h$ and $81h$, since $\sigma(h)/h<3$ for these divisor
+counts. Removing respectively 21 or 15 distinct odd multiples of $h$
+costs at least $21^2h$ or $15^2h$. Both equal-count replacements strictly
+decrease the modulus sum, giving SF23. The count includes every
+ternary height and every q-height together, not a new allowance at
+each height.
+
+### Partition all cofactors before charging labels
+
+Report856 already counts at most
+$4\cdot27+\binom{27}{2}=459$ nonunit cofactors with at most five
+divisors: they are $p,p^2,p^3,p^4$ or $pt$, with distinct primes
+$p,t\mid W$. Every remaining cofactor contains a divisor from
+
+$$
+\mathcal R_6=\{p^5\}\cup\{p^2t:p\ne t\},\qquad
+\mathcal R_8=\{ptu:p,t,u\text{ distinct}\},
+\tag{SF24}
+$$
+
+retaining only divisors of $W$. Three distinct prime factors supply
+a squarefree triple; exactly two require an exponent at least two;
+one requires an exponent at least five. Assign one witness to each
+rich cofactor by a fixed ordering. There are at most 729 witnesses
+in $\mathcal R_6$ and 2925 in $\mathcal R_8$.
+
+Fix a cofactor point $w$ and one of the six sibling q-digits. Every
+contributing label assigned to $r$ lies in the single phase of $113r$
+determined by this digit and $w\bmod r$. SF23 bounds the total number
+of rich contributing labels by
+
+$$
+6(20\cdot729+14\cdot2925)=333180.
+\tag{SF25}
+$$
+
+No factor three or geometric sum is added: all original heights are
+already included in the phase capacities. A witness need not be a
+donor, a nondivisor of $m$, or a divisor of a residual hull.
+For the small-cofactor part, each triple $(a,j,s)$ specifies at most
+one actual numerical label $3^a113^js$. There are three choices of $a$.
+No factor six is needed: an original has only one first q-digit.
+
+### Two measures, each with its own uniform error
+
+Let $N^{(\lambda)}_{m,\ge J}(w)$ be the nondivisor load restricted
+to $j\ge J$, where $\lambda=113$ means the original-tail coefficients
+SF21 and $\lambda=27$ the fixed-dictionary coefficients SF13.
+Use each measure separately. For $J\ge2$, every rich contributing
+label has weight at most $\lambda^{1-J}$; sum the small-cofactor
+inventory geometrically over the actual heights. Then
+
+$$
+N^{(\lambda)}_{m,\ge J}(w)
+\le\left(333180+\frac{1377\lambda}{\lambda-1}\right)
+       \lambda^{1-J}.
+\tag{SF26}
+$$
+
+The unit cofactor is absent because $1\mid m$. The same partition
+also bounds the **total** q-bearing load at these heights, including
+divisor and unit cofactors. The rich part needs no change; the unit
+adds at most three labels per height. Writing the total tail as
+$T^{(\lambda)}_{m,\ge J}(w)$ gives
+
+$$
+T^{(\lambda)}_{m,\ge J}(w)
+\le\varepsilon_{\lambda,J}:=
+\left(333180+\frac{1380\lambda}{\lambda-1}\right)
+       \lambda^{1-J}.
+\tag{SF27}
+$$
+
+In particular the exact total-load errors satisfy
+
+$$
+\varepsilon_{113,5}
+=\frac{9368025}{28\cdot113^4}<0.002052,
+\qquad
+\varepsilon_{27,6}
+=\frac{4349970}{13\cdot27^5}<0.023320.
+\tag{SF28}
+$$
+
+These bounds hold at every $w$, for every target and fixed lawful
+common completion in the stated support envelope. They contain
+neither $\tau(W)$ nor $\tau(m)$. The two proofs use their own
+coefficients and assert no ordering of the two actual measures.
+
+Uniformity preserves the error on any nonempty actual subset. If
+$F(w)$ is either complete load and $F_{<J}(w)$ its literal truncation,
+then for nonempty $A\subseteq\mathbb Z/W\mathbb Z$,
+
+$$
+\min_A F_{<J}\le\min_A F
+\le\min_A F_{<J}+\varepsilon_{\lambda,J}.
+\tag{SF29}
+$$
+
+Use a minimizer of the truncated load for the upper bound. This applies
+on $Z_m$ and any nonempty paid residual cofactor set, without a new law
+or conditional reserve. Restriction can still raise either minimum.
+
+On $Z_m$, whole coverage therefore forces the total original-tail
+load from $j\le4$ to be at least
+$6-\varepsilon_{113,5}>5.997948$ at every point. The unbounded q-height
+tail has a uniform small cost. The remaining low-height incidence,
+its actual support and permanent owner choices are still needed;
+a small tail does not make that low-height load small.
+
+## 9. Remaining estimate and verification scope
 
 The unresolved step is to control the actual nondivisor load on the
 nonempty q-free-uncovered sets $Z_m$, together with the capacities,
 for enough targets in one common source. A private point proves
 $Z_m\ne\varnothing$; it gives no upper bound for $N_m^*$.
-Any probability law supported on $Z_m$ bounds the minimum by its
+Section 8 controls the entire tail above a fixed q-height, including
+its nondivisor portion, with explicit truncation error. Any probability
+law supported on $Z_m$ bounds the minimum by its
 expected load, but it still needs quantitative congruence-query bounds.
 An unconditioned uniform or distortion law cannot be used if it charges
 points outside $Z_m$. Report385's survivor-support analysis already
@@ -477,6 +623,14 @@ four bucket labels, including an empty matching bucket. Its weighted
 sum, positive-excess implication and the new q-tail numerical constants
 compile separately. Arithmetic source existence is not inferred from
 these abstract capacity checks.
+
+For section 8, transient Lean checks cover finite witness-fibre charging,
+the geometric-sum estimate, the exact inventory and error constants,
+and transport of a uniform pointwise error to minima on the same
+nonempty set. The actual phase capacities reuse Report385; their
+connection to the whole-cover source and the complete divisor-witness
+classification are ordinary independently reviewed deductions here,
+not a full kernel replay of SF23--SF29.
 
 No new frozen mathematical declaration, atom coverage or resolution of
 the unrestricted problem is claimed by this report.

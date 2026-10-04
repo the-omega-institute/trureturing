@@ -295,6 +295,32 @@ Hall expansion in the remaining actual graph. A deficient set forces
 the nondivisor, deep-divisor, blocked-owner and committed-group charges
 in ET8--ET9; no upper bound reversing those inequalities is supplied.
 
+Within Report858 section 8's support-through-113 envelope, the total
+original-q tail at heights $j\ge5$ costs at most
+$\varepsilon=9368025/(28\cdot113^4)<0.002052$ per target, uniformly
+on its actual $Z_m$. Define the remaining load
+
+$$
+L_m^{<5}=\Lambda_m^{q,\,2\le j<5}
+       +\min_{w\in Z_m}N_m^{q,\,1\le j<5}(w).
+$$
+
+Both divisor and nondivisor high tails are included in the same
+$\varepsilon$. Applying the original covering inequality at each
+point before minimizing, the same counting argument as ET7--ET9 gives
+
+$$
+\sum_{m\in T}L_m^{<5}+|\mathcal B_T|+2|I|
+\ge(3-\varepsilon)|T|+3
+\tag{ET11}
+$$
+
+for an unused-group Hall-deficient $T\subseteq\mathcal O_\eta$.
+Before any exception plan, omit the $2|I|$ term. Thus a contradiction
+can be sought entirely in the actual first four q-layers, with the
+certified tail debit shown explicitly. Those low-layer upper bounds
+and the compatible exception plan are still missing.
+
 Cooperative output packets and the paid residual hulls of Report858
 can succeed beyond this route. Their larger hit relations cannot simply
 inherit the two-target cap or the twelve-exception theorem.
@@ -309,5 +335,8 @@ those checks. The four-target example is also checked transiently:
 no common assignment, disjoint same-group options, the half-mixture
 identity and ET10 for every real weight vector, and the Hall deficit
 after every exception-covering partial plan. These checks likewise
-use only standard axioms. No retained wrapper declaration is introduced.
+use only standard axioms. ET11's scalar consequence of the truncated
+covering and raw-capacity inequalities also compiles separately; its
+arithmetic source premises retain Report858's verification boundary.
+No retained wrapper declaration is introduced.
 No new frozen declaration or unrestricted resolution is claimed.
