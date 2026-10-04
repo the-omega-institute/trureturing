@@ -1,0 +1,36 @@
+**Theorem 4.1 (Actual rising comparison).** For every $n\ge4$, the
+actual direct-indecomposable separable record fibers satisfy
+$J(0,n,2)\le J(0,n,3)$. Thus this adjacent comparison holds for every
+$n\ge5$ in the right-maximum irreducible clause of CKZ Conjecture 2.
+
+Proof. Coefficient extraction from the actual quadratic of Theorem 3.2
+gives $J_1=t$, $J_2=t^2(1+q)^2$, and
+$J_3=t^3(1+q)^3(1+2q)$, where $J_k=[y^k]J$.
+Using $t(1+q)=q(1-q)$, their difference is $t^2P(q)$, with
+
+$$
+P(x)=-1-x+2x^2+x^3-3x^4-2x^5.
+$$
+
+Put $K(x)=1-2x-x^2$ and
+$N(x)=x^2(9-2x-31x^2-32x^3-10x^4)$.
+The formal derivative of $q=t+tq+q^2$ gives
+$K(q)q'=(1+q)^2$. Hence
+
+$$
+\frac{d}{dt}\bigl(P(q(t))+1+t\bigr)
+=\left(\frac{N}{K}\right)(q(t)).
+$$
+
+The exact coefficients of $N/K$ at indices zero through seven are
+$0,0,9,16,10,4,8,20$. At every index $m\ge8$, its coefficient is twice
+the preceding coefficient plus the coefficient two indices earlier.
+This recurrence proves that every coefficient is nonnegative. The actual
+scalar series $q$ has nonnegative coefficients and zero constant term,
+so formal composition preserves nonnegativity coefficientwise. Integration
+over $\mathbb Q$ preserves nonnegativity at every positive index.
+The correction $1+t$ changes only indices zero and one; multiplication
+by $t^2$ therefore gives the comparison at every length $n\ge4$.
+This argument is an unbounded coefficient proof and does not infer the
+comparison from a finite list of permutation rows.
+
