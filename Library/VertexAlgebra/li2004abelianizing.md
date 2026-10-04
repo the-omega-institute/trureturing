@@ -26,3 +26,8 @@ and its nonpositive-mode formulas.
 PDF: https://arxiv.org/pdf/math/0409140v1
 
 SHA-256: `b6d59b8158c3753af30bf3e23c3702aeddbb05318ebb4895b2c0ca693351e6ad`.
+
+## Verified locator
+
+- https://arxiv.org/abs/math/0409140v1: printed p. 15, Corollary 3.6, Proposition 3.7 and (3.15).
+- Classical abstract context only; no actual-$Y$ proof or novelty claim.

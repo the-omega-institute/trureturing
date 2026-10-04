@@ -26,3 +26,8 @@ The first arXiv submission is from 2016; the pinned v2 is from 2017.
 PDF: https://arxiv.org/pdf/1605.00138v2
 
 SHA-256: `ed5db1a978c13a824cfaff84ed92d157a982d3fb71871f22461ebf76329c1b4a`.
+
+## Verified locator
+
+- https://arxiv.org/abs/1605.00138v2: Section 3.8, printed pp. 23–24; (3.19), printed p. 24.
+- Classical abstract context only; no actual-$Y$ proof or novelty claim.
