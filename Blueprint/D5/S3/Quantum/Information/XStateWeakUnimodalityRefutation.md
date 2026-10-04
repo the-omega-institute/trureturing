@@ -42,7 +42,7 @@ w = (|p_3 + p_4| + |p_3 - p_4|)/4.
 
 **Definition 1.4 (The quantity r_1).**
 
-$$\forall x : \mathbb{R}, \operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right) = (p_{1} + p_{5} \cdot x)^{2} + 4 \cdot \operatorname{wParam}\left(p_{3}, p_{4}\right)^{2} \cdot (1 - x^{2})$$
+$$\forall x, p_{1}, p_{3}, p_{4}, p_{5} : \mathbb{R}, \operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right) = (p_{1} + p_{5} \cdot x)^{2} + 4 \cdot \operatorname{wParam}\left(p_{3}, p_{4}\right)^{2} \cdot (1 - x^{2})$$
 
 *Formalization.* `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.r1` (`✓ std3`).
 
@@ -54,7 +54,7 @@ r_1 = (p_1 + p_5 x)^2 + 4 w^2 (1 - x^2).
 
 **Definition 1.5 (The quantity r_2).**
 
-$$\forall x : \mathbb{R}, \operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right) = (p_{1} - p_{5} \cdot x)^{2} + 4 \cdot \operatorname{wParam}\left(p_{3}, p_{4}\right)^{2} \cdot (1 - x^{2})$$
+$$\forall x, p_{1}, p_{3}, p_{4}, p_{5} : \mathbb{R}, \operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right) = (p_{1} - p_{5} \cdot x)^{2} + 4 \cdot \operatorname{wParam}\left(p_{3}, p_{4}\right)^{2} \cdot (1 - x^{2})$$
 
 *Formalization.* `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.r2` (`✓ std3`).
 
@@ -66,7 +66,7 @@ r_2 = (p_1 - p_5 x)^2 + 4 w^2 (1 - x^2).
 
 **Definition 1.6 (The function f_1).**
 
-$$\forall x : \mathbb{R}, \operatorname{f1}\left(x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5}\right) = -\operatorname{h2}\left(\frac{1 + p_{2} \cdot x}{2}, \frac{1 - p_{2} \cdot x}{2}\right) + \operatorname{h4}\left(\frac{1 + p_{2} \cdot x + \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 + p_{2} \cdot x - \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 - p_{2} \cdot x + \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 - p_{2} \cdot x - \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}\right)$$
+$$\forall x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5} : \mathbb{R}, \operatorname{f1}\left(x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5}\right) = -\operatorname{h2}\left(\frac{1 + p_{2} \cdot x}{2}, \frac{1 - p_{2} \cdot x}{2}\right) + \operatorname{h4}\left(\frac{1 + p_{2} \cdot x + \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 + p_{2} \cdot x - \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 - p_{2} \cdot x + \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}, \frac{1 - p_{2} \cdot x - \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.f1` (`✓ std3`).
 
@@ -78,7 +78,7 @@ Eq. (A1): f_1(x) = -h_2((1 + p_2 x)/2, (1 - p_2 x)/2) + h_4((1 + p_2 x + sqrt r_
 
 **Definition 1.7 (Nonnegative Shannon arguments).**
 
-$$(\operatorname{ArgsNonneg}\left(x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5}\right)) \Leftrightarrow ((((0 \le \frac{1 + p_{2} \cdot x}{2}) \land (0 \le \frac{1 - p_{2} \cdot x}{2})) \land ((0 \le \frac{1 + p_{2} \cdot x + \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}) \land (0 \le \frac{1 + p_{2} \cdot x - \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}))) \land ((0 \le \frac{1 - p_{2} \cdot x + \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}) \land (0 \le \frac{1 - p_{2} \cdot x - \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4})))$$
+$$\forall x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5} : \mathbb{R}, (\operatorname{ArgsNonneg}\left(x, p_{1}, p_{2}, p_{3}, p_{4}, p_{5}\right)) \Leftrightarrow ((((0 \le \frac{1 + p_{2} \cdot x}{2}) \land (0 \le \frac{1 - p_{2} \cdot x}{2})) \land ((0 \le \frac{1 + p_{2} \cdot x + \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}) \land (0 \le \frac{1 + p_{2} \cdot x - \sqrt{\operatorname{r1}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}))) \land ((0 \le \frac{1 - p_{2} \cdot x + \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4}) \land (0 \le \frac{1 - p_{2} \cdot x - \sqrt{\operatorname{r2}\left(x, p_{1}, p_{3}, p_{4}, p_{5}\right)}}{4})))$$
 
 *Formalization.* `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.ArgsNonneg` (`✓ std3`).
 
@@ -90,7 +90,7 @@ All six arguments of the Shannon functions in Eq. (A1) are nonnegative at x.
 
 **Definition 1.8 (Weak unimodality).**
 
-$$(\operatorname{WeaklyUnimodal}\left(f, a, b\right)) \Leftrightarrow (\exists x_{m} \in [a, b], ((\operatorname{MonotoneOn}\left(f, [a, x_{m}]\right)) \land (\operatorname{AntitoneOn}\left(f, [x_{m}, b]\right))) \lor ((\operatorname{AntitoneOn}\left(f, [a, x_{m}]\right)) \land (\operatorname{MonotoneOn}\left(f, [x_{m}, b]\right))))$$
+$$\forall f : \mathbb{R} \to \mathbb{R}, \forall a, b : \mathbb{R}, (\operatorname{WeaklyUnimodal}\left(f, a, b\right)) \Leftrightarrow (\exists x_{m} \in [a, b], ((\operatorname{MonotoneOn}\left(f, [a, x_{m}]\right)) \land (\operatorname{AntitoneOn}\left(f, [x_{m}, b]\right))) \lor ((\operatorname{AntitoneOn}\left(f, [a, x_{m}]\right)) \land (\operatorname{MonotoneOn}\left(f, [x_{m}, b]\right))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.WeaklyUnimodal` (`✓ std3`).
 

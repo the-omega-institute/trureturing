@@ -87,6 +87,20 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Abs(Formula x) => Seq(Bar, x, Bar);
     private static Formula P(byte n) => new Formula.Subscript(F.Id("p"), D(n));
+    private static Formula Vars(params Formula[] names)
+    {
+        var items = new List<Formula>();
+        for (var i = 0; i < names.Length; i++)
+        {
+            if (i > 0)
+            {
+                items.Add(Comma);
+                items.Add(Sp);
+            }
+            items.Add(names[i]);
+        }
+        return Seq([.. items]);
+    }
     private static Formula Icc(Formula a, Formula b) => Seq(OpenBracket, a, Comma, Sp, b, CloseBracket);
     private static Formula Log2() => Seq(Log, Sp, D(2));
 
@@ -117,7 +131,7 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
         Formula lin = plus ? Add(P(1), Mul(P(5), x)) : Sub(P(1), Mul(P(5), x));
         Formula value = Add(Pow(Parenthesized(lin), D(2)),
             Mul(Mul(D(4), Pow(Call(F.Id("wParam"), P(3), P(4)), D(2))), Parenthesized(Sub(D(1), Pow(x, D(2))))));
-        return Disp(All(x, Real(), EqTo(Call(name, x, P(1), P(3), P(4), P(5)), value)));
+        return Disp(All(Vars(x, P(1), P(3), P(4), P(5)), Real(), EqTo(Call(name, x, P(1), P(3), P(4), P(5)), value)));
     }
 
     private static Formula F1Formula()
@@ -128,7 +142,8 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
         Formula value = Add(Seq(Minus, Call(F.Id("h2"), Frac(Add(D(1), px), D(2)), Frac(Sub(D(1), px), D(2)))),
             Call(F.Id("h4"), Frac(Add(Add(D(1), px), s1), D(4)), Frac(Sub(Add(D(1), px), s1), D(4)),
                 Frac(Add(Sub(D(1), px), s2), D(4)), Frac(Sub(Sub(D(1), px), s2), D(4))));
-        return Disp(All(x, Real(), EqTo(Call(F.Id("f1"), x, P(1), P(2), P(3), P(4), P(5)), value)));
+        return Disp(All(Vars(x, P(1), P(2), P(3), P(4), P(5)), Real(),
+            EqTo(Call(F.Id("f1"), x, P(1), P(2), P(3), P(4), P(5)), value)));
     }
 
     private static Formula ArgsFormula()
@@ -139,8 +154,8 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
         Formula body = And(And(And(LeTo(D(0), Frac(Add(D(1), px), D(2))), LeTo(D(0), Frac(Sub(D(1), px), D(2)))),
             And(LeTo(D(0), Frac(Add(Add(D(1), px), s1), D(4))), LeTo(D(0), Frac(Sub(Add(D(1), px), s1), D(4))))),
             And(LeTo(D(0), Frac(Add(Sub(D(1), px), s2), D(4))), LeTo(D(0), Frac(Sub(Sub(D(1), px), s2), D(4)))));
-        return Disp(Logic(Call(F.Id("ArgsNonneg"), x, P(1), P(2), P(3), P(4), P(5)),
-            FormulaLogicOperator.Iff, body));
+        return Disp(All(Vars(x, P(1), P(2), P(3), P(4), P(5)), Real(),
+            Logic(Call(F.Id("ArgsNonneg"), x, P(1), P(2), P(3), P(4), P(5)), FormulaLogicOperator.Iff, body)));
     }
 
     private static Formula WeakFormula()
@@ -150,13 +165,14 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
         Formula down = And(Call(F.Id("AntitoneOn"), f, Icc(a, m)), Call(F.Id("MonotoneOn"), f, Icc(m, b)));
         Formula body = Seq(Exists, Sp, m, Sp, InMacro, Sp, Icc(a, b), Comma, Sp,
             Logic(up, FormulaLogicOperator.Or, down));
-        return Disp(Logic(Call(F.Id("WeaklyUnimodal"), f, a, b), FormulaLogicOperator.Iff, body));
+        return Disp(All(f, Seq(Real(), Sp, To, Sp, Real()), All(Vars(a, b), Real(),
+            Logic(Call(F.Id("WeaklyUnimodal"), f, a, b), FormulaLogicOperator.Iff, body))));
     }
 
     private static Formula ClaimFormula()
     {
         Formula x = F.Id("x");
-        Formula ps = Seq(P(1), Comma, Sp, P(2), Comma, Sp, P(3), Comma, Sp, P(4), Comma, Sp, P(5));
+        Formula ps = Vars(P(1), P(2), P(3), P(4), P(5));
         Formula admissible = AllIn(x, Icc(D(0), D(1)), Call(F.Id("ArgsNonneg"), x, P(1), P(2), P(3), P(4), P(5)));
         Formula f = Parenthesized(Seq(x, Sp, Mapsto, Sp, Call(F.Id("f1"), x, P(1), P(2), P(3), P(4), P(5))));
         Formula body = Logic(admissible, FormulaLogicOperator.Implies, Call(F.Id("WeaklyUnimodal"), f, D(0), D(1)));
