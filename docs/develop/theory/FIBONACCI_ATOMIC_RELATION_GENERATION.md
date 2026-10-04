@@ -57251,3 +57251,213 @@ $$
 并在额外几何识别下等于相应 Chern 数的常数倍。若无谱隙、相关函数不可积、接触项未定义，或有限窗口先于体极限取极限，式（380.8）不能推出量子化输运。FIB 路径重叠可影响电流算子的稀疏支撑，却不替代响应函数的联合状态和极限证明。
 
 **边界 380.4（拓扑量与原生递归的分离）。** 拓扑不变量保持的是连续变形、同伦或谱隙下的投影类，而不是 Fibonacci 叶数本身。相同 FIB 递归可以通过不同周期粘合产生不同基本群，通过不同结构群赋值产生不同 Holonomy，通过不同 Hamiltonian 产生平凡或非平凡 Chern 数。因而 FIB ATOM 能给出拓扑输运的可组合路径骨架和边界接口；指数、异常、量子化电导与拓扑相分类仍是外加几何、群表示、谱和测度的条件结论。
+
+## 381. 实际 Fibonacci 闭包的密度一双重对数损失
+
+**定义 381.1（实际族、整除内核与最小实际上界）。** 沿用 §362、§363 及首个 §366 的标准 Fibonacci 序列 $F_0=0$、$F_1=F_2=1$、$F_{r+2}=F_{r+1}+F_r$。令
+
+$$
+\mathcal M=\left\{\operatorname{lcm}_{s\in S}F_s:
+S\subseteq\mathbb N_{>0}\text{ 有限}\right\},
+\qquad \operatorname{lcm}\varnothing=1.
+\tag{381.4}
+$$
+
+对整数 $a\ge2$，$z(a)=\min\{r\ge1:a\mid F_r\}$ 为既有入口秩。对正整数 $n$ 定义
+
+$$
+\begin{aligned}
+B(n)&=\operatorname{lcm}\{F_d:d\ge3,\ F_d\mid n\},\\
+C(n)&=\operatorname{lcm}_{p^a\parallel n}F_{z(p^a)},
+\qquad C(1)=1.
+\end{aligned}
+\tag{381.5}
+$$
+
+这里 $p^a\parallel n$ 表示 $p$ 为素数且 $a=v_p(n)\ge1$；两个空最小公倍数均取一。$B(n)$ 的指标集有限，由下述证明中的递推增长估计保证。$C$ 正是（362.11）的 $\mathscr C$，不是以最大指标或原始素因子替代的上界。
+
+**定义 381.2（双重对数损失与相对素数密度）。** 所有对数均为自然对数；对正实数 $t$ 和实数 $b$，$t^b=\exp(b\log t)$。对整数 $n>5040$，记
+
+$$
+D(n)=\frac{\log\log C(n)}{\log\log n},
+\qquad
+\pi(x)=\#\{p\le x:p\text{ 为素数}\}\quad(x\ge0).
+$$
+
+（362.11）给 $n\mid C(n)$，所以 $C(n)\ge n>5040>e$，双重对数都有定义，分母严格为正。给定实数 $K>0$，令
+
+$$
+\mathcal G_K=\{p:p\text{ 为素数},\ p>5040,\ B(p)=1,\ D(p)>K\}.
+$$
+
+素数集合 $\mathcal G$ 的相对素数密度一，指实数 $x\to+\infty$ 时 $\#(\mathcal G\cap[0,x])/\pi(x)\to1$。
+
+**定理 381.3（实际整除内核为一的素数上的密度一无界损失）。** 对每个实数 $K>0$，有
+
+$$
+\lim_{\substack{x\to+\infty\\x\in\mathbb R}}
+\frac{\#\{p\le x:p\text{ 为素数},\ p>5040,\ B(p)=1,\ D(p)>K\}}
+{\pi(x)}=1.
+\tag{381.6}
+$$
+
+因而 $D(n)$ 在全部整数 $n>5040$ 上没有有限的统一上界。该结论中的集合只由 $K$ 决定；证明中的辅助指数不属于其定义。
+
+**证明。** 给定 $K>0$。在证明内任取并固定 $0<\beta<1/2$，例如 $\beta=1/4$。先从递推式得到本证明所需的经典增长估计，不另使用 Binet 误差或原始素因子结论。正性由 $F_1=F_2=1$ 和递推归纳得到；同一递推给 $F_{r+1}\ge F_r$（$r\ge1$），从而 $F_{r+2}\ge2F_r$。上界的两个初值满足 $F_1\le2^0$、$F_2\le2^1$；若相邻两项的上界成立，则
+
+$$
+F_{r+2}=F_{r+1}+F_r
+\le2^r+2^{r-1}\le2^{r+1}.
+$$
+
+因此 $F_r\le2^{r-1}$ 对所有 $r\ge1$ 成立。下界按奇偶两条递推分别归纳：对每个整数 $m\ge0$，从 $F_1=1$ 得 $F_{2m+1}\ge2^m$，从 $F_2=1$ 得 $F_{2m+2}\ge2^m$。合起来即
+
+$$
+2^{\lfloor(r-1)/2\rfloor}\le F_r\le2^{r-1}\quad(r\ge1),
+\qquad
+\log F_r\ge c_0r\quad(r\ge4),
+\qquad c_0=\frac{\log2}{4}>0.
+\tag{381.7}
+$$
+
+最后一个不等式的指标边界也可直接核对：若 $r=2m\ge4$，则 $m\ge2$ 且 $\lfloor(r-1)/2\rfloor=m-1\ge m/2=r/4$；若 $r=2m+1\ge5$，则 $\lfloor(r-1)/2\rfloor=m\ge(2m+1)/4$。这证明（381.7）的完整范围。
+
+由这个下界，$F_d\to+\infty$；而 $F_d\mid n$ 时 $F_d\le n$，故定义 $B(n)$ 所用的指标集确实有限。每个生成项整除 $n$，于是 $B(n)\mid n$，且该有限指标集自身实现 $B(n)\in\mathcal M$。这里只使用这些直接的整除关系。另一方面，（362.11）及 §363 的最小实际上界证明已经给出 $C(n)\in\mathcal M$、$n\mid C(n)$，以及 $n\in\mathcal M$ 时 $C(n)=n$。特别地，对每个素数 $p$，这些既有事实在同一实际对象上给
+
+$$
+C(p)=F_{z(p)},\qquad
+B(p)>1\ \Longrightarrow\ B(p)=p\in\mathcal M
+\ \Longrightarrow\ C(p)=p.
+\tag{381.8}
+$$
+
+其中第一步是（381.5）对唯一最大素幂 $p^1$ 的精确取值；第二步使用 $B(p)\mid p$ 和素性，并未把任意约数视为实际族成员。
+
+现在估计移动低秩例外。所用素数乘积计数方法是已有方法：Paolo Leonetti、Carlo Sanna，*On the greatest common divisor of n and the nth Fibonacci number*，[arXiv:1704.00151v2，Lemma 2.4 的证明，3–4 页](https://arxiv.org/pdf/1704.00151v2)，对 $\{p:z(p)<p^\gamma\}$ 用 $\prod_{r\le x^\gamma}F_r$ 得到 $O(x^{2\gamma})$ 计数。下面在本证明内保留非严格的秩阈值与递推给出的具体上界。对实数 $x>0$，置
+
+$$
+E_\beta(x)=\{p\le x:p\text{ 为素数},\ z(p)\le p^\beta\},
+\qquad R=\lfloor x^\beta\rfloor.
+$$
+
+当 $p\in E_\beta(x)$ 时，整数 $z(p)$ 满足 $1\le z(p)\le R$，而 $p\mid F_{z(p)}$。这些素数彼此不同，故它们的平方自由乘积整除同一个正整数 $\prod_{r=1}^{R}F_r$。每个素数至少为二，结合（381.7）得到
+
+$$
+2^{\#E_\beta(x)}
+\le\prod_{p\in E_\beta(x)}p
+\le\prod_{r=1}^{R}F_r
+\le2^{\sum_{r=1}^{R}(r-1)}
+=2^{R(R-1)/2},
+\qquad
+\#E_\beta(x)\le\frac{R(R-1)}2\le\frac{x^{2\beta}}2.
+\tag{381.9}
+$$
+
+$R=0$ 时两个相应空乘积均为一，$E_\beta(x)=\varnothing$；$R=1$ 时 Fibonacci 乘积为 $F_1=1$，也不含素因子。这两个边界均给计数零，与 $R(R-1)/2=0$ 一致。这里只计不同素数，不要求各 Fibonacci 项互素。
+
+所需素数计数下界取自 Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），9 页](https://arxiv.org/pdf/1002.0442v1)：对每个实数 $x\ge599$，
+
+$$
+\pi(x)\ge\frac{x}{\log x}\left(1+\frac1{\log x}\right)
+\ge\frac{x}{\log x}>0.
+\tag{381.10}
+$$
+
+这是无条件的经典素数计数供给。因 $1-2\beta>0$，（381.9）–（381.10）给
+
+$$
+0\le\frac{\#E_\beta(x)}{\pi(x)}
+\le\frac{\log x}{2x^{1-2\beta}}\longrightarrow0.
+\tag{381.11}
+$$
+
+为明确此处的极限，令 $a=1-2\beta>0$、$u=\log x>0$；指数级数给 $e^{au}\ge(au)^2/2$，所以 $u/e^{au}\le2/(a^2u)\to0$。以上移动例外估计对证明内任意先固定的 $\beta\in(0,1/2)$ 成立。
+
+下一步在让计数截止 $x$ 变化之前选定一个有限阈值。置
+
+$$
+\begin{aligned}
+T_{\beta,K}
+&=1+\max\left\{1,\log5040,\frac{\log4}{\beta},
+\frac{2}{c_0\beta^2},\frac{2|\log c_0|}{\beta},
+\left(\frac{4K}{\beta}\right)^2\right\},\\
+P_{\beta,K}&=\exp(T_{\beta,K}).
+\end{aligned}
+\tag{381.12}
+$$
+
+所有项有限，且这个阈值只依赖已经固定的 $\beta,K$ 和常数 $c_0$。若素数 $p\ge P_{\beta,K}$ 满足 $z(p)>p^\beta$，令 $t=\log p\ge T_{\beta,K}$、$r=z(p)$。阈值保证 $p>5040$、$p^\beta>4$、$r\ge4$。由（381.7）和（381.8），
+
+$$
+\begin{aligned}
+\log C(p)&=\log F_r\ge c_0r>c_0p^\beta,\\
+\log\log C(p)&>\beta\log p+\log c_0=\beta t+\log c_0.
+\end{aligned}
+\tag{381.13}
+$$
+
+双重对数合法，因为 $C(p)\ge p>5040>e$。还需同时验证 $C(p)>p$ 和所需严格损失界。由指数级数及（381.12），
+
+$$
+c_0p^\beta=c_0e^{\beta t}
+\ge\frac{c_0\beta^2t^2}{2}>t=\log p.
+$$
+
+与（381.13）合并即得 $C(p)>p$。同时，$t>1$ 时
+
+$$
+\log t=\int_1^t\frac{ds}{s}
+\le\int_1^t\frac{ds}{\sqrt s}
+=2(\sqrt t-1)\le2\sqrt t.
+$$
+
+阈值的另两个条件给
+
+$$
+\beta t+\log c_0
+\ge\beta t-|\log c_0|
+>\frac{\beta t}{2}>2K\sqrt t\ge K\log t.
+$$
+
+由于 $\log t=\log\log p>0$，（381.13）除以这个正分母得到 $D(p)>K$。若 $B(p)>1$，则（381.8）强迫 $C(p)=p$，与刚才的 $C(p)>p$ 矛盾。因此已在同一阈值上证明
+
+$$
+p\text{ 为素数},\quad p\ge P_{\beta,K},\quad z(p)>p^\beta
+\quad\Longrightarrow\quad p\in\mathcal G_K.
+\tag{381.14}
+$$
+
+这也给出在非例外素数上趋于无穷的一致下界，而没有让阈值依赖计数截止。
+
+记固定有限数 $N_{\beta,K}=\#\{p<P_{\beta,K}:p\text{ 为素数}\}$。对任意实数 $x\ge599$，每个不属于 $\mathcal G_K$ 的素数 $p\le x$，或者小于这个固定阈值，或者属于 $E_\beta(x)$。于是
+
+$$
+0\le1-\frac{\#(\mathcal G_K\cap[0,x])}{\pi(x)}
+\le\frac{\#E_\beta(x)+N_{\beta,K}}{\pi(x)}
+\le\frac{\log x}{2x^{1-2\beta}}
++N_{\beta,K}\frac{\log x}{x}\longrightarrow0.
+\tag{381.15}
+$$
+
+第二项用上面指数级数的同一估计、取 $a=1$ 即趋零。这证明（381.6）的实数截止极限。$\beta$ 只用于证明中控制例外和选阈值；最后计数的集合仍是定义 381.2 的 $\mathcal G_K$。
+
+由于（381.10）使 $\pi(x)\to+\infty$，密度一结论保证每个 $K>0$ 都有、且有无穷多个 $p>5040$ 满足 $D(p)>K$。若存在有限实数 $U$ 使每个整数 $n>5040$ 都有 $D(n)\le U$，取 $K>\max\{0,U\}$ 并取上述素数便矛盾。这证明统一上界不存在。
+
+最后将同一个结论接回（362.12），其中 $\mathcal R(n)=\sigma(n)/(e^\gamma n\log\log n)$：
+
+$$
+\mathcal R(n)\le\mathcal R(C(n))D(n)\qquad(n>5040).
+\tag{381.16}
+$$
+
+若只代入实际族上的固定上界 $\mathcal R(M)\le A$（$A>0$），这一比较给出的就是 $\mathcal R(n)\le A D(n)$；本定理说明其右侧比较上界在密度一的素数输入上无界，不能仅凭该比较得到对任意整数原样不变的上界 $A$。即使实际族的固定上界只从某个固定大小起成立，（381.13）仍保证这里的 $C(p)$ 最终进入其适用范围。这是该比较的损失，而不是 Robin 反例或其他证明路线的否定。事实上，对素数有精确恒等式
+
+$$
+\mathcal R(p)=\frac{1+1/p}{e^\gamma\log\log p}\longrightarrow0
+\qquad(p\to+\infty\text{ 沿素数}).
+\tag{381.17}
+$$
+
+分子不超过二，分母趋于正无穷，故素数自身最终满足严格 Robin 不等式；闭包造成的无界损失并不改变这一事实。整个证明只使用既有实际最小上界、经典 Fibonacci 递推增长、上述有出处的低秩计数方法与无条件素数计数供给，没有对生成指标的基数、最大值、原始素因子或 RH 增添假设。$\square$
+
+## 追加锚（本行以下为增补区）

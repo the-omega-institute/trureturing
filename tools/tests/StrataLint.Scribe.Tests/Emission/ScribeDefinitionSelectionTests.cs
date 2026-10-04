@@ -283,80 +283,16 @@ public sealed class ScribeDefinitionSelectionTests
     }
 
     [Fact]
-    public void SharedSourceSelectsItsUsers()
+    public void ChangedDefinitionSelectsOnlyItself()
     {
         using var root = new TemporaryRoot();
-        Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "[ScribeSharedSource(\"Blueprint/Shared.scribe.cs\")] class First {}");
-        Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
-        Add(root, "Blueprint/Shared.scribe.cs", "class Shared {}");
+        const string changed = "Blueprint/D5/S0/Test/Changed.scribe.cs";
+        Add(root, changed, "class Changed {}");
+        Add(root, "Blueprint/D5/S0/Test/Mentions.scribe.cs", $"[ScribeSharedSource(\"{changed}\")] class Mentions {{}}");
 
-        var selected = ScribeDefinitionSelector.Select(root.Path, ["Blueprint/Shared.scribe.cs"]);
-        Assert.True(selected.Paths.SequenceEqual(
-            ["Blueprint/D5/S0/Test/First.scribe.cs", "Blueprint/Shared.scribe.cs"]));
-    }
+        var selected = ScribeDefinitionSelector.Select(root.Path, [changed]);
 
-    [Fact]
-    public void SharedSourceLeafSelectsAllThreeTransitiveUsers()
-    {
-        using var root = new TemporaryRoot();
-        const string leaf = "Blueprint/Leaf.scribe.cs";
-        const string first = "Blueprint/First.scribe.cs";
-        const string second = "Blueprint/Second.scribe.cs";
-        const string third = "Blueprint/Third.scribe.cs";
-        Add(root, leaf, "class Leaf {}");
-        Add(root, first, $"[ScribeSharedSource(\"{leaf}\")] class First {{}}");
-        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
-        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
-        Add(root, "Blueprint/Unrelated.scribe.cs", "class Unrelated {}");
-
-        var selected = ScribeDefinitionSelector.Select(root.Path, [leaf]);
-
-        Assert.Equal(new[] { first, leaf, second, third }, selected.Paths.ToArray());
-    }
-
-    [Fact]
-    public void SharedSourceCycleSelectionTerminatesAndIncludesTransitiveUsers()
-    {
-        using var root = new TemporaryRoot();
-        const string first = "Blueprint/First.scribe.cs";
-        const string second = "Blueprint/Second.scribe.cs";
-        const string third = "Blueprint/Third.scribe.cs";
-        Add(root, first, $"[ScribeSharedSource(\"{second}\")] class First {{}}");
-        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
-        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
-
-        Assert.Equal(new[] { first, second, third },
-            ScribeDefinitionSelector.Select(root.Path, [first]).Paths.ToArray());
-        Assert.Equal(ScribeScriptFailureCode.SharedSourceCycle,
-            ScribeScriptHost.Execute(root.Path, third).Failure!.Code);
-    }
-
-    [Fact]
-    public void SharedSourceSelectionUsesTheHostSyntaxContract()
-    {
-        using var root = new TemporaryRoot();
-        const string shared = "Blueprint/Shared.scribe.cs";
-        Add(root, shared, "class Shared {}");
-        Add(root, "Blueprint/D5/S0/Test/Simple.scribe.cs",
-            $"[ScribeSharedSource(\"{shared}\")] class Simple {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Suffix.scribe.cs",
-            $"[ScribeSharedSourceAttribute(\"{shared}\")] class Suffix {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Qualified.scribe.cs",
-            $"[StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] class Qualified {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Aliased.scribe.cs",
-            $"[global::StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] record Aliased {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Unrelated.scribe.cs", "class Unrelated {}");
-
-        var selected = ScribeDefinitionSelector.Select(root.Path, [shared]);
-
-        Assert.True(selected.Paths.SequenceEqual(
-            [
-                "Blueprint/D5/S0/Test/Aliased.scribe.cs",
-                "Blueprint/D5/S0/Test/Qualified.scribe.cs",
-                "Blueprint/D5/S0/Test/Simple.scribe.cs",
-                "Blueprint/D5/S0/Test/Suffix.scribe.cs",
-                "Blueprint/Shared.scribe.cs",
-            ]));
+        Assert.Equal(new[] { changed }, selected.Paths.ToArray());
     }
 
     [Fact]

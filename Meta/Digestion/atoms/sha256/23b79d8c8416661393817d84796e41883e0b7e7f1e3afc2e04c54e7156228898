@@ -1,0 +1,1 @@
+- Dereniowski–Łukasiewicz–Uznański，*Noisy (Binary) Searching: Simple, Fast and Correct*，[arXiv:2107.05753v4](https://arxiv.org/abs/2107.05753v4)，定理1.1与1.3分别区分期望查询和最坏查询预算。其固定独立翻转参数不由本节的历史统一错误上界自动给出；式（62.10）—（62.14）承担本节所需的有限条件桥梁。

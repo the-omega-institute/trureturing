@@ -1,0 +1,5 @@
+**Lemma 4.2 (coordinate minima bound).** For every nonempty dominant
+$(\sigma,C)$ in $T_{n,l}$, if $m_i=\min\{x_i:x\in\sigma\}$, then
+
+$$l<\sum_{i\in C}m_i+|C|.$$
+

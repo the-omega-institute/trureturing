@@ -1,0 +1,72 @@
+### 62.7. 非自适应均匀配置的线性扫描反例
+
+式（62.22）不能解释为自适应相对于全部受控非自适应查询的阶优势。下面给出一个不枚举全部三元组的充分替代构造。
+
+预先独立选择 $L$ 个均匀完整配置 $X_j\sim\operatorname{Unif}(\Sigma)^n$，选择不使用任何标签。保持每个配置，取得
+
+$$
+K_{\mathrm U}=\left\lceil32a^{-2}\ln8\right\rceil
+\tag{62.23}
+$$
+
+个新标签。设 $T_j=\operatorname{sign}(\sum Z)$，特别规定 $\operatorname{sign}(0)=0$。类2与类0的 $Z$ 分布互为符号反射，类1的分布对称。因此存在同一标量 $s_\alpha$，使
+
+$$
+\mathbb E[T_j\mid C]=s_\alpha(C-1),\qquad
+s_\alpha\geq1-2\exp(-K_{\mathrm U}\alpha^2/32)\geq3/4.
+\tag{62.24}
+$$
+
+后一界由类2的均值 $\alpha/4$ 和 Hoeffding 得到；把“和非正”的概率计入误差即可。零和取0使类1的期望恰为0，不能把平局删去或固定成正号。
+
+令
+
+$$
+\psi(w)=5(h(w)+\ell(w))-4\in\{-4,1,6\}.
+\tag{62.25}
+$$
+
+均匀五窗下，有
+$\mathbb E\psi=0$，
+$\mathbb E[h\psi]=\mathbb E[\ell\psi]=7/5$，
+$\mathbb E[h\ell\psi]=6/5$。
+式（62.2）在活动窗口条件下的均值为
+
+$$
+\begin{aligned}
+\mathbb E[C\mid w_p]&=8/25+6h_p/25,\\
+\mathbb E[C\mid w_q]&=(2/5)\ell_q+(4/5)h_q-(8/25)\ell_qh_q,\\
+\mathbb E[C\mid w_r]&=4/25+16\ell_r/25.
+\end{aligned}
+\tag{62.26}
+$$
+
+展开 $C=h_p\ell_q+2h_q\ell_r-2h_p\ell_qh_q\ell_r$ 后，对其他独立窗口求期望即得三式。证明这些式子必须保留 $\mathbb E[h_q\ell_q]=1/5$，不能用两个边缘 $2/5$ 的乘积替代。由式（62.24）—（62.26），
+
+$$
+\mathbb E[T_j\psi(X_{ji})]
+ =
+\begin{cases}
+s_\alpha\,42/125,&i=p,\\
+s_\alpha\,162/125,&i=q,\\
+s_\alpha\,112/125,&i=r,\\
+0,&i\notin\{p,q,r\}.
+\end{cases}
+\tag{62.27}
+$$
+
+例如 $p$ 项为 $(6/25)(7/5)$；$q$ 项为
+$(2/5)(7/5)+(4/5)(7/5)-(8/25)(6/5)$；
+$r$ 项为 $(16/25)(7/5)$。非活动位置独立于真实教师输出，故其期望为零。优先级和同窗依赖产生三个不同的角色系数，随后索引排序利用给定次序确定角色。
+
+取
+
+$$
+L=\left\lceil4608\ln(2n/\delta)\right\rceil,\qquad
+M_i=\sum_{j=1}^L T_j\psi(X_{ji}).
+\tag{62.28}
+$$
+
+每个求和项在 $[-6,6]$ 中，跨配置独立。双侧 Hoeffding 与 $n$ 项并集界保证，以至少 $1-\delta$ 的概率，所有 $M_i/L$ 距离其期望都小于 $1/8$。活动均值至少
+$(3/4)(42/125)=63/250>1/4$；非活动均值为零。因此选择所有满足整数判据 $8M_i>L$ 的位置，恰得到三个活动位置。排序后输出；若选到的数量不是3，则输出固定合法三元组。
+
