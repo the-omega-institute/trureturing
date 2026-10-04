@@ -1,0 +1,8 @@
+- `Analysis/SpecialFunctions/Hermite/Function/Orthonormal.lean`.
+
+The physical rescaling and actual product-volume transport are constructions
+for the displayed functions below. The donor argument carries no claim of
+research originality by this adaptation. Its copyright remains in the receiving
+Lean source; the full license is in
+`docs/reports/hermite-suppliers/tauceti-LICENSE.txt`.
+
