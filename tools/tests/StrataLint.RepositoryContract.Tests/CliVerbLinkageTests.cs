@@ -99,7 +99,7 @@ public sealed class CliVerbLinkageTests
     {
         var invocations = CollectInvocations(TestRepositoryLayout.FindRoot());
 
-        foreach (var verb in new[] { "emit", "emit-values", "filemap" })
+        foreach (var verb in new[] { "emit", "emit-values" })
         {
             Assert.Contains(invocations, invocation =>
                 invocation.File == "tools/scripts/scribe.sh"

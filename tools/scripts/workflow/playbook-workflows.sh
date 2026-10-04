@@ -5,7 +5,6 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/accepted"
-TRUTH_GRAPH="Generated/truth-graph.v1.json"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 if [[ "$COMMAND" != deposit-uncovered ]]; then
@@ -23,16 +22,12 @@ run_digest_status() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module
+  local accepted_modules='[]' closed_modules module truth_export_dir truth_export_output
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
-    return 2
-  fi
-  if [[ ! -f "$TRUTH_GRAPH" ]]; then
-    echo "PLAYBOOK_INVALID truth graph is missing after emit: $TRUTH_GRAPH" >&2
     return 2
   fi
   if [[ ! -e "${accepted_files[0]}" ]]; then
@@ -49,16 +44,26 @@ align_delivery_ledger() {
     echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
     return 2
   fi
+  truth_export_dir="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-truth-export.XXXXXXXX")" || {
+    echo "PLAYBOOK_INVALID could not allocate a truth export directory" >&2
+    return 2
+  }
+  if ! truth_export_output="$(run_cli truth-export --out "$truth_export_dir" --candidate-lean-report "$REPORT" 2>&1)"; then
+    rm -rf -- "$truth_export_dir"
+    echo "PLAYBOOK_INVALID Lean truth export failed: $truth_export_output" >&2
+    return 2
+  fi
   if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .truth.nodes[]
-      | select(.state == "closed")
+      .nodes[]
       | .repo_path as $path
       | select(($accepted | index($path)) == null)
       | $path
-    ' "$TRUTH_GRAPH" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from $TRUTH_GRAPH: $closed_modules" >&2
+    ' "$truth_export_dir/truth-export.v1.json" 2>&1)"; then
+    rm -rf -- "$truth_export_dir"
+    echo "PLAYBOOK_INVALID failed to derive Closed modules from Lean truth export: $closed_modules" >&2
     return 2
   fi
+  rm -rf -- "$truth_export_dir"
 
   while IFS= read -r module; do
     [[ -z "$module" ]] || align_args+=(--add "$module")

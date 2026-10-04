@@ -39,7 +39,7 @@ public sealed partial class TruthReleaseCommandTests
         using var output = new TemporaryDirectory();
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), [option, value]);
 
-        Assert.Equal(1, exitCode);
+        Assert.Equal(2, exitCode);
         Assert.Contains(PackUsage, console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
@@ -57,28 +57,6 @@ public sealed partial class TruthReleaseCommandTests
 
         Assert.Equal(1, exitCode);
         Assert.Contains(PackUsage, console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
-    }
-
-    [Theory]
-    [InlineData(false, "unregistered Scribe source:")]
-    [InlineData(true, "registered Scribe source is missing:")]
-    public void ResourcePackRequiresSnapshotSourceBijection(bool extra, string diagnostic)
-    {
-        using var fixture = CreateFixture();
-        using var resources = new TemporaryDirectory();
-        using var output = new TemporaryDirectory();
-        DocumentDefinition[] definitions = extra
-            ? [SimpleDefinition(BlueprintGid), SimpleDefinition("D5/S0/Carrier/Extra")]
-            : [];
-        var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, definitions).TotalSha256;
-
-        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
-
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains(diagnostic, console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
@@ -121,7 +99,7 @@ public sealed partial class TruthReleaseCommandTests
             graph.RootElement.GetProperty("documents").GetProperty("document_nodes").EnumerateArray()).GetProperty("gid").GetString());
     }
 
-    private const string PackUsage = "[--scribe-pack FILE --scribe-pack-digest HEX64]";
+    private const string PackUsage = "--scribe-pack FILE --scribe-pack-digest HEX64";
 
     [Fact]
     public void ResourcePackProductionVerifierAcceptsSnapshotDefinitionsWithoutAssemblyDiscovery()

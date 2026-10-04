@@ -27,6 +27,7 @@ public sealed class PlaybookWorkflowScriptTests
                 "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
+                "dotnet:truth-export --out",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
                 $"make:gate BASE=synthetic-base",
@@ -95,30 +96,24 @@ public sealed class PlaybookWorkflowScriptTests
     }
 
     private static void WriteTruthGraph(PlaybookFixture fixture, string module) =>
-        WriteTruthGraphContent(
+        WriteTruthExportContent(
             fixture,
             JsonSerializer.Serialize(new
             {
-                truth = new
-                {
-                    nodes = new[] { new { repo_path = module, state = "closed" } },
-                },
+                nodes = new[] { new { repo_path = module } },
             }));
 
     private static void WriteEmptyTruthGraph(PlaybookFixture fixture) =>
-        WriteTruthGraphContent(
+        WriteTruthExportContent(
             fixture,
             JsonSerializer.Serialize(new
             {
-                truth = new
-                {
-                    nodes = Array.Empty<object>(),
-                },
+                nodes = Array.Empty<object>(),
             }));
 
-    private static void WriteTruthGraphContent(PlaybookFixture fixture, string content)
+    private static void WriteTruthExportContent(PlaybookFixture fixture, string content)
     {
-        var path = Path.Combine(fixture.Temporary.Path, "Generated", "truth-graph.v1.json");
+        var path = Path.Combine(fixture.Temporary.Path, "Generated", "truth-export.v1.json");
         ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
         ScriptHarnessScratch.WriteScratchText(path, content);
     }
@@ -200,9 +195,10 @@ public sealed class PlaybookWorkflowScriptTests
                 """);
             WriteExecutable(
                 "dotnet",
-                "args=\"$*\"; command=${args##* -- }; printf 'dotnet:%s\\n' \"$command\" >> \"$PLAYBOOK_TEST_CALLS\"; "
+                "args=\"$*\"; command=${args##* -- }; if [[ $command == truth-export* ]]; then printf 'dotnet:truth-export --out\\n' >> \"$PLAYBOOK_TEST_CALLS\"; else printf 'dotnet:%s\\n' \"$command\" >> \"$PLAYBOOK_TEST_CALLS\"; fi; "
                 + "if [[ -n ${PLAYBOOK_DOTNET_FAILURE:-} && $command == $PLAYBOOK_DOTNET_FAILURE* ]]; then "
                 + "printf '%s\\n' \"$PLAYBOOK_DOTNET_DIAGNOSTIC\" >&2; exit 1; fi; "
+                + "if [[ $command == truth-export* ]]; then read -r -a parts <<< \"$command\"; for ((i=1; i<${#parts[@]}; i++)); do if [[ ${parts[i]} == --out ]]; then out=${parts[i+1]}; mkdir -p \"$out\"; cp Generated/truth-export.v1.json \"$out/truth-export.v1.json\"; fi; done; exit 0; fi; "
                 + "read -r -a parts <<< \"$command\"; "
                 + "for ((i=1; i<${#parts[@]}; i++)); do "
                 + "if [[ ${parts[i]} == --add ]]; then module=${parts[i+1]}; "

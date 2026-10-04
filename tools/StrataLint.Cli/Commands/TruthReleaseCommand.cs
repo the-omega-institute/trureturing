@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Documents;
 using Trureturing.Truth;
 
 namespace StrataLint.Cli;
@@ -19,16 +18,15 @@ internal static class TruthReleaseCommand
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
-        if (!TryParseArguments(arguments, out var options))
+        if (!TryParseArguments(arguments, out var options, out var missingScribePack))
         {
-            return Usage();
+            return missingScribePack ? MissingScribePackUsage() : Usage();
         }
 
         try
         {
-            var suppliedDefinitions = options.ScribePackPath is null
-                ? (IReadOnlyList<DocumentDefinition>?)null
-                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!);
+            var suppliedDefinitions = ScribePackInput.ReadDefinitions(
+                options.ScribePackPath, options.ScribePackDigest);
             var verifier = scribeEmissionVerifier
                 ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
             TruthExportValidation.RequireGitObjectId(
@@ -132,38 +130,21 @@ internal static class TruthReleaseCommand
         TruthContext truth,
         TruthDagProjection projection,
         ImmutableArray<byte> rawLeanReportBytes,
-        IEnumerable<DocumentDefinition>? suppliedDefinitions)
+        IReadOnlyList<DocumentDefinition> suppliedDefinitions)
     {
-        using var materialized = MaterializedSnapshot.Create(snapshot);
         var catalog = DeclarationCatalog.Create(truth.Report);
-        var sourcePaths = snapshot.Files.Keys
-            .Where(static path => path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
-                && path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
-            .Select(static path => path.Value)
-            .ToArray();
-        var definitions = (suppliedDefinitions ?? DocumentDefinitions
-            .Discover(DocumentAssembly.Value, materialized.Root)
-            .Where(definition => sourcePaths.Contains(
-                ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value),
-                StringComparer.Ordinal)))
-            .ToArray();
-        var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(sourcePaths, definitions);
-        if (sourceFindings.Length > 0)
-        {
-            throw new InvalidOperationException(sourceFindings[0]);
-        }
 
         var provenance = new TruthGraphProvenance(
             SnapshotContentDigest.Compute(
                 snapshot,
-                definitions.Select(static definition => definition.RelativePath.Value)),
+                suppliedDefinitions.Select(static definition => definition.RelativePath.Value)),
             RawLeanReportArtifact.ContentAddress(rawLeanReportBytes.AsSpan()));
         return TruthGraphJsonWriter.Write(
             TruthGraphModelBuilder.Create(
                 projection,
                 provenance,
-                definitions,
-                materialized.Root,
+                suppliedDefinitions,
+                string.Empty,
                 catalog,
                 tolerateAbsentDocuments: true));
     }
@@ -184,9 +165,11 @@ internal static class TruthReleaseCommand
 
     private static bool TryParseArguments(
         IReadOnlyList<string> arguments,
-        out TruthReleaseArguments options)
+        out TruthReleaseArguments options,
+        out bool missingScribePack)
     {
         options = default;
+        missingScribePack = false;
         if (arguments.Count % 2 != 0)
         {
             return false;
@@ -245,9 +228,18 @@ internal static class TruthReleaseCommand
             || producerPackageCommit is null
             || producedAt is null
             || commitOnProtectedDev is null
-            || requiredChecks.Count == 0
-            || (scribePackPath is null) != (scribePackDigest is null)
-            || (scribePackDigest is not null && !ScribePackInput.IsDigest(scribePackDigest)))
+            || requiredChecks.Count == 0)
+        {
+            return false;
+        }
+
+        if (scribePackPath is null || scribePackDigest is null)
+        {
+            missingScribePack = true;
+            return false;
+        }
+
+        if (!ScribePackInput.IsDigest(scribePackDigest))
         {
             return false;
         }
@@ -291,7 +283,13 @@ internal static class TruthReleaseCommand
             + "--commit-on-protected-dev true|false "
             + "--required-check NAME=CONCLUSION (required: "
             + "every required check supplied by the caller" + ") "
-            + "[--scribe-pack FILE --scribe-pack-digest HEX64]\n");
+            + "--scribe-pack FILE --scribe-pack-digest HEX64\n");
+
+    private static ExplicitCommandResult MissingScribePackUsage() => new(
+        2,
+        string.Empty,
+        "TRUTH_RELEASE_INVALID required Scribe resource pack: "
+            + "--scribe-pack FILE --scribe-pack-digest HEX64\n");
 
     private readonly record struct TruthReleaseArguments(
         string OutDirectory,
@@ -299,43 +297,6 @@ internal static class TruthReleaseCommand
         string ProducerPackageCommit,
         string ProducedAt,
         TruthReleaseTrust Trust,
-        string? ScribePackPath,
-        string? ScribePackDigest);
-
-    private sealed class MaterializedSnapshot : IDisposable
-    {
-        private MaterializedSnapshot(string root) => Root = root;
-
-        internal string Root { get; }
-
-        internal static MaterializedSnapshot Create(RepositorySnapshot snapshot)
-        {
-            var root = Path.Combine(
-                Path.GetTempPath(),
-                "stratalint-truth-release-" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(root);
-            try
-            {
-                foreach (var (path, file) in snapshot.Files
-                    .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-                {
-                    var destination = Path.Combine(
-                        root,
-                        path.Value.Replace('/', Path.DirectorySeparatorChar));
-                    Directory.CreateDirectory(Path.GetDirectoryName(destination)
-                        ?? throw new InvalidOperationException("snapshot path has no parent directory"));
-                    File.WriteAllBytes(destination, file.RawBytes.AsSpan());
-                }
-
-                return new MaterializedSnapshot(root);
-            }
-            catch
-            {
-                Directory.Delete(root, recursive: true);
-                throw;
-            }
-        }
-
-        public void Dispose() => Directory.Delete(Root, recursive: true);
-    }
+        string ScribePackPath,
+        string ScribePackDigest);
 }
