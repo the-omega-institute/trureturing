@@ -1,0 +1,9 @@
+**定理 2.2（Coupled repaired digit bijection and exact weight）。** For every
+admissible $P$ of size $k\geq1$, the following construction defines a
+bijection
+
+$$
+\Phi_P:\mathcal E(P)\longrightarrow
+\mathcal E(P')\times\{0,\ldots,A-1\}\times\{0,\ldots,B-1\}.
+$$
+
