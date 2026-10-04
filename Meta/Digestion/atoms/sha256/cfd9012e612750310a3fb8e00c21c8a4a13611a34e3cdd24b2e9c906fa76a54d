@@ -1,0 +1,24 @@
+**激子转移与接缝递归 287.1。** 在强退相干极限下，可把相邻节点的能量转移近似成经典速率 `k_{uv}`。例如 Förster 型模型给出
+
+$$
+k_{uv}=\frac{2\pi}{\hbar}|J_{uv}|^2\,\mathcal J_{uv}(\Delta\epsilon_{uv}),
+$$
+
+其中 `\mathcal J_{uv}` 是外加光谱重叠积分。节点占据 `p_v(t)` 满足
+
+$$
+\dot p_v=\sum_{u\ne v}k_{uv}p_u
+-\sum_{u\ne v}k_{vu}p_v
+-k_v^{\mathrm{loss}}p_v-k_v^{\mathrm{trap}}p_v.
+$$
+
+若每条长路径在唯一接缝 `r` 处分解，且路径权重是两侧转移核与接缝核的乘积，Laplace 域中的候选传播核满足
+
+$$
+\widehat K_{j+1}^{ab}(s)
+=\sum_{r\in\Sigma_j}
+\widehat K_j^{ar}(s)\,\widehat B_{j,r}(s)\,\widehat K_{j-1}^{rb}(s).
+$$
+
+路径相交、相干回路和共同声子浴会使该式需要联合核或记忆核，不能只按合法路径条数相加。
+
