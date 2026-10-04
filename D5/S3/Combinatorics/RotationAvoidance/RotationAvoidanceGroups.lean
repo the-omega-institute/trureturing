@@ -1,15 +1,14 @@
 /- GID: D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups
    generality: G
    mirror-B: D5/B/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups
-   mirror-E: none(waiver:canonical-circular-counting-bijection)
+   mirror-E: none(waiver:uniform-circular-class-separation)
    anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Root deletion and increasing relabeling enumerate the eight circular representatives. -/
+   digest: Uniform positive margins strictly separate the three circular count classes. -/
 
 import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceEnumeration
 import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceLinear
 import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceFibonacci
-import D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceSymmetry
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -20,26 +19,11 @@ namespace D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceGroups
 open D5.S3.Combinatorics Nonnesting.NonnestingDefs
 open RotationAvoidanceDefs RotationAvoidanceCircular RotationAvoidanceCounts
 
-theorem circular_representative_counts (size : ℕ) (hsize : 1 ≤ size) :
-    (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard =
-        2 ^ (size + 1) - 2 * size - 1 - (size + 1).choose 3 ∧
-    (circularAvoiders (size + 1) [1, 4, 3, 2]).ncard =
+theorem circular_representative_separations (size : ℕ) (hsize : 5 ≤ size) :
+    (circularAvoiders (size + 1) [1, 3, 4, 2]).ncard <
         (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard ∧
-    (circularAvoiders (size + 1) [2, 1, 4, 3]).ncard =
-        (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard ∧
-    (circularAvoiders (size + 1) [1, 3, 4, 2]).ncard = 2 ^ size - size ∧
-    (circularAvoiders (size + 1) [1, 2, 4, 3]).ncard =
-        (circularAvoiders (size + 1) [1, 3, 4, 2]).ncard ∧
-    (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard = Nat.fib (2 * size - 1) ∧
-    (circularAvoiders (size + 1) [1, 4, 2, 3]).ncard =
-        (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard ∧
-    (circularAvoiders (size + 1) [2, 4, 1, 3]).ncard =
-        (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard ∧
-    (5 ≤ size →
-      (circularAvoiders (size + 1) [1, 3, 4, 2]).ncard <
-          (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard ∧
-      (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard <
-          (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard) := by
+    (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard <
+        (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard := by
   classical
   have rooted_count (q : List ℕ) (patterns : List (List ℕ))
       (hletters : ∀ pattern ∈ patterns, letters pattern = pattern.length)
@@ -136,83 +120,7 @@ theorem circular_representative_counts (size : ℕ) (hsize : 1 ≤ size) :
         intro tail hp
         simpa only [List.mem_cons, List.not_mem_nil, or_false, forall_eq_or_imp,
           forall_eq] using (minimum_rooted_reductions size tail hp).2.2)]
-    exact RotationAvoidanceFibonacci.fibonacci_count size hsize
-  have cancel_counts (q s : List ℕ)
-      (heq : (rotationAvoiders (size + 1) (size + 1) q).ncard =
-        (rotationAvoiders (size + 1) (size + 1) s).ncard) :
-      (circularAvoiders (size + 1) q).ncard =
-        (circularAvoiders (size + 1) s).ncard := by
-    rw [(counting_cuts (size + 1) (by omega) q).1,
-      (counting_cuts (size + 1) (by omega) s).1] at heq
-    exact Nat.eq_of_mul_eq_mul_left (by omega : 0 < size + 1) heq
-  have symmetry (q s : List ℕ) (hq : q.Perm [1, 2, 3, 4]) (hs : s ∈ orbit q) :
-      (circularAvoiders (size + 1) s).ncard =
-        (circularAvoiders (size + 1) q).ncard := by
-    exact (cancel_counts q s (RotationAvoidanceSymmetry.orbit_wilfEquivalent
-      (size + 1) (by omega) q s hq hs (size + 1) (by omega))).symm
-  have cycle (q : List ℕ) (hq : q.Perm [1, 2, 3, 4]) (shift : ℕ)
-      (hshift : shift < 4) :
-      (circularAvoiders (size + 1) (q.rotate shift)).ncard =
-        (circularAvoiders (size + 1) q).ncard := by
-    have qlength : q.length = 4 := by simpa using hq.length_eq
-    have forward (pattern : List ℕ) (hlen : pattern.length = 4) (offset : ℕ)
-        (word : List ℕ) (havoid : ∀ cut < 4, ¬ Occurs (pattern.rotate cut) word) :
-        ∀ cut < 4, ¬ Occurs ((pattern.rotate offset).rotate cut) word := by
-      intro cut hcut
-      rw [List.rotate_rotate, ← List.rotate_mod, hlen]
-      exact havoid _ (Nat.mod_lt _ (by omega))
-    have restore : (q.rotate shift).rotate (4 - shift) = q := by
-      rw [List.rotate_rotate, show shift + (4 - shift) = 4 by omega,
-        ← qlength, List.rotate_length]
-    have setEq : circularAvoiders (size + 1) (q.rotate shift) =
-        circularAvoiders (size + 1) q := by
-      ext word
-      constructor <;> intro hword
-      · have havoid := (all_cuts_iff_cycle_avoidance (size + 1) (by omega)
-          (q.rotate shift) word ((List.rotate_perm q shift).trans hq) hword.1.1).mp hword.1
-        refine ⟨(all_cuts_iff_cycle_avoidance (size + 1) (by omega) q word hq
-          hword.1.1).mpr ?_, hword.2⟩
-        simpa only [restore] using forward (q.rotate shift)
-          (by simpa using qlength) (4 - shift) word havoid
-      · have havoid := (all_cuts_iff_cycle_avoidance (size + 1) (by omega) q word hq
-          hword.1.1).mp hword.1
-        exact ⟨(all_cuts_iff_cycle_avoidance (size + 1) (by omega) (q.rotate shift)
-          word ((List.rotate_perm q shift).trans hq) hword.1.1).mpr
-            (forward q qlength shift word havoid), hword.2⟩
-    rw [setEq]
-  have ascendingReverse : (circularAvoiders (size + 1) [1, 4, 3, 2]).ncard =
-      (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard := by
-    calc
-      _ = (circularAvoiders (size + 1) [4, 3, 2, 1]).ncard :=
-        (by simpa only [show ([1, 4, 3, 2] : List ℕ).rotate 1 = [4, 3, 2, 1] by decide]
-          using (cycle [1, 4, 3, 2] (by decide) 1 (by omega)).symm)
-      _ = _ := symmetry [1, 2, 3, 4] [4, 3, 2, 1] (by decide) (by simp [orbit, complement])
-  have ascendingOther : (circularAvoiders (size + 1) [2, 1, 4, 3]).ncard =
-      (circularAvoiders (size + 1) [1, 2, 3, 4]).ncard := by
-    calc
-      _ = (circularAvoiders (size + 1) [1, 4, 3, 2]).ncard := by
-        simpa only [show ([1, 4, 3, 2] : List ℕ).rotate 3 = [2, 1, 4, 3] by decide]
-          using cycle [1, 4, 3, 2] (by decide) 3 (by omega)
-      _ = _ := ascendingReverse
-  have binaryOther : (circularAvoiders (size + 1) [1, 2, 4, 3]).ncard =
-      (circularAvoiders (size + 1) [1, 3, 4, 2]).ncard := by
-    calc
-      _ = (circularAvoiders (size + 1) [2, 4, 3, 1]).ncard :=
-        (by simpa only [show ([1, 2, 4, 3] : List ℕ).rotate 1 = [2, 4, 3, 1] by decide]
-          using (cycle [1, 2, 4, 3] (by decide) 1 (by omega)).symm)
-      _ = _ := symmetry [1, 3, 4, 2] [2, 4, 3, 1] (by decide) (by simp [orbit, complement])
-  have fibonacciOther : (circularAvoiders (size + 1) [1, 4, 2, 3]).ncard =
-      (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard := by
-    calc
-      _ = (circularAvoiders (size + 1) [3, 2, 4, 1]).ncard :=
-        symmetry [3, 2, 4, 1] [1, 4, 2, 3] (by decide) (by simp [orbit, complement])
-      _ = _ := by simpa only
-        [show ([1, 3, 2, 4] : List ℕ).rotate 1 = [3, 2, 4, 1] by decide]
-          using cycle [1, 3, 2, 4] (by decide) 1 (by omega)
-  have fibonacciLast : (circularAvoiders (size + 1) [2, 4, 1, 3]).ncard =
-      (circularAvoiders (size + 1) [1, 3, 2, 4]).ncard := by
-    simpa only [show ([1, 3, 2, 4] : List ℕ).rotate 2 = [2, 4, 1, 3] by decide]
-      using cycle [1, 3, 2, 4] (by decide) 2 (by omega)
+    exact RotationAvoidanceFibonacci.fibonacci_count size (by omega)
   have exponential_bounds (index : ℕ) :
       index + 5 + (index + 5).choose 3 < 2 ^ (index + 4) ∧
       1 + (index + 5).choose 2 < 2 ^ (index + 4) ∧
@@ -314,7 +222,6 @@ theorem circular_representative_counts (size : ℕ) (hsize : 1 ≤ size) :
     · have : ((2 ^ (size + 1) - 2 * size - 1 - (size + 1).choose 3 : ℕ) : ℤ) <
           (Nat.fib (2 * size - 1) : ℤ) := by omega
       exact_mod_cast this
-  exact ⟨ascending, ascendingReverse, ascendingOther, binary, binaryOther,
-    fibonacci, fibonacciOther, fibonacciLast, separated⟩
+  exact separated hsize
 
 end D5.S3.Combinatorics.RotationAvoidance.RotationAvoidanceGroups

@@ -83,7 +83,7 @@ Suppose F_m maps L2(I) into a finite span of actual w_t, ||F-F_m||<=delta, and |
 $$\|C_\pm(n_\varepsilon-n_{\varepsilon,m})\|
 \le\frac{\delta(2M_F+\delta)}{2\sqrt2\,\varepsilon}\|h_0\|.\tag{R6}$$
 
-Both differences lie in N, so this is a common paired edge norm bound; the source norm bound is R6 divided by sqrt(c_*). With m equal cells of I and midpoint w_t samples, one may take delta<=L_w(2r)^(3/2)/(sqrt(12)m), where L_w is an independently validated upper bound for sup_I||w'_t||. Holomorphy proves finiteness, but no numerical M_F/L_w values or finite Fredholm matrix have been certified here. R6 controls discretization for fixed epsilon; it does not pay the regularization error R5.
+Both differences lie in N, so this is a common paired edge norm bound; the source norm bound is R6 divided by sqrt(c_*). With m equal cells of I and midpoint w_t samples, one may take delta<=L_w(2r)^(3/2)/(sqrt(12)m), where L_w is an independently validated upper bound for sup_I||w'_t||. The [directed small-window bounds](../../docs/reports/theta-mixed-matrix/theta-translation-bounds.md) supply numerical M_F and L_w for this interface. No finite Fredholm matrix has been certified here. R6 controls discretization for fixed epsilon; it does not pay the regularization error R5.
 
 ## Finite epsilon does not erase the old exact raw Schur obstruction
 
@@ -94,3 +94,27 @@ $$(I-P_\varepsilon)^{-1}=I+\varepsilon^{-1}FF^*B.\tag{R7}$$
 Extend $P_\varepsilon$ by zero on constants, equivalently $P_\varepsilon h=P_\varepsilon(h-\nu(h)1)$; the inverse in (R7) extends by identity on constants. This agrees with the ambient formula because $B1=0$. Both operators preserve the actual form domain because their correction has range in $N$ and is bounded into its form norm. Suppose an ordinary measurable kernel $S$ has a finite, strictly positive weighted absolute Schur certificate of product at most one and exactly reconstructs $C_-(I-P_\varepsilon)h$ from $C_+(I-P_\varepsilon)h$ for every original core input. Schur supplies boundedness of $S$, so core density first extends that identity to the actual form domain. Equation (R7) then gives exact reconstruction of the original raw $C_\pm$ there. The already accepted theta-Schur obstruction excludes this certificate. This is reuse of that obstruction, not another fiber proof. Approximate reconstruction, absolute products>1 tending to1 and better actual norm estimates remain distinct possibilities.
 
 The concrete new interface is R1–R4: it replaces an unspecified P_N primitive by a small-window integral kernel and a regularized normal equation, with the separately controlled discretization error R6. The outstanding estimate is the actual input's small-spectral-value error R5, or a directly certified complementary residual B(h-n)-w with w in N-perp, followed by a jointly reconstructed and norm-bounded projected transfer. No half-bound, RH/Robin proof, complete zero-set characterization or executable full-space approximation algorithm is claimed.
+
+
+## Numerical inputs for the fixed-parameter discretization bound
+
+The [actual-theta translation norm computation](../../docs/reports/theta-mixed-matrix/theta-translation-bounds.md)
+uses the existing derivative supplier and the full original probability
+measure, including both spatial tails. Its outward interval bounds give
+
+$$L_w<9/2,\qquad \|F\|\le\|F\|_{\mathrm{HS}}<3/50,\qquad
+\|F-F_m\|\le\frac{3}{50m}.$$
+
+Substitution into R6 yields, for every positive epsilon and m equal
+midpoint cells, the same-source bound
+
+$$\|C_\pm(n_\varepsilon-n_{\varepsilon,m})\|
+\le\frac{9}{5000\sqrt2\,\varepsilon}
+\left(\frac2m+\frac1{m^2}\right)\|h_0\|.$$
+
+At epsilon=1/100 and m=256, its coefficient is strictly below 1/1000.
+This pays the fixed-parameter discretization term only. The actual-input
+regularization error R5, kernel-entry quadrature, the whole-space
+complementary residual and the projected reconstruction/norm estimate
+remain unresolved. No new original-energy lower bound or Lean
+certification is supplied.
