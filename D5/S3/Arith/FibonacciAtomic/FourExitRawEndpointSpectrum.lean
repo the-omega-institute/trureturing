@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The four-exit right-comb family and its raw endpoint menu interface. -/
+   digest: Literal four-exit trees and the zero-to-two raw-cost obstruction. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualJointResponseCostCore
 import D5.S3.Arith.FibonacciAtomic.ActualImageSevenLeafSeparation
@@ -165,7 +165,7 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
         simp [(Finset.mem_erase.mp hi).1, blen]
       rw [Finset.sum_congr rfl ht]
       simp [Finset.sum_const, Finset.card_erase_of_mem (Finset.mem_univ j),
-        Nat.mul_comm, Nat.add_comm]
+        Nat.add_comm]
     rw [hs]
     have hk : 1 ≤ k := Nat.succ_le_iff.mpr (Nat.zero_lt_of_lt j.isLt)
     have hb := blocklen r
@@ -243,9 +243,9 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
       ActualImageSevenLeafSeparation.Nonconflict (active r) (active s) ∧
       ActualImageSevenLeafSeparation.Nonconflict (comp r) (comp s) := by
     intro r s; fin_cases r <;> fin_cases s <;>
-      simp only [active, comp, B, T, W₁, H, Y, Z, R₀, Rₐ, thirdImage,
-        r₀, rₐ, t, w, h, y, z, ActualImageSevenLeafSeparation.E,
-        ActualImageSevenLeafSeparation.A, ActualImageSevenLeafSeparation.C,
+      simp only [active, comp, B, H, Y, Z, Rₐ, thirdImage,
+        rₐ, t, w, h, y, z, ActualImageSevenLeafSeparation.E,
+        ActualImageSevenLeafSeparation.A,
         ActualImageSevenLeafSeparation.Nonconflict]
     all_goals trivial
   have agree : ∀ P Q : Source, ActualImageSevenLeafSeparation.Nonconflict P Q →
@@ -292,11 +292,38 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
       simp only [active, comp, Fin.val_zero] at hmem
       first
       | change v ∈ [[false, false], [false, true], [true]] at hmem
-      | change v ∈ [[false, false, false, false], [false, false, false, true], [false, false, true], [false, true, false, false, false], [false, true, false, false, true], [false, true, false, true], [false, true, true, false], [false, true, true, true], [true, false, false, false, false], [true, false, false, false, true], [true, false, false, true], [true, false, true, false], [true, false, true, true], [true, true, false, false, false, false], [true, true, false, false, false, true], [true, true, false, false, true], [true, true, false, true, false], [true, true, false, true, true], [true, true, true, false, false], [true, true, true, false, true], [true, true, true, true]] at hmem
+      | change v ∈ [
+          [false, false, false, false],
+          [false, false, false, true],
+          [false, false, true],
+          [false, true, false, false, false],
+          [false, true, false, false, true],
+          [false, true, false, true],
+          [false, true, true, false],
+          [false, true, true, true],
+          [true, false, false, false, false],
+          [true, false, false, false, true],
+          [true, false, false, true],
+          [true, false, true, false],
+          [true, false, true, true],
+          [true, true, false, false, false, false],
+          [true, true, false, false, false, true],
+          [true, true, false, false, true],
+          [true, true, false, true, false],
+          [true, true, false, true, true],
+          [true, true, true, false, false],
+          [true, true, true, false, true],
+          [true, true, true, true]] at hmem
       all_goals
         simp only [List.mem_cons, List.not_mem_nil, or_false] at hmem
         repeat' rcases hmem with hmem | hmem
         all_goals decide
+  have child_gain (S : Finset (Fin 4)) (a : Fin 4 → Reply)
+      (next : ∀ y : Reply, (survivors S a y).Nonempty → Recipe F (survivors S a y))
+      (u v : Reply) (hu : (survivors S a u).Nonempty) (hv : (survivors S a v).Nonempty)
+      (he : u = v) (i : Fin 4) : gain (next u hu) i = gain (next v hv) i := by
+    subst v
+    rfl
   have one_zero : ∀ {S : Finset (Fin 4)} (r : Recipe F S) (i l : Fin 4),
       i ∈ S → l ∈ S → gain r i = 0 → gain r l = 0 → i = l := by
     intro S r
@@ -322,7 +349,10 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
       have hml : l ∈ survivors S a.val (a.val i) := by simp [survivors, hl, he]
       apply ih (a.val i) ⟨i, hmi⟩ i l hmi hml
       · simpa [gain, hi, hz_i] using hgi
-      · simpa [gain, hl, he, hz_l] using hgl
+      · have hchild : gain (next (a.val l) ⟨l, by simp [survivors, hl]⟩) l = 0 := by
+          simpa only [gain, hl, ↓reduceDIte, hz_l, Nat.zero_add] using hgl
+        exact (child_gain S a.val next (a.val i) (a.val l) ⟨i,hmi⟩
+          ⟨l,by simp [survivors, hl]⟩ he l).trans hchild
   have obstruction : ∀ {S : Finset (Fin 4)} (r : Recipe F S),
       (∀ i, i ∈ S) → gain r 0 = 0 → ∃ b : Fin 3, 2 ≤ gain r b.succ := by
     intro S r
@@ -350,7 +380,14 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
           intro i; simp [survivors, hS, common']
         obtain ⟨b,hb⟩ := ih (a.val 0) ⟨0, allmem 0⟩ allmem hg0
         refine ⟨b, ?_⟩
-        simpa [gain, hS, common', hz0] using hb
+        have hh : gain (Recipe.split S a hsplit next) b.succ =
+            gain (next (a.val 0) ⟨0, allmem 0⟩) b.succ := by
+          simp only [gain, hS, ↓reduceDIte]
+          rw [child_gain S a.val next (a.val b.succ) (a.val 0)
+            ⟨b.succ,by simp [survivors, hS]⟩ ⟨0,allmem 0⟩ (common' b.succ) b.succ]
+          rw [common' b.succ, hz0, Nat.zero_add]
+        rw [hh]
+        exact hb
       · have he' : a.val b.succ = a.val c.succ := by simpa [← hu, vector] using he
         have hc' : chi (a.val b.succ) = 1 := by simpa [← hu, vector] using hchi
         have mb : b.succ ∈ survivors S a.val (a.val b.succ) := by simp [survivors, hS]
@@ -361,7 +398,14 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
             have hz := one_zero _ b.succ c.succ mb mc hb (by omega)
             exact hbc (Fin.succ_injective _ hz)
           refine ⟨c, ?_⟩
-          simpa only [gain, hS, ↓reduceDIte, ← he', hc'] using Nat.add_le_add_left hc 1
+          have hh : gain (Recipe.split S a hsplit next) c.succ =
+              1 + gain (next (a.val b.succ) ⟨b.succ, mb⟩) c.succ := by
+            simp only [gain, hS, ↓reduceDIte]
+            rw [child_gain S a.val next (a.val c.succ) (a.val b.succ)
+              ⟨c.succ,by simp [survivors, hS]⟩ ⟨b.succ,mb⟩ he'.symm c.succ]
+            rw [← he', hc']
+          rw [hh]
+          exact Nat.add_le_add_left hc 1
         · refine ⟨b, ?_⟩
           simpa only [gain, hS, ↓reduceDIte, hc'] using
             Nat.add_le_add_left (show 1 ≤ gain (next (a.val b.succ) ⟨b.succ, mb⟩) b.succ by omega) 1
