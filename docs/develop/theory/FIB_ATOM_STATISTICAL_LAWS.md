@@ -13260,3 +13260,418 @@ $$
 主动物质通常破坏详细平衡。若跃迁存在有向亲和力 \(A_{vw}\)，稳态边流可非零；若所有主动偏置、对齐和外场消失，才可能退化为与容量权重相容的被动平衡。因而 flocking、MIPS、堵塞和普通渗流需要分别报告极性、密度、接触和连通观测。
 
 本节结论是：FIB 提供主动物质的关系网络和路径约束；主动输运、极化、集体同步、MIPS 及有限尺寸相变由空间嵌入、驱动、相互作用、噪声、边界和更新规则决定。
+
+## 168. FIB 网络上的吸收态临界与定向渗流型统计
+
+设 FIB 给出递归图族
+$$
+G_N=(V_N,E_N)
+$$
+及其合法转移关系。递归只确定连接、允许操作和层级；转移速率、活动变量、噪声、初始分布、边界和无限系统极限都需外加。必须区分静态渗流、随时间更新的吸收态和 jamming：跨越簇、无合法运动的堵塞态以及活动最终熄灭并非同一事件。
+
+令 \(\Omega_N\) 为合法构型空间，\(\mathcal L_N\) 为 FIB 允许的转移。外加连续时间速率
+$$
+q_N(x,y)\ge0,\qquad
+(x,y)\notin\mathcal L_N\Longrightarrow q_N(x,y)=0
+$$
+给出主方程
+$$
+\frac{dP_N(x,t)}{dt}
+=\sum_{y\ne x}
+[P_N(y,t)q_N(y,x)-P_N(x,t)q_N(x,y)].
+\tag{168.1}
+$$
+吸收集合为
+$$
+\mathcal A_N
+=\{x:q_N(x,y)=0\ \text{对所有 }y\ne x\}.
+\tag{168.2}
+$$
+它取决于速率和约束，不由静态 FIB 图单独决定。
+
+一个外加活动过程可令节点变量 \(\eta_v\in\{0,1\}\)，失活率为 \(\mu_v\)，激活率为
+$$
+h_v+\lambda\sum_uK_{uv}\eta_u,
+$$
+其中 \(K\) 仅在允许传播的关系上非零，\(h_v\) 是自发激活率。\(h_v=0\) 时，全零构型是吸收态。其一阶矩满足
+$$
+\frac{d\langle\eta_v\rangle}{dt}
+=-\mu_v\langle\eta_v\rangle
++h_v(1-\langle\eta_v\rangle)
++\lambda\sum_uK_{uv}
+\langle(1-\eta_v)\eta_u\rangle.
+\tag{168.3}
+$$
+二点相关使方程不闭合；把相关项替换为一阶矩乘积只是平均场近似，不能直接当作真实临界点。
+
+活动密度可定义为
+$$
+\rho_N(t)=\frac1{|V_N|}\sum_{v\in V_N}\mathbb E[\eta_v(t)].
+\tag{168.4}
+$$
+有限、无源系统通常最终进入吸收态，因此活动相必须通过先取无限系统再取长时间的次序定义，例如
+$$
+\rho_{\rm st}(\lambda)
+=\lim_{t\to\infty}\lim_{N\to\infty}\rho_N(t).
+\tag{168.5}
+$$
+交换两个极限、使用准平稳分布或使用有限种子存活概率，得到的是不同观测量。持续源 \(h_v>0\) 会破坏全零吸收性，转而定义受迫响应。
+
+对局域、短程、单一非负活动场、连续转变且没有额外守恒慢变量或特殊对称性的模型，接触过程的随机时空路径可成为 directed percolation 型粗粒化的候选。条件性有效方程可写为
+$$
+\partial_t a
+=D\nabla^2a+ra-ua^2+\sqrt{2\Gamma a}\,\xi,
+\qquad u,\Gamma>0,
+\tag{168.6}
+$$
+其中零活动处漂移与噪声均消失，以保持吸收性。FIB 长程边、层级瓶颈、度异质性、相关无序或多个相互作用吸收态都可能改变普适类。
+
+若存在连续临界点 \(\lambda_c\)，令 \(\Delta=(\lambda-\lambda_c)/\lambda_c\)，可检验
+$$
+\rho_{\rm st}\sim\Delta^\beta,\qquad
+\xi_\perp\sim|\Delta|^{-\nu_\perp},\qquad
+\xi_\parallel\sim|\Delta|^{-\nu_\parallel},
+\tag{168.7}
+$$
+以及有限尺寸形式
+$$
+\rho_N(\Delta)
+=N^{-\beta/\nu_\perp}
+\mathcal F(\Delta N^{1/\nu_\perp},tN^{-\nu_\parallel/\nu_\perp}).
+\tag{168.8}
+$$
+这些指数只有在给定几何、边界、时间更新和极限后才有意义。静态渗流阈值、jamming 阈值和吸收态临界点不能由同一 FIB 数量递推自动识别。
+
+本节结论是：FIB 提供活动传播的合法关系与递归图族；吸收态、定向渗流型临界、序参量和有限尺寸指数由外加更新率、噪声、边界、相关性及极限次序决定。
+
+## 169. FIB 路径的聚合物构象统计、熵弹性与回转半径
+
+将一条 FIB 路径解释为聚合物链时，FIB 只提供步长词
+$$
+w_N=(w_1,\ldots,w_N)
+$$
+和相邻连接关系。物理构象由
+$$
+\mathbf r_i-\mathbf r_{i-1}=b_i\mathbf u_i,
+\qquad |\mathbf u_i|=1,
+\qquad b_i=b(w_i)
+\tag{169.1}
+$$
+给出；空间维数、键长映射、弯曲能、排斥、温度和边界均为外加。固定 Fibonacci 词的构象统计与允许词本身随机变化的退火统计也必须区分。
+
+一个可选的链能量为
+$$
+H_w=\sum_{i=1}^{N-1}\kappa_i(1-\mathbf u_i\cdot\mathbf u_{i+1})
++H_{\rm ev}+H_{\rm attr}+H_{\rm conf},
+\tag{169.2}
+$$
+其中各项分别描述弯曲、排斥、吸引和外部限制。固定 \(\mathbf r_0=0\)，在温度 \(T\) 和外力 \(\mathbf f\) 下，
+$$
+Z_N(\mathbf f\mid w_N)
+=\int d\Gamma_w\,
+e^{-\beta(H_w-\mathbf f\cdot\mathbf R)},
+\qquad
+\mathbf R=\sum_{i=1}^Nb_i\mathbf u_i.
+\tag{169.3}
+$$
+自由能和平均伸长为
+$$
+G_N(\mathbf f)=-k_BT\log Z_N(\mathbf f),
+\qquad
+\langle\mathbf R\rangle_{\mathbf f}
+=-\nabla_{\mathbf f}G_N.
+$$
+端距约束使用
+$$
+Z_N(\mathbf R\mid w_N)
+=\int d\Gamma_w\,
+\delta^{(d)}\!\left(\mathbf R-\sum_i b_i\mathbf u_i\right)e^{-\beta H_w}.
+\tag{169.4}
+$$
+构象熵必须相对于明确的测度和参考体积定义；它不是 \(\log\) FIB 词数的自动同义词。
+
+自由连接、各向同性且无相互作用时，令
+$$
+B_N=\sum_{i=1}^Nb_i^2.
+$$
+有精确关系
+$$
+\langle\mathbf R\rangle=0,\qquad
+\langle R^2\rangle=B_N.
+\tag{169.5}
+$$
+当 \(\max_i b_i^2/B_N\to0\) 时，中心区域近似高斯：
+$$
+p_N(\mathbf R)
+\simeq
+\left(\frac d{2\pi B_N}\right)^{d/2}
+\exp\!\left(-\frac{dR^2}{2B_N}\right).
+\tag{169.6}
+$$
+因而小端距的熵弹性自由能为
+$$
+A_N(\mathbf R)-A_N(0)
+\simeq\frac{dk_BT}{2B_N}R^2,
+$$
+弱力下
+$$
+\mathbf f\simeq\frac{dk_BT}{B_N}\mathbf R.
+\tag{169.7}
+$$
+接近完全拉直时，高斯公式失效；有限链的恒力系综和固定端距系综也不能混用。
+
+回转半径定义为
+$$
+R_g^2=\frac1{N+1}\sum_{i=0}^N|\mathbf r_i-\mathbf r_{\rm cm}|^2
+=\frac1{(N+1)^2}\sum_{0\le i<j\le N}|\mathbf r_i-\mathbf r_j|^2.
+$$
+自由连接链满足
+$$
+\left\langle|\mathbf r_j-\mathbf r_i|^2\right\rangle
+=\sum_{k=i+1}^jb_k^2,
+$$
+从而
+$$
+\left\langle R_g^2\right\rangle
+=\frac1{(N+1)^2}
+\sum_{k=1}^Nk(N+1-k)b_k^2.
+\tag{169.8}
+$$
+FIB 字母频率可以影响 \(b_i\) 的平均统计，但不单独决定自避链或半柔性链的标度指数。加入自避作用后，可能出现
+$$
+R_g\sim N^\nu,\qquad
+\nu=\nu(d)
+$$
+的普适标度；其维数、排斥、弯曲、链序相关和有限尺寸修正需由具体模型确定。标准 Fibonacci 词的低因子复杂度也不能推出聚合物构象熵为零，因为固定词仍可拥有连续或指数多的空间构象。
+
+本节结论是：FIB 提供聚合物键序列和连接骨架；配分函数、熵弹性、回转半径、自避标度和有限尺寸效应由键长、构象测度、温度及相互作用决定。
+
+## 170. FIB 细胞复形上的外加离散曲率、测地线与几何聚焦
+
+FIB 递归只提供细胞、邻接和接缝组合。要讨论曲率和测地线，必须另加边长、角度、面权、体积权、边界以及向连续几何收敛的细化规则。组合曲率不能在未指定度量时直接解释为物理曲率。
+
+对二维多面体型细胞复形 \(K\)，若每条边和每个面都已赋予欧氏几何，使面角 \(\theta_{f,v}\) 有定义，则顶点角缺陷为
+$$
+\kappa(v)
+=2\pi-\sum_{f\ni v}\theta_{f,v}.
+\tag{170.1}
+$$
+边界顶点的定义需减去相应外角。若各面为正多边形且只使用组合数据，可得到离散组合曲率
+$$
+\kappa_{\rm comb}(v)
+=1-\frac{\deg(v)}2+\sum_{f\ni v}\frac1{|f|},
+\tag{170.2}
+$$
+但它只在对应的标准胞腔几何中才与角缺陷成比例。
+
+在闭合有限二维复形上，离散 Gauss–Bonnet 为
+$$
+\sum_v\kappa(v)=2\pi\chi(K).
+\tag{170.3}
+$$
+边界存在时还要加边界测地曲率项。FIB 递归改变顶点、边和面计数，可能改变 Euler 示性数；若接缝识别或边界处理不明确，不能从单纯 Fibonacci 数量递推推出总曲率。
+
+给定边长 \(\ell_e>0\)，离散路径长度为
+$$
+L(\gamma)=\sum_{e\in\gamma}\ell_e,
+$$
+测地线是给定端点间使 \(L\) 最小的路径。组合最短路只有在所有边长相同且不存在嵌入交叉时才与物理测地线一致。等距嵌入、面内折线和跨接缝跳跃都会改变最短路径。若边权被解释为代价或折射率，需明确它是否满足三角不等式及是否允许长程边。
+
+离散标量场的加权 Laplacian 可写为
+$$
+(\Delta_\ell f)(v)
+=\frac1{\mu_v}\sum_{w\sim v}c_{vw}[f(w)-f(v)],
+\qquad c_{vw}=c_{wv}>0.
+\tag{170.4}
+$$
+它同时控制热核
+$$
+p_t=e^{t\Delta_\ell}
+$$
+和离散波动方程
+$$
+\partial_t^2u+c^2(-\Delta_\ell)u=0.
+\tag{170.5}
+$$
+权重 \(c_{vw}\)、体积 \(\mu_v\) 与边界决定热扩散、波速和谱隙；FIB 邻接矩阵本身不足以决定它们。
+
+在有度量收敛、局部形状正则和体积控制时，可研究 \(K_n\) 的图度量、热核和 Laplacian 是否收敛到连续流形对象。若曲率集中在递归接缝，热核可能出现瓶颈或多尺度交叉；若边长缩放不一致，有限图的组合曲率不会给出唯一连续极限。测地线偏离、热核聚焦或波前会聚只有在定义了度量、初始数据和边界后才可计算。
+
+本节结论是：FIB 提供离散胞腔和接缝结构；曲率、Gauss–Bonnet、测地线、热核、波传播与几何聚焦由外加度量、权重、边界和连续极限决定。
+
+## 171. FIB 网络上的外加线性响应、Green–Kubo 与涨落耗散
+
+FIB 在本节只提供状态与通道的组合结构。时间、转移率、平衡测度、能量、外场耦合、时间反演和输运量均需外加。线性响应和涨落耗散关系来自这些结构的相容性，而不是递归关系本身。
+
+设有限状态不可约连续时间过程的生成元为
+$$
+(\mathcal Lf)(x)
+=\sum_{c:s(c)=x}k(c)[f(t(c))-f(x)],
+\qquad P_t=e^{t\mathcal L}.
+\tag{171.1}
+$$
+外加能量 \(H\)、温度 \(T\) 和 Gibbs 测度
+$$
+\pi(x)=Z^{-1}e^{-\beta H(x)},
+\qquad \beta=(k_BT)^{-1}.
+$$
+若每条通道都有反向通道并满足
+$$
+\pi(s(c))k(c)=\pi(t(c))k(\bar c),
+\tag{171.2}
+$$
+则得到详细平衡；速度等奇变量存在时还需指定时间反演映射 \(\theta\)。原 FIB 组合若没有反向通道，不能直接宣称平衡。
+
+外场 \(\varepsilon h(t)\) 通过生成元扰动
+$$
+\mathcal L_{\varepsilon h(t)}
+=\mathcal L+\varepsilon h(t)\mathcal V+O(\varepsilon^2)
+$$
+定义。对观测量 \(A\)，从平稳测度出发的一阶响应为
+$$
+\mathbb E_{\varepsilon h}[A(X_t)]-\langle A\rangle_\pi
+=\varepsilon\int_0^th(s)R_{A,\mathcal V}(t-s)\,ds+o(\varepsilon),
+\tag{171.3}
+$$
+其中
+$$
+R_{A,\mathcal V}(\tau)
+=\langle g_{\mathcal V},P_\tau\delta A\rangle_\pi,
+\qquad
+g_{\mathcal V}=\mathcal V^\dagger1.
+\tag{171.4}
+$$
+因此响应由实际扰动算子产生的 \(g_{\mathcal V}\) 与未扰动相关函数共同决定；不能仅凭“施加了外场”就指定响应量。
+
+若外场与 \(B\) 共轭，\(H_h=H-hB\)，且扰动后生成元以相应 \(\pi_h\) 为平稳测度，则有
+$$
+R_{AB}(\tau)
+=-\beta\frac{d}{d\tau}
+C_{AB}(\tau),
+\qquad
+C_{AB}(\tau)=
+\langle\delta B,P_\tau\delta A\rangle_\pi.
+\tag{171.5}
+$$
+相关衰减时的静态易感率为
+$$
+\chi_{AB}^{\rm stat}
+=\beta\,\operatorname{Cov}_\pi(A,B).
+\tag{171.6}
+$$
+这些式子要求明确共轭耦合；非共轭扰动、非平衡稳态和粗粒化变量不能自动使用同一形式。
+
+对输运通道 \(c\) 赋予反向变号的增量 \(d_\alpha(c)\)，累计流为
+$$
+Q_\alpha(T)=
+\sum_{\text{区间 }[0,T]\text{ 内发生的 }c}
+d_\alpha(c).
+$$
+在平衡、时间平移不变、相关函数可积且边界项消失的条件下，Green–Kubo 型输运系数为
+$$
+L_{\alpha\beta}
+=\frac1{k_BT}
+\int_0^\infty
+\langle J_\alpha(t)J_\beta(0)\rangle_\pi\,dt.
+\tag{171.7}
+$$
+有限 FIB 图的边界流、周期闭合和开放储库都会增加边界项；若相关衰减慢于可积速度，积分可能发散或需要尺寸依赖重整化。
+
+频域中，对因果响应核和双边涨落谱
+$$
+\chi_{BB}(\omega)=\int_0^\infty e^{i\omega t}R_{BB}(t)\,dt,
+$$
+$$
+S_{BB}(\omega)=\int_{-\infty}^{\infty}e^{i\omega t}
+\mathbb E_\pi[\delta B(X_t)\delta B(X_0)]\,dt,
+$$
+在相应分部积分条件下有
+$$
+\operatorname{Im}\chi_{BB}(\omega)
+=\frac{\beta\omega}{2}S_{BB}(\omega).
+\tag{171.8}
+$$
+非平衡驱动、主动流、磁场反演和非平稳递归协议会增加熵流或反对称响应，必须另行写出，不能把平衡 FDT 当作普适恒等式。
+
+本节结论是：FIB 提供状态和通道的组合骨架；响应核、Green–Kubo 输运系数和涨落耗散关系由平衡测度、详细平衡、扰动耦合、时间反演与相关衰减条件决定。
+
+## 172. FIB 路径上的量子通道、测量退相干与信息流
+
+FIB 路径取得量子含义，需要指定每个接口的 Hilbert 空间、节点操作、串并行规则、系统—环境分区以及环境记忆。FIB 长度、节点数和分支数不能直接解释为 Hilbert 空间维数或独立量子自由度数。图上的重复调用也不等于未知量子态复制，因为不存在对任意未知 \(\rho\) 的通用通道
+$$
+\rho\longmapsto\rho\otimes\rho.
+$$
+
+有限维节点操作是完全正映射
+$$
+\Phi:\mathcal B(\mathcal H_{\rm in})
+\to\mathcal B(\mathcal H_{\rm out}),
+$$
+并可写成 Kraus 形式
+$$
+\Phi(\rho)=\sum_aK_a\rho K_a^\dagger.
+\tag{172.1}
+$$
+保迹量子通道满足
+$$
+\sum_aK_a^\dagger K_a=I;
+$$
+若仅有 \(\le I\)，则是某个测量结果或成功分支的迹不增操作。沿串行 FIB 路径的整体 Kraus 算子为
+$$
+C_{\boldsymbol a}
+=K^{(n)}_{a_n}\cdots K^{(1)}_{a_1},
+\qquad
+\Phi_p(\rho)=
+\sum_{\boldsymbol a}C_{\boldsymbol a}\rho C_{\boldsymbol a}^\dagger.
+\tag{172.2}
+$$
+并行组合使用张量积；串行复合和并行张量具有不同的维数和环境含义。
+
+测量需要量子仪器 \(\{\mathcal I_m\}_m\)：
+$$
+\mathcal I_m(\rho)=\sum_aK_{ma}\rho K_{ma}^\dagger,
+\qquad
+\sum_m\mathcal I_m\ \text{保迹}.
+\tag{172.3}
+$$
+结果概率与条件态为
+$$
+p_m=\operatorname{Tr}\mathcal I_m(\rho),
+\qquad
+\rho_m=\frac{\mathcal I_m(\rho)}{p_m}.
+$$
+保留经典记录 \(X\) 得到
+$$
+\rho_{XS}
+=\sum_mp_m|m\rangle\langle m|_X\otimes\rho_m,
+\tag{172.4}
+$$
+丢弃记录则只得到 \(\sum_m\mathcal I_m(\rho)\)。外部随机选择路径、测量分支和相干控制是三种不同机制，不能都按路径数平均。
+
+环境退相干可由等距嵌入
+$$
+\Phi(\rho)=\operatorname{Tr}_E(V\rho V^\dagger),
+\qquad V^\dagger V=I
+$$
+表示。若
+$$
+V|i\rangle=|i\rangle\otimes|e_i\rangle,
+$$
+则
+$$
+\rho'_{ij}=\rho_{ij}\gamma_{ij},
+\qquad
+\gamma_{ij}=\langle e_j|e_i\rangle.
+\tag{172.5}
+$$
+指定相干项对所有输入完全消失，当且仅当相应环境态正交，即 \(\gamma_{ij}=0\)。一般退相干强度由环境重叠矩阵和路径共享环境的联合结构决定；独立环境与记忆环境不会给出相同通道。
+
+测量记录与系统的总信息可用互信息
+$$
+I(X:S)=S(\rho_X)+S(\rho_S)-S(\rho_{XS})
+$$
+表征。完全丢弃记录可能使条件信息不可恢复；仅凭 FIB 路径频率不能确定量子互信息。若讨论纠缠，还需另给物理张量分解；地址直和分解不能替代子系统张量积。
+
+量子通道的时间反演或恢复还需指定参考态、伴随通道或 Petz 型恢复条件。一般通道不可逆；FIB 路径倒序也不自动给出物理逆通道。若不同路径共享环境，路径混合会留下相干交叉项；若环境记录完全区分路径，交叉项被压制。两种极限的次序和环境记忆时间都属于外加参数。
+
+本节结论是：FIB 提供量子操作的组合语法和路径组织；完全正性、测量概率、退相干、互信息、纠缠和恢复条件由 Hilbert 分解、Kraus 算子、环境、记录及时间反演实现决定。
