@@ -6864,3 +6864,214 @@ $D_3\cap D_9$. The three original hull branches and the forcing
 of SC227 or SC208 remain unresolved. These are ordinary deductions
 from the fixed source, actual full menus and existing packets,
 without new enumeration or Lean verification.
+
+## 55. Every transported inner deficit keeps a full flat-prime responsibility
+
+Keep the prime branch and all notation of Section 53, including the
+complete original group $J_a=\{3p,9p\}$. Every $T_u$ again contains
+all actual safe top outputs with nonempty pullback, even those disjoint
+from the old $H$. Fix $b\ne a$ and $j\in\{3,6\}$, and let $k$ be
+the other inner color. The transformed retained family, whole hole and
+inner menus are those of SC273; the outer menus remain unchanged.
+
+### The same patch has an exact residual without the extra coverage test
+
+Run Section 53's patch without assuming $Z_b=\varnothing$: place
+the three outer menus and $C_\ell'\cup T_k'$ at the four nonzero
+fresh 5-roots, add $[0]_5$, then remove the outer partner and move
+$T_j'$ to its former root. Both nonpartner outer menus cover $H'$
+by SC272, and $C_\ell'\cup T_k'$ covers $H'$ by SC273.
+The changed root has menu $(T_c\setminus\{t_p\})\cup T_j'$.
+Its exact missing service is
+
+$$
+\begin{aligned}
+R_{b,j}
+&=H'\setminus\bigl((T_c\setminus\{t_p\})\cup T_j'\bigr)\\
+&=\phi_b(E_j)\setminus T_c
+ \subseteq[b]_p.
+\end{aligned}
+\tag{SC285}
+$$
+
+The last equality uses $H'\setminus T_j'=\phi_b(E_j)$ and
+the disjoint phases $\phi_b(E_j)\subseteq[b]_p$ and
+$C_{t_p}=[a]_p$. In particular, no missing point at the new
+$a$ fibre is discarded. The only remaining integer liability is
+the restriction of the complete $R_{b,j}$ to this one fresh root.
+The other roots and the complement of $H'$ are already covered.
+
+The original supplier indexing, distinct numerical labels and count
+are exactly those checked in SC275. Every top occurs once except
+the removed partner; the transformed lower occurs once. The base
+cost remains at most $1+v_2$.
+
+Consequently the complete residual satisfies
+
+$$
+\boxed{
+R_{b,j}\ne\varnothing,\qquad
+\Gamma_{N_0}(R_{b,j})=p
+\quad(b\ne a,\ j=3,6).
+}
+\tag{SC286}
+$$
+
+An empty residual would give SC275's strict whole-cover descent.
+For the hull statement, $R_{b,j}\subseteq[b]_p$ makes its hull a
+multiple of $p$. If it were larger, it would have a divisor $3p$
+or a composite 3-free divisor. The eleven-class SC137 packet or
+nine-class SC136 packet encloses the entire residual; in the second
+case use $R_{b,j}\subseteq H'$ and $H'\cap S=\varnothing$.
+Shift the packet one fresh 5-level deeper by SC233. Its labels are
+fresh against both the depth-one base menus and the 5-free retained
+family. The existing $v_1\ge11$ bound pays either packet, giving
+at most $1+v_2+v_1=N_3-1$ new classes and hence strict descent.
+SC257's stronger original inventory remains available but is not
+needed for this payment.
+
+This concerns each full transported residual. It does not follow
+merely from SC240's hulls of the larger $E_j$, nor assume that any
+residual equals its enclosing AP.
+
+### Actual original roles cover each entire residual
+
+Now add only $H\cap L_2=\varnothing$. For a first-$p$ root $b$,
+let $\mathcal A_b$ be all actual original suppliers whose nonempty
+output pullbacks have first-$p$ phase $b$, whose original labels
+contain $p$, and whose original ternary height is zero or is one
+at outer first-3 root 2. Retain original labels as supplier identities;
+a height-zero original and its height-one multiple are different
+suppliers even if their numerical output moduli agree.
+
+For every $y\in R_{b,j}$ put $x=\phi_b(y)$. Then $x\in E_j\subseteq H$
+and $y\notin T_c$. The unchanged original point $F_c(y)$ has an
+owner by whole coverage. Since $T_c$ includes every actual top
+pullback, the owner has height zero or is an outer lower. If its
+label were $p$-free, its membership would be unchanged from
+$F_c(y)$ to $F_c(x)$, contrary respectively to the retained
+height-zero convention or $H\cap L_2=\varnothing$. Its original
+first-$p$ phase is $b$. Thus the same actual family supplies the
+complete containments
+
+$$
+R_{b,3}\cup R_{b,6}\subseteq
+ \bigcup_{d\in\mathcal A_b}C_d,
+\qquad
+\sum_{b\ne a}|\mathcal A_b|\ge2p-3.
+\tag{SC287}
+$$
+
+For the count, if $b\ne a,a_p$, one supplier cannot cover all of
+either residual. Its output modulus $q$ divides $N_0$, so such
+coverage and SC286 would force $q\mid p$. It is $p$-bearing,
+hence $q=p$. The only possible original role labels with that
+output are $p$ and $3p$: the former is at $a_p$, and the latter
+is the designated inner lower at $a$, so neither belongs to
+$\mathcal A_b$. Therefore $|\mathcal A_b|\ge2$ at each of the
+$p-2$ other roots. At $b=a_p$ the original pure-$p$ class provides
+one supplier. Different roots have disjoint original identities,
+which proves the stated total.
+
+The two residuals at a fixed root may use the same two suppliers;
+no additional factor of two is counted. Higher $p$ exponents,
+other prime powers and cofactor overlaps remain arbitrary. In
+particular, SC287 counts original roles, not automatically released
+labels or extra copies of the existing $N_3$ payment inventory.
+
+### Reverse transport retains the paired original-private incidence
+
+The inverse images have a stronger same-source location:
+
+$$
+X_{b,j}:=\phi_b(R_{b,j})\subseteq D_p\cap E_j,
+\qquad \Gamma_{N_0}(X_{b,j})=p.
+\tag{SC288}
+$$
+
+This inclusion uses $J_a=\{3p,9p\}$ and does not itself require
+absence of outer lowers. Indeed, $x\in X_{b,j}$ has first-$p$
+phase $a$. Any other top of color $c$ containing $x$ cannot be
+$p$-bearing: it would be another original in $J_a$. If it is
+$p$-free, it also contains $\phi_b(x)\in R_{b,j}$, contrary to
+SC285. Thus $x\in D_p$. On the fixed first-$p$ slice $b$,
+$\phi_b$ is a constant CRT translation, so it preserves the hull.
+
+Under $H\cap L_2=\varnothing$, the owner check SC265 places
+$F_c(X_{b,j})$ inside the complete $P_{9p}$. If the sole-active-
+$L_0$ condition is imposed as well, SC268 also places
+$F_j(X_{b,j})$ inside $P_{3p}$. Consequently, under SC208,
+
+$$
+F_j(X_{b,j})\subseteq P_{3p},\qquad
+F_c(X_{b,j})\subseteq P_{9p},\qquad
+\Gamma_Q(F_j(X_{b,j}))=
+\Gamma_Q(F_c(X_{b,j}))=9p.
+\tag{SC289}
+$$
+
+For every individual $x\in X_{b,j}$ the two private images have
+the same complete original 3-free coordinate. The original role
+service at $F_c(\phi_b(x))$ differs only in the first $p$ digit.
+All three points therefore use one specified source and the same
+higher prime-power coordinates. Sets for different $b$ or different
+$j$ need not share a point. In particular, SC278 does not supply
+a point of $I\cap D_p$ or a common point for all these transported
+responsibilities.
+
+### The two-label phase also partitions the complete parent-private source
+
+The existing prime-private product can be read exactly in this
+phase group. In original CRT coordinates write $T_p$ for all higher
+$p$ digits, and split the complete $p$-free complement from SC272 as
+
+$$
+X_p^{\rm in}=X_p\cap[0]_3,\qquad
+X_p^{\rm out}=X_p\cap[c]_9,
+\qquad X_p=X_p^{\rm in}\sqcup X_p^{\rm out}.
+$$
+
+The original prime-private product of
+[Report 364](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md)
+and the complete
+owner list $J_a=\{3p,9p\}$ give
+
+$$
+\begin{aligned}
+P_{3p}&=\{a\}\times T_p\times X_p^{\rm in},\\
+P_{9p}&=\{a\}\times T_p\times X_p^{\rm out},\\
+P_p&=\{a_p\}\times T_p\times X_p,\\
+\rho(P_{3p})\sqcup\rho(P_{9p})&=P_p,
+\end{aligned}
+\tag{SC290}
+$$
+
+where $\rho$ is the existing first-$p$ reset from $a$ to $a_p$,
+with every higher digit and other coordinate fixed. These are
+complete original private sets. At root $a$ the two displayed
+owners are disjoint, and every other possible owner is $p$-free;
+privacy is therefore exactly avoidance of those $p$-free classes.
+No selected source trace is substituted for $X_p$.
+
+One further actual-role restriction reuses this product and
+[Report 385 PH5](385-private-congruence-hulls-and-crossed-modulus-closure.md#2-the-complete-private-region-supplies-more-than-divisor-closure).
+Every original $p$-bearing outer lower $d=3p^e m$, with
+$(m,3p)=1$, has all of its private points at old word $c$: their
+first ternary root is 2, and their full cofactor lies in $X_p$,
+whose only such word is $c$. Hence $3d\mid\Gamma_Q(P_d)$.
+Since $1<3d/p<d$, PH5 supplies the actual original height-two
+label $3d/p=9p^{e-1}m$. These labels are distinct for distinct
+outer lowers at fixed $p$. Their original phases remain whatever
+the original cover specifies; they are neither fresh labels nor
+asserted service for the transported residual.
+
+The reset partition and the additional original labels do not pay
+all responsibility created by moving these phases. SC286--SC289
+strengthen the complete source-incidence requirements at every
+other $p$ root, but no argument here forces one of these residuals
+to vanish or to admit an affordable repair. The $2p-3$ role count
+is not a contradiction and supplies no upper bound on the original
+inventory. Eliminating $J_a=\{3p,9p\}$, the branch $|J_a|\ge3$,
+and unrestricted odd distinct covering remains open. The deductions
+use existing complete packets, private reset and hull interfaces;
+there is no new enumeration or Lean verification.
