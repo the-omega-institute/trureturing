@@ -1,0 +1,48 @@
+**损伤产生与修复 285.1。** 令 `N_v^{\mathrm{ss}}`、`N_v^{\mathrm{ds}}` 和 `N_v^{\mathrm{cl}}` 分别表示单链断裂、双链断裂和复杂损伤的计数。给定外加辐射质量参数 `\alpha_k`，一种局部随机强度模型为
+
+$$
+\lambda_{v,k}(t)=\alpha_k\,\dot D_v(t),
+\qquad
+N_v^{k}(t+dt)-N_v^{k}(t)\sim\operatorname{Poisson}(\lambda_{v,k}(t)dt).
+$$
+
+若损伤会重叠或发生簇集，可改用复合 Poisson、簇过程或相关点过程。修复状态 `X_v(t)` 可由
+
+$$
+\dot X_v(t)=I_v(t)-\Gamma_v(X_v,t)-\Delta_v(X_v,t)+\nu_v(t)
+$$
+
+描述，其中 `I_v` 是新损伤输入，`\Gamma_v` 是正确修复，`\Delta_v` 是错误修复、细胞清除或凋亡，`\nu_v` 是外加噪声。修复速率、细胞间通讯和旁观者效应都不由 FIB 接缝确定。
+
+在给定动力学状态后，若双链断裂事件沿合法路径近似独立，定义有效损伤图的边指标 `\chi_e(t)`，则从照射端口集合 `B_j^{\mathrm{rad}}` 到核端口集合 `B_j^{\mathrm{nuc}}` 的可达损伤簇为
+
+$$
+\mathcal D_j(t)=\left\{v\in V_j:\exists\gamma\in\mathcal P_j(B_j^{\mathrm{rad}},v),\ \prod_{e\in\gamma}\chi_e(t)=1\right\}.
+$$
+
+但簇内相关性、染色质空间折叠和修复竞争会使可达性概率不等于独立路径概率的并集近似。
+
+**剂量—反应与统计量 285.2。** 对外加观测协议定义细胞终点 `Y_v`，例如存活、突变或染色体畸变。条件响应可以写成
+
+$$
+\Pr(Y_v=1\mid D_v,\dot D_v,X_v,\omega_v)
+=g_v(D_v,\dot D_v,X_v;\omega_v),
+$$
+
+其中 `\omega_v` 表示基因型、细胞周期及其他潜变量。在线性无阈值近似下，低剂量区可有
+
+$$
+\Pr(Y_v=1)\approx p_{0,v}+\beta_vD_v,
+$$
+
+在修复饱和或细胞选择显著时也可能出现阈值、超线性或非单调曲线。FIB 递归只给出能够共享上游辐射和修复信号的组合结构，不能决定 `p_0`、`\beta` 或剂量—反应函数的形状。
+
+若一个组织样本包含相关体元，群体终点 `Z_j` 的方差分解为
+
+$$
+\operatorname{Var}(Z_j)=\mathbb E[\operatorname{Var}(Z_j\mid D,X)]
++\operatorname{Var}(\mathbb E[Z_j\mid D,X]).
+$$
+
+第二项反映剂量场、微环境和遗传异质性在网络上的共同波动；FIB 的层级长度或路径数不自动给出其协方差核。只有在外加独立同分布、弱相关和稳定剂量标度条件下，才可对体元平均值使用中心极限定理。若事件由少数高能径迹主导，极限还可能是复合 Poisson 或稳定律而非高斯律。
+
