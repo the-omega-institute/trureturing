@@ -9742,3 +9742,211 @@ with affordable raw selection, and original ternary heights
 above two remain unresolved. This is an ordinary source-qualified construction
 and reuse of existing packets, not a Lean-verified result or
 a resolution of unrestricted Erdős #7.
+
+## 67. Extra-cofactor menus leave one original donor unspent
+
+The packets of Sections 61--62 admit a stronger payment bound.
+Use the same actual outer-lower menu, with distinct numerical
+outputs
+$n_d=3^{h_d}p^{k_d}q_d$, where $h_d,k_d\ge1$, $q_d>1$ and
+$(q_d,15p)=1$. Every phase belongs to the one original source.
+Assume their actual output union covers the complete selected
+mask in $[b]_p\setminus S$, with the depth-one base interface
+used by those packets.
+For $i=1$, the actual lower itself gives
+$3\chi(n_d)\in D$. For $i=2$, additionally require every
+same-height original top $9\chi(n_d)\in D$ as in SC342.
+Write $r\ge1$ for the number of sources. Then the existing
+complete-mask packet can be chosen with cost
+
+$$
+c_{\rm packet}\le v_i-1.
+\tag{SC383}
+$$
+
+No packet or source phase changes. The extra unit comes from
+reserving one more original divisor in the small-menu case
+and using the next integral projection bound in the large case.
+
+### Reserve the cofactor of one actual source
+
+Suppose $1\le r\le15$ and fix $d_0$, with output $n_0$ and
+cofactor $q_0$. For a nonempty source subset $X$, use the
+same projections as SC325, with $x=|X|$ and
+$A+B+C=|\pi_{hk}X|+|\pi_{hq}X|+|\pi_{kq}X|$.
+The published projection inequality gives $x^2\le ABC$.
+In this range,
+
+$$
+A+B+C\ge x+2.
+\tag{SC384}
+$$
+
+Indeed, the opposite integral bound would imply
+$27x^2\le(x+1)^3$ by AM--GM, whereas for $1\le x\le15$
+
+$$
+(x+1)^3=x^3+3x^2+3x+1
+ \le(x+7)x^2\le22x^2<27x^2.
+$$
+
+Give each source the divisor menu
+
+$$
+\mathcal N_d=\{t:t\mid n_d\}
+ \setminus\{1,3,p,3p,n_0,q_0\}.
+\tag{SC385}
+$$
+
+The five disjoint projection families in Section 61 have
+$x+A+B+C+n$ entries, where $n=|\pi_qX|\ge1$. None contains
+$1,3,p$. Deleting $3p,n_0,q_0$ removes at most three entries
+from this union, even if the chosen $d_0$ is not in $X$ or
+its cofactor divides other source cofactors. Consequently
+
+$$
+\left|\bigcup_{d\in X}\mathcal N_d\right|
+ \ge x+A+B+C+n-3\ge2x.
+\tag{SC386}
+$$
+
+The existing two-copy Hall allocation therefore still assigns
+two distinct divisor slots to every actual source. Use exactly
+SC317's four-common-class packet and those actual-phase
+divisor patches, of total cost $4+2r$.
+
+For each assigned slot $t$ count the original donor
+$3^i\chi(t)$. It divides the qualified original counterpart,
+and the donor map is injective. Five further original donors
+have the excluded indices $p,3,3p,n_0,q_0$:
+
+$$
+3^ip,\quad3^i5,\quad3^i5p,\quad
+3^i\chi(n_0),\quad3^iq_0.
+\tag{SC387}
+$$
+
+They all divide that same qualified counterpart. They are
+distinct because $h_0,k_0\ge1$, $q_0>1$ and $(q_0,15p)=1$.
+None is pure ternary and none is an assigned donor. Hence
+$v_i\ge2r+5$, proving SC383 in this range. These original
+donor phases are not used as patch phases.
+
+### Sixteen sources force the next integral margin
+
+For $r\ge16$, apply the projection inequality to the whole
+menu. A projection sum at most 19 would give
+$27r^2\le19^3=6859$, contrary to
+$27\cdot16^2=6912$. Thus $A+B+C\ge20$. The same five
+original donor families and two additional labels used in
+SC336 or SC344 give
+
+$$
+v_i\ge r+A+B+C+n+2\ge r+23.
+\tag{SC388}
+$$
+
+Reuse the $22+r$ packet of SC331--SC335. It again costs at
+most $v_i-1$. The ranges $r\le15$ and $r\ge16$ exhaust all
+nonempty finite menus. Each packet has 5-valuation at least
+two and remains fresh against any depth-one base with the
+same interface. No two packet budgets are added.
+
+### One additional raw source is affordable
+
+For either the original raw construction SC340 or the virtual
+partner construction SC380, keep distinct selected raw
+indices outside $\mathscr T$ and their actual phases. Its
+exact count is $K-1-v_2-z-e+o$. If the complete remaining
+mask is nonempty and has SC342's qualified top service,
+SC383 gives
+
+$$
+\begin{aligned}
+o&\le z+e+1,\qquad \epsilon=z+e+1-o\ge0,\\
+K'&\le K-1-v_2-z-e+o+(v_2-1)
+     =K-1-\epsilon<K.
+\end{aligned}
+\tag{SC389}
+$$
+
+If the mask is empty, these two base constructions have
+the actual $9p$ top, so $v_2\ge1$ and their raw count is
+at most $K-v_2<K$ under the same bound. Thus one may replace
+the raw-budget hypothesis $o\le z+e$ by $o\le z+e+1$ for
+this particular completion. It does not install a second
+phase at an occupied numerical index or supply a missing
+original top.
+
+### An absent top slot can pay a virtual enclosure
+
+Keep Section 66's original source, retained family, full
+menus and inventories, but replace its entrance SC372 by the
+following assumptions. For some prime $p>5$ dividing
+$N_0$, residue $a$
+and two outer colors $u,v$, with remaining outer color $c$,
+
+$$
+H\subseteq T_u\cap T_v,\qquad
+E_3\cup E_6\subseteq[a]_p,\qquad
+p\notin\mathscr T.
+\tag{SC390}
+$$
+
+No actual top partner is postulated. For any $b\ne a$ and
+inner $j$, use Section 66's placement table, placing the
+entire unchanged $\mathcal T_c$ at root 1 alongside
+$\phi_b(\mathcal T_j)$. There is no partner to remove.
+The other roots and the retained family are exactly as in
+that table, including the virtual $[b]_p$ at root 4.
+The new numerical label $5p$ is available by SC390.
+
+The same rootwise identities give the complete hole and count
+
+$$
+\begin{aligned}
+\mathbb Z\setminus\bigcup\mathcal B
+  &=[1]_5\cap R_{b,j},\qquad
+    R_{b,j}=\phi_b(E_j)\setminus T_c,\\
+|\mathcal B|
+  &=|\mathcal F_0|+2+\tau
+    =K-v_1-v_2-z+\tau.
+\end{aligned}
+\tag{SC391}
+$$
+
+Every top index is used once and the virtual index $p$ is
+used once. Retained labels are 5-free, all added labels have
+5-valuation one, and no top index is 1 or $p$. Thus all
+candidate labels are distinct odd nonunits. The residual
+still lies in $[b]_p\setminus S$; no interpretation as an
+original private region is added.
+
+If $R_{b,j}$ has complete actual outer-lower service of
+SC324's positive-height extra-cofactor form, apply SC383
+with $i=1$. The original inventory now pays both the existing
+packet and the additional virtual slot:
+
+$$
+K'\le K-v_1-v_2-z+\tau+(v_1-1)
+   =K-1-z-(v_2-\tau)<K.
+\tag{SC392}
+$$
+
+An empty residual already contradicts SC391 and $v_1\ge11$.
+As in SC377, a larger-than-$p$ residual hull would be paid
+by a nine- or eleven-class enclosure packet, using the
+stronger global $v_1\ge15$ from SC257, $P\ge29$ and pure
+original 9. Thus the complete residual has hull $p$, but the
+packet comparison SC392 only needs its containment and
+avoidance of $S$.
+
+SC390 is a separate absent-slot entrance; it does not settle
+the cases where a top already occupies $p$ at an unsuitable
+color or phase. Neither SC390 nor complete qualified lower
+service has been forced from a general cover. The extra unit
+does not resolve arbitrary mixed roles, missing counterparts
+or higher original ternary height. These are ordinary
+deductions from the existing projection inequality and packet
+constructions; no new Lean verification or enumeration is
+asserted.
