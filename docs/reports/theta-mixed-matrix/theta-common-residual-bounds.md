@@ -40,6 +40,17 @@ These are bounds for one fixed input and one common correction. They do
 not bound the original half-slack, the regularization error on a required
 input class, a cofinal comparison or the Robin/RH criterion.
 
+The stronger [whole-space negative-edge block constant](theta-negative-block-gap.md)
+$c_{**}=1/100$ improves this conversion, under its actual-model and
+numerical-supplier premises, to
+
+$$\|n_h-n\|<\frac9{80},\qquad
+\|C_\pm(n_h-n)\|<\frac9{800}.$$
+
+The same residual bound is reused; no midpoint action or residual
+envelope is recomputed for this consequence. It still does not reach
+the residual target $10^{-4}$.
+
 ## Support and retained action
 
 For $u>0$, let $b(u)\in(0,1)$ be the unique positive root of
