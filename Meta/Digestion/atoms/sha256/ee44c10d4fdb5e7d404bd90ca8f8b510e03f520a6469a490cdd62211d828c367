@@ -1,0 +1,30 @@
+**命题 356.8（固定组成下的叶序与固定叶序下的括号仍不可恢复）。** 令
+
+$$
+ s=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+ \qquad
+ u=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+则 $c(s)=c(u)=(2,2)$，且
+
+$$
+W_3(s)=W_3(u)=(-1,-S^2,S^2).
+\tag{356.9}
+$$
+
+因此二者的完整历史相同，而 $s\ne u$ 仍是自由有序树中的不同叶序。另令
+
+$$
+ p_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad
+ q_3=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+$$
+
+它们具有同一叶序和组成 $(3,0)$，但括号不同；对每个 $n\ge0$，
+
+$$
+E(\rho^n p_3)=X_n^3=E(\rho^n q_3).
+\tag{356.10}
+$$
+

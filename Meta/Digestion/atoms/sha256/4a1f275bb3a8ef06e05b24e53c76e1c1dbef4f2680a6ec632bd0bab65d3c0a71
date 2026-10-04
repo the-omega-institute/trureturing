@@ -1,0 +1,15 @@
+**定理 25.2（有限族的遗传信息叶判据）。** 对每个有限族 $F\subseteq\mathcal I_3$，有
+
+$$
+\boxed{\quad
+F\text{ 确定性相容}
+\ \Longleftrightarrow\
+F\text{ 期望相容}
+\ \Longleftrightarrow\
+\forall S\subseteq F,\ |S|\ge2\Longrightarrow\Delta(S)\ne\varnothing.
+\quad}
+\tag{25.9}
+$$
+
+对非空 $F$，这些条件亦等价于存在定义 25.1 的叶安全递归路由树。其路由路径至多使用 $|F|-1$ 个不同地址，接上完整叶核对和全域后备后，对每个 $P\in F$ 的总费用恰为 $n_P$。
+

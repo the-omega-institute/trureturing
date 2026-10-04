@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -23,32 +22,19 @@ public static class ScribeCli
     ];
 
     public static int Run(
-        Func<Assembly> documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
-        TextWriter error) =>
-        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null);
-
-    public static int Run(
-        Assembly documentsAssembly,
-        IReadOnlyList<string> arguments,
-        string workingDirectory,
-        TextWriter output,
-        TextWriter error) =>
-        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null);
+        TextWriter error) => Run(arguments, workingDirectory, output, error, leanReport: null);
 
     internal static int Run(
-        Assembly documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
         TextWriter error,
-        TextReader input) =>
-        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null, input);
+        TextReader input) => Run(arguments, workingDirectory, output, error, leanReport: null, input);
 
     internal static int Run(
-        Assembly documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
@@ -56,20 +42,6 @@ public static class ScribeCli
         LeanAxiomReport? leanReport,
         TextReader? input = null)
     {
-        ArgumentNullException.ThrowIfNull(documentsAssembly);
-        return Run(() => documentsAssembly, arguments, workingDirectory, output, error, leanReport, input);
-    }
-
-    internal static int Run(
-        Func<Assembly> documentsAssembly,
-        IReadOnlyList<string> arguments,
-        string workingDirectory,
-        TextWriter output,
-        TextWriter error,
-        LeanAxiomReport? leanReport,
-        TextReader? input = null)
-    {
-        ArgumentNullException.ThrowIfNull(documentsAssembly);
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(workingDirectory);
         ArgumentNullException.ThrowIfNull(output);
@@ -87,7 +59,6 @@ public static class ScribeCli
             try
             {
                 return ScribeScriptVerifyCommands.Run(
-                    documentsAssembly,
                     arguments,
                     FindRepositoryRoot(workingDirectory),
                     input,
@@ -102,35 +73,35 @@ public static class ScribeCli
             }
         }
 
-        if (command == "content-check")
+        if (command is "content-check" or "markdown-check")
         {
-            if (arguments.Count is not (3 or 5)
-                || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
-                || string.IsNullOrWhiteSpace(arguments[2])
-                || (arguments.Count == 5
-                    && !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)))
+            if (arguments.Count == 3 && arguments[1] == "--report")
+            {
+                error.WriteLine($"MissingPathsManifest: {command} requires --paths-from <file|->");
+                return 2;
+            }
+            if (arguments.Count != 5 || arguments[1] != "--report"
+                || string.IsNullOrWhiteSpace(arguments[2]) || arguments[3] != "--paths-from"
+                || string.IsNullOrWhiteSpace(arguments[4]))
             {
                 error.WriteLine(Usage);
                 return 2;
             }
-
             try
             {
-                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
-                    FindRepositoryRoot(workingDirectory), arguments[2]);
-                // InspectRepository also calls ReadRepository with the script's explicit report.
-                var exit = Run(documentsAssembly, ["projections", "--check", "--report", arguments[2]],
-                    workingDirectory, output, error, report);
-                if (exit != 0) return exit;
-                exit = Run(documentsAssembly, ["describe-report", "--check"],
-                    workingDirectory, output, error, report);
-                if (exit != 0) return exit;
-                return Run(documentsAssembly, ["markdown-check", .. arguments.Skip(1)],
-                    workingDirectory, output, error, report, input);
+                var root = FindRepositoryRoot(workingDirectory);
+                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(root, arguments[2]);
+                if (command == "content-check")
+                {
+                    var exit = Run(["projections", "--check", "--report", arguments[2]],
+                        workingDirectory, output, error, report);
+                    if (exit != 0) return exit;
+                }
+                return ScribeContentChecks.Run(root, ReadPaths(arguments[4], input), report,
+                    command == "content-check", output, error);
             }
-            catch (Exception exception) when (
-                exception is IOException or UnauthorizedAccessException or ArgumentException
-                    or FormatException or InvalidOperationException)
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or ArgumentException or FormatException or InvalidOperationException)
             {
                 error.WriteLine(exception.Message);
                 return 2;
@@ -175,60 +146,14 @@ public static class ScribeCli
             }
         }
 
-        if (command == "markdown-check")
-        {
-            if (arguments.Count is not (3 or 5)
-                || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
-                || string.IsNullOrWhiteSpace(arguments[2])
-                || (arguments.Count == 5
-                    && (!string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)
-                        || string.IsNullOrWhiteSpace(arguments[4]))))
-            {
-                error.WriteLine(Usage);
-                return 2;
-            }
-
-            try
-            {
-                var repositoryRoot = FindRepositoryRoot(workingDirectory);
-                var report = leanReport ?? LeanCompiledArtifactReports.ReadRepository(
-                    repositoryRoot,
-                    arguments[2]);
-
-                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
-                // An explicit scope remains caller-owned; current mode needs no Git history.
-                IEnumerable<string> paths = arguments.Count == 5
-                    ? ReadPaths(arguments[4], input)
-                    : definitions.Select(static definition => definition.RelativePath.Value)
-                        .Concat(Directory.EnumerateFiles(Path.Combine(repositoryRoot, "Blueprint"), "*.md", SearchOption.AllDirectories)
-                            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/')));
-                var scope = new MarkdownFormulaScope(repositoryRoot, paths);
-                return ScribeEmitter.CheckMarkdown(
-                    repositoryRoot,
-                    output,
-                    error,
-                    report,
-                    scope,
-                    definitions);
-            }
-            catch (Exception exception) when (
-                exception is IOException
-                    or UnauthorizedAccessException
-                    or ArgumentException
-                    or FormatException
-                    or InvalidOperationException)
-            {
-                error.WriteLine(exception.Message);
-                return 2;
-            }
-        }
-
         if (command == "describe-report")
         {
-            var options = arguments.Skip(1).ToArray();
+            var options = arguments.Skip(5).ToArray();
             var json = options.Contains("--json", StringComparer.Ordinal);
             var describeCheck = options.Contains("--check", StringComparer.Ordinal);
-            if (options.Length > 2
+            if (arguments.Count is < 5 or > 7 || arguments[1] != "--scribe-pack"
+                || string.IsNullOrWhiteSpace(arguments[2]) || arguments[3] != "--scribe-pack-digest"
+                || !System.Text.RegularExpressions.Regex.IsMatch(arguments[4], "^[0-9a-f]{64}$")
                 || options.Distinct(StringComparer.Ordinal).Count() != options.Length
                 || options.Any(static option => option is not ("--json" or "--check")))
             {
@@ -241,12 +166,15 @@ public static class ScribeCli
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var reportMaterial = leanReport
                     ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
-                var definitions = DocumentDefinitions.Discover(documentsAssembly(), repositoryRoot);
+                var pack = ScribeResourcePack.Open(arguments[2]);
+                if (pack.Manifest.TotalSha256 != arguments[4])
+                    throw new FormatException("ScribePackDigestMismatch: the pack digest does not match");
+                var definitions = pack.ReadAll();
                 var report = DescribeReport.Build(
                     repositoryRoot,
                     definitions.Select(static definition => definition.Document),
                     reportMaterial,
-                    validateContentGovernance: describeCheck);
+                    validateContentGovernance: describeCheck, validateSourceFiles: false);
                 output.Write(json
                     ? DescribeReportWriter.WriteJson(report)
                     : DescribeReportWriter.WriteText(report));
@@ -262,6 +190,44 @@ public static class ScribeCli
                 error.WriteLine(exception.Message);
                 return 2;
             }
+        }
+
+        if (command == "emit" && arguments.Count is (3 or 4)
+            && arguments[1] == "--paths-from"
+            && !string.IsNullOrWhiteSpace(arguments[2])
+            && (arguments.Count == 3 || arguments[3] == "--check"))
+        {
+            try
+            {
+                var repositoryRoot = FindRepositoryRoot(workingDirectory);
+                var paths = ReadPaths(arguments[2], input);
+                if (paths.IsEmpty)
+                {
+                    output.WriteLine("emitted: 0 changed blueprint(s)");
+                    return 0;
+                }
+                return ScribeEmitter.EmitPaths(
+                    repositoryRoot,
+                    paths,
+                    arguments.Count == 4,
+                    output,
+                    error,
+                    () => leanReport ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot));
+            }
+            catch (Exception exception) when (
+                exception is IOException or UnauthorizedAccessException or ArgumentException
+                    or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
+        }
+
+        if (command == "emit")
+        {
+            error.WriteLine(arguments.Count == 1 || (arguments.Count == 2 && arguments[1] == "--check")
+                ? "MissingPathsManifest: emit requires --paths-from <file|->" : Usage);
+            return 2;
         }
 
         var check = arguments.Count == 2
@@ -287,10 +253,8 @@ public static class ScribeCli
                 return FileMapEmitter.Emit(repositoryRoot, check, output, error);
             }
 
-            var assembly = documentsAssembly();
-            return leanReport is null
-                ? ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error)
-                : ScribeEmitter.Emit(assembly, repositoryRoot, check, output, error, leanReport);
+            error.WriteLine(Usage);
+            return 2;
         }
         catch (Exception exception) when (
             exception is IOException or UnauthorizedAccessException or ArgumentException)
@@ -301,11 +265,11 @@ public static class ScribeCli
     }
 
     private const string Usage =
-        "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
-        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
-        + "| content-check --report <file> [--paths-from <file|->] "
+        "usage: dotnet run --project tools/StrataLint.Scribe -- "
+        + "emit-values|filemap [--check] | emit --paths-from <file|-> [--check] | describe-report --scribe-pack <file> --scribe-pack-digest <hex64> [--json] [--check] "
+        + "| content-check --report <file> --paths-from <file|-> "
         + "| projections --check --report <file> "
-        + "| markdown-check --report <file> [--paths-from <file|->] "
+        + "| markdown-check --report <file> --paths-from <file|-> "
         + "| resources pack --out <file> | resources verify --pack <file> "
         + "| resources release --out <directory> "
         + "| resources verify-release --dir <directory> [--total-sha256 <digest>] "

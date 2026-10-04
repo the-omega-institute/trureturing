@@ -1,0 +1,26 @@
+**证明。** 式（32.12）的两个前像由母卷定义 3.1 的同态规则给出；它们字面不同，规范编译卷命题 4.3 给像不同。取 $J[X,Z]=\langle X,Z\rangle$、$Y=\langle A,A\rangle$，定理 32.2 的充分性给非冲突和取等。每棵树恰由三个 $A$ 与一个 $C$ 组成，故由 $c(A)=(1,2)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$ 得组成 $(5,9)^{\mathsf T}$ 与叶数 $14$。
+
+为确定所有地址，在每个根孩子处比较 $C$ 与 $\langle A,\langle A,A\rangle\rangle$。引理 30.2 给共享子树恰为左 $A$，右侧没有任何共享叶；前加孔地址 $\mathtt L$ 或 $\mathtt R$，全部共享叶遂正是式（30.7）已列的六片，标签依次为 $\beta,\alpha,\beta,\beta,\alpha,\beta$。$A$ 的唯一 $\alpha$ 地址为 $\mathtt{LR}$，$C$ 的两片为 $\mathtt{LLR},\mathtt{RR}$。将这些字面地址前加式（32.12）的各块位置，得到
+
+$$
+\begin{aligned}
+\Lambda_\alpha(P_{14})
+ &=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLLR},
+       \mathtt{RRLLR},\mathtt{RRRLR}\},\\
+\Lambda_\alpha(Q_{14})
+ &=\{\mathtt{LLLR},\mathtt{LRLLR},\mathtt{LRRLR},
+       \mathtt{RLLR},\mathtt{RRR}\},\\
+\Lambda_\alpha(P_{14})\setminus\Lambda_\alpha(Q_{14})
+ &=\{\mathtt{LRR},\mathtt{RRLLR},\mathtt{RRRLR}\},\\
+\Lambda_\alpha(Q_{14})\setminus\Lambda_\alpha(P_{14})
+ &=\{\mathtt{LRLLR},\mathtt{LRRLR},\mathtt{RRR}\}.
+\end{aligned}
+\tag{32.14}
+$$
+
+这给完整 $\alpha$ 地址证书；全部共同叶只有六片，故总叶缺额为 $14-6=8$，并非 $7$。
+
+两次历史报告都是式（31.6）的 $w\mathtt{LR}$ 行，分别强制 $w=\mathtt{LL}$、$w=\mathtt{RL}$ 处的 $A$。它们的 $\alpha$ 并集恰为式（32.13）的两个地址，按定义 31.3 没有其他块加入 $\mathcal B_{H_*}$，所以得到所述 $\Gamma_{H_*}$ 和三片残差。两次地址都在全部未知输入的合法菜单内，指定两棵固定输入也都真实报告相应叶值。
+
+于是，对任意同叶数非冲突的 $\mathcal E_H$ 成员，仅凭一侧未覆盖 $\alpha$ 数至多 $3$ 不能推出唯一性。这两次查询在二元素评价族 $\{P_{14},Q_{14}\}$ 上都为常值，第一步就不是严格分裂；它们给出共同历史的残差边界，不能作为严格路由中 $f$ 阈值最优或容量上界取得的证书。证毕。
+

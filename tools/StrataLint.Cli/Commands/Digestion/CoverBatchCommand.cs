@@ -1,10 +1,8 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Documents;
 
 namespace StrataLint.Cli;
 
@@ -19,7 +17,7 @@ internal static partial class CoverBatchCommand
         IReadOnlyList<string> arguments,
         Func<CommandResult>? emit = null,
         Func<RawRepositorySnapshot>? readInputs = null,
-        Assembly? documentsAssembly = null)
+        Func<string, IReadOnlyList<DocumentDefinition>>? emissionDefinitions = null)
     {
         BatchArguments options;
         try
@@ -112,7 +110,8 @@ internal static partial class CoverBatchCommand
         {
             session.RequireUnchanged();
             emission = (emit ?? (() => Emit(repositoryRoot, session, reportBundle,
-                documentsAssembly ?? typeof(DocumentAssembly).Assembly)))();
+                options.Items.SelectMany(item => item.Gids).Select(gid =>
+                    ScribeEmissionAttestation.DefinitionPath(ScribeEmissionAttestation.DocumentGid(gid))), emissionDefinitions)))();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -148,7 +147,8 @@ internal static partial class CoverBatchCommand
         })).Append('\n');
 
     private static CommandResult Emit(string root, CoverAtomCommand.Session session,
-        PrecomputedLeanReportSource.CapturedBundle? reportBundle, Assembly documentsAssembly)
+        PrecomputedLeanReportSource.CapturedBundle? reportBundle, IEnumerable<string> definitionPaths,
+        Func<string, IReadOnlyList<DocumentDefinition>>? definitions)
     {
         if (reportBundle is null)
             throw new InvalidOperationException("final emission requires a precomputed Lean report bundle");
@@ -157,42 +157,15 @@ internal static partial class CoverBatchCommand
         var output = new StringWriter();
         var error = new StringWriter();
         // Match scribe.sh's ordered producers while retaining the validated batch inputs.
-        var exit = ScribeEmitter.Emit(documentsAssembly, root, false, output, error, session.Report,
-            validateRepository: true, session.FrozenState, session.FrozenStatements);
+        var exit = definitions is null
+            ? ScribeEmitter.EmitPaths(root, definitionPaths, false, output, error, session.Report,
+                validateRepository: true, session.FrozenState, session.FrozenStatements)
+            : ScribeEmitter.Emit(root, false, output, error, session.Report, definitions(root),
+                scoped: true, validateRepository: true, session.FrozenState, session.FrozenStatements);
         if (exit == 0) exit = ValuesEmitter.Emit(root, false, output, error);
-        if (exit == 0) exit = FileMapEmitter.Emit(root, false, output, error);
+
         if (exit != 0) return new(false, output.ToString(), error.ToString());
-        var dag = DagRenderCommand.Run(root, new(ReadEmittedSnapshot(root, session), session.Lean, session.Report), false,
-            documentsAssembly);
-        output.Write(dag.Output);
-        error.Write(dag.Error);
-        try
-        {
-            ReadEmittedInputs(root, session);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            error.Write($"COVER_BATCH_EMIT_FAILED {exception.Message}\n");
-            return new(false, output.ToString(), error.ToString());
-        }
-        return new(dag.Success, output.ToString(), error.ToString());
+        return new(true, output.ToString(), error.ToString());
     }
 
-    private static RepositorySnapshot ReadEmittedSnapshot(string root, CoverAtomCommand.Session session) =>
-        SnapshotDecoder.Decode(ReadEmittedInputs(root, session)) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(failure.Message),
-        };
-
-    private static RawRepositorySnapshot ReadEmittedInputs(string root, CoverAtomCommand.Session session)
-    {
-        var manifest = FileMapLoader.LoadSnapshot(session.Current);
-        var raw = GitRepositorySnapshotReader.ReadCurrent(root);
-        // Generated path membership affects DAG provenance; all authoritative inputs must still match.
-        RequireSameInputs(Inputs(session.CurrentRaw), Inputs(raw),
-            path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }]);
-        IngestCommand.RequireLedgerUnchanged(root, session.CurrentRaw);
-        return raw;
-    }
 }

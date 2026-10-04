@@ -1,0 +1,16 @@
+**例 15.2（去掉整数条件后的边界）。** 令
+
+$$
+D_* =\begin{pmatrix}2&0\\0&1/2\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+若允许累计操作 $I,D_*,UD_*$，并记其读数为 $x,y,z$，则对每个 $R\in\mathcal R_+$，
+
+$$
+p=\frac{2y-x}{3},\qquad s=x-p,\qquad
+r=2(z-y),\qquad q=\frac{ps}{r}.
+$$
+
+因为 $y=2p+s/2$、$z=y+r/2$，这些公式精确恢复 $R$。$D_*$ 是非负实幺模矩阵，但不是整数矩阵，因而没有 $M/J$ 词实现。这是不能删除定理 15.1 整数条件的例子，不是允许操作合同内的反例。
+

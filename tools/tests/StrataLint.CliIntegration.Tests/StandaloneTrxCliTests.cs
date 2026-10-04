@@ -21,7 +21,7 @@ public sealed class StandaloneTrxCliTests
                 <UnitTest id="two" storage="Fixture.dll"><TestMethod className="Fixture" name="Hangs" /></UnitTest></TestDefinitions>
                 <ResultSummary outcome="Completed"><Counters executed="1" passed="1" /></ResultSummary></TestRun>
                 """);
-        var result = TestProcessRunner.Run("dotnet", [typeof(Program).Assembly.Location, "verify-trx", "--results-directory", fixture.Path,
+        var result = TestProcessRunner.Run("dotnet", [typeof(StrataLint.Cli.Program).Assembly.Location, "verify-trx", "--results-directory", fixture.Path,
             "--required-assembly", scenario == "wrong-assembly" ? "Absent" : "Fixture"],
             fixture.Path, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
         var output = Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError);

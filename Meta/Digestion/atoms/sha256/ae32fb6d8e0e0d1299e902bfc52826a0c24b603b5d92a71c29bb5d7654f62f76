@@ -1,0 +1,6 @@
+**命题 31.6（同规模、正性与严格性的必要边界）。** 字面树 $C$ 与 $\langle A,C\rangle$ 都为正来源，并共享立即左子树 $A$，但分别有五叶、八叶；$C$ 与 $\langle A,\langle\alpha,\beta\rangle\rangle$ 共享同一个左 $A$ 且都有五叶，但后者不是正来源。因此，引理 31.5 的同叶数与正性两项均不能删除。不同地址的常值叶请求也可以没有新增被覆盖 $\alpha$。
+
+**证明。** $C=\rho^3(\beta)$，且 $\langle A,C\rangle=\rho^3(\langle\alpha,\beta\rangle)$，两者的叶数由式（31.4）分别为 $5,8$。单个实际报告 $\mathsf{leaf}_\alpha$ 于 $\mathtt{LLR}$ 只强制左 $A$，在 $C$ 中恰留下右侧的一片未覆盖 $\alpha$；所以删除同叶数时，这一历史兼容上述两个不同正来源。另一棵所示五叶树右孩子为 $\langle\alpha,\beta\rangle\ne E$，与 $C$ 字面不同；引理 31.2 的根分类使唯一五叶正来源为 $C$，故它是负来源。同一叶历史也匹配它，说明不能把正队列内的单孔结论扩张到任意未知输入。
+
+在兼容 $C,\langle A,C\rangle$ 的叶历史 $(\mathtt{LLR},\mathsf{leaf}_\alpha)$ 后，再请求不同地址 $\mathtt{LR}$，两者都报告 $\mathsf{leaf}_\beta$。式（31.6）在两次报告中都只强制地址 $\mathtt L$ 处的同一个 $A$，被覆盖并集没有增长。该请求在队列上为常值，故不是严格节点；重复同一请求也必为常值。证毕。
+

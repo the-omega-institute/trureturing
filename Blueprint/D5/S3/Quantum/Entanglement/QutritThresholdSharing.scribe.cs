@@ -99,6 +99,16 @@ internal sealed class QutritThresholdSharingDocument : IScribeDocumentDefinition
                         + "calculation to every input state, including mixed states."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("qutrit-normalization"),
+                Handle("normalization"),
+                H("The squared amplitude normalization"),
+                StatementSource.FromAuthor(NormalizationFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The encoding amplitudes are 1/sqrt 3, and the product of two of them is 1/3, "
+                        + "since sqrt 3 times sqrt 3 is 3."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("qutrit-two-share-reconstruction"),
                 Handle("qutrit_two_share_reconstruction"),
                 H("Every pair reconstructs every input amplitude"),
@@ -116,6 +126,12 @@ internal sealed class QutritThresholdSharingDocument : IScribeDocumentDefinition
 
     private static DeclarationHandle Handle(string name) => DeclarationHandle.Create(
         "D5/S3/Quantum/Entanglement/QutritThresholdSharing." + name);
+
+    private static Formula NormalizationFormula()
+    {
+        Formula root = Call("Complex.ofReal", Seq(Sqrt, Grp(D(3))));
+        return Disp(Equal(TimesOf(Inverse(root), Inverse(root)), Inverse(D(3))));
+    }
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 

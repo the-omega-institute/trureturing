@@ -258,3 +258,10 @@ theorem conditional_derivative_closed_subspace_rigidity
   exact ⟨F, hF.symm⟩
 
 end D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity
+
+namespace D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity.API
+
+export D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity
+  (eq_constant_of_partials_zero totalDegree_pderiv_lt exists_minimum_degree)
+
+end D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity.API

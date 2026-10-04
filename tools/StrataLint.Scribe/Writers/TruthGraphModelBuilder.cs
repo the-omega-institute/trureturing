@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
@@ -25,12 +24,14 @@ public static class TruthGraphModelBuilder
     {
         ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(provenance);
-        return Create(dag, provenance, DocumentGraphExportProjection.AssembleRepository(
-            definitions,
-            repositoryRoot,
-            catalog,
-            dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal),
-            tolerateAbsentDocuments));
+        var formalPaths = dag.Nodes.Select(static node => node.RepoPath.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var documentProjection = string.IsNullOrWhiteSpace(repositoryRoot)
+            ? DocumentGraphExportProjection.AssembleRepository(definitions, catalog, formalPaths,
+                tolerateAbsentDocuments)
+            : DocumentGraphExportProjection.AssembleRepository(definitions, repositoryRoot, catalog,
+                formalPaths, tolerateAbsentDocuments);
+        return Create(dag, provenance, documentProjection);
     }
 
     public static TruthGraphExportModel Create(
@@ -224,23 +225,6 @@ public static class DocumentGraphExportProjectionExtensions
     extension(DocumentGraphExportProjection)
     {
         public static DocumentGraphExportProjection AssembleRepository(
-            Assembly documentsAssembly,
-            string repositoryRoot,
-            DeclarationCatalog catalog,
-            IReadOnlySet<string> formalTruthRepoPaths)
-        {
-            ArgumentNullException.ThrowIfNull(documentsAssembly);
-            ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-            ArgumentNullException.ThrowIfNull(catalog);
-            ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
-            return DocumentGraphExportProjection.AssembleRepository(
-                DocumentDefinitions.Discover(documentsAssembly, repositoryRoot),
-                repositoryRoot,
-                catalog,
-                formalTruthRepoPaths);
-        }
-
-        public static DocumentGraphExportProjection AssembleRepository(
             IEnumerable<DocumentDefinition> definitions,
             string repositoryRoot,
             DeclarationCatalog catalog,
@@ -263,6 +247,27 @@ public static class DocumentGraphExportProjectionExtensions
                 census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
                     ? "receipt-free"
                     : "receipt-bound"));
+            return DocumentGraphExportProjection.Create(sources, graph, catalog, formalTruthRepoPaths);
+        }
+
+        public static DocumentGraphExportProjection AssembleRepository(
+            IEnumerable<DocumentDefinition> definitions,
+            DeclarationCatalog catalog,
+            IReadOnlySet<string> formalTruthRepoPaths,
+            bool tolerateAbsentDocuments = false)
+        {
+            ArgumentNullException.ThrowIfNull(definitions);
+            ArgumentNullException.ThrowIfNull(catalog);
+            ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
+            var material = definitions.ToArray();
+            var documents = material.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
+            if (documents.Length == 0)
+                throw new InvalidOperationException("Scribe document corpus must not be empty.");
+            var graph = DocumentGraphAssembler.Assemble(documents, catalog);
+            var sources = material.Select(definition => new DocumentGraphDocument(
+                definition.RelativePath.Value,
+                definition.Document,
+                "receipt-free"));
             return DocumentGraphExportProjection.Create(sources, graph, catalog, formalTruthRepoPaths);
         }
     }

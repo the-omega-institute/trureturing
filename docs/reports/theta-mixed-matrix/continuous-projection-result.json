@@ -1,0 +1,122 @@
+{
+  "scope": "Paper-model continuous-projection and infinite-lattice alias coefficients; actual sample/action/Gram errors and matrix sign remain unpaid",
+  "precision_bits": 128,
+  "input_sha256": {
+    "strip-root-bounds-result.json": "d3057a0ff4017ee12be9825498080c8c925fdcfc3a1d676465795103039139de",
+    "high-trial-bounds-result.json": "88bb6871cc29fedecbfd79076e37b39d65b33337a26076b2f15c49cbd88d669a",
+    "common-trials.json": "6ac0df5db3b09a26b15ae6457eebb6d8aa96b50b8a210d59ac923ec45cb10045"
+  },
+  "classical_source": "Tao Proposition 3(i),(v), Fourier inversion and the saved model strip envelopes",
+  "bandwidth_N": 64,
+  "trial_gamma_terms": 1024,
+  "trial_prime_cutoff": 64,
+  "sample_spacing_h": "1/256",
+  "physical_input_radius_X": 4,
+  "frequency_period": "512 pi",
+  "alias_retained_frequency_band_Omega": 512,
+  "contour_delta": "1/8",
+  "sinc_line_L2_upper": {
+    "display": "[2378.4603542625679006547749393513516742 +/- 3.98e-35]",
+    "dyadic": [
+      "197594755609394632454487958830705890679",
+      "-116"
+    ]
+  },
+  "infinite_sinc_lattice_uniform_pointwise_error_upper": {
+    "display": "[1.7218476373950305083984194077637701602e-75 +/- 4.79e-113]",
+    "dyadic": [
+      "33127075819280364497650229221755099791",
+      "-373"
+    ]
+  },
+  "forward_pointwise_envelope_coefficient_upper": {
+    "display": "[6211770.6647213716994383511280097564928 +/- 4.36e-32]",
+    "dyadic": [
+      "125989676985826469898562917848337969013",
+      "-104"
+    ]
+  },
+  "forward_physical_and_discrete_L1_tail_upper": {
+    "display": "[3.1423132213975964851766527569869178210e-2024 +/- 3.61e-2062]",
+    "dyadic": [
+      "22315148863340870766998127478854642013",
+      "-6846"
+    ]
+  },
+  "finite_sinc_lattice_tail_pointwise_error_upper": {
+    "display": "[6.4014679286840931520848054660168922430e-2023 +/- 1.24e-2061]",
+    "dyadic": [
+      "113650119917830053568681197970952289071",
+      "-6844"
+    ]
+  },
+  "combined_sinc_quadrature_and_physical_tail_pointwise_error_upper": {
+    "display": "[1.7218476373950305083984194077637701603e-75 +/- 4.57e-113]",
+    "dyadic": [
+      "265016606554242915981201833774040798329",
+      "-376"
+    ]
+  },
+  "projection_sample_error_L1_multiplier_upper": {
+    "display": "[20.371832715762602978417121711681838341 +/- 4.82e-37]",
+    "dyadic": [
+      "108315241484954818046902227470560947937",
+      "-122"
+    ]
+  },
+  "infinite_lattice_alias_records": [
+    {
+      "input_family": "low_band_unit_ball",
+      "infinite_lattice_alias_sup_upper": {
+        "display": "[8.1057529817397096885448664166268569251e-57 +/- 2.47e-95]",
+        "dyadic": [
+          "270527863833957520088802056348307449139",
+          "-314"
+        ]
+      },
+      "retained_band_full_gamma_alias_action_upper": {
+        "display": "[4.8623437980942662564314614075049045886e-54 +/- 2.95e-92]",
+        "dyadic": [
+          "316952615872796382425277723925158548911",
+          "-305"
+        ]
+      }
+    },
+    {
+      "input_family": "same_five_generator_high_family",
+      "infinite_lattice_alias_sup_upper": {
+        "display": "[2.0568042547880697490512959178255697969e-51 +/- 1.10e-89]",
+        "dyadic": [
+          "32732689556883912029836953890529038869",
+          "-293"
+        ]
+      },
+      "retained_band_full_gamma_alias_action_upper": {
+        "display": "[1.2338014043472878850446931775598675566e-48 +/- 3.44e-86]",
+        "dyadic": [
+          "153399526874233253347023238971282269275",
+          "-286"
+        ]
+      }
+    }
+  ],
+  "finite_DFT_identity": {
+    "length": 32768,
+    "physical_period": 128,
+    "local_output_radius": "33/4",
+    "input_radius": 4,
+    "maximum_used_difference": "49/4",
+    "kernel_signed_radius": 64,
+    "continuous_cutoff_in_kernel": 64,
+    "sharp_frequency_mask_used": false
+  },
+  "actual_operator_samples_evaluated": false,
+  "old_integration_grid_rerun": false,
+  "unpaid": [
+    "actual forward sample enclosures and their errors",
+    "kernel and arithmetic evaluation errors",
+    "whole-line high action and common Gram",
+    "projected ground direction and restricted matrix sign"
+  ],
+  "Lean_certification": false
+}

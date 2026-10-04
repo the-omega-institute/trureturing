@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c4fb4d72fdf0e621bbb60015bc00d48a08429e0404724af59fe62f96af3b6dbb
+  normalized_sha256: sha256:c4fb4d72fdf0e621bbb60015bc00d48a08429e0404724af59fe62f96af3b6dbb
+cas_ref: sha256:c4fb4d72fdf0e621bbb60015bc00d48a08429e0404724af59fe62f96af3b6dbb
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/PhysicalHermiteTests.physical_hermite_tests
+    target_statement_id: sha256:6af2e6f8ed1697c6f2162b9ae37171a18f8a7fe937f90d194f334e4181d96ebf
+receipts:
+  unresolved_subitems: []

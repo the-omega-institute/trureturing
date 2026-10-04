@@ -1,0 +1,23 @@
+**Theorem 2.1 (Arbitrary signed block sums).** For every $m,h\in\mathbb N$,
+every $\alpha\in\mathfrak S_m$ and every $\beta\in\mathfrak S_h$, without
+an avoidance hypothesis,
+
+$$
+r(\alpha\oplus\beta)=
+\begin{cases}r(\alpha)&h=0,\\r(\beta)&h>0,\end{cases}
+\qquad
+r(\alpha\ominus\beta)=r(\alpha)+r(\beta).
+$$
+
+Proof. Partition the positions into $i<m$ and $m\le i<m+h$. In either sum,
+the order comparisons among suffix values are exactly those of $\beta$;
+therefore a suffix position is a right maximum exactly when its position
+in $\beta$ is a right maximum. In a direct sum with $h>0$, every prefix value
+is smaller than every suffix value, so no prefix position is a right maximum.
+For $h=0$ the suffix is empty and the comparisons in the prefix are those
+of $\alpha$. In a skew sum, every prefix value exceeds every suffix value.
+Consequently a prefix position is a right maximum precisely when it exceeds
+every later prefix value, which is exactly the right-maximum condition in
+$\alpha$. Count the two disjoint sets of record positions. This also proves
+the formulas when either set of positions is empty.
+

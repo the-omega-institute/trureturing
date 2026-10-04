@@ -1,0 +1,46 @@
+**定理 26.6（任意规模的实际极小不相容族与无统一有限 Helly 阶数）。** 对每个 $m\ge2$，取
+
+$$
+K_m=2^{[m]}\setminus\{[m]\}.
+\tag{26.23}
+$$
+
+用有序对 $(r,k)$、$r\ne k$ 编号各列，在行 $i$ 置
+
+$$
+X_{i,(r,k)}=
+\begin{cases}
+A,&i=r,\\
+V,&i=k,\\
+U,&i\notin\{r,k\}.
+\end{cases}
+\tag{26.24}
+$$
+
+固定列的一个次序，以 $p_{(r,k)}$ 记列 $(r,k)$ 的孔地址。在一个共同的 $B_T$ 中填入该表，并按式（26.13）构造完整前像，则得到两两不同的实际正来源 $P_1,\ldots,P_m$。无需补齐，各行的共同构造读数为
+
+$$
+\begin{aligned}
+T&=m(m-1),\qquad M=(m-1)^2,\\
+c(Q_i)&=\bigl((m-1)(2m-1),(m-1)^2\bigr)^{\mathsf T},\\
+c(P_i)&=(m-1)(4m-3,7m-5)^{\mathsf T},\\
+n_{P_i}&=(m-1)(11m-8).
+\end{aligned}
+\tag{26.25}
+$$
+
+在两个分别固定的策略空间中，同时有
+
+$$
+\begin{aligned}
+\bigcap_{i\in S}\mathcal O(P_i)\ne\varnothing
+&\ \Longleftrightarrow\ S\subsetneq[m],\\
+\bigcap_{i\in S}\mathcal O_{\mathrm u}(P_i)\ne\varnothing
+&\ \Longleftrightarrow\ S\subsetneq[m]
+\qquad(S\subseteq[m]).
+\end{aligned}
+\tag{26.26}
+$$
+
+故每个规模 $m$ 都有实际同组成的极小不相容族：全部真子族取得各自全部个体最优，而全族不能取得。两个个体最优集合系统均没有统一有限 Helly 阶数，即使每个检验族均限制为两两不同的同组成正来源。
+

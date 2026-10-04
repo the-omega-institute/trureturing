@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
@@ -39,7 +38,7 @@ public sealed partial class TruthReleaseCommandTests
         using var output = new TemporaryDirectory();
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), [option, value]);
 
-        Assert.Equal(1, exitCode);
+        Assert.Equal(2, exitCode);
         Assert.Contains(PackUsage, console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
@@ -57,28 +56,6 @@ public sealed partial class TruthReleaseCommandTests
 
         Assert.Equal(1, exitCode);
         Assert.Contains(PackUsage, console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
-    }
-
-    [Theory]
-    [InlineData(false, "unregistered Scribe source:")]
-    [InlineData(true, "registered Scribe source is missing:")]
-    public void ResourcePackRequiresSnapshotSourceBijection(bool extra, string diagnostic)
-    {
-        using var fixture = CreateFixture();
-        using var resources = new TemporaryDirectory();
-        using var output = new TemporaryDirectory();
-        DocumentDefinition[] definitions = extra
-            ? [SimpleDefinition(BlueprintGid), SimpleDefinition("D5/S0/Carrier/Extra")]
-            : [];
-        var packPath = Path.Combine(resources.Path, "resources.zip");
-        var digest = ScribeResourcePack.Write(packPath, definitions).TotalSha256;
-
-        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
-
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains(diagnostic, console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
@@ -121,7 +98,7 @@ public sealed partial class TruthReleaseCommandTests
             graph.RootElement.GetProperty("documents").GetProperty("document_nodes").EnumerateArray()).GetProperty("gid").GetString());
     }
 
-    private const string PackUsage = "[--scribe-pack FILE --scribe-pack-digest HEX64]";
+    private const string PackUsage = "--scribe-pack FILE --scribe-pack-digest HEX64";
 
     [Fact]
     public void ResourcePackProductionVerifierAcceptsSnapshotDefinitionsWithoutAssemblyDiscovery()
@@ -164,13 +141,28 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
+    [Fact]
+    public void ResourcePackProductionVerifierIgnoresAdditionalLocalScribeSources()
+    {
+        using var fixture = CreateFixture(productionVerifier: true, additionalLocalSource: true);
+        using var resources = new TemporaryDirectory();
+        using var output = new TemporaryDirectory();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [SimpleDefinition(BlueprintGid)]).TotalSha256;
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), PackArguments(packPath, digest));
+
+        Assert.True(exitCode == 0, console.Error);
+        Assert.Single(TruthReleaseVerification.Verify(output.Path,
+            console.Output.Split(' ').Single(part => part.StartsWith("release_digest=", StringComparison.Ordinal))
+                ["release_digest=".Length..]).ReadTruthGraph().Documents.Nodes);
+    }
+
     private static string[] PackArguments(string path, string digest) =>
         ["--scribe-pack", path, "--scribe-pack-digest", digest];
 
     private static DocumentDefinition[] PackDefinitions(Fixture fixture) =>
-        DocumentDefinitions.Discover(Assembly.Load("StrataLint.Scribe.Documents"),
-            Path.Combine(Path.GetDirectoryName(fixture.ReportPath)!, "repository"))
-            .Where(definition => definition.Document.Header.Gid.Value == BlueprintGid).ToArray();
+        [SimpleDefinition(BlueprintGid)];
 
     private static DocumentDefinition SimpleDefinition(string gid) => DocumentDefinition.Create(
         ScribeDocument.Create(DefinitionDsl.Header(gid, "Resource fixture"), Heading.Create("Resource fixture"),

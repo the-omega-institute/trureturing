@@ -1,0 +1,4 @@
+# Monotone convergence of positive operator nets
+
+Peterson, *Notes on von Neumann algebras*, Lemma 2.7.1, states strong convergence of an increasing norm-bounded net of positive operators on a Hilbert space. The formulation below starts from an existing operator-order least upper bound. The square-root estimate is the estimate used in Peterson's proof; construction from vector Cauchy limits and identification of the least upper bound are written out here. No countable cofinal subset is required.
+

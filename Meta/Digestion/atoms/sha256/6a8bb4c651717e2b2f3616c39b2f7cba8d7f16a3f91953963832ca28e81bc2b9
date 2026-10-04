@@ -1,0 +1,9 @@
+**定理 45.2（平坦对边的非线性必要条件）。** 若 $\ell$ 的 $\pi$ 角位于 $ij,kh$，则
+$$\boxed{
+\cosh\frac{\ell_{ij}+\ell_{kh}}2
+\ \ge\
+1+\cosh\frac{\ell_{ik}+\ell_{jh}}2
++\cosh\frac{\ell_{ih}+\ell_{jk}}2 .
+} \tag{FC}
+$$
+

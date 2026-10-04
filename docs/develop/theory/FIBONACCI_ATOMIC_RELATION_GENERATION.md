@@ -52873,3 +52873,2389 @@ $$
 同一 FIB 链上，有限均值的 Markov 时钟、重尾时钟和状态依赖耗散时钟可以拥有相同组合固定点，却产生不同更新速度、稳定指数和响应谱。非交换的接缝矩阵也可以保持相同单层谱半径而产生不同 Lyapunov 指数。它们因此属于不同物理普适类，除非额外证明共享重整化固定点、相关方向、边界和联合极限。
 
 本节五条关系共同给出从 FIB 到物理统计的更完整链条：分支核确定保留，观察商确定信息，辛/作用量装饰确定动力学，联合概率实现确定推断与涨落，重整化桥和极限条件确定普适性。每一步都保留了 FIB 原生骨架与外加物理结构之间的边界。
+
+## 358. 实际 Fibonacci 首现层、模矩阵大阶与固定 Robin 缺口
+
+本节把递推、首次整除秩和缺失素支撑接到同一个最小公倍前缀上。以下是普通数学的综合推导，未作内核形式化；所用经典恒等式是推导中的中间步骤，解析供给的出处与适用条件在证明中明确列出，不主张文献原创性。
+
+**定义 358.1（实际前缀与首现层）。** 取实际整数序列
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对整数 $m\ge1$，令 $Q_m=\operatorname{lcm}(F_1,\ldots,F_m)$、$b_m=\log Q_m$。对整数 $d\ge2$，$z(d)$ 是满足 $d\mid F_n$ 的最小正指标；其存在性由下述有限模数论证保证。对 $n\ge1$，先在正有理数中定义
+
+$$
+\Psi_n=\prod_{d\mid n}F_d^{\mu(n/d)},\qquad
+\Phi=\frac{1+\sqrt5}{2},\quad L=\log\Phi,\quad
+\kappa=\frac{L}{\zeta(2)},\quad H_m=\sum_{j=1}^m\frac1j.
+\tag{358.1}
+$$
+
+这里 $\mu$ 是 Möbius 函数，$\varphi$ 是 Euler totient 函数，$\zeta(2)=\sum_{j\ge1}j^{-2}$；$\Psi_n$ 的整性是结论，不是定义中的假设。对素数 $p$，$v_p$ 在正整数上是通常赋值，在正有理数上以分子赋值减分母赋值延拓。另取 $\gamma$ 为 Euler 常数，$\sigma(M)=\sum_{a\mid M}a$，并定义
+
+$$
+\begin{aligned}
+w(p)&=-\log(1-1/p),&
+A(M)&=\sum_{p\mid M}w(p),\\
+E(M)&=\sum_{p\mid M}\log(1-p^{-v_p(M)-1}),&
+B_0(x)&=\sum_{p\le x}w(p)\quad(x>1),\\
+G(M)&=\log\frac{\sigma(M)}{e^\gamma M\log\log M}\quad(M>5040).
+\end{aligned}
+\tag{358.2}
+$$
+
+各素数和均只取素数；$A(1)=E(1)=0$。
+
+**定理 358.2（首现层恒等式、二次规模与最终严格缺口）。** 对所有整数 $d\ge2$、$n,m\ge1$ 及素数 $p$，有
+
+$$
+\begin{gathered}
+d\mid F_n\ \Longleftrightarrow\ z(d)\mid n,\qquad
+v_p(\Psi_n)=\#\{k\ge1:z(p^k)=n\},\\
+v_p(Q_m)=\#\{k\ge1:z(p^k)\le m\},\qquad
+\Psi_n\in\mathbb N_{>0},\qquad Q_m=\prod_{n\le m}\Psi_n.
+\end{gathered}
+\tag{358.3}
+$$
+
+这些公式包括 $p=2,5$ 和多个素幂具有相同首次秩的情形，不需任何首赋值为一的假设。实际规模满足
+
+$$
+\begin{gathered}
+|\log\Psi_n-L\varphi(n)|\le1,\\
+\left|b_m-\frac\kappa2m^2\right|
+\le L\left(mH_m+\frac m2+\frac12\right)+m,\\
+\frac\kappa4m^2\le b_m\quad(m\ge256),\qquad
+0\le b_m\le\frac L2m(m-1)<m^2\quad(m\ge1).
+\end{gathered}
+\tag{358.4}
+$$
+
+使用下述 Kurlberg–Rudnick Theorem 14 和 Dusart Theorems 6.9、6.12 的已发表普通数学结论，则存在整数 $m_0$，使每个整数 $m\ge m_0$ 都满足
+
+$$
+Q_m>5040,\qquad
+G(Q_m)\le-\frac18\log\frac{16}{15},\qquad
+\frac{\sigma(Q_m)}{e^\gamma Q_m\log\log Q_m}
+\le\left(\frac{15}{16}\right)^{1/8}<1.
+\tag{358.5}
+$$
+
+这里 $m_0$ 是存在阈值，不是已给出的数值截止。
+
+**证明。** *有限模数与首次秩。* 递推矩阵
+
+$$
+B=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+B^n=\begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}\quad(n\ge1)
+\tag{358.6}
+$$
+
+的行列式是 $-1$，故在每个有限环 $\mathbb Z/d\mathbb Z$ 上可逆。有限群 $\mathrm{GL}_2(\mathbb Z/d\mathbb Z)$ 中某个正幂 $B^h=I$，于是 $d\mid F_h$，最小正秩存在，且 $z(d)\ge3$。这个论证适用于合数模数。经典 Fibonacci 模周期背景可参见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。
+
+为核对随后所用的经典强整除律，（358.6）的行列式先给 $\gcd(F_j,F_{j+1})=1$。矩阵相乘给加法公式；当 $a>b\ge1$ 时，
+
+$$
+F_a=F_{a-b}F_{b+1}+F_{a-b-1}F_b,
+\qquad \gcd(F_a,F_b)=\gcd(F_{a-b},F_b).
+$$
+
+对指标作 Euclid 递降，连同 $F_0=0$，得到 $\gcd(F_a,F_b)=F_{\gcd(a,b)}$，因而 $a\mid b$ 蕴含 $F_a\mid F_b$。若 $d\mid F_n$，则 $d\mid F_{\gcd(n,z(d))}$；这个正指标不超过 $z(d)$，最小性迫使它等于 $z(d)$。反向用 $z(d)\mid n$ 及强整除律。这证明（358.3）的第一式，也给
+
+$$
+z(p^k)\mid z(p^{k+1})\quad(k\ge1).
+$$
+
+*素幂首现层与实际 lcm。* 对固定 $p,n$，上述整除判据给
+
+$$
+v_p(F_n)=\sum_{k\ge1}\mathbf1_{z(p^k)\mid n}.
+$$
+
+因此按定义对正有理数 $\Psi_n$ 取赋值，再交换有限个非零项，得到
+
+$$
+\begin{aligned}
+v_p(\Psi_n)
+&=\sum_{d\mid n}\mu(n/d)\sum_{k\ge1}\mathbf1_{z(p^k)\mid d}\\
+&=\sum_{\substack{k\ge1\\z(p^k)\mid n}}
+\sum_{z(p^k)\mid d\mid n}\mu(n/d)
+=\sum_{k\ge1}\mathbf1_{z(p^k)=n}.
+\end{aligned}
+$$
+
+内层和是 $\sum_{e\mid n/z(p^k)}\mu(e)$。凡在交换中出现的 $k$ 都满足 $p^k\mid F_n$，故非零项确实有限。所得赋值非负，证明 $\Psi_n$ 是正整数；还给出 $\Psi_n\mid F_n$。另一方面，
+
+$$
+p^k\mid Q_m
+\ \Longleftrightarrow\ \exists j\in\{1,\ldots,m\},\ p^k\mid F_j
+\ \Longleftrightarrow\ z(p^k)\le m.
+$$
+
+按 $k$ 计数得到 $v_p(Q_m)$，再按首次秩 $n\le m$ 分组，所有素数赋值相同便给出实际乘积恒等式（358.3）。重复秩按素幂逐个计数，不能以不同秩的集合大小替代。特别地，$p\mid Q_m$ 当且仅当 $z(p)\le m$。
+
+*Binet 误差与二次规模。* 令 $q=\Phi^{-2}\in(0,1)$。经典 Binet 公式可由递推及初值直接核对，给
+
+$$
+\log F_j=jL-\tfrac12\log5+\epsilon_j,
+\qquad \epsilon_j=\log(1-(-q)^j).
+$$
+
+由 $|\log(1-u)|\le |u|/(1-|u|)$（$|u|<1$），以及 $(1-q)^2=q$，有
+
+$$
+\sum_{j\ge1}|\epsilon_j|
+\le\sum_{j\ge1}\frac{q^j}{1-q^j}
+\le\frac{q}{(1-q)^2}=1.
+$$
+
+对 $n>1$，$\sum_{d\mid n}\mu(n/d)=0$、$\sum_{d\mid n}d\mu(n/d)=\varphi(n)$，故 $\log\Psi_n=L\varphi(n)+\sum_{d\mid n}\mu(n/d)\epsilon_d$，误差绝对值至多一。$n=1$ 时 $\Psi_1=1$，误差是 $L<1$，单独满足同一界。
+
+为明确 summatory totient 的误差，令 $S_m=\sum_{n\le m}\varphi(n)$。经典互素有序对计数给
+
+$$
+2S_m-1=\sum_{d\le m}\mu(d)\lfloor m/d\rfloor^2.
+$$
+
+因为 $|\lfloor y\rfloor^2-y^2|\le2y$（$y\ge1$），而绝对收敛的 Möbius Euler 乘积给 $\sum_{d\ge1}\mu(d)/d^2=1/\zeta(2)$，尾和以 $\sum_{d>m}d^{-2}\le1/m$ 控制，所以
+
+$$
+\left|S_m-\frac{m^2}{2\zeta(2)}\right|
+\le mH_m+\frac m2+\frac12.
+$$
+
+将每层 Binet 误差相加，并用实际乘积恒等式，即得（358.4）的二次误差。下界也可完全用初等常数核对：$H_m\le1+\log m$；$\Phi>3/2$ 和 $\log(3/2)>1/3$ 给 $L>1/3$；积分比较给 $\zeta(2)<2$。于是该误差不超过 $Lm(\log m+5)$。对 $m\ge256$，$\log m+5\le m/8$：在 $256$ 处由 $\log256<8$ 成立，且 $m/8-\log m-5$ 此后递增。因此误差不超过 $Lm^2/8<\kappa m^2/4$，给出所示下界。上界由递推归纳的 $F_n\le\Phi^{n-1}$ 和 $Q_m\le\prod_{n\le m}F_n$ 得到；$\Phi<2<e$ 给 $L<1$ 及最后的严格不等式。特别地，$b_m=\kappa m^2/2+O(m\log m)$。
+
+*从模矩阵大阶到缺素数区间。* 固定
+
+$$
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix}\in\mathrm{SL}_2(\mathbb Z).
+$$
+
+它的迹为 $18>2$，且模二为单位矩阵，满足此处所用 cat map 的条件。对每个素数 $p$，在 $n=z(p)$ 处（358.6）成为 $B^n=cI$，其中 $c\ne0$ 且 $c^2=(-1)^n$；故 $B^{4n}=I$，从而 $T^{2n}=B^{12n}=I$。所以
+
+$$
+\operatorname{ord}_p(T)\mid2z(p),
+\tag{358.7}
+$$
+
+包括 $p=2,5$，无需删去分歧素数。
+
+使用 Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，Communications in Mathematical Physics **222** (2001)，201–227，[作者 PDF 的 Theorem 14，印刷页 20，式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)：对固定双曲矩阵 $A\in\mathrm{SL}_2(\mathbb Z)$ 和 $1/2<\eta<3/5$，满足 $p\le x$、$\operatorname{ord}_p(A)>x^\eta$ 的素数个数至少为
+
+$$
+c(\eta)\pi(x)+o(\pi(x)),\qquad
+c(\eta)=\frac{3-5\eta}{2(1-\eta)}.
+$$
+
+这里原文的阈值是 $x^\eta$。取 $A=T$、$\eta=11/20$，则 $c(\eta)=5/18>1/4$。定义固定素数集合
+
+$$
+\mathcal P=\{p:\operatorname{ord}_p(T)>p^{11/20}\},\qquad
+N_{\mathcal P}(x)=\#\{p\in\mathcal P:p\le x\}.
+$$
+
+原文计数的集合包含于这个固定集合，故存在固定 $X_A\ge599$，使所有实数 $x\ge X_A$ 满足 $N_{\mathcal P}(x)\ge\pi(x)/4$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），印刷页 9](https://arxiv.org/pdf/1002.0442v1)，给出所用的确切计数界
+
+$$
+\pi(x)\ge\frac{x}{\log x}\left(1+\frac1{\log x}\right)\quad(x\ge599),
+\qquad
+\pi(x)\le\frac{x}{\log x}\left(1+\frac{1.2762}{\log x}\right)\quad(x>1).
+$$
+
+所以 $N_{\mathcal P}(x)\ge x/(4\log x)$（$x\ge X_A$）。这些是无 RH 假设的普通数学供给；$X_A$ 的数值没有由 KR 的渐近陈述给出。
+
+先固定 $\alpha=15/8$、$\rho=1/4$、$r=\log(16/15)/4$。对 $m\ge2^{33}$，令 $u=m^{15/8}$、$v=m^2$。若 $p\in\mathcal P\cap(u,v]$，则（358.7）给
+
+$$
+z(p)>\frac12p^{11/20}>\frac12m^{33/32}>m.
+$$
+
+故这些素数都不整除 $Q_m$。若再有 $u\ge X_A$，对同一个固定计数函数作部分求和，得到
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal P\cap(u,v]}\frac1p
+&=\frac{N_{\mathcal P}(v)}v-\frac{N_{\mathcal P}(u)}u
++\int_u^v\frac{N_{\mathcal P}(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}
++\frac14\log\frac{\log v}{\log u}
+=r-\frac2{\log u}.
+\end{aligned}
+\tag{358.8}
+$$
+
+这里保留严格下端和闭上端；$N_{\mathcal P}(v)/v\ge0$ 被舍去，$N_{\mathcal P}(u)\le\pi(u)$ 和上述 Dusart 上界给 $\pi(u)/u\le2/\log u$，因为 $u\ge599$。计数下界在整个积分区间成立，而非仅在右端点成立。
+
+*有限支撑比较与全部高素数费用。* 对任意整数 $M\ge1$、实数 $x>1$ 及有限素数集 $S\subseteq\{p\le x:p\nmid M\}$，经典 Euler 支撑分拆给
+
+$$
+A(M)\le B_0(x)-\sum_{p\in S}w(p)
++\frac{\log M}{(x-1)\log x}.
+\tag{358.9}
+$$
+
+确切地，$1/p\le w(p)\le1/(p-1)$；低素数的实际支撑是全部 $p\le x$ 去掉一个包含 $S$ 的集合。对每个实际高素因子 $p>x$，
+
+$$
+w(p)\le\frac1{p-1}
+\le\frac{\log p}{(x-1)\log x},\qquad
+\sum_{p\mid M}\log p=\log\operatorname{rad}(M)\le\log M.
+$$
+
+因此（358.9）支付了每个 $p>x$ 的实际支撑费用，不假设最大素因子不超过 $x$；$M=1$ 也成立。这个经典比较作为当前实际族推导的中间步骤使用。
+
+Dusart 同文 [Theorem 6.12，印刷页 11](https://arxiv.org/pdf/1002.0442v1) 直接给出
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right)
+\quad(x\ge2973).
+$$
+
+取对数及 $\log(1+y)\le y$，得 $B_0(x)\le\gamma+\log\log x+0.2/(\log x)^2$。若只使用 Mertens 第三定理的较弱误差 $B_0(x)=\gamma+\log\log x+O(1/\log x)$，在 $x=m^2$ 处误差仍趋零，足以保留最终固定缺口；这里的显示常数使用 Dusart 的上述供给。有限约数和的几何乘积则给确切恒等式
+
+$$
+\log\frac{\sigma(M)}M=A(M)+E(M),\qquad E(M)\le0.
+$$
+
+所以对 $M>5040$、$x\ge2973$，同一个有限比较推出
+
+$$
+\begin{aligned}
+G(M)\le{}&-\sum_{p\in S}\frac1p+\frac{0.2}{(\log x)^2}
++\frac{\log M}{(x-1)\log x}\\
+&+\log\log x-\log\log\log M+E(M).
+\end{aligned}
+\tag{358.10}
+$$
+
+*实际分母与固定储备。* 令 $d=\log(4/\kappa)>0$，所有常数和存在阈值 $X_A$ 均先于 $m$ 固定。可取
+
+$$
+\begin{gathered}
+W=\max\left(2^{33},256,X_A^{8/15},e^d,
+\exp\left(\frac{2(d+3)}r\right),
+\sqrt{\frac{4\log5040}{\kappa}}\right),\qquad
+m_0=\lceil W\rceil+1.
+\end{gathered}
+\tag{358.11}
+$$
+
+这个表达式依赖未指定数值的 $X_A$，故仍只给存在阈值。现在对所有 $m\ge m_0$ 同时取 $t=\log m$、$x=v$、$S=\mathcal P\cap(u,v]$。规模下界给 $Q_m>5040$，且 $t\ge d$、$v\ge2973$。实际分母误差满足
+
+$$
+\begin{aligned}
+\log\log v-\log\log b_m
+&\le\log(2t)-\log(2t-d)\\
+&=-\log\left(1-\frac{d}{2t}\right)\le\frac dt.
+\end{aligned}
+\tag{358.12}
+$$
+
+最后一步用 $0\le d/(2t)\le1/2$。因此不能把 $\log\log Q_m$ 偷换成 $\log v$ 而直接删去误差。全部高素数项则由 $b_m<m^2$ 给
+
+$$
+\frac{b_m}{(v-1)\log v}\le\frac1t.
+$$
+
+将（358.8）、（358.12）代入（358.10），得到
+
+$$
+\begin{aligned}
+G(Q_m)
+&\le-r+\frac1{20t^2}+\frac{16}{15t}+\frac1t+\frac dt+E(Q_m)\\
+&\le-r+\frac{d+3}{t}\le-\frac r2
+=-\frac18\log\frac{16}{15}.
+\end{aligned}
+$$
+
+这里 $t\ge1$，而 $E(Q_m)\le0$；最后用（358.11）的共同阈值。指数化即为（358.5）。固定正储备来自缺失素数区间的调和质量 $r$，不是来自有限素幂的负修正。
+
+为进一步明确修正项的边界，对任意实数 $Y>1$、整数 $K\ge1$，若 $m\ge\max_{p\le Y}z(p^K)$（空集最大值约定为零），则
+
+$$
+0\le-E(Q_m)
+\le\pi(Y)\frac{2^{-K-1}}{1-2^{-K-1}}+\frac{4}{3(Y-1)}.
+\tag{358.13}
+$$
+
+低素数的实际指数至少为 $K$，故以 $-\log(1-y)\le y/(1-y)$ 得第一项。高素数只对实际支撑求和，其指数至少为一，费用至多 $\frac43\sum_{p>Y}p^{-2}\le4/(3(Y-1))$。先取大 $Y$，再取大 $K$，最后取指标阈值，证明 $E(Q_m)\to0$。它的非正性可帮助有限上界，但它的消失不会供应（358.5）的固定缺口。$\square$
+
+**命题 358.3（秩预算的实际占位与 Euler 目标不同）。** 令 $c_n=\log\Psi_n$，则 $c_1=c_2=0$、$0\le c_n\le Ln$，并且对 $m\ge1$，
+
+$$
+J_m:=\sum_{n\le m}\frac{c_n}{n}
+=\sum_{\substack{p\ \mathrm{prime},\ k\ge1\\z(p^k)\le m}}
+\frac{\log p}{z(p^k)},\qquad
+|J_m-\kappa m|\le L(H_m+1)+H_m.
+\tag{358.14}
+$$
+
+若仅保留整数秩盒约束和实际总预算，定义放松目标
+
+$$
+\mathcal J(B)=\sup\left\{\sum_{n\ge3}x_n:
+0\le x_n\le L,\quad \sum_{n\ge3}nx_n\le B\right\},
+$$
+
+其中各和按非负级数理解，则
+
+$$
+\mathcal J(b_m)\sim\frac{L}{\sqrt{\zeta(2)}}m,
+\qquad
+\frac{J_m}{\mathcal J(b_m)}\longrightarrow\frac1{\sqrt{\zeta(2)}}<1.
+\tag{358.15}
+$$
+
+所以即使以固定比例接近这种放松的秩预算最大值，也不能据此认定实际 Fibonacci 占位最优，更不能认定 Robin Euler 乘积最优。
+
+**证明。** （358.3）给 $c_n=\sum_{p,k:z(p^k)=n}\log p$，以及 $\Psi_n\mid F_n$，后者和 $F_n\le\Phi^{n-1}$ 给盒约束。按有限首现层分组得（358.14）的等式。经典公式 $\varphi(n)/n=\sum_{d\mid n}\mu(d)/d$ 给
+
+$$
+\left|\sum_{n\le m}\frac{\varphi(n)}n-\frac{m}{\zeta(2)}\right|
+\le H_m+1:
+$$
+
+取整误差至多 $\sum_{d\le m}1/d$，补齐 $\sum\mu(d)/d^2$ 的尾误差至多一。再将（358.4）的每层误差乘 $1/n$ 相加，得到 $J_m$ 的误差。
+
+为核对放松的渐近而不把放松极值当作实际可实现值，令 $C_h=L\sum_{n=3}^h n$（整数 $h\ge2$，$C_2=0$）。当 $C_h\le B<C_{h+1}$ 时，经典分数背包填充 $x_3=\cdots=x_h=L$、$x_{h+1}=(B-C_h)/(h+1)$，其余为零。这个点达到上界：以价格 $\lambda=1/(h+1)$，对每个可行点逐项有
+
+$$
+\sum_{n\ge3}x_n
+\le\lambda B+L\sum_{3\le n<h+1}(1-\lambda n).
+$$
+
+正收益的秩只有有限多个，故该界同样覆盖无限可行点；所给填充达到等号。于是 $h\sim\sqrt{2B/L}$、$\mathcal J(B)\sim\sqrt{2LB}$。用 $b_m\sim\kappa m^2/2$ 和 $J_m\sim\kappa m$ 得（358.15）。这是 §353.6 的同一经典放松优化，对每个 $m\ge1$，实际前缀在指标 $n\ge3$ 上给出可行点 $x_n^{(m)}=c_n/n$（$3\le n\le m$）、$x_n^{(m)}=0$（$n>m$），满足盒约束 $0\le x_n^{(m)}\le L$，且有限成本 $\sum_{n\ge3}nx_n^{(m)}=b_m$、收益 $\sum_{n\ge3}x_n^{(m)}=J_m$；$m=1,2$ 时取零序列，因 $c_1=c_2=0$，上述等式仍成立。
+
+上述目标对同一素数的每个首现素幂分别收费 $\log p/z(p^k)$；Robin 的饱和支撑目标却是
+
+$$
+A(Q_m)=\sum_{z(p)\le m}-\log(1-1/p),
+$$
+
+每个素数只出现一次，较高素幂只通过实际截断修正 $E(Q_m)$ 影响 $\sigma(Q_m)/Q_m$。例如 $z(2)=3$、$z(4)=z(8)=6$，而 $\Psi_6=4$：秩六有两份 $\log2$ 的素幂质量，radical 在秩六却没有新增二方向。由 $F_1,\ldots,F_6=1,1,2,3,5,8$ 直接核对这些数值。故 radical 分配、素幂分配以及两种收益权重不能相互替换。$\square$
+
+式（358.5）只处理这个实际 lcm 前缀族最终越过 $5040$ 后的固定严格 Robin 缺口；$5040$ 在这里是 Robin 的整数阈值，没有由拓扑数字七或 Fibonacci 巧合来证明它的特殊性。该族结论不推出任意整数的 Robin 不等式或 RH，不给出新的数值认证区间，也不确定此族比值的精确极限。缺失素支撑机制与秩预算机制的连接成立，但二者的优化目标仍不同。
+
+## 追加锚（本行以下为增补区）
+## 359. 三次 Clifford 叶积窗口的共同来源正规形与实际像
+
+**定义 359.1（正叶词、状态代表与整数部分）。** 仍令
+$\mathcal T$ 为全部自由有序非空二叉树，叶为 $\alpha,\beta$，左右次序和括号均属于原树的相等关系。把 $a,b$ 分别作为 $\alpha,\beta$ 的字母记号。每个非空树有唯一保序叶词；反过来，每个非空正词的每一种有序二叉括号化都是一个实际来源。空词只在代数计算中表示空积，不属于来源域。
+
+沿用 §§355–357 的 Clifford 代数关系
+$$
+ A^2=1,\qquad B^2=-1,\qquad AB+BA=1,
+$$
+并置
+$$
+ S=BA,\qquad D=A+B.
+$$
+定义三个叶积三元组
+$$
+ g=(A,B,S),\qquad h=(B,S,D),
+$$
+以及四个状态代表
+$$
+\begin{aligned}
+ R_{00}&=(1,1,1),& R_{10}&=g,\\
+ R_{01}&=h,& R_{11}&=gh=(-S^{-1},-A,S^3A).
+\end{aligned}
+$$
+对 $u,v,w\in\mathbb Z$，定义
+$$
+ L(u,v,w)=\bigl((-1)^vS^{2u},\;(-1)^wS^{2v},\;(-1)^uS^{2w}\bigr).
+$$
+三元组的乘法逐坐标进行。
+
+**引理 359.2（偶部关系与状态右乘表）。** 在上述代数中
+$$
+ S^2=S+1,\qquad S^{-1}=S-1,\qquad ASA=AB=1-S=-S^{-1},
+$$
+且 $D=S^2A$。因此 $S$ 是可逆元，并且
+$$
+ AS^n=(-1)^nS^{-n}A\qquad(n\in\mathbb Z).
+$$
+若在状态 $(p,q)\in\{0,1\}^2$ 右乘 $g$ 或 $h$，所得状态和整数增量如下；表中的增量 $(\Delta u,\Delta v,\Delta w)$ 定义为
+$R_{pq}g^{\,\text{或}\,h}=L(\Delta u,\Delta v,\Delta w)R_{p'q'}$。
+
+| 当前状态 | 右乘 | 下一状态 | $(\Delta u,\Delta v,\Delta w)$ |
+|---|---|---|---|
+| $00$ | $a$ | $10$ | $(0,0,0)$ |
+| $00$ | $b$ | $01$ | $(0,0,0)$ |
+| $10$ | $a$ | $00$ | $(0,0,1)$ |
+| $10$ | $b$ | $11$ | $(0,0,0)$ |
+| $01$ | $a$ | $11$ | $(1,1,-1)$ |
+| $01$ | $b$ | $00$ | $(0,1,0)$ |
+| $11$ | $a$ | $01$ | $(-1,-1,0)$ |
+| $11$ | $b$ | $10$ | $(0,-1,0)$ |
+
+**证明。** 由 $S=BA$、$AB+BA=1$ 和 $B^2=-1$，有
+$$
+S^2=B(AB)A=B(1-S)A=S-BSA=S+1,
+$$
+因为 $BSA=B(BA)A=B^2A^2=-1$。于是 $S(S-1)=1$，并且
+$ASA=A(BA)A=AB=1-S$。再由 $AS=-S^{-1}A$ 归纳得到整数次幂公式；负指数由可逆性给出。最后
+$S^2A=(S+1)A=SA+A=B+A=D$。
+
+把 $R_{00},R_{10},R_{01},R_{11}$ 的三坐标分别右乘 $g,h$，在每一坐标使用上述恒等式，逐项得到表。例如
+$$
+R_{01}g=(S,SB,-B)=L(1,1,-1)R_{11},
+$$
+其余七行完全相同地由 $AS^n=(-1)^nS^{-n}A$ 化简。 $\square$
+
+**定理 359.3（完整实际三窗口像的唯一正规形）。** 令 $W_3(t)=(E(t),E(\rho t),E(\rho^2t))$。一个三元组 $\Xi$ 属于全部实际非空原树的 $W_3$ 像，当且仅当存在唯一
+$$
+(u,v,w,p,q)\in\mathbb Z^3\times\{0,1\}^2
+$$
+使
+$$
+\Xi=L(u,v,w)R_{pq}.
+\tag{359.1}
+$$
+因此每个实际三元组同时具有唯一的三个整数参数和唯一的四状态参数；状态满足
+$p\equiv\#\alpha\pmod2$、$q\equiv\#\beta\pmod2$。
+
+**证明。** 原替换保持叶序二元构造，故对叶词连接有
+$$
+W_3(xy)=W_3(x)W_3(y)
+$$
+逐坐标成立。对任意原树作结构归纳，观察只由其保序叶词的 $g,h$ 乘积决定；括号仍作为原树数据保留。引理 359.2 的表因此按词长归纳给出：每个实际词都唯一地落在四个状态之一，并且其整数增量为各步增量之和。
+
+反过来，六个正词块和一个非空单位块的三窗口如下：
+
+| 整数增量 | 正词 |
+|---|---|
+| $(1,0,0)$ | $baba$ |
+| $(-1,0,0)$ | $abab$ |
+| $(0,1,0)$ | $bb$ |
+| $(0,-1,0)$ | $abaaba$ |
+| $(0,0,1)$ | $aa$ |
+| $(0,0,-1)$ | $babbab$ |
+| $(0,0,0)$ | $aababbab$ |
+
+直接套用表或相乘可得这些窗口分别是对应的 $L$，并且最后一个词的窗口是 $(1,1,1)$。由于 $L(u,v,w)L(u',v',w')=L(u+u',v+v',w+w')$，按 $u,v,w$ 的符号重复相应块，再在末尾接上 $a,b,ab$ 中与 $(p,q)=(1,0),(0,1),(1,1)$ 对应的状态代表，就得到 (359.1) 的正叶词来源。若全部整数块和状态代表都省略，则使用八叶词 $aababbab$，所以不引入空来源。
+
+更具体地，该构造的组成是
+$$
+\left(
+2|u|+4\max(-v,0)+2|w|+p,
+2|u|+2|v|+4\max(-w,0)+q
+\right),
+$$
+而全省略情形的组成是 $(4,4)$。因此负整数参数也由非空正词实现，负幂只出现在代数记号中。
+
+最后证明唯一性。等级对合给出三坐标的奇偶等级：$L$ 的每个坐标均为偶，四个 $R_{pq}$ 的等级模式分别为
+$$
+(0,0,0),\ (1,1,0),\ (1,0,1),\ (0,1,1).
+$$
+故相等三元组先迫使 $(p,q)$ 相同。右消去同一状态代表后，比较 $L$ 的三个坐标。偶子代数以基 $1,S$ 表示，关系为 $S^2-S-1=0$；将 $S$ 取为正根
+$\varphi=(1+\sqrt5)/2>1$，则每个坐标的绝对值分别为
+$\varphi^{2u},\varphi^{2v},\varphi^{2w}$，符号分别记录 $v,w,u$ 的模二值。三坐标依次迫使 $u,v,w$ 全部相等，唯一性成立。 $\square$
+
+**推论 359.4（逐分量的显式联合检验）。** 设候选三元组的三个分量已经各自写成唯一形式
+$$
+\Xi_\nu=(-1)^{\varepsilon_\nu}S^{k_\nu}A^{e_\nu},
+\qquad \varepsilon_\nu\in\{0,1\},\ k_\nu\in\mathbb Z,\ e_\nu\in\{0,1\}.
+$$
+它属于实际 $W_3$ 像，当且仅当
+$$
+ p=e_1,\qquad q=e_2,\qquad e_0\equiv p+q\pmod2,
+$$
+并且
+$$
+\begin{aligned}
+ u&=\frac{k_0-q+2pq}{2},&
+ v&=\frac{k_1-p-q+2pq}{2},&
+ w&=\frac{k_2-p-2q}{2}
+\end{aligned}
+\tag{359.2}
+$$
+都是整数，且
+$$
+\varepsilon_0\equiv v+pq,\qquad
+\varepsilon_1\equiv w+pq,\qquad
+\varepsilon_2\equiv u
+\pmod2.
+\tag{359.3}
+$$
+
+**证明。** 四个状态代表的右侧 $S^kA^e$ 指数偏移依次为
+$$
+(k_0,k_1,k_2)=(0,0,0),\ (0,1,1),\ (1,1,2),\ (-1,0,3)
+$$
+对应 $00,10,01,11$，而前两个坐标在状态 $11$ 还各有一个负号。将这些偏移与 $L(u,v,w)$ 相加，得到
+$$
+\begin{aligned}
+ k_0&=2u+q-2pq,& k_1&=2v+p+q-2pq,& k_2&=2w+p+2q,\\
+ \varepsilon_0&\equiv v+pq,&
+ \varepsilon_1&\equiv w+pq,&
+ \varepsilon_2&\equiv u\pmod2.
+\end{aligned}
+$$
+反解即为 (359.2)–(359.3)。 $\square$
+
+**命题 359.5（实际正像中的非分裂有限商）。** 令
+$$
+X=L(1,0,0),\qquad Y=L(0,1,0),\qquad Z=L(0,0,1),
+$$
+并令 $H=\langle g,h\rangle$ 为三元组单位所生成的群。则
+$$
+N=\langle X,Y,Z\rangle\cong\mathbb Z^3
+$$
+在 $H$ 中正规，且
+$$
+1\longrightarrow N\longrightarrow H\longrightarrow(\mathbb Z/2\mathbb Z)^2\longrightarrow1
+$$
+不分裂。其四个陪集代表为 $1,g,h,gh$。
+
+**证明。** 由三坐标直接相乘，$X,Y,Z$ 交换，并且右正规形的唯一性表明 $N$ 是秩三自由阿贝尔群。同一定义给出
+$$
+ g^2=Z,\qquad h^2=Y,\qquad (gh)^2=X^{-1}.
+$$
+共轭关系为
+$$
+\begin{aligned}
+ gXg^{-1}=X^{-1},&\quad gYg^{-1}=Y^{-1},&\quad gZg^{-1}=Z,\\
+ hXh^{-1}=X^{-1},&\quad hYh^{-1}=Y,&\quad hZh^{-1}=Z^{-1}.
+\end{aligned}
+$$
+所以 $N$ 正规。在商中 $g,h,gh$ 的平方均为单位，故 $g,h$ 是交换的对合，商至多有四个元；四个代表的等级模式互异，商恰为四元初等阿贝尔群。共轭 $gh$ 对 $X$ 保持，对 $Y,Z$ 反演。对任意 $n=X^rY^sZ^t$，使用
+$(nR)^2=n(RnR^{-1})R^2$，得到
+$$
+(ng)^2=Z^{2t+1},\qquad (nh)^2=Y^{2s+1},\qquad (ngh)^2=X^{2r-1}.
+$$
+三个指数均为非零奇数，故这三个平方都是 $N$ 的非单位元。由于 $N$ 无挠，三个非平凡陪集中的每个元素也有无限阶，因而 $H$ 无挠。若扩张分裂，四元商的非单位对合会给出 $H$ 中的二阶元，矛盾。
+
+与成熟群结构的具体对应使用 Gardam，arXiv:2102.11818v1，§§2、3.1 的 Hantzsche–Wendt、Promislow（Fibonacci $F(2,6)$）群 $P$。该文的生成元 $a,b$ 对应本段的 $g,h$，而其平方生成元的字典为
+$$
+ x=a^2\longmapsto Z,\qquad
+ y=b^2\longmapsto Y,\qquad
+ z=(ab)^2\longmapsto X^{-1}.
+$$
+该文采用右共轭 $s^t=t^{-1}st$；核上的各共轭作用都是对合，所以与本段的左共轭表给出同一作用。以 $00,10,01,11$ 为行列次序，取两边截面分别为 $1,a,b,ab$ 和 $1,g,h,gh$。原文的因子系
+$f(\eta,\theta)=\sigma_\eta\sigma_\theta\sigma_{\eta+\theta}^{-1}$ 经上述字典，逐项成为本段的
+$F(\eta,\theta)=R_\eta R_\theta R_{\eta+\theta}^{-1}$：
+
+| $F(\eta,\theta)$ | $00$ | $10$ | $01$ | $11$ |
+|---|---|---|---|---|
+| $00$ | $1$ | $1$ | $1$ | $1$ |
+| $10$ | $1$ | $Z$ | $1$ | $Z$ |
+| $01$ | $1$ | $XYZ^{-1}$ | $Y$ | $XZ^{-1}$ |
+| $11$ | $1$ | $X^{-1}Y^{-1}$ | $Y^{-1}$ | $X^{-1}$ |
+
+该文的核 $\langle x,y,z\rangle\cong\mathbb Z^3$ 与四个陪集给出唯一正规形
+$x^iy^jz^k\sigma_{pq}$。将其送到
+$$
+ x^iy^jz^k\sigma_{pq}\longmapsto L(-k,j,i)R_{pq}
+ \qquad(i,j,k\in\mathbb Z)
+$$
+时，核上作用与上表因子系一致，故正规形的乘法被保持。两边正规形唯一，且整数坐标变换 $(i,j,k)\mapsto(-k,j,i)$ 是双射，因此这是实际群同构。这里使用的是群本身的正规形，不把该文的群环单位结论移植到 Clifford 叶积。 $\square$
+
+## 360. 单个实际历史纤维的八边消元与 Euler 充要判据
+
+**定义 360.1（四状态边图与固定历史）。** 固定一个实际目标
+$$
+\Omega=L(u,v,w)R_{pq}
+$$
+及其唯一参数。四个状态为 $00,10,01,11$，分别对应 $R_{00},R_{10},R_{01},R_{11}$。把表 359.2 的八条转移视为带字母的有向边：
+$$
+\begin{array}{llll}
+ x_{00}:00\xrightarrow{a}10,&x_{10}:10\xrightarrow{a}00,&
+ x_{01}:01\xrightarrow{a}11,&x_{11}:11\xrightarrow{a}01,\\
+ y_{00}:00\xrightarrow{b}01,&y_{01}:01\xrightarrow{b}00,&
+ y_{10}:10\xrightarrow{b}11,&y_{11}:11\xrightarrow{b}10.
+\end{array}
+$$
+这里下标是出发状态。对组成 $(a_c,b_c)\in\mathbb N^2$ 且 $a_c+b_c\ge1$，定义
+$$
+ X=\frac{a_c-p-2w+2u}{4},\qquad
+ Y=\frac{b_c-q-2u+2v}{4}.
+\tag{360.1}
+$$
+
+**定理 360.2（固定组成和单个历史纤维的充要条件）。** 存在实际非空原树 $t$ 满足
+$$
+W_3(t)=\Omega,\qquad c(t)=(a_c,b_c),
+$$
+当且仅当下列条件同时成立：
+
+1. $X,Y$ 是整数；
+2. 八个边重数
+$$
+\begin{aligned}
+ x_{00}&=X+w-u+p,& x_{10}&=X+w,& x_{01}&=X,& x_{11}&=X-u,\\
+ y_{00}&=Y+u+q(1-p),& y_{01}&=Y,& y_{10}&=Y-v+pq,& y_{11}&=Y+u-v
+\end{aligned}
+\tag{360.2}
+$$
+全为非负整数；
+3. 忽略方向后，所有正重数边的端点与起点 $00$ 构成一个弱连通图。
+
+这三个条件是单个实际历史纤维在指定组成下的完整算术判据；它们允许 $a_c=0$ 或 $b_c=0$，但不允许空来源。
+
+**证明。** 对任意实际正词，从状态 $00$ 出发读取表 359.2。若各类边的使用次数为上述八个数，则累计增量为
+$$
+ u=x_{01}-x_{11},\qquad
+ v=x_{01}-x_{11}+y_{01}-y_{11},\qquad
+ w=x_{10}-x_{01}.
+\tag{360.3}
+$$
+路径在四个顶点的出度减入度等于
+$\mathbf1_{\{\text{顶点}=00\}}-\mathbf1_{\{\text{顶点}=(p,q)\}}$。令 $X=x_{01}$、$Y=y_{01}$，由 (360.3) 和三个独立顶点流量方程依次得到
+$$
+\begin{aligned}
+ x_{11}&=X-u,&x_{10}&=X+w,&y_{11}&=Y+u-v,\\
+ y_{10}&=Y-v+pq,&x_{00}&=X+w-u+p,&
+ y_{00}&=Y+u+q(1-p).
+\end{aligned}
+$$
+这正是 (360.2)，所以八数非负是必要条件。再求和得到
+$$
+ a_c=4X+2w-2u+p,\qquad b_c=4Y+2u-2v+q,
+$$
+即 (360.1)；整数性和弱连通性也由同一条实际路径立即得到。
+
+反设 (360.1)–(360.2) 成立。把八个数作为四顶点有向多重图的边重数。直接代入可验证四个顶点的出入差正是起点 $00$ 与终点 $(p,q)$ 的差，并且边总数为 $a_c+b_c\ge1$。若终点不同于起点，临时添一条从 $(p,q)$ 指向 $00$ 的辅助边；若两者相同则不添。加入后，有效支撑上的每个顶点入度等于出度，且弱连通。
+
+从 $00$ 沿未使用出边行走。平衡性保证一旦回到已经出发的顶点之外，不会在别的顶点耗尽而停下；有限性保证所得闭迹有限。删去这条闭迹后，剩余图仍在每个顶点平衡。若仍有未用边，弱连通性保证已得闭迹的某个顶点与剩余支撑相接，从该接点再取闭迹并插入。有限次插入覆盖全部边，得到使用每条边的 Euler 闭迹。若曾加入辅助边，从辅助边之后切开并删去该边，便得到从 $00$ 到 $(p,q)$ 的 Euler 路。
+
+将这条路的边标签读成正叶词，得到组成 $(a_c,b_c)$，而表 359.2 保证累计参数正是 $(u,v,w)$，故窗口为 $\Omega$。对该词取任意有序二叉括号化，均得到实际原树；相反，任一满足条件的原树都给出一条这样的路径。因此全部来源没有遗漏，连通条件也不能删去。 $\square$
+
+**推论 360.3（组成、叶序与括号的精确回接）。** 在定理 360.2 的条件下，固定组成的该历史纤维的全部叶词，恰为具有 (360.2) 八种边次数、从 $00$ 到 $(p,q)$ 的全部有向 Euler 路的字母序列；平行边的人工编号被忽略。全部实际原树恰为这些非空叶词的全部有序二叉括号化。
+
+**证明。** 定理 360.2 的正向部分把任一来源送到一条满足次数的路径，反向部分从每条 Euler 路构造正词；状态路径决定字母次序。观察对叶序乘法结合，而原树语法保留每一种左右括号，所以恰得到所述来源集合。 $\square$
+
+**推论 360.4（单位历史纤维）。** 观察单位
+$$
+\Omega=(1,1,1)=L(0,0,0)R_{00}
+$$
+的组成集合恰为
+$$
+\{(4r,4s):r,s\ge1\}.
+\tag{360.4}
+$$
+对每个 $r,s\ge1$，正词
+$$
+\omega_{r,s}=a^{2r-1}b^{2s}ab^{2s-1}a^{2r}b
+\tag{360.5}
+$$
+给出一个单位来源，且其组成是 $(4r,4s)$。
+
+**证明。** 在 (360.2) 中代入 $u=v=w=p=q=0$，得到四条 $a$ 边的次数全为 $X=a_c/4$，四条 $b$ 边的次数全为 $Y=b_c/4$。当 $X,Y>0$ 时支撑是完整四边形，连通条件成立；当恰有一个为零时，支撑分成两个互不相连的二边回路；二者均不满足定理 360.2，且 $X=Y=0$ 是空来源。因此组成恰为 (360.4)。
+
+为验证 (360.5)，置 $Z_0=L(0,0,1)=g^2$、$Y_0=L(0,1,0)=h^2$。由表 359.2 直接得到
+$$
+ gY_0g^{-1}=Y_0^{-1},\qquad hZ_0h^{-1}=Z_0^{-1},\qquad Z_0Y_0=Y_0Z_0.
+$$
+于是 (360.5) 的前半段和后半段分别为
+$$
+\begin{aligned}
+ g^{2r-1}h^{2s}g
+ &=Z_0^{r-1}(gY_0^sg^{-1})g^2=Z_0^rY_0^{-s},\\
+ h^{2s-1}g^{2r}h
+ &=Y_0^{s-1}(hZ_0^rh^{-1})h^2=Y_0^sZ_0^{-r}.
+\end{aligned}
+$$
+由 $Z_0,Y_0$ 交换，两段乘积为单位；字母计数给出 $(4r,4s)$。 $\square$
+
+**推论 360.5（每个固定历史纤维的组成差集）。** 对任意一个非空实际历史纤维 $\mathcal F_\Omega$，其组成差集恰为
+$$
+\{c(t')-c(t):t,t'\in\mathcal F_\Omega\}=4\mathbb Z^2.
+\tag{360.6}
+$$
+
+**证明。** 由定理 357.3，同一 $W_3$ 的两个来源具有相同的组成模四，所以左侧包含于 $4\mathbb Z^2$。另一方面，取纤维中的任一来源 $t$，把 (360.5) 的树按叶序接在其右侧；观察乘以单位，仍在同一历史纤维，而组成增加任意 $(4r,4s)$，其中 $r,s\ge1$。给定任意 $(4m,4n)$，选取正整数 $r_1,r_2,s_1,s_2$ 使 $r_1-r_2=m$、$s_1-s_2=n$，则两次右接所得来源的组成差为该向量。故反向包含也成立。这个结论是每个固定纤维内部的差集，不是跨不同历史纤维取并。 $\square$
+
+**命题 360.6（联合来源的尖锐边界）。** 三个分量分别可实现、并且满足旧的有限字符与等级条件，并不足以保证共同来源。具体地，正词 $\omega=aababbab$ 给出
+$$
+W_3(\omega)=(1,1,1),
+$$
+而正词 $v=ababaa$ 给出
+$$
+W_3(v)=(S^{-2},-1,-S^2).
+$$
+因此候选三元组 $(1,1,-S^2)$ 的三个坐标各有实际正来源，前两个还由同一个来源共同实现，但候选三元组本身不在实际像中。
+
+**证明。** 两个具体乘积由表 359.2 或直接使用 $A^2=1,B^2=-1,AB+BA=1$ 得到。若 $(1,1,-S^2)$ 属于实际像，推论 359.4 先由前两个坐标的奇偶得到 $p=q=0$，由前两个坐标的指数和符号分别得到 $u=v=0$ 且 $w$ 为偶数，于是第三坐标只能是 $S^{4m}$，不可能为 $-S^2$。等价地，(359.1) 的唯一性直接排除该三元组。
+
+更精确地，完整截面满足
+$$
+(1,1,z)\text{ 属于实际像}
+\quad\Longleftrightarrow\quad
+z=S^{4m}\quad(m\in\mathbb Z).
+\tag{360.7}
+$$
+其中 $m>0$ 由 $a^{4m}$ 实现，$m=0$ 由 $\omega$ 实现，$m<0$ 由正词 $(bbabaab)^{-4m}$ 实现；这里指数均表示正整数次重复。 $\square$
+
+**命题 360.7（流量条件不能替代支撑连通）。** 在单位历史纤维中，组成 $(4,0)$ 使 (360.1)–(360.2) 给出八个非负整数且所有流量方程成立，但其正重数支撑是两个不相接的二边回路，因而不存在该组成的实际来源。
+
+**证明。** 此时 $X=1,Y=0$，四条 $a$ 边均有重数一，四条 $b$ 边均为零。$00\leftrightarrow10$ 与 $01\leftrightarrow11$ 是两个不同连通分量；定理 360.2 的连通条件失败。 $\square$
+
+数学范围与文献：Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1、2.3，提供这里沿用的 Clifford 平方约定、极化关系和保持乘法次序的等级对合；Gardam，*A counterexample to the unit conjecture for group rings*，arXiv:2102.11818v1，§§2、3.1，提供命题 359.5 所指的 Hantzsche–Wendt/Promislow 群结构。§§355–357 的六周期、等级、模五字符、模四恢复和完整历史同纤维关系作为既有前置使用。本文新增的是这些既有关系在实际有序正原树上的三窗口联合正规形、正来源构造、单纤维八边消元与 Euler 充要判据；不把成熟群结构或群环单位结论冒称为本卷原创，也不把不同括号的原树识别为同一来源。
+
+## 追加锚（本行以下为增补区）
+
+## 361. 任意 Fibonacci 指标删除与实际对数截止下的共同 Robin 包络
+
+以下为普通数学的定义与证明，未作内核形式化。完整结论是本卷实际 Fibonacci 关系与所引经典供给的仓内综合推导，不主张文献优先权。
+
+**定义 361.1（选定指标、实际整数与比值）。** 沿用实际递推 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi$。对整数 $m\ge1$ 和集合 $S\subseteq\{1,\ldots,m\}$，定义
+
+$$
+\begin{aligned}
+K&=|S|,& H_m&=\sum_{j=1}^m\frac1j,\\
+D(S)&=\{d\in\mathbb N_{>0}:\exists n\in S,\ d\mid n\},&
+M(S)&=\operatorname{lcm}\{F_n:n\in S\},\qquad b(S)=\log M(S).
+\end{aligned}
+\tag{361.1}
+$$
+
+空集的最小公倍数取一。所有对数均为自然对数；对实数 $a$ 和 $t>0$，实幂的约定是 $t^a=\exp(a\log t)$。对 $M>5040$，定义归一化 Robin 比值
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},\qquad
+\sigma(M)=\sum_{d\mid M}d,
+\tag{361.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。此定义只在所示整数尾部使用。
+
+**定理 361.2（任意子集的共同最终 Robin 包络）。** 固定实参数
+
+$$
+\frac56<\beta\le1,\qquad
+\max\left(\frac12,\frac1{2\beta}\right)<\eta<\frac35,
+\qquad c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad C_{\beta,\eta}=(2\beta\eta)^{-c(\eta)}.
+\tag{361.3}
+$$
+
+则 $0<C_{\beta,\eta}<1$，而且精确量词为
+
+$$
+\begin{gathered}
+\forall\varepsilon\in\mathbb R_{>0}\ \exists m_0\in\mathbb N_{\ge2}\\
+\ \forall m\in\mathbb N_{\ge m_0}\ \forall S\subseteq\{1,\ldots,m\},\\
+|S|\ge m^\beta\quad\Longrightarrow\quad
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le C_{\beta,\eta}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.4}
+$$
+
+$m_0$ 仅依赖先已固定的 $\beta,\eta,\varepsilon$ 及证明中的固定解析供给，不依赖 $m$ 或 $S$。特别地，对每个固定 $\beta\in(5/6,1]$，可先选一个满足（361.3）的 $\eta$，再取共同整数阈值，使所有 $|S|\ge m^\beta$ 的子集同时满足 $\mathcal R(M(S))<1$。式（361.4）是带任意正误差的上包络，不断言最终有 $\mathcal R(M(S))\le C_{\beta,\eta}$。
+
+同一定理还给出以下两种尾部结论。若任意集合族 $S_m\subseteq\{1,\ldots,m\}$ 在某个尾部有 $K_m=|S_m|>0$，并且
+
+$$
+\frac{\log K_m}{\log m}\longrightarrow1,
+\tag{361.5}
+$$
+
+则 $M(S_m)>5040$ 最终成立，且
+
+$$
+\limsup_{m\to\infty}\mathcal R(M(S_m))
+\le\left(\frac{10}{11}\right)^{5/18}<1.
+\tag{361.6}
+$$
+
+更确切地，给定任意固定函数 $g:\{2,3,\ldots\}\to[0,\infty)$，满足 $g(m)\to0$，则对每个 $\varepsilon>0$，存在整数 $m_0(g,\varepsilon)\ge2$，使所有 $m\ge m_0(g,\varepsilon)$ 及所有 $S\subseteq\{1,\ldots,m\}$ 同时满足
+
+$$
+\begin{gathered}
+|S|\ge m^{1-g(m)}\quad\Longrightarrow\\
+\bigl(M(S)>5040\ \text{且}\quad
+\mathcal R(M(S))\le\left(\frac{10}{11}\right)^{5/18}+\varepsilon\bigr).
+\end{gathered}
+\tag{361.7}
+$$
+
+允许（361.5）的族在有限初段任意取值；（361.6）的对数与比值只在最终合法的尾部使用。式（361.7）的共同阈值依赖给定的函数 $g$，不宣称存在一个阈值同时适用于所有仅有（361.5）而无收敛速率的族。参数范围 $\beta>5/6$ 是下面 KR 路线的充分条件，不宣称它锐利、必要或已涵盖等号 $\beta=5/6$。
+
+**证明。** *实际首现秩与任意子集的乘积。* 对每个整数 $a\ge2$，矩阵
+
+$$
+B=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+B^n=\begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}\quad(n\ge1)
+$$
+
+在 $\mathbb Z/a\mathbb Z$ 上可逆，因为其行列式是 $-1$。有限群中某个正幂为单位矩阵，所以存在正指标 $n$ 满足 $a\mid F_n$。令 $z(a)$ 为最小这样的正指标。§358 证明内由加法公式和指标的 Euclid 递降核对的经典强整除律是
+
+$$
+\gcd(F_r,F_s)=F_{\gcd(r,s)}\quad(r,s\ge1).
+$$
+
+若 $a\mid F_n$，则 $a\mid F_{\gcd(n,z(a))}$，而这个正指标不超过 $z(a)$，最小性迫使 $\gcd(n,z(a))=z(a)$。反向使用 $z(a)\mid n\Rightarrow F_{z(a)}\mid F_n$。因此
+
+$$
+a\mid F_n\quad\Longleftrightarrow\quad z(a)\mid n.
+\tag{361.8}
+$$
+
+对素数 $p$，记 $r_j=z(p^j)$（$j\ge1$）；由（361.8）有 $r_j\mid r_{j+1}$。在正有理数中定义 $\Psi_d=\prod_{e\mid d}F_e^{\mu(d/e)}$，其中 $\mu$ 为 Möbius 函数。对固定 $p,d$，
+
+$$
+\begin{aligned}
+v_p(F_e)&=\sum_{j\ge1}\mathbf1_{r_j\mid e},\\
+v_p(\Psi_d)
+&=\sum_{e\mid d}\mu(d/e)\sum_{j\ge1}\mathbf1_{r_j\mid e}
+=\sum_{\substack{j\ge1\\r_j\mid d}}\quad
+\sum_{r_j\mid e\mid d}\mu(d/e)
+=\sum_{j\ge1}\mathbf1_{r_j=d}.
+\end{aligned}
+\tag{361.9}
+$$
+
+凡参与交换的 $j$ 都有 $p^j\mid F_d$，故交换的非零项有限。内层 Möbius 和等于 $\sum_{h\mid d/r_j}\mu(h)$。每个有理数赋值非负，故 $\Psi_d$ 是正整数，$\log\Psi_d\ge0$。重复秩在（361.9）中保留重数；例如 $z(2)=3$、$z(4)=z(8)=6$，给 $v_2(\Psi_6)=2$ 和 $\Psi_6=4$。
+
+对同一个选定集合 $S$，正整数 lcm 的赋值满足 $v_p(M(S))=\max(\{v_p(F_n):n\in S\}\cup\{0\})$。$r_j\in D(S)$ 当且仅当某个 $n\in S$ 满足 $p^j\mid F_n$。这些 $j$ 恰为初段 $1,\ldots,v_p(M(S))$。于是
+
+$$
+\sum_{d\in D(S)}v_p(\Psi_d)
+=\#\{j\ge1:r_j\in D(S)\}=v_p(M(S)),
+\qquad
+M(S)=\prod_{d\in D(S)}\Psi_d.
+\tag{361.10}
+$$
+
+最后一步用正整数的唯一素分解，空集时两侧均为一。这里没有假设原子两两互素；例如 $\Psi_3=2$ 与 $\Psi_6=4$ 已否定这种假设。经典强整除序列的 lcm 增量重构参见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；正 Fibonacci 项满足该文非零 gcd-domain 条件。上面用实际素幂秩写出此消费者所需的任意子集版本，以免把不同首次秩的集合大小误当素幂重数。
+
+*Binet 误差与内部有限增长界。* 令 $q=\Phi^{-2}\in(0,1)$。Binet 公式给
+
+$$
+\log F_e=eL-\tfrac12\log5+\epsilon_e,
+\qquad \epsilon_e=\log(1-(-q)^e),
+\qquad (1-q)^2=q.
+$$
+
+由于 $|\log(1-t)|\le |t|/(1-|t|)$（$|t|<1$），
+
+$$
+\sum_{e\ge1}|\epsilon_e|
+\le\sum_{e\ge1}\frac{q^e}{1-q^e}
+\le\frac1{1-q}\sum_{e\ge1}q^e
+=\frac{q}{(1-q)^2}=1.
+$$
+
+$n>1$ 时 Möbius 反演消去常数项，并用 $\sum_{e\mid n}e\mu(n/e)=\varphi(n)$，得到 $|\log\Psi_n-L\varphi(n)|\le1$。$n=1$ 时 $\Psi_1=1$，误差为 $L<1$，同样成立。原子的整性、正性、Fibonacci 因式分解和 $\log\Psi_n=L\varphi(n)+O(1)$ 的文献背景为 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（4）及 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)；该文的 $\Phi_n$ 与这里的 $\Psi_n$ 由因式分解及 Möbius 反演对应。显示误差一由上述计算承担，不归因于其 $O(1)$ 陈述。
+
+由 $S\subseteq D(S)$、（361.10）和非负原子对数，
+
+$$
+b(S)\ge\sum_{n\in S}\log\Psi_n
+\ge L\sum_{n\in S}\varphi(n)-K.
+\tag{361.11}
+$$
+
+为给这一式提供不依赖子集的显式有限下界，先展开真实的 reciprocal-totient 恒等式：
+
+$$
+\frac n{\varphi(n)}
+=\prod_{p\mid n}\left(1+\frac1{p-1}\right)
+=\sum_{d\mid n}\frac{\mu(d)^2}{\varphi(d)}.
+\tag{361.12}
+$$
+
+对每个 $d\ge1$，
+
+$$
+\frac{\varphi(d)^2}{d}
+=\prod_{p^a\parallel d}p^{a-2}(p-1)^2\ge\frac12.
+$$
+
+每个奇素数因子至少为一；唯一小于一的可能因子是 $p=2,a=1$，等于 $1/2$。故 $1/(d\varphi(d))\le\sqrt2\,d^{-3/2}$。把 $d=1$ 项精确取出，再作积分比较，得到收敛及常数
+
+$$
+\sum_{d\ge1}\frac1{d\varphi(d)}
+\le1+\sqrt2\sum_{d\ge2}d^{-3/2}
+\le1+\sqrt2\int_1^\infty t^{-3/2}\,dt
+=1+2\sqrt2<4.
+$$
+
+在（361.12）中除以 $n$，交换有限的约数和，因而
+
+$$
+\sum_{n\le m}\frac1{\varphi(n)}
+=\sum_{d\le m}\frac{\mu(d)^2}{d\varphi(d)}H_{\lfloor m/d\rfloor}
+\le4H_m.
+$$
+
+Cauchy–Schwarz 不等式给
+
+$$
+K^2\le
+\left(\sum_{n\in S}\varphi(n)\right)
+\left(\sum_{n\in S}\frac1{\varphi(n)}\right)
+\le4H_m\sum_{n\in S}\varphi(n).
+$$
+
+合并（361.11），并用递推归纳所得 $F_n\le\Phi^{n-1}$，证明内部有限界
+
+$$
+\frac{LK^2}{4H_m}-K\le b(S)
+\le L\sum_{n\in S}(n-1)
+\le LK(m-1)\le m^2.
+\tag{361.13}
+$$
+
+这包括 $S=\varnothing$ 或 $S\subseteq\{1,2\}$ 时的 $M(S)=1$，这些情形没有双重对数断言。任意 Lucas 子序列的对数 lcm 增长已有 Shigeki Akiyama、Florian Luca，*On the least common multiple of Lucas subsequences*，Acta Arithmetica **161.4** (2013)，327–349，[doi:10.4064/aa161-4-2](https://doi.org/10.4064/aa161-4-2)，§2，式（14）–（16），印刷页 330–331 的供给，原文明确不要求指标序列有任何算术条件。这里 $A=B=u_1=1$、$\gcd(A^2,B)=1$，其 $w_n=F_n$。增长与重构在本证明中均只充当实际 Robin 消费者的中间步骤。
+
+现在固定（361.3）的 $\beta,\eta$。由 $H_m\le1+\log m$，先有一个只依赖 $\beta$ 的阈值，保证 $m^\beta\ge8H_m/L$。凡 $K\ge m^\beta$ 且越过该阈值，（361.13）的 $-K$ 项便至多吸收一半二次项，所以
+
+$$
+\begin{gathered}
+b(S)\ge\frac{LK^2}{8H_m}\ge\frac{Lm^{2\beta}}{8H_m},\\
+\log b(S)\ge\lambda_m:=2\beta\log m-\log H_m+\log(L/8),
+\qquad b(S)\le m^2,\\
+\frac{\lambda_m}{\log m}\longrightarrow2\beta.
+\end{gathered}
+\tag{361.14}
+$$
+
+因此 $M(S)>5040$ 最终对这些子集统一成立；也得到 $\log\log M(S)\ge2\beta\log m-\log H_m+O(1)$，其中显示常数 $\log(L/8)$ 独立于 $S$。这里只是下界，没有断言每个 $K\ge m^\beta$ 的子集都有精确增长指数 $2\beta$。
+
+*固定大阶素数集与同一实际整数的缺失区间。* 在任何 $m,S$ 之前选定
+
+$$
+\frac1\eta<\alpha<2\beta,\qquad 0<\rho<c(\eta),
+\qquad
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix}.
+\tag{361.15}
+$$
+
+$T$ 是固定整矩阵，$\det T=1$、$\operatorname{tr}T=18>2$，特征值为 $\Phi^6,\Phi^{-6}$，且模二为单位矩阵，满足固定双曲 cat map 的条件。对任意素数 $p$，在 $n=z(p)$ 处有 $B^n=cI\pmod p$，因为 $F_n=0\pmod p$ 且 $F_{n+1}=F_{n-1}\pmod p$。行列式给 $c^2=(-1)^n$，所以 $B^{4n}=I$，$T^{2n}=B^{12n}=I$，从而
+
+$$
+\operatorname{ord}_p(T)\mid2z(p).
+\tag{361.16}
+$$
+
+这里 $\operatorname{ord}_p(T)$ 是 $\mathrm{SL}_2(\mathbb F_p)$ 中的阶；这个论证同样包括 $p=2,5$。
+
+Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，Communications in Mathematical Physics **222** (2001)，201–227，[作者 PDF，Theorem 14，印刷页 20，式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)，对固定双曲 cat map $A$、$1/2<\eta<3/5$ 给出
+
+$$
+\#\{p\le y:\operatorname{ord}_p(A)>y^\eta\}
+\ge c(\eta)\pi(y)+o(\pi(y)).
+$$
+
+原文阈值是 $y^\eta$。定义一个不随截止或子集改变的素数集合
+
+$$
+\mathcal P_\eta=\{p\text{ 为素数}:\operatorname{ord}_p(T)>p^\eta\},
+\qquad N_\eta(y)=\#\{p\in\mathcal P_\eta:p\le y\}.
+$$
+
+$p\le y$ 时 $p^\eta\le y^\eta$，故 KR 原文计数的集合包含于 $\mathcal P_\eta\cap[1,y]$。固定 $\rho<c(\eta)$ 后，其渐近余项给一个共同阈值，保证 $N_\eta(y)\ge\rho\pi(y)$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5），印刷页 9](https://arxiv.org/pdf/1002.0442v1)，给出
+
+$$
+\pi(y)\ge\frac y{\log y}\left(1+\frac1{\log y}\right)\quad(y\ge599),
+\qquad
+\pi(y)\le\frac y{\log y}\left(1+\frac{1.2762}{\log y}\right)\quad(y>1).
+$$
+
+所以可先固定 $X_{\eta,\rho}\ge599$，使所有实数 $y\ge X_{\eta,\rho}$ 都有
+
+$$
+N_\eta(y)\ge\rho\frac y{\log y}.
+\tag{361.17}
+$$
+
+这里没有使用 RH，也没有把存在阈值赋成已知数值。
+
+对充分大 $m$，令 $u=m^\alpha$，并对每个满足 $K\ge m^\beta$ 的实际子集取
+
+$$
+x=b=b(S)=\log M(S).
+\tag{361.18}
+$$
+
+由（361.14），先取共同阈值保证 $\lambda_m>\alpha\log m$、$e^{\lambda_m}>2973$、$u\ge X_{\eta,\rho}$，从而对所有这些 $S$ 同时有 $u<b$、$b\ge2973$。再令共同阈值满足 $m^{\alpha\eta-1}>2$，这是因为 $\alpha\eta>1$。于是每个
+
+$$
+p\in\mathcal A_{m,S}:=\mathcal P_\eta\cap(u,b]
+$$
+
+都由（361.16）满足
+
+$$
+z(p)\ge\tfrac12\operatorname{ord}_p(T)
+>\tfrac12p^\eta>\tfrac12m^{\alpha\eta}>m.
+\tag{361.19}
+$$
+
+（361.8）因而排除它整除任一 $n\in S$ 的 $F_n$，即 $p\nmid M(S)$。这是整个移动区间上的共同秩阈值，而不是为每个素数另取非统一阈值。区间上端正是同一子集的 $b(S)$。
+
+对这个固定计数函数在完整区间 $(u,b]$ 作 Abel 部分求和，保留下端项：
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_{m,S}}\frac1p
+&=\frac{N_\eta(b)}b-\frac{N_\eta(u)}u
++\int_u^b\frac{N_\eta(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}
++\rho\int_u^b\frac{dy}{y\log y}\\
+&=\rho\log\frac{\log b}{\alpha\log m}
+-\frac2{\alpha\log m}.
+\end{aligned}
+\tag{361.20}
+$$
+
+其中舍去非负上端项，使用 $N_\eta(u)\le\pi(u)$ 及 Dusart 上界在 $u\ge599$ 时给出的 $\pi(u)/u\le2/\log u$。（361.17）在每个积分点均成立，不仅在 $b$ 成立。
+
+*实际 Euler 支撑及精确分母抵消。* 对素数 $p$ 令 $w(p)=-\log(1-1/p)$。由 $1/p\le w(p)\le1/(p-1)$，对任意正整数 $M$、实数 $x>1$ 及素数集合 $\mathcal A\subseteq\{p\le x:p\nmid M\}$，低素数支撑比较与全部实际高素因子的费用为
+
+$$
+\begin{aligned}
+\sum_{p\mid M}w(p)
+&\le\sum_{p\le x}w(p)-\sum_{p\in\mathcal A}\frac1p
++\frac{\log M}{(x-1)\log x},\\
+w(p)&\le\frac1{p-1}\le\frac{\log p}{(x-1)\log x}\quad(p>x),
+\qquad\sum_{p\mid M}\log p\le\log M.
+\end{aligned}
+\tag{361.21}
+$$
+
+第二行说明第一行支付了每个 $p>x$ 的实际费用，不以 $x$ 为最大素因子界。有限几何级数的 Euler 恒等式则给
+
+$$
+\log\frac{\sigma(M)}M
+=\sum_{p\mid M}w(p)+E(M),
+\qquad E(M)=\sum_{p\mid M}\log(1-p^{-v_p(M)-1})\le0.
+$$
+
+Dusart 同文 [Theorem 6.12，印刷页 11](https://arxiv.org/pdf/1002.0442v1)，给出 $x\ge2973$ 时
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right).
+$$
+
+取对数并用 $\log(1+t)\le t$，再代入（361.21），对 $M>5040$、$b=\log M$ 有
+
+$$
+\log\mathcal R(M)
+\le-\sum_{p\in\mathcal A}\frac1p+\frac{0.2}{(\log x)^2}
++\frac b{(x-1)\log x}
++\log\log x-\log\log b+E(M).
+$$
+
+现在取（361.18）的 $x=b(S)$ 及（361.19）的 $\mathcal A=\mathcal A_{m,S}$，得到
+
+$$
+\log\mathcal R(M(S))
+\le-\sum_{p\in\mathcal A_{m,S}}\frac1p
++\frac{0.2}{(\log b)^2}
++\frac b{(b-1)\log b}+E(M(S)).
+\tag{361.22}
+$$
+
+分母项 $\log\log x-\log\log b$ 在 $x=b$ 处恒等于零；没有以渐近等价偷换 $\log\log M(S)$。实际高素因子仍全部计费，$E(M(S))$ 的非正性即已足够，不要求它趋零。
+
+*对全部子集统一取误差和参数极限。* 因 $\log b\ge\lambda_m>0$、$b\ge2973$，有 $b/(b-1)\le2$。把（361.20）代入（361.22），便对所有满足基数界的子集同时得到
+
+$$
+\log\mathcal R(M(S))
+\le-\rho\log\frac{\lambda_m}{\alpha\log m}
++\frac2{\alpha\log m}+\frac{0.2}{\lambda_m^2}+\frac2{\lambda_m}.
+\tag{361.23}
+$$
+
+右侧完全不依赖 $S$，且随 $m\to\infty$ 收敛至 $-\rho\log(2\beta/\alpha)<0$。因此对任意先固定的 $\delta>0$，存在共同阈值，使全部这些 $S$ 满足
+
+$$
+\log\mathcal R(M(S))
+\le-\rho\log(2\beta/\alpha)+\delta.
+\tag{361.24}
+$$
+
+这也说明统一的上极限不等式；其根据是（361.23）的共同误差，而非逐个子集的点态极限。
+
+最后给定 $\varepsilon>0$。先在（361.15）的开区间内选定 $\alpha,\rho$，使
+
+$$
+C':=(2\beta/\alpha)^{-\rho}<C_{\beta,\eta}+\varepsilon/2;
+$$
+
+可这样选择，因为 $\alpha\downarrow1/\eta$、$\rho\uparrow c(\eta)$ 时 $C'\to C_{\beta,\eta}$。然后在任何 $m,S$ 之前固定
+
+$$
+\delta=\log\frac{C_{\beta,\eta}+\varepsilon}{C'}>0.
+$$
+
+取（361.24）及此前所有条件所需阈值的最大值，指数化便给（361.4）。$c(\eta)>0$、$2\beta\eta>1$ 证明 $C_{\beta,\eta}<1$；取 $\varepsilon=(1-C_{\beta,\eta})/2$，即给共同严格 Robin 安全阈值。存在 $\eta$ 的条件正是 $1/(2\beta)<3/5$，即本路线所用的 $\beta>5/6$；这只论证充分性。
+
+对于（361.5），固定 $\eta=11/20$，则 $c(\eta)=5/18$。对每个先固定的 $\beta\in(10/11,1)$，（361.5）保证最终有 $K_m\ge m^\beta$，而此 $\beta,\eta$ 满足（361.3）。由（361.4）对所有正误差成立，得到
+
+$$
+\limsup_{m\to\infty}\mathcal R(M(S_m))
+\le\left(\frac{11\beta}{10}\right)^{-5/18}.
+$$
+
+再令 $\beta\uparrow1$，便得（361.6）。对固定 $g$ 和 $\varepsilon>0$，先取 $\beta\in(10/11,1)$，使右侧小于 $(10/11)^{5/18}+\varepsilon/2$，再使用（361.4）的误差 $\varepsilon/2$。$g(m)\le1-\beta$ 最终在一个仅依赖 $g,\beta$ 的尾部成立，故 $m^{1-g(m)}\ge m^\beta$，给出（361.7）的共同阈值。
+
+不存在所有速率未定的族共享的起点：给定任意整数 $N\ge2$，令 $S_m=\{1\}$（$m\le N$），而 $S_m=\{1,\ldots,m\}$（$m>N$）。这个族满足（361.5），但直到 $N$ 都有 $M(S_m)=1$。因此允许任意有限初段与族依赖的尾部阈值是必要的量词区别。
+
+本定理的结论仅关于所定义的实际子集 lcm 族；它不给一般整数的 Robin 不等式、RH、有符号 Robin 尾项、精确比值极限或数值认证区间，也不提供 KR 存在阈值的数值。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 362. 全部有限 Fibonacci 最小公倍数的实际秩收费与 Robin 包络
+
+**定义 362.1（任意有限实际族与 Euler 权重）。** 取 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，并令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$。对任意有限集合 $S\subseteq\mathbb N_{>0}$，定义
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},& b(S)&=\log M(S),\\
+\Psi_d&=\prod_{e\mid d}F_e^{\mu(d/e)},& c_d&=\log\Psi_d,\\
+H_N&=\sum_{j=1}^N\frac1j,& w(p)&=\log\frac p{p-1}\quad(p\text{ 为素数}).
+\end{aligned}
+\tag{362.1}
+$$
+
+空最小公倍数与空乘积均取一；$\Psi_d$ 先在正有理数中定义。$\mu$ 为 Möbius 函数，$\varphi$ 为 Euler totient 函数，$v_p$ 为素数赋值。沿用 §358、§361 的实际首现秩 $z(a)=\min\{n\ge1:a\mid F_n\}$（整数 $a\ge2$），其存在性与整除判据见（361.8）。所有对数均为自然对数，正实数的实幂取 $t^a=\exp(a\log t)$。对整数 $M>5040$，记
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},
+\qquad \sigma(M)=\sum_{d\mid M}d,
+\tag{362.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。
+
+**定理 362.2（实际有限支撑的 Euler 对数收费）。** 存在一个常数 $A>0$，使任意有限 $S\subseteq\mathbb N_{>0}$、任意整数 $N\ge2$ 与任意实数 $R>5$ 都满足以下蕴涵。令
+
+$$
+\Delta=\frac{LR}{A\log N}-1,
+\qquad
+U=\{p\text{ 为素数}:5<p\le N-1,\ p\mid M(S),\ z(p)\ge R\}.
+\tag{362.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\sum_{p\in U}w(p)
+\le\frac{6H_N\log M(S)}{R\Delta}.
+\tag{362.4}
+$$
+
+量词顺序是 $\exists A>0\ \forall S\ \forall N\ge2\ \forall R>5$；$A$ 不依赖集合、截止或秩阈值。结论包括 $S=\varnothing$、$M(S)=1$ 与 $R>N$，不要求指标的基数、最大值或相互包含关系。
+
+**证明。** 先固定经典解析供给。Mertens 第三定理的标准对数误差形式给一个固定 $C\ge0$，使
+
+$$
+\prod_{p\le x}(1-1/p)=\frac{\exp(-\gamma+E_3(x))}{\log x},
+\qquad |E_3(x)|\le\frac C{\log x}\quad(x\ge2).
+\tag{362.5}
+$$
+
+原始出处为 Franz Mertens，*Ein Beitrag zur analytischen Zahlentheorie*，Journal für die reine und angewandte Mathematik **78**，46–62，[doi:10.1515/crll.1874.78.46](https://doi.org/10.1515/crll.1874.78.46)；素数倒数和的 $O(1/\log x)$ 误差参见 Leo Goldmakher，[*A quick proof of Mertens' theorem*](https://web.williams.edu/Mathematics/lg5/mertens.pdf) 的 Proposition。将其常数记为 $B_1$，经典常数恒等式 $B_1=\gamma+\sum_p(\log(1-1/p)+1/p)$ 及绝对可和修正的尾界 $\sum_{p>x}|\log(1-1/p)+1/p|=O(1/x)$ 给上述对数误差。从尾部 $E_3(x)=O(1/\log x)$ 到（362.5）的整个区间，只须扩大常数：在任意固定紧区间 $[2,X]$ 上，有限素数乘积严格为正，$E_3(x)\log x$ 有界。现在在任何 $S,N,R$ 之前选定
+
+$$
+A=\exp\left(\gamma+\frac{|C|}{\log2}\right)>0.
+\tag{362.6}
+$$
+
+由（362.5）取倒数，$\prod_{p\le N}(1-1/p)^{-1}\le A\log N$。对每个整数 $1\le n\le N$，经典有限 Euler 乘积给
+
+$$
+\frac n{\varphi(n)}
+=\prod_{p\mid n}(1-1/p)^{-1}
+\le\prod_{p\le N}(1-1/p)^{-1}\le A\log N,
+\qquad \varphi(n)\ge\frac n{A\log N}.
+\tag{362.7}
+$$
+
+$n=1$ 的左侧为空乘积一；以上经典事实只用于本证明的实际收费。
+
+其次核对支撑和收费确属同一个实际整数。由（361.8），$a\mid F_s$ 当且仅当 $z(a)\mid s$。固定素数 $p$，令 $r_j=z(p^j)$；这些秩满足 $r_j\mid r_{j+1}$，但允许相等。对任意正指标 $d$，Möbius 反演逐个保留素幂重数，给
+
+$$
+\begin{aligned}
+v_p(F_e)&=\sum_{j\ge1}\mathbf1_{r_j\mid e},\\
+v_p(\Psi_d)
+&=\sum_{e\mid d}\mu(d/e)\sum_{j\ge1}\mathbf1_{r_j\mid e}
+=\sum_{\substack{j\ge1\\r_j\mid d}}\ \sum_{r_j\mid e\mid d}\mu(d/e)
+=\#\{j\ge1:r_j=d\}.
+\end{aligned}
+\tag{362.8}
+$$
+
+内层和是 $\sum_{h\mid d/r_j}\mu(h)$。非零项都满足 $p^j\mid F_d$，所以交换只有有限个非零项。每个素数赋值非负，故 $\Psi_d$ 为正整数、$c_d\ge0$。同一个 $S$ 的 lcm 赋值为 $\max(\{v_p(F_s):s\in S\}\cup\{0\})$；而 $r_j\in D(S)$ 当且仅当某个 $s\in S$ 满足 $p^j\mid F_s$。这些 $j$ 恰为 $1,\ldots,v_p(M(S))$，因此
+
+$$
+\begin{gathered}
+v_p(M(S))=\#\{j\ge1:z(p^j)\in D(S)\}
+=\sum_{d\in D(S)}v_p(\Psi_d),\\
+M(S)=\prod_{d\in D(S)}\Psi_d,
+\qquad b(S)=\sum_{d\in D(S)}c_d.
+\end{gathered}
+\tag{362.9}
+$$
+
+等式由唯一素分解得出，空集也成立。这正是（361.9）–（361.10）的任意有限版本；它不假设原子两两互素。例如 $z(2)=3$、$z(4)=z(8)=6$，从而 $\Psi_3=2$、$\Psi_6=4$，同一素数的重复秩在（362.8）中计两次。经典强整除序列的重构供给见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；此处的逐素幂计算明确保留了消费者所需的实际共同实现。
+
+同样沿用 §361 的 Binet 误差计算：置 $q=\Phi^{-2}$，则
+
+$$
+\log F_e=eL-\tfrac12\log5+\epsilon_e,
+\quad \epsilon_e=\log(1-(-q)^e),
+\quad \sum_{e\ge1}|\epsilon_e|
+\le\frac{q}{(1-q)^2}=1.
+$$
+
+$d>1$ 时 Möbius 和消去常数项，$\sum_{e\mid d}e\mu(d/e)=\varphi(d)$；$d=1$ 时 $\Psi_1=1$、$L<1$。于是对每个 $d\ge1$ 都有
+
+$$
+|c_d-L\varphi(d)|\le1.
+\tag{362.10}
+$$
+
+Fibonacci 原子的经典因式分解与该对数主项见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（3）–（4）与 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)。该文原子与 $\Psi_d$ 由 Möbius 反演对应；误差一由这里的计算承担，不由文献的 $O(1)$ 冒充。
+
+实际族为何必须支付完整原子，还可在本步用 divisibility 闭包说明。对任意正整数 $n$，在本证明内记
+
+$$
+\mathscr C(n)=\operatorname{lcm}_{p^a\parallel n}F_{z(p^a)},
+\qquad \mathscr C(1)=1.
+\tag{362.11}
+$$
+
+每个 $p^a\parallel n$ 整除它所对应的项，所以 $n\mid\mathscr C(n)$，且 $\mathscr C(n)$ 本身属于实际有限 Fibonacci lcm 族。若 $n\mid M(S)$，每个这样的 $p^a$ 都整除某个 $F_s$，故 $z(p^a)\mid s$、$F_{z(p^a)}\mid F_s$，进而 $\mathscr C(n)\mid M(S)$。因此 $\mathscr C(n)$ 是 divisibility 意义下最小的实际族上界，且 $\mathscr C(n)=n$ 当且仅当 $n$ 属于实际族。这解释了（362.9）的完整原子费用，而没有赋予任意约数同样的预算。
+
+例如 $F_{19}=4181=37\cdot113$、$19$ 为素数，（361.8）给 $z(37)=19$，所以 $\mathscr C(37)=F_{19}=4181$、$\Psi_{19}=4181$。任意约数 $37$ 只有 $\log37$ 的预算，不能支付整层 $c_{19}=\log4181$。若要从闭包整数比较归一化 Robin 量，有限约数和的各局部因子 $1+1/p+\cdots+1/p^a$ 随指数增加，故对 $n>5040$ 只能先得到
+
+$$
+\mathcal R(n)\le\mathcal R(\mathscr C(n))
+\frac{\log\log\mathscr C(n)}{\log\log n}.
+\tag{362.12}
+$$
+
+这个分母膨胀不能删去，因而闭包的上界不自动成为任意约数的同一 Robin 上界。另一个有限例子是 $z(16)=12$、$z(9)=12$、$z(5)=5$、$z(7)=8$：$F_{12}=144$、$F_5=5$、$F_8=21$，用（361.8）检查相应指标的真约数便得所列最小秩。因此
+
+$$
+\mathscr C(5040)=\operatorname{lcm}(144,5,21)=5040.
+$$
+
+这里仅说明实际族的一个成员；Robin 阈值在定理中仍是所用整数阈值。
+
+现在令 $Z=\{z(p):p\in U\}$，按不同秩合并。$p\mid M(S)$ 使 $z(p)\in D(S)$。对 $p>5$，经典秩界 $z(p)\mid p-1$ 或 $z(p)\mid p+1$ 给 $z(p)\le p+1$；可直接在有限域中核对：多项式 $t^2-t-1$ 的两个不同非零根之比的阶为 $z(p)$，分裂时该比的 $(p-1)$ 次幂为一，非分裂时 Frobenius 交换两根，该比的 $(p+1)$ 次幂为一。因此
+
+$$
+Z\subseteq D(S)\cap\{1,\ldots,N\},
+\qquad r\in Z\Longrightarrow r\ge R>5.
+\tag{362.13}
+$$
+
+由（362.7）、（362.10），每个不同的实际秩至少支付
+
+$$
+c_r\ge L\varphi(r)-1\ge\frac{Lr}{A\log N}-1\ge\Delta.
+\qquad
+|Z|\Delta\le\sum_{r\in Z}c_r\le b(S).
+\tag{362.14}
+$$
+
+最后复用本卷引理 163.1 的完整实际秩桶估计
+
+$$
+\sum_{\substack{p\ \mathrm{prime}\\z(p)=r}}w(p)\le\frac{6H_r}{r}\quad(r>5).
+$$
+
+这是已有的内部估计，系数六不归因于任何已发表的素数分布定理。按不同秩分拆 $U$，每个桶只使用一次，并用 $H_r\le H_N$，得到
+
+$$
+\begin{aligned}
+\sum_{p\in U}w(p)
+&=\sum_{r\in Z}\ \sum_{\substack{p\in U\\z(p)=r}}w(p)
+\le\sum_{r\in Z}\frac{6H_r}{r}
+\le\frac{6H_N}{R}|Z|
+\le\frac{6H_N b(S)}{R\Delta}.
+\end{aligned}
+$$
+
+若 $S=\varnothing$ 或 $M(S)=1$，则 $U=Z=\varnothing$、$b(S)=0$；若 $R>N$，则（362.13）使 $U=Z=\varnothing$。这些情形在 $\Delta>0$ 时同样满足结论。由于 $1/p\le w(p)$，同一估计也在证明内部控制 $\sum_{p\in U}1/p$，无需另取常数或改变支撑。$\square$
+
+**定理 362.3（全部有限实际 Fibonacci lcm 的共同 Robin 包络）。** 对每个先固定的实数 $1/2<\eta<3/5$，令
+
+$$
+c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad K_\eta=(2\eta)^{-c(\eta)}\in(0,1).
+\tag{362.15}
+$$
+
+则对每个 $\varepsilon>0$，存在先于一切有限集合 $S\subseteq\mathbb N_{>0}$ 选定的实数 $B_0>0$，使
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+b(S)\ge B_0\ \Longrightarrow
+\bigl(M(S)>5040\ \text{且}\ \mathcal R(M(S))\le K_\eta+\varepsilon\bigr).
+\tag{362.16}
+$$
+
+$B_0$ 仅依赖固定的 $\eta,\varepsilon$ 及下述经典解析供给。没有基数、最大指标、删除方式或嵌套条件。特别地，$\eta=11/20$ 给 $K_\eta=(10/11)^{5/18}<1$；取 $\varepsilon=(1-K_\eta)/2$，整个实际有限族在同一个 $b$ 阈值之后满足严格 Robin 不等式。这里保留任意正误差，不断言 $\varepsilon=0$ 的最终界，不指定数值起点。
+
+**证明。** 固定 $\eta$，先在任何 $S$ 之前选定
+
+$$
+\frac1{2\eta}<\theta<1,
+\qquad 0<\rho<c(\eta),
+\qquad
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix},
+\quad B=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\tag{362.17}
+$$
+
+$T$ 的行列式为一、迹为 $18>2$，特征值为 $\Phi^6,\Phi^{-6}$，且 $T\equiv I\pmod2$，符合固定双曲 cat map 的条件。在 $r=z(p)$ 处，Fibonacci 矩阵公式使 $B^r=aI\pmod p$，因为 $F_r=0$、$F_{r+1}=F_{r-1}$；行列式给 $a^2=(-1)^r$，故 $B^{4r}=I$、$T^{2r}=B^{12r}=I$。因此对素数 $p$ 有
+
+$$
+\operatorname{ord}_p(T)\mid2z(p).
+\tag{362.18}
+$$
+
+Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，[原文 Theorem 14、式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)，对固定 $T$ 给
+
+$$
+\#\{p\le y:\operatorname{ord}_p(T)>y^\eta\}
+\ge c(\eta)\pi(y)+o(\pi(y)).
+$$
+
+原始阈值为 $y^\eta$。现在定义固定素数集与其固定计数函数
+
+$$
+\mathcal P_\eta=\{p>5\text{ 为素数}:\operatorname{ord}_p(T)>p^\eta\},
+\qquad A_\eta(y)=\#\{p\in\mathcal P_\eta:p\le y\}.
+$$
+
+$p\le y$ 时 $p^\eta\le y^\eta$，故 KR 所计的移动集合除去 $2,3,5$ 后包含于这个固定集合。先取 $\rho_1\in(\rho,c(\eta))$，KR 的余项保证尾部计数至少为 $\rho_1\pi(y)$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5）](https://arxiv.org/pdf/1002.0442v1)，给 $\pi(y)\ge y/\log y$（$y\ge599$）以及 $\pi(y)\le(y/\log y)(1+1.2762/\log y)$（$y>1$）。扩大一个固定起点以吸收至多三个例外素数，便可先选 $X_{\eta,\rho}\ge599$，使每个实数积分点 $y\ge X_{\eta,\rho}$ 都满足
+
+$$
+A_\eta(y)\ge\rho\frac y{\log y},
+\qquad \frac{\pi(y)}y\le\frac2{\log y}.
+\tag{362.19}
+$$
+
+这个起点与任何 $S$ 无关。
+
+对充分大的实际 $b=b(S)$，取同一对象的截止
+
+$$
+x=b,\qquad u=b^\theta,\qquad N=\lfloor b\rfloor+1,
+\qquad R=\tfrac12b^{\theta\eta}.
+\tag{362.20}
+$$
+
+先取统一的 $b$ 起点保证 $b\ge2973$、$b>\log5040$、$u\ge X_{\eta,\rho}$、$R>5$ 及
+
+$$
+\Delta=\frac{LR}{A\log N}-1\ge\frac{LR}{2A\log N}>0.
+\tag{362.21}
+$$
+
+后一条件可满足，因为 $R/\log N\to\infty$。令 $\mathcal A_b=\mathcal P_\eta\cap(u,b]$，并记同一个实际 $M=M(S)$ 在该区间的支撑费用
+
+$$
+W_{\rm supp}(S,b)=\sum_{\substack{p\in\mathcal A_b\\p\mid M(S)}}w(p).
+$$
+
+对每个 $p\in\mathcal A_b$，（362.18）给 $z(p)\ge\operatorname{ord}_p(T)/2>p^\eta/2>R$。若同时 $p\mid M(S)$，整数性给 $p\le\lfloor b\rfloor=N-1$，因此它确实属于定理 362.2 的同一个 $U$。由（362.4）、（362.21）及 $R^2=b^{2\theta\eta}/4$，
+
+$$
+\begin{aligned}
+0\le W_{\rm supp}(S,b)
+&\le\frac{6H_N b}{R\Delta}
+\le\frac{12A(\log N)H_N b}{LR^2}\\
+&=\frac{48A}{L}(\log N)H_N b^{1-2\theta\eta}
+=:h_{\theta,\eta}(b)\longrightarrow0.
+\end{aligned}
+\tag{362.22}
+$$
+
+$N\le b+1$、$H_N\le1+\log N$ 且 $2\theta\eta>1$，所以右侧为 $O(b^{1-2\theta\eta}(\log b)^2)=o(1)$。这是仅依赖实际标量 $b$ 的共同界，适用于全部有限 $S$，不借助指标上界。
+
+固定计数函数在完整区间 $(u,b]$ 上的 Abel 部分求和为
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_b}\frac1p
+&=\frac{A_\eta(b)}b-\frac{A_\eta(u)}u
++\int_u^b\frac{A_\eta(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}+\rho\int_u^b\frac{dy}{y\log y}
+=\rho\log(1/\theta)-\frac2{\theta\log b}.
+\end{aligned}
+\tag{362.23}
+$$
+
+这里舍去非负上端项，用 $A_\eta(u)\le\pi(u)$ 控制下端项；（362.19）在每一个积分点成立。$1/p\le w(p)$，且支撑与非支撑在同一个 $\mathcal A_b$ 中分拆，故实际缺失费用满足
+
+$$
+\sum_{\substack{p\in\mathcal A_b\\p\nmid M}}w(p)
+\ge\rho\log(1/\theta)-\frac2{\theta\log b}-W_{\rm supp}(S,b).
+\tag{362.24}
+$$
+
+无需断言整个区间都缺失；其中所有实际存在的素数已经由（362.22）支付。
+
+对这个实际整数，低素数支撑从全部 $p\le b$ 中删除上述缺失部分；所有实际高素因子 $p>b$ 也一并支付，因为
+
+$$
+w(p)\le\frac1{p-1}
+\le\frac{\log p}{(b-1)\log b}\quad(p>b),
+\qquad \sum_{p\mid M}\log p\le\log M=b.
+$$
+
+于是高素数总费用至多 $b/((b-1)\log b)$。有限几何级数的精确 Euler 恒等式给
+
+$$
+\log\frac{\sigma(M)}M
+=\sum_{p\mid M}w(p)+E(M),
+\qquad E(M)=\sum_{p\mid M}\log(1-p^{-v_p(M)-1})\le0.
+$$
+
+这里只使用符号，不要求 $E(M)$ 趋零。Dusart 同文 [Theorem 6.12](https://arxiv.org/pdf/1002.0442v1) 的正确方向是
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right)
+\quad(x\ge2973).
+$$
+
+取对数、用 $\log(1+t)\le t$，在 $x=b$ 处的上界为 $\gamma+\log\log b+0.2/(\log b)^2$。而 $\log\mathcal R(M)=\log(\sigma(M)/M)-\gamma-\log(\log b)$，所以 Robin 的对数归一化在此精确抵消，并非以渐近替换分母。合并（362.24）及全部高素数费用，得到
+
+$$
+\log\mathcal R(M(S))
+\le\rho\log\theta+\frac2{\theta\log b}
++W_{\rm supp}(S,b)
++\frac{0.2}{(\log b)^2}
++\frac b{(b-1)\log b}.
+\tag{362.25}
+$$
+
+$E(M)\le0$ 已被舍去。除 $\rho\log\theta$ 外的所有项由（362.22）控制，并且在 $b\to\infty$ 时共同趋零。
+
+最后按所需包络选择参数，保持选择先于集合。给定 $\varepsilon>0$，在（362.17）的开区间内先选 $\theta,\rho$，使
+
+$$
+K':=\theta^\rho<K_\eta+\varepsilon/2;
+$$
+
+这是因为 $\theta\downarrow1/(2\eta)$、$\rho\uparrow c(\eta)$ 时 $\theta^\rho\to K_\eta$。再固定 $\delta=\log((K_\eta+\varepsilon)/K')>0$。取一个共同 $B_0$，使每个实数 $b\ge B_0$ 满足此前全部起点条件，以及
+
+$$
+\frac2{\theta\log b}+h_{\theta,\eta}(b)
++\frac{0.2}{(\log b)^2}+\frac b{(b-1)\log b}\le\delta.
+$$
+
+对任意有限 $S$，只要 $b(S)\ge B_0$，便有 $M(S)>5040$；（362.25）指数化给 $\mathcal R(M(S))\le K'e^\delta=K_\eta+\varepsilon$，证明（362.16）。空集或 $M(S)=1$ 的 $b=0$ 不满足此前提，故从未对它们取双重对数。$c(11/20)=5/18$ 给所述具体常数与正误差下的最终严格不等式。整个推导不使用 RH，且结论只作用于所定义的实际有限 Fibonacci lcm 族。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 363. 实际 Fibonacci 最小公倍数的七光滑二十二态激活格
+
+**定义 363.1（有限实际族、激活偏序与闭包）。** 取 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对任意有限正指标集合 $S\subseteq\mathbb N_{>0}$，沿用定义 362.1 的
+
+$$
+D(S)=\{r\ge1:\exists s\in S,\ r\mid s\},
+\qquad M(S)=\operatorname{lcm}\{F_s:s\in S\},
+\qquad M(\varnothing)=1.
+\tag{363.1}
+$$
+
+每个 $F_s$（$s\ge1$）为正整数，因而每个 $M(S)$ 为正整数。称正整数 $m$ 为七光滑，当且仅当它的每个素因子属于 $H=\{2,3,5,7\}$；整数一满足此定义。置
+
+$$
+E=\{1,2,3,4,5,6,8,12\},\qquad
+P=\{3,4,5,6,8,12\},\qquad
+\mathcal A_7=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限且 }M(S)\text{ 七光滑}\}.
+\tag{363.2}
+$$
+
+$P$ 的偏序是指标整除：$j\preceq k$ 当且仅当 $j\mid k$。令 $\mathcal J(P)$ 为它的全部下理想，即满足 $k\in I$、$j\in P$、$j\mid k\Rightarrow j\in I$ 的子集 $I\subseteq P$，允许空理想。沿用（362.8）–（362.11）的正整数原子与首现秩，记
+
+$$
+\begin{aligned}
+\Psi_j&=\prod_{e\mid j}F_e^{\mu(j/e)},
+&\Phi(I)&=\prod_{j\in I}\Psi_j,\\
+z(q)&=\min\{n\ge1:q\mid F_n\}\quad(q\ge2),
+&\mathscr C(m)&=\operatorname{lcm}_{p^e\parallel m}F_{z(p^e)},\qquad \mathscr C(1)=1.
+\end{aligned}
+\tag{363.3}
+$$
+
+这里 $\mu$ 是 Möbius 函数，$p^e\parallel m$ 表示 $p$ 是素数且 $e=v_p(m)\ge1$；空乘积与空最小公倍数均取一。$\Phi(I)$ 表示本章的理想乘积映射。
+
+**定理 363.2（二十二态激活、原子重构与整除闭包的共同刻画）。** 对所有有限 $S\subseteq\mathbb N_{>0}$，有完整等价
+
+$$
+M(S)\text{ 七光滑}
+\quad\Longleftrightarrow\quad M(S)\mid5040
+\quad\Longleftrightarrow\quad S\subseteq E.
+\tag{363.4}
+$$
+
+这个实际子族的像恰为
+
+$$
+\mathcal A_7=
+\{1,2,3,5,6,8,10,15,21,24,30,40,42,105,120,144,168,210,720,840,1008,5040\}.
+\tag{363.5}
+$$
+
+等价地，它的全部、且仅有的素指数轮廓为
+
+$$
+\begin{gathered}
+m=2^a3^b5^c7^d,\qquad
+ a\in\{0,1,3,4\},\quad b\in\{0,1,2\},\quad c,d\in\{0,1\},\\
+a=4\ \Longleftrightarrow\ b=2,
+\qquad d=1\ \Longrightarrow\ b\ge1.
+\end{gathered}
+\tag{363.6}
+$$
+
+每个这样的轮廓都有明确的有限正指标实现，且不同轮廓给不同整数。
+
+在 $P$ 中，全部覆盖关系为 $3\prec6\prec12$、$4\prec8$、$4\prec12$，其中 $3\prec6\prec12$ 表示两个覆盖；$5$ 与其余元素不可比。原子取值依次为
+
+$$
+(\Psi_3,\Psi_4,\Psi_5,\Psi_6,\Psi_8,\Psi_{12})=(2,3,5,4,7,6).
+\tag{363.7}
+$$
+
+映射 $\Phi:\mathcal J(P)\longrightarrow(\mathcal A_7,\mid)$ 是序同构，而且对每个下理想 $I$ 都有
+
+$$
+\Phi(I)=\operatorname{lcm}_{j\in I}F_j.
+\tag{363.8}
+$$
+
+它的逆映射 $I(m)$ 由唯一素分解 $m=2^a3^b5^c7^d\in\mathcal A_7$ 给出：
+
+$$
+\begin{array}{lll}
+3\in I(m)\Longleftrightarrow a\ge1,
+&4\in I(m)\Longleftrightarrow b\ge1,
+&5\in I(m)\Longleftrightarrow c=1,\\
+6\in I(m)\Longleftrightarrow a\ge3,
+&8\in I(m)\Longleftrightarrow d=1,
+&12\in I(m)\Longleftrightarrow a=4\Longleftrightarrow b=2.
+\end{array}
+\tag{363.9}
+$$
+
+特别地，$S=I(m)$ 实现每个允许轮廓。交与并对应整数的最大公因数与最小公倍数：
+
+$$
+\Phi(I\cap J)=\gcd(\Phi(I),\Phi(J)),
+\qquad
+\Phi(I\cup J)=\operatorname{lcm}(\Phi(I),\Phi(J)).
+\tag{363.10}
+$$
+
+因此 $\mathcal A_7$ 是有二十二个元素的分配格，最小元为一、最大元为 $5040$；原子乘积的重构不要求这些 $\Psi_j$ 两两互素。
+
+在任意约数的整除区间 $\operatorname{Div}(5040)=\{m\ge1:m\mid5040\}$ 上，$\mathscr C$ 是取值仍在该区间的闭包，且
+
+$$
+\{m\mid5040:\mathscr C(m)=m\}
+=\{m\mid5040:\exists\text{ 有限 }S\subseteq\mathbb N_{>0},\ m=M(S)\}
+=\mathcal A_7.
+\tag{363.11}
+$$
+
+该区间共有六十个约数，其中恰有二十二个闭包不动点，另外三十八个约数不是实际有限 Fibonacci 最小公倍数；例如 $4,9,7$ 均不能作为单个实际值。
+
+此外，不要求七光滑的任意实际 $M=M(S)$ 也满足
+
+$$
+4\mid M\Longleftrightarrow8\mid M,
+\qquad16\mid M\Longleftrightarrow9\mid M,
+\qquad7\mid M\Longrightarrow3\mid M.
+\tag{363.12}
+$$
+
+这些关系包括空集情形，其机制是素幂在有限最小公倍数中必由某一成员达到。该机制不能换成任意合数的达到：$S=\{3,4\}$ 给 $M(S)=6$，却有 $z(6)=12\notin D(S)=\{1,2,3,4\}$。最后，每个实际 $M(S)>5040$ 都有一个素因子 $p\ge11$。
+
+**证明。** （一）先核对实际秩和经典分类供给。正性由递推和 $F_1=F_2=1$ 归纳得到。沿用（361.8）的经典入口判据
+
+$$
+q\mid F_n\quad\Longleftrightarrow\quad z(q)\mid n\qquad(q\ge2,\ n\ge1).
+\tag{363.13}
+$$
+
+该判据来自 Fibonacci 的强整除律 $\gcd(F_r,F_s)=F_{\gcd(r,s)}$ 与首现秩最小性，其存在性由有限模数上的可逆 Fibonacci 矩阵保证。为明确本证明使用的最小秩，若 $q\mid F_k$，则（363.13）给 $z(q)\mid k$；只须排除 $k$ 的所有真正正约数作为首现指标。递推直接给
+
+$$
+\begin{aligned}
+(F_1,F_2,F_3,F_4,F_5,F_6,F_8,F_{12})
+&=(1,1,2,3,5,8,21,144),\\
+z(2)=3,\quad z(3)=4,\quad z(5)=5,\quad z(7)=8,&\qquad
+z(4)=z(8)=6,\quad z(16)=z(9)=12.
+\end{aligned}
+\tag{363.14}
+$$
+
+具体地，指标 $3,4,5,8$ 的真正正约数分别是 $\{1\},\{1,2\},\{1\},\{1,2,4\}$，相应项都不被目标素数整除。指标六的真正正约数是 $1,2,3$，其 Fibonacci 值为 $1,1,2$，没有四或八的倍数。指标十二的真正正约数是 $1,2,3,4,6$，其值为 $1,1,2,3,8$，没有十六或九的倍数。这证明了（363.14）的每个最小值，而不仅是提供一个可用指标。
+
+这里使用的经典原始素因子定理见 Minora Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。该文第 439 页把 primitive divisor 定义为素数 $p$：$p\mid F_n$ 且 $p$ 不整除任何更早的正指标项 $F_j$（$1\le j<n$）；Theorem 3 的陈述在第 441 页、证明跨第 441–442 页，断言每个 $n\notin\{1,2,6,12\}$ 的 $F_n$ 都有这样的原始素因子。因而，若 $F_n$ 七光滑且 $n$ 不在该例外集内，原始素因子只能属于 $H$，其定义迫使 $n=z(p)\in\{3,4,5,8\}$。把四个例外指标加入，就得到 $n\in E$；反向由（363.14）在 $E$ 上的八个直接值成立。这个单项分类是本证明的经典中间供给。
+
+对任意有限 $S$，每个 $F_s\mid M(S)$。所以若 $M(S)$ 七光滑，每个 $F_s$ 也七光滑，刚才的分类给 $S\subseteq E$。若 $S\subseteq E$，则（363.14）的八个值均整除
+
+$$
+5040=2^4\,3^2\,5\,7,
+\tag{363.15}
+$$
+
+于是 $M(S)\mid5040$；而 $5040$ 的每个约数都七光滑。这三步证明（363.4），也覆盖空集。特别地，所有七光滑实际值都在同一个有限整除区间中，尽管原先的量词允许任意有限正指标集合。
+
+（二）在该区间提取全部激活条件，并构造每个轮廓。有限最小公倍数的素数赋值满足
+
+$$
+v_p(M(S))=\max\bigl(\{v_p(F_s):s\in S\}\cup\{0\}\bigr).
+\tag{363.16}
+$$
+
+对 $S\subseteq E$，二的指数是 $0,1,3,4$ 中的一个：唯一提供指数四的项是 $F_{12}=144$，它也唯一提供三的指数二。因此 $a=4$ 当且仅当 $b=2$。唯一含七的项是 $F_8=21$，它同时含三，所以 $d=1$ 迫使 $b\ge1$。五和七的指数最多为一。这证明（363.6）的必要性。
+
+为证明这些条件已足够，先把指标、原子和下理想联系起来。直接列出 $P$ 中各元素的可比较对象，得到所述覆盖：十二在 $P$ 中的直接前驱是六和四，六的直接前驱是三，八的直接前驱是四；五无可比较的其他元素。按（363.3）的 Möbius 乘积计算，
+
+$$
+\Psi_3=\frac{F_3}{F_1}=2,\quad
+\Psi_4=\frac{F_4}{F_2}=3,\quad
+\Psi_5=\frac{F_5}{F_1}=5,\quad
+\Psi_6=\frac{F_6F_1}{F_2F_3}=4,\quad
+\Psi_8=\frac{F_8}{F_4}=7,\quad
+\Psi_{12}=\frac{F_{12}F_2}{F_6F_4}=6.
+\tag{363.17}
+$$
+
+另外 $\Psi_1=\Psi_2=1$。取任意 $I\in\mathcal J(P)$。每个 $j\in P$ 的正约数都属于 $P\cup\{1,2\}$，而下理想条件给 $D(I)\cap P=I$。所以（362.9）对同一个实际指标集合 $I$ 的重构立即给
+
+$$
+\operatorname{lcm}_{j\in I}F_j
+=\prod_{r\in D(I)}\Psi_r
+=\prod_{j\in I}\Psi_j=\Phi(I).
+\tag{363.18}
+$$
+
+原子重构的经典供给是 §362 证明所引的 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；（362.8）–（362.9）的逐素幂实现说明这里可直接取同一个 $I$。这一步没有互素假设，实际上 $\gcd(\Psi_3,\Psi_6)=2$、$\gcd(\Psi_6,\Psi_{12})=2$、$\gcd(\Psi_4,\Psi_{12})=3$。
+
+写 $x_j=\mathbf1_{j\in I}$。由（363.17），理想乘积的指数恰为
+
+$$
+a=x_3+2x_6+x_{12},\qquad
+b=x_4+x_{12},\qquad c=x_5,\qquad d=x_8.
+\tag{363.19}
+$$
+
+下理想条件是 $x_{12}\le x_6\le x_3$、$x_{12}\le x_4$、$x_8\le x_4$；$x_5$ 独立。于是 $a$ 的四种可能分别对应链上状态 $(x_3,x_6,x_{12})=(0,0,0),(1,0,0),(1,1,0),(1,1,1)$。$x_{12}=1$ 强制 $x_4=1$，给 $a=4$ 与 $b=2$ 同时发生；$x_8=1$ 则强制 $b\ge1$。因此每个理想的乘积满足（363.6）。
+
+反向，给定（363.6）的任意轮廓，按（363.9）选出 $I(m)$。若六被选中，$a\ge3$ 保证三被选中；若十二被选中，$a=4$、$b=2$ 保证六与四都被选中；若八被选中，$d=1$、$b\ge1$ 保证四被选中。覆盖的传递闭包因此全部满足，$I(m)$ 确是下理想。其指标指示函数代入（363.19）恰给原来的 $a,b,c,d$，故 $\Phi(I(m))=m$。结合（363.18），$S=I(m)$ 是明确的实现。反过来，从任意理想的（363.19）读取这六个阈值，恰好恢复原理想，所以 $I(\Phi(I))=I$。
+
+以下同时给出每个轮廓的数值与一个更小的实现指标集合。表中 $S$ 是相应下理想的最大元集，因而原子费用仍由它的完整约数闭包承担。
+
+| 轮廓编号 | $(a,b,c,d)$ | $M(S)$ | 实现指标集合 $S$ |
+| --- | --- | --- | --- |
+| 363.2a01 | $(0,0,0,0)$ | $1$ | $\varnothing$ |
+| 363.2a02 | $(1,0,0,0)$ | $2$ | $\{3\}$ |
+| 363.2a03 | $(0,1,0,0)$ | $3$ | $\{4\}$ |
+| 363.2a04 | $(0,0,1,0)$ | $5$ | $\{5\}$ |
+| 363.2a05 | $(1,1,0,0)$ | $6$ | $\{3,4\}$ |
+| 363.2a06 | $(3,0,0,0)$ | $8$ | $\{6\}$ |
+| 363.2a07 | $(1,0,1,0)$ | $10$ | $\{3,5\}$ |
+| 363.2a08 | $(0,1,1,0)$ | $15$ | $\{4,5\}$ |
+| 363.2a09 | $(0,1,0,1)$ | $21$ | $\{8\}$ |
+| 363.2a10 | $(3,1,0,0)$ | $24$ | $\{4,6\}$ |
+| 363.2a11 | $(1,1,1,0)$ | $30$ | $\{3,4,5\}$ |
+| 363.2a12 | $(3,0,1,0)$ | $40$ | $\{5,6\}$ |
+| 363.2a13 | $(1,1,0,1)$ | $42$ | $\{3,8\}$ |
+| 363.2a14 | $(0,1,1,1)$ | $105$ | $\{5,8\}$ |
+| 363.2a15 | $(3,1,1,0)$ | $120$ | $\{4,5,6\}$ |
+| 363.2a16 | $(4,2,0,0)$ | $144$ | $\{12\}$ |
+| 363.2a17 | $(3,1,0,1)$ | $168$ | $\{6,8\}$ |
+| 363.2a18 | $(1,1,1,1)$ | $210$ | $\{3,5,8\}$ |
+| 363.2a19 | $(4,2,1,0)$ | $720$ | $\{5,12\}$ |
+| 363.2a20 | $(3,1,1,1)$ | $840$ | $\{5,6,8\}$ |
+| 363.2a21 | $(4,2,0,1)$ | $1008$ | $\{8,12\}$ |
+| 363.2a22 | $(4,2,1,1)$ | $5040$ | $\{5,8,12\}$ |
+
+计数也直接来自全部条件，而非只来自表：$a\in\{0,1,3\}$ 时 $b\in\{0,1\}$，$b=0$ 只允许 $d=0$，$b=1$ 允许两种 $d$；每种又允许两种 $c$，共有 $3(1+2)2=18$ 个轮廓。$a=4$ 时必须 $b=2$，$c,d$ 各有两种选择，给另外四个。总数为 $18+4=22$。唯一素分解保证不同轮廓不可能给相同整数；上述实现覆盖每个轮廓，必要性排除其余轮廓，因而完整证明（363.5）与（363.6）。
+
+（三）验证序结构，而不仅是集合双射。若 $I\subseteq J$，正整数原子乘积给 $\Phi(I)\mid\Phi(J)$。若 $m\mid n$ 且 $m,n\in\mathcal A_7$，则对每个 $p\in\{2,3,5,7\}$ 都有 $v_p(m)\le v_p(n)$；由（363.9）的阈值条件可得 $I(m)\subseteq I(n)$。这证明 $\Phi$ 与它的逆映射均保持偏序，即真正的序同构。
+
+下理想的交与并仍是下理想。为了确认它们对应的是整数的通常 gcd 与 lcm，可直接在（363.19）中计算：二指数由一个三元素链的初段长度经严格递增取值 $0,1,3,4$ 给出，交与并分别取较小、较大值；三指数由链 $4\prec12$ 的初段给出取值 $0,1,2$，也分别取较小、较大值；五和七的指数是单个成员指示函数，分别按最小、最大运算变化。所以 $\Phi(I\cap J)$ 的每个素指数是两个乘积相应指数的最小值，$\Phi(I\cup J)$ 的每个素指数是最大值，证明（363.10）。分配律由集合的交、并分配律传递。空理想映到一，满理想的乘积为 $2\cdot3\cdot5\cdot4\cdot7\cdot6=5040$。
+
+（四）用 §362 的实际闭包判定所有六十个约数。先把（362.11）的最小性论证在此有限族中写全。对任意正整数 $m$，每个 $p^e\parallel m$ 都整除 $F_{z(p^e)}$，故 $m\mid\mathscr C(m)$；而 $\mathscr C(m)$ 本身是有限个实际 Fibonacci 项的最小公倍数。若 $m\mid M(S)$，由（363.16），对每个这样的最大素幂 $p^e$ 都存在 $s\in S$ 满足 $p^e\mid F_s$。入口判据给 $z(p^e)\mid s$，于是 $F_{z(p^e)}\mid F_s$，进而
+
+$$
+m\mid M(S)\quad\Longrightarrow\quad\mathscr C(m)\mid M(S).
+\tag{363.20}
+$$
+
+所以 $\mathscr C(m)$ 是整除意义下 $m$ 的最小实际族上界。取 $m=M(S)$ 得 $\mathscr C(m)\mid m$，与扩张性合并得 $\mathscr C(m)=m$；反向，若 $\mathscr C(m)=m$，定义本身把 $m$ 写成有限实际 Fibonacci 最小公倍数。这证明不动点与实际值的等价，不使用任何计数推断。若 $m\mid n$，实际上界 $\mathscr C(n)$ 也容纳 $m$，由（363.20）得 $\mathscr C(m)\mid\mathscr C(n)$；$\mathscr C(m)$ 自身实际，又给 $\mathscr C(\mathscr C(m))=\mathscr C(m)$。因此该映射确为扩张、单调、幂等的闭包。
+
+表中的 $\operatorname{lcm}(F_5,F_8,F_{12})=5040$ 给区间最大元的实际实现，于是（363.20）对每个 $m\mid5040$ 给 $\mathscr C(m)\mid5040$。闭包限制到该区间仍有定义。由已经证明的（363.4），区间内的实际值恰为 $\mathcal A_7$，所以得到（363.11）的两个集合等号。另一方面，（363.15）和唯一素分解给
+
+$$
+\#\operatorname{Div}(5040)=(4+1)(2+1)(1+1)(1+1)=60.
+\tag{363.21}
+$$
+
+不动点数已由理想与全部轮廓证明为二十二，故其补集数为 $60-22=38$。
+
+还可逐坐标看出闭包怎样补齐激活要求。任意 $m\mid5040$ 唯一写为 $2^\alpha3^\beta5^c7^d$，其中 $0\le\alpha\le4$、$0\le\beta\le2$、$c,d\in\{0,1\}$。使用（363.14）的秩，闭包为 $2^{\alpha'}3^{\beta'}5^c7^d$，其中
+
+$$
+\alpha'=
+\begin{cases}
+4,&\alpha=4\text{ 或 }\beta=2,\\
+3,&2\le\alpha\le3\text{ 且 }\beta\le1,\\
+\alpha,&\alpha\le1\text{ 且 }\beta\le1,
+\end{cases}
+\qquad
+\beta'=
+\begin{cases}
+2,&\alpha=4\text{ 或 }\beta=2,\\
+\max\{\beta,d\},&\alpha\le3\text{ 且 }\beta\le1.
+\end{cases}
+\tag{363.22}
+$$
+
+确实，最大二素幂在 $\alpha=1,2,3,4$ 时分别贡献 $F_3=2,F_6=8,F_6=8,F_{12}=144$；最大三素幂在 $\beta=1,2$ 时分别贡献 $F_4=3,F_{12}=144$，五与七分别贡献 $F_5=5,F_8=21$。指数为零的素数不贡献项。取这些项的 lcm 恰得（363.22）。它的固定轮廓正是（363.6），与上述实际上界证明一致。例如
+
+$$
+\mathscr C(4)=8,\qquad \mathscr C(9)=144,\qquad \mathscr C(7)=21.
+\tag{363.23}
+$$
+
+这些数的原值都不是不动点，所以 $4,9,7$ 各自不能等于任何 $M(S)$；它们并非仅因表中未列出而被排除。
+
+（五）最后证明无光滑假设的激活与合数边界。对任意有限 $S$、任意素数 $p$ 与整数 $e\ge1$，（363.16）给
+
+$$
+p^e\mid M(S)
+\quad\Longleftrightarrow\quad
+\exists s\in S,\ p^e\mid F_s
+\quad\Longleftrightarrow\quad z(p^e)\in D(S).
+\tag{363.24}
+$$
+
+非空情形是有限整数最大值必由一个成员达到；空情形 $M=1$、$D(S)=\varnothing$ 使三个条件全不成立。由 $z(4)=z(8)=6$，四与八的整除条件都等价于 $6\in D(S)$。由 $z(16)=z(9)=12$，十六与九的条件都等价于 $12\in D(S)$。若 $7\mid M(S)$，则 $8\in D(S)$；$D(S)$ 对指标取正约数封闭，所以 $4\in D(S)$，再用 $z(3)=4$ 得 $3\mid M(S)$。这证明（363.12）对整个实际族成立，而非仅对其七光滑子族成立。限制到 $m\mid5040$ 后，前两个等价与最后一个蕴含正好解释（363.6）的二指数缺口、二与三的最高层同时激活、以及七依赖于三。
+
+合数六的入口秩本身仍满足（363.13），但六整除 lcm 不保证六整除某一个成员。事实上，$6\mid F_n$ 当且仅当 $2\mid F_n$ 且 $3\mid F_n$，由（363.14）又当且仅当 $3\mid n$ 且 $4\mid n$，即 $12\mid n$，所以 $z(6)=12$。而
+
+$$
+M(\{3,4\})=\operatorname{lcm}(2,3)=6,
+\qquad D(\{3,4\})=\{1,2,3,4\},
+\qquad 12\notin D(\{3,4\}).
+\tag{363.25}
+$$
+
+二和三来自不同成员，故不存在共同的六达到指标。这也说明（363.3）的闭包必须按最大素幂分别取入口：$\mathscr C(6)=\operatorname{lcm}(F_3,F_4)=6$，若把合数整体的 $F_{z(6)}=144$ 当作必需层，就会破坏最小实际上界。
+
+若一个实际 $M(S)>5040$ 没有素因子 $p\ge11$，它的全部素因子都只能属于 $\{2,3,5,7\}$，于是（363.4）给 $M(S)\mid5040$，正性又给 $M(S)\le5040$，矛盾。因此所述大素因子必存在。这里 $5040$ 是实际七光滑子族的最大元；整除闭包、激活约束与二十二态描述的对象始终是所定义的实际有限 Fibonacci 最小公倍数族。$\square$
+
+## 追加锚（本行以下为增补区）
+## 364. 有序秩支撑与实际值支撑闭包的共同完成及满支撑纤维
+
+**定义 364.1（有限素数调色板与两种支撑操作）。** 取标准 Fibonacci 序列 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，令
+
+$$
+M(S)=\operatorname{lcm}_{s\in S}F_s,\qquad M(\varnothing)=1,
+\qquad
+\mathcal M=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\}.
+\tag{364.1}
+$$
+
+对正整数 $m$，记 $\operatorname{Supp}(m)=\{p:p\text{ 为素数且 }p\mid m\}$，故 $\operatorname{Supp}(1)=\varnothing$。对素数 $p$，记 $z(p)=\min\{n>0:p\mid F_n\}$。有限素数集合 $H$ 称为调色板，允许 $H=\varnothing$；定义
+
+$$
+\begin{aligned}
+\mathsf V(H)&=\bigcup_{p\in H}\operatorname{Supp}(F_{z(p)}),\\
+A_H&=\operatorname{lcm}_{p\in H}F_{z(p)},\qquad A_{\varnothing}=1,\\
+E_H&=\{n>0:\operatorname{Supp}(F_n)\subseteq H\}.
+\end{aligned}
+\tag{364.2}
+$$
+
+沿用 [《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》§5](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#5-finite-fibonacci-rank-closure) 的带种子秩支撑闭包。具体地，置 $H_{>5}=\{p\in H:p>5\}$、$B=\max(5,\max H)$，其中 $\max\varnothing=0$，并令
+
+$$
+\begin{aligned}
+U_B&=\{p\le B:p\text{ 为素数}\},\\
+\mathsf T(K)&=K\cup\bigcup_{p\in K}\operatorname{Supp}(z(p)),\\
+\mathsf R(H)&=\mathsf T^{|U_B|}\bigl(\{2,3,5\}\cup H_{>5}\bigr).
+\end{aligned}
+\tag{364.3}
+$$
+
+这里 $\mathsf T^j$ 表示迭代 $j$ 次；$\mathsf R$ 加入的是 $z(p)$ 的素因子，$\mathsf V$ 加入的是 $F_{z(p)}$ 的素因子。称有限调色板 $K$ 为共同不动点，若 $\mathsf R(K)=K=\mathsf V(K)$。沿用定义 363.1 的整数闭包 $\mathscr C$，并记 $H_Q=\{p\le Q:p\text{ 为素数}\}$。
+
+**定理 364.2（有序共同闭包、精确实际纤维与二十三的塌缩）。** 对每个有限素数调色板 $H$，有以下共同刻画。
+
+（一）$\mathsf V(H)$ 是有限素数集合，且对任意有限素数调色板 $H'$，
+
+$$
+\begin{gathered}
+H\subseteq\mathsf V(H),\qquad
+H\subseteq H'\ \Longrightarrow\ \mathsf V(H)\subseteq\mathsf V(H'),\\
+\mathsf V(\varnothing)=\varnothing,\qquad
+\mathsf V(\mathsf V(H))=\mathsf V(H),\\
+\operatorname{Supp}(A_H)=\mathsf V(H),\qquad
+A_H=\mathscr C\!\left(\prod_{p\in H}p\right).
+\end{gathered}
+\tag{364.4}
+$$
+
+$A_H\in\mathcal M$ 是使支撑包含 $H$ 的整除最小实际值：对所有 $M\in\mathcal M$，$H\subseteq\operatorname{Supp}(M)$ 当且仅当 $A_H\mid M$。特别地，存在 $M\in\mathcal M$ 满足 $\operatorname{Supp}(M)=H$，当且仅当 $\mathsf V(H)=H$；此时 $A_H$ 本身就是这样的实现。值支撑的饱和一次即完成。
+
+（二）$\mathsf R(H)$ 是包含 $H\cup\{2,3,5\}$ 的有限素数集合，每个成员不大于 $B$，并且是包含这些种子的最小秩支撑封闭集合。先取 $\mathsf R$ 再取 $\mathsf V$ 得到最小共同不动点：
+
+$$
+\begin{gathered}
+\mathsf V(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\qquad
+\mathsf R(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\\
+H\subseteq K=\mathsf R(K)=\mathsf V(K)
+\ \Longrightarrow\ \mathsf V(\mathsf R(H))\subseteq K,\\
+\mathsf R(\mathsf V(H))\subseteq\mathsf V(\mathsf R(H)),\qquad
+\mathsf V(\mathsf R(\varnothing))=\{2,3,5\},\\
+q\in\mathsf V(\mathsf R(H))\ \Longrightarrow\
+ z(q)\le B+1\quad\text{且}\quad q\le F_{B+1}.
+\end{gathered}
+\tag{364.5}
+$$
+
+其中 $K$ 的量词限于有限素数调色板；共同不动点必含种子 $2,3,5$。最后一行是素数入口秩的界，不是所有 $H$ 光滑指标或其素幂深度的界。次序一般不能互换。实际族中的严格见证为
+
+$$
+\begin{gathered}
+\forall M\in\mathcal M,\quad31\mid M\ \Longrightarrow\ 61\mid M,\qquad
+61\mid F_{15},\quad31\nmid F_{15},\\
+\mathsf R(\{2,3,5,31\})=\{2,3,5,31\},\qquad
+\nexists M\in\mathcal M:\operatorname{Supp}(M)=\{2,3,5,31\},\\
+\forall M\in\mathcal M,\quad37\mid M\ \Longleftrightarrow\ 113\mid M,\qquad
+\mathsf V(\{37\})=\{37,113\},\\
+\mathsf R(\{37\})=\{2,3,5,19,37\},\\
+\mathsf R(\mathsf V(\{37\}))=\{2,3,5,19,37,113\}
+\ \subsetneq\ \mathsf V(\mathsf R(\{37\}))
+=\{2,3,5,17,19,37,113\}.
+\end{gathered}
+\tag{364.6}
+$$
+
+因此实际值的支撑可以是 $\mathsf V$ 不动点而不是 $\mathsf R$ 不动点；值支撑也可以越过初始调色板的最大素数。
+
+（三）$E_H$ 总是有限。置
+
+$$
+N_H=5\operatorname{lcm}_{p\in\mathsf R(H)}z(p),\qquad
+C_H=\{1,2,6,12\}\cup\{z(p):p\in H\}.
+$$
+
+有两个精确的支撑筛选式：
+
+$$
+E_H
+=\{d>0:d\mid N_H,\ \operatorname{Supp}(F_d)\subseteq H\}
+=\{n\in C_H:\operatorname{Supp}(F_n)\subseteq H\}.
+\tag{364.7}
+$$
+
+$C_H$ 必须经过实际支撑筛选，不能直接用它代替 $E_H$。若 $\mathsf V(H)=H$，定义 $B_H=\operatorname{lcm}_{n\in E_H}F_n$，则 $A_H,B_H\in\mathcal M$、$\operatorname{Supp}(A_H)=\operatorname{Supp}(B_H)=H$、$A_H\mid B_H$，而满支撑纤维恰为
+
+$$
+\{M\in\mathcal M:\operatorname{Supp}(M)=H\}
+=\{M\in\mathcal M:A_H\mid M\text{ 且 }M\mid B_H\}.
+\tag{364.8}
+$$
+
+这个整除区间始终限制在实际值 $\mathcal M$ 中。空调色板满足 $E_{\varnothing}=\{1,2\}$、$A_{\varnothing}=B_{\varnothing}=1$，纤维为 $\{1\}$。
+
+（四）对 $H_7=\{2,3,5,7\}$，从定理 363.2 的二十二态实际格提取的满支撑纤维为
+
+$$
+\begin{gathered}
+E_{H_7}=\{1,2,3,4,5,6,8,12\},\qquad
+A_{H_7}=210,\quad B_{H_7}=5040,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_7\}
+=\{210,840,5040\}.
+\end{gathered}
+\tag{364.9}
+$$
+
+对 $H_{19}=\{2,3,5,7,11,13,17,19\}$，有
+
+$$
+\begin{gathered}
+E_{H_{19}}=\{1,2,3,4,5,6,7,8,9,10,12,18\},\\
+A_{H_{19}}=38798760,\qquad B_{H_{19}}=232792560,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{19}\}
+=\{38798760,232792560\}.
+\end{gathered}
+\tag{364.10}
+$$
+
+再加入二十三，$H_{23}=H_{19}\cup\{23\}$ 给
+
+$$
+\begin{gathered}
+E_{H_{23}}=\{1,2,3,4,5,6,7,8,9,10,12,18,24\},\\
+A_{H_{23}}=B_{H_{23}}=\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})
+=10708457760\\
+=2^5\,3^2\,5\,7\,11\,13\,17\,19\,23,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{23}\}
+=\{10708457760\}.
+\end{gathered}
+\tag{364.11}
+$$
+
+在这次满支撑扩张中，任一旧纤维成员加入 $F_{24}$ 后都成为同一个新实际值，且上端点的增加由同一个 Möbius 原子记录：
+
+$$
+\begin{aligned}
+\operatorname{lcm}(38798760,F_{24})
+&=\operatorname{lcm}(232792560,F_{24})=10708457760,\\
+\frac{B_{H_{23}}}{B_{H_{19}}}
+&=\Psi_{24}=\frac{F_{24}F_4}{F_{12}F_8}=46=2\cdot23.
+\end{aligned}
+\tag{364.12}
+$$
+
+新素数二十三强迫的不仅是它自身，还包括已有素数二的更高赋值层。
+
+**证明。** （一）先在实际有限族中连接入口秩、支撑和整数闭包。正指标项均为正整数。沿用（361.8）、（363.13）的入口判据与强整除律的推论：
+
+$$
+p\mid F_n\ \Longleftrightarrow\ z(p)\mid n
+\quad(p\text{ 为素数},\ n>0),\qquad
+ a\mid b\ \Longrightarrow\ F_a\mid F_b\quad(a,b>0).
+\tag{364.13}
+$$
+
+这是 Fibonacci 强整除结构的既有供给。有限最小公倍数的素数赋值按（363.16）取最大值，所以对每个素数 $p$、整数 $e\ge1$，
+
+$$
+p^e\mid M(S)\ \Longleftrightarrow\ \exists s\in S,\ p^e\mid F_s.
+\tag{364.14}
+$$
+
+空集时两侧均假；非空时有限最大值必由一个成员达到。若 $p\mid M(S)$，取该成员，得到 $z(p)\mid s$，继而 $F_{z(p)}\mid F_s\mid M(S)$。对 $p\in H$ 逐个应用便得 $H\subseteq\operatorname{Supp}(M(S))\Rightarrow A_H\mid M(S)$。反向由于每个 $p\in H$ 整除 $F_{z(p)}$，从 $A_H\mid M(S)$ 得到 $H\subseteq\operatorname{Supp}(M(S))$。$A_H$ 的指标集合为有限的 $\{z(p):p\in H\}$，故它本身是实际值；lcm 的支撑是成员支撑的并集，因而 $\operatorname{Supp}(A_H)=\mathsf V(H)$。这证明整除最小性，包括空调色板。
+
+每个 $F_{z(p)}$ 为正整数，支撑有限；有限并集仍有限。$p\mid F_{z(p)}$ 给广延性，扩大 $H$ 给单调性，空并集给 $\mathsf V(\varnothing)=\varnothing$。若 $q\in\mathsf V(H)$，存在 $p\in H$ 使
+
+$$
+q\mid F_{z(p)}\ \Longrightarrow\ z(q)\mid z(p)
+\ \Longrightarrow\ F_{z(q)}\mid F_{z(p)}.
+\tag{364.15}
+$$
+
+因此 $\operatorname{Supp}(F_{z(q)})\subseteq\mathsf V(H)$，逐个 $q$ 取并集给 $\mathsf V(\mathsf V(H))\subseteq\mathsf V(H)$；另一包含由广延性得到。这是一次饱和的机制，不需继续添加新的值支撑层。若 $\operatorname{Supp}(M)=H$，整除最小性给 $\mathsf V(H)=\operatorname{Supp}(A_H)\subseteq H$，与广延性合并即得不动性；若 $\mathsf V(H)=H$，实际值 $A_H$ 就实现 $H$。
+
+由定义 363.1 的 $\mathscr C(m)=\operatorname{lcm}_{p^e\parallel m}F_{z(p^e)}$，对平方自由整数 $\prod_{p\in H}p$ 取 $e=1$，直接得到（364.4）中的闭包等式。$\mathscr C$ 的一般整除最小实际值解释在 §363 的证明中给出；实际族的原子重构沿用 §362 所引的 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。这些整数闭包与经典重构在这里连接的是同一个实际族。
+
+（二）再连接两种闭包。定义（364.3）正是前引 §5 对 $H_{>5}$ 的带种子闭包，$B$ 与该处的 $\max(5,\max H_{>5})$ 相同。该处定理 5.1 供给有限性、素性、界 $p\le B$、$\mathsf T$ 稳定性和最小性。所有不大于五的素数都已在种子中，所以 $H\subseteq\mathsf R(H)$。若有限素数集合包含种子且对 $\mathsf T$ 稳定，则该最小性与广延性共同给它的 $\mathsf R$ 不动性；反向 $\mathsf R$ 不动点必含种子并对 $\mathsf T$ 稳定。
+
+令 $J=\mathsf V(\mathsf R(H))$。它有限，包含 $\mathsf R(H)$ 和种子，且由（一）已对 $\mathsf V$ 不动。对 $q\in J$ 取 $p\in\mathsf R(H)$、$q\mid F_{z(p)}$。（364.15）给 $z(q)\mid z(p)$，所以 $z(q)$ 的每个素因子也是 $z(p)$ 的素因子，都已属于 $\mathsf R(H)\subseteq J$。因此 $\mathsf T(J)=J$。原秩闭包的最小性给 $\mathsf R(J)\subseteq J$，广延性给反向包含，于是 $J$ 为共同不动点。
+
+若 $H\subseteq K=\mathsf R(K)=\mathsf V(K)$，$K$ 已含种子且秩支撑稳定，原最小性给 $\mathsf R(H)\subseteq K$。再用 $\mathsf V$ 单调性得到 $J\subseteq\mathsf V(K)=K$。又因 $\mathsf V(H)\subseteq J$，且 $J$ 是含种子的秩支撑稳定集合，对初始调色板 $\mathsf V(H)$ 应用原最小性，得到 $\mathsf R(\mathsf V(H))\subseteq J$。这证明（364.5）的有序最小完成，而没有假设两种操作交换。
+
+既有素数入口秩界对 $p>5$ 给 $z(p)\mid p-(5/p)$，其中 $(5/p)\in\{-1,1\}$ 是 Legendre 符号；小素数满足 $z(2)=3$、$z(3)=4$、$z(5)=5$。因而
+
+$$
+p\in\mathsf R(H)\ \Longrightarrow\ 0<z(p)\le p+1\le B+1.
+\tag{364.16}
+$$
+
+对上述 $q,p$，$z(q)\mid z(p)$ 给 $z(q)\le B+1$。又 $q\mid F_{z(q)}$，正性给 $q\le F_{z(q)}$，Fibonacci 的单调性给 $q\le F_{B+1}$。此界针对入口秩；例如 $H_7$ 的 $B=7$，却有 $12\in E_{H_7}$，因此不能从它推出全部光滑指标都不大于 $B+1$。空调色板的秩闭包为 $\{2,3,5\}$，因为三个种子的秩只含这三个素因子；而 $F_3=2,F_4=3,F_5=5$，值闭包仍为同一集合。若去掉种子，则空闭包是另一个定义的问题。
+
+（三）核对有序完成的严格见证。递推和唯一素分解给
+
+$$
+F_{15}=610=2\cdot5\cdot61,\qquad
+F_{30}=832040=2^3\cdot5\cdot11\cdot31\cdot61,
+\qquad z(61)=15,\quad z(31)=30.
+\tag{364.17}
+$$
+
+为核对最小秩，$31\mid F_{30}$ 使 $z(31)\mid30$，三十的全部真正正约数为 $1,2,3,5,6,10,15$，相应 Fibonacci 值为 $1,1,2,5,8,55,610$，都不被三十一整除。十五的全部真正正约数为 $1,3,5$，相应值 $1,2,5$ 不被六十一整除，所以 $z(61)=15$。（364.14）–（364.13）使任何实际值中的三十一都强迫整个 $F_{30}$，从而强迫六十一和十一；$F_{15}$ 则反驳反向蕴涵。$z(31)=30$ 的素因子只有种子 $2,3,5$，故 $\{2,3,5,31\}$ 秩支撑稳定，原最小性给其 $\mathsf R$ 不动性；但它缺少六十一和十一，不可能是实际值的完整支撑。
+
+另一组递推值为
+
+$$
+\begin{gathered}
+F_{19}=4181=37\cdot113,\qquad F_{18}=2584=2^3\cdot17\cdot19,
+\qquad F_9=34=2\cdot17,\\
+z(37)=z(113)=19,\qquad z(19)=18,\qquad z(17)=9.
+\end{gathered}
+\tag{364.18}
+$$
+
+十九为素数，真正正约数只有一，而 $F_1=1$，故两条秩十九等式成立。十八的真正正约数 $1,2,3,6,9$ 的 Fibonacci 值为 $1,1,2,8,34$，都不被十九整除；九的真正正约数一和三给 $1,2$，不被十七整除。这证明余下两个最小秩。对全部实际值，三十七的出现强迫 $F_{19}$，一百一十三的出现也强迫同一个 $F_{19}$，故它们同时出现；特别地，$F_{19}$ 的支撑 $\{37,113\}$ 是值闭包不动点，缺少种子，因而不是带种子秩闭包不动点。
+
+从 $\{2,3,5,37\}$ 开始，$\mathsf T$ 只需加入十九；随后十九的秩十八只含二和三，种子的秩 $3,4,5$ 也不引入新素数。因此 $\{2,3,5,19,37\}$ 稳定，且任何含原种子的稳定集合都必须含十九，证明它恰为 $\mathsf R(\{37\})$。若初始调色板同时含一百一十三，其秩仍为十九，同理得到 $\mathsf R(\mathsf V(\{37\}))=\{2,3,5,19,37,113\}$。另一方面，对 $\mathsf R(\{37\})$ 取值支撑时，三个种子贡献 $2,3,5$，十九贡献 $\operatorname{Supp}(F_{18})=\{2,17,19\}$，三十七贡献 $\{37,113\}$；其并集恰为（364.6）的七素数集合。新十七的秩九只含三，所以这个并集也秩支撑稳定。两边唯一的差是十七，得到严格包含。$113>37$ 来自值支撑扩张，与原秩闭包的 $p\le B$ 界无矛盾，因为一百一十三不在原 $\mathsf R(\{37\})$ 中。
+
+（四）从支撑闭包转到精确纤维。令 $K=\mathsf R(H)$。若 $n\in E_H$，则全部正赋值素数支撑包含在 $H\subseteq K$ 中，故奇赋值支撑
+
+$$
+\{p:p\text{ 为素数},\ p\mid F_n,\ v_p(F_n)\text{ 为奇数}\}
+\subseteq K.
+\tag{364.19}
+$$
+
+$K$ 有限、含 $2,3,5$ 且秩支撑稳定，所以前引《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》[定理 10.3 的秩预算](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#104-a-divisibility-bound-replacing-an-unspecified-height-cutoff) 给 $n\mid5\operatorname{lcm}_{p\in K}z(p)=N_H$。各秩为正，$N_H>0$，其正约数有限。于是 $E_H$ 有限，（364.7）的第一个等号正是将这些正约数再按完整支撑筛选。这里完整正赋值支撑蕴涵奇赋值支撑受限，反向一般不成立；预算并没有把两个支撑概念等同。
+
+第二个筛选式使用经典原始素因子供给：Minoru Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。该文第 439 页的 primitive divisor 是素数 $p$，满足 $p\mid F_n$ 且不整除任何 $F_j$（$1\le j<n$）；Theorem 3 在第 441–442 页给出：每个 $n\notin\{1,2,6,12\}$ 的 $F_n$ 有这样的原始素因子。若 $n\in E_H$ 且不在例外集中，取该素数，便有 $p\in H$ 且 $z(p)=n$。所以 $E_H\subseteq C_H$；保留 $C_H$ 中实际支撑包含于 $H$ 的成员，恰好得到 $E_H$。例如 $H=\varnothing$ 时，$C_H$ 仍含六和十二，但 $F_6=8,F_{12}=144$ 不能通过空支撑筛选。因 $F_1=F_2=1$，而 $F_n\ge2$ 对 $n\ge3$ 成立，得到 $E_{\varnothing}=\{1,2\}$。原始素因子定理在这里是缩短候选集的经典中间步骤。
+
+现在假设 $\mathsf V(H)=H$。对每个 $p\in H$，$\operatorname{Supp}(F_{z(p)})\subseteq H$，所以 $z(p)\in E_H$，从而 $A_H\mid B_H$。有限集合 $E_H$ 本身实现 $B_H$，其所有项的支撑都包含于 $H$；$A_H\mid B_H$ 又迫使每个 $p\in H$ 出现，所以两端点都是满支撑 $H$ 的实际值。
+
+若 $M=M(S)$ 满支撑为 $H$，则（一）给 $A_H\mid M$；每个 $F_s\mid M$ 又给 $s\in E_H$，因而 $M\mid B_H$。反之，若实际值 $M$ 满足 $A_H\mid M\mid B_H$，支撑沿整除关系单调，得到 $H=\operatorname{Supp}(A_H)\subseteq\operatorname{Supp}(M)\subseteq\operatorname{Supp}(B_H)=H$。这证明（364.8）；空调色板的两端点为一，纤维也只含一。
+
+限制到实际值不可省略。由（363.12），任何实际值都满足四与八同时整除，然而
+
+$$
+210\mid420\mid5040,\qquad 4\mid420,\quad8\nmid420,
+\qquad420\notin\mathcal M.
+\tag{364.20}
+$$
+
+同样，证明 $A_H$ 最小性时所用的达到只能逐素数或逐素幂进行；任意合数不必在某一成员中达到。沿用（363.25）的例子，
+
+$$
+M(\{3,4\})=6,\qquad
+\mathscr C(6)=\operatorname{lcm}(F_3,F_4)=6,\qquad
+z(6)=12,\quad F_{z(6)}=144.
+\tag{364.21}
+$$
+
+六的两个素数因子来自不同项，不能由 $6\mid M(S)$ 推出 $F_{z(6)}\mid M(S)$。因此（一）按调色板的素数分别取入口，没有把合数整体当作一个达到的成员。
+
+（五）最后用无界候选筛选和生成项支配，求出三个完整纤维。所需素数的最小秩与相应值为
+
+$$
+\begin{array}{c|rrrrrrrrr}
+p&2&3&5&7&11&13&17&19&23\\ \hline
+z(p)&3&4&5&8&10&7&9&18&24\\
+F_{z(p)}&2&3&5&21&55&13&34&2584&46368
+\end{array}
+\tag{364.22}
+$$
+
+前三个秩已在（二）中给出，七的秩八沿用（363.14），十七和十九沿用（364.18）。十一整除 $F_{10}=55$，而十的真正正约数一、二、五给 $1,1,5$，排除更小入口；十三整除 $F_7=13$，七的真正正约数只有一；二十三的情况用
+
+$$
+F_{24}=46368=2^5\,3^2\,7\,23.
+\tag{364.23}
+$$
+
+二十四的全部真正正约数为 $1,2,3,4,6,8,12$，相应值 $1,1,2,3,8,21,144$ 都不被二十三整除，所以 $z(23)=24$。这些最小性论证依靠入口判据，排除的是全部真正约数，因而没有指标截断。
+
+对 $H_7$，$C_{H_7}=\{1,2,3,4,5,6,8,12\}$，其全部 Fibonacci 值为 $1,1,2,3,5,8,21,144$，都通过支撑筛选；（364.7）排除了该集合以外的所有正指标。$A_{H_7}=\operatorname{lcm}(2,3,5,21)=210$，$B_{H_7}=\operatorname{lcm}(5,21,144)=5040$。定理 363.2 的轮廓（363.6）在满支撑条件下要求五、七的指数均为一，二、三的指数均为正；允许的二、三指数对恰为 $(1,1),(3,1),(4,2)$，给出 $210,840,5040$。这是对既有二十二态格的满支撑提取。
+
+对 $H_{19}$，（364.22）与四个例外给出的整个 $C_{H_{19}}$ 正是（364.10）所列指标；每项通过支撑筛选。除一和二以外，其值逐项为
+
+$$
+\begin{aligned}
+(F_3,F_4,F_5,F_6,F_7,F_8,F_9,F_{10},F_{12},F_{18})
+=(2,3,5,8,13,21,34,55,144,2584).
+\end{aligned}
+\tag{364.24}
+$$
+
+因此（364.7）证明完整的 $E_{H_{19}}$，包括所有无界正指标的排除。由指标整除，$F_3,F_6,F_9\mid F_{18}$，$F_4\mid F_8$，$F_5\mid F_{10}$；其余非平凡生成项只剩 $F_7,F_8,F_{10},F_{12},F_{18}$。入口值中的 $F_{12}$ 不出现在 $A_{H_{19}}$ 的定义中，所以
+
+$$
+\begin{aligned}
+A_{H_{19}}&=\operatorname{lcm}(F_7,F_8,F_{10},F_{18})
+=2^3\,3\,5\,7\,11\,13\,17\,19=38798760,\\
+B_{H_{19}}&=\operatorname{lcm}(A_{H_{19}},F_{12})
+=2^4\,3^2\,5\,7\,11\,13\,17\,19=232792560.
+\end{aligned}
+\tag{364.25}
+$$
+
+这些入口值均以 $H_{19}$ 为支撑上界，故 $\mathsf V(H_{19})=H_{19}$。若实际值满支撑为 $H_{19}$，十三、七、十一、十九的出现分别强迫 $F_7,F_8,F_{10},F_{18}$；而所有其他可选项除 $F_{12}$ 外都整除它们的 lcm。因此整个满支撑值只有 $A_{H_{19}}$ 和 $\operatorname{lcm}(A_{H_{19}},F_{12})$ 两种。指标集 $\{7,8,10,18\}$ 与 $\{7,8,10,12,18\}$ 分别实现它们，必要性和充分性同时成立。
+
+对 $H_{23}$，候选集只在 $C_{H_{19}}$ 上加入 $z(23)=24$；新值（364.23）通过支撑筛选，旧值也全部通过，所以（364.11）给出的 $E_{H_{23}}$ 完整。由 $8\mid24$、$12\mid24$，$F_8,F_{12}\mid F_{24}$；结合前一段的支配关系，整个 $E_{H_{23}}$ 的 Fibonacci 值都整除 $\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})$。反向这四项都来自 $E_{H_{23}}$。入口定义还要求 $F_{24}$，故它已经吸收先前可能另选的 $F_{12}$ 和 $F_8$，得到
+
+$$
+A_{H_{23}}=B_{H_{23}}
+=\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})=10708457760.
+\tag{364.26}
+$$
+
+其支撑恰为 $H_{23}$，因此 $\mathsf V(H_{23})=H_{23}$，并由（364.8）得到单元素纤维。指标集 $\{7,10,18,24\}$ 给明确实际实现。对（364.25）的任一旧端点加入 $F_{24}$，旧端点中二的指数三或四都提升到五，三的指数一或二都达到二，七已被 $F_{24}$ 包含，其余五个旧素数层保持在同一 lcm 中，再加入二十三。这直接证明（364.12）的两个 lcm 等式。
+
+最后沿用定义 362.1 的 Möbius 原子。二十四的约数中，$\mu(24/e)$ 非零的恰为 $e=4,8,12,24$，相应符号为 $+,-,-,+$。因此
+
+$$
+\Psi_{24}
+=\frac{F_{24}F_4}{F_{12}F_8}
+=\frac{46368\cdot3}{144\cdot21}=46
+=\frac{10708457760}{232792560}.
+\tag{364.27}
+$$
+
+这正是既有 Nowicki 型原子重构在同一扩张上的局部增量；分子使用 $F_4$。比值 $2\cdot23$ 同时记录新素数二十三和旧素数二的额外一层。上述纤维描述的是实际有限 Fibonacci 最小公倍数在指定完整素数支撑下的全部值，证明依赖无界入口筛选与生成项支配，而非对指标作有限截断。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 365. 完整素支撑纤维的全局三态分类与 Robin 单元素归约
+
+**定义 365.1（完整支撑纤维与去二三部分）。** 沿用定义 364.1 的标准 Fibonacci 序列、正指标有限最小公倍数族 $\mathcal M$、完整素支撑 $\operatorname{Supp}$、正入口秩 $z(p)$ 及不带种子的值支撑操作 $\mathsf V$。具体地，对有限 $S\subseteq\mathbb N_{>0}$ 和有限素数调色板 $H$，允许二者为空，记
+
+$$
+\begin{aligned}
+M(S)&=\operatorname{lcm}_{s\in S}F_s,&M(\varnothing)&=1,\\
+\mathcal M&=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\},&
+\operatorname{Supp}(m)&=\{p:p\text{ 为素数且 }p\mid m\}\quad(m>0),\\
+A_H&=\operatorname{lcm}_{p\in H}F_{z(p)},&A_{\varnothing}&=1,\\
+\mathsf V(H)&=\bigcup_{p\in H}\operatorname{Supp}(F_{z(p)}),&
+\mathcal T_H&=\{m\in\mathcal M:\operatorname{Supp}(m)=H\}.
+\end{aligned}
+\tag{365.1}
+$$
+
+这里支撑包含全部素因子，不按赋值的奇偶性筛选。称 $H$ 可实现，若 $\mathcal T_H\ne\varnothing$。对可实现的 $H$，沿用（364.7）–（364.8）的 $E_H=\{n>0:\operatorname{Supp}(F_n)\subseteq H\}$ 与 $B_H=\operatorname{lcm}_{n\in E_H}F_n$，并唯一写成
+
+$$
+A_H=2^a3^bK,\qquad a=v_2(A_H),\quad b=v_3(A_H),
+\quad K\in\mathbb N_{>0},\quad\gcd(K,6)=1.
+\tag{365.2}
+$$
+
+$K$ 只表示 $A_H$ 去掉二、三素幂后的整数部分，不另假定 $K\in\mathcal M$。对整数 $n>5040$，$\mathcal R(n)$ 始终是（362.2）的同一个 Robin 比值 $\sigma(n)/(e^\gamma n\log\log n)$，其中 $\sigma(n)=\sum_{d\mid n}d$，$\gamma$ 为 Euler 常数，所有对数均为自然对数。
+
+**定理 365.2（实际完整支撑的三态、上端点比较与单元素剩余）。** 对任意有限素数调色板 $H$，有以下共同刻画。
+
+（一）若 $\mathsf V(H)\ne H$，则 $\mathcal T_H=\varnothing$。若 $\mathsf V(H)=H$，则
+
+$$
+\mathcal T_H
+=\{A_H\}
+\ \cup\ \{\operatorname{lcm}(A_H,8):2\in H\}
+\ \cup\ \{\operatorname{lcm}(A_H,144):\{2,3\}\subseteq H\}.
+\tag{365.3}
+$$
+
+右侧按集合取不同整数，条件不成立的项不加入，重复项只计一次。因此每个非空纤维至多有三个成员，按整除成链；最小元为 $A_H$，最大元为既有 $B_H$。具体地，$2\notin H$ 时 $B_H=A_H$；$2\in H,3\notin H$ 时 $B_H=\operatorname{lcm}(A_H,8)$；$\{2,3\}\subseteq H$ 时 $B_H=\operatorname{lcm}(A_H,144)$。空调色板的纤维为 $\mathcal T_{\varnothing}=\{1\}$，两端点均为一。
+
+（二）对同一完整支撑的任意两个实际值 $m,m'\in\mathcal T_H$，每个素数 $p\ge5$ 都满足 $v_p(m)=v_p(m')$。在可实现调色板内，全部非单元素情形恰为
+
+$$
+\begin{array}{c|c|c}
+\text{调色板及最小元条件}&\mathcal T_H&\#\mathcal T_H\\ \hline
+\{2,3\}\subseteq H,\ a=1,\ b=1&\{6K,24K,144K\}&3\\
+\{2,3\}\subseteq H,\ a=3,\ b=1&\{24K,144K\}&2\\
+2\in H,\ 3\notin H,\ a=1,\ b=0&\{2K,8K\}&2
+\end{array}
+\tag{365.4}
+$$
+
+因此三成员纤维只能是第一行；含三的二成员纤维只能是第二行；不含三的二成员纤维只能是第三行。每行的最小系数对应 $A_H$。特别地，
+
+$$
+\#\mathcal T_H>1\quad\Longrightarrow\quad
+\forall m\in\mathcal T_H,\qquad v_2(m)\le4,\quad v_3(m)\le2.
+\tag{365.5}
+$$
+
+这些上界不施加于单元素纤维；（365.4）也不是对任意与六互素的 $K$ 自动断言可实现性。
+
+（三）对每个实际 $m\in\mathcal T_H$ 且 $m>5040$，有
+
+$$
+\mathcal R(m)\le\mathcal R(B_H),
+\qquad
+\mathcal R(m)=\mathcal R(B_H)\ \Longleftrightarrow\ m=B_H.
+\tag{365.6}
+$$
+
+更强地，同一纤维中 $5040<m<m'$ 必有 $\mathcal R(m)<\mathcal R(m')$。这是完整支撑下不同实际值之间的比较，不是任意整数整除区间上的单调性。
+
+（四）对每个素指标 $r\ge5$，令 $H_r=\{2,3\}\cup\operatorname{Supp}(F_r)$，则
+
+$$
+\begin{gathered}
+\gcd(F_r,6)=1,\qquad \mathsf V(H_r)=H_r,\qquad A_{H_r}=6F_r,\\
+\mathcal T_{H_r}=\{6F_r,24F_r,144F_r\},\\
+M(\{3,4,r\})=6F_r,\qquad
+M(\{4,6,r\})=24F_r,\qquad
+M(\{12,r\})=144F_r.
+\end{gathered}
+\tag{365.7}
+$$
+
+这些三成员纤维的最小元无界：对每个实数 $X>0$，存在这样的 $r$ 使 $6F_r>X$。
+
+（五）每个非单元素纤维中的成员只要大于 $5040$，都满足严格 Robin 不等式。因而
+
+$$
+m\in\mathcal M,\quad m>5040,\quad\mathcal R(m)\ge1
+\quad\Longrightarrow\quad
+\mathcal T_{\operatorname{Supp}(m)}=\{m\},\qquad
+m=A_{\operatorname{Supp}(m)}=B_{\operatorname{Supp}(m)}.
+\tag{365.8}
+$$
+
+整个实际族上的严格 Robin 命题等价于只在可实现单元素调色板上的命题：
+
+$$
+\begin{aligned}
+&\forall m\in\mathcal M,\quad m>5040\ \Longrightarrow\ \mathcal R(m)<1\\
+\Longleftrightarrow\quad
+&\forall H\text{ 有限素数调色板且 }\mathsf V(H)=H,\quad
+A_H=B_H>5040\ \Longrightarrow\ \mathcal R(A_H)<1.
+\end{aligned}
+\tag{365.9}
+$$
+
+右侧的 $B_H$ 只在已满足 $\mathsf V(H)=H$ 的调色板上使用。
+
+**证明。** （一）先将完整支撑条件转成同一实际值的生成项条件。沿用（363.13）、（364.13）的入口判据与指标整除性：对素数 $p$ 和正指标 $n$，$p\mid F_n$ 当且仅当 $z(p)\mid n$；若 $u\mid n$，则 $F_u\mid F_n$。在有限最小公倍数中，素数整除必由某一成员承担。因此若 $m=M(S)$ 满支撑为 $H$，对每个 $p\in H$ 可选 $s\in S$ 使 $p\mid F_s$，从而 $F_{z(p)}\mid F_s\mid m$。逐个 $p$ 取 lcm 得 $A_H\mid m$。又 $A_H=M(\{z(p):p\in H\})$ 本身实际，且它的支撑是 $\mathsf V(H)$。这正是定理 364.2（一）的整除最小性与可实现性：$H$ 可实现当且仅当 $\mathsf V(H)=H$。它也直接给不可实现情形的空纤维。
+
+缩短全部可用生成指标所需的经典中间输入为 Minoru Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。第 439 页的 primitive divisor 是素数 $p$，满足 $p\mid F_n$ 且不整除任何更早的正指标项 $F_j$（$1\le j<n$）；Theorem 3 的陈述及证明在第 441–442 页，给出例外恰为 $1,2,6,12$ 的原始素因子存在结论。这与（364.7）中所用的经典供给相同，不把指数奇偶支撑或另一种带判别式排除的约定混入此处。
+
+若 $\operatorname{Supp}(F_n)\subseteq H$ 且 $n\notin\{1,2,6,12\}$，取该原始素数便有 $p\in H$ 和 $z(p)=n$。所以每个可用指标都属于
+
+$$
+\{1,2,6,12\}\cup\{z(p):p\in H\}.
+\tag{365.10}
+$$
+
+非例外项因而整除 $A_H$；例外项沿用（363.14）的 $F_1=F_2=1,F_6=8,F_{12}=144$，并有 $8\mid144$。对 $m=M(S)\in\mathcal T_H$，已经证明 $A_H\mid m$，故可将 $A_H$ 加入同一个 lcm 而不改变 $m$。随后所有非例外项均被 $A_H$ 吸收；若十二被选中，八又被一百四十四吸收。因此 $m$ 必为 $A_H$、$\operatorname{lcm}(A_H,8)$ 或 $\operatorname{lcm}(A_H,144)$ 中的一个。选择六要求 $2\in H$，选择十二要求 $\{2,3\}\subseteq H$，否则这些项本身的素支撑已越过 $H$。这证明（365.3）从左到右的包含。
+
+反向，在 $\mathsf V(H)=H$ 下，正指标集合 $J_H=\{z(p):p\in H\}$ 实现 $A_H$，支撑恰为 $H$。若 $2\in H$，将六加入 $J_H$ 实现 $\operatorname{lcm}(A_H,8)$，其支撑仍为 $H$；若 $\{2,3\}\subseteq H$，将十二加入 $J_H$ 实现 $\operatorname{lcm}(A_H,144)$，同样保留完整支撑。这证明另一个包含，不需要将实际族以外的整数补进纤维。
+
+由于 $8\mid144$，这些不同值按整除成链。定理 364.2（三）已给 $E_H$ 有限；在不动调色板下 $J_H\subseteq E_H$，所以 $A_H\mid B_H$，而 $B_H=M(E_H)$ 的支撑恰为 $H$。它是纤维成员且每个纤维成员都整除它，故等于刚才三态集合的最大元。空调色板只有指标一、二可用，$J_{\varnothing}=\varnothing$ 实现一，得到所述单位情形。这还说明非空调色板不能把一作为满支撑成员。
+
+（二）再把生成分类与既有激活关系组合。八和一百四十四只含二、三，所以（365.3）给所有 $p\ge5$ 的赋值不变。对 $A_H=2^a3^bK$，每个候选值的去二三部分都是同一个 $K$。沿用（363.12）对整个实际族成立的两个激活等价
+
+$$
+4\mid M\ \Longleftrightarrow\ 8\mid M,
+\qquad
+16\mid M\ \Longleftrightarrow\ 9\mid M
+\qquad(M\in\mathcal M).
+\tag{365.11}
+$$
+
+它们作为本推导的既有中间关系使用，不要求七光滑，也不对任意正整数断言。
+
+若 $2\notin H$，没有可加入的例外项，纤维为单元素。若 $2\in H$ 而 $3\notin H$，则 $a\ge1,b=0$。第二个激活等价排除 $a\ge4$，第一个排除 $a=2$，所以 $a\in\{1,3\}$。$a=1$ 给 $A_H=2K$，加入八变成 $8K$，两个值不同；$a=3$ 时八已整除 $A_H$，纤维仍为单元素。
+
+若 $\{2,3\}\subseteq H$，则 $a,b\ge1$。第二个激活等价给 $a\ge4$ 当且仅当 $b\ge2$。只要这一条件成立，$144\mid A_H$，两个例外项都已被吸收，纤维为单元素。否则 $a\le3,b=1$，第一个激活等价又使 $a\in\{1,3\}$。$a=1$ 时三个候选恰为 $6K,24K,144K$；$a=3$ 时最前两个候选重合为 $24K$，剩下 $144K$。因为 $K>0$，列出的不同系数确实产生不同整数。这穷尽（365.4）的所有非单元素情况，也证明每行条件的充分性。（365.5）逐个系数读出；单元素情形可能来自更高的 $a,b$，不能沿用这些上界。
+
+（三）在同一纤维内比较同一个 Robin 比值。记 $Z(n)=\sigma(n)/n$。由 $\gcd(K,6)=1$ 和经典约数和乘法性，
+
+$$
+\begin{aligned}
+Z(6K)&=2Z(K),& Z(24K)&=\frac52Z(K),&
+Z(144K)&=\frac{403}{144}Z(K),\\
+Z(2K)&=\frac32Z(K),&Z(8K)&=\frac{15}{8}Z(K).
+\end{aligned}
+\tag{365.12}
+$$
+
+这里三种含三系数分别来自 $(3/2)(4/3)$、$(15/8)(4/3)$、$(31/16)(13/9)$。因此同一纤维中任意不相等的有序对 $m<m'$，其乘数 $r=m'/m$ 和增益 $g=Z(m')/Z(m)$ 只能是
+
+$$
+(r,g)\in
+\left\{\left(4,\frac54\right),
+\left(6,\frac{403}{360}\right),
+\left(24,\frac{403}{288}\right)\right\}.
+\tag{365.13}
+$$
+
+第一对同时覆盖 $2K\to8K$ 与 $6K\to24K$；其余两对分别覆盖 $24K\to144K$ 与 $6K\to144K$。
+
+下面只在这一步中给出所需严格对数界。指数级数的前五项和为 $65/24$；从 $1/5!$ 开始，后继项与前项之比不大于 $1/6$，故
+
+$$
+e\le\frac{65}{24}+\frac{1/120}{1-1/6}
+=\frac{1631}{600}<\frac{11}{4},\qquad
+e^2<\frac{121}{16}<8,\qquad e^8<4096<5040.
+\tag{365.14}
+$$
+
+两个正项级数的有限部分给
+
+$$
+\begin{aligned}
+\exp(7/10)&>\sum_{j=0}^{3}\frac{(7/10)^j}{j!}
+=\frac{12013}{6000}>2,\\
+\exp(9/5)&>\sum_{j=0}^{6}\frac{(9/5)^j}{j!}
+=\frac{7542629}{1250000}>6.
+\end{aligned}
+\tag{365.15}
+$$
+
+因此 $\log2<7/10$，并得到
+
+$$
+\log4<\frac75,\qquad
+\log6<\frac95,\qquad
+\log24=\log4+\log6<\frac{16}{5}.
+\tag{365.16}
+$$
+
+若 $m>5040$，（365.14）给 $\log m>8$；又 $e^2<8<\log m$ 给 $\log\log m>2$。对 $r>1$，令 $u=\log r/\log m>0$，积分式 $\log(1+u)=\int_0^u(1+s)^{-1}\,ds<u$ 给
+
+$$
+\frac{\log\log(rm)}{\log\log m}
+=1+\frac{\log(1+\log r/\log m)}{\log\log m}
+<1+\frac{\log r}{(\log m)(\log\log m)}
+<1+\frac{\log r}{16}.
+\tag{365.17}
+$$
+
+（365.16）与严格有理比较
+
+$$
+\frac{87}{80}<\frac54,\qquad
+\frac{89}{80}<\frac{403}{360},\qquad
+\frac65<\frac{403}{288}
+\tag{365.18}
+$$
+
+表明（365.13）的每一对都有 $\log\log(rm)/\log\log m<g$。三项有理差分别是 $13/80,1/144,287/1440$，均为正。于是
+
+$$
+\frac{\mathcal R(m')}{\mathcal R(m)}
+=g\frac{\log\log m}{\log\log(rm)}>1.
+\tag{365.19}
+$$
+
+$Z(m)>0$ 且 $\log\log m>0$，所以该商的严格不等式就是所述严格 Robin 比较。取 $m'=B_H$ 给（365.6）的不相等情形；$m=B_H$ 给等号，单元素纤维也包含在内。
+
+（四）构造最小元无界的实际三态纤维。沿用（363.14）的 $z(2)=3,z(3)=4$；素数 $r\ge5$ 不被三或四整除，所以入口判据给 $\gcd(F_r,6)=1$。若素数 $q\mid F_r$，同一判据给 $z(q)\mid r$，而 $F_1=1$ 排除 $z(q)=1$。因 $r$ 为素数，必有
+
+$$
+q\mid F_r\quad\Longrightarrow\quad z(q)=r.
+\tag{365.20}
+$$
+
+这一步只用入口判据和素指标，不需原始素因子定理。$F_5=5$，且 $n\ge5$ 时 $F_n\ge n$ 蕴涵 $F_{n+1}=F_n+F_{n-1}\ge n+1$，其中 $F_{n-1}\ge1$。归纳得 $F_r\ge r\ge5$，所以 $F_r$ 的素支撑非空。$H_r$ 中二、三的入口项分别为二、三，其余素数的入口项由（365.20）全是 $F_r$。因此
+
+$$
+A_{H_r}=\operatorname{lcm}(2,3,F_r)=6F_r,
+\qquad \operatorname{Supp}(A_{H_r})=H_r=\mathsf V(H_r).
+\tag{365.21}
+$$
+
+在（365.2）中这给 $a=b=1,K=F_r$，（365.4）遂给三成员纤维。（365.7）的三个实现由 $F_3=2,F_4=3,F_6=8,F_{12}=144$ 及 $\gcd(F_r,6)=1$ 直接取 lcm 得到。素数无穷且无界；给定 $X>0$，取素数 $r>\max\{5,X/6\}$，则 $6F_r\ge6r>X$。故三成员纤维并不限于有界大小的实际值。
+
+（五）最后把形状分类接到已发表的低赋值停止条件。Alexander Hertlein，*Robin's inequality for new families of integers*，Integers **18** (2018)，A71，[发表本](https://math.colgate.edu/~integers/s71/s71.pdf)，[作者版本 arXiv:1612.05186v2](https://arxiv.org/pdf/1612.05186v2)，第 2 页 Theorem 1 给出：每个 $n>5040$ 若 $v_2(n)\le19$，则 $\sigma(n)<e^\gamma n\log\log n$。同页 Theorem 2 还给出 $v_3(n)\le12$ 时 $n>5040$ 的严格 Robin 结论。这些是本证明所引用的已发表中间结论；§86 的五方向停止与 §95、§277 的来源停止已使用同类低赋值供给。
+
+由（365.5），非单元素纤维的每个成员都有 $v_2\le4\le19$，所以只要该成员大于 $5040$，Theorem 1 就给严格 Robin；也可由 $v_3\le2\le12$ 应用 Theorem 2 的素数三方向。这里低赋值上界对同一成员成立，无须把不同成员的条件拼接。若实际 $m>5040$ 有 $\mathcal R(m)\ge1$，取其完整支撑 $H=\operatorname{Supp}(m)$。该 $H$ 自动可实现。非单元素情况刚被排除，而纤维非空，故 $\mathcal T_H=\{m\}$。由（一）的两个端点都属于纤维，得 $m=A_H=B_H$，证明（365.8）。
+
+若（365.9）左侧成立，每个右侧所量化的 $A_H$ 都是大于 $5040$ 的实际值，直接得到右侧。反向，给任意实际 $m>5040$ 和它的完整支撑 $H$。若纤维非单元素，刚才的文献条件已给 $\mathcal R(m)<1$；若纤维单元素，则 $m=A_H=B_H>5040$，右侧假设给同一结论。两类穷尽所有实际值，所以得到左侧。
+
+（365.9）的量词域始终是 $\mathcal M$，没有将其等同于全部正整数，也没有据此将该归约说成 RH 的等价命题。纤维内的严格比较（365.6）本身不推出 $\mathcal R(B_H)<1$；非单元素纤维的上端点小于一由本段的已发表低赋值条件另行给出，单元素纤维则保留在（365.9）的右侧。$\square$
+
+## 追加锚（本行以下为增补区）

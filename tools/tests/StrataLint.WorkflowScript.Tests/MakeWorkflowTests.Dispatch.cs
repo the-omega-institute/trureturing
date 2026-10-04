@@ -106,6 +106,18 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("[[ -d", cacheEnsure, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Equal($"\t@/bin/bash {ScribeReleaseScriptPath}", Recipe(makefile, "scribe-release"));
+        Assert.Equal(
+            $"\t@/bin/bash {ScribeReleaseScriptPath} publish --prefix \"$$PREFIX\" --target \"$$TARGET\"",
+            Recipe(makefile, "scribe-release-publish"));
+        Assert.Equal(
+            $"\t@/bin/bash {ScribeReleaseScriptPath} fetch \"$$DIGEST\" --prefix \"$$PREFIX\"",
+            Recipe(makefile, "scribe-release-fetch"));
+        Assert.Contains(
+            "scribe-release-publish scribe-release-fetch: export PREFIX ?= scribe-resources",
+            makefile,
+            StringComparison.Ordinal);
+        Assert.Contains("scribe-release-publish: export TARGET ?=", makefile, StringComparison.Ordinal);
+        Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Contains(
             IngestScriptPath + " align-digestion-status",
@@ -443,10 +455,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml", rootOutput, StringComparison.Ordinal);
         Assert.Contains("make scribe-release  Rebuild and verify local Scribe release assets", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make dotnet", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make tools-test", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", rootOutput, StringComparison.Ordinal);
+
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        Assert.Contains("make scribe-release-fetch DIGEST=\"$(DIGEST)\" PREFIX=\"$(PREFIX)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
+        Assert.Contains("--scribe-pack \"$(SCRIBE_PACK)\" --scribe-pack-digest \"$(DIGEST)\"", Recipe(makefile, "dag"), StringComparison.Ordinal);
+        Assert.DoesNotContain("DIGEST", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-release-fetch", Recipe(makefile, "filemap"), StringComparison.Ordinal);
+        Assert.Contains("-- filemap", Recipe(makefile, "filemap"), StringComparison.Ordinal);
 
         Assert.Equal(0, toolsResult.ExitCode);
         var toolsOutput = System.Text.Encoding.UTF8.GetString(toolsResult.StandardOutput);

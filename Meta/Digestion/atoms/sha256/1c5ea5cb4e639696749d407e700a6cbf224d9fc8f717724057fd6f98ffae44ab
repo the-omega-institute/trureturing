@@ -1,0 +1,9 @@
+**定理 28.4（两族相同的零超额相容复形）。** 两族在确定性与期望意义下均有且只有空面和四个单元素面：
+
+$$
+K_{\mathrm d}(\boldsymbol P^{\mathrm b})=K_{\mathrm e}(\boldsymbol P^{\mathrm b})
+=K_{\mathrm d}(\boldsymbol P^{\mathrm p})=K_{\mathrm e}(\boldsymbol P^{\mathrm p})
+=K_\circ:=\{\varnothing,\{1\},\{2\},\{3\},\{4\}\}.
+\tag{28.13}
+$$
+

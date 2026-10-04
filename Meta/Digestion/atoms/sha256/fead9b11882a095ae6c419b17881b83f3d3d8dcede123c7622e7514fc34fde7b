@@ -1,0 +1,35 @@
+**Theorem 8.2 (the complete $p=2$ and $p=3$ cases).** There are no
+admissible triples for $p=2$, and there are exactly six for $p=3$:
+
+$$
+\begin{aligned}
+  A(2)&=0,\\
+  \mathcal T_3&=
+    \{\Gamma(a,b,F):a\in\{1,2\},\ b\in F\},\\
+  A(3)&=6.
+\end{aligned}
+$$
+
+For $p=3$, these six triples form exactly two translation orbits,
+one for each nonzero slope. Each orbit has three triples, and
+$\Gamma(a,b,F)$ has translation stabilizer
+
+$$
+  H_a=\{(h,ah):h\in F\}.
+$$
+
+**Proof.** When $p=2$, an injective first-coordinate projection of a
+three-element set into the two-element field is impossible. Equivalently,
+$\mathcal X_2$ is empty and $\binom23=0$.
+
+When $p=3$, the only three-element subset of $F$ is $F$ itself. There
+are two nonzero slopes and three intercepts; Theorem 7.2 shows that all
+six graph triples are admissible, distinct, and exhaustive. Accordingly,
+$3(3-1)\binom33=6$. Since $h+F=F$ for every $h$, Theorem 8.1
+identifies precisely the three intercept choices for each fixed slope
+as one orbit. A translation fixes such a graph exactly when
+$b+k-ah=b$, or $k=ah$, giving the displayed stabilizer of size three.
+For $n=3$, these two stabilizers are the subgroups $H_+$ and $H_-$
+of Theorem 1, and its two exceptional orbits exhaust $\mathcal T_3$.
+$\square$
+

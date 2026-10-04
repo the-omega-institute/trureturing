@@ -1,0 +1,25 @@
+实际规模满足
+
+$$
+\begin{gathered}
+|\log\Psi_n-L\varphi(n)|\le1,\\
+\left|b_m-\frac\kappa2m^2\right|
+\le L\left(mH_m+\frac m2+\frac12\right)+m,\\
+\frac\kappa4m^2\le b_m\quad(m\ge256),\qquad
+0\le b_m\le\frac L2m(m-1)<m^2\quad(m\ge1).
+\end{gathered}
+\tag{358.4}
+$$
+
+使用下述 Kurlberg–Rudnick Theorem 14 和 Dusart Theorems 6.9、6.12 的已发表普通数学结论，则存在整数 $m_0$，使每个整数 $m\ge m_0$ 都满足
+
+$$
+Q_m>5040,\qquad
+G(Q_m)\le-\frac18\log\frac{16}{15},\qquad
+\frac{\sigma(Q_m)}{e^\gamma Q_m\log\log Q_m}
+\le\left(\frac{15}{16}\right)^{1/8}<1.
+\tag{358.5}
+$$
+
+这里 $m_0$ 是存在阈值，不是已给出的数值截止。
+

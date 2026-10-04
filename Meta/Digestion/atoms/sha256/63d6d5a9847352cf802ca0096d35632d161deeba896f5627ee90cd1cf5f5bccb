@@ -1,0 +1,22 @@
+**推论 10.3（三种增长标度与格点相位）。** 当 $n\to\infty$、$k=k(n)\ge2$ 时：
+
+$$
+\begin{array}{ll}
+n2^{-k}\to0&\Longrightarrow p_{n,k}\to1,\\
+n2^{-k}\to\tau\in(0,\infty)&\Longrightarrow p_{n,k}\to e^{-\tau/2},\\
+n2^{-k}\to\infty&\Longrightarrow p_{n,k}\to0.
+\end{array}
+$$
+
+固定整数 $c$ 且 $k=\lfloor\log_2n\rfloor+c$ 时，若沿子列 $\{\log_2n\}\to\theta$，则相应概率极限为
+
+$$
+\exp\bigl(-2^{\theta-c-1}\bigr).
+$$
+
+不保留小数部分的格点相位，就没有一个共同的单一临界极限。
+
+证明。稀疏情形 $n<k$ 时概率恰为一；其余用 $1-p\le\mu\le(n+2)2^{-k-1}$ 即得。临界情形迫使 $k\to\infty$ 且 $k/n\to0$，所以 $\mu\to\tau/2$，而命题 10.2 的误差趋零。稠密情形最终 $k<n$ 且 $k/n\to0$，因此 $\mu\to\infty$，方差界给 $p\to0$；这也包括固定 $k$ 的长词情形，毋须把大误差的绝对近似当作相对近似。
+
+在格点选择下，$n2^{-k}=2^{\{\log_2n\}-c}$，代入临界结论即得子列极限。取 $n=2^\ell$ 和 $n=\lfloor2^{\ell+\theta}\rfloor$、$0<\theta<1$，给出不同相位及不同极限。证毕。
+

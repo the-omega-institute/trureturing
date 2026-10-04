@@ -15,6 +15,102 @@ public sealed class TruthExportCommandTests
     private const string Lakefile = "[package]\nname = \"fixture\"\n";
     private const string Manifest = "{}\n";
 
+    [Theory]
+    [InlineData("--list-closed", "--add", "D5/S0/Carrier/A.lean")]
+    [InlineData("--list-closed", "--selector", "D5/S0/Carrier/A.lean")]
+    [InlineData("--list-closed", "--retire-registration", "D5/S0/Carrier/A.lean")]
+    [InlineData("--list-closed", "--from-accepted")]
+    [InlineData("--list-closed", "--list-closed")]
+    public void ClosedQueryRejectsWriterOptions(params string[] options)
+    {
+        using var fixture = FixtureFromLedger([], [Module("A")]);
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(
+            ["ledger-align", .. options, "--candidate-lean-report", fixture.ReportPath],
+            fixture.Environment, console);
+
+        Assert.NotEqual(0, exit);
+        Assert.Contains("USAGE", console.Error, StringComparison.Ordinal);
+        Assert.Equal(0, fixture.Gateway.ReadCurrentCount);
+    }
+
+    [Fact]
+    public void ClosedQueryReadsUncommittedCurrentModulesInsteadOfHead()
+    {
+        ModuleSpec[] current = [Module("A"), Module("B", imports: ["A"]),
+            Module("C", axioms: ["sorryAx"])];
+        using var fixture = FixtureFromLedger([], [Module("A")], workingModules: current);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawSnapshot(RepositoryFiles(current)))).Snapshot;
+        RawLeanReportArtifact.WriteFile(fixture.ReportPath, snapshot, LeanAxiomReport.Create(Reports(current)));
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(
+            ["ledger-align", "--list-closed", "--candidate-lean-report", fixture.ReportPath],
+            fixture.Environment, console);
+
+        Assert.True(exit == 0, console.Error);
+        Assert.Equal(new[] { PathFor("A"), PathFor("B") },
+            JsonSerializer.Deserialize<string[]>(console.Output));
+        Assert.Equal(1, fixture.Gateway.ReadCurrentCount);
+        Assert.Empty(fixture.Gateway.ReadRevisionCalls);
+        Assert.Equal(0, fixture.Gateway.CurrentRevisionResolutionCount);
+        Assert.False(Directory.Exists(Path.Combine(Path.GetDirectoryName(fixture.ReportPath)!, "Golden")));
+    }
+
+    [Fact]
+    public void ClosedQueryRejectsReportThatOmitsUncommittedModule()
+    {
+        using var fixture = FixtureFromLedger([], [Module("A")], workingModules: [Module("A"), Module("B")]);
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(
+            ["ledger-align", "--list-closed", "--candidate-lean-report", fixture.ReportPath],
+            fixture.Environment, console);
+
+        Assert.NotEqual(0, exit);
+        Assert.Contains("LEDGER_ALIGN_FAILED", console.Error, StringComparison.Ordinal);
+        Assert.Equal(1, fixture.Gateway.ReadCurrentCount);
+    }
+
+    [Fact]
+    public void ClosedQueryReadsUntrackedModuleInTemporaryRepository()
+    {
+        using var repository = new TemporaryDirectory();
+        using var reports = new TemporaryDirectory();
+        var files = RepositoryFiles([Module("A")]);
+        foreach (var (path, content) in files)
+        {
+            var destination = Path.Combine(repository.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.WriteAllText(destination, content);
+        }
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.name", "Closed query fixture");
+        TestGit.Run(repository.Path, "config", "user.email", "closed-query@example.invalid");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "Closed A");
+        ModuleSpec[] current = [Module("A"), Module("B", imports: ["A"])];
+        File.WriteAllText(Path.Combine(repository.Path, PathFor("B")), current[1].Source);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawSnapshot(RepositoryFiles(current)))).Snapshot;
+        var report = LeanAxiomReport.Create(Reports(current));
+        var reportPath = Path.Combine(reports.Path, "candidate-report.json");
+        RawLeanReportArtifact.WriteFile(reportPath, snapshot, report);
+        var environment = new ProductionCliEnvironment(repository.Path,
+            new GitRepositoryGateway(repository.Path), new FakeLeanReportSource(report));
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(
+            ["ledger-align", "--list-closed", "--candidate-lean-report", reportPath], environment, console);
+
+        Assert.True(exit == 0, console.Error);
+        Assert.Equal(new[] { PathFor("A"), PathFor("B") }, JsonSerializer.Deserialize<string[]>(console.Output));
+        Assert.Equal("?? " + PathFor("B"), TestGit.Run(repository.Path, "status", "--porcelain").Trim());
+        Assert.Equal(string.Empty, TestGit.Run(repository.Path, "ls-tree", "--name-only", "HEAD", PathFor("B")));
+    }
+
     [Fact]
     public void ExportEqualsStrictActiveFreezeSnapshot()
     {

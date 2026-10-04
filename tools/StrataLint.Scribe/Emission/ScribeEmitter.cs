@@ -1,4 +1,3 @@
-using System.Reflection;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -11,62 +10,84 @@ public static class ScribeEmitter
 
     internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
 
-    public static int Emit(
-        Assembly documentsAssembly,
+    internal static int EmitPaths(
         string repositoryRoot,
-        bool check,
-        TextWriter output,
-        TextWriter error)
-    {
-        return Run(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true,
-            tolerateAbsentDocuments: false,
-            documentsAssembly: documentsAssembly).ExitCode;
-    }
-
-    internal static int Emit(
-        Assembly documentsAssembly,
-        string repositoryRoot,
-        bool check,
-        TextWriter output,
-        TextWriter error,
-        LeanAxiomReport leanReport)
-    {
-        ArgumentNullException.ThrowIfNull(leanReport);
-        return Run(
-            repositoryRoot,
-            check,
-            output,
-            error,
-            _ => leanReport,
-            validateRepository: false,
-            tolerateAbsentDocuments: false,
-            documentsAssembly: documentsAssembly).ExitCode;
-    }
-
-    internal static int Emit(
-        Assembly documentsAssembly,
-        string repositoryRoot,
+        IEnumerable<string> changedPaths,
         bool check,
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
-        bool validateRepository,
+        bool validateRepository = false,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
-        return Run(
-            repositoryRoot,
-            check,
-            output,
-            error,
-            _ => leanReport,
-            validateRepository,
-            tolerateAbsentDocuments: false,
-            documentsAssembly: documentsAssembly,
-            frozenState: frozenState,
-            frozenStatements: frozenStatements).ExitCode;
+        return EmitPaths(repositoryRoot, changedPaths, check, output, error, () => leanReport,
+            validateRepository, frozenState, frozenStatements);
+    }
+
+    internal static int EmitPaths(
+        string repositoryRoot,
+        IEnumerable<string> changedPaths,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        Func<LeanAxiomReport> loadLeanReport,
+        bool validateRepository = false,
+        FrozenStateCatalog? frozenState = null,
+        FrozenStatementIndex? frozenStatements = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(changedPaths);
+        ArgumentNullException.ThrowIfNull(loadLeanReport);
+        var selection = ScribeDefinitionSelector.Select(repositoryRoot, changedPaths);
+        if (!selection.IsSuccess)
+        {
+            error.WriteLine(selection.Failure);
+            return 2;
+        }
+
+        if (selection.Paths.IsEmpty)
+        {
+            output.WriteLine("emitted: 0 changed blueprint(s)");
+            return 0;
+        }
+
+        var leanReport = loadLeanReport();
+        return StatementProjectionFixtureLoader.WithFreshRepositoryRoot(repositoryRoot, () =>
+        {
+            var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, selection.Paths);
+            var failures = results.Where(static result => !result.IsSuccess).ToArray();
+            if (failures.Length != 0)
+            {
+                foreach (var failure in failures)
+                    error.WriteLine(failure.Failure);
+                return 1;
+            }
+
+            // The resource boundary is deliberate: scoped emission consumes the same
+            // strongly typed bytes that a release consumer reads.
+            var definitions = results
+                .Select(static result => ScribeResourceCodec.Decode(
+                    ScribeResourceCodec.Encode(result.Definition!),
+                    expectedGid: result.Definition!.Document.Header.Gid.Value,
+                    expectedSourcePath: result.RelativePath))
+                .ToArray();
+            return Run(
+                repositoryRoot,
+                check,
+                output,
+                error,
+                _ => leanReport,
+                validateRepository,
+                frozenState: frozenState, frozenStatements: frozenStatements,
+                suppliedDefinitions: definitions,
+                writeAttestation: false,
+                checkFreshness: check,
+                graphRepositoryRoot: repositoryRoot,
+                validateDocumentGraph: false,
+                validateSourceBijection: false).ExitCode;
+        });
     }
 
     internal static int Emit(
@@ -75,7 +96,9 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
-        IReadOnlyList<DocumentDefinition> definitions)
+        IReadOnlyList<DocumentDefinition> definitions,
+        bool scoped = false, bool validateRepository = false,
+        FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
         ArgumentNullException.ThrowIfNull(definitions);
@@ -85,43 +108,45 @@ public static class ScribeEmitter
             output,
             error,
             _ => leanReport,
-            validateRepository: false,
-            tolerateAbsentDocuments: false,
-            suppliedDefinitions: definitions).ExitCode;
+            validateRepository, suppliedDefinitions: definitions,
+            frozenState: frozenState, frozenStatements: frozenStatements,
+            writeAttestation: !scoped, graphRepositoryRoot: scoped ? repositoryRoot : null,
+            validateDocumentGraph: !scoped, validateSourceBijection: !scoped).ExitCode;
     }
 
-    /// <summary>
-    /// Puts the formulas of the markdown a change touches in front of the pinned KaTeX,
-    /// on both the committed bytes and the current render. The corpus is still rendered —
-    /// a document's bytes depend on the whole document graph — but only the named
-    /// projections are judged and reported, and freshness stays ungated.
-    /// </summary>
+    /// <summary>Checks rendered and tracked markdown formulas in the caller's scope.</summary>
     internal static int CheckMarkdown(
         string repositoryRoot,
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
         MarkdownFormulaScope scope,
-        IReadOnlyList<DocumentDefinition> definitions)
+        IReadOnlyList<DocumentDefinition> definitions,
+        bool scoped = false)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
         ArgumentNullException.ThrowIfNull(scope);
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
-        var run = Run(
+        var run = scoped && definitions.Count == 0 ? new ScribeEmissionRun(0, null) : Run(
             repositoryRoot,
             check: true,
             TextWriter.Null,
             error,
             _ => leanReport,
             validateRepository: false,
-            tolerateAbsentDocuments: false,
             suppliedDefinitions: definitions,
-            markdownScope: scope);
+            markdownScope: scope,
+            writeAttestation: !scoped,
+            graphRepositoryRoot: scoped ? repositoryRoot : null,
+            validateDocumentGraph: !scoped,
+            validateSourceBijection: !scoped);
         if (run.ExitCode != 0)
         {
             return run.ExitCode;
         }
+
+        if (scoped && definitions.Count == 0) scope.Close();
 
         foreach (var finding in scope.Findings)
         {
@@ -134,34 +159,14 @@ public static class ScribeEmitter
         return scope.Findings.IsEmpty ? 0 : 1;
     }
 
-    internal static VerifiedScribeEmissions? Verify(
-        Assembly documentsAssembly,
-        string repositoryRoot,
-        TextWriter error,
-        LeanAxiomReport leanReport,
-        FrozenStateCatalog? frozenState = null,
-        FrozenStatementIndex? frozenStatements = null)
-    {
-        ArgumentNullException.ThrowIfNull(leanReport);
-        return Run(
-            repositoryRoot,
-            check: true,
-            TextWriter.Null,
-            error,
-            _ => leanReport,
-            validateRepository: true,
-            tolerateAbsentDocuments: true,
-            documentsAssembly: documentsAssembly,
-            frozenState: frozenState,
-            frozenStatements: frozenStatements).Verification;
-    }
-
     internal static VerifiedScribeEmissions? Verify(string repositoryRoot, TextWriter error,
         LeanAxiomReport report, IReadOnlyList<DocumentDefinition> definitions,
-        FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null) =>
+        FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null, bool scoped = false) =>
         Run(repositoryRoot, check: true, TextWriter.Null, error, _ => report,
-            validateRepository: true, tolerateAbsentDocuments: false, suppliedDefinitions: definitions,
-            frozenState: frozenState, frozenStatements: frozenStatements).Verification;
+            validateRepository: true, suppliedDefinitions: definitions,
+            frozenState: frozenState, frozenStatements: frozenStatements,
+            writeAttestation: !scoped, graphRepositoryRoot: scoped ? repositoryRoot : null,
+            validateDocumentGraph: !scoped, validateSourceBijection: false).Verification;
 
     private static ScribeEmissionRun Run(
         string repositoryRoot,
@@ -170,45 +175,28 @@ public static class ScribeEmitter
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
-        bool tolerateAbsentDocuments,
-        Assembly? documentsAssembly = null,
         IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null,
         MarkdownFormulaScope? markdownScope = null,
         FrozenStateCatalog? frozenState = null,
-        FrozenStatementIndex? frozenStatements = null)
+        FrozenStatementIndex? frozenStatements = null,
+        bool writeAttestation = true,
+        bool checkFreshness = false,
+        string? graphRepositoryRoot = null,
+        bool validateDocumentGraph = true,
+        bool validateSourceBijection = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
         ArgumentNullException.ThrowIfNull(loadLeanReport);
-        if (documentsAssembly is null && suppliedDefinitions is null)
-        {
-            throw new ArgumentException(
-                "Either a documents assembly or supplied definitions are required.",
-                nameof(documentsAssembly));
-        }
+        ArgumentNullException.ThrowIfNull(suppliedDefinitions);
 
         try
         {
             var leanReport = loadLeanReport(repositoryRoot);
 
-            // Emission runs against the binary's own tree, where every document's
-            // .scribe.cs source must be present; a missing source there is a real fault, so the strict path
-            // keeps the full injected document catalog (an absent source dangling-fails or "emit failed").
-            //
-            // Capability verification (Verify), by contrast, judges an arbitrary tree that may predate some
-            // of this binary's documents. A document this binary knows about is only materialized in that
-            // tree when its .scribe.cs source is present. During conservative-extension replay the candidate
-            // harness re-judges the baseline tree, which lacks a newly added Blueprint's source entirely;
-            // that document is a not-yet-materialized protected-surface addition (SL-022 routes its
-            // .scribe.cs to Component C), not part of this tree — so it must not be dangling-flagged, read,
-            // attested, or counted, which would make the candidate block a tree the baseline admits.
-            // A document whose source IS present stays in scope. The capability is issued from the
-            // current validated render and never from tracked reader-snapshot bytes.
-            var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
-                documentsAssembly!,
-                repositoryRoot);
-            if (check && !tolerateAbsentDocuments)
+            var repositoryDefinitions = suppliedDefinitions;
+            if (check && validateSourceBijection)
             {
                 var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
                 var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(
@@ -228,25 +216,11 @@ public static class ScribeEmitter
                     return new ScribeEmissionRun(1, null);
                 }
             }
-            var definitions = tolerateAbsentDocuments
-                ? repositoryDefinitions
-                    .Where(definition => File.Exists(Path.Combine(
-                        repositoryRoot,
-                        ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
-                    .ToArray()
-                : [.. repositoryDefinitions];
+            var definitions = repositoryDefinitions.ToArray();
             var declarationCatalog = DeclarationCatalog.Create(leanReport);
             definitions = definitions
                 .Select(definition => definition.ResolveDeclarations(declarationCatalog))
                 .ToArray();
-            if (tolerateAbsentDocuments && definitions.Length == 0 && repositoryDefinitions.Count != 0)
-            {
-                // A tree owning zero of this binary's documents is not an older world of this
-                // repository at all (wrong root, gutted checkout): verifying it vacuously would
-                // hide the fault behind distant digestion gaps — fail loud at the source instead.
-                throw new InvalidOperationException(
-                    $"no Scribe definition sources found under {repositoryRoot}");
-            }
             if (validateRepository)
             {
                 var findings = DescribeRepositoryValidator.Validate(
@@ -272,10 +246,19 @@ public static class ScribeEmitter
             var census = ReceiptFreeDocumentCatalog.Load(
                 repositoryRoot,
                 documents,
-                tolerateAbsentDocuments);
+                tolerateAbsentDocuments: false);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                declarationCatalog);
+                declarationCatalog,
+                graphRepositoryRoot,
+                validateDocumentGraph);
+            if (!graph.Findings.IsEmpty)
+            {
+                foreach (var finding in graph.Findings)
+                    error.WriteLine(
+                        $"describe red code={finding.Code} path={finding.Path} message={finding.Message}");
+                return new ScribeEmissionRun(1, null);
+            }
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
             output.WriteLine(
@@ -299,7 +282,7 @@ public static class ScribeEmitter
 
             return EmitVerified(
                 repositoryRoot, check, output, error,
-                declarationCatalog, definitions, graph);
+                declarationCatalog, definitions, graph, writeAttestation, checkFreshness);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -320,7 +303,9 @@ public static class ScribeEmitter
         TextWriter error,
         DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
-        DocumentGraph graph)
+        DocumentGraph graph,
+        bool writeAttestation = true,
+        bool checkFreshness = false)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -355,6 +340,21 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
+        if (check && checkFreshness)
+        {
+            var mismatches = rendered
+                .Where(item => !File.Exists(Path.Combine(repositoryRoot, item.Definition.RelativePath.Value))
+                    || !File.ReadAllBytes(Path.Combine(repositoryRoot, item.Definition.RelativePath.Value))
+                        .AsSpan().SequenceEqual(item.Bytes))
+                .Select(item => item.Definition.RelativePath.Value)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            foreach (var path in mismatches)
+                error.WriteLine($"md mismatch: {path}");
+            if (mismatches.Length != 0)
+                return new ScribeEmissionRun(1, null);
+        }
+
         var writes = 0;
         if (!check)
         {
@@ -376,7 +376,7 @@ public static class ScribeEmitter
             }
         }
 
-        if (!check)
+        if (!check && writeAttestation)
         {
             var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
             var currentAttestation = File.Exists(attestationPath)

@@ -240,7 +240,10 @@ internal static partial class CoverAtomCommand
             session.Scribe.Verify(
                 current,
                 report,
-                receiptVerificationChanges,
+                RawChangeSet.Create(receiptVerificationChanges.Paths.Select(path => path.Value)
+                    .Concat(gids.Select(gid => ScribeEmissionAttestation.DefinitionPath(
+                        ScribeEmissionAttestation.DocumentGid(gid.Value))))
+                    .Distinct(StringComparer.Ordinal)),
                 session.FrozenState,
                 session.FrozenStatements);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
