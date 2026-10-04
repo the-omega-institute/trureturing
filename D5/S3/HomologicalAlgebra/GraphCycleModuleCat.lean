@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/HomologicalAlgebra/GraphCycleModuleCat
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/ModuleCat, arXiv:0910.5634]
+   anchors: []
    utility: none
    digest: The binary ModuleCat homology of a finite graph is its concrete cycle space. -/
 
