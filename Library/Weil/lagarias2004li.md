@@ -387,3 +387,14 @@ For the even operator, any remaining eigenvalues $0<\lambda<1/2$
 are discrete, with eigenvectors in $\mathcal R$, and may accumulate
 at $1/2$. These source applications do not prove the one-half bound
 in (5), equivalently the remainder lower bound stated after (10).
+
+The [same-form exterior transfer](lenz2010compactness.md#same-form-theta-exterior-bound-and-low-projector-cutoff)
+combines (4) with the complete compact Weil formula on the same even
+test $f=\Phi h$. Its pole and variance mean terms cancel, leaving a
+nonnegative flat translation form and two bounded negative terms.
+The bounded multiplier and closed flat form extend that identity through
+the actual minimal form closure; original theta tails then control the
+full killed exterior energy and cutoff of the whole fixed-gap subspace.
+This paper-level transfer replaces the quantitative prime-counting
+remainder only in that exterior estimate. It does not establish the
+remaining spectral lower bound in (5), RH, Robin or Lean certification.
