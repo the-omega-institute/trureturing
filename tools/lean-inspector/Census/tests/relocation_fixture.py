@@ -2,8 +2,10 @@
 
 import json
 import pathlib
+import re
 import shutil
 import sys
+import tomllib
 import unittest
 
 INSPECTOR = pathlib.Path(__file__).resolve().parents[2]
@@ -21,6 +23,47 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
                      "EscapeEvidence", "StructuralProvenance", "Census/Ownership",
                      "Census/Stream", "Census/Membership"):
             self.copy("tools/lean-inspector/LeanInformationAudit/" + name + ".lean")
+        # Follow the copied packages' actual imports, including the contract's
+        # mathematical types. Keep compiler/toolchain imports external.
+        pending = list((self.root / "declaration package").rglob("*.lean")) + list(
+            (self.root / "tools/lean-inspector/LeanInformationAudit").rglob("*.lean"))
+        seen = set()
+        while pending:
+            source = pending.pop()
+            if source in seen:
+                continue
+            seen.add(source)
+            for module in re.findall(r"(?m)^(?:public )?import (\S+)", source.read_text()):
+                relative = module.replace(".", "/") + ".lean"
+                if module.startswith("D5."):
+                    relative = pathlib.Path(relative)
+                elif module.startswith("LeanInformationAudit."):
+                    relative = pathlib.Path("tools/lean-inspector") / relative
+                else:
+                    continue
+                target = self.root / relative
+                if not target.is_file():
+                    self.copy(str(relative))
+                pending.append(target)
+        # The typed contract imports real mathematics, so use its pinned
+        # upstream packages rather than the support fixture's Cache-only provider.
+        upstream = json.loads((ROOT / "lake-manifest.json").read_text())["packages"]
+        mathlib = next(package for package in upstream if package["name"] == "mathlib")
+        config = self.root / "lakefile.toml"
+        text = config.read_text()
+        requirement = next(requirement for requirement in tomllib.loads(text)["require"]
+                           if requirement["name"] == "mathlib")
+        text = text.replace(f'git = "{requirement["git"]}"\nrev = "{requirement["rev"]}"',
+                            f'git = "{mathlib["url"]}"\nrev = "{mathlib["inputRev"]}"')
+        config.write_text(text)
+        for relative in ("lake-manifest.json", "Reg/lake-manifest.json",
+                         "tools/lean-inspector-reg/lake-manifest.json"):
+            manifest = json.loads((self.root / relative).read_text())
+            manifest["packages"] = [package for package in manifest["packages"]
+                                    if package["type"] != "git"] + [
+                dict(package, inherited=relative != "lake-manifest.json" or package["inherited"])
+                for package in upstream]
+            self.write(relative, json.dumps(manifest))
         # Keep the support fixture's synthetic driver in this library's source root.
         (self.root / "LeanInformationAudit/SealCommand.lean").rename(
             self.root / "tools/lean-inspector/LeanInformationAudit/SealCommand.lean")
@@ -31,7 +74,13 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
         # This fixture puts the same dependency under a different source root.
         # Only Lake knows that location; Census cannot name it as a special case.
         config = self.root / "declaration package/lakefile.toml"
-        config.write_text(config.read_text().replace('"../../.lake/', '"../.lake/'))
+        config.write_text(config.read_text().replace('"../../.lake/', '"../.lake/').replace(
+            'path = "../.."', 'path = ".."'))
+        manifest = json.loads((config.parent / "lake-manifest.json").read_text())
+        manifest["packagesDir"] = "../.lake/packages"
+        next(package for package in manifest["packages"]
+             if package["name"] == "trureturing")["dir"] = ".."
+        self.write("declaration package/lake-manifest.json", json.dumps(manifest))
         config = self.root / "lakefile.toml"
         config.write_text(config.read_text().replace('name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nsrcDir = "tools/lean-inspector"\n') +
@@ -41,6 +90,30 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
             manifestFile="lake-manifest.json", inherited=False, dir="declaration package",
             configFile="lakefile.toml"))
         self.write("lake-manifest.json", json.dumps(manifest))
+        # Fetch the exact pinned snapshots, without unrelated upstream history.
+        # The canonical cache owner still supplies and validates their build cache.
+        for package in upstream:
+            directory = self.root / ".lake/packages" / package["name"]
+            directory.mkdir(parents=True)
+            for arguments in (("init", "--quiet"),
+                              ("remote", "add", "origin", package["url"]),
+                              ("fetch", "--quiet", "--depth=1", "origin", package["rev"]),
+                              ("checkout", "--quiet", "--detach", package["rev"])):
+                result = self.guarded_command(["git", "-C", str(directory), *arguments])
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        # The cache producer receives precisely the external import roots of
+        # this bounded fixture. Lake still checks every compiled dependency.
+        imports = {module for source in seen for module in
+                   re.findall(r"(?m)^(?:public )?import (\S+)", source.read_text())
+                   if module.split(".")[0] not in
+                   {"D5", "LeanInformationAudit", "LeanInformationAuditInterface", "Lean", "Init", "Std"}}
+        self.write("bin/lake", "#!/usr/bin/env python3\nimport os, sys\n"
+                   + f"lake, roots = {self.lake!r}, {sorted(imports)!r}\n"
+                   + "args = sys.argv[1:]\n"
+                   + "if args == ['exe', 'cache', 'get']: args += roots\n"
+                   + "os.execv(lake, [lake, *args])\n")
+        (self.root / "bin/lake").chmod(0o755)
+        self.env["LAKE_BIN"] = str(self.root / "bin/lake")
         self.ensure()
         command = ["make", "lean", "LEAN_TARGETS=@trureturing/LeanInformationAudit.Census.Stream "
                    "@trureturing/LeanInformationAudit.Census.Membership"]
