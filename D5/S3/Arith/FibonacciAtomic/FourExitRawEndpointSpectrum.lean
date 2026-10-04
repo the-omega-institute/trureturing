@@ -29,9 +29,8 @@ open ActualImageSevenLeafSeparation (thirdImage)
 
 local notation "b₀" => ActualImageSevenLeafSeparation.E
 def t : Source := .mul (.of true) (.of false)
-def w : Source := .mul b₀ (.of false)
 def h : Source := .mul t (.of true)
-def y : Source := .mul w (.of true)
+def y : Source := .mul ActualImageSevenLeafSeparation.A (.of true)
 def z : Source := .mul (.of false) b₀
 def r₀ : Source := .mul t b₀
 def rₐ : Source := .mul t z
@@ -241,7 +240,7 @@ theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
       ActualImageSevenLeafSeparation.Nonconflict (comp r) (comp s) := by
     intro r s; fin_cases r <;> fin_cases s <;>
       simp only [active, comp, B, H, Y, Z, Rₐ, thirdImage,
-        rₐ, t, w, h, y, z, ActualImageSevenLeafSeparation.E,
+        rₐ, t, h, y, z, ActualImageSevenLeafSeparation.E,
         ActualImageSevenLeafSeparation.A,
         ActualImageSevenLeafSeparation.Nonconflict]
     all_goals trivial

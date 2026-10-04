@@ -159,7 +159,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       simp only [Finset.mem_insert, Finset.mem_singleton] at hP hQ
       rcases hP with rfl | rfl | rfl | rfl | rfl <;>
         rcases hQ with rfl | rfl | rfl | rfl | rfl <;>
-          simp only [B, H, Y, Z, A, thirdImage, t, w, h, y, z,
+          simp only [B, H, Y, Z, A, thirdImage, t, h, y, z,
             ActualImageSevenLeafSeparation.E, Nonconflict]
       all_goals trivial
     have tail_nc : ∀ P ∈ ({R₀, Rₐ, B, Z, H} : Finset Source),
