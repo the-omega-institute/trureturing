@@ -1,11 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Zeros.ActualZeroGeometryDocument;
-using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiGrowthZeroFreeDocument;
+using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability.CanonicalLiCurvatureZeroFreeFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Probability;
 
-[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
-[ScribeSharedSource("Blueprint/D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.scribe.cs")]
 internal sealed class CanonicalLiCurvatureZeroFreeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/Probability/CanonicalLiCurvatureZeroFree.";
@@ -56,4 +54,23 @@ internal sealed class CanonicalLiCurvatureZeroFreeDocument : IScribeDocumentDefi
         Le(Abs(Difference("canonicalLiCoefficient", Id("n"))), Multiply(Num(2), Li(Num(1))))));
     private static Formula Positive => Call("PosSemidef", Call("toeplitzMatrix", Id("canonicalLiCurvature"), Id("N")));
     private static Formula AllPositive => All("N", Natural, Positive);
+}
+
+internal static class CanonicalLiCurvatureZeroFreeFormula
+{
+    internal static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+    internal static Formula Natural => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    internal static Formula RH => Id("RiemannHypothesis");
+    internal static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Exists(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    internal static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    internal static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    internal static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
+    internal static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    internal static Formula Abs(Formula a) => new Formula.Absolute(a);
+    internal static Formula Function(Formula domain, Formula range) => F.Seq(domain, F.To, range);
+    internal static Formula Li(Formula n) => Call("canonicalLiCoefficient", n);
 }

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98b746b7e4a106e1781794c61da5ce0fe2cb6ab23b71b455657d27e610be9485
+  normalized_sha256: sha256:98b746b7e4a106e1781794c61da5ce0fe2cb6ab23b71b455657d27e610be9485
+cas_ref: sha256:98b746b7e4a106e1781794c61da5ce0fe2cb6ab23b71b455657d27e610be9485
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/AffineGcdBehavior.affine_action_realization
+    target_statement_id: sha256:3ab8db241290e9bdb15cce77ba544455ad1068786e9290dfb8782092e6c7f7e6
+  - gid: D5/S3/Factorization/PrimePowers/AffineGcdBehavior.affine_word_translation
+    target_statement_id: sha256:fd830c8304fca72a81d10bcff169398444a8f2a08ff8b46b5b84dfc143d77e71
+receipts:
+  unresolved_subitems: []

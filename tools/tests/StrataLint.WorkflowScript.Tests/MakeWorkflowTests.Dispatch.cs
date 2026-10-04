@@ -237,7 +237,7 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
         Assert.Contains(
-            "HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))",
+            "HERE := $(shell cd \"$$(dirname \"$(MAKEFILE_LIST)\")\" && pwd -P)",
             makefile,
             StringComparison.Ordinal);
         var phony = Assert.Single(
