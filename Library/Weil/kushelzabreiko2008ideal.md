@@ -4,13 +4,13 @@ authors: Olga Y. Kushel and Petr P. Zabreiko
 year: 2008
 title: Gantmakher–Krein theorem for 2-totally nonnegative operators in ideal spaces
 url: https://arxiv.org/abs/0812.0902v1
-claim: The source requires positivity preservation on an ideal function space, together with exterior-square positivity, resolvent regularity and compactness; its spectral conclusions do not give a prescribed numerical gap.
+claim: The source requires positivity preservation on an ideal function space, together with exterior-square positivity and further operator hypotheses. The inherited pointwise cone on the original theta remainder is trivial, so its nonzero compressed semigroup and resolvent cannot meet this interface in the original radial coordinates.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
 ---
 
-# Ideal-space hypotheses for exterior-square positivity
+# Exterior-square positivity and the original theta remainder
 
 ## Published hypotheses
 
@@ -47,3 +47,101 @@ positivity hypothesis or provide a transported cone for a given
 orthogonal remainder. Quadratic nonnegativity in a Hilbert space is a
 different condition from preserving a cone of nonnegative functions.
 
+## The inherited cone is lost after critical projection
+
+Use the [original minimal even theta form](fukushima2011dirichlet.md)
+with probability measure
+$d\nu=2\Phi(x)\cosh(x/2)dx$, nonnegative self-adjoint energy operator
+$A$, and $A1=0$. Retain the
+[critical decomposition](lagarias2004li.md) into constants, the closed
+span $N$ of the known real one-half eigenvectors, and the nontrivial
+reducing remainder
+
+$$
+\mathcal R=(\mathbb C1\oplus N)^\perp,
+\qquad Q=Q_{\mathcal R}.
+$$
+
+All these operator/model premises are the existing paper-level source
+applications. The following interface check is conditional on them;
+it is not a Lean-certified operator construction.
+
+Since $\nu$ is finite, every $r\in\mathcal R$ is integrable and has
+$\nu(r)=0$. For a real $r\ge0$ almost everywhere, the usual
+nonnegative-integral criterion gives $r=0$ almost everywhere. Thus
+
+$$
+\mathcal R\cap L^2_+(\nu)=\{0\}. \tag{1}
+$$
+
+The original measure and radial order are retained here. In particular,
+$\mathcal R$ is not an ideal function space with that order: for any
+nonzero $r\in\mathcal R$, the function $|r|$ belongs to ambient $L^2$
+and has positive mean, so $|r|\notin\mathcal R$. Solidity would require
+it to belong to $\mathcal R$. Restricting positivity preservation to
+the zero cone in (1) would be vacuous and would not supply the source's
+ideal-space hypotheses.
+
+There is a stronger ambient obstruction. Suppose a complex-linear
+operator $B$ on the original even $L^2(\nu)$ preserves nonnegative real
+functions and has range in $\mathcal R$. Equation(1) gives $Bf=0$ for
+every nonnegative $f$. Positive and negative parts span the real even
+space, and complexification spans the whole even space, so $B=0$.
+
+For $t>0$ and $\alpha>0$, consider the bounded compressions
+
+$$
+K_t=Qe^{-tA}Q,\qquad G_\alpha=Q(A+\alpha)^{-1}Q. \tag{2}
+$$
+
+They have range in $\mathcal R$ and are nonzero. Indeed, for any
+nonzero $r\in\mathcal R$, the spectral measure $\mu_r$ of $A$ gives
+
+$$
+\langle r,K_tr\rangle
+=\int_{[0,\infty)}e^{-ts}\,d\mu_r(s)>0,
+\qquad
+\langle r,G_\alpha r\rangle
+=\int_{[0,\infty)}\frac{d\mu_r(s)}{s+\alpha}>0. \tag{3}
+$$
+
+Consequently neither compression preserves the ambient pointwise
+nonnegative cone. In any ordinary integral-kernel representation acting
+on that entire ambient even/radial space, its kernel cannot be
+nonnegative almost everywhere: such a kernel would preserve this cone.
+No existence or regularity of such a kernel is assumed. This rules out
+the direct application of the source's nonnegative-kernel criterion in
+the original coordinates before any ordered-minor calculation.
+
+This conclusion is separate from the
+[full semigroup's ordered-jump obstruction](karlinmcgregor1959coincidence.md).
+It requires no compact support in $\mathcal R$, no projected bump
+calculation, and no compactness assertion about $A|_{\mathcal R}$.
+The known critical vectors lie in $N$, not in $\mathcal R$, so they
+cannot be identified as the first or second eigenvectors of an operator
+whose domain is $\mathcal R$.
+
+## The quantitative obligation remains
+
+The cone obstruction does not decide the desired lower bound on
+$\mathcal R$. A different ordered realization would require an explicit
+map from its function space and cone to this same remainder, verification
+of the published operator hypotheses, and a spectral identification that
+produces the numerical threshold. Merely naming a new cone or observing
+quadratic nonnegativity of an exterior power does not provide that map
+or estimate.
+
+For the already specified nonnegative self-adjoint restriction
+$A_{\mathcal R}$, the spectral theorem gives the standard equivalence
+
+$$
+D(r)\ge\tfrac12\|r\|_\nu^2
+\quad(r\in\mathcal R\cap\mathcal F)
+\quad\Longleftrightarrow\quad
+\|(A_{\mathcal R}+\alpha)^{-1}\|
+\le\frac1{\alpha+1/2}, \tag{4}
+$$
+
+for any fixed $\alpha>0$. Equation(4) is a reformulation, not a new
+resolvent estimate. The norm bound remains unproved; this source check
+does not settle RH, Robin, or the original cofinal signed comparison.
