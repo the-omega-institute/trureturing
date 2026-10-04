@@ -114,7 +114,23 @@ $$\|C_\pm(n_\varepsilon-n_{\varepsilon,m})\|
 
 At epsilon=1/100 and m=256, its coefficient is strictly below 1/1000.
 This pays the fixed-parameter discretization term only. The actual-input
-regularization error R5, kernel-entry quadrature, the whole-space
-complementary residual and the projected reconstruction/norm estimate
+regularization error R5, kernel-entry quadrature, a uniform complementary
+residual on the required input class and the projected reconstruction/norm estimate
 remain unresolved. No new original-energy lower bound or Lean
 certification is supplied.
+
+## One fixed quadratic-input complementary residual
+
+The [direct actual-operator enclosure](../../docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md)
+uses seven finite critical directions and eight individual certified real
+Xi-zero witnesses for h=x^2. Under the inherited actual-model and
+numerical-supplier premises it supplies
+||B(h-n)-w||<9/8000, with n in N and w in N-perp. The accepted inverse
+constant c*=11/2500 converts this to ||n_h-n||<=45/176 and paired edge
+errors <=9/(160 sqrt(11)). The 512 retained point rows are reused;
+derivative transport, all theta series and full spatial tails are paid.
+This is a bounded-B input calculation, without asserting original
+form-domain membership of x^2. Its upper enclosure does not reach 1e-4
+and is not a lower bound on attainable residuals. It supplies neither
+R5 on the required input class nor the projected transfer/norm comparison,
+original half-bound, Robin or RH, and has no new Lean certification.
