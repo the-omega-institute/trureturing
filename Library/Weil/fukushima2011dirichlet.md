@@ -686,3 +686,18 @@ $H^{(m)}\succeq0$ for **every** $m$. The
 only addresses $m=2$. No all-degree PSD result, effective exhaustion
 rate, uniformly conditioned polynomial basis or RH/Robin conclusion
 is supplied by this density argument.
+
+## Quantitative polynomial approximation by published weighted estimates
+
+The [weighted Favard and Brascamp–Lieb application](../Analytic/itoh2015weightedapproximation.md)
+uses (WF2), the original coefficient suppliers and the same full
+fixed-gap spectral map to obtain a conditional polynomial approximation
+in this minimal form norm. It projects the physical derivative in an
+admissible auxiliary weight and integrates that one projection; it does
+not treat a Fourier cutoff of $Uh$ as a physical-bandlimited input.
+For fixed $\varepsilon$, its prescribed dimension has asymptotic cost
+$O_\varepsilon(\tau^{-3}\log(e/\tau)^5)$, with unevaluated external
+Favard constant. This is an application of published approximation
+and variance inequalities, not a new generic core theorem or a numerical
+rank certificate. Original matrix positivity and cofinal control remain
+unproved, so it supplies no RH or Robin conclusion.
