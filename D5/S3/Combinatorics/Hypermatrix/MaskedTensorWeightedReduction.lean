@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hypermatrix/MaskedTensorWeightedReduction
    mirror-E: none(waiver:noncomputable-finite-field-enumeration)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
    utility: none
    digest: Actual masked tensor cardinality reduces to the eligible weight sum. -/
 

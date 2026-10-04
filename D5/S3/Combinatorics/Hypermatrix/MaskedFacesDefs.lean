@@ -2,12 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hypermatrix/MaskedFacesDefs
    mirror-E: none(waiver:noncomputable-finite-field-enumeration)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
    utility: none
    digest: Matrix faces, antitone masks and the integral coefficient determinant. -/
 
 import D5.S3.Combinatorics.Permutation.CoupledRepairedWeight
 import Mathlib
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 set_option autoImplicit false
 open scoped BigOperators

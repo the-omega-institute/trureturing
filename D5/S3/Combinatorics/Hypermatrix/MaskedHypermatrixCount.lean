@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hypermatrix/MaskedHypermatrixCount
    mirror-E: none(waiver:noncomputable-finite-field-enumeration)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
    utility: none
    digest: The masked nondegenerate tensor count over every finite field. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hypermatrix/SoutheastFactorization
    mirror-E: none(waiver:noncomputable-finite-field-enumeration)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
    utility: none
    digest: Upper triangular factorization into unique southeast pivot cells. -/
 

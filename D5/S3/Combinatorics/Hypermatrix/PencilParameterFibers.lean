@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hypermatrix/PencilParameterFibers
    mirror-E: none(waiver:noncomputable-finite-field-enumeration)
-   anchors: [mathlib/module/Mathlib]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Determinant.Basic]
    utility: none
    digest: Full-rank pencils have explicit standard factors with scalar fibers. -/
 
