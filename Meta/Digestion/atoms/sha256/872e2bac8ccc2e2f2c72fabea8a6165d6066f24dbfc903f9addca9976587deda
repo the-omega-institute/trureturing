@@ -1,0 +1,41 @@
+**Theorem 3.2 (Actual positive record equations and support).** Every
+permutation of positive length $n$ has between $1$ and $n$ right maxima.
+Consequently every positive record fiber vanishes at $k=0$ and $k>n$.
+The actual series of Definition 3.1 satisfy
+
+$$
+\begin{aligned}
+U&=J+R,& R&=IU,& J&=z+(z+R)U,\\
+2I_0&=q+t,& I_0(1+q)&=q,& q&=tL(t),\\
+q&=t+tq+q^2,& U&=(1+q)J,&
+J&=z+z(1+q)J+q(1+q)J^2,
+\end{aligned}
+$$
+
+where $L(t)=\sum_{m\ge0}\operatorname{largeSchroder}(m)t^m$ is the
+large Schröder series. The length-zero coefficients of $U,J,R,I_0,q$ are
+zero. Their length-one coefficients are respectively $y,y,0,1,1$.
+The positive no-proper-skew-cut record series is $z+R$. In particular
+the singleton term in the skew decomposition is $z$, whereas a proper-cut
+class is empty at lengths zero and one.
+
+Proof. Partition each actual record fiber into members with a proper direct
+cut and members without one. Apply Theorem 2.2 to obtain $R=IU$.
+For $n\ge2$, the pointwise separable cut dichotomy identifies no proper skew
+cut with a proper direct cut, and no proper direct cut with a proper skew
+cut, without changing the underlying permutation or any record. At length
+one the no-cut fiber contributes $z$, and both proper-cut fibers are empty.
+The skew convolution therefore gives $J=z+(z+R)U$. These equalities follow
+coefficientwise from finite sums over $0<c<n$ and $0\le b\le k$.
+For a nonempty permutation the last position is a right maximum, and the
+set of right maxima is a subset of its $n$ positions; this gives support.
+
+The actual scalar count identities give $2I_0=q+t$ and $q=tL$.
+The existing large Schröder quadratic gives $q=t+tq+q^2$.
+These identities imply $I_0(1+q)=q$. Multiplying $U=J+I_0U$ by
+$1+q$ gives $U=(1+q)J$, and hence $R=qJ$.
+Substituting in the skew equation gives the stated quadratic for $J$.
+All scalar counts here are defined directly; none is inferred from an
+assumed correspondence between an unmarked generating function and a
+weighted record series.
+
