@@ -38,3 +38,4 @@ exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
   -- "${arguments[@]}"
+# selftest trigger probe
