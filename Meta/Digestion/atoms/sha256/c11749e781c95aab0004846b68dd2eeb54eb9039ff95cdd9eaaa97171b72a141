@@ -1,0 +1,18 @@
+**定理 15.2（实际相邻一窗口的精确计数）。** 若 $g=\gcd(m,T)\ge2$、$p=T/g$，则
+
+$$
+ A_0=D_0=1,
+ \tag{15.8}
+$$
+
+并且对所有 $j\ge1$，
+
+$$
+ A_j=\min\!\left(p,2+\left\lfloor\frac jg\right\rfloor\right),
+ \qquad
+ D_j=\min\!\left(p,1+\left\lfloor\frac{j+1}{g}\right\rfloor\right).
+ \tag{15.9}
+$$
+
+这些公式包括 $p=1$ 和超过周期的任意长窗口。
+
