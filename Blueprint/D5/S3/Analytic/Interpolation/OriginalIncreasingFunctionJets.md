@@ -304,7 +304,7 @@ $$\forall n \in \operatorname{Nat}\left(\right),\; \operatorname{P}\left(n\right
 
 *Commentary.*
 
-Conjecture 1.2, arXiv:2512.02151v1, p. 2: '(P_n) is true for all nonnegative integers n.' The mathematical source proves exactly forall n : Nat, PnOriginal.P n. The Proved resolution claim is prospective: independent source/mirror review, canonical admission checks and freezing are still required. Admission basis: open-problem-resolution; preregistration: issue #12872.
+Conjecture 1.2, arXiv:2512.02151v1, p. 2: '(P_n) is true for all nonnegative integers n.' The mathematical source proves exactly forall n : Nat, PnOriginal.P n.
 
 The source's W and P use their original closed-interval derivatives. The Stieltjes argument retains singular continuous and flat input derivatives and arbitrary positive mass. Reversed factorial coordinates connect all endpoint jets to one moment vector. The single witness is repeatedIntegral (n+1) rho; the same rho realizes every coordinate and every endpoint condition.
 

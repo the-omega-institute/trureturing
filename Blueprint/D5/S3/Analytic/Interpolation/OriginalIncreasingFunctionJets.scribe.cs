@@ -158,7 +158,7 @@ internal sealed class OriginalIncreasingFunctionJetsDocument : IScribeDocumentDe
             Describe.Lean(DescribeId.Create("pn-original-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The original all-order assertion"), StatementSource.FromAuthor(Disp(Q("n", N, Call("P", V("n"))))),
                 AssessedProvenance.FromRepo(Source), Blocks(
-                    Paragraph(Text("Conjecture 1.2, arXiv:2512.02151v1, p. 2: '(P_n) is true for all nonnegative integers n.' The mathematical source proves exactly forall n : Nat, PnOriginal.P n. The Proved resolution claim is prospective: independent source/mirror review, canonical admission checks and freezing are still required. Admission basis: open-problem-resolution; preregistration: issue #12872.")),
+                    Paragraph(Text("Conjecture 1.2, arXiv:2512.02151v1, p. 2: '(P_n) is true for all nonnegative integers n.' The mathematical source proves exactly forall n : Nat, PnOriginal.P n.")),
                     Paragraph(Text("The source's W and P use their original closed-interval derivatives. The Stieltjes argument retains singular continuous and flat input derivatives and arbitrary positive mass. Reversed factorial coordinates connect all endpoint jets to one moment vector. The single witness is repeatedIntegral (n+1) rho; the same rho realizes every coordinate and every endpoint condition.")),
                     Paragraph(Text("The coordinate-transform function sends each endpoint-jet vector b to its reversed factorial coordinates:")),
                     Paragraph(Math(Disp(Fn("n", N, Fn("b", VectorType, Fn("k", FinType,

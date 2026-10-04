@@ -32,3 +32,13 @@ di Dio, arXiv:1804.07058v2, supply a related method; they do not state the
 literal endpoint-one and all-higher-zero assertion.
 
 Citation only; no paper text, PDF or HTML is redistributed here.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2512.02151
+
+Source version: https://arxiv.org/abs/2512.02151v1
+
+Conjecture 1.2 and the preceding definition of $(P_n)$, p. 2, specify the
+original all-order endpoint-jet assertion. Theorem 8.2 establishes the cases
+$n=0,1,2,3$; it does not assert the conjecture for every nonnegative integer.
