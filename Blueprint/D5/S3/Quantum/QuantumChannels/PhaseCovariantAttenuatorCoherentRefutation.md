@@ -24,6 +24,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/PhaseCovariantAttenuatorCoherentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/van-herstraeten-guha-cerf-2024-phase-covariant-attenuator-coherent-refutation` (refuted) by `D5/S3/Quantum/QuantumChannels/PhaseCovariantAttenuatorCoherentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"van-herstraeten-guha-cerf-2024-phase-covariant-attenuator-coherent-refutation","declaration_gid":"D5/S3/Quantum/QuantumChannels/PhaseCovariantAttenuatorCoherentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
