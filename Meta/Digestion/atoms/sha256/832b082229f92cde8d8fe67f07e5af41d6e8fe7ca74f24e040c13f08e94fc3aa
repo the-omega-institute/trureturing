@@ -1,0 +1,49 @@
+**裂隙开放与贯通 283.3。** 令 `\Sigma_e^{\mathrm{frac}}` 为外加的裂隙强度，`\sigma_e^{\mathrm{eff}}` 为有效法向应力，并定义开裂指标
+
+$$
+\chi_e(t)
+=\mathbf 1!
+\left\{
+|\Delta P_e(t)|-\sigma_e^{\mathrm{eff}}(t)
+>\Sigma_e^{\mathrm{frac}}
+\right\}.
+$$
+
+由开边组成的动态子图为 `W_j^{\mathrm{open}}(t)`。从岩浆室端口集合 `B_j^{\mathrm{ch}}` 出发的开裂团簇记为
+
+$$
+\mathcal C_j(t)
+=\left\{
+ v\in V_j:\exists\gamma\in\mathcal P_j(B_j^{\mathrm{ch}},v),
+ \ \prod_{e\in\gamma}\chi_e(t)=1
+\right\}.
+$$
+
+若地表端口集合为 `B_j^{\mathrm{surf}}`，则喷发事件是
+
+$$
+\mathsf E_j(t)
+=\mathbf 1!
+\left\{
+\mathcal C_j(t)\cap B_j^{\mathrm{surf}}\ne\varnothing
+\right\}.
+$$
+
+因此 FIB 只提供哪些路径可以成为贯通候选的组合约束；真正的贯通概率为
+
+$$
+\Pi_j(t)
+=\Pr\!\left(\exists\gamma\in\mathcal P_j(B_j^{\mathrm{ch}},B_j^{\mathrm{surf}}),
+\ \prod_{e\in\gamma}\chi_e(t)=1\right),
+$$
+
+它还取决于压力场、强度分布、边间相关性、加载历史和边界条件。若条件于动力学状态后裂隙强度独立，才有局部开边概率
+
+$$
+\Pr\!\left(\chi_e(t)=1\mid\Delta P_e,\sigma_e^{\mathrm{eff}}\right)
+=F_e^{\mathrm{frac}}
+\bigl(|\Delta P_e|-\sigma_e^{\mathrm{eff}}\bigr),
+$$
+
+而 `\Pi_j` 仍是整个 FIB 路径族上的相关并集概率，不等于某一条路径概率的简单相加。
+

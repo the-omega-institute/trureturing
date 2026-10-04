@@ -60,13 +60,11 @@ theorem iterate_second {A : Type} [CommSemiring A] (t : ℕ) (x : A × A) :
     rw [Function.iterate_succ_apply, ih]
     simp only [step, Nat.fib_add_two, Nat.cast_add]
     ring
-
 theorem iterate_first {A : Type} [CommSemiring A] (t : ℕ) (ht : 0 < t) (x : A × A) :
     (step^[t] x).1 = (Nat.fib (t - 1) : A) * x.1 + (Nat.fib t : A) * x.2 := by
   obtain ⟨s, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : t ≠ 0)
   rw [Function.iterate_succ_apply', show (s + 1) - 1 = s by omega]
   exact iterate_second s x
-
 private theorem iterate_matrix {A : Type} [CommSemiring A] (r : ℕ) (hr : 0 < r) (x : A × A) :
     step^[r] x = (Nat.fib (r - 1) * x.1 + Nat.fib r * x.2,
       Nat.fib (r - 1) * x.2 + Nat.fib r * (x.1 + x.2)) := by
@@ -74,7 +72,6 @@ private theorem iterate_matrix {A : Type} [CommSemiring A] (r : ℕ) (hr : 0 < r
   rw [iterate_second, Nat.fib_add_one hr.ne']
   push_cast
   ring
-
 theorem actual_source_value (k : ℕ) (v : ℕ × ℕ) :
     quantity (step^[k] v) = Nat.fib (k + 3) * v.1 + Nat.fib (k + 4) * v.2 := by
   have hbridge := GraftAffineClosure.result.2 1 (by omega) (0, 0)
@@ -83,26 +80,21 @@ theorem actual_source_value (k : ℕ) (v : ℕ × ℕ) :
   rw [(hbridge.2.2.2.2.2.2.2.2.2.2.2.1 v).1,
     ← Function.iterate_add_apply] at hh
   exact hh.symm.trans (iterate_first (k + 4) (by omega) v)
-
 theorem actual_signed_quantity (k : ℕ) (v : ℕ × ℕ) (hk : 0 < k) :
     (quantity (A := ℕ) (step^[k] v) : ℤ) = signedValue k ((observe v).1, (observe v).2) := by
   have hbridge := GraftAffineClosure.result.2 1 (by omega) (0, 0)
   have htime := hbridge.2.2.2.2.2.2.2.2.2.2.2.2.1
   simpa [signedValue] using congrArg (Nat.cast : ℕ → ℤ)
     ((iterate_first k hk (observe v)).symm.trans (htime k v)).symm
-
 theorem actual_quantity_scaling (Q k : ℕ) (v : ℕ × ℕ) :
     quantity (step^[k] (Q * v.1, Q * v.2)) = Q * quantity (step^[k] v) := by
   rw [actual_source_value, actual_source_value]
   ring
-
 private theorem cast_state_semiconj (m : ℕ) : Function.Semiconj (castState m) (step (A := ℤ)) step := fun z => by
   simp [castState, step]
-
 private theorem signed_modular_value (m k : ℕ) (x : ℤ × ℤ) :
     (signedValue (k + 1) x : ZMod m) = (step^[k] (castState m x)).2 := by
   simpa [signedValue, castState] using (iterate_second k (castState m x)).symm
-
 private theorem rank_facts (p : ℕ) (hp : p.Prime) (e : ℕ) (he : 1 ≤ e) :
     3 ≤ zeroRank (p ^ e) ∧ p ^ e ∣ Nat.fib (zeroRank (p ^ e)) ∧
     ∀ k : ℕ, p ^ e ∣ Nat.fib k ↔ zeroRank (p ^ e) ∣ k := by

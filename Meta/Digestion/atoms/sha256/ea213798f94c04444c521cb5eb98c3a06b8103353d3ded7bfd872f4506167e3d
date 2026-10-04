@@ -1,0 +1,34 @@
+**数量读数的局部可逆性 295.1。** 对组成向量 `c(t)=(a,b)^{\mathsf T}`，令 `q(a,b)=2a+3b`。同一来源的两次读数满足
+
+$$
+\binom{q(c(t))}{q(Mc(t))}
+=
+\begin{pmatrix}2&3\\3&5\end{pmatrix}
+\binom ab,
+\qquad
+\det\begin{pmatrix}2&3\\3&5\end{pmatrix}=1.
+\tag{295.4}
+$$
+
+因此
+
+$$
+a=5q(c(t))-3q(Mc(t)),
+\qquad
+b=2q(Mc(t))-3q(c(t)).
+\tag{295.5}
+$$
+
+这个恢复依赖两次读数来自同一个来源。分别知道两个边缘分布而没有联合配对，不足以推出式（295.5）的随机变量关系。
+
+全部数量轨迹仍可能遗失次序。两棵树
+
+$$
+t_L=\langle\alpha,\beta\rangle,
+\qquad
+t_R=\langle\beta,\alpha\rangle
+\tag{295.6}
+$$
+
+具有相同组成和相同数量轨迹，但左端叶标签不同；任何包含次序或路径查询的任务都能区分它们。
+

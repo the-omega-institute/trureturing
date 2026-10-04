@@ -1,0 +1,18 @@
+**规范结构的外加性 288.1。** 若要得到标准模型中的规范场，至少需另行给出基空间 `X`、规范群 `G`、主丛 `P\to X`、表示 `\rho` 和联络 `A`。在离散 FIB 支撑上，可以外加边 holonomy `U_e\in G`，并在每个面或闭合路径上定义
+
+$$
+U_\gamma=\prod_{e\in\gamma}U_e^{\sigma_e},
+\qquad
+F_f=U_{\partial f}-\mathbf 1.
+$$
+
+若再指定迹、耦合常数和面权重，才可写出 Wilson 型作用量
+
+$$
+S_{\mathrm{gauge}}[U]
+=\sum_{f\in F_j}\beta_f
+\left(1-\frac{1}{d_\rho}\operatorname{Re}\operatorname{Tr}_\rho U_{\partial f}\right).
+$$
+
+FIB 递归可以组织哪些面、边和路径进入作用量，以及给出条件转移矩阵；但 `G` 是 `U(1)`、`SU(2)`、`SU(3)` 还是其他群，表示维数、耦合常数和作用量权重都不是裸 FIB 的结论。相同的 `A_j` 可以在不同群上赋值而不改变任何组合邻接关系。
+
