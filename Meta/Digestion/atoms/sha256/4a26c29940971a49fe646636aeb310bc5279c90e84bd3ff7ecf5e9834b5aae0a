@@ -1,0 +1,17 @@
+**定理 19.1（最优标量逆模量）。** 对任意 $0<u<v<x$，令 $\Delta s=v-u$、$\Delta t=h_N(v)-h_N(u)>0$。则
+
+$$
+\Delta t
+=\Delta s\left(m+\frac{2x-u-v}{r}\right)
+\ge m\Delta s+\frac{(\Delta s)^2}{r},
+$$
+
+从而
+
+$$
+\Delta s\le\omega_m(\Delta t),\qquad
+\omega_m(\tau)=\frac{\sqrt{r^2m^2+4r\tau}-rm}{2}.
+$$
+
+这个界是尖锐的：对每个 $\tau\in(0,(N+1)x)$，所有满足 $h_N(v)-h_N(u)=\tau$ 的来源对，其 $v-u$ 的上确界恰为 $\omega_m(\tau)$。任意次序的两读数使用 $|\Delta t|$ 即得相同界。
+

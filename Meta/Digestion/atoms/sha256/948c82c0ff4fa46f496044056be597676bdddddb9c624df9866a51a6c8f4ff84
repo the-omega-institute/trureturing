@@ -1,0 +1,7 @@
+**定义 2.1（Fibonacci 推进）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad y_n=\ell M^n c.
+$$
+

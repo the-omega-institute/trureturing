@@ -1,0 +1,12 @@
+**定理 24.1（有限全局 Lipschitz 逆的最早合法接续）。** 固定 §23 的精确前两读数、实际字面前缀、$k\ge1$ 和相应的 $\rho>0$。要求第三读取在整个相容纤维上注入，且标量逆或矩阵逆具有某个有限全局 Lipschitz 常数，则上、下剪切之后的最少追加动作数分别为
+
+$$
+\ell_U^{\mathrm{Lip}}
+=2\max\left(1,\lfloor\rho-k\rfloor+1\right)-1,
+\qquad
+\ell_V^{\mathrm{Lip}}
+=2\max\left(1,\lfloor\rho-k\rfloor+2\right)-1.
+$$
+
+固定字面前缀的最少总动作数为 $L_2+\ell_U^{\mathrm{Lip}}$ 或 $L_2+\ell_V^{\mathrm{Lip}}$。与定理 21.1 的识别最小值比较，上剪切恰在 $\rho$ 为整数且 $\rho\ge k+1$ 时多两次动作；下剪切恰在 $\rho$ 为整数且 $\rho\ge k$ 时多两次动作；其余参数均无延迟。这里要求的是存在某个有限常数，不是达到预先指定的常数。
+
