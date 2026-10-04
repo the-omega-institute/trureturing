@@ -251,6 +251,146 @@ to force a mixed subcover or a paid replacement. Changing cofactors,
 retaining q-factors or using explicitly paid additional donors also
 falls outside the obstructed replacement class.
 
+## Original private points restrict the small-Helly branch
+
+Return to a genuine whole cover and its actual component C from
+Report861. Keep all original private points. Normalize each color's
+supports by stripping its first q-digit, on the same source
+
+$$
+X_C=V_C\times\mathbb Z/q^{G-1}\mathbb Z,
+\qquad k_c=|C_c|.
+\tag{PC12}
+$$
+
+Every color covers all of this source. It is also irredundant there.
+For an original i of color c, take its global private integer. Its
+base avoids every q-free original and belongs to $F_i$, hence to
+$V_C$. Removing the first q-digit gives a point in its stripped
+support. If another original of the same color contained that
+normalized point, restoring the first digit c would put the original
+private integer in both original classes. Thus each stripped support
+has a private point relative to its entire color.
+
+Omit one support from a color. Its private point is missed by all
+the remaining $k_c-1$ supports, and their own private points still
+witness PC11. Consequently the comatching parameter of all the
+normalized supports satisfies
+
+$$
+\tau'(X_C)\ge k_c-1\qquad\text{for every }c\in U.
+\tag{PC13}
+$$
+
+This argument uses one color at a time. Private points of different
+original q-colors need not remain private after their first digits
+are removed; PC13 is not a lower bound of $M-1$ from all M owners.
+In particular the proposed sufficient bound $\tau'\le82$ requires
+every color to have at most 83 owners, not merely a small average or
+one smallest color.
+
+There is a further source consequence. Suppose an original i of
+color c has q-height at least two, and fix the base of its global
+private point. No q-height-one original of that color is active at
+this base: it would cover the private point. Complete color service
+requires an owner for each of the q possible next digits, with all
+later digits fixed. Every active owner has q-height at least two
+and can accept only one next digit. Selecting an owner for each
+digit is therefore injective, so
+
+$$
+\text{some }i\in C_c\text{ has }j_i\ge2
+\quad\Longrightarrow\quad k_c\ge q.
+\tag{PC14}
+$$
+
+For q=113, PC13--PC14 show that $\tau'\le82$ can hold only when
+every moving original of C has q-height one. The actual parameter
+bound has not been proved. Its failure excludes this particular
+Helly certificate, not the existence of a rainbow subcover or a
+different paid exchange.
+
+Divisor closure makes the remaining height-one case particularly
+explicit. Every stripped label $3^{a_i}m_i>1$ already belongs to a
+q-free original, which is retained outside C. Its old phase differs
+from the stripped phase: equality would make the original q-bearing
+child contained in that parent, contradicting its private point.
+Stripping is injective on numerical labels, so the collision set of
+[Report865](865-whole-component-digit-stripping-and-shared-parent-repairs.md)
+then satisfies
+
+$$
+b_c=k_c,\qquad N'=N-M+r_c.
+\tag{PC15}
+$$
+
+Thus the old-parent repair must still fit $r_c<M$. Those q-free
+parent classes lie outside $E_0$. A rainbow cover of $X_C$ does not
+by itself establish coverage of their deletion liability or authorize
+assigning two phases to the same numerical label. This identifies the remaining
+arithmetic obligation even in the branch where the small Helly
+certificate could apply.
+
+## Coloring by fresh moduli has its own partition obstruction
+
+One could instead choose a finite nonempty set of fresh numerical
+moduli $\mathcal M$ in advance and let color m contain its permitted phase traces
+$X\cap[a]_m$ on one common nonempty residual X. If each such color
+covers all of X and its comatching parameter is at most
+$|\mathcal M|-1$, the cited theorem directly chooses one phase per
+modulus covering X. Numerical distinctness is then built into the
+colors, although the chosen label count must still fit the budget.
+
+This sufficient condition need not certify even an existing repair.
+For fixed m, its nonempty phase traces partition X. Write
+$r_m=|\operatorname{image}(X\bmod m)|$. Choose one point in each
+of $r_m-1$ cells and a common missed point in the remaining cell.
+These cells satisfy PC11, so
+
+$$
+\tau'\ge r_m-1\qquad(m\in\mathcal M).
+\tag{PC16}
+$$
+
+Hence this certificate requires $r_m\le|\mathcal M|$ for every
+chosen m. Pruning phases while requiring that color to cover all X
+cannot remove any nonempty cell of its partition.
+
+For example, consider the complete safe cofactor corridor of one
+bottom parent,
+
+$$
+X=\{x\in\mathbb Z:x\equiv\rho\pmod n,
+       \ x\not\equiv a\pmod3,\ x\not\equiv b\pmod9\},
+\qquad (n,3)=1,\quad b\not\equiv a\pmod3.
+\tag{PC17}
+$$
+
+For $e\mid n$ and $k\ge2$, CRT realizes every safe ternary root
+with the fixed cofactor phase, giving
+
+$$
+|\operatorname{image}(X\bmod3^k e)|=5\cdot3^{k-2}.
+\tag{PC18}
+$$
+
+When $\tau(n)=11$, the existing retained-pure repair of Report385,
+section15, covers this entire corridor with 25 distinct labels:
+eleven at ternary depth three, eleven at depth four and three at
+depth five. For any depth-five label $243e$, PC18 gives 135 phase
+cells. Thus the full phase-family parameter is at least 134, which
+fails the proposed threshold 24 despite the existing 25-label
+repair. A depth-four label already has 45 cells.
+
+This is a limitation of the sufficient Helly condition on this
+specified corridor. An actual expanded residual can be smaller
+after other retained and stripped classes receive credit; neither
+135 nor the resulting obstruction may be transferred to that
+smaller source without checking its actual phase cells. A phase
+family that omits required cells also loses the complete-color
+premise. Both uses of the literature theorem must preserve the
+same residual source and its full color covers.
+
 ## Verification scope
 
 A scoped transient Lean check proves the Cartesian common-missed-point
@@ -272,3 +412,35 @@ phase product, the q=167 sharpness construction and price, and the
 $\tau'\ge664$ example remain ordinary deductions in this scope.
 The cited colorful Helly theorem is reused from its primary text;
 it is not claimed as a new Lean result.
+
+A further scoped transient check verifies the actual integer-to-common-
+source transport in PC12--PC14. Original global private integers yield
+same-color private points, omitting one owner produces the private-point
+and common-miss witness, and the q next-digit suppliers form an actual
+injection into the color. Given an explicit upper bound T on these
+comatching witnesses and $T+1<q$, it concludes that every component
+original has q-height one.
+Given the actual q-free parent at each stripped label, it also verifies
+the parent's collision membership, different phase and exclusion from
+$E_0$, and proves $b_c=k_c$. Extracting those parent indices from the
+ordinary divisor-closure premise is not included in this check.
+
+The general partition witness in PC16 is checked. For PC17--PC18, the
+same compilation checks the concrete corridor $n=5^{10}$, $\rho=0$,
+with pure guards zero modulo three and one modulo nine. Its phase
+range modulo $1215=243\cdot5$ is proved equal to a finite set of
+cardinality 135: each phase has an actual CRT integer in the corridor,
+and every corridor integer has one of those phases. It constructs the
+134-support private-point/common-miss witness. The existing repair is
+instantiated as 25 distinct odd nonunit labels, including 1215, and
+is proved to cover the whole parent together with the guards. Thus
+the mismatch between a valid repair and this Helly sufficient
+condition uses actual congruence classes, not an assumed phase count.
+
+These 110 checked axiom closures use only `propext`,
+`Classical.choice` and `Quot.sound`. They remain transient reuse
+checks, with no retained new Lean declarations. The arbitrary-parameter
+cardinality formula PC18 remains an ordinary CRT deduction. Neither
+check proves the small comatching bound for the actual component,
+supplies its simultaneous parent repair, or resolves the unrestricted
+odd covering problem.
