@@ -15713,3 +15713,366 @@ $$
 不同局部波前和相位奇点可能给出相同体表信号。通道噪声、刺激和电导随机性可触发异位动作电位、波阻滞或随机再入，也可破坏波前相干。传导速度、动作电位时程和总电压通常只能识别参数组合，不能单独恢复离子模型与隐藏恢复态。
 
 因此 FIB 只提供细胞连接、组织图和传播路径骨架。膜电位、离子通道、兴奋阈值、传导速度、恢复期、组织几何、刺激、边界、测量投影和噪声均须外加。FitzHugh–Nagumo/电缆极限、波前、再入旋涡和随机失稳是这些结构下的条件结论；同一 FIB 图可从静息稳定态切换到单脉冲传播、波阻滞、旋涡或噪声诱发失常，不存在由 FIB ATOM 递归单独确定的普适生物电定律。
+
+## 208. FIB 网络上的外加多组分趋化、反应—扩散斑图与聚集临界性
+
+固定 FIB 关系给出的有限图 \(G_j=(V_j,E_j)\)，令 \(B_j\) 为关联矩阵、\(L_j=B_j^{\mathsf T}W_jB_j\) 为另行赋权的图拉普拉斯。顶点上放置 \(m\) 个种群密度 \(u=(u_1,\ldots,u_m)\) 和 \(q\) 个趋化或抑制信号 \(c=(c_1,\ldots,c_q)\)。FIB 只提供顶点、边和组合路径；体积、嵌入距离、扩散张量、趋化系数、反应网络、化学降解、边界、噪声和观测通道均外加。
+
+对种群 \(a\)，外加守恒边通量和反应项可写成
+
+$$
+J_a=-D_aB_ju_a+\bar u_a\sum_{\ell=1}^q\chi_{a\ell}B_jc_\ell,
+\qquad
+\dot u_a=B_j^{\mathsf T}J_a+R_a(u,c),
+\tag{208.1}
+$$
+
+信号方程为
+
+$$
+\tau_\ell\dot c_\ell
+=-D^c_\ell L_jc_\ell-\alpha_\ell c_\ell
++\sum_{a=1}^m\beta_{\ell a}u_a+S_\ell.
+\tag{208.2}
+$$
+
+\(\chi_{a\ell}\) 的符号分别表示吸引或排斥，\(R_a\) 可包含出生、死亡、竞争、饱和和化学反应。质量守恒只有在相应反应项和边界通量为零时成立，不能从 FIB 图结构自动推出。若 \(\tau_\ell\to0\) 且
+\(K_\ell=(D^c_\ell L_j+\alpha_\ell I)^{-1}\) 存在，则
+\(c_\ell=K_\ell(\sum_a\beta_{\ell a}u_a+S_\ell)\)，趋化作用成为图上的非局部交叉扩散。\(\alpha_\ell=0\) 时还需零模相容条件，\(\alpha_\ell>0\) 则给出外加屏蔽长度。
+
+设 \((u_*,c_*)\) 是均匀稳态，令 \(L_j\varphi_{\ell,j}=\lambda_{\ell,j}\varphi_{\ell,j}\)。线性化的图模态满足
+
+$$
+\partial_tz_\ell=\mathsf A_j(\lambda_{\ell,j})z_\ell,
+\qquad
+\mathsf A_j(\lambda)=
+\begin{pmatrix}
+R_u-\lambda D_u & \lambda X\\
+B_c & R_c-\lambda D_c
+\end{pmatrix},
+\tag{208.3}
+$$
+
+并定义
+
+$$
+s_j(\lambda)=\max\operatorname{Re}\operatorname{spec}\mathsf A_j(\lambda).
+\tag{208.4}
+$$
+
+若 \(s_j(0)<0\) 而某个正特征值使 \(s_j(\lambda_{\ell,j})>0\)，均匀稳态对均匀扰动稳定而对空间扰动失稳，得到外加反应—扩散—趋化的 Turing 型斑图。最先增长的模态由
+
+$$
+\lambda_{\rm sel,j}\in\arg\max_{\lambda_{\ell,j}}s_j(\lambda_{\ell,j})
+\tag{208.5}
+$$
+
+选择，其形状仍取决于边界、缺陷和特征向量。图谱只有在给定长度标度和嵌入后才可与连续波数对应；改变边权或边界会移动失稳带。
+
+二维、单种群、无反应且信号快速无屏蔽时，外加连续极限可写
+
+$$
+\partial_tu=D\Delta u-\chi\nabla\!\cdot(u\nabla c),
+\qquad
+-D_c\Delta c=\beta u.
+\tag{208.6}
+$$
+
+在全平面 Newton 核归一化和适当正则性下，经典临界质量为
+
+$$
+M_c=\frac{8\pi D D_c}{\chi\beta}.
+\tag{208.7}
+$$
+
+这个 \(8\pi\) 只属于所列模型；屏蔽、有界域、化学反应、多个物种、非局部核和时间依赖信号都会改变或消除该分界。有限 FIB 图在固定质量和有限顶点数下没有连续 PDE 意义的有限时间无穷大，只能出现向少数顶点集中的高峰。图列体积、边权和归一化若随网格尺度改变，离散峰值是否逼近连续爆聚必须另行证明。
+
+随机通量、信号和反应可写为
+
+$$
+\mathrm du=\mathcal F_u(u,c)\,\mathrm dt
++\Sigma_u(u,c)\,\mathrm dW_u,
+\qquad
+\tau\,\mathrm dc=\mathcal F_c(u,c)\,\mathrm dt
++\Sigma_c(u,c)\,\mathrm dW_c .
+\tag{208.8}
+$$
+
+噪声能在确定性稳定区触发斑图成核，也能在超临界区打散聚集。若读出为
+
+$$
+y(t)=Q_u u(t)+Q_c c(t)+\eta(t),
+\tag{208.9}
+$$
+
+则被 \(Q_u\) 湮灭的模态不可见，只测总质量也无法区分均匀态、条纹态和多个团簇。有限时间轨迹通常只识别 \(\chi\beta/D_c\)、屏蔽长度和反应时间等组合，不能分别恢复全部参数。
+
+因此，FIB 递归只提供关系、图谱和路径骨架；趋化参数、化学信号、反应网络、几何尺度、边界、噪声和测量均须外加。聚集阈值、Turing—趋化斑图、模式选择、离散峰值、连续爆聚与随机切换，都是指定外加模型后的条件结论，不是 FIB ATOM 递归单独确定的普适趋化统计。
+
+## 209. FIB 路径上的外加量子随机游走、退相干与扩散—局域化输运
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，在顶点基 \(\{|v\rangle\}\) 上另给紧束缚 Hamiltonian
+
+$$
+H_j=\sum_vV_v|v\rangle\langle v|
+-\sum_{\{u,v\}\in E_j}
+\left(J_{uv}|u\rangle\langle v|+\overline{J_{uv}}|v\rangle\langle u|\right).
+\tag{209.1}
+$$
+
+跃迁幅度、站点势、规范相位、距离、时间单位和边界均是外加。开放系统密度矩阵可满足
+
+$$
+\dot\rho=-{\rm i}[H_j,\rho]
++\sum_\alpha\left(L_\alpha\rho L_\alpha^\dagger
+-\tfrac12\{L_\alpha^\dagger L_\alpha,\rho\}\right).
+\tag{209.2}
+$$
+
+取 \(L_v=\sqrt{\gamma_v}|v\rangle\langle v|\) 表示位置退相干，取
+\(L_{u\to v}=\sqrt{k_{u\to v}}|v\rangle\langle u|\) 表示有向跳跃；\(\gamma_v,k_{u\to v}\)、热浴和详细平衡关系均不由 FIB 给出。
+
+在强而近似均匀的退相干下，绝热消去相干项可产生
+
+$$
+k_{u\to v}^{\rm eff}
+\simeq\frac{2|J_{uv}|^2\gamma_\phi}
+{\gamma_\phi^2+(V_u-V_v)^2},
+\qquad
+\dot p_v\simeq\sum_{u\sim v}
+(k_{u\to v}^{\rm eff}p_u-k_{v\to u}^{\rm eff}p_v).
+\tag{209.3}
+$$
+
+给定物理距离和适当图列极限后，这一主方程才可能产生 \({\rm MSD}(t)\sim2dDt\)。退相干并不单调加快输运：弱退相干可保留相干准弹道传播，强退相干又使 \(D\) 按 \(|J|^2/\gamma_\phi\) 下降，极强测量导致量子 Zeno 慢化。
+
+若无序势外加且保持相干，一维或准一维模型可有 Anderson 局域化；有限退相干会把严格局域化改为长时间慢扩散。Liouvillian 谱隙
+
+$$
+\Delta_{\mathcal L}=-\max_{\lambda\ne0}\operatorname{Re}\lambda
+\tag{209.4}
+$$
+
+只有在耗散通道、边界和稳态唯一性均明确时才给出弛豫尺度。给有向边标记位移 \(d_{uv}\)，倾斜 Liouvillian 的生成函数为
+
+$$
+Z(\chi,t)=\operatorname{tr}\!\left(e^{t\mathcal L_\chi}\rho_0\right),
+\qquad
+\psi(\chi)=\lim_{t\to\infty}t^{-1}\log Z(\chi,t),
+\tag{209.5}
+$$
+
+其导数给出位移平均、扩散和大偏差率，但前提是测量通道和环境已纳入模型。仅记录位置均方位移不能区分相干弹道、退相干扩散和局域化平台；不同 \(H_j\)、耗散率和测量反作用可能产生同一位置边缘。
+
+因此，FIB 递归只提供量子位置和接续关系的组合路径。Hamiltonian、跃迁幅度、势、退相干、热浴、物理距离、边界、时间尺度及测量均须外加；量子随机游走、扩散、Anderson 局域化、Zeno 慢化和输运涨落都是明确开放量子模型下的条件结论。
+
+## 210. FIB 网络上的外加耗散粒子、自组织临界与有限尺寸幂律
+
+固定 FIB 图族 \(G_L=(V_L,E_L)\)，在顶点放置非负粒子数 \(z_v\)，另给稳定阈值 \(c_v\)、转移核、汇点和体耗散率。一次外加稳定化可写为
+
+$$
+z^{(n+1)}=\mathsf{Stab}_{L,\varepsilon}\!\left(z^{(n)}+\xi_n\right).
+\tag{210.1}
+$$
+
+FIB 只给邻接、路径和层级模板；粒子含义、阈值、驱动、耗散、几何、边界和观测规则均外加。定义 \(M_n=\sum_vz_v\)、\(I_n=\sum_v\xi_{n,v}\) 和耗散量 \(D_n\)，总有质量账式
+
+$$
+M_{n+1}-M_n=I_n-D_n.
+\tag{210.2}
+$$
+
+若存在有限平稳分布，则 \(\mathbb E[D_n]=\mathbb E[I_n]\)。没有汇点和体耗散时，持续正输入不能达到有限平稳账；固定正耗散通常给出有限相关长度和截断尾。候选自组织临界极限需另加慢驱动和随 \(L\) 缩小的耗散路径。
+
+粗粒活动密度 \(\rho_a\) 与粒子密度 \(\zeta\) 可满足
+
+$$
+\partial_t\rho_a
+=a(\zeta-\zeta_c)\rho_a-b\rho_a^2
++D_a\Delta_G\rho_a+\sigma\sqrt{\rho_a}\,\eta_a,
+\qquad
+\partial_t\zeta=h_L-\varepsilon_L\rho_a
++D_\zeta\Delta_G\rho_a+\eta_\zeta .
+\tag{210.3}
+$$
+
+若驱动期间已有活动尚未消失，雪崩重叠改变统计；若 \(h_L,\varepsilon_L\to0\) 的次序不同，也会得到不同极限。分支比
+
+$$
+R_L=\mathbb E[\text{一次活动在下一时间层产生的活动数}]
+\tag{210.4}
+$$
+
+只有在近似树状且子事件近似独立时才可作为临界指标，环路、守恒和长程转移会使它不足以决定雪崩律。
+
+雪崩规模、面积、持续时间和图距离半径可定义为
+
+$$
+S=\sum_vu_v,\qquad
+A=\#\{v:u_v>0\},\qquad
+T=\text{活动时间层数},\qquad
+R=\max_{v:u_v>0}d_L(v,v_0).
+\tag{210.5}
+$$
+
+在另给物理长度 \(L\) 和有限尺寸极限后，才可检验候选标度
+
+$$
+P_L(S=s)=s^{-\tau_s}\Phi\!\left(\frac{s}{s_c(L)}\right),
+\qquad
+s_c(L)\asymp L^{D_s},
+\tag{210.6}
+$$
+
+以及 \(P_L(T=t)=t^{-\tau_t}\Psi(t/L^z)\)。递归深度不能直接代替物理长度；边界占比、谱维、瓶颈、方向性和图族选择都会改变截止。外加加粒若满足
+
+$$
+\Pr(I_n>x)\asymp x^{-\alpha},
+\tag{210.7}
+$$
+
+即使内部动力学次临界，也能在有限窗口产生伪幂律。因此双对数直线不能单独证明 SOC 或临界分支比。
+
+传感器映射 \(Y=Q_L(S,T,A,R)+\epsilon\) 会改变观测指数：只计受影响顶点得到 \(A\)，只计拓扑次数得到 \(S\)，粗时间采样会截短 \(T\)。淬火图族与退火图族的平均顺序也可能给出不同矩指数。故 SOC、雪崩指数、临界分支比和有限尺寸标度必须在指定驱动、耗散、拓扑核、尺度极限和观测规则下检验，不能由 FIB ATOM 递归单独推出。
+
+## 211. FIB 递归路径上的外加更新过程、首达时间与重尾极值统计
+
+固定一条 FIB 递归路径或有限状态接续图，记第 \(n\) 次接续所经过的状态为 \(X_n\)。FIB 只给出允许的组合关系；等待时间 \(\tau_n>0\)、奖励 \(R_n\)、外部时钟、目标集合和观测投影均需外加。令
+
+$$
+S_n=\sum_{k=1}^{n}\tau_k,\qquad
+N(t)=\max\{n:S_n\le t\}.
+\tag{211.1}
+$$
+
+若 \((\tau_n,R_n)\) 独立同分布且 \(\mu=\mathbb E[\tau_1]<\infty\)、\(\rho=\mathbb E[R_1]<\infty\)，更新定理给出
+
+$$
+\frac{N(t)}{t}\longrightarrow\frac1\mu,\qquad
+\frac1t\sum_{n=1}^{N(t)}R_n\longrightarrow\frac{\rho}{\mu}
+\quad\text{a.s.}
+\tag{211.2}
+$$
+
+极限速率由等待时间和奖励律决定，不能由 FIB 路径长度或递归深度单独决定。二阶矩有限时，更新奖励的中心极限定理为
+
+$$
+\frac{\sum_{n=1}^{N(t)}R_n-(\rho/\mu)t}{\sqrt t}
+\Longrightarrow
+\mathcal N\!\left(0,
+\frac{\operatorname{Var}(R_1-(\rho/\mu)\tau_1)}{\mu}\right).
+\tag{211.3}
+$$
+
+马尔可夫调制、共享时钟或回路重访会引入协方差和遍历条件；FIB 接续关系本身不提供独立性、平稳性或协方差结构。
+
+对 FIB 目标子集 \(A\)，首达步数和首达时间分别为
+
+$$
+H_A=\inf\{n\ge0:X_n\in A\},\qquad
+T_A=S_{H_A}.
+\tag{211.4}
+$$
+
+即使 \(H_A\) 的组合分布已知，\(T_A\) 仍依赖等待时间的联合律。若 \(H_A\) 与 \(\tau_n\) 相关，独立时的复合更新公式失效；吸收边界、回路和重访会改变尾部。
+
+若外加等待时间满足
+
+$$
+\Pr(\tau_1>t)\sim c\,t^{-\alpha}L(t),
+\qquad 0<\alpha<1,
+\tag{211.5}
+$$
+
+其中 \(L\) 为慢变函数，则均值发散，通常不再有线性速率，更新计数呈 \(t^\alpha\) 量级并出现老化。对 \(1<\alpha<2\) 的重尾，均值有限而方差发散，高斯极限由稳定律取代。回路结构、尾指数和外加截断共同决定异常扩散、间歇性与长记忆。
+
+对前 \(n\) 次奖励的极值 \(M_n=\max_{k\le n}R_k\)，只有在外加尾部和依赖簇满足相应条件时，才可得到 Fréchet、Gumbel 或 Weibull 型极值极限。有限 FIB 图的节点数不决定极值域；共享边、周期回路和状态门控会改变有效样本数，不能用独立观测替代。
+
+因此，FIB 可提供更新事件的允许接续、回路和目标集合；等待时间分布、奖励律、独立性、平稳性、吸收边界、时间尺度和观测误差均须外加。更新定理、首达分布、中心或稳定极限定理、老化、异常输运与极值标度都是外加随机过程的条件结论，不存在由 FIB 递归本身确定的普适更新统计。
+
+## 212. FIB 关系网络上的外加信息流、转移熵与响应/因果识别统计
+
+固定 FIB 递归产生的上下文集合 \(V\) 及其关系边集 \(E\)。在每个上下文 \(v\) 上另定义随机过程 \(X_v(t)\)，并选择外加时钟、采样间隔、过滤族 \(\mathcal F_t\)、联合概率律和观测通道。FIB 只提供关系与候选路径；边的方向、时间先后、噪声独立性、干预可行性和观测精度均需外加。含环关系必须经过外加时间展开，组合相邻不能自动解释成因果箭头。
+
+对两个离散时间过程 \(X,Y\)，有限记忆转移熵定义为
+
+$$
+T_{X\to Y}^{(\ell,m)}
+=I\!\left(Y_{t+1};X_{t-\ell+1:t}\mid Y_{t-m+1:t}\right)
+=\sum p(y_{t+1},x^\ell,y^m)
+\log\frac{p(y_{t+1}\mid x^\ell,y^m)}
+{p(y_{t+1}\mid y^m)} .
+\tag{212.1}
+$$
+
+它非负且一般不对称。连续时间转移熵率若存在，可写为
+
+$$
+\mathcal T_{X\to Y}
+=\lim_{\Delta t\downarrow0}
+\frac1{\Delta t}
+I\!\left(Y_{t+\Delta t};\mathcal F_t^X\mid\mathcal F_t^Y\right).
+\tag{212.2}
+$$
+
+该极限可能发散、为零或依赖粗粒化，不能用 FIB 路径长度代替时间尺度。条件转移熵
+
+$$
+T_{u\to v\mid S}
+=I\!\left(X_v(t+1);X_u^{\rm past}
+\mid X_v^{\rm past},X_S^{\rm past}\right)
+\tag{212.3}
+$$
+
+只有在 \(S\) 阻断已观测共同驱动且过程近似平稳时，才可解释为预测增益。隐藏变量、同步、混叠和非平稳性会使正值不等于物理因果，真实影响也可能因冗余或噪声使观测值为零。
+
+因果响应需另给可实施的外加扰动 \(h_s\)：
+
+$$
+R_{Y\leftarrow X}(t,s)
+=\left.\frac{\delta\,\mathbb E_h[Y_t]}{\delta h_s}\right|_{h=0},
+\qquad t\ge s .
+\tag{212.4}
+$$
+
+扰动位置、幅度极限、其余变量是否固定以及测量反作用均属于实验协议。Kubo 型相关函数还要求平衡、线性微扰、共轭力和时间反演奇偶性；非平衡或主动噪声通常含额外动力学项。
+
+动态结构模型可写为
+
+$$
+X_v(t+1)=f_v\!\left(X_{\operatorname{pa}(v)}(\le t),U_v(t+1)\right).
+\tag{212.5}
+$$
+
+父集合、噪声联合律和时间递推均为外加。对干预 \(do(X_u(s)=x)\)，因果效应为
+
+$$
+\Delta_{x,x'}^Y(t,s)
+=\mathbb E[Y_t\mid do(X_u(s)=x)]
+-\mathbb E[Y_t\mid do(X_u(s)=x')].
+\tag{212.6}
+$$
+
+后门调整公式
+
+$$
+\mathbb P(y\mid do(x))
+=\sum_z\mathbb P(y\mid x,z)\mathbb P(z)
+\tag{212.7}
+$$
+
+只有在一致性、可交换性和调整集 \(Z\) 的阻断条件成立时才有效；FIB 关系边不保证这些条件。含反馈环时需时间展开或明确动态干预。
+
+在正确指定的高斯线性模型中，转移熵等于预测残差方差的对数增益：
+
+$$
+T_{X\to Y}
+=\frac12\log
+\frac{\operatorname{Var}(\varepsilon_{\rm restricted})}
+{\operatorname{Var}(\varepsilon_{\rm full})}.
+\tag{212.8}
+$$
+
+非线性、重尾噪声、隐藏变量和正则化会破坏这一等价。观测若为 \(\widetilde X=M_X(X,\epsilon_X)\)、\(\widetilde Y=M_Y(Y,\epsilon_Y)\)，有限带宽、延迟、缺失和噪声会把潜在历史投影到观测纤维内；重复同一观测协议不能恢复未观测或未干预的方向。
+
+同一 FIB 关系骨架可承载零转移熵、共同驱动造成的双向预测信息、有向延迟耦合造成的单向响应和反馈造成的方向分解。改变时间采样、测量带宽、干预协议或噪声模型即可改变这些统计量。因此，FIB 递归只给出关系与路径的组合载体；概率分布、时间顺序、噪声联合律、干预、响应、观测和识别条件均须外加。转移熵、响应函数、Granger 型预测增益和因果效应是这些条件明确后的结论，不是 FIB ATOM 递归单独推出的信息方向或物理因果定律。
