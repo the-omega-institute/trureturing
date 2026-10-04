@@ -1,0 +1,26 @@
+**引理 30.2（原子像与复合像的全部非冲突比较）。** 对 $X,Y\in\mathcal I_3$，原子像之间只有相同者满足 $\operatorname{NC}$。原子像与复合像的比较恰为以下情形：
+
+$$
+\begin{aligned}
+\operatorname{NC}(A,\langle X,Y\rangle)
+&\Longleftrightarrow X\ne A,\\
+\operatorname{NC}(C,\langle X,Y\rangle)
+&\Longleftrightarrow
+Y\ne A\ \land\
+\left(X=A\ \lor\
+\bigl(\exists X_1,X_2\in\mathcal I_3,
+X=\langle X_1,X_2\rangle\ \land\ X_1\ne A\bigr)\right).
+\end{aligned}
+\tag{30.3}
+$$
+
+第一行成立时，共享叶数为零，$n(\langle X,Y\rangle)\ge8$，且大小恰为 $8$ 的唯一可能是 $\langle X,Y\rangle=B$。第二行中，若 $X=A$，共享叶数恰为 $3$，两侧未共享叶数分别为 $2$ 和 $n(Y)\ge5$；若 $X$ 为其中的复合像，共享叶数为零，且 $n(X)\ge8$、$n(Y)\ge5$。因此每个非冲突的原子／复合比较中，原子侧严格较小，原子侧至少有 $2$ 片未共享叶，复合侧至少有 $5$ 片未共享叶；两侧总叶数分别至少为 $3$ 和 $8$。
+
+**证明。** 每个实际三步像的根和左孩子都是分支：$A,C$ 的字面描述满足这一点，复合像的两个孩子本身都是实际三步像。按唯一前像的结构归纳，原子前像给大小 $3$ 或 $5$，分支前像的两个子像各至少有 $3$ 片叶，故每个实际像至少有 $3$ 片叶，复合像至少有 $6$ 片叶。因此大小 $3$ 只可能为 $A$；除 $A$ 外至少有 $5$ 片叶，大小 $5$ 只可能为 $C$。
+
+$A$ 与 $C$ 在共同叶地址 $\mathtt{LR}$ 分别标记 $\alpha$ 与 $\beta$，故它们不满足 $\operatorname{NC}$。相同原子像则当然满足，穷尽了原子／原子比较。
+
+$A$ 的叶地址是 $\mathtt{LL},\mathtt{LR},\mathtt R$。在 $\langle X,Y\rangle$ 中，$\mathtt R$ 的子树为 $Y$，$\mathtt{LL}$ 的子树为 $X$ 的左孩子，二者都为分支。若 $X=A$，地址 $\mathtt{LR}$ 在复合像中标记 $\beta$，与 $A$ 的 $\alpha$ 冲突。若 $X\ne A$，则 $X=C$ 或 $X$ 为复合像；其右孩子分别为 $E$ 或一个实际像，都为分支。因此 $A$ 的三个叶地址在该复合像中全部是分支，两树没有共享叶，且 $\operatorname{NC}$ 成立。此时 $n(X)\ge5$、$n(Y)\ge3$；大小 $8$ 强制 $X=C,Y=A$，得到唯一的 $B$。
+
+比较 $C=\langle A,E\rangle$ 与 $\langle X,Y\rangle$ 时，$\operatorname{NC}$ 分别限制左子树 $A,X$ 和右子树 $E,Y$。$E$ 的叶地址是 $\mathtt L,\mathtt R$。若 $Y=A$，右端标签分别为 $\alpha,\beta$，发生冲突。若 $Y\ne A$，则 $Y=C$ 或为复合像；其左右孩子都是分支，故 $E,Y$ 没有共享叶，此时 $n(Y)\ge5$。左侧比较中，$X=A$ 给出完全相同的三片叶；$X=C$ 已被原子／原子冲突排除；$X=\langle X_1,X_2\rangle$ 时，已证的第一行说明它恰在 $X_1\ne A$ 时合法，且没有共享叶、$n(X)\ge8$。左右地址不交，故共享叶数和未共享叶数按两侧相加，得到全部陈述。原子侧大小为 $3$ 或 $5$，复合侧在相应情形至少为 $8$、$8$ 或 $13$，所以大小关系严格。证毕。
+

@@ -1,0 +1,13 @@
+**引理 38.1。** 此长度向量对每个 $x>x_0$ 都真正超理想。记其低端、低中、高端、高中二面角为 $\alpha,\beta,\gamma,\delta$，则
+
+$$\cos\alpha=\sqrt{\frac{x-1}{2(2x-1)}},\qquad
+\cos\beta=\frac{x}{2x-1},$$
+$$\cos\gamma=\sqrt{\frac{(x+1)^2(2x-1)}{8x^2(x-1)}},\qquad
+\cos\delta=\frac{2x^2-x+1}{4x(x-1)}.$$
+
+并且
+
+$$2\alpha+\beta=\pi,\qquad
+\cos(2\gamma+\delta)=F(x):=-1+\frac{3x-1}{2x(x-1)^2},\qquad
+0<2\gamma+\delta<\pi.$$
+

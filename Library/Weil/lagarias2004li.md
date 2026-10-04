@@ -250,3 +250,151 @@ v4 PDF has SHA-256
 `86f3d3c49f5a889f121bb1f04f67694cb9066dc8360f6988165788679594a4a7`.
 No spectrum or essential-spectrum conclusion is asserted without a
 separate closed-form, operator-domain and spectral argument.
+
+## The full derivative family and the remaining estimate
+
+The [minimal mixed-form realization](fukushima2011dirichlet.md) supplies
+the actual closure of the even compact smooth core, with the measure,
+energy and all prime powers in (2) unchanged. Write
+$D=E_\Gamma+E_{\rm prime}$, let $\mathcal F$ be this even complex form
+domain, and let $T$ be its nonnegative self-adjoint operator in
+$\mathcal H=L^2_{\rm even}(\nu)$. The following extends the source
+application in (7); it is a paper bridge, without Lean certification or
+an originality claim. It does not supply a new upper bound on the
+one-half threshold, already constrained by (7).
+
+For each fixed derivative order $m$, differentiate the original normally
+convergent theta series rather than an asymptotic error term. Its tail
+and the positive first-term lower bound give
+
+$$
+\begin{gathered}
+|\Phi^{(m)}(x)|\le C_m
+\exp\bigl((9/2+2m)|x|-\pi e^{2|x|}\bigr),\\
+u_m:=\Phi^{(m)}/\Phi,\qquad
+|u_m(x)|\le C_m e^{2m|x|},\qquad
+|u_m'(x)|\le C_m e^{(2m+2)|x|}.
+\end{gathered} \tag{8}
+$$
+
+These bounds place every even $u_{2k}$ in the **minimal** domain, not
+merely the maximal finite-energy domain. Indeed, with the same cutoffs
+$\chi_R$, put $w_R=(1-\chi_R)u_m$. Its $L^2(\nu)$ norm tends to zero.
+For $0<t<1$, its squared increments are bounded uniformly in $R\ge1$
+by $C_mt^2e^{C_m|x|}$, integrable against
+$\Phi(x)\Phi(x+t)\psi(t)\,dx\,dt$. For $t\ge1$, use
+$\psi(t)\le Ce^{-t/2}$, boundedness of $\Phi$, and
+$\int\Phi|u_m|^2<\infty$. For prime shifts $y=x+\log n$, absorb the
+quotient growth into the two theta tails and use
+
+$$
+e^{2|x|}+e^{2|x+\log n|}\ge2n.
+$$
+
+This gives a uniform integrated majorant $C_me^{-cn}$ for the prime
+diagonals, with $c>0$ and $m$ fixed. Dominated convergence gives
+$D(w_R)\to0$, including every prime power. Thus
+$\chi_Ru_{2k}\to u_{2k}$ in the actual form norm. The case $m=0$
+also agrees with the constant membership established in the realization
+note.
+
+Repeated integration by parts against $\cosh(x/2)$ gives
+$\nu(u_{2k})=4^{-k}$. Define the centered vectors
+
+$$
+v_k=\Phi^{(2k)}/\Phi-4^{-k},\qquad k\ge1.
+$$
+
+Lagarias's mixed nullity applies to the transform
+$(-1)^kz^{2k}\Xi(z)$: it vanishes at every actual zero. To pass from that
+zero-side statement to arithmetic tests, the errors in
+$\chi_R\Phi^{(2k)}$ and their second derivatives tend to zero in the
+same exponentially weighted integral used for (3). Two integrations
+by parts give inverse-square strip decay; pairing with a compact test
+leaves a summable bound proportional to
+$m_\rho/(1+|\Im\rho|^2)^2$. The near-diagonal Gamma and complete prime
+majorants above justify the arithmetic passage as well. This is mixed
+nullity, not an inference from a single zero quadratic value.
+
+Polarizing (4), passing these cutoffs in the form norm and using core
+density gives
+
+$$
+D(v_k,g)=\tfrac12\langle v_k,g\rangle_\nu
+\quad(g\in\mathcal F),\qquad
+v_k\in D(T),\quad Tv_k=\tfrac12v_k. \tag{9}
+$$
+
+Operator-domain membership here uses the cited closed-form representation.
+The vectors are independent: a finite relation, multiplied by $\Phi$
+and Fourier transformed, is a polynomial times $\Xi(z)$. Since
+$\Xi(0)=\int\Phi>0$, the polynomial vanishes on a neighborhood of zero
+and every coefficient in the relation is zero.
+
+Let $N=\overline{\operatorname{span}\{v_k:k\ge1\}}^{\,L^2(\nu)}$ and
+$\mathcal R=(\mathbb C1\oplus N)^\perp$. Closedness of $T$ puts all of
+$N$ in its one-half eigenspace; constants have $T1=0$. These subspaces
+and their orthogonal complement reduce $T$. Every $h\in\mathcal F$
+therefore decomposes as $h=\nu(h)1+n+r$, with $n\in N$ and
+$r\in\mathcal R\cap\mathcal F$, and
+
+$$
+D(h)-\tfrac12\operatorname{Var}_\nu(h)
+=D(r)-\tfrac12\|r\|_\nu^2. \tag{10}
+$$
+
+This is the extended form slack; physical $Q$ outside its original
+compact domain is not asserted. Core density and form-norm continuity
+make (5) equivalent to
+$D(r)\ge\|r\|_\nu^2/2$ on $\mathcal R\cap\mathcal F$.
+That lower bound remains unproved. The decomposition removes an
+independently specified family of critical directions without discarding
+an unknown cross term; it does not identify the entire one-half
+eigenspace or determine the spectrum on $\mathcal R$.
+
+### Compact support does not survive this projection
+
+If $r\in\mathcal R$ has compact essential support, then $r=0$.
+To see this, set $U=r\cosh(x/2)$. The positive smooth density of $\nu$
+on that support makes $U$ a compact even $L^1(dx)$ function. Orthogonality
+to $1$ and every $v_k$ gives
+$\int U(x)\Phi^{(2k)}(x)\,dx=0$ for $k\ge0$; evenness gives the odd
+orders as well. The original theta series is holomorphic on
+$|\Im w|<\pi/4$, by normal convergence on compact subsets. It is not
+being asserted entire in its physical coordinate.
+
+Consequently $A(z)=\int U(x)\Phi(x+z)\,dx$ is holomorphic on this
+connected strip. All its derivatives vanish at zero, so the analytic
+identity theorem gives $A=0$. On the real axis evenness identifies
+$A=U*\Phi$, hence $\widehat U(s)\Xi(s)=0$. The factor $\Xi$ is nonzero
+near zero. Compact support makes $\widehat U$ entire, so it vanishes
+identically; Fourier injectivity gives $U=0$ and $r=0$.
+
+This does not make $\mathcal R$ trivial. The existing
+[sparse compact tests with positive full slack](chenwang2012weighted.md)
+have nonzero projected remainders by (10). Those remainders necessarily
+have noncompact support. Thus requiring both compact support and all
+critical orthogonality conditions would leave only the zero test.
+A local FIB support estimate must control the actual projected tails
+before it can be used on the remaining space; projecting a compact test
+and reusing its old support would change the object being estimated.
+
+The [full mixed spectral application](lenz2010compactness.md) supplies
+a paper-level essential bottom of one-half and an unspecified positive
+Poincare constant in this same measure. Its local compactness and
+relative-compact perturbation checks retain every prime power.
+For the even operator, any remaining eigenvalues $0<\lambda<1/2$
+are discrete, with eigenvectors in $\mathcal R$, and may accumulate
+at $1/2$. These source applications do not prove the one-half bound
+in (5), equivalently the remainder lower bound stated after (10).
+
+The [same-form exterior transfer](lenz2010compactness.md#same-form-theta-exterior-bound-and-low-projector-cutoff)
+combines (4) with the complete compact Weil formula on the same even
+test $f=\Phi h$. Its pole and variance mean terms cancel, leaving a
+nonnegative flat translation form and two bounded negative terms.
+The bounded multiplier and closed flat form extend that identity through
+the actual minimal form closure; original theta tails then control the
+full killed exterior energy and cutoff of the whole fixed-gap subspace.
+This paper-level transfer replaces the quantitative prime-counting
+remainder only in that exterior estimate. It does not establish the
+remaining spectral lower bound in (5), RH, Robin or Lean certification.

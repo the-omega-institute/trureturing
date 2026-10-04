@@ -1,0 +1,16 @@
+**证明。** 在欧氏三维空间取
+
+$$U=(\sqrt R,a-d,\sqrt{2(r+1)ad}),\qquad
+V=(\sqrt R,c-b,\sqrt{2(r+1)bc}).$$
+
+有 $\|U\|^2=A$、$\|V\|^2=B$、$U\cdot V=C$，Cauchy 不等式给出 $J\ge0$。原始余弦满足
+
+$$\varphi_1=\frac{W+r(ac+bd)-Ro}{\sqrt{AB}}.$$
+
+全部分母为正，故 $\varphi_1\le-1$ 等价于 $Ro\ge W+r(ac+bd)+\sqrt{AB}$。另一方面，直接展开得到恒等式
+
+$$W+r(ac+bd)+\sqrt{AB}
+=(r+1)\bigl(r-1+S^2\bigr)+(r+1)J.$$
+
+除以 $r+1>0$ 即得等价式。Cauchy 等号要求 $U,V$ 同向平行；其第一坐标是同一个正数，故必须 $U=V$。于是 $a-d=c-b$、$ad=bc$。令 $\eta=a-c=d-b$，则 $ad-bc=\eta(a+b)$，因 $a+b>0$ 得 $\eta=0$，从而 $a=c,b=d$。反向直接代入。
+

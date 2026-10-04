@@ -1,0 +1,31 @@
+**引理 356.2（等级对合与共轭构成的代数自同构）。** 令 $\gamma$ 为 Clifford 代数的标准保持乘法次序的等级对合：$\gamma(1)=1$，$\gamma(v)=-v$ 对每个 $v\in V$ 成立，并按乘法延拓，满足 $\gamma^2=\operatorname{id}_C$。这里的等级对合使用 Lundholm–Svensson，§2.3 的标准运算，而非反转乘法次序的反对合。令
+
+$$
+J(x)=B\,\gamma(x)\,B^{-1}.
+$$
+
+则 $B^{-1}=-B$，$J$ 是保单位的代数自同构，且
+
+$$
+J(A)=A+B,\qquad J(B)=-B,\qquad J^2=\operatorname{id}_C.
+$$
+
+在向量子空间 $V=\mathbb RA\oplus\mathbb RB$ 上，$J$ 的坐标为
+
+$$
+J(aA+bB)=aA+(a-b)B,
+$$
+
+并保持二次型 $Q$：
+
+$$
+Q(a,a-b)=a^2+a(a-b)-(a-b)^2=a^2+ab-b^2=Q(a,b).
+$$
+
+更一般地，按 $1,A,B,AB$ 展开时有
+
+$$
+J(s+tA+uB+vAB)=(s+v)+tA+(t-u)B-vAB.
+\tag{356.1}
+$$
+

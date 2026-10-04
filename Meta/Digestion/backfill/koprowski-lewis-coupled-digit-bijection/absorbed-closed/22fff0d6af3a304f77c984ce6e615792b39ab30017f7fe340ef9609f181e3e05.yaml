@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:22fff0d6af3a304f77c984ce6e615792b39ab30017f7fe340ef9609f181e3e05
+  normalized_sha256: sha256:22fff0d6af3a304f77c984ce6e615792b39ab30017f7fe340ef9609f181e3e05
+cas_ref: sha256:22fff0d6af3a304f77c984ce6e615792b39ab30017f7fe340ef9609f181e3e05
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Permutation/OrdinaryForbiddenCountContraction.ordinary_forbidden_count_contraction
+    target_statement_id: sha256:e3782bb02f837ad435e7874668f23bbfb0e78f20b915d89d90a9dc1a6c10541b
+receipts:
+  unresolved_subitems: []

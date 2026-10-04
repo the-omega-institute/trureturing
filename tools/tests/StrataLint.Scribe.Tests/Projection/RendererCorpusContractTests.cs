@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "f9d58e56ac69757cd7e473ac29d95e4b4008befc19177fa29f954093cb2e5590";
+        "23d6e96decd4fe98c297ae13b3ef1c188db62ce7a02badd772ca6915e6608ea5";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -190,8 +190,8 @@ public sealed partial class FormulaCorpusInventoryTests
                 DocumentEdge.Dependency.Create(GidRef.Create(targetGid)),
                 DocumentEdge.NarrativeReference.ToDocument(GidRef.Create(targetGid)),
                 DocumentEdge.NarrativeReference.ToDescribe(
-                    GidRef.Create(targetGid),
-                    DescribeId.Create("target")),
+                    GidRef.Create(sourceGid),
+                    DescribeId.Create("lemma")),
             ]);
         var target = ScribeDocument.Create(
             Header(targetGid, "Fixed target digest."),

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:041fb097371198ee6d90347a57791532b63c9cdccb3d0fb158c7d21e6f0714aa
+  normalized_sha256: sha256:041fb097371198ee6d90347a57791532b63c9cdccb3d0fb158c7d21e6f0714aa
+cas_ref: sha256:041fb097371198ee6d90347a57791532b63c9cdccb3d0fb158c7d21e6f0714aa
+coverage_gids:
+  - gid: D5/S3/Quantum/Divergence/RenyiDivergence/UniformPowerSlope.rpow_slope_tendsto_uniformly
+    target_statement_id: sha256:ab51d08c49614bf82076c62e4698313f26413a2eb10757746baa33dfa6be7eba
+receipts:
+  unresolved_subitems: []

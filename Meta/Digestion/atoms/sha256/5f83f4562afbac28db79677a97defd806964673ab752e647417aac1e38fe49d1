@@ -1,0 +1,67 @@
+When $t=1$, the only possible deleted back target is the endpoint, whose
+row is $a$ and contributes zero, agreeing with the empty prefix. When
+$t=k$, the successor is the last row $\sigma_n$ and the same formula
+holds. In particular, the distinguished target must be included in (2.4).
+
+Deleting $\pi_1=t$ removes $t-1$ inversions. Deleting the row $a$ removes
+one inversion for every prefix row greater than $a$ and for every suffix
+row smaller than $a$. There are $a-1$ smaller labels in total. Consequently
+
+$$
+\begin{aligned}
+&\operatorname{inv}(\sigma)+\operatorname{inv}(\pi)
+ -\operatorname{inv}(s)-\operatorname{inv}(p)\\
+&\quad=\#\{r\in R:r>a\}
+       +(a-1-\#\{r\in R:r<a\})+(t-1)\\
+&\quad=a-1+2\#\{r\in R:r>a\},
+\end{aligned}
+$$
+
+because $R$ has $t-1$ entries and contains no $a$. Subtracting (2.3) and
+(2.4), and partitioning rows above $a$ into the ranges ending at $A$ and
+$B+1$, gives the exact ordinary contraction increment
+
+$$
+E_P(\sigma,\pi)-E_{P'}(s,p)
+=a-1+2\#\{r\in R:a<r\leq A\}
+     +\#\{r\in R:A<r\leq B+1\}.
+\tag{2.5}
+$$
+
+Finally put
+
+$$
+j=\#\{r\in R:r\leq A\},\qquad
+m=\#\{r\in R:A<r\leq B+1\},\qquad
+N=\#\{r\in R:a<r\leq A\}.
+$$
+
+Since $a\leq A\leq B+1$ and $a$ is absent from the prefix,
+$\delta_a(r)\leq B$ is equivalent there to $r\leq B+1$. Thus $b=j+m$.
+Deleting $a$ from $\theta$ removes $N$ inversions with preceding larger
+labels and $a-1-(j-N)$ inversions with following smaller labels. Order
+standardization changes none of the surviving comparisons, so
+
+$$
+\operatorname{inv}(\theta)-\operatorname{inv}(\eta)
+=a-1+2N-j.
+\tag{2.6}
+$$
+
+The maximum $A$ contributes exactly $d$ inversions in $\theta$, whence
+$\operatorname{inv}(\theta)=\operatorname{inv}(\rho)+d$. Combining
+(2.5), (2.6), $b=j+m$, and (2.2) yields
+
+$$
+\begin{aligned}
+E_P(\sigma,\pi)
+ &=E_{P'}(s,p)+\operatorname{inv}(\theta)
+                    -\operatorname{inv}(\eta)+b\\
+ &=E_{P'}(s^\dagger,p)+\operatorname{inv}(\theta)
+                    -\operatorname{inv}(\rho)+b\\
+ &=E_{P'}(s^\dagger,p)+d+b.
+\end{aligned}
+$$
+
+All equalities have been taken in $\mathbb Z$. This completes the proof.
+

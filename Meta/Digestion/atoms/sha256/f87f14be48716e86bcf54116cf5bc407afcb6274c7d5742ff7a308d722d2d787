@@ -1,0 +1,19 @@
+**定理 28.5（条件共同历史中的新增收费下界）。** 固定任意 $\pi\in\mathfrak D_3$。对两族分别令 $J_i$ 为它在 $P_i$ 上有限接受前请求的不同地址集合，令 $e_i$ 为叶外地址数，则
+
+$$
+L(P_i)\subseteq J_i,\qquad C_\pi(P_i)=42+e_i,\qquad
+ e_i=|J_i\setminus L(P_i)|\in\mathbb N_0.
+\tag{28.14}
+$$
+
+平衡族有 $\sum_i e_i\ge4$ 且 $\max_i e_i\ge2$；私有族有 $\sum_i e_i\ge3$ 且 $\max_i e_i\ge1$。同一个全域策略的联合下界为
+
+$$
+\begin{array}{c|cc}
+\text{评价族}&\sum_{i=1}^4 C_\pi(P_i)&\max_{i\in[4]}C_\pi(P_i)\\ \hline
+\boldsymbol P^{\mathrm b}&\ge172&\ge44\\
+\boldsymbol P^{\mathrm p}&\ge171&\ge43
+\end{array}
+\tag{28.15}
+$$
+

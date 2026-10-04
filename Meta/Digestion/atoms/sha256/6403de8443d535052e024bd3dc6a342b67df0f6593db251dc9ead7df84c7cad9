@@ -1,0 +1,37 @@
+**定理 27.2（私有列保留相容模式并提供一个叶外分支）。** 定义 27.1 的 $Q_i$ 两两不同且同组成，$P_i$ 两两不同且同组成；$Q_i$ 是 $P_i$ 的唯一完整三步前像。其共同组成和共同叶数为
+
+$$
+\begin{aligned}
+\rho^3(Q_i)&=P_i\in\mathcal I_3,\\
+c(Q_i)&=(T+H,H)^{\mathsf T},\\
+c(P_i)&=(T+3H,2T+5H)^{\mathsf T},\\
+n:=|L(P_i)|&=3T+8H=n_0+3m+8.
+\end{aligned}
+\tag{27.4}
+$$
+
+对每个 $S\subseteq[m]$，该最终族满足
+
+$$
+\begin{aligned}
+|S|\ge2&\ \Longrightarrow\quad
+\bigl(\Delta(P_S)\ne\varnothing\ \Longleftrightarrow\ S\in K\bigr),\\
+S\in K&\ \Longleftrightarrow\quad
+\exists\pi\in\mathfrak D_3\ \forall i\in S:\ C_\pi(P_i)=n.
+\end{aligned}
+\tag{27.5}
+$$
+
+在指定地址 $a_r=p_{g_r}\mathtt{LL}$ 上，有
+
+$$
+\operatorname{out}_{P_i}(a_r)=
+\begin{cases}
+\mathsf{branch},&i=r,\\
+\mathsf{leaf}_\beta,&i\ne r,
+\end{cases}
+\qquad
+a_r\notin L(P_r),\quad a_r\in L(P_i)\ (i\ne r).
+\tag{27.6}
+$$
+
