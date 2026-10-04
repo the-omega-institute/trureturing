@@ -6533,3 +6533,182 @@ make a swap of 45 and 225 strictly improving. The complete
 ancestor liabilities and the forcing of SC265 or SC208 remain
 open. These deductions use the fixed common source and existing
 private-region interfaces, without enumeration or Lean verification.
+
+## 53. A complete output-root transport forces service outside the paired prime group
+
+Keep SC227 in its prime branch: the actual inner lower has output
+$C_\ell=[a]_p$, where $p>5$ is prime. Its original label is
+$3p$, and its unique outer partner has original label $9p$ and
+old word $c\in\{2,5,8\}$. Both originals have first-$p$ phase
+$a$, while the original pure-$p$ class has phase $a_p\ne a$.
+Assume that the complete original group at phase $a$ is
+
+$$
+J_a=\{3p,9p\}.
+\tag{SC271}
+$$
+
+All repeated prime heights and other cofactors remain allowed
+outside this group. The construction below changes explicitly
+specified output phases. It does not identify the resulting mixed
+menus with simultaneous pullbacks of one modified original cover.
+
+For this section, let every $T_u$ include all actual safe top
+outputs with nonempty pullback through the fixed tree $\theta$,
+including outputs disjoint from the old $H$. Restoring such outputs
+does not change $E_j=H\setminus T_j$, and the total number of
+top suppliers is still at most $v_2$, with globally distinct
+numerical output labels. Keeping these outputs is necessary when
+classifying original owners at points outside the old hole.
+
+### The two other outer colors have no $p$-bearing tops
+
+Let $X_p$ be the complete cofactor region avoiding all original
+$p$-free classes. At first-$p$ root $a$, every point with cofactor
+in $X_p$ must have an owner in $J_a$. SC271 restricts its
+ternary coordinate to first root zero or old word $c$. The
+original pure classes $[1]_3$ and $[0]_9$ also miss $X_p$,
+so its entire ternary projection satisfies
+
+$$
+\operatorname{pr}_9(X_p)\subseteq\{3,6,c\}.
+\tag{SC272}
+$$
+
+Every original $p$-bearing class has a private point by EB1
+irredundancy. Its full cofactor lies in $X_p$; equivalently the
+existing prime-private reset into $P_p$ preserves that cofactor.
+Thus any $p$-bearing original top has old word in $\{3,6,c\}$.
+All tops in either of the other two outer colors are $p$-free.
+Their complete output unions are invariant under every permutation
+of the first output $p$ digit. This conclusion uses the complete
+group SC271, not only the two selected source traces.
+
+### The transported whole hole has one exact additional liability
+
+Fix any first-$p$ digit $b\ne a$. On the complete output carrier
+$N_0=3^BM$, let $\phi_b$ interchange digits $a,b$, preserving
+every higher $p$ digit and every other prime coordinate. Extend
+sets by all integer lifts of the carrier. An AP whose modulus
+contains $p$ has a fixed first digit; on that AP the map is a
+constant CRT translation and preserves its numerical modulus.
+An AP with $p$-free modulus is invariant.
+
+Define the candidate retained family and inner menus by
+
+$$
+\begin{aligned}
+\mathcal F_0'&=\phi_b(\mathcal F_0),&
+H'&=\phi_b(H),\\
+T_j'&=\phi_b(T_j)\quad(j=3,6),&
+C_\ell'&=[b]_p.
+\end{aligned}
+\tag{SC273}
+$$
+
+Leave all three outer menus unchanged. The retained moduli remain
+distinct and 5-free, $|\mathcal F_0'|=|\mathcal F_0|$, and the
+bought modulo-3 root $S$ is fixed. The exact inner deficits are
+$H'\setminus T_j'=\phi_b(E_j)\subseteq[b]_p$.
+Both nonpartner outer menus still cover $H'$ by SC272.
+
+For color $c$, service outside the two exchanged $p$ fibres is
+unchanged, and the new $a$ fibre is covered by its partner
+$t_p=[a]_p$. Thus the only new responsibility is the full fibre
+
+$$
+Z_b=\phi_b(H\cap[a]_p)\setminus T_c,
+\qquad H'\subseteq T_c\ \Longleftrightarrow\ Z_b=\varnothing.
+\tag{SC274}
+$$
+
+This tests the whole transported hole at that fibre, including
+points outside the selected inner deficits.
+
+### Vanishing of that liability gives a complete strict descent
+
+Suppose $Z_b=\varnothing$. Assign $T_2,T_5,T_8$ and
+$C_\ell'\cup T_k'$ to the four nonzero fresh 5-roots, where
+$\{j,k\}=\{3,6\}$; add $[0]_5$. A supplier $[\eta]_q$
+at fresh root $r$ gives $[r]_5\cap[\eta]_q$, of numerical
+modulus $5q$. The only repeated label is $5p$, from the lower
+and the outer partner.
+
+Delete the partner patch and add the entire omitted inner menu
+$T_j'$ at that same root. The deleted responsibility is
+
+$$
+D_c'=H'\setminus
+ \bigcup_{\substack{t\text{ top of color }c\\t\ne t_p}}C_t
+ \subseteq[a]_p.
+$$
+
+The inclusion follows from $H'\subseteq T_c$. In contrast,
+$H'\setminus T_j'\subseteq[b]_p$. Since $b\ne a$, the
+omitted inner menu covers all of $D_c'$. Every fresh-root menu
+therefore covers the entire $H'$, and the transformed retained
+family covers its complement.
+
+Every top occurs once except the deleted partner; the lower occurs
+once. Global top-label uniqueness removes all remaining duplicate
+labels, and every new modulus is an odd nonunit divisible by 5,
+fresh relative to $\mathcal F_0'$. The total count is
+
+$$
+|\mathcal F_0'\cup\mathcal B|
+ \le K-N_3-z+(1+v_2)=K-1-v_1-z<K.
+\tag{SC275}
+$$
+
+This is an explicit whole-cover construction with legal distinct
+moduli. Its coverage and count do not require its mixed menus to
+come from a common modified source. EB1 consequently forces
+
+$$
+\boxed{Z_b\ne\varnothing\quad\text{for every }b\ne a.}
+\tag{SC276}
+$$
+
+The root $b=a_p$ is included: the construction acts on output
+APs and leaves the original cover, including its pure-$p$ class,
+available for the subsequent owner comparison.
+
+### Every forced gap has an actual supplier of a restricted role
+
+Now add only $H\cap L_2=\varnothing$. For each $b\ne a$,
+choose $y\in Z_b$ and put $x=\phi_b(y)$. Then
+$x\in H\cap[a]_p$ and $y$ has first-$p$ phase $b$. Apply
+the unchanged original source map $F_c$ to $y$. Original whole
+coverage supplies an owner. It cannot have ternary height two:
+all tops of color $c$ with nonempty pullback were included in
+$T_c$, while $y\notin T_c$.
+
+The owner therefore has ternary height zero or height one at
+the outer first-3 root 2. It must contain $p$. Otherwise its
+membership is unchanged between $F_c(x)$ and $F_c(y)$:
+a height-zero owner contradicts the convention that $H$ misses
+every height-zero output, and a height-one outer owner contradicts
+$H\cap L_2=\varnothing$. Its first-$p$ phase is $b$.
+Different roots require different original labels. Hence
+
+$$
+\boxed{\begin{gathered}
+\text{Each of the }p-1\text{ roots }b\ne a\text{ has an actual}\\
+p\text{-bearing supplier of ternary height zero, or height one}\\
+\text{at outer first-3 root }2.
+\end{gathered}}
+\tag{SC277}
+$$
+
+At $b=a_p$ the original pure-$p$ class supplies the required
+role. Higher $p$ exponents and all other cofactors remain arbitrary.
+Neither SC276 nor SC277 uses the unique-active-$L_0$ hypothesis.
+
+These statements do not force a $b$ with $Z_b=\varnothing$ or
+establish a contradiction among the supplier requirements. They
+do not eliminate SC271 or the prime branch. If $|J_a|\ge3$, other
+$p$-bearing tops can occur in the other outer colors, whose full
+transported liabilities would also need payment. The result is an
+ordinary phase-explicit construction using the existing private
+reset and complete-menu interfaces, without new enumeration or
+Lean verification.
