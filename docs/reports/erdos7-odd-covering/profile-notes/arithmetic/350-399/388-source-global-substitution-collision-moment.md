@@ -10288,3 +10288,395 @@ above two remain untreated here. These are ordinary
 mathematical deductions using existing packets and finite
 Hall; no new Lean verification is asserted. Unrestricted
 Erdős #7 remains unresolved.
+
+## 69. A pure-power parent branch forces private projection and actual phases
+
+Fix one original EB1 whole distinct odd cover
+$\mathcal C=\{A_d=[\rho_d]_d:d\in D\}$. Let $\ell,q$ be
+distinct original support primes and write
+$Q=\ell^Hq^GW$, where $(W,\ell q)=1$ and $H,G\ge1$.
+The coding prime $\ell$ will later be 3; neither prime denotes
+the partner in Section 66. All deletions, phases, heights and
+private regions in this section belong to this one original
+cover.
+
+### One literal parent prefix has a complete joint liability
+
+For $1\le t\le G$, put $k=t-1$ and use the original pure
+class $A_{q^t}$ supplied by divisor closure. Define
+
+$$
+\begin{gathered}
+\gamma_t=\rho_{q^t}\pmod{q^t},\qquad
+u_t=\gamma_t\pmod{q^k},\\
+J_t=\{d\in D:v_q(d)\ge t,\
+                    \rho_d\equiv u_t\pmod{q^k}\},\\
+E_t=(\mathbb Z/Q\mathbb Z)
+             \setminus\bigcup_{d\notin J_t}A_d.
+\end{gathered}
+\tag{SC405}
+$$
+
+The parent condition is void when $k=0$. Thus $J_t$ is the
+entire original family in that parent branch of $q$-height
+at least $t$, including $q^t$ itself. Every original outside
+$J_t$ is retained unchanged.
+
+Let $I_t$ contain the retained lower-height originals
+$d=\ell^a q^j m$ with $j\le k$ and
+$\rho_d\equiv u_t\pmod{q^j}$. In the complete
+$(\ell^H,W)$ carrier put
+
+$$
+X_t=(\mathbb Z/\ell^H\mathbb Z\times\mathbb Z/W\mathbb Z)
+ \setminus\bigcup_{\ell^a q^j m\in I_t}
+             ([\rho_d]_{\ell^a}\times[\rho_d]_m).
+$$
+
+Conditions modulo 1 are void. In CRT coordinates $(v,z,w)$,
+the full joint hole and the complete original private region
+satisfy
+
+$$
+\begin{aligned}
+E_t
+ &=\{(v,z,w):z\equiv u_t\pmod{q^k},\ (v,w)\in X_t\},\\
+P_{q^t}
+ &=\{(v,z,w):z\equiv\gamma_t\pmod{q^t},\ (v,w)\in X_t\}.
+\end{aligned}
+\tag{SC406}
+$$
+
+Inside the parent cylinder, a retained lower-$q$ original has
+membership independent of all later $q$-digits. A retained
+higher-$q$ original has a different parent prefix and misses
+the entire cylinder. Outside that cylinder all removed
+originals were absent, so original coverage is already retained.
+This proves the first equality.
+
+For the second, another original of $q$-height at least $t$
+cannot meet $A_{q^t}$: its class would then be contained in
+the pure $q^t$ class, contradicting irredundancy. The remaining
+originals are exactly those whose compatible conditions were
+removed in defining $X_t$. No union of individual private
+traces replaces $E_t$.
+
+Define the actual projection and the two local height parameters
+by
+
+$$
+\begin{gathered}
+\Lambda_t=\pi_{\ell^H}(X_t)=\pi_{\ell^H}(P_{q^t}),\qquad
+s_t=|\Lambda_t|,\\
+a_t=\max_{d\in J_t}v_\ell(d),\qquad
+b_t=\max_{\substack{d\in D\\v_q(d)=k}}v_\ell(d),\\
+1\le s_t\le T_\ell(H)
+ =\ell^H-\frac{\ell^H-1}{\ell-1},\qquad
+0\le a_t\le b_t\le H.
+\end{gathered}
+\tag{SC407}
+$$
+
+Privacy makes $s_t$ positive. Every pure-$\ell$ guard is
+retained, so Report 385 GHA1 bounds the projection by the
+actual guard-safe alphabet. The maximum defining $b_t$ exists:
+pure $q^k$ supplies a label when $k>0$, and pure $\ell^H$
+does so when $k=0$. To see $a_t\le b_t$, divide a label of
+$J_t$ down to $q$-height $k$, retaining its $\ell$-height.
+The resulting label is an original by divisor closure whenever
+nonunit; the unit case has $\ell$-height zero and causes no
+exception to the inequality. The bound $b_t$ is global at that
+numerical $q$-height, without a phase restriction.
+
+### The existing height code applies to this complete branch
+
+Set
+
+$$
+\begin{gathered}
+\omega=a_t+1,\qquad L_0=\max(H,a_t+b_t+1),\\
+S_t=s_t\ell^{L_0-H},\qquad U_t=\ell^{a_t+1},\qquad
+L_j=L_0+(j-1)\omega\quad(1\le j\le G-k).
+\end{gathered}
+\tag{SC408}
+$$
+
+The following sufficient condition would give a distinct odd
+whole cover with at most $K-1$ classes:
+
+$$
+q-1\ge S_t
+\quad\text{and}\quad
+\bigl(t=G\ \text{or}\ q\ge U_t\bigr).
+\tag{SC409}
+$$
+
+Reuse the prefix transport and shifted height encoding of
+Report 385 Sections 153 and 250 on the initial alphabet
+
+$$
+\mathcal D_1=
+\{c\bmod\ell^{L_0}:c\bmod\ell^H\in\Lambda_t\}.
+$$
+
+It has exactly $S_t$ entries. Inject it into the $q-1$ next
+digits after $u_t$ excluding the actual next digit of
+$A_{q^t}$. At every subsequent level each coded prefix has
+$U_t=\ell^\omega$ extensions, injected into the $q$ next
+digits. Fix these injections once, independently of original
+labels and the complete $W$-coordinate. When $t=G$ there is
+only the initial level, so no subsequent-alphabet bound is
+required.
+
+The source preserves the original $\ell^H$ coordinate, the
+entire $W$ coordinate and the literal parent $u_t$, and uses
+the one fixed code for the remaining $q$-digits. A full
+comparison carrier is $\ell^{L_{G-k}}q^GW$; the original
+$q$-axis has not been removed from the liability comparison.
+
+Write a removed original as
+$d=\ell^a q^{k+j}m$, where $1\le j\le G-k$,
+$0\le a\le a_t$ and $m\mid W$. Its actual $q$-prefix
+either has no inverse or specifies one prefix
+$c_d\pmod{\ell^{L_j}}$. If this prefix meets the original
+$\ell^a$ condition, its full inverse on the coding domain is
+the one AP with conditions
+$z\equiv u_t\pmod{q^k}$,
+$z\equiv c_d\pmod{\ell^{L_j}}$ and
+$z\equiv\rho_d\pmod m$. The prefix already has its
+$\ell^H$ word in $\Lambda_t$, so no additional mask splits
+that AP. Enclose each such inverse by
+
+$$
+\begin{gathered}
+\kappa_j(a)=b_t+1+(j-1)(a_t+1)+a,\\
+d'=\ell^{\kappa_j(a)}q^km,\qquad
+B_d=[u_t]_{q^k}\cap[c_d]_{\ell^{\kappa_j(a)}}
+                         \cap[\rho_d]_m,\\
+b_t<\kappa_j(a)\le a_t+b_t+1+(j-1)(a_t+1)\le L_j.
+\end{gathered}
+\tag{SC410}
+$$
+
+These are whole odd nonunit APs with the actual original
+cofactor phases. All candidates have $q$-height $k$ and
+$\ell$-height exceeding $b_t$, so they cannot collide with
+any retained original. For two candidates, the
+$(\ell q)$-free part recovers $m$, and division with remainder
+of $\kappa_j(a)-(b_t+1)$ by $a_t+1$ recovers $j-1$ and
+$a$. Thus equal candidate labels would recover equal original
+numerical labels.
+
+For any integer missed by the retained originals, SC406 puts
+its parent at $u_t$ and its complete $(\ell^H,W)$ coordinate
+in $X_t$. Its code is therefore defined. Retained lower-$q$
+membership is unchanged at its source point; retained
+higher-$q$ originals miss the entire parent cylinder.
+Original whole coverage consequently supplies a removed owner.
+It is not $q^t$, whose next digit the code excludes. The
+owner's exact inverse contains the integer, and SC410's
+enclosure covers it. This proves coverage of the entire
+joint hole and all integer lifts, using one common code.
+
+The pure $q^t$ original contributes no candidate and every
+other removed original contributes at most one. Hence
+
+$$
+K'\le K-|J_t|+(|J_t|-1)=K-1.
+\tag{SC411}
+$$
+
+No modulus-sum comparison is required. EB1 rules out SC409,
+so the following phase-local bounds hold for every $t$ in
+the same original cover:
+
+$$
+\boxed{
+\begin{array}{ll}
+t=G:&q\le S_t,\\
+t<G:&q\le\max\{S_t,U_t-1\}.
+\end{array}}
+\qquad
+q\le\max\left\{\ell^{a_t+1},\
+s_t\ell^{\max(0,a_t+b_t+1-H)}\right\}.
+\tag{SC412}
+$$
+
+The rightmost expression is a convenient common weaker form.
+The operational condition SC409 keeps the sharper final-level
+case. No strict inequality $q<S_t$ is asserted: $S_t$ can
+itself be prime, so its equality boundary cannot be discarded.
+
+### Height two forces complete private-source spread
+
+Now take $\ell=3$, $H=2$ and an original support prime
+$q\ge29$. In the normalization of this report the pure 3
+and 9 guards leave exactly
+$\mathcal U=\{2,3,5,6,8\}$ modulo 9. Thus
+$\Lambda_t\subseteq\mathcal U$, $1\le s_t\le5$ and
+$U_t\le27<q$. SC412 gives
+
+$$
+q\le s_t3^{\max(0,a_t+b_t-1)}\le27s_t,
+\qquad
+\left|\pi_9(P_{q^t})\right|
+\ge\left\lceil\frac q{27}\right\rceil
+\quad(1\le t\le G).
+\tag{SC413}
+$$
+
+Using the existing $P^+(Q)<135$ bound of GHA10, the required
+projection sizes are
+
+| Original support prime | Required safe words in each $\pi_9(P_{q^t})$ |
+| --- | --- |
+| $29\le q\le53$ | at least 2 |
+| $59\le q\le79$ | at least 3 |
+| $83\le q\le107$ | at least 4 |
+| $109\le q\le131$ | all 5 |
+
+The safe first-ternary roots contain two and three words,
+respectively. Therefore $q\ge83$ forces every pure power's
+complete private region to meet both roots. For $q\ge109$,
+SC406 gives the stronger whole-cylinder statement
+
+$$
+\forall v\in\mathcal U\ \exists w\bmod W:\quad
+\{(v,z,w):z\equiv u_t\pmod{q^{t-1}}\}\subseteq E_t.
+\tag{SC414}
+$$
+
+The cofactor $w$ may depend on $v$ and $t$. Its entire
+remaining $q$-tail is included in the joint hole; no common
+cofactor for different words or different levels is asserted.
+
+If $q\ge47$ and $a_t+b_t\le3$, the first bound in SC413
+would give $q\le5\cdot9=45$. Thus
+
+$$
+\begin{gathered}
+q\ge47\quad\Longrightarrow\quad a_t=b_t=2,\\
+\exists d=9q^jm\in D:\quad
+j\ge t,\quad(m,3q)=1,\quad
+\rho_d\equiv\rho_{q^t}\pmod{q^{t-1}},\quad
+\rho_d\not\equiv\rho_{q^t}\pmod{q^t}.
+\end{gathered}
+\tag{SC415}
+$$
+
+The last inequality is comparable-original disjointness.
+At $t=G$ the witness has $j=G$. The global conclusion
+$b_t=2$ is already supplied by GHA10's actual $9q^G$ and
+divisor closure. SC415 additionally places a height-two
+original inside the specified actual parent branch. It does
+not prescribe the phase of the numerical label $9q^G$
+itself. Parent branches at different $t$ may be nested, so
+one original witness may satisfy several levels; they are
+not counted as different labels.
+
+### Cofactor-free guards impose literal cross-height phase exclusions
+
+For a fixed $t$, let $\mathcal B_t$ be the union of safe
+words removed by compatible lower-$q$ mixed pure labels:
+
+$$
+\mathcal B_t=
+\bigcup_{\substack{a\in\{1,2\},\ 1\le j<t\\
+  3^aq^j\in D,\ 
+  \rho_{3^aq^j}\equiv\gamma_t\ (\mathrm{mod}\ q^j)}}
+\{v\in\mathcal U:v\equiv\rho_{3^aq^j}\pmod{3^a}\}.
+$$
+
+Every one of these is an actual retained original. Its
+$q$-condition holds on the whole pure $q^t$ cylinder, and
+it has no remaining cofactor condition. Consequently
+
+$$
+\Lambda_t\cap\mathcal B_t=\varnothing,\qquad
+|\mathcal B_t|\le5-s_t
+ \le5-\left\lceil\frac q{27}\right\rceil.
+\tag{SC416}
+$$
+
+An original $3q^j$ cannot have the first-3 root occupied by
+pure 3. Its compatible cylinder therefore removes at least
+two safe words. An original $9q^j$ has one of the five safe
+words, since otherwise a pure 3 or 9 guard would contain it.
+It removes one safe word. Combining SC416 with
+comparable-original disjointness gives the full tower
+restrictions
+
+$$
+\begin{aligned}
+q\ge83&\quad\Longrightarrow\quad
+\rho_{q^t}\not\equiv\rho_{3q^j}
+                   \pmod{q^{\min(t,j)}},\\
+q\ge109&\quad\Longrightarrow\quad
+\rho_{q^t}\not\equiv\rho_{9q^j}
+                   \pmod{q^{\min(t,j)}}
+\qquad(1\le t,j\le G).
+\end{aligned}
+\tag{SC417}
+$$
+
+For $j<t$ these are SC416's word exclusions. For $j\ge t$
+they already follow because an intersecting mixed class
+would be contained in $A_{q^t}$. All displayed numerical
+labels exist by GHA10 and divisor closure in the stated
+ranges. Thus SC417 excludes intersections of the literal
+$q$-coordinate cylinders even across the heights where the
+original full moduli are not comparable.
+
+For $q\ge83$, at most one original $9q^j$, $j<t$, can have
+a $q$-prefix compatible with pure $q^t$. Two different safe
+words would violate $|\mathcal B_t|\le1$. If two such labels
+had the same safe word, their compatible $q$-cylinders would
+be nested, and the larger original modulus would give a
+redundant AP. For $q\ge109$, no such compatible label is
+possible by SC417.
+
+The complete private hulls of Report 385 PH3 also satisfy
+
+$$
+q\ge29\Longrightarrow v_3(\Gamma_{q^t})\le1,
+\qquad
+q\ge83\Longrightarrow v_3(\Gamma_{q^t})=0.
+\tag{SC418}
+$$
+
+The first conclusion uses two distinct modulo-9 private
+words; the second uses both first-3 roots. It concerns the
+entire original private region. Divisor closure does not
+transfer the phase of a witness in SC415 to its numerical
+divisors, and private-hull membership does not identify a
+projection with its entire enclosing cylinder.
+
+### Existing consumers and the remaining joint-source boundary
+
+For $q\ge83$, every pure $q^t$ is nonconcentrated at the
+first ternary root. Report 385 DP12 can therefore use its
+entire pure-power index set $I_0=\{1,\ldots,G\}$, with its
+existing simultaneous matching and complete-liability
+conditions unchanged. The pure top $q^G$ also satisfies
+the additional two-root premise of that report's TQ5.
+Those results are reused; nonconcentration of all other
+$q$-bearing originals does not follow from it.
+
+No improved unconditional bound beyond $P^+(Q)<135$ is
+obtained here. At $q\ge109$, the allowed local values
+$a_t=b_t=2$ and $s_t=5$ retain the threshold $27\cdot5=135$.
+The actual phase restrictions SC416--SC417 do not force a
+violation of one of those inequalities. Distinct parent
+branches have not been shown to supply disjoint witnesses
+or independently spendable budgets.
+
+In particular, SC414 has one cofactor choice per safe word;
+it supplies neither two complete outer menus on a common
+five-menu hole nor one prime enclosure of both inner
+deficits. No entrance from Sections 66--68 is forced by
+this projection statement. Excluding the remaining original
+phases, obtaining a complete jointly paid exchange, and
+unrestricted odd distinct covering remain unresolved.
+These are ordinary deductions using the existing height
+code and complete original liabilities; no Lean verification
+or new enumeration is asserted.
