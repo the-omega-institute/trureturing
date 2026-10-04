@@ -141,6 +141,49 @@ Both comparisons are strict and include the Fourier-tail expense.
 The $T=192$ allowance is larger; enlarging a band is not by itself
 a monotone improvement of the combined budget.
 
+## Fixed-head band expansion has a classical obstruction
+
+There is a source-level reason to stop simply expanding the band at a
+fixed arithmetic head. The retained
+[Teschl source](../../../Library/Fourier/teschl2009mathematical.md#finite-measure-fourier-mean-squares),
+Theorem 5.4, equations (5.8)–(5.9), already gives Wiener's finite-measure
+mean-square limit. For the same real even $\mu_A$, with fixed
+$A\ge\log2$, its exact parameter application is
+
+$$
+\lim_{T\to\infty}\frac1{2T}\int_{-T}^T|\sigma_A(\xi)|^2d\xi
+=2\sum_{\log n\le A}\frac{\Lambda(n)^2}{n}>0. \tag{LR8}
+$$
+
+Every prime power contributes at two distinct atoms. The continuous
+main term contributes no atom; evenness changes the source's one-sided
+average into the displayed symmetric average. This is reuse of the
+classical theorem, without another proof or numerical experiment.
+
+Since $U_A(T)$ bounds that actual band integral and the Fourier-tail
+expense in (LR4) is nonnegative, fixed positive caps $S_0,a_0$ give,
+for any $N(T)<T$,
+
+$$
+\liminf_{T\to\infty}\frac{H_{A,N(T),T}^2}{T}
+\ge\frac{2S_0^2a_0^2}{\pi}
+\sum_{\log n\le A}\frac{\Lambda(n)^2}{n}>0. \tag{LR9}
+$$
+
+Thus the scalar allowance in (LR4) diverges on a fixed-head
+$N\to\infty$, $T>N$ route, for any valid smoothing widths.
+The actual weighted head operator still has the fixed upper bound
+$S_0^2V_A$. This identifies loss in the band-supremum scalar estimate;
+eventually it cannot improve even that total-variation reference.
+The conclusion concerns fixed $A$ and this particular allowance.
+It does not settle a growing-$A$ schedule or a localized joint estimate.
+
+For the cofinal problem, the needed next interface should preserve
+theta localization and the actual same-row frequency information,
+rather than assign its band supremum to every frequency separately.
+
+## The remaining signed comparison
+
 These values are not a small residual certificate for the existing
 low Schur center. They are not compared to the saved full-theta
 action or matrix estimates, which concern different operators.
