@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "scope": "Finite ternary-code geometry only; neither Lean verification nor a theorem about existence or exclusion of an odd-distinct covering system.",
+  "mode": "all-phases",
+  "domain": {
+    "pure3_root_count": 3,
+    "actual_pure3_pure9_phase_pairs": 18,
+    "compatible_3q_roots_per_pair": 2,
+    "safe_words_per_pair": 5,
+    "shared_word_choices": 5,
+    "other_ordered_short_word_assignments": 3125
+  },
+  "completed_configurations": 562500,
+  "expected_configurations": 562500,
+  "checked_depth5_cells": 75937500,
+  "distinct_phase_root_triples": 36,
+  "configurations_per_phase_root_triple": [
+    15625
+  ],
+  "available_terminal_word_count_histogram": {
+    "1": 112500,
+    "2": 337500,
+    "3": 112500
+  },
+  "leaf_inventory_every_configuration": {
+    "q_terminal_depth3": 1,
+    "3q_terminal_depth4": 1,
+    "short_depth4": 6,
+    "long_depth5": 105,
+    "total": 113,
+    "continuing": 111
+  },
+  "checks": [
+    "both terminal depths",
+    "common safe terminal word distinct from z",
+    "3q terminal actual root",
+    "six distinct prescribed short digits and words",
+    "short c and long d share mod27 parent",
+    "all 113 digit labels exactly once",
+    "135 admissible full cells covered exactly once",
+    "prefix-free initial forest",
+    "forbidden gamma outside six short digits"
+  ],
+  "label_convention": "q digit labels 0,1 are terminals; 3..8 are fixed distinct short digits c,s0,s1,s2,s3,s4; d=9 is a fixed distinct long donor; gamma=2 is a representative outside this six-set. The gamma exclusion is a supplied U-domain premise, not deduced from a covering system.",
+  "normalization": "canonical mode checks pure3 root0 and pure9 word1 only; all-phases mode enumerates every admissible actual pair and assumes no normalization theorem.",
+  "failure": null,
+  "wall_seconds": 163.031902,
+  "construction_stream_sha256": "1c3e548071e487a79ff8a4eb7716b9c578bfcc928132de30bcb83a90801fddd2",
+  "script_sha256": "b3996f3a8a052800a2fc03e45e202418cd0368caaf4d0105da67749933981744",
+  "examples": [
+    {
+      "case": [
+        0,
+        1,
+        1,
+        2,
+        [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      ],
+      "terminal_word": 4,
+      "designated_leaves": [
+        {
+          "digit": 0,
+          "depth": 3,
+          "residue": 4
+        },
+        {
+          "digit": 1,
+          "depth": 4,
+          "residue": 13
+        },
+        {
+          "digit": 3,
+          "depth": 4,
+          "residue": 2
+        },
+        {
+          "digit": 9,
+          "depth": 5,
+          "residue": 29
+        },
+        {
+          "digit": 4,
+          "depth": 4,
+          "residue": 11
+        },
+        {
+          "digit": 5,
+          "depth": 4,
+          "residue": 20
+        },
+        {
+          "digit": 6,
+          "depth": 4,
+          "residue": 38
+        },
+        {
+          "digit": 7,
+          "depth": 4,
+          "residue": 47
+        },
+        {
+          "digit": 8,
+          "depth": 4,
+          "residue": 56
+        }
+      ]
+    },
+    {
+      "case": [
+        0,
+        1,
+        1,
+        2,
+        [
+          2,
+          2,
+          2,
+          2,
+          4
+        ]
+      ],
+      "terminal_word": 4,
+      "designated_leaves": [
+        {
+          "digit": 0,
+          "depth": 3,
+          "residue": 4
+        },
+        {
+          "digit": 1,
+          "depth": 4,
+          "residue": 13
+        },
+        {
+          "digit": 3,
+          "depth": 4,
+          "residue": 2
+        },
+        {
+          "digit": 9,
+          "depth": 5,
+          "residue": 29
+        },
+        {
+          "digit": 4,
+          "depth": 4,
+          "residue": 11
+        },
+        {
+          "digit": 5,
+          "depth": 4,
+          "residue": 20
+        },
+        {
+          "digit": 6,
+          "depth": 4,
+          "residue": 38
+        },
+        {
+          "digit": 7,
+          "depth": 4,
+          "residue": 47
+        },
+        {
+          "digit": 8,
+          "depth": 4,
+          "residue": 22
+        }
+      ]
+    },
+    {
+      "case": [
+        0,
+        1,
+        1,
+        2,
+        [
+          2,
+          2,
+          2,
+          2,
+          5
+        ]
+      ],
+      "terminal_word": 4,
+      "designated_leaves": [
+        {
+          "digit": 0,
+          "depth": 3,
+          "residue": 4
+        },
+        {
+          "digit": 1,
+          "depth": 4,
+          "residue": 13
+        },
+        {
+          "digit": 3,
+          "depth": 4,
+          "residue": 2
+        },
+        {
+          "digit": 9,
+          "depth": 5,
+          "residue": 29
+        },
+        {
+          "digit": 4,
+          "depth": 4,
+          "residue": 11
+        },
+        {
+          "digit": 5,
+          "depth": 4,
+          "residue": 20
+        },
+        {
+          "digit": 6,
+          "depth": 4,
+          "residue": 38
+        },
+        {
+          "digit": 7,
+          "depth": 4,
+          "residue": 47
+        },
+        {
+          "digit": 8,
+          "depth": 4,
+          "residue": 5
+        }
+      ]
+    }
+  ]
+}
