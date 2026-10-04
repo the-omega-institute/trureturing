@@ -22,8 +22,8 @@ open scoped BigOperators
 open ActualTreeReadoutAcquisition
 open ActualJointResponseCostCore
 
-abbrev Row := Fin 4
-abbrev Index (k : Nat) := Unit ⊕ (Fin k × Row)
+local notation "Row" => Fin 4
+local notation "Index" => fun k : Nat => Unit ⊕ (Fin k × Fin 4)
 
 open ActualImageSevenLeafSeparation (thirdImage)
 
@@ -436,5 +436,360 @@ private theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
   have h := hv b.succ
   rw [hr b.succ, leaflen b.succ] at h
   exact le_trans (by omega) h
+
+/-- The six literal tails attain their gains and actual costs on the five local rows. -/
+private theorem local_tail_attainment (k : Nat) (j : Fin k) :
+    let F := fun i : Fin 5 => match i.val with
+      | 0 => family k (.inl ())
+      | 1 => family k (.inr (j, 0))
+      | 2 => family k (.inr (j, 1))
+      | 3 => family k (.inr (j, 2))
+      | _ => family k (.inr (j, 3))
+    let V := fun m : Fin 6 => fun i : Fin 5 =>
+      (match m.val with
+        | 0 => [1, 1, 0, 1, 1]
+        | 1 => [1, 1, 1, 0, 1]
+        | 2 => [1, 1, 1, 1, 0]
+        | 3 => [1, 0, 1, 2, 1]
+        | 4 => [1, 0, 2, 1, 1]
+        | _ => [1, 0, 1, 1, 2]).getD i.val 0
+    ∀ m : Fin 6, ∃ r : Recipe F Finset.univ, (∀ i, gain r i = V m i) ∧
+      ∃ pi : Strategy, ∀ i, cost pi (F i) = 8 * k + 16 + V m i := by
+  classical
+  let F := fun i : Fin 5 => match i.val with
+      | 0 => family k (.inl ())
+      | 1 => family k (.inr (j, 0))
+      | 2 => family k (.inr (j, 1))
+      | 3 => family k (.inr (j, 2))
+      | _ => family k (.inr (j, 3))
+  let V := fun m : Fin 6 => fun i : Fin 5 =>
+      (match m.val with
+        | 0 => [1, 1, 0, 1, 1]
+        | 1 => [1, 1, 1, 0, 1]
+        | 2 => [1, 1, 1, 1, 0]
+        | 3 => [1, 0, 1, 2, 1]
+        | 4 => [1, 0, 2, 1, 1]
+        | _ => [1, 0, 1, 1, 2]).getD i.val 0
+  change ∀ m : Fin 6, ∃ r : Recipe F Finset.univ, (∀ i, gain r i = V m i) ∧
+    ∃ pi : Strategy, ∀ i, cost pi (F i) = 8 * k + 16 + V m i
+  have at_slot : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (i : Fin n) (u : Address),
+      readout (List.replicate i.val true ++ false :: u) (comb n f q) = readout u (f i) := by
+    intro n
+    induction n with
+    | zero => intro f q i; exact Fin.elim0 i
+    | succ n ih =>
+      intro f q i u
+      refine Fin.cases ?_ (fun i => ?_) i
+      · rfl
+      · simpa only [Fin.val_succ, List.replicate_succ, List.cons_append, comb, readout] using
+          ih (fun i => f i.succ) q i u
+  have at_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source) (u : Address),
+      readout (List.replicate n true ++ u) (comb n f q) = readout u q := by
+    intro n
+    induction n with
+    | zero => intro f q u; rfl
+    | succ n ih =>
+      intro f q u
+      simpa only [List.replicate_succ, List.cons_append, comb, readout] using
+        ih (fun i => f i.succ) q u
+  have image : ∀ i : Index k, thirdImage (preFamily k i) = family k i := by
+    have fold : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
+        thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) := by
+      intro n
+      induction n with
+      | zero => intro f q; rfl
+      | succ n ih =>
+        intro f q
+        have hom := Function.Semiconj₂.iterate
+          (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
+            fun s t => substitution.map_mul s t) 3 (f 0) (comb n (fun i => f i.succ) q)
+        change thirdImage (.mul (f 0) (comb n (fun i => f i.succ) q)) =
+          .mul (thirdImage (f 0)) (thirdImage (comb n (fun i => f i.succ) q)) at hom
+        change thirdImage (.mul (f 0) (comb n (fun i => f i.succ) q)) = _
+        rw [hom, ih]
+        rfl
+    intro i
+    cases i with
+    | inl u => exact fold k (fun _ => b₀) r₀
+    | inr pair =>
+      rcases pair with ⟨l,r⟩
+      change thirdImage (comb k (fun i => if i = l then preActive k l r else b₀)
+        (preComp r)) = _
+      rw [fold]
+      have ha : thirdImage (preActive k l r) = active r := by fin_cases r <;> rfl
+      have hc : thirdImage (preComp r) = comp r := by fin_cases r <;> rfl
+      rw [hc]
+      congr 1
+      funext i
+      by_cases hi : i = l <;> simp [hi, ha, B]
+  have pos : ∀ i, Positive (F i) := by
+    have all : ∀ i : Index k, Positive (family k i) := fun i => ⟨preFamily k i, image i⟩
+    intro i; fin_cases i <;> exact all _
+  have sizes : ∀ i : Index k, (family k i).length = 8 * k + 16 := by
+    have foldlen : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
+        (comb n f q).length = (∑ i, (f i).length) + q.length := by
+      intro n
+      induction n with
+      | zero => intro f q; simp [comb]
+      | succ n ih =>
+        intro f q
+        rw [comb, FreeMagma.length, ih, Fin.sum_univ_succ]
+        omega
+    have hb : B.length = 8 := by rfl
+    have hr : R₀.length = 16 := by rfl
+    have total : ∀ r : Row, (active r).length + (comp r).length = 24 := by
+      intro r; fin_cases r <;> rfl
+    intro i
+    cases i with
+    | inl u =>
+      change (comb k (fun _ => B) R₀).length = _
+      rw [foldlen]
+      simp [hb, hr, Nat.mul_comm]
+    | inr pair =>
+      rcases pair with ⟨l,r⟩
+      change (comb k (fun i => if i = l then active r else B) (comp r)).length = _
+      rw [foldlen]
+      have sum : (∑ i : Fin k, (if i = l then active r else B).length) =
+          (k - 1) * 8 + (active r).length := by
+        rw [← Finset.sum_erase_add (Finset.univ : Finset (Fin k)) _ (Finset.mem_univ l)]
+        have other : ∀ i ∈ (Finset.univ : Finset (Fin k)).erase l,
+            (if i = l then active r else B).length = 8 := by
+          intro i hi; simp [(Finset.mem_erase.mp hi).1, hb]
+        rw [Finset.sum_congr rfl other]
+        simp [Finset.sum_const, Finset.card_erase_of_mem (Finset.mem_univ l)]
+      rw [sum]
+      have hk := Nat.zero_lt_of_lt l.isLt
+      have ht := total r
+      omega
+  let qs : Fin 10 → Address := fun q =>
+    match q.val with
+    | 0 => List.replicate j.val true ++ false :: [false, false, false, false]
+    | 1 => List.replicate j.val true ++ false :: [false, true, false]
+    | 2 => List.replicate j.val true ++ false :: [true, false, false]
+    | 3 => List.replicate j.val true ++ false :: [false, true, false, false, false]
+    | 4 => List.replicate j.val true ++ false :: [false, false, false, false, false, false]
+    | 5 => List.replicate j.val true ++ false :: [true, false, false, false, false]
+    | 6 => List.replicate j.val true ++ false :: [false, false]
+    | 7 => List.replicate k true ++ [false, true, false, false, true]
+    | 8 => List.replicate k true ++ [true, false, false, false, false]
+    | _ => List.replicate k true ++ [true, true, false, false, false, false]
+  let vv : Fin 10 → Fin 5 → Reply := fun q i =>
+    (match q.val with
+    | 0 => [Reply.beta, Reply.absent, Reply.branch, Reply.beta, Reply.beta]
+    | 1 => [Reply.beta, Reply.absent, Reply.branch, Reply.branch, Reply.beta]
+    | 2 => [Reply.beta, Reply.absent, Reply.beta, Reply.beta, Reply.branch]
+    | 3 => [Reply.absent, Reply.absent, Reply.beta, Reply.beta, Reply.absent]
+    | 4 => [Reply.absent, Reply.absent, Reply.beta, Reply.absent, Reply.absent]
+    | 5 => [Reply.absent, Reply.absent, Reply.absent, Reply.absent, Reply.beta]
+    | 6 => [Reply.branch, Reply.beta, Reply.branch, Reply.branch, Reply.branch]
+    | 7 => [Reply.alpha, Reply.alpha, Reply.absent, Reply.absent, Reply.alpha]
+    | 8 => [Reply.beta, Reply.beta, Reply.absent, Reply.beta, Reply.absent]
+    | _ => [Reply.absent, Reply.beta, Reply.absent, Reply.absent, Reply.absent]).getD i.val Reply.absent
+  have actual : ∀ q, vector F (qs q) = vv q := by
+    intro q
+    fin_cases q <;> funext i <;> fin_cases i
+    all_goals
+      simp only [vector, F, qs, vv, family, at_slot, at_comp, if_pos rfl]
+      rfl
+  have injective : Function.Injective F := by
+    have distinct : Function.Injective (fun i => (vv 0 i, vv 1 i, vv 2 i)) := by decide
+    intro i l h
+    have replies : ∀ q, vv q i = vv q l := by
+      intro q
+      rw [← actual q]
+      exact congrArg (fun U => readout (qs q) U) h
+    exact distinct (Prod.ext (replies 0) (Prod.ext (replies 1) (replies 2)))
+  have leafsize : ∀ i, (leaves (F i)).length = 8 * k + 16 := by
+    intro i
+    have only := ActualJointResponseCostCore.result 1 (by decide) (fun _ => F i)
+      (fun _ => pos i) (fun x y _ => Subsingleton.elim x y)
+    obtain ⟨v,hv⟩ := only.2.1
+    obtain ⟨r,p,hp,hfacts⟩ := only.2.2.1 v hv
+    obtain ⟨hc,hpaid,hvec,haddr,hroute,hcount,hsum,htotal⟩ := hfacts 0
+    have nil : routeTrace r 0 = [] := List.eq_nil_of_length_eq_zero (by omega)
+    rw [nil] at hpaid htotal
+    simp only [paid, List.map_nil, List.toFinset_nil, Finset.empty_union,
+      Finset.empty_sdiff, Finset.card_empty, Nat.add_zero] at hpaid htotal
+    have card := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 (F i)).1
+    have ceq : cost p (F i) = (leaves (F i)).toFinset.card := congrArg Finset.card hpaid
+    have sz : (F i).length = 8 * k + 16 := by fin_cases i <;> exact sizes _
+    exact htotal.symm.trans (ceq.trans (card.trans sz))
+  have acquire (m : Fin 6) (r : Recipe F Finset.univ) (h : ∀ i, gain r i = V m i) :
+      ∃ pi : Strategy, ∀ i, cost pi (F i) = 8 * k + 16 + V m i := by
+    have supply := ActualJointResponseCostCore.result 5 (by decide) F pos injective
+    let v := fun i => (leaves (F i)).length + gain r i
+    have hv : v ∈ core F := ⟨r, fun _ => rfl⟩
+    obtain ⟨s,pi,hpi,hcost⟩ := supply.2.2.1 v hv
+    refine ⟨pi, ?_⟩
+    intro i
+    rw [(hcost i).1]
+    exact congrArg₂ (· + ·) (leafsize i) (h i)
+  let leaf0 : Recipe F {0} := .singleton 0
+  let leaf1 : Recipe F {1} := .singleton 1
+  let leaf2 : Recipe F {2} := .singleton 2
+  let leaf3 : Recipe F {3} := .singleton 3
+  let leaf4 : Recipe F {4} := .singleton 4
+  let r23e : Recipe F {2, 3} := by
+    refine .split {2, 3} ⟨vv 4, qs 4, actual 4⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 3} (vv 4) .alpha).Nonempty) han)
+    | beta => convert leaf2 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 3} (vv 4) .branch).Nonempty) han)
+    | absent => convert leaf3 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r023d : Recipe F {0, 2, 3} := by
+    refine .split {0, 2, 3} ⟨vv 3, qs 3, actual 3⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 2, 3} (vv 3) .alpha).Nonempty) han)
+    | beta => convert r23e using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 2, 3} (vv 3) .branch).Nonempty) han)
+    | absent => convert leaf0 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let rootY : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 2, qs 2, actual 2⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 2) .alpha).Nonempty) han)
+    | beta => convert r023d using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf4 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => convert leaf1 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r03d : Recipe F {0, 3} := by
+    refine .split {0, 3} ⟨vv 3, qs 3, actual 3⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3} (vv 3) .alpha).Nonempty) han)
+    | beta => convert leaf3 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3} (vv 3) .branch).Nonempty) han)
+    | absent => convert leaf0 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r034t : Recipe F {0, 3, 4} := by
+    refine .split {0, 3, 4} ⟨vv 2, qs 2, actual 2⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3, 4} (vv 2) .alpha).Nonempty) han)
+    | beta => convert r03d using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf4 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3, 4} (vv 2) .absent).Nonempty) han)
+  let rootH : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 0, qs 0, actual 0⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 0) .alpha).Nonempty) han)
+    | beta => convert r034t using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf2 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => convert leaf1 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r04f : Recipe F {0, 4} := by
+    refine .split {0, 4} ⟨vv 5, qs 5, actual 5⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 4} (vv 5) .alpha).Nonempty) han)
+    | beta => convert leaf4 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 4} (vv 5) .branch).Nonempty) han)
+    | absent => convert leaf0 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r034u : Recipe F {0, 3, 4} := by
+    refine .split {0, 3, 4} ⟨vv 1, qs 1, actual 1⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3, 4} (vv 1) .alpha).Nonempty) han)
+    | beta => convert r04f using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf3 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 3, 4} (vv 1) .absent).Nonempty) han)
+  let rootZ : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 0, qs 0, actual 0⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 0) .alpha).Nonempty) han)
+    | beta => convert r034u using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf2 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => convert leaf1 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r01r : Recipe F {0, 1} := by
+    refine .split {0, 1} ⟨vv 9, qs 9, actual 9⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1} (vv 9) .alpha).Nonempty) han)
+    | beta => convert leaf1 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1} (vv 9) .branch).Nonempty) han)
+    | absent => convert leaf0 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r014g : Recipe F {0, 1, 4} := by
+    refine .split {0, 1, 4} ⟨vv 8, qs 8, actual 8⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1, 4} (vv 8) .alpha).Nonempty) han)
+    | beta => convert r01r using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1, 4} (vv 8) .branch).Nonempty) han)
+    | absent => convert leaf4 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let rootAH : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 7, qs 7, actual 7⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => convert r014g using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | beta => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 7) .beta).Nonempty) han)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 7) .branch).Nonempty) han)
+    | absent => convert r23e using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r23v : Recipe F {2, 3} := by
+    refine .split {2, 3} ⟨vv 0, qs 0, actual 0⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 3} (vv 0) .alpha).Nonempty) han)
+    | beta => convert leaf3 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf2 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 3} (vv 0) .absent).Nonempty) han)
+  let rootAY : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 7, qs 7, actual 7⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => convert r014g using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | beta => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 7) .beta).Nonempty) han)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 7) .branch).Nonempty) han)
+    | absent => convert r23v using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let r24t : Recipe F {2, 4} := by
+    refine .split {2, 4} ⟨vv 2, qs 2, actual 2⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 4} (vv 2) .alpha).Nonempty) han)
+    | beta => convert leaf2 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => convert leaf4 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | absent => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {2, 4} (vv 2) .absent).Nonempty) han)
+  let r013x : Recipe F {0, 1, 3} := by
+    refine .split {0, 1, 3} ⟨vv 7, qs 7, actual 7⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => convert r01r using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | beta => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1, 3} (vv 7) .beta).Nonempty) han)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors {0, 1, 3} (vv 7) .branch).Nonempty) han)
+    | absent => convert leaf3 using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  let rootAZ : Recipe F Finset.univ := by
+    refine .split Finset.univ ⟨vv 8, qs 8, actual 8⟩ (by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl) ?_
+    intro ans han
+    cases ans with
+    | alpha => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 8) .alpha).Nonempty) han)
+    | beta => convert r013x using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+    | branch => exact False.elim ((by first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl : ¬ (survivors Finset.univ (vv 8) .branch).Nonempty) han)
+    | absent => convert r24t using 1 <;> (first | (dsimp only [Subtype.coe_mk]; decide) | decide | rfl)
+  intro m
+  fin_cases m
+  · have hg : ∀ i, gain rootY i = V 0 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootY, hg, acquire 0 rootY hg⟩
+  · have hg : ∀ i, gain rootH i = V 1 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootH, hg, acquire 1 rootH hg⟩
+  · have hg : ∀ i, gain rootZ i = V 2 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootZ, hg, acquire 2 rootZ hg⟩
+  · have hg : ∀ i, gain rootAH i = V 3 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootAH, hg, acquire 3 rootAH hg⟩
+  · have hg : ∀ i, gain rootAY i = V 4 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootAY, hg, acquire 4 rootAY hg⟩
+  · have hg : ∀ i, gain rootAZ i = V 5 i := by
+      intro i
+      fin_cases i <;> rfl
+    exact ⟨rootAZ, hg, acquire 5 rootAZ hg⟩
 
 end D5.S3.Arith.FibonacciAtomic.FourExitRawEndpointSpectrum
