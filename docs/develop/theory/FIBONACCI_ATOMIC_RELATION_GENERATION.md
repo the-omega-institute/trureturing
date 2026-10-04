@@ -52341,3 +52341,355 @@ $$
 本定理的结论仅关于所定义的实际子集 lcm 族；它不给一般整数的 Robin 不等式、RH、有符号 Robin 尾项、精确比值极限或数值认证区间，也不提供 KR 存在阈值的数值。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 362. 全部有限 Fibonacci 最小公倍数的实际秩收费与 Robin 包络
+
+**定义 362.1（任意有限实际族与 Euler 权重）。** 取 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，并令 $\Phi=(1+\sqrt5)/2$、$L=\log\Phi>0$。对任意有限集合 $S\subseteq\mathbb N_{>0}$，定义
+
+$$
+\begin{aligned}
+D(S)&=\{d\in\mathbb N_{>0}:\exists s\in S,\ d\mid s\},\\
+M(S)&=\operatorname{lcm}\{F_s:s\in S\},& b(S)&=\log M(S),\\
+\Psi_d&=\prod_{e\mid d}F_e^{\mu(d/e)},& c_d&=\log\Psi_d,\\
+H_N&=\sum_{j=1}^N\frac1j,& w(p)&=\log\frac p{p-1}\quad(p\text{ 为素数}).
+\end{aligned}
+\tag{362.1}
+$$
+
+空最小公倍数与空乘积均取一；$\Psi_d$ 先在正有理数中定义。$\mu$ 为 Möbius 函数，$\varphi$ 为 Euler totient 函数，$v_p$ 为素数赋值。沿用 §358、§361 的实际首现秩 $z(a)=\min\{n\ge1:a\mid F_n\}$（整数 $a\ge2$），其存在性与整除判据见（361.8）。所有对数均为自然对数，正实数的实幂取 $t^a=\exp(a\log t)$。对整数 $M>5040$，记
+
+$$
+\mathcal R(M)=\frac{\sigma(M)}{e^\gamma M\log\log M},
+\qquad \sigma(M)=\sum_{d\mid M}d,
+\tag{362.2}
+$$
+
+其中 $\gamma$ 为 Euler 常数。
+
+**定理 362.2（实际有限支撑的 Euler 对数收费）。** 存在一个常数 $A>0$，使任意有限 $S\subseteq\mathbb N_{>0}$、任意整数 $N\ge2$ 与任意实数 $R>5$ 都满足以下蕴涵。令
+
+$$
+\Delta=\frac{LR}{A\log N}-1,
+\qquad
+U=\{p\text{ 为素数}:5<p\le N-1,\ p\mid M(S),\ z(p)\ge R\}.
+\tag{362.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\sum_{p\in U}w(p)
+\le\frac{6H_N\log M(S)}{R\Delta}.
+\tag{362.4}
+$$
+
+量词顺序是 $\exists A>0\ \forall S\ \forall N\ge2\ \forall R>5$；$A$ 不依赖集合、截止或秩阈值。结论包括 $S=\varnothing$、$M(S)=1$ 与 $R>N$，不要求指标的基数、最大值或相互包含关系。
+
+**证明。** 先固定经典解析供给。Mertens 第三定理的标准对数误差形式给一个固定 $C\ge0$，使
+
+$$
+\prod_{p\le x}(1-1/p)=\frac{\exp(-\gamma+E_3(x))}{\log x},
+\qquad |E_3(x)|\le\frac C{\log x}\quad(x\ge2).
+\tag{362.5}
+$$
+
+原始出处为 Franz Mertens，*Ein Beitrag zur analytischen Zahlentheorie*，Journal für die reine und angewandte Mathematik **78**，46–62，[doi:10.1515/crll.1874.78.46](https://doi.org/10.1515/crll.1874.78.46)；素数倒数和的 $O(1/\log x)$ 误差参见 Leo Goldmakher，[*A quick proof of Mertens' theorem*](https://web.williams.edu/Mathematics/lg5/mertens.pdf) 的 Proposition。将其常数记为 $B_1$，经典常数恒等式 $B_1=\gamma+\sum_p(\log(1-1/p)+1/p)$ 及绝对可和修正的尾界 $\sum_{p>x}|\log(1-1/p)+1/p|=O(1/x)$ 给上述对数误差。从尾部 $E_3(x)=O(1/\log x)$ 到（362.5）的整个区间，只须扩大常数：在任意固定紧区间 $[2,X]$ 上，有限素数乘积严格为正，$E_3(x)\log x$ 有界。现在在任何 $S,N,R$ 之前选定
+
+$$
+A=\exp\left(\gamma+\frac{|C|}{\log2}\right)>0.
+\tag{362.6}
+$$
+
+由（362.5）取倒数，$\prod_{p\le N}(1-1/p)^{-1}\le A\log N$。对每个整数 $1\le n\le N$，经典有限 Euler 乘积给
+
+$$
+\frac n{\varphi(n)}
+=\prod_{p\mid n}(1-1/p)^{-1}
+\le\prod_{p\le N}(1-1/p)^{-1}\le A\log N,
+\qquad \varphi(n)\ge\frac n{A\log N}.
+\tag{362.7}
+$$
+
+$n=1$ 的左侧为空乘积一；以上经典事实只用于本证明的实际收费。
+
+其次核对支撑和收费确属同一个实际整数。由（361.8），$a\mid F_s$ 当且仅当 $z(a)\mid s$。固定素数 $p$，令 $r_j=z(p^j)$；这些秩满足 $r_j\mid r_{j+1}$，但允许相等。对任意正指标 $d$，Möbius 反演逐个保留素幂重数，给
+
+$$
+\begin{aligned}
+v_p(F_e)&=\sum_{j\ge1}\mathbf1_{r_j\mid e},\\
+v_p(\Psi_d)
+&=\sum_{e\mid d}\mu(d/e)\sum_{j\ge1}\mathbf1_{r_j\mid e}
+=\sum_{\substack{j\ge1\\r_j\mid d}}\ \sum_{r_j\mid e\mid d}\mu(d/e)
+=\#\{j\ge1:r_j=d\}.
+\end{aligned}
+\tag{362.8}
+$$
+
+内层和是 $\sum_{h\mid d/r_j}\mu(h)$。非零项都满足 $p^j\mid F_d$，所以交换只有有限个非零项。每个素数赋值非负，故 $\Psi_d$ 为正整数、$c_d\ge0$。同一个 $S$ 的 lcm 赋值为 $\max(\{v_p(F_s):s\in S\}\cup\{0\})$；而 $r_j\in D(S)$ 当且仅当某个 $s\in S$ 满足 $p^j\mid F_s$。这些 $j$ 恰为 $1,\ldots,v_p(M(S))$，因此
+
+$$
+\begin{gathered}
+v_p(M(S))=\#\{j\ge1:z(p^j)\in D(S)\}
+=\sum_{d\in D(S)}v_p(\Psi_d),\\
+M(S)=\prod_{d\in D(S)}\Psi_d,
+\qquad b(S)=\sum_{d\in D(S)}c_d.
+\end{gathered}
+\tag{362.9}
+$$
+
+等式由唯一素分解得出，空集也成立。这正是（361.9）–（361.10）的任意有限版本；它不假设原子两两互素。例如 $z(2)=3$、$z(4)=z(8)=6$，从而 $\Psi_3=2$、$\Psi_6=4$，同一素数的重复秩在（362.8）中计两次。经典强整除序列的重构供给见 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)；此处的逐素幂计算明确保留了消费者所需的实际共同实现。
+
+同样沿用 §361 的 Binet 误差计算：置 $q=\Phi^{-2}$，则
+
+$$
+\log F_e=eL-\tfrac12\log5+\epsilon_e,
+\quad \epsilon_e=\log(1-(-q)^e),
+\quad \sum_{e\ge1}|\epsilon_e|
+\le\frac{q}{(1-q)^2}=1.
+$$
+
+$d>1$ 时 Möbius 和消去常数项，$\sum_{e\mid d}e\mu(d/e)=\varphi(d)$；$d=1$ 时 $\Psi_1=1$、$L<1$。于是对每个 $d\ge1$ 都有
+
+$$
+|c_d-L\varphi(d)|\le1.
+\tag{362.10}
+$$
+
+Fibonacci 原子的经典因式分解与该对数主项见 Carlo Sanna，*On the l.c.m. of shifted Fibonacci numbers*，[arXiv:2007.13330v1，§2，式（3）–（4）与 Lemma 2.2](https://arxiv.org/pdf/2007.13330v1)。该文原子与 $\Psi_d$ 由 Möbius 反演对应；误差一由这里的计算承担，不由文献的 $O(1)$ 冒充。
+
+实际族为何必须支付完整原子，还可在本步用 divisibility 闭包说明。对任意正整数 $n$，在本证明内记
+
+$$
+\mathscr C(n)=\operatorname{lcm}_{p^a\parallel n}F_{z(p^a)},
+\qquad \mathscr C(1)=1.
+\tag{362.11}
+$$
+
+每个 $p^a\parallel n$ 整除它所对应的项，所以 $n\mid\mathscr C(n)$，且 $\mathscr C(n)$ 本身属于实际有限 Fibonacci lcm 族。若 $n\mid M(S)$，每个这样的 $p^a$ 都整除某个 $F_s$，故 $z(p^a)\mid s$、$F_{z(p^a)}\mid F_s$，进而 $\mathscr C(n)\mid M(S)$。因此 $\mathscr C(n)$ 是 divisibility 意义下最小的实际族上界，且 $\mathscr C(n)=n$ 当且仅当 $n$ 属于实际族。这解释了（362.9）的完整原子费用，而没有赋予任意约数同样的预算。
+
+例如 $F_{19}=4181=37\cdot113$、$19$ 为素数，（361.8）给 $z(37)=19$，所以 $\mathscr C(37)=F_{19}=4181$、$\Psi_{19}=4181$。任意约数 $37$ 只有 $\log37$ 的预算，不能支付整层 $c_{19}=\log4181$。若要从闭包整数比较归一化 Robin 量，有限约数和的各局部因子 $1+1/p+\cdots+1/p^a$ 随指数增加，故对 $n>5040$ 只能先得到
+
+$$
+\mathcal R(n)\le\mathcal R(\mathscr C(n))
+\frac{\log\log\mathscr C(n)}{\log\log n}.
+\tag{362.12}
+$$
+
+这个分母膨胀不能删去，因而闭包的上界不自动成为任意约数的同一 Robin 上界。另一个有限例子是 $z(16)=12$、$z(9)=12$、$z(5)=5$、$z(7)=8$：$F_{12}=144$、$F_5=5$、$F_8=21$，用（361.8）检查相应指标的真约数便得所列最小秩。因此
+
+$$
+\mathscr C(5040)=\operatorname{lcm}(144,5,21)=5040.
+$$
+
+这里仅说明实际族的一个成员；Robin 阈值在定理中仍是所用整数阈值。
+
+现在令 $Z=\{z(p):p\in U\}$，按不同秩合并。$p\mid M(S)$ 使 $z(p)\in D(S)$。对 $p>5$，经典秩界 $z(p)\mid p-1$ 或 $z(p)\mid p+1$ 给 $z(p)\le p+1$；可直接在有限域中核对：多项式 $t^2-t-1$ 的两个不同非零根之比的阶为 $z(p)$，分裂时该比的 $(p-1)$ 次幂为一，非分裂时 Frobenius 交换两根，该比的 $(p+1)$ 次幂为一。因此
+
+$$
+Z\subseteq D(S)\cap\{1,\ldots,N\},
+\qquad r\in Z\Longrightarrow r\ge R>5.
+\tag{362.13}
+$$
+
+由（362.7）、（362.10），每个不同的实际秩至少支付
+
+$$
+c_r\ge L\varphi(r)-1\ge\frac{Lr}{A\log N}-1\ge\Delta.
+\qquad
+|Z|\Delta\le\sum_{r\in Z}c_r\le b(S).
+\tag{362.14}
+$$
+
+最后复用本卷引理 163.1 的完整实际秩桶估计
+
+$$
+\sum_{\substack{p\ \mathrm{prime}\\z(p)=r}}w(p)\le\frac{6H_r}{r}\quad(r>5).
+$$
+
+这是已有的内部估计，系数六不归因于任何已发表的素数分布定理。按不同秩分拆 $U$，每个桶只使用一次，并用 $H_r\le H_N$，得到
+
+$$
+\begin{aligned}
+\sum_{p\in U}w(p)
+&=\sum_{r\in Z}\ \sum_{\substack{p\in U\\z(p)=r}}w(p)
+\le\sum_{r\in Z}\frac{6H_r}{r}
+\le\frac{6H_N}{R}|Z|
+\le\frac{6H_N b(S)}{R\Delta}.
+\end{aligned}
+$$
+
+若 $S=\varnothing$ 或 $M(S)=1$，则 $U=Z=\varnothing$、$b(S)=0$；若 $R>N$，则（362.13）使 $U=Z=\varnothing$。这些情形在 $\Delta>0$ 时同样满足结论。由于 $1/p\le w(p)$，同一估计也在证明内部控制 $\sum_{p\in U}1/p$，无需另取常数或改变支撑。$\square$
+
+**定理 362.3（全部有限实际 Fibonacci lcm 的共同 Robin 包络）。** 对每个先固定的实数 $1/2<\eta<3/5$，令
+
+$$
+c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad K_\eta=(2\eta)^{-c(\eta)}\in(0,1).
+\tag{362.15}
+$$
+
+则对每个 $\varepsilon>0$，存在先于一切有限集合 $S\subseteq\mathbb N_{>0}$ 选定的实数 $B_0>0$，使
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+b(S)\ge B_0\ \Longrightarrow
+\bigl(M(S)>5040\ \text{且}\ \mathcal R(M(S))\le K_\eta+\varepsilon\bigr).
+\tag{362.16}
+$$
+
+$B_0$ 仅依赖固定的 $\eta,\varepsilon$ 及下述经典解析供给。没有基数、最大指标、删除方式或嵌套条件。特别地，$\eta=11/20$ 给 $K_\eta=(10/11)^{5/18}<1$；取 $\varepsilon=(1-K_\eta)/2$，整个实际有限族在同一个 $b$ 阈值之后满足严格 Robin 不等式。这里保留任意正误差，不断言 $\varepsilon=0$ 的最终界，不指定数值起点。
+
+**证明。** 固定 $\eta$，先在任何 $S$ 之前选定
+
+$$
+\frac1{2\eta}<\theta<1,
+\qquad 0<\rho<c(\eta),
+\qquad
+T=B^6=\begin{pmatrix}13&8\\8&5\end{pmatrix},
+\quad B=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\tag{362.17}
+$$
+
+$T$ 的行列式为一、迹为 $18>2$，特征值为 $\Phi^6,\Phi^{-6}$，且 $T\equiv I\pmod2$，符合固定双曲 cat map 的条件。在 $r=z(p)$ 处，Fibonacci 矩阵公式使 $B^r=aI\pmod p$，因为 $F_r=0$、$F_{r+1}=F_{r-1}$；行列式给 $a^2=(-1)^r$，故 $B^{4r}=I$、$T^{2r}=B^{12r}=I$。因此对素数 $p$ 有
+
+$$
+\operatorname{ord}_p(T)\mid2z(p).
+\tag{362.18}
+$$
+
+Pär Kurlberg、Ze'ev Rudnick，*On quantum ergodicity for linear maps of the torus*，[原文 Theorem 14、式（6.1）](https://people.kth.se/~kurlberg/eprints/catmap2.pdf)，对固定 $T$ 给
+
+$$
+\#\{p\le y:\operatorname{ord}_p(T)>y^\eta\}
+\ge c(\eta)\pi(y)+o(\pi(y)).
+$$
+
+原始阈值为 $y^\eta$。现在定义固定素数集与其固定计数函数
+
+$$
+\mathcal P_\eta=\{p>5\text{ 为素数}:\operatorname{ord}_p(T)>p^\eta\},
+\qquad A_\eta(y)=\#\{p\in\mathcal P_\eta:p\le y\}.
+$$
+
+$p\le y$ 时 $p^\eta\le y^\eta$，故 KR 所计的移动集合除去 $2,3,5$ 后包含于这个固定集合。先取 $\rho_1\in(\rho,c(\eta))$，KR 的余项保证尾部计数至少为 $\rho_1\pi(y)$。Pierre Dusart，*Estimates of Some Functions Over Primes without R.H.*，[arXiv:1002.0442v1，Theorem 6.9，式（6.5）](https://arxiv.org/pdf/1002.0442v1)，给 $\pi(y)\ge y/\log y$（$y\ge599$）以及 $\pi(y)\le(y/\log y)(1+1.2762/\log y)$（$y>1$）。扩大一个固定起点以吸收至多三个例外素数，便可先选 $X_{\eta,\rho}\ge599$，使每个实数积分点 $y\ge X_{\eta,\rho}$ 都满足
+
+$$
+A_\eta(y)\ge\rho\frac y{\log y},
+\qquad \frac{\pi(y)}y\le\frac2{\log y}.
+\tag{362.19}
+$$
+
+这个起点与任何 $S$ 无关。
+
+对充分大的实际 $b=b(S)$，取同一对象的截止
+
+$$
+x=b,\qquad u=b^\theta,\qquad N=\lfloor b\rfloor+1,
+\qquad R=\tfrac12b^{\theta\eta}.
+\tag{362.20}
+$$
+
+先取统一的 $b$ 起点保证 $b\ge2973$、$b>\log5040$、$u\ge X_{\eta,\rho}$、$R>5$ 及
+
+$$
+\Delta=\frac{LR}{A\log N}-1\ge\frac{LR}{2A\log N}>0.
+\tag{362.21}
+$$
+
+后一条件可满足，因为 $R/\log N\to\infty$。令 $\mathcal A_b=\mathcal P_\eta\cap(u,b]$，并记同一个实际 $M=M(S)$ 在该区间的支撑费用
+
+$$
+W_{\rm supp}(S,b)=\sum_{\substack{p\in\mathcal A_b\\p\mid M(S)}}w(p).
+$$
+
+对每个 $p\in\mathcal A_b$，（362.18）给 $z(p)\ge\operatorname{ord}_p(T)/2>p^\eta/2>R$。若同时 $p\mid M(S)$，整数性给 $p\le\lfloor b\rfloor=N-1$，因此它确实属于定理 362.2 的同一个 $U$。由（362.4）、（362.21）及 $R^2=b^{2\theta\eta}/4$，
+
+$$
+\begin{aligned}
+0\le W_{\rm supp}(S,b)
+&\le\frac{6H_N b}{R\Delta}
+\le\frac{12A(\log N)H_N b}{LR^2}\\
+&=\frac{48A}{L}(\log N)H_N b^{1-2\theta\eta}
+=:h_{\theta,\eta}(b)\longrightarrow0.
+\end{aligned}
+\tag{362.22}
+$$
+
+$N\le b+1$、$H_N\le1+\log N$ 且 $2\theta\eta>1$，所以右侧为 $O(b^{1-2\theta\eta}(\log b)^2)=o(1)$。这是仅依赖实际标量 $b$ 的共同界，适用于全部有限 $S$，不借助指标上界。
+
+固定计数函数在完整区间 $(u,b]$ 上的 Abel 部分求和为
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_b}\frac1p
+&=\frac{A_\eta(b)}b-\frac{A_\eta(u)}u
++\int_u^b\frac{A_\eta(y)}{y^2}\,dy\\
+&\ge-\frac2{\log u}+\rho\int_u^b\frac{dy}{y\log y}
+=\rho\log(1/\theta)-\frac2{\theta\log b}.
+\end{aligned}
+\tag{362.23}
+$$
+
+这里舍去非负上端项，用 $A_\eta(u)\le\pi(u)$ 控制下端项；（362.19）在每一个积分点成立。$1/p\le w(p)$，且支撑与非支撑在同一个 $\mathcal A_b$ 中分拆，故实际缺失费用满足
+
+$$
+\sum_{\substack{p\in\mathcal A_b\\p\nmid M}}w(p)
+\ge\rho\log(1/\theta)-\frac2{\theta\log b}-W_{\rm supp}(S,b).
+\tag{362.24}
+$$
+
+无需断言整个区间都缺失；其中所有实际存在的素数已经由（362.22）支付。
+
+对这个实际整数，低素数支撑从全部 $p\le b$ 中删除上述缺失部分；所有实际高素因子 $p>b$ 也一并支付，因为
+
+$$
+w(p)\le\frac1{p-1}
+\le\frac{\log p}{(b-1)\log b}\quad(p>b),
+\qquad \sum_{p\mid M}\log p\le\log M=b.
+$$
+
+于是高素数总费用至多 $b/((b-1)\log b)$。有限几何级数的精确 Euler 恒等式给
+
+$$
+\log\frac{\sigma(M)}M
+=\sum_{p\mid M}w(p)+E(M),
+\qquad E(M)=\sum_{p\mid M}\log(1-p^{-v_p(M)-1})\le0.
+$$
+
+这里只使用符号，不要求 $E(M)$ 趋零。Dusart 同文 [Theorem 6.12](https://arxiv.org/pdf/1002.0442v1) 的正确方向是
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+<e^\gamma\log x\left(1+\frac{0.2}{(\log x)^2}\right)
+\quad(x\ge2973).
+$$
+
+取对数、用 $\log(1+t)\le t$，在 $x=b$ 处的上界为 $\gamma+\log\log b+0.2/(\log b)^2$。而 $\log\mathcal R(M)=\log(\sigma(M)/M)-\gamma-\log(\log b)$，所以 Robin 的对数归一化在此精确抵消，并非以渐近替换分母。合并（362.24）及全部高素数费用，得到
+
+$$
+\log\mathcal R(M(S))
+\le\rho\log\theta+\frac2{\theta\log b}
++W_{\rm supp}(S,b)
++\frac{0.2}{(\log b)^2}
++\frac b{(b-1)\log b}.
+\tag{362.25}
+$$
+
+$E(M)\le0$ 已被舍去。除 $\rho\log\theta$ 外的所有项由（362.22）控制，并且在 $b\to\infty$ 时共同趋零。
+
+最后按所需包络选择参数，保持选择先于集合。给定 $\varepsilon>0$，在（362.17）的开区间内先选 $\theta,\rho$，使
+
+$$
+K':=\theta^\rho<K_\eta+\varepsilon/2;
+$$
+
+这是因为 $\theta\downarrow1/(2\eta)$、$\rho\uparrow c(\eta)$ 时 $\theta^\rho\to K_\eta$。再固定 $\delta=\log((K_\eta+\varepsilon)/K')>0$。取一个共同 $B_0$，使每个实数 $b\ge B_0$ 满足此前全部起点条件，以及
+
+$$
+\frac2{\theta\log b}+h_{\theta,\eta}(b)
++\frac{0.2}{(\log b)^2}+\frac b{(b-1)\log b}\le\delta.
+$$
+
+对任意有限 $S$，只要 $b(S)\ge B_0$，便有 $M(S)>5040$；（362.25）指数化给 $\mathcal R(M(S))\le K'e^\delta=K_\eta+\varepsilon$，证明（362.16）。空集或 $M(S)=1$ 的 $b=0$ 不满足此前提，故从未对它们取双重对数。$c(11/20)=5/18$ 给所述具体常数与正误差下的最终严格不等式。整个推导不使用 RH，且结论只作用于所定义的实际有限 Fibonacci lcm 族。$\square$
+
+## 追加锚（本行以下为增补区）
