@@ -1,0 +1,57 @@
+## §1. 素数维反例族
+
+**定理 1.** 对每个满足 $p\equiv1\pmod4$ 的素数 $p$，存在 $u\in\mathbb F_p$ 满足 $u^2=-1$。对每个这样的 $u$，向量
+
+$$
+|\psi_u\rangle=\frac1{\sqrt p}\sum_{x\in\mathbb F_p}|x\rangle\otimes|ux\rangle,
+\qquad
+\psi_u(x,y)=\begin{cases}p^{-1/2}&y=ux,\\0&y\ne ux\end{cases}
+$$
+
+归一化，并且对每个 $i\in\mathcal J_p$ 及每个 $b,c\in\mathbb F_p$ 都有
+
+$$
+P_i^{\psi_u}(b,c)=\frac1p\mathbf1_{c=ub}.
+$$
+
+因此每个测量的两个边缘分布都均匀，且
+
+$$
+I(P_i^{\psi_u})=\log p\quad(i\in\mathcal J_p),\qquad
+I(A:B)_{|\psi_u\rangle\langle\psi_u|}=2\log p.
+$$
+
+特别地，
+
+$$
+\min_{S\subseteq\mathcal J_p,\ |S|=p}\sum_{i\in S}I(P_i^{\psi_u})
+-I(A:B)_{|\psi_u\rangle\langle\psi_u|}
+=(p-2)\log p>0,
+$$
+
+故 $\neg\mathcal C_p$：纯态 ECQC 在每个这样的素数维都失败。
+
+证明。素数 $p\equiv1\pmod4$ 时，$-1$ 是 $\mathbb F_p$ 中的平方。固定任一平方根 $u$，则 $u\ne0$、$u^{-1}=-u$，所以 $x\mapsto ux$ 是双射。向量有 $p$ 个模平方为 $1/p$ 的非零分量，故其范数平方为一。
+
+Appleby 的扩展 Clifford 作用公式所给的逐基对称性，可在这里的列记号下写成 $U_u\overline{v_{a,b}}=v_{a,ub}$，其中 $U_u|x\rangle=|ux\rangle$；它表明 $(1\otimes U_u)|\Psi^+\rangle$ 在每个相同基中具有置换后的完全关联。这一步是上述文献结果的具体应用。以下计算同时固定关联图及其概率。
+
+计算基的振幅直接等于 $p^{-1/2}\mathbf1_{c=ub}$。二次相位基 $a\in\mathbb F_p$ 的振幅则为
+
+$$
+\begin{aligned}
+\langle v_{a,b}|\otimes\langle v_{a,c}|\psi_u\rangle
+&=p^{-3/2}\sum_{x\in\mathbb F_p}
+\omega^{-a(1+u^2)x^2-(b+uc)x}\\
+&=p^{-3/2}\sum_{x\in\mathbb F_p}\omega^{-(b+uc)x}\\
+&=p^{-1/2}\mathbf1_{b+uc=0}.
+\end{aligned}
+$$
+
+第二个等号使用 $1+u^2=0$。最后一个等号使用本原 $p$ 次单位根的几何和：系数为零时和为 $p$，系数非零时和为零。由于 $u^2=-1$，条件 $b+uc=0$ 等价于 $c=ub$。取模平方即得所有基上的联合分布公式。
+
+关联图是双射图，故两个边缘分布均为 $1/p$，联合分布恰有 $p$ 个非零项，每项为 $1/p$。两个边缘熵及联合熵均为 $\log p$，经典互信息因此等于 $\log p$。
+
+对 $|\psi_u\rangle\langle\psi_u|$ 作两种偏迹均得到 $I_p/p$：前者利用 $x\mapsto ux$ 的单射性消去非对角项，后者利用其双射性得到每个对角项 $1/p$。两者的熵均为 $\log p$；全局密度矩阵秩一，其熵为零。因此量子互信息为 $2\log p$。
+
+任取 $p$ 个测量，信息和都为 $p\log p$，所以最小值也为 $p\log p$。素数条件和 $p\equiv1\pmod4$ 给出 $p\geq5$，故 $(p-2)\log p>0$。这给出 $\mathcal C_p$ 的反例。$\square$
+

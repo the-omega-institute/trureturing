@@ -1,0 +1,59 @@
+## §0. 记号与引用结果
+
+全文使用自然对数，约定 $0\log 0=0$。有限联合分布 $P$ 的经典互信息为
+
+$$
+I(P)=H(P_A)+H(P_B)-H(P),\qquad H(q)=-\sum_x q(x)\log q(x).
+$$
+
+密度矩阵 $\rho_{AB}$ 的量子互信息为
+
+$$
+I(A:B)_\rho=S(\rho_A)+S(\rho_B)-S(\rho_{AB}),\qquad
+S(\rho)=-\operatorname{tr}(\rho\log\rho),
+$$
+
+其中 $\rho_A=\operatorname{tr}_B\rho_{AB}$、$\rho_B=\operatorname{tr}_A\rho_{AB}$。
+
+Iqbal，*On the CQC Conjecture: A sufficient condition and an extension*，
+[arXiv:2509.08286v2](https://arxiv.org/abs/2509.08286v2)，ECQC 猜想要求在素数维 $p$ 的完整互无偏基族 $\mathcal M$ 上满足
+
+$$
+\min_{S\subseteq\mathcal M,\ |S|=p}\sum_{M\in S}I(M^A:M^B)\leq I(A:B).
+$$
+
+此断言以 Conjecture 2.1 引用；所引 v2 全文将同一断言编号为 Conjecture 3.1。其纯态限制只允许 $\rho_{AB}=|\psi\rangle\langle\psi|$。
+
+对奇素数 $p$，置 $\mathbb F_p=\mathbb Z/p\mathbb Z$、$\omega=\exp(2\pi i/p)$，以及 $\mathcal J_p=\{\infty\}\sqcup\mathbb F_p$。计算基的列为 $m_{\infty,b}(x)=\mathbf1_{x=b}$；对 $a,b,x\in\mathbb F_p$，令
+
+$$
+m_{a,b}(x)=v_{a,b}(x)=\frac{\omega^{ax^2+bx}}{\sqrt p}.
+$$
+
+这些 $p+1$ 个基构成完整的 Clifford 互无偏基族：每个基正交归一，不同基任意两列的内积模平方均为 $1/p$。这是 Ivanović，*Geometrical description of quantal state determination*，1981，
+[DOI:10.1088/0305-4470/14/12/019](https://doi.org/10.1088/0305-4470/14/12/019)，与 Wootters–Fields，*Optimal state-determination by mutually unbiased measurements*，1989，
+[DOI:10.1016/0003-4916(89)90322-9](https://doi.org/10.1016/0003-4916(89)90322-9) 的构造。
+
+双方使用同一个列基。对归一化向量 $\psi\in\mathbb C^{\mathbb F_p\times\mathbb F_p}$，其联合分布定义为
+
+$$
+P_i^\psi(b,c)=\left|\sum_{x,y\in\mathbb F_p}
+\overline{m_{i,b}(x)}\,\overline{m_{i,c}(y)}\,\psi(x,y)\right|^2,
+\qquad i\in\mathcal J_p.
+$$
+
+纯态 ECQC 断言记作 $\mathcal C_p$：对所有满足 $\sum_{x,y}|\psi(x,y)|^2=1$ 的 $\psi$，均有
+
+$$
+\inf\left\{\sum_{i\in S}I(P_i^\psi):
+S\subseteq\mathcal J_p,\ |S|=p\right\}
+\leq I(A:B)_{|\psi\rangle\langle\psi|}.
+$$
+
+这里候选集合有限且非空，故下确界就是最小值。
+
+Appleby，*Properties of the extended Clifford group with applications to SIC-POVMs and MUBs*，
+[arXiv:0909.5233](https://arxiv.org/abs/0909.5233)，式 (76)、(77)、(219) 给出扩展 Clifford 群的幺正及反幺正表示和对 Wootters–Fields 基的作用。若 $u^2=-1$，标量反辛矩阵 $uI$ 固定每个基的标签并置换其列；对应反幺正算子为置换 $|x\rangle\mapsto|ux\rangle$ 与标准复共轭的复合，允许一个全局相位。这一基对称性是引用的文献中间结果。
+
+仓内结果[《Pure-state ECQC fails in dimension five》](https://github.com/the-omega-institute/trureturing/blob/7670255ef3464286b2f7086c075743a5e749f6ef/Blueprint/D5/S3/Quantum/Information/PureStateECQCRefutation.md) 给出 $p=5$、$u=2$ 的纯态反例，其差额为 $3\log 5$。下面给出素数维家族及其精确差额。
+
