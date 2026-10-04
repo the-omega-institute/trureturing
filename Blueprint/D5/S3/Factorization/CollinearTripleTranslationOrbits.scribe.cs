@@ -34,6 +34,17 @@ internal sealed class CollinearTripleTranslationOrbitsDocument : IScribeDocument
                 "An object is a finite set, not an ordered tuple. Its cardinal condition "
                 + "is exactly three, so each unordered configuration contributes once.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("stabilizing_translation_three_torsion", "Every fixing translation is three-torsion",
+                Disp(Seq(Forall, Sp, N(), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    Forall, Sp, F.Id("S"), Sp, InMacro, Sp, Call("Triple", N()), Comma, Sp,
+                    Forall, Sp, F.Id("t"), Sp, InMacro, Sp, Call("Point", N()), Comma, Sp,
+                    F.Id("t"), Plus, F.Id("S"), Sp, Eq, Sp, F.Id("S"), Sp, Implies, Sp,
+                    D(3), F.Id("t"), Sp, Eq, Sp, D(0))),
+                "Summing the three elements of an invariant unordered set gives "
+                + "three times the translation vector plus the original sum. Cancellation "
+                + "forces that vector to be annihilated by three, for every modulus, "
+                + "including modulus zero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("square_dvd_card_collinear_triples", "The A146557 divisibility conjecture",
                 Disp(Seq(Forall, Sp, N(), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
                     D(0), Sp, Lt, Sp, N(), Sp, Implies, Sp,
