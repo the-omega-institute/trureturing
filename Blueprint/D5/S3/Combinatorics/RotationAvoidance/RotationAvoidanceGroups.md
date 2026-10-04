@@ -2,13 +2,13 @@
 
 ## Abstract
 
-Representative circular avoidance classes have explicit cardinalities and strict comparisons.
+Three circular representative classes have uniformly separated cardinalities.
 
-**Theorem 1.1 (Circular representative counts).**
+**Theorem 1.1 (Strict separation of three circular classes).**
 
-Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_counts`
+Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_separations`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_counts` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_separations` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -16,12 +16,11 @@ Lean statement: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.c
 
 *Commentary.*
 
-For positive size, the circular avoider classes on size plus one entries have the following cardinalities: the 1234 class is 2 to the size plus one minus twice size minus one minus the binomial coefficient choosing three from size plus one; the 1432 and 2143 classes equal it; the 1342 class is 2 to the size minus size; the 1243 class equals the 1342 class; the 1324 class is the Fibonacci number with index twice size minus one; the 1423 and 2413 classes equal the 1324 class. When size is at least five, the 1342 class is smaller than the 1234 class, which is smaller than the 1324 class.
+For size at least five, the number of circular permutations of one through size plus one rooted at one and avoiding 1342 is strictly smaller than the number avoiding 1234, which is strictly smaller than the number avoiding 1324. Cutting at the minimum and increasing relabelling identify these circular classes with classical avoidance classes. Their counts are 2^size minus size, 2^(size + 1) minus twice size minus one minus the binomial coefficient choosing three from size plus one, and F_(2 size - 1), respectively. Exponential bounds and a Fibonacci recurrence give the strict comparisons.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_counts`
+- Truth anchor: `D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceGroups.circular_representative_separations`
 - Dependency: [D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceEnumeration](RotationAvoidanceEnumeration.md)
 - Dependency: [D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceFibonacci](RotationAvoidanceFibonacci.md)
 - Dependency: [D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceLinear](RotationAvoidanceLinear.md)
-- Dependency: [D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceSymmetry](RotationAvoidanceSymmetry.md)

@@ -284,3 +284,20 @@ The original half-bound,
 RH, Robin and the cofinal signed comparison remain unresolved. This
 section applies existing Schur equality and Fourier uniqueness to the
 specified theta family; it claims no new general theorem or Lean result.
+
+
+## One source correction for the two critical edge projections
+
+The [negative-edge Gram application](../Weil/lagarias2004li.md#a-common-source-inverse-for-both-critical-edge-projections)
+uses the same signed edge measures to put an explicit positive symbolic
+lower bound on the negative-edge metric, via three common-neighbor
+anchors. On the centered critical source space this makes the common
+Gram operator boundedly invertible and both critical edge-image ranges
+closed. The two projections in (S7) then use the same correction
+$n_h=G^{-1}P_NC_-^*C_-h$; it generally differs from $P_Nh$.
+The paired edge-error bound for a Neumann truncation uses the exact
+$P_N$ and $G$. It is not a finite algorithm, a pointwise error bound,
+or a lower bound for the original theta energy. Acquisition of $P_N$
+and the projected transfer's joint reconstruction/norm estimate remain
+unproved. The path, Gram projection and Neumann tools are classical
+applications, with no new general theorem or Lean certification.
