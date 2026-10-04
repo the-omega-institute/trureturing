@@ -741,9 +741,10 @@ theorem result (L h : ℕ) :
                          [true,true,true]} : Finset Address), readout u U = readout u P) ∨
                       (∀ u ∈ ({[false,false,false,true],[false,true,true],
                          [true,false,true]} : Finset Address), readout u U = readout u Q))
-               simp only [Finset.forall_mem_insert,Finset.forall_mem_singleton]
+               simp only [Finset.forall_mem_insert,Finset.mem_singleton,forall_eq]
                simp_all only [readout,P,Q,ActualImageSevenLeafSeparation.A,
-                 ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E])
+                 ActualImageSevenLeafSeparation.C,ActualImageSevenLeafSeparation.E,
+                 and_true,true_and,true_or,or_true,eq_self_iff_true])
   have positive_details (favorP : Bool) :
       ∃ x y : Hist (fun _ : Address => Reply) × Bool,
         execute readout (strategy L favorP) 7 [] P = some x ∧
