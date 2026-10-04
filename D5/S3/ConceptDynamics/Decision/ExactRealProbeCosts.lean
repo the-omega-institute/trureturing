@@ -37,45 +37,36 @@ open D5.S3.ConceptDynamics.EscapeSpectrum.UncountableSingletonCutCountermodel (S
 noncomputable section
 
 local notation "Source" => State
-abbrev History := Hist (fun _ : I => Bool)
-abbrev Controller := AdaptiveReadOnlyExecution.Controller (fun _ : I => Bool) Bool
+local notation "History" => Hist (fun _ : I => Bool)
+local notation "Controller" => AdaptiveReadOnlyExecution.Controller (fun _ : I => Bool) Bool
 
 /-- A probe flips the task bit exactly at the source coordinate. -/
 def response (a : I) (s : Source) : Bool :=
   if a = s.1 then !s.2 else s.2
 
 /-- Every recorded response is the actual response of the specified source. -/
-abbrev Consistent (h : History) (s : Source) : Prop :=
-  AdaptiveReadOnlyExecution.Consistent response h s
+local notation "Consistent" => AdaptiveReadOnlyExecution.Consistent response
 
 /-- The complete compatibility fiber forces the returned task bit. -/
 def Sound (h : History) (b : Bool) : Prop :=
   ∀ s, Consistent h s → s.2 = b
 
 /-- The finite set of different exact query parameters in a history. -/
-abbrev parameters (h : History) : Finset I := by
-  classical
-  exact AdaptiveReadOnlyExecution.queries h
+local notation "parameters" => AdaptiveReadOnlyExecution.queries
 
 /-- Repeated queries contribute no extra charge. -/
-abbrev queryCount (h : History) : Nat := by
-  classical
-  exact AdaptiveReadOnlyExecution.queryCount h
+local notation "queryCount" => AdaptiveReadOnlyExecution.queryCount
 
 /-- Finite execution from a given prefix, retaining its additional ordered record.
 There is no constructor for a stall and no depth bound on finite executions. -/
-abbrev Run (π : Controller) (s : Source) : History → History → Bool → Prop :=
-  AdaptiveReadOnlyExecution.Run response π s
+local notation "Run" => AdaptiveReadOnlyExecution.Run response
 
 /-- Total correctness on the whole source domain. -/
-abbrev Correct (π : Controller) : Prop :=
-  AdaptiveReadOnlyExecution.Correct response (fun s : Source => s.2) π
+local notation "Correct" => AdaptiveReadOnlyExecution.Correct response (Prod.snd : Source → Bool)
 
 /-- Extended execution cost. The infimum is over finite run witnesses; it is
 infinite when none exists. Determinism makes all finite witnesses identical. -/
-abbrev cost (π : Controller) (s : Source) : ENNReal := by
-  classical
-  exact AdaptiveReadOnlyExecution.cost response π s
+local notation "cost" => AdaptiveReadOnlyExecution.cost response
 
 /-- Two initial parameters, followed by a third only when the responses differ. -/
 def threeProbe (a c d : I) : Controller := fun h =>
@@ -86,7 +77,7 @@ def threeProbe (a c d : I) : Controller := fun h =>
   | _ :: _ :: p :: _ => some (.inr p.2)
 
 /-- A Borel action carrier distinguishes query, return, and stall. -/
-abbrev CodedAction := (I ⊕ Bool) ⊕ Unit
+local notation "CodedAction" => (I ⊕ Bool) ⊕ Unit
 
 /-- An equivalent action coding with the standard sum measurable structure. -/
 def actionCode : Option (Sum I Bool) → CodedAction
@@ -133,7 +124,7 @@ def oneProbe (u : I) : Controller := fun h =>
   | p :: _ => some (.inr p.2)
 
 /-- Half-open unit-interval seeds include every declared seed below one. -/
-abbrev StrongSeed := Set.Iio (1 : I)
+local notation "StrongSeed" => Set.Iio (1 : I)
 
 /-- Half-period pairing, including both half-interval endpoints. -/
 def shift (u : StrongSeed) : StrongSeed :=
@@ -144,7 +135,7 @@ def shift (u : StrongSeed) : StrongSeed :=
     ⟨⟨(u.1 : ℝ) - 1 / 2, by constructor <;> linarith [u.1.2.2]⟩,
       by change (u.1 : ℝ) - 1 / 2 < 1; linarith [u.1.2.2]⟩
 
-noncomputable instance : MeasureSpace StrongSeed := Measure.Subtype.measureSpace
+attribute [local instance] Measure.Subtype.measureSpace
 
 /-- Every source has a sound certificate of exactly two different parameters;
 no compatible sound history can use fewer parameters. -/
@@ -181,7 +172,7 @@ theorem result :
   classical
   have mem_parameters (h : History) (p : Sigma (fun _ : I => Bool)) (hp : p ∈ h) :
       p.1 ∈ parameters h := by
-    simp only [parameters, AdaptiveReadOnlyExecution.queries, List.mem_toFinset, List.mem_map]
+    simp only [AdaptiveReadOnlyExecution.queries, List.mem_toFinset, List.mem_map]
     exact ⟨p, hp, rfl⟩
   have zero_ne_one : (0 : I) ≠ 1 := by
     intro he
@@ -237,7 +228,7 @@ theorem result :
       · have hct : c ≠ t.1 := by intro he; exact hac (hat.trans he.symm)
         simpa [response, hct] using htc
       · simpa [response, hat] using hta
-    · simp [queryCount, AdaptiveReadOnlyExecution.queryCount,
+    · simp [AdaptiveReadOnlyExecution.queryCount,
         AdaptiveReadOnlyExecution.queries, hac]
   have certificates : ∀ s : Source,
       (∀ h, Consistent h s → Sound h s.2 → 2 ≤ queryCount h) ∧
@@ -272,7 +263,7 @@ theorem result :
   have run_consistent (π : Controller) (s : Source) (pre t : History) (b : Bool)
       (hr : Run π s pre t b) : Consistent t s := by
     induction hr with
-    | stop => simp [Consistent, AdaptiveReadOnlyExecution.Consistent]
+    | stop => simp [AdaptiveReadOnlyExecution.Consistent]
     | query pre a t b hd next ih =>
       intro p hp
       rcases List.mem_cons.mp hp with rfl | hp
@@ -372,7 +363,7 @@ theorem result :
           intro hcx
           have bad : s.2 = (!s.2) := by simpa [r, v, response, hax, hcx] using he
           cases s.2 <;> simp at bad
-        simp [queryCount, AdaptiveReadOnlyExecution.queryCount,
+        simp [AdaptiveReadOnlyExecution.queryCount,
           AdaptiveReadOnlyExecution.queries, hac, hax, hcx]
     · have hdx : d ≠ s.1 := by
         intro hdx
@@ -396,7 +387,7 @@ theorem result :
           by_contra hx
           push_neg at hx
           exact he (by simp [r, v, response, hx.1, hx.2])
-        simp [queryCount, AdaptiveReadOnlyExecution.queryCount,
+        simp [AdaptiveReadOnlyExecution.queryCount,
           AdaptiveReadOnlyExecution.queries, hac, had, hcd, hx]
   have upper (s : Source) :
       ∃ h, Run (threeProbe 0 midpoint 1) s [] h s.2 ∧ queryCount h ≤ 3 := by
@@ -455,7 +446,7 @@ theorem result :
     exact AdaptiveReadOnlyExecution.Run.stop (read := response) _ _ rfl
   have one_cost (u : I) (s : Source) : cost (oneProbe u) s = 1 := by
     rw [cost_of_run _ _ _ _ (one_run u s)]
-    simp [queryCount, AdaptiveReadOnlyExecution.queryCount, AdaptiveReadOnlyExecution.queries]
+    simp [AdaptiveReadOnlyExecution.queryCount, AdaptiveReadOnlyExecution.queries]
   have weak_upper (s : Source) :
       (∀ᵐ u : I, ∃ h, Run (oneProbe u) s [] h s.2) ∧
       (∫⁻ u : I, cost (oneProbe u) s) = 1 := by
