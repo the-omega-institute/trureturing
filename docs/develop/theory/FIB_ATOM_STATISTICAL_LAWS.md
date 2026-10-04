@@ -14681,3 +14681,333 @@ $$
 在高磁雷诺数和外部驱动下，磁能、动能和磁螺度可出现跨尺度传递。统计谱、间歇性和耗散尺度要由具体方程、初始数据、源汇和无量纲参数（如磁雷诺数、等离子体 \(\beta\)）决定。FIB 的递归层级可以作为多尺度分块，但不能直接给出 Kolmogorov 指数或重联普适类。
 
 本节结论是：FIB 提供磁流体通道与网格组合骨架；磁通冻结、能量预算、磁能级联和重联由 MHD 方程、导电性、边界、驱动和尺度极限决定。
+
+## 188. FIB 网络上的外加引力 N 体、Vlasov–Poisson 动力学与 Jeans 不稳定
+
+固定 FIB 上下文给出的有限顶点集 \(V_j\)，并把顶点 \(i\) 另行嵌入 \(\Omega\subseteq\mathbb R^3\)，位置、动量和质量记为 \(x_i(t),p_i(t),m_i>0\)。FIB 只给出顶点、标签、词序及可供选择的组合关系；位置度量、质量、引力常数、边界和时间单位均需外加。给定相互作用掩码 \(A^{(j)}_{ik}\)、软化尺度 \(\ell_j\)、势核 \(U_j\) 和外势 \(V_j^{\rm ext}\)，可定义
+$$
+H_j=\sum_i\frac{|p_i|^2}{2m_i}
++\frac12\sum_{i\ne k}A^{(j)}_{ik}m_im_kU_j(x_i,x_k)
++\sum_i m_iV_j^{\rm ext}(x_i,t),
+\tag{188.1}
+$$
+$$
+\dot x_i=\frac{p_i}{m_i},\qquad
+\dot p_i=-\sum_{k\ne i}A^{(j)}_{ik}m_im_k\nabla_{x_i}U_j(x_i,x_k)
+-m_i\nabla V_j^{\rm ext}(x_i,t).
+\tag{188.2}
+$$
+取 \(U_j(x,y)=-G_j(|x-y|^2+\ell_j^2)^{-1/2}\) 得到软化吸引势；全对全掩码和图掩码分别给出不同的作用范围。无显含时势和无功通量边界下 \(H_j\) 守恒，阻尼、驱动和开放边界则改变能量账。
+
+定义经验相空间测度
+$$
+\mu_t^N=\frac1{M_N}\sum_{i\in V_j}m_i\delta_{(x_i(t),v_i(t))},
+\qquad M_N=\sum_i m_i .
+\tag{188.3}
+$$
+在 \(N\to\infty\)、\(m_i=O(N^{-1})\)、核满足外加正则性和截断条件时，可以寻求 \(\mu_t^N\Rightarrow f_t(x,v)\,{\rm d}x{\rm d}v\)，得到
+$$
+\partial_tf+v\cdot\nabla_xf-\nabla_x\Phi_f\cdot\nabla_vf=0,
+\qquad
+\Phi_f(x)=\int U(x,y)\rho_f(y)\,{\rm d}y,
+\qquad
+\rho_f=\int f\,{\rm d}v .
+\tag{188.4}
+$$
+碰撞、近距离散射或随机踢可另加 \(\varepsilon_NQ_N(f)\)。先取平均场极限还是先保留碰撞，会分别产生 Vlasov、Boltzmann 或 Landau 型极限；FIB 递归不选择极限次序。
+
+为讨论 Jeans 失稳，还需补入均匀背景、压力闭合和边界。取
+$$
+\partial_t\rho+\nabla\cdot(\rho u)=0,\qquad
+\partial_t(\rho u)+\nabla\cdot(\rho u\otimes u)+c_s^2\nabla\rho
+=-\rho\nabla\Phi,\qquad
+\Delta\Phi=4\pi G(\rho-\rho_0).
+\tag{188.5}
+$$
+围绕 \((\rho,u)=(\rho_0,0)\) 的模态 \(e^{st+{\rm i}k\cdot x}\) 满足
+$$
+s^2=4\pi G\rho_0-c_s^2|k|^2.
+\tag{188.6}
+$$
+因此在给定的三维等温无耗散模型中，
+$$
+|k|<k_J,\qquad
+k_J=\frac{\sqrt{4\pi G\rho_0}}{c_s},\qquad
+\lambda_J=\frac{2\pi}{k_J}
+\tag{188.7}
+$$
+给出长波增长。旋转、磁场、各向异性速度弥散、碰撞、阻尼和有限边界都会改变该判据；周期 FIB 图还只允许离散波数。更一般地，若图模态的压力算子和吸引算子分别为 \(\mathsf P_j,\mathsf A_j\)，共同模态满足
+$$
+\ddot\xi+(\mathsf P_j-\rho_0\mathsf A_j)\xi=0,\qquad
+s_{\ell,j}^2=\rho_0a_{\ell,j}-c_s^2\lambda_{\ell,j}.
+\tag{188.8}
+$$
+其中 \(a_{\ell,j}\)、\(\lambda_{\ell,j}\) 来自外加嵌入、权重和势核，不能由图入度或递归深度代替。
+
+在过阻尼缩放下可另得 Smoluchowski–Poisson 方程
+$$
+\partial_t\rho=\nabla\cdot(D\nabla\rho+\mu\rho\nabla\Phi),
+\qquad
+\Delta\Phi=4\pi G(\rho-\rho_0).
+\tag{188.9}
+$$
+它与趋化方程形式相似，但这里的势由同一质量分布对称地产生；是否存在有限温度平稳律仍需外加噪声、阻尼和涨落—耗散关系。仅观测 FIB 标签聚合或总质量时，长波聚集可落在观测核的零空间；即使观测完整密度，通常也只识别 \(G\rho_0/c_s^2\) 等组合。故聚集、Vlasov–Poisson 极限、Jeans 波长和长时间弛豫都是外加模型结论，不能宣称为 FIB ATOM 递归单独推出的引力定律。
+
+## 189. FIB 路径上的外加量子热力学、Jarzynski–Crooks 关系与耗散
+
+固定一条 FIB 上下文路径 \(\xi_0,\ldots,\xi_N\)，另选 Hilbert 空间 \(\mathcal H\)、时间网格、参数映射 \(\lambda_k=\Lambda(\xi_k)\) 和自伴哈密顿量 \(H_{\lambda_k}\)。FIB 的词序不是物理时间协议。正向演化可写成
+$$
+U_F=U_{N-1}\cdots U_0,\qquad
+U_k=\mathcal T\exp\!\left(-{\rm i}\int_{t_k}^{t_{k+1}}H_{\lambda(t)}\,{\rm d}t\right).
+\tag{189.1}
+$$
+设初态为 Gibbs 态
+$$
+\rho_0=\frac{e^{-\beta H_{\lambda_0}}}{Z_0},\qquad
+Z_0={\rm tr}\,e^{-\beta H_{\lambda_0}},\qquad
+F_k=-\beta^{-1}\log Z_k .
+\tag{189.2}
+$$
+采用两点能量测量，功 \(W=E_m^\tau-E_n^0\)，其联合概率为
+$$
+p_F(m,n)=\frac{e^{-\beta E_n^0}}{Z_0}
+\left|\langle m,\tau|U_F|n,0\rangle\right|^2 .
+\tag{189.3}
+$$
+第一次测量消除能量基中的相干，所以这一定义依赖测量协议。
+
+若存在反幺正时间反演 \(\Theta\) 和微观可逆条件
+$$
+U_R=\Theta U_F^\dagger\Theta^{-1},
+\qquad
+\Theta H_{\lambda(t)}\Theta^{-1}=H_{\lambda(t)}^{\rm rev},
+\tag{189.4}
+$$
+反向协议从 \(H_{\lambda_N}\) 的 Gibbs 态开始，则
+$$
+\frac{p_F(m,n)}{p_R(n,m)}
+=\exp\!\left[\beta(W-\Delta F)\right],
+\qquad \Delta F=F_N-F_0 .
+\tag{189.5}
+$$
+按功值聚合得到 Crooks 关系
+$$
+\frac{P_F(W=w)}{P_R(W=-w)}
+=e^{\beta(w-\Delta F)},
+\tag{189.6}
+$$
+并进一步得到 Jarzynski 等式
+$$
+\left\langle e^{-\beta W}\right\rangle_F=e^{-\beta\Delta F},
+\qquad
+\langle W\rangle_F-\Delta F=: \langle W_{\rm diss}\rangle\ge0 .
+\tag{189.7}
+$$
+这些结论要求 Gibbs 制备、反向协议、微观可逆性以及一致的时间反演和能量账；FIB 路径的反向词序不足以构成物理时间反演。
+
+在完整跃迁样本空间上，
+$$
+\Sigma(m,n)=\log\frac{p_F(m,n)}{p_R(n,m)}
+=\beta(W-\Delta F),
+\qquad
+\beta\langle W_{\rm diss}\rangle
+=D_{\rm KL}(p_F\Vert p_R^\dagger)\ge0 .
+\tag{189.8}
+$$
+若只记录粗粒结果 \(Y=g(m,n)\)，数据处理不等式给出
+$$
+D_{\rm KL}(P_F^Y\Vert P_R^{Y,\dagger})
+\le\beta\langle W_{\rm diss}\rangle .
+\tag{189.9}
+$$
+隐藏的能级、coin 或 FIB 标签可以携带未观测熵产生；粗粒正反向分布相同只表示该观测通道看不见耗散。强耦合热浴、初始系统—浴相关、非马尔可夫记忆、反馈测量或准概率功定义都需要改写样本空间和自由能，不能直接套用 (189.6)。
+
+同一 FIB 路径可承载恒定哈密顿量的零功协议、非对易淬火的宽功分布、满足详细平衡的经典跳跃或含测量回馈的非平衡协议。故功分布、自由能差、熵产生和耗散率依赖外加哈密顿量、协议、温度、浴、测量和粗粒化，而非由 FIB 标签或递归深度唯一决定。
+
+## 190. FIB 网络上的外加湍流间歇性、多重分形与粗粒化闭合
+
+固定 FIB 图 \(G_j=(V_j,E_j)\)，并另选速度或通量场 \(u_j(t)\)、质量内积、外部尺度、时间、非线性算子、噪声和边界。外加动力学可写成
+$$
+\dot u_j=\mathcal N_j(u_j)-\nu_jA_ju_j+f_j .
+\tag{190.1}
+$$
+取粗粒投影 \(P_{j,\ell}\)，令 \(u_{j,\ell}=P_{j,\ell}u_j\)，则精确投影满足
+$$
+\dot u_{j,\ell}
+=\mathcal N_{j,\ell}(u_{j,\ell})-\nu_jA_{j,\ell}u_{j,\ell}+f_{j,\ell}
++\tau_{j,\ell}-\nu_jR_{j,\ell},
+\tag{190.2}
+$$
+其中
+$$
+\tau_{j,\ell}=P_{j,\ell}\mathcal N_j(u_j)-\mathcal N_{j,\ell}(u_{j,\ell}),
+\qquad
+R_{j,\ell}=P_{j,\ell}A_ju_j-A_{j,\ell}u_{j,\ell}.
+\tag{190.3}
+$$
+这两个项是未解析尺度的精确残差，不由 FIB 接缝直接给出。若粗粒非线性在所选内积下反对称，粗粒能量的通量项可写为
+$$
+\Pi_{j,\ell}=-\langle u_{j,\ell},\tau_{j,\ell}\rangle .
+\tag{190.4}
+$$
+非零平均通量还需要外加源、汇、尺度局部性和统计稳态；有限图能量守恒本身不产生惯性区。
+
+给定外部嵌入和尺度边集 \(\mathcal E_{j,\ell}\)，定义结构函数
+$$
+S_{j,p}(\ell)=\frac1{|\mathcal E_{j,\ell}|}
+\sum_{e\in\mathcal E_{j,\ell}}\mathbb E|(\mathrm B_ju_j)_e|^p .
+\tag{190.5}
+$$
+只有在共同图极限和幂律窗口已被外加规定时，才可写 \(S_{j,p}(\ell)\asymp\ell^{\zeta_p}\)。平坦度
+$$
+F_j(\ell)=\frac{S_{j,4}(\ell)}{S_{j,2}(\ell)^2}
+\tag{190.6}
+$$
+随尺度增加可作为间歇性候选，但有限图回归不能证明幂律。若另加连续嵌入和多重分形谱 \(\mathcal D(h)\)，可提出
+$$
+\zeta_p=\inf_h\{ph+d-\mathcal D(h)\},
+\tag{190.7}
+$$
+其中 \(d\) 和 \(\mathcal D\) 都是外加几何假设；图谱维不能自动替代 \(d\)。
+
+闭合可用条件期望表示：
+$$
+\overline\tau_{j,\ell}(v)
+=\mathbb E[\tau_{j,\ell}\mid u_{j,\ell}=v],
+\qquad
+\xi_{j,\ell}=\tau_{j,\ell}-\overline\tau_{j,\ell}(u_{j,\ell}),
+\qquad
+\mathbb E[\xi_{j,\ell}\mid u_{j,\ell}]=0 .
+\tag{190.8}
+$$
+零条件均值不表示白噪声或无记忆。细尺度长相关时，精确消元可出现
+$$
+\dot u_{j,\ell}(t)=F_{j,\ell}(u_{j,\ell}(t))
++\int_0^tK_{j,\ell}(t-s,u_{j,\ell}(s))\,{\rm d}s+\eta_{j,\ell}(t),
+\tag{190.9}
+$$
+记忆核和噪声由全状态律及初始分布决定。细尺度混合快且存在严格时间尺度分离时，才可近似局部 Markov 闭合和白噪声。
+
+同一 FIB 层级可外加高斯 Ornstein–Uhlenbeck 场，也可外加乘法级联 \(g_{\ell/b}=W_\ell g_\ell\)，后者给出
+$$
+\zeta_p=-\log_b\mathbb E(W^p)
+\tag{190.10}
+$$
+并可产生非线性标度。两种实现可共享低阶统计却有不同通量尾部和记忆。先固定图再平均的 quenched 统计与先平均图族的 annealed 统计也不必相同。因此能谱、间歇指数和闭合律均依赖外加动力学、过滤器、随机律、源汇和物理尺度，不能归因于 FIB 递归本身。
+
+## 191. FIB 细胞复形上的外加 Regge 型曲率、离散引力与因果三角剖分统计
+
+FIB 递归可提供胞腔附着和细化路径，但没有内禀维数、长度或因果锥。另选有限 \(n\) 维单纯复形 \(\mathcal K_j\)，为每条边 \(e\) 指定长度 \(\ell_e\)，使各单纯形非退化。曲率集中在余维二铰链 \(h\)，欧氏亏角为
+$$
+\delta_h=2\pi-\sum_{\sigma\supset h}\theta_h^\sigma(\ell).
+\tag{191.1}
+$$
+给定 \(G,\Lambda\) 和边界项，Regge 作用量可写为
+$$
+S_R[\ell;\mathcal K_j]
+=\frac1{8\pi G}\left[
+\sum_hV_{n-2}(h)\delta_h-\Lambda\sum_\sigma V_n(\sigma)
+\right]+S_\partial[\ell].
+\tag{191.2}
+$$
+固定组合复形并对长度变分得到离散场方程；改变长度约束、胞腔粘合或边界变分空间，方程也随之改变。Lorentz 版本还需给每条边因果类型、离散时间函数和允许的 \((p,q)\) 单纯形；FIB 的有向边或递归先后不能代替时间函数，欧氏亏角也不能直接代替双曲因果角。
+
+固定测度、积分域和边界后，欧氏配分函数与 Lorentz 振幅分别形如
+$$
+Z_E=\int_{\mathcal D}d\mu(\ell)e^{-S_{E,R}(\ell;\mathcal K)/\hbar},
+\qquad
+Z_L=\sum_{\mathcal K\in\mathfrak C_{\rm FIB}}\frac1{C(\mathcal K)}
+\int_{\mathcal D_L(\mathcal K)}d\mu(\ell)e^{{\rm i}S_R(\ell;\mathcal K)/\hbar}.
+\tag{191.3}
+$$
+Wick 延拓、规范固定、积分轮廓和是否求和于不同粘合都需单独证明或规定。若另加全局切片和正转移核，可定义 CDT 型统计
+$$
+\mathsf T(T',T)=\sum_{B:T\to T'}\frac{e^{-S_E(B)/\hbar}}{C(B)},
+\qquad
+Z_N(T_N,T_0)=\langle T_N|\mathsf T^N|T_0\rangle .
+\tag{191.4}
+$$
+Lorentz 振幅本身不提供概率律；正性和归一化必须外加。
+
+几何观测可取总体积、积分曲率和切片体积
+$$
+\mathcal V=\sum_\sigma V_n(\sigma),\qquad
+\mathcal R=\sum_hV_{n-2}(h)\delta_h,\qquad
+V(k)=\sum_{\sigma:t(\sigma)=k}V_n(\sigma).
+\tag{191.5}
+$$
+对偶图上的扩散还可定义谱维
+$$
+P_{\mathcal K}(\sigma)=\frac1{|V^*|}\sum_{x\in V^*}
+\langle x|e^{-\sigma\Delta_{\mathcal K}^*}|x\rangle,
+\qquad
+d_s(\sigma)=-2\frac{d\log P_{\mathcal K}}{d\log\sigma}.
+\tag{191.6}
+$$
+扩散步长、对偶权重、系综平均次序和边界均为外加；谱维流动不能代替亏角曲率。
+
+若 FIB 层级给出细化 \(q_{j+1,j}:\mathcal K_{j+1}\to\mathcal K_j\)，连续极限还需规定长度缩放、\(G_j,\Lambda_j\) 的重整化、测度和观测量推前。形式上的粗粒化权重
+$$
+e^{-S_j^{\rm eff}(\ell_j)/\hbar}
+=\int_{q_{j+1,j}(\ell_{j+1})=\ell_j}
+d\mu_{j+1}(\ell_{j+1})e^{-S_{E,R,j+1}(\ell_{j+1})/\hbar}
+\tag{191.7}
+$$
+没有这些条件就不定义连续 Einstein 方程或普适固定点。相同组合骨架可配不同度量、签名和系综，得到平直、因果传播、不同曲率涨落或不同相结构；FIB 本身不决定离散引力统计。
+
+## 192. FIB 网络上的外加超导 Ginzburg–Landau、磁通量子化、涡旋与 Josephson 统计
+
+FIB 图可提供顶点、边和可选环路；面胞腔、取向和填充关系仍需外加。令 \(B_0\) 为顶点到边的关联矩阵，\(B_1\) 为边到面胞腔的关联矩阵，满足 \(B_1B_0=0\)。对顶点序参量 \(\psi_v\in\mathbb C\)、边规范势 \(A_e\in\mathbb R\) 和耦合 \(q\)，定义
+$$
+(D_A\psi)_e=e^{-{\rm i}qA_e}\psi_{h(e)}-\psi_{t(e)},
+\qquad
+B_f=(B_1A)_f .
+\tag{192.1}
+$$
+规范变换
+$$
+\psi_v\mapsto e^{{\rm i}q\chi_v}\psi_v,\qquad
+A\mapsto A+B_0\chi
+\tag{192.2}
+$$
+保持 \(|D_A\psi|\) 和 \(B\) 不变。一个外加离散 Ginzburg–Landau 自由能为
+$$
+\mathcal F(\psi,A)
+=\sum_vw_v\left[\alpha(T)|\psi_v|^2+\frac\beta2|\psi_v|^4\right]
++\frac\kappa2\sum_ew_e|(D_A\psi)_e|^2
++\frac1{2\mu}\sum_fw_f(B_f-B_f^{\rm ext})^2 .
+\tag{192.3}
+$$
+系数、温度、磁场、边界和时间尺度不由 FIB 递归给出。可再选时间依赖梯度流；无电流边界、周期边界和 Josephson 接触会产生不同极小值与动力学。
+
+在 \(\psi_v\ne0\) 的区域写 \(\psi_v=|\psi_v|e^{{\rm i}\theta_v}\)。沿闭环 \(C\) 的紧致相位绕数满足
+$$
+\sum_{e\in C}(\theta_{h(e)}-\theta_{t(e)})=2\pi n_C,\qquad
+\sum_{e\in C}\varphi_e=2\pi n_C-q\Phi_C,
+\tag{192.4}
+$$
+其中 \(\varphi_e=\theta_{h(e)}-\theta_{t(e)}-qA_e\)，\(n_C\in\mathbb Z\)，\(\Phi_C\) 是外加面胞腔定义的环路磁通。在深 Meissner 区域协变相位梯度趋于零时，
+$$
+\Phi_C=n_C\Phi_0,\qquad \Phi_0=\frac{2\pi}{q}\quad(\hbar=1),
+\tag{192.5}
+$$
+物理单位下 Cooper 对给出 \(\Phi_0=h/(2e)\)。这要求紧致单值相位、闭环和没有零幅度路径；相位非紧致、环路开口或涡旋核心都会改变直接推导。故磁通量子化来自外加规范结构，不是 FIB 标签的内禀单位。
+
+涡旋由幅度压低和非零相位绕数共同定义。相干长度与穿透深度之比 \(\kappa_{\rm GL}=\lambda/\xi\) 由 GL 系数、规范耦合和离散谱决定；连续各向同性近似下 \(1/\sqrt2\) 分界只是在特定模型中的第一类/第二类判据。有限图、各向异性边权、外磁通和面面积会改变涡旋数、间距和钉扎位置。若两个顶点簇以弱耦合结相连，可另加
+$$
+\mathcal F_{J,e}=-E_{J,e}\cos\varphi_e,\qquad
+I_e=I_{c,e}\sin\varphi_e,\qquad
+\dot\varphi_e=\frac{2e}{\hbar}V_e .
+\tag{192.6}
+$$
+含电容、电阻、偏置和随机驱动的 RCSJ 方程可写成
+$$
+C_e\frac{\Phi_0}{2\pi}\ddot\varphi_e
++\frac{\Phi_0}{2\pi R_e}\dot\varphi_e
++I_{c,e}\sin\varphi_e
+=I_e^{\rm bias}+\eta_e(t).
+\tag{192.7}
+$$
+只有另加热浴温度和涨落—耗散关系时，\(\eta_e\) 才是热噪声；phase slip、Shapiro 台阶和电压分布依赖结参数、驱动、噪声和网络环路。
+
+若图列细化、面权和 \(\xi,\lambda\) 按外加规则缩放，(192.3) 可趋向连续二维或三维 GL 泛函；先取 \(q\to0\)、强阻尼或不同热力学极限会改变量子化、动力学和涡旋统计。振幅观测可以看见 \(|\psi|^2\) 却看不见环路绕数，稀疏电流观测也可能漏掉同调环路的磁通。因此正常态、Meissner 态、涡旋晶格、随机 Josephson 相滑移及其统计均是外加参数和边界条件下的模型结论，不存在由 FIB ATOM 递归单独确定的普适超导定律。
