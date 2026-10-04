@@ -5240,3 +5240,204 @@ whole-hole construction, under the actual shared phases and
 original numerical inventory. These are ordinary deductions
 from existing owner, private-hull and exchange results, without
 new enumeration or Lean verification.
+
+## 46. Five coprime active columns reduce to one equality boundary
+
+Keep the complete-hole setup of Sections 39--40: original ternary
+height two, exactly one retained actual lower per surviving slot
+other than $3$, and all active discarded lower and omitted top
+outputs in five slots
+
+$$
+n_i=3^{b_i}m_i,\qquad b_i\ge2,\qquad m_i>1,\quad m_i\mid M,
+\qquad(m_i,15)=1,\qquad(m_i,m_j)=1\quad(i\ne j).
+$$
+
+There is one active height per cofactor. Let $\ell\le5$ count
+active discarded lowers, $t\le5$ active tops, and $e$ the edges
+in the actual cross-color top-intersection graph. Isolated active
+tops count in $t$. The complete lower-plus-edge enclosure formula
+SC172 still holds. All its enclosures lie in the two unbought
+output ternary roots.
+
+### Original inventory, including the forced largest-prime child
+
+Report 385 Section 250 obtains $P\ge29$ by combining GHA10 with
+[Report 792](../750-799/792-optimal-fixed-leaf-weights-admit-the-complete1200-tail.md).
+GHA10 gives $P<135$. If at most eight support primes occurred,
+all would lie in Report 792's small-prime set and every original
+would satisfy its ternary-height bound two, contradicting its
+noncoverage conclusion. At least nine odd support primes force
+$P\ge29$. GHA10 alone supplies the upper bound and the forced
+labels, not this lower bound.
+
+Use Section 40's disjoint counts $N_3=c_1+c_2+t_P$. GHA10
+supplies the actual original $3P^{H_P}$, so $t_P\ge1$.
+NF66 says $c_1\ge P-1$ or $c_1+t_P\ge P$. Both alternatives
+therefore give
+
+$$
+N_3\ge P+c_2.
+\tag{SC211}
+$$
+
+For $t\ge1$, the same count as SC174 gives $c_2\ge3t$:
+the unit labels $9,45,225$ and three labels from every $P$-free
+top column are distinct, and at most one pairwise-coprime column
+contains $P$. Consequently
+
+$$
+N_3\ge P+3t\qquad(t\ge1).
+\tag{SC212}
+$$
+
+No original product column is counted. For $t=0$ the weaker
+existing $N_3\ge P-1$ already suffices below.
+
+### A complete repair for each intersection-graph shape
+
+Apply SC167 to all $\ell$ lower enclosures and all $e$ edge
+enclosures, and add $[0]_5$. This costs $1+3\ell+3e$ and
+leaves only their new root $[1]_5$. Complete it with pure labels
+$15,45$ and SC175.
+
+If all nonisolated top vertices are connected, edge compatibility
+propagates one actual residue $\gamma\pmod9$. Let $R$ be its
+first ternary root, and let $a,b$ count the lower enclosures in
+$R$ and the other unbought root. The two Section 40 choices
+leave at most $\min(b-1,a)$ lowers when $b>0$, and none when
+$b=0$. Since $a+b\le5$, at most two remain, all in one root.
+SC175 costs at most eight, hence
+
+$$
+c\le1+3\ell+3e+2+8\le26+3e.
+\tag{SC213}
+$$
+
+A simple bipartite graph on $t\le5$ vertices has
+$e\le\lfloor t^2/4\rfloor$. For $t\le4$ this gives
+$c\le26+3t<29+3t\le N_3$. For $t=5,e\le5$, it gives
+$c\le41<44\le N_3$. Only $e=6$ remains, forcing $K_{2,3}$.
+
+If there are two nontrivial components, their sizes are $2+2$
+(possibly with an isolated vertex) or $2+3$, so $e\le3$.
+Each component has a common actual modulo-9 phase. If their first
+roots differ, pure $15$ covers the root with at least half the
+lowers, and pure $45$ covers the entire other component; at most
+two lowers remain in that other root. If both components share
+$R$, either pure $15$ covers $R$ and pure $45$ one opposite
+lower, or pure $15$ covers the opposite root and pure $45$ the
+larger component. The smaller component has one edge. When
+$b>0$, at most $\min(b-1,a+1)\le2$ enclosures remain, all in
+one root; when $b=0$, the first choice leaves none. Thus
+
+$$
+c\le26+3e\le35<N_3,
+\tag{SC214}
+$$
+
+because $t\ge4$ gives $N_3\ge29+12=41$.
+
+If $e=0$, only lower enclosures need repair. Pure $15$ covers
+a largest root group. At most two lowers lie outside it; pure
+$45$ covers one, and at most one needs SC175's five-class packet.
+Thus $c\le1+15+2+5=23<N_3$. If there are no lowers either,
+$H$ is empty and no patch is needed.
+
+These graph cases are exhaustive. Every residual cofactor is a
+different singleton or edge product of the pairwise-coprime
+nonunits $m_i$. All remain $3,5$-free, so the Section 40
+distinctness proof applies to every patch. The entire enclosure
+union is covered, including all discarded lower service; the
+retained family stays fixed.
+
+### The only unpaid count boundary
+
+For $P\ge31$, even $K_{2,3}$ has $c\le44<46\le N_3$.
+For $P=29$, strict descent follows unless all of the following
+necessary conditions hold:
+
+$$
+\begin{gathered}
+\ell=t=5,\qquad G=K_{2,3},\qquad N_3=44,\qquad z=0,\\
+c_2=15,\qquad c_1+t_P=29,\qquad (a,b)=(2,3).
+\end{gathered}
+\tag{SC215}
+$$
+
+Indeed, $\ell\le4$ gives $c\le41$. With $\ell=5$, any
+root split other than $(2,3)$ leaves at most one residual lower,
+again giving $c\le41$. In the remaining case SC211--212 give
+$N_3\ge44$; if $N_3>44$ or $z>0$, the complete patch still
+strictly reduces the original class count.
+
+The equality $c_2=15$ forces exactly one top cofactor to contain
+$29$; otherwise the unit column and all five top columns give
+$c_2\ge18$. Each of the four $29$-free cofactors must be a
+prime. Any proper nonunit divisor would supply an additional
+$29$-free original height-two label, different from all counted
+columns by pairwise coprimality. The $29$-bearing cofactor must
+be a pure power of $29$, since another prime divisor would
+similarly supply an extra $29$-free column. Moreover every
+$b_i=2$, because any $b_i\ge3$ supplies the additional unit
+label $9\cdot5^3$. Up to reordering,
+
+$$
+(m_1,\ldots,m_5)=(q_1,q_2,q_3,q_4,29^h),\qquad
+b_i=2,
+\tag{SC216}
+$$
+
+where $h\ge1$ and the $q_i$ are distinct support primes other
+than $3,5,29$.
+
+### The lower phases are forced as well
+
+If two of the three outside-root lowers shared their modulo-9
+phase, the first pure-$15$/pure-$45$ choice would cover both
+with label $45$ and leave at most one residual, giving $c\le41$.
+If either inside-root lower had phase $\gamma$, the other
+choice would again leave at most one residual.
+
+If the two inside-root lowers instead shared a phase
+$\delta\ne\gamma$, complete their residual enclosures
+$[\eta_h]_{9h}$ with seven classes. Use the shared classes
+
+$$
+[1]_{25},\qquad [6]_{25}\cap[R]_3,\qquad
+[11]_{25}\cap[\delta]_9,
+$$
+
+with labels $25,75,225$. For each of the two distinct nonunit
+cofactors $h$, use
+
+$$
+[16]_{25}\cap[\eta_h]_h,\qquad
+[21]_{25}\cap[\eta_h]_{3h},
+$$
+
+with labels $25h,75h$. All five children of $[1]_5$ are covered;
+the common phase $\delta$ makes the third child valid for both
+enclosures. The seven labels are distinct by their 3-valuations
+and $3,5$-free cofactors, and are fresh at 5-depth two. This
+gives $c\le34+2+7=43<N_3$.
+
+Thus the two inside-root lowers occupy exactly the two children
+other than $\gamma$, and the three outside-root lowers occupy
+all three children of that root. If the bought root is $S=[s]_3$,
+the five lower phases must be
+
+$$
+\{\alpha_i\bmod9:1\le i\le5\}
+=\{v\bmod9:v\not\equiv s\pmod3,\ v\ne\gamma\pmod9\}.
+\tag{SC217}
+$$
+
+At the remaining boundary SC215--217 the proved comparison is
+only $c\le N_3$ with $z=0$. This supplies neither strict
+class-count descent nor a modulus-sum descent. It does not show
+that the boundary is realizable or impossible, and $44$ is an
+upper bound for this construction, not a lower bound for all
+repairs. The construction uses the existing source packets and
+inventory bounds; it adds no Lean verification or enumeration,
+and the unrestricted problem remains unresolved.
