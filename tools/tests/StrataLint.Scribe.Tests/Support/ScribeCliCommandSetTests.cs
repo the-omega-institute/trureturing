@@ -13,7 +13,7 @@ public sealed class ScribeCliCommandSetTests
         var assembly = typeof(ScribeCli).Assembly;
         Assert.NotNull(assembly.EntryPoint);
         using var error = new StringWriter();
-        Assert.Equal("StrataLint.Scribe.Program", assembly.EntryPoint.DeclaringType!.FullName);
+        Assert.Equal("StrataLint.Scribe.ScribeProgram", assembly.EntryPoint.DeclaringType!.FullName);
     }
 
     [Fact]
