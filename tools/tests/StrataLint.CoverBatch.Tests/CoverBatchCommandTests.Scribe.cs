@@ -9,10 +9,62 @@ public sealed partial class CoverBatchCommandTests
     private const string ProblemPath = "Problems/batch-problem.md";
     private const string FrozenPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ScriptBatchExecutesAndEmitsOnlyChangedDefinitions(bool definitionChanged)
+    {
+        const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        using var world = new BatchWorld(targetUnchanged: true)
+        {
+            UseGitReader = true,
+            ChangedPaths = definitionChanged ? [target] : [],
+        };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, target, definitionChanged ? """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Probe"), Blocks(Paragraph(Text("body")))));
+            }
+            """ : "invalid C#");
+        world.KeepAtBaseline("Blueprint/D5/S0/Carrier/Probe.md");
+        if (!definitionChanged) world.KeepAtBaseline(target);
+        world.WriteReportBundle();
+        var markdown = Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md");
+        var before = File.ReadAllBytes(markdown);
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid), scripts: true);
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(definitionChanged, !before.AsSpan().SequenceEqual(File.ReadAllBytes(markdown)));
+        Assert.Equal(definitionChanged, result.Output.Contains("Blueprint/D5/S0/Carrier/Probe.md", StringComparison.Ordinal));
+        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ScriptBatchVerifiesChangedInvalidDefinition()
+    {
+        const string target = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
+        using var world = new BatchWorld(targetUnchanged: true) { UseGitReader = true, ChangedPaths = [target] };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, target, "invalid C#");
+        world.WriteReportBundle();
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid), scripts: true);
+
+        Assert.False(result.Success);
+        Assert.All(Results(result), item => Assert.Contains("Compilation:", item.Reason, StringComparison.Ordinal));
+        Assert.Empty(world.Entry(First).Coverage);
+        Assert.Empty(world.Entry(Second).Coverage);
+    }
+
     [Fact]
     public void ScriptBatchEmitsAndVerifiesRequestedDefinitionsWithoutFullResources()
     {
-        using var world = new BatchWorld { UseGitReader = true };
+        using var world = new BatchWorld { UseGitReader = true, ChangedPaths = ["Blueprint/D5/S0/Carrier/Probe.scribe.cs"] };
         WriteEmissionInputs(world.Root);
         WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Probe.scribe.cs", """
             using StrataLint.Scribe;
