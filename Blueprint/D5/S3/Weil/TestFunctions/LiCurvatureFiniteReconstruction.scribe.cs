@@ -1,10 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.Blueprint.D5.S3.Zeros.ActualZeroGeometryDocument;
 using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Weil.TestFunctions.LiCurvatureFiniteReconstructionFormula;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.TestFunctions;
 
-[ScribeSharedSource("Blueprint/D5/S3/Zeros/ActualZeroGeometry.scribe.cs")]
 internal sealed class LiCurvatureFiniteReconstructionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.";
@@ -116,4 +115,23 @@ internal sealed class LiCurvatureFiniteReconstructionDocument : IScribeDocumentD
                                     U(Call("NatSub", N, Num(1)))),
                                     Multiply(Multiply(Num(2), Id("L")), Call("re", C(N)))))),
                                 body)))))))));
+}
+
+internal static class LiCurvatureFiniteReconstructionFormula
+{
+    internal static Formula Complex => F.Seq(F.Mathbb, F.Grp(F.Id("C")));
+    internal static Formula Real => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+    internal static Formula Natural => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    internal static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Exists(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    internal static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    internal static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    internal static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    internal static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
+    internal static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    internal static Formula Abs(Formula a) => new Formula.Absolute(a);
+    internal static Formula Function(Formula domain, Formula range) => F.Seq(domain, F.To, range);
 }
