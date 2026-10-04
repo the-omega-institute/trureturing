@@ -18078,3 +18078,533 @@ $$
 其中 \(H\) 是报告通道，\(D_v\) 是成熟、降解和曝光响应核，\(\varepsilon\) 是测量噪声。只用稳态均值、单次命运比例或终点测序，无法唯一区分快速开关、慢表观记忆、细胞异质性和检测延迟；需要时间分辨的谱系追踪、脉冲—追踪、同时测量表观标记或登记的调控干预。
 
 因此，FIB ATOM 递归在基因调控问题中只提供候选调控关系、组合路径、接缝和层级骨架；开关速率、调控符号、染色质写入/擦除、分裂继承、参数分布、噪声联合实现、命运吸收集合、首达极限和观测响应均须外加。开关稳态、记忆时间、细胞命运比例、首达时间尾部、姐妹相关和群体过度离散，只有在这些生物动力学与观测条件明确后才是条件统计规律。
+
+
+## 248. FIB 复形上的外加晶体位错、塑性流动与雪崩统计
+
+固定一族由 FIB ATOM 递归得到的有限复形 \(K_j\)，其链群和边界算子记为
+
+$$
+C_2(K_j)\xrightarrow{\partial_2}C_1(K_j)\xrightarrow{\partial_1}C_0(K_j),
+\qquad \partial_1\partial_2=0 .
+\tag{248.1}
+$$
+
+顶点、边和面可以被外加模型解释为晶格节点、候选滑移段和面元，但 FIB 只给组合邻接、取向、接缝和层级。把复形嵌入物理空间需要另给 \(\iota_j:|K_j|\to\mathbb R^d\)、边长和面面积；晶格平移群、晶格间距、材料标架、时间、温度、载荷和边界也都不由递归关系决定。图上有闭路不自动等于物理位错环，图距离也不自动等于位错线长度。
+
+对每个外加滑移系 \(\mu\)，给定 Burgers 向量 \(b_\mu\)、滑移面法向 \(n_\mu\) 和方向 \(s_\mu\)。把有向位错段编码为整数一链 \(J_\mu\in C_1(K_j;\mathbb Z)\)。没有体内源汇时必须有
+
+$$
+\partial_1J_\mu=0,
+\tag{248.2}
+$$
+
+即位错线在内部组成闭环或非平凡一同调类；表面逸出、位错源、沉淀钉扎或外加断链可在右端加入源项。FIB 的边界算子能表达这种组合守恒，却不提供源项是否存在、能量代价或边界吸收律。位错反应还需外加 Burgers 守恒；攀移需要空位或间隙原子通量，不能从一条图路径推出。
+
+若每条允许滑移边带有滑移量 \(\gamma_{\mu,e}\)，外加塑性畸变可写为
+
+$$
+\beta^p_e=\sum_\mu\gamma_{\mu,e}\,b_\mu\otimes n_\mu,
+\qquad
+\alpha_f=\sum_{e\in\partial_2f}\varepsilon_{fe}\,\beta^p_e .
+\tag{248.3}
+$$
+
+只有给定物理嵌入、单位和材料标架后，\(\alpha_f\) 才能解释为位错密度张量。不同 Burgers 格子或同一复形的不同嵌入，可以给出相同 \(J_\mu\) 而不同的位错密度、环量与拓扑扇区。
+
+应力场必须由外加本构和边界求出。在线性小变形近似下，连续模型满足
+
+$$
+\sigma=C:(\nabla u-\beta^p),
+\qquad \nabla\!\cdot\sigma=0,
+\tag{248.4}
+$$
+
+而位错线方向 \(\xi_\ell\) 上的 Peach–Koehler 力和滑移分解为
+
+$$
+F_\ell=(\sigma b_\ell)\times\xi_\ell,
+\qquad
+\tau_\ell=s_\ell\cdot\sigma n_\ell .
+\tag{248.5}
+$$
+
+弹性张量、泊松比、各向异性、核心能、长程 Green 核和边界柔度均不由 FIB 给出；同一邻接在不同嵌入下可把同一路径变成易滑移或受阻方向。
+
+把滑移幅度作为坐标后，外加应力重分配可写成
+
+$$
+\tau_\ell=\tau_\ell^{\rm ext}+\sum_mG_{\ell m}\,\Delta\gamma_m,
+\qquad
+\dot\gamma^p=\sum_\ell\rho_\ell b_\ell v_\ell .
+\tag{248.6}
+$$
+
+核 \(G\) 由弹性、边界和核心正则化决定，可含长程、各向异性和非对称像；FIB 局部接缝不决定它的衰减、符号或是否存在远程耦合。
+
+热激活滑移可用
+
+$$
+ r_\ell^{\pm}=\nu_\ell\exp[-\beta\Delta G_\ell^{\pm}(\tau_\ell,\tau_{c,\ell})]
+\tag{248.7}
+$$
+
+表示，势垒、尝试频率、Peierls 阈值、热浴解释、交滑移和攀移规则都须外加。固定障碍场后演化再平均属于淬火统计，把障碍更新并入跃迁核则是退火统计，二者在稀有事件和长时间极限下通常不同。
+
+在准静态驱动中，一次内部连锁定义为雪崩 \(\mathcal A\)，可取
+
+$$
+S(\mathcal A)=\sum_{\ell\in\mathcal A}w_\ell|\Delta\gamma_\ell|,
+\qquad
+T(\mathcal A)=t_{\rm end}-t_{\rm start},
+\qquad
+\Delta\Sigma=\Sigma_{\rm before}-\Sigma_{\rm after} .
+\tag{248.8}
+$$
+
+权重、事件合并规则和时间窗必须预先给定。若外加无序和弹性核使系统接近临界流动点，才可写候选有限尺寸形式
+
+$$
+P(S\mid L)=S^{-\tau}f\!\left(S/S_c(L)\right),
+\qquad S_c(L)\asymp L^{d_f},
+\qquad T_c(L)\asymp L^z .
+\tag{248.9}
+$$
+
+指数 \(\tau,d_f,z\) 取决于应力核、空间维数、无序相关、加载控制、边界和热噪声；它们不是 FIB 递归的普适输出。有限复形只能产生有限截止，单一双对数直线不能证明无限系统的临界幂律。
+
+闭环位错可在不改变总 Burgers 荷的条件下收缩、扩张或湮灭；非平凡同调类、表面钉扎或禁止交滑移可能阻止局部湮灭，使应力释放转为跨层级事件。相同边数和局部度数的两个图列，若一个有不可收缩环而另一个是树，可能有完全不同的屈服和雪崩尾部；相同复形在不同晶格、弹性和障碍分布下也可从平滑流动变成宽尾间歇流。
+
+声发射、局部位移、晶体取向或总应力只是潜在雪崩的观测投影：
+
+$$
+Y_a=Q_a\bigl(S,T,\Delta\Sigma,\{\Delta\gamma_\ell\},\alpha\bigr)+\eta_a .
+\tag{248.10}
+$$
+
+传感器带宽、阈值、空间卷积和时间采样会改变估计的 \(\tau\)。本节的雪崩来自位错滑移、位错反应和弹性应力重分配，不把断键、裂纹开口或接触网络刚化当作同一机制。
+
+因此，FIB ATOM 递归在晶体塑性问题中只提供复形边界关系、候选滑移路径、环路和层级骨架；Burgers 格子、三维嵌入、滑移系、弹性本构和长程应力核、核心能、位错源汇、障碍无序、温度、加载协议、边界、事件定义、观测投影以及图列极限均须外加。屈服应力、塑性流动曲线、位错密度演化和雪崩分布都是指定外加模型后的条件统计。
+
+## 249. FIB 细胞复形上的外加脂质膜曲率、融合颈、拓扑重连与相分离斑块统计
+
+固定由 FIB ATOM 递归关系给出的有限二维细胞复形 \(K_j=(V_j,E_j,F_j;\partial_1,\partial_2)\)。把几何实现、膜的材料参数和时间演化另行记为外加数据：令 \(X_t:|K_j|\to\mathbb R^3\) 是分片光滑嵌入，\(\Sigma_t=X_t(|K_j|)\) 为膜中面，\(g_t,H_t,K_{G,t}\) 分别为诱导度量、平均曲率和高斯曲率。FIB 给出面、边、顶点的邻接和候选局部接缝；它本身不指定嵌入、长度、面积、法向、曲率或膜的物理时间。
+
+令 \(\mathcal P_t=\{P_{t,i}\}\) 为膜上的相分离斑块，\(\Gamma_t=\bigcup_i\partial P_{t,i}\) 为相界线。斑块面积、边界长度和内部拓扑为
+
+$$
+A_{t,i}=\int_{P_{t,i}}{\rm d}A_t,
+\qquad
+L_{t,i}=\operatorname{length}_{g_t}(\partial P_{t,i}),
+\qquad
+\chi_{t,i}=\chi(P_{t,i}).
+\tag{249.1}
+$$
+
+一个给定几何和材料模型下的局部 Helfrich—线张力能量可写成
+
+$$
+\begin{aligned}
+\mathcal E_t[\Sigma,\mathcal P]
+&=\int_{\Sigma_t}\left[\frac{\kappa(\phi)}2(2H-C_0(\phi))^2
++\bar\kappa(\phi)K_G+\sigma\right]{\rm d}A_t\\
+&\quad+\sum_{\Gamma\subset\Gamma_t}\lambda_\Gamma\operatorname{length}_{g_t}(\Gamma)
++E_{\rm adh}+E_{\rm constraint} .
+\end{aligned}
+\tag{249.2}
+$$
+
+弯曲模量、Gaussian 模量、自发曲率、膜张力、线张力、黏附、面积和体积约束均为外加量。即便闭合光滑曲面满足 Gauss–Bonnet 关系，存在边界、孔洞、相界折线或空间变化的 \(\bar\kappa\) 时也会出现额外边界与材料界面贡献，不能仅用一个整数替代。
+
+给定嵌入后可在 FIB 面上定义曲率测度，例如
+
+$$
+\mu_H(B)=\frac1{\sum_fA_f}\sum_{f\in F_j}A_f\mathbf 1_{\{H_f\in B\}},
+\qquad
+\mu_K(B)=\frac1{\sum_fA_f}\sum_{f\in F_j}A_f\mathbf 1_{\{K_{G,f}\in B\}} .
+\tag{249.3}
+$$
+
+只给 \(K_j\) 时，连 \(A_f,H_f,L_{t,i}\) 都没有定义；这些量只能在指定嵌入和度量后读取。拓扑重连需另给允许的手术映射：FIB 面—边接缝可以枚举候选边界对，但两个边界能否在三维中相遇并发生膜融合是外加几何和化学判据。
+
+对局部候选手术 \(r\)，从膜面删去两个小圆盘并插入半径为 \(a\)、长度为 \(\ell_r\) 的融合颈，可有反应坐标能量
+
+$$
+U_r(a)=\sigma A_r^{\rm new}(a)+\lambda_rL_r(a)
++\frac{\kappa_r}{2}\int_{N_r(a)}(2H-C_{0,r})^2{\rm d}A
++\Delta E_{G,r}+U_{{\rm adh},r}(a).
+\tag{249.4}
+$$
+
+系数和颈形状随边界条件改变；它只显示曲率、张力、线张力和黏附如何共同进入障碍，并非由 FIB 递归推出的定律。给定外加阻尼、尝试频率和温度，Kramers 型速率可写成
+
+$$
+k_r=\nu_r\exp[-\beta\Delta U_r^\ddagger],
+\qquad
+\Delta U_r^\ddagger=\inf_{a(\cdot)}\left[\max_sU_r(a(s))-U_r(a_0)\right].
+\tag{249.5}
+$$
+
+若候选手术条件独立，融合时间尾为
+
+$$
+\Pr(T_{\rm fus}>t)=\exp\!\left[-\int_0^t\sum_rk_r(s){\rm d}s\right],
+\tag{249.6}
+$$
+
+相互作用、面积耗散、颈记忆或非马尔可夫噪声会改变此式，FIB 只给出候选 \(r\) 的组合索引，不给出速率或历史核。
+
+若每次手术后仍得到可定向闭合复形，Euler 示性数为 \(\chi=|V|-|E|+|F|\)，并可在无边界、连通、可定向时写成 \(\chi=2-2g\)。融合、裂变、打孔和孔闭合分别给出不同的 \(\Delta\chi\)，斑块数也可能随颈的连通性改变。给定外加跳变生成元 \(Q\)，拓扑类型和斑块数的联合分布由
+
+$$
+\partial_tp_t(\mathbf n)=\sum_r\left[p_t(\mathbf n-\nu_r)q_r(\mathbf n-\nu_r)-p_t(\mathbf n)q_r(\mathbf n)\right]
+\tag{249.7}
+$$
+
+决定；速率 \(q_r\) 是材料、几何和噪声指定后的量。单一手术计数的 Poisson 生成函数只在独立非齐次假设下成立。
+
+存在直接的观测不可识别性。完整参数 \(\vartheta=(X_t,g_t,\kappa,\bar\kappa,C_0,\sigma,\lambda,T,\nu,q,\text{边界与观测投影})\) 的不同取值可以保留相同 FIB 面—边—顶点关联与斑块计数，却给出不同曲率、融合时间和拓扑跳变统计。例如同一可平面嵌入的复形可以实现为平面片或圆柱片，保持离散边长与面积读数而具有不同平均曲率；改变 \(C_0,\kappa\)、黏附势或颈阻尼即可改变融合率。仅看斑块边界图也无法判定局部手术是膜融合、孔闭合还是两相界线的暂时接触。
+
+因此，本节的条件链是：FIB 提供细胞复形的组合邻接、路径和候选接缝；外加嵌入与度量提供面积、法向和曲率；Helfrich 模量、自发曲率、张力、线张力、黏附和约束提供能量；温度、阻尼、噪声和手术核提供融合颈动力学；初始测度、边界和观测映射提供曲率、拓扑及斑块统计。没有这组外加结构，不能从 FIB 单独推出膜曲率分布、融合时间尾、拓扑重连频率或相分离斑块联合律。
+
+## 250. FIB 网络上的外加离子通道随机门控、膜电噪声与放电首达统计
+
+固定一族有限 FIB 合法图 \(G_j=(V_j,E_j)\)。顶点可在外加模型中解释为膜片段、轴突区室或离子通道簇，边可解释为轴向电耦合候选；FIB ATOM 递归只提供组合支撑、可行路径、分支、接缝与层级索引。电容、膜面积、离子种类、反转电位、通道数、门控速率、电压嵌入、外加电流、空间耦合、温度、边界、初态和探测器均须另行给定。本节研究局部门控随机性和有限区室首达事件，不把第231节的整体脉冲神经元网络动力学当作递归内含量。
+
+对 \(v\in V_j\) 及通道类型 \(c\)，令单个通道门状态为 \(S_{v,c,k}(t)\in\{0,\ldots,m_c\}\)。在给定膜电压 \(V\) 时，门状态是外加连续时间 Markov 链，生成矩阵满足
+
+$$
+Q_{v,c}(V)=(q^c_{rs}(V)),
+\qquad q^c_{rs}(V)\ge0\ (r\ne s),
+\qquad q^c_{rr}(V)=-\sum_{s\ne r}q^c_{rs}(V).
+\tag{250.1}
+$$
+
+FIB 边只限制哪些门控变量可以通过外加耦合共同进入速率；它不决定生成矩阵的非零位置、数值或是否满足详细平衡。二态门 \(C\rightleftarrows O\) 的开闭速率为 \(\alpha_c(V),\beta_c(V)\) 时，
+
+$$
+p_{\infty,c}(V)=\frac{\alpha_c(V)}{\alpha_c(V)+\beta_c(V)},
+\qquad
+\tau_{g,c}(V)=\bigl(\alpha_c(V)+\beta_c(V)\bigr)^{-1},
+\tag{250.2}
+$$
+
+而 \(N_{v,c}\) 个独立门的开态分数协方差为
+
+$$
+\operatorname{Cov}(X_{v,c}(t),X_{v,c}(0))
+=\frac{p_{\infty,c}(1-p_{\infty,c})}{N_{v,c}}e^{-|t|/\tau_{g,c}}.
+\tag{250.3}
+$$
+
+同一稳态开态比例可由共同缩放的开闭速率产生，但时间尺度和噪声谱不同；多态门则给出多个衰减模态。
+
+令外加区室电压满足
+
+$$
+C_v\,dV_v=\Big[I_v^{\rm ext}(t)-g_{L,v}(V_v-E_L)
+-\sum_c\bar g_{v,c}X_{v,c}(t)(V_v-E_{v,c})
++\sum_{u:(u,v)\in E_j}G_{uv}(V_u-V_v)\Big]dt
++dJ_v(t)+\sigma_v(V)\,dW_v(t).
+\tag{250.4}
+$$
+
+电容、电导、反转电位、轴向耦合、事件跳跃和连续噪声均为外加量；把门状态替换成均值只是大通道数或时间尺度分离下的附加近似。若离子事件时刻为 \(T_{v,r}\)、幅度为 \(A_{v,r}\)，复合 Poisson 电流可写成
+
+$$
+J_v(t)=\sum_rA_{v,r}\delta(t-T_{v,r}),
+\qquad
+\mathbb E\,dJ_v=\lambda_v\mathbb E[A_v]dt,
+\qquad
+\operatorname{cum}_k(dJ_v)=\lambda_v\mathbb E[A_v^k]dt.
+\tag{250.5}
+$$
+
+膜电容把单事件卷积为冲激响应；只保留二阶矩时，高斯噪声与复合 Poisson 噪声可能给出相同低阶读数，却在偏度、峰度和稀有首达事件上不同。
+
+定义阈值 \(\Theta_v\) 与安全边界 \(L_v<\Theta_v\)，放电首达时间为
+
+$$
+T_{j,v}=\inf\{t\ge0:V_v(t)\ge\Theta_v\},
+\qquad
+\tau_{j,v}=\inf\{t\ge0:V_v(t)\notin(L_v,\Theta_v)\}.
+\tag{250.6}
+$$
+
+联合状态 \((V,S)\) 的生成元包含漂移、扩散、门控跳变和 shot-noise 跳跃：
+
+$$
+\mathcal Lf=b_s(V)\partial_Vf+\frac12a_s(V)\partial_V^2f
++\sum_{s'}Q_{ss'}(V)[f(V,s')-f(V,s)]
++\lambda(V)\int[f(V+y,s)-f(V,s)]\mu_V(dy).
+\tag{250.7}
+$$
+
+首达概率满足 \(\mathcal Lh=0\)，有限均值满足 \(\mathcal Lm=-1\)，边界条件由阈值、重置和竞争命运另行给定。门控速率、事件强度和电压反馈通过整个联合边值问题进入首达分布，而非只通过平均膜电流进入。
+
+在外加亚阈值周期电流下，若有效势垒为 \(\Delta U(A)\)，扩散近似的稀有逃逸率可写成
+
+$$
+r(D,A)\simeq r_0(A)\exp[-\Delta U(A)/D].
+\tag{250.8}
+$$
+
+随机共振候选峰可由 \(r(D_*)\pi/\omega\asymp1\) 定义。改变通道数会改变门控噪声幅度，改变开闭速率会改变噪声颜色，改变事件幅度分布会改变非高斯尾部；没有周期协议、噪声参数和响应定义，就没有唯一的最佳噪声。
+
+若条件风险率近似恒定为 \(r\)，则 \(\Pr(T>t)\simeq e^{-rt}\)。状态依赖门控、阈值反馈和慢门会使风险率随历史变化；若区室参数 \(\vartheta\) 随机，边缘化后
+
+$$
+\Pr(T>t)=\int e^{-r(\vartheta)t}\,\rho(d\vartheta)
+\tag{250.9}
+$$
+
+可产生多指数或长时间近似幂律尾。混合测度是外加的淬火/退火选择，不能误认成 FIB 递归的普适幂律。
+
+实际电生理读数是隐藏电压与门状态的投影：
+
+$$
+Y_a(t)=\sum_{v\in V_j}H_{av}\int_0^\infty D_v(s)V_v(t-s)\,ds+\eta_a(t).
+\tag{250.10}
+$$
+
+端口矩阵、响应核、阈值滞回、采样间隔和事件检测延迟均会改变读到的首达时间。相同的稳态平均电流或单点功率谱可由快门控小通道数、慢门控大通道数或不同 shot-noise 幅度实现，因而不能仅凭投影读数识别门控机制。
+
+因此，FIB ATOM 递归在离子通道问题中只提供可组合的膜区室、允许耦合、路径、接缝和层级骨架；门状态空间、Markov 生成矩阵、膜电容与电导、反转电位、噪声联合实现、周期驱动、阈值/重置边界、首达极限和观测投影均须外加。开态分布、门控相关时间、shot-noise 高阶累积量、随机共振峰、放电首达时间及其尾部，只有在这些条件明确后才是模型统计结论。
+
+
+## 251. FIB 网络/复形上的外加电池离子沉积、枝晶形貌与短路失效统计
+
+固定由 FIB ATOM 递归给出的有限复形
+
+$$
+C_2(K_j)\xrightarrow{\partial_2}C_1(K_j)\xrightarrow{\partial_1}C_0(K_j),
+\qquad \partial_1\partial_2=0,
+\tag{251.1}
+$$
+
+并指定代表负极、正极和隔膜的边界子集 \(B_-,B_+,B_s\)。复形的面、边和顶点可以在外加模型中解释为电极—电解质界面片、候选成核接缝、枝晶可占据单元或电流收集节点；FIB 只提供组合邻接、定向路径、边界接缝和层级索引。物理嵌入、长度、面积、法向、孔隙体积、晶面取向、金属体积分数、时间单位、温度、初始界面和电池边界均须另加。图上的一条路径不自动是三维中的枝晶，图的度数也不自动是尖端曲率或电场增强因子。
+
+本节只研究给定界面附近的沉积、形貌失稳、随机成核和贯通失效；体相浓度与电势若需要，视为由外加边界值或其他模型先行给出，不重复第197节的体输运。令 \(\eta_e(t)\) 为候选界面单元的有效过电位，可写为
+
+$$
+\eta_e=\phi_{s,e}-\phi_{\ell,e}-E_{{\rm eq},e}(c_e,T)
+-\frac{\Omega_e}{zF}\bigl(\gamma_e\kappa_e+\sigma_{n,e}\bigr)-\eta_e^{\rm ohm} .
+\tag{251.2}
+$$
+
+若局部反应服从给定的电荷转移律，净沉积通量为
+
+$$
+J_e^{\rm dep}=\frac{j_{0,e}}{zF}\left[
+\exp\!\left(\frac{\alpha_{a,e}zF\eta_e}{RT}\right)
+-\exp\!\left(-\frac{\alpha_{c,e}zF\eta_e}{RT}\right)\right].
+\tag{251.3}
+$$
+
+交换电流、转移系数、活度、温度、界面能、应力耦合和膜层降落都不是 FIB 内容。尖端若因外加几何和电场边值获得较大过电位，可能比平坦段更快沉积；但尖端及其场增强本身不能从组合路径推出。
+
+给定有效化学驱动力 \(\Delta\mu_e=zF\eta_e\)，随机成核可由条件强度表示为
+
+$$
+\lambda_e(t)=a_e\nu_e\exp\!\left[-\beta\Delta G_{*,e}
+(\Delta\mu_e,\gamma_e,\theta_e,\sigma_{n,e})\right].
+\tag{251.4}
+$$
+
+在各向同性三维毛细近似下，一个仅供说明的势垒为
+
+$$
+\Delta G_{*,e}=\frac{16\pi\gamma_e^3}{3(\Delta\mu_e)^2},
+\tag{251.5}
+$$
+
+有限晶面、应力、SEI 缺陷、二维成核或离散单元会改变系数和幂次。固定缺陷场、温度场和局部电势后，这可以是条件 Poisson 过程；把这些场视为随机慢变量后，成核是 Cox 过程，计数协方差包含强度场的联合协方差。相同的平均成核率可以对应独立成核、空间簇发或长记忆成核。
+
+界面形貌的尖端不稳定需要在外加嵌入上定义扰动。对局部坐标写
+
+$$
+h(x,t)=h_0(t)+\sum_q a_q(t)e^{{\rm i}qx},
+\qquad
+\dot a_q=\omega(q;\eta,D,\gamma,k_s,\ldots)a_q+\xi_q(t).
+\tag{251.6}
+$$
+
+只有当某个波数带满足 \(\operatorname{Re}\omega(q)>0\) 时扰动才放大；最强模态、尖端半径和速度由各向异性界面能、动力学、供给、应力和边界联合决定。图上离散化可写成
+
+$$
+\dot{\mathbf h}=\mathsf A(\eta,\vartheta)\mathbf h
+-\mathsf\Gamma(\vartheta)L^{(w)}\mathbf h+\boldsymbol\xi,
+\tag{251.7}
+$$
+
+但加权图拉普拉斯、系数矩阵和谱均依赖外加权重、嵌入、晶面和边界；相同组合复形可嵌入成平滑平板而稳定，也可嵌入成尖角电极而进入枝晶失稳。
+
+令 \(\mathcal D_t\) 表示已沉积单元，给定附着、脱附、表面扩散和溶解规则，边界单元的跳变率可写为
+
+$$
+r_e^+=k_e^+g_e(\eta_e,\kappa_e,\sigma_{n,e},c_e,\mathcal N_e(\mathcal D_t)),
+\qquad
+r_e^-=k_e^-h_e(\eta_e,\kappa_e,\sigma_{n,e},\mathcal N_e(\mathcal D_t)).
+\tag{251.8}
+$$
+
+这里 \(\mathcal N_e\) 只表示由 FIB 邻接筛出的候选邻域；函数、晶向依赖和邻居协同性是外加的。由此可以产生紧致层、枝状团簇或反复溶解—再沉积。可记录质量、最大枝高和分支数
+
+$$
+M_t=\sum_{v\in\mathcal D_t}w_v,
+\qquad
+H_t=\max_{v\in\mathcal D_t}d(v,B_-),
+\qquad
+B_t=\#\{e\in\partial\mathcal D_t:r_e^+>r_e^-\},
+\tag{251.9}
+$$
+
+其中权重、物理距离和事件阈值全部外加；有限复形的截断不能证明无限尺度的普适分形指数。
+
+枝晶贯通首先是组合事件：
+
+$$
+\tau_{\rm span}=\inf\{t:\exists\ \pi\subseteq\mathcal D_t,
+\ \pi:B_-\rightsquigarrow B_+\}.
+\tag{251.10}
+$$
+
+但几何相遇不等于电气短路。对候选路径 \(\pi\)，外加电阻和 SEI 接触给出
+
+$$
+R_\pi(t)=\sum_{e\in\pi}\frac{\rho_e\ell_e}{A_e}+R_{{\rm SEI},\pi}(t),
+\qquad
+\mathcal F_t=\{\exists\pi:B_-\rightsquigarrow B_+,\ R_\pi\le R_{\rm crit},\ I_\pi\ge I_{\rm crit}\},
+\tag{251.11}
+$$
+
+真正的短路时间是 \(\tau_{\rm sc}=\inf\{t:\mathcal F_t\text{ 发生}\}\)。长度、面积、电阻率、保护膜、阈值以及接触是否导通都由外加材料和电路决定；同一路径可以只产生几何贯通，也可以直接触发电流跃迁。
+
+在有 \(N\) 个电芯或循环时，令 \(T_m=\tau_{\rm sc}^{(m)}\)，共享参数为 \(\Theta\)。条件独立时
+
+$$
+\Pr(T_{\min}^{(N)}>t\mid\Theta)=\prod_{m=1}^NS_m(t\mid\Theta),
+\qquad
+\Pr(T_{\min}^{(N)}>t)=\mathbb E\left[S(t\mid\Theta)^N\right],
+\tag{251.12}
+$$
+
+一般不等于 \((\mathbb ES(t\mid\Theta))^N\)。共同温度、充电协议、压力或批次缺陷会改变最小首失效尾部；枝高、分支质量和局部电流的极值类也不能仅凭一张 FIB 图确定。
+
+显微图、原位 X 射线、端电压和短路电流都是隐藏沉积过程的投影。两种模型可以有相同容量衰减和端电压，却分别由许多短枝或少数贯通枝造成；同一 FIB 复形也可在不同嵌入、晶面能和过电位协议下产生不同形貌。因此，单一质量曲线、一次短路时间或几何路径计数不足以识别枝晶机制。
+
+因此，FIB ATOM 递归在电池沉积问题中只提供界面复形的组合邻接、候选成核接缝、枝晶可行路径、边界分类和层级骨架。过电位、界面平衡、尖端场增强、曲率与应力耦合、成核势垒、附着—溶解核、表面扩散、噪声联合律、几何嵌入、晶面各向异性、SEI 电阻、贯通阈值、充放电协议、样品异质性、极值极限和观测投影均须外加。给定这些结构后，才能得到成核率、枝晶分支形貌、贯通时间和短路首失效分布；不存在由 FIB 递归单独推出的普适电池枝晶统计定律。
+
+## 252. FIB 网络上的外加连续量子测量、量子轨迹与测量诱导相变统计
+
+固定 FIB 图族或细胞复形的组合支撑 \(G_j=(V_j,E_j)\)。为使它成为量子测量模型，另给每个顶点或胞腔的 Hilbert 空间、局部和边界相互作用、初态以及测量装置。FIB ATOM 递归只给出可组合的支撑、邻接、路径、接缝与层级索引；Hilbert 空间维数、算符、时间单位、测量效率、记录噪声、反馈和极限方案均为外加。本节不重复第234节的无条件 Lindblad 信道和谱隙结论。
+
+对一个时间步，测量结果 \(r\) 对应 Kraus 算子 \(M_{a,r}\)，满足
+
+$$
+\sum_rM_{a,r}^\dagger M_{a,r}=I,
+\qquad
+p(r\mid\rho)=\operatorname{Tr}(M_{a,r}\rho M_{a,r}^\dagger),
+\qquad
+\rho\mid r=\frac{M_{a,r}\rho M_{a,r}^\dagger}{p(r\mid\rho)}.
+\tag{252.1}
+$$
+
+若记录时刻之间施加外加幺正 \(U_n\)，记录 \(\omega=(r_1,\ldots,r_n)\) 的未归一化状态为
+
+$$
+\widetilde\rho_{\omega,n}=K_{\omega,n}\rho_0K_{\omega,n}^\dagger,
+\qquad
+K_{\omega,n}=M_{a_n,r_n}U_n\cdots M_{a_1,r_1}U_1,
+\tag{252.2}
+$$
+
+其 Born 权重为 \(p(\omega)=\operatorname{Tr}\widetilde\rho_{\omega,n}\)。FIB 边可以限制测量算符或幺正的允许支撑，但不决定矩阵元、相位或结果标签。
+
+连续极限中，若 \(Y_a\) 是扩散记录、\(N_\mu\) 是计数记录，则一类外加测量模型为
+
+$$
+\begin{aligned}
+dY_a(t)&=\sqrt{\eta_a}\operatorname{Tr}[(C_a+C_a^\dagger)\rho_{c,t}]\,dt+dW_a(t),\\
+\Pr\{dN_\mu(t)=1\mid\mathcal Y_t\}&=\lambda_\mu(\rho_{c,t})dt,\\
+\lambda_\mu(\rho)&=\operatorname{Tr}(J_\mu^\dagger J_\mu\rho),
+\end{aligned}
+\tag{252.3}
+$$
+
+其中效率、Wiener 相关性和未观测通道均须外加。归一化量子滤波方程包含创新项和跳跃项；其具体补偿必须与测量仪器一致。漏检会把本来纯的轨迹变成混合轨迹，不能用同一条记录恢复丢失信息。
+
+对任意观测量 \(O\)，条件估计为 \(\widehat O_t=\operatorname{Tr}(O\rho_{c,t})\)。有限步记录满足
+
+$$
+\Pr(\omega\mid\rho_0)=\operatorname{Tr}(K_\omega\rho_0K_\omega^\dagger),
+\qquad
+\operatorname{Tr}(O\rho_\omega)=\frac{\operatorname{Tr}(OK_\omega\rho_0K_\omega^\dagger)}{\operatorname{Tr}(K_\omega\rho_0K_\omega^\dagger)}.
+\tag{252.4}
+$$
+
+同一无条件平均态可以由不同仪器分解产生，而条件轨迹、创新相关和后验估计不同；测量记录的联合实现是统计律的一部分，不能由边缘均值代替。
+
+令 \(N_\mu(t)=\int_0^t dN_\mu(s)\)，给记录通道权重和扩散测试函数，定义可加量
+
+$$
+\mathcal R_t=\sum_\mu w_\mu N_\mu(t)+\sum_a\int_0^tf_a(s)\,dY_a(s).
+\tag{252.5}
+$$
+
+若长时和图族极限存在，可定义
+
+$$
+\theta_j(k)=\lim_{t\to\infty}\frac1t\log\mathbb E e^{k\mathcal R_t},
+\qquad
+I_j(r)=\sup_k\{kr-\theta_j(k)\}.
+\tag{252.6}
+$$
+
+若共同长时/无限尺寸极限出现非解析点，才可称为记录动力学相变；固定有限图上的尖峰只是交叉。跳跃计数、连续电流、等待时间和记录后选择都会改变 \(\theta_j\) 与 \(I_j\)。
+
+记录条件的纯度与纠缠统计为
+
+$$
+P_\omega(t)=\operatorname{Tr}\rho_{\omega,t}^2,
+\qquad
+S_A(\omega,t)=-\operatorname{Tr}\rho_{A,\omega,t}\log\rho_{A,\omega,t}.
+\tag{252.7}
+$$
+
+保留记录的平均熵与先平均后取熵不同：
+
+$$
+\mathbb E_\omega S_A(\omega,t)\le S_A(\bar\rho_t),
+\qquad \bar\rho_t=\mathbb E_\omega\rho_{\omega,t}.
+\tag{252.8}
+$$
+
+纯化时间、条件首达时间和纠缠熵取决于初态系综、测量效率、算符不对易性、反馈和目标态；同一 FIB 路径长度不决定它们。
+
+为讨论测量诱导相变，取随 \(j\) 增大的图和子区域，在外加局部幺正混合与测量之间迭代。离散模型可用测量概率 \(p\)，连续模型可用 \(g_j=\gamma_{m,j}/v_j\)。在特定的一维短程模型中，轨迹熵可能呈现
+
+$$
+S_A(L_A)\sim
+\begin{cases}
+s_{\rm vol}(p)L_A+O(1),&p<p_c,\\
+\alpha\log L_A+O(1),&p=p_c,\\
+O(1),&p>p_c,
+\end{cases}
+\tag{252.9}
+$$
+
+但 \(p_c\)、\(\alpha\)、临界指数以及相变是否存在，都依赖幺正门系综、测量算符支撑、维数、对称性、初态和记录平均。高维图或长程边不能沿用一维公式。保留 Born 权重的淬火平均、复制/退火平均和后选择平均也可能给出不同临界点。
+
+强测量极限可出现量子 Zeno 交叉。若投影把 Hilbert 空间分为 \(P,Q=I-P\)，跨扇区块为 \(H_{PQ}\)，测量速率为 \(\gamma_m\)，在时间尺度分离成立时有效跃迁率具有
+
+$$
+\Gamma_{P\to Q}^{\rm eff}=O\!\left(\frac{\lVert H_{PQ}\rVert^2}{\gamma_m}\right).
+\tag{252.10}
+$$
+
+系数和边界修正依赖测量仪器及谱结构；有限图上的 Zeno 抑制只是交叉，要称为相变仍需共同极限和非解析性判据。
+
+同一 FIB 支撑上，顶点可交换的局部测量与相邻边的非对易奇偶测量可以有相同测量率和相同路径，却产生不同纯化、互信息和熵增长。改变探测效率而保持无条件平均通道不变，也会改变记录创新谱和首达分布。因此，同一 FIB 图、相同边数或相同事件总率不足以识别条件量子轨迹，更不足以推出唯一的临界点、纯化时间或大偏差函数。
+
+因此，FIB ATOM 递归在连续量子测量问题中只提供可组合的测量支撑、候选耦合路径、记录端口、接缝和层级骨架；量子仪器、Hilbert 空间、Hamiltonian、测量算符、Born 权重、探测效率、记录联合实现、过滤初态、反馈、尺度极限以及熵和轨迹的平均协议均须外加。量子滤波、跳跃/扩散轨迹、纯化与纠缠统计、记录大偏差、Zeno 交叉和测量诱导相变，只有在这些条件明确后才是外加模型的统计结论。
