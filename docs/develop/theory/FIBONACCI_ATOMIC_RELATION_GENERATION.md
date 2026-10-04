@@ -53000,3 +53000,345 @@ $$
 若一个实际 $M(S)>5040$ 没有素因子 $p\ge11$，它的全部素因子都只能属于 $\{2,3,5,7\}$，于是（363.4）给 $M(S)\mid5040$，正性又给 $M(S)\le5040$，矛盾。因此所述大素因子必存在。这里 $5040$ 是实际七光滑子族的最大元；整除闭包、激活约束与二十二态描述的对象始终是所定义的实际有限 Fibonacci 最小公倍数族。$\square$
 
 ## 追加锚（本行以下为增补区）
+## 364. 有序秩支撑与实际值支撑闭包的共同完成及满支撑纤维
+
+**定义 364.1（有限素数调色板与两种支撑操作）。** 取标准 Fibonacci 序列 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对每个有限集合 $S\subseteq\mathbb N_{>0}$，令
+
+$$
+M(S)=\operatorname{lcm}_{s\in S}F_s,\qquad M(\varnothing)=1,
+\qquad
+\mathcal M=\{M(S):S\subseteq\mathbb N_{>0}\text{ 有限}\}.
+\tag{364.1}
+$$
+
+对正整数 $m$，记 $\operatorname{Supp}(m)=\{p:p\text{ 为素数且 }p\mid m\}$，故 $\operatorname{Supp}(1)=\varnothing$。对素数 $p$，记 $z(p)=\min\{n>0:p\mid F_n\}$。有限素数集合 $H$ 称为调色板，允许 $H=\varnothing$；定义
+
+$$
+\begin{aligned}
+\mathsf V(H)&=\bigcup_{p\in H}\operatorname{Supp}(F_{z(p)}),\\
+A_H&=\operatorname{lcm}_{p\in H}F_{z(p)},\qquad A_{\varnothing}=1,\\
+E_H&=\{n>0:\operatorname{Supp}(F_n)\subseteq H\}.
+\end{aligned}
+\tag{364.2}
+$$
+
+沿用 [《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》§5](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#5-finite-fibonacci-rank-closure) 的带种子秩支撑闭包。具体地，置 $H_{>5}=\{p\in H:p>5\}$、$B=\max(5,\max H)$，其中 $\max\varnothing=0$，并令
+
+$$
+\begin{aligned}
+U_B&=\{p\le B:p\text{ 为素数}\},\\
+\mathsf T(K)&=K\cup\bigcup_{p\in K}\operatorname{Supp}(z(p)),\\
+\mathsf R(H)&=\mathsf T^{|U_B|}\bigl(\{2,3,5\}\cup H_{>5}\bigr).
+\end{aligned}
+\tag{364.3}
+$$
+
+这里 $\mathsf T^j$ 表示迭代 $j$ 次；$\mathsf R$ 加入的是 $z(p)$ 的素因子，$\mathsf V$ 加入的是 $F_{z(p)}$ 的素因子。称有限调色板 $K$ 为共同不动点，若 $\mathsf R(K)=K=\mathsf V(K)$。沿用定义 363.1 的整数闭包 $\mathscr C$，并记 $H_Q=\{p\le Q:p\text{ 为素数}\}$。
+
+**定理 364.2（有序共同闭包、精确实际纤维与二十三的塌缩）。** 对每个有限素数调色板 $H$，有以下共同刻画。
+
+（一）$\mathsf V(H)$ 是有限素数集合，且对任意有限素数调色板 $H'$，
+
+$$
+\begin{gathered}
+H\subseteq\mathsf V(H),\qquad
+H\subseteq H'\ \Longrightarrow\ \mathsf V(H)\subseteq\mathsf V(H'),\\
+\mathsf V(\varnothing)=\varnothing,\qquad
+\mathsf V(\mathsf V(H))=\mathsf V(H),\\
+\operatorname{Supp}(A_H)=\mathsf V(H),\qquad
+A_H=\mathscr C\!\left(\prod_{p\in H}p\right).
+\end{gathered}
+\tag{364.4}
+$$
+
+$A_H\in\mathcal M$ 是使支撑包含 $H$ 的整除最小实际值：对所有 $M\in\mathcal M$，$H\subseteq\operatorname{Supp}(M)$ 当且仅当 $A_H\mid M$。特别地，存在 $M\in\mathcal M$ 满足 $\operatorname{Supp}(M)=H$，当且仅当 $\mathsf V(H)=H$；此时 $A_H$ 本身就是这样的实现。值支撑的饱和一次即完成。
+
+（二）$\mathsf R(H)$ 是包含 $H\cup\{2,3,5\}$ 的有限素数集合，每个成员不大于 $B$，并且是包含这些种子的最小秩支撑封闭集合。先取 $\mathsf R$ 再取 $\mathsf V$ 得到最小共同不动点：
+
+$$
+\begin{gathered}
+\mathsf V(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\qquad
+\mathsf R(\mathsf V(\mathsf R(H)))=\mathsf V(\mathsf R(H)),\\
+H\subseteq K=\mathsf R(K)=\mathsf V(K)
+\ \Longrightarrow\ \mathsf V(\mathsf R(H))\subseteq K,\\
+\mathsf R(\mathsf V(H))\subseteq\mathsf V(\mathsf R(H)),\qquad
+\mathsf V(\mathsf R(\varnothing))=\{2,3,5\},\\
+q\in\mathsf V(\mathsf R(H))\ \Longrightarrow\
+ z(q)\le B+1\quad\text{且}\quad q\le F_{B+1}.
+\end{gathered}
+\tag{364.5}
+$$
+
+其中 $K$ 的量词限于有限素数调色板；共同不动点必含种子 $2,3,5$。最后一行是素数入口秩的界，不是所有 $H$ 光滑指标或其素幂深度的界。次序一般不能互换。实际族中的严格见证为
+
+$$
+\begin{gathered}
+\forall M\in\mathcal M,\quad31\mid M\ \Longrightarrow\ 61\mid M,\qquad
+61\mid F_{15},\quad31\nmid F_{15},\\
+\mathsf R(\{2,3,5,31\})=\{2,3,5,31\},\qquad
+\nexists M\in\mathcal M:\operatorname{Supp}(M)=\{2,3,5,31\},\\
+\forall M\in\mathcal M,\quad37\mid M\ \Longleftrightarrow\ 113\mid M,\qquad
+\mathsf V(\{37\})=\{37,113\},\\
+\mathsf R(\{37\})=\{2,3,5,19,37\},\\
+\mathsf R(\mathsf V(\{37\}))=\{2,3,5,19,37,113\}
+\ \subsetneq\ \mathsf V(\mathsf R(\{37\}))
+=\{2,3,5,17,19,37,113\}.
+\end{gathered}
+\tag{364.6}
+$$
+
+因此实际值的支撑可以是 $\mathsf V$ 不动点而不是 $\mathsf R$ 不动点；值支撑也可以越过初始调色板的最大素数。
+
+（三）$E_H$ 总是有限。置
+
+$$
+N_H=5\operatorname{lcm}_{p\in\mathsf R(H)}z(p),\qquad
+C_H=\{1,2,6,12\}\cup\{z(p):p\in H\}.
+$$
+
+有两个精确的支撑筛选式：
+
+$$
+E_H
+=\{d>0:d\mid N_H,\ \operatorname{Supp}(F_d)\subseteq H\}
+=\{n\in C_H:\operatorname{Supp}(F_n)\subseteq H\}.
+\tag{364.7}
+$$
+
+$C_H$ 必须经过实际支撑筛选，不能直接用它代替 $E_H$。若 $\mathsf V(H)=H$，定义 $B_H=\operatorname{lcm}_{n\in E_H}F_n$，则 $A_H,B_H\in\mathcal M$、$\operatorname{Supp}(A_H)=\operatorname{Supp}(B_H)=H$、$A_H\mid B_H$，而满支撑纤维恰为
+
+$$
+\{M\in\mathcal M:\operatorname{Supp}(M)=H\}
+=\{M\in\mathcal M:A_H\mid M\text{ 且 }M\mid B_H\}.
+\tag{364.8}
+$$
+
+这个整除区间始终限制在实际值 $\mathcal M$ 中。空调色板满足 $E_{\varnothing}=\{1,2\}$、$A_{\varnothing}=B_{\varnothing}=1$，纤维为 $\{1\}$。
+
+（四）对 $H_7=\{2,3,5,7\}$，从定理 363.2 的二十二态实际格提取的满支撑纤维为
+
+$$
+\begin{gathered}
+E_{H_7}=\{1,2,3,4,5,6,8,12\},\qquad
+A_{H_7}=210,\quad B_{H_7}=5040,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_7\}
+=\{210,840,5040\}.
+\end{gathered}
+\tag{364.9}
+$$
+
+对 $H_{19}=\{2,3,5,7,11,13,17,19\}$，有
+
+$$
+\begin{gathered}
+E_{H_{19}}=\{1,2,3,4,5,6,7,8,9,10,12,18\},\\
+A_{H_{19}}=38798760,\qquad B_{H_{19}}=232792560,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{19}\}
+=\{38798760,232792560\}.
+\end{gathered}
+\tag{364.10}
+$$
+
+再加入二十三，$H_{23}=H_{19}\cup\{23\}$ 给
+
+$$
+\begin{gathered}
+E_{H_{23}}=\{1,2,3,4,5,6,7,8,9,10,12,18,24\},\\
+A_{H_{23}}=B_{H_{23}}=\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})
+=10708457760\\
+=2^5\,3^2\,5\,7\,11\,13\,17\,19\,23,\\
+\{M\in\mathcal M:\operatorname{Supp}(M)=H_{23}\}
+=\{10708457760\}.
+\end{gathered}
+\tag{364.11}
+$$
+
+在这次满支撑扩张中，任一旧纤维成员加入 $F_{24}$ 后都成为同一个新实际值，且上端点的增加由同一个 Möbius 原子记录：
+
+$$
+\begin{aligned}
+\operatorname{lcm}(38798760,F_{24})
+&=\operatorname{lcm}(232792560,F_{24})=10708457760,\\
+\frac{B_{H_{23}}}{B_{H_{19}}}
+&=\Psi_{24}=\frac{F_{24}F_4}{F_{12}F_8}=46=2\cdot23.
+\end{aligned}
+\tag{364.12}
+$$
+
+新素数二十三强迫的不仅是它自身，还包括已有素数二的更高赋值层。
+
+**证明。** （一）先在实际有限族中连接入口秩、支撑和整数闭包。正指标项均为正整数。沿用（361.8）、（363.13）的入口判据与强整除律的推论：
+
+$$
+p\mid F_n\ \Longleftrightarrow\ z(p)\mid n
+\quad(p\text{ 为素数},\ n>0),\qquad
+ a\mid b\ \Longrightarrow\ F_a\mid F_b\quad(a,b>0).
+\tag{364.13}
+$$
+
+这是 Fibonacci 强整除结构的既有供给。有限最小公倍数的素数赋值按（363.16）取最大值，所以对每个素数 $p$、整数 $e\ge1$，
+
+$$
+p^e\mid M(S)\ \Longleftrightarrow\ \exists s\in S,\ p^e\mid F_s.
+\tag{364.14}
+$$
+
+空集时两侧均假；非空时有限最大值必由一个成员达到。若 $p\mid M(S)$，取该成员，得到 $z(p)\mid s$，继而 $F_{z(p)}\mid F_s\mid M(S)$。对 $p\in H$ 逐个应用便得 $H\subseteq\operatorname{Supp}(M(S))\Rightarrow A_H\mid M(S)$。反向由于每个 $p\in H$ 整除 $F_{z(p)}$，从 $A_H\mid M(S)$ 得到 $H\subseteq\operatorname{Supp}(M(S))$。$A_H$ 的指标集合为有限的 $\{z(p):p\in H\}$，故它本身是实际值；lcm 的支撑是成员支撑的并集，因而 $\operatorname{Supp}(A_H)=\mathsf V(H)$。这证明整除最小性，包括空调色板。
+
+每个 $F_{z(p)}$ 为正整数，支撑有限；有限并集仍有限。$p\mid F_{z(p)}$ 给广延性，扩大 $H$ 给单调性，空并集给 $\mathsf V(\varnothing)=\varnothing$。若 $q\in\mathsf V(H)$，存在 $p\in H$ 使
+
+$$
+q\mid F_{z(p)}\ \Longrightarrow\ z(q)\mid z(p)
+\ \Longrightarrow\ F_{z(q)}\mid F_{z(p)}.
+\tag{364.15}
+$$
+
+因此 $\operatorname{Supp}(F_{z(q)})\subseteq\mathsf V(H)$，逐个 $q$ 取并集给 $\mathsf V(\mathsf V(H))\subseteq\mathsf V(H)$；另一包含由广延性得到。这是一次饱和的机制，不需继续添加新的值支撑层。若 $\operatorname{Supp}(M)=H$，整除最小性给 $\mathsf V(H)=\operatorname{Supp}(A_H)\subseteq H$，与广延性合并即得不动性；若 $\mathsf V(H)=H$，实际值 $A_H$ 就实现 $H$。
+
+由定义 363.1 的 $\mathscr C(m)=\operatorname{lcm}_{p^e\parallel m}F_{z(p^e)}$，对平方自由整数 $\prod_{p\in H}p$ 取 $e=1$，直接得到（364.4）中的闭包等式。$\mathscr C$ 的一般整除最小实际值解释在 §363 的证明中给出；实际族的原子重构沿用 §362 所引的 Andrzej Nowicki，*Strong divisibility and lcm-sequences*，[arXiv:1310.2416v1，Theorems 1.2、1.3、2.1](https://arxiv.org/pdf/1310.2416v1)。这些整数闭包与经典重构在这里连接的是同一个实际族。
+
+（二）再连接两种闭包。定义（364.3）正是前引 §5 对 $H_{>5}$ 的带种子闭包，$B$ 与该处的 $\max(5,\max H_{>5})$ 相同。该处定理 5.1 供给有限性、素性、界 $p\le B$、$\mathsf T$ 稳定性和最小性。所有不大于五的素数都已在种子中，所以 $H\subseteq\mathsf R(H)$。若有限素数集合包含种子且对 $\mathsf T$ 稳定，则该最小性与广延性共同给它的 $\mathsf R$ 不动性；反向 $\mathsf R$ 不动点必含种子并对 $\mathsf T$ 稳定。
+
+令 $J=\mathsf V(\mathsf R(H))$。它有限，包含 $\mathsf R(H)$ 和种子，且由（一）已对 $\mathsf V$ 不动。对 $q\in J$ 取 $p\in\mathsf R(H)$、$q\mid F_{z(p)}$。（364.15）给 $z(q)\mid z(p)$，所以 $z(q)$ 的每个素因子也是 $z(p)$ 的素因子，都已属于 $\mathsf R(H)\subseteq J$。因此 $\mathsf T(J)=J$。原秩闭包的最小性给 $\mathsf R(J)\subseteq J$，广延性给反向包含，于是 $J$ 为共同不动点。
+
+若 $H\subseteq K=\mathsf R(K)=\mathsf V(K)$，$K$ 已含种子且秩支撑稳定，原最小性给 $\mathsf R(H)\subseteq K$。再用 $\mathsf V$ 单调性得到 $J\subseteq\mathsf V(K)=K$。又因 $\mathsf V(H)\subseteq J$，且 $J$ 是含种子的秩支撑稳定集合，对初始调色板 $\mathsf V(H)$ 应用原最小性，得到 $\mathsf R(\mathsf V(H))\subseteq J$。这证明（364.5）的有序最小完成，而没有假设两种操作交换。
+
+既有素数入口秩界对 $p>5$ 给 $z(p)\mid p-(5/p)$，其中 $(5/p)\in\{-1,1\}$ 是 Legendre 符号；小素数满足 $z(2)=3$、$z(3)=4$、$z(5)=5$。因而
+
+$$
+p\in\mathsf R(H)\ \Longrightarrow\ 0<z(p)\le p+1\le B+1.
+\tag{364.16}
+$$
+
+对上述 $q,p$，$z(q)\mid z(p)$ 给 $z(q)\le B+1$。又 $q\mid F_{z(q)}$，正性给 $q\le F_{z(q)}$，Fibonacci 的单调性给 $q\le F_{B+1}$。此界针对入口秩；例如 $H_7$ 的 $B=7$，却有 $12\in E_{H_7}$，因此不能从它推出全部光滑指标都不大于 $B+1$。空调色板的秩闭包为 $\{2,3,5\}$，因为三个种子的秩只含这三个素因子；而 $F_3=2,F_4=3,F_5=5$，值闭包仍为同一集合。若去掉种子，则空闭包是另一个定义的问题。
+
+（三）核对有序完成的严格见证。递推和唯一素分解给
+
+$$
+F_{15}=610=2\cdot5\cdot61,\qquad
+F_{30}=832040=2^3\cdot5\cdot11\cdot31\cdot61,
+\qquad z(61)=15,\quad z(31)=30.
+\tag{364.17}
+$$
+
+为核对最小秩，$31\mid F_{30}$ 使 $z(31)\mid30$，三十的全部真正正约数为 $1,2,3,5,6,10,15$，相应 Fibonacci 值为 $1,1,2,5,8,55,610$，都不被三十一整除。十五的全部真正正约数为 $1,3,5$，相应值 $1,2,5$ 不被六十一整除，所以 $z(61)=15$。（364.14）–（364.13）使任何实际值中的三十一都强迫整个 $F_{30}$，从而强迫六十一和十一；$F_{15}$ 则反驳反向蕴涵。$z(31)=30$ 的素因子只有种子 $2,3,5$，故 $\{2,3,5,31\}$ 秩支撑稳定，原最小性给其 $\mathsf R$ 不动性；但它缺少六十一和十一，不可能是实际值的完整支撑。
+
+另一组递推值为
+
+$$
+\begin{gathered}
+F_{19}=4181=37\cdot113,\qquad F_{18}=2584=2^3\cdot17\cdot19,
+\qquad F_9=34=2\cdot17,\\
+z(37)=z(113)=19,\qquad z(19)=18,\qquad z(17)=9.
+\end{gathered}
+\tag{364.18}
+$$
+
+十九为素数，真正正约数只有一，而 $F_1=1$，故两条秩十九等式成立。十八的真正正约数 $1,2,3,6,9$ 的 Fibonacci 值为 $1,1,2,8,34$，都不被十九整除；九的真正正约数一和三给 $1,2$，不被十七整除。这证明余下两个最小秩。对全部实际值，三十七的出现强迫 $F_{19}$，一百一十三的出现也强迫同一个 $F_{19}$，故它们同时出现；特别地，$F_{19}$ 的支撑 $\{37,113\}$ 是值闭包不动点，缺少种子，因而不是带种子秩闭包不动点。
+
+从 $\{2,3,5,37\}$ 开始，$\mathsf T$ 只需加入十九；随后十九的秩十八只含二和三，种子的秩 $3,4,5$ 也不引入新素数。因此 $\{2,3,5,19,37\}$ 稳定，且任何含原种子的稳定集合都必须含十九，证明它恰为 $\mathsf R(\{37\})$。若初始调色板同时含一百一十三，其秩仍为十九，同理得到 $\mathsf R(\mathsf V(\{37\}))=\{2,3,5,19,37,113\}$。另一方面，对 $\mathsf R(\{37\})$ 取值支撑时，三个种子贡献 $2,3,5$，十九贡献 $\operatorname{Supp}(F_{18})=\{2,17,19\}$，三十七贡献 $\{37,113\}$；其并集恰为（364.6）的七素数集合。新十七的秩九只含三，所以这个并集也秩支撑稳定。两边唯一的差是十七，得到严格包含。$113>37$ 来自值支撑扩张，与原秩闭包的 $p\le B$ 界无矛盾，因为一百一十三不在原 $\mathsf R(\{37\})$ 中。
+
+（四）从支撑闭包转到精确纤维。令 $K=\mathsf R(H)$。若 $n\in E_H$，则全部正赋值素数支撑包含在 $H\subseteq K$ 中，故奇赋值支撑
+
+$$
+\{p:p\text{ 为素数},\ p\mid F_n,\ v_p(F_n)\text{ 为奇数}\}
+\subseteq K.
+\tag{364.19}
+$$
+
+$K$ 有限、含 $2,3,5$ 且秩支撑稳定，所以前引《GOLDEN_CUBIC_BLOCK_PRIME_PERIODS》[定理 10.3 的秩预算](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS.md#104-a-divisibility-bound-replacing-an-unspecified-height-cutoff) 给 $n\mid5\operatorname{lcm}_{p\in K}z(p)=N_H$。各秩为正，$N_H>0$，其正约数有限。于是 $E_H$ 有限，（364.7）的第一个等号正是将这些正约数再按完整支撑筛选。这里完整正赋值支撑蕴涵奇赋值支撑受限，反向一般不成立；预算并没有把两个支撑概念等同。
+
+第二个筛选式使用经典原始素因子供给：Minora Yabuta，*A Simple Proof of Carmichael's Theorem on Primitive Divisors*，The Fibonacci Quarterly **39**(5) (2001)，439–443，[原文](https://www.fq.math.ca/Scanned/39-5/yabuta.pdf)。该文第 439 页的 primitive divisor 是素数 $p$，满足 $p\mid F_n$ 且不整除任何 $F_j$（$1\le j<n$）；Theorem 3 在第 441–442 页给出：每个 $n\notin\{1,2,6,12\}$ 的 $F_n$ 有这样的原始素因子。若 $n\in E_H$ 且不在例外集中，取该素数，便有 $p\in H$ 且 $z(p)=n$。所以 $E_H\subseteq C_H$；保留 $C_H$ 中实际支撑包含于 $H$ 的成员，恰好得到 $E_H$。例如 $H=\varnothing$ 时，$C_H$ 仍含六和十二，但 $F_6=8,F_{12}=144$ 不能通过空支撑筛选。因 $F_1=F_2=1$，而 $F_n\ge2$ 对 $n\ge3$ 成立，得到 $E_{\varnothing}=\{1,2\}$。原始素因子定理在这里是缩短候选集的经典中间步骤。
+
+现在假设 $\mathsf V(H)=H$。对每个 $p\in H$，$\operatorname{Supp}(F_{z(p)})\subseteq H$，所以 $z(p)\in E_H$，从而 $A_H\mid B_H$。有限集合 $E_H$ 本身实现 $B_H$，其所有项的支撑都包含于 $H$；$A_H\mid B_H$ 又迫使每个 $p\in H$ 出现，所以两端点都是满支撑 $H$ 的实际值。
+
+若 $M=M(S)$ 满支撑为 $H$，则（一）给 $A_H\mid M$；每个 $F_s\mid M$ 又给 $s\in E_H$，因而 $M\mid B_H$。反之，若实际值 $M$ 满足 $A_H\mid M\mid B_H$，支撑沿整除关系单调，得到 $H=\operatorname{Supp}(A_H)\subseteq\operatorname{Supp}(M)\subseteq\operatorname{Supp}(B_H)=H$。这证明（364.8）；空调色板的两端点为一，纤维也只含一。
+
+限制到实际值不可省略。由（363.12），任何实际值都满足四与八同时整除，然而
+
+$$
+210\mid420\mid5040,\qquad 4\mid420,\quad8\nmid420,
+\qquad420\notin\mathcal M.
+\tag{364.20}
+$$
+
+同样，证明 $A_H$ 最小性时所用的达到只能逐素数或逐素幂进行；任意合数不必在某一成员中达到。沿用（363.25）的例子，
+
+$$
+M(\{3,4\})=6,\qquad
+\mathscr C(6)=\operatorname{lcm}(F_3,F_4)=6,\qquad
+z(6)=12,\quad F_{z(6)}=144.
+\tag{364.21}
+$$
+
+六的两个素数因子来自不同项，不能由 $6\mid M(S)$ 推出 $F_{z(6)}\mid M(S)$。因此（一）按调色板的素数分别取入口，没有把合数整体当作一个达到的成员。
+
+（五）最后用无界候选筛选和生成项支配，求出三个完整纤维。所需素数的最小秩与相应值为
+
+$$
+\begin{array}{c|rrrrrrrrr}
+p&2&3&5&7&11&13&17&19&23\\ \hline
+z(p)&3&4&5&8&10&7&9&18&24\\
+F_{z(p)}&2&3&5&21&55&13&34&2584&46368
+\end{array}
+\tag{364.22}
+$$
+
+前三个秩已在（二）中给出，七的秩八沿用（363.14），十七和十九沿用（364.18）。十一整除 $F_{10}=55$，而十的真正正约数一、二、五给 $1,1,5$，排除更小入口；十三整除 $F_7=13$，七的真正正约数只有一；二十三的情况用
+
+$$
+F_{24}=46368=2^5\,3^2\,7\,23.
+\tag{364.23}
+$$
+
+二十四的全部真正正约数为 $1,2,3,4,6,8,12$，相应值 $1,1,2,3,8,21,144$ 都不被二十三整除，所以 $z(23)=24$。这些最小性论证依靠入口判据，排除的是全部真正约数，因而没有指标截断。
+
+对 $H_7$，$C_{H_7}=\{1,2,3,4,5,6,8,12\}$，其全部 Fibonacci 值为 $1,1,2,3,5,8,21,144$，都通过支撑筛选；（364.7）排除了该集合以外的所有正指标。$A_{H_7}=\operatorname{lcm}(2,3,5,21)=210$，$B_{H_7}=\operatorname{lcm}(5,21,144)=5040$。定理 363.2 的轮廓（363.6）在满支撑条件下要求五、七的指数均为一，二、三的指数均为正；允许的二、三指数对恰为 $(1,1),(3,1),(4,2)$，给出 $210,840,5040$。这是对既有二十二态格的满支撑提取。
+
+对 $H_{19}$，（364.22）与四个例外给出的整个 $C_{H_{19}}$ 正是（364.10）所列指标；每项通过支撑筛选。除一和二以外，其值逐项为
+
+$$
+\begin{aligned}
+(F_3,F_4,F_5,F_6,F_7,F_8,F_9,F_{10},F_{12},F_{18})
+=(2,3,5,8,13,21,34,55,144,2584).
+\end{aligned}
+\tag{364.24}
+$$
+
+因此（364.7）证明完整的 $E_{H_{19}}$，包括所有无界正指标的排除。由指标整除，$F_3,F_6,F_9\mid F_{18}$，$F_4\mid F_8$，$F_5\mid F_{10}$；其余非平凡生成项只剩 $F_7,F_8,F_{10},F_{12},F_{18}$。入口值中的 $F_{12}$ 不出现在 $A_{H_{19}}$ 的定义中，所以
+
+$$
+\begin{aligned}
+A_{H_{19}}&=\operatorname{lcm}(F_7,F_8,F_{10},F_{18})
+=2^3\,3\,5\,7\,11\,13\,17\,19=38798760,\\
+B_{H_{19}}&=\operatorname{lcm}(A_{H_{19}},F_{12})
+=2^4\,3^2\,5\,7\,11\,13\,17\,19=232792560.
+\end{aligned}
+\tag{364.25}
+$$
+
+这些入口值均以 $H_{19}$ 为支撑上界，故 $\mathsf V(H_{19})=H_{19}$。若实际值满支撑为 $H_{19}$，十三、七、十一、十九的出现分别强迫 $F_7,F_8,F_{10},F_{18}$；而所有其他可选项除 $F_{12}$ 外都整除它们的 lcm。因此整个满支撑值只有 $A_{H_{19}}$ 和 $\operatorname{lcm}(A_{H_{19}},F_{12})$ 两种。指标集 $\{7,8,10,18\}$ 与 $\{7,8,10,12,18\}$ 分别实现它们，必要性和充分性同时成立。
+
+对 $H_{23}$，候选集只在 $C_{H_{19}}$ 上加入 $z(23)=24$；新值（364.23）通过支撑筛选，旧值也全部通过，所以（364.11）给出的 $E_{H_{23}}$ 完整。由 $8\mid24$、$12\mid24$，$F_8,F_{12}\mid F_{24}$；结合前一段的支配关系，整个 $E_{H_{23}}$ 的 Fibonacci 值都整除 $\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})$。反向这四项都来自 $E_{H_{23}}$。入口定义还要求 $F_{24}$，故它已经吸收先前可能另选的 $F_{12}$ 和 $F_8$，得到
+
+$$
+A_{H_{23}}=B_{H_{23}}
+=\operatorname{lcm}(F_7,F_{10},F_{18},F_{24})=10708457760.
+\tag{364.26}
+$$
+
+其支撑恰为 $H_{23}$，因此 $\mathsf V(H_{23})=H_{23}$，并由（364.8）得到单元素纤维。指标集 $\{7,10,18,24\}$ 给明确实际实现。对（364.25）的任一旧端点加入 $F_{24}$，旧端点中二的指数三或四都提升到五，三的指数一或二都达到二，七已被 $F_{24}$ 包含，其余五个旧素数层保持在同一 lcm 中，再加入二十三。这直接证明（364.12）的两个 lcm 等式。
+
+最后沿用定义 362.1 的 Möbius 原子。二十四的约数中，$\mu(24/e)$ 非零的恰为 $e=4,8,12,24$，相应符号为 $+,-,-,+$。因此
+
+$$
+\Psi_{24}
+=\frac{F_{24}F_4}{F_{12}F_8}
+=\frac{46368\cdot3}{144\cdot21}=46
+=\frac{10708457760}{232792560}.
+\tag{364.27}
+$$
+
+这正是既有 Nowicki 型原子重构在同一扩张上的局部增量；分子使用 $F_4$。比值 $2\cdot23$ 同时记录新素数二十三和旧素数二的额外一层。上述纤维描述的是实际有限 Fibonacci 最小公倍数在指定完整素数支撑下的全部值，证明依赖无界入口筛选与生成项支配，而非对指标作有限截断。$\square$
+
+## 追加锚（本行以下为增补区）
