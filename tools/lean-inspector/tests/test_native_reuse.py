@@ -19,8 +19,10 @@ class NativeReportConsumerTests:
             '[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n', ''))
         registry = 'LeanInformationAudit/SealCommand.lean'
         registry_owner = 'tools/lean-inspector/' + registry
-        (self.root / registry_owner).parent.mkdir(parents=True, exist_ok=True)
-        (self.root / registry).rename(self.root / registry_owner)
+        for module in [registry, 'LeanInformationAudit/Contract/SourceAudit.lean']:
+            owner = self.root / 'tools/lean-inspector' / module
+            owner.parent.mkdir(parents=True, exist_ok=True)
+            (self.root / module).rename(owner)
         with (self.root / 'tools/lean-inspector/lakefile.lean').open('a') as stream:
             stream.write('\nlean_lib LeanInformationAudit where\n'
                          '  globs := #[.submodules `LeanInformationAudit]\n')
