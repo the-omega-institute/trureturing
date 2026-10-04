@@ -178,6 +178,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/huynh-vu-zaw-scarani-2023-precession-separable-bound` (proved) by `D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"huynh-vu-zaw-scarani-2023-precession-separable-bound","declaration_gid":"D5/S3/Quantum/Entanglement/PrecessionSpinOneSeparableBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Khoi-Nguyen Huynh-Vu; Lin Htoo Zaw; Valerio Scarani (2024). *Certification of genuine multipartite entanglement in spin ensembles with measurements of total angular momentum*. URL: <https://arxiv.org/abs/2311.00806>.
