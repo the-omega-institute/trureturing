@@ -62,3 +62,6 @@ The proof seat and an independent referee implementation evaluated the original 
 - Open: the shifts m outside 0 ≤ m ≤ k+1, and the even powers r = 2k, for which the source reports no closed form.
 
 ## ASSUMED-UNVERIFIED
+
+The literature screen is limited to the arXiv records of arXiv:2308.07642, arXiv:2403.11244, arXiv:2402.19127 and
+arXiv:2608.27208, web and GitHub searches and the repository checks.
