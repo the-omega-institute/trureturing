@@ -2402,3 +2402,336 @@ as well as omitted tops. In particular, the height-one containment
 of the entire hole in both top-color unions cannot be assumed for
 lower-representative losses at $A\ge2$. Unrestricted Erdős #7
 remains unresolved.
+
+## 29. Two cofactor envelopes retain the complete lower-and-top liability
+
+Keep the hypothetical EB1-minimal whole cover of Section 7, specialize
+$r=3,s=5$, and allow arbitrary original height $A\ge2$. Fix one
+original terminal prefix and one common tree $\theta$. Thus
+$Q=3^A5^BM$, $(M,15)=1$, and the resulting families
+$\mathcal L,\mathcal T_1,\mathcal T_2$ satisfy SC15. Here the
+subscripts $1,2$ name the two safe terminal siblings; they do not
+prescribe their numerical ternary residues. Write
+$\mathcal T=\mathcal T_1\sqcup\mathcal T_2$ and regard each output
+class $C_d$ as its periodic preimage in $\mathbb Z$. This preserves
+its complete service when a fresh output $5$-coordinate is introduced.
+
+Choose $\mathcal R\subseteq\mathcal L$ with at most one actual
+representative per numerical output modulus and with output slot $3$
+absent. Buy one root $S=[j]_3$. Define the full mandatory omitted-top
+set and the retained family by
+$$
+ \begin{aligned}
+ \mathcal B
+ &=\{t\in\mathcal T:
+       n_t\in\{n_d:d\in\mathcal R\}\cup\{3\}\},
+       &b&=|\mathcal B|,\\
+ \mathcal F_0
+ &=\mathcal R\cup\{S\}\cup(\mathcal T\setminus\mathcal B).
+ \end{aligned}
+$$
+The union denotes a family of APs: their numerical moduli are pairwise
+distinct. In particular, every top whose numerical slot is occupied by
+$\mathcal R$ or the bought root has been removed, regardless of its
+phase or whether its service lies inside $S$.
+
+### Exact count through the original cofactor columns
+
+Let $n_0=\#\{d\in D:3\nmid d\}$ and
+$N_3=\#\{d\in D:3\mid d\}$, so $K=n_0+N_3$.
+Every surviving source has a nonunit cofactor
+$k=5^{b_d}m_d$ after its original $3$-power is removed: lower pure
+$3$-powers miss the fixed terminal prefix, and the pure $3^A$ top
+misses both safe siblings. Divisor closure puts $k$ in $D$.
+The map
+$$
+ \pi(5^{b_d}m_d)=3^{b_d}m_d
+$$
+is injective on these $3$-free cofactors. The bought slot $3$ is
+$\pi(5)$, and original $5$ belongs to $D$. Consequently the distinct
+slots in $\mathcal F_0$ inject into the $n_0$ original $3$-free
+columns. With $z=n_0-|\mathcal F_0|\ge0$ and the same
+$\Delta=K-|\mathcal R|-|\mathcal T|$ as SC45, the exact identities are
+$$
+ \boxed{
+ |\mathcal F_0|=K-N_3-z,
+ \qquad \Delta+b-1=N_3+z.
+ } \tag{SC111}
+$$
+Thus adding a fresh distinct patch family of size $c$ gives
+$|\mathcal F_{\rm new}|=K-N_3-z+c$. This count applies at every
+original height. It does not identify the entire hole with an
+intersection of the original top menus.
+
+### Separate the two kinds of missing service
+
+Define the complete hole and its disjoint decomposition by
+$$
+ H=\mathbb Z\setminus\bigcup\mathcal F_0,
+ \qquad H_{\rm low}=H\cap\bigcup\mathcal L,
+ \qquad H_{\rm top}=H\setminus\bigcup\mathcal L.
+$$
+Choose actual source subfamilies
+$$
+ \begin{gathered}
+ \mathcal W\subseteq\mathcal L\setminus\mathcal R,
+ \qquad H_{\rm low}\subseteq\bigcup_{w\in\mathcal W}C_w,\\
+ \mathcal B_i\subseteq\mathcal B\cap\mathcal T_i,
+ \qquad H_{\rm top}\subseteq\bigcup_{t\in\mathcal B_i}C_t
+ \quad(i=1,2),\\
+ \ell=|\mathcal W|,
+ \qquad \tau=|\mathcal B_1|+|\mathcal B_2|.
+ \end{gathered} \tag{SC112}
+$$
+Taking every discarded lower class not contained in $S$ supplies
+$\mathcal W$. Taking every omitted top of each color not contained
+in $S$ supplies $\mathcal B_i$: SC15 supplies a top of each color
+at every point outside $\bigcup\mathcal L$, and a retained top
+cannot contain a point of $H$. Smaller choices require the displayed
+whole-set containments. In general $\tau\le b$; equality is not
+part of SC112.
+
+For each original $d=3^{a_d}5^{b_d}m_d$, the output $C_d$ keeps its
+original residue $\gamma_d\pmod{m_d}$. Make two requests for every
+$w\in\mathcal W$ and one for every
+$t\in\mathcal B_1\cup\mathcal B_2$. Assume there are integers
+$$
+ h_{w,1},h_{w,2}\mid m_w,
+ \qquad h_t\mid m_t,
+$$
+all greater than one and globally pairwise distinct. This means
+$2\ell+\tau$ different numerical labels, including between the two
+colors and between all lower and top requests. They need not be
+pairwise coprime; every one divides $M$ and hence is coprime to $15$.
+Let $\mathcal J$ be their set. Form the two flat envelope menus
+$$
+ \begin{aligned}
+ \mathcal U
+ &=\{[\gamma_w]_{h_{w,1}}:w\in\mathcal W\}
+     \cup\{[\gamma_t]_{h_t}:t\in\mathcal B_1\},\\
+ \mathcal V
+ &=\{[\gamma_w]_{h_{w,2}}:w\in\mathcal W\}
+     \cup\{[\gamma_t]_{h_t}:t\in\mathcal B_2\}.
+ \end{aligned}
+$$
+Each envelope contains the whole output of its own source because
+its modulus divides $m_d$. An envelope with label $h$ need not have
+the phase of the original $h$-class; that original class is not
+being relabeled or rephased. Only the added classes below use the
+envelope's forced source phase.
+
+If $x\in H_{\rm low}$, an actual $w\in\mathcal W$ containing
+$x$ supplies an envelope in each menu. If $x\in H_{\rm top}$,
+its actual suppliers in $\mathcal B_1$ and $\mathcal B_2$ do the
+same. These two cases give the full packet premise
+$$
+ \boxed{
+ H\subseteq\left(\bigcup\mathcal U\right)
+             \cap\left(\bigcup\mathcal V\right),
+ \qquad H\cap S=\varnothing.
+ } \tag{SC113}
+$$
+In particular a discarded lower class receives two guaranteed
+whole-class enclosures; its points are not assumed to have owners
+in both original top colors.
+
+Apply the three-row packet of Section 23 to SC113, with $j$ in
+place of $j_5$ and these two flat menus. That packet's coverage
+argument uses precisely this containment and avoidance of the bought
+root, so its original height-one application imposes no additional
+height restriction here. Its new numerical labels are
+$$
+ \{5,15,45\}\cdot(\{1\}\cup\mathcal J),
+ \qquad c=3(1+2\ell+\tau). \tag{SC114}
+$$
+The different $3$-valuations distinguish rows and the different
+$3,5$-free cofactors distinguish labels within a row. All new moduli
+are odd nonunits divisible by $5$; every modulus in $\mathcal F_0$
+is $5$-free. Thus all labels are distinct and fresh. The common
+period can be $5\,3^{\max(B,2)}M$, and every retained phase stays
+fixed. The entire integer hole $H$ is covered, including all lower
+and displaced-top service.
+
+Combining SC111 and SC114 gives the sufficient descent criterion
+$$
+ \boxed{
+ 3(1+2\ell+\tau)<N_3+z
+ \quad\Longrightarrow\quad |\mathcal F_{\rm new}|<K.
+ } \tag{SC115}
+$$
+Every EB1 family admitting the complete source assignment above must
+therefore satisfy $N_3+z\le3+6\ell+3\tau$. This conclusion retains
+the full original inventory and one common source tree.
+
+## 30. Disjoint original columns pay the cofactor-envelope repair
+
+For each $h\mid M$, including $h=1$, define
+$$
+ w(h)=\#\{(a,b):1\le a\le A,\ 0\le b\le B,
+                         \ 3^a5^bh\in D\}.
+$$
+Unique factorization partitions the original $3$-bearing labels:
+$$
+ N_3=\sum_{h\mid M}w(h).
+$$
+These columns are disjoint even when $h\mid h'$: the index is the
+entire $3,5$-free cofactor, not the set of labels divisible by a
+chosen prime. Since $|\mathcal J|=2\ell+\tau$, the exact saving
+of Section 29's completed repair is
+$$
+ \begin{aligned}
+ K-|\mathcal F_{\rm new}|
+ ={}&z+w(1)-3+\sum_{h\in\mathcal J}(w(h)-3)\\
+ &+\sum_{\substack{h\mid M\\h\notin\mathcal J\cup\{1\}}}w(h).
+ \end{aligned} \tag{SC116}
+$$
+In particular, $w(1)\ge4$ and $w(h)\ge3$ for every assigned
+$h\in\mathcal J$ suffice for strict descent. No extra donor class
+is removed from $\mathcal F_0$: these counts bound the difference
+$K-|\mathcal F_0|$ already proved in SC111. They add no unrecorded
+service liability.
+
+If a requested divisor $h$ comes from original
+$d=3^{a_d}5^{b_d}m_d$ with $h\mid m_d$, divisor closure supplies
+all distinct original labels
+$$
+ 3^i5^jh,\qquad 1\le i\le a_d,\quad 0\le j\le b_d.
+$$
+Consequently $w(h)\ge a_d(b_d+1)$. Pure $3,\ldots,3^A$ together
+with the divisors $3^i5^j$ for $1\le i\le a_d$ and
+$1\le j\le b_d$ also give $w(1)\ge A+a_db_d$. Define
+$$
+ \rho=\max\bigl(
+ \{a_db_d:d\in\mathcal W\cup\mathcal B_1\cup\mathcal B_2\}
+ \cup\{0\}\bigr).
+$$
+The shared unit column satisfies $w(1)\ge A+\rho$; the maximum
+cannot be replaced by a sum of source contributions. Applying these
+bounds separately to the globally distinct requested columns yields
+$$
+ \boxed{
+ \begin{aligned}
+ K-|\mathcal F_{\rm new}|\ge\Xi
+ :={}&z+A+\rho-3\\
+ &+2\sum_{w\in\mathcal W}\bigl(a_w(b_w+1)-3\bigr)\\
+ &+\sum_{t\in\mathcal B_1\cup\mathcal B_2}
+                          \bigl(A(b_t+1)-3\bigr).
+ \end{aligned}
+ } \tag{SC117}
+$$
+Here $a_t=A$ for every selected top. The summands may be negative;
+SC117 does not discard those deficits. The sufficient condition
+$\Xi\ge1$ contradicts EB1. If it fails, the unassigned columns
+still present in SC116 can contribute to the saving, so failure is
+not evidence that a complete repair is impossible.
+
+## 31. An anchored height-two branch has a complete paid repair
+
+Set $A=2$ and use the private-point tree SC77--SC78 with $r=3,s=5$.
+It preserves one actual private point of original $9$ and removes
+every lower pure-cofactor original. Choose exactly one representative
+from every surviving lower numerical slot, preferring its actual
+height-zero original whenever that original survives. There is no
+lower slot $3$, because all lower pure-cofactor columns have vanished.
+Every discarded lower source then has
+$$
+ a_w=1,\qquad m_w>1.
+$$
+Indeed, a lower column has at most its original heights zero and
+one; its height-zero member cannot be discarded by this preference,
+and a column with only one survivor loses nothing. All its survivors
+have nonunit $M$-cofactor by the anchored-tree property.
+
+If a top of output modulus $3$ survives, choose the bought root $S$
+with that top's exact output phase. It is unique because top output
+moduli are injective. Its entire class is then absorbed by $S$.
+If no such top survives, choose any root. No other pure-cofactor
+top can be mandatory: its output is $3^b$, whereas $\mathcal R$
+has no pure-cofactor slot, and the bought root occupies only $3$.
+Let $\epsilon=1$ when the pure output-$3$ top is omitted and
+absorbed, and $\epsilon=0$ otherwise.
+
+For the following explicit choice, take $\mathcal B_1,\mathcal B_2$
+to contain **all** remaining mandatory tops of their respective colors,
+including any nonpure top whose service already lies in $S$. They
+have $m_t>1$, satisfy SC112, and obey
+$$
+ b=\tau+\epsilon. \tag{SC118}
+$$
+Choose any $\mathcal W$ satisfying the complete lower-service
+condition SC112. Under the globally distinct divisor assignment of
+Section 29, SC117 specializes to
+$$
+ \begin{aligned}
+ \Xi={}&z-1+\rho
+        +2\sum_{w\in\mathcal W}(b_w-2)
+        +\sum_{t\in\mathcal B_1\cup\mathcal B_2}(2b_t-1),\\
+ \rho={}&\max\bigl(
+       \{b_w:w\in\mathcal W\}
+       \cup\{2b_t:t\in\mathcal B_1\cup\mathcal B_2\}
+       \cup\{0\}\bigr).
+ \end{aligned} \tag{SC119}
+$$
+Suppose that assignment exists and
+$$
+ b_w\ge2\quad(w\in\mathcal W),
+ \qquad b_t\ge1\quad(t\in\mathcal B_1\cup\mathcal B_2).
+$$
+If there is at least one request, then $\rho\ge2$, all lower
+summands in SC119 are nonnegative, and each top summand is at least
+one. Hence
+$$
+ \boxed{
+ \Xi\ge z+1+\tau,
+ \qquad |\mathcal F_{\rm new}|\le K-(z+1+\tau)<K.
+ } \tag{SC120}
+$$
+If there are no requests, SC112 makes both parts of $H$ empty, so
+$\mathcal F_0$ itself covers. SC111 and $N_3\ge A=2$ already give
+strict descent, without adding the three unconditional packet rows.
+This excludes the stated height-two branch with arbitrary finite
+$5$-height and arbitrary finite support and heights in $M$. It does
+not use a lower bound for the largest support prime or the attributed
+nine-prime theorem.
+
+There is a separate payment test from the same anchored tree.
+SC78 gives $\Delta\ge B+4$, while SC114 and SC118 give
+$c-b=3+6\ell+2\tau-\epsilon$. The count
+$|\mathcal F_{\rm new}|=K-\Delta+1+c-b$ therefore strictly descends
+whenever
+$$
+ \boxed{6\ell+2\tau\le B-1+\epsilon.} \tag{SC121}
+$$
+This uses the anchored budget as an alternative to SC116--SC119,
+not as additional credit. A smaller pair of top subfamilies may
+still satisfy SC112 and use fewer requests, but then SC118 is
+unavailable: its actual mandatory count remains $b$, and the exact
+budget test is $3+6\ell+3\tau-b\le B+2$.
+
+For example, suppose one discarded lower class supplies the whole
+remaining hole, and there are no mandatory nonpure tops. If its
+cofactor $m$ is composite, choose two different nonunit divisors of
+$m$ for its two requests. The packet uses nine classes. For $m=77$
+one choice is $h_{w,1}=7,h_{w,2}=11$, giving labels
+$$
+ 5,15,45,\quad35,105,315,\quad55,165,495.
+$$
+Their cofactor phases are reductions of that same actual discarded
+class. SC121 pays this complete repair for $B\ge7-\epsilon$,
+without restricting the lost output's ternary height. The condition
+that this one source supplies the entire remaining hole is essential.
+
+The global assignment remains a substantive hypothesis. A prime
+cofactor offers only one nonunit divisor and cannot supply two
+different requests on its own. Different lower or top sources can
+compete for the same divisor pool. At $A>2$ the anchored argument
+above does not remove all lower pure-cofactor sources, which have no
+nonunit $M$-divisor at all. Shallow assigned columns can also fail to
+pay their three packet rows. SC116 retains those deficits and the
+unused inventory exactly. What is not established is that some
+single source tree, retained family and complete supplier choice
+always admit a globally distinct divisor assignment satisfying
+SC115, or a different complete packet for the unassignable sources.
+These are ordinary mathematical sufficient conditions; they do not
+constitute a Lean verification or an unrestricted resolution of
+Erdős #7.

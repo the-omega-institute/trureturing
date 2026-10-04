@@ -28716,3 +28716,232 @@ for a positive-density set. This family is deliberately redundant and is not
 a whole cover, so it does not refute the EB1 odd problem. It does rule out
 using the three-prime expression as an unrestricted cofactor-packing estimate
 without an additional overlap hypothesis.
+
+## 250. Pure-power guards sharpen the single-prime absorption and full-height tail bounds
+
+Fix one original EB1 whole cover and one support prime $p$, with
+$H=H_p\ge1$. Define
+
+$$
+T_p(H)=p^H-\sum_{a=1}^{H}p^{H-a}
+      =p^H-\frac{p^H-1}{p-1}.
+\tag{GHA1}
+$$
+
+The original pure classes $A_p,\ldots,A_{p^H}$ are present by divisor
+closure and pairwise disjoint by comparable-original disjointness. Their
+literal phases therefore leave exactly $T_p(H)$ safe residues modulo
+$p^H$. In particular $T_p(H)\ge p^{H-1}$ and $T_p(H)\ge2$ for odd $p$.
+This uses their actual phases in the same original family; it does not
+choose new guard placements.
+
+Sections 151 and 153 supply the prefix transport and the height encoding.
+Section 159 supplies the method of deleting retained pure guards from the
+initial coding alphabet. Applying that method to the single-prime
+transport gives
+
+$$
+P^+(Q)<p^{H+1}T_p(H).
+\tag{GHA2}
+$$
+
+It also gives, for every distinct original support prime $q$ of height
+$G=H_q$ and every $1\le t\le H$,
+
+$$
+q\ge p^tT_p(H)\quad\Longrightarrow\quad p^tq^G\in D.
+\tag{GHA3}
+$$
+
+These are ordinary-mathematical refinements of the cited constructions,
+without a new Lean verification or a literature-priority claim. The bound
+and forced labels concern the same globally extremal original cover.
+
+### The safe domain changes the alphabet, not the inverse progression
+
+Let $q\ne p$ be an original support prime and write
+$Q=p^Hq^GM$, with $\gcd(M,pq)=1$. For $E\ge H$ let
+
+$$
+\mathcal D_E=\{c\bmod p^E:c\bmod p^H
+                  \text{ avoids }A_p,\ldots,A_{p^H}\}.
+$$
+
+Then
+
+$$
+|\mathcal D_E|=p^{E-H}T_p(H),
+\tag{GHA4}
+$$
+
+and each element of $\mathcal D_E$ has exactly $p^b$ extensions in
+$\mathcal D_{E+b}$. Keep the HPA schedule
+$b=H+1$, $E_e=H+be$. If $q>p^{H+1}T_p(H)$, the first alphabet
+$\mathcal D_{E_1}$ fits into the $q-1$ roots avoiding the actual pure
+$q$ class. Each later alphabet has $p^{H+1}$ elements, also fewer than
+$q$. Fix one compatible injection of these successive safe prefixes into
+$q$-prefixes, independently of the original label and the $M$ coordinate.
+
+Use the HPA source map on the output domain $\mathcal D$ whose $p^H$
+coordinate is safe: preserve the old $p^H$ and complete $M$ coordinates,
+and use the fixed prefix code for the $q$ coordinate. Points outside
+$\mathcal D$ are already covered by the retained pure $p$ guards. No
+source evaluation there is needed for the coverage proof.
+
+For an original $d=p^aq^es$ with $e>0$, the actual $q^e$ residue either
+has no inverse safe prefix or fixes one $c_d\in\mathcal D_{E_e}$. After
+the original $p^a$ compatibility test, its full preimage **within
+$\mathcal D$** is empty or is exactly
+
+$$
+z\equiv c_d\pmod{p^{E_e}},\qquad
+z\equiv\rho_d\pmod s.
+\tag{GHA5}
+$$
+
+This is one whole AP. Its first congruence already implies avoidance of
+every pure guard, so no additional mask splits the progression. Enclose
+it by the existing HPA label $p^{(H+1)e+a}s$. The exponent containment,
+decoder, oddness, nonunit property and new--old noncollision from
+HPA7--HPA8 are unchanged. Every $q$-free original may be retained
+unchanged, including all guards.
+
+For each safe output point, original coverage at its one source supplies
+one of these retained or enclosed classes. Every unsafe output point has
+a retained guard. The pure $q$ class has no safe preimage and is omitted;
+every other original contributes at most one class. Thus the complete
+output is a distinct odd whole cover with strictly fewer classes. EB1
+forbids it, proving $q\le p^{H+1}T_p(H)$. The threshold is composite and
+exceeds $p$, so equality with a support prime is impossible and
+maximizing over $q$ proves (GHA2).
+
+### Retaining a q-prefix gives a qualified endpoint inequality
+
+Use the actual profile from HPM5,
+
+$$
+h_j=\max\{v_p(d):d\in D,\ v_q(d)=j\},\qquad
+h_0=H\ge h_1\ge\cdots\ge h_G.
+$$
+
+Fix $0\le k<G$, and put
+
+$$
+A=h_{k+1},\quad B=h_k,\quad b=A+1,\quad
+E=\max(H,A+B+1),\quad
+S=p^{E-H}T_p(H),\quad U=p^{A+1}.
+\tag{GHA6}
+$$
+
+Suppose $q>\max(S,U)$. For each retained $q^k$ prefix $u$, apply the
+HPM prefix code to $\mathcal D_E$ and its subsequent $p^b$ lifts. The
+first alphabet fits into $q-1$ digits and all later alphabets fit into
+$q$ digits. At the prefix belonging to the original pure
+$q^{k+1}$ class, avoid its next digit; at every other prefix choose any
+one digit to omit. All choices are fixed before transporting originals.
+
+On the safe domain use the same HPM source, preserving the old $p^H$,
+$q^k$ and $M$ coordinates. Retain every original of $q$-height at most
+$k$. An original $p^aq^{k+e}s$, $e\ge1$, specifies one literal retained
+prefix $u_d$. Its safe preimage is empty or the whole AP
+
+$$
+z\equiv u_d\pmod{q^k},\qquad
+z\equiv c_d\pmod{p^{E+(e-1)b}},\qquad
+z\equiv\rho_d\pmod s,
+\tag{GHA7}
+$$
+
+where $c_d$ is safe modulo $p^H$ and satisfies the actual old
+$p^a$ condition. The existing enclosing label is
+
+$$
+p^{B+1+(e-1)b+a}q^ks.
+\tag{GHA8}
+$$
+
+Because $a\le A$, its $p$-height is at most $E+(e-1)b$ and exceeds
+$B$. The HPM decoder recovers $a,e,s$ from the label; retained labels
+of $q$-height $k$ have $p$-height at most $B$, and retained labels of
+smaller $q$-height cannot collide with (GHA8).
+
+The guard classes cover the entire unsafe domain. On the safe domain,
+one-source coverage and (GHA7) cover every point. The pure
+$q^{k+1}$ class has no safe preimage and is omitted, giving strict
+class-count descent. Consequently
+
+$$
+q\le\max\{p^{\max(H,h_k+h_{k+1}+1)-H}T_p(H),\ p^{h_{k+1}+1}\}.
+\tag{GHA9}
+$$
+
+No claim is made that other transported originals have empty preimage
+outside the safe domain. Their unsafe preimages are immaterial because
+the retained $p$ guards already cover those points.
+
+For $H\ge2$, the first term $S$ in (GHA9) is at least $U$. If $B\ge1$,
+then $E\ge A+B+1$ and $T_p(H)\ge p^{H-1}$ give
+$S\ge p^{E-1}\ge p^{A+1}$. If $B=0$, monotonicity gives $A=0$,
+while $S\ge T_p(H)\ge p=U$. Thus one can then write $q\le S$.
+The inequality is not generically strict: at $p=3,H=2,A=B=0$ it has
+$S=5$ and $U=3$, and the threshold $S$ is prime. This is an arithmetic
+endpoint of the bound, not an assertion that those parameters are
+realized by an odd cover.
+
+### Full-q-height labels and the original ternary-height-two branch
+
+Suppose $p^tq^G\notin D$ for $1\le t\le H$. Divisor closure implies
+$h_G\le t-1$. Apply (GHA9) at $k=G-1$. Since $h_{G-1}\le H$,
+
+$$
+E\le H+t,\qquad S\le p^tT_p(H),\qquad U\le p^t.
+$$
+
+Hence $q\le p^tT_p(H)$. This last threshold is composite because
+$t\ge1$ and $T_p(H)\ge2$, so in fact $q<p^tT_p(H)$. Taking the
+contrapositive proves (GHA3). The conclusion supplies the actual
+original numerical label at the **entire** original $q$-height. It
+prescribes neither its phase nor a product of several independently
+forced labels.
+
+At original ternary height $H_3=2$, one has $T_3(2)=5$, so
+
+$$
+P^+(Q)<135,\qquad
+q\ge17\Longrightarrow3q^{H_q}\in D,\qquad
+q\ge47\Longrightarrow9q^{H_q}\in D.
+\tag{GHA10}
+$$
+
+The prime thresholds use the first primes above $15$ and $45$,
+respectively. Section 60 already supplies the shallow label $3q$ for
+$q\ge17$; (GHA10) retains the full original $q$-height. The original
+height-one branch is already excluded by HPA1 and NF73, so no
+height-one substitution is counted as a remaining branch.
+
+Together with Report 792's existing eight-support-prime exclusion,
+(GHA10) restricts this height-two branch to $29\le P^+(Q)<135$ and
+at least nine support primes. Indeed, if there were at most eight
+support primes, take $R$ to be the whole support; $P^+(Q)<135$ and
+$H_3=2$ satisfy every hypothesis of Report 792, contradicting coverage.
+These inequalities supply no new upper bound on nonternary heights.
+The existing HC5 supplies a finite one: take its repair prime $q=3$,
+$K=2$, $R=15$, cut $a=10$ and $t=11$. HC4 then gives
+$\delta=3$, $J=2$, $s=3$ and $N=25$, whence
+
+$$
+H_p\le10+\left\lfloor\frac{23}{p-1}\right\rfloor
+\quad(p\ne3),\qquad
+Q\mid3^2\prod_{\substack{p\text{ prime}\\5\le p<135}}
+      p^{10+\lfloor23/(p-1)\rfloor}.
+\tag{GHA11}
+$$
+
+This is one admissible HC5 substitution, not its optimized value. The
+finite carrier concerns only the original height-two branch, and no
+enumeration or noncoverage of that carrier is asserted. A forced
+pure-parent descendant label supplies no phase-capacity bound unless
+that parent's capacity has separately been established. The remaining
+task is still to exclude the actual phases and complete covering
+service in the allowed branch, or to prove a further complete-liability
+descent.
