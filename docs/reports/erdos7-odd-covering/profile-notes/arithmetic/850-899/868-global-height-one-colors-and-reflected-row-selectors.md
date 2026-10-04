@@ -1,0 +1,222 @@
+[Index](../../../marked_head_profile.md) · [Complete color source](861-complementary-phase-repair-and-pair-anchor-rigidity.md) · [Component exchanges](866-whole-color-top-layer-exchange-forces-lower-row-service.md) · [Column carries](867-literal-column-carries-and-phase-hull-repair.md)
+
+# Retaining all q-free originals permits weighted row selectors
+
+Work with one globally count-then-modulus-sum minimal distinct odd
+whole cover, including its original numerical divisor closure, in the
+branch $Q=9q^GW$, $q=113$, $(W,3q)=1$. Keep the full moving-digit
+set $U$: its complement consists of the first q-digits of all actual
+unit-cofactor originals. Write $n=|U|\ge83$.
+
+The complete-source hypothesis is global: for every $c\in U$, the
+literal q-strips of all originals of color c cover the entire q-free
+residual and every remaining q-coordinate. The conclusion below uses
+this whole source, without choosing one masked component or imposing
+a common cofactor witness.
+
+## Only height-one originals can collide with retained q-free labels
+
+Let $\mathcal F$ be all original q-free classes, let $\mathcal A_q$
+be all q-bearing originals, and put $K_q=|\mathcal A_q|$. For each
+$c\in U$, let $C_c$ be its complete color family and $S_c$ its
+literal first-digit strips. The complete-source identity gives
+
+$$
+\mathcal F\cup S_c\text{ covers every integer}.
+\tag{WR1}
+$$
+
+Indeed $\mathcal F$ covers its entire complement of the residual,
+and $S_c$ covers every point of the residual. To see the latter for
+an arbitrary output integer x, preserve its full $9W$ coordinate
+and use source q-coordinate $c+q(x\bmod q^{G-1})$ modulo $q^G$.
+The source misses all q-free originals, and its first digit c
+excludes every original of another color. Its actual owner therefore
+strips to a class covering x. This argument includes output first
+digits outside U. No protected first-digit cylinder is asserted to
+be covered by a unit original.
+
+The map from old to stripped numerical labels is $d\mapsto d/q$,
+which is injective. A collision with $\mathcal F$ therefore requires
+an old q-height-one original. If color c had none, WR1 would already
+be a distinct odd nonunit whole cover with fewer classes: divisor
+closure supplies the original numerical label q, whose first digit
+is outside U, so it is deleted but never selected. Consequently
+
+$$
+\{i\in C_c:v_q(d_i)=1\}\ne\varnothing
+\qquad(c\in U).
+\tag{WR2}
+$$
+
+The actual q-free parents of these height-one originals exist by
+whole-family numerical divisor closure. They are the only numerical
+parent liabilities if all q-bearing originals are deleted at once.
+This is a different exchange from retaining and carrying some of
+those q-bearing originals.
+
+## One common reflection preserves numerical distinctness
+
+The construction works for any odd prime $p\ne q$. Let $H=v_p(Q)$
+and define, using WR2,
+
+$$
+b_c=\min\{v_p(d_i):i\in C_c,\ v_q(d_i)=1\}.
+\tag{WR3}
+$$
+
+Number p-digits from zero. Give a selected color c one selector
+which fixes the digit positions $b_c,\ldots,2H-b_c$. Its size among
+all $p^{2H+1}$ words is $p^{2b_c}$.
+
+Write a selected original as $d_i=p^{a_i}q^{j_i}r_i$, with
+$(r_i,pq)=1$. Preserve its actual other-prime phase and its literal
+stripped q-tail. There are two cases.
+
+If $j_i\ge2$, keep the literal strip unchanged. Its output label
+still contains q.
+
+If $j_i=1$, WR3 gives $a_i\ge b_c$. Use the new p-height
+
+$$
+e_i=2H+1-a_i,
+\qquad
+\widehat d_i=p^{2H+1-a_i}q^{j_i-1}r_i.
+\tag{WR4}
+$$
+
+Preserve the original low $a_i$ p-digits and take digits
+$a_i,\ldots,2H-a_i$ from the assigned selector. CRT gives one
+actual AP with label WR4. This definition also works when the
+selector conflicts with the original digits on their overlap:
+the corresponding inverse slice is then empty, and the extra
+coverage of the emitted AP is harmless.
+
+The entire intersection of the literal strip with the assigned
+selector is contained in this one output AP. The required digit
+positions form a full initial segment $0,\ldots,e_i-1$; extra
+selector positions can be forgotten. This containment is sufficient
+for coverage and does not claim equality of the whole strip with
+its enclosure.
+
+Every altered output has p-height at least $H+1$ and is q-free.
+Every unaltered output has p-height at most H and still contains q.
+Thus altered outputs are fresh against all original labels, and
+unaltered outputs are fresh against all retained q-free labels.
+
+Within each output range, the p-height recovers the original $a_i$;
+the q-height recovers $j_i$, and the remaining factor recovers $r_i$.
+The two ranges are disjoint. Hence equality between any two emitted
+labels, including emissions from different colors or different cases,
+forces equality of the old numerical labels. All emissions have
+distinct odd moduli greater than one.
+
+## A finite prefix allocation supplies complete selectors
+
+Order the digit positions as
+
+$$
+H,\ H-1,\ H+1,\ H-2,\ H+2,\ldots,0,2H.
+\tag{WR5}
+$$
+
+For each b, the interval $[b,2H-b]$ is a prefix of this order.
+Therefore its selectors are the cells of a nested partition, with
+cell sizes $p^{2b}$.
+
+If the available color weights sum to at least $p^{2H+1}$, process
+colors in decreasing b and assign disjoint available cells of their
+sizes. At each size the remaining cells are whole cells, because
+every preceding size is an integer multiple of it. Stop as soon as
+they fill the entire word space. If a level does not finish, use its
+available colors and subdivide the remaining cells. At the last level
+cells have size one, and the weight assumption guarantees completion.
+Each selected color receives just one cell.
+
+Retain every original in $\mathcal F$ and delete every original in
+$\mathcal A_q$. An integer outside the q-free residual is already
+covered by $\mathcal F$. For an integer in the residual, its word
+chooses a selected color; the complete stripped family of that color
+covers it, and the corresponding retained strip or enclosure covers
+it as well. This proves coverage of all integers.
+
+There is at most one emitted AP per selected original. The original
+q is deleted and belongs to no selected moving color, so the number
+emitted is strictly smaller than $K_q$, even if every moving color
+was selected. Global count-minimality therefore implies
+
+$$
+\sum_{c\in U}p^{2b_c}\le p^{2H+1}-1.
+\tag{WR6}
+$$
+
+The comparison cover may have larger p-height. Global minimality
+allows that comparison; no fixed original period is imposed on it.
+
+## The actual ternary height-one inventory
+
+For $p=3$ and $H=2$, let $N_a$ count colors whose lowest ternary
+row among their q-height-one originals is a. Then
+
+$$
+N_0+N_1+N_2=n,
+\qquad
+N_0+9N_1+81N_2\le242.
+\tag{WR7}
+$$
+
+The three selector sizes are 1, 9 and 81 within the 243 five-digit
+words. They respectively fix all five digits; digits 1, 2, 3;
+and digit 2. The common reflected output heights for original rows
+0, 1 and 2 are respectively 5, 4 and 3. Every original of q-height
+at least two keeps its literal strip and remains q-bearing.
+
+Since $n\ge83$, WR7 gives
+
+$$
+N_2\le1,
+\qquad
+N_0\ge64,
+\qquad
+N_2=1\Longrightarrow N_0\ge73.
+\tag{WR8}
+$$
+
+Thus the exchange forces bottom-row originals specifically
+at q-height one in at least 64 distinct moving colors. The numerical
+parents are actual q-free originals. These are global counts, not
+additional terms to add to the 471-owner inventory of one specified
+masked component.
+
+## Reuse and boundary
+
+This construction reuses complete-color stripping, CRT enclosure,
+and the numerical height recovery of Report385 HPA6--HPA8. The
+selector allocation is a finite prefix packing. The interface to
+check is the common reflection WR4 on height-one originals together
+with unchanged strips of all deeper originals; the existing component
+exchanges do not already check that combination.
+
+The general-p construction is an ordinary mathematical derivation.
+The exact ternary consumer has a cache-guarded Lean application. It
+starts with the actual whole integer cover, distinct odd nonunit
+labels, global count-minimality, ternary height at most two, and the
+actual original label q. It derives full global color-strip service,
+the existence of height-one owners, and their minimum rows. No
+component, common private point or CD21 inventory is assumed.
+
+The application constructs the finite selectors, the actual CRT
+classes and their numerical labels, checks whole integer coverage
+and global injectivity, and uses the unselected original q for strict
+count decrease. Its final consumer derives WR7--WR8 with actual
+height-one witnesses at each counted minimum row. The application
+exits successfully with 169 axiom-closure reports, each using only
+`propext`, `Classical.choice`, `Quot.sound`, or no axioms; there are
+no errors or `sorryAx`.
+
+These are transient applications of existing coordinate, CRT and
+finite-cardinality machinery, with the three-row arithmetic checked
+explicitly. No new frozen Lean declaration or coverage claim is
+retained. The constraints do not themselves supply a complete repair
+for an arbitrary multi-parent color family, and unrestricted
+Erdős #7 remains unresolved.
