@@ -139,10 +139,10 @@ definitions encode intrinsic coordinates and the ambient witness; all
 proof steps are local facts inside `result`, not companion theorems.
 
 `result` existentially supplies a complex bilinear map, an actual
-`Basis (Fin 5) ℂ E`, and V, and states ambient finrank five, vanishing
+`Module.Basis (Fin 5) ℂ E`, and V, and states ambient finrank five, vanishing
 mixed basis products, finrank three, square equality and universal
-subspace minimality. Repository Lean validation and freezing are pending;
-prior local compilation does not substitute for them.
+subspace minimality. The formal claim is exactly this existential statement;
+the general-dimensional arguments in Triage are separate written mathematics.
 
 ## Triage
 

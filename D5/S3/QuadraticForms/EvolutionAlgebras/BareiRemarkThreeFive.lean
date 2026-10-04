@@ -74,8 +74,7 @@ def Square (μ : E →ₗ[ℂ] E →ₗ[ℂ] E) (U : Submodule ℂ E) : Submodul
   Submodule.span ℂ {z | ∃ x ∈ U, ∃ y ∈ U, μ x y = z}
 
 /-- Affirmative answer to Barei's Remark 3.5, with an explicit five-dimensional ambient space. -/
-theorem result :
-    ∃ μ : E →ₗ[ℂ] E →ₗ[ℂ] E, ∃ b : Basis (Fin 5) ℂ E,
+theorem result :    ∃ μ : E →ₗ[ℂ] E →ₗ[ℂ] E, ∃ b : Module.Basis (Fin 5) ℂ E,
       ∃ V : Submodule ℂ E,
         Module.finrank ℂ E = 5 ∧
         (∀ i j : Fin 5, i ≠ j → μ (b i) (b j) = 0) ∧
@@ -86,7 +85,6 @@ theorem result :
   have product_mem_square {U : Submodule ℂ (A)} {x y : A}
       (hx : x ∈ U) (hy : y ∈ U) : mul x y ∈ square U :=
     Submodule.subset_span ⟨x,hx,y,hy,rfl⟩
-
   have top_of_basis_mem (U : Submodule ℂ (A))
       (hu : u ∈ U) (hv : v ∈ U) (hw : w ∈ U) : U = ⊤ := by
     apply top_unique
@@ -95,7 +93,6 @@ theorem result :
       ext i; fin_cases i <;> dsimp [u,v,w] <;> ring
     rw [he]
     exact U.add_mem (U.add_mem (U.smul_mem _ hu) (U.smul_mem _ hv)) (U.smul_mem _ hw)
-
   have generates (U : Submodule ℂ (A))
       (closed : ∀ x ∈ U, ∀ y ∈ U, mul x y ∈ U)
       (x : A) (hx : x ∈ U) (ha : x 0 ≠ 0) : U = ⊤ := by
@@ -120,7 +117,6 @@ theorem result :
       rw [heu] at hm
       exact (Submodule.smul_mem_iff U ha).mp hm
     exact top_of_basis_mem U hu hv hw
-
   have perfect : square ⊤ = ⊤ := by
     let U := square (⊤ : Submodule ℂ (A))
     have hvv : mul (u) (v) = (2 : ℂ) • v := by
@@ -145,7 +141,6 @@ theorem result :
       have h'' : (4 : ℂ) • u ∈ U := by simpa using h'
       exact (Submodule.smul_mem_iff U (by norm_num : (4 : ℂ) ≠ 0)).mp h''
     exact top_of_basis_mem U hu hv hw
-
   have embed_injective : Function.Injective (embed) := by
     intro x y h
     have h0 : x 0=y 0 := by simpa [embed] using congrFun h 0
@@ -157,21 +152,25 @@ theorem result :
       linear_combination h1-h0
     · change x 2 = y 2
       linear_combination h2-h0
-
   have embedding_preserves_product (x y : A) :
       ambientMul (embed x) (embed y) = embed (mul x y) := by
     ext i; fin_cases i <;> dsimp [ambientMul,embed,mul] <;>
       (try simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
         Matrix.head_cons,Matrix.tail_cons]) <;> ring
-
   have ambient_evolution (i j : Fin 5) (h : i ≠ j) :
       ambientMul (fun k => if k=i then 1 else 0) (fun k => if k=j then 1 else 0) = 0 := by
-    ext k; fin_cases i <;> fin_cases j <;> fin_cases k <;> simp_all [ambientMul]
-
+    have disjoint (k : Fin 5) :
+        (if k = i then (1 : ℂ) else 0) * (if k = j then 1 else 0) = 0 := by
+      by_cases hi : k = i
+      · have hj : k ≠ j := fun hj => h (hi.symm.trans hj)
+        simp only [if_pos hi, if_neg hj, mul_zero]
+      · simp only [if_neg hi, zero_mul]
+    ext k
+    fin_cases k <;> dsimp [ambientMul] <;>
+      simp only [mul_assoc, disjoint, mul_zero, add_zero, sub_zero]
   have ambient_product_mem {U : Submodule ℂ (E)} {x y : E}
       (hx : x ∈ U) (hy : y ∈ U) : ambientMul x y ∈ ambientSquare U :=
     Submodule.subset_span ⟨x,hx,y,hy,rfl⟩
-
   have ambient_perfect : ambientSquare (V) = V := by
     apply le_antisymm
     · apply Submodule.span_le.mpr
@@ -190,7 +189,6 @@ theorem result :
       intro z hz
       obtain ⟨a,rfl⟩ := hz
       exact hle (by trivial)
-
   have ambient_generates (U : Submodule ℂ (E)) (hUV : U ≤ V)
       (closed : ∀ x ∈ U, ∀ y ∈ U, ambientMul x y ∈ U)
       (x : E) (hx : x ∈ U) (ha : x 0 ≠ 0) : U = V := by
@@ -211,7 +209,6 @@ theorem result :
     obtain ⟨b,rfl⟩ := hz
     have h : b ∈ C := by rw [hC]; trivial
     exact h
-
   have ambient_minimal (U : Submodule ℂ (E))
       (hUV : U ≤ V) (hne : U ≠ ⊥) (hp : ambientSquare U = U) : U = V := by
     classical
@@ -235,7 +232,6 @@ theorem result :
     intro a ha b hb
     rw [← hp]
     exact ambient_product_mem ha hb
-
   let μ : E →ₗ[ℂ] E →ₗ[ℂ] E :=
     { toFun := fun x =>
         { toFun := ambientMul x
@@ -262,7 +258,12 @@ theorem result :
   · simp [E]
   · intro i j hij
     change ambientMul ((Pi.basisFun ℂ (Fin 5)) i) ((Pi.basisFun ℂ (Fin 5)) j) = 0
-    simpa only [Pi.basisFun_apply, Pi.single_apply] using ambient_evolution i j hij
+    have basis_coordinates (i : Fin 5) :
+        (Pi.basisFun ℂ (Fin 5)) i = fun k => if k = i then 1 else 0 := by
+      funext k
+      by_cases hk : k = i <;> simp [Pi.basisFun_apply, Pi.single, hk]
+    rw [basis_coordinates, basis_coordinates]
+    exact ambient_evolution i j hij
   · exact ambient_perfect
   · intro U hUV hne hp
     exact ambient_minimal U hUV hne hp
