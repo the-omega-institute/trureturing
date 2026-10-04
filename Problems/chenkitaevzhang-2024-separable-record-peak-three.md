@@ -73,15 +73,19 @@ $$
 
 where $\delta(n,k)=1$ exactly when $n=k=1$. They reduce the remaining
 four declining laws at $n\ge5$ to the actual irreducible right-maximum
-law.
+law. `RecordFirstDecline.actual_four_record_first_decline` proves the
+first declining comparison $a(n,4)\le a(n,3)$ at every natural length,
+and its strict form for every $n\ge3$, on all four actual class/statistic
+pairs. The proof establishes its exact positive quotient and infinite tail
+inside the actual weighted inference.
 
 ## Gap
 
-The actual irreducible right-maximum declining law, its universal coefficient
-argument for every $k\ge3$, and the global maximum remain open. The
-Motzkin differential recurrence, support and Newton identity, the remaining
-exact quotient certificates with unbounded nonnegative tails, and their
-actual-series applications are missing. No full open-problem resolution or
+The actual irreducible right-maximum declining comparisons for arbitrary
+$k\ge4$, their universal coefficient argument, and the global maximum
+remain open. The Motzkin differential recurrence, support and Newton identity,
+the other exact quotient certificates with unbounded nonnegative tails,
+and their actual-series applications are missing. No full open-problem resolution or
 KPI increment is attributed to the partial theorems.
 
 ## Route
@@ -119,9 +123,9 @@ Conjecture 15 are separate open problems.
 ## Triage
 
 Theorem: a Tier 2 published universal mathematical conjecture with exact
-source classes and record definitions. The two partial actual-carrier
-theorems leave the complete conjecture open. Neither is a full external
-settlement, and neither carries an `OpenProblemResolutionClaim`.
+source classes and record definitions. The partial actual-carrier
+theorems leave the complete conjecture open. None is a full external
+settlement or carries an `OpenProblemResolutionClaim`.
 
 ## ASSUMED-UNVERIFIED
 

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:857d828437cc0996a13ec1a340ae32a3e59be61de3697d45efdf0f4d6e3eccfa
   normalized_sha256: sha256:857d828437cc0996a13ec1a340ae32a3e59be61de3697d45efdf0f4d6e3eccfa
 cas_ref: sha256:857d828437cc0996a13ec1a340ae32a3e59be61de3697d45efdf0f4d6e3eccfa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Tower/DBonacci/TerminalSamplingLaw.terminal_sampling_uniform_law
+    target_statement_id: sha256:588248e2a58b05d8be38f3b8321a1bbc75da0a27e952c7ec20005cc3ae871171
 receipts:
   unresolved_subitems: []
