@@ -9,8 +9,11 @@ code can depend on a retained cofactor coordinate without
 splitting its original inverses if every moving digit subtree
 has only owners that fix that coordinate. The construction
 below gives a phase-sensitive obstruction and a moment under
-one simultaneous code law. It does not supply the required
-inventory of movable digits or a contradictory upper bound.
+one simultaneous code law. The divisor-controlled construction does
+not supply its required movable-digit inventory. The component
+construction below obtains at least 83 movable digits under the
+additional GHA11 height envelope, but supplies no contradictory
+upper bound on actual component profiles.
 
 All SC labels below refer to Report 388. Use its terminal
 digits $\alpha,\beta,\gamma$, and write
@@ -391,12 +394,268 @@ on every control row automatically preserve one payable
 progression per original. A larger paid packet or another
 source remains possible.
 
-The outstanding requirements are a bound forcing enough
-movable digits in the same actual family, control of its
-actual phase and color distribution, and an upper bound
-contradicting CD8 after accounting for all surviving
-monochromatic and higher-support groups. SC483 supplies none
-of these by itself. CD1--CD10 are ordinary mathematical
-deductions without a claim of Lean verification. The
+## Codes constant on actual owner components
+
+The full numerical gcd in CD9 is one sufficient control. Actual phases
+permit another: keep each moving subtree constant on every actual
+owner's entire cofactor cylinder. This section uses the same one EB1
+whole cover, $q=113$ and $H_3=2$, with all original q-heights retained.
+
+Let $P$ be the set of first q-digits of **all** unit-cofactor originals
+$3^a q^j$, with $0\le a\le2$ and $1\le j\le G$. Fix
+$U\subseteq\mathbb F_{113}\setminus P$, and write $n=|U|\ge6$.
+Every digit outside $U$ has a protected complete subtree, including
+its later dictionaries and any terminal path. Taking the whole
+complement gives $n\ge113-3G$. Only under the additional GHA11
+height bound $G\le10$ does this imply $n\ge83$; a bound on the
+prime support alone does not imply that height bound.
+
+The vertices of the owner graph are all actual originals
+$3^{a_i}q^{e_i}m_i$ with first q-digit $c_i\in U$. In particular,
+the graph includes every ternary row and every q-height. Join distinct
+vertices when their full literal cylinders
+
+$$
+C_i=[\rho_i]_{m_i}\subseteq\mathbb Z/W\mathbb Z
+$$
+
+intersect. For each graph component $C$, let $V_C$ be the union of
+its cylinders. Distinct $V_C$ are disjoint: a shared point would give
+an edge between their components. Every $C_i$ lies wholly in its
+component's $V_C$. Consequently a permutation fixed on $V_C$ is
+fixed on every moving owner's entire cylinder. No common numerical
+divisor or congruence-coset shape of $V_C$ is assumed.
+
+Including a unit-cofactor owner would give a cylinder equal to all
+of $W$, merging the entire graph into one component. Its exclusion
+is therefore substantive; a deep unit owner cannot be silently
+dropped from the graph.
+
+### One simultaneous component code
+
+Choose one global safe word $z$ uniformly from the five safe words.
+For every possible $z$, fix a lawful forest with all six short leaves
+above $z$. Such a forest exists: the actual $3q$ root has at least
+two safe words, so place its depth-four terminal over a different
+word $v$; place the q-terminal over a word different from both $v$
+and $z$. All nine depth-four slots over $z$ are then available for
+the six short leaves. The remaining safe leaves give 105 long leaves.
+
+Fix the protected continuing digits at long leaves and the two
+terminal digits at their terminals. If $\gamma$ is nonterminal,
+give it any fixed long leaf; its actual $9q$ continuing inverse is
+long or empty. There are $111-n$ protected continuing digits, so
+$n\ge6$ leaves exactly enough room to reserve a moving block of
+six short leaves and $n-6$ long leaves. The case $n=111$ is allowed
+when the actual unit-digit set has only the two terminal digits.
+
+Independently for every component $C$, choose a uniform bijection
+from $U$ to this same moving block, and use it at every point of
+$V_C$. Outside their union use a fixed bijection. For each global
+$z$, the protected subtrees, terminal suffixes and later dictionaries
+on the geometric leaves are fixed across all component rows.
+
+This defines one source on the complete corridor before choosing an
+original owner: decode the full q-word using the row of its actual
+W-coordinate and preserve the complete modulo-$9W$ coordinate.
+The common carrier $3^{3G+2}W$ suffices. A moving owner fixes its
+row on its whole $m_i$-cylinder; every other owner has a protected
+subtree. Every continuing inverse is therefore empty or one whole
+AP with its original cofactor phase, at every q-height. No additional
+component mask restricts that AP, because the entire original cylinder
+already belongs to that component.
+
+The grouped allocation CD3 now applies without requiring the three
+phases of one numerical cofactor to belong to the same component.
+The terminal and deeper payments, distinct fresh numerical labels
+and whole-source coverage are those already checked above. If no
+group were bad, this would be one EB1-improving whole replacement.
+Hence every outcome of this experiment has an actual all-short triple.
+
+This uses the all-six-above-one-word geometry. It does not preserve
+Report858's distinct selected modulo-27 parents, short-owner
+inertness or balanced-parent Hall estimates.
+
+### An exact component-weighted moment
+
+For a nonunit cofactor $m$ with $9qm$ original, let $c_0,c_1,c_2$
+be its three actual shallow first digits and $\kappa_0,\kappa_1,
+\kappa_2$ their owner components. First require all three digits to
+belong to $U$, the actual $9qm$ word $z_m$ to be safe, and the
+actual $3qm$ root $b_m$ to satisfy $b_m\equiv z_m\pmod3$.
+Otherwise its bad-event probability is zero. For an eligible group put
+
+$$
+r_{m,C}=\left|\{c_a:a\in\{0,1,2\},\ \kappa_a=C\}\right|,
+\qquad (x)_r=x(x-1)\cdots(x-r+1).
+$$
+
+Repeated equal digits within a component are counted once. The exact
+bad-event probability and necessary whole-cover inequality are
+
+$$
+p_m=\frac15\prod_{C:r_{m,C}>0}
+       \frac{(6)_{r_{m,C}}}{(n)_{r_{m,C}}},
+\qquad
+\sum_m p_m\ge1.
+\tag{CD11}
+$$
+
+The factor $1/5$ selects the one global word $z=z_m$. Within each
+component the short digits are a uniform six-subset of $U$; the
+inclusion probability of $r$ distinct specified digits is
+$\binom{n-r}{6-r}/\binom n6=(6)_r/(n)_r$. Different components
+have independent permutations. Different groups use those same
+permutations and are not assumed independent. Every outcome has a
+bad group, so expectation and the finite union bound give CD11.
+
+Write $f_r=(6)_r/(n)_r$. Let $A_1,A_2,A_3,A_{11},A_{21},A_{111}$
+count eligible groups whose multisets of positive $r_{m,C}$ are
+$(1),(2),(3),(1,1),(2,1),(1,1,1)$, respectively. These six cases exhaust
+the three actual shallow owners. Then CD11 is equivalently
+
+$$
+f_1A_1+f_2A_2+f_3A_3+f_1^2A_{11}
+       +f_2f_1A_{21}+f_1^3A_{111}\ge5.
+\tag{CD12}
+$$
+
+A repeated-digit triple in $k$ components has probability
+$(6/n)^k/5$. Splitting these three phases across components reduces
+that probability. There is no monotonic gain for all groups: for
+three distinct digits the factor $(6/n)^3$ from three components
+is greater than $(6)_3/(n)_3$ from one component when $n>6$.
+CD12 cannot be substituted into SC480 while keeping its code law
+or its original coefficients.
+
+### Whole coverage gives every component all moving digits
+
+Choose an original in a nonempty component and one of its complete
+private points $x$. For each $c\in U$, change only the first q-digit
+of $x$, preserving all higher q-digits, its complete ternary word
+and W-coordinate $w$. Every q-free original still misses. Whole
+coverage supplies a q-bearing owner with first digit $c$, hence a
+vertex of this graph. Its cylinder and the initial owner's cylinder
+both contain $w$, so the new owner lies in the same component.
+Distinct digits have distinct owners. Every component therefore has
+at least $n$ vertices, realized at this one actual cofactor point.
+
+This gives no upper bound on component size or count. SNC1 controls
+top originals at one fixed ternary word, first q-digit and cofactor
+point; the component graph includes all rows and permits paths through
+different cofactor points. A pointwise incidence bound cannot be
+used as a component-size bound.
+
+Nor does the original every-code/exists-bad-group statement supply
+a code-independent cofactor law. Conditioning on each code's complete
+unpaid region can produce a legitimate joint law whose cofactor
+marginal depends on the code. Bare SC479 probabilities cannot then
+be multiplied by separately selected incidence masses. The complete
+joint-hole constructions in Report385 sections 139 and 143 retain
+this dependence. CD11 gives lawful adaptive codes, not the missing
+uniform law or a strict reverse inequality.
+
+### Components of the full preserved-coordinate supports
+
+The component construction can also preserve each owner's ternary
+test before deciding which code row to use. Let $\mathcal A$ be the
+five safe words modulo 9. For every moving owner define
+
+$$
+R_i=\{(u,w)\in\mathcal A\times\mathbb Z/W\mathbb Z:
+u\equiv\rho_i\pmod{3^{a_i}},\quad
+w\equiv\rho_i\pmod{m_i}\}.
+\tag{CD13}
+$$
+
+Use all original q-heights and all three ternary rows, and join two
+owners when their full $R_i$ supports intersect. Every moving owner
+has a nonempty support: its complete private point misses the retained
+pure 3 and 9 classes and therefore has a safe old word. Distinct
+component unions are disjoint, and the whole support $R_i$ belongs
+to its component $\kappa_i$. These components refine the W-only
+components because every support intersection projects to a cofactor
+cylinder intersection.
+
+For one global safe word $z$, use the same fixed forest and protected
+subtrees as above, and choose an independent moving-block permutation
+for each of these finer components. For an output $x$, select its row
+from the component containing $(x\bmod9,x\bmod W)$, using a fixed
+row off the component unions. Decode its complete q-word using that
+row and preserve $x\bmod9W$. This defines one total source on the
+whole corridor before an original owner is selected.
+
+At fixed $w$, different old words can use different rows. The labels
+obtained by evaluating all geometric leaves need not form one global
+bijection. The argument consequently uses the following direct
+whole-inverse identity, rather than identifying the construction with
+SC468's originally stated code class. Write $\theta_C$ for the
+complete fixed-row decoder of component $C$. The complete continuing
+inverse of a moving owner is exactly
+
+$$
+I_i=\{x\text{ continuing}:
+(x\bmod9,x\bmod W)\in R_i,\quad
+\theta_{\kappa_i}(x)\equiv\rho_i\pmod{q^{e_i}}\}.
+\tag{CD14}
+$$
+
+Membership of the actual source in owner $i$ first forces the
+preserved pair to lie in $R_i$, which already forces its row to be
+$\kappa_i$. This proves both directions of CD14. For the fixed
+decoder, the q-prefix inverse is empty or one ternary prefix
+progression, of depth four or five at q-height one and depth
+$3e_i+2$ at greater heights. Such a prefix fixes its old word modulo
+9. The literal ternary test therefore leaves the whole prefix or
+empties it; the cofactor test gives one whole AP with the original
+$m_i$ phase. There is no additional component mask. Owners outside
+$U$ have protected complete subtrees and the same inverse conclusion.
+
+Terminal outputs still have their fixed donors. For a continuing
+output in the complete deletion hole, the total source stays in that
+hole because it preserves modulo $9W$; original whole coverage then
+supplies an owner whose entire inverse has just been enclosed. CD3,
+the deep payments and all numerical-label freshness arguments apply
+unchanged. No surjectivity of the total source is needed. Thus every
+outcome again has an actual all-short triple. CD11 and CD12 hold with
+these refined component indices and the corresponding actual profile
+counts. The effect on the moment is still not monotone.
+
+There is a stronger common-source inventory statement for either
+component construction. **Every vertex belongs to a clique of at least
+$n$ vertices, one at each moving first digit.** Start with its complete
+private point and vary only the first q-digit. All new owners contain
+the same preserved pair $(u,w)$, so they are pairwise adjacent. At the
+initial digit the point is unchanged and its unique owner is the
+initial vertex. The other digits give distinct actual labels. This
+clique uses different first digits; it is not bounded by SNC1's
+fixed-first-digit incidence cap.
+
+### Verification scope and remaining inequality
+
+A scoped transient Lean check confirms whole-support component
+constancy on an arbitrary base set; six-subset inclusion counts and
+their falling-factorial form; one common five-word/component-subset
+experiment; the pointwise bad-group union bound; the six-profile
+aggregation in CD12; and the opposite effects of C1 and C3 splitting
+for $n>6$. The check compiles with only the standard axioms
+`propext`, `Classical.choice` and `Quot.sound`. Its arbitrary base
+includes both W and $\mathcal A\times W$ supports. It reuses the
+pinned Mathlib finite-set, connected-component and counting results;
+it introduces no retained mathematical declaration.
+
+The complete arithmetic decoder, AP inverses, actual family-to-event
+mapping, private-point inventory and EB1 payment contradiction above
+are ordinary mathematical deductions, not a claim of end-to-end Lean
+verification. In particular, the finite moment check takes the
+pointwise existence of a bad group as a premise.
+
+The divisor-controlled route CD8 still needs its own $D_h$ inventory,
+actual phase and color distribution, and a contradictory upper bound.
+The component route CD12 has $n\ge83$ under the additional GHA11
+height envelope, but still needs an upper bound on its actual
+component profiles contradicting CD12. Every surviving repeated-digit
+and distinct-digit profile must be included. SC483 supplies neither
+upper bound by itself. The
 height-two branch and unrestricted odd distinct covering
 remain unresolved.
