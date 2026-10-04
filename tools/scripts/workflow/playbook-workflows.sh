@@ -317,14 +317,12 @@ case "$COMMAND" in
   deposit)
     require_transaction_arguments
     deposit_module
-    if cover_row; then
-      step emit make emit
-    else
+    cover_row || {
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
         "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
       exit "$status"
-    fi
+    }
     ;;
   deposit-uncovered)
     if [[ "$#" -ne 3 || -n "${ATOM_ID+x}" ]]; then
@@ -340,7 +338,6 @@ case "$COMMAND" in
     require_transaction_arguments
     step lean-report make lean-report
     cover_row
-    step emit make emit
     ;;
   cover-batch)
     require_cover_batch_arguments

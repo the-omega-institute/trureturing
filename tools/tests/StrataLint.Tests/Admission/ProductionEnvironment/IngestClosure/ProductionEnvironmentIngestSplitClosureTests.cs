@@ -238,13 +238,9 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("cas")]
     [InlineData("tail")]
     [InlineData("coverage-gid")]
-    [InlineData("scribe-definition")]
-    [InlineData("scribe-emission")]
     public void StatusAuthorityClosureRejectsEachRetainedChangedInput(string inputKind)
     {
         var entry = StatusAuthorityClosureEntry();
-        var coverageGid = Assert.Single(entry.CoverageGids);
-        var documentGid = ScribeEmissionAttestation.DocumentGid(coverageGid);
         var changedPath = inputKind switch
         {
             "entry" => DirectoryAtomPath(entry.AtomId, "residual-open"),
@@ -254,8 +250,6 @@ public sealed partial class ProductionEnvironmentTests
             "cas" => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..],
             "tail" => entry.Receipts.TailAuthorization!.Path,
             "coverage-gid" => "D5/S0/Carrier/Ring.lean",
-            "scribe-definition" => ScribeEmissionAttestation.DefinitionPath(documentGid),
-            "scribe-emission" => ScribeEmissionAttestation.EmissionPath(documentGid),
             _ => throw new ArgumentOutOfRangeException(nameof(inputKind)),
         };
 
@@ -264,6 +258,22 @@ public sealed partial class ProductionEnvironmentTests
             DigestionReceiptAlignment.Seen,
             baselineEntryPresent: true,
             changes: RawChangeSet.Create([changedPath]),
+            isBaseFactAffected: null));
+    }
+
+    [Fact]
+    public void StatusAuthorityClosureIgnoresBlueprintFilesOfCoverageTarget()
+    {
+        var entry = StatusAuthorityClosureEntry();
+        var documentGid = ScribeEmissionAttestation.DocumentGid(Assert.Single(entry.CoverageGids));
+
+        Assert.False(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
+            entry,
+            DigestionReceiptAlignment.Seen,
+            baselineEntryPresent: true,
+            changes: RawChangeSet.Create([
+                ScribeEmissionAttestation.DefinitionPath(documentGid),
+                ScribeEmissionAttestation.EmissionPath(documentGid)]),
             isBaseFactAffected: null));
     }
 
