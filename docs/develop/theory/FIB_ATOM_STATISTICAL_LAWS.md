@@ -22838,3 +22838,375 @@ $$
 仍未证明。(284.1) 不支付该完整成本，不构造实际 Robin 反例，也不推出 RH 或全 Robin 命题；母卷 §365 的既有实际最小公倍数族归约仍只适用于其原量词域。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 285. 总长度条件下完整间隔奇偶核的显式有限误差
+
+**定义 285.1（实际树、完整间隔与共同记录）。** 沿用定义 1.1、2.1 的自由有序非空满二叉树代数 $\mathcal T$，叶为 $\alpha,\beta$；左右次序与全部二叉括号化分别保留。对非负整数组成 $(a,b)$、$a+b\ge1$，$U(a,b)$ 是组成纤维 $\mathcal F(a,b)$ 上的均匀律。原替换及叶积关系为
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle,
+\qquad A^2=1,\quad B^2=-1,\quad AB+BA=1.
+$$
+
+$E(t)$ 按原叶序相乘，三个窗口始终属于同一实际树：
+
+$$
+W_3(t)=(E(t),E(\rho t),E(\rho^2t))=L(u,v,w)R_{pq},
+\qquad Z(t)=(u,v,w),\quad p=a\bmod2,\quad q=b\bmod2.
+$$
+
+这里直接采用[母卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)定理 359.3 的唯一正规形，置 $S=BA$，则
+
+$$
+L(u,v,w)=\bigl((-1)^vS^{2u},(-1)^wS^{2v},(-1)^uS^{2w}\bigr),
+\qquad
+R_{00}=(1,1,1),\quad R_{10}=(A,B,S),\quad
+R_{01}=(B,S,A+B),\quad R_{11}=R_{10}R_{01}.
+$$
+
+令 $k=\min(a,b)$、$M=\max(a,b)$、$d=k+1$、$n=k+M$。当 $a\le b$ 时以 $\alpha$ 分隔，叶词唯一写成
+$\beta^{r_0}\alpha\beta^{r_1}\cdots\alpha\beta^{r_k}$；当 $b<a$ 时以 $\beta$ 分隔，唯一写成
+$\alpha^{r_0}\beta\alpha^{r_1}\cdots\beta\alpha^{r_k}$。全部 $d$ 个间隔满足
+
+$$
+r_i\in\mathbb Z_{\ge0}\quad(0\le i<d),\qquad \sum_{i=0}^{d-1}r_i=M.
+$$
+
+每个叶词都有同样的 $\operatorname{Cat}_{n-1}=n^{-1}\binom{2n-2}{n-1}$ 种有序二叉括号化。采用定理 2.2 及 §§283–284 的计数回接，$U(a,b)$ 在 $r$ 上诱导总和为 $M$ 的均匀弱组成律，而给定 $r$ 后仍均匀保留全部括号。定义
+
+$$
+\xi_i=r_i\bmod2,\qquad h=\sum_{i=0}^{d-1}\xi_i,\qquad
+\varepsilon_0=0,\qquad
+\varepsilon_j=\left(\sum_{i<j}r_i\right)\bmod2\quad(1\le j\le d).
+$$
+
+实际端点为 $\varepsilon_d=M\bmod2$；$\xi_i=\varepsilon_i\mathbin{\oplus}\varepsilon_{i+1}$，其中 $\oplus$ 表示模二加法。因此全部 $d$ 位 $\xi$ 与包含端点的全部 $d+1$ 位 $\varepsilon$ 互相唯一决定。记实际完整奇偶律为 $\mathsf R_{d,M}$。在同一个 $r$ 上定义
+
+$$
+H=\sum_{\substack{0\le i<d\\i\text{ 奇}}}r_i,\qquad
+O=\sum_{\substack{1\le j\le k\\j\text{ 奇}}}\varepsilon_j,\qquad
+E=\sum_{\substack{1\le j\le k\\j\text{ 偶}}}\varepsilon_j.
+$$
+
+此处标量 $E$ 与叶积函数 $E(t)$ 由参数区分。直接使用 (283.12)–(283.13) 的同源坐标：
+
+$$
+\begin{aligned}
+Z&=\left(O-E,\frac{M-2H-(-1)^kq}{2},\lfloor k/2\rfloor-O-E\right)
+&& (a=k,b=M),\\
+Z&=\left(E-O+pq,\lfloor k/2\rfloor-O-E+pq,\frac{M-2H-p}{2}\right)
+&& (b=k,a=M).
+\end{aligned}
+\tag{285.1}
+$$
+
+两式的证明是母卷八边增量沿实际叶词求和，不需要 $k\ge64$，也不需要协方差可逆。相应实际支撑完整保留母卷定理 360.2：令
+
+$$
+X_e=\frac{a-p-2w+2u}{4},\qquad
+Y_e=\frac{b-q-2u+2v}{4},
+$$
+
+则 $X_e,Y_e$ 必须为整数，全部八个出发状态边重数
+
+$$
+\begin{aligned}
+x_{00}&=X_e+w-u+p,&x_{10}&=X_e+w,&x_{01}&=X_e,&x_{11}&=X_e-u,\\
+y_{00}&=Y_e+u+q(1-p),&y_{01}&=Y_e,&y_{10}&=Y_e-v+pq,&y_{11}&=Y_e+u-v
+\end{aligned}
+\tag{285.2}
+$$
+
+必须非负。$x_{pq}$ 是 $pq\xrightarrow{\alpha}(1-p)q$ 的次数，$y_{pq}$ 是 $pq\xrightarrow{\beta}p(1-q)$ 的次数；所有正重数边的端点连同起点 $00$，忽略方向后必须构成弱连通支撑。叶词从 $00$ 到 $(p,q)$ 的实际路径承担全部条件，不能以仅有流量方程的松弛替代。
+
+**定义 285.2（偏置参考合同与实际条件核）。** 对整数 $d\ge1,M\ge1$，置
+
+$$
+\tau=\frac{M}{M+d},\qquad
+\nu=\frac{\tau}{1+\tau}=\frac{M}{2M+d},\qquad
+\eta_0=1-2\nu=\frac{d}{2M+d},
+$$
+
+并令 $\mathsf Q_{d,M}$ 为全部 $d$ 个独立 $\operatorname{Bernoulli}(\nu)$ 位条件于
+$h\equiv M\pmod2$ 的律。独立性属于未条件参考采样；条件后的全部位不称为独立，也不称为原 $U(a,b)$ 的奇偶律。条件事件概率和单向量质量为
+
+$$
+p_e=\frac{1+(-1)^M\eta_0^d}{2}>0,\qquad
+\mathsf Q_{d,M}(\xi)=
+\frac{\nu^h(1-\nu)^{d-h}}{p_e}
+\mathbf1_{\{h\equiv M\pmod2\}}.
+\tag{285.3}
+$$
+
+实际弱组成计数给出
+
+$$
+\mathsf R_{d,M}(\xi)=
+\frac{\displaystyle\binom{(M-h)/2+d-1}{d-1}}
+{\displaystyle\binom{M+d-1}{d-1}}
+\mathbf1_{\{h\equiv M\pmod2,\ h\le M\}};
+\tag{285.4}
+$$
+
+指示条件不成立时质量为零，不对非整数或负参数解释组合数。对实际合法的完整 $\xi$，令 $s_\xi=(M-h)/2$。给定 $\xi$ 后，$r=2T+\xi$ 的实际条件核为
+
+$$
+\mathbb P(T=t\mid\xi)=
+\frac{\mathbf1_{\{t_i\in\mathbb Z_{\ge0},\ \sum_i t_i=s_\xi\}}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}.
+\tag{285.5}
+$$
+
+这是 (284.2)、(284.10) 已用的奇偶分解与均匀弱组成计数。$M\ge d$ 时，每个终端合法的 $\xi$ 都有 $s_\xi\ge0$，因而可以定义参考树律 $\widetilde U(a,b)$：先抽 $\xi\sim\mathsf Q_{d,M}$，再使用同一个实际核 (285.5) 抽 $T$，置 $r=2T+\xi$，按定义 285.1 的指定方向形成原叶词，最后均匀选择全部 $\operatorname{Cat}_{n-1}$ 种原有序括号。每一步均生成 $\mathcal F(a,b)$ 中的实际树。该律仅重加权实际奇偶纤维，属于额外参考合同；它的单树质量为
+
+$$
+\widetilde U(a,b)(t)=
+\frac{\mathsf Q_{d,M}(\xi(t))}
+{\operatorname{Cat}_{n-1}\displaystyle\binom{s_{\xi(t)}+d-1}{d-1}}.
+\tag{285.6}
+$$
+
+**命题 285.3（完整终端奇偶核的有限 TV 界及同源消费者）。** 总变差采用有限概率律的约定
+$\|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|$。对全部整数 $d\ge2,M\ge3d$，有
+
+$$
+\|\mathsf R_{d,M}-\mathsf Q_{d,M}\|_{\mathrm{TV}}
+\le \epsilon_{d,M}:=
+\min\left\{1,\ 5\left(\frac{\sqrt d}{M}+\frac{d(d-1)}{M^2}\right)\right\}.
+\tag{285.7}
+$$
+
+$d=1,M\ge1$ 时两律相等，取 $\epsilon_{1,M}=0$。在这些范围内，完整 $\varepsilon$ 记录的两律具有相同的 TV 距离。对任一对应组成 $(a,b)$，参考树律 (285.6) 满足
+
+$$
+\|U(a,b)-\widetilde U(a,b)\|_{\mathrm{TV}}
+=\|\mathsf R_{d,M}-\mathsf Q_{d,M}\|_{\mathrm{TV}}.
+\tag{285.8}
+$$
+
+因此，对由同一实际树计算的完整联合记录
+$(t,r,\xi,\varepsilon,H,O,E,Z,W_3(t))$ 的任意事件 $\mathcal A$，有两方向概率界
+
+$$
+\max\{0,\mathbb P_{\widetilde U}(\mathcal A)-\epsilon_{d,M}\}
+\le\mathbb P_U(\mathcal A)
+\le\min\{1,\mathbb P_{\widetilde U}(\mathcal A)+\epsilon_{d,M}\}.
+\tag{285.9}
+$$
+
+此处只将已有纤维等距提升及 TV 通道收缩作为 (285.7) 的消费者；承重的新增估计为完整密度的有限参数上界 (285.7)。它是本仓推导，不作全球优先权或最优常数断言。
+
+证明。先取 $d\ge2,M\ge3d$。此时所有终端合法向量都可实现，两律在同一完整奇偶集合上均严格为正。由 (285.3)，$\mathsf Q(\xi)$ 与 $\tau^h$ 成正比；由 (285.4) 的乘积展开，$\mathsf R(\xi)$ 与
+$\prod_{j=1}^{d-1}(M-h+2j)$ 成正比。故对 $0\le x\le d$ 定义
+
+$$
+\ell(x)=\sum_{j=1}^{d-1}\log(M-x+2j)-x\log\tau,
+\qquad m=d\nu=\frac{dM}{2M+d},
+$$
+
+则 $d\mathsf R/d\mathsf Q$ 与 $\exp(\ell(h))$ 成正比。全部对数参数为正，$0<m<d$。$m$ 只是未条件参考 Bernoulli 总和的均值，不将它认作 $\mathsf Q$ 下的条件均值。
+
+两个精确恒等式为
+
+$$
+M-m=\frac{2M^2}{2M+d},\qquad
+M-m+2d=\frac{2(M+d)^2}{2M+d}.
+$$
+
+令 $f(y)=(M-m+2y)^{-1}$，则 $f$ 正且递减，并且
+
+$$
+I_f:=\int_0^d f(y)\,dy
+=\frac12\log\frac{M-m+2d}{M-m}
+=-\log\tau.
+$$
+
+采用递减函数的积分比较：
+
+$$
+\int_1^d f(y)\,dy
+\le\sum_{j=1}^{d-1}f(j)
+\le\int_0^{d-1}f(y)\,dy
+\le I_f.
+$$
+
+因此完整离散和的端点误差满足
+
+$$
+0\le\ell'(m)=I_f-\sum_{j=1}^{d-1}f(j)
+\le\int_0^1f(y)\,dy
+\le\frac1{M-d}=:A_0.
+\tag{285.10}
+$$
+
+这里积分中心与偏置 $\nu$ 精确相消，保留的是全部 $d-1$ 项离散和的有限端点误差。全区间曲率则为
+
+$$
+\ell''(x)=-\sum_{j=1}^{d-1}\frac1{(M-x+2j)^2},
+\qquad -B_0\le\ell''(x)\le0,
+\qquad B_0=\frac{d-1}{(M-d)^2}\quad(0\le x\le d).
+\tag{285.11}
+$$
+
+置 $\Delta=h-m$、$X_\ell=\ell(h)-\ell(m)$。Taylor 积分余项和凹函数的切线界分别给出
+
+$$
+|X_\ell|\le A_0|\Delta|+\frac{B_0}{2}\Delta^2,
+\qquad
+X_\ell\le\ell'(m)\Delta\le A_0d\le\frac12.
+\tag{285.12}
+$$
+
+后一个估计同时覆盖 $\Delta<0$：这时 $\ell'(m)\Delta\le0$。上述余项覆盖全部合法向量，不丢弃尾部，也没有先作任何渐近极限。
+
+在未条件的参考 Bernoulli 律下，$h$ 的均值为 $m$、方差为 $d\nu(1-\nu)\le d/4$。由 $\eta_0\le1/7$，
+
+$$
+p_e=\frac{1+(-1)^M\eta_0^d}{2}
+\ge\frac{1-\eta_0^d}{2}\ge\frac13.
+$$
+
+将非负变量 $\Delta^2$ 的无条件期望除以条件事件概率，再用 Cauchy–Schwarz，得到
+
+$$
+\mathbb E_{\mathsf Q}\Delta^2\le\frac{3d}{4},\qquad
+\mathbb E_{\mathsf Q}|\Delta|\le\frac{\sqrt{3d}}2.
+\tag{285.13}
+$$
+
+这不是条件独立性或条件均值等式。于是
+
+$$
+\mathbb E_{\mathsf Q}|X_\ell|\le D_{d,M}:=
+\frac{\sqrt{3d}}{2(M-d)}+
+\frac{3d(d-1)}{8(M-d)^2}.
+\tag{285.14}
+$$
+
+$M-d\ge2d$、$d\ge2$ 给第一项至多 $\sqrt{3/2}/4<3/8$，第二项至多 $3(d-1)/(32d)<3/32$，故 $D_{d,M}<1/2$。令 $V_\ell=\exp(X_\ell)$、$c=\mathbb E_{\mathsf Q}V_\ell$；有限 Jensen 不等式给出完整归一化常数的下界
+
+$$
+c\ge\exp(\mathbb E_{\mathsf Q}X_\ell)\ge\exp(-D_{d,M}).
+$$
+
+由 $X_\ell\le1/2$ 和均值定理，$|V_\ell-1|\le e^{1/2}|X_\ell|$。精确归一化密度为
+$d\mathsf R/d\mathsf Q=V_\ell/c$，且
+$|c-1|\le\mathbb E_{\mathsf Q}|V_\ell-1|$，所以
+
+$$
+\begin{aligned}
+\|\mathsf R-\mathsf Q\|_{\mathrm{TV}}
+&=\frac1{2c}\mathbb E_{\mathsf Q}|V_\ell-c|\\
+&\le\frac1c\mathbb E_{\mathsf Q}|V_\ell-1|\\
+&\le\exp(1/2+D_{d,M})D_{d,M}\le eD_{d,M}.
+\end{aligned}
+\tag{285.15}
+$$
+
+最后 $M-d\ge2M/3$ 给
+
+$$
+D_{d,M}\le\frac{3\sqrt3}{4}\frac{\sqrt d}{M}
++\frac{27}{32}\frac{d(d-1)}{M^2}.
+$$
+
+使用 $e<3$、$9\sqrt3/4<5$、$81/32<5$，再用概率律的 TV 至多一，便得到 (285.7)。离散端点控制、全域曲率、条件二阶矩与归一化下界共同给出此有限 $L^1$ 误差；弱收敛或单点中心极限不承担任何一步定量换权。
+
+$d=1$ 时只有一个间隔 $r_0=M$，实际奇偶位确定为 $M\bmod2$；参考合同条件于同一奇偶后也集中在这个唯一位，故 TV 为零。固定 $\varepsilon_0=0$ 和 $\varepsilon_d=M\bmod2$ 后，$\xi\leftrightarrow\varepsilon$ 是定义 285.1 的双射，TV 因而保持。
+
+对于完整实际树，(285.5) 和均匀 Catalan 括号给共同条件核 $K_\xi(t)$，其支撑恰为奇偶记录等于 $\xi$ 的树。因而
+
+$$
+U(t)=\mathsf R(\xi(t))K_{\xi(t)}(t),\qquad
+\widetilde U(t)=\mathsf Q(\xi(t))K_{\xi(t)}(t),\qquad
+\sum_{t:\xi(t)=\xi}K_\xi(t)=1.
+$$
+
+纤维内的质量差同号，按纤维求绝对值即得
+
+$$
+\frac12\sum_t|U(t)-\widetilde U(t)|
+=\frac12\sum_\xi|\mathsf R(\xi)-\mathsf Q(\xi)|,
+$$
+
+证明 (285.8)。这是仓内 [FiberwiseEqualDistanceLift](../../../D5/S3/TotalVariation/Equality/FiberwiseEqualDistanceLift.lean) 的 `fiberwise_equal_distance_lift` 所用非空有限纤维提升的实例，参考正质量纤维的非空性由 $M\ge d$ 保证。再将同一树送入完整联合记录，采用 [DataProcessing](../../../D5/S3/TotalVariation/DataProcessing.lean) 的 `total_variation_channel_le` 对有限随机通道的收缩，任一事件的绝对概率差不超过 (285.8)，从而得到 (285.9)。这些已有中间工具不另列新增命题。
+
+有限消费者可以保留 $H$ 与全部奇偶路径的依赖。对 $k\ge1$，令
+
+$$
+n_o=\lceil k/2\rceil,\qquad n_e=\lfloor k/2\rfloor+1,
+\qquad h_o=\sum_{i\text{ 奇}}\xi_i,
+\qquad K_o=\sum_{i\text{ 奇}}T_i.
+$$
+
+$n_o,n_e\ge1$ 且 $n_o+n_e=d$。给定完整 $\xi$，将 (285.5) 的弱组成按奇、偶两组计数，直接复用 (284.10) 的 Dirichlet—多项式／Beta—二项分组核，得
+
+$$
+H=2K_o+h_o,\qquad
+\mathbb P(K_o=j\mid\xi)=
+\frac{\displaystyle\binom{j+n_o-1}{n_o-1}
+\binom{s_\xi-j+n_e-1}{n_e-1}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}
+\quad(0\le j\le s_\xi).
+\tag{285.16}
+$$
+
+$O,E$ 是同一个完整 $\xi$ 所确定的量。以 (285.16) 给定 $H$，再用 (285.1) 得 $Z(\xi,j)$；对任意 $\mathcal B\subseteq\mathbb Z^3$，参考概率的完整有限表达为
+
+$$
+\mathbb P_{\widetilde U}(Z\in\mathcal B)
+=\sum_{\substack{\xi\in\{0,1\}^d\\h\equiv M\ (2)}}
+\mathsf Q(\xi)
+\sum_{j=0}^{s_\xi}
+\frac{\displaystyle\binom{j+n_o-1}{n_o-1}
+\binom{s_\xi-j+n_e-1}{n_e-1}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}
+\mathbf1_{\{Z(\xi,j)\in\mathcal B\}}.
+\tag{285.17}
+$$
+
+对 $(\xi,\varepsilon,H,O,E,Z,W_3)$ 的联合事件，同样在指示函数中保留整份记录；若事件还依赖完整 $T$ 或括号，则使用 (285.5) 与全部 Catalan 括号求和。两律使用完全相同的条件核，没有把 $H,O,E$ 换成独立边缘。每次抽样都先生成原叶词和原树，再由原替换生成三个窗口，故 (285.2) 的八边非负整数与含 $00$ 的弱 Euler 支撑在两律中同时成立，支撑外均为零。$\square$
+
+本命题的退化边界可在同一证明中的精确质量上直接代入。$d=2$ 时，奇 $M$ 的合法向量只有 $01,10$，两律均各赋质量 $1/2$，故 TV 为零。偶 $M$ 的合法向量只有 $00,11$，实际与参考质量分别为
+
+$$
+\begin{aligned}
+\mathsf R(00)&=\frac{M+2}{2(M+1)},&
+\mathsf R(11)&=\frac{M}{2(M+1)},\\
+\mathsf Q(00)&=\frac{(M+2)^2}{(M+2)^2+M^2},&
+\mathsf Q(11)&=\frac{M^2}{(M+2)^2+M^2}.
+\end{aligned}
+$$
+
+因此在偶 $M\ge6$ 上
+
+$$
+\|\mathsf R_{2,M}-\mathsf Q_{2,M}\|_{\mathrm{TV}}
+=\frac{M(M+2)}{2(M+1)(M^2+2M+2)},\qquad
+\lim_{\substack{M\to\infty\\M\text{ 偶}}}
+M\|\mathsf R_{2,M}-\mathsf Q_{2,M}\|_{\mathrm{TV}}=\frac12.
+\tag{285.18}
+$$
+
+这只是 (285.3)–(285.4) 的边界代入，说明不能将所有固定 $d$ 的误差统一写为只有 $O(d^2/M^2)$ 的界。$k=0$ 对应 $d=1$，只有一个叶词，窗口确定，但全部 Catalan 括号仍作为不同树保留。$k=1$ 对应 $d=2$；(285.1) 在第一方向给 $u=-w$、第二方向给 $u=v$，故三维协方差奇异，不能直接使用三维高斯密度、正定性或逆协方差。
+
+对有界 $k$，(285.7) 给完整向量及树换权的 $O_k(M^{-1})$ 绝对误差。对 $d/M\to0$ 的参数族，令 $\delta_g=d/(M+d)$，由
+$\sqrt d/M=\delta_g/((1-\delta_g)\sqrt d)$ 和
+$d(d-1)/M^2\le\delta_g^2/(1-\delta_g)^2$，同一界可写为
+$O(\delta_g/\sqrt d+\delta_g^2)$；无需另加 $\delta_g\sqrt d\to0$。这些是有限界的范围解释，不给固定 $k$ 的完整三维 Gaussian，也不给单点相对局部误差或条件于罕见事件后的同一误差。$d\ge2,M<3d$ 不在 (285.7) 的估计域；$M<d$ 的范围不能无条件使用实际核 (285.5)：例如 $d=3,M=1$ 时，参考律对 $\xi=(1,1,1)$ 赋正质量，但 $s_\xi=-1$，实际质量为零。
+
+计数、几何奇偶分解、两方向坐标和 Dirichlet—多项式条件核采用本卷 §§283–284；正规形及实际支撑采用母卷 §§359–360；积分比较、Taylor 余项、Cauchy–Schwarz 与有限 Jensen 作为成熟中间工具使用。Bender–Canfield，*Locally Restricted Compositions I. Restricted Adjacent Differences*，DOI [10.37236/1954](https://doi.org/10.37236/1954)，[原文](https://mathweb.ucsd.edu/~ebender/reprints/111.pdf) Definition 1 及 Theorems 1、3 的局部限制组成、渐近计数与固定统计维数范围，不直接供应这里全部 $d$ 位、含终端条件的显式有限界；本命题也不将那些文献的渐近结论当作定量证明前提。
+
+(285.7)–(285.9) 的概率量词仅涉及原组成纤维的均匀树律与明示重加权参考律。它们不提供原仿射整数 $N^*=1+F_r g^*$ 上、保留完整素幂及全部除数的严格预算
+
+$$
+C^*+H^*<\left(\frac{\log\log N^*}{\log\log A}\right)^s,
+\qquad s=\log A\,\log\log A.
+$$
+
+该预算在原素数、连续区间、同整数和终端条件下仍为独立未决问题；统计换权不支付它，也不推出 Robin 或 RH。
+
+## 追加锚（本行以下为增补区）
