@@ -926,6 +926,97 @@ nothing about points outside $E_0$. Nor does it extend to the masked
 component graph, where separation may be caused by the retained cover
 even when the full congruences are compatible.
 
+### A common finite window for both component indices
+
+There is a different, two-actual-point argument which also applies
+to the masked graph. Select a finite set $S$ of cofactor primes and
+put
+
+$$
+W_S=\frac{W}{\prod_{p\in S}p^{(v_p(W)-9)_+}}.
+\tag{CD25}
+$$
+
+Assume $n>24|S|$. Every nonempty actual coarse fiber
+
+$$
+\mathscr F_{u,v}=\{(u,w)\in E_0:w\equiv v\pmod{W_S}\}
+$$
+
+is contained in the masked supports of at least $n-24|S|$ actual
+moving owners, with distinct first q-digits and with cofactors dividing
+$W_S$.
+
+Choose one actual point in this fiber and its $n$-owner clique. For
+each selected $p$, at most 24 of these original labels can have
+$p^{10}$ in their cofactor: they share the chosen point's literal
+$p^{10}$ phase. A union bound leaves at least $n-24|S|$ owners with
+no selected $p^{10}$. Each such cofactor $m_\ell$ divides $W_S$,
+because $m_\ell\mid W$, the unselected exponents are unchanged, and
+every selected exponent of $m_\ell$ is at most nine. Its literal
+cofactor test therefore holds at **every** point of the same coarse
+fiber; the old word $u$ is also unchanged. All these points are
+actually in $E_0$, so the whole fiber lies in $F_\ell$.
+
+In particular the pointwise masked-component index, as well as the
+full-support index, satisfies
+
+$$
+\boxed{
+(u,w),(u,w')\in E_0,\quad w\equiv w'\pmod{W_S}
+\quad\Longrightarrow\quad
+\kappa(u,w)=\kappa(u,w').
+}
+\tag{CD26}
+$$
+
+For $n\ge83$ and $|S|\le3$, at least eleven actual owners contain
+the entire fine fiber. The common vertices are chosen at one actual
+point and work simultaneously everywhere on that fiber. This does
+not independently choose incompatible owners at its different points.
+
+This proof does not transfer CD24's arbitrary full-support intersection
+to a masked intersection. It forces a shared owner at the two actual
+endpoints themselves. Consequently it needs no bottom-row anchor,
+no intermediate uncovered path, and no assumption that the mask is
+constant on the coarse fiber.
+
+There is an equivalent graph statement. Project each $F_i$ by
+$\pi_S(u,w)=(u,w\bmod W_S)$ and join owners whose projected supports
+intersect. The projected graph has exactly the same connected
+components as the original masked graph. Indeed an original edge
+projects to an edge. For a new projected edge $i,j$, choose its two
+actual witnesses in one coarse fiber. A common owner $\ell$ supplied
+above meets $F_i$ at the first witness and $F_j$ at the second, giving
+an original path of length at most two. Thus coarse projection creates
+no new component merger. It can create new pairwise intersections;
+equality of the original and projected intersection graphs is not claimed.
+
+Under the additional GHA11 envelope, choose the full available digit
+set $U=\mathbb F_{113}\setminus P$ and take
+$S=\{5,7,11\}\cap\{p:p\mid W\}$. Then $G\le10$ gives
+$n\ge83>72$, and the carrier for the component index has bounds
+
+$$
+v_5(W_S),v_7(W_S),v_{11}(W_S)\le9,
+\qquad v_p(W_S)\le11\quad(p\ge13).
+\tag{CD27}
+$$
+
+The second bound uses the actual GHA11 table
+$H_p\le10+\lfloor23/(p-1)\rfloor$; it does not follow from the
+prime-support bound alone. CD26 says that the component index descends
+to the **image of $E_0$** in this finite window. It does not assert
+that membership in $E_0$ itself, every individual owner support,
+or all raw inverse APs descend. Computing the projected supports still
+requires their actual joint realizability. The decoder continues to
+preserve the full original modulo-$9W$ coordinate.
+
+The masked component classes and the available-word sets used in CD16
+and CD21 are unchanged by this graph projection. Their unknown
+profile and moment upper bounds are therefore still required; the
+finite window is not a whole-cover contradiction.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -970,6 +1061,17 @@ complement is defined to be exactly the complement of lifted $E_0$.
 It does not assume that a raw inverse is a single AP; arithmetic
 fixed-prefix enclosure is an explicit premise. These checks use only
 the standard axioms already listed.
+
+A further transient check verifies the exact factorization of $W_S$,
+its selected exponent formula, cofactor divisibility, and the common-owner
+count for arbitrary finite $S$. With $|S|\le3$ and an actual clique of
+at least 83 owners, it checks whole-fiber containment by at least eleven
+owners and both component indices' factorization on the subtype $E_0$.
+Literal incidence, the clique lower bound, and the phase cap of 24 are
+explicit premises. All twelve checked axiom closures use only the
+standard axioms listed above. The general $n>24|S|$ endpoint statement
+and the projected graph's length-two-path corollary remain ordinary
+deductions; neither was separately kernel-replayed.
 
 The complete arithmetic decoder, AP inverses, actual family-to-event
 mapping, private-point inventory and EB1 payment contradiction above
