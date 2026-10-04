@@ -1,0 +1,53 @@
+**定义 33.1（十四叶块与两个三槽族）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal I_3(14)$、$\operatorname{NC}$、$K$、$K_\circ$、$D$ 和 $\mathsf{Cap}$，以及式（30.2）的实际像 $A,C,B$。另置
+
+$$
+\begin{gathered}
+H=\langle A,A\rangle,\qquad T=\langle A,C\rangle,\qquad
+S=\langle A,H\rangle,\qquad R=\langle H,A\rangle,\\
+D_0=\langle A,B\rangle,\qquad D_1=\langle A,T\rangle,\\
+\mathcal V=\{\langle C,H\rangle,\langle H,C\rangle,
+                 \langle B,A\rangle,\langle T,A\rangle\},
+\qquad \mathcal Z=\mathcal V\cup\{D_0,D_1\}.
+\end{gathered}
+\tag{33.1}
+$$
+
+这里 $H$ 是一棵固定的六叶树，不是历史或孔集；$T$ 是一棵固定的八叶树，不是来源域 $\mathcal T$。这些块的叶数为
+
+$$
+\begin{gathered}
+n(A)=3,\quad n(C)=5,\quad n(H)=6,\quad
+n(B)=n(T)=8,\quad n(S)=n(R)=9,\\
+n(D_0)=n(D_1)=n(D)=11\quad(D\in\mathcal V).
+\end{gathered}
+\tag{33.2}
+$$
+
+定义两个有序三槽上下文及其槽地址：
+
+$$
+\begin{aligned}
+J_{\mathrm R}[X_1,X_2,X_3]&=\langle X_1,\langle X_2,X_3\rangle\rangle,
+ &(p_1,p_2,p_3)_{\mathrm R}&=(\mathtt L,\mathtt{RL},\mathtt{RR}),\\
+J_{\mathrm L}[X_1,X_2,X_3]&=\langle\langle X_1,X_2\rangle,X_3\rangle,
+ &(p_1,p_2,p_3)_{\mathrm L}&=(\mathtt{LL},\mathtt{LR},\mathtt R).
+\end{aligned}
+\tag{33.3}
+$$
+
+对 $\eta\in\{\mathrm R,\mathrm L\}$、$j\in\{1,2,3\}$，令 $P_j^\eta$ 是 $J_\eta$ 的第 $j$ 槽填 $B$、其余两槽填 $A$ 的树，记 $F_\eta=\{P_1^\eta,P_2^\eta,P_3^\eta\}$。于是
+
+$$
+\begin{aligned}
+F_{\mathrm R}
+ &=\{\langle B,H\rangle,\langle A,\langle B,A\rangle\rangle,
+                  \langle A,\langle A,B\rangle\rangle\},\\
+F_{\mathrm L}
+ &=\{\langle\langle B,A\rangle,A\rangle,
+        \langle\langle A,B\rangle,A\rangle,\langle H,B\rangle\}.
+\end{aligned}
+\tag{33.4}
+$$
+
+$\eta$ 仅标记这两个固定上下文，不把树取结合商。控制器仍使用[定义 29.1](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的全来源只读合同：未知输入为任意 $U\in\mathcal T$，初始化不含输入组成、叶数、高度、正性或候选身份承诺；每个有限地址均合法，四值报告来自同一个不变的 $U$，仅不同实际请求地址收费；$F_\eta$ 是初始化中给定的费用评价族，不是输入身份承诺。
+
