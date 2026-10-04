@@ -20692,7 +20692,7 @@ and have the same literal phase modulo h. Divisor closure makes h an original la
 
 This argument permits e_i=1. An exponent-one label can equal h only in the parent case just handled; no assumption that every selected original is a deeper q-descendant is needed.
 
-Every hypothetical matching of size two in the stated graph is excluded by one of these two cases. The additional arithmetic consumer is the four-row repair with two different cofactor gcds. The common-parent capacity, complete-deletion rule, fresh-row construction and elementary graph classification are reused. No Lean verification, global incidence-matrix conclusion or unrestricted noncoverage is asserted.
+Every hypothetical matching of size two in the stated graph is excluded by one of these two cases. The additional arithmetic consumer is the four-row repair with two different cofactor gcds. The common-parent capacity, complete-deletion rule, fresh-row construction and elementary graph classification are reused. No Lean verification of this general-H argument, global incidence-matrix conclusion or unrestricted noncoverage is asserted.
 
 ### A same-source bound for nonunit top cofactors
 
@@ -20710,7 +20710,7 @@ First, each prime ell divides the cofactors of at most two counted labels. Three
 
 By section167 the graph is a star or a triangle together with isolated vertices. In a nonempty star, the leaves and isolated vertices have pairwise coprime nonunit cofactors; choosing one prime from each gives `N-1<=r`. In a triangle, choose a prime from each edge gcd. These three primes are distinct, since no prime occurs in three vertices. Each isolated vertex supplies another distinct prime, giving `N<=r`. The edgeless case follows by choosing one prime from each of its pairwise coprime nonunit cofactors. The empty family is immediate.
 
-This counts all q-heights at the ONE fixed complete ternary word, first-q root and complete cofactor point. Unit cofactors `s=1` are excluded. It gives no bound for originals with ternary height below H, no uniform bound on `omega(M)`, and no whole-cover contradiction by itself. It is an ordinary mathematical consequence of the existing graph and parent capacities, not new Lean verification.
+This counts all q-heights at the ONE fixed complete ternary word, first-q root and complete cofactor point. Unit cofactors `s=1` are excluded. It gives no bound for originals with ternary height below H, no uniform bound on `omega(M)`, and no whole-cover contradiction by itself. For general H, it is an ordinary mathematical consequence of the existing graph and parent capacities; the ternary-height-two application below has its own exact Lean check.
 
 ### The same pure-top source requires lower-ternary shell service
 
@@ -20726,7 +20726,105 @@ Indeed, QC3's individual-shell identity gives F_b(x,q)>=(q-1) for every b=1,...,
 
 All full-ternary-height suppliers have the SAME complete ternary word x modulo3^H, first-q root x modulo q, and complete cofactor incidence at x modulo M. By SNC1, their nonunit cofactors s>1 account for at most omega(M)+1 labels and hence that much total weight. Their unit-cofactor labels are among3^H q^e with2<=e<=G, so numerical distinctness bounds this disjoint part by G-1. Subtracting these two upper bounds from the same shell-service sum proves SNC2.
 
-This reuses QC3 and the same-source top count. It retains all q-heights and all actual lower-ternary suppliers, supplies no upper bound on L(x), and makes no assertion about another private source. A negative right side is simply a vacuous lower bound; no whole-cover contradiction or Lean verification follows by itself.
+This reuses QC3 and the same-source top count. It retains all q-heights and all actual lower-ternary suppliers, supplies no upper bound on L(x), and makes no assertion about another private source. A negative right side is simply a vacuous lower bound; no whole-cover contradiction or Lean verification of SNC2 is asserted.
+
+### Complete second-root service at one actual source
+
+Specialize to ternary height at most two, $q=113$, q-height at most ten,
+and at most 27 distinct prime factors of $W$, with $W>0$ and
+$\gcd(W,3q)=1$. Keep one finite whole cover by distinct odd moduli
+greater than one, globally minimal first in class count and then in
+modulus sum among all such whole covers. Its original labels are
+$3^{a_i}q^{j_i}m_i$, with $m_i\mid W$. The comparison class permits
+replacements whose ternary height exceeds two. Let $E_0$ be the exact
+complement of the q-free originals on the modulo-9 and $W$ carrier.
+Fix one base $b=(u,w)\in E_0$ and one first q-digit $c$. Suppose that
+no original with $a_i=2$, $j_i=1$ agrees with this same base and digit.
+
+SNC1 bounds all active nonunit top originals at this source by 28.
+Every active top original has q-height at least two. The active unit
+top originals have distinct numerical labels $9q^j$, $2\le j\le10$,
+so there are at most nine. Each top original fixes a single second
+q-digit. Removing those at most 37 digits leaves a set D with
+
+$$
+|D|\ge113-28-9=76.
+\tag{SNC3}
+$$
+
+For every $d\in D$, consider the complete integer fiber
+
+$$
+\mathscr F_{b,c,d}=\{z\in\mathbb Z:
+ z\equiv u\pmod9,\quad z\equiv w\pmod W,\quad
+ z\equiv c+qd\pmod{q^2}\}.
+\tag{SNC4}
+$$
+
+CRT makes every such fiber nonempty. Every integer in it has an
+actual original owner. A q-free owner is excluded by $b\in E_0$;
+a top owner is excluded by the choice of d. Therefore
+
+$$
+\forall d\in D\ \forall z\in\mathscr F_{b,c,d}\quad
+\exists i:\quad j_i>0,\quad a_i\le1,\quad
+\rho_i\equiv c\pmod q,\quad z\in A_i.
+\tag{SNC5}
+$$
+
+The universal quantifier retains every higher q-digit and every
+integer lift. The owner may vary with $d$ and $z$. The set $D$ may vary with $b$
+and $c$; no fixed set of 76 digits is asserted over all $E_0$.
+
+The source premise can be supplied by any actual original g with
+$j_g\ge2$. Global class-count minimality gives a complete private
+integer x of g: otherwise deleting g would leave a whole cover.
+Set $b=(x\bmod9,x\bmod W)$ and $c=x\bmod q$. Then $b\in E_0$.
+An original with q-height one agreeing with this b and c would also
+cover x, contradicting privacy and $j_g\ge2$. Thus no first-height
+original in any row serves this source.
+
+Apply SNC3--SNC5 at that one source, then remove the second q-digit
+of g from D. At least 75 digits remain. For every integer in every
+one of their nonempty fibers, there is an actual original i with
+
+$$
+i\ne g,\qquad j_i\ge2,\qquad a_i\le1,\qquad
+\rho_i\equiv c\pmod q,\qquad z\in A_i.
+\tag{SNC6}
+$$
+
+The common base and first digit are projections of the same complete
+private integer $x$ of the actual $g$. The pure $q^G$ source
+used for SNC2 is a special case when $G\ge2$ and that original is
+present. SNC6 neither identifies one owner for an entire fiber nor
+keeps the same owner when its remaining digits change.
+
+The exact ternary application derives the prime-incidence cap of two
+from the existing whole-cover pair-phase repair. Two disjoint
+cofactor-sharing edges would provide two different shared primes,
+or violate that cap. In the former case the actual four-class repair
+uses the fresh labels $27,27q,27p,27r$, covers the full union of the
+four deleted originals and strictly reduces their total modulus.
+The finite support bound then gives SNC1 at this source. Thus the
+application does not assume SNC1, the graph constraint or an
+unproved phase capacity as an extra premise. Numerical divisor
+closure is not needed by this ternary application.
+
+Its complete cache-guarded check has 41 axiom-closure reports, all
+using only `propext`, `Classical.choice` and `Quot.sound`, with no
+errors or `sorryAx`. It verifies the actual same-family top bound,
+the nonempty fibers, the private-source certificate and the whole-tail
+service in SNC3--SNC6.
+The general-H statement of SNC1 and the weighted shell inequality
+SNC2 retain their ordinary-proof scope.
+
+Neither this pointwise service nor its root count supplies a global
+replacement. Such a replacement still needs one common source map,
+AP enclosures for complete original inverses, distinct numerical
+labels, and a count or modulus-sum decrease. Choosing a different
+favorable root at each cofactor point does not establish those
+conditions. Unrestricted noncoverage is not inferred.
 
 ## 168. An actual63 overlap excludes shared7 at height one
 
