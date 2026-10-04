@@ -117,7 +117,12 @@ The canonical source is
   `pairEquiv`, `outEquiv`, `singleEquiv`, `out3Equiv` and `fourEquiv` of
   `FourQubitResidualSumMonotoneRefutation`, made public for this purpose.
 - Freeze identities:
-__IDS__
+  - module statement `sha256:3d05fb0402f588537ae0670b118ff7624d93a97cc5b73da1bda4abb4071f001b`;
+  - `result` statement `sha256:4d8f54432268b2e50f08a0e832ee231414dac21d4e9e15c183df614bde3b0a7a`;
+  - Freeze event `sha256:0aac1dc983cc9778c6af24670e2c3da33ee711bca7c82f60b61c6ba7980ed638`.
+    Its project-level frozen prerequisite is the refrozen Freeze event of
+    `FourQubitResidualSumMonotoneRefutation`,
+    `sha256:007f4fa49ea439d0209925a10013eaab4e3031f64359294fd60ae5ebdb0a4d10`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 

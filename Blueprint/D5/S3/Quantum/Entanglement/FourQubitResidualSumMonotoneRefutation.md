@@ -52,7 +52,77 @@ $$(claim) \Leftrightarrow (\forall \psi : (\operatorname{Fin}\left(4\right) \to 
 
 An entanglement monotone does not increase on average under LOCC. A complete instrument K_0, ..., K_{n-1} on qubit A, with sum_j K_j^dagger K_j = I, is a one-step LOCC protocol; K_j acts on qubit A (index 0) through the existing localOp, the product operator with factor K_j at qubit 0 and the identity elsewhere, applied to psi by matrix-vector multiplication: the outcome j occurs with probability p_j = ||K_j psi||^2 (the weights p of the display) and leaves the normalized state K_j psi / sqrt(p_j). The displayed statement asserts sum_j p_j M(K_j psi / sqrt(p_j)) <= M(psi) for every normalized four-qubit vector and every such instrument, omitting the outcomes with p_j = 0; it is a consequence of the conjecture that M is an entanglement monotone.
 
-**Definition 1.5 (The counterexample state).**
+**Definition 1.5 (Coordinates of a pair).**
+
+$$\forall p, q : \operatorname{Fin}\left(4\right), \forall x : (\ \{p, q\ \} \to \operatorname{Fin}\left(2\right)), \operatorname{pairEquiv}\left(p, q, x\right) = (x\left(p\right), x\left(q\right))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.pairEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yan-Kui Bai; Dong Yang; Z. D. Wang (2007). *Multipartite quantum correlation and entanglement in four-qubit pure states*. DOI: [10.1103/PhysRevA.76.022336](https://doi.org/10.1103/PhysRevA.76.022336). URL: <https://arxiv.org/abs/quant-ph/0703098v2>.
+
+*Commentary.*
+
+For distinct qubits p and q, pairEquiv reads a configuration x of the pair {p, q} as the ordered pair (x(p), x(q)) in Fin 2 x Fin 2.
+
+**Definition 1.6 (Coordinates outside a pair).**
+
+$$\forall p, q, r, s : \operatorname{Fin}\left(4\right), \forall z : (\operatorname{Outside}\left(\ \{p, q\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{outEquiv}\left(p, q, r, s, z\right) = (z\left(r\right), z\left(s\right))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.outEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yan-Kui Bai; Dong Yang; Z. D. Wang (2007). *Multipartite quantum correlation and entanglement in four-qubit pure states*. DOI: [10.1103/PhysRevA.76.022336](https://doi.org/10.1103/PhysRevA.76.022336). URL: <https://arxiv.org/abs/quant-ph/0703098v2>.
+
+*Commentary.*
+
+When the qubits r and s are exactly the two qubits outside {p, q}, outEquiv reads a configuration z of those qubits as (z(r), z(s)).
+
+**Definition 1.7 (Coordinate of one qubit).**
+
+$$\forall k : \operatorname{Fin}\left(4\right), \forall x : (\ \{k\ \} \to \operatorname{Fin}\left(2\right)), \operatorname{singleEquiv}\left(k, x\right) = x\left(k\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.singleEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yan-Kui Bai; Dong Yang; Z. D. Wang (2007). *Multipartite quantum correlation and entanglement in four-qubit pure states*. DOI: [10.1103/PhysRevA.76.022336](https://doi.org/10.1103/PhysRevA.76.022336). URL: <https://arxiv.org/abs/quant-ph/0703098v2>.
+
+*Commentary.*
+
+singleEquiv reads a configuration x of the single qubit k as its value x(k) in Fin 2.
+
+**Definition 1.8 (Coordinates outside one qubit).**
+
+$$\forall k, r, s, t : \operatorname{Fin}\left(4\right), \forall z : (\operatorname{Outside}\left(\ \{k\ \}\right) \to \operatorname{Fin}\left(2\right)), \operatorname{out3Equiv}\left(k, r, s, t, z\right) = (z\left(r\right), z\left(s\right), z\left(t\right))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.out3Equiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yan-Kui Bai; Dong Yang; Z. D. Wang (2007). *Multipartite quantum correlation and entanglement in four-qubit pure states*. DOI: [10.1103/PhysRevA.76.022336](https://doi.org/10.1103/PhysRevA.76.022336). URL: <https://arxiv.org/abs/quant-ph/0703098v2>.
+
+*Commentary.*
+
+When the qubits r, s and t are exactly the three qubits other than k, out3Equiv reads a configuration z of those qubits as (z(r), z(s), z(t)).
+
+**Definition 1.9 (Coordinates of four qubits).**
+
+$$\forall w : (\operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(2\right)), \operatorname{fourEquiv}\left(w\right) = (w\left(0\right), w\left(1\right), w\left(2\right), w\left(3\right))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.fourEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Yan-Kui Bai; Dong Yang; Z. D. Wang (2007). *Multipartite quantum correlation and entanglement in four-qubit pure states*. DOI: [10.1103/PhysRevA.76.022336](https://doi.org/10.1103/PhysRevA.76.022336). URL: <https://arxiv.org/abs/quant-ph/0703098v2>.
+
+*Commentary.*
+
+fourEquiv reads a configuration w of the four qubits as (w(0), w(1), w(2), w(3)).
+
+**Definition 1.10 (The counterexample state).**
 
 $$\psi = \frac{1}{21} \cdot (20 \cdot |0001\rangle + 2 \cdot |1000\rangle + 6 \cdot |1011\rangle + |1110\rangle)$$
 
@@ -66,7 +136,7 @@ $$\psi = \frac{1}{21} \cdot (20 \cdot |0001\rangle + 2 \cdot |1000\rangle + 6 \c
 
 The state is (20|0001> + 2|1000> + 6|1011> + |1110>)/21, with norm one since 400 + 4 + 36 + 1 = 441.
 
-**Definition 1.6 (The measurement on qubit A).**
+**Definition 1.11 (The measurement on qubit A).**
 
 $$K_{0} = \operatorname{diag}\left(\frac{21}{29}, 0\right),\qquad K_{1} = \operatorname{diag}\left(\frac{20}{29}, 1\right)$$
 
@@ -80,7 +150,7 @@ $$K_{0} = \operatorname{diag}\left(\frac{21}{29}, 0\right),\qquad K_{1} = \opera
 
 The two outcomes are K_0 = diag(21/29, 0) and K_1 = diag(20/29, 1) on qubit A, with K_0^dagger K_0 + K_1^dagger K_1 = I.
 
-**Theorem 1.7 (The residual-correlation sum increases on average).**
+**Theorem 1.12 (The residual-correlation sum increases on average).**
 
 $$\neg claim$$
 
@@ -102,10 +172,15 @@ The outcome K_0 has probability 400/841 and leaves the product state |0001>, so 
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.concurrence`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.fourEquiv`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.instrument`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.linearEntropy`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.out3Equiv`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.outEquiv`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.pairEquiv`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.psi`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.residualSum`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.singleEquiv`
 - Dependency: [D5/S3/Quantum/Entanglement/PurityTimeReversalOverlapMinimum](PurityTimeReversalOverlapMinimum.md)
 - Dependency: [D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence](../Information/StabilizerPairLocalUnitaryInequivalence.md)
