@@ -1,0 +1,7 @@
+**Definition 6.1 (Strict comparisons in Definition 5.1).** A left maximum at
+position $i$ exceeds every value at positions $j<i$; a left minimum is
+below every value at positions $j<i$; a right minimum is below every value
+at positions $j>i$. The right-maximum comparison is Definition 1.1.
+These four counts are strict and unshifted, including the empty and
+singleton conventions of Definition 5.1.
+

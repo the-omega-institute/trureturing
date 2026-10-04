@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c2abf58d9b5ba692e2dc51ee5bd16a15ac5ec9ca4d708323f9809e7a525adcca
+  normalized_sha256: sha256:c2abf58d9b5ba692e2dc51ee5bd16a15ac5ec9ca4d708323f9809e7a525adcca
+cas_ref: sha256:c2abf58d9b5ba692e2dc51ee5bd16a15ac5ec9ca4d708323f9809e7a525adcca
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciActualTailImages.actual_tail_zero_image_decomposition
+    target_statement_id: sha256:be8b7a9f5b821544825475f4f88c42eb9976684d1b522a165d6539002cbed095
+receipts:
+  unresolved_subitems: []

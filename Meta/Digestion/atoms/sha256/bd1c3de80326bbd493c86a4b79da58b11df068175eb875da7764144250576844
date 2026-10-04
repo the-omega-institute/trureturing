@@ -1,0 +1,14 @@
+**命题 32.4（两片残差不能删除非冲突条件）。** 取实际像
+
+$$
+\begin{aligned}
+P_0&=\langle C,\langle A,A\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\alpha\rangle\rangle\bigr),\\
+Q_0&=\langle\langle A,A\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\alpha\rangle,\beta\rangle\bigr).
+\end{aligned}
+\tag{32.15}
+$$
+
+两者不同，组成都为 $(4,7)^{\mathsf T}$，叶数均为 $11$，并都属于 $\mathcal E_{H_*}$；各有两片未覆盖 $\alpha$，但不满足 $\operatorname{NC}$。因此，引理 31.5 对全部同叶数 $\mathcal E_H$ 成员的残差上界 $1$，不能无条件换成 $2$。
+
