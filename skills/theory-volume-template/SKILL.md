@@ -202,7 +202,7 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 5  grep -E '^INGEST |EXIT=' log —— 判据见下
 6  git commit 账目(Meta/Digestion/**) → push
 7  git merge origin/dev → 重跑 ingest → 四零齐 ∧ 工作树零改动
-8  make pr-open HEAD=<branch> MESSAGE=<file> [AUTO_MERGE=1]   # 自带同步等待,别在外面套轮询
+8  make pr-open HEAD=<branch> MESSAGE=<file> [AUTO_MERGE=0] [DRAFT=1]   # 普通 PR 自带同步等待;草稿直接返回;别在外面套轮询
 9  合入后同步主检出、git worktree remove、删分支
 ```
 
