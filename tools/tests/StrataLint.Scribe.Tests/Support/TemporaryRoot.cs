@@ -7,12 +7,13 @@ namespace StrataLint.Scribe.Tests;
 /// </summary>
 internal sealed class TemporaryRoot : IDisposable
 {
-    internal TemporaryRoot()
+    internal TemporaryRoot(bool sdkConfiguration = false)
     {
         Path = System.IO.Path.Combine(
             System.IO.Path.GetTempPath(),
             "stratalint-scribe-root-" + Guid.NewGuid().ToString("N"));
         TemporaryFileSystem.Directory.CreateDirectory(Path);
+        if (sdkConfiguration) StrataLint.TestSupport.ScribeSdkFixtureInputs.Write(Path);
     }
 
     internal string Path { get; }
