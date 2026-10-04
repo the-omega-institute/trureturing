@@ -2747,8 +2747,8 @@ omitted top sources such that
 $$
  \begin{gathered}
  H\subseteq\bigcup_{d\in\mathcal W_*}C_d,\qquad
- d=3^{a_d}5^{b_d}m_d,\quad a_d\ge1,\quad m_d\ge1,\\
- C_d=[\eta_d]_{3^{b_d}m_d},\qquad m_d\mid M.
+ d=3^{a_d}5^{b_d}m_d,\quad m_d\ge1,\quad m_d\mid M,\\
+ C_d=[\eta_d]_{3^{b_d}m_d},\qquad 3\cdot5^{b_d}m_d\in D.
  \end{gathered} \tag{SC122}
 $$
 The phase $\eta_d$ is the actual output phase of that source under
@@ -2760,24 +2760,28 @@ service; it is not a condition only on individual private points.
 For every fixed common tree, the following retained-family choice
 supplies SC122 before imposing the matching below. Choose exactly
 one actual lower representative in every surviving numerical slot
-except $3$, preferring its original height-zero member whenever
-that member survives. If original $5$ survives, choose the bought
-root $S$ to be its exact output class $C_5$; otherwise choose any
-root. Form the full mandatory top set and $\mathcal F_0$ as in
-Section 29 using these choices.
+except $3$. These representatives may be chosen by their actual
+phases; no preference for original height zero is required. If
+$15\notin D$ and original $5$ survives, buy its exact output class
+$S=C_5$; otherwise choose any root. Form the full mandatory top
+set and $\mathcal F_0$ as in Section 29 using these choices.
 
-A point of $H_{\rm low}$ has a lower owner outside
-$\mathcal R$. Such an owner cannot have $a_d=0$: height-zero
-output slots are injective, so the preference retains every one
-except possibly slot $3$. The unique height-zero source of slot
-$3$ is original $5$, whose entire output is now $S$ and hence is
-disjoint from $H$. Therefore $H_{\rm low}$ is covered by actual
-discarded lower sources with $a_d\ge1$. For a point of
+A discarded lower source in a slot other than $3$ shares its
+cofactor $k=5^bm$ with the retained representative. The two distinct
+original labels have different $3$-heights, so at least one height
+is positive. Divisor closure supplies $3k\in D$, even when the
+discarded source itself has height zero. In slot $3$, the cofactor
+is $k=5$. If there is any positive-height original in this column,
+then $15\in D$ supplies the same qualification. Otherwise the only
+possible discarded source is original $5$, and the chosen $S$ pays
+its whole output. Thus every point of $H_{\rm low}$ has a
+discarded lower supplier satisfying the inventory condition in
+SC122. For a point of
 $H_{\rm top}$, SC15 supplies a top owner in either fixed safe
 color. That owner is mandatory, since a retained top would cover
 a point of $H$; its original height is $a_d=A\ge1$.
 
-Take these positive-height discarded lower suppliers together with
+Take these qualified discarded lower suppliers together with
 the mandatory tops of one fixed color, omitting any source already
 contained in $S$. This finite family covers all of $H$, including
 every integer lift, and satisfies SC122 for every $A\ge2$.
@@ -2849,11 +2853,13 @@ $\mathcal F_{\rm new}=\mathcal F_0\cup\{[0]_5\}\cup\{B_{d,r}\}$.
 ### Each matched slot has its own original donor
 
 For the requested slot $n=3^jh$, use the numerical original donor
-$3\cdot5^jh$. It exists by Section 30's divisor inventory:
-$a_d\ge1$, $j\le b_d$ and $h\mid m_d$ imply
-$3\cdot5^jh\mid d$. This counts an existing original label; its
-phase is not used for the added patch, and no further original is
-deleted from $\mathcal F_0$.
+$3\cdot5^jh$. The column qualification $3\cdot5^{b_d}m_d\in D$
+in SC122 and divisor closure supply it, because $j\le b_d$ and
+$h\mid m_d$. The donor need not divide the particular discarded
+original when that source has height zero. It may even be the
+original supplying a retained representative: SC111 already counts
+the full original column. Its phase is not used for the added patch,
+and no further original is deleted from $\mathcal F_0$.
 
 Because $(h,15)=1$, the correspondence
 $3^jh\longmapsto3\cdot5^jh$ is injective. Hence the globally
@@ -2899,7 +2905,7 @@ the numerical slots are assigned injectively. In particular:
 - If $m=1$, SC127 is equivalent to $b_i\ge4i$.
 
 If the entire hole lies in one actual source with prime cofactor
-$m$, output height $b_d\ge2$ and original height $a_d\ge1$,
+$m$, output height $b_d\ge2$ and the column qualification SC122,
 use slots $3,m,3m,9m$. The five added labels are
 $$
  5,\quad15,\quad5m,\quad15m,\quad45m.
@@ -2914,13 +2920,15 @@ output divisors, even though it has only one nonunit $M$-divisor.
 Likewise a single actual pure-cofactor source with $b_d\ge4$
 uses slots $3,9,27,81$, added labels $5,15,45,135,405$, and original
 donors $15,75,375,1875$. This application still requires
-$a_d\ge1$ and complete hole containment. No positive lower bound
+the column qualification and complete hole containment. No positive lower bound
 for $m_d-1$ enters the service or donor argument.
 
-The positive original ternary height is essential to the stated
-payment and is ensured by the representative choice above. An
-arbitrarily discarded height-zero source need not supply these
-$3$-bearing donors. The remaining unproved step is SC124 for some
+The original column must contain a positive-height label to justify
+this payment; the discarded source itself need not have positive
+height. The retained-family choice above guarantees that qualification
+for the complete supplier family. An arbitrarily discarded height-zero
+source without it need not have the required donors. The remaining
+unproved step is SC124 for some
 complete source choice on one common tree: sources may still
 compete for too few nonunit output divisors. The result reuses
 whole-class splitting, Hall matching and the original divisor
@@ -2929,17 +2937,21 @@ a Lean verification or a literature-priority claim.
 
 ## 33. A common liability hull can replace several source requests
 
-Keep Section 32's complete supplier family and its retained phases.
+Keep Section 32's retained family and its actual phases.
 If $H=\varnothing$, the existing count already gives a descent.
 Otherwise put $N=3^BM$, the common $5$-free period, choose $w\in H$,
 and define
 $$
- V=\bigcup_{d\in\mathcal W_*}\mathcal N_d,
+ V_3=\{3^b h>1:3\cdot5^b h\in D,\ (h,15)=1\},
  \qquad
  \Gamma_H=\gcd\bigl(N,\{x-w:x\in H\}\bigr).
  \tag{SC128}
 $$
-The hull can be computed in one complete $N$-period. Reuse
+The set $V_3$ uses the whole original inventory, not only selected
+suppliers. It consists of nonunit divisors of $N$ and is closed
+under taking nonunit divisors. Each member has its own original
+donor under the map of Section 32. The hull can be computed in
+one complete $N$-period. Reuse
 [report 385, PH3--PH4](385-private-congruence-hulls-and-crossed-modulus-closure.md#2-the-complete-private-region-supplies-more-than-divisor-closure),
 as already applied to complete liabilities in SC49: for $n\mid N$,
 $H\subseteq[w]_n$ exactly when $n\mid\Gamma_H$. The set here is
@@ -2947,26 +2959,28 @@ the entire $H_{\rm low}\cup H_{\rm top}$, not a union of separately
 chosen private regions.
 
 Suppose there are four distinct nonunit slots
-$n_1,\ldots,n_4\in V$ dividing $\Gamma_H$. Add $[0]_5$ and
+$n_1,\ldots,n_4\in V_3$ dividing $\Gamma_H$. Add $[0]_5$ and
 the four classes $[r]_5\cap[w]_{n_r}$, $r=1,2,3,4$.
 They cover all of $H$ and have distinct fresh labels $5,5n_1,\ldots,5n_4$.
-Membership in $V$ supplies an actual original donor for each slot,
-even if different slots use different suppliers. Section 32's donor
+Membership in $V_3$ supplies an actual original donor for each slot,
+without requiring a selected supplier whose whole output it contains.
+Section 32's donor
 injection and pure-power count therefore give
 $$
- \left|\{n\in V:n\mid\Gamma_H\}\right|\ge4
+ \left|\{n\in V_3:n\mid\Gamma_H\}\right|\ge4
  \quad\Longrightarrow\quad
  |\mathcal F_{\rm new}|=|\mathcal F_0|+5
        \le K-(A+z-1)<K.
  \tag{SC129}
 $$
 The patch phase is fixed by the actual hole point $w$; agreement
-with an original donor phase is not assumed. A divisor of $\Gamma_H$ outside $V$ does
-not receive this automatic donor payment.
+with an original donor phase is not assumed. A divisor of $\Gamma_H$
+outside $V_3$ does not receive this automatic donor payment.
 
 ### Group sources only when their actual phases admit a common enclosure
 
-More generally, partition $\mathcal W_*$ into nonempty groups $X$.
+For a complete qualified supplier family as in SC122, partition
+$\mathcal W_*$ into nonempty groups $X$.
 Writing $n_d=3^{b_d}m_d$, choose $d_X\in X$ and put
 $$
  \Gamma_X
@@ -2986,7 +3000,8 @@ with all these slots globally distinct. Use one shared class
 $[0]_5$ and the classes $[r]_5\cap[\eta_{d_X}]_{n_{X,r}}$.
 Each group is covered on every $5$-root, so SC122 pays the entire
 hole. Every selected slot divides the output modulus of each source
-in its group and therefore belongs to $V$. If there are $g$ groups,
+in its group and, by the column qualification, belongs to $V_3$.
+If there are $g$ groups,
 the same donor injection gives
 $$
  N_3\ge4g+A,\qquad
@@ -3026,3 +3041,547 @@ and retained family in every hypothetical cover. The result reuses
 the existing congruence hull and the complete service and donor checks
 of Section 32; it asserts no new Lean verification or unrestricted
 noncoverage theorem.
+
+## 34. The whole original inventory pays shallow complete-source repairs
+
+Keep the same actual retained family $\mathcal F_0$, bought root
+$S=[j]_3$ and complete integer hole $H$ from Section 29. Thus
+$H\cap S=\varnothing$ and
+$|\mathcal F_0|=K-N_3-z$ with $z\ge0$. A finite fresh repair
+with $c$ classes gives strict descent whenever $c<N_3+z$.
+This uses the full original inventory already present in SC111;
+matching each patch to a different supplier divisor is sufficient
+for payment but is not necessary.
+
+The packets below reuse Sections 23 and 26. Their additional
+application is to the complete lower-and-top liability at arbitrary
+original height $A\ge2$. No height-one assertion that both top colors
+cover the whole hole is imported: each required containment is stated
+for this actual $H$.
+
+### One unbought root and a small cofactor menu
+
+Suppose $\alpha\ne j\pmod3$, and let
+$C_i=[\eta_i]_{m_i}$ for $1\le i\le t$, where the numerical
+$m_i>1$ are distinct and coprime to $15$. Assume
+$$
+ H\subseteq[\alpha]_3\cap\bigcup_{i=1}^t C_i.
+ \tag{SC133}
+$$
+The classes may be cofactor projections of actual suppliers, or other
+enclosures whose containment SC133 has been established on the same
+source. Neither numerical divisibility alone nor a list of selected
+private points supplies SC133.
+
+Use Section 26's packet with this cofactor menu, starting at fresh
+$5$-depth one rather than two. The source of that packet already
+has a fixed first $5$-digit; removing that fixed digit gives the
+following explicit instance. Write $\alpha\in\{0,1,2\}$.
+In a menu row add one class for every $C_i$.
+
+| New $5$-condition | New $3$-condition | Cofactor menu | Numerical moduli |
+|---|---|---|---|
+| $[0]_5$ | none | one | $5$ |
+| $[1]_5$ | none | $C_i$ | $5m_i$ |
+| $[2]_5$ | $[\alpha]_3$ | one | $15$ |
+| $[3]_5$ | $[\alpha]_3$ | $C_i$ | $15m_i$ |
+| $[4]_5$ | $[\alpha]_9$ | one | $45$ |
+| $[4]_5$ | $[\alpha+3]_9$ | $C_i$ | $45m_i$ |
+| $[4]_{25}$ | none | one | $25$ |
+| $[9]_{25}$ | none | $C_i$ | $25m_i$ |
+| $[14]_{25}$ | $[\alpha]_3$ | one | $75$ |
+| $[19]_{25}$ | $[\alpha]_3$ | $C_i$ | $75m_i$ |
+| $[24]_{25}$ | $[\alpha+6]_9$ | one | $225$ |
+
+For a point of the right side of SC133, the first four rows pay
+the first four $5$-roots. On the remaining root, the next two rows
+pay two of the three next ternary digits. Its last ternary child
+has five next $5$-digits, all paid by the last five rows. This is
+the same complete-lift coverage argument as SC101--SC102.
+There are six unconditional classes and five classes per cofactor.
+The pairs of $3$- and $5$-valuations distinguish the six rows of
+numerical factors, and the distinct $3,5$-free cofactors distinguish
+labels within each row. All new labels contain $5$, while every
+retained modulus is $5$-free. Consequently
+$$
+ \boxed{
+ c=6+5t,\qquad
+ K-|\mathcal F_{\rm new}|=N_3+z-(6+5t),\qquad
+ 6+5t<N_3+z\ \Longrightarrow\ |\mathcal F_{\rm new}|<K.
+ } \tag{SC134}
+$$
+No retained phase changes, and all points outside $H$ retain their
+old owner. For $t=0$, SC133 instead makes $H$ empty, and no packet
+is needed.
+
+The existing all-height inventory bounds give useful automatic
+payment. [Report 385, NF67](385-private-congruence-hulls-and-crossed-modulus-closure.md#56-the-original-cover-needs-enough-small-prime-labels-to-block-compression)
+gives $N_3\ge P-1$. Together with the repository's existing
+seven-support-prime exclusion recorded there, it gives $N_3\ge22$.
+The stronger [NF82](385-private-congruence-hulls-and-crossed-modulus-closure.md#60-the-two-first-root-branches-share-one-original-label-inventory)
+gives $N_3\ge31$ in every height case, retaining its separately
+attributed nine-prime-support premise and ordinary evidence scope.
+Thus SC133 is impossible for an EB1 cover in either stated branch:
+$$
+ \begin{array}{c|c|c}
+ \text{reused inventory bound}&\text{number of cofactors}&
+             \text{maximum packet cost}\\\hline
+ N_3\ge22&1\le t\le3&21\\
+ N_3\ge31&1\le t\le4&26.
+ \end{array}
+ \tag{SC135}
+$$
+The general criterion remains SC134. At $t=5$ the packet costs
+$31$; the lower bound $N_3\ge31$ alone does not give strict
+descent. These rows share one $H$ and one root $\alpha$.
+Different roots, or different phases at the same numerical $m_i$,
+cannot be combined by simply adding their separate packet costs.
+
+### A flat composite source uses the existing nine-class packet
+
+Suppose the entire hole lies in $C=[\eta]_m$, where
+$(m,15)=1$ and $m$ is composite. Choose two distinct nonunit
+divisors $h_1,h_2\mid m$. The same actual source supplies both
+enclosures $[\eta]_{h_1}$ and $[\eta]_{h_2}$. Hence
+$$
+ H\subseteq[\eta]_{h_1}\cap[\eta]_{h_2},\quad H\cap S=\varnothing,
+ \qquad
+ \operatorname{moduli}(\mathcal B)
+     =\{5,15,45\}\cdot\{1,h_1,h_2\},\quad c=9.
+ \tag{SC136}
+$$
+Section 23's table, as already applied to two enclosures in
+Section 29, covers this whole liability with those nine distinct
+fresh labels. It can serve both unbought ternary roots; SC133 is
+not required. The sufficient payment condition is $9<N_3+z$,
+already supplied by $N_3\ge22$. This uses the whole inventory,
+so the particular three-row donor bounds in SC117 are unnecessary
+for this application.
+
+### A complete shallow prime class has exact fresh-five cost eleven
+
+Let $m\ge7$ be prime and let $C=[\eta]_{3m}$ be a complete
+integer AP. Among finite families of distinct odd numerical moduli
+all divisible by $5$, with arbitrary other prime factors, heights
+and phases, the exact minimum number of classes covering $C$ is
+$$
+ \boxed{\min|\mathcal B|=11.} \tag{SC137}
+$$
+The single-cofactor instance of the table above attains eleven,
+with labels
+$\{5,15,45,25,75,225\}\cup m\{5,15,45,25,75\}$.
+Its construction covers the entire $C$ and does not use any
+retained service. In an application to $H$, if its ternary root
+is $j$ then $H\subseteq C$ makes $H$ empty; otherwise SC134
+with $t=1$ pays the complete repair.
+
+For the lower bound, suppose a repair of at most ten classes
+covers $C$, and pull it back along $x=\eta+3m u$. Discard
+empty restrictions and reduce to an irredundant cover of the
+whole integer parameter line. Every induced relative index is
+$\delta=d/\gcd(d,3m)$ and is divisible by $5$. Reuse the
+published Simpson whole-LCM bound SC39: for the actual LCM $L$
+of this irredundant cover, its cardinality $k$ satisfies
+$k\ge1+f(L)$.
+
+If $L$ has a prime factor $q\ge7$, then
+$k\ge1+4+(q-1)\ge11$, a contradiction. Otherwise $L$ is
+supported on $3,5$. Every remaining original repair label must
+then be $3^j5^\ell h$ with $h\in\{1,m\}$, and its relative
+index is $3^{\max(j-1,0)}5^\ell$. Numerical distinctness permits
+at most four preimages of a fixed index $5^\ell$, and at most two
+preimages of a fixed index $3^a5^\ell$ for $a\ge1$.
+
+If all relative indices are powers of $5$, their finite reciprocal
+sum is strictly less than $4\sum_{\ell\ge1}5^{-\ell}=1$, so they
+cannot cover. If all relative $5$-heights equal one, at most four
+index-five classes can pay four first $5$-roots. On an unpaid
+root the remaining classes have at most two relative restrictions
+of each index $3^a$, whose finite total mass is strictly below
+$2\sum_{a\ge1}3^{-a}=1$. This also cannot cover. Therefore
+the actual irredundant LCM must satisfy
+$$
+ v_3(L)\ge1,\qquad v_5(L)\ge2,\qquad
+ k\ge1+f(L)\ge1+2+8=11.
+ \tag{SC138}
+$$
+This proves the lower bound by reusing SC39, not by restricting
+the search to the displayed attaining labels. The minimum concerns
+covering the entire $C$ using only $5$-bearing new classes. A
+smaller actual $H\subsetneq C$, help from other retained classes,
+or repairs using $5$-free labels can have a different minimum.
+
+### A flat prime envelope cannot be repaired within its one-prime palette
+
+Let $m\ge7$ be prime, $C=[\eta]_m$ and
+$P=C\setminus S$. Consider all possible fresh labels
+$3^j5^k m^e$, with $j,e\ge0$ and $k\ge1$, allowing
+arbitrary finite depths and arbitrary phases, but only one class
+per numerical modulus. Normalize Haar probability on the entire
+periodic set $P$, including every higher-digit lift.
+
+The maximal mass factor in the ternary coordinate is one for
+$j=0$ and $3^{1-j}/2$ for $j\ge1$. The $5$ factor is
+$5^{-k}$. The $m$ factor is one for $e=0,1$ and $m^{1-e}$
+for $e\ge2$. These bounds use a single product law on this
+complete envelope; incompatible phases only decrease the mass.
+Summing even the entire infinite numerical palette gives
+$$
+ \begin{aligned}
+ \mu(U_{\rm patches})
+ &\le
+ \left(1+\sum_{j\ge1}\frac{3^{1-j}}2\right)
+ \left(\sum_{k\ge1}5^{-k}\right)
+ \left(2+\sum_{e\ge2}m^{1-e}\right)\\
+ &=\frac7{16}\left(2+\frac1{m-1}\right)
+ \le\frac{91}{96}<1.
+ \end{aligned}
+ \tag{SC139}
+$$
+Thus no finite family in this palette covers the complete
+$C\setminus S$, regardless of its class budget. Restricting to
+$e=0,1$ gives the smaller bound $7/8$. More powers of the same
+cofactor prime therefore do not repair this obstruction. Additional
+cofactor primes or $5$-free repair classes are outside the claim.
+Most importantly, an actual smaller hole $H\subsetneq C\setminus S$
+need not carry this product law, so SC139 does not rule out repairing
+that $H$ or constitute an EB1 noncovering example.
+
+These consumers separate a failure of the four-slot assignment from
+a failure of every permitted repair. A complete one-root liability
+with a small cofactor menu, and a complete flat composite-source
+liability, are already paid by existing packets and inventory bounds.
+The missing step is to force suitable complete containments for one
+actual tree, or to handle the remaining phase and palette patterns.
+No new matching theorem, Lean verification or unrestricted odd
+noncoverage result is asserted.
+
+## 35. Two equal output labels can obstruct grouping and repair in a fixed palette
+
+Keep $A\ge2$ and fix one actual common source map $F_u$ under the
+same tree. Suppose that two comparable originals
+$d_i=3^{a_i}5^2m$, with $0\le a_1<a_2\le A$ and prime $m>5$,
+both survive under that map. Their actual outputs are
+$$
+ C_i=[\eta_i]_{9m},\qquad
+ \eta_1\not\equiv\eta_2\pmod{9m},\qquad
+ \mathcal N_1=\mathcal N_2=\{3,9,m,3m,9m\}.
+ \tag{SC140}
+$$
+The phase inequality reuses comparable-class disjointness and the
+common-source pullback property from
+[report 844, Section 1](../600-649/844-collision-moment-needs-cofactor-packing.md#1-a-positive-term-is-not-a-phase-collision).
+It is not inferred from the numerical collision alone.
+
+### A larger selected family cannot repair this pair by four-slot grouping
+
+Each single supplier has five slots and passes its four-request test.
+Together they request eight slots from the same five-slot pool, giving
+an inclusion-minimal supplier deficit of three in SC124.
+
+More strongly, every selected supplier family containing this pair
+fails SC131, regardless of its other suppliers and their partition.
+If the pair belongs to different groups, each group's hull divides
+$9m$. Those two groups still need eight globally distinct nonunit
+divisors from the same five-slot pool. If the pair belongs to the
+same group, its hull divides
+$\gcd(9m,\eta_1-\eta_2)$, a proper divisor of $9m$. Every proper
+divisor of $9m$ has at most three nonunit divisors, so that group
+cannot receive four slots. Adding suppliers to either group only
+reduces its hull. This argument uses the union-hull rule SC130;
+larger original donor inventory does not enlarge a whole-class hull.
+
+### Separated ternary and cofactor phases exclude arbitrary finite splitting
+
+Impose the additional phase conditions
+$$
+ \eta_1\not\equiv\eta_2\pmod3,\qquad
+ \eta_1\not\equiv\eta_2\pmod m,\qquad E=C_1\cup C_2.
+ \tag{SC141}
+$$
+They do not follow from SC140. Consider any finite family
+$\mathcal P$ of APs with
+pairwise distinct numerical moduli in the complete set
+$$
+ \{3^j5^kh:j\ge0,\ k\ge1,\ h\in\{1,m\}\}.
+$$
+Their phases are arbitrary. This family may split either source into
+arbitrarily many pieces and may use arbitrary finite $3$- and
+$5$-depths; it need not follow a four-request or grouping assignment.
+
+Choose integers $J\ge2$ and $L\ge1$ bounding all added exponents
+$j$ and $k$. Give $E$ its normalized uniform measure $\mu_E$ in
+the common period $3^J5^Lm$. Each $C_i$ has mass $1/2$, and its
+$5$-coordinate is unrestricted. The complete-fibre CRT calculation
+of SC41 gives the following upper bounds for an AP of each modulus:
+$$
+ \begin{array}{c|cc}
+ &h=1&h=m\\\hline
+ j=0&5^{-k}&\tfrac12 5^{-k}\\
+ j=1,2&\tfrac12 5^{-k}&\tfrac12 5^{-k}\\
+ j\ge3&\tfrac12 3^{2-j}5^{-k}&\tfrac12 3^{2-j}5^{-k}.
+ \end{array}
+ \tag{SC142}
+$$
+For $j=0,h=m$, the two distinct cofactor phases permit at most one
+source. For $j\ge1$, the two distinct ternary roots likewise
+permit at most one source. Beyond height two, fixing additional
+ternary digits retains only the fraction $3^{2-j}$ of that complete
+source class. These bounds hold for every choice of added phases.
+
+Distinct numerical moduli permit at most one AP per triple $(j,k,h)$.
+Consequently the union bound over all slots in the finite rectangle gives
+$$
+ \begin{aligned}
+ \mu_E\!\left(\bigcup\mathcal P\right)
+ &\le\sum_{k=1}^{L}5^{-k}
+      \left(1+\frac12+2+\sum_{j=3}^{J}3^{2-j}\right)\\
+ &=\left(1-5^{-L}\right)
+      \left(1-\frac{3^{2-J}}8\right)<1.
+ \end{aligned}
+ \tag{SC143}
+$$
+Thus no such finite family covers the complete $E$. Equivalently,
+the infinite slot capacities sum to exactly one, while every finite
+slot set has strictly smaller total capacity. This reuses the
+finite-capacity strictness of
+[report 385, VH2--VH3](385-private-congruence-hulls-and-crossed-modulus-closure.md#20-actual-mixed-column-heights-determine-the-available-repair-forest)
+and its
+[two-fibre capacity argument](385-private-congruence-hulls-and-crossed-modulus-closure.md#202-the-old-cofactor-palette-cannot-cheaply-repair-two-full-fibres),
+with the two actual phase restrictions above.
+
+### The selected pair and its complete service remain conditional
+
+The first obstruction concerns a selected supplier family that
+contains both actual outputs. It does not force every complete
+supplier choice to contain that pair. SC15 supplies all top service
+with either fixed safe color, and changing retained representatives,
+replacing suppliers or combining suppliers from the two colors may
+avoid the pair. Outputs from different common maps cannot be assigned
+the same-source phase inequality without a separate argument.
+
+The capacity obstruction concerns the entire union $E$, not merely
+$E\cap H$. It applies to an actual repair only when that complete
+service remains unpaid by the retained classes. Neither the existence
+of this pair in a hypothetical EB1 cover nor the inclusion $E\subseteq H$
+is established here. New cofactor types, including $m^2$, lie outside
+the specified set of allowed moduli. The result gives a concrete
+limit on grouping and deeper splitting within that set, not an
+unrestricted odd-covering obstruction or a Lean verification.
+
+## 36. Original donor depth funds a complete multilevel repair
+
+Keep the one-source setup and complete qualified supplier family
+$\mathcal W_*$ of SC122. For a nonunit divisor $s=3^b h$ of
+$N=3^BM$, put $\chi(s)=5^b h$, where $(h,15)=1$. Define the
+actual original inventories
+$$
+ \mathcal V^{(t)}
+ =\{s>1:s\mid N,\quad3^t\chi(s)\in D\},
+ \qquad 1\le t\le A.
+ \tag{SC144}
+$$
+Thus $\mathcal V^{(1)}$ is exactly $V_3$ in SC128; the superscript
+here denotes original $3$-height. Divisor closure gives
+$\mathcal V^{(t+1)}\subseteq\mathcal V^{(t)}$. Every original
+$3$-bearing label that is not a pure $3$-power has one and only one
+form $3^t\chi(s)$ with $s\in\mathcal V^{(t)}$. Consequently
+$$
+ N_3=A+\sum_{t=1}^A|\mathcal V^{(t)}|,
+ \qquad
+ \mathcal P_{d,t}=\mathcal N_d\cap\mathcal V^{(t)}.
+ \tag{SC145}
+$$
+The reserved $A$ labels are $3,3^2,\ldots,3^A$.
+SC122 gives $\mathcal P_{d,1}=\mathcal N_d$. More generally,
+$3^t\chi(n_d)\in D$ gives $\mathcal P_{d,t}=\mathcal N_d$,
+even if the discarded supplier itself has height zero. These are
+counts in the original divisor inventory, with no reassignment of
+an original phase and no further deletion from $\mathcal F_0$.
+
+### A complete prefix allocation automatically pays every added class
+
+For each supplier, partition its four nonzero first $5$-roots into
+a finite complete $5$-adic prefix family, with leaf depths at most
+$A$. A leaf at depth $t$ is a residue $u\bmod5^t$ with
+$u\not\equiv0\pmod5$. Assign that leaf a slot
+$s\in\mathcal P_{d,t}$. Require that all assigned slots at a
+fixed depth be numerically distinct across all suppliers; a slot
+may recur at different depths.
+
+Add $[0]_5$ and, for each assigned leaf, the CRT class
+$[u]_{5^t}\cap[\eta_d]_s$ of modulus $5^t s$.
+Every point of every complete $C_d$ either belongs to $[0]_5$ or
+to one of its prefix leaves. Since $s\mid n_d$, it satisfies the
+corresponding actual-phase congruence. This covers all of $H$ by
+SC122, including all integer lifts. All new labels are odd and
+$5$-bearing, hence fresh relative to $\mathcal F_0$.
+Their $5$-valuations and same-depth slot distinctness make them
+pairwise different; the pure label $5$ is separate because $s>1$.
+
+The numerical donor for a leaf $(t,s)$ is $3^t\chi(s)$.
+All donors are distinct and none is a reserved pure $3$-power.
+If $L_t$ leaves are assigned at depth $t$, SC111 and SC145 give
+the exact count
+$$
+ \begin{aligned}
+ c&=1+\sum_{t=1}^A L_t,\\
+ K-|\mathcal F_{\rm new}|
+  &=A+z-1+\sum_{t=1}^A\bigl(|\mathcal V^{(t)}|-L_t\bigr)
+    \ge A+z-1\ge1.
+ \end{aligned}
+ \tag{SC146}
+$$
+The prefix allocation is a hypothesis; its payment follows from
+the actual inventories. Pure slots $s=3^b$, $b\ge1$, are included:
+their donors $3^t5^b$ are not pure $3$-powers. If the complete
+supplier family is empty, use $\mathcal F_0$ without any patch.
+
+This applies the existing prefix and demand-copy matching methods
+of [report 385, Sections 64 and 69](385-private-congruence-hulls-and-crossed-modulus-closure.md#64-the-common-literal-zero-root-makes-deep-feasibility-a-static-hall-condition)
+and its [whole-class construction in Section 200](385-private-congruence-hulls-and-crossed-modulus-closure.md#200-a-vacant-lower-prime-layer-gives-a-whole-cover-descent).
+The additional relation is the depth-specific original donor
+$3^t\chi(s)$ and its exact decomposition of SC111's budget.
+
+### Height two has an explicit pair of global Hall tests
+
+At $A=2$, choose $k_d\in\{0,1,2,3,4\}$ first roots of each
+supplier to defer. It requests $4-k_d$ slots at depth one and
+$5k_d$ slots at depth two. Applying the existing finite Hall
+theorem to those demand copies separately at each depth gives
+exactly
+$$
+ \begin{aligned}
+ \left|\bigcup_{d\in X}\mathcal N_d\right|
+   &\ge4|X|-\sum_{d\in X}k_d,\\
+ \left|\bigcup_{d\in X}
+          (\mathcal N_d\cap\mathcal V^{(2)})\right|
+   &\ge5\sum_{d\in X}k_d
+       \qquad(X\subseteq\mathcal W_*),\\
+ c&=1+4|\mathcal W_*|+4\sum_{d\in\mathcal W_*}k_d.
+ \end{aligned}
+ \tag{SC147}
+$$
+These are necessary and sufficient for this independent two-level
+prefix allocation, not for every possible repair. SC146 pays it
+whenever both global tests hold. In particular, deferring one root
+of a depth-two supplier can remove one failed first-level request
+if its second-level menu has five slots and all the first-level
+inequalities, after that demand reduction, hold. A local deficient
+block alone does not establish these tests for the complete family.
+
+### One compatible root can be shared without grouping whole sources
+
+Let $d,e$ be distinct suppliers, and suppose a nonunit slot $s_0$
+divides $n_d,n_e$ and $\eta_d-\eta_e$. Use one shared class
+$[1]_5\cap[\eta_d]_{s_0}$ for their first root. They each need
+three remaining first-level slots; every other supplier needs four.
+After reserving $s_0$, the exact remaining matching condition is
+$$
+ \left|\left(\bigcup_{a\in X}\mathcal N_a\right)
+           \setminus\{s_0\}\right|
+ \ge4|X|-|X\cap\{d,e\}|
+ \qquad(X\subseteq\mathcal W_*).
+ \tag{SC148}
+$$
+The shared $[0]_5$, shared first-root class and all assigned
+remaining classes give $c=4|\mathcal W_*|$. There are
+$4|\mathcal W_*|-1$ distinct nonpure first-layer donors, so the
+same count gives saving at least $A+z-1$. Only one compatible
+slot is required; SC131's four-slot whole-group hull is unnecessary.
+The source phases and all other retained service stay fixed.
+
+### Two complete outputs of modulus $27p$ admit eight or thirteen classes
+
+Let $p\ge7$ be prime. Suppose two actual suppliers on the fixed
+common tree are $C_1=[u]_{27p}$ and $C_2=[v]_{27p}$, their union
+contains all of $H$, and $9\cdot5^3p\in D$. The last condition
+holds, in particular, for the output pair of originals
+$3\cdot5^3p$ and $9\cdot5^3p$. Divisor closure supplies all
+seven slots $3,9,27,p,3p,9p,27p$ at each of depths one and two,
+and sixteen original $3$-bearing divisors of $9\cdot5^3p$.
+
+If $u\equiv v\pmod p$, share the first root using slot $p$.
+On roots $2,3,4$, use slots $3,9,27$ for $C_1$ and
+$3p,9p,27p$ for $C_2$. With the shared $[0]_5$, this gives
+$$
+ \begin{gathered}
+ \text{labels }5,\ 5p,\ 15,45,135,\ 15p,45p,135p,\\
+ c=8,\qquad K-|\mathcal F_{\rm new}|\ge8+z.
+ \end{gathered}
+ \tag{SC149}
+$$
+Every listed nonpure class carries its supplier phase reduced
+modulo the assigned slot; the $p$-phase is common. For example,
+$v-u=p$ gives a common hull with only one nonunit divisor, so
+SC131 does not apply but this root-local sharing does.
+
+There is also a complete repair for arbitrary $u,v$. Assign the
+following slots, again always using the named supplier's actual
+phase modulo the slot:
+
+| Supplier | Residues at the new $5$-boundary | Slots in the same order |
+| --- | --- | --- |
+| $C_1$ | $1,2,3,4\pmod5$ | $3,9,27,p$ |
+| $C_2$ | $1,2,3\pmod5$ | $3p,9p,27p$ |
+| $C_2$ | $4,9,14,19,24\pmod{25}$ | $3,9,27,p,3p$ |
+
+Together with $[0]_5$, the numerical labels and count are
+$$
+ \begin{gathered}
+ 5;\quad15,45,135,5p,15p,45p,135p;
+ \quad75,225,675,25p,75p,\\
+ c=13,\qquad K-|\mathcal F_{\rm new}|\ge3+z.
+ \end{gathered}
+ \tag{SC150}
+$$
+The last row partitions precisely the unserved fourth root of
+$C_2$. The twelve nonpure donors are distinct original divisors
+of $9\cdot5^3p$. Thus this repairs both complete APs at every
+integer lift even when their common hull is the unit. The
+seven-slot failure of SC124 for this pair does not obstruct a
+paid two-level repair. For a pair inside a larger supplier family,
+these local assignments still require a globally compatible
+allocation; the hypothesis that this pair covers all $H$ cannot
+be dropped merely because its own repair is paid.
+
+### Thirteen is optimal only within the stated common-divisor palette
+
+Let two complete APs have common odd $5$-free modulus $n>1$ and
+$\gcd(n,u-v)=1$. Restrict repairs to exactly one shared pure
+class $[0]_5$ and distinct labels $5^t s$, where $t\ge1$,
+$s>1$, and $s\mid n$. Write $J=\tau(n)-1$.
+A nonpure class can meet only one of the two APs: meeting both
+would force $s\mid u-v$. On the AP it meets, its relative
+mass is $5^{-t}$. Summing the two normalized AP masses therefore
+gives the strict finite-family bound
+$$
+ 2\le\frac25+\sum_{\text{used }(t,s)}5^{-t}
+       <\frac25+\frac J4,
+ \qquad\text{hence }J\ge7.
+ \tag{SC151}
+$$
+For $J=7$, at most seven of the eight source/nonzero-root pairs
+can receive a depth-one class. If $m\le7$ pairs receive such
+service, each remaining pair requires at least five classes of
+depth at least two, since each covers at most one fifth of that
+root's relative mass. Thus the total number of classes is at least
+$1+m+5(8-m)\ge13$. For $n=27p$, SC150 attains it.
+
+This optimum concerns the complete two-AP service and the specified
+palette. It allows arbitrary phases and arbitrary finite $5$-depth
+inside that palette, but no extra pure $5$-powers or shadow labels
+outside the nonunit divisors of $n$. It gives no lower bound for a
+smaller actual $H$ or for unrestricted repairs. The five-slot pair
+$n=9p$ still fails this palette at every finite $5$-depth, whereas
+the seven-slot pair $n=27p$ has the explicit repair above.
+
+SC144--SC150 provide further paid sufficient conditions. They do
+not show that some common tree, representative choice and complete
+supplier family must satisfy one of the global allocations.
+Total donor inventory does not guarantee availability in each
+$\mathcal P_{d,t}$, and separate favorable choices cannot be
+combined into a different source. These are ordinary mathematical
+deductions using the cited matching, prefix and divisor methods;
+they are not Lean verification or an unrestricted resolution of
+Erdős #7.
