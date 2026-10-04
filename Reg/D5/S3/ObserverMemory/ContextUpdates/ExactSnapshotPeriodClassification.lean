@@ -12,6 +12,8 @@ noncomputable section
 namespace Reg.D5.S3.ObserverMemory.ContextUpdates.ExactSnapshotPeriodClassification
 universe u v w z
 
+local instance : AddGroupWithOne (ZMod 2) := (ZMod.commRing 2).toRing.toAddGroupWithOne
+
 abbrev signature : Signature where
   Params := Unit
   State := fun _ => ℕ
