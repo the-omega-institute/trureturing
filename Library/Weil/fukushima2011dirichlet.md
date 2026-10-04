@@ -200,6 +200,13 @@ no stronger maximal-domain core equality is a prerequisite.
 
 ## Weighted Fourier cutoff and a complete finite cosine family
 
+The [sharp-band center interface](../../docs/reports/theta-mixed-matrix/sharp-center.md)
+uses the same even minimal realization and full operator with the later
+high-block gap. It supplies actual operator-domain cosine columns and
+an analytic approximation of their complete Schur center. A prescribed
+rank at most 96 pays a 1/16 center remainder at $c=3/8$; retained matrix
+positivity, high residuals and cofinal control remain unresolved.
+
 Use (JE), (BT), (JF) and (JR) from the
 [same-form exterior analysis](lenz2010compactness.md). This alternative
 to the translated-kernel mesh retains the original minimal realization,

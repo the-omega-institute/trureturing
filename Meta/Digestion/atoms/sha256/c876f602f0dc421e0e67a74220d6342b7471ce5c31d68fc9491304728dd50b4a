@@ -1,0 +1,63 @@
+**证明。** 固定任意可能的初始读数 $x>0$。所有满足 $p+s=x$ 的来源都给出同一初始历史，因此协议若继续，必须为它们选择同一个有限词，记其累计矩阵为
+
+$$
+A=\begin{pmatrix}\alpha&\beta\\\gamma&\eta\end{pmatrix}.
+$$
+
+因为 $M,J$ 都是非负整数矩阵，且二者的行列式均为 $-1$，任意有限词的 $A$ 也具有非负整数元素，且 $\det A\in\{1,-1\}$；空词给出 $A=I$。第二次读数为
+
+$$
+y_A=\alpha p+\beta r+\gamma q+\eta s.
+$$
+
+以下对每种 $A$ 构造不同来源，使初始读数和第二次读数都相同。
+
+若 $\beta\gamma>0$，任选 $p\in(0,x)$，令 $s=x-p$、$C=ps>0$。选取正数
+
+$$
+q\ne\sqrt{\frac{\beta C}{\gamma}},
+\qquad r=\frac Cq,
+\qquad q'=\frac{\beta C}{\gamma q},
+\qquad r'=\frac C{q'}.
+$$
+
+矩阵 $R=\begin{pmatrix}p&q\\r&s\end{pmatrix}$ 与 $R'=\begin{pmatrix}p&q'\\r'&s\end{pmatrix}$ 均严格正且满足秩一条件。所选不等式确保 $q'\ne q$，所以两来源不同；同时
+
+$$
+\gamma q'=\frac{\beta C}{q}=\beta r,
+\qquad
+\beta r'=\gamma q.
+$$
+
+故
+
+$$
+\alpha p+\beta r'+\gamma q'+\eta s
+=\alpha p+\gamma q+\beta r+\eta s
+=y_A.
+$$
+
+若 $\beta\gamma=0$，则 $\det A=\alpha\eta\in\{1,-1\}$。非负性排除 $-1$，非负整数条件进一步给出 $\alpha=\eta=1$。只剩以下三种情形。
+
+当 $\beta>0,\gamma=0$ 时，固定任意 $r_0>0$，让 $p$ 在 $(0,x)$ 中变化，并取
+
+$$
+s=x-p,\qquad r=r_0,\qquad
+q=\frac{p(x-p)}{r_0}.
+$$
+
+不同的 $p$ 给出不同的正秩一来源，但第二次读数恒为 $x+\beta r_0$。
+
+当 $\beta=0,\gamma>0$ 时，固定任意 $q_0>0$，让 $p$ 在 $(0,x)$ 中变化，并取
+
+$$
+s=x-p,\qquad q=q_0,\qquad
+r=\frac{p(x-p)}{q_0}.
+$$
+
+不同来源的第二次读数恒为 $x+\gamma q_0$。
+
+当 $\beta=\gamma=0$ 时，$A=I$，第二次读数仍是 $x$；上述任一正秩一来源族都含有不同矩阵，因而仍发生碰撞。
+
+这些成对来源的第一次读数都是 $x$，故第二次读取前的词选择和全部原子操作相同；第二次读数也相同，故停止决定与输出相同，不能同时恢复两个不同的初始矩阵。若协议在第一次读数后就停止，同一 $x$ 下的不同来源也迫使它给出相同输出，所以提前停止不能消除障碍。由此排除所有两读数全域精确恢复协议，而三读数上界由定理 12.1 达到。∎
+

@@ -1,0 +1,38 @@
+**证明。** 若 $a=0$，两端点的对角元相同，记为 $p,s>0$；其非对角元满足 $q_0r_0=q_1r_1=ps$。若 $b=q_1-q_0=0$，则 $r_1=r_0$，从而 $D=0$；同理 $c=0$ 也迫使 $D=0$。所以非零差要求 $b,c$ 都非零。若二者同号，则两个严格正因子的乘积同时严格增加或同时严格减少，与乘积相等矛盾。因此 $bc<0$。这证明了必要性。
+
+当 $a\ne0$ 时，令
+
+$$
+\begin{aligned}
+L&=1+|b|+|c|,\\
+T&=\frac{a^2+bc+(b+c)L}{a},\qquad
+H=\sqrt{T^2+4L^2},\\
+p&=\frac{H-T}{2},\qquad s=\frac{H+T}{2},\\
+R_0&=\begin{pmatrix}p&L\\L&s\end{pmatrix},\qquad
+R_1=\begin{pmatrix}p+a&L+b\\L+c&s-a\end{pmatrix}.
+\end{aligned}
+$$
+
+因为 $H>|T|$，有 $p,s>0$，且 $ps=L^2$、$s-p=T$，所以 $R_0\in\mathcal R_+$。又有 $L+b,L+c>0$，以及
+
+$$
+\begin{aligned}
+\det R_1
+&=ps-L^2+a(s-p)-a^2-(b+c)L-bc\\
+&=aT-a^2-bc-(b+c)L=0.
+\end{aligned}
+$$
+
+于是 $(p+a)(s-a)=(L+b)(L+c)>0$。若 $a>0$，则 $p+a>0$，故 $s-a>0$；若 $a<0$，则 $s-a>0$，故 $p+a>0$。这证明 $R_1\in\mathcal R_+$，且其与 $R_0$ 的差恰为 $D$。
+
+当 $a=0,b>0>c$ 时，取 $d=\sqrt{-2bc}>0$，则
+
+$$
+R_0=\begin{pmatrix}d&b\\-2c&d\end{pmatrix},\qquad
+R_1=\begin{pmatrix}d&2b\\-c&d\end{pmatrix}
+$$
+
+均严格正，两个行列式都为 $d^2+2bc=0$，且差为 $D$。若 $b<0<c$，对 $-D$ 使用此构造，再交换两个端点即可。非零 $D$ 保证两个端点不同。∎
+
+此条件不要求 $\det D\ne0$。例如 $\begin{pmatrix}1&1\\-1&-1\end{pmatrix}$ 是非零幂零矩阵，且为 $\begin{pmatrix}4&4\\2&2\end{pmatrix}-\begin{pmatrix}3&3\\3&3\end{pmatrix}$；而 $\begin{pmatrix}0&1\\0&0\end{pmatrix}$ 不满足割线条件。差矩阵自身的秩不能代替上述判据。
+
