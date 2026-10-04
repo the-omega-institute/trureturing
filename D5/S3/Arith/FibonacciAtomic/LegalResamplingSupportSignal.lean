@@ -25,15 +25,14 @@ open scoped BigOperators
 def Positive {n : ℕ} (x : Input n) : Prop :=
   Legal x ∧ ∀ j : Fin n, j.val + 1 = n → nonzero (x j) = true
 
-instance {n : ℕ} (x : Input n) : Decidable (Legal x) :=
-  decidable_of_iff (LiteralWindowEnd.run (some (false, false)) (List.ofFn x) ≠ none)
-    (by simpa only [Legal, not_not] using
-      ((LiteralWindowEnd.execution false false (List.ofFn x)).2).not)
-
-instance {n : ℕ} (x : Input n) : Decidable (Positive x) := inferInstanceAs
-  (Decidable (Legal x ∧ ∀ j : Fin n, j.val + 1 = n → nonzero (x j) = true))
-
-def source (n : ℕ) : Finset (Input n) := Finset.univ.filter Positive
+def source (n : ℕ) : Finset (Input n) := by
+  letI (x : Input n) : Decidable (Legal x) :=
+    decidable_of_iff (LiteralWindowEnd.run (some (false, false)) (List.ofFn x) ≠ none)
+      (by simpa only [Legal, not_not] using
+        ((LiteralWindowEnd.execution false false (List.ofFn x)).2).not)
+  letI (x : Input n) : Decidable (Positive x) := inferInstanceAs
+    (Decidable (Legal x ∧ ∀ j : Fin n, j.val + 1 = n → nonzero (x j) = true))
+  exact Finset.univ.filter Positive
 
 /-- Absent adjacent gates contribute no support coordinates. -/
 def support {n : ℕ} (t : Roles n) : Finset (Fin n) :=
