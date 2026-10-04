@@ -17,6 +17,7 @@ open GenealogicalFiberTransport (Source substitution)
 open ActualTreeReadoutAcquisition
 open ActualImageSevenLeafSeparation (thirdImage Nonconflict leafLabel A)
 open FourExitRawEndpointSpectrum
+open ActualJointResponseCostCore (routeTrace)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
 open scoped BigOperators
 
@@ -186,11 +187,18 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rw [unfold_family, unfold_family, (fold_facts k _ _ _ _).2.2.2]
     exact ⟨fun l => block_nc _ (slot_mem i l) _ (slot_mem j l),
       tail_nc _ (tail_mem i) _ (tail_mem j)⟩
-  have leaflength (U : Source) : (leaves U).length = U.length := by
-    induction U with
-    | of b => rfl
-    | mul P Q hP hQ => simpa only [leaves, List.length_append, List.length_map,
-        FreeMagma.length] using congrArg₂ (· + ·) hP hQ
+  have leaflength (i : Index k) : (leaves (family k i)).length = 8 * k + 16 := by
+    have one := ActualJointResponseCostCore.result 1 (by decide) (fun _ => family k i)
+      (fun _ => positive i) (fun a b _ => Subsingleton.elim a b)
+    obtain ⟨v,hv⟩ := one.2.1
+    obtain ⟨r,pi,_,facts⟩ := one.2.2.1 v hv
+    obtain ⟨_,hp,_,_,hr,_,_,ht⟩ := facts 0
+    have empty_route : routeTrace r 0 = [] := List.eq_nil_of_length_eq_zero (by omega)
+    rw [empty_route] at hp ht
+    simp only [paid, List.map_nil, List.toFinset_nil, Finset.empty_union,
+      Finset.empty_sdiff, Finset.card_empty, Nat.add_zero] at hp ht
+    exact ht.symm.trans ((congrArg Finset.card hp).trans
+      ((ActualImageSevenLeafSeparation.seven_leaf_separation.1 _).1.trans (sizes i)))
   have baseline (pi : Strategy) (i : Index k) : 8 * k + 16 ≤ cost pi (family k i) := by
     have incl := source_foundation.2.2.2.2.1 pi (family k i) (positive i)
     have card := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 (family k i)).1
@@ -262,7 +270,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       rw [same_leaves]; exact List.mem_toFinset.mpr hu
     have hju : u ∈ (leaves (family k j)).toFinset := List.mem_toFinset.mpr hu
     exact leaf_agreement i j u hiu hju
-  refine ⟨fun i => ⟨positive i, sizes i, (leaflength _).trans (sizes i)⟩,
+  refine ⟨fun i => ⟨positive i, sizes i, leaflength i⟩,
     injective, nonconflict, ?_⟩
   intro pi
   refine ⟨baseline pi, unique_zero pi, ?_⟩

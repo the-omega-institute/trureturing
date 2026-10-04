@@ -42,9 +42,16 @@ internal sealed class FourExitRawDominationDocument : IScribeDocumentDefinition
                         + "These cases prove domination for every original Strategy, including adaptive and repeated queries."))),
                 DescribeRole.Theorem))));
 
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] xs) =>
-        Seq(V(name), Par(F.Join(SepBy(Comma, Sp), xs)));
-    private static Formula And(params Formula[] xs) => F.Join(Spaced(Wedge), xs.Select(Par).ToArray());
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. xs]);
+    private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula LeOf(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
+    private static Formula MemberOf(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
+    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
+    private static Formula And(params Formula[] xs) => Seq(xs.Select((x, i) =>
+        i == 0 ? Par(x) : Seq(Sp, Land, Sp, Par(x))).ToArray());
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Par(body));
     private static Formula Some(string name, Formula type, Formula body) =>
@@ -59,11 +66,11 @@ internal sealed class FourExitRawDominationDocument : IScribeDocumentDefinition
             EqOf(Call("length",Tree(i)),n),EqOf(Call("leafLength",Tree(i)),n)));
         Formula nc=All("i",indices,All("j",indices,Call("NC",Tree(i),Tree(j))));
         Formula unique=All("i",indices,All("j",indices,
-            Implies(And(EqOf(Cost(i),n),EqOf(Cost(j),n)),EqOf(i,j))));
+            Imp(And(EqOf(Cost(i),n),EqOf(Cost(j),n)),EqOf(i,j))));
         Formula domination=Some("v",Call("NatVector",indices),And(
             MemberOf(v,Call("M",k)),All("i",indices,LeOf(Add(n,Call("at",v,i)),Cost(i)))));
         Formula strategies=All("pi",V("Strategy"),And(All("i",indices,LeOf(n,Cost(i))),unique,domination));
-        return Disp(All("k",V("Nat"),Implies(LeOf(D(1),k),And(structure,
+        return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),And(structure,
             Call("Injective",Call("F",k)),nc,strategies))));
     }
 }
