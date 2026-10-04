@@ -11905,3 +11905,142 @@ $$
 这里的经典枚举直接采用所引结果，有限乘积计算只用于路由归纳；承重关系为同一实际历史的任意预算资源归纳和共享行标记族的统一历史解码、全域认证与精确付费集合。式（41.22）不含普通密度极限、全规模下界、精确有限容量分类、随机化最优、随 $n$ 增长的 $t$ 的统一渐近或其他替换深度的结论，也不对文献范围之外的原创性作断言。完整树来源、组成、规范数量地址、四值响应、组成祖先许可及实际逆执行保持各自对象与操作；唯一前像的纸面描述及只读成员判定不授权实际逆执行，环境代数关系不建立物理对应。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 42. 单 β 四 α 替换的四行区间障碍
+
+**定义 42.1（完整二十变体语法与联合选择）。** 固定整数 $m\ge1$，取[定义 41.3 的完整参数集 $\Theta_{m,3}$、前像 $Q_\theta$ 和像 $P_\theta$](#41-任意固定超额的继承历史界与共享行标记取得)。沿用定义 30.1 的 $\operatorname{NC}$、式（30.2）的完整块 $A=\rho^3(\alpha)$、$C=\rho^3(\beta)$，以及定义 40.5 的右梳 $\mathcal R_T$。令 $\mathcal Z_4$ 为全部恰有四片叶、叶标签全为 $\alpha$ 的有序满二叉树，即
+
+$$
+\begin{aligned}
+\mathcal Z_4=\{\,&
+\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+&\langle\alpha,\langle\langle\alpha,\alpha\rangle,\alpha\rangle\rangle,
+\ \langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\,\}.
+\end{aligned}
+\tag{42.1}
+$$
+
+对 $Q_\theta$ 的任一实际 $\beta$ 叶出现地址 $p$ 和任一 $Z\in\mathcal Z_4$，只将该处完整叶替为 $Z$，其余括号、左右次序与标签逐字保持，记所得完整前像为 $Q_\theta[p\leftarrow Z]$。相应候选是整棵树
+
+$$
+\widetilde P_{\theta,p,Z}=\rho^3\bigl(Q_\theta[p\leftarrow Z]\bigr).
+\tag{42.2}
+$$
+
+由定理 41.5，每个原前像恰有四片 $\beta$，故每个参数至多有二十个候选。联合选择是在每个 $\theta$ 处任取一对 $\sigma(\theta)=(p_\theta,Z_\theta)$；地址和形状均可任意依赖整个参数及 $m$，不要求统一选择同一出现、同一行或同一形状。记 $\widetilde P_\theta=\widetilde P_{\theta,p_\theta,Z_\theta}$。完整前像与像的对应直接采用[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的自由树与替换同态；[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)复合三次保证每个已给出的像拥有唯一的所示完整前像，并不保证不同参数所选的新前像互不相同。
+
+以下规模关系只是既有组成作用的应用。定理 41.5 给 $c(Q_\theta)=(m+1,4)^{\mathsf T}$；一次所规定替换把组成改变为 $(m+5,3)^{\mathsf T}$。[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的第三步作用因而给
+
+$$
+\begin{gathered}
+c\bigl(Q_\theta[p\leftarrow Z]\bigr)=\binom{m+5}{3},\qquad
+c(\widetilde P_{\theta,p,Z})=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{m+5}{3}
+=\binom{m+11}{2m+19},\\
+\widetilde P_{\theta,p,Z}\in\mathcal I_3(3m+30).
+\end{gathered}
+\tag{42.3}
+$$
+
+未知输入仍是定义 29.1 的全部非空有限带标签有序满二叉树 $U\in\mathcal T$；上述参数和候选仅描述评价来源，不给 $U$ 任何承诺。全部有限地址包括根均合法，报告为同一不变 $U$ 的四值；费用只计实际请求的不同地址。选择原型不接受，完整认证仍须实际请求所选整棵原型的全部带标签叶，真实缓存仅复用实际请求过的同址报告，后备仍须有自己的完整初态和空逻辑历史。
+
+**定理 42.2（任意联合选择的四行区间界与统一障碍）。** 令 $\Xi_m\subseteq\Theta_{m,3}$ 为全部四行、没有标记槽的参数，即
+
+$$
+\Xi_m=\{(4,\boldsymbol r,\boldsymbol\varnothing):
+ r_1,r_2,r_3,r_4\in\mathbb N_0,\ r_1+r_2+r_3+r_4=m\}.
+\tag{42.4}
+$$
+
+对任意 $X\subseteq\Xi_m$，在每个 $\theta\in X$ 上作定义 42.1 所允许的任意选择。如果这些选定完整像两两满足 $\operatorname{NC}$，则
+
+$$
+\boxed{\qquad |X|\le16\binom{m+2}{2}.\qquad}
+\tag{42.5}
+$$
+
+特别地，对每个 $m\ge46$，不存在定义在全部 $\Theta_{m,3}$ 上、使全部选定像两两满足 $\operatorname{NC}$ 的联合选择。因此不存在某个 $m_0$ 以及对所有 $m\ge m_0$ 的联合选择，同时取得参数到完整来源的单射、全对 $\operatorname{NC}$，以及一个在全部原未知输入上正确且有限终止、在每个选定成员上费用至多 $3m+33$ 的共同控制器。此障碍不以单射或费用条件为前提。
+
+**证明。** 在 $\Xi_m$ 中每个槽都为普通 $\alpha$；四片 $\beta$ 恰是四个行末。因而每个允许选择必替换某一行末，记该行号为 $j(\theta)\in\{1,2,3,4\}$。这个四行子族包含初始、末端和连续零长度行；外层四个行根的共同地址始终是
+
+$$
+v_j=\mathtt R^{j-1}\mathtt L\qquad(1\le j\le4).
+\tag{42.6}
+$$
+
+若所选形状为 $Z_\theta$，记 $H_\theta=\rho^3(Z_\theta)$。沿用式（41.12）的字面树表示，选定来源的第 $i$ 行完整子树为
+
+$$
+\widetilde P_\theta|_{v_i}=
+\begin{cases}
+\mathcal R_{H_\theta}(\underbrace{A,\ldots,A}_{r_i}),&i=j(\theta),\\
+\mathcal R_C(\underbrace{A,\ldots,A}_{r_i}),&i\ne j(\theta).
+\end{cases}
+\tag{42.7}
+$$
+
+这里仅将行末 $C$ 换成其实际四 $\alpha$ 前像的像；外层末端仍是 $A$。式（42.7）由母卷定义 3.1 直接作用于完整行及外层上下文得到。也可逐步使用[运输记忆完成卷命题 22.2 的（RA.2206）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)：它的前提是同一完整源及该源的实际节点，所用行根、行右脊和被替换行末都满足该前提；这里只作描述对应，不把输出新增节点当作旧源切口，不调用虚拟输入控制器。
+
+现在固定任意两个参数 $\theta,\eta\in X$，满足 $j(\theta)=j(\eta)=j$。设其被替换行的长度分别为 $a=r_j(\theta)$、$b=r_j(\eta)$，并假设 $b-a\ge4$。在短行所选树 $Z_\theta$ 中，从根一直沿右孩子走，最终到达最右侧 $\alpha$ 叶；记该叶地址为 $\mathtt R^q$。由于 $Z_\theta$ 恰有四片叶，有
+
+$$
+1\le q\le3.
+\tag{42.8}
+$$
+
+确切地，这条路径的每个分支各有一个不交的非空左子树，它们各含至少一片叶，再加最右端叶，给 $q+1\le4$；根不是叶，故 $q\ge1$。这个论证覆盖全部五种形状，而不要求两参数选择相同形状。
+
+替换同态在原有分支处保持左右地址，因此短行在地址 $v_j\mathtt R^{a+q}$ 的完整像子树恰为 $A$。长行在同一地址尚未到达其被替换行末：因为 $b-a-q\ge1$，该处仍是一个普通槽及其右后缀组成的分支，完整子树恰为 $\langle A,Y\rangle$，其中 $Y\in\mathcal I_3$。所以两棵选定来源在同一个合法有限地址
+
+$$
+w=v_j\mathtt R^{a+q}\mathtt{LR}
+\tag{42.9}
+$$
+
+拥有相反标签的实际叶：
+
+$$
+\operatorname{out}_{\widetilde P_\theta}(w)=\mathsf{leaf}_\alpha,
+\qquad
+\operatorname{out}_{\widetilde P_\eta}(w)=\mathsf{leaf}_\beta.
+\tag{42.10}
+$$
+
+第一项是式（30.2）的 $A|_{\mathtt{LR}}=\alpha$；第二项是 $\langle A,Y\rangle|_{\mathtt{LR}}=A|_{\mathtt R}=\beta$。这也是引理 30.2 第一行中 $\operatorname{NC}(A,\langle A,Y\rangle)$ 失败的既有局部比较。共同前缀将该局部冲突送到完整来源；其他三行的长度、两参数各自的所选形状与外层末端都不改变这个地址的两个叶报告。这里描述来源上的真实四值，不将未执行的查询报告放入任何缓存。
+
+式（42.10）直接违背全对 $\operatorname{NC}$。因此，同一替换行号的任意两个参数必须满足
+
+$$
+|r_j(\theta)-r_j(\eta)|\le3
+\qquad\bigl(j(\theta)=j(\eta)=j\bigr).
+\tag{42.11}
+$$
+
+将 $X$ 按所选行号分为四个互不相交的集合 $X_j$。非空 $X_j$ 的 $r_j$ 值由式（42.11）包含在至多四个连续整数内；这一限制不按五种形状再分组，允许每个参数独立改变形状。对固定 $r_j=s\in\{0,\ldots,m\}$，其余三行的非负长度之和为 $m-s$。用两个分隔位置描述这些有序弱分拆，恰有
+
+$$
+\binom{m-s+2}{2}\le\binom{m+2}{2}
+\tag{42.12}
+$$
+
+个原参数。每个原参数只属于一个 $X_j$，不按它的多个候选重复计数。因此 $|X_j|\le4\binom{m+2}{2}$；空 $X_j$ 同样满足该界。对四个行号相加，得到式（42.5）。这是一条对任意部分选择的结构界，不是有限样本检验或对二十项菜单的逐项失败推断。
+
+最后，三个分隔位置给全部四行参数的精确数目
+
+$$
+|\Xi_m|=\binom{m+3}{3}
+=\frac{m+3}{3}\binom{m+2}{2}.
+\tag{42.13}
+$$
+
+若全部 $\Theta_{m,3}$ 存在全对非冲突联合选择，限制到 $\Xi_m$ 仍满足式（42.5）。但 $m\ge46$ 时 $(m+3)/3>16$，式（42.13）严格超过式（42.5），矛盾。任意声称适用于所有 $m\ge m_0$ 的选择都在 $m\ge\max\{m_0,46\}$ 遇到这个矛盾。由于必要的来源关系已经失败，增加路由、认证或后备不能使该选择同时满足列出的三个条件；无需假定它们各自无法构造，也不从缺少控制器证明反推障碍。证毕。
+
+**注记 42.3（参数对应、复用及未决边界）。** 原有限目标的参数为 $m=k-2$。定理 41.5 已给 $|\Theta_{m,3}|=D_{m,3}$；式（42.3）给指定语法的共同叶数 $3m+30=3k+24$，其拟议三次超额费用为 $3m+33=3k+27$。定理 42.2 排除的是对全部原参数各选一个字面变体、并保持全对非冲突的方案，特别覆盖所有 $k\ge48$，不把原 Delannoy 计数或组成等式当作新来源关系。门槛 $46$ 是所证估计给出的充分门槛，不宣称首次失败恰为该值。
+
+该定理不排除舍弃部分原参数后另外引入其他来源，也不排除改变多处资源或采用所指定语法以外的完整前像。它没有给 $\mathsf{Cap}(3m+30,3)$ 的上界，没有证明任意同组成族不可能，更没有证明不受本语法限制的 $G_k$ 不存在。寻找 $G_k\subseteq\mathcal I_3(3k+24)$、$|G_k|\ge D_{k-2,3}$、$K(G_k)=K_\circ(G_k)$，并由一个原全域正确总控制器同时取得成员费用至多 $3k+27$，仍未由本章证明或反驳。定理 18.2、23.2、25.2、29.2 与引理 27.3 的完整认证、共同取得及独立续接保持原有适用范围；本章不另立这些既有桥梁的伴随证明，也不以普通全规模极限的复用应用代替上述语法障碍。
+
+右梳、原参数解析、替换单射及组成作用是仓内既有结果的应用；经典 Delannoy 数及其所引文献沿用定理 41.5 的出处。这里的承重关系是任意联合选择所满足的同一行号区间限制、实际相反叶标签见证及由此得到的全参数障碍，不作世界原创性声明。完整树来源、组成、规范数量地址、原始四值响应、组成祖先许可与实际逆执行仍是不同对象与操作；完整前像描述不授权实际逆执行，环境代数关系不提供物理对应。
+
+## 追加锚（本行以下为增补区）
