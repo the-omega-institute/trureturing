@@ -631,6 +631,301 @@ initial vertex. The other digits give distinct actual labels. This
 clique uses different first digits; it is not bounded by SNC1's
 fixed-first-digit incidence cap.
 
+### Independently chosen words with protected complete subtrees
+
+Under the additional inventory condition $78\le n\le111$, the
+five-word choice need not be global. Fix the depth-three q-terminal
+and depth-four 3q-terminal over different safe words. The 41 remaining
+depth-four slots are distributed as $6,8,9,9,9$ among the five words.
+Reserve six slots in each word. The other eleven slots yield 33 fixed
+long leaves at depth five.
+
+In each component, select six of the thirty reserved slots as short
+leaves and expand the other 24 slots to long leaves. This gives
+
+$$
+6+3\cdot24=78
+\tag{CD15}
+$$
+
+moving positions. Add $n-78$ of the 33 fixed long leaves to the moving
+block. The remaining $111-n$ fixed long leaves accommodate every
+protected continuing digit. Fix their entire dictionaries and both
+terminal paths across all rows. In particular every unit-cofactor
+owner remains protected. Different components may choose different
+short-slot geometries, but each complete decoder remains fixed on its
+owners' whole supports. The short 81-way and long 27-way continuations
+both reach depth eight, so deep inverses retain depth $3e+2$ and the
+same carrier $3^{3G+2}W$.
+
+For a specific common experiment, independently choose one uniform
+word $z_C\in\mathcal A$ in every component and use its six reserved
+slots as the short leaves. Independently assign $U$ bijectively to that
+component's moving positions. Its short digits are a uniform six-subset
+of $U$, independent of $z_C$.
+
+For a shallow triple whose three digits lie in $U$, let $T_{m,C}$ be
+the intersection of the word demands of its owners in component $C$:
+row zero demands $\mathcal A$, row one demands
+$\mathcal A\cap[b_m]_3$, and row two demands $\{z_m\}\cap\mathcal A$.
+An empty intersection gives probability zero. With $r_{m,C}$ defined
+as in CD11, the exact probability is now
+
+$$
+\boxed{
+p_m=\prod_{C:r_{m,C}>0}
+\frac{|T_{m,C}|}{5}\frac{(6)_{r_{m,C}}}{(n)_{r_{m,C}}},
+\qquad \sum_m p_m\ge1.
+}
+\tag{CD16}
+$$
+
+The product is one joint experiment, shared by all groups. If the
+middle and top owners share a component, their root and word must be
+compatible. In different components their word factor is
+$|\mathcal A\cap[b_m]_3|/25$, including when the middle root disagrees
+with $z_m$. Such triples cannot be removed using CD11's global
+compatibility filter. A component containing only the bottom owner
+has word factor one. The same full-source payment proves the pointwise
+bad-group premise of CD16. No monotone change of its total moment is
+asserted.
+
+### Components inside the exact retained-family hole
+
+A further refinement uses the full joint liability of
+[Report385, PH1--PH2](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#1-replace-only-the-region-that-depends-on-the-changed-classes).
+Delete all q-bearing originals and retain all q-free originals. Let
+$E_0\subseteq\mathcal A\times\mathbb Z/W\mathbb Z$ be the exact set
+missed by the retained family. Because $H_3=2$, all its tests factor
+through these preserved coordinates. Its lift is the entire joint
+deletion hole; it is fixed before any code or original owner is chosen.
+
+Replace the full support $R_i$ by
+
+$$
+F_i=R_i\cap E_0
+\tag{CD17}
+$$
+
+in the intersection graph, keeping every moving owner at every height.
+Each $F_i$ is nonempty by original privacy. On $E_0$, choose the
+decoder row by the component of these complete $F_i$ supports. Outside
+$E_0$, use an arbitrary fixed row respecting the protected subtrees.
+Every output still has one full source preserving modulo $9W$.
+
+For an output in the lifted $E_0$, source membership in owner $i$
+forces its preserved pair into $F_i$ and hence fixes the decoder to
+$\theta_{\kappa_i}$. The **entire liability-restricted continuing
+inverse** is therefore contained in one fixed-row AP with the original
+$m_i$ phase. Let $B_i$ denote its assigned global AP enclosure, and
+$H_{\rm ret}$ the complete retained union on the output carrier. The
+whole raw continuing inverse $I_i$ satisfies
+
+$$
+I_i\subseteq H_{\rm ret}\cup B_i.
+\tag{CD18}
+$$
+
+The raw inverse need not itself be an AP: it may split outside the
+hole. Every such part is already paid by $H_{\rm ret}$. This is why
+the exact common hole permits the refinement; an arbitrary favorable
+mask or selected private subset would not justify CD18.
+
+Apply CD3 to each group's nonempty restricted shallow inverses.
+Empty restricted inverses cost no replacement. Every nonempty one
+still receives one global enclosure, with the same label ranges and
+strict grouped price comparison. Deep restricted inverses keep their
+usual enclosures; the fixed terminal donors remain paid. Outside the
+hole the retained family covers, and inside it the preserved source
+and original whole coverage supply an enclosed owner. Thus absence
+of a three-short restricted group gives the same complete EB1 descent.
+No extra progression is charged for the shape of $E_0$.
+
+For each shallow owner, define its actual word availability
+
+$$
+\mathcal A_i=\{u\in\mathcal A:\exists w,\ (u,w)\in F_i\}.
+\tag{CD19}
+$$
+
+This is a fixed nonempty set. A selected short inverse is nonempty
+exactly when its component's word belongs to $\mathcal A_i$: retained
+tests do not depend on higher ternary digits, so any witnessing
+cofactor point is compatible with the entire selected short prefix.
+In particular the top owner's set is $\{z_m\}$, while the bottom and
+middle owners may have fewer available words than their bare ternary
+tests permit. Formula CD16 holds with
+
+$$
+T_{m,C}=\bigcap_{a:\kappa_{m,a}=C}\mathcal A_{m,a}.
+\tag{CD20}
+$$
+
+All digit and word choices still belong to one joint law. The sets in
+CD19 are determined by the original retained family, so they do not
+introduce code-dependent conditioning of an unrelated cofactor law.
+
+At every point $(u,w)\in E_0$, fix any higher q-suffix and vary the
+first digit through $U$. Every resulting original source misses the
+retained q-free family. Whole coverage supplies one moving owner at
+each digit, and all their $F_i$ contain this same point. They form an
+actual $n$-clique. Consequently the component unions partition all of
+$E_0$, and every point in each component is supported at every moving
+first digit. This statement uses the exact whole-cover hypothesis.
+
+### One component contains a rectangular top inventory
+
+The missing-cell argument of Report388, SC473--SC474 can now be
+applied to independently chosen component codes. For a component $C$
+and safe word $z$, define $D_C(z)\subseteq U$ to contain the digits
+$c_2(m)$ of actual nonunit shallow triples whose three digits lie in
+$U$, whose top owner belongs to $C$, and whose top word is $z$.
+This is an actual inventory; no hypothetical simultaneous realization
+of its different cofactors is assumed. Set
+
+$$
+S_C=\{c\in U:\forall z\in\mathcal A,\ c\in D_C(z)\}.
+$$
+
+Then, for the full-support or exact-hole component construction,
+
+$$
+\boxed{\exists C:\quad |S_C|\ge n-5.}
+\tag{CD21}
+$$
+
+Suppose every component had at least six digits outside $S_C$. Choose
+six such digits in each component and, for each chosen digit, one
+missing word. Use the arbitrary-six-slot version of CD15 to place
+each digit on a short leaf above its chosen word: at most six digits
+request any word, and six reserved slots are available there. Expand
+the other 24 reserved slots, complete the moving-block bijection and
+keep all protected subtrees fixed. All components have thus been
+assigned one simultaneous lawful source.
+
+Any bad triple must have its top digit on one of those short leaves,
+with the leaf's old word equal to its actual top word. Since every
+digit outside $U$ is protected at a long leaf or a terminal, all three
+digits of a bad triple lie in $U$. Its top owner would therefore
+witness an occupied cell in the very $D_C(z)$ declared missing.
+This is impossible. The complete paid replacement then contradicts
+EB1, proving CD21.
+
+Each of the $|S_C|$ digits in this one component has an actual top
+owner at every one of the five safe words. Different digit/word cells
+require distinct numerical labels $9qm$, since each original has
+only one literal digit and word. Thus this **same component** contains
+at least $5(n-5)$ distinct nonunit top originals, at least 390 when
+the additional GHA11 envelope gives $n\ge83$. This is a rectangular
+inventory, not a common-source clique of 390 labels. The owners of
+different cells can have different cofactor phases and need not meet
+one point. It supplies no contradiction to SNC1's pointwise cap.
+
+### A resolution constraint for full-support components
+
+This paragraph concerns the full $R_i$ intersection graph of CD13,
+not the finer $F_i$ graph in CD17. Let $p\mid W$, and suppose
+$h=p^{10}\mid W$. The retained-pure repair of Report385, RP1--RP4
+bounds the number of original h-multiples in each actual h-phase by
+24. Here is the exact consumer.
+
+Retained pure 3 and 9 leave fifteen fresh ternary roots modulo 27
+inside any h-phase. Use eleven fresh leaves at ternary height three,
+eleven at height four, then three at height five. The first eleven
+leave four roots, their twelve children leave one, and its three
+children complete the repair. Assign all eleven divisors of $h$ to
+each of the first two layers, and $1,p,p^2$ to the last. The 25
+distinct new labels are $27p^b,81p^b$ for $0\le b\le10$ and
+$243,243p,243p^2$. They are globally fresh because $H_3=2$.
+Their sum satisfies, for $p\ge5$,
+
+$$
+108\sigma(p^{10})+243(1+p+p^2)
+<351\sigma(p^{10})<\frac{1755}{4}p^{10}<625p^{10}.
+\tag{CD22}
+$$
+
+Twenty-five distinct odd h-multiples have sum at least
+$h(1+3+\cdots+49)=625h$. Deleting any 25 originals in one
+h-phase and inserting the repair covers their entire union together
+with the retained pure guards, at every lift. Count is unchanged and
+sum decreases, contradicting EB1. The resulting phase cap 24 covers
+all ternary rows, q-heights and first q-digits; it is not an extension
+of SNC1.
+
+Assume $n\ge25$ and let a moving bottom-row owner have modulus
+$q^j p^k$. Then every moving owner whose full support meets its
+coarser cylinder satisfies
+
+$$
+R_\ell\cap
+\bigl(\mathcal A\times[\rho_i]_{p^{\min(k,9)}}\bigr)
+\ne\varnothing
+\quad\Longrightarrow\quad \kappa_\ell=\kappa_i.
+\tag{CD23}
+$$
+
+For $k\le9$ this is direct intersection with $R_i$. Otherwise,
+suppose the two components differ. The anchor has no ternary
+restriction, so their full cofactor congruences must be incompatible.
+Meeting its $p^9$ cylinder and CRT then force $p^{10}\mid m_\ell$
+and $\rho_\ell\equiv\rho_i\pmod{p^9}$. In particular **every**
+point of $R_\ell$ lies in that coarse cylinder. Choose any actual
+private point of $\ell$ and its all-$U$ clique. Every clique owner
+is in $\ell$'s component and disjoint from the anchor, so the same
+CRT test forces $p^{10}$ into each cofactor. All $n$ owners share
+the one actual $p^{10}$ phase of the chosen point, contradicting
+the cap 24.
+
+This selects no private point from an arbitrary intersection:
+divisibility first forces the whole second support into the coarse
+cylinder. A shallow prime-power triple whose three cofactor phases
+agree through $p^{\min(k,9)}$ therefore has all three owners in one
+full-support component. Separating its repeated digit only above the
+ninth p-adic digit cannot suppress that triple's component probability.
+The result does not truncate any original numerical modulus, give a
+component-size upper bound, or extend automatically to masked supports.
+
+There is also a multi-prime version on actual unpaid points. For a
+moving bottom-row anchor $q^jm$, put
+
+$$
+g=\prod_{p\mid m}p^{\min(v_p(m),9)},\qquad
+t_{10}(m)=\#\{p\mid m:v_p(m)\ge10\}.
+$$
+
+For full-support components,
+
+$$
+\boxed{
+n>24t_{10}(m),\quad (u,w)\in E_0,\quad
+w\equiv\rho_i\pmod g
+\quad\Longrightarrow\quad (u,w)\in V_{\kappa_i}.
+}
+\tag{CD24}
+$$
+
+Indeed the actual unpaid point has an $n$-owner clique, all in one
+full-support component. If that component differed from the anchor's,
+each owner's full support would be disjoint from the anchor. Since
+the anchor has no ternary restriction, CRT gives an incompatible
+prime-power cofactor test. Agreement with $\rho_i$ through $g$ forces
+the conflicting prime $p$ to have $v_p(m)\ge10$ and forces
+$p^{10}$ to divide that owner's cofactor. For each such $p$, all
+owners charged to it share the actual phase $w\bmod p^{10}$.
+The cap 24 and a finite union bound give $n\le24t_{10}(m)$,
+a contradiction.
+
+Thus every owner whose full support meets
+$E_0\cap(\mathcal A\times[\rho_i]_g)$ is in the anchor's component.
+When $n\ge83$, CD24 applies whenever $t_{10}(m)\le3$, regardless
+of the number of smaller exponents. This
+does not choose a private point in a favorable intersection: whole
+coverage is applied at the actual unpaid point itself. It asserts
+nothing about points outside $E_0$. Nor does it extend to the masked
+component graph, where separation may be caused by the retained cover
+even when the full congruences are compatible.
+
 ### Verification scope and remaining inequality
 
 A scoped transient Lean check confirms whole-support component
@@ -644,18 +939,52 @@ includes both W and $\mathcal A\times W$ supports. It reuses the
 pinned Mathlib finite-set, connected-component and counting results;
 it introduces no retained mathematical declaration.
 
+A second scoped transient check confirms the independent-word joint
+experiment, arbitrary word masks $T_{m,C}$, its exact product
+probability and the moment in CD16 under the explicit pointwise
+bad-group premise. It also checks the 41/30/24/78/33 leaf counts and
+the protected/moving partition for $78\le n\le111$. These checks use
+only the same standard axioms. They do not impose the common-word
+compatibility filter on different components.
+
+A finite-selection check confirms the rectangular implication CD21:
+the explicit obstruction for every componentwise six-subset and
+per-digit word assignment forces one component with at least $n-5$
+saturated digits. It checks the five-word rectangle cardinality, its
+translation into distinct top labels when every cell has an actual
+witness, and the bound 390 for $n\ge83$. The arithmetic construction
+supplying that obstruction is an explicit premise of this check.
+
+A separate transient check verifies CD22's divisor-sum and strict cost
+chain, the 25-odd-multiple lower bound, the forest's scalar capacity,
+and the CRT implication used in CD23, including that every point of
+the second support lies in the coarse cylinder. It also checks the
+25-versus-24 contradiction with explicit incidence and phase-cap
+premises. The retained-pure arithmetic forest and EB1's implication
+of the phase cap remain ordinary proof inputs.
+
+The masked-source check verifies membership on $E_0$, the inclusion
+of the entire raw continuing inverse in the retained complement plus
+one fixed enclosure, and whole coverage after payment. The retained
+complement is defined to be exactly the complement of lifted $E_0$.
+It does not assume that a raw inverse is a single AP; arithmetic
+fixed-prefix enclosure is an explicit premise. These checks use only
+the standard axioms already listed.
+
 The complete arithmetic decoder, AP inverses, actual family-to-event
 mapping, private-point inventory and EB1 payment contradiction above
 are ordinary mathematical deductions, not a claim of end-to-end Lean
 verification. In particular, the finite moment check takes the
-pointwise existence of a bad group as a premise.
+pointwise existence of a bad group as a premise. CD24's multi-prime
+arithmetic translation and complete component conclusion have not been
+kernel-replayed.
 
 The divisor-controlled route CD8 still needs its own $D_h$ inventory,
 actual phase and color distribution, and a contradictory upper bound.
-The component route CD12 has $n\ge83$ under the additional GHA11
-height envelope, but still needs an upper bound on its actual
-component profiles contradicting CD12. Every surviving repeated-digit
-and distinct-digit profile must be included. SC483 supplies neither
-upper bound by itself. The
+The component routes have $n\ge83$ under the additional GHA11 height
+envelope, enough for CD15. They still need an upper bound on the actual
+profiles or word-availability moment contradicting CD12 or CD16.
+Every surviving repeated-digit and distinct-digit profile must be
+included. SC483 supplies none of these upper bounds by itself. The
 height-two branch and unrestricted odd distinct covering
 remain unresolved.
