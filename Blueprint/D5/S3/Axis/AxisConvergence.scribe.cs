@@ -152,7 +152,7 @@ internal sealed class AxisConvergenceDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "The condition x > 0 is essential. At x = y = 0 every word has weight one, the "
                     + "depth-K partial sum is Fib(K+1), and the sequence diverges to positive "
-                    + "infinity. This is the corrected boundary clause of PZG 6.35.")),
+                    + "infinity.")),
             Describe.Lean(
                 DescribeId.Create("positive-x-word-weights-are-summable"),
                 DeclarationHandle.Create(LeanPrefix + "wordWeight_summable"),

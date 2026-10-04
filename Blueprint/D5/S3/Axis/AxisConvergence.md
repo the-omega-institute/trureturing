@@ -8,7 +8,7 @@ Each natural number is read through its Zeckendorf digits. Positivity of the fir
 
 The depth-K window contains exactly the integers below Fib(K+1), so ordinary series convergence gives convergence of the axis partial sums. The omitted geometric tail begins there. Comparing Fib(K+1) with phi^K / phi converts that tail into the displayed doubly-exponential depth bound.
 
-The condition x > 0 is essential. At x = y = 0 every word has weight one, the depth-K partial sum is Fib(K+1), and the sequence diverges to positive infinity. This is the corrected boundary clause of PZG 6.35.
+The condition x > 0 is essential. At x = y = 0 every word has weight one, the depth-K partial sum is Fib(K+1), and the sequence diverges to positive infinity.
 
 **Theorem 1.1 (Positive-x word weights are summable).**
 
