@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Literal four-exit trees and the zero-to-two raw-cost obstruction. -/
+   digest: Four-exit literal trees, the zero-to-two obstruction, and six local tail costs. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualJointResponseCostCore
 import D5.S3.Arith.FibonacciAtomic.ActualImageSevenLeafSeparation
@@ -37,10 +37,7 @@ def r₀ : Source := .mul t b₀
 def rₐ : Source := .mul t z
 
 local notation "A" => ActualImageSevenLeafSeparation.A
-local notation "C" => ActualImageSevenLeafSeparation.C
 def B : Source := thirdImage b₀
-def T : Source := thirdImage t
-def W₁ : Source := thirdImage w
 def H : Source := thirdImage h
 def Y : Source := thirdImage y
 def Z : Source := thirdImage z

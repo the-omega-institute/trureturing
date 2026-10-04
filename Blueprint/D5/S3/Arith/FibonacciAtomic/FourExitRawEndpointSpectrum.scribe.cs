@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Literal four-exit trees and a zero-to-two raw-cost obstruction.",
+        "Four-exit trees, a zero-to-two raw-cost obstruction, and six local tail costs.",
         H("Four-Exit Raw Endpoint Spectrum"),
         Blocks(
             Paragraph(Text(
@@ -25,6 +25,16 @@ internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefin
                 "An A-leaf query is either common to the four members or gives two sibling members "
                 + "the same nonleaf reply. In the latter case, those two members must subsequently "
                 + "separate. Their shared leaf labels agree, so at least one receives another nonleaf "
-                + "reply before the response tree can reach singleton survivors.")))));
+                + "reply before the response tree can reach singleton survivors.")),
+            Paragraph(Text(
+                "On the five rows (baseline, A, Y, H, Z) at any selected slot, six finite actual "
+                + "response recipes attain the excess vectors (1,1,0,1,1), (1,1,1,0,1), "
+                + "(1,1,1,1,0), (1,0,1,2,1), (1,0,2,1,1), and (1,0,1,1,2). "
+                + "The response-cost core supplies a globally correct strategy for each recipe, "
+                + "with actual costs equal to 8k + 16 plus these coordinates.")),
+            Paragraph(Text(
+                "These local recipes do not establish attainment on the entire family. "
+                + "The scan of other slots, its composition with each tail, global endpoint domination, "
+                + "and the full Pareto classification remain unproved.")))));
 
 }
