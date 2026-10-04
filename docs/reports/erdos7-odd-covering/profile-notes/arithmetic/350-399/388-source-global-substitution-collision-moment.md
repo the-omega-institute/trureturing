@@ -9433,3 +9433,312 @@ complete service or the branch hypotheses, and unrestricted
 odd distinct covering. These are ordinary mathematical deductions using
 the existing packets and original divisor closure; no new
 Lean verification is asserted.
+
+## 66. A virtual partner removes the actual lower phase condition
+
+Use one original EB1 whole cover of ternary height two, one
+fixed source tree, and the retained family $\mathcal F_0$ of
+Section 41. Choose height-zero representatives wherever they
+survive, absorbing the original pure-5 output in the bought root
+$S=[s]_3$ when necessary. Thus the complete hole
+$H=\mathbb Z\setminus\bigcup\mathcal F_0$ avoids every
+height-zero output. Let $N_0=3^BM$ be the construction's common
+5-free output period. Retained numerical labels are distinct
+odd 5-free nonunits. The original counts
+remain $N_3=2+v_1+v_2$ and
+$|\mathcal F_0|=K-N_3-z$, with $z\ge0$. Every safe top menu
+contains all nonempty actual pullbacks, including those inactive
+on this $H$. Write $\mathcal T_u$ for its family and $T_u$ for
+its union. Let $\mathscr T$ be their numerical output-index set,
+$\tau=|\mathscr T|$; then $\mathscr T\subseteq V_1$ and
+$\tau\le v_2$ by the original supplier indexing and divisor
+closure. A numerical top index has only one original supplier.
+
+The following entrance condition replaces the actual lower
+and complete phase-group assumptions of SC227 and Section 55:
+
+$$
+\begin{gathered}
+p>5\text{ prime},\qquad c\in\{2,5,8\},\qquad
+\{u,v\}=\{2,5,8\}\setminus\{c\},\\
+C_*=[a]_p\in\mathcal T_c
+   \text{ is the actual output of original }9p,\\
+H\subseteq T_u\cap T_v,\qquad
+E_j=H\setminus T_j\ (j=3,6),\qquad
+E_3\cup E_6\subseteq[a]_p.
+\end{gathered}
+\tag{SC372}
+$$
+
+Neither $H\subseteq T_c$, an actual inner lower enclosing the
+deficits, phase equality between original $3p$ and $9p$, nor
+$J_a=\{3p,9p\}$ is assumed. The original numerical label $3p$
+exists by divisor closure, but it is not used as the enclosing
+AP. The two nonpartner outer menus may contain $p$-bearing
+tops.
+
+### Three complete outer menus reach this entrance at a prime hull
+
+Suppose instead that all three outer menus cover $H$. If $H$
+is empty, retention already gives a strict whole-cover descent.
+Otherwise SC194's four-complete-top construction shows that
+both $E_3,E_6$ are nonempty. Put $E=E_3\cup E_6$, and suppose
+its complete congruence hull in the common 5-free period is
+the prime $p>5$. Thus $E\subseteq[a]_p$ for one residue
+$a$ modulo $p$.
+
+The virtual-enclosure argument preceding SC229 still applies
+without an actual enclosing lower. Use $[a]_p$ as the fourth
+menu's enclosure. If the unique top index $p$ is absent, or
+is in an inner color that can be omitted, the resulting
+distinct patch costs at most $2+v_2$. Nonempty $H$ and a
+complete outer menu give $v_2\ge1$, and divisor closure gives
+$v_1\ge v_2$. Hence $2+v_2<N_3+z$, a contradiction.
+
+The top therefore exists in an outer color $c$. Remove that
+top from its root and transfer the omitted inner menu there.
+The exact remaining service is $D_p\cap E_j$ as in SC229,
+where $D_p$ is the responsibility of that whole outer color
+after removing its index-$p$ top. If it were empty, the
+base cost $1+v_2$ would give descent. Since $T_c$ covers $H$,
+every point of $D_p$ lies in the deleted top. A residual
+point also lies in $E\subseteq[a]_p$. The deleted top has
+modulus $p$, so its actual AP is exactly $[a]_p$. Consequently
+
+$$
+\left.
+\begin{gathered}
+H\subseteq T_2\cap T_5\cap T_8,\\
+\Gamma(E_3\cup E_6)=p>5\text{ prime}
+\end{gathered}
+\right\}
+\quad\Longrightarrow\quad\text{SC372}.
+\tag{SC373}
+$$
+
+This reuses the complete-enclosure collision argument with
+the count reserve supplied by the nonempty outer menu. It
+does not rephase any original class. The hull-one and ternary
+hull alternatives are not treated by SC373, and three complete
+outer menus have not been forced for a general original source.
+
+### Move the nonpartner outer menus with the retained family
+
+Assume SC372. Fix $b\ne a$ and $j\in\{3,6\}$, with $k$ the
+other inner color. Let $\phi_b$ interchange the first-$p$
+digits $a,b$, preserving every higher $p$-digit and every
+other output coordinate. It acts on the full common period
+and extends periodically to integers. A $p$-free AP is fixed.
+On any AP whose modulus contains $p$, its first digit is
+fixed, so the operation is one constant CRT translation on
+that AP. Thus every actual output remains an AP of the same
+numerical modulus. Set
+
+$$
+\mathcal F'_0=\phi_b(\mathcal F_0),\qquad
+H'=\phi_b(H),\qquad B_b=[b]_p.
+\tag{SC374}
+$$
+
+Keep $\mathcal T_c$ unchanged. Transport the two nonpartner
+outer menus and both inner menus by $\phi_b$. A candidate
+family retains $\mathcal F'_0$ and uses these fresh-root
+placements; placing an AP $C$ at root $r$ means $[r]_5\cap C$:
+
+| Fresh first-5 root | Family placed at that root |
+|---|---|
+| $0$ | the whole root $[0]_5$ |
+| $1$ | $(\mathcal T_c\setminus\{C_*\})\cup\phi_b(\mathcal T_j)$ |
+| $2$ | $\phi_b(\mathcal T_u)$ |
+| $3$ | $\phi_b(\mathcal T_v)$ |
+| $4$ | $\{B_b\}\cup\phi_b(\mathcal T_k)$ |
+
+$B_b$ is a virtual repair AP, not an asserted output of
+original $3p$. These are specified transformations of one
+source, assembled into one candidate integer family; no new
+common original configuration is assumed for the transformed
+menus.
+
+Outside $H'$, retention covers every integer. At roots 2 and
+3, SC372 gives $H'\subseteq\phi_b(T_u)\cap\phi_b(T_v)$.
+At root 4, $H'\setminus\phi_b(T_k)=\phi_b(E_k)\subseteq B_b$.
+At root 1 the exact missing service is
+
+$$
+\begin{aligned}
+R_{b,j}
+&=H'\setminus\left(
+  \bigcup(\mathcal T_c\setminus\{C_*\})\cup\phi_b(T_j)
+  \right)\\
+&=\phi_b(E_j)\setminus T_c\subseteq[b]_p,\\
+\mathbb Z\setminus\bigcup\mathcal B_{b,j}
+&=[1]_5\cap R_{b,j}.
+\end{aligned}
+\tag{SC375}
+$$
+
+The second equality uses the disjoint phases
+$\phi_b(E_j)\subseteq[b]_p$ and $C_*=[a]_p$. In particular,
+there is no extra liability at the new $a$-fiber. Completeness
+of $T_c$ on the old $H$ was not needed: the transferred inner
+menu covers the entire complement of $\phi_b(E_j)$ in $H'$.
+
+### The numerical interface and full residual hull are unchanged
+
+Every safe top occurs once, except $C_*$, whose index $p$ is
+replaced by $B_b$. The numerical labels and exact count are
+
+$$
+\begin{aligned}
+\operatorname{Mod}(\mathcal B_{b,j})
+ &=\operatorname{Mod}(\mathcal F_0)
+     \cup\{5\}\cup\{5n:n\in\mathscr T\},\\
+|\mathcal B_{b,j}|
+ &=|\mathcal F_0|+1+\tau\\
+ &=K-1-v_1-v_2-z+\tau\le K-1-v_1-z.
+\end{aligned}
+\tag{SC376}
+$$
+
+Retained labels are 5-free; every other label has 5-valuation
+one. Top indices are distinct and exceed 1, so no $5n$ equals
+5. Removal of $C_*$ leaves exactly one use of $5p$. All
+labels are odd and exceed 1.
+
+An empty $R_{b,j}$ would contradict EB1 through SC375--SC376.
+Also $R_{b,j}\subseteq H'$ avoids $S$, which $\phi_b$ fixes.
+The original inventory bound $v_1\ge11$ of SC231 does not
+use phase alignment: its inputs are NF66, the support bound,
+the original pure 9 and $v_2\le v_1$. Reuse the complete
+enclosure packets SC136--SC137, shifted below fresh root 1
+by SC233. A hull strictly larger than $p$ has either a
+divisor $3p$ or a composite 3-free divisor; respectively the
+eleven- or nine-class packet would cover the entire residual.
+Its labels have 5-valuation at least two and its cost is at
+most $v_1$, so SC376 would give a strict descent. Therefore
+
+$$
+R_{b,j}\ne\varnothing,\qquad
+R_{b,j}\cap S=\varnothing,\qquad
+\Gamma_{N_0}(R_{b,j})=p,
+\qquad b\ne a,\ j=3,6.
+\tag{SC377}
+$$
+
+This concerns each complete residual, not selected witnesses
+or a claim that it fills its enclosing AP.
+
+### Owner comparison still uses the unchanged original source
+
+For this paragraph add $H\cap L_2=\varnothing$. Let
+$\mathcal A_b$ contain all actual $p$-bearing suppliers at
+first-$p$ phase $b$ whose original ternary height is zero,
+or is one at outer first-3 root 2. Keep original identities
+and actual output phases, even when different roles share
+one numerical output index.
+
+For $y\in R_{b,j}$, put $x=\phi_b(y)\in E_j\subseteq H$.
+Apply the unchanged original source map $F_c$ to $y$.
+Whole original coverage gives an owner. Since $y\notin T_c$
+and every nonempty top pullback of color $c$ was retained
+in that menu, its owner has height zero or is an outer lower.
+If it were $p$-free, membership would be unchanged between
+$F_c(y)$ and $F_c(x)$. Height-zero priority would then put
+$x$ in the retained union, or the outer lower would put it
+in $H\cap L_2$, both contradictions. Hence
+
+$$
+H\cap L_2=\varnothing
+\quad\Longrightarrow\quad
+R_{b,3}\cup R_{b,6}\subseteq
+\bigcup_{d\in\mathcal A_b}C_d.
+\tag{SC378}
+$$
+
+This exhaustive role check is not needed when complete
+service by a specified actual menu is separately assumed.
+No supplier-count bound that excludes original $3p$ from
+an outer role is imported: its phase and root are unrestricted
+here.
+
+### The established menu repairs use the same two separate inventories
+
+If a full $R_{b,j}$ is served by actual outer lowers of the
+form SC324, Section 61's two alternative packets apply
+without changing their constructions or donor counts.
+Their inputs are complete service, $R\subseteq[b]_p$,
+$R\cap S=\varnothing$, distinct actual output indices and
+the original $V_1$ divisor inventory. The donor $3p$ is
+used only as a numerical label, not as a patch phase.
+Moving nonpartner outer menus changes none of the base
+labels or these original divisibilities. The chosen packet
+has cost at most $v_1$, giving
+
+$$
+K'\le |\mathcal B_{b,j}|+v_1
+   =K-1-z-(v_2-\tau)<K.
+\tag{SC379}
+$$
+
+For raw absorption, choose actual $p$-bearing height-zero or
+outer-lower suppliers at $b$ with distinct indices outside
+$\mathscr T$, as in SC339. Let $A$ be their actual output union, let $f$
+count selected indices in $V_1$, let $o$ count those outside,
+and put $e=v_1-\tau-f\ge0$. Adding $[1]_5\cap C_d$ at each
+selected index gives exactly
+
+$$
+\begin{aligned}
+\widehat R&=R_{b,j}\setminus A,\\
+\mathbb Z\setminus\bigcup\mathcal B_{\rm raw}
+  &=[1]_5\cap\widehat R,\\
+|\mathcal B_{\rm raw}|&=K-1-v_2-z-e+o.
+\end{aligned}
+\tag{SC380}
+$$
+
+The occupied numerical interface is precisely SC376. No
+lower counterpart is assumed for a height-zero supplier
+counted in $o$. Under $o\le z+e$, set
+$\sigma=z+e-o\ge0$. If the complete remaining mask has
+SC342's actual positive-height extra-cofactor lower service,
+with every required same-height original top in $D$, reuse
+SC343--SC345's separate $V_2$ payment. No top phase alignment
+or live top pullback is needed for those numerical donors.
+The completion has cost at most $v_2$ and fresh 5-valuation
+at least two, hence
+
+$$
+K'\le K-1-v_2-\sigma+v_2=K-1-\sigma<K.
+\tag{SC381}
+$$
+
+For example, let $\mathcal W_b^{\rm top}$ consist of every
+actual outer lower at $b$ satisfying SC342's numerical shape
+and same-height-top requirement. For every admissible raw
+selection with $o\le z+e$, EB1 forces the concrete remainder
+
+$$
+\widehat R\setminus
+\bigcup_{d\in\mathcal W_b^{\rm top}}C_d\ne\varnothing.
+\tag{SC382}
+$$
+
+Otherwise this finite menu would complete the mask and SC381
+would contradict minimality. Under SC378's extra lower-exclusion
+condition, a remaining point has actual owners outside that
+qualified menu: height-zero service, zero original 5-height,
+pure-$p$-power cofactors or positive-height sources without the
+required original top. The count and every selected phase
+belong to the same original cover throughout.
+
+The virtual construction does not establish the complete
+phase-group condition, the $p$-free nature of nonpartner
+outer colors, the original private-region product formulas
+or the reverse-transport inclusions of SC288--SC313. None
+is needed for SC375--SC382. Forcing SC372, the hull-one and
+remaining ternary-hull branches, complete mixed-role service
+with affordable raw selection, and original ternary heights
+above two remain unresolved. This is an ordinary source-qualified construction
+and reuse of existing packets, not a Lean-verified result or
+a resolution of unrestricted Erdős #7.
