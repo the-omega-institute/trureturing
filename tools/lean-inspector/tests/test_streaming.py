@@ -59,10 +59,15 @@ class ManifestVersionTests(unittest.TestCase):
                         materials.validate_template_evidence(evidence, manifest)
 
     def test_missing_or_malformed_manifest_version_rejected(self):
-        for text in [None, '{}', '{', '[]', '{"report_cache_release_semantic_version":null}',
-                     '{"report_cache_release_semantic_version":"8"}', '{"report_cache_release_semantic_version":true}',
-                     '{"report_cache_release_semantic_version":0}', '{"report_cache_release_semantic_version":-1}',
-                     '{"report_cache_release_semantic_version":6.5}']:
+        cases = [None, '{}', '{', '[]']
+        for field in ('report_cache_release_semantic_version', 'report_extraction_semantic_version'):
+            valid = dict(report_cache_release_semantic_version=9, report_extraction_semantic_version=1)
+            missing = dict(valid)
+            del missing[field]
+            cases.append(json.dumps(missing))
+            cases.extend(json.dumps(dict(valid, **{field: value}))
+                         for value in (None, '8', True, 0, -1, 6.5))
+        for text in cases:
             with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 manifest = manifest_fixture(root)
