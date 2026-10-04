@@ -2735,3 +2735,159 @@ SC115, or a different complete packet for the unassignable sources.
 These are ordinary mathematical sufficient conditions; they do not
 constitute a Lean verification or an unrestricted resolution of
 Erdős #7.
+
+## 32. Four requests per source pay a complete repair with repeated cofactors
+
+Keep Section 29's one actual source tree, retained family
+$\mathcal F_0$, complete integer hole $H$, and exact count SC111.
+Thus every retained modulus is $5$-free and
+$|\mathcal F_0|=K-N_3-z$, with $z\ge0$. Assume $A\ge2$.
+Choose a finite family $\mathcal W_*$ of actual discarded lower or
+omitted top sources such that
+$$
+ \begin{gathered}
+ H\subseteq\bigcup_{d\in\mathcal W_*}C_d,\qquad
+ d=3^{a_d}5^{b_d}m_d,\quad a_d\ge1,\quad m_d>1,\\
+ C_d=[\eta_d]_{3^{b_d}m_d},\qquad m_d\mid M.
+ \end{gathered} \tag{SC122}
+$$
+The phase $\eta_d$ is the actual output phase of that source under
+the fixed tree. In particular, its ternary part is not replaced by
+the original phase of an unrelated divisor. The containment concerns
+all of $H$, including every integer lift and all discarded lower
+service; it is not a condition only on individual private points.
+
+In the anchored height-two setup of Section 31, a source choice with
+these properties is available before imposing the matching below.
+Take the discarded lower suppliers of $H_{\rm low}$ together with
+the remaining mandatory tops of either one fixed color supplying
+$H_{\rm top}$. The height-zero representative preference gives
+$a_d=1,m_d>1$ for the lower suppliers. The selected nonpure tops
+have $a_d=2,m_d>1$. Any omitted pure output-$3$ top is already
+contained in the bought root $S$ and supplies no point of $H$.
+At other heights, SC122 remains an explicit source hypothesis.
+
+### Match complete numerical slots, allowing the cofactor to repeat
+
+For each supplier define its finite slot menu
+$$
+ \mathcal N_d
+ =\{3^j h:0\le j\le b_d,\quad 1<h\mid m_d\}.
+ \tag{SC123}
+$$
+Request four slots $n_{d,r}=3^{j_{d,r}}h_{d,r}\in\mathcal N_d$,
+one for each $r=1,2,3,4$, with all requested numerical slots
+globally distinct. The same $h$ may occur in different requests
+provided their $j$ values differ. This is a larger menu than the
+globally distinct $M$-divisor assignment in Section 29.
+
+The finite Hall theorem, applied to four copies of each supplier,
+gives exactly the condition
+$$
+ \left|\bigcup_{d\in\mathcal X}\mathcal N_d\right|
+       \ge4|\mathcal X|
+ \qquad\text{for every }\mathcal X\subseteq\mathcal W_*.
+ \tag{SC124}
+$$
+This reuses the demand-copy matching method of
+[report 385, Section 64](385-private-congruence-hulls-and-crossed-modulus-closure.md#64-the-common-literal-zero-root-makes-deep-feasibility-a-static-hall-condition)
+and the nested-slot method DP12 in its
+[Section 69](385-private-congruence-hulls-and-crossed-modulus-closure.md#69-cross-cofactor-divisor-payment-reduces-exactly-to-nonconcentrated-ancestors); no new matching
+theorem is needed. The condition is global: separate four-slot
+menus for individual sources do not imply SC124.
+
+### Four nonzero roots cover the complete service of every supplier
+
+Buy the class $[0]_5$. For every matched request add the CRT class
+$$
+ B_{d,r}
+ =\{x:x\equiv r\pmod5,\quad
+         x\equiv\eta_d\pmod{n_{d,r}}\},
+ \qquad r=1,2,3,4.
+ \tag{SC125}
+$$
+This is the existing whole-class root splitting used in
+[report 385, Section 200, LP3--LP4](385-private-congruence-hulls-and-crossed-modulus-closure.md#200-a-vacant-lower-prime-layer-gives-a-whole-cover-descent),
+with source-dependent divisor labels. Indeed
+$n_{d,r}\mid3^{b_d}m_d$ and $5\nmid n_{d,r}$, so every point
+of $C_d$ in the root $r$ belongs to $B_{d,r}$. Its root-zero
+points belong to $[0]_5$. SC122 therefore makes these classes
+cover the whole hole $H$; points outside $H$ retain their owner
+in $\mathcal F_0$.
+
+The added numerical labels are $5$ and the $5n_{d,r}$. They are
+pairwise distinct odd nonunits, since all $n_{d,r}$ are different
+and greater than one. They are all fresh relative to the $5$-free
+family $\mathcal F_0$. Every retained phase stays fixed. For
+$\mathcal W_*\ne\varnothing$ this complete repair uses exactly
+$c=1+4|\mathcal W_*|$ added classes; write
+$\mathcal F_{\rm new}=\mathcal F_0\cup\{[0]_5\}\cup\{B_{d,r}\}$.
+
+### Each matched slot has its own original donor
+
+For the requested slot $n=3^jh$, use the numerical original donor
+$3\cdot5^jh$. It exists by Section 30's divisor inventory:
+$a_d\ge1$, $j\le b_d$ and $h\mid m_d$ imply
+$3\cdot5^jh\mid d$. This counts an existing original label; its
+phase is not used for the added patch, and no further original is
+deleted from $\mathcal F_0$.
+
+Because $(h,15)=1$, the correspondence
+$3^jh\longmapsto3\cdot5^jh$ is injective. Hence the globally
+distinct requests give $4|\mathcal W_*|$ different original
+$3$-bearing labels, even when their cofactors repeat. Since
+$h>1$, none is one of the original pure labels
+$3,\ldots,3^A$. Thus
+$$
+ N_3\ge4|\mathcal W_*|+A,\qquad
+ K-|\mathcal F_{\rm new}|
+ =N_3+z-(1+4|\mathcal W_*|)
+ \ge A+z-1\ge1.
+ \tag{SC126}
+$$
+This is a strict whole-cover descent under SC122 and SC124. It
+uses the original inventory already present in SC111, without
+adding a second repair budget or leaving donor service unpaid.
+If $\mathcal W_*=\varnothing$, SC122 gives $H=\varnothing$;
+then $\mathcal F_0$ itself covers and SC111 gives strict descent
+without adding any patch.
+
+### A single cofactor can provide all four requests
+
+Suppose all chosen sources have the same nonunit cofactor $m$,
+and restrict every request to $h=m$. Order the suppliers so that
+$b_1\le\cdots\le b_s$. Their menus are nested initial segments
+of the slots $3^jm$. The existing nested-slot matching criterion
+specializes to
+$$
+ b_i+1\ge4i\qquad(1\le i\le s).
+ \tag{SC127}
+$$
+These inequalities are necessary from the first $i$ suppliers and
+sufficient by assigning supplier $i$ the four exponents
+$4(i-1),\ldots,4i-1$. Repeated cofactors therefore require neither
+two different nonunit divisors per lower source nor an independently
+chosen phase for each request.
+
+For example, suppose one actual source with prime cofactor $m$
+and $b_d\ge3$ supplies the entire hole, and $a_d\ge1$.
+Choose $h=m$ and $j=0,1,2,3$. The five added labels are
+$$
+ 5,\quad5m,\quad15m,\quad45m,\quad135m.
+$$
+Their phases are exactly those of SC125, reducing the same actual
+$C_d$ phase at each requested modulus. Their four distinct original
+donors are $3m,15m,75m,375m$, and the pure $3$-powers give the
+remaining strict saving in SC126.
+
+The positive original ternary height and the nonunit cofactor are
+part of the scope: a discarded height-zero source does not supply
+these $3$-bearing donors. Requests with $h=1$ would require a
+separate overlap count against the pure labels; SC126 uses $h>1$.
+Such service must be retained or paid by a separately
+justified construction. Nor has SC124 been forced for some complete
+source choice in every hypothetical cover; sources may still compete
+for too few slots. This is a conditional ordinary-mathematical
+consumer of existing whole-class splitting, Hall matching and the
+original divisor inventory, without new Lean verification or a
+literature-priority claim.
