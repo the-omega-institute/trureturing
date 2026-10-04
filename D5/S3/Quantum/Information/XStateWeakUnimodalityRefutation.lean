@@ -8,8 +8,9 @@
 
 /-
 proof_shape: h2, h4, wParam, r1, r2, f1, ArgsNonneg, WeaklyUnimodal:
-  definition (Shannon entropies in bits, Eq. (A1) with r_{1,2} and w, nonnegativity of every
-  Shannon argument, and the Appendix definition of weak unimodality with its minimum form)
+  definition (Shannon entropies in bits through the frozen shannonEntropy, Eq. (A1) with r_{1,2}
+  and w, nonnegativity of every Shannon argument, and the Appendix definition of weak
+  unimodality with its minimum form)
 proof_shape: claim: definition (published unimodality hypothesis, arXiv:1702.03728, Section 2
   and Appendix, for f1 on [0, 1])
 proof_shape: result: bind-only (as local steps: nonnegativity of the Shannon arguments on
@@ -19,18 +20,20 @@ proof_shape: result: bind-only (as local steps: nonnegativity of the Shannon arg
   x = 0, 27/50, 177/200, 1)
 escape_witness: none (the settlement of the external named conjecture is the new content)
 admission_basis: open-problem-resolution (issue #12783; Refuted)
-Direct frozen dependencies (GID, statement_id): none
+Direct frozen dependencies (GID, statement_id):
+  D5/S3/Entropy/MaxEntropy.shannonEntropy
+    sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import D5.S3.Entropy.MaxEntropy
 import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.Real.Sqrt
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Information.XStateWeakUnimodalityRefutation
+
+open D5.S3.Entropy.MaxEntropy (shannonEntropy)
 
 /-!
 M. A. Yurischev, *Extremal properties of conditional entropy and quantum discord for XXZ,
@@ -44,12 +47,11 @@ choice of `p₁, …, p₅` with nonnegative Shannon arguments. For
 `f₁(0) > f₁(27/50) < f₁(177/200) > f₁(1)`, which no weakly unimodal function admits.
 -/
 
-/-- `h₂(a, b) = -a log₂ a - b log₂ b`, the Shannon entropy in bits. -/
-noncomputable def h2 (a b : ℝ) : ℝ := (Real.negMulLog a + Real.negMulLog b) / Real.log 2
+/-- `h₂(a, b) = -a log₂ a - b log₂ b`: the Shannon entropy of `(a, b)`, in bits. -/
+noncomputable def h2 (a b : ℝ) : ℝ := shannonEntropy ![a, b] / Real.log 2
 
-/-- `h₄(a, b, c, d) = -a log₂ a - b log₂ b - c log₂ c - d log₂ d`. -/
-noncomputable def h4 (a b c d : ℝ) : ℝ :=
-  (Real.negMulLog a + Real.negMulLog b + Real.negMulLog c + Real.negMulLog d) / Real.log 2
+/-- `h₄(a, b, c, d) = -a log₂ a - b log₂ b - c log₂ c - d log₂ d`, in bits. -/
+noncomputable def h4 (a b c d : ℝ) : ℝ := shannonEntropy ![a, b, c, d] / Real.log 2
 
 /-- `w = (|p₃ + p₄| + |p₃ - p₄|)/4`. -/
 noncomputable def wParam (p₃ p₄ : ℝ) : ℝ := (|p₃ + p₄| + |p₃ - p₄|) / 4
@@ -114,7 +116,9 @@ theorem result : ¬ claim := by
         Real.negMulLog ((1 - b * x - √(r2 x a c d g)) / 4) -
         (Real.negMulLog ((1 + b * x) / 2) + Real.negMulLog ((1 - b * x) / 2)) := by
     intro x a b c d g
-    simp only [f1, h2, h4]
+    simp only [f1, h2, h4, shannonEntropy, Fin.sum_univ_two, Fin.sum_univ_four,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons]
     field_simp
     ring
   have hw : wParam (187/2500) (-163/2500) = 187/5000 := by

@@ -15,10 +15,10 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
         H("The X-state conditional entropy f_1 need not be weakly unimodal"),
         Blocks(
             Node("h2", "Binary Shannon entropy", H2Formula(),
-                "h_2(a, b) = -a log_2 a - b log_2 b, written with Real.negMulLog t = -t log t divided by log 2.",
+                "h_2(a, b) = -a log_2 a - b log_2 b: the existing shannonEntropy of the pair (a, b), the sum of Real.negMulLog t = -t log t over its entries, divided by log 2.",
                 "h2", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("h4", "Quaternary Shannon entropy", H4Formula(),
-                "h_4(a, b, c, d) = -a log_2 a - b log_2 b - c log_2 c - d log_2 d.",
+                "h_4(a, b, c, d) = -a log_2 a - b log_2 b - c log_2 c - d log_2 d: the existing shannonEntropy of (a, b, c, d) divided by log 2.",
                 "h4", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("w", "The parameter w", WFormula(),
                 "w = (|p_3 + p_4| + |p_3 - p_4|)/4.",
@@ -88,22 +88,22 @@ internal sealed class XStateWeakUnimodalityRefutationDocument : IScribeDocumentD
     private static Formula Abs(Formula x) => Seq(Bar, x, Bar);
     private static Formula P(byte n) => new Formula.Subscript(F.Id("p"), D(n));
     private static Formula Icc(Formula a, Formula b) => Seq(OpenBracket, a, Comma, Sp, b, CloseBracket);
-    private static Formula Nml(Formula t) => Call(F.Id("negMulLog"), t);
     private static Formula Log2() => Seq(Log, Sp, D(2));
 
     private static Formula H2Formula()
     {
         Formula a = F.Id("a"), b = F.Id("b");
         return Disp(All(a, Real(), All(b, Real(),
-            EqTo(Call(F.Id("h2"), a, b), Frac(Add(Nml(a), Nml(b)), Log2())))));
+            EqTo(Call(F.Id("h2"), a, b),
+                Frac(Call(F.Id("shannonEntropy"), Parenthesized(Seq(a, Comma, Sp, b))), Log2())))));
     }
 
     private static Formula H4Formula()
     {
         Formula a = F.Id("a"), b = F.Id("b"), c = F.Id("c"), d = F.Id("d");
-        Formula sum = Add(Add(Add(Nml(a), Nml(b)), Nml(c)), Nml(d));
+        Formula tuple = Parenthesized(Seq(a, Comma, Sp, b, Comma, Sp, c, Comma, Sp, d));
         return Disp(All(a, Real(), All(b, Real(), All(c, Real(), All(d, Real(),
-            EqTo(Call(F.Id("h4"), a, b, c, d), Frac(sum, Log2())))))));
+            EqTo(Call(F.Id("h4"), a, b, c, d), Frac(Call(F.Id("shannonEntropy"), tuple), Log2())))))));
     }
 
     private static Formula WFormula() =>

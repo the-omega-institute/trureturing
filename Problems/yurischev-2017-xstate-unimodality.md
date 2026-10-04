@@ -127,7 +127,8 @@ The canonical source is
 `D5/S3/Quantum/Information/XStateWeakUnimodalityRefutation.lean`.
 - Public declarations: `h2`, `h4`, `wParam`, `r1`, `r2`, `f1`, `ArgsNonneg`,
   `WeaklyUnimodal`, `claim` and `result`.
-- Imports: Mathlib only.
+- Reuse: `h2` and `h4` are the frozen `shannonEntropy` of
+  `D5/S3/Entropy/MaxEntropy`, divided by `log 2`.
 - Axioms: the proof uses only `propext`, `Classical.choice` and
   `Quot.sound`. It contains no `sorry`, no `native_decide` and no new axiom.
 
