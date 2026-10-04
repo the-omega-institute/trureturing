@@ -58,16 +58,20 @@ internal sealed class RuleThirtyTwentyTwoMersenneSignRefutationDocument : IScrib
                     + "For Rule 22 it is the exclusive-or of b shifted left by two bits, b shifted left by one bit, b, and their three-way bitwise intersection. "
                     + "Evaluating these exact recurrences and counting the 1535 possible bits gives the two cardinalities. "
                     + "This disproves the only-if direction. It does not determine the signs at all Mersenne indices or the recurrence of other exceptions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chan-lopez-martin-ruiz-2026-rule30-sign-pattern"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string declaration, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create("rule30-rule22-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
     private static Formula Booleans() => Id("Bool");

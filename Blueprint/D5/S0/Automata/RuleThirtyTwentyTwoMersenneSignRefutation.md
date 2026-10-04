@@ -82,6 +82,10 @@ $$\neg \mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chan-lopez-martin-ruiz-2026-rule30-sign-pattern` (refuted) by `D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chan-lopez-martin-ruiz-2026-rule30-sign-pattern","declaration_gid":"D5/S0/Automata/RuleThirtyTwentyTwoMersenneSignRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* E. Chan-López and A. Martín-Ruiz (2026). *Symmetric Nonlinear Cellular Automata as Algebraic References for Rule 30*. DOI: [10.48550/arXiv.2604.00165](https://doi.org/10.48550/arXiv.2604.00165). URL: <https://arxiv.org/abs/2604.00165v3>.
