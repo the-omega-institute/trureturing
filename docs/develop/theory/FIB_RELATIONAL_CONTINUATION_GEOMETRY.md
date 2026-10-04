@@ -7600,3 +7600,279 @@ $$
 未决内容继续包括实际 Cloitre 的 G.5 后续共同响应与更宽轮廓取得、既有合格域外的实际盆和着陆及校正同历史相位、真实无界周期长度族是否存在、周期与规范缺陷振幅的更强关系、统一缺陷和终端占用控制、联合块补偿与离散度、达到的优化策略、全局 $C(n)/n$ 收敛及完整跨类型结构对应。已证的全域图阻碍不解决这些数值与历史义务，Campbell 的完整盆地也不供应它们。本章完成一个限定的实际数值接口，完整研究目标继续保留。
 
 ## 39.99 追加锚
+
+## 40. Actual cycle canonical-defect mass
+
+### 40.1 同一实际递归、来源条件与周期总量
+
+**假设 40.1（完整继承的实际来源条件）。** 完整保留假设 24.1，以及它经假设 23.1、21.1 承继的全部条件、原生合法域与有限基础。本章的 $C$ 是定义 15.1 的同一个变深度 Cloitre 序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&T_N(x)&=N-C(x),\\
+x_0&=N-1,&x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)&& (N\ge3).
+\end{aligned}
+\tag{40.1}
+$$
+
+全局 $G\le C\le U\le\mathrm{id}$、$U$ 的分段式与增量界、锚值、邻点及锚前值、正负偏移捕获与全锚交集、规定深度入周期、闭块两子域和继承自然阶数、参数行与终端合同均保持假设 21.1、23.1、24.1 的完整范围。证明直接使用其中的合法域、实际内步和黄金下界；其余继承条件仍附于实际结论。$C$ 的单调性、周期均值、无界周期长度族及全局收敛均未加入前提。
+
+原生来源固定为 [foundations](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/proof.md) 与 [golden structure](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/golden-proof.md)，后者的进位算术见同修订的 [landing，§§1--2](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/landing.md)。未经重算的有限来源前提保持 ASSUMED-UNVERIFIED：比值域 $16384\le n\le131071$、黄金归纳基 $1\le n\le65535$、规定深度入周期基域 $3\le n\le52$，以及
+
+$$
+\lambda_8=[0,0,0,1,1,2,3,4,5],\qquad
+\lambda_9=[0,0,0,0,1,1,2,2,3,5,6,6,7,8],
+$$
+
+及全部继承的轮廓、collar、字母表、单位位、接缝、选择器和证书种子。本章的条件纸面推导不改变这些前提的证据地位。
+
+**定义 40.2（实际周期的规范缺陷质量）。** 取 $\alpha=(\sqrt5-1)/2$、$G(x)=\lfloor\alpha(x+1)\rfloor$ 和 $E_C(x)=C(x)-G(x)\ge0$。固定整数 $n\ge3$ 与 $T_n$ 在 $D_n$ 中的一条实际周期 $O$，令
+
+$$
+p=|O|\ge1,\qquad x_1<\cdots<x_p\quad(O=\{x_1,\ldots,x_p\}),
+\qquad S_O=\sum_{x\in O}E_C(x).
+\tag{40.2}
+$$
+
+$p$ 计不同周期点各一次，等于这条周期的最短周期，不用重复遍历词的长度替代。排序只重列同一个实际点集，时间次序仍由 $T_n$ 决定。本章允许未被起点 $n-1$ 到达的实际周期；其结论也适用于被规定轨道到达的周期，保留该轨道自己的起点、进入对齐、深度与所选相位。
+
+### 40.2 有序容量与离散秩证明
+
+**引理 40.3（置换容量迫使的缺陷总量）。** 设 $0<t<1$、$c\in\mathbb R$、$r\in\mathbb Z$，$A$ 是含 $p\ge1$ 个不同整数的有限集，$f:A\to\mathbb Z$，并令
+
+$$
+g(z)=\lfloor tz+c\rfloor,\qquad f(z)\ge g(z),\qquad
+\sigma(z)=r-f(z).
+$$
+
+假设这个实际给定的 $\sigma$ 是 $A$ 的置换。将 $A$ 排为 $z_1<\cdots<z_p$，置 $\gamma=1-t$、$m=\lfloor p/2\rfloor$、$S=\sum_{z\in A}(f(z)-g(z))$。则每个秩都满足
+
+$$
+z_{p+1-i}+g(z_i)\le r\qquad(1\le i\le p),
+\tag{40.3}
+$$
+
+并且
+
+$$
+\begin{aligned}
+S&\ge\sum_{i=1}^{m}\left\lfloor\gamma(z_{p+1-i}-z_i)\right\rfloor\\
+ &\ge B_t(p):=\sum_{i=1}^{m}\lfloor\gamma(p+1-2i)\rfloor\\
+ &\ge\gamma\left\lfloor\frac{p^2}{4}\right\rfloor-m
+ \ge\frac{\gamma p^2}{4}-\frac p2.
+\end{aligned}
+\tag{40.4}
+$$
+
+空求和取零。这里不要求 $f$ 单调，也不要求置换把原点按反序映到像点。
+
+证明。因为 $t>0$，$g$ 非减。固定 $i$，后缀 $z_i,\ldots,z_p$ 的 $p-i+1$ 个像彼此不同，且
+
+$$
+\sigma(z_k)=r-f(z_k)\le r-g(z_k)\le r-g(z_i)
+\qquad(k\ge i).
+$$
+
+若 $r-g(z_i)<z_{p+1-i}$，这些像只能落在 $A$ 的前 $p-i$ 个点中，违反其不同性。这证明全部 (40.3)，使用的是每个后缀的容量，而非未知 $f$ 的次序性质。
+
+定义非负的虚拟容量余量
+
+$$
+s_i=r-g(z_i)-z_{p+1-i}\ge0.
+$$
+
+置换保留全体点的和，故有全局恒等式
+
+$$
+\begin{aligned}
+\sum_{i=1}^p\sigma(z_i)&=\sum_{i=1}^p z_i,\\
+S&=pr-\sum_{i=1}^p z_i-\sum_{i=1}^p g(z_i)
+  =\sum_{i=1}^p s_i.
+\end{aligned}
+\tag{40.5}
+$$
+
+单个 $s_i$ 不必等于 $f(z_i)-g(z_i)$：其反序目标 $z_{p+1-i}$ 不必是实际像 $\sigma(z_i)$。同样，下面的虚拟成对项 $s_i+s_{p+1-i}$ 不被认作两个端点的实际缺陷和；只有 (40.5) 的整体重组成立。
+
+先明确取整增量。对任意实数 $u$ 和 $v\ge0$，有
+
+$$
+\lfloor u+v\rfloor-\lfloor u\rfloor
+=\lfloor\{u\}+v\rfloor
+\in\{\lfloor v\rfloor,\lceil v\rceil\}.
+\tag{40.6}
+$$
+
+下界来自 $\{u\}\ge0$；上界来自 $\{u\}+v<1+\lceil v\rceil$。若 $v$ 为整数，两值相同；否则两值相邻，故所列集合穷尽可能值。对 $1\le i\le m$，令 $j=p+1-i$、$D=z_j-z_i\in\mathbb Z_{>0}$。代入 $u=tz_i+c$、$v=tD$，并用整数平移的 floor/ceil 恒等式，得到
+
+$$
+\begin{aligned}
+g(z_j)-g(z_i)&\le\lceil tD\rceil,\\
+D-\lceil tD\rceil&=\lfloor(1-t)D\rfloor,\\
+D-\lfloor tD\rfloor&=\lceil(1-t)D\rceil,\\
+s_j-s_i&=D-[g(z_j)-g(z_i)]
+\in\{\lfloor\gamma D\rfloor,\lceil\gamma D\rceil\}.
+\end{aligned}
+\tag{40.7}
+$$
+
+这里 $\lceil D-w\rceil=D-\lfloor w\rfloor$，取 $w=(1-t)D$ 即给第二行；第三行同理。因此
+
+$$
+s_i+s_j=2s_i+(s_j-s_i)\ge\lfloor\gamma D\rfloor.
+\tag{40.8}
+$$
+
+这些反序秩对彼此不交。$p=2m$ 时，(40.5) 恰为它们的和；$p=2m+1$ 时，还剩中心项
+
+$$
+s_{m+1}=r-z_{m+1}-g(z_{m+1})\ge0,
+$$
+
+其非负性来自中心秩的 (40.3)。相加得到 (40.4) 的第一步。不同整数的相邻间隔至少为一，故 $D\ge j-i=p+1-2i$；$\gamma>0$ 与 floor 非减给第二步。
+
+秩间距的和为
+
+$$
+\sum_{i=1}^{m}(p+1-2i)=m(p-m)
+=\left\lfloor\frac{p^2}{4}\right\rfloor.
+\tag{40.9}
+$$
+
+逐项使用 $\lfloor w\rfloor\ge w-1$ 给第三步。若 $p=2m$，第三步右侧恰为 $\gamma p^2/4-p/2$；若 $p=2m+1$，它等于
+
+$$
+\frac{\gamma p^2}{4}-\frac p2+\frac12-\frac\gamma4
+>\frac{\gamma p^2}{4}-\frac p2,
+$$
+
+因为 $0<\gamma<1$。这也包含 $p=1$ 的空秩对和非负中心项。$p=2$ 时 $B_t(2)=\lfloor\gamma\rfloor=0$。全部结论成立。$\square$
+
+### 40.3 全部实际周期的二次规范质量
+
+**定理 40.4（实际周期的规范缺陷质量下界）。** 在完整假设 40.1 下，对每个整数 $n\ge3$ 和定义 40.2 的每一条实际周期，令 $m=\lfloor p/2\rfloor$，则
+
+$$
+\begin{aligned}
+S_O&\ge\sum_{i=1}^{m}
+ \left\lfloor\alpha^2(x_{p+1-i}-x_i)\right\rfloor\\
+ &\ge B_p:=\sum_{i=1}^{m}\lfloor\alpha^2(p+1-2i)\rfloor\\
+ &\ge\alpha^2\left\lfloor\frac{p^2}{4}\right\rfloor
+       -\left\lfloor\frac p2\right\rfloor
+ \ge\frac{\alpha^2p^2}{4}-\frac p2.
+\end{aligned}
+\tag{40.10}
+$$
+
+因此根无关的充分常数与均值界为
+
+$$
+a=\frac{\alpha^2}{4}=\frac{3-\sqrt5}{8}>0,
+\qquad b=\frac12,\qquad
+S_O\ge ap^2-bp,\qquad
+\frac{S_O}{p}\ge\frac{B_p}{p}\ge ap-b.
+\tag{40.11}
+$$
+
+$S_O\ge B_p\ge0$；$B_1=B_2=0$。$B_p$ 是上述明确有限 floor 和的值，不声称它是实际周期的最小可达质量，也不声称 $a,b$ 最优。初始化根 $n=2$ 的唯一周期同样满足 (40.10)--(40.11)，其质量为零。
+
+奇偶两种情形的精确秩和可写为
+
+$$
+B_{2m}=\sum_{k=1}^{m}\lfloor\alpha^2(2k-1)\rfloor\quad(m\ge1),
+\qquad
+B_{2m+1}=\sum_{k=1}^{m}\lfloor2\alpha^2k\rfloor\quad(m\ge0).
+$$
+
+两式仅以 $k=m+1-i$ 重列 (40.10) 的同一求和；奇数情形的中心容量余量仍按引理 40.3 保留为非负项。
+
+证明。来源合法域给 $1\le C(x)\le x$；对 $x\in D_n$，于是 $1\le n-C(x)\le n-1$。一条实际周期的时间枚举 $q_0,\ldots,q_{p-1}$ 有不同整数点，并满足 $T_n(q_i)=q_{(i+1)\bmod p}$。因此 $T_n|_O$ 是置换，逆为同一周期的前一步。排序保留这同一个点集，未把循环次序替换为反序配对。
+
+$2<\sqrt5<3$ 给 $0<\alpha<1$，直接展开给 $1-\alpha=\alpha^2$。在引理 40.3 中逐项取
+
+$$
+A=O,\quad z_i=x_i,\quad r=n,\quad f=C|_O,
+\quad t=\alpha,\quad c=\alpha,\quad
+g=G|_O,\quad\sigma=T_n|_O.
+$$
+
+非负实际差 $f-g=E_C|_O$ 来自继承的黄金下界，整数值与不同整数点来自实际序列及周期，置换条件已证。这验证全部一般假设，(40.3) 在实际对象上成为 $x_{p+1-i}+G(x_i)\le n$，(40.5) 成为
+
+$$
+S_O=pn-\sum_{x\in O}x-\sum_{x\in O}G(x).
+\tag{40.12}
+$$
+
+直接应用 (40.4) 得 (40.10)。每个 floor 和的自变量非负，故 $B_p\ge0$。$\alpha^2=(3-\sqrt5)/2$ 给常数式；除以 $p>0$ 给均值界。
+
+对初始化根 $n=2$，$D_2=\{1\}$，初值直接给 $T_2(1)=2-C(1)=1$。又 $G(1)=\lfloor\sqrt5-1\rfloor=1=C(1)$，故其唯一周期为 $\{1\}$，$p=1$、$S_O=0$。这只使用初值与取整，不把一、二视为递归拆分根。$\square$
+
+定理 19.2 的独立振幅结论仍是 $s<\varphi^2(\Delta_O+1)$、$p\le\lceil\varphi^2(\Delta_O+1)\rceil$、$\Delta_O\ge\lfloor\alpha^2(p-1)\rfloor$，且 $\Delta_O=0$ 时 $p\le2$；它不要求假设 18.1。在非负缺陷下，这些振幅式直接给的质量约束是 $S_O\ge\Delta_O$ 的线性下界。(40.10) 使用全部后缀容量与成对整数秩距，得到二次总量；它补充振幅信息，不把最大缺陷或空间跨度平均成周期总量。大质量也不反向证明长周期存在。
+
+定理 15.3 的既有解释可逐点用于每个 $x$ 自己的实际拆分树 $\mathcal T_x$：
+
+$$
+S_O=\sum_{x\in O}\sum_{u\in I_x}
+\delta(g_{m_u},m_u-g_{m_u}).
+\tag{40.13}
+$$
+
+这里 $I_x$ 按该树的内部出现位置计数，双重求和保留标签 $(x,u)$。相同物理索引、共享子树或多个根中的别名保留出现重数，每个内部根仍使用自己的内历史、规定深度和停止条件。右侧是有符号总进位，包含负进位，不是正事件数，也不是外侧某一棵选择树的占用量。(40.13) 是已有树恒等式的应用，不参与秩证明。
+
+在同一 $O$ 中改变时间起点，只循环置换全体求和项，所以完整 $S_O$ 及 $S_O/p$ 与该起点无关。这不证明逐点缺陷、互补标量读出或被规定深度选中的输出恒定，也不证明不同周期或观察纤维具有共同输出。
+
+### 40.4 原生捕获域内的一个 M.9 应用
+
+以下只应用 [dispersion，M.7--M.11](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/dispersion.md#two-split-moment-policies-and-cycle-average-dispersion) 的既有结果。额外固定同一个自然闭块状态 $(j,n)$，$j\ge6$、$F_j\le n\le F_{j+1}$，置 $A_j=F_{j-1}$、$B_j=F_{j-2}$、$S_j=F_j=A_j+B_j$，并要求这条实际周期的每个点属于原生捕获拆分域
+
+$$
+K_j(n)=\{x\in\mathbb Z:A_j\le x\le S_j,
+                     \ B_j\le n-x\le A_j\}.
+$$
+
+所有点和相邻像 $y=n-C(x)$ 都在同一 $K_j(n)$ 中。每个拆分的第一子 $x$、第二子 $n-x$ 保留自然阶数 $j-1,j-2$；端点按继承阶数表示，后续仍在阶数四、五停止。此处的方差是这个原生几何拆分的
+
+$$
+v(j,n;x)=\frac{(A_j n-S_jx)^2}{n^2x(n-x)}.
+$$
+
+M.9 已给 $p^{-1}\sum_{x\in O}v(j,n;x)\ge(20pn^2)^{-1}\sum_{x\in O}E_C(x)^2$。令 $\overline E=S_O/p$，由 $\sum_{x\in O}(E_C(x)-\overline E)^2\ge0$ 得 $\sum E_C(x)^2\ge S_O^2/p$。结合非负的 $B_p$，得到这一限定应用
+
+$$
+\frac1p\sum_{x\in O}v(j,n;x)
+\ge\frac{S_O^2}{20n^2p^2}
+\ge\frac{B_p^2}{20n^2p^2}.
+\tag{40.14}
+$$
+
+这是同根的分析性均匀周期平均。要把均匀抽样用作 M.10--M.11 的策略，仍须同时满足原来的两个条件：
+
+$$
+\frac1p\sum_{x\in O}[C(x)+C(n-x)]\ge C(n),
+\qquad
+\frac{S_O}{p}\ge\theta E_C(n),\qquad\theta\ge0.
+\tag{40.15}
+$$
+
+第一条是标量可行性，第二条是相对父缺陷的付款。只有这些完整条件成立，原生 M.11 才给其一代最优策略值至少 $\theta^2(E_C(n)/n)^2/20$。(40.10) 不给第一条，也不保证一个统一有效的 $\theta$；即使另证 $B_p/p\ge\theta E_C(n)$，也只支付第二条。$p/n$ 可以很小，故 (40.14) 本身不供应统一外侧占用、终端方差或块补偿。
+
+### 40.5 共同五窗资源与取得边界
+
+保持定义 20.1 的每个共同 $H$、高到低合法窗、独立单位末字母和全部接缝。已有 (20.7) 给 $L(u)\le H\Longleftrightarrow0\le u<F_{3H+3}$。因此在任意已准入的 $H\ge L(n)$ 上，单个周期点 $x$、$C(x)$、$G(x)$、$E_C(x)$ 及 $p\le n-1$ 都能使用同一 $H$；每个 $x$ 自己实际树中的较小索引和自身递归根的深度也不超过 $n$，初始化叶没有另设内深度。取整仍是原 $G$ 的取整。
+
+整体 $S_O$、平方或其他乘积、全周期的排序与存储不由这些逐点界自动取得同一 $H$ 资源。有限求和的数学存在和秩证明没有供应周期成员、最短周期、所需 $C$ 值、进入对齐或所选相位的实际取得、识别与认证。该证明也没有增加时钟、宏动作、单位位、接缝权限或帽及拆分域。这里不应用 §26.22；凡另外使用它，仍须保留其 $j\ge2H+23$ 和原来的共同 $H$、实际根与拆分合同。
+
+### 40.6 数学来源、坐标区分与未决内容
+
+(40.3)--(40.12) 是有序容量计数、置换和守恒与 floor 增量在实际规范缺陷上的 repo-derived、PAPER 推导。所用有限有序集计数及取整工具是普通数学；本章不将它们的先例认作新的方法发明，也不主张世界新颖性、私人资料穷尽或 kernel 状态。(40.13) 和 (40.14) 分别是本卷 15.3 与原生 M.9 的明确复用。
+
+供应源的 [five-window closure，§7](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/five-window-closure.md#7-fibonacci-profile-renormalization-and-defect-dynamics) 与 [inverse reconstruction，(9.2) 及其证明](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/inverse-reconstruction.md#minimum-defect-cost-of-a-proper-cycle) 使用反射式 $u_{i+1}=t-u_i+e_i$。在其正偏移接口中，$e_i=F_{k-2}+u_i-C(F_{k-1}+u_i)$ 是局部轮廓短缺，而本章的 $E_C(x)=C(x)-G(x)$ 是规范黄金缺陷。两个基线和缺陷方向不同；来源的反射费用及抽象 sharp profiles 不能换名为 (40.10) 或实际 $C$ 的反例。
+
+另有两个独立的来源合同：[KBonacciActualSaturation 的完整正文](https://github.com/the-omega-institute/trureturing/blob/1da3f395bff2193440078b307493b64b5b8b3652/Blueprint/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.md) 与 [声明及证明](https://github.com/the-omega-institute/trureturing/blob/1da3f395bff2193440078b307493b64b5b8b3652/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.lean) 研究 $k,a\ge2$ 下禁 $k$ 个连续真位的实际二进制词，在 $\mathbb Z/2\mathbb Z$ 上原单探针多项式商中的接受像及精确长度饱和；[transport-memory，§32](https://github.com/the-omega-institute/trureturing/blob/af03309f7843635e6b2ce53d2b72e55b4eab414a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#32-初始同源侧信息的八倍阈值补充容量与操作次序) 研究固定活上限下非空有序原树的 Clifford 窗口、不可逆替换和左右拼接，保留已供应初始同源标签的生产与取得费用。这些结果没有供应原始 $T_n=n-C$ 的周期值或从其标签取得 $S_O$ 的对应；所列合同的饱和、容量与取得结论不用于 (40.10)。其他相关源的有界比对也不构成全部辅助卷、私人库、第三方库或世界文献的完整审计。
+
+本章支付的是每条已给定实际周期的规范质量及均值下界。实际 G.5 后续共同响应与更宽轮廓取得、既有合格域外的盆及着陆、校正同历史相位、真实无界周期长度族、统一外侧缺陷和终端占用、联合块补偿与离散度、实际取得并达到的优化策略、全局 $C(n)/n$ 收敛、自治有限状态闭合及完整跨递归对象／操作／历史／资源对应仍是未决义务。另一递归只有在证明其自己的整数点集、下包络和真实置换对应后才能应用引理 40.3；本章不供应这个跨类型桥梁。完整研究目标保留这些义务。
+
+## 40.99 追加锚

@@ -103,3 +103,15 @@ The separate [directed weighted Fourier deficit](deficit.md) reuses these
 theta callbacks to enclose the full symmetric-row scalar deficit at
 $\varepsilon=1/4$. It supplies a coefficient for the Fourier construction,
 without computing the finite trial matrix or repeating this scalar trial.
+
+The [direct derivative and bandwidth supplier](derivative-bandwidth.md)
+encloses the original-theta derivatives and checks the two direct
+high-frequency conditions at $\varepsilon=1/4$, $N=64$. It retains the
+even minimal form and leaves independent finite-family accuracy and
+matrix-sign requirements unresolved.
+
+The [joint high-frequency floor](joint-high-floor.md) combines the same
+symbol and derivative supplier with the full symmetric prime row. It
+puts the complete even high-frequency restriction above $c=3/8$ and
+retains a positive variance gap. The low block and its coupling remain
+unestimated.
