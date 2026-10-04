@@ -8,20 +8,27 @@
 
 /-
 proof_shape: probeOp, multiProbeOp, gamma: definition (M_x = Σ_i p(x|i) Π_i, the tensor product
-  M_𝐱 = M_{x_1} ⊗ ⋯ ⊗ M_{x_N}, and Eq. (AgammaN) with V_Φ ψ = (ζ + ζ⊥)/√2, V_Φ ψ⊥ = (ζ − ζ⊥)/√2)
+  M_𝐱 = M_{x_1} ⊗ ⋯ ⊗ M_{x_N} through the frozen piKroneckerLinearEquiv, and Eq. (AgammaN) with
+  V_Φ ψ = (ζ + ζ⊥)/√2, V_Φ ψ⊥ = (ζ − ζ⊥)/√2)
 proof_shape: basisPower, catState, catPerp: definition (|j⟩^{⊗N} and the cat pair)
 proof_shape: claim: definition (published conjecture, arXiv:2109.01160v2, Supplementary Note 5,
   "A note on optimality", read for every d ≥ 2, finite outcome set, classical noise channel with
   all p(x|i) > 0, so that an optimal pair exists, and N ≥ 1)
 proof_shape: detector, witness, witnessPerp: definition (the counterexample)
-proof_shape: result: bind-only (as local steps: the entries of the noisy operators; γ of a pair
+proof_shape: result: bind-only (as local steps: the entries of the noisy operators, from
+  multilinearity of the tensor product and pi_kronecker_linear_equiv_tprod_single; γ of a pair
   supported on two basis words; the reduction of every cat pair to that form; tangent-line upper
   bounds for t ↦ t(1−t)(a−b)²/(ta+(1−t)b); and rational evaluations)
 escape_witness: none (the settlement of the external named conjecture is the new content)
 admission_basis: open-problem-resolution (issue #12917; Refuted)
-Direct frozen dependencies: none.
+Direct frozen dependencies (GID, statement_id):
+  D5/S3/ObserverMemory/PrimePowerTensorTower.piKroneckerLinearEquiv
+    sha256:61f87e3d03217f0969c03558727e4e6c694a72a49a9a1c046983576b1b652927
+  D5/S3/ObserverMemory/PrimePowerTensorTower.pi_kronecker_linear_equiv_tprod_single
+    sha256:8ab158d6073e3f6fd2cd92ff5bcecde7ea006c7f86bb1bb2be451cd647fb6723
 -/
 
+import D5.S3.ObserverMemory.PrimePowerTensorTower
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Matrix.Basis
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -31,16 +38,19 @@ open scoped BigOperators Matrix
 namespace D5.S3.Quantum.Measurement.NoisyMeasurementCatOptimalityRefutation
 
 open Matrix
+open D5.S3.ObserverMemory.PrimePowerTensorTower
 
 /-- The single-probe noisy measurement operator `M_x = ∑_i p(x|i) Π_i` with `Π_i = |i⟩⟨i|`. -/
 noncomputable def probeOp {d : ℕ} {X : Type*} (p : X → Fin d → ℝ) (x : X) :
     Matrix (Fin d) (Fin d) ℂ :=
   ∑ i, (p x i : ℂ) • Matrix.single i i 1
 
-/-- The operator `M_𝐱 = M_{x_1} ⊗ ⋯ ⊗ M_{x_N}` on `(Fin N → Fin d) → ℂ`. -/
+/-- The operator `M_𝐱 = M_{x_1} ⊗ ⋯ ⊗ M_{x_N}` on `(Fin N → Fin d) → ℂ`, through the frozen
+finite-family Kronecker equivalence. -/
 noncomputable def multiProbeOp {d N : ℕ} {X : Type*} (p : X → Fin d → ℝ) (xs : Fin N → X) :
     Matrix (Fin N → Fin d) (Fin N → Fin d) ℂ :=
-  Matrix.of fun s s' => ∏ l, probeOp p (xs l) (s l) (s' l)
+  piKroneckerLinearEquiv (fun _ : Fin N => Fin d)
+    (PiTensorProduct.tprod ℂ fun l => probeOp p (xs l))
 
 /-- Eq. (AgammaN): `γ = ¼ ∑_𝐱 [⟨ψ⊥|V_Φ† M_𝐱 V_Φ|ψ⟩ + c.c.]² / ⟨ψ|V_Φ† M_𝐱 V_Φ|ψ⟩`, where
 `V_Φ ψ = (ζ + ζ⊥)/√2` and `V_Φ ψ⊥ = (ζ − ζ⊥)/√2` invert `V_Φ (ψ ± ψ⊥)/√2 = ζ, ζ⊥`. -/
@@ -99,37 +109,30 @@ theorem result : ¬ claim := by
     fin_cases i <;> norm_num [detector, Fin.sum_univ_three, Matrix.cons_val_two]
   obtain ⟨j, k, hjk, θ, hmax⟩ :=
     h 3 (by norm_num) (Fin 3) detector hP hcol 2 (by norm_num)
-  have hop : ∀ x a b : Fin 3,
-      probeOp detector x a b = if a = b then (detector x a : ℂ) else 0 := by
-    intro x a b
-    simp only [probeOp, Matrix.sum_apply, Matrix.smul_apply, Matrix.single_apply, smul_eq_mul]
-    by_cases hab : a = b
-    · subst hab
-      simp
-    · simp only [hab, if_false]
-      refine Finset.sum_eq_zero fun i _ => ?_
-      have hi : ¬ (i = a ∧ i = b) := fun hi => hab (hi.1.symm.trans hi.2)
-      simp [hi]
   set m : (Fin 2 → Fin 3) → (Fin 2 → Fin 3) → ℝ := fun xs s => ∏ l, detector (xs l) (s l)
     with hm
+  have hexp : ∀ xs, multiProbeOp detector xs =
+      ∑ f : Fin 2 → Fin 3, ((m xs f : ℝ) : ℂ) • Matrix.single f f (1 : ℂ) := by
+    intro xs
+    simp only [multiProbeOp, probeOp]
+    rw [MultilinearMap.map_sum (PiTensorProduct.tprod ℂ)
+      (fun l i => (detector (xs l) i : ℂ) • Matrix.single i i (1 : ℂ)), map_sum]
+    refine Finset.sum_congr rfl fun f _ => ?_
+    rw [MultilinearMap.map_smul_univ, map_smul, pi_kronecker_linear_equiv_tprod_single, hm]
+    push_cast
+    rfl
   have hM : ∀ xs s s', multiProbeOp detector xs s s' =
       if s = s' then ((m xs s : ℝ) : ℂ) else 0 := by
     intro xs s s'
-    simp only [multiProbeOp, Matrix.of_apply, hop, Fin.prod_univ_two, hm]
+    rw [hexp, Matrix.sum_apply]
+    simp only [Matrix.smul_apply, Matrix.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
     by_cases hss : s = s'
     · subst hss
       simp
-    · have hne : ¬ (s 0 = s' 0 ∧ s 1 = s' 1) := by
-        intro hh
-        apply hss
-        funext l
-        fin_cases l
-        · exact hh.1
-        · exact hh.2
-      by_cases h0 : s 0 = s' 0
-      · have h1 : ¬ s 1 = s' 1 := fun h1 => hne ⟨h0, h1⟩
-        simp [hss, h1]
-      · simp [hss, h0]
+    · simp only [hss, if_false]
+      refine Finset.sum_eq_zero fun f _ => ?_
+      have hf : ¬ (f = s ∧ f = s') := fun hf => hss (hf.1.symm.trans hf.2)
+      simp [hf]
   have hmv : ∀ xs (ψ : (Fin 2 → Fin 3) → ℂ) s,
       (multiProbeOp detector xs *ᵥ ψ) s = (m xs s : ℂ) * ψ s := by
     intro xs ψ s
