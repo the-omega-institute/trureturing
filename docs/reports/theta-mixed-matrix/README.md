@@ -167,3 +167,17 @@ physical input tail, while explicitly separating sample and kernel
 errors. Its DFT identity applies at lattice outputs; off-lattice prime
 shifts require an additional evaluation interface. The actual common
 Gram and restricted sign remain unpaid.
+
+The [local high samples](local-high.md) enclose the four actual
+$Z=QH_{1024,64}EB$ columns using exact low inputs, continuous sinc
+projection and paid local replacement errors. The retained $H,PH$
+intervals feed the [localized whole-line Gram](local-z-gram.md) without
+another forward solve. This gives $\|Z\|<1.0090$ and the same
+five-generator real norm below $1.00904$, while retaining the independent
+strip and derivative bounds.
+
+The [full-Gamma periodization allowance](full-gamma-periodic.md)
+preserves paired-jump cancellation for the unbounded full symbol on
+those same fixed high vectors. It pays analytic local replacement
+errors; numerical actions, the complete residual Gram and restricted
+Schur sign remain separate obligations.

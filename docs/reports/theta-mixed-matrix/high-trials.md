@@ -192,3 +192,15 @@ which can create spatial tails. It pays the infinite physical-lattice
 quadrature and omitted input samples for the true cutoff64. Actual
 forward sample errors, off-lattice high prime evaluations, common Grams
 and the restricted matrix sign are separate obligations.
+
+The [local high sample producer](local-high.md) now retains the actual
+core $H,PH$ enclosures for these four columns. The
+[localized whole-line Gram replay](local-z-gram.md) uses them to bound
+$\|Z\|<1.0090$ and $\|(g,Z)\|<1.00904$. These actual real norms can
+replace the conservative real $R$ allowance above; they do not replace
+$U$ or the strip norms required for unbounded actions.
+
+The [full-Gamma periodization supplier](full-gamma-periodic.md) gives
+a local analytic replacement allowance on this same high family,
+without changing the finite-$J$ definition of $Z$. Actual full actions,
+other Gram blocks and the exact-ground restricted sign remain unpaid.
