@@ -1,0 +1,6 @@
+**来源边界 10.1（只取得元数据或摘要的条目）。** David Lee and Mihalis Yannakakis 的 *Testing Finite-State Machines: State Identification and Verification*, IEEE Transactions on Computers 43(3) (1994), pp.306–320，DOI [10.1109/12.272431](https://doi.org/10.1109/12.272431)，以及 *Principles and Methods of Testing Finite State Machines—A Survey*, Proceedings of the IEEE 84(8) (1996), pp.1090–1123，DOI [10.1109/5.533956](https://doi.org/10.1109/5.533956)，书目由 DOI 元数据核对，完整原文未取得，故不调用其编号定理或复杂度结论。[C3] 和 [C4] 对这些工作的引用只提供文献连接。
+
+Uraz Cengiz Türker, Robert M. Hierons, Mohammad Reza Mousavi and Khaled El-Fakih 的 *Efficient State Identification for Finite State Machine-Based Testing*, IEEE Transactions on Software Engineering 51(11) (2025), pp.2996–3012，DOI [10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，由 [Lancaster 机构条目](https://eprints.lancs.ac.uk/id/eprint/236847/) 的摘要提出避免 reset/transfer 的 Ordered Characterising Sets，并区别限制 transfer 使用的 bounded 版本。该条目明确不提供全文，完整定义和算法前提未取得；本卷不把摘要转换成可移植的无复位存在定理。普通 characterising set 仅给一组测试，并不凭此保证一条不破坏未决初始区别的顺序路径。
+
+检索与比较范围是 [R1]–[R5]、上述相关仓内声明及这些经典和近期条目，包括实际像、未来行为、初态识别、归巢和未完全识别的相邻问题。全文访问边界如上；这个范围不支持穷尽性、结果不存在或优先权结论。
+

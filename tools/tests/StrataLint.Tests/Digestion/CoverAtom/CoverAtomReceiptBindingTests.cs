@@ -242,7 +242,7 @@ public sealed partial class CoverAtomTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void CoverScribeExecutionSetContainsOnlyChangedDefinitions(bool definitionChanged)
+    public void CoverDoesNotExecuteScribeDefinitionsAndPreservesCoverage(bool definitionChanged)
     {
         var spec = new CoverSpec { BaselineTargetIdentical = true };
         var inputs = spec.Materialize();
@@ -252,7 +252,7 @@ public sealed partial class CoverAtomTests
         if (definitionChanged) current[path] += "// changed definition\n";
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, current);
-        var verifier = new FakeScribeEmissionVerifier(inputs.VerifiedEmissions);
+        var verifier = new FakeScribeEmissionVerifier(null);
         var environment = new ProductionCliEnvironment(temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(definitionChanged ? [path] : []),
                 CoverWorld.Raw(current), CoverWorld.Raw(baseline)),
@@ -261,9 +261,12 @@ public sealed partial class CoverAtomTests
         var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        var scope = Assert.Single(verifier.Scopes);
-        Assert.Equal(definitionChanged ? new[] { path } : [], scope.Paths.Select(item => item.Value)
-            .Where(item => item.EndsWith(".scribe.cs", StringComparison.Ordinal)).ToArray());
+        Assert.Equal(0, verifier.CallCount);
+        Assert.Empty(verifier.Scopes);
+        var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == spec.AtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
+        Assert.Equal(spec.TargetStatementId, Assert.Single(entry.Coverage).TargetStatementId);
     }
 
     private static void Replace(
