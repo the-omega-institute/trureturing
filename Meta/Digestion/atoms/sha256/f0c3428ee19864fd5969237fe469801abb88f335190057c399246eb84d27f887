@@ -1,0 +1,33 @@
+**证明。** 当 $m>0$ 时，定理 19.1 给出 $|\Delta s|\le|\Delta t|/m$。若 $0<u<v<x$，直接比较来源矩阵得到
+
+$$
+\|R(v)-R(u)\|_{\max}
+=(v-u)\max\left(1,\frac{|x-u-v|}{r}\right).
+$$
+
+因 $|x-u-v|<x$，故矩阵 Lipschitz 界为所列常数。取 $u=x-2\varepsilon,v=x-\varepsilon$，其中 $0<2\varepsilon<x$。此时
+
+$$
+\frac{v-u}{h_N(v)-h_N(u)}
+=\frac1{m+3\varepsilon/r}\longrightarrow\frac1m,
+$$
+
+而 $\max(1,|x-u-v|/r)$ 趋向 $\max(1,\rho)$。两种上界都不能减小。
+
+当 $m=0$ 时，定理 19.1 的模量正好是 $\sqrt{r\tau}$。为检查系数和指数，取 $0<\delta<x$，令
+
+$$
+u=x-\delta,\qquad v=x-\frac{\delta^2}{x}.
+$$
+
+则 $0<u<v<x$，并且
+
+$$
+\Delta s=\delta\left(1-\frac\delta x\right),\qquad
+\Delta t=\frac{\delta^2}{r}\left(1-\frac{\delta^2}{x^2}\right).
+$$
+
+当 $\delta\to0$ 时，$\Delta s/\sqrt{r\Delta t}\to1$，所以系数 $\sqrt r$ 尖锐。对于任意 $a>1/2$，$\Delta s/(\Delta t)^a$ 按正的常数倍 $\delta^{1-2a}$ 发散，排除了有限全局 Hölder 常数；特别排除了 Lipschitz 常数。矩阵范数至少为 $|\Delta s|$，故矩阵逆也不可能全局 Lipschitz。∎
+
+这些稳定性结论以精确、固定的前两读数和固定词为条件。它们不提供同时扰动 $x$、第二读数、由读数选择的 $N$ 或全部协议时的噪声保证；相容范围之外的第三读数也不在此逆映射的定义域内。
+

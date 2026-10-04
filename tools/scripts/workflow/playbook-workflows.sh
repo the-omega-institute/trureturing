@@ -5,7 +5,6 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/accepted"
-TRUTH_GRAPH="Generated/truth-graph.v1.json"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 if [[ "$COMMAND" != deposit-uncovered ]]; then
@@ -23,16 +22,12 @@ run_digest_status() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module
+  local accepted_modules='[]' closed_modules module closed_query_output
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
-    return 2
-  fi
-  if [[ ! -f "$TRUTH_GRAPH" ]]; then
-    echo "PLAYBOOK_INVALID truth graph is missing after emit: $TRUTH_GRAPH" >&2
     return 2
   fi
   if [[ ! -e "${accepted_files[0]}" ]]; then
@@ -49,14 +44,17 @@ align_delivery_ledger() {
     echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
     return 2
   fi
+  if ! closed_query_output="$(run_cli ledger-align --list-closed --candidate-lean-report "$REPORT")"; then
+    echo "PLAYBOOK_INVALID current Closed module query failed" >&2
+    return 2
+  fi
   if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .truth.nodes[]
-      | select(.state == "closed")
-      | .repo_path as $path
+      .[]
+      | . as $path
       | select(($accepted | index($path)) == null)
       | $path
-    ' "$TRUTH_GRAPH" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from $TRUTH_GRAPH: $closed_modules" >&2
+    ' <<< "$closed_query_output" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to derive Closed modules from current Lean report: $closed_modules" >&2
     return 2
   fi
 

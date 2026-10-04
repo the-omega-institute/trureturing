@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:18974d86c4dd7094a120b187eb66fe9f8a2a8fd7322bab25434e3ab24cf13538
+  normalized_sha256: sha256:18974d86c4dd7094a120b187eb66fe9f8a2a8fd7322bab25434e3ab24cf13538
+cas_ref: sha256:18974d86c4dd7094a120b187eb66fe9f8a2a8fd7322bab25434e3ab24cf13538
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/ConditionalComparison/PrimeAbsorption.prime_absorption
+    target_statement_id: sha256:3d9683f57e661ca9a71c140035775d2ffdd958e3d28dd16c556b2b1ebbd3e554
+receipts:
+  unresolved_subitems: []

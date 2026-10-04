@@ -34,7 +34,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var sequential = new BatchWorld();
         WriteProblem(sequential.Root);
-        sequential.RunSingles(new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly));
+        sequential.RunSingles(new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() })));
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
@@ -64,15 +64,13 @@ public sealed partial class CoverBatchCommandTests
         }
 
         output.WriteLine(result.Output + result.Error);
-        Assert.Equal(4, discoveries);
+        Assert.Equal(3, discoveries);
         Assert.Equal(partialFailure ? 1 : 0, result.ExitCode);
         Assert.Equal(partialFailure ? ["applied", "failed", "applied"] : ["applied", "applied"],
             Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath,
-                     "tools/Generated/scribe-emissions.v1.json", "Generated/FILEMAP.md", "Generated/DAG.md",
-                     "Generated/truth-graph.v1.json" })
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
@@ -82,99 +80,14 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, frozen.Indexes);
         Assert.Equal(1, ledger.BaselineLoads);
         Assert.Equal([1, 1, 1], ledger.CandidateSnapshotLoads);
-        output.WriteLine("COMPLETE_PRODUCERS synthetic_assembly=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}] discoveries={5}",
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/DAG.md")));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, "Generated/FILEMAP.md")));
+        output.WriteLine("COMPLETE_PRODUCERS synthetic_definitions=true report={0} catalog={1} index={2} baseline={3} candidate=[{4}] discoveries={5}",
             reports.Loads, frozen.Catalogs, frozen.Indexes, ledger.BaselineLoads,
             string.Join(',', ledger.CandidateSnapshotLoads), discoveries);
         Assert.True(TemporaryFileSystem.File.Exists(reportPath));
 
-        var graphPath = Path.Combine(batch.Root, "Generated/truth-graph.v1.json");
-        var emittedGraph = TemporaryFileSystem.File.ReadAllBytes(graphPath);
-        var truth = DagLedgerCommandPreparation.BuildTruth(batch.Repository, new PrecomputedLeanReportSource(batch.Root));
-        var check = DagRenderCommand.Run(batch.Root, truth, true, typeof(BatchClaimDefinition).Assembly);
-        Assert.True(check.Success, check.Error + check.Output);
-        var canonical = DagRenderCommand.Run(batch.Root, truth, false, typeof(BatchClaimDefinition).Assembly);
-        Assert.True(canonical.Success, canonical.Error + canonical.Output);
-        Assert.Equal(emittedGraph, TemporaryFileSystem.File.ReadAllBytes(graphPath));
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
-    }
-
-    [Theory]
-    [InlineData(FrozenPath, 3)]
-    [InlineData("D5/S0/Carrier/Probe.lean", 3)]
-    [InlineData(ProblemPath, 3)]
-    [InlineData(FrozenPath, 4)]
-    [InlineData("D5/S0/Carrier/Probe.lean", 4)]
-    [InlineData(ProblemPath, 4)]
-    [InlineData("Meta/FILEMAP.docs.reports.toml", 3)]
-    [InlineData("Meta/FILEMAP.docs.reports.toml", 4)]
-    public void FinalEmissionRejectsChangedAuthoritativeInputs(string changedPath, int discovery)
-    {
-        using var world = new BatchWorld { UseGitReader = true };
-        WriteEmissionInputs(world.Root);
-        world.WriteReportBundle();
-        var calls = 0;
-        BatchClaimDefinition.Creating.Value = () =>
-        {
-            if (++calls == discovery)
-                TemporaryFileSystem.File.AppendAllText(Path.Combine(world.Root, changedPath), "\n");
-        };
-        try
-        {
-            var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
-
-            output.WriteLine(result.Output + result.Error);
-            output.WriteLine("AUTHORITATIVE_MUTATION path={0} trigger={1} discoveries={2}", changedPath, discovery, calls);
-            Assert.Equal(discovery, calls);
-            Assert.Equal(1, result.ExitCode);
-            Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
-            Assert.Contains("shared cover context changed: " + changedPath, result.Error, StringComparison.Ordinal);
-            Assert.Single(world.Entry(First).Coverage);
-            Assert.Single(world.Entry(Second).Coverage);
-            Assert.Equal(discovery == 4, TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
-            if (discovery == 4)
-                Assert.Contains("Generated/DAG.md", result.Output, StringComparison.Ordinal);
-        }
-        finally
-        {
-            BatchClaimDefinition.Creating.Value = null;
-        }
-    }
-
-    [Fact]
-    public void FinalDagRejectsChangedCommittedLedger()
-    {
-        using var world = new BatchWorld { UseGitReader = true };
-        WriteEmissionInputs(world.Root);
-        world.WriteReportBundle();
-        var calls = 0;
-        string? changedPath = null;
-        BatchClaimDefinition.Creating.Value = () =>
-        {
-            if (++calls != 4) return;
-            changedPath = world.LedgerPaths().Single(path => path.EndsWith(Second + ".yaml", StringComparison.Ordinal));
-            TemporaryFileSystem.File.AppendAllText(changedPath, "# concurrent ledger edit\n");
-        };
-        try
-        {
-            var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
-
-            output.WriteLine(result.Output + result.Error);
-            output.WriteLine("LEDGER_MUTATION trigger=4 discoveries={0}", calls);
-            Assert.Equal(4, calls);
-            Assert.NotNull(changedPath);
-            Assert.Equal(1, result.ExitCode);
-            Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
-            Assert.Contains("ledger changed under us", result.Error, StringComparison.Ordinal);
-            Assert.Single(world.Entry(First).Coverage);
-            Assert.Single(world.Entry(Second).Coverage);
-            Assert.EndsWith("# concurrent ledger edit\n", TemporaryFileSystem.File.ReadAllText(changedPath), StringComparison.Ordinal);
-            Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "Generated/DAG.md")));
-            Assert.Contains("Generated/DAG.md", result.Output, StringComparison.Ordinal);
-        }
-        finally
-        {
-            BatchClaimDefinition.Creating.Value = null;
-        }
     }
 
     [Theory]
@@ -194,7 +107,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Contains(diagnostic, result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
     }
 
@@ -234,7 +147,6 @@ public sealed partial class CoverBatchCommandTests
             Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
             Assert.Equal(1, reports.Loads);
             Assert.Equal("replaced report\n", TemporaryFileSystem.File.ReadAllText(reportPath));
-            Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "Generated/truth-graph.v1.json")));
         }
         finally
         {
@@ -279,6 +191,7 @@ public sealed partial class CoverBatchCommandTests
 
     private static void WriteEmissionInputs(string root)
     {
+        TemporaryFileSystem.File.Delete(Path.Combine(root, ScribeEmissionAttestation.RelativePath));
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
         WriteScribeFixture(root, ".gitignore",

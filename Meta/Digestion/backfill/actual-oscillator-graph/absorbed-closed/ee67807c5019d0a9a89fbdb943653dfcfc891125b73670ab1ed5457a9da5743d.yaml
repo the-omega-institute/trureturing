@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ee67807c5019d0a9a89fbdb943653dfcfc891125b73670ab1ed5457a9da5743d
+  normalized_sha256: sha256:ee67807c5019d0a9a89fbdb943653dfcfc891125b73670ab1ed5457a9da5743d
+cas_ref: sha256:ee67807c5019d0a9a89fbdb943653dfcfc891125b73670ab1ed5457a9da5743d
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/EigenbasisClosure.eigenbasis_closable_selfAdjoint
+    target_statement_id: sha256:bbc8795d0a2b78c70be5b2461ba10409ad16c35acfb6308b575151a47406c6e1
+receipts:
+  unresolved_subitems: []

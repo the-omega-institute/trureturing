@@ -1,0 +1,19 @@
+**Definition 7.1 (prime triples and graph parameters).** Let $p$ be a
+prime and put $F=\mathbb Z/p\mathbb Z$. An admissible triple is an
+unordered subset $S\subset F^2$ with $|S|=3$ such that both coordinate
+projections are injective on $S$ and, for every $u,v,w\in S$,
+
+$$
+  (v_x-u_x)(w_y-u_y)=(w_x-u_x)(v_y-u_y).
+$$
+
+Thus these are precisely the triples counted by $A(p)$ above, with the
+zero-determinant condition stated for all choices of the three points.
+Let $\mathcal X_p=\{X\subset F:|X|=3\}$ and let
+$\mathcal P_p=F^\times\times F\times\mathcal X_p$. For
+$(a,b,X)\in\mathcal P_p$, define its graph triple by
+
+$$
+  \Gamma(a,b,X)=\{(x,ax+b):x\in X\}.
+$$
+

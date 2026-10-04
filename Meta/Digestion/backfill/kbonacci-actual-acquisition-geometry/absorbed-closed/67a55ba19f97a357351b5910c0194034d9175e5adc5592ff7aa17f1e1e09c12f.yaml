@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:67a55ba19f97a357351b5910c0194034d9175e5adc5592ff7aa17f1e1e09c12f
+  normalized_sha256: sha256:67a55ba19f97a357351b5910c0194034d9175e5adc5592ff7aa17f1e1e09c12f
+cas_ref: sha256:67a55ba19f97a357351b5910c0194034d9175e5adc5592ff7aa17f1e1e09c12f
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.kbonacci_actual_saturation
+    target_statement_id: sha256:e486b9bb2c70ede000861b5129eecf919e49c9a879dfa9fe445f2a6288950a3d
+receipts:
+  unresolved_subitems: []

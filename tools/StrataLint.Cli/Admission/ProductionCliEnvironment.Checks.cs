@@ -65,7 +65,8 @@ internal sealed partial class ProductionCliEnvironment
             }
             else
             {
-                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report));
+                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report,
+                    options.ScribePaths is null ? null : RawChangeSet.Create(MarkdownFormulaScope.ParsePaths(File.ReadAllText(options.ScribePaths)))));
                 result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckCurrent(
                     CurrentRuleContext.Create(current, policy, lean, verified), MeasureRule), Blocked);
                 if (timing.Measure("canonicalization", () => RepositoryCanonicalizer.Validate(current, policy),

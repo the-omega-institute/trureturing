@@ -1,0 +1,67 @@
+**定理 16.1（第二累计矩阵的必要形状）。** 设一个确定性协议在 $\mathcal R_+$ 上全域精确恢复，且读取次数统一不超过 $3$。对每个固定初始读数 $x>0$，协议必须继续读取第二次；该次读取的累计矩阵必须为
+
+$$
+A=U^k\quad\text{或}\quad A=V^k,\qquad k\in\mathbb Z_{\ge1}.
+$$
+
+指数及两种形状之间的选择可以依赖 $x$。本定理不对第三累计矩阵施加固定性，也不假定原子操作次数有统一上界。
+
+**证明。** 一个初始迹纤维含有不同来源，故协议不能仅凭 $x$ 全域正确地停止。第二次读取前的词只依赖这一初始历史，因此其累计矩阵 $A=\begin{pmatrix}\alpha&\beta\\\gamma&\eta\end{pmatrix}$ 在此纤维上固定。
+
+先排除 $\beta\gamma>0$。定义
+
+$$
+\lambda=\frac{\alpha+\eta+\sqrt{(\alpha-\eta)^2+4\beta\gamma}}2
+>\max(\alpha,\eta),
+$$
+
+并令
+
+$$
+c=\begin{pmatrix}\beta\\\lambda-\alpha\end{pmatrix},\qquad
+\ell_0=(\gamma,\lambda-\alpha),\qquad
+\ell=\frac{x}{\ell_0c}\ell_0.
+$$
+
+这些向量严格为正，且 $\ell c=x$。恒等式
+
+$$
+(\lambda-\alpha)(\lambda-\eta)=\beta\gamma
+$$
+
+给出 $Ac=\lambda c$ 和 $\ell A=\lambda\ell$：两个乘积的第一分量分别为 $\lambda\beta$ 和 $\lambda\gamma$，第二分量均由该恒等式化为 $\lambda(\lambda-\alpha)$，对行向量再乘相同的归一化系数。
+
+写 $c=(c_1,c_2)^{\mathsf T}$、$\ell=(\ell_1,\ell_2)$，取
+
+$$
+w=(c_2,-c_1),\qquad
+z=\begin{pmatrix}\ell_2\\-\ell_1\end{pmatrix}.
+$$
+
+于是 $wc=0$、$\ell z=0$。在 $R=c\ell$ 周围考虑两条不同的直线
+
+$$
+R_1(t)=c(\ell+tw)=R+t\,cw,\qquad
+R_2(u)=(c+uz)\ell=R+u\,z\ell.
+$$
+
+对足够小的正或负 $t,u$，两个外积的向量分量仍严格为正，故均属于 $\mathcal R_+$。两条直线上的初始读数均为 $x$，第二读数均为 $\lambda x$：对第一条使用 $Ac=\lambda c$ 和 $wc=0$，对第二条使用 $\ell A=\lambda\ell$ 和 $\ell z=0$。
+
+方向 $cw$ 和 $z\ell$ 线性无关。事实上，若 $a\,cw+b\,z\ell=0$，将矩阵右乘 $c$，得到 $bxz=0$，故 $b=0$；随后 $a=0$。因此两条直线除 $R$ 外没有共同点。
+
+在共同历史 $(x,\lambda x)$ 上提前停止不能区分这些来源。若继续，第三次读取前的词也相同，记累计矩阵为 $B$，并令
+
+$$
+k_1=\operatorname{tr}(Bcw),\qquad k_2=\operatorname{tr}(Bz\ell).
+$$
+
+若任一 $k_i=0$，相应直线上两个不同的小参数点有完全相同的三读数。若二者都非零，取足够小的非零 $\varepsilon$，令 $t=k_2\varepsilon$、$u=k_1\varepsilon$。两点严格正且不同，而其第三读数都为
+
+$$
+\operatorname{tr}(BR)+k_1k_2\varepsilon.
+$$
+
+它们的全部读取及操作历史相同，故停止决定和输出相同，不能同时正确。这排除了任何第三词选择，因而 $\beta\gamma>0$ 不可能。
+
+于是 $\beta\gamma=0$。由非负整数性及 $\det A=\pm1$，如定理 13.1 的证明，必有 $\alpha=\eta=1$，所以 $A$ 为 $U^k$、$V^k$ 或 $I$。若 $A=I$，第二读数仍为 $x$；第三词只依赖同一个初始迹和重复读数。定理 13.1 证明中的固定 $x$、任意词碰撞，应用于此第三累计矩阵，仍给出不能区分的两个来源。故 $I$ 也不可能，只剩 $k\ge1$ 的两种剪切。∎
+

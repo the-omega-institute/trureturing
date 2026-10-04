@@ -1,8 +1,6 @@
 using StrataLint.FileMap;
-using StrataLint.Scribe.Documents;
 using System.Text;
 using StrataLint.Engine;
-using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -54,7 +52,7 @@ internal static class FileMapConformCommand
 
             var scope = scoped ? FileMapInspectionScope.Read(Path.GetFullPath(arguments[1], repositoryRoot)) : null;
             var result = Render(FileMapPolicy.InspectRepository(repositoryRoot,
-                DocumentAssembly.Definitions.Select(static definition => definition.RelativePath.Value), scope));
+                FileMapPolicy.DocumentPaths(repositoryRoot), scope));
             return scope is null ? result : result with { Output = DescribeScope(scope) + result.Output };
         }
         catch (Exception exception)
