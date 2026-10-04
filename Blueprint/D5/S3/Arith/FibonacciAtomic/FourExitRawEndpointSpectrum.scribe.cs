@@ -32,9 +32,25 @@ internal sealed class FourExitRawEndpointSpectrumDocument : IScribeDocumentDefin
                 + "(1,1,1,1,0), (1,0,1,2,1), (1,0,2,1,1), and (1,0,1,1,2). "
                 + "The response-cost core supplies a globally correct strategy for each recipe, "
                 + "with actual costs equal to 8k + 16 plus these coordinates.")),
+            Describe.Lean(DescribeId.Create("four-exit-local-two-excess"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_two_excess"),
+                H("A Zero Row Forces a Sibling of Excess Two"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k, every slot j in Fin(k), and every original Strategy pi, "
+                    + "cost(pi,F(k,a_j))=8k+16 implies that some sibling b in Y, H, Z has "
+                    + "cost(pi,F(k,b_j)) at least 8k+18."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("four-exit-local-tail-attainment"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/FourExitRawEndpointSpectrum.local_tail_attainment"),
+                H("Six Local Tail Costs"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At every selected slot, on the five rows baseline, A, Y, H, Z, "
+                    + "six actual response recipes attain gains (1,1,0,1,1), (1,1,1,0,1), "
+                    + "(1,1,1,1,0), (1,0,1,2,1), (1,0,2,1,1), and (1,0,1,1,2). "
+                    + "Each recipe has an original globally correct Strategy with costs 8k+16 plus "
+                    + "these gains on the five rows."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "These local recipes do not establish attainment on the entire family. "
-                + "The scan of other slots, its composition with each tail, global endpoint domination, "
+                + "The scan of other slots, its composition with each tail, "
                 + "and the full Pareto classification remain unproved.")))));
 
 }

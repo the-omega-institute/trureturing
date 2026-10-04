@@ -435,7 +435,7 @@ theorem local_two_excess (k : Nat) (j : Fin k) (pi : Strategy)
   exact le_trans (by omega) h
 
 /-- The six literal tails attain their gains and actual costs on the five local rows. -/
-private theorem local_tail_attainment (k : Nat) (j : Fin k) :
+theorem local_tail_attainment (k : Nat) (j : Fin k) :
     let F := fun i : Fin 5 => match i.val with
       | 0 => family k (.inl ())
       | 1 => family k (.inr (j, 0))
