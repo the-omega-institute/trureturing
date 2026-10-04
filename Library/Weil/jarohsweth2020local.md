@@ -5,7 +5,7 @@ year: 2020
 title: Local compactness and nonvanishing for weakly singular nonlocal quadratic forms
 doi: 10.1016/j.na.2019.01.021
 url: https://arxiv.org/abs/1811.12850v1
-claim: The source supplies local compactness and a quantitative averaging estimate for a weakly singular comparison kernel. Original-model cutoff and graph estimates transport them to uniform finite-rank approximation in the mixed minimal form norm, with explicit analytic bounds and a prescribed translated-kernel spanning family, but no computed lower spectral certificate.
+claim: The source supplies local compactness and a quantitative averaging estimate for a weakly singular comparison kernel. Original-model cutoff and graph estimates transport them to uniform finite-rank approximation in the mixed minimal form norm, with explicit analytic bounds and a prescribed translated-kernel spanning family, and a directed finite matrix assembly interface, but no computed lower spectral certificate.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -568,3 +568,265 @@ needed to exclude every nonconstant spectral value below one-half.
 The bounds do not establish computational feasibility. These explicit
 model transfers are paper-level, without new Lean certification or an
 originality claim; RH and full Robin remain unresolved.
+
+## Directed assembly for the actual mixed theta matrix
+
+Reuse the original-domain even real family $b_1,\ldots,b_q$,
+$b_j(x)=w_\delta(x-c_j)+w_\delta(x+c_j)$, $\delta=e^{-\ell}$, and all
+previous form/domain estimates. Let $S=L+1$, $K=[-S,S]$ and
+$B(x)=(b_1(x),\ldots,b_q(x))^T$, with $B=0$ off $K$.
+The exact target is $T_\varepsilon=D-c_\varepsilon(G-\mu\mu^T)$,
+$c_\varepsilon=1/2-\varepsilon/2$, $\nu(\mathbb R)=1$.
+
+### Exact same-object matrices
+
+$$
+G=\int_K B(x)B(x)^T\rho(x)dx,\quad
+\mu=\int_K B(x)\rho(x)dx,\quad \rho=2\Phi\cosh(x/2),
+$$
+
+$$
+\begin{aligned}
+D_\Gamma&=\int_{x<y}\Phi(x)\Phi(y)\psi(y-x)
+ [B(y)-B(x)][B(y)-B(x)]^Tdxdy,\\
+D_p&=\sum_{n\ge2}w_n\int_{\mathbb R}\Phi(x)\Phi(x+\log n)
+ [B(x+\log n)-B(x)][B(x+\log n)-B(x)]^Tdx,
+\quad w_n=\Lambda(n)/\sqrt n.
+\end{aligned} \tag{DM}
+$$
+
+The positive-shift prime integral includes both original shifted graph
+terms after change of variables, cancelling the one-half prefactor.
+There is no further factor two. These are the original minimal-domain
+energies, with every prime power and Gamma crossing.
+
+For $H>S$, $N\ge2$ an integer, retain the Gamma square $[-H,H]^2$ and
+the complete prime terms $n\le N$. Call their sum $D_{H,N}$. Before
+expanding differences, each omitted region contributes a positive weight
+times an outer product, so
+
+$$
+D-D_{H,N}=R_\Gamma+R_p\succeq0. \tag{DE}
+$$
+
+This is a simultaneous coefficient-vector inequality, not entrywise
+positivity of the energy matrices or of their off-diagonal entries.
+
+### Reuse validated analytic quadrature
+
+The [Johansson/FLINT integration supplier](../Analytic/johansson2018ballintegration.md)
+provides the existing validated Petras method and the bounded-path,
+holomorphic-callback contract. Reuse its documented one-dimensional Gauss
+error $M e_n(r)$, where $e_n(r)=64/[15(r-1)r^{2n-1}]$.
+Finite endpoints, bounded integrands and inspection of the returned
+ball are necessary. The quadrature result and implementation are
+existing work; the actual-model integration interface follows below.
+
+### Remove both smooth-diagonal and jump-corner singularities
+
+Partition $[-H,H]$ at all $\pm c_j\pm\delta$, $\pm c_j\pm1$ and its
+endpoints. On each open interval $B$ is a fixed rational branch, with
+denominators separated from zero on its closure. Use one-sided branches
+at endpoints; their point values do not affect either Gamma integration
+or prime integration in Lebesgue $dx$.
+Put
+
+$$
+\kappa(t)=t\psi(t)=\frac{t e^{-t/2}}{1-e^{-2t}},\qquad
+\kappa(0)=1/2.
+$$
+
+On a single cell, algebraically factor
+$b_i(y)-b_i(x)=(y-x)Q_i(x,y)$ with rational regular $Q_i$. Then
+
+$$
+\psi(y-x)[b_i(y)-b_i(x)][b_j(y)-b_j(x)]
+=(y-x)\kappa(y-x)Q_i(x,y)Q_j(x,y). \tag{SD}
+$$
+
+The apparent singularity is removable. A triangular change of variables
+maps the ordered same-cell region to a unit square with bounded analytic
+integrand.
+
+For adjacent cells meeting at $z$ with lengths $A,B_*>0$, set
+$x=z-s,y=z+t$, $0\le s\le A$, $0\le t\le B_*$.
+The jump difference need not vanish at $(s,t)=0$. Split this rectangle
+along its normalized diagonal and use
+
+$$
+(s,t)=(Au,B_*uv),\qquad(s,t)=(Auv,B_*u),\quad 0\le u,v\le1.
+$$
+
+Both Jacobians are $AB_*u$. Their kernel-times-Jacobian factors become
+
+$$
+\frac{AB_*\kappa(u(A+B_*v))}{A+B_*v},\qquad
+\frac{AB_*\kappa(u(Av+B_*))}{Av+B_*}. \tag{JC}
+$$
+
+They are bounded and holomorphic on a sufficiently small complex
+neighborhood of the real square; the left and right rational branches
+retain the jump difference. Nonadjacent cells have positive separation.
+This transformation pays the jump corner without assuming continuity or
+deleting any Gamma diagonal strip. Unequal cell lengths may force small
+analytic neighborhoods and supply no favorable operation count.
+
+Do not evaluate $\kappa$ through unresolved $0/0$ interval arithmetic.
+For example, with entire $E(z)=\sum_{k\ge0}z^k/(k+1)!$,
+$\kappa(t)=e^{-t/2}/(2E(-2t))$. Equivalently,
+$\kappa(t)=e^{t/2}/(2\operatorname{sinc}(it))$ where
+$\operatorname{sinc}(z)=\sin z/z$, $\operatorname{sinc}(0)=1$.
+Nonfinite enclosures still require subdivision or rejection; a removable
+analytic singularity is not a guarantee that a coarse interval evaluates
+tightly.
+
+### Uniform two-dimensional enclosure and theta callbacks
+
+For a transformed $F$ bounded by $M$ on a product of affinely rescaled
+Bernstein ellipses with parameters $r,s>1$, tensor Gauss quadrature on
+$[0,1]^2$ has error at most
+
+$$
+\frac M2[e_n(r)+e_m(s)]. \tag{TQ}
+$$
+
+Apply the cited one-dimensional error bound one coordinate at a time; each rescaled Gauss rule has
+positive weights summing to one. This standard tensor application is not
+a new quadrature theorem. An adaptively calculated inner integral is
+not automatically a certified holomorphic outer callback: use (TQ),
+parameter-uniform inner enclosures, or interval box integration instead.
+For a bounded continuous interval extension, the fallback
+$\int_QF\in |Q|[F(Q)]$ is a directed enclosure after (SD)/(JC).
+In the analytic callback use polarized products of real branch functions,
+not complex absolute squares.
+
+The original theta series, not an asymptotic replacement, is
+
+$$
+\Phi(z)=\sum_{n\ge1}(4\pi^2n^4e^{9z/2}-6\pi n^2e^{5z/2})
+ e^{-\pi n^2e^{2z}}.
+$$
+
+For $a\le\Re z\le b$, $|\Im z|\le v<\pi/4$, let
+$\lambda=\pi e^{2a}\cos(2v)>0$. After $P$ terms, a uniform modulus
+remainder is at most
+
+$$
+4\pi^2e^{9b/2}U_4+6\pi e^{5b/2}U_2,\qquad
+U_r=\frac{(P+1)^r e^{-\lambda(P+1)^2}}{1-\theta_r},\quad
+\theta_r=\left(1+\frac1{P+1}\right)^r e^{-\lambda(2P+3)}<1. \tag{TH}
+$$
+
+The successive term ratio decreases, giving the geometric majorant.
+This bounds the actual callback's omitted theta summands. It is not a
+certificate for a callback whose complex box violates the strip or ratio
+condition. Reflection using evenness can improve negative-real panels.
+
+For each retained prime term, split at the original breakpoints and those
+shifted by $-\log n$, integrating on $K\cup(K-\log n)$. Its pieces are
+analytic and nonsingular. Endpoints, $\delta$, $\log n$ and the centers
+must have rigorous enclosures; floating sorting of nearly coincident
+breakpoints is not a certificate.
+
+### Simultaneous Gamma and all-prime omitted-tail bounds
+
+Reuse the [original-series spatial and integral majorants](../Analytic/romik2021orthogonal.md),
+$\Phi(x)\le A_\Phi e^{-b_\Phi e^{2|x|}}$ with
+$A_\Phi=144/5$, $b_\Phi=3/2$. The cited integral bound is
+
+$$
+\mathcal T(H)=\int_{|y|>H}\Phi(y)dy
+\le\frac{96}{5}e^{-2H}e^{-(3/2)e^{2H}}.
+$$
+
+For a nonnegative multiplier $f$ write
+$H_f=\int_K\Phi(x)f(x)B(x)B(x)^Tdx$.
+Because $B=0$ outside $K$ and $\psi$ decreases,
+
+$$
+R_\Gamma=\int_K\Phi(x)B(x)B(x)^T
+ \int_{|y|>H}\Phi(y)\psi(|x-y|)dy\,dx,
+\quad0\preceq R_\Gamma\preceq\psi(H-S)\mathcal T(H)H_1. \tag{GT}
+$$
+
+Define the omitted prime row without speed normalization,
+$a_{>N}(x)=\sum_{n>N}w_n[\Phi(x+\log n)+\Phi(x-\log n)]$.
+The squared-difference bound gives $0\preceq R_p\preceq2H_{a_{>N}}$.
+Using $w_n\le\log n/\sqrt n\le2/e<1$ and the decreasing Gaussian
+integral bound, put
+
+$$
+\beta_\pm(x)=b_\Phi e^{\pm2x},\quad
+V_N(x)=\frac{A_\Phi}{2N}
+\left[\frac{e^{-\beta_+(x)N^2}}{\beta_+(x)}
+      +\frac{e^{-\beta_-(x)N^2}}{\beta_-(x)}\right].
+$$
+
+Then $a_{>N}\le V_N$ and
+
+$$
+0\preceq R_p\preceq2H_{V_N}. \tag{PT}
+$$
+
+Every omitted prime power is included in the integer majorant. If
+$\log(N+1)>2S$, all omitted shifted supports are disjoint, so exactly
+$R_p=H_{a_{>N}}\preceq H_{V_N}$. This is a multiplication-potential
+Gram matrix; it is not generally diagonal in the $b_j$ coefficient basis.
+In particular
+
+$$
+D_{H,N}\preceq D\preceq D_{H,N}
+ +\psi(H-S)\mathcal T(H)H_1+2H_{V_N}. \tag{DT}
+$$
+
+For a lower certificate omit only these positive energy remainders.
+The upper bounds allow refinement decisions or validation against the
+full energy; a negative truncated/lower matrix alone is not a full-form
+negative witness.
+
+### Pay variance and entry enclosures in the correct direction
+
+For a rational vector $r$ approximating the full mean $\mu$, define
+
+$$
+C_r=G-\mu r^T-r\mu^T+rr^T
+=\int_{\mathbb R}(B-r)(B-r)^T d\nu.
+$$
+
+Then $C_r-(G-\mu\mu^T)=(\mu-r)(\mu-r)^T$. Thus, for
+$F_r=D_{H,N}-c_\varepsilon C_r$,
+
+$$
+T_\varepsilon-F_r
+=R_\Gamma+R_p+c_\varepsilon(\mu-r)(\mu-r)^T\succeq0. \tag{MC}
+$$
+
+The deliberate centering loss is only quadratic in $\mu-r$.
+The last term in $C_r$ is $rr^T$, not $\nu(K)rr^T$: the constant
+centering vector extends outside the trial functions' compact support.
+
+Suppose symmetric rational $\widehat F$ and symmetric nonnegative
+rational upper bounds $E_{ij}$ enclose $|(F_r)_{ij}-\widehat F_{ij}|\le E_{ij}$. Set
+
+$$
+d_i=\sum_jE_{ij},\qquad L_{\rm cert}=\widehat F-\operatorname{diag}(d_i).
+$$
+
+From $2|z_i z_j|\le |z_i|^2+|z_j|^2$ for complex coefficients,
+
+$$
+L_{\rm cert}\preceq F_r\preceq T_\varepsilon. \tag{LCERT}
+$$
+
+Outward rational rounding supplies the rational error bounds.
+Certified PSD of this rational lower matrix would certify the precise (MT)
+condition for the prior whole-low-subspace approximation at
+$\tau=\varepsilon/8$. Failed lower-matrix positivity does not establish
+indefiniteness of the full target. Entrywise lower rounding is not a
+substitute for (LCERT).
+
+This is a finite assembly interface, not an assembled or signed matrix.
+No numerical feasibility, threshold-uniform control, cofinal window
+certificate, original general quadrature theorem, Lean, RH or full Robin
+conclusion is supplied. Existing source methods are reused; the new
+work is their same-object transfer with correct jumps, tails and variance.
