@@ -15277,3 +15277,232 @@ $$
 半无限连续孔道、特定谱密度和扩散边界下才出现 Warburg 型 \(\omega^{-1/2}\)；有限图、空间电荷和反应边界会产生多个时间常数或不同幂律。电中性、空间电荷和电极反应极限由 \(\lambda_D/L\)、Damköhler 数及取极限次序决定。只测总电流时，内部浓度极化和电势模态可能完全不可见；不同参数也可保持 \(L^2/D\)、\(\lambda_D/L\) 或 \(R_{\rm ct}C_{\rm dl}\) 等组合不变而产生相同有限频带阻抗。
 
 因此 FIB 只提供孔道与接触的组合骨架。Nernst–Planck/Poisson、Butler–Volmer、电中性或空间电荷极限以及阻抗谱均依赖浓度、迁移率、介电权重、反应化学计量、温度、边界、噪声和连续极限等外加结构；同一 FIB 网络可在这些结构变化下呈现欧姆输运、空间电荷限制、反应极化或不同阻抗统计，不存在由 FIB ATOM 递归单独确定的普适电化学定律。
+
+## 198. FIB 网络上的外加颗粒气体、非弹性碰撞、Haff 冷却与团簇不稳定
+
+固定 FIB 关系给出的有限接触骨架 \(G_j=(V_j,E_j)\)，另指定粒子质量、位置、速度、有效截面、接触法向和边界。对接触边 \(e=(a,b)\)，法向相对速度为 \(g_n=(v_a-v_b)\cdot n_e\)，恢复系数为 \(e_e\in[0,1]\)。无切向摩擦的碰撞规则可写成
+$$
+v_a'=v_a-\frac{m_b}{m_a+m_b}(1+e_e)g_nn_e,\qquad
+v_b'=v_b+\frac{m_a}{m_a+m_b}(1+e_e)g_nn_e,
+\tag{198.1}
+$$
+其动能损失为
+$$
+\Delta E_e=-\frac12\frac{m_am_b}{m_a+m_b}(1-e_e^2)g_n^2.
+\tag{198.2}
+$$
+接触边、法向、恢复系数和碰撞率全是外加规则，FIB 不提供物理接触或耗散。
+
+稀薄图索引动力学可抽象为
+$$
+\partial_tf_v+\operatorname{div}_j\mathcal F_j[f]_v
+=\sum_{e\ni v}\gamma_eQ_e^{(e_e)}(f_v,f_{v_e})
++\mathcal T_vf_v+\mathcal S_v .
+\tag{198.3}
+$$
+Boltzmann 近似要求分子混沌；有限密度、重复邻接和图环路造成的关联需 Enskog 或更高阶闭合。对速度分布取矩后，连续嵌入下的密度、动量和温度方程含压力、黏性、热流、拖曳、驱动和冷却率；这些量没有边长和权重就没有确定物理量纲。
+
+自由冷却、均匀密度、无驱动、无拖曳和常数 \(e<1\) 的自相似近似给出
+$$
+\frac{{\rm d}T}{{\rm d}t}=-\Lambda_eT^{3/2},
+\qquad
+T(t)=T_0\left(1+\frac t{t_H}\right)^{-2}.
+\tag{198.4}
+$$
+\(\Lambda_e\) 依赖密度、截面、质量和 \(1-e^2\)；速度相关恢复系数、摩擦、有限密度和边界散热会改变 Haff 指数或前因子。若以外加赋权拉普拉斯 \(L_j\) 分解图模态，线性化扰动可写成
+$$
+\partial_\tau\widehat z_\ell
+=\mathsf M_{0,j}\widehat z_\ell-\lambda_{\ell,j}\mathsf M_{1,j}\widehat z_\ell .
+\tag{198.5}
+$$
+某模态矩阵有正实部时会形成密度团簇或剪切结构；判据依赖碰撞、压力和输运闭合，不能用图度数或递归深度代替。
+
+驱动系统的能量账式还需外加注入、恒温器、振动边界或剪切：
+$$
+\frac{{\rm d}}{{\rm d}t}\left(\frac d2\sum_vn_vT_v\right)
+=\mathcal P_{\rm in}-\sum_vn_v\zeta_vT_v-\mathcal D_{\rm drag}
++\mathcal F_{\rm bdry}.
+\tag{198.6}
+$$
+自由冷却、稀薄 Boltzmann 和驱动稳态不是同一极限；非弹性颗粒气体也不自动等同沙堆、堵塞或弹性网络。只测全图平均温度通常只能识别冷却系数的组合，不能分离密度、截面、恢复系数和图结构。因此 Haff 冷却、团簇不稳定和非平衡速度统计都是外加碰撞与驱动模型的条件结论。
+
+## 199. FIB 路径上的外加 Dicke 超辐射、集体自发辐射与光子统计
+
+固定 FIB 上下文路径，并将每个选定上下文映射为外加二能级发射体。FIB 只给接续或耦合骨架；位置、偶极矩、能级、腔模、真空谱密度、初态、耗散和探测通道均外加。闭合发射体模型可写为
+$$
+H_S=\frac12\sum_i\omega_i\sigma_i^z
++\sum_{i\ne j}J_{ij}\sigma_i^+\sigma_j^-
++\sum_{i,\mu}(g_{i\mu}a_\mu\sigma_i^+
++g_{i\mu}^*a_\mu^\dagger\sigma_i^-).
+\tag{199.1}
+$$
+在 Born–Markov、旋波和外加真空浴近似下，
+$$
+\dot\rho=-{\rm i}[H_{\rm eff},\rho]
++\sum_{i,j}\Gamma_{ij}\left(
+\sigma_j^-\rho\sigma_i^+
+-\frac12\{\sigma_i^+\sigma_j^-,\rho\}\right),
+\tag{199.2}
+$$
+其中 \(\Gamma\) 必须半正定，其非对角元由外加 Green 函数、偶极矩和空间相位决定。辐射强度为
+$$
+I(t)=\sum_{i,j}\Gamma_{ij}
+\langle\sigma_i^+\sigma_j^-\rangle_t .
+\tag{199.3}
+$$
+若 \(\Gamma_{ij}=\gamma\)，唯一亮跳跃算子为
+$$
+L=\sqrt\gamma\,J^-,
+\qquad J^-=\sum_i\sigma_i^-,
+\tag{199.4}
+$$
+对称初态和公共浴下 \(I(t)=\gamma\langle J^+J^-\rangle\) 可在脉冲中段达到 \(O(N^2)\)，而独立辐射为 \(O(N)\)。失谐、位置无序、去相干和边界会削弱增强。
+
+一般有限图给出
+$$
+\Gamma=\sum_\alpha\gamma_\alpha v_\alpha v_\alpha^\dagger,\qquad
+L_\alpha=\sqrt{\gamma_\alpha}\sum_i(v_\alpha)_i\sigma_i^- .
+\tag{199.5}
+$$
+大 \(\gamma_\alpha\) 是亮模，小或零本征值对应亚辐射或暗模；其寿命和权重由初态重叠及外加浴决定。保留单个腔模时，Tavis–Cummings 哈密顿量和腔损耗可产生 Rabi 分裂，但 \(\omega_c,g,\kappa_c\) 仍是外加量。
+
+光子计数需要倾斜 Liouvillian
+$$
+\mathcal L_s=\mathcal L_0+(e^s-1)\mathcal J_d,\qquad
+Z(s,T)={\rm tr}\,e^{T\mathcal L_s}\rho_0,
+\tag{199.6}
+$$
+二阶相关可写为
+$$
+g^{(2)}(\tau)=
+\frac{{\rm tr}[\mathcal J_d e^{\tau\mathcal L}\mathcal J_d\rho_{\rm ss}]}
+{({\rm tr}\mathcal J_d\rho_{\rm ss})^2}.
+\tag{199.7}
+$$
+超辐射脉冲、单体反聚束、暗态长尾和腔反馈会产生不同 Fano 因子与相关函数；探测孔径、偏振、背景和时间窗也会改变观测。只测总强度不能分别恢复 \(\Gamma\)、偶极矩和暗模。故独立辐射、超辐射与亚辐射均是外加量子光学和探测条件下的结论，不是 FIB 接续关系自身的定律。
+
+## 200. FIB 区域网络上的外加气候能量平衡、温室反馈与随机统计
+
+固定 FIB 区域图 \(G_j=(V_j,E_j)\)。顶点只表示区域或层级单元，边只表示可能交换；面积、纬度、高度、热容、辐射参数、边界位置和气候时间尺度均外加。全局一箱模型为
+$$
+C\frac{{\rm d}T}{{\rm d}t}
+=Q(t)(1-\alpha(T))-R(T,\chi)+F_{\rm ext}(t)+\eta(t),
+\tag{200.1}
+$$
+其中 \(R(T,\chi)\) 是外加辐射闭合，\(\chi\) 表示温室气体、云或水汽状态。平衡 \(F(T)=Q(1-\alpha(T))+F_{\rm ext}-R(T,\chi)=0\) 的稳定性由 \(F'(T_*)\) 决定；冰反照率和温室反馈可以产生多平衡、鞍结和滞回，但需要具体参数化。
+
+在区域图上给热容 \(C_v\)、输入 \(Q_v\)、交换权 \(K_{uv}\) 和温室闭合 \(R_v\)，可写
+$$
+C_v\dot T_v=Q_v(1-\alpha_v)-R_v-(L_KT)_v+F_v+\eta_v,
+\qquad
+(L_KT)_v=\sum_uK_{uv}(T_v-T_u).
+\tag{200.2}
+$$
+对称内部边的热量在全图求和时抵消，开放边界和海洋/冰盖通量须另加。线性化后的谱 \(A=C^{-1}(L_K+R_T+Q\alpha_T)\) 给出区域松弛时间；FIB 边数和词频只有在映射到 \(K,C\) 后才影响它。
+
+在稳定矩阵 \(A\) 和白噪声下，
+$$
+{\rm d}\vartheta=-A\vartheta\,{\rm d}t+B\,{\rm d}W_t,
+\qquad
+A\Sigma+\Sigma A^{\mathsf T}=BB^{\mathsf T}.
+\tag{200.3}
+$$
+有色噪声、重尾跳跃和乘法噪声会改变平稳分布与极端尾。最小恢复率下降可产生临界减速候选，但噪声增强和观测滤波也会造成方差、自相关上升；随机诱导、速率诱导和分岔诱导 tipping 需分别建模。单箱与二箱模型可在有限总平均温度窗口内给出相同响应，却有不同区域温差、海洋热含量和长期极端。
+
+若观测 \(Y_k=HT(t_k)+\varepsilon_k\) 只记录总平均，则 \((C,K,R,\alpha,F_{\rm ext})\) 的许多组合不可区分；增加区域温度、热含量、辐射通量和独立强迫实验才可缩小观测纤维。图族的面积权、边界—体积比、交换谱隙、噪声相关和强迫归一化也必须给出，不能把 FIB 图大小直接当作行星半径。故平衡温度、温室响应、随机协方差、tipping 率和极端统计均是外加气候模型的条件结论。
+
+## 201. FIB 网络上的外加毛细润湿、Young–Laplace 压差与液滴统计
+
+固定 FIB 接续图并把部分顶点、边和胞腔嵌入孔道、喉道和固体表面单元。每条喉道另给半径 \(r_e\)、长度 \(L_e\)、截面和粗糙度。FIB 只给接触骨架；表面张力 \(\gamma\)、界面能、接触角、曲率、黏度、密度、压力、重力、蒸发律和边界驱动均外加。液—气界面自由能可写
+$$
+\mathcal F[\Sigma]=\gamma A_{\ell v}+\gamma_{\ell s}A_{\ell s}
++\gamma_{sv}A_{sv}-\Delta p\,V+\mathcal F_{\rm ext}.
+\tag{201.1}
+$$
+法向变分给 Young–Laplace 条件
+$$
+\Delta p=\gamma\left(\frac1{R_1}+\frac1{R_2}\right),
+\tag{201.2}
+$$
+固体接触线给 Young 角
+$$
+\gamma_{sv}-\gamma_{s\ell}=\gamma\cos\theta_e .
+\tag{201.3}
+$$
+圆柱喉道的毛细压差和竖直高度在特定边界下为
+$$
+p_c=\frac{2\gamma\cos\theta}{r_e},\qquad
+h=\frac{2\gamma\cos\theta}{\rho g r_e}.
+\tag{201.4}
+$$
+非圆截面和动态接触线不能用 FIB 边数替代曲率。
+
+接触线滞后满足 \(\theta_R\le\theta\le\theta_A\)；粗糙度、化学斑块和喉道收缩会钉扎接触线并产生跳跃。低 Reynolds 数、不可压、无蒸发且忽略惯性时，单孔浸润长度满足 Washburn 标度
+$$
+\ell^2(t)-\ell_0^2=\frac{r_e\gamma\cos\theta}{2\mu}\,t .
+\tag{201.5}
+$$
+外加压力、惯性、气体压缩、蒸发和滑移会改变该标度。在网络上，给水力导通率 \(k_e\) 和毛细压差 \(p_{c,e}\)，可写
+$$
+q_e=-\frac{k_e}{\mu_eL_e}
+[p_{v(e)}-p_{u(e)}-p_{c,e}],
+\qquad
+\sum_{e\ni v}\varepsilon_{ve}q_e=s_v .
+\tag{201.6}
+$$
+串联瓶颈、并联分流、侵入阈值和残余液相均由这些外加参数决定。
+
+热激活脱钉扎可用
+$$
+\zeta\dot x=-\partial_x\mathcal F(x)+\sqrt{2k_BT\zeta}\,\eta(t),
+\qquad
+\langle\eta(t)\eta(t')\rangle=\delta(t-t')
+\tag{201.7}
+$$
+表示；大势垒下等待时间具有 Kramers 型指数，但前因子取决于粗糙度、摩擦和噪声相关。只观测 Washburn 前沿只能约束 \(r_e\gamma\cos\theta/\mu\) 的组合，不能分别恢复几何、表面张力、接触角和黏度；总占据率也看不见隐藏残余液相。故平衡形状、侵入团簇、接触线滞后和热涨落均是外加毛细模型的条件结论。
+
+## 202. FIB 网络上的外加聚变等离子体、磁约束、能量增益与输运统计
+
+固定 FIB 网格 \(G_j=(V_j,E_j)\)，把顶点解释为等离子体控制体，把边解释为外加场线或输运通道。体积、磁场、密度、温度、流速、组分和通道几何均需外加。对反应 \(a+b\to\) products，反应率为
+$$
+R_{ab,v}=\frac{n_{a,v}n_{b,v}}{1+\delta_{ab}}\langle\sigma v\rangle_{ab,v},
+\qquad
+\langle\sigma v\rangle=\iint f_af_b\sigma(v_{\rm rel})v_{\rm rel}\,{\rm d}v_a{\rm d}v_b .
+\tag{202.1}
+$$
+Maxwell 分布、截面、非热尾和燃料比都不是 FIB 数据。聚变功率 \(P_{\rm fus}=R_{ab}E_{\rm fus}\)，α 自加热还需外加沉积分数。
+
+对各物种粒子数 \(N_{s,v}\) 和热能 \(W_v\)，外加边通量、加热和损失给出
+$$
+\dot N_{s,v}=-\operatorname{div}_j\Gamma_{s,v}+S_{s,v}+R_{s,v}-L_{s,v},
+\tag{202.2}
+$$
+$$
+\dot W_v=-\operatorname{div}_jQ_v+P_{{\rm aux},v}+P_{\alpha,v}
+-P_{{\rm rad},v}-P_{{\rm cx},v}-P_{{\rm wall},v}.
+\tag{202.3}
+$$
+能量约束时间和等离子体增益可定义为
+$$
+\tau_E=\frac W{P_{\rm loss}},\qquad
+Q_{\rm plasma}=\frac{P_{\rm fus}}{P_{\rm aux}}.
+\tag{202.4}
+$$
+\(Q_{\rm plasma}>1\) 不等于工程净功率为正；磁体、泵浦和能量转换还需计入再循环功率。
+
+稳态能量约束下的广义 Lawson 条件形如
+$$
+f_\alpha\frac{n_an_b}{1+\delta_{ab}}\langle\sigma v\rangle E_{\rm fus}
+\ge \frac W{\tau_EV}+\frac{P_{\rm rad}+P_{\rm cx}+P_{\rm wall}}V .
+\tag{202.5}
+$$
+只有在组成、温度、能量系数和损失闭合固定后，才可化为 \(n\tau_E\) 或 \(nT\tau_E\) 判据。磁约束还需场拓扑、碰撞率、漂移、湍流谱、开放场线端损失和中性粒子再循环；FIB 边只有在与场线或磁面的映射被声明后才可离散这些通量。新经典、湍流和边缘输运的分解、杂质辐射系数和电荷交换损失均是外加模型。
+
+自加热与损失的温度导数决定局部燃烧稳定性：
+$$
+C_T\dot T=P_{\rm aux}+f_\alpha P_{\rm fus}(T,n)-P_{\rm loss}(T,n).
+\tag{202.6}
+$$
+正反馈可引起热失稳或跃迁，高辐射和开放边界可使系统受限。随机磁场、加热、杂质和网格族会给出 \(Q_{\rm plasma}\)、\(\tau_E\) 和点火阈值的分布；改变离散分辨率而不改变连续参数不应被误判为物理相变。中子计数主要约束 \(\int n_an_b\langle\sigma v\rangle\,{\rm d}V\)，不能单独分离密度、温度、燃料比和有效体积；总能量与辐射功率也不能在未知 \(\tau_E\) 时分离不同输运机制。
+
+因此 FIB 只提供磁约束通道、控制体和网格组合骨架。反应截面、等离子体状态、磁场拓扑、加热、杂质、辐射、中性粒子、边界和输运闭合均需外加；Lawson 条件、能量增益、燃烧稳定性以及湍流/新经典损失都是这些结构下的条件结论。同一 FIB 骨架可通过改变磁场、燃料、加热和边界从开放低增益状态切换到高约束或辐射受限状态，不存在由 FIB ATOM 递归单独决定的普适聚变定律。
