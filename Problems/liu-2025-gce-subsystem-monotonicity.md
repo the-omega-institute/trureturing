@@ -148,8 +148,10 @@ Tier 1 conjecture of a 2025 journal article. Resolution: `Refuted`, by
 - **Where the example lives (orchestrator readings, not stated in Lean):**
   - On the family
     $\psi_t\propto-|0000\rangle+t|0101\rangle-t|1010\rangle+t|1100\rangle+t^2|1111\rangle$,
-    the clause fails for small $t$ at $K=2.2$ and $K=2.5$, and holds at
-    $K=3,4,5,6$ (double-precision spectra at $t=0.3,0.2,0.1,0.05,0.02$).
+    double-precision spectra at the five values $t=0.3,0.2,0.1,0.05,0.02$
+    show the clause failing at each of them for $K=2.2$ and $K=2.5$, and
+    holding at each of them for $K=3,4,5,6$. These are finite samples; no
+    statement about an interval of $t$ is made.
   - The search seat reports the expansion
     $\mathcal C^{(5/2)}(\{0,1,2\})-\mathcal C^{(5/2)}(\{0,1\})
     =\frac{8\sqrt2-1-5\sqrt5}{12}t^5+O(t^6)$, with a negative leading
