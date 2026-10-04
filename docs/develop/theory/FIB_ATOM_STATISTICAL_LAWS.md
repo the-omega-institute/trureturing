@@ -14379,3 +14379,305 @@ $$
 带边界的有限系统若保持体能隙并满足适当局域性，可出现与体拓扑相容的谱流边缘态。边界形状、终止方式、无序和有限宽度会改变边缘色散，不能由 FIB 接缝单独决定。若体隙关闭、有限尺寸混合占主导或存在强相互作用，简单单粒子边缘—体对应需要重新建立。
 
 本节结论是：FIB 提供量子跃迁和胞腔的组合候选；Berry 曲率、Chern 数、量子霍尔响应及边缘态由二维周期实现、复跃迁、能隙、占据规则和边界条件决定。
+
+## 183. FIB 递归路径上的外加确定性混沌、Lyapunov 指数与 Kolmogorov 熵
+
+FIB 给出状态之间的允许转移和符号路径。设路径为
+$$
+s_0\xrightarrow{e_0}s_1\xrightarrow{e_1}s_2\longrightarrow\cdots.
+$$
+这只规定合法次序；连续状态空间、度量、映射、初始测度和噪声均需外加。可在每个边转移上配置
+$$
+F_e:M\to M,\qquad x_{n+1}=F_{e_n}(x_n),
+\tag{183.1}
+$$
+再以移位 \(S\) 构造符号—连续纤维系统
+$$
+T(\omega,x)=
+\bigl(S\omega,F_{e_0(\omega)}(x)\bigr).
+$$
+不变概率测度及其路径边缘测度不是 FIB 自动给出的。
+
+若 \(F_e\) 为 \(C^1\)，沿固定符号路径的切向传播为
+$$
+A_n=DF_{e_n}(x_n),\qquad
+P_n=A_{n-1}\cdots A_0,
+$$
+$$
+\delta x_n=P_n\delta x_0+o(\|\delta x_0\|).
+\tag{183.2}
+$$
+一般不能把各步最大特征值相乘代替 \(P_n\)，因为扩张方向会转动且矩阵通常不交换。有限时间 Lyapunov 指数为
+$$
+\lambda_i^{(n)}
+=\frac1n\log\sigma_i(P_n),
+$$
+渐近指数的存在需要平稳性、可测性和可积性，例如
+$$
+\int\log^+\|DF_e\|\,d\mu<\infty.
+\tag{183.3}
+$$
+正的最大指数表示某些切向方向的渐近扩张，不表示所有扰动都扩张，也不等于物理单位时间指数，除非物理时钟已明确。
+
+Kolmogorov–Sinai 测度熵对有限分割 \(\mathcal P\) 定义为
+$$
+h_\mu(T,\mathcal P)
+=\lim_{n\to\infty}\frac1n
+H_\mu\!\left(\bigvee_{k=0}^{n-1}T^{-k}\mathcal P\right),
+\qquad
+h_\mu(T)=\sup_{\mathcal P}h_\mu(T,\mathcal P).
+\tag{183.4}
+$$
+允许路径数的增长、路径概率的熵和连续纤维的 KS 熵是不同量。同一合法路径空间可支持集中于周期轨道的零熵测度，也可支持正熵测度。FIB 递归长度的指数增长不能直接当作每次转移的熵率。
+
+在满足相应光滑、可积和绝对连续条件时，Ruelle 不等式给出
+$$
+h_\mu(T)
+\le
+h_{\rm base}
++\int\sum_{\lambda_i>0}m_i\lambda_i\,d\mu.
+\tag{183.5}
+$$
+等式需要 Pesin 型额外条件；正 Lyapunov 指数本身不能自动证明熵等于正指数之和。若存在噪声、分支边界或非遍历分量，需分别处理路径选择和纤维指数。
+
+本节结论是：FIB 提供符号转移与递归路径；确定性混沌、Lyapunov 指数、测度熵及其关系由外加连续映射、度量、不变测度和时间尺度决定。
+
+## 184. FIB 链与图上的外加离散非线性 Schrödinger、孤子与调制不稳定
+
+FIB 只提供耦合图。选无向对称权 \(w_{nm}\)、图 Laplacian
+$$
+(L\psi)_n=\sum_{m\sim n}w_{nm}(\psi_n-\psi_m),
+$$
+以及实势 \(V_n\) 和非线性系数 \(g_n\)，可定义外加 DNLS
+$$
+i\frac{d\psi_n}{dt}
+=(L\psi)_n+V_n\psi_n+g_n|\psi_n|^2\psi_n.
+\tag{184.1}
+$$
+在静态参数和无外部通量边界下，
+$$
+N=\sum_n|\psi_n|^2,\qquad
+H=\sum_{\{n,m\}}w_{nm}|\psi_n-\psi_m|^2
++\sum_nV_n|\psi_n|^2+\frac12\sum_ng_n|\psi_n|^4
+\tag{184.2}
+$$
+分别守恒。若采用邻接算子、非厄米权或开放边界，这些守恒律会改变。
+
+对均匀周期链的平面波
+$$
+\psi_n=\sqrt\rho\,e^{i(qn-\omega t)},
+$$
+有
+$$
+\omega=V_0+4C\sin^2\frac q2+g\rho.
+$$
+扰动波数 \(Q\) 的线性频率满足
+$$
+\Omega_\pm(Q)
+=2C\sin q\sin Q
+\pm\sqrt{\varepsilon_q(Q)[\varepsilon_q(Q)+2g\rho]},
+$$
+$$
+\varepsilon_q(Q)=4C\cos q\sin^2\frac Q2.
+\tag{184.3}
+$$
+若存在
+$$
+\varepsilon_q(Q)[\varepsilon_q(Q)+2g\rho]<0,
+\tag{184.4}
+$$
+则该模态指数增长，增长率为根号内负值的平方根。有限 FIB 环只能取离散 \(Q\)，必须逐模态检查；非周期图不能直接使用平面波公式。
+
+一般图上若 \(L\mathbf1=0\)、\(V_n=V_0\)、\(g_n=g\)，常数背景
+$$
+\psi_n(t)=\sqrt\rho\,e^{-i(V_0+g\rho)t}
+$$
+存在。沿 \(L\) 的谱值 \(\lambda\ge0\) 线性化得到
+$$
+\Omega^2=\lambda(\lambda+2g\rho).
+\tag{184.5}
+$$
+聚焦情形 \(g<0\) 的不稳定条件为
+$$
+0<\lambda<2|g|\rho.
+\tag{184.6}
+$$
+因此有限图的最小正谱值和最大谱值共同决定不稳定窗口。
+
+驻波
+$$
+\psi_n(t)=e^{-i\mu t}\phi_n
+$$
+满足
+$$
+\mu\phi_n=(L\phi)_n+V_n\phi_n+g_n|\phi_n|^2\phi_n.
+\tag{184.7}
+$$
+局域孤子需要 \(\phi\in\ell^2\)，并需有线性局域模态分岔、反连续极限延拓或其他存在性条件。FIB 图的层级结构可能产生局域谱态，但不自动保证点谱、指数局域或孤子稳定性；稳定性还需线性化谱和非线性约束。
+
+本节结论是：FIB 提供非线性波的耦合骨架；守恒量、调制不稳定、离散孤子和局域模态由线性算子、非线性、边界和谱条件决定。
+
+## 185. FIB 关系网络上的外加食物网、共存与生态稳定性
+
+FIB 关系只规定候选连接，不决定捕食方向、增长率、相互作用强度、容量或噪声。选定外加作用矩阵 \(A\)，可研究
+$$
+\dot x_i=x_i\left(r_i+\sum_jA_{ij}x_j\right),
+\qquad x_i\ge0.
+\tag{185.1}
+$$
+其中增长率、捕食/竞争/互利参数和自限项均为外加。关系相同而作用类型不同，会产生完全不同的生态动力学。
+
+完全共存平衡满足
+$$
+x^*>0,\qquad r+Ax^*=0.
+\tag{185.2}
+$$
+矩阵可逆时 \(x^*=-A^{-1}r\)，但仍需逐坐标检查正性。对支持集 \(S\) 的边界平衡，缺席物种 \(j\notin S\) 的入侵增长率为
+$$
+\gamma_j=r_j+A_{jS}x_S^*.
+\tag{185.3}
+$$
+\(\gamma_j>0\) 表示该物种可在低密度入侵，但不等于全局共存。
+
+完全共存平衡的雅可比为
+$$
+J^*=\operatorname{diag}(x^*)A.
+\tag{185.4}
+$$
+全部特征值实部严格为负时才有局部渐近稳定；直接检查 \(A\) 的谱一般不足。边界平衡在居民子系统稳定之外，还必须满足所有缺席物种的 \(\gamma_j<0\)。
+
+一个足够的全局稳定结构是存在正对角矩阵 \(Q\) 使
+$$
+QA+A^{\mathsf T}Q\prec0.
+\tag{185.5}
+$$
+此时相对熵型 Lyapunov 函数
+$$
+\mathcal V(x)=
+\sum_iq_i\left[x_i-x_i^*-x_i^*\log\frac{x_i}{x_i^*}\right]
+$$
+沿正轨道严格下降。该条件是充分条件，不是一般 Lotka–Volterra 系统的必要条件。无自限的经典捕食模型可能只有闭合轨道，关系图不变而渐近性质完全不同。
+
+持久性要求所有严格正初值远离灭绝边界，例如
+$$
+\liminf_{t\to\infty}\min_ix_i(t)\ge\eta>0.
+$$
+局部平衡稳定不能替代持久性。若边界有不变测度 \(\mu\)，可用平均入侵率
+$$
+\lambda_i(\mu)=
+\int\left(r_i+\sum_jA_{ij}x_j\right)d\mu(x)
+$$
+构造边界排斥条件。环境噪声下的随机灭绝和随机持久性还需随机微分方程、噪声协方差、容量和初始分布；有限系统的长寿命不等于永恒共存。
+
+本节结论是：FIB 提供物种关系的位置；共存平衡、入侵阈值、稳定性、持久性和随机灭绝由 Lotka–Volterra 参数、边界和环境噪声决定。
+
+## 186. FIB 路径测度上的外加最优输运、梯度流与扩散
+
+FIB 给出离散状态和允许接续关系，但不确定路径概率、输运代价、连续时间、熵泛函和边界交换。给定外加度量 \(d\)，经典离散 Wasserstein 距离为
+$$
+W_{2,d}^2(\mu,\nu)
+=\min_{\gamma\in\Pi(\mu,\nu)}
+\sum_{x,y}d(x,y)^2\gamma(x,y).
+\tag{186.1}
+$$
+固定有限集合上的这一距离不自动带来连续时间梯度流；需要另选图上的活动边、跃迁率和通量结构。
+
+在无向活动边 \(E\) 上选择正参考概率 \(\pi\)、可逆速率 \(q_{xy}\) 和
+$$
+c_{xy}=\pi_xq_{xy},
+\qquad
+\pi_xq_{xy}=\pi_yq_{yx}.
+$$
+令 \(\rho_x=\mu_x/\pi_x\)，并用对数平均
+$$
+\theta(a,b)=\frac{a-b}{\log a-\log b}
+$$
+定义通量 \(j_{xy}=-j_{yx}\) 与连续性方程
+$$
+\dot\mu_x+\sum_yj_{xy}=0.
+$$
+动态输运作用量为
+$$
+\mathcal A(\mu,j)
+=\frac12\sum_{x,y}
+\frac{j_{xy}^2}{c_{xy}\theta(\rho_x,\rho_y)}.
+\tag{186.2}
+$$
+在该外加图输运结构下，熵
+$$
+\mathcal H(\mu\mid\pi)
+=\sum_x\mu_x\log\frac{\mu_x}{\pi_x}
+$$
+的梯度流恰好为可逆 Markov 链的前向方程
+$$
+\dot\mu_x=\sum_y(\mu_yq_{yx}-\mu_xq_{xy}).
+\tag{186.3}
+$$
+沿演化，
+$$
+\frac d{dt}\mathcal H(\mu_t\mid\pi)
+=-\frac12\sum_{x,y}
+c_{xy}(\rho_x-\rho_y)
+(\log\rho_x-\log\rho_y)\le0.
+\tag{186.4}
+$$
+
+因此，在明确的可逆速率和迁移率下，图热方程是相对熵的梯度流；改变边速率会改变扩散时间尺度，即使 FIB 可行路径完全相同。图不连通时，各连通分量的质量分别守恒，不能宣称全局唯一平衡。
+
+加入外加势 \(V\) 和参考测度 \(m\)，自由能可写为
+$$
+\mathcal F(\mu)
+=\sum_x\mu_x\log\frac{\mu_x}{m_x}
++\sum_xV_x\mu_x.
+\tag{186.5}
+$$
+相应梯度流可导向带漂移的离散 Fokker–Planck 方程。若速率不满足详细平衡，熵流包含非平衡驱动项，梯度流结构和单调性需重新证明。连续 Wasserstein 极限还需给出嵌入、尺度缩放、紧性和边界通量。
+
+本节结论是：FIB 提供离散状态与接缝；最优输运距离、熵梯度流、热方程和 Fokker–Planck 演化由代价度量、迁移率、参考测度、势能及边界决定。
+
+## 187. FIB 网络上的外加磁流体动力学、磁通冻结与重联
+
+FIB 只提供关系或网格骨架。速度场 \(\mathbf u\)、密度 \(\rho\)、压力 \(p\)、磁场 \(\mathbf B\)、电阻率、边界和尺度极限均需外加。可在连续嵌入后选择电阻磁流体方程
+$$
+\partial_t\rho+\nabla\cdot(\rho\mathbf u)=0,
+\tag{187.1}
+$$
+$$
+\rho(\partial_t\mathbf u+\mathbf u\cdot\nabla\mathbf u)
+=-\nabla p+\mathbf J\times\mathbf B+\nabla\cdot\boldsymbol\tau+\mathbf f,
+$$
+$$
+\partial_t\mathbf B
+=\nabla\times(\mathbf u\times\mathbf B-\eta\mathbf J),
+\qquad
+\mathbf J=\mu_0^{-1}\nabla\times\mathbf B,
+\tag{187.2}
+$$
+并要求
+$$
+\nabla\cdot\mathbf B=0.
+$$
+状态方程、黏性应力、热方程和电阻率模型仍需明确。
+
+若 \(\eta=0\)、流场足够光滑且边界无磁通泄漏，则感应方程为
+$$
+\partial_t\mathbf B=\nabla\times(\mathbf u\times\mathbf B),
+$$
+磁通随流体线保持，这就是磁通冻结。非零电阻、薄层奇异性、数值耗散或边界电势会破坏冻结；FIB 接缝本身不提供理想导电条件。
+
+理想磁流体的磁能
+$$
+E_B=\int\frac{|\mathbf B|^2}{2\mu_0}\,dV
+$$
+与动能、内能共同进入总能量预算。电阻项产生
+$$
+P_\eta=\int\eta|\mathbf J|^2\,dV\ge0,
+\tag{187.3}
+$$
+黏性项也产生耗散。若存在外部驱动或开放边界，能量和磁螺度还要加入边界通量；不能在驱动系统中宣称总能量守恒。
+
+磁重联要求磁通冻结在局部失效并改变磁拓扑，通常与非理想电场、薄电流层和拓扑不同的区域相联系。仅有 FIB 回路或接缝数量不能证明重联；必须给出 \(\eta\)、电子惯性、Hall 项或其他非理想机制，以及入口、出口和磁通边界条件。重联速率还依赖层厚度、驱动、压强和三维几何。
+
+在高磁雷诺数和外部驱动下，磁能、动能和磁螺度可出现跨尺度传递。统计谱、间歇性和耗散尺度要由具体方程、初始数据、源汇和无量纲参数（如磁雷诺数、等离子体 \(\beta\)）决定。FIB 的递归层级可以作为多尺度分块，但不能直接给出 Kolmogorov 指数或重联普适类。
+
+本节结论是：FIB 提供磁流体通道与网格组合骨架；磁通冻结、能量预算、磁能级联和重联由 MHD 方程、导电性、边界、驱动和尺度极限决定。
