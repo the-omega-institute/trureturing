@@ -1,0 +1,9 @@
+**命题 68.12（$6k+1$ 个实际 Pareto 端点）。** 原始超额向量的全部最小元恰为
+
+$$
+\mathbf1-\mathbf e_i\quad(i=0,y_j,h_j,z_j),\qquad
+\mathbf1-\mathbf e_{a_j}+\mathbf e_b\quad(b=y_j,h_j,z_j).
+$$
+
+这里 $\mathbf e_i$ 是坐标单位向量；第一类有 $3k+1$ 个，第二类有 $3k$ 个。任何正确总控制器的向量都被其中一个端点逐坐标弱支配；这不宣称所有向上向量均可实现。
+

@@ -1,0 +1,23 @@
+**推论 70.32（三顶点只给上界与必要系数限制）。** 点律、$v^{(a)}$、均匀律的三个目标值为
+
+$$
+(n+1)N,\qquad
+(n+1-t_0)N+\lambda At_0,\qquad
+\left(n+1-\frac1m\right)N+\lambda\frac{A+2}m.
+\tag{70.10}
+$$
+
+这些值及命题70.30、70.31的全部比较值的最小值均为 $\inf_p\Phi_{N,\lambda}(p)$ 的可行上界。取 $\lambda=1,N=A$，式（70.10）的最小值为 $(n+1)A$，而
+
+$$
+\Phi_{A,1}(p^\ast)=(n+1)A-\frac{B-a-3}B<(n+1)A.
+\tag{70.11}
+$$
+
+任何满足 $\forall p, L_m(p)\ge\alpha\min_i p_i$ 的系数都必须有
+
+$$
+\alpha\le\frac{B(a+1)(B-1)}{B-2};\qquad a=3\text{ 时右侧为 }\frac{112}3<40.
+\tag{70.12}
+$$
+

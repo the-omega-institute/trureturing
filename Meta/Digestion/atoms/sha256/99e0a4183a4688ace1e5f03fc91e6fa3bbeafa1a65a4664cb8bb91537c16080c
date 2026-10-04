@@ -1,0 +1,27 @@
+### 63.5 不估计共同噪声的主恢复定理
+
+直接使用第 58.5–58.6 节的整数补偿损失。令
+
+$$
+Z=\mathbf1_{Y=2}-\mathbf1_{Y=0},\quad W=1-3\mathbf1_{Y=1},\quad f_\kappa(x)=C_\kappa(x)-1,
+\qquad \mathcal L_\kappa=Wf_\kappa^2-2Zf_\kappa.
+\tag{63.11}
+$$
+
+零类的 $f=-1$。实际通道给 $\mathbb E[Z\mid X]=\alpha f_\theta(X)/4$、$\mathbb E[W\mid X]=\alpha/4$。损失表的行是 $Y$，列是候选 $C$：
+
+$$
+\begin{array}{c|rrr}&0&1&2\\\hline
+0&-1&0&3\\1&-2&0&-2\\2&3&0&-1
+\end{array}
+$$
+
+已有点态恒等式和幅度证书完全不需要窗口独立：若 $H=\mathcal L_\tau-\mathcal L_\theta$、$d=C_\tau-C_\theta$，则
+
+$$
+\mathbb E[H\mid X]=\alpha d^2/4,\qquad |H|\le4,\qquad H^2\le9d^2.
+\tag{63.12}
+$$
+
+从 $m$ 个 IID 完整 $(X,Y)$ 记录为每个商类累加该整数损失，输出最小者，按预定顺序处理并列。候选为一次零类和所有非连续三元组；没有拟合每候选的 $\alpha$。
+

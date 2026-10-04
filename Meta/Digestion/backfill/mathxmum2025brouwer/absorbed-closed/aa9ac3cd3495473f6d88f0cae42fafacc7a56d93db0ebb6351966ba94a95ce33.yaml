@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:aa9ac3cd3495473f6d88f0cae42fafacc7a56d93db0ebb6351966ba94a95ce33
+  normalized_sha256: sha256:aa9ac3cd3495473f6d88f0cae42fafacc7a56d93db0ebb6351966ba94a95ce33
+cas_ref: sha256:aa9ac3cd3495473f6d88f0cae42fafacc7a56d93db0ebb6351966ba94a95ce33
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Scarf/Dominance.isDominant_erase_iff_M_set_empty
+    target_statement_id: sha256:87418e562eb75bcb0c0ffa6a4c002ab642eb0d0803904b03925b405a3f7d0282
+receipts:
+  unresolved_subitems: []

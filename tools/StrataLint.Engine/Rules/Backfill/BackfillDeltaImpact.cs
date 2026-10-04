@@ -109,24 +109,6 @@ internal static class BackfillDeltaImpactResolver
             return true;
         }
 
-        foreach (var gid in entry.CoverageGids)
-        {
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            if (FileValueChanged(
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths)
-                || FileValueChanged(
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths))
-            {
-                return true;
-            }
-        }
-
         return false;
     }
 
