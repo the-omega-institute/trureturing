@@ -6355,3 +6355,181 @@ It does not provide an upper bound on $N_3$ or eliminate the
 whole height-two branch. The proof reuses the existing profile
 transport and all-root Hall interface, with no new enumeration or
 Lean verification.
+
+## 52. The common prefix source bounds complete original private hulls
+
+The small output hulls can be transported back to the original
+private regions, provided the source images are actually private.
+The required transport preserves congruence depth without requiring
+an affine source map.
+
+Keep original ternary height two and write
+$Q=9\cdot5^BM$, $N_0=3^BM$, with $(M,15)=1$.
+Use the one fixed source SC2 with safe old word $u$:
+
+$$
+F_u(x)\equiv u\pmod9,\qquad
+F_u(x)\equiv\theta_B(x\bmod3^B)\pmod{5^B},\qquad
+F_u(x)\equiv x\pmod M.
+$$
+
+For a nonempty set $X$ in the output carrier, let
+$\Gamma_{N_0}(X)=3^h m$, where $0\le h\le B$ and $m\mid M$.
+Then its image has the exact original-carrier hull
+
+$$
+\boxed{\Gamma_Q(F_u(X))
+       =9\cdot5^h m=9\chi(\Gamma_{N_0}(X)).}
+\tag{SC263}
+$$
+
+At the 3-coordinate, $h$ is the largest level at which every
+point of $X$ has the same prefix. Compatibility of the maps
+$\theta_b$ makes their images agree modulo $5^h$. If $h<B$,
+two points have different next 3-prefixes, and injectivity of
+$\theta_{h+1}$ makes the corresponding next 5-prefixes different.
+Thus the exact common 5-depth is $h$. The endpoint $h=B$ is
+limited by the original carrier itself. Every prime coordinate
+in $M$ is copied literally, and the old ternary coordinate is
+fixed modulo 9. This proves SC263 prime by prime. It neither
+identifies the image with an AP nor treats $\theta$ as affine.
+
+All output moduli divide $N_0$, and $B\ge1$ makes the bought
+modulo-3 root periodic there too. Thus the complete residuals in
+Sections 48--49 have $N_0$ as a period. Their previously computed
+hulls are unchanged: the hull of a complete periodic integer set
+is the gcd of all its actual differences from one point, including
+its periods. If such an image is contained in the complete original
+private region $P_d$, then
+
+$$
+d\mid\Gamma_Q(P_d)\mid9\chi(\Gamma_{N_0}(X)).
+\tag{SC264}
+$$
+
+The second divisibility has this direction because a congruence
+holding throughout $P_d$ also holds on its subset $F_u(X)$.
+It does not assert that this subset accounts for all original
+private points.
+
+### Outer private hulls require no unique inner lower
+
+Keep SC227 and impose only
+
+$$
+H\cap L_2=\varnothing.
+\tag{SC265}
+$$
+
+For every partner $t_e$ and inner color $j$, the whole source
+image $F_{c_e}(R_{e,j})$ lies in $P_{9\chi(e)}$. This is the
+SC209 owner check: height-zero owners miss $H$, height-one
+owners at the outer word would have outputs in $L_2$, and $D_e$
+excludes all other top owners of that color. Uniqueness of the
+active inner lower is not needed for this assertion.
+
+If $\Gamma=9$, apply this check simultaneously to the complete
+$R_*=D_3\cap D_9$ of SC247, whose hull is exactly 9. Both
+outer images have hull 225, and SC264 gives
+
+$$
+\Gamma_Q(P_{225})=225,\qquad
+\Gamma_Q(P_{45})\in\{45,225\}.
+\tag{SC266}
+$$
+
+If $\Gamma=p>5$ is prime, SC243 gives
+$\Gamma_{N_0}(R_{p,j})=p$. Its image hull is $9p$, so
+
+$$
+\Gamma_Q(P_{9p})=9p.
+\tag{SC267}
+$$
+
+If $\Gamma=3$, the residual hulls belong to $\{3,9\}$.
+The same argument gives $\Gamma_Q(P_{45})\in\{45,225\}$,
+with equality 45 if either residual has hull 3. Any displayed
+value not dividing $Q$ is excluded; in particular $B=1$ rules
+out 225.
+
+### A unique inner lower adds the two different old words
+
+Now impose all of SC208: in addition to SC265, the designated
+$\ell$ is the only active source in $L_0$. Its actual output
+modulus is $n$. The same owner check gives
+
+$$
+F_3(R_{n,3})\cup F_6(R_{n,6})\subseteq P_{3\chi(n)}.
+\tag{SC268}
+$$
+
+Both sets are nonempty, and their old modulo-9 words are 3 and 6.
+The complete private region therefore has ternary hull depth
+exactly one. The witnesses need not have the same cofactor
+coordinate or arise from a common point of the two residuals.
+
+Combining SC264 with the residual hulls in SC243 gives
+
+$$
+\begin{array}{c|c|c}
+\text{complete union hull }\Gamma&\text{actual lower }n&
+ \text{complete original lower-private hull}\\\hline
+9&9&\Gamma_Q(P_{75})=75\\
+9&3&\Gamma_Q(P_{15})\in\{15,75\}\\
+3&3&\Gamma_Q(P_{15})\in\{15,75\}\\
+p>5\text{ prime}&p&\Gamma_Q(P_{3p})=3p.
+\end{array}
+\tag{SC269}
+$$
+
+For the first two rows, each image hull is 225; reducing its
+ternary depth to one and retaining the original label gives the
+listed possibilities. For the third row, an image hull is either
+45 or 225, so the same conclusion holds, with equality 15 if
+either residual has hull 3. For the last row each image hull is
+$9p$, and the two old words remove its extra factor 3. Again
+$B=1$ rules out the value 75.
+
+### In the prime branch the complete parent hull is also flat
+
+In the last row of SC269, let the common original $p$-phase of
+$3p,9p$ be $a$ and the original pure-$p$ phase be $a_p\ne a$,
+choosing both digit representatives in $\{0,\ldots,p-1\}$.
+Reuse the original private-reset map
+[Report 357 PT6](../../321-384/357-original-private-swaps-and-prime-reset-transport.md):
+reset the first $p$ digit of every point of $P_{3p}$ from $a$
+to $a_p$, keeping the complete higher $p$ tail and every other
+coordinate. The image lies in $P_p$. Indeed, all $p$-free
+originals remain false, while every other $p$-bearing original
+avoids the root occupied by $A_p$, by comparable-original
+disjointness.
+
+On $P_{3p}$ the old first digit is fixed, so this reset is one
+constant CRT translation: it adds $a_p-a$ modulo $p^{H_p}$ and
+zero modulo $Q/p^{H_p}$. Its image therefore has the same
+complete hull $3p$, even when the higher tail varies. By subset
+inclusion and the original label,
+
+$$
+p\mid\Gamma_Q(P_p)\mid3p.
+$$
+
+SC206 excludes $3p\mid\Gamma_Q(P_p)$ for this original
+crowded phase group. Hence the three complete private hulls are
+
+$$
+\boxed{\Gamma_Q(P_p)=p,\qquad
+       \Gamma_Q(P_{3p})=3p,\qquad
+       \Gamma_Q(P_{9p})=9p.}
+\tag{SC270}
+$$
+
+This conclusion retains SC208. It asserts complete congruence
+hulls, not equality of any private region with its original AP.
+The reciprocal-hull swap for $3p,9p$ still lacks
+$9p\mid\Gamma_Q(P_{3p})$; the flat hull does not pay that move.
+Likewise SC266 supplies no extra descendant whose deletion would
+make a swap of 45 and 225 strictly improving. The complete
+ancestor liabilities and the forcing of SC265 or SC208 remain
+open. These deductions use the fixed common source and existing
+private-region interfaces, without enumeration or Lean verification.
