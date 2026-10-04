@@ -43,7 +43,13 @@ jobs:
             lean-toolchain
             tools/Architecture/*
             tools/Makefile
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
             tools/StrataLint.Engine/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/Trureturing.Truth/*
             tools/StrataLint.TestEvidence/*
             tools/scripts/dotnet-test.sh
             tools/scripts/workflow/*
@@ -139,7 +145,11 @@ jobs:
             global.json
             nuget.config
             tools/Architecture/*
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
             tools/StrataLint.Engine/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
             tools/StrataLint.Scribe/*
             tools/Trureturing.Truth/*
             tools/scripts/scribe-release.sh

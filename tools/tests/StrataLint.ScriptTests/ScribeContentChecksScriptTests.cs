@@ -70,7 +70,7 @@ public sealed class ScribeContentChecksScriptTests
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
             foreach (var project in new[]
-                     { "StrataLint.Cli", "StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "Trureturing.Truth" })
+                     { "StrataLint.Cli", "StrataLint.Engine", "StrataLint.Scribe", "Trureturing.Truth" })
             {
                 Write($"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
                 Write($"tools/{project}/Fixture.cs", "// fixture\n");

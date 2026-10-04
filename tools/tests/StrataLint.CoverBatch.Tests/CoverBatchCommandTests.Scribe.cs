@@ -10,13 +10,39 @@ public sealed partial class CoverBatchCommandTests
     private const string FrozenPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
 
     [Fact]
+    public void ScriptBatchEmitsAndVerifiesRequestedDefinitionsWithoutFullResources()
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Probe.scribe.cs", """
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Probe"), Blocks(Paragraph(Text("body")))));
+            }
+            """);
+        WriteScribeFixture(world.Root, "Blueprint/D5/S0/Carrier/Unselected.scribe.cs", "invalid C#");
+        world.WriteReportBundle();
+
+        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid), scripts: true);
+
+        Assert.True(result.Success, result.Error + result.Output);
+        Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
+        Assert.NotEmpty(File.ReadAllBytes(Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
+        Assert.False(File.Exists(Path.Combine(world.Root, "Blueprint/D5/S0/Carrier/Unselected.md")));
+        Assert.False(File.Exists(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
+    }
+
+    [Fact]
     public void ProductionScribeReusesFrozenLoadsAndMatchesSequentialBytes()
     {
         using var sequential = new BatchWorld();
         using var batch = new BatchWorld();
         WriteProblem(sequential.Root);
         WriteProblem(batch.Root);
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
+        var verifier = new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         FrozenLoadCounter sequentialLoads;
         using (sequentialLoads = new FrozenLoadCounter()) sequential.RunSingles(verifier);
         FrozenLoadCounter batchLoads;
@@ -47,7 +73,7 @@ public sealed partial class CoverBatchCommandTests
         WriteProblem(world.Root);
         TemporaryFileSystem.File.Delete(Path.Combine(world.Root, ProblemPath));
         var before = world.LedgerImage();
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
+        var verifier = new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid), verifier);
 
@@ -67,7 +93,7 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld();
         WriteProblem(world.Root);
-        var verifier = new ProductionScribeEmissionVerifier(typeof(BatchClaimDefinition).Assembly);
+        var verifier = new ProductionScribeEmissionVerifier(root => StatementProjectionFixtureLoader.WithRepositoryRoot(root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         var calls = 0;
         BatchClaimDefinition.Creating.Value = () =>
         {
