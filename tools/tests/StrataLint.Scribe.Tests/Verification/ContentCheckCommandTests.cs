@@ -10,7 +10,7 @@ public sealed class ContentCheckCommandTests
     [InlineData("emit", "--check")]
     public void MissingManifestFailsBeforeRepositoryResolution(params string[] arguments)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("MissingPathsManifest", error.ToString(), StringComparison.Ordinal);
@@ -37,7 +37,7 @@ public sealed class ContentCheckCommandTests
     [InlineData("content-check", "--report", "report.json", "--paths-from", " ")]
     public void RejectsBadArgumentsBeforeResolvingARepository(params string[] arguments)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("usage:", error.ToString(), StringComparison.Ordinal);
@@ -243,7 +243,7 @@ public sealed class ContentCheckCommandTests
 
     private sealed class Fixture : IDisposable
     {
-        internal TemporaryRoot Root { get; } = new();
+        internal TemporaryRoot Root { get; } = new(sdkConfiguration: true);
         internal readonly LeanAxiomReport Report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
             { ["D5/S0/Synthetic/CurrentMarkdown.lean"] = new([], []) });
         internal Fixture()
