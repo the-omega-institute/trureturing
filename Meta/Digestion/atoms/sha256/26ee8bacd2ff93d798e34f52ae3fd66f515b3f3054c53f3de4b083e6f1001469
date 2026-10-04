@@ -1,0 +1,26 @@
+**Theorem 7.1 (physical Hermite Schwartz and cutoff tests).** For every natural
+$d$, every $\hbar>0$, every family $m_j>0$, $\omega_j>0$ indexed by $j<d$,
+and every $\alpha:\{0,\ldots,d-1\}\to\mathbb N$, there exists a complex
+Schwartz function $\varphi_\alpha$ on the Euclidean space $V$ with
+$\varphi_\alpha(x)=\Phi_\alpha(x)$ for every $x$, where $\Phi_\alpha$ is the
+physical product in Definition 1.3. Its actual differential expression satisfies
+$H_0\varphi_\alpha=E_\alpha\varphi_\alpha$ as an equality of Schwartz functions.
+There are compactly supported smooth Schwartz functions $\psi_N$ such that,
+for the actual complex Lebesgue $L^2$ embedding $J$,
+$$
+J\psi_N\longrightarrow J\varphi_\alpha,\qquad
+JH_0\psi_N\longrightarrow E_\alpha J\varphi_\alpha.
+$$
+The construction includes $d=0$, when $\Phi_\alpha=1$ and $E_\alpha=0$.
+It assumes neither orthonormality nor totality of the physical family.
+
+*Construction.* Compose the standard Schwartz Gaussian with the invertible
+coordinate map $x\mapsto(x_j/\ell_j)_j$ and multiply by the normalized tensor
+Hermite polynomial. The lowering identity gives the polynomial differential
+equation. Differentiating each scaled polynomial times half Gaussian twice
+and multiplying by the other coordinate factors gives the stated physical
+energy. The differentiation argument is from Leonardo Pedro's Timepiece,
+`BookProof/ChapterHermiteFunctions.lean`, revision
+`61595bca99e3b8d8b8df51a2c3043b64597e24f9`; its one-dimensional bindings are
+used within the physical construction. Apply a smooth compact bump at scales
+$N+1$ and the simultaneous cutoff limits of Theorem 4.1.
