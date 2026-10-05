@@ -310,3 +310,77 @@ dependency licensing is supplied by python-flint/FLINT. Its successful
 coefficient comparisons supply the displayed remainder bounds. They do
 not compute the retained Schur matrix or high correctors, provide a total
 runtime bound, establish cofinal positivity, or certify RH/Robin in Lean.
+
+
+## Retain this spatial weight in the complete inverse residual
+
+For this section replace the fixed $c=3/8$, $N=64$ above by
+$0<\varepsilon\le1/2$, $c=1/2-\varepsilon$ and
+$N\ge N_w(\varepsilon)$ from the
+[original weighted high estimate](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter).
+Keep its actual $T_c,P,Q,C$, $\delta=\varepsilon/4$,
+$w_{\varepsilon,N}=(\delta+a_Ns^2)^{-1}$ and
+$b_{\varepsilon,N}>0$. This is a conditional paper allowance on the
+original domain, with no new generic inverse theorem or Lean result.
+
+For any finite common low family $p_i\in PL^2_{\rm even}$ and common
+high trials $q_i\in D(C)$, put
+
+$$
+k_i=QT_cp_i,\qquad r_i=k_i-Cq_i,
+\qquad p(z)=\sum_i z_ip_i,\quad q(z)=\sum_i z_iq_i,
+\quad k(z)=\sum_i z_ik_i,\quad r(z)=\sum_i z_ir_i.
+\tag{SC13}
+$$
+
+All are actual full operator residuals. The sharp low projection puts
+$p_i$ in the original operator domain. The Gamma action, every prime
+power, both shifted adjoints and the exact variance term remain in
+$T_c$. A high projected residual is not assigned the unprojected
+source's support or localization.
+
+Reuse the inverse-residual identity already used in (SC10), whose
+published supplier is [the source proof of Theorem B, section 4](../../../Library/Weil/liu2026tailcompensation.md#a-common-256-mode-consumer).
+Apply (WH4) to the same residual and define the Hermitian allowance
+$U_w$ by
+
+$$
+z^*U_wz=2\Re\langle k(z),q(z)\rangle-C[q(z)]
+ +\int w_{\varepsilon,N}|r(z)|^2dx
+\ge\langle k(z),C^{-1}k(z)\rangle.
+\tag{SC14}
+$$
+
+Let $U_{\rm scalar}$ be the same expression with
+$\delta^{-1}\|r(z)\|_2^2$ in place of the integral, and let
+$G_s$ be the actual common residual Gram specified by
+$z^*G_sz=\|sr(z)\|_2^2$. Equation (WH5) gives
+
+$$
+U_{\rm scalar}-U_w\succeq b_{\varepsilon,N}G_s\succeq0.
+\tag{SC15}
+$$
+
+Thus the full finite Schur lower matrix
+$[T_c(p_i,p_j)]-U_w$ dominates the existing scalar-residual comparison
+by this explicit nonnegative source Gram. The saving is strict on any
+coefficient direction with nonzero full residual; residual null
+directions are retained. This comparison uses identical sources,
+trials, parameter, bandwidth and high operator on both sides.
+
+It also preserves an exact ground column. With $p_0=Pv_0$ and
+$q_0=-Qv_0$, the known $T_cv_0=0$ gives
+$k_0=Cq_0$ and $r_0=0$. Hence both residual-cost terms and all their residual cross entries
+vanish on that column. The exact trial contribution
+$2\Re\langle k_0,q_0\rangle-C[q_0]=C[q_0]$ remains; neither full
+inverse allowance is claimed to vanish. No rounded ground vector or
+independent source correction is substituted.
+
+The weight has been established for every subcritical parameter, but
+its full weighted residual entries have not been evaluated here.
+Directed enclosures of those entries and all source errors are still
+required for a numerical consumer. Actual low and complementary-low
+signs remain necessary at every chosen $c_j\uparrow1/2$; (SC15) alone
+proves neither sign, the endpoint half-bound, RH or full Robin.
+The saved $N=64$ matrices and residuals are not data for these other
+bands, and no old producer or new numerical target is executed.
