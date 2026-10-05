@@ -265,8 +265,7 @@ verify_added_frozen_events_v5() {
 
 cover_atom_or_resume() {
   local output
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
-      --base "$BASE" 2>&1)"; then
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" 2>&1)"; then
     [[ -z "$output" ]] || printf '%s\n' "$output"
     return
   else
@@ -336,7 +335,7 @@ case "$COMMAND" in
   cover-batch)
     require_cover_batch_arguments
     step lean-report make lean-report
-    step cover-batch run_cli cover-batch --atoms "$ATOM_ID" --base "$BASE"
+    step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)
     echo "usage: playbook-workflows.sh deliver-check|deposit|deposit-uncovered|cover|cover-batch [BASE] [ATOM_ID GID|GID|ATOMS_FILE]" >&2

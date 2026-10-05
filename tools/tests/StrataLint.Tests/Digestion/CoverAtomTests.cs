@@ -64,7 +64,7 @@ public sealed partial class CoverAtomTests
         var spec = new CoverSpec();
         var (result, after, before, _) = Execute(
             spec,
-            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", "no-such-atom", "--gid", spec.Gid]);
 
         Assert.False(result.Success);
         Assert.Contains("is absent", result.Error, StringComparison.Ordinal);
@@ -210,8 +210,7 @@ public sealed partial class CoverAtomTests
             spec,
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
-                "--gid", inputs.Gid,
-                "--base", "baseline"]);
+                "--gid", inputs.Gid]);
 
         Assert.False(result.Success);
         Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
@@ -233,7 +232,7 @@ public sealed partial class CoverAtomTests
             new FakeLeanReportSource(inputs.Report));
 
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
@@ -263,7 +262,7 @@ public sealed partial class CoverAtomTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
             CoverWorld.TimeProvider);
         var effectiveArgs = args
-            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"];
+            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid];
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);

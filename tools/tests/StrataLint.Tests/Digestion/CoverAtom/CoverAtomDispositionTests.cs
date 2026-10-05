@@ -105,7 +105,7 @@ public sealed partial class CoverAtomTests
             BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles).CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
         return new CoverExecution(
