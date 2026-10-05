@@ -35,9 +35,7 @@ def labels (m : ℕ) (γ : Path) (d : ℕ) : List (Fin m) :=
 def labelDigit {m : ℕ} (γ : Path) (i : Fin m) (d : ℕ) : Fin 2 :=
   if i ∈ labelSet m γ d then 1 else 0
 
-/-- The output law determined by the complete, possibly noncanonical digits. -/
-noncomputable def labelLaw {m : ℕ} (γ : Path) (i : Fin m) : ℝ :=
-  Real.ofDigits (labelDigit γ i)
+local notation "law" γ ":" m => (fun i : Fin m => Real.ofDigits (labelDigit γ i))
 
 /-- Read the next source bit only while active. A left state records the returned
 label and the number of charged reads; a right state is a continuing slot. -/
@@ -132,7 +130,7 @@ private theorem tree_layers (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
     · apply hn.imp
       intro u v huv
       simp only [Function.onFun, List.disjoint_left, List.mem_cons,
-        List.mem_singleton, List.not_mem_nil, or_false]
+        List.not_mem_nil, or_false]
       intro w hw hv
       rcases hw with hw | hw <;> rcases hv with hv | hv
       · exact huv (List.append_cancel_right (hw.symm.trans hv))
@@ -407,13 +405,13 @@ private theorem scan_tree (m : ℕ) (γ : Path) (hγ : IsRootPath m γ) :
   exact ⟨active_words, leaf_words, origin⟩
 
 private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
-    (∀ i : Fin m, 0 ≤ labelLaw γ i) ∧
-    (∑ i : Fin m, labelLaw γ i) = 1 ∧
-    labelLaw (m := m) γ ⟨0, by omega⟩ = anchorValue γ ∧
-    (∀ i : Fin m, anchorValue γ ≤ labelLaw γ i) ∧
-    (0 < anchorValue γ → ∀ i : Fin m, 0 < labelLaw γ i) ∧
+    (∀ i : Fin m, 0 ≤ (law γ : m) i) ∧
+    (∑ i : Fin m, (law γ : m) i) = 1 ∧
+    (law γ : m) ⟨0, by omega⟩ = anchorValue γ ∧
+    (∀ i : Fin m, anchorValue γ ≤ (law γ : m) i) ∧
+    (0 < anchorValue γ → ∀ i : Fin m, 0 < (law γ : m) i) ∧
     Summable (fun d : ℕ => (γ.state d).r / (2 : ℝ) ^ d) ∧
-    pathCost γ ≤ m ∧ DyadicSupportLines.cost (labelLaw (m := m) γ) ≤ pathCost γ := by
+    pathCost γ ≤ m ∧ DyadicSupportLines.cost ((law γ : m)) ≤ pathCost γ := by
   classical
   let k : Fin m := ⟨0, by omega⟩
   let N : ℕ → Fin m → ℤ := Nat.rec (fun _ => 0)
@@ -433,7 +431,7 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
         if i ∈ labelSet m γ d then 1 else 0 := by
       by_cases H : i ∈ labelSet m γ d <;> simp [labelDigit, H]
     simp_rw [digit_indicator]
-    simp [labels, Finset.sum_boole]
+    simp [labels]
   have Nsum : ∀ d, (∑ i : Fin m, N d i) = (2 : ℤ) ^ d - (γ.state d).r := by
     intro d
     induction d with
@@ -470,7 +468,7 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
       ((γ.state d).e ≤ (i.val : ℤ) → N d k + 1 ≤ N d i) := by
     intro d
     induction d with
-    | zero => intro i; simp [Nzero, hγ.1, root] <;> omega
+    | zero => intro i; simp [Nzero, hγ.1, root]
     | succ d ih =>
       intro i
       have ha := (hγ.2 d).1
@@ -511,11 +509,11 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
           · have gap := (ih i).2 (by omega)
             rw [Nstep, Nstep, hk, ha]
             omega
-  have nonneg (i : Fin m) : 0 ≤ labelLaw γ i := Real.ofDigits_nonneg _
+  have nonneg (i : Fin m) : 0 ≤ (law γ : m) i := Real.ofDigits_nonneg _
   have limit (i : Fin m) : Filter.Tendsto
       (fun d => ∑ j ∈ Finset.range d, Real.ofDigitsTerm (labelDigit γ i) j)
-      Filter.atTop (nhds (labelLaw γ i)) := Real.summable_ofDigitsTerm.hasSum.tendsto_sum_nat
-  have minimum (i : Fin m) : labelLaw γ k ≤ labelLaw γ i := by
+      Filter.atTop (nhds ((law γ : m) i)) := Real.summable_ofDigitsTerm.hasSum.tendsto_sum_nat
+  have minimum (i : Fin m) : (law γ : m) k ≤ (law γ : m) i := by
     apply le_of_tendsto_of_tendsto (limit k) (limit i)
     apply Filter.Eventually.of_forall
     intro d
@@ -528,8 +526,9 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
       · exact le_of_eq ((H.1 hi).symm)
       · have := H.2 (by omega); omega
     exact_mod_cast H'
-  have anchor : labelLaw γ k = anchorValue γ := by
-    unfold labelLaw Real.ofDigits anchorValue
+  have anchor : (law γ : m) k = anchorValue γ := by
+    dsimp only
+    unfold Real.ofDigits anchorValue
     apply tsum_congr
     intro d
     have H := anchor_digit d
@@ -557,7 +556,7 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
     rw [← Finset.sum_div, ← Int.cast_sum, Nsum]
     push_cast
     field_simp
-  have normalized : (∑ i : Fin m, labelLaw γ i) = 1 := by
+  have normalized : (∑ i : Fin m, (law γ : m) i) = 1 := by
     have H := tendsto_finsetSum (Finset.univ : Finset (Fin m)) (fun i _ => limit i)
     have H' : Filter.Tendsto
         (fun d => ∑ i : Fin m, ∑ j ∈ Finset.range d,
@@ -588,30 +587,30 @@ private theorem law_bounds (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPat
     simp only [Finset.sum_range_one, head] at split
     change _ = pathCost γ at split
     linarith
-  have floor_compare (d : ℕ) (i : Fin m) : N d i ≤ ⌊(2 : ℝ) ^ d * labelLaw γ i⌋ := by
+  have floor_compare (d : ℕ) (i : Fin m) : N d i ≤ ⌊(2 : ℝ) ^ d * (law γ : m) i⌋ := by
     apply Int.le_floor.mpr
     have H := Real.summable_ofDigitsTerm.sum_le_tsum (Finset.range d)
       (fun j _ => Real.ofDigitsTerm_nonneg (digits := labelDigit γ i) (n := j))
-    change (∑ j ∈ Finset.range d, Real.ofDigitsTerm (labelDigit γ i) j) ≤ labelLaw γ i at H
+    change (∑ j ∈ Finset.range d, Real.ofDigitsTerm (labelDigit γ i) j) ≤ (law γ : m) i at H
     rw [← truncation_identity d i] at H
     simpa only [mul_comm] using
       (div_le_iff₀ (by positivity : 0 < (2 : ℝ) ^ d)).mp H
-  have dyadic_nonneg (d : ℕ) : 0 ≤ DyadicSupportLines.residual (labelLaw (m := m) γ) d := by
+  have dyadic_nonneg (d : ℕ) : 0 ≤ DyadicSupportLines.residual ((law γ : m)) d := by
     have H := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin m)))
-      (fun i _ => Int.floor_le ((2 : ℝ) ^ d * labelLaw γ i))
+      (fun i _ => Int.floor_le ((2 : ℝ) ^ d * (law γ : m) i))
     simp only [← Finset.mul_sum, normalized, mul_one] at H
     simpa only [DyadicSupportLines.residual, Int.cast_sum] using sub_nonneg.mpr H
-  have residual_compare (d : ℕ) : DyadicSupportLines.residual (labelLaw (m := m) γ) d ≤ (γ.state d).r := by
+  have residual_compare (d : ℕ) : DyadicSupportLines.residual ((law γ : m)) d ≤ (γ.state d).r := by
     have H := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin m)))
       (fun i _ => floor_compare d i)
     rw [Nsum] at H
     have H' : (↑((2 : ℤ) ^ d - (γ.state d).r) : ℝ) ≤
-        (∑ i : Fin m, ⌊(2 : ℝ) ^ d * labelLaw γ i⌋ : ℤ) := by exact_mod_cast H
+        (∑ i : Fin m, ⌊(2 : ℝ) ^ d * (law γ : m) i⌋ : ℤ) := by exact_mod_cast H
     dsimp only [DyadicSupportLines.residual]
     push_cast at H' ⊢
     linarith only [H']
   have dyadic_summable : Summable (fun d : ℕ =>
-      DyadicSupportLines.residual (labelLaw (m := m) γ) d / (2 : ℝ) ^ d) :=
+      DyadicSupportLines.residual ((law γ : m)) d / (2 : ℝ) ^ d) :=
     Summable.of_nonneg_of_le (fun d => div_nonneg (dyadic_nonneg d) (by positivity))
       (fun d => div_le_div_of_nonneg_right (residual_compare d) (by positivity)) summable
   refine ⟨nonneg, normalized, anchor, ?_, ?_, summable, cost_upper, ?_⟩
@@ -763,7 +762,7 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
       {w : List Bool | ∃ d : ℕ, ∃ i : Fin m, (w, i) ∈ stopping m γ d} ∧
     (∀ i : Fin m, MeasurableSet {tape : Tape | ∃ n, sample m γ tape = some (i, n)} ∧
       fairTape {tape : Tape | ∃ n, sample m γ tape = some (i, n)} =
-        ENNReal.ofReal (labelLaw γ i)) := by
+        ENNReal.ofReal ((law γ : m) i)) := by
   classical
   have origin := (scan_tree m γ hγ).2.2
   have leaf_words := (scan_tree m γ hγ).2.1
@@ -837,7 +836,7 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
     intro j hj hj'
     simp only [List.getElem_ofFn]
     have H := hprefix.getElem hj'
-    rw [List.getElem_eq_getD false] at H
+    rw [List.getD_eq_getElem _ false (lt_of_lt_of_le hj' hprefix.length_le)]
     exact H.symm
   have prefix_free : D5.S0.Computability.Coding.PrefixFreeCode.IsPrefixFree
       {w : List Bool | ∃ d : ℕ, ∃ i : Fin m, (w, i) ∈ stopping m γ d} := by
@@ -847,14 +846,18 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
     let tape : Tape := fun n => v.getD n false
     have Hu : scan m γ tape (d + 1) = Sum.inl (i, d + 1) := by
       apply (leaf_words d tape i).mpr
-      simpa only [word_from_prefix u v hp (d + 1) hlu] using hu
+      dsimp only [tape]
+      rw [word_from_prefix u v hp (d + 1) hlu]
+      exact hu
     have Hv : scan m γ tape (e + 1) = Sum.inl (j, e + 1) := by
       apply (leaf_words e tape j).mpr
-      simpa only [word_from_prefix v v (List.prefix_refl v) (e + 1) hlv] using hv
+      dsimp only [tape]
+      rw [word_from_prefix v v (List.prefix_refl v) (e + 1) hlv]
+      exact hv
     have hde : d + 1 ≤ e + 1 := by simpa [hlu, hlv] using hp.length_le
     have HH := persistent (d + 1) (e + 1) hde tape (i, d + 1) Hu
     have lengths := congrArg Prod.snd (Sum.inl.inj (HH.symm.trans Hv))
-    exact hp.eq_of_length (by omega)
+    exact hp.eq_of_length (by rw [hlu, hlv]; exact lengths)
   have one_leaf (d : ℕ) (i : Fin m) :
       MeasurableSet {tape : Tape | sample m γ tape = some (i, d + 1)} ∧
       fairTape {tape : Tape | sample m γ tape = some (i, d + 1)} =
@@ -879,19 +882,21 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
         ext tape
         constructor
         · intro H
-          exact congrArg Prod.fst (List.inj_on_of_nodup_map nodup _ H _ hpair rfl)
-        · intro H; simpa only [H] using hpair
+          exact congrArg Prod.fst (List.inj_on_of_nodup_map nodup H hpair rfl)
+        · intro H
+          change List.ofFn (fun j : Fin (d + 1) => tape j.val) = w at H
+          change (List.ofFn (fun j : Fin (d + 1) => tape j.val), i) ∈ stopping m γ d
+          rw [H]; exact hpair
       rw [event']
       have data := (fair_tail m hm γ hγ).2.2.2 (d + 1) w ((layers d).2.2 (w, i) hpair)
       refine ⟨data.1, ?_⟩
       rw [data.2]
-      simp [Real.ofDigitsTerm, labelDigit, hi, ENNReal.ofReal_mul, ENNReal.ofReal_inv_of_pos (by norm_num : (0 : ℝ) < 2),
-        ENNReal.ofReal_pow, ENNReal.inv_pow]
+      simp [Real.ofDigitsTerm, labelDigit, hi, ENNReal.ofReal_pow, ENNReal.inv_pow]
     · have event' : {tape : Tape | (List.ofFn (fun j : Fin (d + 1) => tape j.val), i) ∈
           stopping m γ d} = ∅ := by
         apply Set.eq_empty_iff_forall_notMem.mpr
         intro tape H
-        have HH := List.mem_map_of_mem Prod.snd H
+        have HH := List.mem_map_of_mem (f := Prod.snd) H
         rw [(layers d).1] at HH
         exact hi ((Finset.mem_sort (· ≤ ·)).mp HH)
       rw [event']
@@ -899,7 +904,7 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
   have returned (i : Fin m) :
       MeasurableSet {tape : Tape | ∃ n, sample m γ tape = some (i, n)} ∧
       fairTape {tape : Tape | ∃ n, sample m γ tape = some (i, n)} =
-        ENNReal.ofReal (labelLaw γ i) := by
+        ENNReal.ofReal ((law γ : m) i) := by
     have event : {tape : Tape | ∃ n, sample m γ tape = some (i, n)} =
         ⋃ d : ℕ, {tape : Tape | sample m γ tape = some (i, d + 1)} := by
       ext tape
@@ -924,11 +929,11 @@ private theorem returned_law (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootP
 /-- Every legal root path realizes its fixed-label law on the independent fair
 bit tape, with its own prefix leaves, charged stopping length and tail cost. -/
 theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
-    (∀ i : Fin m, 0 ≤ labelLaw γ i) ∧
-    (∑ i : Fin m, labelLaw γ i) = 1 ∧
-    labelLaw (m := m) γ ⟨0, by omega⟩ = anchorValue γ ∧
-    (∀ i : Fin m, anchorValue γ ≤ labelLaw γ i) ∧
-    (0 < anchorValue γ → ∀ i : Fin m, 0 < labelLaw γ i) ∧
+    (∀ i : Fin m, 0 ≤ (law γ : m) i) ∧
+    (∑ i : Fin m, (law γ : m) i) = 1 ∧
+    (law γ : m) ⟨0, by omega⟩ = anchorValue γ ∧
+    (∀ i : Fin m, anchorValue γ ≤ (law γ : m) i) ∧
+    (0 < anchorValue γ → ∀ i : Fin m, 0 < (law γ : m) i) ∧
     D5.S0.Computability.Coding.PrefixFreeCode.IsPrefixFree
       {w : List Bool | ∃ d : ℕ, ∃ i : Fin m, (w, i) ∈ stopping m γ d} ∧
     (∀ d, (stopping m γ d).map Prod.snd = labels m γ d ∧
@@ -938,7 +943,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
     (∀ tape (i : Fin m) n, sample m γ tape = some (i, n) → bill m γ tape = n) ∧
     (∀ i : Fin m, MeasurableSet {tape : Tape | ∃ n, sample m γ tape = some (i, n)} ∧
       fairTape {tape : Tape | ∃ n, sample m γ tape = some (i, n)} =
-        ENNReal.ofReal (labelLaw γ i)) ∧
+        ENNReal.ofReal ((law γ : m) i)) ∧
     (∀ d, MeasurableSet {tape : Tape | sample m γ tape = none ∨
         ∃ i n, sample m γ tape = some (i, n) ∧ d < n} ∧
       fairTape {tape : Tape | sample m γ tape = none ∨
@@ -946,7 +951,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath m γ) :
           ENNReal.ofReal (((γ.state d).r : ℝ) / (2 : ℝ) ^ d)) ∧
     (∀ᵐ tape ∂fairTape, ∃ i n, sample m γ tape = some (i, n)) ∧
     (∫⁻ tape, bill m γ tape ∂fairTape) = ENNReal.ofReal (pathCost γ) ∧
-    pathCost γ ≤ m ∧ DyadicSupportLines.cost (labelLaw (m := m) γ) ≤ pathCost γ := by
+    pathCost γ ≤ m ∧ DyadicSupportLines.cost ((law γ : m)) ≤ pathCost γ := by
   classical
   obtain ⟨nonneg, total, anchor, minimum, positive, _, upper, lower⟩ := law_bounds m hm γ hγ
   obtain ⟨first, charged, tail_event, prefix_free, returned⟩ := returned_law m hm γ hγ
