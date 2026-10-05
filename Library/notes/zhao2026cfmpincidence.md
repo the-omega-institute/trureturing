@@ -1066,6 +1066,69 @@ $$
 在 FP Theorem 2.13 的可定向、边界负 Euler 特征、指定剖分及四面体定向使粘合反转诱导面定向的前提下，Remark 2.14 的无 toric end 分支（正文第 20 页）把条件约化为匹配内部边长度和各实际内边总角 $2\pi$；所得结构位于该剖分实现的同一个 $N$ 上。
 这项文献应用不提供缺失的 $a_t$：在完整实际小星呈示及面相容比较取得前，$r_C$ 只实现源商 $Q_C$，不能据它直接假定模型商 $Q\cong N$。
 
+### 16.8 有限几何顶点星的实际径向边界
+
+令 $\Delta=\{z\in\mathbb R^4:z_i\ge0,\ \sum_i z_i=1\}$，取原顶点 $v=e_j$。设 $\mathcal K$ 是支撑空间恰为 $\Delta$ 的有限几何单纯复形，$v$ 是其顶点。每个面由有限个仿射独立顶点给出；任意两面的凸包交集是公共顶点集的凸包。定义实际闭星、链接及不含 $v$ 的面并集为
+$$
+\operatorname{St}_{\mathcal K}(v)=\bigcup_{s\in\mathcal K,\ v\in s}\operatorname{conv}(s),\qquad
+L_{\mathcal K}(v)=\bigcup_{s\in\mathcal K,\ v\in s}\operatorname{conv}(s\setminus\{v\}),\qquad
+B_v=\bigcup_{s\in\mathcal K,\ v\notin s}\operatorname{conv}(s).
+$$
+空凸包贡献为空。这里允许闭星非凸。记相对开星为 $O_v=\Delta\setminus B_v$，并取实际小星条件
+$$
+\operatorname{St}_{\mathcal K}(v)\subset\{z\in\Delta:1-z_j\le b\},\qquad b<1.
+$$
+这条件针对字面闭星；不同开星不交不能供应它。
+
+令 $D_j=\{u\in\Delta:u_j=0\}$，$r_j(z)=1-z_j$。在 $\Delta\setminus\{v\}$ 上定义
+$$
+p_j(z)_j=0,\qquad p_j(z)_k=\frac{z_k}{r_j(z)}\quad(k\ne j).
+$$
+则 $p_j:L_{\mathcal K}(v)\to D_j$ 是同胚。特别地，
+$$
+h_j(u)=r_j\bigl((p_j|_{L_{\mathcal K}(v)})^{-1}(u)\bigr)
+$$
+是连续函数，且 $0<h_j(u)\le b<1$。实际星与 cap 具有精确表示
+$$
+\begin{aligned}
+L_{\mathcal K}(v)&=\{(1-h_j(u))v+h_j(u)u:u\in D_j\},\\
+\operatorname{St}_{\mathcal K}(v)&=\{v\}\cup\{(1-r)v+ru:u\in D_j,\ 0<r\le h_j(u)\},\\
+O_v&=\{v\}\cup\{(1-r)v+ru:u\in D_j,\ 0<r<h_j(u)\},\\
+\operatorname{Fr}_{\Delta}O_v&=L_{\mathcal K}(v).
+\end{aligned}
+$$
+
+**射线唯一性。** 每个非空 $s\setminus\{v\}$ 都是 $\mathcal K$ 的面，仿射独立性保证 $v$ 不在其仿射包内。若 $x,y\in L_{\mathcal K}(v)$ 位于同一正射线，选含 $v$ 的面 $s,t$，使 $x\in\operatorname{conv}(s\setminus\{v\})$、$y\in\operatorname{conv}(t\setminus\{v\})$，并交换两者以写成
+$$
+x-v=c(y-v),\qquad 0<c\le1.
+$$
+凸性给出 $x\in\operatorname{conv}(t)$；对 $s\setminus\{v\}$ 与 $t$ 使用实际凸包交集律，得到 $x\in\operatorname{conv}(t\setminus\{v\})$。若 $c\ne1$，两点 $x,y$ 的仿射包包含
+$$
+v=-\frac1{c-1}(x-y)+y,
+$$
+与 $v\notin\operatorname{aff}(t\setminus\{v\})$ 矛盾。所以 $c=1$，$x=y$。此论证使用实际公共面及仿射独立性，没有把所需射线纤维定义成新的等价关系。
+
+**方向覆盖与连续性。** 不含 $v$ 的每个面凸包都紧且避开 $v$；有限并 $B_v$ 因而紧且避开 $v$。所以 $\Delta$ 中存在 $v$ 的相对邻域与 $B_v$ 不交。对任意 $u\in D_j$，在该邻域取 $z=(1-\varepsilon)v+\varepsilon u$，$0<\varepsilon<1$。由于 $\mathcal K$ 覆盖 $\Delta$，$z$ 属于某个面的凸包；该面必须含 $v$。将 $z$ 的重心组合中非 $v$ 的权重归一化，得到 $y\in L_{\mathcal K}(v)$ 与 $z-v=\lambda(y-v)$，$0<\lambda\le1$。于是 $p_j(y)=u$。链接自身紧，且不含 $v$，故其上 $r_j>0$、$p_j$ 连续。刚证明的覆盖和射线唯一性给出连续双射；紧源到 Hausdorff 目标的判据给出同胚与连续正函数 $h_j$。
+
+**实际开星与 frontier。** 公共面交集律给出
+$$
+B_v\cap\operatorname{St}_{\mathcal K}(v)=L_{\mathcal K}(v),\qquad
+O_v=\operatorname{St}_{\mathcal K}(v)\setminus L_{\mathcal K}(v).
+$$
+第二式也表明 $O_v$ 就是所有含 $v$ 的面的相对内部之并：每点的重心支撑给出其唯一最小面；该最小面含 $v$ 当且仅当该点不属于 $B_v$。对闭星中的一点，将含 $v$ 的面的重心组合分解为 $v$ 与某个链接点的凸组合，得到 $0\le r\le h_j(u)$；反向包含来自同一面的凸性。除去链接即得严格不等式。沿同一射线从内侧趋向每个链接点，说明 $\overline{O_v}^{\Delta}=\operatorname{St}_{\mathcal K}(v)$。$B_v$ 闭，故 $O_v$ 相对开；于是其相对 frontier 恰为链接。条件 $h_j<1$ 还保证每个 cap 点的同一射线在 $\Delta$ 内有外侧部分。
+
+**原面限制。** 对一个包含 $v$ 的原面 $F_f=\{z_f=0\}$，$f\ne j$，非负重心坐标保证
+$$
+\operatorname{conv}(s)\cap F_f=\operatorname{conv}(s\cap F_f).
+$$
+所以实际限制复形 $\mathcal K|_{F_f}$ 覆盖 $F_f$，其闭星、链接分别是 $\operatorname{St}_{\mathcal K}(v)\cap F_f$、$L_{\mathcal K}(v)\cap F_f$。设原配对 $P_\sigma:F_f\to F_g$ 将该限制复形映为目标限制复形，并将 $v$ 映为 $e_{\sigma(j)}$。它将两侧的实际链接对应；径向归一化满足 $p_{\sigma(j)}P_\sigma=P_\sigma p_j$，半径也被保留。由链接射线唯一性，得到整个受限方向面上的等式
+$$
+h_{\sigma(j)}(P_\sigma u)=h_j(u)\qquad(u\in D_j\cap F_f).
+$$
+无需要求不同块的完整细分相同，只需核对原配对在共享面上的实际细分及顶点星。
+
+应用到第 16.7 节时，须将这里的 $O_v$ 与该源实现实际删除的 $S_{t,v}$、这里的链接与其 cap 逐一识别，并核对各原面配对上的限制复形对应。实际源未给出这样的有限几何表示时，这个识别仍是待完成的输入桥梁。得到上述实际 profiles 之后，才能把它们代入带标签的相容径向比较并运输原实现 $r_C$；该结论自身不把固定模型商指定为 $N$，也不供应独立预先固定的边界参数化。
+
 ## 17. 原始六参数块上的实际旧边领圈与参数恢复
 
 本节把第 16.2 节的标准 Fermi 领圈接回原始六参数的极面截断块，给出支撑不等式、逆参数及相对开集的具体公式。所有六个参数独立变化，不假设等边。沿用原始槽序 $12,13,14,34,24,23$，令 $x_{ij}>1$，并要求原始判别式 $D(x)>0$。在原始 Lorentz 模型中，记实际向量为 $V_1,\ldots,V_4$，其 Gram 矩阵为
